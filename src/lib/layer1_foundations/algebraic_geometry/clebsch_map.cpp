@@ -156,7 +156,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 					<< plane_rk_global << endl;
 		}
 		intersection_points[u] =
-				Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
+				Surf->P->Solid->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 						a, plane_rk_global,
 						0 /* verbose_level */);
 		if (f_v) {

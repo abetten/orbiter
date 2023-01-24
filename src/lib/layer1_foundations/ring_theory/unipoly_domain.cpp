@@ -527,6 +527,7 @@ int unipoly_domain::degree(unipoly_object p)
 
 void unipoly_domain::print_object(unipoly_object p, std::ostream &ost)
 {
+#if 0
 	int i, k;
 	int f_prev = FALSE;
 	string x, y;
@@ -581,9 +582,75 @@ void unipoly_domain::print_object(unipoly_object p, std::ostream &ost)
 	}
 	// ost << ")";
 	//return ost;
+#else
+	std::stringstream s;
+
+	print_object_sstr(p, s);
+	ost << s.str();
+#endif
 }
 
-void unipoly_domain::print_object_tight(unipoly_object p, std::ostream &ost)
+void unipoly_domain::print_object_sstr(
+		unipoly_object p, std::stringstream &ost)
+{
+	int i, k;
+	int f_prev = FALSE;
+	string x, y;
+	int f_nothing_printed_at_all = TRUE;
+	int *rep = (int *) p;
+	int d = rep[0]; // degree
+	int *coeff = rep + 1;
+
+	x.assign(variable_name);
+	if (f_print_sub) {
+		y.assign("_");
+	}
+	else {
+		y.assign("^");
+	}
+	// ost << "(";
+	for (i = d; i >= 0; i--) {
+		k = coeff[i];
+		if (k == 0) {
+			continue;
+		}
+		f_nothing_printed_at_all = FALSE;
+		if (f_prev) {
+			ost << " + ";
+		}
+		if (k != 1 || (i == 0 /*&& !unip_f_use_variable_name*/)) {
+			//l = F->log_alpha(k);
+			//ost << "\\alpha^{" << l << "}";
+			ost << k;
+		}
+		if (i == 0) {
+			//ost << x;
+			//ost << y;
+			//ost << "0";
+		}
+		else if (i == 1) {
+			ost << x;
+			if (f_print_sub) {
+				ost << y;
+				ost << "1";
+			}
+		}
+		else if (i > 1) {
+			ost << x;
+			ost << y;
+			ost << "{" << i << "}";
+		}
+		f_prev = TRUE;
+	}
+	if (f_nothing_printed_at_all) {
+		ost << "0";
+	}
+	// ost << ")";
+	//return ost;
+}
+
+void unipoly_domain::print_object_tight(
+		unipoly_object p, std::ostream &ost)
 {
 	int i, k;
 	int *rep = (int *) p;
@@ -597,7 +664,8 @@ void unipoly_domain::print_object_tight(unipoly_object p, std::ostream &ost)
 	}
 }
 
-void unipoly_domain::print_object_sparse(unipoly_object p, std::ostream &ost)
+void unipoly_domain::print_object_sparse(
+		unipoly_object p, std::ostream &ost)
 {
 	int i, a;
 	int *rep = (int *) p;
@@ -621,7 +689,8 @@ void unipoly_domain::print_object_sparse(unipoly_object p, std::ostream &ost)
 	}
 }
 
-void unipoly_domain::print_object_dense(unipoly_object p, std::ostream &ost)
+void unipoly_domain::print_object_dense(
+		unipoly_object p, std::ostream &ost)
 {
 	int i, a;
 	int *rep = (int *) p;
@@ -641,7 +710,9 @@ void unipoly_domain::print_object_dense(unipoly_object p, std::ostream &ost)
 
 
 
-void unipoly_domain::assign(unipoly_object a, unipoly_object &b, int verbose_level)
+void unipoly_domain::assign(
+		unipoly_object a, unipoly_object &b,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -978,9 +1049,13 @@ void unipoly_domain::mult_mod_negated(unipoly_object a,
 	}
 	if (f_vv) {
 		cout << "unipoly_domain::mult_mod_negated computing ";
+		cout << "(";
 		print_object(ra, cout);
+		cout << ")";
 		cout << " x ";
+		cout << "(";
 		print_object(rb, cout);
+		cout << ")";
 		cout << " modulo - (";
 		Int_vec_print(cout,
 				factor_polynomial_coefficients_negated,
@@ -1011,8 +1086,8 @@ void unipoly_domain::mult_mod_negated(unipoly_object a,
 			C[j] = F->add(C[j], c1);
 			if (f_vv) {
 				if (c1) {
-					cout << A[i] << "x^" << i << " * "
-						<< B[j] << " x^" << j << " = "
+					cout << "(" << A[i] << "x^" << i << ")" << " * "
+						<< "(" << B[j] << " x^" << j << ")" << " = "
 						<< c1 << " x^" << i + j << " = ";
 					print_object(rc, cout);
 					cout << endl;

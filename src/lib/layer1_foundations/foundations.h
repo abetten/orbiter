@@ -414,6 +414,7 @@ namespace field_theory {
 	class minimum_polynomial;
 	class norm_tables;
 	class nth_roots;
+	class related_fields;
 	class square_nonsquare;
 	class subfield_structure;
 }
@@ -450,6 +451,8 @@ namespace geometry {
 	class points_and_lines;
 	class polarity;
 	class projective_space_implementation;
+	class projective_space_of_dimension_three;
+	class projective_space_plane;
 	class projective_space_reporting;
 	class projective_space;
 	class spread_domain;
@@ -920,6 +923,14 @@ enum data_input_stream_type {
 	t_data_input_stream_incidence_geometry,
 	t_data_input_stream_incidence_geometry_by_row_ranks,
 	t_data_input_stream_from_parallel_search,
+
+};
+
+
+enum CRC_type {
+	t_CRC_16,
+	t_CRC_32,
+	t_CRC_771_30,
 
 };
 

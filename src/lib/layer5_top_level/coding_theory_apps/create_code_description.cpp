@@ -58,6 +58,11 @@ create_code_description::create_code_description()
 	Gilbert_Varshamov_k = 0;
 	Gilbert_Varshamov_d = 0;
 
+	f_ttpA = FALSE;
+	//std::string ttpA_field_label;
+
+	f_ttpB = FALSE;
+	//std::string ttpB_field_label;
 
 	std::vector<code_modification_description> Modifications;
 
@@ -176,7 +181,22 @@ int create_code_description::read_arguments(
 						<< endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-ttpA") == 0) {
+			f_ttpA = TRUE;
+			ttpA_field_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-ttpA " << ttpA_field_label
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-ttpB") == 0) {
+			f_ttpB = TRUE;
+			ttpB_field_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-ttpB " << ttpB_field_label
+						<< endl;
+			}
+		}
 
 		else if (M.check_and_parse_argument(
 				argc, i, argv,
@@ -240,6 +260,14 @@ void create_code_description::print()
 		cout << "-Gilbert_Varshamov " << Gilbert_Varshamov_n
 				<< " " << Gilbert_Varshamov_k
 				<< " " << Gilbert_Varshamov_d
+				<< endl;
+	}
+	if (f_ttpA) {
+		cout << "-ttpA " << ttpA_field_label
+				<< endl;
+	}
+	if (f_ttpB) {
+		cout << "-ttpB " << ttpB_field_label
 				<< endl;
 	}
 

@@ -154,7 +154,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(int verbos
 		int len;
 		int i;
 
-		P->conic_type(
+		P->Plane->conic_type(
 				GOC->Pts, GOC->nb_pts,
 				Descr->conic_type_threshold,
 				Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
@@ -181,7 +181,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(int verbos
 
 		std::vector<int> Rk;
 
-		P->determine_nonconical_six_subsets(
+		P->Plane->determine_nonconical_six_subsets(
 				GOC->Pts, GOC->nb_pts,
 				Rk,
 				verbose_level);

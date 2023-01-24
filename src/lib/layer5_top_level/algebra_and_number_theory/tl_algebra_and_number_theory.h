@@ -730,6 +730,7 @@ public:
 
 	int f_export_magma;
 
+	// GAP:
 	int f_canonical_image;
 	std::string canonical_image_input_set;
 
@@ -1104,7 +1105,8 @@ public:
 
 	orbits_activity();
 	~orbits_activity();
-	void init(orbits_activity_description *Descr,
+	void init(
+			orbits_activity_description *Descr,
 			apps_algebra::orbits_create *OC,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -1160,6 +1162,11 @@ public:
 	int f_on_polynomials;
 	int on_polynomials_degree;
 
+	int f_classification_by_canonical_form;
+	projective_geometry::canonical_form_classifier_description
+		*Canonical_form_classifier_description;
+
+
 #if 0
 	int f_draw_tree;
 	int draw_tree_idx;
@@ -1213,6 +1220,9 @@ public:
 
 	int f_has_On_polynomials;
 	orbits_on_polynomials *On_polynomials;
+
+	int f_has_classification_by_canonical_form;
+	projective_geometry::canonical_form_classifier *Canonical_form_classifier;
 
 	orbits_create();
 	~orbits_create();

@@ -319,6 +319,8 @@ public:
 	int q;
 	int Q;
 
+	field_theory::subfield_structure *SubS;
+
 	int f_classical;
 	int f_Uab;
 	int parameter_a;
@@ -333,9 +335,11 @@ public:
 	int *w3; // [6]
 	int *w4; // [6]
 	int *w5; // [6]
-	int *components;
-	int *embedding;
-	int *pair_embedding;
+
+	//int *components;
+	//int *embedding;
+	//int *pair_embedding;
+
 	long int *ovoid;
 	long int *U;
 	int sz;
@@ -914,10 +918,12 @@ public:
 			long int line2_from, long int line2_to,
 			int *A4,
 			int verbose_level);
+#if 0
 	void andre_preimage(
 			projective_space *P2, projective_space *P4,
 		long int *set2, int sz2, long int *set4, int &sz4,
 		int verbose_level);
+#endif
 	void find_secant_lines(
 			projective_space *P,
 			long int *set, int set_size,
@@ -1009,6 +1015,7 @@ public:
 			int &nb_pts, long int *&Pts,
 		int verbose_level);
 	// The Segre map goes from PG(a,q) cross PG(b,q) to PG((a+1)*(b+1)-1,q)
+#if 0
 	void do_andre(
 			field_theory::finite_field *FQ,
 			field_theory::finite_field *Fq,
@@ -1018,6 +1025,7 @@ public:
 	// creates PG(2,Q) and PG(4,q)
 	// this functions is not called from anywhere right now
 	// it needs a pair of finite fields
+#endif
 	void do_embed_orthogonal(
 			field_theory::finite_field *F,
 		int epsilon, int n,
@@ -1798,7 +1806,9 @@ public:
 
 	knarr();
 	~knarr();
-	void init(field_theory::finite_field *F, int BLT_no, int verbose_level);
+	void init(
+			field_theory::finite_field *F,
+			int BLT_no, int verbose_level);
 	void points_and_lines(int verbose_level);
 	void incidence_matrix(int *&Inc, int &nb_points, 
 		int &nb_lines, int verbose_level);
@@ -2259,9 +2269,148 @@ public:
 	projective_space_implementation();
 	~projective_space_implementation();
 	void init(projective_space *P, int verbose_level);
+	void line_intersection_type(
+			long int *set, int set_size, int *type, int verbose_level);
+	void point_types_of_line_set(
+			long int *set_of_lines, int set_size,
+		int *type, int verbose_level);
+	void point_types_of_line_set_int(
+		int *set_of_lines, int set_size,
+		int *type, int verbose_level);
 
 };
 
+
+// #############################################################################
+// projective_space_of_dimension_three.cpp
+// #############################################################################
+
+//! projective space PG(3,q) collects functionality specific for a three space
+
+
+class projective_space_of_dimension_three {
+
+public:
+	projective_space *P;
+
+	projective_space_of_dimension_three();
+	~projective_space_of_dimension_three();
+	void init(projective_space *P, int verbose_level);
+	void determine_quadric_in_solid(
+			long int *nine_pts_or_more, int nb_pts,
+		int *ten_coeffs, int verbose_level);
+	void quadric_points_brute_force(int *ten_coeffs,
+		long int *points, int &nb_points, int verbose_level);
+	int point_of_intersection_of_a_line_and_a_line_in_three_space(
+		long int line1,
+		long int line2, int verbose_level);
+	int point_of_intersection_of_a_line_and_a_plane_in_three_space(
+		long int line,
+		int plane, int verbose_level);
+	long int line_of_intersection_of_two_planes_in_three_space(
+		long int plane1, long int plane2, int verbose_level);
+	long int transversal_to_two_skew_lines_through_a_point(
+		long int line1, long int line2, int pt, int verbose_level);
+	long int
+	line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(
+		long int plane1, long int plane2, int verbose_level);
+	void plane_intersection_matrix_in_three_space(
+		long int *Planes,
+		int nb_planes, int *&Intersection_matrix,
+		int verbose_level);
+	long int plane_rank_using_dual_coordinates_in_three_space(
+		int *eqn4, int verbose_level);
+	long int dual_rank_of_plane_in_three_space(long int plane_rank,
+		int verbose_level);
+	void plane_equation_from_three_lines_in_three_space(
+		long int *three_lines,
+		int *plane_eqn4, int verbose_level);
+
+
+
+};
+
+
+
+// #############################################################################
+// projective_space_plane.cpp
+// #############################################################################
+
+//! projective space PG(2,q) collects functionality specific for a desarguesian projective plane
+
+
+class projective_space_plane {
+
+public:
+	projective_space *P;
+
+	projective_space_plane();
+	~projective_space_plane();
+	void init(projective_space *P, int verbose_level);
+	int determine_line_in_plane(
+			long int *two_input_pts,
+		int *three_coeffs,
+		int verbose_level);
+	int conic_test(
+			long int *S, int len, int pt, int verbose_level);
+	int test_if_conic_contains_point(
+			int *six_coeffs, int pt);
+	int determine_conic_in_plane(
+			long int *input_pts, int nb_pts,
+			int *six_coeffs,
+			int verbose_level);
+			// returns FALSE if the rank of the
+			// coefficient matrix is not 5.
+			// TRUE otherwise.
+	int determine_cubic_in_plane(
+			ring_theory::homogeneous_polynomial_domain *Poly_3_3,
+			int nb_pts, long int *Pts, int *coeff10,
+			int verbose_level);
+	void conic_points_brute_force(int *six_coeffs,
+		long int *points, int &nb_points, int verbose_level);
+	void conic_points(long int *five_pts, int *six_coeffs,
+		long int *points, int &nb_points, int verbose_level);
+	void find_tangent_lines_to_conic(int *six_coeffs,
+		long int *points, int nb_points,
+		long int *tangents, int verbose_level);
+	int determine_hermitian_form_in_plane(
+			int *pts, int nb_pts,
+		int *six_coeffs, int verbose_level);
+	void conic_type_randomized(
+			int nb_times,
+		long int *set, int set_size,
+		long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,
+		int verbose_level);
+	void conic_intersection_type(
+			int f_randomized, int nb_times,
+		long int *set, int set_size,
+		int threshold,
+		int *&intersection_type, int &highest_intersection_number,
+		int f_save_largest_sets,
+		data_structures::set_of_sets *&largest_sets,
+		int verbose_level);
+	void determine_nonconical_six_subsets(
+		long int *set, int set_size,
+		std::vector<int> &Rk,
+		int verbose_level);
+	void conic_type(
+		long int *set, int set_size,
+		int threshold,
+		long int **&Pts_on_conic,
+		int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
+		int verbose_level);
+	void find_nucleus(int *set, int set_size, int &nucleus,
+		int verbose_level);
+	void points_on_projective_triangle(
+			long int *&set, int &set_size,
+		long int *three_points, int verbose_level);
+	long int dual_rank_of_line_in_plane(
+		long int line_rank, int verbose_level);
+	long int line_rank_using_dual_coordinates_in_plane(
+		int *eqn3, int verbose_level);
+
+
+};
 
 // #############################################################################
 // projective_space_reporting.cpp
@@ -2357,6 +2506,10 @@ public:
 
 	projective_space_implementation *Implementation;
 
+	projective_space_plane *Plane; // if n == 2
+
+	projective_space_of_dimension_three *Solid; // if n == 3
+
 
 	polarity *Standard_polarity;
 	polarity *Reversal_polarity;
@@ -2367,13 +2520,15 @@ public:
 
 	int *v; // [n + 1]
 	int *w; // [n + 1]
-	int *Mtx; // [3 * (n + 1)]
-	int *Mtx2; // [3 * (n + 1)]
+	int *Mtx; // [3 * (n + 1)], used in is_incident
+	int *Mtx2; // [3 * (n + 1)], used in is_incident
+
 
 	projective_space();
 	~projective_space();
 	void projective_space_init(
-			int n, field_theory::finite_field *F,
+			int n,
+			field_theory::finite_field *F,
 		int f_init_incidence_structure, 
 		int verbose_level);
 	void init_incidence_structure(int verbose_level);
@@ -2446,40 +2601,6 @@ public:
 			long int l1, long int l2);
 	int intersection_of_two_lines(
 			long int l1, long int l2);
-	
-	int determine_line_in_plane(
-			long int *two_input_pts,
-		int *three_coeffs, 
-		int verbose_level);
-	int conic_test(
-			long int *S, int len, int pt, int verbose_level);
-	int test_if_conic_contains_point(
-			int *six_coeffs, int pt);
-	int determine_conic_in_plane(
-			long int *input_pts, int nb_pts,
-			int *six_coeffs,
-			int verbose_level);
-			// returns FALSE if the rank of the
-			// coefficient matrix is not 5.
-			// TRUE otherwise.
-	int determine_cubic_in_plane(
-			ring_theory::homogeneous_polynomial_domain *Poly_3_3,
-			int nb_pts, long int *Pts, int *coeff10,
-			int verbose_level);
-
-	void determine_quadric_in_solid(
-			long int *nine_pts_or_more, int nb_pts,
-		int *ten_coeffs, int verbose_level);
-	void conic_points_brute_force(int *six_coeffs, 
-		long int *points, int &nb_points, int verbose_level);
-	void quadric_points_brute_force(int *ten_coeffs, 
-		long int *points, int &nb_points, int verbose_level);
-	void conic_points(long int *five_pts, int *six_coeffs,
-		long int *points, int &nb_points, int verbose_level);
-	void find_tangent_lines_to_conic(int *six_coeffs, 
-		long int *points, int nb_points,
-		long int *tangents, int verbose_level);
-
 
 	void line_intersection_type(
 			long int *set, int set_size, int *type,
@@ -2512,12 +2633,6 @@ public:
 			long int *set, int set_size,
 		int *type_collected, int verbose_level);
 		// type[set_size + 1]
-	void point_types_of_line_set(
-			long int *set_of_lines, int set_size,
-		int *type, int verbose_level);
-	void point_types_of_line_set_int(
-		int *set_of_lines, int set_size,
-		int *type, int verbose_level);
 	void find_external_lines(
 			long int *set, int set_size,
 		long int *external_lines, int &nb_external_lines,
@@ -2558,9 +2673,6 @@ public:
 			long int rk_in, long int &rk_out, int verbose_level);
 
 	// projective_space2.cpp:
-	int determine_hermitian_form_in_plane(
-			int *pts, int nb_pts,
-		int *six_coeffs, int verbose_level);
 	void circle_type_of_line_subset(int *pts, int nb_pts, 
 		int *circle_type, int verbose_level);
 		// circle_type[nb_pts]
@@ -2612,67 +2724,11 @@ public:
 			long int *set, int set_size,
 			std::vector<int> &point_indices,
 			int verbose_level);
-	void conic_type_randomized(
-			int nb_times,
-		long int *set, int set_size,
-		long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,
-		int verbose_level);
-	void conic_intersection_type(
-			int f_randomized, int nb_times,
-		long int *set, int set_size,
-		int threshold,
-		int *&intersection_type, int &highest_intersection_number, 
-		int f_save_largest_sets,
-		data_structures::set_of_sets *&largest_sets,
-		int verbose_level);
-	void determine_nonconical_six_subsets(
-		long int *set, int set_size,
-		std::vector<int> &Rk,
-		int verbose_level);
-	void conic_type(
-		long int *set, int set_size,
-		int threshold,
-		long int **&Pts_on_conic,
-		int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
-		int verbose_level);
-	void find_nucleus(int *set, int set_size, int &nucleus, 
-		int verbose_level);
-	void points_on_projective_triangle(
-			long int *&set, int &set_size,
-		long int *three_points, int verbose_level);
 	void line_plane_incidence_matrix_restricted(
 			long int *Lines, int nb_lines,
 		int *&M, int &nb_planes, int verbose_level);
 	int test_if_lines_are_skew(
 			int line1, int line2, int verbose_level);
-	int point_of_intersection_of_a_line_and_a_line_in_three_space(
-		long int line1,
-		long int line2, int verbose_level);
-	int point_of_intersection_of_a_line_and_a_plane_in_three_space(
-		long int line,
-		int plane, int verbose_level);
-	long int line_of_intersection_of_two_planes_in_three_space(
-		long int plane1, long int plane2, int verbose_level);
-	long int transversal_to_two_skew_lines_through_a_point(
-		long int line1, long int line2, int pt, int verbose_level);
-	long int
-	line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(
-		long int plane1, long int plane2, int verbose_level);
-	void plane_intersection_matrix_in_three_space(
-		long int *Planes,
-		int nb_planes, int *&Intersection_matrix,
-		int verbose_level);
-	long int line_rank_using_dual_coordinates_in_plane(
-		int *eqn3, int verbose_level);
-	long int dual_rank_of_line_in_plane(
-		long int line_rank, int verbose_level);
-	long int plane_rank_using_dual_coordinates_in_three_space(
-		int *eqn4, int verbose_level);
-	long int dual_rank_of_plane_in_three_space(long int plane_rank,
-		int verbose_level);
-	void plane_equation_from_three_lines_in_three_space(
-		long int *three_lines,
-		int *plane_eqn4, int verbose_level);
 #if 0
 	void decomposition_from_set_partition(
 			int nb_subsets, int *sz, int **subsets,
@@ -2738,7 +2794,8 @@ public:
 	long int r;
 	long int nb_pts;
 	long int nb_points_total; // = nb_pts = {n choose 1}_q
-	//long int block_size; // = r = {k choose 1}_q, used in spread_lifting.spp
+	//long int block_size;
+	// = r = {k choose 1}_q, used in spread_lifting.spp
 
 	geometry::grassmann *Grass;
 		// {n choose k}_q
@@ -2938,25 +2995,32 @@ public:
 	projective_space *P3;
 	orthogonal_geometry::orthogonal *Q4;
 	field_theory::finite_field *F;
-	int *Basis; // [2 * 4]
+
+	//int *Basis; // [2 * 4]
 
 	int nb_lines;
 		// number of absolute lines of W(3,q)
 		// = number of points on Q(4,q)
+
 	int *Lines; // [nb_lines]
-		// Lines[] is a list of all absolute lines
-		// of the symplectic polarity
-		// as lines in PG(3,q)
+		// Lines[] is a list of all absolute lines of PG(3,q)
+		// under the chosen symplectic form.
+		// The symplectic form is defined
+		// in the function evaluate_symplectic_form(),
+		// which relies on
+		// F->Linear_algebra->evaluate_symplectic_form.
+		// The form consists of 2x2 blocks
+		// of the form (0,1,-1,0)
+		// along the diagonal
 
 	int *Q4_rk; // [nb_lines]
 	int *Line_idx; // [nb_lines]
 		// Q4_rk[] and Line_idx[] are inverse permutations
 		// for a line a, Q4_rk[a] is the point b
 		// on the quadric corresponding to it.
-		// For a quadric point b, Line_idx[b] is the line
-		// index a corresponding to it
+		// For a point b on the quadric,
+		// Line_idx[b] is the index b of the corresponding line
 
-	int v5[5];
 
 	W3q();
 	~W3q();

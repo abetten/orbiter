@@ -1407,7 +1407,7 @@ long int surface_polynomial_domains::compute_tangent_plane(
 	}
 	long int plane_rk;
 
-	plane_rk = Surf->P->plane_rank_using_dual_coordinates_in_three_space(
+	plane_rk = Surf->P->Solid->plane_rank_using_dual_coordinates_in_three_space(
 			w /* eqn4 */,
 			0 /* verbose_level*/);
 

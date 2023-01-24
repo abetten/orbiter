@@ -1062,8 +1062,14 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 		data_structures_groups::vector_ge *nice_gens;
 
-		F1->finite_field_init_small_order(2, FALSE /* f_without_tables */, 0);
-		F2->finite_field_init_small_order(2, FALSE /* f_without_tables */, 0);
+		F1->finite_field_init_small_order(2,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				0);
+		F2->finite_field_init_small_order(2,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				0);
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::create_action initializing projective groups:" << endl;
@@ -1101,8 +1107,14 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 
 
-		F1->finite_field_init_small_order(Descr->q1, FALSE /* f_without_tables */, 0);
-		F2->finite_field_init_small_order(Descr->q2, FALSE /* f_without_tables */, 0);
+		F1->finite_field_init_small_order(Descr->q1,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				0);
+		F2->finite_field_init_small_order(Descr->q2,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				0);
 
 
 

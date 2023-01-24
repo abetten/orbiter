@@ -29,16 +29,27 @@ class canonical_form_classifier_description {
 
 public:
 
+	int f_space;
+	std::string space_label;
+
+	int f_input_fname_mask;
 	std::string fname_mask;
+
+	int f_nb_files;
 	int nb_files;
 
-	int f_fname_base_out;
+	int f_output_fname;
 	std::string fname_base_out;
 
+	int f_label_po;
 	std::string column_label_po;
+	int f_label_so;
 	std::string column_label_so;
+	int f_label_equation;
 	std::string column_label_eqn;
+	int f_label_points;
 	std::string column_label_pts;
+	int f_label_lines;
 	std::string column_label_bitangents;
 
 	int f_degree;
@@ -47,6 +58,7 @@ public:
 	int f_algorithm_nauty;
 	int f_algorithm_substructure;
 
+	int f_substructure_size;
 	int substructure_size;
 
 	projective_space_with_action *PA;
@@ -57,6 +69,10 @@ public:
 
 	canonical_form_classifier_description();
 	~canonical_form_classifier_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
 };
 
 
@@ -140,12 +156,13 @@ public:
 			int verbose_level);
 	void generate_source_code(
 			std::string &fname_base,
-			data_structures::tally_vector_data
-				*Classification_of_quartic_curves,
 			int verbose_level);
-	void report(std::string &fname, int verbose_level);
-	void report2(std::ostream &ost,
-			std::string &fname_base, int verbose_level);
+	void report(
+			poset_classification::poset_classification_report_options *Opt,
+			int verbose_level);
+	void report2(std::ostream &ost, int verbose_level);
+	void export_canonical_form_data(
+			std::string &fname, int verbose_level);
 
 };
 

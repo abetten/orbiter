@@ -441,6 +441,89 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 	}
 }
 
+void projective_space_implementation::line_intersection_type(
+		long int *set, int set_size, int *type, int verbose_level)
+	// type[N_lines]
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_implementation::line_intersection_type" << endl;
+	}
+
+	int i, j, a, b;
+
+	for (i = 0; i < P->N_lines; i++) {
+		type[i] = 0;
+	}
+	for (i = 0; i < set_size; i++) {
+		a = set[i];
+		for (j = 0; j < P->r; j++) {
+			b = Lines_on_point[a * P->r + j];
+			type[b]++;
+		}
+	}
+
+	if (f_v) {
+		cout << "projective_space_implementation::line_intersection_type done" << endl;
+	}
+}
+
+void projective_space_implementation::point_types_of_line_set(
+	long int *set_of_lines, int set_size,
+	int *type, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_implementation::point_types_of_line_set" << endl;
+	}
+	int i, j, a, b;
+
+	for (i = 0; i < P->N_points; i++) {
+		type[i] = 0;
+	}
+	for (i = 0; i < set_size; i++) {
+		a = set_of_lines[i];
+		for (j = 0; j < P->k; j++) {
+			b = Lines[a * P->k + j];
+			type[b]++;
+		}
+	}
+	if (f_v) {
+		cout << "projective_space_implementation::point_types_of_line_set done" << endl;
+	}
+}
+
+void projective_space_implementation::point_types_of_line_set_int(
+	int *set_of_lines, int set_size,
+	int *type, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_implementation::point_types_of_line_set_int" << endl;
+	}
+	int i, j, a, b;
+
+	for (i = 0; i < P->N_points; i++) {
+		type[i] = 0;
+	}
+	for (i = 0; i < set_size; i++) {
+		a = set_of_lines[i];
+		for (j = 0; j < P->k; j++) {
+			b = Lines[a * P->k + j];
+			type[b]++;
+		}
+	}
+	if (f_v) {
+		cout << "projective_space_implementation::point_types_of_line_set_int done" << endl;
+	}
+}
+
+
+
+
 
 }}}
 

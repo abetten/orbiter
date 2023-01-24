@@ -1005,7 +1005,7 @@ void string_tools::remove_specific_character(std::string &str, char c)
 	st[1] = 0;
 	string str_t;
 
-	str_t.assign(str);
+	str_t.assign(st);
 
 
 	while (str.find(str_t) != std::string::npos) {

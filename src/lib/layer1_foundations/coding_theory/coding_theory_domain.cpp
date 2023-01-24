@@ -1956,7 +1956,10 @@ void coding_theory_domain::do_polynomial(
 	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	Fq = NEW_OBJECT(field_theory::finite_field);
 
-	Fq->finite_field_init_small_order(2, FALSE /* f_without_tables */, 0 /* verbose_level */);
+	Fq->finite_field_init_small_order(2,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0 /* verbose_level */);
 
 	Poly->init(Fq, polynomial_nb_vars, polynomial_degree,
 				Monomial_ordering_type,

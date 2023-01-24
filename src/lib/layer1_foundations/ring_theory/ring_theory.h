@@ -878,30 +878,42 @@ public:
 	void create_object_of_degree_with_coefficients(
 			unipoly_object &p,
 		int d, int *coeff);
-	void create_object_by_rank(unipoly_object &p, long int rk,
+	void create_object_by_rank(
+			unipoly_object &p, long int rk,
 			const char *file, int line, int verbose_level);
 	void create_object_from_csv_file(
 		unipoly_object &p, std::string &fname,
 		const char *file, int line,
 		int verbose_level);
-	void create_object_by_rank_longinteger(unipoly_object &p,
+	void create_object_by_rank_longinteger(
+			unipoly_object &p,
 		longinteger_object &rank,
 		const char *file, int line,
 		int verbose_level);
 	void create_object_by_rank_string(
 		unipoly_object &p, std::string &rk, int verbose_level);
-	void create_Dickson_polynomial(unipoly_object &p, int *map);
+	void create_Dickson_polynomial(
+			unipoly_object &p, int *map);
 	void delete_object(unipoly_object &p);
 	void unrank(unipoly_object p, int rk);
-	void unrank_longinteger(unipoly_object p, longinteger_object &rank);
+	void unrank_longinteger(
+			unipoly_object p, longinteger_object &rank);
 	int rank(unipoly_object p);
-	void rank_longinteger(unipoly_object p, longinteger_object &rank);
+	void rank_longinteger(
+			unipoly_object p, longinteger_object &rank);
 	int degree(unipoly_object p);
 	void print_object(unipoly_object p, std::ostream &ost);
-	void print_object_tight(unipoly_object p, std::ostream &ost);
-	void print_object_sparse(unipoly_object p, std::ostream &ost);
-	void print_object_dense(unipoly_object p, std::ostream &ost);
-	void assign(unipoly_object a, unipoly_object &b, int verbose_level);
+	void print_object_sstr(
+			unipoly_object p, std::stringstream &ost);
+	void print_object_tight(
+			unipoly_object p, std::ostream &ost);
+	void print_object_sparse(
+			unipoly_object p, std::ostream &ost);
+	void print_object_dense(
+			unipoly_object p, std::ostream &ost);
+	void assign(
+			unipoly_object a, unipoly_object &b,
+			int verbose_level);
 	void one(unipoly_object p);
 	void m_one(unipoly_object p);
 	void zero(unipoly_object p);

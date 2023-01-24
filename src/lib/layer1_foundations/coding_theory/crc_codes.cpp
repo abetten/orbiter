@@ -86,7 +86,7 @@ uint16_t crc_codes::crc16(const uint8_t *data, size_t size)
     return crc;
 }
 
-uint32_t crc_codes::crc32(const char *s, size_t n)
+uint32_t crc_codes::crc32(const uint8_t *s, size_t n)
 // polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
 // + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1
 {
@@ -126,7 +126,7 @@ void crc_codes::crc32_test(int block_length, int verbose_level)
 		if ((i & 0xFFFFF) == 0) {
 			cout << "i >> 20: " << (int) (i >> 20) << " cnt = " << cnt << endl;
 		}
-		crc = crc32(buffer, 4);
+		crc = crc32((const uint8_t *) buffer, 4);
 		if (crc == 0) {
 			cout << cnt << " : " << i << endl;
 			cnt++;
@@ -221,7 +221,7 @@ void crc_codes::crc256_test_k_subsets(
 			char *p;
 
 			p = (char *) &crc;
-			crc = crc32(input, message_length);
+			crc = crc32((const uint8_t *) input, message_length);
 
 			check[0] = p[0];
 			check[1] = p[1];
@@ -409,7 +409,7 @@ void crc_codes::crc32_remainders_compute(
 			char *p;
 
 			p = (char *) &crc;
-			crc = crc32(input, message_length);
+			crc = crc32((const uint8_t *) input, message_length);
 
 			Crc[cnt] = crc;
 
@@ -987,46 +987,16 @@ void crc_codes::crc_encode_file_based(
 		cout << "crc_codes::crc_encode_file_based "
 				"block_length=" << block_length << endl;
 	}
-	data_structures::string_tools ST;
+	enum CRC_type type;
 
-	if (ST.stringcmp(crc_type, "crc16") == 0) {
-		if (f_v) {
-			cout << "crc_codes::crc_encode_file_based "
-					"crc16" << endl;
-		}
-		crc16_file_based(fname_in, fname_out,
-				block_length, verbose_level);
 
-	}
-	else if (ST.stringcmp(crc_type, "crc32") == 0) {
-		if (f_v) {
-			cout << "crc_codes::crc_encode_file_based "
-					"crc32" << endl;
-		}
+	type = detect_type_of_CRC(crc_type, verbose_level);
 
-		crc32_file_based(fname_in, fname_out,
-				block_length, verbose_level);
+	crc_general_file_based(
+			fname_in, fname_out,
+			type,
+			block_length, verbose_level);
 
-	}
-	else if (ST.stringcmp(crc_type, "crc771") == 0) {
-		if (f_v) {
-			cout << "crc_codes::crc_encode_file_based "
-					"crc771" << endl;
-		}
-
-		//cout << "coding_theory_domain::crc_encode_file_based "
-		//			"crc771 not yet implemented" << endl;
-		//exit(1);
-
-		crc771_file_based(fname_in, fname_out, verbose_level);
-
-	}
-	else {
-		cout << "crc_codes::crc_encode_file_based "
-					"crc type is unrecognized" << endl;
-		exit(1);
-
-	}
 
 
 	if (f_v) {
@@ -1035,21 +1005,29 @@ void crc_codes::crc_encode_file_based(
 }
 
 
-void crc_codes::crc16_file_based(
+
+void crc_codes::crc_general_file_based(
 		std::string &fname_in, std::string &fname_out,
+		CRC_type type,
 		int block_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "crc_codes::crc16_file_based "
+		cout << "crc_codes::crc_general_file_based "
 				"fname_in=" << fname_in << endl;
-		cout << "crc_codes::crc16_file_based "
+		cout << "crc_codes::crc_general_file_based "
 				"block_length=" << block_length << endl;
 	}
 
+	int check_size_in_byte = 0;
+
+
+	check_size_in_byte = get_check_size_in_bytes(type);
+
+
 	data_structures::string_tools ST;
-	int information_length = block_length - 2;
+	int information_length = block_length - check_size_in_byte;
 
 	orbiter_kernel_system::file_io Fio;
 
@@ -1059,12 +1037,14 @@ void crc_codes::crc16_file_based(
 	N = Fio.file_size(fname_in);
 
 	if (f_v) {
-		cout << "crc_codes::crc16_file_based input file size = " << N << endl;
+		cout << "crc_codes::crc_general_file_based "
+				"input file size = " << N << endl;
 	}
 
 	nb_blocks = (N + information_length - 1) / information_length;
 	if (f_v) {
-		cout << "crc_codes::crc16_file_based nb_blocks = " << nb_blocks << endl;
+		cout << "crc_codes::crc_general_file_based "
+				"nb_blocks = " << nb_blocks << endl;
 	}
 
 	buffer = (uint8_t *) NEW_char(block_length);
@@ -1074,10 +1054,7 @@ void crc_codes::crc16_file_based(
 
 	{
 		ofstream ost(fname_out, ios::binary);
-		uint16_t crc;
-		char *p_crc;
 
-		p_crc = (char *) &crc;
 
 		for (cnt = 0; cnt < nb_blocks; cnt++) {
 
@@ -1095,15 +1072,41 @@ void crc_codes::crc16_file_based(
 
 			// create 2 byte = 16 bit check and add to the block:
 
-			crc = crc16(buffer, L);
-			buffer[L + 0] = p_crc[0];
-			buffer[L + 1] = p_crc[1];
+			if (type == t_CRC_16) {
+				uint16_t crc;
+				char *p_crc;
+				p_crc = (char *) &crc;
+
+				crc = crc16(buffer, L);
+				buffer[L + 0] = p_crc[0];
+				buffer[L + 1] = p_crc[1];
+			}
+			else if (type == t_CRC_32) {
+
+				uint32_t crc;
+				char *p_crc;
+
+				p_crc = (char *) &crc;
+
+				crc = crc32(buffer, L);
+				buffer[L + 0] = p_crc[0];
+				buffer[L + 1] = p_crc[1];
+				buffer[L + 2] = p_crc[2];
+				buffer[L + 3] = p_crc[3];
+
+			}
+			if (type == t_CRC_771_30) {
+
+				CRC_BCH256_771_divide((char *) buffer, (char *) buffer);
 
 
-			// write information_length + 2 bytes to file:
+			}
+
+
+			// write information_length + check_size_in_byte bytes to file:
 			// (or less in case we have reached the end of the input file):
 
-			ost.write((char *)buffer, L + 2);
+			ost.write((char *)buffer, L + check_size_in_byte);
 
 
 		}
@@ -1115,181 +1118,84 @@ void crc_codes::crc16_file_based(
 
 
 	if (f_v) {
-		cout << "crc_codes::crc16_file_based done" << endl;
+		cout << "crc_codes::crc_general_file_based done" << endl;
 	}
 
 }
 
-
-void crc_codes::crc32_file_based(
-		std::string &fname_in, std::string &fname_out,
-		int block_length, int verbose_level)
+enum CRC_type crc_codes::detect_type_of_CRC(std::string &crc_type, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "crc_codes::crc32_file_based "
-				"fname_in=" << fname_in << endl;
-		cout << "crc_codes::crc32_file_based "
-				"block_length=" << block_length << endl;
-	}
-
 	data_structures::string_tools ST;
-	int information_length = block_length - 4;
+	enum CRC_type type;
 
-	orbiter_kernel_system::file_io Fio;
-
-	long int N, L, nb_blocks, cnt;
-	char *buffer;
-
-	N = Fio.file_size(fname_in);
-
-	if (f_v) {
-		cout << "crc_codes::crc32_file_based input file size = " << N << endl;
-	}
-
-	nb_blocks = (N + information_length - 1) / information_length;
-	if (f_v) {
-		cout << "crc_codes::crc32_file_based nb_blocks = " << nb_blocks << endl;
-	}
-
-	buffer = NEW_char(block_length);
-
-
-	ifstream ist(fname_in, ios::binary);
-
-	{
-		ofstream ost(fname_out, ios::binary);
-		uint32_t crc;
-		char *p_crc;
-
-		p_crc = (char *) &crc;
-		//C = 0;
-
-		for (cnt = 0; cnt < nb_blocks; cnt++) {
-		//while (C < N) {
-
-			if ((cnt + 1) * information_length > N) {
-				L = N - cnt * information_length;
-			}
-			else {
-				L = information_length;
-			}
-
-			// read information_length bytes
-			// (or less, in case we reached the end of he file)
-
-			ist.read(buffer, L);
-
-			// create 4 byte check and add to the block:
-
-			crc = crc32(buffer, L);
-			buffer[L + 0] = p_crc[0];
-			buffer[L + 1] = p_crc[1];
-			buffer[L + 2] = p_crc[2];
-			buffer[L + 3] = p_crc[3];
-
-
-			// write information_length + 4 bytes to file:
-			// (or less in case we have reached the end of the input file):
-
-			ost.write(buffer, L + 4);
-
-
-			// count the bytes read,
-			// so C is the position in the input file:
-
-			//C += L;
+	if (ST.stringcmp(crc_type, "crc16") == 0) {
+		if (f_v) {
+			cout << "crc_codes::crc_encode_file_based "
+					"crc16" << endl;
 		}
 
+		type = t_CRC_16;
+
+		//crc16_file_based(fname_in, fname_out,
+		//		block_length, verbose_level);
+
 	}
-	cout << "Written file " << fname_out << " of size "
-			<< Fio.file_size(fname_out) << endl;
+	else if (ST.stringcmp(crc_type, "crc32") == 0) {
+		if (f_v) {
+			cout << "crc_codes::crc_encode_file_based "
+					"crc32" << endl;
+		}
 
+		type = t_CRC_32;
 
+		//crc32_file_based(fname_in, fname_out,
+		//		block_length, verbose_level);
 
-	if (f_v) {
-		cout << "crc_codes::crc32_file_based done" << endl;
 	}
+	else if (ST.stringcmp(crc_type, "crc771_30") == 0) {
+		if (f_v) {
+			cout << "crc_codes::crc_encode_file_based "
+					"crc771" << endl;
+		}
+
+		type = t_CRC_771_30;
+
+		//cout << "coding_theory_domain::crc_encode_file_based "
+		//			"crc771 not yet implemented" << endl;
+		//exit(1);
+
+		//crc771_file_based(fname_in, fname_out, verbose_level);
+
+	}
+	else {
+		cout << "crc_codes::crc_encode_file_based "
+					"crc type is unrecognized" << endl;
+		exit(1);
+
+	}
+	return type;
 
 }
 
-
-void crc_codes::crc771_file_based(
-		std::string &fname_in,
-		std::string &fname_out,
-		int verbose_level)
+int crc_codes::get_check_size_in_bytes(enum CRC_type type)
 {
-	int f_v = (verbose_level >= 1);
+	int check_size_in_byte = 0;
 
-	if (f_v) {
-		cout << "crc_codes::crc771_file_based fname_in=" << fname_in << endl;
+
+	if (type == t_CRC_16) {
+		check_size_in_byte = 2;
 	}
-
-	data_structures::string_tools ST;
-	int block_length = 771;
-	int redundancy = 30;
-	int information_length = block_length - redundancy;
-
-	orbiter_kernel_system::file_io Fio;
-
-	long int N, C, L;
-	char *buffer;
-
-	N = Fio.file_size(fname_in);
-
-	if (f_v) {
-		cout << "crc_codes::crc771_file_based input file size = " << N << endl;
+	else if (type == t_CRC_32) {
+		check_size_in_byte = 4;
 	}
-	buffer = NEW_char(block_length);
-
-
-	ifstream ist(fname_in, ios::binary);
-
-	{
-		ofstream ost(fname_out, ios::binary);
-		//uint32_t crc;
-		//char *p_crc;
-		int i;
-
-		//p_crc = (char *) &crc;
-		C = 0;
-
-		while (C < N) {
-
-			if (C + information_length > N) {
-				L = C + information_length - N;
-			}
-			else {
-				L = information_length;
-			}
-			ist.read(buffer + redundancy, L);
-			for (i = 0; i < redundancy; i++) {
-				buffer[i] = 0;
-			}
-			for (i = L; i < block_length; i++) {
-				buffer[i] = 0;
-			}
-
-			CRC_BCH256_771_divide(buffer, buffer);
-
-			ost.write(buffer, block_length);
-
-
-			C += information_length;
-		}
-
+	if (type == t_CRC_771_30) {
+		check_size_in_byte = 30;
 	}
-	cout << "Written file " << fname_out << " of size "
-			<< Fio.file_size(fname_out) << endl;
-
-
-
-	if (f_v) {
-		cout << "crc_codes::crc771_file_based done" << endl;
-	}
-
+	return check_size_in_byte;
 }
+
+
 
 void crc_codes::check_errors(
 		crc_options_description *Crc_options_description,
@@ -1320,48 +1226,19 @@ void crc_codes::check_errors(
 	int block_length;
 	int information_length;
 	int nb_check_bytes;
-	int f_crc16 = FALSE;
-	int f_crc32 = FALSE;
-	int f_crc771 = FALSE;
 
 
 	data_structures::string_tools ST;
+	enum CRC_type type;
 
-	if (ST.stringcmp(Crc_options_description->crc_type, "crc16") == 0) {
-		if (f_v) {
-			cout << "crc_codes::check_errors "
-					"crc16" << endl;
-		}
-		f_crc16 = TRUE;
-		nb_check_bytes = 2;
 
-	}
-	else if (ST.stringcmp(Crc_options_description->crc_type, "crc32") == 0) {
-		if (f_v) {
-			cout << "crc_codes::check_errors "
-					"crc32" << endl;
-		}
+	type = detect_type_of_CRC(Crc_options_description->crc_type, verbose_level);
 
-		f_crc32 = TRUE;
-		nb_check_bytes = 4;
 
-	}
-	else if (ST.stringcmp(Crc_options_description->crc_type, "crc771") == 0) {
-		if (f_v) {
-			cout << "crc_codes::check_errors "
-					"crc771" << endl;
-		}
 
-		f_crc771 = TRUE;
-		nb_check_bytes = 30;
+	nb_check_bytes = get_check_size_in_bytes(type);
 
-	}
-	else {
-		cout << "crc_codes::crc_encode_file_based "
-					"crc type is unrecognized" << endl;
-		exit(1);
 
-	}
 
 	block_length = Crc_options_description->block_length;
 	information_length = block_length - nb_check_bytes;
@@ -1370,6 +1247,8 @@ void crc_codes::check_errors(
 				"block_length = " << block_length << endl;
 		cout << "crc_codes::check_errors "
 				"information_length = " << information_length << endl;
+		cout << "crc_codes::check_errors "
+				"nb_check_bytes = " << nb_check_bytes << endl;
 
 	}
 
@@ -1435,6 +1314,7 @@ void crc_codes::check_errors(
 	long int *Error_undetected;
 	int nb_error = 0;
 	int m;
+	int i;
 
 	cout << "Reading file " << fname_error_log << " of size "
 			<< Fio.file_size(fname_error_log) << endl;
@@ -1461,25 +1341,12 @@ void crc_codes::check_errors(
 	cur_error = 0;
 	cnt = 0;
 	{
-		uint16_t crc16_read, crc16_computed;
-		uint32_t crc32_read, crc32_computed;
-		char *p_crc;
-		int i;
+
 		int f_faulty;
 
-		if (f_crc16) {
+		char *check_bytes;
 
-			p_crc = (char *) &crc16_read;
-
-		}
-		else if (f_crc32) {
-
-			p_crc = (char *) &crc32_read;
-
-		}
-		else if (f_crc771) {
-
-		}
+		check_bytes = NEW_char(nb_check_bytes);
 
 
 		for (cnt = 0; cnt < nb_blocks; cnt++) {
@@ -1496,41 +1363,68 @@ void crc_codes::check_errors(
 
 			ist.read(buffer, L);
 
-			for (i = 0; i < nb_check_bytes; i++) {
-				p_crc[i] = buffer[L - nb_check_bytes + i];
+
+
+			if (type == t_CRC_16) {
+				check_bytes[0] = buffer[L - nb_check_bytes + 0];
+				check_bytes[1] = buffer[L - nb_check_bytes + 1];
+			}
+			else if (type == t_CRC_32) {
+				check_bytes[0] = buffer[L - nb_check_bytes + 0];
+				check_bytes[1] = buffer[L - nb_check_bytes + 1];
+				check_bytes[2] = buffer[L - nb_check_bytes + 2];
+				check_bytes[3] = buffer[L - nb_check_bytes + 3];
 			}
 
 
 			f_faulty = FALSE;
 
-			if (f_crc16) {
+			if (type == t_CRC_16) {
+				uint16_t crc;
+				char *p_crc;
+				p_crc = (char *) &crc;
 
-				crc16_computed = crc16((uint8_t *) buffer, L - nb_check_bytes);
-				if (crc16_computed != crc16_read) {
+				crc = crc16((uint8_t *) buffer, L);
+				for (i = 0; i < nb_check_bytes; i++) {
+					if (p_crc[i] != check_bytes[i]) {
+						break;
+					}
+				}
+				if (i < nb_check_bytes) {
 					f_faulty = TRUE;
 				}
 
 			}
-			else if (f_crc32) {
+			else if (type == t_CRC_32) {
 
-				crc32_computed = crc32(buffer, L - nb_check_bytes);
-				if (crc32_computed != crc32_read) {
+				uint32_t crc;
+				char *p_crc;
+
+				p_crc = (char *) &crc;
+
+				crc = crc32((uint8_t *) buffer, L);
+				for (i = 0; i < nb_check_bytes; i++) {
+					if (p_crc[i] != check_bytes[i]) {
+						break;
+					}
+				}
+				if (i < nb_check_bytes) {
 					f_faulty = TRUE;
 				}
 
 			}
-			else if (f_crc771) {
 
-			}
-			else {
-				cout << "don't know the type of crc" << endl;
-				exit(1);
-			}
+
+
+
 
 			if (f_faulty) {
 
+				cout << "block " << cnt << " is faulty" << endl;
+
 				Faulty_blocks[nb_error_detected * 3 + 0] = cnt;
 
+#if 0
 				if (f_crc16) {
 
 					Faulty_blocks[nb_error_detected * 3 + 1] = crc16_read;
@@ -1546,6 +1440,7 @@ void crc_codes::check_errors(
 				else if (f_crc771) {
 
 				}
+#endif
 
 				//cout << "detected error " << nb_error_detected << " in block " << cnt << endl;
 				//", crc=" << crc << " crc_computed=" << crc_computed << endl;
@@ -1576,7 +1471,6 @@ void crc_codes::check_errors(
 				}
 			}
 
-			int i;
 			for (i = 0; i < L - nb_check_bytes; i++) {
 				recovered_data[cnt * information_length + i] = buffer[i];
 			}
@@ -1614,10 +1508,9 @@ void crc_codes::check_errors(
 	cout << "nb_error_undetected = " << nb_error_undetected << endl;
 
 	if (nb_error_undetected) {
-		cout << "found an undetected error, stop" << endl;
-		while (1) {
-
-		}
+		cout << "Input file " << Crc_options_description->input_fname << " nb_error_undetected = " << nb_error_undetected << endl;
+		//while (1) {
+		//}
 	}
 
 #if 1
@@ -2089,7 +1982,8 @@ void crc_codes::CRC_encode_text(
 
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
-		Fio.int_matrix_write_csv(fname_out, information_and_parity, 1, nb_rows * nb_cols + nb_rows + nb_cols);
+		Fio.int_matrix_write_csv(fname_out,
+				information_and_parity, 1, nb_rows * nb_cols + nb_rows + nb_cols);
 		cout << "Written file " << fname_out << " of size "
 				<< Fio.file_size(fname_out) << endl;
 

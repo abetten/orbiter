@@ -56,7 +56,9 @@ void second()
 	field_theory::finite_field Fq;
 
 	Fq.finite_field_init_small_order(q,
-			f_without_tables, verbose_level);
+			f_without_tables,
+			FALSE /* f_compute_related_fields */,
+			verbose_level);
 
 	cout << "in F_2, 1 + 1 = " << Fq.add(1, 1) << endl;
 
@@ -75,7 +77,9 @@ void third()
 	Fq = NEW_OBJECT(field_theory::finite_field);
 
 	Fq->finite_field_init_small_order(q,
-			f_without_tables, verbose_level);
+			f_without_tables,
+			FALSE /* f_compute_related_fields */,
+			verbose_level);
 
 	cout << "in F_2, 1 + 1 = " << Fq->add(1, 1) << endl;
 

@@ -591,8 +591,10 @@ int longinteger::compare_with_euclidean(discreta_base &b)
 	return r;
 }
 
-void longinteger::integral_division(discreta_base &x,
-		discreta_base &q, discreta_base &r, int verbose_level)
+void longinteger::integral_division(
+		discreta_base &x,
+		discreta_base &q, discreta_base &r,
+		int verbose_level)
 {
 	if (s_kind() != LONGINTEGER) {
 		cout << "longinteger::integral_division "

@@ -2226,7 +2226,10 @@ char *ring_theory_global::search_for_primitive_polynomial_of_given_degree(
 	if (f_v) {
 		cout << "ring_theory_global::search_for_primitive_polynomial_of_given_degree" << endl;
 	}
-	Fp.finite_field_init_small_order(p, FALSE /* f_without_tables */, 0 /*verbose_level*/);
+	Fp.finite_field_init_small_order(p,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0 /*verbose_level*/);
 	unipoly_domain FX(&Fp);
 
 	unipoly_object m;
@@ -2295,7 +2298,10 @@ void ring_theory_global::search_for_primitive_polynomials(
 
 		{
 			field_theory::finite_field Fq;
-			Fq.finite_field_init_small_order(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
+			Fq.finite_field_init_small_order(q,
+					FALSE /* f_without_tables */,
+					FALSE /* f_compute_related_fields */,
+					0 /*verbose_level*/);
 			unipoly_domain FX(&Fq);
 
 			unipoly_object m;
@@ -2357,12 +2363,21 @@ void ring_theory_global::factor_cyclotomic(
 
 
 	if (f_poly) {
-		Fq.init_override_polynomial_small_order(q, poly, FALSE /* f_without_tables */, verbose_level - 1);
+		Fq.init_override_polynomial_small_order(q, poly,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				verbose_level - 1);
 	}
 	else {
-		Fq.finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level - 2);
+		Fq.finite_field_init_small_order(q,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				verbose_level - 2);
 	}
-	FQ.finite_field_init_small_order(Q, FALSE /* f_without_tables */, verbose_level - 2);
+	FQ.finite_field_init_small_order(Q,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			verbose_level - 2);
 
 	FQ.compute_subfields(verbose_level);
 

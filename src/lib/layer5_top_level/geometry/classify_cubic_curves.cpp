@@ -192,7 +192,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 			int eqn[10];
 			int idx;
 
-			CC->P->determine_cubic_in_plane(
+			CC->P->Plane->determine_cubic_in_plane(
 					CC->Poly,
 					9 /* nb_pts */, S /* int *Pts */, eqn,
 					verbose_level - 5);
@@ -353,7 +353,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 					"determine_cubic_in_plane" << endl;
 		}
 
-		CC->P->determine_cubic_in_plane(
+		CC->P->Plane->determine_cubic_in_plane(
 				CC->Poly,
 				9 /* nb_pts */, dataset /* int *Pts */, eqn,
 				0 /*verbose_level - 5*/);

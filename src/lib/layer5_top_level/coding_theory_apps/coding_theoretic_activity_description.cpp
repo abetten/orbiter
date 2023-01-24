@@ -22,6 +22,8 @@ namespace apps_coding_theory {
 coding_theoretic_activity_description::coding_theoretic_activity_description()
 {
 
+	f_report = FALSE;
+
 	f_general_code_binary = FALSE;
 	general_code_binary_n = 0;
 	//std::string general_code_binary_label;
@@ -153,7 +155,13 @@ int coding_theoretic_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 
-		if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
+		if (ST.stringcmp(argv[i], "-report") == 0) {
+			f_report = TRUE;
+			if (f_v) {
+				cout << "-report " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
 			f_general_code_binary = TRUE;
 			general_code_binary_n = ST.strtoi(argv[++i]);
 			general_code_binary_label.assign(argv[++i]);
@@ -458,13 +466,15 @@ int coding_theoretic_activity_description::read_arguments(
 
 void coding_theoretic_activity_description::print()
 {
+	if (f_report) {
+		cout << "-report " << endl;
+	}
 	if (f_general_code_binary) {
 		cout << "-general_code_binary " << general_code_binary_n
 				<< " " << general_code_binary_label
 				<< " " << general_code_binary_text
 				<< endl;
 	}
-
 	if (f_encode_text_5bits) {
 		cout << "-encode_text_5bits " << encode_text_5bits_input << " "
 				<< encode_text_5bits_fname << endl;

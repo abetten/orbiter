@@ -868,11 +868,14 @@ public:
 
 	field_theory::finite_field *FQ;
 	field_theory::finite_field *Fq;
+	field_theory::subfield_structure *SubS;
 
+#if 0
 	int *components;
 	int *embedding;
 	int *pair_embedding;
 		// data computed by F.subfield_embedding_2dimensional
+#endif
 
 	int alpha;
 	int T_alpha;

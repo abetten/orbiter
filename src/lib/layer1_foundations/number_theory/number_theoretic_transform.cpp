@@ -145,7 +145,10 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 		Psi_powers = NEW_int(N[k]);
 		Q = q * q;
 		FQ = NEW_OBJECT(field_theory::finite_field);
-		FQ->finite_field_init_small_order(Q, FALSE /* f_without_tables */, 0);
+		FQ->finite_field_init_small_order(Q,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				0);
 		alphaQ = FQ->primitive_element();
 
 		psi = FQ->power(alphaQ, (q + 1) >> 1);

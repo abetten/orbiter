@@ -39,6 +39,9 @@ orbits_create::orbits_create()
 	f_has_On_polynomials = FALSE;
 	On_polynomials = NULL;
 
+	f_has_classification_by_canonical_form = FALSE;
+	Canonical_form_classifier = NULL;
+
 	//std::string prefix;
 	//std::string label_txt;
 	//std::string label_tex;
@@ -65,19 +68,19 @@ void orbits_create::init(
 	if (Descr->f_group) {
 
 		Group = Get_object_of_type_any_group(Descr->group_label);
-	}
-	else {
-		cout << "orbits_create::init please specify the group using -group <label>" << endl;
-		exit(1);
+		prefix.assign(Group->label);
 	}
 
 
-	prefix.assign(Group->label);
 
 	if (Descr->f_on_points) {
 
 		if (f_v) {
 			cout << "orbits_create::init f_on_points" << endl;
+		}
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
 		}
 
 
@@ -171,6 +174,10 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_subsets" << endl;
 		}
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
+		}
 
 		poset_classification::poset_classification_control *Control =
 				Get_object_of_type_poset_classification_control(Descr->on_subsets_poset_classification_control_label);
@@ -194,6 +201,10 @@ void orbits_create::init(
 
 		if (f_v) {
 			cout << "orbits_create::init f_on_subspaces" << endl;
+		}
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
 		}
 
 		poset_classification::poset_classification_control *Control =
@@ -226,6 +237,10 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_tensors" << endl;
 		}
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
+		}
 
 
 		if (f_v) {
@@ -249,6 +264,10 @@ void orbits_create::init(
 
 		if (f_v) {
 			cout << "orbits_create::init f_on_partition" << endl;
+		}
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
 		}
 
 
@@ -281,6 +300,10 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_polynomials" << endl;
 		}
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
+		}
 
 		if (!Group->f_linear_group) {
 			cout << "orbits_create::init group must be linear" << endl;
@@ -308,7 +331,115 @@ void orbits_create::init(
 
 	}
 
+	if (Descr->f_classification_by_canonical_form) {
 
+
+		if (f_v) {
+			cout << "orbits_create::init f_classification_by_canonical_form" << endl;
+		}
+
+
+
+		if (!Descr->Canonical_form_classifier_description->f_output_fname) {
+			cout << "Please specify the output file name using -output_fname <fname>" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "orbits_create::init getting projective space "
+					<< Descr->Canonical_form_classifier_description->space_label << endl;
+		}
+
+		Descr->Canonical_form_classifier_description->PA =
+				Get_object_of_projective_space(
+						Descr->Canonical_form_classifier_description->space_label);
+
+		if (Descr->Canonical_form_classifier_description->f_algorithm_substructure) {
+
+			if (f_v) {
+				cout << "orbits_create::init f_algorithm_substructure" << endl;
+			}
+
+			Canonical_form_classifier = NEW_OBJECT(projective_geometry::canonical_form_classifier);
+
+			if (f_v) {
+				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+						"before Classifier.classify" << endl;
+			}
+			Canonical_form_classifier->classify(
+					Descr->Canonical_form_classifier_description, verbose_level);
+			if (f_v) {
+				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+						"after Classifier.classify" << endl;
+			}
+
+			Descr->Canonical_form_classifier_description->Canon_substructure = Canonical_form_classifier;
+
+#if 0
+			if (f_v) {
+				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+						"before Classifier.report" << endl;
+			}
+			Canonical_form_classifier->report(
+					Descr->Canonical_form_classifier_description->fname_base_out,
+					verbose_level);
+			if (f_v) {
+				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+						"after Classifier.report" << endl;
+			}
+#endif
+
+			f_has_classification_by_canonical_form = TRUE;
+
+		}
+		else if (Descr->Canonical_form_classifier_description->f_algorithm_nauty) {
+
+			if (f_v) {
+				cout << "orbits_create::init f_algorithm_nauty" << endl;
+			}
+
+			Canonical_form_classifier = NEW_OBJECT(projective_geometry::canonical_form_classifier);
+
+			if (f_v) {
+				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+						"before Classifier.classify" << endl;
+			}
+			Canonical_form_classifier->classify(
+					Descr->Canonical_form_classifier_description, verbose_level);
+			if (f_v) {
+				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+						"after Classifier.classify" << endl;
+			}
+
+			Descr->Canonical_form_classifier_description->Canon_substructure = Canonical_form_classifier;
+
+#if 0
+			if (f_v) {
+				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+						"before Classifier.report" << endl;
+			}
+			Canonical_form_classifier->report(
+					Descr->Canonical_form_classifier_description->fname_base_out,
+					verbose_level);
+			if (f_v) {
+				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+						"after Classifier.report" << endl;
+			}
+#endif
+
+			f_has_classification_by_canonical_form = TRUE;
+
+		}
+		else {
+			cout << "orbits_create::init please specify which algorithm should be used" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "orbits_create::init f_classification_by_canonical_form done" << endl;
+		}
+
+	}
 
 
 	if (f_v) {

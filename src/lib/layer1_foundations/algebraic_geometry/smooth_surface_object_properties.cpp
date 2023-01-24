@@ -244,7 +244,7 @@ void smooth_surface_object_properties::compute_planes_and_dual_point_ranks(int v
 		// << Surf->nb_trihedral_pairs << endl;
 		for (j = 0; j < 6; j++) {
 			Dual_point_ranks[i * 6 + j] =
-				SO->Surf->P->dual_rank_of_plane_in_three_space(
+				SO->Surf->P->Solid->dual_rank_of_plane_in_three_space(
 						All_Planes[i * 6 + j], 0 /* verbose_level */);
 		}
 
@@ -400,7 +400,7 @@ void smooth_surface_object_properties::print_single_tritangent_plane(
 	b = Tritangent_plane_dual[j];
 #else
 	plane_rk = Tritangent_plane_rk[plane_idx];
-	b = SO->Surf->P->dual_rank_of_plane_in_three_space(
+	b = SO->Surf->P->Solid->dual_rank_of_plane_in_three_space(
 			plane_rk, 0 /* verbose_level */);
 #endif
 	ost << "$$" << endl;
@@ -586,13 +586,13 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(int t_idx
 		plane_rk[i] = Tritangent_plane_rk[row_col_Eckardt_points[i]];
 	}
 	for (i = 0; i < 3; i++) {
-		c = SO->Surf->P->dual_rank_of_plane_in_three_space(
+		c = SO->Surf->P->Solid->dual_rank_of_plane_in_three_space(
 				plane_rk[i], 0 /* verbose_level */);
 		//c = Tritangent_plane_dual[plane_idx[i]];
 		SO->F->PG_element_unrank_modified(F_planes + i * 4, 1, 4, c);
 	}
 	for (i = 0; i < 3; i++) {
-		c = SO->Surf->P->dual_rank_of_plane_in_three_space(
+		c = SO->Surf->P->Solid->dual_rank_of_plane_in_three_space(
 				plane_rk[3 + i], 0 /* verbose_level */);
 		//c = Tritangent_plane_dual[plane_idx[3 + i]];
 		SO->F->PG_element_unrank_modified(G_planes + i * 4, 1, 4, c);

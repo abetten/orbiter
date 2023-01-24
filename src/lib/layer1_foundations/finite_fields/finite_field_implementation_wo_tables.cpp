@@ -84,6 +84,7 @@ void finite_field_implementation_wo_tables::init(finite_field *F, int verbose_le
 		}
 		GFp->finite_field_init_small_order(F->p,
 				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "finite_field_implementation_wo_tables::init "

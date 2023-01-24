@@ -28,8 +28,10 @@ namespace layer2_discreta {
 
 #undef DEBUG_CONTENT
 
-static int gfq_dep(int n, discreta_matrix& A, discreta_matrix& P,
-		Vector& v, int m, permutation& rho, int verbose_level);
+static int gfq_dep(
+		int n, discreta_matrix& A, discreta_matrix& P,
+		Vector& v, int m, permutation& rho,
+		int verbose_level);
 
 
 
@@ -745,7 +747,8 @@ int discreta_matrix::rank()
 	return Gauss(FALSE, FALSE, base_cols, FALSE, P, FALSE);
 }
 
-int discreta_matrix::get_kernel(Vector& base_cols, discreta_matrix& kernel)
+int discreta_matrix::get_kernel(
+		Vector& base_cols, discreta_matrix& kernel)
 {
 	int r, n, k, i, j, ii, iii, a, b;
 	Vector kcol;
@@ -1483,7 +1486,8 @@ void discreta_matrix::evaluate_at(discreta_base& x)
 }
 
 
-static int gfq_dep(int n, discreta_matrix& A,
+static int gfq_dep(
+		int n, discreta_matrix& A,
 		discreta_matrix& P, Vector& v, int m, permutation& rho,
 		int verbose_level)
 {
@@ -2103,7 +2107,8 @@ void discreta_matrix::calc_theX(int & nb_X, int *&theX)
 		}
 }
 
-void discreta_matrix::apply_perms(int f_row_perm, permutation &row_perm,
+void discreta_matrix::apply_perms(
+		int f_row_perm, permutation &row_perm,
 	int f_col_perm, permutation &col_perm)
 {
 	discreta_matrix M;
@@ -2279,7 +2284,8 @@ void discreta_matrix::print_decomposed(
 	ost << T;
 }
 
-void discreta_matrix::incma_print_ascii(ostream &ost, int f_tex,
+void discreta_matrix::incma_print_ascii(
+		std::ostream &ost, int f_tex,
 	int f_row_decomp, Vector &row_decomp, 
 	int f_col_decomp, Vector &col_decomp)
 {
@@ -2391,7 +2397,8 @@ void discreta_matrix::incma_print_ascii(ostream &ost, int f_tex,
 		}
 }
 
-void discreta_matrix::incma_print_latex(ostream &f,
+void discreta_matrix::incma_print_latex(
+		std::ostream &f,
 	int f_row_decomp, Vector &row_decomp, 
 	int f_col_decomp, Vector &col_decomp, 
 	int f_labelling_points, Vector &point_labels, 
@@ -2411,7 +2418,8 @@ void discreta_matrix::incma_print_latex(ostream &f,
 		f_labelling_blocks, block_labels);
 }
 
-void discreta_matrix::incma_print_latex2(ostream &f,
+void discreta_matrix::incma_print_latex2(
+		std::ostream &f,
 	int width, int width_10, 
 	int f_outline_thin, const char *unit_length, 
 	const char *thick_lines,
@@ -2549,8 +2557,9 @@ void discreta_matrix::incma_print_latex2(ostream &f,
 }
 
 void discreta_matrix::calc_hash_key(
-		int key_len, hollerith & hash_key, int f_v)
+		int key_len, hollerith & hash_key, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int al_len;
 	char *alphabet = NULL;
 	char *inc = NULL;
@@ -3028,17 +3037,18 @@ void discreta_matrix::determinant(discreta_base &d, int verbose_level)
 		}
 }
 
-void discreta_matrix::det(discreta_base & d, int f_v, int f_vv)
+void discreta_matrix::det(discreta_base & d, int verbose_level)
 {
 	discreta_matrix A;
 	
 	A = *this;
-	A.det_modify_input_matrix(d, f_v, f_vv);
+	A.det_modify_input_matrix(d, verbose_level);
 }
 
 void discreta_matrix::det_modify_input_matrix(
-		discreta_base & d, int f_v, int f_vv)
+		discreta_base & d, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int rk, i;
 	int f_special = TRUE;
 	int f_complete = FALSE;
@@ -3050,7 +3060,7 @@ void discreta_matrix::det_modify_input_matrix(
 	if (f_v) {
 		cout << "in det():" << endl << *this << endl;
 		}
-	rk = Gauss(f_special, f_complete, base_cols, f_P, P, f_vv);
+	rk = Gauss(f_special, f_complete, base_cols, f_P, P, verbose_level - 1);
 	if (f_v) {
 		cout << "Gauss:" << endl << *this << endl;
 		}
@@ -3075,426 +3085,9 @@ void determinant_map(discreta_base & x, discreta_base &d)
 		exit(1);
 		}
 	discreta_matrix & M = x.as_matrix();
-	int f_v = FALSE;
-	int f_vv = FALSE;
-	M.det(d, f_v, f_vv);
+	M.det(d, 0 /* verbose_level */);
 }
 
-#if 0
-void discreta_matrix::PG_line_rank(int &a, int f_v)
-{
-	domain *d;
-	int q, m, n, l, s, i, a1, a2, a3, nb, ql, pivot_row, pivot_row2 = 0;
-	discreta_base x;
-	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
-	
-	if (!is_finite_field_domain(d)) {
-		cout << "discreta_matrix::PG_line_rank() no finite field domain" << endl;
-		exit(1);
-		}
-	q = finite_field_domain_order_int(d);
-	m = s_m();
-	n = s_n();
-	if (m <= 0) {
-		cout << "discreta_matrix::PG_line_rank() matrix not allocated()" << endl;
-		exit(1);
-		}
-	if (n != 2) {
-		cout << "discreta_matrix::PG_line_rank() matrix not allocated()" << endl;
-		exit(1);
-		}
-	
-	pivot_row = 0;
-	// do a little Gauss algorithm:
-	for (i = m - 1; i >= 0; i--) {
-		if (!s_ij(i, 0).is_zero() || !s_ij(i, 1).is_zero()) {
-			pivot_row = i;
-			if (s_ij(i, 1).is_zero()) {
-				for ( ; i >= 0; i--) {
-					s_ij(i, 0).swap(s_ij(i, 1));
-					}
-				}
-			break;
-			}
-		}
-	if (f_v) {
-		cout << "after permuting:\n" << *this << endl;
-		cout << "PG_line_rank() pivot_row=" << pivot_row << endl;
-		}
-	PG_point_normalize(0, 1, 1, 0, m);
-	if (!s_ij(pivot_row, 1).is_one()) {
-		cout << "matrix::PG_line_rank() pivot element is not one" << endl;
-		exit(1);
-		}
-	if (!s_ij(pivot_row, 0).is_zero()) {
-		discreta_base x;
-				
-		x = s_ij(pivot_row, 0);
-		for (i = pivot_row; i >= 0; i--) {
-			discreta_base y;
-					
-			y = s_ij(i, 1);
-			y *= x;
-			y.negate();
-			s_ij(i, 0) += y;
-			}
-		}
-	PG_point_normalize(0, 0, 1, 0, m);
-	if (f_v) {
-		cout << "PG_line_rank() after gauss right to left and normalize:\n" << *this << endl;
-		}
-	for (i = pivot_row - 1; i >= 0; i--) {
-		if (!s_ij(i, 0).is_zero()) {
-			pivot_row2 = i;
-			break;
-			}
-		}
-	if (i < 0) {
-		cout << "discreta_matrix::PG_line_rank() zero column" << endl;
-		exit(1);
-		}
-	
-	// due to normalize, this element must already be one:
-	if (!s_ij(pivot_row2, 0).is_one()) {
-		cout << "matrix::PG_line_rank() pivot element 2 is not one" << endl;
-		exit(1);
-		}
-	if (!s_ij(pivot_row2, 1).is_zero()) {
-		discreta_base x;
-				
-		x = s_ij(pivot_row2, 1);
-		for (i = pivot_row2; i >= 0; i--) {
-			discreta_base y;
-					
-			y = s_ij(i, 0);
-			y *= x;
-			y.negate();
-			s_ij(i, 1) += y;
-			}
-		}
-	if (f_v) {
-		cout << "PG_line_rank() after gauss left to right:\n" << *this << endl;
-		}
-	
-	l = pivot_row2;
-	if (!s_ij(l, 1).is_zero()) {
-		cout << "!s_ij(l, 1).is_zero()" << endl;
-		exit(1);
-		}
-	ql = NT.i_power_j(q, l);
-	nb = Gg.nb_PG_elements(m - l - 2, q);
-	s = ql * ql * nb;
-	if (f_v) {
-		cout << "l=" << l << " ql=" << ql << " nb=" << nb << " s=" << s << endl;
-		}
-	PG_point_rank(l + 1, 1, 1, 0, m - l - 1, a3);
-	if (f_v) {
-		cout << "a3=" << a3 << endl;
-		}
-	if (l) {
-		AG_point_rank(0, 1, 1, 0, l, a2);
-		if (f_v) {
-			cout << "a2=" << a2 << endl;
-			}
-		AG_point_rank(0, 0, 1, 0, l, a1);
-		if (f_v) {
-			cout << "a1=" << a1 << endl;
-			}
-		}
-	else {
-		a1 = 0;
-		a2 = 0;
-		}
-	a = (a1 * nb + a3) * ql + a2;
-	if (f_v) {
-		cout << "a=" << a << endl;
-		}
-	for (l--; l >= 0; l--) {
-		ql = NT.i_power_j(q, l);
-		nb = Gg.nb_PG_elements(m - l - 2, q);
-		s = ql * ql * nb;
-		a += s;
-		}
-}
-
-void discreta_matrix::PG_line_unrank(int a)
-{
-	domain *d;
-	int q, m, n, l, s, k, a1, a2, a3, nb, ql;
-	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
-	
-	if (!is_finite_field_domain(d)) {
-		cout << "discreta_matrix::PG_line_unrank no finite field domain" << endl;
-		exit(1);
-		}
-	q = finite_field_domain_order_int(d);
-	m = s_m();
-	n = s_n();
-	if (m <= 0) {
-		cout << "discreta_matrix::PG_line_unrank matrix not allocated" << endl;
-		exit(1);
-		}
-	if (n != 2) {
-		cout << "discreta_matrix::PG_line_unrank matrix not allocated" << endl;
-		exit(1);
-		}
-	
-	
-	// cout << "matrix::PG_line_unrank() a=" << a << endl;
-	l = 0;
-	while (l < m) {
-		ql = NT.i_power_j(q, l);
-		nb = Gg.nb_PG_elements(m - l - 2, q);
-		s = ql * ql * nb;
-		// cout << "matrix::PG_line_unrank() a=" << a
-		//<< " l=" << l << " s=" << s << " ql=" << ql
-		//<< " nb=" << nb << endl;
-		if (a >= s) {
-			a -= s;
-			l++;
-			continue;
-			}
-		// cout << "choosing l=" << l << endl;
-		// cout << "nb = " << nb << endl;
-		a2 = a % ql;
-		a -= a2;
-		a /= ql;
-		a3 = a % nb;
-		a -= a3;
-		a /= nb;
-		a1 = a;
-		// cout << "a1=" << a1 << endl;
-		// cout << "a2=" << a2 << endl;
-		// cout << "a3=" << a3 << endl;
-
-		s_ij(l, 0).one();
-		s_ij(l, 1).zero();
-		for (k = l + 1; k < m; k++) {
-			s_ij(k, 0).zero();
-			}
-
-		if (l) {
-			AG_point_unrank(0, 0, 1, 0, l, a1);
-			AG_point_unrank(0, 1, 1, 0, l, a2);
-			}
-
-		PG_point_unrank(l + 1, 1, 1, 0, m - l - 1, a3);
-		return;
-		}
-	cout << "discreta_matrix::PG_line_unrank a too large" << endl;
-	exit(1);
-}
-
-void discreta_matrix::PG_point_normalize(int i0, int j0,
-		int di, int dj, int length)
-{
-	int i, j;
-	discreta_base a;
-	
-	j = 0;
-	for (i = length - 1; i >= 0; i--) {
-		if (!s_ij(i0 + i * di, j0 + j * dj).is_zero()) {
-			if (s_ij(i0 + i * di, j0 + i * dj).is_one())
-				return;
-			a = s_ij(i0 + i * di, j0 + i * dj);
-			a.invert();
-			for (j = i; j >= 0; j--) {
-				s_ij(i0 + j * di, j0 + j * dj) *= a;
-				}
-			return;
-			}
-		}
-	cout << "discreta_matrix::PG_point_normalize zero vector" << endl;
-	exit(1);
-}
-
-void discreta_matrix::PG_point_unrank(int i0, int j0,
-		int di, int dj, int length, int a)
-{
-	domain *d;
-	int q, n, l, qhl, k, j, r, a1 = a;
-	
-	if (!is_finite_field_domain(d)) {
-		cout << "discreta_matrix::PG_point_unrank no finite field domain" << endl;
-		exit(1);
-		}
-	q = finite_field_domain_order_int(d);
-	n = length;
-	if (n <= 0) {
-		cout << "discreta_matrix::PG_point_unrank n <= 0" << endl;
-		exit(1);
-		}
-	
-	
-	l = 0;
-	qhl = 1;
-	while (l < n) {
-		if (a >= qhl) {
-			a -= qhl;
-			qhl *= q;
-			l++;
-			continue;
-			}
-		s_ij(i0 + l * di, j0 + l * dj).one();
-		for (k = l + 1; k < n; k++) {
-			s_ij(i0 + k * di, j0 + k * dj).zero();
-			}
-		j = 0;
-		while (a != 0) {
-			r = a % q;
-			m_iji(i0 + j * di, j0 + j * dj, r);
-			j++;
-			a -= r;
-			a /= q;
-			}
-		for ( ; j < l; j++)
-			m_iji(i0 + j * di, j0 + j * dj, 0);
-		return;
-		}
-	cout << "discreta_matrix::PG_point_unrank() a too large" << endl;
-	cout << "length = " << length << endl;
-	cout << "a = " << a1 << endl;
-	exit(1);
-}
-
-void discreta_matrix::PG_point_rank(int i0, int j0,
-		int di, int dj, int length, int &a)
-{
-	domain *d;
-	int i, j, q, q_power_j, b;
-	
-	if (!is_finite_field_domain(d)) {
-		cout << "discreta_matrix::PG_point_rank no finite field domain" << endl;
-		exit(1);
-		}
-	q = finite_field_domain_order_int(d);
-	PG_point_normalize(i0, j0, di, dj, length);
-	if (length <= 0) {
-		cout << "discreta_matrix::PG_point_rank length <= 0" << endl;
-		exit(1);
-		}
-	for (i = length - 1; i >= 0; i--) {
-		if (!s_ij(i0 + i * di, j0 + i * dj).is_zero())
-			break;
-		}
-	if (i < 0) {
-		cout << "discreta_matrix::PG_point_rank zero vector" << endl;
-		exit(1);
-		}
-	if (!s_ij(i0 + i * di, j0 + i * dj).is_one()) {
-		cout << "discreta_matrix::PG_point_rank vector not normalized" << endl;
-		exit(1);
-		}
-
-	b = 0;
-	q_power_j = 1;
-	for (j = 0; j < i; j++) {
-		b += q_power_j;
-		q_power_j *= q;
-		}
-
-
-	a = 0;
-	for (j = i - 1; j >= 0; j--) {
-		a += s_iji(i0 + j * di, j0 + j * dj);
-		if (j > 0)
-			a *= q;
-		}
-	a += b;
-}
-
-
-void discreta_matrix::PG_element_normalize()
-// lowest element which is different from zero becomes one in each column
-{
-	int i, ii, j, m, n;
-	discreta_base a;
-	
-	m = s_m();
-	n = s_n();
-	for (j = 0; j < n; j++) {
-		for (i = m - 1; i >= 0; i--) {
-			if (!s_ij(i, j).is_zero()) {
-				if (s_ij(i, j).is_one())
-					break;
-				a = s_ij(i, j);
-				a.invert();
-				for (ii = i; ii >= 0; ii--) {
-					s_ij(ii, j) *= a;
-					}
-				break;
-				}
-			}
-		if (i == -1) {
-			cout << "discreta_matrix::PG_element_normalize zero column" << endl;
-			exit(1);
-			}
-		}
-}
-
-void discreta_matrix::AG_point_rank(int i0, int j0,
-		int di, int dj, int length, int &a)
-{
-	domain *d;
-	int q, i;
-	
-	if (!is_finite_field_domain(d)) {
-		cout << "discreta_matrix::AG_point_rank no finite field domain" << endl;
-		exit(1);
-		}
-	q = finite_field_domain_order_int(d);
-	if (length <= 0) {
-		cout << "discreta_matrix::AG_point_rank length <= 0" << endl;
-		exit(1);
-		}
-	a = 0;
-	for (i = length - 1; i >= 0; i--) {
-		a += s_iji(i0 + i * di, j0 + i * dj);
-		if (i > 0)
-			a *= q;
-		}
-}
-
-void discreta_matrix::AG_point_unrank(int i0, int j0,
-		int di, int dj, int length, int a)
-{
-	domain *d;
-	int q, i, b;
-	
-	if (!is_finite_field_domain(d)) {
-		cout << "discreta_matrix::AG_point_unrank no finite field domain" << endl;
-		exit(1);
-		}
-	q = finite_field_domain_order_int(d);
-	if (length <= 0) {
-		cout << "discreta_matrix::AG_point_unrank length <= 0" << endl;
-		exit(1);
-		}
-	for (i = 0; i < length; i++) {
-		b = a % q;
-		m_iji(i0 + i * di, j0 + i * dj, b);
-		a /= q;
-		}
-}
-
-int nb_PG_lines(int n, int q)
-{
-	int l, ql, nb, s, a = 0, m;
-	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
-	
-	m = n + 1;
-	for (l = 0; l < m; l++) {
-		ql = NT.i_power_j(q, l);
-		nb = Gg.nb_PG_elements(m - l - 2, q);
-		s = ql * ql * nb;
-		a += s;
-		}
-	return a;
-}
-#endif
 
 void discreta_matrix::save_as_inc_file(char *fname)
 {
@@ -3513,7 +3106,7 @@ void discreta_matrix::save_as_inc_file(char *fname)
 	f << "-1 1" << endl;
 }
 
-void discreta_matrix::save_as_inc(ofstream &f)
+void discreta_matrix::save_as_inc(std::ofstream &f)
 {
 	int i, j, m, n;
 	m = s_m();

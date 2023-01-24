@@ -37,6 +37,9 @@ finite_field::finite_field()
 	//std::string label_tex;
 	//std::override_poly;
 	//std::string my_poly;
+	my_poly_longinteger = NULL;
+	my_poly_lint = 0;
+	my_poly_vec = NULL;
 	//std::symbol_for_print;
 	f_is_prime_field = FALSE;
 	//std::string q_text;
@@ -58,6 +61,9 @@ finite_field::finite_field()
 
 	Linear_algebra = NULL;
 	//Orthogonal_indexing = NULL;
+
+	f_related_fields_have_been_computed = FALSE;
+	Related_fields = NULL;
 
 }
 
@@ -87,7 +93,9 @@ finite_field::~finite_field()
 		FREE_OBJECT(Orthogonal_indexing);
 	}
 #endif
-
+	if (f_related_fields_have_been_computed) {
+		FREE_OBJECT(Related_fields);
+	}
 }
 
 void finite_field::print_call_stats(std::ostream &ost)
@@ -101,7 +109,9 @@ void finite_field::print_call_stats(std::ostream &ost)
 			<< nb_calls_to_PG_element_unrank_modified << endl;
 }
 
-void finite_field::init(finite_field_description *Descr, int verbose_level)
+void finite_field::init(
+		finite_field_description *Descr,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -123,7 +133,9 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 			cout << "finite_field::init before init_override_polynomial" << endl;
 		}
 		init_override_polynomial(Descr->q_text,
-				Descr->override_polynomial, Descr->f_without_tables,
+				Descr->override_polynomial,
+				Descr->f_without_tables,
+				Descr->f_compute_related_fields,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "finite_field::init after init_override_polynomial" << endl;
@@ -135,7 +147,10 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 		if (f_v) {
 			cout << "finite_field::init before finite_field_init" << endl;
 		}
-		finite_field_init(Descr->q_text, Descr->f_without_tables, verbose_level - 1);
+		finite_field_init(Descr->q_text,
+				Descr->f_without_tables,
+				Descr->f_compute_related_fields,
+				verbose_level - 1);
 		if (f_v) {
 			cout << "finite_field::init after finite_field_init" << endl;
 		}
@@ -157,7 +172,9 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 
 void finite_field::finite_field_init(
 		std::string &q_text,
-		int f_without_tables, int verbose_level)
+		int f_without_tables,
+		int f_compute_related_fields,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -210,7 +227,8 @@ void finite_field::finite_field_init(
 	}
 
 	finite_field_init_small_order(q,
-			f_without_tables, verbose_level);
+			f_without_tables, f_compute_related_fields,
+			verbose_level);
 
 	if (f_v) {
 		cout << "finite_field::finite_field_init "
@@ -305,7 +323,8 @@ void finite_field::check_size(int verbose_level)
 
 
 void finite_field::finite_field_init_small_order(int q,
-		int f_without_tables, int verbose_level)
+		int f_without_tables, int f_compute_related_fields,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -347,7 +366,10 @@ void finite_field::finite_field_init_small_order(int q,
 			cout << "finite_field::finite_field_init_small_order q=" << q
 					<< " before init_override_polynomial poly = " << poly << endl;
 		}
-		init_override_polynomial_small_order(q, poly, f_without_tables, verbose_level - 2);
+		init_override_polynomial_small_order(q, poly,
+				f_without_tables,
+				f_compute_related_fields,
+				verbose_level - 2);
 		if (f_v) {
 			cout << "finite_field::finite_field_init_small_order q=" << q
 					<< " after init_override_polynomial" << endl;
@@ -360,7 +382,10 @@ void finite_field::finite_field_init_small_order(int q,
 			cout << "finite_field::finite_field_init_small_order q=" << q
 					<< " before init_override_polynomial poly = " << poly << endl;
 		}
-		init_override_polynomial_small_order(q, poly, f_without_tables, verbose_level - 2);
+		init_override_polynomial_small_order(q, poly,
+				f_without_tables,
+				f_compute_related_fields,
+				verbose_level - 2);
 		if (f_v) {
 			cout << "finite_field::finite_field_init_small_order q=" << q
 					<< " after init_override_polynomial" << endl;
@@ -373,10 +398,59 @@ void finite_field::finite_field_init_small_order(int q,
 	label.assign(str);
 	snprintf(str, sizeof(str), "{\\mathbb F}_{%d}", q);
 	label_tex.assign(str);
+
+
+
+
+	if (f_v) {
+		cout << "finite_field::finite_field_init_small_order done" << endl;
+	}
+
 }
 
-void finite_field::init_override_polynomial(std::string &q_text,
-		std::string &poly, int f_without_tables, int verbose_level)
+void finite_field::setup_related_fields(int f_compute_related_fields,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::setup_related_fields" << endl;
+	}
+
+	if (f_compute_related_fields) {
+
+		if (f_related_fields_have_been_computed) {
+			if (f_v) {
+				cout << "finite_field::setup_related_fields related fields have been computed already" << endl;
+			}
+		}
+		else {
+			Related_fields = NEW_OBJECT(related_fields);
+
+			if (f_v) {
+				cout << "finite_field::setup_related_fields "
+						"before Related_fields->init" << endl;
+			}
+			Related_fields->init(this, verbose_level);
+			if (f_v) {
+				cout << "finite_field::setup_related_fields "
+						"after Related_fields->init" << endl;
+			}
+			f_related_fields_have_been_computed = TRUE;
+		}
+	}
+
+	if (f_v) {
+		cout << "finite_field::setup_related_fields done" << endl;
+	}
+}
+
+void finite_field::init_override_polynomial(
+		std::string &q_text,
+		std::string &poly,
+		int f_without_tables,
+		int f_compute_related_fields,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -416,7 +490,10 @@ void finite_field::init_override_polynomial(std::string &q_text,
 				"before init_override_polynomial_small_order" << endl;
 	}
 	init_override_polynomial_small_order(q,
-			poly, f_without_tables, verbose_level);
+			poly,
+			f_without_tables,
+			f_compute_related_fields,
+			verbose_level);
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial "
 				"after init_override_polynomial_small_order" << endl;
@@ -432,11 +509,14 @@ void finite_field::init_override_polynomial(std::string &q_text,
 }
 
 
-void finite_field::init_override_polynomial_small_order(int q,
-		std::string &poly, int f_without_tables, int verbose_level)
+void finite_field::init_override_polynomial_small_order(
+		int q,
+		std::string &poly,
+		int f_without_tables,
+		int f_compute_related_fields,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
@@ -460,15 +540,31 @@ void finite_field::init_override_polynomial_small_order(int q,
 	set_default_symbol_for_print();
 
 	if (e > 1) {
+		if (f_v) {
+			cout << "finite_field::init_override_polynomial_small_order "
+					"detected an extension field" << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::init_override_polynomial_small_order "
+					"poly = " << poly << endl;
+		}
 		f_is_prime_field = FALSE;
 		knowledge_base K;
 
 		if (poly.length() == 0) {
+			if (f_v) {
+				cout << "finite_field::init_override_polynomial_small_order "
+						"before K.get_primitive_polynomial field" << endl;
+			}
 			K.get_primitive_polynomial(my_poly, p, e, verbose_level);
+			if (f_v) {
+				cout << "finite_field::init_override_polynomial_small_order "
+						"after K.get_primitive_polynomial field" << endl;
+			}
 		}
 		else {
 			my_poly.assign(poly);
-			if (f_vv) {
+			if (f_v) {
 				cout << "finite_field::init_override_polynomial_small_order, "
 					"using polynomial " << my_poly << endl;
 			}
@@ -477,17 +573,44 @@ void finite_field::init_override_polynomial_small_order(int q,
 			cout << "finite_field::init_override_polynomial_small_order "
 					"using poly " << my_poly << endl;
 		}
+
+
+		my_poly_longinteger = NEW_OBJECT(ring_theory::longinteger_object);
+		my_poly_longinteger->create_from_base_10_string(my_poly);
+
+		std::stringstream s;
+
+		print_minimum_polynomial_to_str(p,
+				my_poly, s);
+
+		my_poly_tex.assign(s.str());
+
+		my_poly_lint = my_poly_longinteger->as_lint();
+		my_poly_vec = NEW_int(e + 1);
+
+		geometry::geometry_global GG;
+
+		my_poly_vec = NEW_int(e + 1);
+
+		GG.AG_element_unrank(p, my_poly_vec, 1, e + 1, my_poly_lint);
+
 	}
 	else {
+		if (f_v) {
+			cout << "finite_field::init_override_polynomial_small_order "
+					"detected a prime field" << endl;
+		}
 		f_is_prime_field = TRUE;
 	}
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial_small_order "
-				"GF(" << q << ") = GF(" << p << "^" << e << ")";
+				"GF(" << q << ") = GF(" << p << "^" << e << ")" << endl;
 		if (e > 1) {
-			cout << ", polynomial = ";
-			print_minimum_polynomial(p, my_poly);
-			cout << " = " << my_poly << endl;
+			cout << "finite_field::init_override_polynomial_small_order polynomial = ";
+
+			std::stringstream s;
+			print_minimum_polynomial_to_str(p, my_poly, s);
+			cout << s.str() << " = " << my_poly << endl;
 		}
 		else {
 			cout << endl;
@@ -523,7 +646,20 @@ void finite_field::init_override_polynomial_small_order(int q,
 				"after init_implementation" << endl;
 	}
 
-	if (f_vv) {
+	if (f_v) {
+		cout << "finite_field::finite_field_init_small_order "
+				"before setup_related_fields" << endl;
+	}
+	setup_related_fields(f_compute_related_fields,
+			verbose_level);
+	if (f_v) {
+		cout << "finite_field::finite_field_init_small_order "
+				"after setup_related_fields" << endl;
+	}
+
+
+
+	if (f_v) {
 		cout << "finite_field::init_override_polynomial_small_order "
 				"finished" << endl;
 	}
@@ -533,7 +669,8 @@ void finite_field::init_override_polynomial_small_order(int q,
 
 
 
-void finite_field::init_implementation(int f_without_tables, int verbose_level)
+void finite_field::init_implementation(
+		int f_without_tables, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string poly;
@@ -655,8 +792,8 @@ int finite_field::belongs_to_quadratic_subfield(int a)
 	return T->belongs_to_quadratic_subfield(a);
 }
 
-long int finite_field::compute_subfield_polynomial(int order_subfield,
-		//int f_latex, std::ostream &ost,
+long int finite_field::compute_subfield_polynomial(
+		int order_subfield,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -681,7 +818,10 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 	}
 
 	finite_field GFp;
-	GFp.finite_field_init_small_order(p1, FALSE /* f_without_tables */, 0);
+	GFp.finite_field_init_small_order(p1,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0);
 
 	ring_theory::unipoly_domain FX(&GFp);
 	ring_theory::unipoly_object m;
@@ -851,7 +991,10 @@ void finite_field::compute_subfields(int verbose_level)
 	cout << "subfields of F_{" << q << "}:" << endl;
 	
 	finite_field GFp;
-	GFp.finite_field_init_small_order(p, FALSE /* f_without_tables */, 0);
+	GFp.finite_field_init_small_order(p,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0);
 
 	ring_theory::unipoly_domain FX(&GFp);
 	ring_theory::unipoly_object m;
@@ -895,12 +1038,26 @@ int finite_field::find_primitive_element(int verbose_level)
 		cout << "finite_field::find_primitive_element" << endl;
 	}
 	for (i = 2; i < q; i++) {
+
+		if (f_v) {
+			cout << "finite_field::find_primitive_element trying i=" << i << " / " << q << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::find_primitive_element before compute_order_of_element" << endl;
+		}
 		ord = compute_order_of_element(i, 0 /*verbose_level - 3*/);
+		if (f_v) {
+			cout << "finite_field::find_primitive_element after compute_order_of_element" << endl;
+		}
 		if (f_v) {
 			cout << "finite_field::find_primitive_element "
 					"the order of " << i << " is " << ord << endl;
 		}
 		if (ord == q - 1) {
+			if (f_v) {
+				cout << "finite_field::find_primitive_element success! "
+						"The element " << i << " is primitive" << endl;
+			}
 			break;
 		}
 	}
@@ -916,12 +1073,16 @@ int finite_field::find_primitive_element(int verbose_level)
 }
 
 
-int finite_field::compute_order_of_element(int elt, int verbose_level)
+int finite_field::compute_order_of_element(
+		int elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, k;
 
+	if (f_v) {
+		cout << "finite_field::compute_order_of_element" << endl;
+	}
 	if (f_v) {
 		cout << "finite_field::compute_order_of_element "
 				"q=" << q << " p=" << p
@@ -930,7 +1091,17 @@ int finite_field::compute_order_of_element(int elt, int verbose_level)
 
 
 	finite_field GFp;
-	GFp.finite_field_init_small_order(p, FALSE /* f_without_tables */, 0);
+
+	if (f_v) {
+		cout << "finite_field::compute_order_of_element before GFp.finite_field_init_small_order" << endl;
+	}
+	GFp.finite_field_init_small_order(p,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "finite_field::compute_order_of_element after GFp.finite_field_init_small_order" << endl;
+	}
 
 	ring_theory::unipoly_domain FX(&GFp);
 	ring_theory::unipoly_object m;
@@ -942,6 +1113,9 @@ int finite_field::compute_order_of_element(int elt, int verbose_level)
 		cout << endl;
 	}
 	{
+		if (f_v) {
+			cout << "finite_field::compute_order_of_element before defining Fq" << endl;
+		}
 		ring_theory::unipoly_domain Fq(&GFp, m, verbose_level - 1);
 		ring_theory::unipoly_object a, c, Alpha;
 
@@ -981,6 +1155,9 @@ int finite_field::compute_order_of_element(int elt, int verbose_level)
 		cout << "finite_field::compute_order_of_element done "
 				"q=" << q << " p=" << p << " e=" << e
 				<< " order of " << elt << " is " << i << endl;
+	}
+	if (f_v) {
+		cout << "finite_field::compute_order_of_element done" << endl;
 	}
 	return i;
 }
@@ -1659,7 +1836,8 @@ int finite_field::bar(int a)
 	return b;
 }
 
-void finite_field::abc2xy(int a, int b, int c,
+void finite_field::abc2xy(
+		int a, int b, int c,
 		int &x, int &y, int verbose_level)
 // given a, b, c, determine x and y such that 
 // c = a * x^2 + b * y^2
@@ -1693,7 +1871,9 @@ void finite_field::abc2xy(int a, int b, int c,
 	exit(1);
 }
 
-int finite_field::retract(finite_field &subfield,
+#if 0
+int finite_field::retract(
+		finite_field &subfield,
 		int index, int a, int verbose_level)
 {
 	int b;
@@ -1702,7 +1882,8 @@ int finite_field::retract(finite_field &subfield,
 	return b;
 }
 
-void finite_field::retract_int_vec(finite_field &subfield,
+void finite_field::retract_int_vec(
+		finite_field &subfield,
 		int index, int *v_in, int *v_out, int len,
 		int verbose_level)
 {
@@ -1749,7 +1930,8 @@ void finite_field::retract_int_vec(finite_field &subfield,
 	}
 }
 
-int finite_field::embed(finite_field &subfield,
+int finite_field::embed(
+		finite_field &subfield,
 		int index, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1858,6 +2040,7 @@ void finite_field::subfield_embedding_2dimensional(
 				"done" << endl;
 	}
 }
+#endif
 
 int finite_field::nb_times_mult_called()
 {
@@ -1869,7 +2052,8 @@ int finite_field::nb_times_add_called()
 	return nb_times_add;
 }
 
-void finite_field::compute_nth_roots(int *&Nth_roots, int n, int verbose_level)
+void finite_field::compute_nth_roots(
+		int *&Nth_roots, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, idx, beta;

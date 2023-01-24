@@ -963,7 +963,10 @@ void action::init_affine_group(int n, int q,
 		cout << "action::init_affine_group" << endl;
 	}
 
-	F.finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level - 1);
+	F.finite_field_init_small_order(q,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			verbose_level - 1);
 	
 	
 	algebra::group_generators_domain GGD;

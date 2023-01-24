@@ -34,6 +34,8 @@ minimum_polynomial::minimum_polynomial()
 	kernel_m = 0;
 	kernel_n = 0;
 	min_poly_rank = 0;
+
+	// min_poly_rank_as_string;
 }
 
 
@@ -42,7 +44,8 @@ minimum_polynomial::~minimum_polynomial()
 
 }
 
-void minimum_polynomial::compute_subfield_polynomial(finite_field *F,
+void minimum_polynomial::compute_subfield_polynomial(
+		finite_field *F,
 		int order_subfield, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -76,7 +79,10 @@ void minimum_polynomial::compute_subfield_polynomial(finite_field *F,
 	}
 
 	finite_field GFp;
-	GFp.finite_field_init_small_order(F->p, FALSE /* f_without_tables */, 0);
+	GFp.finite_field_init_small_order(F->p,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0);
 
 	ring_theory::unipoly_domain FX(&GFp);
 	ring_theory::unipoly_object m;
@@ -123,14 +129,17 @@ void minimum_polynomial::compute_subfield_polynomial(finite_field *F,
 
 	if (f_v) {
 		cout << "minimum_polynomial::compute_subfield_polynomial M=" << endl;
-		Int_vec_print_integer_matrix_width(cout, M,
+		Int_vec_print_integer_matrix_width(
+				cout, M,
 				F->e, e1 + 1, e1 + 1, GFp.log10_of_q);
 	}
-	rk = GFp.Linear_algebra->Gauss_simple(M, F->e, e1 + 1,
+	rk = GFp.Linear_algebra->Gauss_simple(
+			M, F->e, e1 + 1,
 		base_cols, 0/*verbose_level*/);
 	if (f_vv) {
 		cout << "minimum_polynomial::compute_subfield_polynomial after Gauss=" << endl;
-		Int_vec_print_integer_matrix_width(cout, M,
+		Int_vec_print_integer_matrix_width(
+				cout, M,
 				F->e, e1 + 1, e1 + 1, GFp.log10_of_q);
 		cout << "rk=" << rk << endl;
 	}
@@ -140,7 +149,8 @@ void minimum_polynomial::compute_subfield_polynomial(finite_field *F,
 		exit(1);
 	}
 
-	GFp.Linear_algebra->matrix_get_kernel(M, F->e, e1 + 1, base_cols, rk,
+	GFp.Linear_algebra->matrix_get_kernel(
+			M, F->e, e1 + 1, base_cols, rk,
 		kernel_m, kernel_n, K, 0 /* verbose_level */);
 
 	if (f_vv) {
@@ -179,10 +189,17 @@ void minimum_polynomial::compute_subfield_polynomial(finite_field *F,
 
 	min_poly_rank = Gg.AG_element_rank(F->p, K, 1, e1 + 1);
 
+	char str[1000];
+
+	snprintf(str, sizeof(str), "%ld", min_poly_rank);
+
+	min_poly_rank_as_string.assign(str);
+
 	if (f_v) {
 		ring_theory::unipoly_object elt;
 
-		FX.create_object_by_rank(elt, min_poly_rank, __FILE__, __LINE__, verbose_level);
+		FX.create_object_by_rank(
+				elt, min_poly_rank, __FILE__, __LINE__, verbose_level);
 		cout << "minimum_polynomial::compute_subfield_polynomial "
 				"subfield of order " << NT.i_power_j(F->p, e1)
 				<< " : " << min_poly_rank << " = ";

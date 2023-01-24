@@ -736,11 +736,11 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 
 	//tritangent_plane_rk = SO->Tritangent_plane_rk[tritangent_plane_idx];
 
-	p1 = Up->Lift->Surf_A->Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
+	p1 = Up->Lift->Surf_A->Surf->P->Solid->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 			The_case.L1 /* line */,
 			0 /* plane */, 0 /* verbose_level */);
 
-	p2 = Up->Lift->Surf_A->Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
+	p2 = Up->Lift->Surf_A->Surf->P->Solid->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 			line1_to /* line */,
 			0 /* plane */, 0 /* verbose_level */);
 

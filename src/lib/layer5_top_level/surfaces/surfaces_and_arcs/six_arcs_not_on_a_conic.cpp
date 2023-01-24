@@ -163,7 +163,7 @@ void six_arcs_not_on_a_conic::init(
 			cout << "six_arcs_not_on_a_conic::init "
 					"computing conic intersections:" << endl;
 		}
-		PA->P->conic_type(
+		PA->P->Plane->conic_type(
 			Arc6, 6, 
 			6 /* threshold */,
 			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len1,

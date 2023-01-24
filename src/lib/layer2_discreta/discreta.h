@@ -46,57 +46,42 @@ namespace layer2_discreta {
 
 
 
-/*********************************** macros ********************************/
 
 #define NOT_EXISTING_FUNCTION(s)  cout << "The function " << s << " does not exist in this class\n";
 
-/******************* Constants for type determination **********************/
 
 enum kind { 
-	BASE = 0,                      //!< BASE
-	INTEGER = 1,                   //!< INTEGER
-	VECTOR = 2,                    //!< VECTOR
-	NUMBER_PARTITION = 3,          //!< NUMBER_PARTITION
+	BASE = 0,
+	INTEGER = 1,
+	VECTOR = 2,
+	NUMBER_PARTITION = 3,
 	// RATIONAL /* BRUCH */ = 4, 
-	PERMUTATION = 6,               //!< PERMUTATION
+	PERMUTATION = 6,
 	
 	
-	// POLYNOM = 9, 
-	
-	MATRIX = 11,                   //!< MATRIX
+	MATRIX = 11,
 
-	// MONOM = 21, 
-	LONGINTEGER = 22,              //!< LONGINTEGER
+	LONGINTEGER = 22,
 	
-	//SUBGROUP_LATTICE = 36, 
-	//SUBGROUP_ORBIT = 37, 
-	MEMORY = 39,                   //!< MEMORY
+	MEMORY = 39,
 	
-	HOLLERITH = 44,                //!< HOLLERITH
+	HOLLERITH = 44,
 	
-	DATABASE = 50,                 //!< DATABASE
-	BTREE = 51,                    //!< BTREE
+	DATABASE = 50,
+	BTREE = 51,
 	
-	PERM_GROUP = 56,               //!< PERM_GROUP
-	PERM_GROUP_STAB_CHAIN = 57,    //!< PERM_GROUP_STAB_CHAIN
+	PERM_GROUP = 56,
+	PERM_GROUP_STAB_CHAIN = 57,
 
-	BT_KEY = 61,                   //!< BT_KEY
+	BT_KEY = 61,
 	
-	DESIGN_PARAMETER = 70,         //!< DESIGN_PARAMETER
+	DESIGN_PARAMETER = 70,
 	 
-	//GROUP_SELECTION = 78,          //!< GROUP_SELECTION
-	UNIPOLY = 79,                  //!< UNIPOLY
+	UNIPOLY = 79,
 
-	DESIGN_PARAMETER_SOURCE = 83,  //!< DESIGN_PARAMETER_SOURCE
-	//SOLID = 84,                    //!< SOLID
+	DESIGN_PARAMETER_SOURCE = 83,
 
-	BITMATRIX = 90,                //!< BITMATRIX
-	//PC_PRESENTATION = 91,
-	//PC_SUBGROUP = 92,
-	//GROUP_WORD = 93, 
-	//GROUP_TABLE = 94,
-	//ACTION = 95, 
-	//GEOMETRY = 96                  //!< GEOMETRY
+	BITMATRIX = 90,
 	
 };
 
@@ -104,7 +89,6 @@ enum domain_type {
 	GFp = 1, 
 	GFq = 2,
 	Orbiter_finite_field = 3
-	//PC_GROUP = 3 
 };
 
 enum action_kind { 
@@ -177,7 +161,7 @@ class longinteger;
 class discreta_matrix;
 	// self is a pointer obtained from 
 	// calloc_m_times_n_objects().
-	// this means that we have an array of m * n + 2 objacts, 
+	// this means that we have an array of m * n + 2 objects,
 	// self points to the m * n array of user entries 
 	// and at offset [-2] we have m (as an integer object), 
 	// at offset [-1] we have n (as an integer object).
@@ -370,7 +354,6 @@ void fine_tune(
 		int *mtxD, int verbose_level);
 
 
-/************************************* base ********************************/
 
 // internal representations:
 
@@ -629,8 +612,10 @@ class discreta_base
 	void integral_division_by_integer_exact_apply(int x);
 	int is_divisor(discreta_base &y);
 	void modulo(discreta_base &p);
-	void extended_gcd(discreta_base &n, discreta_base &u,
-			discreta_base &v, discreta_base &g, int verbose_level);
+	void extended_gcd(
+			discreta_base &n, discreta_base &u,
+			discreta_base &v, discreta_base &g,
+			int verbose_level);
 	void write_memory(memory &m, int debug_depth);
 	void read_memory(memory &m, int debug_depth);
 	int calc_size_on_file();
@@ -660,12 +645,17 @@ class memory: public discreta_base
 	kind s_virtual_kind();
 	void copyobject_to(discreta_base &x);
 	std::ostream& print(std::ostream& ost);
-	int & alloc_length() { return self.int_pointer[-3]; }
-	int & used_length() { return self.int_pointer[-2]; }
-	int & cur_pointer() { return self.int_pointer[-1]; }
+	int & alloc_length()
+		{ return self.int_pointer[-3]; }
+	int & used_length()
+		{ return self.int_pointer[-2]; }
+	int & cur_pointer()
+		{ return self.int_pointer[-1]; }
 
-	char & s_i(int i) { return self.char_pointer[i]; };
-	char & operator [] (int i) { return s_i(i); }
+	char & s_i(int i)
+		{ return self.char_pointer[i]; };
+	char & operator [] (int i)
+		{ return s_i(i); }
 
 	void init(int length, char *d);
 	void alloc(int length);
@@ -701,7 +691,8 @@ class hollerith: public discreta_base
 	hollerith& operator = (const discreta_base &x);
 		// copy assignment
 
-	void *operator new(size_t, void *p) { return p; } 
+	void *operator new(size_t, void *p)
+		{ return p; }
 	void settype_hollerith();
 
 	~hollerith();
@@ -713,8 +704,10 @@ class hollerith: public discreta_base
 	std::ostream& print(std::ostream&);
 	int compare_with(discreta_base &a);
 
-	char * s_unchecked() { return self.char_pointer; } 
-	char * s() { if (self.char_pointer)
+	char * s_unchecked()
+		{ return self.char_pointer; }
+	char * s()
+		{ if (self.char_pointer)
 		return self.char_pointer; else return (char *) ""; }
 	void init(const char *p);
 	void append(const char *p);
@@ -741,7 +734,8 @@ class integer: public discreta_base
 		// copy constructor
 	integer& operator = (const discreta_base &x);
 		// copy assignment
-	void *operator new(size_t, void *p) { return p; } 
+	void *operator new(size_t, void *p)
+		{ return p; }
 	void settype_integer();
 
 	~integer();
@@ -752,7 +746,8 @@ class integer: public discreta_base
 	std::ostream& print(std::ostream&);
 
 	integer& m_i(long int i); // make_integer
-	long int & s_i() { return self.integer_value; }; // select_integer
+	long int & s_i()
+		{ return self.integer_value; }; // select_integer
 
 	int compare_with(discreta_base &a);
 
@@ -774,8 +769,10 @@ class integer: public discreta_base
 	int is_m_one();
 
 	int compare_with_euclidean(discreta_base &a);
-	void integral_division(discreta_base &x,
-			discreta_base &q, discreta_base &r, int verbose_level);
+	void integral_division(
+			discreta_base &x,
+			discreta_base &q, discreta_base &r,
+			int verbose_level);
 	
 	void rand(int low, int high);
 	int log2();
@@ -841,8 +838,10 @@ class longinteger: public discreta_base
 	int is_odd();
 
 	int compare_with_euclidean(discreta_base &b);
-	void integral_division(discreta_base &x,
-			discreta_base &q, discreta_base &r, int verbose_level);
+	void integral_division(
+			discreta_base &x,
+			discreta_base &q, discreta_base &r,
+			int verbose_level);
 	void square_root_floor(discreta_base &x);
 	longinteger& Mersenne(int n);
 	longinteger& Fermat(int n);
@@ -921,7 +920,7 @@ class Vector: public discreta_base
 	void get_first_and_remove(discreta_base & x);
 	bool insert_sorted(discreta_base& x);
 		// inserts x into the sorted vector x.
-		// if there are already occurences of x, the new x is added
+		// if there are already occurrences of x, the new x is added
 		// behind the x already there.
 		// returns true if the element was already in the vector.
 	bool search(discreta_base& x, int *idx);
@@ -1127,7 +1126,8 @@ class discreta_matrix: public discreta_base
 	discreta_matrix& operator = (const discreta_base &x);
 		// copy assignment
 
-	void *operator new(size_t, void *p) { return p; } 
+	void *operator new(size_t, void *p)
+		{ return p; }
 	void settype_matrix();
 
 	~discreta_matrix();
@@ -1177,7 +1177,8 @@ class discreta_matrix: public discreta_base
 			Vector& base_cols, int f_P,
 			discreta_matrix& P, int verbose_level);
 	int rank();
-	int get_kernel(Vector& base_cols, discreta_matrix& kernel);
+	int get_kernel(
+			Vector& base_cols, discreta_matrix& kernel);
 	discreta_matrix& transpose();
 	int Asup2Ainf();
 	int Ainf2Asup();
@@ -1247,7 +1248,8 @@ class discreta_matrix: public discreta_base
 	int csf();
 
 	void calc_theX(int & nb_X, int *&theX);
-	void apply_perms(int f_row_perm, permutation &row_perm, 
+	void apply_perms(
+			int f_row_perm, permutation &row_perm,
 		int f_col_perm, permutation &col_perm);
 	void apply_col_row_perm(permutation &p);
 	void apply_row_col_perm(permutation &p);
@@ -1257,10 +1259,12 @@ class discreta_matrix: public discreta_base
 	void print_decomposed(
 			std::ostream &ost,
 			Vector &row_decomp, Vector &col_decomp);
-	void incma_print_ascii(std::ostream &ost, int f_tex,
+	void incma_print_ascii(
+			std::ostream &ost, int f_tex,
 		int f_row_decomp, Vector &row_decomp, 
 		int f_col_decomp, Vector &col_decomp);
-	void incma_print_latex(std::ostream &f,
+	void incma_print_latex(
+			std::ostream &f,
 		int f_row_decomp, Vector &row_decomp, 
 		int f_col_decomp, Vector &col_decomp, 
 		int f_labelling_points, Vector &point_labels, 
@@ -1275,14 +1279,14 @@ class discreta_matrix: public discreta_base
 		int f_labelling_points, Vector &point_labels, 
 		int f_labelling_blocks, Vector &block_labels);
 	void calc_hash_key(
-			int key_len, hollerith & hash_key, int f_v);
+			int key_len, hollerith & hash_key, int verbose_level);
 	int is_in_center();
 	void power_mod(int r, integer &P, discreta_matrix &C);
 	int proj_order_mod(integer &P);
 	void determinant(discreta_base &d, int verbose_level);
-	void det(discreta_base & d, int f_v, int f_vv);
+	void det(discreta_base & d, int verbose_level);
 	void det_modify_input_matrix(
-			discreta_base & d, int f_v, int f_vv);
+			discreta_base & d, int verbose_level);
 	void save_as_inc_file(char *fname);
 	void save_as_inc(std::ofstream &f);
 };
@@ -1327,20 +1331,26 @@ class unipoly: public Vector
 	int is_one();
 	int is_zero();
 	int compare_with_euclidean(discreta_base &a);
-	void integral_division(discreta_base &x,
-			discreta_base &q, discreta_base &r, int verbose_level);
+	void integral_division(
+			discreta_base &x,
+			discreta_base &q, discreta_base &r,
+			int verbose_level);
 	void derive();
 	int is_squarefree(int verbose_level);
 	int is_irreducible_GFp(int p, int verbose_level);
 	int is_irreducible(int q, int verbose_level);
-	int is_primitive(int m, int p, Vector& vp, int verbose_level);
+	int is_primitive(
+			int m, int p, Vector& vp, int verbose_level);
 	void numeric_polynomial(int n, int q);
 	int polynomial_numeric(int q);
 	void singer_candidate(int p, int f, int b, int a);
 	void Singer(int p, int f, int verbose_level);
-	void get_an_irreducible_polynomial(int f, int verbose_level);
-	void evaluate_at(discreta_base& x, discreta_base& y);
-	void largest_divisor_prime_to(unipoly& q, unipoly& r);
+	void get_an_irreducible_polynomial(
+			int f, int verbose_level);
+	void evaluate_at(
+			discreta_base& x, discreta_base& y);
+	void largest_divisor_prime_to(
+			unipoly& q, unipoly& r);
 	void monic();
 	void normal_base(int p,
 			discreta_matrix& F, discreta_matrix& N,
@@ -1356,7 +1366,8 @@ class unipoly: public Vector
 	void normalize(discreta_base &p);
 	void Xnm1(int n);
 	void Phi(int n, int f_v);
-	void weight_enumerator_MDS_code(int n, int k, int q,
+	void weight_enumerator_MDS_code(
+			int n, int k, int q,
 			int verbose_level);
 	void charpoly(int q, int size, int *mtx, int verbose_level);
 	

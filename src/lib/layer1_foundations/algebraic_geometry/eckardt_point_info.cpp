@@ -268,7 +268,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 			cout << "eckardt_point_info::init j=" << j << " / 6 "
 					"before P2->determine_conic_in_plane" << endl;
 		}
-		P2->determine_conic_in_plane(arc5, 5,
+		P2->Plane->determine_conic_in_plane(arc5, 5,
 			six_coeffs, verbose_level);
 		if (f_v) {
 			cout << "eckardt_point_info::init j=" << j << " / 6 "
@@ -288,7 +288,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 			cout << "eckardt_point_info::init j=" << j << " / 6 "
 					"before P2->find_tangent_lines_to_conic" << endl;
 		}
-		P2->find_tangent_lines_to_conic(six_coeffs,
+		P2->Plane->find_tangent_lines_to_conic(six_coeffs,
 			arc5, 5,
 			tangents, verbose_level);
 		if (f_v) {

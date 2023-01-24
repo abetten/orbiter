@@ -1019,7 +1019,10 @@ void translation_plane_via_andre_model::p_rank(int p, int verbose_level)
 
 	F = NEW_OBJECT(field_theory::finite_field);
 
-	F->finite_field_init_small_order(p, FALSE /* f_without_tables */, 0 /*verbose_level*/);
+	F->finite_field_init_small_order(p,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0 /*verbose_level*/);
 
 	int *base_cols;
 	int *Mtx;

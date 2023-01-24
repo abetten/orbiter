@@ -43,7 +43,7 @@ namespace geometry {
 	// 
 	// type b) lines:
 	// the q+1 elements of the BLT set, 
-	// lifted to become t.i. planes contaning P in W(5,q)
+	// lifted to become t.i. planes containing P in W(5,q)
 
 	// For a total of 
 	// q^4 + q^3 + q + 1 = (q + 1)*(q^3 + 1) lines
@@ -138,7 +138,10 @@ knarr::~knarr()
 		}
 }
 
-void knarr::init(field_theory::finite_field *F, int BLT_no, int verbose_level)
+void knarr::init(
+		field_theory::finite_field *F,
+		int BLT_no, int verbose_level)
+// creates a W3q and a projective space P5 and a grassmann G63
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

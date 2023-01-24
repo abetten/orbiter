@@ -93,48 +93,62 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 	}
 	data_structures::string_tools ST;
 
-	if (Descr->f_general_code_binary) {
-			long int *Words;
-			int nb_words;
-			int n;
+	if (Descr->f_report) {
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity f_report" << endl;
+		}
 
-			//coding_theory::coding_theory_domain Codes;
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity before Code->report" << endl;
+		}
+		Code->report(verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity after Code->report" << endl;
+		}
 
+	}
+	else if (Descr->f_general_code_binary) {
+		long int *Words;
+		int nb_words;
+		int n;
 
-			n = Descr->general_code_binary_n;
-
-			Get_vector_or_set(Descr->general_code_binary_text, Words, nb_words);
-
-			coding_theory::code_diagram *Diagram;
-
-
-			Diagram = NEW_OBJECT(coding_theory::code_diagram);
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before Diagram->init" << endl;
-			}
-
-			Diagram->init(Descr->general_code_binary_label /* label */,
-					Words, nb_words, n, verbose_level);
-
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after Diagram->init" << endl;
-			}
+		//coding_theory::coding_theory_domain Codes;
 
 
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"before do_diagram" << endl;
-			}
-			do_diagram(Diagram, verbose_level);
-			if (f_v) {
-				cout << "coding_theoretic_activity::perform_activity "
-						"after do_diagram" << endl;
-			}
+		n = Descr->general_code_binary_n;
 
-			FREE_lint(Words);
+		Get_vector_or_set(Descr->general_code_binary_text, Words, nb_words);
+
+		coding_theory::code_diagram *Diagram;
+
+
+		Diagram = NEW_OBJECT(coding_theory::code_diagram);
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before Diagram->init" << endl;
+		}
+
+		Diagram->init(Descr->general_code_binary_label /* label */,
+				Words, nb_words, n, verbose_level);
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after Diagram->init" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before do_diagram" << endl;
+		}
+		do_diagram(Diagram, verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after do_diagram" << endl;
+		}
+
+		FREE_lint(Words);
 
 	}
 	else if (Descr->f_encode_text_5bits) {
@@ -557,7 +571,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			cout << "coding_theoretic_activity::perform_activity "
 					"before Crc_codes.crc32" << endl;
 		}
-		a = Crc_codes.crc32(Descr->crc32_text.c_str(), Descr->crc32_text.length());
+		a = Crc_codes.crc32((const uint8_t *) Descr->crc32_text.c_str(), Descr->crc32_text.length());
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
 					"after Crc_codes.crc32" << endl;
@@ -604,7 +618,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			cout << "coding_theoretic_activity::perform_activity "
 					"before Crc_codes.crc32" << endl;
 		}
-		a = Crc_codes.crc32(data, data_size);
+		a = Crc_codes.crc32((const uint8_t *) data, data_size);
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
 					"after Crc_codes.crc32" << endl;

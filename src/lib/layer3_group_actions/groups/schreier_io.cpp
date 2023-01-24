@@ -1316,7 +1316,8 @@ void schreier::draw_forest(std::string &fname_mask,
 	}
 }
 
-void schreier::export_tree_as_layered_graph(int orbit_no,
+void schreier::export_tree_as_layered_graph(
+		int orbit_no,
 		std::string &fname_mask,
 		int verbose_level)
 {
@@ -1543,11 +1544,7 @@ void schreier::draw_tree(std::string &fname,
 	}
 	draw_tree2(fname,
 			Opt,
-			//xmax, ymax, f_circletext,
 			weight, placement_x, max_depth, i, last,
-			//rad,
-			//f_embedded, f_sideways,
-			//scale, line_width,
 			f_has_point_labels, point_labels,
 			verbose_level - 2);
 	if (f_v) {
@@ -1602,35 +1599,25 @@ void schreier::draw_tree2(std::string &fname,
 
 	G.init(fname_full, Opt, verbose_level - 1);
 
-#if 0
-	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
-		Opt->f_embedded, Opt->f_sideways, verbose_level - 1);
-	if (f_v) {
-		cout << "schreier::draw_tree2 after creating G" << endl;
-	}
-	G.out_xmin() = 0;
-	G.out_ymin() = 0;
-	G.out_xmax() = Opt->xout;
-	G.out_ymax() = Opt->yout;
-	G.set_parameters(Opt->scale, Opt->line_width);
-#endif
-
 	G.header();
 	G.begin_figure(factor_1000);
 
 	int x = Opt->yin / 2;
 	int y;
 	if (f_v) {
-		cout << "schreier::draw_tree2 before calc_y_coordinate" << endl;
+		cout << "schreier::draw_tree2 "
+				"before calc_y_coordinate" << endl;
 	}
 	calc_y_coordinate(y, 0, max_depth, Opt->yin);
 	if (f_v) {
-		cout << "schreier::draw_tree2 after calc_y_coordinate" << endl;
+		cout << "schreier::draw_tree2 "
+				"after calc_y_coordinate" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "schreier::draw_tree2 before subtree_draw_lines" << endl;
+		cout << "schreier::draw_tree2 "
+				"before subtree_draw_lines" << endl;
 	}
 	subtree_draw_lines(G, Opt,
 			x, y, weight,
@@ -1638,11 +1625,13 @@ void schreier::draw_tree2(std::string &fname,
 			Opt->yin,
 			verbose_level);
 	if (f_v) {
-		cout << "schreier::draw_tree2 after subtree_draw_lines" << endl;
+		cout << "schreier::draw_tree2 "
+				"after subtree_draw_lines" << endl;
 	}
 
 	if (f_v) {
-		cout << "schreier::draw_tree2 before subtree_draw_vertices" << endl;
+		cout << "schreier::draw_tree2 "
+				"before subtree_draw_vertices" << endl;
 	}
 	subtree_draw_vertices(G, Opt,
 			x, y, weight,
@@ -1651,7 +1640,8 @@ void schreier::draw_tree2(std::string &fname,
 			Opt->yin,
 			verbose_level);
 	if (f_v) {
-		cout << "schreier::draw_tree2 after subtree_draw_vertices" << endl;
+		cout << "schreier::draw_tree2 "
+				"after subtree_draw_vertices" << endl;
 	}
 
 	int j, L, l, N;
@@ -1679,23 +1669,13 @@ void schreier::draw_tree2(std::string &fname,
 	else {
 		H = 0.;
 	}
-	snprintf(str, sizeof(str), "N=%d, avg=%lf,  gens=%d, H=%lf", N, avg, nb_gens, H);
+	snprintf(str, sizeof(str),
+			"N=%d, avg=%lf,  gens=%d, H=%lf", N, avg, nb_gens, H);
 	s.assign(str);
 	G.aligned_text(x, y, "", s);
 
 
-#if 0
-	if (f_circletext) {
-		G.circle_text(x, y, rad, "$\\emptyset$");
-	}
-	else {
-		G.circle_text(x, y, rad, "");
-		//G.circle(x, y, rad);
-	}
-#endif
-
 	G.end_figure();
-	//print_and_list_orbits_tex(std::ostream &ost)
 	G.footer();
 	if (f_v) {
 		cout << "schreier::draw_tree2 done" << endl;
@@ -1922,7 +1902,8 @@ void schreier::print_path(std::ostream &ost, int *path, int l)
 	ost << endl;
 }
 
-void schreier::write_to_file_csv(std::string &fname_csv, int verbose_level)
+void schreier::write_to_file_csv(
+		std::string &fname_csv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -608,8 +608,10 @@ int integer::compare_with_euclidean(discreta_base &a)
 	return 0;
 }
 
-void integer::integral_division(discreta_base &x,
-		discreta_base &q, discreta_base &r, int verbose_level)
+void integer::integral_division(
+		discreta_base &x,
+		discreta_base &q, discreta_base &r,
+		int verbose_level)
 {
 	int a, b, qq, rr;
 	

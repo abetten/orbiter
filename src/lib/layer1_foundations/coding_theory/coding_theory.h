@@ -295,7 +295,7 @@ public:
 
 	// crc_codes.cpp:
 	uint16_t crc16(const uint8_t *data, size_t size);
-	uint32_t crc32(const char *s, size_t n);
+	uint32_t crc32(const uint8_t *s, size_t n);
 	void crc32_test(int block_length, int verbose_level);
 	void crc256_test_k_subsets(
 			int message_length, int R, int k, int verbose_level);
@@ -312,6 +312,13 @@ public:
 			std::string &fname_out,
 			std::string &crc_type,
 			int block_length, int verbose_level);
+	void crc_general_file_based(
+			std::string &fname_in, std::string &fname_out,
+			CRC_type type,
+			int block_length, int verbose_level);
+	enum CRC_type detect_type_of_CRC(std::string &crc_type, int verbose_level);
+	int get_check_size_in_bytes(enum CRC_type type);
+#if 0
 	void crc16_file_based(
 			std::string &fname_in,
 			std::string &fname_out,
@@ -324,6 +331,7 @@ public:
 			std::string &fname_in,
 			std::string &fname_out,
 			int verbose_level);
+#endif
 	void check_errors(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
@@ -566,11 +574,12 @@ public:
 	~ttp_codes();
 
 	void twisted_tensor_product_codes(
-		int *&H_subfield, int &m, int &n,
 		field_theory::finite_field *FQ,
 		field_theory::finite_field *Fq,
 		int f_construction_A, int f_hyperoval,
-		int f_construction_B, int verbose_level);
+		int f_construction_B,
+		int *&H_subfield, int &m, int &n,
+		int verbose_level);
 	void create_matrix_M(
 		int *&M,
 		field_theory::finite_field *FQ,
@@ -588,7 +597,7 @@ public:
 		int f_elements_exponential,
 		std::string &symbol_for_print,
 		std::string &symbol_for_print_subfield,
-		int f_construction_A, int f_hyperoval, int f_construction_B,
+		int f_construction_A, int f_construction_B,
 		int verbose_level);
 	void tt_field_reduction(
 			field_theory::finite_field &F,
@@ -606,6 +615,79 @@ public:
 			int f_hyperoval,
 			int *&code, int &length,
 			int verbose_level);
+
+
+	void do_tensor(int q,
+			std::string &override_poly_Q,
+			std::string &override_poly_q,
+		int f_construction_A, int f_hyperoval,
+		int f_construction_B, int verbose_level);
+	void action_on_code(
+			field_theory::finite_field &F,
+			field_theory::finite_field &f, int m, int n,
+		int *M, int *H_subfield,
+		int *C, int *C_inv, int *A, int *U,
+		int *perm, int verbose_level);
+	void test_cyclic(
+			field_theory::finite_field &F,
+			field_theory::finite_field &f,
+		int *Aut, int *M, int *H_subfield,
+		int *C, int *C_inv, int *U,
+		int q, int Q, int m, int n,
+		int beta, int verbose_level);
+	void is_cyclic(
+			field_theory::finite_field &FQQ,
+			field_theory::finite_field &F,
+			field_theory::finite_field &f,
+		int *Aut, int *M, int *H_subfield,
+		int *C, int *C_inv, int *U,
+		int q, int Q, int m, int n,
+		int beta, int a, int b, int c, int d,
+		int verbose_level);
+	void test_representation(
+			field_theory::finite_field &F,
+			field_theory::finite_field &f, int Q,
+		int beta, int m, int n, int *H_subfield);
+	void multiply_abcd(
+			field_theory::finite_field &F,
+		int a1, int b1, int c1, int d1,
+		int a2, int b2, int c2, int d2,
+		int &a3, int &b3, int &c3, int &d3);
+	int choose_abcd_first(
+			field_theory::finite_field &F,
+			int Q, int &a, int &b, int &c, int &d);
+	int choose_abcd_next(
+			field_theory::finite_field &F,
+			int Q, int &a, int &b, int &c, int &d);
+	int choose_abcd_next2(
+			field_theory::finite_field &F,
+			int Q, int &a, int &b, int &c, int &d);
+	void choose_abcd_at_random(
+			field_theory::finite_field &F,
+			int Q, int &a, int &b, int &c, int &d);
+	int compute_mindist(
+			field_theory::finite_field &f,
+			int m, int n,
+			int *generator_matrix, int verbose_level);
+	int abcd_term(
+			field_theory::finite_field &f,
+			int a, int b, int c, int d,
+			int e1, int e2, int e3, int e4);
+	void do_other_stuff(
+			field_theory::finite_field *F,
+			field_theory::finite_field *f,
+			int beta, int beta_q,
+		int *M, int *C, int *C_inv, int *H_subfield,
+		int m, int n, int r,
+		int f_elements_exponential,
+		std::string &symbol_for_print,
+		std::string &symbol_for_print_subfield,
+		int f_construction_A, int f_hyperoval,
+		int f_construction_B,
+		int verbose_level);
+	void int_submatrix_all_rows(int *A, int m, int n,
+		int nb_cols, int *cols, int *B);
+
 
 };
 

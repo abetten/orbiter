@@ -156,12 +156,12 @@ void arc_lifting_with_two_lines::create_surface(
 		exit(1);
 	}
 
-	P[0] = Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
+	P[0] = Surf->P->Solid->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 			line1,
 			plane_rk,
 			0 /* verbose_level */);
 
-	P[1] = Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
+	P[1] = Surf->P->Solid->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 			line2,
 			plane_rk,
 			0 /* verbose_level */);
@@ -234,7 +234,7 @@ void arc_lifting_with_two_lines::create_surface(
 
 	for (i = 0; i < 4; i++) {
 		transversal[i] =
-				Surf->P->transversal_to_two_skew_lines_through_a_point(
+				Surf->P->Solid->transversal_to_two_skew_lines_through_a_point(
 						line1, line2, P[2 + i],
 						0 /* verbose_level */);
 		Surf->unrank_line(Transversals + i * 8, transversal[i]);

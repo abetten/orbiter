@@ -59,11 +59,13 @@ void create_graph::init(
 		f_has_CG = TRUE;
 		CG = NEW_OBJECT(graph_theory::colored_graph);
 		if (f_v) {
-			cout << "create_graph::init before CG->load, fname=" << description->fname << endl;
+			cout << "create_graph::init "
+					"before CG->load, fname=" << description->fname << endl;
 		}
 		CG->load(description->fname, verbose_level);
 		if (f_v) {
-			cout << "create_graph::init after CG->load, fname=" << description->fname << endl;
+			cout << "create_graph::init "
+					"after CG->load, fname=" << description->fname << endl;
 		}
 		f_has_CG = TRUE;
 		N = CG->nb_points;
@@ -89,8 +91,10 @@ void create_graph::init(
 		}
 
 		if (f_v) {
-			cout << "create_graph::init group=" << description->Cayley_graph_group << endl;
-			cout << "create_graph::init generators=" << description->Cayley_graph_gens << endl;
+			cout << "create_graph::init "
+					"group=" << description->Cayley_graph_group << endl;
+			cout << "create_graph::init "
+					"generators=" << description->Cayley_graph_gens << endl;
 		}
 
 		apps_algebra::any_group *G;
@@ -124,7 +128,8 @@ void create_graph::init(
 		nb_gens = sz / G->A_base->elt_size_in_int;
 
 		if (f_v) {
-			cout << "create_graph::init number of generators = " << nb_gens << endl;
+			cout << "create_graph::init "
+					"number of generators = " << nb_gens << endl;
 
 			cout << "create_graph::init generators: ";
 			Int_vec_print(cout, v, sz);
@@ -388,7 +393,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_cycle" << endl;
 		}
-		create_cycle(N, Adj, description->cycle_n,
+		create_cycle(description->cycle_n,
 				verbose_level);
 
 
@@ -403,7 +408,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_inversion_graph" << endl;
 		}
-		create_inversion_graph(N, Adj, description->inversion_graph_text,
+		create_inversion_graph(description->inversion_graph_text,
 				verbose_level);
 
 
@@ -418,7 +423,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_Hamming" << endl;
 		}
-		create_Hamming(N, Adj,
+		create_Hamming(
 				description->Hamming_n,
 				description->Hamming_q,
 				verbose_level);
@@ -435,7 +440,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_Johnson" << endl;
 		}
-		create_Johnson(N, Adj,
+		create_Johnson(
 				description->Johnson_n,
 				description->Johnson_k, description->Johnson_s,
 				verbose_level);
@@ -452,7 +457,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_Paley" << endl;
 		}
-		create_Paley(N, Adj,
+		create_Paley(
 				description->Paley_label_Fq,
 				verbose_level);
 
@@ -468,7 +473,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_Sarnak" << endl;
 		}
-		create_Sarnak(N, Adj,
+		create_Sarnak(
 				description->Sarnak_p,
 				description->Sarnak_q,
 				verbose_level);
@@ -485,7 +490,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_Schlaefli" << endl;
 		}
-		create_Schlaefli(N, Adj,
+		create_Schlaefli(
 				description->Schlaefli_label_Fq,
 				verbose_level);
 		if (f_v) {
@@ -499,7 +504,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_Shrikhande" << endl;
 		}
-		create_Shrikhande(N, Adj, verbose_level);
+		create_Shrikhande(verbose_level);
 
 		if (f_v) {
 			cout << "create_graph::init "
@@ -512,7 +517,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_Winnie_Li" << endl;
 		}
-		create_Winnie_Li(N, Adj,
+		create_Winnie_Li(
 				description->Winnie_Li_label_Fq,
 				description->Winnie_Li_index,
 				verbose_level);
@@ -528,7 +533,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_Grassmann" << endl;
 		}
-		create_Grassmann(N, Adj,
+		create_Grassmann(
 				description->Grassmann_n,
 				description->Grassmann_k,
 				description->Grassmann_label_Fq,
@@ -546,7 +551,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before create_coll_orthogonal" << endl;
 		}
-		create_coll_orthogonal(N, Adj,
+		create_coll_orthogonal(
 				description->coll_orthogonal_epsilon,
 				description->coll_orthogonal_d,
 				description->coll_orthogonal_label_Fq, verbose_level);
@@ -564,7 +569,10 @@ void create_graph::init(
 		F = NEW_OBJECT(field_theory::finite_field);
 		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 
-		F->finite_field_init_small_order(5, FALSE /* f_without_tables */, 0);
+		F->finite_field_init_small_order(5,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				0);
 		Surf->init(F, verbose_level);
 
 		Surf->Schlaefli->make_trihedral_pair_disjointness_graph(Adj, verbose_level);
@@ -649,7 +657,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before GT.make_orbital_graph" << endl;
 		}
-		make_orbital_graph(N, Adj,
+		make_orbital_graph(
 				AG, description->orbital_graph_orbit_idx,
 				verbose_level);
 		if (f_v) {
@@ -677,7 +685,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before make_collinearity_graph" << endl;
 		}
-		make_collinearity_graph(N, Adj,
+		make_collinearity_graph(
 				v, m, n,
 				verbose_level);
 		if (f_v) {
@@ -709,7 +717,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"before make_chain_graph" << endl;
 		}
-		make_chain_graph(N, Adj,
+		make_chain_graph(
 				v1, sz1,
 				v2, sz2,
 				verbose_level);
@@ -799,7 +807,7 @@ void create_graph::init(
 }
 
 
-void create_graph::create_cycle(int &N, int *&Adj,
+void create_graph::create_cycle(
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -833,7 +841,7 @@ void create_graph::create_cycle(int &N, int *&Adj,
 	}
 }
 
-void create_graph::create_inversion_graph(int &N, int *&Adj,
+void create_graph::create_inversion_graph(
 		std::string &perm_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -879,7 +887,6 @@ void create_graph::create_inversion_graph(int &N, int *&Adj,
 
 
 void create_graph::create_Hamming(
-		int &N, int *&Adj,
 		int n, int q,
 		int verbose_level)
 {
@@ -916,7 +923,6 @@ void create_graph::create_Hamming(
 
 
 void create_graph::create_Johnson(
-		int &N, int *&Adj,
 		int n, int k, int s,
 		int verbose_level)
 {
@@ -952,7 +958,6 @@ void create_graph::create_Johnson(
 }
 
 void create_graph::create_Paley(
-		int &N, int *&Adj,
 		std::string &label_Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -991,7 +996,6 @@ void create_graph::create_Paley(
 }
 
 void create_graph::create_Sarnak(
-		int &N, int *&Adj,
 		int p, int q,
 		int verbose_level)
 {
@@ -1020,7 +1024,10 @@ void create_graph::create_Sarnak(
 	int f_basis = TRUE;
 
 	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init_small_order(q, FALSE /* f_without_tables */, 0);
+	F->finite_field_init_small_order(q,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0);
 	//F->init_override_polynomial(q, override_poly, verbose_level);
 
 	A = NEW_OBJECT(actions::action);
@@ -1093,7 +1100,6 @@ void create_graph::create_Sarnak(
 
 
 void create_graph::create_Schlaefli(
-		int &N, int *&Adj,
 		std::string &label_Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1131,7 +1137,7 @@ void create_graph::create_Schlaefli(
 }
 
 void create_graph::create_Shrikhande(
-		int &N, int *&Adj, int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1309,7 +1315,6 @@ void create_graph::create_Shrikhande(
 }
 
 void create_graph::create_Winnie_Li(
-		int &N, int *&Adj,
 		std::string &label_Fq, int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1349,7 +1354,6 @@ void create_graph::create_Winnie_Li(
 }
 
 void create_graph::create_Grassmann(
-		int &N, int *&Adj,
 		int n, int k, std::string &label_Fq,
 		int r, int verbose_level)
 {
@@ -1391,7 +1395,6 @@ void create_graph::create_Grassmann(
 }
 
 void create_graph::create_coll_orthogonal(
-		int &N, int *&Adj,
 		int epsilon, int d, std::string &label_Fq,
 		int verbose_level)
 {
@@ -1431,7 +1434,6 @@ void create_graph::create_coll_orthogonal(
 }
 
 void create_graph::make_orbital_graph(
-		int &N, int *&Adj,
 		apps_algebra::any_group *AG, int orbit_idx,
 		int verbose_level)
 {
@@ -1526,7 +1528,6 @@ void create_graph::make_orbital_graph(
 }
 
 void create_graph::make_collinearity_graph(
-		int &N, int *&Adj,
 		int *Inc, int nb_rows, int nb_cols,
 		int verbose_level)
 {
@@ -1566,7 +1567,6 @@ void create_graph::make_collinearity_graph(
 }
 
 void create_graph::make_chain_graph(
-		int &N, int *&Adj,
 		int *part1, int sz1,
 		int *part2, int sz2,
 		int verbose_level)

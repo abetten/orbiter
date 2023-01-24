@@ -44,7 +44,10 @@ orbits_create_description::orbits_create_description()
 	f_on_polynomials = FALSE;
 	on_polynomials_degree = 0;
 
-#if 0
+	f_classification_by_canonical_form = FALSE;
+	Canonical_form_classifier_description = NULL;
+
+	#if 0
 	f_draw_tree = FALSE;
 	draw_tree_idx = 0;
 
@@ -122,6 +125,28 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 				cout << "-on_polynomials " << on_polynomials_degree << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-classification_by_canonical_form") == 0) {
+			f_classification_by_canonical_form = TRUE;
+			Canonical_form_classifier_description = NEW_OBJECT(projective_geometry::canonical_form_classifier_description);
+			if (f_v) {
+				cout << "-classification_by_canonical_form" << endl;
+			}
+			i += Canonical_form_classifier_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			if (f_v) {
+				cout << "done reading -classification_by_canonical_form " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+			if (f_v) {
+				cout << "-classification_by_canonical_form " << endl;
+				Canonical_form_classifier_description->print();
+			}
+		}
 #if 0
 		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
 			f_draw_tree = TRUE;
@@ -180,6 +205,10 @@ void orbits_create_description::print()
 	}
 	if (f_on_polynomials) {
 		cout << "-on_polynomials " << on_polynomials_degree << endl;
+	}
+	if (f_classification_by_canonical_form) {
+		cout << "-classification_by_canonical_form " << endl;
+		Canonical_form_classifier_description->print();
 	}
 #if 0
 	if (f_recognize) {

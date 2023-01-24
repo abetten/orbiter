@@ -560,7 +560,7 @@ public:
 // action_on_grassmannian.cpp
 // #############################################################################
 
-//! induced action on the grassmannian (subspaces of a fixed dimension of a vectors space)
+//! induced action on the grassmannian (subspaces of a fixed dimension of a vector space)
 
 
 class action_on_grassmannian {
@@ -586,7 +586,8 @@ public:
 	int max_string_length;
 	
 	int f_has_print_function;
-	void (*print_function)(std::ostream &ost, long int a, void *data);
+	void (*print_function)(
+			std::ostream &ost, long int a, void *data);
 	void *print_function_data;
 
 	action_on_grassmannian();

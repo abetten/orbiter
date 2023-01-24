@@ -1094,7 +1094,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 					"intersecting line " << i << " = " << five_lines[i]
 				<< " with line " << transversal_line << endl;
 		}
-		P[i] = Surf->P->point_of_intersection_of_a_line_and_a_line_in_three_space(
+		P[i] = Surf->P->Solid->point_of_intersection_of_a_line_and_a_line_in_three_space(
 				five_lines[i], transversal_line, 0 /* verbose_level */);
 	}
 	if (f_v) {

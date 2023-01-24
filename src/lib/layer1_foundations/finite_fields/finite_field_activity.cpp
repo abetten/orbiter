@@ -1179,7 +1179,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Fq = NEW_OBJECT(finite_field);
 		Fq->finite_field_init_small_order(Descr->field_reduction_q,
-				FALSE /* f_without_tables */, verbose_level);
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				verbose_level);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
 					"before Coding.field_reduction" << endl;

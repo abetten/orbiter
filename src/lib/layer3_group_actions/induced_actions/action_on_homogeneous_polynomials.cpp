@@ -80,13 +80,15 @@ void action_on_homogeneous_polynomials::init(
 	F = M->GFq;
 	n = M->n;
 	q = F->q;
+	if (f_v) {
+		cout << "action_on_homogeneous_polynomials::init n = " << n << endl;
+		cout << "action_on_homogeneous_polynomials::init q = " << q << endl;
+	}
 	dimension = HPD->get_nb_monomials();
 	degree = Gg.nb_PG_elements(dimension - 1, q);
 	if (f_v) {
-		cout << "action_on_homogeneous_polynomials::init "
-				"dimension = " << dimension << endl;
-		cout << "action_on_homogeneous_polynomials::init "
-				"degree = " << degree << endl;
+		cout << "action_on_homogeneous_polynomials::init dimension = " << dimension << endl;
+		cout << "action_on_homogeneous_polynomials::init degree = " << degree << endl;
 	}
 	low_level_point_size = dimension;
 	v1 = NEW_int(dimension);

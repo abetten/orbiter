@@ -1076,6 +1076,9 @@ public:
 
 	int f_draw_poset;
 
+	int f_fname;
+	std::string fname;
+
 	poset_classification_report_options();
 	~poset_classification_report_options();
 	int read_arguments(

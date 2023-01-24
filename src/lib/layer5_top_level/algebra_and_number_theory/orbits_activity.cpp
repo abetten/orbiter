@@ -31,7 +31,8 @@ orbits_activity::~orbits_activity()
 
 }
 
-void orbits_activity::init(orbits_activity_description *Descr,
+void orbits_activity::init(
+		orbits_activity_description *Descr,
 		apps_algebra::orbits_create *OC,
 		int verbose_level)
 {
@@ -272,6 +273,36 @@ void orbits_activity::do_report(int verbose_level)
 
 	}
 
+	else if (OC->f_has_classification_by_canonical_form) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"f_has_classification_by_canonical_form" << endl;
+		}
+
+		poset_classification::poset_classification_report_options *report_options;
+
+		if (Descr->f_report_options) {
+			report_options = Descr->report_options;
+		}
+		else {
+			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
+		}
+
+		OC->Canonical_form_classifier->report(
+				report_options,
+				verbose_level);
+
+		if (!Descr->f_report_options) {
+			FREE_OBJECT(report_options);
+		}
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"f_has_classification_by_canonical_form done" << endl;
+		}
+
+	}
+
 
 	else {
 		cout << "orbits_activity::do_report no suitable data structure" << endl;
@@ -303,7 +334,8 @@ void orbits_activity::do_export(int verbose_level)
 					"before OC->Orb->export_something" << endl;
 		}
 
-		OC->Orb->export_something(Descr->export_something_what,
+		OC->Orb->export_something(
+				Descr->export_something_what,
 				Descr->export_something_data1, fname, verbose_level);
 
 		if (f_v) {
@@ -328,7 +360,8 @@ void orbits_activity::do_export(int verbose_level)
 					"before OC->On_polynomials->export_something" << endl;
 		}
 
-		OC->On_polynomials->export_something(Descr->export_something_what,
+		OC->On_polynomials->export_something(
+				Descr->export_something_what,
 				Descr->export_something_data1, fname, verbose_level);
 
 		if (f_v) {
@@ -417,11 +450,47 @@ void orbits_activity::do_draw_tree(int verbose_level)
 		fname.assign(OC->Orb->prefix);
 		fname.append(str);
 
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree "
+					"before OC->Orb->Sch->draw_tree" << endl;
+		}
 		OC->Orb->Sch->draw_tree(fname,
 				orbiter_kernel_system::Orbiter->draw_options,
 				Descr->draw_tree_idx,
 				FALSE /* f_has_point_labels */, NULL /* long int *point_labels*/,
 				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree "
+					"after OC->Orb->Sch->draw_tree" << endl;
+		}
+
+		std::vector<int> Orb;
+
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree "
+					"before OC->Orb->Sch->get_orbit_in_order" << endl;
+		}
+		OC->Orb->Sch->get_orbit_in_order(Orb,
+				Descr->draw_tree_idx, verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree "
+					"after OC->Orb->Sch->get_orbit_in_order" << endl;
+		}
+
+		orbiter_kernel_system::file_io Fio;
+
+		string fname_full;
+
+		fname_full.assign(fname);
+		fname_full.append("_orbit_elements.csv");
+
+
+		Fio.vector_write_csv(fname_full, Orb);
+		if (f_v) {
+			cout << "Written file " << fname_full << " of size "
+					<< Fio.file_size(fname_full) << endl;
+		}
+
 	}
 	else if (OC->f_has_On_polynomials) {
 

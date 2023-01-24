@@ -390,7 +390,7 @@ int arc_generator::conic_test(
 	if (f_v) {
 		cout << "arc_generator::conic_test" << endl;
 	}
-	ret = PA->P->conic_test(S, len, pt, verbose_level);
+	ret = PA->P->Plane->conic_test(S, len, pt, verbose_level);
 	if (f_v) {
 		cout << "arc_generator::conic_test done" << endl;
 	}
@@ -520,7 +520,7 @@ void arc_generator::print(int len, long int *S)
 					"only defined in the plane" << endl;
 			exit(1);
 		}
-		PA->P->conic_type(
+		PA->P->Plane->conic_type(
 			S, len, 
 			6 /* threshold */,
 			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len1,

@@ -785,12 +785,12 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 		else {
 			long int plane_rk;
 
-			plane_rk = SO->Surf->P->plane_rank_using_dual_coordinates_in_three_space(
+			plane_rk = SO->Surf->P->Solid->plane_rank_using_dual_coordinates_in_three_space(
 					w /* eqn4 */,
 					0 /* verbose_level*/);
 			tangent_plane_rank_global[h] = plane_rk;
 			tangent_plane_rank_dual[nb_non_singular_pts++] =
-					SO->Surf->P->dual_rank_of_plane_in_three_space(
+					SO->Surf->P->Solid->dual_rank_of_plane_in_three_space(
 							plane_rk, 0 /* verbose_level*/);
 		}
 	}
@@ -2683,7 +2683,7 @@ int surface_object_properties::test_full_del_pezzo(
 	P = SO->Pts[P_idx];
 	rk_tangent_plane = tangent_plane_rank_global[P_idx];
 
-	SO->Surf->P->dual_rank_of_plane_in_three_space(
+	SO->Surf->P->Solid->dual_rank_of_plane_in_three_space(
 			rk_tangent_plane, 0 /* verbose_level*/);
 
 

@@ -121,6 +121,7 @@ ORBITER_MODULES= \
 		layer1_foundations/finite_fields/minimum_polynomial.o \
 		layer1_foundations/finite_fields/norm_tables.o \
 		layer1_foundations/finite_fields/nth_roots.o \
+		layer1_foundations/finite_fields/related_fields.o \
 		layer1_foundations/finite_fields/square_nonsquare.o \
 		layer1_foundations/finite_fields/subfield_structure.o \
 		layer1_foundations/geometry/andre_construction.o \
@@ -148,6 +149,8 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/points_and_lines.o \
 		layer1_foundations/geometry/polarity.o \
 		layer1_foundations/geometry/projective_space_implementation.o \
+		layer1_foundations/geometry/projective_space_of_dimension_three.o \
+		layer1_foundations/geometry/projective_space_plane.o \
 		layer1_foundations/geometry/projective_space_reporting.o \
 		layer1_foundations/geometry/projective_space.o \
 		layer1_foundations/geometry/projective_space2.o \

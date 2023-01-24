@@ -25,7 +25,7 @@ W3q::W3q()
 	P3 = NULL;
 	Q4 = NULL;
 	F = NULL;
-	Basis = NULL;
+	//Basis = NULL;
 
 	nb_lines = 0;
 	Lines = NULL;
@@ -33,7 +33,6 @@ W3q::W3q()
 	Q4_rk = NULL;
 	Line_idx = NULL;
 
-	//int v5[5];
 }
 
 
@@ -45,9 +44,11 @@ W3q::~W3q()
 	if (Q4) {
 		FREE_OBJECT(Q4);
 	}
+#if 0
 	if (Basis) {
 		FREE_int(Basis);
 	}
+#endif
 	if (Lines) {
 		FREE_int(Lines);
 	}
@@ -61,12 +62,14 @@ W3q::~W3q()
 
 void W3q::init(
 		field_theory::finite_field *F, int verbose_level)
-// allocates a projective_space and a orthogonal
+// allocates a projective_space PG(3,q)
+// and an orthogonal object O^+(4,q)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int f_vvv = FALSE; //(verbose_level >= 3);
 	int h, rk;
+	int v5[5];
 
 	W3q::F = F;
 	W3q::q = F->q;
@@ -76,7 +79,7 @@ void W3q::init(
 	}
 	P3 = NEW_OBJECT(projective_space);
 	Q4 = NEW_OBJECT(orthogonal_geometry::orthogonal);
-	Basis = NEW_int(2 * 4);
+	//Basis = NEW_int(2 * 4);
 	
 	P3->projective_space_init(3, F,
 		FALSE /* f_init_incidence_structure */, 
@@ -111,6 +114,7 @@ void W3q::init(
 	Q4_rk = NEW_int(nb_lines);
 	Line_idx = NEW_int(nb_lines);
 
+	int Basis[8];
 
 	for (h = 0; h < nb_lines; h++) {
 		P3->unrank_line(Basis, Lines[h]);
@@ -146,6 +150,8 @@ void W3q::find_lines(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, c;
+	int Basis[8];
+
 
 	if (f_v) {
 		cout << "W3q::find_lines" << endl;
@@ -170,6 +176,8 @@ void W3q::find_lines(int verbose_level)
 void W3q::print_lines()
 {
 	int h;
+	int Basis[8];
+
 
 	cout << "the lines are:" << endl;
 	for (h = 0; h < nb_lines; h++) {
@@ -194,6 +202,8 @@ int W3q::evaluate_symplectic_form(int *x4, int *y4)
 }
 
 void W3q::isomorphism_Q4q(int *x4, int *y4, int *v)
+// Let x4 and y4 be the coordinates of two points on a line.
+// Then v[] = (Pl_12, -Pl_13, Pl_42, -Pl_14, Pl_23)
 {
 	v[0] = F->Linear_algebra->Pluecker_12(x4, y4);
 	v[1] = F->negate(F->Linear_algebra->Pluecker_13(x4, y4));
@@ -206,6 +216,10 @@ void W3q::isomorphism_Q4q(int *x4, int *y4, int *v)
 void W3q::print_by_lines()
 {
 	int h;
+	int v5[5];
+	int Basis[8];
+
+
 	cout << "The isomorphism is:" << endl;
 	cout << "h : Lines[h] : Q4_rk[h] : Line_idx[h] : "
 			"x : y : point in Q(4,q)" << endl;
@@ -229,6 +243,10 @@ void W3q::print_by_lines()
 void W3q::print_by_points()
 {
 	int h;
+	int v5[5];
+	int Basis[8];
+
+
 	cout << "The isomorphism is:" << endl;
 	cout << "h : Line_idx[h] : Lines[Line_idx[h]] "
 			"x : y : point in Q(4,q)" << endl;

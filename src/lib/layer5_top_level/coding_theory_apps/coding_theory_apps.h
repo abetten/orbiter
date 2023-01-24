@@ -54,6 +54,8 @@ class coding_theoretic_activity_description {
 
 public:
 
+	int f_report;
+
 	int f_general_code_binary;
 	int general_code_binary_n;
 	std::string general_code_binary_label;
@@ -335,6 +337,12 @@ public:
 	int Gilbert_Varshamov_k;
 	int Gilbert_Varshamov_d;
 
+	int f_ttpA;
+	std::string ttpA_field_label;
+
+	int f_ttpB;
+	std::string ttpB_field_label;
+
 	std::vector<code_modification_description> Modifications;
 
 
@@ -412,6 +420,8 @@ public:
 			int verbose_level);
 	void polynomial_representation_of_boolean_function(
 			int verbose_level);
+	void report(int verbose_level);
+	void report2(std::ofstream &ost, int verbose_level);
 
 };
 

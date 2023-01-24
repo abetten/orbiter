@@ -873,7 +873,8 @@ void large_set_was_normalizer_orbits_early_test_func_callback(
 
 // globals:
 
-int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
+int large_set_was_design_test_orbit(
+		long int *orbit, int orbit_length,
 		void *extra_data)
 {
 	large_set_was *LSW = (large_set_was *) extra_data;

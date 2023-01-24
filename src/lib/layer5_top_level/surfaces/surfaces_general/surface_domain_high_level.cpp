@@ -905,7 +905,10 @@ void surface_domain_high_level::do_cubic_surface_properties(
 
 
 	F0 = NEW_OBJECT(field_theory::finite_field);
-	F0->finite_field_init_small_order(defining_q, FALSE /* f_without_tables */, 0);
+	F0->finite_field_init_small_order(defining_q,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0);
 
 	F = PA->P->F;
 
@@ -1193,7 +1196,10 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 
 	F0 = NEW_OBJECT(field_theory::finite_field);
-	F0->finite_field_init_small_order(defining_q, FALSE /* f_without_tables */, 0);
+	F0->finite_field_init_small_order(defining_q,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0);
 
 	F = PA->P->F;
 
@@ -1769,7 +1775,10 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 #endif
 
 		T[cur].F = NEW_OBJECT(field_theory::finite_field);
-		T[cur].F->finite_field_init_small_order(q, FALSE /* f_without_tables */, 0);
+		T[cur].F->finite_field_init_small_order(q,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				0);
 
 		//T[cur].Descr->F = T[cur].F;
 

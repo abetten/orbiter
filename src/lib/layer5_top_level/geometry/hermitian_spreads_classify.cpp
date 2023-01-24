@@ -139,7 +139,10 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	hermitian_spreads_classify::n = n;
 	hermitian_spreads_classify::Q = Q;
 	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init_small_order(Q, FALSE /* f_without_tables */, 0);
+	F->finite_field_init_small_order(Q,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0);
 
 	len = n + 1;
 

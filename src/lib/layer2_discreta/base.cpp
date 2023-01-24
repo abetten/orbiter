@@ -987,7 +987,8 @@ void discreta_base::modulo(discreta_base &p)
 	swap(r);
 }
 
-void discreta_base::extended_gcd(discreta_base &n,
+void discreta_base::extended_gcd(
+		discreta_base &n,
 		discreta_base &u, discreta_base &v, discreta_base &g,
 		int verbose_level)
 {

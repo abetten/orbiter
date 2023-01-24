@@ -3278,7 +3278,10 @@ void symbol_definition::load_finite_field_PG(int verbose_level)
 					"creating the finite field of order " << q << endl;
 		}
 		Projective_space_with_action_description->F = NEW_OBJECT(field_theory::finite_field);
-		Projective_space_with_action_description->F->finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level - 1);
+		Projective_space_with_action_description->F->finite_field_init_small_order(q,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::load_finite_field_PG "
 					"the finite field of order " << q << " has been created" << endl;
@@ -3319,7 +3322,10 @@ void symbol_definition::load_finite_field(std::string &input_q,
 					"creating the finite field of order " << q << endl;
 		}
 		F = NEW_OBJECT(field_theory::finite_field);
-		F->finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level - 1);
+		F->finite_field_init_small_order(q,
+				FALSE /* f_without_tables */,
+				FALSE /* f_compute_related_fields */,
+				verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::load_finite_field "
 					"the finite field of order " << q << " has been created" << endl;

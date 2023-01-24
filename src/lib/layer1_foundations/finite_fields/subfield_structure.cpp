@@ -23,6 +23,7 @@ subfield_structure::subfield_structure()
 	FQ = NULL;
 	Fq = NULL;
 	Q = q = s = 0;
+	index_in_multiplicative_group = 0;
 	Basis = NULL;
 	embedding = NULL;
 	embedding_inv = NULL;
@@ -30,6 +31,10 @@ subfield_structure::subfield_structure()
 	FQ_embedding = NULL;
 	Fq_element = NULL;
 	v = NULL;
+	f_has_2D = FALSE;
+	components_2D = NULL;
+	embedding_2D = NULL;
+	pair_embedding_2D = NULL;
 	//null();
 }
 
@@ -58,9 +63,15 @@ subfield_structure::~subfield_structure()
 	if (v) {
 		FREE_int(v);
 	}
+	if (f_has_2D) {
+		FREE_int(components_2D);
+		FREE_int(embedding_2D);
+		FREE_int(pair_embedding_2D);
+	}
 }
 
-void subfield_structure::init(finite_field *FQ,
+void subfield_structure::init(
+		finite_field *FQ,
 		finite_field *Fq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -88,6 +99,11 @@ void subfield_structure::init(finite_field *FQ,
 		cout << "index = " << s << endl;
 	}
 
+	index_in_multiplicative_group = (Q - 1) / (q - 1);
+	if (f_v) {
+		cout << "index of multiplicative groups = " << index_in_multiplicative_group << endl;
+	}
+
 
 	my_basis = NEW_int(s);
 	alpha = FQ->p; // the primitive element
@@ -96,8 +112,20 @@ void subfield_structure::init(finite_field *FQ,
 		my_basis[i] = FQ->power(omega, i);
 	}
 	init_with_given_basis(FQ, Fq, my_basis, verbose_level);
-
 	FREE_int(my_basis);
+
+
+	if (s == 2) {
+		if (f_v) {
+			cout << "subfield_structure::init before embedding_2dimensional" << endl;
+		}
+		embedding_2dimensional(verbose_level);
+		if (f_v) {
+			cout << "subfield_structure::init after embedding_2dimensional" << endl;
+		}
+		f_has_2D = TRUE;
+	}
+
 
 	if (f_v) {
 		cout << "subfield_structure::init done" << endl;
@@ -105,7 +133,8 @@ void subfield_structure::init(finite_field *FQ,
 }
 
 void subfield_structure::init_with_given_basis(
-		finite_field *FQ, finite_field *Fq, int *given_basis,
+		finite_field *FQ,
+		finite_field *Fq, int *given_basis,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -154,7 +183,8 @@ void subfield_structure::init_with_given_basis(
 		Fq_element[i] = -1;
 	}
 	for (i = 0; i < q; i++) {
-		j = FQ->embed(*Fq, s, i, 0 /* verbose_level */);
+		//j = FQ->embed(*Fq, s, i, 0 /* verbose_level */);
+		j = embed(i, 0 /* verbose_level */);
 		FQ_embedding[i] = j;
 		Fq_element[j] = i;
 	}
@@ -172,6 +202,107 @@ void subfield_structure::init_with_given_basis(
 	
 	if (f_v) {
 		cout << "subfield_structure::init_with_given_basis done" << endl;
+	}
+}
+
+int subfield_structure::embed(int b, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, i, j;
+
+	if (f_v) {
+		cout << "subfield_structure::embed b=" << b << endl;
+	}
+
+	if (b == 0) {
+		a = 0;
+	}
+	else {
+		j = Fq->log_alpha(b);
+		i = j * index_in_multiplicative_group;
+		a = FQ->alpha_power(i);
+	}
+
+	if (f_v) {
+		cout << "subfield_structure::embed b=" << b << " a=" << a << endl;
+	}
+	if (f_v) {
+		cout << "subfield_structure::embed done" << endl;
+	}
+	return a;
+}
+
+int subfield_structure::retract(int b, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, i, j;
+	number_theory::number_theory_domain NT;
+
+	if (f_v) {
+		cout << "subfield_structure::retract b=" << b << endl;
+	}
+
+	if (b == 0) {
+		a = 0;
+	}
+	else {
+		j = FQ->log_alpha(b);
+		if ((j % index_in_multiplicative_group)) {
+			cout << "subfield_structure::retract the element does not belong to the subfield" << endl;
+			exit(1);
+		}
+		i = j / index_in_multiplicative_group;
+		a = Fq->alpha_power(i);
+	}
+
+	if (f_v) {
+		cout << "subfield_structure::retract b=" << b << " a=" << a << endl;
+	}
+	if (f_v) {
+		cout << "subfield_structure::retract done" << endl;
+	}
+	return a;
+}
+
+void subfield_structure::embed_int_vec(
+			int *v_in, int *v_out, int len,
+			int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a, b;
+
+	if (f_v) {
+		cout << "subfield_structure::embed_int_vec" << endl;
+	}
+	for (i = 0; i < len; i++) {
+		a = v_in[i];
+		b = embed(a, verbose_level - 1);
+		v_out[i] = b;
+	}
+
+	if (f_v) {
+		cout << "subfield_structure::embed_int_vec done" << endl;
+	}
+}
+
+void subfield_structure::retract_int_vec(
+			int *v_in, int *v_out, int len,
+			int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a, b;
+
+	if (f_v) {
+		cout << "subfield_structure::retract_int_vec" << endl;
+	}
+	for (i = 0; i < len; i++) {
+		a = v_in[i];
+		b = retract(a, verbose_level - 1);
+		v_out[i] = b;
+	}
+
+	if (f_v) {
+		cout << "subfield_structure::retract_int_vec done" << endl;
 	}
 }
 
@@ -202,16 +333,33 @@ void subfield_structure::print_embedding()
 
 void subfield_structure::report(std::ostream &ost)
 {
-	int i, j;
-	geometry::geometry_global Gg;
+	//int i, j;
+	//geometry::geometry_global Gg;
 
 
-	ost << "\\subsection*{The Subfield of Order $" << q << "$}" << endl;
+	ost << "Subfield of Order $" << q << "$:\\\\" << endl;
+	ost << "polynomial: " << Fq->my_poly << "\\\\" << endl;
 	ost << "Field basis:\\\\" << endl;
 	ost << "$$" << endl;
 	Int_vec_print(ost, Basis, s);
 	//cout << endl;
 	ost << "$$" << endl;
+
+	//report_embedding(ost);
+	//report_embedding_reverse(ost);
+
+	if (f_has_2D) {
+		ost << "$$" << endl;
+		print_embedding_2D_table_tex();
+		ost << "$$" << endl;
+	}
+}
+
+void subfield_structure::report_embedding(std::ostream &ost)
+{
+	int i, j;
+	geometry::geometry_global Gg;
+
 	ost << "Embedding:\\\\" << endl;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|r|r|r|}" << endl;
@@ -226,7 +374,12 @@ void subfield_structure::report(std::ostream &ost)
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
+}
 
+void subfield_structure::report_embedding_reverse(std::ostream &ost)
+{
+	int i, j;
+	geometry::geometry_global Gg;
 
 	ost << "In reverse:\\\\" << endl;
 	ost << "$$" << endl;
@@ -271,7 +424,8 @@ int subfield_structure::evaluate_over_Fq(int *v)
 	return a;
 }
 
-void subfield_structure::lift_matrix(int *MQ,
+void subfield_structure::lift_matrix(
+		int *MQ,
 		int m, int *Mq, int verbose_level)
 // input is MQ[m * m] over the field FQ.
 // output is Mq[n * n] over the field Fq,
@@ -563,7 +717,8 @@ void subfield_structure::create_adelaide_hyperoval(
 }
 
 
-void subfield_structure::field_reduction(int *input, int sz, int *output,
+void subfield_structure::field_reduction(
+		int *input, int sz, int *output,
 		int verbose_level)
 // input[sz], output[(s * sz) * (s * sz * s)],
 {
@@ -629,6 +784,149 @@ void subfield_structure::field_reduction(int *input, int sz, int *output,
 		cout << "subfield_structure::field_reduction done" << endl;
 	}
 
+}
+
+
+
+void subfield_structure::embedding_2dimensional(int verbose_level)
+	// we think of FQ as two dimensional vector space
+	// over Fq with basis (1,alpha)
+	// for i,j \in Fq, with x = i + j * alpha \in FQ, we have
+	// pair_embedding_2D[i * q + j] = x;
+	// also,
+	// components_2D[x * 2 + 0] = i;
+	// components_2D[x * 2 + 1] = j;
+	// also, for i \in Fq, embedding[i] is the element
+	// in FQ that corresponds to i
+
+	// components_2D[Q * 2]
+	// embedding_2D[q]
+	// pair_embedding_2D[q * q]
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
+	int alpha, i, j, I, J, x;
+
+	if (f_v) {
+		cout << "subfield_structure::embedding_2dimensional" << endl;
+	}
+	components_2D = NEW_int(Q * 2);
+	embedding_2D = NEW_int(q);
+	pair_embedding_2D = NEW_int(q * q);
+	alpha = Fq->p;
+	embedding_2D[0] = 0;
+	for (i = 0; i < q * q; i++) {
+		pair_embedding_2D[i] = -1;
+	}
+	for (i = 0; i < Q * 2; i++) {
+		components_2D[i] = -1;
+	}
+	for (i = 1; i < q; i++) {
+		j = embed(i, verbose_level - 2);
+		embedding_2D[i] = j;
+	}
+	for (i = 0; i < q; i++) {
+		I = embed(i, verbose_level - 4);
+		if (f_vv) {
+			cout << "i=" << i << " I=" << I << endl;
+		}
+		for (j = 0; j < q; j++) {
+			J = embed(j, verbose_level - 4);
+			x = FQ->add(I, FQ->mult(alpha, J));
+			if (pair_embedding_2D[i * q + j] != -1) {
+				cout << "error" << endl;
+				cout << "element (" << i << "," << j << ") embeds "
+						"as (" << I << "," << J << ") = " << x << endl;
+				exit(1);
+			}
+			pair_embedding_2D[i * q + j] = x;
+			components_2D[x * 2 + 0] = i;
+			components_2D[x * 2 + 1] = j;
+			if (f_vv) {
+				cout << "element (" << i << "," << j << ") embeds "
+						"as (" << I << "," << J << ") = " << x << endl;
+			}
+		}
+	}
+	if (f_vv) {
+		cout << "subfield_structure::embedding_2dimensional "
+				"the two dimensional embedding is" << endl;
+		print_embedding();
+	}
+	if (f_v) {
+		cout << "subfield_structure::embedding_2dimensional "
+				"done" << endl;
+	}
+
+}
+
+void subfield_structure::print_embedding_2D()
+{
+	int i, j;
+
+	cout << "embedding_2D:" << endl;
+	for (i = 0; i < q; i++) {
+		cout << setw(4) << i << " : " << setw(4) << embedding_2D[i] << endl;
+	}
+	cout << "components_2D:" << endl;
+	for (i = 0; i < Q; i++) {
+		cout << setw(4) << i << setw(4) << components_2D[i * 2 + 0]
+			<< setw(4) << components_2D[i * 2 + 1] << endl;
+	}
+	cout << "pair_embedding_2D:" << endl;
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			cout << setw(4) << i << setw(4) << j << setw(4)
+				<< pair_embedding_2D[i * q + j] << endl;
+		}
+	}
+}
+
+void subfield_structure::print_embedding_2D_table_tex()
+{
+	int i; //, j, a, b, aa, bb, c;
+
+
+	cout << "\\begin{array}{|c|c|c|}" << endl;
+	cout << "\\\\" << endl;
+	cout << "i & \\mbox{elt in Fq} & \\mbox{elt in FQ} \\\\" << endl;
+	cout << "\\\\" << endl;
+	cout << "\\\\" << endl;
+	for (i = 0; i < q; i++) {
+		cout << i;
+		cout << " & ";
+		Fq->print_element(cout, i);
+		cout << " & ";
+		FQ->print_element(cout, embedding_2D[i]);
+		cout << "\\\\" << endl;
+	}
+	cout << "\\end{array}" << endl;
+#if 0
+	cout << "\\hline" << endl;
+	for (i = 0; i < q; i++) {
+		Fq->print_element(cout, i);
+		if (i == 0) {
+			a = 0;
+		}
+		else {
+			a = Fq->alpha_power(i - 1);
+		}
+		aa = embedding[a];
+		for (j = 0; j < q; j++) {
+			if (j == 0) {
+				b = 0;
+			}
+			else {
+				b = Fq->alpha_power(j - 1);
+			}
+			bb = embedding_2D[b];
+			c = FQ->add(aa, FQ->mult(bb, Fq->p));
+			cout << " & ";
+			FQ->print_element(cout, c);
+		}
+		cout << "\\\\" << endl;
+	}
+#endif
 }
 
 

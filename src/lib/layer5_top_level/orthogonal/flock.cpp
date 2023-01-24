@@ -425,7 +425,9 @@ void flock::quadratic_lift(
 	Q = q * q;
 
 	F2->finite_field_init_small_order(Q,
-			FALSE /* f_without_tables */, verbose_level);
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			verbose_level);
 
 
 	ring_theory::homogeneous_polynomial_domain *Poly2;
@@ -518,7 +520,9 @@ void flock::cubic_lift(
 	Q = q * q * q;
 
 	FQ->finite_field_init_small_order(Q,
-			FALSE /* f_without_tables */, verbose_level);
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			verbose_level);
 
 
 	ring_theory::homogeneous_polynomial_domain *Poly2;

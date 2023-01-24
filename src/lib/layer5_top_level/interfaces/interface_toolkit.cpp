@@ -139,6 +139,11 @@ interface_toolkit::interface_toolkit()
 	//std::string extract_from_file_with_tail_tail;
 	//std::string extract_from_file_with_tail_target_fname;
 
+	f_serialize_file_names = FALSE;
+	//std::string serialize_file_names_fname;
+	//std::string serialize_file_names_output_mask;
+
+
 }
 
 
@@ -225,6 +230,9 @@ void interface_toolkit::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-extract_from_file_with_tail") == 0) {
 		cout << "-extract_from_file_with_tail <fname> <label> <tail> <extract_from_file_target_fname>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-serialize_file_names") == 0) {
+		cout << "-serialize_file_names <fname> <fname> <mask>" << endl;
 	}
 }
 
@@ -313,6 +321,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-extract_from_file_with_tail") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-serialize_file_names") == 0) {
 		return true;
 	}
 	return false;
@@ -678,6 +689,14 @@ void interface_toolkit::read_arguments(int argc,
 						<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-serialize_file_names") == 0) {
+		f_serialize_file_names = TRUE;
+		serialize_file_names_fname.assign(argv[++i]);
+		serialize_file_names_output_mask.assign(argv[++i]);
+		if (f_v) {
+			cout << "-serialize_file_names " << serialize_file_names_fname << " " << serialize_file_names_output_mask << endl;
+		}
+	}
 
 
 	if (f_v) {
@@ -818,6 +837,9 @@ void interface_toolkit::print()
 				<< " " << extract_from_file_with_tail_tail
 				<< " " << extract_from_file_with_tail_target_fname
 					<< endl;
+	}
+	if (f_serialize_file_names) {
+		cout << "-serialize_file_names " << serialize_file_names_fname << " " << serialize_file_names_output_mask << endl;
 	}
 }
 
@@ -1259,6 +1281,39 @@ void interface_toolkit::worker(int verbose_level)
 			}
 		}
 		cout << "Written file " << extract_from_file_with_tail_target_fname << " of size " << Fio.file_size(extract_from_file_with_tail_target_fname) << endl;
+
+	}
+	else if (f_serialize_file_names) {
+		if (f_v) {
+			cout << "interface_toolkit::worker -serialize_file_names " << serialize_file_names_fname << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+		std::string *Lines;
+		int nb_lines;
+		int i;
+		char str[1000];
+		char cmd[1000];
+
+		Fio.read_file_as_array_of_strings(
+				serialize_file_names_fname,
+			Lines,
+			nb_lines,
+			verbose_level);
+
+		if (f_v) {
+			cout << "interface_toolkit::worker serialize_file_names_output_mask = " << serialize_file_names_output_mask << endl;
+		}
+
+		for (i = 0; i < nb_lines; i++) {
+			cout << "i=" << i << " / " << nb_lines << " fname=" << Lines[i] << endl;
+			snprintf(str, sizeof(str), serialize_file_names_output_mask.c_str(), i);
+			cout << "i=" << i << " / " << nb_lines << " output=" << str << endl;
+			snprintf(cmd, sizeof(cmd), "mv %s %s", Lines[i].c_str(), str);
+			cout << "executing : " << cmd << endl;
+			system(cmd);
+
+		}
+
 
 	}
 

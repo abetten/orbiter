@@ -176,6 +176,9 @@ public:
 	void lint_matrix_write_csv_override_headers(
 			std::string &fname,
 			std::string *headers, long int *M, int m, int n);
+	void vector_write_csv(
+			std::string &fname,
+			std::vector<int > &V);
 	void vector_matrix_write_csv(
 			std::string &fname,
 			std::vector<std::vector<int> > &V);
@@ -418,6 +421,11 @@ public:
 			std::string &input_values,
 			std::string &output_values,
 			int verbose_level);
+	void read_file_as_array_of_strings(
+			std::string &fname,
+		std::string *&Lines,
+		int &nb_lines,
+		int verbose_level);
 
 };
 

@@ -25,10 +25,13 @@ quadratic_form_list_coding::quadratic_form_list_coding()
 {
 	FQ = NULL;
 	Fq = NULL;
+	SubS = NULL;
 
+#if 0
 	components = NULL;
 	embedding = NULL;
 	pair_embedding = NULL;
+#endif
 
 	alpha = 0;
 	T_alpha = N_alpha = 0;
@@ -60,7 +63,10 @@ quadratic_form_list_coding::quadratic_form_list_coding()
 
 quadratic_form_list_coding::~quadratic_form_list_coding()
 {
-
+	if (SubS) {
+		FREE_OBJECT(SubS);
+	}
+#if 0
 	if (components) {
 		FREE_int(components);
 		components = NULL;
@@ -73,7 +79,7 @@ quadratic_form_list_coding::~quadratic_form_list_coding()
 		FREE_int(pair_embedding);
 		pair_embedding = NULL;
 	}
-
+#endif
 	if (form_i) {
 		FREE_int(form_i);
 		form_i = NULL;
@@ -130,7 +136,8 @@ quadratic_form_list_coding::~quadratic_form_list_coding()
 
 }
 
-void quadratic_form_list_coding::init(field_theory::finite_field *Fq,
+void quadratic_form_list_coding::init(
+		field_theory::finite_field *Fq,
 		field_theory::finite_field *FQ,
 		int f_sum_of_squares, int verbose_level)
 {
@@ -144,6 +151,20 @@ void quadratic_form_list_coding::init(field_theory::finite_field *Fq,
 
 	quadratic_form_list_coding::FQ = FQ;
 	quadratic_form_list_coding::Fq = Fq;
+
+	SubS = NEW_OBJECT(field_theory::subfield_structure);
+
+	if (f_v) {
+		cout << "quadratic_form_list_coding::init before SubS->init" << endl;
+	}
+	SubS->init(
+			FQ,
+			Fq, verbose_level);
+	if (f_v) {
+		cout << "quadratic_form_list_coding::init after SubS->init" << endl;
+	}
+
+
 	nb_terms = 0;
 
 	form_i = NEW_int(4 * 4);
@@ -160,6 +181,7 @@ void quadratic_form_list_coding::init(field_theory::finite_field *Fq,
 				"primitive element alpha=" << alpha << endl;
 	}
 
+#if 0
 	if (f_vv) {
 		cout << "quadratic_form_list_coding::init calling "
 			"subfield_embedding_2dimensional" << endl;
@@ -172,9 +194,10 @@ void quadratic_form_list_coding::init(field_theory::finite_field *Fq,
 		FQ->print_embedding(*Fq, components,
 				embedding, pair_embedding);
 	}
+#endif
 
-	T_alpha = FQ->retract(*Fq, 2, FQ->T2(alpha), verbose_level - 2);
-	N_alpha = FQ->retract(*Fq, 2, FQ->N2(alpha), verbose_level - 2);
+	T_alpha = SubS->retract(FQ->T2(alpha), verbose_level - 2);
+	N_alpha = SubS->retract(FQ->N2(alpha), verbose_level - 2);
 	if (f_vv) {
 		cout << "quadratic_form_list_coding::init T_alpha = " << T_alpha << endl;
 		cout << "quadratic_form_list_coding::init N_alpha = " << N_alpha << endl;

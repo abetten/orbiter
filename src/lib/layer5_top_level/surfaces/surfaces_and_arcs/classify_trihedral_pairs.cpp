@@ -441,9 +441,9 @@ void classify_trihedral_pairs::early_test_func_type1(
 #endif
 
 	for (i = 0; i < len; i++) {
-		Lines[i * 3 + 0] = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 0, 0 /* verbose_level */);
-		Lines[i * 3 + 1] = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 1, 0 /* verbose_level */);
-		Lines[i * 3 + 2] = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 5, 0 /* verbose_level */);
+		Lines[i * 3 + 0] = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 0, 0 /* verbose_level */);
+		Lines[i * 3 + 1] = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 1, 0 /* verbose_level */);
+		Lines[i * 3 + 2] = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 5, 0 /* verbose_level */);
 	}
 	if (f_vv) {
 		cout << "classify_trihedral_pairs::early_test_func_type1 Lines=" << endl;
@@ -474,7 +474,7 @@ void classify_trihedral_pairs::early_test_func_type1(
 		
 		Lint_vec_copy(Lines, Lines2, len * 3);
 		
-		rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 0, 0 /* verbose_level */);
+		rk = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 0, 0 /* verbose_level */);
 
 
 #if 0
@@ -487,7 +487,7 @@ void classify_trihedral_pairs::early_test_func_type1(
 #endif
 		Lines2[len * 3 + 0] = rk;
 
-		rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 1, 0 /* verbose_level */);
+		rk = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 1, 0 /* verbose_level */);
 #if 0
 		if (rk == rk0) {
 			if (f_vv) {
@@ -498,7 +498,7 @@ void classify_trihedral_pairs::early_test_func_type1(
 #endif
 		Lines2[len * 3 + 1] = rk;
 
-		rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 5, 0 /* verbose_level */);
+		rk = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 5, 0 /* verbose_level */);
 #if 0
 		if (rk == rk0) {
 			if (f_vv) {
@@ -607,9 +607,9 @@ void classify_trihedral_pairs::early_test_func_type2(long int *S, int len,
 	}
 
 	for (i = 0; i < len; i++) {
-		Lines[i * 3 + 0] = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 0, 0 /* verbose_level */);
-		Lines[i * 3 + 1] = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 1, 0 /* verbose_level */);
-		Lines[i * 3 + 2] = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 2, 0 /* verbose_level */);
+		Lines[i * 3 + 0] = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 0, 0 /* verbose_level */);
+		Lines[i * 3 + 1] = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 1, 0 /* verbose_level */);
+		Lines[i * 3 + 2] = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[i], 2, 0 /* verbose_level */);
 	}
 	if (f_vv) {
 		cout << "classify_trihedral_pairs::early_test_func_type2 "
@@ -647,11 +647,11 @@ void classify_trihedral_pairs::early_test_func_type2(long int *S, int len,
 		
 		Lint_vec_copy(Lines, Lines2, len * 3);
 		
-		rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 0, 0 /* verbose_level */);
+		rk = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 0, 0 /* verbose_level */);
 		Lines2[len * 3 + 0] = rk;
-		rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 1, 0 /* verbose_level */);
+		rk = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 1, 0 /* verbose_level */);
 		Lines2[len * 3 + 1] = rk;
-		rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 2, 0 /* verbose_level */);
+		rk = Surf->P->Solid->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, 2, 0 /* verbose_level */);
 		Lines2[len * 3 + 2] = rk;
 
 		if (f_vv) {

@@ -385,8 +385,8 @@ void unusual_model::convert_to_usual(int n,
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < 2; j++) {
 			c = unusual_coordinates[i * 3 + j];
-			a = Quadratic_form_list_coding->components[c * 2 + 0];
-			b = Quadratic_form_list_coding->components[c * 2 + 1];
+			a = Quadratic_form_list_coding->SubS->components_2D[c * 2 + 0];
+			b = Quadratic_form_list_coding->SubS->components_2D[c * 2 + 1];
 			//a = c % q;
 			//b = (c - a) / q;
 			tmp[i * 4 + j * 2 + 0] = a;
@@ -448,9 +448,9 @@ void unusual_model::convert_from_usual(int n,
 			a = tmp[i * 4 + j * 2 + 0];
 			b = tmp[i * 4 + j * 2 + 1];
 			//c = b * q + a;
-			c = Quadratic_form_list_coding->pair_embedding[a * q + b];
-			aa = Quadratic_form_list_coding->components[c * 2 + 0];
-			bb = Quadratic_form_list_coding->components[c * 2 + 1];
+			c = Quadratic_form_list_coding->SubS->pair_embedding_2D[a * q + b];
+			aa = Quadratic_form_list_coding->SubS->components_2D[c * 2 + 0];
+			bb = Quadratic_form_list_coding->SubS->components_2D[c * 2 + 1];
 			if (aa != a) {
 				cout << "aa=" << aa << " not equal to a=" << a << endl;
 				cout << "a=" << a << " b=" << b << " c=" << c << endl;
@@ -700,13 +700,13 @@ void unusual_model::create_Mondello_BLT_set(
 
 int unusual_model::N2(int a)
 {
-	return FQ->retract(*Fq, 2, FQ->N2(a), 0 /* verbose_level */);
+	return Quadratic_form_list_coding->SubS->retract(FQ->N2(a), 0 /* verbose_level */);
 	
 }
 
 int unusual_model::T2(int a)
 {
-	return FQ->retract(*Fq, 2, FQ->T2(a), 0 /* verbose_level */);
+	return Quadratic_form_list_coding->SubS->retract(FQ->T2(a), 0 /* verbose_level */);
 	
 }
 
@@ -797,10 +797,10 @@ void unusual_model::print_coordinates_detailed(
 	b = unusual[1];
 	c = unusual[2];
 	w = evaluate_quadratic_form(a, b, c, 0);
-	a1 = Quadratic_form_list_coding->components[2 * a + 0];
-	a2 = Quadratic_form_list_coding->components[2 * a + 1];
-	b1 = Quadratic_form_list_coding->components[2 * b + 0];
-	b2 = Quadratic_form_list_coding->components[2 * b + 1];
+	a1 = Quadratic_form_list_coding->SubS->components_2D[2 * a + 0];
+	a2 = Quadratic_form_list_coding->SubS->components_2D[2 * a + 1];
+	b1 = Quadratic_form_list_coding->SubS->components_2D[2 * b + 0];
+	b2 = Quadratic_form_list_coding->SubS->components_2D[2 * b + 1];
 	unusual_point_rank = a * Q + b * q + c;
 	l1 = FQ->log_alpha(a);
 	l2 = FQ->log_alpha(b);
@@ -1198,10 +1198,10 @@ void unusual_model::parse_4by4_matrix(int *M4,
 				f_semi = FALSE;
 			}
 			else {
-				image1 = Quadratic_form_list_coding->pair_embedding[x * q + y];
+				image1 = Quadratic_form_list_coding->SubS->pair_embedding_2D[x * q + y];
 				x = M4[i * 8 + 4 + j * 2 + 0];
 				y = M4[i * 8 + 4 + j * 2 + 1];
-				image2 = Quadratic_form_list_coding->pair_embedding[x * q + y];
+				image2 = Quadratic_form_list_coding->SubS->pair_embedding_2D[x * q + y];
 				u = FQ->inverse(image1);
 				v = FQ->mult(image2, u);
 				if (v == q) {
@@ -1271,10 +1271,10 @@ void unusual_model::create_4by4_matrix(int *M4,
 				image1 = FQ->mult(1, coeff);
 				image2 = FQ->mult(q, coeff);
 			}
-			M4[i * 8 + j * 2 + 0] = Quadratic_form_list_coding->components[image1 * 2 + 0];
-			M4[i * 8 + j * 2 + 1] = Quadratic_form_list_coding->components[image1 * 2 + 1];
-			M4[i * 8 + 4 + j * 2 + 0] = Quadratic_form_list_coding->components[image2 * 2 + 0];
-			M4[i * 8 + 4 + j * 2 + 1] = Quadratic_form_list_coding->components[image2 * 2 + 1];
+			M4[i * 8 + j * 2 + 0] = Quadratic_form_list_coding->SubS->components_2D[image1 * 2 + 0];
+			M4[i * 8 + j * 2 + 1] = Quadratic_form_list_coding->SubS->components_2D[image1 * 2 + 1];
+			M4[i * 8 + 4 + j * 2 + 0] = Quadratic_form_list_coding->SubS->components_2D[image2 * 2 + 0];
+			M4[i * 8 + 4 + j * 2 + 1] = Quadratic_form_list_coding->SubS->components_2D[image2 * 2 + 1];
 		}
 	}
 }

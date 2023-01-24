@@ -1097,12 +1097,12 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 		else {
 			long int line_rk;
 
-			line_rk = QO->Dom->P->line_rank_using_dual_coordinates_in_plane(
+			line_rk = QO->Dom->P->Plane->line_rank_using_dual_coordinates_in_plane(
 					w /* eqn3 */,
 					0 /* verbose_level*/);
 			tangent_line_rank_global[h] = line_rk;
 			tangent_line_rank_dual[nb_non_singular_pts++] =
-					QO->Dom->P->dual_rank_of_line_in_plane(
+					QO->Dom->P->Plane->dual_rank_of_line_in_plane(
 							line_rk, 0 /* verbose_level*/);
 		}
 	}

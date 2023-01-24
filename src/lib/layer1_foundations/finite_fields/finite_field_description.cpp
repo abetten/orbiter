@@ -32,6 +32,8 @@ finite_field_description::finite_field_description()
 
 	f_without_tables = FALSE;
 
+	f_compute_related_fields = FALSE;
+
 	f_symbol = FALSE;
 	//std::string symbol_label;
 
@@ -73,6 +75,12 @@ int finite_field_description::read_arguments(
 				cout << "-without_tables " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-compute_related_fields") == 0) {
+			f_compute_related_fields = TRUE;
+			if (f_v) {
+				cout << "-compute_related_fields " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-symbol") == 0) {
 			f_symbol = TRUE;
 			symbol_label.assign(argv[++i]);
@@ -110,6 +118,9 @@ void finite_field_description::print()
 	}
 	if (f_without_tables) {
 		cout << "-without_tables" << endl;
+	}
+	if (f_compute_related_fields) {
+		cout << "-compute_related_fields " << endl;
 	}
 	if (f_symbol) {
 		cout << "-symbol " << symbol_label << endl;

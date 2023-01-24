@@ -697,7 +697,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 			cout << endl;
 		}
 
-		if (P->determine_conic_in_plane(
+		if (P->Plane->determine_conic_in_plane(
 				Points, 8,
 				six_coeffs_conic,
 				verbose_level)) {

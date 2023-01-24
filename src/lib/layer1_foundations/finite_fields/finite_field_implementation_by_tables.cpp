@@ -349,7 +349,10 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(i
 
 
 	finite_field GFp;
-	GFp.finite_field_init_small_order(F->p, FALSE /* f_without_tables */, 0);
+	GFp.finite_field_init_small_order(F->p,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0);
 
 	ring_theory::unipoly_domain FX(&GFp);
 	ring_theory::unipoly_object m;
@@ -370,11 +373,11 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(i
 
 		for (i = 0; i < F->q; i++) {
 
-			if (f_vv) {
+			if (FALSE) {
 				cout << "i=" << i << endl;
 			}
 			k = Fq.rank(a);
-			if (f_vv) {
+			if (FALSE) {
 				cout << "a=";
 				Fq.print_object(a, cout);
 				cout << " has rank " << k << endl;
@@ -395,7 +398,7 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(i
 				log_alpha_table[k] = i;
 			}
 
-			if (f_vv) {
+			if (FALSE) {
 				cout << "alpha_power_table[" << i << "]=" << k << endl;
 			}
 
@@ -599,16 +602,25 @@ void finite_field_implementation_by_tables::create_tables_extension_field(int ve
 
 void finite_field_implementation_by_tables::print_add_mult_tables(std::ostream &ost)
 {
-	ost << "addition table:" << endl;
-	Int_vec_print_integer_matrix_width(ost, add_table,
-			F->q, F->q, F->q, F->log10_of_q + 1);
-	ost << endl;
+
+	if (F->q < 30) {
+		ost << "addition table:" << endl;
+		Int_vec_print_integer_matrix_width(ost, add_table,
+				F->q, F->q, F->q, F->log10_of_q + 1);
+		ost << endl;
+
+		ost << "multiplication table:" << endl;
+		Int_vec_print_integer_matrix_width(ost, mult_table,
+				F->q, F->q, F->q, F->log10_of_q + 1);
+		ost << endl;
+
+	}
+	else {
+		ost << "The field is too large. For the sake of space, we cannot print the tables." << endl;
+
+	}
 
 
-	ost << "multiplication table:" << endl;
-	Int_vec_print_integer_matrix_width(ost, mult_table,
-			F->q, F->q, F->q, F->log10_of_q + 1);
-	ost << endl;
 }
 
 void finite_field_implementation_by_tables::print_add_mult_tables_in_C(std::string &fname_base)
@@ -744,7 +756,9 @@ void finite_field_implementation_by_tables::print_tables_extension_field(std::st
 
 	finite_field GFp;
 	GFp.finite_field_init_small_order(F->p,
-			FALSE /* f_without_tables */, 0);
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			0);
 
 	ring_theory::unipoly_domain FX(&GFp);
 	ring_theory::unipoly_object m;

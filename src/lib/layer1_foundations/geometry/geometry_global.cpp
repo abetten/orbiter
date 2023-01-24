@@ -2856,6 +2856,7 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 
 }
 
+#if 0
 void geometry_global::andre_preimage(
 		projective_space *P2, projective_space *P4,
 	long int *set2, int sz2, long int *set4, int &sz4, int verbose_level)
@@ -3048,6 +3049,7 @@ void geometry_global::andre_preimage(
 		cout << "geometry_global::andre_preimage done" << endl;
 	}
 }
+#endif
 
 void geometry_global::find_secant_lines(
 		projective_space *P,
@@ -3715,7 +3717,7 @@ void geometry_global::conic_type2(
 		cout << "geometry_global::conic_type2 before P->conic_type" << endl;
 	}
 
-	P->conic_type(Pts, nb_pts,
+	P->Plane->conic_type(Pts, nb_pts,
 			threshold,
 			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
 			verbose_level);
@@ -3783,7 +3785,7 @@ void geometry_global::conic_type2(
 	for (h = 0; h < len; h++) {
 		for (u = 0; u < 55; u++) {
 			for (v = 0; v < nb_pts_per_line; v++) {
-				if (P->test_if_conic_contains_point(
+				if (P->Plane->test_if_conic_contains_point(
 						Conic_eqn[h], pts_on_line[u * nb_pts_per_line + v])) {
 					Conic_line_intersection_sz[h * 55 + u]++;
 				}
@@ -4190,7 +4192,7 @@ void geometry_global::do_blocking_set_family_3(int n,
 
 	pt_type = NEW_int(P->N_points);
 
-	P->point_types_of_line_set(S->set, S->k, pt_type, 0);
+	P->Implementation->point_types_of_line_set(S->set, S->k, pt_type, 0);
 
 	data_structures::tally C;
 
@@ -4417,10 +4419,10 @@ void geometry_global::create_ttp_code(
 	symbol_for_print_subfield.assign("\\alpha");
 
 	Ttp_codes.twisted_tensor_product_codes(
-		H_subfield, m, n,
 		FQ, Fq_subfield,
 		f_construction_A, f_hyperoval,
 		f_construction_B,
+		H_subfield, m, n,
 		verbose_level - 2);
 
 	if (f_v) {
@@ -4586,7 +4588,7 @@ void geometry_global::create_segre_variety(
 }
 
 
-
+#if 0
 void geometry_global::do_andre(
 		field_theory::finite_field *FQ,
 		field_theory::finite_field *Fq,
@@ -4811,7 +4813,7 @@ void geometry_global::do_andre(
 		cout << "geometry_global::do_andre done" << endl;
 	}
 }
-
+#endif
 
 void geometry_global::do_embed_orthogonal(
 		field_theory::finite_field *F,

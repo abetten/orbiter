@@ -145,6 +145,7 @@ test_10:
 	make test_10_7
 	make test_10_8
 	make test_10_9
+	make test_10_10
 
 
 test_11:
@@ -2032,6 +2033,9 @@ test_3_3:
 	make F_64
 	make nth_roots_63
 	make F8_F2_field_reduction
+	make F_4096
+	make F_4489
+	#make F_2_power_24
 
 
 F_4:
@@ -2092,8 +2096,8 @@ F_8b:
 
 
 F_16:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 16 -end \
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 16 -compute_related_fields -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 	pdflatex GF_16.tex
 	open GF_16.pdf
@@ -2157,13 +2161,38 @@ F8_F2_field_reduction:
 	open F8_to_F2_draw.png
 
 
+F_4096:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 4096 \
+			-compute_related_fields \
+		-end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	pdflatex GF_4096.tex
+	open GF_4096.pdf
+
+
+
 # 67^2 = 4489
 
 F_4489:
-	$(ORBITER) -v 10 \
+	$(ORBITER) -v 4 \
 		-define F -finite_field -q 4489 -without_tables -end \
 
 
+# ToDo error message 
+#finite_field::alpha_power !f_has_table
+
+F_2_power_24:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 16777216 \
+			-compute_related_fields \
+			-without_tables \
+		-end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	pdflatex GF_16777216.tex
+	open GF_16777216.pdf
 
 
 ###############################################################################
@@ -8076,13 +8105,29 @@ quartic_curves_q13_classify:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_quartic_curves_with_substructure \
-				quartics_q13.csv \
-				1 4 4 quartic_curves_q13 \
+		-define O -orbits -classification_by_canonical_form \
+			-space P \
+			-input_fname_mask quartics_q13.csv \
+			-nb_files 1 \
+			-output_fname quartic_curves_q13_classified \
+			-label_po "PO" \
+			-label_so "orbit" \
+			-label_equation "curve" \
+			-label_points "pts_on_curve" \
+			-label_lines "bitangents" \
+			-degree 4 \
+			-algorithm_substructure \
+			-substructure_size 4 \
+			-end \
 		-end \
-		-print_symbols
+	-with O -do -orbits_activity \
+		-report \
+		-report_options \
+			-fname quartics_q13 \
+		-end \
+	-end
+	pdflatex quartics_q13_orbits.tex
+	open quartics_q13_orbits.pdf
 
 
 
@@ -8117,13 +8162,29 @@ quartic_curves_q19_classify:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 19 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_quartic_curves_with_substructure \
-				quartics_q19.csv \
-				1 4 4 quartic_curves_q19 \
+		-define O -orbits -classification_by_canonical_form \
+			-space P \
+			-input_fname_mask quartics_q19.csv \
+			-nb_files 1 \
+			-output_fname quartic_curves_q19_classified \
+			-label_po "PO" \
+			-label_so "orbit" \
+			-label_equation "curve" \
+			-label_points "pts_on_curve" \
+			-label_lines "bitangents" \
+			-degree 4 \
+			-algorithm_substructure \
+			-substructure_size 4 \
+			-end \
 		-end \
-		-print_symbols
+	-with O -do -orbits_activity \
+		-report \
+		-report_options \
+			-fname quartics_q19 \
+		-end \
+	-end
+	pdflatex quartics_q19_orbits.tex
+	open quartics_q19_orbits.pdf
 
 
 
@@ -10018,7 +10079,12 @@ RM_3_1:
 		-end \
 		-with C -and F -do -coding_theoretic_activity \
 			-export_magma RM_3_1.magma \
+		-end \
+		-with C -do -coding_theoretic_activity \
+			-report \
 		-end
+	pdflatex RM_3_code_n8_k4_q2.tex
+	open RM_3_code_n8_k4_q2.pdf
 
 
 code_6:
@@ -10029,14 +10095,17 @@ code_6:
 		-end \
 		-with C -and F -do -coding_theoretic_activity \
 			-make_diagram \
+		-end \
+		-with C -do -coding_theoretic_activity \
+			-report \
 		-end
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file by_basis_n6_k3_char_func_6_8.csv \
 		-box_width 20 -bit_depth 24 \
 		-partition 2 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" \
 		-end
-	pdflatex by_basis_n6_k3_6_8.tex
-	open by_basis_n6_k3_6_8.pdf
+	pdflatex by_basis_n6_k3_code_n6_k3_q2.tex
+	open by_basis_n6_k3_code_n6_k3_q2.pdf
 	open by_basis_n6_k3_char_func_6_8_draw.bmp
 
 # linear code with generator matrix
@@ -10055,7 +10124,12 @@ simplex_code:
 		-end \
 		-define C -code -field F \
 			-generator_matrix v \
-		-end 
+		-end \
+		-with C -do -coding_theoretic_activity \
+			-report \
+		-end
+	pdflatex by_genma_n7_k3_code_n7_k3_q2.tex
+	open by_genma_n7_k3_code_n7_k3_q2.pdf
 
 
 
@@ -12125,15 +12199,39 @@ Reed_solomon_F8_work:
 		-with F -do -finite_field_activity \
 		-parse_and_evaluate "test" "" "(t-a)*(t-a*a)" "a=2" -end
 
+###############################################################################
+# Section 10.8: Coding Theory - Twisted tensor product codes
+
+SECTION_CODING_THEORY_TWISTED_TENSOR_PRODUCT_CODES:
+
+
+test_10_8:
+		make TTP_A_4
+
+
+TTP_A_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define F2 -finite_field -q 16 -end \
+		-define C -code -field F -ttpA F2 -end \
+		-with C -do -coding_theoretic_activity \
+			-export_magma TTP_A_q4.magma \
+		-end \
+		-with C -do -coding_theoretic_activity \
+			-report \
+		-end
+	pdflatex code_n18_k9_q4.tex
+	open code_n18_k9_q4.pdf
+
 
 
 ###############################################################################
-# Section 10.8: Coding Theory - Bounds
+# Section 10.9: Coding Theory - Bounds
 
 SECTION_CODING_THEORY_BOUNDS:
 
 
-test_10_8:
+test_10_9:
 	make bounds_for_d_given_n6_k4_q7
 	make bounds_for_d_given_n15_k6_q2
 	make coding_theory_bounds_q2
@@ -12259,11 +12357,11 @@ code_n15_k6_d6_check_RREF:
 
 
 ###############################################################################
-# Section 10.9: Coding Theory - Classification
+# Section 10.10: Coding Theory - Classification
 
 SECTION_CODING_THEORY_CLASSIFICATION:
 
-test_10_9:
+test_10_10:
 	make codes_8_4_4
 	#make codes_8_4_4_draw
 	#make codes_14_4_9_3

@@ -844,6 +844,9 @@ class interface_toolkit {
 	std::string extract_from_file_with_tail_tail;
 	std::string extract_from_file_with_tail_target_fname;
 
+	int f_serialize_file_names;
+	std::string serialize_file_names_fname;
+	std::string serialize_file_names_output_mask;
 
 public:
 

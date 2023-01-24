@@ -461,7 +461,6 @@ void create_code::init(
 		snprintf(str, sizeof(str), "BCH\\_n%d\\_d%d", n, d);
 		label_tex.assign(str);
 
-		Create_BCH_code->do_report(verbose_level);
 
 
 		if (f_v) {
@@ -512,8 +511,6 @@ void create_code::init(
 
 		snprintf(str, sizeof(str), "RS\\_n%d\\_d%d", n, d);
 		label_tex.assign(str);
-
-		Create_RS_code->do_report(verbose_level);
 
 
 		if (f_v) {
@@ -652,6 +649,61 @@ void create_code::init(
 
 		if (f_v) {
 			cout << "create_code::init f_long_code done" << endl;
+		}
+	}
+	else if (description->f_ttpA) {
+		if (f_v) {
+			cout << "create_code::init f_ttpA" << endl;
+			cout << "create_code::init field = " << description->ttpA_field_label << endl;
+		}
+
+		if (!f_field) {
+			cout << "please use option -field to specify the field of linearity" << endl;
+			exit(1);
+		}
+
+		//long int *v;
+		//int sz;
+
+
+		field_theory::finite_field *FQ;
+
+		FQ = Get_finite_field(description->ttpA_field_label);
+
+		coding_theory::ttp_codes TTP;
+
+		int nb_rows, nb_cols;
+
+		TTP.twisted_tensor_product_codes(
+			FQ,
+			F /* Fq */,
+			TRUE /* f_construction_A */, TRUE /* f_hyperoval */,
+			FALSE /* f_construction_B */,
+			checkma, nb_rows, nb_cols,
+			verbose_level);
+
+		n = nb_cols;
+		nmk = nb_rows;
+
+		f_has_check_matrix = TRUE;
+
+
+
+		create_genma_from_checkma(verbose_level);
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "ttpA_n%d_k%d", n, k);
+		label_txt.assign(str);
+
+		snprintf(str, sizeof(str), "ttpA\\_n%d\\_k%d", n, k);
+		label_tex.assign(str);
+
+
+
+
+		if (f_v) {
+			cout << "create_code::init f_ttpA done" << endl;
 		}
 	}
 
@@ -1437,6 +1489,117 @@ void create_code::polynomial_representation_of_boolean_function(
 
 }
 
+
+void create_code::report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::report" << endl;
+	}
+
+
+	string label;
+	//coding_theory_domain Codes;
+	orbiter_kernel_system::latex_interface Li;
+	orbiter_kernel_system::file_io Fio;
+
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		char str[1000];
+
+		snprintf(str, 1000, "_code_n%d_k%d_q%d.tex",
+				n,
+				k,
+				F->q
+				);
+		fname.assign(label_txt);
+		fname.append(str);
+
+		snprintf(str, 1000, "Linear code");
+		title.assign(str);
+
+
+
+		{
+			ofstream ost(fname);
+			number_theory::number_theory_domain NT;
+
+
+			orbiter_kernel_system::latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			report2(ost, verbose_level);
+
+			L.foot(ost);
+
+
+		}
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	}
+
+
+	if (f_v) {
+		cout << "create_code::report done" << endl;
+	}
+}
+
+void create_code::report2(std::ofstream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::report2" << endl;
+	}
+
+	if (!f_field) {
+		cout << "The code is not linear" << endl;
+		exit(1);
+	}
+
+	if (f_has_generator_matrix) {
+
+		if (description->f_BCH) {
+			Create_BCH_code->do_report(verbose_level);
+		}
+		else if (description->f_Reed_Solomon) {
+			Create_RS_code->do_report(verbose_level);
+		}
+		else {
+			orbiter_kernel_system::latex_interface Li;
+
+			ost << "The generator matrix is:" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			Li.int_matrix_print_tex(ost, genma, k, n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "create_code::report2 done" << endl;
+	}
+}
 
 
 

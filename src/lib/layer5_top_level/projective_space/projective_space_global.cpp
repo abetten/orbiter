@@ -719,7 +719,7 @@ void projective_space_global::classify_quartic_curves_nauty(
 	Descr = NEW_OBJECT(canonical_form_classifier_description);
 
 	Descr->fname_mask.assign(fname_mask);
-	Descr->f_fname_base_out = TRUE;
+	Descr->f_output_fname = TRUE;
 	Descr->fname_base_out.assign(fname_classification);
 #if 0
 	Descr->column_label_eqn.assign("curve");
@@ -792,7 +792,7 @@ void projective_space_global::classify_quartic_curves_with_substructure(
 
 
 	Descr->fname_mask.assign(fname_mask);
-	Descr->f_fname_base_out = TRUE;
+	Descr->f_output_fname = TRUE;
 	Descr->fname_base_out.assign(fname_classification);
 #if 0
 	Descr->column_label_eqn.assign("curve");
@@ -822,7 +822,7 @@ void projective_space_global::classify_quartic_curves_with_substructure(
 
 	Descr->Canon_substructure = Classifier;
 
-
+#if 0
 	if (f_v) {
 		cout << "projective_space_global::classify_quartic_curves_with_substructure "
 				"before Classifier.report" << endl;
@@ -832,7 +832,7 @@ void projective_space_global::classify_quartic_curves_with_substructure(
 		cout << "projective_space_global::classify_quartic_curves_with_substructure "
 				"after Classifier.report" << endl;
 	}
-
+#endif
 
 #if 0
 	cout << "The number of types of quartic curves is " << Classifier.CB->nb_types << endl;
@@ -879,6 +879,10 @@ void projective_space_global::classify_quartic_curves(
 	canonical_form_classifier *Classifier;
 
 
+	if (f_v) {
+		cout << "projective_space_global::classify_quartic_curves "
+				"before classify_quartic_curves_with_substructure" << endl;
+	}
 	classify_quartic_curves_with_substructure(PA,
 			fname_mask,
 			nb,
@@ -887,6 +891,10 @@ void projective_space_global::classify_quartic_curves(
 			fname_classification,
 			Classifier,
 			verbose_level);
+	if (f_v) {
+		cout << "projective_space_global::classify_quartic_curves "
+				"after classify_quartic_curves_with_substructure" << endl;
+	}
 
 	if (f_v) {
 		cout << "projective_space_global::classify_quartic_curves done" << endl;

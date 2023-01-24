@@ -54,7 +54,8 @@ boolean_function_classify::~boolean_function_classify()
 
 
 
-void boolean_function_classify::init_group(combinatorics::boolean_function_domain *BF,
+void boolean_function_classify::init_group(
+		combinatorics::boolean_function_domain *BF,
 		actions::action *A,
 		int verbose_level)
 {
@@ -69,19 +70,6 @@ void boolean_function_classify::init_group(combinatorics::boolean_function_domai
 	int degree = BF->n + 1;
 
 	boolean_function_classify::A = A;
-	//A = NEW_OBJECT(actions::action);
-
-#if 0
-	if (f_v) {
-		cout << "boolean_function_classify::init_group "
-				"before init_projective_group" << endl;
-	}
-	A->init_projective_group(degree, BF->Fq,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
-			nice_gens,
-			verbose_level);
-#endif
 
 	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 	if (f_v) {

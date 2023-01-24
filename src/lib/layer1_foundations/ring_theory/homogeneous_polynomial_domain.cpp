@@ -195,14 +195,22 @@ void homogeneous_polynomial_domain::init(field_theory::finite_field *F,
 	}
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::init before init_with_or_without_variables" << endl;
+		cout << "homogeneous_polynomial_domain::init nb_vars = " << nb_vars << endl;
+		cout << "homogeneous_polynomial_domain::init degree = " << degree << endl;
+		cout << "homogeneous_polynomial_domain::init Monomial_ordering_type = " << (int) Monomial_ordering_type << endl;
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::init "
+				"before init_with_or_without_variables" << endl;
 	}
 	init_with_or_without_variables(F, nb_vars, degree,
 			Monomial_ordering_type,
 			FALSE, NULL, NULL,
-			verbose_level);
+			0 /* verbose_level */);
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::init after init_with_or_without_variables" << endl;
+		cout << "homogeneous_polynomial_domain::init "
+				"after init_with_or_without_variables" << endl;
 	}
 
 	if (f_v) {

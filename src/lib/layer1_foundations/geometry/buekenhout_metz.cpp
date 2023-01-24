@@ -25,6 +25,8 @@ buekenhout_metz::buekenhout_metz()
 	q = 0;
 	Q = 0;
 
+	SubS = NULL;
+
 	f_classical = FALSE;
 	f_Uab = FALSE;
 	parameter_a = 0;
@@ -34,7 +36,7 @@ buekenhout_metz::buekenhout_metz()
 	P3 = NULL;
 	v = NULL;
 	w1 = w2 = w3 = w4 = w5 = NULL;
-	components = embedding = pair_embedding = NULL;
+	//components = embedding = pair_embedding = NULL;
 	ovoid = NULL;
 	U = NULL;
 	sz = 0;
@@ -70,6 +72,9 @@ buekenhout_metz::buekenhout_metz()
 
 buekenhout_metz::~buekenhout_metz()
 {
+	if (SubS) {
+		FREE_OBJECT(SubS);
+	}
 	if (f_is_Baer) {
 		FREE_int(f_is_Baer);
 		}
@@ -100,6 +105,7 @@ buekenhout_metz::~buekenhout_metz()
 	if (tangent_lines) {
 		FREE_lint(tangent_lines);
 		}
+#if 0
 	if (components) {
 		FREE_int(components);
 		}
@@ -109,6 +115,8 @@ buekenhout_metz::~buekenhout_metz()
 	if (pair_embedding) {
 		FREE_int(pair_embedding);
 		}
+#endif
+
 	if (v) {
 		FREE_int(v);
 		FREE_int(w1);
@@ -186,6 +194,18 @@ void buekenhout_metz::buekenhout_metz_init(
 	P3->projective_space_init(3, Fq, TRUE, verbose_level);
 
 
+	SubS = NEW_OBJECT(field_theory::subfield_structure);
+
+	if (f_v) {
+		cout << "buekenhout_metz::buekenhout_metz_init before SubS->init" << endl;
+	}
+	SubS->init(
+			FQ,
+			Fq, verbose_level);
+	if (f_v) {
+		cout << "buekenhout_metz::buekenhout_metz_init after SubS->init" << endl;
+	}
+
 	
 	string s;
 
@@ -196,6 +216,7 @@ void buekenhout_metz::buekenhout_metz_init(
 	T0 = FQ->negate(FQ->N2(alpha));
 	T1 = FQ->T2(alpha);
 	
+#if 0
 	if (f_v) {
 		cout << "buekenhout_metz::buekenhout_metz_init "
 				"before FQ->subfield_embedding_2dimensional" << endl;
@@ -216,12 +237,14 @@ void buekenhout_metz::buekenhout_metz_init(
 		// components[Q * 2]
 		// embedding[q]
 		// pair_embedding[q * q]
+#endif
 
-	e1 = embedding[1];
-	one_1 = components[e1 * 2 + 0];
-	one_2 = components[e1 * 2 + 1];
+	e1 = SubS->embedding_2D[1];
+	one_1 = SubS->components_2D[e1 * 2 + 0];
+	one_2 = SubS->components_2D[e1 * 2 + 1];
 
 	if (f_v) {
+#if 0
 		FQ->print_embedding(*Fq, 
 			components, embedding, pair_embedding);
 
@@ -229,16 +252,17 @@ void buekenhout_metz::buekenhout_metz_init(
 		FQ->print_embedding_tex(*Fq, 
 			components, embedding, pair_embedding);
 
+#endif
 
 		cout << "buekenhout_metz::buekenhout_metz_init e1=" << e1 << " one_1=" << one_1
 				<< " one_2=" << one_2 << endl;
 		}
 	
 	for (i = 0; i < q; i++) {
-		if (embedding[i] == T0) {
+		if (SubS->embedding_2D[i] == T0) {
 			t0 = i;
 			}
-		if (embedding[i] == T1) {
+		if (SubS->embedding_2D[i] == T1) {
 			t1 = i;
 			}
 		}
@@ -358,16 +382,16 @@ void buekenhout_metz::init_ovoid_Uab_even(
 	int lambda, lambda_big, c1, c2, c3;
 	geometry_global Gg;
 	
-	a1 = components[a * 2 + 0];
-	a2 = components[a * 2 + 1];
+	a1 = SubS->components_2D[a * 2 + 0];
+	a2 = SubS->components_2D[a * 2 + 1];
 	//b1 = components[b * 2 + 0]; // b1 is unused
-	b2 = components[b * 2 + 1];
+	b2 = SubS->components_2D[b * 2 + 1];
 	delta = 2;
 	delta2 = FQ->mult(delta, delta);
 	lambda_big = FQ->add(delta, delta2);
 	lambda = 0;
 	for (i = 0; i < q; i++) {
-		if (embedding[i] == lambda_big) {
+		if (SubS->embedding_2D[i] == lambda_big) {
 			lambda = i;
 			break;
 			}
@@ -506,7 +530,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 			for (h = 0; h < 3; h++) {
 				c1 = w5[2 * h + 0];
 				c2 = w5[2 * h + 1];
-				v[h] = pair_embedding[c1 * q + c2];
+				v[h] = SubS->pair_embedding_2D[c1 * q + c2];
 				}
 
 			if (f_vvv) {
@@ -640,7 +664,7 @@ void buekenhout_metz::create_unital_tex(int verbose_level)
 			for (h = 0; h < 3; h++) {
 				c1 = w5[2 * h + 0];
 				c2 = w5[2 * h + 1];
-				v[h] = pair_embedding[c1 * q + c2];
+				v[h] = SubS->pair_embedding_2D[c1 * q + c2];
 				}
 
 			if (FALSE) {
@@ -749,7 +773,7 @@ void buekenhout_metz::create_unital_Uab_tex(int verbose_level)
 
 			t1 = FQ->mult(parameter_a, FQ->mult(x, x));
 			t2 = FQ->mult(parameter_b, FQ->power(x, q + 1));
-			t3 = embedding[r];
+			t3 = SubS->embedding_2D[r];
 			y = FQ->add3(
 				t1, 
 				t2, 

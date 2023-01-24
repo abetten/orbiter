@@ -343,8 +343,10 @@ int unipoly::compare_with_euclidean(discreta_base &a)
 	return 0;
 }
 
-void unipoly::integral_division(discreta_base &x,
-		discreta_base &q, discreta_base &r, int verbose_level)
+void unipoly::integral_division(
+		discreta_base &x,
+		discreta_base &q, discreta_base &r,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int dm, dn, dq, i, j, ii, jj;
@@ -510,7 +512,8 @@ int unipoly::is_irreducible(int q, int verbose_level)
 		return FALSE;
 }
 
-int unipoly::is_primitive(int m, int p, Vector& vp, int verbose_level)
+int unipoly::is_primitive(
+		int m, int p, Vector& vp, int verbose_level)
 //Returns TRUE iff the polynomial $x$ has order $m$ 
 //modulo the polynomial this (over GF(p)). 
 //The prime factorization of $m$ must be given in vp (only the primes).
@@ -615,7 +618,8 @@ void unipoly::Singer(int p, int f, int verbose_level)
 	exit(1);
 }
 
-void unipoly::get_an_irreducible_polynomial(int f, int verbose_level)
+void unipoly::get_an_irreducible_polynomial(
+		int f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -659,7 +663,8 @@ void unipoly::get_an_irreducible_polynomial(int f, int verbose_level)
 	exit(1);
 }
 
-void unipoly::evaluate_at(discreta_base& x, discreta_base& y)
+void unipoly::evaluate_at(
+		discreta_base& x, discreta_base& y)
 {
 	int i, d;
 	discreta_base z;
@@ -673,7 +678,8 @@ void unipoly::evaluate_at(discreta_base& x, discreta_base& y)
 	y = z;
 }
 
-void unipoly::largest_divisor_prime_to(unipoly& q, unipoly& r)
+void unipoly::largest_divisor_prime_to(
+		unipoly& q, unipoly& r)
 //computes the monic polynomial $r$ with ($p$ is the polynomial in this)
 //\begin{enumerate}
 //\item
@@ -939,7 +945,8 @@ static int multiply(Vector & vp, Vector & ve)
 }
 
 
-void unipoly::weight_enumerator_MDS_code(int n, int k, int q, int verbose_level)
+void unipoly::weight_enumerator_MDS_code(
+		int n, int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level = 1);
 	int f_vv = (verbose_level = 2);
@@ -1006,7 +1013,8 @@ void unipoly::weight_enumerator_MDS_code(int n, int k, int q, int verbose_level)
 		}
 }
 
-void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
+void unipoly::charpoly(
+		int q, int size, int *mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1037,7 +1045,11 @@ void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
 		cout << "q is not prime, we need a prime" << endl;
 		exit(1);
 		}
-	Fq.finite_field_init_small_order(q, FALSE /* f_without_tables */, verbose_level - 1);
+	Fq.finite_field_init_small_order(
+			q,
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			verbose_level - 1);
 
 	domain d(q);
 	with w(&d);

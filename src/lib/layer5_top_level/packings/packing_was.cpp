@@ -1515,7 +1515,10 @@ void packing_was::report_orbit_invariant(std::ostream &ost)
 			number_theory::number_theory_domain NT;
 
 			Fq3 = NEW_OBJECT(field_theory::finite_field);
-			Fq3->finite_field_init_small_order(NT.i_power_j(P->F->q, 3), FALSE /* f_without_tables */, 0);
+			Fq3->finite_field_init_small_order(NT.i_power_j(P->F->q, 3),
+					FALSE /* f_without_tables */,
+					FALSE /* f_compute_related_fields */,
+					0);
 
 			ost << "Orbits of length one:\\\\" << endl;
 			for (j = 0; j < l; j++) {

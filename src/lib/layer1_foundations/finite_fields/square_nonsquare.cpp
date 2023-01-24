@@ -65,7 +65,8 @@ square_nonsquare::~square_nonsquare()
 }
 
 
-void square_nonsquare::init(field_theory::finite_field *F, int verbose_level)
+void square_nonsquare::init(
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = FALSE; //(verbose_level >= 1);

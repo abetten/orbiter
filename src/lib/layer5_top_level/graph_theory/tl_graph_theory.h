@@ -238,48 +238,38 @@ public:
 	void init(
 			create_graph_description *description,
 			int verbose_level);
-	void create_cycle(int &N, int *&Adj,
+	void create_cycle(
 			int n, int verbose_level);
-	void create_inversion_graph(int &N, int *&Adj,
+	void create_inversion_graph(
 			std::string &perm_text, int verbose_level);
 	void create_Hamming(
-			int &N, int *&Adj,
 			int n, int q, int verbose_level);
 	void create_Johnson(
-			int &N, int *&Adj,
 			int n, int k, int s, int verbose_level);
 	void create_Paley(
-			int &N, int *&Adj,
 			std::string &label_Fq, int verbose_level);
 	void create_Sarnak(
-			int &N, int *&Adj, int p, int q,
+			int p, int q,
 			int verbose_level);
 	void create_Schlaefli(
-			int &N, int *&Adj,
 			std::string &label_Fq, int verbose_level);
 	void create_Shrikhande(
-			int &N, int *&Adj, int verbose_level);
+			int verbose_level);
 	void create_Winnie_Li(
-			int &N, int *&Adj,
 			std::string &label_Fq, int index, int verbose_level);
 	void create_Grassmann(
-			int &N, int *&Adj,
 			int n, int k, std::string &label_Fq,
 			int r, int verbose_level);
 	void create_coll_orthogonal(
-			int &N, int *&Adj,
 			int epsilon, int d, std::string &label_Fq,
 			int verbose_level);
 	void make_orbital_graph(
-			int &N, int *&Adj,
 			apps_algebra::any_group *AG, int orbit_idx,
 			int verbose_level);
 	void make_collinearity_graph(
-			int &N, int *&Adj,
 			int *Inc, int nb_rows, int nb_cols,
 			int verbose_level);
 	void make_chain_graph(
-			int &N, int *&Adj,
 			int *part1, int sz1,
 			int *part2, int sz2,
 			int verbose_level);

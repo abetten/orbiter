@@ -42,7 +42,8 @@ public:
 	boolean_function_classify();
 	~boolean_function_classify();
 
-	void init_group(combinatorics::boolean_function_domain *BF,
+	void init_group(
+			combinatorics::boolean_function_domain *BF,
 			actions::action *A,
 			int verbose_level);
 	void search_for_bent_functions(int verbose_level);
@@ -833,11 +834,6 @@ public:
 	int *gens;
 	int nb_gens;
 
-#if 0
-	int *N_gens;
-	int N_nb_gens;
-	int N_go;
-#endif
 	actions::action *A;
 	groups::strong_generators *Aut_gens;
 	ring_theory::longinteger_object Aut_order;
@@ -1010,7 +1006,8 @@ public:
 		// these are the pairs of points that are covered by the
 		// triples that we will choose.
 		// The other pairs have been covered by the lines through
-		// the reflection point, so they are fine because we assume that
+		// the reflection point,
+		// so they are fine because we assume that
 		// these lines exist.
 	int nb_blocks_overall; // {n \choose 2} / 6
 	int nb_blocks_needed; // nb_blocks_overall - (n - 1) / 2
@@ -1169,12 +1166,6 @@ public:
 	int *design_color_table; // [nb_designs]
 
 	actions::action *A_on_designs;
-		// action on designs in Design_table
-		//DC->A2->create_induced_action_on_sets(
-		//		Design_table->nb_designs,
-		//      Design_table->design_size,
-		//		Design_table->the_table,
-		//		0 /* verbose_level */);
 
 
 	data_structures::bitvector *Bitvec;
@@ -1340,11 +1331,6 @@ public:
 
 	groups::orbits_on_something *H_orbits;
 
-		//H_orbits->init(LS->A_on_designs,
-		//		H_gens,
-		//			FALSE /* f_load_save */,
-		//			Descr->prefix,
-		//			verbose_level);
 
 	groups::strong_generators *N_gens;
 
@@ -1367,37 +1353,17 @@ public:
 		// H_orbits->Orbits_classified->Sets[type_idx]
 
 
-	// used in do_normalizer_on_orbits_of_a_given_length_multiple_orbits::
+	// used in do_normalizer_on_orbits_of_
+	// a_given_length_multiple_orbits
 	poset_classification::poset_classification *PC;
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
 
 
 	int orbit_length2;
-	int type_idx2; // orbits of length orbit_length2 in H_orbits->Orbits_classified
-
-#if 0
-	// reduced designs are those which are compatible
-	// with all the designs in the chosen set
-
-	design_tables *Design_table_reduced;
-
-	//long int *Design_table_reduced; // [nb_reduced * design_size]
-	long int *Design_table_reduced_idx; // [nb_reduced], index into Design_table[]
-	//int nb_reduced;
-
-
-	int nb_remaining_colors; // = nb_colors - set_sz; // we assume that k = 4
-	int *reduced_design_color_table; // [nb_reduced]
-		// colors of the reduced designs after throwing away
-		// the colors covered by the designs in the chosen set.
-		// The remaining colors are relabeled consecutively.
-
-	action *A_reduced;
-		// reduced action A_on_designs based on Design_table_reduced_idx[]
-	schreier *Orbits_on_reduced;
-	int *color_of_reduced_orbits;
-#endif
+	int type_idx2;
+		// orbits of length orbit_length2
+		// in H_orbits->Orbits_classified
 
 	int selected_type_idx;
 
@@ -1448,7 +1414,8 @@ void large_set_was_normalizer_orbits_early_test_func_callback(
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
+int large_set_was_design_test_orbit(
+		long int *orbit, int orbit_length,
 		void *extra_data);
 int large_set_was_classify_test_pair_of_orbits(
 		long int *orbit1, int orbit_length1,
@@ -1475,14 +1442,17 @@ public:
 
 	int f_projective_space;
 	projective_geometry::projective_space_with_action *PA;
-	groups::strong_generators *SG; // only used if f_projective_space
+	groups::strong_generators *SG;
+		// only used if f_projective_space
 
 	actions::action *A_perm;
 
 	combinatorics::tdo_scheme_compute *TDO;
 
-	flag_orbits_incidence_structure *Flags; // if !f_projective_space
-	flag_orbits_incidence_structure *Anti_Flags; // if !f_projective_space
+	flag_orbits_incidence_structure *Flags;
+		// if !f_projective_space
+	flag_orbits_incidence_structure *Anti_Flags;
+		// if !f_projective_space
 
 	object_with_properties();
 	~object_with_properties();
@@ -1592,7 +1562,8 @@ public:
 	poset_classification::poset_classification *gen;
 	actions::action *A;
 	actions::action *A2;
-	induced_actions::action_on_k_subsets *Aonk; // only a pointer, do not free
+	induced_actions::action_on_k_subsets *Aonk;
+		// only a pointer, do not free
 
 	int *row_sum; // [m]
 	int *pairs; // [m2]

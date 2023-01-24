@@ -1683,7 +1683,9 @@ void spread_domain::HMO(
 		cout << "spread_domain::HMO before Fq2->finite_field_init_small_order" << endl;
 	}
 	Fq2->finite_field_init_small_order(q2,
-			FALSE /* f_without_tables */, verbose_level);
+			FALSE /* f_without_tables */,
+			FALSE /* f_compute_related_fields */,
+			verbose_level);
 	if (f_v) {
 		cout << "spread_domain::HMO after Fq2->finite_field_init_small_order" << endl;
 	}

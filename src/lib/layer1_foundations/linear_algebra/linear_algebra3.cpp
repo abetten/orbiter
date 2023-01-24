@@ -237,6 +237,8 @@ int linear_algebra::Pluecker_ij(int i, int j, int *x4, int *y4)
 
 
 int linear_algebra::evaluate_symplectic_form(int len, int *x, int *y)
+// the form consists of a series of diagonal 2 x 2 blocks
+// of the form (0,1,-1,0)
 {
 	int i, n, c;
 
@@ -249,9 +251,10 @@ int linear_algebra::evaluate_symplectic_form(int len, int *x, int *y)
 	c = 0;
 	n = len >> 1;
 	for (i = 0; i < n; i++) {
-		c = F->add(c, F->add(
-				F->mult(x[2 * i + 0], y[2 * i + 1]),
-				F->negate(F->mult(x[2 * i + 1], y[2 * i + 0]))
+		c = F->add(c,
+				F->add(
+						F->mult(x[2 * i + 0], y[2 * i + 1]),
+						F->negate(F->mult(x[2 * i + 1], y[2 * i + 0]))
 				));
 	}
 	return c;

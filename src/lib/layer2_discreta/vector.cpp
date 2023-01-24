@@ -455,7 +455,7 @@ void Vector::get_first_and_remove(discreta_base & x)
 
 bool Vector::insert_sorted(discreta_base& x)
 	// inserts x into the sorted Vector x.
-	// ifthere are already occurences of x, the new x is added 
+	// if there are already occurrences of x, the new x is added
 	// behind the x already there.
 	// returns true if the element was already in the Vector.
 {

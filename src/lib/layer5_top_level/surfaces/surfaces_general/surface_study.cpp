@@ -839,7 +839,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	int nb_pts_triangle;
 	long int three_points[3] = {0,1,2};
 	cout << "creating projective triangle" << endl;
-	Surf->P->points_on_projective_triangle(
+	Surf->P->Plane->points_on_projective_triangle(
 			triangle, nb_pts_triangle, three_points,
 			verbose_level);
 

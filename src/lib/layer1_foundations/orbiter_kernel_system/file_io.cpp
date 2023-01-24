@@ -1391,6 +1391,35 @@ void file_io::lint_matrix_write_csv_override_headers(
 	}
 }
 
+void file_io::vector_write_csv(
+		std::string &fname,
+		std::vector<int > &V)
+{
+	int i, j;
+	int m, n;
+
+	m = V.size();
+	n = 1;
+
+
+	{
+		ofstream f(fname);
+
+		f << "Row";
+		for (j = 0; j < n; j++) {
+			f << ",C" << j;
+		}
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			f << "," << V[i];
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+}
+
+
 void file_io::vector_matrix_write_csv(
 		std::string &fname,
 		std::vector<std::vector<int> > &V)
@@ -5645,6 +5674,68 @@ void file_io::change_values(
 	}
 }
 
+void file_io::read_file_as_array_of_strings(
+		std::string &fname,
+	std::string *&Lines,
+	int &nb_lines,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *buf;
+
+	if (f_v) {
+		cout << "file_io::read_file_as_array_of_string " << fname << endl;
+	}
+
+	int N;
+	N = file_size(fname) + 1;
+	buf = NEW_char(N);
+
+
+
+	{
+
+		ifstream fp(fname);
+
+
+		nb_lines = 0;
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
+			}
+			fp.getline(buf, N, '\n');
+			nb_lines++;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "file_io::read_file_as_array_of_string nb_lines = " << nb_lines << endl;
+	}
+
+	Lines = new string[nb_lines];
+	int cnt;
+	{
+
+		ifstream fp(fname);
+
+
+		cnt = 0;
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
+			}
+			fp.getline(buf, N, '\n');
+			Lines[cnt].assign(buf);
+			cnt++;
+		}
+	}
+
+	FREE_char(buf);
+	if (f_v) {
+		cout << "file_io::read_file_as_array_of_string done" << endl;
+	}
+}
 
 
 }}}

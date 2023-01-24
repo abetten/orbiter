@@ -2416,7 +2416,7 @@ void arc_in_projective_space::compute_bisecants_and_conics(
 			pj = arc6[j];
 			Line[0] = pi;
 			Line[1] = pj;
-			P->determine_line_in_plane(Line,
+			P->Plane->determine_line_in_plane(Line,
 				bisecants + h * 3,
 				0 /* verbose_level */);
 			P->F->PG_element_normalize_from_front(
@@ -2442,7 +2442,7 @@ void arc_in_projective_space::compute_bisecants_and_conics(
 		cout << endl;
 #endif
 
-		P->determine_conic_in_plane(arc5, 5,
+		P->Plane->determine_conic_in_plane(arc5, 5,
 				six_coeffs, 0 /* verbose_level */);
 		P->F->PG_element_normalize_from_front(six_coeffs, 1, 6);
 		Int_vec_copy(six_coeffs, conics + j * 6, 6);
