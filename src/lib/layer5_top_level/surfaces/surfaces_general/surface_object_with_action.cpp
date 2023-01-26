@@ -296,7 +296,7 @@ void surface_object_with_action::init_with_surface_object(
 				"testing Aut_gens" << endl;
 	}
 	Aut_gens->test_if_set_is_invariant_under_given_action(
-			Surf_A->A2, SO->Lines, SO->nb_lines, verbose_level);
+			Surf_A->A2, SO->Lines, SO->nb_lines, verbose_level - 2);
 	if (f_v) {
 		cout << "surface_object_with_action::init_with_surface_object "
 				"testing Aut_gens done" << endl;
@@ -306,7 +306,7 @@ void surface_object_with_action::init_with_surface_object(
 		cout << "surface_object_with_action::init_with_surface_object "
 				"before compute_projectivity_group" << endl;
 	}
-	compute_projectivity_group(verbose_level);
+	compute_projectivity_group(verbose_level - 2);
 	if (f_v) {
 		cout << "surface_object_with_action::init_with_surface_object "
 				"after compute_projectivity_group" << endl;
@@ -317,7 +317,7 @@ void surface_object_with_action::init_with_surface_object(
 		cout << "surface_object_with_action::init_with_surface_object "
 				"before compute_orbits_of_automorphism_group" << endl;
 	}
-	compute_orbits_of_automorphism_group(verbose_level);
+	compute_orbits_of_automorphism_group(verbose_level - 2);
 	if (f_v) {
 		cout << "surface_object_with_action::init_with_surface_object "
 				"after compute_orbits_of_automorphism_group" << endl;
@@ -364,7 +364,7 @@ void surface_object_with_action::init_surface_object(
 		cout << "surface_object_with_action::init_surface_object "
 				"before compute_orbits_of_automorphism_group" << endl;
 	}
-	compute_orbits_of_automorphism_group(verbose_level);
+	compute_orbits_of_automorphism_group(verbose_level - 2);
 	if (f_v) {
 		cout << "surface_object_with_action::init_surface_object "
 				"after compute_orbits_of_automorphism_group" << endl;
@@ -387,8 +387,9 @@ void surface_object_with_action::compute_projectivity_group(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	Surf_A->A->compute_projectivity_subgroup(projectivity_group_gens,
-			Aut_gens, verbose_level);
+	Surf_A->A->compute_projectivity_subgroup(
+			projectivity_group_gens,
+			Aut_gens, verbose_level - 2);
 
 
 
@@ -415,7 +416,7 @@ void surface_object_with_action::compute_projectivity_group(
 					"before Syl->init" << endl;
 		}
 		Syl = NEW_OBJECT(groups::sylow_structure);
-		Syl->init(S, verbose_level);
+		Syl->init(S, verbose_level - 2);
 		if (f_v) {
 			cout << "surface_object_with_action::compute_projectivity_group "
 					"after Syl->init" << endl;
@@ -490,7 +491,7 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"before init_orbits_on_half_double_sixes" << endl;
 		}
-		init_orbits_on_half_double_sixes(verbose_level);
+		init_orbits_on_half_double_sixes(verbose_level - 1);
 
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
@@ -501,7 +502,7 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"before init_orbits_on_double_sixes" << endl;
 		}
-		init_orbits_on_double_sixes(verbose_level);
+		init_orbits_on_double_sixes(verbose_level - 1);
 
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
@@ -514,7 +515,7 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"before init_orbits_on_tritangent_planes" << endl;
 		}
-		init_orbits_on_tritangent_planes(verbose_level);
+		init_orbits_on_tritangent_planes(verbose_level - 1);
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"after init_orbits_on_tritangent_planes" << endl;
@@ -527,7 +528,7 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"before init_orbits_on_Hesse_planes" << endl;
 		}
-		init_orbits_on_Hesse_planes(verbose_level);
+		init_orbits_on_Hesse_planes(verbose_level - 1);
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"after init_orbits_on_Hesse_planes" << endl;
@@ -539,7 +540,7 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"before init_orbits_on_axes" << endl;
 		}
-		init_orbits_on_axes(verbose_level);
+		init_orbits_on_axes(verbose_level - 1);
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"after init_orbits_on_axes" << endl;
@@ -552,7 +553,7 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"before init_orbits_on_trihedral_pairs" << endl;
 		}
-		init_orbits_on_trihedral_pairs(verbose_level);
+		init_orbits_on_trihedral_pairs(verbose_level - 1);
 		if (f_v) {
 			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 					"after init_orbits_on_trihedral_pairs" << endl;
@@ -568,7 +569,7 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 				"before init_orbits_on_points_not_on_lines" << endl;
 	}
-	init_orbits_on_points_not_on_lines(verbose_level);
+	init_orbits_on_points_not_on_lines(verbose_level - 1);
 	if (f_v) {
 		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
 				"after init_orbits_on_points_not_on_lines" << endl;
@@ -812,7 +813,8 @@ void surface_object_with_action::init_orbits_on_half_double_sixes(
 		cout << "creating action on half double sixes:" << endl;
 	}
 	A_single_sixes = A_on_the_lines->create_induced_action_on_sets(
-			72, 6, Surf->Schlaefli->Double_six, 0 /*verbose_level*/);
+			72, 6, Surf->Schlaefli->Double_six,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on half double sixes done" << endl;
 	}
@@ -866,7 +868,8 @@ void surface_object_with_action::init_orbits_on_double_sixes(
 		cout << "creating action on half double sixes:" << endl;
 	}
 	A_double_sixes = A_single_sixes->create_induced_action_on_sets(
-			36, 2, double_six_sets, 0 /*verbose_level*/);
+			36, 2, double_six_sets,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on half double sixes done" << endl;
 	}
@@ -900,6 +903,7 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_tritangent_planes" << endl;
@@ -933,7 +937,9 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 				<< " tritangent planes" << endl;
 	}
 
-	Orbits_on_tritangent_planes->print_and_list_orbits(cout);
+	if (f_vv) {
+		Orbits_on_tritangent_planes->print_and_list_orbits(cout);
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_tritangent_planes done" << endl;
@@ -943,6 +949,7 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 void surface_object_with_action::init_orbits_on_Hesse_planes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_Hesse_planes" << endl;
@@ -973,7 +980,9 @@ void surface_object_with_action::init_orbits_on_Hesse_planes(int verbose_level)
 				<< " Hesse planes" << endl;
 	}
 
-	Orbits_on_Hesse_planes->print_and_list_orbits(cout);
+	if (f_vv) {
+		Orbits_on_Hesse_planes->print_and_list_orbits(cout);
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_Hesse_planes done" << endl;
@@ -983,6 +992,7 @@ void surface_object_with_action::init_orbits_on_Hesse_planes(int verbose_level)
 void surface_object_with_action::init_orbits_on_axes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_axes" << endl;
@@ -1022,7 +1032,9 @@ void surface_object_with_action::init_orbits_on_axes(int verbose_level)
 				<< " axes" << endl;
 	}
 
-	Orbits_on_axes->print_and_list_orbits(cout);
+	if (f_vv) {
+		Orbits_on_axes->print_and_list_orbits(cout);
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_axes done" << endl;
@@ -1034,6 +1046,7 @@ void surface_object_with_action::init_orbits_on_trihedral_pairs(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_trihedral_pairs" << endl;
@@ -1064,7 +1077,9 @@ void surface_object_with_action::init_orbits_on_trihedral_pairs(
 				<< " orbits on trihedral pairs" << endl;
 	}
 
-	Orbits_on_trihedral_pairs->print_and_list_orbits(cout);
+	if (f_vv) {
+		Orbits_on_trihedral_pairs->print_and_list_orbits(cout);
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_trihedral_pairs done" << endl;
@@ -1075,6 +1090,7 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_points_not_on_lines" << endl;
@@ -1105,7 +1121,9 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 				<< " orbits on points not on lines" << endl;
 	}
 
-	Orbits_on_points_not_on_lines->print_and_list_orbits(cout);
+	if (f_vv) {
+		Orbits_on_points_not_on_lines->print_and_list_orbits(cout);
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_points_not_on_lines done" << endl;
