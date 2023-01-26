@@ -190,7 +190,9 @@ public:
 
 	stabilizer_orbits_and_types();
 	~stabilizer_orbits_and_types();
-	void init(compute_stabilizer *CS, int verbose_level);
+	void init(
+			compute_stabilizer *CS,
+			int verbose_level);
 	void compute_stabilizer_orbits_and_find_minimal_pattern(
 			int verbose_level);
 	// uses selected_set_stab_gens to compute orbits on points in action A2

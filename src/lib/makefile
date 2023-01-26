@@ -557,6 +557,7 @@ ORBITER_MODULES= \
 		layer5_top_level/projective_space/canonical_form_classifier_description.o \
 		layer5_top_level/projective_space/canonical_form_classifier.o \
 		layer5_top_level/projective_space/canonical_form_nauty.o \
+		layer5_top_level/projective_space/canonical_form_of_variety.o \
 		layer5_top_level/projective_space/canonical_form_substructure.o \
 		layer5_top_level/projective_space/object_in_projective_space_with_action.o \
 		layer5_top_level/projective_space/projective_space_activity_description.o \

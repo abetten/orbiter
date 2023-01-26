@@ -73,7 +73,8 @@ classify_bitvectors::~classify_bitvectors()
 }
 
 
-void classify_bitvectors::init(int N, int rep_len, int verbose_level)
+void classify_bitvectors::init(
+		int N, int rep_len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -147,7 +148,8 @@ void classify_bitvectors::search_and_add_if_new(uchar *data,
 			nb_types, data, idx,
 			0 /*verbose_level - 2*/)) {
 		if (f_v) {
-			cout << "classify_bitvectors::add vec_search returns TRUE, idx=" << idx << endl;
+			cout << "classify_bitvectors::add vec_search "
+					"returns TRUE, idx=" << idx << endl;
 		}
 		type_of[n] = idx;
 		Type_mult[idx]++;
@@ -155,11 +157,13 @@ void classify_bitvectors::search_and_add_if_new(uchar *data,
 	}
 	else {
 		if (f_v) {
-			cout << "classify_bitvectors::add vec_search returns FALSE, new bitvector, before add_at_idx" << endl;
+			cout << "classify_bitvectors::add vec_search "
+					"returns FALSE, new bitvector, before add_at_idx" << endl;
 		}
 		add_at_idx(data, extra_data, idx, 0/*verbose_level*/);
 		if (f_v) {
-			cout << "classify_bitvectors::add vec_search returns FALSE, new bitvector, after add_at_idx" << endl;
+			cout << "classify_bitvectors::add vec_search "
+					"after add_at_idx" << endl;
 		}
 		f_found = FALSE;
 	}

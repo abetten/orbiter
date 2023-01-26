@@ -61,6 +61,9 @@ public:
 	int f_substructure_size;
 	int substructure_size;
 
+	int f_skip;
+	std::string skip_label;
+
 	projective_space_with_action *PA;
 
 	canonical_form_classifier *Canon_substructure;
@@ -91,6 +94,8 @@ public:
 
 	canonical_form_classifier_description *Descr;
 
+	int *skip_vector;
+	int skip_sz;
 
 	ring_theory::homogeneous_polynomial_domain *Poly_ring;
 
@@ -98,12 +103,14 @@ public:
 
 	int nb_objects_to_test;
 
+	int idx_po, idx_so, idx_eqn, idx_pts, idx_bitangents;
+
 	// nauty stuff:
 
 	data_structures::classify_bitvectors *CB;
 	int canonical_labeling_len;
-	long int *alpha;
-	int *gamma;
+	//long int *alpha;
+	//int *gamma;
 
 	// substructure stuff:
 
@@ -116,6 +123,7 @@ public:
 	canonical_form_substructure **CFS_table;
 		// [nb_objects_to_test]
 
+	canonical_form_of_variety **Variety_table;
 
 
 	int *Elt;
@@ -139,18 +147,19 @@ public:
 
 	canonical_form_classifier();
 	~canonical_form_classifier();
+	void init(
+			canonical_form_classifier_description *Descr,
+			int verbose_level);
+	int skip_this_one(int counter);
 	void count_nb_objects_to_test(int verbose_level);
 	void classify(
-			canonical_form_classifier_description *Descr,
 			int verbose_level);
 	void classify_nauty(int verbose_level);
 	void classify_with_substructure(int verbose_level);
 	void main_loop(int verbose_level);
-	void classify_curve_nauty(
-			quartic_curve_object *Qco,
-			int *canonical_equation,
-			int *transporter_to_canonical_form,
-			int verbose_level);
+	void prepare_input(int row,
+			data_structures::spreadsheet *S,
+			quartic_curve_object *&Qco, int verbose_level);
 	void write_canonical_forms_csv(
 			std::string &fname_base,
 			int verbose_level);
@@ -180,6 +189,8 @@ class canonical_form_nauty {
 
 public:
 
+	canonical_form_classifier *Classifier;
+
 	quartic_curve_object *Qco;
 
 	int nb_rows, nb_cols;
@@ -197,10 +208,10 @@ public:
 
 	canonical_form_nauty();
 	~canonical_form_nauty();
-	void quartic_curve(
-			projective_space_with_action *PA,
-			ring_theory::homogeneous_polynomial_domain *Poly4_x123,
-			induced_actions::action_on_homogeneous_polynomials *AonHPD,
+	void init(
+			canonical_form_classifier *Classifier,
+			int verbose_level);
+	void canonical_form_of_quartic_curve(
 			quartic_curve_object *Qco,
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
@@ -209,6 +220,56 @@ public:
 
 };
 
+
+
+// #############################################################################
+// canonical_form_of_variety.cpp
+// #############################################################################
+
+
+
+//! to compute the canonical form of a variety
+
+class canonical_form_of_variety {
+
+public:
+
+	canonical_form_classifier *Canonical_form_classifier;
+
+	std::string fname_case_out;
+
+	// intput:
+	quartic_curve_object *Qco;
+
+
+	// output:
+	long int *canonical_pts;
+	int *canonical_equation;
+	int *transporter_to_canonical_form;
+	groups::strong_generators *gens_stab_of_canonical_equation;
+
+	ring_theory::longinteger_object *go_eqn;
+
+
+	canonical_form_of_variety();
+	~canonical_form_of_variety();
+	void init(
+			canonical_form_classifier *Canonical_form_classifier,
+			std::string &fname_case_out,
+			quartic_curve_object *Qco,
+			int verbose_level);
+	void classify_curve_nauty(
+			int verbose_level);
+	void handle_repeated_object(
+			int idx,
+			canonical_form_nauty *C,
+			long int *alpha, int *gamma,
+			int verbose_level);
+	void compute_canonical_form(
+			int counter,
+			int verbose_level);
+
+};
 
 
 // #############################################################################
@@ -223,15 +284,15 @@ class canonical_form_substructure {
 
 public:
 
-	std::string fname_case_out;
+	//std::string fname_case_out;
 
-	canonical_form_classifier *Canonical_form_classifier;
+	//canonical_form_classifier *Canonical_form_classifier;
 		// has substructure_classifier *SubC
 
+	canonical_form_of_variety *Variety;
 
-	quartic_curve_object *Qco;
+	//quartic_curve_object *Qco;
 
-	long int *canonical_pts;
 
 
 	set_stabilizer::substructure_stats_and_selection *SubSt;
@@ -248,7 +309,6 @@ public:
 
 	orbits_schreier::orbit_of_equations *Orb;
 
-	groups::strong_generators *gens_stab_of_canonical_equation;
 
 	int *trans1;
 	int *trans2;
@@ -259,17 +319,12 @@ public:
 	int *Elt;
 	int *eqn2;
 
-	int *canonical_equation;
-	int *transporter_to_canonical_form;
 
 
 	canonical_form_substructure();
 	~canonical_form_substructure();
 	void classify_curve_with_substructure(
-			canonical_form_classifier *Canonical_form_classifier,
-			std::string &fname_case_out,
-			quartic_curve_object *Qco,
-			ring_theory::longinteger_object &go_eqn,
+			canonical_form_of_variety *Variety,
 			int verbose_level);
 	void handle_orbit(
 			int *transporter_to_canonical_form,
@@ -507,6 +562,7 @@ public:
 	int f_filter_by_nb_Eckardt_points;
 	int nb_Eckardt_points;
 
+#if 0
 	int f_classify_quartic_curves_nauty;
 	std::string classify_quartic_curves_nauty_fname_mask;
 	int classify_quartic_curves_nauty_nb;
@@ -518,7 +574,7 @@ public:
 	int classify_quartic_curves_with_substructure_size;
 	int classify_quartic_curves_with_substructure_degree;
 	std::string classify_quartic_curves_with_substructure_fname_classification;
-
+#endif
 
 	int f_classify_arcs;
 	apps_geometry::arc_generator_description
@@ -610,6 +666,7 @@ public:
 			apps_geometry::arc_generator_description
 				*Arc_generator_description,
 			int verbose_level);
+#if 0
 	void classify_quartic_curves_nauty(
 			projective_space_with_action *PA,
 			std::string &fname_mask, int nb,
@@ -631,6 +688,7 @@ public:
 			int degree,
 			std::string &fname_classification,
 			int verbose_level);
+#endif
 	void set_stabilizer(
 			projective_space_with_action *PA,
 			int intermediate_subset_size,

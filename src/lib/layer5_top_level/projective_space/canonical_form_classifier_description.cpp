@@ -55,6 +55,9 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	f_substructure_size = FALSE;
 	substructure_size = 0;
 
+	f_skip = FALSE;
+	//std::string skip_label;
+
 	PA = NULL;
 
 	Canon_substructure = NULL;
@@ -166,6 +169,13 @@ int canonical_form_classifier_description::read_arguments(int argc, std::string 
 				cout << "-substructure_size" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-skip") == 0) {
+			f_skip = TRUE;
+			skip_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-skip " << skip_label << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
@@ -223,6 +233,9 @@ void canonical_form_classifier_description::print()
 	}
 	if (f_substructure_size) {
 		cout << "-substructure_size" << endl;
+	}
+	if (f_skip) {
+		cout << "-skip " << skip_label << endl;
 	}
 }
 

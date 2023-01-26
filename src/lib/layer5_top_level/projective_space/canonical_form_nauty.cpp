@@ -32,6 +32,8 @@ canonical_form_nauty::canonical_form_nauty()
 	nb_bitangents = 0;
 #endif
 
+	Classifier = NULL;
+
 	Qco = NULL;
 
 	nb_rows = 0;
@@ -52,10 +54,21 @@ canonical_form_nauty::~canonical_form_nauty()
 {
 }
 
-void canonical_form_nauty::quartic_curve(
-		projective_space_with_action *PA,
-		ring_theory::homogeneous_polynomial_domain *Poly4_x123,
-		induced_actions::action_on_homogeneous_polynomials *AonHPD,
+void canonical_form_nauty::init(
+		canonical_form_classifier *Classifier,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	canonical_form_nauty::Classifier = Classifier;
+
+	if (f_v) {
+		cout << "canonical_form_nauty::init" << endl;
+	}
+}
+
+
+void canonical_form_nauty::canonical_form_of_quartic_curve(
 		quartic_curve_object *Qco,
 		int *canonical_equation,
 		int *transporter_to_canonical_form,
@@ -66,7 +79,7 @@ void canonical_form_nauty::quartic_curve(
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve" << endl;
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve" << endl;
 	}
 
 #if 0
@@ -83,7 +96,7 @@ void canonical_form_nauty::quartic_curve(
 
 	if (f_v) {
 		cout << "equation is:";
-		Poly4_x123->print_equation_simple(cout, Qco->eqn);
+		Classifier->Poly_ring->print_equation_simple(cout, Qco->eqn);
 		cout << endl;
 	}
 
@@ -96,17 +109,17 @@ void canonical_form_nauty::quartic_curve(
 	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"before OwCF->init_point_set" << endl;
 	}
 	OwCF->init_point_set(
 			Qco->pts, Qco->nb_pts,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"after OwCF->init_point_set" << endl;
 	}
-	OwCF->P = PA->P;
+	OwCF->P = Classifier->Descr->PA->P;
 
 	int nb_rows, nb_cols;
 
@@ -114,8 +127,10 @@ void canonical_form_nauty::quartic_curve(
 				nb_rows, nb_cols,
 				verbose_level);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve nb_rows = " << nb_rows << endl;
-		cout << "canonical_form_nauty::quartic_curve nb_cols = " << nb_cols << endl;
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
+				"nb_rows = " << nb_rows << endl;
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
+				"nb_cols = " << nb_cols << endl;
 	}
 
 
@@ -127,23 +142,23 @@ void canonical_form_nauty::quartic_curve(
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"before Nau.set_stabilizer_of_object" << endl;
 	}
 	SG_pt_stab = Nau.set_stabilizer_of_object(
 			OwCF,
-		PA->A,
+			Classifier->Descr->PA->A,
 		f_compute_canonical_form, Canonical_form,
 		NO,
 		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"after Nau.set_stabilizer_of_object" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"go = " << *NO->Ago << endl;
 
 		NO->print_stats();
@@ -152,6 +167,12 @@ void canonical_form_nauty::quartic_curve(
 
 	}
 
+	int i;
+
+	canonical_labeling = NEW_lint(NO->N);
+	for (i = 0; i < NO->N; i++) {
+		canonical_labeling[i] = NO->canonical_labeling[i];
+	}
 
 	canonical_labeling_len = NO->N;
 
@@ -159,7 +180,7 @@ void canonical_form_nauty::quartic_curve(
 
 	SG_pt_stab->group_order(pt_stab_order);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"pt_stab_order = " << pt_stab_order << endl;
 	}
 
@@ -179,17 +200,19 @@ void canonical_form_nauty::quartic_curve(
 
 #if 1
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"before Orb->init" << endl;
 	}
-	Orb->init(PA->A, PA->F,
-		AonHPD,
+	Orb->init(
+			Classifier->Descr->PA->A,
+			Classifier->Descr->PA->F,
+			Classifier->AonHPD,
 		SG_pt_stab /* A->Strong_gens*/, Qco->eqn,
 		verbose_level);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"after Orb->init" << endl;
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"found an orbit of length " << Orb->used_length << endl;
 	}
 
@@ -197,28 +220,28 @@ void canonical_form_nauty::quartic_curve(
 	// ToDo: we need to compute the canonical form!
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"before Orb->get_canonical_form" << endl;
 	}
 	Orb->get_canonical_form(
-				canonical_equation,
-				transporter_to_canonical_form,
-				gens_stab_of_canonical_equation,
+			canonical_equation,
+			transporter_to_canonical_form,
+			gens_stab_of_canonical_equation,
 				pt_stab_order,
 				verbose_level);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"after Orb->get_canonical_form" << endl;
 	}
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"before Orb->stabilizer_orbit_rep" << endl;
 	}
 	Stab_gens_quartic = Orb->stabilizer_orbit_rep(
 			pt_stab_order, verbose_level);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve "
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"after Orb->stabilizer_orbit_rep" << endl;
 	}
 	if (f_v) {
@@ -235,7 +258,7 @@ void canonical_form_nauty::quartic_curve(
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve done" << endl;
+		cout << "canonical_form_nauty::canonical_form_of_quartic_curve done" << endl;
 	}
 }
 

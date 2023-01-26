@@ -749,8 +749,6 @@ namespace solvers {
 #define Int_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->scan(A, B, C)
 #define Lint_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->scan(A, B, C)
 
-#define Get_int_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_int_vector_from_label(A, B, C, D)
-#define Get_lint_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_lint_vector_from_label(A, B, C, D)
 
 #define Int_vec_copy_to_lint(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->copy_to_lint(A, B, C)
 #define Lint_vec_copy_to_int(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->copy_to_int(A, B, C)
@@ -785,6 +783,8 @@ namespace solvers {
 #define Lint_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, v, len)
 
 
+#define Get_int_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_int_vector_from_label(A, B, C, D)
+#define Get_lint_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_lint_vector_from_label(A, B, C, D)
 #define Get_matrix(label, A, m, n) orbiter_kernel_system::Orbiter->get_matrix_from_label(label, A, m, n)
 #define Get_ring(label) orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(label)
 #define Get_finite_field(label) orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(label)

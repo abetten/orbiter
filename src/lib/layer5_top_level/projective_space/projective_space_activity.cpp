@@ -982,6 +982,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 	}
 
+#if 0
 	else if (Descr->f_classify_quartic_curves_nauty) {
 
 		canonical_form_classifier *Classifier;
@@ -1027,6 +1028,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 
 	}
+#endif
 
 
 	else if (Descr->f_classify_arcs) {

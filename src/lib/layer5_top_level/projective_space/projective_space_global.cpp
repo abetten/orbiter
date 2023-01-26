@@ -699,6 +699,7 @@ void projective_space_global::do_classify_cubic_curves(
 	}
 }
 
+#if 0
 void projective_space_global::classify_quartic_curves_nauty(
 		projective_space_with_action *PA,
 		std::string &fname_mask, int nb,
@@ -901,6 +902,7 @@ void projective_space_global::classify_quartic_curves(
 	}
 
 }
+#endif
 
 void projective_space_global::set_stabilizer(
 		projective_space_with_action *PA,

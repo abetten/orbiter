@@ -206,6 +206,7 @@ projective_space_activity_description::projective_space_activity_description()
 	nb_Eckardt_points = 0;
 
 
+#if 0
 	f_classify_quartic_curves_nauty = FALSE;
 	//std::string classify_quartic_curves_nauty_fname_mask;
 	classify_quartic_curves_nauty_nb = 0;
@@ -217,7 +218,7 @@ projective_space_activity_description::projective_space_activity_description()
 	classify_quartic_curves_with_substructure_size = 0;
 	classify_quartic_curves_with_substructure_degree = 0;
 	//std::string classify_quartic_curves_with_substructure_fname_classification;
-
+#endif
 
 	f_classify_arcs = FALSE;
 	Arc_generator_description = NULL;
@@ -837,7 +838,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
 			}
 		}
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-classify_quartic_curves_nauty") == 0) {
 			f_classify_quartic_curves_nauty = TRUE;
 			classify_quartic_curves_nauty_fname_mask.assign(argv[++i]);
@@ -869,7 +870,7 @@ int projective_space_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-
+#endif
 		else if (ST.stringcmp(argv[i], "-classify_arcs") == 0) {
 			f_classify_arcs = TRUE;
 			Arc_generator_description = NEW_OBJECT(apps_geometry::arc_generator_description);
@@ -1208,7 +1209,7 @@ void projective_space_activity_description::print()
 	if (f_filter_by_nb_Eckardt_points) {
 		cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
 	}
-
+#if 0
 	if (f_classify_quartic_curves_nauty) {
 		cout << "-classify_quartic_curves_nauty "
 				<< classify_quartic_curves_nauty_fname_mask
@@ -1225,6 +1226,7 @@ void projective_space_activity_description::print()
 				<< " " << classify_quartic_curves_with_substructure_fname_classification
 				<< endl;
 	}
+#endif
 	if (f_classify_arcs) {
 		cout << "-classify_arcs " << endl;
 		Arc_generator_description->print();

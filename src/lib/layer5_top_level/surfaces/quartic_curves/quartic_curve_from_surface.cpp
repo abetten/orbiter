@@ -216,7 +216,7 @@ void quartic_curve_from_surface::quartic(
 
 	compute_quartic(pt_orbit,
 			SOA->SO->eqn, SOA->SO->Lines, SOA->SO->nb_lines,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic after compute_quartic" << endl;
 	}
@@ -324,7 +324,7 @@ void quartic_curve_from_surface::quartic(
 				"Surf->assemble_tangent_quadric" << endl;
 	}
 	SOA->Surf->PolynomialDomains->assemble_tangent_quadric(f1, f2, f3,
-			tangent_quadric, verbose_level);
+			tangent_quadric, verbose_level - 2);
 
 
 
@@ -352,7 +352,8 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "We found " << nb_pts_on_tangent_quadric
+		cout << "quartic_curve_from_surface::quartic "
+				"We found " << nb_pts_on_tangent_quadric
 			<< " points on the tangent quadric." << endl;
 	}
 
@@ -418,7 +419,8 @@ void quartic_curve_from_surface::quartic(
 	vector<long int> Points;
 	int h;
 
-	SOA->Surf->PolynomialDomains->Poly4_x123->enumerate_points(curve, Points, 0 /* verbose_level */);
+	SOA->Surf->PolynomialDomains->Poly4_x123->enumerate_points(
+			curve, Points, 0 /* verbose_level */);
 
 	sz_curve = Points.size();
 	Pts_on_curve = NEW_lint(sz_curve);
@@ -428,7 +430,8 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "We found " << sz_curve << " points on the quartic." << endl;
+		cout << "quartic_curve_from_surface::quartic "
+				"We found " << sz_curve << " points on the quartic." << endl;
 	}
 
 #if 0
@@ -462,6 +465,10 @@ void quartic_curve_from_surface::quartic(
 #endif
 
 
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::quartic done" << endl;
+	}
 
 
 }

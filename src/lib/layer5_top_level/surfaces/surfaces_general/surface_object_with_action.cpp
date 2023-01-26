@@ -2066,22 +2066,24 @@ void surface_object_with_action::export_all_quartic_curves(
 	ost_quartics_csv << "orbit,curve,pts_on_curve,bitangents,go" << endl;
 	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
 
-		cout << "Quartic curve associated with surface and with orbit " << pt_orbit
-				<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
+		if (f_v) {
+			cout << "Quartic curve associated with surface and with orbit " << pt_orbit
+					<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
+		}
 
 
 		quartic_curves::quartic_curve_from_surface *QC;
 
 		QC = NEW_OBJECT(quartic_curves::quartic_curve_from_surface);
 
-		QC->init(this, verbose_level);
+		QC->init(this, verbose_level - 2);
 
 
 		if (f_v) {
 			cout << "surface_object_with_action::export_all_quartic_curves "
 					"before QC->quartic" << endl;
 		}
-		QC->quartic(pt_orbit, verbose_level);
+		QC->quartic(pt_orbit, verbose_level - 2);
 		if (f_v) {
 			cout << "surface_object_with_action::export_all_quartic_curves "
 					"after QC->quartic" << endl;
