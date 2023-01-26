@@ -117,7 +117,7 @@ void canonical_form_of_variety::classify_curve_nauty(
 		cout << "canonical_form_of_variety::classify_curve_nauty "
 				"before C->init" << endl;
 	}
-	C->init(Canonical_form_classifier, verbose_level);
+	C->init(Canonical_form_classifier, verbose_level - 2);
 	if (f_v) {
 		cout << "canonical_form_of_variety::classify_curve_nauty "
 				"after C->init" << endl;
@@ -133,7 +133,7 @@ void canonical_form_of_variety::classify_curve_nauty(
 			canonical_equation,
 			transporter_to_canonical_form,
 			gens_stab_of_canonical_equation,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "canonical_form_of_variety::classify_curve_nauty "
 				"after C->canonical_form_of_quartic_curve" << endl;
@@ -163,7 +163,7 @@ void canonical_form_of_variety::classify_curve_nauty(
 		Canonical_form_classifier->CB->init(
 				Canonical_form_classifier->nb_objects_to_test,
 				C->Canonical_form->get_allocated_length(),
-				verbose_level);
+				verbose_level - 2);
 	}
 	int f_found;
 	int idx;
@@ -212,7 +212,7 @@ void canonical_form_of_variety::classify_curve_nauty(
 				idx,
 				C,
 				alpha, gamma,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "canonical_form_of_variety::classify_curve_nauty "
 					"after handle_repeated_object" << endl;
@@ -294,7 +294,9 @@ void canonical_form_of_variety::handle_repeated_object(
 		if (f_v) {
 			cout << "canonical_form_of_variety::handle_repeated_object "
 					"alpha_inv = " << endl;
-			Lint_vec_print(cout, alpha_inv, Canonical_form_classifier->canonical_labeling_len);
+			Lint_vec_print(cout,
+					alpha_inv,
+					Canonical_form_classifier->canonical_labeling_len);
 			cout << endl;
 		}
 
@@ -328,7 +330,9 @@ void canonical_form_of_variety::handle_repeated_object(
 		if (f_v) {
 			cout << "canonical_form_of_variety::handle_repeated_object "
 					"gamma = " << endl;
-			Int_vec_print(cout, gamma, Canonical_form_classifier->canonical_labeling_len);
+			Int_vec_print(cout,
+					gamma,
+					Canonical_form_classifier->canonical_labeling_len);
 			cout << endl;
 		}
 
@@ -355,7 +359,7 @@ void canonical_form_of_variety::handle_repeated_object(
 		}
 		Canonical_form_classifier->Descr->PA->P->reverse_engineer_semilinear_map(
 				gamma, Mtx, frobenius,
-			verbose_level);
+			0 /*verbose_level*/);
 		if (f_v) {
 			cout << "canonical_form_of_variety::handle_repeated_object "
 					"after PA->P->reverse_engineer_semilinear_map" << endl;

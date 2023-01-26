@@ -125,7 +125,7 @@ void canonical_form_classifier::init(
 			Descr->PA->n + 1,
 			Descr->degree,
 			t_PART,
-			verbose_level);
+			verbose_level - 3);
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
 				"after Poly_ring->init" << endl;
@@ -142,7 +142,7 @@ void canonical_form_classifier::init(
 		cout << "canonical_form_classifier::init "
 				"before AonHPD->init" << endl;
 	}
-	AonHPD->init(Descr->PA->A, Poly_ring, verbose_level);
+	AonHPD->init(Descr->PA->A, Poly_ring, verbose_level - 3);
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
 				"after AonHPD->init" << endl;
@@ -223,7 +223,7 @@ void canonical_form_classifier::count_nb_objects_to_test(int verbose_level)
 					<< cnt << " / " << Descr->nb_files
 					<< " fname=" << fname << endl;
 		}
-		S.read_spreadsheet(fname, verbose_level);
+		S.read_spreadsheet(fname, 0 /*verbose_level*/);
 
 		nb_objects_to_test += S.nb_rows - 1;
 
@@ -259,7 +259,7 @@ void canonical_form_classifier::classify(
 				"before count_nb_objects_to_test" << endl;
 	}
 
-	count_nb_objects_to_test(verbose_level);
+	count_nb_objects_to_test(verbose_level - 2);
 
 
 	if (f_v) {
@@ -282,7 +282,7 @@ void canonical_form_classifier::classify(
 			cout << "canonical_form_classifier::classify "
 					"before classify_nauty" << endl;
 		}
-		classify_nauty(verbose_level);
+		classify_nauty(verbose_level - 1);
 		if (f_v) {
 			cout << "canonical_form_classifier::classify "
 					"after classify_nauty" << endl;
@@ -294,7 +294,7 @@ void canonical_form_classifier::classify(
 			cout << "canonical_form_classifier::classify "
 					"before classify_with_substructure" << endl;
 		}
-		classify_with_substructure(verbose_level);
+		classify_with_substructure(verbose_level - 1);
 		if (f_v) {
 			cout << "canonical_form_classifier::classify "
 					"after classify_with_substructure" << endl;
@@ -522,7 +522,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 
 		data_structures::spreadsheet S;
 
-		S.read_spreadsheet(fname, verbose_level);
+		S.read_spreadsheet(fname, 0 /*verbose_level*/);
 
 		if (f_v) {
 			cout << "canonical_form_classifier::classify_nauty "
@@ -569,7 +569,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 			}
 			prepare_input(row,
 					&S,
-					Qco, verbose_level);
+					Qco, verbose_level - 2);
 			if (f_v) {
 				cout << "canonical_form_classifier::main_loop "
 						"after prepare_input" << endl;
@@ -587,7 +587,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 					this,
 					fname_case_out,
 					Qco,
-					verbose_level);
+					verbose_level - 2);
 			if (f_v) {
 				cout << "canonical_form_classifier::main_loop "
 						"after Variety->init" << endl;
@@ -599,7 +599,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 				cout << "canonical_form_classifier::main_loop "
 						"before Variety->compute_canonical_form" << endl;
 			}
-			Variety->compute_canonical_form(counter, verbose_level);
+			Variety->compute_canonical_form(counter, verbose_level - 1);
 			if (f_v) {
 				cout << "canonical_form_classifier::main_loop "
 						"after Variety->compute_canonical_form" << endl;
