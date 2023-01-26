@@ -118,7 +118,7 @@ void surface_create::create_cubic_surface(
 	if (f_v) {
 		cout << "surface_create::create_cubic_surface before init" << endl;
 	}
-	init(Descr, verbose_level);
+	init(Descr, verbose_level - 2);
 	if (f_v) {
 		cout << "surface_create::create_cubic_surface after init" << endl;
 	}
@@ -157,7 +157,7 @@ void surface_create::create_cubic_surface(
 				Sg,
 				f_has_nice_gens,
 				nice_gens,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "surface_create::create_cubic_surface "
 					"after SOA->init_with_surface_object" << endl;
@@ -277,7 +277,7 @@ int surface_create::init(surface_create_description *Descr,
 	if (f_v) {
 		cout << "surface_create::init before create_surface_from_description" << endl;
 	}
-	if (!create_surface_from_description(verbose_level)) {
+	if (!create_surface_from_description(verbose_level - 2)) {
 		if (f_v) {
 			cout << "surface_create::init "
 					"create_surface_from_description could not create surface" << endl;
@@ -313,7 +313,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 		}
 
 		create_Eckardt_surface(Descr->family_Eckardt_a,
-				Descr->family_Eckardt_b, verbose_level);
+				Descr->family_Eckardt_b, verbose_level - 2);
 		
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -327,7 +327,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 					"before create_surface_G13" << endl;
 		}
 
-		create_surface_G13(Descr->family_G13_a, verbose_level);
+		create_surface_G13(Descr->family_G13_a, verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -343,7 +343,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 					"before create_surface_F13" << endl;
 		}
 
-		create_surface_F13(Descr->family_F13_a, verbose_level);
+		create_surface_F13(Descr->family_F13_a, verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -360,7 +360,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 					"before create_surface_bes" << endl;
 		}
 
-		create_surface_bes(Descr->family_bes_a, Descr->family_bes_c, verbose_level);
+		create_surface_bes(Descr->family_bes_a, Descr->family_bes_c, verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -381,7 +381,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 		create_surface_general_abcd(
 				Descr->family_general_abcd_a, Descr->family_general_abcd_b,
 				Descr->family_general_abcd_c, Descr->family_general_abcd_d,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -402,7 +402,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 		create_surface_by_coefficients(
 				Descr->coefficients_text,
 				Descr->select_double_six_string,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -424,7 +424,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 				Descr->rank_text,
 				Descr->rank_defining_q,
 				Descr->select_double_six_string,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -444,7 +444,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 		create_surface_from_catalogue(
 				Descr->iso,
 				Descr->select_double_six_string,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -463,7 +463,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 
 		create_surface_by_arc_lifting(
 				Descr->arc_lifting_text,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -482,7 +482,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 		create_surface_by_arc_lifting_with_two_lines(
 				Descr->arc_lifting_text,
 				Descr->arc_lifting_two_lines_text,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -504,7 +504,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 				Descr->Cayley_form_l,
 				Descr->Cayley_form_m,
 				Descr->Cayley_form_n,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -527,7 +527,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 				Descr->equation_parameters,
 				Descr->equation_parameters_tex,
 				Descr->select_double_six_string,
-				verbose_level)) {
+				verbose_level - 2)) {
 			if (f_v) {
 				cout << "surface_create::init2 cannot create surface" << endl;
 			}
@@ -550,7 +550,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 				Descr->by_double_six_label,
 				Descr->by_double_six_label_tex,
 				Descr->by_double_six_text,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -567,7 +567,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 		create_surface_by_skew_hexagon(
 				Descr->by_skew_hexagon_label,
 				Descr->by_skew_hexagon_label_tex,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
 					"after create_surface_by_skew_hexagon" << endl;
@@ -590,7 +590,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 		override_group(Descr->override_group_order,
 				Descr->override_group_nb_gens,
 				Descr->override_group_gens,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
 					"after override_group" << endl;
@@ -627,7 +627,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 			cout << "surface_create::create_surface_from_description "
 					"before test_group" << endl;
 		}
-		test_group(verbose_level);
+		test_group(verbose_level - 2);
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
 					"after test_group" << endl;
