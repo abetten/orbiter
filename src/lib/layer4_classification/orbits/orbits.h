@@ -33,6 +33,7 @@ public:
 	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 	field_theory::finite_field *F;
 	groups::strong_generators *SG;
+
 	int nb_monomials;
 	int sz; // = 1 + nb_monomials
 	int sz_for_compare; // = 1 + nb_monomials
@@ -41,9 +42,10 @@ public:
 	int position_of_original_object;
 	int allocation_length;
 	int used_length;
-	int **Equations;
-	int *prev;
-	int *label;
+
+	int **Equations; // [allocation_length][sz]
+	int *prev; // [allocation_length]
+	int *label; // [allocation_length]
 
 	int f_has_print_function;
 	void (*print_function)(int *object,
@@ -61,14 +63,20 @@ public:
 	void init(
 			actions::action *A,
 			field_theory::finite_field *F,
-			induced_actions::action_on_homogeneous_polynomials *AonHPD,
-		groups::strong_generators *SG, int *coeff_in,
+			induced_actions::action_on_homogeneous_polynomials
+				*AonHPD,
+		groups::strong_generators *SG,
+		int *coeff_in,
 		int verbose_level);
-	void map_an_equation(int *object_in, int *object_out, 
+	void map_an_equation(
+			int *object_in, int *object_out,
 		int *Elt, int verbose_level);
 	void print_orbit();
 	void compute_orbit(int *coeff, int verbose_level);
-	void get_transporter(int idx, int *transporter, int verbose_level);
+	void reallocate(
+			int *&Q, int Q_len, int verbose_level);
+	void get_transporter(
+			int idx, int *transporter, int verbose_level);
 		// transporter is an element which maps 
 		// the orbit representative to the given subspace.
 	void get_random_schreier_generator(
@@ -76,8 +84,10 @@ public:
 	void get_canonical_form(
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
-			groups::strong_generators *&gens_stab_of_canonical_equation,
-			ring_theory::longinteger_object &full_group_order,
+			groups::strong_generators
+				*&gens_stab_of_canonical_equation,
+			ring_theory::longinteger_object
+				&full_group_order,
 			int verbose_level);
 	groups::strong_generators *stabilizer_orbit_rep(
 			ring_theory::longinteger_object &full_group_order,
@@ -88,11 +98,15 @@ public:
 			groups::sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
 	groups::strong_generators *stabilizer_any_point(
-			ring_theory::longinteger_object &full_group_order, int idx,
+			ring_theory::longinteger_object &full_group_order,
+			int idx,
 		int verbose_level);
-	int search_equation(int *eqn, int &idx, int verbose_level);
-	int search_data(int *data, int &idx, int verbose_level);
-	void save_csv(std::string &fname, int verbose_level);
+	int search_equation(
+			int *eqn, int &idx, int verbose_level);
+	int search_data(
+			int *data, int &idx, int verbose_level);
+	void save_csv(
+			std::string &fname, int verbose_level);
 };
 
 
@@ -113,17 +127,23 @@ public:
 	actions::action *A;
 	actions::action *A2;
 	data_structures_groups::vector_ge *gens;
-	long int *set; // the set whose orbit we want to compute; it has size 'sz'
+	long int *set;
+		// the set whose orbit we want to compute;
+		// it is of size 'sz'
 	int sz;
 
-	int position_of_original_set; // = 0; never changes
-	int allocation_length; // number of entries allocated in Sets
+	int position_of_original_set;
+		// = 0; never changes
+	int allocation_length;
+		// number of entries allocated in Sets
 	int old_length;
-	int used_length; // number of sets currently stored in Sets
+	int used_length;
+		// number of sets currently stored in Sets
 	long int **Sets;
 		// the sets are stored in the order in which they
 		// are discovered and added to the tree
-	int *Extra; // [allocation_length * 2]
+	int *Extra;
+		// [allocation_length * 2]
 		// Extra[i * 2 + 0] is the index of the ancestor node of node i.
 		// Extra[i * 2 + 1] is the label of the generator that maps
 		// the ancestor of node i to node i.
@@ -149,13 +169,18 @@ public:
 			data_structures_groups::vector_ge *gens,
 			int verbose_level);
 	void compute(int verbose_level);
+	void setup_root_node(
+			long int *Q, int &Q_len, int verbose_level);
+	void reallocate(
+			long int *&Q, int Q_len, int verbose_level);
 	void dump_tables_of_hash_values();
 	void get_table_of_orbits(
 			long int *&Table, int &orbit_length,
 		int &set_size, int verbose_level);
 	void get_table_of_orbits_and_hash_values(
 			long int *&Table,
-			int &orbit_length, int &set_size, int verbose_level);
+			int &orbit_length,
+			int &set_size, int verbose_level);
 	void make_table_of_coset_reps(
 			data_structures_groups::vector_ge *&Coset_reps,
 			int verbose_level);
@@ -165,11 +190,14 @@ public:
 		// that moves the orbit representative
 	// to the j-th element in the orbit.
 	void get_orbit_of_points(
-			std::vector<long int> &Orbit, int verbose_level);
+			std::vector<long int> &Orbit,
+			int verbose_level);
 	void get_prev(
-			std::vector<int> &Prev, int verbose_level);
+			std::vector<int> &Prev,
+			int verbose_level);
 	void get_label(
-			std::vector<int> &Label, int verbose_level);
+			std::vector<int> &Label,
+			int verbose_level);
 };
 
 

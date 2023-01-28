@@ -74,7 +74,7 @@ void animate::animate_one_round(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int h, i, j;
 	int f_has_camera = FALSE;
 	double camera_sky[3];
@@ -2869,7 +2869,7 @@ void animate::draw_frame_windy(
 	std::ostream &fp,
 	int verbose_level)
 {
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int i;
 	double d_theta, theta, r, x, y;
 	double b1[3] = {2/sqrt(6),-1/sqrt(6),-1/sqrt(6)};
@@ -3069,7 +3069,7 @@ void animate::draw_text(std::string &text,
 	double x, y, z;
 
 
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int i;
 
 	if (f_v) {
@@ -3195,7 +3195,7 @@ void animate::draw_text_with_selection(int *selection, int nb_select,
 	std::ostream &ost, int verbose_level)
 {
 	int i, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	ost << endl;
 	//ost << "	union{ // labels" << endl;

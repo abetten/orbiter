@@ -609,7 +609,7 @@ void spread_table_with_selection::predict_spread_table_length(
 	int f_do_it, idx, no;
 	ring_theory::longinteger_object go, stab_go;
 	ring_theory::longinteger_domain D;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	data_structures::sorting Sorting;
 
 	if (f_v) {

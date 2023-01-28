@@ -213,7 +213,7 @@ void povray_interface::animation_rotate_around_origin_and_given_vector(
 	double *v, std::ostream &ost)
 {
 	double A[9], Av[9];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	N.orthogonal_transformation_from_point_to_basis_vector(v,
 		A, Av, 0 /* verbose_level */);
@@ -284,7 +284,7 @@ void povray_interface::animation_rotate_xyz(
 	double angle_x_deg, double angle_y_deg, double angle_z_deg,
 	std::ostream &ost)
 {
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	ost << "	rotate <";
 	N.output_double(angle_x_deg, ost);
@@ -299,7 +299,7 @@ void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_give
 	double *v, double angle_zero_one, std::ostream &ost)
 {
 	double A[9], Av[9];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	N.orthogonal_transformation_from_point_to_basis_vector(v,
 		A, Av, 0 /* verbose_level */);

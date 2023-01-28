@@ -18,9 +18,14 @@ namespace actions {
 
 action::action()
 {
+	int verbose_level = 0;
+
 	orbiter_kernel_system::Orbiter->nb_times_action_created++;
 
 	null();
+
+	Known_groups = NEW_OBJECT(known_groups);
+	Known_groups->init(this, verbose_level);
 }
 
 action::~action()
@@ -54,6 +59,7 @@ void action::null()
 
 	Stabilizer_chain = NULL;
 
+	Known_groups = NULL;
 
 
 	elt_size_in_int = 0;
@@ -298,7 +304,12 @@ void action::freeself()
 		cout << "action::freeself after free_base_data" << endl;
 	}
 	
-	
+
+	if (Known_groups) {
+		FREE_OBJECT(Known_groups);
+	}
+
+
 	if (f_v) {
 		cout << "action::freeself after freeing transversal reps" << endl;
 	}
@@ -1051,7 +1062,8 @@ int action::depth_in_stab_chain(int *Elt)
 	return base_len();
 }
 
-void action::strong_generators_at_depth(int depth,
+void action::strong_generators_at_depth(
+		int depth,
 		data_structures_groups::vector_ge &gen,
 		int verbose_level)
 // all strong generators that leave base points 0,..., depth - 1 fix
@@ -1074,7 +1086,8 @@ void action::strong_generators_at_depth(int depth,
 
 void action::compute_point_stabilizer_chain(
 		data_structures_groups::vector_ge &gen,
-		groups::sims *S, int *sequence, int len, int verbose_level)
+		groups::sims *S, int *sequence, int len,
+		int verbose_level)
 // S points to len + 1 many sims objects
 {
 	int f_v = (verbose_level >= 1);
@@ -1534,7 +1547,8 @@ void action::make_element_from_base_image(
 	}
 }
 
-void action::make_element_2x2(int *Elt, int a0, int a1, int a2, int a3)
+void action::make_element_2x2(
+		int *Elt, int a0, int a1, int a2, int a3)
 {
 	int data[4];
 	
@@ -1545,7 +1559,8 @@ void action::make_element_2x2(int *Elt, int a0, int a1, int a2, int a3)
 	make_element(Elt, data, 0);
 }
 
-void action::make_element_from_string(int *Elt,
+void action::make_element_from_string(
+		int *Elt,
 		std::string &data_string, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1578,7 +1593,8 @@ void action::make_element_from_string(int *Elt,
 	}
 }
 
-void action::make_element(int *Elt, int *data, int verbose_level)
+void action::make_element(
+		int *Elt, int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -1649,60 +1665,6 @@ void action::make_element(int *Elt, int *data, int verbose_level)
 	}
 }
 
-void action::build_up_automorphism_group_from_aut_data(
-	int nb_auts, int *aut_data,
-	groups::sims &S, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int h, i, coset;
-	int *Elt1, *Elt2;
-	ring_theory::longinteger_object go;
-	
-	if (f_v) {
-		cout << "action::build_up_automorphism_group_from_aut_data "
-				"action=" << label << " nb_auts=" << nb_auts << endl;
-	}
-	Elt1 = NEW_int(elt_size_in_int);
-	Elt2 = NEW_int(elt_size_in_int);
-	S.init(this, verbose_level - 2);
-	S.init_trivial_group(verbose_level - 1);
-	for (h = 0; h < nb_auts; h++) {
-		if (f_v) {
-			cout << "aut_data[" << h << "]=";
-			Int_vec_print(cout, aut_data + h * base_len(), base_len());
-			cout << endl;
-		}
-		for (i = 0; i < base_len(); i++) {
-			coset = aut_data[h * base_len() + i];
-			//image_point = Sims->orbit[i][coset];
-			Sims->path[i] = coset;
-				//Sims->orbit_inv[i][aut_data[h * base_len + i]];
-		}
-		if (f_v) {
-			cout << "path=";
-			Int_vec_print(cout, Sims->path, base_len());
-			cout << endl;
-		}
-		Sims->element_from_path_inv(Elt1);
-		if (S.strip_and_add(Elt1, Elt2, 0/*verbose_level*/)) {
-			S.group_order(go);
-			if (f_v) {
-				cout << "generator " << h
-						<< " added, n e w group order " << go << endl;
-				S.print_transversal_lengths();
-				S.print_transversals_short();
-			}
-		}
-		else {
-			if (f_v) {
-				cout << "generator " << h << " strips through" << endl;
-			}
-		}
-	}
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-}
-
 void action::element_power_int_in_place(int *Elt,
 		int n, int verbose_level)
 {
@@ -1730,7 +1692,8 @@ void action::element_power_int_in_place(int *Elt,
 	FREE_int(Elt4);
 }
 
-void action::word_in_ab(int *Elt1, int *Elt2, int *Elt3,
+void action::word_in_ab(
+		int *Elt1, int *Elt2, int *Elt3,
 		const char *word, int verbose_level)
 {
 	int *Elt4;
@@ -1760,170 +1723,6 @@ void action::word_in_ab(int *Elt1, int *Elt2, int *Elt3,
 	
 	FREE_int(Elt4);
 	FREE_int(Elt5);
-}
-
-void action::init_group_from_generators(
-	int *group_generator_data, int group_generator_size,
-	int f_group_order_target, const char *group_order_target, 
-	data_structures_groups::vector_ge *gens,
-	groups::strong_generators *&Strong_gens,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go, cur_go;
-	groups::sims S;
-	int *Elt;
-	int nb_gens, i;
-	int nb_times = 200;
-
-	if (f_v) {
-		cout << "action::init_group_from_generators" << endl;
-		cout << "group_generator_size=" << group_generator_size << endl;
-	}
-	if (f_group_order_target) {
-		cout << "group_order_target=" << group_order_target << endl;
-	}
-	go.create_from_base_10_string(group_order_target, 0);
-	if (f_group_order_target) {
-		cout << "group_order_target=" << go << endl;
-	}
-	S.init(this, verbose_level - 2);
-	Elt = NEW_int(elt_size_in_int);
-	nb_gens = group_generator_size / make_element_size;
-	if (nb_gens * make_element_size != group_generator_size) {
-		cout << "action::init_group_from_generators fatal: "
-				"group_generator_size is not "
-				"divisible by make_element_size"
-				<< endl;
-		cout << "make_element_size=" << make_element_size << endl;
-		cout << "group_generator_size=" << group_generator_size << endl;
-		exit(1);
-	}
-	gens->init(this, verbose_level - 2);
-	gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		if (f_v) {
-			cout << "parsing generator " << i << ":" << endl;
-		}
-		Int_vec_print(cout, group_generator_data +
-			i * make_element_size, make_element_size);
-		cout << endl;
-		make_element(Elt, 
-			group_generator_data + i * make_element_size, verbose_level - 2);
-		element_move(Elt, gens->ith(i), 0);
-	}
-	if (f_v) {
-		cout << "done parsing generators" << endl;
-	}
-	S.init_trivial_group(verbose_level);
-	S.init_generators(*gens, verbose_level);
-	S.compute_base_orbits(verbose_level);
-	while (TRUE) {
-		S.closure_group(nb_times, 0/*verbose_level*/);
-		S.group_order(cur_go);
-		cout << "cur_go=" << cur_go << endl;
-		if (!f_group_order_target) {
-			break;
-		}
-		if (D.compare(cur_go, go) == 0) {
-			cout << "reached target group order" << endl;
-			break;
-		}
-		cout << "did not reach target group order, continuing" << endl;
-	}
-
-	Strong_gens = NEW_OBJECT(groups::strong_generators);
-	Strong_gens->init_from_sims(&S, verbose_level - 1);
-
-	FREE_int(Elt);
-}
-
-void action::init_group_from_generators_by_base_images(
-		groups::sims *parent_group_S,
-	int *group_generator_data, int group_generator_size, 
-	int f_group_order_target, const char *group_order_target, 
-	data_structures_groups::vector_ge *gens,
-	groups::strong_generators *&Strong_gens_out,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go, cur_go;
-	groups::sims S;
-	int *Elt;
-	int nb_gens, i;
-	int nb_times = 200;
-
-	if (f_v) {
-		cout << "action::init_group_from_generators_by_base_images" << endl;
-	}
-	if (f_v) {
-		cout << "group_generator_size=" << group_generator_size << endl;
-	}
-	if (f_group_order_target) {
-		cout << "group_order_target=" << group_order_target << endl;
-		go.create_from_base_10_string(group_order_target, 0);
-	}
-	if (f_group_order_target) {
-		cout << "group_order_target=" << go << endl;
-	}
-	S.init(this, verbose_level - 2);
-	Elt = NEW_int(elt_size_in_int);
-	nb_gens = group_generator_size / base_len();
-	if (f_v) {
-		cout << "nb_gens=" << nb_gens << endl;
-		cout << "base_len=" << base_len() << endl;
-	}
-	if (nb_gens * base_len() != group_generator_size) {
-		cout << "action::init_group_from_generators_by_base_images fatal: "
-				"group_generator_size is not divisible by base_len" << endl;
-		cout << "base_len=" << base_len() << endl;
-		cout << "group_generator_size=" << group_generator_size << endl;
-		exit(1);
-	}
-	gens->init(this, verbose_level - 2);
-	gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		if (f_v) {
-			cout << "parsing generator " << i << ":" << endl;
-		}
-		Int_vec_print(cout, group_generator_data +
-			i * base_len(), base_len());
-		cout << endl;
-		make_element_from_base_image(Elt, parent_group_S,
-			group_generator_data + i * base_len(),
-			verbose_level - 2);
-		element_move(Elt, gens->ith(i), 0);
-	}
-	if (f_v) {
-		cout << "done parsing generators" << endl;
-	}
-	S.init_trivial_group(verbose_level);
-	S.init_generators(*gens, verbose_level);
-	S.compute_base_orbits(verbose_level);
-	while (TRUE) {
-		S.closure_group(nb_times, 0/*verbose_level*/);
-		S.group_order(cur_go);
-		cout << "cur_go=" << cur_go << endl;
-		if (!f_group_order_target) {
-			break;
-		}
-		if (D.compare(cur_go, go) == 0) {
-			cout << "reached target group order" << endl;
-			break;
-		}
-		cout << "did not reach target group order, continuing" << endl;
-	}
-
-	Strong_gens = NEW_OBJECT(groups::strong_generators);
-	Strong_gens->init_from_sims(&S, verbose_level - 1);
-	f_has_strong_generators = TRUE;
-
-	FREE_int(Elt);
-	if (f_v) {
-		cout << "action::init_group_from_generators_by_base_images done" << endl;
-	}
 }
 
 void action::group_order(ring_theory::longinteger_object &go)
@@ -1956,7 +1755,8 @@ void action::element_print_base_images(int *Elt)
 	element_print_base_images(Elt, cout);
 }
 
-void action::element_print_base_images(int *Elt, std::ostream &ost)
+void action::element_print_base_images(
+		int *Elt, std::ostream &ost)
 {
 	element_print_base_images_verbose(Elt, cout, 0);
 }
@@ -2007,7 +1807,8 @@ void action::element_base_images_verbose(
 	}
 }
 
-void action::minimize_base_images(int level,
+void action::minimize_base_images(
+		int level,
 		groups::sims *S, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2169,12 +1970,14 @@ void action::lexorder_test(
 
 	//Sch->compute_all_point_orbits(0);
 	if (f_v) {
-		cout << "action::lexorder_test before compute_all_orbits_on_invariant_subset" << endl;
+		cout << "action::lexorder_test "
+				"before compute_all_orbits_on_invariant_subset" << endl;
 	}
 	Sch->compute_all_orbits_on_invariant_subset(set_sz, 
 		set, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "action::lexorder_test after compute_all_orbits_on_invariant_subset" << endl;
+		cout << "action::lexorder_test "
+				"after compute_all_orbits_on_invariant_subset" << endl;
 	}
 
 	if (f_v) {
@@ -2224,8 +2027,10 @@ void action::lexorder_test(
 	
 }
 
-void action::compute_orbits_on_points(groups::schreier *&Sch,
-		data_structures_groups::vector_ge *gens, int verbose_level)
+void action::compute_orbits_on_points(
+		groups::schreier *&Sch,
+		data_structures_groups::vector_ge *gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2238,20 +2043,25 @@ void action::compute_orbits_on_points(groups::schreier *&Sch,
 		print_info();
 	}
 	if (f_v) {
-		cout << "action::compute_orbits_on_points before Sch->init" << endl;
+		cout << "action::compute_orbits_on_points "
+				"before Sch->init" << endl;
 	}
 	Sch->init(this, verbose_level - 2);
 	if (f_v) {
-		cout << "action::compute_orbits_on_points before Sch->init_generators" << endl;
+		cout << "action::compute_orbits_on_points "
+				"before Sch->init_generators" << endl;
 	}
 	Sch->init_generators(*gens, verbose_level - 2);
 	if (f_v) {
-		cout << "action::compute_orbits_on_points before Sch->compute_all_point_orbits, degree = " << degree << endl;
+		cout << "action::compute_orbits_on_points "
+				"before Sch->compute_all_point_orbits, degree = " << degree << endl;
 	}
 	Sch->compute_all_point_orbits(verbose_level - 3);
 	if (f_v) {
-		cout << "action::compute_orbits_on_points after Sch->compute_all_point_orbits" << endl;
-		cout << "action::compute_orbits_on_points Sch->nb_orbits=" << Sch->nb_orbits << endl;
+		cout << "action::compute_orbits_on_points "
+				"after Sch->compute_all_point_orbits" << endl;
+		cout << "action::compute_orbits_on_points "
+				"Sch->nb_orbits=" << Sch->nb_orbits << endl;
 	}
 	//Sch.print_and_list_orbits(cout);
 	if (f_v) {
@@ -2260,8 +2070,10 @@ void action::compute_orbits_on_points(groups::schreier *&Sch,
 	}
 }
 
-void action::point_stabilizer_any_point(int &pt, 
-		groups::schreier *&Sch, groups::sims *&Stab, groups::strong_generators *&stab_gens,
+void action::point_stabilizer_any_point(
+		int &pt,
+		groups::schreier *&Sch, groups::sims *&Stab,
+		groups::strong_generators *&stab_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2333,7 +2145,8 @@ void action::point_stabilizer_any_point(int &pt,
 void action::point_stabilizer_any_point_with_given_group(
 		groups::strong_generators *input_gens,
 	int &pt, 
-	groups::schreier *&Sch, groups::sims *&Stab, groups::strong_generators *&stab_gens,
+	groups::schreier *&Sch, groups::sims *&Stab,
+	groups::strong_generators *&stab_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2402,7 +2215,8 @@ void action::point_stabilizer_any_point_with_given_group(
 
 void action::make_element_which_moves_a_line_in_PG3q(
 		geometry::grassmann *Gr,
-		long int line_rk, int *Elt, int verbose_level)
+		long int line_rk, int *Elt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2417,8 +2231,10 @@ void action::make_element_which_moves_a_line_in_PG3q(
 
 	//int_vec_zero(M, 16);
 	Gr->unrank_lint_here(M, line_rk, 0 /*verbose_level*/);
-	r = Gr->F->Linear_algebra->Gauss_simple(M, 2, 4, base_cols, 0 /* verbose_level */);
-	Gr->F->Linear_algebra->kernel_columns(4, r, base_cols, base_cols + r);
+	r = Gr->F->Linear_algebra->Gauss_simple(
+			M, 2, 4, base_cols, 0 /* verbose_level */);
+	Gr->F->Linear_algebra->kernel_columns(
+			4, r, base_cols, base_cols + r);
 	
 	for (i = r; i < 4; i++) {
 		for (j = 0; j < 4; j++) {

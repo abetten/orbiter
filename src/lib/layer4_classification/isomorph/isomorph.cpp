@@ -186,7 +186,7 @@ void isomorph::init_high_level(
 	}
 
 	
-	layer2_discreta::discreta_init();
+	layer2_discreta::typed_objects::discreta_init();
 
 	int f_use_database_for_starter = FALSE;
 	int f_implicit_fusion = FALSE;

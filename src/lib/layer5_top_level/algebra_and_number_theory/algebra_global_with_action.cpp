@@ -1007,7 +1007,7 @@ void algebra_global_with_action::classes_GL(
 
 
 	A = NEW_OBJECT(actions::action);
-	A->init_projective_group(d /* n */, F,
+	A->Known_groups->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -1112,7 +1112,7 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 
 
 	A = NEW_OBJECT(actions::action);
-	A->init_projective_group(d /* n */, F,
+	A->Known_groups->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
@@ -1202,7 +1202,7 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 
 
 	A = NEW_OBJECT(actions::action);
-	A->init_projective_group(d /* n */, F,
+	A->Known_groups->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -1292,7 +1292,7 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 
 
 	A = NEW_OBJECT(actions::action);
-	A->init_projective_group(d /* n */, F,
+	A->Known_groups->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -1458,7 +1458,7 @@ void algebra_global_with_action::group_table(
 
 
 	A = NEW_OBJECT(actions::action);
-	A->init_projective_group(d /* n */,
+	A->Known_groups->init_projective_group(d /* n */,
 			F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1655,7 +1655,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 			0);
 
 	A = NEW_OBJECT(actions::action);
-	A->init_projective_group(d /* n */, F,
+	A->Known_groups->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -1797,7 +1797,7 @@ void algebra_global_with_action::centralizer(int q, int d,
 			0);
 
 	A_PGL = NEW_OBJECT(actions::action);
-	A_PGL->init_projective_group(d /* n */, F,
+	A_PGL->Known_groups->init_projective_group(d /* n */, F,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
@@ -1807,7 +1807,7 @@ void algebra_global_with_action::centralizer(int q, int d,
 	A_PGL->group_order(Go);
 
 	A_GL = NEW_OBJECT(actions::action);
-	A_GL->init_general_linear_group(d /* n */, F,
+	A_GL->Known_groups->init_general_linear_group(d /* n */, F,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
@@ -1883,7 +1883,7 @@ void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 			FALSE /* f_compute_related_fields */,
 			0);
 	A = NEW_OBJECT(actions::action);
-	A->init_projective_group(d /* n */, F,
+	A->Known_groups->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -2121,7 +2121,7 @@ void algebra_global_with_action::do_eigenstuff(
 		int size, int *Data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	discreta_matrix M;
+	typed_objects::discreta_matrix M;
 	int i, j, k, a, h;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
@@ -2145,8 +2145,8 @@ void algebra_global_with_action::do_eigenstuff(
 	}
 
 	//domain d(q);
-	domain d(F);
-	with w(&d);
+	typed_objects::domain d(F);
+	typed_objects::with w(&d);
 
 #if 0
 
@@ -2162,7 +2162,7 @@ void algebra_global_with_action::do_eigenstuff(
 
 	// This part uses DISCRETA data structures:
 
-	discreta_matrix M1, P, Pv, Q, Qv, S, T;
+	typed_objects::discreta_matrix M1, P, Pv, Q, Qv, S, T;
 
 	M.elements_to_unipoly();
 	M.minus_X_times_id();
@@ -2195,7 +2195,7 @@ void algebra_global_with_action::do_eigenstuff(
 	cout << "T=" << endl << T << endl;
 
 
-	unipoly charpoly;
+	typed_objects::unipoly charpoly;
 	int deg;
 	int l, lv, b, c;
 
@@ -2215,7 +2215,7 @@ void algebra_global_with_action::do_eigenstuff(
 	}
 	cout << "monic characteristic polynomial:" << charpoly << endl;
 
-	integer x, y;
+	typed_objects::integer x, y;
 	int *roots;
 	int nb_roots = 0;
 
@@ -2341,23 +2341,23 @@ void algebra_global_with_action::A5_in_PSL_(int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int p, f;
-	discreta_matrix A, B, D; //, B1, B2, C, D, A2, A3, A4;
+	typed_objects::discreta_matrix A, B, D; //, B1, B2, C, D, A2, A3, A4;
 	number_theory::number_theory_domain NT;
 
 
 	NT.factor_prime_power(q, p, f);
-	domain *dom;
+	typed_objects::domain *dom;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::A5_in_PSL_ "
 				"q=" << q << ", p=" << p << ", f=" << f << endl;
 	}
-	dom = allocate_finite_field_domain(q, verbose_level);
+	dom = typed_objects::allocate_finite_field_domain(q, verbose_level);
 
 	A5_in_PSL_2_q(q, A, B, dom, verbose_level);
 
 	{
-		with w(dom);
+		typed_objects::with w(dom);
 		D.mult(A, B);
 
 		if (f_v) {
@@ -2397,9 +2397,9 @@ void algebra_global_with_action::A5_in_PSL_(int q, int verbose_level)
 }
 
 void algebra_global_with_action::A5_in_PSL_2_q(int q,
-		layer2_discreta::discreta_matrix & A,
-		layer2_discreta::discreta_matrix & B,
-		layer2_discreta::domain *dom_GFq, int verbose_level)
+		layer2_discreta::typed_objects::discreta_matrix & A,
+		layer2_discreta::typed_objects::discreta_matrix & B,
+		layer2_discreta::typed_objects::domain *dom_GFq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2422,23 +2422,23 @@ void algebra_global_with_action::A5_in_PSL_2_q(int q,
 }
 
 void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
-		layer2_discreta::discreta_matrix & A,
-		layer2_discreta::discreta_matrix & B,
-		layer2_discreta::domain *dom_GFq,
+		layer2_discreta::typed_objects::discreta_matrix & A,
+		layer2_discreta::typed_objects::discreta_matrix & B,
+		layer2_discreta::typed_objects::domain *dom_GFq,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, r;
-	integer zeta5, zeta5v, b, c, d, b2, e;
+	typed_objects::integer zeta5, zeta5v, b, c, d, b2, e;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::A5_in_PSL_2_q_easy "
 				"verbose_level=" << verbose_level << endl;
 	}
-	with w(dom_GFq);
+	typed_objects::with w(dom_GFq);
 
 	i = (q - 1) / 5;
-	r = finite_field_domain_primitive_root();
+	r = typed_objects::finite_field_domain_primitive_root();
 	zeta5.m_i(r);
 	zeta5.power_int(i);
 	zeta5v = zeta5;
@@ -2490,17 +2490,17 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 
 
 void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
-		layer2_discreta::discreta_matrix & A,
-		layer2_discreta::discreta_matrix & B,
-		layer2_discreta::domain *dom_GFq,
+		layer2_discreta::typed_objects::discreta_matrix & A,
+		layer2_discreta::typed_objects::discreta_matrix & B,
+		layer2_discreta::typed_objects::domain *dom_GFq,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	with w(dom_GFq);
-	unipoly m;
+	typed_objects::with w(dom_GFq);
+	typed_objects::unipoly m;
 	int i, q2;
-	discreta_matrix S, Sv, E, /*Sbart, SSbart,*/ AA, BB;
-	integer a, b, m1;
+	typed_objects::discreta_matrix S, Sv, E, /*Sbart, SSbart,*/ AA, BB;
+	typed_objects::integer a, b, m1;
 	int norm_alpha, l;
 
 	if (f_v) {
@@ -2515,8 +2515,8 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	norm_alpha = m.s_ii(0);
 	cout << "norm_alpha=" << norm_alpha << endl;
 
-	domain GFq2(&m, dom_GFq);
-	with ww(&GFq2);
+	typed_objects::domain GFq2(&m, dom_GFq);
+	typed_objects::with ww(&GFq2);
 	q2 = q * q;
 
 	if (f_v) {
@@ -2592,10 +2592,10 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 #endif
 
 	int r;
-	integer zeta5, zeta5v;
+	typed_objects::integer zeta5, zeta5v;
 
 	i = (q2 - 1) / 5;
-	r = finite_field_domain_primitive_root();
+	r = typed_objects::finite_field_domain_primitive_root();
 	zeta5.m_i(r);
 	zeta5.power_int(i);
 	zeta5v = zeta5;
@@ -2617,7 +2617,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 		cout << "AA=\n" << AA << endl;
 	}
 
-	integer bb, c, d, e, f, c1, b1;
+	typed_objects::integer bb, c, d, e, f, c1, b1;
 
 	// b := (zeta5 - zeta5^{-1})^{-1}:
 	b = zeta5v;
@@ -2703,9 +2703,10 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	}
 }
 
-int algebra_global_with_action::proj_order(layer2_discreta::discreta_matrix &A)
+int algebra_global_with_action::proj_order(
+		layer2_discreta::typed_objects::discreta_matrix &A)
 {
-	discreta_matrix B;
+	typed_objects::discreta_matrix B;
 	int m, n;
 	int ord;
 
@@ -2731,8 +2732,8 @@ int algebra_global_with_action::proj_order(layer2_discreta::discreta_matrix &A)
 }
 
 void algebra_global_with_action::trace(
-		layer2_discreta::discreta_matrix &A,
-		layer2_discreta::discreta_base &tr)
+		layer2_discreta::typed_objects::discreta_matrix &A,
+		layer2_discreta::typed_objects::discreta_base &tr)
 {
 	int i, m, n;
 
@@ -2749,7 +2750,7 @@ void algebra_global_with_action::trace(
 }
 
 void algebra_global_with_action::elementwise_power_int(
-		layer2_discreta::discreta_matrix &A, int k)
+		layer2_discreta::typed_objects::discreta_matrix &A, int k)
 {
 	int i, j, m, n;
 
@@ -2764,11 +2765,11 @@ void algebra_global_with_action::elementwise_power_int(
 }
 
 int algebra_global_with_action::is_in_center(
-		layer2_discreta::discreta_matrix &B)
+		layer2_discreta::typed_objects::discreta_matrix &B)
 {
 	int m, n, i, j;
-	discreta_matrix A;
-	integer c;
+	typed_objects::discreta_matrix A;
+	typed_objects::integer c;
 
 	m = B.s_m();
 	n = B.s_n();
@@ -2776,7 +2777,7 @@ int algebra_global_with_action::is_in_center(
 	c = A[0][0];
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			integer e;
+			typed_objects::integer e;
 
 			e = A[i][j];
 			if (i != j && !e.is_zero()) {
@@ -2792,7 +2793,7 @@ int algebra_global_with_action::is_in_center(
 
 
 void algebra_global_with_action::matrix_convert_to_numerical(
-		layer2_discreta::discreta_matrix &A, int *AA, int q)
+		layer2_discreta::typed_objects::discreta_matrix &A, int *AA, int q)
 {
 	int m, n, i, j, /*h, l,*/ val;
 
@@ -2802,7 +2803,7 @@ void algebra_global_with_action::matrix_convert_to_numerical(
 		for (j = 0; j < n; j++) {
 
 			//cout << "i=" << i << " j=" << j << endl;
-			discreta_base a;
+			typed_objects::discreta_base a;
 
 			A[i][j].copyobject_to(a);
 

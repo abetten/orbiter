@@ -635,11 +635,15 @@ public:
 	// finite_field_projective.cpp
 	// #########################################################################
 
-	void PG_element_apply_frobenius(int n, int *v, int f);
-	int test_if_vectors_are_projectively_equal(int *v1, int *v2, int len);
-	void PG_element_normalize(int *v, int stride, int len);
+	void PG_element_apply_frobenius(
+			int n, int *v, int f);
+	int test_if_vectors_are_projectively_equal(
+			int *v1, int *v2, int len);
+	void PG_element_normalize(
+			int *v, int stride, int len);
 	// last non-zero element made one
-	void PG_element_normalize_from_front(int *v, int stride, int len);
+	void PG_element_normalize_from_front(
+			int *v, int stride, int len);
 	// first non zero element made one
 	void PG_element_normalize_from_a_given_position(
 			int *v, int stride, int len, int idx);
@@ -693,8 +697,10 @@ public:
 	// finite_field_io.cpp
 	// #########################################################################
 
-	void report(std::ostream &ost, int verbose_level);
-	void print_minimum_polynomial_to_str(int p,
+	void report(
+			std::ostream &ost, int verbose_level);
+	void print_minimum_polynomial_to_str(
+			int p,
 			std::string &polynomial, std::stringstream &s);
 	void print();
 	void print_detailed(int f_add_mult_table);
@@ -703,61 +709,95 @@ public:
 	void display_T3(std::ostream &ost);
 	void display_N2(std::ostream &ost);
 	void display_N3(std::ostream &ost);
-	void print_integer_matrix_zech(std::ostream &ost,
+	void print_integer_matrix_zech(
+			std::ostream &ost,
 		int *p, int m, int n);
 	void print_indicator_square_nonsquare(int a);
-	void print_element(std::ostream &ost, int a);
-	void print_element_str(std::stringstream &ost, int a);
-	void print_element_with_symbol(std::ostream &ost,
+	void print_element(
+			std::ostream &ost, int a);
+	void print_element_str(
+			std::stringstream &ost, int a);
+	void print_element_with_symbol(
+			std::ostream &ost,
 		int a, int f_exponential, int width, std::string &symbol);
-	void print_element_with_symbol_str(std::stringstream &ost,
+	void print_element_with_symbol_str(
+			std::stringstream &ost,
 			int a, int f_exponential, int width, std::string &symbol);
-	void int_vec_print_field_elements(std::ostream &ost, int *v, int len);
-	void int_vec_print_elements_exponential(std::ostream &ost,
+	void int_vec_print_field_elements(
+			std::ostream &ost, int *v, int len);
+	void int_vec_print_elements_exponential(
+			std::ostream &ost,
 		int *v, int len, std::string &symbol_for_print);
-	void make_fname_addition_table_csv(std::string &fname);
-	void make_fname_multiplication_table_csv(std::string &fname);
-	void make_fname_addition_table_reordered_csv(std::string &fname);
-	void make_fname_multiplication_table_reordered_csv(std::string &fname);
-	void addition_table_save_csv(int verbose_level);
-	void multiplication_table_save_csv(int verbose_level);
-	void addition_table_reordered_save_csv(int verbose_level);
-	void multiplication_table_reordered_save_csv(int verbose_level);
-	void latex_addition_table(std::ostream &f,
+	void make_fname_addition_table_csv(
+			std::string &fname);
+	void make_fname_multiplication_table_csv(
+			std::string &fname);
+	void make_fname_addition_table_reordered_csv(
+			std::string &fname);
+	void make_fname_multiplication_table_reordered_csv(
+			std::string &fname);
+	void addition_table_save_csv(
+			int verbose_level);
+	void multiplication_table_save_csv(
+			int verbose_level);
+	void addition_table_reordered_save_csv(
+			int verbose_level);
+	void multiplication_table_reordered_save_csv(
+			int verbose_level);
+	void latex_addition_table(
+			std::ostream &f,
 		int f_elements_exponential, std::string &symbol_for_print);
-	void latex_multiplication_table(std::ostream &f,
+	void latex_multiplication_table(
+			std::ostream &f,
 		int f_elements_exponential, std::string &symbol_for_print);
-	void latex_matrix(std::ostream &f, int f_elements_exponential,
+	void latex_matrix(
+			std::ostream &f, int f_elements_exponential,
 			std::string &symbol_for_print, int *M, int m, int n);
-	void power_table(int t, int *power_table, int len);
-	void cheat_sheet(std::ostream &f, int verbose_level);
-	void cheat_sheet_subfields(std::ostream &f, int verbose_level);
-	void report_subfields(std::ostream &f, int verbose_level);
-	void report_subfields_detailed(std::ostream &ost, int verbose_level);
-	void cheat_sheet_addition_table(std::ostream &f, int verbose_level);
-	void cheat_sheet_multiplication_table(std::ostream &f, int verbose_level);
-	void cheat_sheet_power_table(std::ostream &f,
+	void power_table(
+			int t, int *power_table, int len);
+	void cheat_sheet(
+			std::ostream &f, int verbose_level);
+	void cheat_sheet_subfields(
+			std::ostream &f, int verbose_level);
+	void report_subfields(
+			std::ostream &f, int verbose_level);
+	void report_subfields_detailed(
+			std::ostream &ost, int verbose_level);
+	void cheat_sheet_addition_table(
+			std::ostream &f, int verbose_level);
+	void cheat_sheet_multiplication_table(
+			std::ostream &f, int verbose_level);
+	void cheat_sheet_power_table(
+			std::ostream &f,
 			int f_with_polynomials, int verbose_level);
-	void cheat_sheet_power_table_top(std::ostream &ost,
+	void cheat_sheet_power_table_top(
+			std::ostream &ost,
 			int f_with_polynomials, int verbose_level);
-	void cheat_sheet_power_table_bottom(std::ostream &ost,
+	void cheat_sheet_power_table_bottom(
+			std::ostream &ost,
 			int f_with_polynomials, int verbose_level);
-	void cheat_sheet_table_of_elements(std::ostream &ost, int verbose_level);
-	void print_element_as_polynomial(std::ostream &ost, int *v, int verbose_level);
-	void cheat_sheet_main_table(std::ostream &f, int verbose_level);
-	void cheat_sheet_main_table_top(std::ostream &f, int nb_cols);
-	void cheat_sheet_main_table_bottom(std::ostream &f);
+	void cheat_sheet_table_of_elements(
+			std::ostream &ost, int verbose_level);
+	void print_element_as_polynomial(
+			std::ostream &ost, int *v, int verbose_level);
+	void cheat_sheet_main_table(
+			std::ostream &f, int verbose_level);
+	void cheat_sheet_main_table_top(
+			std::ostream &f, int nb_cols);
+	void cheat_sheet_main_table_bottom(
+			std::ostream &f);
 	void display_table_of_projective_points(
 			std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void display_table_of_projective_points2(
 		std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void display_table_of_projective_points_easy(
 		std::ostream &ost, long int *Pts, int nb_pts, int len);
-	void export_magma(int d, long int *Pts, int nb_pts, std::string &fname);
-	void export_gap(int d, long int *Pts, int nb_pts, std::string &fname);
-	void print_matrix_latex(std::ostream &ost, int *A, int m, int n);
-	void print_matrix_numerical_latex(std::ostream &ost, int *A, int m, int n);
-	void read_from_string_coefficient_vector(std::string &str,
+	void print_matrix_latex(
+			std::ostream &ost, int *A, int m, int n);
+	void print_matrix_numerical_latex(
+			std::ostream &ost, int *A, int m, int n);
+	void read_from_string_coefficient_vector(
+			std::string &str,
 			int *&coeff, int &len,
 			int verbose_level);
 

@@ -13,6 +13,7 @@ MODULES = \
 	mem_object_registry_entry.o \
 	mem_object_registry.o \
 	memory_object.o \
+	numerics.o \
 	orbiter_data_file.o \
 	orbiter_session.o \
 	orbiter_symbol_table_entry.o \

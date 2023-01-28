@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace polish {
 
 
 function_polish::function_polish()
@@ -456,4 +457,6 @@ void function_polish::evaluate(
 	}
 }
 
-}}
+}}}
+
+

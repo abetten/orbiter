@@ -160,7 +160,7 @@ void substructure_lifting_data::init(isomorph *Iso, int verbose_level)
 
 
 
-	v = new layer2_discreta::Vector[1];
+	v = new layer2_discreta::typed_objects::Vector[1];
 
 
 	if (f_v) {
@@ -688,7 +688,7 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 		data_structures_groups::vector_ge &gens,
 		int verbose_level)
 {
-	layer2_discreta::Vector v;
+	layer2_discreta::typed_objects::Vector v;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v4 = (verbose_level >= 4);
@@ -1090,10 +1090,12 @@ void substructure_lifting_data::setup_and_open_solution_database(int verbose_lev
 		cout << "substructure_lifting_data::setup_and_open_solution_database" << endl;
 	}
 	if (DB_sol) {
-		layer2_discreta::freeobject(DB_sol);
+		layer2_discreta::typed_objects::freeobject(DB_sol);
 		DB_sol = NULL;
 	}
-	DB_sol = (layer2_discreta::database *) layer2_discreta::callocobject(layer2_discreta::DATABASE);
+	DB_sol = (layer2_discreta::typed_objects::database *)
+			layer2_discreta::typed_objects::callocobject(
+					layer2_discreta::typed_objects::DATABASE);
 	DB_sol->change_to_database();
 
 	init_DB_sol(0 /*verbose_level - 1*/);
@@ -1109,10 +1111,12 @@ void substructure_lifting_data::setup_and_create_solution_database(int verbose_l
 		cout << "substructure_lifting_data::setup_and_create_solution_database" << endl;
 	}
 	if (DB_sol) {
-		layer2_discreta::freeobject(DB_sol);
+		layer2_discreta::typed_objects::freeobject(DB_sol);
 		DB_sol = NULL;
 	}
-	DB_sol = (layer2_discreta::database *) layer2_discreta::callocobject(layer2_discreta::DATABASE);
+	DB_sol = (layer2_discreta::typed_objects::database *)
+			layer2_discreta::typed_objects::callocobject(
+					layer2_discreta::typed_objects::DATABASE);
 	DB_sol->change_to_database();
 
 	init_DB_sol(0 /*verbose_level - 1*/);
@@ -1130,8 +1134,8 @@ void substructure_lifting_data::init_DB_sol(int verbose_level)
 // fields 4,..., 4+level-1 are the starter values
 {
 	int f_v = (verbose_level >= 1);
-	layer2_discreta::database &D = *DB_sol;
-	layer2_discreta::btree B1, B2, B3, B4;
+	layer2_discreta::typed_objects::database &D = *DB_sol;
+	layer2_discreta::typed_objects::btree B1, B2, B3, B4;
 	int f_compress = TRUE;
 	int f_duplicatekeys = TRUE;
 	int i;
@@ -1140,7 +1144,7 @@ void substructure_lifting_data::init_DB_sol(int verbose_level)
 		cout << "substructure_lifting_data::init_DB_sol" << endl;
 	}
 	//cout << "substructure_lifting_data::init_DB_sol before D.init" << endl;
-	D.init(fname_db1.c_str(), layer2_discreta::VECTOR, f_compress);
+	D.init(fname_db1.c_str(), layer2_discreta::typed_objects::VECTOR, f_compress);
 
 
 	//cout << "substructure_lifting_data::init_DB_sol before B1.init" << endl;
@@ -1191,7 +1195,7 @@ void substructure_lifting_data::add_solution_to_database(long int *data,
 	int print_mod, int verbose_level)
 {
 	int f_vvv = (verbose_level >= 3);
-	layer2_discreta::Vector v;
+	layer2_discreta::typed_objects::Vector v;
 	int j;
 
 	//h = int_vec_hash_after_sorting(data + 1, size);
@@ -1225,7 +1229,7 @@ void substructure_lifting_data::load_solution(
 	}
 	int i, j;
 	long int datref;
-	layer2_discreta::Vector v;
+	layer2_discreta::typed_objects::Vector v;
 	//int verbose_level = 0;
 
 	if (f_use_table_of_solutions) {
@@ -1253,7 +1257,7 @@ void substructure_lifting_data::load_solution_by_btree(
 		int btree_idx, int idx, int &id, long int *data)
 {
 	//int i;
-	layer2_discreta::Vector v;
+	layer2_discreta::typed_objects::Vector v;
 
 	cout << "substructure_lifting_data::load_solution_by_btree" << endl;
 	exit(1);

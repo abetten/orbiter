@@ -38,7 +38,7 @@ PROJECT_NAME           = Orbiter
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = 2022
+PROJECT_NUMBER         = 2023
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -889,6 +889,8 @@ EXCLUDE                = \
 				src/lib/layer1_foundations/graphics/EasyBMP_VariousBMPutilities.h \
 				src/lib/layer1_foundations/io_and_os/chrono.h \
 				src/lib/layer1_foundations/knowledge_base/DATA \
+				src/lib/layer1_foundations/expression_parser_sajeeb \
+				src/lib/layer1_foundations/Jeffrey_Leon_partition_backtrack \
 				src/lib/layer3_group_actions/groups/linalg.h \
 				src/lib/layer3_group_actions/groups/linalg.cpp \
 				src/lib/layer3_group_actions/groups/shallow_schreier_ai.cpp \

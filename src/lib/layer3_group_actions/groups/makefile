@@ -10,7 +10,6 @@ MODULES = \
 	exceptional_isomorphism_O4.o \
 	linear_group.o \
 	linear_group_description.o \
-	magma_interface.o \
 	matrix_group.o \
 	orbits_on_something.o \
 	permutation_group_create.o \

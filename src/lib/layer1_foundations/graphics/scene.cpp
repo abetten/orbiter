@@ -299,7 +299,7 @@ void scene::print_point_coords(int idx)
 
 double scene::point_distance_euclidean(int pt_idx, double *y)
 {
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	double d;
 
 	d = Num.distance_euclidean(y, Point_coords + pt_idx * 3, 3);
@@ -308,7 +308,7 @@ double scene::point_distance_euclidean(int pt_idx, double *y)
 
 double scene::point_distance_from_origin(int pt_idx)
 {
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	double d;
 
 	d = Num.distance_from_origin(Point_coords + pt_idx * 3, 3);
@@ -318,7 +318,7 @@ double scene::point_distance_from_origin(int pt_idx)
 double scene::distance_euclidean_point_to_point(
 		int pt1_idx, int pt2_idx)
 {
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	double d;
 
 	d = Num.distance_euclidean(Point_coords + pt1_idx * 3, Point_coords + pt2_idx * 3, 3);
@@ -390,7 +390,7 @@ scene *scene::transformed_copy(double *A4, double *A4_inv,
 void scene::print()
 {
 	int i;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	
 	cout << "scene:" << endl;
 	cout << "nb_lines=" << nb_lines << endl;
@@ -440,7 +440,7 @@ void scene::transform_lines(scene *S,
 	double xx[4], yy[4];
 	double xxx[4], yyy[4];
 	int i;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	
 	
 	if (f_v) {
@@ -515,7 +515,7 @@ void scene::transform_points(scene *S, double *A4, double *A4_inv,
 	double x[4];
 	double xx[4];
 	int i;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	
 	
 	if (f_v) {
@@ -553,7 +553,7 @@ void scene::transform_planes(scene *S, double *A4, double *A4_inv,
 	double xx[4];
 	double Avt[16];
 	int i;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	
 	
 	if (f_v) {
@@ -585,7 +585,7 @@ void scene::transform_quadrics(scene *S, double *A4, double *A4_inv,
 	double coeff_in[10];
 	double coeff_out[10];
 	int i;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	
 	
 	if (f_v) {
@@ -614,7 +614,7 @@ void scene::transform_cubics(scene *S, double *A4, double *A4_inv,
 	double coeff_in[20];
 	double coeff_out[20];
 	int i;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	
 	
 	if (f_v) {
@@ -651,7 +651,7 @@ void scene::transform_quartics(scene *S, double *A4, double *A4_inv,
 	double coeff_in[35];
 	double coeff_out[35];
 	int i;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 
 	for (i = 0; i < nb_quartics; i++) {
@@ -683,7 +683,7 @@ void scene::transform_quintics(scene *S, double *A4, double *A4_inv,
 	double coeff_in[56];
 	double coeff_out[56];
 	int i;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 
 	for (i = 0; i < nb_quintics; i++) {
@@ -747,7 +747,7 @@ int scene::point_center_of_mass_of_edge(int edge_idx)
 int scene::point_center_of_mass(int *Pt_idx, int nb_pts)
 {
 	double x[3];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	N.center_of_mass(Point_coords, 3 /* len */, Pt_idx, nb_pts, x);
 	return point(x[0], x[1], x[2]);
@@ -779,7 +779,7 @@ int scene::point_as_intersection_of_two_lines(int line1, int line2)
 	//int base_cols[3];
 	double lambda;
 	double Ker[9];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	N.vec_copy(Line_coords + line1 * 6, x, 3);
 	N.vec_copy(Line_coords + line2 * 6, y, 3);
@@ -834,7 +834,7 @@ void scene::draw_lines_with_selection(int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // lines" << endl;
@@ -871,7 +871,7 @@ void scene::draw_line_with_selection(int line_idx,
 		std::string &options, std::ostream &ost)
 {
 	int j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // lines" << endl;
@@ -906,7 +906,7 @@ void scene::draw_lines_cij_with_selection(int *selection, int nb_select,
 	ostream &ost)
 {
 	int i, j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // cij lines" << endl;
@@ -961,7 +961,7 @@ void scene::draw_lines_ai_with_selection(int *selection, int nb_select,
 	std::ostream &ost)
 {
 	int s, i, j, h;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // ai lines" << endl;
@@ -1015,7 +1015,7 @@ void scene::draw_lines_bj_with_selection(int *selection, int nb_select,
 	std::ostream &ost)
 {
 	int s, i, j, h;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // bj lines" << endl;
@@ -1072,7 +1072,7 @@ void scene::draw_edges_with_selection(int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int s, i, j, h, pt1, pt2;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // edges" << endl;
@@ -1139,7 +1139,7 @@ void scene::draw_face(int idx, double thickness_half, std::string &options,
 	double abc3[3];
 	double angles3[3];
 	double T3[3];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	nb_pts = Nb_face_points[idx];
 	pts = Face_points[idx];
@@ -1231,7 +1231,7 @@ void scene::draw_planes_with_selection(
 // for instance color = "Orange transmit 0.5 "
 {
 	int i, j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // planes" << endl;
@@ -1263,7 +1263,7 @@ void scene::draw_plane(
 // for instance color = "Orange transmit 0.5 "
 {
 	int h;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	ost << endl;
 	ost << endl;
@@ -1290,7 +1290,7 @@ void scene::draw_points_with_selection(
 // rad = 0.06 works
 {
 	int i, j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // points" << endl;
@@ -1322,7 +1322,7 @@ void scene::draw_cubic_with_selection(int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // cubics" << endl;
@@ -1359,7 +1359,7 @@ void scene::draw_quartic_with_selection(int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	ost << endl;
 	ost << "	union{ // quartics" << endl;
@@ -1396,7 +1396,7 @@ void scene::draw_quintic_with_selection(int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	ost << endl;
 	ost << "	union{ // quintics" << endl;
@@ -1433,7 +1433,7 @@ void scene::draw_octic_with_selection(int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	ost << endl;
 	ost << "	union{ // octics" << endl;
@@ -1470,7 +1470,7 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 		
 	ost << endl;
 	ost << "	union{ // quadrics" << endl;
@@ -1501,7 +1501,7 @@ void scene::draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
 		std::string &options, std::ostream &ost)
 {
 	int h;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	ost << endl;
 	ost << "	object{ // quadric clipped by plane" << endl;
@@ -1540,7 +1540,7 @@ void scene::draw_line_clipped_by_plane(int line_idx, int plane_idx,
 		std::string &options, std::ostream &ost)
 {
 	int h;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	ost << endl;
 	ost << "	object{ // line with clipping" << endl;
@@ -1594,7 +1594,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	int i;
 	double a, av;
 	double v[3];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
@@ -1635,7 +1635,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	
 	if (f_v) {
 		cout << "scene::intersect_line_and_plane M=" << endl;
-		numerics Num;
+		orbiter_kernel_system::numerics Num;
 
 		Num.print_system(M, 3, 4);
 	}
@@ -1788,7 +1788,7 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = FALSE; // (verbose_level >= 2);
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	if (f_v) {
 		cout << "scene::intersect_line_and_line" << endl;
@@ -1826,7 +1826,7 @@ void scene::map_a_line(int line1, int line2,
 	double direction[3], direction_step[3];
 	double line_pt[3];
 	int i, h;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	if (f_v) {
 		cout << "map_a_line" << endl;
@@ -1888,7 +1888,7 @@ int scene::map_a_point(int line1, int line2,
 	double K3[4 * 4];
 	double K4[4 * 4];
 	int k1, k2, k3, i;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	if (f_v) {
 		cout << "map_a_point" << endl;
@@ -2043,7 +2043,7 @@ void scene::rescale(int first_pt_idx, double rad_desired)
 {
 	int i;
 	double rad = 1., a;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	for (i = first_pt_idx; i < nb_points; i++) {
 		a = N.distance_from_origin(
@@ -2065,7 +2065,7 @@ void scene::rescale(int first_pt_idx, double rad_desired)
 double scene::euclidean_distance(int pt1, int pt2)
 {
 	double d;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	d = N.distance_euclidean(Point_coords + pt1 * 3, Point_coords + pt2 * 3, 3);
 	return d;
@@ -2074,7 +2074,7 @@ double scene::euclidean_distance(int pt1, int pt2)
 double scene::distance_from_origin(int pt)
 {
 	double d;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	d = N.distance_from_origin(
 			Point_coords[pt * 3 + 0],
@@ -2121,7 +2121,7 @@ void scene::hypercube(int n, double rad_desired)
 	double *Basis; // [n * 3];
 	double x[3];
 	double t, dt;
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	number_theory::number_theory_domain NT;
 	geometry::geometry_global Gg;
 
@@ -2592,7 +2592,7 @@ void scene::clebsch_cubic_version2_lines_a()
 	int i, j;
 	double L[8];
 	double a, av;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	for (i = 0; i < 6; i++) {
 		N.vec_copy(A + i * 8, L, 8);
@@ -2625,7 +2625,7 @@ void scene::clebsch_cubic_version2_lines_b()
 	int i, j;
 	double L[8];
 	double a, av;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	for (i = 0; i < 6; i++) {
 		N.vec_copy(B + i * 8, L, 8);
@@ -2671,7 +2671,7 @@ void scene::clebsch_cubic_version2_lines_c()
 	int i, j, h;
 	double L[8];
 	double a, av;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	h = 0;
 	for (i = 0; i < 15; i++) {
@@ -2841,7 +2841,7 @@ void scene::create_Hilbert_model(int verbose_level)
 
 	verbose_level += 2;
 
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int i;
 
 	if (f_v) {
@@ -3321,7 +3321,7 @@ void scene::create_Hilbert_model(int verbose_level)
 void scene::create_Cayleys_nodal_cubic(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	int idx;
 
 	if (f_v) {
@@ -3431,7 +3431,7 @@ void scene::create_Hilbert_cube(int verbose_level)
 	if (f_v) {
 		cout << "scene::create_Hilbert_cube" << endl;
 	}
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	double p = 1.;
 	double m = -1.;
 	double px = p + 1;
@@ -3510,7 +3510,7 @@ void scene::create_cube(int verbose_level)
 	if (f_v) {
 		cout << "scene::create_cube" << endl;
 	}
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	double p = 1.;
 	double m = -1.;
 
@@ -3593,7 +3593,7 @@ void scene::create_affine_space(int q, int verbose_level)
 	if (f_v) {
 		cout << "scene::create_affine_space" << endl;
 	}
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int x, y, z;
 	double half = 3.6 / sqrt(3);
 	double dx = 2 * half / (double) q;
@@ -3703,7 +3703,7 @@ void scene::create_Eckardt_surface(int N, int verbose_level)
 	cubic(coeff_orig); // cubic 0
 	cubic(coeff_trans); // cubic 1
 
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	double A4[] = {
 		1.,1.,1.,1.,
@@ -3941,7 +3941,7 @@ void scene::create_E4_surface(int N, int verbose_level)
 void scene::create_twisted_cubic(int N, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	int i;
 	double t, x, y, z;
 
@@ -3996,7 +3996,7 @@ void scene::create_twisted_cubic(int N, int verbose_level)
 void scene::create_triangulation_of_cube(int N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	if (f_v) {
 		cout << "scene::create_triangulation_of_cube" << endl;
@@ -4055,7 +4055,7 @@ void scene::create_triangulation_of_cube(int N, int verbose_level)
 
 void scene::print_a_line(int line_idx)
 {
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	cout << "Line " << line_idx << " is ";
 	Num.vec_print(Line_coords + line_idx * 6 + 0, 3);
@@ -4067,7 +4067,7 @@ void scene::print_a_line(int line_idx)
 
 void scene::print_a_plane(int plane_idx)
 {
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	cout << "Plane " << plane_idx << " : ";
 	Num.vec_print(Plane_coords + plane_idx * 4, 4);

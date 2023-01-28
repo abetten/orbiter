@@ -24,7 +24,7 @@
 #include "Visitors/exponent_vector_visitor.h"
 #include "Visitors/ReductionVisitors/simplify_numerical_visitor.h"
 
-#include "orbiter.h"
+#include "layer1_foundations/foundations.h"
 
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
 
@@ -159,16 +159,16 @@ int main(int argc, const char** argv) {
 
 
     // orbiter stuff
-    orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-    orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+    //orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+    //orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
 
-    std::string *Argv;
-    data_structures::string_tools ST;
-    ST.convert_arguments(argc, argv, Argv);
+    //std::string *Argv;
+    //data_structures::string_tools ST;
+    //ST.convert_arguments(argc, argv, Argv);
     // argc has changed!
     cout << "after ST.convert_arguments, argc=" << argc << endl;
     cout << "before Top_level_session.startup_and_read_arguments" << endl;
-    static_cast<void>(Top_level_session.startup_and_read_arguments(argc, Argv, 1));
+    //static_cast<void>(Top_level_session.startup_and_read_arguments(argc, Argv, 1));
     orbiter::layer1_foundations::field_theory::finite_field_description Descr;
     orbiter::layer1_foundations::field_theory::finite_field Fq;
     Descr.f_q = TRUE;

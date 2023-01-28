@@ -295,7 +295,7 @@ void linear_set_classify::init(
 	data_structures_groups::vector_ge *nice_gens;
 
 	Aq = NEW_OBJECT(actions::action);
-	Aq->init_general_linear_group(n, Fq,
+	Aq->Known_groups->init_general_linear_group(n, Fq,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
@@ -314,7 +314,7 @@ void linear_set_classify::init(
 		cout << "linear_set_classify::init before init_general_linear_group "
 				"GL(" << m << "," << FQ->q << ")" << endl;
 	}
-	AQ->init_general_linear_group(m, FQ,
+	AQ->Known_groups->init_general_linear_group(m, FQ,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
@@ -337,7 +337,7 @@ void linear_set_classify::init(
 		cout << "linear_set_classify::init before init_projective_group "
 				"PGL(" << m << "," << FQ->q << ")" << endl;
 	}
-	A_PGLQ->init_projective_group(m, FQ,
+	A_PGLQ->Known_groups->init_projective_group(m, FQ,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,

@@ -181,7 +181,8 @@ void hall_system_classify::init(
 	A = NEW_OBJECT(actions::action);
 	int f_no_base = FALSE;
 
-	A->init_symmetric_group(nm1 /* degree */, f_no_base, verbose_level - 1);
+	A->Known_groups->init_symmetric_group(
+			nm1 /* degree */, f_no_base, verbose_level - 1);
 
 	//A->init_permutation_group(nm1 /* degree */, verbose_level - 1);
 	if (f_v) {

@@ -86,7 +86,8 @@ void stabilizer_chain_base_data::free_base_data()
 }
 
 
-void stabilizer_chain_base_data::allocate_base_data(action *A,
+void stabilizer_chain_base_data::allocate_base_data(
+		action *A,
 		int base_len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -182,7 +183,8 @@ void stabilizer_chain_base_data::reallocate_base(int new_base_point)
 	}
 }
 
-void stabilizer_chain_base_data::init_base_from_sims(groups::sims *G, int verbose_level)
+void stabilizer_chain_base_data::init_base_from_sims(
+		groups::sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -299,7 +301,8 @@ int &stabilizer_chain_base_data::path_i(int i)
 	return path[i];
 }
 
-void stabilizer_chain_base_data::group_order(ring_theory::longinteger_object &go)
+void stabilizer_chain_base_data::group_order(
+		ring_theory::longinteger_object &go)
 {
 	ring_theory::longinteger_domain D;
 
@@ -307,7 +310,8 @@ void stabilizer_chain_base_data::group_order(ring_theory::longinteger_object &go
 }
 
 void stabilizer_chain_base_data::init_projective_matrix_group(
-		field_theory::finite_field *F, int n, int f_semilinear, int degree,
+		field_theory::finite_field *F,
+		int n, int f_semilinear, int degree,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -337,7 +341,8 @@ void stabilizer_chain_base_data::init_projective_matrix_group(
 }
 
 void stabilizer_chain_base_data::init_affine_matrix_group(
-		field_theory::finite_field *F, int n, int f_semilinear, int degree,
+		field_theory::finite_field *F,
+		int n, int f_semilinear, int degree,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -368,7 +373,8 @@ void stabilizer_chain_base_data::init_affine_matrix_group(
 }
 
 void stabilizer_chain_base_data::init_linear_matrix_group(
-		field_theory::finite_field *F, int n, int f_semilinear, int degree,
+		field_theory::finite_field *F,
+		int n, int f_semilinear, int degree,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

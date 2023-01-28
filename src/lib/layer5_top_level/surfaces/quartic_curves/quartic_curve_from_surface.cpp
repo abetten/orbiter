@@ -209,21 +209,21 @@ void quartic_curve_from_surface::quartic(
 	transporter = NEW_int(SOA->Surf_A->A->elt_size_in_int);
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic before compute_quartic" << endl;
+		cout << "quartic_curve_from_surface::quartic "
+				"before compute_quartic" << endl;
 	}
-
-
-
 	compute_quartic(pt_orbit,
 			SOA->SO->eqn, SOA->SO->Lines, SOA->SO->nb_lines,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic after compute_quartic" << endl;
+		cout << "quartic_curve_from_surface::quartic "
+				"after compute_quartic" << endl;
 	}
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
 				"equation_nice=" << endl;
-		SOA->Surf->PolynomialDomains->Poly3_4->print_equation(cout, equation_nice);
+		SOA->Surf->PolynomialDomains->Poly3_4->print_equation(
+				cout, equation_nice);
 		cout << endl;
 	}
 
@@ -233,7 +233,8 @@ void quartic_curve_from_surface::quartic(
 		cout << "quartic_curve_from_surface::quartic "
 				"before Surf->split_nice_equation" << endl;
 	}
-	SOA->Surf->PolynomialDomains->split_nice_equation(equation_nice, f1, f2, f3,
+	SOA->Surf->PolynomialDomains->split_nice_equation(
+			equation_nice, f1, f2, f3,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
@@ -243,15 +244,19 @@ void quartic_curve_from_surface::quartic(
 
 	if (f_v) {
 		cout << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) "
-				"+ x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
+				"+ x_0f_2(x_1,x_2,x_3) + "
+				"f_3(x_1,x_2,x_3)$, where" << endl;
 		cout << "f1=" << endl;
-		SOA->Surf->PolynomialDomains->Poly1_x123->print_equation(cout, f1);
+		SOA->Surf->PolynomialDomains->Poly1_x123->print_equation(
+				cout, f1);
 		cout << endl;
 		cout << "f2=" << endl;
-		SOA->Surf->PolynomialDomains->Poly2_x123->print_equation(cout, f2);
+		SOA->Surf->PolynomialDomains->Poly2_x123->print_equation(
+				cout, f2);
 		cout << endl;
 		cout << "f3=" << endl;
-		SOA->Surf->PolynomialDomains->Poly3_x123->print_equation(cout, f3);
+		SOA->Surf->PolynomialDomains->Poly3_x123->print_equation(
+				cout, f3);
 		cout << endl;
 	}
 
@@ -264,15 +269,19 @@ void quartic_curve_from_surface::quartic(
 		cout << "quartic_curve_from_surface::quartic "
 			"before Surf_A->A->map_a_set_and_reorder" << endl;
 	}
-	SOA->Surf_A->A->map_a_set_and_reorder(SOA->SO->Pts, Pts_on_surface,
-			nb_pts_on_surface, transporter, 0 /* verbose_level */);
+	SOA->Surf_A->A->map_a_set_and_reorder(
+			SOA->SO->Pts, Pts_on_surface,
+			nb_pts_on_surface,
+			transporter,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
 			"after Surf_A->A->map_a_set_and_reorder" << endl;
 	}
 	for (i = 0; i < nb_pts_on_surface; i++) {
 		SOA->Surf->unrank_point(v, Pts_on_surface[i]);
-		if (SOA->Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point(equation_nice, v)) {
+		if (SOA->Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point(
+				equation_nice, v)) {
 			cout << "the transformed point does not satisfy "
 					"the transformed equation" << endl;
 			exit(1);
@@ -301,21 +310,25 @@ void quartic_curve_from_surface::quartic(
 	poly2 = NEW_int(SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
 
 	// poly1 = f2^2:
-	SOA->Surf->PolynomialDomains->multiply_Poly2_3_times_Poly2_3(f2, f2, poly1,
+	SOA->Surf->PolynomialDomains->multiply_Poly2_3_times_Poly2_3(
+			f2, f2, poly1,
 			0 /* verbose_level */);
 
 	// poly2 = f1 * f3:
-	SOA->Surf->PolynomialDomains->multiply_Poly1_3_times_Poly3_3(f1, f3, poly2,
+	SOA->Surf->PolynomialDomains->multiply_Poly1_3_times_Poly3_3(
+			f1, f3, poly2,
 			0 /* verbose_level */);
 
 	two = SOA->F->add(1, 1);
 	four = SOA->F->add(two, two);
 	mfour = SOA->F->negate(four);
-	SOA->F->Linear_algebra->scalar_multiply_vector_in_place(mfour, poly2,
+	SOA->F->Linear_algebra->scalar_multiply_vector_in_place(
+			mfour, poly2,
 			SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
 
 	// curve = poly1 -4 * poly2 = f2^2 - 4 * f1 * f3:
-	SOA->F->Linear_algebra->add_vector(poly1, poly2, curve,
+	SOA->F->Linear_algebra->add_vector(
+			poly1, poly2, curve,
 			SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
 
 
@@ -323,7 +336,8 @@ void quartic_curve_from_surface::quartic(
 		cout << "quartic_curve_from_surface::quartic before "
 				"Surf->assemble_tangent_quadric" << endl;
 	}
-	SOA->Surf->PolynomialDomains->assemble_tangent_quadric(f1, f2, f3,
+	SOA->Surf->PolynomialDomains->assemble_tangent_quadric(
+			f1, f2, f3,
 			tangent_quadric, verbose_level - 2);
 
 
@@ -337,7 +351,8 @@ void quartic_curve_from_surface::quartic(
 		vector<long int> Points;
 		int h;
 
-		SOA->Surf->PolynomialDomains->Poly2_4->enumerate_points(tangent_quadric,
+		SOA->Surf->PolynomialDomains->Poly2_4->enumerate_points(
+				tangent_quadric,
 				Points,
 				0 /* verbose_level */);
 
@@ -431,7 +446,8 @@ void quartic_curve_from_surface::quartic(
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
-				"We found " << sz_curve << " points on the quartic." << endl;
+				"We found " << sz_curve
+				<< " points on the quartic." << endl;
 	}
 
 #if 0
@@ -519,9 +535,11 @@ void quartic_curve_from_surface::compute_quartic(
 			pt_A, pt_B, transporter, verbose_level);
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_quartic transporter element=" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic "
+				"transporter element=" << endl;
 	}
-	SOA->Surf_A->A->element_print_quick(transporter, cout);
+	SOA->Surf_A->A->element_print_quick(
+			transporter, cout);
 
 	SOA->Surf_A->AonHPD_3_4->compute_image_int_low_level(
 			transporter, equation /*int *input*/,
@@ -529,12 +547,14 @@ void quartic_curve_from_surface::compute_quartic(
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_quartic "
 			"equation_nice=" << endl;
-		SOA->Surf->PolynomialDomains->Poly3_4->print_equation(cout, equation_nice);
+		SOA->Surf->PolynomialDomains->Poly3_4->print_equation(
+				cout, equation_nice);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_quartic mapping the lines" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic "
+				"mapping the lines" << endl;
 	}
 	quartic_curve_from_surface::nb_lines = nb_lines;
 	Lines_nice = NEW_lint(nb_lines);
@@ -546,9 +566,11 @@ void quartic_curve_from_surface::compute_quartic(
 		int Basis6[6];
 		int j;
 
-		Lines_nice[i] = SOA->Surf_A->A2->element_image_of(Lines[i], transporter, 0);
+		Lines_nice[i] = SOA->Surf_A->A2->element_image_of(
+				Lines[i], transporter, 0);
 
-		SOA->Surf_A->PA->P->Grass_lines->unrank_lint_here(Basis8, Lines_nice[i], 0);
+		SOA->Surf_A->PA->P->Grass_lines->unrank_lint_here(
+				Basis8, Lines_nice[i], 0);
 		if (f_v) {
 			cout << "quartic_curve_from_surface::compute_quartic "
 					"Basis8=" << endl;
@@ -565,7 +587,9 @@ void quartic_curve_from_surface::compute_quartic(
 					"Basis6=" << endl;
 			Int_matrix_print(Basis6, 2, 3);
 		}
-		Bitangents[i] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
+		Bitangents[i] =
+				SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(
+						Basis6, 0);
 		if (f_v) {
 			cout << "quartic_curve_from_surface::compute_quartic "
 					"Bitangents[" << i << "] = " << Bitangents[i] << endl;
@@ -583,7 +607,8 @@ void quartic_curve_from_surface::compute_quartic(
 				"before SOA->SO->Surf->compute_tangent_plane" << endl;
 	}
 
-	plane_rk = SOA->SO->Surf->PolynomialDomains->compute_tangent_plane(v, equation_nice, verbose_level);
+	plane_rk = SOA->SO->Surf->PolynomialDomains->compute_tangent_plane(
+			v, equation_nice, verbose_level);
 
 
 	if (f_v) {
@@ -607,7 +632,9 @@ void quartic_curve_from_surface::compute_quartic(
 	for (j = 0; j < 2; j++) {
 		Int_vec_copy(Basis12 + (j + 1) * 4 + 1, Basis6 + j * 3, 3);
 	}
-	Bitangents[nb_lines] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
+	Bitangents[nb_lines] =
+			SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(
+					Basis6, 0);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_quartic "
 				"Bitangents[nb_lines] = " << Bitangents[nb_lines] << endl;
@@ -671,8 +698,10 @@ void quartic_curve_from_surface::compute_stabilizer(
 				nb_rows, nb_cols,
 				verbose_level);
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer nb_rows = " << nb_rows << endl;
-		cout << "quartic_curve_from_surface::compute_stabilizer nb_cols = " << nb_cols << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"nb_rows = " << nb_rows << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"nb_cols = " << nb_cols << endl;
 	}
 
 
@@ -681,7 +710,7 @@ void quartic_curve_from_surface::compute_stabilizer(
 				"before Nau.set_stabilizer_of_object" << endl;
 	}
 
-	actions::nauty_interface_with_group Nau;
+	interfaces::nauty_interface_with_group Nau;
 	data_structures::nauty_output *NO;
 
 	NO = NEW_OBJECT(data_structures::nauty_output);
@@ -722,7 +751,10 @@ void quartic_curve_from_surface::compute_stabilizer(
 		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"before AonHPD->init" << endl;
 	}
-	AonHPD->init(Surf_A->PA->PA2->A, Surf_A->Surf->PolynomialDomains->Poly4_x123, verbose_level);
+	AonHPD->init(
+			Surf_A->PA->PA2->A,
+			Surf_A->Surf->PolynomialDomains->Poly4_x123,
+			verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"after AonHPD->init" << endl;
@@ -816,8 +848,11 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "The original cubic surface is given by" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal F}^3 &={\\bf \\rm v}(" << endl;
-	SOA->Surf->PolynomialDomains->Poly3_4->print_equation_with_line_breaks_tex(ost,
-			SOA->SO->eqn, 9 /* nb_terms_per_line */, "\\\\\n&");
+	SOA->Surf->PolynomialDomains->Poly3_4->print_equation_with_line_breaks_tex(
+			ost,
+			SOA->SO->eqn,
+			9 /* nb_terms_per_line */,
+			"\\\\\n&");
 	ost << ")" << endl;
 	ost << "\\end{align*}" << endl;
 
@@ -837,8 +872,11 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "The transformed surface is" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal F}^3 &={\\bf \\rm v}(" << endl;
-	SOA->Surf->PolynomialDomains->Poly3_4->print_equation_with_line_breaks_tex(ost,
-			equation_nice, 9 /* nb_terms_per_line */, "\\\\\n&");
+	SOA->Surf->PolynomialDomains->Poly3_4->print_equation_with_line_breaks_tex(
+			ost,
+			equation_nice,
+			9 /* nb_terms_per_line */,
+			"\\\\\n&");
 	ost << ")" << endl;
 	ost << "\\end{align*}" << endl;
 
@@ -858,15 +896,18 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 	ost << "\\begin{align*}" << endl;
 	ost << "f_1 = & ";
-	SOA->Surf->PolynomialDomains->Poly1_x123->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly1_x123->print_equation_with_line_breaks_tex(
+			ost,
 			f1, 8 /* nb_terms_per_line */, "\\\\\n");
 	ost << "\\\\" << endl;
 	ost << "f_2 = & ";
-	SOA->Surf->PolynomialDomains->Poly2_x123->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly2_x123->print_equation_with_line_breaks_tex(
+			ost,
 			f2, 8 /* nb_terms_per_line */, "\\\\\n&");
 	ost << "\\\\" << endl;
 	ost << "f_3 = & ";
-	SOA->Surf->PolynomialDomains->Poly3_x123->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly3_x123->print_equation_with_line_breaks_tex(
+			ost,
 			f3, 8 /* nb_terms_per_line */, "\\\\\n");
 	ost << "\\\\" << endl;
 	ost << "\\end{align*}" << endl;
@@ -891,7 +932,8 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "The tangent quadric is given as" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal C}_2 = & {\\rm \\bf v}(2x_0 \\cdot f_1 + f_2) = {\\rm \\bf v}(";
-	SOA->Surf->PolynomialDomains->Poly2_x123->print_equation_with_line_breaks_tex(ost,
+	SOA->Surf->PolynomialDomains->Poly2_x123->print_equation_with_line_breaks_tex(
+			ost,
 			tangent_quadric, 8 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;
@@ -983,11 +1025,13 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 
 
-	ost << "The stabilizer of the quartic curve is the following group:\\\\" << endl;
+	ost << "The stabilizer of the quartic curve "
+			"is the following group:\\\\" << endl;
 	Stab_gens_quartic->print_generators_tex(ost);
 
 
-	ost << "The curve has " << nb_bitangents << " bitangents, they are: ";
+	ost << "The curve has " << nb_bitangents
+			<< " bitangents, they are: ";
 	Lint_vec_print(ost, Bitangents, nb_bitangents);
 	ost << "\\\\" << endl;
 
@@ -1015,7 +1059,8 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 				"before GG.create_decomposition_of_projective_plane" << endl;
 		}
 
-		GG.create_decomposition_of_projective_plane(fname_base,
+		GG.create_decomposition_of_projective_plane(
+				fname_base,
 				SOA->Surf_A->PA->PA2->P,
 				Pts_on_curve, sz_curve,
 				Bitangents, nb_bitangents,

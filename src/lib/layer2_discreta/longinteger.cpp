@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
 
 
 static void subtract_signless(longinteger &x, longinteger &y, longinteger &z);
@@ -891,5 +892,6 @@ int longinteger::Lucas_test_Mersenne(int m, int verbose_level)
 		return FALSE;
 }
 
-}}
+}}}
+
 

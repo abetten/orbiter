@@ -30,9 +30,13 @@ using namespace orbiter::layer1_foundations;
 
 namespace orbiter {
 
-//! typed objects
+//! legacy project DISCRETA provides typed objects
 
 namespace layer2_discreta {
+
+//! typed objects
+
+namespace typed_objects {
 
 
 
@@ -2228,7 +2232,7 @@ void the_end(int t0);
 void the_end_quietly(int t0);
 
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_DISCRETA_DISCRETA_H_ */

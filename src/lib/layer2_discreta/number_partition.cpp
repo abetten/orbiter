@@ -17,6 +17,9 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
+
+
 
 number_partition::number_partition() : Vector()
 {
@@ -340,4 +343,5 @@ int number_partition::sum_of_decreased_parts()
 }
 
 
-}}
+}}}
+

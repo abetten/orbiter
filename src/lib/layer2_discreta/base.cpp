@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
 
 
 discreta_base::discreta_base()
@@ -245,7 +246,7 @@ void discreta_base::print_to_hollerith(hollerith& h)
 
 ostream& discreta_base::printobjectkind(ostream& ost)
 {
-	orbiter::layer2_discreta::printobjectkind(ost, s_kind());
+	orbiter::layer2_discreta::typed_objects::printobjectkind(ost, s_kind());
 	return ost;
 }
 
@@ -1602,4 +1603,5 @@ void discreta_base::load_file(const char *fname)
 }
  
 
-}}
+}}}
+

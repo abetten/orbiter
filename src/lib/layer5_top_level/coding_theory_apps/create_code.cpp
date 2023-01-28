@@ -817,7 +817,7 @@ void create_code::export_magma(
 		exit(1);
 	}
 
-	groups::magma_interface M;
+	interfaces::magma_interface M;
 
 	if (f_v) {
 		cout << "create_code::export_magma "

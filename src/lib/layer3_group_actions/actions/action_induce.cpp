@@ -176,8 +176,10 @@ action *action::induced_action_on_set_partitions(
 }
 
 
-void action::init_action_on_lines(action *A,
-		field_theory::finite_field *F, int n, int verbose_level)
+void action::init_action_on_lines(
+		action *A,
+		field_theory::finite_field *F, int n,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -939,8 +941,10 @@ action *action::induced_action_on_wedge_product(int verbose_level)
 }
 
 
-void action::induced_action_by_subfield_structure(action *A_old, 
-		induced_actions::action_by_subfield_structure *SubfieldStructure,
+void action::induced_action_by_subfield_structure(
+		action *A_old,
+		induced_actions::action_by_subfield_structure
+			*SubfieldStructure,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
@@ -1834,7 +1838,8 @@ action *action::restricted_action(
 }
 
 action *action::create_induced_action_by_restriction(
-		groups::sims *S, int size, long int *set, int f_induce,
+		groups::sims *S, int size,
+		long int *set, int f_induce,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1855,7 +1860,8 @@ action *action::create_induced_action_by_restriction(
 void action::induced_action_by_restriction_internal_function(
 	action &old_action,
 	int f_induce_action, groups::sims *old_G,
-	int nb_points, long int *points, int verbose_level)
+	int nb_points, long int *points,
+	int verbose_level)
 // uses action_by_restriction data type
 {
 	int f_v = (verbose_level >= 1);
@@ -1984,7 +1990,8 @@ void action::induced_action_on_pairs(
 	}
 }
 
-action *action::create_induced_action_on_ordered_pairs(int verbose_level)
+action *action::create_induced_action_on_ordered_pairs(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
@@ -2301,7 +2308,8 @@ void action::induced_action_on_bricks(
 
 void action::induced_action_on_andre(
 		action *An,
-	action *An1, geometry::andre_construction *Andre,
+	action *An1,
+	geometry::andre_construction *Andre,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3337,7 +3345,8 @@ int action::choose_next_base_point_default_method(
 }
 
 void action::generators_to_strong_generators(
-	int f_target_go, ring_theory::longinteger_object &target_go,
+	int f_target_go,
+	ring_theory::longinteger_object &target_go,
 	data_structures_groups::vector_ge *gens,
 	groups::strong_generators *&Strong_gens,
 	int verbose_level)

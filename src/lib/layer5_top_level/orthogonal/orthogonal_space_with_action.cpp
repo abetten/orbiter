@@ -156,10 +156,10 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 
 	if (f_v) {
 		cout << "orthogonal_space_with_action::init_group before "
-				"A->init_orthogonal_group_with_O" << endl;
+				"A->Known_groups->init_orthogonal_group_with_O" << endl;
 	}
 
-	A->init_orthogonal_group_with_O(O,
+	A->Known_groups->init_orthogonal_group_with_O(O,
 			TRUE /* f_on_points */,
 			FALSE /* f_on_lines */,
 			FALSE /* f_on_points_and_lines */,
@@ -169,7 +169,7 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 
 	if (f_v) {
 		cout << "orthogonal_space_with_action::init_group "
-				"after A->init_orthogonal_group_with_O" << endl;
+				"after A->Known_groups->init_orthogonal_group_with_O" << endl;
 	}
 
 	if (f_v) {

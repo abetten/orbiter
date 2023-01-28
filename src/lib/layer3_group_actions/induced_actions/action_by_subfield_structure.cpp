@@ -135,12 +135,12 @@ void action_by_subfield_structure::init(
 
 	if (f_v) {
 		cout << "action_by_subfield_structure::init "
-				"before Aq->init_matrix_group" << endl;
+				"before Aq->Known_groups->init_projective_group" << endl;
 		}
 
 	data_structures_groups::vector_ge *nice_gens;
 
-	Aq->init_projective_group(m, Fq,
+	Aq->Known_groups->init_projective_group(m, Fq,
 			f_semilinear, f_basis, FALSE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
@@ -149,7 +149,7 @@ void action_by_subfield_structure::init(
 
 
 	cout << "action_by_subfield_structure::init "
-			"after Aq->init_matrix_group" << endl;
+			"after Aq->Known_groups->init_projective_group" << endl;
 	
 	cout << "action_by_subfield_structure::init "
 			"creating subfield structure" << endl;

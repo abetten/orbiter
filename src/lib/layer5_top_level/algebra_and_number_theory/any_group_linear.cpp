@@ -63,7 +63,7 @@ void any_group::classes(int verbose_level)
 
 	G = LG->Strong_gens->create_sims(verbose_level);
 
-	groups::magma_interface M;
+	interfaces::magma_interface M;
 
 	if (f_v) {
 		cout << "any_group::classes "

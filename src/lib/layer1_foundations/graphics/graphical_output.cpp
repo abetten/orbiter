@@ -650,7 +650,7 @@ void graphical_output::do_create_points_on_parabola(
 void graphical_output::do_smooth_curve(std::string &curve_label,
 		double desired_distance, int N,
 		double t_min, double t_max, double boundary,
-		function_polish_description *FP_descr, int verbose_level)
+		polish::function_polish_description *FP_descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_dimensions;
@@ -659,7 +659,7 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 		cout << "graphical_output::do_smooth_curve" << endl;
 	}
 
-	smooth_curve_Polish = NEW_OBJECT(function_polish);
+	smooth_curve_Polish = NEW_OBJECT(polish::function_polish);
 
 	if (f_v) {
 		cout << "graphical_output::do_smooth_curve before smooth_curve_Polish->init" << endl;
@@ -732,7 +732,7 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 		int nb_pts;
 		int i, j, nb, n;
 		double d; // euclidean distance to the previous point
-		numerics Num;
+		orbiter_kernel_system::numerics Num;
 
 		nb_pts = C.Pts.size();
 		n = 1 + nb_dimensions + 1;
@@ -1546,7 +1546,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 	int f_projection_on = TRUE;
 	double radius = 10.;
 	int N_curve = 500;
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 
 	cout << "draw_projective number=" << number << " animate_step=" << animate_step << " animate_nb_of_steps=" << animate_nb_of_steps << endl;

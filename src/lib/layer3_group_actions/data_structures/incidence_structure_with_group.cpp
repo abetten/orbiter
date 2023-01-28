@@ -191,7 +191,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 				"before init_permutation_group_from_generators" << endl;
 	}
 
-	A_perm->init_permutation_group_from_nauty_output(NO,
+	A_perm->Known_groups->init_permutation_group_from_nauty_output(NO,
 		verbose_level);
 
 	if (f_vv) {

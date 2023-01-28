@@ -1,0 +1,20 @@
+DISCRETA_CPP = g++
+DISCRETA_CC = gcc
+CPPFLAGS = -Wall -O3 -funroll-loops -I.. -I../.. -std=c++17
+# -frename-registers
+LIB = 
+LFLAGS = -lm
+
+MODULES = \
+	l3_interface_gap.o \
+	magma_interface.o \
+	nauty_interface_with_group.o
+	
+
+all : $(MODULES)
+
+%.o: %.cpp %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+
+clean:
+	- rm *.o *.a *~
+

@@ -48,7 +48,7 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 
 	int i;
 	number_theory::number_theory_domain NT;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 
 	char str_q[1000];
@@ -92,7 +92,7 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 
 	A = NEW_OBJECT(actions::action);
 
-	A->init_linear_group(
+	A->Known_groups->init_linear_group(
 		F, 4,
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,
@@ -529,7 +529,7 @@ void surface_study::study_group(int verbose_level)
 		cout << "Written file " << fname_out
 				<< " of size " << Fio.file_size(fname_out) << endl;
 
-		groups::magma_interface M;
+		interfaces::magma_interface M;
 
 		M.write_as_magma_permutation_group(SaS->Stab,
 				prefix, SaS->Strong_gens->gens, verbose_level);

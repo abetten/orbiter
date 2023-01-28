@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
+
 
 #undef INTEGER_M_I_VERBOSE
 
@@ -672,7 +674,7 @@ int integer::log2()
 
 
 
-}}
+}}}
 
 
 

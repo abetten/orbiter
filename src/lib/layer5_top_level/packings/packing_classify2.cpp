@@ -181,7 +181,7 @@ void packing_classify::compute_and_save_klein_invariants(
 #endif
 	}
 
-	Vector v;
+	typed_objects::Vector v;
 
 	v.m_l(3);
 	v.m_ii(0, Int_type->len);
@@ -705,7 +705,7 @@ void packing_classify::report_klein_invariants(
 	// klein invariants:
 	{
 		string fname_klein;
-		Vector V;
+		typed_objects::Vector V;
 		
 		klein_invariants_fname(fname_klein,
 				Iso->prefix_invariants, orbit);

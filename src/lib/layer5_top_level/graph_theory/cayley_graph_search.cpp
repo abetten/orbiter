@@ -290,7 +290,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 
 	int f_no_base = FALSE;
 
-	A->init_permutation_group(degree, f_no_base, verbose_level);
+	A->Known_groups->init_permutation_group(degree, f_no_base, verbose_level);
 
 
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -367,7 +367,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 
 	if (degree) {
 		int f_no_base = FALSE;
-		A->init_permutation_group(degree, f_no_base, verbose_level);
+		A->Known_groups->init_permutation_group(degree, f_no_base, verbose_level);
 		}
 	else if (group == 4) {
 		int q = 2;
@@ -378,7 +378,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 				FALSE /* f_without_tables */,
 				FALSE /* f_compute_related_fields */,
 				0);
-		A->init_affine_group(4, F,
+		A->Known_groups->init_affine_group(4, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -649,7 +649,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 				FALSE /* f_without_tables */,
 				FALSE /* f_compute_related_fields */,
 				0);
-		A->init_affine_group(5, F,
+		A->Known_groups->init_affine_group(5, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,

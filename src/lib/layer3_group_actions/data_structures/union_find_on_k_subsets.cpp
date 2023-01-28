@@ -147,7 +147,7 @@ void union_find_on_k_subsets::init(
 
 	int f_no_base = FALSE;
 
-	Ar_perm->init_permutation_group(set_sz, f_no_base, 0/*verbose_level*/);
+	Ar_perm->Known_groups->init_permutation_group(set_sz, f_no_base, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "Ar_perm:" << endl;
 		Ar_perm->print_info();

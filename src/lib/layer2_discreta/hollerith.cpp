@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
+
 
 
 #undef HOLLERITH_COPY_VERBOSE
@@ -223,5 +225,6 @@ void hollerith::get_current_date()
 	init(str);
 }
 
-}}
+}}}
+
 

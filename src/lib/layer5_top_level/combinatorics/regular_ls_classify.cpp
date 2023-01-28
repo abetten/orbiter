@@ -174,7 +174,8 @@ void regular_ls_classify::init_group(int verbose_level)
 	A = NEW_OBJECT(actions::action);
 	int f_no_base = FALSE;
 
-	A->init_symmetric_group(Descr->m /* degree */, f_no_base, 0 /* verbose_level - 2*/);
+	A->Known_groups->init_symmetric_group(
+			Descr->m /* degree */, f_no_base, 0 /* verbose_level - 2*/);
 	
 
 	if (f_v) {

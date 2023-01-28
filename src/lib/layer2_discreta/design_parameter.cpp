@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
+
 
 design_parameter::design_parameter() : Vector()
 {
@@ -714,4 +716,5 @@ void design_parameter::init_database(database& D, char *path)
 	D.btree_access().append(B);
 }
 
-}}
+}}}
+

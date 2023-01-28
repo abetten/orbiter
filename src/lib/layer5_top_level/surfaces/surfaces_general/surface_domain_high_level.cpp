@@ -1594,7 +1594,7 @@ void surface_domain_high_level::do_create_surface_reports(
 		cout << "surface_domain_high_level::do_create_surface_reports verbose_level=" << verbose_level << endl;
 	}
 
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	number_theory::number_theory_domain NT;
 	orbiter_kernel_system::file_io Fio;
 
@@ -1716,7 +1716,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 		cout << "surface_domain_high_level::do_create_surface_atlas verbose_level=" << verbose_level << endl;
 	}
 
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 
 	number_theory::number_theory_domain NT;
@@ -2031,7 +2031,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 		cout << "surface_domain_high_level::do_create_surface_atlas q=" << T->q << " " << nb_e << endl;
 	}
 
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 
 	number_theory::number_theory_domain NT;

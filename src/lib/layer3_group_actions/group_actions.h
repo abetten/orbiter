@@ -31,6 +31,7 @@ namespace actions {
 	class action_global;
 	class action_pointer_table;
 	class nauty_interface_with_group;
+	class known_groups;
 	class stabilizer_chain_base_data;
 
 }
@@ -67,7 +68,6 @@ namespace groups {
 	class exceptional_isomorphism_O4;
 	class linear_group_description;
 	class linear_group;
-	class magma_interface;
 	class matrix_group;
 	class orbits_on_something;
 	class permutation_group_create;
@@ -89,7 +89,7 @@ namespace groups {
 
 }
 
-//! offers various kinds of induced group actions
+//! various kinds of induced group actions
 
 namespace induced_actions {
 
@@ -123,6 +123,15 @@ namespace induced_actions {
 
 }
 
+//! interfaces to outside software such as gap, nauty, magma
+
+namespace interfaces {
+
+	class l3_interface_gap;
+	class magma_interface;
+	class nauty_interface_with_group;
+
+}
 
 
 
@@ -242,6 +251,7 @@ union symmetry_group {
 #include "data_structures/l3_data_structures.h"
 #include "./groups/groups.h"
 #include "./induced_actions/induced_actions.h"
+#include "./interfaces/interfaces.h"
 
 
 

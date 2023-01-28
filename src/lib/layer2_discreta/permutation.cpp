@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
 
 
 
@@ -1322,6 +1323,6 @@ char get_character(istream & is, int f_v)
 }
 #endif
 
-}}
+}}}
 
 

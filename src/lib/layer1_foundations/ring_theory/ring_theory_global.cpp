@@ -1739,7 +1739,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 	unipoly_domain FX(F);
 
 	string poly;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	K.get_primitive_polynomial(poly, F->q, d, 0 /* verbose_level */);
 
@@ -1910,7 +1910,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 	unipoly_domain FX(F);
 
 	string poly;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	K.get_primitive_polynomial(poly, F->q, d, 0 /* verbose_level */);
 

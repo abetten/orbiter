@@ -11,6 +11,7 @@
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace knowledge_base {
 
 
 
@@ -99,7 +100,7 @@ public:
 };
 
 
-}}
+}}}
 
 
 #endif /* SRC_LIB_FOUNDATIONS_KNOWLEDGE_BASE_KNOWLEDGE_BASE_H_ */

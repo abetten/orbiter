@@ -49,7 +49,7 @@ void scene_element_of_type_surface::init(int d, int nb_coeffs, double *coords)
 
 void scene_element_of_type_surface::print()
 {
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	cout << "surface of degree " << d << " with " << nb_coeffs << " coefficients : ";
 	N.vec_print(Eqn, nb_coeffs);

@@ -138,7 +138,7 @@ void nth_roots::init(
 
 	FpX->init_basic(Fp, verbose_level);
 
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	string field_poly;
 
 	K.get_primitive_polynomial(field_poly,

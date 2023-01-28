@@ -11,6 +11,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
+
 
 void free_global_data()
 {
@@ -84,5 +86,5 @@ void the_end_quietly(int t0)
 
 
 
-}}
+}}}
 

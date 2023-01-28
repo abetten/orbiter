@@ -745,14 +745,14 @@ public:
 
 
 	// database access:
-	database *D1, *D2;
+	typed_objects::database *D1, *D2;
 	std::string fname_ge1;
 	std::string fname_ge2;
 	std::ifstream *fp_ge1;
 	std::ifstream *fp_ge2;
 
 	// pointer only, do not free:
-	database *DB_level;
+	typed_objects::database *DB_level;
 	std::ifstream *fp_ge; // either fg_ge1 or fp_ge2
 
 	substructure_classification();
@@ -808,7 +808,8 @@ public:
 	int open_database_and_identify_object(long int *set,
 		int *transporter,
 		int f_implicit_fusion, int verbose_level);
-	void init_DB_level(layer2_discreta::database &D, int level,
+	void init_DB_level(
+			layer2_discreta::typed_objects::database &D, int level,
 		int verbose_level);
 	void create_level_database(int level, int verbose_level);
 	void load_strong_generators(int cur_level,
@@ -976,8 +977,8 @@ public:
 		// [nb_starter]
 
 
-	Vector *v; // [1]
-	database *DB_sol;
+	typed_objects::Vector *v; // [1]
+	typed_objects::database *DB_sol;
 	long int *id_to_datref;
 	long int *id_to_hash;
 	long int *hash_vs_id_hash; // sorted

@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
 
 
 database::database() : Vector()
@@ -1221,4 +1222,5 @@ void database::file_read(void *p, int size, int nb)
 	fstream_table[idx]->read((char *) p, size * nb);
 }
 
-}}
+}}}
+

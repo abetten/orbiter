@@ -175,7 +175,8 @@ void action_global::get_symmetry_group_type_text(
 void action_global::make_generators_stabilizer_of_two_components(
 	action *A_PGL_n_q, action *A_PGL_k_q,
 	int k,
-	data_structures_groups::vector_ge *gens, int verbose_level)
+	data_structures_groups::vector_ge *gens,
+	int verbose_level)
 // used in semifield.cpp
 // does not include the swap
 {
@@ -253,11 +254,13 @@ void action_global::make_generators_stabilizer_of_two_components(
 
 		if (EVEN(h)) {
 			// Q := diag(P,Id)
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, Id);
+			orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+					Q, k, P, Zero, Zero, Id);
 		}
 		else {
 			// Q := diag(Id,P)
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, P);
+			orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+					Q, k, Id, Zero, Zero, P);
 		}
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
@@ -277,7 +280,8 @@ void action_global::make_generators_stabilizer_of_two_components(
 #endif
 
 	// Q := matrix(Center,0,0,I):
-	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Center, Zero, Zero, Id);
+	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+			Q, k, Center, Zero, Zero, Id);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
@@ -285,7 +289,8 @@ void action_global::make_generators_stabilizer_of_two_components(
 	idx++;
 
 	// Q := matrix(I,0,0,Center):
-	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, Center);
+	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+			Q, k, Id, Zero, Zero, Center);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
@@ -500,7 +505,8 @@ void action_global::make_generators_stabilizer_of_three_components(
 	}
 }
 
-void action_global::compute_generators_GL_n_q(int *&Gens,
+void action_global::compute_generators_GL_n_q(
+		int *&Gens,
 		int &nb_gens, int &elt_size, int n,
 		field_theory::finite_field *F,
 		data_structures_groups::vector_ge *&nice_gens,
@@ -518,7 +524,7 @@ void action_global::compute_generators_GL_n_q(int *&Gens,
 	}
 	A = NEW_OBJECT(action);
 
-	A->init_projective_group(n, F,
+	A->Known_groups->init_projective_group(n, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
@@ -571,7 +577,8 @@ void action_global::compute_generators_GL_n_q(int *&Gens,
 	int f_generator_orthogonal_semisimilarity = TRUE;
 
 
-void action_global::set_orthogonal_group_type(int f_siegel,
+void action_global::set_orthogonal_group_type(
+		int f_siegel,
 		int f_reflection,
 		int f_similarity,
 		int f_semisimilarity)
@@ -610,7 +617,8 @@ void test_matrix_group(int k, int q, int f_semilinear, int verbose_level)
 void action_global::lift_generators(
 		data_structures_groups::vector_ge *gens_in,
 		data_structures_groups::vector_ge *&gens_out,
-	action *Aq, field_theory::subfield_structure *S, int n,
+	action *Aq,
+	field_theory::subfield_structure *S, int n,
 	int verbose_level)
 // gens_in are m x m (i.e., small matrices over the large field),
 // gens_out are n x n (i.e., large matrices over the small field).
@@ -673,7 +681,8 @@ void action_global::lift_generators(
 void action_global::retract_generators(
 		data_structures_groups::vector_ge *gens_in,
 		data_structures_groups::vector_ge *&gens_out,
-	action *AQ, field_theory::subfield_structure *S, int n,
+	action *AQ,
+	field_theory::subfield_structure *S, int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -858,14 +867,16 @@ void action_global::lift_generators_to_subfield_structure(
 }
 
 
-void action_global::perm_print_cycles_sorted_by_length(std::ostream &ost,
+void action_global::perm_print_cycles_sorted_by_length(
+		std::ostream &ost,
 		int degree, int *perm, int verbose_level)
 {
 	perm_print_cycles_sorted_by_length_offset(ost,
 			degree, perm, 0, FALSE, TRUE, verbose_level);
 }
 
-void action_global::perm_print_cycles_sorted_by_length_offset(std::ostream &ost,
+void action_global::perm_print_cycles_sorted_by_length_offset(
+		std::ostream &ost,
 	int degree, int *perm, int offset,
 	int f_do_it_anyway_even_for_big_degree,
 	int f_print_cycles_of_length_one, int verbose_level)
@@ -890,7 +901,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(std::ostream &ost,
 	A = NEW_OBJECT(action);
 	int f_no_base = FALSE;
 	
-	A->init_permutation_group(degree, f_no_base, 0/*verbose_level*/);
+	A->Known_groups->init_permutation_group(degree, f_no_base, 0/*verbose_level*/);
 	Gens.init(A, verbose_level - 2);
 	Gens.allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
@@ -1012,7 +1023,9 @@ void action_global::perm_print_cycles_sorted_by_length_offset(std::ostream &ost,
 
 
 action *action_global::init_direct_product_group_and_restrict(
-		groups::matrix_group *M1, groups::matrix_group *M2, int verbose_level)
+		groups::matrix_group *M1,
+		groups::matrix_group *M2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A_direct_product;
@@ -1058,7 +1071,8 @@ action *action_global::init_direct_product_group_and_restrict(
 }
 
 action *action_global::init_direct_product_group(
-		groups::matrix_group *M1, groups::matrix_group *M2,
+		groups::matrix_group *M1,
+		groups::matrix_group *M2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1235,7 +1249,8 @@ void action_global::compute_decomposition_based_on_orbits(
 		geometry::projective_space *P,
 		groups::schreier *Sch1, groups::schreier *Sch2,
 		geometry::incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack, int verbose_level)
+		data_structures::partitionstack *&Stack,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1294,7 +1309,8 @@ void action_global::compute_decomposition_based_on_orbit_length(
 		geometry::projective_space *P,
 		groups::schreier *Sch1, groups::schreier *Sch2,
 		geometry::incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack, int verbose_level)
+		data_structures::partitionstack *&Stack,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1336,7 +1352,8 @@ void action_global::compute_decomposition_based_on_orbit_length(
 void action_global::orbits_on_equations(
 		action *A,
 		ring_theory::homogeneous_polynomial_domain *HPD,
-	int *The_equations, int nb_equations, groups::strong_generators *gens,
+	int *The_equations,
+	int nb_equations, groups::strong_generators *gens,
 	actions::action *&A_on_equations, groups::schreier *&Orb,
 	int verbose_level)
 {
@@ -1384,7 +1401,8 @@ void action_global::orbits_on_equations(
 }
 
 
-void action_global::compute_fixed_objects_in_PG(int up_to_which_rank,
+void action_global::compute_fixed_objects_in_PG(
+		int up_to_which_rank,
 		action *A,
 		geometry::projective_space *P,
 	int *Elt,
@@ -1457,7 +1475,8 @@ void action_global::compute_fixed_objects_in_PG(int up_to_which_rank,
 }
 
 
-void action_global::report_fixed_objects_in_P3(std::ostream &ost,
+void action_global::report_fixed_objects_in_P3(
+		std::ostream &ost,
 		action *A,
 		geometry::projective_space *P3,
 	int *Elt,
@@ -1564,7 +1583,7 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 {
 	int f_v = (verbose_level >= 1);
 	geometry::object_with_canonical_form *OwCF;
-	nauty_interface_with_group Nau;
+	interfaces::nauty_interface_with_group Nau;
 
 	if (f_v) {
 		cout << "action_global::set_stabilizer_in_projective_space" << endl;
@@ -1632,14 +1651,15 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 void action_global::stabilizer_of_dual_hyperoval_representative(
 		action *A,
 		int k, int n, int no,
-		data_structures_groups::vector_ge *&gens, std::string &stab_order,
+		data_structures_groups::vector_ge *&gens,
+		std::string &stab_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
 	int i;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "action_global::stabilizer_of_dual_hyperoval_representative" << endl;
@@ -1666,14 +1686,15 @@ void action_global::stabilizer_of_dual_hyperoval_representative(
 void action_global::stabilizer_of_spread_representative(
 		action *A,
 		int q, int k, int no,
-		data_structures_groups::vector_ge *&gens, std::string &stab_order,
+		data_structures_groups::vector_ge *&gens,
+		std::string &stab_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
 	int i;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "action_global::stabilizer_of_spread_representative"
@@ -1710,7 +1731,7 @@ void action_global::stabilizer_of_quartic_curve_representative(
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
 	int i;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "action_global::stabilizer_of_quartic_curve_representative" << endl;
@@ -1737,7 +1758,8 @@ void action_global::stabilizer_of_quartic_curve_representative(
 
 void action_global::perform_tests(
 		action *A,
-		groups::strong_generators *SG, int verbose_level)
+		groups::strong_generators *SG,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2021,7 +2043,8 @@ void action_global::perform_tests(
 void action_global::apply_based_on_text(
 		action *A,
 		std::string &input_text,
-		std::string &input_group_element, int verbose_level)
+		std::string &input_group_element,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2659,7 +2682,8 @@ void action_global::compute_orbit_of_point(
 void action_global::compute_orbit_of_point_generators_by_handle(
 		actions::action *A,
 		int nb_gen,
-	int *gen_handle, int pt, int *orbit, int &len, int verbose_level)
+	int *gen_handle, int pt, int *orbit, int &len,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures_groups::vector_ge gens;
@@ -2992,8 +3016,10 @@ void action_global::delete_set_orbit(
 
 void action_global::compute_minimal_set(
 		actions::action *A,
-		data_structures_groups::vector_ge &gens, int size, long int *set,
-	long int *minimal_set, int *transporter, int verbose_level)
+		data_structures_groups::vector_ge &gens,
+		int size, long int *set,
+	long int *minimal_set, int *transporter,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int **Sets;

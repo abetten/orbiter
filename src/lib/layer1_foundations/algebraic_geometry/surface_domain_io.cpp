@@ -517,7 +517,7 @@ void surface_domain::make_table_of_surfaces_detailed(
 	int i, j, q, cur, nb_E;
 	int nb_reps_total;
 	int *Nb_reps;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	long int *Big_table;
 	orbiter_kernel_system::file_io Fio;
 
@@ -591,7 +591,7 @@ void surface_domain::make_table_of_surfaces2(
 	int *data;
 	int nb_gens;
 	int data_size;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	orbiter_kernel_system::file_io Fio;
 
 
@@ -886,7 +886,7 @@ void surface_domain::compute_table_E(
 	//int Q_table_len = sizeof(Q_table) / sizeof(int);
 	int i, j, q, nb_reps, nb_E, nb_E_max, idx;
 	int *Table_idx;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	nb_Q = nb_fields;
 	Q = NEW_int(nb_Q);

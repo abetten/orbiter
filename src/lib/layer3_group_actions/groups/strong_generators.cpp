@@ -1528,7 +1528,7 @@ void strong_generators::print_generators_MAGMA(
 		actions::action *A, std::ostream &ost)
 {
 
-	magma_interface M;
+	interfaces::magma_interface M;
 
 	M.print_generators_MAGMA(A, this, ost);
 }
@@ -1542,7 +1542,7 @@ void strong_generators::export_magma(
 		cout << "strong_generators::export_magma" << endl;
 	}
 
-	magma_interface M;
+	interfaces::magma_interface M;
 
 	if (f_v) {
 		cout << "strong_generators::export_magma before M.export_magma" << endl;
@@ -3125,7 +3125,7 @@ void strong_generators::export_permutation_group_to_magma(
 	}
 
 
-	magma_interface M;
+	interfaces::magma_interface M;
 
 	if (f_v) {
 		cout << "strong_generators::export_permutation_group_to_magma "
@@ -3699,7 +3699,7 @@ void strong_generators::export_group_and_copy_to_latex(
 		cout << "strong_generators::export_group_and_copy_to_latex" << endl;
 	}
 
-	magma_interface M;
+	interfaces::magma_interface M;
 
 	M.export_group_to_magma_and_copy_to_latex(label_txt, ost, A2, this, verbose_level);
 

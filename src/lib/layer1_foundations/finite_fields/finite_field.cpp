@@ -359,7 +359,7 @@ void finite_field::finite_field_init_small_order(int q,
 
 	if (e > 1) {
 		f_is_prime_field = FALSE;
-		knowledge_base K;
+		knowledge_base::knowledge_base K;
 
 		K.get_primitive_polynomial(poly, p, e, verbose_level - 2);
 		if (f_v) {
@@ -549,7 +549,7 @@ void finite_field::init_override_polynomial_small_order(
 					"poly = " << poly << endl;
 		}
 		f_is_prime_field = FALSE;
-		knowledge_base K;
+		knowledge_base::knowledge_base K;
 
 		if (poly.length() == 0) {
 			if (f_v) {

@@ -254,7 +254,7 @@ public:
 			std::string &prefix_tex,
 			int iso_cnt,
 		long int *the_packing, int verbose_level);
-	void init_klein_invariants(Vector &v, int verbose_level);
+	void init_klein_invariants(typed_objects::Vector &v, int verbose_level);
 	void compute_decomposition(int verbose_level);
 };
 

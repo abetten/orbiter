@@ -2085,7 +2085,7 @@ void surface_object_with_action::export_all_quartic_curves(
 	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
 
 		if (f_v) {
-			cout << "Quartic curve associated with surface and with orbit " << pt_orbit
+			cout << "Quartic curve associated with surface and with orbit counter = " << pt_orbit
 					<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
 		}
 

@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
+
 
 
 #undef CHANGE_KIND_VERBOSE
@@ -1133,6 +1135,7 @@ void unipoly::charpoly(
 	swap(charpoly);
 }
 
-}}
+}}}
+
 
 

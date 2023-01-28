@@ -1042,7 +1042,7 @@ void create_graph::create_Sarnak(
 			cout << "create_graph::create_Sarnak "
 					"Creating projective special linear group:" << endl;
 		}
-		A->init_projective_special_group(2, F,
+		A->Known_groups->init_projective_special_group(2, F,
 			f_semilinear,
 			f_basis,
 			verbose_level - 2);
@@ -1054,7 +1054,7 @@ void create_graph::create_Sarnak(
 			cout << "create_graph::create_Sarnak "
 					"Creating projective linear group:" << endl;
 		}
-		A->init_projective_group(2, F,
+		A->Known_groups->init_projective_group(2, F,
 			f_semilinear,
 			f_basis, TRUE /* f_init_sims */,
 			nice_gens,
@@ -1156,7 +1156,7 @@ void create_graph::create_Shrikhande(
 	int f_no_base = FALSE;
 
 	A = NEW_OBJECT(actions::action);
-	A->init_symmetric_group(n, f_no_base, verbose_level);
+	A->Known_groups->init_symmetric_group(n, f_no_base, verbose_level);
 	goi = A->group_order_lint();
 
 	if (f_v) {

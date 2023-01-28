@@ -258,6 +258,8 @@ namespace algebra {
 	class gl_classes;
 	class group_generators_domain;
 	class heisenberg;
+	class interface_gap_low;
+	class interface_magma_low;
 	class matrix_block_data;
 	class null_polarity_generator;
 	class rank_checker;
@@ -481,11 +483,6 @@ namespace geometry_builder {
 
 }
 
-// globals:
-class function_command;
-class function_polish_description;
-class function_polish;
-class numerics;
 
 
 //! graph theory: constructions, clique finding, drawing
@@ -543,9 +540,14 @@ namespace graphics {
 }
 
 
+//! database of mathematical objects
 
-// knowledge_base:
-class knowledge_base;
+namespace knowledge_base {
+
+	// knowledge_base:
+	class knowledge_base;
+
+}
 
 
 //! linear algebra and representation theory
@@ -581,6 +583,7 @@ namespace orbiter_kernel_system {
 	class mem_object_registry_entry;
 	class mem_object_registry;
 	class memory_object;
+	class numerics;
 	class orbiter_data_file;
 	class orbiter_session;
 	class orbiter_symbol_table_entry;
@@ -608,6 +611,18 @@ namespace orthogonal_geometry {
 	class unusual_model;
 
 }
+
+
+//! expressions in reverse Polish notation
+
+namespace polish {
+
+	class function_command;
+	class function_polish_description;
+	class function_polish;
+
+}
+
 
 //! ring theory, including polynomial rings and longinteger arithmetic.
 
@@ -950,7 +965,6 @@ enum CRC_type {
 #include "finite_fields/finite_fields.h"
 #include "geometry/geometry.h"
 #include "geometry_builder/geometry_builder.h"
-#include "globals/globals.h"
 #include "graph_theory/graph_theory.h"
 #include "graph_theory_nauty/graph_theory_nauty.h"
 #include "graphics/graphics.h"
@@ -959,6 +973,7 @@ enum CRC_type {
 #include "number_theory/number_theory.h"
 #include "orbiter_kernel_system/orbiter_kernel_system.h"
 #include "orthogonal/orthogonal.h"
+#include "polish/polish.h"
 #include "ring_theory/ring_theory.h"
 #include "solvers/solvers.h"
 

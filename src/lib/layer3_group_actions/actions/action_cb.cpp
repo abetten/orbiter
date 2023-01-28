@@ -366,7 +366,8 @@ void action::element_print_latex(
 	(*ptr->ptr_element_print_latex)(*this, elt, ost);
 }
 
-void action::element_print_latex_with_extras(void *elt, std::string &label, std::ostream &ost)
+void action::element_print_latex_with_extras(
+		void *elt, std::string &label, std::ostream &ost)
 {
 	int *fp, n, ord;
 
@@ -386,7 +387,8 @@ void action::element_print_latex_with_extras(void *elt, std::string &label, std:
 
 void action::element_print_latex_with_print_point_function(
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
+	void (*point_label)(std::stringstream &sstr,
+			long int pt, void *data),
 	void *point_label_data)
 {
 	(*ptr->ptr_element_print_latex_with_print_point_function)(
@@ -673,8 +675,10 @@ void action::element_read_file(int *Elt,
 #endif
 }
 
-void action::element_write_to_memory_object(int *Elt,
-		orbiter_kernel_system::memory_object *m, int verbose_level)
+void action::element_write_to_memory_object(
+		int *Elt,
+		orbiter_kernel_system::memory_object *m,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *elt;
@@ -689,8 +693,10 @@ void action::element_write_to_memory_object(int *Elt,
 }
 
 
-void action::element_read_from_memory_object(int *Elt,
-		orbiter_kernel_system::memory_object *m, int verbose_level)
+void action::element_read_from_memory_object(
+		int *Elt,
+		orbiter_kernel_system::memory_object *m,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *elt;
@@ -782,7 +788,9 @@ void action::random_element(groups::sims *S, int *Elt, int verbose_level)
 	}
 }
 
-void action::all_elements(data_structures_groups::vector_ge *&vec, int verbose_level)
+void action::all_elements(
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
@@ -817,7 +825,8 @@ void action::all_elements(data_structures_groups::vector_ge *&vec, int verbose_l
 }
 
 
-void action::all_elements_save_csv(std::string &fname, int verbose_level)
+void action::all_elements_save_csv(
+		std::string &fname, int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);

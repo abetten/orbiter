@@ -160,7 +160,7 @@ void interface_projective::read_arguments(int argc,
 		smooth_curve_t_min = ST.strtof(argv[++i]);
 		smooth_curve_t_max = ST.strtof(argv[++i]);
 
-		FP_descr = NEW_OBJECT(function_polish_description);
+		FP_descr = NEW_OBJECT(polish::function_polish_description);
 
 		i += FP_descr->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);

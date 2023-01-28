@@ -1485,7 +1485,7 @@ void surface_create::create_surface_from_catalogue(int iso,
 	long int Lines27[27];
 	int nb_iso;
 	//int nb_E = 0;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	nb_iso = K.cubic_surface_nb_reps(q);
 	if (Descr->iso >= nb_iso) {

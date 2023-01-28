@@ -874,7 +874,7 @@ void quadratic_form::choose_anisotropic_form(int verbose_level)
 		form_c3 = F->negate(F->primitive_element());
 	}
 	else {
-		knowledge_base K;
+		knowledge_base::knowledge_base K;
 		string poly;
 
 		K.get_primitive_polynomial(poly, F->q, 2, 0);

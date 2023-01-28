@@ -71,7 +71,7 @@ double polynomial_double::root_finder(int verbose_level)
 	double l, r, m;
 	double vl, vr, vm;
 	double eps = 0.0000001;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	if (ABS(coeff[degree]) < eps) {
 		cout << "polynomial_double::root_finder error, ABS(coeff[degree]) < eps" << endl;

@@ -12,6 +12,8 @@ ORBITER_MODULES= \
 		layer1_foundations/algebra/gl_classes.o \
 		layer1_foundations/algebra/group_generators_domain.o \
 		layer1_foundations/algebra/heisenberg.o \
+		layer1_foundations/algebra/interface_gap_low.o \
+		layer1_foundations/algebra/interface_magma_low.o \
 		layer1_foundations/algebra/matrix_block_data.o \
 		layer1_foundations/algebra/null_polarity_generator.o \
 		layer1_foundations/algebra/rank_checker.o \
@@ -170,10 +172,6 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry_builder/incidence.o \
 		layer1_foundations/geometry_builder/iso_type.o \
 		layer1_foundations/geometry_builder/test_semicanonical.o \
-		layer1_foundations/globals/function_command.o \
-		layer1_foundations/globals/function_polish_description.o \
-		layer1_foundations/globals/function_polish.o \
-		layer1_foundations/globals/numerics.o \
 		layer1_foundations/graph_theory/clique_finder.o \
 		layer1_foundations/graph_theory/clique_finder_control.o \
 		layer1_foundations/graph_theory/colored_graph.o \
@@ -236,6 +234,7 @@ ORBITER_MODULES= \
 		layer1_foundations/orbiter_kernel_system/mem_object_registry_entry.o \
 		layer1_foundations/orbiter_kernel_system/mem_object_registry.o \
 		layer1_foundations/orbiter_kernel_system/memory_object.o \
+		layer1_foundations/orbiter_kernel_system/numerics.o \
 		layer1_foundations/orbiter_kernel_system/orbiter_data_file.o \
 		layer1_foundations/orbiter_kernel_system/orbiter_session.o \
 		layer1_foundations/orbiter_kernel_system/orbiter_symbol_table_entry.o \
@@ -257,6 +256,9 @@ ORBITER_MODULES= \
 		layer1_foundations/orthogonal/quadratic_form_list_coding.o \
 		layer1_foundations/orthogonal/quadratic_form.o \
 		layer1_foundations/orthogonal/unusual_model.o \
+		layer1_foundations/polish/function_command.o \
+		layer1_foundations/polish/function_polish_description.o \
+		layer1_foundations/polish/function_polish.o \
 		layer1_foundations/ring_theory/finite_ring.o \
 		layer1_foundations/ring_theory/homogeneous_polynomial_domain.o \
 		layer1_foundations/ring_theory/longinteger_domain.o \
@@ -315,7 +317,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/interface_perm_group.o \
 		layer3_group_actions/actions/interface_permutation_representation.o \
 		layer3_group_actions/actions/interface_wreath_product.o \
-		layer3_group_actions/actions/nauty_interface_with_group.o \
+		layer3_group_actions/actions/known_groups.o \
 		layer3_group_actions/actions/stabilizer_chain_base_data.o \
 		layer3_group_actions/data_structures/group_container.o \
 		layer3_group_actions/data_structures/incidence_structure_with_group.o \
@@ -334,7 +336,6 @@ ORBITER_MODULES= \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \
 		layer3_group_actions/groups/linear_group.o \
 		layer3_group_actions/groups/linear_group_description.o \
-		layer3_group_actions/groups/magma_interface.o \
 		layer3_group_actions/groups/matrix_group.o \
 		layer3_group_actions/groups/orbits_on_something.o \
 		layer3_group_actions/groups/permutation_group_create.o \
@@ -381,6 +382,9 @@ ORBITER_MODULES= \
 		layer3_group_actions/induced_actions/action_on_subgroups.o \
 		layer3_group_actions/induced_actions/action_on_wedge_product.o \
 		layer3_group_actions/induced_actions/product_action.o \
+		layer3_group_actions/interfaces/l3_interface_gap.o \
+		layer3_group_actions/interfaces/magma_interface.o \
+		layer3_group_actions/interfaces/nauty_interface_with_group.o \
 		layer4_classification/classify/classification_step.o \
 		layer4_classification/classify/flag_orbit_node.o \
 		layer4_classification/classify/flag_orbits.o \

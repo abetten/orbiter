@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace groups {
+namespace interfaces {
 
 
 
@@ -375,7 +375,9 @@ void magma_interface::find_subgroups(
 }
 
 
-void magma_interface::print_generators_MAGMA(actions::action *A, strong_generators *SG, std::ostream &ost)
+void magma_interface::print_generators_MAGMA(
+		actions::action *A,
+		groups::strong_generators *SG, std::ostream &ost)
 {
 	int i;
 
@@ -395,7 +397,7 @@ void magma_interface::print_generators_MAGMA(actions::action *A, strong_generato
 }
 
 void magma_interface::export_magma(actions::action *A,
-		strong_generators *SG, std::ostream &ost,
+		groups::strong_generators *SG, std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -405,7 +407,7 @@ void magma_interface::export_magma(actions::action *A,
 		A->print_info();
 	}
 	if (A->is_matrix_group()) {
-		matrix_group *M;
+		groups::matrix_group *M;
 		int *Elt;
 		int h, i, j;
 
@@ -518,7 +520,7 @@ void magma_interface::export_magma(actions::action *A,
 
 void magma_interface::export_permutation_group_to_magma(
 		std::string &fname, actions::action *A2,
-		strong_generators *SG, int verbose_level)
+		groups::strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -545,8 +547,10 @@ void magma_interface::export_permutation_group_to_magma(
 }
 
 void magma_interface::export_permutation_group_to_magma2(
-		std::ostream &ost, actions::action *A2,
-		strong_generators *SG, int verbose_level)
+		std::ostream &ost,
+		actions::action *A2,
+		groups::strong_generators *SG,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -578,7 +582,7 @@ void magma_interface::export_group_to_magma_and_copy_to_latex(
 		std::string &label_txt,
 		std::ostream &ost,
 		actions::action *A2,
-		strong_generators *SG,
+		groups::strong_generators *SG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2296,7 +2300,8 @@ void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
 }
 
 
-void magma_interface::write_as_magma_permutation_group(sims *S,
+void magma_interface::write_as_magma_permutation_group(
+		groups::sims *S,
 		std::string &fname_base,
 		data_structures_groups::vector_ge *gens, int verbose_level)
 {

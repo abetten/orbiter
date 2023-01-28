@@ -304,7 +304,7 @@ void semifield_classify::init(
 
 	data_structures_groups::vector_ge *nice_gens;
 
-	A0->init_projective_group(
+	A0->Known_groups->init_projective_group(
 		k, Mtx->GFq, Mtx->f_semilinear,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
@@ -334,7 +334,7 @@ void semifield_classify::init(
 		A0->print_info();
 	}
 
-	A0_linear->init_projective_group(k,
+	A0_linear->Known_groups->init_projective_group(k,
 			Mtx->GFq, FALSE /*f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,

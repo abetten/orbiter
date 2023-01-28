@@ -177,6 +177,8 @@ public:
 
 	stabilizer_chain_base_data *Stabilizer_chain;
 
+	known_groups *Known_groups;
+
 
 	action_pointer_table *ptr;
 
@@ -258,7 +260,8 @@ public:
 
 		/** all strong generators that
 		 * leave base points 0,..., depth - 1 fix */
-	void strong_generators_at_depth(int depth,
+	void strong_generators_at_depth(
+			int depth,
 			data_structures_groups::vector_ge &gen,
 			int verbose_level);
 	void compute_point_stabilizer_chain(
@@ -276,51 +279,42 @@ public:
 			int size,
 			long int *set1, long int *set2,
 			int verbose_level);
-	void find_strong_generators_at_level(int base_len, 
+	void find_strong_generators_at_level(
+			int base_len,
 		long int *the_base, int level,
 		data_structures_groups::vector_ge &gens,
 		data_structures_groups::vector_ge &subset_of_gens,
 		int verbose_level);
-	void make_element_from_permutation_representation(int *Elt, 
+	void make_element_from_permutation_representation(
+			int *Elt,
 			groups::sims *S, int *data, int verbose_level);
 	void make_element_from_base_image(
 			int *Elt, groups::sims *S,
 			int *data, int verbose_level);
-	void make_element_2x2(int *Elt, int a0, int a1, int a2, int a3);
-	void make_element_from_string(int *Elt,
+	void make_element_2x2(
+			int *Elt, int a0, int a1, int a2, int a3);
+	void make_element_from_string(
+			int *Elt,
 			std::string &data_string, int verbose_level);
-	void make_element(int *Elt, int *data, int verbose_level);
-	void build_up_automorphism_group_from_aut_data(int nb_auts, 
-		int *aut_data, 
-		groups::sims &S, int verbose_level);
+	void make_element(
+			int *Elt, int *data, int verbose_level);
 	void element_power_int_in_place(int *Elt, 
 		int n, int verbose_level);
 	void word_in_ab(int *Elt1, int *Elt2, int *Elt3, 
 		const char *word, int verbose_level);
-	void init_group_from_generators(int *group_generator_data, 
-		int group_generator_size, 
-		int f_group_order_target, const char *group_order_target, 
-		data_structures_groups::vector_ge *gens,
-		groups::strong_generators *&Strong_gens,
-		int verbose_level);
-	void init_group_from_generators_by_base_images(
-			groups::sims *S,
-			int *group_generator_data, int group_generator_size,
-			int f_group_order_target, const char *group_order_target,
-			data_structures_groups::vector_ge *gens,
-			groups::strong_generators *&Strong_gens_out,
-			int verbose_level);
 	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_lint();
 	void element_print_base_images(int *Elt);
-	void element_print_base_images(int *Elt, std::ostream &ost);
+	void element_print_base_images(
+			int *Elt, std::ostream &ost);
 	void element_print_base_images_verbose(int *Elt, 
 			std::ostream &ost, int verbose_level);
 	void element_base_images(
 			int *Elt, int *base_images);
 	void element_base_images_verbose(int *Elt, 
 		int *base_images, int verbose_level);
-	void minimize_base_images(int level, groups::sims *S,
+	void minimize_base_images(
+			int level, groups::sims *S,
 		int *Elt, int verbose_level);
 	void get_generators_from_ascii_coding(
 			std::string &ascii_coding,
@@ -331,11 +325,13 @@ public:
 			data_structures_groups::vector_ge *gens,
 			int max_starter,
 		int verbose_level);
-	void compute_orbits_on_points(groups::schreier *&Sch,
+	void compute_orbits_on_points(
+			groups::schreier *&Sch,
 			data_structures_groups::vector_ge *gens,
 			int verbose_level);
 
-	void point_stabilizer_any_point(int &pt,
+	void point_stabilizer_any_point(
+			int &pt,
 			groups::schreier *&Sch, groups::sims *&Stab,
 			groups::strong_generators *&stab_gens,
 		int verbose_level);
@@ -347,7 +343,8 @@ public:
 		int verbose_level);
 	void make_element_which_moves_a_line_in_PG3q(
 			geometry::grassmann *Gr,
-		long int line_rk, int *Elt, int verbose_level);
+		long int line_rk, int *Elt,
+		int verbose_level);
 	int matrix_group_dimension();
 	field_theory::finite_field *matrix_group_finite_field();
 	int is_semilinear_matrix_group();
@@ -359,7 +356,8 @@ public:
 
 
 	// action_group_theory.cpp:
-	void report_groups_and_normalizers(std::ostream &ost,
+	void report_groups_and_normalizers(
+			std::ostream &ost,
 			int nb_subgroups,
 			groups::strong_generators *H_gens,
 			groups::strong_generators *N_gens,
@@ -390,146 +388,26 @@ public:
 
 	// action_init.cpp
 
-	/** Create any linear group */
-	void init_linear_group(
-			field_theory::finite_field *F, int m,
-		int f_projective, int f_general, int f_affine,
-		int f_semilinear, int f_special,
-		data_structures_groups::vector_ge *&nice_gens,
+	void init_group_from_generators(
+			int *group_generator_data,
+		int group_generator_size,
+		int f_group_order_target,
+		const char *group_order_target,
+		data_structures_groups::vector_ge *gens,
+		groups::strong_generators *&Strong_gens,
 		int verbose_level);
-
-	/** Create the projective linear (or semilinear) group PGL (or PGGL)*/
-	void init_projective_group(int n, field_theory::finite_field *F,
-		int f_semilinear, int f_basis, int f_init_sims,
-		data_structures_groups::vector_ge *&nice_gens,
-		int verbose_level);
-
-
-	/** Create the affine group AGL(n,q) */
-	void init_affine_group(int n, field_theory::finite_field *F,
-		int f_semilinear, 
-		int f_basis, int f_init_sims,
-		data_structures_groups::vector_ge *&nice_gens,
-		int verbose_level);
-
-	/** Create the general linear group GL(n,q) */
-	void init_general_linear_group(int n, field_theory::finite_field *F,
-		int f_semilinear, int f_basis, int f_init_sims,
-		data_structures_groups::vector_ge *&nice_gens,
-		int verbose_level);
-
-	void setup_linear_group_from_strong_generators(
-			groups::matrix_group *M,
-			data_structures_groups::vector_ge *&nice_gens,
-			int f_init_sims,
-		int verbose_level);
-
-	void init_sims_from_generators(int verbose_level);
-
-	/** Create the projective special linear group PSL */
-	void init_projective_special_group(
-			int n, field_theory::finite_field *F,
-		int f_semilinear, int f_basis, int verbose_level);
-
-	void init_matrix_group_strong_generators_builtin(
-			groups::matrix_group *M,
-			data_structures_groups::vector_ge *&nice_gens,
-		int verbose_level);
-	void init_permutation_group(
-			int degree, int f_no_base, int verbose_level);
-	void init_permutation_group_from_nauty_output(
-			data_structures::nauty_output *NO,
-		int verbose_level);
-	void init_permutation_group_from_generators(
-			int degree,
-		int f_target_go, ring_theory::longinteger_object &target_go,
-		int nb_gens, int *gens, 
-		int given_base_length, long int *given_base,
-		int f_no_base,
-		int verbose_level);
-
-	/** Create the affine group AGL(n,q) as abstract permutation group,
-	 * not as matrix group */
-	void init_affine_group(int n, int q, int f_translations, 
-		int f_semilinear, int frobenius_power, 
-		int f_multiplication, 
-		int multiplication_order, int verbose_level);
-
-
-	/** Create the symmetric group
-	 * as abstract permutation group */
-	void init_symmetric_group(
-			int degree, int f_no_base, int verbose_level);
-	void init_cyclic_group(
-			int degree, int f_no_base, int verbose_level);
-	void init_identity_group(
-			int degree, int f_no_base, int verbose_level);
-
-
-	void create_sims(int verbose_level);
-	void create_orthogonal_group(action *subaction, 
-		int f_has_target_group_order, 
-		ring_theory::longinteger_object &target_go,
-		void (* callback_choose_random_generator)(int iteration, 
-			int *Elt, void *data, int verbose_level), 
-		int verbose_level);
-
-	void init_orthogonal_group_with_O(
-			orthogonal_geometry::orthogonal *O,
-		int f_on_points, int f_on_lines, int f_on_points_and_lines,
-		int f_semilinear,
-		int f_basis, int verbose_level);
-
-
-	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
-	 * in wreath product action
-	 * and restrict the action to the tensor space. */
-	void init_wreath_product_group_and_restrict(
-			int nb_factors, int n,
-			field_theory::finite_field *F,
-			data_structures_groups::vector_ge *&nice_gens,
-			int verbose_level);
-
-	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
-	 * in wreath product action
-	 */
-	void init_wreath_product_group(
-			int nb_factors, int n,
-			field_theory::finite_field *F,
-			data_structures_groups::vector_ge *&nice_gens,
-			int verbose_level);
-
-
-	/** Create the permutation representation with a given set of generators
-	 */
-	void init_permutation_representation(
-			action *A_original,
-			int f_stay_in_the_old_action,
+	void init_group_from_generators_by_base_images(
+			groups::sims *S,
+			int *group_generator_data, int group_generator_size,
+			int f_group_order_target,
+			const char *group_order_target,
 			data_structures_groups::vector_ge *gens,
-			int *Perms, int degree,
+			groups::strong_generators *&Strong_gens_out,
 			int verbose_level);
-
-	/** Create the orthogonal group O(5,q) */
-	void init_BLT(
-			field_theory::finite_field *F, int f_basis,
-		int f_init_hash_table, int verbose_level);
-
-
-	/** Create a group from generators */
-	void init_group_from_strong_generators(
-			data_structures_groups::vector_ge *gens, groups::sims *K,
-		int given_base_length, int *given_base,
-		int verbose_level);
-
-
-	/** Create the orthogonal group O^epsilon(n,q) */
-	void init_orthogonal_group(
-			int epsilon,
-		int n, field_theory::finite_field *F,
-		int f_on_points, int f_on_lines,
-		int f_on_points_and_lines,
-		int f_semilinear,
-		int f_basis, int verbose_level);
+	void build_up_automorphism_group_from_aut_data(
+			int nb_auts,
+		int *aut_data,
+		groups::sims &S, int verbose_level);
 
 	groups::sims *create_sims_from_generators_with_target_group_order_factorized(
 			data_structures_groups::vector_ge *gens,
@@ -570,7 +448,8 @@ public:
 
 	/** Create the induced action on lines in PG(n-1,q)
 	 * using an action_on_grassmannian object */
-	void init_action_on_lines(action *A, field_theory::finite_field *F,
+	void init_action_on_lines(
+			action *A, field_theory::finite_field *F,
 		int n, int verbose_level);
 
 	void induced_action_by_representation_on_conic(
@@ -608,7 +487,8 @@ public:
 			int verbose_level);
 	void induced_action_by_subfield_structure(
 			action *A_old,
-			induced_actions::action_by_subfield_structure *SubfieldStructure,
+			induced_actions::action_by_subfield_structure
+				*SubfieldStructure,
 		int f_induce_action, groups::sims *old_G,
 		int verbose_level);
 	void induced_action_on_determinant(
@@ -621,7 +501,8 @@ public:
 	action *create_induced_action_by_conjugation(
 			groups::sims *Base_group, int f_ownership,
 			int verbose_level);
-	void induced_action_by_conjugation(groups::sims *old_G,
+	void induced_action_by_conjugation(
+			groups::sims *old_G,
 			groups::sims *Base_group, int f_ownership,
 		int f_basis, int verbose_level);
 	void induced_action_by_right_multiplication(
@@ -658,17 +539,20 @@ public:
 			long int *points, int nb_points,
 		int verbose_level);
 	action *create_induced_action_by_restriction(
-			groups::sims *S, int size, long int *set, int f_induce,
+			groups::sims *S, int size,
+			long int *set, int f_induce,
 			int verbose_level);
 	void induced_action_by_restriction_internal_function(
 			action &old_action,
 		int f_induce_action, groups::sims *old_G,
-		int nb_points, long int *points, int verbose_level);
+		int nb_points, long int *points,
+		int verbose_level);
 		// uses action_by_restriction data type
 	void induced_action_on_pairs(
 			action &old_action, groups::sims *old_G,
 		int verbose_level);
-	action *create_induced_action_on_ordered_pairs(int verbose_level);
+	action *create_induced_action_on_ordered_pairs(
+			int verbose_level);
 	void induced_action_on_ordered_pairs(
 			action &old_action,
 			groups::sims *old_G,
@@ -690,7 +574,8 @@ public:
 		int verbose_level);
 	void induced_action_on_andre(
 			action *An,
-		action *An1, geometry::andre_construction *Andre,
+		action *An1,
+		geometry::andre_construction *Andre,
 		int verbose_level);
 	void setup_product_action(
 			action *A1, action *A2,
@@ -742,7 +627,8 @@ public:
 	int choose_next_base_point_default_method(
 			int *Elt, int verbose_level);
 	void generators_to_strong_generators(
-		int f_target_go, ring_theory::longinteger_object &target_go,
+		int f_target_go,
+		ring_theory::longinteger_object &target_go,
 		data_structures_groups::vector_ge *gens,
 		groups::strong_generators *&Strong_gens,
 		int verbose_level);
@@ -757,6 +643,9 @@ public:
 			std::ostream &ost,
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
+
+
+
 	void read_orbit_rep_and_candidates_from_files_and_process(
 			std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
@@ -856,15 +745,22 @@ public:
 	void transpose(void *a, void *at);
 	void move(void *a, void *b);
 	void dispose(int hdl);
-	void print(std::ostream &ost, void *elt);
-	void print_quick(std::ostream &ost, void *elt);
-	void print_as_permutation(std::ostream &ost, void *elt);
-	void print_point(int a, std::ostream &ost);
+	void print(
+			std::ostream &ost, void *elt);
+	void print_quick(
+			std::ostream &ost, void *elt);
+	void print_as_permutation(
+			std::ostream &ost, void *elt);
+	void print_point(
+			int a, std::ostream &ost);
 	void unrank_point(long int rk, int *v);
 	long int rank_point(int *v);
-	void code_for_make_element(int *data, void *elt);
-	void print_for_make_element(std::ostream &ost, void *elt);
-	void print_for_make_element_no_commas(std::ostream &ost, void *elt);
+	void code_for_make_element(
+			int *data, void *elt);
+	void print_for_make_element(
+			std::ostream &ost, void *elt);
+	void print_for_make_element_no_commas(
+			std::ostream &ost, void *elt);
 	
 	long int element_image_of(long int a, void *elt, int verbose_level);
 	void element_image_of_low_level(int *input, int *output, 
@@ -886,10 +782,12 @@ public:
 	void element_print(void *elt, std::ostream &ost);
 	void element_print_quick(void *elt, std::ostream &ost);
 	void element_print_latex(void *elt, std::ostream &ost);
-	void element_print_latex_with_extras(void *elt, std::string &label, std::ostream &ost);
+	void element_print_latex_with_extras(
+			void *elt, std::string &label, std::ostream &ost);
 	void element_print_latex_with_print_point_function(
 		void *elt, std::ostream &ost,
-		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
+		void (*point_label)(std::stringstream &sstr,
+				long int pt, void *data),
 		void *point_label_data);
 	void element_print_verbose(void *elt, std::ostream &ost);
 	void element_code_for_make_element(void *elt, int *data);
@@ -923,18 +821,25 @@ public:
 			std::string &fname, int verbose_level);
 	void element_read_file(int *Elt, 
 			std::string &fname, int verbose_level);
-	void element_write_to_memory_object(int *Elt, 
-			orbiter_kernel_system::memory_object *m, int verbose_level);
-	void element_read_from_memory_object(int *Elt, 
-			orbiter_kernel_system::memory_object *m, int verbose_level);
+	void element_write_to_memory_object(
+			int *Elt,
+			orbiter_kernel_system::memory_object *m,
+			int verbose_level);
+	void element_read_from_memory_object(
+			int *Elt,
+			orbiter_kernel_system::memory_object *m,
+			int verbose_level);
 	void element_write_to_file_binary(int *Elt, 
 			std::ofstream &fp, int verbose_level);
 	void element_read_from_file_binary(int *Elt, 
 			std::ifstream &fp, int verbose_level);
 	void random_element(groups::sims *S, int *Elt,
 		int verbose_level);
-	void all_elements(data_structures_groups::vector_ge *&vec, int verbose_level);
-	void all_elements_save_csv(std::string &fname, int verbose_level);
+	void all_elements(
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+	void all_elements_save_csv(
+			std::string &fname, int verbose_level);
 
 
 	// in backtrack.cpp
@@ -972,26 +877,35 @@ public:
 			symmetry_group_type a);
 	void make_generators_stabilizer_of_three_components(
 		action *A_PGL_n_q, action *A_PGL_k_q,
-		int k, data_structures_groups::vector_ge *gens, int verbose_level);
+		int k, data_structures_groups::vector_ge *gens,
+		int verbose_level);
 	void make_generators_stabilizer_of_two_components(
 		action *A_PGL_n_q, action *A_PGL_k_q,
-		int k, data_structures_groups::vector_ge *gens, int verbose_level);
+		int k, data_structures_groups::vector_ge *gens,
+		int verbose_level);
 	// used in semifield
-	void compute_generators_GL_n_q(int *&Gens, int &nb_gens,
-		int &elt_size, int n, field_theory::finite_field *F,
+	void compute_generators_GL_n_q(
+			int *&Gens, int &nb_gens,
+		int &elt_size, int n,
+		field_theory::finite_field *F,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
-	void set_orthogonal_group_type(int f_siegel,
-		int f_reflection, int f_similarity, int f_semisimilarity);
+	void set_orthogonal_group_type(
+			int f_siegel,
+		int f_reflection, int f_similarity,
+		int f_semisimilarity);
 	int get_orthogonal_group_type_f_reflection();
 	void lift_generators(
 			data_structures_groups::vector_ge *gens_in,
 			data_structures_groups::vector_ge *&gens_out,
-		action *Aq, field_theory::subfield_structure *S, int n, int verbose_level);
+		action *Aq,
+		field_theory::subfield_structure *S, int n,
+		int verbose_level);
 	void retract_generators(
 			data_structures_groups::vector_ge *gens_in,
 			data_structures_groups::vector_ge *&gens_out,
-		action *AQ, field_theory::subfield_structure *S, int n,
+		action *AQ,
+		field_theory::subfield_structure *S, int n,
 		int verbose_level);
 	void lift_generators_to_subfield_structure(
 		int n, int s,
@@ -999,40 +913,50 @@ public:
 		action *Aq, action *AQ,
 		groups::strong_generators *&Strong_gens,
 		int verbose_level);
-	void perm_print_cycles_sorted_by_length(std::ostream &ost,
+	void perm_print_cycles_sorted_by_length(
+			std::ostream &ost,
 		int degree, int *perm, int verbose_level);
-	void perm_print_cycles_sorted_by_length_offset(std::ostream &ost,
+	void perm_print_cycles_sorted_by_length_offset(
+			std::ostream &ost,
 		int degree, int *perm, int offset,
 		int f_do_it_anyway_even_for_big_degree,
 		int f_print_cycles_of_length_one, int verbose_level);
 	action *init_direct_product_group_and_restrict(
-			groups::matrix_group *M1, groups::matrix_group *M2, int verbose_level);
+			groups::matrix_group *M1,
+			groups::matrix_group *M2,
+			int verbose_level);
 	action *init_direct_product_group(
-			groups::matrix_group *M1, groups::matrix_group *M2,
+			groups::matrix_group *M1,
+			groups::matrix_group *M2,
 			int verbose_level);
 	void compute_decomposition_based_on_orbits(
 			geometry::projective_space *P,
 			groups::schreier *Sch1, groups::schreier *Sch2,
 			geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack, int verbose_level);
+			data_structures::partitionstack *&Stack,
+			int verbose_level);
 	void compute_decomposition_based_on_orbit_length(
 			geometry::projective_space *P,
 			groups::schreier *Sch1, groups::schreier *Sch2,
 			geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack, int verbose_level);
+			data_structures::partitionstack *&Stack,
+			int verbose_level);
 	void orbits_on_equations(
 			action *A,
 			ring_theory::homogeneous_polynomial_domain *HPD,
-		int *The_equations, int nb_equations, groups::strong_generators *gens,
+		int *The_equations,
+		int nb_equations, groups::strong_generators *gens,
 		actions::action *&A_on_equations, groups::schreier *&Orb,
 		int verbose_level);
-	void compute_fixed_objects_in_PG(int up_to_which_rank,
+	void compute_fixed_objects_in_PG(
+			int up_to_which_rank,
 			action *A,
 			geometry::projective_space *P,
 		int *Elt,
 		std::vector<std::vector<long int> > &Fix,
 		int verbose_level);
-	void report_fixed_objects_in_P3(std::ostream &ost,
+	void report_fixed_objects_in_P3(
+			std::ostream &ost,
 			action *A,
 			geometry::projective_space *P3,
 		int *Elt,
@@ -1047,12 +971,14 @@ public:
 	void stabilizer_of_dual_hyperoval_representative(
 			action *A,
 			int k, int n, int no,
-			data_structures_groups::vector_ge *&gens, std::string &stab_order,
+			data_structures_groups::vector_ge *&gens,
+			std::string &stab_order,
 			int verbose_level);
 	void stabilizer_of_spread_representative(
 			action *A,
 			int q, int k, int no,
-			data_structures_groups::vector_ge *&gens, std::string &stab_order,
+			data_structures_groups::vector_ge *&gens,
+			std::string &stab_order,
 			int verbose_level);
 	void stabilizer_of_quartic_curve_representative(
 			action *A,
@@ -1062,11 +988,13 @@ public:
 			int verbose_level);
 	void perform_tests(
 			action *A,
-			groups::strong_generators *SG, int verbose_level);
+			groups::strong_generators *SG,
+			int verbose_level);
 	void apply_based_on_text(
 			action *A,
 			std::string &input_text,
-			std::string &input_group_element, int verbose_level);
+			std::string &input_group_element,
+			int verbose_level);
 	void multiply_based_on_text(
 			action *A,
 			std::string &data_A,
@@ -1089,7 +1017,8 @@ public:
 	void compute_orbit_of_point_generators_by_handle(
 			actions::action *A,
 			int nb_gen,
-		int *gen_handle, int pt, int *orbit, int &len, int verbose_level);
+		int *gen_handle, int pt, int *orbit, int &len,
+		int verbose_level);
 	int least_image_of_point(
 			actions::action *A,
 			data_structures_groups::vector_ge &strong_generators,
@@ -1126,8 +1055,10 @@ public:
 			int nb_sets, long int **Sets, int **Transporter);
 	void compute_minimal_set(
 			actions::action *A,
-			data_structures_groups::vector_ge &gens, int size, long int *set,
-		long int *minimal_set, int *transporter, int verbose_level);
+			data_structures_groups::vector_ge &gens,
+			int size, long int *set,
+		long int *minimal_set, int *transporter,
+		int verbose_level);
 
 };
 
@@ -1206,63 +1137,173 @@ public:
 
 
 
-
-
-
 // #############################################################################
-// nauty_interface_with_group.cpp:
+// known_groups.cpp
 // #############################################################################
 
-//! Interface to the graph canonization software Nauty
+//! creating a known group with a default action in an action object
 
-
-class nauty_interface_with_group {
+class known_groups {
 public:
-	nauty_interface_with_group();
-	~nauty_interface_with_group();
-	action *create_automorphism_group_of_colored_graph_object(
-			graph_theory::colored_graph *CG, int verbose_level);
-	action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
-			graph_theory::colored_graph *CG, int *labeling, int verbose_level);
-	action *create_automorphism_group_and_canonical_labeling_of_colored_graph(
-		int n, int f_bitvec, data_structures::bitvector *Bitvec, int *Adj,
-		int *vertex_colors,
-		int *labeling,
+
+	action *A;
+
+	known_groups();
+	~known_groups();
+	void init(action *A, int verbose_level);
+
+	/** Create any linear group */
+	void init_linear_group(
+			field_theory::finite_field *F, int m,
+		int f_projective, int f_general, int f_affine,
+		int f_semilinear, int f_special,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
-	action *create_automorphism_group_of_graph_bitvec(
-		int n, data_structures::bitvector *Bitvec,
+
+	/** Create the projective linear (or semilinear) group PGL (or PGGL)*/
+	void init_projective_group(
+			int n, field_theory::finite_field *F,
+		int f_semilinear, int f_basis, int f_init_sims,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
-	action *create_automorphism_group_of_graph_with_partition_and_labeling(
-		int n,
-		int f_bitvector, data_structures::bitvector *Bitvec, int *Adj,
-		int nb_parts, int *parts,
-		int *labeling,
+
+
+	/** Create the affine group AGL(n,q) */
+	void init_affine_group(
+			int n, field_theory::finite_field *F,
+		int f_semilinear,
+		int f_basis, int f_init_sims,
+		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
-	action *create_automorphism_group_of_graph(int *Adj,
-		int n, int verbose_level);
-	action *create_automorphism_group_and_canonical_labeling_of_graph(
-		int *Adj, int n, int *labeling, int verbose_level);
-	// labeling[n]
-	void automorphism_group_as_permutation_group(
-			//strong_generators *&SG,
+
+	/** Create the general linear group GL(n,q) */
+	void init_general_linear_group(
+			int n, field_theory::finite_field *F,
+		int f_semilinear, int f_basis, int f_init_sims,
+		data_structures_groups::vector_ge *&nice_gens,
+		int verbose_level);
+
+	void setup_linear_group_from_strong_generators(
+			groups::matrix_group *M,
+			data_structures_groups::vector_ge *&nice_gens,
+			int f_init_sims,
+		int verbose_level);
+
+	void init_sims_from_generators(int verbose_level);
+
+	/** Create the projective special linear group PSL */
+	void init_projective_special_group(
+			int n, field_theory::finite_field *F,
+		int f_semilinear, int f_basis, int verbose_level);
+
+	void init_matrix_group_strong_generators_builtin(
+			groups::matrix_group *M,
+			data_structures_groups::vector_ge *&nice_gens,
+		int verbose_level);
+	void init_permutation_group(
+			int degree, int f_no_base, int verbose_level);
+	void init_permutation_group_from_nauty_output(
 			data_structures::nauty_output *NO,
-			actions::action *&A_perm,
-			int verbose_level);
-	void reverse_engineer_linear_group_from_permutation_group(
-			actions::action *A_linear,
-			geometry::projective_space *P,
-			groups::strong_generators *&SG,
-			actions::action *&A_perm,
-			data_structures::nauty_output *NO,
-			int verbose_level);
-	groups::strong_generators *set_stabilizer_of_object(
-			geometry::object_with_canonical_form *OwCF,
-		action *A_linear,
-		int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
-		data_structures::nauty_output *&NO,
 		int verbose_level);
+	void init_permutation_group_from_generators(
+			int degree,
+		int f_target_go, ring_theory::longinteger_object &target_go,
+		int nb_gens, int *gens,
+		int given_base_length, long int *given_base,
+		int f_no_base,
+		int verbose_level);
+
+	/** Create the affine group AGL(n,q) as abstract permutation group,
+	 * not as matrix group */
+	void init_affine_group(
+			int n, int q, int f_translations,
+		int f_semilinear, int frobenius_power,
+		int f_multiplication,
+		int multiplication_order, int verbose_level);
+
+
+	/** Create the symmetric group
+	 * as abstract permutation group */
+	void init_symmetric_group(
+			int degree, int f_no_base, int verbose_level);
+	void init_cyclic_group(
+			int degree, int f_no_base, int verbose_level);
+	void init_identity_group(
+			int degree, int f_no_base, int verbose_level);
+
+
+	void create_sims(int verbose_level);
+	void create_orthogonal_group(
+			action *subaction,
+		int f_has_target_group_order,
+		ring_theory::longinteger_object &target_go,
+		void (* callback_choose_random_generator)(int iteration,
+			int *Elt, void *data, int verbose_level),
+		int verbose_level);
+
+	void init_orthogonal_group_with_O(
+			orthogonal_geometry::orthogonal *O,
+		int f_on_points, int f_on_lines, int f_on_points_and_lines,
+		int f_semilinear,
+		int f_basis, int verbose_level);
+
+
+	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
+	 * in wreath product action
+	 * and restrict the action to the tensor space. */
+	void init_wreath_product_group_and_restrict(
+			int nb_factors, int n,
+			field_theory::finite_field *F,
+			data_structures_groups::vector_ge *&nice_gens,
+			int verbose_level);
+
+	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
+	 * in wreath product action
+	 */
+	void init_wreath_product_group(
+			int nb_factors, int n,
+			field_theory::finite_field *F,
+			data_structures_groups::vector_ge *&nice_gens,
+			int verbose_level);
+
+
+	/** Create the permutation representation with a given set of generators
+	 */
+	void init_permutation_representation(
+			action *A_original,
+			int f_stay_in_the_old_action,
+			data_structures_groups::vector_ge *gens,
+			int *Perms, int degree,
+			int verbose_level);
+
+	/** Create the orthogonal group O(5,q) */
+	void init_BLT(
+			field_theory::finite_field *F, int f_basis,
+		int f_init_hash_table, int verbose_level);
+
+
+	/** Create a group from generators */
+	void init_group_from_strong_generators(
+			data_structures_groups::vector_ge *gens,
+			groups::sims *K,
+		int given_base_length, int *given_base,
+		int verbose_level);
+
+
+	/** Create the orthogonal group O^epsilon(n,q) */
+	void init_orthogonal_group(
+			int epsilon,
+		int n, field_theory::finite_field *F,
+		int f_on_points, int f_on_lines,
+		int f_on_points_and_lines,
+		int f_semilinear,
+		int f_basis, int verbose_level);
+
 
 };
+
+
+
 
 // #############################################################################
 // stabilizer_chain_base_data.cpp:
@@ -1273,7 +1314,7 @@ public:
 #define STABILIZER_CHAIN_DATA_MAX_DEGREE 1L << 29
 
 
-//! the transversals in the stabilizer subgroup chain (Sims chain)
+//! base and transversals in a stabilizer chain for a permutation group
 
 
 class stabilizer_chain_base_data {
@@ -1308,9 +1349,12 @@ public:
 	stabilizer_chain_base_data();
 	~stabilizer_chain_base_data();
 	void free_base_data();
-	void allocate_base_data(action *A, int base_len, int verbose_level);
+	void allocate_base_data(
+			action *A,
+			int base_len, int verbose_level);
 	void reallocate_base(int new_base_point);
-	void init_base_from_sims(groups::sims *G, int verbose_level);
+	void init_base_from_sims(
+			groups::sims *G, int verbose_level);
 	int &get_f_has_base();
 	int &get_base_len();
 	long int &base_i(int i);
@@ -1320,15 +1364,19 @@ public:
 	long int &orbit_ij(int i, int j);
 	long int &orbit_inv_ij(int i, int j);
 	int &path_i(int i);
-	void group_order(ring_theory::longinteger_object &go);
+	void group_order(
+			ring_theory::longinteger_object &go);
 	void init_projective_matrix_group(
-			field_theory::finite_field *F, int n, int f_semilinear, int degree,
+			field_theory::finite_field *F,
+			int n, int f_semilinear, int degree,
 			int verbose_level);
 	void init_affine_matrix_group(
-			field_theory::finite_field *F, int n, int f_semilinear, int degree,
+			field_theory::finite_field *F,
+			int n, int f_semilinear, int degree,
 			int verbose_level);
 	void init_linear_matrix_group(
-			field_theory::finite_field *F, int n, int f_semilinear, int degree,
+			field_theory::finite_field *F,
+			int n, int f_semilinear, int degree,
 			int verbose_level);
 };
 

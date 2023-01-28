@@ -115,7 +115,7 @@ void object_in_projective_space_with_action::report(
 		cout << "projective_space_object_classifier::latex_report before Nau.set_stabilizer_of_object" << endl;
 	}
 
-	actions::nauty_interface_with_group Nau;
+	interfaces::nauty_interface_with_group Nau;
 	data_structures::nauty_output *NO;
 
 	NO = NEW_OBJECT(data_structures::nauty_output);

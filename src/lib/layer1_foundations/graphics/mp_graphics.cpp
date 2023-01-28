@@ -470,28 +470,28 @@ int& mp_graphics::out_ymax()
 
 void mp_graphics::user2dev(int &x, int &y)
 {
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	Num.transform_llur(user, dev, x, y);
 }
 
 void mp_graphics::dev2user(int &x, int &y)
 {
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	Num.transform_llur(dev, user, x, y);
 }
 
 void mp_graphics::user2dev_dist_x(int &x)
 {
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	Num.transform_dist_x(user, dev, x);
 }
 
 void mp_graphics::user2dev_dist_y(int &y)
 {
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	Num.transform_dist_y(user, dev, y);
 }
@@ -509,7 +509,7 @@ void mp_graphics::draw_polar_grid(double r_max,
 	double *Dy;
 	double dx = 1.;
 	double dy = 1.;
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	dr = r_max / nb_circles;
 

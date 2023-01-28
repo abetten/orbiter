@@ -126,7 +126,7 @@ void packing_invariants::init(packing_classify *P,
 }
 
 void packing_invariants::init_klein_invariants(
-		Vector &v,
+		typed_objects::Vector &v,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

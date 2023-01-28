@@ -1060,7 +1060,7 @@ void string_tools::text_to_three_double(std::string &text, double *d)
 {
 	double *data;
 	int data_sz;
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 
 	Num.vec_scan(text.c_str(), data, data_sz);
 	if (data_sz != 3) {

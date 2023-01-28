@@ -1008,7 +1008,7 @@ void colored_graph::draw_on_circle_2(
 	double phi = 360. / (double) n;
 	double rad1 = 500000;
 	double rad2 = 5000;
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	
 	Px = NEW_int(n);
 	Py = NEW_int(n);

@@ -75,7 +75,7 @@ void object_with_properties::init(
 	object_with_properties::PA = PA;
 	object_with_properties::label.assign(label);
 
-	actions::nauty_interface_with_group Nau;
+	interfaces::nauty_interface_with_group Nau;
 
 	if (f_v) {
 		cout << "object_with_properties::init "
@@ -185,7 +185,7 @@ void object_with_properties::lift_generators_to_matrix_group(int verbose_level)
 	//strong_generators *SG;
 	actions::action *A_perm;
 
-	actions::nauty_interface_with_group Naug;
+	interfaces::nauty_interface_with_group Naug;
 
 	if (f_v) {
 		cout << "object_with_properties::lift_generators_to_matrix_group "
@@ -231,7 +231,7 @@ void object_with_properties::init_object_in_projective_space(
 	object_with_properties::label.assign(label);
 
 
-	actions::nauty_interface_with_group Nau;
+	interfaces::nauty_interface_with_group Nau;
 	actions::action *A_linear;
 
 	A_linear = PA->A;

@@ -43,7 +43,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	int f_no_base = FALSE;
 
 	A = NEW_OBJECT(actions::action);
-	A->init_symmetric_group(n, f_no_base, verbose_level);
+	A->Known_groups->init_symmetric_group(n, f_no_base, verbose_level);
 	A->group_order(go);
 
 	goi = go.as_int();
@@ -276,7 +276,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		cout << endl;
 
 
-		discreta_matrix M;
+		typed_objects::discreta_matrix M;
 
 		int /*n,*/ deg;
 
@@ -289,7 +289,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		cout << "M=" << endl;
 		cout << M << endl;
 
-		unipoly p;
+		typed_objects::unipoly p;
 
 
 		M.determinant(p, 0 /*verbose_level*/);
@@ -351,7 +351,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 }
 
 void character_table_burnside::create_matrix(
-		discreta_matrix &M, int i, int *S, int nb_classes,
+		typed_objects::discreta_matrix &M, int i, int *S, int nb_classes,
 	int *character_degree, int *class_size,
 	int verbose_level)
 {
@@ -373,7 +373,7 @@ void character_table_burnside::create_matrix(
 	for (j = 0; j <= n; j++) {
 
 		{
-		unipoly p;
+			typed_objects::unipoly p;
 
 		p.x_to_the_i(j);
 		M.s_ij(0, n - j) = p;
@@ -385,7 +385,7 @@ void character_table_burnside::create_matrix(
 		cout << "ii=" << ii << endl;
 
 		for (j = 0; j <= ii; j++) {
-			unipoly p;
+			typed_objects::unipoly p;
 
 			p.one();
 			if (j == 0) {
@@ -914,7 +914,7 @@ void character_table_burnside::integral_eigenvalues(int *M, int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	unipoly charpoly;
+	typed_objects::unipoly charpoly;
 	int *A;
 	int *B;
 	int i, deg, a, x;
@@ -1016,13 +1016,14 @@ void character_table_burnside::integral_eigenvalues(int *M, int n,
 }
 
 void character_table_burnside::characteristic_poly(
-		int *N, int size, unipoly &charpoly,
+		int *N, int size,
+		typed_objects::unipoly &charpoly,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, k, a;
-	discreta_matrix M, M1, P, Pv, Q, Qv, S, T;
+	typed_objects::discreta_matrix M, M1, P, Pv, Q, Qv, S, T;
 
 	if (f_v) {
 		cout << "character_table_burnside::characteristic_poly" << endl;

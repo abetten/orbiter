@@ -419,7 +419,7 @@ private:
 
 public:
 
-	function_polish *smooth_curve_Polish;
+	polish::function_polish *smooth_curve_Polish;
 	double parabola_a;
 	double parabola_b;
 	double parabola_c;
@@ -442,7 +442,7 @@ public:
 	void do_smooth_curve(std::string &curve_label,
 			double desired_distance, int N,
 			double t_min, double t_max, double boundary,
-			function_polish_description *FP_descr,
+			polish::function_polish_description *FP_descr,
 			int verbose_level);
 	void draw_bitmap(draw_bitmap_control *C, int verbose_level);
 	void random_noise_in_bitmap_file(

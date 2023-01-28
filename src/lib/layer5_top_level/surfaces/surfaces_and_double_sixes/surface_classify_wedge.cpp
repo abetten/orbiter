@@ -2971,7 +2971,7 @@ void surface_classify_wedge::sweep_Cayley(
 	int h;
 
 
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	nb_iso = K.cubic_surface_nb_reps(q);
 
@@ -3383,7 +3383,7 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 	int *Table;
 	int h = 0;
 	int nb_lines, iso, nb_e;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	orbiter_kernel_system::file_io Fio;
 
 	Table = NEW_int(q4 * 7);

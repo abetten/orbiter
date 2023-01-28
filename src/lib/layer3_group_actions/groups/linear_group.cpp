@@ -685,7 +685,7 @@ void linear_group::init_PGL2q_OnConic(int verbose_level)
 	if (!A_linear->f_has_sims) {
 		cout << "linear_group::init_PGL2q_OnConic "
 				"A_linear does not have sims, so we create it" << endl;
-		A_linear->create_sims(verbose_level);
+		A_linear->Known_groups->create_sims(verbose_level);
 	}
 	if (!A_linear->f_has_strong_generators) {
 		cout << "linear_group::init_PGL2q_OnConic "
@@ -1715,7 +1715,7 @@ void linear_group::report(
 		if (f_conjugacy_classes_and_normalizers) {
 
 
-			groups::magma_interface M;
+			interfaces::magma_interface M;
 
 
 			if (f_v) {

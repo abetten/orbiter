@@ -300,7 +300,7 @@ int video_draw_options::read_arguments(
 		else if (ST.stringcmp(argv[i], "-pan") == 0) {
 			pan_round[nb_pan] = ST.strtoi(argv[++i]);
 			pan_f_reverse[nb_pan] = FALSE;
-			numerics Num;
+			orbiter_kernel_system::numerics Num;
 
 
 			ST.text_to_three_double(argv[++i], pan_from + nb_pan * 3);
@@ -323,7 +323,7 @@ int video_draw_options::read_arguments(
 		else if (ST.stringcmp(argv[i], "-pan_reverse") == 0) {
 			pan_round[nb_pan] = ST.strtoi(argv[++i]);
 			pan_f_reverse[nb_pan] = TRUE;
-			numerics Num;
+			orbiter_kernel_system::numerics Num;
 
 
 			ST.text_to_three_double(argv[++i], pan_from + nb_pan * 3);
@@ -596,7 +596,7 @@ void video_draw_options::print()
 	}
 	for (int i = 0; i < nb_pan; i++) {
 		if (pan_f_reverse[nb_pan]) {
-			numerics Num;
+			orbiter_kernel_system::numerics Num;
 			cout << "-pan_reverse "
 					<< pan_round[i];
 			cout << " ";
@@ -609,7 +609,7 @@ void video_draw_options::print()
 
 		}
 		else {
-			numerics Num;
+			orbiter_kernel_system::numerics Num;
 			cout << "-pan "
 					<< pan_round[i];
 			cout << " ";

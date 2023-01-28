@@ -640,7 +640,7 @@ class interface_projective {
 	double smooth_curve_boundary;
 	double smooth_curve_t_min;
 	double smooth_curve_t_max;
-	function_polish_description *FP_descr;
+	polish::function_polish_description *FP_descr;
 
 
 	int f_make_table_of_surfaces;

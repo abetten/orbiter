@@ -297,7 +297,7 @@ void BLT_set_create::init(
 			cout << "BLT_set_create::init BLT set from catalogue" << endl;
 		}
 		int nb_iso;
-		knowledge_base K;
+		knowledge_base::knowledge_base K;
 
 		nb_iso = K.BLT_nb_reps(OA->Descr->F->q);
 		if (Descr->iso >= nb_iso) {

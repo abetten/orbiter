@@ -349,7 +349,7 @@ void recoordinatize::stabilizer_of_first_three(
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"f_semilinear=" << f_semilinear << endl;
 	}
-	A0->init_projective_group(k, F, 
+	A0->Known_groups->init_projective_group(k, F,
 		f_semilinear, 
 		TRUE /* f_basis */,
 		TRUE /* f_init_sims */,
@@ -357,7 +357,7 @@ void recoordinatize::stabilizer_of_first_three(
 		0/*verbose_level - 2*/);
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
-				"after A0->init_projective_group" << endl;
+				"after A0->Known_groups->init_projective_group" << endl;
 	}
 	FREE_OBJECT(nice_gens);
 
@@ -372,9 +372,9 @@ void recoordinatize::stabilizer_of_first_three(
 
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
-				"before A0_linear->init_projective_group" << endl;
+				"before A0_linear->Known_groups->init_projective_group" << endl;
 	}
-	A0_linear->init_projective_group(k, F, 
+	A0_linear->Known_groups->init_projective_group(k, F,
 		FALSE /*f_semilinear*/, 
 		TRUE /*f_basis*/, TRUE /* f_init_sims */,
 		nice_gens,
@@ -382,7 +382,7 @@ void recoordinatize::stabilizer_of_first_three(
 	FREE_OBJECT(nice_gens);
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
-				"after A0_linear->init_projective_group" << endl;
+				"after A0_linear->Known_groups->init_projective_group" << endl;
 	}
 
 	A0_linear->group_order(go_linear);

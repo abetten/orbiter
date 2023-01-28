@@ -1193,7 +1193,8 @@ void file_io::copy_file_to_ostream(
 
 }
 
-void file_io::int_vec_write_csv(int *v, int len,
+void file_io::int_vec_write_csv(
+		int *v, int len,
 	std::string &fname, std::string &label)
 {
 	int i;
@@ -1209,7 +1210,8 @@ void file_io::int_vec_write_csv(int *v, int len,
 	}
 }
 
-void file_io::lint_vec_write_csv(long int *v, int len,
+void file_io::lint_vec_write_csv(
+		long int *v, int len,
 		std::string &fname, std::string &label)
 {
 	int i;
@@ -1225,7 +1227,8 @@ void file_io::lint_vec_write_csv(long int *v, int len,
 	}
 }
 
-void file_io::int_vecs_write_csv(int *v1, int *v2, int len,
+void file_io::int_vecs_write_csv(
+		int *v1, int *v2, int len,
 		std::string &fname, std::string &label1, std::string &label2)
 {
 	int i;
@@ -1241,7 +1244,8 @@ void file_io::int_vecs_write_csv(int *v1, int *v2, int len,
 	}
 }
 
-void file_io::int_vecs3_write_csv(int *v1, int *v2, int *v3, int len,
+void file_io::int_vecs3_write_csv(
+		int *v1, int *v2, int *v3, int len,
 		std::string &fname,
 	std::string &label1, std::string &label2, std::string &label3)
 {
@@ -1258,7 +1262,8 @@ void file_io::int_vecs3_write_csv(int *v1, int *v2, int *v3, int len,
 	}
 }
 
-void file_io::int_vec_array_write_csv(int nb_vecs, int **Vec, int len,
+void file_io::int_vec_array_write_csv(
+		int nb_vecs, int **Vec, int len,
 		std::string &fname, const char **column_label)
 {
 	int i, j;
@@ -1288,7 +1293,8 @@ void file_io::int_vec_array_write_csv(int nb_vecs, int **Vec, int len,
 	}
 }
 
-void file_io::lint_vec_array_write_csv(int nb_vecs, long int **Vec, int len,
+void file_io::lint_vec_array_write_csv(
+		int nb_vecs, long int **Vec, int len,
 		std::string &fname, const char **column_label)
 {
 	int i, j;
@@ -1541,7 +1547,8 @@ void file_io::int_matrix_read_csv(
 	long int a;
 
 	if (f_v) {
-		cout << "file_io::int_matrix_read_csv reading file " << fname << endl;
+		cout << "file_io::int_matrix_read_csv "
+				"reading file " << fname << endl;
 	}
 	if (file_size(fname) <= 0) {
 		cout << "int_matrix_read_csv file " << fname
@@ -1553,11 +1560,13 @@ void file_io::int_matrix_read_csv(
 		data_structures::spreadsheet S;
 
 		if (f_v) {
-			cout << "file_io::int_matrix_read_csv before S.read_spreadsheet" << endl;
+			cout << "file_io::int_matrix_read_csv "
+					"before S.read_spreadsheet" << endl;
 		}
 		S.read_spreadsheet(fname, 0 /* verbose_level - 1*/);
 		if (f_v) {
-			cout << "file_io::int_matrix_read_csv after S.read_spreadsheet" << endl;
+			cout << "file_io::int_matrix_read_csv "
+					"after S.read_spreadsheet" << endl;
 		}
 
 		m = S.nb_rows - 1;
@@ -1587,10 +1596,12 @@ void file_io::int_matrix_read_csv_no_border(
 	int i, j, a;
 
 	if (f_v) {
-		cout << "file_io::int_matrix_read_csv_no_border reading file " << fname << endl;
+		cout << "file_io::int_matrix_read_csv_no_border "
+				"reading file " << fname << endl;
 	}
 	if (file_size(fname) <= 0) {
-		cout << "file_io::int_matrix_read_csv_no_border file " << fname
+		cout << "file_io::int_matrix_read_csv_no_border "
+				"file " << fname
 			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
@@ -1599,11 +1610,13 @@ void file_io::int_matrix_read_csv_no_border(
 		data_structures::spreadsheet S;
 
 		if (f_v) {
-			cout << "file_io::int_matrix_read_csv_no_border before S.read_spreadsheet" << endl;
+			cout << "file_io::int_matrix_read_csv_no_border "
+					"before S.read_spreadsheet" << endl;
 		}
 		S.read_spreadsheet(fname, verbose_level - 1);
 		if (f_v) {
-			cout << "file_io::int_matrix_read_csv_no_border after S.read_spreadsheet" << endl;
+			cout << "file_io::int_matrix_read_csv_no_border "
+					"after S.read_spreadsheet" << endl;
 		}
 
 		m = S.nb_rows;
@@ -1632,10 +1645,12 @@ void file_io::lint_matrix_read_csv_no_border(
 	int i, j;
 
 	if (f_v) {
-		cout << "file_io::lint_matrix_read_csv_no_border reading file " << fname << endl;
+		cout << "file_io::lint_matrix_read_csv_no_border "
+				"reading file " << fname << endl;
 	}
 	if (file_size(fname) <= 0) {
-		cout << "file_io::int_matrix_read_csv_no_border file " << fname
+		cout << "file_io::int_matrix_read_csv_no_border "
+				"file " << fname
 			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
@@ -1644,17 +1659,20 @@ void file_io::lint_matrix_read_csv_no_border(
 		data_structures::spreadsheet S;
 
 		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_no_border before S.read_spreadsheet" << endl;
+			cout << "file_io::lint_matrix_read_csv_no_border "
+					"before S.read_spreadsheet" << endl;
 		}
 		S.read_spreadsheet(fname, verbose_level - 1);
 		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_no_border after S.read_spreadsheet" << endl;
+			cout << "file_io::lint_matrix_read_csv_no_border "
+					"after S.read_spreadsheet" << endl;
 		}
 
 		m = S.nb_rows;
 		n = S.nb_cols;
 		if (f_v) {
-			cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
+			cout << "The spreadsheet has "
+					<< S.nb_cols << " columns" << endl;
 		}
 		M = NEW_lint(m * n);
 
@@ -1680,10 +1698,12 @@ void file_io::int_matrix_read_csv_data_column(
 	int i, j, a;
 
 	if (f_v) {
-		cout << "file_io::int_matrix_read_csv_data_column reading file " << fname << " column=" << col_idx << endl;
+		cout << "file_io::int_matrix_read_csv_data_column "
+				"reading file " << fname << " column=" << col_idx << endl;
 	}
 	if (file_size(fname) <= 0) {
-		cout << "file_io::int_matrix_read_csv_data_column file " << fname
+		cout << "file_io::int_matrix_read_csv_data_column "
+				"file " << fname
 			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
@@ -1692,11 +1712,13 @@ void file_io::int_matrix_read_csv_data_column(
 		data_structures::spreadsheet S;
 
 		if (f_v) {
-			cout << "file_io::int_matrix_read_csv_data_column before S.read_spreadsheet" << endl;
+			cout << "file_io::int_matrix_read_csv_data_column "
+					"before S.read_spreadsheet" << endl;
 		}
 		S.read_spreadsheet(fname, verbose_level - 1);
 		if (f_v) {
-			cout << "file_io::int_matrix_read_csv_data_column after S.read_spreadsheet" << endl;
+			cout << "file_io::int_matrix_read_csv_data_column "
+					"after S.read_spreadsheet" << endl;
 		}
 		{
 			int *v;
@@ -1706,7 +1728,8 @@ void file_io::int_matrix_read_csv_data_column(
 
 			S.get_string(str, 1, col_idx);
 
-			cout << "file_io::int_matrix_read_csv_data_column read " << str << endl;
+			cout << "file_io::int_matrix_read_csv_data_column "
+					"read " << str << endl;
 
 			ST.drop_quotes(str, str2);
 			Int_vec_scan(str2, v, sz);
@@ -1727,7 +1750,8 @@ void file_io::int_matrix_read_csv_data_column(
 			data_structures::string_tools ST;
 
 			S.get_string(str, i + 1, col_idx);
-			cout << "file_io::int_matrix_read_csv_data_column row " << i << " read " << str << endl;
+			cout << "file_io::int_matrix_read_csv_data_column "
+					"row " << i << " read " << str << endl;
 			ST.drop_quotes(str, str2);
 			Int_vec_scan(str2, v, sz);
 
@@ -1758,10 +1782,12 @@ void file_io::lint_matrix_read_csv_data_column(
 	int i, j;
 
 	if (f_v) {
-		cout << "file_io::lint_matrix_read_csv_data_column reading file " << fname << " column=" << col_idx << endl;
+		cout << "file_io::lint_matrix_read_csv_data_column "
+				"reading file " << fname << " column=" << col_idx << endl;
 	}
 	if (file_size(fname) <= 0) {
-		cout << "file_io::lint_matrix_read_csv_data_column file " << fname
+		cout << "file_io::lint_matrix_read_csv_data_column "
+				"file " << fname
 			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
@@ -1770,11 +1796,13 @@ void file_io::lint_matrix_read_csv_data_column(
 		data_structures::spreadsheet S;
 
 		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_data_column before S.read_spreadsheet" << endl;
+			cout << "file_io::lint_matrix_read_csv_data_column "
+					"before S.read_spreadsheet" << endl;
 		}
 		S.read_spreadsheet(fname, verbose_level - 1);
 		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_data_column after S.read_spreadsheet" << endl;
+			cout << "file_io::lint_matrix_read_csv_data_column "
+					"after S.read_spreadsheet" << endl;
 		}
 		{
 			long int *v;
@@ -1784,7 +1812,8 @@ void file_io::lint_matrix_read_csv_data_column(
 
 			S.get_string(str, 1, col_idx);
 
-			cout << "file_io::lint_matrix_read_csv_data_column read " << str << endl;
+			cout << "file_io::lint_matrix_read_csv_data_column "
+					"read " << str << endl;
 
 			ST.drop_quotes(str, str2);
 			Lint_vec_scan(str2, v, sz);
@@ -1794,8 +1823,10 @@ void file_io::lint_matrix_read_csv_data_column(
 		}
 		m = S.nb_rows - 1;
 		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_data_column The spreadsheet has " << m << " rows" << endl;
-			cout << "file_io::lint_matrix_read_csv_data_column The spreadsheet has " << S.nb_cols << " columns" << endl;
+			cout << "file_io::lint_matrix_read_csv_data_column "
+					"The spreadsheet has " << m << " rows" << endl;
+			cout << "file_io::lint_matrix_read_csv_data_column "
+					"The spreadsheet has " << S.nb_cols << " columns" << endl;
 		}
 		M = NEW_lint(m * n);
 		for (i = 0; i < m; i++) {
@@ -1805,7 +1836,8 @@ void file_io::lint_matrix_read_csv_data_column(
 			data_structures::string_tools ST;
 
 			S.get_string(str, i + 1, col_idx);
-			cout << "file_io::lint_matrix_read_csv_data_column row " << i << " read " << str << endl;
+			cout << "file_io::lint_matrix_read_csv_data_column "
+					"row " << i << " read " << str << endl;
 			ST.drop_quotes(str, str2);
 			Lint_vec_scan(str2, v, sz);
 
@@ -1838,7 +1870,8 @@ void file_io::lint_matrix_read_csv(
 	long int a;
 
 	if (f_v) {
-		cout << "lint_matrix_read_csv reading file " << fname << endl;
+		cout << "lint_matrix_read_csv "
+				"reading file " << fname << endl;
 	}
 	if (file_size(fname) <= 0) {
 		cout << "int_matrix_read_csv file " << fname
@@ -1913,7 +1946,8 @@ void file_io::read_column_and_parse(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "file_io::read_column_and_parse reading file " << fname << endl;
+		cout << "file_io::read_column_and_parse "
+				"reading file " << fname << endl;
 	}
 	if (file_size(fname) <= 0) {
 		cout << "file_io::read_column_and_parse file " << fname
@@ -1931,7 +1965,8 @@ void file_io::read_column_and_parse(
 
 		idx = S.find_column(col_label);
 		if (idx == -1) {
-			cout << "file_io::read_column_and_parse cannot find column " << col_label << endl;
+			cout << "file_io::read_column_and_parse "
+					"cannot find column " << col_label << endl;
 			exit(1);
 		}
 		nb_sets = S.nb_rows - 1;
@@ -2060,7 +2095,8 @@ void file_io::read_dimacs_graph_format(
 	int i, a, b;
 
 	if (f_v) {
-		cout << "file_io::read_dimacs_graph_format fname = " << fname << endl;
+		cout << "file_io::read_dimacs_graph_format "
+				"fname = " << fname << endl;
 	}
 	if (file_size(fname) <= 0) {
 		cout << "file_io::read_dimacs_graph_format The file "
@@ -2458,17 +2494,20 @@ void file_io::read_and_parse_data_file(
 	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "file_io::read_and_parse_data_file: reading file "
+		cout << "file_io::read_and_parse_data_file: "
+				"reading file "
 			<< fname << endl;
 	}
 	if (try_to_read_file(fname, nb_cases, data, verbose_level)) {
 		if (f_vv) {
-			cout << "file_io::read_and_parse_data_file file read containing " << nb_cases
+			cout << "file_io::read_and_parse_data_file "
+					"file read containing " << nb_cases
 				<< " cases" << endl;
 		}
 	}
 	else {
-		cout << "file_io::read_and_parse_data_file couldn't read file "
+		cout << "file_io::read_and_parse_data_file "
+				"couldn't read file "
 			<< fname << endl;
 		exit(1);
 	}
@@ -2481,7 +2520,8 @@ void file_io::read_and_parse_data_file(
 
 
 	if (f_v) {
-		cout << "file_io::read_and_parse_data_file: parsing sets" << endl;
+		cout << "file_io::read_and_parse_data_file: "
+				"parsing sets" << endl;
 	}
 	//parse_sets(nb_cases, data, set_sizes, sets);
 
@@ -2661,7 +2701,8 @@ void file_io::read_and_parse_data_file_fancy(
 void file_io::read_set_from_file(
 		std::string &fname,
 	long int *&the_set, int &set_size, int verbose_level)
-// if the file is empty, set_size cannot be determined and is set to 0
+// if the file is empty,
+// set_size cannot be determined and is set to 0
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3721,7 +3762,8 @@ void file_io::read_ascii_set_of_sets_constant_size(
 }
 
 void file_io::write_decomposition_stack(
-		char *fname, int m, int n, int *v, int *b, int *aij, int verbose_level)
+		char *fname, int m, int n,
+		int *v, int *b, int *aij, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3819,14 +3861,16 @@ void file_io::create_file(
 
 				for (j = 0; j < Descr->nb_lines; j++) {
 					if (Descr->f_line_numeric[j]) {
-						snprintf(str, sizeof(str), Descr->lines[j].c_str(), c);
+						snprintf(str, sizeof(str),
+								Descr->lines[j].c_str(), c);
 					}
 					else {
 						string s;
 
 						S.get_string(s, c, 0);
 
-						snprintf(str, sizeof(str), Descr->lines[j].c_str(), s.c_str());
+						snprintf(str, sizeof(str),
+								Descr->lines[j].c_str(), s.c_str());
 					}
 					fix_escape_characters(str);
 					fp << str << endl;
@@ -3952,7 +3996,8 @@ void file_io::create_files(
 
 
 				cout << "mask='" << Descr->lines[j].c_str() << "'" << endl;
-				snprintf(str, sizeof(str), Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
+				snprintf(str, sizeof(str),
+						Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
 
 
 				fix_escape_characters(str);
@@ -3964,7 +4009,8 @@ void file_io::create_files(
 					for (r = 0; r < Descr->split_m; r++) {
 						for (j = 0; j < Descr->repeat_N; j++) {
 							if ((j % Descr->split_m) == r) {
-								snprintf(str, sizeof(str), Descr->repeat_mask.c_str(), j);
+								snprintf(str, sizeof(str),
+										Descr->repeat_mask.c_str(), j);
 								fix_escape_characters(str);
 								fp << str << endl;
 							}
@@ -3984,7 +4030,8 @@ void file_io::create_files(
 					}
 					for (j = 0; j < Descr->repeat_N; j++) {
 						c = Descr->repeat_start + j * Descr->repeat_increment;
-						snprintf(str, sizeof(str), Descr->command.c_str(), c, c, c, c);
+						snprintf(str, sizeof(str),
+								Descr->command.c_str(), c, c, c, c);
 						fix_escape_characters(str);
 						fp << str << endl;
 					}
@@ -4046,7 +4093,8 @@ void file_io::create_files_list_of_cases(
 				ofstream fp(fname);
 
 				for (j = 0; j < Descr->nb_lines; j++) {
-					snprintf(str, sizeof(str), Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
+					snprintf(str, sizeof(str),
+							Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
 					fix_escape_characters(str);
 					fp << str << endl;
 				}
@@ -4056,11 +4104,13 @@ void file_io::create_files_list_of_cases(
 					int t;
 					//int NT;
 
-					snprintf(str, sizeof(str), Descr->tasks_line.c_str(), Descr->nb_tasks);
+					snprintf(str, sizeof(str),
+							Descr->tasks_line.c_str(), Descr->nb_tasks);
 					fp << str << endl;
 					//NT = Descr->N * Descr->nb_tasks;
 					for (t = 0; t < Descr->nb_tasks; t++) {
-						snprintf(str, sizeof(str), Descr->command.c_str(), i, t, i, t);
+						snprintf(str, sizeof(str),
+								Descr->command.c_str(), i, t, i, t);
 						fix_escape_characters(str);
 						fp << str; // << " \\" << endl;
 						for (j = 0; j < nb_cases; j++) {
@@ -4117,7 +4167,8 @@ void file_io::create_files_list_of_cases(
 				} // else
 
 				for (j = 0; j < Descr->nb_final_lines; j++) {
-					snprintf(str, sizeof(str), Descr->final_lines[j].c_str(), i, i, i, i, i, i, i, i);
+					snprintf(str, sizeof(str),
+							Descr->final_lines[j].c_str(), i, i, i, i, i, i, i, i);
 					fix_escape_characters(str);
 					fp << str << endl;
 				} // next j
@@ -4140,7 +4191,9 @@ void file_io::create_files_list_of_cases(
 	int N1 = 128;
 
 	for (h = 0; h < Descr->N / N1; h++) {
-		snprintf(fname_submit_piecewise, sizeof(fname_submit_piecewise), mask_submit_script_piecewise, h * N1);
+		snprintf(fname_submit_piecewise,
+				sizeof(fname_submit_piecewise),
+				mask_submit_script_piecewise, h * N1);
 		{
 			ofstream fp_submit_script(fname_submit_piecewise);
 
@@ -4222,7 +4275,8 @@ void file_io::do_csv_file_select_rows(
 			}
 		ost << "END" << endl;
 	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	cout << "Written file " << fname_out
+			<< " of size " << file_size(fname_out) << endl;
 
 	FREE_int(Rows);
 
@@ -4275,7 +4329,8 @@ void file_io::do_csv_file_split_rows_modulo(
 				}
 			ost << "END" << endl;
 		}
-		cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+		cout << "Written file " << fname_out
+				<< " of size " << file_size(fname_out) << endl;
 	}
 
 	if (f_v) {
@@ -4309,7 +4364,8 @@ void file_io::do_csv_file_select_cols(
 
 	nb_rows = S.nb_rows;
 	if (f_v) {
-		cout << "file_io::do_csv_file_select_cols nb_rows=" << nb_rows << endl;
+		cout << "file_io::do_csv_file_select_cols "
+				"nb_rows=" << nb_rows << endl;
 	}
 
 
@@ -4322,7 +4378,8 @@ void file_io::do_csv_file_select_cols(
 	{
 		ofstream ost(fname_out);
 		ost << "Row,";
-		S.print_table_row_with_column_selection(0, FALSE, Cols, nb_cols, ost, verbose_level);
+		S.print_table_row_with_column_selection(
+				0, FALSE, Cols, nb_cols, ost, verbose_level);
 		for (i = 0; i < nb_rows - 1; i++) {
 			ost << i << ",";
 			S.print_table_row_with_column_selection(i + 1, FALSE,
@@ -4330,7 +4387,8 @@ void file_io::do_csv_file_select_cols(
 			}
 		ost << "END" << endl;
 	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	cout << "Written file " << fname_out
+			<< " of size " << file_size(fname_out) << endl;
 
 	fname_out.assign(fname);
 	ST.chop_off_extension(fname_out);
@@ -4347,7 +4405,8 @@ void file_io::do_csv_file_select_cols(
 			}
 		ost << "END" << endl;
 	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	cout << "Written file " << fname_out
+			<< " of size " << file_size(fname_out) << endl;
 
 	FREE_int(Cols);
 	if (f_v) {
@@ -4405,7 +4464,8 @@ void file_io::do_csv_file_select_rows_and_cols(
 
 
 		ost << "Row,";
-		S.print_table_row_with_column_selection(0, FALSE, Cols, nb_cols, ost, verbose_level);
+		S.print_table_row_with_column_selection(
+				0, FALSE, Cols, nb_cols, ost, verbose_level);
 
 		for (i = 0; i < nb_rows; i++) {
 
@@ -4419,7 +4479,8 @@ void file_io::do_csv_file_select_rows_and_cols(
 			}
 		ost << "END" << endl;
 	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	cout << "Written file " << fname_out
+			<< " of size " << file_size(fname_out) << endl;
 
 
 	FREE_int(Rows);
@@ -4483,7 +4544,8 @@ void file_io::do_csv_file_extract_column_to_txt(
 		ost << -1 << endl;
 	}
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << file_size(fname) << endl;
 	}
 
 	if (f_v) {
@@ -4620,7 +4682,8 @@ void file_io::do_csv_file_join(
 		S[0].print_table(f, FALSE);
 		f << "END" << endl;
 	}
-	cout << "Written file " << save_fname << " of size " << file_size(save_fname) << endl;
+	cout << "Written file " << save_fname
+			<< " of size " << file_size(save_fname) << endl;
 
 
 	if (f_v) {
@@ -4676,7 +4739,8 @@ void file_io::do_csv_file_concatenate(
 		}
 		ost << "END" << endl;
 	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	cout << "Written file " << fname_out
+			<< " of size " << file_size(fname_out) << endl;
 
 
 	if (f_v) {
@@ -4840,7 +4904,8 @@ void file_io::do_csv_file_latex(
 		}
 
 	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	cout << "Written file " << fname_out
+			<< " of size " << file_size(fname_out) << endl;
 
 
 	if (f_v) {
@@ -4890,7 +4955,8 @@ void file_io::read_solutions_and_tally(
 	T.get_data_by_multiplicity(
 			Pts, nb_pts, multiplicity, verbose_level);
 
-	cout << "multiplicity " << multiplicity << " number of pts = " << nb_pts << endl;
+	cout << "multiplicity " << multiplicity
+			<< " number of pts = " << nb_pts << endl;
 	Int_vec_print(cout, Pts, nb_pts);
 	cout << endl;
 
@@ -4926,9 +4992,11 @@ void file_io::save_fibration(
 	File_idx = NEW_OBJECT(data_structures::set_of_sets);
 	Obj_idx = NEW_OBJECT(data_structures::set_of_sets);
 
-	File_idx->init_basic_with_Sz_in_int(INT_MAX /* underlying_set_size */,
+	File_idx->init_basic_with_Sz_in_int(
+			INT_MAX /* underlying_set_size */,
 				nb_sets, Sz, verbose_level);
-	Obj_idx->init_basic_with_Sz_in_int(INT_MAX /* underlying_set_size */,
+	Obj_idx->init_basic_with_Sz_in_int(
+			INT_MAX /* underlying_set_size */,
 				nb_sets, Sz, verbose_level);
 	for (i = 0; i < nb_sets; i++) {
 		l = Fibration[i].size();
@@ -4947,21 +5015,26 @@ void file_io::save_fibration(
 	ST.replace_extension_with(data_fname2, "2.csv");
 
 	if (f_v) {
-		cout << "file_io::save_fibration before File_idx->save_csv" << endl;
+		cout << "file_io::save_fibration "
+				"before File_idx->save_csv" << endl;
 	}
 	File_idx->save_csv(data_fname1, TRUE, verbose_level);
 	if (f_v) {
-		cout << "file_io::save_fibration before Obj_idx->save_csv" << endl;
+		cout << "file_io::save_fibration "
+				"before Obj_idx->save_csv" << endl;
 	}
 	Obj_idx->save_csv(data_fname2, TRUE, verbose_level);
 	if (f_v) {
-		cout << "file_io::save_fibration after Obj_idx->save_csv" << endl;
+		cout << "file_io::save_fibration "
+				"after Obj_idx->save_csv" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "Written file " << data_fname1 << " of size " << file_size(data_fname1) << endl;
-		cout << "Written file " << data_fname2 << " of size " << file_size(data_fname2) << endl;
+		cout << "Written file " << data_fname1
+				<< " of size " << file_size(data_fname1) << endl;
+		cout << "Written file " << data_fname2
+				<< " of size " << file_size(data_fname2) << endl;
 	}
 
 	FREE_int(Sz);

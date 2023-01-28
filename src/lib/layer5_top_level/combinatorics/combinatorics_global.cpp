@@ -496,7 +496,7 @@ void combinatorics_global::Hill_cap56(
 		cout << "f_semilinear=" << f_semilinear << endl;
 		}
 
-	A->init_orthogonal_group(epsilon,
+	A->Known_groups->init_orthogonal_group(epsilon,
 		n, F,
 		TRUE /* f_on_points */, FALSE /* f_on_lines */,
 		FALSE /* f_on_points_and_lines */,
@@ -522,7 +522,7 @@ void combinatorics_global::Hill_cap56(
 		}
 	data_structures_groups::vector_ge *nice_gens;
 
-	An->init_projective_group(n, F, TRUE /* f_semilinear */,
+	An->Known_groups->init_projective_group(n, F, TRUE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);

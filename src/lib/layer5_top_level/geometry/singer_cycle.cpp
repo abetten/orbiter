@@ -123,7 +123,7 @@ void singer_cycle::init(int n,
 		cout << "singer_cycle::init field must be prime field" << endl;
 		exit(1);
 	}
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	K.get_primitive_polynomial(poly, q, n, verbose_level);
 	poly_coeffs = NEW_int(n + 1);

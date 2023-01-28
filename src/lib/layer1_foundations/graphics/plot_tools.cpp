@@ -511,7 +511,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	int N = 1000;
 	int i, j;
 	double start_angle = 0;
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	int f_do_it = FALSE;
 	char str[1000];
 

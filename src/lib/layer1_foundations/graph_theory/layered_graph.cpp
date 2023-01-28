@@ -382,7 +382,7 @@ void layered_graph::draw_with_options(
 		int xoffset = 3 * O->rad / 2;
 		int yoffset = 0;
 		int own_id;
-		numerics Num;
+		orbiter_kernel_system::numerics Num;
 		data_structures::sorting Sorting;
 	
 		rad_x_twice = O->rad >> 3;

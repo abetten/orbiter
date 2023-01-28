@@ -1075,14 +1075,16 @@ void delandtsheer_doyen::create_action(int verbose_level)
 			cout << "delandtsheer_doyen::create_action initializing projective groups:" << endl;
 		}
 
-		A1->init_projective_group(Descr->d1, F1,
+		A1->Known_groups->init_projective_group(
+				Descr->d1, F1,
 				FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 				nice_gens,
 				verbose_level - 1);
 		M1 = A1->G.matrix_grp;
 		FREE_OBJECT(nice_gens);
 
-		A2->init_projective_group(Descr->d2, F2,
+		A2->Known_groups->init_projective_group(
+				Descr->d2, F2,
 				FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 				nice_gens,
 				verbose_level - 1);

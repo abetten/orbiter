@@ -328,7 +328,7 @@ int scene::line_pt_and_dir(double *x6, double rad, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	double pt[6];
 	double pt2[6];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int ret;
 
 	if (f_v) {
@@ -376,7 +376,7 @@ int scene::line_pt_and_dir_and_copy_points(
 	int f_v = (verbose_level >= 1);
 	double pt[6];
 	double pt2[6];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int ret;
 
 	if (f_v) {
@@ -424,7 +424,7 @@ int scene::line_through_two_pts(double *x6, double rad)
 {
 	double pt[6];
 	double pt2[6];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int verbose_level = 0;
 
 	pt[0] = x6[0];
@@ -467,7 +467,7 @@ int scene::line_after_recentering(double x1, double x2, double x3,
 	double x[3], y[3];
 	double xx[3], yy[3];
 	double pt2[6];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int verbose_level = 0;
 
 	x[0] = x1;
@@ -510,7 +510,7 @@ int scene::line_through_two_points(int pt1, int pt2, double rad)
 	double x[3], y[3];
 	double xx[3], yy[3];
 	double coords[6];
-	numerics N;
+	orbiter_kernel_system::numerics N;
 	int verbose_level = 0;
 
 	N.vec_copy(Point_coords + pt1 * 3, x, 3);
@@ -549,7 +549,7 @@ int scene::line_through_two_points(int pt1, int pt2, double rad)
 int scene::plane_through_three_points(int pt1, int pt2, int pt3)
 {
 	double p1[3], p2[3], p3[3], n[3], d;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	N.vec_copy(Point_coords + pt1 * 3, p1, 3);
 	N.vec_copy(Point_coords + pt2 * 3, p2, 3);
@@ -583,7 +583,7 @@ int scene::quadric_through_three_lines(
 	double x, y, z;
 	int idx;
 	int i, k;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	if (f_v) {
 		cout << "scene::quadric_through_three_lines" << endl;

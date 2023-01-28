@@ -19,7 +19,8 @@ namespace layer1_foundations {
 namespace field_theory {
 
 
-void finite_field::PG_element_apply_frobenius(int n,
+void finite_field::PG_element_apply_frobenius(
+		int n,
 		int *v, int f)
 {
 	int i;
@@ -31,7 +32,8 @@ void finite_field::PG_element_apply_frobenius(int n,
 
 
 
-int finite_field::test_if_vectors_are_projectively_equal(int *v1, int *v2, int len)
+int finite_field::test_if_vectors_are_projectively_equal(
+		int *v1, int *v2, int len)
 {
 	int *w1, *w2;
 	int i;

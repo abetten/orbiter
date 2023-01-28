@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
 
 
 Vector::Vector()
@@ -1885,4 +1886,5 @@ void Vector::get_element_orders(Vector &vec_of_orders)
 		}
 }
 
-}}
+}}}
+

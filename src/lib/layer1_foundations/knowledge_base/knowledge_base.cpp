@@ -23,6 +23,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace knowledge_base {
 
 
 
@@ -2738,7 +2739,7 @@ void knowledge_base::retrieve_BLT_set_from_database_embedded(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "finite_field::retrieve_BLT_set_from_database_embedded" << endl;
+		cout << "knowledge_base::retrieve_BLT_set_from_database_embedded" << endl;
 	}
 
 	retrieve_BLT_set_from_database(
@@ -2751,7 +2752,7 @@ void knowledge_base::retrieve_BLT_set_from_database_embedded(
 			verbose_level);
 
 	if (f_v) {
-		cout << "finite_field::retrieve_BLT_set_from_database_embedded done" << endl;
+		cout << "knowledge_base::retrieve_BLT_set_from_database_embedded done" << endl;
 	}
 }
 
@@ -2767,7 +2768,7 @@ void knowledge_base::retrieve_BLT_set_from_database(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "finite_field::retrieve_BLT_set_from_database" << endl;
+		cout << "knowledge_base::retrieve_BLT_set_from_database" << endl;
 	}
 	int i;
 	long int j;
@@ -2854,13 +2855,13 @@ void knowledge_base::retrieve_BLT_set_from_database(
 	//FREE_int(L);
 	//delete F;
 	if (f_v) {
-		cout << "finite_field::retrieve_BLT_set_from_database done" << endl;
+		cout << "knowledge_base::retrieve_BLT_set_from_database done" << endl;
 	}
 }
 
 
 
-}
-}
+}}}
+
 
 

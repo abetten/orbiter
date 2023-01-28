@@ -485,7 +485,7 @@ void any_group::normalizer(int verbose_level)
 	//H = LG->Strong_gens->create_sims(verbose_level);
 
 
-	groups::magma_interface M;
+	interfaces::magma_interface M;
 
 
 	if (f_v) {
@@ -584,7 +584,7 @@ void any_group::centralizer(
 		cout << "any_group::centralizer" << endl;
 	}
 
-	groups::magma_interface M;
+	interfaces::magma_interface M;
 	groups::sims *S;
 	groups::strong_generators *SG;
 
@@ -653,7 +653,7 @@ void any_group::normalizer_of_cyclic_subgroup(
 		cout << "any_group::normalizer_of_cyclic_subgroup" << endl;
 	}
 
-	groups::magma_interface M;
+	interfaces::magma_interface M;
 	groups::sims *S;
 	groups::strong_generators *SG;
 
@@ -691,7 +691,7 @@ void any_group::do_find_subgroups(
 		cout << "any_group::do_find_subgroups" << endl;
 	}
 
-	groups::magma_interface M;
+	interfaces::magma_interface M;
 	groups::sims *S;
 	groups::strong_generators *SG;
 

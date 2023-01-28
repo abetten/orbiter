@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace knowledge_base {
 
 
 static int finitefield_primes[] = {
@@ -1004,5 +1005,6 @@ void knowledge_base::get_primitive_polynomial(std::string &poly,
 }
 
 
-}}
+}}}
+
 

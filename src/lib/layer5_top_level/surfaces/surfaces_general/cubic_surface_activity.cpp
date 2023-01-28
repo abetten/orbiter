@@ -225,7 +225,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 				cout << "cubic_surface_activity::perform_activity "
 						"before SC->SOA->export_all_quartic_curves" << endl;
 			}
-			SC->SOA->export_all_quartic_curves(ost_curves, verbose_level);
+			SC->SOA->export_all_quartic_curves(ost_curves, verbose_level - 1);
 			if (f_v) {
 				cout << "cubic_surface_activity::perform_activity "
 						"after SC->SOA->export_all_quartic_curves" << endl;

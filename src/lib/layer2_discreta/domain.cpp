@@ -12,6 +12,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
+
 
 #define MAX_DOMAIN_STACK 100
 
@@ -444,4 +446,5 @@ void free_finite_field_domain(domain *dom)
 
 
 
-}}
+}}}
+

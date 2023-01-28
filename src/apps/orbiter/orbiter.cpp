@@ -92,7 +92,7 @@ int main(int argc, const char **argv)
 
 	cout << "Orbiter session is finished." << endl;
 	cout << "User time: ";
-	the_end(Top_level_session.Orbiter_session->t0);
+	typed_objects::the_end(Top_level_session.Orbiter_session->t0);
 
 }
 

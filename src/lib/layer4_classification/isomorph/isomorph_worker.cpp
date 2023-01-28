@@ -34,7 +34,7 @@ isomorph_worker::isomorph_worker()
 		cout << "isomorph_worker::isomorph_worker before layer2_discreta::discreta_init" << endl;
 	}
 
-	layer2_discreta::discreta_init();
+	layer2_discreta::typed_objects::discreta_init();
 
 	if (f_v) {
 		cout << "isomorph_worker::isomorph_worker after layer2_discreta::discreta_init" << endl;

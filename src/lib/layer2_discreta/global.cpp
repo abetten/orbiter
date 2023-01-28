@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
 
 
 
@@ -2189,5 +2190,5 @@ void fine_tune(
 }
 
 
-}}
+}}}
 

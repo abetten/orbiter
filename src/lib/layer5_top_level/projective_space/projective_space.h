@@ -191,7 +191,8 @@ public:
 
 	canonical_form_classifier *Classifier;
 
-	quartic_curve_object *Qco;
+	canonical_form_of_variety *Variety;
+	//quartic_curve_object *Qco;
 
 	int nb_rows, nb_cols;
 	data_structures::bitvector *Canonical_form;
@@ -199,11 +200,15 @@ public:
 	int canonical_labeling_len;
 
 
-	groups::strong_generators *SG_pt_stab;
+	groups::strong_generators *Set_stab;
+		// the set stabilizer of the variety
+		// this is not the stabilizer of the variety!
 
 	orbits_schreier::orbit_of_equations *Orb;
+		// orbit under the set stabilizer
 
 	groups::strong_generators *Stab_gens_quartic;
+		// the stabilizer of the original curve
 
 
 	canonical_form_nauty();
@@ -212,11 +217,16 @@ public:
 			canonical_form_classifier *Classifier,
 			int verbose_level);
 	void canonical_form_of_quartic_curve(
-			quartic_curve_object *Qco,
-			int *canonical_equation,
-			int *transporter_to_canonical_form,
-			groups::strong_generators *&gens_stab_of_canonical_equation,
+			canonical_form_of_variety *Variety,
+			//quartic_curve_object *Qco,
+			//int *canonical_equation,
+			//int *transporter_to_canonical_form,
+			//groups::strong_generators *&gens_stab_of_canonical_equation,
 			int verbose_level);
+	// Computes the canonical labeling of the graph associated with
+	// the set of rational points of the curve.
+	// Computes the stabilizer of the set of rational points of the curve.
+	// Computes the orbit of the equation under the stabilizer of the set.
 
 };
 
@@ -260,11 +270,19 @@ public:
 			int verbose_level);
 	void classify_curve_nauty(
 			int verbose_level);
-	void handle_repeated_object(
+	void handle_repeated_canonical_form_of_set(
 			int idx,
 			canonical_form_nauty *C,
 			long int *alpha, int *gamma,
 			int verbose_level);
+	int find_equation(
+			canonical_form_nauty *C,
+			long int *alpha, int *gamma,
+			int idx1, int &found_at,
+			int verbose_level);
+	void add_object_and_compute_canonical_equation(
+			canonical_form_nauty *C,
+			int idx, int verbose_level);
 	void compute_canonical_form(
 			int counter,
 			int verbose_level);

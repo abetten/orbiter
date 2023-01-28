@@ -1252,12 +1252,12 @@ void flag_orbit_folding::induced_action_on_set(
 
 	if (f_v) {
 		cout << "flag_orbit_folding::induced_action_on_set "
-				"before init_permutation_group" << endl;
+				"before AA_perm->Known_groups->init_permutation_group" << endl;
 	}
 
 	int f_no_base = FALSE;
 
-	AA_perm->init_permutation_group(Iso->size, f_no_base, 0/*verbose_level*/);
+	AA_perm->Known_groups->init_permutation_group(Iso->size, f_no_base, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "AA_perm:" << endl;
 		AA_perm->print_info();

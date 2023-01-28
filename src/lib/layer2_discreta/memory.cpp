@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
+
 
 #undef MEMORY_COPY_VERBOSE
 #undef DEBUG_MEM
@@ -552,6 +554,7 @@ void memory::read_mem(memory & M, int debug_depth)
 	delete [] mem;
 }
 
-}}
+}}}
+
 
 

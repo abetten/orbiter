@@ -17,7 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace actions {
+namespace interfaces {
 
 
 nauty_interface_with_group::nauty_interface_with_group()
@@ -30,11 +30,11 @@ nauty_interface_with_group::~nauty_interface_with_group()
 
 }
 
-action *nauty_interface_with_group::create_automorphism_group_of_colored_graph_object(
+actions::action *nauty_interface_with_group::create_automorphism_group_of_colored_graph_object(
 		graph_theory::colored_graph *CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action *A;
+	actions::action *A;
 	int *labeling;
 
 	if (f_v) {
@@ -59,11 +59,11 @@ action *nauty_interface_with_group::create_automorphism_group_of_colored_graph_o
 	return A;
 }
 
-action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
+actions::action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
 		graph_theory::colored_graph *CG, int *labeling, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action *A;
+	actions::action *A;
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_and_"
@@ -84,14 +84,14 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 	return A;
 }
 
-action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph(
+actions::action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph(
 	int n, int f_bitvec, data_structures::bitvector *Bitvec, int *Adj,
 	int *vertex_colors,
 	int *labeling,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	action *A;
+	actions::action *A;
 	data_structures::bitvector *Adj1;
 	int *parts;
 	int nb_parts;
@@ -205,13 +205,13 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 	return A;
 }
 
-action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
+actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
 	int n, data_structures::bitvector *Bitvec,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int parts[1];
-	action *A;
+	actions::action *A;
 	int *labeling;
 
 	parts[0] = n;
@@ -230,7 +230,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
 	return A;
 }
 
-action *nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling(
+actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling(
 	int n,
 	int f_bitvector, data_structures::bitvector *Bitvec, int *Adj,
 	int nb_parts, int *parts,
@@ -345,20 +345,20 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 
 
 
-	action *A;
+	actions::action *A;
 
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling "
-				"before A->init_permutation_group_from_nauty_output" << endl;
+				"before A->Known_groups->init_permutation_group_from_nauty_output" << endl;
 	}
-	A->init_permutation_group_from_nauty_output(NO,
+	A->Known_groups->init_permutation_group_from_nauty_output(NO,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling "
-				"after A->init_permutation_group_from_nauty_output" << endl;
+				"after A->Known_groups->init_permutation_group_from_nauty_output" << endl;
 	}
 
 	if (f_v) {
@@ -376,7 +376,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 
 
 
-action *nauty_interface_with_group::create_automorphism_group_of_graph(
+actions::action *nauty_interface_with_group::create_automorphism_group_of_graph(
 		int *Adj, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -427,19 +427,19 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 				"after Nau.nauty_interface_graph_int Ago=" << *NO->Ago << endl;
 	}
 
-	action *A;
+	actions::action *A;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph "
-				"before A->init_permutation_group_from_nauty_output" << endl;
+				"before A->Known_groups->init_permutation_group_from_nauty_output" << endl;
 	}
-	A->init_permutation_group_from_nauty_output(NO,
+	A->Known_groups->init_permutation_group_from_nauty_output(NO,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph "
-				"after A->init_permutation_group_from_nauty_output" << endl;
+				"after A->Known_groups->init_permutation_group_from_nauty_output" << endl;
 	}
 
 	if (f_v) {
@@ -459,7 +459,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 }
 
 
-action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph(
+actions::action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph(
 		int *Adj, int n, int *labeling,
 		int verbose_level)
 // labeling[n]
@@ -525,19 +525,19 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 	}
 
 
-	action *A;
+	actions::action *A;
 
-	A = NEW_OBJECT(action);
+	A = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
-				"before A->init_permutation_group_from_nauty_output" << endl;
+				"before A->Known_groups->init_permutation_group_from_nauty_output" << endl;
 	}
-	A->init_permutation_group_from_nauty_output(NO,
+	A->Known_groups->init_permutation_group_from_nauty_output(NO,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
-				"after A->init_permutation_group_from_nauty_output" << endl;
+				"after A->Known_groups->init_permutation_group_from_nauty_output" << endl;
 	}
 
 	if (f_v) {
@@ -1202,7 +1202,7 @@ void nauty_interface_with_group::add_configuration_graph(ofstream &g,
 
 void nauty_interface_with_group::automorphism_group_as_permutation_group(
 		data_structures::nauty_output *NO,
-		action *&A_perm,
+		actions::action *&A_perm,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1213,18 +1213,18 @@ void nauty_interface_with_group::automorphism_group_as_permutation_group(
 	if (f_v) {
 		cout << "nauty_interface_with_group::automorphism_group_as_permutation_group" << endl;
 	}
-	A_perm = NEW_OBJECT(action);
+	A_perm = NEW_OBJECT(actions::action);
 
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::automorphism_group_as_permutation_group "
-				"before init_permutation_group_from_generators" << endl;
+				"before A_perm->Known_groups->init_permutation_group_from_generators" << endl;
 	}
-	A_perm->init_permutation_group_from_nauty_output(NO,
+	A_perm->Known_groups->init_permutation_group_from_nauty_output(NO,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "nauty_interface_with_group::automorphism_group_as_permutation_group "
-				"after init_permutation_group_from_generators" << endl;
+				"after A_perm->Known_groups->init_permutation_group_from_generators" << endl;
 	}
 
 	if (f_vv) {
@@ -1478,7 +1478,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 		geometry::object_with_canonical_form *OwCF,
-	action *A_linear,
+		actions::action *A_linear,
 	int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
 	data_structures::nauty_output *&NO,
 	int verbose_level)
@@ -1529,7 +1529,7 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 
 	groups::strong_generators *SG;
-	action *A_perm;
+	actions::action *A_perm;
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_of_object "

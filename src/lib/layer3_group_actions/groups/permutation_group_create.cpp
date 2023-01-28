@@ -70,7 +70,7 @@ void permutation_group_create::permutation_group_init(
 		A_initial = NEW_OBJECT(actions::action);
 		int f_no_base = FALSE;
 
-		A_initial->init_symmetric_group(Descr->degree, f_no_base, verbose_level);
+		A_initial->Known_groups->init_symmetric_group(Descr->degree, f_no_base, verbose_level);
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
@@ -97,7 +97,7 @@ void permutation_group_create::permutation_group_init(
 		A_initial = NEW_OBJECT(actions::action);
 		int f_no_base = FALSE;
 
-		A_initial->init_cyclic_group(Descr->degree, f_no_base, verbose_level);
+		A_initial->Known_groups->init_cyclic_group(Descr->degree, f_no_base, verbose_level);
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
@@ -124,7 +124,7 @@ void permutation_group_create::permutation_group_init(
 		A_initial = NEW_OBJECT(actions::action);
 		int f_no_base = FALSE;
 
-		A_initial->init_identity_group(Descr->degree, f_no_base, verbose_level);
+		A_initial->Known_groups->init_identity_group(Descr->degree, f_no_base, verbose_level);
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
@@ -184,7 +184,8 @@ void permutation_group_create::permutation_group_init(
 		Lint_vec_scan(Descr->bsgs_base, given_base, given_base_length);
 
 
-		A_initial->init_permutation_group_from_generators(Descr->degree,
+		A_initial->Known_groups->init_permutation_group_from_generators(
+				Descr->degree,
 			TRUE /* f_target_go */, target_go,
 			Descr->bsgs_nb_generators, gens,
 			given_base_length, given_base,

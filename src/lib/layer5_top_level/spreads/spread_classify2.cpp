@@ -290,7 +290,7 @@ void spread_classify::save_klein_invariants(
 		verbose_level - 2);
 
 
-	Vector v;
+	typed_objects::Vector v;
 
 	v.m_l(3);
 	v.m_ii(0, nb_planes);

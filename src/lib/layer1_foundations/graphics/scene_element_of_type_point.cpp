@@ -37,7 +37,7 @@ void scene_element_of_type_point::init(double *coord3)
 
 void scene_element_of_type_point::print()
 {
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	N.vec_print(Point_coords, 3);
 	cout << endl;

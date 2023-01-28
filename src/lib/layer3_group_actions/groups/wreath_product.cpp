@@ -1703,7 +1703,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 			cout << "q == 2 && nb_factors == 5" << endl;
 		}
 
-		knowledge_base K;
+		knowledge_base::knowledge_base K;
 
 
 		int N = K.tensor_orbits_nb_reps(nb_factors);
@@ -1802,7 +1802,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 			cout << "q == 2 && nb_factors == 4" << endl;
 		}
 
-		knowledge_base K;
+		knowledge_base::knowledge_base K;
 		int N = K.tensor_orbits_nb_reps(nb_factors);
 		int *R;
 		int *L;
@@ -2995,7 +2995,7 @@ void wreath_product::orbits_restricted_compute(
 	actions::action *A_perm_matrix;
 
 	A_perm = NEW_OBJECT(actions::action);
-	A_perm->init_permutation_representation(A,
+	A_perm->Known_groups->init_permutation_representation(A,
 			FALSE /* f_stay_in_the_old_action */,
 			SG->gens,
 			Perms, degree,
@@ -3005,7 +3005,7 @@ void wreath_product::orbits_restricted_compute(
 	}
 
 	A_perm_matrix = NEW_OBJECT(actions::action);
-	A_perm_matrix->init_permutation_representation(A,
+	A_perm_matrix->Known_groups->init_permutation_representation(A,
 			TRUE /* f_stay_in_the_old_action */,
 			SG->gens,
 			Perms, degree,

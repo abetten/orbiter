@@ -216,9 +216,9 @@ void substructure_classification::setup_and_open_level_database(int verbose_leve
 		freeobject(D2);
 		D2 = NULL;
 	}
-	D1 = (layer2_discreta::database *) callocobject(layer2_discreta::DATABASE);
+	D1 = (layer2_discreta::typed_objects::database *) callocobject(layer2_discreta::typed_objects::DATABASE);
 	D1->change_to_database();
-	D2 = (layer2_discreta::database *) callocobject(layer2_discreta::DATABASE);
+	D2 = (layer2_discreta::typed_objects::database *) callocobject(layer2_discreta::typed_objects::DATABASE);
 	D2->change_to_database();
 
 	if (f_v) {
@@ -606,11 +606,12 @@ int substructure_classification::open_database_and_identify_object(long int *set
 
 
 
-void substructure_classification::init_DB_level(layer2_discreta::database &D,
+void substructure_classification::init_DB_level(
+		layer2_discreta::typed_objects::database &D,
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	layer2_discreta::btree B1, B2;
+	layer2_discreta::typed_objects::btree B1, B2;
 	int f_compress = TRUE;
 	int f_duplicatekeys = TRUE;
 	int i;
@@ -658,7 +659,7 @@ void substructure_classification::init_DB_level(layer2_discreta::database &D,
 	if (f_v) {
 		cout << "substructure_classification::init_DB_level before D.init" << endl;
 	}
-	D.init(fname_db_level.c_str(), layer2_discreta::VECTOR, f_compress);
+	D.init(fname_db_level.c_str(), layer2_discreta::typed_objects::VECTOR, f_compress);
 	if (f_v) {
 		cout << "substructure_classification::init_DB_level after D.init" << endl;
 	}
@@ -732,7 +733,7 @@ void substructure_classification::create_level_database(int level, int verbose_l
 		cout << "nb_nodes=" << nb_nodes << endl;
 	}
 
-	layer2_discreta::database D;
+	layer2_discreta::typed_objects::database D;
 	//FILE *fp;
 	int cnt = 0;
 
@@ -773,7 +774,7 @@ void substructure_classification::create_level_database(int level, int verbose_l
 			}
 
 			int len, nb_fusion;
-			layer2_discreta::Vector v;
+			layer2_discreta::typed_objects::Vector v;
 
 
 				// # ints   description
@@ -1107,7 +1108,7 @@ void substructure_classification::load_strong_generators_database(int cur_level,
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int *tmp_ELT;
-	layer2_discreta::Vector v;
+	layer2_discreta::typed_objects::Vector v;
 	int i;
 	int set[1000];
 	int *tl;

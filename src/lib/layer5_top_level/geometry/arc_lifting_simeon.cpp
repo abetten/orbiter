@@ -86,7 +86,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	data_structures_groups::vector_ge *nice_gens;
 
 	A = NEW_OBJECT(actions::action);
-	A->init_linear_group(//S,
+	A->Known_groups->init_linear_group(//S,
 		F, n + 1,
 		f_projective, f_general, f_affine,
 		f_semilinear, f_special,

@@ -704,6 +704,43 @@ public:
 };
 
 
+// #############################################################################
+// interface_gap_low.cpp:
+// #############################################################################
+
+//! interface to GAP at the foundation level
+
+class interface_gap_low {
+public:
+
+	interface_gap_low();
+	~interface_gap_low();
+	void fining_set_stabilizer_in_collineation_group(
+			field_theory::finite_field *F,
+			int d, long int *Pts, int nb_pts,
+			std::string &fname,
+			int verbose_level);
+
+};
+
+// #############################################################################
+// interface_magma_low.cpp:
+// #############################################################################
+
+//! interface to magma at the foundation level
+
+class interface_magma_low {
+public:
+
+	interface_magma_low();
+	~interface_magma_low();
+	void magma_set_stabilizer_in_collineation_group(
+			field_theory::finite_field *F,
+			int d, long int *Pts, int nb_pts,
+			std::string &fname,
+			int verbose_level);
+
+};
 
 
 // #############################################################################

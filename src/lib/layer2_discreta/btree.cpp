@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
+
 
 //int bt_debug = FALSE;
 
@@ -2241,5 +2243,6 @@ static void bt_item_copy(ItemTyp *a, ItemTyp *b)
 		pcb[i] = pca[i];
 }
 
-}}
+}}}
+
 

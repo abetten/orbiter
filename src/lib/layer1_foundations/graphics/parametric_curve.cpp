@@ -50,7 +50,7 @@ void parametric_curve::init(int nb_dimensions,
 	double t, d, dt, t_last, tf;
 	double *coords0;
 	double *coords;
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	int f_is_valid;
 	double epsilon = 0.0001;
 

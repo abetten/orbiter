@@ -2881,7 +2881,7 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 
 	q = F->q;
 
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	int nb_cubic_surfaces;
 	int h;

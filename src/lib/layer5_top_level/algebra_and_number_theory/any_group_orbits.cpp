@@ -414,7 +414,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 		{
 			//sims *S;
 
-			A->create_sims(verbose_level);
+			A->Known_groups->create_sims(verbose_level);
 
 #if 0
 			if (f_v) {

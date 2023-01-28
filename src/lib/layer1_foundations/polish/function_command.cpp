@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace polish {
 
 
 function_command::function_command()
@@ -52,6 +53,7 @@ void function_command::init_simple(int type)
 }
 
 
-}}
+}}}
+
 
 

@@ -184,7 +184,7 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 
 	ring_theory::unipoly_domain FpX(&Fp);
 	string field_poly;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "cyclic_codes::make_cyclic_code "
@@ -755,7 +755,7 @@ void cyclic_codes::BCH_generator_polynomial(
 
 	string field_poly;
 	ring_theory::unipoly_object m, M, h1, h2;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	K.get_primitive_polynomial(field_poly, p, e, 0);
 	FX.create_object_by_rank_string(m, field_poly, verbose_level - 2);

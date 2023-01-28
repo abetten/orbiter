@@ -36,7 +36,7 @@ void scene_element_of_type_plane::init(double *coord4)
 
 void scene_element_of_type_plane::print()
 {
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	N.vec_print(Plane_coords, 4);
 	cout << endl;

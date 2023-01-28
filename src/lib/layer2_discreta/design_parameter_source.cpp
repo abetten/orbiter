@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
 
 
 design_parameter_source::design_parameter_source() : Vector()
@@ -269,7 +270,7 @@ void design_parameter_source::text012_extended(
 
 
 
-}}
+}}}
 
 
 

@@ -146,7 +146,7 @@ void knarr::init(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, a;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	combinatorics::combinatorics_domain C;
 	
 	knarr::F = F;

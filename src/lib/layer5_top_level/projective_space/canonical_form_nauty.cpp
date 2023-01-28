@@ -34,7 +34,9 @@ canonical_form_nauty::canonical_form_nauty()
 
 	Classifier = NULL;
 
-	Qco = NULL;
+	Variety = NULL;
+
+	//Qco = NULL;
 
 	nb_rows = 0;
 	nb_cols = 0;
@@ -43,7 +45,7 @@ canonical_form_nauty::canonical_form_nauty()
 	canonical_labeling_len = 0;
 
 
-	SG_pt_stab = NULL;
+	Set_stab = NULL;
 
 	Orb = NULL;
 
@@ -69,11 +71,12 @@ void canonical_form_nauty::init(
 
 
 void canonical_form_nauty::canonical_form_of_quartic_curve(
-		quartic_curve_object *Qco,
-		int *canonical_equation,
-		int *transporter_to_canonical_form,
-		groups::strong_generators *&gens_stab_of_canonical_equation,
+		canonical_form_of_variety *Variety,
 		int verbose_level)
+// Computes the canonical labeling of the graph associated with
+// the set of rational points of the curve.
+// Computes the stabilizer of the set of rational points of the curve.
+// Computes the orbit of the equation under the stabilizer of the set.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -92,18 +95,17 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 	canonical_form_nauty::nb_bitangents = Qco->nb_bitangents;
 #endif
 
-	canonical_form_nauty::Qco = Qco;
+	//canonical_form_nauty::Qco = Qco;
+	canonical_form_nauty::Variety = Variety;
 
 	if (f_v) {
 		cout << "equation is:";
-		Classifier->Poly_ring->print_equation_simple(cout, Qco->eqn);
+		Classifier->Poly_ring->print_equation_simple(
+				cout, Variety->Qco->eqn);
 		cout << endl;
 	}
 
-	ring_theory::longinteger_object pt_stab_order;
 	geometry::object_with_canonical_form *OwCF = NULL;
-
-	int f_compute_canonical_form = TRUE;
 
 
 	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
@@ -113,7 +115,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 				"before OwCF->init_point_set" << endl;
 	}
 	OwCF->init_point_set(
-			Qco->pts, Qco->nb_pts,
+			Variety->Qco->pts, Variety->Qco->nb_pts,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
@@ -134,7 +136,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 	}
 
 
-	actions::nauty_interface_with_group Nau;
+	interfaces::nauty_interface_with_group Nau;
 	data_structures::nauty_output *NO;
 
 	NO = NEW_OBJECT(data_structures::nauty_output);
@@ -145,10 +147,11 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"before Nau.set_stabilizer_of_object" << endl;
 	}
-	SG_pt_stab = Nau.set_stabilizer_of_object(
+	Set_stab = Nau.set_stabilizer_of_object(
 			OwCF,
 			Classifier->Descr->PA->A,
-		f_compute_canonical_form, Canonical_form,
+		TRUE /* f_compute_canonical_form */,
+		Canonical_form,
 		NO,
 		0 /*verbose_level*/);
 	if (f_v) {
@@ -159,7 +162,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
-				"go = " << *NO->Ago << endl;
+				"order of set stabilizer = " << *NO->Ago << endl;
 
 		NO->print_stats();
 
@@ -167,6 +170,12 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 
 	}
 
+	// The order of the set stabilizer is needed
+	// in order to be able to compute the subgroup
+	// which fixes the canonical equation.
+
+
+	ring_theory::longinteger_object set_stab_order;
 	int i;
 
 	canonical_labeling = NEW_lint(NO->N);
@@ -178,10 +187,10 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 
 	FREE_OBJECT(NO);
 
-	SG_pt_stab->group_order(pt_stab_order);
+	Set_stab->group_order(set_stab_order);
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
-				"pt_stab_order = " << pt_stab_order << endl;
+				"set_stab_order = " << set_stab_order << endl;
 	}
 
 	FREE_OBJECT(OwCF);
@@ -190,7 +199,8 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 
 
 
-	// compute the orbit of the equation under the stabilizer of the set of points:
+	// compute the orbit of the equation
+	// under the stabilizer of the set of points:
 
 
 	//orbit_of_equations *Orb;
@@ -207,7 +217,8 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 			Classifier->Descr->PA->A,
 			Classifier->Descr->PA->F,
 			Classifier->AonHPD,
-		SG_pt_stab /* A->Strong_gens*/, Qco->eqn,
+			Set_stab /* A->Strong_gens*/,
+			Variety->Qco->eqn,
 		verbose_level);
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
@@ -217,17 +228,19 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 	}
 
 
-	// ToDo: we need to compute the canonical form!
+	// Compute the canonical form
+	// and get the stabilizer of the canonical form to
+	// gens_stab_of_canonical_equation
 
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"before Orb->get_canonical_form" << endl;
 	}
 	Orb->get_canonical_form(
-			canonical_equation,
-			transporter_to_canonical_form,
-			gens_stab_of_canonical_equation,
-				pt_stab_order,
+			Variety->canonical_equation,
+			Variety->transporter_to_canonical_form,
+			Variety->gens_stab_of_canonical_equation,
+			set_stab_order,
 				verbose_level);
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
@@ -239,7 +252,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 				"before Orb->stabilizer_orbit_rep" << endl;
 	}
 	Stab_gens_quartic = Orb->stabilizer_orbit_rep(
-			pt_stab_order, verbose_level);
+			set_stab_order, verbose_level);
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
 				"after Orb->stabilizer_orbit_rep" << endl;
@@ -253,7 +266,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 	}
 #endif
 
-	//FREE_OBJECT(SG_pt_stab);
+	//FREE_OBJECT(Set_stab);
 	//FREE_OBJECT(Orb);
 
 

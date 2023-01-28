@@ -219,7 +219,7 @@ void projective_space_with_action::init_group(
 	data_structures_groups::vector_ge *nice_gens;
 
 	A = NEW_OBJECT(actions::action);
-	A->init_linear_group(
+	A->Known_groups->init_linear_group(
 		F, d, 
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,
@@ -1062,7 +1062,7 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 		exit(1);
 	}
 
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	int nb_quartic_curves;
 	int h;

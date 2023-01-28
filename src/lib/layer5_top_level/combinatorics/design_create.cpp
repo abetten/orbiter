@@ -196,7 +196,7 @@ void design_create::init(
 		if (Descr->f_no_group) {
 			f_no_base = TRUE;
 		}
-		A->init_symmetric_group(degree, f_no_base, verbose_level);
+		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
 		A2 = NEW_OBJECT(actions::action);
 		A2->induced_action_on_k_subsets(*A, k, verbose_level);
@@ -251,7 +251,7 @@ void design_create::init(
 		if (Descr->f_no_group) {
 			f_no_base = TRUE;
 		}
-		A->init_symmetric_group(degree, f_no_base, verbose_level);
+		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
 		//A2 = NEW_OBJECT(actions::action);
 		//A2->induced_action_on_k_subsets(*A, k, verbose_level);
@@ -321,7 +321,7 @@ void design_create::init(
 			f_no_base = TRUE;
 		}
 
-		A->init_symmetric_group(degree, f_no_base, verbose_level);
+		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
 		A2 = NEW_OBJECT(actions::action);
 		A2->induced_action_on_k_subsets(*A, k, verbose_level);
@@ -389,7 +389,7 @@ void design_create::init(
 			f_no_base = TRUE;
 		}
 
-		A->init_symmetric_group(degree, f_no_base, verbose_level);
+		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
 		A2 = NEW_OBJECT(actions::action);
 		A2->induced_action_on_k_subsets(*A, k, verbose_level);
@@ -469,7 +469,7 @@ void design_create::init(
 			f_no_base = TRUE;
 		}
 
-		A->init_symmetric_group(degree, f_no_base, verbose_level);
+		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
 		A2 = NEW_OBJECT(actions::action);
 		A2->induced_action_on_k_subsets(*A, k, verbose_level);
@@ -578,7 +578,7 @@ void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 
 	int f_no_base = FALSE;
 
-	A->init_symmetric_group(degree, f_no_base, verbose_level);
+	A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
 	A2 = NEW_OBJECT(actions::action);
 	A2->induced_action_on_k_subsets(*A, k, verbose_level);

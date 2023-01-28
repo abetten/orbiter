@@ -621,7 +621,7 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 	long int *p_bitangents;
 	long int bitangents28[28];
 	int nb_iso;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	nb_iso = K.quartic_curves_nb_reps(q);
 	if (Descr->iso >= nb_iso) {

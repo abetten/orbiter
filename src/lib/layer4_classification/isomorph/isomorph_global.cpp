@@ -75,7 +75,7 @@ void isomorph_global::read_statistic_files(
 	}
 
 	
-	layer2_discreta::discreta_init();
+	layer2_discreta::typed_objects::discreta_init();
 
 	{
 		isomorph Iso;
@@ -279,7 +279,7 @@ void isomorph_global::init_solutions_from_memory(
 	}
 
 	
-	layer2_discreta::discreta_init();
+	layer2_discreta::typed_objects::discreta_init();
 
 	{
 		isomorph Iso;
@@ -360,7 +360,7 @@ void isomorph_global::classification_graph(
 	}
 
 	
-	layer2_discreta::discreta_init();
+	layer2_discreta::typed_objects::discreta_init();
 
 	{
 		isomorph Iso;
@@ -421,7 +421,7 @@ void isomorph_global::identify(
 	}
 	
 	
-	layer2_discreta::discreta_init();
+	layer2_discreta::typed_objects::discreta_init();
 
 	{
 		isomorph Iso;
@@ -530,7 +530,7 @@ void isomorph_global::identify_table(
 	}
 	
 	
-	layer2_discreta::discreta_init();
+	layer2_discreta::typed_objects::discreta_init();
 
 	{
 		isomorph Iso;
@@ -628,7 +628,7 @@ void isomorph_global::worker(
 	}
 
 	
-	layer2_discreta::discreta_init();
+	layer2_discreta::typed_objects::discreta_init();
 
 	{
 		isomorph Iso;

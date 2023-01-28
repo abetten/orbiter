@@ -43,7 +43,7 @@ void graph_theory_apps::automorphism_group(
 	fname.append(".colored_graph");
 
 
-	actions::nauty_interface_with_group Nauty;
+	interfaces::nauty_interface_with_group Nauty;
 	actions::action *Aut;
 
 	if (f_v) {

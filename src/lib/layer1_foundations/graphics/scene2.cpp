@@ -26,7 +26,7 @@ void scene::create_regulus(int idx, int nb_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double coeff[10];
-	numerics Num;
+	orbiter_kernel_system::numerics Num;
 	int k, i, j;
 
 	if (f_v) {
@@ -315,7 +315,7 @@ void scene::create_regulus(int idx, int nb_lines, int verbose_level)
 void scene::clipping_by_cylinder(int line_idx, double r, std::ostream &ost)
 {
 	int h;
-	numerics N;
+	orbiter_kernel_system::numerics N;
 
 	ost << "	clipped_by { 	cylinder{<";
 	for (h = 0; h < 3; h++) {
@@ -346,7 +346,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -362,7 +362,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -378,7 +378,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -394,7 +394,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -410,7 +410,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -426,7 +426,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -442,7 +442,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -458,7 +458,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 		int idx;
 
 		coeff_text.assign(argv[++i]);
@@ -660,7 +660,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -678,7 +678,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -713,7 +713,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -730,7 +730,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		string coeff_text;
 		double *coeff;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		coeff_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
@@ -1129,7 +1129,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		double *coeff1;
 		double *coeff2;
 		int coeff_sz;
-		numerics Numerics;
+		orbiter_kernel_system::numerics Numerics;
 
 		nb_frames = ST.strtoi(argv[++i]);
 		angle_start = ST.strtof(argv[++i]);

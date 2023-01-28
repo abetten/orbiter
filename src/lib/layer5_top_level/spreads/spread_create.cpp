@@ -157,7 +157,7 @@ void spread_create::init(spread_create_description *Descr,
 					"spread from catalogue" << endl;
 		}
 		int nb_iso;
-		knowledge_base K;
+		knowledge_base::knowledge_base K;
 
 		nb_iso = K.Spread_nb_reps(q, k);
 		if (Descr->iso >= nb_iso) {

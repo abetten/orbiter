@@ -623,7 +623,6 @@ void canonical_form_classifier::prepare_input(int row,
 		quartic_curve_object *&Qco, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int cnt;
 
 
 
@@ -1432,13 +1431,13 @@ void canonical_form_classifier::report2(std::ostream &ost, int verbose_level)
 
 
 	int orbit_index;
-	int i, j;
+	//int i, j;
 
 	int nb_orbits;
 	int nb_monomials;
 
-	actions::action *A;
-	actions::action *A_on_lines;
+	//actions::action *A;
+	//actions::action *A_on_lines;
 
 	if (f_v) {
 		cout << "canonical_form_classifier::report2" << endl;
@@ -1449,8 +1448,8 @@ void canonical_form_classifier::report2(std::ostream &ost, int verbose_level)
 	nb_monomials = Poly_ring->get_nb_monomials();
 
 
-	A = Descr->PA->A;
-	A_on_lines = Descr->PA->A_on_lines;
+	//A = Descr->PA->A;
+	//A_on_lines = Descr->PA->A_on_lines;
 
 
 	int idx;

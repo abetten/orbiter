@@ -139,7 +139,7 @@ void linear_algebra_global::compute_normal_basis(
 	ring_theory::unipoly_domain FX(F);
 
 	string poly;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	K.get_primitive_polynomial(poly, F->q, d, 0 /* verbose_level */);
 

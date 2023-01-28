@@ -146,7 +146,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		if (f_v) {
 			cout << "geometric_object_create::init f_BLT_database" << endl;
 		}
-		knowledge_base K;
+		knowledge_base::knowledge_base K;
 		orthogonal_geometry::quadratic_form *Quadratic_form;
 
 		Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
@@ -180,7 +180,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 	else if (Descr->f_BLT_database_embedded) {
 
-		knowledge_base K;
+		knowledge_base::knowledge_base K;
 
 		orthogonal_geometry::quadratic_form *Quadratic_form;
 

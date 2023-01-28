@@ -244,28 +244,28 @@ public:
 			int size, int *Data, int verbose_level);
 	void A5_in_PSL_(int q, int verbose_level);
 	void A5_in_PSL_2_q(int q,
-			layer2_discreta::discreta_matrix & A,
-			layer2_discreta::discreta_matrix & B,
-			layer2_discreta::domain *dom_GFq, int verbose_level);
+			layer2_discreta::typed_objects::discreta_matrix & A,
+			layer2_discreta::typed_objects::discreta_matrix & B,
+			layer2_discreta::typed_objects::domain *dom_GFq, int verbose_level);
 	void A5_in_PSL_2_q_easy(int q,
-			layer2_discreta::discreta_matrix & A,
-			layer2_discreta::discreta_matrix & B,
-			layer2_discreta::domain *dom_GFq,
+			layer2_discreta::typed_objects::discreta_matrix & A,
+			layer2_discreta::typed_objects::discreta_matrix & B,
+			layer2_discreta::typed_objects::domain *dom_GFq,
 			int verbose_level);
 	void A5_in_PSL_2_q_hard(int q,
-			layer2_discreta::discreta_matrix & A,
-			layer2_discreta::discreta_matrix & B,
-			layer2_discreta::domain *dom_GFq,
+			layer2_discreta::typed_objects::discreta_matrix & A,
+			layer2_discreta::typed_objects::discreta_matrix & B,
+			layer2_discreta::typed_objects::domain *dom_GFq,
 			int verbose_level);
-	int proj_order(layer2_discreta::discreta_matrix &A);
-	void trace(layer2_discreta::discreta_matrix &A,
-			layer2_discreta::discreta_base &tr);
+	int proj_order(layer2_discreta::typed_objects::discreta_matrix &A);
+	void trace(layer2_discreta::typed_objects::discreta_matrix &A,
+			layer2_discreta::typed_objects::discreta_base &tr);
 	void elementwise_power_int(
-			layer2_discreta::discreta_matrix &A, int k);
+			layer2_discreta::typed_objects::discreta_matrix &A, int k);
 	int is_in_center(
-			layer2_discreta::discreta_matrix &B);
+			layer2_discreta::typed_objects::discreta_matrix &B);
 	void matrix_convert_to_numerical(
-			layer2_discreta::discreta_matrix &A, int *AA, int q);
+			layer2_discreta::typed_objects::discreta_matrix &A, int *AA, int q);
 
 
 	void young_symmetrizer(
@@ -540,7 +540,7 @@ public:
 
 	void do_it(int n, int verbose_level);
 	void create_matrix(
-			discreta_matrix &M, int i, int *S, int nb_classes,
+			typed_objects::discreta_matrix &M, int i, int *S, int nb_classes,
 		int *character_degree, int *class_size,
 		int verbose_level);
 	void compute_character_table(
@@ -585,7 +585,8 @@ public:
 		int &nb_mu,
 		int verbose_level);
 	void characteristic_poly(
-			int *N, int size, unipoly &charpoly,
+			int *N, int size,
+			typed_objects::unipoly &charpoly,
 			int verbose_level);
 	void double_swap(double &a, double &b);
 	int double_Gauss(

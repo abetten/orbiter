@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer2_discreta {
+namespace typed_objects {
 
 
 static void prepare_entry(
@@ -1873,4 +1874,6 @@ int Maxfit(
 
 
 
-}}
+}}}
+
+

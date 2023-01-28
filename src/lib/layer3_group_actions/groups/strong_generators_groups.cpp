@@ -118,57 +118,57 @@ void strong_generators::init_linear_group_from_scratch(
 	if (Descr->f_projective) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"before A->init_projective_group" << endl;
+					"before A->Known_groups->init_projective_group" << endl;
 		}
-		A->init_projective_group(n, F, Descr->f_semilinear,
+		A->Known_groups->init_projective_group(n, F, Descr->f_semilinear,
 			f_basis, f_init_sims,
 			nice_gens,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"after A->init_projective_group" << endl;
+					"after A->Known_groups->init_projective_group" << endl;
 		}
 	}
 	else if (Descr->f_general) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"before A->init_general_linear_group" << endl;
+					"before A->Known_groups->init_general_linear_group" << endl;
 		}
-		A->init_general_linear_group(n, F, Descr->f_semilinear,
+		A->Known_groups->init_general_linear_group(n, F, Descr->f_semilinear,
 			f_basis, f_init_sims,
 			nice_gens,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"after A->init_general_linear_group" << endl;
+					"after A->Known_groups->init_general_linear_group" << endl;
 		}
 	}
 	else if (Descr->f_affine) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"before A->init_affine_group" << endl;
+					"before A->Known_groups->init_affine_group" << endl;
 		}
-		A->init_affine_group(n, F, Descr->f_semilinear,
+		A->Known_groups->init_affine_group(n, F, Descr->f_semilinear,
 			f_basis, f_init_sims,
 			nice_gens,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"after A->init_affine_group" << endl;
+					"after A->Known_groups->init_affine_group" << endl;
 		}
 	}
 	else if (Descr->f_GL_d_q_wr_Sym_n) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"before init_wreath_product_group" << endl;
+					"before A->Known_groups->init_wreath_product_group" << endl;
 		}
-		A->init_wreath_product_group(
+		A->Known_groups->init_wreath_product_group(
 				Descr->GL_wreath_Sym_n /* nb_factors */,
 				Descr->GL_wreath_Sym_d /* n */, F, nice_gens,
 				verbose_level);
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"after init_wreath_product_group" << endl;
+					"after A->Known_groups->init_wreath_product_group" << endl;
 		}
 	}
 	else if (Descr->f_orthogonal || Descr->f_orthogonal_p || Descr->f_orthogonal_m) {
@@ -190,7 +190,7 @@ void strong_generators::init_linear_group_from_scratch(
 			cout << "cannot reach this" << endl;
 			exit(1);
 		}
-		A->init_orthogonal_group(epsilon,
+		A->Known_groups->init_orthogonal_group(epsilon,
 			n, F,
 			TRUE /* f_on_points */, FALSE /* f_on_lines */,
 			FALSE /* f_on_points_and_lines */,
@@ -298,12 +298,12 @@ void strong_generators::special_subgroup(int verbose_level)
 	if (A->Sims == NULL) {
 		if (f_v) {
 			cout << "strong_generators::special_subgroup "
-					"before A->init_sims_from_generators" << endl;
+					"before A->Known_groups->init_sims_from_generators" << endl;
 		}
-		A->init_sims_from_generators(verbose_level);
+		A->Known_groups->init_sims_from_generators(verbose_level);
 		if (f_v) {
 			cout << "strong_generators::special_subgroup "
-					"after A->init_sims_from_generators" << endl;
+					"after A->Known_groups->init_sims_from_generators" << endl;
 		}
 	}
 	A_on_det.induced_action_on_determinant(A->Sims, verbose_level);
@@ -1498,7 +1498,7 @@ void strong_generators::field_reduction(
 
 	data_structures_groups::vector_ge *nice_gens;
 
-	AQ->init_general_linear_group(m,
+	AQ->Known_groups->init_general_linear_group(m,
 			FQ,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, FALSE /* f_init_sims */,
@@ -1844,7 +1844,7 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 
 
 	A_PGL_k_q = NEW_OBJECT(actions::action);
-	A_PGL_k_q->init_projective_group(k,
+	A_PGL_k_q->Known_groups->init_projective_group(k,
 		F, FALSE /*f_semilinear */, TRUE /* f_init_sims */,
 		TRUE /* f_basis */,
 		nice_gens,
@@ -1947,7 +1947,7 @@ void strong_generators::regulus_stabilizer(actions::action *A_PGL_n_q,
 	data_structures_groups::vector_ge *nice_gens;
 
 	A_PGL_k_q = NEW_OBJECT(actions::action);
-	A_PGL_k_q->init_projective_group(k,
+	A_PGL_k_q->Known_groups->init_projective_group(k,
 		F, FALSE /*f_semilinear */, TRUE /* f_init_sims */,
 		TRUE /* f_basis */,
 		nice_gens,
@@ -2736,7 +2736,7 @@ void strong_generators::generators_for_the_orthogonal_group(
 				"A2->init_orthogonal_group" << endl;
 	}
 
-	A2->init_orthogonal_group(epsilon, 
+	A2->Known_groups->init_orthogonal_group(epsilon,
 		n, F, 
 		TRUE /* f_on_points */, FALSE /* f_on_lines */,
 		FALSE /* f_on_points_and_lines */,
@@ -2798,7 +2798,7 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	int data_size;
 	string ascii_target_go;
 	ring_theory::longinteger_object target_go;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue before "
@@ -2925,7 +2925,7 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 	int data_size;
 	string ascii_target_go;
 	ring_theory::longinteger_object target_go;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue before "
@@ -3225,7 +3225,7 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 	string ascii_target_go;
 	ring_theory::longinteger_object target_go;
 	int i;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	
 	if (f_v) {
 		cout << "strong_generators::BLT_set_from_catalogue_stabilizer "
@@ -3303,7 +3303,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 	string ascii_target_go;
 	ring_theory::longinteger_object target_go;
 	int i;
-	knowledge_base K;
+	knowledge_base::knowledge_base K;
 	
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_spread_from_catalogue "
@@ -3630,7 +3630,7 @@ void strong_generators::Hall_reflection(
 	A = NEW_OBJECT(actions::action);
 	int f_no_base = FALSE;
 
-	A->init_permutation_group(degree, f_no_base, verbose_level);
+	A->Known_groups->init_permutation_group(degree, f_no_base, verbose_level);
 
 	strong_generators *SG;
 
@@ -3733,7 +3733,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 	A = NEW_OBJECT(actions::action);
 	int f_no_base = FALSE;
 
-	A->init_symmetric_group(degree, f_no_base, verbose_level);
+	A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 	//A->init_permutation_group(degree, verbose_level);
 
 	strong_generators *SG;
