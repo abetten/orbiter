@@ -720,6 +720,19 @@ public:
 			int d, long int *Pts, int nb_pts,
 			std::string &fname,
 			int verbose_level);
+	void collineation_set_stabilizer(
+			std::ostream &ost,
+			field_theory::finite_field *F,
+			int d, long int *Pts, int nb_pts,
+			int verbose_level);
+	void write_matrix(
+			std::ostream &ost,
+			field_theory::finite_field *F,
+			int *Mtx, int d,
+			int verbose_level);
+	void write_element_of_finite_field(
+			std::ostream &ost,
+			field_theory::finite_field *F, int a);
 
 };
 

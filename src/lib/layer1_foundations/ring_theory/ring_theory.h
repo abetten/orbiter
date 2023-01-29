@@ -181,6 +181,7 @@ public:
 	void print_monomial_relaxed(std::string &s, int *mon);
 	void print_monomial_latex(std::string &s, int i);
 	void print_monomial_str(std::stringstream &ost, int i);
+	void print_monomial_for_gap_str(std::stringstream &ost, int i);
 	void print_monomial_latex_str(std::stringstream &ost, int i);
 	void print_equation(std::ostream &ost, int *coeffs);
 	void print_equation_simple(std::ostream &ost, int *coeffs);
@@ -190,6 +191,7 @@ public:
 	void print_equation_lint(std::ostream &ost, long int *coeffs);
 	void print_equation_lint_tex(std::ostream &ost, long int *coeffs);
 	void print_equation_str(std::stringstream &ost, int *coeffs);
+	void print_equation_for_gap_str(std::stringstream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(std::ostream &ost,
 		int *coeffs, int nb_terms_per_line,
 		const char *new_line_text);

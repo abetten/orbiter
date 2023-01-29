@@ -35,62 +35,31 @@ void interface_gap_low::fining_set_stabilizer_in_collineation_group(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "interface_magma_low::fining_set_stabilizer_in_collineation_group" << endl;
+		cout << "interface_gap_low::fining_set_stabilizer_in_collineation_group" << endl;
 	}
 
 	string fname2;
-	int *v;
 	int h, i, a, b;
 	data_structures::string_tools ST;
 
-	v = NEW_int(d);
 	fname2.assign(fname);
 	ST.replace_extension_with(fname2, ".gap");
 
 	{
-		ofstream fp(fname2);
+		ofstream ost(fname2);
 
-		fp << "LoadPackage(\"fining\");" << endl;
-		fp << "pg := ProjectiveSpace(" << d - 1 << "," << F->q << ");" << endl;
-		fp << "S:=[" << endl;
-		for (h = 0; h < nb_pts; h++) {
-			F->PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
-
-			F->PG_element_normalize_from_front(v, 1, d);
-
-			fp << "[";
-			for (i = 0; i < d; i++) {
-				a = v[i];
-				if (a == 0) {
-					fp << "0*Z(" << F->q << ")";
-				}
-				else if (a == 1) {
-					fp << "Z(" << F->q << ")^0";
-				}
-				else {
-					b = F->log_alpha(a);
-					fp << "Z(" << F->q << ")^" << b;
-				}
-				if (i < d - 1) {
-					fp << ",";
-				}
-			}
-			fp << "]";
-			if (h < nb_pts - 1) {
-				fp << ",";
-			}
-			fp << endl;
-		}
-		fp << "];" << endl;
-		fp << "S := List(S,x -> VectorSpaceToElement(pg,x));" << endl;
-		fp << "g := CollineationGroup(pg);" << endl;
-		fp << "stab := Stabilizer(g,Set(S),OnSets);" << endl;
-		fp << "Size(stab);" << endl;
+		collineation_set_stabilizer(
+					ost,
+					F,
+					d, Pts, nb_pts,
+					verbose_level - 2);
 	}
 	orbiter_kernel_system::file_io Fio;
 
-	cout << "Written file " << fname2 << " of size "
-			<< Fio.file_size(fname2) << endl;
+	if (f_v) {
+		cout << "Written file " << fname2 << " of size "
+				<< Fio.file_size(fname2) << endl;
+	}
 
 #if 0
 LoadPackage("fining");
@@ -110,10 +79,119 @@ StructureDescription(stab);
 #endif
 
 
+	if (f_v) {
+		cout << "interface_gap_low::fining_set_stabilizer_in_collineation_group done" << endl;
+	}
+}
+
+void interface_gap_low::collineation_set_stabilizer(
+		std::ostream &ost,
+		field_theory::finite_field *F,
+		int d, long int *Pts, int nb_pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_gap_low::collineation_set_stabilizer" << endl;
+	}
+	int h, i, a;
+	int *v;
+
+	v = NEW_int(d);
+	ost << "LoadPackage(\"fining\");" << endl;
+	ost << "pg := ProjectiveSpace(" << d - 1 << "," << F->q << ");" << endl;
+	ost << "S:=[" << endl;
+	for (h = 0; h < nb_pts; h++) {
+		F->PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
+
+		F->PG_element_normalize_from_front(v, 1, d);
+
+		ost << "[";
+		for (i = 0; i < d; i++) {
+			a = v[i];
+
+			write_element_of_finite_field(ost, F, a);
+
+			if (i < d - 1) {
+				ost << ",";
+			}
+		}
+		ost << "]";
+		if (h < nb_pts - 1) {
+			ost << ",";
+		}
+		ost << endl;
+	}
+
+	ost << "];" << endl;
+	ost << "S := List(S,x -> VectorSpaceToElement(pg,x));" << endl;
+	ost << "g := CollineationGroup(pg);" << endl;
+	ost << "stab := Stabilizer(g,Set(S),OnSets);" << endl;
+	ost << "Size(stab);" << endl;
+
 	FREE_int(v);
 	if (f_v) {
-		cout << "interface_magma_low::fining_set_stabilizer_in_collineation_group done" << endl;
+		cout << "interface_gap_low::collineation_set_stabilizer done" << endl;
 	}
+}
+
+void interface_gap_low::write_matrix(
+		std::ostream &ost,
+		field_theory::finite_field *F,
+		int *Mtx, int d,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_gap_low::write_matrix" << endl;
+	}
+	int i, j, a;
+
+	ost << "[";
+	for (i = 0; i < d; i++) {
+		ost << "[";
+		for (j = 0; j < d; j++) {
+			a = Mtx[i * d + j];
+
+			write_element_of_finite_field(ost, F, a);
+
+			if (j < d - 1) {
+				ost << ",";
+			}
+		}
+		ost << "]";
+		if (i < d - 1) {
+			ost << "," << endl;
+		}
+	}
+	ost << "]";
+
+	if (f_v) {
+		cout << "interface_gap_low::write_matrix done" << endl;
+	}
+}
+
+
+
+void interface_gap_low::write_element_of_finite_field(
+		std::ostream &ost,
+		field_theory::finite_field *F, int a)
+{
+	int b;
+
+	if (a == 0) {
+		ost << "0*Z(" << F->q << ")";
+	}
+	else if (a == 1) {
+		ost << "Z(" << F->q << ")^0";
+	}
+	else {
+		b = F->log_alpha(a);
+		ost << "Z(" << F->q << ")^" << b;
+	}
+
 }
 
 }}}

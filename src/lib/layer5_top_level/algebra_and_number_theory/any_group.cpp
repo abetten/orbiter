@@ -323,30 +323,54 @@ void any_group::do_export_gap(int verbose_level)
 	fname.assign(label);
 	fname.append("_generators.gap");
 	{
-		ofstream fp(fname);
+		ofstream ost(fname);
 
+#if 0
 		if (Subgroup_gens) {
 			if (f_v) {
 				cout << "any_group::do_export_gap "
 						"using Subgroup_gens" << endl;
 			}
-			Subgroup_gens->print_generators_gap(fp);
+			Subgroup_gens->print_generators_gap(ost);
 		}
 		else if (A->f_has_strong_generators) {
 			if (f_v) {
 				cout << "any_group::do_export_gap "
 						"using A_base->Strong_gens" << endl;
 			}
-			A->Strong_gens->print_generators_gap_in_different_action(fp, A);
+			A->Strong_gens->print_generators_gap_in_different_action(ost, A);
 		}
 		else {
 			cout << "any_group::do_export_gap "
 					"no generators to export" << endl;
 			exit(1);
 		}
+#endif
+
+		ost << "LoadPackage(\"fining\");" << endl;
+
+
+		groups::strong_generators *SG;
+
+		SG = get_strong_generators();
+
+		if (A->is_matrix_group()) {
+			if (f_v) {
+				cout << "any_group::do_export_gap "
+						"before SG->export_fining" << endl;
+			}
+			SG->export_fining(A, ost, verbose_level);
+			if (f_v) {
+				cout << "any_group::do_export_gap "
+						"after SG->export_fining" << endl;
+			}
+		}
 
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "any_group::do_export_gap "
+			"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 
 	if (f_v) {
@@ -385,6 +409,7 @@ void any_group::do_export_magma(int verbose_level)
 	}
 }
 
+
 void any_group::do_canonical_image_GAP(
 		std::string &input_set_text,
 		int verbose_level)
@@ -405,7 +430,7 @@ void any_group::do_canonical_image_GAP(
 		groups::strong_generators *SG;
 
 		SG = get_strong_generators();
-		SG->canonical_image_GAP(input_set_text, ost);
+		SG->canonical_image_GAP(input_set_text, ost, verbose_level);
 	}
 	if (f_v) {
 		cout << "Written file " << fname << " of size "

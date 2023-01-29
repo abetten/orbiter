@@ -140,6 +140,11 @@ void action::report(
 			SG->print_generators_gap(ost);
 			ost << "\\end{verbatim}" << endl;
 
+			ost << "Fining export: \\\\" << endl;
+			ost << "\\begin{verbatim}" << endl;
+			SG->export_fining(this, ost, verbose_level);
+			ost << "\\end{verbatim}" << endl;
+
 
 			ost << "Magma export: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;

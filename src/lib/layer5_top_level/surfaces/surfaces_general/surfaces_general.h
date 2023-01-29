@@ -31,6 +31,8 @@ public:
 	int f_export_something;
 	std::string export_something_what;
 
+	int f_export_gap;
+
 	int f_all_quartic_curves;
 
 	int f_export_all_quartic_curves;
@@ -215,6 +217,7 @@ public:
 		// not working ToDo
 #endif
 	void export_something(std::string &what, int verbose_level);
+	void export_gap(int verbose_level);
 	void do_report(int verbose_level);
 	void do_report2(std::ostream &ost, int verbose_level);
 	void report_with_group(

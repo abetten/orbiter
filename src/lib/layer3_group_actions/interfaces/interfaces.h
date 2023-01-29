@@ -30,6 +30,14 @@ public:
 
 	l3_interface_gap();
 	~l3_interface_gap();
+	void canonical_image_GAP(
+			groups::strong_generators *SG,
+			std::string &input_set_text,
+			std::ostream &ost, int verbose_level);
+	void export_collineation_group_to_fining(
+			std::ostream &ost,
+			groups::strong_generators *SG,
+			int verbose_level);
 
 };
 
@@ -64,7 +72,7 @@ public:
 			int verbose_level);
 	void print_generators_MAGMA(actions::action *A,
 			groups::strong_generators *SG, std::ostream &ost);
-	void export_magma(actions::action *A,
+	void export_group(actions::action *A,
 			groups::strong_generators *SG, std::ostream &ost, int verbose_level);
 	void export_permutation_group_to_magma(
 			std::string &fname, actions::action *A2,

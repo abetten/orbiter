@@ -3029,6 +3029,88 @@ void surface_create::export_something(std::string &what, int verbose_level)
 
 }
 
+void surface_create::export_gap(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::export_gap" << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	string fname_base;
+
+	fname_base.assign("surface_");
+	fname_base.append(label_txt);
+
+	string fname;
+
+	fname.assign(fname_base);
+	fname.append(".gap");
+	{
+		ofstream ost(fname);
+
+		ost << "LoadPackage(\"fining\");" << endl;
+
+		ost << "# Cubic surface " << label_txt << endl;
+		ost << "# Group:" << endl;
+
+		if (f_has_group) {
+
+			if (!Sg->A->is_matrix_group()) {
+				cout << "surface_create::export_gap the group is not a matrix group" << endl;
+				exit(1);
+			}
+			if (f_v) {
+				cout << "surface_create::export_gap "
+						"before Sg->export_fining" << endl;
+			}
+			Sg->export_fining(Sg->A, ost, verbose_level);
+			if (f_v) {
+				cout << "surface_create::export_gap "
+						"after Sg->export_fining" << endl;
+			}
+		}
+		else {
+			cout << "surface_create::export_gap the group is not available" << endl;
+		}
+
+		//SO->Surf->print_equation_with_line_breaks_tex(ost, SO->eqn);
+
+		data_structures::string_tools String;
+		std::stringstream ss;
+		string s;
+
+
+		//r:=PolynomialRing(GF(x),["X0","X1","X2","X3"]);
+
+		ost << "r := PolynomialRing(GF(" << F->q << "),[\"X0\",\"X1\",\"X2\",\"X3\"]);" << endl;
+
+		SO->Surf->PolynomialDomains->Poly3_4->print_equation_for_gap_str(ss, SO->eqn);
+
+		s = ss.str();
+		String.remove_specific_character(s, '_');
+
+
+		ost << "Eqn := " << s << ";" << endl;
+
+
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "surface_create::export_gap "
+			"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::export_gap done" << endl;
+	}
+
+}
+
+
 void surface_create::do_report(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

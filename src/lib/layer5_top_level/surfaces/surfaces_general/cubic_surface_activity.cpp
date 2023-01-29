@@ -81,6 +81,21 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 	}
 
+	if (Descr->f_export_gap) {
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"before SC->export_gap" << endl;
+		}
+		SC->export_gap(verbose_level);
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"after SC->export_gap" << endl;
+		}
+
+	}
+
+
 	if (Descr->f_all_quartic_curves) {
 
 		//surface_object_with_action *SoA;

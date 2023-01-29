@@ -2161,6 +2161,8 @@ void surface_object::export_something(std::string &what,
 
 }
 
+
+
 void surface_object::latex_double_six(std::ostream &ost, int idx)
 {
 	int i, j;

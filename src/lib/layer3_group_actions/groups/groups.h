@@ -1939,9 +1939,15 @@ public:
 	void print_generators_MAGMA(
 			actions::action *A, std::ostream &ost);
 	void export_magma(
-			actions::action *A, std::ostream &ost, int verbose_level);
+			actions::action *A, std::ostream &ost,
+			int verbose_level);
+	void export_fining(
+			actions::action *A, std::ostream &ost,
+			int verbose_level);
+	// at the moment, A is not used
 	void canonical_image_GAP(
-			std::string &input_set_text, std::ostream &ost);
+			std::string &input_set_text, std::ostream &ost,
+			int verbose_level);
 	void print_generators_gap(std::ostream &ost);
 	void print_generators_gap_in_different_action(
 			std::ostream &ost, actions::action *A2);

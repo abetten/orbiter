@@ -1534,7 +1534,8 @@ void strong_generators::print_generators_MAGMA(
 }
 
 void strong_generators::export_magma(
-		actions::action *A, std::ostream &ost, int verbose_level)
+		actions::action *A, std::ostream &ost,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1545,11 +1546,13 @@ void strong_generators::export_magma(
 	interfaces::magma_interface M;
 
 	if (f_v) {
-		cout << "strong_generators::export_magma before M.export_magma" << endl;
+		cout << "strong_generators::export_magma "
+				"before M.export_group" << endl;
 	}
-	M.export_magma(A, this, ost, verbose_level);
+	M.export_group(A, this, ost, verbose_level);
 	if (f_v) {
-		cout << "strong_generators::export_magma after M.export_magma" << endl;
+		cout << "strong_generators::export_magma "
+				"after M.export_group" << endl;
 	}
 
 
@@ -1558,10 +1561,44 @@ void strong_generators::export_magma(
 	}
 }
 
+void strong_generators::export_fining(
+		actions::action *A, std::ostream &ost,
+		int verbose_level)
+// at the moment, A is not used
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::export_fining" << endl;
+	}
+
+	interfaces::l3_interface_gap Interface;
+
+	if (f_v) {
+		cout << "strong_generators::export_fining "
+				"before M.export_group" << endl;
+	}
+	Interface.export_collineation_group_to_fining(
+			ost,
+			this,
+			verbose_level);
+	if (f_v) {
+		cout << "strong_generators::export_fining "
+				"after M.export_group" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "strong_generators::export_fining done" << endl;
+	}
+}
+
 
 void strong_generators::canonical_image_GAP(
-		std::string &input_set_text, std::ostream &ost)
+		std::string &input_set_text, std::ostream &ost,
+		int verbose_level)
 {
+#if 0
 	int i;
 
 	//ost << "Generators in GAP format are:" << endl;
@@ -1596,6 +1633,15 @@ void strong_generators::canonical_image_GAP(
 
 	ost << "LoadPackage(\"images\");" << endl;
 	ost << "MinimalImage(G, [" << output << "], OnSets);" << endl;
+#else
+
+	interfaces::l3_interface_gap Interface;
+
+	Interface.canonical_image_GAP(
+			this,
+			input_set_text,
+			ost, verbose_level);
+#endif
 }
 
 

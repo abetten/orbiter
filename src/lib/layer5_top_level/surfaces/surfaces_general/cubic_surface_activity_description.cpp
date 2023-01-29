@@ -26,6 +26,8 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 	f_export_something = FALSE;
 	//std::string export_something_what;
 
+	f_export_gap = FALSE;
+
 	f_all_quartic_curves = FALSE;
 
 	f_export_all_quartic_curves = FALSE;
@@ -62,6 +64,12 @@ int cubic_surface_activity_description::read_arguments(
 			export_something_what.assign(argv[++i]);
 			if (f_v) {
 				cout << "-export_something " << export_something_what << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_gap") == 0) {
+			f_export_gap = TRUE;
+			if (f_v) {
+				cout << "-export_gap " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-all_quartic_curves") == 0) {
@@ -106,6 +114,9 @@ void cubic_surface_activity_description::print()
 	}
 	if (f_export_something) {
 		cout << "-export_something " << export_something_what << endl;
+	}
+	if (f_export_gap) {
+		cout << "-export_gap " << endl;
 	}
 	if (f_all_quartic_curves) {
 		cout << "-all_quartic_curves " << endl;

@@ -334,7 +334,8 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 	SCW = NEW_OBJECT(cubic_surfaces_and_double_sixes::surface_classify_wedge);
 
 	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge before SCW->init" << endl;
+		cout << "surface_domain_high_level::prepare_surface_classify_wedge "
+				"before SCW->init" << endl;
 	}
 
 	SCW->init(PA->Surf_A,
@@ -342,28 +343,34 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge after SCW->init" << endl;
+		cout << "surface_domain_high_level::prepare_surface_classify_wedge "
+				"after SCW->init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge before SCW->do_classify_double_sixes" << endl;
+		cout << "surface_domain_high_level::prepare_surface_classify_wedge "
+				"before SCW->do_classify_double_sixes" << endl;
 	}
 	SCW->do_classify_double_sixes(verbose_level);
 	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge after SCW->do_classify_double_sixes" << endl;
+		cout << "surface_domain_high_level::prepare_surface_classify_wedge "
+				"after SCW->do_classify_double_sixes" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge before SCW->do_classify_surfaces" << endl;
+		cout << "surface_domain_high_level::prepare_surface_classify_wedge "
+				"before SCW->do_classify_surfaces" << endl;
 	}
 	SCW->do_classify_surfaces(verbose_level);
 	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge after SCW->do_classify_surfaces" << endl;
+		cout << "surface_domain_high_level::prepare_surface_classify_wedge "
+				"after SCW->do_classify_surfaces" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge done" << endl;
+		cout << "surface_domain_high_level::prepare_surface_classify_wedge "
+				"done" << endl;
 	}
 
 }

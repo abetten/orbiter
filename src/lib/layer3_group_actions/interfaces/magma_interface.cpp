@@ -396,14 +396,14 @@ void magma_interface::print_generators_MAGMA(
 	}
 }
 
-void magma_interface::export_magma(actions::action *A,
+void magma_interface::export_group(actions::action *A,
 		groups::strong_generators *SG, std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "magma_interface::export_magma" << endl;
+		cout << "magma_interface::export_group" << endl;
 		A->print_info();
 	}
 	if (A->is_matrix_group()) {
@@ -426,7 +426,7 @@ void magma_interface::export_magma(actions::action *A,
 			int a;
 
 			if (f_v) {
-				cout << "magma_interface::export_magma extension field" << endl;
+				cout << "magma_interface::export_group extension field" << endl;
 			}
 			ost << "F<w>:=GF(" << F->q << ");" << endl;
 			ost << "G := GeneralLinearGroup(" << M->n << ", F);" << endl;
@@ -491,11 +491,11 @@ void magma_interface::export_magma(actions::action *A,
 		}
 	}
 	else {
-		cout << "magma_interface::export_magma not A->is_matrix_group()" << endl;
+		cout << "magma_interface::export_group not A->is_matrix_group()" << endl;
 
 		actions::action_global AG;
 
-		cout << "magma_interface::export_magma type_g = ";
+		cout << "magma_interface::export_group type_g = ";
 		AG.action_print_symmetry_group_type(cout,
 				A->type_G);
 		cout << endl;
@@ -508,7 +508,7 @@ void magma_interface::export_magma(actions::action *A,
 		//exit(1);
 	}
 	if (f_v) {
-		cout << "magma_interface::export_magma done" << endl;
+		cout << "magma_interface::export_group done" << endl;
 	}
 }
 

@@ -1036,6 +1036,30 @@ void homogeneous_polynomial_domain::print_monomial_str(std::stringstream &ost, i
 	}
 }
 
+void homogeneous_polynomial_domain::print_monomial_for_gap_str(std::stringstream &ost, int i)
+{
+	int j, a, f_first = TRUE;
+
+	for (j = 0; j < nb_variables; j++) {
+		a = Monomials[i * nb_variables + j];
+		if (a == 0) {
+			continue;
+		}
+		if (!f_first) {
+			ost << "*";
+		}
+		else {
+			f_first = FALSE;
+		}
+		//ost << symbols[j];
+		ost << "(r." << j + 1 << ")";
+		if (a > 1) {
+			ost << "^" << a;
+		}
+	}
+}
+
+
 
 void homogeneous_polynomial_domain::print_monomial_latex_str(std::stringstream &ost, int i)
 {
@@ -1233,6 +1257,31 @@ void homogeneous_polynomial_domain::print_equation_str(std::stringstream &ost, i
 			//ost << c;
 		}
 		print_monomial_str(ost, i);
+	}
+}
+
+void homogeneous_polynomial_domain::print_equation_for_gap_str(std::stringstream &ost, int *coeffs)
+{
+	int i, c;
+	int f_first = TRUE;
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		c = coeffs[i];
+		if (c == 0) {
+			continue;
+		}
+		if (f_first) {
+			f_first = FALSE;
+		}
+		else {
+			ost << "+";
+		}
+		if (c > 1) {
+			F->print_element_str(ost, c);
+			//ost << c;
+		}
+		print_monomial_for_gap_str(ost, i);
 	}
 }
 

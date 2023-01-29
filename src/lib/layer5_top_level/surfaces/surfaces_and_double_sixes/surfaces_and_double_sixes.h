@@ -111,14 +111,15 @@ public:
 };
 
 
+
 // #############################################################################
-// classify_double_sixes.cpp
+// classify_five_plus_one.cpp
 // #############################################################################
 
-//! classification of double sixes in PG(3,q)
+//! classification of five plus one sets of lines in PG(3,q). A five plus one is five pairwise skew lines with a common transversal.
 
 
-class classify_double_sixes {
+class classify_five_plus_one {
 
 public:
 
@@ -130,24 +131,16 @@ public:
 	algebraic_geometry::surface_domain *Surf;
 
 
-	// pulled from surface_classify_wedge:
-
 	actions::action *A2; // the action on the wedge product
 	induced_actions::action_on_wedge_product *AW;
 		// internal data structure for the wedge action
 
 	int *Elt0; // used in identify_five_plus_one
 	int *Elt1; // used in identify_five_plus_one
-	int *Elt2; // used in upstep
-	int *Elt3; // used in upstep
-	int *Elt4; // used in upstep
 
 	groups::strong_generators *SG_line_stab;
 		// stabilizer of the special line in PGL(4,q)
 		// this group acts on the set Neighbors[] in the wedge action
-
-	int l_min;
-	int short_orbit_idx;
 
 	int nb_neighbors;
 		// = (q + 1) * q * (q + 1)
@@ -163,7 +156,6 @@ public:
 	long int *Neighbor_to_klein; // [nb_neighbors]
 		// In orthogonal ranks (i.e., points on the Klein quadric).
 
-	//long int *Line_to_neighbor; // [Surf->nb_lines_PG_3]
 
 	ring_theory::longinteger_object go, stab_go;
 	groups::sims *Stab;
@@ -173,21 +165,16 @@ public:
 	int orbit_len;
 
 	long int pt0_idx_in_orbit;
+
 	long int pt0_wedge;
+		// in wedge coordinates 100000
 	long int pt0_line;
+		// pt0 = the line spanned by 1000, 0100
+		// (we call it point because it is a point on the Klein quadric)
 	long int pt0_klein;
+		// in klein coordinates 100000
 
 
-	int Basis[8];
-	int *line_to_orbit; // [nb_lines_PG_3]
-	long int *orbit_to_line; // [nb_lines_PG_3]
-
-	long int *Pts_klein;
-	long int *Pts_wedge;
-	int nb_pts;
-
-	long int *Pts_wedge_to_line; // [nb_pts]
-	long int *line_to_pts_wedge; // [nb_lines_PG_3]
 
 	actions::action *A_on_neighbors;
 		// restricted action A2 on the set Neighbors[]
@@ -197,31 +184,11 @@ public:
 	poset_classification::poset_classification *Five_plus_one;
 		// orbits on five-plus-one configurations
 
-
-	//int *u, *v, *w; // temporary vectors of length 6
-	//int *u1, *v1; // temporary vectors of length 6
-
-	int len;
-		// = gen->nb_orbits_at_level(5)
-		// = number of orbits on 5-sets of lines
-	int *Idx;
-		// Idx[nb], list of orbits
-		// for which the rank of the system is equal to 19
-	int nb; // number of good orbits
-	int *Po;
-		// Po[Flag_orbits->nb_flag_orbits],
-		//list of orbits for which a double six exists
-
 	int *Pts_for_partial_ovoid_test; // [5*6]
 
 
-	invariant_relations::flag_orbits *Flag_orbits;
-
-	invariant_relations::classification_step *Double_sixes;
-
-
-	classify_double_sixes();
-	~classify_double_sixes();
+	classify_five_plus_one();
+	~classify_five_plus_one();
 	void init(
 			cubic_surfaces_in_general::surface_with_action
 				*Surf_A,
@@ -234,6 +201,17 @@ public:
 		int verbose_level);
 	void classify_partial_ovoids(
 		int verbose_level);
+	int line_to_neighbor(long int line_rk, int verbose_level);
+	void partial_ovoid_test_early(
+			long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void identify_five_plus_one(
+			long int *five_lines,
+			long int transversal_line,
+		long int *five_lines_out_as_neighbors, int &orbit_index,
+		int *transporter, int verbose_level);
 	void report(
 			std::ostream &ost,
 			graphics::layered_graph_draw_options
@@ -241,27 +219,65 @@ public:
 			poset_classification::poset_classification_report_options
 				*Opt,
 			int verbose_level);
-	void partial_ovoid_test_early(long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
+
+
+};
+
+
+// #############################################################################
+// classify_double_sixes.cpp
+// #############################################################################
+
+//! classification of double sixes in PG(3,q)
+
+
+class classify_double_sixes {
+
+public:
+
+	classify_five_plus_one *Five_p1;
+
+	int *Elt3; // used in upstep
+
+	int len;
+		// = gen->nb_orbits_at_level(5)
+		// = number of orbits on 5-sets of lines
+	int *Idx;
+		// Idx[nb], list of orbits
+		// for which the rank of the system is equal to 19
+	int nb; // number of good orbits
+	int *Po;
+		// Po[Flag_orbits->nb_flag_orbits],
+		//list of orbits for which a double six exists
+
+
+
+	invariant_relations::flag_orbits *Flag_orbits;
+
+	invariant_relations::classification_step *Double_sixes;
+
+
+	classify_double_sixes();
+	~classify_double_sixes();
+	void init(
+			classify_five_plus_one *Five_p1,
+			int verbose_level);
 	void test_orbits(int verbose_level);
-	void make_spreadsheet_of_fiveplusone_configurations(
-			data_structures::spreadsheet *&Sp,
-		int verbose_level);
-	void identify_five_plus_one(long int *five_lines,
-			long int transversal_line,
-		long int *five_lines_out_as_neighbors, int &orbit_index,
-		int *transporter, int verbose_level);
 	void classify(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void print_five_plus_ones(std::ostream &ost);
-	void identify_double_six(long int *double_six,
-		int *transporter, int &orbit_index, int verbose_level);
-	void write_file(std::ofstream &fp, int verbose_level);
-	void read_file(std::ifstream &fp, int verbose_level);
-	int line_to_neighbor(long int line_rk, int verbose_level);
+	void identify_double_six(
+			long int *double_six,
+		int *transporter, int &orbit_index,
+		int verbose_level);
+	void make_spreadsheet_of_fiveplusone_configurations(
+			data_structures::spreadsheet *&Sp,
+		int verbose_level);
+	void write_file(
+			std::ofstream &fp, int verbose_level);
+	void read_file(
+			std::ifstream &fp, int verbose_level);
 };
 
 
@@ -290,6 +306,8 @@ public:
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
+
+	classify_five_plus_one *Five_p1;
 
 	classify_double_sixes *Classify_double_sixes;
 
@@ -357,7 +375,8 @@ public:
 	int test_if_double_sixes_have_been_computed_already();
 	void write_double_sixes(int verbose_level);
 	void read_double_sixes(int verbose_level);
-	void create_report(int f_with_stabilizers,
+	void create_report(
+			int f_with_stabilizers,
 			graphics::layered_graph_draw_options *draw_options,
 			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
@@ -367,7 +386,8 @@ public:
 			graphics::layered_graph_draw_options *draw_options,
 			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
-	void create_report_double_sixes(int verbose_level);
+	void create_report_double_sixes(
+			int verbose_level);
 	void test_isomorphism(
 			cubic_surfaces_in_general::surface_create_description
 				*Descr1,

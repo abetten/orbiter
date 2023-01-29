@@ -36,6 +36,8 @@ surface_classify_wedge::surface_classify_wedge()
 	Elt2 = NULL;
 	Elt3 = NULL;
 
+	Five_p1 = NULL;
+
 	Classify_double_sixes = NULL;
 
 	Flag_orbits = NULL;
@@ -76,23 +78,50 @@ surface_classify_wedge::~surface_classify_wedge()
 	}
 
 	if (f_v) {
-		cout << "surface_classify_wedge::~surface_classify_wedge before FREE_OBJECTS(Flag_orbits)" << endl;
+		cout << "surface_classify_wedge::~surface_classify_wedge "
+				"before FREE_OBJECTS(Flag_orbits)" << endl;
 	}
 	if (Flag_orbits) {
 		FREE_OBJECT(Flag_orbits);
 	}
 	if (f_v) {
-		cout << "surface_classify_wedge::~surface_classify_wedge before FREE_OBJECTS(Surfaces)" << endl;
+		cout << "surface_classify_wedge::~surface_classify_wedge "
+				"after FREE_OBJECTS(Flag_orbits)" << endl;
+	}
+	if (f_v) {
+		cout << "surface_classify_wedge::~surface_classify_wedge "
+				"before FREE_OBJECTS(Surfaces)" << endl;
 	}
 	if (Surfaces) {
 		FREE_OBJECT(Surfaces);
 	}
+	if (f_v) {
+		cout << "surface_classify_wedge::~surface_classify_wedge "
+				"after FREE_OBJECTS(Surfaces)" << endl;
+	}
 
 	if (f_v) {
-		cout << "surface_classify_wedge::~surface_classify_wedge before FREE_OBJECTS(Classify_double_sixes)" << endl;
+		cout << "surface_classify_wedge::~surface_classify_wedge "
+				"before FREE_OBJECTS(Five_p1)" << endl;
+	}
+	if (Five_p1) {
+		FREE_OBJECT(Five_p1);
+	}
+	if (f_v) {
+		cout << "surface_classify_wedge::~surface_classify_wedge "
+				"after FREE_OBJECTS(Five_p1)" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_classify_wedge::~surface_classify_wedge "
+				"before FREE_OBJECTS(Classify_double_sixes)" << endl;
 	}
 	if (Classify_double_sixes) {
 		FREE_OBJECT(Classify_double_sixes);
+	}
+	if (f_v) {
+		cout << "surface_classify_wedge::~surface_classify_wedge "
+				"after FREE_OBJECTS(Classify_double_sixes)" << endl;
 	}
 	if (f_v) {
 		cout << "surface_classify_wedge::~surface_classify_wedge done" << endl;
@@ -135,13 +164,27 @@ void surface_classify_wedge::init(
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
+
+	Five_p1 = NEW_OBJECT(classify_five_plus_one);
+
+	if (f_v) {
+		cout << "surface_classify_wedge::init "
+				"before Five_p1->init" << endl;
+	}
+	Five_p1->init(Surf_A, Control, verbose_level);
+	if (f_v) {
+		cout << "surface_classify_wedge::init "
+				"after Five_p1->init" << endl;
+	}
+
+
 	Classify_double_sixes = NEW_OBJECT(classify_double_sixes);
 
 	if (f_v) {
 		cout << "surface_classify_wedge::init "
 				"before Classify_double_sixes->init" << endl;
 	}
-	Classify_double_sixes->init(Surf_A, Control, verbose_level);
+	Classify_double_sixes->init(Five_p1, verbose_level);
 	if (f_v) {
 		cout << "surface_classify_wedge::init "
 				"after Classify_double_sixes->init" << endl;
@@ -177,12 +220,12 @@ void surface_classify_wedge::do_classify_double_sixes(int verbose_level)
 
 		if (f_v) {
 			cout << "surface_classify_wedge::do_classify_double_sixes before "
-					"Classify_double_sixes->classify_partial_ovoids" << endl;
+					"Five_p1->classify_partial_ovoids" << endl;
 		}
-		Classify_double_sixes->classify_partial_ovoids(verbose_level);
+		Five_p1->classify_partial_ovoids(verbose_level);
 		if (f_v) {
 			cout << "surface_classify_wedge::do_classify_double_sixes after "
-					"Classify_double_sixes->classify_partial_ovoids" << endl;
+					"Five_p1->classify_partial_ovoids" << endl;
 		}
 
 		if (f_v) {
@@ -699,7 +742,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 						<< " is orbit " << orb << endl;
 			}
 
-			Classify_double_sixes->Five_plus_one->get_set_by_level(5, orb, S);
+			Five_p1->Five_plus_one->get_set_by_level(5, orb, S);
 
 			if (f_v) {
 				cout << "starter configuration as neighbors: ";
@@ -709,9 +752,9 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 
 
 			orbiter_kernel_system::Orbiter->Lint_vec->apply(S,
-					Classify_double_sixes->Neighbor_to_line,
+					Five_p1->Neighbor_to_line,
 					S2, 5);
-			S2[5] = Classify_double_sixes->pt0_line;
+			S2[5] = Five_p1->pt0_line;
 
 			four_lines[0] = S2[0];
 			four_lines[1] = S2[1];
@@ -720,10 +763,10 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			Surf->perp_of_four_lines(four_lines,
 					trans12, perp_sz, 0 /* verbose_level */);
 
-			if (trans12[0] == Classify_double_sixes->pt0_line) {
+			if (trans12[0] == Five_p1->pt0_line) {
 				b5 = trans12[1];
 			}
-			else if (trans12[1] == Classify_double_sixes->pt0_line) {
+			else if (trans12[1] == Five_p1->pt0_line) {
 				b5 = trans12[0];
 			}
 			else {
@@ -1547,9 +1590,9 @@ void surface_classify_wedge::identify_surface(
 
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_surface "
-				"before Classify_double_sixes->identify_five_plus_one" << endl;
+				"before Five_p1->identify_five_plus_one" << endl;
 	}
-	Classify_double_sixes->identify_five_plus_one(
+	Five_p1->identify_five_plus_one(
 		S3 /* five_lines */,
 		S3[5] /* transversal_line */,
 		W4 /* int *five_lines_out_as_neighbors */,
@@ -2396,7 +2439,7 @@ void surface_classify_wedge::generate_history(int verbose_level)
 	if (f_v) {
 		cout << "surface_classify_wedge::generate_history" << endl;
 	}
-	Classify_double_sixes->Five_plus_one->generate_history(5, verbose_level - 2);
+	Five_p1->Five_plus_one->generate_history(5, verbose_level - 2);
 	if (f_v) {
 		cout << "surface_classify_wedge::generate_history done" << endl;
 	}
@@ -2561,7 +2604,8 @@ void surface_classify_wedge::read_double_sixes(int verbose_level)
 }
 
 
-void surface_classify_wedge::create_report(int f_with_stabilizers,
+void surface_classify_wedge::create_report(
+		int f_with_stabilizers,
 		graphics::layered_graph_draw_options *draw_options,
 		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
@@ -2642,12 +2686,12 @@ void surface_classify_wedge::report(
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report "
-				"before Classify_double_sixes->report" << endl;
+				"before Five_p1->report" << endl;
 	}
-	Classify_double_sixes->report(ost, draw_options, Opt, verbose_level);
+	Five_p1->report(ost, draw_options, Opt, verbose_level);
 	if (f_v) {
 		cout << "surface_classify_wedge::report "
-				"after Classify_double_sixes->report" << endl;
+				"after Five_p1->report" << endl;
 	}
 
 	if (f_v) {
@@ -2735,7 +2779,8 @@ void surface_classify_wedge::report(
 	}
 }
 
-void surface_classify_wedge::create_report_double_sixes(int verbose_level)
+void surface_classify_wedge::create_report_double_sixes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
