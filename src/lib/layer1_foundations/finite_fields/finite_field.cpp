@@ -1791,8 +1791,9 @@ int finite_field::T2(int a)
 	
 	r = e >> 1;
 	if (e != 2 * r) {
-		cout << "finite_field::T2 field does not have a "
-				"quadratic subfield" << endl;
+		cout << "finite_field::T2 "
+				"field does not have a "
+				"quadratic subfield q = " << q << " e = " << e << endl;
 		exit(1);
 	}
 	b = frobenius_power(a, r);

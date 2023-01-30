@@ -1488,9 +1488,16 @@ create_BLT_5_1:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 5 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-with O -do -orthogonal_space_activity \
-			-create_BLT_set -catalogue 1 -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 1 \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
 		-end
+	pdflatex BLT_catalogue_q5_iso1.tex
+	open BLT_catalogue_q5_iso1.pdf
+
+
 
 create_surface_4_0:
 	$(ORBITER) -v 3 \
@@ -1501,6 +1508,8 @@ create_surface_4_0:
 			-cubic_surface_activity \
 			-report \
 		-end
+	pdflatex surface_catalogue_q4_iso0_report.tex
+	open surface_catalogue_q4_iso0_report.pdf
 
 
 
@@ -4224,6 +4233,7 @@ L_5_3:
 	open PSL_5_3_report.pdf
 
 #PSL(5,3): Order 237783237120 = 121 * 120 * 117 * 108 * 81 * 16
+
 
 
 L_4_5:
@@ -15269,6 +15279,7 @@ SECTION_BLT_SETS:
 
 test_12_4:
 	make BLT_5_1
+	make BLT_5_1_export_gap
 	make BLT_5_Linear
 	make BLT_9_Kantor1
 	make BLT_11_0
@@ -15291,18 +15302,37 @@ BLT_5_1:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 5 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-with O -do -orthogonal_space_activity \
-			-create_BLT_set -catalogue 1 -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 1 \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
 		-end
 	pdflatex BLT_catalogue_q5_iso1.tex
 	open BLT_catalogue_q5_iso1.pdf
+
+
+BLT_5_1_export_gap:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 5 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 1 \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-export_gap \
+		-end
+
 
 BLT_5_Linear:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 5 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-with O -do -orthogonal_space_activity \
-			-create_BLT_set -family "Linear" -end \
+		-define BLT -BLT_set \
+			-space O -family "Linear" \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
 		-end
 	pdflatex BLT_Linear_q5.tex
 	open BLT_Linear_q5.pdf
@@ -15313,8 +15343,11 @@ BLT_9_Kantor1:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 9 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-with O -do -orthogonal_space_activity \
-			-create_BLT_set -family "Kantor1" -end \
+		-define BLT -BLT_set \
+			-space O -family "Kantor1" \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
 		-end
 	pdflatex BLT_Kantor1_q9.tex
 	open BLT_Kantor1_q9.pdf
@@ -15326,19 +15359,23 @@ BLT_11_0:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 11 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-with O -do -orthogonal_space_activity \
-			-create_BLT_set -catalogue 0 -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 0 \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
 		-end
-	#pdflatex O_1_6_2_report.tex 
-	#open O_1_6_2_report.pdf
 
 
 BLT_11_Fisher:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 11 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-with O -do -orthogonal_space_activity \
-			-create_BLT_set -family "Fisher" -end \
+		-define BLT -BLT_set \
+			-space O -family "Fisher" \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
 		-end
 	pdflatex BLT_Fisher_q11.tex
 	open BLT_Fisher_q11.pdf
@@ -15347,19 +15384,25 @@ BLT_11_Mondello:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 11 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-with O -do -orthogonal_space_activity \
-			-create_BLT_set -family "Mondello" -end \
+		-define BLT -BLT_set \
+			-space O -family "Mondello" \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
 		-end
 	pdflatex BLT_Mondello_q11.tex
 	open BLT_Mondello_q11.pdf
 
 
-BLT_13_FTWKB:
+BLT_11_FTWKB:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 11 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-with O -do -orthogonal_space_activity \
-			-create_BLT_set -family "FTWKB" -end \
+		-define BLT -BLT_set \
+			-space O -family "FTWKB" \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
 		-end
 	pdflatex BLT_FTWKB_q11.tex
 	open BLT_FTWKB_q11.pdf
@@ -15370,8 +15413,11 @@ BLT_13_Kantor2:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 13 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-with O -do -orthogonal_space_activity \
-			-create_BLT_set -family "Kantor2" -end \
+		-define BLT -BLT_set \
+			-space O -family "Kantor2" \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
 		-end
 	pdflatex BLT_Kantor2_q13.tex
 	open BLT_Kantor2_q13.pdf
@@ -15437,7 +15483,9 @@ BLT_13_classify_starter:
 BLT_13_cliques:
 	$(ORBITER) -v 2 \
 		-loop L 0 38 1 \
-			-define G -graph -load BLT_q13_graph_5_%L.bin -end \
+			-define G -graph \
+				-load BLT_q13_graph_5_%L.bin \
+			-end \
 			-with G -do \
 			-graph_theoretic_activity \
 				-find_cliques -rainbow -target_size 9 -end \

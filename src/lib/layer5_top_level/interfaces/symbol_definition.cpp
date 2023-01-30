@@ -2385,6 +2385,7 @@ void symbol_definition::definition_of_BLT_set(int verbose_level)
 
 	BC = NEW_OBJECT(orthogonal_geometry_applications::BLT_set_create);
 
+
 	if (f_v) {
 		cout << "symbol_definition::definition_of_BLT_set "
 				"before BC->init" << endl;

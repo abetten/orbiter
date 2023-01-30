@@ -89,22 +89,26 @@ void orthogonal_space_with_action::init(
 
 
 	if (f_v) {
-		cout << "orthogonal_space_with_action::init before O->init" << endl;
+		cout << "orthogonal_space_with_action::init "
+				"before O->init" << endl;
 	}
 	O->init(Descr->epsilon, Descr->n, Descr->F, verbose_level);
 	if (f_v) {
-		cout << "orthogonal_space_with_action::init after O->init" << endl;
+		cout << "orthogonal_space_with_action::init "
+				"after O->init" << endl;
 	}
 
 
 	if (!Descr->f_without_group) {
 
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init before init_group" << endl;
+			cout << "orthogonal_space_with_action::init "
+					"before init_group" << endl;
 		}
 		init_group(verbose_level);
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init after init_group" << endl;
+			cout << "orthogonal_space_with_action::init "
+					"after init_group" << endl;
 		}
 	}
 	else {

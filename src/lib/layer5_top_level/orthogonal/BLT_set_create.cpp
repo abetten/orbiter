@@ -67,6 +67,7 @@ void BLT_set_create::init(
 	if (f_v) {
 		cout << "BLT_set_create::init" << endl;
 		}
+	BLT_set_create::Blt_set_domain = Blt_set_domain;
 	BLT_set_create::Descr = Descr;
 	BLT_set_create::OA = OA;
 
@@ -77,6 +78,7 @@ void BLT_set_create::init(
 
 
 	
+
 	if (Descr->f_family) {
 		if (f_v) {
 			cout << "BLT_set_create::init "
@@ -103,10 +105,18 @@ void BLT_set_create::init(
 			FQ = NEW_OBJECT(field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
+			if (f_v) {
+				cout << "BLT_set_create::init "
+						"before FQ->finite_field_init_small_order Q=" << Q << endl;
+			}
 			FQ->finite_field_init_small_order(Q,
 					FALSE /* f_without_tables */,
 					FALSE /* f_compute_related_fields */,
-					0 /* verbose_level */);
+					verbose_level);
+			if (f_v) {
+				cout << "BLT_set_create::init "
+						"after FQ->finite_field_init_small_order Q=" << Q << endl;
+			}
 
 			OG.create_Linear_BLT_set(set, ABC,
 							FQ, OA->Descr->F, verbose_level);
@@ -422,6 +432,149 @@ void BLT_set_create::report(int verbose_level)
 		cout << "BLT_set_create::report done" << endl;
 	}
 }
+
+void BLT_set_create::export_gap(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::export_gap" << endl;
+	}
+
+	string fname;
+
+	fname.assign("BLT_");
+	fname.append(label_txt);
+	fname.append(".gap");
+	ofstream ost(fname);
+
+	//report2(ost, verbose_level);
+
+	{
+		ofstream ost(fname);
+
+		ost << "LoadPackage(\"fining\");" << endl;
+
+
+		ost << "# BLT-set " << label_txt << endl;
+
+
+		orthogonal_geometry::quadratic_form *Quadratic_form;
+
+		Quadratic_form = Blt_set_domain->O->Quadratic_form;
+
+
+		ost << "# Quadratic form: ";
+
+		Quadratic_form->Poly->print_equation_tex(
+				ost, Quadratic_form->the_quadratic_form);
+		ost << endl;
+
+		if (f_has_group) {
+
+			ring_theory::longinteger_object go;
+
+			Sg->group_order(go);
+			ost << "# Group of order " << go << endl;
+
+			if (!Sg->A->is_matrix_group()) {
+				cout << "BLT_set_create::export_gap the group is not a matrix group" << endl;
+				exit(1);
+			}
+			if (f_v) {
+				cout << "BLT_set_create::export_gap "
+						"before Sg->export_fining" << endl;
+			}
+			Sg->export_fining(OA->A, ost, verbose_level);
+			if (f_v) {
+				cout << "BLT_set_create::export_gap "
+						"after Sg->export_fining" << endl;
+			}
+		}
+		else {
+			cout << "BLT_set_create::export_gap the group is not available" << endl;
+		}
+
+		int h, i, a;
+		int sz;
+		int d = 5;
+		int v[5];
+		algebra::interface_gap_low Interface;
+
+		sz = Blt_set_domain->target_size;
+
+		ost << "pg := ProjectiveSpace(" << 4 << "," << Blt_set_domain->F->q << ");" << endl;
+		ost << "S:=[" << endl;
+		for (h = 0; h < sz; h++) {
+
+			Blt_set_domain->O->Hyperbolic_pair->unrank_point(v, 1, set[h], 0);
+
+
+			Blt_set_domain->F->Projective_space_basic->PG_element_normalize_from_front(v, 1, 5);
+
+			ost << "[";
+			for (i = 0; i < d; i++) {
+				a = v[i];
+
+				Interface.write_element_of_finite_field(ost, Blt_set_domain->F, a);
+
+				if (i < d - 1) {
+					ost << ",";
+				}
+			}
+			ost << "]";
+			if (h < sz - 1) {
+				ost << ",";
+			}
+			ost << endl;
+		}
+
+		ost << "];" << endl;
+		ost << "S := List(S,x -> VectorSpaceToElement(pg,x));" << endl;
+
+
+
+#if 0
+		long int *set;
+
+		groups::strong_generators *Aut_gens;
+		orthogonal_geometry::blt_set_invariants *Inv;
+
+		actions::action *A_on_points;
+		groups::schreier *Orbits_on_points;
+
+		long int *T; // [target_size]
+		long int *Pi_ij; // [target_size * target_size]
+		//SO->Surf->print_equation_with_line_breaks_tex(ost, SO->eqn);
+
+		data_structures::string_tools String;
+		std::stringstream ss;
+		string s;
+
+
+		//r:=PolynomialRing(GF(x),["X0","X1","X2","X3"]);
+
+		ost << "r := PolynomialRing(GF(" << F->q << "),[\"X0\",\"X1\",\"X2\",\"X3\"]);" << endl;
+
+		SO->Surf->PolynomialDomains->Poly3_4->print_equation_for_gap_str(ss, SO->eqn);
+
+		s = ss.str();
+		String.remove_specific_character(s, '_');
+
+
+		ost << "Eqn := " << s << ";" << endl;
+#endif
+
+
+	}
+
+
+	if (f_v) {
+		cout << "BLT_set_create::export_gap done" << endl;
+	}
+}
+
+
 
 void BLT_set_create::create_flock(int point_idx, int verbose_level)
 {

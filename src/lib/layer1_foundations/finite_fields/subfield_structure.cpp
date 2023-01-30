@@ -85,6 +85,9 @@ void subfield_structure::init(
 	subfield_structure::Fq = Fq;
 	Q = FQ->q;
 	q = Fq->q;
+	if (f_v) {
+		cout << "subfield_structure::init Q=" << Q << " q=" << q << endl;
+	}
 	if (FQ->p != Fq->p) {
 		cout << "subfield_structure::init "
 				"different characteristics" << endl;
@@ -93,6 +96,7 @@ void subfield_structure::init(
 	s = FQ->e / Fq->e;
 	if (Fq->e * s != FQ->e) {
 		cout << "Fq is not a subfield of FQ" << endl;
+		cout << "subfield_structure::init FQ->e=" << FQ->e << " Fq->e=" << Fq->e << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -101,7 +105,8 @@ void subfield_structure::init(
 
 	index_in_multiplicative_group = (Q - 1) / (q - 1);
 	if (f_v) {
-		cout << "index of multiplicative groups = " << index_in_multiplicative_group << endl;
+		cout << "index of multiplicative groups = "
+				<< index_in_multiplicative_group << endl;
 	}
 
 
@@ -117,11 +122,13 @@ void subfield_structure::init(
 
 	if (s == 2) {
 		if (f_v) {
-			cout << "subfield_structure::init before embedding_2dimensional" << endl;
+			cout << "subfield_structure::init "
+					"before embedding_2dimensional" << endl;
 		}
 		embedding_2dimensional(verbose_level);
 		if (f_v) {
-			cout << "subfield_structure::init after embedding_2dimensional" << endl;
+			cout << "subfield_structure::init "
+					"after embedding_2dimensional" << endl;
 		}
 		f_has_2D = TRUE;
 	}
@@ -239,7 +246,8 @@ int subfield_structure::retract(int b, int verbose_level)
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
-		cout << "subfield_structure::retract b=" << b << endl;
+		cout << "subfield_structure::retract "
+				"b=" << b << endl;
 	}
 
 	if (b == 0) {
@@ -248,7 +256,8 @@ int subfield_structure::retract(int b, int verbose_level)
 	else {
 		j = FQ->log_alpha(b);
 		if ((j % index_in_multiplicative_group)) {
-			cout << "subfield_structure::retract the element does not belong to the subfield" << endl;
+			cout << "subfield_structure::retract "
+					"the element does not belong to the subfield" << endl;
 			exit(1);
 		}
 		i = j / index_in_multiplicative_group;
@@ -256,7 +265,8 @@ int subfield_structure::retract(int b, int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "subfield_structure::retract b=" << b << " a=" << a << endl;
+		cout << "subfield_structure::retract "
+				"b=" << b << " a=" << a << endl;
 	}
 	if (f_v) {
 		cout << "subfield_structure::retract done" << endl;

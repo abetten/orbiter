@@ -1768,18 +1768,26 @@ void known_groups::init_orthogonal_group(
 				"verbose_level=" << verbose_level << endl;
 	}
 	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
-	if (f_vv) {
+	if (f_v) {
 		cout << "known_groups::init_orthogonal_group before O->init" << endl;
 	}
 	O->init(epsilon, n, F, verbose_level);
-	if (f_vv) {
+	if (f_v) {
 		cout << "known_groups::init_orthogonal_group after O->init" << endl;
 	}
 
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group "
+				"before init_orthogonal_group_with_O" << endl;
+	}
 	init_orthogonal_group_with_O(O,
 			f_on_points, f_on_lines, f_on_points_and_lines,
 			f_semilinear,
 			f_basis, verbose_level);
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group "
+				"after init_orthogonal_group_with_O" << endl;
+	}
 
 
 	if (f_v) {
@@ -1811,8 +1819,11 @@ void known_groups::init_orthogonal_group_with_O(
 	}
 	data_structures_groups::vector_ge *nice_gens;
 	A_PGL->Known_groups->init_projective_group(
-			O->Quadratic_form->n, O->F, f_semilinear,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			O->Quadratic_form->n,
+			O->F,
+			f_semilinear,
+			TRUE /* f_basis */,
+			TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	if (f_vv) {
@@ -1823,12 +1834,14 @@ void known_groups::init_orthogonal_group_with_O(
 
 	AO = NEW_OBJECT(induced_actions::action_on_orthogonal);
 	if (f_vv) {
-		cout << "known_groups::init_orthogonal_group_with_O before AO->init" << endl;
+		cout << "known_groups::init_orthogonal_group_with_O "
+				"before AO->init" << endl;
 	}
 	AO->init(A_PGL, O, f_on_points, f_on_lines,
 			f_on_points_and_lines, verbose_level - 2);
 	if (f_vv) {
-		cout << "known_groups::init_orthogonal_group_with_O after AO->init" << endl;
+		cout << "known_groups::init_orthogonal_group_with_O "
+				"after AO->init" << endl;
 	}
 
 	A->type_G = action_on_orthogonal_t;
@@ -1921,7 +1934,8 @@ void known_groups::init_orthogonal_group_with_O(
 			cout << "known_groups::init_orthogonal_group_with_O "
 					"before create_orthogonal_group" << endl;
 		}
-		create_orthogonal_group(A /*subaction*/,
+		create_orthogonal_group(
+				A_PGL /*subaction*/,
 			TRUE /* f_has_target_go */, target_go,
 			callback_choose_random_generator_orthogonal,
 			verbose_level - 2);

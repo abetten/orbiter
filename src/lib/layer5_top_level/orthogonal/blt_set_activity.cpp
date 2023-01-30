@@ -72,6 +72,22 @@ void blt_set_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_export_gap) {
+
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity f_export_gap" << endl;
+		}
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity before BC->export_gap" << endl;
+		}
+		BC->export_gap(verbose_level);
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity after BC->export_gap" << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_create_flock) {
 
 		if (f_v) {

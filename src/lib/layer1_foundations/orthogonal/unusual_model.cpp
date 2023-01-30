@@ -103,7 +103,7 @@ void unusual_model::setup2(
 
 	Quadratic_form_list_coding = NEW_OBJECT(quadratic_form_list_coding);
 
-	Quadratic_form_list_coding->init(FQ, Fq, f_sum_of_squares, verbose_level);
+	Quadratic_form_list_coding->init(Fq, FQ, f_sum_of_squares, verbose_level);
 
 
 	//const char *override_poly_Q = NULL;

@@ -196,6 +196,10 @@ void quadratic_form_list_coding::init(
 	}
 #endif
 
+	if (f_vv) {
+		cout << "quadratic_form_list_coding::init "
+				"before SubS->retract" << endl;
+	}
 	T_alpha = SubS->retract(FQ->T2(alpha), verbose_level - 2);
 	N_alpha = SubS->retract(FQ->N2(alpha), verbose_level - 2);
 	if (f_vv) {
@@ -225,13 +229,18 @@ void quadratic_form_list_coding::init(
 	}
 
 	if (f_vv) {
-		cout << "quadratic_form_list_coding::init finding hyperbolic pair" << endl;
+		cout << "quadratic_form_list_coding::init "
+				"before Fq->Linear_algebra->find_hyperbolic_pair" << endl;
 	}
 	Fq->Linear_algebra->find_hyperbolic_pair(4,
 			nb_terms,
 		form_i, form_j, form_coeff, Gram,
 		basis, basis + 4,
 		0 /*verbose_level - 3*/);
+	if (f_vv) {
+		cout << "quadratic_form_list_coding::init "
+				"after Fq->Linear_algebra->find_hyperbolic_pair" << endl;
+	}
 	Fq->Linear_algebra->perp(4, 2, basis, Gram, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "basis:" << endl;
@@ -254,6 +263,10 @@ void quadratic_form_list_coding::init(
 		}
 	}
 
+	if (f_vv) {
+		cout << "quadratic_form_list_coding::init "
+				"before Fq->Linear_algebra->restrict_quadratic_form_list_coding" << endl;
+	}
 	Fq->Linear_algebra->restrict_quadratic_form_list_coding(
 			4 - 2, 4, basis + 2 * 4,
 		nb_terms, form_i, form_j, form_coeff,
@@ -267,8 +280,14 @@ void quadratic_form_list_coding::init(
 	}
 	r_Gram = NEW_int(2 * 2);
 
+	if (f_vv) {
+		cout << "quadratic_form_list_coding::init "
+				"before make_Gram_matrix_from_list_coded_quadratic_form" << endl;
+	}
+
 	make_Gram_matrix_from_list_coded_quadratic_form(2, *Fq,
 		r_nb_terms, r_form_i, r_form_j, r_form_coeff, r_Gram);
+
 	if (f_vv) {
 		cout << "quadratic_form_list_coding::init "
 				"restricted Gram matrix:" << endl;
@@ -276,16 +295,25 @@ void quadratic_form_list_coding::init(
 				r_Gram, 2, 2, 2, 2);
 	}
 
+	if (f_vv) {
+		cout << "quadratic_form_list_coding::init "
+				"before Fq->Linear_algebra->find_hyperbolic_pair" << endl;
+	}
 	Fq->Linear_algebra->find_hyperbolic_pair(2, r_nb_terms,
 		r_form_i, r_form_j, r_form_coeff, r_Gram,
 		basis_subspace, basis_subspace + 2, verbose_level - 2);
+	if (f_vv) {
+		cout << "quadratic_form_list_coding::init "
+				"after Fq->Linear_algebra->find_hyperbolic_pair" << endl;
+	}
 	if (f_vv) {
 		cout << "quadratic_form_list_coding::init "
 				"basis_subspace:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				basis_subspace, 2, 2, 2, 2);
 	}
-	Fq->Linear_algebra->mult_matrix_matrix(basis_subspace,
+	Fq->Linear_algebra->mult_matrix_matrix(
+			basis_subspace,
 			basis + 8, hyperbolic_basis + 8, 2, 2, 4,
 			0 /* verbose_level */);
 
@@ -317,11 +345,20 @@ void quadratic_form_list_coding::init(
 		Int_vec_print_integer_matrix_width(cout, M, 4, 4, 4, 2);
 	}
 
-	Fq->Linear_algebra->restrict_quadratic_form_list_coding(4, 4,
+	if (f_vv) {
+		cout << "quadratic_form_list_coding::init "
+				"before Fq->Linear_algebra->restrict_quadratic_form_list_coding" << endl;
+	}
+	Fq->Linear_algebra->restrict_quadratic_form_list_coding(
+			4, 4,
 		hyperbolic_basis,
 		nb_terms, form_i, form_j, form_coeff,
 		rr_nb_terms, rr_form_i, rr_form_j, rr_form_coeff,
 		verbose_level - 2);
+	if (f_vv) {
+		cout << "quadratic_form_list_coding::init "
+				"after Fq->Linear_algebra->restrict_quadratic_form_list_coding" << endl;
+	}
 	if (f_vv) {
 		cout << "quadratic_form_list_coding::init "
 				"restricted quadratic form:" << endl;

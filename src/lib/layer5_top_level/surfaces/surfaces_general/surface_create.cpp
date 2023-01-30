@@ -3365,7 +3365,8 @@ void surface_create::report_with_group(
 				verbose_level);
 	}
 	else {
-		cout << "use -draw_options to specify the drawing option for the report" << endl;
+		cout << "use -draw_options to specify "
+				"the drawing option for the report" << endl;
 		exit(1);
 	}
 

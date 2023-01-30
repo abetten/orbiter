@@ -66,6 +66,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		cout << "orthogonal_space_activity::perform_activity" << endl;
 	}
 
+#if 0
 	if (Descr->f_create_BLT_set) {
 
 		if (f_v) {
@@ -115,6 +116,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 	}
+#endif
 
 #if 0
 	else if (Descr->f_BLT_set_starter) {
@@ -228,7 +230,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 #endif
 
 
-	else if (Descr->f_cheat_sheet_orthogonal) {
+	if (Descr->f_cheat_sheet_orthogonal) {
 
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity before OA->report" << endl;

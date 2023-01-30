@@ -29,6 +29,8 @@ public:
 
 	int f_report;
 
+	int f_export_gap;
+
 	int f_create_flock;
 	int create_flock_point_idx;
 
@@ -321,6 +323,7 @@ public:
 			std::vector<std::string> transform_coeffs,
 			std::vector<int> f_inverse_transform, int verbose_level);
 	void report(int verbose_level);
+	void export_gap(int verbose_level);
 	void create_flock(int point_idx, int verbose_level);
 	void report2(std::ostream &ost, int verbose_level);
 	void print_set_of_points(
@@ -433,9 +436,10 @@ public:
 class orthogonal_space_activity_description {
 public:
 
-
+#if 0
 	int f_create_BLT_set;
 	BLT_set_create_description * BLT_Set_create_description;
+#endif
 
 	int f_cheat_sheet_orthogonal;
 
