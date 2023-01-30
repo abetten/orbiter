@@ -280,7 +280,8 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 				b = P->Implementation->Lines[L[h] * P->r + i];
 					cout << "point " << b << " = ";
 					P->unrank_point(v, b);
-					P->F->PG_element_normalize_from_front(v, 1, 3);
+					P->F->Projective_space_basic->PG_element_normalize_from_front(
+							v, 1, 3);
 				Int_vec_print(cout, v, 3);
 				cout << endl;
 			}
@@ -2419,7 +2420,7 @@ void arc_in_projective_space::compute_bisecants_and_conics(
 			P->Plane->determine_line_in_plane(Line,
 				bisecants + h * 3,
 				0 /* verbose_level */);
-			P->F->PG_element_normalize_from_front(
+			P->F->Projective_space_basic->PG_element_normalize_from_front(
 				bisecants + h * 3, 1, 3);
 		}
 	}
@@ -2444,7 +2445,8 @@ void arc_in_projective_space::compute_bisecants_and_conics(
 
 		P->Plane->determine_conic_in_plane(arc5, 5,
 				six_coeffs, 0 /* verbose_level */);
-		P->F->PG_element_normalize_from_front(six_coeffs, 1, 6);
+		P->F->Projective_space_basic->PG_element_normalize_from_front(
+				six_coeffs, 1, 6);
 		Int_vec_copy(six_coeffs, conics + j * 6, 6);
 	}
 

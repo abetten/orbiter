@@ -120,9 +120,9 @@ void classify_double_sixes::test_orbits(int verbose_level)
 
 		orbiter_kernel_system::Orbiter->Lint_vec->apply(
 				S,
-				Five_p1->Neighbor_to_line,
+				Five_p1->Linear_complex->Neighbor_to_line,
 				S2, 5);
-		S2[5] = Five_p1->pt0_line;
+		S2[5] = Five_p1->Linear_complex->pt0_line;
 		if (f_vv) {
 			cout << "5+1 lines = ";
 			Lint_vec_print(cout, S2, 6);
@@ -296,11 +296,11 @@ void classify_double_sixes::downstep(int verbose_level)
 
 		orbiter_kernel_system::Orbiter->Lint_vec->apply(
 				dataset,
-				Five_p1->Neighbor_to_line,
+				Five_p1->Linear_complex->Neighbor_to_line,
 				dataset + 5,
 				5);
 		
-		dataset[10] = Five_p1->pt0_line;
+		dataset[10] = Five_p1->Linear_complex->pt0_line;
 
 		long int double_six[12];
 
@@ -317,7 +317,7 @@ void classify_double_sixes::downstep(int verbose_level)
 
 		c = Five_p1->Surf_A->create_double_six_from_five_lines_with_a_common_transversal(
 				dataset + 5,
-				Five_p1->pt0_line,
+				Five_p1->Linear_complex->pt0_line,
 				double_six,
 				verbose_level - 2);
 		
@@ -886,7 +886,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 		Five_p1->Five_plus_one->get_set_by_level(k, Idx[i], rep);
 
 		orbiter_kernel_system::Orbiter->Lint_vec->apply(
-				rep, Five_p1->Neighbor_to_line, lines, k);
+				rep, Five_p1->Linear_complex->Neighbor_to_line, lines, k);
 
 		Five_p1->Five_plus_one->get_stabilizer_order(k, Idx[i], go);
 
@@ -902,7 +902,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 
 		orbiter_kernel_system::Orbiter->Lint_vec->apply(
 				rep,
-				Five_p1->Neighbor_to_line,
+				Five_p1->Linear_complex->Neighbor_to_line,
 				lines, k);
 
 		Lint_vec_print_to_str(Text[i], lines, k);
@@ -982,7 +982,7 @@ void classify_double_sixes::write_file(
 		cout << "classify_double_sixes::write_file" << endl;
 	}
 	fp.write((char *) &Five_p1->q, sizeof(int));
-	fp.write((char *) &Five_p1->nb_neighbors, sizeof(int));
+	fp.write((char *) &Five_p1->Linear_complex->nb_neighbors, sizeof(int));
 	fp.write((char *) &len, sizeof(int));
 	fp.write((char *) &nb, sizeof(int));
 	fp.write((char *) &Flag_orbits->nb_flag_orbits, sizeof(int));
@@ -1042,7 +1042,7 @@ void classify_double_sixes::read_file(
 		cout << "classify_double_sixes::read_file" << endl;
 	}
 	fp.read((char *) &Five_p1->q, sizeof(int));
-	fp.read((char *) &Five_p1->nb_neighbors, sizeof(int));
+	fp.read((char *) &Five_p1->Linear_complex->nb_neighbors, sizeof(int));
 	fp.read((char *) &len, sizeof(int));
 	fp.read((char *) &nb, sizeof(int));
 	fp.read((char *) &nb_flag_orbits, sizeof(int));
@@ -1051,7 +1051,7 @@ void classify_double_sixes::read_file(
 		cout << "classify_double_sixes::read_file "
 				"q=" << Five_p1->q << endl;
 		cout << "classify_double_sixes::read_file "
-				"nb_neighbors=" << Five_p1->nb_neighbors << endl;
+				"nb_neighbors=" << Five_p1->Linear_complex->nb_neighbors << endl;
 		cout << "classify_double_sixes::read_file "
 				"len=" << len << endl;
 		cout << "classify_double_sixes::read_file "

@@ -968,8 +968,10 @@ void polar::test_if_closed_under_cosets(
 		}
 	if (len >= 2) {
 		for (i = 0; i < nb0; i++) {
-			F->PG_element_unrank_modified(v, 1, len - 1, i);
-			F->Linear_algebra->mult_vector_from_the_left(v, M, N0 + i * n, len - 1, n);
+			F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, len - 1, i);
+			F->Linear_algebra->mult_vector_from_the_left(
+					v, M, N0 + i * n, len - 1, n);
 			}
 		if (f_v) {
 			cout << "the list of points N0:" << endl;
@@ -977,8 +979,10 @@ void polar::test_if_closed_under_cosets(
 			}
 		}
 	for (i = 0; i < nb; i++) {
-		F->PG_element_unrank_modified(v, 1, len, i);
-		F->Linear_algebra->mult_vector_from_the_left(v, M, N + i * n, len, n);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, len, i);
+		F->Linear_algebra->mult_vector_from_the_left(
+				v, M, N + i * n, len, n);
 		}
 	if (f_v) {
 		cout << "the list of points N:" << endl;

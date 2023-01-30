@@ -93,7 +93,8 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 				A, d, d, d,
 				P->F->log10_of_q + 1);
 		}
-		P->F->PG_element_rank_modified_lint(A + n * d, 1, d, a);
+		P->F->Projective_space_basic->PG_element_rank_modified_lint(
+				A + n * d, 1, d, a);
 		if (f_vv) {
 			cout << "hyperplane " << i << " is perp of point ";
 			Int_vec_print(cout, A + n * d, d);
@@ -200,7 +201,8 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 
 	for (i = 0; i < P->N_points; i++) {
 
-		P->F->PG_element_unrank_modified(v, 1, d, i);
+		P->F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, d, i);
 
 
 		P->F->Linear_algebra->mult_matrix_matrix(v, Mtx,

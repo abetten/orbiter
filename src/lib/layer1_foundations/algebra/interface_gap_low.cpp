@@ -103,9 +103,9 @@ void interface_gap_low::collineation_set_stabilizer(
 	ost << "pg := ProjectiveSpace(" << d - 1 << "," << F->q << ");" << endl;
 	ost << "S:=[" << endl;
 	for (h = 0; h < nb_pts; h++) {
-		F->PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
 
-		F->PG_element_normalize_from_front(v, 1, d);
+		F->Projective_space_basic->PG_element_normalize_from_front(v, 1, d);
 
 		ost << "[";
 		for (i = 0; i < d; i++) {

@@ -591,7 +591,8 @@ static void wreath_product_print_set(std::ostream &ost, int len, long int *S, vo
 	Lint_vec_print(cout, S, len);
 	cout << endl;
 	for (i = 0; i < len; i++) {
-		T->F->PG_element_unrank_modified(T->v,
+		T->F->Projective_space_basic->PG_element_unrank_modified(
+				T->v,
 				1, T->vector_space_dimension, S[i]);
 		cout << S[i] << " : ";
 		Int_vec_print(cout, T->v, T->vector_space_dimension);

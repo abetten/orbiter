@@ -2676,8 +2676,10 @@ int number_theory_domain::elliptic_curve_addition(
 
 	P2->unrank_point(p1, p1_rk);
 	P2->unrank_point(p2, p2_rk);
-	P2->F->PG_element_normalize(p1, 1, 3);
-	P2->F->PG_element_normalize(p2, 1, 3);
+	P2->F->Projective_space_basic->PG_element_normalize(
+			p1, 1, 3);
+	P2->F->Projective_space_basic->PG_element_normalize(
+			p2, 1, 3);
 
 	x1 = p1[0];
 	y1 = p1[1];

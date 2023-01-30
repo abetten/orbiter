@@ -1413,7 +1413,8 @@ void geometry_global::do_rank_points_in_PG(
 	int i;
 
 	for (i = 0; i < m; i++) {
-		F->PG_element_rank_modified_lint(v + i * n, 1, n, a);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v + i * n, 1, n, a);
 
 		Int_vec_print(cout, v + i * n, n);
 		cout << " : " << a << endl;
@@ -1460,7 +1461,8 @@ void geometry_global::do_unrank_points_in_PG(
 
 		a = v[i];
 
-		F->PG_element_unrank_modified_lint(M + i * d, 1, d, a);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(
+				M + i * d, 1, d, a);
 
 		cout << a << " : ";
 		Int_vec_print(cout, M + i * d, d);
@@ -1548,7 +1550,7 @@ void geometry_global::do_intersection_of_two_lines(
 		cout << "geometry_global::do_intersection_of_two_lines "
 				"normalizing from the left" << endl;
 		for (i = 3; i < 4; i++) {
-			F->PG_element_normalize_from_front(
+			F->Projective_space_basic->PG_element_normalize_from_front(
 					C + i * 4, 1, 4);
 		}
 
@@ -1563,7 +1565,7 @@ void geometry_global::do_intersection_of_two_lines(
 		cout << "geometry_global::do_intersection_of_two_lines "
 				"normalizing from the right" << endl;
 		for (i = 3; i < 4; i++) {
-			F->PG_element_normalize(
+			F->Projective_space_basic->PG_element_normalize(
 					C + i * 4, 1, 4);
 		}
 
@@ -1661,7 +1663,7 @@ void geometry_global::do_transversal(
 		cout << "geometry_global::do_transversal "
 				"normalizing from the left" << endl;
 		for (i = 2; i < 4; i++) {
-			F->PG_element_normalize_from_front(
+			F->Projective_space_basic->PG_element_normalize_from_front(
 					B + i * 4, 1, 4);
 		}
 
@@ -1676,7 +1678,7 @@ void geometry_global::do_transversal(
 		cout << "geometry_global::do_transversal "
 				"normalizing from the right" << endl;
 		for (i = 2; i < 4; i++) {
-			F->PG_element_normalize(
+			F->Projective_space_basic->PG_element_normalize(
 					B + i * 4, 1, 4);
 		}
 
@@ -2252,7 +2254,8 @@ void geometry_global::find_two_lines_for_arc_lifting(
 		Int_vec_copy(Basis, Basis_search, 4);
 		Int_vec_copy(Basis + 4, Basis_search + 4, 4);
 
-		P->F->PG_element_unrank_modified(Basis_search + 8, 1, 4, i);
+		P->F->Projective_space_basic->PG_element_unrank_modified(
+				Basis_search + 8, 1, 4, i);
 
 		if (Basis_search[11] == 0) {
 			continue;
@@ -2285,8 +2288,10 @@ void geometry_global::find_two_lines_for_arc_lifting(
 	for (i = p0 + 1; i < N; i++) {
 		Int_vec_copy(Basis, Basis_search, 4);
 		Int_vec_copy(Basis + 4, Basis_search + 4, 4);
-		P->F->PG_element_unrank_modified(Basis_search + 8, 1, 4, p0);
-		P->F->PG_element_unrank_modified(Basis_search + 12, 1, 4, i);
+		P->F->Projective_space_basic->PG_element_unrank_modified(
+				Basis_search + 8, 1, 4, p0);
+		P->F->Projective_space_basic->PG_element_unrank_modified(
+				Basis_search + 12, 1, 4, i);
 		if (Basis_search[15] == 0) {
 			continue;
 		}
@@ -2308,8 +2313,10 @@ void geometry_global::find_two_lines_for_arc_lifting(
 		cout << "geometry_global::find_two_lines_for_arc_lifting "
 				"p0=" << p0 << " p1=" << p1 << endl;
 	}
-	P->F->PG_element_unrank_modified(Basis + 8, 1, 4, p0);
-	P->F->PG_element_unrank_modified(Basis + 12, 1, 4, p1);
+	P->F->Projective_space_basic->PG_element_unrank_modified(
+			Basis + 8, 1, 4, p0);
+	P->F->Projective_space_basic->PG_element_unrank_modified(
+			Basis + 12, 1, 4, p1);
 	if (f_v) {
 		cout << "geometry_global::find_two_lines_for_arc_lifting " << endl;
 		cout << "Basis:" << endl;
@@ -2407,10 +2414,14 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		Int_matrix_print(Line2, 2, 4);
 	}
 
-	P->F->PG_element_normalize(Line1, 1, 4);
-	P->F->PG_element_normalize(Line2, 1, 4);
-	P->F->PG_element_normalize(Line1 + 4, 1, 4);
-	P->F->PG_element_normalize(Line2 + 4, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(
+			Line1, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(
+			Line2, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(
+			Line1 + 4, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(
+			Line2 + 4, 1, 4);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"P1 = first point on Line1:" << endl;
@@ -2452,8 +2463,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 				"P2 * A ^Phi^frobenius = " << endl;
 		Int_matrix_print(P2A, 1, 3);
 	}
-	P->F->PG_element_normalize(P1A, 1, 3);
-	P->F->PG_element_normalize(P2A, 1, 3);
+	P->F->Projective_space_basic->PG_element_normalize(
+			P1A, 1, 3);
+	P->F->Projective_space_basic->PG_element_normalize(
+			P2A, 1, 3);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"normalized P1 * A = " << endl;
@@ -2685,10 +2698,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 		Int_matrix_print(Line2_from, 2, 4);
 	}
 
-	P->F->PG_element_normalize(Line1_from, 1, 4);
-	P->F->PG_element_normalize(Line2_from, 1, 4);
-	P->F->PG_element_normalize(Line1_from + 4, 1, 4);
-	P->F->PG_element_normalize(Line2_from + 4, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(Line1_from, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(Line2_from, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(Line1_from + 4, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(Line2_from + 4, 1, 4);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"P1 = first point on Line1_from:" << endl;
@@ -2738,10 +2751,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 		Int_matrix_print(Line2_to, 2, 4);
 	}
 
-	P->F->PG_element_normalize(Line1_to, 1, 4);
-	P->F->PG_element_normalize(Line2_to, 1, 4);
-	P->F->PG_element_normalize(Line1_to + 4, 1, 4);
-	P->F->PG_element_normalize(Line2_to + 4, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(Line1_to, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(Line2_to, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(Line1_to + 4, 1, 4);
+	P->F->Projective_space_basic->PG_element_normalize(Line2_to + 4, 1, 4);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"P1 = first point on Line1_to:" << endl;
@@ -3217,7 +3230,8 @@ void geometry_global::find_lines_which_are_contained(
 		for (a = 0; a < P->q + 1; a++) {
 
 			// unrank a point on the projective line:
-			P->F->PG_element_unrank_modified(coeffs, 1, 2, a);
+			P->F->Projective_space_basic->PG_element_unrank_modified(
+					coeffs, 1, 2, a);
 			Int_vec_copy(M, M2, 2 * d);
 
 			// map the point to the line at hand.
@@ -3231,7 +3245,8 @@ void geometry_global::find_lines_which_are_contained(
 
 			// rank the test point and see
 			// if it belongs to the surface:
-			P->F->PG_element_rank_modified_lint(M2 + 2 * d, 1, d, b);
+			P->F->Projective_space_basic->PG_element_rank_modified_lint(
+					M2 + 2 * d, 1, d, b);
 			if (!Sorting.lint_vec_search(set1, sz1, b, idx, 0)) {
 				break;
 			}
@@ -3325,7 +3340,8 @@ void geometry_global::find_lines_which_are_contained(
 								P->F->mult(a, M2[1 * d + h]));
 				}
 				// row 2 of M2 contains the coordinates of the point P3:
-				P->F->PG_element_rank_modified_lint(M2 + 2 * d, 1, d, b);
+				P->F->Projective_space_basic->PG_element_rank_modified_lint(
+						M2 + 2 * d, 1, d, b);
 				if (!Sorting.lint_vec_search(set2, sz2, b, idx, 0)) {
 					break;
 				}
@@ -3702,7 +3718,8 @@ void geometry_global::conic_type2(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "geometry_global::conic_type2 threshold = " << threshold << endl;
+		cout << "geometry_global::conic_type2 "
+				"threshold = " << threshold << endl;
 	}
 
 
@@ -3714,7 +3731,8 @@ void geometry_global::conic_type2(
 
 
 	if (f_v) {
-		cout << "geometry_global::conic_type2 before P->conic_type" << endl;
+		cout << "geometry_global::conic_type2 "
+				"before P->conic_type" << endl;
 	}
 
 	P->Plane->conic_type(Pts, nb_pts,
@@ -3723,7 +3741,8 @@ void geometry_global::conic_type2(
 			verbose_level);
 
 	if (f_v) {
-		cout << "geometry_global::conic_type2 after P->conic_type" << endl;
+		cout << "geometry_global::conic_type2 "
+				"after P->conic_type" << endl;
 	}
 
 
@@ -3786,7 +3805,9 @@ void geometry_global::conic_type2(
 		for (u = 0; u < 55; u++) {
 			for (v = 0; v < nb_pts_per_line; v++) {
 				if (P->Plane->test_if_conic_contains_point(
-						Conic_eqn[h], pts_on_line[u * nb_pts_per_line + v])) {
+						Conic_eqn[h],
+						pts_on_line[u * nb_pts_per_line + v])) {
+
 					Conic_line_intersection_sz[h * 55 + u]++;
 				}
 
@@ -3972,7 +3993,8 @@ void geometry_global::do_cone_over(int n,
 	Int_vec_zero(v, d);
 	v[d - 1] = 1;
 	//b = P2->rank_point(v);
-	F->PG_element_rank_modified_lint(v, 1, n + 2, b);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1, n + 2, b);
 	set_out[cnt++] = b;
 
 
@@ -3985,12 +4007,14 @@ void geometry_global::do_cone_over(int n,
 		a = set_in[h];
 		for (u = 0; u < F->q; u++) {
 			//P1->unrank_point(v, a);
-			F->PG_element_unrank_modified_lint(v, 1, n + 1, a);
+			F->Projective_space_basic->PG_element_unrank_modified_lint(
+					v, 1, n + 1, a);
 
 			v[d - 1] = u;
 
 			//b = P2->rank_point(v);
-			F->PG_element_rank_modified_lint(v, 1, n + 2, b);
+			F->Projective_space_basic->PG_element_rank_modified_lint(
+					v, 1, n + 2, b);
 
 			set_out[cnt++] = b;
 		}
@@ -4192,7 +4216,8 @@ void geometry_global::do_blocking_set_family_3(int n,
 
 	pt_type = NEW_int(P->N_points);
 
-	P->Implementation->point_types_of_line_set(S->set, S->k, pt_type, 0);
+	P->Implementation->point_types_of_line_set(
+			S->set, S->k, pt_type, 0);
 
 	data_structures::tally C;
 
@@ -4285,7 +4310,8 @@ void geometry_global::create_orthogonal(
 
 		Quadratic_form->unrank_point(v, i, 0 /* verbose_level */);
 
-		F->PG_element_rank_modified(v, 1, d, j);
+		F->Projective_space_basic->PG_element_rank_modified(
+				v, 1, d, j);
 
 		Pts[i] = j;
 
@@ -4357,7 +4383,8 @@ void geometry_global::create_hermitian(
 	}
 	for (i = 0; i < nb_pts; i++) {
 		H->Sbar_unrank(v, d, i, 0 /*verbose_level*/);
-		F->PG_element_rank_modified(v, 1, d, j);
+		F->Projective_space_basic->PG_element_rank_modified(
+				v, 1, d, j);
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
@@ -4429,7 +4456,8 @@ void geometry_global::create_ttp_code(
 		cout << "H_subfield:" << endl;
 		cout << "m=" << m << endl;
 		cout << "n=" << n << endl;
-		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, H_subfield, m, n, n, 2);
 		//f.latex_matrix(cout, f_elements_exponential,
 		//symbol_for_print_subfield, H_subfield, m, n);
 	}
@@ -4550,19 +4578,22 @@ void geometry_global::create_segre_variety(
 
 	for (rk1 = 0; rk1 < N1; rk1++) {
 		//P1->unrank_point(v1, rk1);
-		F->PG_element_unrank_modified_lint(v1, 1, a + 1, rk1);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(
+				v1, 1, a + 1, rk1);
 
 
 		for (rk2 = 0; rk2 < N2; rk2++) {
 			//P2->unrank_point(v2, rk2);
-			F->PG_element_unrank_modified_lint(v2, 1, b + 1, rk2);
+			F->Projective_space_basic->PG_element_unrank_modified_lint(
+					v2, 1, b + 1, rk2);
 
 
-			F->Linear_algebra->mult_matrix_matrix(v1, v2, v3, a + 1, 1, b + 1,
+			F->Linear_algebra->mult_matrix_matrix(
+					v1, v2, v3, a + 1, 1, b + 1,
 					0 /* verbose_level */);
 
 			//rk3 = P3->rank_point(v3);
-			F->PG_element_rank_modified_lint(v3, 1, d, rk3);
+			F->Projective_space_basic->PG_element_rank_modified_lint(v3, 1, d, rk3);
 
 			Pts[nb_pts++] = rk3;
 
@@ -4854,7 +4885,8 @@ void geometry_global::do_embed_orthogonal(
 		Quadratic_form->unrank_point(v, a, 0 /* verbose_level */);
 
 		//b = P->rank_point(v);
-		F->PG_element_rank_modified_lint(v, 1, n + 1, b);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v, 1, n + 1, b);
 		set_out[h] = b;
 	}
 
@@ -4888,11 +4920,13 @@ void geometry_global::do_embed_points(
 	for (h = 0; h < set_size; h++) {
 		a = set_in[h];
 
-		F->PG_element_unrank_modified_lint(v, 1, n + 1, a);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(
+				v, 1, n + 1, a);
 
 		v[d - 1] = 0;
 
-		F->PG_element_rank_modified_lint(v, 1, n + 2, b);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v, 1, n + 2, b);
 
 		set_out[h] = b;
 	}
@@ -4919,7 +4953,7 @@ void geometry_global::print_set_in_affine_plane(
 		}
 	}
 	for (i = 0; i < len; i++) {
-		F->PG_element_unrank_modified(
+		F->Projective_space_basic->PG_element_unrank_modified(
 				v, 1 /* stride */, 3 /* len */, S[i]);
 		if (v[2] != 1) {
 			//cout << "my_generator::print_set_in_affine_plane
@@ -4992,7 +5026,8 @@ void geometry_global::simeon(
 	// unrank all points of the arc:
 	for (i = 0; i < len; i++) {
 		//point_unrank(Coord + i * k, S[i]);
-		F->PG_element_unrank_modified(Coord + i * k, 1 /* stride */, n + 1 /* len */, S[i]);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				Coord + i * k, 1 /* stride */, n + 1 /* len */, S[i]);
 	}
 
 
@@ -5218,7 +5253,8 @@ void geometry_global::isomorphism_to_special_orthogonal(
 	F->Linear_algebra->mult_matrix_matrix(
 			D, B, A6, 6, 6, 6, 0 /*verbose_level */);
 
-	F->PG_element_normalize_from_front(A6, 1, 36);
+	F->Projective_space_basic->PG_element_normalize_from_front(
+			A6, 1, 36);
 
 	if (f_vv) {
 		cout << "geometry_global::isomorphism_to_special_orthogonal "

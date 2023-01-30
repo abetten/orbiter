@@ -850,7 +850,8 @@ void projective_space_plane::conic_type_randomized(
 		}
 
 
-		P->F->PG_element_normalize(six_coeffs, 1, 6);
+		P->F->Projective_space_basic->PG_element_normalize(
+				six_coeffs, 1, 6);
 		Gg.AG_element_rank_longinteger(P->F->q, six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";
@@ -1438,7 +1439,8 @@ void projective_space_plane::conic_type(
 		}
 
 
-		P->F->PG_element_normalize(six_coeffs, 1, 6);
+		P->F->Projective_space_basic->PG_element_normalize(
+				six_coeffs, 1, 6);
 		Gg.AG_element_rank_longinteger(P->F->q, six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";

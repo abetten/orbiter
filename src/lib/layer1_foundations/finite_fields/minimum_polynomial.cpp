@@ -29,6 +29,7 @@ minimum_polynomial::minimum_polynomial()
 	q1 = 0;
 
 	M = NULL;
+	MM = NULL;
 	K = NULL;
 	base_cols = NULL;
 	kernel_m = 0;
@@ -99,6 +100,7 @@ void minimum_polynomial::compute_subfield_polynomial(
 
 
 	M = NEW_int(F->e * (e1 + 1));
+	MM = NEW_int(F->e * (e1 + 1));
 	Int_vec_zero(M, F->e * (e1 + 1));
 
 	K = NEW_int(F->e);
@@ -133,13 +135,16 @@ void minimum_polynomial::compute_subfield_polynomial(
 				cout, M,
 				F->e, e1 + 1, e1 + 1, GFp.log10_of_q);
 	}
+
+	Int_vec_copy(M, MM, F->e * (e1 + 1));
+
 	rk = GFp.Linear_algebra->Gauss_simple(
-			M, F->e, e1 + 1,
+			MM, F->e, e1 + 1,
 		base_cols, 0/*verbose_level*/);
 	if (f_vv) {
 		cout << "minimum_polynomial::compute_subfield_polynomial after Gauss=" << endl;
 		Int_vec_print_integer_matrix_width(
-				cout, M,
+				cout, MM,
 				F->e, e1 + 1, e1 + 1, GFp.log10_of_q);
 		cout << "rk=" << rk << endl;
 	}
@@ -150,7 +155,7 @@ void minimum_polynomial::compute_subfield_polynomial(
 	}
 
 	GFp.Linear_algebra->matrix_get_kernel(
-			M, F->e, e1 + 1, base_cols, rk,
+			MM, F->e, e1 + 1, base_cols, rk,
 		kernel_m, kernel_n, K, 0 /* verbose_level */);
 
 	if (f_vv) {
@@ -215,6 +220,7 @@ void minimum_polynomial::compute_subfield_polynomial(
 
 void minimum_polynomial::report_table(std::ostream &ost)
 {
+	ost << "The power table shows $(\\alpha^d)^i$ for $i=0,1,\\ldots,e$ where $q=p^{e}$:" << endl;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|c|c|}" << endl;
 	ost << "\\hline" << endl;

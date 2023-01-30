@@ -416,6 +416,7 @@ namespace field_theory {
 	class minimum_polynomial;
 	class norm_tables;
 	class nth_roots;
+	class projective_space_basic;
 	class related_fields;
 	class square_nonsquare;
 	class subfield_structure;
@@ -602,6 +603,7 @@ namespace orthogonal_geometry {
 	// orthogonal:
 	class blt_set_domain;
 	class blt_set_invariants;
+	class linear_complex;
 	class orthogonal_global;
 	class orthogonal_group;
 	class orthogonal_indexing;

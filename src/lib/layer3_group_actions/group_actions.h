@@ -251,7 +251,7 @@ union symmetry_group {
 #include "data_structures/l3_data_structures.h"
 #include "./groups/groups.h"
 #include "./induced_actions/induced_actions.h"
-#include "./interfaces/interfaces.h"
+#include "interfaces/l3_interfaces.h"
 
 
 

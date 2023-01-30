@@ -1658,7 +1658,8 @@ void surface_object_properties::print_equation(std::ostream &ost)
 
 	long int rk;
 
-	SO->F->PG_element_rank_modified_lint(SO->eqn, 1, 20, rk);
+	SO->F->Projective_space_basic->PG_element_rank_modified_lint(
+			SO->eqn, 1, 20, rk);
 	ost << "The point rank of the equation over GF$(" << SO->F->q << ")$ is " << rk << "\\\\" << endl;
 
 	//ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
@@ -1727,7 +1728,8 @@ void surface_object_properties::print_affine_points_in_source_code(std::ostream 
 	cnt = 0;
 	for (i = 0; i < SO->nb_pts; i++) {
 		SO->Surf->unrank_point(v, SO->Pts[i]);
-		SO->Surf->F->PG_element_normalize(v, 1, 4);
+		SO->Surf->F->Projective_space_basic->PG_element_normalize(
+				v, 1, 4);
 		if (v[3]) {
 			ost << "\t";
 			for (j = 0; j < 4; j++) {
@@ -2636,7 +2638,8 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 		int j;
 
 		for (j = 0; j < SO->F->q + 1; j++) {
-			SO->F->PG_element_unrank_modified(v, 1, 2, j);
+			SO->F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, 2, j);
 			if (f_vv) {
 				cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P v=" << endl;
 				Int_vec_print(cout, v, 2);

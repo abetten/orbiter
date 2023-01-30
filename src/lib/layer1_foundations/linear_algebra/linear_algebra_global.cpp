@@ -276,7 +276,8 @@ void linear_algebra_global::do_nullspace(
 					"normalizing from the left" << endl;
 		}
 		for (i = rk; i < n; i++) {
-			F->PG_element_normalize_from_front(A + i * n, 1, n);
+			F->Projective_space_basic->PG_element_normalize_from_front(
+					A + i * n, 1, n);
 		}
 
 		if (f_v) {
@@ -299,7 +300,8 @@ void linear_algebra_global::do_nullspace(
 					"normalizing from the right" << endl;
 		}
 		for (i = rk; i < n; i++) {
-			F->PG_element_normalize(A + i * n, 1, n);
+			F->Projective_space_basic->PG_element_normalize(
+					A + i * n, 1, n);
 		}
 
 		if (f_v) {
@@ -462,7 +464,8 @@ void linear_algebra_global::do_RREF(
 			cout << "normalizing from the left" << endl;
 		}
 		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize_from_front(A + i * n, 1, n);
+			F->Projective_space_basic->PG_element_normalize_from_front(
+					A + i * n, 1, n);
 		}
 
 		if (f_v) {
@@ -477,7 +480,8 @@ void linear_algebra_global::do_RREF(
 			cout << "normalizing from the right" << endl;
 		}
 		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize(A + i * n, 1, n);
+			F->Projective_space_basic->PG_element_normalize(
+					A + i * n, 1, n);
 		}
 
 		if (f_v) {
@@ -491,7 +495,8 @@ void linear_algebra_global::do_RREF(
 
 	R = NEW_lint(rk);
 	for (i = 0; i < rk; i++) {
-		F->PG_element_rank_modified_lint(A + i * n, 1, n, R[i]);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				A + i * n, 1, n, R[i]);
 	}
 	cout << "The orbiter ranks of the basis elements are: ";
 	Lint_vec_print(cout, R, rk);

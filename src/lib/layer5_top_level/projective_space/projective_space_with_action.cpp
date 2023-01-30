@@ -422,7 +422,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	ost << "There are " << cnt << " fixed points, they are: \\\\" << endl;
 	for (i = 0; i < P3->N_points; i++) {
 		j = A->element_image_of(i, Elt, 0 /* verbose_level */);
-		F->PG_element_unrank_modified(v, 1, 4, i);
+		F->Projective_space_basic->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
 			Int_vec_print(ost, v, 4);

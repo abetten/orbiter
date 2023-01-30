@@ -1881,7 +1881,7 @@ public:
 
 typedef struct coset_table_entry coset_table_entry;
 
-//! a helper class for the poset classification algorithm to build up a coset transversal for the automorphism group
+//! auxiliary class to build a coset transversal for the automorphism group in the poset classification algorithm
 
 struct coset_table_entry {
 	int coset;

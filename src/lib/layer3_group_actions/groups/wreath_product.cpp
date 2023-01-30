@@ -416,7 +416,8 @@ void wreath_product::unrank_point(long int a, int *v, int verbose_level)
 		exit(1);
 	}
 	a -= nb_factors * M->degree;
-	F->PG_element_unrank_modified_lint(v, 1,
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v, 1,
 			dimension_of_tensor_action, a);
 }
 
@@ -425,7 +426,8 @@ long int wreath_product::rank_point(int *v, int verbose_level)
 	long int a, b;
 
 	a = nb_factors + nb_factors * M->degree;
-	F->PG_element_rank_modified_lint(v, 1,
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1,
 			dimension_of_tensor_action, b);
 	a += b;
 	return a;
@@ -482,7 +484,8 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 						"we are in the tensor product component "
 						"reduced input a = " << a << endl;
 			}
-			F->PG_element_unrank_modified_lint(u, 1,
+			F->Projective_space_basic->PG_element_unrank_modified_lint(
+					u, 1,
 					dimension_of_tensor_action, a);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
@@ -514,7 +517,8 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 				Int_vec_print(cout, w, dimension_of_tensor_action);
 				cout << endl;
 			}
-			F->PG_element_rank_modified_lint(w, 1,
+			F->Projective_space_basic->PG_element_rank_modified_lint(
+					w, 1,
 					dimension_of_tensor_action, c);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
@@ -1433,13 +1437,15 @@ long int wreath_product::tensor_PG_rank(int *tensor)
 {
 	long int b;
 
-	F->PG_element_rank_modified_lint(tensor, 1, dimension_of_tensor_action, b);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			tensor, 1, dimension_of_tensor_action, b);
 	return b;
 }
 
 void wreath_product::tensor_PG_unrank(int *tensor, long int PG_rk)
 {
-	F->PG_element_unrank_modified_lint(tensor, 1, dimension_of_tensor_action, PG_rk);
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			tensor, 1, dimension_of_tensor_action, PG_rk);
 }
 
 long int wreath_product::affine_rank_to_PG_rank(uint32_t affine_rk)
@@ -1447,7 +1453,8 @@ long int wreath_product::affine_rank_to_PG_rank(uint32_t affine_rk)
 	long int b;
 
 	tensor_affine_unrank(u, affine_rk);
-	F->PG_element_rank_modified_lint(u, 1, dimension_of_tensor_action, b);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			u, 1, dimension_of_tensor_action, b);
 	return b;
 }
 
@@ -1455,7 +1462,8 @@ uint32_t wreath_product::PG_rank_to_affine_rank(long int PG_rk)
 {
 	uint32_t b;
 
-	F->PG_element_unrank_modified_lint(u, 1, dimension_of_tensor_action, PG_rk);
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			u, 1, dimension_of_tensor_action, PG_rk);
 	b = tensor_affine_rank(u);
 	return b;
 }

@@ -2536,16 +2536,16 @@ void algebra_global::O4_grid_coordinates_rank(
 		v[0] = b;
 		v[1] = d;
 	}
-	F->PG_element_normalize_from_front(v, 1, 2);
-	F->PG_element_normalize_from_front(w, 1, 2);
+	F->Projective_space_basic->PG_element_normalize_from_front(v, 1, 2);
+	F->Projective_space_basic->PG_element_normalize_from_front(w, 1, 2);
 	if (f_v) {
 		Int_vec_print(cout, v, 2);
 		Int_vec_print(cout, w, 2);
 		cout << endl;
 	}
 
-	F->PG_element_rank_modified(v, 1, 2, grid_x);
-	F->PG_element_rank_modified(w, 1, 2, grid_y);
+	F->Projective_space_basic->PG_element_rank_modified(v, 1, 2, grid_x);
+	F->Projective_space_basic->PG_element_rank_modified(w, 1, 2, grid_y);
 }
 
 void algebra_global::O4_grid_coordinates_unrank(
@@ -2558,10 +2558,10 @@ void algebra_global::O4_grid_coordinates_unrank(
 	int a, b, c, d;
 	int v[2], w[2];
 
-	F->PG_element_unrank_modified(v, 1, 2, grid_x);
-	F->PG_element_unrank_modified(w, 1, 2, grid_y);
-	F->PG_element_normalize_from_front(v, 1, 2);
-	F->PG_element_normalize_from_front(w, 1, 2);
+	F->Projective_space_basic->PG_element_unrank_modified(v, 1, 2, grid_x);
+	F->Projective_space_basic->PG_element_unrank_modified(w, 1, 2, grid_y);
+	F->Projective_space_basic->PG_element_normalize_from_front(v, 1, 2);
+	F->Projective_space_basic->PG_element_normalize_from_front(w, 1, 2);
 	if (f_v) {
 		Int_vec_print(cout, v, 2);
 		Int_vec_print(cout, w, 2);
@@ -2636,7 +2636,7 @@ void algebra_global::O4_find_tangent_plane(
 
 
 			for (k = 0; k < size; k++) {
-				F->PG_element_unrank_modified(vec2, 1, 2, k);
+				F->Projective_space_basic->PG_element_unrank_modified(vec2, 1, 2, k);
 				y1 = F->add(F->mult(pt_x1, vec2[0]), F->mult(x1, vec2[1]));
 				y2 = F->add(F->mult(pt_x2, vec2[0]), F->mult(x2, vec2[1]));
 				y3 = F->add(F->mult(pt_x3, vec2[0]), F->mult(x3, vec2[1]));

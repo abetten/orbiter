@@ -1,10 +1,10 @@
-// finite_field_projective.cpp
-//
-// Anton Betten
-//
-// started:  April 2, 2003
-//
-// renamed from projective.cpp Nov 16, 2018
+/*
+ * projective_space_basic.cpp
+ *
+ *  Created on: Jan 30, 2023
+ *      Author: betten
+ */
+
 
 
 
@@ -13,26 +13,48 @@
 using namespace std;
 
 
-
 namespace orbiter {
 namespace layer1_foundations {
 namespace field_theory {
 
 
-void finite_field::PG_element_apply_frobenius(
+projective_space_basic::projective_space_basic()
+{
+	F = NULL;
+}
+
+projective_space_basic::~projective_space_basic()
+{
+}
+
+void projective_space_basic::init(finite_field *F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_basic::init" << endl;
+	}
+	projective_space_basic::F = F;
+	if (f_v) {
+		cout << "projective_space_basic::init done" << endl;
+	}
+
+}
+
+void projective_space_basic::PG_element_apply_frobenius(
 		int n,
 		int *v, int f)
 {
 	int i;
 
 	for (i = 0; i < n; i++) {
-		v[i] = frobenius_power(v[i], f);
+		v[i] = F->frobenius_power(v[i], f);
 	}
 }
 
 
 
-int finite_field::test_if_vectors_are_projectively_equal(
+int projective_space_basic::test_if_vectors_are_projectively_equal(
 		int *v1, int *v2, int len)
 {
 	int *w1, *w2;
@@ -43,10 +65,10 @@ int finite_field::test_if_vectors_are_projectively_equal(
 	w2 = NEW_int(len);
 
 #if 0
-	cout << "finite_field::test_if_vectors_are_projectively_equal:" << endl;
+	cout << "projective_space_basic::test_if_vectors_are_projectively_equal:" << endl;
 	Orbiter->Int_vec.print(cout, v1, 20);
 	cout << endl;
-	cout << "finite_field::test_if_vectors_are_projectively_equal:" << endl;
+	cout << "projective_space_basic::test_if_vectors_are_projectively_equal:" << endl;
 	Orbiter->Int_vec.print(cout, v2, 20);
 	cout << endl;
 #endif
@@ -57,10 +79,10 @@ int finite_field::test_if_vectors_are_projectively_equal(
 	PG_element_normalize(w2, 1, len);
 
 #if 0
-	cout << "finite_field::test_if_vectors_are_projectively_equal:" << endl;
+	cout << "projective_space_basic::test_if_vectors_are_projectively_equal:" << endl;
 	Orbiter->Int_vec.print(cout, w1, 20);
 	cout << endl;
-	cout << "finite_field::test_if_vectors_are_projectively_equal:" << endl;
+	cout << "projective_space_basic::test_if_vectors_are_projectively_equal:" << endl;
 	Orbiter->Int_vec.print(cout, w2, 20);
 	cout << endl;
 #endif
@@ -78,56 +100,56 @@ finish:
 	return ret;
 }
 
-void finite_field::PG_element_normalize(
+void projective_space_basic::PG_element_normalize(
 		int *v, int stride, int len)
 // last non-zero element made one
 {
 	int i, j, a;
-	
+
 	for (i = len - 1; i >= 0; i--) {
 		a = v[i * stride];
 		if (a) {
 			if (a == 1) {
 				return;
 			}
-			a = inverse(a);
+			a = F->inverse(a);
 			v[i * stride] = 1;
 			for (j = i - 1; j >= 0; j--) {
-				v[j * stride] = mult(v[j * stride], a);
+				v[j * stride] = F->mult(v[j * stride], a);
 			}
 			return;
 		}
 	}
-	cout << "finite_field::PG_element_normalize zero vector" << endl;
+	cout << "projective_space_basic::PG_element_normalize zero vector" << endl;
 	exit(1);
 }
 
-void finite_field::PG_element_normalize_from_front(
+void projective_space_basic::PG_element_normalize_from_front(
 		int *v, int stride, int len)
 // first non zero element made one
 {
 	int i, j, a;
-	
+
 	for (i = 0; i < len; i++) {
 		a = v[i * stride];
 		if (a) {
 			if (a == 1) {
 				return;
 			}
-			a = inverse(a);
+			a = F->inverse(a);
 			v[i * stride] = 1;
 			for (j = i + 1; j < len; j++) {
-				v[j * stride] = mult(v[j * stride], a);
+				v[j * stride] = F->mult(v[j * stride], a);
 			}
 			return;
 		}
 	}
-	cout << "finite_field::PG_element_normalize_from_front "
+	cout << "projective_space_basic::PG_element_normalize_from_front "
 			"zero vector" << endl;
 	exit(1);
 }
 
-void finite_field::PG_element_normalize_from_a_given_position(
+void projective_space_basic::PG_element_normalize_from_a_given_position(
 		int *v, int stride, int len, int idx)
 {
 	int j, a, av;
@@ -137,21 +159,21 @@ void finite_field::PG_element_normalize_from_a_given_position(
 		if (a == 1) {
 			return;
 		}
-		av = inverse(a);
+		av = F->inverse(a);
 		for (j = 0; j < len; j++) {
-			v[j * stride] = mult(v[j * stride], av);
+			v[j * stride] = F->mult(v[j * stride], av);
 		}
 		return;
 	}
 	else {
-		cout << "finite_field::PG_element_normalize_from_a_given_position "
+		cout << "projective_space_basic::PG_element_normalize_from_a_given_position "
 				"zero vector" << endl;
 		exit(1);
 	}
 }
 
 
-void finite_field::PG_elements_embed(
+void projective_space_basic::PG_elements_embed(
 		long int *set_in, long int *set_out, int sz,
 		int old_length, int new_length, int *v)
 {
@@ -162,7 +184,7 @@ void finite_field::PG_elements_embed(
 	}
 }
 
-long int finite_field::PG_element_embed(
+long int projective_space_basic::PG_element_embed(
 		long int rk, int old_length, int new_length, int *v)
 {
 	long int a;
@@ -173,17 +195,17 @@ long int finite_field::PG_element_embed(
 }
 
 
-void finite_field::PG_element_unrank_fining(int *v, int len, int a)
+void projective_space_basic::PG_element_unrank_fining(int *v, int len, int a)
 {
 	int b, c;
-	
+
 	if (len != 3) {
-		cout << "finite_field::PG_element_unrank_fining "
+		cout << "projective_space_basic::PG_element_unrank_fining "
 				"len != 3" << endl;
 		exit(1);
 	}
 	if (a <= 0) {
-		cout << "finite_field::PG_element_unrank_fining "
+		cout << "projective_space_basic::PG_element_unrank_fining "
 				"a <= 0" << endl;
 		exit(1);
 	}
@@ -194,7 +216,7 @@ void finite_field::PG_element_unrank_fining(int *v, int len, int a)
 		return;
 	}
 	a--;
-	if (a <= q) {
+	if (a <= F->q) {
 		if (a == 1) {
 			v[0] = 0;
 			v[1] = 1;
@@ -208,8 +230,8 @@ void finite_field::PG_element_unrank_fining(int *v, int len, int a)
 			return;
 		}
 	}
-	a -= q;
-	if (a <= q * q) {
+	a -= F->q;
+	if (a <= F->q * F->q) {
 		if (a == 1) {
 			v[0] = 0;
 			v[1] = 0;
@@ -218,8 +240,8 @@ void finite_field::PG_element_unrank_fining(int *v, int len, int a)
 		}
 		a--;
 		a--;
-		b = a % (q + 1);
-		c = a / (q + 1);
+		b = a % (F->q + 1);
+		c = a / (F->q + 1);
 		v[2] = c + 1;
 		if (b == 0) {
 			v[0] = 1;
@@ -236,18 +258,18 @@ void finite_field::PG_element_unrank_fining(int *v, int len, int a)
 		return;
 	}
 	else {
-		cout << "finite_field::PG_element_unrank_fining "
+		cout << "projective_space_basic::PG_element_unrank_fining "
 				"a is illegal" << endl;
 		exit(1);
 	}
 }
 
-int finite_field::PG_element_rank_fining(int *v, int len)
+int projective_space_basic::PG_element_rank_fining(int *v, int len)
 {
 	int a;
 
 	if (len != 3) {
-		cout << "finite_field::PG_element_rank_fining "
+		cout << "projective_space_basic::PG_element_rank_fining "
 				"len != 3" << endl;
 		exit(1);
 	}
@@ -269,10 +291,10 @@ int finite_field::PG_element_rank_fining(int *v, int len)
 	}
 	else {
 		if (v[0] == 0 && v[1] == 0) {
-			return q + 2;
+			return F->q + 2;
 		}
 		else {
-			a = (q + 1) * v[2] + 2;
+			a = (F->q + 1) * v[2] + 2;
 			if (v[0] == 1 && v[1] == 0) {
 				return a;
 			}
@@ -286,24 +308,24 @@ int finite_field::PG_element_rank_fining(int *v, int len)
 	}
 }
 
-void finite_field::PG_element_unrank_gary_cook(
+void projective_space_basic::PG_element_unrank_gary_cook(
 		int *v, int len, int a)
 {
 	int b, qm1o2, rk, i;
-	
+
 	if (len != 3) {
-		cout << "finite_field::PG_element_unrank_gary_cook "
+		cout << "projective_space_basic::PG_element_unrank_gary_cook "
 				"len != 3" << endl;
 		exit(1);
 	}
-	if (q != 11) {
-		cout << "finite_field::PG_element_unrank_gary_cook "
+	if (F->q != 11) {
+		cout << "projective_space_basic::PG_element_unrank_gary_cook "
 				"q != 11" << endl;
 		exit(1);
 	}
-	qm1o2 = (q - 1) >> 1;
+	qm1o2 = (F->q - 1) >> 1;
 	if (a < 0) {
-		cout << "finite_field::PG_element_unrank_gary_cook "
+		cout << "projective_space_basic::PG_element_unrank_gary_cook "
 				"a < 0" << endl;
 		exit(1);
 	}
@@ -314,15 +336,15 @@ void finite_field::PG_element_unrank_gary_cook(
 	}
 	else {
 		a--;
-		if (a < q) {
+		if (a < F->q) {
 			v[0] = 0;
 			v[1] = 1;
 			v[2] = -qm1o2 + a;
 		}
 		else {
-			a -= q;
+			a -= F->q;
 			rk = a;
-			if (rk < q * q) {
+			if (rk < F->q * F->q) {
 				// (1, a, b) = 11a + b + 72, where a,b in -5..5
 				b = rk % 11;
 				a = (rk - b) / 11;
@@ -331,7 +353,7 @@ void finite_field::PG_element_unrank_gary_cook(
 				v[2] = -qm1o2 + b;
 			}
 			else {
-				cout << "finite_field::PG_element_unrank_gary_cook "
+				cout << "projective_space_basic::PG_element_unrank_gary_cook "
 						"a is illegal" << endl;
 				exit(1);
 			}
@@ -339,23 +361,22 @@ void finite_field::PG_element_unrank_gary_cook(
 	}
 	for (i = 0; i < 3; i++) {
 		if (v[i] < 0) {
-			v[i] += q;
+			v[i] += F->q;
 		}
 	}
 }
 
-void finite_field::PG_element_rank_modified(
+void projective_space_basic::PG_element_rank_modified(
 		int *v, int stride, int len, int &a)
 {
 	int i, j, q_power_j, b, sqj;
 	int f_v = FALSE;
 
 	if (len <= 0) {
-		cout << "finite_field::PG_element_rank_modified "
+		cout << "projective_space_basic::PG_element_rank_modified "
 				"len <= 0" << endl;
 		exit(1);
 	}
-	nb_calls_to_PG_element_rank_modified++;
 	if (f_v) {
 		cout << "the vector before normalization is ";
 		for (i = 0; i < len; i++) {
@@ -377,7 +398,7 @@ void finite_field::PG_element_rank_modified(
 		}
 	}
 	if (i == len) {
-		cout << "finite_field::PG_element_rank_modified "
+		cout << "projective_space_basic::PG_element_rank_modified "
 				"zero vector" << endl;
 		exit(1);
 	}
@@ -412,12 +433,12 @@ void finite_field::PG_element_rank_modified(
 		}
 	}
 	if (i < 0) {
-		cout << "finite_field::PG_element_rank_modified "
+		cout << "projective_space_basic::PG_element_rank_modified "
 				"zero vector" << endl;
 		exit(1);
 	}
 	if (v[i * stride] != 1) {
-		cout << "finite_field::PG_element_rank_modified "
+		cout << "projective_space_basic::PG_element_rank_modified "
 				"vector not normalized" << endl;
 		exit(1);
 	}
@@ -431,7 +452,7 @@ void finite_field::PG_element_rank_modified(
 	for (j = 0; j < i; j++) {
 		b += q_power_j - 1;
 		sqj += q_power_j;
-		q_power_j *= q;
+		q_power_j *= F->q;
 	}
 	if (f_v) {
 		cout << "b=" << b << endl;
@@ -443,7 +464,7 @@ void finite_field::PG_element_rank_modified(
 	for (j = i - 1; j >= 0; j--) {
 		a += v[j * stride];
 		if (j > 0) {
-			a *= q;
+			a *= F->q;
 		}
 		if (f_v) {
 			cout << "j=" << j << ", a=" << a << endl;
@@ -466,18 +487,17 @@ void finite_field::PG_element_rank_modified(
 	a += len;
 }
 
-void finite_field::PG_element_unrank_modified(
+void projective_space_basic::PG_element_unrank_modified(
 		int *v, int stride, int len, int a)
 {
 	int n, l, ql, sql, k, j, r, a1 = a;
-	
+
 	n = len;
 	if (n <= 0) {
-		cout << "finite_field::PG_element_unrank_modified "
+		cout << "projective_space_basic::PG_element_unrank_modified "
 				"len <= 0" << endl;
 		exit(1);
 	}
-	nb_calls_to_PG_element_unrank_modified++;
 	if (a < n) {
 		// unit vector:
 		for (k = 0; k < n; k++) {
@@ -499,16 +519,16 @@ void finite_field::PG_element_unrank_modified(
 		return;
 	}
 	a--;
-	
+
 	l = 1;
-	ql = q;
+	ql = F->q;
 	sql = 1;
 	// sql = q^0 + q^1 + \cdots + q^{l-1}
 	while (l < n) {
 		if (a >= ql - 1) {
 			a -= (ql - 1);
 			sql += ql;
-			ql *= q;
+			ql *= F->q;
 			l++;
 			continue;
 		}
@@ -524,25 +544,25 @@ void finite_field::PG_element_unrank_modified(
 		}
 		j = 0;
 		while (a != 0) {
-			r = a % q;
+			r = a % F->q;
 			v[j * stride] = r;
 			j++;
 			a -= r;
-			a /= q;
+			a /= F->q;
 		}
 		for ( ; j < l; j++) {
 			v[j * stride] = 0;
 		}
 		return;
 	}
-	cout << "finite_field::PG_element_unrank_modified "
+	cout << "projective_space_basic::PG_element_unrank_modified "
 			"a too large" << endl;
 	cout << "len = " << len << endl;
 	cout << "a = " << a1 << endl;
 	exit(1);
 }
 
-void finite_field::PG_element_rank_modified_lint(
+void projective_space_basic::PG_element_rank_modified_lint(
 		int *v, int stride, int len, long int &a)
 {
 	int i, j;
@@ -550,11 +570,10 @@ void finite_field::PG_element_rank_modified_lint(
 	int f_v = FALSE;
 
 	if (len <= 0) {
-		cout << "finite_field::PG_element_rank_modified_lint "
+		cout << "projective_space_basic::PG_element_rank_modified_lint "
 				"len <= 0" << endl;
 		exit(1);
 	}
-	nb_calls_to_PG_element_rank_modified++;
 	if (f_v) {
 		cout << "the vector before normalization is ";
 		for (i = 0; i < len; i++) {
@@ -576,7 +595,7 @@ void finite_field::PG_element_rank_modified_lint(
 		}
 	}
 	if (i == len) {
-		cout << "finite_field::PG_element_rank_modified_lint "
+		cout << "projective_space_basic::PG_element_rank_modified_lint "
 				"zero vector" << endl;
 		exit(1);
 	}
@@ -611,12 +630,12 @@ void finite_field::PG_element_rank_modified_lint(
 		}
 	}
 	if (i < 0) {
-		cout << "finite_field::PG_element_rank_modified_lint "
+		cout << "projective_space_basic::PG_element_rank_modified_lint "
 				"zero vector" << endl;
 		exit(1);
 	}
 	if (v[i * stride] != 1) {
-		cout << "finite_field::PG_element_rank_modified_lint "
+		cout << "projective_space_basic::PG_element_rank_modified_lint "
 				"vector not normalized" << endl;
 		exit(1);
 	}
@@ -630,7 +649,7 @@ void finite_field::PG_element_rank_modified_lint(
 	for (j = 0; j < i; j++) {
 		b += q_power_j - 1;
 		sqj += q_power_j;
-		q_power_j *= q;
+		q_power_j *= F->q;
 	}
 	if (f_v) {
 		cout << "b=" << b << endl;
@@ -642,7 +661,7 @@ void finite_field::PG_element_rank_modified_lint(
 	for (j = i - 1; j >= 0; j--) {
 		a += v[j * stride];
 		if (j > 0) {
-			a *= q;
+			a *= F->q;
 		}
 		if (f_v) {
 			cout << "j=" << j << ", a=" << a << endl;
@@ -665,7 +684,7 @@ void finite_field::PG_element_rank_modified_lint(
 	a += len;
 }
 
-void finite_field::PG_elements_unrank_lint(
+void projective_space_basic::PG_elements_unrank_lint(
 		int *M, int k, int n, long int *rank_vec)
 {
 	int i;
@@ -675,7 +694,7 @@ void finite_field::PG_elements_unrank_lint(
 	}
 }
 
-void finite_field::PG_elements_rank_lint(
+void projective_space_basic::PG_elements_rank_lint(
 		int *M, int k, int n, long int *rank_vec)
 {
 	int i;
@@ -685,18 +704,17 @@ void finite_field::PG_elements_rank_lint(
 	}
 }
 
-void finite_field::PG_element_unrank_modified_lint(
+void projective_space_basic::PG_element_unrank_modified_lint(
 		int *v, int stride, int len, long int a)
 {
 	long int n, l, ql, sql, k, j, r, a1 = a;
 
 	n = len;
 	if (n <= 0) {
-		cout << "finite_field::PG_element_unrank_modified_lint "
+		cout << "projective_space_basic::PG_element_unrank_modified_lint "
 				"len <= 0" << endl;
 		exit(1);
 	}
-	nb_calls_to_PG_element_unrank_modified++;
 	if (a < n) {
 		// unit vector:
 		for (k = 0; k < n; k++) {
@@ -720,14 +738,14 @@ void finite_field::PG_element_unrank_modified_lint(
 	a--;
 
 	l = 1;
-	ql = q; // q to the power of l
+	ql = F->q; // q to the power of l
 	sql = 1;
 	// sql = q^0 + q^1 + \cdots + q^{l-1}
 	while (l < n) {
 		if (a >= ql - 1) {
 			a -= (ql - 1);
 			sql += ql;
-			ql *= q;
+			ql *= F->q;
 			l++;
 			continue;
 		}
@@ -743,29 +761,29 @@ void finite_field::PG_element_unrank_modified_lint(
 		}
 		j = 0;
 		while (a != 0) {
-			r = a % q;
+			r = a % F->q;
 			v[j * stride] = r;
 			j++;
 			a -= r;
-			a /= q;
+			a /= F->q;
 		}
 		for ( ; j < l; j++) {
 			v[j * stride] = 0;
 		}
 		return;
 	}
-	cout << "finite_field::PG_element_unrank_modified_lint "
+	cout << "projective_space_basic::PG_element_unrank_modified_lint "
 			"a too large" << endl;
 	cout << "len = " << len << endl;
 	cout << "l = " << l << endl;
 	cout << "a = " << a1 << endl;
-	cout << "q = " << q << endl;
+	cout << "q = " << F->q << endl;
 	cout << "ql = " << ql << endl;
 	cout << "sql = q^0 + q^1 + \\cdots + q^{l-1} = " << sql << endl;
 	exit(1);
 }
 
-void finite_field::PG_element_rank_modified_not_in_subspace(
+void projective_space_basic::PG_element_rank_modified_not_in_subspace(
 		int *v, int stride, int len, int m, long int &a)
 {
 	long int s, qq, i;
@@ -773,7 +791,7 @@ void finite_field::PG_element_rank_modified_not_in_subspace(
 	qq = 1;
 	s = qq;
 	for (i = 0; i < m; i++) {
-		qq *= q;
+		qq *= F->q;
 		s += qq;
 	}
 	s -= (m + 1);
@@ -785,7 +803,7 @@ void finite_field::PG_element_rank_modified_not_in_subspace(
 	a -= (m + 1);
 }
 
-void finite_field::PG_element_unrank_modified_not_in_subspace(
+void projective_space_basic::PG_element_unrank_modified_not_in_subspace(
 		int *v, int stride, int len, int m, long int a)
 {
 	long int s, qq, i;
@@ -793,7 +811,7 @@ void finite_field::PG_element_unrank_modified_not_in_subspace(
 	qq = 1;
 	s = qq;
 	for (i = 0; i < m; i++) {
-		qq *= q;
+		qq *= F->q;
 		s += qq;
 	}
 	s -= (m + 1);
@@ -806,13 +824,13 @@ void finite_field::PG_element_unrank_modified_not_in_subspace(
 	PG_element_unrank_modified_lint(v, stride, len, a);
 }
 
-void finite_field::projective_point_unrank(int n, int *v, int rk)
+void projective_space_basic::projective_point_unrank(int n, int *v, int rk)
 {
 	PG_element_unrank_modified(v, 1 /* stride */,
 			n + 1 /* len */, rk);
 }
 
-long int finite_field::projective_point_rank(int n, int *v)
+long int projective_space_basic::projective_point_rank(int n, int *v)
 {
 	long int rk;
 
@@ -823,7 +841,7 @@ long int finite_field::projective_point_rank(int n, int *v)
 
 
 
-void finite_field::all_PG_elements_in_subspace(
+void projective_space_basic::all_PG_elements_in_subspace(
 		int *genma, int k, int n,
 		long int *&point_list, int &nb_points,
 		int verbose_level)
@@ -837,11 +855,11 @@ void finite_field::all_PG_elements_in_subspace(
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "finite_field::all_PG_elements_in_subspace" << endl;
+		cout << "projective_space_basic::all_PG_elements_in_subspace" << endl;
 	}
 	message = NEW_int(k);
 	word = NEW_int(n);
-	nb_points = Combi.generalized_binomial(k, 1, q);
+	nb_points = Combi.generalized_binomial(k, 1, F->q);
 	point_list = NEW_lint(nb_points);
 
 	for (i = 0; i < nb_points; i++) {
@@ -851,7 +869,7 @@ void finite_field::all_PG_elements_in_subspace(
 			Int_vec_print(cout, message, k);
 			cout << endl;
 		}
-		Linear_algebra->mult_vector_from_the_left(message, genma, word, k, n);
+		F->Linear_algebra->mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
 			Int_vec_print(cout, word, n);
@@ -867,12 +885,12 @@ void finite_field::all_PG_elements_in_subspace(
 	FREE_int(message);
 	FREE_int(word);
 	if (f_v) {
-		cout << "finite_field::all_PG_elements_in_subspace "
+		cout << "projective_space_basic::all_PG_elements_in_subspace "
 				"done" << endl;
 	}
 }
 
-void finite_field::all_PG_elements_in_subspace_array_is_given(
+void projective_space_basic::all_PG_elements_in_subspace_array_is_given(
 		int *genma, int k, int n,
 		long int *point_list, int &nb_points,
 		int verbose_level)
@@ -885,11 +903,11 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "finite_field::all_PG_elements_in_subspace_array_is_given" << endl;
+		cout << "projective_space_basic::all_PG_elements_in_subspace_array_is_given" << endl;
 	}
 	message = NEW_int(k);
 	word = NEW_int(n);
-	nb_points = Combi.generalized_binomial(k, 1, q);
+	nb_points = Combi.generalized_binomial(k, 1, F->q);
 	//point_list = NEW_int(nb_points);
 
 	for (i = 0; i < nb_points; i++) {
@@ -899,7 +917,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 			Int_vec_print(cout, message, k);
 			cout << endl;
 		}
-		Linear_algebra->mult_vector_from_the_left(message, genma, word, k, n);
+		F->Linear_algebra->mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
 			Int_vec_print(cout, word, n);
@@ -915,16 +933,16 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 	FREE_int(message);
 	FREE_int(word);
 	if (f_v) {
-		cout << "finite_field::all_PG_elements_in_subspace_array_is_given "
+		cout << "projective_space_basic::all_PG_elements_in_subspace_array_is_given "
 				"done" << endl;
 	}
 }
 
-void finite_field::display_all_PG_elements(int n)
+void projective_space_basic::display_all_PG_elements(int n)
 {
 	int *v = NEW_int(n + 1);
 	geometry::geometry_global Gg;
-	int l = Gg.nb_PG_elements(n, q);
+	int l = Gg.nb_PG_elements(n, F->q);
 	int i, j, a;
 
 	for (i = 0; i < l; i++) {
@@ -939,11 +957,11 @@ void finite_field::display_all_PG_elements(int n)
 	FREE_int(v);
 }
 
-void finite_field::display_all_PG_elements_not_in_subspace(int n, int m)
+void projective_space_basic::display_all_PG_elements_not_in_subspace(int n, int m)
 {
 	int *v = NEW_int(n + 1);
 	geometry::geometry_global Gg;
-	long int l = Gg.nb_PG_elements_not_in_subspace(n, m, q);
+	long int l = Gg.nb_PG_elements_not_in_subspace(n, m, F->q);
 	long int i, j, a;
 
 	for (i = 0; i < l; i++) {
@@ -958,15 +976,15 @@ void finite_field::display_all_PG_elements_not_in_subspace(int n, int m)
 	FREE_int(v);
 }
 
-void finite_field::display_all_AG_elements(int n)
+void projective_space_basic::display_all_AG_elements(int n)
 {
 	int *v = NEW_int(n);
 	geometry::geometry_global Gg;
-	int l = Gg.nb_AG_elements(n, q);
+	int l = Gg.nb_AG_elements(n, F->q);
 	int i, j;
 
 	for (i = 0; i < l; i++) {
-		Gg.AG_element_unrank(q, v, 1, n + 1, i);
+		Gg.AG_element_unrank(F->q, v, 1, n + 1, i);
 		cout << i << " : ";
 		for (j = 0; j < n; j++) {
 			cout << v[j] << " ";
@@ -977,9 +995,5 @@ void finite_field::display_all_AG_elements(int n)
 }
 
 
-
-
-
 }}}
-
 

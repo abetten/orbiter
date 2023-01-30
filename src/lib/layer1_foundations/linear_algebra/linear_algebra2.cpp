@@ -1050,14 +1050,16 @@ void linear_algebra::unrank_point_in_PG(int *v, int len, int rk)
 // len is the length of the vector, not the projective dimension
 {
 
-	F->PG_element_unrank_modified(v, 1 /* stride */, len, rk);
+	F->Projective_space_basic->PG_element_unrank_modified(
+			v, 1 /* stride */, len, rk);
 }
 
 int linear_algebra::rank_point_in_PG(int *v, int len)
 {
 	int rk;
 
-	F->PG_element_rank_modified(v, 1 /* stride */, len, rk);
+	F->Projective_space_basic->PG_element_rank_modified(
+			v, 1 /* stride */, len, rk);
 	return rk;
 }
 
@@ -1373,7 +1375,8 @@ void linear_algebra::map_points_to_points_projectively(int d, int k,
 	Int_vec_copy(B, B1, (d + k + 1) * d);
 	for (i = 0; i < d + k + 1; i++) {
 		//PG_element_normalize(*this, B1 + i * d, 1, d);
-		F->PG_element_rank_modified(B1 + i * d, 1, d, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				B1 + i * d, 1, d, a);
 		B_set[i] = a;
 	}
 	Sorting.int_vec_heapsort(B_set, d + k + 1);
@@ -1426,8 +1429,10 @@ void linear_algebra::map_points_to_points_projectively(int d, int k,
 					B1, Transform, verbose_level);
 
 			for (i = 0; i < d + k + 1; i ++) {
-				mult_vector_from_the_left(A1 + i * d, Transform, v, d, d);
-				F->PG_element_rank_modified(v, 1, d, a);
+				mult_vector_from_the_left(
+						A1 + i * d, Transform, v, d, d);
+				F->Projective_space_basic->PG_element_rank_modified(
+						v, 1, d, a);
 				image_set[i] = a;
 			}
 			if (f_v) {

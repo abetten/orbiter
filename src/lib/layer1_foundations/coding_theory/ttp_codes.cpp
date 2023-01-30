@@ -681,7 +681,8 @@ void ttp_codes::make_tensor_code_9dimensional_as_point_set(
 		for (i = 0; i < 9; i++) {
 			pt[i] = code[i * length + t];
 		}
-		F->PG_element_rank_modified(pt, 1, 9, rk);
+		F->Projective_space_basic->PG_element_rank_modified(
+				pt, 1, 9, rk);
 		the_set[t] = rk;
 	}
 	FREE_int(code);

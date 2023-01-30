@@ -2299,10 +2299,12 @@ void algebra_global_with_action::do_eigenstuff(
 			}
 		Int_vec_print(cout, vec1, size);
 		cout << endl;
-		F->PG_element_normalize_from_front(vec1, 1, size);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				vec1, 1, size);
 		Int_vec_print(cout, vec1, size);
 		cout << endl;
-		F->PG_element_rank_modified(vec1, 1, size, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				vec1, 1, size, a);
 		cout << "has rank " << a << endl;
 
 
@@ -2311,10 +2313,12 @@ void algebra_global_with_action::do_eigenstuff(
 		F->Linear_algebra->mult_vector_from_the_left(vec1, A, vec2, size, size);
 		Int_vec_print(cout, vec2, size);
 		cout << endl;
-		F->PG_element_normalize_from_front(vec2, 1, size);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				vec2, 1, size);
 		Int_vec_print(cout, vec2, size);
 		cout << endl;
-		F->PG_element_rank_modified(vec2, 1, size, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				vec2, 1, size, a);
 		cout << "has rank " << a << endl;
 
 		delete [] vec1;

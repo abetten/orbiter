@@ -316,7 +316,8 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 	Surf->build_cubic_surface_from_lines(
 			SaS->sz, SaS->data, coeff,
 			0 /* verbose_level */);
-	F->PG_element_normalize_from_front(coeff, 1, 20);
+	F->Projective_space_basic->PG_element_normalize_from_front(
+			coeff, 1, 20);
 	cout << "coefficient vector of the surface: ";
 	Int_vec_print(cout, coeff, 20);
 	cout << endl;
@@ -492,7 +493,8 @@ void surface_study::study_group(int verbose_level)
 	cout << "Group_elts:" << endl;
 	Int_matrix_print(Group_elts, group_order, elt_sz);
 	for (i = 0; i < group_order; i++) {
-		F->PG_element_normalize(Group_elts + i * elt_sz, 1, elt_sz);
+		F->Projective_space_basic->PG_element_normalize(
+				Group_elts + i * elt_sz, 1, elt_sz);
 		}
 	cout << "group elements:" << endl;
 	for (i = 0; i < group_order; i++) {
@@ -502,7 +504,8 @@ void surface_study::study_group(int verbose_level)
 		}
 	cout << "Group_elts normalized from the back:" << endl;
 	for (i = 0; i < group_order; i++) {
-		F->PG_element_normalize(Group_elts + i * elt_sz, 1, elt_sz);
+		F->Projective_space_basic->PG_element_normalize(
+				Group_elts + i * elt_sz, 1, elt_sz);
 		cout << "element " << i << " / " << group_order << ":" << endl;
 		Int_matrix_print(Group_elts + i * elt_sz, 4, 4);
 		}
@@ -1073,7 +1076,8 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		Surf->build_cubic_surface_from_lines(SaS2->sz,
 				SaS2->data, coeff,
 				0 /* verbose_level */);
-		F->PG_element_normalize_from_front(coeff, 1, 20);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				coeff, 1, 20);
 
 #if 0
 		cout << "coefficient vector of the surface: ";
@@ -1145,7 +1149,8 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		Surf->build_cubic_surface_from_lines(SaS2->sz,
 				SaS2->data, coeff,
 				0 /* verbose_level */);
-		F->PG_element_normalize_from_front(coeff, 1, 20);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				coeff, 1, 20);
 		cout << "coefficient vector of the surface: ";
 		Int_vec_print(cout, coeff, 20);
 		cout << endl;

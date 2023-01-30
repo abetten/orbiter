@@ -685,7 +685,8 @@ void recoordinatize::compute_live_points_low_level(
 							<< nb_live_points << " points so far" << endl;
 				}
 			}
-			Fq->PG_element_normalize(Elt1, 1, k * k);
+			Fq->Projective_space_basic->PG_element_normalize(
+					Elt1, 1, k * k);
 			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
 				cout << "recoordinatize::compute_live_points_low_level "
 						"element " << cnt << " = " << h

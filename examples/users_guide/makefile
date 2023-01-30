@@ -104,6 +104,7 @@ test_5:
 	make test_5_5
 	make test_5_6
 	#make test_5_7 # magma stuff
+	make test_5_8
 
 
 test_6:
@@ -343,10 +344,7 @@ ENDRASS_SPARSE="\
 EC_11_EQUATION="1,0,3,0,0,0,10,1,0,0"
 
 
-EDGE_CURVE_Q23_AS_POINTS="4, 25, 26, 47, 48, 71, 92, 95, 114, 119, \
-136, 143, 158, 167, 180, 191, 202, 215, 224, 239, 246, 263, 268, \
-287, 290, 311, 312, 334, 335, 356, 359, 378, 383, 400, 407, 422, \
-431, 444, 455, 466, 479, 488, 503, 510, 527, 530, 532, 551"
+
 
 
 GEN_C13="1,2,3,4,5,6,7,8,9,10,11,12,0"
@@ -1242,6 +1240,10 @@ FILE_Q17="orbit,curve,pts_on_curve,bitangents,go\
 \nEND"
 
 
+EDGE_CURVE_Q23_AS_POINTS="4, 25, 26, 47, 48, 71, 92, 95, 114, 119, \
+136, 143, 158, 167, 180, 191, 202, 215, 224, 239, 246, 263, 268, \
+287, 290, 311, 312, 334, 335, 356, 359, 378, 383, 400, 407, 422, \
+431, 444, 455, 466, 479, 488, 503, 510, 527, 530, 532, 551"
 
 
 DESARGUES_PATH_LEX_LEAST="10 10 3\n0\n1 0\n2 0 15\n3 0 15 26\n4 0 15 26 46\n5 0 15 26 46 56\n6 0 15 26 46 56 72\n7 0 15 26 46 56 72 80\n8 0 15 26 46 56 72 80 93\n9 0 15 26 46 56 72 80 93 106\n10 0 15 26 46 56 72 80 93 106 119\n-1\n"
@@ -3671,7 +3673,7 @@ Edge_curve_17:
 
 #Edge_q17.txt
 #combinatorial_object_create::init created a set of size 12
-#( 4, 7, 16, 19, 20, 23, 32, 35, 89, 100, 244, 251 )
+
 
 
 
@@ -3975,7 +3977,9 @@ Symmetric_4_long:
 
 Group_8_1:
 	$(ORBITER) -v 2 \
-		-define gens -vector -dense "1,2,3,4,5,6,7,0" -end \
+		-define gens -vector -dense \
+			"1,2,3,4,5,6,7,0" \
+		-end \
 		-define G -permutation_group -symmetric_group 8 \
 			-subgroup_by_generators G1 8 1 gens -end \
 		-with G -do \
@@ -3986,11 +3990,13 @@ Group_8_1:
 		-define all_one_r -vector -repeat 1 8 -end \
 		-define all_one_c -vector -repeat 1 8 -end \
 		-draw_matrix \
-			-input_csv_file Sym_8_Subgroup_G1_8_group_table.csv \
+			-input_csv_file \
+				Sym_8_Subgroup_G1_8_group_table.csv \
 			-box_width 50 -bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_8_Subgroup_G1_8_group_table_draw.bmp Sym_8_Subgroup_G1_8_group_table_draw.png
+	convert Sym_8_Subgroup_G1_8_group_table_draw.bmp \
+		Sym_8_Subgroup_G1_8_group_table_draw.png
 	open Sym_8_Subgroup_G1_8_group_table_draw.png
 
 
@@ -3999,7 +4005,9 @@ Group_8_1:
 
 Group_8_2:
 	$(ORBITER) -v 2 \
-		-define gens -vector -dense "1,2,3,0,4,5, 0,1,2,3,5,4" -end \
+		-define gens -vector -dense \
+			"1,2,3,0,4,5, 0,1,2,3,5,4" \
+		-end \
 		-define G -permutation_group -symmetric_group 6 \
 			-subgroup_by_generators G2 8 2 gens -end \
 		-with G -do \
@@ -4010,11 +4018,13 @@ Group_8_2:
 		-define all_one_r -vector -repeat 1 8 -end \
 		-define all_one_c -vector -repeat 1 8 -end \
 		-draw_matrix \
-			-input_csv_file Sym_6_Subgroup_G2_8_group_table.csv \
+			-input_csv_file \
+				Sym_6_Subgroup_G2_8_group_table.csv \
 			-box_width 50 -bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_6_Subgroup_G2_8_group_table_draw.bmp Sym_6_Subgroup_G2_8_group_table_draw.png
+	convert Sym_6_Subgroup_G2_8_group_table_draw.bmp \
+		Sym_6_Subgroup_G2_8_group_table_draw.png
 	open Sym_6_Subgroup_G2_8_group_table_draw.png
 
 
@@ -4022,7 +4032,9 @@ Group_8_2:
 
 Group_8_3:
 	$(ORBITER) -v 2 \
-		-define gens -vector -dense "1,0,2,3,4,5, 0,1,3,2,4,5, 0,1,2,3,5,4" -end \
+		-define gens -vector -dense \
+			"1,0,2,3,4,5, 0,1,3,2,4,5, 0,1,2,3,5,4" \
+		-end \
 		-define G -permutation_group -symmetric_group 6 \
 			-subgroup_by_generators G3 8 3 gens -end \
 		-with G -do \
@@ -4033,11 +4045,13 @@ Group_8_3:
 		-define all_one_r -vector -repeat 1 8 -end \
 		-define all_one_c -vector -repeat 1 8 -end \
 		-draw_matrix \
-			-input_csv_file Sym_6_Subgroup_G3_8_group_table.csv \
+			-input_csv_file \
+				Sym_6_Subgroup_G3_8_group_table.csv \
 			-box_width 50 -bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_6_Subgroup_G3_8_group_table_draw.bmp Sym_6_Subgroup_G3_8_group_table_draw.png
+	convert Sym_6_Subgroup_G3_8_group_table_draw.bmp \
+		Sym_6_Subgroup_G3_8_group_table_draw.png
 	open Sym_6_Subgroup_G3_8_group_table_draw.png
 
 
@@ -4045,7 +4059,9 @@ Group_8_3:
 
 Group_8_4:
 	$(ORBITER) -v 2 \
-		-define gens -vector -dense "1,2,3,0, 0,3,2,1" -end \
+		-define gens -vector -dense \
+			"1,2,3,0, 0,3,2,1" \
+		-end \
 		-define G -permutation_group -symmetric_group 4 \
 			-subgroup_by_generators G4 8 2 gens -end \
 		-with G -do \
@@ -4056,18 +4072,22 @@ Group_8_4:
 		-define all_one_r -vector -repeat 1 8 -end \
 		-define all_one_c -vector -repeat 1 8 -end \
 		-draw_matrix \
-			-input_csv_file Sym_4_Subgroup_G4_8_group_table.csv \
+			-input_csv_file \
+				Sym_4_Subgroup_G4_8_group_table.csv \
 			-box_width 50 -bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_4_Subgroup_G4_8_group_table_draw.bmp Sym_4_Subgroup_G4_8_group_table_draw.png
+	convert Sym_4_Subgroup_G4_8_group_table_draw.bmp \
+		Sym_4_Subgroup_G4_8_group_table_draw.png
 	open Sym_4_Subgroup_G4_8_group_table_draw.png
 
 # Quaternion group: 
 
 Group_8_5:
 	$(ORBITER) -v 2 \
-		-define gens -vector -dense "2,3,1,0,6,7,5,4, 4,5,7,6,1,0,2,3" -end \
+		-define gens -vector -dense \
+			"2,3,1,0,6,7,5,4, 4,5,7,6,1,0,2,3" \
+		-end \
 		-define G -permutation_group -symmetric_group 8 \
 			-subgroup_by_generators G5 8 2 gens -end \
 		-with G -do \
@@ -4078,11 +4098,13 @@ Group_8_5:
 		-define all_one_r -vector -repeat 1 8 -end \
 		-define all_one_c -vector -repeat 1 8 -end \
 		-draw_matrix \
-			-input_csv_file Sym_8_Subgroup_G5_8_group_table.csv \
+			-input_csv_file \
+				Sym_8_Subgroup_G5_8_group_table.csv \
 			-box_width 50 -bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_8_Subgroup_G5_8_group_table_draw.bmp Sym_8_Subgroup_G5_8_group_table_draw.png
+	convert Sym_8_Subgroup_G5_8_group_table_draw.bmp \
+		Sym_8_Subgroup_G5_8_group_table_draw.png
 	open Sym_8_Subgroup_G5_8_group_table_draw.png
 
 
@@ -5353,7 +5375,7 @@ normal_forms_PGL_4_4:
 		-end
 	pdflatex PGGL_4_4_classes_normal_form.tex
 	open PGGL_4_4_classes_normal_form.pdf
-	
+
 
 
 
@@ -5814,6 +5836,51 @@ PGOm_6_2_Class_2A_centralizer_recover:
 		-end
 	pdflatex PGL_6_2_Subgroup_2ACent_1440_report.tex
 	open PGL_6_2_Subgroup_2ACent_1440_report.pdf
+
+
+###############################################################################
+# Section 5.8: The GAP Interface
+
+
+SECTION_GAP_INTERFACE:
+
+test_5_8:
+	make Hirschfeld_stab_export_fining
+	make Cyclic_6_canonical_image
+	make Edge_qurve_q17_canonical_image
+
+
+Hirschfeld_stab_export_gap:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -linear_group -PGGL 4 4 \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_gap \
+		-end
+
+
+
+Cyclic_6_canonical_image:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -cyclic_group 6 -end \
+		-with G -do -group_theoretic_activity \
+			-canonical_image 3,5 \
+		-end
+
+
+
+Edge_qurve_q17_canonical_image:
+	$(ORBITER) -v 3 \
+		-define G -linear_group -PGL 3 17 -end \
+		-with G -do -group_theoretic_activity \
+			-canonical_image $(EDGE_CURVE_Q17_AS_POINTS) \
+		-end
+
+#PGL_3_17_canonical_image.gap
 
 
 ###############################################################################
@@ -7292,6 +7359,10 @@ surface_4_0:
 	pdflatex surface_catalogue_q4_iso0_report.tex
 	open surface_catalogue_q4_iso0_report.pdf
 
+
+
+
+
 # points:
 #0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,79,80,81,82
 
@@ -8219,6 +8290,10 @@ surface_classify_q4:
 		-classification_of_cubic_surfaces_with_double_sixes_activity \
 			-report -end \
 		-end \
+		-with Surf27 -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-create_source_code \
+		-end \
 		-print_symbols
 	pdflatex Surfaces_q4.tex
 	open Surfaces_q4.pdf
@@ -8298,6 +8373,25 @@ surface_classify_q13:
 	open Surfaces_q13.pdf
 
 
+
+###############################################################################
+# Section 7.4: Interfaces
+
+SECTION_CUBIC_SURFACES_INTERFACES:
+
+
+test_7_4:
+	make surface_4_0_export_gap
+
+surface_4_0_export_gap:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-define S -cubic_surface -space P -catalogue 0 -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_gap \
+		-end
 
 
 

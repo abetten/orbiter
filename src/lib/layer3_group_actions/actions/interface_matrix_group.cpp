@@ -655,7 +655,8 @@ static void matrix_group_print_point(action &A, long int a, std::ostream &ost)
 	
 	cout << "matrix_group_print_point" << endl;
 	if (G->f_projective) {
-		G->GFq->PG_element_unrank_modified_lint(G->v1, 1, G->n, a);
+		G->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
+				G->v1, 1, G->n, a);
 		}
 	else if (G->f_affine) {
 		Gg.AG_element_unrank(G->GFq->q, G->v1, 1, G->n, a);
@@ -676,7 +677,8 @@ static void matrix_group_unrank_point(action &A, long int rk, int *v)
 	geometry::geometry_global Gg;
 
 	if (G->f_projective) {
-		G->GFq->PG_element_unrank_modified(v, 1 /* stride */, G->n, rk);
+		G->GFq->Projective_space_basic->PG_element_unrank_modified(
+				v, 1 /* stride */, G->n, rk);
 		}
 	else if (G->f_affine) {
 		Gg.AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
@@ -697,7 +699,8 @@ static long int matrix_group_rank_point(action &A, int *v)
 	geometry::geometry_global Gg;
 
 	if (G->f_projective) {
-		G->GFq->PG_element_rank_modified_lint(v, 1 /* stride */, G->n, rk);
+		G->GFq->Projective_space_basic->PG_element_rank_modified_lint(
+				v, 1 /* stride */, G->n, rk);
 		}
 	else if (G->f_affine) {
 		rk = Gg.AG_element_rank(G->GFq->q, v, 1, G->n);

@@ -275,7 +275,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 					"after P2->determine_conic_in_plane" << endl;
 		}
 
-		P2->F->PG_element_normalize_from_front(six_coeffs, 1, 6);
+		P2->F->Projective_space_basic->PG_element_normalize_from_front(six_coeffs, 1, 6);
 
 		if (f_v) {
 			cout << "eckardt_point_info::init j=" << j << " / 6 "
@@ -407,7 +407,7 @@ void eckardt_point_info::print_bisecants(std::ostream &ost, int verbose_level)
 
 		P2->Grass_lines->unrank_lint_here_and_compute_perp(Mtx, a,
 			0 /*verbose_level */);
-		P2->F->PG_element_normalize(Mtx + 6, 1, 3);
+		P2->F->Projective_space_basic->PG_element_normalize(Mtx + 6, 1, 3);
 
 		ost << " & ";
 		Poly1->print_equation(ost, Mtx + 6); // ToDo

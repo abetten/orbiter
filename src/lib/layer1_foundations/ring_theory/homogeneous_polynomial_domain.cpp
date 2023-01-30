@@ -2036,7 +2036,8 @@ int homogeneous_polynomial_domain::is_zero(int *coeff)
 void homogeneous_polynomial_domain::unrank_point(int *v, long int rk)
 {
 	//P->unrank_point(v, rk);
-	F->PG_element_unrank_modified_lint(v, 1, nb_variables, rk);
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v, 1, nb_variables, rk);
 }
 
 long int homogeneous_polynomial_domain::rank_point(int *v)
@@ -2044,20 +2045,23 @@ long int homogeneous_polynomial_domain::rank_point(int *v)
 	long int rk;
 
 	//rk = P->rank_point(v);
-	F->PG_element_rank_modified_lint(v, 1, nb_variables, rk);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1, nb_variables, rk);
 	return rk;
 }
 
 void homogeneous_polynomial_domain::unrank_coeff_vector(int *v, long int rk)
 {
-	F->PG_element_unrank_modified_lint(v, 1, nb_monomials, rk);
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v, 1, nb_monomials, rk);
 }
 
 long int homogeneous_polynomial_domain::rank_coeff_vector(int *v)
 {
 	long int rk;
 
-	F->PG_element_rank_modified_lint(v, 1, nb_monomials, rk);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1, nb_monomials, rk);
 	return rk;
 }
 
@@ -2085,7 +2089,8 @@ int homogeneous_polynomial_domain::test_weierstrass_form(int rk,
 	if (coeff2[1] || coeff2[3] || coeff2[6]) {
 		return FALSE;
 	}
-	F->PG_element_normalize_from_front(coeff2, 1, nb_monomials);
+	F->Projective_space_basic->PG_element_normalize_from_front(
+			coeff2, 1, nb_monomials);
 	if (coeff2[0] != 1) {
 		return FALSE;
 	}
@@ -2858,7 +2863,8 @@ void homogeneous_polynomial_domain::create_projective_curve(
 	Pts = NEW_lint(nb_pts);
 
 	for (i = 0; i < nb_pts; i++) {
-		F->PG_element_unrank_modified(v2, 1, 2, i);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v2, 1, 2, i);
 		s = v2[0];
 		t = v2[1];
 		for (j = 0; j < get_nb_variables(); j++) {
@@ -2866,7 +2872,8 @@ void homogeneous_polynomial_domain::create_projective_curve(
 			b = get_monomial(j, 1);
 			v[j] = F->mult3(coeffs[j], F->power(s, a), F->power(t, b));
 		}
-		F->PG_element_rank_modified(v, 1, get_nb_variables(), c);
+		F->Projective_space_basic->PG_element_rank_modified(
+				v, 1, get_nb_variables(), c);
 		Pts[i] = c;
 		if (f_v) {
 			cout << setw(4) << i << " : ";

@@ -52,14 +52,12 @@ finite_field::finite_field()
 	log10_of_q = 1;
 
 	f_print_as_exponentials = TRUE;
-	nb_calls_to_mult_matrix_matrix = 0;
-	nb_calls_to_PG_element_rank_modified = 0;
-	nb_calls_to_PG_element_unrank_modified = 0;
 
 	nb_times_mult = 0;
 	nb_times_add = 0;
 
 	Linear_algebra = NULL;
+	Projective_space_basic = NULL;
 	//Orthogonal_indexing = NULL;
 
 	f_related_fields_have_been_computed = FALSE;
@@ -88,6 +86,9 @@ finite_field::~finite_field()
 	if (Linear_algebra) {
 		FREE_OBJECT(Linear_algebra);
 	}
+	if (Projective_space_basic) {
+		FREE_OBJECT(Projective_space_basic);
+	}
 #if 0
 	if (Orthogonal_indexing) {
 		FREE_OBJECT(Orthogonal_indexing);
@@ -98,16 +99,6 @@ finite_field::~finite_field()
 	}
 }
 
-void finite_field::print_call_stats(std::ostream &ost)
-{
-	cout << "finite_field::print_call_stats" << endl;
-	cout << "nb_calls_to_mult_matrix_matrix="
-			<< nb_calls_to_mult_matrix_matrix << endl;
-	cout << "nb_calls_to_PG_element_rank_modified="
-			<< nb_calls_to_PG_element_rank_modified << endl;
-	cout << "nb_calls_to_PG_element_unrank_modified="
-			<< nb_calls_to_PG_element_unrank_modified << endl;
-}
 
 void finite_field::init(
 		finite_field_description *Descr,
@@ -338,6 +329,9 @@ void finite_field::finite_field_init_small_order(int q,
 	Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 	Linear_algebra->init(this, verbose_level);
 
+	Projective_space_basic = NEW_OBJECT(projective_space_basic);
+	Projective_space_basic->init(this, verbose_level);
+
 	finite_field::q = q;
 	if (f_v) {
 		cout << "finite_field::finite_field_init_small_order "
@@ -408,7 +402,8 @@ void finite_field::finite_field_init_small_order(int q,
 
 }
 
-void finite_field::setup_related_fields(int f_compute_related_fields,
+void finite_field::setup_related_fields(
+		int f_compute_related_fields,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -528,6 +523,8 @@ void finite_field::init_override_polynomial_small_order(
 	Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 	Linear_algebra->init(this, verbose_level);
 
+	Projective_space_basic = NEW_OBJECT(projective_space_basic);
+	Projective_space_basic->init(this, verbose_level);
 
 	finite_field::q = q;
 	NT.factor_prime_power(q, p, e);

@@ -228,7 +228,8 @@ void create_code::init(
 
 		for (j = 0; j < n; j++) {
 
-			F->PG_element_unrank_modified(Col, 1, nmk, v[j]);
+			F->Projective_space_basic->PG_element_unrank_modified(
+					Col, 1, nmk, v[j]);
 			for (i = 0; i < nmk; i++) {
 				checkma[i * n + j] = Col[i];
 			}

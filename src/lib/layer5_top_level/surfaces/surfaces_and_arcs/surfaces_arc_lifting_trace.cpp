@@ -816,7 +816,8 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 		cout << "surfaces_arc_lifting_trace::embed" << endl;
 	}
 	Int_vec_copy(Elt_A3, M3, 9);
-	Up->Lift->F->PG_element_normalize(M3, 1, 9);
+	Up->Lift->F->Projective_space_basic->PG_element_normalize(
+			M3, 1, 9);
 	Int_vec_zero(M4, 17);
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {

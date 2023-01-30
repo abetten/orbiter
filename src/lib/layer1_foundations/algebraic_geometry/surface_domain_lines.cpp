@@ -1082,7 +1082,7 @@ void surface_domain::create_the_fifteen_other_lines(
 		Lines[h] = Gr->rank_lint_here(Basis0,
 				0/* verbose_level*/);
 		for (i = 0; i < 2; i++) {
-			F->PG_element_normalize_from_front(
+			F->Projective_space_basic->PG_element_normalize_from_front(
 				Basis0 + i * 4, 1, 4);
 		}
 		if (f_v) {

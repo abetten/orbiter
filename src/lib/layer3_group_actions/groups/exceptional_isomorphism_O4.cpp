@@ -124,7 +124,8 @@ void exceptional_isomorphism_O4::apply_5_to_4(
 		cout << "exceptional_isomorphism_O4::apply_5_to_4" << endl;
 		}
 	Int_vec_copy(mtx5x5, Data, 25);
-	Fq->PG_element_normalize_from_front(Data, 1, 25);
+	Fq->Projective_space_basic->PG_element_normalize_from_front(
+			Data, 1, 25);
 	if (f_v) {
 		cout << "as 5 x 5:" << endl;
 		Int_vec_print_integer_matrix_width(cout, Data, 5, 5, 5, 3);
@@ -342,7 +343,8 @@ void exceptional_isomorphism_O4::apply_4_to_2(
 		A4->element_print_quick(E4, cout);
 		}
 	Int_vec_copy(E4, Data, 16);
-	Fq->PG_element_normalize_from_front(Data, 1, 16);
+	Fq->Projective_space_basic->PG_element_normalize_from_front(
+			Data, 1, 16);
 	if (f_v) {
 		cout << "as 4 x 4:" << endl;
 		Int_vec_print_integer_matrix_width(cout, Data, 4, 4, 4, 3);
@@ -412,8 +414,10 @@ void exceptional_isomorphism_O4::print_as_2x2(int *mtx4x4)
 	//cout << "f_switch=" << f_switch << endl;
 	for (r = 0; r < 2; r++) {
 		cout << "component " << r << ":" << endl;
-		Fq->PG_element_normalize_from_front(small + r * 4, 1, 4);
-		Int_vec_print_integer_matrix_width(cout, small + r * 4, 2, 2, 2, 3);
+		Fq->Projective_space_basic->PG_element_normalize_from_front(
+				small + r * 4, 1, 4);
+		Int_vec_print_integer_matrix_width(
+				cout, small + r * 4, 2, 2, 2, 3);
 		A2->make_element(elt1, small + r * 4, 0);
 		order = A2->element_order(elt1);
 		cout << "has order " << order << endl;

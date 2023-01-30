@@ -72,7 +72,7 @@ int rank_checker::check_rank(
 	}
 	// M1 will be used as a m x len matrix
 	for (j = 0; j < len; j++) {
-		GFq->PG_element_unrank_modified_lint(
+		GFq->Projective_space_basic->PG_element_unrank_modified_lint(
 				M1 + j, len /* stride */, m /* len */, S[j]);
 	}
 	if (f_vv) {
@@ -230,7 +230,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 	}
 	// M1 will be used as a m x len matrix
 	for (j = 0; j < len; j++) {
-		GFq->PG_element_unrank_modified(
+		GFq->Projective_space_basic->PG_element_unrank_modified(
 				M1 + j, len /* stride */, m /* len */, S[j]);
 	}
 	if (f_vv) {
@@ -321,7 +321,7 @@ int rank_checker::compute_rank_row_vectors(
 	// M1 will be used as a len x n matrix
 	for (j = 0; j < len; j++) {
 		if (f_projective) {
-			GFq->PG_element_unrank_modified_lint(
+			GFq->Projective_space_basic->PG_element_unrank_modified_lint(
 					M1 + j * n, 1 /* stride */, n /* len */, S[j]);
 		}
 		else {

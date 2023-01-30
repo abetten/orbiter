@@ -541,7 +541,7 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 
 	build_cubic_surface_from_lines(27, Lines27, coeff20,
 			0 /* verbose_level */);
-	F->PG_element_normalize_from_front(coeff20, 1, 20);
+	F->Projective_space_basic->PG_element_normalize_from_front(coeff20, 1, 20);
 
 
 

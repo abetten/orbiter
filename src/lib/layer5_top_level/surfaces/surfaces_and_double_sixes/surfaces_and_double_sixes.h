@@ -131,7 +131,8 @@ public:
 	algebraic_geometry::surface_domain *Surf;
 
 
-	actions::action *A2; // the action on the wedge product
+	actions::action *A2;
+		// the action on the wedge product
 	induced_actions::action_on_wedge_product *AW;
 		// internal data structure for the wedge action
 
@@ -142,19 +143,9 @@ public:
 		// stabilizer of the special line in PGL(4,q)
 		// this group acts on the set Neighbors[] in the wedge action
 
-	int nb_neighbors;
-		// = (q + 1) * q * (q + 1)
 
-	long int *Neighbors; // [nb_neighbors]
-		// The lines which intersect the special line.
-		// In wedge ranks.
-		// The array Neighbors is sorted.
+	orthogonal_geometry::linear_complex *Linear_complex;
 
-	long int *Neighbor_to_line; // [nb_neighbors]
-		// The lines which intersect the special line.
-		// In grassmann (i.e., line) ranks.
-	long int *Neighbor_to_klein; // [nb_neighbors]
-		// In orthogonal ranks (i.e., points on the Klein quadric).
 
 
 	ring_theory::longinteger_object go, stab_go;
@@ -166,13 +157,6 @@ public:
 
 	long int pt0_idx_in_orbit;
 
-	long int pt0_wedge;
-		// in wedge coordinates 100000
-	long int pt0_line;
-		// pt0 = the line spanned by 1000, 0100
-		// (we call it point because it is a point on the Klein quadric)
-	long int pt0_klein;
-		// in klein coordinates 100000
 
 
 
@@ -195,13 +179,10 @@ public:
 			poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
-	void compute_neighbors(int verbose_level);
-	void make_spreadsheet_of_neighbors(
-			data_structures::spreadsheet *&Sp,
-		int verbose_level);
 	void classify_partial_ovoids(
 		int verbose_level);
-	int line_to_neighbor(long int line_rk, int verbose_level);
+	int line_to_neighbor(
+			long int line_rk, int verbose_level);
 	void partial_ovoid_test_early(
 			long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -210,7 +191,8 @@ public:
 	void identify_five_plus_one(
 			long int *five_lines,
 			long int transversal_line,
-		long int *five_lines_out_as_neighbors, int &orbit_index,
+		long int *five_lines_out_as_neighbors,
+		int &orbit_index,
 		int *transporter, int verbose_level);
 	void report(
 			std::ostream &ost,
@@ -307,14 +289,28 @@ public:
 	int *Elt2;
 	int *Elt3;
 
+	// substructures:
+
 	classify_five_plus_one *Five_p1;
 
 	classify_double_sixes *Classify_double_sixes;
 
+
 	// classification of cubic surfaces:
+
 	invariant_relations::flag_orbits *Flag_orbits;
 
 	invariant_relations::classification_step *Surfaces;
+
+
+	// created by post_process():
+
+	int nb_surfaces;
+	data_structures_groups::set_and_stabilizer *SaS;
+		// [nb_surfaces]
+
+	long int *Lines; // [nb_surfaces * 27]
+	int *Eqn; // [nb_surfaces * 20]
 
 
 
@@ -330,6 +326,7 @@ public:
 	void do_classify_surfaces(int verbose_level);
 	void classify_surfaces_from_double_sixes(
 			int verbose_level);
+	void post_process(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void derived_arcs(int verbose_level);
@@ -367,7 +364,6 @@ public:
 			std::ostream &ost,
 			int orbit_index, int verbose_level);
 	void generate_source_code(int verbose_level);
-		// no longer produces nb_E[] and single_six[]
 	void generate_history(int verbose_level);
 	int test_if_surfaces_have_been_computed_already();
 	void write_surfaces(int verbose_level);

@@ -1634,7 +1634,8 @@ void poset_classification::wedge_product_export_magma(
 		f << "B := [ BV | " << endl;
 		for (i = 0; i < Poset->A->base_len(); i++) {
 			a = Poset->A->base_i(i);
-			Poset->VS->F->PG_element_unrank_modified(v, 1, n, a);
+			Poset->VS->F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, n, a);
 			//(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
 			f << "[ ";
 			for (h = 0; h < n; h++) {

@@ -960,11 +960,13 @@ long int matrix_group::GL_image_of_PG_element(
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_PG_element" << endl;
 		}
-	GFq->PG_element_unrank_modified_lint(v1, 1, n, a);
+	GFq->Projective_space_basic->PG_element_unrank_modified_lint(
+			v1, 1, n, a);
 
 	action_from_the_right_all_types(v1, Elt, v2, verbose_level - 1);
 	
-	GFq->PG_element_rank_modified_lint(v2, 1, n, b);
+	GFq->Projective_space_basic->PG_element_rank_modified_lint(
+			v2, 1, n, b);
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_PG_element done" << endl;
@@ -1086,7 +1088,8 @@ void matrix_group::substitute_surface_equation(int *Elt,
 					Elt,
 					0 /*verbose_level*/);
 
-		GFq->PG_element_normalize(coeff_out, 1, 20);
+		GFq->Projective_space_basic->PG_element_normalize(
+				coeff_out, 1, 20);
 	}
 	else {
 		Surf->substitute_semilinear(coeff_in,
@@ -1096,7 +1099,8 @@ void matrix_group::substitute_surface_equation(int *Elt,
 					Elt,
 					0 /*verbose_level*/);
 
-		GFq->PG_element_normalize(coeff_out, 1, 20);
+		GFq->Projective_space_basic->PG_element_normalize(
+				coeff_out, 1, 20);
 
 	}
 	if (f_v) {
@@ -1650,7 +1654,8 @@ void matrix_group::GL_print_for_make_element(
 	Int_vec_copy(Elt, D, n * n);
 
 	if (f_projective) {
-		GFq->PG_element_normalize_from_front(D, 1, n * n);
+		GFq->Projective_space_basic->PG_element_normalize_from_front(
+				D, 1, n * n);
 	}
 
 	for (i = 0; i < n; i++) {
@@ -1722,7 +1727,8 @@ void matrix_group::GL_print_easy_normalized(int *Elt, std::ostream &ost)
 		int *D;
 		D = NEW_int(n * n);
 		Int_vec_copy(Elt, D, n * n);
-		GFq->PG_element_normalize_from_front(D, 1, n * n);
+		GFq->Projective_space_basic->PG_element_normalize_from_front(
+				D, 1, n * n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
 				a = D[i * n + j];
@@ -1776,7 +1782,8 @@ void matrix_group::GL_print_latex(int *Elt, std::ostream &ost)
 	
 	if (f_projective) {
 		//GFq->PG_element_normalize_from_front(D, 1, n * n);
-		GFq->PG_element_normalize(D, 1, n * n);
+		GFq->Projective_space_basic->PG_element_normalize(
+				D, 1, n * n);
 	}
 
 	GFq->print_matrix_latex(ost, D, n, n);
@@ -1878,7 +1885,8 @@ void matrix_group::GL_print_easy_latex_with_option_numerical(
 
     if (f_projective) {
 		Int_vec_copy(Elt, D, n * n);
-		GFq->PG_element_normalize_from_front(D, 1, n * n);
+		GFq->Projective_space_basic->PG_element_normalize_from_front(
+				D, 1, n * n);
 		//GFq->PG_element_normalize(D, 1, n * n);
     }
     else {

@@ -291,7 +291,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 	Variety->gens_stab_of_canonical_equation->group_order(*Variety->go_eqn);
 
-	Variety->Canonical_form_classifier->Descr->PA->F->PG_element_normalize(
+	Variety->Canonical_form_classifier->Descr->PA->F->Projective_space_basic->PG_element_normalize(
 			Variety->canonical_equation, 1,
 			Variety->Canonical_form_classifier->Poly_ring->get_nb_monomials());
 

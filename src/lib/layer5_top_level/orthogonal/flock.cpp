@@ -147,7 +147,7 @@ void flock::init(
 			Int_matrix_print(E, 1, 4);
 		}
 
-		BLT_set->Blt_set_domain->F->PG_element_normalize_from_a_given_position(
+		BLT_set->Blt_set_domain->F->Projective_space_basic->PG_element_normalize_from_a_given_position(
 				E, 1, 4, 1);
 
 		if (f_v) {

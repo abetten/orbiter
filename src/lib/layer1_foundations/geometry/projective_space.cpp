@@ -470,13 +470,15 @@ void projective_space::create_points_on_line(
 	Grass_lines->unrank_lint(line_rk, 0/*verbose_level - 4*/);
 	for (a = 0; a < k; a++) {
 
-		F->PG_element_unrank_modified(v, 1, 2, a);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, 2, a);
 
 		F->Linear_algebra->mult_matrix_matrix(
 				v, Grass_lines->M, w, 1, 2, n + 1,
 				0 /* verbose_level */);
 
-		F->PG_element_rank_modified(w, 1, n + 1, b);
+		F->Projective_space_basic->PG_element_rank_modified(
+				w, 1, n + 1, b);
 
 		line[a] = b;
 	}
@@ -503,7 +505,8 @@ void projective_space::create_lines_on_point(
 	w = NEW_int(n);
 	Basis = NEW_int(2 * d);
 
-	F->PG_element_unrank_modified(v, 1, d, point_rk);
+	F->Projective_space_basic->PG_element_unrank_modified(
+			v, 1, d, point_rk);
 	for (i = 0; i < n + 1; i++) {
 		if (v[i]) {
 			break;
@@ -514,7 +517,8 @@ void projective_space::create_lines_on_point(
 		exit(1);
 	}
 	for (a = 0; a < r; a++) {
-		F->PG_element_unrank_modified(w, 1, n, a);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				w, 1, n, a);
 		Int_vec_copy(v, Basis, d);
 		Int_vec_copy(w, Basis + d, i);
 		Basis[d + i] = 0;
@@ -559,7 +563,8 @@ void projective_space::create_lines_on_point_but_inside_a_plane(
 
 	Grass_planes->unrank_lint_here(Plane, plane_rk, 0 /*verbose_level*/);
 
-	F->PG_element_unrank_modified(v, 1, d, point_rk);
+	F->Projective_space_basic->PG_element_unrank_modified(
+			v, 1, d, point_rk);
 	for (idx = 0; idx < n + 1; idx++) {
 		if (v[idx]) {
 			break;
@@ -571,7 +576,8 @@ void projective_space::create_lines_on_point_but_inside_a_plane(
 	}
 	i = 0;
 	for (a = 0; a < r; a++) {
-		F->PG_element_unrank_modified(w, 1, n, a);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				w, 1, n, a);
 		Int_vec_copy(v, Basis, d);
 		Int_vec_copy(w, Basis + d, idx);
 		Basis[d + idx] = 0;
@@ -619,7 +625,8 @@ int projective_space::create_point_on_line(
 		Int_matrix_print(Grass_lines->M, 2, n + 1);
 	}
 
-	F->PG_element_unrank_modified(v, 1, 2, pt_rk);
+	F->Projective_space_basic->PG_element_unrank_modified(
+			v, 1, 2, pt_rk);
 	if (f_v) {
 		cout << "projective_space::create_point_on_line v=" << endl;
 		Int_vec_print(cout, v, 2);
@@ -634,7 +641,8 @@ int projective_space::create_point_on_line(
 		cout << endl;
 	}
 
-	F->PG_element_rank_modified(w, 1, n + 1, b);
+	F->Projective_space_basic->PG_element_rank_modified(
+			w, 1, n + 1, b);
 
 	if (f_v) {
 		cout << "projective_space::create_point_on_line b = " << b << endl;
@@ -712,7 +720,8 @@ int projective_space::is_incident(int pt, int line)
 			Int_matrix_print(Grass_lines->M, 2, n + 1);
 		}
 		Int_vec_copy(Grass_lines->M, Mtx, 2 * (n + 1));
-		F->PG_element_unrank_modified(Mtx + 2 * (n + 1), 1, n + 1, pt);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				Mtx + 2 * (n + 1), 1, n + 1, pt);
 		if (f_v) {
 			cout << "point:" << endl;
 			Int_vec_print(cout, Mtx + 2 * (n + 1), n + 1);
@@ -1122,7 +1131,8 @@ long int projective_space::rank_point(int *v)
 		cout << endl;
 	}
 	
-	F->PG_element_rank_modified_lint(v, 1, n + 1, b);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1, n + 1, b);
 
 	if (f_v) {
 		cout << "projective_space::rank_point: v=";
@@ -1134,7 +1144,8 @@ long int projective_space::rank_point(int *v)
 
 void projective_space::unrank_point(int *v, long int rk)
 {	
-	F->PG_element_unrank_modified_lint(v, 1, n + 1, rk);
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v, 1, n + 1, rk);
 }
 
 void projective_space::unrank_points(int *v, long int *Rk, int sz)
@@ -1142,7 +1153,8 @@ void projective_space::unrank_points(int *v, long int *Rk, int sz)
 	int i;
 
 	for (i = 0; i < sz; i++) {
-		F->PG_element_unrank_modified_lint(v + i * (n + 1), 1, n + 1, Rk[i]);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(
+				v + i * (n + 1), 1, n + 1, Rk[i]);
 	}
 }
 
@@ -1470,11 +1482,13 @@ void projective_space::line_intersection_type_through_hyperplane(
 	Int_vec_zero(cnt1, nb_pts_in_hyperplane);
 	for (i = 0; i < nb_pts_in_hyperplane; i++) {
 
-		F->PG_element_unrank_modified(Pts1 + i * d, 1, n, i);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				Pts1 + i * d, 1, n, i);
 
 		Pts1[i * d + d - 1] = 0;
 
-		F->PG_element_rank_modified_lint(Pts1 + i * d, 1, n + 1, i1);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				Pts1 + i * d, 1, n + 1, i1);
 
 		// i1 is the rank of the hyperplane point
 		// inside the larger space:

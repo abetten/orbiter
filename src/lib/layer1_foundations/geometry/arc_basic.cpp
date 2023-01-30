@@ -82,7 +82,8 @@ void arc_basic::Segre_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -152,7 +153,8 @@ void arc_basic::GlynnI_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -222,7 +224,8 @@ void arc_basic::GlynnII_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -307,7 +310,8 @@ void arc_basic::Subiaco_oval(
 	Mtx[t * 3 + 1] = 1;
 	Mtx[t * 3 + 2] = 0;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -408,7 +412,8 @@ void arc_basic::Subiaco_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -582,7 +587,8 @@ void arc_basic::LunelliSce(int *pts18, int verbose_level)
 	N = Gg.nb_PG_elements(2, 16);
 	sz = 0;
 	for (i = 0; i < N; i++) {
-		F->PG_element_unrank_modified(v, 1, 3, i);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, 3, i);
 		//cout << "i=" << i << " v=";
 		//int_vec_print(cout, v, 3);
 		//cout << endl;

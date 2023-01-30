@@ -2518,7 +2518,7 @@ void ring_theory_global::oval_polynomial(
 	}
 	map = NEW_int(F->q);
 	for (i = 0; i < F->q; i++) {
-		F->PG_element_unrank_modified(
+		F->Projective_space_basic->PG_element_unrank_modified(
 				v, 1 /* stride */, 3 /* len */, S[2 + i]);
 		if (v[2] != 1) {
 			cout << "ring_theory_global::oval_polynomial "

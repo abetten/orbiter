@@ -12,6 +12,7 @@ MODULES = \
 	hyperbolic_pair_parabolic.o \
 	hyperbolic_pair_rank_unrank.o \
 	hyperbolic_pair.o \
+	linear_complex.o \
 	orthogonal_global.o \
 	orthogonal_group.o \
 	orthogonal_indexing.o \

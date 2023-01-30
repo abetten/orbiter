@@ -1170,7 +1170,8 @@ void spread_classify::cooperstein_thas_quotients(
 	Gr->init(n - 1, k, SD->F, 0 /* verbose_level */);
 	for (i = 0; i < order + 1; i++) {
 		SD->Grass->unrank_lint_here(M, data[i], 0/*verbose_level - 4*/);
-		SD->F->all_PG_elements_in_subspace(M, k, n,
+		SD->F->Projective_space_basic->all_PG_elements_in_subspace(
+				M, k, n,
 				Pts[i], nb_points, 0 /* verbose_level */);
 		Sorting.lint_vec_heapsort(Pts[i], nb_points);
 	}
@@ -1191,8 +1192,10 @@ void spread_classify::cooperstein_thas_quotients(
 		}
 
 
-		SD->F->PG_element_unrank_modified(vec1, 1, n, the_point);
-		SD->F->PG_element_normalize_from_front(vec1, 1, n);
+		SD->F->Projective_space_basic->PG_element_unrank_modified(
+				vec1, 1, n, the_point);
+		SD->F->Projective_space_basic->PG_element_normalize_from_front(
+				vec1, 1, n);
 		pivot = Int_vec_find_first_nonzero_entry(vec1, n);
 
 		for (i = 0; i < order + 1; i++) {

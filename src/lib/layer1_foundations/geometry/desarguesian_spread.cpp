@@ -151,7 +151,8 @@ void desarguesian_spread::calculate_spread_elements(
 		if (f_vv) {
 			cout << "h=" << h << " / " << N << endl;
 			}
-		FQ->PG_element_unrank_modified(v, 1, m, h);
+		FQ->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, m, h);
 		if (f_vv) {
 			Int_vec_print(cout, v, m);
 			cout << endl;
@@ -216,9 +217,12 @@ void desarguesian_spread::calculate_spread_elements(
 			}
 		Spread_elt_basis = Spread_elements + h * spread_element_size;
 		for (i = 0; i < nb_points_per_spread_element; i++) {
-			Fq->PG_element_unrank_modified(v, 1, s, i);
-			Fq->Linear_algebra->mult_vector_from_the_left(v, Spread_elt_basis, w, s, n);
-			Fq->PG_element_rank_modified(w, 1, n, rk);
+			Fq->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, s, i);
+			Fq->Linear_algebra->mult_vector_from_the_left(
+					v, Spread_elt_basis, w, s, n);
+			Fq->Projective_space_basic->PG_element_rank_modified(
+					w, 1, n, rk);
 			List_of_points[h * nb_points_per_spread_element + i] = rk;
 			}
 		if (f_vv) {
@@ -372,7 +376,8 @@ void desarguesian_spread::print_spread_element_table_tex(std::ostream &ost)
 
 	v = NEW_int(m);
 	for (a = 0; a < N; a++) {
-		FQ->PG_element_unrank_modified(v, 1, m, a);
+		FQ->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, m, a);
 		ost << "$";
 		Int_vec_print(ost, v, m);
 		ost << "$";
@@ -411,7 +416,8 @@ void desarguesian_spread::print_spread_elements_tex(std::ostream &ost)
 	ost << "\\noindent" << endl;
 	for (a = 0; a < N; a++) {
 		ost << a << " / " << N << ":";
-		FQ->PG_element_unrank_modified(v, 1, m, a);
+		FQ->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, m, a);
 		ost << "$";
 		Int_vec_print(ost, v, m);
 		ost << "=";
@@ -457,7 +463,8 @@ void desarguesian_spread::print_linear_set_element_tex(long int a, int sz)
 	int *v;
 
 	v = NEW_int(m);
-	FQ->PG_element_unrank_modified(v, 1, m, a);
+	FQ->Projective_space_basic->PG_element_unrank_modified(
+			v, 1, m, a);
 	cout << "D_{";
 	Int_vec_print(cout, v, m);
 	cout << "}";

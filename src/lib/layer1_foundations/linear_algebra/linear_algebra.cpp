@@ -194,7 +194,6 @@ void linear_algebra::mult_matrix_matrix(
 		cout << "B=" << endl;
 		Int_matrix_print(B, n, o);
 	}
-	F->nb_calls_to_mult_matrix_matrix++;
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < o; j++) {
 			a = 0;
@@ -1936,7 +1935,8 @@ void linear_algebra::projective_action_on_columns_from_the_left(
 	}
 
 	for (j = 0; j < n; j++) {
-		F->PG_element_normalize_from_front(AM + j,
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				AM + j,
 				n /* stride */, m /* length */);
 	}
 	if (f_vv) {
@@ -2474,10 +2474,10 @@ int linear_algebra::compare_subspaces_ranked(
 	base_cols1 = NEW_int(vector_space_dimension);
 	base_cols2 = NEW_int(vector_space_dimension);
 	for (i = 0; i < size; i++) {
-		F->PG_element_unrank_modified(
+		F->Projective_space_basic->PG_element_unrank_modified(
 			M1 + i * vector_space_dimension,
 			1, vector_space_dimension, set1[i]);
-		F->PG_element_unrank_modified(
+		F->Projective_space_basic->PG_element_unrank_modified(
 			M2 + i * vector_space_dimension,
 			1, vector_space_dimension, set2[i]);
 	}
@@ -2708,7 +2708,7 @@ int linear_algebra::Gauss_canonical_form_ranked(
 	M = NEW_int(size * vector_space_dimension);
 	base_cols = NEW_int(vector_space_dimension);
 	for (i = 0; i < size; i++) {
-		F->PG_element_unrank_modified(
+		F->Projective_space_basic->PG_element_unrank_modified(
 			M + i * vector_space_dimension,
 			1, vector_space_dimension,
 			set1[i]);
@@ -2735,7 +2735,7 @@ int linear_algebra::Gauss_canonical_form_ranked(
 	}
 
 	for (i = 0; i < rk; i++) {
-		F->PG_element_rank_modified(
+		F->Projective_space_basic->PG_element_rank_modified(
 			M + i * vector_space_dimension,
 			1, vector_space_dimension,
 			set2[i]);
@@ -2791,7 +2791,8 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	M1 = NEW_int(size * vector_space_dimension);
 	base_cols = NEW_int(vector_space_dimension);
 	for (i = 0; i < size; i++) {
-		F->PG_element_unrank_modified(M1 + i * vector_space_dimension,
+		F->Projective_space_basic->PG_element_unrank_modified(
+				M1 + i * vector_space_dimension,
 			1, vector_space_dimension, set1[i]);
 	}
 	if (f_vv) {
@@ -2834,7 +2835,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 		if (a == 0) {
 			continue;
 		}
-		F->PG_element_rank_modified(
+		F->Projective_space_basic->PG_element_rank_modified(
 				M2 + a * vector_space_dimension, 1,
 				vector_space_dimension, list_of_ranks_PG[a]);
 		if (!Sorting.int_vec_search(list_of_ranks_PG_sorted,
@@ -2887,7 +2888,8 @@ int linear_algebra::lexleast_canonical_form_ranked(
 					<< list_of_ranks_PG_sorted[a] << endl;
 		}
 		basis_vectors[i] = list_of_ranks_PG_sorted[a];
-		F->PG_element_unrank_modified(M1 + i * vector_space_dimension,
+		F->Projective_space_basic->PG_element_unrank_modified(
+				M1 + i * vector_space_dimension,
 			1, vector_space_dimension, basis_vectors[i]);
 		Sz = F->q * sz;
 		if (f_vv) {
@@ -2931,7 +2933,8 @@ int linear_algebra::lexleast_canonical_form_ranked(
 				Int_vec_print(cout, tmp, vector_space_dimension);
 				cout << endl;
 			}
-			F->PG_element_rank_modified(tmp, 1,
+			F->Projective_space_basic->PG_element_rank_modified(
+					tmp, 1,
 					vector_space_dimension, a);
 			if (f_vv) {
 				cout << "has rank " << a << endl;
@@ -2962,7 +2965,8 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	}
 
 	for (i = 0; i < rk; i++) {
-		F->PG_element_rank_modified(M1 + i * vector_space_dimension,
+		F->Projective_space_basic->PG_element_rank_modified(
+				M1 + i * vector_space_dimension,
 			1, vector_space_dimension, set2[i]);
 	}
 	if (f_vv) {

@@ -1529,7 +1529,8 @@ void action_global::report_fixed_objects_in_P3(
 	for (j = 0; j < cnt; j++) {
 		i = Fix[0][j];
 
-		F->PG_element_unrank_modified(v, 1, 4, i);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, 4, i);
 
 		ost << j << " / " << cnt << " = " << i << " : ";
 		Int_vec_print(ost, v, 4);

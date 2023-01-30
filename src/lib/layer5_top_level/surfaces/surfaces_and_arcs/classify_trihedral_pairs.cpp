@@ -277,7 +277,8 @@ void classify_trihedral_pairs::report(std::ostream &ost)
 #endif
 }
 
-void classify_trihedral_pairs::list_orbits_on_trihedra_type1(std::ostream &ost, int f_detailed)
+void classify_trihedral_pairs::list_orbits_on_trihedra_type1(
+		std::ostream &ost, int f_detailed)
 {
 	int i, l;
 
@@ -339,7 +340,8 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(std::ostream &ost, 
 	}
 }
 
-void classify_trihedral_pairs::list_orbits_on_trihedra_type2(std::ostream &ost, int f_detailed)
+void classify_trihedral_pairs::list_orbits_on_trihedra_type2(
+		std::ostream &ost, int f_detailed)
 {
 	int i, l;
 
@@ -574,7 +576,8 @@ void classify_trihedral_pairs::early_test_func_type1(
 	
 }
 
-void classify_trihedral_pairs::early_test_func_type2(long int *S, int len,
+void classify_trihedral_pairs::early_test_func_type2(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -1142,12 +1145,14 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 	}
 }
 
-void classify_trihedral_pairs::print_trihedral_pairs_summary(std::ostream &ost)
+void classify_trihedral_pairs::print_trihedral_pairs_summary(
+		std::ostream &ost)
 {
 	Trihedral_pairs->print_summary(ost);
 }
 
-void classify_trihedral_pairs::print_trihedral_pairs(std::ostream &ost,
+void classify_trihedral_pairs::print_trihedral_pairs(
+		std::ostream &ost,
 	int f_with_stabilizers)
 {
 	string title;
@@ -1219,7 +1224,8 @@ groups::strong_generators
 
 
 
-void classify_trihedral_pairs::identify_trihedral_pair(long int *planes6,
+void classify_trihedral_pairs::identify_trihedral_pair(
+		long int *planes6,
 	int *transporter, int &orbit_index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -557,7 +557,8 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 					verbose_level - 6);
 
 
-			AL->F->PG_element_normalize(coeff_out, 1, 20);
+			AL->F->Projective_space_basic->PG_element_normalize(
+					coeff_out, 1, 20);
 
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
@@ -1310,7 +1311,8 @@ void trihedral_pair_with_action::report(std::ostream &ost, int verbose_level)
 
 	coeffs = The_surface_equations + lambda_rk * 20;
 	Int_vec_copy(coeffs, coeffs2, 20);
-	AL->F->PG_element_normalize_from_front(coeffs2, 1, 20);
+	AL->F->Projective_space_basic->PG_element_normalize_from_front(
+			coeffs2, 1, 20);
 
 	ost << "\\bigskip" << endl;
 	ost << "The normalized equation of the surface is:" << endl;

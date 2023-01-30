@@ -479,7 +479,7 @@ int canonical_form_of_variety::find_equation(
 	// now, eqn2 is the image of the curve C
 	// and belongs to the orbit of equations associated with C1.
 
-	Canonical_form_classifier->Descr->PA->F->PG_element_normalize_from_front(
+	Canonical_form_classifier->Descr->PA->F->Projective_space_basic->PG_element_normalize_from_front(
 			Canonical_form_classifier->eqn2, 1,
 			Canonical_form_classifier->Poly_ring->get_nb_monomials());
 

@@ -767,7 +767,8 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 		exit(1);
 	}
 
-	F->PG_element_normalize_from_front(M2 + 6, 1, 3);
+	F->Projective_space_basic->PG_element_normalize_from_front(
+			M2 + 6, 1, 3);
 	if (f_v) {
 		cout << "quartic_curve_domain::create_surface kernel = ";
 		Int_vec_print(cout, M2 + 6, 3);

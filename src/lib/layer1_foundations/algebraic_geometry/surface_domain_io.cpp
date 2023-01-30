@@ -131,7 +131,8 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 
 	for (i = 0; i < nb_lines; i++) {
 		a = Wedge_rk[i];
-		F->PG_element_unrank_modified_lint(w, 1, 6 /*wedge_dimension*/, a);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(
+				w, 1, 6 /*wedge_dimension*/, a);
 		Int_vec_print_to_str(Text_wedge[i], w, 6);
 		}
 	for (i = 0; i < nb_lines; i++) {

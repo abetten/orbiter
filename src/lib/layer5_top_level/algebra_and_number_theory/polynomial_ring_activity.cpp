@@ -201,7 +201,8 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 				cout << "polynomial_ring_activity::perform_activity after substitute_linear" << endl;
 			}
 
-			HPD->get_F()->PG_element_normalize_from_front(Eqn_out, 1, HPD->get_nb_monomials());
+			HPD->get_F()->Projective_space_basic->PG_element_normalize_from_front(
+					Eqn_out, 1, HPD->get_nb_monomials());
 
 
 			if (f_v) {

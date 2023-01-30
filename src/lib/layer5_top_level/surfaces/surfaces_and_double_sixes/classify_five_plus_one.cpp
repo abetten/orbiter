@@ -41,10 +41,8 @@ classify_five_plus_one::classify_five_plus_one()
 
 	SG_line_stab = NULL;
 
-	nb_neighbors = 0;
-	Neighbors = NULL;
-	Neighbor_to_line = NULL;
-	Neighbor_to_klein = NULL;
+	Linear_complex = NULL;
+
 	//Line_to_neighbor = NULL;
 
 	//ring_theory::longinteger_object go, stab_go;
@@ -55,9 +53,6 @@ classify_five_plus_one::classify_five_plus_one()
 	orbit_len = 0;
 
 	pt0_idx_in_orbit = 0;
-	pt0_wedge = 0;
-	pt0_line = 0;
-	pt0_klein = 0;
 
 	A_on_neighbors = NULL;
 	Control = NULL;
@@ -115,10 +110,6 @@ void classify_five_plus_one::init(
 	Elt0 = NEW_int(A->elt_size_in_int);
 	Elt1 = NEW_int(A->elt_size_in_int);
 
-	pt0_line = 0; // pt0 = the line spanned by 1000, 0100
-		// (we call it point because it is a point on the Klein quadric)
-	pt0_wedge = 0; // in wedge coordinates 100000
-	pt0_klein = 0; // in klein coordinates 100000
 
 
 	if (f_v) {
@@ -139,39 +130,18 @@ void classify_five_plus_one::init(
 
 
 
-	if (f_v) {
-		cout << "classify_five_plus_one::init "
-				"before compute_neighbors" << endl;
-	}
-	compute_neighbors(verbose_level);
-	if (f_v) {
-		cout << "classify_five_plus_one::init "
-				"after compute_neighbors" << endl;
-	}
-	{
-		data_structures::spreadsheet *Sp;
-		if (f_v) {
-			cout << "classify_five_plus_one::init "
-					"before make_spreadsheet_of_neighbors" << endl;
-		}
-		make_spreadsheet_of_neighbors(Sp, 0 /* verbose_level */);
-		if (f_v) {
-			cout << "classify_five_plus_one::init "
-					"after make_spreadsheet_of_neighbors" << endl;
-		}
-		FREE_OBJECT(Sp);
-	}
-	if (f_v) {
-		cout << "classify_five_plus_one::init "
-				"after compute_neighbors "
-				"nb_neighbors = " << nb_neighbors << endl;
-		cout << "Neighbors=";
-		Lint_vec_print(cout, Neighbors, nb_neighbors);
-		cout << endl;
-	}
+	Linear_complex = NEW_OBJECT(orthogonal_geometry::linear_complex);
 
 
-
+	if (f_v) {
+		cout << "classify_five_plus_one::init before "
+				"Linear_complex->init" << endl;
+	}
+	Linear_complex->init(Surf, verbose_level - 1);
+	if (f_v) {
+		cout << "classify_five_plus_one::init after "
+				"Linear_complex->init" << endl;
+	}
 
 
 	if (f_v) {
@@ -182,7 +152,7 @@ void classify_five_plus_one::init(
 	A_on_neighbors = NEW_OBJECT(actions::action);
 	A_on_neighbors = A2->create_induced_action_by_restriction(
 		NULL,
-		nb_neighbors, Neighbors,
+		Linear_complex->nb_neighbors, Linear_complex->Neighbors,
 		FALSE /* f_induce_action */,
 		0 /* verbose_level */);
 
@@ -243,183 +213,6 @@ void classify_five_plus_one::init(
 }
 
 
-void classify_five_plus_one::compute_neighbors(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	long int i, a, b, c;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors" << endl;
-	}
-
-	nb_neighbors = (long int) (q + 1) * q * (q + 1);
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors "
-				"nb_neighbors = " << nb_neighbors << endl;
-	}
-	Neighbors = NEW_lint(nb_neighbors);
-	Neighbor_to_line = NEW_lint(nb_neighbors);
-	Neighbor_to_klein = NEW_lint(nb_neighbors);
-
-	int sz;
-
-	// At first, we get the neighbors
-	// as points on the Klein quadric:
-	// Later, we will change them to wedge ranks:
-
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors "
-				"before Surf->O->perp" << endl;
-		}
-	Surf->O->perp(0, Neighbors, sz, 0 /*verbose_level - 3*/);
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors "
-				"after Surf->O->perp" << endl;
-
-		//cout << "Neighbors:" << endl;
-		//lint_matrix_print(Neighbors, (sz + 9) / 10, 10);
-	}
-
-	if (sz != nb_neighbors) {
-		cout << "classify_five_plus_one::compute_neighbors "
-				"sz != nb_neighbors" << endl;
-		cout << "sz = " << sz << endl;
-		cout << "nb_neighbors = " << nb_neighbors << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors "
-				"nb_neighbors = " << nb_neighbors << endl;
-	}
-
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors "
-				"allocating Line_to_neighbor, "
-				"Surf->nb_lines_PG_3=" << Surf->nb_lines_PG_3 << endl;
-	}
-
-#if 0
-	Line_to_neighbor = NEW_lint(Surf->nb_lines_PG_3);
-	for (i = 0; i < Surf->nb_lines_PG_3; i++) {
-		Line_to_neighbor[i] = -1;
-	}
-#endif
-
-
-	// Convert Neighbors[] from points
-	// on the Klein quadric to wedge points:
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors "
-				"before Surf->klein_to_wedge_vec" << endl;
-	}
-	Surf->klein_to_wedge_vec(Neighbors, Neighbors, nb_neighbors);
-
-	// Sort the set Neighbors:
-	Sorting.lint_vec_heapsort(Neighbors, nb_neighbors);
-
-
-
-
-	// Establish the bijection between Neighbors and Lines in PG(3,q)
-	// by going through the Klein correspondence.
-	// It is important that this be done after we sort Neighbors.
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors "
-				"Establish the bijection between Neighbors and Lines in "
-				"PG(3,q), nb_neighbors=" << nb_neighbors << endl;
-	}
-	int N100;
-	int w[6];
-	int v[6];
-
-	N100 = nb_neighbors / 100 + 1;
-
-	for (i = 0; i < nb_neighbors; i++) {
-		if ((i % N100) == 0) {
-			cout << "classify_five_plus_one::compute_neighbors i=" << i << " / "
-					<< nb_neighbors << " at "
-					<< (double)i * 100. / nb_neighbors << "%" << endl;
-		}
-		a = Neighbors[i];
-		AW->unrank_point(w, a);
-		Surf->wedge_to_klein(w, v);
-		if (FALSE) {
-			cout << i << " : ";
-			Int_vec_print(cout, v, 6);
-			cout << endl;
-		}
-		b = Surf->O->Hyperbolic_pair->rank_point(
-				v, 1, 0 /* verbose_level*/);
-		if (FALSE) {
-			cout << " : " << b;
-			cout << endl;
-		}
-		c = Surf->Klein->point_on_quadric_to_line(
-				b, 0 /* verbose_level*/);
-		if (FALSE) {
-			cout << " : " << c << endl;
-			cout << endl;
-		}
-		Neighbor_to_line[i] = c;
-		//Line_to_neighbor[c] = i;
-		}
-
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors "
-				"before int_vec_apply" << endl;
-	}
-	for (i = 0; i < nb_neighbors; i++) {
-		Neighbor_to_klein[i] = Surf->Klein->line_to_point_on_quadric(
-				Neighbor_to_line[i], 0 /* verbose_level*/);
-	}
-#if 0
-	lint_vec_apply(Neighbor_to_line,
-			Surf->Klein->Line_to_point_on_quadric,
-			Neighbor_to_klein, nb_neighbors);
-#endif
-
-
-	if (f_v) {
-		cout << "classify_five_plus_one::compute_neighbors done" << endl;
-	}
-}
-
-void classify_five_plus_one::make_spreadsheet_of_neighbors(
-	data_structures::spreadsheet *&Sp, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	char str[1000];
-	string fname_csv;
-
-	if (f_v) {
-		cout << "classify_five_plus_one::make_spreadsheet_of_neighbors" << endl;
-	}
-
-	snprintf(str, sizeof(str), "neighbors_%d.csv", q);
-	fname_csv.assign(str);
-
-
-	Surf->make_spreadsheet_of_lines_in_three_kinds(Sp,
-		Neighbors, Neighbor_to_line,
-		Neighbor_to_klein, nb_neighbors, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "before Sp->save " << fname_csv << endl;
-	}
-	Sp->save(fname_csv, verbose_level);
-	if (f_v) {
-		cout << "after Sp->save " << fname_csv << endl;
-	}
-
-
-
-
-
-	if (f_v) {
-		cout << "classify_five_plus_one::make_spreadsheet_of_neighbors done" << endl;
-	}
-}
 
 void classify_five_plus_one::classify_partial_ovoids(int verbose_level)
 {
@@ -436,9 +229,9 @@ void classify_five_plus_one::classify_partial_ovoids(int verbose_level)
 	}
 	if (f_v) {
 		cout << "classify_five_plus_one::classify_partial_ovoids "
-				"nb_neighbors = " << nb_neighbors << endl;
+				"nb_neighbors = " << Linear_complex->nb_neighbors << endl;
 		cout << "Neighbors=";
-		Lint_vec_print(cout, Neighbors, nb_neighbors);
+		Lint_vec_print(cout, Linear_complex->Neighbors, Linear_complex->nb_neighbors);
 		cout << endl;
 	}
 	if (f_v) {
@@ -474,7 +267,8 @@ void classify_five_plus_one::classify_partial_ovoids(int verbose_level)
 	}
 }
 
-int classify_five_plus_one::line_to_neighbor(long int line_rk, int verbose_level)
+int classify_five_plus_one::line_to_neighbor(
+		long int line_rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx;
@@ -489,7 +283,7 @@ int classify_five_plus_one::line_to_neighbor(long int line_rk, int verbose_level
 			line_rk, 0 /* verbose_level*/);
 
 	if (!Sorting.lint_vec_search(
-			Neighbors, nb_neighbors, point_rk,
+			Linear_complex->Neighbors, Linear_complex->nb_neighbors, point_rk,
 			idx, 0 /* verbose_level */)) {
 		cout << "classify_five_plus_one::line_to_neighbor line " << line_rk
 				<< " = point " << point_rk << " not found in Neighbors[]" << endl;
@@ -530,7 +324,7 @@ void classify_five_plus_one::partial_ovoid_test_early(
 		exit(1);
 	}
 	for (i = 0; i < len; i++) {
-		AW->unrank_point(u, Neighbors[S[i]]);
+		AW->unrank_point(u, Linear_complex->Neighbors[S[i]]);
 		Surf->wedge_to_klein(u, Pts_for_partial_ovoid_test + i * 6);
 	}
 
@@ -554,7 +348,7 @@ void classify_five_plus_one::partial_ovoid_test_early(
 						<< nb_candidates << endl;
 			}
 
-			AW->unrank_point(u, Neighbors[candidates[j]]);
+			AW->unrank_point(u, Linear_complex->Neighbors[candidates[j]]);
 			Surf->wedge_to_klein(u, v);
 
 			f_OK = TRUE;
@@ -580,7 +374,8 @@ void classify_five_plus_one::partial_ovoid_test_early(
 void classify_five_plus_one::identify_five_plus_one(
 	long int *five_lines,
 	long int transversal_line,
-	long int *five_lines_out_as_neighbors, int &orbit_index,
+	long int *five_lines_out_as_neighbors,
+	int &orbit_index,
 	int *transporter, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -632,7 +427,8 @@ void classify_five_plus_one::identify_five_plus_one(
 		cout << endl;
 	}
 
-	Sorting.lint_vec_search_vec(Neighbors, nb_neighbors,
+	Sorting.lint_vec_search_vec(
+			Linear_complex->Neighbors, Linear_complex->nb_neighbors,
 			W2, 5, N1);
 
 	if (f_v) {

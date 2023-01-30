@@ -324,7 +324,8 @@ void any_group::isomorphism_Klein_quadric(
 		F->Linear_algebra->mult_matrix_matrix(Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
 		F->Linear_algebra->mult_matrix_matrix(D, B, E, 6, 6, 6, 0 /*verbose_level */);
 
-		F->PG_element_normalize_from_front(E, 1, 36);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				E, 1, 36);
 
 		if (f_vv) {
 			cout << "orthogonal matrix in the special form:" << endl;
@@ -637,7 +638,7 @@ int any_group::subspace_orbits_test_set(
 	orbits_on_subspaces_M = NEW_int(len * n);
 	orbits_on_subspaces_base_cols = NEW_int(n);
 
-	F->PG_elements_unrank_lint(
+	F->Projective_space_basic->PG_elements_unrank_lint(
 			orbits_on_subspaces_M, len, n, S);
 
 	if (f_vv) {

@@ -1146,7 +1146,7 @@ void group_generators_domain::diagonal_orbit_perm(
 				cout << v[j] << " ";
 			}
 		}
-		F->PG_element_rank_modified_lint(v, 1, n, a);
+		F->Projective_space_basic->PG_element_rank_modified_lint(v, 1, n, a);
 		if (f_vv) {
 			cout << " : " << a << endl;
 		}
@@ -1199,7 +1199,7 @@ void group_generators_domain::frobenius_orbit_perm(
 		cout << "before PG_element_unrank_modified("
 				<< n + F->p << ")" << endl;
 	}
-	F->PG_element_unrank_modified(v, 1, n, n + F->p);
+	F->Projective_space_basic->PG_element_unrank_modified(v, 1, n, n + F->p);
 	if (f_v) {
 		cout << "after PG_element_unrank_modified("
 				<< n + F->p << ")" << endl;
@@ -1211,7 +1211,7 @@ void group_generators_domain::frobenius_orbit_perm(
 				cout << v[j] << " ";
 			}
 		}
-		F->PG_element_rank_modified_lint(v, 1, n, a);
+		F->Projective_space_basic->PG_element_rank_modified_lint(v, 1, n, a);
 		if (f_vv) {
 			cout << " : " << a << endl;
 		}
@@ -1221,7 +1221,7 @@ void group_generators_domain::frobenius_orbit_perm(
 		orbit[b] = c;
 		orbit_inv[a] = i;
 		orbit_inv[c] = b;
-		F->PG_element_apply_frobenius(n, v, 1);
+		F->Projective_space_basic->PG_element_apply_frobenius(n, v, 1);
 	}
 	FREE_int(v);
 	if (f_v) {
@@ -2400,10 +2400,10 @@ void group_generators_domain::builtin_transversal_rep_GLnq(
 	}
 	else {
 		if (i == 0) {
-			F->PG_element_unrank_modified(A + i, n, n, j);
+			F->Projective_space_basic->PG_element_unrank_modified(A + i, n, n, j);
 		}
 		else {
-			F->PG_element_unrank_modified_not_in_subspace(
+			F->Projective_space_basic->PG_element_unrank_modified_not_in_subspace(
 					A + i, n, n, i - 1, j);
 		}
 		i0 = -1;
@@ -2634,7 +2634,7 @@ void group_generators_domain::PG_element_modified_not_in_subspace_perm(
 		cout << "group_generators_domain::PG_element_modified_not_in_subspace_perm" << endl;
 	}
 	for (i = 0; i < l; i++) {
-		F->PG_element_unrank_modified_lint(v, 1, n + 1, i);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(v, 1, n + 1, i);
 		f_in = Gg.PG_element_modified_is_in_subspace(n, m, v);
 		if (f_v) {
 			cout << i << " : ";

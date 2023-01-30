@@ -920,7 +920,7 @@ void projective_space::plane_intersection(
 			F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
 				3, d, Basis, base_cols,
 				Basis + 3 * d, coefficients, verbose_level);
-			F->PG_element_rank_modified(
+			F->Projective_space_basic->PG_element_rank_modified(
 					coefficients, 1, 3, local_rank);
 			point_local_coordinates.push_back(local_rank);
 		}
@@ -1257,7 +1257,8 @@ void projective_space::planes_through_a_line(
 
 	for (h = 0; h < N; h++) {
 
-		F->PG_element_unrank_modified(w, 1, d - 2, h);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				w, 1, d - 2, h);
 		Int_vec_zero(v, d);
 		for (j = 0; j < d - 2; j++) {
 			v[embedding[j]] = w[j];

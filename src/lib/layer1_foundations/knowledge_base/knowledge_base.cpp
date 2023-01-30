@@ -2798,7 +2798,8 @@ void knowledge_base::retrieve_BLT_set_from_database(
 		//		BLT[i], 0 /* verbose_level */);
 		Quadratic_form->unrank_point(v, BLT[i], 0 /* verbose_level */);
 		if (f_embedded) {
-			Quadratic_form->F->PG_element_rank_modified_lint(v, 1, d, j);
+			Quadratic_form->F->Projective_space_basic->PG_element_rank_modified_lint(
+					v, 1, d, j);
 		}
 		else {
 			j = BLT[i];

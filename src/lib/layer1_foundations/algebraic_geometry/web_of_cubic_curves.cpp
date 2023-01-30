@@ -517,7 +517,7 @@ void web_of_cubic_curves::create_web_and_equations_based_on_four_tritangent_plan
 			Int_vec_copy(curves_t + 4 * 5,
 					Tritangent_plane_equations + h * 4, 4);
 
-			Surf->F->PG_element_normalize(
+			Surf->F->Projective_space_basic->PG_element_normalize(
 					Tritangent_plane_equations + h * 4, 1, 4);
 
 		}
@@ -836,7 +836,8 @@ void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 	}
 	w[0] = 1;
 	w[1] = lambda;
-	Surf->F->PG_element_rank_modified(w, 1, 2, lambda_rk);
+	Surf->F->Projective_space_basic->PG_element_rank_modified(
+			w, 1, 2, lambda_rk);
 
 	if (f_v) {
 		cout << "web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc done" << endl;
@@ -1051,8 +1052,10 @@ void web_of_cubic_curves::print_surface_equations_on_line(
 	for (i = 0; i < Surf->F->q + 1; i++) {
 		ost << "Row " << i << " : ";
 
-		Surf->F->PG_element_unrank_modified(v, 1, 2, i);
-		Surf->F->PG_element_normalize_from_front(v, 1, 2);
+		Surf->F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, 2, i);
+		Surf->F->Projective_space_basic->PG_element_normalize_from_front(
+				v, 1, 2);
 
 		ost << "$";
 		ost << v[0] << " \\cdot ";

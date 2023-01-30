@@ -385,15 +385,10 @@ public:
 			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 			int verbose_level);
 
-	void prepare_surface_classify_wedge(
-			projective_geometry::projective_space_with_action *PA,
-			poset_classification::poset_classification_control *Control,
-			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
-			int verbose_level);
-
 
 	void do_study_surface(
-			field_theory::finite_field *F, int nb, int verbose_level);
+			field_theory::finite_field *F,
+			int nb, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			projective_geometry::projective_space_with_action *PA,
 			std::string &Control_six_arcs_label,
@@ -420,19 +415,24 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			std::string &fname_csv, int defining_q,
 			int verbose_level);
-	void report_singular_surfaces(std::ostream &ost,
+	void report_singular_surfaces(
+			std::ostream &ost,
 			struct cubic_surface_data_set *Data,
 			int nb_orbits, int verbose_level);
-	void report_non_singular_surfaces(std::ostream &ost,
+	void report_non_singular_surfaces(
+			std::ostream &ost,
 			struct cubic_surface_data_set *Data,
 			int nb_orbits, int verbose_level);
-	void report_surfaces_by_lines(std::ostream &ost,
+	void report_surfaces_by_lines(
+			std::ostream &ost,
 			struct cubic_surface_data_set *Data,
 			data_structures::tally &T, int verbose_level);
 	void do_create_surface_reports(
 			std::string &field_orders_text, int verbose_level);
-	void do_create_surface_atlas(int q_max, int verbose_level);
-	void do_create_surface_atlas_q_e(int q_max,
+	void do_create_surface_atlas(
+			int q_max, int verbose_level);
+	void do_create_surface_atlas_q_e(
+			int q_max,
 			struct table_surfaces_field_order *T,
 			int nb_e, int *Idx, int nb,
 			std::string &fname_report_tex,
@@ -704,7 +704,8 @@ public:
 
 	surface_with_action();
 	~surface_with_action();
-	void init(algebraic_geometry::surface_domain *Surf,
+	void init(
+			algebraic_geometry::surface_domain *Surf,
 			projective_geometry::projective_space_with_action *PA,
 			int f_recoordinatize,
 			int verbose_level);
@@ -751,13 +752,16 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
-	void table_of_cubic_surfaces(int verbose_level);
-	void table_of_cubic_surfaces_export_csv(long int *Table,
+	void table_of_cubic_surfaces(
+			int verbose_level);
+	void table_of_cubic_surfaces_export_csv(
+			long int *Table,
 			int nb_cols,
 			int q, int nb_cubic_surfaces,
 			surface_create **SC,
 			int verbose_level);
-	void table_of_cubic_surfaces_export_sql(long int *Table,
+	void table_of_cubic_surfaces_export_sql(
+			long int *Table,
 			int nb_cols,
 			int q, int nb_cubic_surfaces,
 			surface_create **SC,

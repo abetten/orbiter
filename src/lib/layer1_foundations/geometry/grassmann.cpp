@@ -270,9 +270,12 @@ void grassmann::points_covered(long int *the_points, int verbose_level)
 
 	nb = nb_points_covered(0 /* verbose_level*/);
 	for (i = 0; i < nb; i++) {
-		F->PG_element_unrank_modified(v, 1, k, i);
-		F->Linear_algebra->mult_vector_from_the_left(v, M, w, k, n);
-		F->PG_element_rank_modified_lint(w, 1, n, a);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, k, i);
+		F->Linear_algebra->mult_vector_from_the_left(
+				v, M, w, k, n);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				w, 1, n, a);
 		the_points[i] = a;
 	}
 }
@@ -1853,7 +1856,8 @@ void grassmann::do_pluecker_reverse(std::ostream &ost,
 	for (i = 0; i < nb_k_subspaces; i++) {
 		unrank_lint(i, 0 /* verbose_level*/);
 		Pluecker_coordinates(i, v6, 0 /* verbose_level */);
-		F->PG_element_rank_modified(v6, 1, 6, j);
+		F->Projective_space_basic->PG_element_rank_modified(
+				v6, 1, 6, j);
 		T[i] = j;
 		Pos[i] = i;
 	}
@@ -1883,7 +1887,8 @@ void grassmann::do_pluecker_reverse(std::ostream &ost,
 		int v6[6];
 
 		Pluecker_coordinates(u, v6, 0 /* verbose_level */);
-		F->PG_element_normalize(v6, 1, 6);
+		F->Projective_space_basic->PG_element_normalize(
+				v6, 1, 6);
 		ost << "$" << u0 << /*"=" << u <<*/
 				"={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 				<< v6[2] << "," << v6[3] << "," << v6[4]
@@ -2061,7 +2066,8 @@ void grassmann::klein_correspondence(
 			exit(1);
 		}
 
-		F->PG_element_rank_modified_lint(v6, 1, 6, set_out[h]);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v6, 1, 6, set_out[h]);
 		//set_out[h] = P5->rank_point(v6);
 	}
 	if (f_v) {
@@ -2145,7 +2151,8 @@ void grassmann::klein_correspondence_special_model(
 			Int_vec_print(cout, y6, 6);
 			cout << endl;
 		}
-		F->PG_element_rank_modified_lint(y6, 1, 6, table[h]);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				y6, 1, 6, table[h]);
 		//table[h] = P5->rank_point(y6);
 	}
 

@@ -424,7 +424,8 @@ void action_on_forms::associated_set_in_plane(
 		v[0] = x;
 		v[1] = y;
 		v[2] = 1;
-		F->PG_element_rank_modified_lint(v, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v, 1, 3, a);
 		Rk[x] = a;
 	}
 	if (f_v) {

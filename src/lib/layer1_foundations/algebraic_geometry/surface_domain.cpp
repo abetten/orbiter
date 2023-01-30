@@ -632,7 +632,8 @@ long int surface_domain::line_to_wedge(long int line_rk)
 	a = Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
 	O->Hyperbolic_pair->unrank_point(w2, 1, a, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
-	F->PG_element_rank_modified_lint(v2, 1, 6 /*wedge_dimension*/, b);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v2, 1, 6 /*wedge_dimension*/, b);
 	//b = AW->rank_point(v);
 	return b;
 }
@@ -663,7 +664,8 @@ long int surface_domain::klein_to_wedge(long int klein_rk)
 	
 	O->Hyperbolic_pair->unrank_point(w2, 1, klein_rk, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
-	F->PG_element_rank_modified_lint(v2, 1, 6 /*wedge_dimension*/, b);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v2, 1, 6 /*wedge_dimension*/, b);
 	//b = AW->rank_point(v);
 	return b;
 }

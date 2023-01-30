@@ -195,13 +195,15 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 	}
 	if (FALSE) {
 		for (i = 0; i < N_points; i++) {
-			P->F->PG_element_unrank_modified(v, 1, n + 1, i);
+			P->F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, n + 1, i);
 			cout << "point " << i << " : ";
 			Int_vec_print(cout, v, n + 1);
 			cout << " = ";
 			P->F->int_vec_print_field_elements(cout, v, n + 1);
 
-			P->F->PG_element_normalize_from_front(v, 1, n + 1);
+			P->F->Projective_space_basic->PG_element_normalize_from_front(
+					v, 1, n + 1);
 			cout << " = ";
 			Int_vec_print(cout, v, n + 1);
 
@@ -273,10 +275,13 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 
 
 			for (a = 0; a < k; a++) {
-				P->F->PG_element_unrank_modified(v, 1, 2, a);
-				P->F->Linear_algebra->mult_matrix_matrix(v, P->Grass_lines->M, w, 1, 2, n + 1,
+				P->F->Projective_space_basic->PG_element_unrank_modified(
+						v, 1, 2, a);
+				P->F->Linear_algebra->mult_matrix_matrix(
+						v, P->Grass_lines->M, w, 1, 2, n + 1,
 						0 /* verbose_level */);
-				P->F->PG_element_rank_modified(w, 1, n + 1, b);
+				P->F->Projective_space_basic->PG_element_rank_modified(
+						w, 1, n + 1, b);
 				if (Bitmatrix) {
 					Bitmatrix->m_ij(b, i, 1);
 				}

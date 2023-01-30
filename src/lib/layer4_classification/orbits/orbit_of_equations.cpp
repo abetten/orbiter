@@ -177,7 +177,7 @@ void orbit_of_equations::map_an_equation(
 		cout << "orbit_of_equations::map_an_equation "
 				"before F->PG_element_normalize_from_front" << endl;
 	}
-	F->PG_element_normalize_from_front(
+	F->Projective_space_basic->PG_element_normalize_from_front(
 		object_out + 1, 1, nb_monomials);
 	if (f_v) {
 		cout << "orbit_of_equations::map_an_equation "
@@ -251,7 +251,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 
 	Equations[0][0] = 0;
 
-	F->PG_element_normalize_from_front(
+	F->Projective_space_basic->PG_element_normalize_from_front(
 			Equations[0] + 1, 1, nb_monomials);
 
 	position_of_original_object = 0;

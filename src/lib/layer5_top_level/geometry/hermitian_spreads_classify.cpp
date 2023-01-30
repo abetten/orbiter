@@ -162,7 +162,8 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	cout << "We found " << nb_pts << " points, they are:" << endl;
 	for (i = 0; i < nb_pts; i++) {
 		cout << i << " : " << Pts[i] << " : ";
-		F->PG_element_unrank_modified(v, 1, len, Pts[i]);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, len, Pts[i]);
 		Int_vec_print(cout, v, len);
 		cout << endl;
 	}

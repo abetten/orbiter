@@ -342,7 +342,7 @@ void subfield_structure::report(std::ostream &ost)
 	ost << "Field basis:\\\\" << endl;
 	ost << "$$" << endl;
 	Int_vec_print(ost, Basis, s);
-	//cout << endl;
+	ost << endl;
 	ost << "$$" << endl;
 
 	//report_embedding(ost);
@@ -648,7 +648,8 @@ void subfield_structure::Adelaide_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		Fq->PG_element_rank_modified(Mtx + i * 3, 1, 3, r);
+		Fq->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, r);
 		Pts[i] = r;
 	}
 

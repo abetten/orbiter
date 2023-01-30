@@ -141,7 +141,8 @@ void surface_create::create_cubic_surface(
 		cout << "surface_create::create_cubic_surface "
 				"before PG_element_normalize_from_front" << endl;
 	}
-	F->PG_element_normalize_from_front(SO->eqn, 1, 20);
+	F->Projective_space_basic->PG_element_normalize_from_front(
+			SO->eqn, 1, 20);
 
 
 	if (f_has_group) {
@@ -1433,7 +1434,8 @@ void surface_create::create_surface_by_rank(std::string &rank_text, int defining
 				FALSE /* f_compute_related_fields */,
 				0);
 
-		F0.PG_element_unrank_modified_lint(coeffs20, 1, 20, rank);
+		F0.Projective_space_basic->PG_element_unrank_modified_lint(
+				coeffs20, 1, 20, rank);
 	}
 
 	create_surface_by_coefficient_vector(coeffs20,
@@ -3414,7 +3416,8 @@ void surface_create::test_group(int verbose_level)
 				verbose_level - 1);
 
 
-		if (!PA->F->test_if_vectors_are_projectively_equal(SO->eqn, coeffs_out, 20)) {
+		if (!PA->F->Projective_space_basic->test_if_vectors_are_projectively_equal(
+				SO->eqn, coeffs_out, 20)) {
 			cout << "surface_create::test_group error, "
 					"the transformation does not preserve "
 					"the equation of the surface" << endl;

@@ -3199,11 +3199,13 @@ void hyperbolic_pair::parabolic_point_normalize(
 {
 	if (v[0]) {
 		if (v[0] != 1) {
-			F->PG_element_normalize_from_front(v, stride, n);
+			F->Projective_space_basic->PG_element_normalize_from_front(
+					v, stride, n);
 		}
 	}
 	else {
-		F->PG_element_normalize(v, stride, n);
+		F->Projective_space_basic->PG_element_normalize(
+				v, stride, n);
 	}
 }
 
@@ -3213,7 +3215,8 @@ void hyperbolic_pair::parabolic_normalize_point_wrt_subspace(
 	int i, a, av;
 
 	if (v[0]) {
-		F->PG_element_normalize_from_front(v, stride, n);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				v, stride, n);
 		return;
 	}
 	for (i = n - 3; i >= 0; i--) {
@@ -3258,7 +3261,8 @@ void hyperbolic_pair::parabolic_point_properties(
 	}
 	else {
 		f_start_with_one = FALSE;
-		F->PG_element_normalize(v + 1, stride, n - 1);
+		F->Projective_space_basic->PG_element_normalize(
+				v + 1, stride, n - 1);
 		if (f_v) {
 			cout << "hyperbolic_pair::parabolic_point_properties "
 					"after normalization: ";

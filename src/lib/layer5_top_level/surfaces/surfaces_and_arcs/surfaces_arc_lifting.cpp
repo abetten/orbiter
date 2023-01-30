@@ -636,7 +636,8 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				Lint_vec_print(cout, The_arc->data, 6);
 				cout << endl;
 			}
-			Surf->F->PG_elements_embed(The_arc->data, Arc6, 6, 3, 4, v4);
+			Surf->F->Projective_space_basic->PG_elements_embed(
+					The_arc->data, Arc6, 6, 3, 4, v4);
 
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "

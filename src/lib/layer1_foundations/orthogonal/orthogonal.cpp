@@ -563,7 +563,8 @@ void orthogonal::points_on_line(long int pi, long int pj,
 		cout << endl;
 	}
 	for (t = 0; t <= Quadratic_form->q; t++) {
-		F->PG_element_unrank_modified(coeff, 1, 2, t);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				coeff, 1, 2, t);
 		for (i = 0; i < Quadratic_form->n; i++) {
 			a = F->mult(coeff[0], v1[i]);
 			b = F->mult(coeff[1], v2[i]);
@@ -619,7 +620,8 @@ void orthogonal::points_on_line_by_coordinates(
 		cout << endl;
 	}
 	for (t = 0; t <= Quadratic_form->q; t++) {
-		F->PG_element_unrank_modified(coeff, 1, 2, t);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				coeff, 1, 2, t);
 		for (i = 0; i < Quadratic_form->n; i++) {
 			a = F->mult(coeff[0], v1[i]);
 			b = F->mult(coeff[1], v2[i]);
@@ -1075,10 +1077,12 @@ int orthogonal::last_non_zero_entry(int *u, int stride, int len)
 void orthogonal::normalize_point(int *v, int stride)
 {
 	if (Quadratic_form->epsilon == 1) {
-		F->PG_element_normalize(v, stride, Quadratic_form->n);
+		F->Projective_space_basic->PG_element_normalize(
+				v, stride, Quadratic_form->n);
 	}
 	else if (Quadratic_form->epsilon == 0) {
-		Hyperbolic_pair->parabolic_point_normalize(v, stride, Quadratic_form->n);
+		Hyperbolic_pair->parabolic_point_normalize(
+				v, stride, Quadratic_form->n);
 	}
 }
 
@@ -1440,23 +1444,29 @@ void orthogonal::intersection_with_subspace(
 
 	nb_points = 0;
 	for (i = 0; i < nb; i++) {
-		F->PG_element_unrank_modified(v, 1, k, i);
-		F->Linear_algebra->mult_vector_from_the_left(v, Basis, w, k, Quadratic_form->n);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, k, i);
+		F->Linear_algebra->mult_vector_from_the_left(
+				v, Basis, w, k, Quadratic_form->n);
 
-		val = Quadratic_form->evaluate_quadratic_form(w, 1 /* stride */);
+		val = Quadratic_form->evaluate_quadratic_form(
+				w, 1 /* stride */);
 		if (val == 0) {
-			F->PG_element_rank_modified_lint(w, 1, Quadratic_form->n, a);
+			F->Projective_space_basic->PG_element_rank_modified_lint(
+					w, 1, Quadratic_form->n, a);
 			the_points[nb_points++] = a;
 		}
 	}
 
 	if (f_v) {
-		cout << "orthogonal::intersection_with_subspace nb_points=" << nb_points << endl;
+		cout << "orthogonal::intersection_with_subspace "
+				"nb_points=" << nb_points << endl;
 	}
 
 
 	if (f_v) {
-		cout << "orthogonal::intersection_with_subspace done" << endl;
+		cout << "orthogonal::intersection_with_subspace "
+				"done" << endl;
 	}
 }
 

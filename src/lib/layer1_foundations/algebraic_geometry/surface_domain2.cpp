@@ -51,14 +51,20 @@ void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair
 
 
 	for (l = 0; l < q + 1; l++) {
-		F->PG_element_unrank_modified(v, 1, 2, l);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, 2, l);
 
 		Int_vec_copy(eqn_F, eqn_F2, 20);
-		F->Linear_algebra->scalar_multiply_vector_in_place(v[0], eqn_F2, 20);
+		F->Linear_algebra->scalar_multiply_vector_in_place(
+				v[0], eqn_F2, 20);
 		Int_vec_copy(eqn_G, eqn_G2, 20);
-		F->Linear_algebra->scalar_multiply_vector_in_place(v[1], eqn_G2, 20);
-		F->Linear_algebra->add_vector(eqn_F2, eqn_G2, The_surface_equations + l * 20, 20);
-		F->PG_element_normalize(The_surface_equations + l * 20, 1, 20);
+		F->Linear_algebra->scalar_multiply_vector_in_place(
+				v[1], eqn_G2, 20);
+		F->Linear_algebra->add_vector(
+				eqn_F2, eqn_G2,
+				The_surface_equations + l * 20, 20);
+		F->Projective_space_basic->PG_element_normalize(
+				The_surface_equations + l * 20, 1, 20);
 	}
 
 	if (f_v) {
@@ -529,7 +535,8 @@ void surface_domain::compute_local_coordinates_of_arc(
 			Int_vec_print(cout, coefficients, 3);
 			cout << endl;
 		}
-		F->PG_element_rank_modified_lint(coefficients, 1, 3, P6_local[i]);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				coefficients, 1, 3, P6_local[i]);
 	}
 	if (f_v) {
 		cout << "surface_domain::compute_local_coordinates_of_arc" << endl;

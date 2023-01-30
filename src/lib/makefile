@@ -118,11 +118,11 @@ ORBITER_MODULES= \
 		layer1_foundations/finite_fields/finite_field_implementation_by_tables.o \
 		layer1_foundations/finite_fields/finite_field_implementation_wo_tables.o \
 		layer1_foundations/finite_fields/finite_field_io.o \
-		layer1_foundations/finite_fields/finite_field_projective.o \
 		layer1_foundations/finite_fields/finite_field.o \
 		layer1_foundations/finite_fields/minimum_polynomial.o \
 		layer1_foundations/finite_fields/norm_tables.o \
 		layer1_foundations/finite_fields/nth_roots.o \
+		layer1_foundations/finite_fields/projective_space_basic.o \
 		layer1_foundations/finite_fields/related_fields.o \
 		layer1_foundations/finite_fields/square_nonsquare.o \
 		layer1_foundations/finite_fields/subfield_structure.o \
@@ -248,6 +248,7 @@ ORBITER_MODULES= \
 		layer1_foundations/orthogonal/hyperbolic_pair_parabolic.o \
 		layer1_foundations/orthogonal/hyperbolic_pair_rank_unrank.o \
 		layer1_foundations/orthogonal/hyperbolic_pair.o \
+		layer1_foundations/orthogonal/linear_complex.o \
 		layer1_foundations/orthogonal/orthogonal_global.o \
 		layer1_foundations/orthogonal/orthogonal_group.o \
 		layer1_foundations/orthogonal/orthogonal_indexing.o \

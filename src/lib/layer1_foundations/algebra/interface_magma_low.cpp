@@ -55,9 +55,9 @@ void interface_magma_low::magma_set_stabilizer_in_collineation_group(
 		fp << "S:={};" << endl;
 		fp << "a := F.1;" << endl;
 		for (h = 0; h < nb_pts; h++) {
-			F->PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
+			F->Projective_space_basic->PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
 
-			F->PG_element_normalize_from_front(v, 1, d);
+			F->Projective_space_basic->PG_element_normalize_from_front(v, 1, d);
 
 			fp << "Include(~S,Index(I,[";
 			for (i = 0; i < d; i++) {

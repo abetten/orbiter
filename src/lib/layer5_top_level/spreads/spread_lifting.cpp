@@ -191,7 +191,7 @@ void spread_lifting::compute_points_covered_by_starter(
 
 		a = R->rep[i];
 		S->SD->Grass->unrank_lint(a, 0/*verbose_level - 4*/);
-		S->SD->F->all_PG_elements_in_subspace(
+		S->SD->F->Projective_space_basic->all_PG_elements_in_subspace(
 			S->SD->Grass->M, S->SD->k, S->SD->n, point_list,
 			nb_points, 0 /*verbose_level - 2*/);
 		
@@ -320,7 +320,7 @@ void spread_lifting::compute_colors(int &f_ruled_out, int verbose_level)
 	for (i = 0; i < nb_free_points; i++) {
 		a = free_point_list[i];
 		S->SD->unrank_point(v, a);
-		S->SD->F->PG_element_normalize_from_front(
+		S->SD->F->Projective_space_basic->PG_element_normalize_from_front(
 			v, 1, S->SD->n);
 
 
@@ -577,7 +577,7 @@ solvers::diophant *spread_lifting::create_system(int verbose_level)
 			cout << "Which is " << endl;
 			Int_matrix_print(S->SD->Grass->M, S->SD->k, S->SD->n);
 		}
-		S->SD->F->all_PG_elements_in_subspace(
+		S->SD->F->Projective_space_basic->all_PG_elements_in_subspace(
 				S->SD->Grass->M, S->SD->k, S->SD->n,
 				point_list, nb_points,
 				0 /*verbose_level*/);

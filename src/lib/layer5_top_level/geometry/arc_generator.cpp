@@ -572,14 +572,16 @@ void arc_generator::print_set_in_affine_plane(int len, long int *S)
 
 void arc_generator::point_unrank(int *v, int rk)
 {
-	PA->F->PG_element_unrank_modified(v, 1 /* stride */, (PA->n + 1) /* len */, rk);
+	PA->F->Projective_space_basic->PG_element_unrank_modified(
+			v, 1 /* stride */, (PA->n + 1) /* len */, rk);
 }
 
 int arc_generator::point_rank(int *v)
 {
 	int rk;
 	
-	PA->F->PG_element_rank_modified(v, 1 /* stride */, (PA->n + 1), rk);
+	PA->F->Projective_space_basic->PG_element_rank_modified(
+			v, 1 /* stride */, (PA->n + 1), rk);
 	return rk;
 }
 

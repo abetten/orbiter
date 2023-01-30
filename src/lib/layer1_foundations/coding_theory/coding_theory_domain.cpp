@@ -394,18 +394,21 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 				for (u = 0; u < i; u++) {
 					c = subset[u];
 					e = set[c];
-					F->PG_element_unrank_modified(v1, 1, nmk, e);
+					F->Projective_space_basic->PG_element_unrank_modified(
+							v1, 1, nmk, e);
 					//P->unrank_point(v1, e);
 					for (t = 0; t < nmk; t++) {
 						v3[t] = F->add(v3[t], v1[t]);
 					}
 				}
-				F->PG_element_unrank_modified(v1, 1, nmk, set[level]);
+				F->Projective_space_basic->PG_element_unrank_modified(
+						v1, 1, nmk, set[level]);
 				//P->unrank_point(v1, set[level]);
 				for (t = 0; t < nmk; t++) {
 					v3[t] = F->add(v3[t], v1[t]);
 				}
-				F->PG_element_rank_modified(v3, 1, nmk, f);
+				F->Projective_space_basic->PG_element_rank_modified(
+						v3, 1, nmk, f);
 				//f = P->rank_point(v3);
 				if (f_v) {
 					cout << "h=" << h << " / " << N << " : ";
@@ -775,7 +778,8 @@ void coding_theory_domain::make_Hamming_space_distance_matrix(
 	for (i = 0; i < height; i++) {
 
 		if (f_projective) {
-			F->PG_element_unrank_modified(v, 1 /*stride*/, n, i);
+			F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1 /*stride*/, n, i);
 		}
 		else {
 			Gg.AG_element_unrank(F->q, v, 1, n, i);
@@ -784,7 +788,8 @@ void coding_theory_domain::make_Hamming_space_distance_matrix(
 		for (j = 0; j < width; j++) {
 
 			if (f_projective) {
-				F->PG_element_unrank_modified(w, 1 /*stride*/, n, j);
+				F->Projective_space_basic->PG_element_unrank_modified(
+						w, 1 /*stride*/, n, j);
 			}
 			else {
 				Gg.AG_element_unrank(F->q, w, 1, n, j);
@@ -1253,7 +1258,8 @@ void coding_theory_domain::code_weight_enumerator_fast(
 				}
 			}
 		}
-		F->PG_element_unrank_modified(msg, 1, k, h);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				msg, 1, k, h);
 		//AG_element_unrank(q, msg, 1, k, h);
 		F->Linear_algebra->mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
@@ -1328,7 +1334,8 @@ void coding_theory_domain::code_projective_weights(
 			Os.time_check_delta(cout, dt);
 			cout << endl;
 		}
-		F->PG_element_unrank_modified(msg, 1, k, h);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				msg, 1, k, h);
 		//AG_element_unrank(q, msg, 1, k, h);
 		F->Linear_algebra->mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
@@ -1598,7 +1605,7 @@ void coding_theory_domain::do_weight_enumerator(
 					"normalizing from the left" << endl;
 		}
 		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize_from_front(
+			F->Projective_space_basic->PG_element_normalize_from_front(
 					A + i * n, 1, n);
 		}
 
@@ -1616,7 +1623,7 @@ void coding_theory_domain::do_weight_enumerator(
 					"normalizing from the right" << endl;
 		}
 		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize(
+			F->Projective_space_basic->PG_element_normalize(
 					A + i * n, 1, n);
 		}
 
@@ -1797,7 +1804,8 @@ void coding_theory_domain::matrix_from_projective_set(
 	v = NEW_int(k);
 	for (j = 0; j < n; j++) {
 
-		F->PG_element_unrank_modified(v, 1, k, columns_set_of_size_n[j]);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, k, columns_set_of_size_n[j]);
 		for (i = 0; i < k; i++) {
 			genma[i * n + j] = v[i];
 		}

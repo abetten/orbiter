@@ -360,7 +360,8 @@ void projective_space_reporting::cheat_sheet_points(
 		if (P->F->e == 1) {
 			f << "\\begin{multicols}{4}" << endl;
 			for (i = 0; i < P->N_points; i++) {
-				P->F->PG_element_unrank_modified(v, 1, d, i);
+				P->F->Projective_space_basic->PG_element_unrank_modified(
+						v, 1, d, i);
 				f << "$P_{" << i << "}=\\bP";
 				Int_vec_print(f, v, d);
 				f << "$\\\\" << endl;
@@ -370,7 +371,8 @@ void projective_space_reporting::cheat_sheet_points(
 		else {
 			f << "\\begin{multicols}{2}" << endl;
 			for (i = 0; i < P->N_points; i++) {
-				P->F->PG_element_unrank_modified(v, 1, d, i);
+				P->F->Projective_space_basic->PG_element_unrank_modified(
+						v, 1, d, i);
 				f << "$P_{" << i << "}=\\bP";
 				Int_vec_print(f, v, d);
 				f << "=";
@@ -381,7 +383,8 @@ void projective_space_reporting::cheat_sheet_points(
 
 			f << "\\begin{multicols}{2}" << endl;
 			for (i = 0; i < P->N_points; i++) {
-				P->F->PG_element_unrank_modified(v, 1, d, i);
+				P->F->Projective_space_basic->PG_element_unrank_modified(
+						v, 1, d, i);
 				f << "$P_{" << i << "}=\\bP";
 				Int_vec_print(f, v, d);
 				//f << "=";
@@ -405,8 +408,10 @@ void projective_space_reporting::cheat_sheet_points(
 			f << "\\begin{multicols}{4}" << endl;
 			int j;
 			for (i = 0; i < P->N_points; i++) {
-				P->F->PG_element_unrank_modified(v, 1, d, i);
-				P->F->PG_element_normalize_from_front(v, 1, d);
+				P->F->Projective_space_basic->PG_element_unrank_modified(
+						v, 1, d, i);
+				P->F->Projective_space_basic->PG_element_normalize_from_front(
+						v, 1, d);
 				for (j = 0; j < d; j++) {
 					if (!P->F->belongs_to_quadratic_subfield(v[j])) {
 						break;
@@ -425,8 +430,10 @@ void projective_space_reporting::cheat_sheet_points(
 			f << "Too many to list. \\\\" << endl;
 			int j;
 			for (i = 0; i < P->N_points; i++) {
-				P->F->PG_element_unrank_modified(v, 1, d, i);
-				P->F->PG_element_normalize_from_front(v, 1, d);
+				P->F->Projective_space_basic->PG_element_unrank_modified(
+						v, 1, d, i);
+				P->F->Projective_space_basic->PG_element_normalize_from_front(
+						v, 1, d);
 				for (j = 0; j < d; j++) {
 					if (!P->F->belongs_to_quadratic_subfield(v[j])) {
 						break;
@@ -446,8 +453,10 @@ void projective_space_reporting::cheat_sheet_points(
 	if (P->N_points < 1000) {
 		f << "\\begin{multicols}{4}" << endl;
 		for (i = 0; i < P->N_points; i++) {
-			P->F->PG_element_unrank_modified(v, 1, d, i);
-			P->F->PG_element_normalize_from_front(v, 1, d);
+			P->F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, d, i);
+			P->F->Projective_space_basic->PG_element_normalize_from_front(
+					v, 1, d);
 			f << "$P_{" << i << "}=\\bP";
 			Int_vec_print(f, v, d);
 			f << "$\\\\" << endl;
@@ -545,7 +554,8 @@ void projective_space_reporting::cheat_sheet_point_table(
 				a = (I * nb_rows_per_page + i) * nb_cols + j;
 				f << " & ";
 				if (a < P->N_points) {
-					P->F->PG_element_unrank_modified(v, 1, d, a);
+					P->F->Projective_space_basic->PG_element_unrank_modified(
+							v, 1, d, a);
 					Int_vec_print(f, v, d);
 					}
 				}
@@ -761,7 +771,8 @@ void projective_space_reporting::print_set_numerical(
 		ost << setw(3) << i << " : " << setw(5) << a << " : ";
 		Int_vec_print(ost, v, P->n + 1);
 		ost << "=";
-		P->F->PG_element_normalize_from_front(v, 1, P->n + 1);
+		P->F->Projective_space_basic->PG_element_normalize_from_front(
+				v, 1, P->n + 1);
 		Int_vec_print(ost, v, P->n + 1);
 		ost << "\\\\" << endl;
 	}
@@ -781,7 +792,8 @@ void projective_space_reporting::print_set(
 		cout << setw(3) << i << " : " << setw(5) << a << " : ";
 		P->F->int_vec_print_field_elements(cout, v, P->n + 1);
 		cout << "=";
-		P->F->PG_element_normalize_from_front(v, 1, P->n + 1);
+		P->F->Projective_space_basic->PG_element_normalize_from_front(
+				v, 1, P->n + 1);
 		P->F->int_vec_print_field_elements(cout, v, P->n + 1);
 		cout << endl;
 	}

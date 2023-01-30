@@ -95,8 +95,10 @@ long int action_on_bricks::compute_image_linear_action(
 		cout << endl;
 		}
 	
-	B->F->PG_element_rank_modified(v, 1, 3, rk_v);
-	B->F->PG_element_rank_modified(w, 1, 3, rk_w);
+	B->F->Projective_space_basic->PG_element_rank_modified(
+			v, 1, 3, rk_v);
+	B->F->Projective_space_basic->PG_element_rank_modified(
+			w, 1, 3, rk_w);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image rk_v=" << rk_v << endl;
 		cout << "action_on_bricks::compute_image rk_w=" << rk_w << endl;
@@ -109,8 +111,10 @@ long int action_on_bricks::compute_image_linear_action(
 		cout << "action_on_bricks::compute_image rk_vv=" << rk_vv << endl;
 		cout << "action_on_bricks::compute_image rk_ww=" << rk_ww << endl;
 		}
-	B->F->PG_element_unrank_modified(vv, 1, 3, rk_vv);
-	B->F->PG_element_unrank_modified(ww, 1, 3, rk_ww);
+	B->F->Projective_space_basic->PG_element_unrank_modified(
+			vv, 1, 3, rk_vv);
+	B->F->Projective_space_basic->PG_element_unrank_modified(
+			ww, 1, 3, rk_ww);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image vv=";
 		Int_vec_print(cout, vv, 3);
@@ -127,8 +131,10 @@ long int action_on_bricks::compute_image_linear_action(
 		cout << "action_on_bricks::compute_image ww[2] == 0" << endl;
 		exit(1);
 		}
-	B->F->PG_element_normalize(vv, 1, 3);
-	B->F->PG_element_normalize(ww, 1, 3);
+	B->F->Projective_space_basic->PG_element_normalize(
+			vv, 1, 3);
+	B->F->Projective_space_basic->PG_element_normalize(
+			ww, 1, 3);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image after normalize vv=";
 		Int_vec_print(cout, vv, 3);

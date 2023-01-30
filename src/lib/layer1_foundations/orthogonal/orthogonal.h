@@ -546,6 +546,54 @@ public:
 
 };
 
+
+// #############################################################################
+// linear_complex.cpp
+// #############################################################################
+
+//! a linear complex of lines in PG(3,q) under the Klein correspondence
+
+
+class linear_complex {
+
+public:
+
+	algebraic_geometry::surface_domain *Surf;
+
+	long int pt0_wedge;
+		// in wedge coordinates 100000
+	long int pt0_line;
+		// pt0 = the line spanned by 1000, 0100
+		// (we call it point because it is a point on the Klein quadric)
+	long int pt0_klein;
+		// in klein coordinates 100000
+
+	int nb_neighbors;
+		// = (q + 1) * q * (q + 1)
+
+	long int *Neighbors; // [nb_neighbors]
+		// The lines which intersect the special line.
+		// In wedge ranks.
+		// The array Neighbors is sorted.
+
+	long int *Neighbor_to_line; // [nb_neighbors]
+		// The lines which intersect the special line.
+		// In grassmann (i.e., line) ranks.
+	long int *Neighbor_to_klein; // [nb_neighbors]
+		// In orthogonal ranks (i.e., points on the Klein quadric).
+
+	linear_complex();
+	~linear_complex();
+	void init(
+			algebraic_geometry::surface_domain *Surf,
+			int verbose_level);
+	void compute_neighbors(int verbose_level);
+	void make_spreadsheet_of_neighbors(
+			data_structures::spreadsheet *&Sp,
+		int verbose_level);
+
+};
+
 // #############################################################################
 // orthogonal_global.cpp
 // #############################################################################

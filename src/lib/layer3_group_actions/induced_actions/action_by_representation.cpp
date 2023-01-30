@@ -86,7 +86,8 @@ long int action_by_representation::compute_image_int(
 	if (f_v) {
 		cout << "action_by_representation::compute_image_int" << endl;
 		}
-	F->PG_element_unrank_modified_lint(v1, 1, dimension, a);
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v1, 1, dimension, a);
 	if (f_vv) {
 		cout << "action_by_representation::compute_image_int "
 				"a = " << a << " v1 = ";
@@ -101,7 +102,8 @@ long int action_by_representation::compute_image_int(
 		cout << endl;
 		}
 
-	F->PG_element_rank_modified_lint(v2, 1, dimension, b);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v2, 1, dimension, b);
 	if (f_v) {
 		cout << "action_by_representation::compute_image_int "
 				"done " << a << "->" << b << endl;
@@ -183,7 +185,8 @@ void action_by_representation::compute_image_int_low_level(
 void action_by_representation::unrank_point(
 	long int a, int *v, int verbose_level)
 {
-	F->PG_element_unrank_modified_lint(v, 1, dimension, a);
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v, 1, dimension, a);
 }
 
 long int action_by_representation::rank_point(
@@ -191,7 +194,8 @@ long int action_by_representation::rank_point(
 {
 	long int a;
 
-	F->PG_element_rank_modified_lint(v, 1, dimension, a);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1, dimension, a);
 	return a;
 }
 

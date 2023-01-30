@@ -176,7 +176,8 @@ long int action_by_subfield_structure::compute_image_int(
 	if (f_v) {
 		cout << "action_by_subfield_structure::compute_image_int" << endl;
 		}
-	Fq->PG_element_unrank_modified_lint(v1, 1, m, a);
+	Fq->Projective_space_basic->PG_element_unrank_modified_lint(
+			v1, 1, m, a);
 	if (f_vv) {
 		cout << "action_by_subfield_structure::compute_image_int "
 				"a = " << a << " v1 = ";
@@ -191,7 +192,8 @@ long int action_by_subfield_structure::compute_image_int(
 		cout << endl;
 		}
 
-	Fq->PG_element_rank_modified_lint(v2, 1, m, b);
+	Fq->Projective_space_basic->PG_element_rank_modified_lint(
+			v2, 1, m, b);
 	if (f_v) {
 		cout << "action_by_subfield_structure::compute_image_int "
 				"done " << a << "->" << b << endl;

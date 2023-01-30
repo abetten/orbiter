@@ -898,7 +898,8 @@ void geometric_object_create::create_cuspidal_cubic(
 		cout << "i : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		P->F->PG_element_unrank_modified(v2, 1, 2, i);
+		P->F->Projective_space_basic->PG_element_unrank_modified(
+				v2, 1, 2, i);
 		s = v2[0];
 		t = v2[1];
 		v[0] = P->F->mult(P->F->power(s, 3), P->F->power(t, 0));
@@ -1021,7 +1022,8 @@ void geometric_object_create::create_twisted_cubic(
 		cout << "i : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		P->F->PG_element_unrank_modified(v2, 1, 2, i);
+		P->F->Projective_space_basic->PG_element_unrank_modified(
+				v2, 1, 2, i);
 		s = v2[0];
 		t = v2[1];
 		v[0] = P->F->mult(P->F->power(s, 3), P->F->power(t, 0));
@@ -1100,7 +1102,8 @@ void geometric_object_create::create_elliptic_curve(
 		cout << "i : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		P->F->PG_element_rank_modified_lint(E->T + i * d, 1, d, a);
+		P->F->Projective_space_basic->PG_element_rank_modified_lint(
+				E->T + i * d, 1, d, a);
 		Pts[i] = a;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
@@ -1321,7 +1324,8 @@ void geometric_object_create::create_Baer_substructure(
 	sz = 0;
 	for (i = 0; i < P->N_points; i++) {
 
-		P->F->PG_element_unrank_modified(v, 1, d, i);
+		P->F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, d, i);
 
 		for (j = 0; j < d; j++) {
 			a = v[j];

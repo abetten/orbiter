@@ -48,7 +48,8 @@ void quartic_curve_activity::init(
 	}
 }
 
-void quartic_curve_activity::perform_activity(int verbose_level)
+void quartic_curve_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -63,11 +64,13 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 	if (Descr->f_report) {
 
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity before SC->Surf_A->do_report" << endl;
+			cout << "quartic_curve_activity::perform_activity "
+					"before SC->Surf_A->do_report" << endl;
 		}
 		do_report(QC, verbose_level);
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity after SC->Surf_A->do_report" << endl;
+			cout << "quartic_curve_activity::perform_activity "
+					"after SC->Surf_A->do_report" << endl;
 		}
 
 	}
@@ -88,11 +91,13 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 	if (Descr->f_export_points) {
 
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity before SC->Surf_A->export_points" << endl;
+			cout << "quartic_curve_activity::perform_activity "
+					"before SC->Surf_A->export_points" << endl;
 		}
 		//SC->Surf_A->export_points(SC, verbose_level);
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity after SC->Surf_A->export_points" << endl;
+			cout << "quartic_curve_activity::perform_activity "
+					"after SC->Surf_A->export_points" << endl;
 		}
 
 	}
@@ -102,15 +107,18 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 		int eqn20[20];
 
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity before QC->QCDA->Dom->create_surface" << endl;
+			cout << "quartic_curve_activity::perform_activity "
+					"before QC->QCDA->Dom->create_surface" << endl;
 		}
 		QC->QCDA->Dom->create_surface(QC->QO, eqn20, verbose_level);
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity after QC->QCDA->Dom->create_surface" << endl;
+			cout << "quartic_curve_activity::perform_activity "
+					"after QC->QCDA->Dom->create_surface" << endl;
 		}
 
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity eqn20 = ";
+			cout << "quartic_curve_activity::perform_activity "
+					"eqn20 = ";
 			Int_vec_print(cout, eqn20, 20);
 			cout << endl;
 
@@ -129,7 +137,8 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 	if (Descr->f_extract_orbit_on_bitangents_by_length) {
 
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity f_extract_orbit_on_bitangents_by_length "
+			cout << "quartic_curve_activity::perform_activity "
+					"f_extract_orbit_on_bitangents_by_length "
 					"length = " << Descr->extract_orbit_on_bitangents_by_length_length << endl;
 		}
 
@@ -169,7 +178,8 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 	if (Descr->f_extract_specific_orbit_on_bitangents_by_length) {
 
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity f_extract_specific_orbit_on_bitangents_by_length "
+			cout << "quartic_curve_activity::perform_activity "
+					"f_extract_specific_orbit_on_bitangents_by_length "
 					"length = " << Descr->f_extract_specific_orbit_on_bitangents_by_length << endl;
 		}
 
@@ -183,7 +193,8 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 			desired_orbit_idx = Descr->extract_specific_orbit_on_bitangents_by_length_index;
 
 			QC->QOA->Aut_gens->extract_specific_orbit_on_set_with_given_action_after_restriction_by_length(
-					QC->PA->A_on_lines, QC->QO->bitangents28, 28,
+					QC->PA->A_on_lines,
+					QC->QO->bitangents28, 28,
 					desired_orbit_length,
 					desired_orbit_idx,
 					extracted_set,
@@ -200,7 +211,8 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 				extracted_lines[i] = QC->QO->bitangents28[idx];
 			}
 
-			cout << "Orbit on bitangents of length " << desired_orbit_length << ", index " << desired_orbit_idx << " : ";
+			cout << "Orbit on bitangents of length "
+					<< desired_orbit_length << ", index " << desired_orbit_idx << " : ";
 			Lint_vec_print(cout, extracted_lines, desired_orbit_length);
 			cout << endl;
 			//cout << "Index set : ";
@@ -213,7 +225,8 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 	if (Descr->f_extract_specific_orbit_on_kovalevski_points_by_length) {
 
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity f_extract_specific_orbit_on_kovalevski_points_by_length "
+			cout << "quartic_curve_activity::perform_activity "
+					"f_extract_specific_orbit_on_kovalevski_points_by_length "
 					"length = " << Descr->f_extract_specific_orbit_on_kovalevski_points_by_length << endl;
 		}
 
@@ -227,7 +240,9 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 			desired_orbit_idx = Descr->extract_specific_orbit_on_kovalevski_points_by_length_index;
 
 			QC->QOA->Aut_gens->extract_specific_orbit_on_set_with_given_action_after_restriction_by_length(
-					QC->PA->A, QC->QO->QP->Kovalevski_points, QC->QO->QP->nb_Kovalevski,
+					QC->PA->A,
+					QC->QO->QP->Kovalevski_points,
+					QC->QO->QP->nb_Kovalevski,
 					desired_orbit_length,
 					desired_orbit_idx,
 					extracted_set,
@@ -243,7 +258,8 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 				extracted_objects[i] = QC->QO->QP->Kovalevski_points[idx];
 			}
 
-			cout << "Orbit on Kovalevski points of length " << desired_orbit_length << ", index " << desired_orbit_idx << " : ";
+			cout << "Orbit on Kovalevski points of length "
+					<< desired_orbit_length << ", index " << desired_orbit_idx << " : ";
 			Lint_vec_print(cout, extracted_objects, desired_orbit_length);
 			cout << endl;
 			//cout << "Index set : ";
@@ -321,7 +337,8 @@ void quartic_curve_activity::do_report(
 
 
 			if (QC->QO->QP == NULL) {
-				cout << "quartic_curve_activity::do_report QC->QO->QP == NULL" << endl;
+				cout << "quartic_curve_activity::do_report "
+						"QC->QO->QP == NULL" << endl;
 				exit(1);
 			}
 

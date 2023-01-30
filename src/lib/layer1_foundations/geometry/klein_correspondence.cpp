@@ -716,7 +716,8 @@ void klein_correspondence::compute_external_lines(
 		Gr62->points_covered(Line, 0 /* verbose_level */);
 		for (j = 0; j < nb_points_covered; j++) {
 			pt = Line[j];
-			F->PG_element_unrank_modified(v6, 1, 6, pt);
+			F->Projective_space_basic->PG_element_unrank_modified(
+					v6, 1, 6, pt);
 			//K->O->unrank_point(v6, 1, pt, 0);
 			a = F->mult(v6[0], v6[1]);
 			b = F->mult(v6[2], v6[3]);
@@ -1110,7 +1111,8 @@ void klein_correspondence::reverse_isomorphism(
 	}
 
 
-	if (!F->test_if_vectors_are_projectively_equal(A6, A6b, 36)) {
+	if (!F->Projective_space_basic->test_if_vectors_are_projectively_equal(
+			A6, A6b, 36)) {
 		cout << "matrices are not projectively equal" << endl;
 		exit(1);
 	}

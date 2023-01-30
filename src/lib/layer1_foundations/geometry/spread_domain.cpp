@@ -193,14 +193,16 @@ void spread_domain::init(
 
 void spread_domain::unrank_point(int *v, long int a)
 {
-	F->PG_element_unrank_modified_lint(v, 1, n, a);
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v, 1, n, a);
 }
 
 long int spread_domain::rank_point(int *v)
 {
 	long int a;
 
-	F->PG_element_rank_modified_lint(v, 1, n, a);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1, n, a);
 	return a;
 }
 
@@ -292,8 +294,10 @@ void spread_domain::print_elements_and_points()
 		}
 		unrank_subspace(M, i);
 		for (a = 0; a < r; a++) {
-			F->PG_element_unrank_modified(v, 1, k, a);
-			F->Linear_algebra->mult_matrix_matrix(v, M, w, 1, k, n,
+			F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, k, a);
+			F->Linear_algebra->mult_matrix_matrix(
+					v, M, w, 1, k, n,
 					0 /* verbose_level */);
 			b = rank_point(w);
 			Line[a] = b;
