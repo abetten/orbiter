@@ -154,7 +154,7 @@ void ttp_codes::twisted_tensor_product_codes(
 		cout << "ttp_codes::twisted_tensor_product_codes: M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
-		FQ->latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
+		FQ->Io->latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
 	}
 
 
@@ -191,7 +191,7 @@ void ttp_codes::twisted_tensor_product_codes(
 	if (f_v) {
 		cout << "ttp_codes::twisted_tensor_product_codes H_subfield:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		Fq->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
+		Fq->Io->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
 	}
 
 	FREE_int(M);
@@ -351,7 +351,7 @@ void ttp_codes::create_matrix_M(
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
 		cout << "ttp_codes::create_matrix_M M:" << endl;
-		FQ->latex_matrix(cout, f_elements_exponential,
+		FQ->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, M, m, n);
 	}
 
@@ -483,7 +483,7 @@ void ttp_codes::create_matrix_H_subfield(
 	if (f_v) {
 		cout << "ttp_codes::create_matrix_H_subfield matrix C:" << endl;
 		Int_vec_print_integer_matrix_width(cout, C, m, m, m, 2);
-		FQ->latex_matrix(cout, f_elements_exponential,
+		FQ->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, C, m, m);
 	}
 
@@ -510,7 +510,7 @@ void ttp_codes::create_matrix_H_subfield(
 	if (f_v) {
 		cout << "ttp_codes::create_matrix_H_subfield H = C * M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H, m, n, n, 2);
-		FQ->latex_matrix(cout, f_elements_exponential,
+		FQ->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, H, m, n);
 	}
 
@@ -527,7 +527,7 @@ void ttp_codes::create_matrix_H_subfield(
 	if (f_v) {
 		cout << "ttp_codes::create_matrix_H_subfield H_subfield:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		Fq->latex_matrix(cout, f_elements_exponential,
+		Fq->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print_subfield, H_subfield, m, n);
 	}
 
@@ -568,7 +568,7 @@ void ttp_codes::tt_field_reduction(
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 		//print_integer_matrix(cout, M, m, n);
 		cout << endl;
-		FQ.print_integer_matrix_zech(cout, M, m, n);
+		FQ.Io->print_integer_matrix_zech(cout, M, m, n);
 		cout << endl;
 	}
 	for (i = 0; i < m; i++) {
@@ -604,7 +604,7 @@ void ttp_codes::tt_field_reduction(
 		Int_vec_print_integer_matrix_width(cout, MM, m, n, n, 2);
 		//print_integer_matrix(cout, MM, m, n);
 		cout << endl;
-		f.print_integer_matrix_zech(cout, MM, m, n);
+		f.Io->print_integer_matrix_zech(cout, MM, m, n);
 		cout << endl;
 	}
 
@@ -933,7 +933,7 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 		cout << "before field reduction:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H, m, n, n, 2);
 		cout << endl;
-		f.print_integer_matrix_zech(cout, H, m, n);
+		f.Io->print_integer_matrix_zech(cout, H, m, n);
 		cout << endl;
 	}
 
@@ -951,7 +951,7 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 		cout << "after field reduction:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		cout << endl;
-		f.print_integer_matrix_zech(cout, H_subfield, m, n);
+		f.Io->print_integer_matrix_zech(cout, H_subfield, m, n);
 		cout << endl;
 	}
 	cout << "H_subfield:" << endl;
@@ -1083,7 +1083,7 @@ void ttp_codes::do_tensor(int q,
 		cout << "M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
-		F.latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
+		F.Io->latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
 	}
 
 
@@ -1118,7 +1118,7 @@ void ttp_codes::do_tensor(int q,
 		cout << "after create_matrix_H_subfield" << endl;
 		cout << "H_subfield:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		f.latex_matrix(
+		f.Io->latex_matrix(
 				cout, f_elements_exponential,
 				symbol_for_print_subfield, H_subfield, m, n);
 	}
@@ -2110,7 +2110,7 @@ void ttp_codes::do_other_stuff(
 
 		cout << "H_subfield after Gaussian elimination:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H_subfield_gauss, m, n, n, 2);
-		f->latex_matrix(cout,
+		f->Io->latex_matrix(cout,
 				f_elements_exponential,
 				symbol_for_print_subfield, H_subfield_gauss, m, n);
 		}
@@ -2241,12 +2241,12 @@ void ttp_codes::do_other_stuff(
 
 
 	if (f_construction_A) {
-		F->display_T2(cout);
-		F->display_N2(cout);
+		F->Io->display_T2(cout);
+		F->Io->display_N2(cout);
 		}
 	else if (f_construction_B) {
-		F->display_T3(cout);
-		F->display_N3(cout);
+		F->Io->display_T3(cout);
+		F->Io->display_N3(cout);
 		}
 
 

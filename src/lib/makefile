@@ -319,6 +319,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/interface_permutation_representation.o \
 		layer3_group_actions/actions/interface_wreath_product.o \
 		layer3_group_actions/actions/known_groups.o \
+		layer3_group_actions/actions/induced_action.o \
 		layer3_group_actions/actions/stabilizer_chain_base_data.o \
 		layer3_group_actions/data_structures/group_container.o \
 		layer3_group_actions/data_structures/incidence_structure_with_group.o \

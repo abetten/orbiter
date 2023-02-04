@@ -50,7 +50,8 @@ void choose_random_generator_derived_group(sims *G,
 	FREE_int(Elt6);
 }
 
-void sims::build_up_subgroup_random_process(sims *G, 
+void sims::build_up_subgroup_random_process(
+		sims *G,
 	void (*choose_random_generator_for_subgroup)(sims *G,
 			int *Elt, int verbose_level),
 	int verbose_level)

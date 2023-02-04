@@ -286,7 +286,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	//A2r = NEW_OBJECT(action);
 
 	cout << "Creating restricted action on secants:" << endl;
-	A2r = A2->create_induced_action_by_restriction(
+	A2r = A2->Induced_action->create_induced_action_by_restriction(
 		NULL,
 		nb_secants, secants,
 		FALSE /* f_induce_action */,
@@ -516,7 +516,7 @@ static void projective_space_init_line_action(
 	if (f_v) {
 		cout << "projective_space_init_line_action" << endl;
 	}
-	A_on_lines = NEW_OBJECT(actions::action);
+	//A_on_lines = NEW_OBJECT(actions::action);
 
 	AoL = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
@@ -552,7 +552,7 @@ static void projective_space_init_line_action(
 		cout << "projective_space_init_line_action "
 				"initializing action on grassmannian" << endl;
 	}
-	A_on_lines->induced_action_on_grassmannian(A_points, AoL,
+	A_on_lines = A_points->Induced_action->induced_action_on_grassmannian_preloaded(AoL,
 		f_induce_action, &S, verbose_level);
 	if (f_v) {
 		cout << "projective_space_init_line_action "

@@ -82,11 +82,11 @@ void action_on_forms::create_action_on_forms(
 
 
 
-	A_on_poly = NEW_OBJECT(actions::action);
+	//A_on_poly = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "action_on_forms::create_action_on_forms "
-				"before A_on_poly->induced_action_on_homogeneous_polynomials" << endl;
+				"before PA->A->Induced_action->induced_action_on_homogeneous_polynomials" << endl;
 	}
 
 
@@ -94,10 +94,18 @@ void action_on_forms::create_action_on_forms(
 
 	HPD = &PF->Poly[PF->max_degree];
 
-	A_on_poly->induced_action_on_homogeneous_polynomials(PA->A,
+	if (f_v) {
+		cout << "action_on_forms::create_action_on_forms "
+				"before PA->A->Induced_action->induced_action_on_homogeneous_polynomials" << endl;
+	}
+	A_on_poly = PA->A->Induced_action->induced_action_on_homogeneous_polynomials(
 			HPD,
 		FALSE /* f_induce_action */, NULL,
 		verbose_level - 2);
+	if (f_v) {
+		cout << "action_on_forms::create_action_on_forms "
+				"after PA->A->Induced_action->induced_action_on_homogeneous_polynomials" << endl;
+	}
 
 
 	int pt = 0;

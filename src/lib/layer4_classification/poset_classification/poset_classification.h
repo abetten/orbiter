@@ -1759,13 +1759,13 @@ public:
 		int lvl, int verbose_level);
 	void setup_factor_space_action_with_early_test(
 		poset_classification *gen,
-		induced_actions::action_on_factor_space &AF,
-		actions::action &A_factor_space,
+		induced_actions::action_on_factor_space *AF,
+		actions::action *&A_factor_space,
 		int lvl, int verbose_level);
 	void setup_factor_space_action(
 		poset_classification *gen,
-		induced_actions::action_on_factor_space &AF,
-		actions::action &A_factor_space,
+		induced_actions::action_on_factor_space *AF,
+		actions::action *&A_factor_space,
 		int lvl, int f_compute_tables, 
 		int verbose_level);
 	void downstep_subspace_action_print_orbits(

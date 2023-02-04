@@ -786,10 +786,11 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 	}
 
 	if (f_vv) {
-		cout << "substructure_lifting_data::orbits_of_stabilizer_case before A_induced->induced_action_on_sets" << endl;
+		cout << "substructure_lifting_data::orbits_of_stabilizer_case "
+				"before Iso->A->Induced_action->induced_action_on_sets" << endl;
 	}
 
-	A_induced->induced_action_on_sets(*Iso->A, S, //K,
+	A_induced = Iso->A->Induced_action->induced_action_on_sets(S, //K,
 		l, Iso->size, sets, FALSE /*TRUE*/ /* A Betten 1/26/13*/,
 		verbose_level /*- 2*/);
 

@@ -99,16 +99,16 @@ void spread_activity::init(
 
 	if (f_v) {
 		cout << "spread_activity::init before "
-				"A2->induced_action_on_grassmannian" <<  endl;
+				"induced_action_on_grassmannian_preloaded" <<  endl;
 	}
 
-	A2->induced_action_on_grassmannian(A, AG,
+	A2 = A->Induced_action->induced_action_on_grassmannian_preloaded(AG,
 		FALSE /*f_induce_action*/, NULL /*sims *old_G */,
 		0 /*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "spread_activity::init after "
-				"A2->induced_action_on_grassmannian" <<  endl;
+				"induced_action_on_grassmannian_preloaded" <<  endl;
 	}
 
 	if (f_v) {
@@ -116,7 +116,8 @@ void spread_activity::init(
 		A2->print_info();
 	}
 
-	AGr = A2->restricted_action(Spread_create->set, Spread_create->sz,
+	AGr = A2->Induced_action->restricted_action(
+			Spread_create->set, Spread_create->sz,
 			verbose_level);
 
 	if (f_v) {

@@ -55,35 +55,20 @@ void orthogonal_space_with_action::init(
 
 	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
 
+
+	data_structures::string_tools String;
+
+	String.name_of_orthogonal_space(
+			label_txt,
+			label_tex,
+			Descr->epsilon, Descr->n, Descr->F->q,
+			verbose_level - 1);
+
 	if (Descr->f_label_txt) {
 		label_txt.assign(Descr->label_txt);
 	}
-	else {
-		char str[1000];
-
-		snprintf(str, sizeof(str), "O_%d_%d_%d", Descr->epsilon, Descr->n, Descr->F->q);
-		label_txt.assign(str);
-	}
 	if (Descr->f_label_tex) {
 		label_tex.assign(Descr->label_tex);
-	}
-	else {
-		char str[1000];
-
-		if (Descr->epsilon == 1) {
-			snprintf(str, sizeof(str), "O^+(%d,%d)", Descr->n, Descr->F->q);
-		}
-		else if (Descr->epsilon == 0) {
-			snprintf(str, sizeof(str), "O(%d,%d)", Descr->n, Descr->F->q);
-		}
-		else if (Descr->epsilon == -1) {
-			snprintf(str, sizeof(str), "O^-(%d,%d)", Descr->n, Descr->F->q);
-		}
-		else {
-			cout << "orthogonal_space_with_action::init illegal value of epsilon" << endl;
-			exit(1);
-		}
-		label_tex.assign(str);
 	}
 
 
@@ -121,16 +106,19 @@ void orthogonal_space_with_action::init(
 	if (Descr->n == 5) {
 
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init allocating Blt_Set_domain" << endl;
+			cout << "orthogonal_space_with_action::init "
+					"allocating Blt_Set_domain" << endl;
 		}
 		Blt_Set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
 
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init before Blt_Set_domain->init" << endl;
+			cout << "orthogonal_space_with_action::init "
+					"before Blt_Set_domain->init" << endl;
 		}
 		Blt_Set_domain->init(O, verbose_level);
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init after Blt_Set_domain->init" << endl;
+			cout << "orthogonal_space_with_action::init "
+					"after Blt_Set_domain->init" << endl;
 		}
 	}
 
@@ -169,7 +157,7 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 			FALSE /* f_on_points_and_lines */,
 			f_semilinear,
 			TRUE /* f_basis */,
-			verbose_level);
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "orthogonal_space_with_action::init_group "
@@ -183,14 +171,21 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 				"degree = " << A->degree << endl;
 	}
 
-	if (f_v) {
-		cout << "orthogonal_space_with_action::init_group computing "
-				"lex-least base" << endl;
+	if (!A->f_has_sims) {
+		cout << "orthogonal_space_with_action::init_group "
+				"!A->f_has_sims" << endl;
+		exit(1);
 	}
-	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "orthogonal_space_with_action::init_group computing "
-				"lex-least base done" << endl;
+		cout << "orthogonal_space_with_action::init_group "
+				"before A->lex_least_base_in_place" << endl;
+	}
+	A->lex_least_base_in_place(A->Sims, verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::init_group "
+				"after A->lex_least_base_in_place" << endl;
+	}
+	if (f_v) {
 		cout << "orthogonal_space_with_action::init_group base: ";
 		Lint_vec_print(cout, A->get_base(), A->base_len());
 		cout << endl;

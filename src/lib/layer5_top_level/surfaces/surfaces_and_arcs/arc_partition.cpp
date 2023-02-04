@@ -101,7 +101,7 @@ void arc_partition::init(
 				"creating restricted action on the arc" << endl;
 	}
 
-	A_on_rest = A_on_arc->restricted_action(arc_remainder, 4 /* nb_points */,
+	A_on_rest = A_on_arc->Induced_action->restricted_action(arc_remainder, 4 /* nb_points */,
 			verbose_level);
 
 	if (f_v) {
@@ -109,7 +109,7 @@ void arc_partition::init(
 				"creating action on the partition" << endl;
 	}
 
-	A_on_partition = A_on_rest->induced_action_on_set_partitions(
+	A_on_partition = A_on_rest->Induced_action->induced_action_on_set_partitions(
 			2,
 			verbose_level);
 

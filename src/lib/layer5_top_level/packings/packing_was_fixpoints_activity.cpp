@@ -57,13 +57,15 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "packing_was_fixpoints_activity::perform_activity before PW->report" << endl;
+			cout << "packing_was_fixpoints_activity::perform_activity "
+					"before PW->report" << endl;
 		}
 
 		PWF->report(verbose_level);
 
 		if (f_v) {
-			cout << "packing_was_fixpoints_activity::perform_activity after PW->report" << endl;
+			cout << "packing_was_fixpoints_activity::perform_activity "
+					"after PW->report" << endl;
 		}
 
 
@@ -72,7 +74,8 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "packing_was_fixpoints_activity::perform_activity f_print_packing" << endl;
+			cout << "packing_was_fixpoints_activity::perform_activity "
+					"f_print_packing" << endl;
 		}
 
 		long int *packing;
@@ -86,7 +89,8 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "packing_was_fixpoints_activity::perform_activity f_print_packing" << endl;
+			cout << "packing_was_fixpoints_activity::perform_activity "
+					"f_print_packing" << endl;
 		}
 
 
@@ -95,7 +99,8 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "packing_was_fixpoints_activity::perform_activity f_print_packing" << endl;
+			cout << "packing_was_fixpoints_activity::perform_activity "
+					"f_compare_files_of_packings" << endl;
 		}
 
 		orbiter_kernel_system::file_io Fio;
@@ -137,7 +142,8 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "packing_was_fixpoints_activity::perform_activity f_print_packing" << endl;
+			cout << "packing_was_fixpoints_activity::perform_activity "
+					"f_compare_files_of_packings" << endl;
 		}
 
 

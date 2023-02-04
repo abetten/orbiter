@@ -26,6 +26,10 @@ action::action()
 
 	Known_groups = NEW_OBJECT(known_groups);
 	Known_groups->init(this, verbose_level);
+
+	Induced_action = NEW_OBJECT(induced_action);
+	Induced_action->init(this, verbose_level);
+
 }
 
 action::~action()
@@ -61,6 +65,7 @@ void action::null()
 
 	Known_groups = NULL;
 
+	Induced_action = NULL;
 
 	elt_size_in_int = 0;
 	coded_elt_size_in_char = 0;

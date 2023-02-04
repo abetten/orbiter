@@ -1965,7 +1965,7 @@ void gl_classes::report(std::ostream &ost, int verbose_level)
 
 
 		ost << "\\left[" << endl;
-		F->latex_matrix(ost,
+		F->Io->latex_matrix(ost,
 				f_elements_exponential, symbol_for_print, M, k, k);
 		ost << "\\right]" << endl;
 		if (i < nb_classes - 1) {
@@ -2058,7 +2058,7 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	ost << "$" << endl;
 	ost << "$$" << endl;
 	ost << "\\left[" << endl;
-	F->latex_matrix(ost,
+	F->Io->latex_matrix(ost,
 			f_elements_exponential, symbol_for_print, Mtx, k, k);
 	ost << "\\right]";
 	//ost << "_{";

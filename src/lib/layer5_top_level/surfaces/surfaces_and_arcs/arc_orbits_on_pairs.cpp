@@ -100,7 +100,8 @@ void arc_orbits_on_pairs::init(
 				"creating restricted action on the arc" << endl;
 		}
 
-	A_on_arc = A->restricted_action(The_arc->data, 6 /* nb_points */,
+	A_on_arc = A->Induced_action->restricted_action(
+			The_arc->data, 6 /* nb_points */,
 			verbose_level - 2);
 
 	if (f_v) {

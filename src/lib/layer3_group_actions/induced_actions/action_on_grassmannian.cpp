@@ -81,7 +81,8 @@ action_on_grassmannian::~action_on_grassmannian()
 		}
 }
 
-void action_on_grassmannian::init(actions::action &A,
+void action_on_grassmannian::init(
+		actions::action &A,
 		geometry::grassmann *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -157,7 +158,8 @@ void action_on_grassmannian::add_print_function(
 }
 
 
-void action_on_grassmannian::init_embedding(int big_n,
+void action_on_grassmannian::init_embedding(
+		int big_n,
 		int *ambient_space, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -178,7 +180,8 @@ void action_on_grassmannian::init_embedding(int big_n,
 }
 
 
-void action_on_grassmannian::unrank(long int i, int *v, int verbose_level)
+void action_on_grassmannian::unrank(
+		long int i, int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -191,7 +194,8 @@ void action_on_grassmannian::unrank(long int i, int *v, int verbose_level)
 	}
 }
 
-long int action_on_grassmannian::rank(int *v, int verbose_level)
+long int action_on_grassmannian::rank(
+		int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int rk;

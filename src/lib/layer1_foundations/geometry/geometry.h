@@ -2366,11 +2366,14 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly_3_3,
 			int nb_pts, long int *Pts, int *coeff10,
 			int verbose_level);
-	void conic_points_brute_force(int *six_coeffs,
+	void conic_points_brute_force(
+			int *six_coeffs,
 		long int *points, int &nb_points, int verbose_level);
-	void conic_points(long int *five_pts, int *six_coeffs,
+	void conic_points(
+			long int *five_pts, int *six_coeffs,
 		long int *points, int &nb_points, int verbose_level);
-	void find_tangent_lines_to_conic(int *six_coeffs,
+	void find_tangent_lines_to_conic(
+			int *six_coeffs,
 		long int *points, int nb_points,
 		long int *tangents, int verbose_level);
 	int determine_hermitian_form_in_plane(
@@ -2379,7 +2382,8 @@ public:
 	void conic_type_randomized(
 			int nb_times,
 		long int *set, int set_size,
-		long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,
+		long int **&Pts_on_conic,
+		int *&nb_pts_on_conic, int &len,
 		int verbose_level);
 	void conic_intersection_type(
 			int f_randomized, int nb_times,
@@ -2397,9 +2401,11 @@ public:
 		long int *set, int set_size,
 		int threshold,
 		long int **&Pts_on_conic,
-		int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
+		int **&Conic_eqn,
+		int *&nb_pts_on_conic, int &nb_conics,
 		int verbose_level);
-	void find_nucleus(int *set, int set_size, int &nucleus,
+	void find_nucleus(
+			int *set, int set_size, int &nucleus,
 		int verbose_level);
 	void points_on_projective_triangle(
 			long int *&set, int &set_size,
@@ -2611,7 +2617,8 @@ public:
 		// type[N_lines]
 	void line_intersection_type_basic_given_a_set_of_lines(
 			long int *lines_by_rank, int nb_lines,
-		long int *set, int set_size, int *type, int verbose_level);
+		long int *set, int set_size,
+		int *type, int verbose_level);
 	// type[nb_lines]
 	void line_intersection_type_through_hyperplane(
 		long int *set, int set_size,

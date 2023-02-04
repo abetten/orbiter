@@ -259,8 +259,8 @@ void cayley_graph_search::init_group2(int verbose_level)
 
 #if 1
 
-	A2 = NEW_OBJECT(actions::action);
-	A2->induced_action_by_right_multiplication(
+	//A2 = NEW_OBJECT(actions::action);
+	A2 = S->A->Induced_action->induced_action_by_right_multiplication(
 		FALSE /* f_basis */, S,
 		S /* Base_group */, FALSE /* f_ownership */,
 		verbose_level);

@@ -96,7 +96,7 @@ void surface_with_action::init(
 		cout << "surface_with_action::init "
 				"before A->induced_action_on_wedge_product" << endl;
 	}
-	A_wedge = A->induced_action_on_wedge_product(verbose_level);
+	A_wedge = A->Induced_action->induced_action_on_wedge_product(verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"after A->induced_action_on_wedge_product" << endl;
@@ -137,7 +137,7 @@ void surface_with_action::init(
 		cout << "surface_with_action::init "
 				"creating action A_on_planes" << endl;
 	}
-	A_on_planes = A->induced_action_on_grassmannian(3, verbose_level);
+	A_on_planes = A->Induced_action->induced_action_on_grassmannian(3, verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"creating action A_on_planes done" << endl;
@@ -2987,6 +2987,10 @@ void surface_with_action::table_of_cubic_surfaces(
 		//Surface_create_description.q = q;
 		Surface_create_description.f_catalogue = TRUE;
 		Surface_create_description.iso = h;
+
+
+		Surface_create_description.f_space_pointer = TRUE;
+		Surface_create_description.space_pointer = PA;
 
 #if 0
 		if (f_v) {

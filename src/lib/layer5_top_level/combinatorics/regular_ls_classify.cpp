@@ -198,8 +198,8 @@ void regular_ls_classify::init_action_on_k_subsets(
 		cout << "regular_ls_classify::init_action_on_k_subsets "
 				"creating action on k-subsets for k=" << k << endl;
 	}
-	A2 = NEW_OBJECT(actions::action);
-	A2->induced_action_on_k_subsets(*A, k, verbose_level - 2);
+	//A2 = NEW_OBJECT(actions::action);
+	A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level - 2);
 
 	Aonk = A2->G.on_k_subsets;
 	

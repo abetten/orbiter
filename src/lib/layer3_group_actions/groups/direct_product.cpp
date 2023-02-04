@@ -110,7 +110,8 @@ direct_product::~direct_product()
 		}
 }
 
-void direct_product::init(matrix_group *M1, matrix_group *M2,
+void direct_product::init(
+		matrix_group *M1, matrix_group *M2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -682,7 +683,8 @@ void direct_product::make_strong_generators_data(int *&data,
 void direct_product::lift_generators(
 		strong_generators *SG1,
 		strong_generators *SG2,
-		actions::action *A, strong_generators *&SG3,
+		actions::action *A,
+		strong_generators *&SG3,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

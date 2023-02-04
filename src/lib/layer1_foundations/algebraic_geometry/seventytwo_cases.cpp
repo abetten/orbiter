@@ -426,13 +426,13 @@ void seventytwo_cases::report_Clebsch_map_details(
 	ost << "P6, P6 * Alpha1, P6 * Alpha1 local, P6 * Alpha1 * Alpha2:\\\\" << endl;
 	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
-	Surf->F->display_table_of_projective_points_easy(ost, P6, 6, 4);
+	Surf->F->Io->display_table_of_projective_points_easy(ost, P6, 6, 4);
 	ost << "\\;" << endl;
-	Surf->F->display_table_of_projective_points_easy(ost, P6a, 6, 4);
+	Surf->F->Io->display_table_of_projective_points_easy(ost, P6a, 6, 4);
 	ost << "\\;" << endl;
-	Surf->F->display_table_of_projective_points_easy(ost, P6_local, 6, 3);
+	Surf->F->Io->display_table_of_projective_points_easy(ost, P6_local, 6, 3);
 	ost << "\\;" << endl;
-	Surf->F->display_table_of_projective_points_easy(ost, P6_local_canonical, 6, 3);
+	Surf->F->Io->display_table_of_projective_points_easy(ost, P6_local_canonical, 6, 3);
 	ost << "$$}" << endl;
 
 

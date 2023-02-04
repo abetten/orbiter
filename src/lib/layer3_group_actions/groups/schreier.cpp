@@ -351,7 +351,8 @@ void schreier::initialize_tables()
 	}
 }
 
-void schreier::init_single_generator(int *elt, int verbose_level)
+void schreier::init_single_generator(
+		int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1896,7 +1897,8 @@ void schreier::random_schreier_generator(
 	}
 }
 
-void schreier::trace_back(int *path, int i, int &j)
+void schreier::trace_back(
+		int *path, int i, int &j)
 {
 	int ii = orbit_inv[i];
 	
@@ -1915,7 +1917,8 @@ void schreier::trace_back(int *path, int i, int &j)
 	}
 }
 
-void schreier::intersection_vector(int *set,
+void schreier::intersection_vector(
+		int *set,
 		int len, int *intersection_cnt)
 // intersection_cnt[nb_orbits]
 {
@@ -2324,7 +2327,8 @@ data_structures_groups::set_and_stabilizer
 	return SaS;
 }
 
-void schreier::get_orbit_rep_to(actions::action *default_action,
+void schreier::get_orbit_rep_to(
+		actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		int orbit_idx,
 		data_structures_groups::set_and_stabilizer *Rep,
@@ -2605,7 +2609,8 @@ void schreier::point_stabilizer(
 	}
 }
 
-void schreier::get_orbit(int orbit_idx, long int *set, int &len,
+void schreier::get_orbit(
+		int orbit_idx, long int *set, int &len,
 	int verbose_level)
 {
 	int f, i;
@@ -2617,7 +2622,8 @@ void schreier::get_orbit(int orbit_idx, long int *set, int &len,
 	}
 }
 
-void schreier::compute_orbit_statistic(int *set, int set_size, 
+void schreier::compute_orbit_statistic(
+		int *set, int set_size,
 	int *orbit_count, int verbose_level)
 // orbit_count[nb_orbits]
 {

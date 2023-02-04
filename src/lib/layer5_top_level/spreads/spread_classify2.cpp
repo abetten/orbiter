@@ -170,7 +170,7 @@ void spread_classify::print_isomorphism_type2(
 		SD->Grass->unrank_lint(data[i], 0);
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
-		SD->F->latex_matrix(ost, f_elements_exponential, symbol_for_print,
+		SD->F->Io->latex_matrix(ost, f_elements_exponential, symbol_for_print,
 				SD->Grass->M, SD->k, SD->n);
 		ost << "\\right]" << endl;
 		ost << "$$" << endl << endl;
@@ -935,7 +935,7 @@ void spread_classify::report3(
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 			}
-			A1 = Iso.A->create_induced_action_by_restriction(
+			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
 					len, set,
 					TRUE,
@@ -981,7 +981,7 @@ void spread_classify::report3(
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 			}
-			A1 = Iso.A->create_induced_action_by_restriction(
+			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
 					len, set,
 					TRUE,

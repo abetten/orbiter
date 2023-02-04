@@ -2859,7 +2859,7 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 				"A4:" << endl;
 		Int_matrix_print(A4, 4, 4);
 
-		P->F->print_matrix_latex(cout, A4, 4, 4);
+		P->F->Io->print_matrix_latex(cout, A4, 4, 4);
 
 	}
 
@@ -4474,7 +4474,7 @@ void geometry_global::create_ttp_code(
 	if (f_v) {
 		cout << "H_subfield:" << endl;
 		//print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		Fq_subfield->latex_matrix(cout, f_elements_exponential,
+		Fq_subfield->Io->latex_matrix(cout, f_elements_exponential,
 			symbol_for_print_subfield, H_subfield, m, n);
 	}
 

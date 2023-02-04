@@ -322,17 +322,17 @@ void semifield_lifting::report(std::ostream &ost, int verbose_level)
 			ost << "$$" << endl;
 			ost << "\\left\\{" << endl;
 			ost << "\\left[" << endl;
-			SC->Mtx->GFq->latex_matrix(ost, f_elements_exponential,
+			SC->Mtx->GFq->Io->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx_Id, k, k);
 			ost << "\\right]";
 			ost << ",";
 			ost << "\\left[" << endl;
-			SC->Mtx->GFq->latex_matrix(ost, f_elements_exponential,
+			SC->Mtx->GFq->Io->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx1, k, k);
 			ost << "\\right]";
 			ost << ",";
 			ost << "\\left[" << endl;
-			SC->Mtx->GFq->latex_matrix(ost, f_elements_exponential,
+			SC->Mtx->GFq->Io->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx2, k, k);
 			ost << "\\right]";
 			ost << "\\right\\}" << endl;

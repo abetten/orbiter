@@ -376,7 +376,7 @@ void projective_space_reporting::cheat_sheet_points(
 				f << "$P_{" << i << "}=\\bP";
 				Int_vec_print(f, v, d);
 				f << "=";
-				P->F->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
+				P->F->Io->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
 				f << "$\\\\" << endl;
 			}
 			f << "\\end{multicols}" << endl;
@@ -790,11 +790,11 @@ void projective_space_reporting::print_set(
 		a = set[i];
 		P->unrank_point(v, a);
 		cout << setw(3) << i << " : " << setw(5) << a << " : ";
-		P->F->int_vec_print_field_elements(cout, v, P->n + 1);
+		P->F->Io->int_vec_print_field_elements(cout, v, P->n + 1);
 		cout << "=";
 		P->F->Projective_space_basic->PG_element_normalize_from_front(
 				v, 1, P->n + 1);
-		P->F->int_vec_print_field_elements(cout, v, P->n + 1);
+		P->F->Io->int_vec_print_field_elements(cout, v, P->n + 1);
 		cout << endl;
 	}
 	FREE_int(v);

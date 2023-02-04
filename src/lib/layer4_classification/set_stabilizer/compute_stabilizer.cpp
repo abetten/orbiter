@@ -206,15 +206,15 @@ void compute_stabilizer::init(
 
 	if (f_v) {
 		cout << "compute_stabilizer::init "
-				"before A2->restricted_action" << endl;
+				"before A2->Induced_action->restricted_action" << endl;
 	}
-	A_on_the_set = SubSt->SubC->A2->restricted_action(
+	A_on_the_set = SubSt->SubC->A2->Induced_action->restricted_action(
 			SubSt->Pts,
 			SubSt->nb_pts,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "compute_stabilizer::init "
-				"after A2->restricted_action" << endl;
+				"after A2->Induced_action->restricted_action" << endl;
 	}
 
 
@@ -787,13 +787,13 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 				"computing induced action by restriction" << endl;
 	}
 
-	A_induced = SubSt->SubC->A2->restricted_action(
+	A_induced = SubSt->SubC->A2->Induced_action->restricted_action(
 			Stab_orbits->interesting_points,
 			Stab_orbits->nb_interesting_points,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
-				"after A2->restricted_action" << endl;
+				"after A2->Induced_action->restricted_action" << endl;
 	}
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
@@ -810,14 +810,18 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
-				"before A_induced->induced_action_override_sims" << endl;
+				"before AG.induced_action_override_sims" << endl;
 	}
-	A_induced->induced_action_override_sims(
-		*SubSt->SubC->A, Stab_orbits->selected_set_stab,
-		0 /*verbose_level*/);
+
+	actions::action_global AG;
+
+	AG.induced_action_override_sims(
+			SubSt->SubC->A, A_induced,
+			Stab_orbits->selected_set_stab,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
-				"after A_induced->induced_action_override_sims" << endl;
+				"after AG.induced_action_override_sims" << endl;
 	}
 
 	if (!A_induced->f_has_kernel) {
@@ -1041,7 +1045,7 @@ void compute_stabilizer::compute_canonical_set(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_v4 = (verbose_level >= 4);
-	int nb_nodes;
+	long int nb_nodes;
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set" << endl;
@@ -1055,13 +1059,29 @@ void compute_stabilizer::compute_canonical_set(
 
 	my_Aut = NEW_OBJECT(groups::sims);
 
-	A_induced->make_canonical(
+	actions::action_global AG;
+	groups::sims *Sims;
+
+	Sims = A_induced->Strong_gens->create_sims(verbose_level);
+
+	if (f_v) {
+		cout << "compute_stabilizer::make_canonical_set "
+				"before AG.make_canonical" << endl;
+	}
+
+	AG.make_canonical(A_induced, Sims,
 		sz, set_in,
 		set_out, transporter, nb_nodes,
 		TRUE, my_Aut,
 		0 /*verbose_level - 1*/);
 
+	if (f_v) {
+		cout << "compute_stabilizer::make_canonical_set "
+				"after AG.make_canonical" << endl;
+	}
+
 	FREE_OBJECT(my_Aut);
+	FREE_OBJECT(Sims);
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set "
@@ -1079,28 +1099,34 @@ void compute_stabilizer::compute_canonical_set_and_group(
 // calls A_induced->make_canonical and computes a transporter and the set stabilizer
 {
 	int f_v = (verbose_level >= 1);
-	int nb_nodes;
+	long int nb_nodes;
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set_and_group" << endl;
-	}
-	if (f_v) {
-		cout << "compute_stabilizer::compute_canonical_set_and_group "
-				"before A_induced->make_canonical" << endl;
 	}
 
 
 	stab = NEW_OBJECT(groups::sims);
 
-	A_induced->make_canonical(
-		sz, set_in,
-		set_out, transporter, nb_nodes,
-		TRUE, stab,
-		0 /*verbose_level - 1*/);
+	actions::action_global AG;
+	groups::sims *Sims;
+
+	Sims = A_induced->Strong_gens->create_sims(verbose_level);
+
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set_and_group "
-				"after A_induced->make_canonical" << endl;
+				"before AG.make_canonical" << endl;
+	}
+	AG.make_canonical(A_induced, Sims,
+		sz, set_in,
+		set_out, transporter, nb_nodes,
+		TRUE, stab,
+		verbose_level - 1);
+
+	if (f_v) {
+		cout << "compute_stabilizer::compute_canonical_set_and_group "
+				"after AG.make_canonical" << endl;
 	}
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set_and_group done" << endl;
@@ -1279,25 +1305,31 @@ void compute_stabilizer::make_canonical_second_set(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v4 = (verbose_level >= 4);
-	int nb_nodes;
+	long int nb_nodes;
 
 	if (f_v) {
 		cout << "compute_stabilizer::make_canonical_second_set" << endl;
 	}
+
+	actions::action_global AG;
+	groups::sims *Sims;
+
+	Sims = A_induced->Strong_gens->create_sims(verbose_level);
+
 	if (f_v) {
 		cout << "compute_stabilizer::make_canonical_second_set "
-				"before A_induced->make_canonical" << endl;
+				"before AG.make_canonical" << endl;
 	}
-	A_induced->make_canonical(
+	AG.make_canonical(A_induced, Sims,
 			Stab_orbits->reduced_set_size,
 			Stab_orbits->reduced_set2_new_labels,
 			Stab_orbits->canonical_set2,
 			transporter2, nb_nodes,
 			TRUE, Aut,
-		0 /*verbose_level - 1*/);
+			0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "compute_stabilizer::make_canonical_second_set "
-				"after A_induced->make_canonical" << endl;
+				"after AG.make_canonical" << endl;
 	}
 
 	backtrack_nodes_total_in_loop += nb_nodes;
@@ -1331,6 +1363,9 @@ void compute_stabilizer::make_canonical_second_set(int verbose_level)
 		//A_induced.element_print_as_permutation(transporter2, cout);
 		//cout << endl;
 	}
+
+	FREE_OBJECT(Sims);
+
 	if (f_v) {
 		cout << "compute_stabilizer::make_canonical_second_set done" << endl;
 	}

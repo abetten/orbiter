@@ -77,7 +77,7 @@ void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
 	if (f_v) {
 		cout << "blt_set_invariants::init before compute" << endl;
 	}
-	compute(verbose_level);
+	compute(verbose_level - 1);
 	if (f_v) {
 		cout << "blt_set_invariants::init after compute" << endl;
 	}
@@ -108,7 +108,7 @@ void blt_set_invariants::compute(int verbose_level)
 		cout << "blt_set::report before P->plane_intersections" << endl;
 	}
 	D->P->plane_intersections(D->G53,
-			the_set_in_PG, set_size, R, *Sos, verbose_level);
+			the_set_in_PG, set_size, R, *Sos, verbose_level - 1);
 
 
 
@@ -118,27 +118,27 @@ void blt_set_invariants::compute(int verbose_level)
 	Sos->intersection_matrix(
 		intersection_type, highest_intersection_number,
 		intersection_matrix, nb_planes,
-		verbose_level);
+		verbose_level - 1);
 
 	if (f_v) {
 		cout << "blt_set::report before "
 				"extract_largest_sets" << endl;
 	}
 	Sos->extract_largest_sets(*Sos2,
-			Sos2_idx, verbose_level);
+			Sos2_idx, verbose_level - 1);
 
 	if (f_v) {
 		cout << "blt_set::report before "
 				"remove_sets_of_given_size" << endl;
 	}
 	Sos->remove_sets_of_given_size(3,
-			*Sos3, Sos3_idx, verbose_level);
+			*Sos3, Sos3_idx, verbose_level - 1);
 
 	if (f_v) {
 		cout << "blt_set::report before "
 				"Sos2->compute_tdo_decomposition" << endl;
 	}
-	Sos2->compute_tdo_decomposition(*D2, verbose_level);
+	Sos2->compute_tdo_decomposition(*D2, verbose_level - 1);
 
 
 	D2->get_row_scheme(verbose_level);
@@ -148,9 +148,9 @@ void blt_set_invariants::compute(int verbose_level)
 			cout << "blt_set::report before "
 					"Sos3[h].compute_tdo_decomposition" << endl;
 		}
-		Sos3->compute_tdo_decomposition(*D3, verbose_level);
-		D3->get_row_scheme(verbose_level);
-		D3->get_col_scheme(verbose_level);
+		Sos3->compute_tdo_decomposition(*D3, verbose_level - 1);
+		D3->get_row_scheme(verbose_level - 1);
+		D3->get_col_scheme(verbose_level - 1);
 	}
 #if 0
 	P->plane_intersection_invariant(G,

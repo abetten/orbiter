@@ -48,7 +48,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		geometry::grassmann G;
 	induced_actions::action_on_grassmannian *AG;
 	{
-		actions::action A_on_hyperplanes;
+		actions::action *A_on_hyperplanes;
 	int big_n, n, k, rk, degree, idx;
 	int *ambient_space; // [n * big_n]
 	int *base_change_matrix; // [n * n]
@@ -155,22 +155,21 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		cout << "upstep_work::upstep_subspace_action "
 				"AG->GE->degree = " << AG->GE->degree << endl;
 		cout << "upstep_work::upstep_subspace_action "
-				"before induced_action_on_grassmannian" << endl;
+				"before induced_action_on_grassmannian_preloaded" << endl;
 	}
 	
 
-	A_on_hyperplanes.induced_action_on_grassmannian(
-		gen->get_A2(),
+	A_on_hyperplanes = gen->get_A2()->Induced_action->induced_action_on_grassmannian_preloaded(
 		AG, 
 		FALSE /* f_induce_action*/,
 		NULL /*sims *old_G*/,
 		verbose_level - 3);
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
-				"after A_on_hyperplanes->induced_action_on_grassmannian"
+				"after induced_action_on_grassmannian_preloaded"
 				<< endl;
 	}
-	degree = A_on_hyperplanes.degree;
+	degree = A_on_hyperplanes->degree;
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"The action on hyperplanes has degree = "
@@ -182,7 +181,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		exit(1);
 	}
 
-	up_orbit.init(&A_on_hyperplanes, verbose_level - 2);
+	up_orbit.init(A_on_hyperplanes, verbose_level - 2);
 	up_orbit.init_generators(*H->SG, verbose_level - 2);
 	if (f_vvv) {
 		cout << "upstep_work::upstep_subspace_action "
@@ -193,7 +192,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		cout << "generators in the action on hyperplanes:" << endl;
 		H->print_strong_generators_with_different_action_verbose(
 			cout,
-			&A_on_hyperplanes,
+			A_on_hyperplanes,
 			verbose_level - 2);
 #endif
 
@@ -224,7 +223,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		cout << "upstep_work::upstep_subspace_action "
 				"initializing union_find:" << endl;
 		}
-	UF.init(&A_on_hyperplanes, verbose_level - 8);
+	UF.init(A_on_hyperplanes, verbose_level - 8);
 	UF.add_generators(H->SG, 0 /*verbose_level - 8 */);
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
@@ -457,9 +456,9 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 					gen->A2->element_print_as_permutation(aut, cout);
 #endif
 					cout << "in the action "
-							<< A_on_hyperplanes.label
+							<< A_on_hyperplanes->label
 							<< " on the hyperplanes:" << endl;
-					A_on_hyperplanes.element_print_as_permutation_verbose(
+					A_on_hyperplanes->element_print_as_permutation_verbose(
 						aut,
 						cout, 0/*verbose_level - 5*/);
 				}
@@ -583,6 +582,9 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		cout << "upstep_work::upstep_subspace_action "
 				"before freeing A_on_hyperplanes" << endl;
 	}
+
+	FREE_OBJECT(A_on_hyperplanes);
+
 	} // end A_on_hyperplanes
 
 	FREE_OBJECT(AG);

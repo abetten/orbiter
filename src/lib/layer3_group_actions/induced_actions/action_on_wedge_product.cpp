@@ -334,7 +334,7 @@ void action_on_wedge_product::create_induced_matrix(
 void action_on_wedge_product::element_print_latex(int *Elt, std::ostream &ost)
 {
 	ost << "\\left(" << endl;
-	F->print_matrix_latex(ost, Elt, n, n);
+	F->Io->print_matrix_latex(ost, Elt, n, n);
 	if (M->f_semilinear) {
 		ost << "_{" << Elt[n * n] << "}" << endl;
 	}
@@ -342,7 +342,7 @@ void action_on_wedge_product::element_print_latex(int *Elt, std::ostream &ost)
 
 	create_induced_matrix(Elt, Mtx_wedge, 0 /* verbose_level */);
 
-	F->print_matrix_latex(ost, Mtx_wedge, wedge_dimension, wedge_dimension);
+	F->Io->print_matrix_latex(ost, Mtx_wedge, wedge_dimension, wedge_dimension);
 	if (M->f_semilinear) {
 		ost << "_{" << Elt[n * n] << "}" << endl;
 	}

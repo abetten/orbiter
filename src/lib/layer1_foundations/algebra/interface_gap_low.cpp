@@ -39,7 +39,6 @@ void interface_gap_low::fining_set_stabilizer_in_collineation_group(
 	}
 
 	string fname2;
-	int h, i, a, b;
 	data_structures::string_tools ST;
 
 	fname2.assign(fname);

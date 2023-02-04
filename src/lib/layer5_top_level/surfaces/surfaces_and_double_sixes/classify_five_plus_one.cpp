@@ -150,7 +150,7 @@ void classify_five_plus_one::init(
 	}
 
 	A_on_neighbors = NEW_OBJECT(actions::action);
-	A_on_neighbors = A2->create_induced_action_by_restriction(
+	A_on_neighbors = A2->Induced_action->create_induced_action_by_restriction(
 		NULL,
 		Linear_complex->nb_neighbors, Linear_complex->Neighbors,
 		FALSE /* f_induce_action */,

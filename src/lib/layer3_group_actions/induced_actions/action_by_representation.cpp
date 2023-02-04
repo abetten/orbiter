@@ -19,6 +19,7 @@ action_by_representation::action_by_representation()
 	type = representation_type_nothing;
 	n = 0;
 	q = 0;
+	A = NULL;
 	M = NULL;
 	F = NULL;
 	low_level_point_size = 0;
@@ -44,28 +45,30 @@ action_by_representation::~action_by_representation()
 
 
 void action_by_representation::init_action_on_conic(
-		actions::action &A, int verbose_level)
+		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "action_by_representation::init_action_on_conic" << endl;
-		cout << "starting with action " << A.label << endl;
-		}
-	if (A.type_G != matrix_group_t) {
+		cout << "starting with action " << A->label << endl;
+	}
+	if (A->type_G != matrix_group_t) {
 		cout << "action_by_representation::init "
-				"fatal: A.type_G != matrix_group_t" << endl;
+				"fatal: A->type_G != matrix_group_t" << endl;
 		exit(1);
-		}
-	M = A.G.matrix_grp;
+	}
+	action_by_representation::A = A;
+	M = A->G.matrix_grp;
 	F = M->GFq;
 	n = M->n;
 	q = F->q;
 	if (n != 2) {
-		cout << "action_by_representation::init_action_on_conic needs n == 2" << endl;
+		cout << "action_by_representation::init_action_on_conic "
+				"needs n == 2" << endl;
 		exit(1);
-		}
+	}
 	type = representation_type_PSL2_on_conic;
 	dimension = 3;
 	degree = Gg.nb_PG_elements(dimension - 1, q);
@@ -76,7 +79,7 @@ void action_by_representation::init_action_on_conic(
 }
 
 long int action_by_representation::compute_image_int(
-		actions::action &A, int *Elt,
+		int *Elt,
 		long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -95,7 +98,7 @@ long int action_by_representation::compute_image_int(
 		cout << endl;
 		}
 	
-	compute_image_int_low_level(A, Elt, v1, v2, verbose_level);
+	compute_image_int_low_level(Elt, v1, v2, verbose_level);
 	if (f_vv) {
 		cout << " v2=v1 * A=";
 		Int_vec_print(cout, v2, dimension);
@@ -112,7 +115,7 @@ long int action_by_representation::compute_image_int(
 }
 
 void action_by_representation::compute_image_int_low_level(
-		actions::action &A, int *Elt,
+		int *Elt,
 		int *input, int *output, int verbose_level)
 {
 	int *x = input;

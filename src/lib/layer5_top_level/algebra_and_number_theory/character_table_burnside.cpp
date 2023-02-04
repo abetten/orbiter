@@ -68,8 +68,9 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	cout << "Creating action by conjugation" << endl;
 
-	Aconj->induced_action_by_conjugation(S,
-		S, FALSE /* f_ownership */, FALSE /* f_basis */, verbose_level);
+	Aconj->Induced_action->create_induced_action_by_conjugation(S,
+		FALSE /* f_ownership */, FALSE /* f_basis */, NULL,
+		verbose_level);
 
 	cout << "Creating action by conjugation done" << endl;
 

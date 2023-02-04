@@ -1282,7 +1282,7 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph field:" << endl;
-		F->print();
+		F->Io->print();
 	}
 
 	Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);

@@ -31,7 +31,8 @@ nauty_interface_with_group::~nauty_interface_with_group()
 }
 
 actions::action *nauty_interface_with_group::create_automorphism_group_of_colored_graph_object(
-		graph_theory::colored_graph *CG, int verbose_level)
+		graph_theory::colored_graph *CG,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	actions::action *A;
@@ -60,7 +61,9 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_colore
 }
 
 actions::action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
-		graph_theory::colored_graph *CG, int *labeling, int verbose_level)
+		graph_theory::colored_graph *CG,
+		int *labeling,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	actions::action *A;
@@ -85,7 +88,10 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 }
 
 actions::action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph(
-	int n, int f_bitvec, data_structures::bitvector *Bitvec, int *Adj,
+	int n,
+	int f_bitvec,
+	data_structures::bitvector *Bitvec,
+	int *Adj,
 	int *vertex_colors,
 	int *labeling,
 	int verbose_level)
@@ -206,7 +212,8 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 }
 
 actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
-	int n, data_structures::bitvector *Bitvec,
+	int n,
+	data_structures::bitvector *Bitvec,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -232,7 +239,9 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 
 actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling(
 	int n,
-	int f_bitvector, data_structures::bitvector *Bitvec, int *Adj,
+	int f_bitvector,
+	data_structures::bitvector *Bitvec,
+	int *Adj,
 	int nb_parts, int *parts,
 	int *labeling,
 	int verbose_level)
@@ -1479,7 +1488,8 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 		geometry::object_with_canonical_form *OwCF,
 		actions::action *A_linear,
-	int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
+	int f_compute_canonical_form,
+	data_structures::bitvector *&Canonical_form,
 	data_structures::nauty_output *&NO,
 	int verbose_level)
 {

@@ -287,7 +287,7 @@ void tensor_classify::create_restricted_action_on_rank_one_tensors(
 		cout << "tensor_classify::create_restricted_action_on_rank_one_tensors "
 				"before A->restricted_action" << endl;
 	}
-	Ar = A->restricted_action(points, nb_points,
+	Ar = A->Induced_action->restricted_action(points, nb_points,
 			verbose_level);
 	Ar->f_is_linear = TRUE;
 	if (f_v) {
@@ -414,7 +414,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 		fp << "\\noindent The field ${\\mathbb F}_{"
 				<< W->q
 				<< "}$ :\\\\" << endl;
-		W->F->cheat_sheet(fp, verbose_level);
+		W->F->Io->cheat_sheet(fp, verbose_level);
 
 		if (f_v) {
 			cout << "tensor_classify::report before W->report" << endl;

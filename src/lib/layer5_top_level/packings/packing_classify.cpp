@@ -600,60 +600,6 @@ void packing_classify::lifting_prepare_function_new(
 
 
 
-void packing_classify::report_fixed_objects(int *Elt,
-		char *fname_latex, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int i, j, cnt;
-	//int v[4];
-	//file_io Fio;
-
-	if (f_v) {
-		cout << "packing_classify::report_fixed_objects" << endl;
-	}
-
-
-	{
-		ofstream fp(fname_latex);
-		char str[1000];
-		string title, author, extra_praeamble;
-
-		orbiter_kernel_system::latex_interface L;
-
-		snprintf(str, sizeof(str), "Fixed Objects");
-		title.assign(str);
-		author.assign("");
-
-		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
-			title, author /* const char *author */,
-			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
-			extra_praeamble /* extra_praeamble */);
-		//latex_head_easy(fp);
-
-	
-		actions::action_global AcGl;
-
-		AcGl.report_fixed_objects_in_P3(fp,
-				T->A,
-				P3,
-				Elt,
-				verbose_level);
-	
-
-		L.foot(fp);
-	}
-	orbiter_kernel_system::file_io Fio;
-
-	cout << "Written file " << fname_latex << " of size "
-			<< Fio.file_size(fname_latex) << endl;
-
-	
-	if (f_v) {
-		cout << "packing::report_fixed_objects done" << endl;
-	}
-}
 
 
 int packing_classify::test_if_orbit_is_partial_packing(

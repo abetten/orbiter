@@ -121,7 +121,8 @@ void stabilizer_chain_base_data::allocate_base_data(
 		}
 	}
 	else {
-		cout << "stabilizer_chain_base_data::allocate_base_data degree is too large" << endl;
+		cout << "stabilizer_chain_base_data::allocate_base_data "
+				"degree is too large" << endl;
 		orbit = NULL;
 		orbit_inv = NULL;
 	}
@@ -130,8 +131,13 @@ void stabilizer_chain_base_data::allocate_base_data(
 	}
 }
 
-void stabilizer_chain_base_data::reallocate_base(int new_base_point)
+void stabilizer_chain_base_data::reallocate_base(int new_base_point, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::reallocate_base" << endl;
+	}
 
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 		int i, j;
@@ -146,27 +152,48 @@ void stabilizer_chain_base_data::reallocate_base(int new_base_point)
 		old_orbit_inv = orbit_inv;
 		old_path = path;
 
+		if (f_v) {
+			cout << "stabilizer_chain_base_data::reallocate_base base_len = " << base_len << endl;
+		}
+		if (f_v) {
+			cout << "stabilizer_chain_base_data::reallocate_base step1" << endl;
+		}
 		base = NEW_lint(base_len + 1);
 		transversal_length = NEW_int(base_len + 1);
 		orbit = NEW_plint(base_len + 1);
 		orbit_inv = NEW_plint(base_len + 1);
 		path = NEW_int(base_len + 1);
+		if (f_v) {
+			cout << "stabilizer_chain_base_data::reallocate_base step2" << endl;
+		}
 		orbit[base_len] = NEW_lint(A->degree);
 		orbit_inv[base_len] = NEW_lint(A->degree);
+		if (f_v) {
+			cout << "stabilizer_chain_base_data::reallocate_base step3" << endl;
+		}
 		for (i = 0; i < base_len; i++) {
+			if (f_v) {
+				cout << "stabilizer_chain_base_data::reallocate_base i=" << i << endl;
+			}
 			base[i] = old_base[i];
 			transversal_length[i] = old_transversal_length[i];
 			orbit[i] = old_orbit[i];
 			orbit_inv[i] = old_orbit_inv[i];
 			path[i] = old_path[i];
-			}
+		}
 		base[base_len] = new_base_point;
 		transversal_length[base_len] = 1;
+		if (f_v) {
+			cout << "stabilizer_chain_base_data::reallocate_base step4" << endl;
+		}
 		for (j = 0; j < A->degree; j++) {
 			orbit[base_len][j] = -1;
 			orbit_inv[base_len][j] = -1;
 			}
 		base_len++;
+		if (f_v) {
+			cout << "stabilizer_chain_base_data::reallocate_base step5" << endl;
+		}
 		if (old_base)
 			FREE_lint(old_base);
 		if (old_transversal_length)
@@ -180,6 +207,9 @@ void stabilizer_chain_base_data::reallocate_base(int new_base_point)
 	}
 	else {
 		cout << "stabilizer_chain_base_data::reallocate_base degree is too large" << endl;
+	}
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::reallocate_base done" << endl;
 	}
 }
 
@@ -332,7 +362,8 @@ void stabilizer_chain_base_data::init_projective_matrix_group(
 			verbose_level - 1);
 	}
 	else {
-		cout << "stabilizer_chain_base_data::init_projective_matrix_group degree is too large" << endl;
+		cout << "stabilizer_chain_base_data::init_projective_matrix_group "
+				"degree is too large" << endl;
 		exit(1);
 	}
 	if (f_v) {

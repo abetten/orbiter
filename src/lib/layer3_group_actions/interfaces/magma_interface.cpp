@@ -32,9 +32,11 @@ magma_interface::~magma_interface()
 
 
 void magma_interface::centralizer_of_element(
-		actions::action *A, groups::sims *S,
+		actions::action *A,
+		groups::sims *S,
 		std::string &element_description,
-		std::string &label, int verbose_level)
+		std::string &label,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -167,9 +169,11 @@ void magma_interface::centralizer_of_element(
 
 
 void magma_interface::normalizer_of_cyclic_subgroup(
-		actions::action *A, groups::sims *S,
+		actions::action *A,
+		groups::sims *S,
 		std::string &element_description,
-		std::string &label, int verbose_level)
+		std::string &label,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -326,7 +330,8 @@ void magma_interface::normalizer_of_cyclic_subgroup(
 
 
 void magma_interface::find_subgroups(
-		actions::action *A, groups::sims *S,
+		actions::action *A,
+		groups::sims *S,
 		int subgroup_order,
 		std::string &label,
 		int &nb_subgroups,
@@ -377,7 +382,8 @@ void magma_interface::find_subgroups(
 
 void magma_interface::print_generators_MAGMA(
 		actions::action *A,
-		groups::strong_generators *SG, std::ostream &ost)
+		groups::strong_generators *SG,
+		std::ostream &ost)
 {
 	int i;
 
@@ -396,8 +402,10 @@ void magma_interface::print_generators_MAGMA(
 	}
 }
 
-void magma_interface::export_group(actions::action *A,
-		groups::strong_generators *SG, std::ostream &ost,
+void magma_interface::export_group(
+		actions::action *A,
+		groups::strong_generators *SG,
+		std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -519,8 +527,10 @@ void magma_interface::export_group(actions::action *A,
 //>                               [0,1,0,0, 1,0,0,0, 0,0,1,0, 0,0,1,1 ] >;
 
 void magma_interface::export_permutation_group_to_magma(
-		std::string &fname, actions::action *A2,
-		groups::strong_generators *SG, int verbose_level)
+		std::string &fname,
+		actions::action *A2,
+		groups::strong_generators *SG,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -1426,7 +1436,8 @@ void magma_interface::find_subgroups_using_MAGMA(
 void magma_interface::read_subgroups_magma(
 		actions::action *A,
 		std::string &fname_output,
-		groups::sims *override_Sims, int subgroup_order,
+		groups::sims *override_Sims,
+		int subgroup_order,
 		int &nb_subgroups,
 		groups::strong_generators *&H_gens,
 		groups::strong_generators *&N_gens,
@@ -1561,8 +1572,10 @@ void magma_interface::read_subgroups_magma(
 void magma_interface::find_subgroups_using_MAGMA2(
 		actions::action *A,
 		std::string &prefix,
-		std::string &fname_magma, std::string &fname_output,
-		groups::sims *override_Sims, int subgroup_order,
+		std::string &fname_magma,
+		std::string &fname_output,
+		groups::sims *override_Sims,
+		int subgroup_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1748,7 +1761,8 @@ void magma_interface::conjugacy_classes_and_normalizers(
 void magma_interface::report_conjugacy_classes_and_normalizers(
 		actions::action *A,
 		std::ostream &ost,
-		groups::sims *override_Sims, int verbose_level)
+		groups::sims *override_Sims,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string prefix;
@@ -1800,8 +1814,10 @@ void magma_interface::report_conjugacy_classes_and_normalizers(
 
 void magma_interface::read_conjugacy_classes_and_normalizers(
 		actions::action *A,
-		std::string &fname, groups::sims *override_sims,
-		std::string &label_latex, int verbose_level)
+		std::string &fname,
+		groups::sims *override_sims,
+		std::string &label_latex,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -2100,7 +2116,8 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
 		actions::action *A,
 		std::ostream &ost,
-		std::string &fname, groups::sims *override_Sims,
+		std::string &fname,
+		groups::sims *override_Sims,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2303,7 +2320,8 @@ void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
 void magma_interface::write_as_magma_permutation_group(
 		groups::sims *S,
 		std::string &fname_base,
-		data_structures_groups::vector_ge *gens, int verbose_level)
+		data_structures_groups::vector_ge *gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, k, n, l, h;
@@ -2436,7 +2454,8 @@ void magma_interface::export_linear_code(
 	}
 }
 
-void magma_interface::read_permutation_group(std::string &fname,
+void magma_interface::read_permutation_group(
+		std::string &fname,
 	int degree, int *&gens, int &nb_gens, int &go,
 	int verbose_level)
 {
@@ -2459,7 +2478,8 @@ void magma_interface::read_permutation_group(std::string &fname,
 	}
 }
 
-void magma_interface::run_magma_file(std::string &fname, int verbose_level)
+void magma_interface::run_magma_file(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string cmd;

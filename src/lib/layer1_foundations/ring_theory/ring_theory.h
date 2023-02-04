@@ -239,7 +239,8 @@ public:
 	int test_weierstrass_form(int rk,
 		int &a1, int &a2, int &a3, int &a4, int &a6,
 		int verbose_level);
-	void explore_vanishing_ideal(long int *Pts,
+	void explore_vanishing_ideal(
+			long int *Pts,
 			int nb_pts, int verbose_level);
 	void vanishing_ideal(
 			long int *Pts, int nb_pts, int &r, int *Kernel,

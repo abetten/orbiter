@@ -878,7 +878,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			Lint_matrix_print(Packings_table, nb_solutions, PWF->PW->P->size_of_packing);
 		}
 
-		Ar_On_Packings = PWF->PW->A_on_reduced_spreads->create_induced_action_on_sets(nb_solutions,
+		Ar_On_Packings = PWF->PW->A_on_reduced_spreads->Induced_action->create_induced_action_on_sets(
+				nb_solutions,
 				PWF->PW->P->size_of_packing, Packings_table,
 				verbose_level);
 

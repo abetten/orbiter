@@ -387,7 +387,7 @@ void BLT_set_create::init(
 			Blt_set_domain,
 			set,
 			Sg,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "BLT_set_create::init after BA->init_set" << endl;
 	}

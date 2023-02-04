@@ -185,7 +185,7 @@ void grassmann::print_set_tex(std::ostream &ost,
 		//ost << "\\right]" << endl;
 		//latex_matrix(ost, Mtx);
 
-		F->print_matrix_latex(ost, Mtx, k, n);
+		F->Io->print_matrix_latex(ost, Mtx, k, n);
 
 #if 0
 		ost << "\\qquad" << endl;
@@ -234,19 +234,19 @@ void grassmann::print_set_tex_with_perp(
 		//ost << "\\right]" << endl;
 		//latex_matrix(ost, Mtx);
 
-		F->print_matrix_latex(ost, Mtx, k, n);
+		F->Io->print_matrix_latex(ost, Mtx, k, n);
 
 		ost << "\\qquad" << endl;
 
-		F->print_matrix_numerical_latex(ost, Mtx, k, n);
+		F->Io->print_matrix_numerical_latex(ost, Mtx, k, n);
 
 		ost << "\\qquad" << endl;
 
-		F->print_matrix_latex(ost, Mtx + k * n, n - k, n);
+		F->Io->print_matrix_latex(ost, Mtx + k * n, n - k, n);
 
 		ost << "\\qquad" << endl;
 
-		F->print_matrix_numerical_latex(ost, Mtx + k * n, n - k, n);
+		F->Io->print_matrix_numerical_latex(ost, Mtx + k * n, n - k, n);
 
 		ost << "$$" << endl;
 	}
@@ -1230,14 +1230,14 @@ void grassmann::compute_dual_spread(
 void grassmann::latex_matrix(std::ostream &ost, int *p)
 {
 
-	F->print_matrix_latex(ost, p, k, n);
+	F->Io->print_matrix_latex(ost, p, k, n);
 
 }
 
 void grassmann::latex_matrix_numerical(std::ostream &ost, int *p)
 {
 
-	F->print_matrix_numerical_latex(ost, p, k, n);
+	F->Io->print_matrix_numerical_latex(ost, p, k, n);
 
 }
 
@@ -1811,7 +1811,7 @@ void grassmann::Pluecker_coordinates(int line_rk, int *v6, int verbose_level)
 	unrank_lint(line_rk, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << setw(5) << line_rk << " :" << endl;
-		F->latex_matrix(cout, f_elements_exponential,
+		F->Io->latex_matrix(cout, f_elements_exponential,
 			symbol_for_print, M, 2, 4);
 		cout << endl;
 	}
@@ -2034,7 +2034,7 @@ void grassmann::klein_correspondence(
 		unrank_lint(a, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << setw(5) << h << " : " << setw(5) << a << " :" << endl;
-			P3->F->latex_matrix(cout, f_elements_exponential,
+			P3->F->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, M, 2, 4);
 			cout << endl;
 		}
@@ -2109,7 +2109,7 @@ void grassmann::klein_correspondence_special_model(
 		unrank_lint(h, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << setw(5) << h << " :" << endl;
-			F->latex_matrix(cout, f_elements_exponential,
+			F->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, M, 2, 4);
 			cout << endl;
 		}

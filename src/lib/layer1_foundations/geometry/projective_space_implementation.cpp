@@ -200,7 +200,7 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 			cout << "point " << i << " : ";
 			Int_vec_print(cout, v, n + 1);
 			cout << " = ";
-			P->F->int_vec_print_field_elements(cout, v, n + 1);
+			P->F->Io->int_vec_print_field_elements(cout, v, n + 1);
 
 			P->F->Projective_space_basic->PG_element_normalize_from_front(
 					v, 1, n + 1);
@@ -209,7 +209,7 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 
 
 			cout << " = ";
-			P->F->int_vec_print_field_elements(cout, v, n + 1);
+			P->F->Io->int_vec_print_field_elements(cout, v, n + 1);
 
 
 			cout << endl;

@@ -1845,7 +1845,7 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 		ost << "\\bP(";
 		//int_vec_print_fully(ost, v, 4);
 		for (j = 0; j < 4; j++) {
-			SO->F->print_element(ost, v[j]);
+			SO->F->Io->print_element(ost, v[j]);
 			if (j < 4 - 1) {
 				ost << ", ";
 			}
@@ -2063,7 +2063,7 @@ void surface_object_properties::print_singular_points(std::ostream &ost)
 		ost << i << " :  $P_{" << p << "}=\\bP(";
 		//int_vec_print_fully(ost, v, 4);
 		for (j = 0; j < 4; j++) {
-			SO->F->print_element(ost, v[j]);
+			SO->F->Io->print_element(ost, v[j]);
 			if (j < 4 - 1) {
 				ost << ", ";
 			}

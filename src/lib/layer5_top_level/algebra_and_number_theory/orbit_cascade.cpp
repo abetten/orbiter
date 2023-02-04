@@ -193,7 +193,7 @@ void orbit_cascade::init(
 
 	for (i = 0; i < number_primary_orbits; i++) {
 
-		A_restricted[i] = G->A->restricted_action(
+		A_restricted[i] = G->A->Induced_action->restricted_action(
 				Reps_and_complements + i * N + k, N - k,
 				0 /*verbose_level*/);
 	}

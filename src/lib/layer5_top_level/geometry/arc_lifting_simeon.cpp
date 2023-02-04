@@ -357,8 +357,8 @@ void arc_lifting_simeon::do_covering_problem(
 			"the set of c2 points in at least 2 points" << endl;
 
 #if 1
-	A2 = A->induced_action_on_grassmannian(2, verbose_level);
-	A3 = A2->restricted_action(filtered_lines,
+	A2 = A->Induced_action->induced_action_on_grassmannian(2, verbose_level);
+	A3 = A2->Induced_action->restricted_action(filtered_lines,
 			nb_filtered_lines, verbose_level);
 
 

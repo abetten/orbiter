@@ -651,7 +651,7 @@ void packing_was_fixpoints::report(int verbose_level)
 		fp << "\\noindent The field ${\\mathbb F}_{"
 				<< PW->P->q
 				<< "}$ :\\\\" << endl;
-		PW->P->F->cheat_sheet(fp, verbose_level - 5);
+		PW->P->F->Io->cheat_sheet(fp, verbose_level - 5);
 
 #if 0
 		fp << "\\section{The space PG$(3, " << q << ")$}" << endl;

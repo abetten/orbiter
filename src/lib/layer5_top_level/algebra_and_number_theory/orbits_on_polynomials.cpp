@@ -103,8 +103,8 @@ void orbits_on_polynomials::init(
 		cout << "orbits_on_polynomials::init after P->projective_space_init" << endl;
 	}
 
-	A2 = NEW_OBJECT(actions::action);
-	A2->induced_action_on_homogeneous_polynomials(A,
+	//A2 = NEW_OBJECT(actions::action);
+	A2 = A->Induced_action->induced_action_on_homogeneous_polynomials(
 		HPD,
 		FALSE /* f_induce_action */, NULL,
 		verbose_level - 2);
@@ -581,7 +581,7 @@ void orbits_on_polynomials::report_detailed_list(
 			cout << endl;
 			P->Reporting->print_set_numerical(cout, Pts, nb_pts);
 
-			F->display_table_of_projective_points(
+			F->Io->display_table_of_projective_points(
 					ost, Pts, nb_pts, n);
 
 			P->line_intersection_type(Pts, nb_pts,

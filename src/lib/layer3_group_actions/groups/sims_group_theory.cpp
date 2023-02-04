@@ -20,7 +20,8 @@ namespace layer3_group_actions {
 namespace groups {
 
 
-void sims::random_element(int *elt, int verbose_level)
+void sims::random_element(
+		int *elt, int verbose_level)
 // compute a random element among the group
 // elements represented by the chain
 // (chooses random cosets along the stabilizer chain)
@@ -52,7 +53,8 @@ void sims::random_element(int *elt, int verbose_level)
 		}
 }
 
-void sims::random_element_of_order(int *elt,
+void sims::random_element_of_order(
+		int *elt,
 		int order, int verbose_level)
 {
 	int f_v = (verbose_level >=1);
@@ -111,14 +113,16 @@ void sims::random_elements_of_order(
 		}
 }
 
-void sims::transitive_extension(schreier &O,
+void sims::transitive_extension(
+		schreier &O,
 		data_structures_groups::vector_ge &SG,
 		int *tl, int verbose_level)
 {
 	transitive_extension_tolerant(O, SG, tl, FALSE, verbose_level);
 }
 
-int sims::transitive_extension_tolerant(schreier &O,
+int sims::transitive_extension_tolerant(
+		schreier &O,
 		data_structures_groups::vector_ge &SG,
 		int *tl,
 	int f_tolerant, int verbose_level)
@@ -714,7 +718,8 @@ void sims::point_stabilizer_stabchain_with_action(
 	}
 }
 
-void sims::point_stabilizer(data_structures_groups::vector_ge &SG,
+void sims::point_stabilizer(
+		data_structures_groups::vector_ge &SG,
 		int *tl, int pt, int verbose_level)
 // computes strong generating set for the stabilizer of point pt
 {
@@ -733,7 +738,8 @@ void sims::point_stabilizer(data_structures_groups::vector_ge &SG,
 	}
 }
 
-void sims::point_stabilizer_with_action(actions::action *A2,
+void sims::point_stabilizer_with_action(
+		actions::action *A2,
 		data_structures_groups::vector_ge &SG,
 		int *tl, int pt,
 		int verbose_level)
@@ -773,7 +779,8 @@ void sims::point_stabilizer_with_action(actions::action *A2,
 	}
 }
 
-void sims::conjugate(actions::action *A,
+void sims::conjugate(
+		actions::action *A,
 	sims *old_G, int *Elt,
 	int f_overshooting_OK,
 	int verbose_level)
@@ -969,7 +976,8 @@ int sims::test_if_in_set_stabilizer(actions::action *A,
 	return ret;
 }
 
-int sims::test_if_subgroup(sims *old_G, int verbose_level)
+int sims::test_if_subgroup(
+		sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1115,7 +1123,8 @@ void sims::regular_representation(int *Elt,
 	FREE_int(Elt2);
 }
 
-void sims::element_ranks_subgroup(sims *subgroup,
+void sims::element_ranks_subgroup(
+		sims *subgroup,
 		int *element_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1139,7 +1148,8 @@ void sims::element_ranks_subgroup(sims *subgroup,
 	FREE_int(Elt1);
 }
 
-void sims::center(data_structures_groups::vector_ge &gens,
+void sims::center(
+		data_structures_groups::vector_ge &gens,
 		int *center_element_ranks, int &nb_elements,
 		int verbose_level)
 {
@@ -1197,7 +1207,8 @@ void sims::center(data_structures_groups::vector_ge &gens,
 		}
 }
 
-void sims::all_cosets(int *subset, int size,
+void sims::all_cosets(
+		int *subset, int size,
 		long int *all_cosets, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1261,7 +1272,8 @@ void sims::all_cosets(int *subset, int size,
 	FREE_int(f_taken);
 }
 
-void sims::find_standard_generators_int(int ord_a, int ord_b,
+void sims::find_standard_generators_int(
+		int ord_a, int ord_b,
 		int ord_ab, int &a, int &b, int &nb_trials,
 		int verbose_level)
 {
@@ -1373,7 +1385,8 @@ long int sims::find_element_of_given_order_int(int ord,
 	return a;
 }
 
-int sims::find_element_of_given_order_int(int *Elt,
+int sims::find_element_of_given_order_int(
+		int *Elt,
 		int ord, int &nb_trials, int max_trials,
 		int verbose_level)
 {
@@ -1505,7 +1518,8 @@ void sims::evaluate_word_int(int word_len,
 	FREE_int(Elt2);
 }
 
-void sims::sylow_subgroup(int p, sims *P, int verbose_level)
+void sims::sylow_subgroup(
+		int p, sims *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1, *Elt2;
@@ -1521,7 +1535,8 @@ void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 
 	group_order(go);
 	if (f_v) {
-		cout << "sims::sylow_subgroup the group has order "
+		cout << "sims::sylow_subgroup "
+				"the group has order "
 				<< go << endl;
 	}
 	e = D.multiplicity_of_p(go, go1, p);
@@ -1553,19 +1568,21 @@ void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 			exit(1);
 		}
 
-		find_element_of_prime_power_order(p, Elt1, e1,
+		find_element_of_prime_power_order(
+				p, Elt1, e1,
 				nb_trials, 0 /* verbose_level */);
 
 		for (i = 0; i < e1; i++) {
 			if (P->is_normalizing(Elt1,
 					0 /* verbose_level */)) {
+
 				if (P->strip_and_add(Elt1, Elt2 /* residue */,
 						0 /* verbose_level */)) {
 					P->group_order(go_P1);
 					if (f_v) {
 						cout << "sims::sylow_subgroup "
-								"increased the order of the "
-								"subgroup to " << go_P1 << endl;
+								"the order of the "
+								"subgroup has increased to " << go_P1 << endl;
 					}
 				}
 				break;
@@ -1586,7 +1603,8 @@ void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 	}
 }
 
-int sims::is_normalizing(int *Elt, int verbose_level)
+int sims::is_normalizing(
+		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = FALSE;
@@ -1705,7 +1723,8 @@ void sims::create_Cayley_graph(
 	}
 }
 
-void sims::create_group_table(int *&Table, long int &n,
+void sims::create_group_table(
+		int *&Table, long int &n,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1776,18 +1795,26 @@ void sims::compute_conjugacy_classes(
 	if (f_v) {
 		cout << "sims::compute_conjugacy_classes" << endl;
 	}
-	Aconj = NEW_OBJECT(actions::action);
+	//Aconj = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "sims::compute_conjugacy_classes "
 				"before Aconj->induced_action_by_conjugation" << endl;
 	}
 
-	Aconj->induced_action_by_conjugation(this,
+	Aconj = A->Induced_action->create_induced_action_by_conjugation(
 		this,
 		FALSE /* f_ownership */,
-		FALSE /* f_basis */,
+		FALSE /* f_basis */, NULL,
 		verbose_level - 1);
+
+#if 0
+	action *induced_action::create_induced_action_by_conjugation(
+			groups::sims *Base_group, int f_ownership,
+			int f_basis, groups::sims *old_G,
+			int verbose_level)
+#endif
+
 
 	if (f_v) {
 		cout << "sims::compute_conjugacy_classes "
@@ -1843,7 +1870,8 @@ void sims::compute_conjugacy_classes(
 
 }
 
-void sims::compute_all_powers(int elt_idx, int n, int *power_elt,
+void sims::compute_all_powers(
+		int elt_idx, int n, int *power_elt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1880,7 +1908,8 @@ void sims::compute_all_powers(int elt_idx, int n, int *power_elt,
 	}
 }
 
-long int sims::mult_by_rank(long int rk_a, long int rk_b, int verbose_level)
+long int sims::mult_by_rank(
+		long int rk_a, long int rk_b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int rk_c;
@@ -1895,7 +1924,8 @@ long int sims::mult_by_rank(long int rk_a, long int rk_b, int verbose_level)
 	return rk_c;
 }
 
-long int sims::mult_by_rank(long int rk_a, long int rk_b)
+long int sims::mult_by_rank(
+		long int rk_a, long int rk_b)
 {
 	int rk_c;
 
@@ -1903,7 +1933,8 @@ long int sims::mult_by_rank(long int rk_a, long int rk_b)
 	return rk_c;
 }
 
-long int sims::invert_by_rank(long int rk_a, int verbose_level)
+long int sims::invert_by_rank(
+		long int rk_a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int rk_b;
@@ -1937,7 +1968,8 @@ long int sims::conjugate_by_rank(
 	return rk_c;
 }
 
-long int sims::conjugate_by_rank_b_bv_given(long int rk_a,
+long int sims::conjugate_by_rank_b_bv_given(
+		long int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level)
 // comutes b^{-1} * a * b
 {
@@ -2148,7 +2180,8 @@ void sims::dimino(
 		}
 }
 
-void sims::Cayley_graph(int *&Adj, int &sz,
+void sims::Cayley_graph(
+		int *&Adj, int &sz,
 		data_structures_groups::vector_ge *gens_S,
 	int verbose_level)
 {

@@ -73,7 +73,7 @@ void any_group::init_linear_group(
 		cout << "any_group::init_linear_group "
 				"before Subgroup_gens->create_sims" << endl;
 	}
-	Subgroup_sims = Subgroup_gens->create_sims(0/*verbose_level*/);
+	Subgroup_sims = Subgroup_gens->create_sims(verbose_level - 2);
 	if (f_v) {
 		cout << "any_group::init_linear_group "
 				"after Subgroup_gens->create_sims" << endl;
@@ -1248,12 +1248,32 @@ void any_group::random_element(
 	A1->code_for_make_element(data, Elt);
 
 	if (f_v) {
+
 		cout << "Element :" << endl;
 		A1->element_print(Elt, cout);
 		cout << endl;
+
 		cout << "coded: ";
 		Int_vec_print(cout, data, A1->make_element_size);
 		cout << endl;
+
+		cout << "Element as permutation:" << endl;
+
+
+		A1->element_print_as_permutation(Elt, cout);
+		cout << endl;
+
+		int *perm;
+
+		perm = NEW_int(A1->degree);
+
+		A1->element_as_permutation(
+				Elt,
+				perm, 0 /*verbose_level*/);
+		cout << "In list notation:" << endl;
+		Int_vec_print(cout, perm, A1->degree);
+		cout << endl;
+
 	}
 
 	ring_theory::longinteger_object a;
@@ -1487,9 +1507,16 @@ void any_group::conjugacy_class_of(
 
 	actions::action *A_conj;
 
-	A_conj = A->create_induced_action_by_conjugation(
+	if (f_v) {
+		cout << "before A->Induced_action->create_induced_action_by_conjugation" << endl;
+	}
+	A_conj = A->Induced_action->create_induced_action_by_conjugation(
 			Subgroup_sims /*Base_group*/, FALSE /* f_ownership */,
+			FALSE /* f_basis */, NULL /* old_G */,
 			verbose_level);
+	if (f_v) {
+		cout << "after A->Induced_action->create_induced_action_by_conjugation" << endl;
+	}
 
 
 	if (f_v) {
@@ -1652,7 +1679,7 @@ void any_group::orbits_on_set_system_from_file(
 	if (f_v) {
 		cout << "creating action on sets:" << endl;
 	}
-	A_on_sets = A->create_induced_action_on_sets(m /* nb_sets */,
+	A_on_sets = A->Induced_action->create_induced_action_on_sets(m /* nb_sets */,
 			set_size, Table,
 			verbose_level);
 

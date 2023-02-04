@@ -43,7 +43,8 @@ subgroup::~subgroup()
 		}
 }
 
-void subgroup::init_from_sims(sims *S, sims *Sub,
+void subgroup::init_from_sims(
+		sims *S, sims *Sub,
 		strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -76,7 +77,8 @@ void subgroup::init_from_sims(sims *S, sims *Sub,
 	}
 }
 
-void subgroup::init(int *Elements,
+void subgroup::init(
+		int *Elements,
 		int group_order, int *gens, int nb_gens)
 {
 	subgroup::Elements = NEW_int(group_order);

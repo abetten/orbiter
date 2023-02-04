@@ -110,13 +110,13 @@ void boolean_function_classify::init_group(
 
 	if (f_v) {
 		cout << "boolean_function_classify::init_group "
-				"before A->restricted_action" << endl;
+				"before A->Induced_action->restricted_action" << endl;
 	}
-	A_affine = A->restricted_action(BF->affine_points, BF->Q,
+	A_affine = A->Induced_action->restricted_action(BF->affine_points, BF->Q,
 			verbose_level);
 	if (f_v) {
 		cout << "boolean_function_classify::init_group "
-				"after A->restricted_action" << endl;
+				"after A->Induced_action->restricted_action" << endl;
 	}
 
 	if (f_v) {

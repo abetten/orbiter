@@ -506,7 +506,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 	{
 #if 1
 		induced_actions::action_on_factor_space *AF;
-		actions::action A_factor_space;
+		actions::action *A_factor_space;
 		poset_orbit_node *Op = gen->get_node(prev);
 
 		AF = NEW_OBJECT(induced_actions::action_on_factor_space);
@@ -562,7 +562,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 			}
 			Op->setup_factor_space_action(
 				gen,
-				*AF,
+				AF,
 				A_factor_space,
 				size - 1,
 				TRUE /*f_compute_tables*/,
@@ -613,7 +613,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 		}
 #endif
 		G.point_stabilizer_with_action(
-				&A_factor_space,
+				A_factor_space,
 				H,
 				projected_pt,
 				verbose_level - 4);
@@ -629,6 +629,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 					"in_subspace_setting "
 					"before freeing A_factor_space" << endl;
 		}
+		FREE_OBJECT(A_factor_space);
 	}
 	if (f_v) {
 		cout << "poset_orbit_node::compute_point_stabilizer_"
@@ -692,19 +693,19 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 					"setting up restricted action from the previous "
 					"schreier vector:" << endl;
 		}
-		actions::action AR;
 
 
 		if (Op->nb_strong_generators) {
 			// if G is non-trivial
 
+			actions::action *AR;
+
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
-						"calling AR.induced_action_by_restriction_on_orbit_with_schreier_vector" << endl;
+						"before gen->get_A2()->Induced_action->induced_action_by_restriction_on_orbit_with_schreier_vector" << endl;
 			}
-			AR.induced_action_by_restriction_on_orbit_with_schreier_vector(
-				*gen->get_A2(),
+			AR = gen->get_A2()->Induced_action->induced_action_by_restriction_on_orbit_with_schreier_vector(
 				FALSE /* f_induce_action */,
 				NULL /* old_G */,
 				Op->Schreier_vector /* Op->sv*/,
@@ -712,16 +713,24 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 				0 /*verbose_level - 1*/);
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
-				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting created action of degree "
-						<< AR.degree << endl;
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+						"after gen->get_A2()->Induced_action->induced_action_by_restriction_on_orbit_with_schreier_vector" << endl;
 			}
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting created action of degree "
+						<< AR->degree << endl;
+			}
+			if (f_v) {
+				gen->print_level_extension_info(
+						size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting calling "
 						"G.point_stabilizer_with_action"
 						<< endl;
 			}
-			G.point_stabilizer_with_action(&AR, H, AR.G.ABR->idx_of_root_node /* 0 */ /*pt */, 0 /*verbose_level - 3*/);
+			G.point_stabilizer_with_action(
+					AR, H, AR->G.ABR->idx_of_root_node /* 0 */ /*pt */,
+					0 /*verbose_level - 3*/);
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting after "
@@ -746,6 +755,15 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 						"G.point_stabilizer_with_action done"
 						<< endl;
 			}
+			if (f_v) {
+				cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+						"before FREE_OBJECT(AR)" << endl;
+			}
+			FREE_OBJECT(AR);
+			if (f_v) {
+				cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+						"after FREE_OBJECT(AR)" << endl;
+			}
 		}
 		else {
 			// do nothing, the stabilizer is trivial (since G is trivial)
@@ -768,7 +786,8 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 	else {
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			cout << " previous schreier vector not available. Before G.point_stabilizer_with_action" << endl;
+			cout << " previous schreier vector not available. "
+					"Before G.point_stabilizer_with_action" << endl;
 		}
 		G.point_stabilizer_with_action(gen->get_A2(), H, pt, 0);
 	}

@@ -183,15 +183,17 @@ static long int induced_action_element_image_of(action &A,
 					"action_by_representation_t" << endl;
 		}
 		induced_actions::action_by_representation *Rep = A.G.Rep;
-		action *sub;
+		//action *sub;
 		
-		sub = A.subaction;
+		//sub = A.subaction;
+#if 0
 		if (sub == NULL) {
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
 		}
-		b = Rep->compute_image_int(*sub, Elt, a, verbose_level - 1);
+#endif
+		b = Rep->compute_image_int(Elt, a, verbose_level - 1);
 	}
 	else if (A.type_G == action_on_determinant_t) {
 		if (f_v) {
@@ -643,6 +645,7 @@ static void induced_action_element_image_of_low_level(action &A,
 		}
 		induced_actions::action_by_representation *Rep = A.G.Rep;
 
+#if 0
 		action *sub;
 		
 		sub = A.subaction;
@@ -651,7 +654,8 @@ static void induced_action_element_image_of_low_level(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		Rep->compute_image_int_low_level(*sub,
+#endif
+		Rep->compute_image_int_low_level(
 				Elt, input, output, verbose_level - 1);
 	}
 	else if (A.type_G == action_on_determinant_t) {

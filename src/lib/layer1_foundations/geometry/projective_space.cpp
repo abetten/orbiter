@@ -1369,7 +1369,8 @@ void projective_space::line_intersection_type_basic(
 
 void projective_space::line_intersection_type_basic_given_a_set_of_lines(
 		long int *lines_by_rank, int nb_lines,
-	long int *set, int set_size, int *type, int verbose_level)
+	long int *set, int set_size,
+	int *type, int verbose_level)
 // type[nb_lines]
 {
 	int f_v = (verbose_level >= 1);

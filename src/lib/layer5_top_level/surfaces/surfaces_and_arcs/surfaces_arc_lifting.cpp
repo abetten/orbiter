@@ -935,7 +935,7 @@ void surfaces_arc_lifting::report2(std::ostream &ost,
 		The_arc->print_set_tex(ost);
 		ost << "$$" << endl;
 
-		F->display_table_of_projective_points(ost,
+		F->Io->display_table_of_projective_points(ost,
 			The_arc->data, 6, 3);
 
 

@@ -31,7 +31,7 @@ l3_interface_gap::~l3_interface_gap()
 
 void l3_interface_gap::canonical_image_GAP(
 		groups::strong_generators *SG,
-		std::string &input_set_text,
+		long int *set, int sz,
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -56,23 +56,25 @@ void l3_interface_gap::canonical_image_GAP(
 	}
 	ost << "]);" << endl;
 
-	long int *set;
-	int sz;
 	data_structures::string_tools ST;
 	std::string output;
 
+	long int *set2;
 
-	Get_lint_vector_from_label(input_set_text, set, sz, 0 /* verbose_level */);
+	set2 = NEW_lint(sz);
 
 	// add one because GAP permutation domains are 1-based:
 	for (i = 0; i < sz; i++) {
-		set[i]++;
+		set2[i] = set[i] + 1;
 	}
 
-	ST.create_comma_separated_list(output, set, sz);
+	ST.create_comma_separated_list(output, set2, sz);
 
 	ost << "LoadPackage(\"images\");" << endl;
 	ost << "MinimalImage(G, [" << output << "], OnSets);" << endl;
+
+	FREE_lint(set2);
+
 	if (f_v) {
 		cout << "l3_interface_gap::canonical_image_GAP done" << endl;
 	}

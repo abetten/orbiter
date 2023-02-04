@@ -227,13 +227,14 @@ void modified_group_create::create_restricted_action(
 
 	if (f_v) {
 		cout << "modified_group_create::create_restricted_action "
-				"before A_previous->restricted_action" << endl;
+				"before A_previous->Induced_action->restricted_action" << endl;
 	}
-	A_modified = A_previous->restricted_action(points, nb_points,
+	A_modified = A_previous->Induced_action->restricted_action(
+			points, nb_points,
 			verbose_level);
 	if (f_v) {
 		cout << "modified_group_create::create_restricted_action "
-				"after A_previous->restricted_action" << endl;
+				"after A_previous->Induced_action->restricted_action" << endl;
 	}
 	A_modified->f_is_linear = A_previous->f_is_linear;
 
@@ -343,20 +344,20 @@ void modified_group_create::create_action_on_k_subspaces(
 	}
 
 
-	A_modified = NEW_OBJECT(actions::action);
+	//A_modified = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_k_subspaces "
-				"before A_modified->induced_action_on_grassmannian" << endl;
+				"before induced_action_on_grassmannian_preloaded" << endl;
 	}
 
-	A_modified->induced_action_on_grassmannian(A_previous, AonG,
+	A_modified = A_previous->Induced_action->induced_action_on_grassmannian_preloaded(AonG,
 		FALSE /* f_induce_action */, NULL /*sims *old_G */,
 		verbose_level - 2);
 
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_k_subspaces "
-				"after A_modified->induced_action_on_grassmannian" << endl;
+				"after induced_action_on_grassmannian_preloaded" << endl;
 	}
 
 
@@ -426,22 +427,22 @@ void modified_group_create::create_action_on_k_subsets(
 
 
 
-	A_modified = NEW_OBJECT(actions::action);
+	//A_modified = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_k_subsets "
-				"before A_modified->induced_action_on_k_subsets" << endl;
+				"before A_previous->Induced_action->induced_action_on_k_subsets" << endl;
 	}
 
 
-	A_modified->induced_action_on_k_subsets(
-			*A_previous, description->on_k_subsets_k,
+	A_modified = A_previous->Induced_action->induced_action_on_k_subsets(
+			description->on_k_subsets_k,
 			verbose_level);
 
 
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_k_subsets "
-				"after A_modified->induced_action_on_k_subsets" << endl;
+				"after A_previous->Induced_action->induced_action_on_k_subsets" << endl;
 	}
 
 
@@ -515,12 +516,12 @@ void modified_group_create::create_action_on_wedge_product(
 
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_wedge_product "
-				"before A_previous->induced_action_on_wedge_product" << endl;
+				"before A_previous->Induced_action->induced_action_on_wedge_product" << endl;
 	}
-	A_modified = A_previous->induced_action_on_wedge_product(verbose_level);
+	A_modified = A_previous->Induced_action->induced_action_on_wedge_product(verbose_level);
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_wedge_product "
-				"after A_previous->induced_action_on_wedge_product" << endl;
+				"after A_previous->Induced_action->induced_action_on_wedge_product" << endl;
 	}
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_wedge_product "
@@ -607,7 +608,7 @@ void modified_group_create::create_special_subgroup(
 	Strong_gens = NEW_OBJECT(groups::strong_generators);
 
 	{
-		actions::action A_on_det;
+		actions::action *A_on_det;
 		ring_theory::longinteger_object go;
 
 
@@ -626,22 +627,24 @@ void modified_group_create::create_special_subgroup(
 
 		if (f_v) {
 			cout << "modified_group_create::create_special_subgroup "
-					"before A_on_det.induced_action_on_determinant" << endl;
+					"before Sims->A->Induced_action->induced_action_on_determinant" << endl;
 		}
-		A_on_det.induced_action_on_determinant(Sims, verbose_level);
+		A_on_det = Sims->A->Induced_action->induced_action_on_determinant(
+				Sims, verbose_level);
 		if (f_v) {
 			cout << "modified_group_create::create_special_subgroup "
-					"after A_on_det.induced_action_on_determinant" << endl;
+					"after Sims->A->Induced_action->induced_action_on_determinant" << endl;
 		}
-		A_on_det.Kernel->group_order(go);
+		A_on_det->Kernel->group_order(go);
 		if (f_v) {
 			cout << "modified_group_create::create_special_subgroup "
 					"kernel has order " << go << endl;
 		}
 
 
-		Strong_gens->init_from_sims(A_on_det.Kernel, verbose_level);
+		Strong_gens->init_from_sims(A_on_det->Kernel, verbose_level);
 
+		FREE_OBJECT(A_on_det);
 		FREE_OBJECT(Sims);
 	}
 

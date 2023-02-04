@@ -410,6 +410,7 @@ namespace field_theory {
 	class finite_field_activity_description;
 	class finite_field_activity;
 	class finite_field_description;
+	class finite_field_io;
 	class finite_field;
 	class finite_field_implementation_by_tables;
 	class finite_field_implementation_wo_tables;

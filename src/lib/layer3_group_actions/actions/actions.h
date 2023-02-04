@@ -179,6 +179,8 @@ public:
 
 	known_groups *Known_groups;
 
+	induced_action *Induced_action;
+
 
 	action_pointer_table *ptr;
 
@@ -438,182 +440,17 @@ public:
 
 	
 	// action_induce.cpp
-
-	action *induced_action_on_interior_direct_product(
-			int nb_rows,
+	int least_moved_point_at_level(int level,
+		int verbose_level);
+	void lex_least_base_in_place(
+			groups::sims *old_Sims,
 			int verbose_level);
-	action *induced_action_on_set_partitions(
-			int partition_class_size,
-			int verbose_level);
-
-	/** Create the induced action on lines in PG(n-1,q)
-	 * using an action_on_grassmannian object */
-	void init_action_on_lines(
-			action *A, field_theory::finite_field *F,
-		int n, int verbose_level);
-
-	void induced_action_by_representation_on_conic(
-			action *A_old,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_cosets(
-			induced_actions::action_on_cosets *A_on_cosets,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_factor_space(
-			action *A_old,
-			induced_actions::action_on_factor_space *AF,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	action *induced_action_on_grassmannian(
-			int k,
-		int verbose_level);
-	void induced_action_on_grassmannian(
-			action *A_old,
-			induced_actions::action_on_grassmannian *AG,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_spread_set(
-			action *A_old,
-			induced_actions::action_on_spread_set *AS,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_orthogonal(
-			action *A_old,
-			induced_actions::action_on_orthogonal *AO,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	action *induced_action_on_wedge_product(
-			int verbose_level);
-	void induced_action_by_subfield_structure(
-			action *A_old,
-			induced_actions::action_by_subfield_structure
-				*SubfieldStructure,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_determinant(
-			groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_Galois_group(
-			groups::sims *old_G, int verbose_level);
-	void induced_action_on_sign(groups::sims *old_G,
-		int verbose_level);
-	action *create_induced_action_by_conjugation(
-			groups::sims *Base_group, int f_ownership,
-			int verbose_level);
-	void induced_action_by_conjugation(
-			groups::sims *old_G,
-			groups::sims *Base_group, int f_ownership,
-		int f_basis, int verbose_level);
-	void induced_action_by_right_multiplication(
-		int f_basis, groups::sims *old_G,
-		groups::sims *Base_group, int f_ownership,
-		int verbose_level);
-	action *create_induced_action_on_sets(
-			int nb_sets,
-		int set_size, long int *sets,
-		int verbose_level);
-	void induced_action_on_sets(
-			action &old_action, groups::sims *old_G,
-		int nb_sets, int set_size, long int *sets,
-		int f_induce_action, int verbose_level);
-	action *create_induced_action_on_subgroups(
-			groups::sims *S,
-		int nb_subgroups, int group_order, 
-		groups::subgroup **Subgroups, int verbose_level);
-	void induced_action_on_subgroups(
-			action *old_action,
-			groups::sims *S,
-		int nb_subgroups, int group_order, 
-		groups::subgroup **Subgroups,
-		int verbose_level);
-	void induced_action_by_restriction_on_orbit_with_schreier_vector(
-		action &old_action, 
-		int f_induce_action, groups::sims *old_G,
-		data_structures_groups::schreier_vector *Schreier_vector,
-		int pt, int verbose_level);
-	void original_point_labels(
-			long int *points, int nb_points,
-			long int *&original_points, int verbose_level);
-	action *restricted_action(
-			long int *points, int nb_points,
-		int verbose_level);
-	action *create_induced_action_by_restriction(
-			groups::sims *S, int size,
-			long int *set, int f_induce,
-			int verbose_level);
-	void induced_action_by_restriction_internal_function(
-			action &old_action,
-		int f_induce_action, groups::sims *old_G,
-		int nb_points, long int *points,
-		int verbose_level);
-		// uses action_by_restriction data type
-	void induced_action_on_pairs(
-			action &old_action, groups::sims *old_G,
-		int verbose_level);
-	action *create_induced_action_on_ordered_pairs(
-			int verbose_level);
-	void induced_action_on_ordered_pairs(
-			action &old_action,
-			groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_k_subsets(
-			action &old_action, int k,
-		int verbose_level);
-	void induced_action_on_orbits(
-			action *old_action,
-			groups::schreier *Sch, int f_play_it_safe,
-		int verbose_level);
-	void induced_action_on_flags(
-			action *old_action,
-		int *type, int type_len, 
-		int verbose_level);
-	void induced_action_on_bricks(
-			action &old_action,
-		combinatorics::brick_domain *B, int f_linear_action,
-		int verbose_level);
-	void induced_action_on_andre(
-			action *An,
-		action *An1,
-		geometry::andre_construction *Andre,
-		int verbose_level);
-	void setup_product_action(
-			action *A1, action *A2,
-		int f_use_projections, int verbose_level);
-	void induced_action_on_homogeneous_polynomials(
-			action *A_old,
-			ring_theory::homogeneous_polynomial_domain *HPD,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_homogeneous_polynomials_given_by_equations(
-		action *A_old, 
-		ring_theory::homogeneous_polynomial_domain *HPD,
-		int *Equations, int nb_equations, 
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_recycle_sims(
-			action &old_action,
-		int verbose_level);
-	void induced_action_override_sims(
-			action &old_action,
-			groups::sims *old_G,
-		int verbose_level);
-	void induce(
-			action *old_action, groups::sims *old_G,
-		int base_of_choice_len, 
-		long int *base_of_choice,
-		int verbose_level);
-	int least_moved_point_at_level(int level, 
-		int verbose_level);
-	void lex_least_base_in_place(int verbose_level);
 	void lex_least_base(
 			action *old_action, int verbose_level);
 	int test_if_lex_least_base(int verbose_level);
 	void base_change_in_place(
-			int size, long int *set, int verbose_level);
-	void base_change(
-			action *old_action,
-		int size, long int *set, int verbose_level);
+			int size, long int *set, groups::sims *old_Sims,
+			int verbose_level);
 	void create_orbits_on_subset_using_restricted_action(
 			action *&A_by_restriction,
 			groups::schreier *&Orbits, groups::sims *S,
@@ -632,6 +469,7 @@ public:
 		data_structures_groups::vector_ge *gens,
 		groups::strong_generators *&Strong_gens,
 		int verbose_level);
+
 
 	// action_io.cpp:
 	void report(
@@ -844,19 +682,14 @@ public:
 
 	// in backtrack.cpp
 	int is_minimal(
-		int size, long int *set, int &backtrack_level,
-		int verbose_level);
-	void make_canonical(
-		int size, long int *set,
-		long int *canonical_set, int *transporter,
-		int &total_backtrack_nodes, 
-		int f_get_automorphism_group, groups::sims *Aut,
+		int size, long int *set, groups::sims *old_Sims,
+		int &backtrack_level,
 		int verbose_level);
 	int is_minimal_witness(
-		int size, long int *set,
+		int size, long int *set, groups::sims *old_Sims,
 		int &backtrack_level, long int *witness,
 		int *transporter_witness, 
-		int &backtrack_nodes, 
+		long int &backtrack_nodes,
 		int f_get_automorphism_group, groups::sims &Aut,
 		int verbose_level);
 };
@@ -946,7 +779,8 @@ public:
 			ring_theory::homogeneous_polynomial_domain *HPD,
 		int *The_equations,
 		int nb_equations, groups::strong_generators *gens,
-		actions::action *&A_on_equations, groups::schreier *&Orb,
+		actions::action *&A_on_equations,
+		groups::schreier *&Orb,
 		int verbose_level);
 	void compute_fixed_objects_in_PG(
 			int up_to_which_rank,
@@ -955,10 +789,10 @@ public:
 		int *Elt,
 		std::vector<std::vector<long int> > &Fix,
 		int verbose_level);
-	void report_fixed_objects_in_P3(
+	void report_fixed_objects_in_PG(
 			std::ostream &ost,
 			action *A,
-			geometry::projective_space *P3,
+			geometry::projective_space *P,
 		int *Elt,
 		int verbose_level);
 	groups::strong_generators *set_stabilizer_in_projective_space(
@@ -1044,6 +878,7 @@ public:
 			groups::schreier &Schreier,
 			int *Elt,
 			int verbose_level);
+#if 0
 	void compute_set_orbit(
 			actions::action *A,
 			data_structures_groups::vector_ge &gens,
@@ -1058,6 +893,28 @@ public:
 			data_structures_groups::vector_ge &gens,
 			int size, long int *set,
 		long int *minimal_set, int *transporter,
+		int verbose_level);
+#endif
+	void induce(
+			action *old_action,
+			action *new_action,
+			groups::sims *old_G,
+		int base_of_choice_len, long int *base_of_choice,
+		int verbose_level);
+	// after this procedure, new_action will have
+	// a sims for the group and the kernel
+	// it will also have strong generators
+
+	// the old_action may not have a stabilizer chain,
+	// but it's subaction does.
+	void induced_action_override_sims(
+		action *old_action, action *new_action, groups::sims *old_G,
+		int verbose_level);
+	void make_canonical(action *A, groups::sims *Sims,
+			int size, long int *set,
+		long int *canonical_set, int *transporter,
+		long int &total_backtrack_nodes,
+		int f_get_automorphism_group, groups::sims *Aut,
 		int verbose_level);
 
 };
@@ -1303,6 +1160,202 @@ public:
 };
 
 
+// #############################################################################
+// induced_action.cpp:
+// #############################################################################
+
+
+
+//! create new actions from old
+
+
+class induced_action {
+public:
+
+	action *A_old;
+
+	induced_action();
+	~induced_action();
+	void init(action *A, int verbose_level);
+
+	action *induced_action_on_interior_direct_product(
+			int nb_rows,
+			int verbose_level);
+	action *induced_action_on_set_partitions(
+			int partition_class_size,
+			int verbose_level);
+
+#if 0
+	/** Create the induced action on lines in PG(n-1,q)
+	 * using an action_on_grassmannian object */
+	void init_action_on_lines(
+			action *A, field_theory::finite_field *F,
+		int n, int verbose_level);
+#endif
+
+	action *induced_action_by_representation_on_conic(
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_cosets(
+			induced_actions::action_on_cosets *A_on_cosets,
+		int f_induce_action,
+		groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_factor_space(
+			induced_actions::action_on_factor_space *AF,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+
+	action *induced_action_on_grassmannian(
+			int k,
+		int verbose_level);
+	action *induced_action_on_grassmannian_preloaded(
+			induced_actions::action_on_grassmannian *AG,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_spread_set(
+			induced_actions::action_on_spread_set *AS,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+#if 0
+	void induced_action_on_orthogonal(
+			action *A_old,
+			induced_actions::action_on_orthogonal *AO,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+#endif
+
+	action *induced_action_on_wedge_product(
+			int verbose_level);
+#if 0
+	void induced_action_by_subfield_structure(
+			action *A_old,
+			induced_actions::action_by_subfield_structure
+				*SubfieldStructure,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+#endif
+	action *induced_action_on_determinant(
+			groups::sims *old_G, int verbose_level);
+	action *induced_action_on_Galois_group(
+			groups::sims *old_G, int verbose_level);
+	action *induced_action_on_sign(
+			groups::sims *old_G, int verbose_level);
+
+	action *create_induced_action_by_conjugation(
+			groups::sims *Base_group, int f_ownership,
+			int f_basis, groups::sims *old_G,
+			int verbose_level);
+#if 0
+	void induced_action_by_conjugation(
+			groups::sims *old_G,
+			groups::sims *Base_group, int f_ownership,
+		int f_basis, int verbose_level);
+#endif
+	action *induced_action_by_right_multiplication(
+		int f_basis, groups::sims *old_G,
+		groups::sims *Base_group, int f_ownership, int verbose_level);
+	action *create_induced_action_on_sets(
+			int nb_sets,
+		int set_size, long int *sets,
+		int verbose_level);
+	action *induced_action_on_sets(
+			groups::sims *old_G,
+		int nb_sets, int set_size, long int *sets,
+		int f_induce_action, int verbose_level);
+	action *create_induced_action_on_subgroups(
+			groups::sims *S,
+		int nb_subgroups, int group_order,
+		groups::subgroup **Subgroups, int verbose_level);
+	action *induced_action_on_subgroups(
+			action *old_action,
+			groups::sims *S,
+		int nb_subgroups, int group_order,
+		groups::subgroup **Subgroups,
+		int verbose_level);
+	action *induced_action_by_restriction_on_orbit_with_schreier_vector(
+		int f_induce_action, groups::sims *old_G,
+		data_structures_groups::schreier_vector *Schreier_vector,
+		int pt, int verbose_level);
+	void original_point_labels(
+			long int *points, int nb_points,
+			long int *&original_points, int verbose_level);
+	action *restricted_action(
+			long int *points, int nb_points,
+		int verbose_level);
+	action *create_induced_action_by_restriction(
+			groups::sims *old_G, int size,
+			long int *set, int f_induce,
+			int verbose_level);
+	action *induced_action_by_restriction(
+		action *old_action,
+		int f_induce_action, groups::sims *old_G,
+		int nb_points, long int *points,
+		int verbose_level);
+	action *induced_action_on_pairs(
+		int verbose_level);
+#if 0
+	void induced_action_on_pairs(
+			action &old_action, groups::sims *old_G,
+		int verbose_level);
+	action *create_induced_action_on_ordered_pairs(
+			int verbose_level);
+#endif
+	action *induced_action_on_ordered_pairs(
+			groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_k_subsets(
+		int k,
+		int verbose_level);
+	action *induced_action_on_orbits(
+			groups::schreier *Sch, int f_play_it_safe,
+		int verbose_level);
+#if 0
+	void induced_action_on_flags(
+			action *old_action,
+		int *type, int type_len,
+		int verbose_level);
+	void induced_action_on_bricks(
+			action &old_action,
+		combinatorics::brick_domain *B, int f_linear_action,
+		int verbose_level);
+#endif
+	action *induced_action_on_andre(
+			action *An,
+		action *An1,
+		geometry::andre_construction *Andre,
+		int verbose_level);
+#if 0
+	void setup_product_action(
+			action *A1, action *A2,
+		int f_use_projections, int verbose_level);
+#endif
+	action *induced_action_on_homogeneous_polynomials(
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_homogeneous_polynomials_given_by_equations(
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int *Equations, int nb_equations,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+	action *base_change(
+		int size, long int *set,
+		groups::sims *old_Sims,
+		int verbose_level);
+
+#if 0
+	void induced_action_recycle_sims(
+			action &old_action,
+		int verbose_level);
+	void induced_action_override_sims(
+			action &old_action,
+			groups::sims *old_G,
+		int verbose_level);
+#endif
+
+};
+
 
 
 // #############################################################################
@@ -1352,7 +1405,8 @@ public:
 	void allocate_base_data(
 			action *A,
 			int base_len, int verbose_level);
-	void reallocate_base(int new_base_point);
+	void reallocate_base(
+			int new_base_point, int verbose_level);
 	void init_base_from_sims(
 			groups::sims *G, int verbose_level);
 	int &get_f_has_base();

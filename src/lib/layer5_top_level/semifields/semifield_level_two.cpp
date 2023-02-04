@@ -747,7 +747,7 @@ void semifield_level_two::downstep(int verbose_level)
 			Int_matrix_print(class_rep_plus_I_Basis_inv[i], k, k);
 			cout << "$$" << endl;
 			cout << "\\left[" << endl;
-			F->latex_matrix(cout, f_elements_exponential,
+			F->Io->latex_matrix(cout, f_elements_exponential,
 					symbol_for_print,
 					class_rep_plus_I_Basis_inv[i], k, k);
 			cout << "\\right]" << endl;
@@ -2194,7 +2194,7 @@ void semifield_level_two::report(
 			SC->matrix_unrank(a, Mtx);
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
-			F->latex_matrix(ost, f_elements_exponential,
+			F->Io->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx, k, k);
 			ost << "\\right]";
 			ost << "$$";
@@ -2325,11 +2325,11 @@ void semifield_level_two::report(
 			ost << "$$" << endl;
 			ost << "\\left\\{" << endl;
 			ost << "\\left[" << endl;
-			F->latex_matrix(ost, f_elements_exponential,
+			F->Io->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx_Id, k, k);
 			ost << "\\right], \\;";
 			ost << "\\left[" << endl;
-			F->latex_matrix(ost, f_elements_exponential,
+			F->Io->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx, k, k);
 			ost << "\\right]";
 			ost << "\\right\\}" << endl;

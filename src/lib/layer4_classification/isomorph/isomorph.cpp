@@ -312,7 +312,7 @@ void isomorph::induced_action_on_set_and_kernel(
 
 	int f_induce_action = TRUE;
 
-	AAA = Sub->gen->get_A2()->create_induced_action_by_restriction(
+	AAA = Sub->gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		Stab,
 		size, set,
 		f_induce_action,

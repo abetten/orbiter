@@ -878,7 +878,37 @@ void projective_space_activity::perform_activity(int verbose_level)
 					"after AGG.report_grassmannian" << endl;
 		}
 	}
-	// surfaces:
+	else if (Descr->f_report_fixed_objects) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"f_report_fixed_objects" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->report_fixed_objects" << endl;
+		}
+
+		PA->report_fixed_objects(
+				Descr->report_fixed_objects_Elt,
+				Descr->report_fixed_objects_label,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->report_fixed_objects" << endl;
+		}
+	}
+
+
+
+
+
+
+	// classification stuff:
 
 
 	else if (Descr->f_classify_surfaces_with_double_sixes) {

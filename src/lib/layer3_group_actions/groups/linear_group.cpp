@@ -615,7 +615,7 @@ int linear_group::linear_group_apply_modification(
 			cout << "linear_group::linear_group_apply_modification "
 					"before A_wreath->restricted_action" << endl;
 		}
-		A2 = A_linear->restricted_action(points, nb_points,
+		A2 = A_linear->Induced_action->restricted_action(points, nb_points,
 				verbose_level);
 		A2->f_is_linear = TRUE;
 		A2->dimension = W->dimension_of_tensor_action;
@@ -652,7 +652,7 @@ int linear_group::linear_group_apply_modification(
 			cout << "linear_group::linear_group_apply_modification "
 					"before A_wreath->restricted_action" << endl;
 		}
-		A2 = A_linear->restricted_action(points, nb_points,
+		A2 = A_linear->Induced_action->restricted_action(points, nb_points,
 				verbose_level);
 		A2->f_is_linear = TRUE;
 		A2->dimension = W->dimension_of_tensor_action;
@@ -693,9 +693,9 @@ void linear_group::init_PGL2q_OnConic(int verbose_level)
 		//A_linear->create_sims(verbose_level);
 		exit(1);
 	}
-	A2 = NEW_OBJECT(actions::action);
-	A2->induced_action_by_representation_on_conic(A_linear, 
-		FALSE /* f_induce_action */, NULL, 
+	//A2 = NEW_OBJECT(actions::action);
+	A2 = A_linear->Induced_action->induced_action_by_representation_on_conic(
+			FALSE /* f_induce_action */, NULL,
 		verbose_level);
 
 	vector_space_dimension = A2->G.Rep->dimension;
@@ -745,7 +745,7 @@ void linear_group::init_wedge_action(int verbose_level)
 				"A_linear does not have strong generators" << endl;
 		exit(1);
 	}
-	A2 = NEW_OBJECT(actions::action);
+	//A2 = NEW_OBJECT(actions::action);
 	//action_on_wedge_product *AW;
 
 	
@@ -768,7 +768,15 @@ void linear_group::init_wedge_action(int verbose_level)
 				<< vector_space_dimension << endl;
 	}
 		
-	A2 = A_linear->induced_action_on_wedge_product(verbose_level);
+	if (f_v) {
+		cout << "linear_group::init_wedge_action "
+				"before A_linear->Induced_action->induced_action_on_wedge_product" << endl;
+	}
+	A2 = A_linear->Induced_action->induced_action_on_wedge_product(verbose_level);
+	if (f_v) {
+		cout << "linear_group::init_wedge_action "
+				"after A_linear->Induced_action->induced_action_on_wedge_product" << endl;
+	}
 
 	vector_space_dimension = A2->G.AW->wedge_dimension;
 	q = input_q;

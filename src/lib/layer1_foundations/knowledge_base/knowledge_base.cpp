@@ -2829,26 +2829,14 @@ void knowledge_base::retrieve_BLT_set_from_database(
 	cout << endl;
 #endif
 
-	char str[1000];
 
-	if (f_embedded) {
-		snprintf(str, sizeof(str), "%d_%d_embedded", Quadratic_form->F->q, BLT_k);
-		label_txt.assign("BLT_");
-		label_txt.append(str);
+	data_structures::string_tools String;
 
-		snprintf(str, sizeof(str), "%d\\_%d\\_embedded", Quadratic_form->F->q, BLT_k);
-		label_tex.assign("BLT\\_");
-		label_tex.append(str);
-	}
-	else {
-		snprintf(str, sizeof(str), "%d_%d", Quadratic_form->F->q, BLT_k);
-		label_txt.assign("BLT_");
-		label_txt.append(str);
+	String.name_of_BLT_set(
+			label_txt,
+			label_tex,
+			Quadratic_form->F->q, BLT_k, f_embedded, verbose_level);
 
-		snprintf(str, sizeof(str), "%d\\_%d", Quadratic_form->F->q, BLT_k);
-		label_tex.assign("BLT\\_");
-		label_tex.append(str);
-	}
 	//write_set_to_file(fname, L, N, verbose_level);
 
 

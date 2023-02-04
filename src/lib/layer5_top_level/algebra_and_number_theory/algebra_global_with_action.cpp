@@ -34,32 +34,32 @@ void algebra_global_with_action::orbits_under_conjugation(
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation" << endl;
 	}
-	actions::action A_conj;
+	actions::action *A_conj;
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation "
-				"before A_conj.induced_action_by_conjugation" << endl;
+				"before create_induced_action_by_conjugation" << endl;
 	}
-	A_conj.induced_action_by_conjugation(S, S,
-			FALSE /* f_ownership */, FALSE /* f_basis */,
+	A_conj = S->A->Induced_action->create_induced_action_by_conjugation(S,
+			FALSE /* f_ownership */, FALSE /* f_basis */, S,
 			verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation "
-				"created action by conjugation" << endl;
+				"after create_induced_action_by_conjugation" << endl;
 	}
 
 	actions::action *A_conj_restricted;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation "
-				"before A_conj.restricted_action" << endl;
+				"before A_conj->restricted_action" << endl;
 	}
 
-	A_conj_restricted = A_conj.restricted_action(the_set, set_size,
+	A_conj_restricted = A_conj->Induced_action->restricted_action(the_set, set_size,
 			verbose_level);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation "
-				"after A_conj.restricted_action" << endl;
+				"after A_conj->restricted_action" << endl;
 	}
 
 
@@ -84,7 +84,7 @@ void algebra_global_with_action::orbits_under_conjugation(
 				"before create_subgroups" << endl;
 	}
 	create_subgroups(SG,
-			the_set, set_size, S, &A_conj,
+			the_set, set_size, S, A_conj,
 			&Classes,
 			Transporter,
 			verbose_level);
@@ -92,6 +92,8 @@ void algebra_global_with_action::orbits_under_conjugation(
 		cout << "algebra_global_with_action::orbits_under_conjugation "
 				"after create_subgroups" << endl;
 	}
+
+	FREE_OBJECT(A_conj);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation done" << endl;
@@ -3665,11 +3667,19 @@ void algebra_global_with_action::representation_on_polynomials(
 
 	actions::action *A2;
 
-	A2 = NEW_OBJECT(actions::action);
-	A2->induced_action_on_homogeneous_polynomials(A,
+	//A2 = NEW_OBJECT(actions::action);
+	if (f_v) {
+		cout << "algebra_global_with_action::representation_on_polynomials "
+				"before A->Induced_action->induced_action_on_homogeneous_polynomials" << endl;
+	}
+	A2 = A->Induced_action->induced_action_on_homogeneous_polynomials(
 		HPD,
 		FALSE /* f_induce_action */, NULL,
 		verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::representation_on_polynomials "
+				"after A->Induced_action->induced_action_on_homogeneous_polynomials" << endl;
+	}
 
 	if (f_v) {
 		cout << "created action A2" << endl;

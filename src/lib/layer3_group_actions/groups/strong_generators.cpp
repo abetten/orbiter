@@ -956,7 +956,8 @@ void strong_generators::switch_to_subgroup(
 	}
 }
 
-void strong_generators::init_subgroup(actions::action *A,
+void strong_generators::init_subgroup(
+		actions::action *A,
 	int *subgroup_gens_idx, int nb_subgroup_gens,
 	const char *subgroup_order_text, 
 	sims *S, 
@@ -1052,7 +1053,10 @@ void strong_generators::init_subgroup_by_generators(
 			cout << "strong_generators::init_subgroup_by_generators "
 					"generator " << h << " / " << nb_subgroup_gens << endl;
 		}
-		A->make_element(nice_gens->ith(h), subgroup_gens + h * A->make_element_size, verbose_level);
+		A->make_element(
+				nice_gens->ith(h),
+				subgroup_gens + h * A->make_element_size,
+				verbose_level);
 	}
 
 
@@ -1108,7 +1112,8 @@ sims *strong_generators::create_sims(int verbose_level)
 
 
 	if (f_v) {
-		cout << "strong_generators::create_sims verbose_level=" << verbose_level << endl;
+		cout << "strong_generators::create_sims "
+				"verbose_level=" << verbose_level << endl;
 	}
 	
 	if (gens == NULL) {
@@ -1412,7 +1417,8 @@ void strong_generators::print_generators(std::ostream &ost)
 	}
 }
 
-void strong_generators::print_generators_in_latex_individually(std::ostream &ost)
+void strong_generators::print_generators_in_latex_individually(
+		std::ostream &ost)
 {
 	int i;
 	ring_theory::longinteger_object go;
@@ -1574,17 +1580,26 @@ void strong_generators::export_fining(
 
 	interfaces::l3_interface_gap Interface;
 
-	if (f_v) {
-		cout << "strong_generators::export_fining "
-				"before M.export_group" << endl;
+	if (A->is_matrix_group()) {
+		if (f_v) {
+			cout << "strong_generators::export_fining "
+					"before M.export_group" << endl;
+		}
+		Interface.export_collineation_group_to_fining(
+				ost,
+				this,
+				verbose_level);
+		if (f_v) {
+			cout << "strong_generators::export_fining "
+					"after M.export_group" << endl;
+		}
 	}
-	Interface.export_collineation_group_to_fining(
-			ost,
-			this,
-			verbose_level);
-	if (f_v) {
-		cout << "strong_generators::export_fining "
-				"after M.export_group" << endl;
+	else {
+		if (f_v) {
+			cout << "strong_generators::export_fining "
+					"not a matrix group, skipping" << endl;
+		}
+
 	}
 
 
@@ -1598,6 +1613,11 @@ void strong_generators::canonical_image_GAP(
 		std::string &input_set_text, std::ostream &ost,
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::canonical_image_GAP" << endl;
+	}
 #if 0
 	int i;
 
@@ -1635,13 +1655,63 @@ void strong_generators::canonical_image_GAP(
 	ost << "MinimalImage(G, [" << output << "], OnSets);" << endl;
 #else
 
+	long int *set;
+	int sz;
+
+	Get_lint_vector_from_label(input_set_text, set, sz, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::canonical_image_GAP "
+				"found a set of size " << sz << endl;
+	}
+
 	interfaces::l3_interface_gap Interface;
 
 	Interface.canonical_image_GAP(
 			this,
-			input_set_text,
+			set, sz,
 			ost, verbose_level);
+
+	long int *canonical_set;
+	int *transporter;
+	long int total_backtrack_nodes;
+	int f_get_automorphism_group = TRUE;
+	groups::sims Aut;
+
+	transporter = NEW_int(A->elt_size_in_int);
+	canonical_set = NEW_lint(sz);
+
+
+	actions::action_global GL;
+	groups::sims *Sims;
+
+
+	Sims = create_sims(verbose_level);
+
+
+	if (f_v) {
+		cout << "strong_generators::canonical_image_GAP "
+				"before GL.make_canonical" << endl;
+	}
+	GL.make_canonical(A, Sims,
+			sz, set,
+		canonical_set, transporter,
+		total_backtrack_nodes,
+		f_get_automorphism_group, &Aut,
+		verbose_level);
+	if (f_v) {
+		cout << "strong_generators::canonical_image_GAP "
+				"after A->make_canonical" << endl;
+	}
+
+
+	FREE_lint(canonical_set);
+	FREE_OBJECT(Sims);
+
 #endif
+	if (f_v) {
+		cout << "strong_generators::canonical_image_GAP done" << endl;
+	}
 }
 
 
@@ -1761,7 +1831,8 @@ void strong_generators::print_generators_tex_with_print_point_function(
 
 }
 
-void strong_generators::print_generators_for_make_element(std::ostream &ost)
+void strong_generators::print_generators_for_make_element(
+		std::ostream &ost)
 {
 	int i;
 	ring_theory::longinteger_object go;
@@ -1878,7 +1949,8 @@ void strong_generators::print_elements_ost(std::ostream &ost)
 	FREE_int(Elt);
 }
 
-void strong_generators::print_elements_with_special_orthogonal_action_ost(std::ostream &ost)
+void strong_generators::print_elements_with_special_orthogonal_action_ost(
+		std::ostream &ost)
 {
 	long int i;
 	ring_theory::longinteger_object go;
@@ -1905,7 +1977,7 @@ void strong_generators::print_elements_with_special_orthogonal_action_ost(std::o
 			F = A->matrix_group_finite_field();
 			Geo.isomorphism_to_special_orthogonal(F, Elt, A6, 0 /* verbose_level*/);
 			ost << "=" << endl;
-			F->print_matrix_latex(ost, A6, 6, 6);
+			F->Io->print_matrix_latex(ost, A6, 6, 6);
 		}
 		ost << "$$" << endl;
 	}
@@ -1981,7 +2053,8 @@ void strong_generators::print_elements_latex_ost(std::ostream &ost)
 void strong_generators::print_elements_latex_ost_with_print_point_function(
 		actions::action *A_given,
 		std::ostream &ost,
-		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
+		void (*point_label)(
+				std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
 	long int i, order, m;
@@ -2143,7 +2216,8 @@ void strong_generators::compute_schreier_with_given_action_on_a_given_set(
 	}
 }
 
-void strong_generators::orbits_on_points(int &nb_orbits,
+void strong_generators::orbits_on_points(
+		int &nb_orbits,
 		int *&orbit_reps, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2176,7 +2250,8 @@ void strong_generators::orbits_on_points(int &nb_orbits,
 }
 
 void strong_generators::orbits_on_set_with_given_action_after_restriction(
-		actions::action *A_given, long int *Set, int set_sz,
+		actions::action *A_given,
+		long int *Set, int set_sz,
 		std::stringstream &orbit_type,
 		int verbose_level)
 {
@@ -2194,17 +2269,33 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 	orbits_on_something *Orb;
 	std::string prefix;
 
-	Ar = A_given->restricted_action(Set, set_sz, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
+				"before A_given->Induced_action->restricted_action" << endl;
+	}
+	Ar = A_given->Induced_action->restricted_action(Set, set_sz, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
+				"after A_given->Induced_action->restricted_action" << endl;
+	}
 
 	Orb = NEW_OBJECT(orbits_on_something);
 
 	prefix.assign(Ar->label);
 
+	if (f_v) {
+		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
+				"before Orb->init" << endl;
+	}
 	Orb->init(Ar,
 			this,
 			FALSE /* f_load_save */,
 			prefix,
-			verbose_level);
+			verbose_level - 1);
+	if (f_v) {
+		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
+				"after Orb->init" << endl;
+	}
 
 	data_structures::tally *Classify_orbits_by_length;
 
@@ -2224,7 +2315,8 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 
 
 void strong_generators::extract_orbit_on_set_with_given_action_after_restriction_by_length(
-		actions::action *A_given, long int *Set, int set_sz,
+		actions::action *A_given,
+		long int *Set, int set_sz,
 		int desired_orbit_length,
 		long int *&extracted_set,
 		int verbose_level)
@@ -2243,17 +2335,34 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	orbits_on_something *Orb;
 	std::string prefix;
 
-	Ar = A_given->restricted_action(Set, set_sz, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
+				"before A_given->Induced_action->restricted_action" << endl;
+	}
+	Ar = A_given->Induced_action->restricted_action(
+			Set, set_sz, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
+				"after A_given->Induced_action->restricted_action" << endl;
+	}
 
 	Orb = NEW_OBJECT(orbits_on_something);
 
 	prefix.assign(Ar->label);
 
+	if (f_v) {
+		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
+				"before Orb->init" << endl;
+	}
 	Orb->init(Ar,
 			this,
 			FALSE /* f_load_save */,
 			prefix,
 			verbose_level);
+	if (f_v) {
+		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
+				"after Orb->init" << endl;
+	}
 
 	data_structures::tally *Classify_orbits_by_length;
 	data_structures::set_of_sets *SoS;
@@ -2312,7 +2421,8 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 }
 
 void strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length(
-		actions::action *A_given, long int *Set, int set_sz,
+		actions::action *A_given,
+		long int *Set, int set_sz,
 		int desired_orbit_length,
 		int desired_orbit_idx,
 		long int *&extracted_set,
@@ -2332,17 +2442,34 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 	orbits_on_something *Orb;
 	std::string prefix;
 
-	Ar = A_given->restricted_action(Set, set_sz, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
+				"before A_given->Induced_action->restricted_action" << endl;
+	}
+	Ar = A_given->Induced_action->restricted_action(
+			Set, set_sz, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
+				"after A_given->Induced_action->restricted_action" << endl;
+	}
 
 	Orb = NEW_OBJECT(orbits_on_something);
 
 	prefix.assign(Ar->label);
 
+	if (f_v) {
+		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
+				"before Orb->init" << endl;
+	}
 	Orb->init(Ar,
 			this,
 			FALSE /* f_load_save */,
 			prefix,
 			verbose_level);
+	if (f_v) {
+		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
+				"after Orb->init" << endl;
+	}
 
 	data_structures::tally *Classify_orbits_by_length;
 	data_structures::set_of_sets *SoS;
@@ -2351,7 +2478,10 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 	int idx, orb_idx, len;
 
 	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
-	Classify_orbits_by_length->init(Orb->Sch->orbit_len, Orb->Sch->nb_orbits, FALSE, 0);
+	Classify_orbits_by_length->init(
+			Orb->Sch->orbit_len,
+			Orb->Sch->nb_orbits,
+			FALSE, 0);
 
 	SoS = Classify_orbits_by_length->get_set_partition_and_types(types,
 			nb_types, verbose_level);
@@ -2513,7 +2643,8 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 	return Sch;
 }
 
-void strong_generators::orbits_light(actions::action *A_given,
+void strong_generators::orbits_light(
+		actions::action *A_given,
 	int *&Orbit_reps, int *&Orbit_lengths, int &nb_orbits, 
 	int **&Pts_per_generator, int *&Nb_per_generator, 
 	int verbose_level)
@@ -2752,7 +2883,7 @@ void strong_generators::orbits_light(actions::action *A_given,
 
 
 void strong_generators::write_to_file_binary(
-		ofstream &fp, int verbose_level)
+		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -3681,7 +3812,7 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 
 void strong_generators::export_group_to_GAP_and_copy_to_latex(
 		std::string &label_txt,
-		ostream &ost,
+		std::ostream &ost,
 		actions::action *A2,
 		int verbose_level)
 {
@@ -3734,7 +3865,7 @@ void strong_generators::export_group_to_GAP_and_copy_to_latex(
 
 void strong_generators::export_group_and_copy_to_latex(
 		std::string &label_txt,
-		ostream &ost,
+		std::ostream &ost,
 		actions::action *A2,
 		int verbose_level)
 {
@@ -3758,9 +3889,9 @@ void strong_generators::export_group_and_copy_to_latex(
 }
 
 
-void strong_generators::report_fixed_objects_in_P3(
-		ostream &ost,
-		geometry::projective_space *P3,
+void strong_generators::report_fixed_objects_in_PG(
+		std::ostream &ost,
+		geometry::projective_space *P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3768,26 +3899,27 @@ void strong_generators::report_fixed_objects_in_P3(
 	actions::action_global AG;
 
 	if (f_v) {
-		cout << "strong_generators::report_fixed_objects_in_P3" << endl;
+		cout << "strong_generators::report_fixed_objects_in_PG" << endl;
 	}
 
 	ost << "\\begin{enumerate}[(1)]" << endl;
 	for (i = 0; i < gens->len; i++) {
 
 		ost << "\\item" << endl;
-		AG.report_fixed_objects_in_P3(ost,
+		AG.report_fixed_objects_in_PG(ost,
 				A,
-				P3,
+				P,
 				gens->ith(i),
 				verbose_level);
 	}
 	ost << "\\end{enumerate}" << endl;
 	if (f_v) {
-		cout << "strong_generators::report_fixed_objects_in_P3" << endl;
+		cout << "strong_generators::report_fixed_objects_in_PG" << endl;
 	}
 }
 
-void strong_generators::reverse_isomorphism_exterior_square(int verbose_level)
+void strong_generators::reverse_isomorphism_exterior_square(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3812,7 +3944,8 @@ void strong_generators::reverse_isomorphism_exterior_square(int verbose_level)
 	}
 }
 
-void strong_generators::get_gens_data(int *&data, int &sz, int verbose_level)
+void strong_generators::get_gens_data(
+		int *&data, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3972,7 +4105,8 @@ void strong_generators::export_to_orbiter_as_bsgs(
 
 
 
-void strong_generators::report_group(std::string &prefix, int verbose_level)
+void strong_generators::report_group(
+		std::string &prefix, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i;
@@ -4038,7 +4172,8 @@ void strong_generators::report_group(std::string &prefix, int verbose_level)
 }
 
 
-void strong_generators::report_group2(std::ostream &ost, int verbose_level)
+void strong_generators::report_group2(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

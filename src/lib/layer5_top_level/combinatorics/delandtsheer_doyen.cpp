@@ -1038,7 +1038,7 @@ void delandtsheer_doyen::create_monomial_group(int verbose_level)
 	} // next i
 
 
-	Ar = A->restricted_action(points, nb_points,
+	Ar = A->Induced_action->restricted_action(points, nb_points,
 			verbose_level);
 
 	A = Ar;

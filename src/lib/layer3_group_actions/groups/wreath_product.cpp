@@ -1494,7 +1494,8 @@ void wreath_product::save_rank_one_tensors(int verbose_level)
 	}
 }
 
-void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbose_level)
+void wreath_product::compute_tensor_ranks(
+		char *&TR, uint32_t *&Prev, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;
@@ -2141,7 +2142,8 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 	for (b = 0; b < nb_blocks; ++b) {
 		if (f_v) {
-			cout << "wreath_product::compute_permutations_and_write_to_file block b=" << b << " / " << nb_blocks << endl;
+			cout << "wreath_product::compute_permutations_and_write_to_file "
+					"block b=" << b << " / " << nb_blocks << endl;
 		}
 
 
@@ -2149,7 +2151,8 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 		l = MINIMUM((b + 1) * block_size, degree_of_tensor_action) - b * block_size;
 		if (f_v) {
-			cout << "wreath_product::compute_permutations_and_write_to_file l=" << l << endl;
+			cout << "wreath_product::compute_permutations_and_write_to_file "
+					"l=" << l << endl;
 		}
 
 		//linalg::Matrix<char> M  (l, mtx_n);
@@ -2169,7 +2172,8 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 
 #if 0
-		cout << "wreath_product::compute_permutations_and_write_to_file unranking the elements of the PG" << endl;
+		cout << "wreath_product::compute_permutations_and_write_to_file "
+				"unranking the elements of the PG" << endl;
 
 		int l1 = l / 100;
 		for (size_t i=0; i<l; ++i) {
@@ -2385,7 +2389,8 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 }
 
-void wreath_product::make_fname(std::string &fname, int nb_factors, int h, int b)
+void wreath_product::make_fname(
+		std::string &fname, int nb_factors, int h, int b)
 {
 	char str[1000];
 	snprintf(str, sizeof(str), "w%d_h%d_b%d.bin", nb_factors, h, b);
@@ -2558,8 +2563,10 @@ void wreath_product::orbits_using_files_and_union_find(
 
 
 	if (f_v) {
-		cout << "wreath_product::orbits_using_files_and_union_find Done with the loop" << endl;
-		cout << "wreath_product::orbits_using_files_and_union_find Computing the orbit representatives" << endl;
+		cout << "wreath_product::orbits_using_files_and_union_find "
+				"Done with the loop" << endl;
+		cout << "wreath_product::orbits_using_files_and_union_find "
+				"Computing the orbit representatives" << endl;
 	}
 
 
@@ -2569,7 +2576,8 @@ void wreath_product::orbits_using_files_and_union_find(
 		}
 	}
 	if (f_v) {
-		cout << "wreath_product::orbits_using_files_and_union_find nb_orbits: " << nb_orbits << endl;
+		cout << "wreath_product::orbits_using_files_and_union_find "
+				"nb_orbits: " << nb_orbits << endl;
 	}
 
 	long int *orbit_length;
@@ -2589,20 +2597,23 @@ void wreath_product::orbits_using_files_and_union_find(
 	}
 
 	if (f_v) {
-		cout << "wreath_product::orbits_using_files_and_union_find the orbit representatives are: " << endl;
+		cout << "wreath_product::orbits_using_files_and_union_find "
+				"the orbit representatives are: " << endl;
 		for (int i = 0; i < nb_orbits; i++) {
 			cout << i << ", " << orbit_rep[i] << ", " << endl;
 		}
 	}
 	if (f_v) {
-		cout << "wreath_product::orbits_using_files_and_union_find Path compression:" << endl;
+		cout << "wreath_product::orbits_using_files_and_union_find "
+				"Path compression:" << endl;
 	}
 	for (i = 0; i < degree_of_tensor_action; ++i) {
 		r = Algo.root_of_tree_uint32_t(S, i);
 		S[i] = r;
 	}
 	if (f_v) {
-		cout << "wreath_product::orbits_using_files_and_union_find Path compression done" << endl;
+		cout << "wreath_product::orbits_using_files_and_union_find "
+				"Path compression done" << endl;
 	}
 
 	uint32_t *Orbit;
@@ -2643,11 +2654,13 @@ void wreath_product::orbits_using_files_and_union_find(
 		orbit_length[orbit_idx] = len;
 		if (f_v) {
 			cout << "wreath_product::orbits_using_files_and_union_find "
-					"orbit " << orbit_idx << " / " << nb_orbits << " has length " << len << endl;
+					"orbit " << orbit_idx << " / " << nb_orbits
+					<< " has length " << len << endl;
 		}
 		char fname_orbit[1000];
 
-		snprintf(fname_orbit, sizeof(fname_orbit), "wreath_q%d_w%d_orbit_%ld.bin", q, nb_factors, orbit_idx);
+		snprintf(fname_orbit, sizeof(fname_orbit),
+				"wreath_q%d_w%d_orbit_%ld.bin", q, nb_factors, orbit_idx);
 		if (f_v) {
 			cout << "Writing the file " << fname_orbit << endl;
 		}
@@ -2666,9 +2679,11 @@ void wreath_product::orbits_using_files_and_union_find(
 	}
 	FREE_int((int *) Orbit);
 	if (f_v) {
-		cout << "wreath_product::orbits_using_files_and_union_find the orbits are: " << endl;
+		cout << "wreath_product::orbits_using_files_and_union_find "
+				"the orbits are: " << endl;
 		for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
-			cout << orbit_idx << ", " << orbit_rep[orbit_idx] << ", " << orbit_length[orbit_idx] << ", " << endl;
+			cout << orbit_idx << ", " << orbit_rep[orbit_idx] << ", "
+					<< orbit_length[orbit_idx] << ", " << endl;
 		}
 	}
 
@@ -3072,13 +3087,15 @@ void wreath_product::orbits_restricted_compute(
 	}
 
 	if (f_v) {
-		cout << "wreath_product::orbits_restricted_compute looping over all orbits" << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"looping over all orbits" << endl;
 	}
 
 
 	for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
 		if (f_v) {
-			cout << "computing point stabilizer for orbit " << orbit_idx << ":" << endl;
+			cout << "computing point stabilizer for orbit "
+					<< orbit_idx << ":" << endl;
 		}
 
 		int orb_rep;
@@ -3098,7 +3115,9 @@ void wreath_product::orbits_restricted_compute(
 		tensor_PG_unrank(tensor, orbit_rep_in_PG);
 
 		if (f_v) {
-			cout << "orbit representative is " << orb_rep << " = " << orbit_rep_in_PG << " = " << orbit_rep_in_PG_uint << endl;
+			cout << "orbit representative is " << orb_rep
+					<< " = " << orbit_rep_in_PG << " = "
+					<< orbit_rep_in_PG_uint << endl;
 			cout << "tensor: ";
 			Int_vec_print(cout, tensor, dimension_of_tensor_action);
 			cout << endl;
@@ -3106,12 +3125,14 @@ void wreath_product::orbits_restricted_compute(
 		sims *Stab;
 
 		if (f_v) {
-			cout << "before Sch->point_stabilizer in action " << A_perm_matrix->label << endl;
+			cout << "before Sch->point_stabilizer in action "
+					<< A_perm_matrix->label << endl;
 		}
 		Sch->point_stabilizer(A_perm_matrix, go,
 				Stab, orbit_idx, verbose_level - 5);
 		if (f_v) {
-			cout << "after Sch->point_stabilizer in action " << A_perm_matrix->label << endl;
+			cout << "after Sch->point_stabilizer in action "
+					<< A_perm_matrix->label << endl;
 		}
 
 		strong_generators *gens;
@@ -3131,11 +3152,13 @@ void wreath_product::orbits_restricted_compute(
 		if (f_v) {
 			cout << "computing restricted action on the orbit:" << endl;
 		}
-		A_on_orbit = A_perm->restricted_action(Orbits->Sets[orbit_idx] + 1, Orbits->Set_size[orbit_idx] - 1,
+		A_on_orbit = A_perm->Induced_action->restricted_action(
+				Orbits->Sets[orbit_idx] + 1, Orbits->Set_size[orbit_idx] - 1,
 				verbose_level);
 
 		if (f_v) {
-			cout << "generators restricted to the orbit of degree " << Orbits->Set_size[orbit_idx] - 1 << ":" << endl;
+			cout << "generators restricted to the orbit of degree "
+					<< Orbits->Set_size[orbit_idx] - 1 << ":" << endl;
 			gens->print_generators_MAGMA(A_on_orbit, cout);
 		}
 
@@ -3173,7 +3196,8 @@ void wreath_product::orbits_restricted_compute(
 
 		Sch_orbit = NEW_OBJECT(schreier);
 		if (f_v) {
-			cout << "computing orbits of stabilizer on the rest of the orbit:" << endl;
+			cout << "computing orbits of stabilizer on "
+					"the rest of the orbit:" << endl;
 		}
 
 		actions::action_global AcGl;

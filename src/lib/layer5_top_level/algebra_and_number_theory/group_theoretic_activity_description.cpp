@@ -154,6 +154,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_is_subgroup_of = FALSE;
 	f_coset_reps = FALSE;
 
+	f_random_element = FALSE;
 
 	// orbit stuff:
 
@@ -564,6 +565,12 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-coset_reps " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-random_element") == 0) {
+			f_random_element = TRUE;
+			if (f_v) {
+				cout << "-random_element " << endl;
+			}
+		}
 
 		// orbit stuff:
 
@@ -852,6 +859,12 @@ void group_theoretic_activity_description::print()
 	if (f_coset_reps) {
 		cout << "-coset_reps " << endl;
 	}
+
+
+
+	// orbit stuff:
+
+
 
 
 	if (f_orbit_of) {

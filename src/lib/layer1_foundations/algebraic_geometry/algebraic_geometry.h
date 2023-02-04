@@ -1190,17 +1190,21 @@ public:
 		long int *F_planes_rank, long int *G_planes_rank);
 	void print_basics(std::ostream &ost);
 	void sstr_line_label(std::stringstream &sstr, long int pt);
+
+	// report the data in the knowledge base:
 	void make_table_of_surfaces(int verbose_level);
 	void make_table_of_surfaces_detailed(
 			int *Q_table, int Q_table_len, int verbose_level);
 	void make_table_of_surfaces2(
 			std::ostream &ost,
+			std::string &prefix,
 			int *Q_table, int Q_table_len, int verbose_level);
 	void table_top(std::ostream &ost);
 	void table_bottom(std::ostream &ost);
 	void compute_table_E(
 			int *field_orders, int nb_fields,
 			long int *&Table,
+			int *&Table_idx,
 			int *&Q, int &nb_Q,
 			int *&E, int &nb_E_types, int verbose_level);
 

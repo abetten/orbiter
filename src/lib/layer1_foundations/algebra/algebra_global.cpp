@@ -1116,17 +1116,17 @@ void algebra_global::do_cheat_sheet_GF(
 				extra_praeamble /* extra_praeamble */);
 
 
-		F->cheat_sheet(ost, verbose_level);
+		F->Io->cheat_sheet(ost, verbose_level);
 
-		F->cheat_sheet_main_table(ost, verbose_level);
+		F->Io->cheat_sheet_main_table(ost, verbose_level);
 
-		F->cheat_sheet_addition_table(ost, verbose_level);
+		F->Io->cheat_sheet_addition_table(ost, verbose_level);
 
-		F->cheat_sheet_multiplication_table(ost, verbose_level);
+		F->Io->cheat_sheet_multiplication_table(ost, verbose_level);
 
-		F->cheat_sheet_power_table(ost, TRUE, verbose_level);
+		F->Io->cheat_sheet_power_table(ost, TRUE, verbose_level);
 
-		F->cheat_sheet_power_table(ost, FALSE, verbose_level);
+		F->Io->cheat_sheet_power_table(ost, FALSE, verbose_level);
 
 
 
@@ -1156,13 +1156,13 @@ void algebra_global::export_tables(
 		cout << "algebra_global::export_tables q=" << F->q << endl;
 	}
 
-	F->addition_table_save_csv(verbose_level);
+	F->Io->addition_table_save_csv(verbose_level);
 
-	F->multiplication_table_save_csv(verbose_level);
+	F->Io->multiplication_table_save_csv(verbose_level);
 
-	F->addition_table_reordered_save_csv(verbose_level);
+	F->Io->addition_table_reordered_save_csv(verbose_level);
 
-	F->multiplication_table_reordered_save_csv(verbose_level);
+	F->Io->multiplication_table_reordered_save_csv(verbose_level);
 
 
 	if (f_v) {

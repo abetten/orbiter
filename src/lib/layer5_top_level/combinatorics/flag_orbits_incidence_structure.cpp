@@ -115,14 +115,15 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::init "
-				"before A_on_flags" << endl;
+				"before A_perm->Induced_action->create_induced_action_on_sets" << endl;
 	}
-	A_on_flags = A_perm->create_induced_action_on_sets(nb_flags,
+	A_on_flags = A_perm->Induced_action->create_induced_action_on_sets(
+			nb_flags,
 			2 /* set_size */, Flag_table,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::init "
-				"after A_on_flags" << endl;
+				"after A_perm->Induced_action->create_induced_action_on_sets" << endl;
 	}
 
 	Orb = NEW_OBJECT(groups::orbits_on_something);

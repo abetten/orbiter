@@ -1138,16 +1138,16 @@ void flag_orbit_folding::induced_action_on_set_basic(groups::sims *S,
 
 	if (f_vv) {
 		cout << "flag_orbit_folding::induced_action_on_set_basic "
-				"before induced_action_by_restriction" << endl;
+				"before create_induced_action_by_restriction" << endl;
 	}
-	AA = Iso->Sub->gen->get_A2()->create_induced_action_by_restriction(
+	AA = Iso->Sub->gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		S,
 		Iso->size, set,
 		TRUE,
 		0/*verbose_level*/);
 	if (f_vv) {
 		cout << "flag_orbit_folding::induced_action_on_set_basic "
-				"after induced_action_by_restriction" << endl;
+				"after create_induced_action_by_restriction" << endl;
 	}
 	AA->group_order(go);
 	AA->Kernel->group_order(K_go);
@@ -1211,7 +1211,7 @@ void flag_orbit_folding::induced_action_on_set(
 		cout << "flag_orbit_folding::induced_action_on_set "
 				"before induced_action_by_restriction" << endl;
 	}
-	AA = Iso->Sub->gen->get_A2()->create_induced_action_by_restriction(
+	AA = Iso->Sub->gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 			S,
 			Iso->size, set,
 			TRUE,
@@ -1267,8 +1267,8 @@ void flag_orbit_folding::induced_action_on_set(
 		cout << "flag_orbit_folding::induced_action_on_set "
 				"before induced_action_on_k_subsets" << endl;
 	}
-	AA_on_k_subsets->induced_action_on_k_subsets(
-		*AA_perm, Iso->level /* k */,
+	AA_on_k_subsets = AA_perm->Induced_action->induced_action_on_k_subsets(
+		Iso->level /* k */,
 		0/*verbose_level*/);
 	if (f_v) {
 		cout << "flag_orbit_folding::induced_action_on_set "
@@ -4310,7 +4310,8 @@ void flag_orbit_folding::compute_stabilizer(
 				<< l << " solutions" << endl;
 	}
 
-	A_induced->induced_action_on_sets(*Iso->A, S, l, Iso->size,
+	A_induced = Iso->A->Induced_action->induced_action_on_sets(
+			S, l, Iso->size,
 			sets, TRUE, verbose_level - 2);
 
 	if (f_v) {

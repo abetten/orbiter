@@ -63,6 +63,7 @@ public:
 	enum representation_type type;
 	int n;
 	int q;
+	actions::action *A;
 	groups::matrix_group *M;
 	field_theory::finite_field *F;
 	int low_level_point_size;
@@ -76,12 +77,12 @@ public:
 	action_by_representation();
 	~action_by_representation();
 	void init_action_on_conic(
-			actions::action &A, int verbose_level);
+			actions::action *A, int verbose_level);
 	long int compute_image_int(
-			actions::action &A, int *Elt,
+			int *Elt,
 			long int a, int verbose_level);
 	void compute_image_int_low_level(
-			actions::action &A, int *Elt,
+			int *Elt,
 			int *input, int *output,
 		int verbose_level);
 	void unrank_point(long int a, int *v, int verbose_level);
@@ -592,17 +593,21 @@ public:
 
 	action_on_grassmannian();
 	~action_on_grassmannian();
-	void init(actions::action &A,
+	void init(
+			actions::action &A,
 			geometry::grassmann *G, int verbose_level);
 	void add_print_function(
 			void (*print_function)(
 					std::ostream &ost, long int a, void *data),
 			void *print_function_data,
 			int verbose_level);
-	void init_embedding(int big_n, int *ambient_space, 
+	void init_embedding(
+			int big_n, int *ambient_space,
 		int verbose_level);
-	void unrank(long int i, int *v, int verbose_level);
-	long int rank(int *v, int verbose_level);
+	void unrank(
+			long int i, int *v, int verbose_level);
+	long int rank(
+			int *v, int verbose_level);
 	void compute_image_longinteger(
 			actions::action *A,
 			int *Elt,
@@ -916,10 +921,14 @@ public:
 			std::ostream &ost, int verbose_level);
 	long int compute_image_int(
 			int *Elt, long int rk, int verbose_level);
-	void matrix_to_subspace(int *mtx, int *subspace, int verbose_level);
-	void subspace_to_matrix(int *subspace, int *mtx, int verbose_level);
-	void unrank_point(long int rk, int *mtx, int verbose_level);
-	long int rank_point(int *mtx, int verbose_level);
+	void matrix_to_subspace(
+			int *mtx, int *subspace, int verbose_level);
+	void subspace_to_matrix(
+			int *subspace, int *mtx, int verbose_level);
+	void unrank_point(
+			long int rk, int *mtx, int verbose_level);
+	long int rank_point(
+			int *mtx, int verbose_level);
 	void compute_image_low_level(
 			int *Elt, int *input, int *output,
 		int verbose_level);

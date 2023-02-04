@@ -244,6 +244,13 @@ int surface_create::init(surface_create_description *Descr,
 	}
 	surface_create::Descr = Descr;
 
+	if (Descr->f_space_pointer) {
+		if (f_v) {
+			cout << "surface_create::init setting space_pointer" << endl;
+		}
+		PA = Descr->space_pointer;
+	}
+
 	if (PA == NULL) {
 		cout << "surface_create::init PA == NULL" << endl;
 		exit(1);

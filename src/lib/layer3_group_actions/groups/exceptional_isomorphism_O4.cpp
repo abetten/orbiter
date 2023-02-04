@@ -40,7 +40,8 @@ exceptional_isomorphism_O4::~exceptional_isomorphism_O4()
 		}
 }
 
-void exceptional_isomorphism_O4::init(field_theory::finite_field *Fq,
+void exceptional_isomorphism_O4::init(
+		field_theory::finite_field *Fq,
 		actions::action *A2, actions::action *A4, actions::action *A5,
 		int verbose_level)
 {

@@ -33,12 +33,23 @@ void action::report(
 
 	ost << "\\section*{The Action}" << endl;
 
+
+	if (label_tex.length() == 0) {
+		cout << "action::report the group has no tex-name" << endl;
+		exit(1);
+	}
 	ost << "Group action $" << label_tex
 			<< "$ of degree " << degree << "\\\\" << endl;
 
+	if (f_v) {
+		cout << "action::report before report_what_we_act_on" << endl;
+	}
 	report_what_we_act_on(ost,
 			LG_Draw_options,
 			verbose_level);
+	if (f_v) {
+		cout << "action::report after report_what_we_act_on" << endl;
+	}
 
 	if (is_matrix_group()) {
 		ost << "The group is a matrix group.\\\\" << endl;
@@ -88,7 +99,7 @@ void action::report(
 
 	if (f_sims) {
 		if (f_v) {
-			cout << "action::report printing group order" << endl;
+			cout << "action::report we have sims, printing group order" << endl;
 		}
 		ring_theory::longinteger_object go;
 
@@ -127,33 +138,64 @@ void action::report(
 		if (f_v) {
 			cout << "action::report before S->report" << endl;
 		}
-		S->report(ost, label, LG_Draw_options, 0 /*verbose_level - 2*/);
+		S->report(ost, label, LG_Draw_options, verbose_level - 2);
 		if (f_v) {
 			cout << "action::report after S->report" << endl;
 		}
 	}
 	if (Stabilizer_chain) {
+		if (f_v) {
+			cout << "action::report we have Stabilizer_chain" << endl;
+		}
 		if (f_strong_gens) {
+
+			if (f_v) {
+				cout << "action::report we have f_strong_gens" << endl;
+			}
 
 			ost << "GAP export: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;
+			if (f_v) {
+				cout << "action::report before SG->print_generators_gap" << endl;
+			}
 			SG->print_generators_gap(ost);
+			if (f_v) {
+				cout << "action::report after SG->print_generators_gap" << endl;
+			}
 			ost << "\\end{verbatim}" << endl;
 
 			ost << "Fining export: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;
+			if (f_v) {
+				cout << "action::report before SG->export_fining" << endl;
+			}
 			SG->export_fining(this, ost, verbose_level);
+			if (f_v) {
+				cout << "action::report after SG->export_fining" << endl;
+			}
 			ost << "\\end{verbatim}" << endl;
 
 
 			ost << "Magma export: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;
+			if (f_v) {
+				cout << "action::report before SG->export_magma" << endl;
+			}
 			SG->export_magma(this, ost, verbose_level);
+			if (f_v) {
+				cout << "action::report after SG->export_magma" << endl;
+			}
 			ost << "\\end{verbatim}" << endl;
 
 			ost << "Compact form: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;
+			if (f_v) {
+				cout << "action::report before SG->print_generators_compact" << endl;
+			}
 			SG->print_generators_compact(ost);
+			if (f_v) {
+				cout << "action::report after SG->print_generators_compact" << endl;
+			}
 			ost << "\\end{verbatim}" << endl;
 
 		}
@@ -243,7 +285,7 @@ void action::report_what_we_act_on(
 
 		ost << "The finite field ${\\mathbb F}_{" << F->q << "}$:\\\\" << endl;
 
-		F->cheat_sheet(ost, verbose_level);
+		F->Io->cheat_sheet(ost, verbose_level);
 
 		ost << endl << "\\bigskip" << endl << endl;
 

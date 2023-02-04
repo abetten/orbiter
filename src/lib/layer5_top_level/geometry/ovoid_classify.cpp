@@ -180,7 +180,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	
 	if (f_vv) {
 		cout << "The finite field is:" << endl;
-		O->F->print();
+		O->F->Io->print();
 		}
 
 	if (f_v) {

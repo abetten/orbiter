@@ -435,7 +435,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 				"creating restricted action on the set "
 				"of lines" << endl;
 		}
-	A_on_set = A2->restricted_action(data, sz, verbose_level);
+	A_on_set = A2->Induced_action->restricted_action(data, sz, verbose_level);
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
 				"creating restricted action on the set of "
@@ -523,7 +523,7 @@ actions::action *set_and_stabilizer::create_restricted_action_on_the_set(
 				"action_on_the_set creating restricted "
 				"action on the set" << endl;
 		}
-	A_on_set = A2->restricted_action(data, sz, verbose_level);
+	A_on_set = A2->Induced_action->restricted_action(data, sz, verbose_level);
 	
 	Strong_gens->print_with_given_action(cout, A_on_set);
 	
@@ -553,7 +553,7 @@ void set_and_stabilizer::print_restricted_action_on_the_set(
 		cout << "set_and_stabilizer::print_restricted_action_"
 				"on_the_set creating restricted action on the set" << endl;
 		}
-	A_on_set = A2->restricted_action(data, sz, verbose_level);
+	A_on_set = A2->Induced_action->restricted_action(data, sz, verbose_level);
 	
 	Strong_gens->print_with_given_action(cout, A_on_set);
 	

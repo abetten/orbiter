@@ -1700,6 +1700,33 @@ public:
 	int read_schlaefli_label(const char *p);
 	void read_string_of_schlaefli_labels(
 			std::string &str, int *&v, int &sz, int verbose_level);
+	void name_of_group_projective(
+			std::string &label_txt,
+			std::string &label_tex,
+			int n, int q, int f_semilinear, int f_special,
+			int verbose_level);
+	void name_of_group_affine(
+			std::string &label_txt,
+			std::string &label_tex,
+			int n, int q, int f_semilinear, int f_special,
+			int verbose_level);
+	void name_of_group_general_linear(
+			std::string &label_txt,
+			std::string &label_tex,
+			int n, int q, int f_semilinear, int f_special,
+			int verbose_level);
+	void name_of_orthogonal_group(
+			std::string &label_txt,
+			std::string &label_tex,
+			int epsilon, int n, int q, int f_semilinear, int verbose_level);
+	void name_of_orthogonal_space(
+			std::string &label_txt,
+			std::string &label_tex,
+			int epsilon, int n, int q, int verbose_level);
+	void name_of_BLT_set(
+			std::string &label_txt,
+			std::string &label_tex,
+			int q, int ocn, int f_embedded, int verbose_level);
 
 
 };

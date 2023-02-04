@@ -1010,7 +1010,7 @@ void schreier::print_orbit_with_original_labels(
 		v[i] = orbit[first + i];
 	}
 
-	A->original_point_labels(v, len, w, 0 /*verbose_level*/);
+	A->Induced_action->original_point_labels(v, len, w, 0 /*verbose_level*/);
 
 
 	//int_vec_print(ost, v, len);
@@ -1108,7 +1108,7 @@ void schreier::print_orbit_sorted_with_original_labels_tex(
 	Sorting.lint_vec_heapsort(v, len);
 	//int_vec_print_fully(ost, v, len);
 
-	A->original_point_labels(v, len, w, 0 /*verbose_level*/);
+	A->Induced_action->original_point_labels(v, len, w, 0 /*verbose_level*/);
 
 	if (f_truncate && len > max_length) {
 		L.lint_set_print_tex(ost, w, max_length);

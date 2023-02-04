@@ -622,7 +622,7 @@ void spread_domain::print(
 		Grass->unrank_lint(S[i], 0);
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
-		F->latex_matrix(ost, f_elements_exponential, symbol_for_print,
+		F->Io->latex_matrix(ost, f_elements_exponential, symbol_for_print,
 			Grass->M, k, n);
 		ost << "\\right]" << endl;
 		ost << "$$" << endl << endl;

@@ -317,7 +317,7 @@ void spread_classify::init(
 
 
 
-	A2 = NEW_OBJECT(actions::action);
+	//A2 = NEW_OBJECT(actions::action);
 	AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
 #if 0
@@ -353,7 +353,7 @@ void spread_classify::init(
 				"A2->induced_action_on_grassmannian" <<  endl;
 	}
 
-	A2->induced_action_on_grassmannian(A, AG, 
+	A2 = A->Induced_action->induced_action_on_grassmannian_preloaded(AG,
 		FALSE /*f_induce_action*/, NULL /*sims *old_G */,
 		0 /*verbose_level - 2*/);
 	

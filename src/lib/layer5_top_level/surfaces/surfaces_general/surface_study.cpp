@@ -106,7 +106,7 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 	cout << "creating linear group done" << endl;
 
 	cout << "creating action on lines" << endl;
-	A2 = A->induced_action_on_grassmannian(2, verbose_level);
+	A2 = A->Induced_action->induced_action_on_grassmannian(2, verbose_level);
 	cout << "creating action on lines done" << endl;
 
 	coeff = NEW_int(20);
@@ -627,7 +627,7 @@ void surface_study::study_orbits_on_lines(int verbose_level)
 
 
 	cout << "creating restricted action on the set of lines" << endl;
-	A_on_lines = A2->restricted_action(
+	A_on_lines = A2->Induced_action->restricted_action(
 			SaS->data, 27, verbose_level);
 	cout << "creating restricted action on the set of lines done" << endl;
 
@@ -865,7 +865,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	int *Elt;
 	char fname_stab[1000];
 
-	A_triangle = A->restricted_action(
+	A_triangle = A->Induced_action->restricted_action(
 			triangle, nb_pts_triangle, 0 /* verbose_level */);
 	Triangle = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 	Triangle->init(A, A, 0 /* verbose_level */);
@@ -971,7 +971,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 
 
 	cout << "Creating restricted action on Double_pts:" << endl;
-	A_on_double_pts = A->restricted_action(
+	A_on_double_pts = A->Induced_action->restricted_action(
 			Double_pts, nb_double_pts,
 			0 /* verbose_level */);
 
@@ -1035,7 +1035,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 			six_point_orbit_length, sz, verbose_level);
 
 	cout << "Creating action on six_point_orbit" << endl;
-	A_on_six_point_orbit = A->create_induced_action_on_sets(
+	A_on_six_point_orbit = A->Induced_action->create_induced_action_on_sets(
 			six_point_orbit_length, sz, six_point_orbit,
 			verbose_level);
 	cout << "Creating action on six_point_orbit done" << endl;

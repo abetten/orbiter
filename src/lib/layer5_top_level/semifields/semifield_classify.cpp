@@ -392,13 +392,13 @@ void semifield_classify::init(
 
 
 
-	AS = NEW_OBJECT(actions::action);
+	//AS = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"before induced_action_on_spread_set" << endl;
 	}
-	AS->induced_action_on_spread_set(T->A,
+	AS = T->A->Induced_action->induced_action_on_spread_set(
 		A_on_S,
 		FALSE /* f_induce_action */,
 		NULL /* old_G */,
@@ -487,7 +487,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 
 	ost << "Semifields of order " << order << "\\\\" << endl;
 
-	Mtx->GFq->report(ost, verbose_level);
+	Mtx->GFq->Io->report(ost, verbose_level);
 
 	ost << endl;
 	ost << "\\bigskip" << endl;

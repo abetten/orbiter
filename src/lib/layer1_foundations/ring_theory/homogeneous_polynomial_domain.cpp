@@ -1127,7 +1127,7 @@ void homogeneous_polynomial_domain::print_equation_tex(std::ostream &ost, int *c
 			ost << " + ";
 		}
 		if (c > 1) {
-			F->print_element(ost, c);
+			F->Io->print_element(ost, c);
 			//ost << c;
 		}
 		print_monomial_latex(ost, i);
@@ -1152,7 +1152,7 @@ void homogeneous_polynomial_domain::print_equation_relaxed(std::ostream &ost, in
 			ost << " + ";
 		}
 		if (c > 1) {
-			F->print_element(ost, c);
+			F->Io->print_element(ost, c);
 			ost << "*";
 		}
 		print_monomial_relaxed(ost, i);
@@ -1203,7 +1203,7 @@ void homogeneous_polynomial_domain::print_equation_lint(std::ostream &ost, long 
 			ost << " + ";
 		}
 		if (c > 1) {
-			F->print_element(ost, c);
+			F->Io->print_element(ost, c);
 			//ost << c;
 		}
 		print_monomial(ost, i);
@@ -1228,7 +1228,7 @@ void homogeneous_polynomial_domain::print_equation_lint_tex(std::ostream &ost, l
 			ost << " + ";
 		}
 		if (c > 1) {
-			F->print_element(ost, c);
+			F->Io->print_element(ost, c);
 			//ost << c;
 		}
 		print_monomial_latex(ost, i);
@@ -1253,7 +1253,7 @@ void homogeneous_polynomial_domain::print_equation_str(std::stringstream &ost, i
 			ost << "+";
 		}
 		if (c > 1) {
-			F->print_element_str(ost, c);
+			F->Io->print_element_str(ost, c);
 			//ost << c;
 		}
 		print_monomial_str(ost, i);
@@ -1278,7 +1278,7 @@ void homogeneous_polynomial_domain::print_equation_for_gap_str(std::stringstream
 			ost << "+";
 		}
 		if (c > 1) {
-			F->print_element_str(ost, c);
+			F->Io->print_element_str(ost, c);
 			//ost << c;
 		}
 		print_monomial_for_gap_str(ost, i);
@@ -1311,7 +1311,7 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex(
 			ost << " + ";
 		}
 		if (c > 1) {
-			F->print_element(ost, c);
+			F->Io->print_element(ost, c);
 			//ost << c;
 		}
 		print_monomial_latex(ost, i);
@@ -1346,7 +1346,7 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex_lint(
 			ost << " + ";
 		}
 		if (c > 1) {
-			F->print_element(ost, c);
+			F->Io->print_element(ost, c);
 			//ost << c;
 		}
 		print_monomial_latex(ost, i);
@@ -2106,7 +2106,8 @@ int homogeneous_polynomial_domain::test_weierstrass_form(int rk,
 	return TRUE;
 }
 
-void homogeneous_polynomial_domain::explore_vanishing_ideal(long int *Pts,
+void homogeneous_polynomial_domain::explore_vanishing_ideal(
+		long int *Pts,
 		int nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2122,8 +2123,10 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(long int *Pts,
 
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal the input set has size " << nb_pts << endl;
-		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal the input set is: " << endl;
+		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal "
+				"the input set has size " << nb_pts << endl;
+		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal "
+				"the input set is: " << endl;
 		Lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 		//P->print_set_numerical(cout, GOC->Pts, GOC->nb_pts);
@@ -2131,12 +2134,14 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(long int *Pts,
 
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal before vanishing_ideal" << endl;
+		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal "
+				"before vanishing_ideal" << endl;
 	}
 	vanishing_ideal(Pts, nb_pts,
 			rk, Kernel, verbose_level - 1);
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal after vanishing_ideal" << endl;
+		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal "
+				"after vanishing_ideal" << endl;
 	}
 
 	int h;
@@ -2172,7 +2177,8 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(long int *Pts,
 		}
 
 
-		cout << "We found " << nb_pts2 << " points on the generator of the ideal" << endl;
+		cout << "We found " << nb_pts2 << " points "
+				"on the generator of the ideal" << endl;
 		cout << "They are : ";
 		Lint_vec_print(cout, Pts2, nb_pts2);
 		cout << endl;
@@ -2206,7 +2212,8 @@ void homogeneous_polynomial_domain::vanishing_ideal(
 		unrank_point(v, Pts[i]);
 		for (j = 0; j < nb_monomials; j++) {
 			System[i * nb_monomials + j] =
-					F->Linear_algebra->evaluate_monomial(Monomials + j * nb_variables, v, nb_variables);
+					F->Linear_algebra->evaluate_monomial(
+							Monomials + j * nb_variables, v, nb_variables);
 		}
 	}
 	if (f_vv) {
@@ -2412,7 +2419,7 @@ int *homogeneous_polynomial_domain::read_from_string_coefficient_vector(
 		cout << "homogeneous_polynomial_domain::read_from_string_coefficient_vector "
 				"before F->read_from_string_coefficient_vector" << endl;
 	}
-	F->read_from_string_coefficient_vector(str,
+	F->Io->read_from_string_coefficient_vector(str,
 				coeff, len,
 				verbose_level - 2);
 	if (f_v) {
@@ -2556,7 +2563,7 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 		Fio.lint_vec_write_csv(the_class, l, fname2, label);
 
 		cout << "class of type " << t << " contains " << l << " elements:" << endl;
-		F->display_table_of_projective_points(
+		F->Io->display_table_of_projective_points(
 				cout, the_class, l, get_nb_variables());
 
 		FREE_lint(the_class);
@@ -2671,7 +2678,7 @@ void homogeneous_polynomial_domain::create_intersection_of_zariski_open_sets(
 	Pts = NEW_lint(sz1);
 	Lint_vec_copy(Pts1, Pts, sz1);
 
-	F->display_table_of_projective_points(
+	F->Io->display_table_of_projective_points(
 			cout, Pts, nb_pts, get_nb_variables());
 
 	FREE_lint(Pts1);
@@ -2748,7 +2755,7 @@ void homogeneous_polynomial_domain::create_projective_variety(
 				"after HPD->enumerate_points, nb_pts = " << nb_pts << endl;
 	}
 
-	F->display_table_of_projective_points(
+	F->Io->display_table_of_projective_points(
 			cout, Pts, nb_pts, get_nb_variables());
 
 	FREE_int(coeff);
@@ -2882,7 +2889,7 @@ void homogeneous_polynomial_domain::create_projective_curve(
 		}
 	}
 
-	F->display_table_of_projective_points(
+	F->Io->display_table_of_projective_points(
 			cout, Pts, nb_pts, get_nb_variables());
 
 

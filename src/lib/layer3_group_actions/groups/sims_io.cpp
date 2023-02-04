@@ -20,9 +20,15 @@ namespace layer3_group_actions {
 namespace groups {
 
 
-void sims::create_group_tree(std::string &fname,
+void sims::create_group_tree(
+		std::string &fname,
 		int f_full, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::create_group_tree" << endl;
+	}
 	long int i, j, h, go, l;
 	ring_theory::longinteger_object Go;
 	int *Elt;
@@ -37,65 +43,70 @@ void sims::create_group_tree(std::string &fname,
 	//cout << "Group of order " << go << endl;
 
 	{
-	ofstream fp(fname);
+		ofstream fp(fname);
 
-	l = last_moved_base_point() + 1;
-	Fst = NEW_int(l);
-	for (i = 0; i < l; i++) {
-		if (i == 0) {
-			Fst[i] = 0;
-			}
-		else {
-			Fst[i] = Fst[i - 1] + orbit_len[i - 1];
-			}
-		}
-	if (f_full) {
-		for (h = 0; h < go; h++) {
-			element_unrank_lint(h, Elt);
-			//cout << "Element " << h << " / " << go << " : path=";
-			//int_vec_print(cout, S->path, S->A->base_len);
-			//cout << endl;
-			fp << l;
-			for (i = 0; i < l; i++) {
-				j = path[i];
-				fp << " " << Fst[i] + j;
-				coset_rep(Elt2, i, j, 0 /* verbose_level*/);
-				if (i) {
-					//cout << "*" << endl;
-					}
-				//A->element_print_quick(Elt2, cout);
+		l = last_moved_base_point() + 1;
+		Fst = NEW_int(l);
+		for (i = 0; i < l; i++) {
+			if (i == 0) {
+				Fst[i] = 0;
 				}
-			fp << endl;
-			//cout << "=" << endl;
-			//A->element_print_quick(Elt, cout);
-			//A->element_print_as_permutation(Elt, cout);
-			//cout << endl;
+			else {
+				Fst[i] = Fst[i - 1] + orbit_len[i - 1];
+				}
 			}
-		}
-	else {
-		for (h = l - 1; h >= 0; h--) {
-			for (j = 0; j < orbit_len[h]; j++) {
-				if (h < l - 1 && j == 0) {
-					continue;
-					}
-				Int_vec_zero(path, l);
-				path[h] = j;
-				fp << h + 1;
-				for (i = 0; i <= h; i++) {
+		if (f_full) {
+			for (h = 0; h < go; h++) {
+				element_unrank_lint(h, Elt);
+				//cout << "Element " << h << " / " << go << " : path=";
+				//int_vec_print(cout, S->path, S->A->base_len);
+				//cout << endl;
+				fp << l;
+				for (i = 0; i < l; i++) {
 					j = path[i];
-					fp << " " << orbit[i][j];
+					fp << " " << Fst[i] + j;
+					coset_rep(Elt2, i, j, 0 /* verbose_level*/);
+					if (i) {
+						//cout << "*" << endl;
+						}
+					//A->element_print_quick(Elt2, cout);
 					}
 				fp << endl;
+				//cout << "=" << endl;
+				//A->element_print_quick(Elt, cout);
+				//A->element_print_as_permutation(Elt, cout);
+				//cout << endl;
 				}
 			}
-		}
-	fp << "-1" << endl;
+		else {
+			for (h = l - 1; h >= 0; h--) {
+				for (j = 0; j < orbit_len[h]; j++) {
+					if (h < l - 1 && j == 0) {
+						continue;
+						}
+					Int_vec_zero(path, l);
+					path[h] = j;
+					fp << h + 1;
+					for (i = 0; i <= h; i++) {
+						j = path[i];
+						fp << " " << orbit[i][j];
+						}
+					fp << endl;
+					}
+				}
+			}
+		fp << "-1" << endl;
 	}
-	cout << "Written file " << fname << " of size "
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
+	}
 	FREE_int(Elt);
 	FREE_int(Elt2);
 	FREE_int(Fst);
+	if (f_v) {
+		cout << "sims::create_group_tree done" << endl;
+	}
 }
 
 void sims::print_transversals()
@@ -381,7 +392,8 @@ void sims::print_generators_at_level_or_below(int lvl)
 {
 	int i, gen_idx;
 
-	cout << "sims::print_generators_at_level_or_below lvl=" << lvl << ":" << endl;
+	cout << "sims::print_generators_at_level_or_below "
+			"lvl=" << lvl << ":" << endl;
 	for (i = 0; i < nb_gen[lvl]; i++) {
 		gen_idx = gen_perm[i];
 		cout << "sims::print_generators_at_level_or_below "
@@ -422,7 +434,8 @@ void sims::write_all_group_elements(
 	//FREE_char(elt);
 }
 
-void sims::print_all_group_elements_to_file(std::string &fname,
+void sims::print_all_group_elements_to_file(
+		std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -472,7 +485,8 @@ void sims::print_all_group_elements()
 	FREE_int(Elt);
 }
 
-void sims::print_all_group_elements_tex(std::ostream &ost,
+void sims::print_all_group_elements_tex(
+		std::ostream &ost,
 		int f_with_permutation,
 		int f_override_action, actions::action *A_special)
 {
@@ -529,7 +543,8 @@ void sims::print_all_group_elements_tex(std::ostream &ost,
 
 }
 
-void sims::print_all_group_elements_tree(std::ostream &ost)
+void sims::print_all_group_elements_tree(
+		std::ostream &ost)
 {
 	int *Elt;
 	ring_theory::longinteger_object go;
@@ -688,7 +703,8 @@ void sims::print_all_transversal_elements()
 	FREE_int(Elt);
 }
 
-void sims::save_list_of_elements(std::string &fname, int verbose_level)
+void sims::save_list_of_elements(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
@@ -724,7 +740,8 @@ void sims::save_list_of_elements(std::string &fname, int verbose_level)
 		}
 }
 
-void sims::read_list_of_elements(actions::action *A,
+void sims::read_list_of_elements(
+		actions::action *A,
 		std::string &fname,
 		int verbose_level)
 {
@@ -765,7 +782,8 @@ void sims::read_list_of_elements(actions::action *A,
 
 
 
-void sims::report(std::ostream &ost,
+void sims::report(
+		std::ostream &ost,
 		std::string &prefix,
 		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
@@ -831,7 +849,8 @@ void sims::report(std::ostream &ost,
 				cout << "sims::report before Sorting.schreier_vector_tree" << endl;
 			}
 			Sorting.schreier_vector_tree(
-				orbit_len[orbit_idx], orbit[orbit_idx], prev[orbit_idx], TRUE /* f_use_pts_inv */, orbit_inv[orbit_idx],
+				orbit_len[orbit_idx], orbit[orbit_idx], prev[orbit_idx],
+				TRUE /* f_use_pts_inv */, orbit_inv[orbit_idx],
 				fname_base,
 				LG_Draw_options,
 				LG,
@@ -852,7 +871,7 @@ void sims::report(std::ostream &ost,
 			if (f_v) {
 				cout << "sims::report before get_orbit" << endl;
 			}
-			get_orbit(orbit_idx, Orb, verbose_level);
+			get_orbit(orbit_idx, Orb, verbose_level - 2);
 			if (f_v) {
 				cout << "sims::report after get_orbit" << endl;
 			}

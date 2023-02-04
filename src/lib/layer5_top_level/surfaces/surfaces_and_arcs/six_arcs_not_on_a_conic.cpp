@@ -333,7 +333,7 @@ void six_arcs_not_on_a_conic::report_specific_arc(
 	//ost << "\}_{" << go << "}";
 	ost << "$$" << endl;
 
-	PA->F->display_table_of_projective_points(ost, The_arc->data, 6, 3);
+	PA->F->Io->display_table_of_projective_points(ost, The_arc->data, 6, 3);
 
 
 	//ost << "The arc-stabilizer is the following group:\\\\" << endl;

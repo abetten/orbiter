@@ -906,9 +906,9 @@ void subfield_structure::print_embedding_2D_table_tex()
 	for (i = 0; i < q; i++) {
 		cout << i;
 		cout << " & ";
-		Fq->print_element(cout, i);
+		Fq->Io->print_element(cout, i);
 		cout << " & ";
-		FQ->print_element(cout, embedding_2D[i]);
+		FQ->Io->print_element(cout, embedding_2D[i]);
 		cout << "\\\\" << endl;
 	}
 	cout << "\\end{array}" << endl;

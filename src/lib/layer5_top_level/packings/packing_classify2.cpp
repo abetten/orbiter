@@ -109,7 +109,8 @@ void packing_classify::klein_invariants_fname(
 void packing_classify::compute_and_save_klein_invariants(
 		std::string &prefix,
 	int iso_cnt, 
-	long int *data, int data_size, int verbose_level)
+	long int *data, int data_size,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//ring_theory::longinteger_object *R;
@@ -444,8 +445,10 @@ void packing_classify::report_packings_by_ago(
 
 
 void packing_classify::report_isomorphism_type(
-		isomorph::isomorph *Iso, std::ostream &ost,
-	int orbit, invariants_packing *inv, int verbose_level)
+		isomorph::isomorph *Iso,
+		std::ostream &ost,
+	int orbit, invariants_packing *inv,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, id, rep, first; //, c;
@@ -600,7 +603,8 @@ void packing_classify::report_isomorphism_type(
 
 void packing_classify::report_packing_as_table(
 		isomorph::isomorph *Iso, std::ostream &ost,
-	int orbit, invariants_packing *inv, long int *list_of_lines,
+	int orbit,
+	invariants_packing *inv, long int *list_of_lines,
 	int verbose_level)
 {
 	orbiter_kernel_system::latex_interface L;
@@ -749,7 +753,8 @@ void packing_classify::report_klein_invariants(
 
 void packing_classify::report_stabilizer(
 		isomorph::isomorph &Iso,
-		std::ostream &ost, int orbit, int verbose_level)
+		std::ostream &ost, int orbit,
+		int verbose_level)
 {
 	groups::sims *Stab;
 	ring_theory::longinteger_object go;
@@ -782,7 +787,8 @@ void packing_classify::report_stabilizer(
 }
 
 void packing_classify::report_stabilizer_in_action(
-		isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+		isomorph::isomorph &Iso,
+		std::ostream &ost, int orbit,
 		int verbose_level)
 {
 	groups::sims *Stab;
@@ -885,7 +891,7 @@ void packing_classify::report_extra_stuff(
 {
 	ost << "\\chapter{The Field GF$(" << q << ")$}" << endl << endl;
 	
-	T->Mtx->GFq->cheat_sheet(ost, verbose_level - 1);
+	T->Mtx->GFq->Io->cheat_sheet(ost, verbose_level - 1);
 
 
 	ost << "\\chapter{The Points and Lines of "

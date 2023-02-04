@@ -82,7 +82,8 @@ schreier_sims::~schreier_sims()
 	}
 }
 
-void schreier_sims::init(actions::action *A, int verbose_level)
+void schreier_sims::init(
+		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -121,7 +122,8 @@ void schreier_sims::init(actions::action *A, int verbose_level)
 		}
 }
 
-void schreier_sims::interested_in_kernel(actions::action *KA,
+void schreier_sims::interested_in_kernel(
+		actions::action *KA,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -152,7 +154,8 @@ void schreier_sims::init_target_group_order(
 }
 
 void schreier_sims::init_generators(
-		data_structures_groups::vector_ge *gens, int verbose_level)
+		data_structures_groups::vector_ge *gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -468,7 +471,7 @@ void schreier_sims::create_group(int verbose_level)
 	int drop_out_level, image, b, c, f_added, old_base_len;
 	
 	if (f_v) {
-		cout << "schreier_sims::create_group" << endl;
+		cout << "schreier_sims::create_group verbose_level = " << verbose_level << endl;
 		if (f_has_target_group_order) {
 			cout << "schreier_sims::create_group target group order is " << tgo << endl;
 		}
@@ -634,7 +637,7 @@ void schreier_sims::create_group(int verbose_level)
 								"choosing n e w base point " << b << endl;
 					}
 					old_base_len = GA->base_len();
-					GA->Stabilizer_chain->reallocate_base(b);
+					GA->Stabilizer_chain->reallocate_base(b, verbose_level);
 					if (f_vvv) {
 						//cout << "after reallocate_base 1" << endl;
 					}
@@ -677,8 +680,16 @@ void schreier_sims::create_group(int verbose_level)
 					GA->element_print(Elt2, cout);
 					cout  << endl;
 			}
+			if (f_vv) {
+				cout << "schreier_sims::create_group: "
+						"before G->add_generator_at_level" << endl;
+			}
 			G->add_generator_at_level(Elt2,
-					drop_out_level, verbose_level - 3);
+					drop_out_level, 0 /*verbose_level - 3*/);
+			if (f_vv) {
+				cout << "schreier_sims::create_group: "
+						"after G->add_generator_at_level" << endl;
+			}
 		}
 		
 		compute_group_orders();

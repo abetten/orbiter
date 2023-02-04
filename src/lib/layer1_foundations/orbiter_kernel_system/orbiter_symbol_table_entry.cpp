@@ -750,7 +750,7 @@ void orbiter_symbol_table_entry::print()
 			field_theory::finite_field *F;
 
 			F = (field_theory::finite_field *) ptr;
-			F->print();
+			F->Io->print();
 		}
 		else if (object_type == t_polynomial_ring) {
 			ring_theory::homogeneous_polynomial_domain *HPD;

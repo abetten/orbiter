@@ -307,6 +307,7 @@ void action::compute_projectivity_subgroup(
 		}
 
 		projectivity_gens = NEW_OBJECT(groups::strong_generators);
+		projectivity_gens->A = Aut_gens->A;
 		{
 			groups::sims *S;
 

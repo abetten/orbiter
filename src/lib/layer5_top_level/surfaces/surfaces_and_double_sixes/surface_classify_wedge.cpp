@@ -1171,7 +1171,7 @@ void surface_classify_wedge::identify_F13_and_print_table(int verbose_level)
 	cout << "\\hline" << endl;
 	for (a = 1; a < q; a++) {
 		cout << a << " & ";
-		F->print_element(cout, a);
+		F->Io->print_element(cout, a);
 		cout << " & ";
 		cout << Nb_lines[a] << " & ";
 		//cout << Nb_E[a] << " & ";
@@ -1221,9 +1221,9 @@ void surface_classify_wedge::identify_Bes_and_print_table(int verbose_level)
 	for (a = 2; a < q; a++) {
 		for (c = 2; c < q; c++) {
 			cout << "(" << a << "," << c << "); (";
-			F->print_element(cout, a);
+			F->Io->print_element(cout, a);
 			cout << ", ";
-			F->print_element(cout, c);
+			F->Io->print_element(cout, c);
 			cout << "); ";
 			cout << Nb_lines[a * q + c] << "; ";
 			//cout << Nb_E[a * q + c] << "; ";

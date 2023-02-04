@@ -450,7 +450,7 @@ int arc_basic::OKeefe_Penttila_32(int t)
 
 	t_powers = NEW_int(31);
 
-	F->power_table(t, t_powers, 31);
+	F->Io->power_table(t, t_powers, 31);
 	a = F->add3(t_powers[4], t_powers[16], t_powers[28]);
 	b = F->add6(t_powers[6], t_powers[10], t_powers[14],
 			t_powers[18], t_powers[22], t_powers[26]);
@@ -482,7 +482,7 @@ int arc_basic::Subiaco64_1(int t)
 
 	t_powers = NEW_int(65);
 
-	F->power_table(t, t_powers, 65);
+	F->Io->power_table(t, t_powers, 65);
 	a = F->add6(t_powers[8], t_powers[12], t_powers[20],
 			t_powers[22], t_powers[42], t_powers[52]);
 	b = F->add6(t_powers[4], t_powers[10], t_powers[14],
@@ -508,7 +508,7 @@ int arc_basic::Subiaco64_2(int t)
 
 	t_powers = NEW_int(65);
 
-	F->power_table(t, t_powers, 65);
+	F->Io->power_table(t, t_powers, 65);
 	a = F->add3(t_powers[24], t_powers[30], t_powers[62]);
 	b = F->add6(t_powers[4], t_powers[8], t_powers[10],
 			t_powers[14], t_powers[16], t_powers[34]);
@@ -535,7 +535,7 @@ int arc_basic::Adelaide64(int t)
 
 	t_powers = NEW_int(65);
 
-	F->power_table(t, t_powers, 65);
+	F->Io->power_table(t, t_powers, 65);
 	a = F->add7(t_powers[4], t_powers[8], t_powers[14], t_powers[34],
 			t_powers[42], t_powers[48], t_powers[62]);
 	b = F->add8(t_powers[6], t_powers[16], t_powers[26], t_powers[28],

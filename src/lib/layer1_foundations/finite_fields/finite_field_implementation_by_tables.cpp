@@ -187,7 +187,7 @@ void finite_field_implementation_by_tables::init(finite_field *F, int verbose_le
 					print_tables_extension_field(F->my_poly);
 				}
 				else {
-					F->print_tables();
+					F->Io->print_tables();
 				}
 			}
 		}

@@ -56,6 +56,7 @@ finite_field::finite_field()
 	nb_times_mult = 0;
 	nb_times_add = 0;
 
+	Io = NULL;
 	Linear_algebra = NULL;
 	Projective_space_basic = NULL;
 	//Orthogonal_indexing = NULL;
@@ -83,6 +84,9 @@ finite_field::~finite_field()
 		FREE_char(polynomial);
 	}
 #endif
+	if (Io) {
+		FREE_OBJECT(Io);
+	}
 	if (Linear_algebra) {
 		FREE_OBJECT(Linear_algebra);
 	}
@@ -326,6 +330,9 @@ void finite_field::finite_field_init_small_order(int q,
 				<< " verbose_level = " << verbose_level << endl;
 	}
 
+	Io = NEW_OBJECT(finite_field_io);
+	Io->init(this, verbose_level);
+
 	Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 	Linear_algebra->init(this, verbose_level);
 
@@ -520,6 +527,9 @@ void finite_field::init_override_polynomial_small_order(
 	}
 	override_poly.assign(poly);
 
+	Io = NEW_OBJECT(finite_field_io);
+	Io->init(this, verbose_level);
+
 	Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 	Linear_algebra->init(this, verbose_level);
 
@@ -577,7 +587,7 @@ void finite_field::init_override_polynomial_small_order(
 
 		std::stringstream s;
 
-		print_minimum_polynomial_to_str(p,
+		Io->print_minimum_polynomial_to_str(p,
 				my_poly, s);
 
 		my_poly_tex.assign(s.str());
@@ -606,7 +616,7 @@ void finite_field::init_override_polynomial_small_order(
 			cout << "finite_field::init_override_polynomial_small_order polynomial = ";
 
 			std::stringstream s;
-			print_minimum_polynomial_to_str(p, my_poly, s);
+			Io->print_minimum_polynomial_to_str(p, my_poly, s);
 			cout << s.str() << " = " << my_poly << endl;
 		}
 		else {
@@ -753,8 +763,15 @@ void finite_field::init_symbol_for_print(std::string &symbol)
 	symbol_for_print.assign(symbol);
 }
 
+std::string &finite_field::get_symbol_for_print()
+{
+	return symbol_for_print;
+}
 
-
+finite_field_implementation_by_tables *finite_field::get_T()
+{
+	return T;
+}
 
 int finite_field::has_quadratic_subfield()
 {
@@ -2090,6 +2107,13 @@ int finite_field::primitive_element()
 		}
 	return p;
 }
+
+
+
+
+
+
+
 
 
 }}}

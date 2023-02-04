@@ -373,6 +373,7 @@ public:
 	void print_automorphism_group(
 		std::ostream &ost);
 	void report(std::ostream &ost, int verbose_level);
+	void print_summary(std::ostream &ost);
 	void compute_T(int verbose_level);
 	void compute_Pi_ij(int verbose_level);
 

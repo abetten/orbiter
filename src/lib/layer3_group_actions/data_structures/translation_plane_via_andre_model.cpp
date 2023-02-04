@@ -371,15 +371,15 @@ void translation_plane_via_andre_model::init(
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
-				"before OnAndre->induced_action_on_andre" << endl;
+				"before OnAndre->Induced_action->induced_action_on_andre" << endl;
 	}
 
 
-	OnAndre->induced_action_on_andre(An, An1, Andre, verbose_level);
+	OnAndre->Induced_action->induced_action_on_andre(An, An1, Andre, verbose_level);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
-				"after OnAndre->induced_action_on_andre" << endl;
+				"after OnAndre->Induced_action->induced_action_on_andre" << endl;
 	}
 
 

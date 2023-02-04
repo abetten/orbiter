@@ -246,7 +246,7 @@ void poset_orbit_node::compute_schreier_vector(
 		cout << "poset_orbit_node::compute_schreier_vector: "
 				"before gen->Poset->A2->create_induced_action_by_restriction" << endl;
 	}
-	AR = gen->get_A2()->create_induced_action_by_restriction(
+	AR = gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		NULL /*sims *old_G*/,
 		nb_live_points, live_points,
 		FALSE /*f_induce_action*/,
@@ -621,7 +621,7 @@ void poset_orbit_node::schreier_forest(
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest before create_induced_action_by_restriction" << endl;
 		}
-		AR = gen->get_A2()->create_induced_action_by_restriction(
+		AR = gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 			NULL /*sims *old_G*/,
 			nb_candidates, candidates,
 			FALSE /*f_induce_action*/,

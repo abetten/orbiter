@@ -235,13 +235,13 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 	//action *A_on_orbits;
 	//action *A_on_orbits_restricted;
 
-	A_on_orbits = NEW_OBJECT(actions::action);
-	A_on_orbits->induced_action_on_orbits(LS->A_on_designs,
+	//A_on_orbits = NEW_OBJECT(actions::action);
+	A_on_orbits = LS->A_on_designs->Induced_action->induced_action_on_orbits(
 			H_orbits->Sch /* H_orbits_on_spreads*/,
 			TRUE /*f_play_it_safe*/,
 			verbose_level - 1);
 
-	A_on_orbits_restricted = A_on_orbits->restricted_action(
+	A_on_orbits_restricted = A_on_orbits->Induced_action->restricted_action(
 			H_orbits->Classify_orbits_by_length->Set_partition->Sets[type_idx],
 			H_orbits->Classify_orbits_by_length->Set_partition->Set_size[type_idx],
 			verbose_level);

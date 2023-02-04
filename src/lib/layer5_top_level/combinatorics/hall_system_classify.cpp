@@ -223,17 +223,17 @@ void hall_system_classify::init(
 				"after Strong_gens->create_sims" << endl;
 	}
 
-	A_on_triples = NEW_OBJECT(actions::action);
+	//A_on_triples = NEW_OBJECT(actions::action);
 	if (f_v) {
 		cout << "hall_system_classify::init "
-				"before A_on_triples->induced_action_on_sets" << endl;
+				"before A->Induced_action->induced_action_on_sets" << endl;
 	}
-	A_on_triples->induced_action_on_sets(*A, S /*sims *old_G*/,
+	A_on_triples = A->Induced_action->induced_action_on_sets(S /*sims *old_G*/,
 			N /* nb_sets*/, 3 /* set_size */, triples,
 			FALSE /* f_induce_action*/, verbose_level - 1);
 	if (f_v) {
 		cout << "hall_system_classify::init "
-				"after A2->induced_action_on_sets" << endl;
+				"after A->Induced_action->induced_action_on_sets" << endl;
 	}
 
 	if (f_v) {
@@ -378,8 +378,8 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 		cout << "Orbits_on_triples:" << endl;
 		Orbits_on_triples->print(cout);
 	}
-	A_on_orbits = NEW_OBJECT(actions::action);
-	A_on_orbits->induced_action_on_orbits(A_on_triples,
+	//A_on_orbits = NEW_OBJECT(actions::action);
+	A_on_orbits = A_on_triples->Induced_action->induced_action_on_orbits(
 			Orbits_on_triples, f_play_it_safe, verbose_level);
 
 	if (f_v) {
