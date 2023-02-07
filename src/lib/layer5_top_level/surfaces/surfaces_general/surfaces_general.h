@@ -752,23 +752,52 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
-	void table_of_cubic_surfaces(
-			int verbose_level);
-	void table_of_cubic_surfaces_export_csv(
-			long int *Table,
-			int nb_cols,
-			int q, int nb_cubic_surfaces,
-			surface_create **SC,
-			int verbose_level);
-	void table_of_cubic_surfaces_export_sql(
-			long int *Table,
-			int nb_cols,
-			int q, int nb_cubic_surfaces,
-			surface_create **SC,
-			int verbose_level);
 
 };
 
+// #############################################################################
+// table_of_surfaces.cpp
+// #############################################################################
+
+//! a table of cubic surfaces
+
+
+
+class table_of_surfaces {
+
+public:
+
+
+	projective_geometry::projective_space_with_action *PA;
+
+	int nb_cubic_surfaces;
+
+	surface_create_description *Surface_create_description;
+
+	surface_create *SC;
+
+	surface_object_with_action *SOA;
+
+
+
+
+	table_of_surfaces();
+	~table_of_surfaces();
+	void init(
+		projective_geometry::projective_space_with_action *PA,
+		int verbose_level);
+	void do_export(
+			int verbose_level);
+	void export_csv(
+			std::string *Table,
+			int nb_cols,
+			int verbose_level);
+	void export_sql(
+			std::string *Table,
+			int nb_cols,
+			int verbose_level);
+
+};
 
 
 }}}}

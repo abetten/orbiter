@@ -171,10 +171,10 @@ long int action_on_sets::compute_image(
 	}
 	if (f_vv) {
 		cout << "the element " << endl;
-		A->print(cout, Elt);
+		A->Group_element->print(cout, Elt);
 		cout << endl;
 		cout << "as permutation:" << endl;
-		A->print_as_permutation(cout, Elt);
+		A->Group_element->print_as_permutation(cout, Elt);
 		cout << endl;
 	}
 	if (f_vv) {
@@ -183,11 +183,11 @@ long int action_on_sets::compute_image(
 		cout << endl;
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << sets[perm[i]][j] << " : " << endl;
-			A->print_point(sets[perm[i]][j], cout);
+			A->Group_element->print_point(sets[perm[i]][j], cout);
 			cout << endl;
 		}
 	}
-	A->map_a_set_and_reorder(
+	A->Group_element->map_a_set_and_reorder(
 			sets[perm[i]],
 			image_set,
 			set_size,
@@ -199,7 +199,7 @@ long int action_on_sets::compute_image(
 		cout << endl;
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << image_set[j] << " : " << endl;
-			A->print_point(image_set[j], cout);
+			A->Group_element->print_point(image_set[j], cout);
 			cout << endl;
 		}
 	}
@@ -218,10 +218,10 @@ long int action_on_sets::compute_image(
 		cout << "action = " << A->label << endl;
 
 		cout << "the element " << endl;
-		A->print(cout, Elt);
+		A->Group_element->print(cout, Elt);
 		cout << endl;
 		cout << "as permutation:" << endl;
-		A->print_as_permutation(cout, Elt);
+		A->Group_element->print_as_permutation(cout, Elt);
 		cout << endl;
 
 		cout << "i=" << i << endl;

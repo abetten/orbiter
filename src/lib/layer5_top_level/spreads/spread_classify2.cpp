@@ -183,12 +183,12 @@ void spread_classify::print_isomorphism_type2(
 		int *fp, n;
 		
 		fp = NEW_int(A->degree);
-		n = A->find_fixed_points(Stab->gens.ith(i), fp, 0);
+		n = A->Group_element->find_fixed_points(Stab->gens.ith(i), fp, 0);
 		//cout << "with " << n << " fixed points" << endl;
 		FREE_int(fp);
 
 		ost << "$$ g_{" << i + 1 << "}=" << endl;
-		A->element_print_latex(Stab->gens.ith(i), ost);
+		A->Group_element->element_print_latex(Stab->gens.ith(i), ost);
 		ost << "$$" << endl << "with " << n << " fixed points" << endl;
 	}
 
@@ -1002,7 +1002,7 @@ void spread_classify::report3(
 		
 
 				ost << "$$ g_{" << j + 1 << "}=" << endl;
-				A->element_print_latex(gens->ith(j), ost);
+				A->Group_element->element_print_latex(gens->ith(j), ost);
 				ost << "$$" << endl;
 			}
 			
@@ -1375,14 +1375,14 @@ void spread_classify::report_stabilizer(
 		int *fp, n, ord;
 		
 		fp = NEW_int(A->degree);
-		n = A->find_fixed_points(Stab->gens.ith(i), fp, 0);
+		n = A->Group_element->find_fixed_points(Stab->gens.ith(i), fp, 0);
 		//cout << "with " << n << " fixed points" << endl;
 		FREE_int(fp);
 
-		ord = A->element_order(Stab->gens.ith(i));
+		ord = A->Group_element->element_order(Stab->gens.ith(i));
 
 		ost << "$$ g_{" << i + 1 << "}=" << endl;
-		A->element_print_latex(Stab->gens.ith(i), ost);
+		A->Group_element->element_print_latex(Stab->gens.ith(i), ost);
 		ost << "$$" << endl << "of order $" << ord << "$ and with "
 				<< n << " fixed points" << endl;
 	}

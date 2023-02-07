@@ -44,7 +44,7 @@ void l3_interface_gap::canonical_image_GAP(
 	//ost << "Generators in GAP format are:" << endl;
 	ost << "G := Group([";
 	for (i = 0; i < SG->gens->len; i++) {
-		SG->A->element_print_as_permutation_with_offset(
+		SG->A->Group_element->element_print_as_permutation_with_offset(
 				SG->gens->ith(i), ost,
 				1 /*offset*/,
 				TRUE /* f_do_it_anyway_even_for_big_degree */,

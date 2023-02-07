@@ -1409,30 +1409,30 @@ void quartic_curve_create::apply_single_transformation(
 	Elt3 = NEW_int(A->elt_size_in_int);
 
 
-	A->make_element(Elt1, transformation_coeffs, verbose_level);
+	A->Group_element->make_element(Elt1, transformation_coeffs, verbose_level);
 
 	if (f_inverse) {
-		A->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
+		A->Group_element->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
 	}
 	else {
-		A->element_move(Elt1, Elt2, 0 /*verbose_level*/);
+		A->Group_element->element_move(Elt1, Elt2, 0 /*verbose_level*/);
 	}
 
 	//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
 
-	A->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
+	A->Group_element->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "quartic_curve_create::apply_transformations "
 				"applying the transformation given by:" << endl;
 		cout << "$$" << endl;
-		A->print_quick(cout, Elt2);
+		A->Group_element->print_quick(cout, Elt2);
 		cout << endl;
 		cout << "$$" << endl;
 		cout << "quartic_curve_create::apply_transformations "
 				"The inverse is:" << endl;
 		cout << "$$" << endl;
-		A->print_quick(cout, Elt3);
+		A->Group_element->print_quick(cout, Elt3);
 		cout << endl;
 		cout << "$$" << endl;
 	}
@@ -1539,7 +1539,7 @@ void quartic_curve_create::apply_single_transformation(
 				PA->P->Grass_lines->print_single_generator_matrix_tex(
 						cout, QO->bitangents28[i]);
 			}
-			QO->bitangents28[i] = PA->A_on_lines->element_image_of(
+			QO->bitangents28[i] = PA->A_on_lines->Group_element->element_image_of(
 					QO->bitangents28[i], Elt2, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "maps to " << endl;
@@ -1556,7 +1556,7 @@ void quartic_curve_create::apply_single_transformation(
 		if (f_v) {
 			cout << "point" << i << " = " << QO->Pts[i] << endl;
 		}
-		QO->Pts[i] = PA->A->element_image_of(
+		QO->Pts[i] = PA->A->Group_element->element_image_of(
 				QO->Pts[i], Elt2, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "maps to " << QO->Pts[i] << endl;

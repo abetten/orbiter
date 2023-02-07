@@ -143,7 +143,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 					//Sims->orbit_inv[i][aut_data[h * base_len + i]];
 			}
 			A->Sims->element_from_path_inv(D->transporter_witness);
-			if (!A->check_if_transporter_for_set(
+			if (!A->Group_element->check_if_transporter_for_set(
 					D->transporter_witness, D->size,
 				D->the_set, D->the_set, verbose_level)) {
 				cout << "action_is_minimal_recursion: "
@@ -153,11 +153,11 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			if (f_v && D->first_moved < A->base_len()) {
 				int *Elt, a1, a2;
 				Elt = NEW_int(A->elt_size_in_int);
-				A->invert(D->transporter_witness, Elt);
+				A->Group_element->invert(D->transporter_witness, Elt);
 				i = D->first_moved;
 				a = A->Stabilizer_chain->base_i(i);
-				a1 = A->image_of(D->transporter_witness, a);
-				a2 = A->image_of(Elt, a);
+				a1 = A->Group_element->image_of(D->transporter_witness, a);
+				a2 = A->Group_element->image_of(Elt, a);
 				cout << setw(3) << i << " : " 
 					<< setw(3) << a1 << " -> " 
 					<< setw(3) << a << " -> " 
@@ -263,12 +263,12 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		// result is in A->Sims->cosetrep
 		if (FALSE /*f_vvv*/) {
 			cout << "cosetrep:" << endl;
-			A->element_print(D->coset_rep, cout);
+			A->Group_element->element_print(D->coset_rep, cout);
 			cout << endl;
-			A->element_print_as_permutation(D->coset_rep, cout);
+			A->Group_element->element_print_as_permutation(D->coset_rep, cout);
 			cout << endl;
 		}
-		A->map_a_set(current_set, next_set, D->size, D->coset_rep, 0);
+		A->Group_element->map_a_set(current_set, next_set, D->size, D->coset_rep, 0);
 		if (FALSE /*f_vv*/) {
 			cout << "image set: ";
 			Lint_vec_print(cout, next_set, D->size);
@@ -314,7 +314,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			}
 			A->Sims->element_from_path_inv(D->transporter_witness);
 			
-			if (!A->check_if_transporter_for_set(
+			if (!A->Group_element->check_if_transporter_for_set(
 					D->transporter_witness, D->size,
 				D->the_set, D->witness, verbose_level)) {
 				cout << "action_is_minimal_recursion: error in "
@@ -592,7 +592,7 @@ finish:
 					"computing witness" << endl;
 		}
 		for (i = 0; i < size; i++) {
-			witness[i] = A->image_of(transporter_witness, set[i]);
+			witness[i] = A->Group_element->image_of(transporter_witness, set[i]);
 		}
 		//int_vec_sort(size, witness);
 		Sorting.lint_vec_heapsort(witness, size);

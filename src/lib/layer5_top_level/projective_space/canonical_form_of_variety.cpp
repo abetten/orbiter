@@ -443,12 +443,12 @@ int canonical_form_of_variety::find_equation(
 
 	Mtx[9] = frobenius;
 
-	Canonical_form_classifier->Descr->PA->A->make_element(
+	Canonical_form_classifier->Descr->PA->A->Group_element->make_element(
 			Canonical_form_classifier->Elt, Mtx, 0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "The isomorphism from C to C1 is given by:" << endl;
-		Canonical_form_classifier->Descr->PA->A->element_print(
+		Canonical_form_classifier->Descr->PA->A->Group_element->element_print(
 				Canonical_form_classifier->Elt, cout);
 	}
 

@@ -2391,7 +2391,6 @@ void symbol_definition::definition_of_BLT_set(int verbose_level)
 				"before BC->init" << endl;
 	}
 	BC->init(
-			OA->Blt_Set_domain,
 			BLT_Set_create_description,
 			OA,
 			verbose_level);

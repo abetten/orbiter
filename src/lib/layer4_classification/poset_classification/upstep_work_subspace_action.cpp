@@ -369,7 +369,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		
 		
 		// initialize transporter[0] for the tracing
-		gen->get_A()->element_one(gen->get_transporter()->ith(0), 0);
+		gen->get_A()->Group_element->element_one(gen->get_transporter()->ith(0), 0);
 
 
 		if (f_vv) {
@@ -448,7 +448,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 				if (coset > 0 &&
 						TRUE /*gen->f_allowed_to_show_group_elements*/
 						&& f_v) {
-					gen->get_A()->element_print_quick(aut, cout);
+					gen->get_A()->Group_element->element_print_quick(aut, cout);
 					cout << endl;
 #if 0
 					cout << "in the action " << gen->A2->label
@@ -458,7 +458,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 					cout << "in the action "
 							<< A_on_hyperplanes->label
 							<< " on the hyperplanes:" << endl;
-					A_on_hyperplanes->element_print_as_permutation_verbose(
+					A_on_hyperplanes->Group_element->element_print_as_permutation_verbose(
 						aut,
 						cout, 0/*verbose_level - 5*/);
 				}

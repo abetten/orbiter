@@ -244,11 +244,11 @@ void recoordinatize::do_recoordinatize(
 
 	C[n * n] = 0;
 
-	A->make_element(Elt, C, 0);
+	A->Group_element->make_element(Elt, C, 0);
 	if (f_vv) {
 		cout << "recoordinatize::do_recoordinatize "
 				"transporter:" << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 	}
 	if (f_v) {
 		cout << "recoordinatize::do_recoordinatize done" << endl;
@@ -691,7 +691,7 @@ void recoordinatize::compute_live_points_low_level(
 				cout << "recoordinatize::compute_live_points_low_level "
 						"element " << cnt << " = " << h
 						<< ", normalized:" << endl;
-				A0->element_print(Elt1, cout);
+				A0->Group_element->element_print(Elt1, cout);
 			}
 
 			for (z = 1; z < q; z++, cnt++) {

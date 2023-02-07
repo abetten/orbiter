@@ -122,7 +122,7 @@ void poset_classification::generate_source_code(
 							<< j << " / " << stab_gens_len[iso_type] << endl;
 				}
 				fp << "\t";
-				Poset->A->element_print_for_make_element(
+				Poset->A->Group_element->element_print_for_make_element(
 						SaS->Strong_gens->gens->ith(j), fp);
 				fp << endl;
 			}
@@ -326,7 +326,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 										<< j << " / " << stab_gens_len[iso_type] << endl;
 							}
 							fp << "\t";
-							Poset->A->element_print_for_make_element(
+							Poset->A->Group_element->element_print_for_make_element(
 									SaS->Strong_gens->gens->ith(j), fp);
 							fp << endl;
 						}
@@ -624,9 +624,9 @@ void poset_classification::generate_history(int level, int verbose_level)
 				fp << "static long int " << problem_label << "_lvl_" << lvl << "_flag_fuse_iso[] = { " << endl;
 				for (nb_fuse = 0; nb_fuse < nb_fuse_total; nb_fuse++) {
 					hdl = fuse_data[nb_fuse * 3 + 0];
-					Poset->A->element_retrieve(hdl, Elt, 0);
+					Poset->A->Group_element->element_retrieve(hdl, Elt, 0);
 					fp << "\t";
-					Poset->A->element_print_for_make_element(Elt, fp);
+					Poset->A->Group_element->element_print_for_make_element(Elt, fp);
 					fp << endl;
 				}
 				fp << "};" << endl;

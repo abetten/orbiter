@@ -190,6 +190,7 @@ namespace orthogonal_geometry_applications {
 	class orthogonal_space_activity;
 	class orthogonal_space_with_action_description;
 	class orthogonal_space_with_action;
+	class table_of_blt_sets;
 
 }
 
@@ -350,6 +351,7 @@ namespace applications_in_algebraic_geometry {
 		class surface_object_with_action;
 		class surface_study;
 		class surface_with_action;
+		class table_of_surfaces;
 
 	}
 

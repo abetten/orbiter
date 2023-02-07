@@ -480,7 +480,7 @@ void isomorph_global::identify(
 
 				fclose(f2);
 	#else
-				Iso.A_base->element_write_file(Iso.Folding->transporter,
+				Iso.A_base->Group_element->element_write_file(Iso.Folding->transporter,
 						fname_transporter, 0 /* verbose_level*/);
 	#endif
 				cout << "isomorph_identify written file " << fname_transporter
@@ -865,7 +865,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 			//cout << endl;
 			int f_failure_to_find_point, f_found;
 
-			Iso->A_base->element_one(transporter, 0);
+			Iso->A_base->Group_element->element_one(transporter, 0);
 			case_nb = Iso->Folding->trace_set(rearranged_set, transporter,
 				f_implicit_fusion, f_failure_to_find_point,
 				0 /*verbose_level - 2*/);
@@ -1080,7 +1080,7 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 							<< " / " << gens->len << endl;
 				}
 				fp << "";
-				Iso.A_base->element_print_for_make_element(gens->ith(j), fp);
+				Iso.A_base->Group_element->element_print_for_make_element(gens->ith(j), fp);
 				fp << endl;
 			}
 

@@ -782,7 +782,7 @@ void classify_trihedral_pairs::identify_three_planes(
 	}
 	F->Linear_algebra->matrix_inverse(M2, M3, 4, 0 /* verbose_level */);
 	M3[16] = 0; // if semilinear
-	A->make_element(transporter, M3, 0 /* verbose_level */);
+	A->Group_element->make_element(transporter, M3, 0 /* verbose_level */);
 	
 	if (f_v) {
 		cout << "classify_trihedral_pairs::identify_three_planes "
@@ -1034,11 +1034,11 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 
 		if (f_v) {
 			cout << "We found a transporter:" << endl;
-			A->element_print_quick(Elt1, cout);
+			A->Group_element->element_print_quick(Elt1, cout);
 		}
 
 		Lint_vec_copy(Planes + po * 3, planes2, 3);
-		A->map_a_set_and_reorder(planes2, planes3, 3,
+		A->Group_element->map_a_set_and_reorder(planes2, planes3, 3,
 				Elt1, 0 /* verbose_level */);
 		if (type == 1) {
 			orb = orbits_on_trihedra_type1->trace_set(
@@ -1056,7 +1056,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 			cout << "type must be either 1 or 2." << endl;
 			exit(1);
 		}
-		A->element_mult(Elt1, Elt2, Elt3, 0);
+		A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 
 
 		groups::strong_generators *S;
@@ -1068,7 +1068,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 			if (f_v) {
 				cout << "We found an automorphism "
 						"of the trihedral pair:" << endl;
-				A->element_print_quick(Elt3, cout);
+				A->Group_element->element_print_quick(Elt3, cout);
 				cout << endl;
 			}
 		
@@ -1095,7 +1095,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 			Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
 			Flag_orbits->Flag_orbit_node[f2].fusion_elt =
 					NEW_int(A->elt_size_in_int);
-			A->element_invert(Elt3,
+			A->Group_element->element_invert(Elt3,
 					Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
 			f_processed[f2] = TRUE;
 			nb_processed++;
@@ -1255,10 +1255,10 @@ void classify_trihedral_pairs::identify_trihedral_pair(
 
 	if (f_vv) {
 		cout << "Elt1=" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 
-	A->map_a_set_and_reorder(
+	A->Group_element->map_a_set_and_reorder(
 			planes6 + 3, planes1, 3, Elt1,
 			0 /* verbose_level */);
 	if (type == 1) {
@@ -1278,7 +1278,7 @@ void classify_trihedral_pairs::identify_trihedral_pair(
 				"type must be either 1 or 2." << endl;
 		exit(1);
 	}
-	A->element_mult(Elt1, Elt2, Elt3, 0);
+	A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 	
 	if (type == 1) {
 		f = orb;
@@ -1287,14 +1287,14 @@ void classify_trihedral_pairs::identify_trihedral_pair(
 		f = nb_orbits_type1 + orb;
 	}
 	if (Flag_orbits->Flag_orbit_node[f].f_fusion_node) {
-		A->element_mult(Elt3,
+		A->Group_element->element_mult(Elt3,
 				Flag_orbits->Flag_orbit_node[f].fusion_elt, Elt4, 0);
 		f2 = Flag_orbits->Flag_orbit_node[f].fusion_with;
 		orbit_index = Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit;
 	}
 	else {
 		f2 = -1;
-		A->element_move(Elt3, Elt4, 0);
+		A->Group_element->element_move(Elt3, Elt4, 0);
 		orbit_index = Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit;
 	}
 	if (f_v) {
@@ -1302,10 +1302,10 @@ void classify_trihedral_pairs::identify_trihedral_pair(
 				"type=" << type << " orb=" << orb << " f=" << f
 				<< " f2=" << f2 << " orbit_index=" << orbit_index << endl;
 	}
-	A->element_move(Elt4, transporter, 0);
+	A->Group_element->element_move(Elt4, transporter, 0);
 	if (f_vv) {
 		cout << "transporter=" << endl;
-		A->element_print_quick(transporter, cout);
+		A->Group_element->element_print_quick(transporter, cout);
 	}
 	
 	FREE_int(Elt1);

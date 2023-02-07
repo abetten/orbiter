@@ -146,7 +146,7 @@ void orbit_of_equations::map_an_equation(
 	}
 	if (f_v) {
 		cout << "orbit_of_equations::map_an_equation Elt=" << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 	}
 	AonHPD->compute_image_int_low_level(
 		Elt,
@@ -457,16 +457,16 @@ void orbit_of_equations::get_transporter(
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	A->element_one(Elt1, 0);
+	A->Group_element->element_one(Elt1, 0);
 	idx1 = idx;
 	idx0 = prev[idx1];
 	while (idx0 >= 0) {
 		l = label[idx1];
-		A->element_mult(
+		A->Group_element->element_mult(
 				SG->gens->ith(l),
 				Elt1,
 				Elt2, 0);
-		A->element_move(Elt2, Elt1, 0);
+		A->Group_element->element_move(Elt2, Elt1, 0);
 		idx1 = idx0;
 		idx0 = prev[idx1];
 	}
@@ -475,7 +475,7 @@ void orbit_of_equations::get_transporter(
 				"idx1 != position_of_original_object" << endl;
 		exit(1);
 	}
-	A->element_move(Elt1, transporter, 0);
+	A->Group_element->element_move(Elt1, transporter, 0);
 
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -522,7 +522,7 @@ void orbit_of_equations::get_random_schreier_generator(
 				<< ", random generator " << r2 << endl;
 	}
 	
-	A->element_mult(E1, SG->gens->ith(r2), E2, 0);
+	A->Group_element->element_mult(E1, SG->gens->ith(r2), E2, 0);
 
 	// compute image of original subspace under E2:
 	Int_vec_copy(
@@ -549,8 +549,8 @@ void orbit_of_equations::get_random_schreier_generator(
 	
 
 	get_transporter(pt2, E3, 0);
-	A->element_invert(E3, E4, 0);
-	A->element_mult(E2, E4, E5, 0);
+	A->Group_element->element_invert(E3, E4, 0);
+	A->Group_element->element_mult(E2, E4, E5, 0);
 
 	// test:
 	map_an_equation(cur_object, new_object, E5, 0 /* verbose_level*/);
@@ -573,7 +573,7 @@ void orbit_of_equations::get_random_schreier_generator(
 
 
 
-	A->element_move(E5, Elt, 0);
+	A->Group_element->element_move(E5, Elt, 0);
 
 
 	FREE_int(E1);
@@ -767,7 +767,7 @@ void orbit_of_equations::stabilizer_orbit_rep_work(
 						"element strips through" << endl;
 				if (FALSE) {
 					cout << "residue:" << endl;
-					A->element_print(residue, cout);
+					A->Group_element->element_print(residue, cout);
 					cout << endl;
 				}
 			}
@@ -780,7 +780,7 @@ void orbit_of_equations::stabilizer_orbit_rep_work(
 						"element needs to be inserted at level = "
 					<< drop_out_level << " with image " << image << endl;
 				if (FALSE) {
-					A->element_print(residue, cout);
+					A->Group_element->element_print(residue, cout);
 					cout  << endl;
 				}
 			}
@@ -829,7 +829,7 @@ groups::strong_generators *orbit_of_equations::stabilizer_any_point(
 	// transporter_inv is an element which maps
 	// the orbit representative to the given object.
 
-	A->element_invert(transporter_inv, transporter, 0);
+	A->Group_element->element_invert(transporter_inv, transporter, 0);
 
 
 

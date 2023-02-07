@@ -2757,17 +2757,17 @@ void poset_classification::print_data_structure_tex(
 						fp << " & ";
 
 						hdl = E->get_data();
-						Poset->A->element_retrieve(hdl, Elt, FALSE);
+						Poset->A->Group_element->element_retrieve(hdl, Elt, FALSE);
 
 						fp << "$";
-						Poset->A->element_print_latex(Elt, fp);
+						Poset->A->Group_element->element_print_latex(Elt, fp);
 						fp << "$";
 
 						fp << " & ";
 
 						if (f_permutation_degree_is_small) {
 							fp << "$";
-							Poset->A2->element_print_as_permutation(Elt, fp);
+							Poset->A2->Group_element->element_print_as_permutation(Elt, fp);
 							fp << "$";
 
 							fp << " & ";

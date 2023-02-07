@@ -384,7 +384,7 @@ void classification_step::generate_source_code(
 							<< stab_gens_len[orbit_index] << endl;
 				}
 				ost << "\t";
-				A->element_print_for_make_element(
+				A->Group_element->element_print_for_make_element(
 						Orbit[orbit_index].gens->gens->ith(j), ost);
 				//A->element_print_for_make_element(
 				//The_surface[iso_type]->stab_gens->gens->ith(j), f);

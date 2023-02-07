@@ -823,6 +823,15 @@ class interface_toolkit {
 	int loop_step;
 	std::string *loop_argv;
 
+	int f_loop_over;
+	int loop_over_start_idx;
+	int loop_over_end_idx;
+	std::string loop_over_variable;
+	std::string loop_over_index;
+	std::string loop_over_domain;
+	std::string *loop_over_argv;
+
+
 	int f_plot_function;
 	std::string plot_function_fname;
 
@@ -906,7 +915,8 @@ public:
 
 	orbiter_command();
 	~orbiter_command();
-	void parse(orbiter_top_level_session *Orbiter_top_level_session,
+	void parse(
+			orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *Argv, int &i, int verbose_level);
 	void execute(int verbose_level);
 	void print();

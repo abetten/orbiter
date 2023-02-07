@@ -348,7 +348,7 @@ trace_result upstep_work::recognize_recursion(
 		cout << "upstep_work::recognize_recursion "
 				"transporter element:" << endl;
 		int *transporter = gen->get_transporter()->ith(lvl + 1);
-		gen->get_A2()->element_print_quick(transporter, cout);
+		gen->get_A2()->Group_element->element_print_quick(transporter, cout);
 		//gen->A2->element_print_as_permutation(transporter, cout);
 		cout << endl;
 	}
@@ -360,7 +360,7 @@ trace_result upstep_work::recognize_recursion(
 			cout << "upstep_work::recognize_recursion "
 					"calling handle_last_level" << endl;
 			cout << "The element \\alpha is equal to " << endl;
-			gen->get_A2()->element_print_quick(
+			gen->get_A2()->Group_element->element_print_quick(
 					gen->get_transporter()->ith(lvl + 1), cout);
 		}
 		trace_result r;
@@ -629,7 +629,7 @@ trace_result upstep_work::handle_last_level(
 			cout << " extension node is current node, "
 					"i.e. found an automorphism" << endl;
 			if (gen->allowed_to_show_group_elements() && f_vv) {
-				gen->get_A()->element_print_quick(
+				gen->get_A()->Group_element->element_print_quick(
 						gen->get_transporter()->ith(lvl + 1), cout);
 				cout << endl;
 			}
@@ -711,7 +711,7 @@ trace_result upstep_work::start_over(
 		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_set_i(0), size);
 		cout << endl;
 	}
-	gen->get_A()->element_move(
+	gen->get_A()->Group_element->element_move(
 		gen->get_transporter()->ith(lvl + 1),
 		gen->get_transporter()->ith(0),
 		FALSE);

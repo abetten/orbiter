@@ -30,9 +30,9 @@ namespace actions {
 	class action;
 	class action_global;
 	class action_pointer_table;
-	class nauty_interface_with_group;
-	class known_groups;
+	class group_element;
 	class induced_action;
+	class known_groups;
 	class stabilizer_chain_base_data;
 
 }

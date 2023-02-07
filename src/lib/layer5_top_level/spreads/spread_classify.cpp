@@ -387,7 +387,8 @@ void spread_classify::init(
 		A->Strong_gens->gens->print(cout, f_print_as_permutation, 
 			f_offset, offset, 
 			f_do_it_anyway_even_for_big_degree, 
-			f_print_cycles_of_length_one);
+			f_print_cycles_of_length_one,
+			0 /* verbose_level */);
 	}
 
 
@@ -1232,13 +1233,13 @@ static int starter_canonize_callback(long int *Set, int len,
 		cout << "starter_canonize_callback" << endl;
 	}
 	Spread->R->do_recoordinatize(Set[0], Set[1], Set[2], verbose_level - 2);
-	Spread->A->element_move(Spread->R->Elt, Elt, FALSE);
+	Spread->A->Group_element->element_move(Spread->R->Elt, Elt, FALSE);
 	if (f_v) {
 		cout << "starter_canonize_callback done" << endl;
 	}
 	if (f_vv) {
 		cout << "transporter:" << endl;
-		Spread->A->element_print(Elt, cout);
+		Spread->A->Group_element->element_print(Elt, cout);
 	}
 	return TRUE;
 }

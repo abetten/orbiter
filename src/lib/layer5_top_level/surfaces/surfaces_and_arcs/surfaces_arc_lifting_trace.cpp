@@ -195,21 +195,21 @@ void surfaces_arc_lifting_trace::process_flag_orbit(surfaces_arc_lifting_upstep 
 		cout << endl;
 
 		cout << "Alpha1=" << endl;
-		Up->Lift->A4->element_print_quick(Elt_Alpha1, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_Alpha1, cout);
 		cout << "Alpha2=" << endl;
-		Up->Lift->A4->element_print_quick(Elt_Alpha2, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_Alpha2, cout);
 		cout << "Beta1=" << endl;
-		Up->Lift->A4->element_print_quick(Elt_Beta1, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_Beta1, cout);
 		cout << "Beta2=" << endl;
-		Up->Lift->A4->element_print_quick(Elt_Beta2, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_Beta2, cout);
 		cout << "Beta3=" << endl;
-		Up->Lift->A4->element_print_quick(Elt_Beta3, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_Beta3, cout);
 	}
 
-	Up->Lift->A4->element_mult(Elt_Alpha1, Elt_Alpha2, Elt_T1, 0);
-	Up->Lift->A4->element_mult(Elt_T1, Elt_Beta1, Elt_T2, 0);
-	Up->Lift->A4->element_mult(Elt_T2, Elt_Beta2, Elt_T3, 0);
-	Up->Lift->A4->element_mult(Elt_T3, Elt_Beta3, Elt_T4, 0);
+	Up->Lift->A4->Group_element->element_mult(Elt_Alpha1, Elt_Alpha2, Elt_T1, 0);
+	Up->Lift->A4->Group_element->element_mult(Elt_T1, Elt_Beta1, Elt_T2, 0);
+	Up->Lift->A4->Group_element->element_mult(Elt_T2, Elt_Beta2, Elt_T3, 0);
+	Up->Lift->A4->Group_element->element_mult(Elt_T3, Elt_Beta3, Elt_T4, 0);
 
 
 	if (f_vvv) {
@@ -221,7 +221,7 @@ void surfaces_arc_lifting_trace::process_flag_orbit(surfaces_arc_lifting_upstep 
 		cout << " f2=" << f2;
 		cout << endl;
 		cout << "T4 = Alpha1 * Alpha2 * Beta1 * Beta2 * Beta3 = " << endl;
-		Up->Lift->A4->element_print_quick(Elt_T4, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_T4, cout);
 		cout << endl;
 	}
 
@@ -393,9 +393,9 @@ void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_l
 
 	The_case.Basis_pi_inv[16] = 0; // in case the group is semilinear
 
-	Up->Lift->Surf_A->A->make_element(Elt_Alpha1, The_case.Basis_pi_inv, 0 /*verbose_level*/);
+	Up->Lift->Surf_A->A->Group_element->make_element(Elt_Alpha1, The_case.Basis_pi_inv, 0 /*verbose_level*/);
 	for (i = 0; i < 6; i++) {
-		P6a[i] = Up->Lift->Surf_A->A->image_of(Elt_Alpha1, The_case.P6[i]);
+		P6a[i] = Up->Lift->Surf_A->A->Group_element->image_of(Elt_Alpha1, The_case.P6[i]);
 	}
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::move_plane_and_arc" << endl;
@@ -432,7 +432,7 @@ void surfaces_arc_lifting_trace::make_arc_canonical(
 		cout << " orbit_not_on_conic_idx=" << orbit_not_on_conic_idx << endl;
 	}
 	for (i = 0; i < 6; i++) {
-		P6_local_canonical[i] = Up->Lift->A3->image_of(Elt_alpha2, P6_local[i]);
+		P6_local_canonical[i] = Up->Lift->A3->Group_element->image_of(Elt_alpha2, P6_local[i]);
 	}
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::make_arc_canonical" << endl;
@@ -499,7 +499,7 @@ void surfaces_arc_lifting_trace::compute_beta1(algebraic_geometry::seventytwo_ca
 	}
 	for (i = 0; i < 6; i++) {
 		The_case->P6_perm_mapped[i] =
-				Up->Lift->Table_orbits_on_pairs[The_case->orbit_not_on_conic_idx].A_on_arc->image_of(
+				Up->Lift->Table_orbits_on_pairs[The_case->orbit_not_on_conic_idx].A_on_arc->Group_element->image_of(
 				Elt_beta1, The_case->P6_perm[i]);
 	}
 
@@ -611,11 +611,11 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "
 				"before embedding" << endl;
 		cout << "Elt_alpha2=" << endl;
-		Up->Lift->A3->element_print_quick(Elt_alpha2, cout);
+		Up->Lift->A3->Group_element->element_print_quick(Elt_alpha2, cout);
 		cout << "Elt_beta1=" << endl;
-		Up->Lift->A3->element_print_quick(Elt_beta1, cout);
+		Up->Lift->A3->Group_element->element_print_quick(Elt_beta1, cout);
 		cout << "Elt_beta2=" << endl;
-		Up->Lift->A3->element_print_quick(Elt_beta2, cout);
+		Up->Lift->A3->Group_element->element_print_quick(Elt_beta2, cout);
 	}
 
 
@@ -636,17 +636,17 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "
 				"after embedding" << endl;
 		cout << "Elt_Alpha2=" << endl;
-		Up->Lift->A4->element_print_quick(Elt_Alpha2, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_Alpha2, cout);
 		cout << "Elt_Beta1=" << endl;
-		Up->Lift->A4->element_print_quick(Elt_Beta1, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_Beta1, cout);
 		cout << "Elt_Beta2=" << endl;
-		Up->Lift->A4->element_print_quick(Elt_Beta2, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_Beta2, cout);
 	}
 
 
-	Up->Lift->A4->element_mult(Elt_Alpha1, Elt_Alpha2, Elt_T1, 0);
-	Up->Lift->A4->element_mult(Elt_T1, Elt_Beta1, Elt_T2, 0);
-	Up->Lift->A4->element_mult(Elt_T2, Elt_Beta2, Elt_T3, 0);
+	Up->Lift->A4->Group_element->element_mult(Elt_Alpha1, Elt_Alpha2, Elt_T1, 0);
+	Up->Lift->A4->Group_element->element_mult(Elt_T1, Elt_Beta1, Elt_T2, 0);
+	Up->Lift->A4->Group_element->element_mult(Elt_T2, Elt_Beta2, Elt_T3, 0);
 
 
 	// map the two lines:
@@ -656,8 +656,8 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 
 
 
-	The_case.L1 = Up->Lift->Surf_A->A2->element_image_of(Up->Lines[The_case.l1], Elt_T3, 0 /* verbose_level */);
-	The_case.L2 = Up->Lift->Surf_A->A2->element_image_of(Up->Lines[The_case.l2], Elt_T3, 0 /* verbose_level */);
+	The_case.L1 = Up->Lift->Surf_A->A2->Group_element->element_image_of(Up->Lines[The_case.l1], Elt_T3, 0 /* verbose_level */);
+	The_case.L2 = Up->Lift->Surf_A->A2->Group_element->element_image_of(Up->Lines[The_case.l2], Elt_T3, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "
 				"L1=" << The_case.L1 << " L2=" << The_case.L2 << endl;
@@ -785,14 +785,14 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 				"after hyperplane_lifting_with_two_lines_moved" << endl;
 	}
 
-	Up->Lift->A4->make_element(Elt_Beta3, beta3, 0);
+	Up->Lift->A4->Group_element->make_element(Elt_Beta3, beta3, 0);
 
 	if (f_vv) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines" << endl;
 		cout << "Elt_beta3=" << endl;
 		Int_matrix_print(Elt_Beta3, 4, 4);
 		cout << "Elt_beta3=" << endl;
-		Up->Lift->A4->element_print_quick(Elt_Beta3, cout);
+		Up->Lift->A4->Group_element->element_print_quick(Elt_Beta3, cout);
 		cout << endl;
 	}
 
@@ -837,7 +837,7 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 	if (FALSE) {
 		cout << "surfaces_arc_lifting_trace::embed before make_element" << endl;
 	}
-	Up->Lift->A4->make_element(Elt_A4, M4, 0);
+	Up->Lift->A4->Group_element->make_element(Elt_A4, M4, 0);
 
 
 	if (f_v) {
@@ -848,13 +848,13 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 void surfaces_arc_lifting_trace::report_product(std::ostream &ost, int *Elt, int verbose_level)
 {
 	ost << "$$" << endl;
-	Up->Lift->A4->element_print_latex(Elt_Alpha1, ost);
-	Up->Lift->A4->element_print_latex(Elt_Alpha2, ost);
-	Up->Lift->A4->element_print_latex(Elt_Beta1, ost);
-	Up->Lift->A4->element_print_latex(Elt_Beta2, ost);
-	Up->Lift->A4->element_print_latex(Elt_Beta3, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Alpha1, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Alpha2, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Beta1, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Beta2, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Beta3, ost);
 	ost << "=";
-	Up->Lift->A4->element_print_latex(Elt, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt, ost);
 	ost << "$$" << endl;
 
 	int f_print_as_exponentials_save = Up->Lift->F->f_print_as_exponentials;
@@ -866,13 +866,13 @@ void surfaces_arc_lifting_trace::report_product(std::ostream &ost, int *Elt, int
 	Up->Lift->F->f_print_as_exponentials = FALSE;
 
 	ost << "$$" << endl;
-	Up->Lift->A4->element_print_latex(Elt_Alpha1, ost);
-	Up->Lift->A4->element_print_latex(Elt_Alpha2, ost);
-	Up->Lift->A4->element_print_latex(Elt_Beta1, ost);
-	Up->Lift->A4->element_print_latex(Elt_Beta2, ost);
-	Up->Lift->A4->element_print_latex(Elt_Beta3, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Alpha1, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Alpha2, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Beta1, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Beta2, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt_Beta3, ost);
 	ost << "=";
-	Up->Lift->A4->element_print_latex(Elt, ost);
+	Up->Lift->A4->Group_element->element_print_latex(Elt, ost);
 	ost << "$$" << endl;
 
 	Up->Lift->F->f_print_as_exponentials = f_print_as_exponentials_save;

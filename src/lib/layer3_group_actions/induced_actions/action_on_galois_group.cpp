@@ -85,7 +85,7 @@ long int action_on_galois_group::compute_image(
 		exit(1);
 		}
 
-	a = A->linear_entry_frobenius(Elt);
+	a = A->Group_element->linear_entry_frobenius(Elt);
 	b = i + a;
 	j = b % degree;
 

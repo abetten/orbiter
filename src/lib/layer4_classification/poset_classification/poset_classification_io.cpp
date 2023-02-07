@@ -1683,7 +1683,7 @@ void poset_classification::wedge_product_export_magma(
 
 			for (j = 0; j < gen_hdl.size(); j++) {
 
-				Poset->A->element_retrieve(gen_hdl[j], Elt, 0);
+				Poset->A->Group_element->element_retrieve(gen_hdl[j], Elt, 0);
 
 				f << "[";
 				//Gen->A->element_print_quick(Elt, f);

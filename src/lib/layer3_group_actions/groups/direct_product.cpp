@@ -714,23 +714,23 @@ void direct_product::lift_generators(
 	Elt2 = NEW_int(A2->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
-	A1->element_one(Elt1, 0 /* verbose_level */);
-	A2->element_one(Elt2, 0 /* verbose_level */);
+	A1->Group_element->element_one(Elt1, 0 /* verbose_level */);
+	A2->Group_element->element_one(Elt2, 0 /* verbose_level */);
 	for (i = 0; i < len1; i++) {
-		A1->element_move(SG1->gens->ith(i),
+		A1->Group_element->element_move(SG1->gens->ith(i),
 				Elt3, 0 /* verbose_level */);
-		A2->element_move(Elt2,
+		A2->Group_element->element_move(Elt2,
 				Elt3 + A1->elt_size_in_int,
 				0 /* verbose_level */);
-		A->element_move(Elt3, gens->ith(i), 0);
+		A->Group_element->element_move(Elt3, gens->ith(i), 0);
 	}
 	for (i = 0; i < len2; i++) {
-		A1->element_move(Elt1, Elt3,
+		A1->Group_element->element_move(Elt1, Elt3,
 				0 /* verbose_level */);
-		A2->element_move(SG2->gens->ith(i),
+		A2->Group_element->element_move(SG2->gens->ith(i),
 				Elt3 + A1->elt_size_in_int,
 				0 /* verbose_level */);
-		A->element_move(Elt3, gens->ith(len1 + i), 0);
+		A->Group_element->element_move(Elt3, gens->ith(len1 + i), 0);
 	}
 	if (f_v) {
 		cout << "direct_product::lift_generators "

@@ -112,6 +112,8 @@ void flock::init(
 
 		int u, v, w;
 
+		// delete column 2 from the generator matrix of the hyperplane B[]
+		// and copy into C[]
 		for (u = 0; u < 3; u++) {
 			w = 0;
 			for (v = 0; v < 5; v++) {
@@ -131,7 +133,8 @@ void flock::init(
 		Int_vec_copy(C, D, 3 * 4);
 
 
-		plane_reduced = BLT_set->Blt_set_domain->G43->rank_lint_here(D, 0 /*verbose_level*/);
+		plane_reduced = BLT_set->Blt_set_domain->G43->
+				rank_lint_here(D, 0 /*verbose_level*/);
 		Flock_reduced[j] = plane_reduced;
 
 		Int_vec_copy(C, D, 3 * 4);
@@ -147,7 +150,8 @@ void flock::init(
 			Int_matrix_print(E, 1, 4);
 		}
 
-		BLT_set->Blt_set_domain->F->Projective_space_basic->PG_element_normalize_from_a_given_position(
+		BLT_set->Blt_set_domain->F->Projective_space_basic->
+			PG_element_normalize_from_a_given_position(
 				E, 1, 4, 1);
 
 		if (f_v) {
@@ -171,7 +175,8 @@ void flock::init(
 		ABC[j * 3 + 1] = F[1];
 		ABC[j * 3 + 2] = F[2];
 
-		Flock_affine[j] = Gg.AG_element_rank(BLT_set->Blt_set_domain->F->q, F, 1, 3);
+		Flock_affine[j] = Gg.AG_element_rank(
+				BLT_set->Blt_set_domain->F->q, F, 1, 3);
 
 		if (f_v) {
 			cout << "flock::init " << i << " / "
@@ -192,7 +197,8 @@ void flock::init(
 	if (f_v) {
 		cout << "flock::init before Table_of_ABC->allocate_and_init" << endl;
 	}
-	Table_of_ABC->allocate_and_init(BLT_set->Blt_set_domain->F->q, 3, ABC);
+	Table_of_ABC->allocate_and_init(
+			BLT_set->Blt_set_domain->F->q, 3, ABC);
 	if (f_v) {
 		cout << "flock::init after Table_of_ABC->allocate_and_init" << endl;
 	}
@@ -234,7 +240,8 @@ void flock::init(
 
 	}
 
-	test_flock_condition(BLT_set->Blt_set_domain->F, FALSE /* f_magic */, ABC, verbose_level);
+	test_flock_condition(BLT_set->Blt_set_domain->F,
+			FALSE /* f_magic */, ABC, verbose_level);
 
 
 

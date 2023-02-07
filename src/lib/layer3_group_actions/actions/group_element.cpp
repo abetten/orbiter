@@ -1,0 +1,1894 @@
+/*
+ * group_element.cpp
+ *
+ *  Created on: Feb 7, 2023
+ *      Author: betten
+ */
+
+
+#include "layer1_foundations/foundations.h"
+#include "group_actions.h"
+
+
+
+using namespace std;
+
+
+namespace orbiter {
+namespace layer3_group_actions {
+namespace actions {
+
+
+
+group_element::group_element()
+{
+	A = NULL;
+
+}
+
+group_element::~group_element()
+{
+}
+
+void group_element::init(action *A, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::init" << endl;
+	}
+	group_element::A = A;
+	if (f_v) {
+		cout << "group_element::init done" << endl;
+	}
+}
+
+int group_element::image_of(void *elt, int a)
+{
+	A->ptr->nb_times_image_of_called++;
+	return (*A->ptr->ptr_element_image_of)(*A, a, elt, 0);
+}
+
+void group_element::image_of_low_level(
+		void *elt,
+		int *input, int *output,
+		int verbose_level)
+{
+	A->ptr->nb_times_image_of_low_level_called++;
+	(*A->ptr->ptr_element_image_of_low_level)(
+			*A,
+			input, output, elt, verbose_level);
+}
+
+int group_element::linear_entry_ij(
+		void *elt, int i, int j)
+{
+	return (*A->ptr->ptr_element_linear_entry_ij)(*A, elt, i, j, 0);
+}
+
+int group_element::linear_entry_frobenius(
+		void *elt)
+{
+	return (*A->ptr->ptr_element_linear_entry_frobenius)(*A, elt, 0);
+}
+
+void group_element::one(void *elt)
+{
+	(*A->ptr->ptr_element_one)(*A, elt, 0);
+}
+
+int group_element::is_one(void *elt)
+{
+	return element_is_one(elt, 0);
+	//return (*ptr_element_is_one)(*A, elt, FALSE);
+}
+
+void group_element::unpack(void *elt, void *Elt)
+{
+	A->ptr->nb_times_unpack_called++;
+	(*A->ptr->ptr_element_unpack)(*A, elt, Elt, 0);
+}
+
+void group_element::pack(void *Elt, void *elt)
+{
+	A->ptr->nb_times_pack_called++;
+	(*A->ptr->ptr_element_pack)(*A, Elt, elt, 0);
+}
+
+void group_element::retrieve(void *elt, int hdl)
+{
+	A->ptr->nb_times_retrieve_called++;
+	(*A->ptr->ptr_element_retrieve)(*A, hdl, elt, 0);
+}
+
+int group_element::store(void *elt)
+{
+	A->ptr->nb_times_store_called++;
+	return (*A->ptr->ptr_element_store)(*A, elt, 0);
+}
+
+void group_element::mult(
+		void *a, void *b, void *ab)
+{
+	A->ptr->nb_times_mult_called++;
+	(*A->ptr->ptr_element_mult)(*A, a, b, ab, 0);
+}
+
+void group_element::mult_apply_from_the_right(
+		void *a, void *b)
+// a := a * b
+{
+	(*A->ptr->ptr_element_mult)(*A, a, b, A->elt_mult_apply, 0);
+	(*A->ptr->ptr_element_move)(*A, A->elt_mult_apply, a, 0);
+}
+
+void group_element::mult_apply_from_the_left(
+		void *a, void *b)
+// b := a * b
+{
+	(*A->ptr->ptr_element_mult)(*A, a, b, A->elt_mult_apply, 0);
+	(*A->ptr->ptr_element_move)(*A, A->elt_mult_apply, b, 0);
+}
+
+void group_element::invert(void *a, void *av)
+{
+	A->ptr->nb_times_invert_called++;
+	(*A->ptr->ptr_element_invert)(*A, a, av, 0);
+}
+
+void group_element::invert_in_place(void *a)
+{
+	(*A->ptr->ptr_element_invert)(*A, a, A->elt_mult_apply, 0);
+	(*A->ptr->ptr_element_move)(*A, A->elt_mult_apply, a, 0);
+}
+
+void group_element::transpose(void *a, void *at)
+{
+	(*A->ptr->ptr_element_transpose)(*A, a, at, 0);
+}
+
+void group_element::move(void *a, void *b)
+{
+	(*A->ptr->ptr_element_move)(*A, a, b, 0);
+}
+
+void group_element::dispose(int hdl)
+{
+	(*A->ptr->ptr_element_dispose)(*A, hdl, 0);
+}
+
+void group_element::print(
+		ostream &ost, void *elt)
+{
+	(*A->ptr->ptr_element_print)(*A, elt, ost);
+}
+
+void group_element::print_quick(
+		ostream &ost, void *elt)
+{
+	(*A->ptr->ptr_element_print_quick)(*A, elt, ost);
+}
+
+void group_element::print_as_permutation(
+		ostream &ost, void *elt)
+{
+	element_print_as_permutation(elt, ost);
+}
+
+void group_element::print_point(
+		int a, std::ostream &ost)
+{
+	//cout << "action::print_point" << endl;
+	(*A->ptr->ptr_print_point)(*A, a, ost);
+}
+
+void group_element::unrank_point(long int rk, int *v)
+// v[low_level_point_size]
+{
+	if (A->ptr->ptr_unrank_point == NULL) {
+		cout << "group_element::unrank_point "
+				"ptr_unrank_point == NULL, label=" << A->ptr->label << endl;
+		exit(1);
+	}
+	(*A->ptr->ptr_unrank_point)(*A, rk, v);
+}
+
+long int group_element::rank_point(int *v)
+// v[low_level_point_size]
+{
+	if (A->ptr->ptr_rank_point == NULL) {
+		cout << "group_element::rank_point "
+				"ptr_rank_point == NULL, label=" << A->ptr->label << endl;
+		exit(1);
+	}
+	return (*A->ptr->ptr_rank_point)(*A, v);
+}
+
+void group_element::code_for_make_element(
+		int *data, void *elt)
+{
+	(*A->ptr->ptr_element_code_for_make_element)(*A, elt, data);
+}
+
+void group_element::print_for_make_element(
+		ostream &ost, void *elt)
+{
+	(*A->ptr->ptr_element_print_for_make_element)(*A, elt, ost);
+}
+
+void group_element::print_for_make_element_no_commas(
+		ostream &ost, void *elt)
+{
+	(*A->ptr->ptr_element_print_for_make_element_no_commas)(*A, elt, ost);
+}
+
+
+
+// #############################################################################
+
+long int group_element::element_image_of(
+		long int a, void *elt, int verbose_level)
+{
+	if (A->ptr == NULL) {
+		cout << "group_element::element_image_of A->ptr == NULL" << endl;
+		exit(1);
+	}
+	A->ptr->nb_times_image_of_called++;
+	return (*A->ptr->ptr_element_image_of)(*A, a, elt, verbose_level);
+}
+
+void group_element::element_image_of_low_level(
+		int *input, int *output, void *elt,
+		int verbose_level)
+{
+	if (A->ptr->ptr_element_image_of_low_level == NULL) {
+		cout << "group_element::element_image_of_low_level "
+				"A->ptr is NULL" << endl;
+		exit(1);
+		}
+	A->ptr->nb_times_image_of_low_level_called++;
+	(*A->ptr->ptr_element_image_of_low_level)(
+			*A,
+			input, output, elt, verbose_level);
+}
+
+void group_element::element_one(
+		void *elt, int verbose_level)
+{
+	(*A->ptr->ptr_element_one)(*A, elt, verbose_level);
+}
+
+int group_element::element_linear_entry_ij(
+		void *elt,
+		int i, int j, int verbose_level)
+{
+	return (*A->ptr->ptr_element_linear_entry_ij)(
+			*A,
+			elt, i, j, verbose_level);
+}
+
+int group_element::element_linear_entry_frobenius(
+		void *elt,
+		int verbose_level)
+{
+	return (*A->ptr->ptr_element_linear_entry_frobenius)(
+			*A,
+			elt, verbose_level);
+}
+
+int group_element::element_is_one(
+		void *elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "group_element::element_is_one "
+				"in action " << A->label << endl;
+		}
+	if (A->f_has_kernel && A->Kernel->A->base_len()) {
+		int *Elt1;
+		int drop_out_level, image;
+		Elt1 = NEW_int(A->elt_size_in_int); // this should be avoided
+		if (f_v) {
+			cout << "group_element::element_is_one "
+					"before Kernel->strip" << endl;
+			}
+		ret = A->Kernel->strip((int *)elt, Elt1 /* *residue */,
+			drop_out_level, image, 0 /*verbose_level*/);
+		FREE_int(Elt1);
+		if (f_v) {
+			cout << "group_element::element_is_one "
+					"returning " << ret << endl;
+			}
+		if (ret)
+			return TRUE;
+		else
+			return FALSE;
+		}
+	ret = (*A->ptr->ptr_element_is_one)(*A, elt, verbose_level);
+	if (f_v) {
+		cout << "group_element::element_is_one "
+				"returning " << ret << endl;
+		}
+
+	return ret;
+}
+
+void group_element::element_unpack(
+		void *elt, void *Elt, int verbose_level)
+{
+	A->ptr->nb_times_unpack_called++;
+	(*A->ptr->ptr_element_unpack)(*A, elt, Elt, verbose_level);
+}
+
+void group_element::element_pack(
+		void *Elt, void *elt, int verbose_level)
+{
+	A->ptr->nb_times_pack_called++;
+	(*A->ptr->ptr_element_pack)(*A, Elt, elt, verbose_level);
+}
+
+void group_element::element_retrieve(
+		int hdl, void *elt, int verbose_level)
+{
+	A->ptr->nb_times_retrieve_called++;
+	(*A->ptr->ptr_element_retrieve)(*A, hdl, elt, verbose_level);
+}
+
+int group_element::element_store(
+		void *elt, int verbose_level)
+{
+	A->ptr->nb_times_store_called++;
+	return (*A->ptr->ptr_element_store)(*A, elt, verbose_level);
+}
+
+void group_element::element_mult(
+		void *a, void *b, void *ab, int verbose_level)
+{
+	A->ptr->nb_times_mult_called++;
+	(*A->ptr->ptr_element_mult)(*A, a, b, ab, verbose_level);
+}
+
+void group_element::element_invert(
+		void *a, void *av, int verbose_level)
+{
+	A->ptr->nb_times_invert_called++;
+	(*A->ptr->ptr_element_invert)(*A, a, av, verbose_level);
+}
+
+void group_element::element_transpose(
+		void *a, void *at, int verbose_level)
+{
+	(*A->ptr->ptr_element_transpose)(*A, a, at, verbose_level);
+}
+
+void group_element::element_move(
+		void *a, void *b, int verbose_level)
+{
+	(*A->ptr->ptr_element_move)(*A, a, b, verbose_level);
+}
+
+void group_element::element_dispose(
+		int hdl, int verbose_level)
+{
+	(*A->ptr->ptr_element_dispose)(*A, hdl, verbose_level);
+}
+
+void group_element::element_print(
+		void *elt, std::ostream &ost)
+{
+	(*A->ptr->ptr_element_print)(*A, elt, ost);
+}
+
+void group_element::element_print_quick(
+		void *elt, std::ostream &ost)
+{
+	if (A->ptr->ptr_element_print_quick == NULL) {
+		cout << "group_element::element_print_quick "
+				"ptr_element_print_quick == NULL" << endl;
+		exit(1);
+		}
+	(*A->ptr->ptr_element_print_quick)(*A, elt, ost);
+}
+
+void group_element::element_print_latex(
+		void *elt, std::ostream &ost)
+{
+	(*A->ptr->ptr_element_print_latex)(*A, elt, ost);
+}
+
+void group_element::element_print_latex_with_extras(
+		void *elt, std::string &label, std::ostream &ost)
+{
+	int *fp, n, ord;
+
+	fp = NEW_int(A->degree);
+	n = find_fixed_points(elt, fp, 0);
+	//cout << "with " << n << " fixed points" << endl;
+	FREE_int(fp);
+
+	ord = element_order(elt);
+
+	ost << "$$" << label << endl;
+	element_print_latex(elt, ost);
+	ost << "$$" << endl << "of order $" << ord << "$ and with "
+			<< n << " fixed points." << endl;
+}
+
+
+void group_element::element_print_latex_with_print_point_function(
+	void *elt, std::ostream &ost,
+	void (*point_label)(std::stringstream &sstr,
+			long int pt, void *data),
+	void *point_label_data)
+{
+	(*A->ptr->ptr_element_print_latex_with_print_point_function)(
+				*A, elt, ost, point_label, point_label_data);
+}
+
+void group_element::element_print_verbose(
+		void *elt, std::ostream &ost)
+{
+	(*A->ptr->ptr_element_print_verbose)(*A, elt, ost);
+}
+
+void group_element::element_code_for_make_element(
+		void *elt, int *data)
+{
+	(*A->ptr->ptr_element_code_for_make_element)(*A, elt, data);
+}
+
+void group_element::element_print_for_make_element(
+		void *elt, std::ostream &ost)
+{
+	(*A->ptr->ptr_element_print_for_make_element)(*A, elt, ost);
+}
+
+void group_element::element_print_for_make_element_no_commas(
+		void *elt, std::ostream &ost)
+{
+	(*A->ptr->ptr_element_print_for_make_element_no_commas)(*A, elt, ost);
+}
+
+void group_element::element_print_as_permutation(
+		void *elt, std::ostream &ost)
+{
+	element_print_as_permutation_with_offset(
+			elt, ost, 0, FALSE, TRUE, 0);
+}
+
+void group_element::element_print_as_permutation_verbose(
+		void *elt,
+		std::ostream &ost, int verbose_level)
+{
+	element_print_as_permutation_with_offset(elt,
+			ost, 0, FALSE, TRUE, verbose_level);
+}
+
+void group_element::element_as_permutation(
+		void *elt,
+		int *perm, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j;
+
+	if (f_v) {
+		cout << "group_element::element_as_permutation" << endl;
+		}
+	for (i = 0; i < A->degree; i++) {
+		if (f_vv) {
+			cout << "group_element::element_as_permutation" << i << endl;
+			}
+		j = element_image_of(i, elt, verbose_level - 2);
+		perm[i] = j;
+		if (f_vv) {
+			cout << "group_element::element_as_permutation "
+					<< i << "->" << j << endl;
+			}
+		}
+	if (f_v) {
+		cout << "group_element::element_as_permutation done" << endl;
+		}
+}
+
+void group_element::element_print_as_permutation_with_offset(
+	void *elt, std::ostream &ost,
+	int offset, int f_do_it_anyway_even_for_big_degree,
+	int f_print_cycles_of_length_one, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *v, i, j;
+	int f_cycle_length = FALSE;
+	int f_max_cycle_length = FALSE;
+	int max_cycle_length = 50;
+	int f_orbit_structure = FALSE;
+	combinatorics::combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "group_element::element_print_as_permutation_with_offset "
+				"degree=" << A->degree << endl;
+		}
+	if (A->degree > 5000) {
+		cout << "group_element::element_print_as_permutation_with_offset "
+				"the degree is too large, we won't print the permutation" << endl;
+		return;
+	}
+	v = NEW_int(A->degree);
+	for (i = 0; i < A->degree; i++) {
+		if (f_vv) {
+			cout << "group_element::element_print_as_permutation_with_offset "
+					"computing image of " << i << endl;
+			}
+		j = element_image_of(i,
+				elt, verbose_level - 2);
+		if (f_vv) {
+			cout << "group_element::element_print_as_permutation_with_offset "
+					<< i << "->" << j << endl;
+			}
+		v[i] = j;
+		}
+	//perm_print(ost, v, degree);
+	Combi.perm_print_offset(ost, v, A->degree, offset,
+			f_print_cycles_of_length_one,
+			f_cycle_length,
+			f_max_cycle_length, max_cycle_length,
+			f_orbit_structure,
+			NULL, NULL);
+	//ost << endl;
+	//perm_print_cycles_sorted_by_length(ost, degree, v);
+
+
+#if 0
+	if (degree) {
+		if (f_v) {
+			cout << "group_element::element_print_as_permutation_with_offset: "
+					"calling perm_print_cycles_sorted_by_length_offset" << endl;
+			}
+		//ost << "perm of degree " << degree << " : ";
+		//int_vec_print_fully(ost, v, degree);
+		//ost << " = ";
+
+		perm_print_cycles_sorted_by_length_offset(ost, degree, v, offset,
+			f_do_it_anyway_even_for_big_degree, f_print_cycles_of_length_one,
+			verbose_level);
+		}
+#endif
+
+
+	//ost << endl;
+	FREE_int(v);
+}
+
+void group_element::element_print_as_permutation_with_offset_and_max_cycle_length(
+	void *elt,
+	std::ostream &ost, int offset,
+	int max_cycle_length,
+	int f_orbit_structure)
+{
+	int *v, i, j;
+	int f_print_cycles_of_length_one = FALSE;
+	int f_cycle_length = FALSE;
+	int f_max_cycle_length = TRUE;
+	combinatorics::combinatorics_domain Combi;
+
+	v = NEW_int(A->degree);
+	for (i = 0; i < A->degree; i++) {
+		j = element_image_of(i, elt, FALSE);
+		v[i] = j;
+	}
+	//perm_print(ost, v, degree);
+	Combi.perm_print_offset(ost, v, A->degree, offset,
+			f_print_cycles_of_length_one,
+			f_cycle_length,
+			f_max_cycle_length, max_cycle_length, f_orbit_structure,
+			NULL, NULL);
+	FREE_int(v);
+}
+
+void group_element::element_print_image_of_set(
+		void *elt, int size, long int *set)
+{
+	long int i, j;
+
+	for (i = 0; i < size; i++) {
+		j = element_image_of(set[i], elt, FALSE);
+		cout << i << " -> " << j << endl;
+	}
+}
+
+int group_element::element_signum_of_permutation(void *elt)
+{
+	int *v;
+	int i, j, sgn;
+	combinatorics::combinatorics_domain Combi;
+
+	v = NEW_int(A->degree);
+	for (i = 0; i < A->degree; i++) {
+		j = element_image_of(i, elt, FALSE);
+		v[i] = j;
+	}
+	sgn = Combi.perm_signum(v, A->degree);
+	FREE_int(v);
+	return sgn;
+}
+
+
+
+void group_element::element_write_file_fp(int *Elt,
+		ofstream &fp, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *elt;
+
+	elt = A->element_rw_memory_object;
+	if (elt == NULL) {
+		cout << "group_element::element_write_file_fp elt == NULL" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		element_print(Elt, cout);
+		Int_vec_print(cout, Elt, A->elt_size_in_int);
+		cout << endl;
+	}
+	element_pack(Elt, elt, FALSE);
+	fp.write(elt, A->coded_elt_size_in_char);
+	//fwrite(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
+}
+
+void group_element::element_read_file_fp(int *Elt,
+		ifstream &fp, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *elt;
+
+	elt = A->element_rw_memory_object;
+	fp.read(elt, A->coded_elt_size_in_char);
+	//fread(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
+	element_unpack(elt, Elt, FALSE);
+	if (f_v) {
+		element_print(Elt, cout);
+		Int_vec_print(cout, Elt, A->elt_size_in_int);
+		cout << endl;
+	}
+}
+
+void group_element::element_write_file(int *Elt,
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+
+#if 0
+	FILE *f2;
+	f2 = fopen(fname, "wb");
+	element_write_file_fp(Elt, f2, 0/* verbose_level*/);
+	fclose(f2);
+#else
+	{
+		ofstream fp(fname, ios::binary);
+
+		element_write_file_fp(Elt, fp, 0/* verbose_level*/);
+	}
+#endif
+
+	if (f_v) {
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+		}
+}
+
+void group_element::element_read_file(int *Elt,
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "group_element::element_read_file: "
+				"reading from file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+#if 0
+	FILE *f2;
+	f2 = fopen(fname, "rb");
+	element_read_file_fp(Elt, f2, 0/* verbose_level*/);
+
+	fclose(f2);
+#else
+	{
+		ifstream fp(fname, ios::binary);
+
+		element_read_file_fp(Elt, fp, 0/* verbose_level*/);
+	}
+
+#endif
+}
+
+void group_element::element_write_to_memory_object(
+		int *Elt,
+		orbiter_kernel_system::memory_object *m,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *elt;
+
+	if (f_v) {
+		cout << "group_element::element_write_to_memory_object" << endl;
+	}
+	elt = A->element_rw_memory_object;
+
+	element_pack(Elt, elt, FALSE);
+	m->append(A->coded_elt_size_in_char, elt, 0);
+}
+
+
+void group_element::element_read_from_memory_object(
+		int *Elt,
+		orbiter_kernel_system::memory_object *m,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *elt;
+	int i;
+
+
+	if (f_v) {
+		cout << "group_element::element_read_from_memory_object" << endl;
+	}
+	elt = A->element_rw_memory_object;
+
+	for (i = 0; i < A->coded_elt_size_in_char; i++) {
+		m->read_char(elt + i);
+	}
+	element_unpack(elt, Elt, FALSE);
+}
+
+void group_element::element_write_to_file_binary(int *Elt,
+		std::ofstream &fp, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *elt;
+
+	if (f_v) {
+		cout << "group_element::element_write_to_file_binary" << endl;
+	}
+	if (f_v) {
+		cout << "group_element::element_write_to_file_binary "
+				"coded_elt_size_in_char=" << A->coded_elt_size_in_char << endl;
+	}
+	if (A->coded_elt_size_in_char == 0) {
+		cout << "group_element::element_write_to_file_binary "
+				"A->coded_elt_size_in_char == 0" << endl;
+		exit(1);
+	}
+	//elt = NEW_char(coded_elt_size_in_char);
+		// memory allocation should be avoided in a low-level function
+	elt = A->element_rw_memory_object;
+	if (elt == NULL) {
+		cout << "group_element::element_write_to_file_binary "
+				"elt == NULL" << endl;
+		A->print_info();
+		exit(1);
+	}
+
+	element_pack(Elt, elt, verbose_level);
+	fp.write(elt, A->coded_elt_size_in_char);
+	//FREE_char(elt);
+	if (f_v) {
+		cout << "group_element::element_write_to_file_binary done" << endl;
+	}
+}
+
+void group_element::element_read_from_file_binary(int *Elt,
+		std::ifstream &fp, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *elt;
+
+
+	if (f_v) {
+		cout << "group_element::element_read_from_file_binary" << endl;
+	}
+	//elt = NEW_char(coded_elt_size_in_char);
+		// memory allocation should be avoided in a low-level function
+	elt = A->element_rw_memory_object;
+
+	if (f_v) {
+		cout << "group_element::element_read_from_file_binary "
+				"coded_elt_size_in_char=" << A->coded_elt_size_in_char << endl;
+	}
+	fp.read(elt, A->coded_elt_size_in_char);
+	element_unpack(elt, Elt, verbose_level);
+	//FREE_char(elt);
+	if (f_v) {
+		cout << "group_element::element_read_from_file_binary done" << endl;
+	}
+}
+
+void group_element::random_element(groups::sims *S, int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::random_element" << endl;
+	}
+
+	S->random_element(Elt, verbose_level - 1);
+
+	if (f_v) {
+		cout << "group_element::random_element done" << endl;
+	}
+}
+
+int group_element::element_has_order_two(int *E1, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "group_element::element_has_order_two" << endl;
+	}
+
+	element_mult(E1, E1, A->Elt1, 0);
+	if (is_one(A->Elt1)) {
+		ret = TRUE;
+	}
+	else {
+		ret = FALSE;
+	}
+
+	if (f_v) {
+		cout << "group_element::element_has_order_two done" << endl;
+	}
+	return ret;
+}
+
+int group_element::product_has_order_two(int *E1,
+		int *E2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "group_element::product_has_order_two" << endl;
+	}
+
+	element_mult(E1, E2, A->Elt1, 0);
+	element_mult(A->Elt1, A->Elt1, A->Elt2, 0);
+	if (is_one(A->Elt2)) {
+		ret = TRUE;
+	}
+	else {
+		ret = FALSE;
+	}
+
+	if (f_v) {
+		cout << "group_element::product_has_order_two done" << endl;
+	}
+	return ret;
+}
+
+int group_element::product_has_order_three(int *E1,
+		int *E2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "group_element::product_has_order_three" << endl;
+	}
+
+	element_mult(E1, E2, A->Elt1, 0);
+	element_mult(A->Elt1, A->Elt1, A->Elt2, 0);
+	element_mult(A->Elt2, A->Elt1, A->Elt3, 0);
+	if (is_one(A->Elt3)) {
+		ret = TRUE;
+	}
+	else {
+		ret = FALSE;
+	}
+
+	if (f_v) {
+		cout << "group_element::product_has_order_three done" << endl;
+	}
+	return ret;
+}
+
+int group_element::element_order(void *elt)
+{
+	int *cycle_type;
+	int order;
+
+	cycle_type = NEW_int(A->degree);
+	order = element_order_and_cycle_type_verbose(
+			elt, cycle_type, 0);
+	FREE_int(cycle_type);
+	return order;
+}
+
+int group_element::element_order_and_cycle_type(
+		void *elt, int *cycle_type)
+{
+	return element_order_and_cycle_type_verbose(
+			elt, cycle_type, 0);
+}
+
+int group_element::element_order_and_cycle_type_verbose(
+		void *elt, int *cycle_type, int verbose_level)
+// cycle_type[i - 1] is the number of cycle of length i for 1 le i le n
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *have_seen;
+	long int l, l1, first, next, len, g, n, order = 1;
+	number_theory::number_theory_domain NT;
+
+	if (f_v) {
+		cout << "group_element::element_order_verbose" << endl;
+	}
+	if (f_vv) {
+		cout << "The element is:" << endl;
+		element_print_quick(elt, cout);
+		cout << "as permutation:" << endl;
+		element_print_as_permutation(elt, cout);
+	}
+	n = A->degree;
+	Int_vec_zero(cycle_type, A->degree);
+	have_seen = NEW_int(n);
+	for (l = 0; l < n; l++) {
+		have_seen[l] = FALSE;
+	}
+	l = 0;
+	while (l < n) {
+		if (have_seen[l]) {
+			l++;
+			continue;
+		}
+		// work on cycle, starting with l:
+		first = l;
+		l1 = l;
+		len = 1;
+		while (TRUE) {
+			have_seen[l1] = TRUE;
+			next = element_image_of(l1, elt, 0);
+			if (next > n) {
+				cout << "group_element::element_order_verbose: next = "
+					<< next << " > n = " << n << endl;
+				// print_list(ost);
+				exit(1);
+			}
+			if (next == first) {
+				break;
+			}
+			if (have_seen[next]) {
+				cout << "group_element::element_order_verbose "
+						"have_seen[next]" << endl;
+				exit(1);
+			}
+			l1 = next;
+			len++;
+		}
+		cycle_type[len - 1]++;
+		if (len == 1) {
+			continue;
+		}
+		g = NT.gcd_lint(len, order);
+		order *= len / g;
+	}
+	FREE_int(have_seen);
+	if (f_v) {
+		cout << "group_element::element_order_verbose "
+				"done order=" << order << endl;
+	}
+	return order;
+}
+
+int group_element::element_order_if_divisor_of(void *elt, int o)
+// returns the order of the element if o == 0
+// if o != 0, returns the order of the element provided it divides o,
+// 0 otherwise.
+{
+	int *have_seen;
+	long int l, l1, first, next, len, g, n, order = 1;
+	number_theory::number_theory_domain NT;
+
+	n = A->degree;
+	have_seen = NEW_int(n);
+	for (l = 0; l < n; l++) {
+		have_seen[l] = FALSE;
+	}
+	l = 0;
+	while (l < n) {
+		if (have_seen[l]) {
+			l++;
+			continue;
+		}
+		// work on cycle, starting with l:
+		first = l;
+		l1 = l;
+		len = 1;
+		while (TRUE) {
+			have_seen[l1] = TRUE;
+			next = element_image_of(l1, elt, 0);
+			if (next > n) {
+				cout << "group_element::element_order_if_divisor_of next = "
+					<< next << " > n = " << n << endl;
+				// print_list(ost);
+				exit(1);
+			}
+			if (next == first) {
+				break;
+			}
+			if (have_seen[next]) {
+				cout << "group_element::element_order_if_divisor_of "
+						"have_seen[next]" << endl;
+				exit(1);
+				}
+			l1 = next;
+			len++;
+		}
+		if (len == 1) {
+			continue;
+		}
+		if (o && (o % len)) {
+			FREE_int(have_seen);
+			return 0;
+		}
+		g = NT.gcd_lint(len, order);
+		order *= len / g;
+	}
+	FREE_int(have_seen);
+	return order;
+}
+
+void group_element::element_print_base_images(int *Elt)
+{
+	element_print_base_images(Elt, cout);
+}
+
+void group_element::element_print_base_images(
+		int *Elt, std::ostream &ost)
+{
+	element_print_base_images_verbose(Elt, cout, 0);
+}
+
+void group_element::element_print_base_images_verbose(
+		int *Elt, std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *base_images;
+
+	if (f_v) {
+		cout << "group_element::element_print_base_images_verbose" << endl;
+	}
+	base_images = NEW_int(A->base_len());
+	element_base_images_verbose(Elt, base_images, verbose_level - 1);
+	ost << "base images: ";
+	Int_vec_print(ost, base_images, A->base_len());
+	FREE_int(base_images);
+}
+
+void group_element::element_base_images(
+		int *Elt, int *base_images)
+{
+	element_base_images_verbose(Elt, base_images, 0);
+}
+
+void group_element::element_base_images_verbose(
+		int *Elt, int *base_images, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, bi;
+
+	if (f_v) {
+		cout << "group_element::element_base_images_verbose" << endl;
+	}
+	for (i = 0; i < A->base_len(); i++) {
+		bi = A->base_i(i);
+		if (f_vv) {
+			cout << "the " << i << "-th base point is "
+					<< bi << " is mapped to:" << endl;
+		}
+		base_images[i] = element_image_of(bi, Elt, verbose_level - 2);
+		if (f_vv) {
+			cout << "the " << i << "-th base point is "
+					<< bi << " is mapped to: " << base_images[i] << endl;
+		}
+	}
+}
+
+void group_element::minimize_base_images(
+		int level,
+		groups::sims *S, int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *base_images1;
+	int *base_images2;
+	int *Elt1, *Elt2, *Elt3;
+	int i, j, /*bi,*/ oj, j0 = 0, image0 = 0, image;
+
+
+	if (f_v) {
+		cout << "group_element::minimize_base_images" << endl;
+		cout << "level=" << level << endl;
+	}
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	base_images1 = NEW_int(A->base_len());
+	base_images2 = NEW_int(A->base_len());
+
+	element_move(Elt, Elt1, 0);
+	for (i = level; i < A->base_len(); i++) {
+		element_base_images(Elt1, base_images1);
+		//bi = base[i];
+		if (f_vv) {
+			cout << "level " << i << " S->orbit_len[i]="
+					<< S->get_orbit_length(i) << endl;
+		}
+		for (j = 0; j < S->get_orbit_length(i); j++) {
+			oj = S->get_orbit(i, j);
+			image = element_image_of(oj, Elt1, 0);
+			if (f_vv) {
+				cout << "level " << i << " j=" << j
+						<< " oj=" << oj << " image="
+						<< image << endl;
+			}
+			if (j == 0) {
+				image0 = image;
+				j0 = 0;
+			}
+			else {
+				if (image < image0) {
+					if (f_vv) {
+						cout << "level " << i << " coset j="
+								<< j << " image=" << image
+								<< "less that image0 = "
+								<< image0 << endl;
+					}
+					image0 = image;
+					j0 = j;
+				}
+			}
+		}
+		if (f_vv) {
+			cout << "level " << i << " S->orbit_len[i]="
+					<< S->get_orbit_length(i) << " j0=" << j0 << endl;
+		}
+		S->coset_rep(Elt3, i, j0, 0 /*verbose_level*/);
+		if (f_vv) {
+			cout << "cosetrep=" << endl;
+			element_print_quick(Elt3, cout);
+			if (A->degree < 500) {
+				element_print_as_permutation(Elt3, cout);
+				cout << endl;
+			}
+		}
+		element_mult(Elt3, Elt1, Elt2, 0);
+		element_move(Elt2, Elt1, 0);
+		element_base_images(Elt1, base_images2);
+		if (f_vv) {
+			cout << "level " << i << " j0=" << j0 << endl;
+			cout << "before: ";
+			Int_vec_print(cout, base_images1, A->base_len());
+			cout << endl;
+			cout << "after : ";
+			Int_vec_print(cout, base_images2, A->base_len());
+			cout << endl;
+		}
+	}
+
+	element_move(Elt1, Elt, 0);
+
+	FREE_int(base_images1);
+	FREE_int(base_images2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+}
+
+void group_element::element_conjugate_bvab(int *Elt_A,
+		int *Elt_B, int *Elt_C,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int *Elt1, *Elt2;
+
+
+	if (f_v) {
+		cout << "group_element::element_conjugate_bvab" << endl;
+	}
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	if (f_v) {
+		cout << "group_element::element_conjugate_bvab A=" << endl;
+		element_print_quick(Elt_A, cout);
+		cout << "group_element::element_conjugate_bvab B=" << endl;
+		element_print_quick(Elt_B, cout);
+	}
+
+	element_invert(Elt_B, Elt1, 0);
+	element_mult(Elt1, Elt_A, Elt2, 0);
+	element_mult(Elt2, Elt_B, Elt_C, 0);
+	if (f_v) {
+		cout << "group_element::element_conjugate_bvab C=B^-1 * A * B" << endl;
+		element_print_quick(Elt_C, cout);
+	}
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	if (f_v) {
+		cout << "group_element::element_conjugate_bvab done" << endl;
+	}
+}
+
+void group_element::element_conjugate_babv(int *Elt_A,
+		int *Elt_B, int *Elt_C,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int *Elt1, *Elt2;
+
+
+	if (f_v) {
+		cout << "group_element::element_conjugate_babv" << endl;
+		}
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+	element_invert(Elt_B, Elt1, 0);
+	element_mult(Elt_B, Elt_A, Elt2, 0);
+	element_mult(Elt2, Elt1, Elt_C, 0);
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+}
+
+void group_element::element_commutator_abavbv(int *Elt_A,
+		int *Elt_B, int *Elt_C,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int *Elt1, *Elt2, *Elt3, *Elt4;
+
+
+	if (f_v) {
+		cout << "group_element::element_commutator_abavbv" << endl;
+		}
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+
+	element_invert(Elt_A, Elt1, 0);
+	element_invert(Elt_B, Elt2, 0);
+	element_mult(Elt_A, Elt_B, Elt3, 0);
+	element_mult(Elt3, Elt1, Elt4, 0);
+	element_mult(Elt4, Elt2, Elt_C, 0);
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+}
+
+int group_element::find_non_fixed_point(void *elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "group_element::find_non_fixed_point" << endl;
+		cout << "degree=" << A->degree << endl;
+	}
+	for (i = 0; i < A->degree; i++) {
+		j = element_image_of(i, elt, verbose_level - 1);
+		if (j != i) {
+			if (f_v) {
+				cout << "moves " << i << " to " << j << endl;
+			}
+			return i;
+		}
+	}
+	if (f_v) {
+		cout << "cannot find non fixed point" << endl;
+	}
+	return -1;
+}
+
+int group_element::find_fixed_points(void *elt,
+		int *fixed_points, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, n = 0;
+
+	if (f_v) {
+		cout << "computing fixed points in action "
+				<< A->label << " of degree " << A->degree << endl;
+	}
+	for (i = 0; i < A->degree; i++) {
+		j = element_image_of(i, elt, 0);
+		if (j == i) {
+			fixed_points[n++] = i;
+		}
+	}
+	if (f_v) {
+		cout << "found " << n << " fixed points" << endl;
+	}
+	return n;
+}
+
+int group_element::count_fixed_points(void *elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, cnt = 0;
+
+	if (f_v) {
+		cout << "group_element::count_fixed_points counting fixed points in action "
+				<< A->label << " of degree " << A->degree << endl;
+	}
+	for (i = 0; i < A->degree; i++) {
+		j = element_image_of(i, elt, 0);
+		if (j == i) {
+			cnt++;
+		}
+	}
+	if (f_v) {
+		cout << "group_element::count_fixed_points done, "
+				"found " << cnt << " fixed points" << endl;
+	}
+	return cnt;
+}
+
+int group_element::test_if_set_stabilizes(int *Elt,
+		int size, long int *set, int verbose_level)
+{
+	long int *set1, *set2;
+	int i, cmp;
+	int f_v = (verbose_level >= 1);
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "group_element::test_if_set_stabilizes" << endl;
+	}
+	set1 = NEW_lint(size);
+	set2 = NEW_lint(size);
+	for (i = 0; i < size; i++) {
+		set1[i] = set[i];
+	}
+	Sorting.lint_vec_quicksort_increasingly(set1, size);
+	map_a_set(set1, set2, size, Elt, 0);
+	Sorting.lint_vec_quicksort_increasingly(set2, size);
+	cmp = Sorting.lint_vec_compare(set1, set2, size);
+	if (f_v) {
+		cout << "the elements takes " << endl;
+		Lint_vec_print(cout, set1, size);
+		cout << endl << "to" << endl;
+		Lint_vec_print(cout, set2, size);
+		cout << endl;
+		cout << "cmp = " << cmp << endl;
+	}
+	FREE_lint(set1);
+	FREE_lint(set2);
+	if (cmp == 0) {
+		if (f_v) {
+			cout << "group_element::test_if_set_stabilizes "
+					"done, returning TRUE" << endl;
+		}
+		return TRUE;
+	}
+	else {
+		if (f_v) {
+			cout << "group_element::test_if_set_stabilizes "
+					"done, returning FALSE" << endl;
+		}
+		return FALSE;
+	}
+}
+
+void group_element::map_a_set(
+		long int *set,
+		long int *image_set,
+		int n, int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+
+	if (f_v) {
+		cout << "group_element::map_a_set" << endl;
+	}
+	if (f_vv) {
+		cout << "group element:" << endl;
+		element_print_quick(Elt, cout);
+		cout << endl;
+		cout << "set: " << endl;
+		Lint_vec_print(cout, set, n);
+		cout << endl;
+	}
+	for (i = 0; i < n; i++) {
+		if (f_vv) {
+			cout << "group_element::map_a_set i=" << i << " / " << n
+					<< ", computing image of " << set[i] << endl;
+		}
+		image_set[i] = element_image_of(set[i], Elt, verbose_level - 2);
+		if (f_vv) {
+			cout << "group_element::map_a_set i=" << i << " / " << n << ", image of "
+					<< set[i] << " is " << image_set[i] << endl;
+		}
+	}
+}
+
+void group_element::map_a_set_and_reorder(
+		long int *set,
+		long int *image_set,
+		int n, int *Elt, int verbose_level)
+{
+	data_structures::sorting Sorting;
+
+	map_a_set(set, image_set, n, Elt, verbose_level);
+	Sorting.lint_vec_heapsort(image_set, n);
+}
+
+void group_element::make_element_from_permutation_representation(
+		int *Elt, groups::sims *S, int *data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *base_image;
+	int i, a;
+
+	if (f_v) {
+		cout << "group_element::make_element_from_permutation_representation" << endl;
+	}
+	base_image = NEW_int(A->base_len());
+	for (i = 0; i < A->base_len(); i++) {
+		a = A->base_i(i);
+		base_image[i] = data[a];
+		if (base_image[i] >= A->degree) {
+			cout << "group_element::make_element_from_permutation_representation "
+					"base_image[i] >= degree" << endl;
+			cout << "i=" << i << " base[i] = " << a
+					<< " base_image[i]=" << base_image[i] << endl;
+			exit(1);
+		}
+	}
+	make_element_from_base_image(Elt, S, base_image, verbose_level);
+
+	FREE_int(base_image);
+	if (f_v) {
+		cout << "group_element::make_element_from_permutation_representation done"
+				<< endl;
+	}
+}
+
+void group_element::make_element_from_base_image(
+		int *Elt, groups::sims *S,
+		int *data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int *base_image;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+	int *Elt5;
+	//sims *S;
+#if 1
+	int offset = 0;
+	int f_do_it_anyway_even_for_big_degree = TRUE;
+	int f_print_cycles_of_length_one = FALSE;
+#endif
+
+	int i, j, yi, z, b, c, b_pt;
+
+	if (f_v) {
+		cout << "group_element::make_element_from_base_image" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_element::make_element_from_base_image" << endl;
+		cout << "base images: ";
+		Int_vec_print(cout, data, A->base_len());
+		cout << endl;
+		A->print_info();
+	}
+#if 0
+	if (!f_has_sims) {
+		cout << "group_element::make_element_from_base_image "
+				"fatal: does not have sims" << endl;
+		exit(1);
+	}
+	S = Sims;
+#endif
+	if (f_v) {
+		cout << "action in Sims:" << endl;
+		S->A->print_info();
+	}
+	base_image = NEW_int(A->base_len());
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	Elt5 = NEW_int(A->elt_size_in_int);
+	for (j = 0; j < A->base_len(); j++) {
+		base_image[j] = data[j];
+	}
+	element_one(Elt3, 0);
+
+	for (i = 0; i < A->base_len(); i++) {
+		element_invert(Elt3, Elt4, 0);
+		b_pt = A->base_i(i);
+		yi = base_image[i];
+		z = element_image_of(yi, Elt4, 0);
+		j = S->get_orbit_inv(i, z);
+		//j = S->orbit_inv[i][z];
+		if (f_vv) {
+			cout << "i=" << i << endl;
+			cout << "Elt3=" << endl;
+			element_print_quick(Elt3, cout);
+			element_print_as_permutation_with_offset(Elt3, cout,
+				offset, f_do_it_anyway_even_for_big_degree,
+				f_print_cycles_of_length_one, 0/*verbose_level*/);
+			cout << "i=" << i << " b_pt=" << b_pt
+					<< " yi=" << yi << " z="
+					<< z << " j=" << j << endl;
+		}
+		S->coset_rep(Elt5, i, j, 0);
+		if (f_vv) {
+			cout << "cosetrep=" << endl;
+			element_print_quick(Elt5, cout);
+			element_print_base_images(Elt5);
+			element_print_as_permutation_with_offset(Elt5, cout,
+				offset, f_do_it_anyway_even_for_big_degree,
+				f_print_cycles_of_length_one, 0/*verbose_level*/);
+		}
+		element_mult(Elt5, Elt3, Elt4, 0);
+		element_move(Elt4, Elt3, 0);
+
+		if (f_vv) {
+			cout << "after left multiplying, Elt3=" << endl;
+			element_print_quick(Elt3, cout);
+			element_print_as_permutation_with_offset(Elt3, cout,
+				offset, f_do_it_anyway_even_for_big_degree,
+				f_print_cycles_of_length_one, 0/*verbose_level*/);
+
+			cout << "computing image of b_pt=" << b_pt << endl;
+		}
+
+		c = element_image_of(b_pt, Elt3, 0);
+		if (f_vv) {
+			cout << "b_pt=" << b_pt << " -> " << c << endl;
+			}
+		if (c != yi) {
+			cout << "group_element::make_element_from_base_image "
+					"fatal: element_image_of(b_pt, Elt3, 0) "
+					"!= yi" << endl;
+			exit(1);
+		}
+	}
+	element_move(Elt3, Elt, 0);
+	for (i = 0; i < A->base_len(); i++) {
+		yi = data[i];
+		b = element_image_of(A->base_i(i), Elt, 0);
+		if (yi != b) {
+			cout << "group_element::make_element_from_base_image "
+					"fatal: yi != b"
+					<< endl;
+			cout << "i=" << i << endl;
+			cout << "base[i]=" << A->base_i(i) << endl;
+			cout << "yi=" << yi << endl;
+			cout << "b=" << b << endl;
+			exit(1);
+		}
+	}
+	if (f_v) {
+		cout << "group_element::make_element_from_base_image "
+				"created element:" << endl;
+		element_print_quick(Elt, cout);
+	}
+	FREE_int(base_image);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+	FREE_int(Elt5);
+	if (f_v) {
+		cout << "group_element::make_element_from_base_image done" << endl;
+	}
+}
+
+void group_element::make_element_2x2(
+		int *Elt, int a0, int a1, int a2, int a3)
+{
+	int data[4];
+
+	data[0] = a0;
+	data[1] = a1;
+	data[2] = a2;
+	data[3] = a3;
+	make_element(Elt, data, 0);
+}
+
+void group_element::make_element_from_string(
+		int *Elt,
+		std::string &data_string, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::make_element_from_string" << endl;
+	}
+	int *data;
+	int data_len;
+
+	Int_vec_scan(data_string, data, data_len);
+
+	if (f_v) {
+		cout << "group_element::make_element_from_string data = ";
+		Int_vec_print(cout, data, data_len);
+		cout << endl;
+	}
+
+	make_element(Elt, data, verbose_level);
+
+	FREE_int(data);
+
+	if (f_v) {
+		cout << "group_element::make_element_from_string Elt = " << endl;
+		element_print_quick(Elt, cout);
+	}
+
+	if (f_v) {
+		cout << "action::make_element_from_string done" << endl;
+	}
+}
+
+void group_element::make_element(
+		int *Elt, int *data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::make_element" << endl;
+	}
+	if (A->type_G == product_action_t) {
+
+		if (f_v) {
+			cout << "group_element::make_element product_action_t" << endl;
+		}
+
+		induced_actions::product_action *PA;
+
+		PA = A->G.product_action_data;
+		PA->make_element(Elt, data, verbose_level);
+		//PA->A1->make_element(Elt, data, verbose_level);
+		//PA->A2->make_element(Elt + PA->A1->elt_size_in_int,
+		//	data + PA->A1->make_element_size, verbose_level);
+	}
+	else if (A->type_G == action_on_sets_t) {
+		if (f_v) {
+			cout << "group_element::make_element action_on_sets_t" << endl;
+		}
+		A->subaction->Group_element->make_element(Elt, data, verbose_level);
+	}
+	else if (A->type_G == action_on_pairs_t) {
+		if (f_v) {
+			cout << "group_element::make_element action_on_pairs_t" << endl;
+		}
+		A->subaction->Group_element->make_element(Elt, data, verbose_level);
+	}
+	else if (A->type_G == matrix_group_t) {
+		if (f_v) {
+			cout << "group_element::make_element matrix_group_t" << endl;
+		}
+		A->G.matrix_grp->make_element(Elt, data, verbose_level);
+	}
+	else if (A->type_G == wreath_product_t) {
+		if (f_v) {
+			cout << "group_element::make_element wreath_product_t" << endl;
+		}
+		A->G.wreath_product_group->make_element(Elt, data, verbose_level);
+	}
+	else if (A->type_G == direct_product_t) {
+		if (f_v) {
+			cout << "group_element::make_element direct_product_t" << endl;
+		}
+		A->G.direct_product_group->make_element(Elt, data, verbose_level);
+	}
+	else if (A->f_has_subaction) {
+		if (f_v) {
+			cout << "group_element::make_element subaction" << endl;
+		}
+		A->subaction->Group_element->make_element(Elt, data, verbose_level);
+	}
+	else if (A->type_G == perm_group_t) {
+		if (f_v) {
+			cout << "group_element::make_element perm_group_t" << endl;
+		}
+		A->G.perm_grp->make_element(Elt, data, verbose_level);
+	}
+	else {
+		cout << "group_element::make_element unknown type_G: ";
+		A->print_symmetry_group_type(cout);
+		cout << endl;
+		exit(1);
+	}
+}
+
+void group_element::element_power_int_in_place(int *Elt,
+		int n, int verbose_level)
+{
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	move(Elt, Elt2);
+	one(Elt3);
+	while (n) {
+		if (ODD(n)) {
+			mult(Elt2, Elt3, Elt4);
+			move(Elt4, Elt3);
+		}
+		mult(Elt2, Elt2, Elt4);
+		move(Elt4, Elt2);
+		n >>= 1;
+	}
+	move(Elt3, Elt);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+}
+
+void group_element::word_in_ab(
+		int *Elt1, int *Elt2, int *Elt3,
+		const char *word, int verbose_level)
+{
+	int *Elt4;
+	int *Elt5;
+	int l, i;
+
+
+	Elt4 = NEW_int(A->elt_size_in_int);
+	Elt5 = NEW_int(A->elt_size_in_int);
+	one(Elt4);
+	l = strlen(word);
+	for (i = 0; i < l; i++) {
+		if (word[i] == 'a') {
+			mult(Elt4, Elt1, Elt5);
+			move(Elt5, Elt4);
+		}
+		else if (word[i] == 'b') {
+			mult(Elt4, Elt2, Elt5);
+			move(Elt5, Elt4);
+		}
+		else {
+			cout << "word must consist of a and b" << endl;
+			exit(1);
+		}
+	}
+	move(Elt4, Elt3);
+
+	FREE_int(Elt4);
+	FREE_int(Elt5);
+}
+
+int group_element::check_if_in_set_stabilizer(
+		int *Elt,
+		int size, long int *set, int verbose_level)
+{
+	int i, a, b, idx;
+	long int *ordered_set;
+	int f_v = (verbose_level >= 1);
+	data_structures::sorting Sorting;
+
+	ordered_set = NEW_lint(size);
+	for (i = 0; i < size; i++) {
+		ordered_set[i] = set[i];
+	}
+	Sorting.lint_vec_heapsort(ordered_set, size);
+	for (i = 0; i < size; i++) {
+		a = ordered_set[i];
+		b = element_image_of(a, Elt, 0);
+		if (!Sorting.lint_vec_search(ordered_set, size, b, idx, 0)) {
+			if (f_v) {
+				cout << "group_element::check_if_in_set_stabilizer fails" << endl;
+				cout << "set: ";
+				Lint_vec_print(cout, set, size);
+				cout << endl;
+				cout << "ordered_set: ";
+				Lint_vec_print(cout, ordered_set, size);
+				cout << endl;
+				cout << "image of " << i << "-th element "
+						<< a << " is " << b
+						<< " is not found" << endl;
+			}
+			FREE_lint(ordered_set);
+			return FALSE;
+		}
+	}
+	FREE_lint(ordered_set);
+	return TRUE;
+
+}
+
+int group_element::check_if_transporter_for_set(
+		int *Elt,
+		int size,
+		long int *set1, long int *set2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 4);
+	int i, a, b, idx;
+	long int *ordered_set2;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "group_element::check_if_transporter_for_set "
+				"size=" << size << endl;
+	}
+	if (f_vv) {
+		Lint_vec_print(cout, set1, size);
+		cout << endl;
+		Lint_vec_print(cout, set2, size);
+		cout << endl;
+		element_print(Elt, cout);
+		cout << endl;
+	}
+	ordered_set2 = NEW_lint(size);
+	for (i = 0; i < size; i++) {
+		ordered_set2[i] = set2[i];
+	}
+	Sorting.lint_vec_heapsort(ordered_set2, size);
+	if (f_vv) {
+		cout << "sorted target set:" << endl;
+		Lint_vec_print(cout, ordered_set2, size);
+		cout << endl;
+	}
+	for (i = 0; i < size; i++) {
+		a = set1[i];
+		if (FALSE) {
+			cout << "i=" << i << " a=" << a << endl;
+		}
+		b = element_image_of(a, Elt, 0);
+		if (FALSE) {
+			cout << "i=" << i << " a=" << a << " b=" << b << endl;
+		}
+		if (!Sorting.lint_vec_search(ordered_set2, size, b, idx, 0)) {
+			if (f_v) {
+				cout << "group_element::check_if_transporter_for_set fails" << endl;
+				cout << "set1   : ";
+				Lint_vec_print(cout, set1, size);
+				cout << endl;
+				cout << "set2   : ";
+				Lint_vec_print(cout, set2, size);
+				cout << endl;
+				cout << "ordered: ";
+				Lint_vec_print(cout, ordered_set2, size);
+				cout << endl;
+				cout << "image of " << i << "-th element "
+						<< a << " is " << b
+						<< " is not found" << endl;
+			}
+			FREE_lint(ordered_set2);
+			return FALSE;
+		}
+	}
+	FREE_lint(ordered_set2);
+	return TRUE;
+
+}
+
+}}}
+

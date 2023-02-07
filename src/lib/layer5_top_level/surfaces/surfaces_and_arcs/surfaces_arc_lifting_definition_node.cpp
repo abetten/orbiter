@@ -176,7 +176,7 @@ void surfaces_arc_lifting_definition_node::report_cosets(std::ostream &ost, int 
 		ost << "Aut coset " << i << " / " << nb_coset_reps << ": relative order is "
 				<< relative_order_table[i] << "\\\\" << endl;
 		ost << "$$" << endl;
-		Lift->A4->element_print_latex(coset_reps->ith(i), ost);
+		Lift->A4->Group_element->element_print_latex(coset_reps->ith(i), ost);
 		ost << "$$" << endl;
 	}
 	//ost << "\\end{enumerate}" << endl;

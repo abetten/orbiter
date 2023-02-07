@@ -196,7 +196,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 		cout << "transporter to canonical form:" << endl;
-		Variety->Canonical_form_classifier->Descr->PA->A->element_print(trans1, cout);
+		Variety->Canonical_form_classifier->Descr->PA->A->Group_element->element_print(trans1, cout);
 		//cout << "Stabilizer of the original set:" << endl;
 		//Gens_stabilizer_original_set->print_generators_tex();
 	}
@@ -213,7 +213,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 		cout << "transporter to canonical form:" << endl;
-		Variety->Canonical_form_classifier->Descr->PA->A->element_print(trans1, cout);
+		Variety->Canonical_form_classifier->Descr->PA->A->Group_element->element_print(trans1, cout);
 		//cout << "Stabilizer of the canonical form:" << endl;
 		//Gens_stabilizer_canonical_form->print_generators_tex();
 	}
@@ -285,7 +285,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	}
 
 
-	Variety->Canonical_form_classifier->Descr->PA->A->element_mult(
+	Variety->Canonical_form_classifier->Descr->PA->A->Group_element->element_mult(
 			trans1, trans2, Variety->transporter_to_canonical_form, 0);
 
 
@@ -356,7 +356,7 @@ void canonical_form_substructure::handle_orbit(
 	}
 
 
-	Variety->Canonical_form_classifier->SubC->A->element_move(
+	Variety->Canonical_form_classifier->SubC->A->Group_element->element_move(
 			CS->T1, transporter_to_canonical_form, 0);
 
 	Gens_stabilizer_original_set = NEW_OBJECT(groups::strong_generators);

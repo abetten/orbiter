@@ -365,14 +365,14 @@ void graph_theory_apps::expander_graph(
 #endif
 		}
 
-		A->make_element(Elt1, M4, verbose_level - 1);
+		A->Group_element->make_element(Elt1, M4, verbose_level - 1);
 
 		if (f_v) {
 			cout << "graph_theory_apps::expander_graph s_" << i << "=" << endl;
-			A->element_print_quick(Elt1, cout);
+			A->Group_element->element_print_quick(Elt1, cout);
 		}
 
-		A->element_move(Elt1, gens->ith(i), 0);
+		A->Group_element->element_move(Elt1, gens->ith(i), 0);
 	}
 
 	if (f_v) {

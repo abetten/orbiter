@@ -268,7 +268,7 @@ void any_group::isomorphism_Klein_quadric(
 
 	for (i = 0; i < m; i++) {
 
-		A->make_element(Elt, M + i * A->make_element_size, 0);
+		A->Group_element->make_element(Elt, M + i * A->make_element_size, 0);
 
 		if ((i % 10000) == 0) {
 			cout << i << " / " << m << endl;
@@ -276,7 +276,7 @@ void any_group::isomorphism_Klein_quadric(
 
 		if (f_vv) {
 			cout << "Element " << i << " / " << m << endl;
-			A->element_print(Elt, cout);
+			A->Group_element->element_print(Elt, cout);
 			cout << endl;
 		}
 
@@ -361,7 +361,7 @@ void any_group::isomorphism_Klein_quadric(
 			cout << endl;
 
 			cout << "Element :" << endl;
-			A->element_print(Elt, cout);
+			A->Group_element->element_print(Elt, cout);
 			cout << endl;
 
 			cout << "exterior square :" << endl;

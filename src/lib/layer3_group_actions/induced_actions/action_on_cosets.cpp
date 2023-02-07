@@ -185,7 +185,7 @@ long int action_on_cosets::compute_image(
 		cout << endl;
 		}
 	
-	A_linear->element_image_of_low_level(v1, v2,
+	A_linear->Group_element->element_image_of_low_level(v1, v2,
 			Elt, 0/*verbose_level - 1*/);
 
 	if (f_vv) {

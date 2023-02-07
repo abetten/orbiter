@@ -2165,7 +2165,7 @@ void matrix_group::orthogonal_group_random_generator(
 		cout << "Mtx=" << endl;
 		Int_matrix_print(Mtx, n, n);
 	}
-	A->make_element(Elt, Mtx, verbose_level - 1);
+	A->Group_element->make_element(Elt, Mtx, verbose_level - 1);
 
 
 	FREE_int(Mtx);
@@ -2174,7 +2174,7 @@ void matrix_group::orthogonal_group_random_generator(
 	if (f_vvv) {
 		cout << "matrix_group::orthogonal_group_random_generator "
 				"random generator:" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 	}
 	if (f_v) {
 		cout << "matrix_group::orthogonal_group_random_generator done" << endl;

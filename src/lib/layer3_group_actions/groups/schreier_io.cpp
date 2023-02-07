@@ -820,9 +820,9 @@ void schreier::print_tables(std::ostream &ost,
 			if (f_with_cosetrep) {
 				ost << " : ";
 				//A->element_print(Elt1, cout);
-				A->element_print_as_permutation(cosetrep, ost);
+				A->Group_element->element_print_as_permutation(cosetrep, ost);
 				ost << endl;
-				A->element_print_quick(cosetrep, ost);
+				A->Group_element->element_print_quick(cosetrep, ost);
 			}
 			ost << endl;
 		}
@@ -881,7 +881,7 @@ void schreier::print_tables_latex(
 			//A->element_print(Elt1, cout);
 			//A->element_print_as_permutation(cosetrep, ost);
 			//ost << endl;
-			A->element_print_latex(cosetrep, ost);
+			A->Group_element->element_print_latex(cosetrep, ost);
 		}
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
@@ -919,7 +919,7 @@ void schreier::print_generators()
 	for (j = 0; j < gens.len; j++) {
 		cout << "generator " << j << ":" << endl;
 		//A->element_print(gens.ith(j), cout);
-		A->element_print_quick(gens.ith(j), cout);
+		A->Group_element->element_print_quick(gens.ith(j), cout);
 		//A->element_print_as_permutation(gens.ith(j), cout);
 		if (j < gens.len - 1) {
 			cout << ", " << endl;
@@ -939,7 +939,7 @@ void schreier::print_generators_latex(
 		ost << "generator " << j << ":" << endl;
 		//A->element_print(gens.ith(j), cout);
 		ost << "$$" << endl;
-		A->element_print_latex(gens.ith(j), ost);
+		A->Group_element->element_print_latex(gens.ith(j), ost);
 		//A->element_print_as_permutation(gens.ith(j), cout);
 		if (j < gens.len - 1) {
 			ost << ", " << endl;
@@ -958,8 +958,8 @@ void schreier::print_generators_with_permutations()
 	for (j = 0; j < gens.len; j++) {
 		cout << "generator " << j << ":" << endl;
 		//A->element_print(gens.ith(j), cout);
-		A->element_print_quick(gens.ith(j), cout);
-		A->element_print_as_permutation(gens.ith(j), cout);
+		A->Group_element->element_print_quick(gens.ith(j), cout);
+		A->Group_element->element_print_as_permutation(gens.ith(j), cout);
 		cout << endl;
 		if (j < gens.len - 1) {
 			cout << ", " << endl;

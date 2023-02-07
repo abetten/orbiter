@@ -135,7 +135,7 @@ void semifield_trace::trace_very_general(
 	for (i = k; i < n; i++) {
 		M1[i * n + i] = 1;
 		}
-	A->make_element(transporter, M1, 0);
+	A->Group_element->make_element(transporter, M1, 0);
 
 	if (f_vv) {
 		cout << "transformation matrix transporter=" << endl;
@@ -177,7 +177,7 @@ void semifield_trace::trace_very_general(
 		}
 
 	L2->multiply_to_the_right(transporter, Basis, ELT2, ELT3, 0 /* verbose_level */);
-	A->element_move(ELT3, transporter, 0);
+	A->Group_element->element_move(ELT3, transporter, 0);
 
 	// apply ELT2 (i.e., Basis) to input_basis elements 1, .., basis_sz - 1
 	SC->apply_element_and_copy_back(ELT2,
@@ -200,7 +200,7 @@ void semifield_trace::trace_very_general(
 				L2->class_rep_plus_I_Basis_inv[c0],
 				ELT2, ELT3,
 				0 /* verbose_level */);
-		A->element_move(ELT3, transporter, 0);
+		A->Group_element->element_move(ELT3, transporter, 0);
 
 		// apply ELT2 to the basis elements 1,...,basis_sz - 1:
 		SC->apply_element_and_copy_back(ELT2,
@@ -237,8 +237,8 @@ void semifield_trace::trace_very_general(
 			exit(1);
 			}
 		d0 = L2->Fusion_idx[d];
-		A->element_mult(transporter, L2->Fusion_elt[d], ELT3, 0);
-		A->element_move(ELT3, transporter, 0);
+		A->Group_element->element_mult(transporter, L2->Fusion_elt[d], ELT3, 0);
+		A->Group_element->element_move(ELT3, transporter, 0);
 
 		// apply Fusion_elt[d] to the basis elements 0,1,...,basis_sz - 1
 		SC->apply_element_and_copy_back(L2->Fusion_elt[d],

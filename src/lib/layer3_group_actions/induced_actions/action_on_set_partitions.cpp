@@ -100,7 +100,7 @@ long int action_on_set_partitions::compute_image(
 		Combi.unordered_triple_pair_unrank(a, v1[0], v1[1], v1[2],
 			v1[3], v1[4], v1[5]);
 		for (i = 0; i < 6; i++) {
-			v2[i] = A->element_image_of(v1[i], Elt, 0 /*verbose_level*/);
+			v2[i] = A->Group_element->element_image_of(v1[i], Elt, 0 /*verbose_level*/);
 		}
 		for (i = 0; i < nb_parts; i++) {
 			Sorting.int_vec_heapsort(v2 + i * partition_class_size,
@@ -112,7 +112,7 @@ long int action_on_set_partitions::compute_image(
 	else if (universal_set_size == 4 && partition_class_size == 2) {
 		Combi.set_partition_4_into_2_unrank(a, v1);
 		for (i = 0; i < 4; i++) {
-			v2[i] = A->element_image_of(v1[i], Elt, 0 /*verbose_level*/);
+			v2[i] = A->Group_element->element_image_of(v1[i], Elt, 0 /*verbose_level*/);
 		}
 		for (i = 0; i < nb_parts; i++) {
 			Sorting.int_vec_heapsort(v2 + i * partition_class_size,

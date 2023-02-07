@@ -2755,30 +2755,30 @@ void surface_create::apply_single_transformation(int f_inverse,
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
-	A->make_element(Elt1, transformation_coeffs, verbose_level);
+	A->Group_element->make_element(Elt1, transformation_coeffs, verbose_level);
 
 	if (f_inverse) {
-		A->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
+		A->Group_element->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
 	}
 	else {
-		A->element_move(Elt1, Elt2, 0 /*verbose_level*/);
+		A->Group_element->element_move(Elt1, Elt2, 0 /*verbose_level*/);
 	}
 
 	//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
 
-	A->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
+	A->Group_element->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "surface_create::apply_single_transformation "
 				"applying the transformation given by:" << endl;
 		cout << "$$" << endl;
-		A->print_quick(cout, Elt2);
+		A->Group_element->print_quick(cout, Elt2);
 		cout << endl;
 		cout << "$$" << endl;
 		cout << "surface_create::apply_single_transformation "
 				"The inverse is:" << endl;
 		cout << "$$" << endl;
-		A->print_quick(cout, Elt3);
+		A->Group_element->print_quick(cout, Elt3);
 		cout << endl;
 		cout << "$$" << endl;
 	}
@@ -2846,7 +2846,7 @@ void surface_create::apply_single_transformation(int f_inverse,
 			cout << "line " << i << ":" << endl;
 			Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
 		}
-		SO->Lines[i] = Surf_A->A2->element_image_of(SO->Lines[i], Elt2,
+		SO->Lines[i] = Surf_A->A2->Group_element->element_image_of(SO->Lines[i], Elt2,
 				0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "maps to " << endl;
@@ -2860,7 +2860,7 @@ void surface_create::apply_single_transformation(int f_inverse,
 		if (f_vv) {
 			cout << "point" << i << " = " << SO->Pts[i] << endl;
 		}
-		SO->Pts[i] = Surf_A->A->element_image_of(SO->Pts[i], Elt2, 0 /*verbose_level*/);
+		SO->Pts[i] = Surf_A->A->Group_element->element_image_of(SO->Pts[i], Elt2, 0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "maps to " << SO->Pts[i] << endl;
 		}
@@ -3411,7 +3411,7 @@ void surface_create::test_group(int verbose_level)
 		cout << "surface_create::test_group "
 				"Testing generator " << i << " / "
 				<< Sg->gens->len << endl;
-		Surf_A->A->element_invert(Sg->gens->ith(i),
+		Surf_A->A->Group_element->element_invert(Sg->gens->ith(i),
 				Elt2, 0 /*verbose_level*/);
 
 

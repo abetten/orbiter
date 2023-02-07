@@ -202,9 +202,9 @@ void algebra_global_with_action::create_subgroups(
 
 			S->element_unrank_lint(rk1, Elt1);
 			S->element_unrank_lint(rk2, Elt2);
-			S->A->element_print_quick(Elt0, cout);
-			S->A->element_print_quick(Elt1, cout);
-			S->A->element_print_quick(Elt2, cout);
+			S->A->Group_element->element_print_quick(Elt0, cout);
+			S->A->Group_element->element_print_quick(Elt1, cout);
+			S->A->Group_element->element_print_quick(Elt2, cout);
 
 			Flags[nb_flag_orbits * 3 + 0] = rk0;
 			Flags[nb_flag_orbits * 3 + 1] = rk1;
@@ -256,9 +256,9 @@ void algebra_global_with_action::create_subgroups(
 			cout << h << " : " << SO[h] << " : " << SOL[h] << " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1 << endl;
 			cout << "The subgroup consists of the following three "
 					"non-identity elements:" << endl;
-			S->A->element_print_quick(Elt0, cout);
-			S->A->element_print_quick(Elt1, cout);
-			S->A->element_print_quick(Elt2, cout);
+			S->A->Group_element->element_print_quick(Elt0, cout);
+			S->A->Group_element->element_print_quick(Elt1, cout);
+			S->A->Group_element->element_print_quick(Elt2, cout);
 
 			Flag_stab[h]->print_generators_tex(cout);
 
@@ -315,7 +315,7 @@ void algebra_global_with_action::create_subgroups(
 		transversal->init(S->A, 0);
 		transversal->allocate(6, 0);
 		for (h = 0; h < 6; h++) {
-			S->A->element_one(transversal->ith(h), 0);
+			S->A->Group_element->element_one(transversal->ith(h), 0);
 		}
 
 		for (h = 1; h < 6; h++) {
@@ -353,9 +353,9 @@ void algebra_global_with_action::create_subgroups(
 				exit(1);
 			}
 			pt = position[idx];
-			S->A->element_invert(Transporter->ith(pt), Elt0, 0);
+			S->A->Group_element->element_invert(Transporter->ith(pt), Elt0, 0);
 			for (int u = 0; u < 3; u++) {
-				cur_flag_mapped1[u] = A_conj->element_image_of(cur_flag[u], Elt0, 0);
+				cur_flag_mapped1[u] = A_conj->Group_element->element_image_of(cur_flag[u], Elt0, 0);
 			}
 			if (cur_flag_mapped1[0] != rk0) {
 				cout << "cur_flag_mapped1[u] != rk0" << endl;
@@ -381,18 +381,18 @@ void algebra_global_with_action::create_subgroups(
 				Classes->transporter_from_point_to_orbit_rep(pt,
 						orbit_idx, Elt1, verbose_level);
 
-				S->A->element_mult(Elt0, Elt1, Elt2, 0);
-				S->A->element_print_quick(Elt2, cout);
+				S->A->Group_element->element_mult(Elt0, Elt1, Elt2, 0);
+				S->A->Group_element->element_print_quick(Elt2, cout);
 
 				for (int u = 0; u < 3; u++) {
-					cur_flag_mapped1[u] = A_conj->element_image_of(cur_flag[u], Elt2, 0);
+					cur_flag_mapped1[u] = A_conj->Group_element->element_image_of(cur_flag[u], Elt2, 0);
 				}
 				cout << "which maps as follows:" << endl;
 				for (int u = 0; u < 3; u++) {
 					cout << cur_flag[u] << " -> " << cur_flag_mapped1[u] << endl;
 				}
 
-				S->A->element_move(Elt2, transversal->ith(upstep_transversal_size[nb_iso]), 0);
+				S->A->Group_element->element_move(Elt2, transversal->ith(upstep_transversal_size[nb_iso]), 0);
 
 				upstep_transversal_size[nb_iso]++;
 			}
@@ -445,9 +445,9 @@ void algebra_global_with_action::create_subgroups(
 
 		cout << "The subgroup consists of the following three "
 				"non-identity elements:" << endl;
-		S->A->element_print_quick(Elt0, cout);
-		S->A->element_print_quick(Elt1, cout);
-		S->A->element_print_quick(Elt2, cout);
+		S->A->Group_element->element_print_quick(Elt0, cout);
+		S->A->Group_element->element_print_quick(Elt1, cout);
+		S->A->Group_element->element_print_quick(Elt2, cout);
 
 		Aut[i]->print_generators_tex(cout);
 
@@ -502,9 +502,9 @@ void algebra_global_with_action::create_subgroups(
 				ost << "The subgroup consists of the following three "
 						"non-identity elements:\\\\" << endl;
 				ost << "$$" << endl;
-				S->A->element_print_latex(Elt0, ost);
-				S->A->element_print_latex(Elt1, ost);
-				S->A->element_print_latex(Elt2, ost);
+				S->A->Group_element->element_print_latex(Elt0, ost);
+				S->A->Group_element->element_print_latex(Elt1, ost);
+				S->A->Group_element->element_print_latex(Elt2, ost);
 				ost << "$$" << endl;
 				ost << "The flag stabilizer is the following group:\\\\" << endl;
 				Flag_stab[h]->print_generators_tex(ost);
@@ -539,15 +539,15 @@ void algebra_global_with_action::create_subgroups(
 				ost << "The subgroup consists of the following three "
 						"non-identity elements:\\\\" << endl;
 				ost << "$$" << endl;
-				S->A->element_print_latex(Elt0, ost);
-				S->A->element_print_latex(Elt1, ost);
-				S->A->element_print_latex(Elt2, ost);
+				S->A->Group_element->element_print_latex(Elt0, ost);
+				S->A->Group_element->element_print_latex(Elt1, ost);
+				S->A->Group_element->element_print_latex(Elt2, ost);
 				ost << "$$" << endl;
-				S->A->element_print_for_make_element(Elt0, ost);
+				S->A->Group_element->element_print_for_make_element(Elt0, ost);
 				ost << "\\\\" << endl;
-				S->A->element_print_for_make_element(Elt1, ost);
+				S->A->Group_element->element_print_for_make_element(Elt1, ost);
 				ost << "\\\\" << endl;
-				S->A->element_print_for_make_element(Elt2, ost);
+				S->A->Group_element->element_print_for_make_element(Elt2, ost);
 				ost << "\\\\" << endl;
 				ost << "The normalizer is the following group:\\\\" << endl;
 				Aut[i]->print_generators_tex(ost);
@@ -829,7 +829,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 		Int_vec_zero(Mtx, d * d + 1);
 		C.make_matrix_from_class_rep(Mtx, R + i, verbose_level - 1);
 
-		A->make_element(Elt, Mtx, 0);
+		A->Group_element->make_element(Elt, Mtx, 0);
 
 		if (f_v) {
 			cout << "before override_Sims->element_rank_lint" << endl;
@@ -855,7 +855,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 		if (f_v) {
 			cout << "before A->element_order" << endl;
 		}
-		order = A->element_order(Elt);
+		order = A->Group_element->element_order(Elt);
 		if (f_v) {
 			cout << "after A->element_order" << endl;
 		}
@@ -925,7 +925,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 				Int_vec_zero(Mtx, d * d + 1);
 				C.make_matrix_from_class_rep(Mtx, R + i, verbose_level - 1);
 
-				A->make_element(Elt, Mtx, 0);
+				A->Group_element->make_element(Elt, Mtx, 0);
 
 				if (f_v) {
 					cout << "before override_Sims->element_rank_lint" << endl;
@@ -950,7 +950,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 				if (f_v) {
 					cout << "before A->element_order" << endl;
 				}
-				order = A->element_order(Elt);
+				order = A->Group_element->element_order(Elt);
 				if (f_v) {
 					cout << "after A->element_order" << endl;
 				}
@@ -1026,7 +1026,7 @@ void algebra_global_with_action::classes_GL(
 
 		C.make_matrix_from_class_rep(Mtx, R + i, 0 /*verbose_level - 1 */);
 
-		A->make_element(Elt, Mtx, 0);
+		A->Group_element->make_element(Elt, Mtx, 0);
 
 		a = A->Sims->element_rank_lint(Elt);
 
@@ -1137,7 +1137,7 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 	cout << endl;
 
 	//A->Sims->element_unrank_int(elt_idx, Elt);
-	A->make_element(Elt, data, verbose_level);
+	A->Group_element->make_element(Elt, data, verbose_level);
 
 	cout << "Looking at element:" << endl;
 	Int_matrix_print(Elt, d, d);
@@ -1570,7 +1570,7 @@ void algebra_global_with_action::group_table(
 		for (j = 0; j < list_sz; j++) {
 			b = List[j];
 			A->Sims->element_unrank_lint(b, Elt2);
-			A->element_mult(Elt1, Elt2, Elt3, 0);
+			A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 			h = A->Sims->element_rank_lint(Elt3);
 			Group_table[i * list_sz + j] = h;
 			}
@@ -1698,7 +1698,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 			<< elt_idx << ":" << endl;
 	Int_matrix_print(Elt, d, d);
 
-	A->element_invert(Elt, Eltv, 0);
+	A->Group_element->element_invert(Elt, Eltv, 0);
 
 	for (i = 0; i < go; i++) {
 
@@ -1708,11 +1708,11 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 		//int_matrix_print(Elt1, d, d);
 
 
-		A->element_invert(Elt1, Elt2, 0);
-		A->element_mult(Elt2, Elt, Elt3, 0);
-		A->element_mult(Elt3, Elt1, Elt2, 0);
-		A->element_mult(Elt2, Eltv, Elt3, 0);
-		if (A->is_one(Elt3)) {
+		A->Group_element->element_invert(Elt1, Elt2, 0);
+		A->Group_element->element_mult(Elt2, Elt, Elt3, 0);
+		A->Group_element->element_mult(Elt3, Elt1, Elt2, 0);
+		A->Group_element->element_mult(Elt2, Eltv, Elt3, 0);
+		if (A->Group_element->is_one(Elt3)) {
 			List[sz++] = i;
 			}
 		}
@@ -1739,7 +1739,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 		A->Sims->element_unrank_lint(a, Elt1);
 		Int_matrix_print(Elt1, d, d);
 
-		A->element_move(Elt1, gens->ith(i), 0);
+		A->Group_element->element_move(Elt1, gens->ith(i), 0);
 		}
 
 	groups::sims *Cent;
@@ -1751,7 +1751,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 	cout << "strong generators for the centralizer are:" << endl;
 	for (i = 0; i < SG->len; i++) {
 
-		A->element_move(SG->ith(i), Elt1, 0);
+		A->Group_element->element_move(SG->ith(i), Elt1, 0);
 		a = A->Sims->element_rank_lint(Elt1);
 
 		cout << "Element " << i << " / " << SG->len
@@ -2019,7 +2019,7 @@ void algebra_global_with_action::presentation(
 		inverse_word_list[i] = -1;
 		}
 	for (i = 0; i < goi; i++) {
-		A->one(Elt1);
+		A->Group_element->one(Elt1);
 		j = i;
 		for (k = 0; k < l; k++) {
 			b = j % primes[k];
@@ -2030,19 +2030,19 @@ void algebra_global_with_action::presentation(
 		for (k = 0; k < l; k++) {
 			b = word[k];
 			while (b) {
-				A->mult(Elt1, gens->ith(k), Elt2);
-				A->move(Elt2, Elt1);
+				A->Group_element->mult(Elt1, gens->ith(k), Elt2);
+				A->Group_element->move(Elt2, Elt1);
 				b--;
 				}
 			}
-		A->move(Elt1, Elt2);
+		A->Group_element->move(Elt1, Elt2);
 		a = S->element_rank_lint(Elt2);
 		word_list[i] = a;
 		inverse_word_list[a] = i;
 		cout << "word " << i << " = ";
 		Int_vec_print(cout, word, 9);
 		cout << " gives " << endl;
-		A->print(cout, Elt1);
+		A->Group_element->print(cout, Elt1);
 		cout << "which is element " << word_list[i] << endl;
 		cout << endl;
 		}
@@ -2056,12 +2056,12 @@ void algebra_global_with_action::presentation(
 
 	for (i = 0; i < l; i++) {
 		cout << "generator " << i << ":" << endl;
-		A->print(cout, gens->ith(i));
+		A->Group_element->print(cout, gens->ith(i));
 		cout << endl;
 		}
 	for (i = 0; i < l; i++) {
-		A->move(gens->ith(i), Elt1);
-		A->element_power_int_in_place(Elt1, primes[i], 0);
+		A->Group_element->move(gens->ith(i), Elt1);
+		A->Group_element->element_power_int_in_place(Elt1, primes[i], 0);
 		a = S->element_rank_lint(Elt1);
 		cout << "generator " << i << " to the power " << primes[i]
 			<< " is elt " << a << " which is word "
@@ -2075,17 +2075,17 @@ void algebra_global_with_action::presentation(
 			}
 		Int_vec_print(cout, word, l);
 		cout << " :" << endl;
-		A->print(cout, Elt1);
+		A->Group_element->print(cout, Elt1);
 		cout << endl;
 		}
 
 
 	for (i = 0; i < l; i++) {
-		A->move(gens->ith(i), Elt1);
-		A->invert(Elt1, Elt2);
+		A->Group_element->move(gens->ith(i), Elt1);
+		A->Group_element->invert(Elt1, Elt2);
 		for (j = 0; j < i; j++) {
-			A->mult(Elt2, gens->ith(j), Elt3);
-			A->mult(Elt3, Elt1, Elt4);
+			A->Group_element->mult(Elt2, gens->ith(j), Elt3);
+			A->Group_element->mult(Elt3, Elt1, Elt4);
 			cout << "g_" << j << "^{g_" << i << "} =" << endl;
 			a = S->element_rank_lint(Elt4);
 			cout << "which is element " << a << " which is word "
@@ -2099,7 +2099,7 @@ void algebra_global_with_action::presentation(
 				}
 			Int_vec_print(cout, word, l);
 			cout << endl;
-			A->print(cout, Elt4);
+			A->Group_element->print(cout, Elt4);
 			cout << endl;
 			}
 		cout << endl;
@@ -3440,7 +3440,7 @@ void algebra_global_with_action::permutation_representation_of_element(
 		exit(1);
 	}
 
-	A->make_element(Elt, data, 0 /* verbose_level */);
+	A->Group_element->make_element(Elt, data, 0 /* verbose_level */);
 
 
 
@@ -3477,11 +3477,11 @@ void algebra_global_with_action::permutation_representation_of_element(
 			}
 
 			ost << "$$" << endl;
-			A->element_print_latex(Elt, ost);
+			A->Group_element->element_print_latex(Elt, ost);
 			ost << "$$" << endl;
 
 			ost << "$$" << endl;
-			A->element_print_as_permutation(Elt, ost);
+			A->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "$$" << endl;
 
 			if (f_v) {
@@ -3539,14 +3539,14 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 
 	S = SG->create_sims(0 /*verbose_level */);
 	for (i = 0; i < cosets->len; i++) {
-		A->element_move(cosets->ith(i), Elt1, 0);
+		A->Group_element->element_move(cosets->ith(i), Elt1, 0);
 		order = 1;
 		while (TRUE) {
 			if (S->strip(Elt1, Elt2, drop_out_level, image, 0 /*verbose_level*/)) {
 				break;
 			}
-			A->element_mult(cosets->ith(i), Elt1, Elt2, 0);
-			A->element_move(Elt2, Elt1, 0);
+			A->Group_element->element_mult(cosets->ith(i), Elt1, Elt2, 0);
+			A->Group_element->element_move(Elt2, Elt1, 0);
 			order++;
 		}
 		relative_order_table[i] = order;
@@ -3897,7 +3897,7 @@ void algebra_global_with_action::find_singer_cycle(any_group *Any_group,
 		H->element_unrank_lint(i, Elt);
 
 
-		ord = A2->element_order(Elt);
+		ord = A2->Group_element->element_order(Elt);
 
 	#if 0
 		cout << "Element " << setw(5) << i << " / "
@@ -3917,9 +3917,9 @@ void algebra_global_with_action::find_singer_cycle(any_group *Any_group,
 		if (f_v) {
 			cout << "Element " << setw(5) << i << " / "
 						<< go.as_int() << " = " << cnt << ":" << endl;
-			A2->element_print(Elt, cout);
+			A2->Group_element->element_print(Elt, cout);
 			cout << endl;
-			A2->element_print_as_permutation(Elt, cout);
+			A2->Group_element->element_print_as_permutation(Elt, cout);
 			cout << endl;
 		}
 		cnt++;
@@ -3966,7 +3966,7 @@ void algebra_global_with_action::search_element_of_order(any_group *Any_group,
 		H->element_unrank_lint(i, Elt);
 
 
-		ord = A2->element_order(Elt);
+		ord = A2->Group_element->element_order(Elt);
 
 	#if 0
 		cout << "Element " << setw(5) << i << " / "
@@ -3983,9 +3983,9 @@ void algebra_global_with_action::search_element_of_order(any_group *Any_group,
 		if (f_v) {
 			cout << "Element " << setw(5) << i << " / "
 						<< go.as_int() << " = " << cnt << ":" << endl;
-			A2->element_print(Elt, cout);
+			A2->Group_element->element_print(Elt, cout);
 			cout << endl;
-			A2->element_print_as_permutation(Elt, cout);
+			A2->Group_element->element_print_as_permutation(Elt, cout);
 			cout << endl;
 		}
 		cnt++;
@@ -4035,7 +4035,7 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 		H->element_unrank_lint(i, Elt_a);
 
 
-		ord = A2->element_order(Elt_a);
+		ord = A2->Group_element->element_order(Elt_a);
 
 	#if 0
 		cout << "Element " << setw(5) << i << " / "
@@ -4054,15 +4054,15 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 			H->element_unrank_lint(j, Elt_b);
 
 
-			ord = A2->element_order(Elt_b);
+			ord = A2->Group_element->element_order(Elt_b);
 
 			if (ord != order_b) {
 				continue;
 			}
 
-			A2->element_mult(Elt_a, Elt_b, Elt_ab, 0);
+			A2->Group_element->element_mult(Elt_a, Elt_b, Elt_ab, 0);
 
-			ord = A2->element_order(Elt_ab);
+			ord = A2->Group_element->element_order(Elt_ab);
 
 			if (ord != order_ab) {
 				continue;
@@ -4071,19 +4071,19 @@ void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 			if (f_v) {
 				cout << "algebra_global_with_action::find_standard_generators a = " << setw(5) << i << ", b=" << setw(5) << j << " : " << cnt << ":" << endl;
 				cout << "a=" << endl;
-				A2->element_print(Elt_a, cout);
+				A2->Group_element->element_print(Elt_a, cout);
 				cout << endl;
-				A2->element_print_as_permutation(Elt_a, cout);
+				A2->Group_element->element_print_as_permutation(Elt_a, cout);
 				cout << endl;
 				cout << "b=" << endl;
-				A2->element_print(Elt_b, cout);
+				A2->Group_element->element_print(Elt_b, cout);
 				cout << endl;
-				A2->element_print_as_permutation(Elt_b, cout);
+				A2->Group_element->element_print_as_permutation(Elt_b, cout);
 				cout << endl;
 				cout << "ab=" << endl;
-				A2->element_print(Elt_ab, cout);
+				A2->Group_element->element_print(Elt_ab, cout);
 				cout << endl;
-				A2->element_print_as_permutation(Elt_ab, cout);
+				A2->Group_element->element_print_as_permutation(Elt_ab, cout);
 				cout << endl;
 			}
 			cnt++;

@@ -429,7 +429,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 		fp << "\\section{Generators}" << endl;
 		for (i = 0; i < SG->gens->len; i++) {
 			fp << "$$" << endl;
-			A->element_print_latex(SG->gens->ith(i), fp);
+			A->Group_element->element_print_latex(SG->gens->ith(i), fp);
 			if (i < SG->gens->len - 1) {
 				fp << ", " << endl;
 			}

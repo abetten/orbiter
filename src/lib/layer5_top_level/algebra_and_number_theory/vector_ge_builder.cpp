@@ -81,7 +81,7 @@ void vector_ge_builder::init(
 				if (f_v) {
 					cout << "polynomial_ring_activity::perform_activity i=" << i << " / " << V->len << endl;
 					cout << "Group element:" << endl;
-					A->element_print_quick(V->ith(i), cout);
+					A->Group_element->element_print_quick(V->ith(i), cout);
 				}
 			}
 		}

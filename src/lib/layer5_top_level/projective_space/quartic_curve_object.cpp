@@ -105,10 +105,10 @@ void quartic_curve_object::init_image_of(quartic_curve_object *old_one,
 	nb_bitangents = old_one->nb_bitangents;
 
 	for (i = 0; i < old_one->nb_pts; i++) {
-		pts[i] = A->element_image_of(old_one->pts[i], Elt, 0 /* verbose_level */);
+		pts[i] = A->Group_element->element_image_of(old_one->pts[i], Elt, 0 /* verbose_level */);
 	}
 	for (i = 0; i < old_one->nb_bitangents; i++) {
-		bitangents[i] = A_on_lines->element_image_of(old_one->bitangents[i], Elt, 0 /* verbose_level */);
+		bitangents[i] = A_on_lines->Group_element->element_image_of(old_one->bitangents[i], Elt, 0 /* verbose_level */);
 	}
 
 

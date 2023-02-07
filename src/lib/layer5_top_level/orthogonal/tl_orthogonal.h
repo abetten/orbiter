@@ -265,6 +265,8 @@ public:
 	int f_space;
 	std::string space_label;
 
+	//int f_space_pointer;
+	//orthogonal_space_with_action *space_pointer;
 
 
 	BLT_set_create_description();
@@ -308,14 +310,13 @@ public:
 
 	layer1_foundations::orthogonal_geometry::blt_set_domain
 		*Blt_set_domain;
+
 	blt_set_with_action *BA;
 
 
 	BLT_set_create();
 	~BLT_set_create();
 	void init(
-			layer1_foundations::orthogonal_geometry::blt_set_domain
-				*Blt_set_domain,
 			BLT_set_create_description *Descr,
 			orthogonal_space_with_action *OA,
 			int verbose_level);
@@ -472,6 +473,8 @@ public:
 	int f_intersect_with_subspace;
 	std::string intersect_with_subspace_label;
 
+	int f_table_of_blt_sets;
+
 
 
 	orthogonal_space_activity_description();
@@ -595,6 +598,53 @@ public:
 	void report_line_set(
 			long int *Lines, int nb_lines,
 			std::string &label_txt,
+			int verbose_level);
+	void make_table_of_blt_sets(int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// table_of_blt_sets.cpp
+// #############################################################################
+
+//! a table of blt sets
+
+
+
+class table_of_blt_sets {
+
+public:
+
+	orthogonal_geometry_applications::orthogonal_space_with_action *Space;
+
+
+	int nb_objects;
+
+	BLT_set_create_description *Object_create_description;
+
+	BLT_set_create *Object_create;
+
+	blt_set_with_action *Object_with_action;
+
+
+
+
+	table_of_blt_sets();
+	~table_of_blt_sets();
+	void init(
+			orthogonal_geometry_applications::orthogonal_space_with_action *Space,
+		int verbose_level);
+	void do_export(
+			int verbose_level);
+	void export_csv(
+			std::string *Table,
+			int nb_cols,
+			int verbose_level);
+	void export_sql(
+			std::string *Table,
+			int nb_cols,
 			int verbose_level);
 
 };

@@ -320,9 +320,9 @@ void choose_points_or_lines::choose_orbit(
 							<< label << " isomorphism test only" << endl;
 					cout << "element mapping the favorite set to "
 							"the canonical set:" << endl;
-					A->print_for_make_element(cout, transporter_inv);
+					A->Group_element->print_for_make_element(cout, transporter_inv);
 					cout << endl;					
-					A->print_quick(cout, transporter_inv);
+					A->Group_element->print_quick(cout, transporter_inv);
 				}
 			}
 			else {
@@ -416,16 +416,16 @@ void choose_points_or_lines::choose_orbit(
 		for (i = 0; i < Stab_Strong_gens->gens->len; i++) {
 			cout << i << " : " << endl;
 			
-			A->element_print_quick(Stab_Strong_gens->gens->ith(i), cout);
+			A->Group_element->element_print_quick(Stab_Strong_gens->gens->ith(i), cout);
 			cout << endl;
 
 			if (print_generators_verbose_level > 1) {
 				cout << "in action on points:" << endl;
-				A->element_print_as_permutation(
+				A->Group_element->element_print_as_permutation(
 						Stab_Strong_gens->gens->ith(i), cout);
 				cout << endl;
 				cout << "in action on lines:" << endl;
-				A_lines->element_print_as_permutation(
+				A_lines->Group_element->element_print_as_permutation(
 						Stab_Strong_gens->gens->ith(i), cout);
 				cout << endl;
 			}
@@ -486,13 +486,13 @@ int choose_points_or_lines::favorite_orbit_representative(
 			break;
 		}
 	}
-	A2->element_invert(transporter_inv, transporter, FALSE);
+	A2->Group_element->element_invert(transporter_inv, transporter, FALSE);
 	if (f_OK) {
 		if (f_v) {
 			cout << "arc::favorite_zero_lines: transporter "
 					"to favorite set:" << endl;
-			A2->element_print(transporter, cout);
-			A2->element_print_as_permutation(transporter, cout);
+			A2->Group_element->element_print(transporter, cout);
+			A2->Group_element->element_print_as_permutation(transporter, cout);
 		}
 		for (i = 0; i < nb_points_or_lines; i++) {
 			the_favorite_representative[i] = favorite[i];
@@ -526,7 +526,7 @@ void choose_points_or_lines::print_stab()
 		return;
 	cout << "generators:" << endl;
 	for (i = 0; i < Stab_Strong_gens->gens->len; i++) {
-		A->element_print_quick(Stab_Strong_gens->gens->ith(i), cout);
+		A->Group_element->element_print_quick(Stab_Strong_gens->gens->ith(i), cout);
 
 #if 0
 		cout << "as permutation of points:" << endl;

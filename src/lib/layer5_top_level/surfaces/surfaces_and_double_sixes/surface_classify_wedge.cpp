@@ -662,7 +662,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 					//A->element_print_quick(Elt1, cout);
 					//cout << endl;
 				}
-				A->element_move(Elt1, coset_reps->ith(nb_coset_reps), 0);
+				A->Group_element->element_move(Elt1, coset_reps->ith(nb_coset_reps), 0);
 				nb_coset_reps++;
 			}
 			else {
@@ -677,7 +677,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 					Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
 					Flag_orbits->Flag_orbit_node[f2].fusion_elt
 						= NEW_int(A->elt_size_in_int);
-					A->element_invert(Elt1,
+					A->Group_element->element_invert(Elt1,
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
 					f_processed[f2] = TRUE;
 					nb_processed++;
@@ -1279,7 +1279,7 @@ void surface_classify_wedge::identify_Eckardt(
 		cout << "surface_classify_wedge::identify_Eckardt "
 			"a = " << a << " is isomorphic to iso_type "
 			<< iso_type << ", an isomorphism is:" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 
 		Iso_type[a] = iso_type;
 		Nb_lines[a] = SO->nb_lines;
@@ -1330,7 +1330,7 @@ void surface_classify_wedge::identify_F13(
 		cout << "surface_classify_wedge::identify_F13 "
 			"a = " << a << " is isomorphic to iso_type "
 			<< iso_type << ", an isomorphism is:" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 
 		Iso_type[a] = iso_type;
 		Nb_lines[a] = SO->nb_lines;
@@ -1392,7 +1392,7 @@ void surface_classify_wedge::identify_Bes(
 			cout << "surface_classify_wedge::identify_Bes "
 				"a = " << a << " c = " << c << " is isomorphic to iso_type "
 				<< iso_type << ", an isomorphism is:" << endl;
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 
 			Iso_type[a * q + c] = iso_type;
 			Nb_lines[a * q + c] = SO->nb_lines;
@@ -1471,11 +1471,11 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 			cout << "surface_classify_wedge::isomorphism_test_pairwise "
 					"they are isomorphic" << endl;
 		}
-		A->element_invert(Elt2, Elt3, 0);
-		A->element_mult(Elt1, Elt3, Elt_isomorphism_1to2, 0);
+		A->Group_element->element_invert(Elt2, Elt3, 0);
+		A->Group_element->element_mult(Elt1, Elt3, Elt_isomorphism_1to2, 0);
 		if (f_v) {
 			cout << "an isomorphism from surface1 to surface2 is" << endl;
-			A->element_print(Elt_isomorphism_1to2, cout);
+			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
 		}
 		groups::matrix_group *mtx;
 
@@ -1483,7 +1483,7 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 
 		if (f_v) {
 			cout << "testing the isomorphism" << endl;
-			A->element_print(Elt_isomorphism_1to2, cout);
+			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
 			cout << "from: ";
 			Int_vec_print(cout, coeff1, 20);
 			cout << endl;
@@ -1491,10 +1491,10 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 			Int_vec_print(cout, coeff2, 20);
 			cout << endl;
 		}
-		A->element_invert(Elt_isomorphism_1to2, Elt1, 0);
+		A->Group_element->element_invert(Elt_isomorphism_1to2, Elt1, 0);
 		if (f_v) {
 			cout << "the inverse element is" << endl;
-			A->element_print(Elt1, cout);
+			A->Group_element->element_print(Elt1, cout);
 		}
 		int coeff3[20];
 		int coeff4[20];
@@ -1753,7 +1753,7 @@ void surface_classify_wedge::identify_surface(
 			"The five plus one configuration lies in orbit "
 			<< idx2 << endl;
 		cout << "An isomorphism is given by:" << endl;
-		A->element_print_quick(Elt2, cout);
+		A->Group_element->element_print_quick(Elt2, cout);
 	}
 
 #if 0
@@ -1815,7 +1815,7 @@ void surface_classify_wedge::identify_surface(
 					"the flag orbit is a fusion node" << endl;
 		}
 
-		A->element_mult(Elt2,
+		A->Group_element->element_mult(Elt2,
 			Classify_double_sixes->Flag_orbits->Flag_orbit_node[f].fusion_elt,
 			Elt3, 0);
 	}
@@ -1826,12 +1826,12 @@ void surface_classify_wedge::identify_surface(
 					"the flag orbit is a definition node" << endl;
 		}
 
-		A->element_move(Elt2, Elt3, 0);
+		A->Group_element->element_move(Elt2, Elt3, 0);
 	}
 
 	if (f_v) {
 		cout << "An isomorphism is given by:" << endl;
-		A->element_print_quick(Elt3, cout);
+		A->Group_element->element_print_quick(Elt3, cout);
 	}
 
 	iso_type = Flag_orbits->Flag_orbit_node[double_six_orbit].upstep_primary_orbit;
@@ -1842,12 +1842,12 @@ void surface_classify_wedge::identify_surface(
 	}
 
 	if (Flag_orbits->Flag_orbit_node[double_six_orbit].f_fusion_node) {
-		A->element_mult(Elt3,
+		A->Group_element->element_mult(Elt3,
 			Flag_orbits->Flag_orbit_node[double_six_orbit].fusion_elt,
 			Elt_isomorphism, 0);
 	}
 	else {
-		A->element_move(Elt3, Elt_isomorphism, 0);
+		A->Group_element->element_move(Elt3, Elt_isomorphism, 0);
 	}
 
 	//iso_type = is_isomorphic_to[orb2];
@@ -1856,26 +1856,26 @@ void surface_classify_wedge::identify_surface(
 	if (f_v) {
 		cout << "The surface is isomorphic to surface " << iso_type << endl;
 		cout << "An isomorphism is given by:" << endl;
-		A->element_print_quick(Elt_isomorphism, cout);
+		A->Group_element->element_print_quick(Elt_isomorphism, cout);
 	}
 	isomorphic_to = iso_type;
 
 	int *Elt_isomorphism_inv;
 
 	Elt_isomorphism_inv = NEW_int(A->elt_size_in_int);
-	A->element_invert(Elt_isomorphism, Elt_isomorphism_inv, 0);
+	A->Group_element->element_invert(Elt_isomorphism, Elt_isomorphism_inv, 0);
 
 	long int *image;
 
 	image = NEW_lint(nb_points);
 
-	A->map_a_set_and_reorder(Points, image,
+	A->Group_element->map_a_set_and_reorder(Points, image,
 			nb_points, Elt_isomorphism,
 			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "The inverse isomorphism is given by:" << endl;
-		A->element_print_quick(Elt_isomorphism_inv, cout);
+		A->Group_element->element_print_quick(Elt_isomorphism_inv, cout);
 
 		cout << "The image of the set of points is: ";
 		Lint_vec_print(cout, image, nb_points);
@@ -2510,7 +2510,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 								<< stab_gens_len[orbit_index] << endl;
 					}
 					f << "\t";
-					A->element_print_for_make_element(
+					A->Group_element->element_print_for_make_element(
 							Surfaces->Orbit[orbit_index].gens->gens->ith(j), f);
 					//A->element_print_for_make_element(
 					//The_surface[iso_type]->stab_gens->gens->ith(j), f);
@@ -3048,7 +3048,7 @@ void surface_classify_wedge::test_isomorphism(
 		if (f_v) {
 			cout << "The surfaces are isomorphic, "
 					"an isomorphism is given by" << endl;
-			A->element_print(Elt_isomorphism_1to2, cout);
+			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
 			cout << "The surfaces belongs to iso type "
 					<< isomorphic_to1 << endl;
 		}
@@ -3500,7 +3500,7 @@ void surface_classify_wedge::identify_general_abcd(
 							"a = " << a << " b = " << b << " c = " << c << " d = " << d
 							<< " is isomorphic to iso_type "
 						<< iso_type << ", an isomorphism is:" << endl;
-					A->element_print_quick(Elt, cout);
+					A->Group_element->element_print_quick(Elt, cout);
 
 					Iso_type[a * q3 + b * q2 + c * q + d] = iso_type;
 					Nb_lines[a * q3 + b * q2 + c * q + d] = SO->nb_lines;

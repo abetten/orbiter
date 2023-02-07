@@ -401,9 +401,9 @@ void delandtsheer_doyen::show_generators(int verbose_level)
 	for (i = 0; i < SG->gens->len; i++) {
 		cout << "generator " << i << " / "
 				<< SG->gens->len << " is: " << endl;
-		A->element_print_quick(SG->gens->ith(i), cout);
+		A->Group_element->element_print_quick(SG->gens->ith(i), cout);
 		cout << "as permutation: " << endl;
-		A->element_print_as_permutation_with_offset(
+		A->Group_element->element_print_as_permutation_with_offset(
 				SG->gens->ith(i), cout,
 				0 /* offset*/,
 				TRUE /* f_do_it_anyway_even_for_big_degree*/,
@@ -414,13 +414,13 @@ void delandtsheer_doyen::show_generators(int verbose_level)
 		}
 	cout << "Generators are:" << endl;
 	for (i = 0; i < SG->gens->len; i++) {
-		A->element_print_as_permutation(SG->gens->ith(i), cout);
+		A->Group_element->element_print_as_permutation(SG->gens->ith(i), cout);
 		cout << endl;
 		}
 	cout << "Generators in GAP format are:" << endl;
 	cout << "G := Group([";
 	for (i = 0; i < SG->gens->len; i++) {
-		A->element_print_as_permutation_with_offset(
+		A->Group_element->element_print_as_permutation_with_offset(
 				SG->gens->ith(i), cout,
 				1 /*offset*/,
 				TRUE /* f_do_it_anyway_even_for_big_degree */,
@@ -435,7 +435,7 @@ void delandtsheer_doyen::show_generators(int verbose_level)
 	cout << SG->gens->len << " " << A->degree << endl;
 	for (i = 0; i < SG->gens->len; i++) {
 		for (j = 0; j < A->degree; j++) {
-			a = A->element_image_of(j,
+			a = A->Group_element->element_image_of(j,
 					SG->gens->ith(i), 0 /* verbose_level */);
 			cout << a << " ";
 			}

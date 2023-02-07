@@ -838,9 +838,9 @@ void any_group::print_elements(int verbose_level)
 
 		cout << "Element " << setw(5) << i << " / "
 				<< go.as_int() << ":" << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 		cout << endl;
-		A->element_print_as_permutation(Elt, cout);
+		A->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
 
 
@@ -1007,9 +1007,9 @@ void any_group::order_of_products_of_elements_by_rank(
 
 				H->element_unrank_lint(elements[j], Elt2);
 
-				A->element_mult(Elt1, Elt2, Elt3, 0);
+				A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 
-				order_table[i * nb_elements + j] = A->element_order(Elt3);
+				order_table[i * nb_elements + j] = A->Group_element->element_order(Elt3);
 
 			}
 		}
@@ -1107,7 +1107,7 @@ void any_group::multiply_elements_csv(
 		k = 0;
 		for (j = 0; j < n2; j++) {
 			for (i = 0; i < n1; i++, k++) {
-				A->mult(V1.ith(i), V2.ith(j), V3.ith(k));
+				A->Group_element->mult(V1.ith(i), V2.ith(j), V3.ith(k));
 			}
 		}
 	}
@@ -1115,7 +1115,7 @@ void any_group::multiply_elements_csv(
 		k = 0;
 		for (i = 0; i < n1; i++) {
 			for (j = 0; j < n2; j++, k++) {
-				A->mult(V1.ith(i), V2.ith(j), V3.ith(k));
+				A->Group_element->mult(V1.ith(i), V2.ith(j), V3.ith(k));
 			}
 		}
 
@@ -1167,7 +1167,7 @@ void any_group::apply_elements_to_set_csv(
 	}
 
 	for (i = 0; i < n1; i++) {
-		A->map_a_set_and_reorder(set, set_image,
+		A->Group_element->map_a_set_and_reorder(set, set_image,
 				sz, V1.ith(i), 0 /* verbose_level */);
 
 		for (j = 0; j < sz; j++) {
@@ -1245,12 +1245,12 @@ void any_group::random_element(
 	H->random_element(Elt, 0 /* verbose_level */);
 
 
-	A1->code_for_make_element(data, Elt);
+	A1->Group_element->code_for_make_element(data, Elt);
 
 	if (f_v) {
 
 		cout << "Element :" << endl;
-		A1->element_print(Elt, cout);
+		A1->Group_element->element_print(Elt, cout);
 		cout << endl;
 
 		cout << "coded: ";
@@ -1260,14 +1260,14 @@ void any_group::random_element(
 		cout << "Element as permutation:" << endl;
 
 
-		A1->element_print_as_permutation(Elt, cout);
+		A1->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
 
 		int *perm;
 
 		perm = NEW_int(A1->degree);
 
-		A1->element_as_permutation(
+		A1->Group_element->element_as_permutation(
 				Elt,
 				perm, 0 /*verbose_level*/);
 		cout << "In list notation:" << endl;
@@ -1362,11 +1362,11 @@ void any_group::element_rank(
 	int *Elt;
 
 	Elt = NEW_int(A1->elt_size_in_int);
-	A1->make_element_from_string(Elt, elt_data, 0);
+	A1->Group_element->make_element_from_string(Elt, elt_data, 0);
 
 	if (f_v) {
 		cout << "Element :" << endl;
-		A1->element_print(Elt, cout);
+		A1->Group_element->element_print(Elt, cout);
 		cout << endl;
 	}
 
@@ -1431,7 +1431,7 @@ void any_group::element_unrank(
 
 	if (f_v) {
 		cout << "Element :" << endl;
-		A1->element_print(Elt, cout);
+		A1->Group_element->element_print(Elt, cout);
 		cout << endl;
 	}
 
@@ -1478,7 +1478,7 @@ void any_group::conjugacy_class_of(
 		cout << "any_group::conjugacy_class_of creating element " << elt_data << endl;
 	}
 
-	A->make_element_from_string(Elt, elt_data, 0);
+	A->Group_element->make_element_from_string(Elt, elt_data, 0);
 
 	Subgroup_sims->element_rank(a, Elt);
 
@@ -1500,7 +1500,7 @@ void any_group::conjugacy_class_of(
 
 	if (f_v) {
 		cout << "any_group::conjugacy_class_of Element :" << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 		cout << endl;
 	}
 
@@ -2311,7 +2311,7 @@ void any_group::report_coset_reps(
 			fp << "coset " << i << " / " << coset_reps->len << ":" << endl;
 
 			fp << "$$" << endl;
-			A->element_print_latex(coset_reps->ith(i), fp);
+			A->Group_element->element_print_latex(coset_reps->ith(i), fp);
 			fp << "$$" << endl;
 
 
@@ -2376,11 +2376,11 @@ void any_group::print_given_elements_tex(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->make_element(Elt,
+			A->Group_element->make_element(Elt,
 					element_data + i * A->make_element_size,
 					verbose_level);
 
-			ord = A->element_order(Elt);
+			ord = A->Group_element->element_order(Elt);
 
 			ost << "Element " << setw(5) << i << " / "
 					<< nb_elements << " of order " << ord << ":" << endl;
@@ -2390,7 +2390,7 @@ void any_group::print_given_elements_tex(
 			if (f_with_fix_structure) {
 				int f;
 
-				f = A->count_fixed_points(Elt, 0 /* verbose_level */);
+				f = A->Group_element->count_fixed_points(Elt, 0 /* verbose_level */);
 
 				ost << "$f=" << f << "$\\\\" << endl;
 			}
@@ -2456,11 +2456,11 @@ void any_group::process_given_elements(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->make_element(Elt,
+			A->Group_element->make_element(Elt,
 					element_data + i * A->make_element_size,
 					verbose_level);
 
-			ord = A->element_order(Elt);
+			ord = A->Group_element->element_order(Elt);
 
 			ost << "Element " << setw(5) << i << " / "
 					<< nb_elements << " of order " << ord << ":" << endl;
@@ -2534,7 +2534,7 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 			Elt_in = element_data + i * A->make_element_size;
 
-			A->make_element(Elt, Elt_in, verbose_level);
+			A->Group_element->make_element(Elt, Elt_in, verbose_level);
 
 
 			induced_actions::action_on_wedge_product *AW = A->G.AW;
@@ -2617,15 +2617,15 @@ void any_group::order_of_products_of_pairs(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->make_element(Elt1, element_data + i * A->make_element_size, verbose_level);
+			A->Group_element->make_element(Elt1, element_data + i * A->make_element_size, verbose_level);
 
 			for (j = 0; j < nb_elements; j++) {
 
-				A->make_element(Elt2, element_data + j * A->make_element_size, verbose_level);
+				A->Group_element->make_element(Elt2, element_data + j * A->make_element_size, verbose_level);
 
-				A->element_mult(Elt1, Elt2, Elt3, 0);
+				A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 
-				Order_table[i * nb_elements + j] = A->element_order(Elt3);
+				Order_table[i * nb_elements + j] = A->Group_element->element_order(Elt3);
 
 
 			}
@@ -2690,9 +2690,9 @@ void any_group::conjugate(
 
 	Output_table = NEW_int(nb_elements * A->make_element_size);
 
-	A->make_element_from_string(S, conjugate_data, verbose_level);
+	A->Group_element->make_element_from_string(S, conjugate_data, verbose_level);
 
-	A->element_invert(S, Sv, verbose_level);
+	A->Group_element->element_invert(S, Sv, verbose_level);
 
 	string fname;
 
@@ -2707,15 +2707,15 @@ void any_group::conjugate(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->make_element(Elt1,
+			A->Group_element->make_element(Elt1,
 					element_data + i * A->make_element_size,
 					verbose_level);
 
 
-			A->element_mult(Sv, Elt1, Elt2, 0);
-			A->element_mult(Elt2, S, Elt3, 0);
+			A->Group_element->element_mult(Sv, Elt1, Elt2, 0);
+			A->Group_element->element_mult(Elt2, S, Elt3, 0);
 
-			A->code_for_make_element(
+			A->Group_element->code_for_make_element(
 					Output_table + i * A->make_element_size, Elt3);
 
 

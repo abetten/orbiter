@@ -137,7 +137,7 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 			cout << "Group elements:" << endl;
 			for (i = 0; i < V->len; i++) {
 				cout << i << " / " << V->len << ":" << endl;
-				A->element_print_quick(V->ith(i), cout);
+				A->Group_element->element_print_quick(V->ith(i), cout);
 			}
 		}
 
@@ -180,14 +180,14 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 			if (f_v) {
 				cout << "polynomial_ring_activity::perform_activity i=" << i << " / " << V->len << endl;
 				cout << "Group element:" << endl;
-				A->element_print_quick(V->ith(i), cout);
+				A->Group_element->element_print_quick(V->ith(i), cout);
 			}
 
 			if (f_v) {
 				cout << "polynomial_ring_activity::perform_activity before element_invert" << endl;
 			}
 
-			A->element_invert(V->ith(i), Elt_inv, 0);
+			A->Group_element->element_invert(V->ith(i), Elt_inv, 0);
 			if (f_v) {
 				cout << "polynomial_ring_activity::perform_activity after element_invert" << endl;
 			}

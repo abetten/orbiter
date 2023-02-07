@@ -705,10 +705,10 @@ void sims::init_generators(
 		}
 		gens.copy_in(i, elt + i * A->elt_size_in_int);
 		if (f_vvv) {
-			A->element_print_quick(
+			A->Group_element->element_print_quick(
 					elt + i * A->elt_size_in_int, cout);
 		}
-		A->element_invert(elt + i * A->elt_size_in_int,
+		A->Group_element->element_invert(elt + i * A->elt_size_in_int,
 				gens_inv.ith(i), FALSE);
 	}
 	if (f_v) {
@@ -740,8 +740,8 @@ void sims::init_generators_by_hdl(
 
 	for (i = 0; i < nb_gen; i++) {
 		//cout << "sims::init_generators i = " << i << endl;
-		A->element_retrieve(gen_hdl[i], gens.ith(i), FALSE);
-		A->element_invert(gens.ith(i), gens_inv.ith(i), FALSE);
+		A->Group_element->element_retrieve(gen_hdl[i], gens.ith(i), FALSE);
+		A->Group_element->element_invert(gens.ith(i), gens_inv.ith(i), FALSE);
 	}
 	init_images(nb_gen);	
 	init_generator_depth_and_perm(FALSE);
@@ -825,7 +825,7 @@ void sims::add_generator(
 				"verbose_level=" << verbose_level << endl;
 		cout << "sims::add_generator "
 				"generator no " << gens.len << " is:" << endl;
-		A->element_print_quick(elt, cout);
+		A->Group_element->element_print_quick(elt, cout);
 		cout << endl;
 		cout << "sims::add_generator "
 				"my_base_len=" << my_base_len << endl;
@@ -886,7 +886,7 @@ void sims::add_generator(
 		cout << "sims::add_generator "
 				"before A->element_invert" << endl;
 	}
-	A->element_invert(elt, gens_inv.ith(idx), FALSE);
+	A->Group_element->element_invert(elt, gens_inv.ith(idx), FALSE);
 	
 	if (f_v) {
 		cout << "sims::add_generator "
@@ -1065,7 +1065,7 @@ int sims::get_image(
 	int a;
 	
 	if (nb_images == 0 || images == NULL) {
-		a = A->element_image_of(i, gens.ith(gen_idx), 0);
+		a = A->Group_element->element_image_of(i, gens.ith(gen_idx), 0);
 		return a;
 		//cout << "sims::get_image() images == NULL" << endl;
 		//exit(1);
@@ -1073,7 +1073,7 @@ int sims::get_image(
 	a = images[gen_idx][i];
 #if 1
 	if (a == -1) {
-		a = A->element_image_of(i, gens.ith(gen_idx), 0);
+		a = A->Group_element->element_image_of(i, gens.ith(gen_idx), 0);
 		images[gen_idx][i] = a;
 		//images[gen_idx][A->degree + a] = i;
 		}
@@ -1086,7 +1086,7 @@ int sims::get_image(
 // get the image of a point i under a given group element,
 // does not goes through a table.
 {
-	return A->element_image_of(i, elt, FALSE);
+	return A->Group_element->element_image_of(i, elt, FALSE);
 }
 
 void sims::swap_points(
@@ -1163,7 +1163,7 @@ void sims::element_from_path(
 		}
 #endif
 	
-	A->element_one(eltrk1, FALSE);
+	A->Group_element->element_one(eltrk1, FALSE);
 	for (i = 0; i < A->base_len(); i++) {
 		j = path[i];
 		if (f_v) {
@@ -1182,7 +1182,7 @@ void sims::element_from_path(
 			cout << "sims::element_from_path level "
 					<< i << " coset " << j << ":" << endl;
 			cout << "cosetrep:" << endl;
-			A->element_print_quick(eltrk3, cout);
+			A->Group_element->element_print_quick(eltrk3, cout);
 			cout << endl;
 			}
 		
@@ -1190,10 +1190,10 @@ void sims::element_from_path(
 		//cout << endl;
 		
 		// pre multiply the coset representative:
-		A->element_mult(eltrk3, eltrk1, eltrk2, 0);
-		A->element_move(eltrk2, eltrk1, 0);
+		A->Group_element->element_mult(eltrk3, eltrk1, eltrk2, 0);
+		A->Group_element->element_move(eltrk2, eltrk1, 0);
 		}
-	A->element_move(eltrk1, elt, 0);
+	A->Group_element->element_move(eltrk1, elt, 0);
 	if (f_v) {
 		cout << "sims::element_from_path done" << endl;
 		}
@@ -1219,7 +1219,7 @@ void sims::element_from_path_inv(int *elt)
 	}
 	cout << endl;
 #endif
-	A->element_one(eltrk1, FALSE);
+	A->Group_element->element_one(eltrk1, FALSE);
 	for (i = 0; i < A->base_len(); i++) {
 		j = path[i];
 		
@@ -1229,10 +1229,10 @@ void sims::element_from_path_inv(int *elt)
 		//cout << endl;
 		
 		// pre multiply the coset representative:
-		A->element_mult(eltrk1, eltrk3, eltrk2, FALSE);
-		A->element_move(eltrk2, eltrk1, FALSE);
+		A->Group_element->element_mult(eltrk1, eltrk3, eltrk2, FALSE);
+		A->Group_element->element_move(eltrk2, eltrk1, FALSE);
 	}
-	A->element_move(eltrk1, elt, FALSE);
+	A->Group_element->element_move(eltrk1, elt, FALSE);
 }
 
 void sims::element_unrank(
@@ -1309,7 +1309,7 @@ void sims::element_rank(
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object b, c;
 	
-	A->element_move(elt, eltrk1, FALSE);
+	A->Group_element->element_move(elt, eltrk1, FALSE);
 	a.zero();
 	for (i = 0; i < A->base_len(); i++) {
 		bi = A->base_i(i);
@@ -1321,7 +1321,7 @@ void sims::element_rank(
 			c.assign_to(a);
 		}
 		
-		jj = A->element_image_of(bi, eltrk1, FALSE);
+		jj = A->Group_element->element_image_of(bi, eltrk1, FALSE);
 		//cout << "at level " << i << ", maps bi = "
 		// << bi << " to " << jj << endl;
 		j = orbit_inv[i][jj];
@@ -1337,7 +1337,7 @@ void sims::element_rank(
 			Int_vec_print(cout, orbit_len, A->base_len());
 			cout << endl;
 			cout << "elt=" << endl;
-			A->element_print(eltrk1, cout);
+			A->Group_element->element_print(eltrk1, cout);
 			exit(1);
 		}
 		b.create(j, __FILE__, __LINE__);
@@ -1346,8 +1346,8 @@ void sims::element_rank(
 		
 		coset_rep_inv(eltrk3, i, j, 0 /* verbose_level */);
 
-		A->element_mult(eltrk1, eltrk3, eltrk2, FALSE);
-		A->element_move(eltrk2, eltrk1, FALSE);
+		A->Group_element->element_mult(eltrk1, eltrk3, eltrk2, FALSE);
+		A->Group_element->element_move(eltrk2, eltrk1, FALSE);
 	}
 }
 
@@ -1400,13 +1400,13 @@ int sims::is_element_of(
 	if (f_v) {
 		cout << "sims::is_element_of" << endl;
 	}
-	A->element_move(elt, eltrk1, FALSE);
+	A->Group_element->element_move(elt, eltrk1, FALSE);
 	for (i = 0; i < A->base_len(); i++) {
 		bi = A->base_i(i);
 		//l = orbit_len[i];
 		
 		
-		jj = A->element_image_of(bi, eltrk1, FALSE);
+		jj = A->Group_element->element_image_of(bi, eltrk1, FALSE);
 		//cout << "at level " << i << ", maps bi = "
 		// << bi << " to " << jj << endl;
 		j = orbit_inv[i][jj];
@@ -1417,8 +1417,8 @@ int sims::is_element_of(
 		
 		coset_rep_inv(eltrk3, i, j, 0 /* verbose_level */);
 
-		A->element_mult(eltrk1, eltrk3, eltrk2, FALSE);
-		A->element_move(eltrk2, eltrk1, FALSE);
+		A->Group_element->element_mult(eltrk1, eltrk3, eltrk2, FALSE);
+		A->Group_element->element_move(eltrk2, eltrk1, FALSE);
 	}
 	if (f_v) {
 		cout << "sims::is_element_of done ret = " << ret << endl;
@@ -1438,9 +1438,9 @@ void sims::test_element_rank_unrank()
 		a.create(i, __FILE__, __LINE__);
 		element_unrank(a, elt);
 		cout << i << " : " << endl;
-		A->element_print(elt, cout);
+		A->Group_element->element_print(elt, cout);
 		cout << " : ";
-		A->element_print_as_permutation(elt, cout);
+		A->Group_element->element_print_as_permutation(elt, cout);
 		element_rank(b, elt);
 		j = b.as_int();
 		cout << " : " << j << endl;
@@ -1500,7 +1500,7 @@ void sims::coset_rep(
 		cout << endl;
 	}
 
-	A->element_one(cosetrep, 0);
+	A->Group_element->element_one(cosetrep, 0);
 	for (h = 0; h < depth; h++) {
 		if (f_v) {
 			cout << "sims::coset_rep " << h << " / " << depth
@@ -1509,15 +1509,15 @@ void sims::coset_rep(
 		gen = gens.ith(Label[h]);
 		if (f_vv) {
 			cout << "sims::coset_rep gen=:" << endl;
-			A->element_print_quick(gen, cout);
+			A->Group_element->element_print_quick(gen, cout);
 		}
-		A->element_mult(cosetrep, gen, cosetrep_tmp, 0);
-		A->element_move(cosetrep_tmp, cosetrep, 0);
-		a = A->element_image_of(orbit[i][0], cosetrep,
+		A->Group_element->element_mult(cosetrep, gen, cosetrep_tmp, 0);
+		A->Group_element->element_move(cosetrep_tmp, cosetrep, 0);
+		a = A->Group_element->element_image_of(orbit[i][0], cosetrep,
 				0 /* verbose_level */);
 		if (f_vv) {
 			cout << "sims::coset_rep cosetrep*gen=:" << endl;
-			A->element_print_quick(cosetrep, cout);
+			A->Group_element->element_print_quick(cosetrep, cout);
 		}
 		if (f_v) {
 			cout << "sims::coset_rep " << bi0 << " -> " << a << endl;
@@ -1531,7 +1531,7 @@ void sims::coset_rep(
 	if (f_v) {
 		cout << "sims::coset_rep i=" << i << " j=" << j << endl;
 	}
-	a = A->element_image_of(bi0, cosetrep, 0 /* verbose_level */);
+	a = A->Group_element->element_image_of(bi0, cosetrep, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "sims::coset_rep " << bi0 << " -> " << a << endl;
 	}
@@ -1539,10 +1539,10 @@ void sims::coset_rep(
 		cout << "sims::coset_rep a != bij" << endl;
 		exit(1);
 	}
-	A->element_move(cosetrep, Elt, 0);
+	A->Group_element->element_move(cosetrep, Elt, 0);
 	if (f_vv) {
 		cout << "sims::coset_rep cosetrep:" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 	}
 	if (f_v) {
 		cout << "sims::coset_rep done" << endl;
@@ -1705,9 +1705,9 @@ void sims::coset_rep_inv(
 		cout << "sims::coset_rep_inv "
 				"coset_rep(i=" << i << " j=" << j << ") done" << endl;
 		cout << "cosetrep:" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 	}
-	a = A->element_image_of(bi0, Elt, 0 /* verbose_level */);
+	a = A->Group_element->element_image_of(bi0, Elt, 0 /* verbose_level */);
 	if (a != bij) {
 
 		cout << "sims::coset_rep_inv a != get_orbit(i, 0)" << endl;
@@ -1717,17 +1717,17 @@ void sims::coset_rep_inv(
 		cout << "a=" << a << endl;
 
 		cout << "cosetrep:" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 		exit(1);
 	}
 
-	A->element_invert(Elt, cosetrep_tmp, 0 /* verbose_level */);
-	A->element_move(cosetrep_tmp, Elt, 0 /* verbose_level */);
+	A->Group_element->element_invert(Elt, cosetrep_tmp, 0 /* verbose_level */);
+	A->Group_element->element_move(cosetrep_tmp, Elt, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "cosetrep^-1=:" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 	}
-	a = A->element_image_of(bij, Elt, 0 /* verbose_level */);
+	a = A->Group_element->element_image_of(bij, Elt, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "cosetrep^-1 maps " << orbit[i][j]
 			<< " to " << a << endl;
@@ -1741,7 +1741,7 @@ void sims::coset_rep_inv(
 
 	if (f_vv) {
 		cout << "cosetrep:" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 	}
 	if (f_v) {
 		cout << "sims::coset_rep_inv i=" << i
@@ -1801,16 +1801,16 @@ void sims::extract_strong_generators_in_order(
 				cout << "moving generator " << gen_idx
 				 << " to position " << k << endl;
 				cout << "before:" << endl;
-				A->element_print(gens.ith(gen_idx), cout);
+				A->Group_element->element_print(gens.ith(gen_idx), cout);
 				cout << endl;
 			}
-			A->element_move(gens.ith(gen_idx), SG.ith(k), FALSE);
+			A->Group_element->element_move(gens.ith(gen_idx), SG.ith(k), FALSE);
 			if (f_vv) {
 				cout << "sims::extract_strong_generators_in_order "
 						"the " << k << "-th strong "
 						"generator is generator "
 					<< j << " at position " << gen_idx << endl;
-				A->element_print(SG.ith(k), cout);
+				A->Group_element->element_print(SG.ith(k), cout);
 				cout << endl;
 			}
 			k++;
@@ -1876,7 +1876,7 @@ void sims::random_schreier_generator(
 			cout << "sims::random_schreier_generator "
 					"nb_gen[0] == 0, choosing the identity" << endl;
 		}
-		A->element_one(Elt, 0 /* verbose_level */);
+		A->Group_element->element_one(Elt, 0 /* verbose_level */);
 		goto finish;
 	}
 	while (TRUE) {
@@ -1922,7 +1922,7 @@ void sims::random_schreier_generator(
 					"after coset_rep" << endl;
 			cout << "checking image of pt=" << pt << endl;
 		}
-		pt1b = A->element_image_of(pt, eltrk3, 0/*verbose_level*/);
+		pt1b = A->Group_element->element_image_of(pt, eltrk3, 0/*verbose_level*/);
 
 		if (f_vvv) {
 			cout << "sims::random_schreier_generator "
@@ -1939,9 +1939,9 @@ void sims::random_schreier_generator(
 			cout << "image  under cosetrep pt1b=" << pt1b << endl;
 			cout << "basic orbit " << i << ":" << endl;
 			print_basic_orbit(i);
-			pt1b = A->element_image_of(pt, eltrk3, FALSE);
+			pt1b = A->Group_element->element_image_of(pt, eltrk3, FALSE);
 			cout << "cosetrep:" << endl;
-			A->element_print(eltrk3, cout);
+			A->Group_element->element_print(eltrk3, cout);
 			cout << endl;
 			coset_rep(eltrk3, i, r1, 10 /* verbose_level */);
 			exit(1);
@@ -1971,7 +1971,7 @@ void sims::random_schreier_generator(
 				<< " of " << nb_gen[i] << endl;
 			cout << "sims::random_schreier_generator "
 					"gen = " << endl;
-			A->element_print(gen, cout);
+			A->Group_element->element_print(gen, cout);
 		}
 		break;
 	}
@@ -1983,7 +1983,7 @@ void sims::random_schreier_generator(
 		//A->element_print(eltrk3, cout);
 		cout << "maps " << pt << " to " << pt1
 				<< " : checking: " << pt << " -> ";
-		pt1b = A->element_image_of(pt, eltrk3, FALSE);
+		pt1b = A->Group_element->element_image_of(pt, eltrk3, FALSE);
 		cout << pt1b;
 		cout << endl;
 	}
@@ -1992,9 +1992,9 @@ void sims::random_schreier_generator(
 		cout << "sims::random_schreier_generator "
 				"after the while loop" << endl;
 		cout << "gen=" << endl;
-		A->element_print(gen, cout);
+		A->Group_element->element_print(gen, cout);
 	}
-	A->element_mult(eltrk3, gen, schreier_gen1, 0);
+	A->Group_element->element_mult(eltrk3, gen, schreier_gen1, 0);
 	if (f_vv) {
 		cout << "sims::random_schreier_generator "
 				"after the while loop" << endl;
@@ -2002,7 +2002,7 @@ void sims::random_schreier_generator(
 				"cosetrep * gen=" << endl;
 		//A->element_print(schreier_gen1, cout);
 	}
-	pt2 = A->element_image_of(pt, schreier_gen1, 0);
+	pt2 = A->Group_element->element_image_of(pt, schreier_gen1, 0);
 
 
 	if (f_vv) {
@@ -2023,10 +2023,10 @@ void sims::random_schreier_generator(
 	if (pt2_coset >= orbit_len[i]) {
 
 
-		A->element_move(schreier_gen1, Elt, 0);
+		A->Group_element->element_move(schreier_gen1, Elt, 0);
 		cout << "sims::random_schreier_generator "
 				"schreier generator is " << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 		cout << endl;
 		
 		if (f_v) {
@@ -2062,11 +2062,11 @@ void sims::random_schreier_generator(
 	if (f_vv) {
 		cout << "sims::random_schreier_generator "
 				"cosetrep(" << pt2 << ")^-1=" << endl;
-		A->element_print(eltrk3, cout);
+		A->Group_element->element_print(eltrk3, cout);
 	}
 	int pt2b;
 
-	pt2b = A->element_image_of(pt2, eltrk3, FALSE);
+	pt2b = A->Group_element->element_image_of(pt2, eltrk3, FALSE);
 	if (f_vv) {
 		cout << "sims::random_schreier_generator "
 				"cosetrep(" << pt2 << ")^-1 maps "
@@ -2081,34 +2081,34 @@ void sims::random_schreier_generator(
 		exit(1);
 	}
 	
-	A->element_mult(schreier_gen1, eltrk3, schreier_gen, 0);
+	A->Group_element->element_mult(schreier_gen1, eltrk3, schreier_gen, 0);
 	if (f_vv) {
 		cout << "sims::random_schreier_generator "
 				"after the while loop" << endl;
 		cout << "cosetrep * gen * cosetrep("
 				<< pt2 << ")^-1=" << endl;
-		A->element_print(schreier_gen, cout);
+		A->Group_element->element_print(schreier_gen, cout);
 	}
 
-	if (A->element_image_of(pt, schreier_gen, 0) != pt) {
+	if (A->Group_element->element_image_of(pt, schreier_gen, 0) != pt) {
 		int im;
 		
 		cout << "sims::random_schreier_generator "
 				"fatal: schreier generator does not stabilize pt" << endl;
 		cout << "pt=" << pt << endl;
 		cout << "schreier generator:" << endl;
-		A->element_print(schreier_gen, cout);
-		im = A->element_image_of(pt, schreier_gen, TRUE);
+		A->Group_element->element_print(schreier_gen, cout);
+		im = A->Group_element->element_image_of(pt, schreier_gen, TRUE);
 		cout << "im = " << im << endl;
 		exit(1);
 	}
-	A->element_move(schreier_gen, Elt, 0);
+	A->Group_element->element_move(schreier_gen, Elt, 0);
 
 finish:
 	if (f_vv) {
 		cout << "sims::random_schreier_generator "
 				"random Schreier generator:" << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 	}
 	if (f_v) {
 		cout << "sims::random_schreier_generator done" << endl;
@@ -2131,7 +2131,7 @@ void sims::element_as_permutation(
 	
 	element_unrank_lint(elt_rk, Elt);
 
-	A_special->element_as_permutation(Elt, perm, 0);
+	A_special->Group_element->element_as_permutation(Elt, perm, 0);
 	
 
 	FREE_int(Elt);
@@ -2164,10 +2164,10 @@ int sims::least_moved_point_at_level(
 			cout << "sims::least_moved_point_at_level "
 					"h=" << h << endl;
 			cout << "gen_idx=" << gen_idx << endl;
-			A->element_print_quick(gens.ith(gen_idx), cout);
+			A->Group_element->element_print_quick(gens.ith(gen_idx), cout);
 		}
 		for (i = 0; i < A->degree; i++) {
-			j = A->element_image_of(i, gens.ith(gen_idx), 0);
+			j = A->Group_element->element_image_of(i, gens.ith(gen_idx), 0);
 			if (j != i) {
 				break;
 			}

@@ -181,7 +181,7 @@ void young::init(int n, int verbose_level)
 		for (i = 0; i < goi; i++) {
 			S->element_unrank_lint(i, Elt);
 			cout << "element " << i << " is ";
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 			cout << endl;
 			}
 		}
@@ -395,7 +395,7 @@ void young::create_representations(
 				"by group element " << h;
 		S->element_unrank_lint(h, Elt);
 		cout << " which is ";
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 		cout << " which is represented by the matrix:" << endl;
 		D->print_matrix(Mtx, rk, rk);
 		cout << endl;
@@ -620,7 +620,7 @@ void young::young_symmetrizer(
 		for (i = 0; i < go1; i++) {
 			S1->element_unrank_lint(i, Elt);
 			cout << "element " << i << " is ";
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 			cout << endl;
 			}
 		}
@@ -637,7 +637,7 @@ void young::young_symmetrizer(
 		for (i = 0; i < go2; i++) {
 			S2->element_unrank_lint(i, Elt);
 			cout << "element " << i << " is ";
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 			cout << endl;
 			}
 		}
@@ -754,8 +754,8 @@ void young::compute_generators(
 				t = Row_partition->Sets[i][j];
 				v[s] = t;
 				v[t] = s;
-				A->make_element(Elt, v, 0 /* verbose_level */);
-				A->element_move(Elt, gens1->ith(h), 0);
+				A->Group_element->make_element(Elt, v, 0 /* verbose_level */);
+				A->Group_element->element_move(Elt, gens1->ith(h), 0);
 				}
 			}
 		}
@@ -781,8 +781,8 @@ void young::compute_generators(
 				t = Col_partition->Sets[i][j];
 				v[s] = t;
 				v[t] = s;
-				A->make_element(Elt, v, 0 /* verbose_level */);
-				A->element_move(Elt, gens2->ith(h), 0);
+				A->Group_element->make_element(Elt, v, 0 /* verbose_level */);
+				A->Group_element->element_move(Elt, gens2->ith(h), 0);
 				}
 			}
 		}

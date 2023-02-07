@@ -87,7 +87,7 @@ void schreier_vector_handler::print_info_and_generators(
 		for (i = 0; i < S->local_gens->len; i++) {
 			cout << "generator " << i << " / "
 					<< S->local_gens->len << ":" << endl;
-			S->local_gens->A->element_print_quick(
+			S->local_gens->A->Group_element->element_print_quick(
 					S->local_gens->ith(i), cout);
 		}
 	}
@@ -134,11 +134,11 @@ int schreier_vector_handler::coset_rep_inv(
 				"tracing point pt" << endl;
 		}
 	nb_calls_to_coset_rep_inv++;
-	A->element_one(cosetrep, 0);
+	A->Group_element->element_one(cosetrep, 0);
 	if (f_vv) {
 		cout << "schreier_vector_handler::coset_rep_inv "
 				"cosetrep:" << endl;
-		A->element_print_quick(cosetrep, cout);
+		A->Group_element->element_print_quick(cosetrep, cout);
 	}
 	if (f_v) {
 		print_info_and_generators(S);
@@ -153,7 +153,7 @@ int schreier_vector_handler::coset_rep_inv(
 	if (f_vv) {
 		cout << "schreier_vector_handler::coset_rep_inv "
 				"after coset_rep_inv_recursion cosetrep:" << endl;
-		A->element_print_quick(cosetrep, cout);
+		A->Group_element->element_print_quick(cosetrep, cout);
 		}
 	if (f_v) {
 		if (ret) {
@@ -229,9 +229,9 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 				cout << "generator " << la << ":" << endl;
 			}
 			if (f_vv) {
-				A->element_print_quick(S->local_gens->ith(la), cout);
+				A->Group_element->element_print_quick(S->local_gens->ith(la), cout);
 			}
-			A->element_move(S->local_gens->ith(la), Elt1, 0);
+			A->Group_element->element_move(S->local_gens->ith(la), Elt1, 0);
 		}
 		else {
 			if (f_v) {
@@ -239,11 +239,11 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 						"using global generator" << endl;
 			}
 			hdl = S->gen_hdl_first + la;
-			A->element_retrieve(hdl, Elt1, 0);
+			A->Group_element->element_retrieve(hdl, Elt1, 0);
 			//cout << "retrieving generator " << gen_idx << endl;
 		}
 		//A->element_print_verbose(Elt1, cout);
-		A->element_invert(Elt1, Elt2, 0);
+		A->Group_element->element_invert(Elt1, Elt2, 0);
 
 		if (f_check_image) {
 			int prev;
@@ -252,7 +252,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 				cout << "schreier_vector_handler::coset_rep_inv_recursion "
 						"check_image is TRUE" << endl;
 			}
-			prev = A2->element_image_of(pt, Elt2, 0);
+			prev = A2->Group_element->element_image_of(pt, Elt2, 0);
 
 			//cout << "prev = " << prev << endl;
 			if (pr != prev) {
@@ -261,19 +261,19 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 				cout << "pr = " << pr << endl;
 				cout << "prev = " << prev << endl;
 				cout << "Elt1:" << endl;
-				A->element_print_quick(Elt1, cout);
+				A->Group_element->element_print_quick(Elt1, cout);
 				cout << "Elt2:" << endl;
-				A->element_print_quick(Elt2, cout);
+				A->Group_element->element_print_quick(Elt2, cout);
 				exit(1);
 				}
 			}
 
-		A->element_mult(cosetrep, Elt2, Elt3, 0);
-		A->element_move(Elt3, cosetrep, 0);
+		A->Group_element->element_mult(cosetrep, Elt2, Elt3, 0);
+		A->Group_element->element_move(Elt3, cosetrep, 0);
 		if (f_v) {
 			cout << "schreier_vector_handler::coset_rep_inv_recursion "
 					"cosetrep:" << endl;
-			A->element_print_quick(cosetrep, cout);
+			A->Group_element->element_print_quick(cosetrep, cout);
 			}
 
 		if (f_v) {
@@ -289,7 +289,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 		if (f_v) {
 			cout << "schreier_vector_handler::coset_rep_inv_recursion "
 					"after coset_rep_inv_recursion cosetrep" << endl;
-			A->element_print_quick(cosetrep, cout);
+			A->Group_element->element_print_quick(cosetrep, cout);
 			}
 
 		}

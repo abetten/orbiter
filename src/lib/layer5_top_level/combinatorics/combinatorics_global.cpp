@@ -604,7 +604,7 @@ void combinatorics_global::Hill_cap56(
 		}
 	S->random_element_of_order(Elt, 7 /* order */, verbose_level);
 	cout << "an element of order 7 is:" << endl;
-	P->A->element_print_quick(Elt, cout);
+	P->A->Group_element->element_print_quick(Elt, cout);
 
 
 

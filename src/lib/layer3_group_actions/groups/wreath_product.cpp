@@ -2005,8 +2005,8 @@ void wreath_product::compute_permutations_and_write_to_file(
 		if (f_v) {
 			cout << "generator " << h << " / "
 					<< SG->gens->len << " is: " << endl;
-			A->element_print_quick(SG->gens->ith(h), cout);
-			A->element_print_as_permutation(SG->gens->ith(h), cout);
+			A->Group_element->element_print_quick(SG->gens->ith(h), cout);
+			A->Group_element->element_print_as_permutation(SG->gens->ith(h), cout);
 		}
 
 		create_matrix(SG->gens->ith(h), generator_stack + h * mtx_n2,
@@ -3048,7 +3048,7 @@ void wreath_product::orbits_restricted_compute(
 	Gens->init(A_perm, verbose_level - 2);
 	Gens->allocate(SG->gens->len, verbose_level - 2);
 	for (i = 0; i < SG->gens->len; i++) {
-		A_perm->element_move(
+		A_perm->Group_element->element_move(
 				Permutation_representation->Elts
 					+ i * A_perm->elt_size_in_int,
 				Gens->ith(i),

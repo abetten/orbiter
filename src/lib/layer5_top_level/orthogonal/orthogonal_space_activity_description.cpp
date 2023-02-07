@@ -55,6 +55,7 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	f_intersect_with_subspace = FALSE;
 	//std::string intersect_with_subspace_label;
 
+	f_table_of_blt_sets = FALSE;
 
 }
 
@@ -172,6 +173,12 @@ int orthogonal_space_activity_description::read_arguments(
 				cout << "-intersect_with_subspace " << intersect_with_subspace_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-table_of_blt_sets") == 0) {
+			f_table_of_blt_sets = TRUE;
+			if (f_v) {
+				cout << "-table_of_blt_sets " << endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -257,6 +264,9 @@ void orthogonal_space_activity_description::print()
 	}
 	if (f_intersect_with_subspace) {
 		cout << "-intersect_with_subspace " << intersect_with_subspace_label << endl;
+	}
+	if (f_table_of_blt_sets) {
+		cout << "-table_of_blt_sets " << endl;
 	}
 }
 

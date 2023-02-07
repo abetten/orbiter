@@ -420,7 +420,7 @@ void orbit_type_repository::report_one_type(std::ostream &ost,
 								b = set2[a];
 								ost << "$" << b;
 								ost << " = ";
-								Oos->A->print_point(b, ost);
+								Oos->A->Group_element->print_point(b, ost);
 								ost << "$";
 								if (u < SoS->Set_size[h] - 1) {
 									ost << ", ";

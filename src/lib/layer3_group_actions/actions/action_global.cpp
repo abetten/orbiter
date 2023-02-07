@@ -309,13 +309,13 @@ void action_global::make_generators_stabilizer_of_two_components(
 	gens->init(A_PGL_n_q, verbose_level - 2);
 	gens->allocate(new_len, verbose_level - 2);
 	for (h = 0; h < new_len; h++) {
-		A_PGL_n_q->make_element(Elt1, Data + h * sz, 0);
+		A_PGL_n_q->Group_element->make_element(Elt1, Data + h * sz, 0);
 		if (f_vv) {
 			cout << "action_global::make_generators_stabilizer_of_two_components "
 					"after make_element generator " << h << " : " << endl;
-			A_PGL_n_q->print_quick(cout, Elt1);
+			A_PGL_n_q->Group_element->print_quick(cout, Elt1);
 		}
-		A_PGL_n_q->move(Elt1, gens->ith(h));
+		A_PGL_n_q->Group_element->move(Elt1, gens->ith(h));
 	}
 	
 
@@ -483,13 +483,13 @@ void action_global::make_generators_stabilizer_of_three_components(
 			cout << "action_global::make_generators_stabilizer_of_three_components generator=" << endl;
 			Int_matrix_print(Data + h * sz, n, n);
 		}
-		A_PGL_n_q->make_element(Elt1, Data + h * sz, 0);
+		A_PGL_n_q->Group_element->make_element(Elt1, Data + h * sz, 0);
 		if (f_vv) {
 			cout << "action_global::make_generators_stabilizer_of_three_components "
 					"after make_element generator " << h << " : " << endl;
-			A_PGL_n_q->print_quick(cout, Elt1);
+			A_PGL_n_q->Group_element->print_quick(cout, Elt1);
 		}
-		A_PGL_n_q->move(Elt1, gens->ith(h));
+		A_PGL_n_q->Group_element->move(Elt1, gens->ith(h));
 	}
 	
 
@@ -657,12 +657,12 @@ void action_global::lift_generators(
 			cout << "action_global::lift_generators lifted matrix:" << endl;
 			Int_matrix_print(Mtx, n, n);
 			}
-		Aq->make_element(Eltq, Mtx, 0 /*verbose_level - 4 */);
+		Aq->Group_element->make_element(Eltq, Mtx, 0 /*verbose_level - 4 */);
 		if (f_vv) {
 			cout << "action_global::lift_generators after make_element:" << endl;
-			Aq->element_print_quick(Eltq, cout);
+			Aq->Group_element->element_print_quick(Eltq, cout);
 			}
-		Aq->element_move(Eltq, gens_out->ith(t), 0);
+		Aq->Group_element->element_move(Eltq, gens_out->ith(t), 0);
 		if (f_vv) {
 			cout << "action_global::lift_generators " << t << " / "
 					<< nb_gens << " done" << endl;
@@ -719,12 +719,12 @@ void action_global::retract_generators(
 			cout << "action_global::retract_generators retracted matrix:" << endl;
 			Int_matrix_print(Mtx, m, m);
 		}
-		AQ->make_element(EltQ, Mtx, 0 /*verbose_level - 4*/);
+		AQ->Group_element->make_element(EltQ, Mtx, 0 /*verbose_level - 4*/);
 		if (f_vv) {
 			cout << "action_global::retract_generators after make_element:" << endl;
-			AQ->element_print_quick(EltQ, cout);
+			AQ->Group_element->element_print_quick(EltQ, cout);
 		}
-		AQ->element_move(EltQ, gens_out->ith(t), 0);
+		AQ->Group_element->element_move(EltQ, gens_out->ith(t), 0);
 		if (f_vv) {
 			cout << "action_global::retract_generators " << t
 					<< " / " << nb_gens << " done" << endl;
@@ -1453,7 +1453,7 @@ void action_global::compute_fixed_objects_in_PG(
 		vector<long int> fix;
 
 		for (a = 0; a < P->N_points; a++) {
-			j = A->element_image_of(a, Elt, 0 /* verbose_level */);
+			j = A->Group_element->element_image_of(a, Elt, 0 /* verbose_level */);
 			if (j == a) {
 				fix.push_back(a);
 			}
@@ -1484,7 +1484,7 @@ void action_global::compute_fixed_objects_in_PG(
 		}
 
 		for (a = 0; a < Ah->degree; a++) {
-			j = Ah->element_image_of(
+			j = Ah->Group_element->element_image_of(
 					a, Elt, 0 /* verbose_level */);
 			if (j == a) {
 				fix.push_back(a);
@@ -1548,7 +1548,7 @@ void action_global::report_fixed_objects_in_PG(
 
 	ost << "The element" << endl;
 	ost << "$$" << endl;
-	A->element_print_latex(Elt, ost);
+	A->Group_element->element_print_latex(Elt, ost);
 	ost << "$$" << endl;
 	ost << "has the following fixed objects:\\\\" << endl;
 
@@ -1903,13 +1903,13 @@ void action_global::perform_tests(
 			cout << "r1=" << r1 << endl;
 			cout << "r2=" << r2 << endl;
 		}
-		A->element_move(SG->gens->ith(r1), Elt1, 0);
-		A->element_move(SG->gens->ith(r2), Elt2, 0);
+		A->Group_element->element_move(SG->gens->ith(r1), Elt1, 0);
+		A->Group_element->element_move(SG->gens->ith(r2), Elt2, 0);
 		if (f_v) {
 			cout << "Elt1 = " << endl;
-			A->element_print_quick(Elt1, cout);
+			A->Group_element->element_print_quick(Elt1, cout);
 		}
-		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
 			Combi.perm_print(cout, perm1, A->degree);
@@ -1918,21 +1918,21 @@ void action_global::perform_tests(
 
 		if (f_v) {
 			cout << "Elt2 = " << endl;
-			A->element_print_quick(Elt2, cout);
+			A->Group_element->element_print_quick(Elt2, cout);
 		}
-		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
 			Combi.perm_print(cout, perm2, A->degree);
 			cout << endl;
 		}
 
-		A->element_mult(Elt1, Elt2, Elt3, 0);
+		A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 		if (f_v) {
 			cout << "Elt3 = " << endl;
-			A->element_print_quick(Elt3, cout);
+			A->Group_element->element_print_quick(Elt3, cout);
 		}
-		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
 			Combi.perm_print(cout, perm3, A->degree);
@@ -1963,35 +1963,35 @@ void action_global::perform_tests(
 		if (f_v) {
 			cout << "r1=" << r1 << endl;
 		}
-		A->element_move(SG->gens->ith(r1), Elt1, 0);
+		A->Group_element->element_move(SG->gens->ith(r1), Elt1, 0);
 		if (f_v) {
 			cout << "Elt1 = " << endl;
-			A->element_print_quick(Elt1, cout);
+			A->Group_element->element_print_quick(Elt1, cout);
 		}
-		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
 			Combi.perm_print(cout, perm1, A->degree);
 			cout << endl;
 		}
-		A->element_invert(Elt1, Elt2, 0);
+		A->Group_element->element_invert(Elt1, Elt2, 0);
 		if (f_v) {
 			cout << "Elt2 = " << endl;
-			A->element_print_quick(Elt2, cout);
+			A->Group_element->element_print_quick(Elt2, cout);
 		}
-		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
 			Combi.perm_print(cout, perm2, A->degree);
 			cout << endl;
 		}
 
-		A->element_mult(Elt1, Elt2, Elt3, 0);
+		A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 		if (f_v) {
 			cout << "Elt3 = " << endl;
-			A->element_print_quick(Elt3, cout);
+			A->Group_element->element_print_quick(Elt3, cout);
 		}
-		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
 			Combi.perm_print(cout, perm3, A->degree);
@@ -2016,13 +2016,13 @@ void action_global::perform_tests(
 			cout << "r1=" << r1 << endl;
 			cout << "r2=" << r2 << endl;
 		}
-		A->element_move(SG->gens->ith(r1), Elt1, 0);
-		A->element_move(SG->gens->ith(r2), Elt2, 0);
+		A->Group_element->element_move(SG->gens->ith(r1), Elt1, 0);
+		A->Group_element->element_move(SG->gens->ith(r2), Elt2, 0);
 		if (f_v) {
 			cout << "Elt1 = " << endl;
-			A->element_print_quick(Elt1, cout);
+			A->Group_element->element_print_quick(Elt1, cout);
 		}
-		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
 			Combi.perm_print(cout, perm1, A->degree);
@@ -2031,36 +2031,36 @@ void action_global::perform_tests(
 
 		if (f_v) {
 			cout << "Elt2 = " << endl;
-			A->element_print_quick(Elt2, cout);
+			A->Group_element->element_print_quick(Elt2, cout);
 		}
-		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
 			Combi.perm_print(cout, perm2, A->degree);
 			cout << endl;
 		}
 
-		A->element_mult(Elt1, Elt2, Elt3, 0);
+		A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 		if (f_v) {
 			cout << "Elt3 = " << endl;
-			A->element_print_quick(Elt3, cout);
+			A->Group_element->element_print_quick(Elt3, cout);
 		}
 
-		A->element_invert(Elt3, Elt4, 0);
+		A->Group_element->element_invert(Elt3, Elt4, 0);
 		if (f_v) {
 			cout << "Elt4 = Elt3^-1 = " << endl;
-			A->element_print_quick(Elt4, cout);
+			A->Group_element->element_print_quick(Elt4, cout);
 		}
 
 
-		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as Elt3 as permutation: " << endl;
 			Combi.perm_print(cout, perm3, A->degree);
 			cout << endl;
 		}
 
-		A->element_as_permutation(Elt4, perm4, 0 /* verbose_level */);
+		A->Group_element->element_as_permutation(Elt4, perm4, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as Elt4 as permutation: " << endl;
 			Combi.perm_print(cout, perm4, A->degree);
@@ -2092,16 +2092,16 @@ void action_global::perform_tests(
 	}
 
 	int data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
-	A->make_element(Elt1, data, verbose_level);
-	A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+	A->Group_element->make_element(Elt1, data, verbose_level);
+	A->Group_element->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "as Elt1 as permutation: " << endl;
 		Combi.perm_print(cout, perm1, A->degree);
 		cout << endl;
 	}
 
-	A->element_invert(Elt1, Elt2, 0);
-	A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+	A->Group_element->element_invert(Elt1, Elt2, 0);
+	A->Group_element->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "as Elt2 as permutation: " << endl;
 		Combi.perm_print(cout, perm2, A->degree);
@@ -2109,10 +2109,10 @@ void action_global::perform_tests(
 	}
 
 
-	A->element_mult(Elt1, Elt2, Elt3, 0);
+	A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 	if (f_v) {
 		cout << "Elt3 = " << endl;
-		A->element_print_quick(Elt3, cout);
+		A->Group_element->element_print_quick(Elt3, cout);
 	}
 
 	Combi.perm_mult(perm1, perm2, perm3, A->degree);
@@ -2177,14 +2177,14 @@ void action_global::apply_based_on_text(
 
 	w = NEW_lint(sz);
 
-	A->make_element_from_string(Elt2, input_group_element, verbose_level);
+	A->Group_element->make_element_from_string(Elt2, input_group_element, verbose_level);
 	if (f_v) {
 		cout << "B=" << endl;
-		A->element_print_quick(Elt2, cout);
+		A->Group_element->element_print_quick(Elt2, cout);
 	}
 
 	for (i = 0; i < sz; i++) {
-		w[i] = A->element_image_of(v[i], Elt2, verbose_level - 1);
+		w[i] = A->Group_element->element_image_of(v[i], Elt2, verbose_level - 1);
 		if (f_v) {
 			cout << "mapping " << v[i] << " -> " << w[i] << endl;
 		}
@@ -2230,10 +2230,10 @@ void action_global::apply_based_on_text(
 
 
 			ost << "$$" << endl;
-			A->element_print_latex(Elt2, ost);
+			A->Group_element->element_print_latex(Elt2, ost);
 			ost << "$$" << endl;
 
-			A->element_print_for_make_element(Elt2, ost);
+			A->Group_element->element_print_for_make_element(Elt2, ost);
 			ost << "\\\\" << endl;
 
 			ost << "maps: \\\\" << endl;
@@ -2296,23 +2296,23 @@ void action_global::multiply_based_on_text(
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
-	A->make_element_from_string(Elt1, data_A, verbose_level);
+	A->Group_element->make_element_from_string(Elt1, data_A, verbose_level);
 	if (f_v) {
 		cout << "A=" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 
-	A->make_element_from_string(Elt2, data_B, verbose_level);
+	A->Group_element->make_element_from_string(Elt2, data_B, verbose_level);
 	if (f_v) {
 		cout << "B=" << endl;
-		A->element_print_quick(Elt2, cout);
+		A->Group_element->element_print_quick(Elt2, cout);
 	}
 
-	A->element_mult(Elt1, Elt2, Elt3, 0);
+	A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 	if (f_v) {
 		cout << "A*B=" << endl;
-		A->element_print_quick(Elt3, cout);
-		A->element_print_for_make_element(Elt3, cout);
+		A->Group_element->element_print_quick(Elt3, cout);
+		A->Group_element->element_print_for_make_element(Elt3, cout);
 		cout << endl;
 	}
 
@@ -2350,18 +2350,18 @@ void action_global::multiply_based_on_text(
 
 
 			ost << "$$" << endl;
-			A->element_print_latex(Elt1, ost);
+			A->Group_element->element_print_latex(Elt1, ost);
 			ost << "\\cdot" << endl;
-			A->element_print_latex(Elt2, ost);
+			A->Group_element->element_print_latex(Elt2, ost);
 			ost << "=" << endl;
-			A->element_print_latex(Elt3, ost);
+			A->Group_element->element_print_latex(Elt3, ost);
 			ost << "$$" << endl;
 
-			A->element_print_for_make_element(Elt1, ost);
+			A->Group_element->element_print_for_make_element(Elt1, ost);
 			ost << "\\\\" << endl;
-			A->element_print_for_make_element(Elt2, ost);
+			A->Group_element->element_print_for_make_element(Elt2, ost);
 			ost << "\\\\" << endl;
-			A->element_print_for_make_element(Elt3, ost);
+			A->Group_element->element_print_for_make_element(Elt3, ost);
 			ost << "\\\\" << endl;
 
 			L.foot(ost);
@@ -2406,17 +2406,17 @@ void action_global::inverse_based_on_text(
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	A->make_element_from_string(Elt1, data_A, verbose_level);
+	A->Group_element->make_element_from_string(Elt1, data_A, verbose_level);
 	if (f_v) {
 		cout << "A=" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 
-	A->element_invert(Elt1, Elt2, 0);
+	A->Group_element->element_invert(Elt1, Elt2, 0);
 	if (f_v) {
 		cout << "A^-1=" << endl;
-		A->element_print_quick(Elt2, cout);
-		A->element_print_for_make_element(Elt2, cout);
+		A->Group_element->element_print_quick(Elt2, cout);
+		A->Group_element->element_print_for_make_element(Elt2, cout);
 		cout << endl;
 	}
 
@@ -2458,15 +2458,15 @@ void action_global::inverse_based_on_text(
 
 			ost << "$$" << endl;
 			ost << "{" << endl;
-			A->element_print_latex(Elt1, ost);
+			A->Group_element->element_print_latex(Elt1, ost);
 			ost << "}^{-1}" << endl;
 			ost << "=" << endl;
-			A->element_print_latex(Elt2, ost);
+			A->Group_element->element_print_latex(Elt2, ost);
 			ost << "$$" << endl;
 
-			A->element_print_for_make_element(Elt1, ost);
+			A->Group_element->element_print_for_make_element(Elt1, ost);
 			ost << "\\\\" << endl;
-			A->element_print_for_make_element(Elt2, ost);
+			A->Group_element->element_print_for_make_element(Elt2, ost);
 			ost << "\\\\" << endl;
 
 			L.foot(ost);
@@ -2518,10 +2518,10 @@ void action_global::consecutive_powers_based_on_text(
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	A->make_element_from_string(Elt1, data_A, verbose_level);
+	A->Group_element->make_element_from_string(Elt1, data_A, verbose_level);
 	if (f_v) {
 		cout << "A=" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 
 
@@ -2565,7 +2565,7 @@ void action_global::consecutive_powers_based_on_text(
 
 			ost << "$$" << endl;
 			ost << "{" << endl;
-			A->element_print_latex(Elt1, ost);
+			A->Group_element->element_print_latex(Elt1, ost);
 			ost << "}^i" << endl;
 			ost << "=" << endl;
 			//element_print_latex(Elt2, ost);
@@ -2577,23 +2577,23 @@ void action_global::consecutive_powers_based_on_text(
 			ost << "\\hline" << endl;
 
 			ost << "i & {" << endl;
-			A->element_print_latex(Elt1, ost);
+			A->Group_element->element_print_latex(Elt1, ost);
 			ost << "}^i\\\\" << endl;
 			ost << "\\hline" << endl;
 			ost << "\\hline" << endl;
 
 
 			for (i = 1; i <= exponent; i++) {
-				A->move(Elt1, Elt2);
+				A->Group_element->move(Elt1, Elt2);
 
 
-				A->element_power_int_in_place(Elt2,
+				A->Group_element->element_power_int_in_place(Elt2,
 						i, 0 /* verbose_level*/);
 
 				if (f_v) {
 					cout << "A^" << i << "=" << endl;
-					A->element_print_quick(Elt2, cout);
-					A->element_print_for_make_element(Elt2, cout);
+					A->Group_element->element_print_quick(Elt2, cout);
+					A->Group_element->element_print_for_make_element(Elt2, cout);
 					cout << endl;
 				}
 
@@ -2606,7 +2606,7 @@ void action_global::consecutive_powers_based_on_text(
 				//element_print_latex(Elt1, ost);
 				//ost << "}^{" << i << "}" << endl;
 				//ost << "=" << endl;
-				A->element_print_latex(Elt2, ost);
+				A->Group_element->element_print_latex(Elt2, ost);
 				//ost << "$$" << endl;
 				ost << "$\\\\" << endl;
 				ost << "\\hline" << endl;
@@ -2670,22 +2670,22 @@ void action_global::raise_to_the_power_based_on_text(
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	A->make_element_from_string(Elt1, data_A, verbose_level);
+	A->Group_element->make_element_from_string(Elt1, data_A, verbose_level);
 	if (f_v) {
 		cout << "A=" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 
-	A->move(Elt1, Elt2);
+	A->Group_element->move(Elt1, Elt2);
 
 
-	A->element_power_int_in_place(Elt2,
+	A->Group_element->element_power_int_in_place(Elt2,
 			exponent, 0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "A^" << exponent << "=" << endl;
-		A->element_print_quick(Elt2, cout);
-		A->element_print_for_make_element(Elt2, cout);
+		A->Group_element->element_print_quick(Elt2, cout);
+		A->Group_element->element_print_for_make_element(Elt2, cout);
 		cout << endl;
 	}
 
@@ -2725,15 +2725,15 @@ void action_global::raise_to_the_power_based_on_text(
 
 			ost << "$$" << endl;
 			ost << "{" << endl;
-			A->element_print_latex(Elt1, ost);
+			A->Group_element->element_print_latex(Elt1, ost);
 			ost << "}^{" << exponent << "}" << endl;
 			ost << "=" << endl;
-			A->element_print_latex(Elt2, ost);
+			A->Group_element->element_print_latex(Elt2, ost);
 			ost << "$$" << endl;
 
-			A->element_print_for_make_element(Elt1, ost);
+			A->Group_element->element_print_for_make_element(Elt1, ost);
 			ost << "\\\\" << endl;
-			A->element_print_for_make_element(Elt2, ost);
+			A->Group_element->element_print_for_make_element(Elt2, ost);
 			ost << "\\\\" << endl;
 
 			L.foot(ost);
@@ -2800,7 +2800,7 @@ void action_global::compute_orbit_of_point_generators_by_handle(
 	gens.init(A, verbose_level - 2);
 	gens.allocate(nb_gen, verbose_level - 2);
 	for (i = 0; i < nb_gen; i++) {
-		A->element_retrieve(gen_handle[i], gens.ith(i), 0);
+		A->Group_element->element_retrieve(gen_handle[i], gens.ith(i), 0);
 	}
 	compute_orbit_of_point(A, gens, pt, orbit, len, verbose_level);
 	if (f_v) {
@@ -2829,9 +2829,9 @@ int action_global::least_image_of_point(
 	image = orbiter_kernel_system::Orbiter->Int_vec->minimum(Schreier.orbit, len);
 	pos = Schreier.orbit_inv[image];
 	Schreier.coset_rep(pos, 0 /* verbose_level */);
-	A->element_move(Schreier.cosetrep, transporter, 0);
+	A->Group_element->element_move(Schreier.cosetrep, transporter, 0);
 	// we check it:
-	i = A->element_image_of(pt, transporter, 0);
+	i = A->Group_element->element_image_of(pt, transporter, 0);
 	if (i != image) {
 		cout << "action_global::least_image_of_point i != image" << endl;
 		exit(1);
@@ -2860,13 +2860,13 @@ int action_global::least_image_of_point_generators_by_handle(
 	nb_gen = gen_handle.size();
 
 	if (nb_gen == 0) {
-		A->element_one(transporter, 0);
+		A->Group_element->element_one(transporter, 0);
 		return pt;
 	}
 	gens.init(A, verbose_level - 2);
 	gens.allocate(nb_gen, verbose_level - 2);
 	for (i = 0; i < nb_gen; i++) {
-		A->element_retrieve(gen_handle[i], gens.ith(i), 0);
+		A->Group_element->element_retrieve(gen_handle[i], gens.ith(i), 0);
 	}
 	ret = least_image_of_point(A, gens, pt, transporter, verbose_level);
 	if (f_v) {
@@ -2888,13 +2888,13 @@ int action_global::least_image_of_point_generators_by_handle(
 		cout << "action_global::least_image_of_point_generators_by_handle" << endl;
 	}
 	if (nb_gen == 0) {
-		A->element_one(transporter, 0);
+		A->Group_element->element_one(transporter, 0);
 		return pt;
 	}
 	gens.init(A, verbose_level - 2);
 	gens.allocate(nb_gen, verbose_level - 2);
 	for (i = 0; i < nb_gen; i++) {
-		A->element_retrieve(gen_handle[i], gens.ith(i), 0);
+		A->Group_element->element_retrieve(gen_handle[i], gens.ith(i), 0);
 	}
 	ret = least_image_of_point(A, gens, pt, transporter, verbose_level);
 	if (f_v) {
@@ -2971,7 +2971,7 @@ void action_global::all_point_orbits_from_single_generator(
 
 	gens.init(A, verbose_level - 2);
 	gens.allocate(1, verbose_level - 2);
-	A->element_move(Elt, gens.ith(0), 0);
+	A->Group_element->element_move(Elt, gens.ith(0), 0);
 
 	Schreier.init(A, verbose_level - 2);
 	Schreier.init_generators(gens, verbose_level - 2);
@@ -3490,7 +3490,7 @@ void action_global::make_canonical(action *A, groups::sims *Sims,
 	set2 = NEW_lint(size);
 
 	Lint_vec_copy(set, set1, size);
-	A->element_one(Elt1, FALSE);
+	A->Group_element->element_one(Elt1, FALSE);
 
 	int c;
 
@@ -3534,14 +3534,14 @@ void action_global::make_canonical(action *A, groups::sims *Sims,
 				<< total_backtrack_nodes << endl;
 		}
 		Lint_vec_copy(set2, set1, size);
-		A->element_mult(Elt1, Elt2, Elt3, 0);
-		A->element_move(Elt3, Elt1, 0);
+		A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
+		A->Group_element->element_move(Elt3, Elt1, 0);
 
 	}
 	Lint_vec_copy(set1, canonical_set, size);
-	A->element_move(Elt1, transporter, FALSE);
+	A->Group_element->element_move(Elt1, transporter, FALSE);
 
-	if (!A->check_if_transporter_for_set(transporter,
+	if (!A->Group_element->check_if_transporter_for_set(transporter,
 			size, set, canonical_set, verbose_level - 3)) {
 		cout << "action_global::make_canonical "
 				"check_if_transporter_for_set returns FALSE" << endl;
@@ -3572,6 +3572,51 @@ void action_global::make_canonical(action *A, groups::sims *Sims,
 	}
 }
 
+
+
+void action_global::make_element_which_moves_a_line_in_PG3q(
+		action *A,
+		geometry::grassmann *Gr,
+		long int line_rk, int *Elt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::make_element_which_moves_a_line_in_PG3q" << endl;
+	}
+
+	int M[4 * 4];
+	int N[4 * 4 + 1]; // + 1 if f_semilinear
+	int base_cols[4];
+	int r, c, i, j;
+
+	//int_vec_zero(M, 16);
+	Gr->unrank_lint_here(M, line_rk, 0 /*verbose_level*/);
+	r = Gr->F->Linear_algebra->Gauss_simple(
+			M, 2, 4, base_cols, 0 /* verbose_level */);
+	Gr->F->Linear_algebra->kernel_columns(
+			4, r, base_cols, base_cols + r);
+
+	for (i = r; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			if (j == base_cols[i]) {
+				c = 1;
+			}
+			else {
+				c = 0;
+			}
+			M[i * 4 + j] = c;
+		}
+	}
+	Gr->F->Linear_algebra->matrix_inverse(M, N, 4, 0 /* verbose_level */);
+	N[4 * 4] = 0;
+	A->Group_element->make_element(Elt, N, 0);
+
+	if (f_v) {
+		cout << "action_global::make_element_which_moves_a_line_in_PG3q done" << endl;
+	}
+}
 
 
 

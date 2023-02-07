@@ -78,12 +78,12 @@ long int action_on_interior_direct_product::compute_image(
 		cout << "action_on_interior_direct_product::compute_image "
 				"computing image of " << i << endl;
 	}
-	ii = A->element_image_of(i, Elt, verbose_level - 1);
+	ii = A->Group_element->element_image_of(i, Elt, verbose_level - 1);
 	if (f_v) {
 		cout << "action_on_interior_direct_product::compute_image "
 				"computing image of " << j << endl;
 	}
-	jj = A->element_image_of(j + nb_rows, Elt, verbose_level - 1) - nb_rows;
+	jj = A->Group_element->element_image_of(j + nb_rows, Elt, verbose_level - 1) - nb_rows;
 	b = ii * nb_cols + jj;
 
 	if (f_v) {

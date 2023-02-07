@@ -588,7 +588,7 @@ void poset_orbit_node::log_current_node(
 			for (i = 0; i < G.SG->len; i++) {
 				f << i << " : " << endl;
 				
-				G.A->element_print(G.SG->ith(i), f);
+				G.A->Group_element->element_print(G.SG->ith(i), f);
 				f << endl;
 				//G.A->element_print_as_permutation(G.SG->ith(i), f);
 				//f << endl;
@@ -627,9 +627,9 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 	Elt2 = NEW_int(gen->get_poset()->A->elt_size_in_int);
 	
 	store_set_to(gen, s - 1, gen->get_set0());
-	gen->get_poset()->A->element_retrieve(hdl, Elt, 0);
+	gen->get_poset()->A->Group_element->element_retrieve(hdl, Elt, 0);
 	//gen->A->element_print(Elt, cout);
-	gen->get_poset()->A->element_invert(Elt, Elt_inv, 0);
+	gen->get_poset()->A->Group_element->element_invert(Elt, Elt_inv, 0);
 	for (i = 0; i < s; i++) {
 		S[i] = Elt[gen->get_set0()[i]];
 		}
@@ -692,9 +692,9 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 			for (i = 0; i < G.SG->len; i++) {
 				f << "# ";
 				//G.A->element_print(G.SG->ith(i), f);
-				G.A->element_mult(Elt_inv, G.SG->ith(i), Elt1, FALSE);
-				G.A->element_mult(Elt1, Elt, Elt2, FALSE);
-				G.A->element_print(Elt2, f);
+				G.A->Group_element->element_mult(Elt_inv, G.SG->ith(i), Elt1, FALSE);
+				G.A->Group_element->element_mult(Elt1, Elt, Elt2, FALSE);
+				G.A->Group_element->element_print(Elt2, f);
 				//f << endl;
 				}
 			}

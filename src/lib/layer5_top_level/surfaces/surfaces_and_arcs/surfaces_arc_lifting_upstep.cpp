@@ -505,10 +505,10 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 					<< " / 3240, We found an automorphism "
 						"of the surface, nb_coset_reps = " << D->nb_coset_reps << endl;
 				Seventytwo[seventytwo_case_idx].print();
-				Lift->A4->element_print(T->Elt_T4, cout);
+				Lift->A4->Group_element->element_print(T->Elt_T4, cout);
 				cout << endl;
 			}
-			Lift->A4->element_move(T->Elt_T4, D->coset_reps->ith(D->nb_coset_reps), 0);
+			Lift->A4->Group_element->element_move(T->Elt_T4, D->coset_reps->ith(D->nb_coset_reps), 0);
 			D->T[D->nb_coset_reps] = T;
 			D->nb_coset_reps++;
 
@@ -532,7 +532,7 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 					= NEW_int(Lift->A4->elt_size_in_int);
 
 
-				Lift->A4->element_invert(T->Elt_T4,
+				Lift->A4->Group_element->element_invert(T->Elt_T4,
 						Lift->Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
 
 				f_processed[f2] = TRUE;

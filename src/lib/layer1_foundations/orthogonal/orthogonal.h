@@ -108,11 +108,12 @@ public:
 	long int *the_set_in_orthogonal; // [set_size]
 	long int *the_set_in_PG; // [set_size]
 
-	int *intersection_type;
+	int *intersection_type; // [highest_intersection_number + 1]
 	int highest_intersection_number;
-	int *intersection_matrix;
+	int *intersection_matrix; // [nb_planes * nb_planes]
 	int nb_planes;
 
+	int f_has_interesting_planes;
 	data_structures::set_of_sets *Sos;
 	data_structures::set_of_sets *Sos2;
 	data_structures::set_of_sets *Sos3;

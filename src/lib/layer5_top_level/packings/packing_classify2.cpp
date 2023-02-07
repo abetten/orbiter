@@ -778,7 +778,7 @@ void packing_classify::report_stabilizer(
 		//ord = A->element_order(Stab->gens.ith(i));
 
 		//f << "$$ g_{" << i + 1 << "}=" << endl;
-		T->A->element_print_latex(Stab->gens.ith(i), ost);
+		T->A->Group_element->element_print_latex(Stab->gens.ith(i), ost);
 		//f << "$$" << endl;
 		//f << "of order $" << ord << "$ and with " << n
 		//<< " fixed points" << endl;
@@ -817,7 +817,7 @@ void packing_classify::report_stabilizer_in_action(
 		//ord = A->element_order(Stab->gens.ith(i));
 
 		ost << "$";
-		Iso.Folding->AA->element_print_as_permutation_with_offset(
+		Iso.Folding->AA->Group_element->element_print_as_permutation_with_offset(
 			Stab->gens.ith(i), ost,
 			offset, f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one, 0 /* verbose_level */);
@@ -865,7 +865,7 @@ void packing_classify::report_stabilizer_in_action_gap(
 			//ord = A->element_order(Stab->gens.ith(i));
 
 			fp << "g" << i + 1 << " := ";
-			Iso.Folding->AA->element_print_as_permutation_with_offset(
+			Iso.Folding->AA->Group_element->element_print_as_permutation_with_offset(
 				Stab->gens.ith(i), fp,
 				offset, f_do_it_anyway_even_for_big_degree,
 				f_print_cycles_of_length_one, 0 /* verbose_level */);

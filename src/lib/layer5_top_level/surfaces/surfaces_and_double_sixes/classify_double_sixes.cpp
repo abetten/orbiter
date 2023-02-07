@@ -530,7 +530,7 @@ void classify_double_sixes::upstep(int verbose_level)
 
 				if (f_v) {
 					cout << "We found a transporter:" << endl;
-					Five_p1->A->element_print_quick(Elt3, cout);
+					Five_p1->A->Group_element->element_print_quick(Elt3, cout);
 				}
 
 				if (!Sorting.int_vec_search(
@@ -560,10 +560,10 @@ void classify_double_sixes::upstep(int verbose_level)
 					if (f_v) {
 						cout << "We found an automorphism of "
 								"the double six:" << endl;
-						Five_p1->A->element_print_quick(Elt3, cout);
+						Five_p1->A->Group_element->element_print_quick(Elt3, cout);
 						cout << endl;
 					}
-					Five_p1->A->element_move(Elt3, coset_reps->ith(nb_coset_reps), 0);
+					Five_p1->A->Group_element->element_move(Elt3, coset_reps->ith(nb_coset_reps), 0);
 					nb_coset_reps++;
 					//S->add_single_generator(Elt3,
 					//2 /* group_index */, verbose_level - 2);
@@ -582,7 +582,7 @@ void classify_double_sixes::upstep(int verbose_level)
 							= f;
 						Flag_orbits->Flag_orbit_node[f2].fusion_elt
 							= NEW_int(Five_p1->A->elt_size_in_int);
-						Five_p1->A->element_invert(Elt3,
+						Five_p1->A->Group_element->element_invert(Elt3,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								0);
 						f_processed[f2] = TRUE;
@@ -796,7 +796,7 @@ void classify_double_sixes::identify_double_six(
 	if (f_vv) {
 		cout << "po=" << po << endl;
 		cout << "Elt1=" << endl;
-		Five_p1->A->element_print_quick(Elt1, cout);
+		Five_p1->A->Group_element->element_print_quick(Elt1, cout);
 	}
 
 	
@@ -812,7 +812,7 @@ void classify_double_sixes::identify_double_six(
 	}
 
 	if (Flag_orbits->Flag_orbit_node[f].f_fusion_node) {
-		Five_p1->A->element_mult(
+		Five_p1->A->Group_element->element_mult(
 				Elt1,
 				Flag_orbits->Flag_orbit_node[f].fusion_elt,
 				Elt2, 0);
@@ -822,7 +822,7 @@ void classify_double_sixes::identify_double_six(
 	}
 	else {
 		f2 = -1;
-		Five_p1->A->element_move(Elt1, Elt2, 0);
+		Five_p1->A->Group_element->element_move(Elt1, Elt2, 0);
 		orbit_index = Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit;
 	}
 	if (f_v) {
@@ -830,10 +830,10 @@ void classify_double_sixes::identify_double_six(
 				"f=" << f << " f2=" << f2 << " orbit_index="
 				<< orbit_index << endl;
 	}
-	Five_p1->A->element_move(Elt2, transporter, 0);
+	Five_p1->A->Group_element->element_move(Elt2, transporter, 0);
 	if (f_vv) {
 		cout << "transporter=" << endl;
-		Five_p1->A->element_print_quick(transporter, cout);
+		Five_p1->A->Group_element->element_print_quick(transporter, cout);
 	}
 	
 	FREE_int(Elt1);

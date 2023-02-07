@@ -404,7 +404,10 @@ void classify_five_plus_one::identify_five_plus_one(
 	}
 
 
-	A->make_element_which_moves_a_line_in_PG3q(
+	actions::action_global AG;
+
+
+	AG.make_element_which_moves_a_line_in_PG3q(A,
 		Surf->Gr,
 		transversal_line,
 		Elt0,
@@ -412,11 +415,11 @@ void classify_five_plus_one::identify_five_plus_one(
 	if (f_v) {
 		cout << "classify_five_plus_one::identify_five_plus_one "
 				"element which moves transversal line:" << endl;
-		A->element_print(Elt0, cout);
+		A->Group_element->element_print(Elt0, cout);
 	}
 
 
-	A2->map_a_set(
+	A2->Group_element->map_a_set(
 			W1,
 			W2,
 			5,
@@ -449,15 +452,15 @@ void classify_five_plus_one::identify_five_plus_one(
 	if (f_v) {
 		cout << "classify_five_plus_one::identify_five_plus_one "
 				"element which moves neighbor set:" << endl;
-		A->element_print(Elt1, cout);
+		A->Group_element->element_print(Elt1, cout);
 	}
 
 
-	A->element_mult(Elt0, Elt1, transporter, 0);
+	A->Group_element->element_mult(Elt0, Elt1, transporter, 0);
 	if (f_v) {
 		cout << "classify_five_plus_one::identify_five_plus_one "
 				"element which moves five_plus_one:" << endl;
-		A->element_print(transporter, cout);
+		A->Group_element->element_print(transporter, cout);
 	}
 	if (f_v) {
 		cout << "classify_five_plus_one::identify_five_plus_one "

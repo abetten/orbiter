@@ -30,6 +30,9 @@ BLT_set_create_description::BLT_set_create_description()
 	f_space = FALSE;
 	//std::string space_label;
 
+	//f_space_pointer = FALSE;
+	//space_pointer = NULL;
+
 }
 
 BLT_set_create_description::~BLT_set_create_description()

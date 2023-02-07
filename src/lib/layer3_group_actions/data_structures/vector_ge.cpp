@@ -61,7 +61,7 @@ void vector_ge::copy(vector_ge *&vector_copy, int verbose_level)
 	vector_copy->init(A, verbose_level);
 	vector_copy->allocate(len, verbose_level);
 	for (i = 0; i < len; i++) {
-		A->element_move(ith(i), vector_copy->ith(i), 0);
+		A->Group_element->element_move(ith(i), vector_copy->ith(i), 0);
 	}
 	if (f_v) {
 		cout << "vector_ge::copy done" << endl;
@@ -80,7 +80,7 @@ void vector_ge::init_by_hdl(actions::action *A,
 	init(A, verbose_level);
 	allocate(nb_gen, verbose_level);
 	for (i = 0; i < nb_gen; i++) {
-		A->element_retrieve(gen_hdl[i], ith(i), 0);
+		A->Group_element->element_retrieve(gen_hdl[i], ith(i), 0);
 	}
 	if (f_v) {
 		cout << "vector_ge::init_by_hdl done" << endl;
@@ -97,7 +97,7 @@ void vector_ge::init_single(actions::action *A,
 	}
 	init(A, verbose_level);
 	allocate(1, verbose_level);
-	A->element_move(Elt, ith(0), 0);
+	A->Group_element->element_move(Elt, ith(0), 0);
 	if (f_v) {
 		cout << "vector_ge::init_single done" << endl;
 	}
@@ -113,8 +113,8 @@ void vector_ge::init_double(actions::action *A,
 	}
 	init(A, verbose_level);
 	allocate(2, verbose_level);
-	A->element_move(Elt1, ith(0), 0);
-	A->element_move(Elt2, ith(1), 0);
+	A->Group_element->element_move(Elt1, ith(0), 0);
+	A->Group_element->element_move(Elt2, ith(1), 0);
 	if (f_v) {
 		cout << "vector_ge::init_double done" << endl;
 	}
@@ -137,15 +137,15 @@ void vector_ge::init_from_permutation_representation(
 	init(A, verbose_level);
 	allocate(nb_elements, verbose_level);
 	for (i = 0; i < nb_elements; i++) {
-		A->make_element_from_permutation_representation(
+		A->Group_element->make_element_from_permutation_representation(
 				Elt, S, data + i * A->degree, 0/*verbose_level*/);
 		if (f_vv) {
 			cout << "vector_ge::init_from_permutation_representation "
 					"generator " << i << ": " << endl;
-			A->element_print_quick(Elt, cout);
-			A->element_print_latex(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
+			A->Group_element->element_print_latex(Elt, cout);
 		}
-		A->element_move(Elt, ith(i), 0);
+		A->Group_element->element_move(Elt, ith(i), 0);
 	}
 	
 	FREE_int(Elt);
@@ -169,13 +169,13 @@ void vector_ge::init_from_data(actions::action *A, int *data,
 	init(A, verbose_level);
 	allocate(nb_elements, verbose_level);
 	for (i = 0; i < nb_elements; i++) {
-		A->make_element(Elt, data + i * elt_size, verbose_level);
+		A->Group_element->make_element(Elt, data + i * elt_size, verbose_level);
 		if (f_vv) {
 			cout << "vector_ge::init_from_data "
 					"generator " << i << ": " << endl;
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 		}
-		A->element_move(Elt, ith(i), 0);
+		A->Group_element->element_move(Elt, ith(i), 0);
 	}
 	
 	FREE_int(Elt);
@@ -201,11 +201,11 @@ void vector_ge::init_conjugate_svas_of(vector_ge *v,
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
-	A->invert(Elt, Elt1);
+	A->Group_element->invert(Elt, Elt1);
 	for (i = 0; i < len; i++) {
-		A->element_mult(Elt1, v->ith(i), Elt2, FALSE);
-		A->element_mult(Elt2, Elt, Elt3, FALSE);
-		A->element_move(Elt3, ith(i), FALSE);
+		A->Group_element->element_mult(Elt1, v->ith(i), Elt2, FALSE);
+		A->Group_element->element_mult(Elt2, Elt, Elt3, FALSE);
+		A->Group_element->element_move(Elt3, ith(i), FALSE);
 	}
 	
 	FREE_int(Elt1);
@@ -233,11 +233,11 @@ void vector_ge::init_conjugate_sasv_of(vector_ge *v,
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
-	A->invert(Elt, Elt1);
+	A->Group_element->invert(Elt, Elt1);
 	for (i = 0; i < len; i++) {
-		A->element_mult(Elt, v->ith(i), Elt2, FALSE);
-		A->element_mult(Elt2, Elt1, Elt3, FALSE);
-		A->element_move(Elt3, ith(i), FALSE);
+		A->Group_element->element_mult(Elt, v->ith(i), Elt2, FALSE);
+		A->Group_element->element_mult(Elt2, Elt1, Elt3, FALSE);
+		A->Group_element->element_move(Elt3, ith(i), FALSE);
 	}
 	
 	FREE_int(Elt1);
@@ -266,7 +266,7 @@ void vector_ge::print(std::ostream &ost)
 
 	for (i = 0; i < len; i++) {
 		ost << "Element " << i << " / " << len << " is:" << endl;
-		A->element_print_quick(ith(i), ost);
+		A->Group_element->element_print_quick(ith(i), ost);
 		ost << endl;
 	}
 }
@@ -282,7 +282,7 @@ void vector_ge::print_quick(std::ostream& ost)
 			cout << "vector_ge::print fatal: data == NULL" << endl;
 			exit(1);
 		}
-		A->element_print_quick(ith(i), ost);
+		A->Group_element->element_print_quick(ith(i), ost);
 		if (i < len - 1) {
 			ost << ", " << endl;
 		}
@@ -298,7 +298,7 @@ void vector_ge::print_tex(std::ostream &ost)
 	for (i = 0; i < len; i++) {
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
-		A->element_print_latex(ith(i), ost);
+		A->Group_element->element_print_latex(ith(i), ost);
 		if (i < len - 1) {
 			ost << ", " << endl;
 		}
@@ -322,7 +322,7 @@ void vector_ge::print_generators_tex(
 	for (i = 0; i < len; i++) {
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
-		A->element_print_latex(ith(i), ost);
+		A->Group_element->element_print_latex(ith(i), ost);
 		if (((i + 1) % 4) == 0 && i < len - 1) {
 			ost << "$$" << endl;
 			ost << "$$" << endl;
@@ -330,7 +330,7 @@ void vector_ge::print_generators_tex(
 	}
 	ost << "$$" << endl;
 	for (i = 0; i < len; i++) {
-		A->element_print_for_make_element(ith(i), ost);
+		A->Group_element->element_print_for_make_element(ith(i), ost);
 		ost << "\\\\" << endl;
 	}
 }
@@ -341,10 +341,10 @@ void vector_ge::print_as_permutation(std::ostream& ost)
 	
 	ost << "(" << endl;
 	for (i = 0; i < len; i++) {
-		A->element_print(ith(i), ost);
+		A->Group_element->element_print(ith(i), ost);
 		if (A->degree < 1000) {
 			cout << "is the permutation" << endl;
-			A->element_print_as_permutation(ith(i), ost);
+			A->Group_element->element_print_as_permutation(ith(i), ost);
 		}
 		else {
 			cout << "vector_ge::print_as_permutation "
@@ -393,7 +393,7 @@ void vector_ge::reallocate(int new_length, int verbose_level)
 	for (i = 0; i < l; i++) {
 		elt = ith(i);
 		elt2 = data2 + i * A->elt_size_in_int;
-		A->element_move(elt, elt2, FALSE);
+		A->Group_element->element_move(elt, elt2, FALSE);
 	}
 	if (data) {
 		FREE_int(data);
@@ -426,7 +426,7 @@ void vector_ge::reallocate_and_insert_at(
 		else {
 			elt2 = data2 + i * A->elt_size_in_int;
 		}
-		A->element_move(elt1, elt2, FALSE);
+		A->Group_element->element_move(elt1, elt2, FALSE);
 	}
 	if (data) {
 		FREE_int(data);
@@ -468,7 +468,7 @@ void vector_ge::insert_at(int length_before,
 		
 		elt1 = ith(i);
 		elt2 = ith(i + 1);
-		A->element_move(elt1, elt2, FALSE);
+		A->Group_element->element_move(elt1, elt2, FALSE);
 	}
 	copy_in(position, elt);
 	if (f_v) {
@@ -492,13 +492,13 @@ void vector_ge::append(int *elt, int verbose_level)
 void vector_ge::copy_in(int i, int *elt)
 {
 	int *elt2 = ith(i);
-	A->element_move(elt, elt2, FALSE);
+	A->Group_element->element_move(elt, elt2, FALSE);
 };
 
 void vector_ge::copy_out(int i, int *elt)
 {
 	int *elt2 = ith(i);
-	A->element_move(elt2, elt, FALSE);
+	A->Group_element->element_move(elt2, elt, FALSE);
 }
 
 void vector_ge::conjugate_svas(int *Elt)
@@ -509,11 +509,11 @@ void vector_ge::conjugate_svas(int *Elt)
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
-	A->invert(Elt, Elt1);
+	A->Group_element->invert(Elt, Elt1);
 	for (i = 0; i < len; i++) {
-		A->element_mult(Elt1, ith(i), Elt2, FALSE);
-		A->element_mult(Elt2, Elt, Elt3, FALSE);
-		A->element_move(Elt3, ith(i), FALSE);
+		A->Group_element->element_mult(Elt1, ith(i), Elt2, FALSE);
+		A->Group_element->element_mult(Elt2, Elt, Elt3, FALSE);
+		A->Group_element->element_move(Elt3, ith(i), FALSE);
 	}
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -528,11 +528,11 @@ void vector_ge::conjugate_sasv(int *Elt)
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
-	A->invert(Elt, Elt1);
+	A->Group_element->invert(Elt, Elt1);
 	for (i = 0; i < len; i++) {
-		A->element_mult(Elt, ith(i), Elt2, FALSE);
-		A->element_mult(Elt2, Elt1, Elt3, FALSE);
-		A->element_move(Elt3, ith(i), FALSE);
+		A->Group_element->element_mult(Elt, ith(i), Elt2, FALSE);
+		A->Group_element->element_mult(Elt2, Elt1, Elt3, FALSE);
+		A->Group_element->element_move(Elt3, ith(i), FALSE);
 	}
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -547,9 +547,9 @@ void vector_ge::print_with_given_action(
 	l = len;
 	for (i = 0; i < l; i++) {
 		ost << "generator " << i << ":" << endl;
-		A->element_print_quick(ith(i), ost);
+		A->Group_element->element_print_quick(ith(i), ost);
 		ost << endl;
-		A2->element_print_as_permutation(ith(i), ost);
+		A2->Group_element->element_print_as_permutation(ith(i), ost);
 		ost << endl;
 	}
 }
@@ -558,7 +558,8 @@ void vector_ge::print(std::ostream &ost,
 		int f_print_as_permutation,
 	int f_offset, int offset,
 	int f_do_it_anyway_even_for_big_degree,
-	int f_print_cycles_of_length_one)
+	int f_print_cycles_of_length_one,
+	int verbose_level)
 {
 	int i, l;
 	
@@ -566,17 +567,17 @@ void vector_ge::print(std::ostream &ost,
 	if (!f_offset) {
 		offset = 0;
 	}
-	ost << "Strong generators: (" << l << " of them)" << endl;
+	ost << "vector of " << l << " group elements:" << endl;
 	ost << "f_print_as_permutation=" << f_print_as_permutation << endl;
 	for (i = 0; i < l; i++) {
-		ost << "generator " << i << ":" << endl;
-		A->element_print_quick(ith(i), ost);
+		ost << "generator " << i << " / " << l << ":" << endl;
+		A->Group_element->element_print_quick(ith(i), ost);
 		ost << endl;
 		if (f_print_as_permutation) {
 			//A->element_print_as_permutation(ith(i), ost);
-			A->element_print_as_permutation_with_offset(ith(i), ost, 
+			A->Group_element->element_print_as_permutation_with_offset(ith(i), ost,
 				offset, f_do_it_anyway_even_for_big_degree, 
-				f_print_cycles_of_length_one, 0/*verbose_level*/);
+				f_print_cycles_of_length_one, verbose_level - 1);
 			ost << endl;
 		}
 	}
@@ -589,7 +590,7 @@ void vector_ge::print_for_make_element(std::ostream &ost)
 	l = len;
 	ost << "Strong generators: (" << l << " of them)" << endl;
 	for (i = 0; i < l; i++) {
-		A->element_print_for_make_element(ith(i), ost);
+		A->Group_element->element_print_for_make_element(ith(i), ost);
 		ost << "\\\\" << endl;
 	}
 }
@@ -606,7 +607,7 @@ void vector_ge::write_to_memory_object(
 	}
 	m->write_int(len);
 	for (i = 0; i < len; i++) {
-		A->element_write_to_memory_object(ith(i), m, 0);
+		A->Group_element->element_write_to_memory_object(ith(i), m, 0);
 	}
 }
 
@@ -622,7 +623,7 @@ void vector_ge::read_from_memory_object(
 	m->read_int(&l);
 	allocate(l, verbose_level);
 	for (i = 0; i < len; i++) {
-		A->element_read_from_memory_object(ith(i), m, 0);
+		A->Group_element->element_read_from_memory_object(ith(i), m, 0);
 	}
 }
 
@@ -639,7 +640,7 @@ void vector_ge::write_to_file_binary(ofstream &fp, int verbose_level)
 		if (f_v) {
 			cout << "vector_ge::write_to_file_binary writing element " << i << " / " << len << endl;
 		}
-		A->element_write_to_file_binary(ith(i), fp, verbose_level);
+		A->Group_element->element_write_to_file_binary(ith(i), fp, verbose_level);
 	}
 }
 
@@ -657,7 +658,7 @@ void vector_ge::read_from_file_binary(ifstream &fp, int verbose_level)
 		if (f_v) {
 			cout << "vector_ge::read_from_file_binary reading element " << i << " / " << len << endl;
 		}
-		A->element_read_from_file_binary(ith(i), fp, verbose_level);
+		A->Group_element->element_read_from_file_binary(ith(i), fp, verbose_level);
 	}
 }
 
@@ -712,7 +713,7 @@ void vector_ge::save_csv(
 		for (i = 0; i < len; i++) {
 			Elt = ith(i);
 
-			A->element_code_for_make_element(Elt, data);
+			A->Group_element->element_code_for_make_element(Elt, data);
 
 			stringstream ss;
 			Int_vec_print_str_naked(ss, data, A->make_element_size);
@@ -764,7 +765,7 @@ void vector_ge::export_inversion_graphs(
 			int N;
 			int i, j;
 
-			A->element_as_permutation(Elt, perm, 0 /* verbose_level*/);
+			A->Group_element->element_as_permutation(Elt, perm, 0 /* verbose_level*/);
 
 			graph_theory::graph_theory_domain GT;
 
@@ -843,7 +844,7 @@ void vector_ge::read_column_csv(std::string &fname,
 			cout << "vector_ge::read_column_csv me_sz = " << me_sz << endl;
 			exit(1);
 		}
-		A->make_element(ith(i), data, 0 /*verbose_level*/);
+		A->Group_element->make_element(ith(i), data, 0 /*verbose_level*/);
 		FREE_int(data);
 	}
 
@@ -910,7 +911,7 @@ void vector_ge::read_column_csv_using_column_label(
 			cout << "vector_ge::read_column_csv me_sz = " << me_sz << endl;
 			exit(1);
 		}
-		A->make_element(ith(i), data, 0 /*verbose_level*/);
+		A->Group_element->make_element(ith(i), data, 0 /*verbose_level*/);
 		FREE_int(data);
 	}
 
@@ -968,9 +969,9 @@ void vector_ge::extract_subset_of_elements_by_rank(
 		if (f_v) {
 			cout << "vector_ge::extract_subset_of_elements_by_rank "
 					"element " << i << " = " << r << " / " << len << endl;
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 		}
-		A->element_move(Elt, ith(i), 0);
+		A->Group_element->element_move(Elt, ith(i), 0);
 	}
 	FREE_int(Elt);
 	if (f_v) {
@@ -984,7 +985,7 @@ int vector_ge::test_if_all_elements_stabilize_a_point(
 	int i;
 	
 	for (i = 0; i < len; i++) {
-		if (A2->element_image_of(pt, ith(i), 0) != pt) {
+		if (A2->Group_element->element_image_of(pt, ith(i), 0) != pt) {
 			return FALSE;
 		}
 	}
@@ -1006,7 +1007,7 @@ int vector_ge::test_if_all_elements_stabilize_a_set(
 		if (f_v) {
 			cout << "testing element " << i << " / " << len << endl;
 		}
-		if (!A2->test_if_set_stabilizes(ith(i),
+		if (!A2->Group_element->test_if_set_stabilizes(ith(i),
 				sz, set, 0 /* verbose_level*/)) {
 			return FALSE;
 		}
@@ -1123,8 +1124,95 @@ void vector_ge::matrix_representation(
 	}
 }
 
+void vector_ge::stab_BLT_set_from_catalogue(
+		actions::action *A,
+	field_theory::finite_field *F, int iso,
+	std::string &target_go_text,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::stab_BLT_set_from_catalogue" << endl;
+		cout << "q=" << F->q << endl;
+		cout << "iso=" << iso << endl;
+	}
+
+	int *data;
+	int nb_gens;
+	int data_size;
+	//string ascii_target_go;
+	//ring_theory::longinteger_object target_go;
+	int i;
+	knowledge_base::knowledge_base K;
+
+	if (f_v) {
+		cout << "vector_ge::stab_BLT_set_from_catalogue "
+				"before K.BLT_stab_gens" << endl;
+	}
+	K.BLT_stab_gens(F->q, iso, data, nb_gens, data_size, target_go_text);
+
+	if (f_v) {
+		cout << "vector_ge::stab_BLT_set_from_catalogue "
+				"data_size=" << data_size << endl;
+		cout << "vector_ge::stab_BLT_set_from_catalogue "
+				"nb_gens=" << nb_gens << endl;
+	}
+
+	data_structures_groups::vector_ge *gens;
+
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+	gens->init(A, verbose_level - 2);
+	//target_go.create_from_base_10_string(target_go_text);
 
 
+	gens->allocate(nb_gens, verbose_level - 2);
+	for (i = 0; i < nb_gens; i++) {
+		A->Group_element->make_element(gens->ith(i), data + i * data_size, 0);
+	}
+
+	if (f_v) {
+		cout << "vector_ge::stab_BLT_set_from_catalogue "
+				"generators are:" << endl;
+		gens->print_quick(cout);
+	}
+
+	if (f_v) {
+		cout << "vector_ge::stab_BLT_set_from_catalogue done" << endl;
+	}
+}
+
+int vector_ge::test_if_in_set_stabilizer(
+		actions::action *A,
+		long int *set, int sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret;
+	int i, c;
+
+	if (f_v) {
+		cout << "vector_ge::test_if_in_set_stabilizer" << endl;
+	}
+
+	ret = TRUE;
+	for (i = 0; i < len; i++) {
+		c = A->Group_element->check_if_in_set_stabilizer(
+				ith(i),
+				sz, set, 0 /* verbose_level*/);
+		if (!c) {
+			if (f_v) {
+				cout << "vector_ge::test_if_in_set_stabilizer element "
+						<< i << " fails to stabilize the given set" << endl;
+			}
+			ret = FALSE;
+			break;
+		}
+	}
+	if (f_v) {
+		cout << "vector_ge::test_if_in_set_stabilizer done" << endl;
+	}
+	return ret;
+}
 }}}
 
 

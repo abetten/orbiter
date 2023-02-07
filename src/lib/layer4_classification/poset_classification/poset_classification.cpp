@@ -939,15 +939,15 @@ void poset_classification::find_node_by_stabilizer_order(
 				level, i, 0  /* verbose_level */);
 				
 			for (j = 0; j < Strong_gens->gens->len; j++) {
-				elt_order = Poset->A->element_order(Strong_gens->gens->ith(j));
+				elt_order = Poset->A->Group_element->element_order(Strong_gens->gens->ith(j));
 				cout << "poset_classification " << j << " of order "
 						<< elt_order << ":" << endl;
 				if (order == elt_order) {
 					cout << "CYCLIC" << endl;
 					}
-				Poset->A->element_print(
+				Poset->A->Group_element->element_print(
 						Strong_gens->gens->ith(j), cout);
-				Poset->A->element_print_as_permutation(
+				Poset->A->Group_element->element_print_as_permutation(
 						Strong_gens->gens->ith(j), cout);
 			}
 			FREE_OBJECT(Strong_gens);
@@ -1145,9 +1145,9 @@ void poset_classification::orbit_element_unrank(
 	O = get_node_ij(depth, orbit_idx);
 	coset_unrank(depth, orbit_idx, rank, Elt1, 0 /*verbose_level*/);
 
-	Poset->A->element_invert(Elt1, Elt2, 0);
+	Poset->A->Group_element->element_invert(Elt1, Elt2, 0);
 	O->store_set_to(this, depth - 1, the_set);
-	Poset->A2->map_a_set(the_set, set, depth, Elt2, 0 /*verbose_level*/);
+	Poset->A2->Group_element->map_a_set(the_set, set, depth, Elt2, 0 /*verbose_level*/);
 
 	FREE_lint(the_set);
 	FREE_int(Elt1);
@@ -1198,9 +1198,9 @@ void poset_classification::orbit_element_rank(
 				"after trace_set, "
 				"orbit_idx = " << orbit_idx << endl;
 		cout << "transporter:" << endl;
-		Poset->A->element_print_quick(Elt1, cout);
+		Poset->A->Group_element->element_print_quick(Elt1, cout);
 		cout << "as permutation:" << endl;
-		Poset->A2->element_print_as_permutation(Elt1, cout);
+		Poset->A2->Group_element->element_print_as_permutation(Elt1, cout);
 	}
 	if (f_v) {
 		cout << "calling coset_rank" << endl;
@@ -1745,10 +1745,10 @@ void poset_classification::map_to_canonical_k_subset(
 
 	if (f_v) {
 		cout << "the transporter is" << endl;
-		Poset->A->element_print(Elt1, cout);
+		Poset->A->Group_element->element_print(Elt1, cout);
 		cout << endl;
 	}
-	Poset->A->element_move(Elt1, transporter, FALSE);
+	Poset->A->Group_element->element_move(Elt1, transporter, FALSE);
 
 	for (i = 0; i < reduced_set_size; i++) {
 		reduced_set[i] = canonical_subset[subset_size + i];
@@ -2013,7 +2013,7 @@ void poset_classification::trace_all_k_subsets(
 			if (FALSE) {
 				cout << "poset_classification::trace_all_k_subsets "
 						"the transporter is" << endl;
-				Poset->A->element_print(Elt, cout);
+				Poset->A->Group_element->element_print(Elt, cout);
 				cout << endl;
 			}
 

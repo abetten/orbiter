@@ -806,7 +806,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 #endif
 		gen->get_set_i(0)[coset] = pt;
 		gen->get_set_i(0)[size - 1] = possible_image;
-		gen->get_A()->element_one(gen->get_transporter()->ith(0), 0);
+		gen->get_A()->Group_element->element_one(gen->get_transporter()->ith(0), 0);
 
 
 		if (f_v4) {
@@ -867,11 +867,11 @@ int upstep_work::upstep_for_sets(int verbose_level)
 						"mapping " << possible_image << " to " << pt << endl;
 				//gen->A->element_print_as_permutation(aut, cout);
 				if (gen->allowed_to_show_group_elements() && f_v5) {
-					gen->get_A()->element_print_quick(aut, cout);
+					gen->get_A()->Group_element->element_print_quick(aut, cout);
 					cout << endl;
 				}
 			}
-			if (gen->get_A2()->element_image_of(possible_image, aut, 0) != pt) {
+			if (gen->get_A2()->Group_element->element_image_of(possible_image, aut, 0) != pt) {
 				cout << "upstep_work::upstep_for_sets image of possible_"
 						"image is not pt" << endl;
 				exit(1);

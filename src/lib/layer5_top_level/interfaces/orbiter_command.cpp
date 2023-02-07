@@ -53,7 +53,8 @@ orbiter_command::~orbiter_command()
 }
 
 
-void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session,
+void orbiter_command::parse(
+		orbiter_top_level_session *Orbiter_top_level_session,
 		int argc, std::string *Argv, int &i, int verbose_level)
 {
 

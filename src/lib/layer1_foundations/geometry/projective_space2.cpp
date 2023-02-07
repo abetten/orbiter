@@ -446,7 +446,7 @@ void projective_space::plane_intersection_type(
 
 }
 
-void projective_space::plane_intersections(
+int projective_space::plane_intersections(
 	grassmann *G,
 	long int *set, int set_size,
 	ring_theory::longinteger_object *&R,
@@ -458,6 +458,7 @@ void projective_space::plane_intersections(
 	int *nb_pts_on_plane;
 	int nb_planes;
 	int i;
+	int ret;
 
 	if (f_v) {
 		cout << "projective_space::plane_intersections" << endl;
@@ -472,17 +473,24 @@ void projective_space::plane_intersections(
 		verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space::plane_intersections "
-				"after plane_intersection_type_fast" << endl;
+				"after plane_intersection_type_fast, nb_planes = " << nb_planes << endl;
 	}
-	if (f_v) {
-		cout << "projective_space::plane_intersections "
-				"before Sos.init" << endl;
+
+	if (nb_planes) {
+		if (f_v) {
+			cout << "projective_space::plane_intersections "
+					"before Sos.init" << endl;
+		}
+		SoS.init_with_Sz_in_int(set_size, nb_planes,
+				Pts_on_plane, nb_pts_on_plane, verbose_level - 1);
+		if (f_v) {
+			cout << "projective_space::plane_intersections "
+					"after Sos.init" << endl;
+		}
+		ret = TRUE;
 	}
-	SoS.init_with_Sz_in_int(set_size, nb_planes,
-			Pts_on_plane, nb_pts_on_plane, verbose_level - 1);
-	if (f_v) {
-		cout << "projective_space::plane_intersections "
-				"after Sos.init" << endl;
+	else {
+		ret = FALSE;
 	}
 	for (i = 0; i < nb_planes; i++) {
 		FREE_lint(Pts_on_plane[i]);
@@ -492,6 +500,7 @@ void projective_space::plane_intersections(
 	if (f_v) {
 		cout << "projective_space::plane_intersections done" << endl;
 	}
+	return ret;
 }
 
 
@@ -504,7 +513,7 @@ void projective_space::plane_intersection_type_fast(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_v3 = (verbose_level >= 3);
+	int f_v3 = FALSE; //(verbose_level >= 3);
 	int r, rk, rr, h, i, j, a, d, N_planes, N, N2, idx, l;
 
 	int *Basis;
@@ -570,13 +579,13 @@ void projective_space::plane_intersection_type_fast(
 	len = 0;
 	for (rk = 0; rk < N; rk++) {
 		Combi.unrank_k_subset(rk, subset, set_size, 3);
-		if (f_v) {
+		if (f_v3) {
 			cout << rk << "-th subset ";
 			Int_vec_print(cout, subset, 3);
 			cout << endl;
 		}
 		if (f_subset_done[rk]) {
-			if (f_v) {
+			if (f_v3) {
 				cout << "skipping" << endl;
 			}
 			continue;
@@ -596,7 +605,7 @@ void projective_space::plane_intersection_type_fast(
 		r = F->Linear_algebra->rank_of_rectangular_matrix(
 				Basis, 3, d, 0 /* verbose_level */);
 		if (r < 3) {
-			if (TRUE || f_v) {
+			if (f_v3) {
 				cout << "projective_space::plane_intersection_type_fast "
 						"not independent, skip" << endl;
 				cout << "subset: ";
@@ -607,7 +616,7 @@ void projective_space::plane_intersection_type_fast(
 			continue;
 		}
 		G->rank_longinteger_here(Basis, plane_rk, 0 /* verbose_level */);
-		if (f_v) {
+		if (f_v3) {
 			cout << rk << "-th subset ";
 			Int_vec_print(cout, subset, 3);
 			cout << " plane_rk=" << plane_rk << endl;
@@ -685,16 +694,17 @@ void projective_space::plane_intersection_type_fast(
 					}
 				}
 			}
-			if (f_v) {
-				cout << "We found an " << l << "-plane, "
-						"its rank is " << plane_rk << endl;
-				cout << "The ranks of points on that plane are : ";
-				Lint_vec_print(cout, pts_on_plane, l);
-				cout << endl;
-			}
 
 
 			if (l >= 3) {
+				if (f_vv) {
+					cout << "We found an " << l << "-plane, "
+							"its rank is " << plane_rk << endl;
+					cout << "The ranks of points on that plane are : ";
+					Lint_vec_print(cout, pts_on_plane, l);
+					cout << endl;
+				}
+
 				for (j = len; j > idx; j--) {
 					R[j].swap_with(R[j - 1]);
 					Pts_on_plane[j] = Pts_on_plane[j - 1];
@@ -706,7 +716,7 @@ void projective_space::plane_intersection_type_fast(
 					}
 				}
 				plane_rk.assign_to(R[idx]);
-				if (f_v3) {
+				if (f_vv) {
 					cout << "after assign_to, "
 							"plane_rk=" << plane_rk << endl;
 				}
@@ -723,7 +733,7 @@ void projective_space::plane_intersection_type_fast(
 						subset3[h] = pts_on_plane[subset2[h]];
 					}
 					rr = Combi.rank_k_subset(subset3, set_size, 3);
-					if (f_v) {
+					if (f_vv) {
 						cout << i << "-th subset3 ";
 						Int_vec_print(cout, subset3, 3);
 						cout << " rr=" << rr << endl;

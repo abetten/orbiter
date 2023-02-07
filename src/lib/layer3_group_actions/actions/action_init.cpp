@@ -62,9 +62,9 @@ void action::init_group_from_generators(
 		Int_vec_print(cout, group_generator_data +
 			i * make_element_size, make_element_size);
 		cout << endl;
-		make_element(Elt,
+		Group_element->make_element(Elt,
 			group_generator_data + i * make_element_size, verbose_level - 2);
-		element_move(Elt, gens->ith(i), 0);
+		Group_element->element_move(Elt, gens->ith(i), 0);
 	}
 	if (f_v) {
 		cout << "done parsing generators" << endl;
@@ -145,10 +145,10 @@ void action::init_group_from_generators_by_base_images(
 		Int_vec_print(cout, group_generator_data +
 			i * base_len(), base_len());
 		cout << endl;
-		make_element_from_base_image(Elt, parent_group_S,
+		Group_element->make_element_from_base_image(Elt, parent_group_S,
 			group_generator_data + i * base_len(),
 			verbose_level - 2);
-		element_move(Elt, gens->ith(i), 0);
+		Group_element->element_move(Elt, gens->ith(i), 0);
 	}
 	if (f_v) {
 		cout << "done parsing generators" << endl;
@@ -561,8 +561,8 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 	Elt1 = NEW_int(elt_size_in_int);
 
 	for (i = 0; i < nb_gens; i++) {
-		make_element(Elt1, Gens[i], 0);
-		element_move(Elt1, gens->ith(i), 0);
+		Group_element->make_element(Elt1, Gens[i], 0);
+		Group_element->element_move(Elt1, gens->ith(i), 0);
 	}
 	groups::sims *Cent;
 

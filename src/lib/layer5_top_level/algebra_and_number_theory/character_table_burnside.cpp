@@ -58,7 +58,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	for (i = 0; i < goi; i++) {
 		S->element_unrank_lint(i, Elt);
 		cout << "element " << i << " is ";
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 		cout << endl;
 		}
 
@@ -814,7 +814,7 @@ void character_table_burnside::compute_Distribution_table(
 
 			if (f_vvv) {
 				cout << "word:";
-				A->element_print(Elt1, cout);
+				A->Group_element->element_print(Elt1, cout);
 				cout << " has rank " << i << " and belongs to class " << j;
 				cout << endl;
 				}
@@ -846,10 +846,10 @@ void character_table_burnside::multiply_word(
 {
 	int i;
 
-	A->element_move(Gens[Choice[0]], Elt1, 0);
+	A->Group_element->element_move(Gens[Choice[0]], Elt1, 0);
 	for (i = 1; i < t; i++) {
-		A->element_mult(Elt1, Gens[Choice[i]], Elt2, 0);
-		A->element_move(Elt2, Elt1, 0);
+		A->Group_element->element_mult(Elt1, Gens[Choice[i]], Elt2, 0);
+		A->Group_element->element_move(Elt2, Elt1, 0);
 		}
 }
 
@@ -880,7 +880,7 @@ void character_table_burnside::create_generators(
 				}
 			v[0] = i + 1;
 			v[i + 1] = 0;
-			A->make_element(Elt[i], v, 0 /* verbose_level */);
+			A->Group_element->make_element(Elt[i], v, 0 /* verbose_level */);
 			}
 		}
 	else {
@@ -890,13 +890,13 @@ void character_table_burnside::create_generators(
 				}
 			v[i] = i + 1;
 			v[i + 1] = i;
-			A->make_element(Elt[i], v, 0 /* verbose_level */);
+			A->Group_element->make_element(Elt[i], v, 0 /* verbose_level */);
 			}
 		}
 	cout << "generators:" << endl;
 	for (i = 0; i < nb_gens; i++) {
 		cout << "generator " << i << ":" << endl;
-		A->element_print(Elt[i], cout);
+		A->Group_element->element_print(Elt[i], cout);
 		cout << endl;
 		}
 

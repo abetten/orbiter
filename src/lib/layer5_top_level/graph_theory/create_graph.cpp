@@ -174,14 +174,14 @@ void create_graph::init(
 				cout << "create_graph::init "
 						"Element " << setw(5) << i << " / "
 						<< go.as_int() << ":" << endl;
-				G->A->element_print(Elt1, cout);
+				G->A->Group_element->element_print(Elt1, cout);
 				cout << endl;
-				G->A->element_print_as_permutation(Elt1, cout);
+				G->A->Group_element->element_print_as_permutation(Elt1, cout);
 				cout << endl;
 			}
 			for (h = 0; h < nb_gens; h++) {
 
-				G->A->element_mult(Elt1, gens->ith(h), Elt2, 0 /*verbose_level*/);
+				G->A->Group_element->element_mult(Elt1, gens->ith(h), Elt2, 0 /*verbose_level*/);
 
 				j = Sims->element_rank_lint(Elt2);
 
@@ -1196,7 +1196,7 @@ void create_graph::create_Shrikhande(
 				v[4 + j] = 4 + ((j + 1) % 4);
 			}
 		}
-		A->make_element(gens_G->ith(i), v, 0 /* verbose_level */);
+		A->Group_element->make_element(gens_G->ith(i), v, 0 /* verbose_level */);
 	}
 
 	if (f_v) {
@@ -1204,7 +1204,7 @@ void create_graph::create_Shrikhande(
 				"generators for G:" << endl;
 		for (i = 0; i < nb_G; i++) {
 			cout << "generator " << i << ":" << endl;
-			A->element_print(gens_G->ith(i), cout);
+			A->Group_element->element_print(gens_G->ith(i), cout);
 		}
 	}
 
@@ -1257,7 +1257,7 @@ void create_graph::create_Shrikhande(
 				v[4 + j] = 4 + ((4 + j - 1) % 4);
 			}
 		}
-		A->make_element(gens_S->ith(i), v, 0 /* verbose_level */);
+		A->Group_element->make_element(gens_S->ith(i), v, 0 /* verbose_level */);
 	}
 
 	if (f_v) {
@@ -1265,7 +1265,7 @@ void create_graph::create_Shrikhande(
 				"generators for S:" << endl;
 		for (i = 0; i < nb_S; i++) {
 			cout << "generator " << i << ":" << endl;
-			A->element_print(gens_S->ith(i), cout);
+			A->Group_element->element_print(gens_S->ith(i), cout);
 		}
 	}
 

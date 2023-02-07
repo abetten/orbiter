@@ -312,6 +312,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/action_io.o \
 		layer3_group_actions/actions/action_pointer_table.o \
 		layer3_group_actions/actions/backtrack.o \
+		layer3_group_actions/actions/group_element.o \
 		layer3_group_actions/actions/interface_direct_product.o \
 		layer3_group_actions/actions/interface_induced_action.o \
 		layer3_group_actions/actions/interface_matrix_group.o \
@@ -545,6 +546,7 @@ ORBITER_MODULES= \
 		layer5_top_level/orthogonal/orthogonal_space_activity.o \
 		layer5_top_level/orthogonal/orthogonal_space_with_action_description.o \
 		layer5_top_level/orthogonal/orthogonal_space_with_action.o \
+		layer5_top_level/orthogonal/table_of_blt_sets.o \
 		layer5_top_level/packings/invariants_packing.o \
 		layer5_top_level/packings/packing_classify.o \
 		layer5_top_level/packings/packing_classify2.o \
@@ -630,7 +632,9 @@ ORBITER_MODULES= \
 		layer5_top_level/surfaces/surfaces_general/surface_domain_high_level.o \
 		layer5_top_level/surfaces/surfaces_general/surface_object_with_action.o \
 		layer5_top_level/surfaces/surfaces_general/surface_study.o \
-		layer5_top_level/surfaces/surfaces_general/surface_with_action.o
+		layer5_top_level/surfaces/surfaces_general/surface_with_action.o \
+		layer5_top_level/surfaces/surfaces_general/table_of_surfaces.o
+
 
 JL_MODULES=\
 	layer1_foundations/Jeffrey_Leon_partition_backtrack/addsgen.o \

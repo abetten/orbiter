@@ -1033,7 +1033,7 @@ long int action_on_factor_space::compute_image(
 				"before A->element_image_of_low_level"
 				<< endl;
 	}
-	A->element_image_of_low_level(Tmp1, Tmp2,
+	A->Group_element->element_image_of_low_level(Tmp1, Tmp2,
 			Elt, verbose_level - 1);
 	if (f_v) {
 		cout << "action_on_factor_space::compute_image "

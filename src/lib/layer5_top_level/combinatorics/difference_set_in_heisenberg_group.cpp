@@ -191,9 +191,9 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	E1 = NEW_int(A->elt_size_in_int);
 
 	cout << "making element" << endl;
-	A->make_element_from_base_image(E1, A->Sims, base_image, verbose_level);
+	A->Group_element->make_element_from_base_image(E1, A->Sims, base_image, verbose_level);
 	cout << "generator has been created:" << endl;
-	A->element_print(E1, cout);
+	A->Group_element->element_print(E1, cout);
 	cout << endl;
 
 
@@ -473,7 +473,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 	cout << "making element Elt1:" << endl;
 	N->Sims->element_unrank_lint(rk_E1, Elt1, 0);
-	A->element_print(Elt1, cout);
+	A->Group_element->element_print(Elt1, cout);
 	cout << endl;
 
 
@@ -491,7 +491,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		cout << "making element" << endl;
 		N->Sims->element_unrank_lint(second_gen_idx[h], Elt2, 0);
 		cout << "second generator has been created:" << endl;
-		A->element_print(Elt2, cout);
+		A->Group_element->element_print(Elt2, cout);
 		cout << endl;
 
 

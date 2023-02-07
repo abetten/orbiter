@@ -208,7 +208,8 @@ void polar::init2(int depth, int verbose_level)
 		gens->gens->print(cout, f_print_as_permutation, 
 			f_offset, offset, 
 			f_do_it_anyway_even_for_big_degree, 
-			f_print_cycles_of_length_one);
+			f_print_cycles_of_length_one,
+			0 /* verbose_level */);
 		}
 	VS = NEW_OBJECT(algebra::vector_space);
 
@@ -368,21 +369,21 @@ void polar::compute_cosets(
 
 		if (f_vvv) {
 			cout << "Left coset " << c << " is represented by" << endl;
-			Gen->get_A()->element_print_quick(Elt1, cout);
+			Gen->get_A()->Group_element->element_print_quick(Elt1, cout);
 			cout << endl;
 			}
 
-		Gen->get_A()->element_invert(Elt1, Elt2, 0);
+		Gen->get_A()->Group_element->element_invert(Elt1, Elt2, 0);
 
 
 		if (f_vvv) {
 			cout << "Right coset " << c << " is represented by" << endl;
-			Gen->get_A()->element_print_quick(Elt2, cout);
+			Gen->get_A()->Group_element->element_print_quick(Elt2, cout);
 			cout << endl;
 			}
 
 		for (i = 0; i < k; i++) {
-			A->element_image_of_low_level(M1 + i * n, M2 + i * n,
+			A->Group_element->element_image_of_low_level(M1 + i * n, M2 + i * n,
 					Elt2, 0/* verbose_level*/);
 			}
 		if (f_vv) {
@@ -514,22 +515,22 @@ void polar::dual_polar_graph(
 
 		if (FALSE) {
 			cout << "Left coset " << c << " is represented by" << endl;
-			Gen->get_A()->element_print_quick(Elt1, cout);
+			Gen->get_A()->Group_element->element_print_quick(Elt1, cout);
 			cout << endl;
 			}
 
-		Gen->get_A()->element_invert(Elt1, Elt2, 0);
+		Gen->get_A()->Group_element->element_invert(Elt1, Elt2, 0);
 
 
 		if (FALSE) {
 			cout << "Right coset " << c
 					<< " is represented by" << endl;
-			Gen->get_A()->element_print_quick(Elt2, cout);
+			Gen->get_A()->Group_element->element_print_quick(Elt2, cout);
 			cout << endl;
 			}
 
 		for (i = 0; i < k; i++) {
-			A->element_image_of_low_level(M1 + i * n,
+			A->Group_element->element_image_of_low_level(M1 + i * n,
 					M2 + i * n, Elt2, 0/* verbose_level*/);
 			}
 
@@ -703,10 +704,10 @@ void polar::show_stabilizer(
 	goi = go.as_int();
 	for (i = 0; i < goi; i++) {
 		S->element_unrank_lint(i, Elt);
-		order = A->element_order(Elt);
+		order = A->Group_element->element_order(Elt);
 		cout << "element " << i << " of order " << order << ":" << endl;
-		A->element_print_quick(Elt, cout);
-		A->element_print_as_permutation(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
+		A->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
 		}
 	

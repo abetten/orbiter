@@ -36,10 +36,10 @@ void poset_orbit_node::store_strong_generators(
 
 			if (i == 0) {
 				first_strong_generator_handle =
-					gen->get_A()->element_store(Strong_gens->gens->ith(i), FALSE);
+					gen->get_A()->Group_element->element_store(Strong_gens->gens->ith(i), FALSE);
 			}
 			else {
-				gen->get_A()->element_store(Strong_gens->gens->ith(i), FALSE);
+				gen->get_A()->Group_element->element_store(Strong_gens->gens->ith(i), FALSE);
 			}
 		}
 		Int_vec_copy(Strong_gens->tl, tl, gen->get_A()->base_len());

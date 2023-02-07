@@ -219,7 +219,7 @@ void union_find_on_k_subsets::init(
 					"generator " << h << " / " << len << ":" << endl;
 		}
 		for (i = 0; i < set_sz; i++) {
-			j = Ar->image_of(gens->ith(h), i);
+			j = Ar->Group_element->image_of(gens->ith(h), i);
 			data1[i] = j;
 		}
 		if (FALSE /*f_v*/) {
@@ -227,8 +227,8 @@ void union_find_on_k_subsets::init(
 			Int_vec_print(cout, data1, set_sz);
 			cout << endl;
 		}
-		Ar_perm->make_element(Elt1, data1, 0 /* verbose_level */);
-		Ar_perm->element_move(Elt1,
+		Ar_perm->Group_element->make_element(Elt1, data1, 0 /* verbose_level */);
+		Ar_perm->Group_element->element_move(Elt1,
 				gens_perm->ith(h), 0 /* verbose_level */);
 	}
 	if (f_v) {

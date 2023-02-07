@@ -180,7 +180,7 @@ void strong_generators::init_copy(strong_generators *S,
 	for (i = 0; i < S->gens->len; i++) {
 		//cout << "strong_generators::init_copy before
 		// element_move i=" << i << endl;
-		A->element_move(S->gens->ith(i), gens->ith(i), 0);
+		A->Group_element->element_move(S->gens->ith(i), gens->ith(i), 0);
 	}
 	if (f_v) {
 		cout << "strong_generators::init_copy done" << endl;
@@ -209,7 +209,7 @@ void strong_generators::init_by_hdl_and_with_tl(actions::action *A,
 	gens->init(A, verbose_level - 2);
 	gens->allocate(gen_handle.size(), verbose_level - 2);
 	for (i = 0; i < gen_handle.size(); i++) {
-		A->element_retrieve(gen_handle[i], gens->ith(i), 0);
+		A->Group_element->element_retrieve(gen_handle[i], gens->ith(i), 0);
 	}
 
 
@@ -237,7 +237,7 @@ void strong_generators::init_by_hdl(actions::action *A,
 	gens->init(A, verbose_level - 2);
 	gens->allocate(nb_gen, verbose_level - 2);
 	for (i = 0; i < nb_gen; i++) {
-		A->element_retrieve(gen_hdl[i], gens->ith(i), 0);
+		A->Group_element->element_retrieve(gen_hdl[i], gens->ith(i), 0);
 	}
 	if (f_v) {
 		cout << "strong_generators::init_by_hdl done" << endl;
@@ -408,7 +408,7 @@ void strong_generators::init_from_data_with_target_go(
 					<< i << " / " << nb_gens << endl;
 		}
 
-		A->make_element(nice_gens->ith(i),
+		A->Group_element->make_element(nice_gens->ith(i),
 				data_gens + i * data_gens_size,
 				verbose_level);
 	}
@@ -684,14 +684,14 @@ void strong_generators::init_transposed_group(
 		if (f_v) {
 			cout << "before element_transpose " << i << " / "
 					<< SG->gens->len << ":" << endl;
-			A->element_print_quick(SG->gens->ith(i), cout);
+			A->Group_element->element_print_quick(SG->gens->ith(i), cout);
 		}
-		A->element_transpose(SG->gens->ith(i), gens->ith(i),
+		A->Group_element->element_transpose(SG->gens->ith(i), gens->ith(i),
 				0 /* verbose_level*/);
 		if (f_v) {
 			cout << "after element_transpose " << i << " / "
 					<< SG->gens->len << ":" << endl;
-			A->element_print_quick(gens->ith(i), cout);
+			A->Group_element->element_print_quick(gens->ith(i), cout);
 		}
 	}
 
@@ -742,9 +742,9 @@ void strong_generators::init_group_extension(
 	nb_gens = subgroup->gens->len;
 	my_gens->allocate(nb_gens + 1, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->element_move(subgroup->gens->ith(i), my_gens->ith(i), 0);
+		A->Group_element->element_move(subgroup->gens->ith(i), my_gens->ith(i), 0);
 	}
-	A->make_element(my_gens->ith(nb_gens), data, 0);
+	A->Group_element->make_element(my_gens->ith(nb_gens), data, 0);
 
 	subgroup->group_order(target_go);
 	D.mult_integer_in_place(target_go, index);
@@ -815,10 +815,10 @@ void strong_generators::init_group_extension(
 	nb_new_gens = new_gens->len;
 	my_gens->allocate(nb_gens + nb_new_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->element_move(subgroup->gens->ith(i), my_gens->ith(i), 0);
+		A->Group_element->element_move(subgroup->gens->ith(i), my_gens->ith(i), 0);
 	}
 	for (i = 0; i < nb_new_gens; i++) {
-		A->element_move(new_gens->ith(i), my_gens->ith(nb_gens + i), 0);
+		A->Group_element->element_move(new_gens->ith(i), my_gens->ith(nb_gens + i), 0);
 	}
 
 	if (f_v) {
@@ -1053,7 +1053,7 @@ void strong_generators::init_subgroup_by_generators(
 			cout << "strong_generators::init_subgroup_by_generators "
 					"generator " << h << " / " << nb_subgroup_gens << endl;
 		}
-		A->make_element(
+		A->Group_element->make_element(
 				nice_gens->ith(h),
 				subgroup_gens + h * A->make_element_size,
 				verbose_level);
@@ -1189,7 +1189,7 @@ void strong_generators::add_generators(
 
 	coset_reps_vec = NEW_int(group_index * A->elt_size_in_int);
 	for (i = 0; i < group_index; i++) {
-		A->element_move(coset_reps->ith(i),
+		A->Group_element->element_move(coset_reps->ith(i),
 				coset_reps_vec + i * A->elt_size_in_int, 0);
 	}
 
@@ -1301,7 +1301,7 @@ void strong_generators::print_generators_gap(std::ostream &ost)
 				cout << "strong_generators::print_generators_gap "
 						"i=" << i << " / " << gens->len << endl;
 			}
-			A->element_print_as_permutation_with_offset(
+			A->Group_element->element_print_as_permutation_with_offset(
 					gens->ith(i), ost,
 					1 /*offset*/,
 					TRUE /* f_do_it_anyway_even_for_big_degree */,
@@ -1330,7 +1330,7 @@ void strong_generators::print_generators_gap_in_different_action(std::ostream &o
 	if (A->degree < 200) {
 		ost << "G := Group([";
 		for (i = 0; i < gens->len; i++) {
-			A2->element_print_as_permutation_with_offset(
+			A2->Group_element->element_print_as_permutation_with_offset(
 					gens->ith(i), ost,
 					1 /*offset*/,
 					TRUE /* f_do_it_anyway_even_for_big_degree */,
@@ -1357,7 +1357,7 @@ void strong_generators::print_generators_compact(std::ostream &ost)
 		ost << gens->len << " " << A->degree << endl;
 		for (i = 0; i < gens->len; i++) {
 			for (j = 0; j < A->degree; j++) {
-				a = A->element_image_of(j,
+				a = A->Group_element->element_image_of(j,
 						gens->ith(i), 0 /* verbose_level */);
 				ost << a << " ";
 				}
@@ -1385,10 +1385,10 @@ void strong_generators::print_generators(std::ostream &ost)
 	for (i = 0; i < gens->len; i++) {
 		ost << "generator " << i << " / "
 				<< gens->len << " is: " << endl;
-		A->element_print(gens->ith(i), ost);
+		A->Group_element->element_print(gens->ith(i), ost);
 		ost << "as permutation: " << endl;
 		if (A->degree < 400) {
-			A->element_print_as_permutation_with_offset(
+			A->Group_element->element_print_as_permutation_with_offset(
 					gens->ith(i), ost,
 					0 /* offset*/,
 					TRUE /* f_do_it_anyway_even_for_big_degree*/,
@@ -1408,7 +1408,7 @@ void strong_generators::print_generators(std::ostream &ost)
 
 	if (A->degree < 400) {
 		for (i = 0; i < gens->len; i++) {
-			A->element_print_as_permutation(gens->ith(i), ost);
+			A->Group_element->element_print_as_permutation(gens->ith(i), ost);
 			ost << endl;
 		}
 	}
@@ -1444,11 +1444,11 @@ void strong_generators::print_generators_in_latex_individually(
 
 		if (TRUE /* A->f_is_linear */) {
 			ost << "$";
-			A->element_print_latex(gens->ith(i), ost);
+			A->Group_element->element_print_latex(gens->ith(i), ost);
 			ost << "$";
 		}
 		else {
-			A->element_print_latex(gens->ith(i), ost);
+			A->Group_element->element_print_latex(gens->ith(i), ost);
 		}
 
 		//ost << "\\\\" << endl;
@@ -1456,11 +1456,11 @@ void strong_generators::print_generators_in_latex_individually(
 
 		int n, ord;
 
-		ord = A->element_order(gens->ith(i));
+		ord = A->Group_element->element_order(gens->ith(i));
 
 		ost << " of order " << ord;
 
-		n = A->count_fixed_points(gens->ith(i), 0 /* verbose_level */);
+		n = A->Group_element->count_fixed_points(gens->ith(i), 0 /* verbose_level */);
 		ost << " and with " << n << " fixed points.\\\\" << endl;
 
 		}
@@ -1484,7 +1484,7 @@ void strong_generators::print_generators_in_source_code()
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / "
 		// << gens->len << " is:" << endl;
-		A->print_for_make_element(cout, gens->ith(i));
+		A->Group_element->print_for_make_element(cout, gens->ith(i));
 		cout << endl;
 	}
 }
@@ -1503,7 +1503,7 @@ void strong_generators::print_generators_in_source_code_to_file(
 		for (i = 0; i < gens->len; i++) {
 			//cout << "Generator " << i << " / "
 			//<< gens->len << " is:" << endl;
-			A->print_for_make_element_no_commas(f, gens->ith(i));
+			A->Group_element->print_for_make_element_no_commas(f, gens->ith(i));
 			f << endl;
 		}
 	}
@@ -1522,9 +1522,9 @@ void strong_generators::print_generators_even_odd()
 	cout << endl;
 	for (i = 0; i < gens->len; i++) {
 		cout << "Generator " << i << " / " << gens->len << " is:" << endl;
-		A->element_print(gens->ith(i), cout);
+		A->Group_element->element_print(gens->ith(i), cout);
 
-		sgn = A->element_signum_of_permutation(gens->ith(i));
+		sgn = A->Group_element->element_signum_of_permutation(gens->ith(i));
 		cout << " sgn=" << sgn;
 		cout << endl;
 	}
@@ -1731,7 +1731,7 @@ void strong_generators::print_generators_tex(std::ostream &ost)
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
 		ost << "$" << endl;
-		A->element_print_latex(gens->ith(i), ost);
+		A->Group_element->element_print_latex(gens->ith(i), ost);
 		ost << "$" << endl;
 		if (i < gens->len - 1) {
 			ost << ", " << endl;
@@ -1755,7 +1755,7 @@ void strong_generators::print_for_make_element(std::ostream &ost)
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
-		A->element_print_for_make_element(gens->ith(i), ost);
+		A->Group_element->element_print_for_make_element(gens->ith(i), ost);
 		ost << "\\\\" << endl;
 	}
 }
@@ -1772,7 +1772,7 @@ void strong_generators::print_generators_in_different_action_tex(
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
-		A2->element_print_as_permutation(gens->ith(i), ost);
+		A2->Group_element->element_print_as_permutation(gens->ith(i), ost);
 		if (i < gens->len - 1) {
 			ost << ", " << endl;
 		}
@@ -1785,7 +1785,7 @@ void strong_generators::print_generators_in_different_action_tex(
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
-		A->element_print_for_make_element(gens->ith(i), ost);
+		A->Group_element->element_print_for_make_element(gens->ith(i), ost);
 		ost << "\\\\" << endl;
 	}
 }
@@ -1807,10 +1807,10 @@ void strong_generators::print_generators_tex_with_print_point_function(
 	for (i = 0; i < gens->len; i++) {
 		cout << "Generator " << i << " / " << gens->len << " is:" << endl;
 		ost << "$$" << endl;
-		A->element_print_latex(gens->ith(i), ost);
+		A->Group_element->element_print_latex(gens->ith(i), ost);
 		ost << "$$" << endl;
 		ost << "$$" << endl;
-		A_given->element_print_latex_with_print_point_function(
+		A_given->Group_element->element_print_latex_with_print_point_function(
 				gens->ith(i), ost,
 				point_label, point_label_data);
 		ost << "$$" << endl;
@@ -1819,13 +1819,13 @@ void strong_generators::print_generators_tex_with_print_point_function(
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / " << gens->len
 		// << " is:" << endl;
-		A->element_print_for_make_element(gens->ith(i), ost);
+		A->Group_element->element_print_for_make_element(gens->ith(i), ost);
 		ost << "\\\\" << endl;
 	}
 
 	for (i = 0; i < gens->len; i++) {
 		ost << "$";
-		A_given->element_print_latex(gens->ith(i), ost);
+		A_given->Group_element->element_print_latex(gens->ith(i), ost);
 		ost << "$\\\\" << endl;
 	}
 
@@ -1841,7 +1841,7 @@ void strong_generators::print_generators_for_make_element(
 	ost << "Strong generators for a group of order " << go << ":\\\\" << endl;
 	for (i = 0; i < gens->len; i++) {
 		//ost << "";
-		A->element_print_for_make_element(gens->ith(i), ost);
+		A->Group_element->element_print_for_make_element(gens->ith(i), ost);
 		ost << "\\\\" << endl;
 	}
 }
@@ -1858,9 +1858,9 @@ void strong_generators::print_generators_as_permutations()
 	for (i = 0; i < gens->len; i++) {
 		cout << "Generator " << i << " / "
 				<< gens->len << " is:" << endl;
-		A->element_print(gens->ith(i), cout);
+		A->Group_element->element_print(gens->ith(i), cout);
 		if (A->degree < 1000) {
-			A->element_print_as_permutation(gens->ith(i), cout);
+			A->Group_element->element_print_as_permutation(gens->ith(i), cout);
 			cout << endl;
 		}
 		else {
@@ -1885,7 +1885,7 @@ void strong_generators::print_generators_as_permutations_tex(
 				<< gens->len << " is: $" << endl;
 		//A->element_print(gens->ith(i), cout);
 		if (A->degree < 1000) {
-			A2->element_print_as_permutation(gens->ith(i), ost);
+			A2->Group_element->element_print_as_permutation(gens->ith(i), ost);
 		}
 		else {
 			cout << "strong_generators::print_generators_as_permutations_tex "
@@ -1905,13 +1905,13 @@ void strong_generators::print_with_given_action(
 		ost << "Generator " << i << " / "
 				<< gens->len << " is:" << endl;
 		ost << "$$" << endl;
-		A2->element_print_latex(gens->ith(i), ost);
+		A2->Group_element->element_print_latex(gens->ith(i), ost);
 		//ost << endl;
 		ost << "$$" << endl;
 		ost << "as permutation:" << endl;
 		//ost << "$$" << endl;
 		if (A2->degree < 1000) {
-			A2->element_print_as_permutation(gens->ith(i), ost);
+			A2->Group_element->element_print_as_permutation(gens->ith(i), ost);
 		}
 		else {
 			cout << "strong_generators::print_with_given_action "
@@ -1942,7 +1942,7 @@ void strong_generators::print_elements_ost(std::ostream &ost)
 		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
-		A->element_print_latex(Elt, ost);
+		A->Group_element->element_print_latex(Elt, ost);
 		ost << "$$" << endl;
 	}
 	FREE_OBJECT(S);
@@ -1969,7 +1969,7 @@ void strong_generators::print_elements_with_special_orthogonal_action_ost(
 
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
-		A->element_print_latex(Elt, ost);
+		A->Group_element->element_print_latex(Elt, ost);
 		if (A->matrix_group_dimension() == 4) {
 			int A6[36];
 			field_theory::finite_field *F;
@@ -2005,7 +2005,7 @@ void strong_generators::print_elements_with_given_action(
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
 		if (A2->degree < 1000) {
-			A2->element_print_as_permutation(Elt, ost);
+			A2->Group_element->element_print_as_permutation(Elt, ost);
 		}
 		else {
 			cout << "strong_generators::print_with_given_action "
@@ -2039,10 +2039,10 @@ void strong_generators::print_elements_latex_ost(std::ostream &ost)
 	}
 	for (i = 0; i < m; i++) {
 		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
-		order = A->element_order(Elt);
+		order = A->Group_element->element_order(Elt);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
-		A->element_print_latex(Elt, ost);
+		A->Group_element->element_print_latex(Elt, ost);
 		ost << "$$" << endl;
 		ost << "The element has order " << order << ".\\\\" << endl;
 	}
@@ -2082,15 +2082,15 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 	for (i = 0; i < m; i++) {
 		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
 		//cout << "element " << i << " / " << m << " before A->element_order" << endl;
-		order = A->element_order(Elt);
+		order = A->Group_element->element_order(Elt);
 		//cout << "element " << i << " / " << m << " before A->element_order_and_cycle_type" << endl;
-		A_given->element_order_and_cycle_type(Elt, cycle_type);
+		A_given->Group_element->element_order_and_cycle_type(Elt, cycle_type);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
-		A->element_print_latex(Elt, ost);
+		A->Group_element->element_print_latex(Elt, ost);
 		ost << "$$" << endl;
 		ost << "$$" << endl;
-		A_given->element_print_latex_with_print_point_function(Elt, ost,
+		A_given->Group_element->element_print_latex_with_print_point_function(Elt, ost,
 				point_label, point_label_data);
 		ost << "$$" << endl;
 		ost << "The element has order " << order << ".\\\\" << endl;
@@ -2740,7 +2740,7 @@ void strong_generators::orbits_light(
 					cout << "strong_generators::orbits_light "
 							"applying generator " << h << endl;
 				}
-				b = A_given->element_image_of(a, gens->ith(h), FALSE);
+				b = A_given->Group_element->element_image_of(a, gens->ith(h), FALSE);
 				if (f_vv) {
 					cout << "strong_generators::orbits_light "
 							"under generator " << h
@@ -3202,7 +3202,7 @@ void strong_generators::compute_ascii_coding(
 		Os.code_int4(p, (int_4) tl[i]);
 	}
 	for (i = 0; i < gens->len; i++) {
-		A->element_pack(gens->ith(i), A->elt1, FALSE);
+		A->Group_element->element_pack(gens->ith(i), A->elt1, FALSE);
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
 			Os.code_uchar(p, A->elt1[j]);
 		}
@@ -3277,7 +3277,7 @@ void strong_generators::decode_ascii_coding(
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
 			Os.decode_uchar(p, A->elt1[j]);
 		}
-		A->element_unpack(A->elt1, gens->ith(i), FALSE);
+		A->Group_element->element_unpack(A->elt1, gens->ith(i), FALSE);
 	}
 	FREE_int(base1);
 	if (p - p0 != str_len) {
@@ -3334,7 +3334,7 @@ void strong_generators::export_permutation_group_to_GAP(
 
 		fp << "G := Group([" << endl;
 		for (i = 0; i < gens->len; i++) {
-			A2->element_print_as_permutation_with_offset(
+			A2->Group_element->element_print_as_permutation_with_offset(
 				gens->ith(i), fp,
 				1 /* offset */,
 				TRUE /* f_do_it_anyway_even_for_big_degree */,
@@ -3404,7 +3404,7 @@ void strong_generators::compute_and_print_orbits_on_a_given_set(
 		l = Sch->orbit_len[i];
 		a = Sch->orbit[f + 0];
 		cout << setw(5) << a << " : " << setw(5) << l << " : ";
-		A_given->print_point(a, cout);
+		A_given->Group_element->print_point(a, cout);
 		cout << endl;
 	}
 	FREE_OBJECT(Sch);
@@ -3457,7 +3457,7 @@ void strong_generators::compute_and_print_orbits(
 		l = Sch->orbit_len[i];
 		a = Sch->orbit[f + 0];
 		cout << setw(5) << a << " : " << setw(5) << l << " : ";
-		A_given->print_point(a, cout);
+		A_given->Group_element->print_point(a, cout);
 		cout << endl;
 	}
 
@@ -3553,7 +3553,7 @@ void strong_generators::test_if_set_is_invariant_under_given_action(
 	}
 	for (i = 0; i < gens->len; i++) {
 
-		if (!A_given->test_if_set_stabilizes(gens->ith(i),
+		if (!A_given->Group_element->test_if_set_stabilizes(gens->ith(i),
 				set_sz, set, 0 /* verbose_level */)) {
 			cout << "strong_generators::test_if_set_is_invariant_under_given_action "
 					"the generator does not fix the set" << endl;
@@ -3603,7 +3603,7 @@ void strong_generators::set_of_coset_representatives(sims *S,
 
 	for (i = 0; i < subgroup_index; i++) {
 
-		S->A->element_one(coset_reps->ith(i), 0);
+		S->A->Group_element->element_one(coset_reps->ith(i), 0);
 
 	}
 
@@ -3627,8 +3627,8 @@ void strong_generators::set_of_coset_representatives(sims *S,
 				cout << "strong_generators::set_of_coset_representatives "
 						"cur = " << cur << " gen " << i << " / " << S->gens.len << endl;
 			}
-			S->A->element_mult(coset_reps->ith(cur), S->gens.ith(i), Elt1, 0);
-			S->A->element_invert(Elt1, Elt2, 0);
+			S->A->Group_element->element_mult(coset_reps->ith(cur), S->gens.ith(i), Elt1, 0);
+			S->A->Group_element->element_invert(Elt1, Elt2, 0);
 
 			if (f_v) {
 				cout << "strong_generators::set_of_coset_representatives "
@@ -3640,14 +3640,14 @@ void strong_generators::set_of_coset_representatives(sims *S,
 					cout << "strong_generators::set_of_coset_representatives "
 							"searching for coset at position " << j << endl;
 				}
-				S->A->element_mult(coset_reps->ith(j), Elt2, Elt3, 0);
+				S->A->Group_element->element_mult(coset_reps->ith(j), Elt2, Elt3, 0);
 
 				if (H->is_element_of(Elt3, 0 /* verbose_level */)) {
 					break;
 				}
 			}
 			if (j == len) {
-				S->A->element_move(Elt1, coset_reps->ith(len), 0);
+				S->A->Group_element->element_move(Elt1, coset_reps->ith(len), 0);
 				len++;
 			}
 
@@ -3752,7 +3752,7 @@ strong_generators *strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoi
 		cout << "strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoints "
 				"before init_single_with_target_go" << endl;
 		cout << "Elt=" << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 	}
 	Sub_gens->init_single_with_target_go(A, Elt, order, verbose_level);
 	if (f_v) {
@@ -3796,7 +3796,7 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 	Orb->transporter_from_orbit_rep_to_point(pt_B, orbit_idx, Elt,
 			0 /* verbose_level */);
 
-	if (A_given->element_image_of(pt_A, Elt, 0 /* verbose_level*/)
+	if (A_given->Group_element->element_image_of(pt_A, Elt, 0 /* verbose_level*/)
 			!= pt_B) {
 		cout << "strong_generators::make_element_which_moves_a_point_from_A_to_B "
 				"the image of A is not B" << endl;
@@ -4045,7 +4045,7 @@ void strong_generators::export_to_orbiter_as_bsgs(
 				}
 
 				for (j = 0; j < A2->degree; j++) {
-					a = A2->element_image_of(j, gens->ith(i), 0 /* verbose_level*/);
+					a = A2->Group_element->element_image_of(j, gens->ith(i), 0 /* verbose_level*/);
 					Data[i * A2->degree + j] = a;
 				}
 			}

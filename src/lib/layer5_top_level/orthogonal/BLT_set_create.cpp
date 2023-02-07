@@ -46,16 +46,12 @@ BLT_set_create::~BLT_set_create()
 	if (Sg) {
 		FREE_OBJECT(Sg);
 	}
-	if (Blt_set_domain) {
-		FREE_OBJECT(Blt_set_domain);
-	}
 	if (BA) {
 		FREE_OBJECT(BA);
 	}
 }
 
 void BLT_set_create::init(
-		orthogonal_geometry::blt_set_domain *Blt_set_domain,
 		BLT_set_create_description *Descr,
 		orthogonal_space_with_action *OA,
 		int verbose_level)
@@ -67,7 +63,7 @@ void BLT_set_create::init(
 	if (f_v) {
 		cout << "BLT_set_create::init" << endl;
 		}
-	BLT_set_create::Blt_set_domain = Blt_set_domain;
+	BLT_set_create::Blt_set_domain = OA->Blt_Set_domain;
 	BLT_set_create::Descr = Descr;
 	BLT_set_create::OA = OA;
 
@@ -317,8 +313,46 @@ void BLT_set_create::init(
 		}
 
 		set = NEW_lint(OA->Descr->F->q + 1);
-		Lint_vec_copy(K.BLT_representative(OA->Descr->F->q, Descr->iso),
+		Lint_vec_copy(
+				K.BLT_representative(OA->Descr->F->q, Descr->iso),
 				set, OA->Descr->F->q + 1);
+
+
+
+		data_structures_groups::vector_ge *gens;
+		std::string target_go_text;
+
+		gens = NEW_OBJECT(data_structures_groups::vector_ge);
+
+		if (f_v) {
+			cout << "BLT_set_create::init before "
+					"gens->stab_BLT_set_from_catalogue" << endl;
+		}
+		gens->stab_BLT_set_from_catalogue(
+				OA->A,
+				OA->Descr->F, Descr->iso,
+				target_go_text,
+				0 /*verbose_level*/);
+		if (f_v) {
+			cout << "BLT_set_create::init after "
+					"gens->stab_BLT_set_from_catalogue" << endl;
+		}
+
+		int c;
+
+		c = gens->test_if_in_set_stabilizer(
+				OA->A,
+				set, OA->Descr->F->q + 1, verbose_level);
+
+		if (c) {
+			cout << "BLT_set_create::init the generators "
+					"stabilize the given BLT set, good" << endl;
+		}
+		else {
+			cout << "BLT_set_create::init the generators "
+					"do not stabilize the given BLT set, bad!" << endl;
+			exit(1);
+		}
 
 		Sg = NEW_OBJECT(groups::strong_generators);
 
@@ -327,7 +361,8 @@ void BLT_set_create::init(
 					"Sg->BLT_set_from_catalogue_stabilizer" << endl;
 		}
 
-		Sg->BLT_set_from_catalogue_stabilizer(OA->A,
+		Sg->BLT_set_from_catalogue_stabilizer(
+				OA->A,
 				OA->Descr->F, Descr->iso,
 				verbose_level);
 		f_has_group = TRUE;

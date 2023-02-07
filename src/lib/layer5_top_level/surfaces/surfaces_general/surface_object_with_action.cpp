@@ -2579,11 +2579,11 @@ void surface_object_with_action::print_action_on_surface(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->make_element(Elt,
+			A->Group_element->make_element(Elt,
 					element_data + i * A->make_element_size,
 					verbose_level);
 
-			ord = A->element_order(Elt);
+			ord = A->Group_element->element_order(Elt);
 
 			ost << "Element " << setw(5) << i << " / "
 					<< nb_elements << " of order " << ord << ":" << endl;
@@ -2593,7 +2593,7 @@ void surface_object_with_action::print_action_on_surface(
 			if (TRUE /* f_with_fix_structure*/) {
 				int f;
 
-				f = A->count_fixed_points(Elt, 0 /* verbose_level */);
+				f = A->Group_element->count_fixed_points(Elt, 0 /* verbose_level */);
 
 				ost << "$f=" << f << "$\\\\" << endl;
 			}
@@ -2602,54 +2602,54 @@ void surface_object_with_action::print_action_on_surface(
 			ost << endl;
 
 			ost << "Action on points: \\\\" << endl;
-			A_on_points->element_print_as_permutation(Elt, ost);
+			A_on_points->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 
 			ost << "Action on Eckardt points: \\\\" << endl;
-			A_on_Eckardt_points->element_print_as_permutation(Elt, ost);
+			A_on_Eckardt_points->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on Double points: \\\\" << endl;
-			A_on_Double_points->element_print_as_permutation(Elt, ost);
+			A_on_Double_points->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on Single points: \\\\" << endl;
-			A_on_Single_points->element_print_as_permutation(Elt, ost);
+			A_on_Single_points->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on lines: \\\\" << endl;
-			A_on_the_lines->element_print_as_permutation(Elt, ost);
+			A_on_the_lines->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on single sixes: \\\\" << endl;
-			A_single_sixes->element_print_as_permutation(Elt, ost);
+			A_single_sixes->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on tritangent planes: \\\\" << endl;
-			A_on_tritangent_planes->element_print_as_permutation(Elt, ost);
+			A_on_tritangent_planes->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on Hesse planes: \\\\" << endl;
-			A_on_Hesse_planes->element_print_as_permutation(Elt, ost);
+			A_on_Hesse_planes->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 
 			ost << "Action on trihedral pairs: \\\\" << endl;
-			A_on_trihedral_pairs->element_print_as_permutation(Elt, ost);
+			A_on_trihedral_pairs->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on points not on lines: \\\\" << endl;
-			A_on_pts_not_on_lines->element_print_as_permutation(Elt, ost);
+			A_on_pts_not_on_lines->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 

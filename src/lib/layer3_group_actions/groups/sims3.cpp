@@ -74,10 +74,10 @@ void sims::normalizer_based_on_characteristic_vector(
 	N_go = 0;
 	for (i = 0; i < go; i++) {
 		element_unrank_lint(i, Elt1);
-		A->element_invert(Elt1, Elt2, 0);
+		A->Group_element->element_invert(Elt1, Elt2, 0);
 		for (j = 0; j < nb_gens; j++) {
-			A->element_mult(Elt2, gens->ith(j), Elt3, 0);
-			A->element_mult(Elt3, Elt1, Elt4, 0);
+			A->Group_element->element_mult(Elt2, gens->ith(j), Elt3, 0);
+			A->Group_element->element_mult(Elt3, Elt1, Elt4, 0);
 			a = element_rank_lint(Elt4);
 			if (!C_sub[a]) {
 				break;
@@ -111,14 +111,14 @@ void sims::order_structure_relative_to_subgroup(
 	go = group_order_lint();
 	for (i = 0; i < go; i++) {
 		element_unrank_lint(i, Elt1);
-		A->element_move(Elt1, Elt2, 0);
+		A->Group_element->element_move(Elt1, Elt2, 0);
 		for (j = 1; ; j++) {
 			a = element_rank_lint(Elt2);
 			if (C_sub[a]) {
 				break;
 				}
-			A->element_mult(Elt2, Elt1, Elt3, 0);
-			A->element_move(Elt3, Elt2, 0);
+			A->Group_element->element_mult(Elt2, Elt1, Elt3, 0);
+			A->Group_element->element_move(Elt3, Elt2, 0);
 			}
 		Order[i] = j;
 		Residue[i] = a;

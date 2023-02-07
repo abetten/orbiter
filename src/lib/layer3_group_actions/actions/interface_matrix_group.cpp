@@ -231,7 +231,7 @@ static int matrix_group_element_is_one(action &A, void *elt, int verbose_level)
 				"using slow identity element test" << endl;
 		f_is_one = TRUE;
 		for (i = 0; i < A.degree; i++) {
-			j = A.element_image_of(i, elt, FALSE);
+			j = A.Group_element->element_image_of(i, elt, FALSE);
 			if (j != i) {
 				f_is_one = FALSE;
 				break;
@@ -609,7 +609,7 @@ static void matrix_group_element_print_as_permutation(action &A,
 			//f_v = TRUE;
 		//else
 			//f_v = FALSE;
-		j = A.element_image_of(i, Elt, 0 /* verbose_level */);
+		j = A.Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
 		}
 	Combi.perm_print(ost, p, A.degree);
@@ -630,7 +630,7 @@ static void matrix_group_element_print_verbose(action &A,
 	if (A.degree < 100) {
 		int *p = NEW_int(A.degree);
 		for (i = 0; i < A.degree; i++) {
-			j = A.element_image_of(i, Elt, FALSE);
+			j = A.Group_element->element_image_of(i, Elt, FALSE);
 			p[i] = j;
 			}
 		Combi.perm_print(ost, p, A.degree);

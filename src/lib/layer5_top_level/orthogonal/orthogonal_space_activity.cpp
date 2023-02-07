@@ -499,6 +499,23 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		cout << endl;
 
 	}
+	else if (Descr->f_table_of_blt_sets) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_table_of_blt_sets" << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"before OA->make_table_of_blt_sets" << endl;
+		}
+		OA->make_table_of_blt_sets(verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"after OA->make_table_of_blt_sets" << endl;
+		}
+	}
+
 
 
 	if (f_v) {

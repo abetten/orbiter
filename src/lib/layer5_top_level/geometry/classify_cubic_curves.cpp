@@ -620,10 +620,10 @@ void classify_cubic_curves::upstep(int verbose_level)
 				if (f_v) {
 					cout << "We found an automorphism of "
 							"the curve with " << nb_pts << " points:" << endl;
-					A->element_print_quick(Elt, cout);
+					A->Group_element->element_print_quick(Elt, cout);
 					cout << endl;
 				}
-				A->element_move(Elt, coset_reps->ith(nb_coset_reps), 0);
+				A->Group_element->element_move(Elt, coset_reps->ith(nb_coset_reps), 0);
 				nb_coset_reps++;
 				//S->add_single_generator(Elt3,
 				//2 /* group_index */, verbose_level - 2);
@@ -642,7 +642,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 						= f;
 					Flag_orbits->Flag_orbit_node[f2].fusion_elt
 						= NEW_int(A->elt_size_in_int);
-					A->element_invert(Elt,
+					A->Group_element->element_invert(Elt,
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 							0);
 					f_processed[f2] = TRUE;
@@ -953,11 +953,11 @@ int classify_cubic_curves::recognize(int *eqn_in,
 			}
 
 			if (Flag_orbits->Flag_orbit_node[f2].f_fusion_node) {
-				A->element_mult(Elt,
+				A->Group_element->element_mult(Elt,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								Elt1,
 								0);
-				A->element_move(Elt1,
+				A->Group_element->element_move(Elt1,
 								Elt,
 								0);
 			}

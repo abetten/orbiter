@@ -154,7 +154,7 @@ long int action_on_spread_set::compute_image_int(
 		}
 
 	for (i = 0; i < k; i++) {
-		A_PGL_n_q->element_image_of_low_level(
+		A_PGL_n_q->Group_element->element_image_of_low_level(
 			subspace1 + i * n, subspace2 + i * n, Elt, verbose_level - 1);
 		}
 
@@ -245,7 +245,7 @@ long int action_on_spread_set::rank_point(
 	if (f_v) {
 		cout << "action_on_spread_set::rank_point" << endl;
 		}
-	A_PGL_k_q->make_element(Elt2, mtx, 0 /* verbose_level */);
+	A_PGL_k_q->Group_element->make_element(Elt2, mtx, 0 /* verbose_level */);
 
 	rk = G_PGL_k_q->element_rank_lint(Elt2);
 	if (f_v) {
@@ -278,7 +278,7 @@ void action_on_spread_set::compute_image_low_level(
 
 
 	for (i = 0; i < k; i++) {
-		A_PGL_n_q->element_image_of_low_level(
+		A_PGL_n_q->Group_element->element_image_of_low_level(
 			subspace1 + i * n,
 			subspace2 + i * n,
 			Elt,

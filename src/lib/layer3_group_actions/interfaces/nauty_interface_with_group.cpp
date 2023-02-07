@@ -1328,13 +1328,13 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 			0 /*verbose_level - 2*/)) {
 
 			Mtx[d * d] = frobenius;
-			A_linear->make_element(Elt1, Mtx, 0 /*verbose_level - 2*/);
+			A_linear->Group_element->make_element(Elt1, Mtx, 0 /*verbose_level - 2*/);
 			if (f_vv) {
 				cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 						"semi-linear group element:" << endl;
-				A_linear->element_print(Elt1, cout);
+				A_linear->Group_element->element_print(Elt1, cout);
 			}
-			A_linear->element_move(Elt1, gens1->ith(pos), 0);
+			A_linear->Group_element->element_move(Elt1, gens1->ith(pos), 0);
 
 
 			pos++;
@@ -1370,8 +1370,8 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		}
 		//A_linear->element_print(gens1->ith(g), cout);
 		for (i = 0; i < P->N_points; i++) {
-			j1 = A_linear->element_image_of(i, gens1->ith(g), 0);
-			j2 = A_perm->element_image_of(i, gens->ith(g), 0);
+			j1 = A_linear->Group_element->element_image_of(i, gens1->ith(g), 0);
+			j2 = A_perm->Group_element->element_image_of(i, gens->ith(g), 0);
 			if (j1 != j2) {
 				cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 						"problem with generator: "

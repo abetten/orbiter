@@ -963,7 +963,7 @@ void known_groups::init_permutation_group_from_generators(
 		generators->init(A, verbose_level - 2);
 		generators->allocate(nb_gens, verbose_level - 2);
 		for (i = 0; i < nb_gens; i++) {
-			A->make_element(generators->ith(i), gens + i * degree,
+			A->Group_element->make_element(generators->ith(i), gens + i * degree,
 				0 /*verbose_level*/);
 		}
 

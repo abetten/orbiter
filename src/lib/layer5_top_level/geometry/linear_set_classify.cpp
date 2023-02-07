@@ -1613,7 +1613,7 @@ void linear_set_classify::do_compute_stabilizer(
 	aut_gens->init(Aq, verbose_level - 2);
 	aut_gens->allocate(Strong_gens_previous->gens->len, verbose_level - 2);
 	for (i = 0; i < Strong_gens_previous->gens->len; i++) {
-		Aq->element_move(Strong_gens_previous->gens->ith(i),
+		Aq->Group_element->element_move(Strong_gens_previous->gens->ith(i),
 				aut_gens->ith(i), 0);
 	}
 
@@ -1651,9 +1651,9 @@ void linear_set_classify::do_compute_stabilizer(
 			if (f_v) {
 				cout << "linear_set_classify::do_compute_stabilizer orbit "
 						<< h << " leads to an automorphism" << endl;
-				Aq->element_print_quick(Elt1, cout);
+				Aq->Group_element->element_print_quick(Elt1, cout);
 				}
-			if (!Aq->test_if_set_stabilizes(Elt1,
+			if (!Aq->Group_element->test_if_set_stabilizes(Elt1,
 					nb_candidates, candidates, 0 /* verbose_level */)) {
 				cout << "The automorphism does not "
 						"stabilize the candidate set" << endl;
@@ -2180,7 +2180,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 				<< " which is isomorphism type " << orbit_at_lvl
 				<< " with stabilizer order " << go << endl;
 		cout << "transporter=" << endl;
-		T->gen->get_A()->element_print_quick(transporter, cout);
+		T->gen->get_A()->Group_element->element_print_quick(transporter, cout);
 
 		FREE_int(transporter);
 	}

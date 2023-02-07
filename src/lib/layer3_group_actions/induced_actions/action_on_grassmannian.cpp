@@ -233,7 +233,7 @@ void action_on_grassmannian::compute_image_longinteger(
 				G->k, G->n, G->n, F->log10_of_q);
 		}
 	for (h = 0; h < k; h++) {
-		A->element_image_of_low_level(G->M + h * n,
+		A->Group_element->element_image_of_low_level(G->M + h * n,
 				M1 + h * n, Elt, verbose_level - 1);
 		}
 	//A->element_image_of_low_level(G->M, M1, Elt, verbose_level - 1);
@@ -294,7 +294,7 @@ long int action_on_grassmannian::compute_image_int_ordinary(
 				G->k, G->n, G->n, 2/* M->GFq->log10_of_q*/);
 		}
 	for (h = 0; h < k; h++) {
-		A->element_image_of_low_level(G->M + h * n,
+		A->Group_element->element_image_of_low_level(G->M + h * n,
 				M1 + h * n, Elt, verbose_level - 1);
 		}
 #if 0
@@ -338,7 +338,7 @@ long int action_on_grassmannian::compute_image_int_embedded(
 				k, big_n, big_n, F->log10_of_q);
 		}
 	for (h = 0; h < k; h++) {
-		A->element_image_of_low_level(
+		A->Group_element->element_image_of_low_level(
 			subspace_basis + h * big_n,
 			subspace_basis2 + h * big_n,
 			Elt, verbose_level - 1);

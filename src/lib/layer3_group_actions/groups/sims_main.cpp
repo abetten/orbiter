@@ -307,7 +307,7 @@ void sims::compute_base_orbit_known_length(
 			gen_idx = gen_perm[i];
 			cout << "sims::compute_base_orbit_known_length "
 					"generator " << i << ":" << endl;
-			A->element_print_quick(gens.ith(gen_idx), cout);
+			A->Group_element->element_print_quick(gens.ith(gen_idx), cout);
 		}
 	}
 	if (pt_loc > 0) {
@@ -417,7 +417,7 @@ int sims::strip_and_add(
 	}
 	if (FALSE) {
 		cout << "sims::strip_and_add residue = " << endl;
-		A->element_print_quick(residue, cout);
+		A->Group_element->element_print_quick(residue, cout);
 		//A->element_print_as_permutation(residue, cout);
 		cout << endl;
 	}
@@ -469,10 +469,10 @@ int sims::strip(
 		cout << "A->base_len=" << A->base_len() << endl;
 	}
 	if (f_vv) {
-		A->element_print_quick(elt, cout);
+		A->Group_element->element_print_quick(elt, cout);
 		cout << endl;
 	}
-	A->element_move(elt, strip1, FALSE);
+	A->Group_element->element_move(elt, strip1, FALSE);
 	for (i = 0; i < my_base_len; i++) {
 		if (f_v) {
 			cout << "sims::strip level " << i
@@ -485,7 +485,7 @@ int sims::strip(
 			cout << "computing image of " << i
 					<< "-th base element " << bi << endl;
 		}
-		j = A->element_image_of(bi, strip1, verbose_level - 2);
+		j = A->Group_element->element_image_of(bi, strip1, verbose_level - 2);
 		if (f_v) {
 			cout << "sims::strip level " << i
 					<< " base point " << bi
@@ -507,7 +507,7 @@ int sims::strip(
 			}
 			image = j;
 			drop_out_level = i;
-			A->element_move(strip1, residue, FALSE);
+			A->Group_element->element_move(strip1, residue, FALSE);
 			if (f_v) {
 				cout << "sims::strip returns FALSE, "
 						"drop_out_level=" << drop_out_level << endl;
@@ -523,30 +523,30 @@ int sims::strip(
 			if (FALSE) {
 				cout << "sims::strip representative "
 						"of coset " << j_coset << " is " << endl;
-				A->element_print(eltrk3, cout);
+				A->Group_element->element_print(eltrk3, cout);
 				cout << endl;
 			}
 			if (FALSE) {
 				cout << "sims::strip before element_mult, "
 						"strip1=" << endl;
-				A->element_print(strip1, cout);
+				A->Group_element->element_print(strip1, cout);
 				cout << endl;
 			}
 			if (FALSE) {
 				cout << "sims::strip before element_mult, "
 						"cosetrep=" << endl;
-				A->element_print(eltrk3, cout);
+				A->Group_element->element_print(eltrk3, cout);
 				cout << endl;
 			}
-			A->element_mult(strip1, eltrk3, strip2, 0 /*verboe_level*/);
+			A->Group_element->element_mult(strip1, eltrk3, strip2, 0 /*verboe_level*/);
 			if (FALSE) {
 				cout << "sims::strip before element_move" << endl;
 			}
-			A->element_move(strip2, strip1, FALSE);
+			A->Group_element->element_move(strip2, strip1, FALSE);
 			if (FALSE) {
 				cout << "sims::strip after dividing off, "
 						"we have strip1= " << endl;
-				A->element_print(strip1, cout);
+				A->Group_element->element_print(strip1, cout);
 				cout << endl;
 			}
 		}
@@ -554,7 +554,7 @@ int sims::strip(
 	if (f_v) {
 		cout << "sims::strip after loop" << endl;
 	}
-	A->element_move(strip1, residue, FALSE);
+	A->Group_element->element_move(strip1, residue, FALSE);
 	if (f_v) {
 		cout << "sims::strip returns TRUE" << endl;
 	}
@@ -576,7 +576,7 @@ void sims::add_generator_at_level(
 				<< " verbose_level = " << verbose_level<< endl;
 		print_generator_depth_and_perm();
 		if (FALSE) {
-			A->element_print_quick(elt, cout);
+			A->Group_element->element_print_quick(elt, cout);
 			cout << endl;
 		}
 	}
@@ -616,7 +616,7 @@ void sims::add_generator_at_level_only(
 		cout << "sims::add_generator_at_level_only "
 				"level " << lvl << endl;
 		if (f_vvv) {
-			A->element_print(elt, cout);
+			A->Group_element->element_print(elt, cout);
 			cout << endl;
 		}
 	}
@@ -776,11 +776,11 @@ void sims::build_up_group_random_process(
 						"choosing random schreier generator" << endl;
 			}
 			random_schreier_generator(Elt, verbose_level - 5);
-			A->element_move(Elt, GA->Elt1, 0);
+			A->Group_element->element_move(Elt, GA->Elt1, 0);
 			if (f_v4) {
 				cout << "sims::build_up_group_random_process: "
 						"random element chosen:" << endl;
-				A->element_print_quick(GA->Elt1, cout);
+				A->Group_element->element_print_quick(GA->Elt1, cout);
 				cout << endl;
 			}
 		}
@@ -798,7 +798,7 @@ void sims::build_up_group_random_process(
 				cout << endl;
 			}
 			if (f_v4) {
-				GA->element_print_quick(GA->Elt1, cout);
+				GA->Group_element->element_print_quick(GA->Elt1, cout);
 				cout << endl;
 			}
 		}
@@ -814,12 +814,12 @@ void sims::build_up_group_random_process(
 				if (f_v4) {
 					cout << "sims::build_up_group_random_process: "
 							"residue = " << endl;
-					GA->element_print_quick(GA->Elt2, cout);
+					GA->Group_element->element_print_quick(GA->Elt2, cout);
 					cout << endl;
 				}
 			}
 			//f_added = FALSE;
-			if (!GA->element_is_one(GA->Elt2, 0)) {
+			if (!GA->Group_element->element_is_one(GA->Elt2, 0)) {
 				if (f_vvv) {
 					cout << "sims::build_up_group_random_process: "
 							"the residue is not trivial, we need to "
@@ -851,27 +851,27 @@ void sims::build_up_group_random_process(
 							if (f_v4) {
 								cout << "sims::build_up_group_random_"
 										"process: residue = " << endl;
-								KA->element_print_quick(GA->Elt3, cout);
+								KA->Group_element->element_print_quick(GA->Elt3, cout);
 								cout << endl;
 								K->print(FALSE);
 								K->print_basic_orbits();
 								cout << "sims::build_up_group_random_"
 										"process: residue" << endl;
-								KA->element_print_image_of_set(
+								KA->Group_element->element_print_image_of_set(
 										GA->Elt3, KA->base_len(), KA->get_base());
 								cout << "sims::build_up_group_random_"
 										"process: Elt2" << endl;
-								KA->element_print_image_of_set(
+								KA->Group_element->element_print_image_of_set(
 										GA->Elt2, KA->base_len(), KA->get_base());
 							}
 						}
-						if (!KA->element_is_one(GA->Elt3, FALSE)) {
+						if (!KA->Group_element->element_is_one(GA->Elt3, FALSE)) {
 							cout << "sims::build_up_group_random_process: "
 									"element strips through kernel, "
 									"residue = " << endl;
 							cout << "but the element is not the identity, "
 									"something is wrong" << endl;
-							GA->element_print(GA->Elt3, cout);
+							GA->Group_element->element_print(GA->Elt3, cout);
 							cout << endl;
 
 							cout << "sims::build_up_group_random_process: "
@@ -981,7 +981,7 @@ void sims::build_up_group_random_process(
 					<< drop_out_level << " with image "
 					<< image << endl;
 				if (FALSE) {
-					GA->element_print(GA->Elt2, cout);
+					GA->Group_element->element_print(GA->Elt2, cout);
 					cout  << endl;
 				}
 			}
@@ -1183,7 +1183,7 @@ void sims::build_up_group_from_generators(
 			}
 			O.coset_rep(j, 0 /* verbose_level */);
 			if (FALSE) {
-				GA->element_print(O.cosetrep, cout);
+				GA->Group_element->element_print(O.cosetrep, cout);
 				cout << endl;
 			}
 			if (strip(O.cosetrep, GA->Elt2 /* residue */,
@@ -1194,7 +1194,7 @@ void sims::build_up_group_from_generators(
 					if (FALSE /*f_vvv */) {
 						cout << "sims::build_up_group_from_generators "
 								"residue=" << endl;
-						GA->element_print_quick(GA->Elt2, cout);
+						GA->Group_element->element_print_quick(GA->Elt2, cout);
 						cout << endl;
 					}
 				}
@@ -1209,9 +1209,9 @@ void sims::build_up_group_from_generators(
 					cout << "sims::build_up_group_from_generators "
 							"a point which is moved by the residue"
 							<< endl;
-					GA->element_print(GA->Elt2, cout);
+					GA->Group_element->element_print(GA->Elt2, cout);
 				}
-				if (!GA->element_is_one(GA->Elt2, FALSE)) {
+				if (!GA->Group_element->element_is_one(GA->Elt2, FALSE)) {
 					if (f_vvv) {
 						cout << "sims::build_up_group_from_generators "
 								"the residue is not trivial, "
@@ -1238,24 +1238,24 @@ void sims::build_up_group_from_generators(
 										"element strips through kernel, "
 										"residue = " << endl;
 								if (f_vv) {
-									KA->element_print(GA->Elt3, cout);
+									KA->Group_element->element_print(GA->Elt3, cout);
 									cout << endl;
 									}
 								K->print(FALSE);
 								K->print_basic_orbits();
 								cout << "sims::build_up_group_from_generators "
 										"residue" << endl;
-								KA->element_print_image_of_set(
+								KA->Group_element->element_print_image_of_set(
 										GA->Elt3, KA->base_len(), KA->get_base());
 								cout << "sims::build_up_group_from_generators Elt2" << endl;
-								KA->element_print_image_of_set(
+								KA->Group_element->element_print_image_of_set(
 										GA->Elt2, KA->base_len(), KA->get_base());
 							}
-							if (!KA->element_is_one(GA->Elt3, FALSE)) {
+							if (!KA->Group_element->element_is_one(GA->Elt3, FALSE)) {
 								cout << "sims::build_up_group_from_generators "
 										"but the element is not the identity, "
 										"something is wrong" << endl;
-								GA->element_print(GA->Elt3, cout);
+								GA->Group_element->element_print(GA->Elt3, cout);
 								cout << endl;
 								exit(1);
 							}
@@ -1479,7 +1479,7 @@ int sims::closure_group(int nb_times, int verbose_level)
 					"after random_schreier_generator" << endl;
 		}
 		group_order(go);
-		A->element_move(Elt3, Elt2, 0);
+		A->Group_element->element_move(Elt3, Elt2, 0);
 		if (strip_and_add(Elt2, Elt1 /* residue */,
 				verbose_level - 3)) {
 			group_order(go1);
@@ -1491,9 +1491,9 @@ int sims::closure_group(int nb_times, int verbose_level)
 			}
 			if (f_v3) {
 				cout << "original element:" << endl;
-				A->element_print_quick(Elt3, cout);
+				A->Group_element->element_print_quick(Elt3, cout);
 				cout << "additional generator:" << endl;
-				A->element_print_quick(Elt2, cout);
+				A->Group_element->element_print_quick(Elt2, cout);
 			}
 			f_extended = TRUE;
 		}

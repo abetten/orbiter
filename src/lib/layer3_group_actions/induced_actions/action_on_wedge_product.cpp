@@ -134,7 +134,7 @@ int action_on_wedge_product::element_entry_frobenius(
 {
 	int f;
 
-	f = A->element_linear_entry_frobenius(Elt, verbose_level);
+	f = A->Group_element->element_linear_entry_frobenius(Elt, verbose_level);
 	return f;
 }
 
@@ -155,10 +155,10 @@ int action_on_wedge_product::element_entry_ijkl(
 {
 	int aki, alj, akj, ali, u, v, w;
 
-	aki = A->element_linear_entry_ij(Elt, k, i, verbose_level); //Elt[k * n + i];
-	alj = A->element_linear_entry_ij(Elt, l, j, verbose_level); //Elt[l * n + j];
-	akj = A->element_linear_entry_ij(Elt, k, j, verbose_level); //Elt[k * n + j];
-	ali = A->element_linear_entry_ij(Elt, l, i, verbose_level); //Elt[l * n + i];
+	aki = A->Group_element->element_linear_entry_ij(Elt, k, i, verbose_level); //Elt[k * n + i];
+	alj = A->Group_element->element_linear_entry_ij(Elt, l, j, verbose_level); //Elt[l * n + j];
+	akj = A->Group_element->element_linear_entry_ij(Elt, k, j, verbose_level); //Elt[k * n + j];
+	ali = A->Group_element->element_linear_entry_ij(Elt, l, i, verbose_level); //Elt[l * n + i];
 	u = F->mult(aki, alj);
 	v = F->mult(akj, ali);
 	w = F->add(u, F->negate(v));
@@ -258,7 +258,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 
 	if (M->f_semilinear) {
 
-		int f = A->linear_entry_frobenius(Elt); //Elt[n * n];
+		int f = A->Group_element->linear_entry_frobenius(Elt); //Elt[n * n];
 
 #if 0
 		for (i = 0; i < wedge_dimension; i++) {
@@ -350,7 +350,7 @@ void action_on_wedge_product::element_print_latex(int *Elt, std::ostream &ost)
 
 	int f;
 
-	f = A->count_fixed_points(Elt, 0 /* verbose_level */);
+	f = A->Group_element->count_fixed_points(Elt, 0 /* verbose_level */);
 
 	ost << "f=" << f << endl;
 }

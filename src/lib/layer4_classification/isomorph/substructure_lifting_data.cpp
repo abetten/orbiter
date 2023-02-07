@@ -846,13 +846,13 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 		if (prev != -1) {
 			//A->element_retrieve(O->hdl_strong_generators[hdl],
 			// A->Elt1, FALSE);
-			b = A_induced->element_image_of(prev, gens.ith(hdl), FALSE);
+			b = A_induced->Group_element->element_image_of(prev, gens.ith(hdl), FALSE);
 			//cout << "image of " << prev << " results in =" << b << endl;
 			if (b != p) {
 				cout << "b != p" << endl;
 				exit(1);
 			}
-			if (!Iso->A->check_if_transporter_for_set(
+			if (!Iso->A->Group_element->check_if_transporter_for_set(
 					gens.ith(hdl), Iso->size,
 				sets + prev * Iso->size, sets + p * Iso->size,
 				0 /*verbose_level - 2*/)) {
@@ -936,7 +936,7 @@ void substructure_lifting_data::orbit_representative(int i, int &i0,
 		cout << "substructure_lifting_data::orbit_representative "
 				"after load_strong_generators" << endl;
 	}
-	Iso->A->element_one(transporter, FALSE);
+	Iso->A->Group_element->element_one(transporter, FALSE);
 	if (f_vv) {
 		cout << "substructure_lifting_data::orbit_representative "
 				"i=" << i << endl;
@@ -958,9 +958,9 @@ void substructure_lifting_data::orbit_representative(int i, int &i0,
 		//cout << "l=" << l << endl;
 		//hdl = O->hdl_strong_generators[l];
 		//A->element_retrieve(hdl, Elt1, FALSE);
-		Iso->A->element_invert(gens.ith(l), Elt2, FALSE);
-		Iso->A->element_mult(transporter, Elt2, Elt1, FALSE);
-		Iso->A->element_move(Elt1, transporter, FALSE);
+		Iso->A->Group_element->element_invert(gens.ith(l), Elt2, FALSE);
+		Iso->A->Group_element->element_mult(transporter, Elt2, Elt1, FALSE);
+		Iso->A->Group_element->element_move(Elt1, transporter, FALSE);
 		i = p;
 	}
 	if (f_v) {
@@ -1004,7 +1004,7 @@ void substructure_lifting_data::test_orbit_representative(int verbose_level)
 		}
 
 		load_solution(r0, data2, verbose_level - 1);
-		if (!Iso->A->check_if_transporter_for_set(transporter,
+		if (!Iso->A->Group_element->check_if_transporter_for_set(transporter,
 				Iso->size, data1, data2, 0 /*verbose_level*/)) {
 			exit(1);
 		}
@@ -1067,7 +1067,7 @@ void substructure_lifting_data::test_identify_solution(int verbose_level)
 			id0 = orbit_perm[orbit_fst[r0]];
 
 			load_solution(id0, data1, verbose_level - 1);
-			if (!Iso->A->check_if_transporter_for_set(transporter,
+			if (!Iso->A->Group_element->check_if_transporter_for_set(transporter,
 					Iso->size, data2, data1, 0 /*verbose_level*/)) {
 				cout << "test_identify_solution, "
 						"check fails, stop" << endl;

@@ -52,7 +52,7 @@ void strong_generators::prepare_from_generator_data(
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->make_element(gens->ith(i), data + i * data_size, 0);
+		A->Group_element->make_element(gens->ith(i), data + i * data_size, 0);
 	}
 
 	if (f_v) {
@@ -701,10 +701,10 @@ void strong_generators::generators_for_the_monomial_group(
 			cout << endl;
 			cout << "in action " << A->label << endl;
 		}
-		A->make_element(Elt1, data, verbose_level - 1);
+		A->Group_element->make_element(Elt1, data, verbose_level - 1);
 		if (f_vv) {
 			cout << "generator " << h << ":" << endl;
-			A->element_print_quick(Elt1, cout);
+			A->Group_element->element_print_quick(Elt1, cout);
 		}
 		my_gens->copy_in(h, Elt1);
 	}
@@ -742,7 +742,8 @@ void strong_generators::generators_for_the_monomial_group(
 				cout, f_print_as_permutation,
 			f_offset, offset,
 			f_do_it_anyway_even_for_big_degree,
-			f_print_cycles_of_length_one);
+			f_print_cycles_of_length_one,
+			0 /* verbose_level */);
 	}
 	FREE_OBJECT(S);
 	FREE_OBJECT(my_gens);
@@ -845,10 +846,10 @@ void strong_generators::generators_for_the_diagonal_group(
 				data[n * n] = 1;
 			}
 		}
-		A->make_element(Elt1, data, 0 /*verbose_level - 1*/);
+		A->Group_element->make_element(Elt1, data, 0 /*verbose_level - 1*/);
 		if (f_vv) {
 			cout << "generator " << h << ":" << endl;
-			A->element_print_quick(Elt1, cout);
+			A->Group_element->element_print_quick(Elt1, cout);
 		}
 		my_gens->copy_in(h, Elt1);
 	}
@@ -886,7 +887,8 @@ void strong_generators::generators_for_the_diagonal_group(
 				cout, f_print_as_permutation,
 			f_offset, offset,
 			f_do_it_anyway_even_for_big_degree,
-			f_print_cycles_of_length_one);
+			f_print_cycles_of_length_one,
+			0 /* verbose_level */);
 	}
 	FREE_OBJECT(S);
 	FREE_OBJECT(my_gens);
@@ -1014,19 +1016,19 @@ void strong_generators::generators_for_the_singer_cycle(
 	}
 
 	
-	A->make_element(Elt1, data, 0 /*verbose_level - 1*/);
+	A->Group_element->make_element(Elt1, data, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "generator :" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 
-	A->element_power_int_in_place(Elt1, 
+	A->Group_element->element_power_int_in_place(Elt1,
 		power_of_singer, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "generator after raising to the "
 				"power of " << power_of_singer << ":" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 	nice_gens->copy_in(0, Elt1);
 
@@ -1067,7 +1069,8 @@ void strong_generators::generators_for_the_singer_cycle(
 				f_print_as_permutation,
 			f_offset, offset,
 			f_do_it_anyway_even_for_big_degree,
-			f_print_cycles_of_length_one);
+			f_print_cycles_of_length_one,
+			0 /* verbose_level */);
 	}
 	FREE_OBJECT(S);
 	//FREE_OBJECT(nice_gens);
@@ -1198,26 +1201,26 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	}
 
 
-	A->make_element(Elt1, data1, 0 /*verbose_level - 1*/);
+	A->Group_element->make_element(Elt1, data1, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "singer cycle 0:" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 
-	A->element_power_int_in_place(Elt1,
+	A->Group_element->element_power_int_in_place(Elt1,
 		power_of_singer, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "generator after raising to the "
 				"power of " << power_of_singer << ":" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 	nice_gens->copy_in(0, Elt1);
 
-	A->make_element(Elt1, data2, 0 /*verbose_level - 1*/);
+	A->Group_element->make_element(Elt1, data2, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "Frob:" << endl;
-		A->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_quick(Elt1, cout);
 	}
 	nice_gens->copy_in(1, Elt1);
 
@@ -1258,7 +1261,8 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 				f_print_as_permutation,
 			f_offset, offset,
 			f_do_it_anyway_even_for_big_degree,
-			f_print_cycles_of_length_one);
+			f_print_cycles_of_length_one,
+			0 /* verbose_level */);
 	}
 	FREE_OBJECT(S);
 	//FREE_OBJECT(nice_gens);
@@ -1501,14 +1505,14 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 		if (M->f_semilinear) {
 			data[n * n] = SG1->gens->ith(i)[n * n];
 		}
-		A_general_linear->make_element(
+		A_general_linear->Group_element->make_element(
 				new_gens->ith(i), data, 0);
 	}
 	M->GFq->Linear_algebra->diagonal_matrix(data, n, M->GFq->primitive_root());
 	if (M->f_semilinear) {
 		data[n * n] = 0;
 	}
-	A_general_linear->make_element(
+	A_general_linear->Group_element->make_element(
 			new_gens->ith(SG1->gens->len), data, 0);
 
 	
@@ -1665,12 +1669,12 @@ void strong_generators::field_reduction(
 			cout << "lifted matrix:" << endl;
 			Int_matrix_print(Mtx, n, n);
 		}
-		Aq->make_element(Eltq, Mtx, verbose_level - 1);
+		Aq->Group_element->make_element(Eltq, Mtx, verbose_level - 1);
 		if (f_v) {
 			cout << "after make_element:" << endl;
-			Aq->element_print_quick(Eltq, cout);
+			Aq->Group_element->element_print_quick(Eltq, cout);
 		}
-		Aq->element_move(Eltq, gens1->ith(t), 0);
+		Aq->Group_element->element_move(Eltq, gens1->ith(t), 0);
 		cout << "strong_generators::field_reduction " << t
 				<< " / " << nb_gens << " done" << endl;
 	}
@@ -1863,7 +1867,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 			Int_matrix_print(M1, n1, n1);
 			//cout << endl;
 		}
-		A_PGL_n1_q->make_element(my_gens->ith(h), M1, 0 /* verbose_level */);
+		A_PGL_n1_q->Group_element->make_element(my_gens->ith(h), M1, 0 /* verbose_level */);
 	}
 
 	ring_theory::longinteger_domain D;
@@ -2130,7 +2134,7 @@ void strong_generators::regulus_stabilizer(
 			if (f_vv) {
 				cout << "strong_generators::regulus_stabilizer "
 						"generator:" << endl;
-				A_PGL_k_q->print_quick(cout, P);
+				A_PGL_k_q->Group_element->print_quick(cout, P);
 			}
 
 			if ((h % 2) == 0) {
@@ -2156,20 +2160,20 @@ void strong_generators::regulus_stabilizer(
 						"semilinear part = " << Q[n * n] << endl;
 			}
 		}
-		A_PGL_n_q->make_element(Elt1, Q, 0);
+		A_PGL_n_q->Group_element->make_element(Elt1, Q, 0);
 		if (f_vv) {
 			cout << "strong_generators::regulus_stabilizer "
 					"after make_element:" << endl;
-			A_PGL_n_q->print_quick(cout, Elt1);
+			A_PGL_n_q->Group_element->print_quick(cout, Elt1);
 			}
-		A_PGL_n_q->move(Elt1, my_gens->ith(h));
+		A_PGL_n_q->Group_element->move(Elt1, my_gens->ith(h));
 		
 	}
 	if (f_vv) {
 		for (h = 0; h < len; h++) {
 			cout << "strong_generators::regulus_stabilizer "
 					"generator " << h << ":" << endl;
-			A_PGL_n_q->element_print(my_gens->ith(h), cout);
+			A_PGL_n_q->Group_element->element_print(my_gens->ith(h), cout);
 		}
 	}
 
@@ -2248,13 +2252,13 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 		if (Mtx->f_semilinear) {
 			Q[n * n] = 0;
 		}
-		A_linear->make_element(Elt1, Q, 0);
+		A_linear->Group_element->make_element(Elt1, Q, 0);
 		if (f_vv) {
 			cout << "strong_generators::generators_for_the_borel_subgroup_upper "
 					"after make_element:" << endl;
-			A_linear->print_quick(cout, Elt1);
+			A_linear->Group_element->print_quick(cout, Elt1);
 		}
-		A_linear->move(Elt1, my_gens->ith(h));
+		A_linear->Group_element->move(Elt1, my_gens->ith(h));
 	}
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
@@ -2263,13 +2267,13 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 			if (Mtx->f_semilinear) {
 				Q[n * n] = 0;
 			}
-			A_linear->make_element(Elt1, Q, 0);
+			A_linear->Group_element->make_element(Elt1, Q, 0);
 			if (f_vv) {
 				cout << "strong_generators::generators_for_the_borel_subgroup_upper "
 						"after make_element:" << endl;
-				A_linear->print_quick(cout, Elt1);
+				A_linear->Group_element->print_quick(cout, Elt1);
 			}
-			A_linear->move(Elt1, my_gens->ith(h));
+			A_linear->Group_element->move(Elt1, my_gens->ith(h));
 			h++;
 		}
 	}
@@ -2286,7 +2290,7 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 		for (h = 0; h < len; h++) {
 			cout << "strong_generators::generators_for_the_borel_subgroup_upper "
 					"generator " << h << " / " << len << endl;
-			A_linear->element_print(my_gens->ith(h), cout);
+			A_linear->Group_element->element_print(my_gens->ith(h), cout);
 		}
 	}
 	ring_theory::longinteger_object target_go;
@@ -2377,13 +2381,13 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 		if (Mtx->f_semilinear) {
 			Q[n * n] = 0;
 		}
-		A_linear->make_element(Elt1, Q, 0);
+		A_linear->Group_element->make_element(Elt1, Q, 0);
 		if (f_vv) {
 			cout << "strong_generators::generators_for_the_borel_subgroup_lower "
 					"after make_element:" << endl;
-			A_linear->print_quick(cout, Elt1);
+			A_linear->Group_element->print_quick(cout, Elt1);
 		}
-		A_linear->move(Elt1, my_gens->ith(h));
+		A_linear->Group_element->move(Elt1, my_gens->ith(h));
 	}
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < i; j++) {
@@ -2392,13 +2396,13 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 			if (Mtx->f_semilinear) {
 				Q[n * n] = 0;
 			}
-			A_linear->make_element(Elt1, Q, 0);
+			A_linear->Group_element->make_element(Elt1, Q, 0);
 			if (f_vv) {
 				cout << "strong_generators::generators_for_the_borel_subgroup_lower "
 						"after make_element:" << endl;
-				A_linear->print_quick(cout, Elt1);
+				A_linear->Group_element->print_quick(cout, Elt1);
 			}
-			A_linear->move(Elt1, my_gens->ith(h));
+			A_linear->Group_element->move(Elt1, my_gens->ith(h));
 			h++;
 		}
 	}
@@ -2415,7 +2419,7 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 		for (h = 0; h < len; h++) {
 			cout << "strong_generators::generators_for_the_borel_subgroup_lower "
 					"generator " << h << " / " << len << endl;
-			A_linear->element_print(my_gens->ith(h), cout);
+			A_linear->Group_element->element_print(my_gens->ith(h), cout);
 		}
 	}
 	ring_theory::longinteger_object target_go;
@@ -2504,13 +2508,13 @@ void strong_generators::generators_for_the_identity_subgroup(
 		if (Mtx->f_semilinear) {
 			Q[n * n] = 0;
 		}
-		A_linear->make_element(Elt1, Q, 0);
+		A_linear->Group_element->make_element(Elt1, Q, 0);
 		if (f_vv) {
 			cout << "strong_generators::generators_for_the_identity_subgroup "
 					"after make_element:" << endl;
-			A_linear->print_quick(cout, Elt1);
+			A_linear->Group_element->print_quick(cout, Elt1);
 		}
-		A_linear->move(Elt1, my_gens->ith(i));
+		A_linear->Group_element->move(Elt1, my_gens->ith(i));
 	}
 	
 	
@@ -2519,7 +2523,7 @@ void strong_generators::generators_for_the_identity_subgroup(
 			cout << "strong_generators::generators_for_the_identity_subgroup "
 					"generator "
 					<< h << " / " << len << endl;
-			A_linear->element_print(my_gens->ith(h), cout);
+			A_linear->Group_element->element_print(my_gens->ith(h), cout);
 		}
 	}
 	ring_theory::longinteger_object target_go;
@@ -2596,7 +2600,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 	my_gens->init(A_PGL_n_q, verbose_level - 2);
 	my_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A_PGL_n_q->make_element(my_gens->ith(i), data + i * size, 0);
+		A_PGL_n_q->Group_element->make_element(my_gens->ith(i), data + i * size, 0);
 	}
 	
 
@@ -2705,7 +2709,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	my_gens->init(A_PGL_4_q, verbose_level - 2);
 	my_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A_PGL_4_q->make_element(my_gens->ith(i),
+		A_PGL_4_q->Group_element->make_element(my_gens->ith(i),
 				data + i * size, 0);
 	}
 	
@@ -2813,7 +2817,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	my_gens->init(A_PGL_4_q, verbose_level - 2);
 	my_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A_PGL_4_q->make_element(my_gens->ith(i), data + i * size, 0);
+		A_PGL_4_q->Group_element->make_element(my_gens->ith(i), data + i * size, 0);
 	}
 	
 
@@ -3200,7 +3204,7 @@ strong_generators::stabilizer_of_Eckardt_surface(
 
 	nice_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->make_element(nice_gens->ith(i), data + i * data_size, 0);
+		A->Group_element->make_element(nice_gens->ith(i), data + i * data_size, 0);
 	}
 
 
@@ -3269,7 +3273,7 @@ void strong_generators::stabilizer_of_G13_surface(
 
 	nice_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->make_element(nice_gens->ith(i), data + i * data_size, 0);
+		A->Group_element->make_element(nice_gens->ith(i), data + i * data_size, 0);
 	}
 
 
@@ -3338,7 +3342,7 @@ void strong_generators::stabilizer_of_F13_surface(
 
 	nice_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->make_element(nice_gens->ith(i), data + i * data_size, 0);
+		A->Group_element->make_element(nice_gens->ith(i), data + i * data_size, 0);
 	}
 
 
@@ -3415,7 +3419,7 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->make_element(gens->ith(i), data + i * data_size, 0);
+		A->Group_element->make_element(gens->ith(i), data + i * data_size, 0);
 	}
 
 	if (f_v) {
@@ -3435,7 +3439,7 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		gens, Strong_gens2, 
-		0 /* verbose_level */);
+		verbose_level - 3);
 
 	if (f_v) {
 		cout << "strong_generators::BLT_set_from_catalogue_stabilizer "
@@ -3497,7 +3501,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->make_element(gens->ith(i), data + i * data_size, 0);
+		A->Group_element->make_element(gens->ith(i), data + i * data_size, 0);
 	}
 
 	if (f_v) {
@@ -3588,7 +3592,7 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 			data[4] = 1;
 			data[8] = 1;
 		}
-		A->make_element(gens->ith(i), data, 0);
+		A->Group_element->make_element(gens->ith(i), data, 0);
 		}
 
 	if (f_v) {
@@ -3701,7 +3705,7 @@ void strong_generators::Janko1(
 				data[j] = (data2[j] + 11) % 11;
 			}
 		}
-		A->make_element(gens->ith(i), data, 0);
+		A->Group_element->make_element(gens->ith(i), data, 0);
 	}
 
 	if (f_v) {
@@ -3777,7 +3781,7 @@ void strong_generators::Hall_reflection(
 
 	gens->allocate(nb_perms, verbose_level - 2);
 	for (i = 0; i < nb_perms; i++) {
-		A->make_element(gens->ith(i), perms + i * degree, 0);
+		A->Group_element->make_element(gens->ith(i), perms + i * degree, 0);
 	}
 
 	if (f_v) {
@@ -3875,7 +3879,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 
 	gens->allocate(nb_perms, verbose_level - 2);
 	for (i = 0; i < nb_perms; i++) {
-		A->make_element(gens->ith(i), perms + i * degree, 0);
+		A->Group_element->make_element(gens->ith(i), perms + i * degree, 0);
 	}
 
 	if (f_v) {
@@ -4008,13 +4012,13 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 					<< i << " / " << SG_hyperplane->gens->len
 					<< " after Gg.hyperplane_lifting_with_two_lines_fixed" << endl;
 			}
-		A->make_element(gens->ith(i), A4, 0);
+		A->Group_element->make_element(gens->ith(i), A4, 0);
 		if (f_v) {
 			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 					"generator "
 					<< i << " / " << SG_hyperplane->gens->len
 					<< " lifts to " << endl;
-			A->element_print(gens->ith(i), cout);
+			A->Group_element->element_print(gens->ith(i), cout);
 			}
 		}
 
@@ -4150,14 +4154,14 @@ void strong_generators::exterior_square(
 					<< i << " / " << SG_original->gens->len
 					<< " after P->exterior_square" << endl;
 			}
-		A_detached->make_element(
+		A_detached->Group_element->make_element(
 				gens->ith(i), An2, 0);
 		if (f_v) {
 			cout << "strong_generators::exterior_square "
 					"generator "
 					<< i << " / " << SG_original->gens->len
 					<< " lifts to " << endl;
-			A_detached->element_print(gens->ith(i), cout);
+			A_detached->Group_element->element_print(gens->ith(i), cout);
 			}
 		}
 
@@ -4258,7 +4262,7 @@ void strong_generators::diagonally_repeat(
 				M[(k + i) * n + k + j] = a;
 			}
 		}
-		An->make_element(gens->ith(h), M, 0);
+		An->Group_element->make_element(gens->ith(h), M, 0);
 	}
 	group_order(go);
 

@@ -944,7 +944,7 @@ void schreier_vector::init_shallow_schreier_forest(groups::schreier *S,
 			for (i = 0; i < local_gens->len; i++) {
 				cout << "generator " << i << " / "
 						<< local_gens->len << ":" << endl;
-				local_gens->A->element_print_quick(
+				local_gens->A->Group_element->element_print_quick(
 						local_gens->ith(i), cout);
 			}
 		}

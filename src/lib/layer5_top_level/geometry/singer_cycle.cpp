@@ -191,10 +191,10 @@ void singer_cycle::init(int n,
 	//A->element_move(Elt, gens->ith(0), 0);
 	if (f_v) {
 		cout << "singer_cycle::init created Singer cycle:" << endl;
-		A->element_print_as_permutation(nice_gens->ith(0), cout);
+		A->Group_element->element_print_as_permutation(nice_gens->ith(0), cout);
 		cout << endl;
 		cout << "singer_cycle::init Singer cycle on lines:" << endl;
-		A2->element_print_as_permutation(nice_gens->ith(0), cout);
+		A2->Group_element->element_print_as_permutation(nice_gens->ith(0), cout);
 		cout << endl;
 	}
 	if (f_v) {
@@ -228,7 +228,7 @@ void singer_cycle::init_lines(int verbose_level)
 	singer_point_list[0] = 0;
 	singer_point_list_inv[0] = 0;
 	for (i = 0; i < P->N_points - 1; i++) {
-		b = A->element_image_of(a, nice_gens->ith(0), 0);
+		b = A->Group_element->element_image_of(a, nice_gens->ith(0), 0);
 		singer_point_list[1 + i] = b;
 		singer_point_list_inv[b] = i + 1;
 		a = b;
@@ -331,7 +331,7 @@ void singer_cycle::init_lines(int verbose_level)
 			}
 			line_orbit_label_tex[h].assign(str);
 
-			b = A2->element_image_of(a, nice_gens->ith(0), 0);
+			b = A2->Group_element->element_image_of(a, nice_gens->ith(0), 0);
 			a = b;
 			h++;
 		}

@@ -231,7 +231,7 @@ void sims::print_generators()
 			gen_idx = gen_perm[j];
 
 			cout << "generator " << gen_idx << ":" << endl;
-			A->element_print(gens.ith(gen_idx), cout);
+			A->Group_element->element_print(gens.ith(gen_idx), cout);
 			cout << endl;
 			}
 		cout << "orbit_len[" << i << "]=" << orbit_len[i] << endl;
@@ -268,7 +268,7 @@ void sims::print_generators_tex(std::ostream &ost)
 				}
 				ost << "&" << endl;
 			}
-			A->element_print_latex(gens.ith(gen_idx), ost);
+			A->Group_element->element_print_latex(gens.ith(gen_idx), ost);
 			cnt++;
 			f_first = FALSE;
 			if (j < nbg - 1) {
@@ -288,7 +288,7 @@ void sims::print_generators_as_permutations()
 	l = gens.len;
 	for (i = 0; i < l; i++) {
 		cout << i << " : ";
-		A->element_print_as_permutation(gens.ith(i), cout);
+		A->Group_element->element_print_as_permutation(gens.ith(i), cout);
 		cout << endl;
 		}
 	cout << endl;
@@ -303,7 +303,7 @@ void sims::print_generators_as_permutations_override_action(
 	l = gens.len;
 	for (i = 0; i < l; i++) {
 		cout << i << " : ";
-		A->element_print_as_permutation(gens.ith(i), cout);
+		A->Group_element->element_print_as_permutation(gens.ith(i), cout);
 		cout << endl;
 		}
 	cout << endl;
@@ -398,9 +398,9 @@ void sims::print_generators_at_level_or_below(int lvl)
 		gen_idx = gen_perm[i];
 		cout << "sims::print_generators_at_level_or_below "
 				"generator " << i << ":" << endl;
-		A->element_print_quick(gens.ith(gen_idx), cout);
+		A->Group_element->element_print_quick(gens.ith(gen_idx), cout);
 		cout << "as permutation:" << endl;
-		A->element_print_as_permutation(gens.ith(gen_idx), cout);
+		A->Group_element->element_print_as_permutation(gens.ith(gen_idx), cout);
 		}
 }
 
@@ -423,7 +423,7 @@ void sims::write_all_group_elements(
 
 		for (i = 0; i < go.as_lint(); i++) {
 			element_unrank_lint(i, Elt);
-			A->element_write_file_fp(Elt, fp, 0/* verbose_level*/);
+			A->Group_element->element_write_file_fp(Elt, fp, 0/* verbose_level*/);
 			}
 	}
 	if (f_v) {
@@ -453,7 +453,7 @@ void sims::print_all_group_elements_to_file(
 		element_unrank_lint(i, Elt);
 		fp << "Element " << setw(5) << i << " / "
 				<< go.as_int() << endl;
-		A->element_print(Elt, fp);
+		A->Group_element->element_print(Elt, fp);
 		fp << endl;
 		}
 	}
@@ -477,9 +477,9 @@ void sims::print_all_group_elements()
 		element_unrank_lint(i, Elt);
 		cout << "Element " << setw(5) << i << " / "
 				<< go.as_int() << ":" << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 		cout << endl;
-		A->element_print_as_permutation(Elt, cout);
+		A->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
 		}
 	FREE_int(Elt);
@@ -518,7 +518,7 @@ void sims::print_all_group_elements_tex(
 	for (i = 0; i < goi; i++) {
 		element_unrank_lint(i, Elt);
 
-		ord = A1->element_order(Elt);
+		ord = A1->Group_element->element_order(Elt);
 		ost << "Element " << setw(5) << i << " / "
 				<< go.as_int() << " of order " << ord << ":" << endl;
 
@@ -574,7 +574,7 @@ void sims::print_all_group_elements_tree(
 		//A->element_print_as_permutation(Elt, cout);
 		//cout << endl;
 #else
-		A->element_as_permutation(
+		A->Group_element->element_as_permutation(
 				Elt,
 				perm, 0 /*verbose_level*/);
 		ost << A->degree;
@@ -609,14 +609,14 @@ void sims::print_all_group_elements_with_permutations_tex(
 	for (i = 0; i < go.as_lint(); i++) {
 		element_unrank_lint(i, Elt);
 
-		ord = A->element_order(Elt);
+		ord = A->Group_element->element_order(Elt);
 		ost << "Element " << setw(5) << i << " / "
 				<< go.as_int() << " of order " << ord << ":" << endl;
 		ost << "$$" << endl;
 		ost << "\\begin{array}{c}" << endl;
-		A->element_print_latex(Elt, ost);
+		A->Group_element->element_print_latex(Elt, ost);
 		ost << "\\\\" << endl;
-		A->element_print_as_permutation(Elt, ost);
+		A->Group_element->element_print_as_permutation(Elt, ost);
 		ost << "\\\\" << endl;
 		ost << "\\end{array}" << endl;
 		ost << "$$" << endl;
@@ -642,7 +642,7 @@ void sims::print_all_group_elements_as_permutations()
 				<< go.as_int() << ":" << endl;
 		//A->element_print(Elt, cout);
 		//cout << endl;
-		A->element_print_as_permutation(Elt, cout);
+		A->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
 		}
 	FREE_int(Elt);
@@ -662,9 +662,9 @@ void sims::print_all_group_elements_as_permutations_in_special_action(
 		element_unrank_lint(i, Elt);
 		cout << "Element " << setw(5) << i << " / "
 				<< go.as_int() << ":" << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 		cout << endl;
-		A_special->element_print_as_permutation(Elt, cout);
+		A_special->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
 		}
 	FREE_int(Elt);
@@ -694,9 +694,9 @@ void sims::print_all_transversal_elements()
 				cout << setw(5) << path[ii] << " ";
 				}
 			cout << endl;
-			A->element_print(Elt, cout);
+			A->Group_element->element_print(Elt, cout);
 			cout << endl;
-			A->element_print_as_permutation(Elt, cout);
+			A->Group_element->element_print_as_permutation(Elt, cout);
 			cout << endl;
 			}
 		}
@@ -727,7 +727,7 @@ void sims::save_list_of_elements(
 			element_unrank_lint(i, Elt1);
 			//cout << "element " << i << ":" << endl;
 			//A->element_print(Elt1, cout);
-			A->element_write_file_fp(Elt1, fp, 0/* verbose_level*/);
+			A->Group_element->element_write_file_fp(Elt1, fp, 0/* verbose_level*/);
 			//A->element_print_as_permutation(Elt1, cout);
 			//AA.print_as_permutation(cout, Elt1);
 			//cout << endl;
@@ -765,7 +765,7 @@ void sims::read_list_of_elements(
 		ifstream fp(fname, ios::binary);
 
 		for (i = 0; i < goi; i++) {
-			A->element_read_file_fp(Elt1, fp, 0/* verbose_level*/);
+			A->Group_element->element_read_file_fp(Elt1, fp, 0/* verbose_level*/);
 			//cout << "element " << i << ":" << endl;
 			//A->element_print(Elt1, cout);
 			strip_and_add(Elt1, Elt2, verbose_level - 1);

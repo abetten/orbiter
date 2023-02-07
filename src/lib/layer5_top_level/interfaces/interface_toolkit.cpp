@@ -119,6 +119,14 @@ interface_toolkit::interface_toolkit()
 	loop_step = 0;
 	loop_argv = NULL;
 
+	f_loop_over = FALSE;
+	loop_over_start_idx = 0;
+	loop_over_end_idx = 0;
+	//std::string loop_over_variable;
+	//std::string loop_over_index;
+	//std::string loop_over_domain;
+	loop_over_argv = NULL;
+
 	f_plot_function = FALSE;
 	//std::string plot_function_fname;
 
@@ -214,7 +222,10 @@ void interface_toolkit::print_help(int argc,
 		cout << "-system <string : command> " << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-loop") == 0) {
-		cout << "-loop <string : variable> <string : logfile_mask> <int : from> <int : to> <int : step> <arguments> -loop_end" << endl;
+		cout << "-loop <string : variable> <int : from> <int : to> <int : step> <arguments> -loop_end" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-loop_over") == 0) {
+		cout << "-loop_over <string : variable> <string : index> <string : domain>  <loop body> -loop_end" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-plot_function") == 0) {
 		cout << "-plot_function <string : fname_csv>" << endl;
@@ -306,6 +317,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-loop") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-loop_over") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-plot_function") == 0) {
@@ -618,6 +632,38 @@ void interface_toolkit::read_arguments(int argc,
 			cout << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-loop_over") == 0) {
+		f_loop_over = TRUE;
+		loop_over_start_idx = i + 4;
+		loop_over_variable.assign(argv[++i]);
+		loop_over_index.assign(argv[++i]);
+		loop_over_domain.assign(argv[++i]);
+		loop_over_argv = argv;
+
+		for (++i; i < argc; i++) {
+			if (ST.stringcmp(argv[i], "-end_loop_over") == 0) {
+				loop_over_end_idx = i;
+				break;
+			}
+		}
+		if (i == argc) {
+			cout << "-loop cannot find -end_loop_over" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "-loop_over"
+					<< " " << loop_over_variable
+					<< " " << loop_over_index
+					<< " " << loop_over_domain
+					<< " " << loop_over_start_idx
+					<< " " << loop_over_end_idx;
+
+			for (int j = loop_over_start_idx; j < loop_over_end_idx; j++) {
+				cout << " " << argv[j];
+			}
+			cout << endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-plot_function") == 0) {
 		f_plot_function = TRUE;
 		plot_function_fname.assign(argv[++i]);
@@ -812,6 +858,17 @@ void interface_toolkit::print()
 		cout << endl;
 
 	}
+	if (f_loop_over) {
+		cout << "-loop_over"
+				<< " " << loop_over_variable
+				<< " " << loop_over_index
+				<< " " << loop_over_domain
+				<< " " << loop_over_start_idx
+				<< " " << loop_over_end_idx;
+
+		cout << endl;
+
+	}
 	if (f_plot_function) {
 		cout << "-plot_function " << plot_function_fname << endl;
 	}
@@ -839,7 +896,9 @@ void interface_toolkit::print()
 					<< endl;
 	}
 	if (f_serialize_file_names) {
-		cout << "-serialize_file_names " << serialize_file_names_fname << " " << serialize_file_names_output_mask << endl;
+		cout << "-serialize_file_names "
+				<< serialize_file_names_fname
+				<< " " << serialize_file_names_output_mask << endl;
 	}
 }
 
@@ -1170,6 +1229,73 @@ void interface_toolkit::worker(int verbose_level)
 		}
 
 	}
+
+	else if (f_loop_over) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker f_loop_over" << endl;
+		}
+		std::string *argv2;
+		int argc2;
+		int j;
+
+		argc2 = loop_over_end_idx - loop_over_start_idx;
+		int h, s;
+
+		long int *Domain;
+		int sz;
+
+		Get_lint_vector_from_label(loop_over_domain, Domain, sz, 0 /* verbose_level */);
+
+		for (h = 0; h < sz; h++) {
+			cout << "loop_over iteration h=" << h << " / " << sz << " value=" << Domain[h] << endl;
+			argv2 = new string[argc2];
+			for (j = loop_over_start_idx, s = 0; j < loop_over_end_idx; j++, s++) {
+
+				char str[1000];
+				string arg;
+				string token;
+				string value;
+
+				arg.assign(loop_over_argv[j]);
+
+				snprintf(str, sizeof(str), "%d", h);
+				value.assign(str);
+
+				token.assign("%");
+				token.append(loop_over_index);
+
+				while (arg.find(token) != std::string::npos) {
+					arg.replace(arg.find(token), token.length(), value);
+				}
+
+				snprintf(str, sizeof(str), "%ld", Domain[h]);
+				value.assign(str);
+
+				token.assign("%");
+				token.append(loop_over_variable);
+
+				while (arg.find(token) != std::string::npos) {
+					arg.replace(arg.find(token), token.length(), value);
+				}
+
+				argv2[s].assign(arg);
+			}
+		cout << "loop_over iteration " << h << ", executing sequence of length " << argc2 << " : ";
+		for (s = 0; s < argc2; s++) {
+			cout << " " << argv2[s];
+		}
+		cout << endl;
+
+
+		The_Orbiter_top_level_session->parse_and_execute(argc2 - 1, argv2, 0, verbose_level);
+
+		cout << "loop_over iteration " << h << " / " << sz << "done" << endl;
+
+		delete [] argv2;
+		} // next h
+	}
+
 	else if (f_plot_function) {
 
 		if (f_v) {

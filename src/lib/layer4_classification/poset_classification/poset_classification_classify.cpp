@@ -615,12 +615,12 @@ void poset_classification::recognize(
 	cout << "is orbit " << orb << endl;
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
 	cout << "transporter:" << endl;
-	get_A()->element_print_quick(Elt_transporter, cout);
+	get_A()->Group_element->element_print_quick(Elt_transporter, cout);
 
-	get_A()->element_invert(Elt_transporter, Elt_transporter_inv, 0);
+	get_A()->Group_element->element_invert(Elt_transporter, Elt_transporter_inv, 0);
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
 	cout << "transporter inverse:" << endl;
-	get_A()->element_print_quick(Elt_transporter_inv, cout);
+	get_A()->Group_element->element_print_quick(Elt_transporter_inv, cout);
 
 	cout << "Stabilizer of the given set:" << endl;
 	SaS_original->print_generators_tex(cout);

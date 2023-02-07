@@ -401,9 +401,9 @@ int action::choose_next_base_point_default_method(
 
 	if (f_v) {
 		cout << "action::choose_next_base_point_default_method" << endl;
-		cout << "calling A->find_non_fixed_point" << endl;
+		cout << "calling Group_element->find_non_fixed_point" << endl;
 	}
-	b = find_non_fixed_point(Elt, verbose_level - 1);
+	b = Group_element->find_non_fixed_point(Elt, verbose_level - 1);
 	if (b == -1) {
 		if (f_v) {
 			cout << "action::choose_next_base_point_default_method "

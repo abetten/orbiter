@@ -78,7 +78,7 @@ long int action_on_k_subsets::compute_image(
 	Combi.unrank_k_subset(i, set1, A->degree, k);
 	for (u = 0; u < k; u++) {
 		a = set1[u];
-		b = A->image_of(Elt, a);
+		b = A->Group_element->image_of(Elt, a);
 		set2[u] = b;
 		}
 	Sorting.int_vec_heapsort(set2, k);

@@ -2702,7 +2702,7 @@ public:
 		long int *set, int set_size, int threshold,
 		intersection_type *&Int_type,
 		int verbose_level);
-	void plane_intersections(
+	int plane_intersections(
 			grassmann *G,
 		long int *set, int set_size,
 		ring_theory::longinteger_object *&R,

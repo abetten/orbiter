@@ -181,7 +181,7 @@ void group_container::init_strong_generators_by_hdl(
 				"before A->element_retrieve" << endl;
 	}
 	for (i = 0; i < nb_gen; i++) {
-		A->element_retrieve(gen_hdl[i], SG->ith(i), 0/*verbose_level*/);
+		A->Group_element->element_retrieve(gen_hdl[i], SG->ith(i), 0/*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "group::init_strong_generators_by_hdl "
@@ -320,7 +320,7 @@ void group_container::code_ascii(int verbose_level)
 		Os.code_int4(p, (int_4) tl[i]);
 	}
 	for (i = 0; i < SG->len; i++) {
-		A->element_pack(SG->ith(i), A->elt1, FALSE);
+		A->Group_element->element_pack(SG->ith(i), A->elt1, FALSE);
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
 			Os.code_uchar(p, A->elt1[j]);
 		}
@@ -384,7 +384,7 @@ void group_container::decode_ascii(int verbose_level)
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
 			Os.decode_uchar(p, A->elt1[j]);
 		}
-		A->element_unpack(A->elt1, SG->ith(i), FALSE);
+		A->Group_element->element_unpack(A->elt1, SG->ith(i), FALSE);
 	}
 	FREE_int(base1);
 	if (p - p0 != str_len) {
@@ -620,7 +620,7 @@ void group_container::induced_action(
 				S->random_element(A->Elt1, verbose_level - 1);
 				if (f_v) {
 					cout << "random group element:" << endl;
-					A->element_print(A->Elt1, cout);
+					A->Group_element->element_print(A->Elt1, cout);
 				}
 
 				if (HH.strip(A->Elt1, A->Elt2 /* residue */,
@@ -772,7 +772,7 @@ void group_container::extension(group_container &N,
 			p_gen = A->Elt1;
 			if (f_v) {
 				cout << "random group element:" << endl;
-				A->element_print(p_gen, cout);
+				A->Group_element->element_print(p_gen, cout);
 			}
 		}
 		else {
@@ -780,7 +780,7 @@ void group_container::extension(group_container &N,
 			//p_gen = G.schreier_gen;
 			if (f_v) {
 				cout << "random schreier generator:" << endl;
-				A->element_print(Elt, cout);
+				A->Group_element->element_print(Elt, cout);
 			}
 		}
 		
@@ -844,10 +844,10 @@ void group_container::print_strong_generators(std::ostream &ost,
 	ost << " and with " << l << " strong generators" << endl;
 	for (i = 0; i < l; i++) {
 		ost << "generator " << i << ":" << endl;
-		A->element_print_quick(SG->ith(i), ost);
+		A->Group_element->element_print_quick(SG->ith(i), ost);
 		ost << endl;
 		if (f_print_as_permutation) {
-			A->element_print_as_permutation(SG->ith(i), ost);
+			A->Group_element->element_print_as_permutation(SG->ith(i), ost);
 			ost << endl;
 		}
 	}
@@ -886,7 +886,7 @@ void group_container::print_strong_generators_with_different_action_verbose(
 	ost << " and with " << l << " strong generators" << endl;
 	for (i = 0; i < l; i++) {
 		ost << "generator " << i << ":" << endl;
-		A->element_print_quick(SG->ith(i), ost);
+		A->Group_element->element_print_quick(SG->ith(i), ost);
 		ost << endl;
 		Elt = SG->ith(i);
 		if (f_vv) {
@@ -900,7 +900,7 @@ void group_container::print_strong_generators_with_different_action_verbose(
 				//cout << "group::print_strong_generators_with_"
 				//"different_action_verbose  computing image of "
 				// << j << endl;
-				/*k =*/ A2->element_image_of(j, Elt,
+				/*k =*/ A2->Group_element->element_image_of(j, Elt,
 						0 /*verbose_level - 2*/);
 				//cout << "group::print_strong_generators_with_"
 				//"different_action_verbose  image of "
@@ -909,7 +909,7 @@ void group_container::print_strong_generators_with_different_action_verbose(
 		}
 		ost << "as permutation in action " << A2->label
 				<< " of degree " << A2->degree << ":" << endl;
-		A2->element_print_as_permutation_verbose(Elt,
+		A2->Group_element->element_print_as_permutation_verbose(Elt,
 				ost, 0/*verbose_level - 2*/);
 		ost << endl;
 	}

@@ -381,7 +381,7 @@ void surface_with_action::complete_skew_hexagon(
 			verbose_level);
 
 
-	A->element_invert(Recoordinatize->Elt, Elt1, 0);
+	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 
 	for (i = 0; i < regulus_size; i++) {
@@ -428,9 +428,9 @@ void surface_with_action::complete_skew_hexagon(
 				b1, b2, b3,
 				verbose_level - 2);
 
-		A->element_invert(Recoordinatize->Elt, Elt1, 0);
+		A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
-		b6_image = A2->element_image_of(b6,
+		b6_image = A2->Group_element->element_image_of(b6,
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
 		if (f_v) {
@@ -704,7 +704,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 			verbose_level);
 
 
-	A->element_invert(Recoordinatize->Elt, Elt1, 0);
+	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 
 	for (i = 0; i < regulus_size; i++) {
@@ -754,9 +754,9 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 				b1, b2, b3,
 				verbose_level - 2);
 
-		A->element_invert(Recoordinatize->Elt, Elt1, 0);
+		A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
-		b6_image = A2->element_image_of(b6,
+		b6_image = A2->Group_element->element_image_of(b6,
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
 		if (f_v) {
@@ -1020,7 +1020,7 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 			three_skew_lines[2],
 			verbose_level - 2);
 
-	A->element_invert(Recoordinatize->Elt, Elt1, 0);
+	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 	Recoordinatize->Grass->line_regulus_in_PG_3_q(
 			regulus, regulus_size, FALSE /* f_opposite */,
@@ -1038,13 +1038,13 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 
 	// map regulus back:
 	for (i = 0; i < regulus_size; i++) {
-		regulus[i] = A2->element_image_of(
+		regulus[i] = A2->Group_element->element_image_of(
 				regulus[i], Elt1, 0 /* verbose_level */);
 	}
 
 	// map opposite regulus back:
 	for (i = 0; i < regulus_size; i++) {
-		opp_regulus[i] = A2->element_image_of(
+		opp_regulus[i] = A2->Group_element->element_image_of(
 				opp_regulus[i], Elt1, 0 /* verbose_level */);
 	}
 
@@ -1187,14 +1187,14 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 					<< " after do_recoordinatize" << endl;
 		}
 
-		A->element_invert(Recoordinatize->Elt, Elt1, 0);
+		A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 
-		ai4image = A2->element_image_of(four_lines[3],
+		ai4image = A2->Group_element->element_image_of(four_lines[3],
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
 
-		Q = A->element_image_of(P4,
+		Q = A->Group_element->element_image_of(P4,
 				Recoordinatize->Elt, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "ai4image = " << ai4image << " Q=" << Q << endl;
@@ -1344,7 +1344,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		line3 = Surf->rank_line(M);
 
 		// Map line3 back to get line4 = b_i:
-		line4 = A2->element_image_of(line3, Elt1, 0 /* verbose_level */);
+		line4 = A2->Group_element->element_image_of(line3, Elt1, 0 /* verbose_level */);
 		
 		double_six[10 - rk] = line4; // fill in b_i
 	} // next rk
@@ -1374,11 +1374,11 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				"after do_recoordinatize" << endl;
 	}
 
-	A->element_invert(Recoordinatize->Elt, Elt1, 0);
+	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 	// map b4 and b5:
-	image[0] = A2->element_image_of(b4, Recoordinatize->Elt, 0 /* verbose_level */);
-	image[1] = A2->element_image_of(b5, Recoordinatize->Elt, 0 /* verbose_level */);
+	image[0] = A2->Group_element->element_image_of(b4, Recoordinatize->Elt, 0 /* verbose_level */);
+	image[1] = A2->Group_element->element_image_of(b5, Recoordinatize->Elt, 0 /* verbose_level */);
 	
 	nb_pts = 0;
 	for (h = 0; h < 2; h++) {
@@ -1455,7 +1455,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		exit(1);
 	}
 	// Map line3 back to get line4 = a_6:
-	line4 = A2->element_image_of(line3, Elt1, 0 /* verbose_level */);
+	line4 = A2->Group_element->element_image_of(line3, Elt1, 0 /* verbose_level */);
 	double_six[5] = line4; // fill in a_6
 
 	if (f_v) {
@@ -2930,393 +2930,6 @@ void surface_with_action::sweep_4_L9_E4(
 	}
 }
 
-
-
-
-void surface_with_action::table_of_cubic_surfaces(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces" << endl;
-	}
-
-
-	field_theory::finite_field *F;
-
-	F = PA->F;
-
-	int q;
-
-	q = F->q;
-
-	knowledge_base::knowledge_base K;
-
-	int nb_cubic_surfaces;
-	int h;
-	surface_create **SC;
-	int *nb_E;
-	long int *Table;
-	int nb_cols = 19;
-
-
-	poset_classification::poset_classification_control Control_six_arcs;
-
-
-	nb_cubic_surfaces = K.cubic_surface_nb_reps(q);
-
-	SC = (surface_create **) NEW_pvoid(nb_cubic_surfaces);
-
-	nb_E = NEW_int(nb_cubic_surfaces);
-
-	Table = NEW_lint(nb_cubic_surfaces * nb_cols);
-
-
-
-
-	for (h = 0; h < nb_cubic_surfaces; h++) {
-
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					<< h << " / " << nb_cubic_surfaces << endl;
-		}
-		surface_create_description Surface_create_description;
-
-		//Surface_create_description.f_q = TRUE;
-		//Surface_create_description.q = q;
-		Surface_create_description.f_catalogue = TRUE;
-		Surface_create_description.iso = h;
-
-
-		Surface_create_description.f_space_pointer = TRUE;
-		Surface_create_description.space_pointer = PA;
-
-#if 0
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					"before create_surface" << endl;
-		}
-		create_surface(
-				&Surface_create_description,
-				SC[h],
-				verbose_level);
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					"after create_surface" << endl;
-		}
-#endif
-
-
-		//surface_create *SC;
-		//SC = NEW_OBJECT(surface_create);
-
-		SC[h] = NEW_OBJECT(surface_create);
-
-		if (f_v) {
-			cout << "surface_with_action::sweep_4_27 before SC->init" << endl;
-		}
-		SC[h]->init(&Surface_create_description, verbose_level);
-		if (f_v) {
-			cout << "surface_with_action::sweep_4_27 after SC->init" << endl;
-		}
-
-
-
-
-		nb_E[h] = SC[h]->SO->SOP->nb_Eckardt_points;
-
-
-		if (!SC[h]->f_has_group) {
-			cout << "!SC[h]->f_has_group" << endl;
-			exit(1);
-		}
-
-		surface_object_with_action *SoA;
-
-		SoA = NEW_OBJECT(surface_object_with_action);
-
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					"before SoA->init_with_surface_object" << endl;
-		}
-		SoA->init_with_surface_object(this,
-				SC[h]->SO,
-				SC[h]->Sg,
-				FALSE /* f_has_nice_gens */, NULL /* vector_ge *nice_gens */,
-				verbose_level);
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					"after SoA->init_with_surface_object" << endl;
-		}
-
-
-
-		Table[h * nb_cols + 0] = h;
-
-		if (f_v) {
-			cout << "collineation stabilizer order" << endl;
-		}
-		if (SC[h]->f_has_group) {
-			Table[h * nb_cols + 1] = SC[h]->Sg->group_order_as_lint();
-		}
-		else {
-			Table[h * nb_cols + 1] = 0;
-		}
-		if (f_v) {
-			cout << "projectivity stabilizer order" << endl;
-		}
-		if (A->is_semilinear_matrix_group()) {
-			Table[h * nb_cols + 2] = SoA->projectivity_group_gens->group_order_as_lint();
-		}
-		else {
-			Table[h * nb_cols + 2] = SC[h]->Sg->group_order_as_lint();
-		}
-
-		Table[h * nb_cols + 3] = SC[h]->SO->nb_pts;
-		Table[h * nb_cols + 4] = SC[h]->SO->nb_lines;
-		Table[h * nb_cols + 5] = SC[h]->SO->SOP->nb_Eckardt_points;
-		Table[h * nb_cols + 6] = SC[h]->SO->SOP->nb_Double_points;
-		Table[h * nb_cols + 7] = SC[h]->SO->SOP->nb_Single_points;
-		Table[h * nb_cols + 8] = SC[h]->SO->SOP->nb_pts_not_on_lines;
-		Table[h * nb_cols + 9] = SC[h]->SO->SOP->nb_Hesse_planes;
-		Table[h * nb_cols + 10] = SC[h]->SO->SOP->nb_axes;
-		if (f_v) {
-			cout << "SoA->Orbits_on_Eckardt_points->nb_orbits" << endl;
-		}
-		Table[h * nb_cols + 11] = SoA->Orbits_on_Eckardt_points->nb_orbits;
-		Table[h * nb_cols + 12] = SoA->Orbits_on_Double_points->nb_orbits;
-		Table[h * nb_cols + 13] = SoA->Orbits_on_points_not_on_lines->nb_orbits;
-		Table[h * nb_cols + 14] = SoA->Orbits_on_lines->nb_orbits;
-		Table[h * nb_cols + 15] = SoA->Orbits_on_single_sixes->nb_orbits;
-		Table[h * nb_cols + 16] = SoA->Orbits_on_tritangent_planes->nb_orbits;
-		Table[h * nb_cols + 17] = SoA->Orbits_on_Hesse_planes->nb_orbits;
-		Table[h * nb_cols + 18] = SoA->Orbits_on_trihedral_pairs->nb_orbits;
-		//Table[h * nb_cols + 19] = SoA->Orbits_on_tritangent_planes->nb_orbits;
-
-
-		FREE_OBJECT(SoA);
-
-
-	} // next h
-
-
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces "
-				"before table_of_cubic_surfaces_export_csv" << endl;
-	}
-
-	table_of_cubic_surfaces_export_csv(Table,
-				nb_cols,
-				q, nb_cubic_surfaces,
-				SC,
-				verbose_level);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces "
-				"after table_of_cubic_surfaces_export_csv" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces "
-				"before table_of_cubic_surfaces_export_sql" << endl;
-	}
-
-	table_of_cubic_surfaces_export_sql(Table,
-				nb_cols,
-				q, nb_cubic_surfaces,
-				SC,
-				verbose_level);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces "
-				"after table_of_cubic_surfaces_export_sql" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces done" << endl;
-	}
-
-}
-
-
-void surface_with_action::table_of_cubic_surfaces_export_csv(
-		long int *Table,
-		int nb_cols,
-		int q, int nb_cubic_surfaces,
-		surface_create **SC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces_export_csv" << endl;
-	}
-
-	orbiter_kernel_system::file_io Fio;
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d", q);
-
-	string fname;
-	fname.assign("table_of_cubic_surfaces");
-	fname.append(str);
-	fname.append("_info.csv");
-
-	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
-
-	{
-		ofstream f(fname);
-		int i, j;
-
-		f << "Row,OCN,CollStabOrder,ProjStabOrder,nbPts,nbLines,"
-				"nbE,nbDouble,nbSingle,nbPtsNotOn,nbHesse,nbAxes,"
-				"nbOrbE,nbOrbDouble,nbOrbPtsNotOn,nbOrbLines,"
-				"nbOrbSingleSix,nbOrbTriPlanes,nbOrbHesse,nbOrbTrihedralPairs,"
-				"Eqn20,Equation,Lines";
-
-
-
-		f << endl;
-		for (i = 0; i < nb_cubic_surfaces; i++) {
-			f << i;
-			for (j = 0; j < nb_cols; j++) {
-				f << "," << Table[i * nb_cols + j];
-			}
-			{
-				string str;
-				f << ",";
-				Int_vec_create_string_with_quotes(str, SC[i]->SO->eqn, 20);
-				//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC[i]->SO->eqn, 20);
-				f << str;
-			}
-
-#if 1
-			{
-				stringstream sstr;
-				string str;
-				SC[i]->Surf->print_equation_maple(sstr, SC[i]->SO->eqn);
-				str.assign(sstr.str());
-				f << ",";
-				f << "\"$";
-				f << str;
-				f << "$\"";
-			}
-			{
-				string str;
-				f << ",";
-				Lint_vec_create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
-				//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
-				f << str;
-			}
-#endif
-
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-
-
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces_export_csv done" << endl;
-	}
-}
-
-void surface_with_action::table_of_cubic_surfaces_export_sql(
-		long int *Table,
-		int nb_cols,
-		int q, int nb_cubic_surfaces,
-		surface_create **SC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces_export_sql" << endl;
-	}
-
-	orbiter_kernel_system::file_io Fio;
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d", q);
-
-	string fname;
-	fname.assign("table_of_cubic_surfaces");
-	fname.append(str);
-	fname.append("_data.sql");
-
-	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
-
-	{
-		ofstream f(fname);
-		int i;
-
-		for (i = 0; i < nb_cubic_surfaces; i++) {
-
-			f << "UPDATE `cubicvt`.`surface` SET ";
-			f << "`CollStabOrder` = '" << Table[i * nb_cols + 1] << "', ";
-			f << "`ProjStabOrder` = '" << Table[i * nb_cols + 2] << "', ";
-			f << "`nbPts` = '" << Table[i * nb_cols + 3] << "', ";
-			f << "`nbLines` = '" << Table[i * nb_cols + 4] << "', ";
-			f << "`nbE` = '" << Table[i * nb_cols + 5] << "', ";
-			f << "`nbDouble` = '" << Table[i * nb_cols + 6] << "', ";
-			f << "`nbSingle` = '" << Table[i * nb_cols + 7] << "', ";
-			f << "`nbPtsNotOn` = '" << Table[i * nb_cols + 8] << "',";
-			f << "`nbHesse` = '" << Table[i * nb_cols + 9] << "', ";
-			f << "`nbAxes` = '" << Table[i * nb_cols + 10] << "', ";
-			f << "`nbOrbE` = '" << Table[i * nb_cols + 11] << "', ";
-			f << "`nbOrbDouble` = '" << Table[i * nb_cols + 12] << "', ";
-			f << "`nbOrbPtsNotOn` = '" << Table[i * nb_cols + 13] << "', ";
-			f << "`nbOrbLines` = '" << Table[i * nb_cols + 14] << "', ";
-			f << "`nbOrbSingleSix` = '" << Table[i * nb_cols + 15] << "', ";
-			f << "`nbOrbTriPlanes` = '" << Table[i * nb_cols + 16] << "', ";
-			f << "`nbOrbHesse` = '" << Table[i * nb_cols + 17] << "', ";
-			f << "`nbOrbTrihedralPairs` = '" << Table[i * nb_cols + 18] << "', ";
-			{
-				string str;
-				Int_vec_create_string_with_quotes(str, SC[i]->SO->eqn, 20);
-				//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC[i]->SO->eqn, 20);
-				f << "`Eqn20` = '" << str << "', ";
-			}
-			{
-				stringstream sstr;
-				string str;
-				SC[i]->Surf->print_equation_maple(sstr, SC[i]->SO->eqn);
-				str.assign(sstr.str());
-				//f << ",";
-				//f << "\"$";
-				//f << str;
-				//f << "$\"";
-				f << "`Equation` = '$" << str << "$', ";
-			}
-			{
-				string str;
-				Lint_vec_create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
-				//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
-				f << "`Lines` = '" << str << "' ";
-			}
-			f << "WHERE `Q` = '" << q << "' AND `OCN` = '" << Table[i * nb_cols + 0] << "';" << endl;
-		}
-
-	}
-
-
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces_export_sql done" << endl;
-	}
-}
-
-
-// from Oznur Oztunc, 11/28/2021:
-// oznr83@gmail.com
-//UPDATE `cubicvt`.`surface` SET `CollStabOrder` = '12', `ProjStabOrder` = '12', `nbPts` = '691', `nbLines` = '27', `nbE` = '4', `nbDouble` = '123', `nbSingle` = '390', `nbPtsNotOn` = '174',`nbHesse` = '0', `nbAxes` = '1', `nbOrbE` = '2', `nbOrbDouble` = '16', `nbOrbPtsNotOn` = '16', `nbOrbLines` = '5', `nbOrbSingleSix` = '10', `nbOrbTriPlanes` = '10', `nbOrbHesse` = '0', `nbOrbTrihedralPairs` = '19', `nbOrbTritangentPlanes` = '10',`Eqn20` = '0,0,0,0,0,0,8,0,10,0,0,18,0,2,0,0,18,10,2,1', `Equation` = '$8X_0^2*X_3+10X_1^2*X_2+18X_1*X_2^2+2X_0*X_3^2+18X_0*X_1*X_2+10X_0*X_1*X_3+2X_0*X_2*X_3+X_1*X_2*X_3$', `Lines` = '529,292560,1083,4965,290982,88471,169033,6600,8548,576,293089,0,3824,9119,1698,242212,12168,59424,229610,292854,242075,120504,179157,279048,30397,181283,12150' WHERE `Q` = '23' AND `OCN` = '1';
 
 
 }}}}

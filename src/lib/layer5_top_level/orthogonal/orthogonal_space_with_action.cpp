@@ -393,6 +393,52 @@ void orthogonal_space_with_action::report_line_set(
 	}
 }
 
+void orthogonal_space_with_action::make_table_of_blt_sets(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets" << endl;
+	}
+
+	if (O->Quadratic_form->n != 5) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"we need a five-dimensional orthogonal space" << endl;
+		exit(1);
+	}
+
+	table_of_blt_sets *T;
+
+	T = NEW_OBJECT(table_of_blt_sets);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"before T->init" << endl;
+	}
+	T->init(this, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"after T->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"before T->do_export" << endl;
+	}
+	T->do_export(verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"after T->do_export" << endl;
+	}
+
+	FREE_OBJECT(T);
+
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets done" << endl;
+	}
+
+}
 
 
 

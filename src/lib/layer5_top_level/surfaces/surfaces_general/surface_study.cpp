@@ -498,7 +498,7 @@ void surface_study::study_group(int verbose_level)
 		}
 	cout << "group elements:" << endl;
 	for (i = 0; i < group_order; i++) {
-		A->print_for_make_element(cout,
+		A->Group_element->print_for_make_element(cout,
 				Group_elts + i * elt_sz);
 		cout << endl;
 		}
@@ -1065,7 +1065,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 			cout << "coset " << j << " / " << l << ":" << endl;
 			}
 		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
-		A->element_move(Orb_six_points->cosetrep, Elt, 0);
+		A->Group_element->element_move(Orb_six_points->cosetrep, Elt, 0);
 
 		data_structures_groups::set_and_stabilizer *SaS2;
 
@@ -1138,7 +1138,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	if (j >= 0) {
 		cout << "coset " << j << " / " << l << ":" << endl;
 		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
-		A->element_move(Orb_six_points->cosetrep, Elt, 0);
+		A->Group_element->element_move(Orb_six_points->cosetrep, Elt, 0);
 
 		data_structures_groups::set_and_stabilizer *SaS2;
 
@@ -1592,7 +1592,7 @@ static void move_point_set(actions::action *A2,
 
 	if (f_v) {
 		cout << "transporter:" << endl;
-		Universe->A->element_print_quick(Elt, cout);
+		Universe->A->Group_element->element_print_quick(Elt, cout);
 		cout << endl;
 		}
 

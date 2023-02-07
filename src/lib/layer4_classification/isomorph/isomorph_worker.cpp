@@ -918,7 +918,7 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 							<< " / " << gens->len << endl;
 				}
 				ost << "";
-				Iso->A_base->element_print_for_make_element(gens->ith(j), ost);
+				Iso->A_base->Group_element->element_print_for_make_element(gens->ith(j), ost);
 				ost << endl;
 			}
 
@@ -986,7 +986,7 @@ void isomorph_worker::recognize(std::string &label, int verbose_level)
 	if (f_v) {
 		cout << "isomorph_worker::recognize after Iso->Folding->identify" << endl;
 		cout << "isomorph_worker::recognize transporter:" << endl;
-		Iso->Sub->gen->get_A()->element_print(Iso->Folding->transporter, cout);
+		Iso->Sub->gen->get_A()->Group_element->element_print(Iso->Folding->transporter, cout);
 	}
 
 	groups::strong_generators *SG;

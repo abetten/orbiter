@@ -2019,7 +2019,7 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 			a = Orb[0];
 
 			ost << "$$" << endl;
-			A->print_point(a, ost);
+			A->Group_element->print_point(a, ost);
 			//Orbiter->Lint_vec.print(ost, Orb, orbit_length);
 			ost << "$$" << endl;
 			ost << "\\\\" << endl;

@@ -729,7 +729,8 @@ public:
 			int f_print_as_permutation,
 		int f_offset, int offset,
 		int f_do_it_anyway_even_for_big_degree,
-		int f_print_cycles_of_length_one);
+		int f_print_cycles_of_length_one,
+		int verbose_level);
 	void print_for_make_element(std::ostream &ost);
 	void write_to_memory_object(
 			orbiter_kernel_system::memory_object *m,
@@ -774,6 +775,14 @@ public:
 			induced_actions::action_on_homogeneous_polynomials *A_on_HPD,
 			int *&M, int &nb_gens,
 			int verbose_level);
+	void stab_BLT_set_from_catalogue(
+			actions::action *A,
+		field_theory::finite_field *F, int iso,
+		std::string &target_go_text,
+		int verbose_level);
+	int test_if_in_set_stabilizer(
+			actions::action *A,
+			long int *set, int sz, int verbose_level);
 
 };
 

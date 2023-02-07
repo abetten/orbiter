@@ -181,6 +181,8 @@ public:
 
 	induced_action *Induced_action;
 
+	group_element *Group_element;
+
 
 	action_pointer_table *ptr;
 
@@ -223,35 +225,14 @@ public:
 	void allocate_element_data();
 	void free_element_data();
 	
-	int find_non_fixed_point(void *elt, int verbose_level);
-	int find_fixed_points(void *elt, 
-		int *fixed_points, int verbose_level);
-	int count_fixed_points(void *elt, int verbose_level);
-	int test_if_set_stabilizes(int *Elt, 
-		int size, long int *set, int verbose_level);
 	void map_a_set_based_on_hdl(long int *set,
 			long int *image_set,
 			int n, action *A_base, int hdl, int verbose_level);
-	void map_a_set(
-			long int *set,
-			long int *image_set,
-		int n, int *Elt, int verbose_level);
-	void map_a_set_and_reorder(
-			long int *set, long int *image_set,
-		int n, int *Elt, int verbose_level);
 	void print_all_elements();
 
 	void init_sims_only(groups::sims *G, int verbose_level);
 	void compute_strong_generators_from_sims(int verbose_level);
 	void init_base_from_sims(groups::sims *G, int verbose_level);
-	int element_has_order_two(int *E1, int verbose_level);
-	int product_has_order_two(int *E1, int *E2, int verbose_level);
-	int product_has_order_three(int *E1, int *E2, int verbose_level);
-	int element_order(void *elt);
-	int element_order_and_cycle_type(void *elt, int *cycle_type);
-	int element_order_and_cycle_type_verbose(
-			void *elt, int *cycle_type, int verbose_level);
-	int element_order_if_divisor_of(void *elt, int o);
 	void compute_all_point_orbits(groups::schreier &S,
 			data_structures_groups::vector_ge &gens,
 			int verbose_level);
@@ -273,51 +254,14 @@ public:
 	void compute_stabilizer_orbits(
 			data_structures::partitionstack *&Staborbits,
 			int verbose_level);
-	int check_if_in_set_stabilizer(
-			int *Elt,
-			int size, long int *set, int verbose_level);
-	int check_if_transporter_for_set(
-			int *Elt,
-			int size,
-			long int *set1, long int *set2,
-			int verbose_level);
 	void find_strong_generators_at_level(
 			int base_len,
 		long int *the_base, int level,
 		data_structures_groups::vector_ge &gens,
 		data_structures_groups::vector_ge &subset_of_gens,
 		int verbose_level);
-	void make_element_from_permutation_representation(
-			int *Elt,
-			groups::sims *S, int *data, int verbose_level);
-	void make_element_from_base_image(
-			int *Elt, groups::sims *S,
-			int *data, int verbose_level);
-	void make_element_2x2(
-			int *Elt, int a0, int a1, int a2, int a3);
-	void make_element_from_string(
-			int *Elt,
-			std::string &data_string, int verbose_level);
-	void make_element(
-			int *Elt, int *data, int verbose_level);
-	void element_power_int_in_place(int *Elt, 
-		int n, int verbose_level);
-	void word_in_ab(int *Elt1, int *Elt2, int *Elt3, 
-		const char *word, int verbose_level);
 	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_lint();
-	void element_print_base_images(int *Elt);
-	void element_print_base_images(
-			int *Elt, std::ostream &ost);
-	void element_print_base_images_verbose(int *Elt, 
-			std::ostream &ost, int verbose_level);
-	void element_base_images(
-			int *Elt, int *base_images);
-	void element_base_images_verbose(int *Elt, 
-		int *base_images, int verbose_level);
-	void minimize_base_images(
-			int level, groups::sims *S,
-		int *Elt, int verbose_level);
 	void get_generators_from_ascii_coding(
 			std::string &ascii_coding,
 			data_structures_groups::vector_ge *&gens,
@@ -343,10 +287,6 @@ public:
 		groups::schreier *&Sch, groups::sims *&Stab,
 		groups::strong_generators *&stab_gens,
 		int verbose_level);
-	void make_element_which_moves_a_line_in_PG3q(
-			geometry::grassmann *Gr,
-		long int line_rk, int *Elt,
-		int verbose_level);
 	int matrix_group_dimension();
 	field_theory::finite_field *matrix_group_finite_field();
 	int is_semilinear_matrix_group();
@@ -364,12 +304,6 @@ public:
 			groups::strong_generators *H_gens,
 			groups::strong_generators *N_gens,
 			int verbose_level);
-	void element_conjugate_bvab(int *Elt_A,
-		int *Elt_B, int *Elt_C, int verbose_level);
-	void element_conjugate_babv(int *Elt_A,
-		int *Elt_B, int *Elt_C, int verbose_level);
-	void element_commutator_abavbv(int *Elt_A,
-		int *Elt_B, int *Elt_C, int verbose_level);
 	void compute_projectivity_subgroup(
 			groups::strong_generators *&projectivity_gens,
 			groups::strong_generators *Aut_gens,
@@ -562,117 +496,6 @@ public:
 			int *Elt, int f_with_permutation);
 
 	// action_cb.cpp
-	int image_of(void *elt, int a);
-	void image_of_low_level(void *elt,
-			int *input, int *output, int verbose_level);
-	int linear_entry_ij(void *elt, int i, int j);
-	int linear_entry_frobenius(void *elt);
-	void one(void *elt);
-	int is_one(void *elt);
-	void unpack(void *elt, void *Elt);
-	void pack(void *Elt, void *elt);
-	void retrieve(void *elt, int hdl);
-	int store(void *elt);
-	void mult(void *a, void *b, void *ab);
-	void mult_apply_from_the_right(void *a, void *b);
-		// a := a * b
-	void mult_apply_from_the_left(void *a, void *b);
-		// b := a * b
-	void invert(void *a, void *av);
-	void invert_in_place(void *a);
-	void transpose(void *a, void *at);
-	void move(void *a, void *b);
-	void dispose(int hdl);
-	void print(
-			std::ostream &ost, void *elt);
-	void print_quick(
-			std::ostream &ost, void *elt);
-	void print_as_permutation(
-			std::ostream &ost, void *elt);
-	void print_point(
-			int a, std::ostream &ost);
-	void unrank_point(long int rk, int *v);
-	long int rank_point(int *v);
-	void code_for_make_element(
-			int *data, void *elt);
-	void print_for_make_element(
-			std::ostream &ost, void *elt);
-	void print_for_make_element_no_commas(
-			std::ostream &ost, void *elt);
-	
-	long int element_image_of(long int a, void *elt, int verbose_level);
-	void element_image_of_low_level(int *input, int *output, 
-		void *elt, int verbose_level);
-	int element_linear_entry_ij(void *elt, int i, int j, 
-		int verbose_level);
-	int element_linear_entry_frobenius(void *elt, int verbose_level);
-	void element_one(void *elt, int verbose_level);
-	int element_is_one(void *elt, int verbose_level);
-	void element_unpack(void *elt, void *Elt, int verbose_level);
-	void element_pack(void *Elt, void *elt, int verbose_level);
-	void element_retrieve(int hdl, void *elt, int verbose_level);
-	int element_store(void *elt, int verbose_level);
-	void element_mult(void *a, void *b, void *ab, int verbose_level);
-	void element_invert(void *a, void *av, int verbose_level);
-	void element_transpose(void *a, void *at, int verbose_level);
-	void element_move(void *a, void *b, int verbose_level);
-	void element_dispose(int hdl, int verbose_level);
-	void element_print(void *elt, std::ostream &ost);
-	void element_print_quick(void *elt, std::ostream &ost);
-	void element_print_latex(void *elt, std::ostream &ost);
-	void element_print_latex_with_extras(
-			void *elt, std::string &label, std::ostream &ost);
-	void element_print_latex_with_print_point_function(
-		void *elt, std::ostream &ost,
-		void (*point_label)(std::stringstream &sstr,
-				long int pt, void *data),
-		void *point_label_data);
-	void element_print_verbose(void *elt, std::ostream &ost);
-	void element_code_for_make_element(void *elt, int *data);
-	void element_print_for_make_element(void *elt, 
-			std::ostream &ost);
-	void element_print_for_make_element_no_commas(void *elt, 
-			std::ostream &ost);
-	void element_print_as_permutation(void *elt, 
-			std::ostream &ost);
-	void element_as_permutation(void *elt, 
-		int *perm, int verbose_level);
-	void element_print_as_permutation_verbose(void *elt, 
-			std::ostream &ost, int verbose_level);
-	void element_print_as_permutation_with_offset(void *elt, 
-			std::ostream &ost,
-		int offset, int f_do_it_anyway_even_for_big_degree, 
-		int f_print_cycles_of_length_one, 
-		int verbose_level);
-	void element_print_as_permutation_with_offset_and_max_cycle_length(
-		void *elt, 
-		std::ostream &ost, int offset, int max_cycle_length,
-		int f_orbit_structure);
-	void element_print_image_of_set(void *elt, 
-		int size, long int *set);
-	int element_signum_of_permutation(void *elt);
-	void element_write_file_fp(int *Elt, 
-			std::ofstream &fp, int verbose_level);
-	void element_read_file_fp(int *Elt, 
-			std::ifstream &fp, int verbose_level);
-	void element_write_file(int *Elt, 
-			std::string &fname, int verbose_level);
-	void element_read_file(int *Elt, 
-			std::string &fname, int verbose_level);
-	void element_write_to_memory_object(
-			int *Elt,
-			orbiter_kernel_system::memory_object *m,
-			int verbose_level);
-	void element_read_from_memory_object(
-			int *Elt,
-			orbiter_kernel_system::memory_object *m,
-			int verbose_level);
-	void element_write_to_file_binary(int *Elt, 
-			std::ofstream &fp, int verbose_level);
-	void element_read_from_file_binary(int *Elt, 
-			std::ifstream &fp, int verbose_level);
-	void random_element(groups::sims *S, int *Elt,
-		int verbose_level);
 	void all_elements(
 			data_structures_groups::vector_ge *&vec,
 			int verbose_level);
@@ -916,6 +739,11 @@ public:
 		long int &total_backtrack_nodes,
 		int f_get_automorphism_group, groups::sims *Aut,
 		int verbose_level);
+	void make_element_which_moves_a_line_in_PG3q(
+			action *A,
+			geometry::grassmann *Gr,
+			long int line_rk, int *Elt,
+			int verbose_level);
 
 };
 
@@ -1158,6 +986,206 @@ public:
 
 
 };
+
+
+// #############################################################################
+// group_element.cpp:
+// #############################################################################
+
+
+
+//! action related functions that are specific to a group element
+
+
+class group_element {
+public:
+
+	action *A;
+
+
+	group_element();
+	~group_element();
+	void init(action *A, int verbose_level);
+
+	int image_of(void *elt, int a);
+	void image_of_low_level(void *elt,
+			int *input, int *output, int verbose_level);
+	int linear_entry_ij(void *elt, int i, int j);
+	int linear_entry_frobenius(void *elt);
+	void one(void *elt);
+	int is_one(void *elt);
+	void unpack(void *elt, void *Elt);
+	void pack(void *Elt, void *elt);
+	void retrieve(void *elt, int hdl);
+	int store(void *elt);
+	void mult(void *a, void *b, void *ab);
+	void mult_apply_from_the_right(void *a, void *b);
+		// a := a * b
+	void mult_apply_from_the_left(void *a, void *b);
+		// b := a * b
+	void invert(void *a, void *av);
+	void invert_in_place(void *a);
+	void transpose(void *a, void *at);
+	void move(void *a, void *b);
+	void dispose(int hdl);
+	void print(
+			std::ostream &ost, void *elt);
+	void print_quick(
+			std::ostream &ost, void *elt);
+	void print_as_permutation(
+			std::ostream &ost, void *elt);
+	void print_point(
+			int a, std::ostream &ost);
+	void unrank_point(long int rk, int *v);
+	long int rank_point(int *v);
+	void code_for_make_element(
+			int *data, void *elt);
+	void print_for_make_element(
+			std::ostream &ost, void *elt);
+	void print_for_make_element_no_commas(
+			std::ostream &ost, void *elt);
+
+	long int element_image_of(long int a, void *elt, int verbose_level);
+	void element_image_of_low_level(int *input, int *output,
+		void *elt, int verbose_level);
+	int element_linear_entry_ij(void *elt, int i, int j,
+		int verbose_level);
+	int element_linear_entry_frobenius(void *elt, int verbose_level);
+	void element_one(void *elt, int verbose_level);
+	int element_is_one(void *elt, int verbose_level);
+	void element_unpack(void *elt, void *Elt, int verbose_level);
+	void element_pack(void *Elt, void *elt, int verbose_level);
+	void element_retrieve(int hdl, void *elt, int verbose_level);
+	int element_store(void *elt, int verbose_level);
+	void element_mult(void *a, void *b, void *ab, int verbose_level);
+	void element_invert(void *a, void *av, int verbose_level);
+	void element_transpose(void *a, void *at, int verbose_level);
+	void element_move(void *a, void *b, int verbose_level);
+	void element_dispose(int hdl, int verbose_level);
+	void element_print(void *elt, std::ostream &ost);
+	void element_print_quick(void *elt, std::ostream &ost);
+	void element_print_latex(void *elt, std::ostream &ost);
+	void element_print_latex_with_extras(
+			void *elt, std::string &label, std::ostream &ost);
+	void element_print_latex_with_print_point_function(
+		void *elt, std::ostream &ost,
+		void (*point_label)(std::stringstream &sstr,
+				long int pt, void *data),
+		void *point_label_data);
+	void element_print_verbose(void *elt, std::ostream &ost);
+	void element_code_for_make_element(void *elt, int *data);
+	void element_print_for_make_element(void *elt,
+			std::ostream &ost);
+	void element_print_for_make_element_no_commas(void *elt,
+			std::ostream &ost);
+	void element_print_as_permutation(void *elt,
+			std::ostream &ost);
+	void element_as_permutation(void *elt,
+		int *perm, int verbose_level);
+	void element_print_as_permutation_verbose(void *elt,
+			std::ostream &ost, int verbose_level);
+	void element_print_as_permutation_with_offset(void *elt,
+			std::ostream &ost,
+		int offset, int f_do_it_anyway_even_for_big_degree,
+		int f_print_cycles_of_length_one,
+		int verbose_level);
+	void element_print_as_permutation_with_offset_and_max_cycle_length(
+		void *elt,
+		std::ostream &ost, int offset, int max_cycle_length,
+		int f_orbit_structure);
+	void element_print_image_of_set(void *elt,
+		int size, long int *set);
+	int element_signum_of_permutation(void *elt);
+	void element_write_file_fp(int *Elt,
+			std::ofstream &fp, int verbose_level);
+	void element_read_file_fp(int *Elt,
+			std::ifstream &fp, int verbose_level);
+	void element_write_file(int *Elt,
+			std::string &fname, int verbose_level);
+	void element_read_file(int *Elt,
+			std::string &fname, int verbose_level);
+	void element_write_to_memory_object(
+			int *Elt,
+			orbiter_kernel_system::memory_object *m,
+			int verbose_level);
+	void element_read_from_memory_object(
+			int *Elt,
+			orbiter_kernel_system::memory_object *m,
+			int verbose_level);
+	void element_write_to_file_binary(int *Elt,
+			std::ofstream &fp, int verbose_level);
+	void element_read_from_file_binary(int *Elt,
+			std::ifstream &fp, int verbose_level);
+	void random_element(groups::sims *S, int *Elt,
+		int verbose_level);
+	int element_has_order_two(int *E1, int verbose_level);
+	int product_has_order_two(int *E1, int *E2, int verbose_level);
+	int product_has_order_three(int *E1, int *E2, int verbose_level);
+	int element_order(void *elt);
+	int element_order_and_cycle_type(void *elt, int *cycle_type);
+	int element_order_and_cycle_type_verbose(
+			void *elt, int *cycle_type, int verbose_level);
+	int element_order_if_divisor_of(void *elt, int o);
+	void element_print_base_images(int *Elt);
+	void element_print_base_images(
+			int *Elt, std::ostream &ost);
+	void element_print_base_images_verbose(int *Elt,
+			std::ostream &ost, int verbose_level);
+	void element_base_images(
+			int *Elt, int *base_images);
+	void element_base_images_verbose(int *Elt,
+		int *base_images, int verbose_level);
+	void minimize_base_images(
+			int level, groups::sims *S,
+		int *Elt, int verbose_level);
+	void element_conjugate_bvab(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level);
+	void element_conjugate_babv(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level);
+	void element_commutator_abavbv(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level);
+	int find_non_fixed_point(void *elt, int verbose_level);
+	int find_fixed_points(void *elt,
+			int *fixed_points, int verbose_level);
+	int count_fixed_points(void *elt, int verbose_level);
+	int test_if_set_stabilizes(int *Elt,
+			int size, long int *set, int verbose_level);
+	void map_a_set(
+			long int *set,
+			long int *image_set,
+		int n, int *Elt, int verbose_level);
+	void map_a_set_and_reorder(
+			long int *set, long int *image_set,
+		int n, int *Elt, int verbose_level);
+	void make_element_from_permutation_representation(
+			int *Elt,
+			groups::sims *S, int *data, int verbose_level);
+	void make_element_from_base_image(
+			int *Elt, groups::sims *S,
+			int *data, int verbose_level);
+	void make_element_2x2(
+			int *Elt, int a0, int a1, int a2, int a3);
+	void make_element_from_string(
+			int *Elt,
+			std::string &data_string, int verbose_level);
+	void make_element(
+			int *Elt, int *data, int verbose_level);
+	void element_power_int_in_place(int *Elt,
+		int n, int verbose_level);
+	void word_in_ab(int *Elt1, int *Elt2, int *Elt3,
+		const char *word, int verbose_level);
+	int check_if_in_set_stabilizer(
+			int *Elt,
+			int size, long int *set, int verbose_level);
+	int check_if_transporter_for_set(
+			int *Elt,
+			int size,
+			long int *set1, long int *set2,
+			int verbose_level);
+
+
+};
+
 
 
 // #############################################################################

@@ -239,7 +239,7 @@ long int action_on_homogeneous_polynomials::compute_image_int(
 			Int_vec_print(cout, v2, dimension);
 			cout << endl;
 			cout << "A=" << endl;
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 #if 1
 			{
 				ofstream f("equations.txt");
@@ -323,7 +323,7 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	n = mtx->n;
 
 
-	A->element_invert(Elt, Elt1, 0);
+	A->Group_element->element_invert(Elt, Elt1, 0);
 
 
 	if (f_semilinear) {

@@ -103,10 +103,10 @@ long int action_on_bricks::compute_image_linear_action(
 		cout << "action_on_bricks::compute_image rk_v=" << rk_v << endl;
 		cout << "action_on_bricks::compute_image rk_w=" << rk_w << endl;
 		cout << "action_on_bricks::compute_image A=" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 		}
-	rk_vv = A->image_of(Elt, rk_v);
-	rk_ww = A->image_of(Elt, rk_w);
+	rk_vv = A->Group_element->image_of(Elt, rk_v);
+	rk_ww = A->Group_element->image_of(Elt, rk_w);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image rk_vv=" << rk_vv << endl;
 		cout << "action_on_bricks::compute_image rk_ww=" << rk_ww << endl;
@@ -182,10 +182,10 @@ long int action_on_bricks::compute_image_permutation_action(
 				"b=" << b << endl;
 		cout << "action_on_bricks::compute_image_permutation_action "
 				"A=" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 		}
-	c = A->image_of(Elt, a);
-	d = A->image_of(Elt, b);
+	c = A->Group_element->image_of(Elt, a);
+	d = A->Group_element->image_of(Elt, b);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image_permutation_action "
 				"c=" << c << endl;

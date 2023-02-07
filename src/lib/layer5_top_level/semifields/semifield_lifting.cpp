@@ -1105,7 +1105,7 @@ void semifield_lifting::upstep(
 		i = 0;
 		for (h = 0; h < N; h++) {
 			if (Aut[h]) {
-				SC->A->element_move(Aut[h], coset_reps->ith(i), 0);
+				SC->A->Group_element->element_move(Aut[h], coset_reps->ith(i), 0);
 				i++;
 			}
 		}
@@ -1289,7 +1289,7 @@ void semifield_lifting::upstep_loop_over_down_set(
 						<< ", we found an automorphism" << endl;
 			}
 			Aut[h] = NEW_int(SC->A->elt_size_in_int);
-			SC->A->element_move(transporter, Aut[h], 0);
+			SC->A->Group_element->element_move(transporter, Aut[h], 0);
 			//test_automorphism(Aut[h], level,
 			//		changed_space, verbose_level - 3);
 		}
@@ -1315,7 +1315,7 @@ void semifield_lifting::upstep_loop_over_down_set(
 			Flag_orbits[mo].f_fusion_node = TRUE;
 			Flag_orbits[mo].fusion_with = f;
 			Flag_orbits[mo].fusion_elt = NEW_int(SC->A->elt_size_in_int);
-			SC->A->element_invert(
+			SC->A->Group_element->element_invert(
 					transporter,
 					Flag_orbits[mo].fusion_elt, 0);
 
@@ -1595,11 +1595,11 @@ int semifield_lifting::trace_step_up(
 					"fusion node" << endl;
 		}
 		f0 = Flag_orbits[fo].fusion_with;
-		SC->A->element_mult(transporter,
+		SC->A->Group_element->element_mult(transporter,
 				Flag_orbits[fo].fusion_elt,
 				ELT3,
 				0 /* verbose_level */);
-		SC->A->element_move(ELT3, transporter, 0);
+		SC->A->Group_element->element_move(ELT3, transporter, 0);
 		SC->apply_element_and_copy_back(Flag_orbits[fo].fusion_elt,
 			changed_basis, basis_tmp,
 			0, basis_sz, verbose_level);
@@ -1822,11 +1822,11 @@ void semifield_lifting::trace_very_general(
 	}
 
 	Downstep_nodes[trace_po].Sch->coset_rep_inv(pos, 0 /* verbose_level */);
-	A->element_mult(transporter,
+	A->Group_element->element_mult(transporter,
 			Downstep_nodes[trace_po].Sch->cosetrep,
 			ELT3,
 			0 /* verbose_level */);
-	A->element_move(ELT3, transporter, 0);
+	A->Group_element->element_move(ELT3, transporter, 0);
 	// apply cosetrep to base elements 2,...,basis_sz - 1:
 	SC->apply_element_and_copy_back(
 			Downstep_nodes[trace_po].Sch->cosetrep,
@@ -1932,7 +1932,7 @@ void semifield_lifting::trace_to_level_two(
 	for (i = k; i < n; i++) {
 		M1[i * n + i] = 1;
 	}
-	A->make_element(transporter, M1, 0);
+	A->Group_element->make_element(transporter, M1, 0);
 
 	if (f_vvv) {
 		cout << "transformation matrix transporter=" << endl;
@@ -1996,7 +1996,7 @@ void semifield_lifting::trace_to_level_two(
 	// ELT2 = diag(Basis, Basis).
 
 
-	A->element_move(ELT3, transporter, 0);
+	A->Group_element->element_move(ELT3, transporter, 0);
 
 	// apply ELT2 (i.e., Basis)
 	// to input_basis elements 1, .., basis_sz - 1
@@ -2034,7 +2034,7 @@ void semifield_lifting::trace_to_level_two(
 				L2->class_rep_plus_I_Basis_inv[c0],
 				ELT2, ELT3,
 				0 /* verbose_level */);
-		A->element_move(ELT3, transporter, 0);
+		A->Group_element->element_move(ELT3, transporter, 0);
 
 		// apply ELT2 to the basis elements 1,...,basis_sz - 1:
 		SC->apply_element_and_copy_back(ELT2,
@@ -2073,10 +2073,10 @@ void semifield_lifting::trace_to_level_two(
 			exit(1);
 		}
 		d0 = L2->Fusion_idx[d];
-		A->element_mult(transporter, L2->Fusion_elt[d], ELT3, 0);
+		A->Group_element->element_mult(transporter, L2->Fusion_elt[d], ELT3, 0);
 		//multiply_to_the_right(transporter, Fusion_elt[d],
 		//ELT2, ELT3, 0 /* verbose_level */);
-		A->element_move(ELT3, transporter, 0);
+		A->Group_element->element_move(ELT3, transporter, 0);
 
 		// apply Fusion_elt[d] to the basis elements 0,1,...,basis_sz - 1
 		SC->apply_element_and_copy_back(

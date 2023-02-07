@@ -466,7 +466,7 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 
 	C->make_matrix_from_class_rep(Mtx, R + c, 0 /*verbose_level - 1 */);
 
-	A_PGLk->make_element(Elt, Mtx, 0);
+	A_PGLk->Group_element->make_element(Elt, Mtx, 0);
 
 	Centralizer_gens->init_centralizer_of_matrix(
 			A_PGLk, Mtx, verbose_level - 2);
@@ -503,12 +503,12 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 
 		A_PGLk->coset_unrank(G, U, rk, E1, 0 /* verbose_level */);
 
-		A_PGLk->element_invert(E1, E2, 0);
+		A_PGLk->Group_element->element_invert(E1, E2, 0);
 
 
-		A_PGLk->element_mult(E2, Elt, E3, 0);
-		A_PGLk->element_mult(E3, E1, E4, 0);
-		A_PGLk->element_print(E4, cout);
+		A_PGLk->Group_element->element_mult(E2, Elt, E3, 0);
+		A_PGLk->Group_element->element_mult(E3, E1, E4, 0);
+		A_PGLk->Group_element->element_print(E4, cout);
 
 		r = SC->matrix_rank(E4); // G->element_rank_int(E4);
 		if (f_v) {
@@ -518,7 +518,7 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 
 		if (f_v) {
 			cout << "Coset representative:" << endl;
-			A_PGLk->element_print(E1, cout);
+			A_PGLk->Group_element->element_print(E1, cout);
 			cout << endl;
 		}
 	}
@@ -867,7 +867,7 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 
 			C->identify_matrix(Mtx_2, R2, Basis, verbose_level - 3);
 
-			A_PGLk->make_element(Elt, Basis, 0);
+			A_PGLk->Group_element->make_element(Elt, Basis, 0);
 
 			Flag_orbit_stabilizer[i].add_single_generator(Elt,
 					2 /* group_index */, verbose_level - 3);
@@ -1077,9 +1077,9 @@ void semifield_level_two::upstep(int verbose_level)
 		coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
 		coset_reps->init(A, verbose_level - 2);
 		coset_reps->allocate(nb_aut_gens + 1, verbose_level - 2);
-		A->element_one(coset_reps->ith(0), 0);
+		A->Group_element->element_one(coset_reps->ith(0), 0);
 		for (i = 0; i < nb_aut_gens; i++) {
-			A->element_move(Aut_gens[i], coset_reps->ith(i + 1), 0);
+			A->Group_element->element_move(Aut_gens[i], coset_reps->ith(i + 1), 0);
 			FREE_int(Aut_gens[i]);
 		}
 		FREE_pint(Aut_gens);
@@ -1195,7 +1195,7 @@ void semifield_level_two::upstep(int verbose_level)
 						"the element" << endl;
 				if (FALSE) {
 					cout << "Fusion element:" << endl;
-					A->element_print(Fusion_elt[f], cout);
+					A->Group_element->element_print(Fusion_elt[f], cout);
 				}
 			}
 			else {
@@ -1260,10 +1260,10 @@ void semifield_level_two::trace(int f, int coset,
 		Int_matrix_print(M1, n, n);
 	}
 
-	A->make_element(ELT1, M1, 0);
+	A->Group_element->make_element(ELT1, M1, 0);
 	if (f_vv) {
 		cout << "semifield_level_two::trace ELT1=" << endl;
-		A->print_quick(cout, ELT1);
+		A->Group_element->print_quick(cout, ELT1);
 	}
 
 	SC->A_on_S->compute_image_low_level(ELT1, Mtx1, Mtx4, 0 /* verbose_level */);
@@ -1343,7 +1343,7 @@ void semifield_level_two::trace(int f, int coset,
 					ELT2, ELT1, 0 /* verbose_level */);
 		}
 		else {
-			A->element_move(ELT3, ELT1, 0);
+			A->Group_element->element_move(ELT3, ELT1, 0);
 		}
 
 
@@ -1365,7 +1365,7 @@ void semifield_level_two::trace(int f, int coset,
 
 
 		if (f_vv) {
-			A->element_print_quick(ELT1, cout);
+			A->Group_element->element_print_quick(ELT1, cout);
 		}
 
 
@@ -1399,7 +1399,7 @@ void semifield_level_two::trace(int f, int coset,
 #endif
 		f_automorphism = TRUE;
 		Aut = NEW_int(A->elt_size_in_int);
-		A->element_move(ELT1, Aut, 0);
+		A->Group_element->element_move(ELT1, Aut, 0);
 
 	}
 	else {
@@ -1408,7 +1408,7 @@ void semifield_level_two::trace(int f, int coset,
 		}
 		multiply_to_the_right(ELT1, Basis1,
 				ELT2, ELT3, 0 /* verbose_level */);
-		A->element_move(ELT3, ELT1, 0);
+		A->Group_element->element_move(ELT3, ELT1, 0);
 
 		d1 = class_to_flag_orbit[idx1];
 		d2 = class_to_flag_orbit[idx2];
@@ -1428,15 +1428,15 @@ void semifield_level_two::trace(int f, int coset,
 					class_rep_plus_I_Basis_inv[cc1],
 					ELT2, ELT3,
 					0 /* verbose_level */);
-			A->element_move(ELT3, ELT1, 0);
+			A->Group_element->element_move(ELT3, ELT1, 0);
 		}
 		else {
 		}
-		A->element_invert(ELT1, ELT3, 0);
+		A->Group_element->element_invert(ELT1, ELT3, 0);
 		f_Fusion[d] = TRUE;
 		Fusion_idx[d] = f;
 		Fusion_elt[d] = NEW_int(A->elt_size_in_int);
-		A->element_move(ELT3, Fusion_elt[d], 0);
+		A->Group_element->element_move(ELT3, Fusion_elt[d], 0);
 	}
 
 	if (f_v) {
@@ -1471,8 +1471,8 @@ void semifield_level_two::multiply_to_the_right(
 			M[(k + i) * n + k + j] = a;
 		}
 	}
-	A->make_element(ELT2, M, 0);
-	A->element_mult(ELT1, ELT2, ELT3, 0);
+	A->Group_element->make_element(ELT2, M, 0);
+	A->Group_element->element_mult(ELT1, ELT2, ELT3, 0);
 
 	FREE_int(M);
 
@@ -2257,7 +2257,7 @@ void semifield_level_two::report(
 			if (f_Fusion[i]) {
 				ost << "Fusion\\_elt = \\\\" << endl;
 				ost << "$$" << endl;
-				SC->A->element_print_latex(Fusion_elt[i], ost);
+				SC->A->Group_element->element_print_latex(Fusion_elt[i], ost);
 				ost << "$$" << endl;
 			}
 			ring_theory::longinteger_object go;
