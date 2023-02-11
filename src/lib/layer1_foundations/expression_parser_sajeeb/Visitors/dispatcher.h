@@ -10,8 +10,8 @@
  * @brief 
 */
 
-#include "../IRTree/node_forward_declaration.h"
 
+#include "../IRTree/node.h"
 #include <memory>
 #include <unordered_map>
 #include <iostream>
@@ -27,17 +27,39 @@ using std::shared_ptr;
 
 namespace dispatcher {
 
-    std::variant<plus_node, minus_node, multiply_node, exponent_node, unary_negate_node, variable_node, parameter_node, 
-    number_node, sentinel_node> nodes;
-
-    template<typename visitor_t, typename node_t, class... Args_t>
-    void visit(shared_ptr<visitor_t>& visitor, shared_ptr<node_t>& node, Args_t... args) {
-        cout << "visit: " << node->type << endl;
-    }
-
-    template<typename visitor_t, typename node_t, class... Args_t>
-    void visit(const shared_ptr<visitor_t>& visitor, shared_ptr<node_t>& node, Args_t... args) {
-        std::visit(visitor.get(), node.get(), args...);
+    template <typename node_t, typename visitor_t, typename... visitor_args_t>
+    auto visit(shared_ptr<node_t>& node, visitor_t& visitor, visitor_args_t... args) {
+        switch (node->type) {
+            case irtree_node::node_type::SENTINEL_NODE:
+                return visitor.template visit<sentinel_node>(std::forward<decltype(node)>(node),
+                                                std::forward<decltype(args)>(args)...);
+            case irtree_node::node_type::NUMBER_NODE:
+                return visitor.template visit<number_node>(std::forward<decltype(node)>(node),
+                                                std::forward<decltype(args)>(args)...);
+            case irtree_node::node_type::PARAMETER_NODE:
+                return visitor.template visit<parameter_node>(std::forward<decltype(node)>(node),
+                                                std::forward<decltype(args)>(args)...);
+            case irtree_node::node_type::VARIABLE_NODE:
+                return visitor.template visit<variable_node>(std::forward<decltype(node)>(node),
+                                                std::forward<decltype(args)>(args)...);
+            case irtree_node::node_type::UNARY_NEGATE_NODE:
+                return visitor.template visit<unary_negate_node>(std::forward<decltype(node)>(node),
+                                                std::forward<decltype(args)>(args)...);
+            case irtree_node::node_type::EXPONENT_NODE:
+                return visitor.template visit<exponent_node>(std::forward<decltype(node)>(node),
+                                                std::forward<decltype(args)>(args)...);
+            case irtree_node::node_type::MULTIPLY_NODE:
+                return visitor.template visit<multiply_node>(std::forward<decltype(node)>(node),
+                                                std::forward<decltype(args)>(args)...);
+            case irtree_node::node_type::MINUS_NODE:
+                return visitor.template visit<minus_node>(std::forward<decltype(node)>(node),
+                                                std::forward<decltype(args)>(args)...);
+            case irtree_node::node_type::PLUS_NODE:
+                return visitor.template visit<plus_node>(std::forward<decltype(node)>(node),
+                                                std::forward<decltype(args)>(args)...);
+            default:
+                break;
+        };
     }
 
 }
