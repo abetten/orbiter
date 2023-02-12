@@ -479,7 +479,7 @@ public:
 	poset_classification_control *get_control();
 	actions::action *get_A();
 	actions::action *get_A2();
-	algebra::vector_space *get_VS();
+	linear_algebra::vector_space *get_VS();
 	data_structures_groups::schreier_vector_handler
 		*get_schreier_vector_handler();
 	int &get_depth();
@@ -1803,7 +1803,7 @@ public:
 	int n;
 
 	int f_subspace_lattice;
-	algebra::vector_space *VS;
+	linear_algebra::vector_space *VS;
 
 	actions::action *A; // the action in which the group is given
 	actions::action *A2; // the action in which we do the search
@@ -1828,7 +1828,7 @@ public:
 	void init_subspace_lattice(
 			actions::action *A, actions::action *A2,
 			groups::strong_generators *Strong_gens,
-			algebra::vector_space *VS,
+			linear_algebra::vector_space *VS,
 			int verbose_level);
 	void init(
 			poset_description *description,

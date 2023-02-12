@@ -93,7 +93,7 @@ void l3_interface_gap::export_collineation_group_to_fining(
 	int h;
 	algebra::interface_gap_low Interface_low;
 	field_theory::finite_field *F;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	int *Elt;
 	int frob;
 	int d;

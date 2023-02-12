@@ -115,7 +115,8 @@ void polynomial_double_domain::copy(polynomial_double *A,
 
 void polynomial_double_domain::determinant_over_polynomial_ring(
 		polynomial_double *P,
-		polynomial_double *det, int n, int verbose_level)
+		polynomial_double *det, int n,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	polynomial_double *Q;

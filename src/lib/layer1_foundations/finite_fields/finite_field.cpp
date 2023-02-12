@@ -336,7 +336,7 @@ void finite_field::finite_field_init_small_order(int q,
 	Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 	Linear_algebra->init(this, verbose_level);
 
-	Projective_space_basic = NEW_OBJECT(projective_space_basic);
+	Projective_space_basic = NEW_OBJECT(geometry::projective_space_basic);
 	Projective_space_basic->init(this, verbose_level);
 
 	finite_field::q = q;
@@ -533,7 +533,7 @@ void finite_field::init_override_polynomial_small_order(
 	Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 	Linear_algebra->init(this, verbose_level);
 
-	Projective_space_basic = NEW_OBJECT(projective_space_basic);
+	Projective_space_basic = NEW_OBJECT(geometry::projective_space_basic);
 	Projective_space_basic->init(this, verbose_level);
 
 	finite_field::q = q;

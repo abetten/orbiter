@@ -122,7 +122,7 @@ void packing_classify::spread_table_init(
 				"dimension_of_spread_elements=" << dimension_of_spread_elements << endl;
 	}
 	int n, q;
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 	spreads::spread_classify *T;
 
 

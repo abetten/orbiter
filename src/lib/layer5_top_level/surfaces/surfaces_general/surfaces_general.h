@@ -145,30 +145,42 @@ public:
 	void create_cubic_surface(
 			surface_create_description *Descr,
 			int verbose_level);
-	int init_with_data(surface_create_description *Descr,
+	int init_with_data(
+			surface_create_description *Descr,
 		surface_with_action *Surf_A,
 		int verbose_level);
 	int init(surface_create_description *Descr,
 		int verbose_level);
 	int create_surface_from_description(int verbose_level);
-	void override_group(std::string &group_order_text,
-			int nb_gens, std::string &gens_text, int verbose_level);
-	void create_Eckardt_surface(int a, int b, int verbose_level);
-	void create_surface_G13(int a, int verbose_level);
-	void create_surface_F13(int a, int verbose_level);
-	void create_surface_bes(int a, int c, int verbose_level);
-	void create_surface_general_abcd(int a, int b, int c, int d,
+	void override_group(
+			std::string &group_order_text,
+			int nb_gens, std::string &gens_text,
 			int verbose_level);
-	void create_surface_by_coefficients(std::string &coefficients_text,
+	void create_Eckardt_surface(
+			int a, int b, int verbose_level);
+	void create_surface_G13(
+			int a, int verbose_level);
+	void create_surface_F13(
+			int a, int verbose_level);
+	void create_surface_bes(
+			int a, int c, int verbose_level);
+	void create_surface_general_abcd(
+			int a, int b, int c, int d,
+			int verbose_level);
+	void create_surface_by_coefficients(
+			std::string &coefficients_text,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
-	void create_surface_by_coefficient_vector(int *coeffs20,
+	void create_surface_by_coefficient_vector(
+			int *coeffs20,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
-	void create_surface_by_rank(std::string &rank_text, int defining_q,
+	void create_surface_by_rank(
+			std::string &rank_text, int defining_q,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
-	void create_surface_from_catalogue(int iso,
+	void create_surface_from_catalogue(
+			int iso,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
 	void create_surface_by_arc_lifting(
@@ -204,7 +216,8 @@ public:
 		std::vector<int> &f_inverse_transform,
 		int verbose_level);
 	// applies all transformations and then recomputes the properties
-	void apply_single_transformation(int f_inverse,
+	void apply_single_transformation(
+			int f_inverse,
 			int *transformation_coeffs,
 			int sz,
 			int verbose_level);
@@ -216,10 +229,12 @@ public:
 			int verbose_level);
 		// not working ToDo
 #endif
-	void export_something(std::string &what, int verbose_level);
+	void export_something(
+			std::string &what, int verbose_level);
 	void export_gap(int verbose_level);
 	void do_report(int verbose_level);
-	void do_report2(std::ostream &ost, int verbose_level);
+	void do_report2(
+			std::ostream &ost, int verbose_level);
 	void report_with_group(
 			std::string &Control_six_arcs_label,
 			int verbose_level);

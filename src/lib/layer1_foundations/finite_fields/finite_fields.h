@@ -639,7 +639,7 @@ public:
 
 	linear_algebra::linear_algebra *Linear_algebra;
 
-	projective_space_basic *Projective_space_basic;
+	geometry::projective_space_basic *Projective_space_basic;
 
 	int f_related_fields_have_been_computed;
 	related_fields *Related_fields;
@@ -900,80 +900,6 @@ public:
 
 };
 
-// #############################################################################
-// projective_space_basic.cpp
-// #############################################################################
-
-//! basic functions for projective geometries over a finite field such as ranking and unranking
-
-class projective_space_basic {
-
-private:
-
-public:
-
-	finite_field *F;
-
-	projective_space_basic();
-	~projective_space_basic();
-	void init(finite_field *F, int verbose_level);
-	void PG_element_apply_frobenius(
-			int n, int *v, int f);
-	int test_if_vectors_are_projectively_equal(
-			int *v1, int *v2, int len);
-	void PG_element_normalize(
-			int *v, int stride, int len);
-	// last non-zero element made one
-	void PG_element_normalize_from_front(
-			int *v, int stride, int len);
-	// first non zero element made one
-	void PG_element_normalize_from_a_given_position(
-			int *v, int stride, int len, int idx);
-
-
-	void PG_elements_embed(
-			long int *set_in, long int *set_out, int sz,
-			int old_length, int new_length, int *v);
-	long int PG_element_embed(
-			long int rk, int old_length, int new_length, int *v);
-	void PG_element_unrank_fining(
-			int *v, int len, int a);
-	int PG_element_rank_fining(
-			int *v, int len);
-	void PG_element_unrank_gary_cook(
-			int *v, int len, int a);
-	void PG_element_rank_modified(
-			int *v, int stride, int len, int &a);
-	void PG_element_unrank_modified(
-			int *v, int stride, int len, int a);
-	void PG_element_rank_modified_lint(
-			int *v, int stride, int len, long int &a);
-	void PG_elements_unrank_lint(
-			int *M, int k, int n, long int *rank_vec);
-	void PG_elements_rank_lint(
-			int *M, int k, int n, long int *rank_vec);
-	void PG_element_unrank_modified_lint(
-			int *v, int stride, int len, long int a);
-	void PG_element_rank_modified_not_in_subspace(
-			int *v, int stride, int len, int m, long int &a);
-	void PG_element_unrank_modified_not_in_subspace(
-			int *v, int stride, int len, int m, long int a);
-
-	void projective_point_unrank(int n, int *v, int rk);
-	long int projective_point_rank(int n, int *v);
-	void all_PG_elements_in_subspace(
-			int *genma, int k, int n,
-			long int *&point_list, int &nb_points,
-			int verbose_level);
-	void all_PG_elements_in_subspace_array_is_given(
-			int *genma, int k, int n,
-			long int *point_list, int &nb_points,
-			int verbose_level);
-	void display_all_PG_elements(int n);
-	void display_all_PG_elements_not_in_subspace(int n, int m);
-	void display_all_AG_elements(int n);
-
-};
 
 
 

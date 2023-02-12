@@ -1783,6 +1783,39 @@ void group_element::word_in_ab(
 	FREE_int(Elt5);
 }
 
+void group_element::evaluate_word(
+		int *Elt, int *word, int len,
+		data_structures_groups::vector_ge *gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::evaluate_word" << endl;
+	}
+	int *Elt1;
+	int *Elt2;
+	int i;
+
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+	one(Elt1);
+
+	for (i = 0; i < len; i++) {
+		mult(Elt1, gens->ith(word[i]), Elt2);
+		move(Elt2, Elt1);
+	}
+	move(Elt1, Elt);
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	if (f_v) {
+		cout << "group_element::evaluate_word done" << endl;
+	}
+}
+
 int group_element::check_if_in_set_stabilizer(
 		int *Elt,
 		int size, long int *set, int verbose_level)
@@ -1889,6 +1922,200 @@ int group_element::check_if_transporter_for_set(
 	return TRUE;
 
 }
+
+void group_element::compute_fixed_objects_in_PG(
+		int up_to_which_rank,
+		geometry::projective_space *P,
+	int *Elt,
+	std::vector<std::vector<long int> > &Fix,
+	int verbose_level)
+// creates temporary actions using induced_action_on_grassmannian
+{
+	int f_v = (verbose_level >= 1);
+	int j, h;
+	long int a;
+
+	if (f_v) {
+		cout << "group_element::compute_fixed_objects_in_PG" << endl;
+	}
+
+	if (up_to_which_rank < 1) {
+		cout << "group_element::compute_fixed_objects_in_PG "
+				"up_to_which_rank < 1" << endl;
+		exit(1);
+	}
+
+
+
+
+	if (f_v) {
+		cout << "group_element::compute_fixed_objects_in_PG "
+				"computing fixed points" << endl;
+	}
+	{
+		vector<long int> fix;
+
+		for (a = 0; a < P->N_points; a++) {
+			j = A->Group_element->element_image_of(a, Elt, 0 /* verbose_level */);
+			if (j == a) {
+				fix.push_back(a);
+			}
+		}
+
+		Fix.push_back(fix);
+	}
+
+
+	for (h = 2; h <= up_to_which_rank; h++) {
+
+		if (f_v) {
+			cout << "group_element::compute_fixed_objects_in_PG "
+					"computing fixed subspaces of rank " << h << endl;
+		}
+		vector<long int> fix;
+		action *Ah;
+
+		if (f_v) {
+			cout << "group_element::compute_fixed_objects_in_PG "
+					"before A->Induced_action->induced_action_on_grassmannian" << endl;
+		}
+		Ah = A->Induced_action->induced_action_on_grassmannian(
+				h, 0 /* verbose_level*/);
+		if (f_v) {
+			cout << "group_element::compute_fixed_objects_in_PG "
+					"after A->Induced_action->induced_action_on_grassmannian" << endl;
+		}
+
+		for (a = 0; a < Ah->degree; a++) {
+			j = Ah->Group_element->element_image_of(
+					a, Elt, 0 /* verbose_level */);
+			if (j == a) {
+				fix.push_back(a);
+			}
+		}
+
+		Fix.push_back(fix);
+
+		FREE_OBJECT(Ah);
+
+
+	}
+
+
+	if (f_v) {
+		cout << "group_element::compute_fixed_objects_in_PG done" << endl;
+	}
+}
+
+
+void group_element::report_fixed_objects_in_PG(
+		std::ostream &ost,
+		geometry::projective_space *P,
+	int *Elt,
+	int verbose_level)
+// creates temporary actions using induced_action_on_grassmannian
+{
+	int f_v = (verbose_level >= 1);
+	int j, h, cnt;
+	int v[4];
+	//field_theory::finite_field *F;
+
+	if (f_v) {
+		cout << "group_element::report_fixed_objects_in_PG" << endl;
+	}
+
+
+	//ost << "\\section{Fixed Objects}" << endl;
+
+	//F = PG->F;
+
+
+	int up_to_which_rank = P->n;
+	std::vector<std::vector<long int>> Fix;
+	long int a;
+
+	if (f_v) {
+		cout << "group_element::report_fixed_objects_in_PG "
+				"before compute_fixed_objects_in_PG" << endl;
+	}
+	compute_fixed_objects_in_PG(
+			up_to_which_rank,
+			P,
+			Elt,
+			Fix,
+			verbose_level);
+
+
+	ost << "\\bigskip" << endl;
+
+	ost << "The element" << endl;
+	ost << "$$" << endl;
+	A->Group_element->element_print_latex(Elt, ost);
+	ost << "$$" << endl;
+	ost << "has the following fixed objects:\\\\" << endl;
+
+
+	ost << "\\bigskip" << endl;
+	//ost << "Fixed Points:\\" << endl;
+
+
+	cnt = Fix[0].size();
+	ost << "There are " << cnt << " / " << P->N_points
+			<< " fixed points, they are: \\\\" << endl;
+	for (j = 0; j < cnt; j++) {
+		a = Fix[0][j];
+
+		P->F->Projective_space_basic->PG_element_unrank_modified_lint(
+				v, 1, 4, a);
+
+		ost << j << " / " << cnt << " = " << a << " : ";
+		Int_vec_print(ost, v, 4);
+		ost << "\\\\" << endl;
+	}
+
+	ost << "\\bigskip" << endl;
+
+	for (h = 2; h <= up_to_which_rank; h++) {
+
+		if (f_v) {
+			cout << "group_element::compute_fixed_objects_in_PG "
+					"listing fixed subspaces of rank " << h << endl;
+		}
+		vector<long int> fix;
+		action *Ah;
+
+		if (f_v) {
+			cout << "group_element::compute_fixed_objects_in_PG "
+					"before A->Induced_action->induced_action_on_grassmannian" << endl;
+		}
+		Ah = A->Induced_action->induced_action_on_grassmannian(
+				h, 0 /* verbose_level*/);
+		if (f_v) {
+			cout << "group_element::compute_fixed_objects_in_PG "
+					"after A->Induced_action->induced_action_on_grassmannian" << endl;
+		}
+
+		cnt = Fix[h - 1].size();
+		ost << "There are " << cnt << " / " << Ah->degree
+				<< " fixed subspaces of "
+				"rank " << h << ", they are: \\\\" << endl;
+
+		for (j = 0; j < cnt; j++) {
+			a = Fix[h - 1][j];
+
+			ost << j << " / " << cnt << " = " << a << " : $";
+			Ah->G.AG->G->print_single_generator_matrix_tex(ost, a);
+			ost << "$\\\\" << endl;
+		}
+		FREE_OBJECT(Ah);
+	}
+
+
+	if (f_v) {
+		cout << "group_element::report_fixed_objects_in_P3 done" << endl;
+	}
+}
+
 
 }}}
 

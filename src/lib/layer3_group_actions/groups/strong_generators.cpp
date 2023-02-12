@@ -3896,7 +3896,6 @@ void strong_generators::report_fixed_objects_in_PG(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	actions::action_global AG;
 
 	if (f_v) {
 		cout << "strong_generators::report_fixed_objects_in_PG" << endl;
@@ -3906,8 +3905,7 @@ void strong_generators::report_fixed_objects_in_PG(
 	for (i = 0; i < gens->len; i++) {
 
 		ost << "\\item" << endl;
-		AG.report_fixed_objects_in_PG(ost,
-				A,
+		A->Group_element->report_fixed_objects_in_PG(ost,
 				P,
 				gens->ith(i),
 				verbose_level);

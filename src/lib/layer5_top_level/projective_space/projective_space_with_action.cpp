@@ -1488,45 +1488,6 @@ void projective_space_with_action::do_spread_classify(int k,
 	}
 }
 
-#if 0
-void projective_space_with_action::setup_surface_with_action(
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action
-			*&Surf_A,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action" << endl;
-		cout << "projective_space_with_action::setup_surface_with_action verbose_level=" << verbose_level << endl;
-	}
-
-
-	algebraic_geometry::surface_domain *Surf;
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(F, 0 /*verbose_level - 1*/);
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action after Surf->init" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
-
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action before Surf_A->init" << endl;
-	}
-	Surf_A->init(Surf, this, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action after Surf_A->init" << endl;
-	}
-
-}
-#endif
-
 
 void projective_space_with_action::report_decomposition_by_group(
 		groups::strong_generators *SG,
@@ -1615,20 +1576,18 @@ void projective_space_with_action::report_fixed_objects(
 		//latex_head_easy(fp);
 
 
-		actions::action_global AG;
 
 		if (f_v) {
 			cout << "projective_space_with_action::report_fixed_objects "
-					"before AG.report_fixed_objects_in_PG" << endl;
+					"before A->Group_element->report_fixed_objects_in_PG" << endl;
 		}
-		AG.report_fixed_objects_in_PG(fp,
-				A,
+		A->Group_element->report_fixed_objects_in_PG(fp,
 				P,
 				Elt,
 				verbose_level);
 		if (f_v) {
 			cout << "projective_space_with_action::report_fixed_objects "
-					"after AG.report_fixed_objects_in_PG" << endl;
+					"after A->Group_element->report_fixed_objects_in_PG" << endl;
 		}
 
 

@@ -405,7 +405,7 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	int d, q, i;
 	algebra::gl_classes *C;

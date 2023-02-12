@@ -190,7 +190,7 @@ void action_global::make_generators_stabilizer_of_two_components(
 	int *minusId;
 	int n, i, len;
 	int *P;
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 	field_theory::finite_field *Fq;
 	int minus_one, alpha;
 	groups::strong_generators *gens_PGL_k;
@@ -348,7 +348,7 @@ void action_global::make_generators_stabilizer_of_three_components(
 	int *minusId;
 	int n, i, len;
 	int *P;
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 	field_theory::finite_field *Fq;
 	int minus_one;
 	groups::strong_generators *gens_PGL_k;
@@ -1031,8 +1031,8 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 
 
 action *action_global::init_direct_product_group_and_restrict(
-		groups::matrix_group *M1,
-		groups::matrix_group *M2,
+		algebra::matrix_group *M1,
+		algebra::matrix_group *M2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1084,8 +1084,8 @@ action *action_global::init_direct_product_group_and_restrict(
 }
 
 action *action_global::init_direct_product_group(
-		groups::matrix_group *M1,
-		groups::matrix_group *M2,
+		algebra::matrix_group *M1,
+		algebra::matrix_group *M2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1419,200 +1419,6 @@ void action_global::orbits_on_equations(
 }
 
 
-void action_global::compute_fixed_objects_in_PG(
-		int up_to_which_rank,
-		action *A,
-		geometry::projective_space *P,
-	int *Elt,
-	std::vector<std::vector<long int>> &Fix,
-	int verbose_level)
-// creates temporary actions using induced_action_on_grassmannian
-{
-	int f_v = (verbose_level >= 1);
-	int j, h;
-	long int a;
-
-	if (f_v) {
-		cout << "action_global::compute_fixed_objects_in_PG" << endl;
-	}
-
-	if (up_to_which_rank < 1) {
-		cout << "action::compute_fixed_objects_in_PG "
-				"up_to_which_rank < 1" << endl;
-		exit(1);
-	}
-
-
-
-
-	if (f_v) {
-		cout << "action_global::compute_fixed_objects_in_PG "
-				"computing fixed points" << endl;
-	}
-	{
-		vector<long int> fix;
-
-		for (a = 0; a < P->N_points; a++) {
-			j = A->Group_element->element_image_of(a, Elt, 0 /* verbose_level */);
-			if (j == a) {
-				fix.push_back(a);
-			}
-		}
-
-		Fix.push_back(fix);
-	}
-
-
-	for (h = 2; h <= up_to_which_rank; h++) {
-
-		if (f_v) {
-			cout << "action_global::compute_fixed_objects_in_PG "
-					"computing fixed subspaces of rank " << h << endl;
-		}
-		vector<long int> fix;
-		action *Ah;
-
-		if (f_v) {
-			cout << "action_global::compute_fixed_objects_in_PG "
-					"before A->Induced_action->induced_action_on_grassmannian" << endl;
-		}
-		Ah = A->Induced_action->induced_action_on_grassmannian(
-				h, 0 /* verbose_level*/);
-		if (f_v) {
-			cout << "action_global::compute_fixed_objects_in_PG "
-					"after A->Induced_action->induced_action_on_grassmannian" << endl;
-		}
-
-		for (a = 0; a < Ah->degree; a++) {
-			j = Ah->Group_element->element_image_of(
-					a, Elt, 0 /* verbose_level */);
-			if (j == a) {
-				fix.push_back(a);
-			}
-		}
-
-		Fix.push_back(fix);
-
-		FREE_OBJECT(Ah);
-
-
-	}
-
-
-	if (f_v) {
-		cout << "action_global::compute_fixed_objects_in_PG done" << endl;
-	}
-}
-
-
-void action_global::report_fixed_objects_in_PG(
-		std::ostream &ost,
-		action *A,
-		geometry::projective_space *P,
-	int *Elt,
-	int verbose_level)
-// creates temporary actions using induced_action_on_grassmannian
-{
-	int f_v = (verbose_level >= 1);
-	int j, h, cnt;
-	int v[4];
-	//field_theory::finite_field *F;
-
-	if (f_v) {
-		cout << "action_global::report_fixed_objects_in_PG" << endl;
-	}
-
-
-	//ost << "\\section{Fixed Objects}" << endl;
-
-	//F = PG->F;
-
-
-	int up_to_which_rank = P->n;
-	std::vector<std::vector<long int>> Fix;
-	long int a;
-
-	if (f_v) {
-		cout << "action_global::report_fixed_objects_in_PG "
-				"before compute_fixed_objects_in_PG" << endl;
-	}
-	compute_fixed_objects_in_PG(up_to_which_rank,
-			A,
-			P,
-			Elt,
-			Fix,
-			verbose_level);
-
-
-	ost << "\\bigskip" << endl;
-
-	ost << "The element" << endl;
-	ost << "$$" << endl;
-	A->Group_element->element_print_latex(Elt, ost);
-	ost << "$$" << endl;
-	ost << "has the following fixed objects:\\\\" << endl;
-
-
-	ost << "\\bigskip" << endl;
-	//ost << "Fixed Points:\\" << endl;
-
-
-	cnt = Fix[0].size();
-	ost << "There are " << cnt << " / " << P->N_points
-			<< " fixed points, they are: \\\\" << endl;
-	for (j = 0; j < cnt; j++) {
-		a = Fix[0][j];
-
-		P->F->Projective_space_basic->PG_element_unrank_modified_lint(
-				v, 1, 4, a);
-
-		ost << j << " / " << cnt << " = " << a << " : ";
-		Int_vec_print(ost, v, 4);
-		ost << "\\\\" << endl;
-	}
-
-	ost << "\\bigskip" << endl;
-
-	for (h = 2; h <= up_to_which_rank; h++) {
-
-		if (f_v) {
-			cout << "action_global::compute_fixed_objects_in_PG "
-					"listing fixed subspaces of rank " << h << endl;
-		}
-		vector<long int> fix;
-		action *Ah;
-
-		if (f_v) {
-			cout << "action_global::compute_fixed_objects_in_PG "
-					"before A->Induced_action->induced_action_on_grassmannian" << endl;
-		}
-		Ah = A->Induced_action->induced_action_on_grassmannian(
-				h, 0 /* verbose_level*/);
-		if (f_v) {
-			cout << "action_global::compute_fixed_objects_in_PG "
-					"after A->Induced_action->induced_action_on_grassmannian" << endl;
-		}
-
-		cnt = Fix[h - 1].size();
-		ost << "There are " << cnt << " / " << Ah->degree
-				<< " fixed subspaces of "
-				"rank " << h << ", they are: \\\\" << endl;
-
-		for (j = 0; j < cnt; j++) {
-			a = Fix[h - 1][j];
-
-			ost << j << " / " << cnt << " = " << a << " : $";
-			Ah->G.AG->G->print_single_generator_matrix_tex(ost, a);
-			ost << "$\\\\" << endl;
-		}
-		FREE_OBJECT(Ah);
-	}
-
-
-	if (f_v) {
-		cout << "action_global::report_fixed_objects_in_P3 done" << endl;
-	}
-}
 
 groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 		action *A_linear,
@@ -3619,6 +3425,70 @@ void action_global::make_element_which_moves_a_line_in_PG3q(
 }
 
 
+void action_global::orthogonal_group_random_generator(
+		action *A,
+		orthogonal_geometry::orthogonal *O,
+		algebra::matrix_group *M,
+	int f_siegel,
+	int f_reflection,
+	int f_similarity,
+	int f_semisimilarity,
+	int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vvv = (verbose_level >= 3);
+	int *Mtx;
+
+	if (f_v) {
+		cout << "action_global::orthogonal_group_random_generator" << endl;
+		cout << "f_siegel=" << f_siegel << endl;
+		cout << "f_reflection=" << f_reflection << endl;
+		cout << "f_similarity=" << f_similarity << endl;
+		cout << "f_semisimilarity=" << f_semisimilarity << endl;
+		cout << "n=" << M->n << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+	Mtx = NEW_int(M->n * M->n + 1);
+
+	if (f_v) {
+		cout << "action_global::orthogonal_group_random_generator "
+				"before O->random_generator_for_orthogonal_group" << endl;
+	}
+
+	O->Orthogonal_group->random_generator_for_orthogonal_group(
+			M->f_semilinear /* f_action_is_semilinear */,
+		f_siegel,
+		f_reflection,
+		f_similarity,
+		f_semisimilarity,
+		Mtx, verbose_level - 1);
+
+	if (f_v) {
+		cout << "action_global::orthogonal_group_random_generator "
+				"after O->random_generator_for_orthogonal_group" << endl;
+		cout << "Mtx=" << endl;
+		Int_matrix_print(Mtx, M->n, M->n);
+	}
+	A->Group_element->make_element(Elt, Mtx, verbose_level - 1);
+
+
+	FREE_int(Mtx);
+
+
+	if (f_vvv) {
+		cout << "action_global::orthogonal_group_random_generator "
+				"random generator:" << endl;
+		A->Group_element->element_print_quick(Elt, cout);
+	}
+	if (f_v) {
+		cout << "action_global::orthogonal_group_random_generator done" << endl;
+	}
+}
+
+
+
+
 
 //#############################################################################
 
@@ -3636,7 +3506,7 @@ void callback_choose_random_generator_orthogonal(int iteration,
 	groups::schreier_sims *ss = (groups::schreier_sims *) data;
 	action *A = ss->GA;
 	action *subaction = ss->KA;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 #if 0
 	int f_siegel = TRUE;
 	int f_reflection = TRUE;
@@ -3646,6 +3516,7 @@ void callback_choose_random_generator_orthogonal(int iteration,
 
 	induced_actions::action_on_orthogonal *AO;
 	orthogonal_geometry::orthogonal *O;
+	action_global AG;
 
 	AO = A->G.AO;
 	O = AO->O;
@@ -3657,7 +3528,10 @@ void callback_choose_random_generator_orthogonal(int iteration,
 				<< " before M->orthogonal_group_random_generator"
 				<< endl;
 	}
-	M->orthogonal_group_random_generator(ss->GA, O,
+	AG.orthogonal_group_random_generator(
+			ss->GA,
+			O,
+			M,
 		f_generator_orthogonal_siegel,
 		f_generator_orthogonal_reflection,
 		f_generator_orthogonal_similarity,
@@ -3677,6 +3551,213 @@ void callback_choose_random_generator_orthogonal(int iteration,
 	}
 }
 
+
+void action_global::init_base(
+		actions::action *A, algebra::matrix_group *M, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "action_global::init_base" << endl;
+	}
+	if (M->f_projective) {
+		if (f_vv) {
+			cout << "action_global::init_base "
+					"before init_base_projective" << endl;
+		}
+		init_base_projective(A, M, verbose_level - 2);
+		if (f_vv) {
+			cout << "action_global::init_base "
+					"after init_base_projective" << endl;
+		}
+	}
+	else if (M->f_affine) {
+		if (f_vv) {
+			cout << "action_global::init_base "
+					"before init_base_affine" << endl;
+		}
+		init_base_affine(A, M, verbose_level - 2);
+		if (f_vv) {
+			cout << "action_global::init_base "
+					"after init_base_affine" << endl;
+		}
+	}
+	else if (M->f_general_linear) {
+		if (f_vv) {
+			cout << "action_global::init_base "
+					"before init_base_general_linear" << endl;
+		}
+		init_base_general_linear(A, M, verbose_level - 2);
+		if (f_vv) {
+			cout << "action_global::init_base "
+					"after init_base_general_linear" << endl;
+		}
+	}
+	else {
+		cout << "action_global::init_base  "
+				"group type unknown" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "action_global::init_base done" << endl;
+	}
+}
+
+void action_global::init_base_projective(
+		actions::action *A, algebra::matrix_group *M, int verbose_level)
+// initializes A->degree, A->Stabilizer_chain
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int q = M->GFq->q;
+	algebra::group_generators_domain GG;
+	int base_len;
+
+	if (f_v) {
+		cout << "action_global::init_base_projective "
+				"verbose_level=" << verbose_level << endl;
+	}
+	A->degree = M->degree;
+	if (f_vv) {
+		cout << "action_global::init_base_projective "
+				"degree=" << M->degree << endl;
+	}
+	if (f_vv) {
+		cout << "action_global::init_base_projective "
+				"before GG.matrix_group_base_len_projective_group" << endl;
+	}
+	base_len = GG.matrix_group_base_len_projective_group(
+			M->n, q, M->f_semilinear, verbose_level);
+	if (f_vv) {
+		cout << "action_global::init_base_projective "
+				"after GG.matrix_group_base_len_projective_group" << endl;
+	}
+
+	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
+	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
+	//A->Stabilizer_chain->base_len = base_len;
+	//A->allocate_base_data(A->base_len);
+	if (f_vv) {
+		cout << "action_global::init_base_projective "
+				"A->base_len()=" << A->base_len() << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::init_base_projective "
+				"before init_projective_matrix_group" << endl;
+	}
+
+	A->Stabilizer_chain->init_projective_matrix_group(
+			M->GFq, M->n, M->f_semilinear, A->degree,
+			verbose_level);
+
+	if (f_v) {
+		cout << "action_global::init_base_projective "
+				"after init_projective_matrix_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::init_base_projective: finished" << endl;
+	}
+}
+
+void action_global::init_base_affine(
+		actions::action *A, algebra::matrix_group *M, int verbose_level)
+// initializes A->degree, A->Stabilizer_chain
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
+	int q = M->GFq->q;
+	algebra::group_generators_domain GG;
+	int base_len;
+
+	if (f_v) {
+		cout << "action_global::init_base_affine "
+				"verbose_level=" << verbose_level << endl;
+	}
+	A->degree = M->degree;
+	if (f_vv) {
+		cout << "action_global::init_base_affine degree="
+				<< A->degree << endl;
+	}
+	base_len = GG.matrix_group_base_len_affine_group(
+			M->n, q, M->f_semilinear, verbose_level - 1);
+	if (f_vv) {
+		cout << "action_global::init_base_affine base_len="
+				<< base_len << endl;
+	}
+
+	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
+	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
+	//A->Stabilizer_chain->base_len = base_len;
+	//A->allocate_base_data(A->base_len);
+
+	if (f_v) {
+		cout << "action_global::init_base_affine before "
+				"init_affine_matrix_group" << endl;
+	}
+	A->Stabilizer_chain->init_affine_matrix_group(
+			M->GFq, M->n, M->f_semilinear, A->degree,
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::init_base_affine after "
+				"init_affine_matrix_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::init_base_affine: finished" << endl;
+	}
+}
+
+void action_global::init_base_general_linear(
+		actions::action *A, algebra::matrix_group *M, int verbose_level)
+// initializes A->degree, A->Stabilizer_chain
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
+	int q = M->GFq->q;
+	algebra::group_generators_domain GG;
+	int base_len;
+
+	if (f_v) {
+		cout << "action_global::init_base_general_linear "
+				"verbose_level=" << verbose_level << endl;
+	}
+	A->degree = M->degree;
+	if (f_vv) {
+		cout << "action_global::init_base_general_linear "
+				"degree=" << A->degree << endl;
+	}
+	base_len = GG.matrix_group_base_len_general_linear_group(
+			M->n, q, M->f_semilinear, verbose_level - 1);
+
+	if (f_vv) {
+		cout << "action_global::init_base_general_linear "
+				"base_len=" << base_len << endl;
+	}
+
+	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
+	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
+	//A->Stabilizer_chain->base_len = base_len;
+	//A->allocate_base_data(A->base_len);
+
+	if (f_v) {
+		cout << "action_global::init_base_general_linear before "
+				"init_linear_matrix_group" << endl;
+	}
+	A->Stabilizer_chain->init_linear_matrix_group(
+			M->GFq, M->n, M->f_semilinear, A->degree,
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::init_base_general_linear after "
+				"init_linear_matrix_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::init_base_affine: finished" << endl;
+	}
+}
 
 
 

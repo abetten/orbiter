@@ -1477,7 +1477,7 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 			cout << "an isomorphism from surface1 to surface2 is" << endl;
 			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
 		}
-		groups::matrix_group *mtx;
+		algebra::matrix_group *mtx;
 
 		mtx = A->G.matrix_grp;
 
@@ -1617,7 +1617,8 @@ void surface_classify_wedge::identify_surface(
 				<< " points and " << My_Lines.size() << " lines" << endl;
 	}
 	if (My_Lines.size() != 27 /*&& nb_lines != 21*/) {
-		cout << "the input surface has " << My_Lines.size() << " lines" << endl;
+		cout << "the input surface has " << My_Lines.size()
+				<< " lines, but should have 27 lines" << endl;
 		cout << "something is wrong with the input surface, skipping" << endl;
 		cout << "Points:";
 		orbiter_kernel_system::Orbiter->Lint_vec->print(cout, My_Points);
@@ -1932,7 +1933,7 @@ void surface_classify_wedge::identify_surface(
 	cout << endl;
 
 
-	groups::matrix_group *mtx;
+	algebra::matrix_group *mtx;
 
 	mtx = A->G.matrix_grp;
 	

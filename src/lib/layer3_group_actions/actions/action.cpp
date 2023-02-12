@@ -1289,7 +1289,7 @@ field_theory::finite_field *action::matrix_group_finite_field()
 			exit(1);
 	}
 	else {
-		groups::matrix_group *M;
+		algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		return M->GFq;
@@ -1303,7 +1303,7 @@ int action::is_semilinear_matrix_group()
 			exit(1);
 	}
 	else {
-		groups::matrix_group *M;
+		algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_semilinear) {
@@ -1322,7 +1322,7 @@ int action::is_projective()
 			exit(1);
 	}
 	else {
-		groups::matrix_group *M;
+		algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_projective) {
@@ -1341,7 +1341,7 @@ int action::is_affine()
 			exit(1);
 	}
 	else {
-		groups::matrix_group *M;
+		algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_affine) {
@@ -1360,7 +1360,7 @@ int action::is_general_linear()
 			exit(1);
 	}
 	else {
-		groups::matrix_group *M;
+		algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_general_linear) {
@@ -1388,7 +1388,7 @@ int action::is_matrix_group()
 	}
 }
 
-groups::matrix_group *action::get_matrix_group()
+algebra::matrix_group *action::get_matrix_group()
 {
 	if (type_G == unknown_symmetry_group_t) {
 		cout << "action::get_matrix_group type_G == unknown_symmetry_group_t" << endl;

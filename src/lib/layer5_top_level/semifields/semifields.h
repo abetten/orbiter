@@ -72,7 +72,7 @@ public:
 	semifield_classify_description *Descr;
 
 	projective_geometry::projective_space_with_action *PA;
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 	poset_classification::poset_classification_control *Control;
 
 
@@ -149,7 +149,7 @@ public:
 	int k;
 	int k2; // = k * k
 	//linear_group *LG;
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 
 	int q;
 	int order; // q^k
@@ -295,7 +295,7 @@ public:
 
 	actions::action *A; // PGL(n,q)
 	actions::action *A_PGLk; // PGL(k,q)
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	algebra::gl_classes *C;
 	int *desired_pivots; // [k]

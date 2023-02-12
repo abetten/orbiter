@@ -525,20 +525,27 @@ void finite_field_activity::perform_activity(int verbose_level)
 	else if (Descr->f_search_APN_function) {
 
 		if (f_v) {
-			cout << "finite_field_activity::perform_activity f_search_APN_function" << endl;
+			cout << "finite_field_activity::perform_activity "
+					"f_search_APN_function" << endl;
 		}
-		algebra::algebra_global Algebra;
+		combinatorics::apn_functions *Apn_functions;
 		int delta_max = 2;
+
+
+		Apn_functions = NEW_OBJECT(combinatorics::apn_functions);
+
+		Apn_functions->init(F, verbose_level);
 
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
-					"before Algebra.search_APN" << endl;
+					"before Apn_functions->search_APN" << endl;
 		}
-		Algebra.search_APN(F, delta_max, verbose_level);
+		Apn_functions->search_APN(delta_max, verbose_level);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
-					"after Algebra.search_APN" << endl;
+					"after Apn_functions->search_APN" << endl;
 		}
+		FREE_OBJECT(Apn_functions);
 
 	}
 

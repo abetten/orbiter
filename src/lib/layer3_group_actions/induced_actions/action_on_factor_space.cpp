@@ -132,7 +132,7 @@ action_on_factor_space::~action_on_factor_space()
 }
 
 void action_on_factor_space::init_light(
-		algebra::vector_space *VS,
+		linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	int verbose_level)
@@ -163,7 +163,7 @@ void action_on_factor_space::init_light(
 }
 
 void action_on_factor_space::init_by_rank_table_mode(
-		algebra::vector_space *VS,
+		linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	long int *point_list, int nb_points,
@@ -377,7 +377,7 @@ void action_on_factor_space::init_coset_table(
 
 
 void action_on_factor_space::init_by_rank(
-		algebra::vector_space *VS,
+		linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	int f_compute_tables,
@@ -404,7 +404,7 @@ void action_on_factor_space::init_by_rank(
 }
 
 void action_on_factor_space::init_from_coordinate_vectors(
-		algebra::vector_space *VS,
+		linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	int *subspace_basis, int subspace_basis_size,
 	int f_compute_tables, int verbose_level)

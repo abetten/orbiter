@@ -30,6 +30,7 @@ MODULES = \
 	point_line.o \
 	points_and_lines.o \
 	polarity.o \
+	projective_space_basic.o \
 	projective_space_implementation.o \
 	projective_space_of_dimension_three.o \
 	projective_space_plane.o \

@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace field_theory {
+namespace geometry {
 
 
 projective_space_basic::projective_space_basic()
@@ -27,7 +27,9 @@ projective_space_basic::~projective_space_basic()
 {
 }
 
-void projective_space_basic::init(finite_field *F, int verbose_level)
+void projective_space_basic::init(
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

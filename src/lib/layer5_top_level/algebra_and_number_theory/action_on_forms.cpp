@@ -73,11 +73,13 @@ void action_on_forms::create_action_on_forms(
 	PF = NEW_OBJECT(combinatorics::polynomial_function_domain);
 
 	if (f_v) {
-		cout << "action_on_forms::create_action_on_forms before PF->init" << endl;
+		cout << "action_on_forms::create_action_on_forms "
+				"before PF->init" << endl;
 	}
 	PF->init(F, PA->P->n, verbose_level);
 	if (f_v) {
-		cout << "action_on_forms::create_action_on_forms after PF->init" << endl;
+		cout << "action_on_forms::create_action_on_forms "
+				"after PF->init" << endl;
 	}
 
 
@@ -161,7 +163,8 @@ void action_on_forms::orbits_on_functions(
 	The_equations = NEW_int(nb_functions * sz);
 
 	if (f_v) {
-		cout << "action_on_forms::orbits_on_functions converting functions to equations" << endl;
+		cout << "action_on_forms::orbits_on_functions "
+				"converting functions to equations" << endl;
 	}
 
 	for (i = 0; i < nb_functions; i++) {
@@ -182,20 +185,24 @@ void action_on_forms::orbits_on_functions(
 	Table_of_equations = NEW_OBJECT(data_structures::int_matrix);
 
 	if (f_v) {
-		cout << "action_on_forms::orbits_on_functions before Table_of_equations->allocate_and_init" << endl;
+		cout << "action_on_forms::orbits_on_functions "
+				"before Table_of_equations->allocate_and_init" << endl;
 	}
 	Table_of_equations->allocate_and_init(nb_functions, sz, The_equations);
 	if (f_v) {
-		cout << "action_on_forms::orbits_on_functions after Table_of_equations->allocate_and_init" << endl;
+		cout << "action_on_forms::orbits_on_functions "
+				"after Table_of_equations->allocate_and_init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "action_on_forms::orbits_on_functions before Table_of_equations->sort_rows" << endl;
+		cout << "action_on_forms::orbits_on_functions "
+				"before Table_of_equations->sort_rows" << endl;
 	}
 	Table_of_equations->sort_rows(verbose_level);
 	if (f_v) {
-		cout << "action_on_forms::orbits_on_functions after Table_of_equations->sort_rows" << endl;
+		cout << "action_on_forms::orbits_on_functions "
+				"after Table_of_equations->sort_rows" << endl;
 	}
 
 
@@ -239,7 +246,8 @@ void action_on_forms::orbits_on_functions(
 	Table_of_equations->check_that_entries_are_distinct(verbose_level);
 
 	if (f_v) {
-		cout << "action_on_forms::orbits_on_functions sorted Table_of_equations:" << endl;
+		cout << "action_on_forms::orbits_on_functions "
+				"sorted Table_of_equations:" << endl;
 		//Table_of_equations->print();
 	}
 #endif
@@ -248,13 +256,15 @@ void action_on_forms::orbits_on_functions(
 	groups::schreier *Orb;
 
 	if (f_v) {
-		cout << "action_on_forms::orbits_on_functions computing orbits on equations" << endl;
+		cout << "action_on_forms::orbits_on_functions "
+				"computing orbits on equations" << endl;
 	}
 
 	orbits_on_equations(The_equations, nb_functions, sz, Orb, A_on_equations, verbose_level);
 
 	if (f_v) {
-		cout << "action_on_forms::orbits_on_functions computing orbits on equations finished" << endl;
+		cout << "action_on_forms::orbits_on_functions "
+				"computing orbits on equations finished" << endl;
 	}
 
 
@@ -289,10 +299,12 @@ void action_on_forms::orbits_on_functions(
 	if (f_v) {
 		cout << "action::orbits_on_equations "
 				"We found " << Orb->nb_orbits
-				<< " orbits on the equations. The non-trivial orbits are:" << endl;
+				<< " orbits on the equations. "
+						"The non-trivial orbits are:" << endl;
 		Orb->print_and_list_non_trivial_orbits_tex(cout);
 
-		cout << "action::orbits_on_equations The orbits that are not long are:" << endl;
+		cout << "action::orbits_on_equations "
+				"The orbits that are not long are:" << endl;
 		int h, t, t_max;
 
 		if (nb_types > 1) {
@@ -306,7 +318,8 @@ void action_on_forms::orbits_on_functions(
 			// skip the long orbits
 
 			cout << "Type " << t << ":" << endl;
-			cout << "There are " << SoS->Set_size[t] << " orbits of length " << types[t] << ":" << endl;
+			cout << "There are " << SoS->Set_size[t]
+				<< " orbits of length " << types[t] << ":" << endl;
 
 			for (h = 0; h < SoS->Set_size[t]; h++) {
 				Orb->print_and_list_orbit_tex(SoS->Sets[t][h], cout);
@@ -416,7 +429,8 @@ void action_on_forms::associated_set_in_plane(
 	}
 
 	if (len != PF->Q) {
-		cout << "action_on_forms::associated_set_in_plane len should be " << PF->Q << endl;
+		cout << "action_on_forms::associated_set_in_plane "
+				"len should be " << PF->Q << endl;
 		cout << "but is equal to " << len << endl;
 		exit(1);
 	}
@@ -437,7 +451,8 @@ void action_on_forms::associated_set_in_plane(
 		Rk[x] = a;
 	}
 	if (f_v) {
-		cout << "action_on_forms::associated_set_in_plane associated point set: ";
+		cout << "action_on_forms::associated_set_in_plane "
+				"associated point set: ";
 		Lint_vec_print(cout, Rk, len);
 		cout << endl;
 	}
@@ -459,7 +474,8 @@ void action_on_forms::differential_uniformity(
 	}
 
 	if (len != PF->Q) {
-		cout << "action_on_forms::differential_uniformity len should be " << PF->Q << endl;
+		cout << "action_on_forms::differential_uniformity "
+				"len should be " << PF->Q << endl;
 		cout << "but is equal to " << len << endl;
 		exit(1);
 	}
@@ -477,22 +493,33 @@ void action_on_forms::differential_uniformity(
 
 	Int_vec_zero(nb_times_ab, q * q);
 
-	algebra::algebra_global Algebra;
+	//algebra::algebra_global Algebra;
 	int delta;
 	int *Fibre;
 
-	delta = Algebra.differential_uniformity(F, func, nb_times_ab, 0 /* verbose_level */);
+	combinatorics::apn_functions *Apn_functions;
 
 
-	delta = Algebra.differential_uniformity_with_fibre(F,
+	Apn_functions = NEW_OBJECT(combinatorics::apn_functions);
+
+	Apn_functions->init(F, verbose_level);
+
+
+	delta = Apn_functions->differential_uniformity(
+			func, nb_times_ab, 0 /* verbose_level */);
+
+
+	delta = Apn_functions->differential_uniformity_with_fibre(
 			func, nb_times_ab, Fibre, verbose_level);
 
 
 	if (f_v) {
-		cout << "action_on_forms::differential_uniformity nb_times_ab: " << endl;
+		cout << "action_on_forms::differential_uniformity "
+				"nb_times_ab: " << endl;
 		Int_matrix_print(nb_times_ab, q, q);
 		cout << endl;
-		cout << "action_on_forms::differential_uniformity delta = " << delta << endl;
+		cout << "action_on_forms::differential_uniformity "
+				"delta = " << delta << endl;
 
 		int a, b, nb, x, h;
 
@@ -522,6 +549,8 @@ void action_on_forms::differential_uniformity(
 
 		}
 	}
+
+	FREE_OBJECT(Apn_functions);
 
 
 	if (f_v) {

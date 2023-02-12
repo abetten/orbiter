@@ -38,7 +38,8 @@ gl_class_rep::~gl_class_rep()
 	}
 }
 
-void gl_class_rep::init(int nb_irred, int *Select_polynomial,
+void gl_class_rep::init(
+		int nb_irred, int *Select_polynomial,
 		int *Select_partition, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -70,7 +71,8 @@ void gl_class_rep::init(int nb_irred, int *Select_polynomial,
 	}
 }
 
-void gl_class_rep::print(int nb_irred,  int *Select_polynomial,
+void gl_class_rep::print(
+		int nb_irred,  int *Select_polynomial,
 		int *Select_partition, int verbose_level)
 {
 	int i, l;
@@ -88,7 +90,8 @@ void gl_class_rep::print(int nb_irred,  int *Select_polynomial,
 
 }
 
-void gl_class_rep::compute_vector_coding(gl_classes *C,
+void gl_class_rep::compute_vector_coding(
+		gl_classes *C,
 		int &nb_irred, int *&Poly_degree,
 		int *&Poly_mult, int *&Partition_idx,
 		int verbose_level)
@@ -117,7 +120,8 @@ void gl_class_rep::compute_vector_coding(gl_classes *C,
 	}
 }
 
-void gl_class_rep::centralizer_order_Kung(gl_classes *C,
+void gl_class_rep::centralizer_order_Kung(
+		gl_classes *C,
 		ring_theory::longinteger_object &co, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -130,7 +134,8 @@ void gl_class_rep::centralizer_order_Kung(gl_classes *C,
 		cout << "gl_class_rep::centralizer_order_Kung" << endl;
 	}
 
-	compute_vector_coding(C, nb_irred, Poly_degree,
+	compute_vector_coding(
+			C, nb_irred, Poly_degree,
 			Poly_mult, Partition_idx, verbose_level);
 
 	C->centralizer_order_Kung_basic(nb_irred,

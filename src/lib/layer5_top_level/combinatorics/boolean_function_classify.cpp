@@ -85,7 +85,7 @@ void boolean_function_classify::init_group(
 
 	SG = NEW_OBJECT(groups::strong_generators);
 
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 
 	Mtx = A->get_matrix_group();
 

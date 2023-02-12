@@ -401,8 +401,8 @@ public:
 	int *col_sum; // [Ysize]
 
 
-	groups::matrix_group *M1;
-	groups::matrix_group *M2;
+	algebra::matrix_group *M1;
+	algebra::matrix_group *M2;
 	actions::action *A1;
 	actions::action *A2;
 

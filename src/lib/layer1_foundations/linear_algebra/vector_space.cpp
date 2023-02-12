@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace algebra {
+namespace linear_algebra {
 
 
 static void vector_space_unrank_point_callback(int *v, long int rk, void *data);
@@ -57,7 +57,8 @@ vector_space::~vector_space()
 	}
 }
 
-void vector_space::init(field_theory::finite_field *F, int dimension,
+void vector_space::init(
+		field_theory::finite_field *F, int dimension,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

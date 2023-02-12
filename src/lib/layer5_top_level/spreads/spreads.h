@@ -293,7 +293,7 @@ public:
 	projective_geometry::projective_space_with_action *PA;
 	groups::strong_generators *Strong_gens;
 
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 
 	long int block_size;
 		// = r = {k choose 1}_q,

@@ -162,22 +162,25 @@ void set_of_sets::init_basic(int underlying_set_size,
 	if (f_v) {
 		cout << "set_of_sets::init_basic nb_sets=" << nb_sets
 				<< " underlying_set_size=" << underlying_set_size << endl;
-		}
+	}
 	set_of_sets::nb_sets = nb_sets;
 	set_of_sets::underlying_set_size = underlying_set_size;
 	Sets = NEW_plint(nb_sets);
 	Set_size = NEW_lint(nb_sets);
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
-		}
+	}
 	for (i = 0; i < nb_sets; i++) {
 		Set_size[i] = Sz[i];
 		if (FALSE /*f_v*/) {
 			cout << "set_of_sets::init_basic allocating set " << i
 					<< " of size " << Sz[i] << endl;
-			}
-		Sets[i] = NEW_lint(Sz[i]);
 		}
+		Sets[i] = NEW_lint(Sz[i]);
+	}
+	if (f_v) {
+		cout << "set_of_sets::init_basic done" << endl;
+	}
 }
 
 void set_of_sets::init_basic_with_Sz_in_int(int underlying_set_size,

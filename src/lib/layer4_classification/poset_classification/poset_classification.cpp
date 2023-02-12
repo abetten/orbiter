@@ -119,7 +119,7 @@ actions::action *poset_classification::get_A2()
 	return Poset->A2;
 }
 
-algebra::vector_space *poset_classification::get_VS()
+linear_algebra::vector_space *poset_classification::get_VS()
 {
 	return Poset->VS;
 }

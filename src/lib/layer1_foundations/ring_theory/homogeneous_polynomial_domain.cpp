@@ -102,7 +102,8 @@ homogeneous_polynomial_domain::~homogeneous_polynomial_domain()
 	}
 }
 
-void homogeneous_polynomial_domain::init(polynomial_ring_description *Descr,
+void homogeneous_polynomial_domain::init(
+		polynomial_ring_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -183,7 +184,8 @@ void homogeneous_polynomial_domain::init(polynomial_ring_description *Descr,
 	}
 }
 
-void homogeneous_polynomial_domain::init(field_theory::finite_field *F,
+void homogeneous_polynomial_domain::init(
+		field_theory::finite_field *F,
 		int nb_vars, int degree,
 		monomial_ordering_type Monomial_ordering_type,
 		int verbose_level)
@@ -321,7 +323,8 @@ int *homogeneous_polynomial_domain::get_monomial_pointer(int i)
 	return Monomials + i * nb_variables;
 }
 
-int homogeneous_polynomial_domain::evaluate_monomial(int idx_of_monomial, int *coords)
+int homogeneous_polynomial_domain::evaluate_monomial(
+		int idx_of_monomial, int *coords)
 {
 	int r;
 
@@ -331,7 +334,8 @@ int homogeneous_polynomial_domain::evaluate_monomial(int idx_of_monomial, int *c
 	return r;
 }
 
-void homogeneous_polynomial_domain::remake_symbols(int symbol_offset,
+void homogeneous_polynomial_domain::remake_symbols(
+		int symbol_offset,
 		std::string &symbol_mask, std::string &symbol_mask_latex,
 		int verbose_level)
 {
@@ -364,7 +368,8 @@ void homogeneous_polynomial_domain::remake_symbols(int symbol_offset,
 	}
 }
 
-void homogeneous_polynomial_domain::remake_symbols_interval(int symbol_offset,
+void homogeneous_polynomial_domain::remake_symbols_interval(
+		int symbol_offset,
 		int from, int len,
 		std::string &symbol_mask, std::string &symbol_mask_latex,
 		int verbose_level)
@@ -1354,7 +1359,8 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex_lint(
 	}
 }
 
-void homogeneous_polynomial_domain::algebraic_set(int *Eqns, int nb_eqns,
+void homogeneous_polynomial_domain::algebraic_set(
+		int *Eqns, int nb_eqns,
 		long int *Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1393,7 +1399,8 @@ void homogeneous_polynomial_domain::algebraic_set(int *Eqns, int nb_eqns,
 	}
 }
 
-void homogeneous_polynomial_domain::polynomial_function(int *coeff, int *f, int verbose_level)
+void homogeneous_polynomial_domain::polynomial_function(
+		int *coeff, int *f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk, a;

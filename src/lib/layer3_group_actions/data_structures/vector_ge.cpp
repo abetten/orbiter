@@ -1041,11 +1041,23 @@ groups::schreier *vector_ge::orbits_on_points_schreier(
 	Sch->init(A_given, verbose_level - 2);
 	Sch->initialize_tables();
 	Sch->init_generators(*this, verbose_level - 2);
+	if (f_v) {
+		cout << "vector_ge::orbits_on_points_schreier "
+				"before Sch->compute_all_point_orbits" << endl;
+	}
 	Sch->compute_all_point_orbits(verbose_level);
+	if (f_v) {
+		cout << "vector_ge::orbits_on_points_schreier "
+				"after Sch->compute_all_point_orbits" << endl;
+	}
 
 	if (f_v) {
 		cout << "vector_ge::orbits_on_points_schreier "
-				"done, we found " << Sch->nb_orbits << " orbits" << endl;
+				"we found " << Sch->nb_orbits << " orbits" << endl;
+	}
+
+	if (f_v) {
+		cout << "vector_ge::orbits_on_points_schreier done" << endl;
 	}
 	return Sch;
 }

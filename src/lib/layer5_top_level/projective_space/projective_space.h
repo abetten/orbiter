@@ -825,12 +825,6 @@ public:
 			poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
-#if 0
-	void setup_surface_with_action(
-			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action
-				*&Surf_A,
-			int verbose_level);
-#endif
 	void report_decomposition_by_group(
 			groups::strong_generators *SG,
 			std::ostream &ost, std::string &fname_base,

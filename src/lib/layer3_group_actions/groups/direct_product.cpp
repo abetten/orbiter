@@ -111,7 +111,8 @@ direct_product::~direct_product()
 }
 
 void direct_product::init(
-		matrix_group *M1, matrix_group *M2,
+		algebra::matrix_group *M1,
+		algebra::matrix_group *M2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

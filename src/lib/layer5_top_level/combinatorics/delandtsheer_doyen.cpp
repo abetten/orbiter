@@ -247,8 +247,8 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 	Int_vec_zero(col_sum, Ysize);
 
 
-	M1 = NEW_OBJECT(groups::matrix_group);
-	M2 = NEW_OBJECT(groups::matrix_group);
+	M1 = NEW_OBJECT(algebra::matrix_group);
+	M2 = NEW_OBJECT(algebra::matrix_group);
 
 	F1 = NEW_OBJECT(field_theory::finite_field);
 	F2 = NEW_OBJECT(field_theory::finite_field);
@@ -1118,6 +1118,7 @@ void delandtsheer_doyen::create_action(int verbose_level)
 				FALSE /* f_compute_related_fields */,
 				0);
 
+		actions::action_global AG;
 
 
 		if (f_v) {
@@ -1125,10 +1126,32 @@ void delandtsheer_doyen::create_action(int verbose_level)
 		}
 
 		M1->init_affine_group(Descr->d1, F1,
-				FALSE /* f_semilinear */, A1, verbose_level);
+				FALSE /* f_semilinear */, /*A1,*/ verbose_level);
+
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action "
+					"before AG.init_base" << endl;
+		}
+		AG.init_base(A1, M1, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action "
+					"after AG.init_base" << endl;
+		}
+
 
 		M2->init_affine_group(Descr->d2, F2,
-				FALSE /* f_semilinear */, A2, verbose_level);
+				FALSE /* f_semilinear */, /*A2,*/ verbose_level);
+
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action "
+					"before AG.init_base" << endl;
+		}
+		AG.init_base(A2, M2, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action "
+					"after AG.init_base" << endl;
+		}
+
 	}
 
 	if (f_v) {

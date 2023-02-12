@@ -177,7 +177,8 @@ wreath_product::~wreath_product()
 		}
 }
 
-void wreath_product::init_tensor_wreath_product(matrix_group *M,
+void wreath_product::init_tensor_wreath_product(
+		algebra::matrix_group *M,
 		actions::action *A_mtx, int nb_factors,
 		int verbose_level)
 {

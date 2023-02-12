@@ -42,7 +42,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	int final_node, final_ex;
 	
 	//wreath_product *W;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	{
 		geometry::grassmann G;

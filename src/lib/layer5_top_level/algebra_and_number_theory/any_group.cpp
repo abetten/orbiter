@@ -1964,6 +1964,47 @@ void any_group::orbits_on_points(
 	}
 }
 
+void any_group::orbits_on_points_from_generators(
+		data_structures_groups::vector_ge *gens,
+		groups::orbits_on_something *&Orb,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::orbits_on_points_from_generators" << endl;
+	}
+	algebra_global_with_action Algebra;
+
+
+	int f_load_save = TRUE;
+	string prefix;
+
+	prefix.assign(label);
+
+	if (f_v) {
+		cout << "any_group::orbits_on_points_from_generators "
+				"before Algebra.orbits_on_points_from_vector_ge" << endl;
+	}
+	Algebra.orbits_on_points_from_vector_ge(
+			A,
+			gens,
+			f_load_save,
+			prefix,
+			Orb,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::orbits_on_points_from_generators "
+				"after Algebra.orbits_on_points_from_vector_ge" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::orbits_on_points_from_generators done" << endl;
+	}
+}
+
 void any_group::create_latex_report_for_permutation_group(
 		graphics::layered_graph_draw_options *O,
 		int verbose_level)

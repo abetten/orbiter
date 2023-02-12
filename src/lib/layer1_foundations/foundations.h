@@ -261,9 +261,9 @@ namespace algebra {
 	class interface_gap_low;
 	class interface_magma_low;
 	class matrix_block_data;
+	class matrix_group;
 	class null_polarity_generator;
 	class rank_checker;
-	class vector_space;
 
 }
 
@@ -316,6 +316,7 @@ namespace coding_theory {
 namespace combinatorics {
 
 	// combinatorics:
+	class apn_functions;
 	class boolean_function_domain;
 	class brick_domain;
 	class classification_of_objects_description;
@@ -417,7 +418,6 @@ namespace field_theory {
 	class minimum_polynomial;
 	class norm_tables;
 	class nth_roots;
-	class projective_space_basic;
 	class related_fields;
 	class square_nonsquare;
 	class subfield_structure;
@@ -454,6 +454,7 @@ namespace geometry {
 	class point_line;
 	class points_and_lines;
 	class polarity;
+	class projective_space_basic;
 	class projective_space_implementation;
 	class projective_space_of_dimension_three;
 	class projective_space_plane;
@@ -559,6 +560,7 @@ namespace linear_algebra {
 	// linear_algebra:
 	class linear_algebra;
 	class representation_theory_domain;
+	class vector_space;
 
 }
 

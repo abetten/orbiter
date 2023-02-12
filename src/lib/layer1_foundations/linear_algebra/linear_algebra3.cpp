@@ -119,7 +119,8 @@ int linear_algebra::evaluate_hyperbolic_bilinear_form(
 #endif
 
 
-int linear_algebra::evaluate_conic_form(int *six_coeffs, int *v3)
+int linear_algebra::evaluate_conic_form(
+		int *six_coeffs, int *v3)
 {
 	//int a = 2, b = 0, c = 0, d = 4, e = 4, f = 4, val, val1;
 	//int a = 3, b = 1, c = 2, d = 4, e = 1, f = 4, val, val1;
@@ -236,7 +237,8 @@ int linear_algebra::Pluecker_ij(int i, int j, int *x4, int *y4)
 }
 
 
-int linear_algebra::evaluate_symplectic_form(int len, int *x, int *y)
+int linear_algebra::evaluate_symplectic_form(
+		int len, int *x, int *y)
 // the form consists of a series of diagonal 2 x 2 blocks
 // of the form (0,1,-1,0)
 {
@@ -260,7 +262,8 @@ int linear_algebra::evaluate_symplectic_form(int len, int *x, int *y)
 	return c;
 }
 
-int linear_algebra::evaluate_symmetric_form(int len, int *x, int *y)
+int linear_algebra::evaluate_symmetric_form(
+		int len, int *x, int *y)
 {
 	int i, n, c;
 
@@ -281,7 +284,8 @@ int linear_algebra::evaluate_symmetric_form(int len, int *x, int *y)
 	return c;
 }
 
-int linear_algebra::evaluate_quadratic_form_x0x3mx1x2(int *x)
+int linear_algebra::evaluate_quadratic_form_x0x3mx1x2(
+		int *x)
 {
 	int a;
 
@@ -289,7 +293,8 @@ int linear_algebra::evaluate_quadratic_form_x0x3mx1x2(int *x)
 	return a;
 }
 
-void linear_algebra::solve_y2py(int a, int *Y2, int &nb_sol)
+void linear_algebra::solve_y2py(
+		int a, int *Y2, int &nb_sol)
 {
 	int y, y2py;
 
@@ -440,7 +445,8 @@ int linear_algebra::is_totally_isotropic_wrt_symplectic_form(
 	return TRUE;
 }
 
-int linear_algebra::evaluate_monomial(int *monomial,
+int linear_algebra::evaluate_monomial(
+		int *monomial,
 		int *variables, int nb_vars)
 {
 	int i, j, a, b, x;

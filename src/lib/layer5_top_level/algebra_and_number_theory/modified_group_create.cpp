@@ -32,6 +32,9 @@ modified_group_create::modified_group_create()
 
 		f_has_strong_generators = FALSE;
 		Strong_gens = NULL;
+
+		action_on_self_by_right_multiplication_sims = NULL;
+		Action_by_right_multiplication = NULL;
 }
 
 
@@ -177,6 +180,21 @@ void modified_group_create::modified_group_init(
 					"after create_subfield_subgroup" << endl;
 		}
 	}
+	else if (Descr->f_action_on_self_by_right_multiplication) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_action_on_self_by_right_multiplication" << endl;
+		}
+
+		create_action_on_self_by_right_multiplication(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_action_on_self_by_right_multiplication" << endl;
+		}
+	}
+
 
 	else {
 		cout << "modified_group_create::modified_group_init "
@@ -299,7 +317,7 @@ void modified_group_create::create_action_on_k_subspaces(
 	}
 
 
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *Fq;
 	int n;
 
@@ -901,6 +919,9 @@ void modified_group_create::create_subfield_subgroup(
 
 	//Strong_gens = NEW_OBJECT(groups::strong_generators);
 
+	// ToDo
+
+
 #if 0
 	{
 		groups::orbits_on_something *Orb;
@@ -948,6 +969,109 @@ void modified_group_create::create_subfield_subgroup(
 				"done" << endl;
 	}
 }
+
+
+
+void modified_group_create::create_action_on_self_by_right_multiplication(
+		group_modification_description *description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+
+	AG = Get_object_of_type_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	//A_modified = A_previous;
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
+				"before AG->Subgroup_gens->create_sims" << endl;
+	}
+	action_on_self_by_right_multiplication_sims = AG->Subgroup_gens->create_sims(verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
+				"after AG->Subgroup_gens->create_sims" << endl;
+	}
+
+
+	A_modified = A_previous->Induced_action->induced_action_by_right_multiplication(
+			FALSE /* f_basis */, NULL,
+			action_on_self_by_right_multiplication_sims, FALSE /* f_ownership */,
+			verbose_level);
+
+
+
+
+	A_modified->f_is_linear = FALSE;
+
+	f_has_strong_generators = TRUE;
+
+	//A_modified->f_is_linear = A_previous->f_is_linear;
+	//A_modified->dimension = A_previous->dimension;
+
+	f_has_strong_generators = TRUE;
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+	Strong_gens = AG->Subgroup_gens;
+
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	char str1[1000];
+	char str2[1000];
+
+	snprintf(str1, sizeof(str1), "_ByRightMult");
+	snprintf(str2, sizeof(str2), " {\\rm ByRightMult}");
+	label.append(str1);
+	label_tex.append(str2);
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
+				"done" << endl;
+	}
+}
+
+
+
 
 
 

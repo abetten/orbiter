@@ -659,6 +659,10 @@ public:
 	std::string read_csv_fname;
 	std::string read_csv_column_label;
 
+
+	int f_vector_data;
+	std::string vector_data_label;
+
 	vector_ge_description();
 	~vector_ge_description();
 	int read_arguments(

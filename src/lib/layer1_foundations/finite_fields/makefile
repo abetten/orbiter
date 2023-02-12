@@ -16,7 +16,6 @@ MODULES = \
 	minimum_polynomial.o \
 	norm_tables.o \
 	nth_roots.o \
-	projective_space_basic.o \
 	related_fields.o \
 	square_nonsquare.o \
 	subfield_structure.o 

@@ -543,7 +543,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 
 
 
-			groups::matrix_group *M;
+			algebra::matrix_group *M;
 
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "

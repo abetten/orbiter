@@ -294,7 +294,7 @@ public:
 	int is_affine();
 	int is_general_linear();
 	int is_matrix_group();
-	groups::matrix_group *get_matrix_group();
+	algebra::matrix_group *get_matrix_group();
 
 
 	// action_group_theory.cpp:
@@ -578,12 +578,12 @@ public:
 		int f_do_it_anyway_even_for_big_degree,
 		int f_print_cycles_of_length_one, int verbose_level);
 	action *init_direct_product_group_and_restrict(
-			groups::matrix_group *M1,
-			groups::matrix_group *M2,
+			algebra::matrix_group *M1,
+			algebra::matrix_group *M2,
 			int verbose_level);
 	action *init_direct_product_group(
-			groups::matrix_group *M1,
-			groups::matrix_group *M2,
+			algebra::matrix_group *M1,
+			algebra::matrix_group *M2,
 			int verbose_level);
 	void compute_decomposition_based_on_orbits(
 			geometry::projective_space *P,
@@ -604,19 +604,6 @@ public:
 		int nb_equations, groups::strong_generators *gens,
 		actions::action *&A_on_equations,
 		groups::schreier *&Orb,
-		int verbose_level);
-	void compute_fixed_objects_in_PG(
-			int up_to_which_rank,
-			action *A,
-			geometry::projective_space *P,
-		int *Elt,
-		std::vector<std::vector<long int> > &Fix,
-		int verbose_level);
-	void report_fixed_objects_in_PG(
-			std::ostream &ost,
-			action *A,
-			geometry::projective_space *P,
-		int *Elt,
 		int verbose_level);
 	groups::strong_generators *set_stabilizer_in_projective_space(
 			action *A_linear,
@@ -744,6 +731,23 @@ public:
 			geometry::grassmann *Gr,
 			long int line_rk, int *Elt,
 			int verbose_level);
+	void orthogonal_group_random_generator(
+			action *A,
+			orthogonal_geometry::orthogonal *O,
+			algebra::matrix_group *M,
+		int f_siegel,
+		int f_reflection,
+		int f_similarity,
+		int f_semisimilarity,
+		int *Elt, int verbose_level);
+	void init_base(
+			actions::action *A, algebra::matrix_group *M, int verbose_level);
+	void init_base_projective(
+			actions::action *A, algebra::matrix_group *M, int verbose_level);
+	void init_base_affine(
+			actions::action *A, algebra::matrix_group *M, int verbose_level);
+	void init_base_general_linear(
+			actions::action *A, algebra::matrix_group *M, int verbose_level);
 
 };
 
@@ -869,7 +873,7 @@ public:
 		int verbose_level);
 
 	void setup_linear_group_from_strong_generators(
-			groups::matrix_group *M,
+			algebra::matrix_group *M,
 			data_structures_groups::vector_ge *&nice_gens,
 			int f_init_sims,
 		int verbose_level);
@@ -882,7 +886,7 @@ public:
 		int f_semilinear, int f_basis, int verbose_level);
 
 	void init_matrix_group_strong_generators_builtin(
-			groups::matrix_group *M,
+			algebra::matrix_group *M,
 			data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void init_permutation_group(
@@ -1045,8 +1049,10 @@ public:
 	void print_for_make_element_no_commas(
 			std::ostream &ost, void *elt);
 
-	long int element_image_of(long int a, void *elt, int verbose_level);
-	void element_image_of_low_level(int *input, int *output,
+	long int element_image_of(
+			long int a, void *elt, int verbose_level);
+	void element_image_of_low_level(
+			int *input, int *output,
 		void *elt, int verbose_level);
 	int element_linear_entry_ij(void *elt, int i, int j,
 		int verbose_level);
@@ -1174,6 +1180,10 @@ public:
 		int n, int verbose_level);
 	void word_in_ab(int *Elt1, int *Elt2, int *Elt3,
 		const char *word, int verbose_level);
+	void evaluate_word(
+			int *Elt, int *word, int len,
+			data_structures_groups::vector_ge *gens,
+			int verbose_level);
 	int check_if_in_set_stabilizer(
 			int *Elt,
 			int size, long int *set, int verbose_level);
@@ -1182,6 +1192,17 @@ public:
 			int size,
 			long int *set1, long int *set2,
 			int verbose_level);
+	void compute_fixed_objects_in_PG(
+			int up_to_which_rank,
+			geometry::projective_space *P,
+		int *Elt,
+		std::vector<std::vector<long int> > &Fix,
+		int verbose_level);
+	void report_fixed_objects_in_PG(
+			std::ostream &ost,
+			geometry::projective_space *P,
+		int *Elt,
+		int verbose_level);
 
 
 };

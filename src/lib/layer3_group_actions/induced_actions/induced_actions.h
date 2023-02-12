@@ -64,7 +64,7 @@ public:
 	int n;
 	int q;
 	actions::action *A;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	int low_level_point_size;
 	int degree;
@@ -175,9 +175,9 @@ public:
 	actions::action *AQ;
 	actions::action *Aq;
 
-	groups::matrix_group *MQ;
+	algebra::matrix_group *MQ;
 	field_theory::finite_field *FQ;
-	groups::matrix_group *Mq;
+	algebra::matrix_group *Mq;
 	field_theory::finite_field *Fq;
 
 	field_theory::subfield_structure *S;
@@ -346,7 +346,7 @@ public:
 
 class action_on_determinant {
 public:
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	int f_projective;
 	int m;
 	int q;
@@ -373,7 +373,7 @@ public:
 
 class action_on_factor_space {
 public:
-	algebra::vector_space *VS;
+	linear_algebra::vector_space *VS;
 
 
 	// VS->dimension = length of vectors in large space
@@ -436,12 +436,12 @@ public:
 	action_on_factor_space();
 	~action_on_factor_space();
 	void init_light(
-		algebra::vector_space *VS,
+			linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int verbose_level);
 	void init_by_rank_table_mode(
-			algebra::vector_space *VS,
+			linear_algebra::vector_space *VS,
 			actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		long int *point_list, int nb_points,
@@ -453,12 +453,12 @@ public:
 			long int *point_list, int nb_points,
 			int verbose_level);
 	void init_by_rank(
-			algebra::vector_space *VS,
+			linear_algebra::vector_space *VS,
 			actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int f_compute_tables, int verbose_level);
 	void init_from_coordinate_vectors(
-			algebra::vector_space *VS,
+			linear_algebra::vector_space *VS,
 			actions::action &A_base, actions::action &A,
 		int *subspace_basis, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
@@ -516,7 +516,7 @@ public:
 	int *type;
 	int type_len;
 	geometry::flag *Flag;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	int degree;
 	int *M1;
 	int *M2;
@@ -542,7 +542,7 @@ public:
 class action_on_galois_group {
 public:
 	actions::action *A;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	int m;
 	int q;
 	int degree;
@@ -640,7 +640,7 @@ public:
 	int q;
 	actions::action *A;
 	ring_theory::homogeneous_polynomial_domain *HPD;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	int low_level_point_size;
 	int degree;
@@ -984,7 +984,7 @@ public:
 	actions::action *A;
 	int n;
 	int q;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	int low_level_point_size;
 	long int degree;

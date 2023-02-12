@@ -1316,6 +1316,91 @@ void schreier::draw_forest(std::string &fname_mask,
 	}
 }
 
+void schreier::get_orbit_by_levels(
+		int orbit_no,
+		data_structures::set_of_sets *&SoS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int fst, len;
+	int *depth;
+	int *horizontal_position;
+	int i, j, l, max_depth;
+
+	if (f_v) {
+		cout << "schreier::get_orbit_by_levels" << endl;
+		cout << "schreier::get_orbit_by_levels "
+				"nb_gen = " << gens.len << endl;
+	}
+
+	fst = orbit_first[orbit_no];
+	len = orbit_len[orbit_no];
+	depth = NEW_int(len);
+	horizontal_position = NEW_int(len);
+	max_depth = 0;
+	for (j = 0; j < len; j++) {
+		trace_back(NULL, orbit[fst + j], l);
+		l--;
+		depth[j] = l;
+		max_depth = MAX(max_depth, l);
+	}
+	int nb_layers;
+	nb_layers = max_depth + 1;
+	int *Nb;
+	int *Nb1;
+	int **Node;
+
+
+	//classify C;
+	//C.init(depth, len, FALSE, 0);
+	Nb = NEW_int(nb_layers);
+	Nb1 = NEW_int(nb_layers);
+	Int_vec_zero(Nb, nb_layers);
+	Int_vec_zero(Nb1, nb_layers);
+	for (j = 0; j < len; j++) {
+		trace_back(NULL, orbit[fst + j], l);
+		l--;
+		horizontal_position[j] = Nb[l];
+		Nb[l]++;
+	}
+	if (f_v) {
+		cout << "schreier::get_orbit_by_levels" << endl;
+		cout << "number of nodes at depth:" << endl;
+		for (i = 0; i <= max_depth; i++) {
+			cout << i << " : " << Nb[i] << endl;
+		}
+	}
+	Node = NEW_pint(nb_layers);
+	for (i = 0; i <= max_depth; i++) {
+		Node[i] = NEW_int(Nb[i]);
+	}
+	for (j = 0; j < len; j++) {
+		trace_back(NULL, orbit[fst + j], l);
+		l--;
+		Node[l][Nb1[l]] = j;
+		Nb1[l]++;
+	}
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
+
+	SoS->init_basic_with_Sz_in_int(A->degree /* underlying_set_size */,
+			nb_layers /* nb_sets */,
+			Nb, verbose_level);
+
+	for (i = 0; i <= max_depth; i++) {
+		for (j = 0; j < Nb[i]; j++) {
+			SoS->Sets[i][j] = orbit[fst + Node[i][j]];
+		}
+	}
+
+
+	if (f_v) {
+		cout << "schreier::get_orbit_by_levels done" << endl;
+	}
+
+}
+
 void schreier::export_tree_as_layered_graph(
 		int orbit_no,
 		std::string &fname_mask,
@@ -1481,7 +1566,7 @@ void schreier::draw_tree(std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	int *path;
 	int *weight;
 	int *placement_x;
@@ -1518,7 +1603,7 @@ void schreier::draw_tree(std::string &fname,
 		placement_x[j] = 0;
 	}
 	subtree_calc_weight(weight, max_depth, i, last);
-	if (f_vv) {
+	if (FALSE) {
 		cout << "the weights: " << endl;
 		for (j = i; j < last; j++) {
 			cout << j << " : " << weight[j] << " : " << endl;
@@ -1526,8 +1611,12 @@ void schreier::draw_tree(std::string &fname,
 		cout << endl;
 		cout << "max_depth = " << max_depth << endl;
 	}
+
+	if (f_v) {
+		cout << "max_depth = " << max_depth << endl;
+	}
 	subtree_place(weight, placement_x, 0, Opt->xin, i, last);
-	if (f_vv) {
+	if (FALSE) {
 		for (j = i; j < last; j++) {
 			cout << j << " : " << placement_x[j] << endl;
 		}

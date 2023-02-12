@@ -4261,8 +4261,8 @@ void file_io::do_csv_file_select_rows(
 
 	fname_out.assign(fname);
 	ST.chop_off_extension(fname_out);
-	fname_out.append("_select_");
-	fname_out.append(rows_text);
+	fname_out.append("_select");
+	//fname_out.append(rows_text);
 	fname_out.append(".csv");
 
 	{

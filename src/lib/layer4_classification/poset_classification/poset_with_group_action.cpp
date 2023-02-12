@@ -81,7 +81,7 @@ void poset_with_group_action::init_subset_lattice(
 void poset_with_group_action::init_subspace_lattice(
 		actions::action *A, actions::action *A2,
 		groups::strong_generators *Strong_gens,
-		algebra::vector_space *VS,
+		linear_algebra::vector_space *VS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -124,8 +124,8 @@ void poset_with_group_action::init(
 	f_subset_lattice = description->f_subset_lattice;
 	n = A2->degree;
 	f_subspace_lattice = description->f_subspace_lattice;
-	VS = NEW_OBJECT(algebra::vector_space);
-	groups::matrix_group *mtx;
+	VS = NEW_OBJECT(linear_algebra::vector_space);
+	algebra::matrix_group *mtx;
 	field_theory::finite_field *F;
 	mtx = A->get_matrix_group();
 	F = mtx->GFq;
@@ -174,7 +174,7 @@ void poset_with_group_action::add_independence_condition(
 	}
 
 	algebra::rank_checker *rc;
-	groups::matrix_group *mtx;
+	algebra::matrix_group *mtx;
 
 	mtx = A->get_matrix_group();
 

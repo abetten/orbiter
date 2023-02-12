@@ -231,7 +231,7 @@ void action::report_what_we_act_on(
 	if (is_matrix_group()) {
 
 		field_theory::finite_field *F;
-		groups::matrix_group *M;
+		algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		F = M->GFq;
@@ -281,7 +281,28 @@ void action::report_what_we_act_on(
 
 		}
 
-		ost << "Group Action $" << label_tex << "$ on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
+		if (M->f_projective) {
+
+			ost << "Group Action $" << label_tex
+					<< "$ on Projective Space ${\\rm PG}"
+							"(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
+
+		}
+		else if (M->f_affine) {
+
+			ost << "Group Action $" << label_tex
+					<< "$ on Affine Space ${\\rm AG}"
+							"(" << M->n << ", " << F->q << ")$\\\\" << endl;
+
+		}
+		else if (M->f_general_linear) {
+
+			ost << "Group Action $" << label_tex
+					<< "$ on Affine Space ${\\rm AG}"
+							"(" << M->n << ", " << F->q << ")$\\\\" << endl;
+
+		}
+
 
 		ost << "The finite field ${\\mathbb F}_{" << F->q << "}$:\\\\" << endl;
 

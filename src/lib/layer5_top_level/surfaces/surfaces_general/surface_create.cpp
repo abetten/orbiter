@@ -648,8 +648,10 @@ int surface_create::create_surface_from_description(int verbose_level)
 	return TRUE;
 }
 
-void surface_create::override_group(std::string &group_order_text,
-		int nb_gens, std::string &gens_text, int verbose_level)
+void surface_create::override_group(
+		std::string &group_order_text,
+		int nb_gens, std::string &gens_text,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *data;
@@ -691,7 +693,8 @@ void surface_create::override_group(std::string &group_order_text,
 	}
 }
 
-void surface_create::create_Eckardt_surface(int a, int b, int verbose_level)
+void surface_create::create_Eckardt_surface(
+		int a, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int alpha, beta;
@@ -780,7 +783,8 @@ void surface_create::create_Eckardt_surface(int a, int b, int verbose_level)
 
 }
 
-void surface_create::create_surface_G13(int a, int verbose_level)
+void surface_create::create_surface_G13(
+		int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -854,7 +858,8 @@ void surface_create::create_surface_G13(int a, int verbose_level)
 	}
 }
 
-void surface_create::create_surface_F13(int a, int verbose_level)
+void surface_create::create_surface_F13(
+		int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -928,7 +933,8 @@ void surface_create::create_surface_F13(int a, int verbose_level)
 
 }
 
-void surface_create::create_surface_bes(int a, int c, int verbose_level)
+void surface_create::create_surface_bes(
+		int a, int c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1003,7 +1009,8 @@ void surface_create::create_surface_bes(int a, int c, int verbose_level)
 }
 
 
-void surface_create::create_surface_general_abcd(int a, int b, int c, int d,
+void surface_create::create_surface_general_abcd(
+		int a, int b, int c, int d,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1270,7 +1277,8 @@ void surface_create::create_surface_by_coefficients(
 
 }
 
-void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
+void surface_create::create_surface_by_coefficient_vector(
+		int *coeffs20,
 		std::vector<std::string> &select_double_six_string,
 		int verbose_level)
 {
@@ -1407,7 +1415,8 @@ void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
 
 }
 
-void surface_create::create_surface_by_rank(std::string &rank_text, int defining_q,
+void surface_create::create_surface_by_rank(
+		std::string &rank_text, int defining_q,
 		std::vector<std::string> &select_double_six_string,
 		int verbose_level)
 {
@@ -1473,7 +1482,8 @@ void surface_create::create_surface_by_rank(std::string &rank_text, int defining
 
 
 
-void surface_create::create_surface_from_catalogue(int iso,
+void surface_create::create_surface_from_catalogue(
+		int iso,
 		std::vector<std::string> &select_double_six_string,
 		int verbose_level)
 {
@@ -2729,7 +2739,8 @@ void surface_create::apply_transformations(
 	}
 }
 
-void surface_create::apply_single_transformation(int f_inverse,
+void surface_create::apply_single_transformation(
+		int f_inverse,
 		int *transformation_coeffs,
 		int sz,
 		int verbose_level)
@@ -2785,7 +2796,7 @@ void surface_create::apply_single_transformation(int f_inverse,
 
 	// apply the transformation to the equation of the surface:
 
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 
 	M = A->G.matrix_grp;
 	M->substitute_surface_equation(Elt3,
@@ -3007,7 +3018,8 @@ void surface_create::compute_group(
 }
 #endif
 
-void surface_create::export_something(std::string &what, int verbose_level)
+void surface_create::export_something(
+		std::string &what, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3199,7 +3211,8 @@ void surface_create::do_report(int verbose_level)
 
 }
 
-void surface_create::do_report2(std::ostream &ost, int verbose_level)
+void surface_create::do_report2(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3416,7 +3429,7 @@ void surface_create::test_group(int verbose_level)
 
 
 
-		groups::matrix_group *M;
+		algebra::matrix_group *M;
 
 		M = Surf_A->A->G.matrix_grp;
 		M->substitute_surface_equation(Elt2,

@@ -2436,7 +2436,7 @@ void group_generators_domain::affine_translation(
 		int n, field_theory::finite_field *F,
 		int coordinate_idx, int field_base_idx, int *perm,
 		int verbose_level)
-// perm points to q^n int's
+// perm points to q^n ints
 // field_base_idx is the base element whose translation
 // we compute, 0 \le field_base_idx < e
 // coordinate_idx is the coordinate in which we shift,
@@ -2469,7 +2469,7 @@ void group_generators_domain::affine_multiplication(
 		int n, field_theory::finite_field *F,
 		int multiplication_order, int *perm,
 		int verbose_level)
-// perm points to q^n int's
+// perm points to q^n ints
 // compute the diagonal multiplication by alpha, i.e.
 // the multiplication by alpha of each component
 {
@@ -2506,7 +2506,7 @@ void group_generators_domain::affine_frobenius(
 		int n, field_theory::finite_field *F,
 		int k, int *perm,
 		int verbose_level)
-// perm points to q^n int's
+// perm points to q^n ints
 // compute the diagonal action of the Frobenius automorphism
 // to the power k, i.e.,
 // raises each component to the p^k-th power

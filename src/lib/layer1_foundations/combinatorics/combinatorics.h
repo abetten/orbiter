@@ -20,6 +20,67 @@ namespace combinatorics {
 
 
 // #############################################################################
+// apn_functions.cpp
+// #############################################################################
+
+//! boolean functions
+
+class apn_functions {
+
+public:
+
+	field_theory::finite_field *F;
+
+	apn_functions();
+	~apn_functions();
+	void init(field_theory::finite_field *F,
+			int verbose_level);
+	void search_APN(
+			int delta_max, int verbose_level);
+	void search_APN_recursion(
+			int *f, int depth, int f_normalize,
+			int &delta_max, int &nb_times,
+			std::vector<std::vector<int> > &Solutions,
+			int *A_matrix, int *B_matrix,
+			int *Count_ab, int *nb_times_ab,
+			int verbose_level);
+	int search_APN_perform_checks(
+			int *f, int depth,
+			int delta_max,
+			int *A_matrix, int *B_matrix, int *Count_ab,
+			int verbose_level);
+	void search_APN_undo_checks(
+			int *f, int depth,
+			int delta_max,
+			int *A_matrix, int *B_matrix, int *Count_ab,
+			int verbose_level);
+	int perform_single_check(
+			int *f, int depth, int i, int delta_max,
+			int *A_matrix, int *B_matrix, int *Count_ab,
+			int verbose_level);
+	void undo_single_check(
+			int *f, int depth, int i, int delta_max,
+			int *A_matrix, int *B_matrix, int *Count_ab,
+			int verbose_level);
+	void search_APN_old(
+			int verbose_level);
+	void search_APN_recursion_old(
+			int *f, int depth, int f_normalize,
+			int &delta_min, int &nb_times,
+			std::vector<std::vector<int> > &Solutions,
+			int *nb_times_ab,
+			int verbose_level);
+	int differential_uniformity(
+			int *f, int *nb_times_ab, int verbose_level);
+	int differential_uniformity_with_fibre(
+			int *f, int *nb_times_ab, int *&Fibre,
+			int verbose_level);
+
+};
+
+
+
+// #############################################################################
 // boolean_function_domain.cpp
 // #############################################################################
 

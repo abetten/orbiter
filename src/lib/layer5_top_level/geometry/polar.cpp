@@ -211,7 +211,7 @@ void polar::init2(int depth, int verbose_level)
 			f_print_cycles_of_length_one,
 			0 /* verbose_level */);
 		}
-	VS = NEW_OBJECT(algebra::vector_space);
+	VS = NEW_OBJECT(linear_algebra::vector_space);
 
 	VS->init(F, n /* dimension */,
 			verbose_level - 1);

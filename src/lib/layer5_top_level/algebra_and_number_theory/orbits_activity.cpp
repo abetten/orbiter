@@ -96,6 +96,18 @@ void orbits_activity::perform_activity(int verbose_level)
 			cout << "orbits_activity::perform_activity after do_export_trees" << endl;
 		}
 	}
+	else if (Descr->f_export_levels) {
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_export_levels" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_export_levels" << endl;
+		}
+		do_export_levels(Descr->export_levels_orbit_idx, verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_export_levels" << endl;
+		}
+	}
 	else if (Descr->f_draw_tree) {
 		if (f_v) {
 			cout << "orbits_activity::perform_activity f_draw_tree" << endl;
@@ -427,6 +439,117 @@ void orbits_activity::do_export_trees(int verbose_level)
 	}
 
 }
+
+
+void orbits_activity::do_export_levels(int orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_activity::do_export_levels" << endl;
+	}
+
+	if (OC->f_has_Orb) {
+		string fname_tree_mask;
+		string fname;
+		char str[1000];
+
+		fname_tree_mask.assign("orbit_");
+		fname_tree_mask.append(OC->Group->A->label);
+		fname_tree_mask.append("_orbit_");
+		snprintf(str, sizeof(str), "%d", orbit_idx);
+		fname_tree_mask.append(str);
+
+		data_structures::set_of_sets *SoS;
+
+		OC->Orb->Sch->get_orbit_by_levels(
+				orbit_idx,
+				SoS,
+				verbose_level);
+
+		int i;
+
+		orbiter_kernel_system::file_io Fio;
+
+		for (i = 0; i < SoS->nb_sets; i++) {
+			fname.assign(fname_tree_mask);
+			fname.append("_level_");
+			snprintf(str, sizeof(str), "%d", i);
+			fname.append(str);
+			fname.append(".csv");
+
+			string label;
+			snprintf(str, sizeof(str), "lvl%d", i);
+			label.assign(str);
+
+			Fio.lint_vec_write_csv(
+					SoS->Sets[i], SoS->Set_size[i],
+					fname, label);
+
+			if (f_v) {
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			}
+		}
+
+		int j;
+		int *v;
+
+		if (f_v) {
+			cout << "low_level_point_size = " << OC->Group->A->low_level_point_size << endl;
+		}
+
+
+		v = NEW_int(OC->Group->A->low_level_point_size);
+		i = SoS->nb_sets - 1;
+		for (j = 0; j < SoS->Set_size[i]; j++) {
+			OC->Group->A->Group_element->unrank_point(SoS->Sets[i][j], v);
+
+			std::vector<int> path;
+			std::vector<int> labels;
+			int *Labels;
+			int h;
+
+			Labels = NEW_int(i);
+
+
+			OC->Orb->Sch->get_path_and_labels(
+					path, labels,
+					SoS->Sets[i][j], verbose_level);
+
+
+
+			if (path.size() != i) {
+				cout << "orbits_activity::do_export_levels path.size() != i" << endl;
+				cout << "path.size()=" << path.size() << endl;
+				cout << "i=" << i << endl;
+				exit(1);
+			}
+
+			for (h = 0; h < i; h++) {
+				Labels[h] = labels[h];
+			}
+
+			cout << j << " : " << SoS->Sets[i][j] << " : ";
+			Int_vec_print(cout, Labels, i);
+			cout << " : ";
+			Int_vec_print(cout, v, OC->Group->A->low_level_point_size);
+			cout << endl;
+
+			FREE_int(Labels);
+
+		}
+	}
+	else {
+		cout << "orbits_activity::do_export_levels no suitable data structure" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "orbits_activity::do_export_levels done" << endl;
+	}
+
+}
+
 
 void orbits_activity::do_draw_tree(int verbose_level)
 {

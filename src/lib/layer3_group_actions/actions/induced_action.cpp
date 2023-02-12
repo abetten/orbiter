@@ -554,7 +554,7 @@ action *induced_action::induced_action_on_grassmannian(int k, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	induced_actions::action_on_grassmannian *AG;
 	action *A;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_grassmannian" << endl;
@@ -1138,7 +1138,7 @@ action *induced_action::induced_action_on_Galois_group(
 		}
 	induced_actions::action_on_galois_group *AG;
 	action *A;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 
 	A = NEW_OBJECT(action);
 
@@ -1227,7 +1227,7 @@ action *induced_action::induced_action_on_determinant(
 	int f_v = (verbose_level >= 1);
 	induced_actions::action_on_determinant *AD;
 	action *A;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_determinant" << endl;
@@ -1645,6 +1645,7 @@ action *induced_action::induced_action_by_right_multiplication(
 
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
+	A->low_level_point_size = A_old->make_element_size;
 
 	A->allocate_element_data();
 
@@ -3127,6 +3128,9 @@ action *induced_action::base_change(
 	}
 	return new_action;
 }
+
+
+
 
 
 

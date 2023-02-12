@@ -415,7 +415,7 @@ void magma_interface::export_group(
 		A->print_info();
 	}
 	if (A->is_matrix_group()) {
-		groups::matrix_group *M;
+		algebra::matrix_group *M;
 		int *Elt;
 		int h, i, j;
 

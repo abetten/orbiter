@@ -299,7 +299,7 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_semilinear;
-	groups::matrix_group *mtx;
+	algebra::matrix_group *mtx;
 	int n;
 	
 	if (f_v) {

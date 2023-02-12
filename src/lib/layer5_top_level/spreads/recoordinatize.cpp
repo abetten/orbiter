@@ -631,7 +631,7 @@ void recoordinatize::compute_live_points_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 	field_theory::finite_field *Fq;
 	long int set[4];
 	int *Elt1;

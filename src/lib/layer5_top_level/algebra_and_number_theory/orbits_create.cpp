@@ -83,12 +83,16 @@ void orbits_create::init(
 			exit(1);
 		}
 
+		//f_override_generators = FALSE;
+		//std::string override_generators_label;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity before AG->orbits_on_points" << endl;
 		}
 
 		Group->orbits_on_points(Orb, verbose_level);
+
+
 
 		f_has_Orb = TRUE;
 
@@ -167,6 +171,39 @@ void orbits_create::init(
 
 		//FREE_OBJECT(Orb);
 
+	}
+
+	if (Descr->f_on_points_with_generators) {
+
+		if (f_v) {
+			cout << "orbits_create::init f_on_points_with_generators" << endl;
+		}
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
+		}
+
+
+		apps_algebra::vector_ge_builder *Gens;
+
+		Gens = Get_object_of_type_vector_ge(Descr->on_points_with_generators_gens_label);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->orbits_on_points_from_generators" << endl;
+		}
+
+		Group->orbits_on_points_from_generators(Gens->V, Orb, verbose_level);
+
+
+		f_has_Orb = TRUE;
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->orbits_on_points_from_generators" << endl;
+		}
 	}
 
 	if (Descr->f_on_subsets) {

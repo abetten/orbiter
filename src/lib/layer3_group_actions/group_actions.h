@@ -69,7 +69,6 @@ namespace groups {
 	class exceptional_isomorphism_O4;
 	class linear_group_description;
 	class linear_group;
-	class matrix_group;
 	class orbits_on_something;
 	class permutation_group_create;
 	class permutation_group_description;
@@ -209,7 +208,7 @@ enum permutation_group_type {
 //! interface for the various types of group actions
 
 union symmetry_group {
-	groups::matrix_group *matrix_grp;
+	algebra::matrix_group *matrix_grp;
 	groups::permutation_representation_domain *perm_grp;
 	groups::wreath_product *wreath_product_group;
 	groups::direct_product *direct_product_group;

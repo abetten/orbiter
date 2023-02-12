@@ -423,7 +423,7 @@ void linear_set_classify::init(
 		cout << "linear_set_classify::init computing spread_embedding done" << endl;
 	}
 
-	VS = NEW_OBJECT(algebra::vector_space);
+	VS = NEW_OBJECT(linear_algebra::vector_space);
 	VS->init(P->F, vector_space_dimension /* dimension */,
 			verbose_level - 1);
 	VS->init_rank_functions(

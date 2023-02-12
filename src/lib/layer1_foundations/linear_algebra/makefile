@@ -11,7 +11,8 @@ MODULES = \
 	linear_algebra.o \
 	linear_algebra2.o \
 	linear_algebra3.o \
-	representation_theory_domain.o 
+	representation_theory_domain.o \
+	vector_space.o 
 
 
 all : $(MODULES)

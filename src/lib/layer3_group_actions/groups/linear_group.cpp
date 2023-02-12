@@ -1431,7 +1431,7 @@ void linear_group::init_subgroup_Janko1(int verbose_level)
 				"Strong_gens->init_subgroup_by_generators" << endl;
 	}
 
-	matrix_group *M;
+	algebra::matrix_group *M;
 
 	M = A_linear->get_matrix_group();
 

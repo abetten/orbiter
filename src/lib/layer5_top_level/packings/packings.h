@@ -624,7 +624,7 @@ public:
 
 	actions::action *A;
 	int f_semilinear;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	int dim;
 
 	groups::strong_generators *N_gens;

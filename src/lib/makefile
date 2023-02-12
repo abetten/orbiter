@@ -15,9 +15,9 @@ ORBITER_MODULES= \
 		layer1_foundations/algebra/interface_gap_low.o \
 		layer1_foundations/algebra/interface_magma_low.o \
 		layer1_foundations/algebra/matrix_block_data.o \
+		layer1_foundations/algebra/matrix_group.o \
 		layer1_foundations/algebra/null_polarity_generator.o \
 		layer1_foundations/algebra/rank_checker.o \
-		layer1_foundations/algebra/vector_space.o \
 		layer1_foundations/algebraic_geometry/algebraic_geometry_global.o \
 		layer1_foundations/algebraic_geometry/arc_lifting_with_two_lines.o \
 		layer1_foundations/algebraic_geometry/clebsch_map.o \
@@ -53,6 +53,7 @@ ORBITER_MODULES= \
 		layer1_foundations/coding_theory/error_repository.o \
 		layer1_foundations/coding_theory/mindist.o \
 		layer1_foundations/coding_theory/ttp_codes.o \
+		layer1_foundations/combinatorics/apn_functions.o \
 		layer1_foundations/combinatorics/boolean_function_domain.o \
 		layer1_foundations/combinatorics/brick_domain.o \
 		layer1_foundations/combinatorics/classification_of_objects_description.o \
@@ -122,7 +123,6 @@ ORBITER_MODULES= \
 		layer1_foundations/finite_fields/minimum_polynomial.o \
 		layer1_foundations/finite_fields/norm_tables.o \
 		layer1_foundations/finite_fields/nth_roots.o \
-		layer1_foundations/finite_fields/projective_space_basic.o \
 		layer1_foundations/finite_fields/related_fields.o \
 		layer1_foundations/finite_fields/square_nonsquare.o \
 		layer1_foundations/finite_fields/subfield_structure.o \
@@ -150,6 +150,7 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/point_line.o \
 		layer1_foundations/geometry/points_and_lines.o \
 		layer1_foundations/geometry/polarity.o \
+		layer1_foundations/geometry/projective_space_basic.o \
 		layer1_foundations/geometry/projective_space_implementation.o \
 		layer1_foundations/geometry/projective_space_of_dimension_three.o \
 		layer1_foundations/geometry/projective_space_plane.o \
@@ -221,6 +222,7 @@ ORBITER_MODULES= \
 		layer1_foundations/linear_algebra/linear_algebra2.o \
 		layer1_foundations/linear_algebra/linear_algebra3.o \
 		layer1_foundations/linear_algebra/representation_theory_domain.o \
+		layer1_foundations/linear_algebra/vector_space.o \
 		layer1_foundations/knowledge_base/finite_field_tables.o \
 		layer1_foundations/knowledge_base/knowledge_base.o \
 		layer1_foundations/number_theory/cyclotomic_sets.o \
@@ -339,7 +341,6 @@ ORBITER_MODULES= \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \
 		layer3_group_actions/groups/linear_group.o \
 		layer3_group_actions/groups/linear_group_description.o \
-		layer3_group_actions/groups/matrix_group.o \
 		layer3_group_actions/groups/orbits_on_something.o \
 		layer3_group_actions/groups/permutation_group_create.o \
 		layer3_group_actions/groups/permutation_group_description.o \

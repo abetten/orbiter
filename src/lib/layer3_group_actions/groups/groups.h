@@ -26,8 +26,8 @@ namespace groups {
 class direct_product {
 
 public:
-	matrix_group *M1;
-	matrix_group *M2;
+	algebra::matrix_group *M1;
+	algebra::matrix_group *M2;
 	field_theory::finite_field *F1;
 	field_theory::finite_field *F2;
 	int q1;
@@ -75,7 +75,8 @@ public:
 	direct_product();
 	~direct_product();
 	void init(
-			matrix_group *M1, matrix_group *M2,
+			algebra::matrix_group *M1,
+			algebra::matrix_group *M2,
 			int verbose_level);
 	long int element_image_of(
 			int *Elt, long int a, int verbose_level);
@@ -250,7 +251,7 @@ public:
 
 	strong_generators *initial_strong_gens;
 	actions::action *A_linear;
-	matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 
 	int f_has_strong_generators;
 	strong_generators *Strong_gens;
@@ -315,213 +316,6 @@ public:
 
 
 
-// #############################################################################
-// matrix_group.cpp
-// #############################################################################
-
-//! a matrix group over a finite field in projective, vector space or affine action
-
-class matrix_group {
-
-public:
-	int f_projective;
-		// n x n matrices (possibly with Frobenius) 
-		// acting on PG(n - 1, q)
-	int f_affine;
-		// n x n matrices plus translations
-		// (possibly with Frobenius) 
-		// acting on F_q^n
-	int f_general_linear;
-		// n x n matrices (possibly with Frobenius) 
-		// acting on F_q^n
-
-	int n;
-		// the size of the matrices
-
-	int degree;
-		// the degree of the action: 
-		// (q^(n-1)-1) / (q - 1) if f_projective
-		// q^n if f_affine or f_general_linear
-		  
-	int f_semilinear;
-		// use Frobenius automorphism
-
-	int f_kernel_is_diagonal_matrices;
-	
-	int bits_per_digit;
-	int bits_per_elt;
-	int bits_extension_degree;
-	int char_per_elt;
-	int elt_size_int;
-	int elt_size_int_half;
-	int low_level_point_size; // added Jan 26, 2010
-		// = n, the size of the vectors on which we act
-	int make_element_size;
-
-
-	std::string label;
-	std::string label_tex;
-
-	int f_GFq_is_allocated;
-		// if TRUE, GFq will be destroyed in the destructor
-		// if FALSE, it is the responsibility
-		// of someone else to destroy GFq
-	
-	field_theory::finite_field *GFq;
-	void *data;
-
-	algebra::gl_classes *C; // added Dec 2, 2013
-
-	
-	// temporary variables, do not use!
-	int *Elt1, *Elt2, *Elt3;
-		// used for mult, invert
-	int *Elt4;
-		// used for invert
-	int *Elt5;
-	int *tmp_M;
-		// used for GL_mult_internal
-	int *base_cols;
-		// used for Gauss during invert
-	int *v1, *v2;
-		// temporary vectors of length 2n
-	int *v3;
-		// used in GL_mult_vector_from_the_left_contragredient
-	uchar *elt1, *elt2, *elt3;
-		// temporary storage, used in element_store()
-	
-	data_structures::page_storage *Elts;
-	
-
-	matrix_group();
-	~matrix_group();
-	
-	void init_projective_group(int n,
-			field_theory::finite_field *F,
-		int f_semilinear, actions::action *A,
-		int verbose_level);
-	void init_affine_group(int n,
-			field_theory::finite_field *F,
-		int f_semilinear, actions::action *A,
-		int verbose_level);
-	void init_general_linear_group(int n,
-			field_theory::finite_field *F,
-		int f_semilinear, actions::action *A,
-		int verbose_level);
-	void allocate_data(int verbose_level);
-	void free_data(int verbose_level);
-	void setup_page_storage(
-			int page_length_log, int verbose_level);
-	void compute_elt_size(int verbose_level);
-	void init_base(
-			actions::action *A, int verbose_level);
-	void init_base_projective(
-			actions::action *A, int verbose_level);
-		// initializes base, base_len, degree,
-		// transversal_length, orbit, orbit_inv
-	void init_base_affine(
-			actions::action *A, int verbose_level);
-	void init_base_general_linear(
-			actions::action *A, int verbose_level);
-	void init_gl_classes(int verbose_level);
-
-	int GL_element_entry_ij(
-			int *Elt, int i, int j);
-	int GL_element_entry_frobenius(int *Elt);
-	long int image_of_element(
-			int *Elt, long int a, int verbose_level);
-	long int GL_image_of_PG_element(
-			int *Elt, long int a, int verbose_level);
-	long int GL_image_of_AG_element(
-			int *Elt, long int a, int verbose_level);
-	void action_from_the_right_all_types(
-		int *v, int *A, int *vA, int verbose_level);
-	void projective_action_from_the_right(
-		int *v, int *A, int *vA, int verbose_level);
-	void general_linear_action_from_the_right(
-		int *v, int *A, int *vA, int verbose_level);
-	void substitute_surface_equation(int *Elt,
-			int *coeff_in, int *coeff_out,
-			algebraic_geometry::surface_domain *Surf,
-			int verbose_level);
-	void GL_one(int *Elt);
-	void GL_one_internal(int *Elt);
-	void GL_zero(int *Elt);
-	int GL_is_one(int *Elt);
-	void GL_mult(
-			int *A, int *B, int *AB, int verbose_level);
-	void GL_mult_internal(
-			int *A, int *B, int *AB, int verbose_level);
-	void GL_copy(int *A, int *B);
-	void GL_copy_internal(int *A, int *B);
-	void GL_transpose(
-			int *A, int *At, int verbose_level);
-	void GL_transpose_internal(
-			int *A, int *At, int verbose_level);
-	void GL_invert(int *A, int *Ainv);
-	void GL_invert_internal(
-			int *A, int *Ainv, int verbose_level);
-	void GL_unpack(
-			uchar *elt, int *Elt, int verbose_level);
-	void GL_pack(
-			int *Elt, uchar *elt, int verbose_level);
-	void GL_print_easy(
-			int *Elt, std::ostream &ost);
-	void GL_code_for_make_element(
-			int *Elt, int *data);
-	void GL_print_for_make_element(
-			int *Elt, std::ostream &ost);
-	void GL_print_for_make_element_no_commas(
-			int *Elt, std::ostream &ost);
-	void GL_print_easy_normalized(
-			int *Elt, std::ostream &ost);
-	void GL_print_latex(
-			int *Elt, std::ostream &ost);
-	void GL_print_latex_with_print_point_function(
-			int *Elt,
-			std::ostream &ost,
-			void (*point_label)(
-					std::stringstream &sstr, int pt, void *data),
-			void *point_label_data);
-	void GL_print_easy_latex(
-			int *Elt, std::ostream &ost);
-	void GL_print_easy_latex_with_option_numerical(
-			int *Elt, int f_numerical, std::ostream &ost);
-	void decode_matrix(int *Elt, int n, uchar *elt);
-	int get_digit(uchar *elt, int i, int j);
-	int decode_frobenius(uchar *elt);
-	void encode_matrix(
-			int *Elt, int n, uchar *elt, int verbose_level);
-	void put_digit(uchar *elt, int i, int j, int d);
-	void encode_frobenius(uchar *elt, int d);
-	void make_element(int *Elt, int *data, int verbose_level);
-	void make_GL_element(int *Elt, int *A, int f);
-	void orthogonal_group_random_generator(
-			actions::action *A,
-			orthogonal_geometry::orthogonal *O,
-		int f_siegel, 
-		int f_reflection, 
-		int f_similarity,
-		int f_semisimilarity, 
-		int *Elt, int verbose_level);
-	void matrices_without_eigenvector_one(
-		sims *S, int *&Sol, int &cnt,
-		int f_path_select, int select_value, 
-		int verbose_level);
-	void matrix_minor(int *Elt, int *Elt1, 
-		matrix_group *mtx1, int f, int verbose_level);
-	int base_len(int verbose_level);
-	void base_and_transversal_length(
-			int base_len,
-			long int *base, int *transversal_length,
-			int verbose_level);
-	void strong_generators_low_level(
-			int *&data,
-			int &size, int &nb_gens, int verbose_level);
-	int has_shape_of_singer_cycle(int *Elt);
-};
-
-
 
 
 // #############################################################################
@@ -535,7 +329,12 @@ class orbits_on_something {
 public:
 
 	actions::action *A;
+
+	int f_has_SG;
 	strong_generators *SG;
+
+	data_structures_groups::vector_ge *gens;
+
 	schreier *Sch;
 
 	int f_load_save;
@@ -551,6 +350,12 @@ public:
 	void init(
 			actions::action *A,
 			strong_generators *SG,
+			int f_load_save,
+			std::string &prefix,
+			int verbose_level);
+	void init_from_vector_ge(
+			actions::action *A,
+			data_structures_groups::vector_ge *gens,
 			int f_load_save,
 			std::string &prefix,
 			int verbose_level);
@@ -705,7 +510,6 @@ public:
 	std::string label;
 	std::string label_tex;
 
-	//strong_generators *initial_strong_gens;
 	actions::action *A_initial;
 
 	int f_has_strong_generators;
@@ -915,8 +719,12 @@ public:
 		// allocated by init_images, 
 		// called from init_generators
 		// for each generator,
-		// stores the generator as permutation in 0..A->degree-1 ,
-		// then the inverse generator in A->degree..2*A->degree-1
+		// the permutation representation and the permutation
+		// representation of the inverse element
+		// are stored in succession. So,
+		// we store the permutation in 0..A->degree-1 ,
+		// then the inverse of the generator
+		// in A->degree..2*A->degree-1
 	
 	int *orbit; // [A->degree]
 	int *orbit_inv; // [A->degree]
@@ -1022,7 +830,6 @@ public:
 		// determines an element in the group 
 		// that moves the orbit representative 
 		// to the j-th point in the orbit.
-	void coset_rep_with_verbosity(int j, int verbose_level);
 	void coset_rep_inv(int j, int verbose_level);
 	void extend_orbit(int *elt, int verbose_level);
 	void compute_all_point_orbits(int verbose_level);
@@ -1054,6 +861,9 @@ public:
 			int *Elt, int verbose_level);
 		// computes random Schreier generator
 		// for the first orbit into Elt
+	void get_path_and_labels(
+			std::vector<int> &path, std::vector<int> &labels,
+			int i, int verbose_level);
 	void trace_back(
 			int *path, int i, int &j);
 	void intersection_vector(
@@ -1141,7 +951,8 @@ public:
 			int f_randomized,
 			schreier *&shallow_tree,
 			int verbose_level);
-	data_structures_groups::schreier_vector *get_schreier_vector(
+	data_structures_groups::schreier_vector
+		*get_schreier_vector(
 			int gen_hdl_first, int nb_gen,
 			enum shallow_schreier_tree_strategy
 				Shallow_schreier_tree_strategy,
@@ -1152,7 +963,8 @@ public:
 	double get_average_word_length();
 		// This function returns the average word length of the forest.
 	double get_average_word_length(int orbit_idx);
-	void compute_orbit_invariant(int *&orbit_invariant,
+	void compute_orbit_invariant(
+			int *&orbit_invariant,
 			int (*compute_orbit_invariant_callback)(schreier *Sch,
 					int orbit_idx, void *data, int verbose_level),
 			void *compute_orbit_invariant_data,
@@ -1193,7 +1005,8 @@ public:
 			int verbose_level);
 	void print_and_list_orbits_with_original_labels_tex(
 			std::ostream &ost);
-	void print_and_list_orbits_of_given_length(std::ostream &ost,
+	void print_and_list_orbits_of_given_length(
+			std::ostream &ost,
 		int len);
 	void print_and_list_orbits_and_stabilizer(
 			std::ostream &ost,
@@ -1272,6 +1085,10 @@ public:
 	void draw_forest(std::string &fname_mask,
 			graphics::layered_graph_draw_options *Opt,
 			int f_has_point_labels, long int *point_labels,
+			int verbose_level);
+	void get_orbit_by_levels(
+			int orbit_no,
+			data_structures::set_of_sets *&SoS,
 			int verbose_level);
 	void draw_tree(std::string &fname,
 			graphics::layered_graph_draw_options *Opt,
@@ -1432,7 +1249,7 @@ public:
 		// indices of generators which belong to G^{(i)}
 		// the generators for G^{(i)} modulo G^{(i+1)} 
 		// those indexed by nb_gen[i + 1], .., nb_gen[i] - 1 (!!!)
-		// Observe that the entries in nb_gen[] are *decreasing*.
+		// Observe that the entries in nb_gen[] are decreasing.
 		// This is because the generators at the bottom of the 
 		// stabilizer chain are listed first. 
 		// (And nb_gen[0] is the total number of generators).
@@ -1704,7 +1521,8 @@ public:
 		int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 		int verbose_level);
-	void build_up_group_from_generators(sims *K,
+	void build_up_group_from_generators(
+			sims *K,
 			data_structures_groups::vector_ge *gens,
 		int f_target_go,
 		ring_theory::longinteger_object *target_go,
@@ -1756,7 +1574,8 @@ public:
 		int *tl, int verbose_level);
 	int transitive_extension_tolerant(
 			schreier &O,
-			data_structures_groups::vector_ge &SG, int *tl, int f_tolerant,
+			data_structures_groups::vector_ge &SG,
+			int *tl, int f_tolerant,
 		int verbose_level);
 	void transitive_extension_using_coset_representatives_extract_generators(
 		int *coset_reps, int nb_cosets,
@@ -2252,26 +2071,26 @@ public:
 			actions::action *A, int verbose_level);
 	void generators_for_the_monomial_group(
 			actions::action *A,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_the_diagonal_group(
 			actions::action *A,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_the_singer_cycle(
 			actions::action *A,
-		matrix_group *Mtx, int power_of_singer,
+			algebra::matrix_group *Mtx, int power_of_singer,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void generators_for_the_singer_cycle_and_the_Frobenius(
 			actions::action *A,
-		matrix_group *Mtx, int power_of_singer,
+			algebra::matrix_group *Mtx, int power_of_singer,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void generators_for_the_null_polarity_group(
 			actions::action *A,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_symplectic_group(
 			actions::action *A,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void init_centralizer_of_matrix(
 			actions::action *A, int *Mtx,
 		int verbose_level);
@@ -2285,33 +2104,33 @@ public:
 	void generators_for_translation_plane_in_andre_model(
 			actions::action *A_PGL_n1_q,
 			actions::action *A_PGL_n_q,
-		matrix_group *Mtx_n1, matrix_group *Mtx_n, 
+			algebra::matrix_group *Mtx_n1, algebra::matrix_group *Mtx_n,
 		strong_generators *spread_stab_gens,
 		int verbose_level);
 	void generators_for_the_stabilizer_of_two_components(
 			actions::action *A_PGL_n_q,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void regulus_stabilizer(
 			actions::action *A_PGL_n_q,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_the_borel_subgroup_upper(
 			actions::action *A_linear,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_the_borel_subgroup_lower(
 			actions::action *A_linear,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_the_identity_subgroup(
 			actions::action *A_linear,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_parabolic_subgroup(
 			actions::action *A_PGL_n_q,
-		matrix_group *Mtx, int k, int verbose_level);
+			algebra::matrix_group *Mtx, int k, int verbose_level);
 	void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 			actions::action *A_PGL_4_q,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_stabilizer_of_triangle_in_PGL4(
 			actions::action *A_PGL_4_q,
-		matrix_group *Mtx, int verbose_level);
+			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_the_orthogonal_group(
 			actions::action *A,
 			field_theory::finite_field *F, int n,
@@ -2444,7 +2263,7 @@ public:
 class wreath_product {
 
 public:
-	matrix_group *M;
+	algebra::matrix_group *M;
 	actions::action *A_mtx;
 	field_theory::finite_field *F;
 	int q;
@@ -2517,7 +2336,8 @@ public:
 
 	wreath_product();
 	~wreath_product();
-	void init_tensor_wreath_product(matrix_group *M,
+	void init_tensor_wreath_product(
+			algebra::matrix_group *M,
 			actions::action *A_mtx, int nb_factors,
 			int verbose_level);
 	void compute_tensor_ranks(int verbose_level);

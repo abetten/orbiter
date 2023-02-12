@@ -8,16 +8,15 @@
 
 
 
-#include "layer1_foundations/foundations.h"
-#include "group_actions.h"
+#include "foundations.h"
 
 
 using namespace std;
 
 
 namespace orbiter {
-namespace layer3_group_actions {
-namespace groups {
+namespace layer1_foundations {
+namespace algebra {
 
 matrix_group::matrix_group()
 {
@@ -101,11 +100,10 @@ matrix_group::~matrix_group()
 void matrix_group::init_projective_group(
 		int n,
 		field_theory::finite_field *F, int f_semilinear,
-		actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	int page_length_log = PAGE_LENGTH_LOG;
 	geometry::geometry_global Gg;
 
@@ -178,7 +176,7 @@ void matrix_group::init_projective_group(
 
 
 
-
+#if 0
 	if (f_vv) {
 		cout << "matrix_group::init_projective_group "
 				"before init_base" << endl;
@@ -188,7 +186,7 @@ void matrix_group::init_projective_group(
 		cout << "matrix_group::init_projective_group "
 				"after init_base" << endl;
 	}
-
+#endif
 
 	//init_gl_classes(verbose_level - 1);
 
@@ -202,7 +200,6 @@ void matrix_group::init_projective_group(
 void matrix_group::init_affine_group(
 		int n,
 		field_theory::finite_field *F, int f_semilinear,
-		actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -251,7 +248,7 @@ void matrix_group::init_affine_group(
 
 
 
-
+#if 0
 	if (f_vv) {
 		cout << "matrix_group::init_affine_group "
 				"before init_base" << endl;
@@ -261,6 +258,7 @@ void matrix_group::init_affine_group(
 		cout << "matrix_group::init_affine_group "
 				"after init_base" << endl;
 	}
+#endif
 
 
 	//init_gl_classes(verbose_level - 1);
@@ -274,7 +272,6 @@ void matrix_group::init_affine_group(
 void matrix_group::init_general_linear_group(
 		int n,
 		field_theory::finite_field *F, int f_semilinear,
-		actions::action *A,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -324,7 +321,7 @@ void matrix_group::init_general_linear_group(
 
 
 
-
+#if 0
 	if (f_vv) {
 		cout << "matrix_group::init_general_linear_group "
 				"before init_base" << endl;
@@ -334,7 +331,7 @@ void matrix_group::init_general_linear_group(
 		cout << "matrix_group::init_general_linear_group "
 				"after init_base" << endl;
 	}
-
+#endif
 
 	//init_gl_classes(verbose_level - 1);
 
@@ -571,213 +568,6 @@ void matrix_group::compute_elt_size(int verbose_level)
 	}
 }
 
-void matrix_group::init_base(
-		actions::action *A, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	
-	if (f_v) {
-		cout << "matrix_group::init_base" << endl;
-	}
-	if (f_projective) {
-		if (f_vv) {
-			cout << "matrix_group::init_base "
-					"before init_base_projective" << endl;
-		}
-		init_base_projective(A, verbose_level - 2);
-		if (f_vv) {
-			cout << "matrix_group::init_base "
-					"after init_base_projective" << endl;
-		}
-	}
-	else if (f_affine) {
-		if (f_vv) {
-			cout << "matrix_group::init_base "
-					"before init_base_affine" << endl;
-		}
-		init_base_affine(A, verbose_level - 2);
-		if (f_vv) {
-			cout << "matrix_group::init_base "
-					"after init_base_affine" << endl;
-		}
-	}
-	else if (f_general_linear) {
-		if (f_vv) {
-			cout << "matrix_group::init_base "
-					"before init_base_general_linear" << endl;
-		}
-		init_base_general_linear(A, verbose_level - 2);
-		if (f_vv) {
-			cout << "matrix_group::init_base "
-					"after init_base_general_linear" << endl;
-		}
-	}
-	else {
-		cout << "matrix_group::init_base  "
-				"group type unknown" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "matrix_group::init_base done" << endl;
-	}
-}
-
-void matrix_group::init_base_projective(
-		actions::action *A, int verbose_level)
-// initializes A->degree, A->Stabilizer_chain
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int q = GFq->q;
-	algebra::group_generators_domain GG;
-	int base_len;
-	
-	if (f_v) {
-		cout << "matrix_group::init_base_projective "
-				"verbose_level=" << verbose_level << endl;
-	}
-	A->degree = degree;
-	if (f_vv) {
-		cout << "matrix_group::init_base_projective "
-				"degree=" << degree << endl;
-	}
-	if (f_vv) {
-		cout << "matrix_group::init_base_projective "
-				"before GG.matrix_group_base_len_projective_group" << endl;
-	}
-	base_len = GG.matrix_group_base_len_projective_group(
-			n, q, f_semilinear, verbose_level);
-	if (f_vv) {
-		cout << "matrix_group::init_base_projective "
-				"after GG.matrix_group_base_len_projective_group" << endl;
-	}
-
-	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
-	//A->Stabilizer_chain->base_len = base_len;
-	//A->allocate_base_data(A->base_len);
-	if (f_vv) {
-		cout << "matrix_group::init_base_projective "
-				"A->base_len()=" << A->base_len() << endl;
-	}
-
-	if (f_v) {
-		cout << "matrix_group::init_base_projective "
-				"before init_projective_matrix_group" << endl;
-	}
-
-	A->Stabilizer_chain->init_projective_matrix_group(
-			GFq, n, f_semilinear, A->degree,
-			verbose_level);
-
-	if (f_v) {
-		cout << "matrix_group::init_base_projective "
-				"after init_projective_matrix_group" << endl;
-	}
-
-	if (f_v) {
-		cout << "matrix_group::init_base_projective: finished" << endl;
-	}
-}
-
-void matrix_group::init_base_affine(
-		actions::action *A, int verbose_level)
-// initializes A->degree, A->Stabilizer_chain
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 1);
-	int q = GFq->q;
-	algebra::group_generators_domain GG;
-	int base_len;
-	
-	if (f_v) {
-		cout << "matrix_group::init_base_affine "
-				"verbose_level=" << verbose_level << endl;
-	}
-	A->degree = degree;
-	if (f_vv) {
-		cout << "matrix_group::init_base_affine degree="
-				<< degree << endl;
-	}
-	base_len = GG.matrix_group_base_len_affine_group(
-			n, q, f_semilinear, verbose_level - 1);
-	if (f_vv) {
-		cout << "matrix_group::init_base_affine base_len="
-				<< base_len << endl;
-	}
-
-	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
-	//A->Stabilizer_chain->base_len = base_len;
-	//A->allocate_base_data(A->base_len);
-
-	if (f_v) {
-		cout << "matrix_group::init_base_affine before "
-				"init_affine_matrix_group" << endl;
-	}
-	A->Stabilizer_chain->init_affine_matrix_group(
-			GFq, n, f_semilinear, A->degree,
-			verbose_level);
-	if (f_v) {
-		cout << "matrix_group::init_base_affine after "
-				"init_affine_matrix_group" << endl;
-	}
-
-	if (f_v) {
-		cout << "matrix_group::init_base_affine: finished" << endl;
-	}
-}
-
-void matrix_group::init_base_general_linear(
-		actions::action *A, int verbose_level)
-// initializes A->degree, A->Stabilizer_chain
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 1);
-	int q = GFq->q;
-	algebra::group_generators_domain GG;
-	int base_len;
-	
-	if (f_v) {
-		cout << "matrix_group::init_base_general_linear "
-				"verbose_level=" << verbose_level << endl;
-	}
-	A->degree = degree;
-	if (f_vv) {
-		cout << "matrix_group::init_base_general_linear "
-				"degree=" << degree << endl;
-	}
-	base_len = GG.matrix_group_base_len_general_linear_group(
-			n, q, f_semilinear, verbose_level - 1);
-
-	if (f_vv) {
-		cout << "matrix_group::init_base_general_linear "
-				"base_len=" << base_len << endl;
-	}
-
-	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
-	//A->Stabilizer_chain->base_len = base_len;
-	//A->allocate_base_data(A->base_len);
-
-	if (f_v) {
-		cout << "matrix_group::init_base_general_linear before "
-				"init_linear_matrix_group" << endl;
-	}
-	A->Stabilizer_chain->init_linear_matrix_group(
-			GFq, n, f_semilinear, A->degree,
-			verbose_level);
-	if (f_v) {
-		cout << "matrix_group::init_base_general_linear after "
-				"init_linear_matrix_group" << endl;
-	}
-
-	if (f_v) {
-		cout << "matrix_group::init_base_affine: finished" << endl;
-	}
-}
-
 void matrix_group::init_gl_classes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -887,7 +677,7 @@ long int matrix_group::GL_image_of_PG_element(
 	
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_PG_element" << endl;
-		}
+	}
 	GFq->Projective_space_basic->PG_element_unrank_modified_lint(
 			v1, 1, n, a);
 
@@ -898,7 +688,7 @@ long int matrix_group::GL_image_of_PG_element(
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_PG_element done" << endl;
-		}
+	}
 	return b;
 }
 
@@ -911,7 +701,7 @@ long int matrix_group::GL_image_of_AG_element(
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_AG_element" << endl;
-		}
+	}
 	
 	Gg.AG_element_unrank(GFq->q, v1, 1, n, a);
 
@@ -921,7 +711,7 @@ long int matrix_group::GL_image_of_AG_element(
 
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_AG_element done" << endl;
-		}
+	}
 	return b;
 }
 
@@ -1917,7 +1707,8 @@ void matrix_group::GL_print_easy_latex_with_option_numerical(
 
 }
 
-void matrix_group::decode_matrix(int *Elt, int n, uchar *elt)
+void matrix_group::decode_matrix(
+		int *Elt, int n, unsigned char *elt)
 {
 	int i, j;
 
@@ -1928,7 +1719,8 @@ void matrix_group::decode_matrix(int *Elt, int n, uchar *elt)
 	}
 }
 
-int matrix_group::get_digit(uchar *elt, int i, int j)
+int matrix_group::get_digit(
+		unsigned char *elt, int i, int j)
 {
 	int h0 = (int) (i * n + j) * bits_per_digit;
 	int h, h1, word, bit;
@@ -1947,7 +1739,8 @@ int matrix_group::get_digit(uchar *elt, int i, int j)
 	return d;
 }
 
-int matrix_group::decode_frobenius(uchar *elt)
+int matrix_group::decode_frobenius(
+		unsigned char *elt)
 {
 	int h0;
 	int h, h1, word, bit;
@@ -1973,7 +1766,8 @@ int matrix_group::decode_frobenius(uchar *elt)
 }
 
 void matrix_group::encode_matrix(
-		int *Elt, int n, uchar *elt, int verbose_level)
+		int *Elt, int n,
+		unsigned char *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2000,7 +1794,8 @@ void matrix_group::encode_matrix(
 	}
 }
 
-void matrix_group::put_digit(uchar *elt, int i, int j, int d)
+void matrix_group::put_digit(
+		unsigned char *elt, int i, int j, int d)
 {
 	int h0 = (int) (i * n + j) * bits_per_digit;
 	int h, h1, word, bit;
@@ -2025,7 +1820,8 @@ void matrix_group::put_digit(uchar *elt, int i, int j, int d)
 	}
 }
 
-void matrix_group::encode_frobenius(uchar *elt, int d)
+void matrix_group::encode_frobenius(
+		unsigned char *elt, int d)
 {
 	int h0;
 	int h, h1, word, bit;
@@ -2121,66 +1917,7 @@ void matrix_group::make_GL_element(int *Elt, int *A, int f)
 	GL_invert_internal(Elt, Elt + elt_size_int_half, FALSE);
 }
 
-void matrix_group::orthogonal_group_random_generator(
-		actions::action *A,
-		orthogonal_geometry::orthogonal *O,
-	int f_siegel, 
-	int f_reflection, 
-	int f_similarity,
-	int f_semisimilarity, 
-	int *Elt, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vvv = (verbose_level >= 3);
-	int *Mtx;
-
-	if (f_v) {
-		cout << "matrix_group::orthogonal_group_random_generator" << endl;
-		cout << "f_siegel=" << f_siegel << endl;
-		cout << "f_reflection=" << f_reflection << endl;
-		cout << "f_similarity=" << f_similarity << endl;
-		cout << "f_semisimilarity=" << f_semisimilarity << endl;
-		cout << "n=" << n << endl;
-		cout << "verbose_level = " << verbose_level << endl;
-	}
-
-	Mtx = NEW_int(n * n + 1);
-
-	if (f_v) {
-		cout << "matrix_group::orthogonal_group_random_generator "
-				"before O->random_generator_for_orthogonal_group" << endl;
-	}
-	
-	O->Orthogonal_group->random_generator_for_orthogonal_group(
-		f_semilinear /* f_action_is_semilinear */, 
-		f_siegel, 
-		f_reflection, 
-		f_similarity,
-		f_semisimilarity, 
-		Mtx, verbose_level - 1);
-	
-	if (f_v) {
-		cout << "matrix_group::orthogonal_group_random_generator "
-				"after O->random_generator_for_orthogonal_group" << endl;
-		cout << "Mtx=" << endl;
-		Int_matrix_print(Mtx, n, n);
-	}
-	A->Group_element->make_element(Elt, Mtx, verbose_level - 1);
-
-
-	FREE_int(Mtx);
-
-
-	if (f_vvv) {
-		cout << "matrix_group::orthogonal_group_random_generator "
-				"random generator:" << endl;
-		A->Group_element->element_print_quick(Elt, cout);
-	}
-	if (f_v) {
-		cout << "matrix_group::orthogonal_group_random_generator done" << endl;
-	}
-}
-
+#if 0
 
 void matrix_group::matrices_without_eigenvector_one(
 		sims *S,
@@ -2337,6 +2074,7 @@ void matrix_group::matrices_without_eigenvector_one(
 				"done, found this many matrices: " << cnt << endl;
 	}
 }
+#endif
 
 
 void matrix_group::matrix_minor(int *Elt,
@@ -2355,7 +2093,8 @@ void matrix_group::matrix_minor(int *Elt,
 	}
 	n1 = mtx1->n;
 	data = NEW_int(mtx1->elt_size_int_half);
-	GFq->Linear_algebra->matrix_minor(f_semilinear, Elt, data, n, f, n1);
+	GFq->Linear_algebra->matrix_minor(
+			f_semilinear, Elt, data, n, f, n1);
 
 	mtx1->make_GL_element(Elt1, data, Elt[n * n]);
 	

@@ -1750,16 +1750,11 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 	//cout << "induced_action_unrank_point" << endl;
 
 	if (A.type_G == action_by_right_multiplication_t) {
-		//action_by_right_multiplication *ABRM = A.G.ABRM;
-		action *sub;
+		induced_actions::action_by_right_multiplication *ABRM = A.G.ABRM;
 
-		sub = A.subaction;
-		if (sub == NULL) {
-			cout << "induced_action_unrank_point no subaction" << endl;
-			exit(1);
-			}
-		//ost << a;
-		//ABRM->compute_image(sub, Elt, a, b, verbose_level);
+
+		ABRM->Base_group->element_unrank_lint(rk, ABRM->Elt1);
+		ABRM->Base_group->A->Group_element->code_for_make_element(v, ABRM->Elt1);
 		}
 	else if (A.type_G == action_by_restriction_t) {
 		induced_actions::action_by_restriction *ABR = A.G.ABR;

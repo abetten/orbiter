@@ -219,7 +219,7 @@ void known_groups::init_projective_group(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "known_groups::init_projective_group" << endl;
@@ -228,7 +228,7 @@ void known_groups::init_projective_group(
 		cout << "f_basis=" << f_basis << endl;
 	}
 
-	M = NEW_OBJECT(groups::matrix_group);
+	M = NEW_OBJECT(algebra::matrix_group);
 
 
 
@@ -244,10 +244,22 @@ void known_groups::init_projective_group(
 				"before M->init_projective_group" << endl;
 	}
 	M->init_projective_group(n,
-			F, f_semilinear, A, verbose_level - 3);
+			F, f_semilinear, /*A,*/ verbose_level - 3);
 	if (f_v) {
 		cout << "known_groups::init_projective_group "
 				"after M->init_projective_group" << endl;
+	}
+
+	action_global AG;
+
+	if (f_v) {
+		cout << "known_groups::init_projective_group "
+				"before AG.init_base" << endl;
+	}
+	AG.init_base(A, M, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "known_groups::init_projective_group "
+				"after AG.init_base" << endl;
 	}
 
 
@@ -312,7 +324,7 @@ void known_groups::init_affine_group(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "known_groups::init_affine_group" << endl;
@@ -321,7 +333,7 @@ void known_groups::init_affine_group(
 		cout << "f_basis=" << f_basis << endl;
 	}
 
-	M = NEW_OBJECT(groups::matrix_group);
+	M = NEW_OBJECT(algebra::matrix_group);
 
 
 
@@ -336,10 +348,21 @@ void known_groups::init_affine_group(
 		cout << "known_groups::init_affine_group "
 				"before M->init_affine_group" << endl;
 	}
-	M->init_affine_group(n, F, f_semilinear, A, verbose_level - 1);
+	M->init_affine_group(n, F, f_semilinear, /*A,*/ verbose_level - 1);
 	if (f_v) {
 		cout << "known_groups::init_affine_group "
 				"after M->init_affine_group" << endl;
+	}
+	action_global AG;
+
+	if (f_v) {
+		cout << "known_groups::init_affine_group "
+				"before AG.init_base" << endl;
+	}
+	AG.init_base(A, M, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "known_groups::init_affine_group "
+				"after AG.init_base" << endl;
 	}
 
 
@@ -392,7 +415,7 @@ void known_groups::init_general_linear_group(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "known_groups::init_general_linear_group" << endl;
@@ -401,7 +424,7 @@ void known_groups::init_general_linear_group(
 		cout << "f_basis=" << f_basis << endl;
 	}
 
-	M = NEW_OBJECT(groups::matrix_group);
+	M = NEW_OBJECT(algebra::matrix_group);
 
 
 
@@ -413,7 +436,20 @@ void known_groups::init_general_linear_group(
 	A->dimension = n;
 
 	M->init_general_linear_group(n, F,
-		f_semilinear, A, verbose_level - 1);
+		f_semilinear, /*A,*/ verbose_level - 1);
+
+	action_global AG;
+
+	if (f_v) {
+		cout << "known_groups::init_general_linear_group "
+				"before AG.init_base" << endl;
+	}
+	AG.init_base(A, M, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "known_groups::init_general_linear_group "
+				"after AG.init_base" << endl;
+	}
+
 
 
 	A->low_level_point_size = M->low_level_point_size;
@@ -458,7 +494,7 @@ void known_groups::init_general_linear_group(
 }
 
 void known_groups::setup_linear_group_from_strong_generators(
-		groups::matrix_group *M,
+		algebra::matrix_group *M,
 		data_structures_groups::vector_ge *&nice_gens,
 		int f_init_sims,
 	int verbose_level)
@@ -620,7 +656,7 @@ void known_groups::init_projective_special_group(
 }
 
 void known_groups::init_matrix_group_strong_generators_builtin(
-		groups::matrix_group *M,
+		algebra::matrix_group *M,
 		data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -1352,7 +1388,8 @@ void known_groups::create_orthogonal_group(
 		cout << "known_groups::create_orthogonal_group" << endl;
 	}
 
-	groups::matrix_group *Mtx;
+	action_global AG;
+	algebra::matrix_group *Mtx;
 	int degree_save;
 
 	Mtx = subaction->get_matrix_group();
@@ -1360,14 +1397,14 @@ void known_groups::create_orthogonal_group(
 	degree_save = A->degree;
 	if (f_v) {
 		cout << "known_groups::create_orthogonal_group "
-				"before Mtx->init_base_projective" << endl;
+				"before AG.init_base_projective" << endl;
 	}
-	Mtx->init_base_projective(A, verbose_level);
+	AG.init_base_projective(A, Mtx, verbose_level);
 	// initializes base, base_len, degree,
 	// transversal_length, orbit, orbit_inv
 	if (f_v) {
 		cout << "known_groups::create_orthogonal_group "
-				"after Mtx->init_base_projective" << endl;
+				"after AG.init_base_projective" << endl;
 	}
 	A->degree = degree_save;
 
@@ -1514,7 +1551,7 @@ void known_groups::init_wreath_product_group(
 	int f_v = (verbose_level >= 1);
 	action *A_mtx;
 	groups::wreath_product *W;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "known_groups::init_wreath_product_group" << endl;
@@ -1523,7 +1560,7 @@ void known_groups::init_wreath_product_group(
 	}
 
 	A_mtx = NEW_OBJECT(action);
-	M = NEW_OBJECT(groups::matrix_group);
+	M = NEW_OBJECT(algebra::matrix_group);
 	W = NEW_OBJECT(groups::wreath_product);
 
 
@@ -1537,12 +1574,24 @@ void known_groups::init_wreath_product_group(
 				"before M->init_general_linear_group" << endl;
 	}
 	M->init_general_linear_group(n,
-			F, FALSE /* f_semilinear */, A_mtx,
+			F, FALSE /* f_semilinear */, //A_mtx,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "known_groups::init_wreath_product_group "
 				"after M->init_general_linear_group" << endl;
 	}
+	action_global AG;
+
+	if (f_v) {
+		cout << "known_groups::init_wreath_product_group "
+				"before AG.init_base" << endl;
+	}
+	AG.init_base(A_mtx, M, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "known_groups::init_wreath_product_group "
+				"after AG.init_base" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "known_groups::init_wreath_product_group "

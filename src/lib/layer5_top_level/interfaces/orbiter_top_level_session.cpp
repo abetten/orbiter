@@ -473,6 +473,8 @@ apps_algebra::vector_ge_builder *orbiter_top_level_session::get_object_of_type_v
 	}
 	if (get_object_type(idx) != t_vector_ge) {
 		cout << "orbiter_top_level_session::get_object_of_type_vector_ge object type != t_vector_ge" << endl;
+		cout << "object type = ";
+		orbiter_kernel_system::Orbiter->print_type(get_object_type(idx));
 		exit(1);
 	}
 	return (apps_algebra::vector_ge_builder *) get_object(idx);

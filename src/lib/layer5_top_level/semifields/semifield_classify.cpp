@@ -660,8 +660,8 @@ void semifield_classify::init_poset_classification(
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
-	algebra::vector_space *VS;
-	VS = NEW_OBJECT(algebra::vector_space);
+	linear_algebra::vector_space *VS;
+	VS = NEW_OBJECT(linear_algebra::vector_space);
 	VS->init(Mtx->GFq, vector_space_dimension,
 			verbose_level);
 	VS->init_rank_functions(
