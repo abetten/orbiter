@@ -124,7 +124,7 @@ public:
 		int *v, int *A, int *vA, int n, int verbose_level);
 	void semilinear_action_from_the_right(
 			int *v,
-		int *A, int *vA, int n);
+		int *A, int *vA, int n, int verbose_level);
 		// vA = (v * A)^{p^f}  (where f = A[n *  n])
 	void semilinear_action_from_the_left(
 			int *A,
@@ -273,19 +273,6 @@ public:
 			int *Coord, int *C,
 		int *U, int k, int sz_U,
 		int *T, int verbose_level);
-	void cubic_surface_family_24_generators(
-			int f_with_normalizer,
-		int f_semilinear,
-		int *&gens, int &nb_gens, int &data_size,
-		int &group_order, int verbose_level);
-	void cubic_surface_family_G13_generators(
-			int a,
-			int *&gens, int &nb_gens, int &data_size,
-			int &group_order, int verbose_level);
-	void cubic_surface_family_F13_generators(
-		int a,
-		int *&gens, int &nb_gens, int &data_size,
-		int &group_order, int verbose_level);
 	int is_unit_vector(
 			int *v, int len, int k);
 	void make_Fourier_matrices(
@@ -361,16 +348,20 @@ public:
 		// returns FALSE if pivot cannot be found at one of the steps
 	int RREF_search_pivot(
 			int *A, int m, int n,
-			int &i, int &j, int *base_cols, int verbose_level);
+			int &i, int &j, int *base_cols,
+			int verbose_level);
 	void RREF_make_pivot_one(
 			int *A, int m, int n,
-			int &i, int &j, int *base_cols, int verbose_level);
+			int &i, int &j, int *base_cols,
+			int verbose_level);
 	void RREF_elimination_below(
 			int *A, int m, int n,
-			int &i, int &j, int *base_cols, int verbose_level);
+			int &i, int &j, int *base_cols,
+			int verbose_level);
 	void RREF_elimination_above(
 			int *A, int m, int n,
-			int i, int *base_cols, int verbose_level);
+			int i, int *base_cols,
+			int verbose_level);
 	int rank_of_matrix(
 			int *A, int m, int verbose_level);
 	int rank_of_matrix_memory_given(

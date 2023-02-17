@@ -236,16 +236,16 @@ void classify_five_plus_one::classify_partial_ovoids(int verbose_level)
 	}
 	if (f_v) {
 		cout << "classify_five_plus_one::classify_partial_ovoids "
-				"classifying starter" << endl;
+				"before Five_plus_one->main" << endl;
 	}
 	Five_plus_one->main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
-		verbose_level);
+		0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "classify_five_plus_one::classify_partial_ovoids "
-				"classifying starter done" << endl;
+				"after Five_plus_one->main" << endl;
 	}
 
 #if 0

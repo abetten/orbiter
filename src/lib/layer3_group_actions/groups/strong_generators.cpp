@@ -3565,6 +3565,46 @@ void strong_generators::test_if_set_is_invariant_under_given_action(
 	}
 }
 
+int strong_generators::test_if_they_stabilize_the_equation(
+		actions::action *A_on_equation,
+		int *equation,
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	int ret;
+
+	if (f_v) {
+		cout << "strong_generators::test_if_they_stabilize_the_equation" << endl;
+	}
+	for (i = 0; i < gens->len; i++) {
+
+		ret = A->Group_element->test_if_it_fixes_the_polynomial(
+				gens->ith(i),
+				equation,
+				HPD,
+				verbose_level - 1);
+
+		if (!ret) {
+			cout << "strong_generators::test_if_they_stabilize_the_equation "
+					"the generator do not fix the equation" << endl;
+			break;
+		}
+
+	}
+	if (i < gens->len) {
+		ret = FALSE;
+	}
+	else {
+		ret = TRUE;
+	}
+	if (f_v) {
+		cout << "strong_generators::test_if_they_stabilize_the_equation done" << endl;
+	}
+	return ret;
+}
+
 void strong_generators::set_of_coset_representatives(sims *S,
 		data_structures_groups::vector_ge *&coset_reps,
 		int verbose_level)

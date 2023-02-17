@@ -1684,14 +1684,16 @@ void spread_domain::HMO(
 	Sub = NEW_OBJECT(field_theory::subfield_structure);
 
 	if (f_v) {
-		cout << "spread_domain::HMO before Fq2->finite_field_init_small_order" << endl;
+		cout << "spread_domain::HMO "
+				"before Fq2->finite_field_init_small_order" << endl;
 	}
 	Fq2->finite_field_init_small_order(q2,
 			FALSE /* f_without_tables */,
 			FALSE /* f_compute_related_fields */,
 			verbose_level);
 	if (f_v) {
-		cout << "spread_domain::HMO after Fq2->finite_field_init_small_order" << endl;
+		cout << "spread_domain::HMO "
+				"after Fq2->finite_field_init_small_order" << endl;
 	}
 
 	Sub->init(Fq2, F, verbose_level);
@@ -1719,7 +1721,8 @@ void spread_domain::HMO(
 			x = Sub->components[beta * 2 + 0];
 			y = Sub->components[beta * 2 + 1];
 			if (f_v) {
-				cout << "spread_domain::HMO alpha=" << alpha << " beta=" << beta
+				cout << "spread_domain::HMO "
+						"alpha=" << alpha << " beta=" << beta
 						<< " x=" << x << " y=" << y << endl;
 			}
 			tmp1 = Ge[x * q + y];
@@ -1767,7 +1770,8 @@ void spread_domain::HMO(
 			y = h1 % q2;
 			x = (h1 - y) / q2;
 			if (f_v) {
-				cout << "spread_domain::HMO h=" << h << " x=" << x << " y=" << y << endl;
+				cout << "spread_domain::HMO "
+						"h=" << h << " x=" << x << " y=" << y << endl;
 			}
 			M[0 * 4 + 2] = x;
 			M[0 * 4 + 3] = y;
@@ -1775,7 +1779,8 @@ void spread_domain::HMO(
 			M[1 * 4 + 3] = HH[x * q2 + y];
 		}
 		if (f_v) {
-			cout << "spread_domain::HMO element " << h << ":" << endl;
+			cout << "spread_domain::HMO "
+					"element " << h << ":" << endl;
 			Int_matrix_print(M, 2, 4);
 		}
 #if 0
@@ -1785,7 +1790,8 @@ void spread_domain::HMO(
 #endif
 		Data2[h] = Gq2->rank_lint_here(M, 0);
 		if (f_v) {
-			cout << "spread_domain::HMO has rank " << Data2[h] << endl;
+			cout << "spread_domain::HMO "
+					"has rank " << Data2[h] << endl;
 		}
 	}
 

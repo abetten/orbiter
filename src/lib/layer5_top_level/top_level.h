@@ -333,7 +333,9 @@ namespace applications_in_algebraic_geometry {
 		class classification_of_cubic_surfaces_with_double_sixes_activity;
 		class classify_double_sixes;
 		class classify_five_plus_one;
+		class identify_cubic_surface;
 		class surface_classify_wedge;
+		class surface_repository;
 
 	}
 

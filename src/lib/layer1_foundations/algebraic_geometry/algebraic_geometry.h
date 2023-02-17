@@ -45,6 +45,22 @@ public:
 			long int *&Image_pts,
 			int &N_points,
 			int verbose_level);
+	void cubic_surface_family_24_generators(
+			field_theory::finite_field *F,
+		int f_with_normalizer,
+		int f_semilinear,
+		int *&gens, int &nb_gens, int &data_size,
+		int &group_order, int verbose_level);
+	void cubic_surface_family_G13_generators(
+			field_theory::finite_field *F,
+		int a,
+		int *&gens, int &nb_gens, int &data_size,
+		int &group_order, int verbose_level);
+	void cubic_surface_family_F13_generators(
+			field_theory::finite_field *F,
+		int a,
+		int *&gens, int &nb_gens, int &data_size,
+		int &group_order, int verbose_level);
 
 
 };

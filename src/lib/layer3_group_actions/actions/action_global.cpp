@@ -3759,6 +3759,52 @@ void action_global::init_base_general_linear(
 	}
 }
 
+void action_global::substitute_semilinear(
+		action *A,
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int *Elt,
+		int *input, int *output,
+		int verbose_level)
+{
+	int f_v = (verbose_level > 1);
+
+
+	if (f_v) {
+		cout << "action_global::substitute_semilinear" << endl;
+	}
+
+	int *Elt1;
+	algebra::matrix_group *mtx;
+	int f_semilinear;
+	int n;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+
+	mtx = A->G.matrix_grp;
+	f_semilinear = mtx->f_semilinear;
+	n = mtx->n;
+
+
+	A->Group_element->element_invert(Elt, Elt1, 0);
+
+
+	if (f_semilinear) {
+		HPD->substitute_semilinear(input, output,
+				f_semilinear, Elt[n * n], Elt1,
+				0 /* verbose_level */);
+	}
+	else {
+		HPD->substitute_linear(input, output, Elt1,
+				0 /* verbose_level */);
+	}
+
+
+	FREE_int(Elt1);
+
+	if (f_v) {
+		cout << "action_global::substitute_semilinear done" << endl;
+	}
+}
 
 
 

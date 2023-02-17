@@ -108,7 +108,8 @@ projective_space::~projective_space()
 
 	if (Go) {
 		if (f_v) {
-			cout << "projective_space::~projective_space deleting Go" << endl;
+			cout << "projective_space::~projective_space "
+					"deleting Go" << endl;
 		}
 		FREE_OBJECT(Go);
 	}

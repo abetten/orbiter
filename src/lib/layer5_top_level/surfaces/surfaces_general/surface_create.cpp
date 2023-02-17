@@ -581,6 +581,32 @@ int surface_create::create_surface_from_description(int verbose_level)
 					"after create_surface_by_skew_hexagon" << endl;
 		}
 	}
+	else if (Descr->f_random) {
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"f_random" << endl;
+		}
+
+		int eqn20[20];
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_at_random" << endl;
+		}
+		create_surface_at_random(eqn20, verbose_level - 2);
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_at_random" << endl;
+		}
+
+		cout << "We created a cubic surface with 27 lines as random. The equation is:" << endl;
+		Int_vec_print(cout, eqn20, 20);
+		cout << endl;
+
+
+	}
 
 	else {
 		cout << "surface_create::init2 we do not "
@@ -2516,7 +2542,8 @@ void surface_create::create_surface_by_skew_hexagon(
 	Pts = NEW_lint(nb_pts);
 
 	for (i = 0; i < nb_pts; i++) {
-		Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(Pluecker_ccords + i * 6, 0 /*verbose_level*/);
+		Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(
+				Pluecker_ccords + i * 6, 0 /*verbose_level*/);
 	}
 
 	if (nb_pts != 6) {
@@ -2646,6 +2673,167 @@ void surface_create::create_surface_by_skew_hexagon(
 		cout << "surface_create::create_surface_by_skew_hexagon done" << endl;
 	}
 }
+
+void surface_create::create_surface_at_random(
+		int *eqn20,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random" << endl;
+	}
+
+	int nb_surfaces;
+	int t;
+	orbiter_kernel_system::os_interface Os;
+	knowledge_base::knowledge_base K;
+	actions::action_global AG;
+	int *Elt;
+	int *eqn;
+
+
+	nb_surfaces = K.cubic_surface_nb_reps(q);
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random "
+				"The number of isomorphism types of cubic surfaces "
+				"for q=" << q << " is " << nb_surfaces << endl;
+	}
+
+	t = Os.random_integer(nb_surfaces);
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random "
+				"t=" << t << endl;
+	}
+
+	eqn = K.cubic_surface_representative(q, t);
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random "
+				"eqn=" << endl;
+		Int_vec_print(cout, eqn, 20);
+		cout << endl;
+	}
+
+#if 0
+	if (!Surf_A->A->f_has_sims) {
+		cout << "surface_create::create_surface_at_random "
+				"!Surf_A->A->f_has_sims" << endl;
+		exit(1);
+	}
+#endif
+
+	if (!Surf_A->A->f_has_strong_generators) {
+		cout << "surface_create::create_surface_at_random "
+				"!Surf_A->A->f_has_strong_generators" << endl;
+		exit(1);
+	}
+
+	groups::sims *Sims;
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random before create_sims" << endl;
+	}
+	Sims = Surf_A->A->Strong_gens->create_sims(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random after create_sims" << endl;
+	}
+
+
+	Elt = NEW_int(Surf_A->A->elt_size_in_int);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random before random_element" << endl;
+	}
+	//Sims->random_element(Elt, 0 /*verbose_level*/);
+	Surf_A->A->Group_element->element_one(Elt, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random after random_element" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random random element is Elt=" << endl;
+		Surf_A->A->Group_element->element_print(Elt, cout);
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random "
+				"before AG.substitute_semilinear" << endl;
+	}
+
+	AG.substitute_semilinear(
+			Surf_A->A,
+			Surf->PolynomialDomains->Poly3_4,
+			Elt,
+			eqn /* input */, eqn20 /* output */,
+			verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random "
+				"after AG.substitute_semilinear" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random "
+				"eqn20=" << endl;
+		Int_vec_print(cout, eqn20, 20);
+		cout << endl;
+	}
+
+	FREE_int(Elt);
+	FREE_OBJECT(Sims);
+
+
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+
+
+	std::vector<std::string> select_double_six_string;
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before create_surface_by_coefficient_vector" << endl;
+	}
+
+	create_surface_by_coefficient_vector(eqn20,
+			select_double_six_string,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after create_surface_by_coefficient_vector" << endl;
+	}
+
+
+	f_has_group = FALSE;
+
+	char str_q[1000];
+
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+
+
+	prefix.assign("random");
+	prefix.append("_q");
+	prefix.append(str_q);
+
+	label_txt.assign("random");
+	label_txt.append("_q");
+	label_txt.append(str_q);
+
+
+
+
+	cout << "prefix = " << prefix << endl;
+	cout << "label_txt = " << label_txt << endl;
+	cout << "label_tex = " << label_tex << endl;
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random done" << endl;
+	}
+}
+
 
 void surface_create::apply_transformations(
 	std::vector<std::string> &transform_coeffs,

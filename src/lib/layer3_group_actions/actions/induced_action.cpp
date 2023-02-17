@@ -1142,6 +1142,17 @@ action *induced_action::induced_action_on_Galois_group(
 
 	A = NEW_OBJECT(action);
 
+	if (A_old != old_G->A) {
+		cout << "induced_action::induced_action_on_Galois_group A_old != old_G->A" << endl;
+		cout << "A_old = ";
+		A_old->print_info();
+		cout << endl;
+		cout << "old_G->A = ";
+		old_G->A->print_info();
+		cout << endl;
+		exit(1);
+	}
+
 
 	char str1[1000];
 	char str2[1000];
@@ -1191,7 +1202,7 @@ action *induced_action::induced_action_on_Galois_group(
 	A->ptr->init_function_pointers_induced_action();
 
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -1299,7 +1310,7 @@ action *induced_action::induced_action_on_determinant(
 	A->ptr->init_function_pointers_induced_action();
 
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -1382,7 +1393,7 @@ action *induced_action::induced_action_on_sign(
 	A->ptr->init_function_pointers_induced_action();
 
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -1639,7 +1650,7 @@ action *induced_action::induced_action_by_right_multiplication(
 	A->ptr->init_function_pointers_induced_action();
 
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -1765,7 +1776,7 @@ action *induced_action::induced_action_on_sets(
 				"calling allocate_base_data" << endl;
 	}
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -1884,7 +1895,7 @@ action *induced_action::induced_action_on_subgroups(
 				"calling allocate_base_data" << endl;
 	}
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -1965,7 +1976,7 @@ action *induced_action::induced_action_by_restriction_on_orbit_with_schreier_vec
 				"calling allocate_base_data" << endl;
 	}
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -2166,7 +2177,7 @@ action *induced_action::induced_action_by_restriction(
 				"calling allocate_base_data" << endl;
 	}
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -2359,7 +2370,7 @@ action *induced_action::induced_action_on_ordered_pairs(
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -2438,7 +2449,7 @@ action *induced_action::induced_action_on_k_subsets(
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -2502,7 +2513,7 @@ action *induced_action::induced_action_on_orbits(
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -2693,7 +2704,7 @@ action *induced_action::induced_action_on_andre(
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -3070,7 +3081,7 @@ action *induced_action::base_change(
 	new_action->ptr->init_function_pointers_induced_action();
 
 	new_action->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	new_action->Stabilizer_chain->allocate_base_data(new_action, 0 /* base_len */, verbose_level);
+	new_action->Stabilizer_chain->allocate_base_data(A_old, 0 /* base_len */, verbose_level);
 	//allocate_base_data(0);
 
 

@@ -27,11 +27,10 @@ int projective_space::reverse_engineer_semilinear_map(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	//finite_field *F;
 	int d = n + 1;
 	int *v1, *v2, *v1_save;
 	int *w1, *w2, *w1_save;
-	int /*q,*/ h, hh, i, j, l, e, frobenius_inv, lambda, rk, c, cv;
+	int h, hh, i, j, l, e, frobenius_inv, lambda, rk, c, cv;
 	int *system;
 	int *base_cols;
 	number_theory::number_theory_domain NT;
@@ -92,7 +91,8 @@ int projective_space::reverse_engineer_semilinear_map(
 
 	if (f_vv) {
 		cout << "Mtx (before scaling):" << endl;
-		Int_vec_print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
+		Int_vec_print_integer_matrix_width(
+				cout, Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 	}
 
@@ -136,11 +136,14 @@ int projective_space::reverse_engineer_semilinear_map(
 	if (f_vv) {
 		cout << "projective_space::reverse_engineer_semilinear_map "
 				"linear system:" << endl;
-		Int_vec_print_integer_matrix_width(cout, system,
+		Int_vec_print_integer_matrix_width(
+				cout, system,
 				d, d + 1, d + 1, F->log10_of_q);
 		cout << endl;
 	}
-	rk = F->Linear_algebra->Gauss_simple(system, d, d + 1, base_cols, verbose_level - 4);
+	rk = F->Linear_algebra->Gauss_simple(
+			system, d, d + 1, base_cols,
+			verbose_level - 4);
 	if (rk != d) {
 		cout << "projective_space::reverse_engineer_semilinear_map "
 				"rk != d, fatal" << endl;
@@ -149,7 +152,8 @@ int projective_space::reverse_engineer_semilinear_map(
 	if (f_vv) {
 		cout << "projective_space::reverse_engineer_semilinear_map "
 				"after Gauss_simple:" << endl;
-		Int_vec_print_integer_matrix_width(cout, system,
+		Int_vec_print_integer_matrix_width(
+				cout, system,
 				d, d + 1, d + 1, F->log10_of_q);
 		cout << endl;
 	}
@@ -167,7 +171,8 @@ int projective_space::reverse_engineer_semilinear_map(
 
 	if (f_vv) {
 		cout << "Mtx (after scaling):" << endl;
-		Int_vec_print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
+		Int_vec_print_integer_matrix_width(
+				cout, Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 	}
 

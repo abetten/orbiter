@@ -591,13 +591,20 @@ void surface_object_with_action::init_orbits_on_points(
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_action action on points:" << endl;
+		cout << "surface_object_with_action::init_orbits_on_points action: ";
+		Surf_A->A->print_info();
 	}
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_points "
+				"creating action on points:" << endl;
+	}
+
 	A_on_points = Surf_A->A->Induced_action->restricted_action(
 			SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
+
 	if (f_v) {
-		cout << "surface_object_with_action action "
-				"on points done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_points "
+				"creating action on points done" << endl;
 	}
 
 
@@ -618,9 +625,18 @@ void surface_object_with_action::init_orbits_on_points(
 		if (f_v) {
 			cout << "surface_object_with_action::init_orbits_on_points "
 					"computing orbits on points using Aut_gens:" << endl;
+			Aut_gens->print_generators(cout);
+		}
+		if (f_v) {
+			cout << "surface_object_with_action::init_orbits_on_points "
+					"before Aut_gens->orbits_on_points_schreier" << endl;
 		}
 		Orbits_on_points = Aut_gens->orbits_on_points_schreier(
-				A_on_points, 0 /*verbose_level*/);
+				A_on_points, verbose_level - 2);
+		if (f_v) {
+			cout << "surface_object_with_action::init_orbits_on_points "
+					"after Aut_gens->orbits_on_points_schreier" << endl;
+		}
 	}
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_points "

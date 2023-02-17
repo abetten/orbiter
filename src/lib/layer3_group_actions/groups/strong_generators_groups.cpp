@@ -3182,13 +3182,15 @@ strong_generators::stabilizer_of_Eckardt_surface(
 	int group_order;
 	ring_theory::longinteger_object target_go;
 	int i;
+	algebraic_geometry::algebraic_geometry_global AGG;
 	
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_Eckardt_surface "
-				"before F->cubic_surface_family_24_generators" << endl;
+				"before AGG.cubic_surface_family_24_generators" << endl;
 	}
 
-	F->Linear_algebra->cubic_surface_family_24_generators(
+	AGG.cubic_surface_family_24_generators(
+			F,
 			f_with_normalizer,
 		f_semilinear, 
 		data, nb_gens, data_size, group_order, verbose_level);
@@ -3257,13 +3259,16 @@ void strong_generators::stabilizer_of_G13_surface(
 	int group_order;
 	ring_theory::longinteger_object target_go;
 	int i;
+	algebraic_geometry::algebraic_geometry_global AGG;
 
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_G13_surface "
-				"before F->cubic_surface_family_G13_generators" << endl;
+				"before AGG.cubic_surface_family_G13_generators" << endl;
 	}
 
-	F->Linear_algebra->cubic_surface_family_G13_generators(a,
+	AGG.cubic_surface_family_G13_generators(
+			F,
+			a,
 		data, nb_gens, data_size, group_order, verbose_level);
 
 	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
@@ -3326,13 +3331,15 @@ void strong_generators::stabilizer_of_F13_surface(
 	int group_order;
 	ring_theory::longinteger_object target_go;
 	int i;
+	algebraic_geometry::algebraic_geometry_global AGG;
 
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_F13_surface "
-				"before F->cubic_surface_family_F13_generators" << endl;
+				"before AGG.cubic_surface_family_F13_generators" << endl;
 	}
 
-	F->Linear_algebra->cubic_surface_family_F13_generators(a,
+	AGG.cubic_surface_family_F13_generators(
+			F, a,
 		data, nb_gens, data_size, group_order, verbose_level);
 
 	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);

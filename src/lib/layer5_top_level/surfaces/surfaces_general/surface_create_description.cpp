@@ -110,6 +110,8 @@ surface_create_description::surface_create_description()
 	override_group_nb_gens = 0;
 	//std::string override_group_gens;
 
+	f_random = FALSE;
+
 
 	//std::vector<std::string> transform_coeffs;
 	//std::vector<int> f_inverse_transform;
@@ -285,6 +287,12 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< endl;
 		}
 
+		else if (ST.stringcmp(argv[i], "-random") == 0) {
+			f_random = TRUE;
+
+			cout << "-random " << endl;
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-transform") == 0) {
 
@@ -408,6 +416,10 @@ void surface_create_description::print()
 				<< " " << override_group_nb_gens
 				<< " " << override_group_gens
 				<< endl;
+	}
+	if (f_random) {
+
+		cout << "-random " << endl;
 	}
 
 	for (int i = 0; i < transform_coeffs.size(); i++) {

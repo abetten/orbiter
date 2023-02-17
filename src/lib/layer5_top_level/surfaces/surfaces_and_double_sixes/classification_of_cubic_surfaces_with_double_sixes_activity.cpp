@@ -291,12 +291,12 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_write_sourc
 
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code "
-				"before SCW->recognition" << endl;
+				"before SCW->Surface_repository->generate_source_code" << endl;
 	}
-	SCW->generate_source_code(verbose_level);
+	SCW->Surface_repository->generate_source_code(verbose_level);
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code "
-				"after SCW->recognition" << endl;
+				"after SCW->Surface_repository->generate_source_code" << endl;
 	}
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code done" << endl;

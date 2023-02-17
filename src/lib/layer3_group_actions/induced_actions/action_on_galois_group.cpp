@@ -42,14 +42,14 @@ void action_on_galois_group::init(
 	if (f_v) {
 		cout << "action_on_galois_group::init" << endl;
 		cout << "m=" << m << endl;
-		}
+	}
 	action_on_galois_group::A = A;
 	action_on_galois_group::m = m;
 	if (A->type_G != matrix_group_t) {
 		cout << "action_on_galois_group::init action "
 				"not of matrix group type" << endl;
 		exit(1);
-		}
+	}
 	M = A->G.matrix_grp;
 	if (M->f_semilinear == FALSE) {
 		cout << "action_on_galois_group::init "
@@ -60,12 +60,12 @@ void action_on_galois_group::init(
 	degree = M->GFq->e;
 	if (f_v) {
 		cout << "degree=" << degree << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "action_on_galois_group::init "
 				"field order is " << q << endl;
-		}
+	}
 }
 
 long int action_on_galois_group::compute_image(
@@ -78,12 +78,12 @@ long int action_on_galois_group::compute_image(
 	if (f_v) {
 		cout << "action_on_galois_group::compute_image "
 				"i = " << i << endl;
-		}
+	}
 	if (i < 0 || i >= degree) {
 		cout << "action_on_galois_group::compute_image "
 				"i = " << i << " out of range" << endl;
 		exit(1);
-		}
+	}
 
 	a = A->Group_element->linear_entry_frobenius(Elt);
 	b = i + a;
@@ -92,7 +92,7 @@ long int action_on_galois_group::compute_image(
 	if (f_v) {
 		cout << "action_on_galois_group::compute_image "
 				"image of " << i << " is " << j << endl;
-		}
+	}
 	return j;
 }
 

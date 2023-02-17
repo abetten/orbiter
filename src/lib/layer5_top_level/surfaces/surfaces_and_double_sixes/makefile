@@ -10,7 +10,11 @@ MODULES = \
 	classification_of_cubic_surfaces_with_double_sixes_activity.o \
 	classify_double_sixes.o \
 	classify_five_plus_one.o \
-	surface_classify_wedge.o 
+	identify_cubic_surface.o \
+	surface_classify_wedge_io.o \
+	surface_classify_wedge_recognition.o \
+	surface_classify_wedge.o \
+	surface_repository.o 
 
 
 all : $(MODULES)

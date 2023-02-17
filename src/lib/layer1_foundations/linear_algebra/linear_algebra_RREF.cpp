@@ -637,7 +637,8 @@ int linear_algebra::Gauss_int_with_given_pivots(
 
 int linear_algebra::RREF_search_pivot(
 		int *A, int m, int n,
-		int &i, int &j, int *base_cols, int verbose_level)
+		int &i, int &j, int *base_cols,
+		int verbose_level)
 // A is a m x n matrix,
 {
 	int f_v = (verbose_level >= 1);
@@ -693,7 +694,8 @@ int linear_algebra::RREF_search_pivot(
 
 void linear_algebra::RREF_make_pivot_one(
 		int *A, int m, int n,
-		int &i, int &j, int *base_cols, int verbose_level)
+		int &i, int &j, int *base_cols,
+		int verbose_level)
 // A is a m x n matrix,
 {
 	int f_v = (verbose_level >= 1);
@@ -730,7 +732,8 @@ void linear_algebra::RREF_make_pivot_one(
 
 void linear_algebra::RREF_elimination_below(
 		int *A, int m, int n,
-		int &i, int &j, int *base_cols, int verbose_level)
+		int &i, int &j, int *base_cols,
+		int verbose_level)
 // A is a m x n matrix,
 {
 	int f_v = (verbose_level >= 1);
@@ -776,7 +779,8 @@ void linear_algebra::RREF_elimination_below(
 
 void linear_algebra::RREF_elimination_above(
 		int *A, int m, int n,
-		int i, int *base_cols, int verbose_level)
+		int i, int *base_cols,
+		int verbose_level)
 // A is a m x n matrix,
 {
 	int f_v = (verbose_level >= 1);

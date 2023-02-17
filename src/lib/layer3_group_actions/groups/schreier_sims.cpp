@@ -158,6 +158,7 @@ void schreier_sims::init_generators(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "schreier_sims::init_generators " << endl;
@@ -170,8 +171,10 @@ void schreier_sims::init_generators(
 	if (f_v) {
 		cout << "schreier_sims::init_generators generators are:" << endl;
 		gens->print_for_make_element(cout);
+	}
+	if (f_vv) {
 		cout << "schreier_sims::init_generators generators are:" << endl;
-		gens->print(cout, TRUE /* f_print_as_permutation */,
+		gens->print(cout, FALSE /* f_print_as_permutation */,
 				TRUE /* f_offset */, 1 /* offset */,
 				TRUE /* f_do_it_anyway_even_for_big_degree */,
 				FALSE /* f_print_cycles_of_length_one*/,

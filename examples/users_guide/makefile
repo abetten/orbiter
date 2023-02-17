@@ -66,6 +66,7 @@ test:
 	make test_15
 	make test_16
 	make test_17
+	make test_18
 
 test_2:
 	make test_2_4
@@ -202,7 +203,11 @@ test_16:
 
 test_17:
 	make test_17_1
-	make test_17_2
+
+
+test_18:
+	make test_18_1
+	make test_18_2
 
 
 
@@ -2039,6 +2044,10 @@ SECTION_EXTENSION_FIELDS:
 test_3_3:
 	make F_4
 	make F_4_tables
+	make F_8
+	make F_8_tables
+	make F_8b
+	make F_9
 	make F_16
 	make F_16_tables
 	make F_64
@@ -2104,6 +2113,16 @@ F_8b:
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 	pdflatex GF_8.tex
 	open GF_8.pdf
+
+
+
+F_9:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	pdflatex GF_9.tex
+	open GF_9.pdf
+
 
 
 F_16:
@@ -3328,9 +3347,11 @@ SECTION_PROJECTIVE_SPACE_ADVANCED_TOPICS:
 
 
 test_4_9:
-	make fix_structure_2A
-	make fix_structure_2B
-	make fix_structure_2C
+	make fixed_objects_2A
+	make fixed_objects_2B
+	make fixed_objects_2C
+	make PG_2_2_rank_lines
+	make PG_2_2_unrank_lines
 	make trans
 	make del_Pezzo_F13ab_report
 	make del_Pezzo_F13a_points.txt
@@ -3338,48 +3359,72 @@ test_4_9:
 
 
 
-fix_structure_2A:
+fixed_objects_2A:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
-			-decomposition_by_element_PG 1 \
+			-report_fixed_objects \
 				"1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1" \
-				fix_structure_2A \
+				fix_structure_2A.tex \
 		-end 
 	pdflatex fix_structure_2A.tex
 	open fix_structure_2A.pdf
 
 
-fix_structure_2B:
+fixed_objects_2B:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
-			-decomposition_by_element_PG 1 \
+			-report_fixed_objects \
 				"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
-				fix_structure_2B \
+				fix_structure_2B.tex \
 		-end 
 	pdflatex fix_structure_2B.tex
 	open fix_structure_2B.pdf
 
 
-fix_structure_2C:
+fixed_objects_2C:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
 		-projective_space_activity \
-			-decomposition_by_element_PG 1 \
+			-report_fixed_objects \
 				"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,1,1, 0" \
-				fix_structure_2C \
+				fix_structure_2C.tex \
 		-end 
 	pdflatex fix_structure_2C.tex
 	open fix_structure_2C.pdf
 
 
+PG_2_2_rank_lines:
+	$(ORBITER) -v 2 \
+		-define v -vector -format 4 \
+		-dense "1,0,0, 0,1,0, 1,0,0, 0,0,1, 1,1,1, 0,1,0, 1,1,1, 0,0,1" \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-rank_lines_in_PG v \
+		-end \
+
+
+PG_2_2_unrank_lines:
+	$(ORBITER) -v 2 \
+		-define v -vector -format 4 \
+		-dense "0,1,2,3,4,5,6" \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-unrank_lines_in_PG v \
+		-end \
 
 
 trans:
@@ -3392,6 +3437,16 @@ trans:
 				"1,0,0,0, 0,0,0,1" "1,1,0,2, 0,0,1,0" \
 				"1,0,0,0, 0,0,0,1" "0,1,0,1, 0,0,1,0" \
 		-end
+
+
+PG_2_3_plane_pencil:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-planes_through_line 0 \
+		-end \
 
 
 del_Pezzo_F13ab_report:
@@ -4158,8 +4213,8 @@ test_5_2:
 	make PGL_4_5
 	make PGGL_3_4
 	make PGGL_3_8
-	make PGGL_3_8_report
 	make AGL_1_27
+	make AGGL_2_27
 	make SP_4_2
 	make PSP_4_4
 	make PGO_5_2
@@ -4168,6 +4223,7 @@ test_5_2:
 	make PGOm_6_2
 	make PSP_6_2
 	make PGO_7_2
+	make NullPolarity_6_2
 
 
 
@@ -4268,6 +4324,8 @@ PGL_4_5:
 	pdflatex PGL_4_5_report.tex
 	open PGL_4_5_report.pdf
 
+
+
 PGGL_3_4:
 	$(ORBITER) -v 2 \
 		-define G -linear_group -PGGL 3 4 -end \
@@ -4284,18 +4342,17 @@ PGGL_3_4:
 
 PGGL_3_8:
 	$(ORBITER) -v 2 \
-		-define G -linear_group -PGGL 3 8 -end
-
-
-PGGL_3_8_report:
-	$(ORBITER) -v 3 \
 		-define G -linear_group -PGGL 3 8 -end \
 		-with G -do \
 		-group_theoretic_activity \
 			-report \
+			-report_sylow \
+			-report_classes \
 		-end
 	pdflatex PGGL_3_8_report.tex
 	open PGGL_3_8_report.pdf
+
+
 
 
 AGL_1_27:
@@ -4309,7 +4366,19 @@ AGL_1_27:
 	pdflatex AGL_1_27_report.tex
 	open AGL_1_27_report.pdf
 
-#		-group_table \
+
+AGGL_2_27:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 27 -end \
+		-define G -linear_group -AGGL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex AGGL_2_27_report.tex
+	open AGGL_2_27_report.pdf
+
+
 
 
 SP_4_2:
@@ -4430,6 +4499,21 @@ PGO_7_2:
 
 
 
+
+NullPolarity_6_2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 6 F \
+			-null_polarity_group \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_6_2_NullPolarity_6_2_report.tex
+	open PGL_6_2_NullPolarity_6_2_report.pdf
+
+# group order 23040, acting on 63 points
 
 
 
@@ -4833,9 +4917,12 @@ test_5_4:
 
 U_3_3:
 	$(ORBITER) -v 3 \
-		-define F -finite_field -q 9 -override_polynomial "17" -end \
+		-define F -finite_field -q 9 \
+			-override_polynomial "17" \
+		-end \
 		-define G -linear_group -PGL 3 F \
-			-subgroup_by_generators "U_3_3" "6048" 2 \
+			-subgroup_by_generators \
+			"U_3_3" "6048" 2 \
 			"1,6,4, 5,0,6, 8,5,1, \
 			6,2,1, 7,8,4, 0,6,6" \
 			-end \
@@ -4848,7 +4935,6 @@ U_3_3:
 
 
 
-# ToDo -embedded for group table
 
 
 PGL_2_3:
@@ -4895,7 +4981,9 @@ Co3:
 
 Ree_27:
 	$(ORBITER) -v 2 \
-		-define F -finite_field -q 27 -override_polynomial "34" -end \
+		-define F -finite_field -q 27 \
+			-override_polynomial "34" \
+		-end \
 		-define g1 -vector -field F -format 7 -dense $(Ree_gen1) -end \
 		-define g2 -vector -field F -format 7 -dense $(Ree_gen2) -end \
 		-define gens -vector -concatenate g1 -concatenate g2 -end \
@@ -4994,7 +5082,9 @@ surface_q13_Eckardt_on_tritangent_planes:
 		-orbiter_path $(ORBITER_PATH) \
 		-draw_options -embedded -end \
 		-define F -finite_field -q 13 -end \
-		-define gens -vector -field F -dense $(SURFACE_Q13_STAB_GENS) -end \
+		-define gens -vector -field F \
+			-dense $(SURFACE_Q13_STAB_GENS) \
+		-end \
 		-define TriP -set -file \
 			surface_arc_lifting_trihedral_q13_arc0_1_2_3_43_113_tritangent_planes.csv \
 		-end \
@@ -5032,7 +5122,7 @@ surface_q13_Eckardt_on_tritangent_planes:
 
 
 Hirschfeld_stab_projectivity_group:
-	$(ORBITER) -v 9 \
+	$(ORBITER) -v 4 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define G -linear_group -PGGL 4 4 \
 			-subgroup_by_generators "Hirschfeld_Stab" \
@@ -5455,6 +5545,23 @@ PGL_4_2_random_element:
 		-end \
 	-print_symbols
 
+
+#group order H = 20160
+#Element :
+#1 0 1 1 
+#0 1 1 0 
+#0 1 0 1 
+#1 0 1 0 
+
+
+#coded: ( 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0 )
+#Element as permutation:
+#(0, 13, 1, 7, 12, 4, 2, 10, 5, 11, 14, 9, 3, 6, 8)
+#In list notation:
+#( 13, 7, 10, 6, 2, 11, 8, 12, 0, 3, 5, 14, 4, 1, 9 )
+#The rank of the element is 9883
+
+#\{0,1,2,3,4\} -> \{13,7,10,6,2\} = \{2,6,7,10,13\}
 
 
 ###############################################################################
@@ -6891,7 +6998,6 @@ SECTION_ARCS_AND_CAPS_IN_PROJECTIVE_SPACES:
 
 test_6_6:
 	make PGL_3_27
-	make AGGL_2_27
 	make hyperoval_4_classify
 	make hyperoval_8_classify
 	make hyperoval_16_classify
@@ -6918,17 +7024,6 @@ PGL_3_27:
 	
 
 
-AGGL_2_27:
-	$(ORBITER) -v 5 \
-		-define G \
-		-linear_group -AGGL 2 27 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-		-end
-	pdflatex AGGL_2_27_report.tex
-	open AGGL_2_27_report.pdf
-	
 
 
 hyperoval_4_classify:
@@ -7338,6 +7433,7 @@ test_7_1:
 	make surface_F_abcd_q7
 	make surface_F_abcd_Eckardt_q31
 	make surface_F_abcd_sweep_4_27_q7
+	make surface_11_random
 
 
 
@@ -7965,6 +8061,30 @@ surface_F_abcd_sweep_4_27_q7:
 
 
 
+surface_11_random:
+	$(ORBITER) -v 12 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-define S -cubic_surface -space P -random -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report \
+		-end
+	pdflatex surface_random_q11_report.tex
+	open surface_random_q11_report.pdf
+
+surface_11_1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S -cubic_surface -space P -catalogue 1 -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report \
+		-end
+	pdflatex surface_catalogue_q11_iso1_report.tex
+	open surface_catalogue_q11_iso1_report.pdf
+
 
 
 ###############################################################################
@@ -8183,7 +8303,7 @@ quartic_curves_q13_combine:
 
 
 quartic_curves_q13_classify:
-	$(ORBITER) -v 3 \
+	$(ORBITER) -v 30 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define O -orbits -classification_by_canonical_form \
@@ -8284,6 +8404,7 @@ test_7_3:
 	#make surface_classify_q4_arc_lifting_two_lines
 	make surface_classify_q7
 	make surface_classify_q9
+	make surface_classify_q11
 	make surface_classify_q13
 
 
@@ -8347,7 +8468,7 @@ surface_classify_q7:
 
 
 surface_classify_q9:
-	$(ORBITER) -v 5 \
+	$(ORBITER) -v 15 \
 		-define F -finite_field -q 9 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define Control -poset_classification_control -W -end \
@@ -8362,6 +8483,24 @@ surface_classify_q9:
 		-print_symbols
 	pdflatex Surfaces_q9.tex
 	open Surfaces_q9.pdf
+
+
+surface_classify_q11:
+	$(ORBITER) -v 5 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Control -poset_classification_control -W -end \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes C Control \
+		-end \
+		-with C -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-report -end \
+		-end \
+		-print_symbols
+	pdflatex Surfaces_q11.tex
+	open Surfaces_q11.pdf
 
 
 
@@ -15287,6 +15426,7 @@ test_12_4:
 	make BLT_11_Mondello
 	make BLT_13_FTWKB
 	make BLT_13_Kantor2
+	make BLT_67_4
 	make BLT_11_deep_search
 	make BLT_13_deep_search
 	make BLT_13_classify_starter
@@ -15299,7 +15439,7 @@ test_12_4:
 
 
 BLT_5_1:
-	$(ORBITER) -v 2 \
+	$(ORBITER) -v 10 \
 		-define F -finite_field -q 5 -end \
 		-define O -orthogonal_space 0 5 F -end \
 		-define BLT -BLT_set \
@@ -15365,6 +15505,8 @@ BLT_11_0:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
+	pdflatex BLT_catalogue_q11_iso0.tex
+	open BLT_catalogue_q11_iso0.pdf
 
 
 BLT_11_Fisher:
@@ -15423,8 +15565,29 @@ BLT_13_Kantor2:
 	open BLT_Kantor2_q13.pdf
 
 
+BLT_67_4:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 67 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 4 \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
+		-end
 
 
+BLT_9_deep_search:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 9 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define C -BLT_set_classifier O -starter_size 10 -end \
+		-with C -do -BLT_set_classify_activity \
+			-compute_starter \
+				-problem_label BLT_q9 \
+				-W -depth 10 \
+			-end \
+		-end
 
 
 
@@ -17061,8 +17224,8 @@ Suzuki_8:
 		-group_theoretic_activity \
 			-report \
 		-end
-	#pdflatex PGGL_4_8_Subgroup_Sz8_87360_report.tex
-	#open PGGL_4_8_Subgroup_Sz8_87360_report.pdf
+	pdflatex PGGL_4_8_Subgroup_Sz8_87360_report.tex
+	open PGGL_4_8_Subgroup_Sz8_87360_report.pdf
 
 
 
@@ -17530,7 +17693,9 @@ design_27c:
 		-define C -combinatorial_objects \
 			-set_of_points "2,56,30,112,253,90,440,508" \
 		-end \
-		-define F -finite_field -q 27 -override_polynomial 46 -end \
+		-define F -finite_field -q 27 \
+			-override_polynomial 46 \
+		-end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -17557,7 +17722,8 @@ design_PG_2_3_canonical:
 		-draw_incidence_structure_description \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_objects \
-			-file_of_incidence_geometries PG_2_3_inc.txt 13 13 52 \
+			-file_of_incidence_geometries \
+				PG_2_3_inc.txt 13 13 52 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -18014,11 +18180,6 @@ JK_graph_grid_3_3:
 		-graph_theoretic_activity -automorphism_group -end \
 
 
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 4
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 9
-#Written file grid-w-3-3_group.makefile of size 579
-#User time: 0 of a second, dt=0 tps = 100
-#nb_calls_to_densenauty=1
 
 
 JK_graph_sts_13:
@@ -18032,9 +18193,6 @@ JK_graph_sts_13:
 		-graph_theoretic_activity -automorphism_group -end
 	make ORBITER_PATH=$(ORBITER_PATH) -f sts-13_group.makefile sts-13
 
-
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 3
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 24
 
 
 halljanko315_gens.csv:
@@ -18496,7 +18654,6 @@ plane2:
 	mv plane2_0_*.pov POV
 	mv makefile_animation POV
 
-#			-planes 5 "texture{ pigment{ color Yellow transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
 
 
 
@@ -19528,24 +19685,114 @@ finish { diffuse 0.9 phong 1}}" \
 	mv lissajous_3d_0_*.pov POV
 	mv makefile_animation POV
 
-#			-planes 5 "texture{ pigment{ color Blue*0.5 transmit 0.5 } }" \
-
 
 
 
 ###############################################################################
-# Chapter 17 - Miscellaneous
+# Chapter 17 - Mathematical Data in Orbiter
+###############################################################################
+
+###############################################################################
+# Section 17.1: Mathematical Data in Orbiter
+
+SECTION_MATHEMATICAL_DATA:
+
+
+test_17_1:
+	make make_table_of_surfaces
+	make cubic_surfaces_table_q17
+	make quartic_curves_table_q17
+	make blt_set_table_q13
+
+
+make_table_of_surfaces:
+	$(ORBITER) -v 3 \
+		-make_table_of_surfaces
+	pdflatex surfaces_report.tex
+	open surfaces_report.pdf
+
+
+
+cubic_surfaces_table_q17: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space \
+			-n 3 -field F -v 0 \
+		-end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_cubic_surfaces \
+		-end
+
+quartic_curves_table_q17: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space \
+			-n 3 -field F -v 0 \
+		-end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_quartic_curves \
+		-end
+
+
+blt_set_table_q7: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-with O -do \
+			-orthogonal_space_activity \
+				-table_of_blt_sets \
+		-end
+
+blt_set_table_q9: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-with O -do \
+			-orthogonal_space_activity \
+				-table_of_blt_sets \
+		-end
+
+
+blt_set_table_q13: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-with O -do \
+			-orthogonal_space_activity \
+				-table_of_blt_sets \
+		-end
+
+
+blt_set_table: 
+	$(ORBITER) -v 30 \
+		-define v -vector -dense "3,5,7,9,11,13,17,19,23,25,27,29,31" -end \
+		-loop_over L I v \
+			-define F%L -finite_field -q %L -end \
+			-define O%L -orthogonal_space 0 5 F%L -end \
+			-with O%L -do \
+				-orthogonal_space_activity \
+					-table_of_blt_sets \
+				-end \
+			-end \
+		-end_loop_over \
+		-print_symbols
+
+
+###############################################################################
+# Chapter 18 - Miscellaneous
 ###############################################################################
 
 
 ###############################################################################
-# Section 17.1: Miscellaneous
+# Section 18.1: Miscellaneous
 
 SECTION_MISCELLANEOUS:
 
 
 
-test_17_1:
+test_18_1:
 	make misc_select
 	make misc_join
 	make table_mod_12
@@ -19584,11 +19831,11 @@ table_mod_12:
 
 
 ###############################################################################
-# Section 17.2: Limitations
+# Section 18.2: Limitations
 
 SECTION_LIMITATIONS:
 
-test_17_2:
+test_18_2:
 	make F_15bit
 	make F_31bit
 	#make F_32bit
@@ -19615,13 +19862,14 @@ F_31bit:
 		-with F -do -finite_field_activity -product_of v -end
 
 
-# The next command will not run. This is on purpose:
+# The next command fail on purpose. The goal is to 
+# show the limits of the integer domain.
 
 F_32bit:
 	$(ORBITER) -v 10 \
 		-define F -finite_field -q 4294967291 -without_tables -end \
 
-# we get an error message. the order of the field is too large for 32 bit int: 
+# we get an error message. The order of the field is too large for 32 bit int: 
 # 2^32 - 5 = 4294967291
 
 

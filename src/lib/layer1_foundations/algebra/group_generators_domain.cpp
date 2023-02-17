@@ -54,7 +54,8 @@ void group_generators_domain::generators_symmetric_group(int deg,
 		perms[i * deg + i + 1] = i;
 	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_symmetric_group generators are:" << endl;
+		cout << "group_generators_domain::generators_symmetric_group "
+				"generators are:" << endl;
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -63,7 +64,8 @@ void group_generators_domain::generators_symmetric_group(int deg,
 		}
 	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_symmetric_group done" << endl;
+		cout << "group_generators_domain::generators_symmetric_group "
+				"done" << endl;
 	}
 }
 
@@ -90,7 +92,8 @@ void group_generators_domain::generators_cyclic_group(int deg,
 	}
 	perms[i * deg + i + deg - 1] = 0;
 	if (f_v) {
-		cout << "group_generators_domain::generators_cyclic_group generators are:" << endl;
+		cout << "group_generators_domain::generators_cyclic_group "
+				"generators are:" << endl;
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -99,7 +102,8 @@ void group_generators_domain::generators_cyclic_group(int deg,
 		}
 	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_cyclic_group done" << endl;
+		cout << "group_generators_domain::generators_cyclic_group "
+				"done" << endl;
 	}
 }
 

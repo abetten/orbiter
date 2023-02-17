@@ -151,7 +151,8 @@ public:
 		int verbose_level);
 	int init(surface_create_description *Descr,
 		int verbose_level);
-	int create_surface_from_description(int verbose_level);
+	int create_surface_from_description(
+			int verbose_level);
 	void override_group(
 			std::string &group_order_text,
 			int nb_gens, std::string &gens_text,
@@ -210,6 +211,9 @@ public:
 	void create_surface_by_skew_hexagon(
 			std::string &given_label,
 			std::string &given_label_tex,
+			int verbose_level);
+	void create_surface_at_random(
+			int *eqn20,
 			int verbose_level);
 	void apply_transformations(
 		std::vector<std::string> &transform_coeffs,
@@ -337,6 +341,8 @@ public:
 	std::string override_group_order;
 	int override_group_nb_gens;
 	std::string override_group_gens;
+
+	int f_random;
 
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;

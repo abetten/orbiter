@@ -624,7 +624,11 @@ ORBITER_MODULES= \
 		layer5_top_level/surfaces/surfaces_and_double_sixes/classification_of_cubic_surfaces_with_double_sixes_activity.o \
 		layer5_top_level/surfaces/surfaces_and_double_sixes/classify_double_sixes.o \
 		layer5_top_level/surfaces/surfaces_and_double_sixes/classify_five_plus_one.o \
+		layer5_top_level/surfaces/surfaces_and_double_sixes/identify_cubic_surface.o \
+		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge_io.o \
+		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge_recognition.o \
 		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge.o \
+		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_repository.o \
 		layer5_top_level/surfaces/surfaces_general/cubic_surface_activity_description.o \
 		layer5_top_level/surfaces/surfaces_general/cubic_surface_activity.o \
 		layer5_top_level/surfaces/surfaces_general/surface_clebsch_map.o \

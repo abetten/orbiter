@@ -499,7 +499,7 @@ void group_element::element_print_as_permutation_with_offset(
 	int f_print_cycles_of_length_one, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = FALSE; //(verbose_level >= 2);
 	int *v, i, j;
 	int f_cycle_length = FALSE;
 	int f_max_cycle_length = FALSE;
@@ -510,33 +510,45 @@ void group_element::element_print_as_permutation_with_offset(
 	if (f_v) {
 		cout << "group_element::element_print_as_permutation_with_offset "
 				"degree=" << A->degree << endl;
-		}
+	}
 	if (A->degree > 5000) {
 		cout << "group_element::element_print_as_permutation_with_offset "
 				"the degree is too large, we won't print the permutation" << endl;
 		return;
 	}
 	v = NEW_int(A->degree);
+	if (f_v) {
+		cout << "group_element::element_print_as_permutation_with_offset "
+				"computing list of images" << endl;
+	}
 	for (i = 0; i < A->degree; i++) {
 		if (f_vv) {
 			cout << "group_element::element_print_as_permutation_with_offset "
 					"computing image of " << i << endl;
-			}
+		}
 		j = element_image_of(i,
-				elt, verbose_level - 2);
+				elt, 0 /*verbose_level - 2*/);
 		if (f_vv) {
 			cout << "group_element::element_print_as_permutation_with_offset "
 					<< i << "->" << j << endl;
-			}
-		v[i] = j;
 		}
+		v[i] = j;
+	}
 	//perm_print(ost, v, degree);
+	if (f_v) {
+		cout << "group_element::element_print_as_permutation_with_offset "
+				"before Combi.perm_print_offset" << endl;
+	}
 	Combi.perm_print_offset(ost, v, A->degree, offset,
 			f_print_cycles_of_length_one,
 			f_cycle_length,
 			f_max_cycle_length, max_cycle_length,
 			f_orbit_structure,
 			NULL, NULL);
+	if (f_v) {
+		cout << "group_element::element_print_as_permutation_with_offset "
+				"after Combi.perm_print_offset" << endl;
+	}
 	//ost << endl;
 	//perm_print_cycles_sorted_by_length(ost, degree, v);
 
@@ -2115,6 +2127,149 @@ void group_element::report_fixed_objects_in_PG(
 		cout << "group_element::report_fixed_objects_in_P3 done" << endl;
 	}
 }
+
+int group_element::test_if_it_fixes_the_polynomial(
+	int *Elt,
+	int *input,
+	ring_theory::homogeneous_polynomial_domain *HPD,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *input1;
+	int *output;
+	int ret = TRUE;
+	algebra::matrix_group *mtx;
+
+	if (f_v) {
+		cout << "group_element::test_if_it_fixes_the_polynomial" << endl;
+	}
+
+	if (A->type_G != matrix_group_t) {
+		cout << "group_element::test_if_it_fixes_the_polynomial "
+				"A->type_G != matrix_group_t" << endl;
+		exit(1);
+	}
+
+	mtx = A->G.matrix_grp;
+
+	input1 = NEW_int(HPD->get_nb_monomials());
+	output = NEW_int(HPD->get_nb_monomials());
+
+	Int_vec_copy(input, input1, HPD->get_nb_monomials());
+
+
+	mtx->GFq->Projective_space_basic->PG_element_normalize_from_front(
+			input1, 1, HPD->get_nb_monomials());
+
+
+	if (f_v) {
+		cout << "group_element::test_if_it_fixes_the_polynomial "
+				"before action_on_polynomial" << endl;
+	}
+	action_on_polynomial(
+		Elt,
+		input1, output,
+		HPD,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "group_element::test_if_it_fixes_the_polynomial "
+				"after action_on_polynomial" << endl;
+	}
+
+	mtx->GFq->Projective_space_basic->PG_element_normalize_from_front(
+			output, 1, HPD->get_nb_monomials());
+
+
+	data_structures::sorting Sorting;
+
+	if (Sorting.integer_vec_compare(input1, output, HPD->get_nb_monomials())) {
+		if (f_v) {
+			cout << "group_element::test_if_it_fixes_the_polynomial "
+					"the element does not fix the equation" << endl;
+
+			Int_vec_print(cout, input1, HPD->get_nb_monomials());
+			cout << endl;
+
+			Int_vec_print(cout, output, HPD->get_nb_monomials());
+			cout << endl;
+		}
+		ret = FALSE;
+	}
+	else {
+		ret = TRUE;
+	}
+
+
+	FREE_int(input1);
+	FREE_int(output);
+
+	if (f_v) {
+		cout << "group_element::test_if_it_fixes_the_polynomial done" << endl;
+	}
+	return ret;
+}
+
+void group_element::action_on_polynomial(
+	int *Elt,
+	int *input, int *output,
+	ring_theory::homogeneous_polynomial_domain *HPD,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_semilinear;
+	algebra::matrix_group *mtx;
+	int n;
+	int *Elt1;
+
+	if (f_v) {
+		cout << "group_element::action_on_polynomial" << endl;
+	}
+
+	if (A->type_G != matrix_group_t) {
+		cout << "group_element::action_on_polynomial "
+				"A->type_G != matrix_group_t" << endl;
+		exit(1);
+	}
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+
+	mtx = A->G.matrix_grp;
+	f_semilinear = mtx->f_semilinear;
+	n = mtx->n;
+
+	if (f_vv) {
+		cout << "group_element::action_on_polynomial "
+				"input = ";
+		Int_vec_print(cout, input, HPD->get_nb_monomials());
+		cout << endl;
+	}
+
+	A->Group_element->element_invert(Elt, Elt1, 0);
+
+
+	if (f_semilinear) {
+		HPD->substitute_semilinear(input, output,
+				f_semilinear, Elt[n * n], Elt1, 0 /* verbose_level */);
+	}
+	else {
+		HPD->substitute_linear(input, output, Elt1, 0 /* verbose_level */);
+	}
+
+	if (f_vv) {
+		cout << "group_element::action_on_polynomial "
+				"output = ";
+		Int_vec_print(cout, output, HPD->get_nb_monomials());
+		cout << endl;
+	}
+
+	FREE_int(Elt1);
+
+	if (f_v) {
+		cout << "group_element::action_on_polynomial done" << endl;
+	}
+}
+
 
 
 }}}

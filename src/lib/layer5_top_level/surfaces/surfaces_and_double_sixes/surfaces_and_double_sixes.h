@@ -265,6 +265,90 @@ public:
 
 
 // #############################################################################
+// identify_cubic_surface.cpp
+// #############################################################################
+
+//! identification of a cubic surface after classification using double sixes
+
+
+class identify_cubic_surface {
+public:
+
+	surface_classify_wedge *Wedge;
+
+	int *coeff_of_given_surface; // [20]
+
+	int *Elt2;
+	int *Elt3;
+	int *Elt_isomorphism_inv;
+	int *Elt_isomorphism;
+
+	std::vector<long int> My_Points;
+	int nb_points; // = My_Points.size()
+
+	std::vector<long int> My_Lines;
+
+
+	// points and lines
+	// on the surface based on the equation:
+
+	long int *Points; // [nb_points]
+	long int *Lines; // [27]
+
+
+	int *Adj; // line intersection graph
+
+	data_structures::set_of_sets *line_intersections;
+
+	int *Starter_Table; // [nb_starter * 2]
+	int nb_starter;
+
+
+	long int S3[6];
+	long int K1[6];
+		// K1[5] is the transversal
+		// of the 5 lines K1[0],...,K1[4]
+	long int W4[6];
+
+	int l;
+		// index of selected starter
+		// need l < nb_starter
+
+	int flag_orbit_idx;
+
+	long int *image;
+
+	int line_idx;
+	int subset_idx;
+
+		// line_idx = Starter_Table[l * 2 + 0];
+		// subset_idx = Starter_Table[l * 2 + 1];
+
+
+	int double_six_orbit, iso_type, idx2;
+
+	int *coeffs_transformed;
+
+	int idx;
+	long int Lines0[27];
+	int eqn0[20];
+
+
+	int isomorphic_to; // = iso_type
+
+	identify_cubic_surface();
+	~identify_cubic_surface();
+	void identify(
+			surface_classify_wedge *Wedge,
+		int *coeff_of_given_surface,
+		int verbose_level);
+
+
+};
+
+
+
+// #############################################################################
 // surface_classify_wedge.cpp
 // #############################################################################
 
@@ -305,13 +389,7 @@ public:
 
 	// created by post_process():
 
-	int nb_surfaces;
-	data_structures_groups::set_and_stabilizer *SaS;
-		// [nb_surfaces]
-
-	long int *Lines; // [nb_surfaces * 27]
-	int *Eqn; // [nb_surfaces * 20]
-
+	surface_repository *Surface_repository;
 
 
 	surface_classify_wedge();
@@ -334,36 +412,15 @@ public:
 			int iso_type,
 		int *&Starter_configuration_idx,
 		int &nb_starter_conf, int verbose_level);
+
+
+
+	// surface_classify_wedge_io.cpp:
 	void write_file(
 			std::ofstream &fp, int verbose_level);
 	void read_file(
 			std::ifstream &fp, int verbose_level);
 
-	void identify_Eckardt_and_print_table(int verbose_level);
-	void identify_F13_and_print_table(int verbose_level);
-	void identify_Bes_and_print_table(int verbose_level);
-	void identify_Eckardt(
-			int *Iso_type, int *Nb_lines, int verbose_level);
-	void identify_F13(
-		int *Iso_type, int *Nb_lines, int verbose_level);
-	void identify_Bes(
-		int *Iso_type, int *Nb_lines, int verbose_level);
-	int isomorphism_test_pairwise(
-			cubic_surfaces_in_general::surface_create *SC1,
-			cubic_surfaces_in_general::surface_create *SC2,
-		int &isomorphic_to1, int &isomorphic_to2,
-		int *Elt_isomorphism_1to2,
-		int verbose_level);
-	void identify_surface(int *coeff_of_given_surface,
-		int &isomorphic_to, int *Elt_isomorphism,
-		int verbose_level);
-	void latex_surfaces(
-			std::ostream &ost,
-			int f_with_stabilizers, int verbose_level);
-	void report_surface(
-			std::ostream &ost,
-			int orbit_index, int verbose_level);
-	void generate_source_code(int verbose_level);
 	void generate_history(int verbose_level);
 	int test_if_surfaces_have_been_computed_already();
 	void write_surfaces(int verbose_level);
@@ -382,14 +439,17 @@ public:
 			graphics::layered_graph_draw_options *draw_options,
 			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
+	void latex_surfaces(
+			std::ostream &ost,
+			int f_with_stabilizers, int verbose_level);
 	void create_report_double_sixes(
 			int verbose_level);
-	void test_isomorphism(
-			cubic_surfaces_in_general::surface_create_description
-				*Descr1,
-			cubic_surfaces_in_general::surface_create_description
-				*Descr2,
-			int verbose_level);
+
+
+	// surface_classify_wedge_recognition.cpp:
+	void identify_surface(int *coeff_of_given_surface,
+		int &isomorphic_to, int *Elt_isomorphism,
+		int verbose_level);
 	void recognition(
 			cubic_surfaces_in_general::surface_create_description
 				*Descr,
@@ -398,8 +458,62 @@ public:
 	void identify_general_abcd(
 		int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_general_abcd_and_print_table(int verbose_level);
+	void identify_Eckardt_and_print_table(int verbose_level);
+	void identify_F13_and_print_table(int verbose_level);
+	void identify_Bes_and_print_table(int verbose_level);
+	void identify_Eckardt(
+			int *Iso_type, int *Nb_lines, int verbose_level);
+	void identify_F13(
+		int *Iso_type, int *Nb_lines, int verbose_level);
+	void identify_Bes(
+		int *Iso_type, int *Nb_lines, int verbose_level);
+	int isomorphism_test_pairwise(
+			cubic_surfaces_in_general::surface_create *SC1,
+			cubic_surfaces_in_general::surface_create *SC2,
+		int &isomorphic_to1, int &isomorphic_to2,
+		int *Elt_isomorphism_1to2,
+		int verbose_level);
+	void test_isomorphism(
+			cubic_surfaces_in_general::surface_create_description
+				*Descr1,
+			cubic_surfaces_in_general::surface_create_description
+				*Descr2,
+			int verbose_level);
 
 };
+
+
+
+// #############################################################################
+// surface_repository.cpp
+// #############################################################################
+
+//! a place to store a list of cubic surfaces, for instance after a classification
+
+
+class surface_repository {
+public:
+
+	surface_classify_wedge *Wedge;
+
+	int nb_surfaces;
+	data_structures_groups::set_and_stabilizer **SaS;
+		// [nb_surfaces]
+
+	long int *Lines; // [nb_surfaces * 27]
+	int *Eqn; // [nb_surfaces * 20]
+
+	surface_repository();
+	~surface_repository();
+	void init(surface_classify_wedge *Wedge, int verbose_level);
+	void generate_source_code(int verbose_level);
+	void report_surface(
+			std::ostream &ost,
+			int orbit_index, int verbose_level);
+
+
+};
+
 
 
 }}}}

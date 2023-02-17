@@ -556,10 +556,26 @@ void linear_algebra::projective_action_from_the_right(
 		cout << "linear_algebra::projective_action_from_the_right"  << endl;
 	}
 	if (f_semilinear) {
-		semilinear_action_from_the_right(v, A, vA, n);
+		if (f_v) {
+			cout << "linear_algebra::projective_action_from_the_right "
+					"before semilinear_action_from_the_right"  << endl;
+		}
+		semilinear_action_from_the_right(v, A, vA, n, verbose_level - 1);
+		if (f_v) {
+			cout << "linear_algebra::projective_action_from_the_right "
+					"after semilinear_action_from_the_right"  << endl;
+		}
 	}
 	else {
+		if (f_v) {
+			cout << "linear_algebra::projective_action_from_the_right "
+					"before mult_vector_from_the_left"  << endl;
+		}
 		mult_vector_from_the_left(v, A, vA, n, n);
+		if (f_v) {
+			cout << "linear_algebra::projective_action_from_the_right "
+					"after mult_vector_from_the_left"  << endl;
+		}
 	}
 	if (f_v) {
 		cout << "linear_algebra::projective_action_from_the_right done"  << endl;
@@ -578,7 +594,7 @@ void linear_algebra::general_linear_action_from_the_right(
 				<< endl;
 	}
 	if (f_semilinear) {
-		semilinear_action_from_the_right(v, A, vA, n);
+		semilinear_action_from_the_right(v, A, vA, n, verbose_level);
 	}
 	else {
 		mult_vector_from_the_left(v, A, vA, n, n);
@@ -591,14 +607,48 @@ void linear_algebra::general_linear_action_from_the_right(
 
 
 void linear_algebra::semilinear_action_from_the_right(
-		int *v, int *A, int *vA, int n)
+		int *v, int *A, int *vA, int n, int verbose_level)
 // vA = (v * A)^{p^f}  (where f = A[n *  n])
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_algebra::semilinear_action_from_the_right"
+				<< endl;
+	}
 	int f;
 
 	f = A[n * n];
+	if (f_v) {
+		cout << "linear_algebra::semilinear_action_from_the_right"
+				" A=" << endl;
+		Int_matrix_print(A, n, n);
+		cout << "frob=" << f << endl;
+	}
+	if (f_v) {
+		cout << "linear_algebra::semilinear_action_from_the_right"
+				" input vector = ";
+		Int_vec_print(cout, v, n);
+		cout << endl;
+	}
 	mult_vector_from_the_left(v, A, vA, n, n);
+	if (f_v) {
+		cout << "linear_algebra::semilinear_action_from_the_right"
+				" after multiplication = ";
+		Int_vec_print(cout, vA, n);
+		cout << endl;
+	}
 	vector_frobenius_power_in_place(vA, n, f);
+	if (f_v) {
+		cout << "linear_algebra::semilinear_action_from_the_right"
+				" after vector_frobenius_power_in_place = ";
+		Int_vec_print(cout, vA, n);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "linear_algebra::semilinear_action_from_the_right "
+				"done" << endl;
+	}
 }
 
 void linear_algebra::semilinear_action_from_the_left(

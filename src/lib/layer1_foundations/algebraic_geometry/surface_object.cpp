@@ -96,11 +96,13 @@ void surface_object::init_equation_points_and_lines_only(
 		// allocate enough space in case we have a surface with too many points
 
 	if (f_v) {
-		cout << "surface_object::init_equation_points_and_lines_only before enumerate_points_and_lines" << endl;
+		cout << "surface_object::init_equation_points_and_lines_only "
+				"before enumerate_points_and_lines" << endl;
 	}
-	enumerate_points_and_lines(0/*verbose_level - 1*/);
+	enumerate_points_and_lines(verbose_level - 1);
 	if (f_v) {
-		cout << "surface_object::init_equation_points_and_lines_only after enumerate_points_and_lines" << endl;
+		cout << "surface_object::init_equation_points_and_lines_only "
+				"after enumerate_points_and_lines" << endl;
 	}
 
 #if 0

@@ -748,6 +748,12 @@ public:
 			actions::action *A, algebra::matrix_group *M, int verbose_level);
 	void init_base_general_linear(
 			actions::action *A, algebra::matrix_group *M, int verbose_level);
+	void substitute_semilinear(
+			action *A,
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int *Elt,
+			int *input, int *output,
+			int verbose_level);
 
 };
 
@@ -1202,6 +1208,16 @@ public:
 			std::ostream &ost,
 			geometry::projective_space *P,
 		int *Elt,
+		int verbose_level);
+	int test_if_it_fixes_the_polynomial(
+		int *Elt,
+		int *input,
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level);
+	void action_on_polynomial(
+		int *Elt,
+		int *input, int *output,
+		ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 
 
