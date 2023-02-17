@@ -292,12 +292,12 @@ void surface_classify_wedge::do_classify_surfaces(int verbose_level)
 
 		if (f_v) {
 			cout << "surface_classify_wedge::do_classify_surfaces before "
-					"SCW->classify_surfaces_from_double_sixes" << endl;
+					"classify_surfaces_from_double_sixes" << endl;
 		}
 		classify_surfaces_from_double_sixes(verbose_level - 4);
 		if (f_v) {
 			cout << "surface_classify_wedge::do_classify_surfaces after "
-					"SCW->classify_surfaces_from_double_sixes" << endl;
+					"classify_surfaces_from_double_sixes" << endl;
 		}
 
 		if (f_v) {
@@ -380,11 +380,13 @@ void surface_classify_wedge::post_process(int verbose_level)
 	Surface_repository = NEW_OBJECT(surface_repository);
 
 	if (f_v) {
-		cout << "surface_classify_wedge::post_process before Surface_repository->init" << endl;
+		cout << "surface_classify_wedge::post_process "
+				"before Surface_repository->init" << endl;
 	}
 	Surface_repository->init(this, verbose_level - 1);
 	if (f_v) {
-		cout << "surface_classify_wedge::post_process after Surface_repository->init" << endl;
+		cout << "surface_classify_wedge::post_process "
+				"after Surface_repository->init" << endl;
 	}
 
 #if 0
@@ -588,7 +590,8 @@ void surface_classify_wedge::upstep(int verbose_level)
 	ring_theory::longinteger_object go;
 	A->group_order(go);
 
-	Surfaces->init(A, A2,
+	Surfaces->init(
+			A, A2,
 			Flag_orbits->nb_flag_orbits, 27, go,
 			verbose_level - 3);
 
@@ -859,7 +862,8 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			cout << "surface_classify_wedge::derived_arcs "
 					"There are " << nb_starter_conf
 					<< " starter configurations which are involved: " << endl;
-			Int_vec_print(cout, Starter_configuration_idx, nb_starter_conf);
+			Int_vec_print(cout,
+					Starter_configuration_idx, nb_starter_conf);
 			cout << endl;
 		}
 
@@ -884,7 +888,8 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			}
 
 
-			orbiter_kernel_system::Orbiter->Lint_vec->apply(S,
+			orbiter_kernel_system::Orbiter->Lint_vec->apply(
+					S,
 					Five_p1->Linear_complex->Neighbor_to_line,
 					S2, 5);
 			S2[5] = Five_p1->Linear_complex->pt0_line;
@@ -981,7 +986,8 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			S2[6] = b5;
 
 			for (int h = 0; h < 7; h++) {
-				K1[h] = Surf->Klein->line_to_point_on_quadric(S2[h], 0/*verbose_level*/);
+				K1[h] = Surf->Klein->line_to_point_on_quadric(
+						S2[h], 0/*verbose_level*/);
 			}
 			//int_vec_apply(S2, Surf->Klein->Line_to_point_on_quadric, K1, 7);
 			if (f_v) {

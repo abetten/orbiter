@@ -146,6 +146,29 @@ void surface_create::create_cubic_surface(
 
 
 	if (f_has_group) {
+
+		int ret;
+
+		ret = Sg->test_if_they_stabilize_the_equation(
+				SO->eqn,
+				Surf->PolynomialDomains->Poly3_4,
+				verbose_level);
+
+		if (!ret) {
+			cout << "surface_create::create_cubic_surface "
+					"the generators do not fix the equation" << endl;
+			exit(1);
+		}
+		else {
+			if (f_v) {
+				cout << "surface_create::create_cubic_surface "
+						"the generators fix the equation, good." << endl;
+			}
+
+		}
+
+
+
 		SOA = NEW_OBJECT(surface_object_with_action);
 
 		if (f_v) {
@@ -2685,7 +2708,7 @@ void surface_create::create_surface_at_random(
 	}
 
 	int nb_surfaces;
-	int t;
+	int iso;
 	orbiter_kernel_system::os_interface Os;
 	knowledge_base::knowledge_base K;
 	actions::action_global AG;
@@ -2700,19 +2723,33 @@ void surface_create::create_surface_at_random(
 				"for q=" << q << " is " << nb_surfaces << endl;
 	}
 
-	t = Os.random_integer(nb_surfaces);
+	iso = Os.random_integer(nb_surfaces);
 	if (f_v) {
 		cout << "surface_create::create_surface_at_random "
-				"t=" << t << endl;
+				"iso=" << iso << endl;
 	}
 
-	eqn = K.cubic_surface_representative(q, t);
+	eqn = K.cubic_surface_representative(q, iso);
 	if (f_v) {
 		cout << "surface_create::create_surface_at_random "
 				"eqn=" << endl;
 		Int_vec_print(cout, eqn, 20);
 		cout << endl;
 	}
+
+	groups::strong_generators *Aut_gens;
+
+	Aut_gens = NEW_OBJECT(groups::strong_generators);
+
+	Aut_gens->stabilizer_of_cubic_surface_from_catalogue(
+			PA->A,
+			F, iso,
+			verbose_level);
+
+	f_has_group = TRUE;
+	Sg = Aut_gens;
+	f_has_nice_gens = FALSE;
+	//data_structures_groups::vector_ge *nice_gens;
 
 #if 0
 	if (!Surf_A->A->f_has_sims) {
@@ -2806,7 +2843,6 @@ void surface_create::create_surface_at_random(
 	}
 
 
-	f_has_group = FALSE;
 
 	char str_q[1000];
 

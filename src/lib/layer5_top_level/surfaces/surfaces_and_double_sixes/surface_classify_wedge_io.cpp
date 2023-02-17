@@ -123,11 +123,11 @@ void surface_classify_wedge::write_surfaces(int verbose_level)
 		ofstream fp(fname);
 
 		if (f_v) {
-			cout << "surface_classify before SCW->write_file" << endl;
+			cout << "surface_classify before write_file" << endl;
 		}
 		write_file(fp, verbose_level - 1);
 		if (f_v) {
-			cout << "surface_classify after SCW->write_file" << endl;
+			cout << "surface_classify after write_file" << endl;
 		}
 	}
 	cout << "Written file " << fname << " of size "
@@ -155,12 +155,12 @@ void surface_classify_wedge::read_surfaces(int verbose_level)
 
 		if (f_v) {
 			cout << "surface_classify_wedge::read_surfaces "
-					"before SCW->read_file" << endl;
+					"before read_file" << endl;
 			}
 		read_file(fp, verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify_wedge::read_surfaces "
-					"after SCW->read_file" << endl;
+					"after read_file" << endl;
 		}
 		if (f_v) {
 			cout << "surface_classify_wedge::read_surfaces "

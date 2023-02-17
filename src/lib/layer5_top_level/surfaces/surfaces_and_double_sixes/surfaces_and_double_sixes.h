@@ -420,7 +420,6 @@ public:
 			std::ofstream &fp, int verbose_level);
 	void read_file(
 			std::ifstream &fp, int verbose_level);
-
 	void generate_history(int verbose_level);
 	int test_if_surfaces_have_been_computed_already();
 	void write_surfaces(int verbose_level);

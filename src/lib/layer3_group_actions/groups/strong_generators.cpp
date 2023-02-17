@@ -3566,7 +3566,6 @@ void strong_generators::test_if_set_is_invariant_under_given_action(
 }
 
 int strong_generators::test_if_they_stabilize_the_equation(
-		actions::action *A_on_equation,
 		int *equation,
 		ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)

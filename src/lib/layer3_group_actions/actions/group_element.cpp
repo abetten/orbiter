@@ -2181,21 +2181,31 @@ int group_element::test_if_it_fixes_the_polynomial(
 
 
 	data_structures::sorting Sorting;
+	int cmp;
 
-	if (Sorting.integer_vec_compare(input1, output, HPD->get_nb_monomials())) {
+	cmp = Sorting.integer_vec_compare(input1, output, HPD->get_nb_monomials());
+	if (f_v) {
+		cout << "group_element::test_if_it_fixes_the_polynomial "
+				"cmp = " << cmp << endl;
+
+		Int_vec_print(cout, input1, HPD->get_nb_monomials());
+		cout << endl;
+
+		Int_vec_print(cout, output, HPD->get_nb_monomials());
+		cout << endl;
+	}
+	if (cmp) {
 		if (f_v) {
 			cout << "group_element::test_if_it_fixes_the_polynomial "
 					"the element does not fix the equation" << endl;
-
-			Int_vec_print(cout, input1, HPD->get_nb_monomials());
-			cout << endl;
-
-			Int_vec_print(cout, output, HPD->get_nb_monomials());
-			cout << endl;
 		}
 		ret = FALSE;
 	}
 	else {
+		if (f_v) {
+			cout << "group_element::test_if_it_fixes_the_polynomial "
+					"the element fixes the equation" << endl;
+		}
 		ret = TRUE;
 	}
 

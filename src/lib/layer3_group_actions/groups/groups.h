@@ -1998,7 +1998,6 @@ public:
 			actions::action *A_given,
 		long int *set, int set_sz, int verbose_level);
 	int test_if_they_stabilize_the_equation(
-			actions::action *A_on_equation,
 			int *equation,
 			ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);

@@ -124,6 +124,36 @@ void surface_repository::init(surface_classify_wedge *Wedge, int verbose_level)
 		}
 		Int_vec_copy(equation, Eqn + orbit_index * 20, 20);
 
+		if (f_v) {
+			cout << "surface_repository::init "
+					"orbit_index = " << orbit_index
+					<< " / " << Wedge->Surfaces->nb_orbits
+					<< " testing the generators on the equation" << endl;
+		}
+		int ret;
+
+		ret = SaS[orbit_index]->Strong_gens->test_if_they_stabilize_the_equation(
+				equation,
+				Wedge->Surf->PolynomialDomains->Poly3_4,
+				verbose_level);
+
+		if (!ret) {
+			cout << "surface_repository::init "
+					"orbit_index = " << orbit_index
+					<< " / " << Wedge->Surfaces->nb_orbits
+					<< " the generators do not fix the equation" << endl;
+			exit(1);
+		}
+		else {
+			if (f_v) {
+				cout << "surface_repository::init "
+						"orbit_index = " << orbit_index
+						<< " / " << Wedge->Surfaces->nb_orbits
+						<< " the generators fix the equation, good." << endl;
+			}
+
+		}
+
 		//FREE_OBJECT(SaS);
 
 	}
