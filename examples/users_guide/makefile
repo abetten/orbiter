@@ -8488,7 +8488,7 @@ surface_classify_q9:
 surface_classify_q11:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 11 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P -projective_space -n 3 -field F -end \
 		-define Control -poset_classification_control -W -end \
 		-with P -do \
 		-projective_space_activity \
@@ -8497,6 +8497,10 @@ surface_classify_q11:
 		-with C -do \
 		-classification_of_cubic_surfaces_with_double_sixes_activity \
 			-report -end \
+		-end \
+		-with C -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-create_source_code \
 		-end \
 		-print_symbols
 	pdflatex Surfaces_q11.tex

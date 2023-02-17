@@ -293,10 +293,10 @@ void projective_space_reporting::report(
 			t_PART,
 			verbose_level);
 
-	Poly1->print_monomial_ordering(ost);
-	Poly2->print_monomial_ordering(ost);
-	Poly3->print_monomial_ordering(ost);
-	Poly4->print_monomial_ordering(ost);
+	Poly1->print_monomial_ordering_latex(ost);
+	Poly2->print_monomial_ordering_latex(ost);
+	Poly3->print_monomial_ordering_latex(ost);
+	Poly4->print_monomial_ordering_latex(ost);
 
 	FREE_OBJECT(Poly1);
 	FREE_OBJECT(Poly2);

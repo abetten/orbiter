@@ -2402,6 +2402,9 @@ public:
 	void plane_equation_from_three_lines_in_three_space(
 		long int *three_lines,
 		int *plane_eqn4, int verbose_level);
+	long int plane_from_three_lines(
+			long int *three_lines,
+		int verbose_level);
 
 
 

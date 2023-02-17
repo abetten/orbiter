@@ -196,10 +196,16 @@ void homogeneous_polynomial_domain::init(
 		cout << "homogeneous_polynomial_domain::init" << endl;
 	}
 
+
+	ring_theory_global RG;
+	std::string s;
+
+	RG.Monomial_ordering_type_as_string(Monomial_ordering_type, s);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init nb_vars = " << nb_vars << endl;
 		cout << "homogeneous_polynomial_domain::init degree = " << degree << endl;
-		cout << "homogeneous_polynomial_domain::init Monomial_ordering_type = " << (int) Monomial_ordering_type << endl;
+		cout << "homogeneous_polynomial_domain::init "
+				"Monomial_ordering_type = " << s << endl;
 	}
 
 	if (f_v) {
@@ -1455,7 +1461,8 @@ void homogeneous_polynomial_domain::polynomial_function_affine(
 }
 
 
-void homogeneous_polynomial_domain::enumerate_points(int *coeff,
+void homogeneous_polynomial_domain::enumerate_points(
+		int *coeff,
 		std::vector<long int> &Pts,
 		int verbose_level)
 {
@@ -1474,8 +1481,10 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 
 	if (f_vv) {
-		cout << "homogeneous_polynomial_domain::enumerate_points N_points=" << N_points << endl;
-		cout << "homogeneous_polynomial_domain::enumerate_points coeff=" << endl;
+		cout << "homogeneous_polynomial_domain::enumerate_points "
+				"N_points=" << N_points << endl;
+		cout << "homogeneous_polynomial_domain::enumerate_points "
+				"coeff=" << endl;
 		Int_vec_print(cout, coeff, nb_monomials);
 		cout << endl;
 #if 0
@@ -1490,7 +1499,8 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 		unrank_point(v, rk);
 		a = evaluate_at_a_point(coeff, v);
 		if (f_vv) {
-			cout << "homogeneous_polynomial_domain::enumerate_points point " << rk << " / " << N_points << " :";
+			cout << "homogeneous_polynomial_domain::enumerate_points "
+					"point " << rk << " / " << N_points << " :";
 			Int_vec_print(cout, v, nb_variables);
 			cout << " evaluates to " << a << endl;
 		}
@@ -1505,7 +1515,8 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 	}
 }
 
-void homogeneous_polynomial_domain::enumerate_points_lint(int *coeff,
+void homogeneous_polynomial_domain::enumerate_points_lint(
+		int *coeff,
 		long int *&Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1517,18 +1528,18 @@ void homogeneous_polynomial_domain::enumerate_points_lint(int *coeff,
 	vector<long int> Points;
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::enumerate_points_lint before "
-				"enumerate_points" << endl;
+		cout << "homogeneous_polynomial_domain::enumerate_points_lint "
+				"before enumerate_points" << endl;
 	}
 	enumerate_points(coeff, Points, verbose_level - 1);
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::enumerate_points_lint after "
-				"enumerate_points" << endl;
+		cout << "homogeneous_polynomial_domain::enumerate_points_lint "
+				"after enumerate_points" << endl;
 	}
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::enumerate_points_lint The object "
-				"has " << Points.size() << " points" << endl;
+		cout << "homogeneous_polynomial_domain::enumerate_points_lint "
+				"The object has " << Points.size() << " points" << endl;
 	}
 	int i;
 
@@ -2324,7 +2335,7 @@ the_end:
 }
 
 
-void homogeneous_polynomial_domain::print_monomial_ordering(std::ostream &ost)
+void homogeneous_polynomial_domain::print_monomial_ordering_latex(std::ostream &ost)
 {
 	int h, i, l;
 	

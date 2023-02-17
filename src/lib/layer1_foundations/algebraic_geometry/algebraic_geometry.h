@@ -1024,35 +1024,48 @@ public:
 	void init(
 			field_theory::finite_field *F,
 			int verbose_level);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
-	void unrank_plane(int *v, long int rk);
-	long int rank_plane(int *v);
-	void enumerate_points(int *coeff,
+	void unrank_point(
+			int *v, long int rk);
+	long int rank_point(
+			int *v);
+	void unrank_plane(
+			int *v, long int rk);
+	long int rank_plane(
+			int *v);
+	void enumerate_points(
+			int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
-	void substitute_semilinear(int *coeff_in, int *coeff_out,
-		int f_semilinear, int frob, int *Mtx_inv, int verbose_level);
+	void substitute_semilinear(
+			int *coeff_in, int *coeff_out,
+		int f_semilinear, int frob, int *Mtx_inv,
+		int verbose_level);
 	void list_starter_configurations(
 			long int *Lines, int nb_lines,
 			data_structures::set_of_sets *line_intersections,
 			int *&Table, int &N,
 		int verbose_level);
-	void create_starter_configuration(int line_idx, int subset_idx,
+	void create_starter_configuration(
+			int line_idx, int subset_idx,
 			data_structures::set_of_sets *line_neighbors,
 			long int *Lines, long int *S,
 		int verbose_level);
-	void wedge_to_klein(int *W, int *K);
-	void klein_to_wedge(int *K, int *W);
-	long int line_to_wedge(long int line_rk);
+	void wedge_to_klein(
+			int *W, int *K);
+	void klein_to_wedge(
+			int *K, int *W);
+	long int line_to_wedge(
+			long int line_rk);
 	void line_to_wedge_vec(
 			long int *Line_rk, long int *Wedge_rk, int len);
 	void line_to_klein_vec(
 			long int *Line_rk, long int *Klein_rk, int len);
-	long int klein_to_wedge(long int klein_rk);
+	long int klein_to_wedge(
+			long int klein_rk);
 	void klein_to_wedge_vec(
 			long int *Klein_rk, long int *Wedge_rk, int len);
-	void save_lines_in_three_kinds(std::string &fname_csv,
+	void save_lines_in_three_kinds(
+			std::string &fname_csv,
 		long int *Lines_wedge, long int *Lines,
 		long int *Lines_klein, int nb_lines);
 	int build_surface_from_double_six_and_count_Eckardt_points(
@@ -1073,7 +1086,8 @@ public:
 	void prepare_system_from_FG(
 			int *F_planes, int *G_planes,
 		int lambda, int *&system, int verbose_level);
-	void compute_nine_lines(int *F_planes, int *G_planes,
+	void compute_nine_lines(
+			int *F_planes, int *G_planes,
 		long int *nine_lines, int verbose_level);
 	void compute_nine_lines_by_dual_point_ranks(
 			long int *F_planes_rank,
@@ -1102,15 +1116,20 @@ public:
 	void build_cubic_surface_from_lines(
 			int len, long int *S, int *coeff,
 		int verbose_level);
-	int rank_of_system(int len, long int *S,
+	int rank_of_system(
+			int len, long int *S,
 			int verbose_level);
-	void create_system(int len, long int *S,
-			int *&System, int &nb_rows, int verbose_level);
-	void compute_intersection_points(int *Adj,
+	void create_system(
+			int len, long int *S,
+			int *&System, int &nb_rows,
+			int verbose_level);
+	void compute_intersection_points(
+			int *Adj,
 		long int *Lines, int nb_lines,
 		long int *&Intersection_pt,
 		int verbose_level);
-	void compute_intersection_points_and_indices(int *Adj,
+	void compute_intersection_points_and_indices(
+			int *Adj,
 		long int *Points, int nb_points,
 		long int *Lines, int nb_lines,
 		int *&Intersection_pt, int *&Intersection_pt_idx,
@@ -1124,16 +1143,20 @@ public:
 	int perp_of_four_lines(
 			long int *four_lines, long int *trans12, int &perp_sz,
 		int verbose_level);
-	int rank_of_four_lines_on_Klein_quadric(long int *four_lines,
+	int rank_of_four_lines_on_Klein_quadric(
+			long int *four_lines,
 		int verbose_level);
 	int create_double_six_from_five_lines_with_a_common_transversal(
 		long int *five_pts, long int *double_six,
 		int verbose_level);
-	int create_double_six_from_six_disjoint_lines(long int *single_six,
+	int create_double_six_from_six_disjoint_lines(
+			long int *single_six,
 			long int *double_six, int verbose_level);
-	void create_the_fifteen_other_lines(long int *double_six,
+	void create_the_fifteen_other_lines(
+			long int *double_six,
 		long int *fifteen_other_lines, int verbose_level);
-	int test_double_six_property(long int *S12, int verbose_level);
+	int test_double_six_property(
+			long int *S12, int verbose_level);
 	void compute_adjacency_matrix_of_line_intersection_graph(
 		int *&Adj,
 		long int *S, int n, int verbose_level);
@@ -1155,41 +1178,50 @@ public:
 			int *given_double_six,
 			long int *New_lines,
 			int verbose_level);
-	void rearrange_lines_according_to_double_six(long int *Lines,
+	void rearrange_lines_according_to_double_six(
+			long int *Lines,
 		int verbose_level);
 	void rearrange_lines_according_to_starter_configuration(
 		long int *Lines, long int *New_lines,
 		int line_idx, int subset_idx, int *Adj,
 		data_structures::set_of_sets *line_intersections,
 		int verbose_level);
-	int intersection_of_four_lines_but_not_b6(int *Adj,
+	int intersection_of_four_lines_but_not_b6(
+			int *Adj,
 		int *four_lines_idx, int b6, int verbose_level);
 	int intersection_of_five_lines(
 			int *Adj, int *five_lines_idx,
 		int verbose_level);
 	void rearrange_lines_according_to_a_given_double_six(
 			long int *Lines,
-		long int *New_lines, long int *double_six, int verbose_level);
+		long int *New_lines, long int *double_six,
+		int verbose_level);
 	void create_lines_from_plane_equations(
 			int *The_plane_equations,
 		long int *Lines, int verbose_level);
 	void create_remaining_fifteen_lines(
 		long int *double_six, long int *fifteen_lines,
 		int verbose_level);
-	long int compute_cij(long int *double_six,
+	long int compute_cij(
+			long int *double_six,
 		int i, int j, int verbose_level);
 	int compute_transversals_of_any_four(
 			long int *&Trans, int &nb_subsets,
 			long int *lines, int sz, int verbose_level);
 
 	// surface_domain_io.cpp:
-	void print_equation(std::ostream &ost, int *coeffs);
-	void print_equation_maple(std::stringstream &ost, int *coeffs);
-	void print_equation_tex(std::ostream &ost, int *coeffs);
+	void print_equation(
+			std::ostream &ost, int *coeffs);
+	void print_equation_maple(
+			std::stringstream &ost, int *coeffs);
+	void print_equation_tex(
+			std::ostream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(
 			std::ostream &ost, int *coeffs);
-	void print_equation_tex_lint(std::ostream &ost, long int *coeffs);
-	void latex_double_six(std::ostream &ost, long int *double_six);
+	void print_equation_tex_lint(
+			std::ostream &ost, long int *coeffs);
+	void latex_double_six(
+			std::ostream &ost, long int *double_six);
 	void make_spreadsheet_of_lines_in_three_kinds(
 			data_structures::spreadsheet *&Sp,
 		long int *Wedge_rk, long int *Line_rk,
@@ -1205,7 +1237,8 @@ public:
 	void print_trihedral_pair_in_dual_coordinates_in_GAP(
 		long int *F_planes_rank, long int *G_planes_rank);
 	void print_basics(std::ostream &ost);
-	void sstr_line_label(std::stringstream &sstr, long int pt);
+	void sstr_line_label(
+			std::stringstream &sstr, long int pt);
 
 	// report the data in the knowledge base:
 	void make_table_of_surfaces(int verbose_level);
@@ -1215,8 +1248,10 @@ public:
 			std::ostream &ost,
 			std::string &prefix,
 			int *Q_table, int Q_table_len, int verbose_level);
-	void table_top(std::ostream &ost);
-	void table_bottom(std::ostream &ost);
+	void table_top(
+			std::ostream &ost);
+	void table_bottom(
+			std::ostream &ost);
 	void compute_table_E(
 			int *field_orders, int nb_fields,
 			long int *&Table,
@@ -1226,27 +1261,39 @@ public:
 
 
 	// surface_domain_families.cpp:
-	void create_equation_general_abcd(int a, int b, int c, int d,
+	void create_equation_general_abcd(
+			int a, int b, int c, int d,
 			int *coeff, int verbose_level);
-	void create_equation_Cayley_klmn(int k, int l, int m, int n,
+	void create_equation_Cayley_klmn(
+			int k, int l, int m, int n,
 			int *coeff, int verbose_level);
-	void create_equation_bes(int a, int c, int *coeff, int verbose_level);
-	void create_equation_F13(int a, int *coeff, int verbose_level);
-	void create_equation_G13(int a, int *coeff, int verbose_level);
-	surface_object *create_surface_general_abcd(int a, int b, int c, int d,
+	void create_equation_bes(
+			int a, int c, int *coeff, int verbose_level);
+	void create_equation_F13(
+			int a, int *coeff, int verbose_level);
+	void create_equation_G13(
+			int a, int *coeff, int verbose_level);
+	surface_object *create_surface_general_abcd(
+			int a, int b, int c, int d,
 		int verbose_level);
-	surface_object *create_surface_bes(int a, int c,
+	surface_object *create_surface_bes(
+			int a, int c,
 		int verbose_level);
-	surface_object *create_surface_F13(int a, int verbose_level);
-	surface_object *create_surface_G13(int a, int verbose_level);
-	surface_object *create_Eckardt_surface(int a, int b,
+	surface_object *create_surface_F13(
+			int a, int verbose_level);
+	surface_object *create_surface_G13(
+			int a, int verbose_level);
+	surface_object *create_Eckardt_surface(
+			int a, int b,
 		int &alpha, int &beta,
 		int verbose_level);
 	void create_equation_Eckardt_surface(
 			int a, int b, int *coeff, int verbose_level);
-	int test_Eckardt_form_alpha_beta(int *coeff, int &alpha, int &beta,
+	int test_Eckardt_form_alpha_beta(
+			int *coeff, int &alpha, int &beta,
 		int verbose_level);
-	void create_Eckardt_double_six(long int *double_six, int a, int b,
+	void create_Eckardt_double_six(
+			long int *double_six, int a, int b,
 		int verbose_level);
 	void create_Eckardt_fifteen_lines(
 			long int *fifteen_lines, int a, int b,
@@ -1595,31 +1642,44 @@ public:
 	void multiply_linear_times_linear_times_linear_in_space(
 		int *four_coeff1, int *four_coeff2, int *four_coeff3,
 		int *twenty_coeff, int verbose_level);
-	void multiply_Poly2_3_times_Poly2_3(int *input1, int *input2,
+	void multiply_Poly2_3_times_Poly2_3(
+			int *input1, int *input2,
 		int *result, int verbose_level);
-	void multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
+	void multiply_Poly1_3_times_Poly3_3(
+			int *input1, int *input2,
 		int *result, int verbose_level);
 	void clebsch_cubics(int verbose_level);
-	void multiply_222_27_and_add(int *M1, int *M2, int *M3,
+	void multiply_222_27_and_add(
+			int *M1, int *M2, int *M3,
 		int scalar, int *MM, int verbose_level);
-	void minor22(int **P3, int i1, int i2, int j1, int j2,
+	void minor22(
+			int **P3, int i1, int i2, int j1, int j2,
 		int scalar, int *Ad, int verbose_level);
-	void multiply42_and_add(int *M1, int *M2, int *MM,
+	void multiply42_and_add(
+			int *M1, int *M2, int *MM,
 		int verbose_level);
-	void split_nice_equation(int *nice_equation, int *&f1,
+	void split_nice_equation(
+			int *nice_equation, int *&f1,
 		int *&f2, int *&f3, int verbose_level);
-	void assemble_tangent_quadric(int *f1, int *f2, int *f3,
+	void assemble_tangent_quadric(
+			int *f1, int *f2, int *f3,
 		int *&tangent_quadric, int verbose_level);
 	void compute_gradient(
 			int *equation20, int *&gradient, int verbose_level);
 	long int compute_tangent_plane(
 			int *pt_coords, int *equation20, int verbose_level);
-	void print_clebsch_P(std::ostream &ost);
-	void print_clebsch_P_matrix_only(std::ostream &ost);
-	void print_clebsch_cubics(std::ostream &ost);
-	void print_system(std::ostream &ost, int *system);
-	void print_polynomial_domains(std::ostream &ost);
-	void print_equation_in_trihedral_form(std::ostream &ost,
+	void print_clebsch_P(
+			std::ostream &ost);
+	void print_clebsch_P_matrix_only(
+			std::ostream &ost);
+	void print_clebsch_cubics(
+			std::ostream &ost);
+	void print_system(
+			std::ostream &ost, int *system);
+	void print_polynomial_domains_latex(
+			std::ostream &ost);
+	void print_equation_in_trihedral_form(
+			std::ostream &ost,
 		int *the_six_plane_equations,
 		int lambda, int *the_equation);
 

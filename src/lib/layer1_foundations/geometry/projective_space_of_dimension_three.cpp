@@ -498,6 +498,32 @@ void projective_space_of_dimension_three::plane_equation_from_three_lines_in_thr
 	}
 }
 
+long int projective_space_of_dimension_three::plane_from_three_lines(
+		long int *three_lines,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Basis[6 * 4];
+	long int rk;
+
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::plane_from_three_lines" << endl;
+	}
+	P->unrank_lines(Basis, three_lines, 3);
+	rk = P->F->Linear_algebra->Gauss_easy(Basis, 6, 4);
+	if (rk != 3) {
+		cout << "projective_space_of_dimension_three::plane_from_three_lines rk != 3" << endl;
+		exit(1);
+	}
+	rk = P->rank_plane(Basis);
+
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::plane_from_three_lines done" << endl;
+	}
+	return rk;
+}
+
+
 
 
 

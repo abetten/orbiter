@@ -187,6 +187,15 @@ void surface_repository::generate_source_code(int verbose_level)
 	{
 		ofstream f(fname);
 
+		orbiter_kernel_system::os_interface Os;
+		string str;
+
+		Os.get_date(str);
+
+
+		f << "// file " << fname << endl;
+		f << "// created by Orbiter" << endl;
+		f << "// date " << str << endl;
 		f << "static int " << Wedge->fname_base << "_nb_reps = "
 				<< nb_surfaces << ";" << endl;
 		f << "static int " << fname_base << "_size = "
@@ -273,6 +282,11 @@ void surface_repository::generate_source_code(int verbose_level)
 			equation = Eqn + orbit_index * 20;
 
 			if (f_v) {
+				cout << "equation:" << endl;
+				Int_vec_print(cout, equation, 20);
+				cout << endl;
+			}
+			if (f_v) {
 				cout << "surface_repository::generate_source_code "
 						"before Wedge->Surf->enumerate_points" << endl;
 			}
@@ -290,6 +304,16 @@ void surface_repository::generate_source_code(int verbose_level)
 				Pts[h] = Points[h];
 			}
 
+			if (f_v) {
+				cout << "surface_repository::generate_source_code "
+						"nb_pts = " << nb_pts << endl;
+				cout << "surface_repository::generate_source_code "
+						"Pts=";
+				Lint_vec_print(cout, Pts, nb_pts);
+				cout << endl;
+			}
+
+
 
 			if (nb_pts != Wedge->Surf->nb_pts_on_surface_with_27_lines) {
 				cout << "surface_repository::generate_source_code "
@@ -305,13 +329,43 @@ void surface_repository::generate_source_code(int verbose_level)
 			}
 			Wedge->Surf->compute_points_on_lines(
 					Pts, nb_pts,
-				Lines, 27 /*nb_lines*/,
+				Lines + orbit_index * 27, 27 /*nb_lines*/,
 				pts_on_lines,
 				f_is_on_line,
 				0/*verbose_level*/);
 			if (f_v) {
 				cout << "surface_repository::generate_source_code "
 						"after Wedge->Surf->compute_points_on_lines" << endl;
+			}
+
+			if (!pts_on_lines->has_constant_size_property()) {
+				cout << "surface_repository::generate_source_code "
+						"pts_on_lines:" << endl;
+				pts_on_lines->print_table();
+				cout << "equation:" << endl;
+				Int_vec_print(cout, equation, 20);
+				cout << endl;
+				cout << "surface_repository::generate_source_code "
+						"pts_on_lines does not have the constant size property. Something is wrong." << endl;
+				exit(1);
+			}
+			if (pts_on_lines->get_constant_size() != Wedge->q + 1) {
+				cout << "surface_repository::generate_source_code "
+						"pts_on_lines:" << endl;
+				pts_on_lines->print_table();
+				cout << "equation:" << endl;
+				Int_vec_print(cout, equation, 20);
+				cout << endl;
+				cout << "surface_repository::generate_source_code "
+						"The lines do not have exactly q + 1 points. Something is wrong" << endl;
+				exit(1);
+
+			}
+
+			if (f_v) {
+				cout << "surface_repository::generate_source_code "
+						"pts_on_lines:" << endl;
+				pts_on_lines->print_table();
 			}
 
 			FREE_int(f_is_on_line);
@@ -340,7 +394,7 @@ void surface_repository::generate_source_code(int verbose_level)
 		}
 		f << "// the lines in the order double six "
 				"a_i, b_i and 15 more lines c_ij:" << endl;
-		f << "static int " << fname_base << "_Lines[] = { " << endl;
+		f << "static long int " << fname_base << "_Lines[] = { " << endl;
 
 
 		for (orbit_index = 0;

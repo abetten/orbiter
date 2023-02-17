@@ -1,3 +1,41 @@
+// file surface_11.cpp
+// created by Orbiter
+// date Sat Feb 18 02:11:23 +03 2023
+static int surface_11_nb_reps = 2;
+static int surface_11_size = 20;
+// the equations:
+static int surface_11_reps[] = {
+	0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 7, 0, 2, 0, 0, 2, 7, 7, 6,
+	0, 0, 0, 0, 0, 0, 1, 0, 9, 0, 0, 1, 0, 10, 0, 0, 1, 0, 8, 3,
+};
+// the stabilizer orders:
+static const char *surface_11_stab_order[] = {
+	"24",
+	"120",
+};
+// the number of Eckardt points:
+static int surface_11_nb_E[] = {
+	6, 10};
+// the lines in the order double six a_i, b_i and 15 more lines c_ij:
+static long int surface_11_Lines[] = {
+	121, 16104, 255, 659, 15722, 15822, 6528, 624, 299, 1440, 16225, 0, 753, 168, 1181, 7438, 801, 13477, 5785, 16209, 7337, 12720, 10504, 9636, 3585, 3525, 1189,
+	121, 16104, 255, 659, 15739, 1985, 9121, 780, 986, 144, 16225, 0, 376, 995, 154, 1592, 1332, 3912, 13322, 16196, 1463, 8220, 1727, 4860, 2119, 12449, 524,
+};
+static int surface_11_make_element_size = 16;
+static int surface_11_stab_gens_fst[] = { 0, 3};
+static int surface_11_stab_gens_len[] = { 3, 5};
+static int surface_11_stab_gens[] = {
+	1,0,4,2,0,1,1,6,0,0,7,3,0,0,6,4,
+	1,9,10,2,6,8,5,3,9,6,2,8,5,7,1,4,
+	0,0,0,1,0,0,2,0,0,4,0,1,1,0,2,0,
+	1,0,0,0,0,1,0,0,2,0,10,0,10,1,0,10,
+	1,0,0,0,7,10,0,0,2,0,10,0,6,10,3,1,
+	1,0,0,0,8,0,1,0,10,10,0,0,2,2,10,10,
+	0,1,0,2,0,2,0,0,9,8,9,9,2,10,0,0,
+	1,9,0,1,0,1,0,0,0,5,1,3,0,4,0,10,
+};
+
+#if 0
 static int surface_11_nb_reps = 2;
 static int surface_11_size = 20;
 static int surface_11_reps[] = {
@@ -25,3 +63,4 @@ static int surface_11_stab_gens[] = {
 	 4,  0,  0,  0, 10,  0,  4,  0,  1,  4,  0,  0,  9,  3,  8,  4, 
 	 1,  4,  0,  1,  8, 10,  1,  0,  3,  0,  0,  3,  5,  0,  2, 10, 
 };
+#endif

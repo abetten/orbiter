@@ -1217,7 +1217,7 @@ void algebra_global::do_cheat_sheet_ring(
 
 		HPD->print_latex(ost);
 
-		HPD->print_monomial_ordering(ost);
+		HPD->print_monomial_ordering_latex(ost);
 
 		L.foot(ost);
 	}

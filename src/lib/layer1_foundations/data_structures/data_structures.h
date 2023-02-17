@@ -1170,6 +1170,7 @@ public:
 	void all_triple_intersections(set_of_sets *&Intersections, 
 		int verbose_level);
 	int has_constant_size_property();
+	int get_constant_size();
 	int largest_set_size();
 	void save_csv(std::string &fname,
 		int f_make_heading, int verbose_level);

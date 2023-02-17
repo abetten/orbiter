@@ -2746,10 +2746,6 @@ void surface_create::create_surface_at_random(
 			F, iso,
 			verbose_level);
 
-	f_has_group = TRUE;
-	Sg = Aut_gens;
-	f_has_nice_gens = FALSE;
-	//data_structures_groups::vector_ge *nice_gens;
 
 #if 0
 	if (!Surf_A->A->f_has_sims) {
@@ -2781,8 +2777,8 @@ void surface_create::create_surface_at_random(
 	if (f_v) {
 		cout << "surface_create::create_surface_at_random before random_element" << endl;
 	}
-	//Sims->random_element(Elt, 0 /*verbose_level*/);
-	Surf_A->A->Group_element->element_one(Elt, verbose_level);
+	Sims->random_element(Elt, 0 /*verbose_level*/);
+	//Surf_A->A->Group_element->element_one(Elt, verbose_level);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_at_random after random_element" << endl;
@@ -2818,6 +2814,31 @@ void surface_create::create_surface_at_random(
 		cout << endl;
 	}
 
+
+	groups::strong_generators *Gens_conj;
+
+	Gens_conj = NEW_OBJECT(groups::strong_generators);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random "
+				"before init_generators_for_the_conjugate_group_avGa" << endl;
+	}
+	Gens_conj->init_generators_for_the_conjugate_group_avGa(
+			Aut_gens, Elt,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "surface_create::create_surface_at_random "
+				"after init_generators_for_the_conjugate_group_avGa" << endl;
+	}
+
+	f_has_group = TRUE;
+	Sg = Gens_conj; //Aut_gens;
+	f_has_nice_gens = FALSE;
+	//data_structures_groups::vector_ge *nice_gens;
+
+
+
+	FREE_OBJECT(Aut_gens);
 	FREE_int(Elt);
 	FREE_OBJECT(Sims);
 

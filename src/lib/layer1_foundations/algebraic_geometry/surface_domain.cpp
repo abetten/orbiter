@@ -195,6 +195,12 @@ void surface_domain::init(
 		cout << "surface::init after PolynomialDomains->init" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface::init polynomial domains are:" << endl;
+		PolynomialDomains->print_polynomial_domains_latex(cout);
+	}
+
+
 
 
 
@@ -215,187 +221,15 @@ void surface_domain::init(
 	}
 }
 
-#if 0
-void surface_domain::init_polynomial_domains(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains" << endl;
-	}
-	Poly1 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly1->init" << endl;
-	}
-	Poly1->init(F,
-			3 /* nb_vars */, 1 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly1->init" << endl;
-	}
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly2->init" << endl;
-	}
-	Poly2->init(F,
-			3 /* nb_vars */, 2 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly2->init" << endl;
-	}
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly3->init" << endl;
-	}
-	Poly3->init(F,
-			3 /* nb_vars */, 3 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly3->init" << endl;
-	}
-
-	Poly1_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly2_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly3_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly4_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly1_x123->init" << endl;
-	}
-	Poly1_x123->init(F,
-			3 /* nb_vars */, 1 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly1_x123->init" << endl;
-	}
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly2_x123->init" << endl;
-	}
-	Poly2_x123->init(F,
-			3 /* nb_vars */, 2 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly2_x123->init" << endl;
-	}
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly3_x123->init" << endl;
-	}
-	Poly3_x123->init(F,
-			3 /* nb_vars */, 3 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly3_x123->init" << endl;
-	}
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly4_x123->init" << endl;
-	}
-	Poly4_x123->init(F,
-			3 /* nb_vars */, 4 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly4_x123->init" << endl;
-	}
-
-
-	label_variables_3(Poly1, 0 /* verbose_level */);
-	label_variables_3(Poly2, 0 /* verbose_level */);
-	label_variables_3(Poly3, 0 /* verbose_level */);
-
-	label_variables_x123(Poly1_x123, 0 /* verbose_level */);
-	label_variables_x123(Poly2_x123, 0 /* verbose_level */);
-	label_variables_x123(Poly3_x123, 0 /* verbose_level */);
-	label_variables_x123(Poly4_x123, 0 /* verbose_level */);
-
-	Poly1_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly2_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly3_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly1_4->init" << endl;
-	}
-	Poly1_4->init(F,
-			4 /* nb_vars */, 1 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly1_4->init" << endl;
-	}
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly2_4->init" << endl;
-	}
-	Poly2_4->init(F,
-			4 /* nb_vars */, 2 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly2_4->init" << endl;
-	}
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before Poly3_4->init" << endl;
-	}
-	Poly3_4->init(F,
-			4 /* nb_vars */, 3 /* degree */,
-			t_PART,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after Poly3_4->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains before label_variables_4" << endl;
-	}
-	label_variables_4(Poly1_4, 0 /* verbose_level */);
-	label_variables_4(Poly2_4, 0 /* verbose_level */);
-	label_variables_4(Poly3_4, 0 /* verbose_level */);
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains after label_variables_4" << endl;
-	}
-
-	nb_monomials = Poly3_4->get_nb_monomials();
-
-	if (f_v) {
-		cout << "Poly3_4->nb_monomials = " << nb_monomials << endl;
-		cout << "Poly2_4->nb_monomials = " << Poly2_4->get_nb_monomials() << endl;
-	}
-
-
-
-	Partials = NEW_OBJECTS(ring_theory::partial_derivative, 4);
-
-	int i;
-
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains initializing partials" << endl;
-	}
-	for (i = 0; i < 4; i++) {
-		Partials[i].init(Poly3_4, Poly2_4, i, verbose_level);
-	}
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains initializing partials done" << endl;
-	}
-
-
-
-
-	if (f_v) {
-		cout << "surface_domain::init_polynomial_domains done" << endl;
-	}
-}
-#endif
-
-
-void surface_domain::unrank_point(int *v, long int rk)
+void surface_domain::unrank_point(
+		int *v, long int rk)
 {
 	P->unrank_point(v, rk);
 }
 
-long int surface_domain::rank_point(int *v)
+long int surface_domain::rank_point(
+		int *v)
 {
 	long int rk;
 
@@ -403,12 +237,14 @@ long int surface_domain::rank_point(int *v)
 	return rk;
 }
 
-void surface_domain::unrank_plane(int *v, long int rk)
+void surface_domain::unrank_plane(
+		int *v, long int rk)
 {
 	Gr3->unrank_lint_here(v, rk, 0 /* verbose_level */);
 }
 
-long int surface_domain::rank_plane(int *v)
+long int surface_domain::rank_plane(
+		int *v)
 {
 	long int rk;
 
@@ -416,7 +252,8 @@ long int surface_domain::rank_plane(int *v)
 	return rk;
 }
 
-void surface_domain::enumerate_points(int *coeff,
+void surface_domain::enumerate_points(
+		int *coeff,
 		std::vector<long int> &Pts,
 		int verbose_level)
 {
@@ -442,7 +279,8 @@ void surface_domain::substitute_semilinear(
 	if (f_v) {
 		cout << "surface_domain::substitute_semilinear" << endl;
 	}
-	PolynomialDomains->Poly3_4->substitute_semilinear(coeff_in, coeff_out,
+	PolynomialDomains->Poly3_4->substitute_semilinear(
+			coeff_in, coeff_out,
 		f_semilinear, frob, Mtx_inv, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::substitute_semilinear done" << endl;
@@ -594,7 +432,8 @@ void surface_domain::create_starter_configuration(
 	}
 }
 
-void surface_domain::wedge_to_klein(int *W, int *K)
+void surface_domain::wedge_to_klein(
+		int *W, int *K)
 {
 	geometry::geometry_global Geo;
 
@@ -610,7 +449,8 @@ void surface_domain::wedge_to_klein(int *W, int *K)
 #endif
 }
 
-void surface_domain::klein_to_wedge(int *K, int *W)
+void surface_domain::klein_to_wedge(
+		int *K, int *W)
 {
 	geometry::geometry_global Geo;
 
@@ -625,7 +465,8 @@ void surface_domain::klein_to_wedge(int *K, int *W)
 #endif
 }
 
-long int surface_domain::line_to_wedge(long int line_rk)
+long int surface_domain::line_to_wedge(
+		long int line_rk)
 {
 	long int a, b;
 	
@@ -658,7 +499,8 @@ void surface_domain::line_to_klein_vec(
 	}
 }
 
-long int surface_domain::klein_to_wedge(long int klein_rk)
+long int surface_domain::klein_to_wedge(
+		long int klein_rk)
 {
 	long int b;
 	

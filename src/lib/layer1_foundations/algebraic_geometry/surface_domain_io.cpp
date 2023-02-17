@@ -19,18 +19,21 @@ namespace layer1_foundations {
 namespace algebraic_geometry {
 
 
-void surface_domain::print_equation(std::ostream &ost, int *coeffs)
+void surface_domain::print_equation(
+		std::ostream &ost, int *coeffs)
 {
 	PolynomialDomains->Poly3_4->print_equation(ost, coeffs);
 }
 
-void surface_domain::print_equation_maple(std::stringstream &ost, int *coeffs)
+void surface_domain::print_equation_maple(
+		std::stringstream &ost, int *coeffs)
 {
 	PolynomialDomains->Poly3_4->print_equation_str(ost, coeffs);
 }
 
 
-void surface_domain::print_equation_tex(std::ostream &ost, int *coeffs)
+void surface_domain::print_equation_tex(
+		std::ostream &ost, int *coeffs)
 {
 	PolynomialDomains->Poly3_4->print_equation_tex(ost, coeffs);
 }
@@ -49,13 +52,15 @@ void surface_domain::print_equation_with_line_breaks_tex(
 	ost << "$$}" << endl;
 }
 
-void surface_domain::print_equation_tex_lint(std::ostream &ost, long int *coeffs)
+void surface_domain::print_equation_tex_lint(
+		std::ostream &ost, long int *coeffs)
 {
 	PolynomialDomains->Poly3_4->print_equation_lint_tex(ost, coeffs);
 }
 
 #if 0
-void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
+void surface_domain::latex_double_six(
+		std::ostream &ost, long int *double_six)
 {
 
 #if 0
@@ -99,7 +104,8 @@ void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
 #endif
 
 
-void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
+void surface_domain::latex_double_six(
+		std::ostream &ost, long int *double_six)
 {
 
 	print_lines_tex(ost, double_six, 12 /* nb_lines */);
@@ -386,9 +392,11 @@ void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
 	cout << "];";
 }
 
-void surface_domain::print_basics(std::ostream &ost)
+void surface_domain::print_basics(
+		std::ostream &ost)
 {
-	PolynomialDomains->print_polynomial_domains(ost);
+	PolynomialDomains->print_polynomial_domains_latex(ost);
+
 	Schlaefli->print_Schlaefli_labelling(ost);
 
 
@@ -409,7 +417,8 @@ void surface_domain::print_basics(std::ostream &ost)
 
 
 
-void surface_domain::sstr_line_label(std::stringstream &sstr, long int pt)
+void surface_domain::sstr_line_label(
+		std::stringstream &sstr, long int pt)
 {
 	if (pt >= 27) {
 		cout << "surface_domain::sstr_line_label pt >= 27, pt=" << pt << endl;
@@ -943,7 +952,8 @@ void surface_domain::make_table_of_surfaces2(
 
 }
 
-void surface_domain::table_top(std::ostream &ost)
+void surface_domain::table_top(
+		std::ostream &ost)
 {
 	ost << "$" << endl;
 	ost << "\\begin{array}{|c|c||c|c|c|}" << endl;
@@ -954,7 +964,8 @@ void surface_domain::table_top(std::ostream &ost)
 	ost << "\\hline" << endl;
 }
 
-void surface_domain::table_bottom(std::ostream &ost)
+void surface_domain::table_bottom(
+		std::ostream &ost)
 {
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;

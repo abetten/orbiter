@@ -214,7 +214,8 @@ public:
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
-	void enumerate_points_lint(int *coeff,
+	void enumerate_points_lint(
+			int *coeff,
 			long int *&Pts, int &nb_pts, int verbose_level);
 	void enumerate_points_zariski_open_set(int *coeff,
 			std::vector<long int> &Pts,
@@ -255,7 +256,7 @@ public:
 		int verbose_level);
 	int compare_monomials(int *M1, int *M2);
 	int compare_monomials_PART(int *M1, int *M2);
-	void print_monomial_ordering(std::ostream &ost);
+	void print_monomial_ordering_latex(std::ostream &ost);
 	int *read_from_string_coefficient_pairs(
 			std::string &str, int verbose_level);
 	int *read_from_string_coefficient_vector(
@@ -738,6 +739,8 @@ class ring_theory_global {
 public:
 	ring_theory_global();
 	~ring_theory_global();
+	void Monomial_ordering_type_as_string(
+			monomial_ordering_type Monomial_ordering_type, std::string &s);
 	void write_code_for_division(
 			field_theory::finite_field *F,
 			std::string &label_code,

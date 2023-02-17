@@ -1337,6 +1337,26 @@ int set_of_sets::has_constant_size_property()
 	return TRUE;
 }
 
+int set_of_sets::get_constant_size()
+{
+	int s, i;
+
+	if (nb_sets == 0) {
+		cout << "set_of_sets::get_constant_size no sets" << endl;
+		exit(1);
+	}
+	s = Set_size[0];
+	for (i = 1; i < nb_sets; i++) {
+		if (Set_size[i] != s) {
+			cout << "set_of_sets::get_constant_size "
+					"the size of the sets is not constant" << endl;
+			exit(1);
+		}
+	}
+	return s;
+}
+
+
 int set_of_sets::largest_set_size()
 {
 	int s = INT_MIN;

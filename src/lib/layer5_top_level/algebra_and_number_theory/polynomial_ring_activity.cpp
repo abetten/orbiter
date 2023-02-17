@@ -67,7 +67,7 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 		algebra::algebra_global Algebra;
 
 		//Algebra.do_cheat_sheet_GF(F, verbose_level);
-		//HPD->print_monomial_ordering(cout);
+		//HPD->print_monomial_ordering_latex(cout);
 
 		Algebra.do_cheat_sheet_ring(HPD, verbose_level);
 

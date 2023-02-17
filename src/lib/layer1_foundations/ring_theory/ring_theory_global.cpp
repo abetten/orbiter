@@ -29,6 +29,21 @@ ring_theory_global::~ring_theory_global()
 
 }
 
+void ring_theory_global::Monomial_ordering_type_as_string(
+		monomial_ordering_type Monomial_ordering_type, std::string &s)
+{
+	if (Monomial_ordering_type == t_LEX) {
+		s.assign("LEX");
+	}
+	else if (Monomial_ordering_type == t_PART) {
+		s.assign("PART");
+	}
+	else {
+		cout << "ring_theory_global::Monomial_ordering_type_as_string unknown type" << endl;
+		exit(1);
+	}
+}
+
 void ring_theory_global::write_code_for_division(
 		field_theory::finite_field *F,
 		std::string &label_code,

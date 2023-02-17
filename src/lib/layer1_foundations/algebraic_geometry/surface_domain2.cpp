@@ -80,12 +80,13 @@ long int surface_domain::plane_from_three_lines(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int Basis[6 * 4];
 	long int rk;
 
 	if (f_v) {
 		cout << "surface_domain::plane_from_three_lines" << endl;
 	}
+#if 0
+	int Basis[6 * 4];
 	unrank_lines(Basis, three_lines, 3);
 	rk = F->Linear_algebra->Gauss_easy(Basis, 6, 4);
 	if (rk != 3) {
@@ -93,6 +94,10 @@ long int surface_domain::plane_from_three_lines(
 		exit(1);
 	}
 	rk = rank_plane(Basis);
+#endif
+	rk = P->Solid->plane_from_three_lines(
+			three_lines,
+		verbose_level);
 
 	if (f_v) {
 		cout << "surface_domain::plane_from_three_lines done" << endl;
@@ -289,7 +294,8 @@ void surface_domain::prepare_system_from_FG(
 }
 
 
-void surface_domain::compute_nine_lines(int *F_planes, int *G_planes,
+void surface_domain::compute_nine_lines(
+		int *F_planes, int *G_planes,
 	long int *nine_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

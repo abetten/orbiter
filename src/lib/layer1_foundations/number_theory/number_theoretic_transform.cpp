@@ -526,7 +526,7 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 		exit(1);
 	}
 
-	Hom->print_monomial_ordering(cout);
+	Hom->print_monomial_ordering_latex(cout);
 
 	poly_A = NEW_int(N[k]);
 	poly_B = NEW_int(N[k]);
