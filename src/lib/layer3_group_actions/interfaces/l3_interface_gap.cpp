@@ -145,6 +145,170 @@ void l3_interface_gap::export_collineation_group_to_fining(
 }
 
 
+void l3_interface_gap::export_surface(
+		std::ostream &ost,
+		std::string &label_txt,
+		int f_has_group,
+		groups::strong_generators *SG,
+		ring_theory::homogeneous_polynomial_domain *Poly3_4,
+		int *equation,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "l3_interface_gap::export_surface" << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	ost << "# Cubic surface " << label_txt << endl;
+	ost << "# Group:" << endl;
+
+	if (f_has_group) {
+
+		if (!SG->A->is_matrix_group()) {
+			cout << "l3_interface_gap::export_surface "
+					"the group is not a matrix group" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "l3_interface_gap::export_surface "
+					"before Sg->export_fining" << endl;
+		}
+		SG->export_fining(SG->A, ost, verbose_level);
+		if (f_v) {
+			cout << "l3_interface_gap::export_surface "
+					"after Sg->export_fining" << endl;
+		}
+	}
+	else {
+		cout << "l3_interface_gap::export_surface "
+				"the group is not available" << endl;
+	}
+
+	//SO->Surf->print_equation_with_line_breaks_tex(ost, SO->eqn);
+
+	data_structures::string_tools String;
+	std::stringstream ss;
+	string s;
+
+
+	//r:=PolynomialRing(GF(x),["X0","X1","X2","X3"]);
+
+	ost << "r := PolynomialRing(GF(" << Poly3_4->get_F()->q << "),"
+			"[\"X0\",\"X1\",\"X2\",\"X3\"]);" << endl;
+
+	Poly3_4->print_equation_for_gap_str(
+			ss, equation);
+
+	s = ss.str();
+	String.remove_specific_character(s, '_');
+
+
+	ost << "Eqn := " << s << ";" << endl;
+
+
+
+	if (f_v) {
+		cout << "l3_interface_gap::export_surface done" << endl;
+	}
+
+}
+
+
+void l3_interface_gap::export_BLT_set(
+		std::ostream &ost,
+		std::string &label_txt,
+		int f_has_group,
+		groups::strong_generators *SG,
+		actions::action *A,
+		layer1_foundations::orthogonal_geometry::blt_set_domain
+				*Blt_set_domain,
+		long int *set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "l3_interface_gap::export_BLT_set" << endl;
+	}
+
+
+	ost << "# BLT-set " << label_txt << endl;
+
+
+
+	if (f_has_group) {
+
+		ring_theory::longinteger_object go;
+
+		SG->group_order(go);
+		ost << "# Group of order " << go << endl;
+
+		if (!SG->A->is_matrix_group()) {
+			cout << "l3_interface_gap::export_BLT_set the group is not a matrix group" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "l3_interface_gap::export_BLT_set "
+					"before SG->export_fining" << endl;
+		}
+		SG->export_fining(A, ost, verbose_level);
+		if (f_v) {
+			cout << "l3_interface_gap::export_BLT_set "
+					"after SG->export_fining" << endl;
+		}
+	}
+	else {
+		cout << "l3_interface_gap::export_BLT_set the group is not available" << endl;
+	}
+
+	int h, i, a;
+	int sz;
+	int d = 5;
+	int v[5];
+	algebra::interface_gap_low Interface;
+
+	sz = Blt_set_domain->target_size;
+
+	ost << "pg := ProjectiveSpace(" << 4 << "," << Blt_set_domain->F->q << ");" << endl;
+	ost << "S:=[" << endl;
+	for (h = 0; h < sz; h++) {
+
+		Blt_set_domain->O->Hyperbolic_pair->unrank_point(v, 1, set[h], 0);
+
+
+		Blt_set_domain->F->Projective_space_basic->PG_element_normalize_from_front(v, 1, 5);
+
+		ost << "[";
+		for (i = 0; i < d; i++) {
+			a = v[i];
+
+			Interface.write_element_of_finite_field(ost, Blt_set_domain->F, a);
+
+			if (i < d - 1) {
+				ost << ",";
+			}
+		}
+		ost << "]";
+		if (h < sz - 1) {
+			ost << ",";
+		}
+		ost << endl;
+	}
+
+	ost << "];" << endl;
+	ost << "S := List(S,x -> VectorSpaceToElement(pg,x));" << endl;
+
+
+
+	if (f_v) {
+		cout << "l3_interface_gap::export_BLT_set done" << endl;
+	}
+}
+
+
+
 
 }}}
 

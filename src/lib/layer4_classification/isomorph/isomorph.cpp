@@ -116,7 +116,8 @@ void isomorph::init(std::string &prefix,
 	Sub = NEW_OBJECT(substructure_classification);
 
 	if (f_v) {
-		cout << "isomorph::init before Sub->init" << endl;
+		cout << "isomorph::init "
+				"before Sub->init" << endl;
 	}
 
 	Sub->init(this,
@@ -126,32 +127,37 @@ void isomorph::init(std::string &prefix,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "isomorph::init after Sub->init" << endl;
+		cout << "isomorph::init "
+				"after Sub->init" << endl;
 	}
 
 
 	Lifting = NEW_OBJECT(substructure_lifting_data);
 
 	if (f_v) {
-		cout << "isomorph::init before Lifting->init" << endl;
+		cout << "isomorph::init "
+				"before Lifting->init" << endl;
 	}
 
 	Lifting->init(this, verbose_level - 1);
 
 	if (f_v) {
-		cout << "isomorph::init after Lifting->init" << endl;
+		cout << "isomorph::init "
+				"after Lifting->init" << endl;
 	}
 
 	Folding = NEW_OBJECT(flag_orbit_folding);
 
 	if (f_v) {
-		cout << "isomorph::init before Folding->init" << endl;
+		cout << "isomorph::init "
+				"before Folding->init" << endl;
 	}
 
 	Folding->init(this, verbose_level - 1);
 
 	if (f_v) {
-		cout << "isomorph::init after Folding->init" << endl;
+		cout << "isomorph::init "
+				"after Folding->init" << endl;
 	}
 
 
@@ -160,12 +166,14 @@ void isomorph::init(std::string &prefix,
 	}
 }
 
-void isomorph::print_node_local(int level, int node_local)
+void isomorph::print_node_local(
+		int level, int node_local)
 {
 	Sub->print_node_local(level, node_local);
 }
 
-void isomorph::print_node_global(int level, int node_global)
+void isomorph::print_node_global(
+		int level, int node_global)
 {
 	Sub->print_node_global(level, node_global);
 }
@@ -192,7 +200,8 @@ void isomorph::init_high_level(
 	int f_implicit_fusion = FALSE;
 	
 	if (f_v) {
-		cout << "isomorph::init_high_level before init" << endl;
+		cout << "isomorph::init_high_level "
+				"before init" << endl;
 	}
 	init(prefix, A, A, gen, 
 		size, level, 
@@ -201,7 +210,8 @@ void isomorph::init_high_level(
 		verbose_level);
 		// sets q, level and initializes file names
 	if (f_v) {
-		cout << "isomorph::init_high_level after init" << endl;
+		cout << "isomorph::init_high_level "
+				"after init" << endl;
 	}
 
 

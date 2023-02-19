@@ -1277,6 +1277,9 @@ public:
 			void *OC, int verbose_level);
 	void init_poset_classification_control(std::string &label,
 			void *PCC, int verbose_level);
+	void init_poset_classification_activity(
+			std::string &label,
+			void *PCA, int verbose_level);
 	void print();
 };
 

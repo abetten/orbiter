@@ -246,7 +246,8 @@ void orbiter_top_level_session::parse(
 	int i_prev = -1;
 
 	if (f_v) {
-		cout << "orbiter_top_level_session::parse, parsing the orbiter dash code" << endl;
+		cout << "orbiter_top_level_session::parse "
+				"parsing the orbiter dash code" << endl;
 	}
 
 	while (i < argc) {
@@ -261,34 +262,40 @@ void orbiter_top_level_session::parse(
 			}
 		}
 		if (i_prev == i) {
-			cout << "orbiter_top_level_session::parse we seem to be stuck in a look" << endl;
+			cout << "orbiter_top_level_session::parse "
+					"we seem to be stuck in a look" << endl;
 			exit(1);
 		}
 		i_prev = i;
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse before Interface_symbol_table, i = " << i << endl;
+			cout << "orbiter_top_level_session::parse "
+					"before Interface_symbol_table, i = " << i << endl;
 		}
 
 		orbiter_command *OC;
 
 		OC = NEW_OBJECT(orbiter_command);
 		if (f_vv) {
-			cout << "orbiter_top_level_session::parse before OC->parse" << endl;
+			cout << "orbiter_top_level_session::parse "
+					"before OC->parse" << endl;
 		}
 		OC->parse(this, argc, Argv, i, verbose_level);
 		if (f_vv) {
-			cout << "orbiter_top_level_session::parse after OC->parse" << endl;
+			cout << "orbiter_top_level_session::parse "
+					"after OC->parse" << endl;
 		}
 
 		program.push_back(OC);
 
 #if 0
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse before OC->execute" << endl;
+			cout << "orbiter_top_level_session::parse "
+					"before OC->execute" << endl;
 		}
 		OC->execute(verbose_level);
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse after OC->execute" << endl;
+			cout << "orbiter_top_level_session::parse "
+					"after OC->execute" << endl;
 		}
 #endif
 
@@ -301,7 +308,8 @@ void orbiter_top_level_session::parse(
 	}
 
 	if (f_v) {
-		cout << "orbiter_top_level_session::parse, parsing the orbiter dash code done" << endl;
+		cout << "orbiter_top_level_session::parse "
+				"parsing the orbiter dash code done" << endl;
 	}
 }
 
@@ -315,12 +323,14 @@ symbol_table_object_type orbiter_top_level_session::get_object_type(int idx)
 	return Orbiter_session->get_object_type(idx);
 }
 
-int orbiter_top_level_session::find_symbol(std::string &label)
+int orbiter_top_level_session::find_symbol(
+		std::string &label)
 {
 	return Orbiter_session->find_symbol(label);
 }
 
-void orbiter_top_level_session::find_symbols(std::vector<std::string> &Labels, int *&Idx)
+void orbiter_top_level_session::find_symbols(
+		std::vector<std::string> &Labels, int *&Idx)
 {
 
 	Orbiter_session->find_symbols(Labels, Idx);
@@ -339,7 +349,8 @@ void orbiter_top_level_session::add_symbol_table_entry(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "orbiter_top_level_session::add_symbol_table_entry, label = " << label << endl;
+		cout << "orbiter_top_level_session::add_symbol_table_entry "
+				"label = " << label << endl;
 	}
 	Orbiter_session->add_symbol_table_entry(label, Symb, verbose_level);
 	if (f_v) {
@@ -347,52 +358,85 @@ void orbiter_top_level_session::add_symbol_table_entry(
 	}
 }
 
-apps_algebra::any_group *orbiter_top_level_session::get_object_of_type_any_group(std::string &label)
+apps_algebra::any_group
+	*orbiter_top_level_session::get_object_of_type_any_group(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_any_group cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_any_group "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_any_group) {
-		cout << "orbiter_top_level_session::get_object_of_type_any_group object type != t_any_group" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_any_group "
+				"object type != t_any_group" << endl;
 		exit(1);
 	}
 	return (apps_algebra::any_group *) get_object(idx);
 }
 
-projective_geometry::projective_space_with_action *orbiter_top_level_session::get_object_of_type_projective_space(std::string &label)
+projective_geometry::projective_space_with_action
+	*orbiter_top_level_session::get_object_of_type_projective_space(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_projective_space cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_projective_space "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_projective_space) {
-		cout << "orbiter_top_level_session::get_object_of_type_projective_space object type != t_projective_space" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_projective_space "
+				"object type != t_projective_space" << endl;
 		exit(1);
 	}
 	return (projective_geometry::projective_space_with_action *) get_object(idx);
 }
 
-poset_classification::poset_classification_control *orbiter_top_level_session::get_object_of_type_poset_classification_control(std::string &label)
+poset_classification::poset_classification_control
+	*orbiter_top_level_session::get_object_of_type_poset_classification_control(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_ring cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_poset_classification_control "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_poset_classification_control) {
-		cout << "orbiter_top_level_session::get_object_of_type_ring object type != t_poset_classification_control" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_poset_classification_control "
+				"object type != t_poset_classification_control" << endl;
 		exit(1);
 	}
 	return (poset_classification::poset_classification_control *) get_object(idx);
+}
+
+
+poset_classification::poset_classification_activity_description
+	*orbiter_top_level_session::get_object_of_type_poset_classification_activity(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_poset_classification_activity "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_poset_classification_activity) {
+		cout << "orbiter_top_level_session::get_object_of_type_poset_classification_activity "
+				"object type != t_poset_classification_activity" << endl;
+		exit(1);
+	}
+	return (poset_classification::poset_classification_activity_description *) get_object(idx);
 }
 
 
@@ -425,7 +469,8 @@ void orbiter_top_level_session::get_vector_or_set(std::string &label,
 			}
 			data_structures::vector_builder *VB;
 
-			VB = (data_structures::vector_builder *) Orbiter_session->get_object(idx);
+			VB = (data_structures::vector_builder *)
+					Orbiter_session->get_object(idx);
 
 			nb_pts = VB->len;
 			Pts = NEW_lint(nb_pts);
@@ -440,7 +485,8 @@ void orbiter_top_level_session::get_vector_or_set(std::string &label,
 			}
 			data_structures::set_builder *SB;
 
-			SB = (data_structures::set_builder *) Orbiter_session->get_object(idx);
+			SB = (data_structures::set_builder *)
+					Orbiter_session->get_object(idx);
 
 			nb_pts = SB->sz;
 			Pts = NEW_lint(nb_pts);
@@ -452,27 +498,33 @@ void orbiter_top_level_session::get_vector_or_set(std::string &label,
 		Lint_vec_scan(label, Pts, nb_pts);
 	}
 	if (f_v) {
-		cout << "orbiter_top_level_session::get_vector_or_set we found a set of size " << nb_pts << endl;
+		cout << "orbiter_top_level_session::get_vector_or_set "
+				"we found a set of size " << nb_pts << endl;
 	}
 
 	if (f_v) {
-		cout << "orbiter_top_level_session::get_vector_or_set done" << endl;
+		cout << "orbiter_top_level_session::get_vector_or_set "
+				"done" << endl;
 	}
 
 }
 
 
-apps_algebra::vector_ge_builder *orbiter_top_level_session::get_object_of_type_vector_ge(std::string &label)
+apps_algebra::vector_ge_builder
+	*orbiter_top_level_session::get_object_of_type_vector_ge(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_vector_ge cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_vector_ge "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_vector_ge) {
-		cout << "orbiter_top_level_session::get_object_of_type_vector_ge object type != t_vector_ge" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_vector_ge "
+				"object type != t_vector_ge" << endl;
 		cout << "object type = ";
 		orbiter_kernel_system::Orbiter->print_type(get_object_type(idx));
 		exit(1);
@@ -481,17 +533,21 @@ apps_algebra::vector_ge_builder *orbiter_top_level_session::get_object_of_type_v
 }
 
 
-orthogonal_geometry_applications::orthogonal_space_with_action *orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action(std::string &label)
+orthogonal_geometry_applications::orthogonal_space_with_action
+	*orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_orthogonal_space) {
-		cout << "orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action object type != t_orthogonal_space" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action "
+				"object type != t_orthogonal_space" << endl;
 		exit(1);
 	}
 
@@ -500,17 +556,21 @@ orthogonal_geometry_applications::orthogonal_space_with_action *orbiter_top_leve
 }
 
 #if 0
-field_theory::finite_field *orbiter_top_level_session::get_object_of_type_finite_field(std::string &label)
+field_theory::finite_field
+	*orbiter_top_level_session::get_object_of_type_finite_field(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_finite_field cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_finite_field "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_finite_field) {
-		cout << "orbiter_top_level_session::get_object_of_type_finite_field object type != t_finite_field" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_finite_field "
+				"object type != t_finite_field" << endl;
 		exit(1);
 	}
 
@@ -519,17 +579,21 @@ field_theory::finite_field *orbiter_top_level_session::get_object_of_type_finite
 }
 #endif
 
-spreads::spread_create *orbiter_top_level_session::get_object_of_type_spread(std::string &label)
+spreads::spread_create
+	*orbiter_top_level_session::get_object_of_type_spread(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_spread cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_spread "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_spread) {
-		cout << "orbiter_top_level_session::get_object_of_type_spread object type != t_spread" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_spread "
+				"object type != t_spread" << endl;
 		exit(1);
 	}
 
@@ -537,35 +601,44 @@ spreads::spread_create *orbiter_top_level_session::get_object_of_type_spread(std
 	return (spreads::spread_create *) get_object(idx);
 }
 
-applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *orbiter_top_level_session::get_object_of_type_cubic_surface(std::string &label)
+applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create
+	*orbiter_top_level_session::get_object_of_type_cubic_surface(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_cubic_surface cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_cubic_surface "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_cubic_surface) {
-		cout << "orbiter_top_level_session::get_object_of_type_cubic_surface object type != t_cubic_surface" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_cubic_surface "
+				"object type != t_cubic_surface" << endl;
 		exit(1);
 	}
 
 
-	return (applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *) get_object(idx);
+	return (applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *)
+			get_object(idx);
 }
 
-apps_coding_theory::create_code *orbiter_top_level_session::get_object_of_type_code(std::string &label)
+apps_coding_theory::create_code
+	*orbiter_top_level_session::get_object_of_type_code(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_code cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_code "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_code) {
-		cout << "orbiter_top_level_session::get_object_of_type_code object type != t_code" << endl;
+		cout << "orbiter_top_level_session::get_object_of_type_code "
+				"object type != t_code" << endl;
 		exit(1);
 	}
 
@@ -573,22 +646,27 @@ apps_coding_theory::create_code *orbiter_top_level_session::get_object_of_type_c
 	return (apps_coding_theory::create_code *) get_object(idx);
 }
 
-orthogonal_geometry_applications::orthogonal_space_with_action *orbiter_top_level_session::get_orthogonal_space(std::string &label)
+orthogonal_geometry_applications::orthogonal_space_with_action
+	*orbiter_top_level_session::get_orthogonal_space(
+			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_orthogonal_space cannot find symbol " << label << endl;
+		cout << "orbiter_top_level_session::get_orthogonal_space "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_orthogonal_space) {
-		cout << "orbiter_top_level_session::get_orthogonal_space object type != t_orthogonal_space" << endl;
+		cout << "orbiter_top_level_session::get_orthogonal_space "
+				"object type != t_orthogonal_space" << endl;
 		exit(1);
 	}
 
 
-	return (orthogonal_geometry_applications::orthogonal_space_with_action *) get_object(idx);
+	return (orthogonal_geometry_applications::orthogonal_space_with_action *)
+			get_object(idx);
 }
 
 

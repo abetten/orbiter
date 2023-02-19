@@ -408,12 +408,13 @@ ORBITER_MODULES= \
 		layer4_classification/poset_classification/extension.o \
 		layer4_classification/poset_classification/orbit_based_testing.o \
 		layer4_classification/poset_classification/orbit_tracer.o \
+		layer4_classification/poset_classification/poset_classification_activity_description.o \
+		layer4_classification/poset_classification/poset_classification_activity_export_source_code.o \
+		layer4_classification/poset_classification/poset_classification_activity.o \
 		layer4_classification/poset_classification/poset_classification.o \
 		layer4_classification/poset_classification/poset_classification_classify.o \
-		layer4_classification/poset_classification/poset_classification_combinatorics.o \
 		layer4_classification/poset_classification/poset_classification_control.o \
 		layer4_classification/poset_classification/poset_classification_draw.o \
-		layer4_classification/poset_classification/poset_classification_export_source_code.o \
 		layer4_classification/poset_classification/poset_classification_init.o \
 		layer4_classification/poset_classification/poset_classification_io.o \
 		layer4_classification/poset_classification/poset_classification_report_options.o \

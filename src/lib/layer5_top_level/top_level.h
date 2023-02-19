@@ -363,13 +363,10 @@ namespace applications_in_algebraic_geometry {
 #define Get_vector_or_set(label, set, sz) user_interface::The_Orbiter_top_level_session->get_vector_or_set(label, set, sz, 0)
 
 
-//#define Get_object_of_type_finite_field(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_finite_field(label)
-// use Get_finite_field() instead
-
 #define Get_object_of_type_any_group(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(label)
 #define Get_object_of_type_spread(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_spread(label)
-//#define Get_object_of_type_ring(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_ring(label)
 #define Get_object_of_type_poset_classification_control(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_poset_classification_control(label)
+#define Get_object_of_type_poset_classification_activity(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_poset_classification_activity(label)
 #define Get_object_of_type_vector_ge(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_vector_ge(label)
 #define Get_object_of_projective_space(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(label)
 #define Get_object_of_cubic_surface(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_cubic_surface(label)

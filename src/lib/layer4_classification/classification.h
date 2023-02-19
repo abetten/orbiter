@@ -76,6 +76,8 @@ namespace poset_classification {
 	class extension;
 	class orbit_based_testing;
 	class orbit_tracer;
+	class poset_classification_activity_description;
+	class poset_classification_activity;
 	class poset_classification;
 	class poset_classification_control;
 	class poset_classification_report_options;

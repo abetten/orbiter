@@ -332,7 +332,7 @@ void BLT_set_create::init(
 				OA->A,
 				OA->Descr->F, Descr->iso,
 				target_go_text,
-				0 /*verbose_level*/);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "BLT_set_create::init after "
 					"gens->stab_BLT_set_from_catalogue" << endl;
@@ -345,15 +345,28 @@ void BLT_set_create::init(
 				set, OA->Descr->F->q + 1, verbose_level);
 
 		if (c) {
-			cout << "BLT_set_create::init the generators "
+			if (f_v) {
+				cout << "BLT_set_create::init the generators "
 					"stabilize the given BLT set, good" << endl;
+			}
 		}
 		else {
 			cout << "BLT_set_create::init the generators "
 					"do not stabilize the given BLT set, bad!" << endl;
+
+			int i;
+
+			for (i = 0; i < gens->len; i++) {
+				cout << "checking generator " << i << " / " << gens->len << endl;
+				OA->A->Group_element->check_if_in_set_stabilizer_debug(
+						gens->ith(i),
+						OA->Descr->F->q + 1, set, verbose_level);
+			}
 			exit(1);
 		}
 
+
+#if 0
 		Sg = NEW_OBJECT(groups::strong_generators);
 
 		if (f_v) {
@@ -365,6 +378,32 @@ void BLT_set_create::init(
 				OA->A,
 				OA->Descr->F, Descr->iso,
 				verbose_level);
+#else
+
+		ring_theory::longinteger_object target_go;
+
+		target_go.create_from_base_10_string(target_go_text);
+		if (f_v) {
+			cout << "BLT_set_create::init "
+					"target_go = " << target_go << endl;
+		}
+
+
+		if (f_v) {
+			cout << "BLT_set_create::init "
+					"before generators_to_strong_generators" << endl;
+		}
+		OA->A->generators_to_strong_generators(
+			TRUE /* f_target_go */, target_go,
+			gens, Sg,
+			verbose_level - 3);
+
+		if (f_v) {
+			cout << "BLT_set_create::init "
+					"after generators_to_strong_generators" << endl;
+		}
+
+#endif
 		f_has_group = TRUE;
 
 		char str_q[1000];
@@ -488,10 +527,21 @@ void BLT_set_create::export_gap(int verbose_level)
 	{
 		ofstream ost(fname);
 
+		orbiter_kernel_system::os_interface Os;
+		string str;
+
+		Os.get_date(str);
+
+
+		ost << "# file " << fname << endl;
+		ost << "# created by Orbiter" << endl;
+		ost << "# date " << str << endl;
+		ost << "#" << endl;
+
 		ost << "LoadPackage(\"fining\");" << endl;
 
 
-		ost << "# BLT-set " << label_txt << endl;
+		//ost << "# BLT-set " << label_txt << endl;
 
 
 		orthogonal_geometry::quadratic_form *Quadratic_form;
@@ -505,100 +555,26 @@ void BLT_set_create::export_gap(int verbose_level)
 				ost, Quadratic_form->the_quadratic_form);
 		ost << endl;
 
-		if (f_has_group) {
 
-			ring_theory::longinteger_object go;
+		interfaces::l3_interface_gap GAP;
 
-			Sg->group_order(go);
-			ost << "# Group of order " << go << endl;
 
-			if (!Sg->A->is_matrix_group()) {
-				cout << "BLT_set_create::export_gap the group is not a matrix group" << endl;
-				exit(1);
-			}
-			if (f_v) {
-				cout << "BLT_set_create::export_gap "
-						"before Sg->export_fining" << endl;
-			}
-			Sg->export_fining(OA->A, ost, verbose_level);
-			if (f_v) {
-				cout << "BLT_set_create::export_gap "
-						"after Sg->export_fining" << endl;
-			}
+		if (f_v) {
+			cout << "BLT_set_create::export_gap "
+					"before GAP.export_BLT_set" << endl;
 		}
-		else {
-			cout << "BLT_set_create::export_gap the group is not available" << endl;
+		GAP.export_BLT_set(
+				ost,
+				label_txt,
+				f_has_group,
+				Sg,
+				OA->A,
+				Blt_set_domain,
+				set, verbose_level);
+		if (f_v) {
+			cout << "BLT_set_create::export_gap "
+					"before GAP.export_BLT_set" << endl;
 		}
-
-		int h, i, a;
-		int sz;
-		int d = 5;
-		int v[5];
-		algebra::interface_gap_low Interface;
-
-		sz = Blt_set_domain->target_size;
-
-		ost << "pg := ProjectiveSpace(" << 4 << "," << Blt_set_domain->F->q << ");" << endl;
-		ost << "S:=[" << endl;
-		for (h = 0; h < sz; h++) {
-
-			Blt_set_domain->O->Hyperbolic_pair->unrank_point(v, 1, set[h], 0);
-
-
-			Blt_set_domain->F->Projective_space_basic->PG_element_normalize_from_front(v, 1, 5);
-
-			ost << "[";
-			for (i = 0; i < d; i++) {
-				a = v[i];
-
-				Interface.write_element_of_finite_field(ost, Blt_set_domain->F, a);
-
-				if (i < d - 1) {
-					ost << ",";
-				}
-			}
-			ost << "]";
-			if (h < sz - 1) {
-				ost << ",";
-			}
-			ost << endl;
-		}
-
-		ost << "];" << endl;
-		ost << "S := List(S,x -> VectorSpaceToElement(pg,x));" << endl;
-
-
-
-#if 0
-		long int *set;
-
-		groups::strong_generators *Aut_gens;
-		orthogonal_geometry::blt_set_invariants *Inv;
-
-		actions::action *A_on_points;
-		groups::schreier *Orbits_on_points;
-
-		long int *T; // [target_size]
-		long int *Pi_ij; // [target_size * target_size]
-		//SO->Surf->print_equation_with_line_breaks_tex(ost, SO->eqn);
-
-		data_structures::string_tools String;
-		std::stringstream ss;
-		string s;
-
-
-		//r:=PolynomialRing(GF(x),["X0","X1","X2","X3"]);
-
-		ost << "r := PolynomialRing(GF(" << F->q << "),[\"X0\",\"X1\",\"X2\",\"X3\"]);" << endl;
-
-		SO->Surf->PolynomialDomains->Poly3_4->print_equation_for_gap_str(ss, SO->eqn);
-
-		s = ss.str();
-		String.remove_specific_character(s, '_');
-
-
-		ost << "Eqn := " << s << ";" << endl;
-#endif
 
 
 	}
@@ -693,7 +669,8 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 	}
 }
 
-void BLT_set_create::print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts)
+void BLT_set_create::print_set_of_points(
+		std::ostream &ost, long int *Pts, int nb_pts)
 {
 	int h, I;
 	int *v;

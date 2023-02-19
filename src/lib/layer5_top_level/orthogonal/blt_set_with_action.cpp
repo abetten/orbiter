@@ -67,6 +67,7 @@ void blt_set_with_action::init_set(
 	blt_set_with_action::Blt_set_domain = Blt_set_domain;
 	blt_set_with_action::set = set;
 	blt_set_with_action::Aut_gens = Aut_gens;
+
 	Inv = NEW_OBJECT(orthogonal_geometry::blt_set_invariants);
 	if (f_v) {
 		cout << "blt_set_with_action::init_set "
@@ -219,7 +220,8 @@ void blt_set_with_action::report(std::ostream &ost, int verbose_level)
 
 	ost << "Tangent hyperplanes:\\\\" << endl;
 
-	Blt_set_domain->G54->print_set_tex(ost, T, Blt_set_domain->target_size, verbose_level);
+	Blt_set_domain->G54->print_set_tex(
+			ost, T, Blt_set_domain->target_size, verbose_level);
 
 	ost << "\\bigskip" << endl;
 
@@ -231,7 +233,9 @@ void blt_set_with_action::report(std::ostream &ost, int verbose_level)
 	ost << "\\left[" << endl;
 
 	Li.print_lint_matrix_tex(ost,
-			Pi_ij, Blt_set_domain->target_size, Blt_set_domain->target_size);
+			Pi_ij,
+			Blt_set_domain->target_size,
+			Blt_set_domain->target_size);
 
 	ost << "\\right]" << endl;
 	ost << "$$" << endl;
@@ -240,7 +244,9 @@ void blt_set_with_action::report(std::ostream &ost, int verbose_level)
 
 	ost << "First row of $\\Pi_{ij}$ (with the diagonal entry removed):\\\\" << endl;
 
-	Blt_set_domain->G53->print_set_tex(ost, Pi_ij + 1, Blt_set_domain->q, verbose_level);
+	Blt_set_domain->G53->print_set_tex(ost,
+			Pi_ij + 1, Blt_set_domain->q,
+			verbose_level);
 
 	ost << "\\bigskip" << endl;
 
@@ -320,7 +326,9 @@ void blt_set_with_action::compute_Pi_ij(int verbose_level)
 	long int plane_rk1, plane_rk2, a;
 
 	Pi_ij = NEW_lint(Blt_set_domain->target_size * Blt_set_domain->target_size);
+
 	Lint_vec_zero(Pi_ij, Blt_set_domain->target_size * Blt_set_domain->target_size);
+
 	for (i = 0; i < Blt_set_domain->target_size; i++) {
 		plane_rk1 = T[i];
 		for (j = 0; j < Blt_set_domain->target_size; j++) {

@@ -7434,6 +7434,7 @@ test_7_1:
 	make surface_F_abcd_Eckardt_q31
 	make surface_F_abcd_sweep_4_27_q7
 	make surface_11_random
+	make surface_11_1
 
 
 
@@ -15431,6 +15432,7 @@ test_12_4:
 	make BLT_13_FTWKB
 	make BLT_13_Kantor2
 	make BLT_67_4
+	make BLT_9_deep_search
 	make BLT_11_deep_search
 	make BLT_13_deep_search
 	make BLT_13_classify_starter
@@ -15480,6 +15482,21 @@ BLT_5_Linear:
 		-end
 	pdflatex BLT_Linear_q5.tex
 	open BLT_Linear_q5.pdf
+
+
+BLT_9_0:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 9 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 0 \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
+		-end
+	pdflatex BLT_catalogue_q9_iso0.tex
+	open BLT_catalogue_q9_iso0.pdf
+
 
 
 
@@ -15581,17 +15598,44 @@ BLT_67_4:
 		-end
 
 
+BLT_67_4_export_gap:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 67 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 4 \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-export_gap \
+		-end
+
+
+
+
 BLT_9_deep_search:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 9 -end \
 		-define O -orthogonal_space 0 5 F -end \
 		-define C -BLT_set_classifier O -starter_size 10 -end \
+		-define Activity -poset_classification_activity -report -end -end \
+		-define Activity_export -poset_classification_activity \
+			-export_level_to_cpp 10 -end \
 		-with C -do -BLT_set_classify_activity \
 			-compute_starter \
 				-problem_label BLT_q9 \
 				-W -depth 10 \
 			-end \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-poset_classification_activity \
+				Activity \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-poset_classification_activity \
+				Activity_export \
 		-end
+	pdflatex BLT_q9_poset.tex
+	open BLT_q9_poset.pdf
 
 
 
@@ -19771,16 +19815,43 @@ blt_set_table_q13:
 
 blt_set_table: 
 	$(ORBITER) -v 30 \
-		-define v -vector -dense "3,5,7,9,11,13,17,19,23,25,27,29,31" -end \
-		-loop_over L I v \
-			-define F%L -finite_field -q %L -end \
-			-define O%L -orthogonal_space 0 5 F%L -end \
-			-with O%L -do \
+		-define Q -vector -dense "3,5,7,9,11,13,17,19,23,25,27,29,31" -end \
+		-define NB -vector -dense "1,2,2,3,4,3,6,5,9,6,6,9,8" -end \
+		-loop_over i Q \
+			-define F%i -finite_field -q "%i[Q]" -end \
+			-define O%i -orthogonal_space 0 5 F%i -end \
+			-with O%i -do \
 				-orthogonal_space_activity \
 					-table_of_blt_sets \
 				-end \
 			-end \
-		-end_loop_over \
+		-end_loop_over i \
+		-print_symbols
+
+BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73"
+
+BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,9,8,7,10,6,10,8,8,9,5,6,8,5"
+
+blt_set_export_gap: 
+	$(ORBITER) -v 30 \
+		-define Q -vector -dense \
+			$(BLT_ORDER_Q) \
+		-end \
+		-define NB -vector -dense \
+			$(BLT_NUMBER_ISO) \
+		-end \
+		-loop_over i Q \
+			-define F%i -finite_field -q "%i[Q]" -end \
+			-define O%i -orthogonal_space 0 5 F%i -end \
+			-loop j 0 %i[NB] 1 \
+				-define BLT_%i_%j -BLT_set \
+					-space O%i -catalogue %j \
+				-end \
+				-with BLT_%i_%j -do -blt_set_activity \
+					-export_gap \
+				-end \
+			-end_loop j \
+		-end_loop_over i \
 		-print_symbols
 
 

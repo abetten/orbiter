@@ -18,21 +18,26 @@ sims::sims()
 {
 	A = NULL;
 	my_base_len = 0;
-	nb_images = 0;
-	images = NULL;
+
+	gens.null();
+	gens_inv.null();
+
 	gen_depth = NULL;
 	gen_perm = NULL;
 	nb_gen = NULL;
+
 	transversal_length = 0;
 	path = NULL;
+
+	nb_images = 0;
 	images = NULL;
+
 	orbit_len = NULL;
 	orbit = NULL;
 	orbit_inv = NULL;
 	prev = NULL;
 	label = NULL;
-	//Path = NULL;
-	//Label = NULL;
+
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
@@ -42,13 +47,18 @@ sims::sims()
 	eltrk1 = NULL;
 	eltrk2 = NULL;
 	eltrk3 = NULL;
-	cosetrep = NULL;
 	cosetrep_tmp = NULL;
 	schreier_gen = NULL;
 	schreier_gen1 = NULL;
+	cosetrep = NULL;
 	//null();
 
 }
+
+
+
+
+
 
 sims::~sims()
 {

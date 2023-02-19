@@ -20,6 +20,9 @@ blt_set_classify_activity_description::blt_set_classify_activity_description()
 	f_compute_starter = FALSE;
 	starter_control = NULL;
 
+	f_poset_classification_activity = FALSE;
+	//std::string poset_classification_activity_label;
+
 	f_create_graphs = FALSE;
 
 	f_split = FALSE;
@@ -57,6 +60,14 @@ int blt_set_classify_activity_description::read_arguments(int argc, std::string 
 			i += starter_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
+		}
+		else if (ST.stringcmp(argv[i], "-poset_classification_activity") == 0) {
+			f_poset_classification_activity = TRUE;
+			poset_classification_activity_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-poset_classification_activity "
+						<< poset_classification_activity_label << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-create_graphs") == 0) {
 			f_create_graphs = TRUE;
@@ -105,6 +116,10 @@ void blt_set_classify_activity_description::print()
 {
 	if (f_compute_starter) {
 		cout << "-compute_starter " << endl;
+	}
+	if (f_poset_classification_activity) {
+		cout << "-poset_classification_activity "
+				<< poset_classification_activity_label << endl;
 	}
 	if (f_create_graphs) {
 		cout << "-create_graphs " << endl;

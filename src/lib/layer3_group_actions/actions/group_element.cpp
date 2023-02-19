@@ -1867,6 +1867,65 @@ int group_element::check_if_in_set_stabilizer(
 
 }
 
+void group_element::check_if_in_set_stabilizer_debug(
+		int *Elt,
+		int size, long int *set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::check_if_in_set_stabilizer_debug" << endl;
+		cout << "group_element::check_if_in_set_stabilizer_debug size = " << size << endl;
+	}
+
+	int i, a, b, idx;
+	long int *ordered_set;
+	data_structures::sorting Sorting;
+
+	ordered_set = NEW_lint(size);
+	for (i = 0; i < size; i++) {
+		ordered_set[i] = set[i];
+	}
+	Sorting.lint_vec_heapsort(ordered_set, size);
+	if (f_v) {
+		cout << "group_element::check_if_in_set_stabilizer_debug sorted set:" << endl;
+		Lint_vec_print(cout, ordered_set, size);
+		cout << endl;
+	}
+	for (i = 0; i < size; i++) {
+		a = ordered_set[i];
+		b = element_image_of(a, Elt, 0);
+		if (f_v) {
+			cout << "group_element::check_if_in_set_stabilizer_debug " << a << " -> " << b << endl;
+			cout << "a=" << a << " = ";
+			print_point(a, cout);
+			cout << endl;
+			cout << "b=" << b << " = ";
+			print_point(b, cout);
+			cout << endl;
+		}
+		if (!Sorting.lint_vec_search(ordered_set, size, b, idx, 0)) {
+			if (f_v) {
+				cout << "group_element::check_if_in_set_stabilizer fails" << endl;
+				cout << "set: ";
+				Lint_vec_print(cout, set, size);
+				cout << endl;
+				cout << "ordered_set: ";
+				Lint_vec_print(cout, ordered_set, size);
+				cout << endl;
+				cout << "image of " << i << "-th element "
+						<< a << " is " << b
+						<< " is not found" << endl;
+			}
+			FREE_lint(ordered_set);
+			exit(1);
+		}
+	}
+	FREE_lint(ordered_set);
+
+}
+
+
 int group_element::check_if_transporter_for_set(
 		int *Elt,
 		int size,

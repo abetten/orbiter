@@ -783,8 +783,8 @@ public:
 		int f_on_points, int f_on_lines,
 		int f_on_points_and_lines,
 		int verbose_level);
-	void unrank_point(int *v, int rk);
-	int rank_point(int *v);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
 	long int map_a_point(
 			int *Elt, long int i, int verbose_level);
 	long int map_a_line(

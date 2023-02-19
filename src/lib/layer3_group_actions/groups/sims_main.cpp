@@ -905,7 +905,7 @@ void sims::build_up_group_random_process(
 									"drop_out_level=" << drop_out_level << endl;
 						}
 						K->add_generator_at_level(GA->Elt3,
-								drop_out_level, verbose_level - 3);
+								drop_out_level, 0 /*verbose_level - 10*/);
 						if (f_vvv) {
 							cout << "sims::build_up_group_random_process: "
 									"the residue has been added as kernel "
@@ -944,7 +944,7 @@ void sims::build_up_group_random_process(
 								"before add_generator_at_level" << endl;
 					}
 					add_generator_at_level(GA->Elt2,
-							GA->base_len() - 1, verbose_level - 3);
+							GA->base_len() - 1, 0 /*verbose_level - 10*/);
 					if (f_v) {
 						cout << "sims::build_up_group_random_process "
 								"after add_generator_at_level" << endl;

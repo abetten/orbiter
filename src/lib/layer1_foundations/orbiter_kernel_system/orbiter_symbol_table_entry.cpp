@@ -734,6 +734,24 @@ void orbiter_symbol_table_entry::init_poset_classification_control(std::string &
 	}
 }
 
+void orbiter_symbol_table_entry::init_poset_classification_activity(
+		std::string &label,
+		void *PCA, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_poset_classification_activity" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_poset_classification_activity;
+	ptr = PCA;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_poset_classification_activity done" << endl;
+	}
+}
+
 
 
 
@@ -872,6 +890,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_poset_classification_control) {
 			cout << "poset_classification_control" << endl;
+		}
+		else if (object_type == t_poset_classification_activity) {
+			cout << "poset_classification_activity" << endl;
 		}
 
 	}

@@ -827,7 +827,7 @@ class interface_toolkit {
 	int loop_over_start_idx;
 	int loop_over_end_idx;
 	std::string loop_over_variable;
-	std::string loop_over_index;
+	//std::string loop_over_index;
 	std::string loop_over_domain;
 	std::string *loop_over_argv;
 
@@ -952,8 +952,10 @@ public:
 			std::vector<void * > &program, int verbose_level);
 	void *get_object(int idx);
 	symbol_table_object_type get_object_type(int idx);
-	int find_symbol(std::string &label);
-	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
+	int find_symbol(
+			std::string &label);
+	void find_symbols(
+			std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
 	void add_symbol_table_entry(
 			std::string &label,
@@ -966,6 +968,9 @@ public:
 			std::string &label);
 	poset_classification::poset_classification_control
 		*get_object_of_type_poset_classification_control(
+				std::string &label);
+	poset_classification::poset_classification_activity_description
+		*get_object_of_type_poset_classification_activity(
 				std::string &label);
 	void get_vector_or_set(std::string &label,
 			long int *&Pts, int &nb_pts, int verbose_level);
@@ -1165,6 +1170,10 @@ public:
 	poset_classification::poset_classification_control
 		*Poset_classification_control;
 
+	int f_poset_classification_activity;
+	poset_classification::poset_classification_activity_description
+		*Poset_classification_activity;
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -1219,6 +1228,8 @@ public:
 	void definition_of_action_on_forms(int verbose_level);
 	void definition_of_orbits(int verbose_level);
 	void definition_of_poset_classification_control(int verbose_level);
+	void definition_of_poset_classification_activity(int verbose_level);
+
 
 };
 

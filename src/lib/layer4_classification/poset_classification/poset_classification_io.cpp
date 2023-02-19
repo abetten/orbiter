@@ -163,7 +163,8 @@ void poset_classification::print_statistic_on_callbacks()
 }
 
 
-void poset_classification::prepare_fname_data_file(std::string &fname,
+void poset_classification::prepare_fname_data_file(
+		std::string &fname,
 		std::string &fname_base, int depth_completed)
 {
 	char str[1000];
@@ -212,7 +213,8 @@ void poset_classification::print_problem_label()
 		}
 }
 
-void poset_classification::print_level_info(int prev_level, int prev)
+void poset_classification::print_level_info(
+		int prev_level, int prev)
 {
 	int t1, dt;
 	orbiter_kernel_system::os_interface Os;
@@ -270,7 +272,7 @@ void poset_classification::print_node(int node)
 }
 
 void poset_classification::print_extensions_at_level(
-		ostream &ost, int lvl)
+		std::ostream &ost, int lvl)
 {
 	int i, node;
 	int fst, len;
@@ -393,7 +395,8 @@ void poset_classification::read_data_file(
 
 }
 
-void poset_classification::write_data_file(int depth_completed,
+void poset_classification::write_data_file(
+		int depth_completed,
 		std::string &fname_base, int verbose_level)
 {
 	orbiter_kernel_system::memory_object *m;
@@ -613,7 +616,8 @@ void poset_classification::read_file(
 	}
 }
 
-void poset_classification::housekeeping(int i,
+void poset_classification::housekeeping(
+		int i,
 		int f_write_files, int t0, int verbose_level)
 {
 	int j, nb_nodes;

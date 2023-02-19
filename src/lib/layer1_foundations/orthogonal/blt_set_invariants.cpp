@@ -54,7 +54,8 @@ blt_set_invariants::~blt_set_invariants()
 	}
 }
 
-void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
+void blt_set_invariants::init(
+		blt_set_domain *D, long int *the_set,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -71,16 +72,23 @@ void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
 	Lint_vec_copy(the_set, the_set_in_orthogonal, set_size);
 
 	for (i = 0; i < set_size; i++) {
-		D->O->Hyperbolic_pair->unrank_point(v5, 1, the_set[i], 0 /* verbose_level */);
+
+		D->O->Hyperbolic_pair->unrank_point(
+				v5, 1, the_set[i], 0 /* verbose_level */);
+
 		the_set_in_PG[i] = D->P->rank_point(v5);
 	}
 
-	if (f_v) {
-		cout << "blt_set_invariants::init before compute" << endl;
-	}
-	compute(verbose_level - 1);
-	if (f_v) {
-		cout << "blt_set_invariants::init after compute" << endl;
+	if (FALSE) {
+		if (f_v) {
+			cout << "blt_set_invariants::init "
+					"before compute" << endl;
+		}
+		compute(verbose_level - 1);
+		if (f_v) {
+			cout << "blt_set_invariants::init "
+					"after compute" << endl;
+		}
 	}
 
 	if (f_v) {
@@ -109,9 +117,14 @@ void blt_set_invariants::compute(int verbose_level)
 		cout << "blt_set_invariants::compute "
 				"before P->plane_intersections G53" << endl;
 	}
-	f_has_interesting_planes = D->P->plane_intersections(D->G53,
+	f_has_interesting_planes = D->P->plane_intersections(
+			D->G53,
 			the_set_in_PG, set_size, R, *Sos,
 			verbose_level - 1);
+	if (f_v) {
+		cout << "blt_set_invariants::compute "
+				"after P->plane_intersections G53" << endl;
+	}
 
 
 	if (f_has_interesting_planes) {

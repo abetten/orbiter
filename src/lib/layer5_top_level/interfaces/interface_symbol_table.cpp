@@ -48,7 +48,8 @@ void interface_symbol_table::init(
 	if (f_v) {
 		cout << "interface_symbol_table::init" << endl;
 	}
-	interface_symbol_table::Orbiter_top_level_session = Orbiter_top_level_session;
+	interface_symbol_table::Orbiter_top_level_session =
+			Orbiter_top_level_session;
 	if (f_v) {
 		cout << "interface_symbol_table::done" << endl;
 	}
@@ -103,7 +104,8 @@ void interface_symbol_table::read_arguments(
 
 
 	if (f_v) {
-		cout << "interface_symbol_table::read_arguments the next argument is " << argv[i] << endl;
+		cout << "interface_symbol_table::read_arguments "
+				"the next argument is " << argv[i] << endl;
 	}
 
 	if (ST.stringcmp(argv[i], "-define") == 0) {

@@ -41,7 +41,8 @@ void hyperbolic_pair::unrank_point(
 	O->Quadratic_form->unrank_point(v, rk, verbose_level);
 }
 
-long int hyperbolic_pair::rank_point(int *v, int stride, int verbose_level)
+long int hyperbolic_pair::rank_point(
+		int *v, int stride, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
@@ -76,7 +77,8 @@ long int hyperbolic_pair::rank_point(int *v, int stride, int verbose_level)
 }
 
 
-void hyperbolic_pair::unrank_line(long int &p1, long int &p2,
+void hyperbolic_pair::unrank_line(
+		long int &p1, long int &p2,
 		long int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -99,7 +101,8 @@ void hyperbolic_pair::unrank_line(long int &p1, long int &p2,
 	}
 }
 
-long int hyperbolic_pair::rank_line(long int p1, long int p2, int verbose_level)
+long int hyperbolic_pair::rank_line(
+		long int p1, long int p2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int ret;

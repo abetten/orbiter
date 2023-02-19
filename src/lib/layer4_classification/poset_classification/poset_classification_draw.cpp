@@ -18,11 +18,11 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
-static void print_table1_top(ofstream &fp);
-static void print_table1_bottom(ofstream &fp);
-static void print_table_top(ofstream &fp, int f_permutation_degree_is_small);
-static void print_table_bottom(ofstream &fp);
-static void print_set_special(ofstream &fp, long int *set, int sz);
+static void print_table1_top(ostream &fp);
+static void print_table1_bottom(ostream &fp);
+static void print_table_top(ostream &fp, int f_permutation_degree_is_small);
+static void print_table_bottom(ostream &fp);
+static void print_set_special(ostream &fp, long int *set, int sz);
 
 void poset_classification::draw_poset_fname_base_aux_poset(
 		std::string &fname, int depth)
@@ -119,7 +119,8 @@ void poset_classification::write_treefile(
 	}
 }
 
-int poset_classification::write_treefile(std::string &fname_base,
+int poset_classification::write_treefile(
+		std::string &fname_base,
 		int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1569,7 +1570,8 @@ void poset_classification::make_full_poset_graph(
 	}
 }
 
-void poset_classification::make_auxiliary_graph(int depth,
+void poset_classification::make_auxiliary_graph(
+		int depth,
 		graph_theory::layered_graph *&LG, int data1, int verbose_level)
 // makes a graph of the poset of orbits with 2 * depth + 1 layers.
 // The middle layers represent the flag orbits.
@@ -2802,7 +2804,7 @@ void poset_classification::print_data_structure_tex(
 	}
 }
 
-static void print_table1_top(ofstream &fp)
+static void print_table1_top(std::ostream &fp)
 {
 	fp << "\\begin{tabular}{|r|r|r|r|}" << endl;
 	fp << "\\hline" << endl;
@@ -2811,13 +2813,13 @@ static void print_table1_top(ofstream &fp)
 	fp << "\\hline" << endl;
 }
 
-static void print_table1_bottom(ofstream &fp)
+static void print_table1_bottom(std::ostream &fp)
 {
 	fp << "\\hline" << endl;
 	fp << "\\end{tabular}" << endl;
 }
 
-static void print_table_top(ofstream &fp, int f_permutation_degree_is_small)
+static void print_table_top(std::ostream &fp, int f_permutation_degree_is_small)
 {
 	fp << "\\begin{tabular}{|r|r|r|r|r";
 	if (f_permutation_degree_is_small) {
@@ -2834,13 +2836,13 @@ static void print_table_top(ofstream &fp, int f_permutation_degree_is_small)
 	fp << "\\hline" << endl;
 }
 
-static void print_table_bottom(ofstream &fp)
+static void print_table_bottom(std::ostream &fp)
 {
 	fp << "\\hline" << endl;
 	fp << "\\end{tabular}" << endl;
 }
 
-static void print_set_special(ofstream &fp, long int *set, int sz)
+static void print_set_special(std::ostream &fp, long int *set, int sz)
 {
 	int i;
 

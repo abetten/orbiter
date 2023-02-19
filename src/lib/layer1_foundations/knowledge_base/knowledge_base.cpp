@@ -87,6 +87,9 @@ namespace knowledge_base {
 #include "DATA/data_tensor.cpp"
 
 #include "DATA/data_BLT.cpp"
+#include "DATA/BLT_sets/BLT_q9_level_10.cpp"
+#include "DATA/BLT_sets/BLT_q25_classification.cpp"
+#include "DATA/BLT_sets/BLT_q27_classification.cpp"
 
 #include "DATA/planes_16.cpp"
 
@@ -1912,7 +1915,7 @@ int knowledge_base::BLT_nb_reps(int q)
 		nb = BLT_7_nb_reps;
 		}
 	else if (q == 9) {
-		nb = BLT_9_nb_reps;
+		nb = BLT_q9_nb_reps;
 		}
 	else if (q == 11) {
 		nb = BLT_11_nb_reps;
@@ -1930,10 +1933,10 @@ int knowledge_base::BLT_nb_reps(int q)
 		nb = BLT_23_nb_reps;
 		}
 	else if (q == 25) {
-		nb = BLT_25_nb_reps;
+		nb = BLT_q25_nb_reps;
 		}
 	else if (q == 27) {
-		nb = BLT_27_nb_reps;
+		nb = BLT_q27_nb_reps;
 		}
 	else if (q == 29) {
 		nb = BLT_29_nb_reps;
@@ -2004,9 +2007,9 @@ long int *knowledge_base::BLT_representative(int q, int no)
 		sz = BLT_7_size;
 		}
 	else if (q == 9) {
-		p = BLT_9_reps;
-		nb = BLT_9_nb_reps;
-		sz = BLT_9_size;
+		p = BLT_q9_reps;
+		nb = BLT_q9_nb_reps;
+		sz = BLT_q9_size;
 		}
 	else if (q == 11) {
 		p = BLT_11_reps;
@@ -2034,14 +2037,14 @@ long int *knowledge_base::BLT_representative(int q, int no)
 		sz = BLT_23_size;
 		}
 	else if (q == 25) {
-		p = BLT_25_reps;
-		nb = BLT_25_nb_reps;
-		sz = BLT_25_size;
+		p = BLT_q25_reps;
+		nb = BLT_q25_nb_reps;
+		sz = BLT_q25_size;
 		}
 	else if (q == 27) {
-		p = BLT_27_reps;
-		nb = BLT_27_nb_reps;
-		sz = BLT_27_size;
+		p = BLT_q27_reps;
+		nb = BLT_q27_nb_reps;
+		sz = BLT_q27_size;
 		}
 	else if (q == 29) {
 		p = BLT_29_reps;
@@ -2160,12 +2163,12 @@ void knowledge_base::BLT_stab_gens(int q, int no,
 		stab_order = BLT_7_stab_order[no];
 		}
 	else if (q == 9) {
-		Reps = BLT_9_stab_gens;
-		nb = BLT_9_nb_reps;
-		make_element_size = BLT_9_make_element_size;
-		f = BLT_9_stab_gens_fst[no];
-		l = BLT_9_stab_gens_len[no];
-		stab_order = BLT_9_stab_order[no];
+		Reps = BLT_q9_stab_gens;
+		nb = BLT_q9_nb_reps;
+		make_element_size = BLT_q9_make_element_size;
+		f = BLT_q9_stab_gens_fst[no];
+		l = BLT_q9_stab_gens_len[no];
+		stab_order = BLT_q9_stab_order[no];
 		}
 	else if (q == 11) {
 		Reps = BLT_11_stab_gens;
@@ -2208,20 +2211,20 @@ void knowledge_base::BLT_stab_gens(int q, int no,
 		stab_order = BLT_23_stab_order[no];
 		}
 	else if (q == 25) {
-		Reps = BLT_25_stab_gens;
-		nb = BLT_25_nb_reps;
-		make_element_size = BLT_25_make_element_size;
-		f = BLT_25_stab_gens_fst[no];
-		l = BLT_25_stab_gens_len[no];
-		stab_order = BLT_25_stab_order[no];
+		Reps = BLT_q25_stab_gens;
+		nb = BLT_q25_nb_reps;
+		make_element_size = BLT_q25_make_element_size;
+		f = BLT_q25_stab_gens_fst[no];
+		l = BLT_q25_stab_gens_len[no];
+		stab_order = BLT_q25_stab_order[no];
 		}
 	else if (q == 27) {
-		Reps = BLT_27_stab_gens;
-		nb = BLT_27_nb_reps;
-		make_element_size = BLT_27_make_element_size;
-		f = BLT_27_stab_gens_fst[no];
-		l = BLT_27_stab_gens_len[no];
-		stab_order = BLT_27_stab_order[no];
+		Reps = BLT_q27_stab_gens;
+		nb = BLT_q27_nb_reps;
+		make_element_size = BLT_q27_make_element_size;
+		f = BLT_q27_stab_gens_fst[no];
+		l = BLT_q27_stab_gens_len[no];
+		stab_order = BLT_q27_stab_order[no];
 		}
 	else if (q == 29) {
 		Reps = BLT_29_stab_gens;

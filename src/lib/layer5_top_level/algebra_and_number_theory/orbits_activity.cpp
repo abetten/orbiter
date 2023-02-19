@@ -760,20 +760,50 @@ void orbits_activity::do_Kramer_Mesner_matrix(int verbose_level)
 		cout << "orbits_activity::do_Kramer_Mesner_matrix" << endl;
 	}
 
+
+
+
+
+
+
 	if (OC->f_has_On_subsets) {
 
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"before OC->On_subsets->compute_Kramer_Mesner_matrix" << endl;
+					"f_has_On_subsets" << endl;
 		}
-		OC->On_subsets->compute_Kramer_Mesner_matrix(
+
+
+		poset_classification::poset_classification_activity_description Activity_descr;
+		poset_classification::poset_classification_activity Activity;
+
+
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"before Activity.init" << endl;
+		}
+		Activity.init(
+				&Activity_descr,
+				OC->On_subsets,
+				Descr->Kramer_Mesner_k /* actual_size */,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"after Activity.init" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"before Activity.compute_Kramer_Mesner_matrix" << endl;
+		}
+		Activity.compute_Kramer_Mesner_matrix(
 				Descr->Kramer_Mesner_t,
 				Descr->Kramer_Mesner_k,
 				verbose_level);
 
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"after OC->On_subsets->compute_Kramer_Mesner_matrix" << endl;
+					"after Activity.compute_Kramer_Mesner_matrix" << endl;
 		}
 
 	}
@@ -782,21 +812,45 @@ void orbits_activity::do_Kramer_Mesner_matrix(int verbose_level)
 
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"before OC->On_Subspaces->orbits_on_subspaces_PC->compute_Kramer_Mesner_matrix" << endl;
+					"f_has_On_Subspaces" << endl;
 		}
-		OC->On_Subspaces->orbits_on_subspaces_PC->compute_Kramer_Mesner_matrix(
+
+		poset_classification::poset_classification_activity_description Activity_descr;
+		poset_classification::poset_classification_activity Activity;
+
+
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"before Activity.init" << endl;
+		}
+		Activity.init(
+				&Activity_descr,
+				OC->On_Subspaces->orbits_on_subspaces_PC,
+				Descr->Kramer_Mesner_k /* actual_size */,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"after Activity.init" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_activity::do_Kramer_Mesner_matrix "
+					"before Activity.compute_Kramer_Mesner_matrix" << endl;
+		}
+		Activity.compute_Kramer_Mesner_matrix(
 				Descr->Kramer_Mesner_t,
 				Descr->Kramer_Mesner_k,
 				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"after OC->On_Subspaces->orbits_on_subspaces_PC->compute_Kramer_Mesner_matrix" << endl;
+					"after Activity.compute_Kramer_Mesner_matrix" << endl;
 		}
 
 	}
 
 	else {
-		cout << "orbits_activity::do_stabilizer_of_orbit_rep no suitable data structure" << endl;
+		cout << "orbits_activity::do_stabilizer_of_orbit_rep "
+				"unknown type of poset" << endl;
 		exit(1);
 	}
 

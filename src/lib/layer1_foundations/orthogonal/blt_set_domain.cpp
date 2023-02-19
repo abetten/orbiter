@@ -83,7 +83,8 @@ blt_set_domain::~blt_set_domain()
 
 
 
-void blt_set_domain::init(orthogonal *O,
+void blt_set_domain::init(
+		orthogonal *O,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -276,7 +277,8 @@ long int blt_set_domain::compute_tangent_hyperplane(
 }
 
 
-void blt_set_domain::report_given_point_set(std::ostream &ost,
+void blt_set_domain::report_given_point_set(
+		std::ostream &ost,
 		long int *Pts, int nb_pts, int verbose_level)
 {
 	long int pt_rk, hyperplane_rk;
@@ -426,7 +428,8 @@ void blt_set_domain::compute_adjacency_list_fast(
 
 
 
-void blt_set_domain::compute_colors(int orbit_at_level,
+void blt_set_domain::compute_colors(
+		int orbit_at_level,
 	long int *starter, int starter_sz,
 	long int special_line,
 	long int *candidates, int nb_candidates,
@@ -633,7 +636,8 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 
 
 
-void blt_set_domain::early_test_func(long int *S, int len,
+void blt_set_domain::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -803,7 +807,8 @@ void blt_set_domain::early_test_func(long int *S, int len,
 	} // else
 }
 
-int blt_set_domain::pair_test(int a, int x, int y, int verbose_level)
+int blt_set_domain::pair_test(
+		int a, int x, int y, int verbose_level)
 // We assume that a is an element
 // of a set S of size at least two such that
 // S \cup \{ x \} is BLT and
@@ -835,7 +840,8 @@ int blt_set_domain::pair_test(int a, int x, int y, int verbose_level)
 
 }
 
-int blt_set_domain::check_conditions(int len, long int *S, int verbose_level)
+int blt_set_domain::check_conditions(
+		int len, long int *S, int verbose_level)
 {
 	int f_OK = TRUE;
 	int f_BLT_test = FALSE;
@@ -883,7 +889,8 @@ int blt_set_domain::check_conditions(int len, long int *S, int verbose_level)
 	}
 }
 
-int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
+int blt_set_domain::collinearity_test(
+		long int *S, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -938,7 +945,8 @@ int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 	return f_OK;
 }
 
-void blt_set_domain::print(std::ostream &ost, long int *S, int len)
+void blt_set_domain::print(
+		std::ostream &ost, long int *S, int len)
 {
 	int i;
 
@@ -950,7 +958,8 @@ void blt_set_domain::print(std::ostream &ost, long int *S, int len)
 }
 
 
-void blt_set_domain::find_free_points(long int *S, int S_sz,
+void blt_set_domain::find_free_points(
+		long int *S, int S_sz,
 	long int *&free_pts, int *&free_pt_idx, int &nb_free_pts,
 	int verbose_level)
 {

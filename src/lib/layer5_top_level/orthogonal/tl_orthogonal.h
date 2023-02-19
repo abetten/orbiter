@@ -86,6 +86,9 @@ public:
 	int f_compute_starter;
 	poset_classification::poset_classification_control *starter_control;
 
+	int f_poset_classification_activity;
+	std::string poset_classification_activity_label;
+
 	int f_create_graphs;
 
 	int f_split;
@@ -124,7 +127,8 @@ public:
 
 	blt_set_classify_activity();
 	~blt_set_classify_activity();
-	void init(blt_set_classify_activity_description *Descr,
+	void init(
+			blt_set_classify_activity_description *Descr,
 			blt_set_classify *BLT_classify,
 			orthogonal_space_with_action *OA,
 			int verbose_level);
@@ -152,7 +156,8 @@ public:
 
 	blt_set_classify_description();
 	~blt_set_classify_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -202,13 +207,17 @@ public:
 
 	blt_set_classify();
 	~blt_set_classify();
-	void init_basic(orthogonal_space_with_action *OA,
+	void init_basic(
+			orthogonal_space_with_action *OA,
 			actions::action *A,
 			groups::strong_generators *Strong_gens,
 			int starter_size,
 			int verbose_level);
 	void compute_starter(
 			poset_classification::poset_classification_control *Control,
+			int verbose_level);
+	void do_poset_classification_activity(
+			std::string &activity_label,
 			int verbose_level);
 	void create_graphs(
 		int orbit_at_level_r, int orbit_at_level_m,
@@ -235,10 +244,13 @@ public:
 		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
-	void report_from_iso(isomorph::isomorph &Iso, int verbose_level);
-	void report(data_structures_groups::orbit_transversal *T,
+	void report_from_iso(
+			isomorph::isomorph &Iso, int verbose_level);
+	void report(
+			data_structures_groups::orbit_transversal *T,
 			int verbose_level);
-	void report2(std::ostream &ost,
+	void report2(
+			std::ostream &ost,
 			data_structures_groups::orbit_transversal *T,
 			int verbose_level);
 };

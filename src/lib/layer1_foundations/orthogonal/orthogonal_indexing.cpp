@@ -30,7 +30,8 @@ orthogonal_indexing::~orthogonal_indexing()
 {
 }
 
-void orthogonal_indexing::init(quadratic_form *Quadratic_form,
+void orthogonal_indexing::init(
+		quadratic_form *Quadratic_form,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

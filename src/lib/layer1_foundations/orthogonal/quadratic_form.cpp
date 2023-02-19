@@ -127,22 +127,26 @@ void quadratic_form::init(int epsilon, int n,
 	}
 
 	if (f_v) {
-		cout << "quadratic_form::init before init_form_and_Gram_matrix" << endl;
+		cout << "quadratic_form::init "
+				"before init_form_and_Gram_matrix" << endl;
 	}
 	init_form_and_Gram_matrix(verbose_level);
 	if (f_v) {
-		cout << "quadratic_form::init after init_form_and_Gram_matrix" << endl;
+		cout << "quadratic_form::init "
+				"after init_form_and_Gram_matrix" << endl;
 	}
 
 
 	Orthogonal_indexing = NEW_OBJECT(orthogonal_indexing);
 
 	if (f_v) {
-		cout << "quadratic_form::init before Orthogonal_indexing->init" << endl;
+		cout << "quadratic_form::init "
+				"before Orthogonal_indexing->init" << endl;
 	}
 	Orthogonal_indexing->init(this, verbose_level);
 	if (f_v) {
-		cout << "quadratic_form::init after Orthogonal_indexing->init" << endl;
+		cout << "quadratic_form::init "
+				"after Orthogonal_indexing->init" << endl;
 	}
 
 	if (f_v) {
@@ -166,14 +170,16 @@ void quadratic_form::init_form_and_Gram_matrix(int verbose_level)
 	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
-		cout << "quadratic_form::init_form_and_Gram_matrix before Poly->init" << endl;
+		cout << "quadratic_form::init_form_and_Gram_matrix "
+				"before Poly->init" << endl;
 	}
 	Poly->init(F,
 			n /* nb_vars */, 2 /* degree */,
 			t_LEX,
 			verbose_level);
 	if (f_v) {
-		cout << "quadratic_form::init_form_and_Gram_matrix after Poly->init" << endl;
+		cout << "quadratic_form::init_form_and_Gram_matrix "
+				"after Poly->init" << endl;
 	}
 	the_quadratic_form = NEW_int(Poly->get_nb_monomials());
 	Int_vec_zero(the_quadratic_form, Poly->get_nb_monomials());
@@ -187,18 +193,21 @@ void quadratic_form::init_form_and_Gram_matrix(int verbose_level)
 		Int_vec_zero(the_monomial, n);
 		the_monomial[n - 2] = 2;
 		idx = Poly->index_of_monomial(the_monomial);
-		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c1);
+		the_quadratic_form[idx] =
+				F->add(the_quadratic_form[idx], form_c1);
 
 		Int_vec_zero(the_monomial, n);
 		the_monomial[n - 2] = 1;
 		the_monomial[n - 1] = 1;
 		idx = Poly->index_of_monomial(the_monomial);
-		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c2);
+		the_quadratic_form[idx] =
+				F->add(the_quadratic_form[idx], form_c2);
 
 		Int_vec_zero(the_monomial, n);
 		the_monomial[n - 1] = 2;
 		idx = Poly->index_of_monomial(the_monomial);
-		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c3);
+		the_quadratic_form[idx] =
+				F->add(the_quadratic_form[idx], form_c3);
 
 	}
 	else if (epsilon == 0) {
@@ -206,7 +215,8 @@ void quadratic_form::init_form_and_Gram_matrix(int verbose_level)
 		Int_vec_zero(the_monomial, n);
 		the_monomial[0] = 2;
 		idx = Poly->index_of_monomial(the_monomial);
-		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c1);
+		the_quadratic_form[idx] =
+				F->add(the_quadratic_form[idx], form_c1);
 
 	}
 
@@ -228,20 +238,23 @@ void quadratic_form::init_form_and_Gram_matrix(int verbose_level)
 		the_monomial[u] = 1;
 		the_monomial[u + 1] = 1;
 		idx = Poly->index_of_monomial(the_monomial);
-		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], 1);
+		the_quadratic_form[idx] =
+				F->add(the_quadratic_form[idx], 1);
 
 			// X_u * X_{u+1}
 	}
 
 	if (f_v) {
-		cout << "quadratic_form::init_form_and_Gram_matrix the quadratic form is: ";
+		cout << "quadratic_form::init_form_and_Gram_matrix "
+				"the quadratic form is: ";
 		Poly->print_equation_tex(cout, the_quadratic_form);
 		cout << endl;
 	}
 
 
 	if (f_v) {
-		cout << "quadratic_form::init_form_and_Gram_matrix before make_Gram_matrix" << endl;
+		cout << "quadratic_form::init_form_and_Gram_matrix "
+				"before make_Gram_matrix" << endl;
 	}
 	make_Gram_matrix(verbose_level);
 	if (f_v) {
@@ -308,7 +321,8 @@ int quadratic_form::evaluate_quadratic_form(int *v, int stride)
 		f = evaluate_elliptic_quadratic_form(v, stride);
 	}
 	else {
-		cout << "quadratic_form::evaluate_quadratic_form epsilon = " << epsilon << endl;
+		cout << "quadratic_form::evaluate_quadratic_form "
+				"epsilon = " << epsilon << endl;
 		exit(1);
 	}
 	return f;
@@ -372,7 +386,8 @@ int quadratic_form::evaluate_elliptic_quadratic_form(
 
 
 
-int quadratic_form::evaluate_bilinear_form(int *u, int *v, int stride)
+int quadratic_form::evaluate_bilinear_form(
+		int *u, int *v, int stride)
 {
 	int f;
 
@@ -384,13 +399,15 @@ int quadratic_form::evaluate_bilinear_form(int *u, int *v, int stride)
 	}
 	else if (epsilon == -1) {
 		if (stride != 1) {
-			cout << "quadratic_form::evaluate_bilinear_form stride != 1 and epsilon == -1" << endl;
+			cout << "quadratic_form::evaluate_bilinear_form "
+					"stride != 1 and epsilon == -1" << endl;
 			exit(1);
 		}
 		f = evaluate_bilinear_form_Gram_matrix(u, v);
 	}
 	else {
-		cout << "quadratic_form::evaluate_bilinear_form epsilon = " << epsilon << endl;
+		cout << "quadratic_form::evaluate_bilinear_form "
+				"epsilon = " << epsilon << endl;
 		exit(1);
 	}
 	return f;
@@ -427,7 +444,8 @@ int quadratic_form::evaluate_parabolic_bilinear_form(
 	return c;
 }
 
-int quadratic_form::evaluate_bilinear_form_Gram_matrix(int *u, int *v)
+int quadratic_form::evaluate_bilinear_form_Gram_matrix(
+		int *u, int *v)
 {
 	int i, j, a, b, c, e, f;
 
@@ -479,7 +497,8 @@ void quadratic_form::report_quadratic_form(
 }
 
 
-long int quadratic_form::find_root(int rk2, int verbose_level)
+long int quadratic_form::find_root(
+		int rk2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -719,7 +738,8 @@ void quadratic_form::Siegel_Transformation(
 }
 
 
-void quadratic_form::Siegel_map_between_singular_points(int *T,
+void quadratic_form::Siegel_map_between_singular_points(
+		int *T,
 		long int rk_from, long int rk_to, long int root,
 	//int epsilon, int algebraic_dimension,
 	//int form_c1, int form_c2, int form_c3, int *Gram_matrix,
@@ -929,14 +949,16 @@ void quadratic_form::choose_anisotropic_form(int verbose_level)
 	}
 }
 
-void quadratic_form::unrank_point(int *v, long int a, int verbose_level)
+void quadratic_form::unrank_point(
+		int *v, long int a, int verbose_level)
 {
 	Orthogonal_indexing->Q_epsilon_unrank_private(
 			v, 1 /* stride */, epsilon, n - 1 /* proj dimension */,
 			form_c1, form_c2, form_c3, a, verbose_level);
 }
 
-long int quadratic_form::rank_point(int *v, int verbose_level)
+long int quadratic_form::rank_point(
+		int *v, int verbose_level)
 {
 	long int a;
 

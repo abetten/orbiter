@@ -25,7 +25,8 @@ void orthogonal::list_points_by_type(int verbose_level)
 	}
 }
 
-void orthogonal::report_points_by_type(std::ostream &ost, int verbose_level)
+void orthogonal::report_points_by_type(
+		std::ostream &ost, int verbose_level)
 {
 	int t;
 

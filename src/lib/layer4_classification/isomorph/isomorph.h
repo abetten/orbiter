@@ -343,6 +343,8 @@ public:
 
 	int f_isomorph_report;
 
+	int f_export_source_code;
+
 
 	int f_subset_orbits;
 	int f_subset_orbits_file;
@@ -486,12 +488,17 @@ public:
 		int *&special_orbit_identify, int verbose_level);
 	void report_data_in_source_code_inside_tex(
 			isomorph &Iso,
-			const char *prefix,
-			char *label_of_structure_plural, std::ostream &f,
+			std::string &prefix,
+			std::string &label_of_structure_plural, std::ostream &f,
 			int verbose_level);
 	void report_data_in_source_code_inside_tex_with_selection(
-			isomorph &Iso, const char *prefix,
-			char *label_of_structure_plural, std::ostream &fp,
+			isomorph &Iso, std::string &prefix,
+			std::string &label_of_structure_plural, std::ostream &fp,
+			int selection_size, int *selection,
+			int verbose_level);
+	void export_source_code_with_selection(
+			isomorph &Iso, std::string &prefix,
+			std::ostream &fp,
 			int selection_size, int *selection,
 			int verbose_level);
 
@@ -531,6 +538,7 @@ public:
 	void compute_orbits(int verbose_level);
 	void isomorph_testing(int verbose_level);
 	void isomorph_report(int verbose_level);
+	void export_source_code(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void recognize(std::string &label, int verbose_level);
 
@@ -597,8 +605,10 @@ public:
 		int size, int level, 
 		int f_use_database_for_starter, 
 		int f_implicit_fusion, int verbose_level);
-	void print_node_local(int level, int node_local);
-	void print_node_global(int level, int node_global);
+	void print_node_local(
+			int level, int node_local);
+	void print_node_global(
+			int level, int node_global);
 	void init_high_level(
 			actions::action *A,
 			poset_classification::poset_classification *gen,
@@ -688,7 +698,8 @@ public:
 			int verbose_level);
 	void read_representatives_and_stabilizers(
 			int verbose_level);
-	void get_stabilizer(isomorph *Iso, int idx,
+	void get_stabilizer(
+			isomorph *Iso, int idx,
 			groups::strong_generators *&SG,
 			int verbose_level);
 	void save(int verbose_level);

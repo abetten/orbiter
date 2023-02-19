@@ -33,6 +33,15 @@ vector_ge::~vector_ge()
 	}
 }
 
+void vector_ge::null()
+{
+	A = NULL;
+	data = NULL;
+	len = 0;
+}
+
+
+
 void vector_ge::init(actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -56,10 +65,21 @@ void vector_ge::copy(vector_ge *&vector_copy, int verbose_level)
 	if (f_v) {
 		cout << "vector_ge::copy" << endl;
 	}
+	if (A == NULL) {
+		cout << "vector_ge::copy A == NULL" << endl;
+		exit(1);
+	}
 
 	vector_copy = NEW_OBJECT(vector_ge);
+	vector_copy->null();
 	vector_copy->init(A, verbose_level);
+	if (f_v) {
+		cout << "vector_ge::copy before vector_copy->allocate" << endl;
+	}
 	vector_copy->allocate(len, verbose_level);
+	if (f_v) {
+		cout << "vector_ge::copy before loop" << endl;
+	}
 	for (i = 0; i < len; i++) {
 		A->Group_element->element_move(ith(i), vector_copy->ith(i), 0);
 	}
@@ -364,6 +384,11 @@ void vector_ge::allocate(int length, int verbose_level)
 
 	if (f_v) {
 		cout << "vector_ge::allocate" << endl;
+		cout << "vector_ge::allocate length = " << length << endl;
+	}
+	if (f_v) {
+		cout << "vector_ge::allocate A = " << endl;
+		A->print_info();
 	}
 	if (data) {
 		FREE_int(data);
@@ -1148,6 +1173,8 @@ void vector_ge::stab_BLT_set_from_catalogue(
 		cout << "vector_ge::stab_BLT_set_from_catalogue" << endl;
 		cout << "q=" << F->q << endl;
 		cout << "iso=" << iso << endl;
+		cout << "A=" << endl;
+		A->print_info();
 	}
 
 	int *data;
@@ -1169,24 +1196,23 @@ void vector_ge::stab_BLT_set_from_catalogue(
 				"data_size=" << data_size << endl;
 		cout << "vector_ge::stab_BLT_set_from_catalogue "
 				"nb_gens=" << nb_gens << endl;
+		cout << "vector_ge::stab_BLT_set_from_catalogue "
+				"target_go_text=" << target_go_text << endl;
 	}
 
-	data_structures_groups::vector_ge *gens;
-
-	gens = NEW_OBJECT(data_structures_groups::vector_ge);
-	gens->init(A, verbose_level - 2);
+	init(A, verbose_level - 2);
 	//target_go.create_from_base_10_string(target_go_text);
 
 
-	gens->allocate(nb_gens, verbose_level - 2);
+	allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->Group_element->make_element(gens->ith(i), data + i * data_size, 0);
+		A->Group_element->make_element(ith(i), data + i * data_size, 0);
 	}
 
 	if (f_v) {
 		cout << "vector_ge::stab_BLT_set_from_catalogue "
 				"generators are:" << endl;
-		gens->print_quick(cout);
+		print_quick(cout);
 	}
 
 	if (f_v) {

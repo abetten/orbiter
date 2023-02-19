@@ -49,7 +49,8 @@ public:
 
 	blt_set_domain();
 	~blt_set_domain();
-	void init(orthogonal *O,
+	void init(
+			orthogonal *O,
 		int verbose_level);
 	long int intersection_of_hyperplanes(
 			long int plane_rk1, long int plane_rk2,
@@ -57,27 +58,35 @@ public:
 	long int compute_tangent_hyperplane(
 		long int pt,
 		int verbose_level);
-	void report_given_point_set(std::ostream &ost,
+	void report_given_point_set(
+			std::ostream &ost,
 			long int *Pts, int nb_pts, int verbose_level);
 	void compute_adjacency_list_fast(int first_point_of_starter,
 		long int *points, int nb_points, int *point_color,
 		data_structures::bitvector *&Bitvec,
 		int verbose_level);
-	void compute_colors(int orbit_at_level,
+	void compute_colors(
+			int orbit_at_level,
 		long int *starter, int starter_sz,
 		long int special_line,
 		long int *candidates, int nb_candidates,
 		int *&point_color, int &nb_colors,
 		int verbose_level);
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int pair_test(int a, int x, int y, int verbose_level);
-	int check_conditions(int len, long int *S, int verbose_level);
-	int collinearity_test(long int *S, int len, int verbose_level);
-	void print(std::ostream &ost, long int *S, int len);
-	void find_free_points(long int *S, int S_sz,
+	int pair_test(
+			int a, int x, int y, int verbose_level);
+	int check_conditions(
+			int len, long int *S, int verbose_level);
+	int collinearity_test(
+			long int *S, int len, int verbose_level);
+	void print(
+			std::ostream &ost, long int *S, int len);
+	void find_free_points(
+			long int *S, int S_sz,
 			long int *&free_pts, int *&free_pt_idx, int &nb_free_pts,
 		int verbose_level);
 	int create_graph(
@@ -126,7 +135,8 @@ public:
 
 	blt_set_invariants();
 	~blt_set_invariants();
-	void init(blt_set_domain *D, long int *the_set,
+	void init(
+			blt_set_domain *D, long int *the_set,
 		int verbose_level);
 	void compute(int verbose_level);
 	void latex(std::ostream &ost, int verbose_level);
@@ -439,10 +449,13 @@ public:
 	// hyperbolic_pair_rank_unrank.cpp
 	void unrank_point(int *v,
 		int stride, long int rk, int verbose_level);
-	long int rank_point(int *v, int stride, int verbose_level);
-	void unrank_line(long int &p1, long int &p2,
+	long int rank_point(
+			int *v, int stride, int verbose_level);
+	void unrank_line(
+			long int &p1, long int &p2,
 		long int index, int verbose_level);
-	long int rank_line(long int p1, long int p2, int verbose_level);
+	long int rank_line(
+			long int p1, long int p2, int verbose_level);
 	int line_type_given_point_types(
 			long int pt1, long int pt2,
 			long int pt1_type, long int pt2_type);
@@ -489,7 +502,8 @@ public:
 
 	orthogonal_indexing();
 	~orthogonal_indexing();
-	void init(quadratic_form *Quadratic_form,
+	void init(
+			quadratic_form *Quadratic_form,
 			int verbose_level);
 	void Q_epsilon_unrank_private(
 		int *v, int stride, int epsilon, int k,
@@ -807,7 +821,8 @@ public:
 
 	orthogonal();
 	~orthogonal();
-	void init(int epsilon, int n,
+	void init(
+			int epsilon, int n,
 			field_theory::finite_field *F,
 		int verbose_level);
 	void allocate();
@@ -816,7 +831,8 @@ public:
 			long int line_rk,
 		long int *line,
 		int verbose_level);
-	void points_on_line(long int pi, long int pj,
+	void points_on_line(
+			long int pi, long int pj,
 			long int *line, int verbose_level);
 	void points_on_line_by_coordinates(
 			long int pi, long int pj,
@@ -875,7 +891,8 @@ public:
 
 	// orthogonal_io.cpp:
 	void list_points_by_type(int verbose_level);
-	void report_points_by_type(std::ostream &ost, int verbose_level);
+	void report_points_by_type(
+			std::ostream &ost, int verbose_level);
 	void list_points_of_given_type(int t,
 		int verbose_level);
 	void report_points_of_given_type(std::ostream &ost,
@@ -1042,16 +1059,19 @@ public:
 	int evaluate_elliptic_quadratic_form(
 			int *v, int stride);
 
-	int evaluate_bilinear_form(int *u, int *v, int stride);
+	int evaluate_bilinear_form(
+			int *u, int *v, int stride);
 	int evaluate_hyperbolic_bilinear_form(
 			int *u, int *v, int stride, int m);
 	int evaluate_parabolic_bilinear_form(
 			int *u, int *v, int stride, int m);
-	int evaluate_bilinear_form_Gram_matrix(int *u, int *v);
+	int evaluate_bilinear_form_Gram_matrix(
+			int *u, int *v);
 
 	void report_quadratic_form(
 			std::ostream &ost, int verbose_level);
-	long int find_root(int rk2, int verbose_level);
+	long int find_root(
+			int rk2, int verbose_level);
 	void Siegel_Transformation(
 		int *M, int *v, int *u, int verbose_level);
 	// if u is singular and v \in \la u \ra^\perp, then
@@ -1059,13 +1079,16 @@ public:
 	// is called the Siegel transform (see Taylor p. 148)
 	// Here Q is the quadratic form
 	// and \beta is the corresponding bilinear form
-	void Siegel_map_between_singular_points(int *T,
+	void Siegel_map_between_singular_points(
+			int *T,
 			long int rk_from, long int rk_to, long int root,
 		int verbose_level);
 	// root is not perp to from and to.
 	void choose_anisotropic_form(int verbose_level);
-	void unrank_point(int *v, long int a, int verbose_level);
-	long int rank_point(int *v, int verbose_level);
+	void unrank_point(
+			int *v, long int a, int verbose_level);
+	long int rank_point(
+			int *v, int verbose_level);
 
 
 };
@@ -1101,7 +1124,8 @@ public:
 			field_theory::finite_field *FQ,
 			field_theory::finite_field *Fq,
 			int f_sum_of_squares, int verbose_level);
-	void convert_to_ranks(int n,
+	void convert_to_ranks(
+			int n,
 			int *unusual_coordinates,
 		long int *ranks, int verbose_level);
 	void convert_from_ranks(int n,
@@ -1118,15 +1142,18 @@ public:
 			int *unusual_coordinates,
 		int *usual_coordinates,
 		int verbose_level);
-	void create_Fisher_BLT_set(long int *Fisher_BLT,
+	void create_Fisher_BLT_set(
+			long int *Fisher_BLT,
 			int *ABC, int verbose_level);
 	void convert_from_usual(int n,
 			int *usual_coordinates,
 		int *unusual_coordinates,
 		int verbose_level);
-	void create_Linear_BLT_set(long int *BLT,
+	void create_Linear_BLT_set(
+			long int *BLT,
 			int *ABC, int verbose_level);
-	void create_Mondello_BLT_set(long int *BLT,
+	void create_Mondello_BLT_set(
+			long int *BLT,
 			int *ABC, int verbose_level);
 	int N2(int a);
 	int T2(int a);
@@ -1141,7 +1168,8 @@ public:
 			long int *set, int len);
 	void print_coordinates_detailed(
 			long int pt, int cnt);
-	int build_candidate_set(orthogonal &O, int q,
+	int build_candidate_set(
+			orthogonal &O, int q,
 		int gamma, int delta, int m, long int *Set,
 		int f_second_half, int verbose_level);
 	int build_candidate_set_with_offset(
@@ -1155,19 +1183,24 @@ public:
 		int m, long int *Set,
 		int f_second_half, int f_test,
 		int verbose_level);
-	int create_orbit_of_psi(orthogonal &O, int q,
+	int create_orbit_of_psi(
+			orthogonal &O, int q,
 		int gamma, int delta, int m, long int *Set,
 		int f_test, int verbose_level);
-	void transform_matrix_unusual_to_usual(orthogonal *O,
+	void transform_matrix_unusual_to_usual(
+			orthogonal *O,
 		int *M4, int *M5, int verbose_level);
-	void transform_matrix_usual_to_unusual(orthogonal *O,
+	void transform_matrix_usual_to_unusual(
+			orthogonal *O,
 		int *M5, int *M4, int verbose_level);
 
-	void parse_4by4_matrix(int *M4,
+	void parse_4by4_matrix(
+			int *M4,
 		int &a, int &b, int &c, int &d,
 		int &f_semi1, int &f_semi2,
 		int &f_semi3, int &f_semi4);
-	void create_4by4_matrix(int *M4,
+	void create_4by4_matrix(
+			int *M4,
 		int a, int b, int c, int d,
 		int f_semi1, int f_semi2,
 		int f_semi3, int f_semi4,

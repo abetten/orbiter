@@ -263,7 +263,8 @@ void unusual_model::setup2(
 	
 }
 
-void unusual_model::convert_to_ranks(int n,
+void unusual_model::convert_to_ranks(
+		int n,
 		int *unusual_coordinates,
 		long int *ranks, int verbose_level)
 {
@@ -304,7 +305,8 @@ void unusual_model::convert_to_ranks(int n,
 	FREE_int(usual);
 }
 
-void unusual_model::convert_from_ranks(int n,
+void unusual_model::convert_from_ranks(
+		int n,
 	long int *ranks,
 	int *unusual_coordinates,
 	int verbose_level)
@@ -826,7 +828,8 @@ void unusual_model::print_coordinates_detailed(
 	cout << setw(4) << x << " " << setw(4) << y;
 }
 
-int unusual_model::build_candidate_set(orthogonal &O, int q, 
+int unusual_model::build_candidate_set(
+		orthogonal &O, int q,
 	int gamma, int delta, int m, long int *Set,
 	int f_second_half, int verbose_level)
 {
@@ -977,7 +980,8 @@ int unusual_model::build_candidate_set_with_or_without_test(
 	return TRUE;
 }
 
-int unusual_model::create_orbit_of_psi(orthogonal &O, int q, 
+int unusual_model::create_orbit_of_psi(
+		orthogonal &O, int q,
 	int gamma, int delta, int m, long int *Set,
 	int f_test, int verbose_level)
 {
@@ -1182,7 +1186,8 @@ void unusual_model::transform_matrix_usual_to_unusual(
 	//FREE_int(M5);
 }
 
-void unusual_model::parse_4by4_matrix(int *M4, 
+void unusual_model::parse_4by4_matrix(
+		int *M4,
 	int &a, int &b, int &c, int &d, 
 	int &f_semi1, int &f_semi2,
 	int &f_semi3, int &f_semi4)
@@ -1236,7 +1241,8 @@ void unusual_model::parse_4by4_matrix(int *M4,
 	}
 }
 
-void unusual_model::create_4by4_matrix(int *M4, 
+void unusual_model::create_4by4_matrix(
+		int *M4,
 	int a, int b, int c, int d, 
 	int f_semi1, int f_semi2,
 	int f_semi3, int f_semi4,

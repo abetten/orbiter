@@ -1686,10 +1686,17 @@ static void induced_action_print_point(action &A,
 		if (FALSE) {
 			cout << "action_on_orthogonal_t" << endl;
 			}
-		//action_on_orthogonal *AO = A.G.AO;
+		induced_actions::action_on_orthogonal *AO = A.G.AO;
 
-		ost << a;
+		ost << a << " = ";
 		
+		int *v;
+
+		v = NEW_int(AO->low_level_point_size);
+		AO->unrank_point(v, a);
+		Int_vec_print(ost, v, AO->low_level_point_size);
+		FREE_int(v);
+
 #if 0
 		action *sub;
 		

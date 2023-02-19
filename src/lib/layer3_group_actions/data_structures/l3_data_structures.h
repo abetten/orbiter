@@ -690,6 +690,7 @@ public:
 
 	vector_ge();
 	~vector_ge();
+	void null();
 	void init(actions::action *A, int verbose_level);
 	void copy(vector_ge *&vector_copy, int verbose_level);
 	void init_by_hdl(actions::action *A,

@@ -1193,6 +1193,9 @@ public:
 	int check_if_in_set_stabilizer(
 			int *Elt,
 			int size, long int *set, int verbose_level);
+	void check_if_in_set_stabilizer_debug(
+			int *Elt,
+			int size, long int *set, int verbose_level);
 	int check_if_transporter_for_set(
 			int *Elt,
 			int size,

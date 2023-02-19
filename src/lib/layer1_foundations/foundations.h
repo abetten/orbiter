@@ -874,6 +874,7 @@ enum symbol_table_object_type {
 	t_action_on_forms,
 	t_orbits,
 	t_poset_classification_control,
+	t_poset_classification_activity,
 };
 
 

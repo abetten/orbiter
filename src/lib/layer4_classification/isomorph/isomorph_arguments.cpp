@@ -46,7 +46,11 @@ isomorph_arguments::isomorph_arguments()
 	f_event_file = FALSE; // -e <event file> option
 	//event_file_name;
 	print_mod = 500;
+
 	f_isomorph_report = FALSE;
+
+	f_export_source_code = FALSE;
+
 	f_subset_orbits = FALSE;
 	f_subset_orbits_file = FALSE;
 	//std::string subset_orbits_fname;
@@ -162,7 +166,11 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 		}
 		else if (ST.stringcmp(argv[i], "-isomorph_report") == 0) {
 			f_isomorph_report = TRUE;
-			cout << "-report " << endl;
+			cout << "-isomorph_report " << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-export_source_code") == 0) {
+			f_export_source_code = TRUE;
+			cout << "-export_source_code " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-subset_orbits") == 0) {
 			f_subset_orbits = TRUE;
@@ -261,7 +269,10 @@ void isomorph_arguments::print()
 		cout << "-print_interval " << print_mod << endl;
 	}
 	if (f_isomorph_report) {
-		cout << "-report " << endl;
+		cout << "-isomorph_report " << endl;
+	}
+	if (f_export_source_code) {
+		cout << "-export_source_code " << endl;
 	}
 	if (f_subset_orbits) {
 		cout << "-subset_orbits " << endl;

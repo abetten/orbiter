@@ -123,7 +123,7 @@ interface_toolkit::interface_toolkit()
 	loop_over_start_idx = 0;
 	loop_over_end_idx = 0;
 	//std::string loop_over_variable;
-	//std::string loop_over_index;
+	// deleted: //std::string loop_over_index;
 	//std::string loop_over_domain;
 	loop_over_argv = NULL;
 
@@ -225,7 +225,7 @@ void interface_toolkit::print_help(int argc,
 		cout << "-loop <string : variable> <int : from> <int : to> <int : step> <arguments> -loop_end" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-loop_over") == 0) {
-		cout << "-loop_over <string : variable> <string : index> <string : domain>  <loop body> -loop_end" << endl;
+		cout << "-loop_over <string : index_variable> <string : domain>  <loop body> -loop_end <string : index_variable>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-plot_function") == 0) {
 		cout << "-plot_function <string : fname_csv>" << endl;
@@ -634,26 +634,27 @@ void interface_toolkit::read_arguments(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-loop_over") == 0) {
 		f_loop_over = TRUE;
-		loop_over_start_idx = i + 4;
+		loop_over_start_idx = i + 3;
 		loop_over_variable.assign(argv[++i]);
-		loop_over_index.assign(argv[++i]);
+		//loop_over_index.assign(argv[++i]);
 		loop_over_domain.assign(argv[++i]);
 		loop_over_argv = argv;
 
-		for (++i; i < argc; i++) {
-			if (ST.stringcmp(argv[i], "-end_loop_over") == 0) {
+		for (++i; i < argc - 1; i++) {
+			if (ST.stringcmp(argv[i], "-end_loop_over") == 0 && ST.stringcmp(argv[i + 1], loop_over_variable.c_str()) == 0) {
 				loop_over_end_idx = i;
 				break;
 			}
 		}
-		if (i == argc) {
-			cout << "-loop cannot find -end_loop_over" << endl;
+		if (i == argc - 1) {
+			cout << "-loop_over cannot find -end_loop_over <variable>, looking for variable " << loop_over_variable << endl;
 			exit(1);
 		}
+		i++;
 		if (f_v) {
 			cout << "-loop_over"
 					<< " " << loop_over_variable
-					<< " " << loop_over_index
+					//<< " " << loop_over_index
 					<< " " << loop_over_domain
 					<< " " << loop_over_start_idx
 					<< " " << loop_over_end_idx;
@@ -861,7 +862,7 @@ void interface_toolkit::print()
 	if (f_loop_over) {
 		cout << "-loop_over"
 				<< " " << loop_over_variable
-				<< " " << loop_over_index
+				//<< " " << loop_over_index
 				<< " " << loop_over_domain
 				<< " " << loop_over_start_idx
 				<< " " << loop_over_end_idx;
@@ -1262,21 +1263,66 @@ void interface_toolkit::worker(int verbose_level)
 				snprintf(str, sizeof(str), "%d", h);
 				value.assign(str);
 
+#if 0
 				token.assign("%");
 				token.append(loop_over_index);
 
 				while (arg.find(token) != std::string::npos) {
 					arg.replace(arg.find(token), token.length(), value);
 				}
+#endif
 
-				snprintf(str, sizeof(str), "%ld", Domain[h]);
-				value.assign(str);
+				//snprintf(str, sizeof(str), "%ld", Domain[h]);
+				//value.assign(str);
 
 				token.assign("%");
 				token.append(loop_over_variable);
 
-				while (arg.find(token) != std::string::npos) {
-					arg.replace(arg.find(token), token.length(), value);
+				size_t pos, pos1, pos2;
+				int f_square_bracket;
+				string index_object;
+
+				while ((pos = arg.find(token)) != std::string::npos) {
+					f_square_bracket = FALSE;
+					if ((pos1 = arg.find('[', pos + token.length())) != std::string::npos) {
+
+						if ((pos2 = arg.find(']', pos1 + 1)) != std::string::npos) {
+							f_square_bracket = TRUE;
+							index_object = arg.substr(pos + token.length() + 1, pos2 - pos1 - 1);
+						}
+						else {
+							cout << "found opening square bracket but not a corresponding closing one." << endl;
+							exit(1);
+						}
+					}
+					if (f_square_bracket) {
+						cout << "square_bracket of " << index_object << endl;
+
+
+						long int *v;
+						int sz_v;
+
+						Get_lint_vector_from_label(index_object, v, sz_v, 0 /* verbose_level */);
+						cout << "found object of length " << sz_v << endl;
+
+						if (h >= sz_v) {
+							cout << "access error: index is out of range" << endl;
+							cout << "index = " << h << endl;
+							cout << "object size = " << sz_v << endl;
+							exit(1);
+						}
+						snprintf(str, sizeof(str), "%ld", v[h]);
+						value.assign(str);
+
+						arg.replace(pos, pos2 - pos + 1, value);
+					}
+					else {
+						snprintf(str, sizeof(str), "%d", h);
+						value.assign(str);
+
+						arg.replace(pos, token.length(), value);
+
+					}
 				}
 
 				argv2[s].assign(arg);

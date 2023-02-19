@@ -108,7 +108,8 @@ void representatives::init(
 
 	
 	if (f_v) {
-		cout << "representatives::init before allocating things" << endl;
+		cout << "representatives::init "
+				"before allocating things" << endl;
 	}
 	rep = NEW_lint(nb_objects);
 	stab = new groups::psims[nb_objects];
@@ -159,7 +160,8 @@ void representatives::write_fusion(int verbose_level)
 		cout << "representatives::write_fusion" << endl;
 	}
 	if (f_v) {
-		cout << "representatives::write_fusion fname_fusion=" << fname_fusion << endl;
+		cout << "representatives::write_fusion "
+				"fname_fusion=" << fname_fusion << endl;
 	}
 	{
 		ofstream f1(fname_fusion);
@@ -181,9 +183,11 @@ void representatives::write_fusion(int verbose_level)
 				A->Group_element->one(Elt1);
 			}
 			else {
-				A->Group_element->element_retrieve(handle[i], Elt1, FALSE);
+				A->Group_element->element_retrieve(
+						handle[i], Elt1, FALSE);
 			}
-			A->Group_element->element_write_file_fp(Elt1, f2, 0/* verbose_level*/);
+			A->Group_element->element_write_file_fp(
+					Elt1, f2, 0/* verbose_level*/);
 		}
 		f1 << -1 << endl;
 		//fclose(f2);
@@ -250,8 +254,10 @@ void representatives::read_fusion(int verbose_level)
 		//f2 = fopen(fname_fusion_ge, "rb");
 	
 		for (i = 0; i < nb_objects; i++) {
-			A->Group_element->element_read_file_fp(Elt1, f2, 0/* verbose_level*/);
-			handle[i] = A->Group_element->element_store(Elt1, FALSE);
+			A->Group_element->element_read_file_fp(
+					Elt1, f2, 0/* verbose_level*/);
+			handle[i] = A->Group_element->element_store(
+					Elt1, FALSE);
 			}
 	}
 	if (f_v) {
@@ -316,7 +322,8 @@ void representatives::write_representatives_and_stabilizers(
 		//fclose(f2);
 	}
 	if (f_v) {
-		cout << "representatives::write_representatives_and_stabilizers finished" << endl;
+		cout << "representatives::write_representatives_and_stabilizers "
+				"finished" << endl;
 		cout << "written file " << fname_rep << " of size "
 				<< Fio.file_size(fname_rep) << endl;
 		cout << "written file " << fname_stabgens << " of size "
@@ -381,7 +388,8 @@ void representatives::read_representatives_and_stabilizers(
 				f1 >> tl[j];
 			}
 			for (j = 0; j < len; j++) {
-				A->Group_element->element_read_file_fp(gens.ith(j), f2, 0/* verbose_level*/);
+				A->Group_element->element_read_file_fp(
+						gens.ith(j), f2, 0/* verbose_level*/);
 			}
 			if (f_vv) {
 				cout << "representative of orbit " << i << " read" << endl;
@@ -418,7 +426,8 @@ void representatives::read_representatives_and_stabilizers(
 	}
 }
 
-void representatives::get_stabilizer(isomorph *Iso, int idx,
+void representatives::get_stabilizer(
+		isomorph *Iso, int idx,
 		groups::strong_generators *&SG,
 		int verbose_level)
 {
@@ -439,12 +448,14 @@ void representatives::get_stabilizer(isomorph *Iso, int idx,
 	tl = NEW_int(Iso->A_base->base_len());
 
 	if (f_v) {
-		cout << "representatives::get_stabilizer before extract_strong_generators_in_order" << endl;
+		cout << "representatives::get_stabilizer "
+				"before extract_strong_generators_in_order" << endl;
 	}
 	Iso->Folding->Reps->stab[idx]->extract_strong_generators_in_order(
 			*gens, tl, 0);
 	if (f_v) {
-		cout << "representatives::get_stabilizer after extract_strong_generators_in_order" << endl;
+		cout << "representatives::get_stabilizer "
+				"after extract_strong_generators_in_order" << endl;
 	}
 
 
@@ -501,18 +512,22 @@ void representatives::load(int verbose_level)
 		cout << "representatives::load" << endl;
 	}
 	if (f_v) {
-		cout << "representatives::load before read_fusion" << endl;
+		cout << "representatives::load "
+				"before read_fusion" << endl;
 	}
 	read_fusion(verbose_level - 1);
 	if (f_v) {
-		cout << "representatives::load after read_fusion" << endl;
+		cout << "representatives::load "
+				"after read_fusion" << endl;
 	}
 	if (f_v) {
-		cout << "representatives::load before read_representatives_and_stabilizers" << endl;
+		cout << "representatives::load "
+				"before read_representatives_and_stabilizers" << endl;
 	}
 	read_representatives_and_stabilizers(verbose_level - 1);
 	if (f_v) {
-		cout << "representatives::load after read_representatives_and_stabilizers" << endl;
+		cout << "representatives::load "
+				"after read_representatives_and_stabilizers" << endl;
 	}
 	if (f_v) {
 		cout << "representatives::load done found " << count

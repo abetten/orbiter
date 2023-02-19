@@ -138,7 +138,8 @@ orthogonal::~orthogonal()
 
 
 
-void orthogonal::init(int epsilon, int n,
+void orthogonal::init(
+		int epsilon, int n,
 		field_theory::finite_field *F,
 		int verbose_level)
 {
@@ -154,11 +155,13 @@ void orthogonal::init(int epsilon, int n,
 	Quadratic_form = NEW_OBJECT(quadratic_form);
 
 	if (f_v) {
-		cout << "orthogonal::init before Quadratic_form->init" << endl;
+		cout << "orthogonal::init "
+				"before Quadratic_form->init" << endl;
 	}
 	Quadratic_form->init(epsilon, n, F, verbose_level);
 	if (f_v) {
-		cout << "orthogonal::init after Quadratic_form->init" << endl;
+		cout << "orthogonal::init "
+				"after Quadratic_form->init" << endl;
 	}
 
 	orthogonal::F = F;
@@ -169,11 +172,13 @@ void orthogonal::init(int epsilon, int n,
 
 
 	if (f_v) {
-		cout << "orthogonal::init before Orthogonal_indexing->init" << endl;
+		cout << "orthogonal::init "
+				"before Orthogonal_indexing->init" << endl;
 	}
 	Orthogonal_indexing->init(Quadratic_form, verbose_level);
 	if (f_v) {
-		cout << "orthogonal::init after Orthogonal_indexing->init" << endl;
+		cout << "orthogonal::init "
+				"after Orthogonal_indexing->init" << endl;
 	}
 
 
@@ -235,11 +240,13 @@ void orthogonal::init(int epsilon, int n,
 #endif
 
 	if (f_v) {
-		cout << "orthogonal::init before allocate" << endl;
+		cout << "orthogonal::init "
+				"before allocate" << endl;
 	}
 	allocate();
 	if (f_v) {
-		cout << "orthogonal::init after allocate" << endl;
+		cout << "orthogonal::init "
+				"after allocate" << endl;
 	}
 
 
@@ -247,33 +254,39 @@ void orthogonal::init(int epsilon, int n,
 
 
 	if (f_v) {
-		cout << "orthogonal::init before Orthogonal_group->init" << endl;
+		cout << "orthogonal::init "
+				"before Orthogonal_group->init" << endl;
 	}
 	Orthogonal_group->init(this, verbose_level);
 	if (f_v) {
-		cout << "orthogonal::init after Orthogonal_group->init" << endl;
+		cout << "orthogonal::init "
+				"after Orthogonal_group->init" << endl;
 	}
 
 
 
 #if 0
 	if (f_v) {
-		cout << "orthogonal::init before init_form_and_Gram_matrix" << endl;
+		cout << "orthogonal::init "
+				"before init_form_and_Gram_matrix" << endl;
 	}
 	init_form_and_Gram_matrix(verbose_level - 2);
 	if (f_v) {
-		cout << "orthogonal::init after init_form_and_Gram_matrix" << endl;
+		cout << "orthogonal::init "
+				"after init_form_and_Gram_matrix" << endl;
 	}
 #endif
 
 	Hyperbolic_pair = NEW_OBJECT(hyperbolic_pair);
 
 	if (f_v) {
-		cout << "orthogonal::init before Hyperbolic_pair->init" << endl;
+		cout << "orthogonal::init "
+				"before Hyperbolic_pair->init" << endl;
 	}
 	Hyperbolic_pair->init(this, verbose_level - 2);
 	if (f_v) {
-		cout << "orthogonal::init after Hyperbolic_pair->init" << endl;
+		cout << "orthogonal::init "
+				"after Hyperbolic_pair->init" << endl;
 	}
 
 	if (epsilon == -1) {
@@ -293,10 +306,14 @@ void orthogonal::init(int epsilon, int n,
 		}
 		subspace->init(epsilon, n - 2, F, 0 /*verbose_level - 1*/);
 		if (f_v) {
-			cout << "orthogonal::init initializing subspace finished" << endl;
-			cout << "orthogonal::init subspace->epsilon=" << subspace->Quadratic_form->epsilon << endl;
-			cout << "orthogonal::init subspace->n=" << subspace->Quadratic_form->n << endl;
-			cout << "orthogonal::init subspace->m=" << subspace->Quadratic_form->m << endl;
+			cout << "orthogonal::init "
+					"initializing subspace finished" << endl;
+			cout << "orthogonal::init "
+					"subspace->epsilon=" << subspace->Quadratic_form->epsilon << endl;
+			cout << "orthogonal::init "
+					"subspace->n=" << subspace->Quadratic_form->n << endl;
+			cout << "orthogonal::init "
+					"subspace->m=" << subspace->Quadratic_form->m << endl;
 		}
 	}
 	else {
@@ -307,9 +324,12 @@ void orthogonal::init(int epsilon, int n,
 	}
 
 	if (f_v) {
-		cout << "orthogonal::init O^" << epsilon << "(" << n << "," << Quadratic_form->q << ")" << endl;
+		cout << "orthogonal::init O^" << epsilon
+				<< "(" << n << "," << Quadratic_form->q << ")" << endl;
 		cout << "epsilon=" << epsilon
-				<< " n=" << n << " m=" << Quadratic_form->m << " q=" << Quadratic_form->q << endl;
+				<< " n=" << n
+				<< " m=" << Quadratic_form->m
+				<< " q=" << Quadratic_form->q << endl;
 		cout << "pt_P = " << Hyperbolic_pair->pt_P << endl;
 		cout << "pt_Q=" << Hyperbolic_pair->pt_Q << endl;
 		cout << "nb_points = " << Hyperbolic_pair->nb_points << endl;
@@ -383,9 +403,12 @@ void orthogonal::init(int epsilon, int n,
 	}
 	if (f_v) {
 		if (subspace) {
-			cout << "orthogonal::init subspace->epsilon=" << subspace->Quadratic_form->epsilon << endl;
-			cout << "orthogonal::init subspace->n=" << subspace->Quadratic_form->n << endl;
-			cout << "orthogonal::init subspace->m=" << subspace->Quadratic_form->m << endl;
+			cout << "orthogonal::init "
+					"subspace->epsilon=" << subspace->Quadratic_form->epsilon << endl;
+			cout << "orthogonal::init "
+					"subspace->n=" << subspace->Quadratic_form->n << endl;
+			cout << "orthogonal::init "
+					"subspace->m=" << subspace->Quadratic_form->m << endl;
 		}
 		cout << "orthogonal::init finished" << endl;
 	}
@@ -537,7 +560,8 @@ void orthogonal::points_on_line_by_line_rank(
 	points_on_line(p1, p2, line, verbose_level);
 }
 
-void orthogonal::points_on_line(long int pi, long int pj,
+void orthogonal::points_on_line(
+		long int pi, long int pj,
 		long int *line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

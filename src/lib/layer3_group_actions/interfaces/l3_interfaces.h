@@ -38,6 +38,23 @@ public:
 			std::ostream &ost,
 			groups::strong_generators *SG,
 			int verbose_level);
+	void export_surface(
+			std::ostream &ost,
+			std::string &label_txt,
+			int f_has_group,
+			groups::strong_generators *SG,
+			ring_theory::homogeneous_polynomial_domain *Poly3_4,
+			int *equation,
+			int verbose_level);
+	void export_BLT_set(
+			std::ostream &ost,
+			std::string &label_txt,
+			int f_has_group,
+			groups::strong_generators *SG,
+			actions::action *A,
+			layer1_foundations::orthogonal_geometry::blt_set_domain
+					*Blt_set_domain,
+			long int *set, int verbose_level);
 
 };
 

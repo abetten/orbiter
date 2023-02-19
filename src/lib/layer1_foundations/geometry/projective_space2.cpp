@@ -473,7 +473,8 @@ int projective_space::plane_intersections(
 		verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space::plane_intersections "
-				"after plane_intersection_type_fast, nb_planes = " << nb_planes << endl;
+				"after plane_intersection_type_fast, "
+				"nb_planes = " << nb_planes << endl;
 	}
 
 	if (nb_planes) {

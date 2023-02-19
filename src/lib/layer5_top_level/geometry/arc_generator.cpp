@@ -1178,16 +1178,21 @@ void arc_generator::report_do_the_work(
 
 	char prefix[1000];
 	char label_of_structure_plural[1000];
+	string prefix_str;
+	string label_of_structure_plural_str;
 
 	snprintf(prefix, sizeof(prefix), "arcs_%d_%d", PA->q, Descr->target_size);
 	snprintf(label_of_structure_plural, sizeof(label_of_structure_plural), "Arcs");
+
+	prefix_str.assign(prefix);
+	label_of_structure_plural_str.assign(label_of_structure_plural_str);
 
 	isomorph::isomorph_global IG;
 
 	IG.init(Iso.A_base, Iso.A, Iso.Sub->gen, verbose_level);
 
 	IG.report_data_in_source_code_inside_tex(Iso,
-		prefix, label_of_structure_plural, ost,
+		prefix_str, label_of_structure_plural_str, ost,
 		verbose_level);
 
 
