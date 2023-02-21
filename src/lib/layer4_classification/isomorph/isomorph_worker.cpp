@@ -236,6 +236,21 @@ void isomorph_worker::execute(
 					"after recognize" << endl;
 		}
 	}
+	else if (Isomorph_arguments->f_classification_graph) {
+
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"before Iso->Folding->write_classification_matrix" << endl;
+		}
+
+		Iso->Folding->write_classification_matrix(verbose_level);
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"after Iso->Folding->write_classification_matrix" << endl;
+		}
+	}
 #if 0
 	else if (Isomorph_arguments->f_classification_graph) {
 
@@ -690,7 +705,7 @@ void isomorph_worker::isomorph_testing(int verbose_level)
 		for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 
 
-			id = Iso->Lifting->orbit_perm[Iso->Lifting->orbit_fst[Iso->Folding->Reps->rep[orbit]]];
+			id = Iso->Lifting->orbit_perm[Iso->Lifting->flag_orbit_solution_first[Iso->Folding->Reps->rep[orbit]]];
 
 			Iso->Lifting->load_solution(
 					id, data1, verbose_level - 1);
@@ -938,7 +953,7 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 
 	for (h = 0; h < Reps->count; h++) {
 		rep = Iso->Folding->Reps->rep[h];
-		first = Iso->Lifting->orbit_fst[rep];
+		first = Iso->Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
 		Iso->Lifting->load_solution(id, data, verbose_level - 1);
@@ -967,7 +982,7 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 	ost << "\\begin{verbatim}" << endl << endl;
 	for (h = 0; h < Reps->count; h++) {
 		rep = Iso->Folding->Reps->rep[h];
-		first = Iso->Lifting->orbit_fst[rep];
+		first = Iso->Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
 		Iso->Lifting->load_solution(id, data, verbose_level - 1);
@@ -993,7 +1008,7 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 	ost << "int " << Iso->prefix << "_reps[] = {" << endl;
 	for (h = 0; h < Reps->count; h++) {
 		rep = Iso->Folding->Reps->rep[h];
-		first = Iso->Lifting->orbit_fst[rep];
+		first = Iso->Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
 		Iso->Lifting->load_solution(id, data, verbose_level - 1);
@@ -1010,7 +1025,7 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 
 
 		rep = Iso->Folding->Reps->rep[h];
-		first = Iso->Lifting->orbit_fst[rep];
+		first = Iso->Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
 		Iso->Lifting->load_solution(id, data, verbose_level - 1);

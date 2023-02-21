@@ -30,11 +30,11 @@ public:
 
 	std::string event_out_fname;
 
-	int current_flag_orbit; // previously orbit_no
+	int current_flag_orbit;
 		// Used in isomorph_testing:
 		// The flag orbit we are currently testing.
 		// In the end, this will become the representative of a
-		// n e w isomorphism type
+		// new isomorphism type
 
 	representatives *Reps;
 
@@ -112,7 +112,8 @@ public:
 
 	flag_orbit_folding();
 	~flag_orbit_folding();
-	void init(isomorph *Iso, int verbose_level);
+	void init(
+			isomorph *Iso, int verbose_level);
 	void isomorph_testing(
 			int t0, int f_play_back,
 			std::string &play_back_file_name,
@@ -140,23 +141,28 @@ public:
 			int *Elt, int verbose_level);
 	void print_statistics_iso_test(
 			int t0, groups::sims *Stab);
-	int identify(long int *set, int f_implicit_fusion,
+	int identify(
+			long int *set, int f_implicit_fusion,
 		int verbose_level);
-	int identify_database_is_open(long int *set,
+	int identify_database_is_open(
+			long int *set,
 		int f_implicit_fusion, int verbose_level);
-	void induced_action_on_set_basic(groups::sims *S,
+	void induced_action_on_set_basic(
+			groups::sims *S,
 		long int *set, int verbose_level);
-	void induced_action_on_set(groups::sims *S,
+	void induced_action_on_set(
+			groups::sims *S,
 		long int *set, int verbose_level);
 	// Called by do_iso_test and print_isomorphism_types
 	// Creates the induced action on the set from the given action.
 	// The given action is gen->A2
 	// The induced action is computed to AA
 	// The set is in set[].
-	// Allocates a n e w union_find data structure and initializes it
+	// Allocates a new union_find data structure and initializes it
 	// using the generators in S.
 	// Calls action::induced_action_by_restriction()
-	int handle_automorphism(long int *set,
+	int handle_automorphism(
+			long int *set,
 			groups::sims *Stab, int *Elt, int verbose_level);
 	void print_isomorphism_types(int f_select,
 		int select_first, int select_len,
@@ -188,7 +194,8 @@ public:
 		// (local orbit number)
 		// Called from identify_solution and identify_solution_relaxed
 		// calls trace_set_recursion
-	void make_set_smaller(int case_nb_local,
+	void make_set_smaller(
+			int case_nb_local,
 		long int *set, int *transporter, int verbose_level);
 		// Called from identify_solution.
 		// The goal is to produce a set that is lexicographically
@@ -200,7 +207,8 @@ public:
 		// or one can produce such an element
 		// by applying an element in the
 		// stabilizer of the current starter.
-	int trace_set_recursion(int cur_level,
+	int trace_set_recursion(
+			int cur_level,
 		int cur_node_global,
 		long int *canonical_set, int *transporter,
 		int f_implicit_fusion,
@@ -209,7 +217,8 @@ public:
 		// to the canonical_set.
 		// Called from trace_set.
 		// Calls trace_next_point and handle_extension.
-	int trace_next_point(int cur_level,
+	int trace_next_point(
+			int cur_level,
 		int cur_node_global,
 		long int *canonical_set, int *transporter,
 		int f_implicit_fusion,
@@ -218,72 +227,88 @@ public:
 		// Calls trace_next_point_in_place
 		// and (possibly) trace_next_point_database
 		// Returns FALSE is the set becomes lexicographically smaller
-	int trace_next_point_database(int cur_level,
+	int trace_next_point_database(
+			int cur_level,
 		int cur_node_global,
 		long int *canonical_set, int *Elt_transporter,
 		int verbose_level);
 		// Returns FALSE is the set becomes lexicographically smaller
-	int handle_extension(int cur_level,
+	int handle_extension(
+			int cur_level,
 		int cur_node_global,
 		long int *canonical_set, int *Elt_transporter,
 		int f_implicit_fusion,
 		int &f_failure_to_find_point, int verbose_level);
-	int handle_extension_database(int cur_level,
+	int handle_extension_database(
+			int cur_level,
 		int cur_node_global,
 		long int *canonical_set, int *Elt_transporter,
 		int f_implicit_fusion,
 		int &f_failure_to_find_point,
 		int verbose_level);
-	int handle_extension_tree(int cur_level,
+	int handle_extension_tree(
+			int cur_level,
 		int cur_node_global,
 		long int *canonical_set, int *Elt_transporter,
 		int f_implicit_fusion,
 		int &f_failure_to_find_point,
 		int verbose_level);
 	// Returns next_node_global at level cur_level + 1.
-	void apply_isomorphism_database(int cur_level,
+	void apply_isomorphism_database(
+			int cur_level,
 		int cur_node_global,
 		int current_extension, long int *canonical_set,
 		int *Elt_transporter, int ref,
 		int verbose_level);
-	void apply_isomorphism_tree(int cur_level,
+	void apply_isomorphism_tree(
+			int cur_level,
 		int cur_node_global,
 		int current_extension, long int *canonical_set,
 		int *Elt_transporter,
 		int verbose_level);
 
-	void handle_event_files(int nb_event_files,
+	void handle_event_files(
+			int nb_event_files,
 		const char **event_file_name, int verbose_level);
 	void read_event_file(
 			const char *event_file_name,
 		int verbose_level);
-	void skip_through_event_file(std::ifstream &f,
-		int verbose_level);
-	void skip_through_event_file1(std::ifstream &f,
+	void skip_through_event_file(
+			std::ifstream &f, int verbose_level);
+	void skip_through_event_file1(
+			std::ifstream &f,
 		int case_no, int orbit_no, int verbose_level);
 	void event_file_completed_cases(
 			const char *event_file_name,
 		int &nb_completed_cases, int *completed_cases,
 		int verbose_level);
-	void event_file_read_case(const char *event_file_name,
+	void event_file_read_case(
+			const char *event_file_name,
 		int case_no, int verbose_level);
-	void event_file_read_case1(std::ifstream &f,
+	void event_file_read_case1(
+			std::ifstream &f,
 		int case_no, int verbose_level);
-	int next_subset_play_back(int &subset_rank,
+	int next_subset_play_back(
+			int &subset_rank,
 			std::ifstream *play_back_file,
 		int &f_eof, int verbose_level);
 
-	void write_classification_matrix(int verbose_level);
-	void write_classification_graph(int verbose_level);
+	void write_classification_matrix(
+			int verbose_level);
+	void write_classification_graph(
+			int verbose_level);
 	void decomposition_matrix(int verbose_level);
 	void compute_down_link(
 			int *&down_link, int verbose_level);
-	void probe(int flag_orbit, int subset_rk,
+	void probe(
+			int flag_orbit, int subset_rk,
 		int f_implicit_fusion, int verbose_level);
 	void test_compute_stabilizer(int verbose_level);
 	void test_memory(int verbose_level);
-	void test_edges(int verbose_level);
-	int test_edge(int n1, long int *subset1,
+	void test_edges(
+			int verbose_level);
+	int test_edge(
+			int n1, long int *subset1,
 		int *transporter, int verbose_level);
 	void compute_Ago_Ago_induced(
 			ring_theory::longinteger_object *&Ago,
@@ -894,41 +919,41 @@ public:
 
 
 
-	int *solution_first;
+	int *starter_solution_first;
 		// [nb_starter + 1] the beginning of solutions
 		// belonging to a given starter
 		// previously called case_first
-	int *solution_len;
+	int *starter_solution_len;
 		// [nb_starter + 1] the number of solutions
 		// belonging to a given starter
 		// previously called case_len
 
 
 
-	int *starter_number;
-		// [N]  starter_number[i] = j means that
+	int *starter_number_of_solution; // starter_number
+		// [N]  starter_number_of_solution[i] = j means that
 		// solution i belongs to starter j
 		// previously called case_number
 
-	int *orbit_fst;
+	int *flag_orbit_solution_first; // orbit_fst;
 		// [nb_flag_orbits + 1]
-		// orbit_fst[i] is the beginning of solutions
+		// flag_orbit_solution_first[i] is the beginning of solutions
 		// associated to the i-th flag orbit
 		// in the sorted list of solutions
-		// allocated in isomorph::read_orbit_data()
+		// allocated in read_orbit_data()
 
-	int *orbit_len;
+	int *flag_orbit_solution_len;
 		// [nb_orbits]
-		// orbit_len[i] is the length of the i-th flag orbit
-		// allocated in isomorph::read_orbit_data()
+		// flag_orbit_solution_len[i] is the length of the i-th flag orbit
+		// allocated in read_orbit_data()
 
 
-	int *orbit_number;
+	int *flag_orbit_of_solution; // orbit_number;
 		// [N]
-		// orbit_number[i] is the flag orbit
+		// flag_orbit_of_solution[i] is the flag orbit
 		// containing the i-th solution
 		// in the original labeling
-		// allocated in isomorph::read_orbit_data()
+		// allocated in read_orbit_data()
 
 
 	int *orbit_perm;
@@ -938,18 +963,18 @@ public:
 		// we often see id = orbit_perm[orbit_fst[orbit_no]];
 		// this is the index of the first solution
 		// associated to flag orbit orbit_no, for instance
-		// allocated in isomorph::read_orbit_data()
+		// allocated in read_orbit_data()
 
 	int *orbit_perm_inv;
 		// [N]
 		// orbit_perm_inv is the inverse of orbit_perm
-		// allocated in isomorph::read_orbit_data()
+		// allocated in read_orbit_data()
 
 
 	int *schreier_vector; // [N]
-		// allocated in isomorph::read_orbit_data()
+		// allocated in read_orbit_data()
 	int *schreier_prev; // [N]
-		// allocated in isomorph::read_orbit_data()
+		// allocated in read_orbit_data()
 
 
 
@@ -969,11 +994,11 @@ public:
 	// these variables are not used ?? (Oct 30, 2014)
 	// They are used, for instance in isomorph_testing.cpp
 	// isomorph::write_classification_graph (May 3, 2015)
-	int *flag_orbit_fst;
+	int *first_flag_orbit_of_starter; //flag_orbit_fst;
 		// [nb_starter + 1]
 		// the beginning of flag orbits
 		// belonging to a given starter
-	int *flag_orbit_len;
+	int *nb_flag_orbits_of_starter; // flag_orbit_len;
 		// [nb_starter]
 		// the number of flag orbits belonging to a given starter
 
@@ -1009,7 +1034,8 @@ public:
 	void orbits_of_stabilizer_case(int the_case,
 			data_structures_groups::vector_ge &gens,
 			int verbose_level);
-	void orbit_representative(int i, int &i0,
+	void orbit_representative(
+			int i, int &i0,
 		int &orbit, int *transporter, int verbose_level);
 		// slow because it calls load_strong_generators
 	void test_orbit_representative(int verbose_level);
@@ -1020,7 +1046,8 @@ public:
 	void init_DB_sol(int verbose_level);
 		// We assume that the starter is of size 5 and that
 		// fields 3-8 are the starter
-	void add_solution_to_database(long int *data,
+	void add_solution_to_database(
+			long int *data,
 		int nb, int id, int no,
 		int nb_solutions, long int h, uint_4 &datref,
 		int print_mod, int verbose_level);

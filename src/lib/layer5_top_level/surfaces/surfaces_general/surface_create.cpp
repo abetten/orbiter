@@ -2513,7 +2513,13 @@ void surface_create::create_surface_by_skew_hexagon(
 		cout << "surface_create::create_surface_by_skew_hexagon" << endl;
 	}
 
-	int Pluecker_ccords[] = {1,0,0,0,0,0, 0,1,0,1,0,0, 0,1,1,0,0,0, 0,1,0,0,0,0, 1,0,0,1,0,0, 1,0,1,0,0,0};
+	int Pluecker_ccords[] = {
+			1,0,0,0,0,0,
+			0,1,0,1,0,0,
+			0,1,1,0,0,0,
+			0,1,0,0,0,0,
+			1,0,0,1,0,0,
+			1,0,1,0,0,0};
 	int i;
 	long int *Pts;
 	int nb_pts = 6;
@@ -2728,7 +2734,8 @@ void surface_create::create_surface_at_random(
 		cout << "surface_create::create_surface_at_random "
 				"before create_sims" << endl;
 	}
-	Sims = Surf_A->A->Strong_gens->create_sims(0 /*verbose_level*/);
+	Sims = Surf_A->A->Strong_gens->create_sims(
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "surface_create::create_surface_at_random "
 				"after create_sims" << endl;

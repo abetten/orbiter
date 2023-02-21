@@ -1067,7 +1067,7 @@ public:
 	void create_shallow_schreier_tree_fname_mask(
 			std::string &fname, int node);
 	void make_fname_candidates_file_default(
-			char *fname2000, int level);
+			std::string &fname, int level);
 	void wedge_product_export_magma(
 			int n, int q, int vector_space_dimension,
 			int level, int verbose_level);
@@ -1311,7 +1311,7 @@ public:
 		int level, std::ofstream &fp,
 		int &nb_group_elements, int verbose_level);
 	void write_candidates_binary_using_sv(
-			const char *fname_base,
+			std::string &fname_base,
 			int lvl, int t0, int verbose_level);
 	void read_level_file(int level,
 			std::string &fname, int verbose_level);

@@ -428,8 +428,8 @@ int substructure_classification::find_extension_easy_old(long int *set,
 		cout << "case_nb=" << case_nb << endl;
 	}
 	Sorting.lint_vec_heapsort(set + Iso->level, Iso->size - Iso->level);
-	first = Iso->Lifting->solution_first[case_nb];
-	len = Iso->Lifting->solution_len[case_nb];
+	first = Iso->Lifting->starter_solution_first[case_nb];
+	len = Iso->Lifting->starter_solution_len[case_nb];
 	ret = find_extension_search_interval(set,
 		first, len, idx, FALSE, 0, FALSE, verbose_level);
 	if (f_v) {

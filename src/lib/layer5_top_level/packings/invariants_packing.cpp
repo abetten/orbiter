@@ -117,7 +117,7 @@ void invariants_packing::init(
 		int rep, first, /*c,*/ id;
 		
 		rep = Iso->Folding->Reps->rep[orbit];
-		first = Iso->Lifting->orbit_fst[rep];
+		first = Iso->Lifting->flag_orbit_solution_first[rep];
 		//c = Iso->starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
 		Iso->Lifting->load_solution(id, P->the_packing, verbose_level - 1);
@@ -151,7 +151,7 @@ void invariants_packing::init(
 		int rep, first, /*c,*/ id, a;
 		
 		rep = Iso->Folding->Reps->rep[orbit];
-		first = Iso->Lifting->orbit_fst[rep];
+		first = Iso->Lifting->flag_orbit_solution_first[rep];
 		//c = Iso->starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
 		Iso->Lifting->load_solution(id, P->the_packing, verbose_level - 1);
@@ -278,7 +278,7 @@ void invariants_packing::compute_dual_packings(
 		int f_implicit_fusion = TRUE;
 		
 		rep = Iso->Folding->Reps->rep[orbit];
-		first = Iso->Lifting->orbit_fst[rep];
+		first = Iso->Lifting->flag_orbit_solution_first[rep];
 		//c = Iso->starter_number[first];
 		id = Iso->Lifting->orbit_perm[first];
 		Iso->Lifting->load_solution(id, P->the_packing, verbose_level - 1);

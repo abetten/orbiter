@@ -621,7 +621,7 @@ void spread_classify::report3(
 
 	for (h = 0; h < Iso.Folding->Reps->count; h++) {
 		rep = Iso.Folding->Reps->rep[h];
-		first = Iso.Lifting->orbit_fst[rep];
+		first = Iso.Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
 		Iso.Lifting->load_solution(id, data, verbose_level - 1);
@@ -778,7 +778,7 @@ void spread_classify::report3(
 
 	for (h = 0; h < Iso.Folding->Reps->count; h++) {
 		rep = Iso.Folding->Reps->rep[h];
-		first = Iso.Lifting->orbit_fst[rep];
+		first = Iso.Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
 		Iso.Lifting->load_solution(id, data, verbose_level - 1);
@@ -1125,7 +1125,7 @@ void spread_classify::cooperstein_thas_quotients(
 	}
 
 	rep = Iso.Folding->Reps->rep[h];
-	first = Iso.Lifting->orbit_fst[rep];
+	first = Iso.Lifting->flag_orbit_solution_first[rep];
 	//c = Iso.starter_number[first];
 	id = Iso.Lifting->orbit_perm[first];
 	Iso.Lifting->load_solution(id, data, verbose_level - 1);
@@ -1315,7 +1315,7 @@ void spread_classify::orbit_info_short(
 	long int data[1000];
 
 	rep = Iso.Folding->Reps->rep[h];
-	first = Iso.Lifting->orbit_fst[rep];
+	first = Iso.Lifting->flag_orbit_solution_first[rep];
 	//c = Iso.starter_number[first];
 	id = Iso.Lifting->orbit_perm[first];
 	Iso.Lifting->load_solution(id, data, verbose_level - 1);

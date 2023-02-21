@@ -123,7 +123,6 @@ interface_toolkit::interface_toolkit()
 	loop_over_start_idx = 0;
 	loop_over_end_idx = 0;
 	//std::string loop_over_variable;
-	// deleted: //std::string loop_over_index;
 	//std::string loop_over_domain;
 	loop_over_argv = NULL;
 
@@ -354,7 +353,8 @@ void interface_toolkit::read_arguments(int argc,
 	}
 
 	if (f_v) {
-		cout << "interface_toolkit::read_arguments the next argument is " << argv[i] << endl;
+		cout << "interface_toolkit::read_arguments "
+				"the next argument is " << argv[i] << endl;
 	}
 	if (ST.stringcmp(argv[i], "-create_files") == 0) {
 		f_create_files = TRUE;
@@ -363,7 +363,8 @@ void interface_toolkit::read_arguments(int argc,
 			cout << "-create_files " << endl;
 		}
 
-		Create_file_description = NEW_OBJECT(orbiter_kernel_system::create_file_description);
+		Create_file_description =
+				NEW_OBJECT(orbiter_kernel_system::create_file_description);
 		i += Create_file_description->read_arguments(argc - i - 1,
 			argv + i + 1, verbose_level);
 		if (f_v) {
@@ -390,7 +391,8 @@ void interface_toolkit::read_arguments(int argc,
 		csv_file_select_rows_fname.assign(argv[++i]);
 		csv_file_select_rows_text.assign(argv[++i]);
 		if (f_v) {
-			cout << "-csv_file_select_rows " << csv_file_select_rows_fname
+			cout << "-csv_file_select_rows "
+					<< csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
 		}
 	}
@@ -399,7 +401,8 @@ void interface_toolkit::read_arguments(int argc,
 		csv_file_split_rows_modulo_fname.assign(argv[++i]);
 		csv_file_split_rows_modulo_n = ST.strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-csv_file_split_rows_modulo " << csv_file_split_rows_modulo_fname
+			cout << "-csv_file_split_rows_modulo "
+					<< csv_file_split_rows_modulo_fname
 				<< " " << csv_file_split_rows_modulo_n << endl;
 		}
 	}
@@ -408,7 +411,8 @@ void interface_toolkit::read_arguments(int argc,
 		csv_file_select_cols_fname.assign(argv[++i]);
 		csv_file_select_cols_text.assign(argv[++i]);
 		if (f_v) {
-			cout << "-csv_file_select_cols " << csv_file_select_cols_fname
+			cout << "-csv_file_select_cols "
+					<< csv_file_select_cols_fname
 				<< " " << csv_file_select_cols_text << endl;
 		}
 	}
@@ -449,7 +453,8 @@ void interface_toolkit::read_arguments(int argc,
 		if (f_v) {
 			cout << "-csv_file_join " << endl;
 			for (j = 0; j < nb; j++) {
-				cout << j << " : " << csv_file_join_fname[j]
+				cout << j
+						<< " : " << csv_file_join_fname[j]
 					<< " : " << csv_file_join_identifier[j] << endl;
 			}
 		}
@@ -466,7 +471,8 @@ void interface_toolkit::read_arguments(int argc,
 			csv_file_concatenate_fname_in.push_back(s);
 		}
 		if (f_v) {
-			cout << "-csv_file_concatenate " << csv_file_concatenate_fname_out << endl;
+			cout << "-csv_file_concatenate "
+					<< csv_file_concatenate_fname_out << endl;
 			for (j = 0; j < nb; j++) {
 				cout << j << " : " << csv_file_concatenate_fname_in[j] << endl;
 			}
@@ -490,7 +496,9 @@ void interface_toolkit::read_arguments(int argc,
 		csv_file_extract_column_to_txt_fname.assign(argv[++i]);
 		csv_file_extract_column_to_txt_col_label.assign(argv[++i]);
 		if (f_v) {
-			cout << "-csv_file_extract_column_to_txt " << csv_file_extract_column_to_txt_fname << " " << csv_file_extract_column_to_txt_col_label << endl;
+			cout << "-csv_file_extract_column_to_txt "
+					<< csv_file_extract_column_to_txt_fname
+					<< " " << csv_file_extract_column_to_txt_col_label << endl;
 		}
 	}
 
@@ -499,7 +507,8 @@ void interface_toolkit::read_arguments(int argc,
 		f_produce_latex_header = ST.strtoi(argv[++i]);
 		csv_file_latex_fname.assign(argv[++i]);
 		if (f_v) {
-			cout << "-csv_file_latex " << f_produce_latex_header << " " << csv_file_latex_fname << endl;
+			cout << "-csv_file_latex " << f_produce_latex_header
+					<< " " << csv_file_latex_fname << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-grade_statistic_from_csv") == 0) {
@@ -552,7 +561,8 @@ void interface_toolkit::read_arguments(int argc,
 		f_split_by_values = TRUE;
 		split_by_values_fname_in.assign(argv[++i]);
 		if (f_v) {
-			cout << "-split_by_values " << split_by_values_fname_in << endl;
+			cout << "-split_by_values "
+					<< split_by_values_fname_in << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-change_values") == 0) {
@@ -577,7 +587,8 @@ void interface_toolkit::read_arguments(int argc,
 		store_as_csv_file_n = ST.strtoi(argv[++i]);
 		store_as_csv_file_data.assign(argv[++i]);
 		if (f_v) {
-			cout << "-store_as_csv_file " << store_as_csv_file_fname
+			cout << "-store_as_csv_file "
+					<< store_as_csv_file_fname
 				<< " " << store_as_csv_file_m
 				<< " " << store_as_csv_file_n
 				<< " " << store_as_csv_file_data << endl;
@@ -608,16 +619,23 @@ void interface_toolkit::read_arguments(int argc,
 		loop_step = ST.strtoi(argv[++i]);
 		loop_argv = argv;
 
-		for (++i; i < argc; i++) {
-			if (ST.stringcmp(argv[i], "-end_loop") == 0) {
-				loop_end_idx = i;
+		for (++i; i < argc - 1; i++) {
+			if (ST.stringcmp(argv[i], "-end_loop") == 0
+					&& ST.stringcmp(argv[i + 1], loop_variable.c_str()) == 0) {
+				cout << "found -end_loop " << loop_variable << " at i=" << i << " argc=" << argc << endl;
+				loop_end_idx = i + 1;
 				break;
 			}
 		}
-		if (i == argc) {
-			cout << "-loop cannot find -end_loop" << endl;
+		if (i == argc - 1) {
+			cout << "-loop cannot find -end_loop " << loop_variable << " in:" << endl;
+			for (int j = loop_start_idx; j < argc; j++) {
+				cout << " " << argv[j];
+			}
+			cout << endl;
 			exit(1);
 		}
+		i++;
 		if (f_v) {
 			cout << "-loop " << loop_variable
 				<< " " << loop_from
@@ -641,13 +659,15 @@ void interface_toolkit::read_arguments(int argc,
 		loop_over_argv = argv;
 
 		for (++i; i < argc - 1; i++) {
-			if (ST.stringcmp(argv[i], "-end_loop_over") == 0 && ST.stringcmp(argv[i + 1], loop_over_variable.c_str()) == 0) {
-				loop_over_end_idx = i;
+			if (ST.stringcmp(argv[i], "-end_loop_over") == 0
+					&& ST.stringcmp(argv[i + 1], loop_over_variable.c_str()) == 0) {
+				loop_over_end_idx = i + 1;
 				break;
 			}
 		}
 		if (i == argc - 1) {
-			cout << "-loop_over cannot find -end_loop_over <variable>, looking for variable " << loop_over_variable << endl;
+			cout << "-loop_over cannot find -end_loop_over <variable>, "
+					"looking for variable " << loop_over_variable << endl;
 			exit(1);
 		}
 		i++;
@@ -674,7 +694,8 @@ void interface_toolkit::read_arguments(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-draw_projective_curve") == 0) {
 		f_draw_projective_curve = TRUE;
-		Draw_projective_curve_description = NEW_OBJECT(graphics::draw_projective_curve_description);
+		Draw_projective_curve_description =
+				NEW_OBJECT(graphics::draw_projective_curve_description);
 		if (f_v) {
 			cout << "reading -draw_projective_curve" << endl;
 		}
@@ -741,7 +762,9 @@ void interface_toolkit::read_arguments(int argc,
 		serialize_file_names_fname.assign(argv[++i]);
 		serialize_file_names_output_mask.assign(argv[++i]);
 		if (f_v) {
-			cout << "-serialize_file_names " << serialize_file_names_fname << " " << serialize_file_names_output_mask << endl;
+			cout << "-serialize_file_names "
+					<< serialize_file_names_fname
+					<< " " << serialize_file_names_output_mask << endl;
 		}
 	}
 
@@ -767,7 +790,8 @@ void interface_toolkit::print()
 				<< " " << csv_file_select_rows_text << endl;
 	}
 	if (f_csv_file_split_rows_modulo) {
-		cout << "-csv_file_split_rows_modulo " << csv_file_split_rows_modulo_fname
+		cout << "-csv_file_split_rows_modulo "
+				<< csv_file_split_rows_modulo_fname
 				<< " " << csv_file_split_rows_modulo_n << endl;
 	}
 	if (f_csv_file_select_cols) {
@@ -789,7 +813,8 @@ void interface_toolkit::print()
 	if (f_csv_file_join) {
 		cout << "-csv_file_join " << endl;
 		for (j = 0; j < csv_file_join_fname.size(); j++) {
-			cout << j << " : " << csv_file_join_fname[j] << " : " << csv_file_join_identifier[j] << endl;
+			cout << j << " : " << csv_file_join_fname[j]
+				<< " : " << csv_file_join_identifier[j] << endl;
 		}
 	}
 	if (f_csv_file_concatenate) {
@@ -806,7 +831,9 @@ void interface_toolkit::print()
 				<< endl;
 	}
 	if (f_csv_file_extract_column_to_txt) {
-		cout << "-csv_file_extract_column_to_txt " << csv_file_extract_column_to_txt_fname << " " << csv_file_extract_column_to_txt_col_label << endl;
+		cout << "-csv_file_extract_column_to_txt "
+				<< csv_file_extract_column_to_txt_fname
+				<< " " << csv_file_extract_column_to_txt_col_label << endl;
 	}
 	if (f_csv_file_latex) {
 		cout << "-csv_file_latex " << csv_file_latex_fname << endl;
@@ -936,12 +963,14 @@ void interface_toolkit::worker(int verbose_level)
 		Get_matrix(save_matrix_csv_label, v, m, n);
 		Fio.int_matrix_write_csv(fname, v, m, n);
 
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 	else if (f_csv_file_select_rows) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_select_rows" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_select_rows" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
@@ -951,17 +980,20 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_csv_file_split_rows_modulo) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_split_rows_modulo" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_split_rows_modulo" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_split_rows_modulo(csv_file_split_rows_modulo_fname,
+		Fio.do_csv_file_split_rows_modulo(
+				csv_file_split_rows_modulo_fname,
 				csv_file_split_rows_modulo_n, verbose_level);
 	}
 	else if (f_csv_file_select_cols) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_select_cols" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_select_cols" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
@@ -971,19 +1003,22 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_csv_file_select_rows_and_cols) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_select_rows_and_cols" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_select_rows_and_cols" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
 		Fio.do_csv_file_select_rows_and_cols(
 				csv_file_select_rows_and_cols_fname,
-				csv_file_select_rows_and_cols_R_text, csv_file_select_rows_and_cols_C_text,
+				csv_file_select_rows_and_cols_R_text,
+				csv_file_select_rows_and_cols_C_text,
 				verbose_level);
 	}
 	else if (f_csv_file_sort_each_row) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_sort_each_row" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_sort_each_row" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
@@ -993,27 +1028,32 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_csv_file_join) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_join" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_join" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_join(csv_file_join_fname,
+		Fio.do_csv_file_join(
+				csv_file_join_fname,
 				csv_file_join_identifier, verbose_level);
 	}
 	else if (f_csv_file_concatenate) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_concatenate" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_concatenate" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_concatenate(csv_file_concatenate_fname_in,
+		Fio.do_csv_file_concatenate(
+				csv_file_concatenate_fname_in,
 				csv_file_concatenate_fname_out, verbose_level);
 	}
 	else if (f_csv_file_concatenate_from_mask) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_concatenate_from_mask" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_concatenate_from_mask" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
@@ -1026,22 +1066,28 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_csv_file_extract_column_to_txt) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_extract_column_to_txt" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_extract_column_to_txt" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_extract_column_to_txt(csv_file_extract_column_to_txt_fname, csv_file_extract_column_to_txt_col_label, verbose_level);
+		Fio.do_csv_file_extract_column_to_txt(
+				csv_file_extract_column_to_txt_fname,
+				csv_file_extract_column_to_txt_col_label,
+				verbose_level);
 
 	}
 	else if (f_csv_file_latex) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_csv_file_latex" << endl;
+			cout << "interface_toolkit::worker "
+					"f_csv_file_latex" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 		int nb_lines_per_table = 40;
 
-		Fio.do_csv_file_latex(csv_file_latex_fname,
+		Fio.do_csv_file_latex(
+				csv_file_latex_fname,
 				f_produce_latex_header,
 				nb_lines_per_table,
 				verbose_level);
@@ -1049,7 +1095,8 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_grade_statistic_from_csv) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_grade_statistic_from_csv" << endl;
+			cout << "interface_toolkit::worker "
+					"f_grade_statistic_from_csv" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 		int f_midterm1 = TRUE;
@@ -1057,18 +1104,21 @@ void interface_toolkit::worker(int verbose_level)
 		int f_final = TRUE;
 		int f_oracle_grade = TRUE;
 
-		Fio.grade_statistic_from_csv(grade_statistic_from_csv_fname,
+		Fio.grade_statistic_from_csv(
+				grade_statistic_from_csv_fname,
 				f_midterm1, grade_statistic_from_csv_m1_label,
 				f_midterm2, grade_statistic_from_csv_m2_label,
 				f_final, grade_statistic_from_csv_final_label,
-				f_oracle_grade, grade_statistic_from_csv_oracle_grade_label,
+				f_oracle_grade,
+				grade_statistic_from_csv_oracle_grade_label,
 				verbose_level);
 
 	}
 	else if (f_draw_matrix) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_draw_matrix" << endl;
+			cout << "interface_toolkit::worker "
+					"f_draw_matrix" << endl;
 		}
 		graphics::graphical_output GO;
 
@@ -1079,7 +1129,8 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_reformat) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_reformat" << endl;
+			cout << "interface_toolkit::worker "
+					"f_reformat" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 		int *M;
@@ -1088,28 +1139,36 @@ void interface_toolkit::worker(int verbose_level)
 		int len;
 		int m2;
 
-		Fio.int_matrix_read_csv(reformat_fname_in, M, m, n, verbose_level);
+		Fio.int_matrix_read_csv(
+				reformat_fname_in, M, m, n, verbose_level);
 		len = m * n;
 		m2 = (len + reformat_nb_cols - 1) / reformat_nb_cols;
 		M2 = NEW_int(m2 * reformat_nb_cols);
 		Int_vec_zero(M2, m2 * reformat_nb_cols);
 		Int_vec_copy(M, M2, len);
-		Fio.int_matrix_write_csv(reformat_fname_out, M2, m2, reformat_nb_cols);
-		cout << "Written file " << reformat_fname_out << " of size " << Fio.file_size(reformat_fname_out) << endl;
+		Fio.int_matrix_write_csv(
+				reformat_fname_out, M2, m2, reformat_nb_cols);
+		cout << "Written file " << reformat_fname_out
+				<< " of size "
+				<< Fio.file_size(reformat_fname_out) << endl;
 	}
 	else if (f_split_by_values) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_split_by_values" << endl;
+			cout << "interface_toolkit::worker "
+					"f_split_by_values" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
-			cout << "interface_toolkit::worker before Fio.split_by_values" << endl;
+			cout << "interface_toolkit::worker "
+					"before Fio.split_by_values" << endl;
 		}
-		Fio.split_by_values(split_by_values_fname_in, verbose_level);
+		Fio.split_by_values(
+				split_by_values_fname_in, verbose_level);
 		if (f_v) {
-			cout << "interface_toolkit::worker after Fio.split_by_values" << endl;
+			cout << "interface_toolkit::worker "
+					"after Fio.split_by_values" << endl;
 		}
 
 
@@ -1117,18 +1176,24 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_change_values) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_change_values" << endl;
+			cout << "interface_toolkit::worker "
+					"f_change_values" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
-			cout << "interface_toolkit::worker before Fio.change_values" << endl;
+			cout << "interface_toolkit::worker "
+					"before Fio.change_values" << endl;
 		}
-		Fio.change_values(change_values_fname_in, change_values_fname_out,
-				change_values_function_input, change_values_function_output,
+		Fio.change_values(
+				change_values_fname_in,
+				change_values_fname_out,
+				change_values_function_input,
+				change_values_function_output,
 				verbose_level);
 		if (f_v) {
-			cout << "interface_toolkit::worker after Fio.change_values" << endl;
+			cout << "interface_toolkit::worker "
+					"after Fio.change_values" << endl;
 		}
 
 
@@ -1136,7 +1201,8 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_store_as_csv_file) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_store_as_csv_file" << endl;
+			cout << "interface_toolkit::worker "
+					"f_store_as_csv_file" << endl;
 		}
 		long int *D;
 		int sz;
@@ -1154,8 +1220,12 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.lint_matrix_write_csv(store_as_csv_file_fname, D, store_as_csv_file_m, store_as_csv_file_n);
-		cout << "Written file " << store_as_csv_file_fname << " of size " << Fio.file_size(store_as_csv_file_fname) << endl;
+		Fio.lint_matrix_write_csv(
+				store_as_csv_file_fname, D,
+				store_as_csv_file_m, store_as_csv_file_n);
+		cout << "Written file " << store_as_csv_file_fname
+				<< " of size "
+				<< Fio.file_size(store_as_csv_file_fname) << endl;
 	}
 	else if (f_mv) {
 
@@ -1215,14 +1285,16 @@ void interface_toolkit::worker(int verbose_level)
 				}
 				argv2[s].assign(arg);
 			}
-			cout << "loop iteration " << h << ", executing sequence of length " << argc2 << " : ";
+			cout << "loop iteration "
+					<< h << ", executing sequence of length " << argc2 << " : ";
 			for (s = 0; s < argc2; s++) {
 				cout << " " << argv2[s];
 			}
 			cout << endl;
 
 
-			The_Orbiter_top_level_session->parse_and_execute(argc2 - 1, argv2, 0, verbose_level);
+			The_Orbiter_top_level_session->parse_and_execute(
+					argc2 - 1, argv2, 0, verbose_level);
 
 			cout << "loop iteration " << h << "done" << endl;
 
@@ -1249,7 +1321,8 @@ void interface_toolkit::worker(int verbose_level)
 		Get_lint_vector_from_label(loop_over_domain, Domain, sz, 0 /* verbose_level */);
 
 		for (h = 0; h < sz; h++) {
-			cout << "loop_over iteration h=" << h << " / " << sz << " value=" << Domain[h] << endl;
+			cout << "loop_over iteration "
+					"h=" << h << " / " << sz << " value=" << Domain[h] << endl;
 			argv2 = new string[argc2];
 			for (j = loop_over_start_idx, s = 0; j < loop_over_end_idx; j++, s++) {
 
@@ -1262,18 +1335,6 @@ void interface_toolkit::worker(int verbose_level)
 
 				snprintf(str, sizeof(str), "%d", h);
 				value.assign(str);
-
-#if 0
-				token.assign("%");
-				token.append(loop_over_index);
-
-				while (arg.find(token) != std::string::npos) {
-					arg.replace(arg.find(token), token.length(), value);
-				}
-#endif
-
-				//snprintf(str, sizeof(str), "%ld", Domain[h]);
-				//value.assign(str);
 
 				token.assign("%");
 				token.append(loop_over_variable);
@@ -1291,7 +1352,8 @@ void interface_toolkit::worker(int verbose_level)
 							index_object = arg.substr(pos + token.length() + 1, pos2 - pos1 - 1);
 						}
 						else {
-							cout << "found opening square bracket but not a corresponding closing one." << endl;
+							cout << "found opening square bracket "
+									"but not a corresponding closing one." << endl;
 							exit(1);
 						}
 					}
@@ -1302,7 +1364,8 @@ void interface_toolkit::worker(int verbose_level)
 						long int *v;
 						int sz_v;
 
-						Get_lint_vector_from_label(index_object, v, sz_v, 0 /* verbose_level */);
+						Get_lint_vector_from_label(
+								index_object, v, sz_v, 0 /* verbose_level */);
 						cout << "found object of length " << sz_v << endl;
 
 						if (h >= sz_v) {
@@ -1327,14 +1390,16 @@ void interface_toolkit::worker(int verbose_level)
 
 				argv2[s].assign(arg);
 			}
-		cout << "loop_over iteration " << h << ", executing sequence of length " << argc2 << " : ";
+		cout << "loop_over iteration " << h
+				<< ", executing sequence of length " << argc2 << " : ";
 		for (s = 0; s < argc2; s++) {
 			cout << " " << argv2[s];
 		}
 		cout << endl;
 
 
-		The_Orbiter_top_level_session->parse_and_execute(argc2 - 1, argv2, 0, verbose_level);
+		The_Orbiter_top_level_session->parse_and_execute(
+				argc2 - 1, argv2, 0, verbose_level);
 
 		cout << "loop_over iteration " << h << " / " << sz << "done" << endl;
 
@@ -1353,7 +1418,8 @@ void interface_toolkit::worker(int verbose_level)
 		int *M;
 		int m1, n1, x, y;
 
-		Fio.int_matrix_read_csv(plot_function_fname, T, m1, n1, verbose_level);
+		Fio.int_matrix_read_csv(
+				plot_function_fname, T, m1, n1, verbose_level);
 
 
 
@@ -1372,24 +1438,28 @@ void interface_toolkit::worker(int verbose_level)
 		ST.chop_off_extension(fname);
 		fname.append("_graph.csv");
 		Fio.int_matrix_write_csv(fname, M, m1, m1);
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 
 	}
 	else if (f_draw_projective_curve) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_draw_projective_curve" << endl;
+			cout << "interface_toolkit::worker "
+					"f_draw_projective_curve" << endl;
 		}
 		graphics::graphical_output GO;
 
-		GO.draw_projective_curve(Draw_projective_curve_description,
+		GO.draw_projective_curve(
+				Draw_projective_curve_description,
 				orbiter_kernel_system::Orbiter->draw_options, verbose_level);
 
 	}
 	else if (f_tree_draw) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_tree_draw" << endl;
+			cout << "interface_toolkit::worker "
+					"f_tree_draw" << endl;
 		}
 		graphics::graphical_output GO;
 
@@ -1399,9 +1469,12 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_extract_from_file) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_extract_from_file" << endl;
+			cout << "interface_toolkit::worker "
+					"f_extract_from_file" << endl;
 		}
-		cout << "-extract_from_file " << extract_from_file_fname << " " << extract_from_file_label << endl;
+		cout << "-extract_from_file "
+				<< extract_from_file_fname
+				<< " " << extract_from_file_label << endl;
 		orbiter_kernel_system::file_io Fio;
 		std::vector<std::string> text;
 		int i;
@@ -1413,7 +1486,8 @@ void interface_toolkit::worker(int verbose_level)
 				text,
 				verbose_level);
 
-		cout << "We have extracted " << text.size() << " lines of text:" << endl;
+		cout << "We have extracted "
+				<< text.size() << " lines of text:" << endl;
 		for (i = 0; i < text.size(); i++) {
 			cout << i << " : " << text[i] << endl;
 		}
@@ -1423,41 +1497,55 @@ void interface_toolkit::worker(int verbose_level)
 				fp_out << text[i] << endl;
 			}
 		}
-		cout << "Written file " << extract_from_file_target_fname << " of size " << Fio.file_size(extract_from_file_target_fname) << endl;
+		cout << "Written file "
+				<< extract_from_file_target_fname
+				<< " of size "
+				<< Fio.file_size(extract_from_file_target_fname) << endl;
 
 	}
 	else if (f_extract_from_file_with_tail) {
 
 		if (f_v) {
-			cout << "interface_toolkit::worker f_extract_from_file_with_tail" << endl;
+			cout << "interface_toolkit::worker "
+					"f_extract_from_file_with_tail" << endl;
 		}
-		cout << "-extract_from_file_with_tail " << extract_from_file_with_tail_fname << " " << extract_from_file_with_tail_label << endl;
+		cout << "-extract_from_file_with_tail "
+				<< extract_from_file_with_tail_fname
+				<< " " << extract_from_file_with_tail_label << endl;
 		orbiter_kernel_system::file_io Fio;
 		std::vector<std::string> text;
 		int i;
 
-		Fio.extract_from_makefile(extract_from_file_with_tail_fname,
+		Fio.extract_from_makefile(
+				extract_from_file_with_tail_fname,
 				extract_from_file_with_tail_label,
 				TRUE /*  f_tail */, extract_from_file_with_tail_tail,
 				text,
 				verbose_level);
 
-		cout << "We have extracted " << text.size() << " lines of text:" << endl;
+		cout << "We have extracted "
+				<< text.size() << " lines of text:" << endl;
 		for (i = 0; i < text.size(); i++) {
 			cout << i << " : " << text[i] << endl;
 		}
 		{
-			std::ofstream fp_out(extract_from_file_with_tail_target_fname);
+			std::ofstream fp_out(
+					extract_from_file_with_tail_target_fname);
 			for (i = 0; i < text.size(); i++) {
 				fp_out << text[i] << endl;
 			}
 		}
-		cout << "Written file " << extract_from_file_with_tail_target_fname << " of size " << Fio.file_size(extract_from_file_with_tail_target_fname) << endl;
+		cout << "Written file "
+				<< extract_from_file_with_tail_target_fname
+				<< " of size "
+				<< Fio.file_size(extract_from_file_with_tail_target_fname) << endl;
 
 	}
 	else if (f_serialize_file_names) {
 		if (f_v) {
-			cout << "interface_toolkit::worker -serialize_file_names " << serialize_file_names_fname << endl;
+			cout << "interface_toolkit::worker "
+					"-serialize_file_names "
+					<< serialize_file_names_fname << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 		std::string *Lines;
@@ -1473,7 +1561,9 @@ void interface_toolkit::worker(int verbose_level)
 			verbose_level);
 
 		if (f_v) {
-			cout << "interface_toolkit::worker serialize_file_names_output_mask = " << serialize_file_names_output_mask << endl;
+			cout << "interface_toolkit::worker "
+					"serialize_file_names_output_mask = "
+					<< serialize_file_names_output_mask << endl;
 		}
 
 		for (i = 0; i < nb_lines; i++) {

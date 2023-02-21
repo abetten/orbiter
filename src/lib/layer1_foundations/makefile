@@ -6,7 +6,15 @@ LIB =
 LFLAGS = -lm
 
 
-all: algebra \
+# expression_parser_sajeeb must come before expression_parser
+# because the file expression_parser_sajeeb/parse_tab.h 
+# must be generated
+# before it is used in expression_parser
+
+
+all: \
+	expression_parser_sajeeb \
+	algebra \
 	algebraic_geometry \
 	coding_theory \
 	combinatorics \
@@ -29,9 +37,7 @@ all: algebra \
 	polish \
 	ring_theory \
 	solvers \
-	BitSet \
-	expression_parser_sajeeb
-
+	BitSet
 
 
 

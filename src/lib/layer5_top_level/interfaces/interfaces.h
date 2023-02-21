@@ -827,7 +827,6 @@ class interface_toolkit {
 	int loop_over_start_idx;
 	int loop_over_end_idx;
 	std::string loop_over_variable;
-	//std::string loop_over_index;
 	std::string loop_over_domain;
 	std::string *loop_over_argv;
 

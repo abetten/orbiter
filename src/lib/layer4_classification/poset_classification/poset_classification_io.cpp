@@ -498,9 +498,11 @@ void poset_classification::write_file(
 		cout << "poset_classification::write_file "
 				"depth_completed=" << depth_completed << endl;
 	}
-	size0 = Poo->calc_size_on_file(depth_completed, 0 /*verbose_level*/);
+	size0 = Poo->calc_size_on_file(
+			depth_completed, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "poset_classification::write_file size on file = " << size0 << endl;
+		cout << "poset_classification::write_file "
+				"size on file = " << size0 << endl;
 	}
 
 	if (size0 > 1000 * ONE_MILLION) {
@@ -709,7 +711,8 @@ void poset_classification::housekeeping(
 		fname_reps_csv.append(str);
 		fname_reps_csv.append(".csv");
 
-		Poo->save_representatives_at_level_to_csv(fname_reps_csv, i, verbose_level);
+		Poo->save_representatives_at_level_to_csv(
+				fname_reps_csv, i, verbose_level);
 
 
 		my_fname_base.assign(problem_label_with_path);
@@ -1516,12 +1519,21 @@ void poset_classification::create_shallow_schreier_tree_fname_mask(
 }
 
 void poset_classification::make_fname_candidates_file_default(
-		char *fname2000, int level)
+		std::string &fname, int level)
 {
-	snprintf(fname2000, 2000, "%s_lvl_%d_candidates.bin",
-			problem_label_with_path.c_str(), level);
-}
 
+	fname.assign(problem_label_with_path);
+	fname.append("_lvl_");
+
+	char str[1000];
+
+	snprintf(str, sizeof(str), "%d", level);
+	fname.append(str);
+	fname.append("_candidates.bin");
+
+	//snprintf(fname2000, 2000, "%s_lvl_%d_candidates.bin",
+	//		problem_label_with_path.c_str(), level);
+}
 
 void poset_classification::wedge_product_export_magma(
 		int n, int q, int vector_space_dimension,

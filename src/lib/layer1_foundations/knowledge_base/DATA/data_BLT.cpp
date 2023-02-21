@@ -925,7 +925,7 @@ static int BLT_47_make_element_size = 25;
 
 
 
-
+#if 0
 static int BLT_49_size = 50;
 static int BLT_49_nb_reps = 8;
 static long int BLT_49_reps[] = {
@@ -995,6 +995,7 @@ static int BLT_49_stab_gens[] = {
 static int BLT_49_stab_gens_fst[] = { 0, 10, 16, 26, 30, 32, 35, 38};
 static int BLT_49_stab_gens_len[] = { 10, 6, 10, 4, 2, 3, 3, 4};
 static int BLT_49_make_element_size = 26;
+#endif
 
 
 

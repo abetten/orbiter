@@ -701,7 +701,7 @@ void poset_classification::extend_level(
 					"size = " << size
 					<< " before write_candidates_binary_using_sv" << endl;
 		}
-		Poo->write_candidates_binary_using_sv(problem_label_with_path.c_str(),
+		Poo->write_candidates_binary_using_sv(problem_label_with_path,
 				size, t0, verbose_level - 1);
 		if (f_v) {
 			cout << "poset_classification::extend_level "

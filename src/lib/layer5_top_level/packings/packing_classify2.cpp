@@ -53,7 +53,7 @@ void packing_classify::compute_klein_invariants(
 			}
 			continue;
 		}
-		id = Iso->Lifting->orbit_perm[Iso->Lifting->orbit_fst[Iso->Folding->Reps->rep[orbit]]];
+		id = Iso->Lifting->orbit_perm[Iso->Lifting->flag_orbit_solution_first[Iso->Folding->Reps->rep[orbit]]];
 	
 		Iso->Lifting->load_solution(id, the_packing, verbose_level - 1);
 		if (f_vv) {
@@ -460,7 +460,7 @@ void packing_classify::report_isomorphism_type(
 
 
 	rep = Iso->Folding->Reps->rep[orbit];
-	first = Iso->Lifting->orbit_fst[rep];
+	first = Iso->Lifting->flag_orbit_solution_first[rep];
 	//c = Iso->starter_number[first];
 	id = Iso->Lifting->orbit_perm[first];
 	Iso->Lifting->load_solution(id, the_packing, verbose_level - 1);

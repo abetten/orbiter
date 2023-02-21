@@ -152,7 +152,7 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 		}
 		else if (ST.stringcmp(argv[i], "-classification_graph") == 0) {
 			f_classification_graph = TRUE;
-			cout << "-make_classification_graph " << endl;
+			cout << "-classification_graph " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-e") == 0) {
 			i++;
@@ -260,7 +260,7 @@ void isomorph_arguments::print()
 		cout << "-isomorph_testing " << endl;
 	}
 	if (f_classification_graph) {
-		cout << "-make_classification_graph " << endl;
+		cout << "-classification_graph " << endl;
 	}
 	if (f_event_file) {
 		cout << "-e " << event_file_name << endl;

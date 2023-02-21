@@ -90,6 +90,7 @@ namespace knowledge_base {
 #include "DATA/BLT_sets/BLT_q9_level_10.cpp"
 #include "DATA/BLT_sets/BLT_q25_classification.cpp"
 #include "DATA/BLT_sets/BLT_q27_classification.cpp"
+#include "DATA/BLT_sets/BLT_q49_classification.cpp"
 
 #include "DATA/planes_16.cpp"
 
@@ -1957,7 +1958,7 @@ int knowledge_base::BLT_nb_reps(int q)
 		nb = BLT_47_nb_reps;
 		}
 	else if (q == 49) {
-		nb = BLT_49_nb_reps;
+		nb = BLT_q49_nb_reps;
 		}
 	else if (q == 53) {
 		nb = BLT_53_nb_reps;
@@ -2077,9 +2078,9 @@ long int *knowledge_base::BLT_representative(int q, int no)
 		sz = BLT_47_size;
 		}
 	else if (q == 49) {
-		p = BLT_49_reps;
-		nb = BLT_49_nb_reps;
-		sz = BLT_49_size;
+		p = BLT_q49_reps;
+		nb = BLT_q49_nb_reps;
+		sz = BLT_q49_size;
 		}
 	else if (q == 53) {
 		p = BLT_53_reps;
@@ -2275,12 +2276,12 @@ void knowledge_base::BLT_stab_gens(int q, int no,
 		stab_order = BLT_47_stab_order[no];
 		}
 	else if (q == 49) {
-		Reps = BLT_49_stab_gens;
-		nb = BLT_49_nb_reps;
-		make_element_size = BLT_49_make_element_size;
-		f = BLT_49_stab_gens_fst[no];
-		l = BLT_49_stab_gens_len[no];
-		stab_order = BLT_49_stab_order[no];
+		Reps = BLT_q49_stab_gens;
+		nb = BLT_q49_nb_reps;
+		make_element_size = BLT_q49_make_element_size;
+		f = BLT_q49_stab_gens_fst[no];
+		l = BLT_q49_stab_gens_len[no];
+		stab_order = BLT_q49_stab_order[no];
 		}
 	else if (q == 53) {
 		Reps = BLT_53_stab_gens;

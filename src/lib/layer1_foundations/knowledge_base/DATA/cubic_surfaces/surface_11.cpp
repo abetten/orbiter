@@ -1,3 +1,4 @@
+#if 0
 // file surface_11.cpp
 // created by Orbiter
 // date Sat Feb 18 02:11:23 +03 2023
@@ -35,7 +36,7 @@ static int surface_11_stab_gens[] = {
 	1,9,0,1,0,1,0,0,0,5,1,3,0,4,0,10,
 };
 
-#if 0
+#else
 static int surface_11_nb_reps = 2;
 static int surface_11_size = 20;
 static int surface_11_reps[] = {
