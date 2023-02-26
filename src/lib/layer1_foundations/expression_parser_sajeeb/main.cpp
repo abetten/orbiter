@@ -64,7 +64,7 @@ void remove_minus_nodes(shared_ptr<irtree_node>& root) {
 
 void merge_redundant_nodes(shared_ptr<irtree_node>& root) {
     static merge_nodes_visitor merge_redundant_nodes;
-    root->accept(&merge_redundant_nodes);
+    dispatcher::visit(root, merge_redundant_nodes);
 }
 
 

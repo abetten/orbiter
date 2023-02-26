@@ -14,8 +14,8 @@ using std::make_shared;
 
 class merge_nodes_visitor final : public IRTreeVoidReturnTypeVisitorInterface {
 public:
-    void visit(plus_node* op_node);
-	void visit(multiply_node* op_node);
+    void visit(plus_node* node);
+	void visit(multiply_node* node);
 
 private:
     using node_type = irtree_node::node_type;

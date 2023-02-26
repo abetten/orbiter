@@ -13,16 +13,10 @@
 
 #include "../IRTree/node.h"
 #include <memory>
-#include <unordered_map>
-#include <iostream>
-#include <variant>
 
 #ifndef _DISPATCHER_H_
 #define _DISPATCHER_H_
 
-using std::unordered_map;
-using std::cout;
-using std::endl;
 using std::shared_ptr;
 
 namespace dispatcher {
@@ -31,31 +25,31 @@ namespace dispatcher {
     auto visit(shared_ptr<node_t>& node, visitor_t& visitor, visitor_args_t... args) {
         switch (node->type) {
             case irtree_node::node_type::SENTINEL_NODE:
-                return visitor.template visit<sentinel_node>(std::forward<decltype(node)>(node),
+                return visitor.visit(static_cast<sentinel_node*>(node.get()),
                                                 std::forward<decltype(args)>(args)...);
             case irtree_node::node_type::NUMBER_NODE:
-                return visitor.template visit<number_node>(std::forward<decltype(node)>(node),
+                return visitor.visit(static_cast<number_node*>(node.get()),
                                                 std::forward<decltype(args)>(args)...);
             case irtree_node::node_type::PARAMETER_NODE:
-                return visitor.template visit<parameter_node>(std::forward<decltype(node)>(node),
+                return visitor.visit(static_cast<parameter_node*>(node.get()),
                                                 std::forward<decltype(args)>(args)...);
             case irtree_node::node_type::VARIABLE_NODE:
-                return visitor.template visit<variable_node>(std::forward<decltype(node)>(node),
+                return visitor.visit(static_cast<variable_node*>(node.get()),
                                                 std::forward<decltype(args)>(args)...);
             case irtree_node::node_type::UNARY_NEGATE_NODE:
-                return visitor.template visit<unary_negate_node>(std::forward<decltype(node)>(node),
+                return visitor.visit(static_cast<unary_negate_node*>(node.get()),
                                                 std::forward<decltype(args)>(args)...);
             case irtree_node::node_type::EXPONENT_NODE:
-                return visitor.template visit<exponent_node>(std::forward<decltype(node)>(node),
+                return visitor.visit(static_cast<exponent_node*>(node.get()),
                                                 std::forward<decltype(args)>(args)...);
             case irtree_node::node_type::MULTIPLY_NODE:
-                return visitor.template visit<multiply_node>(std::forward<decltype(node)>(node),
+                return visitor.visit(static_cast<multiply_node*>(node.get()),
                                                 std::forward<decltype(args)>(args)...);
             case irtree_node::node_type::MINUS_NODE:
-                return visitor.template visit<minus_node>(std::forward<decltype(node)>(node),
+                return visitor.visit(static_cast<minus_node*>(node.get()),
                                                 std::forward<decltype(args)>(args)...);
             case irtree_node::node_type::PLUS_NODE:
-                return visitor.template visit<plus_node>(std::forward<decltype(node)>(node),
+                return visitor.visit(static_cast<plus_node*>(node.get()),
                                                 std::forward<decltype(args)>(args)...);
             default:
                 break;

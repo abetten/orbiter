@@ -7,6 +7,7 @@
 **/
     
 #include "merge_nodes_visitor.h"
+#include "dispatcher.h"
 #include <iostream>
 
 using std::cout;
@@ -25,52 +26,52 @@ using std::endl;
 using std::cout;
 using std::endl;
 
-void merge_nodes_visitor::visit(plus_node* op_node) {
+void merge_nodes_visitor::visit(plus_node* node) {
     bool found_plus_chain = true;
-    auto it_start = op_node->children.begin();
+    auto it_start = node->children.begin();
     while (found_plus_chain) {
         found_plus_chain = false;
         bool set_start_iterator = true;
-        for (auto it = it_start; it != op_node->children.end(); ++it) {
+        for (auto it = it_start; it != node->children.end(); ++it) {
             if ((*it)->type == node_type::PLUS_NODE) {
                 found_plus_chain = true;
                 plus_node* child_raw_ptr = static_cast<plus_node*>(it->get());
                 for (shared_ptr<irtree_node>& grandchild : child_raw_ptr->children) {
-                    auto new_iter = op_node->children.insert(it, grandchild);
+                    auto new_iter = node->children.insert(it, grandchild);
                     if (grandchild->type == node_type::PLUS_NODE && set_start_iterator)
                         it_start = new_iter, set_start_iterator = false;
                 }
-                op_node->children.erase(it--);
+                node->children.erase(it--);
             }
             if (set_start_iterator) it_start = it;
         }
     }
-    for (shared_ptr<irtree_node>& child : op_node->children) {
-        child->accept(this);
+    for (shared_ptr<irtree_node>& child : node->children) {
+        dispatcher::visit(child, *this);
     }
 }
 
-void merge_nodes_visitor::visit(multiply_node* op_node) {
+void merge_nodes_visitor::visit(multiply_node* node) {
     bool found_multiplication_chain = true;
-    auto it_start = op_node->children.begin();
+    auto it_start = node->children.begin();
     while (found_multiplication_chain) {
         found_multiplication_chain = false;
         bool set_start_iterator = true;
-        for (auto it = it_start; it != op_node->children.end(); ++it) {
+        for (auto it = it_start; it != node->children.end(); ++it) {
             if ((*it)->type == node_type::MULTIPLY_NODE) {
                 found_multiplication_chain = true;
                 multiply_node* child_raw_ptr = static_cast<multiply_node*>(it->get());
                 for (shared_ptr<irtree_node>& grandchild : child_raw_ptr->children) {
-                    auto new_iter = op_node->children.insert(it, grandchild);
+                    auto new_iter = node->children.insert(it, grandchild);
                     if (grandchild->type == node_type::MULTIPLY_NODE && set_start_iterator)
                         it_start = new_iter, set_start_iterator = false;
                 }
-                op_node->children.erase(it--);
+                node->children.erase(it--);
             }
             if (set_start_iterator) it_start = it;
         }
     }
-    for (shared_ptr<irtree_node>& child : op_node->children) {
-        child->accept(this);
+    for (shared_ptr<irtree_node>& child : node->children) {
+        dispatcher::visit(child, *this);
     }
 }

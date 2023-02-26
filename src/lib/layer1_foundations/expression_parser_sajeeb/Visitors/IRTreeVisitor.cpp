@@ -6,7 +6,9 @@
 **/
 
 #include "IRTreeVisitor.h"
+#include "dispatcher.h"
 #include "../IRTree/node.h"
+
 
 
 
