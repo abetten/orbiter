@@ -24,6 +24,12 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_export_point_line_incidence_matrix = FALSE;
 
+	f_export_cubic_surface_line_vs_line_incidence_matrix = FALSE;
+
+	f_export_cubic_surface_line_tritangent_plane_incidence_matrix = FALSE;
+
+	f_export_double_sixes = FALSE;
+
 	f_table_of_cubic_surfaces_compute_properties = FALSE;
 	//std::string _table_of_cubic_surfaces_compute_fname_csv;
 	table_of_cubic_surfaces_compute_defining_q = 0;
@@ -258,6 +264,29 @@ int projective_space_activity_description::read_arguments(
 				cout << "-export_point_line_incidence_matrix " << endl;
 			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-export_cubic_surface_line_vs_line_incidence_matrix") == 0) {
+			f_export_cubic_surface_line_vs_line_incidence_matrix = TRUE;
+			if (f_v) {
+				cout << "-export_cubic_surface_line_vs_line_incidence_matrix " << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-export_cubic_surface_line_tritangent_plane_incidence_matrix") == 0) {
+			f_export_cubic_surface_line_tritangent_plane_incidence_matrix = TRUE;
+			if (f_v) {
+				cout << "-export_cubic_surface_line_tritangent_plane_incidence_matrix " << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-export_double_sixes") == 0) {
+			f_export_double_sixes = TRUE;
+			if (f_v) {
+				cout << "-export_double_sixes " << endl;
+			}
+		}
+
+
 
 		else if (ST.stringcmp(argv[i], "-table_of_cubic_surfaces_compute_properties") == 0) {
 			f_table_of_cubic_surfaces_compute_properties = TRUE;
@@ -973,6 +1002,15 @@ void projective_space_activity_description::print()
 {
 	if (f_export_point_line_incidence_matrix) {
 		cout << "-export_point_line_incidence_matrix " << endl;
+	}
+	if (f_export_cubic_surface_line_vs_line_incidence_matrix) {
+		cout << "-export_cubic_surface_line_vs_line_incidence_matrix " << endl;
+	}
+	if (f_export_cubic_surface_line_tritangent_plane_incidence_matrix) {
+		cout << "-export_cubic_surface_line_tritangent_plane_incidence_matrix " << endl;
+	}
+	if (f_export_double_sixes) {
+		cout << "-export_double_sixes " << endl;
 	}
 	if (f_table_of_cubic_surfaces_compute_properties) {
 		cout << "-table_of_cubic_surfaces_compute_properties "

@@ -876,7 +876,8 @@ public:
 			double *A, double *B, double *C,
 			int m, int n, int o);
 	// A is m x n, B is n x o, C is m x o
-	void print_matrix(double *R);
+	void print_matrix_3x3(double *R);
+	void print_matrix(double *R, int m, int n);
 	void make_Rz(double *R, double phi);
 	void make_Ry(double *R, double psi);
 	void make_Rx(double *R, double chi);

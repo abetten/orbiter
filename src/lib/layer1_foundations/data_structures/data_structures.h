@@ -62,6 +62,14 @@ public:
 			std::string &fname_set_of_sets,
 			std::string &fname_input,
 			std::string &fname_output, int verbose_level);
+	void dot_product_of_columns(
+			std::string &label, int verbose_level);
+	void dot_product_of_rows(
+			std::string &label, int verbose_level);
+	void matrix_multiply_over_Z(
+			std::string &label1, std::string &label2, int verbose_level);
+	void matrix_rowspan_over_R(
+			std::string &label, int verbose_level);
 
 };
 

@@ -327,6 +327,7 @@ void finite_field::finite_field_init_small_order(int q,
 	if (f_v) {
 		cout << "finite_field::finite_field_init_small_order q=" << q
 				<< " f_without_tables = " << f_without_tables
+				<< " f_compute_related_fields = " << f_compute_related_fields
 				<< " verbose_level = " << verbose_level << endl;
 	}
 
@@ -365,7 +366,7 @@ void finite_field::finite_field_init_small_order(int q,
 		K.get_primitive_polynomial(poly, p, e, verbose_level - 2);
 		if (f_v) {
 			cout << "finite_field::finite_field_init_small_order q=" << q
-					<< " before init_override_polynomial poly = " << poly << endl;
+					<< " before init_override_polynomial_small_order poly = " << poly << endl;
 		}
 		init_override_polynomial_small_order(q, poly,
 				f_without_tables,
@@ -373,22 +374,37 @@ void finite_field::finite_field_init_small_order(int q,
 				verbose_level - 2);
 		if (f_v) {
 			cout << "finite_field::finite_field_init_small_order q=" << q
-					<< " after init_override_polynomial" << endl;
+					<< " after init_override_polynomial_small_order" << endl;
 		}
+#if 0
+		if (f_compute_related_fields) {
+			if (f_v) {
+				cout << "finite_field::finite_field_init_small_order "
+						"before setup_related_fields" << endl;
+			}
+			setup_related_fields(
+					f_compute_related_fields,
+					verbose_level - 2);
+			if (f_v) {
+				cout << "finite_field::finite_field_init_small_order "
+						"after setup_related_fields" << endl;
+			}
+		}
+#endif
 	}
 	else {
 		f_is_prime_field = TRUE;
 		poly.assign("");
 		if (f_v) {
 			cout << "finite_field::finite_field_init_small_order q=" << q
-					<< " before init_override_polynomial poly = " << poly << endl;
+					<< " before init_override_polynomial_small_order poly = " << poly << endl;
 		}
 		init_override_polynomial_small_order(q, poly,
 				f_without_tables,
 				f_compute_related_fields,
 				verbose_level - 2);
 		if (f_v) {
-			cout << "finite_field::finite_field_init_small_order q=" << q
+			cout << "finite_field::init_override_polynomial_small_order q=" << q
 					<< " after init_override_polynomial" << endl;
 		}
 	}
@@ -416,14 +432,16 @@ void finite_field::setup_related_fields(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "finite_field::setup_related_fields" << endl;
+		cout << "finite_field::setup_related_fields q=" << q << endl;
+		cout << "f_compute_related_fields = " << f_compute_related_fields << endl;
 	}
 
 	if (f_compute_related_fields) {
 
 		if (f_related_fields_have_been_computed) {
 			if (f_v) {
-				cout << "finite_field::setup_related_fields related fields have been computed already" << endl;
+				cout << "finite_field::setup_related_fields "
+						"related fields have been computed already" << endl;
 			}
 		}
 		else {
@@ -440,6 +458,11 @@ void finite_field::setup_related_fields(
 			}
 			f_related_fields_have_been_computed = TRUE;
 		}
+	}
+	else {
+		cout << "finite_field::setup_related_fields q=" << q
+				<< " not computing related fields" << endl;
+
 	}
 
 	if (f_v) {
@@ -654,13 +677,13 @@ void finite_field::init_override_polynomial_small_order(
 	}
 
 	if (f_v) {
-		cout << "finite_field::finite_field_init_small_order "
+		cout << "finite_field::init_override_polynomial_small_order "
 				"before setup_related_fields" << endl;
 	}
 	setup_related_fields(f_compute_related_fields,
 			verbose_level);
 	if (f_v) {
-		cout << "finite_field::finite_field_init_small_order "
+		cout << "finite_field::init_override_polynomial_small_order "
 				"after setup_related_fields" << endl;
 	}
 

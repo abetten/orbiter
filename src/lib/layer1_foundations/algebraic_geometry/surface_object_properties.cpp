@@ -34,6 +34,9 @@ surface_object_properties::surface_object_properties()
 	f_is_on_line = NULL;
 
 
+	Pluecker_coordinates = NULL;
+	Pluecker_rk = NULL;
+
 	Eckardt_points = NULL;
 	Eckardt_points_index = NULL;
 	Eckardt_points_schlaefli_labels = NULL;
@@ -109,6 +112,13 @@ surface_object_properties::~surface_object_properties()
 	}
 	if (f_is_on_line) {
 		FREE_int(f_is_on_line);
+	}
+
+	if (Pluecker_coordinates) {
+		FREE_int(Pluecker_coordinates);
+	}
+	if (Pluecker_rk) {
+		FREE_lint(Pluecker_rk);
 	}
 
 	if (Eckardt_points) {
@@ -260,6 +270,18 @@ void surface_object_properties::init(surface_object *SO, int verbose_level)
 				"after compute_properties" << endl;
 	}
 
+	if (SO->nb_lines == 27) {
+
+		if (f_v) {
+			cout << "surface_object_properties::init "
+					"before SmoothProperties->init_roots" << endl;
+		}
+		SmoothProperties->init_roots(verbose_level);
+		if (f_v) {
+			cout << "surface_object_properties::init "
+					"after SmoothProperties->init_roots" << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "surface_object_properties::init done" << endl;
@@ -277,7 +299,25 @@ void surface_object_properties::compute_properties(int verbose_level)
 		cout << "surface_object_properties::compute_properties" << endl;
 	}
 
+	int i;
 
+	Pluecker_coordinates = NEW_int(SO->nb_lines * 6);
+	Pluecker_rk = NEW_lint(SO->nb_lines);
+
+	for (i = 0; i < SO->nb_lines; i++) {
+
+		int v6[6];
+
+		SO->Surf->Gr->Pluecker_coordinates(
+				SO->Lines[i], v6, 0 /* verbose_level */);
+
+		Int_vec_copy(
+				v6, Pluecker_coordinates + i * 6, 6);
+
+		Pluecker_rk[i] = SO->Surf->O->Orthogonal_indexing->Qplus_rank(
+				v6, 1, 5, 0 /* verbose_level*/);
+			// destroys v6[]
+	}
 
 	if (SO->Pts == NULL) {
 		if (f_v) {
@@ -288,7 +328,9 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 
 
+
 	Sorting.lint_vec_heapsort(SO->Pts, SO->nb_pts);
+
 	if (f_v) {
 		cout << "surface_object::compute_properties "
 				"we found "
@@ -318,7 +360,8 @@ void surface_object_properties::compute_properties(int verbose_level)
 		cout << "surface_object_properties::compute_properties before "
 				"Surf->compute_points_on_lines" << endl;
 	}
-	SO->Surf->compute_points_on_lines(SO->Pts, SO->nb_pts,
+	SO->Surf->compute_points_on_lines(
+			SO->Pts, SO->nb_pts,
 		SO->Lines, SO->nb_lines,
 		pts_on_lines,
 		f_is_on_line,
@@ -393,7 +436,11 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 
 	if (SO->nb_lines == 27) {
-		int p, a, b, c, idx, i;
+
+
+
+
+		int p, a, b, c, idx;
 
 		Eckardt_points_schlaefli_labels = NEW_int(nb_Eckardt_points);
 
@@ -410,7 +457,8 @@ void surface_object_properties::compute_properties(int verbose_level)
 			c = lines_on_point->Sets[i][2];
 
 
-			idx = SO->Surf->Schlaefli->identify_Eckardt_point(a, b, c, 0 /*verbose_level*/);
+			idx = SO->Surf->Schlaefli->identify_Eckardt_point(
+					a, b, c, 0 /*verbose_level*/);
 
 			Eckardt_points_schlaefli_labels[p] = idx;
 		}
@@ -466,11 +514,6 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 
 
-
-
-
-
-
 	if (f_v) {
 		cout << "computing Single points:" << endl;
 	}
@@ -500,19 +543,11 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 
 
-
-
-
-
-
-
-
-
 	Pts_not_on_lines = NEW_lint(SO->nb_pts);
 	Lint_vec_copy(SO->Pts, Pts_not_on_lines, SO->nb_pts);
 	nb_pts_not_on_lines = SO->nb_pts;
 
-	int i, j, a, b, idx, h;
+	int j, a, b, idx, h;
 
 	for (i = 0; i < pts_on_lines->nb_sets; i++) {
 

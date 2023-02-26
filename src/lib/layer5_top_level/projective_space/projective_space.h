@@ -391,6 +391,13 @@ public:
 
 	int f_export_point_line_incidence_matrix;
 
+	int f_export_cubic_surface_line_vs_line_incidence_matrix;
+
+	int f_export_cubic_surface_line_tritangent_plane_incidence_matrix;
+
+	int f_export_double_sixes;
+
+
 	int f_table_of_cubic_surfaces_compute_properties;
 	std::string table_of_cubic_surfaces_compute_fname_csv;
 	int table_of_cubic_surfaces_compute_defining_q;

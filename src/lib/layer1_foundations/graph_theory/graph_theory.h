@@ -26,7 +26,7 @@ namespace graph_theory {
 
 #define CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS 100
 
-//! settings that control the clique finding process
+//! settings to control the clique finding process
 
 
 class clique_finder_control {
@@ -335,17 +335,21 @@ public:
 		int *colors, int *Adj,
 		std::string &label, std::string &label_tex,
 		int verbose_level);
-	void init_adjacency_no_colors(int nb_points, int *Adj, 
+	void init_adjacency_no_colors(
+			int nb_points, int *Adj,
 			std::string &label, std::string &label_tex,
 		int verbose_level);
-	void init_adjacency_two_colors(int nb_points,
+	void init_adjacency_two_colors(
+			int nb_points,
 		int *Adj, int *subset, int sz,
 		std::string &label, std::string &label_tex,
 		int verbose_level);
 	void init_user_data(
 			long int *data, int data_size, int verbose_level);
-	void save(std::string &fname, int verbose_level);
-	void load(std::string &fname, int verbose_level);
+	void save(
+			std::string &fname, int verbose_level);
+	void load(
+			std::string &fname, int verbose_level);
 	void draw_on_circle(
 			std::string &fname,
 			graphics::layered_graph_draw_options *Draw_options,
@@ -353,7 +357,8 @@ public:
 	void draw_on_circle_2(
 			graphics::mp_graphics &G,
 		graphics::layered_graph_draw_options *Draw_options);
-	void create_bitmatrix(data_structures::bitmatrix *&Bitmatrix,
+	void create_bitmatrix(
+			data_structures::bitmatrix *&Bitmatrix,
 		int verbose_level);
 	void draw(
 			std::string &fname,
@@ -414,7 +419,8 @@ public:
 			long int *candidates, int nb_candidates,
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int is_cycle(int nb_e, long int *edges, int verbose_level);
+	int is_cycle(
+			int nb_e, long int *edges, int verbose_level);
 	void all_cliques(
 			clique_finder_control *Control,
 			std::string &graph_label, int verbose_level);
@@ -425,7 +431,8 @@ public:
 			int verbose_level);
 	void find_subgraph(
 			std::string &subgraph_label, int verbose_level);
-	void find_subgraph_E6(int verbose_level);
+	void find_subgraph_E6(
+			int verbose_level);
 	void all_cliques_black_and_white(
 			clique_finder_control *Control,
 			std::ostream &ost_txt,
@@ -436,6 +443,7 @@ public:
 			std::ostream &ost, int verbose_level);
 	void do_Sajeeb(
 			clique_finder_control *Control,
+			std::vector<std::vector<unsigned int> > &solutions,
 			int verbose_level);
 	void do_Sajeeb_black_and_white(
 			clique_finder_control *Control,
@@ -454,14 +462,18 @@ public:
 	void complement(int verbose_level);
 	void distance_2(int verbose_level);
 	void properties(int verbose_level);
-	int test_distinguishing_property(long int *set, int sz,
+	int test_distinguishing_property(
+			long int *set, int sz,
 			int verbose_level);
-	void eigenvalues(double *&E, int verbose_level);
-	void Laplace_eigenvalues(double *&E, int verbose_level);
+	void eigenvalues(
+			double *&E, int verbose_level);
+	void Laplace_eigenvalues(
+			double *&E, int verbose_level);
 
 };
 
-void call_back_clique_found_using_file_output(clique_finder *CF, 
+void call_back_clique_found_using_file_output(
+		clique_finder *CF,
 	int verbose_level);
 
 
@@ -733,7 +745,8 @@ public:
 
 	layered_graph();
 	~layered_graph();
-	void init(int nb_layers, int *Nb_nodes_layer, 
+	void init(
+			int nb_layers, int *Nb_nodes_layer,
 			std::string &fname_base, int verbose_level);
 	int nb_nodes();
 	void print_nb_nodes_per_level();
@@ -758,7 +771,8 @@ public:
 	void add_node_vec_data(
 			int l, int n, long int *v, int len,
 		int verbose_level);
-	void set_distinguished_element_index(int l, int n, 
+	void set_distinguished_element_index(
+			int l, int n,
 		int index, int verbose_level);
 	void add_node_data1(
 			int l, int n, int data,
@@ -791,14 +805,17 @@ public:
 	void read_memory_object(
 			orbiter_kernel_system::memory_object *m,
 			int verbose_level);
-	void remove_edges(int layer1, int node1,
+	void remove_edges(
+			int layer1, int node1,
 			int layer2, int node2,
 			std::vector<std::vector<int> > &All_Paths,
 			int verbose_level);
-	void remove_edge(int layer1, int node1,
+	void remove_edge(
+			int layer1, int node1,
 			int layer2, int node2,
 			int verbose_level);
-	void find_all_paths_between(int layer1, int node1,
+	void find_all_paths_between(
+			int layer1, int node1,
 			int layer2, int node2,
 			std::vector<std::vector<int> > &All_Paths,
 			int verbose_level);

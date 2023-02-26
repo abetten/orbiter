@@ -2610,6 +2610,11 @@ public:
 	int *Mtx2; // [3 * (n + 1)], used in is_incident
 
 
+	std::string label_txt;
+	std::string label_tex;
+
+
+
 	projective_space();
 	~projective_space();
 	void projective_space_init(

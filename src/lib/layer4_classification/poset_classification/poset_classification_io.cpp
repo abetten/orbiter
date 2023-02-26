@@ -1562,7 +1562,8 @@ void poset_classification::wedge_product_export_magma(
 	Elt = NEW_int(Poset->A->elt_size_in_int);
 
 	fst = Poo->first_node_at_level(level);
-	len = Poo->first_node_at_level(level + 1) - fst;
+	len = Poo->nb_orbits_at_level(level);
+	//len = Poo->first_node_at_level(level + 1) - fst;
 	if (f_v) {
 		cout << "exporting to magma" << endl;
 		cout << "fst=" << fst << " len=" << len << endl;
@@ -1681,7 +1682,8 @@ void poset_classification::wedge_product_export_magma(
 			std::vector<int> gen_hdl;
 			std::vector<int> tl;
 
-			O->get_strong_generators_handle(gen_hdl, verbose_level);
+			O->get_strong_generators_handle(
+					gen_hdl, verbose_level);
 
 			O->get_tl(tl, this, verbose_level);
 

@@ -497,10 +497,12 @@ public:
 			std::stringstream &ost, int a);
 	void print_element_with_symbol(
 			std::ostream &ost,
-		int a, int f_exponential, int width, std::string &symbol);
+		int a, int f_exponential,
+		int width, std::string &symbol);
 	void print_element_with_symbol_str(
 			std::stringstream &ost,
-			int a, int f_exponential, int width, std::string &symbol);
+			int a, int f_exponential,
+			int width, std::string &symbol);
 	void int_vec_print_field_elements(
 			std::ostream &ost, int *v, int len);
 	void int_vec_print_elements_exponential(
@@ -1050,6 +1052,9 @@ public:
 			int *MQ, int m, int *Mq, int verbose_level);
 		// input is MQ[m * m] over the field FQ.
 		// output is Mq[n * n] over the field Fq,
+	void lift_matrix_semilinear(
+			int *MQ, int frob,
+			int m, int *Mq, int verbose_level);
 	void retract_matrix(int *Mq, int n, int *MQ, int m,
 		int verbose_level);
 		// input is Mq[n * n] over the field Fq,

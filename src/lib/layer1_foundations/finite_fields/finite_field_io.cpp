@@ -324,7 +324,8 @@ void finite_field_io::print_element_str(
 
 void finite_field_io::print_element_with_symbol(
 		std::ostream &ost,
-		int a, int f_exponential, int width, std::string &symbol)
+		int a, int f_exponential,
+		int width, std::string &symbol)
 {
 	int b;
 
@@ -365,7 +366,8 @@ void finite_field_io::print_element_with_symbol(
 
 void finite_field_io::print_element_with_symbol_str(
 		std::stringstream &ost,
-		int a, int f_exponential, int width, std::string &symbol)
+		int a, int f_exponential,
+		int width, std::string &symbol)
 {
 	int b;
 

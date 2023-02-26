@@ -140,7 +140,8 @@ void surfaces_arc_lifting_trace::init(surfaces_arc_lifting_upstep *Up,
 }
 
 
-void surfaces_arc_lifting_trace::process_flag_orbit(surfaces_arc_lifting_upstep *Up, int verbose_level)
+void surfaces_arc_lifting_trace::process_flag_orbit(
+		surfaces_arc_lifting_upstep *Up, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -275,21 +276,26 @@ void surfaces_arc_lifting_trace::move_arc(int verbose_level)
 
 	// compute Elt_alpha1 which is 4x4:
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc before move_plane_and_arc" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"before move_plane_and_arc" << endl;
 	}
 	move_plane_and_arc(The_case.P6a, verbose_level - 2);
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc after move_plane_and_arc" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"after move_plane_and_arc" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc before compute_local_coordinates_of_arc" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"before compute_local_coordinates_of_arc" << endl;
 	}
-	Up->Lift->Surf->compute_local_coordinates_of_arc(The_case.P6a, The_case.P6_local, verbose_level - 2);
+	Up->Lift->Surf->compute_local_coordinates_of_arc(
+			The_case.P6a, The_case.P6_local, verbose_level - 2);
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc after compute_local_coordinates_of_arc" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"after compute_local_coordinates_of_arc" << endl;
 	}
 
 
@@ -299,12 +305,15 @@ void surfaces_arc_lifting_trace::move_arc(int verbose_level)
 	// compute Elt_alpha2 which is 3x3:
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc before make_arc_canonical" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"before make_arc_canonical" << endl;
 	}
-	make_arc_canonical(The_case.P6_local, The_case.P6_local_canonical,
+	make_arc_canonical(
+			The_case.P6_local, The_case.P6_local_canonical,
 			The_case.orbit_not_on_conic_idx, verbose_level);
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc after make_arc_canonical" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"after make_arc_canonical" << endl;
 	}
 
 
@@ -313,11 +322,13 @@ void surfaces_arc_lifting_trace::move_arc(int verbose_level)
 
 	// compute beta1 which is 3x3:
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc before compute_beta1" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"before compute_beta1" << endl;
 	}
 	compute_beta1(&The_case, verbose_level);
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc after compute_beta1" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"after compute_beta1" << endl;
 	}
 
 
@@ -327,9 +338,11 @@ void surfaces_arc_lifting_trace::move_arc(int verbose_level)
 
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc before compute_beta2" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"before compute_beta2" << endl;
 	}
-	compute_beta2(The_case.orbit_not_on_conic_idx,
+	compute_beta2(
+			The_case.orbit_not_on_conic_idx,
 			The_case.pair_orbit_idx,
 			The_case.partition_orbit_idx,
 			The_case.the_partition4, verbose_level);
@@ -337,7 +350,8 @@ void surfaces_arc_lifting_trace::move_arc(int verbose_level)
 	The_case.f2 = f2;
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_trace::move_arc after compute_beta2" << endl;
+		cout << "surfaces_arc_lifting_trace::move_arc "
+				"after compute_beta2" << endl;
 	}
 
 
@@ -346,7 +360,8 @@ void surfaces_arc_lifting_trace::move_arc(int verbose_level)
 	}
 }
 
-void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_level)
+void surfaces_arc_lifting_trace::move_plane_and_arc(
+		long int *P6a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -375,8 +390,10 @@ void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_l
 		cout << "tritangent_plane_rk = " << The_case.tritangent_plane_rk << endl;
 	}
 
-	Up->Lift->Surf_A->Surf->Gr3->unrank_embedded_subspace_lint_here(The_case.Basis_pi,
-			The_case.tritangent_plane_rk, 0 /*verbose_level - 5*/);
+	Up->Lift->Surf_A->Surf->Gr3->unrank_embedded_subspace_lint_here(
+			The_case.Basis_pi,
+			The_case.tritangent_plane_rk,
+			0 /*verbose_level - 5*/);
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::move_plane_and_arc" << endl;
@@ -384,7 +401,9 @@ void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_l
 		Int_matrix_print(The_case.Basis_pi, 4, 4);
 	}
 
-	Up->Lift->Surf_A->Surf->F->Linear_algebra->invert_matrix(The_case.Basis_pi, The_case.Basis_pi_inv, 4, 0 /* verbose_level */);
+	Up->Lift->Surf_A->Surf->F->Linear_algebra->invert_matrix(
+			The_case.Basis_pi, The_case.Basis_pi_inv, 4,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::move_plane_and_arc" << endl;
 		cout << "Basis_inv=" << endl;
@@ -393,9 +412,12 @@ void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_l
 
 	The_case.Basis_pi_inv[16] = 0; // in case the group is semilinear
 
-	Up->Lift->Surf_A->A->Group_element->make_element(Elt_Alpha1, The_case.Basis_pi_inv, 0 /*verbose_level*/);
+	Up->Lift->Surf_A->A->Group_element->make_element(
+			Elt_Alpha1, The_case.Basis_pi_inv,
+			0 /*verbose_level*/);
 	for (i = 0; i < 6; i++) {
-		P6a[i] = Up->Lift->Surf_A->A->Group_element->image_of(Elt_Alpha1, The_case.P6[i]);
+		P6a[i] = Up->Lift->Surf_A->A->Group_element->image_of(
+				Elt_Alpha1, The_case.P6[i]);
 	}
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::move_plane_and_arc" << endl;
@@ -432,7 +454,8 @@ void surfaces_arc_lifting_trace::make_arc_canonical(
 		cout << " orbit_not_on_conic_idx=" << orbit_not_on_conic_idx << endl;
 	}
 	for (i = 0; i < 6; i++) {
-		P6_local_canonical[i] = Up->Lift->A3->Group_element->image_of(Elt_alpha2, P6_local[i]);
+		P6_local_canonical[i] = Up->Lift->A3->Group_element->image_of(
+				Elt_alpha2, P6_local[i]);
 	}
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::make_arc_canonical" << endl;
@@ -451,7 +474,9 @@ void surfaces_arc_lifting_trace::make_arc_canonical(
 	}
 }
 
-void surfaces_arc_lifting_trace::compute_beta1(algebraic_geometry::seventytwo_cases *The_case, int verbose_level)
+void surfaces_arc_lifting_trace::compute_beta1(
+		algebraic_geometry::seventytwo_cases *The_case,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -467,7 +492,8 @@ void surfaces_arc_lifting_trace::compute_beta1(algebraic_geometry::seventytwo_ca
 	Lint_vec_copy(The_case->P6_local_canonical, P6_orbit_rep, 6);
 	Sorting.lint_vec_heapsort(P6_orbit_rep, 6);
 	for (i = 0; i < 6; i++) {
-		Sorting.lint_vec_search_linear(P6_orbit_rep, 6, The_case->P6_local_canonical[i], idx);
+		Sorting.lint_vec_search_linear(
+				P6_orbit_rep, 6, The_case->P6_local_canonical[i], idx);
 		The_case->P6_perm[i] = idx;
 	}
 	The_case->pair[0] = The_case->P6_perm[0];
@@ -490,7 +516,8 @@ void surfaces_arc_lifting_trace::compute_beta1(algebraic_geometry::seventytwo_ca
 		cout << "surfaces_arc_lifting_trace::compute_beta1 before "
 			"Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize" << endl;
 	}
-	Up->Lift->Table_orbits_on_pairs[The_case->orbit_not_on_conic_idx].recognize(The_case->pair, Elt_beta1,
+	Up->Lift->Table_orbits_on_pairs[The_case->orbit_not_on_conic_idx].recognize(
+			The_case->pair, Elt_beta1,
 			The_case->pair_orbit_idx, verbose_level - 4);
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::compute_beta1 after "
@@ -499,7 +526,8 @@ void surfaces_arc_lifting_trace::compute_beta1(algebraic_geometry::seventytwo_ca
 	}
 	for (i = 0; i < 6; i++) {
 		The_case->P6_perm_mapped[i] =
-				Up->Lift->Table_orbits_on_pairs[The_case->orbit_not_on_conic_idx].A_on_arc->Group_element->image_of(
+				Up->Lift->Table_orbits_on_pairs[
+					The_case->orbit_not_on_conic_idx].A_on_arc->Group_element->image_of(
 				Elt_beta1, The_case->P6_perm[i]);
 	}
 
@@ -588,7 +616,8 @@ void surfaces_arc_lifting_trace::compute_beta2(
 
 }
 
-void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verbose_level)
+void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(
+		int verbose_level)
 // uses Elt_Alpha2, Elt_Beta1, Elt_Beta2, Elt_Beta3, Elt_T1, Elt_T2, Elt_T3
 {
 	int f_v = (verbose_level >= 1);
@@ -644,9 +673,12 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 	}
 
 
-	Up->Lift->A4->Group_element->element_mult(Elt_Alpha1, Elt_Alpha2, Elt_T1, 0);
-	Up->Lift->A4->Group_element->element_mult(Elt_T1, Elt_Beta1, Elt_T2, 0);
-	Up->Lift->A4->Group_element->element_mult(Elt_T2, Elt_Beta2, Elt_T3, 0);
+	Up->Lift->A4->Group_element->element_mult(
+			Elt_Alpha1, Elt_Alpha2, Elt_T1, 0);
+	Up->Lift->A4->Group_element->element_mult(
+			Elt_T1, Elt_Beta1, Elt_T2, 0);
+	Up->Lift->A4->Group_element->element_mult(
+			Elt_T2, Elt_Beta2, Elt_T3, 0);
 
 
 	// map the two lines:
@@ -656,8 +688,10 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 
 
 
-	The_case.L1 = Up->Lift->Surf_A->A2->Group_element->element_image_of(Up->Lines[The_case.l1], Elt_T3, 0 /* verbose_level */);
-	The_case.L2 = Up->Lift->Surf_A->A2->Group_element->element_image_of(Up->Lines[The_case.l2], Elt_T3, 0 /* verbose_level */);
+	The_case.L1 = Up->Lift->Surf_A->A2->Group_element->element_image_of(
+			Up->Lines[The_case.l1], Elt_T3, 0 /* verbose_level */);
+	The_case.L2 = Up->Lift->Surf_A->A2->Group_element->element_image_of(
+			Up->Lines[The_case.l2], Elt_T3, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "
 				"L1=" << The_case.L1 << " L2=" << The_case.L2 << endl;
@@ -738,11 +772,13 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 
 	p1 = Up->Lift->Surf_A->Surf->P->Solid->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 			The_case.L1 /* line */,
-			0 /* plane */, 0 /* verbose_level */);
+			0 /* plane */,
+			0 /* verbose_level */);
 
 	p2 = Up->Lift->Surf_A->Surf->P->Solid->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 			line1_to /* line */,
-			0 /* plane */, 0 /* verbose_level */);
+			0 /* plane */,
+			0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "
@@ -774,7 +810,8 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "
 				"before hyperplane_lifting_with_two_lines_moved" << endl;
 	}
-	Gg.hyperplane_lifting_with_two_lines_moved(Up->Lift->Surf_A->Surf->P,
+	Gg.hyperplane_lifting_with_two_lines_moved(
+			Up->Lift->Surf_A->Surf->P,
 			The_case.L1 /* line1_from */, line1_to,
 			The_case.L2 /* line2_from */, line2_to,
 			beta3,
@@ -785,14 +822,16 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 				"after hyperplane_lifting_with_two_lines_moved" << endl;
 	}
 
-	Up->Lift->A4->Group_element->make_element(Elt_Beta3, beta3, 0);
+	Up->Lift->A4->Group_element->make_element(
+			Elt_Beta3, beta3, 0);
 
 	if (f_vv) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines" << endl;
 		cout << "Elt_beta3=" << endl;
 		Int_matrix_print(Elt_Beta3, 4, 4);
 		cout << "Elt_beta3=" << endl;
-		Up->Lift->A4->Group_element->element_print_quick(Elt_Beta3, cout);
+		Up->Lift->A4->Group_element->element_print_quick(
+				Elt_Beta3, cout);
 		cout << endl;
 	}
 
@@ -804,7 +843,8 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 	}
 }
 
-void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_level)
+void surfaces_arc_lifting_trace::embed(
+		int *Elt_A3, int *Elt_A4, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int M3[9];
@@ -835,7 +875,8 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 		M4[16] = Elt_A3[9];
 	}
 	if (FALSE) {
-		cout << "surfaces_arc_lifting_trace::embed before make_element" << endl;
+		cout << "surfaces_arc_lifting_trace::embed "
+				"before make_element" << endl;
 	}
 	Up->Lift->A4->Group_element->make_element(Elt_A4, M4, 0);
 
@@ -845,7 +886,8 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 	}
 }
 
-void surfaces_arc_lifting_trace::report_product(std::ostream &ost, int *Elt, int verbose_level)
+void surfaces_arc_lifting_trace::report_product(
+		std::ostream &ost, int *Elt, int verbose_level)
 {
 	ost << "$$" << endl;
 	Up->Lift->A4->Group_element->element_print_latex(Elt_Alpha1, ost);

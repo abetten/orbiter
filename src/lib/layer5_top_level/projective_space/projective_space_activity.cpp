@@ -49,6 +49,59 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 	}
 
+	else if (Descr->f_export_cubic_surface_line_vs_line_incidence_matrix) {
+
+		string prefix;
+
+		prefix = PA->P->label_txt;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->write_lines_vs_line" << endl;
+		}
+		PA->Surf_A->Surf->Schlaefli->write_lines_vs_line(prefix, verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->write_lines_vs_line" << endl;
+		}
+	}
+
+	else if (Descr->f_export_cubic_surface_line_tritangent_plane_incidence_matrix) {
+
+		string prefix;
+
+		prefix = PA->P->label_txt;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->write_lines_vs_tritangent_planes" << endl;
+		}
+		PA->Surf_A->Surf->Schlaefli->write_lines_vs_tritangent_planes(prefix, verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->write_lines_vs_tritangent_planes" << endl;
+		}
+	}
+
+	else if (Descr->f_export_double_sixes) {
+
+		string prefix;
+
+		prefix = PA->P->label_txt;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->write_double_sixes" << endl;
+		}
+		PA->Surf_A->Surf->Schlaefli->write_double_sixes(prefix, verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->write_double_sixes" << endl;
+		}
+	}
+
+
+
 
 	else if (Descr->f_table_of_cubic_surfaces_compute_properties) {
 

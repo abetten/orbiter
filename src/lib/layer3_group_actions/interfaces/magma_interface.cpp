@@ -436,42 +436,119 @@ void magma_interface::export_group(
 			if (f_v) {
 				cout << "magma_interface::export_group extension field" << endl;
 			}
-			ost << "F<w>:=GF(" << F->q << ");" << endl;
-			ost << "G := GeneralLinearGroup(" << M->n << ", F);" << endl;
-			ost << "H := sub< G | ";
-			for (h = 0; h < SG->gens->len; h++) {
-				Elt = SG->gens->ith(h);
-				ost << "[";
-				for (i = 0; i < M->n; i++) {
-					for (j = 0; j < M->n; j++) {
-						a = Elt[i * M->n + j];
-						if (a < F->p) {
-							ost << a;
-						}
-						else {
-							ost << "w^" << F->log_alpha(a);
-						}
-						if (j < M->n - 1) {
-							ost << ",";
-						}
-					}
-					if (i < M->n - 1) {
-						ost << ", ";
-					}
-				}
-				ost << "]";
-				if (h < SG->gens->len - 1) {
-					ost << ", " << endl;
-				}
-			}
-			ost << " >;" << endl;
 			if (M->f_semilinear) {
+				if (f_v) {
+					cout << "magma_interface::export_group semilinear group" << endl;
+				}
+#if 0
 				if (Elt[M->n * M->n]) {
 					cout << "cannot export to magma if Frobenius is present." << endl;
 					return;
 				}
-			}
+#endif
 
+
+				int *B;
+				int d;
+
+				d = M->n * F->e;
+				B = NEW_int(d * d);
+
+
+				if (!F->f_related_fields_have_been_computed) {
+					cout << "magma_interface::export_group related fields have not yet been computed" << endl;
+					exit(1);
+				}
+
+
+				field_theory::subfield_structure *SubS;
+
+				SubS = &F->Related_fields->SubS[0];
+
+
+				ost << "F:=GF(" << F->p << ");" << endl;
+				ost << "G := GeneralLinearGroup(" << d << ", F);" << endl;
+				ost << "H := sub< G | ";
+				for (h = 0; h < SG->gens->len; h++) {
+					Elt = SG->gens->ith(h);
+
+					int frob;
+
+					frob = Elt[M->n * M->n];
+
+					SubS->lift_matrix_semilinear(
+							Elt /* int *MQ */, frob,
+							M->n, B, verbose_level - 2);
+					// input is MQ[m * m] over the field FQ.
+					// output is Mq[n * n] over the field Fq,
+
+					if (f_v) {
+						cout << "generator:" << endl;
+						Int_matrix_print(Elt, M->n, M->n);
+						cout << "frob = " << frob << endl;
+						cout << "after lifting:" << endl;
+						Int_matrix_print(B, d, d);
+					}
+
+					ost << "[";
+					for (i = 0; i < d; i++) {
+						for (j = 0; j < d; j++) {
+							a = B[i * d + j];
+							ost << a;
+							if (j < d - 1) {
+								ost << ",";
+							}
+						}
+						if (i < d - 1) {
+							ost << ", ";
+						}
+					}
+					ost << "]";
+
+
+					if (h < SG->gens->len - 1) {
+						ost << ", " << endl;
+					}
+				}
+				ost << " >;" << endl;
+
+				FREE_int(B);
+
+			}
+			else {
+				if (f_v) {
+					cout << "magma_interface::export_group linear group" << endl;
+				}
+				ost << "F<w>:=GF(" << F->q << ");" << endl;
+				ost << "G := GeneralLinearGroup(" << M->n << ", F);" << endl;
+				ost << "H := sub< G | ";
+				for (h = 0; h < SG->gens->len; h++) {
+					Elt = SG->gens->ith(h);
+					ost << "[";
+					for (i = 0; i < M->n; i++) {
+						for (j = 0; j < M->n; j++) {
+							a = Elt[i * M->n + j];
+							if (a < F->p) {
+								ost << a;
+							}
+							else {
+								ost << "w^" << F->log_alpha(a);
+							}
+							if (j < M->n - 1) {
+								ost << ",";
+							}
+						}
+						if (i < M->n - 1) {
+							ost << ", ";
+						}
+					}
+					ost << "]";
+					if (h < SG->gens->len - 1) {
+						ost << ", " << endl;
+					}
+				}
+				ost << " >;" << endl;
+			}
 		}
 		else {
 			ost << "G := GeneralLinearGroup(" << M->n << ", GF(" << F->q << "));" << endl;

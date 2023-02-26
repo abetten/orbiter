@@ -2358,7 +2358,7 @@ F8_over_F2_field_reduction:
 			-finite_field_activity \
 				-field_reduction "F8_red_%L" 2 1 1 "%L" \
 			-end \
-		-end_loop
+		-end_loop L
 	$(ORBITER) -v 2 \
 		-loop L 0 8 1 \
 			-draw_matrix \
@@ -2366,7 +2366,7 @@ F8_over_F2_field_reduction:
 				-box_width 40 -bit_depth 24 \
 				-partition 4 3 3 \
 			-end \
-		-end_loop
+		-end_loop L
 	#pdflatex field_reduction_Q8_q2_5_7.tex
 
 
@@ -4414,6 +4414,8 @@ PSP_4_4:
 
 
 
+
+
 PGO_5_2:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
@@ -5572,6 +5574,9 @@ SECTION_GROUP_THEORETIC_ACTIVITIES_BASED_ON_MAGMA:
 
 
 test_5_7:
+	make PSP_4_4_export_magma
+	make PGGL_2_4_export_magma
+	make Hirschfeld_stab_export_magma
 	make PGGL_2_4_classes
 	make PGL_7_2_classes
 	make PGL_8_2_classes
@@ -5594,6 +5599,54 @@ test_5_7:
 	make PGOm_6_2_Class_2A_centralizer_recover
 
 
+
+
+PSP_4_4_export_magma:
+	$(ORBITER) -v 5 \
+		-define F -finite_field -q 4 -end \
+		-define G -linear_group -PGL 4 F \
+			-symplectic_group \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_magma \
+		-end
+
+PGGL_2_4_export_magma:
+	$(ORBITER) -v 20 \
+		-define F -finite_field -q 4 \
+			-compute_related_fields \
+		-end \
+		-define G -linear_group -PGGL 2 F \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_magma \
+		-end
+	pdflatex PGGL_2_4_report.tex
+	open PGGL_2_4_report.pdf
+
+
+
+
+Hirschfeld_stab_export_magma:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define F -finite_field -q 4 \
+			-compute_related_fields \
+		-end \
+		-define G -linear_group -PGGL 4 F \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_magma \
+		-end
 
 
 PGGL_2_4_classes:
@@ -7541,6 +7594,102 @@ surface_4_0_plane_type_of_lines_on_Klein_quadric:
 #L_highest_weight_objects.csv
 
 
+surface_4_0_lines_vs_lines:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-with P -do \
+		-projective_space_activity \
+			-export_cubic_surface_line_vs_line_incidence_matrix \
+		-end
+
+
+# PG_3_4_lines_vs_lines_incma.csv
+
+
+surface_4_0_lines_vs_tritangent_planes:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-with P -do \
+		-projective_space_activity \
+			-export_cubic_surface_line_tritangent_plane_incidence_matrix \
+		-end \
+
+surface_4_0_dot_products_columns:
+	$(ORBITER) -v 3 \
+		-define line_vs_trit -vector \
+			-file PG_3_4_lines_tritplanes_incma.csv \
+		-end \
+		-dot_product_of_columns line_vs_trit
+
+
+surface_4_0_export_double_sixes:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-with P -do \
+		-projective_space_activity \
+			-export_double_sixes \
+		-end \
+
+
+surface_4_0_multiply_half_double_six_vs_lines:
+	$(ORBITER) -v 3 \
+		-define lines_vs_lines -vector \
+			-file PG_3_4_lines_vs_lines_incma.csv \
+		-end \
+		-define single_six -vector \
+			-file PG_3_4_single_sixes_char_vec.csv \
+		-end \
+		-matrix_multiply_over_Z single_six lines_vs_lines
+
+# single_six_times_lines_vs_lines.csv
+
+surface_4_0_multiply_half_double_six_vs_incma:
+	$(ORBITER) -v 3 \
+		-define line_vs_trit -vector \
+			-file PG_3_4_lines_tritplanes_incma.csv \
+		-end \
+		-define single_six -vector \
+			-file PG_3_4_single_sixes_char_vec.csv \
+		-end \
+		-matrix_multiply_over_Z single_six line_vs_trit
+
+surface_4_0_dot_products_rows:
+	$(ORBITER) -v 3 \
+		-define single_six_vs_trit_planes -vector \
+			-file single_six_times_line_vs_trit.csv \
+		-end \
+		-dot_product_of_rows single_six_vs_trit_planes
+
+
+surface_4_0_dot_products_rowspan:
+	$(ORBITER) -v 3 \
+		-define single_six_vs_trit_planes -vector \
+			-file single_six_times_line_vs_trit.csv \
+		-end \
+		-rowspan_over_R single_six_vs_trit_planes
+
+surface_4_0_single_six_times_lines_vs_lines_rowspan:
+	$(ORBITER) -v 3 \
+		-define M -vector \
+			-file single_six_times_lines_vs_lines.csv \
+		-end \
+		-rowspan_over_R M
+
+
+
+surface_4_0_roots:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S -cubic_surface -space P -catalogue 0 -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something "roots" \
+		-end
+
 
 surface_7_0:
 	$(ORBITER) -v 3 \
@@ -7558,6 +7707,17 @@ surface_7_0:
 		-end
 	pdflatex surface_catalogue_q7_iso0_report.tex
 	open surface_catalogue_q7_iso0_report.pdf
+
+
+surface_7_0_roots:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S -cubic_surface -space P -catalogue 0 -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something "roots" \
+		-end
 
 
 surface_7_0_plane_type_of_lines_on_Klein_quadric:
@@ -8215,7 +8375,7 @@ quartic_curves_19_report:
 			-quartic_curve_activity \
 				-report \
 			-end \
-		-end_loop
+		-end_loop L
 		pdflatex quartic_curve_catalogue_q19_iso0_report.tex
 		pdflatex quartic_curve_catalogue_q19_iso1_report.tex
 		pdflatex quartic_curve_catalogue_q19_iso2_report.tex
@@ -8266,14 +8426,14 @@ quartic_curves_q7:
 		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
 			-define S_%L -cubic_surface -space P -catalogue %L -end \
-		-end_loop \
+		-end_loop L \
 		-print_symbols \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
 			-with S_%L -do \
 			-cubic_surface_activity \
 				-export_all_quartic_curves \
 			-end \
-		-end_loop \
+		-end_loop L \
 		-print_symbols
 
 
@@ -8286,14 +8446,14 @@ quartic_curves_q13:
 		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
 			-define S_%L -cubic_surface -space P -catalogue %L -end \
-		-end_loop \
+		-end_loop L \
 		-print_symbols \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
 			-with S_%L -do \
 			-cubic_surface_activity \
 				-export_all_quartic_curves \
 			-end \
-		-end_loop \
+		-end_loop L \
 		-print_symbols
 
 quartic_curves_q13_combine:
@@ -8341,14 +8501,14 @@ quartic_curves_q19:
 		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
 			-define S_%L -cubic_surface -space P -catalogue %L -end \
-		-end_loop \
+		-end_loop L \
 		-print_symbols \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
 			-with S_%L -do \
 			-cubic_surface_activity \
 				-export_all_quartic_curves \
 			-end \
-		-end_loop \
+		-end_loop L \
 		-print_symbols
 
 
@@ -9487,7 +9647,7 @@ representation_on_polynomials_of_degree_3:
 		-loop L 0 9 1 -draw_matrix \
 			-input_csv_file PGL_4_3_rep_3_%L.csv \
 			-box_width 40 -bit_depth 24 -partition 3 20 20 -end \
-		-end_loop
+		-end_loop L
 
 
 
@@ -9504,7 +9664,7 @@ representation_tetrahedral_group_on_polynomials_of_degree_3:
 		-end 
 	$(ORBITER) -v 2 -loop L 0 2 1 -draw_matrix \
 		-input_csv_file GL_3_3_Subgroup_tetra_12_rep_3_%L.csv \
-		-box_width 40 -bit_depth 24 -partition 3 10 10 -end -end_loop
+		-box_width 40 -bit_depth 24 -partition 3 10 10 -end -end_loop L
 	open GL_3_3_Subgroup_tetra_12_rep_3_0_draw.bmp
 	open GL_3_3_Subgroup_tetra_12_rep_3_1_draw.bmp
 
@@ -10613,7 +10773,7 @@ Hamming_code_words:
 		-input_csv_file Hamming_7_4_word_%L_char_func_7_1.csv \
 		-box_width 25 -bit_depth 8 \
 		-partition 4 16 8 -end \
-		-end_loop
+		-end_loop L
 	convert Hamming_7_4_word_0_char_func_7_1_draw.bmp Hamming_7_4_word_0_char_func_7_1_draw.png
 	convert Hamming_7_4_word_1_char_func_7_1_draw.bmp Hamming_7_4_word_1_char_func_7_1_draw.png
 	convert Hamming_7_4_word_2_char_func_7_1_draw.bmp Hamming_7_4_word_2_char_func_7_1_draw.png
@@ -11556,7 +11716,7 @@ RM_3_distance_draw:
 				-box_width 25 -bit_depth 8 \
 				-partition 5 16 16 \
 			-end \
-		-end_loop
+		-end_loop L
 	convert RM_3_distance_H_8_16_value0_draw.bmp RM_3_distance_H_8_16_value0_draw.png
 	convert RM_3_distance_H_8_16_value1_draw.bmp RM_3_distance_H_8_16_value1_draw.png
 	convert RM_3_distance_H_8_16_value2_draw.bmp RM_3_distance_H_8_16_value2_draw.png
@@ -11571,7 +11731,7 @@ RM_3_algebraic_normal_form:
 			-with F -do -finite_field_activity \
 				-algebraic_normal_form 8 v%L \
 			-end \
-		-end_loop
+		-end_loop L
 
 # distance 0:
 
@@ -11645,7 +11805,7 @@ RM_6_codewords_draw:
 				-partition 3 8 8 \
 			-end \
 			-system "convert RM6_codewords_ref_%L_draw.bmp -frame 8 %L.png" \
-		-end_loop
+		-end_loop L
 	convert 0.png 1.png 2.png 3.png 4.png 5.png \
 		6.png 7.png 8.png 9.png 10.png +append a0
 	convert 11.png 12.png 13.png 14.png 15.png \
@@ -14609,7 +14769,7 @@ spreads_25_starter_cliques:
 			-graph_theoretic_activity \
 				-find_cliques -rainbow -target_size 21 -end \
 			-end \
-		-end_loop
+		-end_loop L
 
 
 classify_spreads_25_isomorph:
@@ -14772,7 +14932,7 @@ spreads_27_starter_cliques:
 			-graph_theoretic_activity \
 				-find_cliques -rainbow -target_size 23 -end \
 			-end \
-		-end_loop
+		-end_loop L
 
 #4:41
 
@@ -15701,7 +15861,7 @@ BLT_13_cliques:
 			-graph_theoretic_activity \
 				-find_cliques -rainbow -target_size 9 -end \
 			-end \
-		-end_loop
+		-end_loop L
 
 
 # 3 solutions:
@@ -15810,6 +15970,55 @@ BLT_13_isomorph_testing:
 	pdflatex BLT_q13_isomorphism_types.tex
 	open BLT_q13_isomorphism_types.pdf
 
+
+
+BLT_49_classify_starter:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 49 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define C -BLT_set_classifier O -starter_size 5 -end \
+		-with C -do -BLT_set_classify_activity \
+			-compute_starter \
+				-problem_label BLT_q49 \
+				-W -depth 5 \
+			-end \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-create_graphs \
+		-end
+
+
+NB_CASES_BLT_Q49=14542
+
+BLT_49_cliques:
+	$(ORBITER) -v 2 \
+		-loop L 0 $(NB_CASES_BLT_Q49) 1 \
+			-define G -graph \
+				-load BLT_q49_graph_5_%L.bin \
+			-end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 50 -end \
+			-end \
+		-end_loop L
+
+
+BLT_SLICE_COMMAND_Q49="$(ORBITER) -v 2 \
+		-loop L %i $(NB_CASES_Q49) 128 \
+			-define G -graph \
+				-load BLT_q49_graph_5_%L.bin \
+			-end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 50 -end \
+			-end \
+		-end_loop L >log_%i"
+
+BLT_49_cliques_sliced_128:
+	$(ORBITER) -v 2 \
+		-loop i 1 128 1\
+			-system $(BLT_SLICE_COMMAND_Q49) \
+		-end_loop i
 
 
 
@@ -17557,7 +17766,7 @@ geo_40_4_g4_c:
 			-system "convert \
 				40_4_g4_object%L_TDA_flag_orbits_draw.bmp \
 				40_4_g4_object%L_TDA_flag_orbits_draw.png" \
-		-end_loop
+		-end_loop L
 	pdflatex 40_4_g4_classification.tex
 	open 40_4_g4_classification.pdf
 
@@ -17656,7 +17865,7 @@ geo_LSQ6_c: LSQ6.inc
 			-system "convert \
 				LSQ6_object%L_TDA_flag_orbits_draw.bmp \
 				LSQ6_object%L_TDA_flag_orbits_draw.png" \
-		-end_loop
+		-end_loop L
 	$(ORBITER) -v 2 \
 		-loop L 0 12 1 \
 			-draw_matrix \
@@ -17664,7 +17873,7 @@ geo_LSQ6_c: LSQ6.inc
 			-secondary_input_csv_file LSQ6_object%L_INP.csv \
 			-box_width 32 -bit_depth 24 \
 			-end \
-		-end_loop
+		-end_loop L
 
 
 

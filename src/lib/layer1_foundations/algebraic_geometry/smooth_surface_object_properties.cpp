@@ -40,6 +40,8 @@ smooth_surface_object_properties::smooth_surface_object_properties()
 	All_Planes = NULL;
 	Dual_point_ranks = NULL;
 
+	Roots = NULL;
+
 }
 
 smooth_surface_object_properties::~smooth_surface_object_properties()
@@ -63,6 +65,10 @@ smooth_surface_object_properties::~smooth_surface_object_properties()
 	if (Dual_point_ranks) {
 		FREE_int(Dual_point_ranks);
 	}
+	if (Roots) {
+		FREE_int(Roots);
+	}
+
 }
 
 void smooth_surface_object_properties::init(surface_object *SO, int verbose_level)
@@ -109,6 +115,39 @@ void smooth_surface_object_properties::init(surface_object *SO, int verbose_leve
 		cout << "smooth_surface_object_properties::init done" << endl;
 	}
 
+}
+
+void smooth_surface_object_properties::init_roots(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "smooth_surface_object_properties::init_roots" << endl;
+	}
+
+	int i, j, h;
+
+	Roots = NEW_int(72 * 6);
+	for (i = 0; i < 72; i++) {
+
+		int v6[6];
+		long int Half_double_six[6];
+		int a;
+
+		Lint_vec_copy(&SO->Surf->Schlaefli->Double_six[i * 6], Half_double_six, 6);
+		Int_vec_zero(v6, 6);
+		for (j = 0; j < 6; j++) {
+			a = Half_double_six[j];
+			for (h = 0; h < 6; h++) {
+				v6[h] = SO->Surf->F->add(v6[h], SO->SOP->Pluecker_coordinates[a * 6 + h]);
+			}
+		}
+		Int_vec_copy(v6, Roots + i * 6, 6);
+	}
+
+	if (f_v) {
+		cout << "smooth_surface_object_properties::init_roots done" << endl;
+	}
 }
 
 void smooth_surface_object_properties::compute_tritangent_planes_by_rank(int verbose_level)

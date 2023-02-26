@@ -684,6 +684,9 @@ public:
 	std::string *Double_six_label_tex; // [36]
 
 
+	int *Half_double_six_characteristic_vector; // [36 * 27]
+
+
 	long int *Half_double_sixes; // [72 * 6]
 		// warning: the half double sixes are sorted individually,
 		// so the pairing between the lines
@@ -784,6 +787,12 @@ public:
 	void print_half_double_sixes_in_GAP();
 	int identify_Eckardt_point(
 			int line1, int line2, int line3, int verbose_level);
+	void write_lines_vs_line(
+			std::string &prefix, int verbose_level);
+	void write_lines_vs_tritangent_planes(
+			std::string &prefix, int verbose_level);
+	void write_double_sixes(
+			std::string &prefix, int verbose_level);
 
 };
 
@@ -937,11 +946,13 @@ public:
 	long int *All_Planes; // [nb_trihedral_pairs * 6]
 	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]
 
+	int *Roots; // [72 * 6]
 
 
 	smooth_surface_object_properties();
 	~smooth_surface_object_properties();
 	void init(surface_object *SO, int verbose_level);
+	void init_roots(int verbose_level);
 	void compute_tritangent_planes_by_rank(int verbose_level);
 	void compute_Lines_in_tritangent_planes(int verbose_level);
 	void compute_Trihedral_pairs_as_tritangent_planes(int verbose_level);
@@ -1326,6 +1337,11 @@ public:
 
 
 
+	//
+	int *Pluecker_coordinates; // [SO->nb_lines * 6];
+	long int *Pluecker_rk; // [SO->nb_lines];
+
+
 	long int *Eckardt_points;
 		// the orbiter ranks of the Eckardt points
 	int *Eckardt_points_index;
@@ -1385,6 +1401,7 @@ public:
 	// only for surfaces with 27 lines:
 
 	smooth_surface_object_properties *SmoothProperties;
+
 
 
 	int *Adj_line_intersection_graph;

@@ -348,8 +348,11 @@ public:
 	std::string arc_label;
 	std::string arc_label_short;
 
-	cubic_surfaces_in_general::surface_clebsch_map *Clebsch; // [SOA->Orbits_on_single_sixes->nb_orbits]
-	int *Other_arc_idx; // [SOA->Orbits_on_single_sixes->nb_orbits]
+	cubic_surfaces_in_general::surface_clebsch_map *Clebsch;
+		// [SOA->Orbits_on_single_sixes->nb_orbits]
+
+	int *Other_arc_idx;
+		// [SOA->Orbits_on_single_sixes->nb_orbits]
 
 	surface_create_by_arc_lifting();
 	~surface_create_by_arc_lifting();
@@ -463,9 +466,11 @@ public:
 	// 3x3 matrices of elements in PGGL(3,q)
 	int *Elt_alpha2;
 		// Using local coordinates P6_local[6],
-		// maps the arc P6[6] to the canonical arc in the classification.
+		// maps the arc P6[6] to
+		// the canonical arc in the classification.
 	int *Elt_beta1;
-		// Moves the arc points on m1 to P1 and P2.
+		// Moves the two points of the arc
+		// lying on the line m1 to P1 and P2.
 		// Computed using
 		// Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize
 	int *Elt_beta2;
@@ -507,21 +512,28 @@ public:
 
 	surfaces_arc_lifting_trace();
 	~surfaces_arc_lifting_trace();
-	void init(surfaces_arc_lifting_upstep *Up,
+	void init(
+			surfaces_arc_lifting_upstep *Up,
 			int seventytwo_case_idx, int verbose_level);
-	void process_flag_orbit(surfaces_arc_lifting_upstep *Up, int verbose_level);
+	void process_flag_orbit(
+			surfaces_arc_lifting_upstep *Up, int verbose_level);
 	void move_arc(int verbose_level);
 	void move_plane_and_arc(long int *P6a, int verbose_level);
 	void make_arc_canonical(
 			long int *P6_local, long int *P6_local_canonical,
 			int &orbit_not_on_conic_idx, int verbose_level);
-	void compute_beta1(algebraic_geometry::seventytwo_cases *The_case, int verbose_level);
-	void compute_beta2(int orbit_not_on_conic_idx,
+	void compute_beta1(
+			algebraic_geometry::seventytwo_cases *The_case,
+			int verbose_level);
+	void compute_beta2(
+			int orbit_not_on_conic_idx,
 			int pair_orbit_idx, int &partition_orbit_idx,
 			int *the_partition4, int verbose_level);
 	void lift_group_elements_and_move_two_lines(int verbose_level);
-	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
-	void report_product(std::ostream &ost, int *Elt, int verbose_level);
+	void embed(
+			int *Elt_A3, int *Elt_A4, int verbose_level);
+	void report_product(
+			std::ostream &ost, int *Elt, int verbose_level);
 
 };
 

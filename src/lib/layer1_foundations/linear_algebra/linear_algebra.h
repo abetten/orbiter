@@ -522,11 +522,14 @@ public:
 		int *Tmp_basecols, int *Ainv, int n, int verbose_level);
 		// Tmp points to n * n + 1 int's
 		// Tmp_basecols points to n int's
+	// input: (A,f), output: (A^{-1}^{\Phi^f},-f mod e)
 	void semilinear_matrix_invert_affine(
 			int *A, int *Tmp,
 		int *Tmp_basecols, int *Ainv, int n, int verbose_level);
 		// Tmp points to n * n + 1 int's
 		// Tmp_basecols points to n int's
+	// input: (A,v,f),
+	// output: (A^{-1}^{\Phi^f},-(v*A^{-1}^{\Phi^f})^{\Phi^{-f}},-f mod e)
 	void matrix_invert_affine(
 			int *A, int *Tmp, int *Tmp_basecols,
 		int *Ainv, int n, int verbose_level);

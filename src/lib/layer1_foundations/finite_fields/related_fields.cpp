@@ -70,7 +70,7 @@ void related_fields::init(
 	number_theory::number_theory_domain NT;
 
 	nb_subfields = 0;
-	for (h1 = 2; h1 < F->e; h1++) {
+	for (h1 = 1; h1 < F->e; h1++) {
 		if ((F->e % h1) == 0) {
 			nb_subfields++;
 		}
@@ -86,7 +86,7 @@ void related_fields::init(
 	Subfield_index = NEW_int(nb_subfields);
 
 	h2 = 0;
-	for (h1 = 2; h1 < F->e; h1++) {
+	for (h1 = 1; h1 < F->e; h1++) {
 		if ((F->e % h1) == 0) {
 			Subfield_order[h2] = NT.i_power_j(F->p, h1);
 			Subfield_exponent[h2] = h1;
@@ -101,15 +101,23 @@ void related_fields::init(
 
 		int order_subfield;
 
-		if (f_v) {
-			cout << "related_fields::init "
-					"computing minimum polynomial of subfield of order " << Subfield_order[h1] << endl;
-		}
-		order_subfield = Subfield_order[h1];
-		Subfield_minimum_polynomial[h1].compute_subfield_polynomial(
-			F,
-			order_subfield, verbose_level);
 
+		if (Subfield_exponent[h1] > 1) {
+			if (f_v) {
+				cout << "related_fields::init "
+						"computing minimum polynomial of subfield of order " << Subfield_order[h1] << endl;
+			}
+			order_subfield = Subfield_order[h1];
+			Subfield_minimum_polynomial[h1].compute_subfield_polynomial(
+				F,
+				order_subfield, verbose_level);
+		}
+		else {
+			if (f_v) {
+				cout << "related_fields::init "
+						"skipping the prime field" << endl;
+			}
+		}
 	}
 
 	if (f_v) {

@@ -86,7 +86,8 @@ void subfield_structure::init(
 	Q = FQ->q;
 	q = Fq->q;
 	if (f_v) {
-		cout << "subfield_structure::init Q=" << Q << " q=" << q << endl;
+		cout << "subfield_structure::init "
+				"Q=" << Q << " q=" << q << endl;
 	}
 	if (FQ->p != Fq->p) {
 		cout << "subfield_structure::init "
@@ -96,7 +97,9 @@ void subfield_structure::init(
 	s = FQ->e / Fq->e;
 	if (Fq->e * s != FQ->e) {
 		cout << "Fq is not a subfield of FQ" << endl;
-		cout << "subfield_structure::init FQ->e=" << FQ->e << " Fq->e=" << Fq->e << endl;
+		cout << "subfield_structure::init "
+				"FQ->e=" << FQ->e
+				<< " Fq->e=" << Fq->e << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -441,11 +444,17 @@ void subfield_structure::lift_matrix(
 // output is Mq[n * n] over the field Fq,
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, I, J, a, b, c, d, u, v, n;
+	//int i, j, I, J, a, b, c, d, u, v, n;
 
 	if (f_v) {
 		cout << "subfield_structure::lift_matrix" << endl;
 	}
+
+	lift_matrix_semilinear(
+			MQ, 0 /* frob */,
+			m, Mq, verbose_level - 1);
+
+#if 0
 	n = m * s;
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < m; j++) {
@@ -462,11 +471,59 @@ void subfield_structure::lift_matrix(
 			}
 		}
 	}
+#endif
 
 	if (f_v) {
 		cout << "subfield_structure::lift_matrix done" << endl;
 	}
 }
+
+void subfield_structure::lift_matrix_semilinear(
+		int *MQ, int frob,
+		int m, int *Mq, int verbose_level)
+// input is MQ[m * m] over the field FQ.
+// output is Mq[n * n] over the field Fq,
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subfield_structure::lift_matrix" << endl;
+#if 0
+		cout << "subfield_structure::lift_matrix basis = ";
+		Int_vec_print(cout, Basis, s);
+		cout << endl;
+		cout << "subfield_structure::lift_matrix components = " << endl;
+		Int_matrix_print(components, Q, s);
+		cout << endl;
+#endif
+	}
+
+	int i, j, I, J, a, b, c, d, u, v, n;
+
+	n = m * s;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < m; j++) {
+			a = MQ[i * m + j];
+			I = s * i;
+			J = s * j;
+			for (u = 0; u < s; u++) {
+				b = Basis[u];
+				c = FQ->mult(b, a);
+				c = FQ->frobenius_power(c, frob); // apply the Frobenius
+				for (v = 0; v < s; v++) {
+					d = components[c * s + v];
+					Mq[(I + u) * n + J + v] = d;
+				}
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "subfield_structure::lift_matrix done" << endl;
+	}
+}
+
+
 
 void subfield_structure::retract_matrix(int *Mq,
 		int n, int *MQ, int m, int verbose_level)

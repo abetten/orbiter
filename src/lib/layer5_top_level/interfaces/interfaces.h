@@ -407,6 +407,19 @@ class interface_combinatorics {
 	std::string union_input_fname;
 	std::string union_output_fname;
 
+	int f_dot_product_of_columns;
+	std::string dot_product_of_columns_fname;
+
+	int f_dot_product_of_rows;
+	std::string dot_product_of_rows_fname;
+
+	int f_matrix_multiply_over_Z;
+	std::string matrix_multiply_over_Z_label1;
+	std::string matrix_multiply_over_Z_label2;
+
+	int f_rowspan_over_R;
+	std::string rowspan_over_R_label;
+
 
 public:
 	interface_combinatorics();

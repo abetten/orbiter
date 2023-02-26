@@ -132,11 +132,13 @@ void surface_object::init_equation(
 	}
 
 	if (f_v) {
-		cout << "surface_object::init_equation before init_equation_points_and_lines_only" << endl;
+		cout << "surface_object::init_equation "
+				"before init_equation_points_and_lines_only" << endl;
 	}
 	init_equation_points_and_lines_only(Surf, eqn, verbose_level);
 	if (f_v) {
-		cout << "surface_object::init_equation after init_equation_points_and_lines_only" << endl;
+		cout << "surface_object::init_equation "
+				"after init_equation_points_and_lines_only" << endl;
 	}
 
 	
@@ -195,7 +197,8 @@ void surface_object::enumerate_points(int verbose_level)
 		cout << "surface_object::enumerate_points before "
 				"Surf->enumerate_points" << endl;
 	}
-	Surf->enumerate_points(surface_object::eqn,
+	Surf->enumerate_points(
+			surface_object::eqn,
 		Points,
 		0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -2150,11 +2153,27 @@ void surface_object::export_something(std::string &what,
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
+	else if (ST.stringcmp(what, "roots") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_roots.csv");
+
+		if (nb_lines != 27) {
+			cout << "surface must have 27 lines to be able to export roots" << endl;
+			exit(1);
+		}
+		Fio.int_matrix_write_csv(fname, SOP->SmoothProperties->Roots, 72, 6);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 
 
 	else {
-		cout << "surface_object::export_something unrecognized export target: " << what << endl;
+		cout << "surface_object::export_something "
+				"unrecognized export target: " << what << endl;
 	}
 
 	if (f_v) {
