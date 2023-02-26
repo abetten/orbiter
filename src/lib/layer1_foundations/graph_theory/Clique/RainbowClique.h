@@ -194,13 +194,13 @@ private:
             for (size_t i=start; i<end_color_class; ++i) {
                 if ((i % param.n_threads) == param.tid) {
 
-#if 0
+#if 1
                     if (param.tid == 0) {
                         printf("thread %ld "
                         		"level %ld "
-                        		"picking vertex %ld"
+                        		"at %ld of %ld"
                         		"\n",
-								(long int) param.tid, (long int) depth, (long int) param.live_pts[i]);
+								(long int) param.tid, (long int) depth, (long int) i, (long int) end_color_class);
                         fflush(stdout);
                     }
 #endif
