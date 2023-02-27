@@ -303,6 +303,7 @@ namespace coding_theory {
 	class code_diagram;
 	class coding_theory_domain;
 	class crc_codes;
+	class crc_object;
 	class crc_options_description;
 	class create_BCH_code;
 	class create_RS_code;

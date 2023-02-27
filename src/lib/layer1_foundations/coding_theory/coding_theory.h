@@ -296,7 +296,12 @@ public:
 	// crc_codes.cpp:
 	uint16_t crc16(const uint8_t *data, size_t size);
 	uint32_t crc32(const uint8_t *s, size_t n);
+	void divide_alfa(const unsigned char *in771, unsigned char *out3);
+	void divide_bravo(const unsigned char *in771, unsigned char *out4);
+	void divide_charlie(const unsigned char *in771, unsigned char *out12);
 	void crc32_test(int block_length, int verbose_level);
+	void test_crc_object(crc_object *Crc, long int Nb_test, int k, int verbose_level);
+	void char_vec_zero(unsigned char *p, int len);
 	void crc256_test_k_subsets(
 			int message_length, int R, int k, int verbose_level);
 	void crc32_remainders(
@@ -346,6 +351,46 @@ public:
 		int verbose_level);
 
 };
+
+// #############################################################################
+// crc_object.cpp:
+// #############################################################################
+
+enum crc_object_type {
+	t_crc_unknown,
+	t_crc_alfa,
+	t_crc_bravo,
+	t_crc_charlie,
+	t_crc_crc32,
+};
+
+//! a specific CRC code
+
+
+class crc_object {
+public:
+
+	crc_object_type Crc_object_type;
+
+	int Len_total;
+	int Len_check;
+	int Len_info; // = Len_total - Len_check;
+	unsigned char *Data;
+	unsigned char *Check;
+
+	crc_object();
+	~crc_object();
+	void init(std::string &type, int verbose_level);
+	void divide(const unsigned char *in, unsigned char *out);
+	void divide_alfa(const unsigned char *in771, unsigned char *out3);
+	void divide_bravo(const unsigned char *in771, unsigned char *out4);
+	void divide_charlie(const unsigned char *in771, unsigned char *out12);
+	void divide_crc32(const uint8_t *s, size_t n, unsigned char *out);
+		// polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
+		// + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1
+
+};
+
 
 // #############################################################################
 // crc_options_description.cpp:

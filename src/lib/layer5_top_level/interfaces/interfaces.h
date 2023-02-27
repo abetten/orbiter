@@ -293,6 +293,11 @@ class interface_coding_theory {
 	int random_noise_of_burst_type_in_bitmap_file_denominator;
 	int random_noise_of_burst_type_in_bitmap_file_burst_length;
 
+	int f_crc_test;
+	std::string crc_test_type;
+	long int crc_test_N;
+	int crc_test_k;
+
 public:
 	interface_coding_theory();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);

@@ -46,6 +46,7 @@ ORBITER_MODULES= \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
 		layer1_foundations/coding_theory/crc_codes_search.o \
 		layer1_foundations/coding_theory/crc_codes.o \
+		layer1_foundations/coding_theory/crc_object.o \
 		layer1_foundations/coding_theory/crc_options_description.o \
 		layer1_foundations/coding_theory/create_BCH_code.o \
 		layer1_foundations/coding_theory/create_RS_code.o \

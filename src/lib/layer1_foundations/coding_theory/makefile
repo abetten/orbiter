@@ -11,6 +11,7 @@ MODULES = \
 		coding_theory_domain.o \
 		crc_codes_search.o \
 		crc_codes.o \
+		crc_object.o \
 		crc_options_description.o \
 		create_BCH_code.o \
 		create_RS_code.o \

@@ -3046,7 +3046,9 @@ void colored_graph::do_Sajeeb(
 	// storage must be the same as data type of the vertex label
 	// in the graph
 	//std::vector<std::vector<unsigned int> > solutions;
-	cout << __FILE__ << ":" << __LINE__ << endl;
+	if (f_v) {
+		cout << __FILE__ << ":" << __LINE__ << endl;
+	}
 
 	if (f_v) {
 		cout << "colored_graph::do_Sajeeb "
@@ -3059,7 +3061,9 @@ void colored_graph::do_Sajeeb(
 		cout << "colored_graph::do_Sajeeb "
 				"after RainbowClique::find_cliques" << endl;
 	}
-	cout << __FILE__ << ":" << __LINE__ << endl;
+	if (f_v) {
+		cout << __FILE__ << ":" << __LINE__ << endl;
+	}
 
 	// Print the solutions
 	if (f_v) {
