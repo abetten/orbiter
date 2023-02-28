@@ -520,9 +520,9 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 		}
 		if (j == Crc->Len_check) {
 			cout << i << "," << nb_undetected << ",";
-			Int_vec_print(cout, A, k);
+			Int_vec_print_fully(cout, A, k);
 			cout << ",";
-			Int_vec_print(cout, V, k);
+			Int_vec_print_fully(cout, V, k);
 			cout << endl;
 			nb_undetected++;
 		}
