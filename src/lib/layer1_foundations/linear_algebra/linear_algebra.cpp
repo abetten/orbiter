@@ -161,6 +161,77 @@ void linear_algebra::matrix_minor(int f_semilinear,
 	}
 }
 
+int linear_algebra::minor_2x2(
+		int *Elt, int n, int i, int j, int k, int l,
+		int verbose_level)
+{
+	int aki, alj, akj, ali, u, v, w;
+
+	aki = Elt[k * n + i]; // A->Group_element->element_linear_entry_ij(Elt, k, i, verbose_level); //Elt[k * n + i];
+	alj = Elt[l * n + j]; // A->Group_element->element_linear_entry_ij(Elt, l, j, verbose_level); //Elt[l * n + j];
+	akj = Elt[k * n + j]; // A->Group_element->element_linear_entry_ij(Elt, k, j, verbose_level); //Elt[k * n + j];
+	ali = Elt[l * n + i]; // A->Group_element->element_linear_entry_ij(Elt, l, i, verbose_level); //Elt[l * n + i];
+	u = F->mult(aki, alj);
+	v = F->mult(akj, ali);
+	w = F->add(u, F->negate(v));
+	return w;
+}
+
+void linear_algebra::wedge_product(
+		int *Elt, int *Mtx2, int n, int n2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_algebra::wedge_product" << endl;
+	}
+	int i, j, ij, k, l, kl;
+	int w;
+	//combinatorics::combinatorics_domain Combi;
+
+	for (i = 0, ij = 0; i < n; i++) {
+		for (j = i + 1; j < n; j++, ij++) {
+
+			// (i,j) = row index
+			//ij = Combi.ij2k(i, j, n);
+
+			for (k = 0, kl = 0; k < n; k++) {
+				for (l = k + 1; l < n; l++, kl++) {
+
+					// (k,l) = column index
+					//kl = Combi.ij2k(k, l, n);
+
+
+					// a_{k,i}a_{l,j} - a_{k,j}a_{l,i} = matrix entry
+#if 0
+
+					aki = Elt[k * n + i];
+					alj = Elt[l * n + j];
+					akj = Elt[k * n + j];
+					ali = Elt[l * n + i];
+					u = F->mult(aki, alj);
+					v = F->mult(akj, ali);
+					w = F->add(u, F->negate(v));
+#endif
+
+					w = minor_2x2(
+							Elt, n, i, j, k, l,
+							verbose_level - 3);
+
+					//w = element_entry_ijkl(Elt, i, j, k, l, verbose_level - 3);
+					// now w is the matrix entry
+
+					Mtx2[ij * n2 + kl] = w;
+				}
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "linear_algebra::wedge_product done" << endl;
+	}
+}
+
 void linear_algebra::mult_vector_from_the_left(
 		int *v,
 		int *A, int *vA, int m, int n)

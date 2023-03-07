@@ -65,7 +65,8 @@ projective_space_implementation::~projective_space_implementation()
 	}
 }
 
-void projective_space_implementation::init(projective_space *P, int verbose_level)
+void projective_space_implementation::init(
+		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
@@ -447,7 +448,8 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 }
 
 void projective_space_implementation::line_intersection_type(
-		long int *set, int set_size, int *type, int verbose_level)
+		long int *set, int set_size, int *type,
+		int verbose_level)
 	// type[N_lines]
 {
 	int f_v = (verbose_level >= 1);

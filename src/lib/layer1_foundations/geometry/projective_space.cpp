@@ -184,9 +184,9 @@ void projective_space::projective_space_init(
 
 	char str[1000];
 
-	snprintf(str, sizeof(str), "PG_%ld_%ld", n, q);
+	snprintf(str, sizeof(str), "PG_%d_%d", n, q);
 	label_txt.assign(str);
-	snprintf(str, sizeof(str), "PG(%ld,%ld)", n, q);
+	snprintf(str, sizeof(str), "PG(%d,%d)", n, q);
 	label_tex.assign(str);
 
 	if (n == 2) {

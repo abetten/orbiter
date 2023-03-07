@@ -79,7 +79,7 @@ ostream& design_parameter::print(ostream& ost)
 {
 	hollerith h;
 	
-	text(h);
+	text(h, 0 /*verbose_level*/);
 	ost << h.s();
 	return ost;
 }
@@ -115,7 +115,7 @@ void design_parameter::init(int t, int v, int k, discreta_base& lambda)
 	design_parameter::lambda() = lambda;
 }
 
-void design_parameter::text(hollerith& h)
+void design_parameter::text(hollerith& h, int verbose_level)
 {
 	hollerith hh;
 	
@@ -127,12 +127,12 @@ void design_parameter::text(hollerith& h)
 	h.append(hh.s());
 	h.append(" ");
 	
-	if (is_selfsupplementary()) {
+	if (is_selfsupplementary(verbose_level)) {
 		h.append("(selfsupplementary) ");
 		}
 	else {
 		discreta_base ls;
-		lambda_of_supplementary(ls);
+		lambda_of_supplementary(ls, verbose_level);
 		ls.print_to_hollerith(hh);
 		
 		h.append("(supplementary design has lambda=");
@@ -166,7 +166,7 @@ void design_parameter::text_parameter(hollerith& h)
 	h.append(") ");
 }
 
-void design_parameter::reduced_t(design_parameter& p)
+void design_parameter::reduced_t(design_parameter& p, int verbose_level)
 {
 	discreta_base lambda_new;
 	integer a, b;
@@ -175,8 +175,8 @@ void design_parameter::reduced_t(design_parameter& p)
 	// lambda_new = (lambda * (v - t + 1)) / (k - t + 1);
 	a.m_i(v() - t() + 1);
 	b.m_i(K() - t() + 1);
-	lambda_new.mult(lambda(), a);
-	lambda_new.divide_by_exact(b);
+	lambda_new.mult(lambda(), a, verbose_level);
+	lambda_new.divide_by_exact(b, verbose_level);
 	
 	p.init();
 	p.v() = v();
@@ -189,7 +189,7 @@ void design_parameter::reduced_t(design_parameter& p)
 	p.source().append(S);
 }
 
-int design_parameter::increased_t(design_parameter& p)
+int design_parameter::increased_t(design_parameter& p, int verbose_level)
 {
 	discreta_base lambda_new;
 	integer a, b, q, r;
@@ -201,7 +201,7 @@ int design_parameter::increased_t(design_parameter& p)
 		return FALSE;
 	if (b.is_zero())
 		return FALSE;
-	lambda_new.mult(lambda(), a);
+	lambda_new.mult(lambda(), a, verbose_level);
 	lambda_new.integral_division(b, q, r, 0);
 	lambda_new.swap(q);
 	if (!r.is_zero())
@@ -214,19 +214,19 @@ int design_parameter::increased_t(design_parameter& p)
 	return TRUE;
 }
 
-void design_parameter::supplementary_reduced_t(design_parameter& p)
+void design_parameter::supplementary_reduced_t(design_parameter& p, int verbose_level)
 {
 	discreta_base lambda_new;
 	integer a, b;
 	design_parameter_source S;
 	design_parameter q;
 
-	supplementary(q);
+	supplementary(q, verbose_level);
 	// lambda_new = (lambda * (v - t + 1)) / (k - t + 1);
 	a.m_i(q.v() - q.t() + 1);
 	b.m_i(q.K() - q.t() + 1);
-	lambda_new.mult(q.lambda(), a);
-	lambda_new.divide_by_exact(b);
+	lambda_new.mult(q.lambda(), a, verbose_level);
+	lambda_new.divide_by_exact(b, verbose_level);
 	
 	p.init();
 	p.v() = q.v();
@@ -239,7 +239,7 @@ void design_parameter::supplementary_reduced_t(design_parameter& p)
 	p.source().append(S);
 }
 
-void design_parameter::derived(design_parameter& p)
+void design_parameter::derived(design_parameter& p, int verbose_level)
 {
 	design_parameter_source S;
 
@@ -254,7 +254,7 @@ void design_parameter::derived(design_parameter& p)
 	p.source().append(S);
 }
 
-int design_parameter::derived_inverse(design_parameter& p)
+int design_parameter::derived_inverse(design_parameter& p, int verbose_level)
 {
 	design_parameter p1;
 	
@@ -269,12 +269,12 @@ int design_parameter::derived_inverse(design_parameter& p)
 	return TRUE;
 }
 
-void design_parameter::supplementary_derived(design_parameter& p)
+void design_parameter::supplementary_derived(design_parameter& p, int verbose_level)
 {
 	design_parameter_source S;
 	design_parameter q;
 
-	supplementary(q);
+	supplementary(q, verbose_level);
 	p.init();
 	p.v() = q.v() - 1;
 	p.t() = q.t() - 1;
@@ -286,7 +286,7 @@ void design_parameter::supplementary_derived(design_parameter& p)
 	p.source().append(S);
 }
 
-void design_parameter::residual(design_parameter& p)
+void design_parameter::residual(design_parameter& p, int verbose_level)
 {
 	discreta_base lambda_new;
 	integer a, b, c;
@@ -297,8 +297,8 @@ void design_parameter::residual(design_parameter& p)
 	b.m_i(K() - t() + 1);
 	c = lambda();
 	c.negate();
-	lambda_new.mult(lambda(), a);
-	lambda_new.divide_by_exact(b);
+	lambda_new.mult(lambda(), a, verbose_level);
+	lambda_new.divide_by_exact(b, verbose_level);
 	lambda_new += c;
 	
 	p.init();
@@ -312,7 +312,7 @@ void design_parameter::residual(design_parameter& p)
 	p.source().append(S);
 }
 
-int design_parameter::residual_inverse(design_parameter& p)
+int design_parameter::residual_inverse(design_parameter& p, int verbose_level)
 {
 	discreta_base a, a1, b, q, r;
 	design_parameter p1;
@@ -323,7 +323,7 @@ int design_parameter::residual_inverse(design_parameter& p)
 	p1.K() = K();
 	
 	a1.m_i_i(K() - t());
-	a.mult(lambda(), a1);
+	a.mult(lambda(), a1, verbose_level);
 	b.m_i_i(v() + 1 - K());
 	a.integral_division(b, q, r, 0);
 	if (!r.is_zero())
@@ -373,21 +373,21 @@ void design_parameter::ancestor(
 		path.m_ii(1, n);
 		}
 	else {
-		while (s.increased_t(q)) {
+		while (s.increased_t(q, verbose_level)) {
 			if (f_v) {
 				cout << "ancestor, increasing t to " << q << endl;
 				}
 			s.swap(q);
 			path.s_ii(0)++;
 			}
-		while (s.derived_inverse(q)) {
+		while (s.derived_inverse(q, verbose_level)) {
 			if (f_v) {
 				cout << "ancestor, derived_inverse gives " << q << endl;
 				}
 			s.swap(q);
 			path.s_ii(1)++;
 			}
-		while (s.residual_inverse(q)) {
+		while (s.residual_inverse(q, verbose_level)) {
 			if (f_v) {
 				cout << "ancestor, residual_inverse gives " << q << endl;
 				}
@@ -404,21 +404,21 @@ void design_parameter::ancestor(
 		}
 }
 
-void design_parameter::supplementary_residual(design_parameter& p)
+void design_parameter::supplementary_residual(design_parameter& p, int verbose_level)
 {
 	discreta_base lambda_new;
 	integer a, b, c;
 	design_parameter_source S;
 	design_parameter q;
 
-	supplementary(q);
+	supplementary(q, verbose_level);
 	// lambda_new = (lambda * (v - t + 1)) / (k - t + 1) - lambda;
 	a.m_i(q.v() - q.t() + 1);
 	b.m_i(q.K() - q.t() + 1);
 	c = q.lambda();
 	c.negate();
-	lambda_new.mult(q.lambda(), a);
-	lambda_new.divide_by_exact(b);
+	lambda_new.mult(q.lambda(), a, verbose_level);
+	lambda_new.divide_by_exact(b, verbose_level);
 	lambda_new += c;
 	
 	p.init();
@@ -432,7 +432,7 @@ void design_parameter::supplementary_residual(design_parameter& p)
 	p.source().append(S);
 }
 
-int design_parameter::trung_complementary(design_parameter& p)
+int design_parameter::trung_complementary(design_parameter& p, int verbose_level)
 {
 	discreta_base lambda_new;
 	integer a, b;
@@ -444,8 +444,8 @@ int design_parameter::trung_complementary(design_parameter& p)
 	// lambda_new = (lambda * (2 * k + 2 - t)) / (k + 1 - t);
 	a.m_i(2 * K() + 2 - t());
 	b.m_i(K() - t() + 1);
-	lambda_new.mult(lambda(), a);
-	lambda_new.divide_by_exact(b);
+	lambda_new.mult(lambda(), a, verbose_level);
+	lambda_new.divide_by_exact(b, verbose_level);
 	
 	p.init();
 	p.v() = v() + 1;
@@ -461,13 +461,13 @@ int design_parameter::trung_complementary(design_parameter& p)
 
 int design_parameter::trung_left_partner(
 		int& t1, int& v1, int& k1, discreta_base& lambda1,
-	int& t_new, int& v_new, int& k_new, discreta_base& lambda_new)
+	int& t_new, int& v_new, int& k_new, discreta_base& lambda_new, int verbose_level)
 {
 	discreta_base a, q, r;
 	integer b, c;
 	
 	c.m_i(K() - t());
-	a.mult(lambda(), c);
+	a.mult(lambda(), c, verbose_level);
 	b.m_i(v() - K() + 1);
 	if (b.is_zero())
 		return FALSE;
@@ -487,13 +487,13 @@ int design_parameter::trung_left_partner(
 
 int design_parameter::trung_right_partner(
 		int& t1, int& v1, int& k1, discreta_base& lambda1,
-	int& t_new, int& v_new, int& k_new, discreta_base& lambda_new)
+	int& t_new, int& v_new, int& k_new, discreta_base& lambda_new, int verbose_level)
 {
 	discreta_base a, q, r;
 	integer b, c;
 	
 	c.m_i(v() - K());
-	a.mult(lambda(), c);
+	a.mult(lambda(), c, verbose_level);
 	b.m_i(K() + 1 - t());
 	if (b.is_zero())
 		return FALSE;
@@ -556,12 +556,12 @@ int design_parameter::alltop(design_parameter& p)
 	return FALSE;
 }
 
-void design_parameter::complementary(design_parameter& p)
+void design_parameter::complementary(design_parameter& p, int verbose_level)
 {
 	discreta_base lambda_new;
 	design_parameter_source S;
 
-	design_lambda_ijs(t(), v(), K(), lambda(), 1 /* s */, 0 /* i */, t() /* j */, lambda_new);
+	design_lambda_ijs(t(), v(), K(), lambda(), 1 /* s */, 0 /* i */, t() /* j */, lambda_new, verbose_level);
 	
 	p.init();
 	p.v() = v();
@@ -574,7 +574,7 @@ void design_parameter::complementary(design_parameter& p)
 	p.source().append(S);
 }
 
-void design_parameter::supplementary(design_parameter& p)
+void design_parameter::supplementary(design_parameter& p, int verbose_level)
 {
 	discreta_base lambda_new, a;
 	design_parameter_source S;
@@ -617,12 +617,12 @@ void design_parameter::supplementary(design_parameter& p)
 	p.source().append(S);
 }
 
-int design_parameter::is_selfsupplementary()
+int design_parameter::is_selfsupplementary(int verbose_level)
 {
 	design_parameter q;
 	discreta_base a, b, c;
 	
-	supplementary(q);
+	supplementary(q, verbose_level);
 	a = q.lambda();
 	b = lambda();
 	b.negate();
@@ -633,11 +633,11 @@ int design_parameter::is_selfsupplementary()
 		return FALSE;
 }
 
-void design_parameter::lambda_of_supplementary(discreta_base& lambda_supplementary)
+void design_parameter::lambda_of_supplementary(discreta_base& lambda_supplementary, int verbose_level)
 {
 	design_parameter q;
 
-	supplementary(q);
+	supplementary(q, verbose_level);
 	lambda_supplementary = q.lambda();
 }
 

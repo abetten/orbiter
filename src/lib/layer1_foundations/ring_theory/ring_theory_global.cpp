@@ -2562,7 +2562,7 @@ void ring_theory_global::oval_polynomial(
 }
 
 void ring_theory_global::print_longinteger_after_multiplying(
-		ostream &ost, int *factors, int len)
+		std::ostream &ost, int *factors, int len)
 {
 	longinteger_domain D;
 	longinteger_object a;
@@ -2570,6 +2570,7 @@ void ring_theory_global::print_longinteger_after_multiplying(
 	D.multiply_up(a, factors, len, 0 /* verbose_level */);
 	ost << a;
 }
+
 
 
 

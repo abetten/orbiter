@@ -37,6 +37,14 @@ public:
 
 	int f_export_all_quartic_curves;
 
+	int f_export_something_with_group_element;
+	std::string export_something_with_group_element_what;
+	std::string export_something_with_group_element_label;
+
+	int f_action_on_module;
+	std::string action_on_module_type;
+	std::string action_on_module_basis;
+	std::string action_on_module_gens;
 
 	cubic_surface_activity_description();
 	~cubic_surface_activity_description();
@@ -235,6 +243,11 @@ public:
 #endif
 	void export_something(
 			std::string &what, int verbose_level);
+	void export_something_with_group_element(
+			std::string &what, std::string &label, int verbose_level);
+	void action_on_module(
+			std::string &module_type, std::string &module_basis_label, std::string &gens_label,
+			int verbose_level);
 	void export_gap(int verbose_level);
 	void do_report(int verbose_level);
 	void do_report2(
@@ -243,6 +256,8 @@ public:
 			std::string &Control_six_arcs_label,
 			int verbose_level);
 	void test_group(int verbose_level);
+	void all_quartic_curves(int verbose_level);
+	void export_all_quartic_curves(int verbose_level);
 
 };
 

@@ -3278,6 +3278,233 @@ void surface_create::export_something(
 
 }
 
+void surface_create::export_something_with_group_element(
+		std::string &what, std::string &label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::export_something_with_group_element" << endl;
+	}
+
+	apps_algebra::vector_ge_builder *gens_builder;
+
+	gens_builder = Get_object_of_type_vector_ge(label);
+
+
+
+	string fname_base;
+
+	fname_base.assign("surface_");
+	fname_base.append(label_txt);
+
+
+
+	data_structures::string_tools ST;
+	string fname;
+	orbiter_kernel_system::file_io Fio;
+
+
+	if (ST.stringcmp(what, "action_on_tritangent_planes") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_on_tri.csv");
+
+		{
+			ofstream ost(fname);
+			int i, j;
+
+			int *perm;
+
+			perm = NEW_int(SOA->A_on_tritangent_planes->degree);
+
+
+			ost << "ROW,OnTriP" << endl;
+			for (i = 0; i < gens_builder->V->len; i++) {
+				ost << i << ",";
+
+				SOA->A_on_tritangent_planes->Group_element->element_as_permutation(
+						gens_builder->V->ith(i),
+						perm, 0 /* verbose_level */);
+
+				ost << "\"[";
+				for (j = 0; j < SOA->A_on_tritangent_planes->degree; j++) {
+					ost << perm[j];
+					if (j < SOA->A_on_tritangent_planes->degree - 1) {
+						ost << ",";
+					}
+				}
+				ost << "]\"";
+
+				//SOA->A_on_tritangent_planes->Group_element->print_as_permutation(
+				//		ost, gens_builder->V->ith(i));
+				ost << endl;
+			}
+			ost << "END" << endl;
+
+			FREE_int(perm);
+
+		}
+
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	else if (ST.stringcmp(what, "action_on_double_sixes") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_on_double_sixes.csv");
+
+		{
+			ofstream ost(fname);
+			int i, j;
+
+			int *perm;
+
+			perm = NEW_int(SOA->A_double_sixes->degree);
+
+
+			ost << "ROW,OnDoubleSixes" << endl;
+			for (i = 0; i < gens_builder->V->len; i++) {
+				ost << i << ",";
+
+				SOA->A_double_sixes->Group_element->element_as_permutation(
+						gens_builder->V->ith(i),
+						perm, 0 /* verbose_level */);
+
+				ost << "\"[";
+				for (j = 0; j < SOA->A_double_sixes->degree; j++) {
+					ost << perm[j];
+					if (j < SOA->A_double_sixes->degree - 1) {
+						ost << ",";
+					}
+				}
+				ost << "]\"";
+
+				//SOA->A_on_tritangent_planes->Group_element->print_as_permutation(
+				//		ost, gens_builder->V->ith(i));
+				ost << endl;
+			}
+			ost << "END" << endl;
+
+
+			FREE_int(perm);
+
+
+		}
+
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::export_something_with_group_element done" << endl;
+	}
+
+}
+
+void surface_create::action_on_module(
+		std::string &module_type, std::string &module_basis_label, std::string &gens_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::action_on_module" << endl;
+	}
+
+	apps_algebra::vector_ge_builder *gens_builder;
+
+	gens_builder = Get_object_of_type_vector_ge(gens_label);
+
+	int *module_basis;
+	int module_dimension_m, module_dimension_n;
+
+	Get_matrix(module_basis_label, module_basis, module_dimension_m, module_dimension_n);
+
+
+	if (f_v) {
+		cout << "surface_create::action_on_module" << endl;
+		cout << "surface_create::action_on_module m = " << module_dimension_m << endl;
+		cout << "surface_create::action_on_module n = " << module_dimension_n << endl;
+		cout << "surface_create::action_on_module Basis:" << endl;
+		Int_matrix_print(module_basis, module_dimension_m, module_dimension_n);
+	}
+
+
+	induced_actions::action_on_module *AM;
+
+	AM = NEW_OBJECT(induced_actions::action_on_module);
+
+	if (f_v) {
+		cout << "surface_create::action_on_module "
+				"before AM->init_action_on_module" << endl;
+	}
+	AM->init_action_on_module(
+			SO,
+			SOA->A_on_the_lines,
+			module_type,
+			module_basis, module_dimension_m, module_dimension_n,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_create::action_on_module "
+				"after AM->init_action_on_module" << endl;
+	}
+
+	int i, h;
+	int *v;
+	int *w;
+
+
+	v = NEW_int(module_dimension_m);
+	w = NEW_int(module_dimension_m);
+
+	for (i = 0; i < gens_builder->V->len; i++) {
+		if (f_v) {
+			cout << "group element " << i << ":" << endl;
+		}
+		for (h = 0; h < module_dimension_m; h++) {
+
+			if (f_v) {
+				cout << "group element " << i << " : h=" << h << endl;
+			}
+
+			Int_vec_zero(v, module_dimension_m);
+
+			v[h] = 1;
+
+			if (f_v) {
+				cout << "surface_create::action_on_module "
+						"before AM->compute_image_int_low_level" << endl;
+			}
+			AM->compute_image_int_low_level(
+					gens_builder->V->ith(i),
+					v, w,
+					verbose_level);
+			if (f_v) {
+				cout << "surface_create::action_on_module "
+						"after AM->compute_image_int_low_level" << endl;
+			}
+
+			if (f_v) {
+				cout << "group element " << i << " h=" << h << " maps to ";
+				Int_vec_print(cout, w, module_dimension_m);
+				cout << endl;
+			}
+
+		}
+	}
+
+	if (f_v) {
+		cout << "surface_create::action_on_module done" << endl;
+	}
+}
+
+
 void surface_create::export_gap(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3674,8 +3901,149 @@ void surface_create::test_group(int verbose_level)
 	}
 }
 
+void surface_create::all_quartic_curves(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::all_quartic_curves" << endl;
+	}
+
+	if (!f_has_group) {
+		cout << "surface_create::all_quartic_curves The automorphism group "
+				"of the surface is missing" << endl;
+		exit(1);
+	}
 
 
+	string surface_prefix;
+	string fname_tex;
+	//string fname_quartics;
+	string fname_mask;
+	string surface_label;
+	string surface_label_tex;
+
+
+	surface_prefix.assign("surface_");
+	surface_prefix.append(label_txt);
+
+	surface_label.assign("surface_");
+	surface_label.append(label_txt);
+	surface_label.append("_quartics");
+
+
+	fname_tex.assign(surface_label);
+	fname_tex.append(".tex");
+
+
+
+	//fname_quartics.assign(label);
+	//fname_quartics.append(".csv");
+
+
+	surface_label_tex.assign("surface_");
+	surface_label_tex.append(label_tex);
+
+	fname_mask.assign("surface_");
+	fname_mask.append(prefix);
+	fname_mask.append("_orbit_%d");
+
+	if (f_v) {
+		cout << "surface_create::all_quartic_curves "
+				"fname_tex = " << fname_tex << endl;
+		//cout << "cubic_surface_activity::perform_activity "
+		//		"fname_quartics = " << fname_quartics << endl;
+	}
+	{
+		ofstream ost(fname_tex);
+		//ofstream ost_quartics(fname_quartics);
+
+		orbiter_kernel_system::latex_interface L;
+
+		L.head_easy(ost);
+
+		if (f_v) {
+			cout << "surface_create::all_quartic_curves "
+					"before SOA->all_quartic_curves" << endl;
+		}
+		SOA->all_quartic_curves(label_txt, label_tex, ost, verbose_level);
+		if (f_v) {
+			cout << "surface_create::all_quartic_curves "
+					"after SOA->all_quartic_curves" << endl;
+		}
+
+		//ost_curves << -1 << endl;
+
+		L.foot(ost);
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "Written file " << fname_tex << " of size "
+			<< Fio.file_size(fname_tex) << endl;
+
+	if (f_v) {
+		cout << "surface_create::all_quartic_curves done" << endl;
+	}
+
+}
+
+void surface_create::export_all_quartic_curves(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::export_all_quartic_curves" << endl;
+	}
+
+	if (!f_has_group) {
+		cout << "surface_create::export_all_quartic_curves The automorphism group "
+				"of the surface is missing" << endl;
+		exit(1);
+	}
+
+	string fname_curves;
+	string surface_label;
+
+
+	surface_label.assign("surface_");
+	surface_label.append(label_txt);
+	surface_label.append("_quartics");
+
+
+	fname_curves.assign(surface_label);
+	fname_curves.append(".csv");
+
+
+	if (f_v) {
+		cout << "surface_create::export_all_quartic_curves "
+				"fname_curves = " << fname_curves << endl;
+	}
+
+	{
+		ofstream ost_curves(fname_curves);
+
+		if (f_v) {
+			cout << "surface_create::export_all_quartic_curves "
+					"before SC->SOA->export_all_quartic_curves" << endl;
+		}
+		SOA->export_all_quartic_curves(ost_curves, verbose_level - 1);
+		if (f_v) {
+			cout << "surface_create::export_all_quartic_curves "
+					"after SC->SOA->export_all_quartic_curves" << endl;
+		}
+
+		ost_curves << -1 << endl;
+
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "Written file " << fname_curves << " of size "
+			<< Fio.file_size(fname_curves) << endl;
+
+	if (f_v) {
+		cout << "surface_create::export_all_quartic_curves done" << endl;
+	}
+}
 
 
 }}}}

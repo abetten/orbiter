@@ -930,9 +930,9 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 		cout << "SO->SOP->nb_tritangent_planes = "
 				<< SO->SOP->SmoothProperties->nb_tritangent_planes << endl;
 	}
-	A_on_tritangent_planes = A_on_the_lines->Induced_action->create_induced_action_on_sets(
+	A_on_tritangent_planes =
+			A_on_the_lines->Induced_action->create_induced_action_on_sets(
 			SO->SOP->SmoothProperties->nb_tritangent_planes, 3,
-			//SO->Lines_in_tritangent_planes,
 			Surf->Schlaefli->Lines_in_tritangent_planes,
 			0 /*verbose_level*/);
 	if (f_v) {

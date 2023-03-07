@@ -2582,8 +2582,13 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 
 
-			AW->create_induced_matrix(
-					Elt, Elt_out, verbose_level);
+			//AW->create_induced_matrix(
+			//		Elt, Elt_out, verbose_level);
+
+			AW->F->Linear_algebra->wedge_product(
+					Elt, Elt_out, AW->n, AW->wedge_dimension,
+					0 /* verbose_level */);
+
 
 			if (A->is_semilinear_matrix_group()) {
 				Elt_out[6 * 6] = Elt_in[4 * 4];

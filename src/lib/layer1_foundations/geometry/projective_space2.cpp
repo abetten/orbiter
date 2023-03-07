@@ -467,7 +467,8 @@ int projective_space::plane_intersections(
 		cout << "projective_space::plane_intersections "
 				"before plane_intersection_type_fast" << endl;
 	}
-	plane_intersection_type_fast(G,
+	plane_intersection_type_fast(
+			G,
 		set, set_size,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes,
 		verbose_level - 1);
@@ -482,8 +483,10 @@ int projective_space::plane_intersections(
 			cout << "projective_space::plane_intersections "
 					"before Sos.init" << endl;
 		}
-		SoS.init_with_Sz_in_int(set_size, nb_planes,
-				Pts_on_plane, nb_pts_on_plane, verbose_level - 1);
+		SoS.init_with_Sz_in_int(
+				set_size, nb_planes,
+				Pts_on_plane, nb_pts_on_plane,
+				verbose_level - 1);
 		if (f_v) {
 			cout << "projective_space::plane_intersections "
 					"after Sos.init" << endl;
@@ -546,6 +549,7 @@ void projective_space::plane_intersection_type_fast(
 	d = n + 1;
 	N_planes = nb_rk_k_subspaces_as_lint(3);
 	N = Combi.int_n_choose_k(set_size, 3);
+		// N is the number of 3-subsets of the given set
 
 	if (f_v) {
 		cout << "N_planes=" << N_planes << endl;
@@ -579,7 +583,8 @@ void projective_space::plane_intersection_type_fast(
 
 	len = 0;
 	for (rk = 0; rk < N; rk++) {
-		Combi.unrank_k_subset(rk, subset, set_size, 3);
+		Combi.unrank_k_subset(
+				rk, subset, set_size, 3);
 		if (f_v3) {
 			cout << rk << "-th subset ";
 			Int_vec_print(cout, subset, 3);
@@ -616,7 +621,8 @@ void projective_space::plane_intersection_type_fast(
 			rank_idx[rk] = -1;
 			continue;
 		}
-		G->rank_longinteger_here(Basis, plane_rk, 0 /* verbose_level */);
+		G->rank_longinteger_here(
+				Basis, plane_rk, 0 /* verbose_level */);
 		if (f_v3) {
 			cout << rk << "-th subset ";
 			Int_vec_print(cout, subset, 3);
@@ -839,7 +845,8 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 						<< rk / one_percent << " percent done" << endl;
 			}
 		}
-		Grass_planes->unrank_lint_here(Basis_save, rk, 0 /* verbose_level */);
+		Grass_planes->unrank_lint_here(
+				Basis_save, rk, 0 /* verbose_level */);
 		//int_vec_copy(G->M, Basis_save, 3 * d);
 
 		int nb_pts_on_plane = 0;
@@ -847,7 +854,8 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 		for (u = 0; u < set_size; u++) {
 			Int_vec_copy(Basis_save, Basis, 3 * d);
 			Int_vec_copy(Coords + u * d, Basis + 3 * d, d);
-			r = F->Linear_algebra->rank_of_rectangular_matrix(Basis,
+			r = F->Linear_algebra->rank_of_rectangular_matrix(
+					Basis,
 					4, d, 0 /* verbose_level */);
 			if (r < 4) {
 				nb_pts_on_plane++;
@@ -979,7 +987,8 @@ void projective_space::line_intersection(
 		Int_matrix_print(Coords, set_size, d);
 	}
 
-	Grass_lines->unrank_lint_here(Basis_save, line_rank, 0 /* verbose_level */);
+	Grass_lines->unrank_lint_here(
+			Basis_save, line_rank, 0 /* verbose_level */);
 
 	for (u = 0; u < set_size; u++) {
 		Int_vec_copy(Basis_save, Basis, 2 * d);
@@ -1248,20 +1257,24 @@ void projective_space::planes_through_a_line(
 	embedding = NEW_int(d);
 	w = NEW_int(d);
 	v = NEW_int(d);
-	Grass_lines->unrank_lint_here(M1, line_rk, 0 /* verbose_level */);
+	Grass_lines->unrank_lint_here(
+			M1, line_rk, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "projective_space::planes_through_a_line M1=" << endl;
+		cout << "projective_space::planes_through_a_line "
+				"M1=" << endl;
 		Int_matrix_print(M1, 2, d);
 	}
 
-	r = F->Linear_algebra->base_cols_and_embedding(2, d, M1,
+	r = F->Linear_algebra->base_cols_and_embedding(
+			2, d, M1,
 			base_cols, embedding, 0 /* verbose_level */);
 	if (r != 2) {
 		cout << "projective_space::planes_through_a_line r != 2" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "projective_space::planes_through_a_line after RREF, M1=" << endl;
+		cout << "projective_space::planes_through_a_line "
+				"after RREF, M1=" << endl;
 		Int_matrix_print(M1, 2, d);
 	}
 	N = Gg.nb_PG_elements(n - 2, F->q);
@@ -1277,15 +1290,18 @@ void projective_space::planes_through_a_line(
 		Int_vec_copy(M1, M2, 2 * d);
 		Int_vec_copy(v, M2 + 2 * d, d);
 		if (FALSE) {
-			cout << "projective_space::planes_through_a_line h = " << h << ", M2=" << endl;
+			cout << "projective_space::planes_through_a_line "
+					"h = " << h << ", M2=" << endl;
 			Int_matrix_print(M2, 3, d);
 		}
-		if (F->Linear_algebra->rank_of_rectangular_matrix(M2, 3, d, 0 /*verbose_level*/) == 3) {
+		if (F->Linear_algebra->rank_of_rectangular_matrix(
+				M2, 3, d, 0 /*verbose_level*/) == 3) {
 
 			// here, rank means the rank in the sense of linear algebra
 
 			if (f_v) {
-				cout << "projective_space::planes_through_a_line h = " << h << ", M2=" << endl;
+				cout << "projective_space::planes_through_a_line "
+						"h = " << h << ", M2=" << endl;
 				Int_matrix_print(M2, 3, d);
 			}
 			rk = Grass_planes->rank_lint_here(M2, 0 /* verbose_level */);
@@ -1293,7 +1309,8 @@ void projective_space::planes_through_a_line(
 			// here rank is in the sense of indexing
 
 			if (f_v) {
-				cout << "projective_space::planes_through_a_line h = " << h << " rk=" << rk << endl;
+				cout << "projective_space::planes_through_a_line "
+						"h = " << h << " rk=" << rk << endl;
 			}
 			plane_ranks.push_back(rk);
 		}

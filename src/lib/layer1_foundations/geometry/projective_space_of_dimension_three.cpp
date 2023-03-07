@@ -28,7 +28,8 @@ projective_space_of_dimension_three::~projective_space_of_dimension_three()
 {
 }
 
-void projective_space_of_dimension_three::init(projective_space *P, int verbose_level)
+void projective_space_of_dimension_three::init(
+		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -523,6 +524,47 @@ long int projective_space_of_dimension_three::plane_from_three_lines(
 	return rk;
 }
 
+void projective_space_of_dimension_three::make_element_which_moves_a_line_in_PG3q(
+		long int line_rk, int *Mtx16,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::make_element_which_moves_a_line_in_PG3q" << endl;
+	}
+
+	int M[4 * 4];
+	//int N[4 * 4 + 1]; // + 1 if f_semilinear
+	int base_cols[4];
+	int r, c, i, j;
+
+	//int_vec_zero(M, 16);
+	P->Grass_lines->unrank_lint_here(M, line_rk, 0 /*verbose_level*/);
+	r = P->Grass_lines->F->Linear_algebra->Gauss_simple(
+			M, 2, 4, base_cols, 0 /* verbose_level */);
+	P->Grass_lines->F->Linear_algebra->kernel_columns(
+			4, r, base_cols, base_cols + r);
+
+	for (i = r; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			if (j == base_cols[i]) {
+				c = 1;
+			}
+			else {
+				c = 0;
+			}
+			M[i * 4 + j] = c;
+		}
+	}
+	P->Grass_lines->F->Linear_algebra->matrix_inverse(M, Mtx16, 4, 0 /* verbose_level */);
+	//N[4 * 4] = 0;
+	//A->Group_element->make_element(Elt, N, 0);
+
+	if (f_v) {
+		cout << "action_global::make_element_which_moves_a_line_in_PG3q done" << endl;
+	}
+}
 
 
 

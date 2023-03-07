@@ -727,6 +727,57 @@ public:
 			int *Elt, long int i, int verbose_level);
 };
 
+
+// #############################################################################
+// action_on_module.cpp
+// #############################################################################
+
+
+//! induced action on a module
+
+
+class action_on_module {
+public:
+
+	actions::action *A;
+	int n;
+	int q;
+	algebra::matrix_group *M;
+	field_theory::finite_field *F;
+	int low_level_point_size;
+	//long int degree;
+
+	algebraic_geometry::surface_object *SO;
+	int *module_basis; // [module_dimension_m * module_dimension_n]
+	int module_dimension_m;
+	int module_dimension_n;
+	double *module_basis_base_transposed; // [module_dimension_n * module_dimension_m]
+
+	int *module_basis_base_cols; // [module_dimension_n]
+	int *module_basis_rref; // [module_dimension_m * module_dimension_n]
+	int *module_basis_transformation; // [module_dimension_m * module_dimension]
+
+	int *v1; // [module_dimension_n]
+	int *v2; // [module_dimension_n]
+
+	actions::action *A_on_the_lines;
+	actions::action *A_on_module;
+
+	action_on_module();
+	~action_on_module();
+	void init_action_on_module(
+			algebraic_geometry::surface_object *SO,
+			actions::action *A_on_the_lines,
+			std::string &module_type,
+			int *module_basis, int module_dimension_m, int module_dimension_n,
+			int verbose_level);
+	void compute_image_int_low_level(
+			int *Elt, int *input, int *output,
+		int verbose_level);
+};
+
+
+
 // #############################################################################
 // action_on_orbits.cpp
 // #############################################################################
@@ -1005,15 +1056,15 @@ public:
 			int *Elt, long int a, int verbose_level);
 	int element_entry_frobenius(int *Elt,
 		int verbose_level);
-	int element_entry_ij(int *Elt, int I, int J,
-		int verbose_level);
-	int element_entry_ijkl(int *Elt,
-		int i, int j, int k, int l, int verbose_level);
+	//int element_entry_ij(int *Elt, int I, int J,
+	//	int verbose_level);
+	//int element_entry_ijkl(int *Elt,
+	//	int i, int j, int k, int l, int verbose_level);
 	void compute_image_int_low_level(
 			int *Elt, int *input, int *output,
 		int verbose_level);
-	void create_induced_matrix(
-			int *Elt, int *Mtx2, int verbose_level);
+	//void create_induced_matrix(
+	//		int *Elt, int *Mtx2, int verbose_level);
 	void element_print_latex(int *A, std::ostream &ost);
 };
 

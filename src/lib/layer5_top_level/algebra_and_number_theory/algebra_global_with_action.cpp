@@ -2156,7 +2156,6 @@ void algebra_global_with_action::do_eigenstuff(
 		cout << M << endl;
 	}
 
-	//domain d(q);
 	typed_objects::domain d(F);
 	typed_objects::with w(&d);
 
@@ -2195,15 +2194,15 @@ void algebra_global_with_action::do_eigenstuff(
 	cout << "the Smith normal form is:" << endl;
 	cout << M << endl;
 
-	S.mult(P, Pv);
+	S.mult(P, Pv, verbose_level);
 	cout << "P * Pv=" << endl << S << endl;
 
-	S.mult(Q, Qv);
+	S.mult(Q, Qv, verbose_level);
 	cout << "Q * Qv=" << endl << S << endl;
 
-	S.mult(P, M1);
+	S.mult(P, M1, verbose_level);
 	cout << "T.mult(S, Q):" << endl;
-	T.mult(S, Q);
+	T.mult(S, Q, verbose_level);
 	cout << "T=" << endl << T << endl;
 
 
@@ -2375,7 +2374,7 @@ void algebra_global_with_action::A5_in_PSL_(
 
 	{
 		typed_objects::with w(dom);
-		D.mult(A, B);
+		D.mult(A, B, verbose_level);
 
 		if (f_v) {
 			cout << "A5_in_PSL_2_q done" << endl;
@@ -2459,9 +2458,9 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 	i = (q - 1) / 5;
 	r = typed_objects::finite_field_domain_primitive_root();
 	zeta5.m_i(r);
-	zeta5.power_int(i);
+	zeta5.power_int(i, verbose_level);
 	zeta5v = zeta5;
-	zeta5v.power_int(4);
+	zeta5v.power_int(4, verbose_level);
 
 	if (f_v) {
 		cout << "zeta5=" << zeta5 << endl;
@@ -2483,7 +2482,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 	b = zeta5v;
 	b.negate();
 	b += zeta5;
-	b.invert();
+	b.invert(verbose_level);
 
 	// determine c, d such that $-b^2 -cd = 1$:
 	b2 = b;
@@ -2562,9 +2561,9 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 		}
 #else
 	a.m_i(q); // alpha
-	a.power_int((q - 1) >> 1);
+	a.power_int((q - 1) >> 1, verbose_level);
 	b = a;
-	b.power_int(q + 1);
+	b.power_int(q + 1, verbose_level);
 	cout << "(" << a << ")^" << q + 1 << " = " << b << endl;
 	if (!b.is_m_one()) {
 		cout << "fatal: element a does not have norm -1" << endl;
@@ -2592,8 +2591,8 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 		cout << "S=\n" << S << endl;
 	}
 	Sv = S;
-	Sv.invert();
-	E.mult(S, Sv);
+	Sv.invert(verbose_level);
+	E.mult(S, Sv, verbose_level);
 	if (f_v) {
 		cout << "S^{-1}=\n" << Sv << endl;
 		cout << "S \\cdot S^{-1}=\n" << E << endl;
@@ -2616,9 +2615,9 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	i = (q2 - 1) / 5;
 	r = typed_objects::finite_field_domain_primitive_root();
 	zeta5.m_i(r);
-	zeta5.power_int(i);
+	zeta5.power_int(i, verbose_level);
 	zeta5v = zeta5;
-	zeta5v.power_int(4);
+	zeta5v.power_int(4, verbose_level);
 
 	if (f_v) {
 		cout << "zeta5=" << zeta5 << endl;
@@ -2642,7 +2641,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	b = zeta5v;
 	b.negate();
 	b += zeta5;
-	b.invert();
+	b.invert(verbose_level);
 
 	if (f_v) {
 		cout << "b=" << b << endl;
@@ -2650,9 +2649,9 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 
 	// compute $c$ with $N(c) = c \cdot \bar{c} = 1 - N(b) = 1 - b \cdot \bar{b}$:
 	b1 = b;
-	b1.power_int(q);
+	b1.power_int(q, verbose_level);
 
-	bb.mult(b, b1);
+	bb.mult(b, b1, verbose_level);
 	bb.negate();
 	e.one();
 	e += bb;
@@ -2663,7 +2662,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	for (l = 0; l < q; l++) {
 		c.m_i(norm_alpha);
 		f = c;
-		f.power_int(l);
+		f.power_int(l, verbose_level);
 		if (f.compare_with(e) == 0) {
 			break;
 		}
@@ -2672,10 +2671,10 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 		cout << "the discrete log with respect to " << norm_alpha << " is " << l << endl;
 	}
 	c.m_i(q);
-	c.power_int(l);
+	c.power_int(l, verbose_level);
 
 	f = c;
-	f.power_int(q + 1);
+	f.power_int(q + 1, verbose_level);
 	if (f.compare_with(e) != 0) {
 		cout << "fatal: norm of " << c << " is not " << e << endl;
 		exit(1);
@@ -2698,7 +2697,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 		cout << "element c=" << c << endl;
 	}
 	c1 = c;
-	c1.power_int(q);
+	c1.power_int(q, verbose_level);
 
 	BB[0][0] = b;
 	BB[0][1] = c;
@@ -2708,9 +2707,9 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	if (f_v) {
 		cout << "BB=\n" << BB << endl;
 	}
-	A.mult(S, AA);
+	A.mult(S, AA, verbose_level);
 	A *= Sv;
-	B.mult(S, BB);
+	B.mult(S, BB, verbose_level);
 	B *= Sv;
 
 	if (f_v) {
@@ -2769,7 +2768,7 @@ void algebra_global_with_action::trace(
 }
 
 void algebra_global_with_action::elementwise_power_int(
-		layer2_discreta::typed_objects::discreta_matrix &A, int k)
+		layer2_discreta::typed_objects::discreta_matrix &A, int k, int verbose_level)
 {
 	int i, j, m, n;
 
@@ -2778,7 +2777,7 @@ void algebra_global_with_action::elementwise_power_int(
 
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			A[i][j].power_int(k);
+			A[i][j].power_int(k, verbose_level);
 		}
 	}
 }

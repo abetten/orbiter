@@ -266,7 +266,8 @@ void incidence::install_isomorphism_test_after_a_given_row(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "incidence::install_isomorphism_test_after_a_given_row line = " << row << endl;
+		cout << "incidence::install_isomorphism_test_after_a_given_row "
+				"line = " << row << endl;
 	}
 	if (row > 0 && row <= Encoding->v) {
 		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);

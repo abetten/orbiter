@@ -3238,7 +3238,8 @@ void action_global::induced_action_override_sims(
 	}
 }
 
-void action_global::make_canonical(action *A, groups::sims *Sims,
+void action_global::make_canonical(
+		action *A, groups::sims *Sims,
 		int size, long int *set,
 	long int *canonical_set, int *transporter,
 	long int &total_backtrack_nodes,
@@ -3382,7 +3383,8 @@ void action_global::make_canonical(action *A, groups::sims *Sims,
 
 void action_global::make_element_which_moves_a_line_in_PG3q(
 		action *A,
-		geometry::grassmann *Gr,
+		geometry::projective_space_of_dimension_three *P3,
+		//geometry::grassmann *Gr,
 		long int line_rk, int *Elt,
 		int verbose_level)
 {
@@ -3392,6 +3394,7 @@ void action_global::make_element_which_moves_a_line_in_PG3q(
 		cout << "action_global::make_element_which_moves_a_line_in_PG3q" << endl;
 	}
 
+#if 0
 	int M[4 * 4];
 	int N[4 * 4 + 1]; // + 1 if f_semilinear
 	int base_cols[4];
@@ -3416,8 +3419,28 @@ void action_global::make_element_which_moves_a_line_in_PG3q(
 		}
 	}
 	Gr->F->Linear_algebra->matrix_inverse(M, N, 4, 0 /* verbose_level */);
-	N[4 * 4] = 0;
-	A->Group_element->make_element(Elt, N, 0);
+#endif
+
+	int Mtx17[17];
+
+	if (f_v) {
+		cout << "action_global::make_element_which_moves_a_line_in_PG3q "
+				"before P3->make_element_which_moves_a_line_in_PG3q" << endl;
+	}
+	P3->make_element_which_moves_a_line_in_PG3q(
+			line_rk, Mtx17,
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::make_element_which_moves_a_line_in_PG3q "
+				"after P3->make_element_which_moves_a_line_in_PG3q" << endl;
+	}
+
+	Mtx17[16] = 0;
+
+
+
+	//N[4 * 4] = 0;
+	A->Group_element->make_element(Elt, Mtx17, 0);
 
 	if (f_v) {
 		cout << "action_global::make_element_which_moves_a_line_in_PG3q done" << endl;

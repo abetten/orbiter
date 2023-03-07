@@ -2345,9 +2345,11 @@ public:
 
 	projective_space_implementation();
 	~projective_space_implementation();
-	void init(projective_space *P, int verbose_level);
+	void init(
+			projective_space *P, int verbose_level);
 	void line_intersection_type(
-			long int *set, int set_size, int *type, int verbose_level);
+			long int *set, int set_size, int *type,
+			int verbose_level);
 	void point_types_of_line_set(
 			long int *set_of_lines, int set_size,
 		int *type, int verbose_level);
@@ -2362,7 +2364,7 @@ public:
 // projective_space_of_dimension_three.cpp
 // #############################################################################
 
-//! projective space PG(3,q) collects functionality specific for a three space
+//! functionality specific to a three-dimensional projective space, i.e. PG(3,q)
 
 
 class projective_space_of_dimension_three {
@@ -2372,11 +2374,13 @@ public:
 
 	projective_space_of_dimension_three();
 	~projective_space_of_dimension_three();
-	void init(projective_space *P, int verbose_level);
+	void init(
+			projective_space *P, int verbose_level);
 	void determine_quadric_in_solid(
 			long int *nine_pts_or_more, int nb_pts,
 		int *ten_coeffs, int verbose_level);
-	void quadric_points_brute_force(int *ten_coeffs,
+	void quadric_points_brute_force(
+			int *ten_coeffs,
 		long int *points, int &nb_points, int verbose_level);
 	int point_of_intersection_of_a_line_and_a_line_in_three_space(
 		long int line1,
@@ -2397,7 +2401,8 @@ public:
 		int verbose_level);
 	long int plane_rank_using_dual_coordinates_in_three_space(
 		int *eqn4, int verbose_level);
-	long int dual_rank_of_plane_in_three_space(long int plane_rank,
+	long int dual_rank_of_plane_in_three_space(
+			long int plane_rank,
 		int verbose_level);
 	void plane_equation_from_three_lines_in_three_space(
 		long int *three_lines,
@@ -2405,6 +2410,9 @@ public:
 	long int plane_from_three_lines(
 			long int *three_lines,
 		int verbose_level);
+	void make_element_which_moves_a_line_in_PG3q(
+			long int line_rk, int *Mtx16,
+			int verbose_level);
 
 
 
@@ -2416,7 +2424,7 @@ public:
 // projective_space_plane.cpp
 // #############################################################################
 
-//! projective space PG(2,q) collects functionality specific for a desarguesian projective plane
+//! functionality specific to a desarguesian projective plane, i.e. PG(2,q)
 
 
 class projective_space_plane {
@@ -2588,7 +2596,7 @@ public:
 		// N_lines = Nb_subspaces[1];
 
 	int r; // number of lines on a point
-	int k; // number of points on a line
+	int k; // = q + 1, number of points on a line
 
 	projective_space_implementation *Implementation;
 
@@ -2744,9 +2752,6 @@ public:
 	void Baer_subline(
 			long int *pts3, long int *&pts, int &nb_pts,
 		int verbose_level);
-
-	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
-		int verbose_level);
 	void export_incidence_matrix_to_csv(int verbose_level);
 	void make_fname_incidence_matrix_csv(std::string &fname);
 	void compute_decomposition(
@@ -2765,6 +2770,9 @@ public:
 			long int rk_in, long int &rk_out, int verbose_level);
 
 	// projective_space2.cpp:
+	int is_contained_in_Baer_subline(
+			long int *pts, int nb_pts,
+		int verbose_level);
 	void circle_type_of_line_subset(int *pts, int nb_pts, 
 		int *circle_type, int verbose_level);
 		// circle_type[nb_pts]

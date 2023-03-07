@@ -138,6 +138,7 @@ int action_on_wedge_product::element_entry_frobenius(
 	return f;
 }
 
+#if 0
 int action_on_wedge_product::element_entry_ij(
 		int *Elt, int I, int J, int verbose_level)
 {
@@ -164,6 +165,7 @@ int action_on_wedge_product::element_entry_ijkl(
 	w = F->add(u, F->negate(v));
 	return w;
 }
+#endif
 
 void action_on_wedge_product::compute_image_int_low_level(
 		int *Elt, int *input, int *output, int verbose_level)
@@ -243,7 +245,11 @@ void action_on_wedge_product::compute_image_int_low_level(
 #else
 
 
-	create_induced_matrix(Elt, Mtx_wedge, verbose_level - 2);
+	//create_induced_matrix(Elt, Mtx_wedge, verbose_level - 2);
+
+	F->Linear_algebra->wedge_product(
+			Elt, Mtx_wedge, n, wedge_dimension, verbose_level - 2);
+
 
 	F->Linear_algebra->mult_vector_from_the_right(Mtx_wedge, x,
 			xA, wedge_dimension, wedge_dimension);
@@ -280,6 +286,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 	}
 }
 
+#if 0
 void action_on_wedge_product::create_induced_matrix(
 		int *Elt, int *Mtx2, int verbose_level)
 {
@@ -290,19 +297,19 @@ void action_on_wedge_product::create_induced_matrix(
 	}
 	int i, j, ij, k, l, kl;
 	int w;
-	combinatorics::combinatorics_domain Combi;
+	//combinatorics::combinatorics_domain Combi;
 
-	for (i = 0; i < n; i++) {
-		for (j = i + 1; j < n; j++) {
+	for (i = 0, ij = 0; i < n; i++) {
+		for (j = i + 1; j < n; j++, ij++) {
 
 			// (i,j) = row index
-			ij = Combi.ij2k(i, j, n);
+			//ij = Combi.ij2k(i, j, n);
 
-			for (k = 0; k < n; k++) {
-				for (l = k + 1; l < n; l++) {
+			for (k = 0, kl = 0; k < n; k++) {
+				for (l = k + 1; l < n; l++, kl++) {
 
 					// (k,l) = column index
-					kl = Combi.ij2k(k, l, n);
+					//kl = Combi.ij2k(k, l, n);
 
 
 					// a_{k,i}a_{l,j} - a_{k,j}a_{l,i} = matrix entry
@@ -317,9 +324,13 @@ void action_on_wedge_product::create_induced_matrix(
 					w = F->add(u, F->negate(v));
 #endif
 
+					w = F->Linear_algebra->minor_2x2(
+							Elt, n, i, j, k, l,
+							verbose_level - 3);
 
-					w = element_entry_ijkl(Elt, i, j, k, l, verbose_level - 3);
+					//w = element_entry_ijkl(Elt, i, j, k, l, verbose_level - 3);
 					// now w is the matrix entry
+
 					Mtx2[ij * wedge_dimension + kl] = w;
 				}
 			}
@@ -330,6 +341,7 @@ void action_on_wedge_product::create_induced_matrix(
 		cout << "action_on_wedge_product::create_induced_matrix done" << endl;
 	}
 }
+#endif
 
 void action_on_wedge_product::element_print_latex(int *Elt, std::ostream &ost)
 {
@@ -340,7 +352,10 @@ void action_on_wedge_product::element_print_latex(int *Elt, std::ostream &ost)
 	}
 	ost << "=";
 
-	create_induced_matrix(Elt, Mtx_wedge, 0 /* verbose_level */);
+	//create_induced_matrix(Elt, Mtx_wedge, 0 /* verbose_level */);
+	F->Linear_algebra->wedge_product(
+			Elt, Mtx_wedge, n, wedge_dimension, 0 /* verbose_level */);
+
 
 	F->Io->print_matrix_latex(ost, Mtx_wedge, wedge_dimension, wedge_dimension);
 	if (M->f_semilinear) {

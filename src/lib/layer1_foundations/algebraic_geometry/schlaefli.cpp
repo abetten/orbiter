@@ -53,6 +53,8 @@ schlaefli::schlaefli()
 
 	Half_double_six_characteristic_vector = NULL;
 
+	Double_six_characteristic_vector = NULL;
+
 	Half_double_sixes = NULL;
 	Half_double_six_label_tex = NULL;
 	Half_double_six_to_double_six = NULL;
@@ -132,6 +134,10 @@ schlaefli::~schlaefli()
 
 	if (Half_double_six_characteristic_vector) {
 		FREE_int(Half_double_six_characteristic_vector);
+	}
+
+	if (Double_six_characteristic_vector) {
+		FREE_int(Double_six_characteristic_vector);
 	}
 
 	if (Half_double_sixes) {
@@ -1192,23 +1198,33 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 		cout << "schlaefli::create_half_double_sixes" << endl;
 	}
 
-	Half_double_six_characteristic_vector = NEW_int(36 * 27);
+	Half_double_six_characteristic_vector = NEW_int(72 * 27);
 	Half_double_sixes = NEW_lint(72 * 6);
 	Half_double_six_to_double_six = NEW_int(72);
 	Half_double_six_to_double_six_row = NEW_int(72);
 
-	Int_vec_zero(Half_double_six_characteristic_vector, 36 * 27);
+	Double_six_characteristic_vector = NEW_int(36 * 27);
+	Int_vec_zero(Double_six_characteristic_vector, 36 * 27);
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
-			if (j) {
-				continue;
-			}
 			for (h = 0; h < 6; h++) {
 				a = Double_six[(2 * i + j) * 6 + h];
-				Half_double_six_characteristic_vector[i * 27 + a] = 1;
+				Double_six_characteristic_vector[i * 27 + a] = 1;
 			}
 		}
 	}
+
+
+	Int_vec_zero(Half_double_six_characteristic_vector, 72 * 27);
+	for (i = 0; i < 36; i++) {
+		for (j = 0; j < 2; j++) {
+			for (h = 0; h < 6; h++) {
+				a = Double_six[(2 * i + j) * 6 + h];
+				Half_double_six_characteristic_vector[(2 * i + j) * 27 + a] = 1;
+			}
+		}
+	}
+
 
 	Lint_vec_copy(Double_six, Half_double_sixes, 36 * 12);
 	for (i = 0; i < 36; i++) {
@@ -2818,7 +2834,15 @@ void schlaefli::write_double_sixes(
 	fname.append("_single_sixes_char_vec.csv");
 
 	Fio.int_matrix_write_csv(fname, Half_double_six_characteristic_vector,
+			72, 27);
+
+	fname.assign(prefix);
+	fname.append("_double_sixes_char_vec.csv");
+
+	Fio.int_matrix_write_csv(fname, Double_six_characteristic_vector,
 			36, 27);
+
+
 
 	if (f_v) {
 		cout << "schlaefli::write_double_sixes done" << endl;

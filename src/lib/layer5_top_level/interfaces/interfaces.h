@@ -228,6 +228,9 @@ class interface_algebra {
 	std::string eigenstuff_coeffs;
 	std::string eigenstuff_fname;
 
+	int f_smith_normal_form;
+	std::string smith_normal_form_matrix;
+
 
 public:
 	interface_algebra();

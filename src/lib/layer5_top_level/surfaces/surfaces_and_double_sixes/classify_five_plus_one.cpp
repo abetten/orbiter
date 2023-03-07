@@ -408,7 +408,8 @@ void classify_five_plus_one::identify_five_plus_one(
 
 
 	AG.make_element_which_moves_a_line_in_PG3q(A,
-		Surf->Gr,
+		Surf->P->Solid,
+		//Surf->Gr,
 		transversal_line,
 		Elt0,
 		0 /* verbose_level */);

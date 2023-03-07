@@ -85,6 +85,11 @@ public:
 		int *B, int n, int f, int l);
 		// initializes B as the l x l minor of A
 		// (which is n x n) starting from row f.
+	int minor_2x2(
+			int *Elt, int n, int i, int j, int k, int l,
+			int verbose_level);
+	void wedge_product(
+			int *Elt, int *Mtx2, int n, int n2, int verbose_level);
 	void mult_vector_from_the_left(
 			int *v, int *A,
 		int *vA, int m, int n);
@@ -535,6 +540,52 @@ public:
 		int *Ainv, int n, int verbose_level);
 		// Tmp points to n * n + 1 int's
 		// Tmp_basecols points to n int's
+
+};
+
+
+
+// #############################################################################
+// module.cpp:
+// #############################################################################
+
+//! a Z module
+
+class module {
+public:
+
+
+	module();
+	~module();
+	void matrix_multiply_over_Z_low_level(
+			int *A1, int *A2, int m1, int n1, int m2, int n2,
+			int *A3, int verbose_level);
+	void multiply_2by2_from_the_left(
+			data_structures::int_matrix *M,
+			int i, int j,
+		int aii, int aij,
+		int aji, int ajj, int verbose_level);
+	void multiply_2by2_from_the_right(
+			data_structures::int_matrix *M,
+			int i, int j,
+		int aii, int aij,
+		int aji, int ajj, int verbose_level);
+	int clean_column(
+			data_structures::int_matrix *M,
+			data_structures::int_matrix *P,
+			data_structures::int_matrix *Pv, int i, int verbose_level);
+	int clean_row(
+			data_structures::int_matrix *M,
+			data_structures::int_matrix *Q,
+			data_structures::int_matrix *Qv,
+			int i, int verbose_level);
+	void smith_normal_form(
+			data_structures::int_matrix *M,
+			data_structures::int_matrix *&P,
+			data_structures::int_matrix *&Pv,
+			data_structures::int_matrix *&Q,
+			data_structures::int_matrix *&Qv,
+			int verbose_level);
 
 };
 

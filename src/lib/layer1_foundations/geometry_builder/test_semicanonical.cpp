@@ -59,7 +59,8 @@ test_semicanonical::~test_semicanonical()
 	}
 }
 
-void test_semicanonical::init(gen_geo *gg, int MAX_V, int verbose_level)
+void test_semicanonical::init(
+		gen_geo *gg, int MAX_V, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -171,7 +172,8 @@ void test_semicanonical::print()
 
 }
 
-void test_semicanonical::markers_update(int I, int m, int J, int n, int j,
+void test_semicanonical::markers_update(
+		int I, int m, int J, int n, int j,
 		int i1, int j0, int r,
 		int verbose_level)
 {
@@ -228,7 +230,8 @@ void test_semicanonical::markers_update(int I, int m, int J, int n, int j,
 
 }
 
-void test_semicanonical::marker_move_on(int I, int m, int J, int n, int j,
+void test_semicanonical::marker_move_on(
+		int I, int m, int J, int n, int j,
 		int i1, int j0, int r,
 		int verbose_level)
 {
@@ -259,7 +262,8 @@ void test_semicanonical::marker_move_on(int I, int m, int J, int n, int j,
 	}
 }
 
-int test_semicanonical::row_starter(int I, int m, int J, int n,
+int test_semicanonical::row_starter(
+		int I, int m, int J, int n,
 		int i1, int j0, int r,
 		int verbose_level)
 {
@@ -326,7 +330,8 @@ void test_semicanonical::row_init(int I, int m, int J,
 
 }
 
-int test_semicanonical::col_marker_test(int j0, int j, int i1)
+int test_semicanonical::col_marker_test(
+		int j0, int j, int i1)
 {
 	if (gg->GB->Descr->f_orderly) {
 		return FALSE;
@@ -343,7 +348,8 @@ int test_semicanonical::col_marker_test(int j0, int j, int i1)
 
 }
 
-void test_semicanonical::col_marker_remove(int I, int m, int J, int n,
+void test_semicanonical::col_marker_remove(
+		int I, int m, int J, int n,
 		int i1, int j0, int r, int old_x)
 {
 	if (gg->GB->Descr->f_orderly) {
@@ -368,7 +374,8 @@ void test_semicanonical::col_marker_remove(int I, int m, int J, int n,
 
 }
 
-void test_semicanonical::row_test_continue(int I, int m, int J, int i1)
+void test_semicanonical::row_test_continue(
+		int I, int m, int J, int i1)
 {
 	if (gg->GB->Descr->f_orderly) {
 		return;

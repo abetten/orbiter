@@ -22,6 +22,7 @@ MODULES = \
 	action_on_homogeneous_polynomials.o \
 	action_on_interior_direct_product.o \
 	action_on_k_subsets.o \
+	action_on_module.o \
 	action_on_orbits.o \
 	action_on_orthogonal.o \
 	action_on_set_partitions.o \

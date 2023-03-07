@@ -64,6 +64,8 @@ interface_algebra::interface_algebra()
 	//eigenstuff_coeffs = NULL;
 	//eigenstuff_fname = NULL;
 
+	f_smith_normal_form = FALSE;
+	//std::string smith_normal_form_matrix
 
 }
 
@@ -106,8 +108,10 @@ void interface_algebra::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-eigenstuff") == 0) {
 		cout << "-eigenstuff <string : finite_field_label> <int : n> <intvec : coeffs>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-smith_normal_form") == 0) {
+		cout << "-smith_normal_form <string : matrix_label>" << endl;
+	}
 }
-
 
 int interface_algebra::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
@@ -152,6 +156,9 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-eigenstuff") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-smith_normal_form") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -273,9 +280,16 @@ void interface_algebra::read_arguments(int argc,
 				<< " " << eigenstuff_coeffs << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-smith_normal_form") == 0) {
+		f_smith_normal_form = TRUE;
+		smith_normal_form_matrix.assign(argv[++i]);
+		if (f_v) {
+			cout << "-smith_normal_form "
+				<< smith_normal_form_matrix << endl;
+		}
+	}
 
 }
-
 
 void interface_algebra::print()
 {
@@ -328,13 +342,10 @@ void interface_algebra::print()
 			<< eigenstuff_n << " "
 			<< eigenstuff_coeffs << endl;
 	}
-#if 0
-	if (f_eigenstuff_from_file) {
-		cout << "-eigenstuff_from_file "
-				<< eigenstuff_finite_field_label << " " << eigenstuff_n
-			<< " " << eigenstuff_fname << endl;
+	if (f_smith_normal_form) {
+		cout << "-smith_normal_form "
+			<< smith_normal_form_matrix << endl;
 	}
-#endif
 
 }
 
@@ -481,6 +492,199 @@ void interface_algebra::worker(int verbose_level)
 
 	}
 
+	else if (f_smith_normal_form) {
+
+
+		if (f_v) {
+			cout << "interface_algebra::worker f_smith_normal_form" << endl;
+		}
+
+		int *A;
+		int m, n;
+
+		Get_matrix(smith_normal_form_matrix, A, m, n);
+
+#if 0
+		typed_objects::discreta_matrix M;
+		typed_objects::discreta_matrix P, Pv, Q, Qv;
+		int i, j, a;
+		number_theory::number_theory_domain NT;
+
+		M.m_mn(m, n);
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				a = A[i * n + j];
+				M.m_iji(i, j, a);
+			}
+		}
+
+		if (f_v) {
+			cout << "M=" << endl;
+			cout << M << endl;
+		}
+
+		M.smith_normal_form(
+				P, Pv,
+				Q, Qv,
+				verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker M = " << endl;
+			cout << M << endl;
+			cout << "interface_algebra::worker P = " << endl;
+			cout << P << endl;
+			cout << "interface_algebra::worker Pv = " << endl;
+			cout << Pv << endl;
+			cout << "interface_algebra::worker Q = " << endl;
+			cout << Q << endl;
+			cout << "interface_algebra::worker Qv = " << endl;
+			cout << Qv << endl;
+		}
+#endif
+
+		data_structures::int_matrix *M;
+		data_structures::int_matrix *P;
+		data_structures::int_matrix *Pv;
+		data_structures::int_matrix *Q;
+		data_structures::int_matrix *Qv;
+		linear_algebra::module Mod;
+
+		M = NEW_OBJECT(data_structures::int_matrix);
+		M->allocate_and_init(m, n, A);
+
+
+		if (f_v) {
+			cout << "interface_algebra::worker M=" << endl;
+			M->print();
+		}
+
+
+		orbiter_kernel_system::file_io Fio;
+		string fname;
+
+		fname.assign(smith_normal_form_matrix);
+		fname.append("_SNF");
+		fname.append("_M_original.csv");
+
+		M->write_csv(fname, verbose_level);
+
+		if (f_v) {
+			cout << "M:" << endl;
+			Int_matrix_print(M->M, M->m, M->n);
+		}
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+
+		if (f_v) {
+			cout << "interface_algebra::worker before Mod.smith_normal_form" << endl;
+		}
+
+		Mod.smith_normal_form(
+				M, P, Pv, Q, Qv, verbose_level);
+
+		if (f_v) {
+			cout << "interface_algebra::worker after Mod.smith_normal_form" << endl;
+		}
+
+		if (f_v) {
+			cout << "interface_algebra::worker M=" << endl;
+			M->print();
+		}
+
+
+
+		fname.assign(smith_normal_form_matrix);
+		fname.append("_SNF");
+		fname.append(".csv");
+
+		M->write_csv(fname, verbose_level);
+
+		if (f_v) {
+			cout << "SNF:" << endl;
+			Int_matrix_print(M->M, M->m, M->n);
+		}
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+
+		// write P and Pv:
+
+		fname.assign(smith_normal_form_matrix);
+		fname.append("_SNF_P");
+		fname.append(".csv");
+
+		P->write_csv(fname, verbose_level);
+
+		if (f_v) {
+			cout << "SNF_P:" << endl;
+			Int_matrix_print(P->M, P->m, P->n);
+		}
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+		fname.assign(smith_normal_form_matrix);
+		fname.append("_SNF_Pv");
+		fname.append(".csv");
+
+		Pv->write_csv(fname, verbose_level);
+
+		if (f_v) {
+			cout << "SNF_Pv:" << endl;
+			Int_matrix_print(Pv->M, Pv->m, Pv->n);
+		}
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+
+
+		// write Q and Qv:
+
+		fname.assign(smith_normal_form_matrix);
+		fname.append("_SNF_Q");
+		fname.append(".csv");
+
+		Q->write_csv(fname, verbose_level);
+
+		if (f_v) {
+			cout << "SNF_Q:" << endl;
+			Int_matrix_print(Q->M, Q->m, Q->n);
+		}
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+		fname.assign(smith_normal_form_matrix);
+		fname.append("_SNF_Qv");
+		fname.append(".csv");
+
+		Qv->write_csv(fname, verbose_level);
+
+		if (f_v) {
+			cout << "SNF_Qv:" << endl;
+			Int_matrix_print(Qv->M, Qv->m, Qv->n);
+		}
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+
+
+
+	}
 
 
 

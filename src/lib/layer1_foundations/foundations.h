@@ -560,6 +560,7 @@ namespace linear_algebra {
 
 	// linear_algebra:
 	class linear_algebra;
+	class module;
 	class representation_theory_domain;
 	class vector_space;
 

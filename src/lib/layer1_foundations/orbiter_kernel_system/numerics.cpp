@@ -212,7 +212,7 @@ int numerics::Gauss_elimination(
 			f = -1. * f;
 			A[k * n + j] = 0;
 			if (f_vv) {
-				cout << "eliminating row " << k << endl;
+				cout << "j=" << j << ", eliminating row " << k << endl;
 				}
 			for (jj = j + 1; jj < n; jj++) {
 				a = A[i * n + jj];
@@ -226,6 +226,9 @@ int numerics::Gauss_elimination(
 				if (f_vv) {
 					cout << A[k * n + jj] << " ";
 					}
+				}
+			if (f_vv) {
+				cout << endl;
 				}
 			if (f_vv) {
 				print_system(A, m, n);
@@ -279,11 +282,12 @@ void numerics::print_system(double *A, int m, int n)
 	int i, j;
 	
 	for (i = 0; i < m; i++) {
+		cout << i << " : \t";
 		for (j = 0; j < n; j++) {
 			cout << A[i * n + j] << "\t";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 }
 
 void numerics::get_kernel(double *M, int m, int n,

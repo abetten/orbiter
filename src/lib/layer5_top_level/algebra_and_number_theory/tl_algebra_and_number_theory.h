@@ -272,7 +272,7 @@ public:
 	void trace(layer2_discreta::typed_objects::discreta_matrix &A,
 			layer2_discreta::typed_objects::discreta_base &tr);
 	void elementwise_power_int(
-			layer2_discreta::typed_objects::discreta_matrix &A, int k);
+			layer2_discreta::typed_objects::discreta_matrix &A, int k, int verbose_level);
 	int is_in_center(
 			layer2_discreta::typed_objects::discreta_matrix &B);
 	void matrix_convert_to_numerical(

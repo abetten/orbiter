@@ -367,10 +367,16 @@ void schreier::make_orbit_trees(std::ostream &ost,
 	int f_has_point_labels = FALSE;
 	long int *point_labels = NULL;
 
+	if (f_v) {
+		cout << "schreier::make_orbit_trees before draw_forest" << endl;
+	}
 	draw_forest(fname_mask,
 		Opt,
 		f_has_point_labels, point_labels,
 		verbose_level - 1);
+	if (f_v) {
+		cout << "schreier::make_orbit_trees after draw_forest" << endl;
+	}
 
 
 	int i;
@@ -383,7 +389,7 @@ void schreier::make_orbit_trees(std::ostream &ost,
 		ost << "" << endl;
 		ost << "Orbit " << i << " consisting of the following "
 				<< orbit_len[i]
-				<< " half double sixes:" << endl;
+				<< " elements:" << endl;
 		ost << "$$" << endl;
 		L.int_set_print_tex(ost,
 			orbit + orbit_first[i], orbit_len[i]);
@@ -412,7 +418,8 @@ void schreier::print_and_list_orbits_with_original_labels_tex(
 			<< A->degree << ":\\\\" << endl;
 	//ost << "i : orbit_first[i] : orbit_len[i]" << endl;
 	for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
-		ost << " Orbit " << orbit_no << " / " << nb_orbits << " of size " << orbit_len[orbit_no] << " : ";
+		ost << " Orbit " << orbit_no << " / " << nb_orbits
+				<< " of size " << orbit_len[orbit_no] << " : ";
 		//print_and_list_orbit_tex(i, ost);
 		print_orbit_sorted_with_original_labels_tex(ost,
 				orbit_no, FALSE /* f_truncate */, 0 /* max_length*/);
@@ -423,7 +430,8 @@ void schreier::print_and_list_orbits_with_original_labels_tex(
 
 void schreier::print_and_list_orbit_tex(int i, std::ostream &ost)
 {
-	ost << " Orbit " << i << " / " << nb_orbits << " of size " << orbit_len[i] << " : ";
+	ost << " Orbit " << i << " / " << nb_orbits
+			<< " of size " << orbit_len[i] << " : ";
 	//print_orbit_tex(ost, i);
 	print_orbit_sorted_tex(ost, i, FALSE /* f_truncate */, 0 /* max_length*/);
 	ost << "\\\\" << endl;
@@ -431,7 +439,8 @@ void schreier::print_and_list_orbit_tex(int i, std::ostream &ost)
 
 void schreier::print_and_list_orbit_and_stabilizer_tex(int i,
 		actions::action *default_action,
-	ring_theory::longinteger_object &full_group_order, std::ostream &ost)
+	ring_theory::longinteger_object &full_group_order,
+	std::ostream &ost)
 {
 	ost << " Orbit " << i << " / " << nb_orbits << " : ";
 	print_orbit_tex(ost, i);
@@ -472,8 +481,10 @@ void schreier::write_orbit_summary(std::string &fname,
 
 		strong_generators *gens;
 
-		gens = stabilizer_orbit_rep(default_action,
-			full_group_order, orbit_no, 0 /*verbose_level */);
+		gens = stabilizer_orbit_rep(
+				default_action,
+			full_group_order, orbit_no,
+			0 /*verbose_level */);
 
 		Stab_order[orbit_no] = gens->group_order_as_lint();
 
@@ -491,7 +502,8 @@ void schreier::write_orbit_summary(std::string &fname,
 			fname, column_label);
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 

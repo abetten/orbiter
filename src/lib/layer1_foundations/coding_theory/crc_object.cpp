@@ -682,7 +682,6 @@ void crc_object::divide_bravo(const unsigned char *in771, unsigned char *out4)
 		if (x == 0) {
 			continue;
 		}
-		//cout << "i=" << i << " x=" << x << endl;
 		x--;
 		for (ii = i, jj = 4; jj >= 0; ii--, jj--) {
 			R[ii] ^= crc_poly_table_bravo[x * 5 + jj];

@@ -694,8 +694,14 @@ void algorithms::matrix_multiply_over_Z(
 	int m1, n1;
 	int m2, n2;
 
+	if (f_v) {
+		cout << "algorithms::matrix_multiply_over_Z get matrix " << label1 << endl;
+	}
 	Get_matrix(label1, A1, m1, n1);
 
+	if (f_v) {
+		cout << "algorithms::matrix_multiply_over_Z get matrix " << label2 << endl;
+	}
 	Get_matrix(label2, A2, m2, n2);
 
 	if (n1 != m2) {
@@ -703,19 +709,19 @@ void algorithms::matrix_multiply_over_Z(
 		exit(1);
 	}
 	int *A3;
+	int m3, n3;
 	int i, j, h, a, c;
 
-	A3 = NEW_int(m1 * n2);
 
-	for (i = 0; i < m1; i++) {
-		for (j = 0; j < n2; j++) {
-			c = 0;
-			for (h = 0; h < n1; h++) {
-				c += A1[i * n1 + h] * A2[h * n2 + j];
-			}
-			A3[i * n2 + j] = c;
-		}
-	}
+	m3 = m1;
+	n3 = n2;
+	A3 = NEW_int(m3 * n3);
+
+	linear_algebra::module Mod;
+
+	Mod.matrix_multiply_over_Z_low_level(
+			A1, A2, m1, n1, m2, n2,
+			A3, verbose_level - 2);
 
 	orbiter_kernel_system::file_io Fio;
 	string fname;
@@ -726,11 +732,11 @@ void algorithms::matrix_multiply_over_Z(
 	fname.append(".csv");
 
 	Fio.int_matrix_write_csv(fname, A3,
-			m1, n2);
+			m3, n3);
 
 	if (f_v) {
 		cout << "A1 * A2:" << endl;
-		Int_matrix_print(A3, m1, n2);
+		Int_matrix_print(A3, m3, n3);
 	}
 
 	if (f_v) {
@@ -744,6 +750,7 @@ void algorithms::matrix_multiply_over_Z(
 		cout << "algorithms::matrix_multiply_over_Z done" << endl;
 	}
 }
+
 
 
 void algorithms::matrix_rowspan_over_R(

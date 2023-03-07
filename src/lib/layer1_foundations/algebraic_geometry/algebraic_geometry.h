@@ -684,7 +684,9 @@ public:
 	std::string *Double_six_label_tex; // [36]
 
 
-	int *Half_double_six_characteristic_vector; // [36 * 27]
+	int *Half_double_six_characteristic_vector; // [72 * 27]
+
+	int *Double_six_characteristic_vector; // [36 * 27]
 
 
 	long int *Half_double_sixes; // [72 * 6]

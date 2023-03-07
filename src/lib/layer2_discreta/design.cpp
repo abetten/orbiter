@@ -17,20 +17,24 @@ namespace typed_objects {
 
 static void prepare_entry(
 		Vector &entry, int i, int j,
-		int h, int t, int v, int k, int lambda);
+		int h, int t, int v, int k, int lambda, int verbose_level);
 static void determine_minimal_and_maximal_path(
 		Vector &v,
 		Vector & min_path, Vector & max_path, int & max_depth);
 static void determine_dominating_ancestor(
 		int t, int v, int k,
 		discreta_base & lambda, Vector & path,
-		design_parameter &dominating_ancestor);
+		design_parameter &dominating_ancestor, int verbose_level);
 static void reduce_path(
 		Vector &cmp, Vector &min_path);
 static void family_report(
 		database & D, ostream& fhtml,
 		ostream &ftex, int t, int v, int k, discreta_base &lambda,
-		Vector & cm, Vector & cmp, int minimal_t);
+		Vector & cm, Vector & cmp, int minimal_t, int verbose_level);
+static void f_m_j(
+		int m, int j, discreta_base &a, int verbose_level);
+static int max_m(
+		int i, int j, int verbose_level);
 
 
 int design_parameters_admissible(
@@ -52,8 +56,9 @@ int design_parameters_admissible(
 }
 
 int calc_delta_lambda(
-		int v, int t, int k, int f_v)
+		int v, int t, int k, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	discreta_base lambda;
 	int i;
 	discreta_base a, b, a1, b1, g, rhs_a, rhs_b, delta_lambda, dl, a2, b2, gg;
@@ -74,15 +79,15 @@ int calc_delta_lambda(
 		else {
 			a1.m_i_i(v - i);
 			b1.m_i_i(k - i);
-			a.mult(rhs_a, a1);
-			b.mult(rhs_b, b1);
+			a.mult(rhs_a, a1, verbose_level);
+			b.mult(rhs_b, b1, verbose_level);
 			a.extended_gcd(b, a2, b2, g, 0);
-			a.divide_by_exact(g);
-			b.divide_by_exact(g);
+			a.divide_by_exact(g, verbose_level);
+			b.divide_by_exact(g, verbose_level);
 			delta_lambda.extended_gcd(b, a2, b2, gg, 0);
 			b1 = b;
-			b1.divide_by_exact(gg);
-			dl.mult(delta_lambda, b1);
+			b1.divide_by_exact(gg, verbose_level);
+			dl.mult(delta_lambda, b1, verbose_level);
 			delta_lambda = dl;
 			if (f_v) {
 				cout << "t'=" << i << " lambda'=" << a << "/" << b
@@ -120,14 +125,14 @@ void design_lambda_max_half(
 void design_lambda_ijs_matrix(
 		int t, int v, int k,
 		discreta_base& lambda,
-		int s, discreta_matrix & M)
+		int s, discreta_matrix & M, int verbose_level)
 {
 	int i, j;
 	
 	M.m_mn_n(t + 1, t + 1);
 	for (i = 0; i <= t; i++) {
 		for (j = 0; j <= t - i; j++) {
-			design_lambda_ijs(t, v, k, lambda, s, i, j, M[i][j]);
+			design_lambda_ijs(t, v, k, lambda, s, i, j, M[i][j], verbose_level);
 			}
 		}
 }
@@ -135,7 +140,7 @@ void design_lambda_ijs_matrix(
 void design_lambda_ijs(
 		int t, int v, int k,
 		discreta_base& lambda, int s, int i, int j,
-		discreta_base & lambda_ijs)
+		discreta_base & lambda_ijs, int verbose_level)
 //\lambda_{i,j}^{(s)} =
 // \sum_{h=0}^j (-1)^h {j \choose h} {\lambda_{i+h} \choose s}
 //cf. Wilson, Van Lint~\cite{VanLintWilson92}.
@@ -148,8 +153,8 @@ void design_lambda_ijs(
 		Binomial(j, h, a);
 		if (ODD(h))
 			a.negate();
-		design_lambda_ij(t, v, k, lambda, i + h, 0, b);
-		N_choose_K(b, s, c);
+		design_lambda_ij(t, v, k, lambda, i + h, 0, b, verbose_level);
+		N_choose_K(b, s, c, verbose_level);
 		a *= c;
 		lambda_ijs += a;
 		}
@@ -158,7 +163,7 @@ void design_lambda_ijs(
 void design_lambda_ij(
 		int t, int v, int k,
 		discreta_base& lambda, int i, int j,
-		discreta_base & lambda_ij)
+		discreta_base & lambda_ij, int verbose_level)
 //\lambda_{i,j} = \lambda \frac{{v-i-j \choose k-i}}{{v-t \choose k-t}}
 //cf. Wilson, Van Lint~\cite{VanLintWilson92}.
 {
@@ -172,7 +177,7 @@ void design_lambda_ij(
 	//<< " lambda=" << lambda << " i=" << i << " j=" << j << endl;
 	// cout << "design_lambda_ij() a=" << a << endl;
 	// cout << "design_lambda_ij() b=" << b << endl;
-	lambda_ij.divide_by_exact(b);
+	lambda_ij.divide_by_exact(b, verbose_level);
 }
 
 int is_trivial_clan(
@@ -190,14 +195,14 @@ int is_trivial_clan(
 }
 
 void print_clan_tex_int(
-		int t, int v, int k)
+		int t, int v, int k, int verbose_level)
 {
 	integer T(t), V(v), K(k);
 	discreta_base lambda_max, m_max;
 	
 	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 	design_lambda_max(t, v, k, lambda_max);
-	lambda_max.integral_division_by_integer_exact(delta_lambda, m_max);
+	lambda_max.integral_division_by_integer_exact(delta_lambda, m_max, verbose_level);
 	print_clan_tex(T, V, K, delta_lambda, m_max);
 }
 
@@ -340,7 +345,7 @@ void design_mendelsohn_coefficient_matrix(
 void design_mendelsohn_rhs(
 		int v, int t, int k,
 		discreta_base& lambda,
-		int m, int s, Vector & rhs)
+		int m, int s, Vector & rhs, int verbose_level)
 {
 	int i;
 	discreta_base a, b, c;
@@ -348,10 +353,10 @@ void design_mendelsohn_rhs(
 	rhs.m_l(t + 1);
 	for (i = 0; i <= t; i++) {
 		Binomial(m, i, a);
-		design_lambda_ij(t, v, k, lambda, i, 0, b);
-		N_choose_K(b, s, c);
-		rhs[i].mult(a, c);
-		}
+		design_lambda_ij(t, v, k, lambda, i, 0, b, verbose_level);
+		N_choose_K(b, s, c, verbose_level);
+		rhs[i].mult(a, c, verbose_level);
+	}
 }
 
 int design_parameter_database_already_there(
@@ -440,27 +445,27 @@ void design_parameter_database_closure(
 			}
 		
 		if (f_vv) cout << "reduced_t:" << endl;
-		p.reduced_t(q);
+		p.reduced_t(q, verbose_level);
 		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
 			design_parameter_database_add_if_new(D, q,
 					highest_id, verbose_level - 2);
 			}
 		
 		if (f_vv) cout << "derived:" << endl;
-		p.derived(q);
+		p.derived(q, verbose_level);
 		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
 			design_parameter_database_add_if_new(D, q,
 					highest_id, verbose_level - 2);
 			}
 		
 		if (f_vv) cout << "residual:" << endl;
-		p.residual(q);
+		p.residual(q, verbose_level);
 		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
 			design_parameter_database_add_if_new(D, q,
 					highest_id, verbose_level - 2);
 			}
 		
-		if (p.trung_complementary(q)) {
+		if (p.trung_complementary(q, verbose_level)) {
 			if (f_vv) cout << "trung_complementary:" << endl;
 			if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
 				design_parameter_database_add_if_new(D, q,
@@ -478,7 +483,7 @@ void design_parameter_database_closure(
 		
 		if (p.v() == 2 * p.K() + 1) {
 			if (f_vv) cout << "complementary design:" << endl;
-			p.complementary(q);
+			p.complementary(q, verbose_level);
 			if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
 				design_parameter_database_add_if_new(D, q,
 						highest_id, verbose_level - 2);
@@ -495,21 +500,21 @@ void design_parameter_database_closure(
 #endif
 		
 		if (f_vv) cout << "supplementary_reduced_t:" << endl;
-		p.supplementary_reduced_t(q);
+		p.supplementary_reduced_t(q, verbose_level);
 		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
 			design_parameter_database_add_if_new(D, q,
 					highest_id, verbose_level - 2);
 			}
 
 		if (f_vv) cout << "supplementary_derived:" << endl;
-		p.supplementary_derived(q);
+		p.supplementary_derived(q, verbose_level);
 		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
 			design_parameter_database_add_if_new(D, q,
 					highest_id, verbose_level - 2);
 			}
 		
 		if (f_vv) cout << "supplementary_residual:" << endl;
-		p.supplementary_residual(q);
+		p.supplementary_residual(q, verbose_level);
 		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
 			design_parameter_database_add_if_new(D, q,
 					highest_id, verbose_level - 2);
@@ -522,7 +527,7 @@ void design_parameter_database_closure(
 		int idx;
 		
 		if (p.trung_left_partner(t1, v1, k1, lambda1, t_new, v_new,
-				k_new, lambda_new) && lambda_new.s_kind() == INTEGER) {
+				k_new, lambda_new, verbose_level) && lambda_new.s_kind() == INTEGER) {
 			if (f_vv) cout << "trung_left_partner:" << endl;
 			q.init();
 			q.t() = t1;
@@ -547,7 +552,7 @@ void design_parameter_database_closure(
 			}
 		
 		if (p.trung_right_partner(t1, v1, k1, lambda1, t_new,
-				v_new, k_new, lambda_new) && lambda_new.s_kind() == INTEGER) {
+				v_new, k_new, lambda_new, verbose_level) && lambda_new.s_kind() == INTEGER) {
 			if (f_vv) cout << "trung_right_partner:" << endl;
 			q.init();
 			q.t() = t1;
@@ -642,7 +647,7 @@ void design_parameter_database_read_design_txt(
 		integer lambda_object(lambda);
 		discreta_matrix M;
 		
-		design_lambda_ijs_matrix(t, v, k, lambda_object, 1 /* s */, M);
+		design_lambda_ijs_matrix(t, v, k, lambda_object, 1 /* s */, M, verbose_level);
 		}
 		
 		int idx;
@@ -1298,7 +1303,7 @@ void design_parameter_database_clans(
 			discreta_base dl, q;
 			
 			dl.m_i_i(delta_lambda);
-			CL[j].integral_division_exact(dl, q);
+			CL[j].integral_division_exact(dl, q, verbose_level);
 			cout << q;
 			if (j < ll - 1)
 				cout << "$, $";
@@ -1350,9 +1355,8 @@ void design_parameter_database_clans(
 
 void design_parameter_database_family_report(
 		char *path_db, int t, int v, int k,
-		int lambda, int minimal_t)
+		int lambda, int minimal_t, int verbose_level)
 {
-	int verbose_level = 0;
 	// int btree_idx_id = 0;
 	int btree_idx_tvkl = 2;
 	
@@ -1385,7 +1389,7 @@ void design_parameter_database_family_report(
 			for (j = 0; j <= h - i; j++) {
 				Vector entry;
 
-				prepare_entry(entry, i, j, h, t, v, k, lambda);
+				prepare_entry(entry, i, j, h, t, v, k, lambda, verbose_level);
 				id = -1;
 				if (entry.s_i(3).s_kind() == INTEGER) {
 					idx = B_tvkl.search_unique_int8_int8_int8_int8(
@@ -1430,7 +1434,7 @@ void design_parameter_database_family_report(
 }
 
 static void prepare_entry(
-		Vector &entry, int i, int j, int h, int t, int v, int k, int lambda)
+		Vector &entry, int i, int j, int h, int t, int v, int k, int lambda, int verbose_level)
 {
 	design_parameter p, q;
 	
@@ -1442,15 +1446,15 @@ static void prepare_entry(
 	
 	p.init(t, v, k, lambda);
 	for (u = 0; u < i; u++) {
-		p.derived(q);
+		p.derived(q, verbose_level);
 		p.swap(q);
 		}
 	for (u = 0; u < j; u++) {
-		p.residual(q);
+		p.residual(q, verbose_level);
 		p.swap(q);
 		}
 	for (u = 0; u < h1; u++) {
-		p.reduced_t(q);
+		p.reduced_t(q, verbose_level);
 		p.swap(q);
 		}
 	entry.m_l(5);
@@ -1625,13 +1629,13 @@ void design_parameter_database_clan_report(
 			
 			fhtml << "<br>minpath=" << min_path << " minimal_t=" << minimal_t << endl;
 			design_parameter dominating_ancestor;
-			determine_dominating_ancestor(t, v, k, lambda, min_path, dominating_ancestor);
+			determine_dominating_ancestor(t, v, k, lambda, min_path, dominating_ancestor, verbose_level);
 			// fhtml << "<br>dominating_ancestor: " << dominating_ancestor
 			//<< " (path=" << min_path << ")" << endl;
 			reduce_path(cmp, min_path);
 			family_report(D, fhtml, ftex, dominating_ancestor.t(),
 					dominating_ancestor.v(), dominating_ancestor.K(),
-					dominating_ancestor.lambda(), cm, cmp, minimal_t);
+					dominating_ancestor.lambda(), cm, cmp, minimal_t, verbose_level);
 			}		
 		fhtml << "</ul>" << endl;
 
@@ -1678,22 +1682,22 @@ static void determine_minimal_and_maximal_path(
 static void determine_dominating_ancestor(
 		int t, int v, int k,
 		discreta_base & lambda, Vector & path,
-		design_parameter &dominating_ancestor)
+		design_parameter &dominating_ancestor, int verbose_level)
 {
 	design_parameter p, q;
 	int u;
 	
 	p.init(t, v, k, lambda);
 	for (u = 0; u < path.s_ii(0); u++) {
-		p.reduced_t(q);
+		p.reduced_t(q, verbose_level);
 		p.swap(q);
 		}
 	for (u = 0; u < path.s_ii(1); u++) {
-		p.derived(q);
+		p.derived(q, verbose_level);
 		p.swap(q);
 		}
 	for (u = 0; u < path.s_ii(2); u++) {
-		p.residual(q);
+		p.residual(q, verbose_level);
 		p.swap(q);
 		}
 	dominating_ancestor = p;
@@ -1716,7 +1720,7 @@ static void reduce_path(
 static void family_report(
 		database & D, ostream& fhtml, ostream &ftex,
 		int t, int v, int k, discreta_base &lambda, Vector & cm,
-		Vector & cmp, int minimal_t)
+		Vector & cmp, int minimal_t, int verbose_level)
 {
 	int h, i, j, idx, idx1, id, nb_found = 0;
 	Vector Layers;
@@ -1781,7 +1785,7 @@ static void family_report(
 				path.m_ii(1, i);
 				path.m_ii(2, j);
 				design_parameter p;
-				determine_dominating_ancestor(t, v, k, lambda, path, p);
+				determine_dominating_ancestor(t, v, k, lambda, path, p, verbose_level);
 				if (id >= 0) {
 					hollerith link, text1;
 					
@@ -1813,7 +1817,7 @@ static void family_report(
 }
 
 static void f_m_j(
-		int m, int j, discreta_base &a)
+		int m, int j, discreta_base &a, int verbose_level)
 {
 	int q = m / j;
 	int r = m % j;
@@ -1830,8 +1834,8 @@ static void f_m_j(
 	two.m_i_i(2);
 	b.m_i_i(q);
 	c.m_i_i(q - 1);
-	d.mult(b, c);
-	d.integral_division_exact(two, c);
+	d.mult(b, c, verbose_level);
+	d.integral_division_exact(two, c, verbose_level);
 	J.m_i_i(j);
 	c *= J;
 	R.m_i_i(r);
@@ -1841,7 +1845,7 @@ static void f_m_j(
 }
 
 static int max_m(
-		int i, int j)
+		int i, int j, int verbose_level)
 {
 	int m;
 	discreta_base a, b, c, d, two;
@@ -1849,10 +1853,10 @@ static int max_m(
 	two.m_i_i(2);
 	b.m_i_i(i);
 	c.m_i_i(i - 1);
-	d.mult(b, c);
-	d.integral_division_exact(two, a);
+	d.mult(b, c, verbose_level);
+	d.integral_division_exact(two, a, verbose_level);
 	for (m = 0; ; m++) {
-		f_m_j(m, j, b);
+		f_m_j(m, j, b, verbose_level);
 		if (b.gt(a)) {
 			break;
 			}
@@ -1861,12 +1865,12 @@ static int max_m(
 }
 
 int Maxfit(
-		int i, int j)
+		int i, int j, int verbose_level)
 {
 	int a, b, c;
 	
-	a = max_m(i, j);
-	b = max_m(j, i);
+	a = max_m(i, j, verbose_level);
+	b = max_m(j, i, verbose_level);
 	c = MINIMUM(a, b);
 	return c;
 }

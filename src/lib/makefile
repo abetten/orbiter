@@ -222,6 +222,7 @@ ORBITER_MODULES= \
 		layer1_foundations/linear_algebra/linear_algebra.o \
 		layer1_foundations/linear_algebra/linear_algebra2.o \
 		layer1_foundations/linear_algebra/linear_algebra3.o \
+		layer1_foundations/linear_algebra/module.o \
 		layer1_foundations/linear_algebra/representation_theory_domain.o \
 		layer1_foundations/linear_algebra/vector_space.o \
 		layer1_foundations/knowledge_base/finite_field_tables.o \
@@ -378,6 +379,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/induced_actions/action_on_homogeneous_polynomials.o \
 		layer3_group_actions/induced_actions/action_on_interior_direct_product.o \
 		layer3_group_actions/induced_actions/action_on_k_subsets.o \
+		layer3_group_actions/induced_actions/action_on_module.o \
 		layer3_group_actions/induced_actions/action_on_orbits.o \
 		layer3_group_actions/induced_actions/action_on_orthogonal.o \
 		layer3_group_actions/induced_actions/action_on_set_partitions.o \

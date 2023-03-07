@@ -158,19 +158,19 @@ void group_element::dispose(int hdl)
 }
 
 void group_element::print(
-		ostream &ost, void *elt)
+		std::ostream &ost, void *elt)
 {
 	(*A->ptr->ptr_element_print)(*A, elt, ost);
 }
 
 void group_element::print_quick(
-		ostream &ost, void *elt)
+		std::ostream &ost, void *elt)
 {
 	(*A->ptr->ptr_element_print_quick)(*A, elt, ost);
 }
 
 void group_element::print_as_permutation(
-		ostream &ost, void *elt)
+		std::ostream &ost, void *elt)
 {
 	element_print_as_permutation(elt, ost);
 }

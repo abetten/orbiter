@@ -720,7 +720,8 @@ public:
 	void induced_action_override_sims(
 		action *old_action, action *new_action, groups::sims *old_G,
 		int verbose_level);
-	void make_canonical(action *A, groups::sims *Sims,
+	void make_canonical(
+			action *A, groups::sims *Sims,
 			int size, long int *set,
 		long int *canonical_set, int *transporter,
 		long int &total_backtrack_nodes,
@@ -728,7 +729,8 @@ public:
 		int verbose_level);
 	void make_element_which_moves_a_line_in_PG3q(
 			action *A,
-			geometry::grassmann *Gr,
+			geometry::projective_space_of_dimension_three *P3,
+			//geometry::grassmann *Gr,
 			long int line_rk, int *Elt,
 			int verbose_level);
 	void orthogonal_group_random_generator(

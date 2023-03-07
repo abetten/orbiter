@@ -279,11 +279,11 @@ Vector& Vector::realloc(int l)
 	return *this;
 }
 
-void Vector::mult_to(discreta_base &x, discreta_base &y)
+void Vector::mult_to(discreta_base &x, discreta_base &y, int verbose_level)
 {
 	if (x.s_kind() == MATRIX) {
 		y.change_to_vector();
-		x.as_matrix().multiply_vector_from_left(*this, y.as_vector());
+		x.as_matrix().multiply_vector_from_left(*this, y.as_vector(), verbose_level);
 		}
 	else if (x.s_kind() == VECTOR) {
 		cout << "Vector::mult_to() error: cannot multiply vector with vector\n";
@@ -536,13 +536,13 @@ Vector& Vector::sort()
 	return *this;
 }
 
-void Vector::sort_with_fellow(Vector &fellow)
+void Vector::sort_with_fellow(Vector &fellow, int verbose_level)
 {
 	permutation p, pv;
 	
 	sort_with_logging(p);
 	pv = p;
-	pv.invert();
+	pv.invert(verbose_level);
 	fellow.apply_permutation(pv);
 }
 
@@ -1086,13 +1086,13 @@ int Vector::csf()
 	return size;
 }
 
-void Vector::conjugate(discreta_base & a)
+void Vector::conjugate(discreta_base & a, int verbose_level)
 {
 	discreta_base av, b;
 	int i, l;
 	
 	av = a;
-	av.invert();
+	av.invert(verbose_level);
 	l = s_l();
 	for (i = 0; i < l; i++) {
 		b = av;
@@ -1102,13 +1102,13 @@ void Vector::conjugate(discreta_base & a)
 		}
 }
 
-void Vector::conjugate_with_inverse(discreta_base & a)
+void Vector::conjugate_with_inverse(discreta_base & a, int verbose_level)
 {
 	discreta_base av;
 	
 	av = a;
-	av.invert();
-	conjugate(av);
+	av.invert(verbose_level);
+	conjugate(av, verbose_level);
 }
 
 void merge(Vector &v1, Vector &v2, Vector &v3)
@@ -1574,7 +1574,7 @@ int Vector::hamming_weight()
 	return w;
 }
 
-void Vector::scalar_product(Vector &w, discreta_base & a)
+void Vector::scalar_product(Vector &w, discreta_base & a, int verbose_level)
 {
 	int l, i;
 	discreta_base b;
@@ -1586,10 +1586,10 @@ void Vector::scalar_product(Vector &w, discreta_base & a)
 		}
 	for (i = 0; i < l; i++) {
 		if (i == 0) {
-			a.mult(s_i(i), w[i]);
+			a.mult(s_i(i), w[i], verbose_level);
 			}
 		else {
-			b.mult(s_i(i), w[i]);
+			b.mult(s_i(i), w[i], verbose_level);
 			a += b;
 			}
 		}
@@ -1725,7 +1725,7 @@ int Vector::next_non_trivial_divisor(Vector &exponents)
 		return FALSE;
 }
 
-void Vector::multiply_out(Vector &primes, discreta_base &x)
+void Vector::multiply_out(Vector &primes, discreta_base &x, int verbose_level)
 {
 	int n, i;
 	discreta_base a;
@@ -1736,7 +1736,7 @@ void Vector::multiply_out(Vector &primes, discreta_base &x)
 		if (s_ii(i) == 0)
 			continue;
 		a = primes[i];
-		a.power_int(s_ii(i));
+		a.power_int(s_ii(i), verbose_level);
 		x *= a;
 		}
 }

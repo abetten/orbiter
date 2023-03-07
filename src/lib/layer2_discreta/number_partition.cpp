@@ -284,8 +284,9 @@ void number_partition::type(number_partition &q)
 		}
 }
 
-void number_partition::multinomial(discreta_base &res, int f_v)
+void number_partition::multinomial(discreta_base &res, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	discreta_base a, b, c;
 	int i, n, m;
 	
@@ -302,24 +303,25 @@ void number_partition::multinomial(discreta_base &res, int f_v)
 		if (m == 0)
 			continue;
 		c.factorial(i);
-		c.power_int(m);
+		c.power_int(m, verbose_level);
 		b *= c;
 		}
-	a.integral_division_exact(b, res); 
+	a.integral_division_exact(b, res, verbose_level);
 	if (f_v) {
 		cout << "multinomial(" << *this << ") = " << res << endl;
 		}
 }
 
-void number_partition::multinomial_ordered(discreta_base &res, int f_v)
+void number_partition::multinomial_ordered(discreta_base &res, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	number_partition q;
 	discreta_base a;
 	
 	type(q);
 	
-	multinomial(res, f_v);
-	q.multinomial(a, f_v);
+	multinomial(res, verbose_level);
+	q.multinomial(a, verbose_level);
 	res *= a;
 	if (f_v) {
 		cout << "multinomial_ordered(" << *this << ") = " << res << endl;

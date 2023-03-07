@@ -291,7 +291,7 @@ int longinteger::compare_with_unsigned(longinteger &b)
 	return 0;
 }
 
-void longinteger::mult_to(discreta_base &x, discreta_base &y)
+void longinteger::mult_to(discreta_base &x, discreta_base &y, int verbose_level)
 {
 	longinteger Y;
 	int len;
@@ -304,7 +304,7 @@ void longinteger::mult_to(discreta_base &x, discreta_base &y)
 		longinteger x1;
 		
 		x1.homo_z(x.s_i_i());
-		mult_to(x1, y);
+		mult_to(x1, y, verbose_level);
 		return;
 		}
 	if (x.s_kind() != LONGINTEGER) {
@@ -351,7 +351,7 @@ void longinteger::mult_to(discreta_base &x, discreta_base &y)
 	Y.swap(y);
 }
 
-int longinteger::invert_to(discreta_base &x)
+int longinteger::invert_to(discreta_base &x, int verbose_level)
 {	
 	if (s_kind() != LONGINTEGER) {
 		cout << "longinteger::invert_to() this is not a longinteger\n";
@@ -652,7 +652,7 @@ void longinteger::integral_division(
 #ifdef DEBUG_LONGINTEGER_DIVISION
 		cout << "r1 = " << r1 << " ";
 #endif
-		d[i].mult(X, r1);
+		d[i].mult(X, r1, verbose_level);
 #ifdef DEBUG_LONGINTEGER_DIVISION
 		cout << "d[i] = " << d[i] << " ";
 #endif
@@ -734,7 +734,7 @@ static int do_division(longinteger& r, longinteger *d)
 	exit(1);
 }
 
-void longinteger::square_root_floor(discreta_base &x)
+void longinteger::square_root_floor(discreta_base &x, int verbose_level)
 {
 	if (s_kind() != LONGINTEGER) {
 		cout << "longinteger::square_root_floor "
@@ -771,7 +771,7 @@ void longinteger::square_root_floor(discreta_base &x)
 	for (l = len - 1; l >= 0; l--) {
 		for (c1 = 9; c1 >= 0; c1--) {
 			Y.s_p(l) = c1;
-			YY.mult(Y, Y);
+			YY.mult(Y, Y, verbose_level);
 			if (YY.compare_with(*this) <= 0)
 				break;
 			}
@@ -780,24 +780,24 @@ void longinteger::square_root_floor(discreta_base &x)
 	Y.swap(X);
 }
 
-longinteger& longinteger::Mersenne(int n)
+longinteger& longinteger::Mersenne(int n, int verbose_level)
 // $M_n = 2^n - 1$
 {
 	longinteger a = "2", b = "-1";
 	
-	a.power_int(n);
+	a.power_int(n, verbose_level);
 	a += b;
 	// cout << "Mersenne number M_" << n << "=" << a << endl;
 	swap(a);
 	return *this;
 }
 
-longinteger& longinteger::Fermat(int n)
+longinteger& longinteger::Fermat(int n, int verbose_level)
 // $F_n = 2^{2^n} + 1$
 {
 	longinteger a = "2", b = "1", l = "2";
 	
-	l.power_int(n);
+	l.power_int(n, verbose_level);
 	// cout << "l=" << l << endl;
 	a.power_longinteger(l);
 	a += b;
@@ -875,13 +875,13 @@ int longinteger::Lucas_test_Mersenne(int m, int verbose_level)
 	int i;
 	longinteger s("4"), m2("-2"), t;
 	
-	Mersenne(m);
+	Mersenne(m, verbose_level);
 	if (f_v) 
 		cout << "s_0 = " << s << endl;
 	for (i = 1; i <= m - 2; i++) {
-		t.mult(s, s);
+		t.mult(s, s, verbose_level);
 		t += m2;
-		t.modulo(*this);
+		t.modulo(*this, verbose_level);
 		s = t;
 		if (f_v)
 			cout << "s_" << i << " = " << s << endl;
