@@ -44,10 +44,6 @@ public:
 
     virtual ~irtree_node();
 	node_type type;
-
-    friend class deep_copy_visitor;
-    friend class exponent_vector_visitor;
-    friend class uminus_distribute_and_reduce_visitor;
 };
 std::ostream& operator<< (std::ostream& os, const irtree_node::node_type& obj);
 
@@ -70,14 +66,14 @@ public:
 	template<typename T>
 	inline
     void add_child(T&& node) {
-		children.emplace_back(node) ;
+		children.emplace_back(std::forward<T>(node)) ;
 	}
 
     template <typename T, typename... Args>
 	inline
     void add_child(T&& arg, Args&&... args) {
-		children.emplace_back(arg);
-		add_child(args...);
+		children.emplace_back(std::forward<T>(arg));
+		add_child(std::forward<T>(args)...);
 	}
 
 	inline

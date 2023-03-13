@@ -26,7 +26,7 @@ void ir_tree_latex_visitor_simple_tree::visit(plus_node* op_node) {
     add_indentation();
     for (shared_ptr<irtree_node>& child : op_node->children) {
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -38,7 +38,7 @@ void ir_tree_latex_visitor_simple_tree::visit(minus_node* op_node) {
     add_indentation();
     for (shared_ptr<irtree_node>& child : op_node->children) {
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -50,7 +50,7 @@ void ir_tree_latex_visitor_simple_tree::visit(multiply_node* op_node) {
     add_indentation();
     for (shared_ptr<irtree_node>& child : op_node->children) {
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -62,7 +62,7 @@ void ir_tree_latex_visitor_simple_tree::visit(exponent_node* op_node) {
     add_indentation();
     for (shared_ptr<irtree_node>& child : op_node->children) {
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -74,7 +74,7 @@ void ir_tree_latex_visitor_simple_tree::visit(unary_negate_node* op_node) {
     add_indentation();
     for (shared_ptr<irtree_node>& child : op_node->children) {
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -98,7 +98,7 @@ void ir_tree_latex_visitor_simple_tree::visit(sentinel_node* op_node) {
     add_indentation();
     for (shared_ptr<irtree_node>& child : op_node->children) {
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         OUT << indentation << "]\n";
     }
     remove_indentation();

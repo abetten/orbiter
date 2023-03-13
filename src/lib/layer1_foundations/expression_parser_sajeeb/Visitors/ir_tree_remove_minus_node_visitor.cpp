@@ -7,6 +7,7 @@
 **/
     
 #include "ir_tree_remove_minus_node_visitor.h"
+#include "dispatcher.h"
 
 
 void ir_tree_remove_minus_node_visitor::merge_visited_minus_node(non_terminal_node* root,
@@ -22,7 +23,7 @@ void ir_tree_remove_minus_node_visitor::merge_visited_minus_node(non_terminal_no
 
 void ir_tree_remove_minus_node_visitor::visit(plus_node* op_node) {
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) {
-        it->get()->accept(this);
+        dispatcher::visit(*it, *this);
         merge_visited_minus_node(op_node, it);
     }
 }
@@ -38,21 +39,21 @@ void ir_tree_remove_minus_node_visitor::visit(minus_node* op_node) {
 
 void ir_tree_remove_minus_node_visitor::visit(multiply_node* op_node) {
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) {
-        it->get()->accept(this);
+        dispatcher::visit(*it, *this);
         merge_visited_minus_node(op_node, it);
     }
 }
 
 void ir_tree_remove_minus_node_visitor::visit(exponent_node* op_node) {
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) {
-        it->get()->accept(this);
+        dispatcher::visit(*it, *this);
         merge_visited_minus_node(op_node, it);
     }
 }
 
 void ir_tree_remove_minus_node_visitor::visit(unary_negate_node* op_node) {
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) {
-        it->get()->accept(this);
+        dispatcher::visit(*it, *this);
         if (visited_minus_node == it->get()) {
             shared_ptr<non_terminal_node> intermediate_plus_node = make_shared<plus_node>();
             intermediate_plus_node->children = 

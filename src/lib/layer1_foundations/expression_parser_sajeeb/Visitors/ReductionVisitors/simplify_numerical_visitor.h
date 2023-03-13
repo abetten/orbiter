@@ -6,7 +6,10 @@
 **/
 
 
+
+
 #include "simplify_visitor.h"
+#include "../dispatcher.h"
 #include <functional>
 #include "../../IRTree/node.h"
 #include <memory>
@@ -33,27 +36,30 @@ class simplify_numerical_visitor : public simplify_visitor,
     }
 
 public:
+    using simplify_visitor::visit;
     typedef decltype(number_node::value) return_t;
 
-    return_t visit(plus_node* op_node, irtree_node* parent_node) override;
-    return_t visit(minus_node* op_node, irtree_node* parent_node) override;
-    return_t visit(multiply_node* op_node, irtree_node* parent_node) override;
-    return_t visit(exponent_node* op_node, irtree_node* parent_node) override;
-    return_t visit(unary_negate_node* op_node, irtree_node* parent_node) override;
+    return_t visit(plus_node* node, irtree_node* parent_node) override;
+    return_t visit(minus_node* node, irtree_node* parent_node) override;
+    return_t visit(multiply_node* node, irtree_node* parent_node) override;
+    return_t visit(exponent_node* node, irtree_node* parent_node) override;
+    return_t visit(unary_negate_node* node, irtree_node* parent_node) override;
     return_t visit(variable_node* num_node, irtree_node* parent_node) override;
     return_t visit(parameter_node* node, irtree_node* parent_node) override;
-    return_t visit(number_node* op_node, irtree_node* parent_node) override;
-    return_t visit(sentinel_node* op_node, irtree_node* parent_node) override;
+    return_t visit(number_node* node, irtree_node* parent_node) override;
+    return_t visit(sentinel_node* node, irtree_node* parent_node) override;
 
-    void visit(plus_node* op_node) override;
-    void visit(minus_node* op_node) override;
-    void visit(multiply_node* op_node) override;
-    void visit(exponent_node* op_node) override;
-    void visit(unary_negate_node* op_node) override;
+    void visit(plus_node* node) override;
+    void visit(minus_node* node) override;
+    void visit(multiply_node* node) override;
+    void visit(exponent_node* node) override;
+    void visit(unary_negate_node* node) override;
     void visit(variable_node* num_node) override;
     void visit(parameter_node* node) override;
-    void visit(number_node* op_node) override;
-    void visit(sentinel_node* op_node) override;
+    void visit(number_node* node) override;
+    void visit(sentinel_node* node) override;
+
+    friend dispatcher;
 };
 
 

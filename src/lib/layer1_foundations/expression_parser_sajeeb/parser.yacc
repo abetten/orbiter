@@ -22,7 +22,7 @@
 %union {
 	int num;
 	char* id;	// for identifier nodes
-    irtree_node::variant_node_types expression_node;
+    irtree_node* expression_node;
     sentinel_node* ast_root;
 }
 

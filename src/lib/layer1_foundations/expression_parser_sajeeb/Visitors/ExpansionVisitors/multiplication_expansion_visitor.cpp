@@ -72,5 +72,5 @@ void multiplication_expansion_visitor::visit(multiply_node* op_node, iterator_t&
     }
     if (expand) expand_multiplication_node(op_node, link);
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it)
-        (*it)->accept(this, link);
+        dispatcher::visit(*it, *this, link);
 }

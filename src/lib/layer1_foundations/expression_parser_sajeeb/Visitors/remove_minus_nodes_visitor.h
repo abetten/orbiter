@@ -2,7 +2,7 @@
 // Created by Sajeeb Roy Chowdhury on 10/1/22.
 //
 
-#include "IRTreeVisitor.h"
+#include "IRTreeChildLinkArgumentVisitor.h"
 #include "../IRTree/node.h"
 #include <memory>
 
@@ -11,6 +11,8 @@
 
 class remove_minus_nodes_visitor : public IRTreeChildLinkArgumentVisitor {
 public:
+    using IRTreeChildLinkArgumentVisitor::visit;
+
     bool found_operator_chain = false;
     void visit(minus_node* op_node, list<shared_ptr<irtree_node>>::iterator& link) override;
 };

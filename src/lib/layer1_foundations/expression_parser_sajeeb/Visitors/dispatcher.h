@@ -19,10 +19,10 @@
 
 using std::shared_ptr;
 
-namespace dispatcher {
+struct dispatcher {
 
     template <typename node_t, typename visitor_t, typename... visitor_args_t>
-    auto visit(shared_ptr<node_t>& node, visitor_t& visitor, visitor_args_t... args) {
+    static auto visit(node_t& node, visitor_t&& visitor, visitor_args_t&&... args) {
         switch (node->type) {
             case irtree_node::node_type::SENTINEL_NODE:
                 return visitor.visit(static_cast<sentinel_node*>(node.get()),
@@ -56,6 +56,6 @@ namespace dispatcher {
         };
     }
 
-}
+};
 
 #endif /* _DISPATCHER_H_ */

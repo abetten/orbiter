@@ -48,18 +48,18 @@ public:
         if (latex_output_stream.is_open()) latex_output_stream.close();
     }
 
-    IRTreeVoidReturnTypeVisitorInterface* operator()() {
+    IRTreeVoidReturnTypeVisitorInterface& operator()() {
         if (latex_output_stream.is_open()) latex_output_stream.close();
         latex_output_stream.open(directory + "stage" + std::to_string(stage_counter++) + ".tex");
 
         strategy_wrapper.set_output_stream(latex_output_stream);
-        return strategy_wrapper.get_visitor();
+        return *strategy_wrapper.get_visitor();
     }
 };
 
 void remove_minus_nodes(shared_ptr<irtree_node>& root) {
     static remove_minus_nodes_visitor remove_minus_nodes;
-    root->accept(&remove_minus_nodes);
+    dispatcher::visit(root, remove_minus_nodes);
 }
 
 void merge_redundant_nodes(shared_ptr<irtree_node>& root) {
@@ -102,7 +102,7 @@ int main(int argc, const char** argv) {
 
 
     shared_ptr<irtree_node> ir_tree_root = parser::parse_expression(exp, managed_variables_table);
-    dispatcher::visit(make_shared<merge_nodes_visitor>(), ir_tree_root);
+    dispatcher::visit(ir_tree_root, make_shared<merge_nodes_visitor>());
 
     get_latex_staged_visitor_functor
         get_latex_staged_visitor("visitor_result/",
@@ -111,41 +111,41 @@ int main(int argc, const char** argv) {
 
     // print the AST
 //    LOG(ir_tree_root.get());
-//    ir_tree_root->accept(get_latex_staged_visitor());
+//    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 //    LOG("");
 
     //
 //    simplify_numerical_visitor simplify;
-//    ir_tree_root->accept(&simplify);
-//    ir_tree_root->accept(get_latex_staged_visitor());
+//    dispatcher::visit(ir_tree_root, &simplify);
+//    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
 
     LOG("");
     // remove minus nodes
     remove_minus_nodes(ir_tree_root);
     merge_redundant_nodes(ir_tree_root);
-    ir_tree_root->accept(get_latex_staged_visitor());
+    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
    // distribute and reduce unary minus nodes
     uminus_distribute_and_reduce_visitor distribute_uminus_visitor;
-    ir_tree_root->accept(&distribute_uminus_visitor);
+    dispatcher::visit(ir_tree_root, &distribute_uminus_visitor);
     merge_redundant_nodes(ir_tree_root);
-    ir_tree_root->accept(get_latex_staged_visitor());
+    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
     //
     // multiplication_expansion_visitor mev;
-    // ir_tree_root->accept(&mev);
-    // ir_tree_root->accept(get_latex_staged_visitor());
+    // dispatcher::visit(ir_tree_root, &mev);
+    // dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
     //
 //    deep_copy_visitor deepCopyVisitor;
-//    shared_ptr<irtree_node> ir_tree_root_cpy = ir_tree_root->accept(&deepCopyVisitor);
+//    shared_ptr<irtree_node> ir_tree_root_cpy = dispatcher::visit(ir_tree_root, &deepCopyVisitor);
 //    ir_tree_root_cpy->accept(get_latex_staged_visitor());
 
    //
     exponent_vector_visitor evv;
-    ir_tree_root->accept(evv(managed_variables_table));
-    ir_tree_root->accept(get_latex_staged_visitor());
+    dispatcher::visit(ir_tree_root, evv(managed_variables_table));
+    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
     eval_visitor evalVisitor;
 
 
@@ -179,22 +179,22 @@ int main(int argc, const char** argv) {
         for (const auto& itit : vec) std::cout << itit << " ";
         std::cout << "]: ";
 
-        vector<irtree_node*> root_nodes = it.second;
+        auto root_nodes = it.second;
         int val = 0;
         for (auto& node : root_nodes) {
-            auto tmp = node->accept(&evalVisitor, &Fq, assignemnt);
+            auto tmp = dispatcher::visit(node, &evalVisitor, &Fq, assignemnt);
             val += tmp;
         }
         cout << val << endl;
     }
-   ir_tree_root->accept(get_latex_staged_visitor());
+   dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
 
 
 
     // print string representation of the IR tree
     ir_tree_to_string_visitor to_string_visitor;
-    ir_tree_root->accept(&to_string_visitor);
+    dispatcher::visit(ir_tree_root, to_string_visitor);
     cout << "in:  " << exp << endl;
     cout << "out: " << to_string_visitor.get_string_representation() << endl;
 

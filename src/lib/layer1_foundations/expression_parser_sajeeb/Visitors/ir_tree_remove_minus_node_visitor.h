@@ -18,11 +18,13 @@ using std::endl;
 
 class ir_tree_remove_minus_node_visitor : public IRTreeVoidReturnTypeVisitorInterface {
 public:
-    void visit(plus_node* op_node);
-	void visit(minus_node* op_node);
-	void visit(multiply_node* op_node);
-	void visit(exponent_node* op_node);
-	void visit(unary_negate_node* op_node);
+    using IRTreeVoidReturnTypeVisitorInterface::visit;
+
+    void visit(plus_node* op_node) override;
+	void visit(minus_node* op_node) override;
+	void visit(multiply_node* op_node) override;
+	void visit(exponent_node* op_node) override;
+	void visit(unary_negate_node* op_node) override;
 
 private:
 	non_terminal_node* visited_minus_node;

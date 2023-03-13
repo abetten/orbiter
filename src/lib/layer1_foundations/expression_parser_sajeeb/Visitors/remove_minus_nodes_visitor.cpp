@@ -23,7 +23,7 @@ void remove_minus_nodes_visitor::visit(minus_node* op_node, list<shared_ptr<irtr
 
     for (auto it=plus->children.begin(); it != plus->children.end(); ++it) {
         shared_ptr<irtree_node>& child = *it;
-        child->accept(this, it);
+        dispatcher::visit(*it, *this, it);
     }
 }
 

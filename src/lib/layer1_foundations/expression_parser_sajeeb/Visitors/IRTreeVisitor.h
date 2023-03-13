@@ -21,45 +21,45 @@
 template<class return_t, class... Args>
 class IRTreeTemplateReturnTypeVariadicArgumentVisitorInterface {
 public:
-    return_t visit(plus_node& node, Args... args);
-    return_t visit(minus_node* node, Args... args);
-    return_t visit(multiply_node* node, Args... args);
-    return_t visit(exponent_node* node, Args... args);
-    return_t visit(unary_negate_node* node, Args... args);
-    return_t visit(variable_node* node, Args... args);
-    return_t visit(parameter_node* node, Args... args);
-    return_t visit(number_node* node, Args... args);
-    return_t visit(sentinel_node* node, Args... args);
+    virtual return_t visit(plus_node* node, Args... args) = 0;
+    virtual return_t visit(minus_node* node, Args... args) = 0;
+    virtual return_t visit(multiply_node* node, Args... args) = 0;
+    virtual return_t visit(exponent_node* node, Args... args) = 0;
+    virtual return_t visit(unary_negate_node* node, Args... args) = 0;
+    virtual return_t visit(variable_node* node, Args... args) { /* NO_OP */ }
+    virtual return_t visit(parameter_node* node, Args... args) { /* NO_OP */ }
+    virtual return_t visit(number_node* node, Args... args) { /* NO_OP */ }
+    virtual return_t visit(sentinel_node* node, Args... args) = 0;
 };
 
 
 template<class return_t, class... Args>
 class IRTreeTemplateReturnTypeVariadicArgumentConstantVisitorInterface {
 public:
-    return_t visit(const plus_node* node, Args... args);
-    return_t visit(const minus_node* node, Args... args);
-    return_t visit(const multiply_node* node, Args... args);
-    return_t visit(const exponent_node* node, Args... args);
-    return_t visit(const unary_negate_node* node, Args... args);
-    return_t visit(const variable_node* node, Args... args);
-    return_t visit(const parameter_node* node, Args... args);
-    return_t visit(const number_node* node, Args... args);
-    return_t visit(const sentinel_node* node, Args... args);
+    virtual return_t visit(const plus_node* node, Args... args) = 0;
+    virtual return_t visit(const minus_node* node, Args... args) = 0;
+    virtual return_t visit(const multiply_node* node, Args... args) = 0;
+    virtual return_t visit(const exponent_node* node, Args... args) = 0;
+    virtual return_t visit(const unary_negate_node* node, Args... args) = 0;
+    virtual return_t visit(const variable_node* node, Args... args) { /* NO_OP */ }
+    virtual return_t visit(const parameter_node* node, Args... args) { /* NO_OP */ }
+    virtual return_t visit(const number_node* node, Args... args) { /* NO_OP */ }
+    virtual return_t visit(const sentinel_node* node, Args... args) = 0;
 };
 
 
 template<class... Args>
 class IRTreeVoidReturnTypeVariadicArgumentVisitorInterface {
 public:
-    void visit(plus_node* node, Args... args);
-    void visit(minus_node* node, Args... args);
-    void visit(multiply_node* node, Args... args);
-    void visit(exponent_node* node, Args... args);
-    void visit(unary_negate_node* node, Args... args);
-    void visit(variable_node* node, Args... args);
-    void visit(parameter_node* node, Args... args);
-    void visit(number_node* node, Args... args);
-    void visit(sentinel_node* node, Args... args);
+    virtual void visit(plus_node* node, Args... args) = 0;
+    virtual void visit(minus_node* node, Args... args) = 0;
+    virtual void visit(multiply_node* node, Args... args) = 0;
+    virtual void visit(exponent_node* node, Args... args) = 0;
+    virtual void visit(unary_negate_node* node, Args... args) = 0;
+    virtual void visit(variable_node* node, Args... args) { /* NO_OP */ }
+    virtual void visit(parameter_node* node, Args... args) { /* NO_OP */ }
+    virtual void visit(number_node* node, Args... args) { /* NO_OP */ }
+    virtual void visit(sentinel_node* node, Args... args) = 0;
 };
 
 
@@ -67,59 +67,59 @@ public:
 template<class... Args>
 class IRTreeVoidReturnTypeVariadicArgumentConstantVisitorInterface {
 public:
-    void visit(const plus_node* node, Args... args);
-    void visit(const minus_node* node, Args... args);
-    void visit(const multiply_node* node, Args... args);
-    void visit(const exponent_node* node, Args... args);
-    void visit(const unary_negate_node* node, Args... args);
-    void visit(const variable_node* node, Args... args);
-    void visit(const parameter_node* node, Args... args);
-    void visit(const number_node* node, Args... args);
-    void visit(const sentinel_node* node, Args... args);
+    virtual void visit(const plus_node* node, Args... args) = 0;
+    virtual void visit(const minus_node* node, Args... args) = 0;
+    virtual void visit(const multiply_node* node, Args... args) = 0;
+    virtual void visit(const exponent_node* node, Args... args) = 0;
+    virtual void visit(const unary_negate_node* node, Args... args) = 0;
+    virtual void visit(const variable_node* node, Args... args) { /* NO_OP */ }
+    virtual void visit(const parameter_node* node, Args... args) { /* NO_OP */ }
+    virtual void visit(const number_node* node, Args... args) { /* NO_OP */ }
+    virtual void visit(const sentinel_node* node, Args... args) = 0;
 };
 
 
 template<class return_t>
 class IRTreeTemplateReturnTypeVisitorInterface {
 public:
-    return_t visit(plus_node* node);
-    return_t visit(minus_node* node);
-    return_t visit(multiply_node* node);
-    return_t visit(exponent_node* node);
-    return_t visit(unary_negate_node* node);
-    return_t visit(variable_node* node);
-    return_t visit(parameter_node* node);
-    return_t visit(number_node* node);
-    return_t visit(sentinel_node* node);
+    virtual return_t visit(plus_node* node) = 0;
+    virtual return_t visit(minus_node* node) = 0;
+    virtual return_t visit(multiply_node* node) = 0;
+    virtual return_t visit(exponent_node* node) = 0;
+    virtual return_t visit(unary_negate_node* node) = 0;
+    virtual return_t visit(variable_node* node) { return return_t(); }
+    virtual return_t visit(parameter_node* node) { return return_t(); }
+    virtual return_t visit(number_node* node) { return return_t(); }
+    virtual return_t visit(sentinel_node* node) = 0;
 };
 
 
 template<class return_t>
 class IRTreeTemplateReturnTypeConstantVisitorInterface {
 public:
-    return_t visit(const plus_node* node);
-    return_t visit(const minus_node* node);
-    return_t visit(const multiply_node* node);
-    return_t visit(const exponent_node* node);
-    return_t visit(const unary_negate_node* node);
-    return_t visit(const variable_node* node);
-    return_t visit(const parameter_node* node);
-    return_t visit(const number_node* node);
-    return_t visit(const sentinel_node* node);
+    virtual return_t visit(const plus_node* node) = 0;
+    virtual return_t visit(const minus_node* node) = 0;
+    virtual return_t visit(const multiply_node* node) = 0;
+    virtual return_t visit(const exponent_node* node) = 0;
+    virtual return_t visit(const unary_negate_node* node) = 0;
+    virtual return_t visit(const variable_node* node) { return return_t(); }
+    virtual return_t visit(const parameter_node* node) { return return_t(); }
+    virtual return_t visit(const number_node* node) { return return_t(); }
+    virtual return_t visit(const sentinel_node* node) = 0;
 };
 
 
 class IRTreeVoidReturnTypeVisitorInterface {
 public:
-    void visit(plus_node* node);
-    void visit(minus_node* node);
-    void visit(multiply_node* node);
-    void visit(exponent_node* node);
-    void visit(unary_negate_node* node);
-    void visit(variable_node* node);
-    void visit(parameter_node* node);
-    void visit(number_node* node);
-    void visit(sentinel_node* node);
+    virtual void visit(plus_node* node);
+    virtual void visit(minus_node* node);
+    virtual void visit(multiply_node* node);
+    virtual void visit(exponent_node* node);
+    virtual void visit(unary_negate_node* node);
+    virtual void visit(variable_node* node);
+    virtual void visit(parameter_node* node);
+    virtual void visit(number_node* node);
+    virtual void visit(sentinel_node* node);
 };
 
 void IRTreeVoidReturnTypeVisitorInterface::visit(plus_node* node) {
@@ -159,15 +159,15 @@ void IRTreeVoidReturnTypeVisitorInterface::visit(number_node*) {}
 
 class IRTreeVoidReturnTypeConstantVisitorInterface {
 public:
-    void visit(const plus_node* node);
-    void visit(const minus_node* node);
-    void visit(const multiply_node* node);
-    void visit(const exponent_node* node);
-    void visit(const unary_negate_node* node);
-    void visit(const variable_node* node);
-    void visit(const parameter_node* node);
-    void visit(const number_node* node);
-    void visit(const sentinel_node* node);
+    virtual void visit(const plus_node* node) = 0;
+    virtual void visit(const minus_node* node) = 0;
+    virtual void visit(const multiply_node* node) = 0;
+    virtual void visit(const exponent_node* node) = 0;
+    virtual void visit(const unary_negate_node* node) = 0;
+    virtual void visit(const variable_node* node) { /* NO_OP */ }
+    virtual void visit(const parameter_node* node) { /* NO_OP */ }
+    virtual void visit(const number_node* node) { /* NO_OP */ }
+    virtual void visit(const sentinel_node* node) = 0;
 };
 
 #endif // IRTREETEMPLATERETURNVISITOR_H
