@@ -424,7 +424,7 @@ void linear_set_classify::init(
 	}
 
 	VS = NEW_OBJECT(linear_algebra::vector_space);
-	VS->init(P->F, vector_space_dimension /* dimension */,
+	VS->init(P->Subspaces->F, vector_space_dimension /* dimension */,
 			verbose_level - 1);
 	VS->init_rank_functions(
 			linear_set_classify_rank_point_func,
@@ -472,19 +472,19 @@ void linear_set_classify::init(
 		SD = NEW_OBJECT(geometry::spread_domain);
 
 		if (f_v) {
-			cout << "linear_set_classify::init before SD->init" << endl;
+			cout << "linear_set_classify::init before SD->init_spread_domain" << endl;
 		}
 
 
 		// ToDo PA is not valid!
 
-		SD->init(
+		SD->init_spread_domain(
 				PA->F,
 				n, k,
 				verbose_level - 1);
 
 		if (f_v) {
-			cout << "linear_set_classify::init after SD->init" << endl;
+			cout << "linear_set_classify::init after SD->init_spread_domain" << endl;
 		}
 
 

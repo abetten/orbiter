@@ -851,12 +851,12 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 		}
 
 
-	tangent_lines = NEW_lint(P2->N_lines);
-	secant_lines = NEW_lint(P2->N_lines);
+	tangent_lines = NEW_lint(P2->Subspaces->N_lines);
+	secant_lines = NEW_lint(P2->Subspaces->N_lines);
 	block = NEW_lint(q + 1);
 
 
-	P2->find_k_secant_lines(U, sz, q + 1, 
+	P2->Subspaces->find_k_secant_lines(U, sz, q + 1,
 		secant_lines, nb_secant_lines, verbose_level - 1);
 
 	if (f_vv) {
@@ -866,7 +866,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 		cout << endl;
 		}
 
-	P2->find_k_secant_lines(U, sz, 1, 
+	P2->Subspaces->find_k_secant_lines(U, sz, 1,
 		tangent_lines, nb_tangent_lines, verbose_level - 1);
 
 	if (f_vv) {
@@ -878,20 +878,20 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 
 
 	
-	tangent_line_at_point = NEW_int(P2->N_points);
-	f_is_tangent_line = NEW_int(P2->N_lines);
-	point_of_tangency = NEW_int(P2->N_lines);
-	for (i = 0; i < P2->N_points; i++) {
+	tangent_line_at_point = NEW_int(P2->Subspaces->N_points);
+	f_is_tangent_line = NEW_int(P2->Subspaces->N_lines);
+	point_of_tangency = NEW_int(P2->Subspaces->N_lines);
+	for (i = 0; i < P2->Subspaces->N_points; i++) {
 		tangent_line_at_point[i] = -1;
 		}
-	for (i = 0; i < P2->N_lines; i++) {
+	for (i = 0; i < P2->Subspaces->N_lines; i++) {
 		f_is_tangent_line[i] = FALSE;
 		point_of_tangency[i] = -1;
 		}
 	for (h = 0; h < nb_tangent_lines; h++) {
 		a = tangent_lines[h];
 		f_is_tangent_line[a] = TRUE;
-		P2->intersect_with_line(U, sz,
+		P2->Subspaces->intersect_with_line(U, sz,
 				a /* line_rk */, block, block_size,
 				0 /* verbose_level*/);
 		//Sorting.int_vec_intersect(P2->Lines + a * P2->k, P2->k,
@@ -907,7 +907,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 		tangent_line_at_point[b] = a;
 		point_of_tangency[a] = b;
 		}
-	for (b = 0; b < P2->N_points; b++) {
+	for (b = 0; b < P2->Subspaces->N_points; b++) {
 		if (tangent_line_at_point[b] == -1) {
 			continue;
 			}
@@ -917,12 +917,12 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 			}
 		}
 
-	idx_in_unital = NEW_int(P2->N_points);
-	idx_in_secants = NEW_int(P2->N_lines);
-	for (i = 0; i < P2->N_points; i++) {
+	idx_in_unital = NEW_int(P2->Subspaces->N_points);
+	idx_in_secants = NEW_int(P2->Subspaces->N_lines);
+	for (i = 0; i < P2->Subspaces->N_points; i++) {
 		idx_in_unital[i] = -1;
 		}
-	for (i = 0; i < P2->N_lines; i++) {
+	for (i = 0; i < P2->Subspaces->N_lines; i++) {
 		idx_in_secants[i] = -1;
 		}
 	for (i = 0; i < sz; i++) {
@@ -939,7 +939,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 
 	for (h = 0; h < nb_secant_lines; h++) {
 		a = secant_lines[h];
-		P2->intersect_with_line(U, sz,
+		P2->Subspaces->intersect_with_line(U, sz,
 				a /* line_rk */, block, block_size,
 				0 /* verbose_level*/);
 		//Sorting.int_vec_intersect(P2->Lines + a * P2->k,

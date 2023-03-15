@@ -82,9 +82,9 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 	eckardt_point_info::P2 = P2;
 	Lint_vec_copy(arc6, eckardt_point_info::arc6, 6);
 
-	if (P2->n != 2) {
+	if (P2->Subspaces->n != 2) {
 		cout << "eckardt_point_info::init "
-				"P->n != 2" << endl;
+				"P->Subspaces->n != 2" << endl;
 		exit(1);
 	}
 
@@ -108,7 +108,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 		pi = arc6[i];
 		for (j = i + 1; j < 6; j++, h++) {
 			pj = arc6[j];
-			bisecants[h] = P2->line_through_two_points(pi, pj);
+			bisecants[h] = P2->Subspaces->line_through_two_points(pi, pj);
 		}
 	}
 	if (f_v) {
@@ -125,7 +125,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 				p = -1;
 			}
 			else {
-				p = P2->intersection_of_two_lines(bi, bj);
+				p = P2->Subspaces->intersection_of_two_lines(bi, bj);
 			}
 			Intersections[i * 15 + j] = p;
 		}
@@ -275,7 +275,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 					"after P2->determine_conic_in_plane" << endl;
 		}
 
-		P2->F->Projective_space_basic->PG_element_normalize_from_front(six_coeffs, 1, 6);
+		P2->Subspaces->F->Projective_space_basic->PG_element_normalize_from_front(six_coeffs, 1, 6);
 
 		if (f_v) {
 			cout << "eckardt_point_info::init j=" << j << " / 6 "
@@ -310,7 +310,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 #endif
 
 			P2->unrank_point(Basis + 6, deleted_point);
-			rk = P2->F->Linear_algebra->Gauss_easy(Basis, 3, 3);
+			rk = P2->Subspaces->F->Linear_algebra->Gauss_easy(Basis, 3, 3);
 			if (rk == 2) {
 				if (i >= j) {
 					i1 = i + 1;
@@ -378,7 +378,7 @@ void eckardt_point_info::print_bisecants(std::ostream &ost, int verbose_level)
 		cout << "eckardt_point_info::print_bisecants "
 				"before Poly1->init" << endl;
 	}
-	Poly1->init(P2->F,
+	Poly1->init(P2->Subspaces->F,
 			3 /* nb_vars */, 1 /* degree */,
 			t_PART,
 			verbose_level);
@@ -402,12 +402,12 @@ void eckardt_point_info::print_bisecants(std::ostream &ost, int verbose_level)
 		ost << h << " & P_{" << i + 1 << "}P_{" << j + 1
 				<< "} & " << a << " & " << endl;
 		//ost << "\\left[ " << endl;
-		P2->Grass_lines->print_single_generator_matrix_tex(ost, a);
+		P2->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, a);
 		//ost << "\\right] ";
 
-		P2->Grass_lines->unrank_lint_here_and_compute_perp(Mtx, a,
+		P2->Subspaces->Grass_lines->unrank_lint_here_and_compute_perp(Mtx, a,
 			0 /*verbose_level */);
-		P2->F->Projective_space_basic->PG_element_normalize(Mtx + 6, 1, 3);
+		P2->Subspaces->F->Projective_space_basic->PG_element_normalize(Mtx + 6, 1, 3);
 
 		ost << " & ";
 		Poly1->print_equation(ost, Mtx + 6); // ToDo
@@ -474,7 +474,7 @@ void eckardt_point_info::print_conics(std::ostream &ost, int verbose_level)
 		cout << "eckardt_point_info::print_conics "
 				"before Poly2->init" << endl;
 	}
-	Poly2->init(P2->F,
+	Poly2->init(P2->Subspaces->F,
 			3 /* nb_vars */, 2 /* degree */,
 			t_PART,
 			verbose_level);

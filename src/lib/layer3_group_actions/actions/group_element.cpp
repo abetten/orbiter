@@ -2026,7 +2026,7 @@ void group_element::compute_fixed_objects_in_PG(
 	{
 		vector<long int> fix;
 
-		for (a = 0; a < P->N_points; a++) {
+		for (a = 0; a < P->Subspaces->N_points; a++) {
 			j = A->Group_element->element_image_of(a, Elt, 0 /* verbose_level */);
 			if (j == a) {
 				fix.push_back(a);
@@ -2101,7 +2101,7 @@ void group_element::report_fixed_objects_in_PG(
 	//F = PG->F;
 
 
-	int up_to_which_rank = P->n;
+	int up_to_which_rank = P->Subspaces->n;
 	std::vector<std::vector<long int>> Fix;
 	long int a;
 
@@ -2131,12 +2131,12 @@ void group_element::report_fixed_objects_in_PG(
 
 
 	cnt = Fix[0].size();
-	ost << "There are " << cnt << " / " << P->N_points
+	ost << "There are " << cnt << " / " << P->Subspaces->N_points
 			<< " fixed points, they are: \\\\" << endl;
 	for (j = 0; j < cnt; j++) {
 		a = Fix[0][j];
 
-		P->F->Projective_space_basic->PG_element_unrank_modified_lint(
+		P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified_lint(
 				v, 1, 4, a);
 
 		ost << j << " / " << cnt << " = " << a << " : ";

@@ -235,12 +235,12 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(
 	}
 	int i, j;
 
-	nb_rows0 = P->N_points;
-	nb_cols0 = P->N_lines;
+	nb_rows0 = P->Subspaces->N_points;
+	nb_cols0 = P->Subspaces->N_lines;
 
-	for (i = 0; i < P->N_points; i++) {
-		for (j = 0; j < P->N_lines; j++) {
-			if (P->is_incident(i, j)) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
+		for (j = 0; j < P->Subspaces->N_lines; j++) {
+			if (P->Subspaces->is_incident(i, j)) {
 				set_incidence_ij(i, j);
 			}
 		}
@@ -262,18 +262,18 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 
 	int i, j, h, k, l;
 
-	nb_rows0 = P->N_points + P->N_lines;
-	nb_cols0 = P->N_lines + P->Nb_subspaces[2]; // number of lines and planes
+	nb_rows0 = P->Subspaces->N_points + P->Subspaces->N_lines;
+	nb_cols0 = P->Subspaces->N_lines + P->Subspaces->Nb_subspaces[2]; // number of lines and planes
 
-	for (i = 0; i < P->N_points; i++) {
-		for (j = 0; j < P->N_lines; j++) {
-			if (P->is_incident(i, j)) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
+		for (j = 0; j < P->Subspaces->N_lines; j++) {
+			if (P->Subspaces->is_incident(i, j)) {
 				set_incidence_ij(i, j);
 			}
 		}
 	}
-	for (j = 0; j < P->N_lines; j++) {
-		set_incidence_ij(P->N_points + j, j);
+	for (j = 0; j < P->Subspaces->N_lines; j++) {
+		set_incidence_ij(P->Subspaces->N_points + j, j);
 	}
 
 
@@ -283,11 +283,11 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 
 	long int *Pts_on_line;
 
-	Pts_on_line = NEW_lint(P->N_lines * P->k);
+	Pts_on_line = NEW_lint(P->Subspaces->N_lines * P->Subspaces->k);
 
-	for (j = 0; j < P->N_lines; j++) {
-		P->create_points_on_line(
-				j /* line_rk */, Pts_on_line + j * P->k,
+	for (j = 0; j < P->Subspaces->N_lines; j++) {
+		P->Subspaces->create_points_on_line(
+				j /* line_rk */, Pts_on_line + j * P->Subspaces->k,
 				0 /* verbose_level*/);
 	}
 
@@ -297,11 +297,11 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 
 	std::vector<std::vector<long int>> Plane_ranks;
 
-	for (j = 0; j < P->N_lines; j++) {
+	for (j = 0; j < P->Subspaces->N_lines; j++) {
 
 		std::vector<long int> plane_ranks;
 
-		P->planes_through_a_line(
+		P->Subspaces->planes_through_a_line(
 				j /* line_rk */, plane_ranks, 0 /*verbose_level*/);
 
 		Plane_ranks.push_back(plane_ranks);
@@ -310,13 +310,13 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 
 			k = plane_ranks[h];
 
-			set_incidence_ij(P->N_points + j, P->N_lines + k);
+			set_incidence_ij(P->Subspaces->N_points + j, P->Subspaces->N_lines + k);
 
-			for (l = 0; l < P->k; l++) {
+			for (l = 0; l < P->Subspaces->k; l++) {
 
-				i = Pts_on_line[j * P->k + l];
+				i = Pts_on_line[j * P->Subspaces->k + l];
 
-				set_incidence_ij(i, P->N_lines + k);
+				set_incidence_ij(i, P->Subspaces->N_lines + k);
 
 			}
 		}

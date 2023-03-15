@@ -92,7 +92,7 @@ spread_domain::~spread_domain()
 
 }
 
-void spread_domain::init(
+void spread_domain::init_spread_domain(
 		field_theory::finite_field *F,
 		int n, int k,
 		int verbose_level)
@@ -104,7 +104,7 @@ void spread_domain::init(
 
 
 	if (f_v) {
-		cout << "spread_domain::init" << endl;
+		cout << "spread_domain::init_spread_domain" << endl;
 		cout << "n=" << n << endl;
 		cout << "k=" << k << endl;
 		cout << "q=" << F->q << endl;
@@ -133,7 +133,7 @@ void spread_domain::init(
 	nb_points_total = nb_pts = nC1q;
 
 	if (f_v) {
-		cout << "spread_domain::init" << endl;
+		cout << "spread_domain::init_spread_domain" << endl;
 		cout << "q=" << q << endl;
 		cout << "n=" << n << endl;
 		cout << "k=" << k << endl;
@@ -153,11 +153,11 @@ void spread_domain::init(
 
 
 	if (f_v) {
-		cout << "spread_domain::init "
+		cout << "spread_domain::init_spread_domain "
 				"nCkq = {n \\choose k}_q = " << nCkq << endl;
-		cout << "spread_domain::init "
+		cout << "spread_domain::init_spread_domain "
 				"r = {k \\choose 1}_q = " << r << endl;
-		cout << "spread_domain::init "
+		cout << "spread_domain::init_spread_domain "
 				"nb_pts = {n \\choose 1}_q = " << nb_pts << endl;
 	}
 
@@ -167,7 +167,7 @@ void spread_domain::init(
 	if (k == 2 && n == 4) {
 
 		if (f_v) {
-			cout << "spread_domain::init k == 2 and n == 4, "
+			cout << "spread_domain::init_spread_domain k == 2 and n == 4, "
 					"initializing the Klein correspondence" << endl;
 		}
 		Klein = NEW_OBJECT(geometry::klein_correspondence);
@@ -178,7 +178,7 @@ void spread_domain::init(
 	}
 	else {
 		if (f_v) {
-			cout << "spread_domain::init we are not "
+			cout << "spread_domain::init_spread_domain we are not "
 					"initializing the Klein correspondence" << endl;
 		}
 		O = NULL;
@@ -186,7 +186,7 @@ void spread_domain::init(
 	}
 
 	if (f_v) {
-		cout << "spread_domain::init done" << endl;
+		cout << "spread_domain::init_spread_domain done" << endl;
 	}
 }
 

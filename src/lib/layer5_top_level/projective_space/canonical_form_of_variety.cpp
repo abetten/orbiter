@@ -428,14 +428,25 @@ int canonical_form_of_variety::find_equation(
 
 	//int Mtx_inv[10];
 	int frobenius;
+	linear_algebra::linear_algebra_global LA;
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
 				"before PA->P->reverse_engineer_semilinear_map" << endl;
 	}
+
+	LA.reverse_engineer_semilinear_map(
+			Canonical_form_classifier->Descr->PA->P->Subspaces->F,
+			Canonical_form_classifier->Descr->PA->P->Subspaces->n,
+			gamma, Mtx, frobenius,
+		0 /*verbose_level*/);
+
+#if 0
 	Canonical_form_classifier->Descr->PA->P->reverse_engineer_semilinear_map(
 			gamma, Mtx, frobenius,
 		0 /*verbose_level*/);
+#endif
+
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
 				"after PA->P->reverse_engineer_semilinear_map" << endl;

@@ -1286,8 +1286,8 @@ void action_global::compute_decomposition_based_on_orbits(
 		cout << "action_global::compute_decomposition_based_on_orbits "
 				"before S1->allocate" << endl;
 	}
-	S1->allocate(P->N_points, 0 /* verbose_level */);
-	S2->allocate(P->N_lines, 0 /* verbose_level */);
+	S1->allocate(P->Subspaces->N_points, 0 /* verbose_level */);
+	S2->allocate(P->Subspaces->N_lines, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "action_global::compute_decomposition_based_on_orbits "
@@ -1311,7 +1311,7 @@ void action_global::compute_decomposition_based_on_orbits(
 		cout << "action_global::compute_decomposition_based_on_orbits "
 				"before P->compute_decomposition" << endl;
 	}
-	P->compute_decomposition(S1, S2, Inc, Stack, verbose_level);
+	P->Subspaces->compute_decomposition(S1, S2, Inc, Stack, verbose_level);
 
 	FREE_OBJECT(S1);
 	FREE_OBJECT(S2);
@@ -1350,9 +1350,9 @@ void action_global::compute_decomposition_based_on_orbit_length(
 
 	if (f_v) {
 		cout << "action_global::compute_decomposition_based_on_orbit_length "
-				"before P->compute_decomposition" << endl;
+				"before P->Subspaces->compute_decomposition_based_on_tally" << endl;
 	}
-	P->compute_decomposition_based_on_tally(
+	P->Subspaces->compute_decomposition_based_on_tally(
 			&T1, &T2, Inc, Stack, verbose_level);
 
 

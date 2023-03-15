@@ -102,13 +102,13 @@ void spread_tables::init(projective_space *P,
 		cout << "spread_tables::init" << endl;
 	}
 
-	if (P->n != 3) {
-		cout << "spread_tables::init P->n != 3" << endl;
+	if (P->Subspaces->n != 3) {
+		cout << "spread_tables::init P->Subspaces->n != 3" << endl;
 		exit(1);
 	}
 	spread_tables::P = P;
-	spread_tables::F = P->F;
-	Gr = P->Grass_lines;
+	spread_tables::F = P->Subspaces->F;
+	Gr = P->Subspaces->Grass_lines;
 	q = F->q;
 	d = 4;
 
@@ -256,8 +256,8 @@ void spread_tables::init_reduced(
 	}
 
 	P = old_spread_table->P;
-	F = P->F;
-	Gr = P->Grass_lines;
+	F = P->Subspaces->F;
+	Gr = P->Subspaces->Grass_lines;
 	q = F->q;
 	d = 4; // = 4
 

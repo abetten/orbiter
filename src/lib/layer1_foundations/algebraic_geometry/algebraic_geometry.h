@@ -630,7 +630,7 @@ public:
 // schlaefli.cpp
 // #############################################################################
 
-//! schlaefli labeling of objects in cubic surfaces with 27 lines
+//! Schlaefli labeling of objects in cubic surfaces with 27 lines. This is general information that applies to any cubic surface.
 
 
 class schlaefli {
@@ -717,7 +717,8 @@ public:
 
 	schlaefli();
 	~schlaefli();
-	void init(surface_domain *Surf, int verbose_level);
+	void init(
+			surface_domain *Surf, int verbose_level);
 	void init_line_data(int verbose_level);
 	void init_Schlaefli_labels(int verbose_level);
 	void find_tritangent_planes_intersecting_in_a_line(
@@ -735,7 +736,8 @@ public:
 		// 0 = a_i, 1 = b_i, 2 = c_ij
 	void index_of_line(int line, int &i, int &j);
 		// returns i for a_i, i for b_i and (i,j) for c_ij
-	int third_line_in_tritangent_plane(int l1, int l2, int verbose_level);
+	int third_line_in_tritangent_plane(
+			int l1, int l2, int verbose_level);
 	void make_Tijk(int *T, int i, int j, int k);
 	void make_Tlmnp(int *T, int l, int m, int n, int p);
 	void make_Tdefght(int *T, int d, int e, int f, int g, int h, int t);
@@ -757,7 +759,8 @@ public:
 		int line1, int line2, int transversal,
 		int hds[6],
 		int verbose_level);
-	void prepare_clebsch_map(int ds, int ds_row, int &line1,
+	void prepare_clebsch_map(
+			int ds, int ds_row, int &line1,
 		int &line2, int &transversal, int verbose_level);
 	void init_adjacency_matrix_of_lines(int verbose_level);
 	void init_incidence_matrix_of_lines_vs_tritangent_planes(
@@ -775,7 +778,8 @@ public:
 	void print_Steiner_and_Eckardt(std::ostream &ost);
 	void latex_abstract_trihedral_pair(std::ostream &ost, int t_idx);
 	void latex_table_of_Schlaefli_labeling_of_lines(std::ostream &ost);
-	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
+	void latex_trihedral_pair(
+			std::ostream &ost, int *T, long int *TE);
 	void latex_table_of_trihedral_pairs(std::ostream &ost);
 	void latex_triads(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost);
@@ -784,7 +788,8 @@ public:
 	void latex_table_of_tritangent_planes(std::ostream &ost);
 	void print_line(std::ostream &ost, int rk);
 	void print_Schlaefli_labelling(std::ostream &ost);
-	void print_set_of_lines_tex(std::ostream &ost, long int *v, int len);
+	void print_set_of_lines_tex(
+			std::ostream &ost, long int *v, int len);
 	void latex_table_of_clebsch_maps(std::ostream &ost);
 	void print_half_double_sixes_in_GAP();
 	int identify_Eckardt_point(
@@ -802,7 +807,7 @@ public:
 // seventytwo_cases.cpp
 // #############################################################################
 
-//! description of a Clebsch map with a fixed tritangent plane
+//! description of a Clebsch map with respect to a fixed tritangent plane
 
 class seventytwo_cases {
 
@@ -896,7 +901,7 @@ public:
 			int line_l1_l2_idx, int l1, int l2);
 	void compute_arc(
 			surface_object *SO, int verbose_level);
-	// We have chosen a tritangent planes
+	// We have chosen a tritangent plane
 	// and we know the three lines m1, m2, m3 in it.
 	// The lines l1 and l2 intersect m1 in the first two points.
 	// Computes the 5 transversals to the two lines l1 and l2.
@@ -926,7 +931,7 @@ public:
 // smooth_surface_object_properties.cpp
 // #############################################################################
 
-//! smooth cubic surfaces in PG(3,q) have 27 lines
+//! properties that are specific to smooth cubic surfaces in PG(3,q) with 27 lines
 
 
 class smooth_surface_object_properties {
@@ -940,13 +945,17 @@ public:
 		// list of tritangent planes in Schlaefli labeling
 	int nb_tritangent_planes;
 
-	long int *Lines_in_tritangent_planes; // [nb_tritangent_planes * 3]
+	long int *Lines_in_tritangent_planes;
+		// [nb_tritangent_planes * 3]
 
-	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
+	long int *Trihedral_pairs_as_tritangent_planes;
+		// [nb_trihedral_pairs * 6]
 
 
-	long int *All_Planes; // [nb_trihedral_pairs * 6]
-	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]
+	long int *All_Planes;
+		// [nb_trihedral_pairs * 6]
+	int *Dual_point_ranks;
+		// [nb_trihedral_pairs * 6]
 
 	int *Roots; // [72 * 6]
 
@@ -1034,7 +1043,7 @@ public:
 
 	surface_domain();
 	~surface_domain();
-	void init(
+	void init_surface_domain(
 			field_theory::finite_field *F,
 			int verbose_level);
 	void unrank_point(
@@ -1159,7 +1168,7 @@ public:
 	int rank_of_four_lines_on_Klein_quadric(
 			long int *four_lines,
 		int verbose_level);
-	int create_double_six_from_five_lines_with_a_common_transversal(
+	int five_plus_one_to_double_six(
 		long int *five_pts, long int *double_six,
 		int verbose_level);
 	int create_double_six_from_six_disjoint_lines(
@@ -1221,6 +1230,9 @@ public:
 	int compute_transversals_of_any_four(
 			long int *&Trans, int &nb_subsets,
 			long int *lines, int sz, int verbose_level);
+	int create_double_six_safely(
+		long int *five_lines, long int transversal_line, long int *double_six,
+		int verbose_level);
 
 	// surface_domain_io.cpp:
 	void print_equation(

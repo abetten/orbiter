@@ -193,12 +193,12 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 
 
-	line_type = NEW_int(P->N_lines);
+	line_type = NEW_int(P->Subspaces->N_lines);
 
-	P->line_intersection_type(Pts, nb_pts, line_type, verbose_level);
+	P->Subspaces->line_intersection_type(Pts, nb_pts, line_type, verbose_level);
 
 
-	C.init(line_type, P->N_lines, FALSE, 0);
+	C.init(line_type, P->Subspaces->N_lines, FALSE, 0);
 	cout << "The line type is:" << endl;
 	C.print(TRUE /* f_backwards*/);
 
@@ -223,7 +223,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 		cout << j << " : " << a << " : ";
 
 		P->intersection_of_subspace_with_point_set(
-			P->Grass_lines, a, Pts, nb_pts,
+			P->Subspaces->Grass_lines, a, Pts, nb_pts,
 			Intersection_sets[j], intersection_set_size,
 			0 /* verbose_level */);
 		if (intersection_set_size != sz) {
@@ -520,7 +520,7 @@ static void projective_space_init_line_action(
 
 	AoL = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
-	AoL->init(*A_points, P->Grass_lines, verbose_level - 5);
+	AoL->init(*A_points, P->Subspaces->Grass_lines, verbose_level - 5);
 
 
 	if (f_v) {

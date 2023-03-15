@@ -76,7 +76,7 @@ void action_on_forms::create_action_on_forms(
 		cout << "action_on_forms::create_action_on_forms "
 				"before PF->init" << endl;
 	}
-	PF->init(F, PA->P->n, verbose_level);
+	PF->init(F, PA->P->Subspaces->n, verbose_level);
 	if (f_v) {
 		cout << "action_on_forms::create_action_on_forms "
 				"after PF->init" << endl;

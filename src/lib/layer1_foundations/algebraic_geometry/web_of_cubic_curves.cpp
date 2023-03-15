@@ -857,9 +857,9 @@ void web_of_cubic_curves::find_point_not_on_six_curves(
 	if (f_v) {
 		cout << "web_of_cubic_curves::find_point_not_on_six_curves" << endl;
 		cout << "web_of_cubic_curves::find_point_not_on_six_curves "
-			"P2->N_points = " << Surf->P2->N_points << endl;
+			"P2->N_points = " << Surf->P2->Subspaces->N_points << endl;
 	}
-	for (pt = 0; pt < Surf->P2->N_points; pt++) {
+	for (pt = 0; pt < Surf->P2->Subspaces->N_points; pt++) {
 		if (Sorting.lint_vec_search_linear(arc6, 6, pt, idx)) {
 			continue;
 		}
@@ -874,7 +874,7 @@ void web_of_cubic_curves::find_point_not_on_six_curves(
 			break;
 		}
 	}
-	if (pt == Surf->P2->N_points) {
+	if (pt == Surf->P2->Subspaces->N_points) {
 		cout << "web_of_cubic_curves::find_point_not_on_six_curves "
 				"could not find a point which is not on "
 				"any of the six curves" << endl;

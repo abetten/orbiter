@@ -194,10 +194,10 @@ void spread_table_activity::perform_activity(int verbose_level)
 		int line2;
 		int *N;
 
-		N = NEW_int(P->P3->N_lines);
-		Int_vec_zero(N, P->P3->N_lines);
+		N = NEW_int(P->P3->Subspaces->N_lines);
+		Int_vec_zero(N, P->P3->Subspaces->N_lines);
 
-		for (line2 = 0; line2 < P->P3->N_lines; line2++) {
+		for (line2 = 0; line2 < P->P3->Subspaces->N_lines; line2++) {
 			if (line2 == line1) {
 				continue;
 			}
@@ -212,7 +212,7 @@ void spread_table_activity::perform_activity(int verbose_level)
 		}
 		data_structures::tally N_t;
 
-		N_t.init(N, P->P3->N_lines, FALSE, 0);
+		N_t.init(N, P->P3->Subspaces->N_lines, FALSE, 0);
 		cout << "type of covering based on all lines together with line " << line1 << ":" << endl;
 		N_t.print(TRUE);
 		cout << endl;
@@ -359,7 +359,8 @@ void spread_table_activity::report_spread2(std::ostream &ost, int spread_idx, in
 	Lint_vec_print(ost, spread_elts, P->spread_size);
 	ost << "\\\\" << endl;
 
-	P->P3->Grass_lines->print_set_tex(ost, spread_elts, P->spread_size, 0 /* verbose_level */);
+	P->P3->Subspaces->Grass_lines->print_set_tex(
+			ost, spread_elts, P->spread_size, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "spread_table_activity::report_spread2 done" << endl;

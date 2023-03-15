@@ -1,6 +1,7 @@
 
 #MY_PATH=../orbiter
 MY_PATH=~/DEV.23/orbiter
+#MY_PATH=/s/hipft-logger/b/nobackup/abetten/orbiter
 #MY_PATH=/scratch/betten/COMPILE/orbiter
 
 
@@ -7460,6 +7461,17 @@ test_7_1:
 	make surface_4_0
 	make Hirschfeld_surface_get_incidence_matrix_40_40
 	make Hirschfeld_surface_incma_40_40_c
+	make surface_4_0_plane_type_of_lines_on_Klein_quadric
+	make surface_4_0_lines_vs_lines
+	make surface_4_0_lines_vs_tritangent_planes
+	make surface_4_0_dot_products_columns
+	make surface_4_0_export_double_sixes
+	make surface_4_0_multiply_half_double_six_vs_lines
+	make surface_4_0_multiply_half_double_six_vs_incma
+	make surface_4_0_dot_products_rows
+	make surface_4_0_dot_products_rowspan
+	make surface_4_0_single_six_times_lines_vs_lines_rowspan
+	make surface_4_0_roots
 	make surface_7_0
 	make Family_general_F7
 	make surface_eckardt_13_4_12
@@ -8204,7 +8216,7 @@ surface_F_abcd_Eckardt_q31:
 
 
 surface_F_abcd_sweep_4_27_q7:
-	$(ORBITER) -v 10 \
+	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with P -do \
@@ -8221,11 +8233,12 @@ surface_F_abcd_sweep_4_27_q7:
 
 
 
+# ToDo problem
 
 surface_11_random:
-	$(ORBITER) -v 12 \
+	$(ORBITER) -v 10 \
 		-define F -finite_field -q 11 -end \
-		-define P -projective_space -n 3 -field F -end \
+		-define P -projective_space -n 3 -field F -v 6 -end \
 		-define S -cubic_surface -space P -random -end \
 		-with S -do \
 		-cubic_surface_activity \
@@ -10685,116 +10698,25 @@ Hamming_code_diagram:
 	open by_basis_n7_k4_char_func_7_16_draw.bmp
 
 
-#			-metric_balls 1 \
-
-
 Hamming_code_words:
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_0" "0" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_1" "67" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_2" "37" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_3" "102" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_4" "22" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_5" "85" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_6" "51" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_7" "112" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_8" "15" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_9" "76" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_10" "42" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_11" "105" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_12" "25" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_13" "90" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_14" "60" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -define F -finite_field -q 2 -end \
-		-with F -do -coding_theoretic_activity \
-		-general_code_binary 7 "Hamming_7_4_word_15" "127" \
-		-metric_balls 1 \
-		-end
-	$(ORBITER) -v 2 -loop L 0 16 1 -draw_matrix \
-		-input_csv_file Hamming_7_4_word_%L_char_func_7_1.csv \
-		-box_width 25 -bit_depth 8 \
-		-partition 4 16 8 -end \
-		-end_loop L
-	convert Hamming_7_4_word_0_char_func_7_1_draw.bmp Hamming_7_4_word_0_char_func_7_1_draw.png
-	convert Hamming_7_4_word_1_char_func_7_1_draw.bmp Hamming_7_4_word_1_char_func_7_1_draw.png
-	convert Hamming_7_4_word_2_char_func_7_1_draw.bmp Hamming_7_4_word_2_char_func_7_1_draw.png
-	convert Hamming_7_4_word_3_char_func_7_1_draw.bmp Hamming_7_4_word_3_char_func_7_1_draw.png
-	convert Hamming_7_4_word_4_char_func_7_1_draw.bmp Hamming_7_4_word_4_char_func_7_1_draw.png
-	convert Hamming_7_4_word_5_char_func_7_1_draw.bmp Hamming_7_4_word_5_char_func_7_1_draw.png
-	convert Hamming_7_4_word_6_char_func_7_1_draw.bmp Hamming_7_4_word_6_char_func_7_1_draw.png
-	convert Hamming_7_4_word_7_char_func_7_1_draw.bmp Hamming_7_4_word_7_char_func_7_1_draw.png
-	convert Hamming_7_4_word_8_char_func_7_1_draw.bmp Hamming_7_4_word_8_char_func_7_1_draw.png
-	convert Hamming_7_4_word_9_char_func_7_1_draw.bmp Hamming_7_4_word_9_char_func_7_1_draw.png
-	convert Hamming_7_4_word_10_char_func_7_1_draw.bmp Hamming_7_4_word_10_char_func_7_1_draw.png
-	convert Hamming_7_4_word_11_char_func_7_1_draw.bmp Hamming_7_4_word_11_char_func_7_1_draw.png
-	convert Hamming_7_4_word_12_char_func_7_1_draw.bmp Hamming_7_4_word_12_char_func_7_1_draw.png
-	convert Hamming_7_4_word_13_char_func_7_1_draw.bmp Hamming_7_4_word_13_char_func_7_1_draw.png
-	convert Hamming_7_4_word_14_char_func_7_1_draw.bmp Hamming_7_4_word_14_char_func_7_1_draw.png
-	convert Hamming_7_4_word_15_char_func_7_1_draw.bmp Hamming_7_4_word_15_char_func_7_1_draw.png
+	$(ORBITER) -v 2 \
+		-define v -vector -dense $(HAMMING_CODE_CODEWORDS) -end \
+		-define F -finite_field -q 2 -end \
+		-loop_over i v \
+			-with F -do -coding_theoretic_activity \
+			-general_code_binary 7 "Hamming_7_4_word_%i" "%i[v]" \
+			-metric_balls 1 \
+			-end \
+		-end_loop_over i
+	$(ORBITER) -v 2 \
+		-loop i 0 16 1 -draw_matrix \
+			-input_csv_file Hamming_7_4_word_%i_char_func_7_1.csv \
+			-box_width 25 -bit_depth 8 \
+			-partition 4 16 8 -end \
+			-system "convert Hamming_7_4_word_%i_char_func_7_1_draw.bmp \
+			-frame 8 Hamming_7_4_word_%i_char_func_7_1_draw.png" \
+		-end_loop i
 
-#codewords
-#0,67,37,102,22,85,51,112,15,76,42,105,25,90,60,127
-
-#Hamming_7_4_word_0_diagram_7_1.csv
 
 
 Hamming_weight_enumerator:
@@ -11377,7 +11299,10 @@ CRC_F256_BCH_write_code_for_division_d2:
 
 
 
+
 # bravo:
+
+
 
 # degree of polynomial = 4
 #-dense "1,23,27,213,1"
@@ -11621,6 +11546,147 @@ extract_block:
 
 
 
+# alfa has d = 2, so it can detect any 1 error at the F256 level
+
+TEN_MILLION=10000000
+
+crc_test_alfa:
+	$(ORBITER) -v 3 \
+		-crc_test "alfa" $(TEN_MILLION) 3
+
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 2 nb_undetected=89, time=0:24
+#crc_codes::test_crc_object Nb_test = 10000000 k = 3 nb_undetected=153, time=0:26
+
+
+
+# bravo has d = 3, so it can detect any 2 errors at the F256 level
+
+crc_test_bravo_10M_3:
+	$(ORBITER) -v 3 \
+		-crc_test "bravo" $(TEN_MILLION) 3
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 3 nb_undetected=0, time=0:27
+
+
+crc_test_crc32_10M_3:
+	$(ORBITER) -v 3 \
+		-crc_test "crc32" $(TEN_MILLION) 3
+
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 3 nb_undetected=0, time=3:31
+
+
+
+crc_test_bravo_10M_4:
+	$(ORBITER) -v 3 \
+		-crc_test "bravo" $(TEN_MILLION) 4
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 4 nb_undetected=0, time=0:28
+
+crc_test_crc32_10M_4:
+	$(ORBITER) -v 3 \
+		-crc_test "crc32" $(TEN_MILLION) 4
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 4 nb_undetected=0, time=3:36
+
+
+crc_test_bravo_10M_5:
+	$(ORBITER) -v 3 \
+		-crc_test "bravo" $(TEN_MILLION) 5
+
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 5 nb_undetected=0, time=0:30
+
+
+crc_test_crc32_10M_5:
+	$(ORBITER) -v 3 \
+		-crc_test "crc32" $(TEN_MILLION) 5
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 5 nb_undetected=0, time=3:41
+
+
+
+
+crc_test_bravo_10M_6:
+	$(ORBITER) -v 3 \
+		-crc_test "bravo" $(TEN_MILLION) 6
+
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 6 nb_undetected=0, time=0:30
+
+
+crc_test_crc32_10M_6:
+	$(ORBITER) -v 3 \
+		-crc_test "crc32" $(TEN_MILLION) 6
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 6 nb_undetected=0, time=3:45
+
+
+
+crc_test_bravo_10M_7:
+	$(ORBITER) -v 3 \
+		-crc_test "bravo" $(TEN_MILLION) 7
+
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 7 nb_undetected=0, time=0:31
+
+
+crc_test_crc32_10M_7:
+	$(ORBITER) -v 3 \
+		-crc_test "crc32" $(TEN_MILLION) 7
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 7 nb_undetected=0, time=3:47
+
+
+crc_test_bravo_10M_8:
+	$(ORBITER) -v 3 \
+		-crc_test "bravo" $(TEN_MILLION) 8
+
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 8 nb_undetected=0, time=0:32
+
+crc_test_crc32_10M_8:
+	$(ORBITER) -v 3 \
+		-crc_test "crc32" $(TEN_MILLION) 8
+
+#crc_codes::test_crc_object Nb_test = 10000000 k = 8 nb_undetected=0, time=3:50
+
+
+crc_test_bravo_10_loop:
+	$(ORBITER) -v 3 \
+		-loop i 2 770 1 \
+			-crc_test "bravo" $(TEN_MILLION) %i \
+		-end_loop i
+
+
+crc_test_crc32_10_loop:
+	$(ORBITER) -v 3 \
+		-loop i 2 770 1 \
+			-crc_test "crc32" $(TEN_MILLION) %i \
+		-end_loop i
+
+
+#### 20 Million:
+
+
+
+crc_test_crc32_20M_3:
+	$(ORBITER) -v 3 \
+		-crc_test "crc32" 20000000 3
+
+
+
+
+# charlie has d = 7, so it can detect any 6 errors at the F256 level
+
+
+crc_test_charlie:
+	$(ORBITER) -v 3 \
+		-crc_test "charlie" 10000000 7
+
+
+
 
 ###############################################################################
 # Section 10.5: Coding Theory - Reed-Muller codes
@@ -11733,24 +11799,6 @@ RM_3_algebraic_normal_form:
 			-end \
 		-end_loop L
 
-# distance 0:
-
-# E_0 + E_1 + E_2 + E_3 + E_4
-#X8^8 + X0*X8^7 + X1*X8^7 + X2*X8^7 + X3*X8^7 + X4*X8^7 + X5*X8^7 + X6*X8^7 + X7*X8^7 + X0*X1*X8^6 + X0*X2*X8^6 + X0*X3*X8^6 + X0*X4*X8^6 + X0*X5*X8^6 + X0*X6*X8^6 + X0*X7*X8^6 + X1*X2*X8^6 + X1*X3*X8^6 + X1*X4*X8^6 + X1*X5*X8^6 + X1*X6*X8^6 + X1*X7*X8^6 + X2*X3*X8^6 + X2*X4*X8^6 + X2*X5*X8^6 + X2*X6*X8^6 + X2*X7*X8^6 + X3*X4*X8^6 + X3*X5*X8^6 + X3*X6*X8^6 + X3*X7*X8^6 + X4*X5*X8^6 + X4*X6*X8^6 + X4*X7*X8^6 + X5*X6*X8^6 + X5*X7*X8^6 + X6*X7*X8^6 + X0*X1*X2*X8^5 + X0*X1*X3*X8^5 + X0*X1*X4*X8^5 + X0*X1*X5*X8^5 + X0*X1*X6*X8^5 + X0*X1*X7*X8^5 + X0*X2*X3*X8^5 + X0*X2*X4*X8^5 + X0*X2*X5*X8^5 + X0*X2*X6*X8^5 + X0*X2*X7*X8^5 + X0*X3*X4*X8^5 + X0*X3*X5*X8^5 + X0*X3*X6*X8^5 + X0*X3*X7*X8^5 + X0*X4*X5*X8^5 + X0*X4*X6*X8^5 + X0*X4*X7*X8^5 + X0*X5*X6*X8^5 + X0*X5*X7*X8^5 + X0*X6*X7*X8^5 + X1*X2*X3*X8^5 + X1*X2*X4*X8^5 + X1*X2*X5*X8^5 + X1*X2*X6*X8^5 + X1*X2*X7*X8^5 + X1*X3*X4*X8^5 + X1*X3*X5*X8^5 + X1*X3*X6*X8^5 + X1*X3*X7*X8^5 + X1*X4*X5*X8^5 + X1*X4*X6*X8^5 + X1*X4*X7*X8^5 + X1*X5*X6*X8^5 + X1*X5*X7*X8^5 + X1*X6*X7*X8^5 + X2*X3*X4*X8^5 + X2*X3*X5*X8^5 + X2*X3*X6*X8^5 + X2*X3*X7*X8^5 + X2*X4*X5*X8^5 + X2*X4*X6*X8^5 + X2*X4*X7*X8^5 + X2*X5*X6*X8^5 + X2*X5*X7*X8^5 + X2*X6*X7*X8^5 + X3*X4*X5*X8^5 + X3*X4*X6*X8^5 + X3*X4*X7*X8^5 + X3*X5*X6*X8^5 + X3*X5*X7*X8^5 + X3*X6*X7*X8^5 + X4*X5*X6*X8^5 + X4*X5*X7*X8^5 + X4*X6*X7*X8^5 + X5*X6*X7*X8^5 + X0*X1*X2*X4*X8^4 + X0*X1*X2*X5*X8^4 + X0*X1*X2*X6*X8^4 + X0*X1*X2*X7*X8^4 + X0*X1*X3*X4*X8^4 + X0*X1*X3*X5*X8^4 + X0*X1*X3*X6*X8^4 + X0*X1*X3*X7*X8^4 + X0*X1*X4*X6*X8^4 + X0*X1*X4*X7*X8^4 + X0*X1*X5*X6*X8^4 + X0*X1*X5*X7*X8^4 + X0*X2*X3*X4*X8^4 + X0*X2*X3*X5*X8^4 + X0*X2*X3*X6*X8^4 + X0*X2*X3*X7*X8^4 + X0*X2*X4*X5*X8^4 + X0*X2*X4*X7*X8^4 + X0*X2*X5*X6*X8^4 + X0*X2*X6*X7*X8^4 + X0*X3*X4*X5*X8^4 + X0*X3*X4*X6*X8^4 + X0*X3*X5*X7*X8^4 + X0*X3*X6*X7*X8^4 + X0*X4*X5*X6*X8^4 + X0*X4*X5*X7*X8^4 + X0*X4*X6*X7*X8^4 + X0*X5*X6*X7*X8^4 + X1*X2*X3*X4*X8^4 + X1*X2*X3*X5*X8^4 + X1*X2*X3*X6*X8^4 + X1*X2*X3*X7*X8^4 + X1*X2*X4*X5*X8^4 + X1*X2*X4*X6*X8^4 + X1*X2*X5*X7*X8^4 + X1*X2*X6*X7*X8^4 + X1*X3*X4*X5*X8^4 + X1*X3*X4*X7*X8^4 + X1*X3*X5*X6*X8^4 + X1*X3*X6*X7*X8^4 + X1*X4*X5*X6*X8^4 + X1*X4*X5*X7*X8^4 + X1*X4*X6*X7*X8^4 + X1*X5*X6*X7*X8^4 + X2*X3*X4*X6*X8^4 + X2*X3*X4*X7*X8^4 + X2*X3*X5*X6*X8^4 + X2*X3*X5*X7*X8^4 + X2*X4*X5*X6*X8^4 + X2*X4*X5*X7*X8^4 + X2*X4*X6*X7*X8^4 + X2*X5*X6*X7*X8^4 + X3*X4*X5*X6*X8^4 + X3*X4*X5*X7*X8^4 + X3*X4*X6*X7*X8^4 + X3*X5*X6*X7*X8^4
-
-
-# distance 1:
-
-#X0*X8^7 + X1*X8^7 + X2*X8^7 + X3*X8^7 + X4*X8^7 + X5*X8^7 + X6*X8^7 + X7*X8^7 = E_1
-#E_1 = X_0X_8^7 + X_1X_8^7 + X_2X_8^7 + X_3X_8^7 + X_4X_8^7 + X_5X_8^7 + X_6X_8^7 + X_7X_8^7
-
-# distance 2:
-
-#X0*X1*X8^6 + X0*X2*X8^6 + X0*X3*X8^6 + X0*X4*X8^6 + X0*X5*X8^6 + X0*X6*X8^6 + X0*X7*X8^6 + X1*X2*X8^6 + X1*X3*X8^6 + X1*X4*X8^6 + X1*X5*X8^6 + X1*X6*X8^6 + X1*X7*X8^6 + X2*X3*X8^6 + X2*X4*X8^6 + X2*X5*X8^6 + X2*X6*X8^6 + X2*X7*X8^6 + X3*X4*X8^6 + X3*X5*X8^6 + X3*X6*X8^6 + X3*X7*X8^6 + X4*X5*X8^6 + X4*X6*X8^6 + X4*X7*X8^6 + X5*X6*X8^6 + X5*X7*X8^6 + X6*X7*X8^6 + X0*X1*X2*X8^5 + X0*X1*X3*X8^5 + X0*X1*X4*X8^5 + X0*X1*X5*X8^5 + X0*X1*X6*X8^5 + X0*X1*X7*X8^5 + X0*X2*X3*X8^5 + X0*X2*X4*X8^5 + X0*X2*X5*X8^5 + X0*X2*X6*X8^5 + X0*X2*X7*X8^5 + X0*X3*X4*X8^5 + X0*X3*X5*X8^5 + X0*X3*X6*X8^5 + X0*X3*X7*X8^5 + X0*X4*X5*X8^5 + X0*X4*X6*X8^5 + X0*X4*X7*X8^5 + X0*X5*X6*X8^5 + X0*X5*X7*X8^5 + X0*X6*X7*X8^5 + X1*X2*X3*X8^5 + X1*X2*X4*X8^5 + X1*X2*X5*X8^5 + X1*X2*X6*X8^5 + X1*X2*X7*X8^5 + X1*X3*X4*X8^5 + X1*X3*X5*X8^5 + X1*X3*X6*X8^5 + X1*X3*X7*X8^5 + X1*X4*X5*X8^5 + X1*X4*X6*X8^5 + X1*X4*X7*X8^5 + X1*X5*X6*X8^5 + X1*X5*X7*X8^5 + X1*X6*X7*X8^5 + X2*X3*X4*X8^5 + X2*X3*X5*X8^5 + X2*X3*X6*X8^5 + X2*X3*X7*X8^5 + X2*X4*X5*X8^5 + X2*X4*X6*X8^5 + X2*X4*X7*X8^5 + X2*X5*X6*X8^5 + X2*X5*X7*X8^5 + X2*X6*X7*X8^5 + X3*X4*X5*X8^5 + X3*X4*X6*X8^5 + X3*X4*X7*X8^5 + X3*X5*X6*X8^5 + X3*X5*X7*X8^5 + X3*X6*X7*X8^5 + X4*X5*X6*X8^5 + X4*X5*X7*X8^5 + X4*X6*X7*X8^5 + X5*X6*X7*X8^5 + X0*X1*X2*X4*X8^4 + X0*X1*X2*X5*X8^4 + X0*X1*X2*X6*X8^4 + X0*X1*X2*X7*X8^4 + X0*X1*X3*X4*X8^4 + X0*X1*X3*X5*X8^4 + X0*X1*X3*X6*X8^4 + X0*X1*X3*X7*X8^4 + X0*X1*X4*X6*X8^4 + X0*X1*X4*X7*X8^4 + X0*X1*X5*X6*X8^4 + X0*X1*X5*X7*X8^4 + X0*X2*X3*X4*X8^4 + X0*X2*X3*X5*X8^4 + X0*X2*X3*X6*X8^4 + X0*X2*X3*X7*X8^4 + X0*X2*X4*X5*X8^4 + X0*X2*X4*X7*X8^4 + X0*X2*X5*X6*X8^4 + X0*X2*X6*X7*X8^4 + X0*X3*X4*X5*X8^4 + X0*X3*X4*X6*X8^4 + X0*X3*X5*X7*X8^4 + X0*X3*X6*X7*X8^4 + X0*X4*X5*X6*X8^4 + X0*X4*X5*X7*X8^4 + X0*X4*X6*X7*X8^4 + X0*X5*X6*X7*X8^4 + X1*X2*X3*X4*X8^4 + X1*X2*X3*X5*X8^4 + X1*X2*X3*X6*X8^4 + X1*X2*X3*X7*X8^4 + X1*X2*X4*X5*X8^4 + X1*X2*X4*X6*X8^4 + X1*X2*X5*X7*X8^4 + X1*X2*X6*X7*X8^4 + X1*X3*X4*X5*X8^4 + X1*X3*X4*X7*X8^4 + X1*X3*X5*X6*X8^4 + X1*X3*X6*X7*X8^4 + X1*X4*X5*X6*X8^4 + X1*X4*X5*X7*X8^4 + X1*X4*X6*X7*X8^4 + X1*X5*X6*X7*X8^4 + X2*X3*X4*X6*X8^4 + X2*X3*X4*X7*X8^4 + X2*X3*X5*X6*X8^4 + X2*X3*X5*X7*X8^4 + X2*X4*X5*X6*X8^4 + X2*X4*X5*X7*X8^4 + X2*X4*X6*X7*X8^4 + X2*X5*X6*X7*X8^4 + X3*X4*X5*X6*X8^4 + X3*X4*X5*X7*X8^4 + X3*X4*X6*X7*X8^4 + X3*X5*X6*X7*X8^4
-
-# E_2 + E_3 + E_4
-
-
 
 RM_6:
 	$(ORBITER) -v 2 \
@@ -11796,16 +11844,16 @@ RM_6_codewords_matrix_draw:
 
 RM_6_codewords_draw:
 	$(ORBITER) -v 4 \
-		-loop L 0 128 1 \
-			-csv_file_select_rows RM6_codewords.csv %L \
-			-reformat RM6_codewords_select_%L.csv RM6_codewords_ref_%L.csv 8 \
+		-loop i 0 128 1 \
+			-csv_file_select_rows RM6_codewords.csv %i \
+			-reformat RM6_codewords_select_%i.csv RM6_codewords_ref_%i.csv 8 \
 			-draw_matrix \
-				-input_csv_file RM6_codewords_ref_%L.csv \
+				-input_csv_file RM6_codewords_ref_%i.csv \
 				-box_width 25 -bit_depth 8 \
 				-partition 3 8 8 \
 			-end \
-			-system "convert RM6_codewords_ref_%L_draw.bmp -frame 8 %L.png" \
-		-end_loop L
+			-system "convert RM6_codewords_ref_%i_draw.bmp -frame 8 %i.png" \
+		-end_loop i
 	convert 0.png 1.png 2.png 3.png 4.png 5.png \
 		6.png 7.png 8.png 9.png 10.png +append a0
 	convert 11.png 12.png 13.png 14.png 15.png \

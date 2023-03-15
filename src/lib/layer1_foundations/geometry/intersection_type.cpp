@@ -100,8 +100,8 @@ void intersection_type::plane_intersection_type_slow(
 				"the input set if not a set" << endl;
 		exit(1);
 	}
-	d = P->n + 1;
-	N_planes = P->nb_rk_k_subspaces_as_lint(3);
+	d = P->Subspaces->n + 1;
+	N_planes = P->Subspaces->nb_rk_k_subspaces_as_lint(3);
 
 	if (f_v) {
 		cout << "intersection_type::plane_intersection_type_slow "
@@ -155,7 +155,7 @@ void intersection_type::plane_intersection_type_slow(
 		for (u = 0; u < set_size; u++) {
 			Int_vec_copy(Basis_save, Basis, 3 * d);
 			Int_vec_copy(Coords + u * d, Basis + 3 * d, d);
-			r = P->F->Linear_algebra->rank_of_rectangular_matrix(Basis,
+			r = P->Subspaces->F->Linear_algebra->rank_of_rectangular_matrix(Basis,
 					4, d, 0 /* verbose_level */);
 			if (r < 4) {
 				pts_on_plane[nb++] = u;

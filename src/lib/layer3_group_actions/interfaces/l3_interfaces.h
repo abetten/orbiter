@@ -144,6 +144,12 @@ public:
 			int *&class_normalizer_number_of_generators,
 			int **&normalizer_generators_perms,
 			int verbose_level);
+	// perms[nb_classes * A->degree]
+	// class_size[nb_classes]
+	// class_order_of_element[nb_classes]
+	// class_normalizer_order[nb_classes]
+	// class_normalizer_number_of_generators[nb_classes]
+	// normalizer_generators_perms[nb_classes][class_normalizer_number_of_generators[i] * A->degree]
 	void normalizer_of_cyclic_group_using_MAGMA(
 			actions::action *A,
 			std::string &fname_magma_prefix,

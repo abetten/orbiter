@@ -564,6 +564,7 @@ public:
 	void print_as_table(std::ostream &ost, int *v, int len, int width);
 	void print_fully(std::ostream &ost, std::vector<int> &v);
 	void print_fully(std::ostream &ost, int *v, int len);
+	void print_fully_naked(std::ostream &ost, int *v, int len);
 	void print_dense(std::ostream &ost, int *v, int len);
 	void print_Cpp(std::ostream &ost, int *v, int len);
 	void print_GAP(std::ostream &ost, int *v, int len);

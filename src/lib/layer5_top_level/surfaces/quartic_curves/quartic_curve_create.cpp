@@ -1536,14 +1536,14 @@ void quartic_curve_create::apply_single_transformation(
 		for (i = 0; i < 28; i++) {
 			if (f_v) {
 				cout << "line " << i << ":" << endl;
-				PA->P->Grass_lines->print_single_generator_matrix_tex(
+				PA->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
 						cout, QO->bitangents28[i]);
 			}
 			QO->bitangents28[i] = PA->A_on_lines->Group_element->element_image_of(
 					QO->bitangents28[i], Elt2, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "maps to " << endl;
-				PA->P->Grass_lines->print_single_generator_matrix_tex(
+				PA->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
 						cout, QO->bitangents28[i]);
 			}
 		}

@@ -255,16 +255,18 @@ void semifield_classify::init(
 	SD = NEW_OBJECT(geometry::spread_domain);
 
 	if (f_v) {
-		cout << "semifield_classify::init before SD->init" << endl;
+		cout << "semifield_classify::init "
+				"before SD->init_spread_domain" << endl;
 	}
 
-	SD->init(
+	SD->init_spread_domain(
 			PA->F,
 			n, k,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "semifield_classify::init after SD->init" << endl;
+		cout << "semifield_classify::init "
+				"after SD->init_spread_domain" << endl;
 	}
 
 
@@ -274,7 +276,8 @@ void semifield_classify::init(
 	//T->read_arguments(argc, argv);
 
 	if (f_v) {
-		cout << "semifield_classify::init before T->init" << endl;
+		cout << "semifield_classify::init "
+				"before T->init" << endl;
 	}
 
 	//int max_depth = k + 1;
@@ -282,7 +285,8 @@ void semifield_classify::init(
 	T->init(SD, PA, 0 /*verbose_level - 2*/);
 
 	if (f_v) {
-		cout << "semifield_classify::init after T->init" << endl;
+		cout << "semifield_classify::init "
+				"after T->init" << endl;
 	}
 
 	ring_theory::longinteger_object go1, go2;
@@ -445,7 +449,8 @@ void semifield_classify::init(
 		cout << "semifield_classify::init "
 				"before Strong_gens->create_sims" << endl;
 	}
-	Symmetry_group = Strong_gens->create_sims(0 /*verbose_level*/);
+	Symmetry_group = Strong_gens->create_sims(
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"after Strong_gens->create_sims" << endl;
@@ -470,7 +475,8 @@ void semifield_classify::init(
 	}
 }
 
-void semifield_classify::report(std::ostream &ost, int level,
+void semifield_classify::report(
+		std::ostream &ost, int level,
 		semifield_level_two *L2,
 		semifield_lifting *L3,
 		graphics::layered_graph_draw_options *draw_options,

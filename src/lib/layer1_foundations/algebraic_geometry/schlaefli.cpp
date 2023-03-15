@@ -167,7 +167,8 @@ schlaefli::~schlaefli()
 
 }
 
-void schlaefli::init(surface_domain *Surf, int verbose_level)
+void schlaefli::init(
+		surface_domain *Surf, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -180,93 +181,115 @@ void schlaefli::init(surface_domain *Surf, int verbose_level)
 
 	Labels = NEW_OBJECT(schlaefli_labels);
 	if (f_v) {
-		cout << "schlaefli::init before Labels->init" << endl;
+		cout << "schlaefli::init "
+				"before Labels->init" << endl;
 	}
 	Labels->init(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after Labels->init" << endl;
+		cout << "schlaefli::init "
+				"after Labels->init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "schlaefli::init before make_trihedral_pairs" << endl;
+		cout << "schlaefli::init "
+				"before make_trihedral_pairs" << endl;
 	}
 	make_trihedral_pairs(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after make_trihedral_pairs" << endl;
+		cout << "schlaefli::init "
+				"after make_trihedral_pairs" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before make_triads" << endl;
+		cout << "schlaefli::init "
+				"before make_triads" << endl;
 	}
 	make_triads(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after make_triads" << endl;
+		cout << "schlaefli::init "
+				"after make_triads" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before process_trihedral_pairs" << endl;
+		cout << "schlaefli::init "
+				"before process_trihedral_pairs" << endl;
 	}
 	process_trihedral_pairs(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after process_trihedral_pairs" << endl;
+		cout << "schlaefli::init "
+				"after process_trihedral_pairs" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before make_Eckardt_points" << endl;
+		cout << "schlaefli::init "
+				"before make_Eckardt_points" << endl;
 	}
 	make_Eckardt_points(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after make_Eckardt_points" << endl;
+		cout << "schlaefli::init "
+				"after make_Eckardt_points" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before init_Trihedral_to_Eckardt" << endl;
+		cout << "schlaefli::init "
+				"before init_Trihedral_to_Eckardt" << endl;
 	}
 	init_Trihedral_to_Eckardt(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_Trihedral_to_Eckardt" << endl;
+		cout << "schlaefli::init "
+				"after init_Trihedral_to_Eckardt" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before init_collinear_Eckardt_triples" << endl;
+		cout << "schlaefli::init "
+				"before init_collinear_Eckardt_triples" << endl;
 	}
 	init_collinear_Eckardt_triples(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_collinear_Eckardt_triples" << endl;
+		cout << "schlaefli::init "
+				"after init_collinear_Eckardt_triples" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before init_double_sixes" << endl;
+		cout << "schlaefli::init "
+				"before init_double_sixes" << endl;
 	}
 	init_double_sixes(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_double_sixes" << endl;
+		cout << "schlaefli::init "
+				"after init_double_sixes" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before create_half_double_sixes" << endl;
+		cout << "schlaefli::init "
+				"before create_half_double_sixes" << endl;
 	}
 	create_half_double_sixes(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after create_half_double_sixes" << endl;
+		cout << "schlaefli::init "
+				"after create_half_double_sixes" << endl;
 	}
 	//print_half_double_sixes_in_GAP();
 
 	if (f_v) {
-		cout << "schlaefli::init before init_adjacency_matrix_of_lines" << endl;
+		cout << "schlaefli::init "
+				"before init_adjacency_matrix_of_lines" << endl;
 	}
 	init_adjacency_matrix_of_lines(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_adjacency_matrix_of_lines" << endl;
+		cout << "schlaefli::init "
+				"after init_adjacency_matrix_of_lines" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
+		cout << "schlaefli::init "
+				"before init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
 	}
 	init_incidence_matrix_of_lines_vs_tritangent_planes(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
+		cout << "schlaefli::init "
+				"after init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
 	}
 
 
@@ -669,7 +692,8 @@ void schlaefli::index_of_line(int line, int &i, int &j)
 		}
 }
 
-int schlaefli::third_line_in_tritangent_plane(int l1, int l2, int verbose_level)
+int schlaefli::third_line_in_tritangent_plane(
+		int l1, int l2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, j, k, l, m, n;
@@ -1685,7 +1709,8 @@ void schlaefli::get_half_double_six_associated_with_Clebsch_map(
 	}
 }
 
-void schlaefli::prepare_clebsch_map(int ds, int ds_row,
+void schlaefli::prepare_clebsch_map(
+		int ds, int ds_row,
 	int &line1, int &line2, int &transversal,
 	int verbose_level)
 {
@@ -1989,7 +2014,8 @@ void schlaefli::latex_table_of_Schlaefli_labeling_of_lines(std::ostream &ost)
 	ost << "\\end{multicols}" << endl;
 }
 
-void schlaefli::latex_trihedral_pair(std::ostream &ost, int *T, long int *TE)
+void schlaefli::latex_trihedral_pair(
+		std::ostream &ost, int *T, long int *TE)
 {
 	int i, j;
 
@@ -2465,7 +2491,8 @@ void schlaefli::print_Schlaefli_labelling(std::ostream &ost)
 	ost << "$$" << endl;
 }
 
-void schlaefli::print_set_of_lines_tex(std::ostream &ost, long int *v, int len)
+void schlaefli::print_set_of_lines_tex(
+		std::ostream &ost, long int *v, int len)
 {
 	int i;
 

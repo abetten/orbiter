@@ -55,14 +55,14 @@ void del_pezzo_surface_of_degree_two_domain::init(
 		cout << "del_pezzo_surface_of_degree_two_domain::init" << endl;
 	}
 
-	if (P3->n != 3) {
+	if (P3->Subspaces->n != 3) {
 		cout << "del_pezzo_surface_of_degree_two_domain::init "
 				"projective space must have dimension 3" << endl;
 		exit(1);
 	}
 	del_pezzo_surface_of_degree_two_domain::P3 = P3;
 	del_pezzo_surface_of_degree_two_domain::Poly4_3 = Poly4_3;
-	F = P3->F;
+	F = P3->Subspaces->F;
 
 	P2 = NEW_OBJECT(geometry::projective_space);
 	P2->projective_space_init(2, F,
@@ -106,7 +106,7 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 
 	if (f_v) {
 		cout << "del_pezzo_surface_of_degree_two_domain::enumerate_points "
-				"P2->N_points=" << P2->N_points << endl;
+				"P2->N_points=" << P2->Subspaces->N_points << endl;
 #if 0
 		print_equation_with_line_breaks_tex(cout,
 				coeff, 8 /* nb_terms_per_line*/,
@@ -115,7 +115,7 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 #endif
 	}
 
-	for (rk = 0; rk < P2->N_points; rk++) {
+	for (rk = 0; rk < P2->Subspaces->N_points; rk++) {
 		P2->unrank_point(v3, rk);
 		a = Poly4_3->evaluate_at_a_point(coeff, v3);
 

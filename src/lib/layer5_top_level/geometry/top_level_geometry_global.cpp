@@ -129,7 +129,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 		fname.assign(fname_base);
 		fname.append("_incma_transitive.csv");
 
-		PA->P->make_incidence_matrix(Orb1, Orb2, Inc, verbose_level);
+		PA->P->Subspaces->make_incidence_matrix(Orb1, Orb2, Inc, verbose_level);
 
 		Fio.int_matrix_write_csv(fname, Inc, Orb1.size(), Orb2.size());
 
@@ -361,7 +361,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 		cout << "top_level_geometry_global::report_decomposition_by_single_automorphism "
 				"before incidence_and_stack_for_type_ij" << endl;
 	}
-	PA->P->incidence_and_stack_for_type_ij(
+	PA->P->Subspaces->incidence_and_stack_for_type_ij(
 		1 /* row_type */, 2 /* col_type */,
 		Inc,
 		Stack,
@@ -439,7 +439,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 		fname.assign(fname_base);
 		fname.append("_incma_cyclic.csv");
 
-		PA->P->make_incidence_matrix(Orb1, Orb2, Inc, verbose_level);
+		PA->P->Subspaces->make_incidence_matrix(Orb1, Orb2, Inc, verbose_level);
 
 		Fio.int_matrix_write_csv(fname, Inc, Orb1.size(), Orb2.size());
 
@@ -486,7 +486,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 				snprintf(str, sizeof(str), "_index_%d.csv", p);
 				fname.append(str);
 
-				PA->P->make_incidence_matrix(Orb1_subgroup, Orb2_subgroup, Inc, verbose_level);
+				PA->P->Subspaces->make_incidence_matrix(Orb1_subgroup, Orb2_subgroup, Inc, verbose_level);
 
 				Fio.int_matrix_write_csv(fname, Inc, Orb1.size(), Orb2.size());
 				FREE_int(Inc);

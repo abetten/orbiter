@@ -70,7 +70,7 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 	if (f_v) {
 		cout << "surface_study::init initializing surface" << endl;
 		}
-	Surf->init(F, verbose_level);
+	Surf->init_surface_domain(F, verbose_level);
 	if (f_v) {
 		cout << "surface_study::init initializing surface done" << endl;
 		}

@@ -137,7 +137,9 @@ void spread_classify::init_basic(
 	}
 
 	if (f_v) {
-		cout << "spread_classify::init_basic searching for projective space object with label " << Descr->projective_space_label << endl;
+		cout << "spread_classify::init_basic searching for "
+				"projective space object with label "
+				<< Descr->projective_space_label << endl;
 	}
 	PA = Get_object_of_projective_space(Descr->projective_space_label);
 
@@ -168,16 +170,18 @@ void spread_classify::init_basic(
 	}
 
 	if (f_v) {
-		cout << "spread_classify::init_basic before SD->init" << endl;
+		cout << "spread_classify::init_basic "
+				"before SD->init_spread_domain" << endl;
 	}
 
-	SD->init(
+	SD->init_spread_domain(
 			PA->F,
 			n, Descr->k,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "spread_classify::init_basic after SD->init" << endl;
+		cout << "spread_classify::init_basic "
+				"after SD->init_spread_domain" << endl;
 	}
 
 
@@ -231,11 +235,13 @@ void spread_classify::init_basic(
 
 
 	if (f_v) {
-		cout << "spread_classify::init_basic before init" << endl;
+		cout << "spread_classify::init_basic "
+				"before init" << endl;
 	}
 	init(SD, PA, verbose_level);
 	if (f_v) {
-		cout << "spread_classify::init_basic after init" << endl;
+		cout << "spread_classify::init_basic "
+				"after init" << endl;
 	}
 
 
@@ -438,8 +444,17 @@ void spread_classify::init(
 		//snprintf(str, sizeof(str), "live_points_q%d", q);
 		//fname_live_points.assign(str);
 
+
+		geometry::three_skew_subspaces *Three_skew_subspaces;
+
+		Three_skew_subspaces = NEW_OBJECT(geometry::three_skew_subspaces);
+
+		Three_skew_subspaces->init(
+				SD->Grass, SD->F, SD->k, SD->n, verbose_level);
+
+
 		R = NEW_OBJECT(recoordinatize);
-		R->init(SD,  // SD->n, SD->k, SD->F, SD->Grass,
+		R->init(Three_skew_subspaces, // SD,  // SD->n, SD->k, SD->F, SD->Grass,
 				A, A2,
 				TRUE /*f_projective*/, Mtx->f_semilinear,
 				callback_incremental_check_function, (void *) this,

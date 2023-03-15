@@ -2810,7 +2810,9 @@ void homogeneous_polynomial_domain::create_ideal(
 				"ideal_point_set_label=" << ideal_point_set_label << endl;
 	}
 
-	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(ideal_point_set_label, Pts, nb_pts, verbose_level);
+	//orbiter_kernel_system::Orbiter->get_lint_vector_from_label(ideal_point_set_label, Pts, nb_pts, verbose_level);
+
+	Get_lint_vector_from_label(ideal_point_set_label, Pts, nb_pts, verbose_level);
 
 	if (f_v) {
 		cout << "polynomial_ring_activity::create_ideal "
@@ -3062,7 +3064,7 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 		cout << "homogeneous_polynomial_domain::evaluate_regular_map" << endl;
 	}
 
-	if (nb_eqns != P->n + 1) {
+	if (nb_eqns != P->Subspaces->n + 1) {
 		cout << "homogeneous_polynomial_domain::evaluate_regular_map nb_eqns != P->n + 1" << endl;
 		exit(1);
 	}
@@ -3073,10 +3075,10 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 	long int i, j;
 	int f_vv = FALSE;
 
-	N_points = P->N_points;
+	N_points = P->Subspaces->N_points;
 	Image_pts = NEW_lint(N_points);
-	v = NEW_int(P->n + 1);
-	w = NEW_int(P->n + 1);
+	v = NEW_int(P->Subspaces->n + 1);
+	w = NEW_int(P->Subspaces->n + 1);
 
 	for (i = 0; i < N_points; i++) {
 
@@ -3093,16 +3095,16 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 
 		if (f_vv) {
 			cout << "homogeneous_polynomial_domain::evaluate_regular_map point " << i << " is ";
-			Int_vec_print(cout, v, P->n + 1);
+			Int_vec_print(cout, v, P->Subspaces->n + 1);
 			cout << endl;
 		}
 
-		for (h = 0; h < P->n + 1; h++) {
+		for (h = 0; h < P->Subspaces->n + 1; h++) {
 			w[h] = evaluate_at_a_point(Coefficient_vector + h * nb_monomials, v);
 		}
 
 
-		if (!Int_vec_is_zero(w, P->n + 1)) {
+		if (!Int_vec_is_zero(w, P->Subspaces->n + 1)) {
 			j = P->rank_point(w);
 		}
 		else {
@@ -3111,7 +3113,7 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 
 		if (f_vv) {
 			cout << "homogeneous_polynomial_domain::evaluate_regular_map maps to ";
-			Int_vec_print(cout, w, P->n + 1);
+			Int_vec_print(cout, w, P->Subspaces->n + 1);
 			cout << " = " << j << endl;
 		}
 

@@ -573,7 +573,7 @@ void create_graph::init(
 				FALSE /* f_without_tables */,
 				FALSE /* f_compute_related_fields */,
 				0);
-		Surf->init(F, verbose_level);
+		Surf->init_surface_domain(F, verbose_level);
 
 		Surf->Schlaefli->make_trihedral_pair_disjointness_graph(Adj, verbose_level);
 		N = 120;

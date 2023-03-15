@@ -211,7 +211,8 @@ public:
 			std::string &level_two_prefix,
 			std::string &level_three_prefix,
 			int verbose_level);
-	void report(std::ostream &ost, int level,
+	void report(
+			std::ostream &ost, int level,
 			semifield_level_two *L2,
 			semifield_lifting *L3,
 			graphics::layered_graph_draw_options *draw_options,

@@ -156,11 +156,12 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/projective_space_of_dimension_three.o \
 		layer1_foundations/geometry/projective_space_plane.o \
 		layer1_foundations/geometry/projective_space_reporting.o \
+		layer1_foundations/geometry/projective_space_subspaces.o \
 		layer1_foundations/geometry/projective_space.o \
 		layer1_foundations/geometry/projective_space2.o \
-		layer1_foundations/geometry/projective_space3.o \
 		layer1_foundations/geometry/spread_domain.o \
 		layer1_foundations/geometry/spread_tables.o \
+		layer1_foundations/geometry/three_skew_subspaces.o \
 		layer1_foundations/geometry/w3q.o \
 		layer1_foundations/geometry_builder/cperm.o \
 		layer1_foundations/geometry_builder/decomposition_with_fuse.o \

@@ -92,7 +92,8 @@ void incidence_structure::check_point_pairs(int verbose_level)
 	FREE_int(Lines);
 }
 
-int incidence_structure::lines_through_two_points(int *lines,
+int incidence_structure::lines_through_two_points(
+		int *lines,
 		int p1, int p2, int verbose_level)
 {
 	int h1, h2, l1, l2, nb;
@@ -122,13 +123,13 @@ void incidence_structure::init_projective_space(
 	}
 	realization_type = INCIDENCE_STRUCTURE_REALIZATION_BY_PROJECTIVE_SPACE;
 	incidence_structure::P = P;
-	nb_rows = P->N_points;
-	nb_cols = P->N_lines;
+	nb_rows = P->Subspaces->N_points;
+	nb_cols = P->Subspaces->N_lines;
 
 	f_rowsums_constant = TRUE;
 	f_colsums_constant = TRUE;
-	r = P->r;
-	k = P->k;
+	r = P->Subspaces->r;
+	k = P->Subspaces->k;
 	nb_lines_on_point = NEW_int(nb_rows);
 	nb_points_on_line = NEW_int(nb_cols);
 	for (i = 0; i < nb_rows; i++) {
@@ -276,7 +277,8 @@ void incidence_structure::init_orthogonal(
 	}
 }
 
-void incidence_structure::init_by_incidences(int m, int n,
+void incidence_structure::init_by_incidences(
+		int m, int n,
 		int nb_inc, int *X, int verbose_level)
 {
 	int *M;
@@ -294,7 +296,8 @@ void incidence_structure::init_by_incidences(int m, int n,
 	FREE_int(M);
 }
 
-void incidence_structure::init_by_R_and_X(int m, int n,
+void incidence_structure::init_by_R_and_X(
+		int m, int n,
 		int *R, int *X, int max_r, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -566,7 +569,8 @@ int incidence_structure::get_ij(int i, int j)
 	exit(1);
 }
 
-int incidence_structure::get_lines_on_point(int *data, int i, int verbose_level)
+int incidence_structure::get_lines_on_point(
+		int *data, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int r;
@@ -597,13 +601,13 @@ int incidence_structure::get_lines_on_point(int *data, int i, int verbose_level)
 		long int *Data;
 		int h;
 
-		Data = NEW_lint(P->r);
-		P->create_lines_on_point(i, Data, verbose_level);
-		for (h = 0; h < P->r; h++) {
+		Data = NEW_lint(P->Subspaces->r);
+		P->Subspaces->create_lines_on_point(i, Data, verbose_level);
+		for (h = 0; h < P->Subspaces->r; h++) {
 			data[h] = Data[h];
 		}
 		FREE_lint(Data);
-		r = P->r;
+		r = P->Subspaces->r;
 	}
 	else {
 		cout << "incidence_structure::get_lines_on_point "
@@ -619,7 +623,8 @@ int incidence_structure::get_lines_on_point(int *data, int i, int verbose_level)
 	return r;
 }
 
-int incidence_structure::get_points_on_line(int *data, int j, int verbose_level)
+int incidence_structure::get_points_on_line(
+		int *data, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int k;
@@ -653,13 +658,13 @@ int incidence_structure::get_points_on_line(int *data, int j, int verbose_level)
 		long int *Data;
 		int h;
 
-		Data = NEW_lint(P->k);
-		P->create_points_on_line(j, Data, 0 /*verbose_level*/);
-		for (h = 0; h < P->k; h++) {
+		Data = NEW_lint(P->Subspaces->k);
+		P->Subspaces->create_points_on_line(j, Data, 0 /*verbose_level*/);
+		for (h = 0; h < P->Subspaces->k; h++) {
 			data[h] = Data[h];
 		}
 		FREE_lint(Data);
-		k = P->k;
+		k = P->Subspaces->k;
 	}
 	else {
 		cout << "incidence_structure::get_points_on_line "
@@ -2723,8 +2728,10 @@ void incidence_structure::latex_it(std::ostream &ost, data_structures::partition
 
 }
 
-void incidence_structure::rearrange(int *&Vi, int &nb_V, 
-	int *&Bj, int &nb_B, int *&R, int *&X, data_structures::partitionstack &P)
+void incidence_structure::rearrange(
+		int *&Vi, int &nb_V,
+	int *&Bj, int &nb_B, int *&R, int *&X,
+	data_structures::partitionstack &P)
 {
 	int *row_classes;
 	int nb_row_classes;

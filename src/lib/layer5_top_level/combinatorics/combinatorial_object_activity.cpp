@@ -117,17 +117,17 @@ void combinatorial_object_activity::perform_activity_geometric_object(int verbos
 
 		int *type;
 
-		type = NEW_int(P->N_lines);
+		type = NEW_int(P->Subspaces->N_lines);
 
 
-		P->line_intersection_type(
+		P->Subspaces->line_intersection_type(
 				GOC->Pts, GOC->nb_pts, type, 0 /* verbose_level */);
 			// type[N_lines]
 
 
 		data_structures::tally T;
 
-		T.init(type, P->N_lines, FALSE, 0);
+		T.init(type, P->Subspaces->N_lines, FALSE, 0);
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_geometric_object line type:" << endl;
@@ -1379,7 +1379,7 @@ void combinatorial_object_activity::line_covering_type(
 			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
 
 
-			P->line_intersection_type_basic_given_a_set_of_lines(
+			P->Subspaces->line_intersection_type_basic_given_a_set_of_lines(
 					the_lines, nb_lines,
 					OwCF->set, OwCF->sz, type, 0 /*verbose_level */);
 
@@ -1455,7 +1455,7 @@ void combinatorial_object_activity::line_type(
 
 		int *type;
 
-		type = NEW_int(P->N_lines);
+		type = NEW_int(P->Subspaces->N_lines);
 
 
 		for (i = 0; i < N; i++) {
@@ -1465,12 +1465,12 @@ void combinatorial_object_activity::line_type(
 			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
 
 
-			P->line_intersection_type(
+			P->Subspaces->line_intersection_type(
 					OwCF->set, OwCF->sz, type, 0 /* verbose_level */);
 				// type[N_lines]
 
 			ost << OwCF->sz;
-			for (h = 0; h < P->N_lines; h++) {
+			for (h = 0; h < P->Subspaces->N_lines; h++) {
 				ost << " " << type[h];
 			}
 			ost << endl;
@@ -1478,7 +1478,7 @@ void combinatorial_object_activity::line_type(
 #if 1
 			data_structures::tally T;
 
-			T.init(type, P->N_lines, FALSE, 0);
+			T.init(type, P->Subspaces->N_lines, FALSE, 0);
 
 			if (f_v) {
 				cout << "combinatorial_object_activity::perform_activity_GOC line type:" << endl;

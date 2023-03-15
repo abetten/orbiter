@@ -732,7 +732,7 @@ public:
 	cubic_surfaces_and_arcs::classify_trihedral_pairs
 		*Classify_trihedral_pairs;
 
-	geometry::spread_domain *SD;
+	geometry::three_skew_subspaces *Three_skew_subspaces;
 	spreads::recoordinatize *Recoordinatize;
 	long int *regulus; // [regulus_size]
 	int regulus_size; // q + 1
@@ -755,16 +755,17 @@ public:
 		int *Polarity36,
 		std::vector<std::vector<long int> > &Double_sixes,
 		int verbose_level);
+#if 0
 	void create_regulus_and_opposite_regulus(
 		long int *three_skew_lines, long int *&regulus,
 		long int *&opp_regulus, int &regulus_sz,
 		int verbose_level);
-	int create_double_six_safely(
-		long int *five_lines, long int transversal_line,
-		long int *double_six, int verbose_level);
+#endif
+#if 0
 	int create_double_six_from_five_lines_with_a_common_transversal(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);
+#endif
 	void report_basics(std::ostream &ost);
 	void report_double_triplets(std::ostream &ost);
 	void report_double_triplets_detailed(std::ostream &ost);

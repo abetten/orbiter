@@ -477,7 +477,7 @@ void object_with_canonical_form::init_packing_from_set(
 	}
 	//object_with_canonical_form::P = P;
 	type = t_PAC;
-	q = P->q;
+	q = P->Subspaces->q;
 	size_of_spread = q * q + 1;
 	size_of_packing = q * q + q + 1;
 	if (sz != size_of_packing * size_of_spread) {
@@ -487,7 +487,7 @@ void object_with_canonical_form::init_packing_from_set(
 	}
 	SoS = NEW_OBJECT(data_structures::set_of_sets);
 
-	SoS->init_basic_constant_size(P->N_lines, 
+	SoS->init_basic_constant_size(P->Subspaces->N_lines,
 		size_of_packing /* nb_sets */, 
 		size_of_spread /* constant_size */, 
 		0 /* verbose_level */);
@@ -959,11 +959,11 @@ void object_with_canonical_form::encoding_size_point_set(
 
 	int nb_rows0, nb_cols0;
 
-	nb_rows0 = P->N_points;
-	nb_cols0 = P->N_lines;
+	nb_rows0 = P->Subspaces->N_points;
+	nb_cols0 = P->Subspaces->N_lines;
 
-	nb_rows0 += P->N_lines;
-	nb_cols0 += P->Nb_subspaces[2];
+	nb_rows0 += P->Subspaces->N_lines;
+	nb_cols0 += P->Subspaces->Nb_subspaces[2];
 
 
 	nb_rows = nb_rows0 + 1;
@@ -1000,8 +1000,8 @@ void object_with_canonical_form::encoding_size_line_set(
 	}
 
 
-	nb_rows = P->N_points + 1;
-	nb_cols = P->N_lines + 1;
+	nb_rows = P->Subspaces->N_points + 1;
+	nb_cols = P->Subspaces->N_lines + 1;
 
 }
 
@@ -1016,8 +1016,8 @@ void object_with_canonical_form::encoding_size_points_and_lines(
 	}
 
 
-	nb_rows = P->N_points + 1;
-	nb_cols = P->N_lines + 1;
+	nb_rows = P->Subspaces->N_points + 1;
+	nb_cols = P->Subspaces->N_lines + 1;
 
 }
 
@@ -1031,8 +1031,8 @@ void object_with_canonical_form::encoding_size_packing(
 		cout << "object_with_canonical_form::encoding_size_packing" << endl;
 	}
 
-	nb_rows = P->N_points + SoS->nb_sets;
-	nb_cols = P->N_lines + 1;
+	nb_rows = P->Subspaces->N_points + SoS->nb_sets;
+	nb_cols = P->Subspaces->N_lines + 1;
 
 }
 
@@ -1193,12 +1193,12 @@ void object_with_canonical_form::encode_point_set(
 	int nb_rows0, nb_cols0;
 	int nb_rows, nb_cols;
 
-	nb_rows0 = P->N_points;
-	nb_cols0 = P->N_lines;
+	nb_rows0 = P->Subspaces->N_points;
+	nb_cols0 = P->Subspaces->N_lines;
 
-	if (P->n >= 3) {
-		nb_rows0 += P->N_lines;
-		nb_cols0 += P->Nb_subspaces[2];
+	if (P->Subspaces->n >= 3) {
+		nb_rows0 += P->Subspaces->N_lines;
+		nb_cols0 += P->Subspaces->Nb_subspaces[2];
 	}
 
 	nb_rows = nb_rows0 + 1;
@@ -1211,7 +1211,7 @@ void object_with_canonical_form::encode_point_set(
 
 	//Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
 
-	if (P->n >= 3) {
+	if (P->Subspaces->n >= 3) {
 		Enc->extended_incidence_matrix_projective_space_top_left(P, verbose_level);
 	}
 	else {
@@ -1239,10 +1239,10 @@ void object_with_canonical_form::encode_point_set(
 				cout << "h=" << h << " idx=" << idx << " f=" << f
 						<< " l=" << l << " i=" << i << endl;
 			}
-			if (i > P->N_points) {
+			if (i > P->Subspaces->N_points) {
 				cout << "object_with_canonical_form::encode_point_set i > P->N_points" << endl;
 				cout << "i = " << i << endl;
-				cout << "P->N_points = " << P->N_points << endl;
+				cout << "P->N_points = " << P->Subspaces->N_points << endl;
 				cout << "h=" << h << " idx=" << idx << " f=" << f
 						<< " l=" << l << " i=" << i << endl;
 				exit(1);
@@ -1264,11 +1264,11 @@ void object_with_canonical_form::encode_point_set(
 	}
 
 
-	Enc->partition[P->N_points - 1] = 0;
+	Enc->partition[P->Subspaces->N_points - 1] = 0;
 	Enc->partition[nb_rows0 - 1] = 0;
 	Enc->partition[nb_rows - 1] = 0;
 
-	Enc->partition[nb_rows + P->N_lines - 1] = 0;
+	Enc->partition[nb_rows + P->Subspaces->N_lines - 1] = 0;
 	Enc->partition[nb_rows + Enc->nb_cols0 - 1] = 0;
 
 	for (j = 0; j < C->second_nb_types; j++) {
@@ -1300,8 +1300,8 @@ void object_with_canonical_form::encode_line_set(
 	int nb_rows0, nb_cols0;
 	int nb_rows, nb_cols;
 
-	nb_rows0 = P->N_points;
-	nb_cols0 = P->N_lines;
+	nb_rows0 = P->Subspaces->N_points;
+	nb_cols0 = P->Subspaces->N_lines;
 
 	nb_rows = nb_rows0 + 1;
 	nb_cols = nb_cols0 + 1;
@@ -1359,8 +1359,8 @@ void object_with_canonical_form::encode_points_and_lines(
 	int nb_rows0, nb_cols0;
 	int nb_rows, nb_cols;
 
-	nb_rows0 = P->N_points;
-	nb_cols0 = P->N_lines;
+	nb_rows0 = P->Subspaces->N_points;
+	nb_cols0 = P->Subspaces->N_lines;
 
 	nb_rows = nb_rows0 + 1;
 	nb_cols = nb_cols0 + 1;
@@ -1427,8 +1427,8 @@ void object_with_canonical_form::encode_packing(
 	int nb_rows0, nb_cols0;
 	int nb_rows, nb_cols;
 
-	nb_rows0 = P->N_points;
-	nb_cols0 = P->N_lines;
+	nb_rows0 = P->Subspaces->N_points;
+	nb_cols0 = P->Subspaces->N_lines;
 
 	nb_rows = nb_rows0 + SoS->nb_sets;
 	nb_cols = nb_cols0 + 1;
@@ -1663,8 +1663,8 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PTS split1" << endl;
 		}
 		Stack->subset_continguous(
-				Inc->nb_points() + P->N_lines,
-				Enc->nb_cols - P->N_lines);
+				Inc->nb_points() + P->Subspaces->N_lines,
+				Enc->nb_cols - P->Subspaces->N_lines);
 		Stack->split_cell(0);
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PTS split2" << endl;
@@ -1683,11 +1683,11 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_LNS" << endl;
 		}
-		Stack->subset_continguous(P->N_points, 1);
+		Stack->subset_continguous(P->Subspaces->N_points, 1);
 		Stack->split_cell(0);
 		Stack->subset_continguous(
-				Inc->nb_points() + P->N_lines,
-				Enc->nb_cols - P->N_lines);
+				Inc->nb_points() + P->Subspaces->N_lines,
+				Enc->nb_cols - P->Subspaces->N_lines);
 		Stack->split_cell(0);
 
 	}
@@ -1697,11 +1697,11 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PNL" << endl;
 		}
-		Stack->subset_continguous(P->N_points, 1);
+		Stack->subset_continguous(P->Subspaces->N_points, 1);
 		Stack->split_cell(0);
 		Stack->subset_continguous(
-				Inc->nb_points() + P->N_lines,
-				Enc->nb_cols - P->N_lines);
+				Inc->nb_points() + P->Subspaces->N_lines,
+				Enc->nb_cols - P->Subspaces->N_lines);
 		Stack->split_cell(0);
 
 	}
@@ -1711,11 +1711,11 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PAC" << endl;
 		}
-		Stack->subset_continguous(P->N_points, Enc->nb_rows - P->N_points);
+		Stack->subset_continguous(P->Subspaces->N_points, Enc->nb_rows - P->Subspaces->N_points);
 		Stack->split_cell(0);
 		Stack->subset_continguous(
-				Inc->nb_points() + P->N_lines,
-				Enc->nb_cols - P->N_lines);
+				Inc->nb_points() + P->Subspaces->N_lines,
+				Enc->nb_cols - P->Subspaces->N_lines);
 		Stack->split_cell(0);
 
 	}

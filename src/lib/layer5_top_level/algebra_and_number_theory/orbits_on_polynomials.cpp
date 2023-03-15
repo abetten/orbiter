@@ -536,9 +536,9 @@ void orbits_on_polynomials::report_detailed_list(
 		//int h, pt, orbit_idx;
 
 		A->group_order(go);
-		Pts = NEW_lint(P->N_points);
+		Pts = NEW_lint(P->Subspaces->N_points);
 		coeff = NEW_int(HPD->get_nb_monomials());
-		line_type = NEW_int(P->N_lines);
+		line_type = NEW_int(P->Subspaces->N_lines);
 		Kernel = NEW_int(HPD->get_nb_monomials() * HPD->get_nb_monomials());
 		v = NEW_int(n);
 
@@ -584,14 +584,14 @@ void orbits_on_polynomials::report_detailed_list(
 			F->Io->display_table_of_projective_points(
 					ost, Pts, nb_pts, n);
 
-			P->line_intersection_type(Pts, nb_pts,
+			P->Subspaces->line_intersection_type(Pts, nb_pts,
 					line_type, 0 /* verbose_level */);
 
 			ost << "The line type is: ";
 
 			stringstream sstr;
 			Int_vec_print_classified_str(sstr,
-					line_type, P->N_lines,
+					line_type, P->Subspaces->N_lines,
 					TRUE /* f_backwards*/);
 			string s = sstr.str();
 			ost << "$" << s << "$\\\\" << endl;

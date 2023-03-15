@@ -62,7 +62,7 @@ void orthogonal_space_with_action::init(
 			label_txt,
 			label_tex,
 			Descr->epsilon, Descr->n, Descr->F->q,
-			verbose_level - 1);
+			verbose_level - 2);
 
 	if (Descr->f_label_txt) {
 		label_txt.assign(Descr->label_txt);
@@ -77,7 +77,7 @@ void orthogonal_space_with_action::init(
 		cout << "orthogonal_space_with_action::init "
 				"before O->init" << endl;
 	}
-	O->init(Descr->epsilon, Descr->n, Descr->F, verbose_level);
+	O->init(Descr->epsilon, Descr->n, Descr->F, verbose_level - 2);
 	if (f_v) {
 		cout << "orthogonal_space_with_action::init "
 				"after O->init" << endl;
@@ -90,7 +90,7 @@ void orthogonal_space_with_action::init(
 			cout << "orthogonal_space_with_action::init "
 					"before init_group" << endl;
 		}
-		init_group(verbose_level);
+		init_group(verbose_level - 2);
 		if (f_v) {
 			cout << "orthogonal_space_with_action::init "
 					"after init_group" << endl;
@@ -115,7 +115,7 @@ void orthogonal_space_with_action::init(
 			cout << "orthogonal_space_with_action::init "
 					"before Blt_Set_domain->init" << endl;
 		}
-		Blt_Set_domain->init(O, verbose_level);
+		Blt_Set_domain->init(O, verbose_level - 2);
 		if (f_v) {
 			cout << "orthogonal_space_with_action::init "
 					"after Blt_Set_domain->init" << endl;

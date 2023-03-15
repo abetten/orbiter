@@ -37,7 +37,8 @@ surface_with_action::surface_with_action()
 
 	Classify_trihedral_pairs = NULL;
 
-	SD = NULL;
+	//SD = NULL;
+	Three_skew_subspaces = NULL;
 	Recoordinatize = NULL;
 	regulus = NULL;
 	regulus_size = 0;
@@ -57,8 +58,13 @@ surface_with_action::~surface_with_action()
 	if (Classify_trihedral_pairs) {
 		FREE_OBJECT(Classify_trihedral_pairs);
 	}
+#if 0
 	if (SD) {
 		FREE_OBJECT(SD);
+	}
+#endif
+	if (Three_skew_subspaces) {
+		FREE_OBJECT(Three_skew_subspaces);
 	}
 	if (Recoordinatize) {
 		FREE_OBJECT(Recoordinatize);
@@ -166,20 +172,34 @@ void surface_with_action::init(
 
 	if (f_recoordinatize) {
 
+#if 0
 		SD = NEW_OBJECT(geometry::spread_domain);
 
 		if (f_v) {
-			cout << "surface_with_action::init before SD->init" << endl;
+			cout << "surface_with_action::init "
+					"before SD->init_spread_domain" << endl;
 		}
 
-		SD->init(
+		SD->init_spread_domain(
 				PA->F,
 				4 /*n*/, 2 /* k */,
 				verbose_level - 1);
 
 		if (f_v) {
-			cout << "surface_with_action::init after SD->init" << endl;
+			cout << "surface_with_action::init "
+					"after SD->init_spread_domain" << endl;
 		}
+#endif
+
+		//geometry::three_skew_subspaces *Three_skew_subspaces;
+
+		Three_skew_subspaces = NEW_OBJECT(geometry::three_skew_subspaces);
+
+		Three_skew_subspaces->init(
+				PA->P->Subspaces->Grass_lines,
+				PA->F,
+				2 /*k*/, 4 /*n*/,
+				verbose_level);
 
 
 
@@ -190,7 +210,7 @@ void surface_with_action::init(
 					"before Recoordinatize->init" << endl;
 		}
 		Recoordinatize->init(
-				SD,
+				Three_skew_subspaces, //SD,
 				A, A2,
 			TRUE /* f_projective */, f_semilinear,
 			NULL /*int (*check_function_incremental)(int len,
@@ -213,8 +233,8 @@ void surface_with_action::init(
 		cout << "surface_with_action::init before "
 				"Surf->Gr->line_regulus_in_PG_3_q" << endl;
 	}
-	Surf->Gr->line_regulus_in_PG_3_q(regulus,
-			regulus_size, FALSE /* f_opposite */,
+	Surf->Gr->line_regulus_in_PG_3_q(
+			regulus, regulus_size, FALSE /* f_opposite */,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init after "
@@ -224,79 +244,6 @@ void surface_with_action::init(
 	if (f_v) {
 		cout << "surface_with_action::init done" << endl;
 	}
-}
-
-int surface_with_action::create_double_six_safely(
-	long int *five_lines, long int transversal_line, long int *double_six,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	long int double_six1[12];
-	long int double_six2[12];
-	int r1, r2, c;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely" << endl;
-		cout << "five_lines=";
-		Lint_vec_print(cout, five_lines, 5);
-		cout << " transversal_line=" << transversal_line << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely "
-				"before create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
-	}
-	r1 = create_double_six_from_five_lines_with_a_common_transversal(
-		five_lines, transversal_line, double_six1,
-		0 /* verbose_level */);
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely "
-				"after create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely "
-				"before create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
-	}
-	r2 = Surf->create_double_six_from_five_lines_with_a_common_transversal(
-			five_lines, double_six2,
-			0 /* verbose_level */);
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely "
-				"after create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
-	}
-
-	if (r1 && !r2) {
-		cout << "surface_with_action::create_double_six_safely "
-				"r1 && !r2" << endl;
-		exit(1);
-	}
-	if (!r1 && r2) {
-		cout << "surface_with_action::create_double_six_safely "
-				"!r1 && r2" << endl;
-		exit(1);
-	}
-	c = Sorting.lint_vec_compare(double_six1, double_six2, 12);
-	if (!r1) {
-		return FALSE;
-	}
-	if (c) {
-		cout << "surface_with_action::create_double_six_safely "
-				"the double sixes differ" << endl;
-		cout << "double six 1: ";
-		Lint_vec_print(cout, double_six1, 12);
-		cout << endl;
-		cout << "double six 2: ";
-		Lint_vec_print(cout, double_six2, 12);
-		cout << endl;
-		exit(1);
-	}
-	Lint_vec_copy(double_six1, double_six, 12);
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely done" << endl;
-	}
-	return TRUE;
 }
 
 
@@ -375,10 +322,18 @@ void surface_with_action::complete_skew_hexagon(
 		Int_matrix_print(Forbidden_points, 6, 4);
 	}
 
-	create_regulus_and_opposite_regulus(
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon "
+				"before create_regulus_and_opposite_regulus" << endl;
+	}
+	Recoordinatize->Three_skew_subspaces->create_regulus_and_opposite_regulus(
 			three_skew_lines, regulus_a123,
 			opp_regulus_a123, regulus_size,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon "
+				"after create_regulus_and_opposite_regulus" << endl;
+	}
 
 
 	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
@@ -430,7 +385,8 @@ void surface_with_action::complete_skew_hexagon(
 
 		A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
-		b6_image = A2->Group_element->element_image_of(b6,
+		b6_image = A2->Group_element->element_image_of(
+				b6,
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
 		if (f_v) {
@@ -454,9 +410,17 @@ void surface_with_action::complete_skew_hexagon(
 
 		int sz;
 
-		create_regulus_and_opposite_regulus(
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon "
+					"before create_regulus_and_opposite_regulus" << endl;
+		}
+		Recoordinatize->Three_skew_subspaces->create_regulus_and_opposite_regulus(
 				three_skew_lines, regulus_b123, opp_regulus_b123, sz,
 				verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon "
+					"after create_regulus_and_opposite_regulus" << endl;
+		}
 
 
 
@@ -492,7 +456,8 @@ void surface_with_action::complete_skew_hexagon(
 		for (j = 0; j < nb_pts; j++) {
 			v[0] = Pts4[j * 2 + 0];
 			v[1] = Pts4[j * 2 + 1];
-			F->Linear_algebra->mult_matrix_matrix(v,
+			F->Linear_algebra->mult_matrix_matrix(
+					v,
 					Basis,
 					w + j * 4,
 					1, 2, 4,
@@ -512,7 +477,8 @@ void surface_with_action::complete_skew_hexagon(
 					"does not lie on the quadric" << endl;
 			exit(1);
 		}
-		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w + 4);
+		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(
+				w + 4);
 		if (u) {
 			cout << "the second secant point "
 					"does not lie on the quadric" << endl;
@@ -699,9 +665,17 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		Int_matrix_print(Forbidden_points, 6, 4);
 	}
 
-	create_regulus_and_opposite_regulus(
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+				"before create_regulus_and_opposite_regulus" << endl;
+	}
+	Recoordinatize->Three_skew_subspaces->create_regulus_and_opposite_regulus(
 			three_skew_lines, regulus_a123, opp_regulus_a123, regulus_size,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+				"after create_regulus_and_opposite_regulus" << endl;
+	}
 
 
 	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
@@ -781,9 +755,17 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 
 		int sz;
 
-		create_regulus_and_opposite_regulus(
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+					"before create_regulus_and_opposite_regulus" << endl;
+		}
+		Recoordinatize->Three_skew_subspaces->create_regulus_and_opposite_regulus(
 				three_skew_lines, regulus_b123, opp_regulus_b123, sz,
 				verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+					"after create_regulus_and_opposite_regulus" << endl;
+		}
 
 
 
@@ -963,6 +945,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 	}
 }
 
+#if 0
 void surface_with_action::create_regulus_and_opposite_regulus(
 	long int *three_skew_lines, long int *&regulus,
 	long int *&opp_regulus, int &regulus_size,
@@ -1020,13 +1003,14 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 			three_skew_lines[2],
 			verbose_level - 2);
 
+
 	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
-	Recoordinatize->Grass->line_regulus_in_PG_3_q(
+	Recoordinatize->Three_skew_subspaces->Grass->line_regulus_in_PG_3_q(
 			regulus, regulus_size, FALSE /* f_opposite */,
 			verbose_level);
 
-	Recoordinatize->Grass->line_regulus_in_PG_3_q(
+	Recoordinatize->Three_skew_subspaces->Grass->line_regulus_in_PG_3_q(
 			opp_regulus, sz, TRUE /* f_opposite */,
 			verbose_level);
 
@@ -1053,8 +1037,10 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 		cout << "surface_with_action::create_regulus_and_opposite_regulus done" << endl;
 	}
 }
+#endif
 
 
+#if 0
 int surface_with_action::create_double_six_from_five_lines_with_a_common_transversal(
 	long int *five_lines, long int transversal_line, long int *double_six,
 	int verbose_level)
@@ -1144,6 +1130,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	// let b_i be the unique second transversal:
 	
 	nb_subsets = Combi.int_n_choose_k(5, 4);
+		// 5 choose 4 is of course 5.
 
 	for (rk = 0; rk < nb_subsets; rk++) {
 
@@ -1187,15 +1174,19 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 					<< " after do_recoordinatize" << endl;
 		}
 
-		A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
+		A->Group_element->element_invert(
+				Recoordinatize->Elt, Elt1, 0);
 
 
-		ai4image = A2->Group_element->element_image_of(four_lines[3],
-				Recoordinatize->Elt, 0 /* verbose_level */);
+		ai4image = A2->Group_element->element_image_of(
+				four_lines[3],
+				Recoordinatize->Elt,
+				0 /* verbose_level */);
 
 
 		Q = A->Group_element->element_image_of(P4,
-				Recoordinatize->Elt, 0 /* verbose_level */);
+				Recoordinatize->Elt,
+				0 /* verbose_level */);
 		if (f_vv) {
 			cout << "ai4image = " << ai4image << " Q=" << Q << endl;
 		}
@@ -1209,7 +1200,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 
 
-		Surf->Gr->unrank_lint_here(L, ai4image, 0 /* verbose_level */);
+		Surf->Gr->unrank_lint_here(
+				L, ai4image, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "before F->adjust_basis" << endl;
 			cout << "L=" << endl;
@@ -1242,7 +1234,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		for (a = 0; a < F->q; a++) {
 			v[0] = a;
 			v[1] = 1;
-			F->Linear_algebra->mult_matrix_matrix(v, L, w, 1, 2, 4,
+			F->Linear_algebra->mult_matrix_matrix(
+					v, L, w, 1, 2, 4,
 					0 /* verbose_level */);
 			//rk = Surf->rank_point(w);
 
@@ -1280,8 +1273,10 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 		
 		// test that the line is not a line of the quadric:
-		F->Linear_algebra->add_vector(L, w, pt_coord, 4);
-		b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(pt_coord);
+		F->Linear_algebra->add_vector(
+				L, w, pt_coord, 4);
+		b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(
+				pt_coord);
 		if (b == 0) {
 			if (f_v) {
 				cout << "The line lies in the quadric, "
@@ -1326,13 +1321,16 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		// Let line3 be the intersection of pi1 and pi2:
 		if (f_v) {
 			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
-					"subset " << rk << " / " << nb_subsets << " before intersect_subspaces" << endl;
+					"subset " << rk << " / " << nb_subsets
+					<< " before intersect_subspaces" << endl;
 		}
-		F->Linear_algebra->intersect_subspaces(4, 3, pi1, 3, pi2,
+		F->Linear_algebra->intersect_subspaces(
+				4, 3, pi1, 3, pi2,
 			d, M, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
-					"subset " << rk << " / " << nb_subsets << " after intersect_subspaces" << endl;
+					"subset " << rk << " / " << nb_subsets
+					<< " after intersect_subspaces" << endl;
 		}
 		if (d != 2) {
 			if (f_v) {
@@ -1344,7 +1342,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		line3 = Surf->rank_line(M);
 
 		// Map line3 back to get line4 = b_i:
-		line4 = A2->Group_element->element_image_of(line3, Elt1, 0 /* verbose_level */);
+		line4 = A2->Group_element->element_image_of(
+				line3, Elt1, 0 /* verbose_level */);
 		
 		double_six[10 - rk] = line4; // fill in b_i
 	} // next rk
@@ -1368,21 +1367,28 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
 				"before do_recoordinatize" << endl;
 	}
-	Recoordinatize->do_recoordinatize(b1, b2, b3, verbose_level - 2);
+	Recoordinatize->do_recoordinatize(
+			b1, b2, b3, verbose_level - 2);
 	if (f_vv) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
 				"after do_recoordinatize" << endl;
 	}
 
-	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
+	A->Group_element->element_invert(
+			Recoordinatize->Elt, Elt1, 0);
 
 	// map b4 and b5:
-	image[0] = A2->Group_element->element_image_of(b4, Recoordinatize->Elt, 0 /* verbose_level */);
-	image[1] = A2->Group_element->element_image_of(b5, Recoordinatize->Elt, 0 /* verbose_level */);
+	image[0] = A2->Group_element->element_image_of(
+			b4, Recoordinatize->Elt, 0 /* verbose_level */);
+	image[1] = A2->Group_element->element_image_of(
+			b5, Recoordinatize->Elt, 0 /* verbose_level */);
 	
 	nb_pts = 0;
 	for (h = 0; h < 2; h++) {
-		Surf->Gr->unrank_lint_here(L, image[h], 0 /* verbose_level */);
+
+		Surf->Gr->unrank_lint_here(
+				L, image[h], 0 /* verbose_level */);
+
 		for (a = 0; a < F->q + 1; a++) {
 			F->Projective_space_basic->PG_element_unrank_modified(
 					v, 1, 2, a);
@@ -1419,7 +1425,10 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	line3 = -1;
 	for (h = 0; h < 2; h++) {
 		for (k = 0; k < 2; k++) {
-			F->Linear_algebra->add_vector(pt_coord + h * 4, pt_coord + (2 + k) * 4, w, 4);
+
+			F->Linear_algebra->add_vector(
+					pt_coord + h * 4, pt_coord + (2 + k) * 4, w, 4);
+
 			b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (b == 0) {
 				if (f_vv) {
@@ -1430,7 +1439,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				Int_vec_copy(pt_coord + (2 + k) * 4, L + 4, 4);
 				line3 = Surf->rank_line(L);
 
-				if (!Surf->P->test_if_lines_are_skew(ell0,
+				if (!Surf->P->Solid->test_if_lines_are_skew(
+						ell0,
 						line3, 0 /* verbose_level */)) {
 					if (f_vv) {
 						cout << "The line intersects ell_0, so we are good" << endl;
@@ -1455,7 +1465,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		exit(1);
 	}
 	// Map line3 back to get line4 = a_6:
-	line4 = A2->Group_element->element_image_of(line3, Elt1, 0 /* verbose_level */);
+	line4 = A2->Group_element->element_image_of(
+			line3, Elt1, 0 /* verbose_level */);
 	double_six[5] = line4; // fill in a_6
 
 	if (f_v) {
@@ -1463,7 +1474,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	}
 	return TRUE;
 }
-
+#endif
 
 
 

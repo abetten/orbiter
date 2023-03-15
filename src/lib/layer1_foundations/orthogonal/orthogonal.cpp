@@ -150,6 +150,7 @@ void orthogonal::init(
 
 	if (f_v) {
 		cout << "orthogonal::init" << endl;
+		cout << "orthogonal::init epsilon=" << epsilon << " n=" << n << endl;
 	}
 
 	Quadratic_form = NEW_OBJECT(quadratic_form);
@@ -551,13 +552,33 @@ int orthogonal::evaluate_bilinear_form_by_rank(int i, int j)
 }
 
 void orthogonal::points_on_line_by_line_rank(
-		long int line_rk, long int *line,
+		long int line_rk, long int *pts_on_line,
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal::points_on_line_by_line_rank" << endl;
+	}
 	long int p1, p2;
 	
-	Hyperbolic_pair->unrank_line(p1, p2, line_rk, verbose_level);
-	points_on_line(p1, p2, line, verbose_level);
+	if (f_v) {
+		cout << "orthogonal::points_on_line_by_line_rank before Hyperbolic_pair->unrank_line" << endl;
+	}
+	Hyperbolic_pair->unrank_line(p1, p2, line_rk, verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal::points_on_line_by_line_rank after Hyperbolic_pair->unrank_line" << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal::points_on_line_by_line_rank before points_on_line" << endl;
+	}
+	points_on_line(p1, p2, pts_on_line, verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal::points_on_line_by_line_rank after points_on_line" << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal::points_on_line_by_line_rank done" << endl;
+	}
 }
 
 void orthogonal::points_on_line(
@@ -565,7 +586,7 @@ void orthogonal::points_on_line(
 		long int *line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = FALSE; // (verbose_level >= 2);
 	int *v1, *v2, *v3;
 	int coeff[2], t, i, a, b;
 	
@@ -587,8 +608,16 @@ void orthogonal::points_on_line(
 		cout << endl;
 	}
 	for (t = 0; t <= Quadratic_form->q; t++) {
+		if (f_vv) {
+			cout << "orthogonal::points_on_line t=" << t << " / " << Quadratic_form->q + 1 << endl;
+		}
 		F->Projective_space_basic->PG_element_unrank_modified(
 				coeff, 1, 2, t);
+		if (f_vv) {
+			cout << "orthogonal::points_on_line coeff=";
+			Int_vec_print(cout, coeff, 2);
+			cout << endl;
+		}
 		for (i = 0; i < Quadratic_form->n; i++) {
 			a = F->mult(coeff[0], v1[i]);
 			b = F->mult(coeff[1], v2[i]);
@@ -603,13 +632,13 @@ void orthogonal::points_on_line(
 		}
 		normalize_point(v3, 1);
 		if (f_vv) {
-			cout << "orthogonal::points_on_line normalized:";
+			cout << "orthogonal::points_on_line after normalize_point v3=";
 			Int_vec_print(cout, v3, Quadratic_form->n);
 			cout << endl;
 		}
 		line[t] = Hyperbolic_pair->rank_point(v3, 1, verbose_level - 1);
 		if (f_vv) {
-			cout << "orthogonal::points_on_line=" << line[t] << endl;
+			cout << "orthogonal::points_on_line rank of point is " << line[t] << endl;
 		}
 	}
 	if (f_v) {
@@ -1156,9 +1185,10 @@ void orthogonal::Gauss_step(int *v1, int *v2, int len, int idx)
 void orthogonal::perp(long int pt,
 		long int *Perp_without_pt, int &sz,
 		int verbose_level)
+// Perp_without_pt needs to be of size [Hyperbolic_pair->alpha * (Quadratic_form->q + 1)]
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int i, j;
 	data_structures::sorting Sorting;
 	
@@ -1174,7 +1204,7 @@ void orthogonal::perp(long int pt,
 	if (f_v) {
 		cout << "orthogonal::perp after lines_on_point_by_line_rank" << endl;
 	}
-	if (FALSE) {
+	if (f_vv) {
 		cout << "orthogonal::perp line_pencil=";
 		for (i = 0; i < Hyperbolic_pair->alpha; i++) {
 			cout << i << " : " << line_pencil[i] << endl;
@@ -1188,11 +1218,24 @@ void orthogonal::perp(long int pt,
 		cout << "orthogonal::perp before points_on_line_by_line_rank" << endl;
 	}
 	for (i = 0; i < Hyperbolic_pair->alpha; i++) {
-		points_on_line_by_line_rank(line_pencil[i],
+		if (f_vv) {
+			cout << "orthogonal::perp i=" <<i << " / " << Hyperbolic_pair->alpha << endl;
+		}
+		if (f_vv) {
+			cout << "orthogonal::perp line_pencil[i]=" << line_pencil[i] << endl;
+		}
+		if (f_vv) {
+			cout << "orthogonal::perp before points_on_line_by_line_rank" << endl;
+		}
+		points_on_line_by_line_rank(
+				line_pencil[i],
 				Perp1 + i * (Quadratic_form->q + 1), 0 /* verbose_level */);
+		if (f_vv) {
+			cout << "orthogonal::perp after points_on_line_by_line_rank" << endl;
+		}
 	}
 
-	if (FALSE) {
+	if (f_vv) {
 		cout << "orthogonal::perp points collinear "
 				"with pt " << pt << ":" << endl;
 		for (i = 0; i < Hyperbolic_pair->alpha; i++) {
@@ -1201,13 +1244,22 @@ void orthogonal::perp(long int pt,
 						<< " : " << Perp1[i * (Quadratic_form->q + 1) + j] << endl;
 			}
 		}
-		Lint_matrix_print(Perp1, Hyperbolic_pair->alpha, Quadratic_form->q + 1);
+		Lint_matrix_print(Perp1,
+				Hyperbolic_pair->alpha, Quadratic_form->q + 1);
 	}
 
-	Sorting.lint_vec_heapsort(Perp1, Hyperbolic_pair->alpha * (Quadratic_form->q + 1));
-	if (FALSE) {
+	if (f_v) {
+		cout << "orthogonal::perp before sorting" << endl;
+	}
+	Sorting.lint_vec_heapsort(Perp1,
+			Hyperbolic_pair->alpha * (Quadratic_form->q + 1));
+	if (f_v) {
+		cout << "orthogonal::perp after sorting" << endl;
+	}
+	if (f_vv) {
 		cout << "orthogonal::perp after sorting:" << endl;
-		Lint_vec_print(cout, Perp1, Hyperbolic_pair->alpha * (Quadratic_form->q + 1));
+		Lint_vec_print(cout, Perp1,
+				Hyperbolic_pair->alpha * (Quadratic_form->q + 1));
 		cout << endl;
 	}
 
@@ -1218,13 +1270,26 @@ void orthogonal::perp(long int pt,
 		}
 	}
 	sz = j;
+	if (f_v) {
+		cout << "orthogonal::perp after removing "
+				"pt, sz = " << sz << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal::perp before sorting" << endl;
+	}
 	Sorting.lint_vec_heapsort(Perp1, sz);
-	if (FALSE) {
+	if (f_v) {
+		cout << "orthogonal::perp after sorting" << endl;
+	}
+	if (f_vv) {
 		cout << "orthogonal::perp after removing "
 				"pt and sorting:" << endl;
 		Lint_vec_print(cout, Perp1, sz);
 		cout << endl;
 		cout << "sz=" << sz << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal::perp before copying to output array" << endl;
 	}
 	Lint_vec_copy(Perp1, Perp_without_pt, sz);
 
@@ -1267,6 +1332,7 @@ void orthogonal::perp_of_two_points(long int pt1,
 void orthogonal::perp_of_k_points(long int *pts,
 		int nb_pts,
 		long int *&Perp, int &sz, int verbose_level)
+// requires k >= 2
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

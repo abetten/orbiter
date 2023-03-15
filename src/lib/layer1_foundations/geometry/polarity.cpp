@@ -64,36 +64,36 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 		cout << "polarity::init_standard_polarity" << endl;
 	}
 	polarity::P = P;
-	n = P->n;
+	n = P->Subspaces->n;
 	d = n + 1;
-	N_points = P->N_points;
+	N_points = P->Subspaces->N_points;
 
 	Point_to_hyperplane = NEW_int(N_points);
 	Hyperplane_to_point = NEW_int(N_points);
 
 	if (d == 4) {
-		Line_to_line = NEW_lint(P->N_lines);
+		Line_to_line = NEW_lint(P->Subspaces->N_lines);
 	}
 	A = NEW_int(d * d);
 
-	for (i = 0; i < P->N_points; i++) {
-		P->Grass_hyperplanes->unrank_lint(i, 0 /*verbose_level - 4*/);
+	for (i = 0; i < P->Subspaces->N_points; i++) {
+		P->Subspaces->Grass_hyperplanes->unrank_lint(i, 0 /*verbose_level - 4*/);
 		for (j = 0; j < n * d; j++) {
-			A[j] = P->Grass_hyperplanes->M[j];
+			A[j] = P->Subspaces->Grass_hyperplanes->M[j];
 		}
 		if (f_vv) {
 			cout << "hyperplane " << i << ":" << endl;
 			Int_vec_print_integer_matrix_width(cout,
 				A, n, d, d,
-				P->F->log10_of_q + 1);
+				P->Subspaces->F->log10_of_q + 1);
 		}
-		P->F->Linear_algebra->perp_standard(d, n, A, 0);
+		P->Subspaces->F->Linear_algebra->perp_standard(d, n, A, 0);
 		if (FALSE) {
 			Int_vec_print_integer_matrix_width(cout,
 				A, d, d, d,
-				P->F->log10_of_q + 1);
+				P->Subspaces->F->log10_of_q + 1);
 		}
-		P->F->Projective_space_basic->PG_element_rank_modified_lint(
+		P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
 				A + n * d, 1, d, a);
 		if (f_vv) {
 			cout << "hyperplane " << i << " is perp of point ";
@@ -114,21 +114,21 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 
 
 	if (d == 4) {
-		for (i = 0; i < P->N_lines; i++) {
-			P->Grass_lines->unrank_lint_here(A, i, 0 /*verbose_level - 4*/);
+		for (i = 0; i < P->Subspaces->N_lines; i++) {
+			P->Subspaces->Grass_lines->unrank_lint_here(A, i, 0 /*verbose_level - 4*/);
 			if (f_vv) {
 				cout << "line " << i << ":" << endl;
 				Int_vec_print_integer_matrix_width(cout,
 					A, 2, d, d,
-					P->F->log10_of_q + 1);
+					P->Subspaces->F->log10_of_q + 1);
 			}
-			P->F->Linear_algebra->perp_standard(d, 2, A, 0);
+			P->Subspaces->F->Linear_algebra->perp_standard(d, 2, A, 0);
 			if (FALSE) {
 				Int_vec_print_integer_matrix_width(cout,
 					A, d, d, d,
-					P->F->log10_of_q + 1);
+					P->Subspaces->F->log10_of_q + 1);
 			}
-			a = P->Grass_lines->rank_lint_here(A + 2 * d, 0 /*verbose_level - 4*/);
+			a = P->Subspaces->Grass_lines->rank_lint_here(A + 2 * d, 0 /*verbose_level - 4*/);
 			if (f_vv) {
 				cout << "perp of line " << i << " is " << a << ":";
 				Int_vec_print(cout, A + 2 * d, d);
@@ -184,28 +184,28 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 		cout << "polarity::init_general_polarity" << endl;
 	}
 	polarity::P = P;
-	n = P->n;
+	n = P->Subspaces->n;
 	d = n + 1;
-	N_points = P->N_points;
+	N_points = P->Subspaces->N_points;
 
 	Point_to_hyperplane = NEW_int(N_points);
 	Hyperplane_to_point = NEW_int(N_points);
 
 	if (d == 4) {
-		Line_to_line = NEW_lint(P->N_lines);
+		Line_to_line = NEW_lint(P->Subspaces->N_lines);
 	}
 
 	v = NEW_int(d);
 	A = NEW_int(d * d);
 	B = NEW_int(d * d);
 
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 
-		P->F->Projective_space_basic->PG_element_unrank_modified(
+		P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
 				v, 1, d, i);
 
 
-		P->F->Linear_algebra->mult_matrix_matrix(v, Mtx,
+		P->Subspaces->F->Linear_algebra->mult_matrix_matrix(v, Mtx,
 				A, 1, d, d, 0 /* verbose_level*/);
 
 
@@ -213,15 +213,15 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 			cout << "point " << i << " * Mtx = " << endl;
 			Int_vec_print_integer_matrix_width(cout,
 				A, 1, d, d,
-				P->F->log10_of_q + 1);
+				P->Subspaces->F->log10_of_q + 1);
 		}
-		P->F->Linear_algebra->perp_standard(d, 1, A, 0);
+		P->Subspaces->F->Linear_algebra->perp_standard(d, 1, A, 0);
 		if (FALSE) {
 			Int_vec_print_integer_matrix_width(cout,
 				A, d, d, d,
-				P->F->log10_of_q + 1);
+				P->Subspaces->F->log10_of_q + 1);
 		}
-		a = P->Grass_hyperplanes->rank_lint_here(A + d, 0 /*verbose_level - 4*/);
+		a = P->Subspaces->Grass_hyperplanes->rank_lint_here(A + d, 0 /*verbose_level - 4*/);
 		if (f_vv) {
 			cout << "hyperplane " << i << " is perp of point ";
 			Int_vec_print(cout, A + 2 * d, d);
@@ -241,25 +241,25 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 
 
 	if (d == 4) {
-		for (i = 0; i < P->N_lines; i++) {
-			P->Grass_lines->unrank_lint_here(A, i, 0 /*verbose_level - 4*/);
+		for (i = 0; i < P->Subspaces->N_lines; i++) {
+			P->Subspaces->Grass_lines->unrank_lint_here(A, i, 0 /*verbose_level - 4*/);
 			if (f_vv) {
 				cout << "line " << i << ":" << endl;
 				Int_vec_print_integer_matrix_width(cout,
 					A, 2, d, d,
-					P->F->log10_of_q + 1);
+					P->Subspaces->F->log10_of_q + 1);
 			}
 
-			P->F->Linear_algebra->mult_matrix_matrix(A, Mtx,
+			P->Subspaces->F->Linear_algebra->mult_matrix_matrix(A, Mtx,
 					B, 2, d, d, 0 /* verbose_level*/);
 
-			P->F->Linear_algebra->perp_standard(d, 2, B, 0);
+			P->Subspaces->F->Linear_algebra->perp_standard(d, 2, B, 0);
 			if (FALSE) {
 				Int_vec_print_integer_matrix_width(cout,
 					B, d, d, d,
-					P->F->log10_of_q + 1);
+					P->Subspaces->F->log10_of_q + 1);
 			}
-			a = P->Grass_lines->rank_lint_here(B + 2 * d, 0 /*verbose_level - 4*/);
+			a = P->Subspaces->Grass_lines->rank_lint_here(B + 2 * d, 0 /*verbose_level - 4*/);
 			if (f_vv) {
 				cout << "perp of line " << i << " is " << a << ":";
 				Int_vec_print(cout, B + 2 * d, d);
@@ -315,18 +315,18 @@ void polarity::determine_absolute_points(int *&f_absolute, int verbose_level)
 		cout << "polarity::determine_absolute_points" << endl;
 	}
 
-	if (P->n != 3) {
+	if (P->Subspaces->n != 3) {
 		cout << "polarity::determine_absolute_points "
 				"we need n=3, skipping" << endl;
 		return;
 	}
-	N_points = P->nb_rk_k_subspaces_as_lint(1 /* type_i */);
+	N_points = P->Subspaces->nb_rk_k_subspaces_as_lint(1 /* type_i */);
 	f_absolute = NEW_int(N_points);
 
 	for (i = 0; i < N_points; i++) {
 		j = Point_to_hyperplane[i];
-		f_absolute[i] = P->incidence_test_for_objects_of_type_ij(
-			1 /* type_i */, P->n /* type_j */, i, j,
+		f_absolute[i] = P->Subspaces->incidence_test_for_objects_of_type_ij(
+			1 /* type_i */, P->Subspaces->n /* type_j */, i, j,
 			0 /* verbose_level */);
 		if (f_absolute[i]) {
 			if (FALSE) {
@@ -353,18 +353,18 @@ void polarity::determine_absolute_lines(int verbose_level)
 		cout << "polarity::determine_absolute_lines" << endl;
 	}
 
-	if (P->n != 3) {
+	if (P->Subspaces->n != 3) {
 		cout << "polarity::determine_absolute_lines "
 				"we need n=3, skipping" << endl;
 		return;
 	}
-	f_absolute_line = NEW_int(P->N_lines);
+	f_absolute_line = NEW_int(P->Subspaces->N_lines);
 	nb_absolute_lines = 0;
 	nb_self_dual_lines = 0;
 
-	for (i = 0; i < P->N_lines; i++) {
+	for (i = 0; i < P->Subspaces->N_lines; i++) {
 		j = Line_to_line[i];
-		if (P->test_if_lines_are_disjoint_from_scratch(i, j)) {
+		if (P->Subspaces->test_if_lines_are_disjoint_from_scratch(i, j)) {
 			f_absolute_line[i] = FALSE;
 		}
 		else {
@@ -400,7 +400,7 @@ void polarity::init_reversal_polarity(projective_space *P, int verbose_level)
 		cout << "polarity::init_reversal_polarity" << endl;
 	}
 	polarity::P = P;
-	n = P->n;
+	n = P->Subspaces->n;
 	d = n + 1;
 
 	Mtx = NEW_int(d * d);
@@ -441,7 +441,7 @@ void polarity::report(std::ostream &f)
 
 	//f << "Polarity point $\\leftrightarrow$ hyperplane:\\\\" << endl;
 	f << "\\begin{multicols}{4}" << endl;
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 		f << "$" << i << " \\leftrightarrow " << Point_to_hyperplane[i] << "$\\\\" << endl;
 	}
 	f << "\\end{multicols}" << endl;
@@ -451,41 +451,41 @@ void polarity::report(std::ostream &f)
 		return;
 	}
 
-	if (P->N_points >= 1000) {
+	if (P->Subspaces->N_points >= 1000) {
 		f << "Too many to list\\\\" << endl;
 		return;
 	}
 	int N;
 	N = 0;
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 		if (f_absolute[i]) {
 			N++;
 		}
 	}
 	f << "There are " << N << " absolute points: \\\\" << endl;
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 		if (f_absolute[i]) {
 			f << "$" << i << " \\leftrightarrow " << Point_to_hyperplane[i] << "$\\\\" << endl;
 		}
 	}
 
-	if (P->n + 1 == 4) {
+	if (P->Subspaces->n + 1 == 4) {
 		f << "Lines $\\leftrightarrow$ lines:\\\\" << endl;
 		f << "\\begin{multicols}{4}" << endl;
-		for (i = 0; i < P->N_lines; i++) {
+		for (i = 0; i < P->Subspaces->N_lines; i++) {
 			f << "$" << i << " \\leftrightarrow " << Line_to_line[i] << "$\\\\" << endl;
 		}
 		f << "\\end{multicols}" << endl;
 
 	}
 	f << "There are " << nb_absolute_lines << " absolute lines: \\\\" << endl;
-	for (i = 0; i < P->N_lines; i++) {
+	for (i = 0; i < P->Subspaces->N_lines; i++) {
 		if (f_absolute_line[i]) {
 			f << "$" << i << " \\leftrightarrow " << Line_to_line[i] << "$\\\\" << endl;
 		}
 	}
 	f << "There are " << nb_self_dual_lines << " self dual lines: \\\\" << endl;
-	for (i = 0; i < P->N_lines; i++) {
+	for (i = 0; i < P->Subspaces->N_lines; i++) {
 		if (Line_to_line[i] == i) {
 			f << "$" << i << " \\leftrightarrow " << Line_to_line[i] << "$\\\\" << endl;
 		}

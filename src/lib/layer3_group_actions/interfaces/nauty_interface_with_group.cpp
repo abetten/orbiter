@@ -1266,6 +1266,9 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 
+
+	linear_algebra::linear_algebra_global LA;
+
 	//action *A_perm;
 
 	int d;
@@ -1304,6 +1307,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 	int g, frobenius, pos;
 	int *Mtx;
 	int *Elt1;
+	int c;
 
 	gens = A_perm->Strong_gens->gens;
 
@@ -1323,9 +1327,13 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 			cout << endl;
 		}
 
-		if (P->reverse_engineer_semilinear_map(
-			gens->ith(g), Mtx, frobenius,
-			0 /*verbose_level - 2*/)) {
+		c = LA.reverse_engineer_semilinear_map(
+				P->Subspaces->F,
+				P->Subspaces->n,
+				gens->ith(g), Mtx, frobenius,
+				0 /*verbose_level - 2*/);
+
+		if (c) {
 
 			Mtx[d * d] = frobenius;
 			A_linear->Group_element->make_element(Elt1, Mtx, 0 /*verbose_level - 2*/);
@@ -1340,11 +1348,12 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 			pos++;
 		}
 		else {
-			if (f_vv) {
+			//if (f_vv) {
 				cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 						"generator " << g << " does not "
 						"correspond to a semilinear mapping" << endl;
-			}
+				exit(1);
+			//}
 		}
 	}
 	gens1->reallocate(pos, verbose_level - 2);
@@ -1369,7 +1378,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 			cout << "generator " << g << ":" << endl;
 		}
 		//A_linear->element_print(gens1->ith(g), cout);
-		for (i = 0; i < P->N_points; i++) {
+		for (i = 0; i < P->Subspaces->N_points; i++) {
 			j1 = A_linear->Group_element->element_image_of(i, gens1->ith(g), 0);
 			j2 = A_perm->Group_element->element_image_of(i, gens->ith(g), 0);
 			if (j1 != j2) {

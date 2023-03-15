@@ -890,11 +890,11 @@ void plot_tools::draw_point_set_in_plane(
 	if (f_v) {
 		cout << "plot_tools::draw_point_set_in_plane" << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "plot_tools::draw_point_set_in_plane n != 2" << endl;
 		exit(1);
 	}
-	q = P->F->q;
+	q = P->Subspaces->F->q;
 	Table = NEW_int(nb_pts * 3);
 	for (i = 0; i < nb_pts; i++) {
 		P->unrank_point(Table + i * 3, Pts[i]);

@@ -61,7 +61,8 @@ public:
 	void report_given_point_set(
 			std::ostream &ost,
 			long int *Pts, int nb_pts, int verbose_level);
-	void compute_adjacency_list_fast(int first_point_of_starter,
+	void compute_adjacency_list_fast(
+			int first_point_of_starter,
 		long int *points, int nb_points, int *point_color,
 		data_structures::bitvector *&Bitvec,
 		int verbose_level);
@@ -829,7 +830,7 @@ public:
 	int evaluate_bilinear_form_by_rank(int i, int j);
 	void points_on_line_by_line_rank(
 			long int line_rk,
-		long int *line,
+		long int *pts_on_line,
 		int verbose_level);
 	void points_on_line(
 			long int pi, long int pj,
@@ -873,12 +874,14 @@ public:
 	void perp(long int pt,
 			long int *Perp_without_pt, int &sz,
 		int verbose_level);
+	// Perp_without_pt needs to be of size [Hyperbolic_pair->alpha * (Quadratic_form->q + 1)]
 	void perp_of_two_points(long int pt1,
 			long int pt2, long int *Perp,
 		int &sz, int verbose_level);
 	void perp_of_k_points(long int *pts,
 			int nb_pts, long int *&Perp,
 		int &sz, int verbose_level);
+	// requires k >= 2
 	int triple_is_collinear(
 			long int pt1, long int pt2, long int pt3);
 	void intersection_with_subspace(

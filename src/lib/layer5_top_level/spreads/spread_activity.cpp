@@ -50,16 +50,18 @@ void spread_activity::init(
 
 
 	if (f_v) {
-		cout << "spread_activity::init before SD->init" << endl;
+		cout << "spread_activity::init "
+				"before SD->init_spread_domain" << endl;
 	}
 
-	SD->init(
+	SD->init_spread_domain(
 			Spread_create->F,
 			2 * Spread_create->k, Spread_create->k,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "spread_activity::init after SD->init" << endl;
+		cout << "spread_activity::init "
+				"after SD->init_spread_domain" << endl;
 	}
 
 
@@ -88,13 +90,15 @@ void spread_activity::init(
 
 
 	if (f_v) {
-		cout << "spread_activity::init before AG->init" <<  endl;
+		cout << "spread_activity::init "
+				"before AG->init" <<  endl;
 	}
 
 	AG->init(*A, SD->Grass, 0 /*verbose_level - 2*/);
 
 	if (f_v) {
-		cout << "spread_activity::init after AG->init" <<  endl;
+		cout << "spread_activity::init "
+				"after AG->init" <<  endl;
 	}
 
 	if (f_v) {
@@ -149,15 +153,18 @@ void spread_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "spread_classify_activity::perform_activity before Spread_classify->classify_partial_spreads" << endl;
+			cout << "spread_classify_activity::perform_activity "
+					"before Spread_classify->classify_partial_spreads" << endl;
 		}
 		report(verbose_level);
 		if (f_v) {
-			cout << "spread_classify_activity::perform_activity after Spread_classify->classify_partial_spreads" << endl;
+			cout << "spread_classify_activity::perform_activity "
+					"after Spread_classify->classify_partial_spreads" << endl;
 		}
 
 		if (f_v) {
-			cout << "spread_classify_activity::perform_activity f_report done" << endl;
+			cout << "spread_classify_activity::perform_activity "
+					"f_report done" << endl;
 		}
 
 	}
@@ -185,7 +192,8 @@ void spread_activity::report(int verbose_level)
 	char str[1000];
 	string title, author, extra_praeamble;
 
-	snprintf(str, 1000, "Translation plane %s", Spread_create->label_tex.c_str());
+	snprintf(str, 1000, "Translation plane %s",
+			Spread_create->label_tex.c_str());
 	title.assign(str);
 
 
@@ -239,7 +247,8 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 	if (f_v) {
 		cout << "spread_activity::report2 before Grass->print_set_tex" << endl;
 	}
-	SD->Grass->print_set_tex(ost, Spread_create->set, Spread_create->sz, verbose_level);
+	SD->Grass->print_set_tex(
+			ost, Spread_create->set, Spread_create->sz, verbose_level);
 	if (f_v) {
 		cout << "spread_activity::report2 after Grass->print_set_tex" << endl;
 	}
@@ -252,7 +261,8 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 	orbiter_kernel_system::latex_interface Li;
 
 	if (f_v) {
-		cout << "spread_activity::report2 before SD->Grass->make_spread_set_from_spread" << endl;
+		cout << "spread_activity::report2 "
+				"before SD->Grass->make_spread_set_from_spread" << endl;
 	}
 
 	SD->Grass->make_spread_set_from_spread(
@@ -261,7 +271,8 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 			verbose_level);
 
 	if (f_v) {
-		cout << "spread_activity::report2 after SD->Grass->make_spread_set_from_spread" << endl;
+		cout << "spread_activity::report2 "
+				"after SD->Grass->make_spread_set_from_spread" << endl;
 	}
 
 	ost << "The spread set: \\\\" << endl;
@@ -370,13 +381,15 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 
 			P5 = NEW_OBJECT(geometry::projective_space);
 			if (f_v) {
-				cout << "spread_activity::report2 before P5->projective_space_init" << endl;
+				cout << "spread_activity::report2 "
+						"before P5->projective_space_init" << endl;
 			}
 			P5->projective_space_init(5, Spread_create->F,
 				FALSE /*f_init_incidence_structure */,
 				verbose_level - 2);
 			if (f_v) {
-				cout << "spread_activity::report2 after P5->projective_space_init" << endl;
+				cout << "spread_activity::report2 "
+						"after P5->projective_space_init" << endl;
 			}
 
 
@@ -386,7 +399,11 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 						"initializing orthogonal" << endl;
 			}
 			O = NEW_OBJECT(orthogonal_geometry::orthogonal);
-			O->init(1 /* epsilon */, 6 /* n */, Spread_create->F, verbose_level - 2);
+			O->init(
+					1 /* epsilon */,
+					6 /* n */,
+					Spread_create->F,
+					verbose_level - 2);
 			if (f_v) {
 				cout << "spread_activity::report2 "
 						"initializing orthogonal done" << endl;
@@ -481,7 +498,7 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 
 				long int nb_planes;
 
-				nb_planes = P5->nb_rk_k_subspaces_as_lint(3);
+				nb_planes = P5->Subspaces->nb_rk_k_subspaces_as_lint(3);
 				if (f_v) {
 					cout << "spread_activity::report2 nb_planes = " << nb_planes << endl;
 				}
@@ -490,9 +507,10 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 				type = NEW_int(nb_planes);
 
 				if (f_v) {
-					cout << "spread_activity::report2 before P5->plane_intersection_type_basic" << endl;
+					cout << "spread_activity::report2 "
+							"before P5->plane_intersection_type_basic" << endl;
 				}
-				P5->plane_intersection_type_basic(Pts_in_PG5, l,
+				P5->Subspaces->plane_intersection_type_basic(Pts_in_PG5, l,
 						type, 0 /* verbose_level*/);
 						// type[N_planes]
 
@@ -518,16 +536,19 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 
 
 				if (f_v) {
-					cout << "spread_activity::report2 before FREE_int(type);" << endl;
+					cout << "spread_activity::report2 "
+							"before FREE_int(type);" << endl;
 				}
 				FREE_int(type);
 				if (f_v) {
-					cout << "spread_activity::report2 before FREE_lint(Orbit_elements);" << endl;
+					cout << "spread_activity::report2 "
+							"before FREE_lint(Orbit_elements);" << endl;
 				}
 				FREE_lint(Orbit_elements);
 				FREE_lint(Orbit_elements_lines);
 				if (f_v) {
-					cout << "spread_activity::report2 before FREE_lint(Pts_on_Klein);" << endl;
+					cout << "spread_activity::report2 "
+							"before FREE_lint(Pts_on_Klein);" << endl;
 				}
 				FREE_lint(Pts_on_Klein);
 				FREE_lint(Pts_in_PG5);
@@ -536,19 +557,23 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 			}
 
 			if (f_v) {
-				cout << "spread_activity::report2 before FREE_OBJECT(P5);" << endl;
+				cout << "spread_activity::report2 "
+						"before FREE_OBJECT(P5);" << endl;
 			}
 			FREE_OBJECT(P5);
 			if (f_v) {
-				cout << "spread_activity::report2 before FREE_OBJECT(O);" << endl;
+				cout << "spread_activity::report2 "
+						"before FREE_OBJECT(O);" << endl;
 			}
 			FREE_OBJECT(O);
 			if (f_v) {
-				cout << "spread_activity::report2 before FREE_OBJECT(Klein);" << endl;
+				cout << "spread_activity::report2 "
+						"before FREE_OBJECT(Klein);" << endl;
 			}
 			FREE_OBJECT(Klein);
 			if (f_v) {
-				cout << "spread_activity::report2 after FREE_OBJECT(Klein);" << endl;
+				cout << "spread_activity::report2 "
+						"after FREE_OBJECT(Klein);" << endl;
 			}
 
 		} // if k == 2

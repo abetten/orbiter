@@ -102,14 +102,17 @@ surface_domain::~surface_domain()
 	}
 }
 
-void surface_domain::init(
+void surface_domain::init_surface_domain(
 		field_theory::finite_field *F,
 		int verbose_level)
+// allocates projective_space objects for a PG(3,q) and PG(2,q)
+// allocates grassmann objects for lines and hyperplanes
+// allocates orthogonal and klein objects for the Klein correspondence
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_domain::init" << endl;
+		cout << "surface_domain::init_surface_domain" << endl;
 	}
 	
 	n = 4;
@@ -118,7 +121,8 @@ void surface_domain::init(
 	q = F->q;
 	nb_pts_on_surface_with_27_lines = q * q + 7 * q + 1;
 	if (f_v) {
-		cout << "surface::init nb_pts_on_surface_with_27_lines = "
+		cout << "surface::init_surface_domain "
+				"nb_pts_on_surface_with_27_lines = "
 				<< nb_pts_on_surface_with_27_lines << endl;
 	}
 
@@ -128,31 +132,35 @@ void surface_domain::init(
 	
 	P = NEW_OBJECT(geometry::projective_space);
 	if (f_v) {
-		cout << "surface::init before P->projective_space_init" << endl;
+		cout << "surface::init_surface_domain "
+				"before P->projective_space_init" << endl;
 	}
 	P->projective_space_init(3, F,
 		TRUE /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init after P->projective_space_init" << endl;
+		cout << "surface::init_surface_domain "
+				"after P->projective_space_init" << endl;
 	}
 
 	P2 = NEW_OBJECT(geometry::projective_space);
 	if (f_v) {
-		cout << "surface::init before P2->projective_space_init" << endl;
+		cout << "surface::init_surface_domain "
+				"before P2->projective_space_init" << endl;
 	}
 	P2->projective_space_init(2, F,
 		TRUE /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init after P2->projective_space_init" << endl;
+		cout << "surface::init_surface_domain "
+				"after P2->projective_space_init" << endl;
 	}
 
 	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(n, 2, F, 0 /* verbose_level */);
 	nb_lines_PG_3 = Gr->nCkq->as_lint();
 	if (f_v) {
-		cout << "surface::init nb_lines_PG_3 = "
+		cout << "surface::init_surface_domain nb_lines_PG_3 = "
 				<< nb_lines_PG_3 << endl;
 	}
 
@@ -161,24 +169,24 @@ void surface_domain::init(
 
 
 	if (f_v) {
-		cout << "surface::init "
+		cout << "surface::init_surface_domain "
 				"initializing orthogonal" << endl;
 	}
 	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
 	O->init(1 /* epsilon */, 6 /* n */, F, verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init "
+		cout << "surface::init_surface_domain "
 				"initializing orthogonal done" << endl;
 	}
 
 	Klein = NEW_OBJECT(geometry::klein_correspondence);
 
 	if (f_v) {
-		cout << "surface::init before Klein->init" << endl;
+		cout << "surface::init_surface_domain before Klein->init" << endl;
 	}
 	Klein->init(F, O, verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init after Klein->init" << endl;
+		cout << "surface::init_surface_domain after Klein->init" << endl;
 	}
 
 
@@ -187,17 +195,21 @@ void surface_domain::init(
 	PolynomialDomains = NEW_OBJECT(surface_polynomial_domains);
 
 	if (f_v) {
-		cout << "surface::init before PolynomialDomains->init" << endl;
+		cout << "surface::init_surface_domain "
+				"before PolynomialDomains->init" << endl;
 	}
 	PolynomialDomains->init(this, verbose_level);
 	//init_polynomial_domains(verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init after PolynomialDomains->init" << endl;
+		cout << "surface::init_surface_domain "
+				"after PolynomialDomains->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface::init polynomial domains are:" << endl;
+		cout << "surface::init_surface_domain "
+				"polynomial domains are:" << endl;
 		PolynomialDomains->print_polynomial_domains_latex(cout);
+		PolynomialDomains->Poly3_4->print_monomial_ordering_latex(cout);
 	}
 
 
@@ -205,11 +217,11 @@ void surface_domain::init(
 
 
 	if (f_v) {
-		cout << "surface::init before init_Schlaefli" << endl;
+		cout << "surface::init_surface_domain before init_Schlaefli" << endl;
 	}
 	init_Schlaefli(verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init after init_Schlaefli" << endl;
+		cout << "surface::init_surface_domain after init_Schlaefli" << endl;
 	}
 
 
@@ -217,7 +229,7 @@ void surface_domain::init(
 	//clebsch_cubics(verbose_level);
 
 	if (f_v) {
-		cout << "surface::init done" << endl;
+		cout << "surface::init_surface_domain done" << endl;
 	}
 }
 

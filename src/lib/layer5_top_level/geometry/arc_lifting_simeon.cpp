@@ -130,7 +130,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 		TRUE /* f_init_incidence_structure */,
 		0 /* verbose_level */);
 
-	P->init_incidence_structure(0 /*verbose_level*/);
+	P->Subspaces->init_incidence_structure(0 /*verbose_level*/);
 
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification_control *Control;
@@ -221,7 +221,7 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 			S[len] = candidates[j];
 
 			//cout << "test_function_for_arc" << endl;
-			P->line_intersection_type_collected(
+			P->Subspaces->line_intersection_type_collected(
 				S /*int *set */,
 				len + 1 /* int set_size */,
 				type_collected,
@@ -263,13 +263,13 @@ void arc_lifting_simeon::do_covering_problem(
 
 	nb_bisecants = Combi.int_n_choose_k(original_arc_sz, 2);
 	nb_c2points = nb_bisecants * nb_bisecants;
-	type = NEW_int(P->N_lines);
-	external_lines = NEW_lint(P->N_lines);
+	type = NEW_int(P->Subspaces->N_lines);
+	external_lines = NEW_lint(P->Subspaces->N_lines);
 	nb_external_lines = 0;
-	P->line_intersection_type(original_arc,
+	P->Subspaces->line_intersection_type(original_arc,
 			original_arc_sz, type, 0 /*verbose_level*/);
 
-	for (i = 0; i < P->N_lines; i++) {
+	for (i = 0; i < P->Subspaces->N_lines; i++) {
 		if (type[i] == 0) {
 			external_lines[nb_external_lines++] = i;
 			}
@@ -343,7 +343,7 @@ void arc_lifting_simeon::do_covering_problem(
 		a = external_lines[i];
 		cnt = 0;
 		for (j = 0; j < q + 1; j++) {
-			pt = P->Implementation->Lines[a * (q + 1) + j];
+			pt = P->Subspaces->Implementation->Lines[a * (q + 1) + j];
 			if (Sorting.int_vec_search(c2_points, h, pt, idx)) {
 				cnt++;
 				}
@@ -426,7 +426,7 @@ void arc_lifting_simeon::do_covering_problem(
 			for (u = 0; u < target_depth; u++) {
 				a = SaS->data[u];
 				a = filtered_lines[a];
-				if (P->is_incident(c2_points[j], a)) {
+				if (P->Subspaces->is_incident(c2_points[j], a)) {
 					covering_number[j]++;
 					}
 				}

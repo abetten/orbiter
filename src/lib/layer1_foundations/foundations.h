@@ -460,9 +460,11 @@ namespace geometry {
 	class projective_space_of_dimension_three;
 	class projective_space_plane;
 	class projective_space_reporting;
+	class projective_space_subspaces;
 	class projective_space;
 	class spread_domain;
 	class spread_tables;
+	class three_skew_subspaces;
 	class W3q;
 
 }
@@ -737,6 +739,7 @@ namespace solvers {
 #define Lint_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print(A, B, C)
 #define Int_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_fully(A, B, C)
 #define Lint_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_fully(A, B, C)
+#define Int_vec_print_fully_naked(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_fully_naked(A, B, C)
 
 #define Int_vec_print_integer_matrix(A,B,C,D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
 #define Int_vec_print_integer_matrix_width(A,B,C,D,E,F) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, E, F)

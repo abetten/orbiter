@@ -376,7 +376,7 @@ void klein_correspondence::plane_intersections(
 		}
 	pts = NEW_lint(nb_lines);
 	
-	P3->Grass_lines->klein_correspondence(P3, //P5,
+	P3->Subspaces->Grass_lines->klein_correspondence(P3, //P5,
 		lines_in_PG3, nb_lines, pts, 0/*verbose_level*/);
 
 	P5->plane_intersection_type_fast(Gr63, pts, nb_lines, 
@@ -428,7 +428,7 @@ long int klein_correspondence::line_to_point_on_quadric(long int line_rk, int ve
 	point_rk = O->Hyperbolic_pair->rank_point(v6, 1, 0 /* verbose_level */);
 	if (FALSE) {
 		cout << "klein_correspondence::line_to_point_on_quadric line_rk=" << line_rk
-				<< " / " << P3->N_lines << " v6 : ";
+				<< " / " << P3->Subspaces->N_lines << " v6 : ";
 		Int_vec_print(cout, v6, 6);
 		cout << " : point_rk=" << point_rk << endl;
 	}
@@ -501,7 +501,7 @@ long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int v
 				"point_rk=" << point_rk
 				<< " line_rk=" << line_rk << " done" << endl;
 	}
-	if (line_rk >= P3->N_lines) {
+	if (line_rk >= P3->Subspaces->N_lines) {
 		cout << "klein_correspondence::point_on_quadric_to_line "
 				"line_rk >= P3->N_lines" << endl;
 		exit(1);

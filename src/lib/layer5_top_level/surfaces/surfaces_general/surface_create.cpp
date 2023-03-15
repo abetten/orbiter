@@ -3077,7 +3077,7 @@ void surface_create::apply_single_transformation(
 	for (i = 0; i < SO->nb_lines; i++) {
 		if (f_vv) {
 			cout << "line " << i << ":" << endl;
-			Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(
+			Surf_A->Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
 					cout, SO->Lines[i]);
 		}
 		SO->Lines[i] = Surf_A->A2->Group_element->element_image_of(
@@ -3085,7 +3085,7 @@ void surface_create::apply_single_transformation(
 				0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "maps to " << endl;
-			Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(
+			Surf_A->Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
 					cout, SO->Lines[i]);
 		}
 	}
@@ -3459,14 +3459,25 @@ void surface_create::action_on_module(
 	int *v;
 	int *w;
 
+	int **Rep; // [gens_builder->V->len] [module_dimension_m * module_dimension_m]
+	int *Trace;
+	int *R;
+
 
 	v = NEW_int(module_dimension_m);
 	w = NEW_int(module_dimension_m);
+
+	Rep = (int **) NEW_pvoid(gens_builder->V->len);
+	Trace = NEW_int(gens_builder->V->len);
+
 
 	for (i = 0; i < gens_builder->V->len; i++) {
 		if (f_v) {
 			cout << "group element " << i << ":" << endl;
 		}
+
+		R = NEW_int(module_dimension_m * module_dimension_m);
+
 		for (h = 0; h < module_dimension_m; h++) {
 
 			if (f_v) {
@@ -3496,8 +3507,28 @@ void surface_create::action_on_module(
 				cout << endl;
 			}
 
+			Int_vec_copy(w, R + h * module_dimension_m, module_dimension_m);
+
+		}
+
+		Trace[i] = 0;
+		for (h = 0; h < module_dimension_m; h++) {
+			Trace[i] += R[h * module_dimension_m + h];
+		}
+
+		Rep[i] = R;
+
+	}
+
+	if (f_v) {
+		cout << "The representation:" << endl;
+		for (i = 0; i < gens_builder->V->len; i++) {
+			cout << "group element " << i << ":" << endl;
+			//Int_matrix_print(Rep[i], module_dimension_m, module_dimension_m);
+			cout << "trace = " << Trace[i] << endl;
 		}
 	}
+
 
 	if (f_v) {
 		cout << "surface_create::action_on_module done" << endl;

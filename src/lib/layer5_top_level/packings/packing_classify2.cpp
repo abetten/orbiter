@@ -133,7 +133,7 @@ void packing_classify::compute_and_save_klein_invariants(
 		cout << "packing_classify::compute_and_save_klein_invariants "
 				"before P3->Grass_lines->klein_correspondence" << endl;
 	}
-	P3->Grass_lines->klein_correspondence(P3, //P5,
+	P3->Subspaces->Grass_lines->klein_correspondence(P3, //P5,
 		data, data_size, list_of_lines_klein_image, 0/*verbose_level*/);
 
 	if (f_v) {
@@ -906,7 +906,7 @@ void packing_classify::report_extra_stuff(
 		int i, j, u;
 		combinatorics::combinatorics_domain Combi;
 
-		nb_points = P3->N_points;
+		nb_points = P3->Subspaces->N_points;
 		nb_lines = Combi.generalized_binomial(4, 2, q);
 
 		ost << "PG$(3," << q << ")$ has " << nb_points
@@ -936,9 +936,9 @@ void packing_classify::report_extra_stuff(
 			ost << "\\end{array}" << endl;
 			ost << "\\right]" << endl;
 			ost << " = \\{" << endl;
-			for (i = 0; i < P3->k; i++) {
-				ost << P3->Implementation->Lines[u * P3->k + i];
-				if (i < P3->k - 1) {
+			for (i = 0; i < P3->Subspaces->k; i++) {
+				ost << P3->Subspaces->Implementation->Lines[u * P3->Subspaces->k + i];
+				if (i < P3->Subspaces->k - 1) {
 					ost << ", ";
 				}
 			}

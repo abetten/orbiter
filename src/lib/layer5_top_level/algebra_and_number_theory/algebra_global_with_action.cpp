@@ -3228,17 +3228,17 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 	geometry::incidence_structure *Inc;
 	Inc = NEW_OBJECT(geometry::incidence_structure);
 
-	Mtx = NEW_int(P->N_points * P->N_lines);
-	Int_vec_zero(Mtx, P->N_points * P->N_lines);
+	Mtx = NEW_int(P->Subspaces->N_points * P->Subspaces->N_lines);
+	Int_vec_zero(Mtx, P->Subspaces->N_points * P->Subspaces->N_lines);
 
-	for (j = 0; j < P->N_lines; j++) {
-		for (h = 0; h < P->k; h++) {
-			i = P->Implementation->Lines[j * P->k + h];
-			Mtx[i * P->N_lines + j] = 1;
+	for (j = 0; j < P->Subspaces->N_lines; j++) {
+		for (h = 0; h < P->Subspaces->k; h++) {
+			i = P->Subspaces->Implementation->Lines[j * P->Subspaces->k + h];
+			Mtx[i * P->Subspaces->N_lines + j] = 1;
 		}
 	}
 
-	Inc->init_by_matrix(P->N_points, P->N_lines, Mtx, 0 /* verbose_level*/);
+	Inc->init_by_matrix(P->Subspaces->N_points, P->Subspaces->N_lines, Mtx, 0 /* verbose_level*/);
 
 
 	data_structures::partitionstack S;

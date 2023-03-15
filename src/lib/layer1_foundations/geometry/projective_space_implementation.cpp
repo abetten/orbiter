@@ -82,11 +82,11 @@ void projective_space_implementation::init(
 
 	projective_space_implementation::P = P;
 
-	N_points = P->N_points;
-	N_lines = P->N_lines;
-	k = P->k;
-	r = P->r;
-	n = P->n;
+	N_points = P->Subspaces->N_points;
+	N_lines = P->Subspaces->N_lines;
+	k = P->Subspaces->k;
+	r = P->Subspaces->r;
+	n = P->Subspaces->n;
 
 	v = NEW_int(n + 1);
 	w = NEW_int(n + 1);
@@ -196,21 +196,21 @@ void projective_space_implementation::init(
 	}
 	if (FALSE) {
 		for (i = 0; i < N_points; i++) {
-			P->F->Projective_space_basic->PG_element_unrank_modified(
+			P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
 					v, 1, n + 1, i);
 			cout << "point " << i << " : ";
 			Int_vec_print(cout, v, n + 1);
 			cout << " = ";
-			P->F->Io->int_vec_print_field_elements(cout, v, n + 1);
+			P->Subspaces->F->Io->int_vec_print_field_elements(cout, v, n + 1);
 
-			P->F->Projective_space_basic->PG_element_normalize_from_front(
+			P->Subspaces->F->Projective_space_basic->PG_element_normalize_from_front(
 					v, 1, n + 1);
 			cout << " = ";
 			Int_vec_print(cout, v, n + 1);
 
 
 			cout << " = ";
-			P->F->Io->int_vec_print_field_elements(cout, v, n + 1);
+			P->Subspaces->F->Io->int_vec_print_field_elements(cout, v, n + 1);
 
 
 			cout << endl;
@@ -254,11 +254,11 @@ void projective_space_implementation::init(
 						"Line " << i << " / " << N_lines << ":" << endl;
 			}
 #endif
-			P->Grass_lines->unrank_lint(i, 0/*verbose_level - 4*/);
+			P->Subspaces->Grass_lines->unrank_lint(i, 0/*verbose_level - 4*/);
 			if (FALSE) {
 				Int_vec_print_integer_matrix_width(cout,
-						P->Grass_lines->M, 2, n + 1, n + 1,
-						P->F->log10_of_q + 1);
+						P->Subspaces->Grass_lines->M, 2, n + 1, n + 1,
+						P->Subspaces->F->log10_of_q + 1);
 			}
 
 
@@ -276,12 +276,12 @@ void projective_space_implementation::init(
 
 
 			for (a = 0; a < k; a++) {
-				P->F->Projective_space_basic->PG_element_unrank_modified(
+				P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
 						v, 1, 2, a);
-				P->F->Linear_algebra->mult_matrix_matrix(
-						v, P->Grass_lines->M, w, 1, 2, n + 1,
+				P->Subspaces->F->Linear_algebra->mult_matrix_matrix(
+						v, P->Subspaces->Grass_lines->M, w, 1, 2, n + 1,
 						0 /* verbose_level */);
-				P->F->Projective_space_basic->PG_element_rank_modified(
+				P->Subspaces->F->Projective_space_basic->PG_element_rank_modified(
 						w, 1, n + 1, b);
 				if (Bitmatrix) {
 					Bitmatrix->m_ij(b, i, 1);
@@ -298,8 +298,8 @@ void projective_space_implementation::init(
 			if (f_vv) {
 				cout << "line " << i << ":" << endl;
 				Int_vec_print_integer_matrix_width(cout,
-						P->Grass_lines->M, 2, n + 1, n + 1,
-						P->F->log10_of_q + 1);
+						P->Subspaces->Grass_lines->M, 2, n + 1, n + 1,
+						P->Subspaces->F->log10_of_q + 1);
 
 				if (Lines) {
 					cout << "points on line " << i << " : ";
@@ -460,13 +460,13 @@ void projective_space_implementation::line_intersection_type(
 
 	int i, j, a, b;
 
-	for (i = 0; i < P->N_lines; i++) {
+	for (i = 0; i < P->Subspaces->N_lines; i++) {
 		type[i] = 0;
 	}
 	for (i = 0; i < set_size; i++) {
 		a = set[i];
-		for (j = 0; j < P->r; j++) {
-			b = Lines_on_point[a * P->r + j];
+		for (j = 0; j < P->Subspaces->r; j++) {
+			b = Lines_on_point[a * P->Subspaces->r + j];
 			type[b]++;
 		}
 	}
@@ -487,13 +487,13 @@ void projective_space_implementation::point_types_of_line_set(
 	}
 	int i, j, a, b;
 
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 		type[i] = 0;
 	}
 	for (i = 0; i < set_size; i++) {
 		a = set_of_lines[i];
-		for (j = 0; j < P->k; j++) {
-			b = Lines[a * P->k + j];
+		for (j = 0; j < P->Subspaces->k; j++) {
+			b = Lines[a * P->Subspaces->k + j];
 			type[b]++;
 		}
 	}
@@ -513,13 +513,13 @@ void projective_space_implementation::point_types_of_line_set_int(
 	}
 	int i, j, a, b;
 
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 		type[i] = 0;
 	}
 	for (i = 0; i < set_size; i++) {
 		a = set_of_lines[i];
-		for (j = 0; j < P->k; j++) {
-			b = Lines[a * P->k + j];
+		for (j = 0; j < P->Subspaces->k; j++) {
+			b = Lines[a * P->Subspaces->k + j];
 			type[b]++;
 		}
 	}

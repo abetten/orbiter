@@ -171,13 +171,13 @@ void projective_space_global::do_lift_skew_hexagon(
 
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon "
-				"before Surf->init" << endl;
+				"before Surf->init_surface_domain" << endl;
 	}
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(PA->F, 0 /*verbose_level - 1*/);
+	Surf->init_surface_domain(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon "
-				"after Surf->init" << endl;
+				"after Surf->init_surface_domain" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
@@ -290,13 +290,13 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
-				"before Surf->init" << endl;
+				"before Surf->init_surface_domain" << endl;
 	}
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(PA->F, 0 /*verbose_level - 1*/);
+	Surf->init_surface_domain(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
-				"after Surf->init" << endl;
+				"after Surf->init_surface_domain" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
@@ -970,7 +970,7 @@ void projective_space_global::classify_bent_functions(
 		cout << "projective_space_global::classify_bent_functions" << endl;
 	}
 
-	if (PA->P->F->q != 2) {
+	if (PA->P->Subspaces->F->q != 2) {
 		cout << "projective_space_global::classify_bent_functions the field must have order 2" << endl;
 		exit(1);
 	}
@@ -986,7 +986,7 @@ void projective_space_global::classify_bent_functions(
 	if (f_v) {
 		cout << "projective_space_global::classify_bent_functions before BF->init" << endl;
 	}
-	BF->init(PA->P->F, n, verbose_level);
+	BF->init(PA->P->Subspaces->F, n, verbose_level);
 	if (f_v) {
 		cout << "projective_space_global::classify_bent_functions after BF->init" << endl;
 	}

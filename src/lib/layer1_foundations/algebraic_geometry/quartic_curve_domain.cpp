@@ -251,7 +251,7 @@ void quartic_curve_domain::print_lines_tex(
 
 	for (i = 0; i < nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		P->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
+		P->Subspaces->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
 
 		ost << Schlaefli->Line_label_tex[i];
@@ -265,7 +265,7 @@ void quartic_curve_domain::print_lines_tex(
 		ost << " = " << endl;
 		//print_integer_matrix_width(cout,
 		// P->Grass_lines->M, k, n, n, F->log10_of_q + 1);
-		P->Grass_lines->latex_matrix(ost, P->Grass_lines->M);
+		P->Subspaces->Grass_lines->latex_matrix(ost, P->Subspaces->Grass_lines->M);
 		//print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 4);
 		//ost << "\\right]_{" << Lines[i] << "}" << endl;
 		ost << "_{" << Lines[i] << "}" << endl;
@@ -273,7 +273,7 @@ void quartic_curve_domain::print_lines_tex(
 		if (F->e > 1) {
 			ost << "=" << endl;
 			ost << "\\left[" << endl;
-			L.print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 3);
+			L.print_integer_matrix_tex(ost, P->Subspaces->Grass_lines->M, 2, 3);
 			ost << "\\right]_{" << Lines[i] << "}" << endl;
 		}
 

@@ -183,12 +183,12 @@ void projective_space_with_action::init(
 		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 		if (f_v) {
 			cout << "projective_space_with_action::init "
-					"before Surf->init" << endl;
+					"before Surf->init_surface_domain" << endl;
 		}
-		Surf->init(F, verbose_level - 1);
+		Surf->init_surface_domain(F, verbose_level - 1);
 		if (f_v) {
 			cout << "projective_space_with_action::init "
-					"after Surf->init" << endl;
+					"after Surf->init_surface_domain" << endl;
 		}
 
 		Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
@@ -401,8 +401,8 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		cout << "projective_space_with_action::report_fixed_points_lines_and_planes" << endl;
 	}
 
-	if (P->n < 3) {
-		cout << "projective_space_with_action::report_fixed_points_lines_and_planes P->n < 3" << endl;
+	if (P->Subspaces->n < 3) {
+		cout << "projective_space_with_action::report_fixed_points_lines_and_planes P->Subspaces->n < 3" << endl;
 		exit(1);
 	}
 	geometry::projective_space *P3;
@@ -425,7 +425,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	ost << "Fixed points:\\\\" << endl;
 
 	cnt = 0;
-	for (i = 0; i < P3->N_points; i++) {
+	for (i = 0; i < P3->Subspaces->N_points; i++) {
 		j = A->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 		if (j == i) {
 			cnt++;
@@ -433,7 +433,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	}
 
 	ost << "There are " << cnt << " fixed points, they are: \\\\" << endl;
-	for (i = 0; i < P3->N_points; i++) {
+	for (i = 0; i < P3->Subspaces->N_points; i++) {
 		j = A->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 		F->Projective_space_basic->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
@@ -519,8 +519,8 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes" << endl;
 	}
 
-	if (P->n < 3) {
-		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes P->n < 3" << endl;
+	if (P->Subspaces->n < 3) {
+		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes P->Subspaces->n < 3" << endl;
 		exit(1);
 	}
 	//projective_space *P3;
@@ -711,7 +711,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 	field_theory::finite_field *F;
 
-	F = P->F;
+	F = P->Subspaces->F;
 
 
 	{
@@ -813,7 +813,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 	H_LG = NEW_OBJECT(groups::linear_group);
 
-	subgroup_Descr->F = P->F;
+	subgroup_Descr->F = P->Subspaces->F;
 
 	if (f_v) {
 		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup "
@@ -1440,16 +1440,18 @@ void projective_space_with_action::do_spread_classify(int k,
 	SD = NEW_OBJECT(geometry::spread_domain);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify before SD->init" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"before SD->init_spread_domain" << endl;
 	}
 
-	SD->init(
+	SD->init_spread_domain(
 			F,
 			n, k,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify after SD->init" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"after SD->init_spread_domain" << endl;
 	}
 
 
@@ -1458,7 +1460,8 @@ void projective_space_with_action::do_spread_classify(int k,
 	SC = NEW_OBJECT(spreads::spread_classify);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify before SC->init" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"before SC->init" << endl;
 	}
 
 	SC->init(
@@ -1466,17 +1469,20 @@ void projective_space_with_action::do_spread_classify(int k,
 			this,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify after SC->init" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"after SC->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify before SC->classify_partial_spreads" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"before SC->classify_partial_spreads" << endl;
 	}
 
 	SC->classify_partial_spreads(verbose_level);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify after SC->classify_partial_spreads" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"after SC->classify_partial_spreads" << endl;
 	}
 
 

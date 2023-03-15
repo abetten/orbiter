@@ -70,7 +70,7 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface "
 				"before Poly->init" << endl;
 	}
-	Poly4_3->init(P->F,
+	Poly4_3->init(P->Subspaces->F,
 			Formula->nb_managed_vars /* nb_vars */, Formula->degree,
 			t_PART,
 			verbose_level);
@@ -178,10 +178,10 @@ void algebraic_geometry_global::report_grassmannian(
 	char str[1000];
 
 	snprintf(str, 1000, "Gr_%d_%d_%d.tex",
-			P->n + 1, k, P->F->q);
+			P->Subspaces->n + 1, k, P->Subspaces->F->q);
 	fname.assign(str);
 	snprintf(str, 1000, "Cheat Sheet Gr($%d,%d,%d$)",
-			P->n + 1, k, P->F->q);
+			P->Subspaces->n + 1, k, P->Subspaces->F->q);
 	title.assign(str);
 
 
@@ -246,7 +246,7 @@ void algebraic_geometry_global::map(
 		cout << "algebraic_geometry_global::map" << endl;
 	}
 	if (f_v) {
-		cout << "algebraic_geometry_global::map n = " << P->n << endl;
+		cout << "algebraic_geometry_global::map n = " << P->Subspaces->n << endl;
 	}
 
 

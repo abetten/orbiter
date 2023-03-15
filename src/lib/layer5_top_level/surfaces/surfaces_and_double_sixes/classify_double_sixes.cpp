@@ -316,8 +316,14 @@ void classify_double_sixes::downstep(int verbose_level)
 			cout << "classify_double_sixes::downstep before "
 					"create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		}
-
+#if 0
 		c = Five_p1->Surf_A->create_double_six_from_five_lines_with_a_common_transversal(
+				dataset + 5,
+				Five_p1->Linear_complex->pt0_line,
+				double_six,
+				0 /* verbose_level - 2*/);
+#endif
+		c = Five_p1->Surf_A->PA->P->Solid->five_plus_one_to_double_six(
 				dataset + 5,
 				Five_p1->Linear_complex->pt0_line,
 				double_six,

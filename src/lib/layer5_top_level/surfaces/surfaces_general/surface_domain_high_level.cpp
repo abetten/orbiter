@@ -851,14 +851,14 @@ void surface_domain_high_level::do_cubic_surface_properties(
 			FALSE /* f_compute_related_fields */,
 			0);
 
-	F = PA->P->F;
+	F = PA->P->Subspaces->F;
 
 
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(F, 0 /*verbose_level - 1*/);
+	Surf->init_surface_domain(F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties "
-				"after Surf->init" << endl;
+				"after Surf->init_surface_domain" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(surface_with_action);
@@ -1144,14 +1144,14 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 			FALSE /* f_compute_related_fields */,
 			0);
 
-	F = PA->P->F;
+	F = PA->P->Subspaces->F;
 
 
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(F, 0 /* verbose_level - 1 */);
+	Surf->init_surface_domain(F, 0 /* verbose_level - 1 */);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
-				"after Surf->init" << endl;
+				"after Surf->init_surface_domain" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(surface_with_action);
@@ -1755,9 +1755,9 @@ void surface_domain_high_level::do_create_surface_atlas(
 		}
 
 		T[cur].Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-		T[cur].Surf->init(T[cur].F, 0 /*verbose_level - 1*/);
+		T[cur].Surf->init_surface_domain(T[cur].F, 0 /*verbose_level - 1*/);
 		if (f_v) {
-			cout << "do_create_surface_atlas after Surf->init" << endl;
+			cout << "do_create_surface_atlas after Surf->init_surface_domain" << endl;
 		}
 
 		T[cur].Surf_A = NEW_OBJECT(surface_with_action);

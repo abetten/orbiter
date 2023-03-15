@@ -164,15 +164,15 @@ void arc_generator::init(
 
 		Int_vec_scan(Descr->forbidden_point_set_string, forbidden_points, nb_forbidden_points);
 
-		f_is_forbidden = NEW_int(PA->P->N_points);
-		Int_vec_zero(f_is_forbidden, PA->P->N_points);
+		f_is_forbidden = NEW_int(PA->P->Subspaces->N_points);
+		Int_vec_zero(f_is_forbidden, PA->P->Subspaces->N_points);
 		for (i = 0; i < nb_forbidden_points; i++) {
 			a = forbidden_points[i];
 			f_is_forbidden[a] = TRUE;
 			cout << "arc_generator::init point " << a << " is forbidden" << endl;
 		}
 	}
-	if (PA->P->Implementation->Lines_on_point == NULL) {
+	if (PA->P->Subspaces->Implementation->Lines_on_point == NULL) {
 		cout << "arc_generator::init "
 				"P->Lines_on_point == NULL" << endl;
 		exit(1);
@@ -182,7 +182,7 @@ void arc_generator::init(
 		cout << "arc_generator::init line_type" << endl;
 	}
 
-	line_type = NEW_int(PA->P->N_lines);
+	line_type = NEW_int(PA->P->Subspaces->N_lines);
 
 
 	if (!Descr->f_control) {
@@ -434,8 +434,8 @@ void arc_generator::early_test_func(
 
 		if (f_survive && Descr->f_d) {
 			// test that there are no more than d points per line:
-			for (j = 0; j < PA->P->r; j++) {
-				b = PA->P->Implementation->Lines_on_point[a * PA->P->r + j];
+			for (j = 0; j < PA->P->Subspaces->r; j++) {
+				b = PA->P->Subspaces->Implementation->Lines_on_point[a * PA->P->Subspaces->r + j];
 				if (line_type[b] == Descr->d) {
 					if (Descr->f_affine && b < nb_affine_lines) {
 						f_survive = FALSE;
@@ -484,7 +484,7 @@ void arc_generator::print(int len, long int *S)
 
 	data_structures::tally C;
 
-	C.init(line_type, PA->P->N_lines, FALSE, 0);
+	C.init(line_type, PA->P->Subspaces->N_lines, FALSE, 0);
 	C.print_naked(TRUE);
 	cout << endl;
 
@@ -515,7 +515,7 @@ void arc_generator::print(int len, long int *S)
 	
 		cout << "Conic intersections:" << endl;
 
-		if (PA->P->n != 2) {
+		if (PA->P->Subspaces->n != 2) {
 			cout << "conic intersections "
 					"only defined in the plane" << endl;
 			exit(1);
@@ -595,16 +595,16 @@ void arc_generator::compute_line_type(long int *set, int len, int verbose_level)
 		cout << "arc_generator::compute_line_type" << endl;
 	}
 
-	if (PA->P->Implementation->Lines_on_point == 0) {
+	if (PA->P->Subspaces->Implementation->Lines_on_point == 0) {
 		cout << "arc_generator::compute_line_type "
 				"P->Lines_on_point == 0" << endl;
 		exit(1);
 	}
-	Int_vec_zero(line_type, PA->P->N_lines);
+	Int_vec_zero(line_type, PA->P->Subspaces->N_lines);
 	for (i = 0; i < len; i++) {
 		a = set[i];
-		for (j = 0; j < PA->P->r; j++) {
-			b = PA->P->Implementation->Lines_on_point[a * PA->P->r + j];
+		for (j = 0; j < PA->P->Subspaces->r; j++) {
+			b = PA->P->Subspaces->Implementation->Lines_on_point[a * PA->P->Subspaces->r + j];
 			line_type[b]++;
 		}
 	}
@@ -659,7 +659,7 @@ void arc_generator::lifting_prepare_function_new(
 
 	data_structures::tally C;
 
-	C.init(line_type, PA->P->N_lines, FALSE, 0);
+	C.init(line_type, PA->P->Subspaces->N_lines, FALSE, 0);
 	if (f_v) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"line_type:" << endl;
@@ -699,8 +699,8 @@ void arc_generator::lifting_prepare_function_new(
 	tangent_lines_fst = fst;
 	nb_tangent_lines = len;
 	tangent_lines = NEW_int(nb_tangent_lines);
-	tangent_line_idx = NEW_int(PA->P->N_lines);
-	for (i = 0; i < PA->P->N_lines; i++) {
+	tangent_line_idx = NEW_int(PA->P->Subspaces->N_lines);
+	for (i = 0; i < PA->P->Subspaces->N_lines; i++) {
 		tangent_line_idx[i] = -1;
 	}
 	for (i = 0; i < len; i++) {
@@ -727,8 +727,8 @@ void arc_generator::lifting_prepare_function_new(
 	external_lines_fst = fst;
 	nb_external_lines = len;
 	external_lines = NEW_int(nb_external_lines);
-	external_line_idx = NEW_int(PA->P->N_lines);
-	for (i = 0; i < PA->P->N_lines; i++) {
+	external_line_idx = NEW_int(PA->P->Subspaces->N_lines);
+	for (i = 0; i < PA->P->Subspaces->N_lines; i++) {
 		external_line_idx[i] = -1;
 	}
 	for (i = 0; i < len; i++) {
@@ -794,8 +794,8 @@ void arc_generator::lifting_prepare_function_new(
 
 	for (i = 0; i < nb_candidates; i++) {
 		a = col_labels[i];
-		for (j = 0; j < PA->P->r; j++) {
-			b = PA->P->Implementation->Lines_on_point[a * PA->P->r + j];
+		for (j = 0; j < PA->P->Subspaces->r; j++) {
+			b = PA->P->Subspaces->Implementation->Lines_on_point[a * PA->P->Subspaces->r + j];
 			if (line_type[b] == 2) {
 				cout << "arc_generator::lifting_prepare_function "
 						"candidate lies on a secant" << endl;

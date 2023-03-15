@@ -571,13 +571,13 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 	Eckardt_points_line_type = NEW_int(nb_Eckardt_points + 1);
 
-	Eckardt_points_plane_type = NEW_int(SO->Surf->P->Nb_subspaces[2]);
+	Eckardt_points_plane_type = NEW_int(SO->Surf->P->Subspaces->Nb_subspaces[2]);
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_properties "
 				"computing line type" << endl;
 	}
-	SO->Surf->P->line_intersection_type_collected(
+	SO->Surf->P->Subspaces->line_intersection_type_collected(
 			Eckardt_points, nb_Eckardt_points,
 			Eckardt_points_line_type, 0 /* verbose_level */);
 	if (f_v) {
@@ -588,7 +588,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		cout << "surface_object_properties::compute_properties "
 				"computing plane type" << endl;
 	}
-	SO->Surf->P->plane_intersection_type_basic(
+	SO->Surf->P->Subspaces->plane_intersection_type_basic(
 			Eckardt_points, nb_Eckardt_points,
 			Eckardt_points_plane_type, 0 /* verbose_level */);
 	// type[N_planes]
@@ -603,7 +603,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		data_structures::sorting Sorting;
 
 		T_planes.init(Eckardt_points_plane_type,
-				SO->Surf->P->Nb_subspaces[2], FALSE, 0);
+				SO->Surf->P->Subspaces->Nb_subspaces[2], FALSE, 0);
 
 		T_planes.get_class_by_value(H_planes,
 				nb_Hesse_planes, 9 /* value */,
@@ -618,7 +618,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		FREE_int(H_planes);
 
 
-		SO->Surf->P->point_plane_incidence_matrix(
+		SO->Surf->P->Subspaces->point_plane_incidence_matrix(
 					Eckardt_points, nb_Eckardt_points,
 					Hesse_planes, nb_Hesse_planes,
 					Eckardt_point_Hesse_plane_incidence,
@@ -686,9 +686,9 @@ void surface_object_properties::compute_axes(int verbose_level)
 					Lint_vec_print(cout, E, 3);
 					cout << endl;
 				}
-				line_rk = SO->Surf->P->line_through_two_points(E[0], E[1]);
-				line_rk1 = SO->Surf->P->line_through_two_points(E[0], E[2]);
-				line_rk2 = SO->Surf->P->line_through_two_points(E[1], E[2]);
+				line_rk = SO->Surf->P->Subspaces->line_through_two_points(E[0], E[1]);
+				line_rk1 = SO->Surf->P->Subspaces->line_through_two_points(E[0], E[2]);
+				line_rk2 = SO->Surf->P->Subspaces->line_through_two_points(E[1], E[2]);
 				if (line_rk1 != line_rk) {
 					cout << "surface_object_properties::compute_axes line_rk1 != line_rk" << endl;
 					exit(1);
@@ -960,12 +960,12 @@ void surface_object_properties::compute_plane_type_by_points(int verbose_level)
 		cout << "surface_object_properties::compute_plane_type_by_points" << endl;
 	}
 
-	nb_planes = SO->Surf->P->Nb_subspaces[2];
+	nb_planes = SO->Surf->P->Subspaces->Nb_subspaces[2];
 	plane_type_by_points = NEW_int(nb_planes);
 	plane_type_by_lines = NEW_int(nb_planes);
 
 	if (nb_planes < MAX_NUMBER_OF_PLANES_FOR_PLANE_TYPE) {
-		SO->Surf->P->plane_intersection_type_basic(SO->Pts, SO->nb_pts,
+		SO->Surf->P->Subspaces->plane_intersection_type_basic(SO->Pts, SO->nb_pts,
 			plane_type_by_points, 0 /* verbose_level */);
 
 
@@ -1639,7 +1639,7 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 			{
 				std::vector<long int> plane_ranks;
 
-				SO->Surf->P->planes_through_a_line(
+				SO->Surf->P->Subspaces->planes_through_a_line(
 						SO->Lines[i], plane_ranks,
 						0 /*verbose_level*/);
 

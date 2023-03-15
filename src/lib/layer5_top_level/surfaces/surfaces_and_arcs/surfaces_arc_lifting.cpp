@@ -1124,12 +1124,12 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(std::ostream &ost, int v
 		ost << "$$" << endl;
 		ost << "\\ell_1 = " << endl;
 		//ost << "\\left[" << endl;
-		Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, line1);
+		Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, line1);
 		//ost << "\\right]" << endl;
 		ost << "\\quad" << endl;
 		ost << "\\ell_2 = " << endl;
 		//fp << "\\left[" << endl;
-		Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, line2);
+		Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, line2);
 		//fp << "\\right]" << endl;
 		ost << "$$" << endl;
 		ost << "The equation of the lifted surface is:" << endl;
