@@ -316,7 +316,7 @@ void tdo_scheme_synthetic::init_partition_stack(int verbose_level)
 			cout << "P->cellSize[c]=" << l << endl;
 			cout << "f + l - at=" << f + l - at << endl;
 		}
-		P->subset_continguous(at, f + l - at);
+		P->subset_contiguous(at, f + l - at);
 		P->split_cell(FALSE);
 		if (f_vvv) {
 			cout << "after splitting at " << at << endl;

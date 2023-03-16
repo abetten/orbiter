@@ -927,7 +927,8 @@ void orthogonal::make_initial_partition(
 	S.allocate(Hyperbolic_pair->nb_points + Hyperbolic_pair->nb_lines, 0 /* verbose_level */);
 	
 	// split off the column class:
-	S.subset_continguous(Hyperbolic_pair->nb_points, Hyperbolic_pair->nb_lines);
+	S.subset_contiguous(
+			Hyperbolic_pair->nb_points, Hyperbolic_pair->nb_lines);
 	S.split_cell(FALSE);
 	
 	for (i = Hyperbolic_pair->nb_point_classes; i >= 2; i--) {

@@ -25,6 +25,8 @@ quadratic_form::quadratic_form()
 	f_even = FALSE;
 	form_c1 = form_c2 = form_c3 = 0;
 
+	nb_points = 0;
+
 	//std::string label_txt;
 	//std::string label_tex;
 
@@ -147,6 +149,13 @@ void quadratic_form::init(int epsilon, int n,
 	if (f_v) {
 		cout << "quadratic_form::init "
 				"after Orthogonal_indexing->init" << endl;
+	}
+
+
+	nb_points = Gg.nb_pts_Qepsilon(epsilon, n - 1, q);
+	if (f_v) {
+		cout << "quadratic_form::init "
+				"nb_points = " << nb_points << endl;
 	}
 
 	if (f_v) {

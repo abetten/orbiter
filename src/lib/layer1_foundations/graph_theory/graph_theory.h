@@ -696,10 +696,6 @@ public:
 			int n, int k,
 			field_theory::finite_field *F,
 			int r, int verbose_level);
-	void make_orthogonal_collinearity_graph(
-			int *&Adj, int &N,
-			int epsilon, int d,
-			field_theory::finite_field *F, int verbose_level);
 	void make_non_attacking_queens_graph(
 			int *&Adj, int &N,
 			int n, int verbose_level);

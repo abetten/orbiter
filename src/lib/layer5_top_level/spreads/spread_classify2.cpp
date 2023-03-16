@@ -425,7 +425,7 @@ void spread_classify::klein(
 		I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-		Stack->subset_continguous(set_size, nb_blocks);
+		Stack->subset_contiguous(set_size, nb_blocks);
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
 
@@ -454,7 +454,7 @@ void spread_classify::klein(
 		I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-		Stack->subset_continguous(set_size, nb_blocks);
+		Stack->subset_contiguous(set_size, nb_blocks);
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
 

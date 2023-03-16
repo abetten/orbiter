@@ -552,9 +552,9 @@ void create_graph::init(
 					"before create_coll_orthogonal" << endl;
 		}
 		create_coll_orthogonal(
-				description->coll_orthogonal_epsilon,
-				description->coll_orthogonal_d,
-				description->coll_orthogonal_label_Fq, verbose_level);
+				description->coll_orthogonal_space_label,
+				description->coll_orthogonal_set_of_points_label,
+				verbose_level);
 
 		if (f_v) {
 			cout << "create_graph::init "
@@ -1395,7 +1395,8 @@ void create_graph::create_Grassmann(
 }
 
 void create_graph::create_coll_orthogonal(
-		int epsilon, int d, std::string &label_Fq,
+		std::string &orthogonal_space_label,
+		std::string &set_of_points_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1405,28 +1406,38 @@ void create_graph::create_coll_orthogonal(
 	}
 
 	graph_theory::graph_theory_domain GT;
-	field_theory::finite_field *F;
 
-	F = Get_finite_field(label_Fq);
+	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
+
+	OA = Get_orthogonal_space(orthogonal_space_label);
+
+	long int *Set;
+	int sz;
+
+	Get_lint_vector_from_label(set_of_points_label, Set, sz, 0 /* verbose_level */);
 
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal before "
-				"GT.make_orthogonal_collinearity_graph" << endl;
+				"OA->make_collinearity_graph" << endl;
 	}
-	GT.make_orthogonal_collinearity_graph(Adj, N,
-			epsilon, d, F, verbose_level);
+	OA->make_collinearity_graph(
+			Adj, N,
+			Set, sz,
+			verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal after "
-				"GT.make_orthogonal_collinearity_graph" << endl;
+				"OA->make_collinearity_graph" << endl;
 	}
 
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Coll_orthogonal_%d_%d_%d", epsilon, d, F->q);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, F->q);
-	label_tex.assign(str);
+	label.assign(OA->label_txt);
+	label.append("_coll_");
+	label.append(set_of_points_label);
+
+	label_tex.assign(OA->label_tex);
+	label_tex.append("\\_coll\\_");
+	label_tex.append(set_of_points_label);
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal done" << endl;

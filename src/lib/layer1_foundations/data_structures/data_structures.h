@@ -899,7 +899,7 @@ class partitionstack {
 	void join_cell();
 	void reduce_height(int ht0);
 	void isolate_point(int pt);
-	void subset_continguous(int from, int len);
+	void subset_contiguous(int from, int len);
 	int is_row_class(int c);
 	int is_col_class(int c);
 	void allocate_and_get_decomposition(

@@ -28,7 +28,8 @@ blt_set_activity::~blt_set_activity()
 {
 }
 
-void blt_set_activity::init(blt_set_activity_description *Descr,
+void blt_set_activity::init(
+		blt_set_activity_description *Descr,
 		orthogonal_geometry_applications::BLT_set_create *BC,
 		int verbose_level)
 {

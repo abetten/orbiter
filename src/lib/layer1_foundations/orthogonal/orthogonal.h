@@ -802,20 +802,20 @@ public:
 	field_theory::finite_field *F;
 
 
-	int *T1, *T2, *T3; // [n * n]
+	int *T1, *T2, *T3; // [Quadratic_form->n * Quadratic_form->n]
 
 	// for determine_line
 	int *determine_line_v1, *determine_line_v2, *determine_line_v3;
 
 	// for lines_on_point
-	int *lines_on_point_coords1; // [alpha * n]
-	int *lines_on_point_coords2; // [alpha * n]
+	int *lines_on_point_coords1; // [Hyperbolic_pair->alpha * Quadratic_form->n]
+	int *lines_on_point_coords2; // [Hyperbolic_pair->alpha * Quadratic_form->n]
 
 	orthogonal *subspace;
 
 	// for perp:
-	long int *line_pencil; // [nb_lines]
-	long int *Perp1; // [alpha * (q + 1)]
+	long int *line_pencil; // [Hyperbolic_pair->alpha]
+	long int *Perp1; // [Hyperbolic_pair->alpha * (Quadratic_form->q + 1)]
 
 
 	orthogonal_group *Orthogonal_group;
@@ -1027,6 +1027,8 @@ public:
 	// \sum_{i=0}^m x_{2i}x_{2i+1}
 	// + c1 x_{2m}^2 + c2 x_{2m} x_{2m+1} + c3 x_{2m+1}^2
 	// where m is the Witt index.
+
+	long int nb_points;
 
 
 	std::string label_txt;

@@ -758,7 +758,7 @@ void projective_space_subspaces::make_incidence_structure_and_partition(
 
 	Stack = NEW_OBJECT(data_structures::partitionstack);
 	Stack->allocate(N_points + N_lines, 0 /* verbose_level */);
-	Stack->subset_continguous(N_points, N_lines);
+	Stack->subset_contiguous(N_points, N_lines);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 
@@ -1036,7 +1036,7 @@ void projective_space_subspaces::incidence_and_stack_for_type_ij(
 
 	Stack = NEW_OBJECT(data_structures::partitionstack);
 	Stack->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
-	Stack->subset_continguous(nb_rows, nb_cols);
+	Stack->subset_contiguous(nb_rows, nb_cols);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 

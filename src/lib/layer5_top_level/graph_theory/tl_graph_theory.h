@@ -166,9 +166,8 @@ public:
 	int Grassmann_r;
 
 	int f_coll_orthogonal;
-	int coll_orthogonal_epsilon;
-	int coll_orthogonal_d;
-	std::string coll_orthogonal_label_Fq;
+	std::string coll_orthogonal_space_label;
+	std::string coll_orthogonal_set_of_points_label;
 
 	int f_trihedral_pair_disjointness_graph;
 
@@ -261,7 +260,8 @@ public:
 			int n, int k, std::string &label_Fq,
 			int r, int verbose_level);
 	void create_coll_orthogonal(
-			int epsilon, int d, std::string &label_Fq,
+			std::string &orthogonal_space_label,
+			std::string &set_of_points_label,
 			int verbose_level);
 	void make_orbital_graph(
 			apps_algebra::any_group *AG, int orbit_idx,

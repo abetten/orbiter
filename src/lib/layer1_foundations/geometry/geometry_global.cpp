@@ -1945,7 +1945,7 @@ void geometry_global::create_decomposition_of_projective_plane(
 
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(I->nb_rows + I->nb_cols, 0 /* verbose_level */);
-		Stack->subset_continguous(I->nb_rows, I->nb_cols);
+		Stack->subset_contiguous(I->nb_rows, I->nb_cols);
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
 

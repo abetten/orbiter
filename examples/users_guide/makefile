@@ -16099,6 +16099,7 @@ test_13_1:
 	make Johnson_6_2_0
 	make Hamming_graph_3
 	make Hamming_graph_7
+	make Op_6_2_coll_graph
 	make HJ_graph
 	make Group_Perm315_Orbital_3.colored_graph
 	make HJ_d2_graph
@@ -16194,6 +16195,21 @@ Hamming_graph_7:
 # needs halljanko315.csv
 # from https://www.win.tue.nl/~aeb/drg/graphs/HJ315.html
 #There is a unique distance-regular graph Gamma with intersection array {10,8,8,2; 1,1,4,5}. It was constructed in Cohen (1981), and uniqueness (given the intersection array) was proved in Cohen & Tits (1985).
+
+
+
+Op_6_2_coll_graph:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-define v -vector -loop 0 35 1 -end \
+		-define Gamma -graph -coll_orthogonal O v -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -save \
+		-end
+
+
+#O_1_6_13_coll_v.colored_graph
 
 
 HJ_graph:

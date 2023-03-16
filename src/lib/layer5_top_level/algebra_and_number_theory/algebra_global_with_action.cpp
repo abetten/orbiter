@@ -3253,7 +3253,7 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 
 	S.allocate(N, 0);
 	// split off the column class:
-	S.subset_continguous(Inc->nb_points(), Inc->nb_lines());
+	S.subset_contiguous(Inc->nb_points(), Inc->nb_lines());
 	S.split_cell(0);
 
 	#if 0

@@ -3331,7 +3331,7 @@ void incidence_structure::init_partitionstack_trivial(
 	S->allocate(N, 0);
 
 	// split off the column class:
-	S->subset_continguous(nb_points(), nb_lines());
+	S->subset_contiguous(nb_points(), nb_lines());
 	S->split_cell(0);
 
 }
@@ -3361,7 +3361,7 @@ void incidence_structure::init_partitionstack(
 	S->allocate(N, 0);
 
 	// split off the column class:
-	S->subset_continguous(nb_points(), nb_lines());
+	S->subset_contiguous(nb_points(), nb_lines());
 	S->split_cell(0);
 
 
@@ -3369,7 +3369,7 @@ void incidence_structure::init_partitionstack(
 	if (f_row_part) {
 		a = row_parts[0];
 		for (i = 1; i < nb_row_parts; i++) {
-			S->subset_continguous(a, nb_points() - a);
+			S->subset_contiguous(a, nb_points() - a);
 			S->split_cell(0);
 			a += row_parts[i];
 		}
@@ -3377,7 +3377,7 @@ void incidence_structure::init_partitionstack(
 	if (f_col_part) {
 		a = nb_points() + col_parts[0];
 		for (i = 1; i < nb_col_parts; i++) {
-			S->subset_continguous(a, nb_points() + nb_lines() - a);
+			S->subset_contiguous(a, nb_points() + nb_lines() - a);
 			S->split_cell(0);
 			a += col_parts[i];
 		}

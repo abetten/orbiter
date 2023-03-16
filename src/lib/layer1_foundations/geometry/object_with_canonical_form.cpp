@@ -1654,7 +1654,7 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 
 	Stack = NEW_OBJECT(data_structures::partitionstack);
 	Stack->allocate(Enc->nb_rows + Enc->nb_cols, 0);
-	Stack->subset_continguous(Inc->nb_points(), Inc->nb_lines());
+	Stack->subset_contiguous(Inc->nb_points(), Inc->nb_lines());
 	Stack->split_cell(0);
 
 	if (type == t_PTS) {
@@ -1662,7 +1662,7 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PTS split1" << endl;
 		}
-		Stack->subset_continguous(
+		Stack->subset_contiguous(
 				Inc->nb_points() + P->Subspaces->N_lines,
 				Enc->nb_cols - P->Subspaces->N_lines);
 		Stack->split_cell(0);
@@ -1670,7 +1670,7 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PTS split2" << endl;
 		}
 		if (Enc->nb_rows - Inc->nb_points()) {
-			Stack->subset_continguous(
+			Stack->subset_contiguous(
 					Inc->nb_points(),
 					Enc->nb_rows - Inc->nb_points());
 			Stack->split_cell(0);
@@ -1683,9 +1683,9 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_LNS" << endl;
 		}
-		Stack->subset_continguous(P->Subspaces->N_points, 1);
+		Stack->subset_contiguous(P->Subspaces->N_points, 1);
 		Stack->split_cell(0);
-		Stack->subset_continguous(
+		Stack->subset_contiguous(
 				Inc->nb_points() + P->Subspaces->N_lines,
 				Enc->nb_cols - P->Subspaces->N_lines);
 		Stack->split_cell(0);
@@ -1697,9 +1697,9 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PNL" << endl;
 		}
-		Stack->subset_continguous(P->Subspaces->N_points, 1);
+		Stack->subset_contiguous(P->Subspaces->N_points, 1);
 		Stack->split_cell(0);
-		Stack->subset_continguous(
+		Stack->subset_contiguous(
 				Inc->nb_points() + P->Subspaces->N_lines,
 				Enc->nb_cols - P->Subspaces->N_lines);
 		Stack->split_cell(0);
@@ -1711,9 +1711,9 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PAC" << endl;
 		}
-		Stack->subset_continguous(P->Subspaces->N_points, Enc->nb_rows - P->Subspaces->N_points);
+		Stack->subset_contiguous(P->Subspaces->N_points, Enc->nb_rows - P->Subspaces->N_points);
 		Stack->split_cell(0);
-		Stack->subset_continguous(
+		Stack->subset_contiguous(
 				Inc->nb_points() + P->Subspaces->N_lines,
 				Enc->nb_cols - P->Subspaces->N_lines);
 		Stack->split_cell(0);
@@ -1724,7 +1724,7 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_INC" << endl;
 		}
-		Stack->subset_continguous(v, b);
+		Stack->subset_contiguous(v, b);
 		Stack->split_cell(0);
 
 	}
@@ -1733,9 +1733,9 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		if (f_v) {
 			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_LS" << endl;
 		}
-		Stack->subset_continguous(v, Enc->nb_rows - v);
+		Stack->subset_contiguous(v, Enc->nb_rows - v);
 		Stack->split_cell(0);
-		Stack->subset_continguous(
+		Stack->subset_contiguous(
 				v + b,
 				Enc->nb_cols - b);
 		Stack->split_cell(0);

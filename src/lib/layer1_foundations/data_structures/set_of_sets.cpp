@@ -1013,7 +1013,7 @@ void set_of_sets::compute_and_print_tdo_row_scheme(
 	I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-	Stack->subset_continguous(set_size, nb_blocks);
+	Stack->subset_contiguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 
@@ -1069,7 +1069,7 @@ void set_of_sets::compute_and_print_tdo_col_scheme(
 	I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-	Stack->subset_continguous(set_size, nb_blocks);
+	Stack->subset_contiguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 
@@ -1570,7 +1570,7 @@ void set_of_sets::get_eckardt_points(
 
 	PStack = NEW_OBJECT(partitionstack);
 	PStack->allocate(nb_sets + underlying_set_size, 0 /* verbose_level */);
-	PStack->subset_continguous(nb_sets, underlying_set_size);
+	PStack->subset_contiguous(nb_sets, underlying_set_size);
 	PStack->split_cell(0 /* verbose_level */);
 	
 	IS->compute_TDO_safe(*PStack,

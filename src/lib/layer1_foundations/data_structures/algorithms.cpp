@@ -587,7 +587,7 @@ void algorithms::dot_product_of_columns(
 	Get_matrix(label, A, m, n);
 
 	int *Dot_products;
-	int i, j, h, a, c;
+	int i, j, h, c;
 
 	Dot_products = NEW_int(n * n);
 
@@ -641,7 +641,7 @@ void algorithms::dot_product_of_rows(
 	Get_matrix(label, A, m, n);
 
 	int *Dot_products;
-	int i, j, h, a, c;
+	int i, j, h, c;
 
 	Dot_products = NEW_int(m * m);
 
@@ -710,7 +710,6 @@ void algorithms::matrix_multiply_over_Z(
 	}
 	int *A3;
 	int m3, n3;
-	int i, j, h, a, c;
 
 
 	m3 = m1;
@@ -769,7 +768,7 @@ void algorithms::matrix_rowspan_over_R(
 	Get_matrix(label, A, m, n);
 
 
-	int i, j, h, a, c;
+	int i, j;
 
 	D = new double [m * n];
 

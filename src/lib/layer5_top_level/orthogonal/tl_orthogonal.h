@@ -62,7 +62,8 @@ public:
 
 	blt_set_activity();
 	~blt_set_activity();
-	void init(blt_set_activity_description *Descr,
+	void init(
+			blt_set_activity_description *Descr,
 			orthogonal_geometry_applications::BLT_set_create *BC,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -612,6 +613,10 @@ public:
 			std::string &label_txt,
 			int verbose_level);
 	void make_table_of_blt_sets(int verbose_level);
+	void make_collinearity_graph(
+			int *&Adj, int &N,
+			long int *Set, int sz,
+			int verbose_level);
 
 };
 

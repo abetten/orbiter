@@ -391,7 +391,6 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		long int *pts;
 		int nb_pts;
 
-		//Lint_vec_scan(Descr->perp_text.c_str(), pts, nb_pts);
 		Get_vector_or_set(Descr->perp_text, pts, nb_pts);
 
 		if (f_v) {
@@ -438,6 +437,28 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		cout << "The perp is the following set:" << endl;
 		Lint_vec_print_fully(cout, Perp, sz);
 		cout << endl;
+
+
+		orbiter_kernel_system::file_io Fio;
+		char str[1000];
+
+		snprintf(str, sizeof(str), "_q%d", OA->O->F->q);
+
+		string fname;
+		fname.assign("perp_of_");
+		fname.append(Descr->perp_text);
+		fname.append(str);
+		fname.append(".csv");
+
+		Fio.lint_matrix_write_csv(fname, Perp, sz, 1);
+
+
+
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
 
 		FREE_lint(Perp);
 		FREE_lint(pts);
