@@ -39,6 +39,7 @@ int graph_modification_description::check_and_parse_argument(
 
 	if (f_v) {
 		cout << "graph_modification_description::check_and_parse_argument" << endl;
+		cout << "next argument is " << argv[i] << endl;
 	}
 	if (ST.stringcmp(argv[i], "-complement") == 0) {
 		f_complement = TRUE;

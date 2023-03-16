@@ -343,6 +343,10 @@ int create_graph_description::read_arguments(
 				argc, i, argv,
 				verbose_level)) {
 			Modifications.push_back(M);
+			i--;
+			if (f_v) {
+				cout << "modification" << endl;
+			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
