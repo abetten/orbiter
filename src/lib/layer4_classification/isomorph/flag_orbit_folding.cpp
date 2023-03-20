@@ -1140,13 +1140,17 @@ void flag_orbit_folding::induced_action_on_set_basic(
 
 	//AA = NEW_OBJECT(action);
 
+	std::string label_of_set;
+
+	label_of_set.assign("flag_orbit_folding");
+
 	if (f_vv) {
 		cout << "flag_orbit_folding::induced_action_on_set_basic "
 				"before create_induced_action_by_restriction" << endl;
 	}
 	AA = Iso->Sub->gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		S,
-		Iso->size, set,
+		Iso->size, set, label_of_set,
 		TRUE,
 		0/*verbose_level*/);
 	if (f_vv) {
@@ -1211,13 +1215,17 @@ void flag_orbit_folding::induced_action_on_set(
 	AA_on_k_subsets = NEW_OBJECT(actions::action);
 
 
+	std::string label_of_set;
+
+	label_of_set.assign("flag_orbit_folding");
+
 	if (f_v) {
 		cout << "flag_orbit_folding::induced_action_on_set "
 				"before induced_action_by_restriction" << endl;
 	}
 	AA = Iso->Sub->gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 			S,
-			Iso->size, set,
+			Iso->size, set, label_of_set,
 			TRUE,
 			0/*verbose_level*/);
 	if (f_v) {

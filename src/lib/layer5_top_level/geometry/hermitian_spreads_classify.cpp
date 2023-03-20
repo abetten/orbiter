@@ -285,10 +285,15 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 	//A2r = NEW_OBJECT(action);
 
+	std::string label_of_set;
+
+	label_of_set.assign("secants");
+
+
 	cout << "Creating restricted action on secants:" << endl;
 	A2r = A2->Induced_action->create_induced_action_by_restriction(
 		NULL,
-		nb_secants, secants,
+		nb_secants, secants, label_of_set,
 		FALSE /* f_induce_action */,
 		0 /* verbose_level */);
 	cout << "Creating restricted action on secants done." << endl;

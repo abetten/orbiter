@@ -404,8 +404,8 @@ action *induced_action::induced_action_on_cosets(
 	snprintf(str2, 1000, " {\\rm OnCosets}_{%d}", A_on_cosets->dimension_of_subspace);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 
@@ -449,7 +449,8 @@ action *induced_action::induced_action_on_cosets(
 			cout << "induced_action::induced_action_on_cosets "
 					"before AG.induced_action_override_sims" << endl;
 		}
-		AG.induced_action_override_sims(A_old, A, old_G, verbose_level - 2);
+		AG.induced_action_override_sims(
+				A_old, A, old_G, verbose_level - 2);
 		if (f_v) {
 			cout << "induced_action::induced_action_on_cosets "
 					"after AG.induced_action_override_sims" << endl;
@@ -458,7 +459,8 @@ action *induced_action::induced_action_on_cosets(
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_cosets "
-				"finished, created action " << A->label << " of degree=" << A->degree << endl;
+				"finished, created action " << A->label
+				<< " of degree=" << A->degree << endl;
 		A->print_info();
 	}
 	return A;
@@ -485,8 +487,8 @@ action *induced_action::induced_action_on_factor_space(
 	snprintf(str2, 1000, " {\\rm OnFactor}_{%d,%d}", AF->VS->dimension, AF->factor_space_len);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 
@@ -659,8 +661,8 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 	snprintf(str2, 1000, " {\\rm OnGr}_{%d,%d}", AG->n, AG->k);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 
@@ -782,8 +784,8 @@ action *induced_action::induced_action_on_spread_set(
 	snprintf(str2, 1000, " {\\rm OnSpreadSet %d,%d}", AS->k, AS->q);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 
@@ -837,7 +839,8 @@ action *induced_action::induced_action_on_spread_set(
 			cout << "induced_action::induced_action_on_spread_set "
 					"before AG.induced_action_override_sims" << endl;
 		}
-		AG.induced_action_override_sims(A_old, A,
+		AG.induced_action_override_sims(
+				A_old, A,
 					old_G, 0/*verbose_level - 2*/);
 		if (f_v) {
 			cout << "induced_action::induced_action_on_spread_set "
@@ -957,16 +960,11 @@ action *induced_action::induced_action_on_wedge_product(int verbose_level)
 	A = NEW_OBJECT(action);
 
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_Wedge");
-	snprintf(str2, 1000, " {\\rm OnWedge}");
-
 	A->label.assign(A_old->label);
-	A->label.append(str1);
+	A->label.append("_Wedge");
 
 	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label_tex.append(" {\\rm OnWedge}");
 
 
 	if (f_v) {
@@ -1154,15 +1152,10 @@ action *induced_action::induced_action_on_Galois_group(
 	}
 
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_gal");
-	snprintf(str2, 1000, " {\\rm OnGal}");
-
 	A->label.assign(A_old->label);
+	A->label.append("_gal");
 	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
+	A->label_tex.append(" {\\rm OnGal}");
 
 	if (f_v) {
 		cout << "the old_action " << A_old->label
@@ -1254,15 +1247,10 @@ action *induced_action::induced_action_on_determinant(
 				"old group order = " << go1 << endl;
 	}
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_det");
-	snprintf(str2, 1000, " {\\rm OnDet}");
-
 	A->label.assign(A_old->label);
+	A->label.append("_det");
 	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
+	A->label_tex.append(" {\\rm OnDet}");
 
 
 	if (f_v) {
@@ -1360,15 +1348,10 @@ action *induced_action::induced_action_on_sign(
 	A = NEW_OBJECT(action);
 
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_OnSign");
-	snprintf(str2, 1000, " {\\rm OnSign}");
-
 	A->label.assign(A_old->label);
+	A->label.append("_OnSign");
 	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
+	A->label_tex.append(" {\\rm OnSign}");
 
 
 	if (f_v) {
@@ -1625,8 +1608,8 @@ action *induced_action::induced_action_by_right_multiplication(
 	snprintf(str2, 1000, " {\\rm RightMult%d}", goi);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 
@@ -1664,11 +1647,14 @@ action *induced_action::induced_action_by_right_multiplication(
 		actions::action_global AG;
 
 		if (f_v) {
-			cout << "induced_action::induced_action_by_right_multiplication before induced_action_override_sims" << endl;
+			cout << "induced_action::induced_action_by_right_multiplication "
+					"before induced_action_override_sims" << endl;
 		}
-		AG.induced_action_override_sims(A_old, A, old_G, verbose_level - 2);
+		AG.induced_action_override_sims(
+				A_old, A, old_G, verbose_level - 2);
 		if (f_v) {
-			cout << "induced_action::induced_action_by_right_multiplication after induced_action_override_sims" << endl;
+			cout << "induced_action::induced_action_by_right_multiplication "
+					"after induced_action_override_sims" << endl;
 		}
 	}
 	if (f_v) {
@@ -1792,7 +1778,8 @@ action *induced_action::induced_action_on_sets(
 		}
 		action_global AG;
 
-		AG.induced_action_override_sims(A_old, A,
+		AG.induced_action_override_sims(
+				A_old, A,
 				old_G, verbose_level /*- 2*/);
 		if (f_v) {
 			cout << "induced_action::induced_action_on_sets "
@@ -1823,7 +1810,8 @@ action *induced_action::create_induced_action_on_subgroups(
 	if (f_v) {
 		cout << "induced_action::create_induced_action_on_subgroups" << endl;
 	}
-	A = induced_action_on_subgroups(A_old, S,
+	A = induced_action_on_subgroups(
+			A_old, S,
 		nb_subgroups, group_order, Subgroups,
 		verbose_level - 1);
 	if (f_v) {
@@ -1861,8 +1849,8 @@ action *induced_action::induced_action_on_subgroups(
 	snprintf(str2, 1000, " {\\rm OnSubgroups%d,%d}", nb_subgroups, group_order);
 
 	A->label.assign(old_action->label);
-	A->label_tex.assign(old_action->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(old_action->label_tex);
 	A->label_tex.append(str2);
 
 	A->f_has_subaction = TRUE;
@@ -1941,8 +1929,8 @@ action *induced_action::induced_action_by_restriction_on_orbit_with_schreier_vec
 	snprintf(str2, 1000, " {\\rm res sv%d}", pt);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 	A->f_has_subaction = TRUE;
@@ -1992,7 +1980,8 @@ action *induced_action::induced_action_by_restriction_on_orbit_with_schreier_vec
 		}
 		action_global AG;
 
-		AG.induced_action_override_sims(A_old, A, old_G, verbose_level - 2);
+		AG.induced_action_override_sims(
+				A_old, A, old_G, verbose_level - 2);
 	}
 	if (f_v) {
 		cout << "induced_action::induced_action_by_restriction_on_orbit_with_schreier_vector "
@@ -2054,15 +2043,10 @@ action *induced_action::restricted_action(
 		}
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_res%d", nb_points);
-	snprintf(str2, 1000, " {\\rm res%d}", nb_points);
-
 	A->label.assign(A_old->label);
+	A->label.append("_res");
 	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
+	A->label_tex.append(" {\\rm res}");
 
 
 	A->f_has_subaction = TRUE;
@@ -2105,7 +2089,9 @@ action *induced_action::restricted_action(
 
 action *induced_action::create_induced_action_by_restriction(
 		groups::sims *old_G, int size,
-		long int *set, int f_induce,
+		long int *set,
+		std::string &label_of_set,
+		int f_induce,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2115,7 +2101,7 @@ action *induced_action::create_induced_action_by_restriction(
 		cout << "induced_action::create_induced_action_by_restriction" << endl;
 	}
 	A = induced_action_by_restriction(A_old,
-			f_induce, old_G, size, set, verbose_level - 1);
+			f_induce, old_G, size, set, label_of_set, verbose_level - 1);
 	if (f_v) {
 		cout << "induced_action::create_induced_action_by_restriction done" << endl;
 	}
@@ -2126,6 +2112,7 @@ action *induced_action::induced_action_by_restriction(
 	action *old_action,
 	int f_induce_action, groups::sims *old_G,
 	int nb_points, long int *points,
+	std::string &label_of_set,
 	int verbose_level)
 // uses action_by_restriction data type
 {
@@ -2145,15 +2132,14 @@ action *induced_action::induced_action_by_restriction(
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_res%d", nb_points);
-	snprintf(str2, 1000, " {\\rm res%d}", nb_points);
+
 
 	A->label.assign(old_action->label);
+	A->label.append("_res_");
+	A->label.append(label_of_set);
 	A->label_tex.assign(old_action->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
+	A->label_tex.append(" {\\rm res}");
+	A->label_tex.append(label_of_set);
 
 
 	A->f_has_subaction = TRUE;
@@ -2235,15 +2221,10 @@ action *induced_action::induced_action_on_pairs(
 				"after induced_action_on_k_subsets" << endl;
 	}
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_pairs");
-	snprintf(str2, 1000, " {\\rm OnPairs}");
-
 	A->label.assign(A_old->label);
+	A->label.append("_on_pairs");
 	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
+	A->label_tex.append(" {\\rm OnPairs}");
 
 
 	if (f_v) {
@@ -2347,15 +2328,10 @@ action *induced_action::induced_action_on_ordered_pairs(
 	A = NEW_OBJECT(action);
 
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_ordered_pairs");
-	snprintf(str2, 1000, " {\\rm OnOrderedPairs}");
-
 	A->label.assign(A_old->label);
+	A->label.append("_on_ordered_pairs");
 	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
+	A->label_tex.append(" {\\rm OnOrderedPairs}");
 
 
 	A->f_has_subaction = TRUE;
@@ -2427,8 +2403,8 @@ action *induced_action::induced_action_on_k_subsets(
 	snprintf(str2, 1000, "^{[%d]}", k);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 	On_k_subsets = NEW_OBJECT(induced_actions::action_on_k_subsets);
@@ -2490,8 +2466,8 @@ action *induced_action::induced_action_on_orbits(
 	snprintf(str2, 1000, " {\\rm OnOrbits}_{%d}", Sch->nb_orbits);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 
@@ -2676,15 +2652,10 @@ action *induced_action::induced_action_on_andre(
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_andre");
-	snprintf(str2, 1000, " {\\rm OnAndre}");
-
 	A->label.assign(An1->label);
+	A->label.append("_on_andre");
 	A->label_tex.assign(An1->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
+	A->label_tex.append(" {\\rm OnAndre}");
 
 	On_andre = NEW_OBJECT(induced_actions::action_on_andre);
 	On_andre->init(An, An1, Andre, verbose_level);
@@ -2831,12 +2802,14 @@ action *induced_action::induced_action_on_homogeneous_polynomials(
 
 	char str1[1000];
 	char str2[1000];
-	snprintf(str1, 1000, "_on_homog_poly_%d_%d", HPD->nb_variables, HPD->degree);
-	snprintf(str2, 1000, " {\\rm OnHomPoly}_{%d,%d}", HPD->nb_variables, HPD->degree);
+	snprintf(str1, 1000, "_on_homog_poly_%d_%d",
+			HPD->nb_variables, HPD->degree);
+	snprintf(str2, 1000, " {\\rm OnHomPoly}_{%d,%d}",
+			HPD->nb_variables, HPD->degree);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 
@@ -2942,8 +2915,8 @@ action *induced_action::induced_action_on_homogeneous_polynomials_given_by_equat
 			HPD->nb_variables, HPD->degree, nb_equations);
 
 	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
 	A->label.append(str1);
+	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
 
@@ -3107,15 +3080,10 @@ action *induced_action::base_change(
 		cout << "induced_action::base_change after AG.induce" << endl;
 	}
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_base_change");
-	snprintf(str2, 1000, " {\\rm BaseChange}");
-
 	new_action->label.assign(old_action->label);
+	new_action->label.append("_base_change");
 	new_action->label_tex.assign(old_action->label_tex);
-	new_action->label.append(str1);
-	new_action->label_tex.append(str2);
+	new_action->label_tex.append(" {\\rm BaseChange}");
 
 
 

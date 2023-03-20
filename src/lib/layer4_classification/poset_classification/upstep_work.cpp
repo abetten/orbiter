@@ -695,9 +695,14 @@ int upstep_work::upstep_for_sets(int verbose_level)
 				<< f_indicate_not_canonicals << endl;
 		//cout << endl;
 	}
+
+	std::string label_of_set;
+
+	label_of_set.assign("upstep_work");
+
 	A_by_restriction = gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		NULL /*sims *old_G */,
-		size, gen->get_S(),
+		size, gen->get_S(), label_of_set,
 		FALSE /* f_induce_action */,
 		0 /*verbose_level - 2*/);
 	

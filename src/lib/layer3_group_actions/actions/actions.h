@@ -389,6 +389,7 @@ public:
 			action *&A_by_restriction,
 			groups::schreier *&Orbits, groups::sims *S,
 			int size, long int *set,
+			std::string &label_of_set,
 			int verbose_level);
 	void create_orbits_on_sets_using_action_on_sets(
 			action *&A_on_sets,
@@ -1355,12 +1356,15 @@ public:
 		int verbose_level);
 	action *create_induced_action_by_restriction(
 			groups::sims *old_G, int size,
-			long int *set, int f_induce,
+			long int *set,
+			std::string &label_of_set,
+			int f_induce,
 			int verbose_level);
 	action *induced_action_by_restriction(
 		action *old_action,
 		int f_induce_action, groups::sims *old_G,
 		int nb_points, long int *points,
+		std::string &label_of_set,
 		int verbose_level);
 	action *induced_action_on_pairs(
 		int verbose_level);

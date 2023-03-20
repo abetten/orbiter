@@ -93,13 +93,19 @@ void union_find_on_k_subsets::init(
 	Arkr = NEW_OBJECT(actions::action);
 	
 	
+	std::string label_of_set;
+
+
+	label_of_set.assign("union_find_on_k_subsets");
+
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init "
 				"before A_original->Induced_action->"
 				"create_induced_action_by_restriction" << endl;
 	}
 	Ar = A_original->Induced_action->create_induced_action_by_restriction(
-			S, set_sz, set, TRUE, 0/*verbose_level*/);
+			S, set_sz, set, label_of_set,
+			TRUE, 0/*verbose_level*/);
 	//action *create_induced_action_by_restriction(
 	//		sims *S, int size, int *set, int f_induce,
 	//		int verbose_level);
@@ -177,13 +183,15 @@ void union_find_on_k_subsets::init(
 		Ark->print_info();
 	}
 
+	label_of_set.assign("interesting_k_subsets");
+
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init "
 				"before Ark->Induced_action->create_induced_action_by_restriction" << endl;
 	}
 	Arkr = Ark->Induced_action->create_induced_action_by_restriction(
 			NULL /* sims *S */,
-			nb_interesting_k_subsets, interesting_k_subsets,
+			nb_interesting_k_subsets, interesting_k_subsets, label_of_set,
 			FALSE, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init "

@@ -935,9 +935,16 @@ void spread_classify::report3(
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 			}
+
+
+			std::string label_of_set;
+
+			label_of_set.assign("spread");
+
+
 			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
-					len, set,
+					len, set, label_of_set,
 					TRUE,
 					0/*verbose_level*/);
 			if (f_v) {
@@ -981,9 +988,14 @@ void spread_classify::report3(
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 			}
+
+			std::string label_of_set;
+
+			label_of_set.assign("spread");
+
 			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
-					len, set,
+					len, set, label_of_set,
 					TRUE,
 					0/*verbose_level*/);
 			if (f_v) {

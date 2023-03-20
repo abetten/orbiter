@@ -341,6 +341,7 @@ void action::create_orbits_on_subset_using_restricted_action(
 		action *&A_by_restriction,
 		groups::schreier *&Orbits, groups::sims *S,
 		int size, long int *set,
+		std::string &label_of_set,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -352,6 +353,7 @@ void action::create_orbits_on_subset_using_restricted_action(
 	A_by_restriction = Induced_action->create_induced_action_by_restriction(
 			S,
 			size, set,
+			label_of_set,
 			f_induce,
 			verbose_level - 1);
 	Orbits = NEW_OBJECT(groups::schreier);

@@ -321,10 +321,13 @@ void isomorph::induced_action_on_set_and_kernel(
 	}
 
 	int f_induce_action = TRUE;
+	std::string label_of_set;
+
+	label_of_set.assign("isomorph::induced_action_on_set_and_kernel");
 
 	AAA = Sub->gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		Stab,
-		size, set,
+		size, set, label_of_set,
 		f_induce_action,
 		verbose_level - 1);
 

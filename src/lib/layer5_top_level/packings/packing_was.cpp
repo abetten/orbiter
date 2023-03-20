@@ -1141,6 +1141,13 @@ actions::action *packing_was::restricted_action(
 				"we don't have any orbits of length " << orbit_length << endl;
 		exit(1);
 	}
+
+
+	std::string label_of_set;
+
+	label_of_set.assign("reduced_spreads");
+
+
 	if (f_v) {
 		cout << "orbit_idx = " << orbit_idx << endl;
 		cout << "Number of orbits of length " << orbit_length << " is "
@@ -1150,6 +1157,7 @@ actions::action *packing_was::restricted_action(
 		NULL,
 		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[orbit_idx],
 		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[orbit_idx],
+		label_of_set,
 		FALSE /* f_induce_action */,
 		verbose_level);
 
