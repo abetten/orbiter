@@ -1849,7 +1849,8 @@ void matrix_group::encode_frobenius(
 	}
 }
 
-void matrix_group::make_element(int *Elt,
+void matrix_group::make_element(
+		int *Elt,
 		int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1889,7 +1890,8 @@ void matrix_group::make_element(int *Elt,
 	}
 }
 
-void matrix_group::make_GL_element(int *Elt, int *A, int f)
+void matrix_group::make_GL_element(
+		int *Elt, int *A, int f)
 {
 	if (f_projective) {
 		Int_vec_copy(A, Elt, n * n);
@@ -2077,7 +2079,8 @@ void matrix_group::matrices_without_eigenvector_one(
 #endif
 
 
-void matrix_group::matrix_minor(int *Elt,
+void matrix_group::matrix_minor(
+		int *Elt,
 		int *Elt1, matrix_group *mtx1, int f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

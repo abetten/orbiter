@@ -16091,6 +16091,7 @@ test_13_1:
 	make make_triangle_graph
 	make Chain_232
 	make Paley_13_graph
+	make Paley_13_graph_complement
 	make Winnie_Li_graph_q16_index2
 	make Sarnak_graph_29_5
 	make trihedral_pair_graph
@@ -16144,6 +16145,10 @@ Paley_13_graph:
 		-define Gamma -graph -Paley F -end \
 
 
+Paley_13_graph_complement:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define Gamma -graph -Paley F -complement -end \
 
 Winnie_Li_graph_q16_index2:
 	$(ORBITER) -v 2 \

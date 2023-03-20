@@ -227,7 +227,8 @@ void hyperbolic_pair::canonical_points_of_line(
 
 
 
-void hyperbolic_pair::unrank_S(int *v, int stride, int m, int rk)
+void hyperbolic_pair::unrank_S(
+		int *v, int stride, int m, int rk)
 // m = Witt index
 {
 	if (m == 0) {
@@ -236,7 +237,8 @@ void hyperbolic_pair::unrank_S(int *v, int stride, int m, int rk)
 	O->Orthogonal_indexing->S_unrank(v, stride, m, rk);
 }
 
-long int hyperbolic_pair::rank_S(int *v, int stride, int m)
+long int hyperbolic_pair::rank_S(
+		int *v, int stride, int m)
 // m = Witt index
 {
 	long int rk;
@@ -248,13 +250,15 @@ long int hyperbolic_pair::rank_S(int *v, int stride, int m)
 	return rk;
 }
 
-void hyperbolic_pair::unrank_N(int *v, int stride, int m, long int rk)
+void hyperbolic_pair::unrank_N(
+		int *v, int stride, int m, long int rk)
 // m = Witt index
 {
 	O->Orthogonal_indexing->N_unrank(v, stride, m, rk);
 }
 
-long int hyperbolic_pair::rank_N(int *v, int stride, int m)
+long int hyperbolic_pair::rank_N(
+		int *v, int stride, int m)
 // m = Witt index
 {
 	long int rk;
@@ -263,13 +267,15 @@ long int hyperbolic_pair::rank_N(int *v, int stride, int m)
 	return rk;
 }
 
-void hyperbolic_pair::unrank_N1(int *v, int stride, int m, long int rk)
+void hyperbolic_pair::unrank_N1(
+		int *v, int stride, int m, long int rk)
 // m = Witt index
 {
 	O->Orthogonal_indexing->N1_unrank(v, stride, m, rk);
 }
 
-long int hyperbolic_pair::rank_N1(int *v, int stride, int m)
+long int hyperbolic_pair::rank_N1(
+		int *v, int stride, int m)
 // m = Witt index
 {
 	long int rk;
@@ -278,13 +284,16 @@ long int hyperbolic_pair::rank_N1(int *v, int stride, int m)
 	return rk;
 }
 
-void hyperbolic_pair::unrank_Sbar(int *v, int stride, int m, long int rk)
+void hyperbolic_pair::unrank_Sbar(
+		int *v, int stride, int m, long int rk)
 // m = Witt index
 {
-	O->Orthogonal_indexing->Sbar_unrank(v, stride, m, rk, 0 /* verbose_level */);
+	O->Orthogonal_indexing->Sbar_unrank(
+			v, stride, m, rk, 0 /* verbose_level */);
 }
 
-long int hyperbolic_pair::rank_Sbar(int *v, int stride, int m)
+long int hyperbolic_pair::rank_Sbar(
+		int *v, int stride, int m)
 // m = Witt index
 {
 	long int rk;
@@ -293,17 +302,20 @@ long int hyperbolic_pair::rank_Sbar(int *v, int stride, int m)
 	for (i = 0; i < 2 * m; i++) {
 		v_tmp[i] = v[i * stride];
 	}
-	O->Orthogonal_indexing->Sbar_rank(v_tmp, 1, m, rk, 0 /* verbose_level */);
+	O->Orthogonal_indexing->Sbar_rank(
+			v_tmp, 1, m, rk, 0 /* verbose_level */);
 	return rk;
 }
 
-void hyperbolic_pair::unrank_Nbar(int *v, int stride, int m, long int rk)
+void hyperbolic_pair::unrank_Nbar(
+		int *v, int stride, int m, long int rk)
 // m = Witt index
 {
 	O->Orthogonal_indexing->Nbar_unrank(v, stride, m, rk);
 }
 
-long int hyperbolic_pair::rank_Nbar(int *v, int stride, int m)
+long int hyperbolic_pair::rank_Nbar(
+		int *v, int stride, int m)
 // m = Witt index
 {
 	long int rk;

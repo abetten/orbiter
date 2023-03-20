@@ -141,7 +141,8 @@ hyperbolic_pair::~hyperbolic_pair()
 
 }
 
-void hyperbolic_pair::init(orthogonal *O, int verbose_level)
+void hyperbolic_pair::init(
+		orthogonal *O, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

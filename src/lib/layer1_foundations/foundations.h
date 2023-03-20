@@ -246,7 +246,7 @@ namespace layer1_foundations {
 
 
 
-//! algebraic algorithms, generators for certain classes of groups, conjugacy classes in the general linear group
+//! algebraic algorithms, generators for groups, conjugacy classes in the general linear group
 
 namespace algebra {
 
@@ -258,8 +258,6 @@ namespace algebra {
 	class gl_classes;
 	class group_generators_domain;
 	class heisenberg;
-	class interface_gap_low;
-	class interface_magma_low;
 	class matrix_block_data;
 	class matrix_group;
 	class null_polarity_generator;
@@ -554,6 +552,18 @@ namespace knowledge_base {
 	class knowledge_base;
 
 }
+
+
+
+//! interface to magma and gap
+
+namespace l1_interfaces {
+
+	class interface_gap_low;
+	class interface_magma_low;
+
+}
+
 
 
 //! linear algebra and representation theory
@@ -980,6 +990,7 @@ enum CRC_type {
 #include "graph_theory_nauty/graph_theory_nauty.h"
 #include "graphics/graphics.h"
 #include "knowledge_base/knowledge_base.h"
+#include "l1_interfaces/l1_interfaces.h"
 #include "linear_algebra/linear_algebra.h"
 #include "number_theory/number_theory.h"
 #include "orbiter_kernel_system/orbiter_kernel_system.h"

@@ -29,6 +29,7 @@ all: \
 	graphics \
 	Jeffrey_Leon_partition_backtrack \
 	knowledge_base \
+	l1_interfaces \
 	linear_algebra \
 	number_theory \
 	orbiter_kernel_system \
@@ -57,6 +58,7 @@ graph_theory_nauty : graph_theory_nauty2
 graphics : graphics2 
 Jeffrey_Leon_partition_backtrack : Jeffrey_Leon_partition_backtrack2 
 knowledge_base : knowledge_base2  
+l1_interfaces : l1_interfaces2  
 linear_algebra : linear_algebra2  
 number_theory : number_theory2  
 orbiter_kernel_system : orbiter_kernel_system2  
@@ -83,6 +85,7 @@ graph_theory_nauty2 : ; cd graph_theory_nauty; $(MAKE)
 graphics2 : ; cd graphics; $(MAKE)
 Jeffrey_Leon_partition_backtrack2 : ; cd Jeffrey_Leon_partition_backtrack; $(MAKE)
 knowledge_base2 : ; cd knowledge_base; $(MAKE)
+l1_interfaces2 : ; cd l1_interfaces; $(MAKE)
 linear_algebra2 : ; cd linear_algebra; $(MAKE)
 number_theory2 : ; cd number_theory; $(MAKE)
 orbiter_kernel_system2 : ; cd orbiter_kernel_system; $(MAKE)
@@ -111,6 +114,7 @@ clean:
 	cd graphics; $(MAKE) clean
 	cd Jeffrey_Leon_partition_backtrack; $(MAKE) clean
 	cd knowledge_base; $(MAKE) clean
+	cd l1_interfaces; $(MAKE) clean
 	cd linear_algebra; $(MAKE) clean
 	cd number_theory; $(MAKE) clean
 	cd orbiter_kernel_system; $(MAKE) clean

@@ -45,7 +45,8 @@ heisenberg::~heisenberg()
 		}
 }
 
-void heisenberg::init(field_theory::finite_field *F, int n, int verbose_level)
+void heisenberg::init(
+		field_theory::finite_field *F, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -69,13 +70,15 @@ void heisenberg::init(field_theory::finite_field *F, int n, int verbose_level)
 		}
 }
 
-void heisenberg::unrank_element(int *Elt, long int rk)
+void heisenberg::unrank_element(
+		int *Elt, long int rk)
 {
 	geometry::geometry_global Gg;
 	Gg.AG_element_unrank(q, Elt, 1, len, rk);
 }
 
-long int heisenberg::rank_element(int *Elt)
+long int heisenberg::rank_element(
+		int *Elt)
 {
 	long int rk;
 	geometry::geometry_global Gg;
@@ -84,7 +87,8 @@ long int heisenberg::rank_element(int *Elt)
 	return rk;
 }
 
-void heisenberg::element_add(int *Elt1, int *Elt2, int *Elt3, int verbose_level)
+void heisenberg::element_add(
+		int *Elt1, int *Elt2, int *Elt3, int verbose_level)
 {
 	int a;
 
@@ -93,7 +97,8 @@ void heisenberg::element_add(int *Elt1, int *Elt2, int *Elt3, int verbose_level)
 	Elt3[2 * n] = F->add(Elt3[2 * n], a);
 }
 
-void heisenberg::element_negate(int *Elt1, int *Elt2, int verbose_level)
+void heisenberg::element_negate(
+		int *Elt1, int *Elt2, int verbose_level)
 {
 	int a;
 
@@ -103,7 +108,8 @@ void heisenberg::element_negate(int *Elt1, int *Elt2, int verbose_level)
 }
 
 
-int heisenberg::element_add_by_rank(int rk_a, int rk_b, int verbose_level)
+int heisenberg::element_add_by_rank(
+		int rk_a, int rk_b, int verbose_level)
 {
 	int rk;
 	
@@ -114,7 +120,8 @@ int heisenberg::element_add_by_rank(int rk_a, int rk_b, int verbose_level)
 	return rk;
 }
 
-int heisenberg::element_negate_by_rank(int rk_a, int verbose_level)
+int heisenberg::element_negate_by_rank(
+		int rk_a, int verbose_level)
 {
 	int rk;
 	
@@ -124,7 +131,8 @@ int heisenberg::element_negate_by_rank(int rk_a, int verbose_level)
 	return rk;
 }
 
-void heisenberg::group_table(int *&Table, int verbose_level)
+void heisenberg::group_table(
+		int *&Table, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -148,7 +156,8 @@ void heisenberg::group_table(int *&Table, int verbose_level)
 		}
 }
 
-void heisenberg::group_table_abv(int *&Table_abv, int verbose_level)
+void heisenberg::group_table_abv(
+		int *&Table_abv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -173,7 +182,8 @@ void heisenberg::group_table_abv(int *&Table_abv, int verbose_level)
 		}
 }
 
-void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
+void heisenberg::generating_set(
+		int *&gens, int &nb_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);

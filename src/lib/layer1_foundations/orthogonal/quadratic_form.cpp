@@ -64,7 +64,8 @@ quadratic_form::~quadratic_form()
 }
 
 
-void quadratic_form::init(int epsilon, int n,
+void quadratic_form::init(
+		int epsilon, int n,
 		field_theory::finite_field *F,
 		int verbose_level)
 {

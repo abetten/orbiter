@@ -91,7 +91,7 @@ void l3_interface_gap::export_collineation_group_to_fining(
 		cout << "l3_interface_gap::export_collineation_group_to_fining" << endl;
 	}
 	int h;
-	algebra::interface_gap_low Interface_low;
+	l1_interfaces::interface_gap_low Interface_low;
 	field_theory::finite_field *F;
 	algebra::matrix_group *M;
 	int *Elt;
@@ -123,7 +123,8 @@ void l3_interface_gap::export_collineation_group_to_fining(
 			frob = 0;
 		}
 
-		ost << "frob" << h + 1 << " := FrobeniusAutomorphism(GF(" << F->q << "))^" << frob << ";" << endl;
+		ost << "frob" << h + 1 << " := FrobeniusAutomorphism("
+				"GF(" << F->q << "))^" << frob << ";" << endl;
 
 		ost << "psi" << h + 1 << " := ProjectiveSemilinearMap("
 				"mat" << h + 1 << ", frob" << h + 1 << ",GF(" << F->q << "));" << endl;
@@ -246,7 +247,8 @@ void l3_interface_gap::export_BLT_set(
 		ost << "# Group of order " << go << endl;
 
 		if (!SG->A->is_matrix_group()) {
-			cout << "l3_interface_gap::export_BLT_set the group is not a matrix group" << endl;
+			cout << "l3_interface_gap::export_BLT_set "
+					"the group is not a matrix group" << endl;
 			exit(1);
 		}
 		if (f_v) {
@@ -260,14 +262,15 @@ void l3_interface_gap::export_BLT_set(
 		}
 	}
 	else {
-		cout << "l3_interface_gap::export_BLT_set the group is not available" << endl;
+		cout << "l3_interface_gap::export_BLT_set "
+				"the group is not available" << endl;
 	}
 
 	int h, i, a;
 	int sz;
 	int d = 5;
 	int v[5];
-	algebra::interface_gap_low Interface;
+	l1_interfaces::interface_gap_low Interface;
 
 	sz = Blt_set_domain->target_size;
 

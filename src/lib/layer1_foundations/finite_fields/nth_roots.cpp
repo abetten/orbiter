@@ -377,7 +377,8 @@ void nth_roots::init(
 	}
 }
 
-void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int verbose_level)
+void nth_roots::compute_subfield(
+		int subfield_degree, int *&field_basis, int verbose_level)
 // field_basis[subfield_degree * field_degree]
 // assumes that subfield_degree divides the field_degree
 {
@@ -572,7 +573,8 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 }
 
 
-void nth_roots::report(std::ostream &ost, int verbose_level)
+void nth_roots::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

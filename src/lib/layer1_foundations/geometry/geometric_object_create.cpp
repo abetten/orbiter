@@ -39,7 +39,8 @@ geometric_object_create::~geometric_object_create()
 	}
 }
 
-void geometric_object_create::init(geometric_object_description *Descr,
+void geometric_object_create::init(
+		geometric_object_description *Descr,
 		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -59,7 +60,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 	if (Descr->f_hyperoval) {
 		if (f_v) {
-			cout << "geometric_object_create::init before P->Arc_in_projective_space->create_hyperoval" << endl;
+			cout << "geometric_object_create::init "
+					"before P->Arc_in_projective_space->create_hyperoval" << endl;
 		}
 		P->Arc_in_projective_space->create_hyperoval(
 				Descr->f_translation,
@@ -73,7 +75,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 				nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after P->Arc_in_projective_space->create_hyperoval" << endl;
+			cout << "geometric_object_create::init "
+					"after P->Arc_in_projective_space->create_hyperoval" << endl;
 		}
 
 		//F->export_magma(3, Pts, nb_pts, fname);
@@ -82,7 +85,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 	else if (Descr->f_subiaco_oval) {
 		if (f_v) {
-			cout << "geometric_object_create::init before P->Arc_in_projective_space->create_subiaco_oval" << endl;
+			cout << "geometric_object_create::init "
+					"before P->Arc_in_projective_space->create_subiaco_oval" << endl;
 		}
 		P->Arc_in_projective_space->create_subiaco_oval(
 				Descr->f_short,
@@ -91,7 +95,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after P->Arc_in_projective_space->create_subiaco_oval" << endl;
+			cout << "geometric_object_create::init "
+					"after P->Arc_in_projective_space->create_subiaco_oval" << endl;
 		}
 
 		//F->export_magma(3, Pts, nb_pts, fname);
@@ -100,7 +105,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 	else if (Descr->f_subiaco_hyperoval) {
 		if (f_v) {
-			cout << "geometric_object_create::init before P->Arc_in_projective_space->create_subiaco_hyperoval" << endl;
+			cout << "geometric_object_create::init "
+					"before P->Arc_in_projective_space->create_subiaco_hyperoval" << endl;
 		}
 		P->Arc_in_projective_space->create_subiaco_hyperoval(
 				label_txt,
@@ -108,7 +114,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after P->Arc_in_projective_space->create_subiaco_hyperoval" << endl;
+			cout << "geometric_object_create::init "
+					"after P->Arc_in_projective_space->create_subiaco_hyperoval" << endl;
 		}
 
 
@@ -542,8 +549,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(
-				Descr->projective_variety_ring_label);
+		HPD = Get_ring(Descr->projective_variety_ring_label);
 
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -568,7 +574,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->intersection_of_zariski_open_sets_ring_label);
+		HPD = Get_ring(Descr->intersection_of_zariski_open_sets_ring_label);
 
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -592,7 +598,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->number_of_conditions_satisfied_ring_label);
+		HPD = Get_ring(Descr->number_of_conditions_satisfied_ring_label);
 
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -620,7 +626,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->projective_curve_ring_label);
+		HPD = Get_ring(Descr->projective_curve_ring_label);
 
 		if (f_v) {
 			cout << "geometric_object_create::init "

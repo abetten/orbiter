@@ -201,7 +201,8 @@ public:
 	~clique_finder();
 	void null();
 	void free();
-	void init(clique_finder_control *Control,
+	void init(
+			clique_finder_control *Control,
 			std::string &label, int n,
 			int f_has_adj_list, int *adj_list_coded,
 			int f_has_bitvector,
@@ -230,14 +231,17 @@ public:
 			unsigned long int counter);
 	void log_choice(int depth);
 	void swap_point(int idx1, int idx2);
-	void degree_of_point_statistic(int depth, int nb_points, 
+	void degree_of_point_statistic(
+			int depth, int nb_points,
 		int verbose_level);
-	int degree_of_point(int depth, int i, int nb_points);
+	int degree_of_point(
+			int depth, int i, int nb_points);
 	int is_suspicious(int i);
 	int point_label(int i);
 	int is_adjacent(int depth, int i, int j);
 	int is_viable(int depth, int pt);
-	void write_entry_to_tree_file(int depth, int verbose_level);
+	void write_entry_to_tree_file(
+			int depth, int verbose_level);
 	int s_ij(int i, int j);
 	void delinearize_adjacency_list(int verbose_level);
 
@@ -496,7 +500,8 @@ public:
 
 	graph_layer();
 	~graph_layer();
-	void init(int nb_nodes,
+	void init(
+			int nb_nodes,
 			int id_of_first_node, int verbose_level);
 	void place(int verbose_level);
 	void place_with_grouping(
@@ -578,7 +583,8 @@ public:
 	void find_all_parents(
 			layered_graph *G, std::vector<int> &All_Parents,
 			int verbose_level);
-	int find_parent(layered_graph *G, int verbose_level);
+	int find_parent(
+			layered_graph *G, int verbose_level);
 	void register_child(
 			layered_graph *G, int id_child,
 			int verbose_level);

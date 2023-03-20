@@ -2314,7 +2314,7 @@ void algebra_global::O4_find_tangent_plane(
 #endif
 }
 
-void algebra_global::Nth_roots(
+void algebra_global::create_Nth_roots_and_write_report(
 		field_theory::finite_field *F,
 		int n, int verbose_level)
 {
@@ -2370,7 +2370,8 @@ void algebra_global::Nth_roots(
 
 		}
 
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 
 	}
 

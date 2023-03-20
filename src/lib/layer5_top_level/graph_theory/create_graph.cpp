@@ -60,21 +60,25 @@ void create_graph::init(
 		CG = NEW_OBJECT(graph_theory::colored_graph);
 		if (f_v) {
 			cout << "create_graph::init "
-					"before CG->load, fname=" << description->fname << endl;
+					"before CG->load, "
+					"fname=" << description->fname << endl;
 		}
 		CG->load(description->fname, verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
-					"after CG->load, fname=" << description->fname << endl;
+					"after CG->load, "
+					"fname=" << description->fname << endl;
 		}
 		f_has_CG = TRUE;
 		N = CG->nb_points;
 		if (f_v) {
-			cout << "create_graph::init number of vertices = " << N << endl;
+			cout << "create_graph::init "
+					"number of vertices = " << N << endl;
 		}
 		label.assign(description->fname);
 		if (f_v) {
-			cout << "create_graph::init label = " << label << endl;
+			cout << "create_graph::init "
+					"label = " << label << endl;
 		}
 
 		data_structures::string_tools String;
@@ -115,7 +119,8 @@ void create_graph::init(
 			cout << "create_graph::init group order "
 					"G = " << Sims->group_order_lint() << endl;
 			cout << "create_graph::init group order "
-					"coded element size = " << G->A_base->elt_size_in_int << endl;
+					"coded element size = "
+					<< G->A_base->elt_size_in_int << endl;
 		}
 
 		int *v;
@@ -181,7 +186,8 @@ void create_graph::init(
 			}
 			for (h = 0; h < nb_gens; h++) {
 
-				G->A->Group_element->element_mult(Elt1, gens->ith(h), Elt2, 0 /*verbose_level*/);
+				G->A->Group_element->element_mult(
+						Elt1, gens->ith(h), Elt2, 0 /*verbose_level*/);
 
 				j = Sims->element_rank_lint(Elt2);
 
@@ -225,7 +231,8 @@ void create_graph::init(
 		int *M;
 		int m, n;
 
-		Fio.int_matrix_read_csv_no_border(description->fname, M, m, n, verbose_level);
+		Fio.int_matrix_read_csv_no_border(
+				description->fname, M, m, n, verbose_level);
 		N = n;
 		Adj = M;
 
@@ -1414,7 +1421,8 @@ void create_graph::create_coll_orthogonal(
 	long int *Set;
 	int sz;
 
-	Get_lint_vector_from_label(set_of_points_label, Set, sz, 0 /* verbose_level */);
+	Get_lint_vector_from_label(
+			set_of_points_label, Set, sz, 0 /* verbose_level */);
 
 
 	if (f_v) {

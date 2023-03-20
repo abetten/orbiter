@@ -368,7 +368,8 @@ void subfield_structure::report(std::ostream &ost)
 	}
 }
 
-void subfield_structure::report_embedding(std::ostream &ost)
+void subfield_structure::report_embedding(
+		std::ostream &ost)
 {
 	int i, j;
 	geometry::geometry_global Gg;
@@ -389,7 +390,8 @@ void subfield_structure::report_embedding(std::ostream &ost)
 	ost << "$$" << endl;
 }
 
-void subfield_structure::report_embedding_reverse(std::ostream &ost)
+void subfield_structure::report_embedding_reverse(
+		std::ostream &ost)
 {
 	int i, j;
 	geometry::geometry_global Gg;
@@ -525,7 +527,8 @@ void subfield_structure::lift_matrix_semilinear(
 
 
 
-void subfield_structure::retract_matrix(int *Mq,
+void subfield_structure::retract_matrix(
+		int *Mq,
 		int n, int *MQ, int m, int verbose_level)
 // input is Mq[n * n] over the field Fq,
 // output is MQ[m * m] over the field FQ.

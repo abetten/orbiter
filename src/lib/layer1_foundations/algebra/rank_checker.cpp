@@ -306,7 +306,8 @@ int rank_checker::check_rank_last_two_are_fixed(
 }
 
 int rank_checker::compute_rank_row_vectors(
-		int len, long int *S, int f_projective, int verbose_level)
+		int len, long int *S, int f_projective,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

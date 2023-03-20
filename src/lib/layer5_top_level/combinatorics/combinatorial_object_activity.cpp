@@ -1222,22 +1222,27 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 	apps_algebra::any_group *G;
 
 	G = Get_object_of_type_any_group(group_label);
+
+#if 0
 	groups::linear_group *LG;
 
 	LG = G->LG;
 
 
 	if (!G->f_linear_group) {
-		cout << "combinatorial_object_activity::unpack_from_restricted_action must be a linear group" << endl;
+		cout << "combinatorial_object_activity::unpack_from_restricted_action "
+				"must be a linear group" << endl;
 		exit(1);
 	}
+#endif
 
-	if (LG->A2->type_G != action_by_restriction_t) {
-		cout << "combinatorial_object_activity::unpack_from_restricted_action must be a restricted action" << endl;
+	if (G->A->type_G != action_by_restriction_t) {
+		cout << "combinatorial_object_activity::unpack_from_restricted_action "
+				"must be a restricted action" << endl;
 		exit(1);
 	}
 	induced_actions::action_by_restriction *ABR;
-	ABR = LG->A2->G.ABR;
+	ABR = G->A->G.ABR;
 
 
 	string fname;
@@ -1246,7 +1251,8 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 	fname.append("_unpacked.txt");
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::unpack_from_restricted_action before latex_report" << endl;
+		cout << "combinatorial_object_activity::unpack_from_restricted_action "
+				"before latex_report" << endl;
 	}
 
 
@@ -1261,7 +1267,8 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::unpack_from_restricted_action before loop" << endl;
+			cout << "combinatorial_object_activity::unpack_from_restricted_action "
+					"before loop" << endl;
 		}
 
 		int i, h;

@@ -30,7 +30,8 @@ group_generators_domain::~group_generators_domain()
 }
 
 
-void group_generators_domain::generators_symmetric_group(int deg,
+void group_generators_domain::generators_symmetric_group(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -69,7 +70,8 @@ void group_generators_domain::generators_symmetric_group(int deg,
 	}
 }
 
-void group_generators_domain::generators_cyclic_group(int deg,
+void group_generators_domain::generators_cyclic_group(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -107,7 +109,8 @@ void group_generators_domain::generators_cyclic_group(int deg,
 	}
 }
 
-void group_generators_domain::generators_dihedral_group(int deg,
+void group_generators_domain::generators_dihedral_group(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -151,7 +154,8 @@ void group_generators_domain::generators_dihedral_group(int deg,
 	}
 }
 
-void group_generators_domain::generators_dihedral_involution(int deg,
+void group_generators_domain::generators_dihedral_involution(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -191,7 +195,8 @@ void group_generators_domain::generators_dihedral_involution(int deg,
 	}
 }
 
-void group_generators_domain::generators_identity_group(int deg,
+void group_generators_domain::generators_identity_group(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

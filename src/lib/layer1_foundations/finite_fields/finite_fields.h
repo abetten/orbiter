@@ -896,9 +896,11 @@ public:
 	~nth_roots();
 	void init(
 			finite_field *F, int n, int verbose_level);
-	void compute_subfield(int subfield_degree,
+	void compute_subfield(
+			int subfield_degree,
 			int *&field_basis, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 
 };
 
@@ -1044,8 +1046,10 @@ public:
 				int verbose_level);
 	void print_embedding();
 	void report(std::ostream &ost);
-	void report_embedding(std::ostream &ost);
-	void report_embedding_reverse(std::ostream &ost);
+	void report_embedding(
+			std::ostream &ost);
+	void report_embedding_reverse(
+			std::ostream &ost);
 	int evaluate_over_FQ(int *v);
 	int evaluate_over_Fq(int *v);
 	void lift_matrix(
@@ -1055,7 +1059,8 @@ public:
 	void lift_matrix_semilinear(
 			int *MQ, int frob,
 			int m, int *Mq, int verbose_level);
-	void retract_matrix(int *Mq, int n, int *MQ, int m,
+	void retract_matrix(
+			int *Mq, int n, int *MQ, int m,
 		int verbose_level);
 		// input is Mq[n * n] over the field Fq,
 		// output is MQ[m * m] over the field FQ.

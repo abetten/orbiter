@@ -12,8 +12,6 @@ ORBITER_MODULES= \
 		layer1_foundations/algebra/gl_classes.o \
 		layer1_foundations/algebra/group_generators_domain.o \
 		layer1_foundations/algebra/heisenberg.o \
-		layer1_foundations/algebra/interface_gap_low.o \
-		layer1_foundations/algebra/interface_magma_low.o \
 		layer1_foundations/algebra/matrix_block_data.o \
 		layer1_foundations/algebra/matrix_group.o \
 		layer1_foundations/algebra/null_polarity_generator.o \
@@ -228,6 +226,8 @@ ORBITER_MODULES= \
 		layer1_foundations/linear_algebra/vector_space.o \
 		layer1_foundations/knowledge_base/finite_field_tables.o \
 		layer1_foundations/knowledge_base/knowledge_base.o \
+		layer1_foundations/l1_interfaces/interface_gap_low.o \
+		layer1_foundations/l1_interfaces/interface_magma_low.o \
 		layer1_foundations/number_theory/cyclotomic_sets.o \
 		layer1_foundations/number_theory/elliptic_curve.o \
 		layer1_foundations/number_theory/number_theoretic_transform.o \

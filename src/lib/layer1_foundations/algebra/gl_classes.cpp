@@ -196,7 +196,8 @@ int gl_classes::next(
 }
 
 
-void gl_classes::make_matrix_from_class_rep(int *Mtx,
+void gl_classes::make_matrix_from_class_rep(
+		int *Mtx,
 		gl_class_rep *R, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -468,7 +469,8 @@ void gl_classes::centralizer_order_Kung(
 
 void gl_classes::make_classes(
 		gl_class_rep *&R, int &nb_classes,
-		int f_no_eigenvalue_one, int verbose_level)
+		int f_no_eigenvalue_one,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -712,7 +714,8 @@ loop2:
 	}
 }
 
-void gl_classes::identify_matrix(int *Mtx,
+void gl_classes::identify_matrix(
+		int *Mtx,
 		gl_class_rep *R, int *Basis, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -856,7 +859,8 @@ void gl_classes::identify_matrix(int *Mtx,
 	}
 }
 
-void gl_classes::identify2(int *Mtx,
+void gl_classes::identify2(
+		int *Mtx,
 		ring_theory::unipoly_object &poly,
 	int *Mult, int *Select_partition, int *Basis,
 	int verbose_level)
@@ -1158,7 +1162,8 @@ void gl_classes::compute_generalized_kernels(
 	
 }
 
-int gl_classes::identify_partition(int *part, int m, int verbose_level)
+int gl_classes::identify_partition(
+		int *part, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1869,8 +1874,8 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 
 			if (ret == FALSE) {
 				if (f_v) {
-					cout << "gl_classes::choose_basis_for_rational_normal_"
-							"form_coset level1 = " << level1 << " level2 = "
+					cout << "gl_classes::choose_basis_for_rational_normal_form_coset "
+							"level1 = " << level1 << " level2 = "
 							<< level2 << " coset = " << coset
 							<< " could not choose vector, finished" << endl;
 				}
@@ -1894,7 +1899,8 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 						Basis[i * k + b] = v[i];
 					}
 					b++;
-					F->Linear_algebra->mult_vector_from_the_right(Mtx, v, w, k, k);
+					F->Linear_algebra->mult_vector_from_the_right(
+							Mtx, v, w, k, k);
 					if (f_vv) {
 						cout << "forced vector w=";
 						Int_vec_print(cout, w, k);
@@ -1913,8 +1919,8 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 				} // next g
 			} // next c
 			if (f_vv) {
-				cout << "gl_classes::choose_basis_for_rational_normal_"
-						"form_coset Basis = " << endl;
+				cout << "gl_classes::choose_basis_for_rational_normal_form_coset "
+						"Basis = " << endl;
 				Int_matrix_print(Basis, k, k);
 				cout << endl;
 			}
@@ -1926,14 +1932,14 @@ the_end:
 	FREE_int(w);
 
 	if (f_v) {
-		cout << "gl_classes::choose_basis_for_rational_normal_"
-				"form_coset done" << endl;
+		cout << "gl_classes::choose_basis_for_rational_normal_form_coset done" << endl;
 	}
 	return ret;
 }
 
 
-int gl_classes::find_class_rep(gl_class_rep *Reps,
+int gl_classes::find_class_rep(
+		gl_class_rep *Reps,
 		int nb_reps, gl_class_rep *R, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1965,7 +1971,8 @@ int gl_classes::find_class_rep(gl_class_rep *Reps,
 	return i;
 }
 
-void gl_classes::report(std::ostream &ost, int verbose_level)
+void gl_classes::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1981,7 +1988,8 @@ void gl_classes::report(std::ostream &ost, int verbose_level)
 
 	int i;
 
-	ost << "\\section*{Conjugacy Classes of ${\\rm GL}(" << k << "," << q << ")$}" << endl;
+	ost << "\\section*{Conjugacy Classes of "
+			"${\\rm GL}(" << k << "," << q << ")$}" << endl;
 
 
 	int *M;
@@ -2076,12 +2084,15 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 
 
 
-	make_matrix_from_class_rep(Mtx, R, 0 /* verbose_level */);
+	make_matrix_from_class_rep(
+			Mtx, R, 0 /* verbose_level */);
 
-	centralizer_order_Kung(Select_polynomial,
+	centralizer_order_Kung(
+			Select_polynomial,
 			Select_Partition, co, 0 /*verbose_level - 2*/);
 
-	D.integral_division(go, co, cl, r, 0 /* verbose_level */);
+	D.integral_division(
+			go, co, cl, r, 0 /* verbose_level */);
 
 
 	ost << "$";
@@ -2094,6 +2105,7 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 			ost << ";";
 		}
 	}
+
 	ost << "$" << endl;
 	ost << "$$" << endl;
 	ost << "\\left[" << endl;

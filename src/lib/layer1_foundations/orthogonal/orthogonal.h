@@ -158,14 +158,15 @@ public:
 
 	orthogonal *O;
 
-	field_theory::finite_field *F;
+	field_theory::finite_field *F; // O->F;
+	int q; // F->q;
+	int epsilon; // O->Quadratic_form->epsilon;
+	int m; // O->Quadratic_form->m;
+	int n; // O->Quadratic_form->n;
 
-	int q;
-	int epsilon;
-	int m;
-	int n;
 
 	long int pt_P, pt_Q;
+
 	long int nb_points;
 	long int nb_lines;
 
@@ -185,9 +186,14 @@ public:
 	long int Sbar_mm1;
 	long int Sbar_mm2;
 
-	long int alpha; // number of points in the subspace
-	long int beta; // number of points in the subspace of the subspace
-	long int gamma; // = alpha * beta / (q + 1);
+	long int alpha;
+		// number of points in the subspace
+		// which is the perp of a pair of hyperbolic points
+	long int beta;
+		// number of points in the subspace of the subspace
+	long int gamma;
+		// = alpha * beta / (q + 1);
+
 	int subspace_point_type;
 	int subspace_line_type;
 
@@ -227,7 +233,8 @@ public:
 
 	hyperbolic_pair();
 	~hyperbolic_pair();
-	void init(orthogonal *O, int verbose_level);
+	void init(
+			orthogonal *O, int verbose_level);
 	void init_counting_functions(int verbose_level);
 	void init_decomposition(int verbose_level);
 	void init_parabolic(int verbose_level);
@@ -246,38 +253,54 @@ public:
 			long int rk,
 			long int &type, long int &index);
 
-	void hyperbolic_unrank_line(long int &p1, long int &p2,
+	void hyperbolic_unrank_line(
+			long int &p1, long int &p2,
 		long int rk, int verbose_level);
-	long int hyperbolic_rank_line(long int p1, long int p2,
+	long int hyperbolic_rank_line(
+			long int p1, long int p2,
 			int verbose_level);
 
-	void unrank_line_L1(long int &p1, long int &p2,
+	void unrank_line_L1(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int rank_line_L1(long int p1, long int p2,
+	long int rank_line_L1(
+			long int p1, long int p2,
 			int verbose_level);
-	void unrank_line_L2(long int &p1, long int &p2,
+	void unrank_line_L2(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int rank_line_L2(long int p1, long int p2,
+	long int rank_line_L2(
+			long int p1, long int p2,
 			int verbose_level);
-	void unrank_line_L3(long int &p1, long int &p2,
+	void unrank_line_L3(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int rank_line_L3(long int p1, long int p2,
+	long int rank_line_L3(
+			long int p1, long int p2,
 			int verbose_level);
-	void unrank_line_L4(long int &p1, long int &p2,
+	void unrank_line_L4(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int rank_line_L4(long int p1, long int p2,
+	long int rank_line_L4(
+			long int p1, long int p2,
 			int verbose_level);
-	void unrank_line_L5(long int &p1, long int &p2,
+	void unrank_line_L5(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int rank_line_L5(long int p1, long int p2,
+	long int rank_line_L5(
+			long int p1, long int p2,
 			int verbose_level);
-	void unrank_line_L6(long int &p1, long int &p2,
+	void unrank_line_L6(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int rank_line_L6(long int p1, long int p2,
+	long int rank_line_L6(
+			long int p1, long int p2,
 			int verbose_level);
-	void unrank_line_L7(long int &p1, long int &p2,
+	void unrank_line_L7(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int rank_line_L7(long int p1, long int p2,
+	long int rank_line_L7(
+			long int p1, long int p2,
 			int verbose_level);
 
 	void hyperbolic_canonical_points_of_line(
@@ -286,139 +309,205 @@ public:
 			long int &cpt1, long int &cpt2,
 		int verbose_level);
 
-	void canonical_points_L1(long int pt1, long int pt2,
+	void canonical_points_L1(
+			long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2);
-	void canonical_points_L2(long int pt1, long int pt2,
+	void canonical_points_L2(
+			long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2);
-	void canonical_points_L3(long int pt1, long int pt2,
+	void canonical_points_L3(
+			long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2);
-	void canonical_points_L4(long int pt1, long int pt2,
+	void canonical_points_L4(
+			long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2);
-	void canonical_points_L5(long int pt1, long int pt2,
+	void canonical_points_L5(
+			long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2);
-	void canonical_points_L6(long int pt1, long int pt2,
+	void canonical_points_L6(
+			long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2);
-	void canonical_points_L7(long int pt1, long int pt2,
+	void canonical_points_L7(
+			long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2);
 	int hyperbolic_line_type_given_point_types(
 			long int pt1, long int pt2,
 		int pt1_type, int pt2_type);
-	int hyperbolic_decide_P1(long int pt1, long int pt2);
-	int hyperbolic_decide_P2(long int pt1, long int pt2);
-	int hyperbolic_decide_P3(long int pt1, long int pt2);
+	int hyperbolic_decide_P1(
+			long int pt1, long int pt2);
+	int hyperbolic_decide_P2(
+			long int pt1, long int pt2);
+	int hyperbolic_decide_P3(
+			long int pt1, long int pt2);
 	int find_root_hyperbolic(
 			long int rk2, int m, int verbose_level);
 	// m = Witt index
-	void find_root_hyperbolic_xyz(long int rk2, int m,
+	void find_root_hyperbolic_xyz(
+			long int rk2, int m,
 		int *x, int *y, int *z, int verbose_level);
 
 
 	// hyperbolic_pair_parabolic.cpp:
-	int parabolic_type_and_index_to_point_rk(int type,
+	int parabolic_type_and_index_to_point_rk(
+			int type,
 		int index, int verbose_level);
-	int parabolic_even_type_and_index_to_point_rk(int type,
+	int parabolic_even_type_and_index_to_point_rk(
+			int type,
 		int index, int verbose_level);
-	void parabolic_even_type1_index_to_point(int index, int *v);
-	void parabolic_even_type2_index_to_point(int index, int *v);
-	long int parabolic_odd_type_and_index_to_point_rk(long int type,
+	void parabolic_even_type1_index_to_point(
+			int index, int *v);
+	void parabolic_even_type2_index_to_point(
+			int index, int *v);
+	long int parabolic_odd_type_and_index_to_point_rk(
+			long int type,
 			long int index, int verbose_level);
-	void parabolic_odd_type1_index_to_point(long int index,
+	void parabolic_odd_type1_index_to_point(
+			long int index,
 		int *v, int verbose_level);
-	void parabolic_odd_type2_index_to_point(long int index,
+	void parabolic_odd_type2_index_to_point(
+			long int index,
 		int *v, int verbose_level);
-	void parabolic_point_rk_to_type_and_index(long int rk,
+	void parabolic_point_rk_to_type_and_index(
+			long int rk,
 			long int &type, long int &index, int verbose_level);
-	void parabolic_even_point_rk_to_type_and_index(long int rk,
+	void parabolic_even_point_rk_to_type_and_index(
+			long int rk, long int &type,
+			long int &index, int verbose_level);
+	void parabolic_even_point_to_type_and_index(
+			int *v, long int &type, long int &index,
+			int verbose_level);
+	void parabolic_odd_point_rk_to_type_and_index(
+			long int rk,
 			long int &type, long int &index, int verbose_level);
-	void parabolic_even_point_to_type_and_index(int *v,
-			long int &type, long int &index, int verbose_level);
-	void parabolic_odd_point_rk_to_type_and_index(long int rk,
-			long int &type, long int &index, int verbose_level);
-	void parabolic_odd_point_to_type_and_index(int *v,
+	void parabolic_odd_point_to_type_and_index(
+			int *v,
 			long int &type, long int &index, int verbose_level);
 
-	void parabolic_neighbor51_odd_unrank(long int index,
+	void parabolic_neighbor51_odd_unrank(
+			long int index,
 		int *v, int verbose_level);
-	long int parabolic_neighbor51_odd_rank(int *v,
+	long int parabolic_neighbor51_odd_rank(
+			int *v,
 		int verbose_level);
-	void parabolic_neighbor52_odd_unrank(long int index,
+	void parabolic_neighbor52_odd_unrank(
+			long int index,
 		int *v, int verbose_level);
-	long int parabolic_neighbor52_odd_rank(int *v,
+	long int parabolic_neighbor52_odd_rank(
+			int *v,
 		int verbose_level);
-	void parabolic_neighbor52_even_unrank(long int index,
+	void parabolic_neighbor52_even_unrank(
+			long int index,
 		int *v, int verbose_level);
-	long int parabolic_neighbor52_even_rank(int *v,
+	long int parabolic_neighbor52_even_rank(
+			int *v,
 		int verbose_level);
-	void parabolic_neighbor34_unrank(long int index,
+	void parabolic_neighbor34_unrank(
+			long int index,
 		int *v, int verbose_level);
-	long int parabolic_neighbor34_rank(int *v,
+	long int parabolic_neighbor34_rank(
+			int *v,
 		int verbose_level);
-	void parabolic_neighbor53_unrank(long int index,
+	void parabolic_neighbor53_unrank(
+			long int index,
 		int *v, int verbose_level);
-	long int parabolic_neighbor53_rank(int *v,
+	long int parabolic_neighbor53_rank(
+			int *v,
 		int verbose_level);
-	void parabolic_neighbor54_unrank(long int index,
+	void parabolic_neighbor54_unrank(
+			long int index,
 		int *v, int verbose_level);
-	long int parabolic_neighbor54_rank(int *v, int verbose_level);
+	long int parabolic_neighbor54_rank(
+			int *v, int verbose_level);
 
 
-	void parabolic_unrank_line(long int &p1, long int &p2,
+	void parabolic_unrank_line(
+			long int &p1, long int &p2,
 			long int rk, int verbose_level);
-	long int parabolic_rank_line(long int p1, long int p2,
+	long int parabolic_rank_line(
+			long int p1, long int p2,
 			int verbose_level);
-	void parabolic_unrank_line_L1_even(long int &p1, long int &p2,
+	void parabolic_unrank_line_L1_even(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L1_even(long int p1, long int p2,
+	long int parabolic_rank_line_L1_even(
+			long int p1, long int p2,
 		int verbose_level);
-	void parabolic_unrank_line_L1_odd(long int &p1, long int &p2,
+	void parabolic_unrank_line_L1_odd(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L1_odd(long int p1, long int p2,
+	long int parabolic_rank_line_L1_odd(
+			long int p1, long int p2,
 		int verbose_level);
-	void parabolic_unrank_line_L2_even(long int &p1, long int &p2,
+	void parabolic_unrank_line_L2_even(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	void parabolic_unrank_line_L2_odd(long int &p1, long int &p2,
+	void parabolic_unrank_line_L2_odd(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	int parabolic_rank_line_L2_even(long int p1, long int p2,
+	int parabolic_rank_line_L2_even(
+			long int p1, long int p2,
 		int verbose_level);
-	long int parabolic_rank_line_L2_odd(long int p1, long int p2,
+	long int parabolic_rank_line_L2_odd(
+			long int p1, long int p2,
 		int verbose_level);
-	void parabolic_unrank_line_L3(long int &p1, long int &p2,
+	void parabolic_unrank_line_L3(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L3(long int p1, long int p2,
+	long int parabolic_rank_line_L3(
+			long int p1, long int p2,
 			int verbose_level);
-	void parabolic_unrank_line_L4(long int &p1, long int &p2,
+	void parabolic_unrank_line_L4(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L4(long int p1, long int p2,
+	long int parabolic_rank_line_L4(
+			long int p1, long int p2,
 			int verbose_level);
-	void parabolic_unrank_line_L5(long int &p1, long int &p2,
+	void parabolic_unrank_line_L5(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L5(long int p1, long int p2,
+	long int parabolic_rank_line_L5(
+			long int p1, long int p2,
 			int verbose_level);
-	void parabolic_unrank_line_L6(long int &p1, long int &p2,
+	void parabolic_unrank_line_L6(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L6(long int p1, long int p2,
+	long int parabolic_rank_line_L6(
+			long int p1, long int p2,
 		int verbose_level);
-	void parabolic_unrank_line_L7(long int &p1, long int &p2,
+	void parabolic_unrank_line_L7(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L7(long int p1, long int p2,
+	long int parabolic_rank_line_L7(
+			long int p1, long int p2,
 		int verbose_level);
-	void parabolic_unrank_line_L8(long int &p1, long int &p2,
+	void parabolic_unrank_line_L8(
+			long int &p1, long int &p2,
 			long int index, int verbose_level);
-	long int parabolic_rank_line_L8(long int p1, long int p2,
+	long int parabolic_rank_line_L8(
+			long int p1, long int p2,
 		int verbose_level);
 	long int parabolic_line_type_given_point_types(
 			long int pt1, long int pt2,
 			long int pt1_type, long int pt2_type, int verbose_level);
-	int parabolic_decide_P11_odd(long int pt1, long int pt2);
-	int parabolic_decide_P22_even(long int pt1, long int pt2);
-	int parabolic_decide_P22_odd(long int pt1, long int pt2);
-	int parabolic_decide_P33(long int pt1, long int pt2);
-	int parabolic_decide_P35(long int pt1, long int pt2);
-	int parabolic_decide_P45(long int pt1, long int pt2);
-	int parabolic_decide_P44(long int pt1, long int pt2);
-	void find_root_parabolic_xyz(long int rk2,
+	int parabolic_decide_P11_odd(
+			long int pt1, long int pt2);
+	int parabolic_decide_P22_even(
+			long int pt1, long int pt2);
+	int parabolic_decide_P22_odd(
+			long int pt1, long int pt2);
+	int parabolic_decide_P33(
+			long int pt1, long int pt2);
+	int parabolic_decide_P35(
+			long int pt1, long int pt2);
+	int parabolic_decide_P45(
+			long int pt1, long int pt2);
+	int parabolic_decide_P44(
+			long int pt1, long int pt2);
+	void find_root_parabolic_xyz(
+			long int rk2,
 		int *x, int *y, int *z, int verbose_level);
-	long int find_root_parabolic(long int rk2, int verbose_level);
+	long int find_root_parabolic(
+			long int rk2, int verbose_level);
 	void parabolic_canonical_points_of_line(
 		int line_type, long int pt1, long int pt2,
 		long int &cpt1, long int &cpt2, int verbose_level);
@@ -437,14 +526,16 @@ public:
 	void parabolic_canonical_points_L8(
 			long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2);
-	void parabolic_point_normalize(int *v, int stride, int n);
+	void parabolic_point_normalize(
+			int *v, int stride, int n);
 	void parabolic_normalize_point_wrt_subspace(
 			int *v, int stride);
 	void parabolic_point_properties(
 			int *v, int stride, int n,
 		int &f_start_with_one, int &value_middle, int &value_end,
 		int verbose_level);
-	int parabolic_is_middle_dependent(int *vec1, int *vec2);
+	int parabolic_is_middle_dependent(
+			int *vec1, int *vec2);
 
 
 	// hyperbolic_pair_rank_unrank.cpp
@@ -469,16 +560,26 @@ public:
 	void canonical_points_of_line(
 			int line_type, long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2, int verbose_level);
-	void unrank_S(int *v, int stride, int m, int rk);
-	long int rank_S(int *v, int stride, int m);
-	void unrank_N(int *v, int stride, int m, long int rk);
-	long int rank_N(int *v, int stride, int m);
-	void unrank_N1(int *v, int stride, int m, long int rk);
-	long int rank_N1(int *v, int stride, int m);
-	void unrank_Sbar(int *v, int stride, int m, long int rk);
-	long int rank_Sbar(int *v, int stride, int m);
-	void unrank_Nbar(int *v, int stride, int m, long int rk);
-	long int rank_Nbar(int *v, int stride, int m);
+	void unrank_S(
+			int *v, int stride, int m, int rk);
+	long int rank_S(
+			int *v, int stride, int m);
+	void unrank_N(
+			int *v, int stride, int m, long int rk);
+	long int rank_N(
+			int *v, int stride, int m);
+	void unrank_N1(
+			int *v, int stride, int m, long int rk);
+	long int rank_N1(
+			int *v, int stride, int m);
+	void unrank_Sbar(
+			int *v, int stride, int m, long int rk);
+	long int rank_Sbar(
+			int *v, int stride, int m);
+	void unrank_Nbar(
+			int *v, int stride, int m, long int rk);
+	long int rank_Nbar(
+			int *v, int stride, int m);
 
 
 };

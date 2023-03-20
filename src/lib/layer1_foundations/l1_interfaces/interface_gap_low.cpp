@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace algebra {
+namespace l1_interfaces {
 
 
 interface_gap_low::interface_gap_low()

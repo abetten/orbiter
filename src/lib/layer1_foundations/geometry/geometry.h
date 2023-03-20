@@ -579,7 +579,8 @@ public:
 
 	geometric_object_create();
 	~geometric_object_create();
-	void init(geometric_object_description *Descr,
+	void init(
+			geometric_object_description *Descr,
 			projective_space *P, int verbose_level);
 	void create_elliptic_quadric_ovoid(
 			projective_space *P,

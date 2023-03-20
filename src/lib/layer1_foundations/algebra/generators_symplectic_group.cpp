@@ -184,8 +184,9 @@ void generators_symplectic_group::init(
 	}
 }
 
-int generators_symplectic_group::count_strong_generators(int &nb,
-		int *transversal_length, int &first_moved, int depth,
+int generators_symplectic_group::count_strong_generators(
+		int &nb, int *transversal_length,
+		int &first_moved, int depth,
 		int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
@@ -223,8 +224,9 @@ int generators_symplectic_group::count_strong_generators(int &nb,
 	return TRUE;
 }
 
-int generators_symplectic_group::get_strong_generators(int *Data,
-		int &nb, int &first_moved, int depth, int verbose_level)
+int generators_symplectic_group::get_strong_generators(
+		int *Data, int &nb, int &first_moved,
+		int depth, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int a;

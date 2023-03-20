@@ -7,17 +7,8 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	a_domain.o \
-	algebra_global.o \
-	generators_symplectic_group.o \
-	gl_class_rep.o \
-	gl_classes.o \
-	group_generators_domain.o \
-	heisenberg.o \
-	matrix_block_data.o \
-	matrix_group.o \
-	null_polarity_generator.o \
-	rank_checker.o
+	interface_gap_low.o \
+	interface_magma_low.o
 
 
 all : $(MODULES)

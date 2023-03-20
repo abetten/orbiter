@@ -161,7 +161,8 @@ void hyperbolic_pair::hyperbolic_point_rk_to_type_and_index(
 //##############################################################################
 
 void hyperbolic_pair::hyperbolic_unrank_line(
-		long int &p1, long int &p2, long int rk, int verbose_level)
+		long int &p1, long int &p2,
+		long int rk, int verbose_level)
 {
 	if (O->Quadratic_form->m == 0) {
 		cout << "hyperbolic_pair::hyperbolic_unrank_line "
@@ -419,7 +420,8 @@ void hyperbolic_pair::unrank_line_L1(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L1(long int p1, long int p2,
+long int hyperbolic_pair::rank_line_L1(
+		long int p1, long int p2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -676,7 +678,8 @@ void hyperbolic_pair::unrank_line_L2(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L2(long int p1, long int p2,
+long int hyperbolic_pair::rank_line_L2(
+		long int p1, long int p2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -997,7 +1000,8 @@ void hyperbolic_pair::unrank_line_L3(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L3(long int p1, long int p2,
+long int hyperbolic_pair::rank_line_L3(
+		long int p1, long int p2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1203,7 +1207,8 @@ void hyperbolic_pair::unrank_line_L4(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L4(long int p1, long int p2,
+long int hyperbolic_pair::rank_line_L4(
+		long int p1, long int p2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1344,7 +1349,8 @@ void hyperbolic_pair::unrank_line_L5(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L5(long int p1, long int p2,
+long int hyperbolic_pair::rank_line_L5(
+		long int p1, long int p2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1386,7 +1392,8 @@ void hyperbolic_pair::unrank_line_L6(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L6(long int p1, long int p2,
+long int hyperbolic_pair::rank_line_L6(
+		long int p1, long int p2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1428,7 +1435,8 @@ void hyperbolic_pair::unrank_line_L7(
 	}
 }
 
-long int hyperbolic_pair::rank_line_L7(long int p1, long int p2,
+long int hyperbolic_pair::rank_line_L7(
+		long int p1, long int p2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1791,7 +1799,8 @@ int hyperbolic_pair::hyperbolic_line_type_given_point_types(
 	exit(1);
 }
 
-int hyperbolic_pair::hyperbolic_decide_P1(long int pt1, long int pt2)
+int hyperbolic_pair::hyperbolic_decide_P1(
+		long int pt1, long int pt2)
 {
 	unrank_Sbar(v1, 1, m, pt1);
 	unrank_Sbar(v2, 1, m, pt2);
@@ -1803,7 +1812,8 @@ int hyperbolic_pair::hyperbolic_decide_P1(long int pt1, long int pt2)
 	}
 }
 
-int hyperbolic_pair::hyperbolic_decide_P2(long int pt1, long int pt2)
+int hyperbolic_pair::hyperbolic_decide_P2(
+		long int pt1, long int pt2)
 {
 
 	if (O->triple_is_collinear(pt1, pt2, pt_Q)) {
@@ -1814,7 +1824,8 @@ int hyperbolic_pair::hyperbolic_decide_P2(long int pt1, long int pt2)
 	}
 }
 
-int hyperbolic_pair::hyperbolic_decide_P3(long int pt1, long int pt2)
+int hyperbolic_pair::hyperbolic_decide_P3(
+		long int pt1, long int pt2)
 {
 
 

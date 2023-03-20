@@ -101,7 +101,8 @@ void null_polarity_generator::init(
 	create_first_candidate_set(verbose_level);
 
 	if (f_v) {
-		cout << "first candidate set has size " << nb_candidates[0] << endl;
+		cout << "first candidate set has size "
+				<< nb_candidates[0] << endl;
 	}
 
 	//backtrack_search(0 /* depth */, verbose_level);
@@ -129,7 +130,8 @@ void null_polarity_generator::init(
 
 		ring_theory::ring_theory_global R;
 
-		R.print_longinteger_after_multiplying(cout, transversal_length, n);
+		R.print_longinteger_after_multiplying(
+				cout, transversal_length, n);
 		cout << endl;
 	}
 
@@ -227,8 +229,10 @@ int null_polarity_generator::get_strong_generators(
 		Int_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
-		if (!get_strong_generators(Data, nb, first_moved,
-				depth + 1, verbose_level) && depth > first_moved) {
+		if (!get_strong_generators(
+				Data, nb, first_moved,
+				depth + 1, verbose_level)
+				&& depth > first_moved) {
 			return FALSE;
 		}
 	}
@@ -318,7 +322,8 @@ void null_polarity_generator::create_next_candidate_set(
 }
 
 
-int null_polarity_generator::dot_product(int *u1, int *u2)
+int null_polarity_generator::dot_product(
+		int *u1, int *u2)
 {
 	return F->Linear_algebra->dot_product(n, u1, u2);
 }

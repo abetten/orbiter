@@ -183,7 +183,8 @@ void colored_graph::partition_by_color_classes(
 		cout << "colored_graph::partition_by_color_classes" << endl;
 	}
 	if (nb_colors_per_vertex != 1) {
-		cout << "colored_graph::partition_by_color_classes nb_colors_per_vertex != 1" << endl;
+		cout << "colored_graph::partition_by_color_classes "
+				"nb_colors_per_vertex != 1" << endl;
 		exit(1);
 	}
 	partition = NEW_int(nb_colors);
@@ -306,7 +307,8 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 		cout << "colored_graph::subgraph_by_color_classes c=" << c << endl;
 	}
 	if (nb_colors_per_vertex != 1) {
-		cout << "colored_graph::subgraph_by_color_classes nb_colors_per_vertex != 1" << endl;
+		cout << "colored_graph::subgraph_by_color_classes "
+				"nb_colors_per_vertex != 1" << endl;
 		exit(1);
 	}
 
@@ -357,7 +359,8 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 	colored_graph *CG;
 
 	CG = NEW_OBJECT(colored_graph);
-	CG->init_adjacency(l /* nb_points */, 1 /*nb_colors */, 1 /* nb_colors_per_vertex*/,
+	CG->init_adjacency(
+			l /* nb_points */, 1 /*nb_colors */, 1 /* nb_colors_per_vertex*/,
 		Color, A,
 		label, label_tex,
 		0 /* verbose_level */);
@@ -643,7 +646,8 @@ void colored_graph::init_with_point_labels(int nb_points,
 		cout << "nb_colors=" << nb_colors << endl;
 		cout << "nb_colors_per_vertex=" << nb_colors_per_vertex << endl;
 	}
-	init(nb_points, nb_colors, nb_colors_per_vertex,
+	init(
+			nb_points, nb_colors, nb_colors_per_vertex,
 		colors,
 		Bitvec, f_ownership_of_bitvec,
 		label, label_tex,
@@ -725,7 +729,8 @@ void colored_graph::init_no_colors(
 	vertex_colors = NEW_int(nb_points);
 	Int_vec_zero(vertex_colors, nb_points);
 
-	init(nb_points, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
+	init(
+			nb_points, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 		vertex_colors, Bitvec, f_ownership_of_bitvec,
 		label, label_tex,
 		verbose_level);
@@ -766,7 +771,8 @@ void colored_graph::init_adjacency(
 			}
 		}
 	}
-	init(nb_points, nb_colors, nb_colors_per_vertex,
+	init(
+			nb_points, nb_colors, nb_colors_per_vertex,
 		colors, Bitvec, TRUE /* f_ownership_of_bitvec */,
 		label, label_tex,
 		verbose_level);
@@ -810,7 +816,8 @@ void colored_graph::init_adjacency_upper_triangle(
 			}
 		}
 	}
-	init(nb_points, nb_colors, nb_colors_per_vertex,
+	init(
+			nb_points, nb_colors, nb_colors_per_vertex,
 		colors, Bitvec, TRUE /* f_ownership_of_bitvec */,
 		label, label_tex,
 		verbose_level);
@@ -839,7 +846,8 @@ void colored_graph::init_adjacency_no_colors(
 	vertex_colors = NEW_int(nb_points);
 	Int_vec_zero(vertex_colors, nb_points);
 
-	init_adjacency(nb_points,
+	init_adjacency(
+			nb_points,
 			1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 			vertex_colors, Adj,
 			label, label_tex,
@@ -874,7 +882,8 @@ void colored_graph::init_adjacency_two_colors(
 		vertex_colors[a] = 1;
 	}
 
-	init_adjacency(nb_points,
+	init_adjacency(
+			nb_points,
 			2 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 			vertex_colors, Adj,
 			label, label_tex,
@@ -913,7 +922,8 @@ void colored_graph::save(
 		cout << "colored_graph::save" << endl;
 	}
 
-	Graph.save_colored_graph(fname,
+	Graph.save_colored_graph(
+			fname,
 			nb_points, nb_colors, nb_colors_per_vertex,
 			points, point_color,
 			user_data, user_data_size,
@@ -939,7 +949,8 @@ void colored_graph::load(
 	if (f_v) {
 		cout << "colored_graph::load before Graph.load_colored_graph" << endl;
 	}
-	Graph.load_colored_graph(fname,
+	Graph.load_colored_graph(
+			fname,
 		nb_points, nb_colors, nb_colors_per_vertex,
 		points /*vertex_labels*/, point_color /*vertex_colors*/, 
 		user_data, user_data_size, 
@@ -1774,57 +1785,25 @@ void colored_graph::export_to_magma(
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
-	int *neighbors;
-	int nb_neighbors;
-	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_magma" << endl;
 	}
-	{
-		ofstream fp(fname);
 
-		neighbors = NEW_int(nb_points);
-		fp << "G := Graph< " << nb_points << " | [" << endl;
-		for (i = 0; i < nb_points; i++) {
+	l1_interfaces::interface_magma_low Interface;
 
-
-			nb_neighbors = 0;
-			for (j = 0; j < nb_points; j++) {
-				if (j == i) {
-					continue;
-				}
-				if (is_adjacent(i, j)) {
-					neighbors[nb_neighbors++] = j;
-				}
-			}
-
-			fp << "{";
-			for (j = 0; j < nb_neighbors; j++) {
-				fp << neighbors[j] + 1;
-				if (j < nb_neighbors - 1) {
-					fp << ",";
-				}
-			}
-			fp << "}";
-			if (i < nb_points - 1) {
-				fp << ", " << endl;
-			}
-		}
-
-		FREE_int(neighbors);
-		
-		fp << "]>;" << endl;
-
-//> G := Graph< 9 | [ {4,5,6,7,8,9}, {4,5,6,7,8,9}, {4,5,6,7,8,9},
-//>                   {1,2,3,7,8,9}, {1,2,3,7,8,9}, {1,2,3,7,8,9},
-//>                   {1,2,3,4,5,6}, {1,2,3,4,5,6}, {1,2,3,4,5,6} ]>;
-
-
+	if (f_v) {
+		cout << "colored_graph::export_to_magma "
+				"before Interface.export_colored_graph_to_magma" << endl;
 	}
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	Interface.export_colored_graph_to_magma(
+			this,
+			fname, verbose_level);
+	if (f_v) {
+		cout << "colored_graph::export_to_magma "
+				"after Interface.export_colored_graph_to_magma" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "colored_graph::export_to_magma" << endl;
