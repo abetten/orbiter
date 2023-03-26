@@ -120,8 +120,13 @@ void spread_activity::init(
 		A2->print_info();
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_grassmannian");
+
 	AGr = A2->Induced_action->restricted_action(
-			Spread_create->set, Spread_create->sz,
+			Spread_create->set, Spread_create->sz, label_of_set,
 			verbose_level);
 
 	if (f_v) {

@@ -739,19 +739,27 @@ void sims::build_up_group_random_process(
 		cout << "sims::build_up_group_random_process: "
 				"current group order is " << G_order
 				<< " target " << target_go << endl;
-		cout << "the old_G action " << old_G->A->label
+		cout << "sims::build_up_group_random_process "
+				"the old_G action " << old_G->A->label
 				<< " has base_length = " << old_G->A->base_len()
 			<< " and degree " << old_G->A->degree << endl;
-		cout << "the kernel action " << KA->label
+		cout << "sims::build_up_group_random_process "
+				"the kernel action " << KA->label
 				<< " has base_length = " << KA->base_len()
 			<< " and degree " << KA->degree << endl;
-		cout << "the image action has base_length = " << GA->base_len()
+		cout << "sims::build_up_group_random_process "
+				"the image action has base_length = " << GA->base_len()
 			<< " and degree " << GA->degree << endl;
-		cout << "current action " << GA->label << endl;
-		cout << "current group order = " << G_order << endl;
-		cout << "current kernel order = " << K_order << endl;
-		cout << "together = " << KG_order << endl;
-		cout << "target_go = " << target_go << endl;
+		cout << "sims::build_up_group_random_process "
+				"current action " << GA->label << endl;
+		cout << "sims::build_up_group_random_process "
+				"current group order = " << G_order << endl;
+		cout << "sims::build_up_group_random_process "
+				"current kernel order = " << K_order << endl;
+		cout << "sims::build_up_group_random_process "
+				"together = " << KG_order << endl;
+		cout << "sims::build_up_group_random_process "
+				"target_go = " << target_go << endl;
 	}
 	cnt = 0;
 	while (TRUE) {
@@ -772,13 +780,13 @@ void sims::build_up_group_random_process(
 		}
 		if ((cnt % 2) == 0) {
 			if (f_vv) {
-				cout << "sims::build_up_group_random_process: "
+				cout << "sims::build_up_group_random_process "
 						"choosing random schreier generator" << endl;
 			}
 			random_schreier_generator(Elt, verbose_level - 5);
 			A->Group_element->element_move(Elt, GA->Elt1, 0);
 			if (f_v4) {
-				cout << "sims::build_up_group_random_process: "
+				cout << "sims::build_up_group_random_process "
 						"random element chosen:" << endl;
 				A->Group_element->element_print_quick(GA->Elt1, cout);
 				cout << endl;
@@ -786,13 +794,13 @@ void sims::build_up_group_random_process(
 		}
 		else if ((cnt % 2) == 1) {
 			if (f_vv) {
-				cout << "sims::build_up_group_random_process: "
+				cout << "sims::build_up_group_random_process "
 						"choosing random element in the group by "
 						"which we extend" << endl;
 			}
 			old_G->random_element(GA->Elt1, verbose_level - 5);
 			if (f_vv) {
-				cout << "sims::build_up_group_random_process: "
+				cout << "sims::build_up_group_random_process "
 						"random element chosen, path = ";
 				Int_vec_print(cout, old_G->path, old_G->A->base_len());
 				cout << endl;
@@ -803,16 +811,16 @@ void sims::build_up_group_random_process(
 			}
 		}
 		if (f_v4) {
-			cout << "sims::build_up_group_random_process: "
+			cout << "sims::build_up_group_random_process "
 					"calling strip:" << endl;
 		}
 		if (strip(GA->Elt1, GA->Elt2, drop_out_level, image,
 				verbose_level - 5)) {
 			if (f_vv) {
-				cout << "sims::build_up_group_random_process: "
+				cout << "sims::build_up_group_random_process "
 						"element strips through" << endl;
 				if (f_v4) {
-					cout << "sims::build_up_group_random_process: "
+					cout << "sims::build_up_group_random_process "
 							"residue = " << endl;
 					GA->Group_element->element_print_quick(GA->Elt2, cout);
 					cout << endl;
@@ -821,7 +829,7 @@ void sims::build_up_group_random_process(
 			//f_added = FALSE;
 			if (!GA->Group_element->element_is_one(GA->Elt2, 0)) {
 				if (f_vvv) {
-					cout << "sims::build_up_group_random_process: "
+					cout << "sims::build_up_group_random_process "
 							"the residue is not trivial, we need to "
 							"choose another base point" << endl;
 				}
@@ -835,38 +843,38 @@ void sims::build_up_group_random_process(
 				}
 
 				if (f_vv) {
-					cout << "sims::build_up_group_random_process: "
+					cout << "sims::build_up_group_random_process "
 							"suggested next base point " << b << endl;
 				}
 				if (b == -1) {
 					if (f_vv) {
-						cout << "sims::build_up_group_random_process: "
+						cout << "sims::build_up_group_random_process "
 								"cannot find next base point" << endl;
 					}
 					if (K->strip(GA->Elt2, GA->Elt3,
 							drop_out_level, image, 0/*verbose_level - 3*/)) {
 						if (f_vv) {
-							cout << "sims::build_up_group_random_process: "
+							cout << "sims::build_up_group_random_process "
 									"element strips through kernel" << endl;
 							if (f_v4) {
-								cout << "sims::build_up_group_random_"
-										"process: residue = " << endl;
+								cout << "sims::build_up_group_random_process "
+										"residue = " << endl;
 								KA->Group_element->element_print_quick(GA->Elt3, cout);
 								cout << endl;
 								K->print(FALSE);
 								K->print_basic_orbits();
-								cout << "sims::build_up_group_random_"
-										"process: residue" << endl;
+								cout << "sims::build_up_group_random_process "
+										"residue" << endl;
 								KA->Group_element->element_print_image_of_set(
 										GA->Elt3, KA->base_len(), KA->get_base());
-								cout << "sims::build_up_group_random_"
-										"process: Elt2" << endl;
+								cout << "sims::build_up_group_random_process "
+										"Elt2" << endl;
 								KA->Group_element->element_print_image_of_set(
 										GA->Elt2, KA->base_len(), KA->get_base());
 							}
 						}
 						if (!KA->Group_element->element_is_one(GA->Elt3, FALSE)) {
-							cout << "sims::build_up_group_random_process: "
+							cout << "sims::build_up_group_random_process "
 									"element strips through kernel, "
 									"residue = " << endl;
 							cout << "but the element is not the identity, "
@@ -874,26 +882,34 @@ void sims::build_up_group_random_process(
 							GA->Group_element->element_print(GA->Elt3, cout);
 							cout << endl;
 
-							cout << "sims::build_up_group_random_process: "
+							cout << "sims::build_up_group_random_process "
 									"current group order is " << G_order
 									<< " target " << target_go << endl;
-							cout << "the old_G action " << old_G->A->label
+							cout << "sims::build_up_group_random_process "
+									"the old_G action " << old_G->A->label
 									<< " has base_length = "
 									<< old_G->A->base_len()
 								<< " and degree " << old_G->A->degree << endl;
-							cout << "the kernel action " << KA->label
+							cout << "sims::build_up_group_random_process "
+									"the kernel action " << KA->label
 									<< " has base_length = " << KA->base_len()
 								<< " and degree " << KA->degree << endl;
-							cout << "the image action has base_length = "
+							cout << "sims::build_up_group_random_process "
+									"the image action has base_length = "
 								<< GA->base_len()
 								<< " and degree " << GA->degree << endl;
-							cout << "current action " << GA->label << endl;
-							cout << "current group order = "
+							cout << "sims::build_up_group_random_process "
+									"current action " << GA->label << endl;
+							cout << "sims::build_up_group_random_process "
+									"current group order = "
 								<< G_order << endl;
-							cout << "current kernel order = "
+							cout << "sims::build_up_group_random_process "
+									"current kernel order = "
 								<< K_order << endl;
-							cout << "together = " << KG_order << endl;
-							cout << "target_go = " << target_go << endl;
+							cout << "sims::build_up_group_random_process "
+									"together = " << KG_order << endl;
+							cout << "sims::build_up_group_random_process "
+									"target_go = " << target_go << endl;
 
 							exit(1);
 						}
@@ -907,7 +923,7 @@ void sims::build_up_group_random_process(
 						K->add_generator_at_level(GA->Elt3,
 								drop_out_level, 0 /*verbose_level - 10*/);
 						if (f_vvv) {
-							cout << "sims::build_up_group_random_process: "
+							cout << "sims::build_up_group_random_process "
 									"the residue has been added as kernel "
 									"generator at level " << drop_out_level
 									<< endl;
@@ -917,7 +933,7 @@ void sims::build_up_group_random_process(
 				}
 				else {
 					if (f_vvv) {
-						cout << "sims::build_up_group_random_process: "
+						cout << "sims::build_up_group_random_process "
 								"choosing additional base point " << b << endl;
 					}
 					old_base_len = GA->base_len();
@@ -932,11 +948,11 @@ void sims::build_up_group_random_process(
 								"after reallocate_base" << endl;
 					}
 					if (f_vv) {
-						cout << "sims::build_up_group_random_process: "
+						cout << "sims::build_up_group_random_process "
 								"additional base point " << b
 							<< " chosen, increased base has length "
 							<< GA->base_len() << endl;
-						cout << "sims::build_up_group_random_process: "
+						cout << "sims::build_up_group_random_process "
 								"calling add_generator_at_level" << endl;
 					}
 					if (f_v) {
@@ -950,7 +966,7 @@ void sims::build_up_group_random_process(
 								"after add_generator_at_level" << endl;
 					}
 					if (f_vv) {
-						cout << "sims::build_up_group_random_process: "
+						cout << "sims::build_up_group_random_process "
 								"the residue has been added at level "
 								<< GA->base_len() - 1 << endl;
 					}
@@ -958,25 +974,25 @@ void sims::build_up_group_random_process(
 			} // if ! element is one
 			else {
 				if (f_vv) {
-					cout << "sims::build_up_group_random_process: "
+					cout << "sims::build_up_group_random_process "
 							"the residue is trivial" << endl;
 				}
 			}
 			if (f_vv) {
-				cout << "sims::build_up_group_random_process: "
+				cout << "sims::build_up_group_random_process "
 						"before closure_group" << endl;
 			}
 			//closure_group(10, verbose_level);
 			closure_group(10, 0 /*verbose_level - 2*/);
 			if (f_vv) {
-				cout << "sims::build_up_group_random_process: "
+				cout << "sims::build_up_group_random_process "
 						"after closure_group" << endl;
 			}
 		}
 		else {
 			//f_added = TRUE;
 			if (f_vv) {
-				cout << "sims::build_up_group_random_process: "
+				cout << "sims::build_up_group_random_process "
 						"element needs to be inserted at level = "
 					<< drop_out_level << " with image "
 					<< image << endl;
@@ -1003,12 +1019,12 @@ void sims::build_up_group_random_process(
 		}
 		group_order(G_order);
 		if (f_vv) {
-			cout << "sims::build_up_group_random_process:  "
+			cout << "sims::build_up_group_random_process "
 					"G_order=" << G_order << endl;
 		}
 		K->group_order(K_order);
 		if (f_vv) {
-			cout << "sims::build_up_group_random_process:  "
+			cout << "sims::build_up_group_random_process "
 					"K_order=" << K_order << endl;
 		}
 		//cout << "K tl: ";
@@ -1017,11 +1033,12 @@ void sims::build_up_group_random_process(
 		//cout << "K action " << K->A->label << endl;
 		D.mult(G_order, K_order, KG_order);
 		if (f_v /* (f_v && f_added) || f_vv */) {
-			cout << "sims::build_up_group_random_process: "
+			cout << "sims::build_up_group_random_process "
 					"current group order is " << KG_order
 				<< " = " << G_order << " * " << K_order << endl;
 		}
 		if (f_vv) {
+			cout << "sims::build_up_group_random_process ";
 			print_transversal_lengths();
 		}
 		if (FALSE) {
@@ -1037,7 +1054,7 @@ void sims::build_up_group_random_process(
 		cnt++;
 		if (c == 0) {
 			if (f_v) {
-				cout << "sims::build_up_group_random_process: "
+				cout << "sims::build_up_group_random_process "
 						"reached the full group after "
 						<< cnt << " iterations" << endl;
 			}
@@ -1048,7 +1065,8 @@ void sims::build_up_group_random_process(
 				cout << "sims::build_up_group_random_process "
 						"overshooting the expected group after "
 						<< cnt << " iterations" << endl;
-				cout << "current group order is " << KG_order
+				cout << "sims::build_up_group_random_process "
+						"current group order is " << KG_order
 					<< " = |G| * |K| = " << G_order << " * "
 					<< K_order << ", target_go=" << target_go << endl;
 			}
@@ -1058,11 +1076,13 @@ void sims::build_up_group_random_process(
 	} // while TRUE
 	FREE_int(Elt);
 	if (f_vv) {
-		cout << "sims::build_up_group_random_process finished: "
+		cout << "sims::build_up_group_random_process "
+				"finished: "
 				"found a group of order " << KG_order
 			<< " = " << G_order << " * " << K_order << endl;
 		if (f_vvv) {
-			cout << "the n e w action has base_length = "
+			cout << "sims::build_up_group_random_process "
+					"the n e w action has base_length = "
 				<< GA->base_len()
 				<< " and degree " << GA->degree << endl;
 			print_transversal_lengths();

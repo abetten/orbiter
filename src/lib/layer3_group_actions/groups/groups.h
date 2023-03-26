@@ -1314,7 +1314,8 @@ public:
 	// sims.cpp:
 	sims();
 	~sims();
-	sims(actions::action *A, int verbose_level);
+	sims(
+			actions::action *A, int verbose_level);
 
 	void delete_images();
 	void init_images(int nb_images);
@@ -1882,6 +1883,10 @@ public:
 	// at the moment, A is not used
 	void canonical_image_GAP(
 			std::string &input_set_text, std::ostream &ost,
+			int verbose_level);
+	void canonical_image_orbiter(
+			std::string &input_set_text,
+			//std::ostream &ost,
 			int verbose_level);
 	void print_generators_gap(std::ostream &ost);
 	void print_generators_gap_in_different_action(

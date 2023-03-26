@@ -95,6 +95,12 @@ void arc_orbits_on_pairs::init(
 			verbose_level);
 
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_6arc");
+
+
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init "
 				"creating restricted action on the arc" << endl;
@@ -102,6 +108,7 @@ void arc_orbits_on_pairs::init(
 
 	A_on_arc = A->Induced_action->restricted_action(
 			The_arc->data, 6 /* nb_points */,
+			label_of_set,
 			verbose_level - 2);
 
 	if (f_v) {

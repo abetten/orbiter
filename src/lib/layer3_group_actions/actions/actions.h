@@ -1353,6 +1353,7 @@ public:
 			long int *&original_points, int verbose_level);
 	action *restricted_action(
 			long int *points, int nb_points,
+			std::string &label_of_set,
 		int verbose_level);
 	action *create_induced_action_by_restriction(
 			groups::sims *old_G, int size,
@@ -1483,6 +1484,7 @@ public:
 			int new_base_point, int verbose_level);
 	void init_base_from_sims(
 			groups::sims *G, int verbose_level);
+	actions::action *get_A();
 	int &get_f_has_base();
 	int &get_base_len();
 	long int &base_i(int i);

@@ -134,6 +134,7 @@ void table_of_blt_sets::init(
 				Space->Blt_Set_domain,
 				Object_create[h].set,
 				Object_create[h].Sg,
+				TRUE /* f_invariants */,
 				verbose_level);
 
 		if (f_v) {

@@ -34,6 +34,8 @@ public:
 	int f_create_flock;
 	int create_flock_point_idx;
 
+	int f_BLT_test;
+
 	blt_set_activity_description();
 	~blt_set_activity_description();
 	int read_arguments(int argc, std::string *argv,
@@ -275,12 +277,16 @@ public:
 	int f_family;
 	std::string family_name;
 
+	int f_flock;
+	std::string flock_label;
+
 	int f_space;
 	std::string space_label;
 
 	//int f_space_pointer;
 	//orthogonal_space_with_action *space_pointer;
 
+	int f_invariants;
 
 	BLT_set_create_description();
 	~BLT_set_create_description();
@@ -339,6 +345,7 @@ public:
 	void report(int verbose_level);
 	void export_gap(int verbose_level);
 	void create_flock(int point_idx, int verbose_level);
+	void BLT_test(int verbose_level);
 	void report2(std::ostream &ost, int verbose_level);
 	void print_set_of_points(
 				std::ostream &ost, long int *Pts, int nb_pts);
@@ -381,12 +388,15 @@ public:
 			actions::action *A,
 			orthogonal_geometry::blt_set_domain *Blt_set_domain,
 			long int *set,
-			groups::strong_generators *Aut_gens, int verbose_level);
+			groups::strong_generators *Aut_gens,
+			int f_invariants,
+			int verbose_level);
 	void init_orbits_on_points(
 			int verbose_level);
 	void print_automorphism_group(
 		std::ostream &ost);
-	void report(std::ostream &ost, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 	void print_summary(std::ostream &ost);
 	void compute_T(int verbose_level);
 	void compute_Pi_ij(int verbose_level);
@@ -425,6 +435,13 @@ public:
 
 	combinatorics::polynomial_function_domain *PF;
 
+	int q;
+	int degree; // = PF->max_degree
+	int nb_coeff; // = PF->Poly[degree].get_nb_monomials()
+	int *coeff_f; // [nb_coeff]
+	int *coeff_g; // [nb_coeff]
+
+
 	flock();
 	~flock();
 	void init(
@@ -433,10 +450,8 @@ public:
 	void test_flock_condition(
 			field_theory::finite_field *F,
 			int f_magic, int *ABC, int verbose_level);
-	void quadratic_lift(
-			int *coeff_f, int *coeff_g, int verbose_level);
-	void cubic_lift(
-			int *coeff_f, int *coeff_g, int verbose_level);
+	void quadratic_lift(int verbose_level);
+	void cubic_lift(int verbose_level);
 
 };
 
@@ -578,8 +593,7 @@ public:
 
 	orthogonal_space_with_action_description *Descr;
 
-	std::string label_txt;
-	std::string label_tex;
+	geometry::projective_space *P;
 
 	layer1_foundations::orthogonal_geometry::orthogonal *O;
 
@@ -596,6 +610,8 @@ public:
 	void init(
 			orthogonal_space_with_action_description *Descr,
 			int verbose_level);
+	// creates a projective space and an orthogonal space.
+	// For n == 5, it also creates a blt_set_domain
 	void init_group(int verbose_level);
 	void report(
 			graphics::layered_graph_draw_options *LG_Draw_options,

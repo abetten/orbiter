@@ -1125,7 +1125,7 @@ void isomorph_worker::recognize(std::string &label, int verbose_level)
 	int sz;
 	int idx;
 
-	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(label,
+	Get_lint_vector_from_label(label,
 			data, sz, 0 /* verbose_level */);
 
 	//Get_vector_or_set(label, data, sz); // layer5 only

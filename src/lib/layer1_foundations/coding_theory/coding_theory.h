@@ -532,7 +532,8 @@ public:
 	~cyclic_codes();
 
 	// cyclic_codes.cpp:
-	void make_cyclic_code(int n, int q, int t,
+	void make_cyclic_code(
+			int n, int q, int t,
 			int *roots, int nb_roots,
 			int f_poly, std::string &poly,
 			int f_dual,
@@ -541,7 +542,8 @@ public:
 			int verbose_level);
 	// this function creates a finite field,
 	// using the given polynomial if necessary
-	void generator_matrix_cyclic_code(int n,
+	void generator_matrix_cyclic_code(
+			int n,
 			int degree, int *generator_polynomial, int *&M);
 	void print_polynomial(
 			ring_theory::unipoly_domain &Fq,
@@ -730,7 +732,8 @@ public:
 		int f_construction_A, int f_hyperoval,
 		int f_construction_B,
 		int verbose_level);
-	void int_submatrix_all_rows(int *A, int m, int n,
+	void int_submatrix_all_rows(
+			int *A, int m, int n,
 		int nb_cols, int *cols, int *B);
 
 

@@ -49,9 +49,11 @@ public:
 
 	blt_set_domain();
 	~blt_set_domain();
-	void init(
+	void init_blt_set_domain(
 			orthogonal *O,
+			geometry::projective_space *P4,
 		int verbose_level);
+	// creates a grassmann G43.
 	long int intersection_of_hyperplanes(
 			long int plane_rk1, long int plane_rk2,
 			int verbose_level);
@@ -724,11 +726,23 @@ public:
 	orthogonal_global();
 	~orthogonal_global();
 
-	void create_FTWKB_BLT_set(orthogonal *O,
+	void create_BLT_set_from_flock(orthogonal *O,
+			long int *set, int *ABC, int verbose_level);
+		// set[q + 1]
+		// ABC[q * 3]
+	void create_FTWKB_flock(orthogonal *O,
+			int *ABC, int verbose_level);
+	void create_K1_flock(orthogonal *O,
+			int *ABC, int verbose_level);
+	void create_K2_flock(orthogonal *O,
+			int *ABC, int verbose_level);
+	void create_FTWKB_flock_and_BLT_set(orthogonal *O,
+			long int *set, int *ABC, int verbose_level);
+	void create_K1_flock_and_BLT_set(orthogonal *O,
 			long int *set, int *ABC, int verbose_level);
 	void create_K1_BLT_set(orthogonal *O,
 			long int *set, int *ABC, int verbose_level);
-	void create_K2_BLT_set(orthogonal *O,
+	void create_K2_flock_and_BLT_set(orthogonal *O,
 			long int *set, int *ABC, int verbose_level);
 	void create_LP_37_72_BLT_set(orthogonal *O,
 			long int *set, int verbose_level);
@@ -890,6 +904,9 @@ public:
 class orthogonal {
 
 public:
+
+	std::string label_txt;
+	std::string label_tex;
 
 	quadratic_form *Quadratic_form;
 
@@ -1082,7 +1099,8 @@ public:
 
 	quadratic_form_list_coding();
 	~quadratic_form_list_coding();
-	void init(field_theory::finite_field *Fq,
+	void init(
+			field_theory::finite_field *Fq,
 			field_theory::finite_field *FQ,
 			int f_sum_of_squares, int verbose_level);
 	void print_quadratic_form_list_coded(
@@ -1149,7 +1167,8 @@ public:
 
 	quadratic_form();
 	~quadratic_form();
-	void init(int epsilon, int n,
+	void init(
+			int epsilon, int n,
 			field_theory::finite_field *F,
 			int verbose_level);
 	void init_form_and_Gram_matrix(int verbose_level);

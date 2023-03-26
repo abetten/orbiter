@@ -1215,7 +1215,8 @@ public:
 			int *G, int *H,
 			long int *data, int verbose_level);
 	// assuming we are in PG(3,q)
-	long int map_line_in_PG3q(long int line, int *transform16, int verbose_level);
+	long int map_line_in_PG3q(
+			long int line, int *transform16, int verbose_level);
 
 };
 
@@ -2461,6 +2462,8 @@ public:
 		int verbose_level);
 	// a similar function exists in class surface_domain
 	// the arguments are almost the same, except that transversal_line is missing.
+	long int map_point(
+			long int point, int *transform16, int verbose_level);
 
 
 

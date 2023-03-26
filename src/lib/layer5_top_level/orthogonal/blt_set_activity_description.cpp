@@ -25,6 +25,7 @@ blt_set_activity_description::blt_set_activity_description()
 	f_create_flock = FALSE;
 	create_flock_point_idx = 0;
 
+	f_BLT_test = FALSE;
 
 }
 
@@ -63,6 +64,12 @@ int blt_set_activity_description::read_arguments(int argc, std::string *argv,
 				cout << "-create_flock " << create_flock_point_idx << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-BLT_test") == 0) {
+			f_BLT_test = TRUE;
+			if (f_v) {
+				cout << "-BLT_test " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -89,6 +96,9 @@ void blt_set_activity_description::print()
 	}
 	if (f_create_flock) {
 		cout << "-create_flock " << create_flock_point_idx << endl;
+	}
+	if (f_BLT_test) {
+		cout << "-BLT_test " << endl;
 	}
 }
 

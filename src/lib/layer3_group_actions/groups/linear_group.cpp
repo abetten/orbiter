@@ -203,6 +203,11 @@ void linear_group::linear_group_import_group_of_plane(int verbose_level)
 	label_tex.append(TP->label_tex);
 
 	A2 = TP->OnAndre;
+	if (TP->OnAndre->degree == 0) {
+		cout << "linear_group::linear_group_import_group_of_plane "
+				"TP->OnAndre->degree == 0" << endl;
+		exit(1);
+	}
 	vector_space_dimension = n;
 	q = input_q;
 	f_has_strong_generators = TRUE;
@@ -221,40 +226,11 @@ void linear_group::linear_group_create(int verbose_level)
 	if (f_v) {
 		cout << "linear_group::linear_group_create" << endl;
 	}
-
-	data_structures::string_tools ST;
-
-	if (ST.starts_with_a_number(description->input_q)) {
-		int q;
-
-		q = ST.strtoi(description->input_q);
-		if (f_v) {
-			cout << "linear_group::linear_group_create "
-					"creating the finite field of order " << q << endl;
-		}
-		description->F = NEW_OBJECT(field_theory::finite_field);
-		description->F->finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
-				verbose_level - 1);
-		if (f_v) {
-			cout << "linear_group::linear_group_create "
-					"the finite field of order " << q << " has been created" << endl;
-		}
+	if (description->F == NULL) {
+		cout << "linear_group::linear_group_create please specify a finite field" << endl;
+		exit(1);
 	}
-	else {
-		if (f_v) {
-			cout << "linear_group::linear_group_create "
-					"using existing finite field " << input_q << endl;
-		}
-		int idx;
-		idx = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol(description->input_q);
-		if (idx < 0) {
-			cout << "linear_group::linear_group_create done cannot find finite field object" << endl;
-			exit(1);
-		}
-		description->F = (field_theory::finite_field *) orbiter_kernel_system::Orbiter->Orbiter_symbol_table->get_object(idx);
-	}
+
 
 	n = description->n;
 	F = description->F;
@@ -603,6 +579,7 @@ int linear_group::linear_group_apply_modification(
 		long int *points;
 		int nb_points;
 		int i;
+		std::string label_of_set;
 
 		W = A_linear->G.wreath_product_group;
 		nb_points = W->degree_of_tensor_action;
@@ -611,11 +588,15 @@ int linear_group::linear_group_apply_modification(
 			points[i] = W->perm_offset_i[W->nb_factors] + i;
 		}
 
+		label_of_set.assign("on_tensors");
+
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
 					"before A_wreath->restricted_action" << endl;
 		}
-		A2 = A_linear->Induced_action->restricted_action(points, nb_points,
+		A2 = A_linear->Induced_action->restricted_action(
+				points, nb_points,
+				label_of_set,
 				verbose_level);
 		A2->f_is_linear = TRUE;
 		A2->dimension = W->dimension_of_tensor_action;
@@ -640,6 +621,7 @@ int linear_group::linear_group_apply_modification(
 		long int *points;
 		int nb_points;
 		int i;
+		std::string label_of_set;
 
 		W = A_linear->G.wreath_product_group;
 		nb_points = W->nb_rank_one_tensors;
@@ -648,11 +630,15 @@ int linear_group::linear_group_apply_modification(
 			points[i] = W->perm_offset_i[W->nb_factors] + W->rank_one_tensors_in_PG[i];
 		}
 
+		label_of_set.assign("on_rank_one_tensors");
+
+
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
 					"before A_wreath->restricted_action" << endl;
 		}
-		A2 = A_linear->Induced_action->restricted_action(points, nb_points,
+		A2 = A_linear->Induced_action->restricted_action(
+				points, nb_points, label_of_set,
 				verbose_level);
 		A2->f_is_linear = TRUE;
 		A2->dimension = W->dimension_of_tensor_action;

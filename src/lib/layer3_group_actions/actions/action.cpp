@@ -607,6 +607,8 @@ void action::init_sims_only(groups::sims *G, int verbose_level)
 	if (f_v) {
 		cout << "action::init_sims_only action " << label
 				<< " base_len = " << base_len() << endl;
+		cout << "action::init_sims_only "
+				"Stabilizer_chain->A = " << Stabilizer_chain->get_A()->label << endl;
 	}
 	if (f_has_sims) {
 		FREE_OBJECT(Sims);
@@ -621,8 +623,15 @@ void action::init_sims_only(groups::sims *G, int verbose_level)
 	}
 	Sims = G;
 	f_has_sims = TRUE;
+	if (f_v) {
+		cout << "action::init_sims_only "
+				"before Stabilizer_chain->init_base_from_sims" << endl;
+	}
 	Stabilizer_chain->init_base_from_sims(G, verbose_level);
-
+	if (f_v) {
+		cout << "action::init_sims_only "
+				"after Stabilizer_chain->init_base_from_sims" << endl;
+	}
 #if 0
 	if (f_v) {
 		cout << "action::init_sims_only action " << label

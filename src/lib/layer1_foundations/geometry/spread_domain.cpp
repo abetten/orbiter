@@ -96,6 +96,8 @@ void spread_domain::init_spread_domain(
 		field_theory::finite_field *F,
 		int n, int k,
 		int verbose_level)
+// creates grassmann n,k
+// creates klein_correspondence and orthogonal if (n,k) = (4,2)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1665,11 +1667,13 @@ void spread_domain::HMO(
 
 
 	if (f_v) {
-		cout << "spread_domain::HMO before Grass->get_spread_matrices" << endl;
+		cout << "spread_domain::HMO "
+				"before Grass->get_spread_matrices" << endl;
 	}
 	Grass->get_spread_matrices(G, H, data, verbose_level);
 	if (f_v) {
-		cout << "spread_domain::HMO after Grass->get_spread_matrices" << endl;
+		cout << "spread_domain::HMO "
+				"after Grass->get_spread_matrices" << endl;
 	}
 
 

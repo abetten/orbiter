@@ -203,15 +203,6 @@ void classify_five_plus_one::init(
 	}
 
 
-	//Five_plus_one->init_check_func(callback_partial_ovoid_test,
-	//	(void *)this /* candidate_check_data */);
-
-
-	//Five_plus_one->f_print_function = TRUE;
-	//Five_plus_one->print_function = callback_print_set;
-	//Five_plus_one->print_function_data = (void *) this;
-
-
 	if (f_v) {
 		cout << "classify_five_plus_one::init done" << endl;
 	}
@@ -236,7 +227,10 @@ void classify_five_plus_one::classify_partial_ovoids(int verbose_level)
 		cout << "classify_five_plus_one::classify_partial_ovoids "
 				"nb_neighbors = " << Linear_complex->nb_neighbors << endl;
 		cout << "Neighbors=";
-		Lint_vec_print(cout, Linear_complex->Neighbors, Linear_complex->nb_neighbors);
+		Lint_vec_print(
+				cout,
+				Linear_complex->Neighbors,
+				Linear_complex->nb_neighbors);
 		cout << endl;
 	}
 	if (f_v) {
@@ -247,7 +241,7 @@ void classify_five_plus_one::classify_partial_ovoids(int verbose_level)
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
-		0 /*verbose_level - 2*/);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "classify_five_plus_one::classify_partial_ovoids "
 				"after Five_plus_one->main" << endl;

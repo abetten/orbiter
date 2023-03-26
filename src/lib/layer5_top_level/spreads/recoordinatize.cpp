@@ -51,7 +51,7 @@ recoordinatize::recoordinatize()
 	transform = NULL;
 	Elt = NULL;
 
-	starter_j1 = starter_j2 = starter_j3 = 0;
+	//starter_j1 = starter_j2 = starter_j3 = 0;
 	A0 = NULL;
 	A0_linear = NULL;
 	gens2 = NULL;
@@ -298,9 +298,9 @@ void recoordinatize::compute_starter(
 	size = 3;
 	S = NEW_lint(size);
 
-	S[0] = starter_j1;
-	S[1] = starter_j2;
-	S[2] = starter_j3;
+	S[0] = Three_skew_subspaces->starter_j1;
+	S[1] = Three_skew_subspaces->starter_j2;
+	S[2] = Three_skew_subspaces->starter_j3;
 
 
 	if (f_v) {
@@ -680,9 +680,9 @@ void recoordinatize::compute_live_points_low_level(
 	Mtx = A0->G.matrix_grp;
 	Fq = Mtx->GFq;
 
-	set[0] = starter_j1;
-	set[1] = starter_j2;
-	set[2] = starter_j3;
+	set[0] = Three_skew_subspaces->starter_j1;
+	set[1] = Three_skew_subspaces->starter_j2;
+	set[2] = Three_skew_subspaces->starter_j3;
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -713,6 +713,7 @@ void recoordinatize::compute_live_points_low_level(
 			}
 			Fq->Projective_space_basic->PG_element_normalize(
 					Elt1, 1, Three_skew_subspaces->k * Three_skew_subspaces->k);
+
 			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
 				cout << "recoordinatize::compute_live_points_low_level "
 						"element " << cnt << " = " << h
@@ -733,25 +734,41 @@ void recoordinatize::compute_live_points_low_level(
 							"element " << cnt << " = " << h
 							<< ", multiplied by z=" << z << ":" << endl;
 					Int_vec_print_integer_matrix_width(cout,
-							Elt2, Three_skew_subspaces->k, Three_skew_subspaces->k, Three_skew_subspaces->k, Three_skew_subspaces->F->log10_of_q + 1);
+							Elt2,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->F->log10_of_q + 1);
 				}
 
 
 				// make spread element from Elt2:
 
-				Three_skew_subspaces->Grass->make_spread_element(Three_skew_subspaces->Grass->M, Elt2, 0/* verbose_level*/);
+				Three_skew_subspaces->Grass->make_spread_element(
+						Three_skew_subspaces->Grass->M,
+						Elt2, 0/* verbose_level*/);
 					// make the k x n matrix M = ( I_k | Elt2 )
 
 
 				if (f_vv && (cnt % cnt_mod) == 0) {
 					cout << "recoordinatize::compute_live_points_low_level "
 							"element " << h << ":" << endl;
-					Int_vec_print_integer_matrix_width(cout, Three_skew_subspaces->Grass->M, Three_skew_subspaces->k, Three_skew_subspaces->n, Three_skew_subspaces->n, 2);
+					Int_vec_print_integer_matrix_width(
+							cout,
+							Three_skew_subspaces->Grass->M,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->n,
+							Three_skew_subspaces->n, 2);
 				}
 				if (FALSE || ((h & ((1 << 15) - 1)) == 0 && z == 1)) {
 					cout << h << " / " << gos
 							<< " nb_live_points=" << nb_live_points << endl;
-					Int_vec_print_integer_matrix_width(cout, Three_skew_subspaces->Grass->M, Three_skew_subspaces->k, Three_skew_subspaces->n, Three_skew_subspaces->n, 2);
+					Int_vec_print_integer_matrix_width(
+							cout,
+							Three_skew_subspaces->Grass->M,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->n,
+							Three_skew_subspaces->n, 2);
 				}
 
 				a = Three_skew_subspaces->Grass->rank_lint(0);

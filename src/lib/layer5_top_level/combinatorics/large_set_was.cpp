@@ -241,9 +241,16 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 			TRUE /*f_play_it_safe*/,
 			verbose_level - 1);
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_orbits");
+
+
 	A_on_orbits_restricted = A_on_orbits->Induced_action->restricted_action(
 			H_orbits->Classify_orbits_by_length->Set_partition->Sets[type_idx],
 			H_orbits->Classify_orbits_by_length->Set_partition->Set_size[type_idx],
+			label_of_set,
 			verbose_level);
 
 

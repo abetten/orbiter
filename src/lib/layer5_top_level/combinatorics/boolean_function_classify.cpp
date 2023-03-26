@@ -108,11 +108,17 @@ void boolean_function_classify::init_group(
 				"go=" << go << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("affine_points");
+
 	if (f_v) {
 		cout << "boolean_function_classify::init_group "
 				"before A->Induced_action->restricted_action" << endl;
 	}
-	A_affine = A->Induced_action->restricted_action(BF->affine_points, BF->Q,
+	A_affine = A->Induced_action->restricted_action(
+			BF->affine_points, BF->Q, label_of_set,
 			verbose_level);
 	if (f_v) {
 		cout << "boolean_function_classify::init_group "

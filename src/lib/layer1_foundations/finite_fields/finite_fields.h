@@ -948,7 +948,7 @@ public:
 // square_nonsquare.cpp:
 // #############################################################################
 
-//! keeping track of squares and nonsquares
+//! keeping track of squares and non-squares
 
 class square_nonsquare {
 public:

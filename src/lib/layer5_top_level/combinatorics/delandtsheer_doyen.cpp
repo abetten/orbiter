@@ -1038,7 +1038,13 @@ void delandtsheer_doyen::create_monomial_group(int verbose_level)
 	} // next i
 
 
-	Ar = A->Induced_action->restricted_action(points, nb_points,
+	std::string label_of_set;
+
+
+	label_of_set.assign("points");
+
+	Ar = A->Induced_action->restricted_action(
+			points, nb_points, label_of_set,
 			verbose_level);
 
 	A = Ar;

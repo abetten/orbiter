@@ -47,7 +47,10 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	A->group_order(go);
 
 	goi = go.as_int();
-	cout << "Created group Sym(" << n << ") of size " << goi << endl;
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"Created group Sym(" << n << ") of size " << goi << endl;
+	}
 
 	Elt = NEW_int(A->elt_size_in_int);
 
@@ -55,24 +58,33 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	S = A->Sims;
 
-	for (i = 0; i < goi; i++) {
-		S->element_unrank_lint(i, Elt);
-		cout << "element " << i << " is ";
-		A->Group_element->element_print_quick(Elt, cout);
-		cout << endl;
+	if (f_v) {
+		for (i = 0; i < goi; i++) {
+			S->element_unrank_lint(i, Elt);
+			cout << "element " << i << " is ";
+			A->Group_element->element_print_quick(Elt, cout);
+			cout << endl;
 		}
+	}
 
 	actions::action *Aconj;
 
 	Aconj = NEW_OBJECT(actions::action);
 
-	cout << "Creating action by conjugation" << endl;
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"Creating action by conjugation" << endl;
+	}
 
-	Aconj->Induced_action->create_induced_action_by_conjugation(S,
+	Aconj = A->Induced_action->create_induced_action_by_conjugation(
+			S,
 		FALSE /* f_ownership */, FALSE /* f_basis */, NULL,
 		verbose_level);
 
-	cout << "Creating action by conjugation done" << endl;
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"Creating action by conjugation done" << endl;
+	}
 
 	induced_actions::action_by_conjugation *ABC;
 
@@ -99,8 +111,15 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	Sch->init_generators(*SG->gens, verbose_level - 2);
 
-	cout << "Computing conjugacy classes:" << endl;
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"before Sch->compute_all_point_orbits:" << endl;
+	}
 	Sch->compute_all_point_orbits(verbose_level);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"after Sch->compute_all_point_orbits:" << endl;
+	}
 
 
 	int nb_classes;
@@ -112,10 +131,12 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	for (i = 0; i < nb_classes; i++) {
 		class_size[i] = Sch->orbit_len[i];
-		}
-	cout << "class sizes : ";
-	Int_vec_print(cout, class_size, nb_classes);
-	cout << endl;
+	}
+	if (f_v) {
+		cout << "class sizes : ";
+		Int_vec_print(cout, class_size, nb_classes);
+		cout << endl;
+	}
 
 
 
@@ -124,19 +145,36 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	int r, r0;
 
 
-	compute_multiplication_constants_center_of_group_ring(A,
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"before compute_multiplication_constants_center_of_group_ring" << endl;
+	}
+	compute_multiplication_constants_center_of_group_ring(
+			A,
 		ABC,
-		Sch, nb_classes, N, verbose_level);
+		Sch, nb_classes, N, verbose_level - 2);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"after compute_multiplication_constants_center_of_group_ring" << endl;
+	}
 
 
 	for (r = 0; r < nb_classes; r++) {
 		cout << "N_" << r << ":" << endl;
 		Int_matrix_print(N + r * nb_classes * nb_classes, nb_classes, nb_classes);
 		cout << endl;
-		}
+	}
 
 
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"before compute_r0" << endl;
+	}
 	r0 = compute_r0(N, nb_classes, verbose_level);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"after compute_r0" << endl;
+	}
 
 
 	if (r0 == -1) {
@@ -146,7 +184,9 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		}
 
 
-	cout << "r0=" << r0 << endl;
+	if (f_v) {
+		cout << "r0=" << r0 << endl;
+	}
 
 	int *N0;
 
@@ -161,8 +201,14 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	int *Mu_mult;
 	int nb_mu;
 
-	cout << "N_" << r0 << ":" << endl;
+	if (f_v) {
+		cout << "N_" << r0 << ":" << endl;
+	}
 
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"before integral_eigenvalues" << endl;
+	}
 	integral_eigenvalues(N0, nb_classes,
 		Lambda,
 		nb_lambda,
@@ -170,28 +216,48 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		Mu_mult,
 		nb_mu,
 		0 /*verbose_level*/);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"after integral_eigenvalues" << endl;
+	}
 
-	cout << "Has " << nb_mu << " distinct eigenvalues" << endl;
+	if (f_v) {
+		cout << "Has " << nb_mu << " distinct eigenvalues" << endl;
+	}
 
 
-	cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
-	Int_vec_print(cout, Lambda, nb_lambda);
-	cout << endl;
-	cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
-	for (i = 0; i < nb_mu; i++) {
-		cout << Mu[i] << " with multiplicity " << Mu_mult[i] << endl;
+	if (f_v) {
+		cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
+		Int_vec_print(cout, Lambda, nb_lambda);
+		cout << endl;
+		cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
+		for (i = 0; i < nb_mu; i++) {
+			cout << Mu[i] << " with multiplicity " << Mu_mult[i] << endl;
 		}
+	}
 
 	int *Omega;
 
 
-	compute_omega(D, N0, nb_classes, Mu, nb_mu, Omega, verbose_level);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"before compute_omega" << endl;
+	}
+	compute_omega(
+			D, N0, nb_classes, Mu, nb_mu, Omega,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"after compute_omega" << endl;
+	}
 
 
 
-	cout << "Omega:" << endl;
-	D->print_matrix(Omega, nb_classes, nb_classes);
-	//double_matrix_print(Omega, nb_classes, nb_classes);
+	if (f_v) {
+		cout << "Omega:" << endl;
+		D->print_matrix(Omega, nb_classes, nb_classes);
+		//double_matrix_print(Omega, nb_classes, nb_classes);
+	}
 
 
 
@@ -199,28 +265,50 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	int *character_degree;
 
 
-	compute_character_degrees(D, goi, nb_classes, Omega, class_size,
-		character_degree, verbose_level);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"before compute_character_degrees" << endl;
+	}
+	compute_character_degrees(
+			D, goi, nb_classes, Omega, class_size,
+		character_degree,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"after compute_character_degrees" << endl;
+	}
 
 
-	cout << "character degrees : ";
-	Int_vec_print(cout, character_degree, nb_classes);
-	cout << endl;
+	if (f_v) {
+		cout << "character degrees : ";
+		Int_vec_print(cout, character_degree, nb_classes);
+		cout << endl;
+	}
 
 
 	int *character_table;
 
 
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"before compute_character_table" << endl;
+	}
 	compute_character_table(D, nb_classes, Omega,
 		character_degree, class_size,
-		character_table, verbose_level);
+		character_table, verbose_level - 2);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"after compute_character_table" << endl;
+	}
 
 
 
 
 
-	cout << "character table:" << endl;
-	Int_matrix_print(character_table, nb_classes, nb_classes);
+	if (f_v) {
+		cout << "character table:" << endl;
+		Int_matrix_print(character_table, nb_classes, nb_classes);
+	}
 
 	int f_special = TRUE;
 	int **Gens;
@@ -232,22 +320,44 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	for (i = 0; i < nb_classes; i++) {
 		if (character_degree[i] > t_max) {
 			t_max = character_degree[i];
-			}
 		}
+	}
 
-	cout << "t_max=" << t_max << endl;
+	if (f_v) {
+		cout << "t_max=" << t_max << endl;
+	}
 
-	cout << "creating generators:" << endl;
-	create_generators(A, n, Gens, nb_gens, f_special, verbose_level);
+	if (f_v) {
+		cout << "creating generators:" << endl;
+	}
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"before create_generators" << endl;
+	}
+	create_generators(A, n, Gens, nb_gens, f_special, verbose_level - 2);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"after create_generators" << endl;
+	}
 
 
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"before compute_Distribution_table" << endl;
+	}
 	compute_Distribution_table(A, ABC,
 		Sch, nb_classes,
-		Gens,nb_gens, t_max, Distribution, verbose_level);
+		Gens,nb_gens, t_max, Distribution, verbose_level - 2);
+	if (f_v) {
+		cout << "character_table_burnside::do_it "
+				"after compute_Distribution_table" << endl;
+	}
 
 
-	cout << "Distribution table:" << endl;
-	Int_matrix_print(Distribution + nb_classes, t_max, nb_classes);
+	if (f_v) {
+		cout << "Distribution table:" << endl;
+		Int_matrix_print(Distribution + nb_classes, t_max, nb_classes);
+	}
 
 
 	for (i = 0; i < nb_classes; i++) {
@@ -283,35 +393,55 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 		//n = character_degree[i];
 
+		if (f_v) {
+			cout << "character_table_burnside::do_it "
+					"before create_matrix" << endl;
+		}
 		create_matrix(M, i, S, nb_classes,
 			character_degree, class_size,
-			verbose_level);
+			verbose_level - 2);
+		if (f_v) {
+			cout << "character_table_burnside::do_it "
+					"after create_matrix" << endl;
+		}
 
-		cout << "M=" << endl;
-		cout << M << endl;
+		if (f_v) {
+			cout << "M=" << endl;
+			cout << M << endl;
+		}
 
 		typed_objects::unipoly p;
 
 
+		if (f_v) {
+			cout << "character_table_burnside::do_it "
+					"before M.determinant" << endl;
+		}
 		M.determinant(p, 0 /*verbose_level*/);
 		if (f_v) {
+			cout << "character_table_burnside::do_it "
+					"after M.determinant" << endl;
+		}
+		if (f_v) {
 			cout << "determinant:" << p << endl;
-			}
+		}
 
 		deg = p.degree();
 		if (f_v) {
 			cout << "has degree " << deg << endl;
-			}
+		}
 
 
 
 
 		FREE_int(S);
-		}
+	}
 
 
-	cout << "character table:" << endl;
-	Int_matrix_print(character_table, nb_classes, nb_classes);
+	if (f_v) {
+		cout << "character table:" << endl;
+		Int_matrix_print(character_table, nb_classes, nb_classes);
+	}
 
 
 	orbiter_kernel_system::latex_interface L;

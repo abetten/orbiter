@@ -265,6 +265,23 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		}
 	}
 
+	else if (Descr->f_canonical_image_GAP) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_canonical_image_GAP" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->do_canonical_image_GAP" << endl;
+		}
+		AG->do_canonical_image_GAP(Descr->canonical_image_GAP_input_set, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->do_canonical_image_GAP" << endl;
+		}
+	}
+
 	else if (Descr->f_canonical_image) {
 
 		if (f_v) {
@@ -273,14 +290,15 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		}
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_canonical_image_GAP" << endl;
+					"before AG->do_canonical_image_orbiter" << endl;
 		}
-		AG->do_canonical_image_GAP(Descr->canonical_image_input_set, verbose_level);
+		AG->do_canonical_image_orbiter(Descr->canonical_image_input_set, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_canonical_image_GAP" << endl;
+					"after AG->do_canonical_image_orbiter" << endl;
 		}
 	}
+
 
 	else if (Descr->f_search_element_of_order) {
 

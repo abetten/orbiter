@@ -117,12 +117,13 @@ void classify_double_sixes::test_orbits(int verbose_level)
 			cout << endl;
 		}
 
-
 		orbiter_kernel_system::Orbiter->Lint_vec->apply(
 				S,
 				Five_p1->Linear_complex->Neighbor_to_line,
 				S2, 5);
+
 		S2[5] = Five_p1->Linear_complex->pt0_line;
+
 		if (f_vv) {
 			cout << "5+1 lines = ";
 			Lint_vec_print(cout, S2, 6);
@@ -314,7 +315,7 @@ void classify_double_sixes::downstep(int verbose_level)
 
 		if (f_vv) {
 			cout << "classify_double_sixes::downstep before "
-					"create_double_six_from_five_lines_with_a_common_transversal" << endl;
+					"five_plus_one_to_double_six" << endl;
 		}
 #if 0
 		c = Five_p1->Surf_A->create_double_six_from_five_lines_with_a_common_transversal(
@@ -327,7 +328,7 @@ void classify_double_sixes::downstep(int verbose_level)
 				dataset + 5,
 				Five_p1->Linear_complex->pt0_line,
 				double_six,
-				0 /* verbose_level - 2*/);
+				verbose_level - 2);
 
 		if (f_vv) {
 			cout << "classify_double_sixes::downstep after "

@@ -52,12 +52,14 @@ void orbiter_symbol_table_entry::freeself()
 }
 
 
-void orbiter_symbol_table_entry::init(std::string &str_label)
+void orbiter_symbol_table_entry::init(
+		std::string &str_label)
 {
 	label.assign(str_label);
 }
 
-void orbiter_symbol_table_entry::init_finite_field(std::string &label,
+void orbiter_symbol_table_entry::init_finite_field(
+		std::string &label,
 		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -74,8 +76,10 @@ void orbiter_symbol_table_entry::init_finite_field(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_polynomial_ring(std::string &label,
-		ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level)
+void orbiter_symbol_table_entry::init_polynomial_ring(
+		std::string &label,
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -91,7 +95,8 @@ void orbiter_symbol_table_entry::init_polynomial_ring(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_any_group(std::string &label,
+void orbiter_symbol_table_entry::init_any_group(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -108,7 +113,8 @@ void orbiter_symbol_table_entry::init_any_group(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_linear_group(std::string &label,
+void orbiter_symbol_table_entry::init_linear_group(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -125,7 +131,8 @@ void orbiter_symbol_table_entry::init_linear_group(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_permutation_group(std::string &label,
+void orbiter_symbol_table_entry::init_permutation_group(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -142,7 +149,8 @@ void orbiter_symbol_table_entry::init_permutation_group(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_modified_group(std::string &label,
+void orbiter_symbol_table_entry::init_modified_group(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -159,7 +167,8 @@ void orbiter_symbol_table_entry::init_modified_group(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_projective_space(std::string &label,
+void orbiter_symbol_table_entry::init_projective_space(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -176,7 +185,8 @@ void orbiter_symbol_table_entry::init_projective_space(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_orthogonal_space(std::string &label,
+void orbiter_symbol_table_entry::init_orthogonal_space(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -193,7 +203,8 @@ void orbiter_symbol_table_entry::init_orthogonal_space(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_BLT_set_classify(std::string &label,
+void orbiter_symbol_table_entry::init_BLT_set_classify(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -210,7 +221,8 @@ void orbiter_symbol_table_entry::init_BLT_set_classify(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_spread_classify(std::string &label,
+void orbiter_symbol_table_entry::init_spread_classify(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -227,7 +239,8 @@ void orbiter_symbol_table_entry::init_spread_classify(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_formula(std::string &label,
+void orbiter_symbol_table_entry::init_formula(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -244,7 +257,8 @@ void orbiter_symbol_table_entry::init_formula(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_cubic_surface(std::string &label,
+void orbiter_symbol_table_entry::init_cubic_surface(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -261,7 +275,8 @@ void orbiter_symbol_table_entry::init_cubic_surface(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_quartic_curve(std::string &label,
+void orbiter_symbol_table_entry::init_quartic_curve(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -278,7 +293,8 @@ void orbiter_symbol_table_entry::init_quartic_curve(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_BLT_set(std::string &label,
+void orbiter_symbol_table_entry::init_BLT_set(
+		std::string &label,
 		void *p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -314,7 +330,8 @@ void orbiter_symbol_table_entry::init_classification_of_cubic_surfaces_with_doub
 
 }
 
-void orbiter_symbol_table_entry::init_collection(std::string &label,
+void orbiter_symbol_table_entry::init_collection(
+		std::string &label,
 		std::string &list_of_objects, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -355,8 +372,10 @@ void orbiter_symbol_table_entry::init_collection(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_geometric_object(std::string &label,
-		geometry::geometric_object_create *COC, int verbose_level)
+void orbiter_symbol_table_entry::init_geometric_object(
+		std::string &label,
+		geometry::geometric_object_create *COC,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -372,7 +391,8 @@ void orbiter_symbol_table_entry::init_geometric_object(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_graph(std::string &label,
+void orbiter_symbol_table_entry::init_graph(
+		std::string &label,
 		void *Gr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -389,7 +409,8 @@ void orbiter_symbol_table_entry::init_graph(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_code(std::string &label,
+void orbiter_symbol_table_entry::init_code(
+		std::string &label,
 		void *Code, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -406,7 +427,8 @@ void orbiter_symbol_table_entry::init_code(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_spread(std::string &label,
+void orbiter_symbol_table_entry::init_spread(
+		std::string &label,
 		void *Spread, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -423,7 +445,8 @@ void orbiter_symbol_table_entry::init_spread(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_translation_plane(std::string &label,
+void orbiter_symbol_table_entry::init_translation_plane(
+		std::string &label,
 		void *Tp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -443,7 +466,8 @@ void orbiter_symbol_table_entry::init_translation_plane(std::string &label,
 
 
 
-void orbiter_symbol_table_entry::init_spread_table(std::string &label,
+void orbiter_symbol_table_entry::init_spread_table(
+		std::string &label,
 		void *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -460,7 +484,8 @@ void orbiter_symbol_table_entry::init_spread_table(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_packing_was(std::string &label,
+void orbiter_symbol_table_entry::init_packing_was(
+		std::string &label,
 		void *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -478,7 +503,8 @@ void orbiter_symbol_table_entry::init_packing_was(std::string &label,
 }
 
 
-void orbiter_symbol_table_entry::init_packing_was_choose_fixed_points(std::string &label,
+void orbiter_symbol_table_entry::init_packing_was_choose_fixed_points(
+		std::string &label,
 		void *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -496,7 +522,8 @@ void orbiter_symbol_table_entry::init_packing_was_choose_fixed_points(std::strin
 }
 
 
-void orbiter_symbol_table_entry::init_packing_long_orbits(std::string &label,
+void orbiter_symbol_table_entry::init_packing_long_orbits(
+		std::string &label,
 		void *PL, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -513,7 +540,8 @@ void orbiter_symbol_table_entry::init_packing_long_orbits(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_graph_classify(std::string &label,
+void orbiter_symbol_table_entry::init_graph_classify(
+		std::string &label,
 		void *GC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -530,7 +558,8 @@ void orbiter_symbol_table_entry::init_graph_classify(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_diophant(std::string &label,
+void orbiter_symbol_table_entry::init_diophant(
+		std::string &label,
 		void *Dio, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -547,7 +576,8 @@ void orbiter_symbol_table_entry::init_diophant(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_design(std::string &label,
+void orbiter_symbol_table_entry::init_design(
+		std::string &label,
 		void *DC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -564,7 +594,8 @@ void orbiter_symbol_table_entry::init_design(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_design_table(std::string &label,
+void orbiter_symbol_table_entry::init_design_table(
+		std::string &label,
 		void *DT, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -581,7 +612,8 @@ void orbiter_symbol_table_entry::init_design_table(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_large_set_was(std::string &label,
+void orbiter_symbol_table_entry::init_large_set_was(
+		std::string &label,
 		void *LSW, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -598,7 +630,8 @@ void orbiter_symbol_table_entry::init_large_set_was(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_set(std::string &label,
+void orbiter_symbol_table_entry::init_set(
+		std::string &label,
 		void *SB, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -615,7 +648,8 @@ void orbiter_symbol_table_entry::init_set(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_vector(std::string &label,
+void orbiter_symbol_table_entry::init_vector(
+		std::string &label,
 		void *VB, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -632,7 +666,8 @@ void orbiter_symbol_table_entry::init_vector(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_combinatorial_objects(std::string &label,
+void orbiter_symbol_table_entry::init_combinatorial_objects(
+		std::string &label,
 		data_structures::data_input_stream *IS, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -649,7 +684,8 @@ void orbiter_symbol_table_entry::init_combinatorial_objects(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_geometry_builder_object(std::string &label,
+void orbiter_symbol_table_entry::init_geometry_builder_object(
+		std::string &label,
 		geometry_builder::geometry_builder *GB, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -666,7 +702,8 @@ void orbiter_symbol_table_entry::init_geometry_builder_object(std::string &label
 	}
 }
 
-void orbiter_symbol_table_entry::init_vector_ge(std::string &label,
+void orbiter_symbol_table_entry::init_vector_ge(
+		std::string &label,
 		void *V, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -683,7 +720,8 @@ void orbiter_symbol_table_entry::init_vector_ge(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_action_on_forms(std::string &label,
+void orbiter_symbol_table_entry::init_action_on_forms(
+		std::string &label,
 		void *AF, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -700,7 +738,8 @@ void orbiter_symbol_table_entry::init_action_on_forms(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_orbits(std::string &label,
+void orbiter_symbol_table_entry::init_orbits(
+		std::string &label,
 		void *OC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -717,7 +756,8 @@ void orbiter_symbol_table_entry::init_orbits(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_poset_classification_control(std::string &label,
+void orbiter_symbol_table_entry::init_poset_classification_control(
+		std::string &label,
 		void *PCC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

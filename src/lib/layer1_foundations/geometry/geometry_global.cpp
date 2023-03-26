@@ -1442,7 +1442,7 @@ void geometry_global::do_unrank_points_in_PG(
 	long int *v;
 	int len;
 
-	orbiter_kernel_system::Orbiter->get_lint_vector_from_label(text, v, len, 0 /* verbose_level */);
+	Get_lint_vector_from_label(text, v, len, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "geometry_global::do_unrank_points_in_PG rank values = ";

@@ -1200,83 +1200,123 @@ public:
 	orbiter_symbol_table_entry();
 	~orbiter_symbol_table_entry();
 	void freeself();
-	void init(std::string &str_label);
-	void init_finite_field(std::string &label,
+	void init(
+			std::string &str_label);
+	void init_finite_field(
+			std::string &label,
 			field_theory::finite_field *F, int verbose_level);
-	void init_polynomial_ring(std::string &label,
-			ring_theory::homogeneous_polynomial_domain *HPD, int verbose_level);
-	void init_any_group(std::string &label,
+	void init_polynomial_ring(
+			std::string &label,
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int verbose_level);
+	void init_any_group(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_linear_group(std::string &label,
+	void init_linear_group(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_permutation_group(std::string &label,
+	void init_permutation_group(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_modified_group(std::string &label,
+	void init_modified_group(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_projective_space(std::string &label,
+	void init_projective_space(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_orthogonal_space(std::string &label,
+	void init_orthogonal_space(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_BLT_set_classify(std::string &label,
+	void init_BLT_set_classify(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_spread_classify(std::string &label,
+	void init_spread_classify(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_formula(std::string &label,
+	void init_formula(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_cubic_surface(std::string &label,
+	void init_cubic_surface(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_quartic_curve(std::string &label,
+	void init_quartic_curve(
+			std::string &label,
 			void *p, int verbose_level);
-	void init_BLT_set(std::string &label,
+	void init_BLT_set(
+			std::string &label,
 			void *p, int verbose_level);
 	void init_classification_of_cubic_surfaces_with_double_sixes(
 			std::string &label,
 			void *p, int verbose_level);
-	void init_collection(std::string &label,
+	void init_collection(
+			std::string &label,
 			std::string &list_of_objects, int verbose_level);
-	void init_geometric_object(std::string &label,
-			geometry::geometric_object_create *COC, int verbose_level);
-	void init_graph(std::string &label,
+	void init_geometric_object(
+			std::string &label,
+			geometry::geometric_object_create *COC,
+			int verbose_level);
+	void init_graph(
+			std::string &label,
 			void *Gr, int verbose_level);
-	void init_code(std::string &label,
+	void init_code(
+			std::string &label,
 			void *Code, int verbose_level);
-	void init_spread(std::string &label,
+	void init_spread(
+			std::string &label,
 			void *Spread, int verbose_level);
-	void init_translation_plane(std::string &label,
+	void init_translation_plane(
+			std::string &label,
 			void *Tp, int verbose_level);
-	void init_spread_table(std::string &label,
+	void init_spread_table(
+			std::string &label,
 			void *P, int verbose_level);
-	void init_packing_was(std::string &label,
+	void init_packing_was(
+			std::string &label,
 			void *P, int verbose_level);
-	void init_packing_was_choose_fixed_points(std::string &label,
+	void init_packing_was_choose_fixed_points(
+			std::string &label,
 			void *P, int verbose_level);
-	void init_packing_long_orbits(std::string &label,
+	void init_packing_long_orbits(
+			std::string &label,
 			void *PL, int verbose_level);
-	void init_graph_classify(std::string &label,
+	void init_graph_classify(
+			std::string &label,
 			void *GC, int verbose_level);
-	void init_diophant(std::string &label,
+	void init_diophant(
+			std::string &label,
 			void *Dio, int verbose_level);
-	void init_design(std::string &label,
+	void init_design(
+			std::string &label,
 			void *DC, int verbose_level);
-	void init_design_table(std::string &label,
+	void init_design_table(
+			std::string &label,
 			void *DT, int verbose_level);
-	void init_large_set_was(std::string &label,
+	void init_large_set_was(
+			std::string &label,
 			void *LSW, int verbose_level);
-	void init_set(std::string &label,
+	void init_set(
+			std::string &label,
 			void *SB, int verbose_level);
-	void init_vector(std::string &label,
+	void init_vector(
+			std::string &label,
 			void *VB, int verbose_level);
-	void init_combinatorial_objects(std::string &label,
+	void init_combinatorial_objects(
+			std::string &label,
 			data_structures::data_input_stream *IS, int verbose_level);
-	void init_geometry_builder_object(std::string &label,
+	void init_geometry_builder_object(
+			std::string &label,
 			geometry_builder::geometry_builder *GB, int verbose_level);
-	void init_vector_ge(std::string &label,
+	void init_vector_ge(
+			std::string &label,
 			void *V, int verbose_level);
-	void init_action_on_forms(std::string &label,
+	void init_action_on_forms(
+			std::string &label,
 			void *AF, int verbose_level);
-	void init_orbits(std::string &label,
+	void init_orbits(
+			std::string &label,
 			void *OC, int verbose_level);
-	void init_poset_classification_control(std::string &label,
+	void init_poset_classification_control(
+			std::string &label,
 			void *PCC, int verbose_level);
 	void init_poset_classification_activity(
 			std::string &label,

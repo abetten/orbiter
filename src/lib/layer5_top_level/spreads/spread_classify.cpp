@@ -600,7 +600,8 @@ void spread_classify::init2(int verbose_level)
 			cout << "spread_classify::init2 "
 					"before gen->initialize" << endl;
 		}
-		gen->initialize_and_allocate_root_node(Control, Poset,
+		gen->initialize_and_allocate_root_node(
+				Control, Poset,
 			SD->spread_size,
 			verbose_level - 2);
 		if (f_v) {
@@ -644,21 +645,24 @@ void spread_classify::classify_partial_spreads(int verbose_level)
 	}
 
 	if (gen->get_depth() < starter_size) {
-		cout << "spread_classify::classify_partial_spreads gen->depth < starter_size" << endl;
+		cout << "spread_classify::classify_partial_spreads "
+				"gen->depth < starter_size" << endl;
 		exit(1);
 	}
 
 	gen->get_depth() = starter_size;
 
 	if (f_v) {
-		cout << "spread_classify::classify_partial_spreads Control->max_depth=" << gen->get_control()->depth << endl;
+		cout << "spread_classify::classify_partial_spreads "
+				"Control->max_depth=" << gen->get_control()->depth << endl;
 	}
 
 
 	schreier_depth = starter_size; // gen->get_control()->depth;
 	
 	if (f_v) {
-		cout << "spread_classify::classify_partial_spreads calling generator_main" << endl;
+		cout << "spread_classify::classify_partial_spreads "
+				"calling generator_main" << endl;
 	}
 
 	t0 = Os.os_ticks();
@@ -671,7 +675,8 @@ void spread_classify::classify_partial_spreads(int verbose_level)
 	int length;
 	
 	if (f_v) {
-		cout << "spread_classify::classify_partial_spreads done with generator_main" << endl;
+		cout << "spread_classify::classify_partial_spreads "
+				"done with generator_main" << endl;
 	}
 	length = gen->nb_orbits_at_level(gen->get_control()->depth);
 	if (f_v) {
@@ -732,7 +737,8 @@ void spread_classify::lifting(
 
 	R = NEW_OBJECT(data_structures_groups::orbit_rep);
 	if (f_v) {
-		cout << "spread_classify::lifting before R->init_from_file" << endl;
+		cout << "spread_classify::lifting "
+				"before R->init_from_file" << endl;
 	}
 
 	R->init_from_file(A, prefix,
@@ -741,7 +747,8 @@ void spread_classify::lifting(
 		this /* early_test_func_callback_data */,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "spread_classify::lifting after R->init_from_file" << endl;
+		cout << "spread_classify::lifting "
+				"after R->init_from_file" << endl;
 	}
 	nb = target_size - starter_size;
 
@@ -845,7 +852,7 @@ void spread_classify::lifting(
 	if (f_v) {
 		cout << "spread_classify::lifting before "
 				"setup_lifting" << endl;
-		}
+	}
 	setup_lifting(
 			R,
 			Descr->output_prefix,

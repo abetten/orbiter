@@ -2309,7 +2309,8 @@ void grassmann::get_spread_matrices(
 	}
 }
 
-long int grassmann::map_line_in_PG3q(long int line, int *transform16, int verbose_level)
+long int grassmann::map_line_in_PG3q(
+		long int line, int *transform16, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2320,17 +2321,36 @@ long int grassmann::map_line_in_PG3q(long int line, int *transform16, int verbos
 	int Basis1[8];
 	int Basis2[8];
 
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q transform16 = " << endl;
+		Int_matrix_print(transform16, 4, 4);
+	}
 
 	Int_vec_zero(Basis1, 8);
 	unrank_lint_here(
 			Basis1, line, 0/*verbose_level - 4*/);
 
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q line = " << line << endl;
+		cout << "grassmann::map_line_in_PG3q Basis1 = " << endl;
+		Int_matrix_print(Basis1, 2, 4);
+	}
+
+
 	F->Linear_algebra->mult_matrix_matrix(
 			Basis1, transform16, Basis2,
 			2, 4, 4, 0/*verbose_level - 4*/);
 
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q Basis2 = " << endl;
+		Int_matrix_print(Basis2, 2, 4);
+	}
+
 	b = rank_lint_here(
 			Basis2, 0/*verbose_level - 4*/);
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q image line = " << b << endl;
+	}
 
 	if (f_v) {
 		cout << "grassmann::map_line_in_PG3q done" << endl;

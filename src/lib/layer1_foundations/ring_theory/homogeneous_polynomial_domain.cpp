@@ -2810,7 +2810,7 @@ void homogeneous_polynomial_domain::create_ideal(
 				"ideal_point_set_label=" << ideal_point_set_label << endl;
 	}
 
-	//orbiter_kernel_system::Orbiter->get_lint_vector_from_label(ideal_point_set_label, Pts, nb_pts, verbose_level);
+	//Get_lint_vector_from_label(ideal_point_set_label, Pts, nb_pts, verbose_level);
 
 	Get_lint_vector_from_label(ideal_point_set_label, Pts, nb_pts, verbose_level);
 

@@ -103,7 +103,8 @@ void unusual_model::setup2(
 
 	Quadratic_form_list_coding = NEW_OBJECT(quadratic_form_list_coding);
 
-	Quadratic_form_list_coding->init(Fq, FQ, f_sum_of_squares, verbose_level);
+	Quadratic_form_list_coding->init(
+			Fq, FQ, f_sum_of_squares, verbose_level);
 
 
 	//const char *override_poly_Q = NULL;
@@ -327,7 +328,8 @@ void unusual_model::convert_from_ranks(
 	usual = NEW_int(n * 5);
 	for (i = 0; i < n; i++) {
 		Quadratic_form->Orthogonal_indexing->Q_unrank(
-				usual + 5 * i, 1, 4, ranks[i], 0 /* verbose_level */);
+				usual + 5 * i, 1, 4, ranks[i],
+				0 /* verbose_level */);
 	}
 	
 
@@ -352,7 +354,9 @@ long int unusual_model::convert_to_rank(
 	int usual[5];
 	long int rank;
 
-	convert_to_usual(1, unusual_coordinates, usual, verbose_level - 1);
+	convert_to_usual(
+			1, unusual_coordinates, usual,
+			verbose_level - 1);
 	rank = Quadratic_form->Orthogonal_indexing->Q_rank(
 			usual, 1, 4, 0 /* verbose_level */);
 	return rank;
@@ -1069,9 +1073,12 @@ void unusual_model::transform_matrix_unusual_to_usual(
 				"standard coordinates:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M4_tmp2, 4, 4, 4, 3);
 	}
+	Int_vec_zero(M5, 25);
+#if 0
 	for (i = 0; i < 25; i++) {
 		M5[i] = 0;
 	}
+#endif
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
 			a = M4_tmp2[i * 4 + j];

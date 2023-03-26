@@ -1479,12 +1479,16 @@ action *induced_action::create_induced_action_by_conjugation(
 	if (f_basis) {
 		if (f_v) {
 			cout << "induced_action::create_induced_action_by_conjugation "
-					"calling induced_action_override_sims" << endl;
+					"before AG.induced_action_override_sims" << endl;
 		}
 
 		action_global AG;
 
 		AG.induced_action_override_sims(A_old, A, old_G, verbose_level - 2);
+		if (f_v) {
+			cout << "induced_action::create_induced_action_by_conjugation "
+					"after AG.induced_action_override_sims" << endl;
+		}
 	}
 	if (f_v) {
 		cout << "induced_action::create_induced_action_by_conjugation "
@@ -1762,7 +1766,7 @@ action *induced_action::induced_action_on_sets(
 				"calling allocate_base_data" << endl;
 	}
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(A, 0, verbose_level); // we need to pass A here!
 	//allocate_base_data(0);
 
 
@@ -1774,7 +1778,7 @@ action *induced_action::induced_action_on_sets(
 	if (f_induce_action) {
 		if (f_v) {
 			cout << "induced_action::induced_action_on_sets "
-					"calling induced_action_override_sims" << endl;
+					"before induced_action_override_sims" << endl;
 		}
 		action_global AG;
 
@@ -1783,7 +1787,7 @@ action *induced_action::induced_action_on_sets(
 				old_G, verbose_level /*- 2*/);
 		if (f_v) {
 			cout << "induced_action::induced_action_on_sets "
-					"induced_action_override_sims done" << endl;
+					"after induced_action_override_sims" << endl;
 		}
 	}
 	if (f_v) {
@@ -2028,7 +2032,9 @@ void induced_action::original_point_labels(
 }
 
 action *induced_action::restricted_action(
-		long int *points, int nb_points, int verbose_level)
+		long int *points, int nb_points,
+		std::string &label_of_set,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
@@ -2044,9 +2050,11 @@ action *induced_action::restricted_action(
 	A = NEW_OBJECT(action);
 
 	A->label.assign(A_old->label);
-	A->label.append("_res");
+	A->label.append("_res_");
+	A->label.append(label_of_set);
 	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(" {\\rm res}");
+	A->label_tex.append(label_of_set);
 
 
 	A->f_has_subaction = TRUE;
@@ -2686,7 +2694,7 @@ action *induced_action::induced_action_on_andre(
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_andre "
-				"finished, created action " << A->label << endl;
+				"finished, created action " << A->label << " of degree " << A->degree << endl;
 		A->print_info();
 	}
 	return A;

@@ -428,9 +428,16 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 			Long_pairs, nb_pairs_of_type2, 2, FALSE /* f_tex */);
 
 
+
+	std::string label_of_set;
+
+
+	label_of_set.assign("short_orbits");
+
 	cout << "creating restricted action on short orbits:" << endl;
 	A_on_short_orbits = N_on_orbits->Induced_action->restricted_action(
-			Short_pairs, nb_short_orbits, verbose_level);
+			Short_pairs, nb_short_orbits, label_of_set,
+			verbose_level);
 
 
 	//create_minimal_overgroups(verbose_level);

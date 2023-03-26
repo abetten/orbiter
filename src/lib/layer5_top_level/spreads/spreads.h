@@ -67,7 +67,8 @@ public:
 	int *Elt; // [A->elt_size_in_int]
 
 	// initialized in compute_starter():
-	long int starter_j1, starter_j2, starter_j3;
+	//long int starter_j1, starter_j2, starter_j3;
+
 	actions::action *A0;
 		// P Gamma L(k,q)
 	actions::action *A0_linear;

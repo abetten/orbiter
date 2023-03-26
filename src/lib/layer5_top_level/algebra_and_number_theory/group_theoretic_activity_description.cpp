@@ -52,6 +52,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_export_magma = FALSE;
 
 	// GAP
+	f_canonical_image_GAP = FALSE;
+	//std::string canonical_image_GAP_input_set;
+
 	f_canonical_image = FALSE;
 	//std::string canonical_image_input_set;
 
@@ -296,6 +299,13 @@ int group_theoretic_activity_description::read_arguments(
 			f_export_magma = TRUE;
 			if (f_v) {
 				cout << "-export_magma " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-canonical_image_GAP") == 0) {
+			f_canonical_image_GAP = TRUE;
+			canonical_image_GAP_input_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-canonical_image_GAP " << canonical_image_GAP_input_set << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-canonical_image") == 0) {
@@ -735,6 +745,9 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_export_magma) {
 		cout << "-export_magma " << endl;
+	}
+	if (f_canonical_image_GAP) {
+		cout << "-canonical_image_GAP " << canonical_image_GAP_input_set << endl;
 	}
 	if (f_canonical_image) {
 		cout << "-canonical_image " << canonical_image_input_set << endl;

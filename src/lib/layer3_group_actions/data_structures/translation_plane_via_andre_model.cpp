@@ -375,7 +375,8 @@ void translation_plane_via_andre_model::init(
 	}
 
 
-	OnAndre->Induced_action->induced_action_on_andre(An, An1, Andre, verbose_level);
+	OnAndre = An->Induced_action->induced_action_on_andre(
+			An, An1, Andre, verbose_level);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "

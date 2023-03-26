@@ -153,6 +153,14 @@ void orthogonal::init(
 		cout << "orthogonal::init epsilon=" << epsilon << " n=" << n << endl;
 	}
 
+	data_structures::string_tools String;
+
+	String.name_of_orthogonal_space(
+			label_txt,
+			label_tex,
+			epsilon, n, F->q,
+			verbose_level - 2);
+
 	Quadratic_form = NEW_OBJECT(quadratic_form);
 
 	if (f_v) {
@@ -184,61 +192,6 @@ void orthogonal::init(
 
 
 
-
-
-#if 0
-	orthogonal::epsilon = epsilon;
-	orthogonal::F = F;
-	orthogonal::n = n;
-
-	q = F->q;
-	m = Gg.Witt_index(epsilon, n - 1);
-
-	char str[1000];
-
-	if (epsilon == 1) {
-		snprintf(str, sizeof(str), "Op_%d_%d", n, q);
-	}
-	else if (epsilon == -1) {
-		snprintf(str, sizeof(str), "Om_%d_%d", n, q);
-	}
-	else if (epsilon == 0) {
-		snprintf(str, sizeof(str), "O_%d_%d", n, q);
-	}
-
-	label_txt.assign(str);
-
-	if (epsilon == 1) {
-		snprintf(str, sizeof(str), "O^+(%d,%d)", n, q);
-	}
-	else if (epsilon == -1) {
-		snprintf(str, sizeof(str), "O^-(%d,%d)", n, q);
-	}
-	else if (epsilon == 0) {
-		snprintf(str, sizeof(str), "O(%d,%d)", n, q);
-	}
-
-
-	label_tex.assign(str);
-
-	if (f_v) {
-		cout << "orthogonal::init: epsilon=" << epsilon
-			<< " n=" << n << " (= vector space dimension)"
-			<< " m=" << m << " (= Witt index)"
-			<< " q=" << q
-			<< " label_txt=" << label_txt
-			<< " label_tex=" << label_tex
-			<< " verbose_level=" << verbose_level
-			<< endl;
-	}
-
-	if (EVEN(q)) {
-		f_even = TRUE;
-	}
-	else {
-		f_even = FALSE;
-	}
-#endif
 
 	if (f_v) {
 		cout << "orthogonal::init "

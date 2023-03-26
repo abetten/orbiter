@@ -20,8 +20,7 @@ namespace orthogonal_geometry_applications {
 orthogonal_space_with_action::orthogonal_space_with_action()
 {
 	Descr = NULL;
-	//std::string label_txt;
-	//std::string label_tex;
+	P = NULL;
 	O = NULL;
 	f_semilinear = FALSE;
 	A = NULL;
@@ -45,6 +44,8 @@ orthogonal_space_with_action::~orthogonal_space_with_action()
 void orthogonal_space_with_action::init(
 		orthogonal_space_with_action_description *Descr,
 		int verbose_level)
+// creates a projective space and an orthogonal space.
+// For n == 5, it also creates a blt_set_domain
 {
 	int f_v = (verbose_level >= 1);
 
@@ -53,24 +54,23 @@ void orthogonal_space_with_action::init(
 	}
 	orthogonal_space_with_action::Descr = Descr;
 
+	P = NEW_OBJECT(geometry::projective_space);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::init "
+				"before P->projective_space_init" << endl;
+	}
+
+	P->projective_space_init(Descr->n - 1, Descr->F,
+		FALSE /* f_init_incidence_structure */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::init "
+				"after P->projective_space_init" << endl;
+	}
+
 	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
-
-
-	data_structures::string_tools String;
-
-	String.name_of_orthogonal_space(
-			label_txt,
-			label_tex,
-			Descr->epsilon, Descr->n, Descr->F->q,
-			verbose_level - 2);
-
-	if (Descr->f_label_txt) {
-		label_txt.assign(Descr->label_txt);
-	}
-	if (Descr->f_label_tex) {
-		label_tex.assign(Descr->label_tex);
-	}
-
 
 
 	if (f_v) {
@@ -82,6 +82,16 @@ void orthogonal_space_with_action::init(
 		cout << "orthogonal_space_with_action::init "
 				"after O->init" << endl;
 	}
+
+
+	if (Descr->f_label_txt) {
+		O->label_txt.assign(Descr->label_txt);
+	}
+	if (Descr->f_label_tex) {
+		O->label_tex.assign(Descr->label_tex);
+	}
+
+
 
 
 	if (!Descr->f_without_group) {
@@ -113,11 +123,11 @@ void orthogonal_space_with_action::init(
 
 		if (f_v) {
 			cout << "orthogonal_space_with_action::init "
-					"before Blt_Set_domain->init" << endl;
+					"before Blt_Set_domain->init_blt_set_domain" << endl;
 		}
-		Blt_Set_domain->init(O, verbose_level - 2);
+		Blt_Set_domain->init_blt_set_domain(O, P, verbose_level - 2);
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init "
+			cout << "orthogonal_space_with_action::init_blt_set_domain "
 					"after Blt_Set_domain->init" << endl;
 		}
 	}
@@ -214,7 +224,7 @@ void orthogonal_space_with_action::report(
 
 	{
 		string fname_report;
-		fname_report.assign(label_txt);
+		fname_report.assign(O->label_txt);
 		fname_report.append("_report.tex");
 		orbiter_kernel_system::latex_interface L;
 		orbiter_kernel_system::file_io Fio;

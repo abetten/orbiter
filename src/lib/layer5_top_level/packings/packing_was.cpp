@@ -1812,7 +1812,7 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
 	cout << "Type " << type_idx << " has " << nb_spreads << " spreads:\\\\" << endl;
 
 	spreads_in_reduced_orbits_by_type = NEW_lint(nb_spreads);
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(spreads_in_reduced_orbits_by_type, nb_spreads);
+	Lint_vec_zero(spreads_in_reduced_orbits_by_type, nb_spreads);
 
 
 

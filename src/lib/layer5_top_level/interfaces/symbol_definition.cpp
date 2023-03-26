@@ -1751,6 +1751,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	if (Projective_space_with_action_description->f_override_verbose_level) {
 		verbose_level = Projective_space_with_action_description->override_verbose_level;
 	}
+
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space "
 				"before load_finite_field_PG" << endl;
@@ -1829,12 +1830,17 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 		cout << "symbol_definition::definition_of_orthogonal_space" << endl;
 	}
 
-
-	load_finite_field(
+	if (f_v) {
+		cout << "symbol_definition::definition_of_orthogonal_space "
+				"before get_or_create_finite_field" << endl;
+	}
+	Orthogonal_space_with_action_description->F = get_or_create_finite_field(
 			Orthogonal_space_with_action_description->input_q,
-			Orthogonal_space_with_action_description->F,
 			verbose_level);
-
+	if (f_v) {
+		cout << "symbol_definition::definition_of_orthogonal_space "
+				"after get_or_create_finite_field" << endl;
+	}
 
 	//int f_semilinear;
 	number_theory::number_theory_domain NT;
@@ -2004,6 +2010,23 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 	if (f_v) {
 		cout << "symbol_definition::definition_of_linear_group" << endl;
 	}
+
+	if (Linear_group_description->input_q.length()) {
+
+
+		if (f_v) {
+			cout << "symbol_definition::definition_of_linear_group "
+					"before get_or_create_finite_field" << endl;
+		}
+		Linear_group_description->F = get_or_create_finite_field(
+				Linear_group_description->input_q,
+				verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::definition_of_linear_group "
+					"after get_or_create_finite_field" << endl;
+		}
+	}
+
 
 	groups::linear_group *LG;
 
@@ -3375,6 +3398,12 @@ void symbol_definition::definition_of_vector(
 
 	if (Descr->f_field) {
 
+
+		F = get_or_create_finite_field(
+				Descr->field_label,
+				verbose_level);
+
+#if 0
 		int idx;
 
 		idx = Sym->Orbiter_top_level_session->find_symbol(Descr->field_label);
@@ -3382,7 +3411,7 @@ void symbol_definition::definition_of_vector(
 		if (f_v) {
 			cout << "symbol_definition::definition_of_vector over a field" << endl;
 		}
-
+#endif
 
 	}
 	else {
@@ -3537,7 +3566,7 @@ void symbol_definition::load_finite_field_PG(int verbose_level)
 		Projective_space_with_action_description->F = NEW_OBJECT(field_theory::finite_field);
 		Projective_space_with_action_description->F->finite_field_init_small_order(q,
 				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				TRUE /* f_compute_related_fields */,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::load_finite_field_PG "
@@ -3560,14 +3589,16 @@ void symbol_definition::load_finite_field_PG(int verbose_level)
 
 
 
-void symbol_definition::load_finite_field(std::string &input_q,
-		field_theory::finite_field *&F, int verbose_level)
+field_theory::finite_field *symbol_definition::get_or_create_finite_field(
+		std::string &input_q,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "symbol_definition::load_finite_field" << endl;
+		cout << "symbol_definition::get_or_create_finite_field" << endl;
 	}
+	field_theory::finite_field *F;
 	data_structures::string_tools ST;
 
 	if (ST.starts_with_a_number(input_q)) {
@@ -3575,31 +3606,31 @@ void symbol_definition::load_finite_field(std::string &input_q,
 
 		q = ST.strtoi(input_q);
 		if (f_v) {
-			cout << "symbol_definition::load_finite_field "
+			cout << "symbol_definition::get_or_create_finite_field "
 					"creating the finite field of order " << q << endl;
 		}
 		F = NEW_OBJECT(field_theory::finite_field);
 
 		F->finite_field_init_small_order(q,
 				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				TRUE /* f_compute_related_fields */,
 				verbose_level - 1);
 
 		if (f_v) {
-			cout << "symbol_definition::load_finite_field "
+			cout << "symbol_definition::get_or_create_finite_field "
 					"the finite field of order " << q
 					<< " has been created" << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "symbol_definition::load_finite_field "
+			cout << "symbol_definition::get_or_create_finite_field "
 					"using existing finite field " << input_q << endl;
 		}
 		int idx;
 		idx = Sym->Orbiter_top_level_session->find_symbol(input_q);
 		if (idx < 0) {
-			cout << "symbol_definition::load_finite_field "
+			cout << "symbol_definition::get_or_create_finite_field "
 					"done cannot find finite field object" << endl;
 			exit(1);
 		}
@@ -3608,8 +3639,9 @@ void symbol_definition::load_finite_field(std::string &input_q,
 	}
 
 	if (f_v) {
-		cout << "symbol_definition::load_finite_field done" << endl;
+		cout << "symbol_definition::get_or_create_finite_field done" << endl;
 	}
+	return F;
 }
 
 

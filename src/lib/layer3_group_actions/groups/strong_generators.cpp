@@ -1618,43 +1618,6 @@ void strong_generators::canonical_image_GAP(
 	if (f_v) {
 		cout << "strong_generators::canonical_image_GAP" << endl;
 	}
-#if 0
-	int i;
-
-	//ost << "Generators in GAP format are:" << endl;
-	ost << "G := Group([";
-	for (i = 0; i < gens->len; i++) {
-		A->element_print_as_permutation_with_offset(
-				gens->ith(i), ost,
-				1 /*offset*/,
-				TRUE /* f_do_it_anyway_even_for_big_degree */,
-				FALSE /* f_print_cycles_of_length_one */,
-				0 /* verbose_level*/);
-		if (i < gens->len - 1) {
-			ost << ", " << endl;
-		}
-	}
-	ost << "]);" << endl;
-
-	long int *set;
-	int sz;
-	data_structures::string_tools ST;
-	std::string output;
-
-
-	Lint_vec_scan(input_set_text, set, sz);
-
-	// add one because GAP is 1-based:
-	for (i = 0; i < sz; i++) {
-		set[i]++;
-	}
-
-	ST.create_comma_separated_list(output, set, sz);
-
-	ost << "LoadPackage(\"images\");" << endl;
-	ost << "MinimalImage(G, [" << output << "], OnSets);" << endl;
-#else
-
 	long int *set;
 	int sz;
 
@@ -1671,6 +1634,33 @@ void strong_generators::canonical_image_GAP(
 			this,
 			set, sz,
 			ost, verbose_level);
+
+	if (f_v) {
+		cout << "strong_generators::canonical_image_GAP done" << endl;
+	}
+}
+
+
+void strong_generators::canonical_image_orbiter(
+		std::string &input_set_text,
+		//std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::canonical_image_orbiter" << endl;
+	}
+	long int *set;
+	int sz;
+
+	Get_lint_vector_from_label(input_set_text, set, sz, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::canonical_image_orbiter "
+				"found a set of size " << sz << endl;
+	}
+
 
 	long int *canonical_set;
 	int *transporter;
@@ -1690,7 +1680,7 @@ void strong_generators::canonical_image_GAP(
 
 
 	if (f_v) {
-		cout << "strong_generators::canonical_image_GAP "
+		cout << "strong_generators::canonical_image_orbiter "
 				"before GL.make_canonical" << endl;
 	}
 	GL.make_canonical(A, Sims,
@@ -1700,7 +1690,7 @@ void strong_generators::canonical_image_GAP(
 		f_get_automorphism_group, &Aut,
 		verbose_level);
 	if (f_v) {
-		cout << "strong_generators::canonical_image_GAP "
+		cout << "strong_generators::canonical_image_orbiter "
 				"after A->make_canonical" << endl;
 	}
 
@@ -1708,11 +1698,12 @@ void strong_generators::canonical_image_GAP(
 	FREE_lint(canonical_set);
 	FREE_OBJECT(Sims);
 
-#endif
+
 	if (f_v) {
-		cout << "strong_generators::canonical_image_GAP done" << endl;
+		cout << "strong_generators::canonical_image_orbiter done" << endl;
 	}
 }
+
 
 
 void strong_generators::print_generators_tex()
@@ -2269,11 +2260,16 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 	orbits_on_something *Orb;
 	std::string prefix;
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_set");
+
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"before A_given->Induced_action->restricted_action" << endl;
 	}
-	Ar = A_given->Induced_action->restricted_action(Set, set_sz, verbose_level);
+	Ar = A_given->Induced_action->restricted_action(Set, set_sz, label_of_set, verbose_level);
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"after A_given->Induced_action->restricted_action" << endl;
@@ -2334,13 +2330,17 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	actions::action *Ar;
 	orbits_on_something *Orb;
 	std::string prefix;
+	std::string label_of_set;
+
+	label_of_set.assign("on_set");
 
 	if (f_v) {
 		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
 				"before A_given->Induced_action->restricted_action" << endl;
 	}
 	Ar = A_given->Induced_action->restricted_action(
-			Set, set_sz, verbose_level);
+			Set, set_sz, label_of_set,
+			verbose_level);
 	if (f_v) {
 		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
 				"after A_given->Induced_action->restricted_action" << endl;
@@ -2441,13 +2441,19 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 	actions::action *Ar;
 	orbits_on_something *Orb;
 	std::string prefix;
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_set");
+
 
 	if (f_v) {
 		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
 				"before A_given->Induced_action->restricted_action" << endl;
 	}
 	Ar = A_given->Induced_action->restricted_action(
-			Set, set_sz, verbose_level);
+			Set, set_sz, label_of_set,
+			verbose_level);
 	if (f_v) {
 		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
 				"after A_given->Induced_action->restricted_action" << endl;

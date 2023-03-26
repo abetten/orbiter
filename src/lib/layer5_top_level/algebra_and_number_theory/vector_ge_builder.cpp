@@ -86,7 +86,7 @@ void vector_ge_builder::init(
 			}
 		}
 	}
-	if (Descr->f_vector_data) {
+	else if (Descr->f_vector_data) {
 		if (f_v) {
 			cout << "vector_ge_builder::init f_vector_data "
 					"vector_data_label = " << Descr->vector_data_label << endl;

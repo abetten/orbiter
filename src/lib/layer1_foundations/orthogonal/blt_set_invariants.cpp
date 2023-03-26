@@ -79,18 +79,6 @@ void blt_set_invariants::init(
 		the_set_in_PG[i] = D->P->rank_point(v5);
 	}
 
-	if (FALSE) {
-		if (f_v) {
-			cout << "blt_set_invariants::init "
-					"before compute" << endl;
-		}
-		compute(verbose_level - 1);
-		if (f_v) {
-			cout << "blt_set_invariants::init "
-					"after compute" << endl;
-		}
-	}
-
 	if (f_v) {
 		cout << "blt_set_invariants::init done" << endl;
 	}

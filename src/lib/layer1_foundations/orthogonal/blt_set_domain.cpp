@@ -64,6 +64,7 @@ blt_set_domain::~blt_set_domain()
 	if (Candidates) {
 		FREE_int(Candidates);
 	}
+#if 0
 	if (P) {
 		FREE_OBJECT(P);
 	}
@@ -73,6 +74,7 @@ blt_set_domain::~blt_set_domain()
 	if (G54) {
 		FREE_OBJECT(G54);
 	}
+#endif
 	if (G43) {
 		FREE_OBJECT(G43);
 	}
@@ -83,16 +85,18 @@ blt_set_domain::~blt_set_domain()
 
 
 
-void blt_set_domain::init(
+void blt_set_domain::init_blt_set_domain(
 		orthogonal *O,
+		geometry::projective_space *P4,
 	int verbose_level)
+// creates a grassmann G43.
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
-		cout << "blt_set_domain::init" << endl;
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain" << endl;
+		cout << "blt_set_domain::init_blt_set_domain "
 				"verbose_level = " << verbose_level << endl;
 	}
 
@@ -115,7 +119,7 @@ void blt_set_domain::init(
 
 
 	if (f_v) {
-		cout << "blt_set_domain::init q=" << q
+		cout << "blt_set_domain::init_blt_set_domain q=" << q
 				<< " target_size = " << target_size << endl;
 	}
 
@@ -125,13 +129,13 @@ void blt_set_domain::init(
 		f_semilinear = FALSE;
 	}
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"f_semilinear=" << f_semilinear << endl;
 	}
 
 
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"allocating Pts and Candidates" << endl;
 	}
 
@@ -141,10 +145,18 @@ void blt_set_domain::init(
 	Candidates = NEW_int(degree * n);
 
 
+	P = P4;
+
+	G53 = P->Subspaces->Grass_planes;
+	G54 = P->Subspaces->Grass_hyperplanes;
+
+
+
+#if 0
 	P = NEW_OBJECT(geometry::projective_space);
 
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"before P->projective_space_init" << endl;
 	}
 
@@ -154,7 +166,7 @@ void blt_set_domain::init(
 		verbose_level);
 
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"after P->projective_space_init" << endl;
 	}
 
@@ -162,41 +174,44 @@ void blt_set_domain::init(
 	G53 = NEW_OBJECT(geometry::grassmann);
 
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"before G53->init" << endl;
 	}
 	G53->init(5, 3, F, 0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"after G53->init" << endl;
 	}
 
 	G54 = NEW_OBJECT(geometry::grassmann);
 
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"before G54->init" << endl;
 	}
 	G54->init(5, 4, F, 0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"after G54->init" << endl;
 	}
+
+#endif
 
 	G43 = NEW_OBJECT(geometry::grassmann);
 
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"before G43->init" << endl;
 	}
 	G43->init(4, 3, F, 0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "blt_set_domain::init "
+		cout << "blt_set_domain::init_blt_set_domain "
 				"after G43->init" << endl;
 	}
 
+
 	if (f_v) {
-		cout << "blt_set_domain::init finished" << endl;
+		cout << "blt_set_domain::init_blt_set_domain finished" << endl;
 	}
 }
 
@@ -256,7 +271,10 @@ long int blt_set_domain::compute_tangent_hyperplane(
 		cout << "blt_set_domain::compute_tangent_hyperplane "
 				"before F->Linear_algebra->perp" << endl;
 	}
-	F->Linear_algebra->perp(5, 1, B, O->Quadratic_form->Gram_matrix, 0 /* verbose_level */);
+	F->Linear_algebra->perp(
+			5, 1, B,
+			O->Quadratic_form->Gram_matrix,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "blt_set_domain::compute_tangent_hyperplane "
 				"after F->Linear_algebra->perp" << endl;

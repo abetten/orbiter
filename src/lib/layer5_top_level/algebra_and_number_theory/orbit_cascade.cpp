@@ -193,8 +193,13 @@ void orbit_cascade::init(
 
 	for (i = 0; i < number_primary_orbits; i++) {
 
+		std::string label_of_set;
+
+
+		label_of_set.assign("on_orbit");
+
 		A_restricted[i] = G->A->Induced_action->restricted_action(
-				Reps_and_complements + i * N + k, N - k,
+				Reps_and_complements + i * N + k, N - k, label_of_set,
 				0 /*verbose_level*/);
 	}
 

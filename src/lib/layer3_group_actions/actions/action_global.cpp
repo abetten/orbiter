@@ -1062,12 +1062,17 @@ action *action_global::init_direct_product_group_and_restrict(
 		points[i] = P->perm_offset_i[2] + i;
 	}
 
+
+	std::string label_of_set;
+
+	label_of_set.assign("direct_product");
+
 	if (f_v) {
 		cout << "action_global::init_direct_product_group_and_restrict "
 				"before A_direct_product->Induced_action->restricted_action" << endl;
 	}
 	Adp = A_direct_product->Induced_action->restricted_action(
-			points, nb_points,
+			points, nb_points, label_of_set,
 			verbose_level);
 	if (f_v) {
 		cout << "action_global::init_direct_product_group_and_restrict "
@@ -2985,6 +2990,7 @@ void action_global::induce(
 		groups::sims *old_G,
 	int base_of_choice_len, long int *base_of_choice,
 	int verbose_level)
+
 // after this procedure, new_action will have
 // a sims for the group and the kernel
 // it will also have strong generators
@@ -2995,12 +3001,37 @@ void action_global::induce(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	if (f_v) {
-		cout << "action_global::induce verbose_level=" << verbose_level << endl;
+		cout << "action_global::induce "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 	if (f_v) {
-		cout << "action_global::induce old_action->base_len=" << old_action->base_len() << endl;
-		cout << "action_global::induce new_action->base_len=" << new_action->base_len() << endl;
+		cout << "action_global::induce" << endl;
+		cout << "action_global::induce old_action = ";
+		old_action->print_info();
+		cout << endl;
+		cout << "action_global::induce new_action = ";
+		new_action->print_info();
+		cout << endl;
+
+		cout << "action_global::induce "
+				"new_action->Stabilizer_chain->A = " << new_action->Stabilizer_chain->get_A()->label << endl;
+
+		cout << "action_global::induce old_G->A = ";
+		old_G->A->print_info();
+		cout << endl;
+	}
+
+	// the old action may not have a base,
+	// so we don't print old_action->base_len()
+
+	if (f_v) {
+
+		// old_action may not have a base, so the next command is bad:
+		//cout << "action_global::induce old_action->base_len=" << old_action->base_len() << endl;
+
+		cout << "action_global::induce "
+				"new_action->base_len=" << new_action->base_len() << endl;
 	}
 
 	action *subaction;
@@ -3014,10 +3045,11 @@ void action_global::induce(
 	action *fallback_action;
 
 	if (f_v) {
-		cout << "induced_action from action:" << endl;
+		cout << "action_global::induce old_action" << endl;
 		old_action->print_info();
 
-		cout << "the old group is in action:" << endl;
+		cout << "action_global::induce "
+				"the old group is in action:" << endl;
 		old_G->A->print_info();
 	}
 
@@ -3051,7 +3083,10 @@ void action_global::induce(
 		cout << "subaction order = " << go2 << endl;
 		cout << "old action has degree " << old_action->degree << endl;
 		cout << "subaction has degree " << subaction->degree << endl;
+
+		// old_action may not have a base, so the next command is bad:
 		//cout << "base_length = " << old_action->base_len() << endl;
+
 		cout << "subaction->base_len = " << subaction->base_len() << endl;
 		if (base_of_choice_len) {
 			cout << "base of choice:" << endl;
@@ -3065,22 +3100,37 @@ void action_global::induce(
 
 	G = NEW_OBJECT(groups::sims);
 	K = NEW_OBJECT(groups::sims);
+
+	// action of G is new_action
+	// action of K is fallback_action
+
+
 	if (f_v) {
-		cout << "action_global::induce: "
+		cout << "action_global::induce "
+				"new_action=" << new_action->label << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::induce "
 				"before G->init_without_base(this);" << endl;
 	}
 	G->init_without_base(new_action, verbose_level - 2);
 	if (f_v) {
-		cout << "action_global::induce: "
+		cout << "action_global::induce "
 				"after G->init_without_base(this);" << endl;
 	}
 
 
 	if (base_of_choice_len) {
 		if (f_v) {
-			cout << "action_global::induce: initializing base of choice" << endl;
-			cout << "action_global::induce old_action->base_len=" << old_action->base_len() << endl;
-			cout << "action_global::induce new_action->base_len=" << new_action->base_len() << endl;
+			cout << "action_global::induce "
+					"initializing base of choice" << endl;
+
+			// old_action may not have a base, so the next command is bad:
+			//cout << "action_global::induce old_action->base_len=" << old_action->base_len() << endl;
+
+			cout << "action_global::induce "
+					"new_action->base_len=" << new_action->base_len() << endl;
 		}
 		for (i = 0; i < base_of_choice_len; i++) {
 			b = base_of_choice[i];
@@ -3091,22 +3141,22 @@ void action_global::induce(
 			old_base_len = new_action->base_len();
 
 			if (f_v) {
-				cout << "action_global::induce: "
+				cout << "action_global::induce "
 						"before new_action->Stabilizer_chain->reallocate_base" << endl;
 			}
 			new_action->Stabilizer_chain->reallocate_base(b, verbose_level);
 			if (f_v) {
-				cout << "action_global::induce: "
+				cout << "action_global::induce "
 						"after new_action->Stabilizer_chain->reallocate_base" << endl;
 			}
 
 			if (f_v) {
-				cout << "action_global::induce: "
+				cout << "action_global::induce "
 						"before G->reallocate_base" << endl;
 			}
 			G->reallocate_base(old_base_len, verbose_level - 2);
 			if (f_v) {
-				cout << "action_global::induce: "
+				cout << "action_global::induce "
 						"after G->reallocate_base" << endl;
 			}
 		}
@@ -3115,6 +3165,12 @@ void action_global::induce(
 					<< endl;
 		}
 	}
+	else {
+		if (f_vv) {
+			cout << "action_global::induce no base of choice given" << endl;
+		}
+
+	}
 
 	fallback_action = subaction; // changed A. Betten Dec 27, 2011 !!!
 	//fallback_action = old_action; // changed back A. Betten, May 27, 2012 !!!
@@ -3122,8 +3178,8 @@ void action_global::induce(
 		// the translation plane search needs subaction
 	if (fallback_action->base_len() == 0) {
 		if (f_vv) {
-			cout << "WARNING: action_global::induce fallback_action->base_len == 0"
-					<< endl;
+			cout << "WARNING: action_global::induce "
+					"fallback_action->base_len == 0" << endl;
 			cout << "fallback_action=" << fallback_action->label << endl;
 			cout << "subaction=" << subaction->label << endl;
 			cout << "old_action=" << old_action->label << endl;
@@ -3135,32 +3191,54 @@ void action_global::induce(
 					<< endl;
 		}
 	}
+
+
 	if (f_v) {
-		cout << "action_global::induce: before K->init" << endl;
+		cout << "action_global::induce "
+				"new_action=" << new_action->label
+				<< " of degree " << new_action->degree << endl;
+		cout << "action_global::induce "
+				"fallback_action=" << fallback_action->label
+				<< " of degree " << fallback_action->degree << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::induce "
+				"before K->init" << endl;
 	}
 	K->init(fallback_action, verbose_level - 2);
 	if (f_v) {
-		cout << "action_global::induce: after K->init" << endl;
+		cout << "action_global::induce "
+				"after K->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "action_global::induce before G->init_trivial_group" << endl;
+		cout << "action_global::induce "
+				"before G->init_trivial_group" << endl;
 	}
-
 	G->init_trivial_group(verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::induce "
+				"after G->init_trivial_group" << endl;
+	}
 
 	if (f_v) {
-		cout << "action_global::induce before K->init_trivial_group" << endl;
+		cout << "action_global::induce "
+				"before K->init_trivial_group" << endl;
 	}
 	K->init_trivial_group(verbose_level - 2);
 	if (f_v) {
 		cout << "action_global::induce "
-				"after init_trivial_group" << endl;
+				"after K->init_trivial_group" << endl;
+	}
+
+	if (f_v) {
 		cout << "action_global::induce "
 				"before G->build_up_group_random_process" << endl;
 	}
-
-	G->build_up_group_random_process(K, old_G, go,
+	G->build_up_group_random_process(
+			K, old_G, go,
 		FALSE /*f_override_chose_next_base_point*/,
 		NULL /*choose_next_base_point_method*/,
 		verbose_level - 1);
@@ -3168,52 +3246,79 @@ void action_global::induce(
 		cout << "action_global::induce "
 				"after G->build_up_group_random_process" << endl;
 	}
+	if (f_v) {
+		cout << "action_global::induce "
+				"new_action=" << new_action->label
+				<< " of degree " << new_action->degree << endl;
+		cout << "action_global::induce "
+				"G->A->label=" << G->A->label
+				<< " of degree " << G->A->degree << endl;
+	}
 
 	G->group_order(G_order);
 	K->group_order(K_order);
 	if (f_v) {
-		cout << "action_global::induce: ";
+		cout << "action_global::induce ";
 		cout << "found a group in action " << G->A->label
 				<< " of order " << G_order << " ";
-		cout << "transversal lengths:" << endl;
+		cout << "transversal lengths: ";
 		for (int t = 0; t < G->A->base_len(); t++) {
 			cout << G->get_orbit_length(t) << ", ";
+		}
+		cout << " base: ";
+		for (int t = 0; t < G->A->base_len(); t++) {
+			cout << G->A->base_i(t) << ", ";
 		}
 		//int_vec_print(cout, G->get_orbit_length(i), G->A->base_len());
 		cout << endl;
 
-		cout << "kernel in action " << fallback_action->label
+		cout << "action_global::induce kernel in action " << fallback_action->label
 				<< " of order " << K_order << " ";
-		cout << "transversal lengths:" << endl;
+		cout << "transversal lengths: ";
 		for (int t = 0; t < fallback_action->base_len(); t++) {
 			cout << K->get_orbit_length(t) << ", ";
+		}
+		cout << " base: ";
+		for (int t = 0; t < fallback_action->base_len(); t++) {
+			cout << fallback_action->base_i(t) << ", ";
 		}
 		//int_vec_print(cout, K->get_orbit_length(), K->A->base_len());
 		cout << endl;
 	}
 	D.mult(G_order, K_order, go3);
 	if (D.compare(go3, go) != 0) {
-		cout << "action_global::induce group orders do not match: "
+		cout << "action_global::induce "
+				"group orders do not match: "
 				<< go3 << " != " << go << endl;
 		exit(1);
 	}
 	if (f_vv) {
-		cout << "action_global::induce product of group orders equals "
+		cout << "action_global::induce "
+				"product of group orders equals "
 				"old group order" << endl;
 	}
 	if (f_vv) {
-		cout << "action_global::induce before init_sims_only" << endl;
+		cout << "action_global::induce "
+				"before init_sims_only" << endl;
 	}
 	new_action->init_sims_only(G, verbose_level - 2);
+	if (f_vv) {
+		cout << "action_global::induce "
+				"after init_sims_only" << endl;
+	}
 	new_action->f_has_kernel = TRUE;
 	new_action->Kernel = K;
 
 	//init_transversal_reps_from_stabilizer_chain(G, verbose_level - 2);
 	if (f_vv) {
-		cout << "action_global::induce after init_sims, "
-				"calling compute_strong_generators_from_sims" << endl;
+		cout << "action_global::induce "
+				"before new_action->compute_strong_generators_from_sims" << endl;
 	}
 	new_action->compute_strong_generators_from_sims(verbose_level - 2);
+	if (f_vv) {
+		cout << "action_global::induce "
+				"after new_action->compute_strong_generators_from_sims" << endl;
+	}
 	if (f_v) {
 		cout << "action_global::induce done" << endl;
 	}
@@ -3228,11 +3333,28 @@ void action_global::induced_action_override_sims(
 
 	if (f_v) {
 		cout << "action_global::induced_action_override_sims" << endl;
+		cout << "action_global::induced_action_override_sims "
+				"old_action = ";
+		old_action->print_info();
+		cout << endl;
+		cout << "action_global::induced_action_override_sims "
+				"old_G->A = ";
+		old_G->A->print_info();
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "action_global::induced_action_override_sims "
+				"before induce" << endl;
 	}
 	induce(old_action, new_action,
 			old_G,
 		0 /* base_of_choice_len */, NULL /* base_of_choice */,
 		verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::induced_action_override_sims "
+				"after induce" << endl;
+	}
+
 	if (f_v) {
 		cout << "action_global::induced_action_override_sims done" << endl;
 	}

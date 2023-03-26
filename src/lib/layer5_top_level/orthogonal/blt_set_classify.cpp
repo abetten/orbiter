@@ -148,8 +148,12 @@ void blt_set_classify::init_basic(
 #endif
 	
 
+#if 0
 	Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
-	Blt_set_domain->init(O, verbose_level);
+	Blt_set_domain->init_blt_set_domain(O, OA->P, verbose_level);
+#endif
+
+	Blt_set_domain = OA->Blt_Set_domain;
 
 	degree = Blt_set_domain->degree;
 	target_size = Blt_set_domain->target_size;
@@ -1549,7 +1553,9 @@ void blt_set_classify::report2(
 		BA = NEW_OBJECT(blt_set_with_action);
 		BA->init_set(
 				A, Blt_set_domain, T->Reps[h].data,
-				T->Reps[h].Strong_gens, verbose_level);
+				T->Reps[h].Strong_gens,
+				TRUE /* f_invariants */,
+				verbose_level);
 		BA->print_automorphism_group(ost);
 
 		FREE_OBJECT(BA);

@@ -4335,7 +4335,7 @@ void flag_orbit_folding::compute_stabilizer(
 	}
 
 	S = NEW_OBJECT(groups::sims);
-	A_induced = NEW_OBJECT(actions::action);
+	//A_induced = NEW_OBJECT(actions::action);
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	Schreier = NEW_OBJECT(groups::schreier);
 	sets = NEW_lint(l * Iso->size);

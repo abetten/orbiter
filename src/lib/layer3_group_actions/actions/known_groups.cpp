@@ -1523,12 +1523,17 @@ void known_groups::init_wreath_product_group_and_restrict(
 		points[i] = W->perm_offset_i[nb_factors] + i;
 	}
 
+	std::string label_of_set;
+
+	label_of_set.assign("wreath_product");
+
+
 	if (f_v) {
 		cout << "known_groups::init_wreath_product_group_and_restrict "
 				"before A_wreath->Induced_action->restricted_action" << endl;
 	}
 	Awr = A_wreath->Induced_action->restricted_action(
-			points, nb_points,
+			points, nb_points, label_of_set,
 			verbose_level);
 	Awr->f_is_linear = TRUE;
 	if (f_v) {

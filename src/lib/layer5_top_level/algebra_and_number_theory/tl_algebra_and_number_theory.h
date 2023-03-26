@@ -392,6 +392,9 @@ public:
 	void do_export_magma(int verbose_level);
 	void do_canonical_image_GAP(
 			std::string &input_set, int verbose_level);
+	void do_canonical_image_orbiter(
+			std::string &input_set_text,
+			int verbose_level);
 	void create_group_table(
 			int *&Table, long int &n, int verbose_level);
 	void normalizer(int verbose_level);
@@ -760,6 +763,9 @@ public:
 	int f_export_magma;
 
 	// GAP:
+	int f_canonical_image_GAP;
+	std::string canonical_image_GAP_input_set;
+
 	int f_canonical_image;
 	std::string canonical_image_input_set;
 

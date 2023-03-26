@@ -32,7 +32,7 @@ finite_field_description::finite_field_description()
 
 	f_without_tables = FALSE;
 
-	f_compute_related_fields = FALSE;
+	f_compute_related_fields = TRUE;
 
 	f_symbol = FALSE;
 	//std::string symbol_label;

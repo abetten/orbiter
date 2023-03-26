@@ -56,7 +56,9 @@ void blt_set_with_action::init_set(
 		actions::action *A,
 		orthogonal_geometry::blt_set_domain *Blt_set_domain,
 		long int *set,
-		groups::strong_generators *Aut_gens, int verbose_level)
+		groups::strong_generators *Aut_gens,
+		int f_invariants,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -78,6 +80,26 @@ void blt_set_with_action::init_set(
 		cout << "blt_set_with_action::init_set "
 				"after Inv->init" << endl;
 	}
+
+	if (f_invariants) {
+		if (f_v) {
+			cout << "blt_set_with_action::init_set "
+					"before Inv->compute" << endl;
+		}
+		Inv->compute(verbose_level - 1);
+		if (f_v) {
+			cout << "blt_set_with_action::init_set "
+					"after Inv->compute" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "blt_set_with_action::init_set "
+					"We don't compute invariants." << endl;
+		}
+
+	}
+
 
 	if (Aut_gens) {
 		if (f_v) {
@@ -122,6 +144,12 @@ void blt_set_with_action::init_orbits_on_points(
 		cout << "blt_set_with_action::init_orbits_on_points" << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_points");
+
+
 	if (f_v) {
 		cout << "blt_set_with_action action "
 				"on points:" << endl;
@@ -129,6 +157,7 @@ void blt_set_with_action::init_orbits_on_points(
 	A_on_points = A->Induced_action->restricted_action(
 			Inv->the_set_in_orthogonal,
 			Blt_set_domain->target_size,
+			label_of_set,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "blt_set_with_action action "
@@ -183,7 +212,8 @@ void blt_set_with_action::print_automorphism_group(
 	}
 }
 
-void blt_set_with_action::report(std::ostream &ost, int verbose_level)
+void blt_set_with_action::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -251,7 +281,24 @@ void blt_set_with_action::report(std::ostream &ost, int verbose_level)
 	ost << "\\bigskip" << endl;
 
 
-	Inv->latex(ost, verbose_level);
+	if (Inv) {
+		if (f_v) {
+			cout << "blt_set_with_action::report "
+					"before Inv->latex" << endl;
+		}
+		Inv->latex(ost, verbose_level);
+		if (f_v) {
+			cout << "blt_set_with_action::report "
+					"after Inv->latex" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "blt_set_with_action::report "
+					"Inv not available" << endl;
+		}
+
+	}
 
 
 	ost << "\\bigskip" << endl;

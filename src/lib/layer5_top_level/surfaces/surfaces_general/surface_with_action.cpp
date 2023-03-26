@@ -1720,7 +1720,6 @@ void surface_with_action::sweep_4_15_lines(
 						{
 							string str;
 							Int_vec_create_string_with_quotes(str, SC->SO->eqn, 20);
-							//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
 							ost_csv << str;
 						}
 
@@ -1729,7 +1728,6 @@ void surface_with_action::sweep_4_15_lines(
 						{
 							string str;
 							Lint_vec_create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
-							//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
 							ost_csv << str;
 						}
 
@@ -1744,7 +1742,6 @@ void surface_with_action::sweep_4_15_lines(
 							params[3] = delta;
 							string str;
 							Int_vec_create_string_with_quotes(str, params, 4);
-							//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
 							ost_csv << str;
 						}
 
@@ -2828,7 +2825,6 @@ void surface_with_action::sweep_4_L9_E4(
 						{
 							string str;
 							Int_vec_create_string_with_quotes(str, SC->SO->eqn, 20);
-							//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
 							ost_csv << str;
 						}
 
@@ -2837,7 +2833,6 @@ void surface_with_action::sweep_4_L9_E4(
 						{
 							string str;
 							Lint_vec_create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
-							//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
 							ost_csv << str;
 						}
 
@@ -2852,7 +2847,6 @@ void surface_with_action::sweep_4_L9_E4(
 							params[3] = lambda;
 							string str;
 							Int_vec_create_string_with_quotes(str, params, 4);
-							//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
 							ost_csv << str;
 						}
 

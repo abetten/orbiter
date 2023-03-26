@@ -129,7 +129,7 @@ void three_skew_subspaces::do_recoordinatize(
 	Grass->unrank_lint_here(
 			M + 2 * k * n, i3, 0 /*verbose_level - 4*/);
 	if (f_vv) {
-		cout << "M:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize M=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, M, 3 * k, n, n, F->log10_of_q + 1);
 	}
@@ -137,7 +137,7 @@ void three_skew_subspaces::do_recoordinatize(
 	F->Linear_algebra->matrix_inverse(
 			AA, AAv, n, 0 /*verbose_level - 1*/);
 	if (f_vv) {
-		cout << "AAv:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize AAv=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, AAv, n, n, n,
 				F->log10_of_q + 1);
@@ -146,7 +146,7 @@ void three_skew_subspaces::do_recoordinatize(
 			M, AAv, N, 3 * k, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
-		cout << "N:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize N=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, N, 3 * k, n, n,
 				F->log10_of_q + 1);
@@ -158,14 +158,14 @@ void three_skew_subspaces::do_recoordinatize(
 		}
 	}
 	if (f_vv) {
-		cout << "TT:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize TT=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, TT, k, k, k, F->log10_of_q + 1);
 	}
 	F->Linear_algebra->matrix_inverse(
 			TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
-		cout << "TTv:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize TTv=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, TTv, k, k, k,
 				F->log10_of_q + 1);
@@ -183,7 +183,7 @@ void three_skew_subspaces::do_recoordinatize(
 		}
 	}
 	if (f_vv) {
-		cout << "TT:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize TT=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, TT, k, k, k,
 				F->log10_of_q + 1);
@@ -191,7 +191,7 @@ void three_skew_subspaces::do_recoordinatize(
 	F->Linear_algebra->matrix_inverse(
 			TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
-		cout << "TTv:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize TTv=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, TTv, k, k, k,
 				F->log10_of_q + 1);
@@ -202,7 +202,7 @@ void three_skew_subspaces::do_recoordinatize(
 		}
 	}
 	if (f_vv) {
-		cout << "B:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize B=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout,
 				B, n, n, n,
@@ -214,7 +214,7 @@ void three_skew_subspaces::do_recoordinatize(
 			AAv, B, transformation, n, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
-		cout << "transformation:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize transformation=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, transformation, n, n, n,
 				F->log10_of_q + 1);
@@ -224,7 +224,7 @@ void three_skew_subspaces::do_recoordinatize(
 			M, transformation, M1, 3 * k, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
-		cout << "M1:" << endl;
+		cout << "three_skew_subspaces::do_recoordinatize M1=" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				M1, 3 * k, n, n,
 				F->log10_of_q + 1);
@@ -233,7 +233,7 @@ void three_skew_subspaces::do_recoordinatize(
 	j2 = Grass->rank_lint_here(M1 + k * n, 0 /*verbose_level - 4*/);
 	j3 = Grass->rank_lint_here(M1 + 2 * k * n, 0 /*verbose_level - 4*/);
 	if (f_v) {
-		cout << "j1=" << j1 << " j2=" << j2 << " j3=" << j3 << endl;
+		cout << "three_skew_subspaces::do_recoordinatize j1=" << j1 << " j2=" << j2 << " j3=" << j3 << endl;
 	}
 
 	// put a zero, just in case we are in a semilinear group:

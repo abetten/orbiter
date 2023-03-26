@@ -181,7 +181,8 @@ sims::~sims()
 	}
 }
 
-sims::sims(actions::action *A, int verbose_level)
+sims::sims(
+		actions::action *A, int verbose_level)
 {
 	init(A, verbose_level);
 }
@@ -263,6 +264,7 @@ void sims::init(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; // (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "sims::init action=" << A->label << endl;
@@ -271,7 +273,7 @@ void sims::init(
 	if (f_v) {
 		cout << "sims::init before init_without_base" << endl;
 	}
-	init_without_base(A, verbose_level);
+	init_without_base(A, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "sims::init after init_without_base" << endl;
 	}
@@ -287,33 +289,33 @@ void sims::init(
 	}
 #endif
 	
-	if (f_v) {
+	if (f_vv) {
 		cout << "sims::init my_base_len=" << my_base_len << endl;
 	}
-	if (f_v) {
+	if (f_vv) {
 		cout << "sims::init allocating orbit" << endl;
 	}
 	orbit = NEW_pint(my_base_len);
-	if (f_v) {
+	if (f_vv) {
 		cout << "sims::init allocating orbit_inv" << endl;
 	}
 	orbit_inv = NEW_pint(my_base_len);
-	if (f_v) {
+	if (f_vv) {
 		cout << "sims::init allocating prev" << endl;
 	}
 	prev = NEW_pint(my_base_len);
-	if (f_v) {
+	if (f_vv) {
 		cout << "sims::init allocating label" << endl;
 	}
 	label = NEW_pint(my_base_len);
 
 	transversal_length = A->degree;
-	if (f_v) {
+	if (f_vv) {
 		cout << "sims::init "
 				"transversal_length=" << transversal_length << endl;
 	}
 	for (i = 0; i < my_base_len; i++) {
-		if (f_v) {
+		if (f_vv) {
 			cout << "sims::init allocating "
 					"orbit " << i << " / " << my_base_len << endl;
 		}
@@ -338,11 +340,11 @@ void sims::init(
 	orbit_len = NEW_int(my_base_len);
 	
 	for (i = 0; i < my_base_len; i++) {
-		if (f_v) {
+		if (f_vv) {
 			cout << "sims::init before "
 					"initialize_table " << i << " / " << my_base_len << endl;
 		}
-		initialize_table(i, verbose_level);
+		initialize_table(i, 0 /*verbose_level*/);
 		orbit_len[i] = 1;
 	}
 	if (f_v) {
@@ -590,32 +592,44 @@ void sims::init_trivial_group(
 // only the i-th base point (for all i).
 {
 	int f_v = (verbose_level >= 2);
-	int f_vv = (verbose_level >= 3);
+	int f_vv = FALSE; //(verbose_level >= 3);
 	int i;
 	
 	if (f_v) {
 		cout << "sims::init_trivial_group" << endl;
 	}
+	if (f_v) {
+		cout << "sims::init_trivial_group A->label = " << A->label << endl;
+	}
+
 	if (A->Stabilizer_chain == NULL) {
 		cout << "sims::init_trivial_group "
 				"A->Stabilizer_chain == NULL" << endl;
 		return;
 	}
+
 	if (my_base_len != A->base_len()) {
 		cout << "sims::init_trivial_group: "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
 	}
-	if (f_vv) {
-		cout << "before init_generators" << endl;
+
+	if (f_v) {
+		cout << "sims::init_trivial_group "
+				"before init_generators" << endl;
 	}
-	init_generators(0, NULL, verbose_level - 3);
+	init_generators(0, NULL, 0 /*verbose_level - 3*/);
+	if (f_v) {
+		cout << "sims::init_trivial_group "
+				"after init_generators" << endl;
+	}
+
 	for (i = 0; i < my_base_len; i++) {
 		if (f_vv) {
 			cout << "sims::init_trivial_group "
 					"before init_trivial_orbit i=" << i << endl;
 		}
-		init_trivial_orbit(i, verbose_level);
+		init_trivial_orbit(i, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "sims::init_trivial_group done" << endl;
@@ -704,7 +718,10 @@ void sims::init_generators(
 	int i;
 	
 	if (f_v) {
-		cout << "sims::init_generators nb = " << nb << endl;
+		cout << "sims::init_generators" << endl;
+		cout << "sims::init_generators A->label = " << A->label << endl;
+		cout << "sims::init_generators A->degree = " << A->degree << endl;
+		cout << "sims::init_generators number of generators = " << nb << endl;
 	}
 	gens.allocate(nb, verbose_level - 2);
 	gens_inv.allocate(nb, verbose_level - 2);
@@ -728,9 +745,17 @@ void sims::init_generators(
 	init_images(nb);
 	if (f_v) {
 		cout << "sims::init_generators "
+				"after init_images" << endl;
+	}
+	if (f_v) {
+		cout << "sims::init_generators "
 				"before init_generator_depth_and_perm" << endl;
 	}
 	init_generator_depth_and_perm(verbose_level);
+	if (f_v) {
+		cout << "sims::init_generators "
+				"after init_generator_depth_and_perm" << endl;
+	}
 	if (f_v) {
 		cout << "sims::init_generators done" << endl;
 	}

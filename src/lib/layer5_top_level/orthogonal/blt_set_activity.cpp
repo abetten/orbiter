@@ -105,7 +105,21 @@ void blt_set_activity::perform_activity(int verbose_level)
 	}
 
 
+	else if (Descr->f_BLT_test) {
 
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity f_BLT_test" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity before BC->BLT_test" << endl;
+		}
+		BC->BLT_test(verbose_level);
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity after BC->BLT_test" << endl;
+		}
+
+	}
 
 
 	if (f_v) {

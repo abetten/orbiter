@@ -25,11 +25,13 @@ orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Or
 
 orbiter_top_level_session::orbiter_top_level_session()
 {
-	cout << "orbiter_top_level_session::orbiter_top_level_session before new orbiter_session" << endl;
+	cout << "orbiter_top_level_session::orbiter_top_level_session "
+			"before new orbiter_session" << endl;
 
 	Orbiter_session = new orbiter_kernel_system::orbiter_session;
 
-	cout << "orbiter_top_level_session::orbiter_top_level_session after new orbiter_session" << endl;
+	cout << "orbiter_top_level_session::orbiter_top_level_session "
+			"after new orbiter_session" << endl;
 
 	The_Orbiter_top_level_session = this;
 	//Orbiter_session = NULL;
@@ -45,11 +47,13 @@ orbiter_top_level_session::~orbiter_top_level_session()
 	}
 	if (Orbiter_session) {
 		if (f_v) {
-			cout << "orbiter_top_level_session::~orbiter_top_level_session before delete Orbiter_session" << endl;
+			cout << "orbiter_top_level_session::~orbiter_top_level_session "
+					"before delete Orbiter_session" << endl;
 		}
 		delete Orbiter_session;
 		if (f_v) {
-			cout << "orbiter_top_level_session::~orbiter_top_level_session after delete Orbiter_session" << endl;
+			cout << "orbiter_top_level_session::~orbiter_top_level_session "
+					"after delete Orbiter_session" << endl;
 		}
 	}
 	if (f_v) {
@@ -63,7 +67,8 @@ int orbiter_top_level_session::startup_and_read_arguments(
 {
 	int i;
 
-	cout << "orbiter_top_level_session::startup_and_read_arguments before Orbiter_session->read_arguments" << endl;
+	cout << "orbiter_top_level_session::startup_and_read_arguments "
+			"before Orbiter_session->read_arguments" << endl;
 
 	i = Orbiter_session->read_arguments(argc, argv, i0);
 
@@ -119,7 +124,8 @@ void orbiter_top_level_session::handle_everything(
 			orbiter_kernel_system::os_interface Os;
 
 			if (f_v) {
-				cout << "seeding random number generator with " << Orbiter_session->the_seed << endl;
+				cout << "seeding random number generator with "
+						<< Orbiter_session->the_seed << endl;
 			}
 			srand(Orbiter_session->the_seed);
 			Os.random_integer(1000);

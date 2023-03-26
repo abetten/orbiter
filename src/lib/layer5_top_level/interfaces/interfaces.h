@@ -1242,8 +1242,9 @@ public:
 	void definition_of_combinatorial_object(int verbose_level);
 	void do_geometry_builder(int verbose_level);
 	void load_finite_field_PG(int verbose_level);
-	void load_finite_field(std::string &input_q,
-			field_theory::finite_field *&F, int verbose_level);
+	field_theory::finite_field *get_or_create_finite_field(
+			std::string &input_q,
+			int verbose_level);
 	void definition_of_vector_ge(int verbose_level);
 	void definition_of_action_on_forms(int verbose_level);
 	void definition_of_orbits(int verbose_level);

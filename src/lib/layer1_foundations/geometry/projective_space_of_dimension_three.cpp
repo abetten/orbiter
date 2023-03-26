@@ -767,6 +767,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 		P4 = P[subset[3]];
 		if (f_vv) {
 			cout << "subset " << rk << " / " << nb_subsets << " : ";
+			Int_vec_print(cout, subset, 4);
+			cout << " : ";
 			Lint_vec_print(cout, four_lines, 5);
 			cout << " P4=" << P4 << endl;
 		}
@@ -788,8 +790,12 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 		Three_skew_subspaces->do_recoordinatize(
 				four_lines[0], four_lines[1], four_lines[2],
 				transformation,
-				verbose_level - 2);
+				0 /*verbose_level - 2*/);
 
+		if (f_vv) {
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six transformation=" << endl;
+			Int_matrix_print(transformation, 4, 4);
+		}
 		//Recoordinatize->do_recoordinatize(
 		//		four_lines[0], four_lines[1], four_lines[2],
 		//		verbose_level - 2);
@@ -803,14 +809,33 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 				transformation, transformation_inv, 4 /*n*/,
 				0 /* verbose_level*/);
 
+		if (f_vv) {
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six transformation_inv=" << endl;
+			Int_matrix_print(transformation_inv, 4, 4);
+		}
+		if (f_vv) {
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six transformation=" << endl;
+			Int_matrix_print(transformation, 4, 4);
+		}
+
+
+		transformation[16] = 0;
+		transformation_inv[16] = 0;
 
 		//A->Group_element->element_invert(
 		//		Recoordinatize->Elt, Elt1, 0);
 
+		if (f_vv) {
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six mapping a4=four_lines[3]=" << four_lines[3] << endl;
+		}
 
 		ai4image = Projective_space->Subspaces->Grass_lines->map_line_in_PG3q(
 				four_lines[3], transformation,
 				0 /* verbose_level */);
+
+		if (f_vv) {
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six ai4image=" << ai4image << endl;
+		}
 
 		//ai4image = A2->Group_element->element_image_of(
 		//		four_lines[3],
@@ -818,23 +843,23 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 		//		0 /* verbose_level */);
 
 
-		Q = Projective_space->Subspaces->Grass_lines->map_line_in_PG3q(
+		Q = map_point(
 				P4, transformation,
-				0 /* verbose_level */);
+				0 /*verbose_level - 2*/);
 
 		//Q = A->Group_element->element_image_of(P4,
 		//		Recoordinatize->Elt,
 		//		0 /* verbose_level */);
 
 		if (f_vv) {
-			cout << "ai4image = " << ai4image << " Q=" << Q << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six ai4image = " << ai4image << " Q=" << Q << endl;
 		}
 		//Surf->unrank_point(Q4, Q);
 		Projective_space->unrank_point(Q4, Q);
 
 		b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(Q4);
 		if (b) {
-			cout << "error: The point Q does not "
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six error: The point Q does not "
 					"lie on the quadric" << endl;
 			exit(1);
 		}
@@ -847,7 +872,7 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 
 
 		if (f_vv) {
-			cout << "before F->adjust_basis" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six before F->adjust_basis" << endl;
 			cout << "L=" << endl;
 			Int_matrix_print(L, 2, 4);
 			cout << "Q4=" << endl;
@@ -858,10 +883,10 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 		F->Linear_algebra->adjust_basis(
 				L, Q4, 4, 2, 1, verbose_level - 1);
 		if (f_vv) {
-			cout << "after F->adjust_basis" << endl;
-			cout << "L=" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six after F->adjust_basis" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six L=" << endl;
 			Int_matrix_print(L, 2, 4);
-			cout << "Q4=" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six Q4=" << endl;
 			Int_matrix_print(Q4, 1, 4);
 		}
 
@@ -888,7 +913,7 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 			// to see if w lies on it:
 			b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (f_vv) {
-				cout << "a=" << a << " v=";
+				cout << "projective_space_of_dimension_three::five_plus_one_to_double_six a=" << a << " v=";
 				Int_vec_print(cout, v, 2);
 				cout << " w=";
 				Int_vec_print(cout, w, 4);
@@ -923,7 +948,7 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 				pt_coord);
 		if (b == 0) {
 			if (f_v) {
-				cout << "The line lies in the quadric, "
+				cout << "projective_space_of_dimension_three::five_plus_one_to_double_six The line lies on the quadric, "
 						"this five plus one is not good." << endl;
 			}
 			return FALSE;
@@ -1160,6 +1185,54 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 	return TRUE;
 }
 
+long int projective_space_of_dimension_three::map_point(
+		long int point, int *transform16, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::map_point" << endl;
+	}
+	long int b;
+	int Basis1[4];
+	int Basis2[4];
+
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::map_point transform16 = " << endl;
+		Int_matrix_print(transform16, 4, 4);
+	}
+
+	Int_vec_zero(Basis1, 4);
+	Projective_space->unrank_point(
+			Basis1, point);
+
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::map_point point = " << point << endl;
+		cout << "projective_space_of_dimension_three::map_point Basis1 = " << endl;
+		Int_matrix_print(Basis1, 2, 4);
+	}
+
+
+	Projective_space->Subspaces->F->Linear_algebra->mult_matrix_matrix(
+			Basis1, transform16, Basis2,
+			1, 4, 4, 0/*verbose_level - 4*/);
+
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::map_point Basis2 = " << endl;
+		Int_matrix_print(Basis2, 1, 4);
+	}
+
+	b = Projective_space->rank_point(Basis2);
+
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::map_point image line = " << b << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::map_point done" << endl;
+	}
+	return b;
+}
 
 
 }}}

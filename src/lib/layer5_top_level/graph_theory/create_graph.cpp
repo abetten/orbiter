@@ -1439,11 +1439,11 @@ void create_graph::create_coll_orthogonal(
 	}
 
 
-	label.assign(OA->label_txt);
+	label.assign(OA->O->label_txt);
 	label.append("_coll_");
 	label.append(set_of_points_label);
 
-	label_tex.assign(OA->label_tex);
+	label_tex.assign(OA->O->label_tex);
 	label_tex.append("\\_coll\\_");
 	label_tex.append(set_of_points_label);
 

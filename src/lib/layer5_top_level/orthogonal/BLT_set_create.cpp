@@ -62,7 +62,7 @@ void BLT_set_create::init(
 	
 	if (f_v) {
 		cout << "BLT_set_create::init" << endl;
-		}
+	}
 	BLT_set_create::Blt_set_domain = OA->Blt_Set_domain;
 	BLT_set_create::Descr = Descr;
 	BLT_set_create::OA = OA;
@@ -190,7 +190,7 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			OG.create_FTWKB_BLT_set(OA->O, set, ABC, verbose_level);
+			OG.create_FTWKB_flock_and_BLT_set(OA->O, set, ABC, verbose_level);
 			// for q congruent 2 mod 3
 			// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
@@ -207,7 +207,7 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			OG.create_K1_BLT_set(OA->O, set, ABC, verbose_level);
+			OG.create_K1_flock_and_BLT_set(OA->O, set, ABC, verbose_level);
 			// for a non-square m, and q=p^e
 			// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
@@ -223,7 +223,7 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			OG.create_K2_BLT_set(OA->O, set, ABC, verbose_level);
+			OG.create_K2_flock_and_BLT_set(OA->O, set, ABC, verbose_level);
 			// for q congruent 2 or 3 mod 5
 			// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
@@ -295,7 +295,59 @@ void BLT_set_create::init(
 		label_tex.append(str_q);
 
 	}
+	else if (Descr->f_flock) {
+		if (f_v) {
+			cout << "BLT_set_create::init f_flock" << endl;
+		}
 
+		f_has_group = FALSE;
+		orthogonal_geometry::orthogonal_global OG;
+
+		int *ABC;
+		int m, n;
+
+		Get_matrix(Descr->flock_label, ABC, m, n);
+		if (m != OA->Descr->F->q) {
+			cout << "BLT_set_create::init m != OA->Descr->F->q" << endl;
+			exit(1);
+		}
+		if (n != 3) {
+			cout << "BLT_set_create::init n != 3" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "BLT_set_create::init flock:" << endl;
+			Int_matrix_print(ABC, OA->Descr->F->q, 3);
+		}
+
+		set = NEW_lint(OA->Descr->F->q + 1);
+
+		if (f_v) {
+			cout << "BLT_set_create::init "
+					"before create_BLT_set_from_flock" << endl;
+		}
+		OG.create_BLT_set_from_flock(
+				OA->O,
+				set, ABC, verbose_level - 2);
+		if (f_v) {
+			cout << "BLT_set_create::init "
+					"after create_BLT_set_from_flock" << endl;
+		}
+
+		char str_q[1000];
+
+		snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+		prefix.assign(Descr->flock_label);
+
+		label_txt.assign(prefix);
+		label_txt.append("_");
+		label_txt.append(str_q);
+
+		label_tex.assign(prefix);
+		label_tex.append("\\_");
+		label_tex.append(str_q);
+
+	}
 
 	else if (Descr->f_catalogue) {
 
@@ -461,10 +513,12 @@ void BLT_set_create::init(
 			Blt_set_domain,
 			set,
 			Sg,
+			Descr->f_invariants,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "BLT_set_create::init after BA->init_set" << endl;
 	}
+
 
 
 
@@ -608,9 +662,64 @@ void BLT_set_create::create_flock(int point_idx, int verbose_level)
 		cout << "BLT_set_create::create_flock after Flock->init" << endl;
 	}
 
+	if (f_v) {
+		cout << "BLT_set_create::create_flock "
+				"before Flock->quadratic_lift" << endl;
+	}
+	Flock->quadratic_lift(verbose_level);
+	if (f_v) {
+		cout << "BLT_set_create::create_flock "
+				"after Flock->quadratic_lift" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "flock::init "
+				"before Flock->cubic_lift" << endl;
+	}
+	Flock->cubic_lift(verbose_level);
+	if (f_v) {
+		cout << "flock::init "
+				"after Flock->cubic_lift" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "BLT_set_create::create_flock done" << endl;
+	}
+}
+
+void BLT_set_create::BLT_test(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::BLT_test" << endl;
+	}
+	int ret;
+
+	if (f_v) {
+		cout << "BLT_set_create::BLT_test "
+				"before Blt_set_domain->check_conditions" << endl;
+	}
+	ret = Blt_set_domain->check_conditions(
+			Blt_set_domain->target_size,
+			set,
+			verbose_level);
+	if (f_v) {
+		cout << "BLT_set_create::BLT_test "
+				"after Blt_set_domain->check_conditions" << endl;
+		if (ret) {
+			cout << "The set passes the BLT-test" << endl;
+		}
+		else {
+			cout << "The set fails the BLT-test" << endl;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "BLT_set_create::BLT_test done" << endl;
 	}
 }
 

@@ -125,10 +125,8 @@ public:
 
 class diophant_description {
 public:
-	int f_q;
-	int input_q;
-	int f_override_polynomial;
-	std::string override_polynomial;
+	int f_field;
+	std::string field_label;
 
 	int f_maximal_arc;
 	int maximal_arc_sz;

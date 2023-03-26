@@ -287,7 +287,15 @@ void tensor_classify::create_restricted_action_on_rank_one_tensors(
 		cout << "tensor_classify::create_restricted_action_on_rank_one_tensors "
 				"before A->restricted_action" << endl;
 	}
-	Ar = A->Induced_action->restricted_action(points, nb_points,
+
+
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_tensors");
+
+	Ar = A->Induced_action->restricted_action(
+			points, nb_points, label_of_set,
 			verbose_level);
 	Ar->f_is_linear = TRUE;
 	if (f_v) {

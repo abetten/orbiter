@@ -709,7 +709,15 @@ void interface_algebra::do_character_table_symmetric_group(int deg, int verbose_
 
 	CTB = NEW_OBJECT(apps_algebra::character_table_burnside);
 
+	if (f_v) {
+		cout << "interface_algebra::do_character_table_symmetric_group "
+				"before CTB->do_it" << endl;
+	}
 	CTB->do_it(deg, verbose_level);
+	if (f_v) {
+		cout << "interface_algebra::do_character_table_symmetric_group "
+				"after CTB->do_it" << endl;
+	}
 
 	FREE_OBJECT(CTB);
 

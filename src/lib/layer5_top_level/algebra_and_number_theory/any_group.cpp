@@ -443,6 +443,29 @@ void any_group::do_canonical_image_GAP(
 	}
 }
 
+void any_group::do_canonical_image_orbiter(
+		std::string &input_set_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::do_canonical_image_orbiter" << endl;
+	}
+
+	{
+		groups::strong_generators *SG;
+
+		SG = get_strong_generators();
+		SG->canonical_image_orbiter(input_set_text, verbose_level);
+	}
+
+
+	if (f_v) {
+		cout << "any_group::do_canonical_image_orbiter done" << endl;
+	}
+}
+
 
 void any_group::create_group_table(
 		int *&Table, long int &n, int verbose_level)
