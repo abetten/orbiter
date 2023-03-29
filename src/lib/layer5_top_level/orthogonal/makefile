@@ -14,8 +14,10 @@ MODULES = \
 	blt_set_classify.o \
 	BLT_set_create_description.o \
 	BLT_set_create.o \
+	blt_set_domain_with_action.o \
+	blt_set_group_properties.o \
 	blt_set_with_action.o \
-	flock.o \
+	flock_from_blt_set.o \
 	orthogonal_space_activity_description.o \
 	orthogonal_space_activity.o \
 	orthogonal_space_with_action_description.o \

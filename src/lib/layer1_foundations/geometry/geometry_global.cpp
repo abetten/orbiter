@@ -2064,6 +2064,47 @@ void geometry_global::create_BLT_point(
 	}
 }
 
+void geometry_global::create_BLT_point_from_flock(
+		field_theory::finite_field *F,
+		int *v5, int a, int b, int c, int verbose_level)
+// creates the point (c/2,-c^2/4-ab,1,b,a)
+{
+	int f_v = (verbose_level >= 1);
+	int v0, v1, v2, v3, v4;
+	int half, four, quarter, minus_one;
+
+	if (f_v) {
+		cout << "geometry_global::create_BLT_point_from_flock" << endl;
+	}
+	four = 4 % F->p;
+	half = F->inverse(2);
+	quarter = F->inverse(four);
+	minus_one = F->negate(1);
+	if (f_v) {
+		cout << "geometry_global::create_BLT_point_from_flock "
+				"four=" << four << endl;
+		cout << "geometry_global::create_BLT_point_from_flock "
+				"half=" << half << endl;
+		cout << "geometry_global::create_BLT_point_from_flock "
+				"quarter=" << quarter << endl;
+		cout << "geometry_global::create_BLT_point_from_flock "
+				"minus_one=" << minus_one << endl;
+	}
+
+	v0 = F->mult(c, half);
+	v1 = F->mult(minus_one, F->add(
+			F->mult(F->mult(c, c), quarter), F->mult(a, b)));
+	v2 = 1;
+	v3 = b;
+	v4 = a;
+	orbiter_kernel_system::Orbiter->Int_vec->init5(v5, v0, v1, v2, v3, v4);
+	if (f_v) {
+		cout << "geometry_global::create_BLT_point_from_flock done" << endl;
+	}
+}
+
+
+
 int geometry_global::nonconical_six_arc_get_nb_Eckardt_points(
 		projective_space *P2,
 		long int *Arc6, int verbose_level)

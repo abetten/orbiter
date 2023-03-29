@@ -560,7 +560,7 @@ void set_of_sets::init_cycle_structure(
 			l++;
 			continue;
 			}
-		// work on a n e w cycle, starting at position l:
+		// work on the next cycle, starting at position l:
 		first = l;
 		//cout << "set_of_sets::init_cycle_structure cyle
 		//starting with " << first << endl;

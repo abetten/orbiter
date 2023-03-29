@@ -479,7 +479,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 				(double) Flag_orbits->nb_flag_orbits;
 
 		if (f_v) {
-			cout << "Defining n e w orbit "
+			cout << "Defining new orbit "
 				<< Flag_orbits->nb_primary_orbits_upper
 				<< " from flag orbit " << f << " / "
 				<< Flag_orbits->nb_flag_orbits
@@ -693,7 +693,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 			if (f_v) {
 				cout << "the double six has a stabilizer of order "
 						<< ago << endl;
-				cout << "The n e w stabilizer is:" << endl;
+				cout << "The new stabilizer is:" << endl;
 				Aut_gens->print_generators_tex(cout);
 			}
 		}

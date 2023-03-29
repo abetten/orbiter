@@ -728,10 +728,10 @@ void flag_orbit_folding::process_rearranged_set(
 			Iso->A->Group_element->element_retrieve(Reps->handle[orbit_no0], Elt1, FALSE);
 			cout << "old transporter inverse:" << endl;
 			Iso->A->Group_element->element_print(Elt1, cout);
-			cout << "n e w transporter:" << endl;
+			cout << "new transporter:" << endl;
 			Iso->A->Group_element->element_print(transporter, cout);
 			Iso->A->Group_element->element_mult(transporter, Elt1, tmp_Elt, FALSE);
-			cout << "n e w transporter times old transporter inverse:" << endl;
+			cout << "new transporter times old transporter inverse:" << endl;
 			Iso->A->Group_element->element_print(tmp_Elt, cout);
 			cout << "subset: ";
 			Int_vec_print(cout, subset, Iso->level);
@@ -1401,12 +1401,12 @@ int flag_orbit_folding::handle_automorphism(
 			cout << "flag_orbit_folding::handle_automorphism orbit " << current_flag_orbit
 					<< " subset " << subset_rank <<  " : ";
 			cout << "the stabilizer has been extended, old order "
-				<< go << " n e w group order " << go1 << endl;
+				<< go << " new group order " << go1 << endl;
 		}
 		if (f_v) {
 			cout << "flag_orbit_folding::handle_automorphism orbit " << current_flag_orbit
 					<< " subset " << subset_rank
-					<< "n e w automorphism:" << endl;
+					<< "new automorphism:" << endl;
 			Iso->A->Group_element->element_print(Elt, cout);
 		}
 		//induced_action_on_set(Stab, set, verbose_level - 2);
@@ -1436,7 +1436,7 @@ int flag_orbit_folding::handle_automorphism(
 						<< " subset " << subset_rank <<  " : ";
 				cout << "the stabilizer has been extended during "
 						"closure_group, old order "
-					<< go << " n e w group order " << go1 << endl;
+					<< go << " new group order " << go1 << endl;
 			}
 			induced_action_on_set(Stab, set, 0/*verbose_level - 1*/);
 		}
@@ -4492,7 +4492,7 @@ void flag_orbit_folding::compute_stabilizer(
 				"orbit " << orb_no << " has length "
 				<< Schreier->orbit_len[orb_no] << endl;
 		cout << "flag_orbit_folding::compute_stabilizer "
-				"n e w stabilizer has order " << so << endl;
+				"new stabilizer has order " << so << endl;
 		cout << "flag_orbit_folding::compute_stabilizer "
 				"orbit_no=" << current_flag_orbit << " finished" << endl;
 	}

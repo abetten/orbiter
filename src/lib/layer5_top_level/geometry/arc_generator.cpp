@@ -776,7 +776,7 @@ void arc_generator::lifting_prepare_function_new(
 	nb_cols = nb_candidates;
 
 	Dio = NEW_OBJECT(solvers::diophant);
-	Dio->open(nb_rows, nb_cols);
+	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->sum = nb_needed;
 
 	for (i = 0; i < nb_tangent_lines; i++) {

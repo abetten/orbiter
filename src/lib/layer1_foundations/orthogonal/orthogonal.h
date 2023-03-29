@@ -47,6 +47,20 @@ public:
 	geometry::grassmann *G43;
 
 
+	// for the lifting of flocks:
+
+	int Q2; // = q * q
+	field_theory::finite_field *F2;
+	ring_theory::homogeneous_polynomial_domain *Poly2;
+
+	// for the lifting of flocks:
+
+	int Q3; // = q * q * q
+	field_theory::finite_field *F3;
+	ring_theory::homogeneous_polynomial_domain *Poly3;
+
+
+
 	blt_set_domain();
 	~blt_set_domain();
 	void init_blt_set_domain(
@@ -54,6 +68,8 @@ public:
 			geometry::projective_space *P4,
 		int verbose_level);
 	// creates a grassmann G43.
+	void create_extension_fields(
+		int verbose_level);
 	long int intersection_of_hyperplanes(
 			long int plane_rk1, long int plane_rk2,
 			int verbose_level);
@@ -99,6 +115,20 @@ public:
 		int f_eliminate_graphs_if_possible,
 		graph_theory::colored_graph *&CG,
 		int verbose_level);
+	void test_flock_condition(
+			field_theory::finite_field *F,
+			int *ABC,
+			int *&outcome,
+			int &N,
+			int verbose_level);
+	// F is given because the field might be an extension field of the current field
+	void quadratic_lift(
+			int *coeff_f, int *coeff_g, int nb_coeff,
+			int verbose_level);
+	void cubic_lift(
+			int *coeff_f, int *coeff_g, int nb_coeff,
+			int verbose_level);
+
 };
 
 

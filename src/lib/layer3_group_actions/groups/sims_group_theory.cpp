@@ -933,7 +933,8 @@ void sims::conjugate(
 	}
 }
 
-int sims::test_if_in_set_stabilizer(actions::action *A,
+int sims::test_if_in_set_stabilizer(
+		actions::action *A,
 		long int *set, int size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1091,7 +1092,8 @@ void sims::table_of_group_elements_in_data_form(
 		}
 }
 
-void sims::regular_representation(int *Elt,
+void sims::regular_representation(
+		int *Elt,
 		int *perm, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1326,7 +1328,8 @@ void sims::find_standard_generators_int(
 	}
 }
 
-long int sims::find_element_of_given_order_int(int ord,
+long int sims::find_element_of_given_order_int(
+		int ord,
 		int &nb_trials, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1460,7 +1463,8 @@ int sims::find_element_of_given_order_int(
 	return TRUE;
 }
 
-void sims::find_element_of_prime_power_order(int p,
+void sims::find_element_of_prime_power_order(
+		int p,
 		int *Elt, int &e, int &nb_trials,
 		int verbose_level)
 {
@@ -1496,7 +1500,8 @@ void sims::find_element_of_prime_power_order(int p,
 	}
 }
 
-void sims::evaluate_word_int(int word_len,
+void sims::evaluate_word_int(
+		int word_len,
 		int *word, int *Elt, int verbose_level)
 {
 	int *Elt1;
@@ -2156,7 +2161,7 @@ void sims::dimino(
 				continue;
 				}
 			if (f_vv) {
-				cout << "sims::dimino n e w coset rep" << endl;
+				cout << "sims::dimino new coset rep" << endl;
 				}
 			new_coset_rep = c;
 
@@ -2172,7 +2177,7 @@ void sims::dimino(
 			}
 		}
 	if (f_vv) {
-		cout << "sims::dimino, the n e w group has order " << group_sz << endl;
+		cout << "sims::dimino, the group order has been updated to " << group_sz << endl;
 		}
 
 	if (f_v) {

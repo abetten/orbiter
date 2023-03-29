@@ -3285,7 +3285,8 @@ void symbol_definition::definition_of_large_set_was(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_large_set_was "
-				"using existing spread table " << packing_was_label_spread_table << endl;
+				"using existing spread table "
+				<< packing_was_label_spread_table << endl;
 	}
 	int idx;
 	apps_combinatorics::large_set_classify *LS;
@@ -3416,7 +3417,8 @@ void symbol_definition::definition_of_vector(
 	}
 	else {
 		if (f_v) {
-			cout << "symbol_definition::definition_of_vector not over a field" << endl;
+			cout << "symbol_definition::definition_of_vector "
+					"not over a field" << endl;
 		}
 
 	}
@@ -3445,7 +3447,8 @@ void symbol_definition::definition_of_vector(
 	Symb->init_vector(
 			label, VB, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_vector "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3488,7 +3491,8 @@ void symbol_definition::definition_of_combinatorial_object(int verbose_level)
 	Symb->init_combinatorial_objects(
 			define_label, IS, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_combinatorial_object "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3523,7 +3527,8 @@ void symbol_definition::do_geometry_builder(int verbose_level)
 	Symb->init_geometry_builder_object(
 			define_label, GB, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::do_geometry_builder before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::do_geometry_builder "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3570,7 +3575,8 @@ void symbol_definition::load_finite_field_PG(int verbose_level)
 				verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::load_finite_field_PG "
-					"the finite field of order " << q << " has been created" << endl;
+					"the finite field of order " << q
+					<< " has been created" << endl;
 		}
 
 	}
@@ -3659,13 +3665,15 @@ void symbol_definition::definition_of_vector_ge(int verbose_level)
 	VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector_ge before VB->init" << endl;
+		cout << "symbol_definition::definition_of_vector_ge "
+				"before VB->init" << endl;
 	}
 
 	VB->init(Vector_ge_description, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector_ge after VB->init" << endl;
+		cout << "symbol_definition::definition_of_vector_ge "
+				"after VB->init" << endl;
 	}
 
 
@@ -3675,7 +3683,8 @@ void symbol_definition::definition_of_vector_ge(int verbose_level)
 	Symb->init_vector_ge(
 			define_label, VB, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector_ge before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_vector_ge "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3701,7 +3710,8 @@ void symbol_definition::definition_of_action_on_forms(int verbose_level)
 	AF = NEW_OBJECT(apps_algebra::action_on_forms);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_action_on_forms before AF->create_action_on_forms" << endl;
+		cout << "symbol_definition::definition_of_action_on_forms "
+				"before AF->create_action_on_forms" << endl;
 	}
 
 	AF->create_action_on_forms(
@@ -3709,7 +3719,8 @@ void symbol_definition::definition_of_action_on_forms(int verbose_level)
 			verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_action_on_forms after AF->create_action_on_forms" << endl;
+		cout << "symbol_definition::definition_of_action_on_forms "
+				"after AF->create_action_on_forms" << endl;
 	}
 
 
@@ -3719,7 +3730,8 @@ void symbol_definition::definition_of_action_on_forms(int verbose_level)
 	Symb->init_action_on_forms(
 			define_label, AF, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_action_on_forms before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_action_on_forms "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3745,7 +3757,8 @@ void symbol_definition::definition_of_orbits(int verbose_level)
 	OC = NEW_OBJECT(apps_algebra::orbits_create);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_orbits before OC->init" << endl;
+		cout << "symbol_definition::definition_of_orbits "
+				"before OC->init" << endl;
 	}
 
 	OC->init(
@@ -3753,7 +3766,8 @@ void symbol_definition::definition_of_orbits(int verbose_level)
 			verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_orbits after OC->init" << endl;
+		cout << "symbol_definition::definition_of_orbits "
+				"after OC->init" << endl;
 	}
 
 
@@ -3763,7 +3777,8 @@ void symbol_definition::definition_of_orbits(int verbose_level)
 	Symb->init_orbits(
 			define_label, OC, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_orbits before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_orbits "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3792,7 +3807,8 @@ void symbol_definition::definition_of_poset_classification_control(int verbose_l
 	Symb->init_poset_classification_control(
 			define_label, Poset_classification_control, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_poset_classification_control before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_poset_classification_control "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3821,7 +3837,8 @@ void symbol_definition::definition_of_poset_classification_activity(int verbose_
 	Symb->init_poset_classification_activity(
 			define_label, Poset_classification_activity, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_poset_classification_activity before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_poset_classification_activity "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);

@@ -1017,17 +1017,21 @@ public:
 	void init(
 			field_theory::finite_field *Fq,
 			int n, int verbose_level);
-	void setup_polynomial_rings(int verbose_level);
+	void setup_polynomial_rings(
+			int verbose_level);
 	void compute_polynomial_representation(
 			int *func, int *coeff, int verbose_level);
-	void evaluate_projectively(int *coeff, int *f);
-	void evaluate(int *coeff, int *f);
+	void evaluate_projectively(
+			int *coeff, int *f);
+	void evaluate(
+			int *coeff, int *f);
 	void raise(int *in, int *out);
 	void multiply_i_times_j(
 			int i, int j,
 			int *A_eqn, int *B_eqn, int *C_eqn,
 		int verbose_level);
-	void algebraic_normal_form(int *func, int len,
+	void algebraic_normal_form(
+			int *func, int len,
 			int *&coeff, int &nb_coeff,
 			int verbose_level);
 };
@@ -1319,31 +1323,41 @@ public:
 			int *part, int *entries, int verbose_level);
 	void init_part_and_entries_int(
 			int *part, int *entries, int verbose_level);
-	void init_TDO(int *Part, int *Entries,
+	void init_TDO(
+			int *Part, int *Entries,
 		int Row_level, int Col_level,
 		int Extra_row_level, int Extra_col_level,
 		int Lambda_level, int verbose_level);
 	void exit_TDO();
 	void init_partition_stack(int verbose_level);
 	void exit_partition_stack();
-	void get_partition(int h, int l, int verbose_level);
+	void get_partition(
+			int h, int l, int verbose_level);
 	void free_partition(int h);
-	void complete_partition_info(int h, int verbose_level);
-	void get_row_or_col_scheme(int h, int l, int verbose_level);
-	void get_column_split_partition(int verbose_level,
+	void complete_partition_info(
+			int h, int verbose_level);
+	void get_row_or_col_scheme(
+			int h, int l, int verbose_level);
+	void get_column_split_partition(
+			int verbose_level,
 			data_structures::partitionstack &P);
-	void get_row_split_partition(int verbose_level,
+	void get_row_split_partition(
+			int verbose_level,
 			data_structures::partitionstack &P);
 	void print_all_schemes();
-	void print_scheme(int h, int verbose_level);
-	void print_scheme_tex(std::ostream &ost, int h);
+	void print_scheme(
+			int h, int verbose_level);
+	void print_scheme_tex(
+			std::ostream &ost, int h);
 	void print_scheme_tex_fancy(
 			std::ostream &ost,
 			int h, int f_label, std::string &label);
 	void compute_whether_first_inc_must_be_moved(
 			int *f_first_inc_must_be_moved, int verbose_level);
-	int count_nb_inc_from_row_scheme(int verbose_level);
-	int count_nb_inc_from_extra_row_scheme(int verbose_level);
+	int count_nb_inc_from_row_scheme(
+			int verbose_level);
+	int count_nb_inc_from_extra_row_scheme(
+			int verbose_level);
 
 
 	int geometric_test_for_row_scheme(
@@ -1360,7 +1374,8 @@ public:
 		int verbose_level);
 
 
-	int refine_rows(int verbose_level,
+	int refine_rows(
+			int verbose_level,
 		int f_use_mckay, int f_once,
 		data_structures::partitionstack &P,
 		int *&point_types, int &nb_point_types, int &point_type_len,
@@ -1370,7 +1385,8 @@ public:
 		int f_use_packing_numbers,
 		int f_dual_is_linear_space,
 		int f_do_the_geometric_test);
-	int refine_rows_easy(int verbose_level,
+	int refine_rows_easy(
+			int verbose_level,
 		int *&point_types, int &nb_point_types, int &point_type_len,
 		int *&distributions, int &nb_distributions,
 		int &cnt_second_system);

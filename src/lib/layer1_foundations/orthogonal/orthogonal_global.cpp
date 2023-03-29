@@ -112,7 +112,9 @@ void orthogonal_global::create_BLT_set_from_flock(orthogonal *O,
 		b = ABC[i * 3 + 1];
 		c = ABC[i * 3 + 2];
 
-		Gg.create_BLT_point(O->F, v, a, b, c, verbose_level - 2);
+		Gg.create_BLT_point_from_flock(O->F, v, a, b, c, verbose_level - 2);
+
+
 		if (f_vv) {
 			cout << "point " << i << " : ";
 			Int_vec_print(cout, v, 5);
@@ -121,7 +123,7 @@ void orthogonal_global::create_BLT_set_from_flock(orthogonal *O,
 		set[i] = O->Hyperbolic_pair->rank_point(v, 1, 0);
 
 	}
-	orbiter_kernel_system::Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
+	orbiter_kernel_system::Orbiter->Int_vec->init5(v, 0, 1, 0, 0, 0);
 	if (f_vv) {
 		cout << "point : ";
 		Int_vec_print(cout, v, 5);

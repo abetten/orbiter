@@ -178,7 +178,7 @@ void upstep_work::handle_extension(
 //
 // Handles the extension 'cur_ex' in node 'prev'.
 // We are extending a set of size 'size' to a set of size 'size' + 1. 
-// Calls poset_orbit_node::init_extension_node for the n e w node
+// Calls poset_orbit_node::init_extension_node for the new node
 // that is (possibly) created
 {
 	int f_v = (verbose_level >= 1);
@@ -318,7 +318,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 		exit(1);
 	}
 				
-	// process the node and create a n e w set orbit at level size + 1:
+	// process the node and create a new set orbit at level size + 1:
 				
 	pt_orbit_len = O_prev->get_E(prev_ex)->get_orbit_len();
 
@@ -389,7 +389,7 @@ int upstep_work::init_extension_node(int verbose_level)
 // depending on the type of action
 // then changes the type of the extension to EXTENSION_TYPE_EXTENSION
 //
-// Establishes a n e w node at depth 'size'
+// Establishes a new node at depth 'size'
 // (i.e., a set of size 'size') as an extension
 // of a previous node (prev) at depth size - 1 
 // with respect to a given point (pt).
@@ -735,7 +735,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	up_orbit.compute_point_orbit(size - 1 /*pt*/, 0);
 		// the orbits of the group H
 		// up_orbit will be extended as soon 
-		// as n e w automorphisms are found
+		// as new automorphisms are found
 
 
 
@@ -884,7 +884,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 			UF.add_generator(aut, 0 /*verbose_level - 5*/);
 			up_orbit.extend_orbit(aut, verbose_level - 5);
 			if (f_vvv) {
-				cout << "upstep_work::upstep_for_sets n e w orbit length "
+				cout << "upstep_work::upstep_for_sets new orbit length "
 						"upstep = " << up_orbit.orbit_len[0] << endl;
 			}
 		}

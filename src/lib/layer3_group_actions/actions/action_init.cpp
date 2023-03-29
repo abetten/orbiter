@@ -219,7 +219,7 @@ void action::build_up_automorphism_group_from_aut_data(
 			S.group_order(go);
 			if (f_v) {
 				cout << "generator " << h
-						<< " added, n e w group order " << go << endl;
+						<< " added, group order has been updated to " << go << endl;
 				S.print_transversal_lengths();
 				S.print_transversals_short();
 			}

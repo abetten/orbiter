@@ -328,7 +328,7 @@ void set_and_stabilizer::apply_to_self(
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self "
-				"before testing the n e w generators" << endl;
+				"before testing the new generators" << endl;
 		}
 	for (i = 0; i < Strong_gens->gens->len; i++) {
 		if (!A2->Group_element->check_if_in_set_stabilizer(

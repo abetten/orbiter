@@ -895,6 +895,10 @@ public:
 		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
 		// b^2/4 + (-c)*a + -(b^2/4-ac)
 		// = b^2/4 -ac -b^2/4 + ac = 0
+	void create_BLT_point_from_flock(
+			field_theory::finite_field *F,
+			int *v5, int a, int b, int c, int verbose_level);
+	// creates the point (a/2,-a^2/4-bc,1,c,b)
 	int nonconical_six_arc_get_nb_Eckardt_points(
 			projective_space *P2,
 			long int *Arc6, int verbose_level);

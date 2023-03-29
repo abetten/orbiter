@@ -212,7 +212,7 @@ void orbits_on_something::init_from_vector_ge(
 
 
 
-	if (f_load_save && Fio.file_size(fname.c_str()) > 0) {
+	if (f_load_save && Fio.file_size(fname) > 0) {
 
 
 		if (f_v) {

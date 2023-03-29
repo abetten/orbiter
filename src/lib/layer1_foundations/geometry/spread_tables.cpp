@@ -953,7 +953,7 @@ void spread_tables::make_exact_cover_problem(
 	int nb_cols = nb_live_blocks;
 
 	Dio = NEW_OBJECT(solvers::diophant);
-	Dio->open(nb_rows, nb_cols);
+	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->f_has_sum = TRUE;
 	Dio->sum = nb_needed;
 

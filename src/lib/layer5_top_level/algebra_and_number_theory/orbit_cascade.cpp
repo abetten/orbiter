@@ -579,7 +579,7 @@ void orbit_cascade::upstep(
 		progress = ((double)nb_processed * 100. ) / (double) nb_orbits_secondary_total;
 
 		if (f_v) {
-			cout << "Defining n e w orbit "
+			cout << "Defining new orbit "
 					<< Flag_orbits->nb_primary_orbits_upper
 					<< " from flag orbit " << f << " / "
 					<< nb_orbits_secondary_total

@@ -15,7 +15,8 @@ namespace groups {
 
 
 
-void choose_random_generator_derived_group(sims *G,
+void choose_random_generator_derived_group(
+		sims *G,
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

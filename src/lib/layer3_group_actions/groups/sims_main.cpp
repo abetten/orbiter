@@ -1082,7 +1082,7 @@ void sims::build_up_group_random_process(
 			<< " = " << G_order << " * " << K_order << endl;
 		if (f_vvv) {
 			cout << "sims::build_up_group_random_process "
-					"the n e w action has base_length = "
+					"the new action has base_length = "
 				<< GA->base_len()
 				<< " and degree " << GA->degree << endl;
 			print_transversal_lengths();
@@ -1423,7 +1423,7 @@ void sims::build_up_group_from_generators(
 				"found a group of order " << KG_order
 			<< " = " << G_order << " * " << K_order << endl;
 		cout << "sims::build_up_group_from_generators "
-				"the n e w action has base_length = " << GA->base_len()
+				"the new action has base_length = " << GA->base_len()
 			<< " and degree " << GA->degree << endl;
 		print_transversal_lengths();
 
@@ -1445,7 +1445,8 @@ void sims::build_up_group_from_generators(
 	}
 }
 
-int sims::closure_group(int nb_times, int verbose_level)
+int sims::closure_group(
+		int nb_times, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 1);

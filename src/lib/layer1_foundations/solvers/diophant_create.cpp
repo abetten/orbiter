@@ -102,7 +102,7 @@ void diophant_create::init(
 					A, m, n);
 
 		D = NEW_OBJECT(diophant);
-		D->open(m, n);
+		D->open(m, n, verbose_level - 1);
 
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
@@ -130,7 +130,7 @@ void diophant_create::init(
 		int nb_k_orbits = nb_rows;
 
 		D = NEW_OBJECT(diophant);
-		D->open(nb_t_orbits, nb_k_orbits);
+		D->open(nb_t_orbits, nb_k_orbits, verbose_level - 1);
 
 		for (j = 0; j < nb_k_orbits; j++) {
 			for (h = 0; h < nb_cols; h++) {
@@ -166,7 +166,7 @@ void diophant_create::init(
 
 		D = NEW_OBJECT(diophant);
 
-		D->open(m, n);
+		D->open(m, n, verbose_level - 1);
 
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {

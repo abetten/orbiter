@@ -3401,6 +3401,59 @@ void surface_create::export_something_with_group_element(
 				<< Fio.file_size(fname) << endl;
 	}
 
+
+	else if (ST.stringcmp(what, "action_on_lines") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_on_lines.csv");
+
+		{
+			ofstream ost(fname);
+			int i, j;
+
+			int *perm;
+
+			perm = NEW_int(SOA->A_on_the_lines->degree);
+
+
+			ost << "ROW,OnLines" << endl;
+			for (i = 0; i < gens_builder->V->len; i++) {
+				ost << i << ",";
+
+				SOA->A_on_the_lines->Group_element->element_as_permutation(
+						gens_builder->V->ith(i),
+						perm, 0 /* verbose_level */);
+
+				ost << "\"[";
+				for (j = 0; j < SOA->A_on_the_lines->degree; j++) {
+					ost << perm[j];
+					if (j < SOA->A_on_the_lines->degree - 1) {
+						ost << ",";
+					}
+				}
+				ost << "]\"";
+
+				//SOA->A_on_tritangent_planes->Group_element->print_as_permutation(
+				//		ost, gens_builder->V->ith(i));
+				ost << endl;
+			}
+			ost << "END" << endl;
+
+
+			FREE_int(perm);
+
+
+		}
+
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
 	if (f_v) {
 		cout << "surface_create::export_something_with_group_element done" << endl;
 	}

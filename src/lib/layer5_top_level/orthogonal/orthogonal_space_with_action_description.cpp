@@ -29,6 +29,8 @@ orthogonal_space_with_action_description::orthogonal_space_with_action_descripti
 	//std::string label_txt;
 	f_label_tex = FALSE;
 	//std::string label_tex;
+
+
 	f_without_group = FALSE;
 
 }

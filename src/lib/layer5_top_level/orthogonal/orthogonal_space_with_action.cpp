@@ -25,7 +25,7 @@ orthogonal_space_with_action::orthogonal_space_with_action()
 	f_semilinear = FALSE;
 	A = NULL;
 	AO = NULL;
-	Blt_Set_domain = NULL;
+	Blt_set_domain_with_action = NULL;
 }
 
 orthogonal_space_with_action::~orthogonal_space_with_action()
@@ -36,8 +36,8 @@ orthogonal_space_with_action::~orthogonal_space_with_action()
 	if (A) {
 		FREE_OBJECT(A);
 	}
-	if (Blt_Set_domain) {
-		FREE_OBJECT(Blt_Set_domain);
+	if (Blt_set_domain_with_action) {
+		FREE_OBJECT(Blt_set_domain_with_action);
 	}
 }
 
@@ -119,16 +119,17 @@ void orthogonal_space_with_action::init(
 			cout << "orthogonal_space_with_action::init "
 					"allocating Blt_Set_domain" << endl;
 		}
-		Blt_Set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
+		Blt_set_domain_with_action = NEW_OBJECT(orthogonal_geometry_applications::blt_set_domain_with_action);
+
 
 		if (f_v) {
 			cout << "orthogonal_space_with_action::init "
-					"before Blt_Set_domain->init_blt_set_domain" << endl;
+					"before Blt_set_domain_with_action->init" << endl;
 		}
-		Blt_Set_domain->init_blt_set_domain(O, P, verbose_level - 2);
+		Blt_set_domain_with_action->init(A, P, O, verbose_level);
 		if (f_v) {
 			cout << "orthogonal_space_with_action::init_blt_set_domain "
-					"after Blt_Set_domain->init" << endl;
+					"after Blt_set_domain_with_action->init" << endl;
 		}
 	}
 

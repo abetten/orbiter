@@ -32,6 +32,7 @@ static void blt_set_classify_early_test_func_callback(
 blt_set_classify::blt_set_classify()
 {
 	OA = NULL;
+	Blt_set_domain_with_action = NULL;
 	Blt_set_domain = NULL;
 	//LG = NULL;
 	A = NULL;
@@ -53,18 +54,7 @@ blt_set_classify::~blt_set_classify()
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "blt_set_classify::~blt_set_classify before A" << endl;
-	}
-	if (Blt_set_domain) {
-		FREE_OBJECT(Blt_set_domain);
-		Blt_set_domain = NULL;
-	}
-	if (A) {
-		FREE_OBJECT(A);
-		A = NULL;
-	}
-	if (f_v) {
-		cout << "blt_set_classify::~blt_set_classify before gen" << endl;
+		cout << "blt_set_classify::~blt_set_classify" << endl;
 	}
 	if (Control) {
 		FREE_OBJECT(Control);
@@ -111,6 +101,8 @@ void blt_set_classify::init_basic(
 	blt_set_classify::A = A;
 
 
+	Blt_set_domain_with_action = OA->Blt_set_domain_with_action;
+
 
 	if (A->type_G != action_on_orthogonal_t) {
 		cout << "the group must be of orthogonal type" << endl;
@@ -148,12 +140,8 @@ void blt_set_classify::init_basic(
 #endif
 	
 
-#if 0
-	Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
-	Blt_set_domain->init_blt_set_domain(O, OA->P, verbose_level);
-#endif
 
-	Blt_set_domain = OA->Blt_Set_domain;
+	Blt_set_domain = OA->Blt_set_domain_with_action->Blt_set_domain;
 
 	degree = Blt_set_domain->degree;
 	target_size = Blt_set_domain->target_size;
@@ -983,7 +971,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 
 	Dio = NEW_OBJECT(solvers::diophant);
-	Dio->open(nb_rows, nb_cols);
+	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->sum = nb_needed;
 
 	for (i = 0; i < nb_rows; i++) {
@@ -1548,15 +1536,33 @@ void blt_set_classify::report2(
 #endif
 
 
+		string label_txt;
+		string label_tex;
 		blt_set_with_action *BA;
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "_q%d_iso%d", q, h);
+
+		label_txt.assign("BLT_set_");
+		label_txt.append(str);
+
+		snprintf(str, sizeof(str), "-q%d-iso%d", q, h);
+
+		label_tex.assign("BLT_set_");
+		label_tex.append(str);
+
 
 		BA = NEW_OBJECT(blt_set_with_action);
 		BA->init_set(
-				A, Blt_set_domain, T->Reps[h].data,
+				A, Blt_set_domain_with_action,
+				T->Reps[h].data,
+				label_txt,
+				label_tex,
 				T->Reps[h].Strong_gens,
 				TRUE /* f_invariants */,
 				verbose_level);
-		BA->print_automorphism_group(ost);
+		BA->Blt_set_group_properties->print_automorphism_group(ost);
 
 		FREE_OBJECT(BA);
 	}

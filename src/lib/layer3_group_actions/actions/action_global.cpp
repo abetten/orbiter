@@ -2872,7 +2872,7 @@ void action_global::compute_set_orbit(
 			if (j < nb_sets) {
 				continue;
 			}
-			// n e w set found:
+			// found a new set in the orbit:
 			if (f_vv) {
 				cout << "action_global::compute_set_orbit "
 						"new set " << nb_sets << ":";

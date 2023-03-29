@@ -790,7 +790,7 @@ void orbit_of_equations::stabilizer_orbit_rep_work(
 		Stab->group_order(cur_go);
 		if ((f_vv && f_added) || f_vvv) {
 			cout << "iteration " << cnt
-				<< " the n e w group order is " << cur_go
+				<< " the new group order is " << cur_go
 				<< " expecting a group of order " << target_go << endl; 
 		}
 		cnt++;

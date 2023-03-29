@@ -237,9 +237,9 @@ public:
 	int *Y; // [m]
 	
 	std::deque<std::vector<int> > _results;
-	int _maxresults;
-	int _resultanz;
-	int _cur_result;
+	long int _maxresults;
+	long int _resultanz;
+	long int _cur_result;
 	long int nb_steps_betten;
 	int f_max_time;
 	int f_broken_off_because_of_maxtime;
@@ -251,7 +251,7 @@ public:
 	diophant();
 	~diophant();
 	
-	void open(int m, int n);
+	void open(int m, int n, int verbose_level);
 	void init_var_labels(
 			long int *labels, int verbose_level);
 	void join_problems(

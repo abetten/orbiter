@@ -470,7 +470,7 @@ void schreier_vector::relabel_points(
 	}
 	if (f_vv) {
 		cout << "schreier_vector::relabel_points "
-				"old / n e w schreier vector:" << endl;
+				"old / new schreier vector:" << endl;
 		cout << "i : pts[i] : prev[i] : label[i] :: i : "
 				"new_sv_pts[i] : new_sv_prev[i] : "
 				"new_sv_label[i] " << endl;
@@ -526,7 +526,7 @@ void schreier_vector::relabel_points(
 	}
 	if (f_v) {
 		cout << "schreier_vector::relabel_points "
-				"n e w schreier vector created" << endl;
+				"new schreier vector created" << endl;
 		cout << "schreier_vector::relabel_points done" << endl;
 	}
 }

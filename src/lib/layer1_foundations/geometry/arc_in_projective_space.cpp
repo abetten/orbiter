@@ -1006,7 +1006,7 @@ void arc_in_projective_space::arc_lifting_diophant(
 
 
 	D = NEW_OBJECT(solvers::diophant);
-	D->open(P->Subspaces->N_lines + 1, nb_free_points);
+	D->open(P->Subspaces->N_lines + 1, nb_free_points, verbose_level - 1);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < nb_free_points; j++) {
 		D->x_min[j] = 0;
@@ -1114,7 +1114,7 @@ void arc_in_projective_space::arc_with_given_set_of_s_lines_diophant(
 
 
 	D = NEW_OBJECT(solvers::diophant);
-	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points);
+	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points, verbose_level - 1);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < P->Subspaces->N_points; j++) {
 		D->x_min[j] = 0;
@@ -1247,7 +1247,7 @@ void arc_in_projective_space::arc_with_two_given_line_sets_diophant(
 
 
 	D = NEW_OBJECT(solvers::diophant);
-	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points);
+	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points, verbose_level - 1);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < P->Subspaces->N_points; j++) {
 		D->x_min[j] = 0;
@@ -1405,7 +1405,7 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 
 
 	D = NEW_OBJECT(solvers::diophant);
-	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points);
+	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points, verbose_level - 1);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < P->Subspaces->N_points; j++) {
 		D->x_min[j] = 0;
@@ -1661,7 +1661,7 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 	nb_vars = P->Subspaces->N_points + nb_slack1;
 
 	D = NEW_OBJECT(solvers::diophant);
-	D->open(nb_eqns, nb_vars);
+	D->open(nb_eqns, nb_vars, verbose_level - 1);
 	//D->f_x_max = TRUE;
 	for (j = 0; j < nb_vars; j++) {
 		D->x_min[j] = 0;

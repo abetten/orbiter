@@ -89,7 +89,7 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 		LG->place_with_y_stretch(Opt->y_stretch, verbose_level - 1);
 		}
 	if (Opt->f_spanning_tree) {
-		// create n e w x coordinates
+		// create updated x coordinates
 		LG->create_spanning_tree(TRUE /* f_place_x */, verbose_level);
 		}
 #if 0

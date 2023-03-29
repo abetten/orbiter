@@ -1207,13 +1207,18 @@ public:
 		int verbose_level);
 	void compute_group_orders();
 	void print_group_orders();
-	void get_generator_internal(int *Elt, int verbose_level);
-	void get_generator_external(int *Elt, int verbose_level);
-	void get_generator_external_from_generators(int *Elt, 
+	void get_generator_internal(
+			int *Elt, int verbose_level);
+	void get_generator_external(
+			int *Elt, int verbose_level);
+	void get_generator_external_from_generators(
+			int *Elt,
 		int verbose_level);
-	void get_generator_external_random_process(int *Elt, 
+	void get_generator_external_random_process(
+			int *Elt,
 		int verbose_level);
-	void get_generator_external_old_G(int *Elt, 
+	void get_generator_external_old_G(
+			int *Elt,
 		int verbose_level);
 	void get_generator(int *Elt, int verbose_level);
 	void closure_group(int verbose_level);
@@ -1531,7 +1536,8 @@ public:
 		int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 		int verbose_level);
-	int closure_group(int nb_times, int verbose_level);
+	int closure_group(
+			int nb_times, int verbose_level);
 
 
 
@@ -1613,7 +1619,8 @@ public:
 			actions::action *A, sims *old_G, int *Elt,
 		int f_overshooting_OK, int verbose_level);
 		// Elt * g * Elt^{-1} where g is in old_G
-	int test_if_in_set_stabilizer(actions::action *A,
+	int test_if_in_set_stabilizer(
+			actions::action *A,
 		long int *set, int size, int verbose_level);
 	int test_if_subgroup(
 			sims *old_G, int verbose_level);
@@ -1623,7 +1630,8 @@ public:
 	void table_of_group_elements_in_data_form(
 			int *&Table,
 		int &len, int &sz, int verbose_level);
-	void regular_representation(int *Elt, int *perm,
+	void regular_representation(
+			int *Elt, int *perm,
 		int verbose_level);
 	void center(
 			data_structures_groups::vector_ge &gens,
@@ -1639,15 +1647,18 @@ public:
 			int ord_a, int ord_b,
 		int ord_ab, int &a, int &b, int &nb_trials,
 		int verbose_level);
-	long int find_element_of_given_order_int(int ord,
+	long int find_element_of_given_order_int(
+			int ord,
 		int &nb_trials, int verbose_level);
 	int find_element_of_given_order_int(
 			int *Elt,
 		int ord, int &nb_trials, int max_trials,
 		int verbose_level);
-	void find_element_of_prime_power_order(int p,
+	void find_element_of_prime_power_order(
+			int p,
 		int *Elt, int &e, int &nb_trials, int verbose_level);
-	void evaluate_word_int(int word_len,
+	void evaluate_word_int(
+			int word_len,
 		int *word, int *Elt, int verbose_level);
 	void sylow_subgroup(
 			int p, sims *P, int verbose_level);
@@ -1677,7 +1688,8 @@ public:
 	long int conjugate_by_rank(
 			long int rk_a, long int rk_b, int verbose_level);
 		// computes b^{-1} * a * b
-	long int conjugate_by_rank_b_bv_given(long int rk_a,
+	long int conjugate_by_rank_b_bv_given(
+			long int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level);
 	void zuppo_list(
 			int *Zuppos, int &nb_zuppos, int verbose_level);
@@ -1747,7 +1759,8 @@ public:
 };
 
 // sims2.cpp
-void choose_random_generator_derived_group(sims *G, int *Elt, 
+void choose_random_generator_derived_group(
+		sims *G, int *Elt,
 	int verbose_level);
 
 

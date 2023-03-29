@@ -892,7 +892,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 
 #if 0
 	int Eckardt_pts[] = {7,12,15,24,58,91}; // these were the E-points from before. Not any more.
-	int Eckardt_pts2[] = {15,24,5,14,25,124}; // these are the n e w E-points
+	int Eckardt_pts2[] = {15,24,5,14,25,124}; // these are the new E-points
 	int nb_E = 6;
 #endif
 

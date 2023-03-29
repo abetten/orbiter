@@ -1010,7 +1010,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 				(double) nb_orbits_ordered_total;
 
 		if (f_v) {
-			cout << "Defining n e w orbit "
+			cout << "Defining new orbit "
 					<< Flag_orbits->nb_primary_orbits_upper
 					<< " from flag orbit " << f << " / "
 					<< nb_orbits_ordered_total

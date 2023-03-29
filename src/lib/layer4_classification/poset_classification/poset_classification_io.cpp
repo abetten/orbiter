@@ -59,7 +59,7 @@ void poset_classification::print_progress_by_extension(
 	print_level_info(size, prev);
 	cout << " **** Upstep extension " << cur_ex << " / "
 		<< Poo->node_get_nb_of_extensions(prev) << " with "
-		<< nb_ext_cur << " n e w orbits and "
+		<< nb_ext_cur << " new orbits and "
 		<< nb_fuse_cur << " fusion nodes. We now have "
 		<< cur - Poo->first_node_at_level(size)
 		<< " nodes at level " << size;
@@ -80,7 +80,7 @@ void poset_classification::print_progress(
 
 	print_level_info(size, prev);
 	cout << " **** Upstep finished with "
-		<< nb_ext_cur << " n e w orbits and "
+		<< nb_ext_cur << " new orbits and "
 		<< nb_fuse_cur << " fusion nodes. We now have "
 		<< cur - Poo->first_node_at_level(size)
 		<< " nodes at level " << size;

@@ -182,8 +182,10 @@ public:
 
 	orthogonal_space_with_action *OA;
 
-	layer1_foundations::orthogonal_geometry::blt_set_domain
-		*Blt_set_domain;
+	orthogonal_geometry_applications::blt_set_domain_with_action
+		*Blt_set_domain_with_action;
+
+	orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
 	actions::action *A; // orthogonal group
 
@@ -327,8 +329,8 @@ public:
 	int f_has_group;
 	groups::strong_generators *Sg;
 
-	layer1_foundations::orthogonal_geometry::blt_set_domain
-		*Blt_set_domain;
+	orthogonal_geometry_applications::blt_set_domain_with_action
+		*Blt_set_domain_with_action;
 
 	blt_set_with_action *BA;
 
@@ -355,6 +357,80 @@ public:
 };
 
 
+// #############################################################################
+// blt_set_domain_with_action.cpp
+// #############################################################################
+
+
+//! a BLT-set domain with group action
+
+
+class blt_set_domain_with_action {
+
+public:
+
+	actions::action *A;
+	geometry::projective_space *P;
+
+	layer1_foundations::orthogonal_geometry::orthogonal *O;
+
+	orthogonal_geometry::blt_set_domain *Blt_set_domain;
+
+	combinatorics::polynomial_function_domain *PF;
+
+	blt_set_domain_with_action();
+	~blt_set_domain_with_action();
+	void init(
+			actions::action *A,
+			geometry::projective_space *P,
+			layer1_foundations::orthogonal_geometry::orthogonal *O,
+			int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// blt_set_group_properties.cpp
+// #############################################################################
+
+//! to create a BLT-set from a description using class BLT_set_create_description
+
+
+
+class blt_set_group_properties {
+
+public:
+
+	blt_set_with_action *Blt_set_with_action;
+
+	actions::action *A_on_points;
+	//groups::schreier *Orbits_on_points;
+	groups::orbits_on_something *Orbits_on_points;
+
+	flock_from_blt_set *Flock; // [Orbits_on_points->Sch->nb_orbits]
+	int *Point_idx; // [Orbits_on_points->Sch->nb_orbits]
+
+
+	blt_set_group_properties();
+	~blt_set_group_properties();
+	void init_blt_set_group_properties(
+			blt_set_with_action *Blt_set_with_action,
+			int verbose_level);
+	void init_orbits_on_points(
+			int verbose_level);
+	void init_flocks(
+			int verbose_level);
+	void print_automorphism_group(
+		std::ostream &ost);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void print_summary(std::ostream &ost);
+
+
+};
+
+
 
 // #############################################################################
 // blt_set_with_action.cpp
@@ -369,51 +445,52 @@ class blt_set_with_action {
 public:
 
 	actions::action *A;
-	orthogonal_geometry::blt_set_domain *Blt_set_domain;
+	orthogonal_geometry_applications::blt_set_domain_with_action *Blt_set_domain_with_action;
 
 	long int *set;
+
+	std::string label_txt;
+	std::string label_tex;
 
 	groups::strong_generators *Aut_gens;
 	orthogonal_geometry::blt_set_invariants *Inv;
 
-	actions::action *A_on_points;
-	groups::schreier *Orbits_on_points;
-
 	long int *T; // [target_size]
 	long int *Pi_ij; // [target_size * target_size]
+
+	blt_set_group_properties *Blt_set_group_properties;
 
 	blt_set_with_action();
 	~blt_set_with_action();
 	void init_set(
 			actions::action *A,
-			orthogonal_geometry::blt_set_domain *Blt_set_domain,
+			orthogonal_geometry_applications::blt_set_domain_with_action *Blt_set_domain_with_action,
 			long int *set,
+			std::string &label_txt,
+			std::string &label_tex,
 			groups::strong_generators *Aut_gens,
 			int f_invariants,
 			int verbose_level);
-	void init_orbits_on_points(
-			int verbose_level);
-	void print_automorphism_group(
-		std::ostream &ost);
-	void report(
-			std::ostream &ost, int verbose_level);
-	void print_summary(std::ostream &ost);
 	void compute_T(int verbose_level);
 	void compute_Pi_ij(int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void report_basics(
+			std::ostream &ost, int verbose_level);
 
 };
 
 
 
 // #############################################################################
-// flock.cpp
+// flock_from_blt_set.cpp
 // #############################################################################
 
 
-//! a flock of a quadratic cone
+//! a flock of a quadratic cone arising from a BLT-set
 
 
-class flock {
+class flock_from_blt_set {
 
 public:
 
@@ -433,7 +510,7 @@ public:
 	int *func_f; // second column of ABC
 	int *func_g; // third column of ABC
 
-	combinatorics::polynomial_function_domain *PF;
+	//combinatorics::polynomial_function_domain *PF;
 
 	int q;
 	int degree; // = PF->max_degree
@@ -442,16 +519,24 @@ public:
 	int *coeff_g; // [nb_coeff]
 
 
-	flock();
-	~flock();
+	flock_from_blt_set();
+	~flock_from_blt_set();
 	void init(
 				blt_set_with_action *BLT_set,
 				int point_idx, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+#if 0
 	void test_flock_condition(
 			field_theory::finite_field *F,
-			int f_magic, int *ABC, int verbose_level);
+			int *ABC,
+			int *&outcome,
+			int &N,
+			int verbose_level);
+	// F is given because the field might be an extension field of the current field
 	void quadratic_lift(int verbose_level);
 	void cubic_lift(int verbose_level);
+#endif
 
 };
 
@@ -602,7 +687,7 @@ public:
 	actions::action *A;
 	induced_actions::action_on_orthogonal *AO;
 
-	orthogonal_geometry::blt_set_domain *Blt_Set_domain;
+	orthogonal_geometry_applications::blt_set_domain_with_action *Blt_set_domain_with_action;
 
 
 	orthogonal_space_with_action();

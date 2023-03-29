@@ -546,8 +546,10 @@ ORBITER_MODULES= \
 		layer5_top_level/orthogonal/blt_set_classify.o \
 		layer5_top_level/orthogonal/BLT_set_create_description.o \
 		layer5_top_level/orthogonal/BLT_set_create.o \
+		layer5_top_level/orthogonal/blt_set_domain_with_action.o \
+		layer5_top_level/orthogonal/blt_set_group_properties.o \
 		layer5_top_level/orthogonal/blt_set_with_action.o \
-		layer5_top_level/orthogonal/flock.o \
+		layer5_top_level/orthogonal/flock_from_blt_set.o \
 		layer5_top_level/orthogonal/orthogonal_space_activity_description.o \
 		layer5_top_level/orthogonal/orthogonal_space_activity.o \
 		layer5_top_level/orthogonal/orthogonal_space_with_action_description.o \

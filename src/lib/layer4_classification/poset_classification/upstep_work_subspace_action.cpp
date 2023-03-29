@@ -207,7 +207,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			verbose_level);
 		// computes the orbits of the group H
 		// up_orbit will be extended as soon 
-		// as n e w automorphisms are found
+		// as new automorphisms are found
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"computing initial orbits of hyperplane action done"
@@ -477,7 +477,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			up_orbit.extend_orbit(aut, verbose_level - 8);
 			if (f_vv) {
 				cout << "upstep_work::upstep_subspace_action "
-						"n e w orbit length upstep = "
+						"new orbit length upstep = "
 						<< up_orbit.orbit_len[0] << endl;
 			}
 		}

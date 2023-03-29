@@ -953,7 +953,8 @@ void translation_plane_via_andre_model::create_latex_report(int verbose_level)
 	}
 }
 
-void translation_plane_via_andre_model::report(std::ostream &ost, int verbose_level)
+void translation_plane_via_andre_model::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -963,11 +964,13 @@ void translation_plane_via_andre_model::report(std::ostream &ost, int verbose_le
 
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::report before Andre->report" << endl;
+		cout << "translation_plane_via_andre_model::report "
+				"before Andre->report" << endl;
 	}
 	Andre->report(ost, verbose_level);
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::report after Andre->report" << endl;
+		cout << "translation_plane_via_andre_model::report "
+				"after Andre->report" << endl;
 	}
 
 	ost << "Automorphism group:\\\\" << endl;

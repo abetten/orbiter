@@ -31,7 +31,7 @@ BLT_set_create::BLT_set_create()
 	ABC = NULL;
 	f_has_group = FALSE;
 	Sg = NULL;
-	Blt_set_domain = NULL;
+	Blt_set_domain_with_action = NULL;
 	BA = NULL;
 }
 
@@ -63,9 +63,9 @@ void BLT_set_create::init(
 	if (f_v) {
 		cout << "BLT_set_create::init" << endl;
 	}
-	BLT_set_create::Blt_set_domain = OA->Blt_Set_domain;
 	BLT_set_create::Descr = Descr;
 	BLT_set_create::OA = OA;
+	BLT_set_create::Blt_set_domain_with_action = OA->Blt_set_domain_with_action;
 
 	if (OA->Descr->n != 5) {
 		cout << "BLT_set_create::init OA->Descr->n != 5" << endl;
@@ -503,6 +503,7 @@ void BLT_set_create::init(
 	}
 
 
+
 	BA = NEW_OBJECT(blt_set_with_action);
 
 	if (f_v) {
@@ -510,8 +511,10 @@ void BLT_set_create::init(
 	}
 	BA->init_set(
 			OA->A,
-			Blt_set_domain,
+			Blt_set_domain_with_action,
 			set,
+			label_txt,
+			label_tex,
 			Sg,
 			Descr->f_invariants,
 			verbose_level - 1);
@@ -600,7 +603,7 @@ void BLT_set_create::export_gap(int verbose_level)
 
 		orthogonal_geometry::quadratic_form *Quadratic_form;
 
-		Quadratic_form = Blt_set_domain->O->Quadratic_form;
+		Quadratic_form = Blt_set_domain_with_action->Blt_set_domain->O->Quadratic_form;
 
 
 		ost << "# Quadratic form: ";
@@ -623,7 +626,7 @@ void BLT_set_create::export_gap(int verbose_level)
 				f_has_group,
 				Sg,
 				OA->A,
-				Blt_set_domain,
+				Blt_set_domain_with_action->Blt_set_domain,
 				set, verbose_level);
 		if (f_v) {
 			cout << "BLT_set_create::export_gap "
@@ -650,37 +653,56 @@ void BLT_set_create::create_flock(int point_idx, int verbose_level)
 	}
 
 
-	flock *Flock;
+	flock_from_blt_set *Flock;
 
-	Flock = NEW_OBJECT(flock);
+	Flock = NEW_OBJECT(flock_from_blt_set);
 
 	if (f_v) {
-		cout << "BLT_set_create::create_flock before Flock->init" << endl;
+		cout << "BLT_set_create::create_flock "
+				"before Flock->init" << endl;
 	}
 	Flock->init(BA, point_idx, verbose_level);
 	if (f_v) {
-		cout << "BLT_set_create::create_flock after Flock->init" << endl;
+		cout << "BLT_set_create::create_flock "
+				"after Flock->init" << endl;
 	}
+
+	char str[1000];
+	string fname_csv;
+	orbiter_kernel_system::file_io Fio;
+
+
+	snprintf(str, 1000, "_flock_pt%d.csv", point_idx);
+	fname_csv.assign(BA->label_txt);
+	fname_csv.append(str);
+
+	Fio.int_matrix_write_csv(fname_csv, Flock->Table_of_ABC->M, Flock->q, 3);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
 
 	if (f_v) {
 		cout << "BLT_set_create::create_flock "
-				"before Flock->quadratic_lift" << endl;
+				"before Blt_set_domain_with_action->Blt_set_domain->quadratic_lift" << endl;
 	}
-	Flock->quadratic_lift(verbose_level);
+	Blt_set_domain_with_action->Blt_set_domain->quadratic_lift(
+			Flock->coeff_f, Flock->coeff_g, Flock->nb_coeff, verbose_level);
 	if (f_v) {
 		cout << "BLT_set_create::create_flock "
-				"after Flock->quadratic_lift" << endl;
+				"after Blt_set_domain_with_action->Blt_set_domain->quadratic_lift" << endl;
 	}
 
 
 	if (f_v) {
 		cout << "flock::init "
-				"before Flock->cubic_lift" << endl;
+				"before Blt_set_domain_with_action->Blt_set_domain->cubic_lift" << endl;
 	}
-	Flock->cubic_lift(verbose_level);
+	Blt_set_domain_with_action->Blt_set_domain->cubic_lift(
+			Flock->coeff_f, Flock->coeff_g, Flock->nb_coeff, verbose_level);
 	if (f_v) {
 		cout << "flock::init "
-				"after Flock->cubic_lift" << endl;
+				"after Blt_set_domain_with_action->Blt_set_domain->cubic_lift" << endl;
 	}
 
 
@@ -702,8 +724,8 @@ void BLT_set_create::BLT_test(int verbose_level)
 		cout << "BLT_set_create::BLT_test "
 				"before Blt_set_domain->check_conditions" << endl;
 	}
-	ret = Blt_set_domain->check_conditions(
-			Blt_set_domain->target_size,
+	ret = Blt_set_domain_with_action->Blt_set_domain->check_conditions(
+			Blt_set_domain_with_action->Blt_set_domain->target_size,
 			set,
 			verbose_level);
 	if (f_v) {
@@ -812,7 +834,8 @@ void BLT_set_create::print_set_of_points(
 	FREE_int(v);
 }
 
-void BLT_set_create::print_set_of_points_with_ABC(std::ostream &ost, long int *Pts, int nb_pts)
+void BLT_set_create::print_set_of_points_with_ABC(
+		std::ostream &ost, long int *Pts, int nb_pts)
 {
 	int h, I;
 	int *v;

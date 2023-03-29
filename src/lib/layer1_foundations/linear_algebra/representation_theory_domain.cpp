@@ -646,7 +646,7 @@ void representation_theory_domain::representing_matrix9b(
 
 	Int_vec_zero(A, 81);
 
-	// changed to n e w base:
+	// changed to new base:
 	// attention, now transposed!
 	A[0 * 9 + 0] = 1;
 	A[1 * 9 + 1] = 1;
@@ -661,7 +661,7 @@ void representation_theory_domain::representing_matrix9b(
 	A[8 * 9 + 7] = delta;
 	A[8 * 9 + 8] = minus_one;
 #if 0
-	// changed to n e w base:
+	// changed to new base:
 	A[0 * 9 + 0] = 1;
 	A[1 * 9 + 1] = 1;
 	A[2 * 9 + 2] = 1;

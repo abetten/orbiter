@@ -558,7 +558,8 @@ public:
 		long int *S, int *subplane7,
 		int verbose_level);
 	void create_latex_report(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 	void export_incma(int verbose_level);
 	void p_rank(int p, int verbose_level);
 

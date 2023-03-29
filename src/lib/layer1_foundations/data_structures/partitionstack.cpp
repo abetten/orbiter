@@ -1901,7 +1901,7 @@ void partitionstack::print_column_refinement_info(
 	}
 	else {
 		cout << "the " << ht - ht0
-				<< " n e w col parts that were split off are:" << endl;
+				<< " col parts that were split off are:" << endl;
 		for (cell = ht0; cell < ht; cell++) {
 			ancestor = parent_at_height(ht0, cell);
 			first = startCell[cell];
@@ -1938,7 +1938,7 @@ void partitionstack::print_row_refinement_info(
 		cout << "no splitting" << endl;
 	}
 	else {
-		cout << "the " << ht - ht0 << " n e w row parts "
+		cout << "the " << ht - ht0 << " row parts "
 				"that were split off are:" << endl;
 		for (cell = ht0; cell < ht; cell++) {
 			ancestor = parent_at_height(ht0, cell);
@@ -2145,7 +2145,7 @@ void partitionstack::split_by_orbit_partition(
 			if (f_v) {
 				cout << "orbit " << i << " of length=" << l
 					<< " is split off from cell " << cell_idx
-					<< " to form a n e w cell C_{" << ht << "}, so "
+					<< " to form a cell C_{" << ht << "}, so "
 					<< cell_size << " = " << cell_size - l
 					<< " + " << l << endl;
 			}

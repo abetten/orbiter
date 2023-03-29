@@ -125,14 +125,34 @@ void table_of_blt_sets::init(
 			exit(1);
 		}
 
+		string label_txt;
+		string label_tex;
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "_q%d_iso%d", Space->P->Subspaces->F->q, h);
+
+		label_txt.assign("BLT_set_");
+		label_txt.append(str);
+
+		snprintf(str, sizeof(str), "-q%d-iso%d", Space->P->Subspaces->F->q, h);
+
+		label_tex.assign("BLT_set_");
+		label_tex.append(str);
+
+
+
+
 		if (f_v) {
 			cout << "table_of_blt_sets::init "
 					"before Object_with_action[h].init_with_surface_object" << endl;
 		}
 		Object_with_action[h].init_set(
 				Space->A,
-				Space->Blt_Set_domain,
+				Space->Blt_set_domain_with_action,
 				Object_create[h].set,
+				label_txt,
+				label_tex,
 				Object_create[h].Sg,
 				TRUE /* f_invariants */,
 				verbose_level);
@@ -209,11 +229,11 @@ void table_of_blt_sets::do_export(
 		}
 #endif
 
-		Row[2] = Object_create[h].OA->Blt_Set_domain->target_size;
+		Row[2] = Object_create[h].OA->Blt_set_domain_with_action->Blt_set_domain->target_size;
 		if (f_v) {
 			cout << "table_of_blt_sets::do_export before Row[3]" << endl;
 		}
-		Row[3] = Object_with_action[h].Orbits_on_points->nb_orbits;
+		Row[3] = Object_with_action[h].Blt_set_group_properties->Orbits_on_points->Sch->nb_orbits;
 
 
 

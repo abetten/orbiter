@@ -89,6 +89,8 @@ private:
 	enum monomial_ordering_type Monomial_ordering_type;
 	field_theory::finite_field *F;
 	int nb_monomials;
+		// = Combi.int_n_choose_k(
+		// nb_variables + degree - 1, nb_variables - 1);
 	int *Monomials; // [nb_monomials * nb_variables]
 
 
@@ -172,31 +174,53 @@ public:
 			std::vector<std::string> *variables_txt,
 			std::vector<std::string> *variables_tex,
 			int verbose_level);
-	void rearrange_monomials_by_partition_type(int verbose_level);
+	void rearrange_monomials_by_partition_type(
+			int verbose_level);
 	int index_of_monomial(int *v);
 	void affine_evaluation_kernel(
 			int *&Kernel, int &dim_kernel, int verbose_level);
-	void get_quadratic_form_matrix(int *eqn, int *M);
-	void print_monomial(std::ostream &ost, int i);
-	void print_monomial(std::ostream &ost, int *mon);
-	void print_monomial_latex(std::ostream &ost, int *mon);
-	void print_monomial_latex(std::ostream &ost, int i);
-	void print_monomial_relaxed(std::ostream &ost, int i);
-	void print_monomial_latex(std::string &s, int *mon);
-	void print_monomial_relaxed(std::string &s, int *mon);
-	void print_monomial_latex(std::string &s, int i);
-	void print_monomial_str(std::stringstream &ost, int i);
-	void print_monomial_for_gap_str(std::stringstream &ost, int i);
-	void print_monomial_latex_str(std::stringstream &ost, int i);
-	void print_equation(std::ostream &ost, int *coeffs);
-	void print_equation_simple(std::ostream &ost, int *coeffs);
-	void print_equation_tex(std::ostream &ost, int *coeffs);
-	void print_equation_relaxed(std::ostream &ost, int *coeffs);
-	void print_equation_numerical(std::ostream &ost, int *coeffs);
-	void print_equation_lint(std::ostream &ost, long int *coeffs);
-	void print_equation_lint_tex(std::ostream &ost, long int *coeffs);
-	void print_equation_str(std::stringstream &ost, int *coeffs);
-	void print_equation_for_gap_str(std::stringstream &ost, int *coeffs);
+	void get_quadratic_form_matrix(
+			int *eqn, int *M);
+	void print_monomial(
+			std::ostream &ost, int i);
+	void print_monomial(
+			std::ostream &ost, int *mon);
+	void print_monomial_latex(
+			std::ostream &ost, int *mon);
+	void print_monomial_latex(
+			std::ostream &ost, int i);
+	void print_monomial_relaxed(
+			std::ostream &ost, int i);
+	void print_monomial_latex(
+			std::string &s, int *mon);
+	void print_monomial_relaxed(
+			std::string &s, int *mon);
+	void print_monomial_latex(
+			std::string &s, int i);
+	void print_monomial_str(
+			std::stringstream &ost, int i);
+	void print_monomial_for_gap_str(
+			std::stringstream &ost, int i);
+	void print_monomial_latex_str(
+			std::stringstream &ost, int i);
+	void print_equation(
+			std::ostream &ost, int *coeffs);
+	void print_equation_simple(
+			std::ostream &ost, int *coeffs);
+	void print_equation_tex(
+			std::ostream &ost, int *coeffs);
+	void print_equation_relaxed(
+			std::ostream &ost, int *coeffs);
+	void print_equation_numerical(
+			std::ostream &ost, int *coeffs);
+	void print_equation_lint(
+			std::ostream &ost, long int *coeffs);
+	void print_equation_lint_tex(
+			std::ostream &ost, long int *coeffs);
+	void print_equation_str(
+			std::stringstream &ost, int *coeffs);
+	void print_equation_for_gap_str(
+			std::stringstream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(
 			std::ostream &ost,
 		int *coeffs, int nb_terms_per_line,
@@ -217,14 +241,19 @@ public:
 	void enumerate_points_lint(
 			int *coeff,
 			long int *&Pts, int &nb_pts, int verbose_level);
-	void enumerate_points_zariski_open_set(int *coeff,
+	void enumerate_points_zariski_open_set(
+			int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
-	int evaluate_at_a_point_by_rank(int *coeff, int pt);
-	int evaluate_at_a_point(int *coeff, int *pt_vec);
-	void substitute_linear(int *coeff_in, int *coeff_out,
+	int evaluate_at_a_point_by_rank(
+			int *coeff, int pt);
+	int evaluate_at_a_point(
+			int *coeff, int *pt_vec);
+	void substitute_linear(
+			int *coeff_in, int *coeff_out,
 		int *Mtx_inv, int verbose_level);
-	void substitute_semilinear(int *coeff_in, int *coeff_out,
+	void substitute_semilinear(
+			int *coeff_in, int *coeff_out,
 		int f_semilinear, int frob_power, int *Mtx_inv,
 		int verbose_level);
 	void substitute_line(
@@ -245,7 +274,8 @@ public:
 	long int rank_point(int *v);
 	void unrank_coeff_vector(int *v, long int rk);
 	long int rank_coeff_vector(int *v);
-	int test_weierstrass_form(int rk,
+	int test_weierstrass_form(
+			int rk,
 		int &a1, int &a2, int &a3, int &a4, int &a6,
 		int verbose_level);
 	void explore_vanishing_ideal(

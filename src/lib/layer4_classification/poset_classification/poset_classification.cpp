@@ -584,7 +584,7 @@ int poset_classification::find_poset_orbit_node_for_set_basic(
 		node = Poo->get_node(node)->get_E(j)->get_data();
 		if (f_v) {
 			cout << "depth " << i << " extension " << j
-					<< " n e w node " << node << endl;
+					<< " new node " << node << endl;
 		}
 	}
 	return node;

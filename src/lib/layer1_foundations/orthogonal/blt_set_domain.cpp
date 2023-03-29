@@ -38,6 +38,15 @@ blt_set_domain::blt_set_domain()
 	G53 = NULL;
 	G54 = NULL;
 	G43 = NULL;
+
+	Q2 = 0;
+	F2 = NULL;
+	Poly2 = NULL;
+
+	Q3 = 0;
+	F3 = NULL;
+	Poly3 = NULL;
+
 	//null();
 }
 
@@ -77,6 +86,19 @@ blt_set_domain::~blt_set_domain()
 #endif
 	if (G43) {
 		FREE_OBJECT(G43);
+	}
+
+	if (F2) {
+		FREE_OBJECT(F2);
+	}
+	if (Poly2) {
+		FREE_OBJECT(Poly2);
+	}
+	if (F3) {
+		FREE_OBJECT(F3);
+	}
+	if (Poly3) {
+		FREE_OBJECT(Poly3);
 	}
 	if (f_v) {
 		cout << "blt_set_domain::~blt_set_domain done" << endl;
@@ -152,51 +174,6 @@ void blt_set_domain::init_blt_set_domain(
 
 
 
-#if 0
-	P = NEW_OBJECT(geometry::projective_space);
-
-	if (f_v) {
-		cout << "blt_set_domain::init_blt_set_domain "
-				"before P->projective_space_init" << endl;
-	}
-
-
-	P->projective_space_init(4, F,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level);
-
-	if (f_v) {
-		cout << "blt_set_domain::init_blt_set_domain "
-				"after P->projective_space_init" << endl;
-	}
-
-
-	G53 = NEW_OBJECT(geometry::grassmann);
-
-	if (f_v) {
-		cout << "blt_set_domain::init_blt_set_domain "
-				"before G53->init" << endl;
-	}
-	G53->init(5, 3, F, 0 /*verbose_level - 2*/);
-	if (f_v) {
-		cout << "blt_set_domain::init_blt_set_domain "
-				"after G53->init" << endl;
-	}
-
-	G54 = NEW_OBJECT(geometry::grassmann);
-
-	if (f_v) {
-		cout << "blt_set_domain::init_blt_set_domain "
-				"before G54->init" << endl;
-	}
-	G54->init(5, 4, F, 0 /*verbose_level - 2*/);
-	if (f_v) {
-		cout << "blt_set_domain::init_blt_set_domain "
-				"after G54->init" << endl;
-	}
-
-#endif
-
 	G43 = NEW_OBJECT(geometry::grassmann);
 
 	if (f_v) {
@@ -209,9 +186,89 @@ void blt_set_domain::init_blt_set_domain(
 				"after G43->init" << endl;
 	}
 
+	if (f_v) {
+		cout << "blt_set_domain::init_blt_set_domain "
+				"before create_extension_fields" << endl;
+	}
+	create_extension_fields(verbose_level);
+	if (f_v) {
+		cout << "blt_set_domain::init_blt_set_domain "
+				"after create_extension_fields" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "blt_set_domain::init_blt_set_domain finished" << endl;
+	}
+}
+
+void blt_set_domain::create_extension_fields(
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory::number_theory_domain NT;
+
+	if (f_v) {
+		cout << "blt_set_domain::create_extension_fields" << endl;
+	}
+
+	Q2 = q * q;
+
+	F2 = NEW_OBJECT(field_theory::finite_field);
+
+
+	F2->finite_field_init_small_order(Q2,
+			FALSE /* f_without_tables */,
+			TRUE /* f_compute_related_fields */,
+			verbose_level);
+
+
+
+	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "blt_set_domain::create_extension_fields "
+				"before Poly2->init" << endl;
+	}
+	Poly2->init(F2, 2, degree,
+				t_PART,
+				verbose_level);
+	if (f_v) {
+		cout << "blt_set_domain::create_extension_fields "
+				"after Poly2->init" << endl;
+	}
+
+
+	Q3 = q * q * q;
+
+	F3 = NEW_OBJECT(field_theory::finite_field);
+
+
+	F3->finite_field_init_small_order(Q3,
+			FALSE /* f_without_tables */,
+			TRUE /* f_compute_related_fields */,
+			verbose_level);
+
+
+
+	Poly3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "blt_set_domain::create_extension_fields "
+				"before Poly3->init" << endl;
+	}
+	Poly3->init(F3, 2, degree,
+				t_PART,
+				verbose_level);
+	if (f_v) {
+		cout << "blt_set_domain::create_extension_fields "
+				"after Poly3->init" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "blt_set_domain::create_extension_fields done" << endl;
 	}
 }
 
@@ -1264,6 +1321,261 @@ finish:
 		cout << "blt_set_domain::create_graph done" << endl;
 	}
 	return ret;
+}
+
+
+void blt_set_domain::test_flock_condition(
+		field_theory::finite_field *F,
+		int *ABC,
+		int *&outcome,
+		int &N,
+		int verbose_level)
+// F is given because the field might be an extension field of the current field
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "blt_set_domain::test_flock_condition" << endl;
+	}
+
+	int q;
+	//int N;
+	int i, j;
+	int ai, bi, ci;
+	int aj, bj, cj;
+	int a, b, c;
+	int two, four;
+	int x;
+	//int *outcome;
+	int cnt;
+
+
+
+	q = F->q;
+
+	two = F->add(1, 1);
+	four = F->add(two, two);
+
+	N = (q * (q - 1)) >> 1;
+	outcome = NEW_int(N);
+
+	cnt = 0;
+	for (i = 0; i < q; i++) {
+		ai = ABC[i * 3 + 0];
+		bi = ABC[i * 3 + 1];
+		ci = ABC[i * 3 + 2];
+		for (j = i + 1; j < q; j++) {
+			aj = ABC[j * 3 + 0];
+			bj = ABC[j * 3 + 1];
+			cj = ABC[j * 3 + 2];
+			a = F->add(ai, F->negate(aj));
+			b = F->add(bi, F->negate(bj));
+			c = F->add(ci, F->negate(cj));
+			x = F->add(F->mult(c, c), F->mult(four, F->mult(a, b)));
+			outcome[cnt] = F->is_square(x);
+
+			if (f_vv) {
+				if (outcome[cnt]) {
+					cout << "i=" << i << ",j=" << j << ",x=" << x << " yes" << endl;
+				}
+				else {
+					cout << "i=" << i << ",j=" << j << ",x=" << x << " no" << endl;
+				}
+			}
+			cnt++;
+		}
+	}
+
+
+	//FREE_int(outcome);
+	if (f_v) {
+		cout << "blt_set_domain::test_flock_condition done" << endl;
+	}
+
+}
+
+void blt_set_domain::quadratic_lift(
+		int *coeff_f, int *coeff_g, int nb_coeff, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "blt_set_domain::quadratic_lift" << endl;
+		cout << "blt_set_domain::quadratic_lift nb_coeff = " << nb_coeff << endl;
+		cout << "blt_set_domain::quadratic_lift Poly2->get_nb_monomials() = " << Poly2->get_nb_monomials() << endl;
+	}
+
+
+	if (f_v) {
+		cout << "blt_set_domain::quadratic_lift Q2=" << Q2 << endl;
+	}
+
+	if (f_v) {
+
+		cout << "blt_set_domain::quadratic_lift coeff_f:" << endl;
+		Int_vec_print(cout, coeff_f, nb_coeff);
+		cout << endl;
+
+		cout << "blt_set_domain::quadratic_lift coeff_g:" << endl;
+		Int_vec_print(cout, coeff_g, nb_coeff);
+		cout << endl;
+
+	}
+
+
+	int *lifted_f;
+	int *lifted_g;
+
+
+	lifted_f = NEW_int(Q2);
+	lifted_g = NEW_int(Q2);
+
+	int v[2];
+	int i;
+
+	for (i = 0; i < Q2; i++) {
+		//Gg.AG_element_unrank(Q, v, 1, 1, i);
+		v[0] = i;
+		v[1] = 1;
+		lifted_f[i] = Poly2->evaluate_at_a_point(coeff_f, v);
+		lifted_g[i] = Poly2->evaluate_at_a_point(coeff_g, v);
+	}
+
+	if (f_v) {
+
+		cout << "blt_set_domain::quadratic_lift lifted_f:" << endl;
+		Int_vec_print(cout, lifted_f, Q2);
+		cout << endl;
+
+		cout << "blt_set_domain::quadratic_lift lifted_g:" << endl;
+		Int_vec_print(cout, lifted_g, Q2);
+		cout << endl;
+	}
+
+	int *ABC2;
+
+	ABC2 = NEW_int(Q2 * 3);
+	for (i = 0; i < Q2; i++) {
+		ABC2[i * 3 + 0] = i;
+		ABC2[i * 3 + 1] = lifted_f[i];
+		ABC2[i * 3 + 2] = lifted_g[i];
+	}
+
+	int *outcome;
+	int N;
+
+	test_flock_condition(F2, ABC2, outcome, N, verbose_level);
+
+	data_structures::tally T;
+
+	T.init(outcome, N, FALSE, 0);
+	cout << "outcome : ";
+	T.print_first(FALSE /*f_backwards*/);
+	cout << endl;
+
+	FREE_int(outcome);
+
+	FREE_int(ABC2);
+	FREE_int(lifted_f);
+	FREE_int(lifted_g);
+
+
+	if (f_v) {
+		cout << "blt_set_domain::quadratic_lift done" << endl;
+	}
+}
+
+
+
+void blt_set_domain::cubic_lift(
+		int *coeff_f, int *coeff_g, int nb_coeff,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 2);
+
+	if (f_v) {
+		cout << "blt_set_domain::cubic_lift" << endl;
+		cout << "blt_set_domain::cubic_lift nb_coeff = " << nb_coeff << endl;
+		cout << "blt_set_domain::cubic_lift Poly3->get_nb_monomials() = " << Poly3->get_nb_monomials() << endl;
+	}
+
+
+
+	int *lifted_f;
+	int *lifted_g;
+
+
+	lifted_f = NEW_int(Q3);
+	lifted_g = NEW_int(Q3);
+
+	int v[2];
+	int i;
+
+	for (i = 0; i < Q3; i++) {
+		//Gg.AG_element_unrank(Q, v, 1, 1, i);
+		v[0] = i;
+		v[1] = 1;
+		lifted_f[i] = Poly3->evaluate_at_a_point(coeff_f, v);
+		lifted_g[i] = Poly3->evaluate_at_a_point(coeff_g, v);
+	}
+
+	if (f_v) {
+
+		cout << "blt_set_domain::cubic_lift lifted_f:" << endl;
+		Int_vec_print(cout, lifted_f, Q3);
+		cout << endl;
+
+		cout << "blt_set_domain::cubic_lift lifted_g:" << endl;
+		Int_vec_print(cout, lifted_g, Q3);
+		cout << endl;
+	}
+
+	int *ABC2;
+
+	ABC2 = NEW_int(Q3 * 3);
+	for (i = 0; i < Q3; i++) {
+		ABC2[i * 3 + 0] = i;
+		ABC2[i * 3 + 1] = lifted_f[i];
+		ABC2[i * 3 + 2] = lifted_g[i];
+	}
+
+	int *outcome;
+	int N;
+
+	test_flock_condition(F3, ABC2, outcome, N, verbose_level);
+
+	data_structures::tally T;
+
+	T.init(outcome, N, FALSE, 0);
+	cout << "outcome : ";
+	T.print_first(FALSE /*f_backwards*/);
+	cout << endl;
+
+	FREE_int(outcome);
+
+
+	char str[1000];
+	string fname_csv;
+	orbiter_kernel_system::file_io Fio;
+
+
+	snprintf(str, 1000, "ABC_q%d.csv", Q3);
+	fname_csv.assign(str);
+	Fio.int_matrix_write_csv(fname_csv, ABC2, Q3, 3);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
+	FREE_int(ABC2);
+	FREE_int(lifted_f);
+	FREE_int(lifted_g);
+
+	if (f_v) {
+		cout << "blt_set_domain::cubic_lift done" << endl;
+	}
 }
 
 

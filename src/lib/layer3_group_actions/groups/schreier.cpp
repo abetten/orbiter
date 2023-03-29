@@ -994,7 +994,7 @@ void schreier::extend_orbit(int *elt, int verbose_level)
 				continue;
 			}
 			if (FALSE) {
-				cout << "schreier::extend_orbit n e w pt "
+				cout << "schreier::extend_orbit new pt "
 						<< next_pt << " reached from "
 						<< cur_pt << " under generator " << i << endl;
 			}
@@ -2735,7 +2735,7 @@ void schreier::point_stabilizer(
 		if ((f_vv && f_added) || f_vvv) {
 			cout << "schreier::point_stabilizer "
 					"iteration " << cnt
-				<< " the n e w group order is " << cur_go
+				<< " the new group order is " << cur_go
 				<< " expecting a group of order "
 				<< target_go << endl;
 		}

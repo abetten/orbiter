@@ -971,7 +971,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 		//orbit_of_subspaces_compare_func, (void *) (sz_for_compare),
 	//	used_length, new_basis, pt3, 0 /* verbose_level */)) {
 		if (f_vv) {
-			cout << "testing: n e w subspace is at position " << pt3 << endl;
+			cout << "testing: new subspace is at position " << pt3 << endl;
 			}
 		}
 	else {
@@ -1144,7 +1144,7 @@ void orbit_of_subspaces::compute_stabilizer(
 		Stab->group_order(cur_go);
 		if ((f_vv && f_added) || f_vvv) {
 			cout << "iteration " << cnt
-					<< " the n e w group order is " << cur_go
+					<< " the group order has been updated to " << cur_go
 				<< " expecting a group of order " << target_go << endl; 
 			}
 		cnt++;
