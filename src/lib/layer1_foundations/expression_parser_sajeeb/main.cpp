@@ -57,11 +57,6 @@ public:
     }
 };
 
-void remove_minus_nodes(shared_ptr<irtree_node>& root) {
-    static remove_minus_nodes_visitor remove_minus_nodes;
-    dispatcher::visit(root, remove_minus_nodes);
-}
-
 void merge_redundant_nodes(shared_ptr<irtree_node>& root) {
     static merge_nodes_visitor merge_redundant_nodes;
     dispatcher::visit(root, merge_redundant_nodes);
@@ -102,7 +97,7 @@ int main(int argc, const char** argv) {
 
 
     shared_ptr<irtree_node> ir_tree_root = parser::parse_expression(exp, managed_variables_table);
-    dispatcher::visit(ir_tree_root, make_shared<merge_nodes_visitor>());
+    dispatcher::visit(ir_tree_root, merge_nodes_visitor());
 
     get_latex_staged_visitor_functor
         get_latex_staged_visitor("visitor_result/",
@@ -122,13 +117,13 @@ int main(int argc, const char** argv) {
 
     LOG("");
     // remove minus nodes
-    remove_minus_nodes(ir_tree_root);
+    dispatcher::visit(ir_tree_root, remove_minus_nodes_visitor());
     merge_redundant_nodes(ir_tree_root);
     dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
    // distribute and reduce unary minus nodes
     uminus_distribute_and_reduce_visitor distribute_uminus_visitor;
-    dispatcher::visit(ir_tree_root, &distribute_uminus_visitor);
+    dispatcher::visit(ir_tree_root, distribute_uminus_visitor);
     merge_redundant_nodes(ir_tree_root);
     dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 

@@ -49,7 +49,7 @@ int eval_visitor::visit(const number_node* op_node, finite_field* Fq, unordered_
 
 int eval_visitor::visit(const sentinel_node* op_node, finite_field* Fq, unordered_map<string, int>& assignment_table) {
     int return_value = 0;
-    for (shared_ptr<irtree_node> child : op_node->children) {
+    for (shared_ptr<irtree_node>& child : op_node->children) {
         return_value = dispatcher::visit(child, *this, Fq, assignment_table);
     }
     return return_value;
