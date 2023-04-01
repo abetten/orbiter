@@ -24,7 +24,7 @@ void ir_tree_latex_visitor_family_tree::visit(plus_node* op_node) {
     for (auto it = op_node->children.rbegin(); it != op_node->children.rend(); ++it) {
         shared_ptr<irtree_node>& child = *it;
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -37,7 +37,7 @@ void ir_tree_latex_visitor_family_tree::visit(minus_node* op_node) {
     for (auto it = op_node->children.rbegin(); it != op_node->children.rend(); ++it) {
         shared_ptr<irtree_node>& child = *it;
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -50,7 +50,7 @@ void ir_tree_latex_visitor_family_tree::visit(multiply_node* op_node) {
     for (auto it = op_node->children.rbegin(); it != op_node->children.rend(); ++it) {
         shared_ptr<irtree_node>& child = *it;
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -63,7 +63,7 @@ void ir_tree_latex_visitor_family_tree::visit(exponent_node* op_node) {
     for (auto it = op_node->children.rbegin(); it != op_node->children.rend(); ++it) {
         shared_ptr<irtree_node>& child = *it;
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -76,7 +76,7 @@ void ir_tree_latex_visitor_family_tree::visit(unary_negate_node* op_node) {
     for (auto it = op_node->children.rbegin(); it != op_node->children.rend(); ++it) {
         shared_ptr<irtree_node>& child = *it;
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         if (!dynamic_cast<terminal_node*>(child.get())) OUT << indentation;
         OUT  << "]\n";
     }
@@ -102,7 +102,7 @@ void ir_tree_latex_visitor_family_tree::visit(sentinel_node* op_node) {
     for (auto it = op_node->children.rbegin(); it != op_node->children.rend(); ++it) {
         shared_ptr<irtree_node>& child = *it;
         OUT << indentation << "[";
-        child->accept(this);
+        dispatcher::visit(child, *this);
         OUT << indentation << "]\n";
     }
     remove_indentation();

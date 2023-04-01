@@ -14,6 +14,7 @@
 #include <memory>
 
 #include "IRTreeVisitor.h"
+#include "dispatcher.h"
 #include "../exception.h"
 #include "../../foundations.h"
 
@@ -67,75 +68,95 @@ struct monomial_coefficient_table_key_equal_function final {
     }
 };
 class monomial_coefficient_table final : public unordered_map<vector<unsigned int>,
-                                                              vector<irtree_node*>,
+                                                              vector<shared_ptr<irtree_node>>,
                                                               monomial_coefficient_table_hash_function,
                                                               monomial_coefficient_table_key_equal_function> {};
 
 
 class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitorInterface,
+                                      public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<shared_ptr<irtree_node>&>,
                                       public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<vector<unsigned int>&,
                                               list<shared_ptr<irtree_node> >::iterator&,
-                                              irtree_node*> {
+                                              shared_ptr<irtree_node>&,
+                                              shared_ptr<irtree_node>&> {
+    using IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<shared_ptr<irtree_node>&>::visit;
+    using IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<vector<unsigned int>&,
+                                              list<shared_ptr<irtree_node> >::iterator&,
+                                              shared_ptr<irtree_node>&,
+                                              shared_ptr<irtree_node>&>::visit;
+    using IRTreeVoidReturnTypeVisitorInterface::visit;
     typedef size_t index_t;
 
-    void visit(plus_node* op_node,
+    void visit(plus_node* node, shared_ptr<irtree_node>& node_self) override;
+    void visit(minus_node* node, shared_ptr<irtree_node>& node_self) override;
+    void visit(multiply_node* node, shared_ptr<irtree_node>& node_self) override;
+    void visit(exponent_node* node, shared_ptr<irtree_node>& node_self) override;
+    void visit(unary_negate_node* node, shared_ptr<irtree_node>& node_self) override;
+    void visit(sentinel_node* node, shared_ptr<irtree_node>& node_self) override;
+    
+    void visit(plus_node* node,
                vector<unsigned int>& exponent_vector,
                list<shared_ptr<irtree_node> >::iterator& link,
-               irtree_node* parent_node) override;
-    void visit(minus_node* op_node,
+               shared_ptr<irtree_node>& node_self,
+               shared_ptr<irtree_node>& parent_node) override;
+    void visit(minus_node* node,
                vector<unsigned int>& exponent_vector,
                list<shared_ptr<irtree_node> >::iterator& link,
-               irtree_node* parent_node) override;
-    void visit(multiply_node* op_node,
+               shared_ptr<irtree_node>& node_self,
+               shared_ptr<irtree_node>& parent_node) override;
+    void visit(multiply_node* node,
                vector<unsigned int>& exponent_vector,
                list<shared_ptr<irtree_node> >::iterator& link,
-               irtree_node* parent_node) override;
-    void visit(exponent_node* op_node,
+               shared_ptr<irtree_node>& node_self,
+               shared_ptr<irtree_node>& parent_node) override;
+    void visit(exponent_node* node,
                vector<unsigned int>& exponent_vector,
                list<shared_ptr<irtree_node> >::iterator& link,
-               irtree_node* parent_node) override;
-    void visit(unary_negate_node* op_node,
+               shared_ptr<irtree_node>& node_self,
+               shared_ptr<irtree_node>& parent_node) override;
+    void visit(unary_negate_node* node,
                vector<unsigned int>& exponent_vector,
                list<shared_ptr<irtree_node> >::iterator& link,
-               irtree_node* parent_node) override;
+               shared_ptr<irtree_node>& node_self,
+               shared_ptr<irtree_node>& parent_node) override;
     void visit(variable_node* num_node,
                vector<unsigned int>& exponent_vector,
                list<shared_ptr<irtree_node> >::iterator& link,
-               irtree_node* parent_node) override;
+               shared_ptr<irtree_node>& node_self,
+               shared_ptr<irtree_node>& parent_node) override;
     void visit(parameter_node* node,
                vector<unsigned int>& exponent_vector,
                list<shared_ptr<irtree_node> >::iterator& link,
-               irtree_node* parent_node) override;
-    void visit(number_node* op_node,
+               shared_ptr<irtree_node>& node_self,
+               shared_ptr<irtree_node>& parent_node) override;
+    void visit(number_node* node,
                vector<unsigned int>& exponent_vector,
                list<shared_ptr<irtree_node> >::iterator& link,
-               irtree_node* parent_node) override;
-    void visit(sentinel_node* op_node,
+               shared_ptr<irtree_node>& node_self,
+               shared_ptr<irtree_node>& parent_node) override;
+    void visit(sentinel_node* node,
                vector<unsigned int>& exponent_vector,
                list<shared_ptr<irtree_node> >::iterator& link,
-               irtree_node* parent_node) override;
+               shared_ptr<irtree_node>& node_self,
+               shared_ptr<irtree_node>& parent_node) override;
 
     managed_variables_index_table* symbol_table;
-
-    using IRTreeVoidReturnTypeVisitorInterface::visit;
 
 public:
 
     monomial_coefficient_table monomial_coefficient_table_;
 
-    void visit(multiply_node* op_node) override;
-    void visit(plus_node* op_node) override;
-    void visit(sentinel_node* op_node) override;
+    void visit(sentinel_node* node) override;
 
-    exponent_vector_visitor* operator()(managed_variables_index_table& symbol_table) {
+    exponent_vector_visitor& operator()(managed_variables_index_table& symbol_table) {
         this->symbol_table = &symbol_table;
-        return this;
+        return *this;
     }
 
     void print() const {
         for (const auto& it : monomial_coefficient_table_) {
             const vector<unsigned int>& vec = it.first;
-            const vector<irtree_node*> root_nodes = it.second;
+            const vector<shared_ptr<irtree_node>>& root_nodes = it.second;
             std::cout << "[";
             for (const auto& node : root_nodes) std::cout << node << " ";
             std::cout << "]:  [";
@@ -144,16 +165,7 @@ public:
         }
     }
 
-    friend class irtree_node;
-    friend class plus_node;
-    friend class minus_node;
-    friend class multiply_node;
-    friend class exponent_node;
-    friend class unary_negate_node;
-    friend class variable_node;
-    friend class parameter_node;
-    friend class number_node;
-    friend class sentinel_node;
+    friend dispatcher;
 };
 
 

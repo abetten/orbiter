@@ -6,13 +6,17 @@
 *
 **/
     
+// This always needs to be included    
+#include "parser.h"
+
 #include <iostream>
 #include <unordered_map>
 #include <string>
 
-#include "parser.tab.hpp"
-#include "lexer.yy.h"
+// This only needs to be included if the tree is to be visited
+#include "Visitors/dispatcher.h"
 
+// Provided visitors
 #include "Visitors/PrintVisitors/ir_tree_pretty_print_visitor.h"
 #include "Visitors/uminus_distribute_and_reduce_visitor.h"
 #include "Visitors/merge_nodes_visitor.h"
@@ -23,6 +27,7 @@
 #include "Visitors/CopyVisitors/deep_copy_visitor.h"
 #include "Visitors/exponent_vector_visitor.h"
 #include "Visitors/ReductionVisitors/simplify_numerical_visitor.h"
+#include "Visitors/EvaluateVisitors/eval_visitor.h"
 
 #include "layer1_foundations/foundations.h"
 
@@ -48,34 +53,15 @@ public:
         if (latex_output_stream.is_open()) latex_output_stream.close();
     }
 
-    IRTreeVoidReturnTypeVisitorInterface* operator()() {
+    IRTreeVoidReturnTypeVisitorInterface& operator()() {
         if (latex_output_stream.is_open()) latex_output_stream.close();
         latex_output_stream.open(directory + "stage" + std::to_string(stage_counter++) + ".tex");
 
         strategy_wrapper.set_output_stream(latex_output_stream);
-        return strategy_wrapper.get_visitor();
+        return *strategy_wrapper.get_visitor();
     }
 };
 
-void remove_minus_nodes(shared_ptr<irtree_node>& root) {
-    static remove_minus_nodes_visitor remove_minus_nodes;
-    root->accept(&remove_minus_nodes);
-}
-
-void merge_redundant_nodes(shared_ptr<irtree_node>& root) {
-    static merge_nodes_visitor merge_redundant_nodes;
-    root->accept(&merge_redundant_nodes);
-}
-
-shared_ptr<irtree_node> generate_abstract_syntax_tree(std::string& exp, managed_variables_index_table managed_variables_table) {
-    shared_ptr<irtree_node> ir_tree_root;
-    YY_BUFFER_STATE buffer = yy_scan_string( exp.c_str() );
-    yy_switch_to_buffer(buffer);
-    int result = yyparse(ir_tree_root, managed_variables_table);
-    yy_delete_buffer(buffer);
-    yylex_destroy();
-    return ir_tree_root;
-}
 
 int main(int argc, const char** argv) {
 	// std::string exp = "a-(-b)^(c*j*i-d*-9*-(-1+7))*e+f+g"; //a + --b^(c+d)*e + f + g
@@ -109,8 +95,7 @@ int main(int argc, const char** argv) {
     cout << "managed_variables_table:\n" << managed_variables_table << endl;
 
 
-    shared_ptr<irtree_node> ir_tree_root = generate_abstract_syntax_tree(exp, managed_variables_table);
-
+    shared_ptr<irtree_node> ir_tree_root = parser::parse_expression(exp, managed_variables_table);
 
     get_latex_staged_visitor_functor
         get_latex_staged_visitor("visitor_result/",
@@ -118,42 +103,38 @@ int main(int argc, const char** argv) {
 
 
     // print the AST
-//    LOG(ir_tree_root.get());
-//    ir_tree_root->accept(get_latex_staged_visitor());
-//    LOG("");
+    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
     //
 //    simplify_numerical_visitor simplify;
-//    ir_tree_root->accept(&simplify);
-//    ir_tree_root->accept(get_latex_staged_visitor());
+//    dispatcher::visit(ir_tree_root, &simplify);
+//    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
 
-    LOG("");
     // remove minus nodes
-    remove_minus_nodes(ir_tree_root);
-    merge_redundant_nodes(ir_tree_root);
-    ir_tree_root->accept(get_latex_staged_visitor());
+    dispatcher::visit(ir_tree_root, remove_minus_nodes_visitor());
+    dispatcher::visit(ir_tree_root, merge_nodes_visitor());
+    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
    // distribute and reduce unary minus nodes
-    uminus_distribute_and_reduce_visitor distribute_uminus_visitor;
-    ir_tree_root->accept(&distribute_uminus_visitor);
-    merge_redundant_nodes(ir_tree_root);
-    ir_tree_root->accept(get_latex_staged_visitor());
+    dispatcher::visit(ir_tree_root, uminus_distribute_and_reduce_visitor());
+    dispatcher::visit(ir_tree_root, merge_nodes_visitor());
+    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
     //
     // multiplication_expansion_visitor mev;
-    // ir_tree_root->accept(&mev);
-    // ir_tree_root->accept(get_latex_staged_visitor());
+    // dispatcher::visit(ir_tree_root, &mev);
+    // dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
     //
 //    deep_copy_visitor deepCopyVisitor;
-//    shared_ptr<irtree_node> ir_tree_root_cpy = ir_tree_root->accept(&deepCopyVisitor);
+//    shared_ptr<irtree_node> ir_tree_root_cpy = dispatcher::visit(ir_tree_root, &deepCopyVisitor);
 //    ir_tree_root_cpy->accept(get_latex_staged_visitor());
 
    //
     exponent_vector_visitor evv;
-    ir_tree_root->accept(evv(managed_variables_table));
-    ir_tree_root->accept(get_latex_staged_visitor());
+    dispatcher::visit(ir_tree_root, evv(managed_variables_table));
+    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
     eval_visitor evalVisitor;
 
 
@@ -187,22 +168,22 @@ int main(int argc, const char** argv) {
         for (const auto& itit : vec) std::cout << itit << " ";
         std::cout << "]: ";
 
-        vector<irtree_node*> root_nodes = it.second;
+        auto root_nodes = it.second;
         int val = 0;
         for (auto& node : root_nodes) {
-            auto tmp = node->accept(&evalVisitor, &Fq, assignemnt);
+            auto tmp = dispatcher::visit(node, evalVisitor, &Fq, assignemnt);
             val += tmp;
         }
         cout << val << endl;
     }
-   ir_tree_root->accept(get_latex_staged_visitor());
+   dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
 
 
 
     // print string representation of the IR tree
     ir_tree_to_string_visitor to_string_visitor;
-    ir_tree_root->accept(&to_string_visitor);
+    dispatcher::visit(ir_tree_root, to_string_visitor);
     cout << "in:  " << exp << endl;
     cout << "out: " << to_string_visitor.get_string_representation() << endl;
 

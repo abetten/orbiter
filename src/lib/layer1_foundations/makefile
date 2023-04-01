@@ -13,6 +13,7 @@ LFLAGS = -lm
 
 
 all: \
+  expression_parser_sajeeb \
 	algebra \
 	algebraic_geometry \
 	coding_theory \
@@ -38,8 +39,7 @@ all: \
 	ring_theory \
 	solvers \
 	BitSet
-
-#	expression_parser_sajeeb \
+  
 
 
 algebra : algebra2 

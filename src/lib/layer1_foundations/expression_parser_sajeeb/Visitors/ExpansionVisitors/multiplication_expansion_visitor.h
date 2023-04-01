@@ -19,6 +19,8 @@ class multiplication_expansion_visitor : public IRTreeChildLinkArgumentVisitor {
     void expand_multiplication_node(multiply_node*& op_node, iterator_t& link);
 
 public:
+    using IRTreeChildLinkArgumentVisitor::visit;
+
     void visit(multiply_node* op_node, list<shared_ptr<irtree_node> >::iterator& link) override;
 };
 
