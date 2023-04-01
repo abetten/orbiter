@@ -38,16 +38,7 @@ public:
     return_t visit(const number_node* op_node) override;
     return_t visit(const sentinel_node* op_node) override;
 
-    friend class irtree_node;
-    friend class plus_node;
-    friend class minus_node;
-    friend class multiply_node;
-    friend class exponent_node;
-    friend class unary_negate_node;
-    friend class variable_node;
-    friend class parameter_node;
-    friend class number_node;
-    friend class sentinel_node;
+    friend dispatcher;
 
 };
 

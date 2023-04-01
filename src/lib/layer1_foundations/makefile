@@ -29,8 +29,7 @@ all: algebra \
 	polish \
 	ring_theory \
 	solvers \
-	BitSet \
-	expression_parser_sajeeb
+	BitSet
 
 
 

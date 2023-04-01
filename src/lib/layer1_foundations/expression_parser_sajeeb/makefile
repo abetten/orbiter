@@ -4,6 +4,7 @@ include os-detect.mk
 include auto_dependency_generation_variables.mk
 
 TARGET_OBJECT_FILES = main.o \
+						parser.o \
 						lexer.yy.o \
 						parser.tab.o \
 						IRTree/node.o \

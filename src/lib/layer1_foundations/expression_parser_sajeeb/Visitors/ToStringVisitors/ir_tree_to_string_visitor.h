@@ -24,6 +24,8 @@ class ir_tree_to_string_visitor : public IRTreeVoidReturnTypeVisitorInterface {
     list<string>::iterator left;
 
 public:
+    using IRTreeVoidReturnTypeVisitorInterface::visit;
+
     string get_string_representation() const {
         string res;
         for (auto it=rep.begin(); it != rep.end(); ++it)

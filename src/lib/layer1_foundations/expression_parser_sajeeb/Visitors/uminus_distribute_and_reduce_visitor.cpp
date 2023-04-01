@@ -46,7 +46,7 @@ void uminus_distribute_and_reduce_visitor::visit(plus_node* op_node,
     }
 
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) 
-        (*it)->accept(this, op_node, it);
+        dispatcher::visit(*it, *this, op_node, it);
 
 }
 
@@ -54,7 +54,7 @@ void uminus_distribute_and_reduce_visitor::visit(minus_node* op_node,
                                                  irtree_node* parent_node, 
                                                  list<shared_ptr<irtree_node> >::iterator& link) {
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) 
-        (*it)->accept(this, op_node, it);
+        dispatcher::visit(*it, *this, op_node, it);
 }
 
 void uminus_distribute_and_reduce_visitor::visit(multiply_node* op_node,
@@ -98,14 +98,14 @@ void uminus_distribute_and_reduce_visitor::visit(multiply_node* op_node,
     }
 
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) 
-        (*it)->accept(this, op_node, it);
+        dispatcher::visit(*it, *this, op_node, it);
 }
 
 void uminus_distribute_and_reduce_visitor::visit(exponent_node* op_node,
                                                  irtree_node* parent_node, 
                                                  list<shared_ptr<irtree_node> >::iterator& link) {
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) 
-        (*it)->accept(this, op_node, it);
+        dispatcher::visit(*it, *this, op_node, it);
 }
 
 void uminus_distribute_and_reduce_visitor::visit(unary_negate_node* op_node,
@@ -115,12 +115,12 @@ void uminus_distribute_and_reduce_visitor::visit(unary_negate_node* op_node,
     switch (child_raw_ptr->type) {
         case node_type::UNARY_NEGATE_NODE: {
             shared_ptr<irtree_node>& grandchild = *link = child_raw_ptr->children.front();
-            grandchild->accept(this, parent_node, link);
+            dispatcher::visit(grandchild, *this, parent_node, link);
             break;
         }
 
         default: {
-            op_node->children.front()->accept(this, op_node, link);
+            dispatcher::visit(op_node->children.front(), *this, op_node, link);
             break;
         }
     }
@@ -128,5 +128,5 @@ void uminus_distribute_and_reduce_visitor::visit(unary_negate_node* op_node,
 
 void uminus_distribute_and_reduce_visitor::visit(sentinel_node* op_node) {
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) 
-        (*it)->accept(this, op_node, it);
+        dispatcher::visit(*it, *this, op_node, it);
 }

@@ -35,7 +35,7 @@ void simplify_numerical_visitor::visit(number_node* op_node) {}
 
 void simplify_numerical_visitor::visit(sentinel_node* op_node) {
     for (shared_ptr<irtree_node>& child : op_node->children)
-        static_cast<void>(child->accept_simplify_numerical_visitor(this, op_node));
+        static_cast<void>(dispatcher::visit(child, *this, op_node));
     if (!op_node->children.front()->is_terminal()) {
         non_terminal_node* child_node_raw_ptr = static_cast<non_terminal_node*>(op_node->children.front().get());
         if (child_node_raw_ptr->children.size() == 1)
@@ -51,15 +51,15 @@ return_t simplify_numerical_visitor::visit(plus_node* op_node, irtree_node* pare
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) {
         shared_ptr<irtree_node>& child = *it;
         if (child->type == node_type::NUMBER_NODE) {
-            return_val += child->accept_simplify_numerical_visitor(this, op_node);
+            return_val += dispatcher::visit(child, *this, op_node);
             it = --op_node->children.erase(it);
             append_node = true;
         } else if (child->type == node_type::UNARY_NEGATE_NODE) {
-            return_val -= child->accept_simplify_numerical_visitor(this, op_node);
+            return_val -= dispatcher::visit(child, *this, op_node);
             it = --op_node->children.erase(it);
             append_node = true;
         } else {
-            static_cast<void>(child->accept_simplify_numerical_visitor(this, op_node));
+            static_cast<void>(dispatcher::visit(child, *this, op_node));
             create_grandchild_link(child, [&it](){--it;});
         }
     }
@@ -78,15 +78,15 @@ return_t simplify_numerical_visitor::visit(multiply_node* op_node, irtree_node* 
     for (auto it=op_node->children.begin(); it != op_node->children.end(); ++it) {
         shared_ptr<irtree_node>& child = *it;
         if (child->type == irtree_node::node_type::NUMBER_NODE) {
-            return_val *= child->accept_simplify_numerical_visitor(this, op_node);
+            return_val *= dispatcher::visit(child, *this, op_node);
             it = --op_node->children.erase(it);
             append_node = true;
         } else if (child->type == node_type::UNARY_NEGATE_NODE) {
-            return_val *= -child->accept_simplify_numerical_visitor(this, op_node);
+            return_val *= -dispatcher::visit(child, *this, op_node);
             it = --op_node->children.erase(it);
             append_node = true;
         } else {
-            static_cast<void>(child->accept_simplify_numerical_visitor(this, op_node));
+            static_cast<void>(dispatcher::visit(child, *this, op_node));
             create_grandchild_link(child, [&it](){--it;});
         }
     }
@@ -98,8 +98,8 @@ return_t simplify_numerical_visitor::visit(exponent_node* op_node, irtree_node* 
     return_t return_val = parent_node->type != node_type::PLUS_NODE;
     auto it2=op_node->children.begin(), it1=it2++;
     auto evaluate_fn = [&return_val, &it1, &it2, &op_node](simplify_numerical_visitor* self){
-        auto base = (*it1)->accept_simplify_numerical_visitor(self, op_node);
-        auto exponent = (*it2)->accept_simplify_numerical_visitor(self, op_node);
+        auto base = dispatcher::visit(*it1, *self, op_node);
+        auto exponent = dispatcher::visit(*it2, *self, op_node);
         return_val = pow(base, exponent);
         it2 = --op_node->children.erase(it2);
         static_cast<number_node*>(it1->get())->value = return_val;
@@ -107,8 +107,8 @@ return_t simplify_numerical_visitor::visit(exponent_node* op_node, irtree_node* 
     if ((*it1)->type == node_type::NUMBER_NODE && (*it2)->type == node_type::NUMBER_NODE) 
         evaluate_fn(this);
     else {
-        static_cast<void>((*it1)->accept_simplify_numerical_visitor(this, op_node));
-        static_cast<void>((*it2)->accept_simplify_numerical_visitor(this, op_node));
+        static_cast<void>(dispatcher::visit(*it1, *this, op_node));
+        static_cast<void>(dispatcher::visit(*it2, *this, op_node));
         create_grandchild_link(*it1);
         create_grandchild_link(*it2);
         if ((*it1)->type == node_type::NUMBER_NODE && (*it2)->type == node_type::NUMBER_NODE) 
@@ -122,13 +122,13 @@ return_t simplify_numerical_visitor::visit(unary_negate_node* op_node, irtree_no
                           parent_node->type == node_type::MULTIPLY_NODE ? 1 : 0;
     shared_ptr<irtree_node>& child = op_node->children.front();
     if (child->type == node_type::NUMBER_NODE) {
-        return_val = child->accept_simplify_numerical_visitor(this, op_node);
+        return_val = dispatcher::visit(child, *this, op_node);
         return return_val;
     }
-    static_cast<void>(child->accept_simplify_numerical_visitor(this, op_node));
+    static_cast<void>(dispatcher::visit(child, *this, op_node));
     create_grandchild_link(child);
     if (child->type == node_type::NUMBER_NODE)
-        return_val = child->accept_simplify_numerical_visitor(this, op_node);
+        return_val = dispatcher::visit(child, *this, op_node);
     return return_val;
 }
 
@@ -143,7 +143,7 @@ return_t simplify_numerical_visitor::visit(number_node* op_node, irtree_node* pa
 return_t simplify_numerical_visitor::visit(sentinel_node* op_node, irtree_node* parent_node) {
     return_t return_val = 0;
     for (shared_ptr<irtree_node>& child : op_node->children)
-        return_val = child->accept_simplify_numerical_visitor(this, op_node);
+        return_val = dispatcher::visit(child, *this, op_node);
     if (!op_node->children.front()->is_terminal()) {
         if (static_cast<non_terminal_node*>(op_node->children.front().get())->children.size() == 1)
             op_node->children.front() =

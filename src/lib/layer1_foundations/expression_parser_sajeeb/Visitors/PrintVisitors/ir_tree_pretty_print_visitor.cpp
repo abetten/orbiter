@@ -14,7 +14,7 @@ void ir_tree_pretty_print_visitor::visit(plus_node* op_node) {
 	cout << indentation << "PLUS\n";
 	add_indentation();
 	for (shared_ptr<irtree_node>& child : op_node->children) 
-		child->accept(this);
+		dispatcher::visit(child, *this);
 	remove_indentation();
 }
 
@@ -22,7 +22,7 @@ void ir_tree_pretty_print_visitor::visit(minus_node* op_node) {
 	cout << indentation << "MINUS\n";
 	add_indentation();
 	for (shared_ptr<irtree_node>& child : op_node->children) 
-		child->accept(this);
+		dispatcher::visit(child, *this);
 	remove_indentation();
 }
 
@@ -30,7 +30,7 @@ void ir_tree_pretty_print_visitor::visit(multiply_node* op_node) {
 	cout << indentation << "TIMES\n";
 	add_indentation();
 	for (shared_ptr<irtree_node>& child : op_node->children) 
-		child->accept(this);
+		dispatcher::visit(child, *this);
 	remove_indentation();
 }
 
@@ -38,7 +38,7 @@ void ir_tree_pretty_print_visitor::visit(exponent_node* op_node) {
 	cout << indentation << "EXPONENT\n";
 	add_indentation();
 	for (shared_ptr<irtree_node>& child : op_node->children) 
-		child->accept(this);
+		dispatcher::visit(child, *this);
 	remove_indentation();
 }
 
@@ -46,7 +46,7 @@ void ir_tree_pretty_print_visitor::visit(unary_negate_node* op_node) {
 	cout << indentation << "(-)\n";
 	add_indentation();
 	for (shared_ptr<irtree_node>& child : op_node->children)
-		child->accept(this);
+		dispatcher::visit(child, *this);
 	remove_indentation();
 }
 
@@ -54,7 +54,7 @@ void ir_tree_pretty_print_visitor::visit(sentinel_node* op_node) {
 	cout << indentation << "START\n";
 	add_indentation();
 	for (shared_ptr<irtree_node>& child : op_node->children) 
-		child->accept(this);
+		dispatcher::visit(child, *this);
 	remove_indentation();
 }
 

@@ -14,6 +14,7 @@
 
 class simplify_visitor : public IRTreeVoidReturnTypeVisitorInterface {
 public:
+    using IRTreeVoidReturnTypeVisitorInterface::visit;
 };
 
 
