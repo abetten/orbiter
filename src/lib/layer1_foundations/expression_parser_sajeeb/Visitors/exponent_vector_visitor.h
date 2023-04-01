@@ -80,6 +80,11 @@ class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitorInterfac
                                               shared_ptr<irtree_node>&,
                                               shared_ptr<irtree_node>&> {
     using IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<shared_ptr<irtree_node>&>::visit;
+    using IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<vector<unsigned int>&,
+                                              list<shared_ptr<irtree_node> >::iterator&,
+                                              shared_ptr<irtree_node>&,
+                                              shared_ptr<irtree_node>&>::visit;
+    using IRTreeVoidReturnTypeVisitorInterface::visit;
     typedef size_t index_t;
 
     void visit(plus_node* node, shared_ptr<irtree_node>& node_self) override;
@@ -87,9 +92,6 @@ class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitorInterfac
     void visit(multiply_node* node, shared_ptr<irtree_node>& node_self) override;
     void visit(exponent_node* node, shared_ptr<irtree_node>& node_self) override;
     void visit(unary_negate_node* node, shared_ptr<irtree_node>& node_self) override;
-    void visit(variable_node* node, shared_ptr<irtree_node>& node_self) override;
-    void visit(parameter_node* node, shared_ptr<irtree_node>& node_self) override;
-    void visit(number_node* node, shared_ptr<irtree_node>& node_self) override;
     void visit(sentinel_node* node, shared_ptr<irtree_node>& node_self) override;
     
     void visit(plus_node* node,
@@ -140,14 +142,10 @@ class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitorInterfac
 
     managed_variables_index_table* symbol_table;
 
-    using IRTreeVoidReturnTypeVisitorInterface::visit;
-
 public:
 
     monomial_coefficient_table monomial_coefficient_table_;
 
-    void visit(multiply_node* node) override;
-    void visit(plus_node* node) override;
     void visit(sentinel_node* node) override;
 
     exponent_vector_visitor& operator()(managed_variables_index_table& symbol_table) {

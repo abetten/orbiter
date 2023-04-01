@@ -6,12 +6,17 @@
 *
 **/
     
+// This always needs to be included    
 #include "parser.h"
 
 #include <iostream>
 #include <unordered_map>
 #include <string>
 
+// This only needs to be included if the tree is to be visited
+#include "Visitors/dispatcher.h"
+
+// Provided visitors
 #include "Visitors/PrintVisitors/ir_tree_pretty_print_visitor.h"
 #include "Visitors/uminus_distribute_and_reduce_visitor.h"
 #include "Visitors/merge_nodes_visitor.h"
@@ -22,7 +27,7 @@
 #include "Visitors/CopyVisitors/deep_copy_visitor.h"
 #include "Visitors/exponent_vector_visitor.h"
 #include "Visitors/ReductionVisitors/simplify_numerical_visitor.h"
-#include "Visitors/dispatcher.h"
+#include "Visitors/EvaluateVisitors/eval_visitor.h"
 
 #include "orbiter.h"
 
@@ -56,12 +61,6 @@ public:
         return *strategy_wrapper.get_visitor();
     }
 };
-
-void merge_redundant_nodes(shared_ptr<irtree_node>& root) {
-    static merge_nodes_visitor merge_redundant_nodes;
-    dispatcher::visit(root, merge_redundant_nodes);
-}
-
 
 
 int main(int argc, const char** argv) {
@@ -97,7 +96,6 @@ int main(int argc, const char** argv) {
 
 
     shared_ptr<irtree_node> ir_tree_root = parser::parse_expression(exp, managed_variables_table);
-    dispatcher::visit(ir_tree_root, merge_nodes_visitor());
 
     get_latex_staged_visitor_functor
         get_latex_staged_visitor("visitor_result/",
@@ -105,9 +103,7 @@ int main(int argc, const char** argv) {
 
 
     // print the AST
-//    LOG(ir_tree_root.get());
-//    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
-//    LOG("");
+    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
     //
 //    simplify_numerical_visitor simplify;
@@ -115,16 +111,14 @@ int main(int argc, const char** argv) {
 //    dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
 
-    LOG("");
     // remove minus nodes
     dispatcher::visit(ir_tree_root, remove_minus_nodes_visitor());
-    merge_redundant_nodes(ir_tree_root);
+    dispatcher::visit(ir_tree_root, merge_nodes_visitor());
     dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
    // distribute and reduce unary minus nodes
-    uminus_distribute_and_reduce_visitor distribute_uminus_visitor;
-    dispatcher::visit(ir_tree_root, distribute_uminus_visitor);
-    merge_redundant_nodes(ir_tree_root);
+    dispatcher::visit(ir_tree_root, uminus_distribute_and_reduce_visitor());
+    dispatcher::visit(ir_tree_root, merge_nodes_visitor());
     dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
     //
@@ -177,7 +171,7 @@ int main(int argc, const char** argv) {
         auto root_nodes = it.second;
         int val = 0;
         for (auto& node : root_nodes) {
-            auto tmp = dispatcher::visit(node, &evalVisitor, &Fq, assignemnt);
+            auto tmp = dispatcher::visit(node, evalVisitor, &Fq, assignemnt);
             val += tmp;
         }
         cout << val << endl;
