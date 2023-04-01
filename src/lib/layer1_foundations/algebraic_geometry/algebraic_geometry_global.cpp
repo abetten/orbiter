@@ -51,11 +51,13 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 		cout << "Formula is not homogeneous" << endl;
 		exit(1);
 	}
+#if 0
 	if (Formula->degree != 4) {
 		cout << "Formula is not of degree 4. "
 				"Degree is " << Formula->degree << endl;
 		exit(1);
 	}
+#endif
 	if (Formula->nb_managed_vars != 3) {
 		cout << "Formula should have 3 managed variables. "
 				"Has " << Formula->nb_managed_vars << endl;
@@ -71,7 +73,7 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 				"before Poly->init" << endl;
 	}
 	Poly4_3->init(P->Subspaces->F,
-			Formula->nb_managed_vars /* nb_vars */, Formula->degree,
+			Formula->nb_managed_vars /* nb_vars */, 4 /*Formula->degree*/,
 			t_PART,
 			verbose_level);
 	if (f_v) {
@@ -93,6 +95,7 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 				"after Formula->get_subtrees" << endl;
 	}
 
+#if 0
 	int i;
 
 	for (i = 0; i < nb_monomials; i++) {
@@ -107,11 +110,11 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 			cout << "no subtree" << endl;
 		}
 	}
-
+#endif
 
 	int *Coefficient_vector;
 
-	Coefficient_vector = NEW_int(nb_monomials);
+	Coefficient_vector = NEW_int(Poly4_3->get_nb_monomials());
 
 	Formula->evaluate(Poly4_3,
 			Subtrees, evaluate_text, Coefficient_vector,
