@@ -79,7 +79,8 @@ public:
 			quartic_curve_activity_description
 				*Quartic_curve_activity_description,
 			quartic_curve_create *QC, int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 	void do_report(
 			quartic_curve_create *QC,
 			int verbose_level);
@@ -260,9 +261,12 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 	// ToDo
-	void report(std::ostream &ost, int verbose_level);
-	void print_general(std::ostream &ost, int verbose_level);
-	void export_something(std::string &what, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void print_general(
+			std::ostream &ost, int verbose_level);
+	void export_something(
+			std::string &what, int verbose_level);
 
 };
 

@@ -194,7 +194,8 @@ void tdo_scheme_synthetic::init_part_and_entries_int(
 	}
 }
 
-void tdo_scheme_synthetic::init_TDO(int *Part, int *Entries,
+void tdo_scheme_synthetic::init_TDO(
+		int *Part, int *Entries,
 	int Row_level, int Col_level,
 	int Extra_row_level, int Extra_col_level,
 	int Lambda_level, int verbose_level)
@@ -316,7 +317,7 @@ void tdo_scheme_synthetic::init_partition_stack(int verbose_level)
 			cout << "P->cellSize[c]=" << l << endl;
 			cout << "f + l - at=" << f + l - at << endl;
 		}
-		P->subset_continguous(at, f + l - at);
+		P->subset_contiguous(at, f + l - at);
 		P->split_cell(FALSE);
 		if (f_vvv) {
 			cout << "after splitting at " << at << endl;
@@ -447,7 +448,8 @@ void tdo_scheme_synthetic::exit_partition_stack()
 
 }
 
-void tdo_scheme_synthetic::get_partition(int h, int l, int verbose_level)
+void tdo_scheme_synthetic::get_partition(
+		int h, int l, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 10);
@@ -545,7 +547,8 @@ void tdo_scheme_synthetic::free_partition(int i)
 	}
 }
 
-void tdo_scheme_synthetic::complete_partition_info(int h, int verbose_level)
+void tdo_scheme_synthetic::complete_partition_info(
+		int h, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 5);
@@ -606,7 +609,8 @@ void tdo_scheme_synthetic::complete_partition_info(int h, int verbose_level)
 	}
 }
 
-void tdo_scheme_synthetic::get_row_or_col_scheme(int h, int l, int verbose_level)
+void tdo_scheme_synthetic::get_row_or_col_scheme(
+		int h, int l, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, d, c1, c2, s1, s2, v;
@@ -720,7 +724,8 @@ void tdo_scheme_synthetic::get_row_or_col_scheme(int h, int l, int verbose_level
 	}
 }
 
-void tdo_scheme_synthetic::get_column_split_partition(int verbose_level,
+void tdo_scheme_synthetic::get_column_split_partition(
+		int verbose_level,
 		data_structures::partitionstack &P)
 {
 	int f_v = (verbose_level >= 1);
@@ -787,7 +792,8 @@ void tdo_scheme_synthetic::get_column_split_partition(int verbose_level,
 	}
 }
 
-void tdo_scheme_synthetic::get_row_split_partition(int verbose_level,
+void tdo_scheme_synthetic::get_row_split_partition(
+		int verbose_level,
 		data_structures::partitionstack &P)
 {
 	int f_v = (verbose_level >= 1);
@@ -840,7 +846,8 @@ void tdo_scheme_synthetic::get_row_split_partition(int verbose_level,
 		}
 		if (FALSE) {
 			cout << "non descendants of " << i << "/" << ci << " : ";
-			orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, P.subset, P.subset_size);
+			orbiter_kernel_system::Orbiter->Int_vec->set_print(
+					cout, P.subset, P.subset_size);
 			cout << endl;
 		}
 		if (P.subset_size > 0) {
@@ -875,7 +882,8 @@ void tdo_scheme_synthetic::print_all_schemes()
 	}
 }
 
-void tdo_scheme_synthetic::print_scheme(int h, int verbose_level)
+void tdo_scheme_synthetic::print_scheme(
+		int h, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, c1, c2, a = 0;
@@ -956,7 +964,8 @@ void tdo_scheme_synthetic::print_scheme(int h, int verbose_level)
 	}
 }
 
-void tdo_scheme_synthetic::print_scheme_tex(std::ostream &ost, int h)
+void tdo_scheme_synthetic::print_scheme_tex(
+		std::ostream &ost, int h)
 {
 	std::string dummy;
 
@@ -1133,7 +1142,8 @@ void tdo_scheme_synthetic::compute_whether_first_inc_must_be_moved(
 	}
 }
 
-int tdo_scheme_synthetic::count_nb_inc_from_row_scheme(int verbose_level)
+int tdo_scheme_synthetic::count_nb_inc_from_row_scheme(
+		int verbose_level)
 {
 	int i, j, a, b = 0, nb_inc;
 	int f_v = (verbose_level > 1);
@@ -1160,7 +1170,8 @@ int tdo_scheme_synthetic::count_nb_inc_from_row_scheme(int verbose_level)
 	return nb_inc;
 }
 
-int tdo_scheme_synthetic::count_nb_inc_from_extra_row_scheme(int verbose_level)
+int tdo_scheme_synthetic::count_nb_inc_from_extra_row_scheme(
+		int verbose_level)
 {
 	int i, j, a, b = 0, nb_inc;
 	int f_v = (verbose_level > 1);
@@ -1233,7 +1244,8 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(
 		}
 		
 		if (f_vvvv) {
-			cout << "geometric_test_for_row_scheme: testing distribution " 
+			cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme "
+					"testing distribution "
 				<< cnt << " / " << nb_distributions << " : ";
 			Int_vec_print(cout,
 				distributions + cnt * nb_point_types,
@@ -1262,12 +1274,14 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(
 				f_ruled_out = TRUE;
 				ruled_out_by[s]++;
 				if (f_vv) {
-					cout << "geometric_test_for_row_scheme: distribution "
+					cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme "
+							"distribution "
 						<< cnt << " / " << nb_distributions
 						<< " eliminated by test of order " << s << endl;
 				}
 				if (f_vvv) {
-					cout << "the eliminated scheme is:" << endl;
+					cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme "
+							"the eliminated scheme is:" << endl;
 					for (i = 0; i < nb_non_zero_blocks; i++) {
 						d = distributions[cnt * nb_point_types +
 										  non_zero_blocks[i]];
@@ -1278,7 +1292,8 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(
 							point_type_len);
 						cout << endl;						
 					}
-					cout << "we repeat the test with more printout:" << endl;
+					cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme "
+							"we repeat the test with more printout:" << endl;
 					geometric_test_for_row_scheme_level_s(P, s, 
 						point_types, nb_point_types, point_type_len, 
 						distributions + cnt * nb_point_types, 
@@ -1300,8 +1315,9 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(
 		}
 	} // next cnt
 	if (f_v) {
-		cout << "geometric_test_for_row_scheme: number of distributions "
-			"reduced from " << nb_distributions << " to "
+		cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme "
+				"number of distributions has been reduced from "
+				<< nb_distributions << " to "
 			<< new_nb_distributions << ", i.e. Eliminated " 
 			<< nb_distributions - new_nb_distributions << " cases" << endl;
 		cout << "# of ruled out by test of order ";
@@ -1317,7 +1333,8 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(
 			}
 		}
 		if (i) {
-			cout << "highest order test that was successfully "
+			cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme "
+					"highest order test that was successfully "
 					"applied is order " << i << endl;
 		}
 	}
@@ -1532,8 +1549,8 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
 			cur += nb_ordererd_pairs;
 			if (cur > max) {
 				if (f_v) {
-					cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme_"
-						"level_s s=" << s << " failure in point type ";
+					cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s "
+							"s=" << s << " failure in point type ";
 					Int_vec_print(cout, set, s);
 					cout << endl;
 					cout << "max=" << max << endl;
@@ -1556,7 +1573,8 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
 // parameter refinement: refine rows
 // #############################################################################
 
-int tdo_scheme_synthetic::refine_rows(int verbose_level,
+int tdo_scheme_synthetic::refine_rows(
+		int verbose_level,
 	int f_use_mckay, int f_once, 
 	data_structures::partitionstack &P,
 	int *&point_types, int &nb_point_types, int &point_type_len, 
@@ -1609,7 +1627,8 @@ int tdo_scheme_synthetic::refine_rows(int verbose_level,
 				distributions, nb_distributions, cnt_second_system)) {
 
 				if (f_v) {
-					cout << "tdo_scheme_synthetic::refine_rows refine_rows_easy returns FALSE" << endl;
+					cout << "tdo_scheme_synthetic::refine_rows "
+							"refine_rows_easy returns FALSE" << endl;
 				}
 
 				return FALSE;
@@ -1624,7 +1643,8 @@ int tdo_scheme_synthetic::refine_rows(int verbose_level,
 				f_use_packing_numbers, f_dual_is_linear_space)) {
 
 				if (f_v) {
-					cout << "tdo_scheme_synthetic::refine_rows refine_rows_hard returns FALSE" << endl;
+					cout << "tdo_scheme_synthetic::refine_rows "
+							"refine_rows_hard returns FALSE" << endl;
 				}
 
 				return FALSE;
@@ -1637,7 +1657,8 @@ int tdo_scheme_synthetic::refine_rows(int verbose_level,
 			distributions, nb_distributions, cnt_second_system)) {
 
 			if (f_v) {
-				cout << "tdo_scheme_synthetic::refine_rows refine_rows_easy returns FALSE" << endl;
+				cout << "tdo_scheme_synthetic::refine_rows "
+						"refine_rows_easy returns FALSE" << endl;
 			}
 			return FALSE;
 		}
@@ -1645,7 +1666,8 @@ int tdo_scheme_synthetic::refine_rows(int verbose_level,
 
 	if (f_do_the_geometric_test) {
 		if (f_v) {
-			cout << "tdo_scheme_synthetic::refine_rows before geometric_test_for_row_scheme" << endl;
+			cout << "tdo_scheme_synthetic::refine_rows "
+					"before geometric_test_for_row_scheme" << endl;
 		}
 		nb_distributions = geometric_test_for_row_scheme(P, 
 			point_types, nb_point_types, point_type_len, 
@@ -1653,7 +1675,8 @@ int tdo_scheme_synthetic::refine_rows(int verbose_level,
 			f_omit1, omit1, 
 			verbose_level);
 		if (f_v) {
-			cout << "tdo_scheme_synthetic::refine_rows after geometric_test_for_row_scheme" << endl;
+			cout << "tdo_scheme_synthetic::refine_rows "
+					"after geometric_test_for_row_scheme" << endl;
 		}
 	}
 	if (f_v) {
@@ -1662,7 +1685,8 @@ int tdo_scheme_synthetic::refine_rows(int verbose_level,
 	return TRUE;
 }
 
-int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
+int tdo_scheme_synthetic::refine_rows_easy(
+		int verbose_level,
 	int *&point_types, int &nb_point_types, int &point_type_len,  
 	int *&distributions, int &nb_distributions, 
 	int &cnt_second_system)
@@ -1696,11 +1720,12 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 	
 	solvers::diophant D;
 	
-	D.open(nb_eqns, nb_vars);
+	D.open(nb_eqns, nb_vars, verbose_level - 1);
 		
 	// 1st equation: connections within the same row-partition
 	for (J = 0; J < nb_vars; J++) {
-		D.Aij(0, J) = Combi.minus_one_if_positive(the_col_scheme[0 * l2 + J]);
+		D.Aij(0, J) = Combi.minus_one_if_positive(
+				the_col_scheme[0 * l2 + J]);
 	}
 	D.Aij(0, nb_vars - 1) = 0;
 	if (f_vv) {
@@ -1724,7 +1749,8 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 	D.eliminate_zero_rows_quick(verbose_level);
 	D.sum = S;
 	if (f_vv) {
-		cout << "tdo_scheme_synthetic::refine_rows_easy The first system is" << endl;
+		cout << "tdo_scheme_synthetic::refine_rows_easy "
+				"The first system is" << endl;
 		D.print();
 	}
 	if (f_vv) {
@@ -1754,7 +1780,8 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 		}
 	}
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_easy found " << nb_sol << " point types" << endl;
+		cout << "tdo_scheme_synthetic::refine_rows_easy "
+				"found " << nb_sol << " point types" << endl;
 	}
 	if (nb_sol == 0) {
 		return FALSE;
@@ -1774,7 +1801,7 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 	
 	solvers::diophant D2;
 	
-	D2.open(Nb_eqns, Nb_vars);
+	D2.open(Nb_eqns, Nb_vars, verbose_level - 1);
 	point_types = NEW_int(nb_point_types * point_type_len);
 	if (f_v) {
 		cout << "tdo_scheme_synthetic::refine_rows_easy: opening second "
@@ -1867,7 +1894,8 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 	D2.m = Nb_eqns;
 
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_easy second system " << cnt_second_system << " found "
+		cout << "tdo_scheme_synthetic::refine_rows_easy "
+				"second system " << cnt_second_system << " found "
 			<< nb_sol << " point types" << endl;
 	}
 	cnt_second_system++;
@@ -1930,7 +1958,8 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 		}
 	}
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_easy: found " << nb_distributions
+		cout << "tdo_scheme_synthetic::refine_rows_easy "
+				"found " << nb_distributions
 			<< " point type distributions." << endl;
 	}
 	return TRUE;
@@ -2005,7 +2034,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 
 
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_hard computing refined point types:" << endl;
+		cout << "tdo_scheme_synthetic::refine_rows_hard "
+				"computing refined point types:" << endl;
 		cout << "point_type_len = " << point_type_len << endl;
 		cout << "L1 = " << L1 << endl;
 		cout << "L2 = " << L2 << endl;
@@ -2034,11 +2064,13 @@ int tdo_scheme_synthetic::refine_rows_hard(
 			point_types, nb_point_types, point_types_allocated);
 
 		if (f_v) {
-			cout << "tdo_scheme_synthetic::refine_rows_hard r = " << r << ", found " << nb_sol
+			cout << "tdo_scheme_synthetic::refine_rows_hard "
+					"r = " << r << ", found " << nb_sol
 					<< " refined point types" << endl;
 		}
 		if (f_vv) {
-			cout << "tdo_scheme_synthetic::refine_rows_hard r = " << r << ", found " << nb_sol
+			cout << "tdo_scheme_synthetic::refine_rows_hard "
+					"r = " << r << ", found " << nb_sol
 					<< " refined point types:" << endl;
 			Int_vec_print_integer_matrix_width(cout,
 				point_types + T.types_first[r] * point_type_len,
@@ -2065,7 +2097,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 
 
 		if (f_vv) {
-			cout << "tdo_scheme_synthetic::refine_rows_hard r = " << r << ", found " << nb_sol
+			cout << "tdo_scheme_synthetic::refine_rows_hard "
+					"r = " << r << ", found " << nb_sol
 					<< " refined point types:" << endl;
 			Int_vec_print_integer_matrix_width(cout,
 				point_types + T.types_first[r] * point_type_len,
@@ -2074,7 +2107,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 		if (nb_sol == 0) {
 			FREE_int(point_types);
 			if (f_v) {
-				cout << "tdo_scheme_synthetic::refine_rows_hard no solution for this point type, we are done" << endl;
+				cout << "tdo_scheme_synthetic::refine_rows_hard "
+						"no solution for this point type, we are done" << endl;
 			}
 			return FALSE;
 		}
@@ -2084,7 +2118,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 		
 		if (nb_sol == 1) {
 			if (f_v) {
-				cout << "tdo_scheme_synthetic::refine_rows_hard only one solution in block r=" << r << endl;
+				cout << "tdo_scheme_synthetic::refine_rows_hard "
+						"only one solution in block r=" << r << endl;
 				}
 			T.only_one_type[T.nb_only_one_type++] = r;
 		}
@@ -2101,7 +2136,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 	} // next r
 
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_hard computing refined point types done" << endl;
+		cout << "tdo_scheme_synthetic::refine_rows_hard "
+				"computing refined point types done" << endl;
 	}
 
 	// eliminate the slack variables from point_types:
@@ -2120,11 +2156,13 @@ int tdo_scheme_synthetic::refine_rows_hard(
 	}
 	point_type_len = L2;
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_hard altogether, we found " << nb_point_types
+		cout << "tdo_scheme_synthetic::refine_rows_hard "
+				"altogether, we found " << nb_point_types
 				<< " refined point types" << endl;
 	}
 	if (f_vv) {
-		cout << "tdo_scheme_synthetic::refine_rows_hard altogether, we found " << nb_point_types
+		cout << "tdo_scheme_synthetic::refine_rows_hard "
+				"altogether, we found " << nb_point_types
 				<< " refined point types:" << endl;
 		Int_vec_print_integer_matrix_width(cout, point_types,
 			nb_point_types, point_type_len, point_type_len, 3);
@@ -2134,7 +2172,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 	// now we compute the distributions:
 
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_hard before tdo_rows_setup_second_system" << endl;
+		cout << "tdo_scheme_synthetic::refine_rows_hard "
+				"before tdo_rows_setup_second_system" << endl;
 	}
 
 	if (!tdo_rows_setup_second_system(
@@ -2146,14 +2185,16 @@ int tdo_scheme_synthetic::refine_rows_hard(
 		point_types, nb_point_types)) {
 
 		if (f_v) {
-			cout << "tdo_scheme_synthetic::refine_rows_hard tdo_rows_setup_second_system returns FALSE, we are done" << endl;
+			cout << "tdo_scheme_synthetic::refine_rows_hard "
+					"tdo_rows_setup_second_system returns FALSE, we are done" << endl;
 		}
 
 		FREE_int(point_types);
 		return FALSE;
 		}
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_hard after tdo_rows_setup_second_system" << endl;
+		cout << "tdo_scheme_synthetic::refine_rows_hard "
+				"after tdo_rows_setup_second_system" << endl;
 	}
 	if (f_vv) {
 		char label[1000];
@@ -2205,7 +2246,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 #endif
 
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_hard: solving second system "
+		cout << "tdo_scheme_synthetic::refine_rows_hard "
+				"solving second system "
 				<< cnt_second_system << " which is " << T.D2->m
 				<< " x " << T.D2->n << endl;
 		cout << T.nb_multiple_types << " variable blocks:" << endl;
@@ -2221,7 +2263,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 	}
 	if (f_omit) {
 		if (f_v) {
-			cout << "tdo_scheme_synthetic::refine_rows_hard before T.solve_second_system_omit" << endl;
+			cout << "tdo_scheme_synthetic::refine_rows_hard "
+					"before T.solve_second_system_omit" << endl;
 		}
 		T.solve_second_system_omit(verbose_level - 1, 
 			row_classes_len[ROW_SCHEME],
@@ -2232,7 +2275,8 @@ int tdo_scheme_synthetic::refine_rows_hard(
 		int f_scale = FALSE;
 		int scaling = 0;
 		if (f_v) {
-			cout << "tdo_scheme_synthetic::refine_rows_hard before T.solve_second_system" << endl;
+			cout << "tdo_scheme_synthetic::refine_rows_hard "
+					"before T.solve_second_system" << endl;
 		}
 		T.solve_second_system(verbose_level - 1,
 			f_use_mckay, f_once,
@@ -2244,7 +2288,7 @@ int tdo_scheme_synthetic::refine_rows_hard(
 
 
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::refine_rows_hard: second system "
+		cout << "tdo_scheme_synthetic::refine_rows_hard second system "
 			<< cnt_second_system
 			<< " found " << nb_distributions
 			<< " distributions." << endl;
@@ -2278,7 +2322,7 @@ void tdo_scheme_synthetic::row_refinement_L1_L2(
 	L1 = l1 - omit;
 	L2 = l2 - omit2;
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::row_refinement_L1_L2: l1 = " << l1 << " l2=" << l2
+		cout << "tdo_scheme_synthetic::row_refinement_L1_L2 l1 = " << l1 << " l2=" << l2
 			<< " L1=" << L1 << " L2=" << L2 << endl;
 	}
 }
@@ -2323,7 +2367,7 @@ int tdo_scheme_synthetic::tdo_rows_setup_first_system(
 		cout << "tdo_rows_setup_first_system L2=" << L2 << endl;
 	}
 
-	T.D1->open(nb_eqns, nb_vars);
+	T.D1->open(nb_eqns, nb_vars, verbose_level - 1);
 	T.D1->fill_coefficient_matrix_with(0);
 	S = 0;
 		
@@ -2362,14 +2406,14 @@ int tdo_scheme_synthetic::tdo_rows_setup_first_system(
 				for (j = 0; j < l; j++) {
 					J = f + i + j; // +i for the slack variables
 					T.D1->Aij(r2, J) = the_col_scheme[r2 * l2 + f + j];
-					}
+				}
 				T.D1->Aij(r2, f + i + l) = 0;
 					// the slack variable is not needed
-				}
+			}
 #if 0
 			for (J = 0; J < nb_vars; J++) {
 				T.D1->Aij(r2, J) = the_col_scheme[r2 * l2 + J];
-				}
+			}
 #endif
 			T.D1->RHS[r2] = row_classes_len[ROW_SCHEME][r2];
 			if (f_omit) {
@@ -2432,7 +2476,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_first_system(
 		T.D1->print();
 	}
 	if (f_v) {
-		cout << "tdo_rows_setup_first_system r=" << r << " finished" << endl;
+		cout << "tdo_rows_setup_first_system "
+				"r=" << r << " finished" << endl;
 	}
 	return TRUE;
 		
@@ -2458,7 +2503,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system(
 		cout << "tdo_rows_setup_second_system" << endl;
 	}
 	if (f_vv) {
-		cout << "f_omit=" << f_omit << " omit=" << omit << endl;
+		cout << "f_omit=" << f_omit
+				<< " omit=" << omit << endl;
 		cout << "f_use_packing_numbers=" << f_use_packing_numbers << endl;
 		cout << "f_dual_is_linear_space=" << f_dual_is_linear_space << endl;
 	}
@@ -2488,7 +2534,7 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system(
 	}
 		
 
-	T.D2->open(Nb_eqns, Nb_vars);
+	T.D2->open(Nb_eqns, Nb_vars, verbose_level - 1);
 	T.D2->fill_coefficient_matrix_with(0);
 
 #if 0
@@ -2498,7 +2544,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system(
 #endif
 
 	if (f_v) {
-		cout << "tdo_rows_setup_second_system: opening second system with " 
+		cout << "tdo_rows_setup_second_system: "
+				"opening second system with "
 			<< Nb_eqns << " equations and " << Nb_vars
 			<< " variables" << endl;
 		cout << "nb_eqns_joining=" << nb_eqns_joining << endl;
@@ -2516,7 +2563,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system(
 		0 /*eqn_offset*/)) {
 
 		if (f_v) {
-			cout << "tdo_rows_setup_second_system_eqns_joining returns FALSE" << endl;
+			cout << "tdo_rows_setup_second_system_eqns_joining "
+					"returns FALSE" << endl;
 		}
 		if (f_vv) {
 			T.D2->print();
@@ -2531,7 +2579,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system(
 		nb_eqns_joining /*eqn_offset*/)) {
 
 		if (f_v) {
-			cout << "tdo_rows_setup_second_system_eqns_counting returns FALSE" << endl;
+			cout << "tdo_rows_setup_second_system_eqns_counting "
+					"returns FALSE" << endl;
 		}
 		if (f_vv) {
 			T.D2->print();
@@ -2547,7 +2596,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system(
 			nb_eqns_used)) {
 
 			if (f_v) {
-				cout << "tdo_rows_setup_second_system_eqns_packing returns FALSE" << endl;
+				cout << "tdo_rows_setup_second_system_eqns_packing "
+						"returns FALSE" << endl;
 			}
 			if (f_vv) {
 				T.D2->print();
@@ -2706,8 +2756,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_joining(
 				T.D2->RHS[eqn_offset + L2 + k] -= ab;
 				if (T.D2->RHS[eqn_offset + L2 + k] < 0) {
 					if (f_vv) {
-						cout << "tdo_rows_setup_second_system_eqns_"
-								"joining: RHS is negative, no solution "
+						cout << "tdo_rows_setup_second_system_eqns_joining: "
+								"RHS is negative, no solution "
 								"for the distribution" << endl;
 						cout << "h=" << h << endl;
 						cout << "rr=T.only_one_type[h]=" << rr << endl;
@@ -2729,7 +2779,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_joining(
 		}
 	}
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_joining done" << endl;
+		cout << "tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_joining "
+				"done" << endl;
 	}
 	return TRUE;
 }
@@ -2801,7 +2852,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_counting(
 	T.D2->sum = S;
 	//T.D2->f_x_max = TRUE;
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_counting done" << endl;
+		cout << "tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_counting "
+				"done" << endl;
 	}
 	return TRUE;
 }
@@ -2891,7 +2943,8 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_packing(
 				"nb_eqns_used = " << nb_eqns_used << endl;
 	}
 	if (f_v) {
-		cout << "tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_packing done" << endl;
+		cout << "tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_packing "
+				"done" << endl;
 	}
 	return TRUE;
 }
@@ -3445,7 +3498,7 @@ int tdo_scheme_synthetic::tdo_columns_setup_first_system(
 	nb_eqns = L1 + 1 + (R - 1);
 		
 	
-	T.D1->open(nb_eqns, nb_vars);
+	T.D1->open(nb_eqns, nb_vars, verbose_level - 1);
 	S = 0;
 		
 	for (I = 0; I < nb_eqns; I++) {
@@ -3454,7 +3507,7 @@ int tdo_scheme_synthetic::tdo_columns_setup_first_system(
 		}
 	}
 	
-	// the m equalities that come from the fact that the n e w type
+	// the m equalities that come from the fact that the new type
 	// is a partition of the old type.
 	
 	// we are in the r-th column class (r is given)
@@ -3600,7 +3653,7 @@ int tdo_scheme_synthetic::tdo_columns_setup_second_system(
 		Nb_vars += T.types_len[r];
 	}
 
-	T.D2->open(Nb_eqns, Nb_vars);
+	T.D2->open(Nb_eqns, Nb_vars, verbose_level - 1);
 	if (f_v) {
 		cout << "tdo_scheme_synthetic::tdo_columns_setup_second_system "
 				"opening second system with "
@@ -4146,7 +4199,7 @@ int tdo_scheme_synthetic::td3_rows_setup_first_system(int verbose_level,
 	nb_eqns = R + R + (R - 1) + (((R - 1) * (R - 2)) >> 1) + l1;
 		
 	
-	T.D1->open(nb_eqns, nb_vars);
+	T.D1->open(nb_eqns, nb_vars, verbose_level - 1);
 	S = 0;
 		
 	for (I = 0; I < nb_eqns; I++) {
@@ -4335,7 +4388,7 @@ int tdo_scheme_synthetic::td3_rows_setup_second_system(int verbose_level,
 	}
 
 
-	T.D2->open(Nb_eqns, Nb_vars);
+	T.D2->open(Nb_eqns, Nb_vars, verbose_level - 1);
 	if (f_v) {
 		cout << "td3_rows_setup_second_system: "
 			"opening second system with "
@@ -4626,7 +4679,7 @@ int tdo_scheme_synthetic::td3_columns_setup_first_system(int verbose_level,
 	nb_eqns = l1; // = P.ht
 		
 	
-	T.D1->open(nb_eqns, nb_vars);
+	T.D1->open(nb_eqns, nb_vars, verbose_level - 1);
 	S = 0;
 		
 	for (I = 0; I < nb_eqns; I++) {
@@ -4775,7 +4828,7 @@ int tdo_scheme_synthetic::td3_columns_setup_second_system(
 		Nb_vars += T.types_len[r];
 	}
 
-	T.D2->open(Nb_eqns, Nb_vars);
+	T.D2->open(Nb_eqns, Nb_vars, verbose_level - 1);
 	if (f_v) {
 		cout << "tdo_scheme_synthetic::td3_columns_setup_second_system: "
 			"opening second system with "

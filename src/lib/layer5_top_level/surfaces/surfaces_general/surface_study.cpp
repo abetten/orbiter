@@ -70,7 +70,7 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 	if (f_v) {
 		cout << "surface_study::init initializing surface" << endl;
 		}
-	Surf->init(F, verbose_level);
+	Surf->init_surface_domain(F, verbose_level);
 	if (f_v) {
 		cout << "surface_study::init initializing surface done" << endl;
 		}
@@ -106,7 +106,7 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 	cout << "creating linear group done" << endl;
 
 	cout << "creating action on lines" << endl;
-	A2 = A->induced_action_on_grassmannian(2, verbose_level);
+	A2 = A->Induced_action->induced_action_on_grassmannian(2, verbose_level);
 	cout << "creating action on lines done" << endl;
 
 	coeff = NEW_int(20);
@@ -316,7 +316,8 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 	Surf->build_cubic_surface_from_lines(
 			SaS->sz, SaS->data, coeff,
 			0 /* verbose_level */);
-	F->PG_element_normalize_from_front(coeff, 1, 20);
+	F->Projective_space_basic->PG_element_normalize_from_front(
+			coeff, 1, 20);
 	cout << "coefficient vector of the surface: ";
 	Int_vec_print(cout, coeff, 20);
 	cout << endl;
@@ -492,17 +493,19 @@ void surface_study::study_group(int verbose_level)
 	cout << "Group_elts:" << endl;
 	Int_matrix_print(Group_elts, group_order, elt_sz);
 	for (i = 0; i < group_order; i++) {
-		F->PG_element_normalize(Group_elts + i * elt_sz, 1, elt_sz);
+		F->Projective_space_basic->PG_element_normalize(
+				Group_elts + i * elt_sz, 1, elt_sz);
 		}
 	cout << "group elements:" << endl;
 	for (i = 0; i < group_order; i++) {
-		A->print_for_make_element(cout,
+		A->Group_element->print_for_make_element(cout,
 				Group_elts + i * elt_sz);
 		cout << endl;
 		}
 	cout << "Group_elts normalized from the back:" << endl;
 	for (i = 0; i < group_order; i++) {
-		F->PG_element_normalize(Group_elts + i * elt_sz, 1, elt_sz);
+		F->Projective_space_basic->PG_element_normalize(
+				Group_elts + i * elt_sz, 1, elt_sz);
 		cout << "element " << i << " / " << group_order << ":" << endl;
 		Int_matrix_print(Group_elts + i * elt_sz, 4, 4);
 		}
@@ -622,10 +625,15 @@ void surface_study::study_orbits_on_lines(int verbose_level)
 		cout << "surface_study::study_orbits_on_lines" << endl;
 		}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("lines");
 
 	cout << "creating restricted action on the set of lines" << endl;
-	A_on_lines = A2->restricted_action(
-			SaS->data, 27, verbose_level);
+	A_on_lines = A2->Induced_action->restricted_action(
+			SaS->data, 27, label_of_set,
+			verbose_level);
 	cout << "creating restricted action on the set of lines done" << endl;
 
 
@@ -862,8 +870,14 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	int *Elt;
 	char fname_stab[1000];
 
-	A_triangle = A->restricted_action(
-			triangle, nb_pts_triangle, 0 /* verbose_level */);
+	std::string label_of_set;
+
+
+	label_of_set.assign("triangle");
+
+	A_triangle = A->Induced_action->restricted_action(
+			triangle, nb_pts_triangle, label_of_set,
+			0 /* verbose_level */);
 	Triangle = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 	Triangle->init(A, A, 0 /* verbose_level */);
 	Triangle->init_data(triangle, nb_pts_triangle,
@@ -878,7 +892,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 
 #if 0
 	int Eckardt_pts[] = {7,12,15,24,58,91}; // these were the E-points from before. Not any more.
-	int Eckardt_pts2[] = {15,24,5,14,25,124}; // these are the n e w E-points
+	int Eckardt_pts2[] = {15,24,5,14,25,124}; // these are the new E-points
 	int nb_E = 6;
 #endif
 
@@ -967,9 +981,14 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 #endif
 
 
+	//std::string label_of_set;
+
+
+	label_of_set.assign("Double_pts");
+
 	cout << "Creating restricted action on Double_pts:" << endl;
-	A_on_double_pts = A->restricted_action(
-			Double_pts, nb_double_pts,
+	A_on_double_pts = A->Induced_action->restricted_action(
+			Double_pts, nb_double_pts, label_of_set,
 			0 /* verbose_level */);
 
 	groups::schreier *Orb2;
@@ -1032,7 +1051,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 			six_point_orbit_length, sz, verbose_level);
 
 	cout << "Creating action on six_point_orbit" << endl;
-	A_on_six_point_orbit = A->create_induced_action_on_sets(
+	A_on_six_point_orbit = A->Induced_action->create_induced_action_on_sets(
 			six_point_orbit_length, sz, six_point_orbit,
 			verbose_level);
 	cout << "Creating action on six_point_orbit done" << endl;
@@ -1062,7 +1081,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 			cout << "coset " << j << " / " << l << ":" << endl;
 			}
 		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
-		A->element_move(Orb_six_points->cosetrep, Elt, 0);
+		A->Group_element->element_move(Orb_six_points->cosetrep, Elt, 0);
 
 		data_structures_groups::set_and_stabilizer *SaS2;
 
@@ -1073,7 +1092,8 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		Surf->build_cubic_surface_from_lines(SaS2->sz,
 				SaS2->data, coeff,
 				0 /* verbose_level */);
-		F->PG_element_normalize_from_front(coeff, 1, 20);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				coeff, 1, 20);
 
 #if 0
 		cout << "coefficient vector of the surface: ";
@@ -1134,7 +1154,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	if (j >= 0) {
 		cout << "coset " << j << " / " << l << ":" << endl;
 		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
-		A->element_move(Orb_six_points->cosetrep, Elt, 0);
+		A->Group_element->element_move(Orb_six_points->cosetrep, Elt, 0);
 
 		data_structures_groups::set_and_stabilizer *SaS2;
 
@@ -1145,7 +1165,8 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		Surf->build_cubic_surface_from_lines(SaS2->sz,
 				SaS2->data, coeff,
 				0 /* verbose_level */);
-		F->PG_element_normalize_from_front(coeff, 1, 20);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				coeff, 1, 20);
 		cout << "coefficient vector of the surface: ";
 		Int_vec_print(cout, coeff, 20);
 		cout << endl;
@@ -1587,7 +1608,7 @@ static void move_point_set(actions::action *A2,
 
 	if (f_v) {
 		cout << "transporter:" << endl;
-		Universe->A->element_print_quick(Elt, cout);
+		Universe->A->Group_element->element_print_quick(Elt, cout);
 		cout << endl;
 		}
 

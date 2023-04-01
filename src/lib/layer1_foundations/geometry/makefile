@@ -30,18 +30,20 @@ MODULES = \
 	point_line.o \
 	points_and_lines.o \
 	polarity.o \
+	projective_space_basic.o \
 	projective_space_implementation.o \
 	projective_space_of_dimension_three.o \
 	projective_space_plane.o \
 	projective_space_reporting.o \
+	projective_space_subspaces.o \
 	projective_space.o \
 	projective_space2.o \
-	projective_space3.o \
 	spread_domain.o \
 	spread_tables.o \
+	three_skew_subspaces.o \
 	w3q.o 
 
-
+ 
 
 all : $(MODULES) 
 

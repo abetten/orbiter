@@ -31,7 +31,8 @@ nauty_interface_with_group::~nauty_interface_with_group()
 }
 
 actions::action *nauty_interface_with_group::create_automorphism_group_of_colored_graph_object(
-		graph_theory::colored_graph *CG, int verbose_level)
+		graph_theory::colored_graph *CG,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	actions::action *A;
@@ -60,7 +61,9 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_colore
 }
 
 actions::action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
-		graph_theory::colored_graph *CG, int *labeling, int verbose_level)
+		graph_theory::colored_graph *CG,
+		int *labeling,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	actions::action *A;
@@ -85,7 +88,10 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 }
 
 actions::action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph(
-	int n, int f_bitvec, data_structures::bitvector *Bitvec, int *Adj,
+	int n,
+	int f_bitvec,
+	data_structures::bitvector *Bitvec,
+	int *Adj,
 	int *vertex_colors,
 	int *labeling,
 	int verbose_level)
@@ -206,7 +212,8 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 }
 
 actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
-	int n, data_structures::bitvector *Bitvec,
+	int n,
+	data_structures::bitvector *Bitvec,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -232,7 +239,9 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 
 actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling(
 	int n,
-	int f_bitvector, data_structures::bitvector *Bitvec, int *Adj,
+	int f_bitvector,
+	data_structures::bitvector *Bitvec,
+	int *Adj,
 	int nb_parts, int *parts,
 	int *labeling,
 	int verbose_level)
@@ -1257,6 +1266,9 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 
+
+	linear_algebra::linear_algebra_global LA;
+
 	//action *A_perm;
 
 	int d;
@@ -1295,6 +1307,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 	int g, frobenius, pos;
 	int *Mtx;
 	int *Elt1;
+	int c;
 
 	gens = A_perm->Strong_gens->gens;
 
@@ -1314,28 +1327,33 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 			cout << endl;
 		}
 
-		if (P->reverse_engineer_semilinear_map(
-			gens->ith(g), Mtx, frobenius,
-			0 /*verbose_level - 2*/)) {
+		c = LA.reverse_engineer_semilinear_map(
+				P->Subspaces->F,
+				P->Subspaces->n,
+				gens->ith(g), Mtx, frobenius,
+				0 /*verbose_level - 2*/);
+
+		if (c) {
 
 			Mtx[d * d] = frobenius;
-			A_linear->make_element(Elt1, Mtx, 0 /*verbose_level - 2*/);
+			A_linear->Group_element->make_element(Elt1, Mtx, 0 /*verbose_level - 2*/);
 			if (f_vv) {
 				cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 						"semi-linear group element:" << endl;
-				A_linear->element_print(Elt1, cout);
+				A_linear->Group_element->element_print(Elt1, cout);
 			}
-			A_linear->element_move(Elt1, gens1->ith(pos), 0);
+			A_linear->Group_element->element_move(Elt1, gens1->ith(pos), 0);
 
 
 			pos++;
 		}
 		else {
-			if (f_vv) {
+			//if (f_vv) {
 				cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 						"generator " << g << " does not "
 						"correspond to a semilinear mapping" << endl;
-			}
+				exit(1);
+			//}
 		}
 	}
 	gens1->reallocate(pos, verbose_level - 2);
@@ -1360,9 +1378,9 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 			cout << "generator " << g << ":" << endl;
 		}
 		//A_linear->element_print(gens1->ith(g), cout);
-		for (i = 0; i < P->N_points; i++) {
-			j1 = A_linear->element_image_of(i, gens1->ith(g), 0);
-			j2 = A_perm->element_image_of(i, gens->ith(g), 0);
+		for (i = 0; i < P->Subspaces->N_points; i++) {
+			j1 = A_linear->Group_element->element_image_of(i, gens1->ith(g), 0);
+			j2 = A_perm->Group_element->element_image_of(i, gens->ith(g), 0);
 			if (j1 != j2) {
 				cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 						"problem with generator: "
@@ -1479,7 +1497,8 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 		geometry::object_with_canonical_form *OwCF,
 		actions::action *A_linear,
-	int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
+	int f_compute_canonical_form,
+	data_structures::bitvector *&Canonical_form,
 	data_structures::nauty_output *&NO,
 	int verbose_level)
 {

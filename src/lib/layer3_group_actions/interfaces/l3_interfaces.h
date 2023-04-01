@@ -5,8 +5,8 @@
  *      Author: betten
  */
 
-#ifndef SRC_LIB_LAYER3_GROUP_ACTIONS_INTERFACES_INTERFACES_H_
-#define SRC_LIB_LAYER3_GROUP_ACTIONS_INTERFACES_INTERFACES_H_
+#ifndef SRC_LIB_LAYER3_GROUP_ACTIONS_INTERFACES_L3_INTERFACES_H_
+#define SRC_LIB_LAYER3_GROUP_ACTIONS_INTERFACES_L3_INTERFACES_H_
 
 
 namespace orbiter {
@@ -30,6 +30,31 @@ public:
 
 	l3_interface_gap();
 	~l3_interface_gap();
+	void canonical_image_GAP(
+			groups::strong_generators *SG,
+			long int *set, int sz,
+			std::ostream &ost, int verbose_level);
+	void export_collineation_group_to_fining(
+			std::ostream &ost,
+			groups::strong_generators *SG,
+			int verbose_level);
+	void export_surface(
+			std::ostream &ost,
+			std::string &label_txt,
+			int f_has_group,
+			groups::strong_generators *SG,
+			ring_theory::homogeneous_polynomial_domain *Poly3_4,
+			int *equation,
+			int verbose_level);
+	void export_BLT_set(
+			std::ostream &ost,
+			std::string &label_txt,
+			int f_has_group,
+			groups::strong_generators *SG,
+			actions::action *A,
+			layer1_foundations::orthogonal_geometry::blt_set_domain
+					*Blt_set_domain,
+			long int *set, int verbose_level);
 
 };
 
@@ -47,28 +72,37 @@ public:
 	magma_interface();
 	~magma_interface();
 	void centralizer_of_element(
-			actions::action *A, groups::sims *S,
+			actions::action *A,
+			groups::sims *S,
 			std::string &element_description,
 			std::string &label, int verbose_level);
 	void normalizer_of_cyclic_subgroup(
-			actions::action *A, groups::sims *S,
+			actions::action *A,
+			groups::sims *S,
 			std::string &element_description,
 			std::string &label, int verbose_level);
 	void find_subgroups(
-			actions::action *A, groups::sims *S,
+			actions::action *A,
+			groups::sims *S,
 			int subgroup_order,
 			std::string &label,
 			int &nb_subgroups,
 			groups::strong_generators *&H_gens,
 			groups::strong_generators *&N_gens,
 			int verbose_level);
-	void print_generators_MAGMA(actions::action *A,
-			groups::strong_generators *SG, std::ostream &ost);
-	void export_magma(actions::action *A,
-			groups::strong_generators *SG, std::ostream &ost, int verbose_level);
+	void print_generators_MAGMA(
+			actions::action *A,
+			groups::strong_generators *SG,
+			std::ostream &ost);
+	void export_group(
+			actions::action *A,
+			groups::strong_generators *SG,
+			std::ostream &ost, int verbose_level);
 	void export_permutation_group_to_magma(
-			std::string &fname, actions::action *A2,
-			groups::strong_generators *SG, int verbose_level);
+			std::string &fname,
+			actions::action *A2,
+			groups::strong_generators *SG,
+			int verbose_level);
 	void export_permutation_group_to_magma2(
 			std::ostream &ost,
 			actions::action *A2,
@@ -110,6 +144,12 @@ public:
 			int *&class_normalizer_number_of_generators,
 			int **&normalizer_generators_perms,
 			int verbose_level);
+	// perms[nb_classes * A->degree]
+	// class_size[nb_classes]
+	// class_order_of_element[nb_classes]
+	// class_normalizer_order[nb_classes]
+	// class_normalizer_number_of_generators[nb_classes]
+	// normalizer_generators_perms[nb_classes][class_normalizer_number_of_generators[i] * A->degree]
 	void normalizer_of_cyclic_group_using_MAGMA(
 			actions::action *A,
 			std::string &fname_magma_prefix,
@@ -147,7 +187,8 @@ public:
 	void read_subgroups_magma(
 			actions::action *A,
 			std::string &fname_output,
-			groups::sims *override_Sims, int subgroup_order,
+			groups::sims *override_Sims,
+			int subgroup_order,
 			int &nb_subgroups,
 			groups::strong_generators *&H_gens,
 			groups::strong_generators *&N_gens,
@@ -155,8 +196,10 @@ public:
 	void find_subgroups_using_MAGMA2(
 			actions::action *A,
 			std::string &prefix,
-			std::string &fname_magma, std::string &fname_output,
-			groups::sims *override_Sims, int subgroup_order,
+			std::string &fname_magma,
+			std::string &fname_output,
+			groups::sims *override_Sims,
+			int subgroup_order,
 			int verbose_level);
 	void conjugacy_classes_and_normalizers(
 			actions::action *A,
@@ -167,28 +210,37 @@ public:
 	void report_conjugacy_classes_and_normalizers(
 			actions::action *A,
 			std::ostream &ost,
-			groups::sims *override_Sims, int verbose_level);
+			groups::sims *override_Sims,
+			int verbose_level);
 	void read_conjugacy_classes_and_normalizers(
 			actions::action *A,
-			std::string &fname, groups::sims *override_sims,
-			std::string &label_latex, int verbose_level);
+			std::string &fname,
+			groups::sims *override_sims,
+			std::string &label_latex,
+			int verbose_level);
 	void read_and_report_conjugacy_classes_and_normalizers(
 			actions::action *A,
 			std::ostream &ost,
-			std::string &fname, groups::sims *override_Sims,
+			std::string &fname,
+			groups::sims *override_Sims,
 			int verbose_level);
-	void write_as_magma_permutation_group(groups::sims *S,
+	void write_as_magma_permutation_group(
+			groups::sims *S,
 			std::string &fname_base,
-			data_structures_groups::vector_ge *gens, int verbose_level);
+			data_structures_groups::vector_ge *gens,
+			int verbose_level);
 	void export_linear_code(
 			std::string &fname,
 			field_theory::finite_field *F,
 			int *genma, int n, int k,
 			int verbose_level);
-	void read_permutation_group(std::string &fname,
+	void read_permutation_group(
+			std::string &fname,
 		int degree, int *&gens, int &nb_gens, int &go,
 		int verbose_level);
-	void run_magma_file(std::string &fname, int verbose_level);
+	void run_magma_file(
+			std::string &fname,
+			int verbose_level);
 	void normalizer_in_Sym_n(
 			std::string &fname_base,
 		int group_order, int *Table, int *gens, int nb_gens,
@@ -212,30 +264,41 @@ public:
 	nauty_interface_with_group();
 	~nauty_interface_with_group();
 	actions::action *create_automorphism_group_of_colored_graph_object(
-			graph_theory::colored_graph *CG, int verbose_level);
+			graph_theory::colored_graph *CG,
+			int verbose_level);
 	actions::action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
-			graph_theory::colored_graph *CG, int *labeling, int verbose_level);
+			graph_theory::colored_graph *CG,
+			int *labeling,
+			int verbose_level);
 	actions::action *create_automorphism_group_and_canonical_labeling_of_colored_graph(
-		int n, int f_bitvec, data_structures::bitvector *Bitvec, int *Adj,
+		int n,
+		int f_bitvec,
+		data_structures::bitvector *Bitvec,
+		int *Adj,
 		int *vertex_colors,
 		int *labeling,
 		int verbose_level);
 	actions::action *create_automorphism_group_of_graph_bitvec(
-		int n, data_structures::bitvector *Bitvec,
+		int n,
+		data_structures::bitvector *Bitvec,
 		int verbose_level);
 	actions::action *create_automorphism_group_of_graph_with_partition_and_labeling(
 		int n,
-		int f_bitvector, data_structures::bitvector *Bitvec, int *Adj,
+		int f_bitvector,
+		data_structures::bitvector *Bitvec,
+		int *Adj,
 		int nb_parts, int *parts,
 		int *labeling,
 		int verbose_level);
-	actions::action *create_automorphism_group_of_graph(int *Adj,
-		int n, int verbose_level);
+	actions::action *create_automorphism_group_of_graph(
+			int *Adj,
+		int n,
+		int verbose_level);
 	actions::action *create_automorphism_group_and_canonical_labeling_of_graph(
-		int *Adj, int n, int *labeling, int verbose_level);
+		int *Adj, int n, int *labeling,
+		int verbose_level);
 	// labeling[n]
 	void automorphism_group_as_permutation_group(
-			//strong_generators *&SG,
 			data_structures::nauty_output *NO,
 			actions::action *&A_perm,
 			int verbose_level);
@@ -249,7 +312,8 @@ public:
 	groups::strong_generators *set_stabilizer_of_object(
 			geometry::object_with_canonical_form *OwCF,
 			actions::action *A_linear,
-		int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
+		int f_compute_canonical_form,
+		data_structures::bitvector *&Canonical_form,
 		data_structures::nauty_output *&NO,
 		int verbose_level);
 
@@ -260,4 +324,4 @@ public:
 
 
 
-#endif /* SRC_LIB_LAYER3_GROUP_ACTIONS_INTERFACES_INTERFACES_H_ */
+#endif /* SRC_LIB_LAYER3_GROUP_ACTIONS_INTERFACES_L3_INTERFACES_H_ */

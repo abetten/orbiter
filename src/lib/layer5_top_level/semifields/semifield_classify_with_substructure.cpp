@@ -538,7 +538,7 @@ void semifield_classify_with_substructure::identify_semifield(int verbose_level)
 				cout << "fo=" << fo << endl;
 				cout << "po=" << po << endl;
 				cout << "isotopy:" << endl;
-				Sub->SC->A->element_print_quick(transporter, cout);
+				Sub->SC->A->Group_element->element_print_quick(transporter, cout);
 				cout << endl;
 			}
 			else {
@@ -607,7 +607,7 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 					cout << "fo=" << fo << endl;
 					cout << "po=" << po << endl;
 					cout << "isotopy:" << endl;
-					Sub->SC->A->element_print_quick(transporter, cout);
+					Sub->SC->A->Group_element->element_print_quick(transporter, cout);
 					cout << endl;
 					identify_semifields_from_file_Po[i * 6 + t] = po;
 				}
@@ -954,7 +954,7 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 				f = F1[h1].fusion_with;
 				cout << "f=" << f << endl;
 				cout << "fusion elt:" << endl;
-				Sub->SC->A->element_print_quick(F1[h1].fusion_elt, cout);
+				Sub->SC->A->Group_element->element_print_quick(F1[h1].fusion_elt, cout);
 			}
 			for (h2 = 0; h2 < F2->nb_flag_orbits; h2++) {
 				if (F2->Flag_orbit_node[h2].downstep_primary_orbit != i2) {

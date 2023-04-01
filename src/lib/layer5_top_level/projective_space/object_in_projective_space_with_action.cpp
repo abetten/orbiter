@@ -155,7 +155,8 @@ void object_in_projective_space_with_action::report(
 		OwCF->get_packing_as_set_system(Sets, nb_sets, set_size, verbose_level);
 
 
-		A_on_spreads = PA->A_on_lines->create_induced_action_on_sets(nb_sets,
+		A_on_spreads = PA->A_on_lines->Induced_action->create_induced_action_on_sets(
+				nb_sets,
 				set_size, Sets,
 				verbose_level);
 

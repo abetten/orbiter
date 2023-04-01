@@ -63,7 +63,8 @@ int longinteger_domain::compare_unsigned(
 	return 0;
 }
 
-int longinteger_domain::is_less_than(longinteger_object &a, longinteger_object &b)
+int longinteger_domain::is_less_than(
+		longinteger_object &a, longinteger_object &b)
 {
 	if (compare_unsigned(a, b) == -1)
 		return TRUE;
@@ -201,7 +202,8 @@ void longinteger_domain::add(
 	c.normalize();
 }
 
-void longinteger_domain::add_mod(longinteger_object &a,
+void longinteger_domain::add_mod(
+		longinteger_object &a,
 	longinteger_object &b, longinteger_object &c,
 	longinteger_object &m, int verbose_level)
 {
@@ -355,7 +357,8 @@ void longinteger_domain::mult_integer_in_place(
 	C.assign_to(a);
 }
 
-static int do_division(longinteger_domain &D,
+static int do_division(
+		longinteger_domain &D,
 		longinteger_object &r, longinteger_object table[10])
 {
 	int i, cmp;
@@ -1120,7 +1123,8 @@ void longinteger_domain::square_root(
 
 
 
-int longinteger_domain::square_root_mod(int a, int p, int verbose_level)
+int longinteger_domain::square_root_mod(
+		int a, int p, int verbose_level)
 // solves x^2 = a mod p. Returns x
 {
 	int f_v = (verbose_level >= 1);
@@ -1552,7 +1556,8 @@ int longinteger_domain::is_odd(longinteger_object &a)
 
 
 
-int longinteger_domain::remainder_mod_int(longinteger_object &a, int p)
+int longinteger_domain::remainder_mod_int(
+		longinteger_object &a, int p)
 {
 	int r;
 	longinteger_object q;
@@ -1561,7 +1566,8 @@ int longinteger_domain::remainder_mod_int(longinteger_object &a, int p)
 	return r;
 }
 
-int longinteger_domain::multiplicity_of_p(longinteger_object &a, 
+int longinteger_domain::multiplicity_of_p(
+		longinteger_object &a,
 	longinteger_object &residue, int p)
 {
 	int r, n = 0;
@@ -1754,7 +1760,8 @@ void longinteger_domain::factor_into_longintegers(
 	}
 }
 
-void longinteger_domain::factor(longinteger_object &a, 
+void longinteger_domain::factor(
+		longinteger_object &a,
 	int &nb_primes, int *&primes, int *&exponents, 
 	int verbose_level)
 {
@@ -1839,7 +1846,8 @@ void longinteger_domain::factor(longinteger_object &a,
 	}
 }
 
-int longinteger_domain::jacobi(longinteger_object &a, 
+int longinteger_domain::jacobi(
+		longinteger_object &a,
 	longinteger_object &m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2136,7 +2144,8 @@ void longinteger_domain::group_order_PGL(
 
 
 
-void longinteger_domain::square_root_floor(longinteger_object &a,
+void longinteger_domain::square_root_floor(
+		longinteger_object &a,
 		longinteger_object &x, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -428,8 +428,8 @@ int substructure_classification::find_extension_easy_old(long int *set,
 		cout << "case_nb=" << case_nb << endl;
 	}
 	Sorting.lint_vec_heapsort(set + Iso->level, Iso->size - Iso->level);
-	first = Iso->Lifting->solution_first[case_nb];
-	len = Iso->Lifting->solution_len[case_nb];
+	first = Iso->Lifting->starter_solution_first[case_nb];
+	len = Iso->Lifting->starter_solution_len[case_nb];
 	ret = find_extension_search_interval(set,
 		first, len, idx, FALSE, 0, FALSE, verbose_level);
 	if (f_v) {
@@ -925,13 +925,13 @@ void substructure_classification::create_level_database(int level, int verbose_l
 				if (f_v) {
 					cout << "substructure_classification::create_level_database before element_retrieve" << endl;
 				}
-				gen->get_A()->element_retrieve(
+				gen->get_A()->Group_element->element_retrieve(
 						gen_hdl[j], Iso->Folding->Elt1,
 						0/*verbose_level*/);
 				if (f_v) {
 					cout << "substructure_classification::create_level_database before element_write_file_fp" << endl;
 				}
-				gen->get_A()->element_write_file_fp(Iso->Folding->Elt1, fp,
+				gen->get_A()->Group_element->element_write_file_fp(Iso->Folding->Elt1, fp,
 						0/* verbose_level*/);
 				cnt++;
 			}
@@ -945,8 +945,8 @@ void substructure_classification::create_level_database(int level, int verbose_l
 				if (O->get_E(j)->get_type() == EXTENSION_TYPE_EXTENSION) {
 					continue;
 				}
-				gen->get_A()->element_retrieve(O->get_E(j)->get_data(), Iso->Folding->Elt1, FALSE);
-				gen->get_A()->element_write_file_fp(Iso->Folding->Elt1, fp,
+				gen->get_A()->Group_element->element_retrieve(O->get_E(j)->get_data(), Iso->Folding->Elt1, FALSE);
+				gen->get_A()->Group_element->element_write_file_fp(Iso->Folding->Elt1, fp,
 						0/* verbose_level*/);
 				cnt++;
 			}
@@ -1084,7 +1084,7 @@ void substructure_classification::load_strong_generators_tree(int cur_level,
 	gens.allocate(gen_hdl.size(), verbose_level - 2);
 
 	for (i = 0; i < gen_hdl.size(); i++) {
-		gen->get_A()->element_retrieve(
+		gen->get_A()->Group_element->element_retrieve(
 				gen_hdl[i],
 				gens.ith(i), FALSE);
 	}
@@ -1179,7 +1179,7 @@ void substructure_classification::load_strong_generators_database(int cur_level,
 	//fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
 	fp_ge->seekg(ref * gen->get_A()->coded_elt_size_in_char, ios::beg);
 	for (i = 0; i < nb_strong_generators; i++) {
-		gen->get_A()->element_read_file_fp(gens.ith(i), *fp_ge,
+		gen->get_A()->Group_element->element_read_file_fp(gens.ith(i), *fp_ge,
 				0/* verbose_level*/);
 	}
 finish:

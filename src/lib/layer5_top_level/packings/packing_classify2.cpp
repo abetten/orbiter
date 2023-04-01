@@ -53,7 +53,7 @@ void packing_classify::compute_klein_invariants(
 			}
 			continue;
 		}
-		id = Iso->Lifting->orbit_perm[Iso->Lifting->orbit_fst[Iso->Folding->Reps->rep[orbit]]];
+		id = Iso->Lifting->orbit_perm[Iso->Lifting->flag_orbit_solution_first[Iso->Folding->Reps->rep[orbit]]];
 	
 		Iso->Lifting->load_solution(id, the_packing, verbose_level - 1);
 		if (f_vv) {
@@ -109,7 +109,8 @@ void packing_classify::klein_invariants_fname(
 void packing_classify::compute_and_save_klein_invariants(
 		std::string &prefix,
 	int iso_cnt, 
-	long int *data, int data_size, int verbose_level)
+	long int *data, int data_size,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//ring_theory::longinteger_object *R;
@@ -132,7 +133,7 @@ void packing_classify::compute_and_save_klein_invariants(
 		cout << "packing_classify::compute_and_save_klein_invariants "
 				"before P3->Grass_lines->klein_correspondence" << endl;
 	}
-	P3->Grass_lines->klein_correspondence(P3, //P5,
+	P3->Subspaces->Grass_lines->klein_correspondence(P3, //P5,
 		data, data_size, list_of_lines_klein_image, 0/*verbose_level*/);
 
 	if (f_v) {
@@ -444,8 +445,10 @@ void packing_classify::report_packings_by_ago(
 
 
 void packing_classify::report_isomorphism_type(
-		isomorph::isomorph *Iso, std::ostream &ost,
-	int orbit, invariants_packing *inv, int verbose_level)
+		isomorph::isomorph *Iso,
+		std::ostream &ost,
+	int orbit, invariants_packing *inv,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, id, rep, first; //, c;
@@ -457,7 +460,7 @@ void packing_classify::report_isomorphism_type(
 
 
 	rep = Iso->Folding->Reps->rep[orbit];
-	first = Iso->Lifting->orbit_fst[rep];
+	first = Iso->Lifting->flag_orbit_solution_first[rep];
 	//c = Iso->starter_number[first];
 	id = Iso->Lifting->orbit_perm[first];
 	Iso->Lifting->load_solution(id, the_packing, verbose_level - 1);
@@ -600,7 +603,8 @@ void packing_classify::report_isomorphism_type(
 
 void packing_classify::report_packing_as_table(
 		isomorph::isomorph *Iso, std::ostream &ost,
-	int orbit, invariants_packing *inv, long int *list_of_lines,
+	int orbit,
+	invariants_packing *inv, long int *list_of_lines,
 	int verbose_level)
 {
 	orbiter_kernel_system::latex_interface L;
@@ -749,7 +753,8 @@ void packing_classify::report_klein_invariants(
 
 void packing_classify::report_stabilizer(
 		isomorph::isomorph &Iso,
-		std::ostream &ost, int orbit, int verbose_level)
+		std::ostream &ost, int orbit,
+		int verbose_level)
 {
 	groups::sims *Stab;
 	ring_theory::longinteger_object go;
@@ -773,7 +778,7 @@ void packing_classify::report_stabilizer(
 		//ord = A->element_order(Stab->gens.ith(i));
 
 		//f << "$$ g_{" << i + 1 << "}=" << endl;
-		T->A->element_print_latex(Stab->gens.ith(i), ost);
+		T->A->Group_element->element_print_latex(Stab->gens.ith(i), ost);
 		//f << "$$" << endl;
 		//f << "of order $" << ord << "$ and with " << n
 		//<< " fixed points" << endl;
@@ -782,7 +787,8 @@ void packing_classify::report_stabilizer(
 }
 
 void packing_classify::report_stabilizer_in_action(
-		isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+		isomorph::isomorph &Iso,
+		std::ostream &ost, int orbit,
 		int verbose_level)
 {
 	groups::sims *Stab;
@@ -811,7 +817,7 @@ void packing_classify::report_stabilizer_in_action(
 		//ord = A->element_order(Stab->gens.ith(i));
 
 		ost << "$";
-		Iso.Folding->AA->element_print_as_permutation_with_offset(
+		Iso.Folding->AA->Group_element->element_print_as_permutation_with_offset(
 			Stab->gens.ith(i), ost,
 			offset, f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one, 0 /* verbose_level */);
@@ -859,7 +865,7 @@ void packing_classify::report_stabilizer_in_action_gap(
 			//ord = A->element_order(Stab->gens.ith(i));
 
 			fp << "g" << i + 1 << " := ";
-			Iso.Folding->AA->element_print_as_permutation_with_offset(
+			Iso.Folding->AA->Group_element->element_print_as_permutation_with_offset(
 				Stab->gens.ith(i), fp,
 				offset, f_do_it_anyway_even_for_big_degree,
 				f_print_cycles_of_length_one, 0 /* verbose_level */);
@@ -885,7 +891,7 @@ void packing_classify::report_extra_stuff(
 {
 	ost << "\\chapter{The Field GF$(" << q << ")$}" << endl << endl;
 	
-	T->Mtx->GFq->cheat_sheet(ost, verbose_level - 1);
+	T->Mtx->GFq->Io->cheat_sheet(ost, verbose_level - 1);
 
 
 	ost << "\\chapter{The Points and Lines of "
@@ -900,7 +906,7 @@ void packing_classify::report_extra_stuff(
 		int i, j, u;
 		combinatorics::combinatorics_domain Combi;
 
-		nb_points = P3->N_points;
+		nb_points = P3->Subspaces->N_points;
 		nb_lines = Combi.generalized_binomial(4, 2, q);
 
 		ost << "PG$(3," << q << ")$ has " << nb_points
@@ -930,9 +936,9 @@ void packing_classify::report_extra_stuff(
 			ost << "\\end{array}" << endl;
 			ost << "\\right]" << endl;
 			ost << " = \\{" << endl;
-			for (i = 0; i < P3->k; i++) {
-				ost << P3->Implementation->Lines[u * P3->k + i];
-				if (i < P3->k - 1) {
+			for (i = 0; i < P3->Subspaces->k; i++) {
+				ost << P3->Subspaces->Implementation->Lines[u * P3->Subspaces->k + i];
+				if (i < P3->Subspaces->k - 1) {
 					ost << ", ";
 				}
 			}

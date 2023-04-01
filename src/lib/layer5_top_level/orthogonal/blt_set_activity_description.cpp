@@ -20,9 +20,12 @@ blt_set_activity_description::blt_set_activity_description()
 {
 	f_report = FALSE;
 
+	f_export_gap = FALSE;
+
 	f_create_flock = FALSE;
 	create_flock_point_idx = 0;
 
+	f_BLT_test = FALSE;
 
 }
 
@@ -48,11 +51,23 @@ int blt_set_activity_description::read_arguments(int argc, std::string *argv,
 				cout << "-report " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_gap") == 0) {
+			f_export_gap = TRUE;
+			if (f_v) {
+				cout << "-export_gap " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-create_flock") == 0) {
 			f_create_flock = TRUE;
 			create_flock_point_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-create_flock " << create_flock_point_idx << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-BLT_test") == 0) {
+			f_BLT_test = TRUE;
+			if (f_v) {
+				cout << "-BLT_test " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -76,8 +91,14 @@ void blt_set_activity_description::print()
 	if (f_report) {
 		cout << "-report " << endl;
 	}
+	if (f_export_gap) {
+		cout << "-export_gap " << endl;
+	}
 	if (f_create_flock) {
 		cout << "-create_flock " << create_flock_point_idx << endl;
+	}
+	if (f_BLT_test) {
+		cout << "-BLT_test " << endl;
 	}
 }
 

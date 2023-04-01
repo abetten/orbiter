@@ -229,7 +229,7 @@ void design_tables::create_action(
 		cout << "design_tables::create_action "
 				"creating action A_on_designs" << endl;
 	}
-	A_on_designs = A2->create_induced_action_on_sets(
+	A_on_designs = A2->Induced_action->create_induced_action_on_sets(
 			nb_designs, design_size,
 			the_table,
 			0 /* verbose_level */);

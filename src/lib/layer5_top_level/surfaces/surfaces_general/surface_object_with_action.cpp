@@ -591,13 +591,28 @@ void surface_object_with_action::init_orbits_on_points(
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_action action on points:" << endl;
+		cout << "surface_object_with_action::init_orbits_on_points action: ";
+		Surf_A->A->print_info();
 	}
-	A_on_points = Surf_A->A->restricted_action(
-			SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
+
+
+	std::string label_of_set;
+
+
+	label_of_set.assign("Pts");
+
 	if (f_v) {
-		cout << "surface_object_with_action action "
-				"on points done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_points "
+				"creating action on points:" << endl;
+	}
+
+	A_on_points = Surf_A->A->Induced_action->restricted_action(
+			SO->Pts, SO->nb_pts, label_of_set,
+			0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_points "
+				"creating action on points done" << endl;
 	}
 
 
@@ -618,9 +633,18 @@ void surface_object_with_action::init_orbits_on_points(
 		if (f_v) {
 			cout << "surface_object_with_action::init_orbits_on_points "
 					"computing orbits on points using Aut_gens:" << endl;
+			Aut_gens->print_generators(cout);
+		}
+		if (f_v) {
+			cout << "surface_object_with_action::init_orbits_on_points "
+					"before Aut_gens->orbits_on_points_schreier" << endl;
 		}
 		Orbits_on_points = Aut_gens->orbits_on_points_schreier(
-				A_on_points, 0 /*verbose_level*/);
+				A_on_points, verbose_level - 2);
+		if (f_v) {
+			cout << "surface_object_with_action::init_orbits_on_points "
+					"after Aut_gens->orbits_on_points_schreier" << endl;
+		}
 	}
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_points "
@@ -642,11 +666,17 @@ void surface_object_with_action::init_orbits_on_Eckardt_points(
 		cout << "surface_object_with_action::init_orbits_on_Eckardt_points" << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("Eckardt");
+
 	if (f_v) {
 		cout << "creating action on Eckardt points:" << endl;
 	}
-	A_on_Eckardt_points = Surf_A->A->restricted_action(
-			SO->SOP->Eckardt_points, SO->SOP->nb_Eckardt_points, 0 /*verbose_level*/);
+	A_on_Eckardt_points = Surf_A->A->Induced_action->restricted_action(
+			SO->SOP->Eckardt_points, SO->SOP->nb_Eckardt_points, label_of_set,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Eckardt points done" << endl;
 	}
@@ -686,11 +716,16 @@ void surface_object_with_action::init_orbits_on_Double_points(
 		cout << "surface_object_with_action::init_orbits_on_Double_points" << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("Double_pts");
+
 	if (f_v) {
 		cout << "creating action on Double points:" << endl;
 	}
-	A_on_Double_points = Surf_A->A->restricted_action(
-			SO->SOP->Double_points, SO->SOP->nb_Double_points,
+	A_on_Double_points = Surf_A->A->Induced_action->restricted_action(
+			SO->SOP->Double_points, SO->SOP->nb_Double_points, label_of_set,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Double points done" << endl;
@@ -727,11 +762,16 @@ void surface_object_with_action::init_orbits_on_Single_points(
 		cout << "surface_object_with_action::init_orbits_on_Single_points" << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("Single_pts");
+
 	if (f_v) {
 		cout << "creating action on Single points:" << endl;
 	}
-	A_on_Single_points = Surf_A->A->restricted_action(
-			SO->SOP->Single_points, SO->SOP->nb_Single_points,
+	A_on_Single_points = Surf_A->A->Induced_action->restricted_action(
+			SO->SOP->Single_points, SO->SOP->nb_Single_points, label_of_set,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Single points done" << endl;
@@ -768,12 +808,18 @@ void surface_object_with_action::init_orbits_on_lines(
 		cout << "surface_object_with_action::init_orbits_on_lines" << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("Lines");
+
 	if (f_v) {
 		cout << "creating restricted action "
 				"on the lines:" << endl;
 	}
-	A_on_the_lines = Surf_A->A2->restricted_action(
-			SO->Lines, SO->nb_lines, 0 /*verbose_level*/);
+	A_on_the_lines = Surf_A->A2->Induced_action->restricted_action(
+			SO->Lines, SO->nb_lines, label_of_set,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating restricted action "
 				"on the lines done" << endl;
@@ -812,7 +858,7 @@ void surface_object_with_action::init_orbits_on_half_double_sixes(
 	if (f_v) {
 		cout << "creating action on half double sixes:" << endl;
 	}
-	A_single_sixes = A_on_the_lines->create_induced_action_on_sets(
+	A_single_sixes = A_on_the_lines->Induced_action->create_induced_action_on_sets(
 			72, 6, Surf->Schlaefli->Double_six,
 			0 /*verbose_level*/);
 	if (f_v) {
@@ -867,7 +913,7 @@ void surface_object_with_action::init_orbits_on_double_sixes(
 	if (f_v) {
 		cout << "creating action on half double sixes:" << endl;
 	}
-	A_double_sixes = A_single_sixes->create_induced_action_on_sets(
+	A_double_sixes = A_single_sixes->Induced_action->create_induced_action_on_sets(
 			36, 2, double_six_sets,
 			0 /*verbose_level*/);
 	if (f_v) {
@@ -914,9 +960,9 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 		cout << "SO->SOP->nb_tritangent_planes = "
 				<< SO->SOP->SmoothProperties->nb_tritangent_planes << endl;
 	}
-	A_on_tritangent_planes = A_on_the_lines->create_induced_action_on_sets(
+	A_on_tritangent_planes =
+			A_on_the_lines->Induced_action->create_induced_action_on_sets(
 			SO->SOP->SmoothProperties->nb_tritangent_planes, 3,
-			//SO->Lines_in_tritangent_planes,
 			Surf->Schlaefli->Lines_in_tritangent_planes,
 			0 /*verbose_level*/);
 	if (f_v) {
@@ -955,13 +1001,19 @@ void surface_object_with_action::init_orbits_on_Hesse_planes(int verbose_level)
 		cout << "surface_object_with_action::init_orbits_on_Hesse_planes" << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("Hesse_planes");
+
 	if (f_v) {
 		cout << "creating action on Hesse planes:" << endl;
 		cout << "SO->SOP->nb_Hesse_planes = "
 				<< SO->SOP->nb_Hesse_planes << endl;
 	}
-	A_on_Hesse_planes = Surf_A->A_on_planes->restricted_action(
-			SO->SOP->Hesse_planes, SO->SOP->nb_Hesse_planes, 0 /*verbose_level*/);
+	A_on_Hesse_planes = Surf_A->A_on_planes->Induced_action->restricted_action(
+			SO->SOP->Hesse_planes, SO->SOP->nb_Hesse_planes, label_of_set,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on Hesse planes done" << endl;
 	}
@@ -998,6 +1050,11 @@ void surface_object_with_action::init_orbits_on_axes(int verbose_level)
 		cout << "surface_object_with_action::init_orbits_on_axes" << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("axes");
+
 	if (f_v) {
 		cout << "creating action on axes:" << endl;
 		cout << "SO->SOP->nb_axes = "
@@ -1010,8 +1067,8 @@ void surface_object_with_action::init_orbits_on_axes(int verbose_level)
 		cout << "surface_object_with_action::init_orbits_on_axes "
 				"before Surf_A->A2->restricted_action" << endl;
 	}
-	A_on_axes = Surf_A->A2->restricted_action(
-			SO->SOP->Axes_line_rank, SO->SOP->nb_axes,
+	A_on_axes = Surf_A->A2->Induced_action->restricted_action(
+			SO->SOP->Axes_line_rank, SO->SOP->nb_axes, label_of_set,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "surface_object_with_action::init_orbits_on_axes "
@@ -1056,7 +1113,7 @@ void surface_object_with_action::init_orbits_on_trihedral_pairs(
 		cout << "creating action on trihedral pairs:" << endl;
 	}
 	A_on_trihedral_pairs =
-			A_on_tritangent_planes->create_induced_action_on_sets(
+			A_on_tritangent_planes->Induced_action->create_induced_action_on_sets(
 					120, 6,
 					Surf->Schlaefli->Trihedral_to_Eckardt,
 					0 /*verbose_level*/);
@@ -1096,11 +1153,17 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 		cout << "surface_object_with_action::init_orbits_on_points_not_on_lines" << endl;
 	}
 
+
+	std::string label_of_set;
+
+
+	label_of_set.assign("pts_not_on_lines");
+
 	if (f_v) {
 		cout << "creating action on points not on lines:" << endl;
 	}
-	A_on_pts_not_on_lines = Surf_A->A->restricted_action(
-			SO->SOP->Pts_not_on_lines, SO->SOP->nb_pts_not_on_lines,
+	A_on_pts_not_on_lines = Surf_A->A->Induced_action->restricted_action(
+			SO->SOP->Pts_not_on_lines, SO->SOP->nb_pts_not_on_lines, label_of_set,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on points not on lines done" << endl;
@@ -1816,7 +1879,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 	ost << "\\bigskip" << endl;
 
 	ost << "\\section{The Finite Field $\\mathbb F_{" << SC->F->q << "}$}" << endl;
-	SC->F->cheat_sheet(ost, verbose_level);
+	SC->F->Io->cheat_sheet(ost, verbose_level);
 
 
 
@@ -2579,11 +2642,11 @@ void surface_object_with_action::print_action_on_surface(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->make_element(Elt,
+			A->Group_element->make_element(Elt,
 					element_data + i * A->make_element_size,
 					verbose_level);
 
-			ord = A->element_order(Elt);
+			ord = A->Group_element->element_order(Elt);
 
 			ost << "Element " << setw(5) << i << " / "
 					<< nb_elements << " of order " << ord << ":" << endl;
@@ -2593,7 +2656,7 @@ void surface_object_with_action::print_action_on_surface(
 			if (TRUE /* f_with_fix_structure*/) {
 				int f;
 
-				f = A->count_fixed_points(Elt, 0 /* verbose_level */);
+				f = A->Group_element->count_fixed_points(Elt, 0 /* verbose_level */);
 
 				ost << "$f=" << f << "$\\\\" << endl;
 			}
@@ -2602,54 +2665,54 @@ void surface_object_with_action::print_action_on_surface(
 			ost << endl;
 
 			ost << "Action on points: \\\\" << endl;
-			A_on_points->element_print_as_permutation(Elt, ost);
+			A_on_points->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 
 			ost << "Action on Eckardt points: \\\\" << endl;
-			A_on_Eckardt_points->element_print_as_permutation(Elt, ost);
+			A_on_Eckardt_points->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on Double points: \\\\" << endl;
-			A_on_Double_points->element_print_as_permutation(Elt, ost);
+			A_on_Double_points->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on Single points: \\\\" << endl;
-			A_on_Single_points->element_print_as_permutation(Elt, ost);
+			A_on_Single_points->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on lines: \\\\" << endl;
-			A_on_the_lines->element_print_as_permutation(Elt, ost);
+			A_on_the_lines->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on single sixes: \\\\" << endl;
-			A_single_sixes->element_print_as_permutation(Elt, ost);
+			A_single_sixes->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on tritangent planes: \\\\" << endl;
-			A_on_tritangent_planes->element_print_as_permutation(Elt, ost);
+			A_on_tritangent_planes->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on Hesse planes: \\\\" << endl;
-			A_on_Hesse_planes->element_print_as_permutation(Elt, ost);
+			A_on_Hesse_planes->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 
 			ost << "Action on trihedral pairs: \\\\" << endl;
-			A_on_trihedral_pairs->element_print_as_permutation(Elt, ost);
+			A_on_trihedral_pairs->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 			ost << "Action on points not on lines: \\\\" << endl;
-			A_on_pts_not_on_lines->element_print_as_permutation(Elt, ost);
+			A_on_pts_not_on_lines->Group_element->element_print_as_permutation(Elt, ost);
 			ost << "\\bigskip" << endl;
 			ost << endl;
 

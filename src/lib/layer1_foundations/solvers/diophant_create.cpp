@@ -32,6 +32,7 @@ diophant_create::~diophant_create()
 void diophant_create::init(
 		diophant_description *Descr,
 		int verbose_level)
+// creates a projective space P2 in case of maximal arcs
 {
 	int f_v = (verbose_level >= 1);
 
@@ -56,28 +57,12 @@ void diophant_create::init(
 
 		field_theory::finite_field *F = NULL;
 
-		if (Descr->f_q) {
-			F = NEW_OBJECT(field_theory::finite_field);
-
-			if (Descr->f_override_polynomial) {
-				cout << "creating finite field of order q=" << Descr->input_q
-						<< " using override polynomial " << Descr->override_polynomial << endl;
-				F->init_override_polynomial_small_order(Descr->input_q,
-						Descr->override_polynomial,
-						FALSE /* f_without_tables */,
-						FALSE /* f_compute_related_fields */,
-						verbose_level);
-			}
-			else {
-				cout << "diophant_create::init creating finite field "
-						"of order q=" << Descr->input_q
-						<< " using the default polynomial (if necessary)" << endl;
-				F->finite_field_init_small_order(Descr->input_q,
-						FALSE /* f_without_tables */,
-						FALSE /* f_compute_related_fields */,
-						0);
-			}
-
+		if (Descr->f_field) {
+			F = Get_finite_field(Descr->field_label);
+		}
+		else {
+			cout << "diophant_create::init please specify the field using -field <label>" << endl;
+			exit(1);
 		}
 
 
@@ -100,16 +85,13 @@ void diophant_create::init(
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		snprintf(str, sizeof(str), "max_arc_%d_%d_%d.diophant", Descr->input_q,
+		snprintf(str, sizeof(str), "max_arc_%d_%d_%d.diophant", F->q,
 				Descr->maximal_arc_sz, Descr->maximal_arc_d);
 		fname.assign(str);
 		D->save_in_general_format(fname, verbose_level);
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 		FREE_OBJECT(P);
-		if (F) {
-			FREE_OBJECT(F);
-		}
 	}
 	if (Descr->f_coefficient_matrix) {
 		int *A;
@@ -120,7 +102,7 @@ void diophant_create::init(
 					A, m, n);
 
 		D = NEW_OBJECT(diophant);
-		D->open(m, n);
+		D->open(m, n, verbose_level - 1);
 
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
@@ -148,7 +130,7 @@ void diophant_create::init(
 		int nb_k_orbits = nb_rows;
 
 		D = NEW_OBJECT(diophant);
-		D->open(nb_t_orbits, nb_k_orbits);
+		D->open(nb_t_orbits, nb_k_orbits, verbose_level - 1);
 
 		for (j = 0; j < nb_k_orbits; j++) {
 			for (h = 0; h < nb_cols; h++) {
@@ -184,7 +166,7 @@ void diophant_create::init(
 
 		D = NEW_OBJECT(diophant);
 
-		D->open(m, n);
+		D->open(m, n, verbose_level - 1);
 
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
@@ -205,7 +187,8 @@ void diophant_create::init(
 		}
 		Int_vec_scan(Descr->RHS_text, RHS, sz);
 		if (sz != 3 * D->m) {
-			cout << "number of values for RHS must be 3 times the number of rows of the system" << endl;
+			cout << "number of values for RHS must be "
+					"3 times the number of rows of the system" << endl;
 			exit(1);
 		}
 		for (i = 0; i < D->m; i++) {
@@ -252,7 +235,8 @@ void diophant_create::init(
 				RHS,
 				m, n, verbose_level);
 		if (n != 3) {
-			cout << "reading RHS from file " << Descr->RHS_csv_text << ". Csv file must have exactly 3 column2." << endl;
+			cout << "reading RHS from file " << Descr->RHS_csv_text
+					<< ". Csv file must have exactly 3 column2." << endl;
 			exit(1);
 		}
 		if (m != D->m) {

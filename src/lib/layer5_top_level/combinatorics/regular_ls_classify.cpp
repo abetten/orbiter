@@ -12,8 +12,10 @@ namespace layer5_applications {
 namespace apps_combinatorics {
 
 
-static void regular_ls_classify_print_set(std::ostream &ost, int len, long int *S, void *data);
-static void regular_ls_classify_early_test_function(long int *S, int len,
+static void regular_ls_classify_print_set(
+		std::ostream &ost, int len, long int *S, void *data);
+static void regular_ls_classify_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -198,8 +200,8 @@ void regular_ls_classify::init_action_on_k_subsets(
 		cout << "regular_ls_classify::init_action_on_k_subsets "
 				"creating action on k-subsets for k=" << k << endl;
 	}
-	A2 = NEW_OBJECT(actions::action);
-	A2->induced_action_on_k_subsets(*A, k, verbose_level - 2);
+	//A2 = NEW_OBJECT(actions::action);
+	A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level - 2);
 
 	Aonk = A2->G.on_k_subsets;
 	
@@ -464,7 +466,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	nb_cols = nb_candidates;
 
 	Dio = NEW_OBJECT(solvers::diophant);
-	Dio->open(nb_rows, nb_cols);
+	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->f_has_sum = TRUE;
 	Dio->sum = nb_needed;
 
@@ -530,7 +532,8 @@ void regular_ls_classify::lifting_prepare_function_new(
 
 
 
-static void regular_ls_classify_print_set(std::ostream &ost, int len, long int *S, void *data)
+static void regular_ls_classify_print_set(
+		std::ostream &ost, int len, long int *S, void *data)
 {
 	regular_ls_classify *Gen = (regular_ls_classify *) data;
 	
@@ -538,7 +541,8 @@ static void regular_ls_classify_print_set(std::ostream &ost, int len, long int *
 	Gen->print(ost, S, len);
 }
 
-static void regular_ls_classify_early_test_function(long int *S, int len,
+static void regular_ls_classify_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

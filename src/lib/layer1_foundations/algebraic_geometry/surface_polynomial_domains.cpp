@@ -142,34 +142,40 @@ void surface_polynomial_domains::init(surface_domain *Surf, int verbose_level)
 	Poly3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly1->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly1->init" << endl;
 	}
 	Poly1->init(Surf->F,
 			3 /* nb_vars */, 1 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly1->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly1->init" << endl;
 	}
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly2->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly2->init" << endl;
 	}
 	Poly2->init(Surf->F,
 			3 /* nb_vars */, 2 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly2->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly2->init" << endl;
 	}
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly3->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly3->init" << endl;
 	}
 	Poly3->init(Surf->F,
 			3 /* nb_vars */, 3 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly3->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly3->init" << endl;
 	}
 
 	Poly1_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
@@ -177,44 +183,52 @@ void surface_polynomial_domains::init(surface_domain *Surf, int verbose_level)
 	Poly3_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	Poly4_x123 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly1_x123->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly1_x123->init" << endl;
 	}
 	Poly1_x123->init(Surf->F,
 			3 /* nb_vars */, 1 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly1_x123->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly1_x123->init" << endl;
 	}
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly2_x123->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly2_x123->init" << endl;
 	}
 	Poly2_x123->init(Surf->F,
 			3 /* nb_vars */, 2 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly2_x123->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly2_x123->init" << endl;
 	}
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly3_x123->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly3_x123->init" << endl;
 	}
 	Poly3_x123->init(Surf->F,
 			3 /* nb_vars */, 3 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly3_x123->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly3_x123->init" << endl;
 	}
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly4_x123->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly4_x123->init" << endl;
 	}
 	Poly4_x123->init(Surf->F,
 			3 /* nb_vars */, 4 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly4_x123->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly4_x123->init" << endl;
 	}
 
 
@@ -231,44 +245,52 @@ void surface_polynomial_domains::init(surface_domain *Surf, int verbose_level)
 	Poly2_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	Poly3_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly1_4->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly1_4->init" << endl;
 	}
 	Poly1_4->init(Surf->F,
 			4 /* nb_vars */, 1 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly1_4->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly1_4->init" << endl;
 	}
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly2_4->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly2_4->init" << endl;
 	}
 	Poly2_4->init(Surf->F,
 			4 /* nb_vars */, 2 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly2_4->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly2_4->init" << endl;
 	}
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before Poly3_4->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before Poly3_4->init" << endl;
 	}
 	Poly3_4->init(Surf->F,
 			4 /* nb_vars */, 3 /* degree */,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after Poly3_4->init" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after Poly3_4->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains before label_variables_4" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"before label_variables_4" << endl;
 	}
 	label_variables_4(Poly1_4, 0 /* verbose_level */);
 	label_variables_4(Poly2_4, 0 /* verbose_level */);
 	label_variables_4(Poly3_4, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains after label_variables_4" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"after label_variables_4" << endl;
 	}
 
 	nb_monomials = Poly3_4->get_nb_monomials();
@@ -285,13 +307,15 @@ void surface_polynomial_domains::init(surface_domain *Surf, int verbose_level)
 	int i;
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains initializing partials" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"initializing partials" << endl;
 	}
 	for (i = 0; i < 4; i++) {
 		Partials[i].init(Poly3_4, Poly2_4, i, verbose_level);
 	}
 	if (f_v) {
-		cout << "surface_polynomial_domains::init_polynomial_domains initializing partials done" << endl;
+		cout << "surface_polynomial_domains::init_polynomial_domains "
+				"initializing partials done" << endl;
 	}
 
 
@@ -525,7 +549,8 @@ void surface_polynomial_domains::label_variables_24(
 		cout << "surface_polynomial_domains::label_variables_24" << endl;
 	}
 	if (HPD->nb_variables != 24) {
-		cout << "surface_polynomial_domains::label_variables_24 HPD->n != 24" << endl;
+		cout << "surface_polynomial_domains::label_variables_24 "
+				"HPD->n != 24" << endl;
 		exit(1);
 	}
 
@@ -766,7 +791,8 @@ void surface_polynomial_domains::multiply_Poly2_3_times_Poly2_3(
 	}
 }
 
-void surface_polynomial_domains::multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
+void surface_polynomial_domains::multiply_Poly1_3_times_Poly3_3(
+		int *input1, int *input2,
 	int *result, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -902,7 +928,8 @@ void surface_polynomial_domains::clebsch_cubics(int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::clebsch_cubics allocating cubics" << endl;
+		cout << "surface_polynomial_domains::clebsch_cubics "
+				"allocating cubics" << endl;
 	}
 
 	Cubics = NEW_int(4 * nb_monomials6);
@@ -921,8 +948,8 @@ void surface_polynomial_domains::clebsch_cubics(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::clebsch_cubics computing "
-				"C[3] = the determinant" << endl;
+		cout << "surface_polynomial_domains::clebsch_cubics "
+				"computing C[3] = the determinant" << endl;
 	}
 	// compute C[3] as the negative of the determinant
 	// of the matrix of the first three columns:
@@ -959,9 +986,10 @@ void surface_polynomial_domains::clebsch_cubics(int verbose_level)
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::clebsch_cubics computing adjugate" << endl;
+		cout << "surface_polynomial_domains::clebsch_cubics "
+				"computing adjoint" << endl;
 	}
-	// compute adjugate:
+	// compute adjoint:
 	for (i = 0; i < 3; i++) {
 		I[0] = i;
 		Combi.set_complement(I, 1, I + 1, size_complement, 3);
@@ -975,15 +1003,19 @@ void surface_polynomial_domains::clebsch_cubics(int verbose_level)
 			else {
 				scalar = 1;
 			}
-			minor22(Clebsch_P3, I[1], I[2], J[1], J[2], scalar,
-					Ad[j * 3 + i], 0 /* verbose_level */);
+			minor22(
+					Clebsch_P3,
+					I[1], I[2], J[1], J[2],
+					scalar,
+					Ad[j * 3 + i],
+					0 /* verbose_level */);
 		}
 	}
 
-	// multiply adjugate * last column:
+	// multiply adjoint * last column:
 	if (f_v) {
-		cout << "surface_polynomial_domains::clebsch_cubics multiply adjugate "
-				"times last column" << endl;
+		cout << "surface_polynomial_domains::clebsch_cubics "
+				"multiply adjoint times last column" << endl;
 	}
 
 	for (i = 0; i < 3; i++) {
@@ -994,8 +1026,8 @@ void surface_polynomial_domains::clebsch_cubics(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::clebsch_cubics We have "
-				"computed the Clebsch cubics" << endl;
+		cout << "surface_polynomial_domains::clebsch_cubics "
+				"We have computed the Clebsch cubics" << endl;
 	}
 
 
@@ -1040,7 +1072,8 @@ void surface_polynomial_domains::clebsch_cubics(int verbose_level)
 	}
 }
 
-void surface_polynomial_domains::multiply_222_27_and_add(int *M1, int *M2, int *M3,
+void surface_polynomial_domains::multiply_222_27_and_add(
+		int *M1, int *M2, int *M3,
 	int scalar, int *MM, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1073,7 +1106,8 @@ void surface_polynomial_domains::multiply_222_27_and_add(int *M1, int *M2, int *
 					continue;
 				}
 				d = Surf->F->mult3(a, b, c);
-				orbiter_kernel_system::Orbiter->Int_vec->add3(Poly2_27->get_monomial_pointer(i),
+				orbiter_kernel_system::Orbiter->Int_vec->add3(
+						Poly2_27->get_monomial_pointer(i),
 					Poly2_27->get_monomial_pointer(j),
 					Poly2_27->get_monomial_pointer(k),
 					M, 27);
@@ -1095,7 +1129,8 @@ void surface_polynomial_domains::multiply_222_27_and_add(int *M1, int *M2, int *
 	}
 }
 
-void surface_polynomial_domains::minor22(int **P3, int i1, int i2, int j1, int j2,
+void surface_polynomial_domains::minor22(
+		int **P3, int i1, int i2, int j1, int j2,
 	int scalar, int *Ad, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1168,7 +1203,8 @@ void surface_polynomial_domains::minor22(int **P3, int i1, int i2, int j1, int j
 	}
 }
 
-void surface_polynomial_domains::multiply42_and_add(int *M1, int *M2,
+void surface_polynomial_domains::multiply42_and_add(
+		int *M1, int *M2,
 		int *MM, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1213,7 +1249,8 @@ void surface_polynomial_domains::multiply42_and_add(int *M1, int *M2,
 	}
 }
 
-void surface_polynomial_domains::split_nice_equation(int *nice_equation,
+void surface_polynomial_domains::split_nice_equation(
+		int *nice_equation,
 	int *&f1, int *&f2, int *&f3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1368,11 +1405,13 @@ long int surface_polynomial_domains::compute_tangent_plane(
 		cout << "surface_polynomial_domains::compute_tangent_plane" << endl;
 	}
 	if (f_v) {
-		cout << "surface_polynomial_domains::compute_tangent_plane before compute_gradient" << endl;
+		cout << "surface_polynomial_domains::compute_tangent_plane "
+				"before compute_gradient" << endl;
 	}
 	compute_gradient(equation20, gradient, verbose_level - 2);
 	if (f_v) {
-		cout << "surface_polynomial_domains::compute_tangent_plane after compute_gradient" << endl;
+		cout << "surface_polynomial_domains::compute_tangent_plane "
+				"after compute_gradient" << endl;
 	}
 
 	for (i = 0; i < nb_eqns; i++) {
@@ -1402,7 +1441,8 @@ long int surface_polynomial_domains::compute_tangent_plane(
 	}
 
 	if (i == nb_eqns) {
-		cout << "surface_polynomial_domains::compute_tangent_plane the point is singular" << endl;
+		cout << "surface_polynomial_domains::compute_tangent_plane "
+				"the point is singular" << endl;
 		exit(1);
 	}
 	long int plane_rk;
@@ -1416,7 +1456,8 @@ long int surface_polynomial_domains::compute_tangent_plane(
 	return plane_rk;
 }
 
-void surface_polynomial_domains::print_clebsch_P(std::ostream &ost)
+void surface_polynomial_domains::print_clebsch_P(
+		std::ostream &ost)
 {
 	int h, i, f_first;
 
@@ -1425,7 +1466,7 @@ void surface_polynomial_domains::print_clebsch_P(std::ostream &ost)
 				"f_has_large_polynomial_domains is FALSE" << endl;
 		//exit(1);
 		return;
-		}
+	}
 	ost << "\\clearpage" << endl;
 	ost << "\\subsection*{The Clebsch system $P$}" << endl;
 
@@ -1458,15 +1499,15 @@ void surface_polynomial_domains::print_clebsch_P(std::ostream &ost)
 
 			if (Poly3_24->is_zero(CC[h * Poly3->get_nb_monomials() + i])) {
 				continue;
-				}
+			}
 			ost << "&";
 
 			if (f_first) {
 				f_first = FALSE;
-				}
+			}
 			else {
 				ost << "+";
-				}
+			}
 			ost << "\\Big(";
 			Poly3_24->print_equation_with_line_breaks_tex(
 					ost, CC[h * Poly3->get_nb_monomials() + i],
@@ -1477,12 +1518,13 @@ void surface_polynomial_domains::print_clebsch_P(std::ostream &ost)
 
 			Poly3->print_monomial(ost, i);
 			ost << "\\\\" << endl;
-			}
 		}
+	}
 	ost << "\\end{align*}" << endl;
 }
 
-void surface_polynomial_domains::print_clebsch_P_matrix_only(std::ostream &ost)
+void surface_polynomial_domains::print_clebsch_P_matrix_only(
+		std::ostream &ost)
 {
 	int i, j;
 
@@ -1490,7 +1532,7 @@ void surface_polynomial_domains::print_clebsch_P_matrix_only(std::ostream &ost)
 		cout << "surface_polynomial_domains::print_clebsch_P_matrix_only "
 				"f_has_large_polynomial_domains is FALSE" << endl;
 		exit(1);
-		}
+	}
 	ost << "\\left[" << endl;
 	ost << "\\begin{array}{cccc}" << endl;
 	for (i = 0; i < 3; i++) {
@@ -1499,15 +1541,16 @@ void surface_polynomial_domains::print_clebsch_P_matrix_only(std::ostream &ost)
 			Poly2_27->print_equation(ost, Clebsch_P[i * 4 + j]);
 			if (j < 4 - 1) {
 				ost << " & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 	ost << "\\right]" << endl;
 }
 
-void surface_polynomial_domains::print_clebsch_cubics(std::ostream &ost)
+void surface_polynomial_domains::print_clebsch_cubics(
+		std::ostream &ost)
 {
 	int i, h;
 
@@ -1515,7 +1558,7 @@ void surface_polynomial_domains::print_clebsch_cubics(std::ostream &ost)
 		cout << "surface_polynomial_domains::print_clebsch_cubics "
 				"f_has_large_polynomial_domains is FALSE" << endl;
 		exit(1);
-		}
+	}
 	ost << "The Clebsch coefficients are:" << endl;
 	for (h = 0; h < 4; h++) {
 		ost << "C[" << h << "]:" << endl;
@@ -1523,17 +1566,18 @@ void surface_polynomial_domains::print_clebsch_cubics(std::ostream &ost)
 
 			if (Poly3_24->is_zero(CC[h * Poly3->get_nb_monomials() + i])) {
 				continue;
-				}
+			}
 
 			Poly3->print_monomial(ost, i);
 			ost << " \\cdot \\Big(";
 			Poly3_24->print_equation(ost, CC[h * Poly3->get_nb_monomials() + i]);
 			ost << "\\Big)" << endl;
-			}
 		}
+	}
 }
 
-void surface_polynomial_domains::print_system(std::ostream &ost, int *system)
+void surface_polynomial_domains::print_system(
+		std::ostream &ost, int *system)
 {
 	int i, j;
 
@@ -1547,10 +1591,10 @@ void surface_polynomial_domains::print_system(std::ostream &ost, int *system)
 			Poly1->print_equation(ost, p);
 			if (j < 4 - 1) {
 				ost << " & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 	ost << "\\right]" << endl;
 	ost << "\\cdot \\left[" << endl;
@@ -1571,26 +1615,28 @@ void surface_polynomial_domains::print_system(std::ostream &ost, int *system)
 	ost << "$$" << endl;
 }
 
-void surface_polynomial_domains::print_polynomial_domains(std::ostream &ost)
+void surface_polynomial_domains::print_polynomial_domains_latex(
+		std::ostream &ost)
 {
-	ost << "The polynomial domain Poly3\\_4 is:" << endl;
-	Poly3_4->print_monomial_ordering(ost);
+	ost << "The polynomial domain Poly3\\_4 is\\\\" << endl;
+	Poly3_4->print_monomial_ordering_latex(ost);
 
-	ost << "The polynomial domain Poly1\\_x123 is:" << endl;
-	Poly1_x123->print_monomial_ordering(ost);
+	ost << "The polynomial domain Poly1\\_x123 is\\\\" << endl;
+	Poly1_x123->print_monomial_ordering_latex(ost);
 
-	ost << "The polynomial domain Poly2\\_x123 is:" << endl;
-	Poly2_x123->print_monomial_ordering(ost);
+	ost << "The polynomial domain Poly2\\_x123 is\\\\" << endl;
+	Poly2_x123->print_monomial_ordering_latex(ost);
 
-	ost << "The polynomial domain Poly3\\_x123 is:" << endl;
-	Poly3_x123->print_monomial_ordering(ost);
+	ost << "The polynomial domain Poly3\\_x123 is\\\\" << endl;
+	Poly3_x123->print_monomial_ordering_latex(ost);
 
-	ost << "The polynomial domain Poly4\\_x123 is:" << endl;
-	Poly4_x123->print_monomial_ordering(ost);
+	ost << "The polynomial domain Poly4\\_x123 is\\\\" << endl;
+	Poly4_x123->print_monomial_ordering_latex(ost);
 
 }
 
-void surface_polynomial_domains::print_equation_in_trihedral_form(std::ostream &ost,
+void surface_polynomial_domains::print_equation_in_trihedral_form(
+		std::ostream &ost,
 	int *the_six_plane_equations,
 	int lambda, int *the_equation)
 {

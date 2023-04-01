@@ -106,6 +106,10 @@ uint32_t crc_codes::crc32(const uint8_t *s, size_t n)
 	return ~crc;
 }
 
+
+
+
+
 void crc_codes::crc32_test(int block_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -149,6 +153,407 @@ void crc_codes::crc32_test(int block_length, int verbose_level)
 
 	if (f_v) {
 		cout << "crc_codes::crc32_test" << endl;
+	}
+}
+
+#if 0
+void crc_codes::test_alfa(long int Nb_test, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "crc_codes::test_alfa" << endl;
+	}
+
+	orbiter_kernel_system::os_interface Os;
+	int Len_info = 771 - 3;
+	int Len_check = 3;
+	int Len_total = 771;
+	unsigned char *Data;
+	unsigned char *Check;
+	long int i, j, h, a, v;
+	long int nb_undetected = 0;
+	unsigned char c;
+	int *A;
+	int *V;
+
+	Data = (unsigned char *) NEW_char(Len_total);
+	Check = (unsigned char *) NEW_char(3);
+	A = NEW_int(k);
+	V = NEW_int(k);
+
+	for (i = 0; i < Nb_test; i++) {
+		char_vec_zero(Data, Len_total);
+
+
+		for (j = 0; j < k; j++) {
+			int f_repeat;
+
+			while (TRUE) {
+				a = Len_check + Os.random_integer(Len_info);
+
+				f_repeat = FALSE;
+				for (h = 0; h < j; h++) {
+					if (A[h] == a) {
+						f_repeat = TRUE;
+					}
+				}
+				if (!f_repeat) {
+					break;
+				}
+			}
+			A[j] = a;
+			v = 1 + Os.random_integer(255);
+			V[j] = v;
+			c = (unsigned char) v;
+			Data[a] = c;
+		}
+		divide_alfa(Data /* in771 */, Check /*out3*/);
+		for (j = 0; j < Len_check; j++) {
+			if (Check[j]) {
+				break;
+			}
+		}
+		if (j == Len_check) {
+			cout << i << "," << nb_undetected << ",";
+			Int_vec_print(cout, A, k);
+			cout << ",";
+			Int_vec_print(cout, V, k);
+			cout << endl;
+			nb_undetected++;
+		}
+	}
+	if (f_v) {
+		cout << "crc_codes::test_alfa "
+				"Nb_test = " << Nb_test
+				<< " k = " << k
+				<< " nb_undetected=" << nb_undetected << endl;
+	}
+
+
+}
+
+
+void crc_codes::test_bravo(long int Nb_test, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "crc_codes::test_bravo" << endl;
+	}
+
+	orbiter_kernel_system::os_interface Os;
+	int Len_total = 771;
+	int Len_check = 4;
+	int Len_info = Len_total - Len_check;
+	unsigned char *Data;
+	unsigned char *Check;
+	long int i, j, h, a, v;
+	long int nb_undetected = 0;
+	unsigned char c;
+	int *A;
+	int *V;
+
+	Data = (unsigned char *) NEW_char(Len_total);
+	Check = (unsigned char *) NEW_char(Len_check);
+	A = NEW_int(k);
+	V = NEW_int(k);
+
+	for (i = 0; i < Nb_test; i++) {
+		char_vec_zero(Data, Len_total);
+
+
+		for (j = 0; j < k; j++) {
+			int f_repeat;
+
+			while (TRUE) {
+				a = Len_check + Os.random_integer(Len_info);
+
+				f_repeat = FALSE;
+				for (h = 0; h < j; h++) {
+					if (A[h] == a) {
+						f_repeat = TRUE;
+					}
+				}
+				if (!f_repeat) {
+					break;
+				}
+			}
+			A[j] = a;
+			v = 1 + Os.random_integer(255);
+			V[j] = v;
+			c = (unsigned char) v;
+			Data[a] = c;
+		}
+		divide_bravo(Data /* in771 */, Check /*out4*/);
+		for (j = 0; j < Len_check; j++) {
+			if (Check[j]) {
+				break;
+			}
+		}
+		if (j == Len_check) {
+			nb_undetected++;
+			Int_vec_print(cout, A, k);
+			cout << ",";
+			Int_vec_print(cout, V, k);
+			cout << endl;
+		}
+	}
+	if (f_v) {
+		cout << "crc_codes::test_bravo "
+				"Nb_test = " << Nb_test
+				<< " k = " << k
+				<< " nb_undetected=" << nb_undetected << endl;
+	}
+
+
+}
+
+
+
+
+void crc_codes::test_crc32(long int Nb_test, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "crc_codes::test_crc32" << endl;
+	}
+
+	orbiter_kernel_system::os_interface Os;
+	int Len_total = 771;
+	int Len_check = 4;
+	int Len_info = Len_total - Len_check;
+	unsigned char *Data;
+	unsigned char *Check;
+	long int i, j, h, a, v;
+	long int nb_undetected = 0;
+	unsigned char c;
+	int *A;
+	int *V;
+
+	Data = (unsigned char *) NEW_char(Len_total);
+	Check = (unsigned char *) NEW_char(Len_check);
+	A = NEW_int(k);
+	V = NEW_int(k);
+
+	for (i = 0; i < Nb_test; i++) {
+		char_vec_zero(Data, Len_total);
+
+
+		for (j = 0; j < k; j++) {
+			int f_repeat;
+
+			while (TRUE) {
+				a = Len_check + Os.random_integer(Len_info);
+
+				f_repeat = FALSE;
+				for (h = 0; h < j; h++) {
+					if (A[h] == a) {
+						f_repeat = TRUE;
+					}
+				}
+				if (!f_repeat) {
+					break;
+				}
+			}
+			A[j] = a;
+			v = 1 + Os.random_integer(255);
+			V[j] = v;
+			c = (unsigned char) v;
+			Data[a] = c;
+		}
+
+		uint32_t crc;
+
+		crc = crc32(Data + Len_check, Len_info);
+
+		if (crc == 0) {
+			cout << i << "," << nb_undetected << ",";
+			Int_vec_print(cout, A, k);
+			cout << ",";
+			Int_vec_print(cout, V, k);
+			cout << endl;
+			nb_undetected++;
+		}
+	}
+	if (f_v) {
+		cout << "crc_codes::test_crc32 "
+				"Nb_test = " << Nb_test
+				<< " k = " << k
+				<< " nb_undetected=" << nb_undetected << endl;
+	}
+
+
+}
+
+
+void crc_codes::test_charlie(long int Nb_test, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "crc_codes::test_charlie" << endl;
+	}
+
+	orbiter_kernel_system::os_interface Os;
+	int Len_total = 771;
+	int Len_check = 12;
+	int Len_info = Len_total - Len_check;
+	unsigned char *Data;
+	unsigned char *Check;
+	long int i, j, h, a, v;
+	long int nb_undetected = 0;
+	unsigned char c;
+	int *A;
+	int *V;
+
+	Data = (unsigned char *) NEW_char(Len_total);
+	Check = (unsigned char *) NEW_char(Len_check);
+	A = NEW_int(k);
+	V = NEW_int(k);
+
+	for (i = 0; i < Nb_test; i++) {
+		char_vec_zero(Data, Len_total);
+
+
+		for (j = 0; j < k; j++) {
+			int f_repeat;
+
+			while (TRUE) {
+				a = Len_check + Os.random_integer(Len_info);
+
+				f_repeat = FALSE;
+				for (h = 0; h < j; h++) {
+					if (A[h] == a) {
+						f_repeat = TRUE;
+					}
+				}
+				if (!f_repeat) {
+					break;
+				}
+			}
+			A[j] = a;
+			v = 1 + Os.random_integer(255);
+			V[j] = v;
+			c = (unsigned char) v;
+			Data[a] = c;
+		}
+		divide_charlie(Data /* in771 */, Check /*out12*/);
+		for (j = 0; j < Len_check; j++) {
+			if (Check[j]) {
+				break;
+			}
+		}
+		if (j == Len_check) {
+			cout << i << "," << nb_undetected << ",";
+			Int_vec_print(cout, A, k);
+			cout << ",";
+			Int_vec_print(cout, V, k);
+			cout << endl;
+			nb_undetected++;
+		}
+	}
+	if (f_v) {
+		cout << "crc_codes::test_charlie "
+				"Nb_test = " << Nb_test
+				<< " k = " << k
+				<< " nb_undetected=" << nb_undetected << endl;
+	}
+
+
+}
+#endif
+
+
+void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "crc_codes::test_crc_object" << endl;
+	}
+
+	orbiter_kernel_system::os_interface Os;
+	long int i, j, h, a, v;
+	long int nb_undetected = 0;
+	unsigned char c;
+	long int t0, t1, dt;
+	int *A;
+	int *V;
+
+	A = NEW_int(k);
+	V = NEW_int(k);
+	t0 = Os.os_ticks();
+
+	for (i = 0; i < Nb_test; i++) {
+		char_vec_zero(Crc->Data, Crc->Len_total);
+
+
+		for (j = 0; j < k; j++) {
+			int f_repeat;
+
+			while (TRUE) {
+				a = Crc->Len_check + Os.random_integer(Crc->Len_info);
+
+				f_repeat = FALSE;
+				for (h = 0; h < j; h++) {
+					if (A[h] == a) {
+						f_repeat = TRUE;
+					}
+				}
+				if (!f_repeat) {
+					break;
+				}
+			}
+			A[j] = a;
+			v = 1 + Os.random_integer(255);
+			V[j] = v;
+			c = (unsigned char) v;
+			Crc->Data[a] = c;
+		}
+		Crc->divide(Crc->Data /* in771 */, Crc->Check /*out12*/);
+		for (j = 0; j < Crc->Len_check; j++) {
+			if (Crc->Check[j]) {
+				break;
+			}
+		}
+		if (j == Crc->Len_check) {
+			cout << i << "," << nb_undetected << ",";
+			Int_vec_print_fully(cout, A, k);
+			cout << ",";
+			Int_vec_print_fully(cout, V, k);
+			cout << endl;
+			nb_undetected++;
+		}
+	}
+	t1 = Os.os_ticks();
+	dt = t1 - t0;
+
+	if (f_v) {
+		cout << "crc_codes::test_crc_object "
+				"Nb_test = " << Nb_test
+				<< " k = " << k
+				<< " nb_undetected=" << nb_undetected << ", time=";
+		Os.time_check_delta(cout, dt);
+		cout << endl;
+	}
+
+	FREE_int(A);
+	FREE_int(V);
+
+	if (f_v) {
+		cout << "crc_codes::test_crc_object done" << endl;
+	}
+}
+
+
+void crc_codes::char_vec_zero(unsigned char *p, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		p[i] = 0;
 	}
 }
 

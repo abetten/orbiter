@@ -75,9 +75,8 @@ create_graph_description::create_graph_description()
 	Grassmann_r = 0;
 
 	f_coll_orthogonal = FALSE;
-	coll_orthogonal_epsilon = 0;
-	coll_orthogonal_d = 0;
-	//std::string coll_orthogonal_label_Fq;
+	//std::string coll_orthogonal_space_label;
+	//std::string coll_orthogonal_set_of_points_label;
 
 	f_trihedral_pair_disjointness_graph = FALSE;
 
@@ -258,13 +257,13 @@ int create_graph_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-coll_orthogonal") == 0) {
 			f_coll_orthogonal = TRUE;
-			coll_orthogonal_epsilon = ST.strtoi(argv[++i]);
-			coll_orthogonal_d = ST.strtoi(argv[++i]);
-			coll_orthogonal_label_Fq.assign(argv[++i]);
+			coll_orthogonal_space_label.assign(argv[++i]);
+			coll_orthogonal_set_of_points_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-coll_orthogonal " << coll_orthogonal_epsilon
-					<< " " << coll_orthogonal_d
-					<< " " << coll_orthogonal_label_Fq << endl;
+				cout << "-coll_orthogonal "
+					<< " " << coll_orthogonal_space_label
+					<< " " << coll_orthogonal_set_of_points_label
+					<< endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-trihedral_pair_disjointness_graph") == 0) {
@@ -286,7 +285,10 @@ int create_graph_description::read_arguments(
 			subset_label_tex.assign(argv[++i]);
 			subset_text.assign(argv[++i]);
 			if (f_v) {
-				cout << "-subset " << subset_label << " " << subset_label_tex << " " << subset_text << endl;
+				cout << "-subset "
+						<< subset_label
+						<< " " << subset_label_tex
+						<< " " << subset_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-disjoint_sets_graph") == 0) {
@@ -301,7 +303,9 @@ int create_graph_description::read_arguments(
 			orbital_graph_group.assign(argv[++i]);
 			orbital_graph_orbit_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-orbital_graph " << orbital_graph_group << " " << orbital_graph_orbit_idx << endl;
+				cout << "-orbital_graph "
+						<< orbital_graph_group
+						<< " " << orbital_graph_orbit_idx << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-collinearity_graph") == 0) {
@@ -328,7 +332,9 @@ int create_graph_description::read_arguments(
 			Cayley_graph_group.assign(argv[++i]);
 			Cayley_graph_gens.assign(argv[++i]);
 			if (f_v) {
-				cout << "-Cayley_graph " << Cayley_graph_group << " " << Cayley_graph_gens << endl;
+				cout << "-Cayley_graph "
+						<< Cayley_graph_group
+						<< " " << Cayley_graph_gens << endl;
 			}
 		}
 
@@ -337,6 +343,10 @@ int create_graph_description::read_arguments(
 				argc, i, argv,
 				verbose_level)) {
 			Modifications.push_back(M);
+			i--;
+			if (f_v) {
+				cout << "modification" << endl;
+			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -411,9 +421,10 @@ void create_graph_description::print()
 			<< " " << Grassmann_label_Fq << " " << Grassmann_r << endl;
 	}
 	if (f_coll_orthogonal) {
-		cout << "-coll_orthogonal " << coll_orthogonal_epsilon
-			<< " " << coll_orthogonal_d
-			<< " " << coll_orthogonal_label_Fq << endl;
+		cout << "-coll_orthogonal "
+			<< " " << coll_orthogonal_space_label
+			<< " " << coll_orthogonal_set_of_points_label
+			<< endl;
 	}
 	if (f_trihedral_pair_disjointness_graph) {
 		cout << "-trihedral_pair_disjointness_graph " << endl;

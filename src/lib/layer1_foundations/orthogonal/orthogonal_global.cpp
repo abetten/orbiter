@@ -88,27 +88,80 @@ void orthogonal_global::create_Linear_BLT_set(long int *set, int *ABC, int verbo
 #endif
 
 
-void orthogonal_global::create_FTWKB_BLT_set(orthogonal *O,
+void orthogonal_global::create_BLT_set_from_flock(orthogonal *O,
 		long int *set, int *ABC, int verbose_level)
+// output: set[q + 1]
+// input: ABC[q * 3]
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5];
+	int i, a, b, c;
+	geometry::geometry_global Gg;
+
+
+	if (f_v) {
+		cout << "orthogonal_global::create_BLT_set_from_flock" << endl;
+	}
+
+	int q = O->F->q;
+
+	for (i = 0; i < q; i++) {
+
+		a = ABC[i * 3 + 0];
+		b = ABC[i * 3 + 1];
+		c = ABC[i * 3 + 2];
+
+		Gg.create_BLT_point_from_flock(O->F, v, a, b, c, verbose_level - 2);
+
+
+		if (f_vv) {
+			cout << "point " << i << " : ";
+			Int_vec_print(cout, v, 5);
+			cout << endl;
+		}
+		set[i] = O->Hyperbolic_pair->rank_point(v, 1, 0);
+
+	}
+	orbiter_kernel_system::Orbiter->Int_vec->init5(v, 0, 1, 0, 0, 0);
+	if (f_vv) {
+		cout << "point : ";
+		Int_vec_print(cout, v, 5);
+		cout << endl;
+	}
+	set[q] = O->Hyperbolic_pair->rank_point(v, 1, 0);
+
+	if (f_v) {
+		cout << "orthogonal_global::create_BLT_set_from_flock done" << endl;
+	}
+}
+
+
+void orthogonal_global::create_FTWKB_flock(orthogonal *O,
+		int *ABC, int verbose_level)
 // for q congruent 2 mod 3
 // a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int v[5];
+	//int v[5];
 	int r, i, a, b, c;
-	geometry::geometry_global Gg;
+	//geometry::geometry_global Gg;
+
+	if (f_v) {
+		cout << "orthogonal_global::create_FTWKB_flock" << endl;
+	}
 
 	int q = O->F->q;
 
 	if (q <= 5) {
-		cout << "orthogonal_global::create_FTWKB_BLT_set q <= 5" << endl;
+		cout << "orthogonal_global::create_FTWKB_flock q <= 5" << endl;
 		exit(1);
 	}
 	r = q % 3;
 	if (r != 2) {
-		cout << "orthogonal_global::create_FTWKB_BLT_set q mod 3 must be 2" << endl;
+		cout << "orthogonal_global::create_FTWKB_flock q mod 3 must be 2" << endl;
 		exit(1);
 	}
 	Int_vec_zero(ABC, 3 * (q + 1));
@@ -123,47 +176,29 @@ void orthogonal_global::create_FTWKB_BLT_set(orthogonal *O,
 		ABC[i * 3 + 0] = a;
 		ABC[i * 3 + 1] = b;
 		ABC[i * 3 + 2] = c;
-		Gg.create_BLT_point(O->F, v, a, b, c, verbose_level - 2);
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			Int_vec_print(cout, v, 5);
-			cout << endl;
-		}
-		set[i] = O->Hyperbolic_pair->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-		}
 	}
-	orbiter_kernel_system::Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
-	if (f_vv) {
-		cout << "point : ";
-		Int_vec_print(cout, v, 5);
-		cout << endl;
-	}
-	set[q] = O->Hyperbolic_pair->rank_point(v, 1, 0);
-	if (f_vv) {
-		cout << "rank " << set[q] << endl;
-	}
+
 	if (f_v) {
-		cout << "orthogonal_global::create_FTWKB_BLT_set the BLT set FTWKB is ";
-		Lint_vec_print(cout, set, q + 1);
-		cout << endl;
+		cout << "orthogonal_global::create_FTWKB_flock done" << endl;
 	}
 }
 
-void orthogonal_global::create_K1_BLT_set(orthogonal *O,
-		long int *set, int *ABC, int verbose_level)
+void orthogonal_global::create_K1_flock(orthogonal *O,
+		int *ABC, int verbose_level)
 // for a nonsquare m, and q=p^e
 // a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int v[5];
+	//int v[5];
 	int i, m, minus_one, exponent, a, b, c;
 	int q;
-	geometry::geometry_global Gg;
+	//geometry::geometry_global Gg;
 
+	if (f_v) {
+		cout << "orthogonal_global::create_K1_BLT_set" << endl;
+	}
 	q = O->F->q;
 	m = O->F->p; // the primitive element is a nonsquare
 	exponent = O->F->p;
@@ -172,7 +207,7 @@ void orthogonal_global::create_K1_BLT_set(orthogonal *O,
 		cout << "m=" << m << endl;
 		cout << "exponent=" << exponent << endl;
 		cout << "minus_one=" << minus_one << endl;
-		}
+	}
 	Int_vec_zero(ABC, 3 * (q + 1));
 	for (i = 0; i < q; i++) {
 		a = i;
@@ -181,62 +216,44 @@ void orthogonal_global::create_K1_BLT_set(orthogonal *O,
 		if (f_vv) {
 			cout << "i=" << i << " a=" << a
 					<< " b=" << b << " c=" << c << endl;
-			}
-		Gg.create_BLT_point(O->F, v, a, b, c, verbose_level - 2);
+		}
 		ABC[i * 3 + 0] = a;
 		ABC[i * 3 + 1] = b;
 		ABC[i * 3 + 2] = c;
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			Int_vec_print(cout, v, 5);
-			cout << endl;
-			}
-		set[i] = O->Hyperbolic_pair->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-			}
-		}
-	orbiter_kernel_system::Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
-	if (f_vv) {
-		cout << "point : ";
-		Int_vec_print(cout, v, 5);
-		cout << endl;
-		}
-	set[q] = O->Hyperbolic_pair->rank_point(v, 1, 0);
-	if (f_vv) {
-		cout << "rank " << set[q] << endl;
-		}
+	}
+
 	if (f_v) {
-		cout << "orthogonal_global::create_K1_BLT_set the BLT set K1 is ";
-		Lint_vec_print(cout, set, q + 1);
-		cout << endl;
-		}
+		cout << "orthogonal_global::create_K1_BLT_set done" << endl;
+	}
 }
 
-void orthogonal_global::create_K2_BLT_set(orthogonal *O,
-		long int *set, int *ABC, int verbose_level)
+void orthogonal_global::create_K2_flock(orthogonal *O,
+		int *ABC, int verbose_level)
 // for q congruent 2 or 3 mod 5
 // a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int v[5];
+	//int v[5];
 	int five, r, i, a, b, c;
 	int q;
 	geometry::geometry_global Gg;
 
+	if (f_v) {
+		cout << "orthogonal_global::create_K2_flock" << endl;
+	}
 	q = O->F->q;
 	if (q <= 5) {
-		cout << "orthogonal_global::create_K2_BLT_set q <= 5" << endl;
+		cout << "orthogonal_global::create_K2_flock q <= 5" << endl;
 		return;
-		}
+	}
 	r = q % 5;
 	if (r != 2 && r != 3) {
-		cout << "orthogonal_global::create_K2_BLT_set "
+		cout << "orthogonal_global::create_K2_flock "
 				"q mod 5 must be 2 or 3" << endl;
 		return;
-		}
+	}
 	five = 5 % O->F->p;
 	Int_vec_zero(ABC, 3 * (q + 1));
 	for (i = 0; i < q; i++) {
@@ -246,37 +263,153 @@ void orthogonal_global::create_K2_BLT_set(orthogonal *O,
 		if (f_vv) {
 			cout << "i=" << i << " a=" << a
 					<< " b=" << b << " c=" << c << endl;
-			}
-		Gg.create_BLT_point(O->F, v, a, b, c, verbose_level - 2);
+		}
 		ABC[i * 3 + 0] = a;
 		ABC[i * 3 + 1] = b;
 		ABC[i * 3 + 2] = c;
-		if (f_vv) {
-			cout << "point " << i << " : ";
-			Int_vec_print(cout, v, 5);
-			cout << endl;
-			}
-		set[i] = O->Hyperbolic_pair->rank_point(v, 1, 0);
-		if (f_vv) {
-			cout << "rank " << set[i] << endl;
-			}
-		}
-	orbiter_kernel_system::Orbiter->Int_vec->init5(v, 0, 0, 0, 1, 0);
-	if (f_vv) {
-		cout << "point : ";
-		Int_vec_print(cout, v, 5);
-		cout << endl;
-		}
-	set[q] = O->Hyperbolic_pair->rank_point(v, 1, 0);
-	if (f_vv) {
-		cout << "rank " << set[q] << endl;
-		}
+	}
 	if (f_v) {
-		cout << "orthogonal_global::create_K2_BLT_set "
-				"the BLT set K2 is ";
+		cout << "orthogonal_global::create_K2_flock done" << endl;
+	}
+}
+
+
+void orthogonal_global::create_FTWKB_flock_and_BLT_set(orthogonal *O,
+		long int *set, int *ABC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_global::create_FTWKB_flock_and_BLT_set" << endl;
+	}
+	int q;
+
+	q = O->F->q;
+
+	if (f_v) {
+		cout << "orthogonal_global::create_FTWKB_flock_and_BLT_set "
+				"before create_FTWKB_flock" << endl;
+	}
+	create_FTWKB_flock(O,
+			ABC, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_global::create_FTWKB_flock_and_BLT_set "
+				"after create_FTWKB_flock" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal_global::create_FTWKB_flock_and_BLT_set "
+				"before create_BLT_set_from_flock" << endl;
+	}
+	create_BLT_set_from_flock(O,
+			set, ABC, verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal_global::create_FTWKB_flock_and_BLT_set "
+				"after create_BLT_set_from_flock" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal_global::create_FTWKB_flock_and_BLT_set the BLT set K1 is ";
 		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
-		}
+	}
+	if (f_v) {
+		cout << "orthogonal_global::create_FTWKB_flock_and_BLT_set done" << endl;
+	}
+
+}
+
+
+
+void orthogonal_global::create_K1_flock_and_BLT_set(orthogonal *O,
+		long int *set, int *ABC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_global::create_K1_flock_and_BLT_set" << endl;
+	}
+	int q;
+
+	q = O->F->q;
+
+	if (f_v) {
+		cout << "orthogonal_global::create_K1_flock_and_BLT_set "
+				"before create_K1_flock" << endl;
+	}
+	create_K1_flock(O,
+			ABC, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_global::create_K1_flock_and_BLT_set "
+				"after create_K1_flock" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal_global::create_K1_flock_and_BLT_set "
+				"before create_BLT_set_from_flock" << endl;
+	}
+	create_BLT_set_from_flock(O,
+			set, ABC, verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal_global::create_K1_flock_and_BLT_set "
+				"after create_BLT_set_from_flock" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal_global::create_K1_flock_and_BLT_set the BLT set K1 is ";
+		Lint_vec_print(cout, set, q + 1);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal_global::create_K1_flock_and_BLT_set done" << endl;
+	}
+
+}
+
+
+void orthogonal_global::create_K2_flock_and_BLT_set(orthogonal *O,
+		long int *set, int *ABC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_global::create_K2_flock_and_BLT_set" << endl;
+	}
+	int q;
+
+	q = O->F->q;
+
+	if (f_v) {
+		cout << "orthogonal_global::create_K2_flock_and_BLT_set "
+				"before create_K2_flock" << endl;
+	}
+	create_K2_flock(O,
+			ABC, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_global::create_K2_flock_and_BLT_set "
+				"after create_K2_flock" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal_global::create_K2_flock_and_BLT_set "
+				"before create_BLT_set_from_flock" << endl;
+	}
+	create_BLT_set_from_flock(O,
+			set, ABC, verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal_global::create_K2_flock_and_BLT_set "
+				"after create_BLT_set_from_flock" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal_global::create_K2_flock_and_BLT_set the BLT set K2 is ";
+		Lint_vec_print(cout, set, q + 1);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal_global::create_K2_flock_and_BLT_set done" << endl;
+	}
+
 }
 
 void orthogonal_global::create_LP_37_72_BLT_set(orthogonal *O,
@@ -325,14 +458,14 @@ void orthogonal_global::create_LP_37_72_BLT_set(orthogonal *O,
 		1,3,30,4,13,
 		1,31,9,21,8,
 		1,34,9,29,6
-		};
+	};
 	int q;
 
 	q = O->F->q;
 	if (q != 37) {
 		cout << "orthogonal_global::create_LP_37_72_BLT_set q = 37" << endl;
 		return;
-		}
+	}
 	for (i = 0; i <= q; i++) {
 		v0 = coordinates[i * 5 + 2];
 		v1 = coordinates[i * 5 + 0];
@@ -344,18 +477,18 @@ void orthogonal_global::create_LP_37_72_BLT_set(orthogonal *O,
 			cout << "point " << i << " : ";
 			Int_vec_print(cout, v, 5);
 			cout << endl;
-			}
+		}
 		set[i] = O->Hyperbolic_pair->rank_point(v, 1, 0);
 		if (f_vv) {
 			cout << "rank " << set[i] << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "orthogonal_global::create_LP_37_72_BLT_set "
 				"the BLT set LP_37_72 is ";
 		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
-		}
+	}
 }
 
 void orthogonal_global::create_LP_37_4a_BLT_set(orthogonal *O,
@@ -404,7 +537,7 @@ void orthogonal_global::create_LP_37_4a_BLT_set(orthogonal *O,
 		1,5,33,12,35,
 		1,6,22,34,15,
 		1,16,31,29,18
-		};
+	};
 	int q;
 
 	q = O->F->q;
@@ -483,7 +616,7 @@ void orthogonal_global::create_LP_37_4b_BLT_set(orthogonal *O,
 		1,22,28,5,31,
 		1,24,3,11,23,
 		1,36,27,6,17
-		};
+	};
 	int q;
 
 	q = O->F->q;
@@ -572,7 +705,7 @@ void orthogonal_global::create_Law_71_BLT_set(orthogonal *O,
 		1,31,9,21,8,
 		1,34,9,29,6
 #endif
-		};
+	};
 	int q;
 
 	q = O->F->q;
@@ -609,11 +742,25 @@ void orthogonal_global::create_Law_71_BLT_set(orthogonal *O,
 int orthogonal_global::BLT_test_full(orthogonal *O,
 		int size, long int *set, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_global::BLT_test_full" << endl;
+	}
 	if (!collinearity_test(O, size, set, 0/*verbose_level - 2*/)) {
+		if (f_v) {
+			cout << "orthogonal_global::BLT_test_full fails due to collinearity_test" << endl;
+		}
 		return FALSE;
 	}
 	if (!BLT_test(O, size, set, verbose_level)) {
+		if (f_v) {
+			cout << "orthogonal_global::BLT_test_full fails due to BLT_test" << endl;
+		}
 		return FALSE;
+	}
+	if (f_v) {
+		cout << "orthogonal_global::BLT_test_full passes" << endl;
 	}
 	return TRUE;
 }
@@ -629,15 +776,18 @@ int orthogonal_global::BLT_test(orthogonal *O,
 	int two;
 	int m1[5], m3[5];
 
-	if (size <= 2)
+	if (size <= 2) {
 		return TRUE;
+	}
 	if (f_v) {
-		cout << "BLT_test for" << endl;
+		cout << "orthogonal_global::BLT_test BLT_test for" << endl;
 		Lint_vec_print(cout, set, size);
+		cout << endl;
 		if (f_vv) {
+			cout << "orthogonal_global::BLT_test the set of points is:" << endl;
 			for (i = 0; i < size; i++) {
 				O->Hyperbolic_pair->unrank_point(
-						O->Hyperbolic_pair->v1, 1, set[i], verbose_level - 1);
+						O->Hyperbolic_pair->v1, 1, set[i], 0 /*verbose_level - 1*/);
 				cout << i << " : " << set[i] << " : ";
 				Int_vec_print(cout, O->Hyperbolic_pair->v1, O->Quadratic_form->n);
 				cout << endl;
@@ -648,9 +798,17 @@ int orthogonal_global::BLT_test(orthogonal *O,
 	z = set[size - 1];
 	two = O->F->add(1, 1);
 	O->Hyperbolic_pair->unrank_point(
-			O->Hyperbolic_pair->v1, 1, x, verbose_level - 1);
+			O->Hyperbolic_pair->v1, 1, x, 0 /*verbose_level - 1*/);
 	O->Hyperbolic_pair->unrank_point(
-			O->Hyperbolic_pair->v3, 1, z, verbose_level - 1);
+			O->Hyperbolic_pair->v3, 1, z, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "v1=";
+		Int_vec_print(cout, O->Hyperbolic_pair->v1, O->Quadratic_form->n);
+		cout << endl;
+		cout << "v3=";
+		Int_vec_print(cout, O->Hyperbolic_pair->v3, O->Quadratic_form->n);
+		cout << endl;
+	}
 
 	m1[0] = O->F->mult(two, O->Hyperbolic_pair->v1[0]);
 	m1[1] = O->Hyperbolic_pair->v1[2];
@@ -683,14 +841,19 @@ int orthogonal_global::BLT_test(orthogonal *O,
 		else
 			cout << "-";
 		cout << endl;
-		}
+	}
 
 	for (i = 1; i < size - 1; i++) {
 
 		y = set[i];
 
 		O->Hyperbolic_pair->unrank_point(
-				O->Hyperbolic_pair->v2, 1, y, verbose_level - 1);
+				O->Hyperbolic_pair->v2, 1, y, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "i=" << i << " v2=";
+			Int_vec_print(cout, O->Hyperbolic_pair->v2, O->Quadratic_form->n);
+			cout << endl;
+		}
 
 		//fxy = evaluate_bilinear_form(v1, v2, 1);
 		fxy = O->F->add5(
@@ -716,8 +879,9 @@ int orthogonal_global::BLT_test(orthogonal *O,
 			l3 = O->F->log_alpha(fyz);
 			cout << "i=" << i << " fxy=" << fxy << " (log=" << l2
 				<< ") fyz=" << fyz << " (log=" << l3
-				<< ") a=" << a << endl;
-			}
+				<< ") a=" << a << " log=" << O->F->log_alpha(a)
+				<< " is_minus_square=" << O->SN->f_is_minus_square[a] << endl;
+		}
 
 
 		if (O->SN->f_is_minus_square[a]) {
@@ -756,19 +920,19 @@ int orthogonal_global::BLT_test(orthogonal *O,
 				cout << "a=" << a << "(log=" << O->F->log_alpha(a)
 						<< ") is the negative of a square" << endl;
 				O->SN->print_minus_square_tables();
-				}
-			break;
 			}
+			break;
 		}
+	}
 
 	if (f_v) {
 		if (!f_OK) {
 			cout << "BLT_test fails" << endl;
-			}
+		}
 		else {
 			cout << endl;
-			}
 		}
+	}
 	return f_OK;
 }
 

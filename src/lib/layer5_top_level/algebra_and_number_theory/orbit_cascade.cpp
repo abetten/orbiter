@@ -193,8 +193,13 @@ void orbit_cascade::init(
 
 	for (i = 0; i < number_primary_orbits; i++) {
 
-		A_restricted[i] = G->A->restricted_action(
-				Reps_and_complements + i * N + k, N - k,
+		std::string label_of_set;
+
+
+		label_of_set.assign("on_orbit");
+
+		A_restricted[i] = G->A->Induced_action->restricted_action(
+				Reps_and_complements + i * N + k, N - k, label_of_set,
 				0 /*verbose_level*/);
 	}
 
@@ -574,7 +579,7 @@ void orbit_cascade::upstep(
 		progress = ((double)nb_processed * 100. ) / (double) nb_orbits_secondary_total;
 
 		if (f_v) {
-			cout << "Defining n e w orbit "
+			cout << "Defining new orbit "
 					<< Flag_orbits->nb_primary_orbits_upper
 					<< " from flag orbit " << f << " / "
 					<< nb_orbits_secondary_total
@@ -675,13 +680,13 @@ void orbit_cascade::upstep(
 					Elt1, po1 /* orbit_at_level */,
 					verbose_level - 3);
 
-			G->A->map_a_set_and_reorder(
+			G->A->Group_element->map_a_set_and_reorder(
 					partition1 + a * k, partition2, k,
 					Elt1, 0 /* verbose_level */);
-			G->A->map_a_set_and_reorder(
+			G->A->Group_element->map_a_set_and_reorder(
 					partition1 + b * k, partition2 + k, k,
 					Elt1, 0 /* verbose_level */);
-			G->A->map_a_set_and_reorder(
+			G->A->Group_element->map_a_set_and_reorder(
 					partition1 + c * k, partition2 + 2 * k, N - 2 * k,
 					Elt1, 0 /* verbose_level */);
 
@@ -741,7 +746,7 @@ void orbit_cascade::upstep(
 
 
 
-			G->A_base->element_mult(Elt1, Elt2, Elt3, 0);
+			G->A_base->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 
 
 
@@ -751,11 +756,11 @@ void orbit_cascade::upstep(
 				if (f_v) {
 					cout << "orbit_cascade::upstep We found an automorphism "
 							"of the partition:" << endl;
-					G->A_base->element_print_quick(Elt3, cout);
+					G->A_base->Group_element->element_print_quick(Elt3, cout);
 					cout << endl;
 				}
 
-				G->A_base->element_move(Elt3, coset_reps->ith(nb_coset_reps), 0);
+				G->A_base->Group_element->element_move(Elt3, coset_reps->ith(nb_coset_reps), 0);
 				nb_coset_reps++;
 
 				//S->add_single_generator(Elt3,
@@ -776,7 +781,7 @@ void orbit_cascade::upstep(
 					Flag_orbits->Flag_orbit_node[f1].fusion_with = f;
 					Flag_orbits->Flag_orbit_node[f1].fusion_elt =
 							NEW_int(G->A_base->elt_size_in_int);
-					G->A_base->element_invert(Elt3,
+					G->A_base->Group_element->element_invert(Elt3,
 							Flag_orbits->Flag_orbit_node[f1].fusion_elt, 0);
 					f_processed[f1] = TRUE;
 					nb_processed++;

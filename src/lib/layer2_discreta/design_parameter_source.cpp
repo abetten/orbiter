@@ -202,6 +202,7 @@ void design_parameter_source::text012_extended(
 		hollerith& s1, hollerith& s2)
 {
 	hollerith hh;
+	int verbose_level = 0;
 	
 	text012(s0, s1, s2);
 
@@ -211,12 +212,12 @@ void design_parameter_source::text012_extended(
 	if (r == rule_trung_left) {
 		design_parameter q, der, res;
 		
-		if (!p.increased_t(q)) {
+		if (!p.increased_t(q, verbose_level)) {
 			cout << "design_parameter_source::text012_extended() cannot increase t, error" << endl;
 			exit(1);
 			}
-		q.derived(der);
-		q.residual(res);
+		q.derived(der, verbose_level);
+		q.residual(res, verbose_level);
 		s2.init(": der= ");
 		s2.append_i(der.t());
 		s2.append("-(");
@@ -240,12 +241,12 @@ void design_parameter_source::text012_extended(
 	else if (r == rule_trung_right) {
 		design_parameter q, der, res;
 		
-		if (!p.increased_t(q)) {
+		if (!p.increased_t(q, verbose_level)) {
 			cout << "design_parameter_source::text012_extended() cannot increase t, error" << endl;
 			exit(1);
 			}
-		q.derived(der);
-		q.residual(res);
+		q.derived(der, verbose_level);
+		q.residual(res, verbose_level);
 		s2.init(": der= ");
 		s2.append_i(der.t());
 		s2.append("-(");

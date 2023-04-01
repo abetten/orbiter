@@ -447,7 +447,7 @@ void orbit_transversal::export_data_in_source_code_inside_tex(
 						<< " / " << Reps[h].Strong_gens->gens->len << endl;
 				}
 			ost << "";
-			A->element_print_for_make_element(
+			A->Group_element->element_print_for_make_element(
 					Reps[h].Strong_gens->gens->ith(j), ost);
 			ost << endl;
 			}

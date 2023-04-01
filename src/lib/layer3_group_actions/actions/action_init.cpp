@@ -62,9 +62,9 @@ void action::init_group_from_generators(
 		Int_vec_print(cout, group_generator_data +
 			i * make_element_size, make_element_size);
 		cout << endl;
-		make_element(Elt,
+		Group_element->make_element(Elt,
 			group_generator_data + i * make_element_size, verbose_level - 2);
-		element_move(Elt, gens->ith(i), 0);
+		Group_element->element_move(Elt, gens->ith(i), 0);
 	}
 	if (f_v) {
 		cout << "done parsing generators" << endl;
@@ -145,10 +145,10 @@ void action::init_group_from_generators_by_base_images(
 		Int_vec_print(cout, group_generator_data +
 			i * base_len(), base_len());
 		cout << endl;
-		make_element_from_base_image(Elt, parent_group_S,
+		Group_element->make_element_from_base_image(Elt, parent_group_S,
 			group_generator_data + i * base_len(),
 			verbose_level - 2);
-		element_move(Elt, gens->ith(i), 0);
+		Group_element->element_move(Elt, gens->ith(i), 0);
 	}
 	if (f_v) {
 		cout << "done parsing generators" << endl;
@@ -219,7 +219,7 @@ void action::build_up_automorphism_group_from_aut_data(
 			S.group_order(go);
 			if (f_v) {
 				cout << "generator " << h
-						<< " added, n e w group order " << go << endl;
+						<< " added, group order has been updated to " << go << endl;
 				S.print_transversal_lengths();
 				S.print_transversals_short();
 			}
@@ -359,14 +359,14 @@ groups::sims *action::create_sims_from_generators_randomized(
 	//ss->interested_in_kernel(A_subaction, verbose_level - 1);
 
 	if (f_target_go) {
-		ss->init_target_group_order(target_go, verbose_level - 1);
+		ss->init_target_group_order(target_go, 0 /*verbose_level - 1*/);
 	}
 
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized "
 				"before ss->init_generators" << endl;
 	}
-	ss->init_generators(gens, verbose_level - 3);
+	ss->init_generators(gens, verbose_level - 2);
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized "
 				"after ss->init_generators" << endl;
@@ -376,7 +376,7 @@ groups::sims *action::create_sims_from_generators_randomized(
 		cout << "action::create_sims_from_generators_randomized "
 				"before ss->create_group" << endl;
 	}
-	ss->create_group(verbose_level - 10);
+	ss->create_group(0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized "
 				"after ss->create_group" << endl;
@@ -405,7 +405,7 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	int d, q, i;
 	algebra::gl_classes *C;
@@ -561,8 +561,8 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 	Elt1 = NEW_int(elt_size_in_int);
 
 	for (i = 0; i < nb_gens; i++) {
-		make_element(Elt1, Gens[i], 0);
-		element_move(Elt1, gens->ith(i), 0);
+		Group_element->make_element(Elt1, Gens[i], 0);
+		Group_element->element_move(Elt1, gens->ith(i), 0);
 	}
 	groups::sims *Cent;
 

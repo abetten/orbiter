@@ -30,7 +30,8 @@ namespace actions {
 	class action;
 	class action_global;
 	class action_pointer_table;
-	class nauty_interface_with_group;
+	class group_element;
+	class induced_action;
 	class known_groups;
 	class stabilizer_chain_base_data;
 
@@ -68,7 +69,6 @@ namespace groups {
 	class exceptional_isomorphism_O4;
 	class linear_group_description;
 	class linear_group;
-	class matrix_group;
 	class orbits_on_something;
 	class permutation_group_create;
 	class permutation_group_description;
@@ -208,7 +208,7 @@ enum permutation_group_type {
 //! interface for the various types of group actions
 
 union symmetry_group {
-	groups::matrix_group *matrix_grp;
+	algebra::matrix_group *matrix_grp;
 	groups::permutation_representation_domain *perm_grp;
 	groups::wreath_product *wreath_product_group;
 	groups::direct_product *direct_product_group;
@@ -251,7 +251,7 @@ union symmetry_group {
 #include "data_structures/l3_data_structures.h"
 #include "./groups/groups.h"
 #include "./induced_actions/induced_actions.h"
-#include "./interfaces/interfaces.h"
+#include "interfaces/l3_interfaces.h"
 
 
 

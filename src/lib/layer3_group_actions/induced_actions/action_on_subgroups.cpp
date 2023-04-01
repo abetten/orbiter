@@ -157,10 +157,10 @@ long int action_on_subgroups::compute_image(
 		}
 	if (f_vv) {
 		cout << "the element " << endl;
-		A->print(cout, Elt);
+		A->Group_element->print(cout, Elt);
 		cout << endl;
 		cout << "as permutation:" << endl;
-		A->print_as_permutation(cout, Elt);
+		A->Group_element->print_as_permutation(cout, Elt);
 		cout << endl;
 		}
 	if (f_vv) {
@@ -169,13 +169,13 @@ long int action_on_subgroups::compute_image(
 		cout << endl;
 		for (j = 0; j < subgroup_order; j++) {
 			cout << j << " : " << sets[aa][j] << " : " << endl;
-			A->print_point(sets[aa][j], cout);
+			A->Group_element->print_point(sets[aa][j], cout);
 			cout << endl;
 			}
 		}
 
 	//r = S->element_rank_int(Elt);
-	A->element_invert(Elt, Elt1, 0);
+	A->Group_element->element_invert(Elt, Elt1, 0);
 
 	for (j = 0; j < subgroup_order; j++) {
 		s = sets[aa][j];
@@ -195,7 +195,7 @@ long int action_on_subgroups::compute_image(
 		cout << endl;
 		for (j = 0; j < subgroup_order; j++) {
 			cout << j << " : " << image_set[j] << " : " << endl;
-			A->print_point(image_set[j], cout);
+			A->Group_element->print_point(image_set[j], cout);
 			cout << endl;
 			}
 		}
@@ -210,10 +210,10 @@ long int action_on_subgroups::compute_image(
 		cout << "action = " << A->label << endl;
 
 		cout << "the element " << endl;
-		A->print(cout, Elt);
+		A->Group_element->print(cout, Elt);
 		cout << endl;
 		cout << "as permutation:" << endl;
-		A->print_as_permutation(cout, Elt);
+		A->Group_element->print_as_permutation(cout, Elt);
 		cout << endl;
 
 		cout << "a=" << a << endl;
@@ -231,7 +231,7 @@ long int action_on_subgroups::compute_image(
 			}
 		for (u = 0; u < subgroup_order; u++) {
 			s = sets[aa][u];
-			t = A->image_of(Elt, s);
+			t = A->Group_element->image_of(Elt, s);
 			cout << setw(3) << u << " : " << setw(3) << s
 					<< " : " << setw(3) << t << endl;
 			}

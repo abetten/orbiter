@@ -41,13 +41,6 @@ void surface_domain_high_level::do_sweep_4_15_lines(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-#if 0
-	surface_with_action *Surf_A;
-
-	PA->setup_surface_with_action(
-			Surf_A,
-			verbose_level);
-#endif
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_15_lines "
 				"before Surf_A->sweep_4_15_lines" << endl;
@@ -80,14 +73,6 @@ void surface_domain_high_level::do_sweep_F_beta_9_lines(
 		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines "
 				"verbose_level=" << verbose_level << endl;
 	}
-
-#if 0
-	surface_with_action *Surf_A;
-
-	PA->setup_surface_with_action(
-			Surf_A,
-			verbose_level);
-#endif
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_F_beta_9_lines "
@@ -123,14 +108,6 @@ void surface_domain_high_level::do_sweep_6_9_lines(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-#if 0
-	surface_with_action *Surf_A;
-
-	PA->setup_surface_with_action(
-			Surf_A,
-			verbose_level);
-#endif
-
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_6_9_lines "
 				"before Surf_A->sweep_6_9_lines" << endl;
@@ -164,23 +141,17 @@ void surface_domain_high_level::do_sweep_4_27(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-#if 0
-	surface_with_action *Surf_A;
-
-	PA->setup_surface_with_action(
-			Surf_A,
-			verbose_level);
-#endif
-
 	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_27 before Surf_A->sweep_4" << endl;
+		cout << "surface_domain_high_level::do_sweep_4_27 "
+				"before Surf_A->sweep_4" << endl;
 	}
 	PA->Surf_A->sweep_4_27(
 				Surface_Descr,
 				sweep_fname,
 				verbose_level);
 	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_27 after Surf_A->sweep_4" << endl;
+		cout << "surface_domain_high_level::do_sweep_4_27 "
+				"after Surf_A->sweep_4" << endl;
 	}
 
 	if (f_v) {
@@ -213,14 +184,16 @@ void surface_domain_high_level::do_sweep_4_L9_E4(
 #endif
 
 	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_L9_E4 before Surf_A->sweep_4" << endl;
+		cout << "surface_domain_high_level::do_sweep_4_L9_E4 "
+				"before Surf_A->sweep_4" << endl;
 	}
 	PA->Surf_A->sweep_4_L9_E4(
 				Surface_Descr,
 				sweep_fname,
 				verbose_level);
 	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4_L9_E4 after Surf_A->sweep_4" << endl;
+		cout << "surface_domain_high_level::do_sweep_4_L9_E4 "
+				"after Surf_A->sweep_4" << endl;
 	}
 
 	if (f_v) {
@@ -243,9 +216,6 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes" << endl;
 	}
 
-	//algebraic_geometry::surface_domain *Surf;
-	//surface_with_action *Surf_A;
-
 	poset_classification::poset_classification_control *Control;
 
 	Control =
@@ -257,11 +227,44 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 				"before classify_surfaces, control=" << endl;
 		Control->print();
 	}
-	prepare_surface_classify_wedge(
-			PA,
+
+
+	SCW = NEW_OBJECT(cubic_surfaces_and_double_sixes::surface_classify_wedge);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
+				"before SCW->init" << endl;
+	}
+
+	SCW->init(PA->Surf_A,
 			Control,
-			SCW,
-			verbose_level);
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
+				"after SCW->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
+				"before SCW->do_classify_double_sixes" << endl;
+	}
+	SCW->do_classify_double_sixes(verbose_level);
+	if (f_v) {
+		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
+				"after SCW->do_classify_double_sixes" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
+				"before SCW->do_classify_surfaces" << endl;
+	}
+	SCW->do_classify_surfaces(verbose_level);
+	if (f_v) {
+		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
+				"after SCW->do_classify_surfaces" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
@@ -299,77 +302,15 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 	}
 #endif
 
-	//FREE_OBJECT(Surf_A);
-	//FREE_OBJECT(Surf);
 	if (f_v) {
 		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes done" << endl;
 	}
 }
 
 
-void surface_domain_high_level::prepare_surface_classify_wedge(
-		projective_geometry::projective_space_with_action *PA,
-		poset_classification::poset_classification_control *Control,
-		cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
-
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge" << endl;
-	}
-
-#if 0
-	surface_with_action *Surf_A;
-
-	PA->setup_surface_with_action(
-			Surf_A,
-			verbose_level);
-
-	//Surf = Surf_A->Surf;
-#endif
-
-
-	SCW = NEW_OBJECT(cubic_surfaces_and_double_sixes::surface_classify_wedge);
-
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge before SCW->init" << endl;
-	}
-
-	SCW->init(PA->Surf_A,
-			Control,
-			verbose_level - 1);
-
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge after SCW->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge before SCW->do_classify_double_sixes" << endl;
-	}
-	SCW->do_classify_double_sixes(verbose_level);
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge after SCW->do_classify_double_sixes" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge before SCW->do_classify_surfaces" << endl;
-	}
-	SCW->do_classify_surfaces(verbose_level);
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge after SCW->do_classify_surfaces" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge done" << endl;
-	}
-
-}
-
 void surface_domain_high_level::do_study_surface(
-		field_theory::finite_field *F, int nb, int verbose_level)
+		field_theory::finite_field *F,
+		int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -910,14 +851,14 @@ void surface_domain_high_level::do_cubic_surface_properties(
 			FALSE /* f_compute_related_fields */,
 			0);
 
-	F = PA->P->F;
+	F = PA->P->Subspaces->F;
 
 
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(F, 0 /*verbose_level - 1*/);
+	Surf->init_surface_domain(F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties "
-				"after Surf->init" << endl;
+				"after Surf->init_surface_domain" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(surface_with_action);
@@ -987,7 +928,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		Orbit_length[orbit_idx] = M[orbit_idx * n + column_offset + 2];
 
 		cout << "Rep=" << Rep[orbit_idx] << endl;
-		F0->PG_element_unrank_modified_lint(coeff20, 1, 20, Rep[orbit_idx]);
+		F0->Projective_space_basic->PG_element_unrank_modified_lint(
+				coeff20, 1, 20, Rep[orbit_idx]);
 		cout << "coeff20=";
 		Int_vec_print(cout, coeff20, 20);
 		cout << endl;
@@ -1025,7 +967,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 			SC->F->f_print_as_exponentials = FALSE;
 		}
 
-		SC->F->PG_element_normalize(SC->SO->eqn, 1, 20);
+		SC->F->Projective_space_basic->PG_element_normalize(
+				SC->SO->eqn, 1, 20);
 
 		if (f_v) {
 			cout << "surface_domain_high_level::do_cubic_surface_properties "
@@ -1201,14 +1144,14 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 			FALSE /* f_compute_related_fields */,
 			0);
 
-	F = PA->P->F;
+	F = PA->P->Subspaces->F;
 
 
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(F, 0 /* verbose_level - 1 */);
+	Surf->init_surface_domain(F, 0 /* verbose_level - 1 */);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
-				"after Surf->init" << endl;
+				"after Surf->init_surface_domain" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(surface_with_action);
@@ -1363,7 +1306,8 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 	}
 }
 
-void surface_domain_high_level::report_singular_surfaces(std::ostream &ost,
+void surface_domain_high_level::report_singular_surfaces(
+		std::ostream &ost,
 		struct cubic_surface_data_set *Data,
 		int nb_orbits, int verbose_level)
 {
@@ -1432,7 +1376,8 @@ void surface_domain_high_level::report_singular_surfaces(std::ostream &ost,
 }
 
 
-void surface_domain_high_level::report_non_singular_surfaces(std::ostream &ost,
+void surface_domain_high_level::report_non_singular_surfaces(
+		std::ostream &ost,
 		struct cubic_surface_data_set *Data,
 		int nb_orbits, int verbose_level)
 {
@@ -1504,7 +1449,8 @@ void surface_domain_high_level::report_non_singular_surfaces(std::ostream &ost,
 	}
 }
 
-void surface_domain_high_level::report_surfaces_by_lines(std::ostream &ost,
+void surface_domain_high_level::report_surfaces_by_lines(
+		std::ostream &ost,
 		struct cubic_surface_data_set *Data,
 		data_structures::tally &T,
 		int verbose_level)
@@ -1707,7 +1653,8 @@ void surface_domain_high_level::do_create_surface_reports(
 	}
 }
 
-void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_level)
+void surface_domain_high_level::do_create_surface_atlas(
+		int q_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1784,7 +1731,9 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 
 
 		T[cur].PA = NEW_OBJECT(projective_geometry::projective_space_with_action);
-		T[cur].PA->init(T[cur].F, 3, f_semilinear,
+
+		T[cur].PA->init(
+				T[cur].F, 3, f_semilinear,
 				TRUE /* f_init_incidence_structure */,
 				verbose_level);
 
@@ -1801,13 +1750,14 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 
 
 		if (f_v) {
-			cout << "surface_domain_high_level::do_create_surface_atlas before Surf->init" << endl;
+			cout << "surface_domain_high_level::do_create_surface_atlas "
+					"before Surf->init" << endl;
 		}
 
 		T[cur].Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-		T[cur].Surf->init(T[cur].F, 0 /*verbose_level - 1*/);
+		T[cur].Surf->init_surface_domain(T[cur].F, 0 /*verbose_level - 1*/);
 		if (f_v) {
-			cout << "do_create_surface_atlas after Surf->init" << endl;
+			cout << "do_create_surface_atlas after Surf->init_surface_domain" << endl;
 		}
 
 		T[cur].Surf_A = NEW_OBJECT(surface_with_action);
@@ -1816,7 +1766,9 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 			cout << "surface_domain_high_level::do_create_surface_atlas "
 					"before Surf_A->init_with_linear_group" << endl;
 		}
-		T[cur].Surf_A->init(T[cur].Surf, T[cur].PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+		T[cur].Surf_A->init(
+				T[cur].Surf, T[cur].PA, TRUE /* f_recoordinatize */,
+				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "surface_domain_high_level::do_create_surface_atlas "
 					"after Surf_A->init_with_linear_group" << endl;
@@ -2018,7 +1970,8 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 
 
 
-void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
+void surface_domain_high_level::do_create_surface_atlas_q_e(
+		int q_max,
 		struct table_surfaces_field_order *T,
 		int nb_e, int *Idx, int nb,
 		std::string &fname_report_tex,

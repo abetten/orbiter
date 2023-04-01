@@ -942,11 +942,14 @@ public:
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
 	void domino_draw9(int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
-	void domino_draw_assignment_East(int Ap, int Aq, int M,
+	void domino_draw_assignment_East(
+			int Ap, int Aq, int M,
 			int i, int j, int dx, int dy, int rad);
-	void domino_draw_assignment_South(int Ap, int Aq, int M,
+	void domino_draw_assignment_South(
+			int Ap, int Aq, int M,
 			int i, int j, int dx, int dy, int rad);
-	void domino_draw_assignment(int *A, int *matching, int *B,
+	void domino_draw_assignment(
+			int *A, int *matching, int *B,
 			int M, int N,
 			int dx, int dy,
 			int rad, int edge,
@@ -1042,22 +1045,28 @@ public:
 		int offset_x, int f_switch_x,
 		int f_v_logarithmic, double log_base, int no, int f_embedded,
 		int verbose_level);
-	void get_coord(int *Px, int *Py, int idx, int x, int y,
+	void get_coord(
+			int *Px, int *Py, int idx, int x, int y,
 		int min_x, int min_y, int max_x, int max_y, int f_switch_x);
-	void get_coord_log(int *Px, int *Py, int idx, int x, int y,
+	void get_coord_log(
+			int *Px, int *Py, int idx, int x, int y,
 		int min_x, int min_y, int max_x, int max_y,
 		double log_base, int f_switch_x);
-	void y_to_pt_on_curve(int y_in, int &x, int &y,
+	void y_to_pt_on_curve(
+			int y_in, int &x, int &y,
 		int *outline_value, int *outline_number, int outline_sz);
-	void projective_plane_draw_grid(std::string &fname,
+	void projective_plane_draw_grid(
+			std::string &fname,
 			layered_graph_draw_options *O,
 			int q, int *Table, int nb,
 			int f_point_labels, std::string *Point_labels,
 			int verbose_level);
-	void draw_mod_n(draw_mod_n_description *Descr,
+	void draw_mod_n(
+			draw_mod_n_description *Descr,
 			layered_graph_draw_options *O,
 			int verbose_level);
-	void draw_mod_n_work(mp_graphics &G,
+	void draw_mod_n_work(
+			mp_graphics &G,
 			layered_graph_draw_options *O,
 			draw_mod_n_description *Descr,
 			int verbose_level);

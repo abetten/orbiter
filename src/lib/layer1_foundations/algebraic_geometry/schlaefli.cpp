@@ -50,6 +50,11 @@ schlaefli::schlaefli()
 
 	Double_six = NULL;
 	Double_six_label_tex = NULL;
+
+	Half_double_six_characteristic_vector = NULL;
+
+	Double_six_characteristic_vector = NULL;
+
 	Half_double_sixes = NULL;
 	Half_double_six_label_tex = NULL;
 	Half_double_six_to_double_six = NULL;
@@ -126,6 +131,15 @@ schlaefli::~schlaefli()
 	if (Double_six_label_tex) {
 		delete [] Double_six_label_tex;
 	}
+
+	if (Half_double_six_characteristic_vector) {
+		FREE_int(Half_double_six_characteristic_vector);
+	}
+
+	if (Double_six_characteristic_vector) {
+		FREE_int(Double_six_characteristic_vector);
+	}
+
 	if (Half_double_sixes) {
 		FREE_lint(Half_double_sixes);
 	}
@@ -153,7 +167,8 @@ schlaefli::~schlaefli()
 
 }
 
-void schlaefli::init(surface_domain *Surf, int verbose_level)
+void schlaefli::init(
+		surface_domain *Surf, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -166,93 +181,115 @@ void schlaefli::init(surface_domain *Surf, int verbose_level)
 
 	Labels = NEW_OBJECT(schlaefli_labels);
 	if (f_v) {
-		cout << "schlaefli::init before Labels->init" << endl;
+		cout << "schlaefli::init "
+				"before Labels->init" << endl;
 	}
 	Labels->init(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after Labels->init" << endl;
+		cout << "schlaefli::init "
+				"after Labels->init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "schlaefli::init before make_trihedral_pairs" << endl;
+		cout << "schlaefli::init "
+				"before make_trihedral_pairs" << endl;
 	}
 	make_trihedral_pairs(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after make_trihedral_pairs" << endl;
+		cout << "schlaefli::init "
+				"after make_trihedral_pairs" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before make_triads" << endl;
+		cout << "schlaefli::init "
+				"before make_triads" << endl;
 	}
 	make_triads(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after make_triads" << endl;
+		cout << "schlaefli::init "
+				"after make_triads" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before process_trihedral_pairs" << endl;
+		cout << "schlaefli::init "
+				"before process_trihedral_pairs" << endl;
 	}
 	process_trihedral_pairs(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after process_trihedral_pairs" << endl;
+		cout << "schlaefli::init "
+				"after process_trihedral_pairs" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before make_Eckardt_points" << endl;
+		cout << "schlaefli::init "
+				"before make_Eckardt_points" << endl;
 	}
 	make_Eckardt_points(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after make_Eckardt_points" << endl;
+		cout << "schlaefli::init "
+				"after make_Eckardt_points" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before init_Trihedral_to_Eckardt" << endl;
+		cout << "schlaefli::init "
+				"before init_Trihedral_to_Eckardt" << endl;
 	}
 	init_Trihedral_to_Eckardt(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_Trihedral_to_Eckardt" << endl;
+		cout << "schlaefli::init "
+				"after init_Trihedral_to_Eckardt" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before init_collinear_Eckardt_triples" << endl;
+		cout << "schlaefli::init "
+				"before init_collinear_Eckardt_triples" << endl;
 	}
 	init_collinear_Eckardt_triples(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_collinear_Eckardt_triples" << endl;
+		cout << "schlaefli::init "
+				"after init_collinear_Eckardt_triples" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before init_double_sixes" << endl;
+		cout << "schlaefli::init "
+				"before init_double_sixes" << endl;
 	}
 	init_double_sixes(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_double_sixes" << endl;
+		cout << "schlaefli::init "
+				"after init_double_sixes" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before create_half_double_sixes" << endl;
+		cout << "schlaefli::init "
+				"before create_half_double_sixes" << endl;
 	}
 	create_half_double_sixes(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after create_half_double_sixes" << endl;
+		cout << "schlaefli::init "
+				"after create_half_double_sixes" << endl;
 	}
 	//print_half_double_sixes_in_GAP();
 
 	if (f_v) {
-		cout << "schlaefli::init before init_adjacency_matrix_of_lines" << endl;
+		cout << "schlaefli::init "
+				"before init_adjacency_matrix_of_lines" << endl;
 	}
 	init_adjacency_matrix_of_lines(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_adjacency_matrix_of_lines" << endl;
+		cout << "schlaefli::init "
+				"after init_adjacency_matrix_of_lines" << endl;
 	}
 
 	if (f_v) {
-		cout << "schlaefli::init before init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
+		cout << "schlaefli::init "
+				"before init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
 	}
 	init_incidence_matrix_of_lines_vs_tritangent_planes(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
+		cout << "schlaefli::init "
+				"after init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
 	}
 
 
@@ -655,7 +692,8 @@ void schlaefli::index_of_line(int line, int &i, int &j)
 		}
 }
 
-int schlaefli::third_line_in_tritangent_plane(int l1, int l2, int verbose_level)
+int schlaefli::third_line_in_tritangent_plane(
+		int l1, int l2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, j, k, l, m, n;
@@ -1174,7 +1212,7 @@ void schlaefli::init_double_sixes(int verbose_level)
 void schlaefli::create_half_double_sixes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a, b, c, ij, v;
+	int i, j, a, b, c, ij, v, h;
 	int set[6];
 	int size_complement;
 	combinatorics::combinatorics_domain Combi;
@@ -1183,9 +1221,34 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 	if (f_v) {
 		cout << "schlaefli::create_half_double_sixes" << endl;
 	}
+
+	Half_double_six_characteristic_vector = NEW_int(72 * 27);
 	Half_double_sixes = NEW_lint(72 * 6);
 	Half_double_six_to_double_six = NEW_int(72);
 	Half_double_six_to_double_six_row = NEW_int(72);
+
+	Double_six_characteristic_vector = NEW_int(36 * 27);
+	Int_vec_zero(Double_six_characteristic_vector, 36 * 27);
+	for (i = 0; i < 36; i++) {
+		for (j = 0; j < 2; j++) {
+			for (h = 0; h < 6; h++) {
+				a = Double_six[(2 * i + j) * 6 + h];
+				Double_six_characteristic_vector[i * 27 + a] = 1;
+			}
+		}
+	}
+
+
+	Int_vec_zero(Half_double_six_characteristic_vector, 72 * 27);
+	for (i = 0; i < 36; i++) {
+		for (j = 0; j < 2; j++) {
+			for (h = 0; h < 6; h++) {
+				a = Double_six[(2 * i + j) * 6 + h];
+				Half_double_six_characteristic_vector[(2 * i + j) * 27 + a] = 1;
+			}
+		}
+	}
+
 
 	Lint_vec_copy(Double_six, Half_double_sixes, 36 * 12);
 	for (i = 0; i < 36; i++) {
@@ -1646,7 +1709,8 @@ void schlaefli::get_half_double_six_associated_with_Clebsch_map(
 	}
 }
 
-void schlaefli::prepare_clebsch_map(int ds, int ds_row,
+void schlaefli::prepare_clebsch_map(
+		int ds, int ds_row,
 	int &line1, int &line2, int &transversal,
 	int verbose_level)
 {
@@ -1950,7 +2014,8 @@ void schlaefli::latex_table_of_Schlaefli_labeling_of_lines(std::ostream &ost)
 	ost << "\\end{multicols}" << endl;
 }
 
-void schlaefli::latex_trihedral_pair(std::ostream &ost, int *T, long int *TE)
+void schlaefli::latex_trihedral_pair(
+		std::ostream &ost, int *T, long int *TE)
 {
 	int i, j;
 
@@ -2426,7 +2491,8 @@ void schlaefli::print_Schlaefli_labelling(std::ostream &ost)
 	ost << "$$" << endl;
 }
 
-void schlaefli::print_set_of_lines_tex(std::ostream &ost, long int *v, int len)
+void schlaefli::print_set_of_lines_tex(
+		std::ostream &ost, long int *v, int len)
 {
 	int i;
 
@@ -2725,6 +2791,93 @@ int schlaefli::identify_Eckardt_point(
 	}
 	return idx;
 }
+
+void schlaefli::write_lines_vs_line(
+		std::string &prefix, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schlaefli::write_lines_vs_line" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_lines_vs_lines_incma.csv");
+
+	Fio.int_matrix_write_csv(fname, adjacency_matrix_of_lines,
+			27, 27);
+
+
+	if (f_v) {
+		cout << "schlaefli::write_lines_vs_line done" << endl;
+	}
+
+}
+void schlaefli::write_lines_vs_tritangent_planes(
+		std::string &prefix, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schlaefli::write_lines_vs_tritangent_planes" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_lines_tritplanes_incma.csv");
+
+	Fio.int_matrix_write_csv(fname, incidence_lines_vs_tritangent_planes,
+			27, 45);
+
+	fname.assign(prefix);
+	fname.append("_lines_tritplanes.csv");
+
+	Fio.lint_matrix_write_csv(fname, Lines_in_tritangent_planes,
+			45, 3);
+
+	if (f_v) {
+		cout << "schlaefli::write_lines_vs_tritangent_planes done" << endl;
+	}
+}
+
+void schlaefli::write_double_sixes(
+		std::string &prefix, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schlaefli::write_double_sixes" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_single_sixes_char_vec.csv");
+
+	Fio.int_matrix_write_csv(fname, Half_double_six_characteristic_vector,
+			72, 27);
+
+	fname.assign(prefix);
+	fname.append("_double_sixes_char_vec.csv");
+
+	Fio.int_matrix_write_csv(fname, Double_six_characteristic_vector,
+			36, 27);
+
+
+
+	if (f_v) {
+		cout << "schlaefli::write_double_sixes done" << endl;
+	}
+}
+
+
+
 
 
 }}}

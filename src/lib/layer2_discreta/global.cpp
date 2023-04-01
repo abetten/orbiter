@@ -71,7 +71,8 @@ void discreta_init()
 #if 1
 		if (Fio.file_size(str) <= 0) {
 			if (f_v) {
-				cout << "discreta_init WARNING: can't find my library (DISCRETA_HOME/lib) !" << endl;
+				cout << "discreta_init WARNING: "
+						"can't find my library (DISCRETA_HOME/lib) !" << endl;
 				}
 			}
 #endif
@@ -283,7 +284,7 @@ ostream& operator<<(ostream& ost, discreta_base& p)
 
 
 
-int invert_mod_integer(int i, int p)
+int invert_mod_integer(int i, int p, int verbose_level)
 {
 	integer a, b;
 	
@@ -292,7 +293,7 @@ int invert_mod_integer(int i, int p)
 #endif
 	a.m_i(i);
 	b.m_i(p);
-	a.power_int_mod(p - 2, b);
+	a.power_int_mod(p - 2, b, verbose_level);
 #ifdef DEBUG_INVERT_MOD_INTEGER
 	cout << "i^-1=" << a.s_i() << endl;
 #endif
@@ -421,7 +422,7 @@ void print_factorization_hollerith(
 	
 	l = primes.s_l();
 	if (l != exponents.s_l()) {
-		cout << "print_factorization l != exponents.s_l()" << endl;
+		cout << "print_factorization l != exponents.s_l" << endl;
 		exit(1);
 		}
 	h.init("");
@@ -606,7 +607,7 @@ int sqrt_mod(int a, int p, int verbose_level)
 				return x;
 			}
 		}
-		cout << "sqrt_mod() a not a quadratic residue" << endl;
+		cout << "sqrt_mod a is not a quadratic residue" << endl;
 		cout << "a = " << a << " p=" << p << endl;
 		exit(1);
 		}
@@ -616,7 +617,7 @@ int sqrt_mod(int a, int p, int verbose_level)
 		
 		X.homo_z(x);
 		P.homo_z(p);
-		Y.mult_mod(X, X, P);
+		Y.mult_mod(X, X, P, verbose_level);
 		if (Y.modp(p) != a1) {
 			cout << "sqrt_mod error in sqrt_mod_invoved" << endl;
 			exit(1);
@@ -644,17 +645,17 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 	P.homo_z(p);
 	if (p % 4 == 3) {
 		X = A;
-		X.power_int_mod((p + 1) >> 2, P);
+		X.power_int_mod((p + 1) >> 2, P, verbose_level);
 		return X.s_i();
 		}
 	if (p % 8 == 5) {
 		b = A;
-		b.power_int_mod((p - 1) >> 2, P);
+		b.power_int_mod((p - 1) >> 2, P, verbose_level);
 		// cout << "A = " << A << endl;
 		// cout << "b = A^(p-1)/4=" << b << endl;
 		if (b.is_one()) {
 			X = A;
-			X.power_int_mod((p + 3) >> 3, P);
+			X.power_int_mod((p + 3) >> 3, P, verbose_level);
 			if (f_v) {
 				cout << "sqrt_mod_involved done" << endl;
 			}
@@ -663,10 +664,10 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 		m1 = P;
 		m1.dec();
 		if (b.compare_with(m1) == 0) {
-			a2.add_mod(A, A, P);
-			a4.add_mod(a2, a2, P);
-			a4.power_int_mod((p - 5) >> 3, P);
-			X.mult_mod(a2, a4, P);
+			a2.add_mod(A, A, P, verbose_level);
+			a4.add_mod(a2, a2, P, verbose_level);
+			a4.power_int_mod((p - 5) >> 3, P, verbose_level);
+			X.mult_mod(a2, a4, P, verbose_level);
 			if (f_v) {
 				cout << "sqrt_mod_involved done" << endl;
 			}
@@ -717,14 +718,14 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 	cout << "n=" << n << " p=" << p << " Legendre(n,p)=" << r<< endl;
 	N.homo_z(n);
 	Z = N;
-	Z.power_int_mod(q, P);
+	Z.power_int_mod(q, P, verbose_level);
 	Y = Z;
 	r = e;
 	X = A;
-	X.power_int_mod((q - 1) >> 1, P);
-	d.mult_mod(X, X, P);
-	B.mult_mod(A, d, P);
-	X.mult_mod(A, X, P);
+	X.power_int_mod((q - 1) >> 1, P, verbose_level);
+	d.mult_mod(X, X, P, verbose_level);
+	B.mult_mod(A, d, P, verbose_level);
+	X.mult_mod(A, X, P, verbose_level);
 #ifdef TONELLI_VERBOSE
 	cout << "initialization:\n";
 #endif	
@@ -739,15 +740,15 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 #endif
 
 
-		X2.mult_mod(X, X, P);
-		AB.mult_mod(A, B, P);
+		X2.mult_mod(X, X, P, verbose_level);
+		AB.mult_mod(A, B, P, verbose_level);
 		Ypower = Y;
-		Ypower.power_int_mod(1 << (r - 1), P);
+		Ypower.power_int_mod(1 << (r - 1), P, verbose_level);
 		Bpower = B;
-		Bpower.power_int_mod(1 << (r - 1), P);
+		Bpower.power_int_mod(1 << (r - 1), P, verbose_level);
 
 		d = Y;
-		d.power_int_mod(1 << (r - 1), P);
+		d.power_int_mod(1 << (r - 1), P, verbose_level);
 		mP = P;
 		mP.negate();
 		d += mP;
@@ -756,7 +757,7 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 			exit(1);
 			}
 		
-		d.mult_mod(A, B, P);
+		d.mult_mod(A, B, P, verbose_level);
 		//X2.mult_mod(X, X, P);
 		if (d.compare_with(X2) != 0) {
 			cout << "loop invariant violated: ab != x^2" << endl;
@@ -766,7 +767,7 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 			}
 
 		d = B;
-		d.power_int_mod(1 << (r - 1), P);
+		d.power_int_mod(1 << (r - 1), P, verbose_level);
 		if (!d.is_one()) {
 			cout << "loop invariant violated: B^{2^{r-1}} != 1" << endl;
 			exit(1);
@@ -779,7 +780,7 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 		else {
 			for (m = 1; ; m++) {
 				d = B;
-				d.power_int_mod(1 << m, P);
+				d.power_int_mod(1 << m, P, verbose_level);
 				if (d.is_one())
 					break;
 				if (m >= r) {
@@ -815,11 +816,11 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 		cout << "m=" << m << endl;
 #endif
 		T = Y;
-		T.power_int_mod(1 << (r - m - 1), P);
-		Y.mult_mod(T, T, P);
+		T.power_int_mod(1 << (r - m - 1), P, verbose_level);
+		Y.mult_mod(T, T, P, verbose_level);
 		r = m;
-		X.mult_mod(X, T, P);
-		B.mult_mod(B, Y, P);
+		X.mult_mod(X, T, P, verbose_level);
+		B.mult_mod(B, Y, P, verbose_level);
 
 		cout << " & " << Y << " & " << X << " & " << B << " & " << r;
 		cout << "\\\\" << endl;
@@ -990,7 +991,7 @@ void stirling_second(
 		} while (p.next_into_k_parts(n, k));
 	if (!f_ordered) {
 		b.factorial(k);
-		a.integral_division_exact(b, c); 
+		a.integral_division_exact(b, c, verbose_level);
 		c.swap(a);
 		}
 	a.swap(res);
@@ -1055,7 +1056,7 @@ void stirling_first(
 			if (ax == 0)
 				continue;
 			c.factorial(x - 1);
-			c.power_int(ax);
+			c.power_int(ax, verbose_level);
 			b *= c;
 			}
 
@@ -1064,7 +1065,7 @@ void stirling_first(
 		} while (p.next_into_k_parts(n, k));
 
 	b.factorial(k);
-	a.integral_division_exact(b, c);
+	a.integral_division_exact(b, c, verbose_level);
 	
 	if (!f_signless) {
 		if (ODD(n + k))
@@ -1180,7 +1181,7 @@ void Catalan_nk_star(
 
 
 void N_choose_K(
-		discreta_base & n, int k, discreta_base & res)
+		discreta_base & n, int k, discreta_base & res, int verbose_level)
 // Computes ${n \choose k}$ into res as an {\em object}.
 // This function uses a recursion formula.
 {
@@ -1210,11 +1211,11 @@ void N_choose_K(
 		}
 	n1 = n;
 	n1.dec();
-	N_choose_K(n1, k - 1, res1);
+	N_choose_K(n1, k - 1, res1, verbose_level);
 	res1 *= n;
 	// a = n * n_choose_k(n - 1, k - 1);
 	k1.m_i_i(k);
-	res1.integral_division_exact(k1, res);
+	res1.integral_division_exact(k1, res, verbose_level);
 	// b = a / k;
 }
 
@@ -1323,7 +1324,7 @@ static void Binomial_using_table(
 }
 
 void Krawtchouk(
-		int n, int q, int i, int j, discreta_base & a)
+		int n, int q, int i, int j, discreta_base & a, int verbose_level)
 // $\sum_{u=0}^{\min(i,j)} (-1)^u \cdot (q-1)^{i-u} \cdot {j \choose u} \cdot $
 // ${n - j \choose i - u}$
 {
@@ -1334,7 +1335,7 @@ void Krawtchouk(
 	u_max = MINIMUM(i, j);
 	for (u = 0; u <= u_max; u++) {
 		b.m_i_i(q - 1);
-		b.power_int(i - u);
+		b.power_int(i - u, verbose_level);
 		if (ODD(u))
 			b.negate();
 		Binomial(j, u, c);

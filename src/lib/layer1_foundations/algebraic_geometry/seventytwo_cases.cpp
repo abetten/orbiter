@@ -189,8 +189,8 @@ void seventytwo_cases::compute_arc(
 
 
 
-	P6[0] = SO->Surf->P->intersection_of_two_lines(SO->Lines[l1], SO->Lines[m1]);
-	P6[1] = SO->Surf->P->intersection_of_two_lines(SO->Lines[l2], SO->Lines[m1]);
+	P6[0] = SO->Surf->P->Subspaces->intersection_of_two_lines(SO->Lines[l1], SO->Lines[m1]);
+	P6[1] = SO->Surf->P->Subspaces->intersection_of_two_lines(SO->Lines[l2], SO->Lines[m1]);
 	nb_t = 4;
 	nb = 2;
 	for (i = 0; i < nb_t; i++) {
@@ -201,7 +201,7 @@ void seventytwo_cases::compute_arc(
 			continue;
 		}
 		if (SO->SOP->Adj_ij(transversals4[i], m2)) {
-			P6[nb++] = SO->Surf->P->intersection_of_two_lines(
+			P6[nb++] = SO->Surf->P->Subspaces->intersection_of_two_lines(
 					SO->Lines[transversals4[i]], SO->Lines[m2]);
 			f_taken[i] = TRUE;
 		}
@@ -215,7 +215,7 @@ void seventytwo_cases::compute_arc(
 			continue;
 		}
 		if (SO->SOP->Adj_ij(transversals4[i], m3)) {
-			P6[nb++] = SO->Surf->P->intersection_of_two_lines(
+			P6[nb++] = SO->Surf->P->Subspaces->intersection_of_two_lines(
 					SO->Lines[transversals4[i]], SO->Lines[m3]);
 			f_taken[i] = TRUE;
 		}
@@ -380,25 +380,25 @@ void seventytwo_cases::report_Clebsch_map_details(
 	ost << "\\bigskip" << endl << endl;
 
 	ost << "$\\ell_1=" << Surf->Schlaefli->Labels->Line_label_tex[l1] << " = " << SO->Lines[l1] << " = ";
-	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l1]);
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l1]);
 	ost << "$\\\\" << endl;
 
 	ost << "$\\ell_2=" << Surf->Schlaefli->Labels->Line_label_tex[l2] << " = " << SO->Lines[l2] << " = ";
-	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l2]);
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l2]);
 	ost << "$\\\\" << endl;
 
 	SO->SOP->SmoothProperties->print_single_tritangent_plane(ost, tritangent_plane_idx);
 
 	ost << "$m_1=" << Surf->Schlaefli->Labels->Line_label_tex[m1] << " = " << SO->Lines[m1] << " = ";
-	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m1]);
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m1]);
 	ost << "$\\\\" << endl;
 
 	ost << "$m_2=" << Surf->Schlaefli->Labels->Line_label_tex[m2] << " = " << SO->Lines[m2] << " = ";
-	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m2]);
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m2]);
 	ost << "$\\\\" << endl;
 
 	ost << "$m_3=" << Surf->Schlaefli->Labels->Line_label_tex[m3] << " = " << SO->Lines[m3] << " = ";
-	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m3]);
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m3]);
 	ost << "$\\\\" << endl;
 
 
@@ -417,7 +417,7 @@ void seventytwo_cases::report_Clebsch_map_details(
 		ost << "$";
 		ost << Surf->Schlaefli->Labels->Line_label_tex[H[i]];
 		ost << " = " << SO->Lines[H[i]] << " = ";
-		Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[H[i]]);
+		Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[H[i]]);
 		ost << "$\\\\" << endl;
 	}
 
@@ -426,13 +426,13 @@ void seventytwo_cases::report_Clebsch_map_details(
 	ost << "P6, P6 * Alpha1, P6 * Alpha1 local, P6 * Alpha1 * Alpha2:\\\\" << endl;
 	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
-	Surf->F->display_table_of_projective_points_easy(ost, P6, 6, 4);
+	Surf->F->Io->display_table_of_projective_points_easy(ost, P6, 6, 4);
 	ost << "\\;" << endl;
-	Surf->F->display_table_of_projective_points_easy(ost, P6a, 6, 4);
+	Surf->F->Io->display_table_of_projective_points_easy(ost, P6a, 6, 4);
 	ost << "\\;" << endl;
-	Surf->F->display_table_of_projective_points_easy(ost, P6_local, 6, 3);
+	Surf->F->Io->display_table_of_projective_points_easy(ost, P6_local, 6, 3);
 	ost << "\\;" << endl;
-	Surf->F->display_table_of_projective_points_easy(ost, P6_local_canonical, 6, 3);
+	Surf->F->Io->display_table_of_projective_points_easy(ost, P6_local_canonical, 6, 3);
 	ost << "$$}" << endl;
 
 
@@ -440,11 +440,11 @@ void seventytwo_cases::report_Clebsch_map_details(
 
 	ost << "$\\ell_1\\tau=";
 	ost << L1 << " = ";
-	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, L1);
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, L1);
 	ost << "$\\\\" << endl;
 	ost << "$\\ell_2\\tau=";
 	ost << L2 << " = ";
-	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, L2);
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, L2);
 	ost << "$\\\\" << endl;
 
 	//ost << "\\bigskip" << endl << endl;

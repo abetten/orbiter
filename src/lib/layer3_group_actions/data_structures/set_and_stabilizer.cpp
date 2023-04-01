@@ -175,7 +175,7 @@ void set_and_stabilizer::init_stab_from_data(int *data_gens,
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->make_element(gens->ith(i), data_gens + i * data_gens_size, 0);
+		A->Group_element->make_element(gens->ith(i), data_gens + i * data_gens_size, 0);
 		}
 
 	A->generators_to_strong_generators(
@@ -242,7 +242,7 @@ void set_and_stabilizer::init_stab_from_file(
 		for (j = 0; j < A->make_element_size; j++) {
 			f >> data[j];
 			}
-		A->make_element(gens->ith(i), data, 0);
+		A->Group_element->make_element(gens->ith(i), data, 0);
 		}
 
 	FREE_int(data);
@@ -306,11 +306,11 @@ void set_and_stabilizer::apply_to_self(
 		}
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self Elt=" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 		}
 
 	data2 = NEW_lint(sz);
-	A2->map_a_set(data, data2, sz, Elt, 0 /* verbose_level */);
+	A2->Group_element->map_a_set(data, data2, sz, Elt, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self "
 				"mapping the set under action " << A2->label << ":" << endl;
@@ -328,10 +328,10 @@ void set_and_stabilizer::apply_to_self(
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self "
-				"before testing the n e w generators" << endl;
+				"before testing the new generators" << endl;
 		}
 	for (i = 0; i < Strong_gens->gens->len; i++) {
-		if (!A2->check_if_in_set_stabilizer(
+		if (!A2->Group_element->check_if_in_set_stabilizer(
 				gens->ith(i), sz, data2, 0 /*verbose_level*/)) {
 			cout << "set_and_stabilizer::apply_to_self "
 					"conjugate element does not stabilize the set" << endl;
@@ -366,7 +366,7 @@ void set_and_stabilizer::apply_to_self_inverse(
 		}
 	Elt1 = NEW_int(A->elt_size_in_int);
 
-	A->element_invert(Elt, Elt1, 0);
+	A->Group_element->element_invert(Elt, Elt1, 0);
 	apply_to_self(Elt1, verbose_level);
 
 	FREE_int(Elt1);
@@ -386,7 +386,7 @@ void set_and_stabilizer::apply_to_self_element_raw(
 		}
 
 	Elt = NEW_int(A->elt_size_in_int);
-	A->make_element(Elt, Elt_data, 0);
+	A->Group_element->make_element(Elt, Elt_data, 0);
 	apply_to_self(Elt, verbose_level);
 	FREE_int(Elt);
 	if (f_v) {
@@ -406,7 +406,7 @@ void set_and_stabilizer::apply_to_self_inverse_element_raw(
 		}
 
 	Elt = NEW_int(A->elt_size_in_int);
-	A->make_element(Elt, Elt_data, 0);
+	A->Group_element->make_element(Elt, Elt_data, 0);
 	apply_to_self_inverse(Elt, verbose_level);
 	FREE_int(Elt);
 	if (f_v) {
@@ -428,14 +428,18 @@ void set_and_stabilizer::rearrange_by_orbits(
 		}
 	
 	actions::action *A_on_set;
+	std::string label_of_set;
 
-			
+	label_of_set.assign("rearrange_by_orbits");
+
+
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
 				"creating restricted action on the set "
 				"of lines" << endl;
 		}
-	A_on_set = A2->restricted_action(data, sz, verbose_level);
+	A_on_set = A2->Induced_action->restricted_action(
+			data, sz, label_of_set, verbose_level);
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
 				"creating restricted action on the set of "
@@ -516,6 +520,11 @@ actions::action *set_and_stabilizer::create_restricted_action_on_the_set(
 		}
 	
 	actions::action *A_on_set;
+	std::string label_of_set;
+
+
+
+	label_of_set.assign("on_set");
 
 			
 	if (f_v) {
@@ -523,7 +532,7 @@ actions::action *set_and_stabilizer::create_restricted_action_on_the_set(
 				"action_on_the_set creating restricted "
 				"action on the set" << endl;
 		}
-	A_on_set = A2->restricted_action(data, sz, verbose_level);
+	A_on_set = A2->Induced_action->restricted_action(data, sz, label_of_set, verbose_level);
 	
 	Strong_gens->print_with_given_action(cout, A_on_set);
 	
@@ -547,13 +556,16 @@ void set_and_stabilizer::print_restricted_action_on_the_set(
 		}
 	
 	actions::action *A_on_set;
+	std::string label_of_set;
 
+	label_of_set.assign("on_set");
 			
 	if (f_v) {
 		cout << "set_and_stabilizer::print_restricted_action_"
 				"on_the_set creating restricted action on the set" << endl;
 		}
-	A_on_set = A2->restricted_action(data, sz, verbose_level);
+	A_on_set = A2->Induced_action->restricted_action(
+			data, sz, label_of_set, verbose_level);
 	
 	Strong_gens->print_with_given_action(cout, A_on_set);
 	

@@ -28,7 +28,8 @@ blt_set_activity::~blt_set_activity()
 {
 }
 
-void blt_set_activity::init(blt_set_activity_description *Descr,
+void blt_set_activity::init(
+		blt_set_activity_description *Descr,
 		orthogonal_geometry_applications::BLT_set_create *BC,
 		int verbose_level)
 {
@@ -72,6 +73,22 @@ void blt_set_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_export_gap) {
+
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity f_export_gap" << endl;
+		}
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity before BC->export_gap" << endl;
+		}
+		BC->export_gap(verbose_level);
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity after BC->export_gap" << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_create_flock) {
 
 		if (f_v) {
@@ -88,7 +105,21 @@ void blt_set_activity::perform_activity(int verbose_level)
 	}
 
 
+	else if (Descr->f_BLT_test) {
 
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity f_BLT_test" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity before BC->BLT_test" << endl;
+		}
+		BC->BLT_test(verbose_level);
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity after BC->BLT_test" << endl;
+		}
+
+	}
 
 
 	if (f_v) {

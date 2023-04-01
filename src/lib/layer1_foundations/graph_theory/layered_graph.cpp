@@ -37,7 +37,8 @@ layered_graph::~layered_graph()
 		}
 }
 
-void layered_graph::init(int nb_layers, int *Nb_nodes_layer, 
+void layered_graph::init(
+		int nb_layers, int *Nb_nodes_layer,
 	std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -53,9 +54,12 @@ void layered_graph::init(int nb_layers, int *Nb_nodes_layer,
 	id_of_first_node = 0;
 	for (i = 0; i < nb_layers; i++) {
 		if (f_v) {
-			cout << "layered_graph::init before L[i].init, i=" << i << endl;
+			cout << "layered_graph::init "
+					"before L[i].init, i=" << i << endl;
 			}
-		L[i].init(Nb_nodes_layer[i], id_of_first_node, verbose_level);
+		L[i].init(
+				Nb_nodes_layer[i],
+				id_of_first_node, verbose_level);
 		id_of_first_node += Nb_nodes_layer[i];
 		}
 	nb_nodes_total = id_of_first_node;
@@ -164,7 +168,8 @@ void layered_graph::place_with_grouping(
 					"layer " << i << endl;
 			}
 		L[i].y_coordinate = 1. - i * dy - dy2;
-		L[i].place_with_grouping(Group_sizes[i], Nb_groups[i],
+		L[i].place_with_grouping(
+				Group_sizes[i], Nb_groups[i],
 				x_stretch, verbose_level);
 		if (f_v) {
 			cout << "layered_graph::place_with_grouping "
@@ -333,10 +338,12 @@ void layered_graph::draw_with_options(
 	fname_full.append(".mp");
 
 	if (f_v) {
-		cout << "layered_graph::draw_with_options fname_full = " << fname_full << endl;
+		cout << "layered_graph::draw_with_options "
+				"fname_full = " << fname_full << endl;
 	}
 	if (O == NULL) {
-		cout << "layered_graph::draw_with_options O == NULL" << endl;
+		cout << "layered_graph::draw_with_options "
+				"O == NULL" << endl;
 		exit(1);
 	}
 
@@ -400,7 +407,8 @@ void layered_graph::draw_with_options(
 			}
 
 		if (O->f_has_draw_begining_callback) {
-			(*O->draw_begining_callback)(this, &G,
+			(*O->draw_begining_callback)(
+					this, &G,
 					O->xin, O->yin, O->f_rotated,
 					O->rad * 4, O->rad * 4);
 		}
@@ -413,7 +421,8 @@ void layered_graph::draw_with_options(
 			if (O->f_select_layers) {
 				int idx;
 
-				if (!Sorting.int_vec_search_linear(O->layer_select,
+				if (!Sorting.int_vec_search_linear(
+						O->layer_select,
 						O->nb_layer_select, i, idx)) {
 					continue;
 				}
@@ -447,7 +456,8 @@ void layered_graph::draw_with_options(
 						continue;
 					}
 				}
-				coordinates(L[i].Nodes[j].id, O->xin, O->yin,
+				coordinates(
+						L[i].Nodes[j].id, O->xin, O->yin,
 						O->f_rotated, x, y);
 				//G.circle(x, y, rad);
 
@@ -481,7 +491,8 @@ void layered_graph::draw_with_options(
 					if (O->f_select_layers) {
 						int idx;
 
-						if (!Sorting.int_vec_search_linear(O->layer_select,
+						if (!Sorting.int_vec_search_linear(
+								O->layer_select,
 								O->nb_layer_select, l, idx)) {
 							continue;
 						}
@@ -513,7 +524,8 @@ void layered_graph::draw_with_options(
 					for (h = 0; h < nb_up; h++) {
 						id = up[h];
 						find_node_by_id(id, l, n);
-						coordinates(id, O->xin, O->yin,
+						coordinates(
+								id, O->xin, O->yin,
 								O->f_rotated, x2, y2);
 						if (h > 0 && h < nb_up - 1) {
 #if 1
@@ -536,7 +548,7 @@ void layered_graph::draw_with_options(
 						if (O->f_label_edges) {
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
-							snprintf(text, 1000, "%d", edge_label);
+							snprintf(text, sizeof(text), "%d", edge_label);
 							string s;
 							s.assign(text);
 							G.aligned_text_with_offset(Px[2], Py[2],
@@ -549,7 +561,8 @@ void layered_graph::draw_with_options(
 					for (h = 0; h < nb_up; h++) {
 						id = up[h];
 						find_node_by_id(id, l, n);
-						coordinates(id, O->xin, O->yin,
+						coordinates(
+								id, O->xin, O->yin,
 								O->f_rotated, x2, y2);
 						Px[0] = x;
 						Px[1] = x2;
@@ -559,7 +572,7 @@ void layered_graph::draw_with_options(
 						if (O->f_label_edges) {
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
-							snprintf(text, 1000, "%d", edge_label);
+							snprintf(text, sizeof(text), "%d", edge_label);
 							string s;
 							s.assign(text);
 							G.aligned_text_with_offset(Px[2], Py[2],
@@ -587,7 +600,8 @@ void layered_graph::draw_with_options(
 					for (h = 0; h < nb_down; h++) {
 						id = down[h];
 						find_node_by_id(id, l, n);
-						coordinates(id, O->xin, O->yin, O->f_rotated, x2, y2);
+						coordinates(
+								id, O->xin, O->yin, O->f_rotated, x2, y2);
 						if (h > 0 && h < nb_down - 1) {
 #if 1
 							Px[0] = x;
@@ -608,10 +622,11 @@ void layered_graph::draw_with_options(
 						if (O->f_label_edges) {
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
-							snprintf(text, 1000, "%d", edge_label);
+							snprintf(text, sizeof(text), "%d", edge_label);
 							string s;
 							s.assign(text);
-							G.aligned_text_with_offset(Px[2], Py[2],
+							G.aligned_text_with_offset(
+									Px[2], Py[2],
 									xoffset, yoffset, "", s);
 							edge_label++;
 						}
@@ -627,7 +642,8 @@ void layered_graph::draw_with_options(
 					for (h = 0; h < nb_down; h++) {
 						id = down[h];
 						find_node_by_id(id, l, n);
-						coordinates(id, O->xin, O->yin,
+						coordinates(
+								id, O->xin, O->yin,
 								O->f_rotated, x2, y2);
 						Px[0] = x;
 						Px[1] = x2;
@@ -637,10 +653,11 @@ void layered_graph::draw_with_options(
 						if (O->f_label_edges) {
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
-							snprintf(text, 1000, "%d", edge_label);
+							snprintf(text, sizeof(text), "%d", edge_label);
 							string s;
 							s.assign(text);
-							G.aligned_text_with_offset(Px[2], Py[2],
+							G.aligned_text_with_offset(
+									Px[2], Py[2],
 									xoffset, yoffset, "", s);
 							edge_label++;
 						}
@@ -685,7 +702,8 @@ void layered_graph::draw_with_options(
 			if (O->f_select_layers) {
 				int idx;
 
-				if (!Sorting.int_vec_search_linear(O->layer_select,
+				if (!Sorting.int_vec_search_linear(
+						O->layer_select,
 						O->nb_layer_select, i, idx)) {
 					continue;
 				}
@@ -719,7 +737,8 @@ void layered_graph::draw_with_options(
 						continue;
 					}
 				}
-				coordinates(L[i].Nodes[j].id, O->xin, O->yin,
+				coordinates(
+						L[i].Nodes[j].id, O->xin, O->yin,
 						O->f_rotated, x, y);
 
 
@@ -753,7 +772,7 @@ void layered_graph::draw_with_options(
 
 					if (L[i].Nodes[j].radius_factor >= 1.) {
 						char str[1000];
-						snprintf(str, 1000, "{\\scriptsize %d}", L[i].Nodes[j].data1);
+						snprintf(str, sizeof(str), "{\\scriptsize %d}", L[i].Nodes[j].data1);
 						label.assign(str);
 					}
 					else {
@@ -764,7 +783,8 @@ void layered_graph::draw_with_options(
 					label.assign("");
 				}
 
-				G.nice_circle(x, y, O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
+				G.nice_circle(
+						x, y, O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
 
 				if (O->f_nodes_empty) {
 					if (f_v) {
@@ -892,7 +912,8 @@ void layered_graph::coordinates(
 
 	find_node_by_id(id, l, n);
 
-	coordinates_direct(L[l].Nodes[n].x_coordinate,
+	coordinates_direct(
+			L[l].Nodes[n].x_coordinate,
 			L[l].y_coordinate, x_max, y_max, f_rotated, x, y);
 #if 0
 	x = (int)(L[l].Nodes[n].x_coordinate * x_max);
@@ -996,7 +1017,7 @@ void layered_graph::write_memory_object(
 	for (i = 0; i < nb_layers; i++) {
 		L[i].write_memory_object(m, verbose_level - 1);
 		}
-	m->write_string(fname_base.c_str());
+	m->write_string(fname_base);
 	m->write_int(MAGIC_SYNC); // a check to see if the file is not corrupt
 	if (f_v) {
 		cout << "layered_graph::write_memory_object "
@@ -1053,7 +1074,8 @@ void layered_graph::read_memory_object(
 		}
 }
 
-void layered_graph::remove_edges(int layer1, int node1,
+void layered_graph::remove_edges(
+		int layer1, int node1,
 		int layer2, int node2,
 		std::vector<std::vector<int> > &All_Paths,
 		int verbose_level)
@@ -1062,7 +1084,8 @@ void layered_graph::remove_edges(int layer1, int node1,
 
 	if (f_v) {
 		cout << "layered_graph::remove_edges" << endl;
-		cout << "layer1 = " << layer1 << " node1=" << node1 << " layer2=" << layer2 << " node2=" << node2 << endl;
+		cout << "layer1 = " << layer1 << " node1=" << node1
+				<< " layer2=" << layer2 << " node2=" << node2 << endl;
 	}
 	int l, n, j, id, l1, n1;
 	int f_found;
@@ -1098,7 +1121,8 @@ void layered_graph::remove_edges(int layer1, int node1,
 	}
 }
 
-void layered_graph::remove_edge(int layer1, int node1,
+void layered_graph::remove_edge(
+		int layer1, int node1,
 		int layer2, int node2,
 		int verbose_level)
 {
@@ -1122,7 +1146,8 @@ void layered_graph::remove_edge(int layer1, int node1,
 	}
 }
 
-void layered_graph::find_all_paths_between(int layer1, int node1,
+void layered_graph::find_all_paths_between(
+		int layer1, int node1,
 		int layer2, int node2,
 		std::vector<std::vector<int> > &All_Paths,
 		int verbose_level)
@@ -1176,7 +1201,9 @@ void layered_graph::find_all_paths_between_recursion(
 
 	if (f_v) {
 		cout << "layered_graph::find_all_paths_between_recursion" << endl;
-		cout << "layer1 = " << layer1 << " node1=" << node1 << " layer2=" << layer2 << " node2=" << node2 << " l0=" << l0 << " n0=" << n0 << endl;
+		cout << "layer1 = " << layer1 << " node1=" << node1
+				<< " layer2=" << layer2 << " node2=" << node2
+				<< " l0=" << l0 << " n0=" << n0 << endl;
 	}
 
 	graph_node *N = &L[l0].Nodes[n0];
@@ -1289,8 +1316,8 @@ void layered_graph::set_radius_factor_for_all_nodes_at_level(
 	int j;
 
 	if (f_v) {
-		cout << "layered_graph::set_radius_factor_for_all_"
-				"nodes_at_level level = " << lvl
+		cout << "layered_graph::set_radius_factor_for_all_nodes_at_level "
+				"level = " << lvl
 				<< " radius_factor=" << radius_factor << endl;
 		}
 	for (j = 0; j < L[lvl].nb_nodes; j++) {
@@ -1333,11 +1360,13 @@ void layered_graph::make_subset_lattice(
 
 	init(depth + 1 /*nb_layers*/, Nb, dummy, verbose_level);
 	if (f_vv) {
-		cout << "layered_graph::make_subset_lattice after init" << endl;
+		cout << "layered_graph::make_subset_lattice "
+				"after init" << endl;
 		}
 	place(verbose_level);
 	if (f_vv) {
-		cout << "layered_graph::make_subset_lattice after place" << endl;
+		cout << "layered_graph::make_subset_lattice "
+				"after place" << endl;
 		}
 
 	// create vertex labels:
@@ -1368,7 +1397,7 @@ void layered_graph::make_subset_lattice(
 						}
 					}
 				a += k;
-				snprintf(text, 1000, "%d", a);
+				snprintf(text, sizeof(text), "%d", a);
 				}
 			else if (f_breadth_first) {
 				a = 0;
@@ -1376,11 +1405,11 @@ void layered_graph::make_subset_lattice(
 					a += Nb[i];
 					}
 				a += r;
-				snprintf(text, 1000, "%d", a);
+				snprintf(text, sizeof(text), "%d", a);
 				}
 			else {
 				if (k) {
-					snprintf(text, 1000, "%d", set1[k - 1]);
+					snprintf(text, sizeof(text), "%d", set1[k - 1]);
 					}
 				else {
 					text[0] = 0;
@@ -1472,7 +1501,7 @@ void layered_graph::init_poset_from_file(
 
 				char text[1000];
 
-				snprintf(text, 1000, "%d", a);
+				snprintf(text, sizeof(text), "%d", a);
 
 				string text2;
 
@@ -1503,7 +1532,8 @@ void layered_graph::init_poset_from_file(
 		}
 	}
 	if (f_grouping) {
-		place_with_grouping(Orbit_length,
+		place_with_grouping(
+				Orbit_length,
 				Nb_orbits, x_stretch, 0 /*verbose_level*/);
 		}
 	if (f_v) {

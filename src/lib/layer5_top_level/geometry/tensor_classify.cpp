@@ -287,7 +287,15 @@ void tensor_classify::create_restricted_action_on_rank_one_tensors(
 		cout << "tensor_classify::create_restricted_action_on_rank_one_tensors "
 				"before A->restricted_action" << endl;
 	}
-	Ar = A->restricted_action(points, nb_points,
+
+
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_tensors");
+
+	Ar = A->Induced_action->restricted_action(
+			points, nb_points, label_of_set,
 			verbose_level);
 	Ar->f_is_linear = TRUE;
 	if (f_v) {
@@ -414,7 +422,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 		fp << "\\noindent The field ${\\mathbb F}_{"
 				<< W->q
 				<< "}$ :\\\\" << endl;
-		W->F->cheat_sheet(fp, verbose_level);
+		W->F->Io->cheat_sheet(fp, verbose_level);
 
 		if (f_v) {
 			cout << "tensor_classify::report before W->report" << endl;
@@ -429,7 +437,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 		fp << "\\section{Generators}" << endl;
 		for (i = 0; i < SG->gens->len; i++) {
 			fp << "$$" << endl;
-			A->element_print_latex(SG->gens->ith(i), fp);
+			A->Group_element->element_print_latex(SG->gens->ith(i), fp);
 			if (i < SG->gens->len - 1) {
 				fp << ", " << endl;
 			}
@@ -591,7 +599,8 @@ static void wreath_product_print_set(std::ostream &ost, int len, long int *S, vo
 	Lint_vec_print(cout, S, len);
 	cout << endl;
 	for (i = 0; i < len; i++) {
-		T->F->PG_element_unrank_modified(T->v,
+		T->F->Projective_space_basic->PG_element_unrank_modified(
+				T->v,
 				1, T->vector_space_dimension, S[i]);
 		cout << S[i] << " : ";
 		Int_vec_print(cout, T->v, T->vector_space_dimension);

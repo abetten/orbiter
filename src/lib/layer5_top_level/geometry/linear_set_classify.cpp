@@ -410,9 +410,11 @@ void linear_set_classify::init(
 	spread_embedding = NEW_int(D->N);
 	vec = NEW_int(m1);
 	for (i = 0; i < D->N; i++) {
-		FQ->PG_element_unrank_modified(vec, 1, m, i);
+		FQ->Projective_space_basic->PG_element_unrank_modified(
+				vec, 1, m, i);
 		vec[m] = 0;
-		FQ->PG_element_rank_modified(vec, 1, m1, j);
+		FQ->Projective_space_basic->PG_element_rank_modified(
+				vec, 1, m1, j);
 		spread_embedding[i] = j;
 	}
 
@@ -421,8 +423,8 @@ void linear_set_classify::init(
 		cout << "linear_set_classify::init computing spread_embedding done" << endl;
 	}
 
-	VS = NEW_OBJECT(algebra::vector_space);
-	VS->init(P->F, vector_space_dimension /* dimension */,
+	VS = NEW_OBJECT(linear_algebra::vector_space);
+	VS->init(P->Subspaces->F, vector_space_dimension /* dimension */,
 			verbose_level - 1);
 	VS->init_rank_functions(
 			linear_set_classify_rank_point_func,
@@ -470,19 +472,19 @@ void linear_set_classify::init(
 		SD = NEW_OBJECT(geometry::spread_domain);
 
 		if (f_v) {
-			cout << "linear_set_classify::init before SD->init" << endl;
+			cout << "linear_set_classify::init before SD->init_spread_domain" << endl;
 		}
 
 
 		// ToDo PA is not valid!
 
-		SD->init(
+		SD->init_spread_domain(
 				PA->F,
 				n, k,
 				verbose_level - 1);
 
 		if (f_v) {
-			cout << "linear_set_classify::init after SD->init" << endl;
+			cout << "linear_set_classify::init after SD->init_spread_domain" << endl;
 		}
 
 
@@ -598,7 +600,7 @@ int linear_set_classify::test_set(int len, long int *S, int verbose_level)
 		cout << endl;
 	}
 	for (i = 0; i < len; i++) {
-		Fq->PG_element_unrank_modified(
+		Fq->Projective_space_basic->PG_element_unrank_modified(
 			Basis + i * vector_space_dimension, 1,
 			vector_space_dimension, S[i]);
 	}
@@ -654,7 +656,8 @@ void linear_set_classify::compute_intersection_types_at_level(int level,
 	for (node = 0; node < nb_nodes; node++) {
 		Gen->get_set_by_level(level, node, set);
 		for (i = 0; i < level; i++) {
-			Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
+			Fq->Projective_space_basic->PG_element_unrank_modified(
+					Basis + i * n, 1, n, set[i]);
 		}
 		D->compute_intersection_type(level, Basis,
 			Intersection_dimensions + node * D->N, 0 /*verbose_level - 1*/);
@@ -832,7 +835,8 @@ void linear_set_classify::print_orbits_at_level(int level)
 	for (orbit_at_level = 0; orbit_at_level < len; orbit_at_level++) {
 		Gen->get_set_by_level(level, orbit_at_level, set);
 		for (i = 0; i < level; i++) {
-			Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
+			Fq->Projective_space_basic->PG_element_unrank_modified(
+					Basis + i * n, 1, n, set[i]);
 		}
 		Gen->get_stabilizer_order(level, orbit_at_level, go);
 		cout << "orbit " << orbit_at_level << " / " << len
@@ -870,7 +874,8 @@ void linear_set_classify::classify_secondary(int argc, const char **argv,
 
 	Gen->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
-		Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
+		Fq->Projective_space_basic->PG_element_unrank_modified(
+				Basis + i * n, 1, n, set[i]);
 	}
 	cout << "set: ";
 	Lint_vec_print(cout, set, level);
@@ -1124,7 +1129,8 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 
 	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
-		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
+		Fq->Projective_space_basic->PG_element_unrank_modified(
+				Basis1 + i * n, 1, n, set1[i]);
 	}
 	cout << "set1: ";
 	Lint_vec_print(cout, set1, secondary_level);
@@ -1141,7 +1147,8 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 		cout << "Orbit " << h << " / " << nb_orbits << ":" << endl;
 		Gen2->get_set_by_level(secondary_depth, h, set2);
 		for (i = 0; i < secondary_depth; i++) {
-			Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
+			Fq->Projective_space_basic->PG_element_unrank_modified(
+					Basis2 + i * n, 1, n, set2[i]);
 		}
 		cout << "set2: ";
 		Lint_vec_print(cout, set2, secondary_depth);
@@ -1198,7 +1205,7 @@ int linear_set_classify::test_set_secondary(
 		cout << endl;
 	}
 	for (i = 0; i < len; i++) {
-		Fq->PG_element_unrank_modified(
+		Fq->Projective_space_basic->PG_element_unrank_modified(
 				Basis + i * vector_space_dimension, 1,
 				vector_space_dimension, S[i]);
 	}
@@ -1232,9 +1239,12 @@ int linear_set_classify::test_set_secondary(
 
 
 		for (i = 0; i < nb; i++) {
-			Fq->PG_element_unrank_modified(v, 1, len, i);
-			Fq->Linear_algebra->mult_vector_from_the_left(v, Basis, w, len, n);
-			Fq->PG_element_rank_modified(w, 1, n, rk);
+			Fq->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, len, i);
+			Fq->Linear_algebra->mult_vector_from_the_left(
+					v, Basis, w, len, n);
+			Fq->Projective_space_basic->PG_element_rank_modified(
+					w, 1, n, rk);
 			if (is_allowed[rk] == FALSE) {
 				ret = FALSE;
 				break;
@@ -1284,7 +1294,8 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 
 	Gen->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
-		Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
+		Fq->Projective_space_basic->PG_element_unrank_modified(
+				Basis + i * n, 1, n, set[i]);
 	}
 	cout << "set: ";
 	Lint_vec_print(cout, set, level);
@@ -1535,7 +1546,8 @@ void linear_set_classify::do_compute_stabilizer(
 
 	Gen->get_set_by_level(level, orbit_at_level, set1);
 	for (i = 0; i < level; i++) {
-		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
+		Fq->Projective_space_basic->PG_element_unrank_modified(
+				Basis1 + i * n, 1, n, set1[i]);
 	}
 	cout << "set1: ";
 	Lint_vec_print(cout, set1, level);
@@ -1601,7 +1613,7 @@ void linear_set_classify::do_compute_stabilizer(
 	aut_gens->init(Aq, verbose_level - 2);
 	aut_gens->allocate(Strong_gens_previous->gens->len, verbose_level - 2);
 	for (i = 0; i < Strong_gens_previous->gens->len; i++) {
-		Aq->element_move(Strong_gens_previous->gens->ith(i),
+		Aq->Group_element->element_move(Strong_gens_previous->gens->ith(i),
 				aut_gens->ith(i), 0);
 	}
 
@@ -1613,7 +1625,8 @@ void linear_set_classify::do_compute_stabilizer(
 				<< orbit_len << ":" << endl;
 		Gen_stab->get_set_by_level(level, h, set2);
 		for (i = 0; i < level; i++) {
-			Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
+			Fq->Projective_space_basic->PG_element_unrank_modified(
+					Basis2 + i * n, 1, n, set2[i]);
 		}
 		cout << "set2: ";
 		Lint_vec_print(cout, set2, level);
@@ -1638,9 +1651,9 @@ void linear_set_classify::do_compute_stabilizer(
 			if (f_v) {
 				cout << "linear_set_classify::do_compute_stabilizer orbit "
 						<< h << " leads to an automorphism" << endl;
-				Aq->element_print_quick(Elt1, cout);
+				Aq->Group_element->element_print_quick(Elt1, cout);
 				}
-			if (!Aq->test_if_set_stabilizes(Elt1,
+			if (!Aq->Group_element->test_if_set_stabilizes(Elt1,
 					nb_candidates, candidates, 0 /* verbose_level */)) {
 				cout << "The automorphism does not "
 						"stabilize the candidate set" << endl;
@@ -1772,10 +1785,12 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 
 	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
-		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
+		Fq->Projective_space_basic->PG_element_unrank_modified(
+				Basis1 + i * n, 1, n, set1[i]);
 	}
 	for (i = 0; i < secondary_level; i++) {
-		Fq->PG_element_unrank_modified(BasisU + i * n1, 1, n, set1[i]);
+		Fq->Projective_space_basic->PG_element_unrank_modified(
+				BasisU + i * n1, 1, n, set1[i]);
 	}
 	BasisU[secondary_level * n1 + n] = 1; // the vector v
 	if (f_vv) {
@@ -1791,10 +1806,12 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 
 	Gen2->get_set_by_level(secondary_depth, orbit_for_W, set2);
 	for (i = 0; i < secondary_depth; i++) {
-		Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
+		Fq->Projective_space_basic->PG_element_unrank_modified(
+				Basis2 + i * n, 1, n, set2[i]);
 	}
 	for (i = 0; i < secondary_depth; i++) {
-		Fq->PG_element_unrank_modified(BasisW + i * n1, 1, n, set2[i]);
+		Fq->Projective_space_basic->PG_element_unrank_modified(
+				BasisW + i * n1, 1, n, set2[i]);
 	}
 
 	if (f_vv) {
@@ -2163,7 +2180,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 				<< " which is isomorphism type " << orbit_at_lvl
 				<< " with stabilizer order " << go << endl;
 		cout << "transporter=" << endl;
-		T->gen->get_A()->element_print_quick(transporter, cout);
+		T->gen->get_A()->Group_element->element_print_quick(transporter, cout);
 
 		FREE_int(transporter);
 	}

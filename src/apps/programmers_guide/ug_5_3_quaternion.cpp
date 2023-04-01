@@ -28,7 +28,7 @@ int main()
 
 	F->finite_field_init_small_order(q,
 			f_without_tables,
-			FALSE /* f_compute_related_fields */,
+			TRUE /* f_compute_related_fields */,
 			verbose_level);
 
 	int gens[] = { 1,1,1,2, 2,1,1,1, 0,2,1,0 };

@@ -715,25 +715,32 @@ public:
 
 	test_semicanonical();
 	~test_semicanonical();
-	void init(gen_geo *gg, int MAX_V, int verbose_level);
+	void init(
+			gen_geo *gg, int MAX_V, int verbose_level);
 	void init_bars(int verbose_level);
 	void print();
-	void markers_update(int I, int m, int J, int n, int j,
+	void markers_update(
+			int I, int m, int J, int n, int j,
 			int i1, int j0, int r,
 			int verbose_level);
-	void marker_move_on(int I, int m, int J, int n, int j,
+	void marker_move_on(
+			int I, int m, int J, int n, int j,
 			int i1, int j0, int r,
 			int verbose_level);
-	int row_starter(int I, int m, int J, int n,
+	int row_starter(
+			int I, int m, int J, int n,
 			int i1, int j0, int r,
 			int verbose_level);
 	void row_init(int I, int m, int J,
 			int i1,
 			int verbose_level);
-	int col_marker_test(int j0, int j, int i1);
-	void col_marker_remove(int I, int m, int J, int n,
+	int col_marker_test(
+			int j0, int j, int i1);
+	void col_marker_remove(
+			int I, int m, int J, int n,
 			int i1, int j0, int r, int old_x);
-	void row_test_continue(int I, int m, int J, int i1);
+	void row_test_continue(
+			int I, int m, int J, int i1);
 
 };
 

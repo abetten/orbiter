@@ -39,7 +39,8 @@ partial_derivative::~partial_derivative()
 	}
 }
 
-void partial_derivative::init(homogeneous_polynomial_domain *H,
+void partial_derivative::init(
+		homogeneous_polynomial_domain *H,
 		homogeneous_polynomial_domain *Hd,
 		int variable_idx,
 		int verbose_level)

@@ -70,7 +70,7 @@ void action_on_orthogonal::init(
 	action_on_orthogonal::f_on_points = f_on_points;
 	action_on_orthogonal::f_on_lines = f_on_lines;
 	action_on_orthogonal::f_on_points_and_lines = f_on_points_and_lines;
-	low_level_point_size = O->Quadratic_form->n + 1;
+	low_level_point_size = O->Quadratic_form->n;
 		
 	v1 = NEW_int(low_level_point_size);
 	v2 = NEW_int(low_level_point_size);
@@ -101,12 +101,12 @@ void action_on_orthogonal::init(
 	}
 }
 
-void action_on_orthogonal::unrank_point(int *v, int rk)
+void action_on_orthogonal::unrank_point(int *v, long int rk)
 {
 	O->Hyperbolic_pair->unrank_point(v, 1 /* stride */, rk, 0 /* verbose_level */);
 }
 
-int action_on_orthogonal::rank_point(int *v)
+long int action_on_orthogonal::rank_point(int *v)
 {
 	int rk;
 
@@ -128,7 +128,7 @@ long int action_on_orthogonal::map_a_point(
 
 	O->Hyperbolic_pair->unrank_point(v1, 1 /* stride */, i, 0 /* verbose_level */);
 
-	A->element_image_of_low_level(v1, w1, Elt, verbose_level - 1);
+	A->Group_element->element_image_of_low_level(v1, w1, Elt, verbose_level - 1);
 
 	j = O->Hyperbolic_pair->rank_point(w1, 1 /* stride */, 0 /* verbose_level */);
 
@@ -157,8 +157,8 @@ long int action_on_orthogonal::map_a_line(
 	O->Hyperbolic_pair->unrank_point(v1, 1 /* stride */, p1, 0 /* verbose_level */);
 	O->Hyperbolic_pair->unrank_point(v2, 1 /* stride */, p2, 0 /* verbose_level */);
 
-	A->element_image_of_low_level(v1, w1, Elt, verbose_level - 1);
-	A->element_image_of_low_level(v2, w2, Elt, verbose_level - 1);
+	A->Group_element->element_image_of_low_level(v1, w1, Elt, verbose_level - 1);
+	A->Group_element->element_image_of_low_level(v2, w2, Elt, verbose_level - 1);
 
 	q1 = O->Hyperbolic_pair->rank_point(w1, 1 /* stride */, 0 /* verbose_level */);
 	q2 = O->Hyperbolic_pair->rank_point(w2, 1 /* stride */, 0 /* verbose_level */);

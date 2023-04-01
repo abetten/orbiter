@@ -228,6 +228,9 @@ class interface_algebra {
 	std::string eigenstuff_coeffs;
 	std::string eigenstuff_fname;
 
+	int f_smith_normal_form;
+	std::string smith_normal_form_matrix;
+
 
 public:
 	interface_algebra();
@@ -292,6 +295,11 @@ class interface_coding_theory {
 	int random_noise_of_burst_type_in_bitmap_file_numerator;
 	int random_noise_of_burst_type_in_bitmap_file_denominator;
 	int random_noise_of_burst_type_in_bitmap_file_burst_length;
+
+	int f_crc_test;
+	std::string crc_test_type;
+	long int crc_test_N;
+	int crc_test_k;
 
 public:
 	interface_coding_theory();
@@ -406,6 +414,19 @@ class interface_combinatorics {
 	std::string union_set_of_sets_fname;
 	std::string union_input_fname;
 	std::string union_output_fname;
+
+	int f_dot_product_of_columns;
+	std::string dot_product_of_columns_fname;
+
+	int f_dot_product_of_rows;
+	std::string dot_product_of_rows_fname;
+
+	int f_matrix_multiply_over_Z;
+	std::string matrix_multiply_over_Z_label1;
+	std::string matrix_multiply_over_Z_label2;
+
+	int f_rowspan_over_R;
+	std::string rowspan_over_R_label;
 
 
 public:
@@ -823,6 +844,14 @@ class interface_toolkit {
 	int loop_step;
 	std::string *loop_argv;
 
+	int f_loop_over;
+	int loop_over_start_idx;
+	int loop_over_end_idx;
+	std::string loop_over_variable;
+	std::string loop_over_domain;
+	std::string *loop_over_argv;
+
+
 	int f_plot_function;
 	std::string plot_function_fname;
 
@@ -906,7 +935,8 @@ public:
 
 	orbiter_command();
 	~orbiter_command();
-	void parse(orbiter_top_level_session *Orbiter_top_level_session,
+	void parse(
+			orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *Argv, int &i, int verbose_level);
 	void execute(int verbose_level);
 	void print();
@@ -942,8 +972,10 @@ public:
 			std::vector<void * > &program, int verbose_level);
 	void *get_object(int idx);
 	symbol_table_object_type get_object_type(int idx);
-	int find_symbol(std::string &label);
-	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
+	int find_symbol(
+			std::string &label);
+	void find_symbols(
+			std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
 	void add_symbol_table_entry(
 			std::string &label,
@@ -956,6 +988,9 @@ public:
 			std::string &label);
 	poset_classification::poset_classification_control
 		*get_object_of_type_poset_classification_control(
+				std::string &label);
+	poset_classification::poset_classification_activity_description
+		*get_object_of_type_poset_classification_activity(
 				std::string &label);
 	void get_vector_or_set(std::string &label,
 			long int *&Pts, int &nb_pts, int verbose_level);
@@ -1155,6 +1190,10 @@ public:
 	poset_classification::poset_classification_control
 		*Poset_classification_control;
 
+	int f_poset_classification_activity;
+	poset_classification::poset_classification_activity_description
+		*Poset_classification_activity;
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -1203,12 +1242,15 @@ public:
 	void definition_of_combinatorial_object(int verbose_level);
 	void do_geometry_builder(int verbose_level);
 	void load_finite_field_PG(int verbose_level);
-	void load_finite_field(std::string &input_q,
-			field_theory::finite_field *&F, int verbose_level);
+	field_theory::finite_field *get_or_create_finite_field(
+			std::string &input_q,
+			int verbose_level);
 	void definition_of_vector_ge(int verbose_level);
 	void definition_of_action_on_forms(int verbose_level);
 	void definition_of_orbits(int verbose_level);
 	void definition_of_poset_classification_control(int verbose_level);
+	void definition_of_poset_classification_activity(int verbose_level);
+
 
 };
 

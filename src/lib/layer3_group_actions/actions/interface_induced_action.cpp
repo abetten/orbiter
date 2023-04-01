@@ -183,15 +183,17 @@ static long int induced_action_element_image_of(action &A,
 					"action_by_representation_t" << endl;
 		}
 		induced_actions::action_by_representation *Rep = A.G.Rep;
-		action *sub;
+		//action *sub;
 		
-		sub = A.subaction;
+		//sub = A.subaction;
+#if 0
 		if (sub == NULL) {
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
 		}
-		b = Rep->compute_image_int(*sub, Elt, a, verbose_level - 1);
+#endif
+		b = Rep->compute_image_int(Elt, a, verbose_level - 1);
 	}
 	else if (A.type_G == action_on_determinant_t) {
 		if (f_v) {
@@ -466,8 +468,8 @@ static long int induced_action_element_image_of(action &A,
 			exit(1);
 		}
 		Combi.k2ij_lint(a, i, j, sub->degree);
-		u = sub->element_image_of(i, elt, verbose_level - 1);
-		v = sub->element_image_of(j, elt, verbose_level - 1);
+		u = sub->Group_element->element_image_of(i, elt, verbose_level - 1);
+		v = sub->Group_element->element_image_of(j, elt, verbose_level - 1);
 		b = Combi.ij2k_lint(u, v, sub->degree);
 	}
 	else if (A.type_G == action_on_ordered_pairs_t) {
@@ -493,8 +495,8 @@ static long int induced_action_element_image_of(action &A,
 			i = j;
 			j = tmp;
 		}
-		u = sub->element_image_of(i, elt, verbose_level - 1);
-		v = sub->element_image_of(j, elt, verbose_level - 1);
+		u = sub->Group_element->element_image_of(i, elt, verbose_level - 1);
+		v = sub->Group_element->element_image_of(j, elt, verbose_level - 1);
 		if (u > v) {
 			v2 = u;
 			u2 = v;
@@ -529,7 +531,7 @@ static long int induced_action_element_image_of(action &A,
 					"no subaction, type = base_change_t" << endl;
 			exit(1);
 		}
-		b = sub->element_image_of(a, elt, verbose_level - 1);
+		b = sub->Group_element->element_image_of(a, elt, verbose_level - 1);
 	}
 	else if (A.type_G == product_action_t) {
 		if (f_v) {
@@ -615,7 +617,7 @@ static void induced_action_element_image_of_low_level(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->image_of_low_level(elt, input, output, verbose_level - 1);
+		sub->Group_element->image_of_low_level(elt, input, output, verbose_level - 1);
 	}
 	else if (A.type_G == action_by_conjugation_t) {
 		if (f_v) {
@@ -643,6 +645,7 @@ static void induced_action_element_image_of_low_level(action &A,
 		}
 		induced_actions::action_by_representation *Rep = A.G.Rep;
 
+#if 0
 		action *sub;
 		
 		sub = A.subaction;
@@ -651,7 +654,8 @@ static void induced_action_element_image_of_low_level(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		Rep->compute_image_int_low_level(*sub,
+#endif
+		Rep->compute_image_int_low_level(
 				Elt, input, output, verbose_level - 1);
 	}
 	else if (A.type_G == action_on_determinant_t) {
@@ -947,7 +951,7 @@ static void induced_action_element_one(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_one(elt, verbose_level);
+		sub->Group_element->element_one(elt, verbose_level);
 	}
 }
 
@@ -973,7 +977,7 @@ static int induced_action_element_is_one(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		return sub->element_is_one(elt, verbose_level);
+		return sub->Group_element->element_is_one(elt, verbose_level);
 	}
 }
 
@@ -999,7 +1003,7 @@ static void induced_action_element_unpack(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_unpack(elt, Elt, verbose_level);
+		sub->Group_element->element_unpack(elt, Elt, verbose_level);
 	}
 }
 
@@ -1028,7 +1032,7 @@ static void induced_action_element_pack(action &A,
 		if (f_v) {
 			cout << "induced_action_element_pack before sub->element_pack" << endl;
 		}
-		sub->element_pack(Elt, elt, verbose_level);
+		sub->Group_element->element_pack(Elt, elt, verbose_level);
 		if (f_v) {
 			cout << "induced_action_element_pack after sub->element_pack" << endl;
 		}
@@ -1058,7 +1062,7 @@ static void induced_action_element_retrieve(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_retrieve(hdl, elt, verbose_level);
+		sub->Group_element->element_retrieve(hdl, elt, verbose_level);
 	}
 }
 
@@ -1084,7 +1088,7 @@ static int induced_action_element_store(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		return sub->element_store(elt, verbose_level);
+		return sub->Group_element->element_store(elt, verbose_level);
 	}
 }
 
@@ -1110,7 +1114,7 @@ static void induced_action_element_mult(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_mult(a, b, ab, verbose_level);
+		sub->Group_element->element_mult(a, b, ab, verbose_level);
 	}
 	if (f_v) {
 		cout << "induced_action_element_mult done" << endl;
@@ -1140,7 +1144,7 @@ static void induced_action_element_invert(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_invert(a, av, verbose_level);
+		sub->Group_element->element_invert(a, av, verbose_level);
 	}
 }
 
@@ -1167,7 +1171,7 @@ static void induced_action_element_transpose(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_transpose(a, at, verbose_level);
+		sub->Group_element->element_transpose(a, at, verbose_level);
 	}
 }
 
@@ -1194,7 +1198,7 @@ static void induced_action_element_move(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_move(a, b, verbose_level);
+		sub->Group_element->element_move(a, b, verbose_level);
 	}
 }
 
@@ -1220,7 +1224,7 @@ static void induced_action_element_dispose(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_dispose(hdl, verbose_level);
+		sub->Group_element->element_dispose(hdl, verbose_level);
 	}
 }
 
@@ -1241,7 +1245,7 @@ static void induced_action_element_print(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_print_quick(elt, ost);
+		sub->Group_element->element_print_quick(elt, ost);
 
 
 #if 0
@@ -1283,7 +1287,7 @@ static void induced_action_element_print_quick(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_print_quick(elt, ost);
+		sub->Group_element->element_print_quick(elt, ost);
 		
 	}
 	else {
@@ -1319,7 +1323,7 @@ static void induced_action_element_print_latex(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_print_latex(elt, ost);
+		sub->Group_element->element_print_latex(elt, ost);
 	}
 }
 
@@ -1346,7 +1350,7 @@ static void induced_action_element_print_latex_with_print_point_function(
 			//f_v = TRUE;
 		//else
 			//f_v = FALSE;
-		j = A.element_image_of(i, Elt, 0 /* verbose_level */);
+		j = A.Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
 	}
 	//Combi.perm_print(ost, p, A.degree);
@@ -1398,7 +1402,7 @@ static void induced_action_element_print_verbose(action &A,
 					"no subaction" << endl;
 			exit(1);
 		}
-		sub->element_print_verbose(elt, ost);
+		sub->Group_element->element_print_verbose(elt, ost);
 	}
 }
 
@@ -1417,7 +1421,7 @@ static void induced_action_element_code_for_make_element(action &A,
 				"make_element no subaction" << endl;
 		exit(1);
 	}
-	sub->element_code_for_make_element(elt, data);
+	sub->Group_element->element_code_for_make_element(elt, data);
 	//exit(1);
 }
 
@@ -1436,7 +1440,7 @@ static void induced_action_element_print_for_make_element(action &A,
 				"make_element no subaction" << endl;
 		exit(1);
 	}
-	sub->element_print_for_make_element(elt, ost);
+	sub->Group_element->element_print_for_make_element(elt, ost);
 	//exit(1);
 }
 
@@ -1455,7 +1459,7 @@ static void induced_action_element_print_for_make_element_no_commas(
 				"make_element_no_commas no subaction" << endl;
 		exit(1);
 	}
-	sub->element_print_for_make_element_no_commas(elt, ost);
+	sub->Group_element->element_print_for_make_element_no_commas(elt, ost);
 	//exit(1);
 }
 
@@ -1544,7 +1548,7 @@ static void induced_action_print_point(action &A,
 			ost << "$$" << endl;
 			ost << "$$" << endl;
 			b = AOS->sets[AOS->perm[a]][i];
-			sub->print_point(b, ost);
+			sub->Group_element->print_point(b, ost);
 		}
 		//AOS->compute_image(sub, Elt, a, b, verbose_level);
 	}
@@ -1682,10 +1686,17 @@ static void induced_action_print_point(action &A,
 		if (FALSE) {
 			cout << "action_on_orthogonal_t" << endl;
 			}
-		//action_on_orthogonal *AO = A.G.AO;
+		induced_actions::action_on_orthogonal *AO = A.G.AO;
 
-		ost << a;
+		ost << a << " = ";
 		
+		int *v;
+
+		v = NEW_int(AO->low_level_point_size);
+		AO->unrank_point(v, a);
+		Int_vec_print(ost, v, AO->low_level_point_size);
+		FREE_int(v);
+
 #if 0
 		action *sub;
 		
@@ -1746,16 +1757,11 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 	//cout << "induced_action_unrank_point" << endl;
 
 	if (A.type_G == action_by_right_multiplication_t) {
-		//action_by_right_multiplication *ABRM = A.G.ABRM;
-		action *sub;
+		induced_actions::action_by_right_multiplication *ABRM = A.G.ABRM;
 
-		sub = A.subaction;
-		if (sub == NULL) {
-			cout << "induced_action_unrank_point no subaction" << endl;
-			exit(1);
-			}
-		//ost << a;
-		//ABRM->compute_image(sub, Elt, a, b, verbose_level);
+
+		ABRM->Base_group->element_unrank_lint(rk, ABRM->Elt1);
+		ABRM->Base_group->A->Group_element->code_for_make_element(v, ABRM->Elt1);
 		}
 	else if (A.type_G == action_by_restriction_t) {
 		induced_actions::action_by_restriction *ABR = A.G.ABR;
@@ -1768,7 +1774,7 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 			}
 		int rk0;
 		rk0 = ABR->original_point(rk);
-		sub->unrank_point(rk0, v);
+		sub->Group_element->unrank_point(rk0, v);
 		}
 	else if (A.type_G == action_by_conjugation_t) {
 		//action_by_conjugation *ABC = A.G.ABC;
@@ -2017,7 +2023,7 @@ static long int induced_action_rank_point(action &A, int *v)
 			exit(1);
 			}
 		int rk0;
-		rk0 = sub->rank_point(v);
+		rk0 = sub->Group_element->rank_point(v);
 		rk = ABR->restricted_point_idx(rk0);
 		}
 	else if (A.type_G == action_by_conjugation_t) {

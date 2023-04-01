@@ -171,13 +171,13 @@ void projective_space_global::do_lift_skew_hexagon(
 
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon "
-				"before Surf->init" << endl;
+				"before Surf->init_surface_domain" << endl;
 	}
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(PA->F, 0 /*verbose_level - 1*/);
+	Surf->init_surface_domain(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon "
-				"after Surf->init" << endl;
+				"after Surf->init_surface_domain" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
@@ -290,13 +290,13 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
-				"before Surf->init" << endl;
+				"before Surf->init_surface_domain" << endl;
 	}
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(PA->F, 0 /*verbose_level - 1*/);
+	Surf->init_surface_domain(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
-				"after Surf->init" << endl;
+				"after Surf->init_surface_domain" << endl;
 	}
 
 	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
@@ -699,210 +699,6 @@ void projective_space_global::do_classify_cubic_curves(
 	}
 }
 
-#if 0
-void projective_space_global::classify_quartic_curves_nauty(
-		projective_space_with_action *PA,
-		std::string &fname_mask, int nb,
-		std::string &fname_classification,
-		canonical_form_classifier *&Classifier,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_nauty" << endl;
-	}
-
-
-	canonical_form_classifier_description *Descr;
-
-	Descr = NEW_OBJECT(canonical_form_classifier_description);
-
-	Descr->fname_mask.assign(fname_mask);
-	Descr->f_output_fname = TRUE;
-	Descr->fname_base_out.assign(fname_classification);
-#if 0
-	Descr->column_label_eqn.assign("curve");
-	Descr->column_label_pts.assign("pts_on_curve");
-	Descr->column_label_bitangents.assign("bitangents");
-#endif
-	Descr->PA = PA;
-	Descr->f_degree = TRUE;
-	Descr->degree = 4;
-	Descr->nb_files = nb;
-	Descr->f_algorithm_nauty = TRUE;
-	Descr->f_algorithm_substructure = FALSE;
-
-	std::string column_label_eqn;
-	std::string column_label_pts;
-	std::string column_label_bitangents;
-
-	Classifier = NEW_OBJECT(canonical_form_classifier);
-
-	Classifier->classify(Descr, verbose_level);
-
-	cout << "The number of types of quartic curves is " << Classifier->CB->nb_types << endl;
-
-	Descr->Canon_substructure = Classifier;
-
-
-
-	int idx;
-
-	cout << "idx : ago" << endl;
-	for (idx = 0; idx < Classifier->CB->nb_types; idx++) {
-
-		canonical_form_nauty *C1;
-		ring_theory::longinteger_object go;
-
-		C1 = (canonical_form_nauty *) Classifier->CB->Type_extra_data[idx];
-
-		C1->Stab_gens_quartic->group_order(go);
-
-		cout << idx << " : " << go << endl;
-
-
-	}
-
-
-
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_nauty done" << endl;
-	}
-}
-
-void projective_space_global::classify_quartic_curves_with_substructure(
-		projective_space_with_action *PA,
-		std::string &fname_mask,
-		int nb, int substructure_size, int degree,
-		std::string &fname_classification,
-		canonical_form_classifier *&Classifier,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure" << endl;
-	}
-
-	canonical_form_classifier_description *Descr;
-
-	Descr = NEW_OBJECT(canonical_form_classifier_description);
-
-
-	Descr->fname_mask.assign(fname_mask);
-	Descr->f_output_fname = TRUE;
-	Descr->fname_base_out.assign(fname_classification);
-#if 0
-	Descr->column_label_eqn.assign("curve");
-	Descr->column_label_pts.assign("pts_on_curve");
-	Descr->column_label_bitangents.assign("bitangents");
-#endif
-	Descr->PA = PA;
-	Descr->f_degree = TRUE;
-	Descr->degree = degree;
-	Descr->nb_files = nb;
-	Descr->f_algorithm_nauty = FALSE;
-	Descr->f_algorithm_substructure = TRUE;
-	Descr->substructure_size = substructure_size;
-
-
-	Classifier = NEW_OBJECT(canonical_form_classifier);
-
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure "
-				"before Classifier.classify" << endl;
-	}
-	Classifier->classify(Descr, verbose_level);
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure "
-				"after Classifier.classify" << endl;
-	}
-
-	Descr->Canon_substructure = Classifier;
-
-#if 0
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure "
-				"before Classifier.report" << endl;
-	}
-	Classifier->report(fname_classification, verbose_level);
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure "
-				"after Classifier.report" << endl;
-	}
-#endif
-
-#if 0
-	cout << "The number of types of quartic curves is " << Classifier.CB->nb_types << endl;
-	int idx;
-
-	cout << "idx : ago" << endl;
-	for (idx = 0; idx < Classifier.CB->nb_types; idx++) {
-
-		canonical_form *C1;
-		longinteger_object go;
-
-		C1 = (canonical_form *) Classifier.CB->Type_extra_data[idx];
-
-		C1->Stab_gens_quartic->group_order(go);
-
-		cout << idx << " : " << go << endl;
-
-
-	}
-#endif
-
-
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves_with_substructure done" << endl;
-	}
-}
-
-
-void projective_space_global::classify_quartic_curves(
-		projective_space_with_action *PA,
-		std::string &fname_mask,
-		int nb,
-		int size,
-		int degree,
-		std::string &fname_classification,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves" << endl;
-	}
-
-	canonical_form_classifier *Classifier;
-
-
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves "
-				"before classify_quartic_curves_with_substructure" << endl;
-	}
-	classify_quartic_curves_with_substructure(PA,
-			fname_mask,
-			nb,
-			size,
-			degree,
-			fname_classification,
-			Classifier,
-			verbose_level);
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves "
-				"after classify_quartic_curves_with_substructure" << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_global::classify_quartic_curves done" << endl;
-	}
-
-}
-#endif
 
 void projective_space_global::set_stabilizer(
 		projective_space_with_action *PA,
@@ -1174,7 +970,7 @@ void projective_space_global::classify_bent_functions(
 		cout << "projective_space_global::classify_bent_functions" << endl;
 	}
 
-	if (PA->P->F->q != 2) {
+	if (PA->P->Subspaces->F->q != 2) {
 		cout << "projective_space_global::classify_bent_functions the field must have order 2" << endl;
 		exit(1);
 	}
@@ -1190,7 +986,7 @@ void projective_space_global::classify_bent_functions(
 	if (f_v) {
 		cout << "projective_space_global::classify_bent_functions before BF->init" << endl;
 	}
-	BF->init(PA->P->F, n, verbose_level);
+	BF->init(PA->P->Subspaces->F, n, verbose_level);
 	if (f_v) {
 		cout << "projective_space_global::classify_bent_functions after BF->init" << endl;
 	}

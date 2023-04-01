@@ -42,12 +42,65 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity "
 					"before PA->P->export_incidence_matrix_to_csv" << endl;
 		}
-		PA->P->export_incidence_matrix_to_csv(verbose_level);
+		PA->P->Subspaces->export_incidence_matrix_to_csv(verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"after PA->P->export_incidence_matrix_to_csv" << endl;
 		}
 	}
+
+	else if (Descr->f_export_cubic_surface_line_vs_line_incidence_matrix) {
+
+		string prefix;
+
+		prefix = PA->P->label_txt;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->write_lines_vs_line" << endl;
+		}
+		PA->Surf_A->Surf->Schlaefli->write_lines_vs_line(prefix, verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->write_lines_vs_line" << endl;
+		}
+	}
+
+	else if (Descr->f_export_cubic_surface_line_tritangent_plane_incidence_matrix) {
+
+		string prefix;
+
+		prefix = PA->P->label_txt;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->write_lines_vs_tritangent_planes" << endl;
+		}
+		PA->Surf_A->Surf->Schlaefli->write_lines_vs_tritangent_planes(prefix, verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->write_lines_vs_tritangent_planes" << endl;
+		}
+	}
+
+	else if (Descr->f_export_double_sixes) {
+
+		string prefix;
+
+		prefix = PA->P->label_txt;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->write_double_sixes" << endl;
+		}
+		PA->Surf_A->Surf->Schlaefli->write_double_sixes(prefix, verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->write_double_sixes" << endl;
+		}
+	}
+
+
 
 
 	else if (Descr->f_table_of_cubic_surfaces_compute_properties) {
@@ -118,7 +171,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity before G.map" << endl;
 		}
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity n=" << PA->P->n << endl;
+			cout << "projective_space_activity::perform_activity n=" << PA->P->Subspaces->n << endl;
 		}
 
 		long int *Image_pts;
@@ -549,7 +602,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		the_set_out = NEW_lint(set_size_in);
 		for (i = 0; i < set_size_in; i++) {
 			a = the_set_in[i];
-			the_set_out[i] = PA->P->Standard_polarity->Hyperplane_to_point[a];
+			the_set_out[i] = PA->P->Subspaces->Standard_polarity->Hyperplane_to_point[a];
 		}
 
 		cout << "output set:" << endl;
@@ -583,7 +636,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		the_set_out = NEW_lint(set_size_in);
 		for (i = 0; i < set_size_in; i++) {
 			a = the_set_in[i];
-			the_set_out[i] = PA->P->Standard_polarity->Point_to_hyperplane[a];
+			the_set_out[i] = PA->P->Subspaces->Standard_polarity->Point_to_hyperplane[a];
 		}
 
 		cout << "output set:" << endl;
@@ -614,7 +667,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		for (i = 0; i < set_size_in; i++) {
 			a = the_set_in[i];
 			cout << "i=" << i << " in=" << a << endl;
-			PA->P->polarity_rank_k_subspace(Descr->dualize_rank_k_subspaces_k,
+			PA->P->Subspaces->polarity_rank_k_subspace(Descr->dualize_rank_k_subspaces_k,
 					a, the_set_out[i], verbose_level);
 			cout << "i=" << i << " in=" << a << " out=" << the_set_out[i] << endl;
 		}
@@ -646,7 +699,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity "
 					"before PA->P->create_lines_on_point_but_inside_a_plane" << endl;
 		}
-		PA->P->create_lines_on_point_but_inside_a_plane(
+		PA->P->Subspaces->create_lines_on_point_but_inside_a_plane(
 				point_rk, plane_rk,
 				line_pencil, verbose_level);
 			// assumes that line_pencil[q + 1] has been allocated
@@ -748,13 +801,13 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"before PA->P->planes_through_line" << endl;
+					"before PA->P->Subspaces->planes_through_a_set_of_lines" << endl;
 		}
-		PA->P->planes_through_line(Lines, nb_lines,
+		PA->P->Subspaces->planes_through_a_set_of_lines(Lines, nb_lines,
 				Plane_ranks, nb_planes_on_one_line, verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"after PA->P->planes_through_line" << endl;
+					"after PA->P->Subspaces->planes_through_a_set_of_lines" << endl;
 		}
 
 		cout << "Ranks of planes on the given set of lines:" << endl;
@@ -878,7 +931,37 @@ void projective_space_activity::perform_activity(int verbose_level)
 					"after AGG.report_grassmannian" << endl;
 		}
 	}
-	// surfaces:
+	else if (Descr->f_report_fixed_objects) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"f_report_fixed_objects" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->report_fixed_objects" << endl;
+		}
+
+		PA->report_fixed_objects(
+				Descr->report_fixed_objects_Elt,
+				Descr->report_fixed_objects_label,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->report_fixed_objects" << endl;
+		}
+	}
+
+
+
+
+
+
+	// classification stuff:
 
 
 	else if (Descr->f_classify_surfaces_with_double_sixes) {

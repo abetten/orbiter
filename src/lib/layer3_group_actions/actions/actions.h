@@ -179,6 +179,10 @@ public:
 
 	known_groups *Known_groups;
 
+	induced_action *Induced_action;
+
+	group_element *Group_element;
+
 
 	action_pointer_table *ptr;
 
@@ -221,35 +225,14 @@ public:
 	void allocate_element_data();
 	void free_element_data();
 	
-	int find_non_fixed_point(void *elt, int verbose_level);
-	int find_fixed_points(void *elt, 
-		int *fixed_points, int verbose_level);
-	int count_fixed_points(void *elt, int verbose_level);
-	int test_if_set_stabilizes(int *Elt, 
-		int size, long int *set, int verbose_level);
 	void map_a_set_based_on_hdl(long int *set,
 			long int *image_set,
 			int n, action *A_base, int hdl, int verbose_level);
-	void map_a_set(
-			long int *set,
-			long int *image_set,
-		int n, int *Elt, int verbose_level);
-	void map_a_set_and_reorder(
-			long int *set, long int *image_set,
-		int n, int *Elt, int verbose_level);
 	void print_all_elements();
 
 	void init_sims_only(groups::sims *G, int verbose_level);
 	void compute_strong_generators_from_sims(int verbose_level);
 	void init_base_from_sims(groups::sims *G, int verbose_level);
-	int element_has_order_two(int *E1, int verbose_level);
-	int product_has_order_two(int *E1, int *E2, int verbose_level);
-	int product_has_order_three(int *E1, int *E2, int verbose_level);
-	int element_order(void *elt);
-	int element_order_and_cycle_type(void *elt, int *cycle_type);
-	int element_order_and_cycle_type_verbose(
-			void *elt, int *cycle_type, int verbose_level);
-	int element_order_if_divisor_of(void *elt, int o);
 	void compute_all_point_orbits(groups::schreier &S,
 			data_structures_groups::vector_ge &gens,
 			int verbose_level);
@@ -271,51 +254,14 @@ public:
 	void compute_stabilizer_orbits(
 			data_structures::partitionstack *&Staborbits,
 			int verbose_level);
-	int check_if_in_set_stabilizer(
-			int *Elt,
-			int size, long int *set, int verbose_level);
-	int check_if_transporter_for_set(
-			int *Elt,
-			int size,
-			long int *set1, long int *set2,
-			int verbose_level);
 	void find_strong_generators_at_level(
 			int base_len,
 		long int *the_base, int level,
 		data_structures_groups::vector_ge &gens,
 		data_structures_groups::vector_ge &subset_of_gens,
 		int verbose_level);
-	void make_element_from_permutation_representation(
-			int *Elt,
-			groups::sims *S, int *data, int verbose_level);
-	void make_element_from_base_image(
-			int *Elt, groups::sims *S,
-			int *data, int verbose_level);
-	void make_element_2x2(
-			int *Elt, int a0, int a1, int a2, int a3);
-	void make_element_from_string(
-			int *Elt,
-			std::string &data_string, int verbose_level);
-	void make_element(
-			int *Elt, int *data, int verbose_level);
-	void element_power_int_in_place(int *Elt, 
-		int n, int verbose_level);
-	void word_in_ab(int *Elt1, int *Elt2, int *Elt3, 
-		const char *word, int verbose_level);
 	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_lint();
-	void element_print_base_images(int *Elt);
-	void element_print_base_images(
-			int *Elt, std::ostream &ost);
-	void element_print_base_images_verbose(int *Elt, 
-			std::ostream &ost, int verbose_level);
-	void element_base_images(
-			int *Elt, int *base_images);
-	void element_base_images_verbose(int *Elt, 
-		int *base_images, int verbose_level);
-	void minimize_base_images(
-			int level, groups::sims *S,
-		int *Elt, int verbose_level);
 	void get_generators_from_ascii_coding(
 			std::string &ascii_coding,
 			data_structures_groups::vector_ge *&gens,
@@ -341,10 +287,6 @@ public:
 		groups::schreier *&Sch, groups::sims *&Stab,
 		groups::strong_generators *&stab_gens,
 		int verbose_level);
-	void make_element_which_moves_a_line_in_PG3q(
-			geometry::grassmann *Gr,
-		long int line_rk, int *Elt,
-		int verbose_level);
 	int matrix_group_dimension();
 	field_theory::finite_field *matrix_group_finite_field();
 	int is_semilinear_matrix_group();
@@ -352,7 +294,7 @@ public:
 	int is_affine();
 	int is_general_linear();
 	int is_matrix_group();
-	groups::matrix_group *get_matrix_group();
+	algebra::matrix_group *get_matrix_group();
 
 
 	// action_group_theory.cpp:
@@ -362,12 +304,6 @@ public:
 			groups::strong_generators *H_gens,
 			groups::strong_generators *N_gens,
 			int verbose_level);
-	void element_conjugate_bvab(int *Elt_A,
-		int *Elt_B, int *Elt_C, int verbose_level);
-	void element_conjugate_babv(int *Elt_A,
-		int *Elt_B, int *Elt_C, int verbose_level);
-	void element_commutator_abavbv(int *Elt_A,
-		int *Elt_B, int *Elt_C, int verbose_level);
 	void compute_projectivity_subgroup(
 			groups::strong_generators *&projectivity_gens,
 			groups::strong_generators *Aut_gens,
@@ -438,186 +374,22 @@ public:
 
 	
 	// action_induce.cpp
-
-	action *induced_action_on_interior_direct_product(
-			int nb_rows,
+	int least_moved_point_at_level(int level,
+		int verbose_level);
+	void lex_least_base_in_place(
+			groups::sims *old_Sims,
 			int verbose_level);
-	action *induced_action_on_set_partitions(
-			int partition_class_size,
-			int verbose_level);
-
-	/** Create the induced action on lines in PG(n-1,q)
-	 * using an action_on_grassmannian object */
-	void init_action_on_lines(
-			action *A, field_theory::finite_field *F,
-		int n, int verbose_level);
-
-	void induced_action_by_representation_on_conic(
-			action *A_old,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_cosets(
-			induced_actions::action_on_cosets *A_on_cosets,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_factor_space(
-			action *A_old,
-			induced_actions::action_on_factor_space *AF,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	action *induced_action_on_grassmannian(
-			int k,
-		int verbose_level);
-	void induced_action_on_grassmannian(
-			action *A_old,
-			induced_actions::action_on_grassmannian *AG,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_spread_set(
-			action *A_old,
-			induced_actions::action_on_spread_set *AS,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_orthogonal(
-			action *A_old,
-			induced_actions::action_on_orthogonal *AO,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	action *induced_action_on_wedge_product(
-			int verbose_level);
-	void induced_action_by_subfield_structure(
-			action *A_old,
-			induced_actions::action_by_subfield_structure
-				*SubfieldStructure,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_determinant(
-			groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_Galois_group(
-			groups::sims *old_G, int verbose_level);
-	void induced_action_on_sign(groups::sims *old_G,
-		int verbose_level);
-	action *create_induced_action_by_conjugation(
-			groups::sims *Base_group, int f_ownership,
-			int verbose_level);
-	void induced_action_by_conjugation(
-			groups::sims *old_G,
-			groups::sims *Base_group, int f_ownership,
-		int f_basis, int verbose_level);
-	void induced_action_by_right_multiplication(
-		int f_basis, groups::sims *old_G,
-		groups::sims *Base_group, int f_ownership,
-		int verbose_level);
-	action *create_induced_action_on_sets(
-			int nb_sets,
-		int set_size, long int *sets,
-		int verbose_level);
-	void induced_action_on_sets(
-			action &old_action, groups::sims *old_G,
-		int nb_sets, int set_size, long int *sets,
-		int f_induce_action, int verbose_level);
-	action *create_induced_action_on_subgroups(
-			groups::sims *S,
-		int nb_subgroups, int group_order, 
-		groups::subgroup **Subgroups, int verbose_level);
-	void induced_action_on_subgroups(
-			action *old_action,
-			groups::sims *S,
-		int nb_subgroups, int group_order, 
-		groups::subgroup **Subgroups,
-		int verbose_level);
-	void induced_action_by_restriction_on_orbit_with_schreier_vector(
-		action &old_action, 
-		int f_induce_action, groups::sims *old_G,
-		data_structures_groups::schreier_vector *Schreier_vector,
-		int pt, int verbose_level);
-	void original_point_labels(
-			long int *points, int nb_points,
-			long int *&original_points, int verbose_level);
-	action *restricted_action(
-			long int *points, int nb_points,
-		int verbose_level);
-	action *create_induced_action_by_restriction(
-			groups::sims *S, int size,
-			long int *set, int f_induce,
-			int verbose_level);
-	void induced_action_by_restriction_internal_function(
-			action &old_action,
-		int f_induce_action, groups::sims *old_G,
-		int nb_points, long int *points,
-		int verbose_level);
-		// uses action_by_restriction data type
-	void induced_action_on_pairs(
-			action &old_action, groups::sims *old_G,
-		int verbose_level);
-	action *create_induced_action_on_ordered_pairs(
-			int verbose_level);
-	void induced_action_on_ordered_pairs(
-			action &old_action,
-			groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_k_subsets(
-			action &old_action, int k,
-		int verbose_level);
-	void induced_action_on_orbits(
-			action *old_action,
-			groups::schreier *Sch, int f_play_it_safe,
-		int verbose_level);
-	void induced_action_on_flags(
-			action *old_action,
-		int *type, int type_len, 
-		int verbose_level);
-	void induced_action_on_bricks(
-			action &old_action,
-		combinatorics::brick_domain *B, int f_linear_action,
-		int verbose_level);
-	void induced_action_on_andre(
-			action *An,
-		action *An1,
-		geometry::andre_construction *Andre,
-		int verbose_level);
-	void setup_product_action(
-			action *A1, action *A2,
-		int f_use_projections, int verbose_level);
-	void induced_action_on_homogeneous_polynomials(
-			action *A_old,
-			ring_theory::homogeneous_polynomial_domain *HPD,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_on_homogeneous_polynomials_given_by_equations(
-		action *A_old, 
-		ring_theory::homogeneous_polynomial_domain *HPD,
-		int *Equations, int nb_equations, 
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-	void induced_action_recycle_sims(
-			action &old_action,
-		int verbose_level);
-	void induced_action_override_sims(
-			action &old_action,
-			groups::sims *old_G,
-		int verbose_level);
-	void induce(
-			action *old_action, groups::sims *old_G,
-		int base_of_choice_len, 
-		long int *base_of_choice,
-		int verbose_level);
-	int least_moved_point_at_level(int level, 
-		int verbose_level);
-	void lex_least_base_in_place(int verbose_level);
 	void lex_least_base(
 			action *old_action, int verbose_level);
 	int test_if_lex_least_base(int verbose_level);
 	void base_change_in_place(
-			int size, long int *set, int verbose_level);
-	void base_change(
-			action *old_action,
-		int size, long int *set, int verbose_level);
+			int size, long int *set, groups::sims *old_Sims,
+			int verbose_level);
 	void create_orbits_on_subset_using_restricted_action(
 			action *&A_by_restriction,
 			groups::schreier *&Orbits, groups::sims *S,
 			int size, long int *set,
+			std::string &label_of_set,
 			int verbose_level);
 	void create_orbits_on_sets_using_action_on_sets(
 			action *&A_on_sets,
@@ -632,6 +404,7 @@ public:
 		data_structures_groups::vector_ge *gens,
 		groups::strong_generators *&Strong_gens,
 		int verbose_level);
+
 
 	// action_io.cpp:
 	void report(
@@ -724,117 +497,6 @@ public:
 			int *Elt, int f_with_permutation);
 
 	// action_cb.cpp
-	int image_of(void *elt, int a);
-	void image_of_low_level(void *elt,
-			int *input, int *output, int verbose_level);
-	int linear_entry_ij(void *elt, int i, int j);
-	int linear_entry_frobenius(void *elt);
-	void one(void *elt);
-	int is_one(void *elt);
-	void unpack(void *elt, void *Elt);
-	void pack(void *Elt, void *elt);
-	void retrieve(void *elt, int hdl);
-	int store(void *elt);
-	void mult(void *a, void *b, void *ab);
-	void mult_apply_from_the_right(void *a, void *b);
-		// a := a * b
-	void mult_apply_from_the_left(void *a, void *b);
-		// b := a * b
-	void invert(void *a, void *av);
-	void invert_in_place(void *a);
-	void transpose(void *a, void *at);
-	void move(void *a, void *b);
-	void dispose(int hdl);
-	void print(
-			std::ostream &ost, void *elt);
-	void print_quick(
-			std::ostream &ost, void *elt);
-	void print_as_permutation(
-			std::ostream &ost, void *elt);
-	void print_point(
-			int a, std::ostream &ost);
-	void unrank_point(long int rk, int *v);
-	long int rank_point(int *v);
-	void code_for_make_element(
-			int *data, void *elt);
-	void print_for_make_element(
-			std::ostream &ost, void *elt);
-	void print_for_make_element_no_commas(
-			std::ostream &ost, void *elt);
-	
-	long int element_image_of(long int a, void *elt, int verbose_level);
-	void element_image_of_low_level(int *input, int *output, 
-		void *elt, int verbose_level);
-	int element_linear_entry_ij(void *elt, int i, int j, 
-		int verbose_level);
-	int element_linear_entry_frobenius(void *elt, int verbose_level);
-	void element_one(void *elt, int verbose_level);
-	int element_is_one(void *elt, int verbose_level);
-	void element_unpack(void *elt, void *Elt, int verbose_level);
-	void element_pack(void *Elt, void *elt, int verbose_level);
-	void element_retrieve(int hdl, void *elt, int verbose_level);
-	int element_store(void *elt, int verbose_level);
-	void element_mult(void *a, void *b, void *ab, int verbose_level);
-	void element_invert(void *a, void *av, int verbose_level);
-	void element_transpose(void *a, void *at, int verbose_level);
-	void element_move(void *a, void *b, int verbose_level);
-	void element_dispose(int hdl, int verbose_level);
-	void element_print(void *elt, std::ostream &ost);
-	void element_print_quick(void *elt, std::ostream &ost);
-	void element_print_latex(void *elt, std::ostream &ost);
-	void element_print_latex_with_extras(
-			void *elt, std::string &label, std::ostream &ost);
-	void element_print_latex_with_print_point_function(
-		void *elt, std::ostream &ost,
-		void (*point_label)(std::stringstream &sstr,
-				long int pt, void *data),
-		void *point_label_data);
-	void element_print_verbose(void *elt, std::ostream &ost);
-	void element_code_for_make_element(void *elt, int *data);
-	void element_print_for_make_element(void *elt, 
-			std::ostream &ost);
-	void element_print_for_make_element_no_commas(void *elt, 
-			std::ostream &ost);
-	void element_print_as_permutation(void *elt, 
-			std::ostream &ost);
-	void element_as_permutation(void *elt, 
-		int *perm, int verbose_level);
-	void element_print_as_permutation_verbose(void *elt, 
-			std::ostream &ost, int verbose_level);
-	void element_print_as_permutation_with_offset(void *elt, 
-			std::ostream &ost,
-		int offset, int f_do_it_anyway_even_for_big_degree, 
-		int f_print_cycles_of_length_one, 
-		int verbose_level);
-	void element_print_as_permutation_with_offset_and_max_cycle_length(
-		void *elt, 
-		std::ostream &ost, int offset, int max_cycle_length,
-		int f_orbit_structure);
-	void element_print_image_of_set(void *elt, 
-		int size, long int *set);
-	int element_signum_of_permutation(void *elt);
-	void element_write_file_fp(int *Elt, 
-			std::ofstream &fp, int verbose_level);
-	void element_read_file_fp(int *Elt, 
-			std::ifstream &fp, int verbose_level);
-	void element_write_file(int *Elt, 
-			std::string &fname, int verbose_level);
-	void element_read_file(int *Elt, 
-			std::string &fname, int verbose_level);
-	void element_write_to_memory_object(
-			int *Elt,
-			orbiter_kernel_system::memory_object *m,
-			int verbose_level);
-	void element_read_from_memory_object(
-			int *Elt,
-			orbiter_kernel_system::memory_object *m,
-			int verbose_level);
-	void element_write_to_file_binary(int *Elt, 
-			std::ofstream &fp, int verbose_level);
-	void element_read_from_file_binary(int *Elt, 
-			std::ifstream &fp, int verbose_level);
-	void random_element(groups::sims *S, int *Elt,
-		int verbose_level);
 	void all_elements(
 			data_structures_groups::vector_ge *&vec,
 			int verbose_level);
@@ -844,19 +506,14 @@ public:
 
 	// in backtrack.cpp
 	int is_minimal(
-		int size, long int *set, int &backtrack_level,
-		int verbose_level);
-	void make_canonical(
-		int size, long int *set,
-		long int *canonical_set, int *transporter,
-		int &total_backtrack_nodes, 
-		int f_get_automorphism_group, groups::sims *Aut,
+		int size, long int *set, groups::sims *old_Sims,
+		int &backtrack_level,
 		int verbose_level);
 	int is_minimal_witness(
-		int size, long int *set,
+		int size, long int *set, groups::sims *old_Sims,
 		int &backtrack_level, long int *witness,
 		int *transporter_witness, 
-		int &backtrack_nodes, 
+		long int &backtrack_nodes,
 		int f_get_automorphism_group, groups::sims &Aut,
 		int verbose_level);
 };
@@ -922,12 +579,12 @@ public:
 		int f_do_it_anyway_even_for_big_degree,
 		int f_print_cycles_of_length_one, int verbose_level);
 	action *init_direct_product_group_and_restrict(
-			groups::matrix_group *M1,
-			groups::matrix_group *M2,
+			algebra::matrix_group *M1,
+			algebra::matrix_group *M2,
 			int verbose_level);
 	action *init_direct_product_group(
-			groups::matrix_group *M1,
-			groups::matrix_group *M2,
+			algebra::matrix_group *M1,
+			algebra::matrix_group *M2,
 			int verbose_level);
 	void compute_decomposition_based_on_orbits(
 			geometry::projective_space *P,
@@ -946,20 +603,8 @@ public:
 			ring_theory::homogeneous_polynomial_domain *HPD,
 		int *The_equations,
 		int nb_equations, groups::strong_generators *gens,
-		actions::action *&A_on_equations, groups::schreier *&Orb,
-		int verbose_level);
-	void compute_fixed_objects_in_PG(
-			int up_to_which_rank,
-			action *A,
-			geometry::projective_space *P,
-		int *Elt,
-		std::vector<std::vector<long int> > &Fix,
-		int verbose_level);
-	void report_fixed_objects_in_P3(
-			std::ostream &ost,
-			action *A,
-			geometry::projective_space *P3,
-		int *Elt,
+		actions::action *&A_on_equations,
+		groups::schreier *&Orb,
 		int verbose_level);
 	groups::strong_generators *set_stabilizer_in_projective_space(
 			action *A_linear,
@@ -1044,6 +689,7 @@ public:
 			groups::schreier &Schreier,
 			int *Elt,
 			int verbose_level);
+#if 0
 	void compute_set_orbit(
 			actions::action *A,
 			data_structures_groups::vector_ge &gens,
@@ -1059,6 +705,58 @@ public:
 			int size, long int *set,
 		long int *minimal_set, int *transporter,
 		int verbose_level);
+#endif
+	void induce(
+			action *old_action,
+			action *new_action,
+			groups::sims *old_G,
+		int base_of_choice_len, long int *base_of_choice,
+		int verbose_level);
+	// after this procedure, new_action will have
+	// a sims for the group and the kernel
+	// it will also have strong generators
+
+	// the old_action may not have a stabilizer chain,
+	// but it's subaction does.
+	void induced_action_override_sims(
+		action *old_action, action *new_action, groups::sims *old_G,
+		int verbose_level);
+	void make_canonical(
+			action *A, groups::sims *Sims,
+			int size, long int *set,
+		long int *canonical_set, int *transporter,
+		long int &total_backtrack_nodes,
+		int f_get_automorphism_group, groups::sims *Aut,
+		int verbose_level);
+	void make_element_which_moves_a_line_in_PG3q(
+			action *A,
+			geometry::projective_space_of_dimension_three *P3,
+			//geometry::grassmann *Gr,
+			long int line_rk, int *Elt,
+			int verbose_level);
+	void orthogonal_group_random_generator(
+			action *A,
+			orthogonal_geometry::orthogonal *O,
+			algebra::matrix_group *M,
+		int f_siegel,
+		int f_reflection,
+		int f_similarity,
+		int f_semisimilarity,
+		int *Elt, int verbose_level);
+	void init_base(
+			actions::action *A, algebra::matrix_group *M, int verbose_level);
+	void init_base_projective(
+			actions::action *A, algebra::matrix_group *M, int verbose_level);
+	void init_base_affine(
+			actions::action *A, algebra::matrix_group *M, int verbose_level);
+	void init_base_general_linear(
+			actions::action *A, algebra::matrix_group *M, int verbose_level);
+	void substitute_semilinear(
+			action *A,
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int *Elt,
+			int *input, int *output,
+			int verbose_level);
 
 };
 
@@ -1184,7 +882,7 @@ public:
 		int verbose_level);
 
 	void setup_linear_group_from_strong_generators(
-			groups::matrix_group *M,
+			algebra::matrix_group *M,
 			data_structures_groups::vector_ge *&nice_gens,
 			int f_init_sims,
 		int verbose_level);
@@ -1197,7 +895,7 @@ public:
 		int f_semilinear, int f_basis, int verbose_level);
 
 	void init_matrix_group_strong_generators_builtin(
-			groups::matrix_group *M,
+			algebra::matrix_group *M,
 			data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void init_permutation_group(
@@ -1303,6 +1001,436 @@ public:
 };
 
 
+// #############################################################################
+// group_element.cpp:
+// #############################################################################
+
+
+
+//! action related functions that are specific to a group element
+
+
+class group_element {
+public:
+
+	action *A;
+
+
+	group_element();
+	~group_element();
+	void init(action *A, int verbose_level);
+
+	int image_of(void *elt, int a);
+	void image_of_low_level(void *elt,
+			int *input, int *output, int verbose_level);
+	int linear_entry_ij(void *elt, int i, int j);
+	int linear_entry_frobenius(void *elt);
+	void one(void *elt);
+	int is_one(void *elt);
+	void unpack(void *elt, void *Elt);
+	void pack(void *Elt, void *elt);
+	void retrieve(void *elt, int hdl);
+	int store(void *elt);
+	void mult(void *a, void *b, void *ab);
+	void mult_apply_from_the_right(void *a, void *b);
+		// a := a * b
+	void mult_apply_from_the_left(void *a, void *b);
+		// b := a * b
+	void invert(void *a, void *av);
+	void invert_in_place(void *a);
+	void transpose(void *a, void *at);
+	void move(void *a, void *b);
+	void dispose(int hdl);
+	void print(
+			std::ostream &ost, void *elt);
+	void print_quick(
+			std::ostream &ost, void *elt);
+	void print_as_permutation(
+			std::ostream &ost, void *elt);
+	void print_point(
+			int a, std::ostream &ost);
+	void unrank_point(long int rk, int *v);
+	long int rank_point(int *v);
+	void code_for_make_element(
+			int *data, void *elt);
+	void print_for_make_element(
+			std::ostream &ost, void *elt);
+	void print_for_make_element_no_commas(
+			std::ostream &ost, void *elt);
+
+	long int element_image_of(
+			long int a, void *elt, int verbose_level);
+	void element_image_of_low_level(
+			int *input, int *output,
+		void *elt, int verbose_level);
+	int element_linear_entry_ij(void *elt, int i, int j,
+		int verbose_level);
+	int element_linear_entry_frobenius(void *elt, int verbose_level);
+	void element_one(void *elt, int verbose_level);
+	int element_is_one(void *elt, int verbose_level);
+	void element_unpack(void *elt, void *Elt, int verbose_level);
+	void element_pack(void *Elt, void *elt, int verbose_level);
+	void element_retrieve(int hdl, void *elt, int verbose_level);
+	int element_store(void *elt, int verbose_level);
+	void element_mult(void *a, void *b, void *ab, int verbose_level);
+	void element_invert(void *a, void *av, int verbose_level);
+	void element_transpose(void *a, void *at, int verbose_level);
+	void element_move(void *a, void *b, int verbose_level);
+	void element_dispose(int hdl, int verbose_level);
+	void element_print(void *elt, std::ostream &ost);
+	void element_print_quick(void *elt, std::ostream &ost);
+	void element_print_latex(void *elt, std::ostream &ost);
+	void element_print_latex_with_extras(
+			void *elt, std::string &label, std::ostream &ost);
+	void element_print_latex_with_print_point_function(
+		void *elt, std::ostream &ost,
+		void (*point_label)(std::stringstream &sstr,
+				long int pt, void *data),
+		void *point_label_data);
+	void element_print_verbose(void *elt, std::ostream &ost);
+	void element_code_for_make_element(void *elt, int *data);
+	void element_print_for_make_element(void *elt,
+			std::ostream &ost);
+	void element_print_for_make_element_no_commas(void *elt,
+			std::ostream &ost);
+	void element_print_as_permutation(void *elt,
+			std::ostream &ost);
+	void element_as_permutation(void *elt,
+		int *perm, int verbose_level);
+	void element_print_as_permutation_verbose(void *elt,
+			std::ostream &ost, int verbose_level);
+	void element_print_as_permutation_with_offset(void *elt,
+			std::ostream &ost,
+		int offset, int f_do_it_anyway_even_for_big_degree,
+		int f_print_cycles_of_length_one,
+		int verbose_level);
+	void element_print_as_permutation_with_offset_and_max_cycle_length(
+		void *elt,
+		std::ostream &ost, int offset, int max_cycle_length,
+		int f_orbit_structure);
+	void element_print_image_of_set(void *elt,
+		int size, long int *set);
+	int element_signum_of_permutation(void *elt);
+	void element_write_file_fp(int *Elt,
+			std::ofstream &fp, int verbose_level);
+	void element_read_file_fp(int *Elt,
+			std::ifstream &fp, int verbose_level);
+	void element_write_file(int *Elt,
+			std::string &fname, int verbose_level);
+	void element_read_file(int *Elt,
+			std::string &fname, int verbose_level);
+	void element_write_to_memory_object(
+			int *Elt,
+			orbiter_kernel_system::memory_object *m,
+			int verbose_level);
+	void element_read_from_memory_object(
+			int *Elt,
+			orbiter_kernel_system::memory_object *m,
+			int verbose_level);
+	void element_write_to_file_binary(int *Elt,
+			std::ofstream &fp, int verbose_level);
+	void element_read_from_file_binary(int *Elt,
+			std::ifstream &fp, int verbose_level);
+	void random_element(groups::sims *S, int *Elt,
+		int verbose_level);
+	int element_has_order_two(int *E1, int verbose_level);
+	int product_has_order_two(int *E1, int *E2, int verbose_level);
+	int product_has_order_three(int *E1, int *E2, int verbose_level);
+	int element_order(void *elt);
+	int element_order_and_cycle_type(void *elt, int *cycle_type);
+	int element_order_and_cycle_type_verbose(
+			void *elt, int *cycle_type, int verbose_level);
+	int element_order_if_divisor_of(void *elt, int o);
+	void element_print_base_images(int *Elt);
+	void element_print_base_images(
+			int *Elt, std::ostream &ost);
+	void element_print_base_images_verbose(int *Elt,
+			std::ostream &ost, int verbose_level);
+	void element_base_images(
+			int *Elt, int *base_images);
+	void element_base_images_verbose(int *Elt,
+		int *base_images, int verbose_level);
+	void minimize_base_images(
+			int level, groups::sims *S,
+		int *Elt, int verbose_level);
+	void element_conjugate_bvab(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level);
+	void element_conjugate_babv(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level);
+	void element_commutator_abavbv(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level);
+	int find_non_fixed_point(void *elt, int verbose_level);
+	int find_fixed_points(void *elt,
+			int *fixed_points, int verbose_level);
+	int count_fixed_points(void *elt, int verbose_level);
+	int test_if_set_stabilizes(int *Elt,
+			int size, long int *set, int verbose_level);
+	void map_a_set(
+			long int *set,
+			long int *image_set,
+		int n, int *Elt, int verbose_level);
+	void map_a_set_and_reorder(
+			long int *set, long int *image_set,
+		int n, int *Elt, int verbose_level);
+	void make_element_from_permutation_representation(
+			int *Elt,
+			groups::sims *S, int *data, int verbose_level);
+	void make_element_from_base_image(
+			int *Elt, groups::sims *S,
+			int *data, int verbose_level);
+	void make_element_2x2(
+			int *Elt, int a0, int a1, int a2, int a3);
+	void make_element_from_string(
+			int *Elt,
+			std::string &data_string, int verbose_level);
+	void make_element(
+			int *Elt, int *data, int verbose_level);
+	void element_power_int_in_place(int *Elt,
+		int n, int verbose_level);
+	void word_in_ab(int *Elt1, int *Elt2, int *Elt3,
+		const char *word, int verbose_level);
+	void evaluate_word(
+			int *Elt, int *word, int len,
+			data_structures_groups::vector_ge *gens,
+			int verbose_level);
+	int check_if_in_set_stabilizer(
+			int *Elt,
+			int size, long int *set, int verbose_level);
+	void check_if_in_set_stabilizer_debug(
+			int *Elt,
+			int size, long int *set, int verbose_level);
+	int check_if_transporter_for_set(
+			int *Elt,
+			int size,
+			long int *set1, long int *set2,
+			int verbose_level);
+	void compute_fixed_objects_in_PG(
+			int up_to_which_rank,
+			geometry::projective_space *P,
+		int *Elt,
+		std::vector<std::vector<long int> > &Fix,
+		int verbose_level);
+	void report_fixed_objects_in_PG(
+			std::ostream &ost,
+			geometry::projective_space *P,
+		int *Elt,
+		int verbose_level);
+	int test_if_it_fixes_the_polynomial(
+		int *Elt,
+		int *input,
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level);
+	void action_on_polynomial(
+		int *Elt,
+		int *input, int *output,
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level);
+
+
+};
+
+
+
+// #############################################################################
+// induced_action.cpp:
+// #############################################################################
+
+
+
+//! create new actions from old
+
+
+class induced_action {
+public:
+
+	action *A_old;
+
+	induced_action();
+	~induced_action();
+	void init(action *A, int verbose_level);
+
+	action *induced_action_on_interior_direct_product(
+			int nb_rows,
+			int verbose_level);
+	action *induced_action_on_set_partitions(
+			int partition_class_size,
+			int verbose_level);
+
+#if 0
+	/** Create the induced action on lines in PG(n-1,q)
+	 * using an action_on_grassmannian object */
+	void init_action_on_lines(
+			action *A, field_theory::finite_field *F,
+		int n, int verbose_level);
+#endif
+
+	action *induced_action_by_representation_on_conic(
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_cosets(
+			induced_actions::action_on_cosets *A_on_cosets,
+		int f_induce_action,
+		groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_factor_space(
+			induced_actions::action_on_factor_space *AF,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+
+	action *induced_action_on_grassmannian(
+			int k,
+		int verbose_level);
+	action *induced_action_on_grassmannian_preloaded(
+			induced_actions::action_on_grassmannian *AG,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_spread_set(
+			induced_actions::action_on_spread_set *AS,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+#if 0
+	void induced_action_on_orthogonal(
+			action *A_old,
+			induced_actions::action_on_orthogonal *AO,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+#endif
+
+	action *induced_action_on_wedge_product(
+			int verbose_level);
+#if 0
+	void induced_action_by_subfield_structure(
+			action *A_old,
+			induced_actions::action_by_subfield_structure
+				*SubfieldStructure,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+#endif
+	action *induced_action_on_determinant(
+			groups::sims *old_G, int verbose_level);
+	action *induced_action_on_Galois_group(
+			groups::sims *old_G, int verbose_level);
+	action *induced_action_on_sign(
+			groups::sims *old_G, int verbose_level);
+
+	action *create_induced_action_by_conjugation(
+			groups::sims *Base_group, int f_ownership,
+			int f_basis, groups::sims *old_G,
+			int verbose_level);
+#if 0
+	void induced_action_by_conjugation(
+			groups::sims *old_G,
+			groups::sims *Base_group, int f_ownership,
+		int f_basis, int verbose_level);
+#endif
+	action *induced_action_by_right_multiplication(
+		int f_basis, groups::sims *old_G,
+		groups::sims *Base_group, int f_ownership, int verbose_level);
+	action *create_induced_action_on_sets(
+			int nb_sets,
+		int set_size, long int *sets,
+		int verbose_level);
+	action *induced_action_on_sets(
+			groups::sims *old_G,
+		int nb_sets, int set_size, long int *sets,
+		int f_induce_action, int verbose_level);
+	action *create_induced_action_on_subgroups(
+			groups::sims *S,
+		int nb_subgroups, int group_order,
+		groups::subgroup **Subgroups, int verbose_level);
+	action *induced_action_on_subgroups(
+			action *old_action,
+			groups::sims *S,
+		int nb_subgroups, int group_order,
+		groups::subgroup **Subgroups,
+		int verbose_level);
+	action *induced_action_by_restriction_on_orbit_with_schreier_vector(
+		int f_induce_action, groups::sims *old_G,
+		data_structures_groups::schreier_vector *Schreier_vector,
+		int pt, int verbose_level);
+	void original_point_labels(
+			long int *points, int nb_points,
+			long int *&original_points, int verbose_level);
+	action *restricted_action(
+			long int *points, int nb_points,
+			std::string &label_of_set,
+		int verbose_level);
+	action *create_induced_action_by_restriction(
+			groups::sims *old_G, int size,
+			long int *set,
+			std::string &label_of_set,
+			int f_induce,
+			int verbose_level);
+	action *induced_action_by_restriction(
+		action *old_action,
+		int f_induce_action, groups::sims *old_G,
+		int nb_points, long int *points,
+		std::string &label_of_set,
+		int verbose_level);
+	action *induced_action_on_pairs(
+		int verbose_level);
+#if 0
+	void induced_action_on_pairs(
+			action &old_action, groups::sims *old_G,
+		int verbose_level);
+	action *create_induced_action_on_ordered_pairs(
+			int verbose_level);
+#endif
+	action *induced_action_on_ordered_pairs(
+			groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_k_subsets(
+		int k,
+		int verbose_level);
+	action *induced_action_on_orbits(
+			groups::schreier *Sch, int f_play_it_safe,
+		int verbose_level);
+#if 0
+	void induced_action_on_flags(
+			action *old_action,
+		int *type, int type_len,
+		int verbose_level);
+	void induced_action_on_bricks(
+			action &old_action,
+		combinatorics::brick_domain *B, int f_linear_action,
+		int verbose_level);
+#endif
+	action *induced_action_on_andre(
+			action *An,
+		action *An1,
+		geometry::andre_construction *Andre,
+		int verbose_level);
+#if 0
+	void setup_product_action(
+			action *A1, action *A2,
+		int f_use_projections, int verbose_level);
+#endif
+	action *induced_action_on_homogeneous_polynomials(
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+	action *induced_action_on_homogeneous_polynomials_given_by_equations(
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int *Equations, int nb_equations,
+		int f_induce_action, groups::sims *old_G,
+		int verbose_level);
+	action *base_change(
+		int size, long int *set,
+		groups::sims *old_Sims,
+		int verbose_level);
+
+#if 0
+	void induced_action_recycle_sims(
+			action &old_action,
+		int verbose_level);
+	void induced_action_override_sims(
+			action &old_action,
+			groups::sims *old_G,
+		int verbose_level);
+#endif
+
+};
+
 
 
 // #############################################################################
@@ -1352,9 +1480,11 @@ public:
 	void allocate_base_data(
 			action *A,
 			int base_len, int verbose_level);
-	void reallocate_base(int new_base_point);
+	void reallocate_base(
+			int new_base_point, int verbose_level);
 	void init_base_from_sims(
 			groups::sims *G, int verbose_level);
+	actions::action *get_A();
 	int &get_f_has_base();
 	int &get_base_len();
 	long int &base_i(int i);

@@ -158,7 +158,8 @@ void isomorph_global::read_statistic_files(
 		cout << "Read all the statistic files" << endl;
 		for (i = 0; i < Iso.Sub->nb_starter; i++) {
 			if (Stats[i * 6 + 0] == -1) {
-				cout << "The run is incomplete, I don't have data for case "
+				cout << "The run is incomplete, "
+						"I don't have data for case "
 						<< i << " for instance" << endl;
 				exit(1);
 			}
@@ -377,18 +378,48 @@ void isomorph_global::classification_graph(
 			f_use_database_for_starter,
 			f_implicit_fusion,
 			verbose_level - 1);
+		if (f_v) {
+			cout << "isomorph_global::classification_graph "
+					"after Iso.init" << endl;
+		}
 
 
 
+		if (f_v) {
+			cout << "isomorph_global::classification_graph "
+					"before Iso.read_everything_including_classification" << endl;
+		}
 		Iso.read_everything_including_classification(
 				prefix_classify, verbose_level);
+		if (f_v) {
+			cout << "isomorph_global::classification_graph "
+					"after Iso.read_everything_including_classification" << endl;
+		}
 
 
 	
 	
 	
+		if (f_v) {
+			cout << "isomorph_global::classification_graph "
+					"before Iso.Folding->write_classification_matrix" << endl;
+		}
 		Iso.Folding->write_classification_matrix(verbose_level);
+		if (f_v) {
+			cout << "isomorph_global::classification_graph "
+					"after Iso.Folding->write_classification_matrix" << endl;
+		}
+
+		if (f_v) {
+			cout << "isomorph_global::classification_graph "
+					"before Iso.Folding->write_classification_graph" << endl;
+		}
 		Iso.Folding->write_classification_graph(verbose_level);
+		if (f_v) {
+			cout << "isomorph_global::classification_graph "
+					"after Iso.Folding->write_classification_graph" << endl;
+		}
+
 		Iso.Folding->decomposition_matrix(verbose_level);
 
 
@@ -430,7 +461,8 @@ void isomorph_global::identify(
 	
 
 		if (f_v) {
-			cout << "isomorph_global::identify before Iso.init" << endl;
+			cout << "isomorph_global::identify "
+					"before Iso.init" << endl;
 		}
 		Iso.init(prefix_iso, A_base, A, gen,
 			size, level,
@@ -450,7 +482,8 @@ void isomorph_global::identify(
 
 			Fio.read_set_from_file(fname[i], the_set, set_size, verbose_level);
 			if (f_v) {
-				cout << "isomorph_global::identify read file " << fname[i] << endl;
+				cout << "isomorph_global::identify "
+						"read file " << fname[i] << endl;
 				cout << "the_set = ";
 				Lint_vec_print(cout, the_set, set_size);
 				cout << endl;
@@ -462,12 +495,14 @@ void isomorph_global::identify(
 	
 	
 			if (f_v) {
-				cout << "isomorph_identify before Iso.identify" << endl;
+				cout << "isomorph_identify "
+						"before Iso.identify" << endl;
 			}
 			Iso_type[i] = Iso.Folding->identify(the_set,
 					f_implicit_fusion, verbose_level - 2);
 			if (f_v) {
-				cout << "isomorph_identify after Iso.identify" << endl;
+				cout << "isomorph_identify "
+						"after Iso.identify" << endl;
 			}
 
 			if (f_save) {
@@ -480,11 +515,13 @@ void isomorph_global::identify(
 
 				fclose(f2);
 	#else
-				Iso.A_base->element_write_file(Iso.Folding->transporter,
+				Iso.A_base->Group_element->element_write_file(
+						Iso.Folding->transporter,
 						fname_transporter, 0 /* verbose_level*/);
 	#endif
 				cout << "isomorph_identify written file " << fname_transporter
-						<< " of size " << Fio.file_size(fname_transporter) << endl;
+						<< " of size "
+						<< Fio.file_size(fname_transporter) << endl;
 			}
 	
 	
@@ -538,7 +575,8 @@ void isomorph_global::identify_table(
 	
 
 		if (f_v) {
-			cout << "isomorph_global::identify_table before Iso.init" << endl;
+			cout << "isomorph_global::identify_table "
+					"before Iso.init" << endl;
 		}
 		Iso.init(prefix_iso, A_base, A, gen,
 			size, level,
@@ -636,7 +674,8 @@ void isomorph_global::worker(
 		int f_implicit_fusion = FALSE;
 
 		if (f_v) {
-			cout << "isomorph_global::worker before Iso.init" << endl;
+			cout << "isomorph_global::worker "
+					"before Iso.init" << endl;
 		}
 		Iso.init(prefix_iso,
 			A_base, A, gen,
@@ -646,34 +685,41 @@ void isomorph_global::worker(
 			verbose_level);
 			// sets level and initializes file names
 		if (f_v) {
-			cout << "isomorph_global::worker after Iso.init" << endl;
+			cout << "isomorph_global::worker "
+					"after Iso.init" << endl;
 		}
 
 		if (f_v) {
-			cout << "isomorph_global::worker before Iso.read_everything_including_classification" << endl;
+			cout << "isomorph_global::worker "
+					"before Iso.read_everything_including_classification" << endl;
 		}
 		Iso.read_everything_including_classification(
 				prefix_classify, verbose_level);
 		if (f_v) {
-			cout << "isomorph_global::worker after Iso.read_everything_including_classification" << endl;
+			cout << "isomorph_global::worker "
+					"after Iso.read_everything_including_classification" << endl;
 		}
 	
 
 
 
 		if (f_v) {
-			cout << "isomorph_global::worker before Iso.setup_and_open_solution_database" << endl;
+			cout << "isomorph_global::worker "
+					"before Iso.setup_and_open_solution_database" << endl;
 		}
 		Iso.Lifting->setup_and_open_solution_database(verbose_level - 1);
 		if (f_v) {
-			cout << "isomorph_global::worker after Iso.setup_and_open_solution_database" << endl;
+			cout << "isomorph_global::worker "
+					"after Iso.setup_and_open_solution_database" << endl;
 		}
 		if (f_v) {
-			cout << "isomorph_global::worker before Iso.Sub->setup_and_open_level_database" << endl;
+			cout << "isomorph_global::worker "
+					"before Iso.Sub->setup_and_open_level_database" << endl;
 		}
 		Iso.Sub->setup_and_open_level_database(verbose_level - 1);
 		if (f_v) {
-			cout << "isomorph_global::worker after Iso.Sub->setup_and_open_level_database" << endl;
+			cout << "isomorph_global::worker "
+					"after Iso.Sub->setup_and_open_level_database" << endl;
 		}
 
 	#if 0
@@ -685,11 +731,13 @@ void isomorph_global::worker(
 
 
 		if (f_v) {
-			cout << "isomorph_global::worker before work_callback" << endl;
+			cout << "isomorph_global::worker "
+					"before work_callback" << endl;
 		}
 		(*work_callback)(&Iso, work_data, verbose_level);
 		if (f_v) {
-			cout << "isomorph_global::worker after work_callback" << endl;
+			cout << "isomorph_global::worker "
+					"after work_callback" << endl;
 		}
 	
 	
@@ -747,7 +795,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 	cnt_special_orbits = 0;
 
 	rep = Iso->Folding->Reps->rep[orbit];
-	first = Iso->Lifting->orbit_fst[rep];
+	first = Iso->Lifting->flag_orbit_solution_first[rep];
 	//c = Iso->starter_number[first];
 	id = Iso->Lifting->orbit_perm[first];
 	Iso->Lifting->load_solution(id, data, verbose_level - 1);
@@ -769,7 +817,8 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 	Strong_gens->init_from_sims(Stab, verbose_level - 2);
 	
 
-	Iso->Folding->induced_action_on_set(Stab, data, 0 /*verbose_level*/);
+	Iso->Folding->induced_action_on_set(
+			Stab, data, 0 /*verbose_level*/);
 		
 	if (f_vv) {
 		cout << "data after induced_action_on_set:" << endl;
@@ -865,7 +914,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 			//cout << endl;
 			int f_failure_to_find_point, f_found;
 
-			Iso->A_base->element_one(transporter, 0);
+			Iso->A_base->Group_element->element_one(transporter, 0);
 			case_nb = Iso->Folding->trace_set(rearranged_set, transporter,
 				f_implicit_fusion, f_failure_to_find_point,
 				0 /*verbose_level - 2*/);
@@ -893,7 +942,8 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 			//cout << "f_found=" << f_found << endl;
 			if (!f_found) {
 				if (f_vv) {
-					cout << "isomorph_global::compute_down_orbits_for_isomorphism_type not found" << endl;
+					cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
+							"not found" << endl;
 				}
 				continue;
 			}
@@ -938,8 +988,8 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 
 void isomorph_global::report_data_in_source_code_inside_tex(
 		isomorph &Iso,
-		const char *prefix,
-		char *label_of_structure_plural, std::ostream &f,
+		std::string &prefix,
+		std::string &label_of_structure_plural, std::ostream &f,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -966,8 +1016,53 @@ void isomorph_global::report_data_in_source_code_inside_tex(
 
 
 void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
-		isomorph &Iso, const char *prefix,
-		char *label_of_structure_plural, std::ostream &fp,
+		isomorph &Iso, std::string &prefix,
+		std::string &label_of_structure_plural, std::ostream &fp,
+		int selection_size, int *selection,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int h, rep, first, /*c,*/ id, i, s;
+	long int data[1000];
+
+	if (f_v) {
+		cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection" << endl;
+	}
+
+	fp << "\\section{The " << label_of_structure_plural
+			<< " in Numeric Form}" << endl << endl;
+
+	//fp << "\\clearpage" << endl << endl;
+	for (s = 0; s < selection_size; s++) {
+		h = selection[s];
+		rep = Iso.Folding->Reps->rep[h];
+		first = Iso.Lifting->flag_orbit_solution_first[rep];
+		//c = Iso.starter_number[first];
+		id = Iso.Lifting->orbit_perm[first];
+		Iso.Lifting->load_solution(id, data, verbose_level - 1);
+		for (i = 0; i < Iso.size; i++) {
+			fp << data[i];
+			if (i < Iso.size - 1) {
+				fp << ", ";
+			}
+		}
+		fp << "\\\\" << endl;
+	}
+	fp << "\\begin{verbatim}" << endl << endl;
+	export_source_code_with_selection(
+			Iso, prefix,
+			fp,
+			selection_size, selection,
+			verbose_level);
+	fp << "\\end{verbatim}" << endl << endl;
+}
+
+
+void isomorph_global::export_source_code_with_selection(
+		isomorph &Iso, std::string &prefix,
+		std::ostream &fp,
 		int selection_size, int *selection,
 		int verbose_level)
 {
@@ -978,9 +1073,10 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 	long int data[1000];
 
 	if (f_v) {
-		cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection" << endl;
+		cout << "isomorph_global::export_source_code_with_selection" << endl;
 	}
 
+#if 0
 	fp << "\\section{The " << label_of_structure_plural
 			<< " in Numeric Form}" << endl << endl;
 
@@ -1000,14 +1096,15 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 		}
 		fp << "\\\\" << endl;
 	}
-	fp << "\\begin{verbatim}" << endl << endl;
+#endif
+
 	fp << "int " << prefix << "_size = " << Iso.size << ";" << endl;
 	fp << "int " << prefix << "_nb_reps = " << selection_size << ";" << endl;
-	fp << "int " << prefix << "_reps[] = {" << endl;
+	fp << "long int " << prefix << "_reps[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 		rep = Iso.Folding->Reps->rep[h];
-		first = Iso.Lifting->orbit_fst[rep];
+		first = Iso.Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
 		Iso.Lifting->load_solution(id, data, verbose_level - 1);
@@ -1024,9 +1121,9 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 		h = selection[s];
 
 		ring_theory::longinteger_object go;
-		
+
 		rep = Iso.Folding->Reps->rep[h];
-		first = Iso.Lifting->orbit_fst[rep];
+		first = Iso.Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
 		Iso.Lifting->load_solution(id, data, verbose_level - 1);
@@ -1043,7 +1140,7 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 		}
 	}
 	fp << "};" << endl;
-	
+
 	{
 		int *stab_gens_first;
 		int *stab_gens_len;
@@ -1063,8 +1160,8 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 			tl = NEW_int(Iso.A_base->base_len());
 
 			if (f_vv) {
-				cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection before extract_strong_"
-						"generators_in_order" << endl;
+				cout << "isomorph_global::export_source_code_with_selection "
+						"before extract_strong_generators_in_order" << endl;
 			}
 			Iso.Folding->Reps->stab[h]->extract_strong_generators_in_order(
 					*gens, tl, 0);
@@ -1075,12 +1172,13 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 
 			for (j = 0; j < gens->len; j++) {
 				if (f_vv) {
-					cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection before extract_strong_"
-							"generators_in_order generator " << j
+					cout << "isomorph_global::export_source_code_with_selection "
+							"before extract_strong_generators_in_order "
+							"generator " << j
 							<< " / " << gens->len << endl;
 				}
 				fp << "";
-				Iso.A_base->element_print_for_make_element(gens->ith(j), fp);
+				Iso.A_base->Group_element->element_print_for_make_element(gens->ith(j), fp);
 				fp << endl;
 			}
 
@@ -1107,7 +1205,9 @@ void isomorph_global::report_data_in_source_code_inside_tex_with_selection(
 		fp << "int " << prefix << "_make_element_size = "
 				<< Iso.A_base->make_element_size << ";" << endl;
 	}
-	fp << "\\end{verbatim}" << endl << endl;
+	if (f_v) {
+		cout << "isomorph_global::export_source_code_with_selection done" << endl;
+	}
 }
 
 static void callback_compute_down_orbits_worker(
@@ -1166,7 +1266,8 @@ static void callback_compute_down_orbits_worker(
 		string fname;
 
 		fname.assign("Nb_down_orbits.csv");
-		Fio.int_matrix_write_csv(fname, Nb_orbits, Iso->Folding->Reps->count, 2);
+		Fio.int_matrix_write_csv(
+				fname, Nb_orbits, Iso->Folding->Reps->count, 2);
 	}
 
 	if (f_v) {
@@ -1191,7 +1292,8 @@ static void callback_compute_down_orbits_worker(
 		string fname;
 
 		fname.assign("Down_identify.csv");
-		Fio.int_matrix_write_csv(fname, Down_identify, nb_special_orbits, 3);
+		Fio.int_matrix_write_csv(
+				fname, Down_identify, nb_special_orbits, 3);
 	}
 
 	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {

@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace algebra {
+namespace linear_algebra {
 
 
 static void vector_space_unrank_point_callback(int *v, long int rk, void *data);
@@ -57,7 +57,8 @@ vector_space::~vector_space()
 	}
 }
 
-void vector_space::init(field_theory::finite_field *F, int dimension,
+void vector_space::init(
+		field_theory::finite_field *F, int dimension,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -124,7 +125,8 @@ void vector_space::unrank_point(int *v, long int rk)
 		(*unrank_point_func)(v, rk, rank_point_data);
 	}
 	else {
-		F->PG_element_unrank_modified_lint(v, 1, dimension, rk);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(
+				v, 1, dimension, rk);
 	}
 }
 
@@ -136,7 +138,8 @@ long int vector_space::rank_point(int *v)
 		rk = (*rank_point_func)(v, rank_point_data);
 	}
 	else {
-		F->PG_element_rank_modified_lint(v, 1, dimension, rk);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v, 1, dimension, rk);
 	}
 	return rk;
 }
@@ -278,7 +281,8 @@ static void vector_space_unrank_point_callback(int *v, long int rk, void *data)
 {
 	vector_space *VS = (vector_space *) data;
 
-	VS->F->PG_element_unrank_modified_lint(v, 1, VS->dimension, rk);
+	VS->F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v, 1, VS->dimension, rk);
 
 }
 
@@ -287,7 +291,8 @@ static long int vector_space_rank_point_callback(int *v, void *data)
 	vector_space *VS = (vector_space *) data;
 	long int rk;
 
-	VS->F->PG_element_rank_modified_lint(v, 1, VS->dimension, rk);
+	VS->F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1, VS->dimension, rk);
 	return rk;
 
 }

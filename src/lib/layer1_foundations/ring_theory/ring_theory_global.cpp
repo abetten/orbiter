@@ -29,6 +29,21 @@ ring_theory_global::~ring_theory_global()
 
 }
 
+void ring_theory_global::Monomial_ordering_type_as_string(
+		monomial_ordering_type Monomial_ordering_type, std::string &s)
+{
+	if (Monomial_ordering_type == t_LEX) {
+		s.assign("LEX");
+	}
+	else if (Monomial_ordering_type == t_PART) {
+		s.assign("PART");
+	}
+	else {
+		cout << "ring_theory_global::Monomial_ordering_type_as_string unknown type" << endl;
+		exit(1);
+	}
+}
+
 void ring_theory_global::write_code_for_division(
 		field_theory::finite_field *F,
 		std::string &label_code,
@@ -2518,7 +2533,7 @@ void ring_theory_global::oval_polynomial(
 	}
 	map = NEW_int(F->q);
 	for (i = 0; i < F->q; i++) {
-		F->PG_element_unrank_modified(
+		F->Projective_space_basic->PG_element_unrank_modified(
 				v, 1 /* stride */, 3 /* len */, S[2 + i]);
 		if (v[2] != 1) {
 			cout << "ring_theory_global::oval_polynomial "
@@ -2547,7 +2562,7 @@ void ring_theory_global::oval_polynomial(
 }
 
 void ring_theory_global::print_longinteger_after_multiplying(
-		ostream &ost, int *factors, int len)
+		std::ostream &ost, int *factors, int len)
 {
 	longinteger_domain D;
 	longinteger_object a;
@@ -2555,6 +2570,7 @@ void ring_theory_global::print_longinteger_after_multiplying(
 	D.multiply_up(a, factors, len, 0 /* verbose_level */);
 	ost << a;
 }
+
 
 
 

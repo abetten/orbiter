@@ -2676,8 +2676,10 @@ int number_theory_domain::elliptic_curve_addition(
 
 	P2->unrank_point(p1, p1_rk);
 	P2->unrank_point(p2, p2_rk);
-	P2->F->PG_element_normalize(p1, 1, 3);
-	P2->F->PG_element_normalize(p2, 1, 3);
+	P2->Subspaces->F->Projective_space_basic->PG_element_normalize(
+			p1, 1, 3);
+	P2->Subspaces->F->Projective_space_basic->PG_element_normalize(
+			p2, 1, 3);
 
 	x1 = p1[0];
 	y1 = p1[1];
@@ -2741,11 +2743,15 @@ int number_theory_domain::elliptic_curve_addition(
 		// now both points are affine.
 
 
+		field_theory::finite_field *F;
+
+		F = P2->Subspaces->F;
+
 		int lambda_top, lambda_bottom, lambda, nu_top, nu_bottom, nu;
 		int three, two; //, m_one;
 		int c;
 
-		c = P2->F->add4(y1, y2, P2->F->mult(a1, x2), a3);
+		c = F->add4(y1, y2, F->mult(a1, x2), a3);
 
 		if (x1 == x2 && c == 0) {
 			x3 = 0;
@@ -2754,8 +2760,8 @@ int number_theory_domain::elliptic_curve_addition(
 		}
 		else {
 
-			two = P2->F->add(1, 1);
-			three = P2->F->add(two, 1);
+			two = P2->Subspaces->F->add(1, 1);
+			three = P2->Subspaces->F->add(two, 1);
 			//m_one = F->negate(1);
 
 
@@ -2763,25 +2769,25 @@ int number_theory_domain::elliptic_curve_addition(
 			if (x1 == x2) {
 
 				// point duplication:
-				lambda_top = P2->F->add4(P2->F->mult3(three, x1, x1),
-						P2->F->mult3(two, a2, x1), a4,
-						P2->F->negate(P2->F->mult(a1, y1)));
-				lambda_bottom = P2->F->add3(P2->F->mult(two, y1),
-						P2->F->mult(a1, x1), a3);
+				lambda_top = F->add4(F->mult3(three, x1, x1),
+						F->mult3(two, a2, x1), a4,
+						F->negate(F->mult(a1, y1)));
+				lambda_bottom = F->add3(F->mult(two, y1),
+						F->mult(a1, x1), a3);
 
-				nu_top = P2->F->add4(P2->F->negate(P2->F->mult3(x1, x1, x1)),
-						P2->F->mult(a4, x1), P2->F->mult(two, a6),
-						P2->F->negate(P2->F->mult(a3, y1)));
-				nu_bottom = P2->F->add3(P2->F->mult(two, y1),
-						P2->F->mult(a1, x1), a3);
+				nu_top = F->add4(F->negate(F->mult3(x1, x1, x1)),
+						F->mult(a4, x1), F->mult(two, a6),
+						F->negate(F->mult(a3, y1)));
+				nu_bottom = F->add3(F->mult(two, y1),
+						F->mult(a1, x1), a3);
 
 			}
 			else {
 				// adding different points:
-				lambda_top = P2->F->add(y2, P2->F->negate(y1));
-				lambda_bottom = P2->F->add(x2, P2->F->negate(x1));
+				lambda_top = F->add(y2, F->negate(y1));
+				lambda_bottom = F->add(x2, F->negate(x1));
 
-				nu_top = P2->F->add(P2->F->mult(y1, x2), P2->F->negate(P2->F->mult(y2, x1)));
+				nu_top = F->add(F->mult(y1, x2), F->negate(F->mult(y2, x1)));
 				nu_bottom = lambda_bottom;
 			}
 
@@ -2805,14 +2811,14 @@ int number_theory_domain::elliptic_curve_addition(
 						"a6=" << a6 << endl;
 				exit(1);
 			}
-			lambda = P2->F->mult(lambda_top, P2->F->inverse(lambda_bottom));
+			lambda = F->mult(lambda_top, F->inverse(lambda_bottom));
 
 			if (nu_bottom == 0) {
 				cout << "number_theory_domain::elliptic_curve_addition "
 						"nu_bottom == 0" << endl;
 				exit(1);
 			}
-			nu = P2->F->mult(nu_top, P2->F->inverse(nu_bottom));
+			nu = F->mult(nu_top, F->inverse(nu_bottom));
 
 			if (f_vv) {
 				cout << "number_theory_domain::elliptic_curve_addition "
@@ -2832,9 +2838,9 @@ int number_theory_domain::elliptic_curve_addition(
 				cout << "number_theory_domain::elliptic_curve_addition "
 						"lambda=" << lambda << " nu=" << nu << endl;
 			}
-			x3 = P2->F->add3(P2->F->mult(lambda, lambda), P2->F->mult(a1, lambda),
-					P2->F->negate(P2->F->add3(a2, x1, x2)));
-			y3 = P2->F->negate(P2->F->add3(P2->F->mult(P2->F->add(lambda, a1), x3), nu, a3));
+			x3 = F->add3(F->mult(lambda, lambda), F->mult(a1, lambda),
+					F->negate(F->add3(a2, x1, x2)));
+			y3 = F->negate(F->add3(F->mult(F->add(lambda, a1), x3), nu, a3));
 			z3 = 1;
 		}
 	}

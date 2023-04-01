@@ -168,7 +168,7 @@ int integer::compare_with(discreta_base &a)
 }
 
 
-void integer::mult_to(discreta_base &x, discreta_base &y)
+void integer::mult_to(discreta_base &x, discreta_base &y, int verbose_level)
 {
 	domain *dom;
 	
@@ -185,7 +185,7 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 
 			a.numeric_polynomial(s_i(), p);
 			b.numeric_polynomial(x.s_i_i(), p);
-			c.mult_mod(a, b, *dom->factor_poly());
+			c.mult_mod(a, b, *dom->factor_poly(), verbose_level);
 			res = c.polynomial_numeric(p);
 			y.m_i_i(res);
 			}
@@ -206,7 +206,7 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 				
 				a.homo_z(s_i());
 				b.homo_z(x.s_i_i());
-				a.mult_to(b, c);
+				a.mult_to(b, c, verbose_level);
 				y = c;
 				return;
 				}
@@ -226,7 +226,7 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 			
 		a.homo_z(s_i());
 		b = x;
-		a.mult_to(b, c);
+		a.mult_to(b, c, verbose_level);
 		y = c;
 		return;
 		}
@@ -238,9 +238,8 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 		}
 }
 
-int integer::invert_to(discreta_base &x)
+int integer::invert_to(discreta_base &x, int verbose_level)
 {
-	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int i;
 	domain *dom;
@@ -269,7 +268,7 @@ int integer::invert_to(discreta_base &x)
 		if (f_v) {
 			cout << "integer::invert_to p=" << p << endl;
 		}
-		av = invert_mod_integer(a, p);
+		av = invert_mod_integer(a, p, verbose_level);
 		if (f_v) {
 			cout << "integer::invert_to av=" << av << endl;
 		}
@@ -299,7 +298,7 @@ int integer::invert_to(discreta_base &x)
 		
 		q = dom->order_int();
 		l = q - 2;
-		a.power_int_mod(l, *dom->factor_poly());
+		a.power_int_mod(l, *dom->factor_poly(), verbose_level);
 #endif
 		res = a.polynomial_numeric(p);
 		x.m_i_i(res);

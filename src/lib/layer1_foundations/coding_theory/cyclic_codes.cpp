@@ -30,7 +30,8 @@ cyclic_codes::~cyclic_codes()
 
 
 
-void cyclic_codes::make_cyclic_code(int n, int q, int t,
+void cyclic_codes::make_cyclic_code(
+		int n, int q, int t,
 		int *roots, int nb_roots,
 		int f_poly, std::string &poly,
 		int f_dual,
@@ -488,7 +489,8 @@ void cyclic_codes::make_cyclic_code(int n, int q, int t,
 
 }
 
-void cyclic_codes::generator_matrix_cyclic_code(int n,
+void cyclic_codes::generator_matrix_cyclic_code(
+		int n,
 		int degree, int *generator_polynomial, int *&M)
 {
 	int k = n - degree;
@@ -662,7 +664,8 @@ void cyclic_codes::field_reduction(
 	{
 		field_theory::finite_field fq;
 
-		fq.init_override_polynomial_small_order(q, poly,
+		fq.init_override_polynomial_small_order(
+				q, poly,
 				FALSE /* f_without_tables */,
 				FALSE /* f_compute_related_fields */,
 				verbose_level);
@@ -1056,7 +1059,7 @@ void cyclic_codes::generator_matrix_cyclic_code(
 		for (i = 0; i < k; i++) {
 			v[i] = M[i * n + j];
 		}
-		F->PG_element_rank_modified_lint(
+		F->Projective_space_basic->PG_element_rank_modified_lint(
 				v, 1, k, rk);
 		Rk[j] = rk;
 	}

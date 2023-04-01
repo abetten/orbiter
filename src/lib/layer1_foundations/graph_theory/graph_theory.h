@@ -26,7 +26,7 @@ namespace graph_theory {
 
 #define CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS 100
 
-//! settings that control the clique finding process
+//! settings to control the clique finding process
 
 
 class clique_finder_control {
@@ -201,7 +201,8 @@ public:
 	~clique_finder();
 	void null();
 	void free();
-	void init(clique_finder_control *Control,
+	void init(
+			clique_finder_control *Control,
 			std::string &label, int n,
 			int f_has_adj_list, int *adj_list_coded,
 			int f_has_bitvector,
@@ -230,14 +231,17 @@ public:
 			unsigned long int counter);
 	void log_choice(int depth);
 	void swap_point(int idx1, int idx2);
-	void degree_of_point_statistic(int depth, int nb_points, 
+	void degree_of_point_statistic(
+			int depth, int nb_points,
 		int verbose_level);
-	int degree_of_point(int depth, int i, int nb_points);
+	int degree_of_point(
+			int depth, int i, int nb_points);
 	int is_suspicious(int i);
 	int point_label(int i);
 	int is_adjacent(int depth, int i, int j);
 	int is_viable(int depth, int pt);
-	void write_entry_to_tree_file(int depth, int verbose_level);
+	void write_entry_to_tree_file(
+			int depth, int verbose_level);
 	int s_ij(int i, int j);
 	void delinearize_adjacency_list(int verbose_level);
 
@@ -335,17 +339,21 @@ public:
 		int *colors, int *Adj,
 		std::string &label, std::string &label_tex,
 		int verbose_level);
-	void init_adjacency_no_colors(int nb_points, int *Adj, 
+	void init_adjacency_no_colors(
+			int nb_points, int *Adj,
 			std::string &label, std::string &label_tex,
 		int verbose_level);
-	void init_adjacency_two_colors(int nb_points,
+	void init_adjacency_two_colors(
+			int nb_points,
 		int *Adj, int *subset, int sz,
 		std::string &label, std::string &label_tex,
 		int verbose_level);
 	void init_user_data(
 			long int *data, int data_size, int verbose_level);
-	void save(std::string &fname, int verbose_level);
-	void load(std::string &fname, int verbose_level);
+	void save(
+			std::string &fname, int verbose_level);
+	void load(
+			std::string &fname, int verbose_level);
 	void draw_on_circle(
 			std::string &fname,
 			graphics::layered_graph_draw_options *Draw_options,
@@ -353,7 +361,8 @@ public:
 	void draw_on_circle_2(
 			graphics::mp_graphics &G,
 		graphics::layered_graph_draw_options *Draw_options);
-	void create_bitmatrix(data_structures::bitmatrix *&Bitmatrix,
+	void create_bitmatrix(
+			data_structures::bitmatrix *&Bitmatrix,
 		int verbose_level);
 	void draw(
 			std::string &fname,
@@ -414,7 +423,8 @@ public:
 			long int *candidates, int nb_candidates,
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int is_cycle(int nb_e, long int *edges, int verbose_level);
+	int is_cycle(
+			int nb_e, long int *edges, int verbose_level);
 	void all_cliques(
 			clique_finder_control *Control,
 			std::string &graph_label, int verbose_level);
@@ -425,7 +435,8 @@ public:
 			int verbose_level);
 	void find_subgraph(
 			std::string &subgraph_label, int verbose_level);
-	void find_subgraph_E6(int verbose_level);
+	void find_subgraph_E6(
+			int verbose_level);
 	void all_cliques_black_and_white(
 			clique_finder_control *Control,
 			std::ostream &ost_txt,
@@ -436,6 +447,7 @@ public:
 			std::ostream &ost, int verbose_level);
 	void do_Sajeeb(
 			clique_finder_control *Control,
+			std::vector<std::vector<unsigned int> > &solutions,
 			int verbose_level);
 	void do_Sajeeb_black_and_white(
 			clique_finder_control *Control,
@@ -454,14 +466,18 @@ public:
 	void complement(int verbose_level);
 	void distance_2(int verbose_level);
 	void properties(int verbose_level);
-	int test_distinguishing_property(long int *set, int sz,
+	int test_distinguishing_property(
+			long int *set, int sz,
 			int verbose_level);
-	void eigenvalues(double *&E, int verbose_level);
-	void Laplace_eigenvalues(double *&E, int verbose_level);
+	void eigenvalues(
+			double *&E, int verbose_level);
+	void Laplace_eigenvalues(
+			double *&E, int verbose_level);
 
 };
 
-void call_back_clique_found_using_file_output(clique_finder *CF, 
+void call_back_clique_found_using_file_output(
+		clique_finder *CF,
 	int verbose_level);
 
 
@@ -484,7 +500,8 @@ public:
 
 	graph_layer();
 	~graph_layer();
-	void init(int nb_nodes,
+	void init(
+			int nb_nodes,
 			int id_of_first_node, int verbose_level);
 	void place(int verbose_level);
 	void place_with_grouping(
@@ -566,7 +583,8 @@ public:
 	void find_all_parents(
 			layered_graph *G, std::vector<int> &All_Parents,
 			int verbose_level);
-	int find_parent(layered_graph *G, int verbose_level);
+	int find_parent(
+			layered_graph *G, int verbose_level);
 	void register_child(
 			layered_graph *G, int id_child,
 			int verbose_level);
@@ -684,10 +702,6 @@ public:
 			int n, int k,
 			field_theory::finite_field *F,
 			int r, int verbose_level);
-	void make_orthogonal_collinearity_graph(
-			int *&Adj, int &N,
-			int epsilon, int d,
-			field_theory::finite_field *F, int verbose_level);
 	void make_non_attacking_queens_graph(
 			int *&Adj, int &N,
 			int n, int verbose_level);
@@ -733,7 +747,8 @@ public:
 
 	layered_graph();
 	~layered_graph();
-	void init(int nb_layers, int *Nb_nodes_layer, 
+	void init(
+			int nb_layers, int *Nb_nodes_layer,
 			std::string &fname_base, int verbose_level);
 	int nb_nodes();
 	void print_nb_nodes_per_level();
@@ -758,7 +773,8 @@ public:
 	void add_node_vec_data(
 			int l, int n, long int *v, int len,
 		int verbose_level);
-	void set_distinguished_element_index(int l, int n, 
+	void set_distinguished_element_index(
+			int l, int n,
 		int index, int verbose_level);
 	void add_node_data1(
 			int l, int n, int data,
@@ -791,14 +807,17 @@ public:
 	void read_memory_object(
 			orbiter_kernel_system::memory_object *m,
 			int verbose_level);
-	void remove_edges(int layer1, int node1,
+	void remove_edges(
+			int layer1, int node1,
 			int layer2, int node2,
 			std::vector<std::vector<int> > &All_Paths,
 			int verbose_level);
-	void remove_edge(int layer1, int node1,
+	void remove_edge(
+			int layer1, int node1,
 			int layer2, int node2,
 			int verbose_level);
-	void find_all_paths_between(int layer1, int node1,
+	void find_all_paths_between(
+			int layer1, int node1,
 			int layer2, int node2,
 			std::vector<std::vector<int> > &All_Paths,
 			int verbose_level);

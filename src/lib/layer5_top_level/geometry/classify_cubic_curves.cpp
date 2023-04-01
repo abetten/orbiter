@@ -150,7 +150,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 
 	//Pts_on_curve = NEW_lint(CC->P->N_points);
 	//singular_Pts = NEW_lint(CC->P->N_points);
-	type = NEW_int(CC->P->N_lines);
+	type = NEW_int(CC->P->Subspaces->N_lines);
 
 	if (f_v) {
 		cout << "classify_cubic_curves::test_orbits testing "
@@ -216,7 +216,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 						Pts[h] = Pts_on_curve[h];
 					}
 				}
-				CC->P->line_intersection_type(
+				CC->P->Subspaces->line_intersection_type(
 						Pts, nb_pts /* set_size */,
 						type, 0 /*verbose_level*/);
 
@@ -225,7 +225,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 
 			data_structures::tally Cl;
 
-			Cl.init(type, CC->P->N_lines, FALSE, 0);
+			Cl.init(type, CC->P->Subspaces->N_lines, FALSE, 0);
 			idx = Cl.determine_class_by_value(q + 1);
 
 			if (idx == -1) {
@@ -435,8 +435,8 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 
 	Elt = NEW_int(A->elt_size_in_int);
-	Pts = NEW_lint(CCA->CC->P->N_points);
-	type = NEW_int(CCA->CC->P->N_lines);
+	Pts = NEW_lint(CCA->CC->P->Subspaces->N_points);
+	type = NEW_int(CCA->CC->P->Subspaces->N_lines);
 
 	f_processed = NEW_int(Flag_orbits->nb_flag_orbits);
 	Int_vec_zero(f_processed, Flag_orbits->nb_flag_orbits);
@@ -479,7 +479,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 				(double) Flag_orbits->nb_flag_orbits;
 
 		if (f_v) {
-			cout << "Defining n e w orbit "
+			cout << "Defining new orbit "
 				<< Flag_orbits->nb_primary_orbits_upper
 				<< " from flag orbit " << f << " / "
 				<< Flag_orbits->nb_flag_orbits
@@ -574,16 +574,16 @@ void classify_cubic_curves::upstep(int verbose_level)
 				continue;
 			}
 
-			CCA->CC->P->line_intersection_type(
+			CCA->CC->P->Subspaces->line_intersection_type(
 				set, 9 /* set_size */, type, 0 /*verbose_level*/);
 			// type[N_lines]
 
-			for (j = 0; j < CCA->CC->P->N_lines; j++) {
+			for (j = 0; j < CCA->CC->P->Subspaces->N_lines; j++) {
 				if (type[j] > 3) {
 					break;
 				}
 			}
-			if (j < CCA->CC->P->N_lines) {
+			if (j < CCA->CC->P->Subspaces->N_lines) {
 				continue;
 			}
 
@@ -620,10 +620,10 @@ void classify_cubic_curves::upstep(int verbose_level)
 				if (f_v) {
 					cout << "We found an automorphism of "
 							"the curve with " << nb_pts << " points:" << endl;
-					A->element_print_quick(Elt, cout);
+					A->Group_element->element_print_quick(Elt, cout);
 					cout << endl;
 				}
-				A->element_move(Elt, coset_reps->ith(nb_coset_reps), 0);
+				A->Group_element->element_move(Elt, coset_reps->ith(nb_coset_reps), 0);
 				nb_coset_reps++;
 				//S->add_single_generator(Elt3,
 				//2 /* group_index */, verbose_level - 2);
@@ -642,7 +642,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 						= f;
 					Flag_orbits->Flag_orbit_node[f2].fusion_elt
 						= NEW_int(A->elt_size_in_int);
-					A->element_invert(Elt,
+					A->Group_element->element_invert(Elt,
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 							0);
 					f_processed[f2] = TRUE;
@@ -693,7 +693,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 			if (f_v) {
 				cout << "the double six has a stabilizer of order "
 						<< ago << endl;
-				cout << "The n e w stabilizer is:" << endl;
+				cout << "The new stabilizer is:" << endl;
 				Aut_gens->print_generators_tex(cout);
 			}
 		}
@@ -807,9 +807,9 @@ int classify_cubic_curves::recognize(int *eqn_in,
 
 
 	Elt1 = NEW_int(A->elt_size_in_int);
-	Pts_on_curve = NEW_lint(CCA->CC->P->N_points);
-	singular_Pts = NEW_lint(CCA->CC->P->N_points);
-	type = NEW_int(CCA->CC->P->N_lines);
+	Pts_on_curve = NEW_lint(CCA->CC->P->Subspaces->N_points);
+	singular_Pts = NEW_lint(CCA->CC->P->Subspaces->N_points);
+	type = NEW_int(CCA->CC->P->Subspaces->N_lines);
 
 
 	int nb_pts_on_curve; //, nb_singular_pts;
@@ -838,12 +838,12 @@ int classify_cubic_curves::recognize(int *eqn_in,
 				<< " we found a curve with " << nb_pts_on_curve
 				<< " points" << endl;
 	}
-	CCA->CC->P->line_intersection_type(
+	CCA->CC->P->Subspaces->line_intersection_type(
 			Pts_on_curve, nb_pts_on_curve /* set_size */, type, 0 /*verbose_level*/);
 	// type[N_lines]
 
 	ret = TRUE;
-	for (j = 0; j < CCA->CC->P->N_lines; j++) {
+	for (j = 0; j < CCA->CC->P->Subspaces->N_lines; j++) {
 		if (type[j] > 3) {
 			ret = FALSE;
 			break;
@@ -886,16 +886,16 @@ int classify_cubic_curves::recognize(int *eqn_in,
 				continue;
 			}
 
-			CCA->CC->P->line_intersection_type(
+			CCA->CC->P->Subspaces->line_intersection_type(
 				set, 9 /* set_size */, type, 0 /*verbose_level*/);
 			// type[N_lines]
 
-			for (j = 0; j < CCA->CC->P->N_lines; j++) {
+			for (j = 0; j < CCA->CC->P->Subspaces->N_lines; j++) {
 				if (type[j] > 3) {
 					break;
 				}
 			}
-			if (j < CCA->CC->P->N_lines) {
+			if (j < CCA->CC->P->Subspaces->N_lines) {
 				continue;
 			}
 
@@ -953,11 +953,11 @@ int classify_cubic_curves::recognize(int *eqn_in,
 			}
 
 			if (Flag_orbits->Flag_orbit_node[f2].f_fusion_node) {
-				A->element_mult(Elt,
+				A->Group_element->element_mult(Elt,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								Elt1,
 								0);
-				A->element_move(Elt1,
+				A->Group_element->element_move(Elt1,
 								Elt,
 								0);
 			}
@@ -1317,10 +1317,10 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 	long int *singular_Pts;
 	int *type;
 
-	Pts_on_curve = NEW_lint(CCA->CC->P->N_points);
-	inflexion_Pts = NEW_lint(CCA->CC->P->N_points);
-	singular_Pts = NEW_lint(CCA->CC->P->N_points);
-	type = NEW_int(CCA->CC->P->N_lines);
+	Pts_on_curve = NEW_lint(CCA->CC->P->Subspaces->N_points);
+	inflexion_Pts = NEW_lint(CCA->CC->P->Subspaces->N_points);
+	singular_Pts = NEW_lint(CCA->CC->P->Subspaces->N_points);
+	type = NEW_int(CCA->CC->P->Subspaces->N_lines);
 
 
 
@@ -1482,14 +1482,14 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 		ost << "$\\\\" << endl;
 
 
-		CCA->CC->P->line_intersection_type(
+		CCA->CC->P->Subspaces->line_intersection_type(
 				Pts_on_curve, nb_pts_on_curve /* set_size */,
 				type, 0 /*verbose_level*/);
 		// type[N_lines]
 
 		ost << "The line type is $";
 		data_structures::tally C;
-		C.init(type, CCA->CC->P->N_lines, FALSE, 0);
+		C.init(type, CCA->CC->P->Subspaces->N_lines, FALSE, 0);
 		C.print_naked_tex(ost, TRUE /* f_backwards*/);
 		ost << ".$ \\\\" << endl;
 
@@ -1510,7 +1510,7 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 			CC->P->unrank_point(Basis, inflexion_Pts[0]);
 			CC->P->unrank_point(Basis + 3, inflexion_Pts[1]);
 
-			CC->P->F->Linear_algebra->extend_basis(2, 3, Basis,
+			CC->P->Subspaces->F->Linear_algebra->extend_basis(2, 3, Basis,
 				verbose_level);
 
 			//CC->P->unrank_point(Basis + 6, inflexion_Pts[2]);

@@ -96,11 +96,13 @@ void surface_object::init_equation_points_and_lines_only(
 		// allocate enough space in case we have a surface with too many points
 
 	if (f_v) {
-		cout << "surface_object::init_equation_points_and_lines_only before enumerate_points_and_lines" << endl;
+		cout << "surface_object::init_equation_points_and_lines_only "
+				"before enumerate_points_and_lines" << endl;
 	}
-	enumerate_points_and_lines(0/*verbose_level - 1*/);
+	enumerate_points_and_lines(verbose_level - 1);
 	if (f_v) {
-		cout << "surface_object::init_equation_points_and_lines_only after enumerate_points_and_lines" << endl;
+		cout << "surface_object::init_equation_points_and_lines_only "
+				"after enumerate_points_and_lines" << endl;
 	}
 
 #if 0
@@ -130,11 +132,13 @@ void surface_object::init_equation(
 	}
 
 	if (f_v) {
-		cout << "surface_object::init_equation before init_equation_points_and_lines_only" << endl;
+		cout << "surface_object::init_equation "
+				"before init_equation_points_and_lines_only" << endl;
 	}
 	init_equation_points_and_lines_only(Surf, eqn, verbose_level);
 	if (f_v) {
-		cout << "surface_object::init_equation after init_equation_points_and_lines_only" << endl;
+		cout << "surface_object::init_equation "
+				"after init_equation_points_and_lines_only" << endl;
 	}
 
 	
@@ -193,7 +197,8 @@ void surface_object::enumerate_points(int verbose_level)
 		cout << "surface_object::enumerate_points before "
 				"Surf->enumerate_points" << endl;
 	}
-	Surf->enumerate_points(surface_object::eqn,
+	Surf->enumerate_points(
+			surface_object::eqn,
 		Points,
 		0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -335,7 +340,7 @@ void surface_object::find_real_lines(
 	}
 	for (i = 0, j = 0; i < The_Lines.size(); i++) {
 		rk = The_Lines[i];
-		Surf->P->Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
+		Surf->P->Subspaces->Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "surface_object::find_real_lines testing line" << endl;
 			Int_matrix_print(M, 2, 4);
@@ -539,9 +544,9 @@ void surface_object::find_double_six_and_rearrange_lines(
 
 	if (f_v) {
 		cout << "surface_object::find_double_six_and_rearrange_lines "
-				"before Surf->create_double_six_from_five_lines_with_a_common_transversal" << endl;
+				"before Surf->five_plus_one_to_double_six" << endl;
 	}
-	if (!Surf->create_double_six_from_five_lines_with_a_common_transversal(
+	if (!Surf->five_plus_one_to_double_six(
 		S3, double_six, verbose_level)) {
 		cout << "surface_object::find_double_six_and_rearrange_lines "
 				"The starter configuration is bad, there "
@@ -550,7 +555,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 	}
 	if (f_v) {
 		cout << "surface_object::find_double_six_and_rearrange_lines after "
-				"Surf->create_double_six_from_five_lines_with_a_common_transversal" << endl;
+				"Surf->five_plus_one_to_double_six" << endl;
 	}
 
 
@@ -2028,11 +2033,11 @@ void surface_object::export_something(std::string &what,
 		long int *Pts_off;
 		int nb_pts_off;
 
-		nb_pts_off = Surf->P->N_points - nb_pts;
+		nb_pts_off = Surf->P->Subspaces->N_points - nb_pts;
 
-		Pts_off = NEW_lint(Surf->P->N_points);
+		Pts_off = NEW_lint(Surf->P->Subspaces->N_points);
 
-		Lint_vec_complement_to(Pts, Pts_off, Surf->P->N_points, nb_pts);
+		Lint_vec_complement_to(Pts, Pts_off, Surf->P->Subspaces->N_points, nb_pts);
 
 		//Fio.write_set_to_file(fname, Pts_off, nb_pts_off, 0 /*verbose_level*/);
 		Fio.lint_matrix_write_csv(fname, Pts_off, 1, nb_pts_off);
@@ -2111,6 +2116,23 @@ void surface_object::export_something(std::string &what,
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
+
+	else if (ST.stringcmp(what, "lines_in_Pluecker_coordinates") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_lines_Pluecker.csv");
+
+		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
+		Fio.int_matrix_write_csv(fname, SOP->Pluecker_coordinates, nb_lines, 6);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
 	else if (ST.stringcmp(what, "axes") == 0) {
 
 		fname.assign(fname_base);
@@ -2148,11 +2170,27 @@ void surface_object::export_something(std::string &what,
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
+	else if (ST.stringcmp(what, "roots") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_roots.csv");
+
+		if (nb_lines != 27) {
+			cout << "surface must have 27 lines to be able to export roots" << endl;
+			exit(1);
+		}
+		Fio.int_matrix_write_csv(fname, SOP->SmoothProperties->Roots, 72, 6);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 
 
 	else {
-		cout << "surface_object::export_something unrecognized export target: " << what << endl;
+		cout << "surface_object::export_something "
+				"unrecognized export target: " << what << endl;
 	}
 
 	if (f_v) {
@@ -2160,6 +2198,8 @@ void surface_object::export_something(std::string &what,
 	}
 
 }
+
+
 
 void surface_object::latex_double_six(std::ostream &ost, int idx)
 {

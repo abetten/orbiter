@@ -22,26 +22,36 @@ namespace spreads {
 recoordinatize::recoordinatize()
 {
 
+	Three_skew_subspaces = NULL;
+
+#if 0
 	SD = NULL;
 
 	n = k = q = 0;
 
 	Grass = NULL;
 	F = NULL;
+	nCkq = 0;
+#endif
+
 	A = NULL;
 	A2 = NULL;
 	f_projective = FALSE;
 	f_semilinear = FALSE;
-	nCkq = 0;
 	check_function_incremental = NULL;
 	check_function_incremental_data = NULL;
 
 	//fname_live_points
 
+#if 0
 	f_data_is_allocated = FALSE;
 	M = M1 = AA = AAv = TT = TTv = B = C = N = Elt = NULL;
+#endif
 
-	starter_j1 = starter_j2 = starter_j3 = 0;
+	transform = NULL;
+	Elt = NULL;
+
+	//starter_j1 = starter_j2 = starter_j3 = 0;
 	A0 = NULL;
 	A0_linear = NULL;
 	gens2 = NULL;
@@ -54,16 +64,10 @@ recoordinatize::recoordinatize()
 
 recoordinatize::~recoordinatize()
 {
-	if (f_data_is_allocated) {
-		FREE_int(M);
-		FREE_int(M1);
-		FREE_int(AA);
-		FREE_int(AAv);
-		FREE_int(TT);
-		FREE_int(TTv);
-		FREE_int(B);
-		FREE_int(C);
-		FREE_int(N);
+	if (transform) {
+		FREE_int(transform);
+	}
+	if (Elt) {
 		FREE_int(Elt);
 	}
 	if (A0) {
@@ -79,7 +83,7 @@ recoordinatize::~recoordinatize()
 }
 
 void recoordinatize::init(
-		geometry::spread_domain *SD,
+		geometry::three_skew_subspaces *Three_skew_subspaces,
 		actions::action *A, actions::action *A2,
 	int f_projective, int f_semilinear, 
 	int (*check_function_incremental)(
@@ -89,12 +93,14 @@ void recoordinatize::init(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "recoordinatize::init" << endl;
 	}
 
+	recoordinatize::Three_skew_subspaces = Three_skew_subspaces;
+
+#if 0
 	recoordinatize::SD = SD;
 
 	recoordinatize::Grass = SD->Grass;
@@ -102,7 +108,7 @@ void recoordinatize::init(
 	recoordinatize::q = F->q;
 	recoordinatize::k = SD->k;
 	recoordinatize::n = SD->n;
-
+#endif
 
 	recoordinatize::A = A;
 	recoordinatize::A2 = A2;
@@ -114,7 +120,6 @@ void recoordinatize::init(
 	recoordinatize::check_function_incremental_data
 		= check_function_incremental_data;
 	//recoordinatize::fname_live_points.assign(fname_live_points);
-	nCkq = Combi.generalized_binomial(n, k, q);
 
 #if 0
 	if (f_v) {
@@ -123,6 +128,7 @@ void recoordinatize::init(
 #endif
 	
 
+#if 0
 	M = NEW_int((3 * k) * n);
 	M1 = NEW_int((3 * k) * n);
 	AA = NEW_int(n * n);
@@ -130,10 +136,13 @@ void recoordinatize::init(
 	TT = NEW_int(k * k);
 	TTv = NEW_int(k * k);
 	B = NEW_int(n * n);
-	C = NEW_int(n * n + 1);
 	N = NEW_int((3 * k) * n);
+#endif
+
+	transform = NEW_int(Three_skew_subspaces->n * Three_skew_subspaces->n + 1);
+
 	Elt = NEW_int(A->elt_size_in_int);
-	f_data_is_allocated = TRUE;
+	//f_data_is_allocated = TRUE;
 	if (f_v) {
 		cout << "recoordinatize::init done" << endl;
 	}
@@ -147,13 +156,25 @@ void recoordinatize::do_recoordinatize(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, j;
-	long int j1, j2, j3;
+	//int i, j;
+	//long int j1, j2, j3;
 
 	if (f_v) {
 		cout << "recoordinatize::do_recoordinatize "
 				<< i1 << "," << i2 << "," << i3 << endl;
 	}
+
+	if (f_v) {
+		cout << "recoordinatize::do_recoordinatize "
+				"before Three_skew_subspaces->do_recoordinatize" << endl;
+	}
+	Three_skew_subspaces->do_recoordinatize(i1, i2, i3, transform, verbose_level - 2);
+	if (f_v) {
+		cout << "recoordinatize::do_recoordinatize "
+				"after Three_skew_subspaces->do_recoordinatize" << endl;
+	}
+
+#if 0
 	Grass->unrank_lint_here(M, i1, 0 /*verbose_level - 4*/);
 	Grass->unrank_lint_here(M + k * n, i2, 0 /*verbose_level - 4*/);
 	Grass->unrank_lint_here(M + 2 * k * n, i3, 0 /*verbose_level - 4*/);
@@ -240,15 +261,17 @@ void recoordinatize::do_recoordinatize(
 		cout << "j1=" << j1 << " j2=" << j2 << " j3=" << j3 << endl;
 	}
 	
+#endif
+
 	// put a zero, just in case we are in a semilinear group:
 
-	C[n * n] = 0;
+	transform[Three_skew_subspaces->n * Three_skew_subspaces->n] = 0;
 
-	A->make_element(Elt, C, 0);
+	A->Group_element->make_element(Elt, transform, 0);
 	if (f_vv) {
 		cout << "recoordinatize::do_recoordinatize "
 				"transporter:" << endl;
-		A->element_print(Elt, cout);
+		A->Group_element->element_print(Elt, cout);
 	}
 	if (f_v) {
 		cout << "recoordinatize::do_recoordinatize done" << endl;
@@ -270,23 +293,14 @@ void recoordinatize::compute_starter(
 
 	
 
-	if (f_v) {
-		cout << "recoordinatize::compute_starter "
-				"before make_first_three" << endl;
-	}
-	make_first_three(starter_j1, starter_j2, starter_j3, verbose_level - 1);
-	if (f_v) {
-		cout << "recoordinatize::compute_starter "
-				"after make_first_three" << endl;
-	}
 
 	// initialize S with the vector (j1,j2,j3):
 	size = 3;
 	S = NEW_lint(size);
 
-	S[0] = starter_j1;
-	S[1] = starter_j2;
-	S[2] = starter_j3;
+	S[0] = Three_skew_subspaces->starter_j1;
+	S[1] = Three_skew_subspaces->starter_j2;
+	S[2] = Three_skew_subspaces->starter_j3;
 
 
 	if (f_v) {
@@ -323,6 +337,8 @@ void recoordinatize::compute_starter(
 void recoordinatize::stabilizer_of_first_three(
 		groups::strong_generators *&Strong_gens,
 		int verbose_level)
+// creates two action objects, using init_projective_group
+// then calls actions::action_global::make_generators_stabilizer_of_three_components
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
@@ -345,11 +361,13 @@ void recoordinatize::stabilizer_of_first_three(
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"before A0->init_projective_group" << endl;
 		cout << "recoordinatize::stabilizer_of_first_three "
-				"k=" << k << endl;
+				"k=" << Three_skew_subspaces->k << endl;
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"f_semilinear=" << f_semilinear << endl;
 	}
-	A0->Known_groups->init_projective_group(k, F,
+	A0->Known_groups->init_projective_group(
+			Three_skew_subspaces->k,
+			Three_skew_subspaces->F,
 		f_semilinear, 
 		TRUE /* f_basis */,
 		TRUE /* f_init_sims */,
@@ -365,7 +383,9 @@ void recoordinatize::stabilizer_of_first_three(
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"target_go=" << target_go
-			<< " = order of PGGL(" << k << "," << q << ")" << endl;
+			<< " = order of PGGL("
+			<< Three_skew_subspaces->k << ","
+			<< Three_skew_subspaces->q << ")" << endl;
 		cout << "action A0 created: ";
 		A0->print_info();
 	}
@@ -374,7 +394,9 @@ void recoordinatize::stabilizer_of_first_three(
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"before A0_linear->Known_groups->init_projective_group" << endl;
 	}
-	A0_linear->Known_groups->init_projective_group(k, F,
+	A0_linear->Known_groups->init_projective_group(
+			Three_skew_subspaces->k,
+			Three_skew_subspaces->F,
 		FALSE /*f_semilinear*/, 
 		TRUE /*f_basis*/, TRUE /* f_init_sims */,
 		nice_gens,
@@ -388,7 +410,9 @@ void recoordinatize::stabilizer_of_first_three(
 	A0_linear->group_order(go_linear);
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
-				"order of PGL(" << k << "," << q << ") is "
+				"order of PGL("
+				<< Three_skew_subspaces->k << ","
+				<< Three_skew_subspaces->q << ") is "
 			<< go_linear << endl;
 		cout << "action A0_linear created: ";
 		A0_linear->print_info();
@@ -420,7 +444,9 @@ void recoordinatize::stabilizer_of_first_three(
 	AG.make_generators_stabilizer_of_three_components(
 		A /* A_PGL_n_q */,
 		A0 /* A_PGL_k_q */,
-		k, gens2, verbose_level - 1);
+		Three_skew_subspaces->k,
+		gens2,
+		verbose_level - 1);
 
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
@@ -631,7 +657,7 @@ void recoordinatize::compute_live_points_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 	field_theory::finite_field *Fq;
 	long int set[4];
 	int *Elt1;
@@ -654,9 +680,9 @@ void recoordinatize::compute_live_points_low_level(
 	Mtx = A0->G.matrix_grp;
 	Fq = Mtx->GFq;
 
-	set[0] = starter_j1;
-	set[1] = starter_j2;
-	set[2] = starter_j3;
+	set[0] = Three_skew_subspaces->starter_j1;
+	set[1] = Three_skew_subspaces->starter_j2;
+	set[2] = Three_skew_subspaces->starter_j3;
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -664,7 +690,7 @@ void recoordinatize::compute_live_points_low_level(
 
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level "
-				"nCkq = " << nCkq << endl;
+				"nCkq = " << Three_skew_subspaces->nCkq << endl;
 	}
 
 	{
@@ -685,19 +711,21 @@ void recoordinatize::compute_live_points_low_level(
 							<< nb_live_points << " points so far" << endl;
 				}
 			}
-			Fq->PG_element_normalize(Elt1, 1, k * k);
+			Fq->Projective_space_basic->PG_element_normalize(
+					Elt1, 1, Three_skew_subspaces->k * Three_skew_subspaces->k);
+
 			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
 				cout << "recoordinatize::compute_live_points_low_level "
 						"element " << cnt << " = " << h
 						<< ", normalized:" << endl;
-				A0->element_print(Elt1, cout);
+				A0->Group_element->element_print(Elt1, cout);
 			}
 
-			for (z = 1; z < q; z++, cnt++) {
+			for (z = 1; z < Three_skew_subspaces->q; z++, cnt++) {
 
 				// multiply Elt1 by non-zero scalar z to get Elt2:
 
-				for (i = 0; i < k * k; i++) {
+				for (i = 0; i < Three_skew_subspaces->k * Three_skew_subspaces->k; i++) {
 					Elt2[i] = Fq->mult(Elt1[i], z);
 				}
 
@@ -706,28 +734,44 @@ void recoordinatize::compute_live_points_low_level(
 							"element " << cnt << " = " << h
 							<< ", multiplied by z=" << z << ":" << endl;
 					Int_vec_print_integer_matrix_width(cout,
-							Elt2, k, k, k, F->log10_of_q + 1);
+							Elt2,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->F->log10_of_q + 1);
 				}
 
 
 				// make spread element from Elt2:
 
-				Grass->make_spread_element(Grass->M, Elt2, 0/* verbose_level*/);
+				Three_skew_subspaces->Grass->make_spread_element(
+						Three_skew_subspaces->Grass->M,
+						Elt2, 0/* verbose_level*/);
 					// make the k x n matrix M = ( I_k | Elt2 )
 
 
 				if (f_vv && (cnt % cnt_mod) == 0) {
 					cout << "recoordinatize::compute_live_points_low_level "
 							"element " << h << ":" << endl;
-					Int_vec_print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
+					Int_vec_print_integer_matrix_width(
+							cout,
+							Three_skew_subspaces->Grass->M,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->n,
+							Three_skew_subspaces->n, 2);
 				}
 				if (FALSE || ((h & ((1 << 15) - 1)) == 0 && z == 1)) {
 					cout << h << " / " << gos
 							<< " nb_live_points=" << nb_live_points << endl;
-					Int_vec_print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
+					Int_vec_print_integer_matrix_width(
+							cout,
+							Three_skew_subspaces->Grass->M,
+							Three_skew_subspaces->k,
+							Three_skew_subspaces->n,
+							Three_skew_subspaces->n, 2);
 				}
 
-				a = Grass->rank_lint(0);
+				a = Three_skew_subspaces->Grass->rank_lint(0);
 				set[3] = a;
 
 				if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
@@ -811,36 +855,6 @@ int recoordinatize::apply_test(
 		cout << "recoordinatize::apply_test done" << endl;
 	}
 	return ret;
-}
-
-void recoordinatize::make_first_three(
-		long int &j1, long int &j2, long int &j3,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "recoordinatize::make_first_three" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "recoordinatize::make_first_three before Grass->make_special_element_zero" << endl;
-	}
-	j1 = Grass->make_special_element_zero(0 /* verbose_level */);
-	if (f_v) {
-		cout << "recoordinatize::make_first_three after Grass->make_special_element_zero" << endl;
-	}
-	j2 = Grass->make_special_element_infinity(0 /* verbose_level */);
-	j3 = Grass->make_special_element_one(0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "recoordinatize::make_first_three j1=" << j1 << " j2=" << j2 << " j3=" << j3 << endl;
-	}
-
-	if (f_v) {
-		cout << "recoordinatize::make_first_three done" << endl;
-	}
 }
 
 }}}

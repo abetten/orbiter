@@ -137,7 +137,9 @@ void spread_classify::init_basic(
 	}
 
 	if (f_v) {
-		cout << "spread_classify::init_basic searching for projective space object with label " << Descr->projective_space_label << endl;
+		cout << "spread_classify::init_basic searching for "
+				"projective space object with label "
+				<< Descr->projective_space_label << endl;
 	}
 	PA = Get_object_of_projective_space(Descr->projective_space_label);
 
@@ -168,16 +170,18 @@ void spread_classify::init_basic(
 	}
 
 	if (f_v) {
-		cout << "spread_classify::init_basic before SD->init" << endl;
+		cout << "spread_classify::init_basic "
+				"before SD->init_spread_domain" << endl;
 	}
 
-	SD->init(
+	SD->init_spread_domain(
 			PA->F,
 			n, Descr->k,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "spread_classify::init_basic after SD->init" << endl;
+		cout << "spread_classify::init_basic "
+				"after SD->init_spread_domain" << endl;
 	}
 
 
@@ -231,11 +235,13 @@ void spread_classify::init_basic(
 
 
 	if (f_v) {
-		cout << "spread_classify::init_basic before init" << endl;
+		cout << "spread_classify::init_basic "
+				"before init" << endl;
 	}
 	init(SD, PA, verbose_level);
 	if (f_v) {
-		cout << "spread_classify::init_basic after init" << endl;
+		cout << "spread_classify::init_basic "
+				"after init" << endl;
 	}
 
 
@@ -317,7 +323,7 @@ void spread_classify::init(
 
 
 
-	A2 = NEW_OBJECT(actions::action);
+	//A2 = NEW_OBJECT(actions::action);
 	AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
 #if 0
@@ -353,7 +359,7 @@ void spread_classify::init(
 				"A2->induced_action_on_grassmannian" <<  endl;
 	}
 
-	A2->induced_action_on_grassmannian(A, AG, 
+	A2 = A->Induced_action->induced_action_on_grassmannian_preloaded(AG,
 		FALSE /*f_induce_action*/, NULL /*sims *old_G */,
 		0 /*verbose_level - 2*/);
 	
@@ -387,7 +393,8 @@ void spread_classify::init(
 		A->Strong_gens->gens->print(cout, f_print_as_permutation, 
 			f_offset, offset, 
 			f_do_it_anyway_even_for_big_degree, 
-			f_print_cycles_of_length_one);
+			f_print_cycles_of_length_one,
+			0 /* verbose_level */);
 	}
 
 
@@ -437,8 +444,17 @@ void spread_classify::init(
 		//snprintf(str, sizeof(str), "live_points_q%d", q);
 		//fname_live_points.assign(str);
 
+
+		geometry::three_skew_subspaces *Three_skew_subspaces;
+
+		Three_skew_subspaces = NEW_OBJECT(geometry::three_skew_subspaces);
+
+		Three_skew_subspaces->init(
+				SD->Grass, SD->F, SD->k, SD->n, verbose_level);
+
+
 		R = NEW_OBJECT(recoordinatize);
-		R->init(SD,  // SD->n, SD->k, SD->F, SD->Grass,
+		R->init(Three_skew_subspaces, // SD,  // SD->n, SD->k, SD->F, SD->Grass,
 				A, A2,
 				TRUE /*f_projective*/, Mtx->f_semilinear,
 				callback_incremental_check_function, (void *) this,
@@ -584,7 +600,8 @@ void spread_classify::init2(int verbose_level)
 			cout << "spread_classify::init2 "
 					"before gen->initialize" << endl;
 		}
-		gen->initialize_and_allocate_root_node(Control, Poset,
+		gen->initialize_and_allocate_root_node(
+				Control, Poset,
 			SD->spread_size,
 			verbose_level - 2);
 		if (f_v) {
@@ -628,21 +645,24 @@ void spread_classify::classify_partial_spreads(int verbose_level)
 	}
 
 	if (gen->get_depth() < starter_size) {
-		cout << "spread_classify::classify_partial_spreads gen->depth < starter_size" << endl;
+		cout << "spread_classify::classify_partial_spreads "
+				"gen->depth < starter_size" << endl;
 		exit(1);
 	}
 
 	gen->get_depth() = starter_size;
 
 	if (f_v) {
-		cout << "spread_classify::classify_partial_spreads Control->max_depth=" << gen->get_control()->depth << endl;
+		cout << "spread_classify::classify_partial_spreads "
+				"Control->max_depth=" << gen->get_control()->depth << endl;
 	}
 
 
 	schreier_depth = starter_size; // gen->get_control()->depth;
 	
 	if (f_v) {
-		cout << "spread_classify::classify_partial_spreads calling generator_main" << endl;
+		cout << "spread_classify::classify_partial_spreads "
+				"calling generator_main" << endl;
 	}
 
 	t0 = Os.os_ticks();
@@ -655,7 +675,8 @@ void spread_classify::classify_partial_spreads(int verbose_level)
 	int length;
 	
 	if (f_v) {
-		cout << "spread_classify::classify_partial_spreads done with generator_main" << endl;
+		cout << "spread_classify::classify_partial_spreads "
+				"done with generator_main" << endl;
 	}
 	length = gen->nb_orbits_at_level(gen->get_control()->depth);
 	if (f_v) {
@@ -716,7 +737,8 @@ void spread_classify::lifting(
 
 	R = NEW_OBJECT(data_structures_groups::orbit_rep);
 	if (f_v) {
-		cout << "spread_classify::lifting before R->init_from_file" << endl;
+		cout << "spread_classify::lifting "
+				"before R->init_from_file" << endl;
 	}
 
 	R->init_from_file(A, prefix,
@@ -725,7 +747,8 @@ void spread_classify::lifting(
 		this /* early_test_func_callback_data */,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "spread_classify::lifting after R->init_from_file" << endl;
+		cout << "spread_classify::lifting "
+				"after R->init_from_file" << endl;
 	}
 	nb = target_size - starter_size;
 
@@ -829,7 +852,7 @@ void spread_classify::lifting(
 	if (f_v) {
 		cout << "spread_classify::lifting before "
 				"setup_lifting" << endl;
-		}
+	}
 	setup_lifting(
 			R,
 			Descr->output_prefix,
@@ -1232,13 +1255,13 @@ static int starter_canonize_callback(long int *Set, int len,
 		cout << "starter_canonize_callback" << endl;
 	}
 	Spread->R->do_recoordinatize(Set[0], Set[1], Set[2], verbose_level - 2);
-	Spread->A->element_move(Spread->R->Elt, Elt, FALSE);
+	Spread->A->Group_element->element_move(Spread->R->Elt, Elt, FALSE);
 	if (f_v) {
 		cout << "starter_canonize_callback done" << endl;
 	}
 	if (f_vv) {
 		cout << "transporter:" << endl;
-		Spread->A->element_print(Elt, cout);
+		Spread->A->Group_element->element_print(Elt, cout);
 	}
 	return TRUE;
 }

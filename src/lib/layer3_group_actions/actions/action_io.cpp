@@ -33,12 +33,23 @@ void action::report(
 
 	ost << "\\section*{The Action}" << endl;
 
+
+	if (label_tex.length() == 0) {
+		cout << "action::report the group has no tex-name" << endl;
+		exit(1);
+	}
 	ost << "Group action $" << label_tex
 			<< "$ of degree " << degree << "\\\\" << endl;
 
+	if (f_v) {
+		cout << "action::report before report_what_we_act_on" << endl;
+	}
 	report_what_we_act_on(ost,
 			LG_Draw_options,
 			verbose_level);
+	if (f_v) {
+		cout << "action::report after report_what_we_act_on" << endl;
+	}
 
 	if (is_matrix_group()) {
 		ost << "The group is a matrix group.\\\\" << endl;
@@ -88,7 +99,7 @@ void action::report(
 
 	if (f_sims) {
 		if (f_v) {
-			cout << "action::report printing group order" << endl;
+			cout << "action::report we have sims, printing group order" << endl;
 		}
 		ring_theory::longinteger_object go;
 
@@ -127,28 +138,64 @@ void action::report(
 		if (f_v) {
 			cout << "action::report before S->report" << endl;
 		}
-		S->report(ost, label, LG_Draw_options, 0 /*verbose_level - 2*/);
+		S->report(ost, label, LG_Draw_options, verbose_level - 2);
 		if (f_v) {
 			cout << "action::report after S->report" << endl;
 		}
 	}
 	if (Stabilizer_chain) {
+		if (f_v) {
+			cout << "action::report we have Stabilizer_chain" << endl;
+		}
 		if (f_strong_gens) {
+
+			if (f_v) {
+				cout << "action::report we have f_strong_gens" << endl;
+			}
 
 			ost << "GAP export: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;
+			if (f_v) {
+				cout << "action::report before SG->print_generators_gap" << endl;
+			}
 			SG->print_generators_gap(ost);
+			if (f_v) {
+				cout << "action::report after SG->print_generators_gap" << endl;
+			}
+			ost << "\\end{verbatim}" << endl;
+
+			ost << "Fining export: \\\\" << endl;
+			ost << "\\begin{verbatim}" << endl;
+			if (f_v) {
+				cout << "action::report before SG->export_fining" << endl;
+			}
+			SG->export_fining(this, ost, verbose_level);
+			if (f_v) {
+				cout << "action::report after SG->export_fining" << endl;
+			}
 			ost << "\\end{verbatim}" << endl;
 
 
 			ost << "Magma export: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;
+			if (f_v) {
+				cout << "action::report before SG->export_magma" << endl;
+			}
 			SG->export_magma(this, ost, verbose_level);
+			if (f_v) {
+				cout << "action::report after SG->export_magma" << endl;
+			}
 			ost << "\\end{verbatim}" << endl;
 
 			ost << "Compact form: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;
+			if (f_v) {
+				cout << "action::report before SG->print_generators_compact" << endl;
+			}
 			SG->print_generators_compact(ost);
+			if (f_v) {
+				cout << "action::report after SG->print_generators_compact" << endl;
+			}
 			ost << "\\end{verbatim}" << endl;
 
 		}
@@ -184,7 +231,7 @@ void action::report_what_we_act_on(
 	if (is_matrix_group()) {
 
 		field_theory::finite_field *F;
-		groups::matrix_group *M;
+		algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		F = M->GFq;
@@ -234,11 +281,32 @@ void action::report_what_we_act_on(
 
 		}
 
-		ost << "Group Action $" << label_tex << "$ on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
+		if (M->f_projective) {
+
+			ost << "Group Action $" << label_tex
+					<< "$ on Projective Space ${\\rm PG}"
+							"(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
+
+		}
+		else if (M->f_affine) {
+
+			ost << "Group Action $" << label_tex
+					<< "$ on Affine Space ${\\rm AG}"
+							"(" << M->n << ", " << F->q << ")$\\\\" << endl;
+
+		}
+		else if (M->f_general_linear) {
+
+			ost << "Group Action $" << label_tex
+					<< "$ on Affine Space ${\\rm AG}"
+							"(" << M->n << ", " << F->q << ")$\\\\" << endl;
+
+		}
+
 
 		ost << "The finite field ${\\mathbb F}_{" << F->q << "}$:\\\\" << endl;
 
-		F->cheat_sheet(ost, verbose_level);
+		F->Io->cheat_sheet(ost, verbose_level);
 
 		ost << endl << "\\bigskip" << endl << endl;
 
@@ -287,7 +355,8 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 	}
 
 	if (f_v) {
-		cout << "action::read_orbit_rep_and_candidates_from_files_and_process before read_orbit_rep_and_candidates_from_files" << endl;
+		cout << "action::read_orbit_rep_and_candidates_from_files_and_process "
+				"before read_orbit_rep_and_candidates_from_files" << endl;
 	}
 	read_orbit_rep_and_candidates_from_files(prefix,
 		level, orbit_at_level, level_of_candidates_file,
@@ -300,7 +369,8 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 		nb_cases,
 		verbose_level);
 	if (f_v) {
-		cout << "action::read_orbit_rep_and_candidates_from_files_and_process after read_orbit_rep_and_candidates_from_files" << endl;
+		cout << "action::read_orbit_rep_and_candidates_from_files_and_process "
+				"after read_orbit_rep_and_candidates_from_files" << endl;
 	}
 
 	for (h = level_of_candidates_file; h < level; h++) {
@@ -376,7 +446,8 @@ void action::read_orbit_rep_and_candidates_from_files(
 		fname1.append(str);
 
 		if (f_v) {
-			cout << "action::read_orbit_rep_and_candidates_from_files before read_set_and_stabilizer fname1=" << fname1 << endl;
+			cout << "action::read_orbit_rep_and_candidates_from_files "
+					"before read_set_and_stabilizer fname1=" << fname1 << endl;
 		}
 		read_set_and_stabilizer(fname1,
 			orbit_at_level, starter, starter_sz, Stab,
@@ -384,7 +455,8 @@ void action::read_orbit_rep_and_candidates_from_files(
 			nb_cases,
 			verbose_level);
 		if (f_v) {
-			cout << "action::read_orbit_rep_and_candidates_from_files after read_set_and_stabilizer" << endl;
+			cout << "action::read_orbit_rep_and_candidates_from_files "
+					"after read_set_and_stabilizer" << endl;
 		}
 
 
@@ -472,6 +544,7 @@ void action::read_representatives(
 		std::string &fname,
 		int *&Reps, int &nb_reps, int &size, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int f_casenumbers = FALSE;
 	int nb_cases;
 	int *Set_sizes;
@@ -482,8 +555,10 @@ void action::read_representatives(
 	int i, j;
 	orbiter_kernel_system::file_io Fio;
 
-	cout << "action::read_file_and_print_representatives "
+	if (f_v) {
+		cout << "action::read_representatives "
 			"reading file " << fname << endl;
+	}
 
 	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers,
@@ -503,12 +578,16 @@ void action::read_representatives(
 		Set_sizes, Sets,
 		Ago_ascii, Aut_ascii,
 		Casenumbers);
+	if (f_v) {
+		cout << "action::read_representatives done" << endl;
+	}
 }
 
 void action::read_representatives_and_strong_generators(
 	std::string &fname, int *&Reps,
 	char **&Aut_ascii, int &nb_reps, int &size, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int f_casenumbers = FALSE;
 	int nb_cases;
 	int *Set_sizes;
@@ -520,27 +599,44 @@ void action::read_representatives_and_strong_generators(
 	orbiter_kernel_system::file_io Fio;
 
 
-	cout << "action::read_file_and_print_representatives "
+	if (f_v) {
+		cout << "action::read_representatives_and_strong_generators "
 			"reading file " << fname << endl;
+	}
 
+	if (f_v) {
+		cout << "action::read_representatives_and_strong_generators "
+			"before Fio.read_and_parse_data_file_fancy" << endl;
+	}
 	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers,
 		nb_cases,
 		Set_sizes, Sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
 		0/*verbose_level*/);
+	if (f_v) {
+		cout << "action::read_representatives_and_strong_generators "
+			"after Fio.read_and_parse_data_file_fancy" << endl;
+	}
 	nb_reps = nb_cases;
+	if (f_v) {
+		cout << "action::read_representatives_and_strong_generators "
+			"nb_reps = " << nb_reps << endl;
+	}
 	size = Set_sizes[0];
 	Reps = NEW_int(nb_cases * size);
 	for (i = 0; i < nb_cases; i++) {
 		for (j = 0; j < size; j++) {
 			Reps[i * size + j] = Sets[i][j];
-			}
 		}
+	}
 	Fio.free_data_fancy(nb_cases,
 		Set_sizes, Sets,
 		Ago_ascii, NULL /*Aut_ascii*/,
 		Casenumbers);
+	if (f_v) {
+		cout << "action::read_representatives_and_strong_generators done" << endl;
+	}
 }
 
 void action::read_file_and_print_representatives(
@@ -570,8 +666,9 @@ void action::read_file_and_print_representatives(
 		Set_sizes, Sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
 		0/*verbose_level*/);
+
 	for (i = 0; i < nb_cases; i++) {
-		cout << "Orbit " << i << " representative ";
+		cout << "Orbit " << i << " / " << nb_cases << " representative = ";
 		Lint_vec_print(cout, Sets[i], Set_sizes[i]);
 		cout << endl;
 
@@ -603,13 +700,13 @@ void action::read_file_and_print_representatives(
 		if (f_print_stabilizer_generators) {
 			cout << "The stabilizer is generated by:" << endl;
 			gens->print(cout);
-			}
+		}
 
 		FREE_OBJECT(G);
 		FREE_OBJECT(gens);
 		FREE_int(tl);
 
-		}
+	}
 	Fio.free_data_fancy(nb_cases,
 		Set_sizes, Sets,
 		Ago_ascii, Aut_ascii,
@@ -642,7 +739,7 @@ void action::read_set_and_stabilizer(
 		cout << "action::read_set_and_stabilizer "
 				"reading file " << fname
 				<< " no=" << no << endl;
-		}
+	}
 
 	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers,
@@ -656,13 +753,13 @@ void action::read_set_and_stabilizer(
 				"after read_and_parse_data_file_fancy" << endl;
 		cout << "Aut_ascii[no]=" << Aut_ascii[no] << endl;
 		cout << "Set_sizes[no]=" << Set_sizes[no] << endl;
-		}
+	}
 
 	set_sz = Set_sizes[no];
 	set = NEW_lint(set_sz);
 	for (i = 0; i < set_sz; i ++) {
 		set[i] = Sets[no][i];
-		}
+	}
 
 
 	G = NEW_OBJECT(data_structures_groups::group_container);
@@ -670,7 +767,7 @@ void action::read_set_and_stabilizer(
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
 				"before G->init_ascii_coding_to_sims" << endl;
-		}
+	}
 
 	string s;
 
@@ -679,7 +776,7 @@ void action::read_set_and_stabilizer(
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
 				"after G->init_ascii_coding_to_sims" << endl;
-		}
+	}
 
 	stab = G->S;
 	G->S = NULL;
@@ -697,20 +794,20 @@ void action::read_set_and_stabilizer(
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
 				"Group order=" << go << endl;
-		}
+	}
 
 	FREE_OBJECT(G);
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
 				"after FREE_OBJECT  G" << endl;
-		}
+	}
 	Fio.free_data_fancy(nb_cases,
 		Set_sizes, Sets,
 		Ago_ascii, Aut_ascii,
 		Casenumbers);
 	if (f_v) {
 		cout << "action::read_set_and_stabilizer done" << endl;
-		}
+	}
 
 }
 
@@ -729,7 +826,7 @@ void action::list_elements_as_permutations_vertically(
 	for (i = 0; i < degree; i++) {
 		ost << setw(3) << i;
 		for (j = 0; j < len; j++) {
-			a = element_image_of(i,
+			a = Group_element->element_image_of(i,
 					gens->ith(j), 0 /* verbose_level */);
 			ost << " & " << setw(3) << a;
 		}
@@ -892,7 +989,7 @@ void action::latex_all_points(std::ostream &ost)
 	}
 	ost << "\\noindent" << endl;
 	for (i = 0; i < degree; i++) {
-		unrank_point(i, v);
+		Group_element->unrank_point(i, v);
 		ost << i << " = ";
 		Int_vec_print(ost, v, low_level_point_size);
 		ost << "\\\\" << endl;
@@ -962,7 +1059,7 @@ void action::latex_point_set(
 		}
 		ost << "\\noindent" << endl;
 		for (i = 0; i < sz; i++) {
-			unrank_point(set[i], v);
+			Group_element->unrank_point(set[i], v);
 			ost << i << " : ";
 			ost << set[i] << " = ";
 			Int_vec_print(ost, v, low_level_point_size);
@@ -1015,7 +1112,7 @@ void action::print_vector(
 	cout << "vector of " << l << " group elements:" << endl;
 	for (i = 0; i < l; i++) {
 		cout << i << " : " << endl;
-		element_print_quick(v.ith(i), cout);
+		Group_element->element_print_quick(v.ith(i), cout);
 		cout << endl;
 		}
 }
@@ -1029,7 +1126,7 @@ void action::print_vector_as_permutation(
 	cout << "vector of " << l << " group elements:" << endl;
 	for (i = 0; i < l; i++) {
 		cout << i << " : ";
-		element_print_as_permutation(v.ith(i), cout);
+		Group_element->element_print_as_permutation(v.ith(i), cout);
 		cout << endl;
 		}
 }
@@ -1065,7 +1162,7 @@ void action::write_set_of_elements_latex_file(
 
 		for (i = 0; i < nb_elts; i++) {
 			ost << "$$" << endl;
-			element_print_latex(Elt + i * elt_size_in_int, ost);
+			Group_element->element_print_latex(Elt + i * elt_size_in_int, ost);
 			ost << "$$" << endl;
 		}
 
@@ -1110,7 +1207,7 @@ void action::export_to_orbiter(
 				if (FALSE) {
 					cout << "action::export_to_orbiter computing image of " << j << " under generator " << i << endl;
 				}
-				a = element_image_of(j, SG->gens->ith(i), 0 /* verbose_level*/);
+				a = Group_element->element_image_of(j, SG->gens->ith(i), 0 /* verbose_level*/);
 				fp << a;
 				if (j < degree - 1 || i < SG->gens->len - 1) {
 					fp << ",";
@@ -1184,11 +1281,11 @@ void action::print_one_element_tex(
 		int *Elt, int f_with_permutation)
 {
 	ost << "$$" << endl;
-	element_print_latex(Elt, ost);
+	Group_element->element_print_latex(Elt, ost);
 	ost << "$$" << endl;
 
 	if (f_with_permutation) {
-		element_print_as_permutation(Elt, ost);
+		Group_element->element_print_as_permutation(Elt, ost);
 		ost << "\\\\" << endl;
 
 		int *perm;
@@ -1196,7 +1293,7 @@ void action::print_one_element_tex(
 
 		perm = NEW_int(degree);
 
-		element_as_permutation(
+		Group_element->element_as_permutation(
 				Elt,
 				perm, 0 /* verbose_level */);
 

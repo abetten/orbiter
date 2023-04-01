@@ -167,13 +167,13 @@ long int action_by_restriction::compute_image(
 		}
 	if (f_vv) {
 		cout << "under the group element " << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 		cout << endl;
 		}
 	if (f_vv) {
 		cout << "points[i]=" << points[i] << endl;
 		}
-	b = A->element_image_of(points[i], Elt, verbose_level - 2);
+	b = A->Group_element->element_image_of(points[i], Elt, verbose_level - 2);
 	if (f_vv) {
 		cout << "image of " << points[i] << " is " << b << endl;
 		}
@@ -184,7 +184,7 @@ long int action_by_restriction::compute_image(
 		A->print_info();
 
 		cout << "the element " << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 		cout << endl;
 		//cout << "as permutation:" << endl;
 		//A->print_as_permutation(cout, Elt);
@@ -205,7 +205,7 @@ long int action_by_restriction::compute_image(
 
 		cout << "We compute the image point again, "
 				"this time with more output" << endl;
-		b = A->element_image_of(points[i],
+		b = A->Group_element->element_image_of(points[i],
 				Elt, 10 /* verbose_level - 2*/);
 		cout << "action_by_restriction::compute_image fatal: "
 				"image point " << b << " not found" << endl;

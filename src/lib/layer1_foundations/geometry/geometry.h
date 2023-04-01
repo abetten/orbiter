@@ -579,7 +579,8 @@ public:
 
 	geometric_object_create();
 	~geometric_object_create();
-	void init(geometric_object_description *Descr,
+	void init(
+			geometric_object_description *Descr,
 			projective_space *P, int verbose_level);
 	void create_elliptic_quadric_ovoid(
 			projective_space *P,
@@ -794,7 +795,8 @@ public:
 			ring_theory::longinteger_object &a);
 	int PG_element_modified_is_in_subspace(
 			int n, int m, int *v);
-	int test_if_arc(field_theory::finite_field *Fq,
+	int test_if_arc(
+			field_theory::finite_field *Fq,
 			int *pt_coords, int *set,
 			int set_sz, int k, int verbose_level);
 	void create_Buekenhout_Metz(
@@ -853,16 +855,20 @@ public:
 			int n,
 			std::string &text,
 			int verbose_level);
-	void do_intersection_of_two_lines(field_theory::finite_field *F,
+	void do_intersection_of_two_lines(
+			field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int f_normalize_from_the_left,
+			int f_normalize_from_the_right,
 			int verbose_level);
-	void do_transversal(field_theory::finite_field *F,
+	void do_transversal(
+			field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
 			std::string &point,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int f_normalize_from_the_left,
+			int f_normalize_from_the_right,
 			int verbose_level);
 	void do_cheat_sheet_hermitian(
 			field_theory::finite_field *F,
@@ -882,12 +888,17 @@ public:
 			long int *lines, int nb_lines,
 			int verbose_level);
 	// creates incidence_structure and data_structures::partitionstack objects
-	void create_BLT_point(field_theory::finite_field *F,
+	void create_BLT_point(
+			field_theory::finite_field *F,
 			int *v5, int a, int b, int c, int verbose_level);
 		// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
 		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
 		// b^2/4 + (-c)*a + -(b^2/4-ac)
 		// = b^2/4 -ac -b^2/4 + ac = 0
+	void create_BLT_point_from_flock(
+			field_theory::finite_field *F,
+			int *v5, int a, int b, int c, int verbose_level);
+	// creates the point (a/2,-a^2/4-bc,1,c,b)
 	int nonconical_six_arc_get_nb_Eckardt_points(
 			projective_space *P2,
 			long int *Arc6, int verbose_level);
@@ -1089,21 +1100,27 @@ public:
 	void init(int n, int k,
 			field_theory::finite_field *F, int verbose_level);
 	long int nb_of_subspaces(int verbose_level);
-	void print_single_generator_matrix_tex(std::ostream &ost, long int a);
+	void print_single_generator_matrix_tex(
+			std::ostream &ost, long int a);
 	void print_single_generator_matrix_tex_numerical(
 			std::ostream &ost, long int a);
 	void print_set(long int *v, int len);
-	void print_set_tex(std::ostream &ost,
+	void print_set_tex(
+			std::ostream &ost,
 			long int *v, int len, int verbose_level);
 	void print_set_tex_with_perp(
 			std::ostream &ost, long int *v, int len);
 	int nb_points_covered(int verbose_level);
-	void points_covered(long int *the_points, int verbose_level);
-	void unrank_lint_here(int *Mtx, long int rk, int verbose_level);
-	long int rank_lint_here(int *Mtx, int verbose_level);
+	void points_covered(
+			long int *the_points, int verbose_level);
+	void unrank_lint_here(
+			int *Mtx, long int rk, int verbose_level);
+	long int rank_lint_here(
+			int *Mtx, int verbose_level);
 	void unrank_embedded_subspace_lint(
 			long int rk, int verbose_level);
-	long int rank_embedded_subspace_lint(int verbose_level);
+	long int rank_embedded_subspace_lint(
+			int verbose_level);
 	void unrank_embedded_subspace_lint_here(
 			int *Basis, long int rk, int verbose_level);
 	void unrank_lint(long int rk, int verbose_level);
@@ -1121,22 +1138,30 @@ public:
 	void print();
 	int dimension_of_join(
 			long int rk1, long int rk2, int verbose_level);
-	void unrank_lint_here_and_extend_basis(int *Mtx, long int rk,
+	void unrank_lint_here_and_extend_basis(
+			int *Mtx, long int rk,
 		int verbose_level);
 		// Mtx must be n x n
-	void unrank_lint_here_and_compute_perp(int *Mtx, long int rk,
+	void unrank_lint_here_and_compute_perp(
+			int *Mtx, long int rk,
 		int verbose_level);
 		// Mtx must be n x n
-	void line_regulus_in_PG_3_q(long int *&regulus,
-		int &regulus_size, int f_opposite, int verbose_level);
+	void line_regulus_in_PG_3_q(
+			long int *&regulus,
+		int &regulus_size, int f_opposite,
+		int verbose_level);
 		// the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
-	void compute_dual_line_idx(int *&dual_line_idx,
+	void compute_dual_line_idx(
+			int *&dual_line_idx,
 			int *&self_dual_lines, int &nb_self_dual_lines,
 			int verbose_level);
-	void compute_dual_spread(int *spread, int *dual_spread, 
+	void compute_dual_spread(
+			int *spread, int *dual_spread,
 		int spread_size, int verbose_level);
-	void latex_matrix(std::ostream &ost, int *p);
-	void latex_matrix_numerical(std::ostream &ost, int *p);
+	void latex_matrix(
+			std::ostream &ost, int *p);
+	void latex_matrix_numerical(
+			std::ostream &ost, int *p);
 	void create_Schlaefli_graph(
 			int *&Adj, int &sz, int verbose_level);
 	long int make_special_element_zero(int verbose_level);
@@ -1155,14 +1180,17 @@ public:
 			long int *Spread, int spread_sz,
 			int *&Spread_set, int &sz,
 			int verbose_level);
-	void make_partition(long int *Spread, int spread_sz,
+	void make_partition(
+			long int *Spread, int spread_sz,
 			long int *&Part, int &s, int verbose_level);
 	void make_spread_element(
 			int *Spread_element, int *A, int verbose_level);
-	void cheat_sheet_subspaces(std::ostream &f, int verbose_level);
+	void cheat_sheet_subspaces(
+			std::ostream &f, int verbose_level);
 	void Pluecker_coordinates(
 		int line_rk, int *v6, int verbose_level);
-	void do_pluecker_reverse(std::ostream &ost,
+	void do_pluecker_reverse(
+			std::ostream &ost,
 			int nb_k_subspaces, int verbose_level);
 	void create_latex_report(int verbose_level);
 	void klein_correspondence(
@@ -1187,9 +1215,12 @@ public:
 			long int *data, int size, int threshold,
 			intersection_type *&Int_type,
 			int verbose_level);
-	void get_spread_matrices(int *G, int *H,
+	void get_spread_matrices(
+			int *G, int *H,
 			long int *data, int verbose_level);
 	// assuming we are in PG(3,q)
+	long int map_line_in_PG3q(
+			long int line, int *transform16, int verbose_level);
 
 };
 
@@ -1223,17 +1254,22 @@ public:
 
 	grassmann_embedded();
 	~grassmann_embedded();
-	void init(int big_n, int n, grassmann *G, int *M, int verbose_level);
+	void init(
+			int big_n, int n, grassmann *G, int *M, int verbose_level);
 		// M is n x big_n
-	void unrank_embedded_lint(int *subspace_basis_with_embedding,
+	void unrank_embedded_lint(
+			int *subspace_basis_with_embedding,
 		long int rk, int verbose_level);
 		// subspace_basis_with_embedding is n x big_n
-	long int rank_embedded_lint(int *subspace_basis, int verbose_level);
+	long int rank_embedded_lint(
+			int *subspace_basis, int verbose_level);
 		// subspace_basis is n x big_n, 
 		// only the first k x big_n entries are used
-	void unrank_lint(int *subspace_basis, long int rk, int verbose_level);
+	void unrank_lint(
+			int *subspace_basis, long int rk, int verbose_level);
 		// subspace_basis is k x big_n
-	long int rank_lint(int *subspace_basis, int verbose_level);
+	long int rank_lint(
+			int *subspace_basis, int verbose_level);
 		// subspace_basis is k x big_n
 };
 
@@ -1372,7 +1408,8 @@ class incidence_structure {
 	incidence_structure();
 	~incidence_structure();
 	void check_point_pairs(int verbose_level);
-	int lines_through_two_points(int *lines, int p1, int p2, 
+	int lines_through_two_points(
+			int *lines, int p1, int p2,
 		int verbose_level);
 	void init_projective_space(
 			projective_space *P, int verbose_level);
@@ -1381,14 +1418,17 @@ class incidence_structure {
 	void init_orthogonal(
 			orthogonal_geometry::orthogonal *O,
 			int verbose_level);
-	void init_by_incidences(int m, int n, int nb_inc, int *X, 
+	void init_by_incidences(
+			int m, int n, int nb_inc, int *X,
 		int verbose_level);
-	void init_by_R_and_X(int m, int n, int *R, int *X, int max_r, 
+	void init_by_R_and_X(
+			int m, int n, int *R, int *X, int max_r,
 		int verbose_level);
 	void init_by_set_of_sets(
 			data_structures::set_of_sets *SoS,
 			int verbose_level);
-	void init_by_matrix(int m, int n, int *M, int verbose_level);
+	void init_by_matrix(
+			int m, int n, int *M, int verbose_level);
 	void init_by_matrix_as_bitmatrix(
 			int m, int n,
 			data_structures::bitmatrix *Bitmatrix,
@@ -1397,8 +1437,10 @@ class incidence_structure {
 	int nb_points();
 	int nb_lines();
 	int get_ij(int i, int j);
-	int get_lines_on_point(int *data, int i, int verbose_level);
-	int get_points_on_line(int *data, int j, int verbose_level);
+	int get_lines_on_point(
+			int *data, int i, int verbose_level);
+	int get_points_on_line(
+			int *data, int j, int verbose_level);
 	int get_nb_inc();
 	void save_inc_file(char *fname);
 	void save_row_by_row_file(char *fname);
@@ -1537,7 +1579,8 @@ class incidence_structure {
 		// G[nb_lines() * nb_lines()]
 	void latex_it(std::ostream &ost,
 			data_structures::partitionstack &P);
-	void rearrange(int *&Vi, int &nb_V, 
+	void rearrange(
+			int *&Vi, int &nb_V,
 		int *&Bj, int &nb_B, int *&R, int *&X,
 		data_structures::partitionstack &P);
 	void decomposition_print_tex(std::ostream &ost,
@@ -1729,7 +1772,8 @@ public:
 			orthogonal_geometry::orthogonal *O,
 			int verbose_level);
 	// opens two projective_space objects P3 and P5
-	void plane_intersections(long int *lines_in_PG3, int nb_lines,
+	void plane_intersections(
+			long int *lines_in_PG3, int nb_lines,
 			ring_theory::longinteger_object *&R,
 		long int **&Pts_on_plane,
 		int *&nb_pts_on_plane, 
@@ -2243,6 +2287,83 @@ public:
 
 
 // #############################################################################
+// projective_space_basic.cpp
+// #############################################################################
+
+//! basic functions for projective geometries over a finite field such as ranking and unranking
+
+class projective_space_basic {
+
+private:
+
+public:
+
+	field_theory::finite_field *F;
+
+	projective_space_basic();
+	~projective_space_basic();
+	void init(
+			field_theory::finite_field *F, int verbose_level);
+	void PG_element_apply_frobenius(
+			int n, int *v, int f);
+	int test_if_vectors_are_projectively_equal(
+			int *v1, int *v2, int len);
+	void PG_element_normalize(
+			int *v, int stride, int len);
+	// last non-zero element made one
+	void PG_element_normalize_from_front(
+			int *v, int stride, int len);
+	// first non zero element made one
+	void PG_element_normalize_from_a_given_position(
+			int *v, int stride, int len, int idx);
+
+
+	void PG_elements_embed(
+			long int *set_in, long int *set_out, int sz,
+			int old_length, int new_length, int *v);
+	long int PG_element_embed(
+			long int rk, int old_length, int new_length, int *v);
+	void PG_element_unrank_fining(
+			int *v, int len, int a);
+	int PG_element_rank_fining(
+			int *v, int len);
+	void PG_element_unrank_gary_cook(
+			int *v, int len, int a);
+	void PG_element_rank_modified(
+			int *v, int stride, int len, int &a);
+	void PG_element_unrank_modified(
+			int *v, int stride, int len, int a);
+	void PG_element_rank_modified_lint(
+			int *v, int stride, int len, long int &a);
+	void PG_elements_unrank_lint(
+			int *M, int k, int n, long int *rank_vec);
+	void PG_elements_rank_lint(
+			int *M, int k, int n, long int *rank_vec);
+	void PG_element_unrank_modified_lint(
+			int *v, int stride, int len, long int a);
+	void PG_element_rank_modified_not_in_subspace(
+			int *v, int stride, int len, int m, long int &a);
+	void PG_element_unrank_modified_not_in_subspace(
+			int *v, int stride, int len, int m, long int a);
+
+	void projective_point_unrank(int n, int *v, int rk);
+	long int projective_point_rank(int n, int *v);
+	void all_PG_elements_in_subspace(
+			int *genma, int k, int n,
+			long int *&point_list, int &nb_points,
+			int verbose_level);
+	void all_PG_elements_in_subspace_array_is_given(
+			int *genma, int k, int n,
+			long int *point_list, int &nb_points,
+			int verbose_level);
+	void display_all_PG_elements(int n);
+	void display_all_PG_elements_not_in_subspace(int n, int m);
+	void display_all_AG_elements(int n);
+
+};
+
+
+// #############################################################################
 // projective_space_implementation.cpp
 // #############################################################################
 
@@ -2268,9 +2389,11 @@ public:
 
 	projective_space_implementation();
 	~projective_space_implementation();
-	void init(projective_space *P, int verbose_level);
+	void init(
+			projective_space *P, int verbose_level);
 	void line_intersection_type(
-			long int *set, int set_size, int *type, int verbose_level);
+			long int *set, int set_size, int *type,
+			int verbose_level);
 	void point_types_of_line_set(
 			long int *set_of_lines, int set_size,
 		int *type, int verbose_level);
@@ -2285,21 +2408,25 @@ public:
 // projective_space_of_dimension_three.cpp
 // #############################################################################
 
-//! projective space PG(3,q) collects functionality specific for a three space
+//! functionality specific to a three-dimensional projective space, i.e. PG(3,q)
 
 
 class projective_space_of_dimension_three {
 
 public:
-	projective_space *P;
+	projective_space *Projective_space;
+
+	three_skew_subspaces *Three_skew_subspaces;
 
 	projective_space_of_dimension_three();
 	~projective_space_of_dimension_three();
-	void init(projective_space *P, int verbose_level);
+	void init(
+			projective_space *P, int verbose_level);
 	void determine_quadric_in_solid(
 			long int *nine_pts_or_more, int nb_pts,
 		int *ten_coeffs, int verbose_level);
-	void quadric_points_brute_force(int *ten_coeffs,
+	void quadric_points_brute_force(
+			int *ten_coeffs,
 		long int *points, int &nb_points, int verbose_level);
 	int point_of_intersection_of_a_line_and_a_line_in_three_space(
 		long int line1,
@@ -2320,11 +2447,27 @@ public:
 		int verbose_level);
 	long int plane_rank_using_dual_coordinates_in_three_space(
 		int *eqn4, int verbose_level);
-	long int dual_rank_of_plane_in_three_space(long int plane_rank,
+	long int dual_rank_of_plane_in_three_space(
+			long int plane_rank,
 		int verbose_level);
 	void plane_equation_from_three_lines_in_three_space(
 		long int *three_lines,
 		int *plane_eqn4, int verbose_level);
+	long int plane_from_three_lines(
+			long int *three_lines,
+		int verbose_level);
+	void make_element_which_moves_a_line_in_PG3q(
+			long int line_rk, int *Mtx16,
+			int verbose_level);
+	int test_if_lines_are_skew(
+			int line1, int line2, int verbose_level);
+	int five_plus_one_to_double_six(
+		long int *five_lines, long int transversal_line, long int *double_six,
+		int verbose_level);
+	// a similar function exists in class surface_domain
+	// the arguments are almost the same, except that transversal_line is missing.
+	long int map_point(
+			long int point, int *transform16, int verbose_level);
 
 
 
@@ -2336,7 +2479,7 @@ public:
 // projective_space_plane.cpp
 // #############################################################################
 
-//! projective space PG(2,q) collects functionality specific for a desarguesian projective plane
+//! functionality specific to a desarguesian projective plane, i.e. PG(2,q)
 
 
 class projective_space_plane {
@@ -2366,11 +2509,14 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly_3_3,
 			int nb_pts, long int *Pts, int *coeff10,
 			int verbose_level);
-	void conic_points_brute_force(int *six_coeffs,
+	void conic_points_brute_force(
+			int *six_coeffs,
 		long int *points, int &nb_points, int verbose_level);
-	void conic_points(long int *five_pts, int *six_coeffs,
+	void conic_points(
+			long int *five_pts, int *six_coeffs,
 		long int *points, int &nb_points, int verbose_level);
-	void find_tangent_lines_to_conic(int *six_coeffs,
+	void find_tangent_lines_to_conic(
+			int *six_coeffs,
 		long int *points, int nb_points,
 		long int *tangents, int verbose_level);
 	int determine_hermitian_form_in_plane(
@@ -2379,7 +2525,8 @@ public:
 	void conic_type_randomized(
 			int nb_times,
 		long int *set, int set_size,
-		long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,
+		long int **&Pts_on_conic,
+		int *&nb_pts_on_conic, int &len,
 		int verbose_level);
 	void conic_intersection_type(
 			int f_randomized, int nb_times,
@@ -2397,9 +2544,11 @@ public:
 		long int *set, int set_size,
 		int threshold,
 		long int **&Pts_on_conic,
-		int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
+		int **&Conic_eqn,
+		int *&nb_pts_on_conic, int &nb_conics,
 		int verbose_level);
-	void find_nucleus(int *set, int set_size, int &nucleus,
+	void find_nucleus(
+			int *set, int set_size, int &nucleus,
 		int verbose_level);
 	void points_on_projective_triangle(
 			long int *&set, int &set_size,
@@ -2470,16 +2619,19 @@ public:
 };
 
 
+
 // #############################################################################
-// projective_space.cpp
+// projective_space_subspaces.cpp
 // #############################################################################
 
-//! projective space PG(n,q) of dimension n over Fq
+//! subspaces in a projective space PG(n,q) of dimension n over Fq
 
 
-class projective_space {
+class projective_space_subspaces {
 
 public:
+
+	projective_space *P;
 
 	grassmann *Grass_lines;
 	grassmann *Grass_planes; // if n > 2
@@ -2490,7 +2642,7 @@ public:
 	grassmann **Grass_stack; // [n + 1]
 
 	field_theory::finite_field *F;
-	ring_theory::longinteger_object *Go;
+	//ring_theory::longinteger_object *Go;
 
 	int n; // projective dimension
 	int q;
@@ -2502,37 +2654,30 @@ public:
 		// N_lines = Nb_subspaces[1];
 
 	int r; // number of lines on a point
-	int k; // number of points on a line
-
-	projective_space_implementation *Implementation;
-
-	projective_space_plane *Plane; // if n == 2
-
-	projective_space_of_dimension_three *Solid; // if n == 3
-
-
-	polarity *Standard_polarity;
-	polarity *Reversal_polarity;
-
-	arc_in_projective_space *Arc_in_projective_space;
-
-	projective_space_reporting *Reporting;
+	int k; // = q + 1, number of points on a line
 
 	int *v; // [n + 1]
 	int *w; // [n + 1]
 	int *Mtx; // [3 * (n + 1)], used in is_incident
 	int *Mtx2; // [3 * (n + 1)], used in is_incident
 
+	projective_space_implementation *Implementation;
 
-	projective_space();
-	~projective_space();
-	void projective_space_init(
-			int n,
-			field_theory::finite_field *F,
-		int f_init_incidence_structure, 
+	polarity *Standard_polarity;
+	polarity *Reversal_polarity;
+
+	projective_space_subspaces();
+	~projective_space_subspaces();
+	void init(
+		projective_space *P,
+		int n,
+		field_theory::finite_field *F,
+		int f_init_incidence_structure,
 		int verbose_level);
+	// n is projective dimension
 	void init_incidence_structure(int verbose_level);
 	void init_polarity(int verbose_level);
+	// uses Grass_hyperplanes
 	void intersect_with_line(
 			long int *set, int set_sz,
 			int line_rk,
@@ -2551,7 +2696,7 @@ public:
 	int create_point_on_line(
 		long int line_rk, int pt_rk, int verbose_level);
 	// pt_rk is between 0 and q-1.
-	void make_incidence_matrix(int &m, int &n, 
+	void make_incidence_matrix(int &m, int &n,
 		int *&Inc, int verbose_level);
 	void make_incidence_matrix(
 		std::vector<int> &Pts, std::vector<int> &Lines,
@@ -2559,7 +2704,7 @@ public:
 	int is_incident(int pt, int line);
 	void incidence_m_ii(int pt, int line, int a);
 	void make_incidence_structure_and_partition(
-		incidence_structure *&Inc, 
+		incidence_structure *&Inc,
 		data_structures::partitionstack *&Stack,
 		int verbose_level);
 	void incma_for_type_ij(
@@ -2593,6 +2738,7 @@ public:
 	void unrank_lines(int *v, long int *Rk, int nb);
 	long int rank_plane(int *basis);
 	void unrank_plane(int *basis, long int rk);
+
 	long int line_through_two_points(
 			long int p1, long int p2);
 	int test_if_lines_are_disjoint(
@@ -2611,7 +2757,8 @@ public:
 		// type[N_lines]
 	void line_intersection_type_basic_given_a_set_of_lines(
 			long int *lines_by_rank, int nb_lines,
-		long int *set, int set_size, int *type, int verbose_level);
+		long int *set, int set_size,
+		int *type, int verbose_level);
 	// type[nb_lines]
 	void line_intersection_type_through_hyperplane(
 		long int *set, int set_size,
@@ -2649,12 +2796,7 @@ public:
 			long int *set, int set_size, int k,
 		long int *secant_lines, int &nb_secant_lines,
 		int verbose_level);
-	void Baer_subline(
-			long int *pts3, long int *&pts, int &nb_pts,
-		int verbose_level);
 
-	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
-		int verbose_level);
 	void export_incidence_matrix_to_csv(int verbose_level);
 	void make_fname_incidence_matrix_csv(std::string &fname);
 	void compute_decomposition(
@@ -2671,8 +2813,75 @@ public:
 			int verbose_level);
 	void polarity_rank_k_subspace(int k,
 			long int rk_in, long int &rk_out, int verbose_level);
+	void planes_through_a_line(
+		long int line_rk, std::vector<long int> &plane_ranks,
+		int verbose_level);
+	void planes_through_a_set_of_lines(
+			long int *Lines, int nb_lines,
+			long int *&Plane_ranks,
+			int &nb_planes_on_one_line, int verbose_level);
+
+};
+
+
+
+
+// #############################################################################
+// projective_space.cpp
+// #############################################################################
+
+//! projective space PG(n,q) of dimension n over Fq
+
+
+class projective_space {
+
+public:
+
+	projective_space_subspaces *Subspaces;
+
+	projective_space_plane *Plane; // if n == 2
+
+	projective_space_of_dimension_three *Solid; // if n == 3
+
+
+
+	arc_in_projective_space *Arc_in_projective_space;
+
+	projective_space_reporting *Reporting;
+
+	std::string label_txt;
+	std::string label_tex;
+
+
+
+	projective_space();
+	~projective_space();
+	void projective_space_init(
+			int n,
+			field_theory::finite_field *F,
+		int f_init_incidence_structure, 
+		int verbose_level);
+	long int rank_point(int *v);
+	void unrank_point(int *v, long int rk);
+	void unrank_points(int *v, long int *Rk, int sz);
+	long int rank_line(int *basis);
+	void unrank_line(int *basis, long int rk);
+	void unrank_lines(int *v, long int *Rk, int nb);
+	long int rank_plane(int *basis);
+	void unrank_plane(int *basis, long int rk);
+	long int line_through_two_points(
+			long int p1, long int p2);
+	int intersection_of_two_lines(
+			long int l1, long int l2);
+
+	void Baer_subline(
+			long int *pts3, long int *&pts, int &nb_pts,
+		int verbose_level);
 
 	// projective_space2.cpp:
+	int is_contained_in_Baer_subline(
+			long int *pts, int nb_pts,
+		int verbose_level);
 	void circle_type_of_line_subset(int *pts, int nb_pts, 
 		int *circle_type, int verbose_level);
 		// circle_type[nb_pts]
@@ -2695,7 +2904,7 @@ public:
 		long int *set, int set_size, int threshold,
 		intersection_type *&Int_type,
 		int verbose_level);
-	void plane_intersections(
+	int plane_intersections(
 			grassmann *G,
 		long int *set, int set_size,
 		ring_theory::longinteger_object *&R,
@@ -2727,30 +2936,6 @@ public:
 	void line_plane_incidence_matrix_restricted(
 			long int *Lines, int nb_lines,
 		int *&M, int &nb_planes, int verbose_level);
-	int test_if_lines_are_skew(
-			int line1, int line2, int verbose_level);
-#if 0
-	void decomposition_from_set_partition(
-			int nb_subsets, int *sz, int **subsets,
-		incidence_structure *&Inc, 
-		data_structures::partitionstack *&Stack,
-		int verbose_level);
-#endif
-
-	void planes_through_a_line(
-		long int line_rk, std::vector<long int> &plane_ranks,
-		int verbose_level);
-
-
-
-	// projective_space3.cpp:
-	int reverse_engineer_semilinear_map(
-		int *Elt, int *Mtx, int &frobenius,
-		int verbose_level);
-	void planes_through_line(long int *Lines, int nb_lines,
-			long int *&Plane_ranks,
-			int &nb_planes_on_one_line, int verbose_level);
-
 
 };
 
@@ -2821,7 +3006,7 @@ public:
 
 	spread_domain();
 	~spread_domain();
-	void init(
+	void init_spread_domain(
 			field_theory::finite_field *F,
 			int n, int k,
 			int verbose_level);
@@ -2978,6 +3163,61 @@ public:
 
 };
 
+
+
+
+// #############################################################################
+// three_skew_subspaces.cpp
+// #############################################################################
+
+//! three skew lines in PG(3,q), used to classify spreads
+
+
+class three_skew_subspaces {
+public:
+	//geometry::spread_domain *SD;
+
+	int n;
+	int k;
+	int q;
+	geometry::grassmann *Grass;
+	field_theory::finite_field *F;
+
+	long int nCkq;
+
+	int f_data_is_allocated;
+	int *M; // [(3 * k) * n]
+	int *M1; // [(3 * k) * n]
+	int *AA; // [n * n]
+	int *AAv; // [n * n]
+	int *TT; // [k * k]
+	int *TTv; // [k * k]
+	int *B; // [n * n]
+	//int *C; // [n * n + 1]
+	int *N; // [(3 * k) * n]
+
+	long int starter_j1, starter_j2, starter_j3;
+
+	three_skew_subspaces();
+	~three_skew_subspaces();
+	void init(
+			geometry::grassmann *Grass,
+			field_theory::finite_field *F,
+			int k, int n,
+			int verbose_level);
+	void do_recoordinatize(
+			long int i1, long int i2, long int i3,
+			int *transformation,
+			int verbose_level);
+	void make_first_three(
+			long int &j1, long int &j2, long int &j3,
+			int verbose_level);
+	void create_regulus_and_opposite_regulus(
+		long int *three_skew_lines, long int *&regulus,
+		long int *&opp_regulus, int &regulus_size,
+		int verbose_level);
+
+};
 
 
 

@@ -62,6 +62,14 @@ public:
 			std::string &fname_set_of_sets,
 			std::string &fname_input,
 			std::string &fname_output, int verbose_level);
+	void dot_product_of_columns(
+			std::string &label, int verbose_level);
+	void dot_product_of_rows(
+			std::string &label, int verbose_level);
+	void matrix_multiply_over_Z(
+			std::string &label1, std::string &label2, int verbose_level);
+	void matrix_rowspan_over_R(
+			std::string &label, int verbose_level);
 
 };
 
@@ -556,6 +564,7 @@ public:
 	void print_as_table(std::ostream &ost, int *v, int len, int width);
 	void print_fully(std::ostream &ost, std::vector<int> &v);
 	void print_fully(std::ostream &ost, int *v, int len);
+	void print_fully_naked(std::ostream &ost, int *v, int len);
 	void print_dense(std::ostream &ost, int *v, int len);
 	void print_Cpp(std::ostream &ost, int *v, int len);
 	void print_GAP(std::ostream &ost, int *v, int len);
@@ -890,7 +899,7 @@ class partitionstack {
 	void join_cell();
 	void reduce_height(int ht0);
 	void isolate_point(int pt);
-	void subset_continguous(int from, int len);
+	void subset_contiguous(int from, int len);
 	int is_row_class(int c);
 	int is_col_class(int c);
 	void allocate_and_get_decomposition(
@@ -1170,6 +1179,7 @@ public:
 	void all_triple_intersections(set_of_sets *&Intersections, 
 		int verbose_level);
 	int has_constant_size_property();
+	int get_constant_size();
 	int largest_set_size();
 	void save_csv(std::string &fname,
 		int f_make_heading, int verbose_level);
@@ -1700,6 +1710,33 @@ public:
 	int read_schlaefli_label(const char *p);
 	void read_string_of_schlaefli_labels(
 			std::string &str, int *&v, int &sz, int verbose_level);
+	void name_of_group_projective(
+			std::string &label_txt,
+			std::string &label_tex,
+			int n, int q, int f_semilinear, int f_special,
+			int verbose_level);
+	void name_of_group_affine(
+			std::string &label_txt,
+			std::string &label_tex,
+			int n, int q, int f_semilinear, int f_special,
+			int verbose_level);
+	void name_of_group_general_linear(
+			std::string &label_txt,
+			std::string &label_tex,
+			int n, int q, int f_semilinear, int f_special,
+			int verbose_level);
+	void name_of_orthogonal_group(
+			std::string &label_txt,
+			std::string &label_tex,
+			int epsilon, int n, int q, int f_semilinear, int verbose_level);
+	void name_of_orthogonal_space(
+			std::string &label_txt,
+			std::string &label_tex,
+			int epsilon, int n, int q, int verbose_level);
+	void name_of_BLT_set(
+			std::string &label_txt,
+			std::string &label_tex,
+			int q, int ocn, int f_embedded, int verbose_level);
 
 
 };

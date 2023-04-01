@@ -89,7 +89,8 @@ void ttp_codes::twisted_tensor_product_codes(
 	index = (Q - 1) / (q - 1);
 
 	if (Q != FQ->q) {
-		cout << "ttp_codes::twisted_tensor_product_codes Q != FQ->q" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes "
+				"Q != FQ->q" << endl;
 		exit(1);
 	}
 
@@ -154,7 +155,8 @@ void ttp_codes::twisted_tensor_product_codes(
 		cout << "ttp_codes::twisted_tensor_product_codes: M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
-		FQ->latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
+		FQ->Io->latex_matrix(cout,
+				f_elements_exponential, symbol_for_print, M, m, n);
 	}
 
 
@@ -177,21 +179,29 @@ void ttp_codes::twisted_tensor_product_codes(
 
 
 	if (f_v) {
-		cout << "ttp_codes::twisted_tensor_product_codes before create_matrix_H_subfield" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes "
+				"before create_matrix_H_subfield" << endl;
 	}
-	create_matrix_H_subfield(FQ, Fq,
+	create_matrix_H_subfield(
+			FQ, Fq,
 		H_subfield, C, C_inv, M, m, n, beta, beta_q,
-		f_elements_exponential, symbol_for_print, symbol_for_print_subfield,
+		f_elements_exponential,
+		symbol_for_print, symbol_for_print_subfield,
 		f_construction_A, f_construction_B,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "ttp_codes::twisted_tensor_product_codes after create_matrix_H_subfield" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes "
+				"after create_matrix_H_subfield" << endl;
 	}
 
 	if (f_v) {
-		cout << "ttp_codes::twisted_tensor_product_codes H_subfield:" << endl;
+		cout << "ttp_codes::twisted_tensor_product_codes "
+				"H_subfield:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		Fq->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
+		Fq->Io->latex_matrix(cout,
+				f_elements_exponential,
+				symbol_for_print_subfield,
+				H_subfield, m, n);
 	}
 
 	FREE_int(M);
@@ -351,7 +361,7 @@ void ttp_codes::create_matrix_M(
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 
 		cout << "ttp_codes::create_matrix_M M:" << endl;
-		FQ->latex_matrix(cout, f_elements_exponential,
+		FQ->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, M, m, n);
 	}
 
@@ -483,7 +493,7 @@ void ttp_codes::create_matrix_H_subfield(
 	if (f_v) {
 		cout << "ttp_codes::create_matrix_H_subfield matrix C:" << endl;
 		Int_vec_print_integer_matrix_width(cout, C, m, m, m, 2);
-		FQ->latex_matrix(cout, f_elements_exponential,
+		FQ->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, C, m, m);
 	}
 
@@ -510,7 +520,7 @@ void ttp_codes::create_matrix_H_subfield(
 	if (f_v) {
 		cout << "ttp_codes::create_matrix_H_subfield H = C * M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H, m, n, n, 2);
-		FQ->latex_matrix(cout, f_elements_exponential,
+		FQ->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, H, m, n);
 	}
 
@@ -527,7 +537,7 @@ void ttp_codes::create_matrix_H_subfield(
 	if (f_v) {
 		cout << "ttp_codes::create_matrix_H_subfield H_subfield:" << endl;
 		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		Fq->latex_matrix(cout, f_elements_exponential,
+		Fq->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print_subfield, H_subfield, m, n);
 	}
 
@@ -568,7 +578,7 @@ void ttp_codes::tt_field_reduction(
 		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
 		//print_integer_matrix(cout, M, m, n);
 		cout << endl;
-		FQ.print_integer_matrix_zech(cout, M, m, n);
+		FQ.Io->print_integer_matrix_zech(cout, M, m, n);
 		cout << endl;
 	}
 	for (i = 0; i < m; i++) {
@@ -590,7 +600,8 @@ void ttp_codes::tt_field_reduction(
 					z = FQ.log_alpha(a);
 					b = z / index;
 					if (b * index != z) {
-						cout << "coding_theory_domain::tt_field_reduction b * index != z" << endl;
+						cout << "coding_theory_domain::tt_field_reduction "
+								"b * index != z" << endl;
 						exit(1);
 					}
 					c = f.alpha_power(b);
@@ -604,7 +615,7 @@ void ttp_codes::tt_field_reduction(
 		Int_vec_print_integer_matrix_width(cout, MM, m, n, n, 2);
 		//print_integer_matrix(cout, MM, m, n);
 		cout << endl;
-		f.print_integer_matrix_zech(cout, MM, m, n);
+		f.Io->print_integer_matrix_zech(cout, MM, m, n);
 		cout << endl;
 	}
 
@@ -681,7 +692,8 @@ void ttp_codes::make_tensor_code_9dimensional_as_point_set(
 		for (i = 0; i < 9; i++) {
 			pt[i] = code[i * length + t];
 		}
-		F->PG_element_rank_modified(pt, 1, 9, rk);
+		F->Projective_space_basic->PG_element_rank_modified(
+				pt, 1, 9, rk);
 		the_set[t] = rk;
 	}
 	FREE_int(code);
@@ -803,13 +815,15 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 	SubS = NEW_OBJECT(field_theory::subfield_structure);
 
 	if (f_v) {
-		cout << "ttp_codes::make_tensor_code_9_dimensional before SubS->init" << endl;
+		cout << "ttp_codes::make_tensor_code_9_dimensional "
+				"before SubS->init" << endl;
 	}
 	SubS->init(
 			&F,
 			&f, verbose_level);
 	if (f_v) {
-		cout << "ttp_codes::make_tensor_code_9_dimensional after SubS->init" << endl;
+		cout << "ttp_codes::make_tensor_code_9_dimensional "
+				"after SubS->init" << endl;
 	}
 
 
@@ -870,7 +884,8 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 	}
 
 	cout << "M:" << endl;
-	Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
+	Int_vec_print_integer_matrix_width(
+			cout, M, m, n, n, 2);
 
 	{
 		int *all_one, *col_sum;
@@ -880,10 +895,12 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 		for (i = 0; i < n; i++) {
 			all_one[i] = 1;
 		}
-		F.Linear_algebra->mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
+		F.Linear_algebra->mult_matrix_matrix(
+				M, all_one, col_sum, m, n, 1,
 				0 /* verbose_level */);
 		cout << "col_sum:" << endl;
-		Int_vec_print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, col_sum, m, 1, 1, 2);
 		FREE_int(all_one);
 		FREE_int(col_sum);
 	}
@@ -898,31 +915,39 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 
 
 	cout << "C:" << endl;
-	Int_vec_print_integer_matrix_width(cout, C, m, m, m, 2);
+	Int_vec_print_integer_matrix_width(
+			cout, C, m, m, m, 2);
 
-	F.Linear_algebra->invert_matrix(C, C_inv, m, 0 /* verbose_level */);
+	F.Linear_algebra->invert_matrix(
+			C, C_inv, m, 0 /* verbose_level */);
 
 	cout << "C_inv:" << endl;
-	Int_vec_print_integer_matrix_width(cout, C_inv, m, m, m, 2);
+	Int_vec_print_integer_matrix_width(
+			cout, C_inv, m, m, m, 2);
 
 	{
 		int *AA;
 		AA = NEW_int(m * m);
-		F.Linear_algebra->mult_matrix_matrix(C, C_inv, AA, m, m, m,
+		F.Linear_algebra->mult_matrix_matrix(
+				C, C_inv, AA, m, m, m,
 				0 /* verbose_level */);
 		cout << "C * C_inv:" << endl;
-		Int_vec_print_integer_matrix_width(cout, AA, m, m, m, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, AA, m, m, m, 2);
 		FREE_int(AA);
 	}
 
-	F.Linear_algebra->mult_matrix_matrix(C, M, H, m, m, n,
+	F.Linear_algebra->mult_matrix_matrix(
+			C, M, H, m, m, n,
 			0 /* verbose_level */);
 	cout << "H = C * M:" << endl;
-	Int_vec_print_integer_matrix_width(cout, H, m, n, n, 2);
+	Int_vec_print_integer_matrix_width(
+			cout, H, m, n, n, 2);
 
 
 #if 0
-	rk = F.Gauss_int(M, FALSE /* f_special */, TRUE /* f_complete */, base_cols,
+	rk = F.Gauss_int(
+			M, FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL, m /* m */, n /* n */, 0 /* Pn */,
 		FALSE, FALSE);
 	cout << "has rank " << rk << endl;
@@ -930,16 +955,19 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 
 	if (f_vv) {
 		cout << "before field reduction:" << endl;
-		Int_vec_print_integer_matrix_width(cout, H, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, H, m, n, n, 2);
 		cout << endl;
-		f.print_integer_matrix_zech(cout, H, m, n);
+		f.Io->print_integer_matrix_zech(
+				cout, H, m, n);
 		cout << endl;
 	}
 
 	if (f_vv) {
 		cout << "before SubS->retract_int_vec" << endl;
 	}
-	SubS->retract_int_vec(H, H_subfield, m * n, 0 /* verbose_level */);
+	SubS->retract_int_vec(
+			H, H_subfield, m * n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "after SubS->retract_int_vec" << endl;
 	}
@@ -948,13 +976,16 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 	//field_reduction(F, f, m, n, H, H_subfield, TRUE, TRUE);
 	if (f_vv) {
 		cout << "after field reduction:" << endl;
-		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, H_subfield, m, n, n, 2);
 		cout << endl;
-		f.print_integer_matrix_zech(cout, H_subfield, m, n);
+		f.Io->print_integer_matrix_zech(
+				cout, H_subfield, m, n);
 		cout << endl;
 	}
 	cout << "H_subfield:" << endl;
-	Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+	Int_vec_print_integer_matrix_width(
+			cout, H_subfield, m, n, n, 2);
 
 	code = H_subfield;
 	length = n;
@@ -968,7 +999,8 @@ void ttp_codes::make_tensor_code_9_dimensional(int q,
 }
 
 
-void ttp_codes::do_tensor(int q,
+void ttp_codes::do_tensor(
+		int q,
 		std::string &override_poly_Q,
 		std::string &override_poly_q,
 	int f_construction_A, int f_hyperoval,
@@ -1080,9 +1112,11 @@ void ttp_codes::do_tensor(int q,
 
 	if (f_v) {
 		cout << "M:" << endl;
-		Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, M, m, n, n, 2);
 
-		F.latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
+		F.Io->latex_matrix(
+				cout, f_elements_exponential, symbol_for_print, M, m, n);
 	}
 
 
@@ -1093,7 +1127,8 @@ void ttp_codes::do_tensor(int q,
 		PG_element_normalize(F, M + j, n, m);
 		}
 	cout << "column normalized M:" << endl;
-	Int_vec_print_integer_matrix_width(cout, M, m, n, n, 2);
+	Int_vec_print_integer_matrix_width(
+			cout, M, m, n, n, 2);
 #endif
 
 
@@ -1104,7 +1139,8 @@ void ttp_codes::do_tensor(int q,
 	H_subfield = NEW_int(m * n);
 
 
-	TTp.create_matrix_H_subfield(&F, &f,
+	TTp.create_matrix_H_subfield(
+			&F, &f,
 		H_subfield, C, C_inv, M, m, n, beta, beta_q,
 		f_elements_exponential,
 		symbol_for_print,
@@ -1116,8 +1152,9 @@ void ttp_codes::do_tensor(int q,
 	if (f_v) {
 		cout << "after create_matrix_H_subfield" << endl;
 		cout << "H_subfield:" << endl;
-		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
-		f.latex_matrix(
+		Int_vec_print_integer_matrix_width(
+				cout, H_subfield, m, n, n, 2);
+		f.Io->latex_matrix(
 				cout, f_elements_exponential,
 				symbol_for_print_subfield, H_subfield, m, n);
 	}
@@ -1129,7 +1166,8 @@ void ttp_codes::do_tensor(int q,
 	if (f_v) {
 		cout << "after row reduction:" << endl;
 		cout << "H_subfield:" << endl;
-		Int_vec_print_integer_matrix_width(cout, H_subfield, rk, n, n, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, H_subfield, rk, n, n, 2);
 	}
 
 #if 0
@@ -1487,7 +1525,10 @@ void ttp_codes::is_cyclic(
 
 
 
-	action_on_code(F, f, m, n, M, H_subfield, C, C_inv, Aut, U, perm, verbose_level - 1);
+	action_on_code(
+			F, f, m, n, M, H_subfield,
+			C, C_inv, Aut, U, perm,
+			verbose_level - 1);
 	if (f_v) {
 		Combi.perm_print(cout, perm, n);
 		cout << endl;
@@ -1500,25 +1541,30 @@ void ttp_codes::is_cyclic(
 	j = 0;
 	if (f_vv) {
 		cout << "j=" << j << " v1=" << endl;
-		Int_vec_print_integer_matrix_width(cout, v1, 1, m, m, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, v1, 1, m, m, 2);
 		}
 	for (j = 1; j < n; j++) {
-		F.Linear_algebra->mult_matrix_matrix(Aut, v1, v2, m, m, 1,
+		F.Linear_algebra->mult_matrix_matrix(
+				Aut, v1, v2, m, m, 1,
 				0 /* verbose_level */);
 		if (f_vv) {
 			cout << "j=" << j << " v2=" << endl;
-			Int_vec_print_integer_matrix_width(cout, v2, 1, m, m, 2);
+			Int_vec_print_integer_matrix_width(
+					cout, v2, 1, m, m, 2);
 			}
 		for (i = 0; i < m; i++) {
 			M2[i * n + j] = v2[i];
 			v1[i] = v2[i];
 			}
 		}
-	F.Linear_algebra->mult_matrix_matrix(Aut, v1, v2, m, m, 1,
+	F.Linear_algebra->mult_matrix_matrix(
+			Aut, v1, v2, m, m, 1,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "last v2=" << endl;;
-		Int_vec_print_integer_matrix_width(cout, v2, 1, m, m, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, v2, 1, m, m, 2);
 		}
 	if (v2[0] != 1) {
 		cout << "not an n-cycle" << endl;
@@ -1532,17 +1578,21 @@ void ttp_codes::is_cyclic(
 	coding_theory::ttp_codes TTp;
 
 
-	F.Linear_algebra->mult_matrix_matrix(C, M2, Hgamma, m, m, n,
+	F.Linear_algebra->mult_matrix_matrix(
+			C, M2, Hgamma, m, m, n,
 			0 /* verbose_level */);
-	TTp.tt_field_reduction(F, f, m, n, Hgamma, Hgamma_subfield, 0);
+	TTp.tt_field_reduction(
+			F, f, m, n, Hgamma, Hgamma_subfield, 0);
 
 	if (f_v) {
 		cout << "permuted matrix Hgamma_subfield: " << endl;
-		Int_vec_print_integer_matrix_width(cout, Hgamma_subfield, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, Hgamma_subfield, m, n, n, 2);
 		}
 
 	F.Linear_algebra->Gauss_int(
-			M2, FALSE /* f_special */, TRUE /* f_complete */, base_cols,
+			M2, FALSE /* f_special */,
+			TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL, m /* m */, n /* n */, 0 /* Pn */,
 		verbose_level - 2);
 	//cout << "has rank " << rk << endl;
@@ -1553,7 +1603,8 @@ void ttp_codes::is_cyclic(
 	//print_integer_matrix_width(cout, M2, m, n, n, 2);
 
 	F.Linear_algebra->Gauss_int(
-			M3, FALSE /* f_special */, FALSE /* f_complete */, base_cols,
+			M3, FALSE /* f_special */,
+			FALSE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL, m /* m */, n /* n */, 0 /* Pn */,
 		verbose_level - 2);
 	//cout << "has rank " << rk << endl;
@@ -1562,7 +1613,8 @@ void ttp_codes::is_cyclic(
 
 	if (f_v) {
 		cout << "normal form: " << endl;
-		Int_vec_print_integer_matrix_width(cout, M2, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, M2, m, n, n, 2);
 		}
 
 	ring_theory::unipoly_domain FqX(&F);
@@ -2076,11 +2128,13 @@ void ttp_codes::do_other_stuff(
 	rc.init(f, m, n, r + 1);
 
 
-	f->Linear_algebra->transpose_matrix(H_subfield, H_subfield_t, m, n);
+	f->Linear_algebra->transpose_matrix(
+			H_subfield, H_subfield_t, m, n);
 
 	if (f_v) {
 		cout << "H_subfield_t:" << endl;
-		Int_vec_print_integer_matrix_width(cout, H_subfield_t, n, m, m, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, H_subfield_t, n, m, m, 2);
 		}
 
 
@@ -2108,8 +2162,9 @@ void ttp_codes::do_other_stuff(
 		cout << endl;
 
 		cout << "H_subfield after Gaussian elimination:" << endl;
-		Int_vec_print_integer_matrix_width(cout, H_subfield_gauss, m, n, n, 2);
-		f->latex_matrix(cout,
+		Int_vec_print_integer_matrix_width(
+				cout, H_subfield_gauss, m, n, n, 2);
+		f->Io->latex_matrix(cout,
 				f_elements_exponential,
 				symbol_for_print_subfield, H_subfield_gauss, m, n);
 		}
@@ -2127,7 +2182,8 @@ void ttp_codes::do_other_stuff(
 
 	if (f_vv) {
 		cout << "G_subfield_t:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(
+				cout,
 				G_subfield_t, kernel_m, kernel_n, kernel_n, 2);
 		}
 
@@ -2150,7 +2206,8 @@ void ttp_codes::do_other_stuff(
 
 	if (f_vv) {
 		cout << "G_subfield after Gauss" << endl;
-		Int_vec_print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(
+				cout,
 				G_subfield, k, n, n, 2);
 		cout << "rk=" << rk << endl;
 		}
@@ -2170,7 +2227,8 @@ void ttp_codes::do_other_stuff(
 
 		if (f_vv) {
 			cout << "G\\bar{G}^\\top" << endl;
-			Int_vec_print_integer_matrix_width(cout,
+			Int_vec_print_integer_matrix_width(
+					cout,
 					GH, k, m, m, 2);
 			}
 		}
@@ -2191,11 +2249,13 @@ void ttp_codes::do_other_stuff(
 		}
 
 
-	int_submatrix_all_rows(H_subfield, m, n, nb_kernel_cols, kernel_cols, MMM);
+	int_submatrix_all_rows(
+			H_subfield, m, n, nb_kernel_cols, kernel_cols, MMM);
 
 	if (f_vv) {
 		cout << "MMM:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(
+				cout,
 				MMM, m, nb_kernel_cols, nb_kernel_cols, 2);
 		}
 
@@ -2240,12 +2300,12 @@ void ttp_codes::do_other_stuff(
 
 
 	if (f_construction_A) {
-		F->display_T2(cout);
-		F->display_N2(cout);
+		F->Io->display_T2(cout);
+		F->Io->display_N2(cout);
 		}
 	else if (f_construction_B) {
-		F->display_T3(cout);
-		F->display_N3(cout);
+		F->Io->display_T3(cout);
+		F->Io->display_N3(cout);
 		}
 
 
@@ -2292,7 +2352,9 @@ void ttp_codes::do_other_stuff(
 	if (f_v) {
 		cout << "computing action on code" << endl;
 		}
-	action_on_code(*F, *f, m, n, M, H_subfield, C, C_inv, Aut, U, perm, verbose_level);
+	action_on_code(
+			*F, *f, m, n, M, H_subfield,
+			C, C_inv, Aut, U, perm, verbose_level);
 
 
 	if (f_v) {
@@ -2304,15 +2366,21 @@ void ttp_codes::do_other_stuff(
 
 	if (f_construction_A) {
 		if (q == 4 && !f_hyperoval) {
-			test_cyclic(*F, *f, Aut, M, H_subfield, C, C_inv, U, q, Q, m, n, beta, 1);
+			test_cyclic(
+					*F, *f, Aut, M, H_subfield,
+					C, C_inv, U, q, Q, m, n, beta, 1);
 			exit(1);
 			}
 		if (q == 8 && !f_hyperoval) {
-			test_cyclic(*F, *f, Aut, M, H_subfield, C, C_inv, U, q, Q, m, n, beta, 1);
+			test_cyclic(
+					*F, *f, Aut, M, H_subfield,
+					C, C_inv, U, q, Q, m, n, beta, 1);
 			exit(1);
 			}
 		if (q == 5) {
-			test_cyclic(*F, *f, Aut, M, H_subfield, C, C_inv, U, q, Q, m, n, beta, 1);
+			test_cyclic(
+					*F, *f, Aut, M, H_subfield,
+					C, C_inv, U, q, Q, m, n, beta, 1);
 			exit(1);
 			}
 		}
@@ -2336,7 +2404,9 @@ void ttp_codes::do_other_stuff(
 
 			setup_representing_matrix(F, q, Aut, a, b, c, d);
 			F.representing_matrix8a(U, a, b, c, d, beta);
-			action_on_code(F, f, m, n, M, H_subfield, C, C_inv, Aut, U, perm, TRUE, FALSE);
+			action_on_code(
+					F, f, m, n, M, H_subfield,
+					C, C_inv, Aut, U, perm, TRUE, FALSE);
 			}
 		exit(1);
 #endif
@@ -2344,7 +2414,9 @@ void ttp_codes::do_other_stuff(
 
 
 	if (q == 4) {
-		test_cyclic(*F, *f, Aut, M, H_subfield, C, C_inv, U, q, Q, m, n, beta, 1);
+		test_cyclic(
+				*F, *f, Aut, M, H_subfield,
+				C, C_inv, U, q, Q, m, n, beta, 1);
 		exit(1);
 		}
 
@@ -2391,7 +2463,9 @@ void ttp_codes::do_other_stuff(
 			}
 
 		//cout << "action on code: " << endl;
-		action_on_code(*F, *f, m, n, M, H_subfield, C, C_inv, Aut, U, perm, verbose_level);
+		action_on_code(
+				*F, *f, m, n, M, H_subfield,
+				C, C_inv, Aut, U, perm, verbose_level);
 
 		if (Combi.perm_order(perm, n) == n) {
 			cout << "cyclic" << endl;
@@ -2410,7 +2484,8 @@ void ttp_codes::do_other_stuff(
 }
 
 
-void ttp_codes::int_submatrix_all_rows(int *A, int m, int n,
+void ttp_codes::int_submatrix_all_rows(
+		int *A, int m, int n,
 	int nb_cols, int *cols, int *B)
 {
 	int i, j;

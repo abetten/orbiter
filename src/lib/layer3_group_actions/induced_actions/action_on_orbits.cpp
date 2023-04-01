@@ -65,7 +65,7 @@ long int action_on_orbits::compute_image(
 	f = Sch->orbit_first[i];
 	l = Sch->orbit_len[i];
 	a = Sch->orbit[f];
-	b = A->element_image_of(a, Elt, 0 /* verbose_level */);
+	b = A->Group_element->element_image_of(a, Elt, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action_on_orbits::compute_image "
 				"image of " << a << " is " << b << endl;
@@ -74,7 +74,7 @@ long int action_on_orbits::compute_image(
 	if (f_play_it_safe) {
 		for (h = 1; h < l; h++) {
 			a = Sch->orbit[f + h];
-			b = A->element_image_of(a, Elt, 0 /* verbose_level */);
+			b = A->Group_element->element_image_of(a, Elt, 0 /* verbose_level */);
 			j1 = Sch->orbit_number(b); //Sch->orbit_no[Sch->orbit_inv[b]];
 			if (j1 != j) {
 				cout << "action_on_orbits::compute_image "

@@ -49,7 +49,7 @@ void pentomino_puzzle::main(int verbose_level)
 
 	D = NEW_OBJECT(solvers::diophant);
 
-	D->open(nb_eqns, nb_vars);
+	D->open(nb_eqns, nb_vars, verbose_level - 1);
 	D->fill_coefficient_matrix_with(0);
 
 	make_coefficient_matrix(D);

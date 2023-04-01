@@ -256,7 +256,7 @@ void uint4_swap(uint_4& x, uint_4& y);
 
 std::ostream& operator<<(std::ostream& ost, class discreta_base& p);
 
-int invert_mod_integer(int i, int p);
+int invert_mod_integer(int i, int p, int verbose_level);
 int remainder_mod(int i, int n);
 void factor_integer(int n, Vector& primes, Vector& exponents);
 void discreta_print_factorization(
@@ -301,11 +301,11 @@ void Catalan_nk_star(
 		discreta_base &res, int verbose_level);
 
 void N_choose_K(
-		discreta_base & n, int k, discreta_base & res);
+		discreta_base & n, int k, discreta_base & res, int verbose_level);
 void Binomial(
 		int n, int k, discreta_base & n_choose_k);
 void Krawtchouk(
-		int n, int q, int i, int j, discreta_base & a);
+		int n, int q, int i, int j, discreta_base & a, int verbose_level);
 // $\sum_{u=0}^{\min(i,j)} (-1)^u \cdot (q-1)^{i-u} \cdot {j \choose u} \cdot $
 // ${n - j \choose i - u}$
 //int ij2k(int i, int j, int n);
@@ -525,43 +525,43 @@ class discreta_base
 	// arithmetic functions:
     
 	// multiplicative group:
-	void mult(discreta_base &x, discreta_base &y);
+	void mult(discreta_base &x, discreta_base &y, int verbose_level);
 		// this := x * y
 	void mult_mod(
 			discreta_base &x, discreta_base &y,
-			discreta_base &p);
-	virtual void mult_to(discreta_base &x, discreta_base &y);
+			discreta_base &p, int verbose_level);
+	virtual void mult_to(discreta_base &x, discreta_base &y, int verbose_level);
 		// y := this * x
-	int invert();
+	int invert(int verbose_level);
 		// this := this^(-1)
 		// returns TRUE if the object was invertible,
 		// FALSE otherwise
-	int invert_mod(discreta_base &p);
-	virtual int invert_to(discreta_base &x);
-	void mult_apply(discreta_base &x);
+	int invert_mod(discreta_base &p, int verbose_level);
+	virtual int invert_to(discreta_base &x, int verbose_level);
+	void mult_apply(discreta_base &x, int verbose_level);
 		// this := this * x
 	discreta_base& operator *= (discreta_base &y)
-		{ mult_apply(y); return *this; }
-	discreta_base& power_int(int l);
+		{ mult_apply(y, 0); return *this; }
+	discreta_base& power_int(int l, int verbose_level);
 		// this := this^l, l >= 0
-	discreta_base& power_int_mod(int l, discreta_base &p);
+	discreta_base& power_int_mod(int l, discreta_base &p, int verbose_level);
 	discreta_base& power_longinteger(longinteger &l);
 	discreta_base& power_longinteger_mod(
-			longinteger &l, discreta_base &p);
-	discreta_base& commutator(discreta_base &x, discreta_base &y);
+			longinteger &l, discreta_base &p, int verbose_level);
+	discreta_base& commutator(discreta_base &x, discreta_base &y, int verbose_level);
 		// this := x^{-1} * y^{-1} * x * y
-	discreta_base& conjugate(discreta_base &x, discreta_base &y);
+	discreta_base& conjugate(discreta_base &x, discreta_base &y, int verbose_level);
 		// this := y^{-1} * x * y
-	discreta_base& divide_by(discreta_base& x);
-	discreta_base& divide_by_exact(discreta_base& x);
+	discreta_base& divide_by(discreta_base& x, int verbose_level);
+	discreta_base& divide_by_exact(discreta_base& x, int verbose_level);
 	int order();
-	int order_mod(discreta_base &p);
+	int order_mod(discreta_base &p, int verbose_level);
 	
 
 	// additive group:
 	void add(discreta_base &x, discreta_base &y);
 		// this := x + y
-	void add_mod(discreta_base &x, discreta_base &y, discreta_base &p);
+	void add_mod(discreta_base &x, discreta_base &y, discreta_base &p, int verbose_level);
 	virtual void add_to(discreta_base &x, discreta_base &y);
 		// y := this + x
 	void negate();
@@ -608,14 +608,14 @@ class discreta_base
 			discreta_base &q, discreta_base &r,
 			int verbose_level);
 	void integral_division_exact(
-			discreta_base &x, discreta_base &q);
+			discreta_base &x, discreta_base &q, int verbose_level);
 	void integral_division_by_integer(
-			int x, discreta_base &q, discreta_base &r);
+			int x, discreta_base &q, discreta_base &r, int verbose_level);
 	void integral_division_by_integer_exact(
-			int x, discreta_base &q);
-	void integral_division_by_integer_exact_apply(int x);
-	int is_divisor(discreta_base &y);
-	void modulo(discreta_base &p);
+			int x, discreta_base &q, int verbose_level);
+	void integral_division_by_integer_exact_apply(int x, int verbose_level);
+	int is_divisor(discreta_base &y, int verbose_level);
+	void modulo(discreta_base &p, int verbose_level);
 	void extended_gcd(
 			discreta_base &n, discreta_base &u,
 			discreta_base &v, discreta_base &g,
@@ -755,8 +755,8 @@ class integer: public discreta_base
 
 	int compare_with(discreta_base &a);
 
-	void mult_to(discreta_base &x, discreta_base &y);
-	int invert_to(discreta_base &x);
+	void mult_to(discreta_base &x, discreta_base &y, int verbose_level);
+	int invert_to(discreta_base &x, int verbose_level);
 	
 	void add_to(discreta_base &x, discreta_base &y);
 	void negate_to(discreta_base &x);
@@ -824,8 +824,8 @@ class longinteger: public discreta_base
 	int compare_with(discreta_base &b);
 	int compare_with_unsigned(longinteger &b);
 
-	void mult_to(discreta_base &x, discreta_base &y);
-	int invert_to(discreta_base &x);
+	void mult_to(discreta_base &x, discreta_base &y, int verbose_level);
+	int invert_to(discreta_base &x, int verbose_level);
 	void add_to(discreta_base &x, discreta_base &y);
 	void negate_to(discreta_base &x);
 	
@@ -846,9 +846,9 @@ class longinteger: public discreta_base
 			discreta_base &x,
 			discreta_base &q, discreta_base &r,
 			int verbose_level);
-	void square_root_floor(discreta_base &x);
-	longinteger& Mersenne(int n);
-	longinteger& Fermat(int n);
+	void square_root_floor(discreta_base &x, int verbose_level);
+	longinteger& Mersenne(int n, int verbose_level);
+	longinteger& Fermat(int n, int verbose_level);
 	int s_i();
 	int retract_to_integer_if_possible(integer &x);
 	int modp(int p);
@@ -909,7 +909,7 @@ class Vector: public discreta_base
 	void m_l_x(int l, discreta_base &x);
 		// allocates a vector of l copies of x
 	Vector& realloc(int l);
-	void mult_to(discreta_base &x, discreta_base &y);
+	void mult_to(discreta_base &x, discreta_base &y, int verbose_level);
 	void add_to(discreta_base &x, discreta_base &y);
 	void inc();
 	void dec();
@@ -937,7 +937,7 @@ class Vector: public discreta_base
 		// the next larger element. 
 		// This is the position to insert x if required.
 	Vector& sort();
-	void sort_with_fellow(Vector &fellow);
+	void sort_with_fellow(Vector &fellow, int verbose_level);
 	Vector& sort_with_logging(permutation& p);
 		// the permutation p tells where the sorted elements 
 		// lay before, i.e. p[i] is the position of the
@@ -995,21 +995,21 @@ class Vector: public discreta_base
 	void read_mem(memory & m, int debug_depth);
 	int csf();
 
-	void conjugate(discreta_base & a);
-	void conjugate_with_inverse(discreta_base & a);
+	void conjugate(discreta_base & a, int verbose_level);
+	void conjugate_with_inverse(discreta_base & a, int verbose_level);
 	void replace(Vector &v);
 	void vector_of_vectors_replace(Vector &v);
 	void extract_subvector(Vector & v, int first, int len);
 	
 	int hamming_weight();
-	void scalar_product(Vector &w, discreta_base & a);
+	void scalar_product(Vector &w, discreta_base & a, int verbose_level);
 	void hadamard_product(Vector &w);
 	void intersect(Vector& b, Vector &c);
 	int vector_of_vectors_overall_length();
 	void first_divisor(Vector &exponents);
 	int next_divisor(Vector &exponents);
 	int next_non_trivial_divisor(Vector &exponents);
-	void multiply_out(Vector &primes, discreta_base &x);
+	void multiply_out(Vector &primes, discreta_base &x, int verbose_level);
 	int hash(int hash0);
 	int is_subset_of(Vector &w);
 	void concatenation(Vector &v1, Vector &v2);
@@ -1061,8 +1061,8 @@ class permutation: public Vector
 	long int& operator [] (int i)
 		{ return s_i(i); }
 
-	void mult_to(discreta_base &x, discreta_base &y);
-	int invert_to(discreta_base &x);
+	void mult_to(discreta_base &x, discreta_base &y, int verbose_level);
+	int invert_to(discreta_base &x, int verbose_level);
 	void one();
 	int is_one();
 	int compare_with(discreta_base &a);
@@ -1164,11 +1164,11 @@ class discreta_matrix: public discreta_base
 		{ matrix_access ma = { i, this };  return ma; }
 		// overload access operator
 
-	void mult_to(discreta_base &x, discreta_base &y);
-	void matrix_mult_to(discreta_matrix &x, discreta_base &y);
-	void vector_mult_to(Vector &x, discreta_base &y);
-	void multiply_vector_from_left(Vector &x, Vector &y);
-	int invert_to(discreta_base &x);
+	void mult_to(discreta_base &x, discreta_base &y, int verbose_level);
+	void matrix_mult_to(discreta_matrix &x, discreta_base &y, int verbose_level);
+	void vector_mult_to(Vector &x, discreta_base &y, int verbose_level);
+	void multiply_vector_from_left(Vector &x, Vector &y, int verbose_level);
+	int invert_to(discreta_base &x, int verbose_level);
 	void add_to(discreta_base &x, discreta_base &y);
 	void negate_to(discreta_base &x);
 	void one();
@@ -1184,10 +1184,10 @@ class discreta_matrix: public discreta_base
 	int get_kernel(
 			Vector& base_cols, discreta_matrix& kernel);
 	discreta_matrix& transpose();
-	int Asup2Ainf();
-	int Ainf2Asup();
-	int Asup2Acover();
-	int Acover2nl(Vector& nl);
+	int Asup2Ainf(int verbose_level);
+	int Ainf2Asup(int verbose_level);
+	int Asup2Acover(int verbose_level);
+	int Acover2nl(Vector& nl, int verbose_level);
 
 	void Frobenius(unipoly& m, int p, int verbose_level);
 	void Berlekamp(unipoly& m, int p, int verbose_level);
@@ -1223,7 +1223,7 @@ class discreta_matrix: public discreta_base
 	void KX_module_order_ideal(
 			int i, unipoly& mue, int verbose_level);
 	void KX_module_apply(
-			unipoly& p, Vector& v);
+			unipoly& p, Vector& v, int verbose_level);
 	void KX_module_join(
 			Vector& v1, unipoly& mue1,
 		Vector& v2, unipoly& mue2, Vector& v3,
@@ -1285,8 +1285,8 @@ class discreta_matrix: public discreta_base
 	void calc_hash_key(
 			int key_len, hollerith & hash_key, int verbose_level);
 	int is_in_center();
-	void power_mod(int r, integer &P, discreta_matrix &C);
-	int proj_order_mod(integer &P);
+	void power_mod(int r, integer &P, discreta_matrix &C, int verbose_level);
+	int proj_order_mod(integer &P, int verbose_level);
 	void determinant(discreta_base &d, int verbose_level);
 	void det(discreta_base & d, int verbose_level);
 	void det_modify_input_matrix(
@@ -1325,7 +1325,7 @@ class unipoly: public Vector
 	void m_l(int l);
 	int degree();
 
-	void mult_to(discreta_base &x, discreta_base &y);
+	void mult_to(discreta_base &x, discreta_base &y, int verbose_level);
 	void add_to(discreta_base &x, discreta_base &y);
 	void negate_to(discreta_base &x);
 	void one();
@@ -1354,8 +1354,8 @@ class unipoly: public Vector
 	void evaluate_at(
 			discreta_base& x, discreta_base& y);
 	void largest_divisor_prime_to(
-			unipoly& q, unipoly& r);
-	void monic();
+			unipoly& q, unipoly& r, int verbose_level);
+	void monic(int verbose_level);
 	void normal_base(int p,
 			discreta_matrix& F, discreta_matrix& N,
 			int verbose_level);
@@ -1369,7 +1369,7 @@ class unipoly: public Vector
 			int verbose_level);
 	void normalize(discreta_base &p);
 	void Xnm1(int n);
-	void Phi(int n, int f_v);
+	void Phi(int n, int verbose_level);
 	void weight_enumerator_MDS_code(
 			int n, int k, int q,
 			int verbose_level);
@@ -1434,8 +1434,8 @@ class number_partition: public Vector
 	int nb_parts();
 	void conjugate();
 	void type(number_partition &q);
-	void multinomial(discreta_base &res, int f_v);
-	void multinomial_ordered(discreta_base &res, int f_v);
+	void multinomial(discreta_base &res, int verbose_level);
+	void multinomial_ordered(discreta_base &res, int verbose_level);
 	int sum_of_decreased_parts();
 
 };
@@ -2083,19 +2083,19 @@ void design_lambda_max_half(
 		int t, int v, int k, discreta_base & lambda_max_half);
 void design_lambda_ijs_matrix(
 		int t, int v, int k, discreta_base& lambda,
-		int s, discreta_matrix & M);
+		int s, discreta_matrix & M, int verbose_level);
 void design_lambda_ijs(
 		int t, int v, int k,
 		discreta_base& lambda, int s, int i, int j,
-		discreta_base & lambda_ijs);
+		discreta_base & lambda_ijs, int verbose_level);
 void design_lambda_ij(
 		int t, int v, int k,
 		discreta_base& lambda, int i, int j,
-		discreta_base & lambda_ij);
+		discreta_base & lambda_ij, int verbose_level);
 int is_trivial_clan(
 		int t, int v, int k);
 void print_clan_tex_int(
-		int t, int v, int k);
+		int t, int v, int k, int verbose_level);
 void print_clan_tex_int(
 		int t, int v, int k, int delta_lambda,
 		discreta_base &m_max);
@@ -2119,7 +2119,7 @@ void design_mendelsohn_coefficient_matrix(
 		int t, int m, discreta_matrix & M);
 void design_mendelsohn_rhs(
 		int v, int t, int k, discreta_base& lambda,
-		int m, int s, Vector & rhs);
+		int m, int s, Vector & rhs, int verbose_level);
 int design_parameter_database_already_there(
 		database &D, design_parameter &p, int& idx);
 void design_parameter_database_add_if_new(
@@ -2147,11 +2147,11 @@ void design_parameter_database_clans(
 		char *path_db, int f_html, int verbose_level);
 void design_parameter_database_family_report(
 		char *path_db, int t, int v, int k,
-		int lambda, int minimal_t);
+		int lambda, int minimal_t, int verbose_level);
 void design_parameter_database_clan_report(
 		char *path_db, Vector &ancestor, Vector &clan_lambda,
 		Vector & clan_member, Vector & clan_member_path);
-int Maxfit(int i, int j);
+int Maxfit(int i, int j, int verbose_level);
 
 
 //! DISCRETA class for design parameters
@@ -2194,32 +2194,32 @@ class design_parameter: public Vector
 	void init();
 	void init(int t, int v, int k, int lambda);
 	void init(int t, int v, int k, discreta_base& lambda);
-	void text(hollerith& h);
+	void text(hollerith& h, int verbose_level);
 	void text_parameter(hollerith& h);
-	void reduced_t(design_parameter& p);
-	int increased_t(design_parameter& p);
-	void supplementary_reduced_t(design_parameter& p);
-	void derived(design_parameter& p);
-	int derived_inverse(design_parameter& p);
-	void supplementary_derived(design_parameter& p);
-	void residual(design_parameter& p);
+	void reduced_t(design_parameter& p, int verbose_level);
+	int increased_t(design_parameter& p, int verbose_level);
+	void supplementary_reduced_t(design_parameter& p, int verbose_level);
+	void derived(design_parameter& p, int verbose_level);
+	int derived_inverse(design_parameter& p, int verbose_level);
+	void supplementary_derived(design_parameter& p, int verbose_level);
+	void residual(design_parameter& p, int verbose_level);
 	void ancestor(
 			design_parameter& p, Vector & path,
 			int verbose_level);
-	void supplementary_residual(design_parameter& p);
-	int residual_inverse(design_parameter& p);
-	int trung_complementary(design_parameter& p);
+	void supplementary_residual(design_parameter& p, int verbose_level);
+	int residual_inverse(design_parameter& p, int verbose_level);
+	int trung_complementary(design_parameter& p, int verbose_level);
 	int trung_left_partner(
 			int& t1, int& v1, int& k1, discreta_base& lambda1,
-		int& t_new, int& v_new, int& k_new, discreta_base& lambda_new);
+		int& t_new, int& v_new, int& k_new, discreta_base& lambda_new, int verbose_level);
 	int trung_right_partner(
 			int& t1, int& v1, int& k1, discreta_base& lambda1,
-		int& t_new, int& v_new, int& k_new, discreta_base& lambda_new);
+		int& t_new, int& v_new, int& k_new, discreta_base& lambda_new, int verbose_level);
 	int alltop(design_parameter& p);
-	void complementary(design_parameter& p);
-	void supplementary(design_parameter& p);
-	int is_selfsupplementary();
-	void lambda_of_supplementary(discreta_base& lambda_supplementary);
+	void complementary(design_parameter& p, int verbose_level);
+	void supplementary(design_parameter& p, int verbose_level);
+	int is_selfsupplementary(int verbose_level);
+	void lambda_of_supplementary(discreta_base& lambda_supplementary, int verbose_level);
 	
 	void init_database(database& D, char *path);
 };

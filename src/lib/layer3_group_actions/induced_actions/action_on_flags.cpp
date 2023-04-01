@@ -97,7 +97,7 @@ long int action_on_flags::compute_image(
 		}
 	if (f_v) {
 		cout << "Elt=" << endl;
-		A->element_print_quick(Elt, cout);
+		A->Group_element->element_print_quick(Elt, cout);
 		}
 	Flag->unrank(i, M1, 0 /*verbose_level*/);
 	if (f_v) {
@@ -109,7 +109,7 @@ long int action_on_flags::compute_image(
 				"before image_of_low_level" << endl;
 		}
 	for (h = 0; h < Flag->K; h++) {
-		A->image_of_low_level(Elt,
+		A->Group_element->image_of_low_level(Elt,
 				M1 + h * n, M2 + h * n, verbose_level - 1);
 		}
 	if (f_v) {

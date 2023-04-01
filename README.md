@@ -42,10 +42,11 @@ Orbiter includes the following software packages (at the source code level)
 - EasyBMP
 - DISCRETA (legacy code)
 
-Statistics (as of November 2022):
-- Total number of lines of code is about 927 thousand (excluding the external software packages)
-- Total number of classes is about 518.
+Statistics (as of January 2023):
+- Total number of namespaces is 57
+- Total number of classes is 552.
+- Total number of lines of code is about 980 thousand (excluding the external software packages)
 
 Anton Betten
-November 14, 2022
+January 30, 2023
 

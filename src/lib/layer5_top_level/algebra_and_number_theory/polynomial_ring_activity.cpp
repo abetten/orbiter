@@ -67,7 +67,7 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 		algebra::algebra_global Algebra;
 
 		//Algebra.do_cheat_sheet_GF(F, verbose_level);
-		//HPD->print_monomial_ordering(cout);
+		//HPD->print_monomial_ordering_latex(cout);
 
 		Algebra.do_cheat_sheet_ring(HPD, verbose_level);
 
@@ -137,7 +137,7 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 			cout << "Group elements:" << endl;
 			for (i = 0; i < V->len; i++) {
 				cout << i << " / " << V->len << ":" << endl;
-				A->element_print_quick(V->ith(i), cout);
+				A->Group_element->element_print_quick(V->ith(i), cout);
 			}
 		}
 
@@ -180,14 +180,14 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 			if (f_v) {
 				cout << "polynomial_ring_activity::perform_activity i=" << i << " / " << V->len << endl;
 				cout << "Group element:" << endl;
-				A->element_print_quick(V->ith(i), cout);
+				A->Group_element->element_print_quick(V->ith(i), cout);
 			}
 
 			if (f_v) {
 				cout << "polynomial_ring_activity::perform_activity before element_invert" << endl;
 			}
 
-			A->element_invert(V->ith(i), Elt_inv, 0);
+			A->Group_element->element_invert(V->ith(i), Elt_inv, 0);
 			if (f_v) {
 				cout << "polynomial_ring_activity::perform_activity after element_invert" << endl;
 			}
@@ -201,7 +201,8 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 				cout << "polynomial_ring_activity::perform_activity after substitute_linear" << endl;
 			}
 
-			HPD->get_F()->PG_element_normalize_from_front(Eqn_out, 1, HPD->get_nb_monomials());
+			HPD->get_F()->Projective_space_basic->PG_element_normalize_from_front(
+					Eqn_out, 1, HPD->get_nb_monomials());
 
 
 			if (f_v) {

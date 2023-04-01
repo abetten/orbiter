@@ -541,6 +541,20 @@ void int_vec::print_fully(std::ostream &ost, int *v, int len)
 	ost << " )";
 }
 
+void int_vec::print_fully_naked(std::ostream &ost, int *v, int len)
+{
+	int i;
+
+	//ost << "( ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1) {
+			ost << ", ";
+		}
+	}
+	//ost << " )";
+}
+
 void int_vec::print_dense(std::ostream &ost, int *v, int len)
 {
 	int i;

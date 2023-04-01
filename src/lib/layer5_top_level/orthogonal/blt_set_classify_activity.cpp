@@ -29,7 +29,8 @@ blt_set_classify_activity::~blt_set_classify_activity()
 {
 }
 
-void blt_set_classify_activity::init(blt_set_classify_activity_description *Descr,
+void blt_set_classify_activity::init(
+		blt_set_classify_activity_description *Descr,
 		blt_set_classify *BLT_classify,
 		orthogonal_space_with_action *OA,
 		int verbose_level)
@@ -63,34 +64,67 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 	if (Descr->f_compute_starter) {
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity f_compute_starter" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_compute_starter" << endl;
 		}
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity before BLT_classify->compute_starter" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"before BLT_classify->compute_starter" << endl;
 		}
 		BLT_classify->compute_starter(
 				Descr->starter_control,
 				verbose_level);
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity after BLT_classify->compute_starter" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"after BLT_classify->compute_starter" << endl;
 		}
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity f_BLT_set_starter done" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_BLT_set_starter done" << endl;
 		}
 
 	}
 
+	else if (Descr->f_poset_classification_activity) {
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_poset_classification_activity" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"before BLT_classify->do_poset_classification_activity" << endl;
+		}
+		BLT_classify->do_poset_classification_activity(
+				Descr->poset_classification_activity_label,
+				verbose_level);
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"after BLT_classify->do_poset_classification_activity" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_poset_classification_activity done" << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_create_graphs) {
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity f_create_graphs" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_create_graphs" << endl;
 		}
 
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity before BLT_classify->create_graphs" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"before BLT_classify->create_graphs" << endl;
 		}
 
 
@@ -98,15 +132,18 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 				Descr->split_r,
 				Descr->split_m,
 				BLT_classify->starter_size - 1,
-				TRUE /* f_lexorder_test */, FALSE /* f_eliminate_graphs_if_possible */,
+				TRUE /* f_lexorder_test */,
+				FALSE /* f_eliminate_graphs_if_possible */,
 				verbose_level);
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity after BLT_classify->create_graphs" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"after BLT_classify->create_graphs" << endl;
 		}
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity f_BLT_set_graphs done" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_BLT_set_graphs done" << endl;
 		}
 
 	}
@@ -115,12 +152,14 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 	else if (Descr->f_isomorph) {
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity f_isomorph" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_isomorph" << endl;
 		}
 
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity before Isomorph_arguments->init" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"before Isomorph_arguments->init" << endl;
 		}
 
 
@@ -142,7 +181,8 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity after Isomorph_arguments->init" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"after Isomorph_arguments->init" << endl;
 		}
 
 		int size;
@@ -157,10 +197,12 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 			BLT_classify->Worker = NEW_OBJECT(isomorph::isomorph_worker);
 
 			if (f_v) {
-				cout << "blt_set_classify_activity::perform_activity before Worker->init" << endl;
+				cout << "blt_set_classify_activity::perform_activity "
+						"before Worker->init" << endl;
 			}
 
-			BLT_classify->Worker->init(Descr->Isomorph_arguments,
+			BLT_classify->Worker->init(
+					Descr->Isomorph_arguments,
 					BLT_classify->A,
 					BLT_classify->A /* A2 */,
 					BLT_classify->gen,
@@ -169,13 +211,15 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 					verbose_level);
 
 			if (f_v) {
-				cout << "blt_set_classify_activity::perform_activity after Worker->init" << endl;
+				cout << "blt_set_classify_activity::perform_activity "
+						"after Worker->init" << endl;
 			}
 		}
 		else {
 
 			if (f_v) {
-				cout << "blt_set_classify_activity::perform_activity BLT_classify->Worker exists" << endl;
+				cout << "blt_set_classify_activity::perform_activity "
+						"BLT_classify->Worker exists" << endl;
 			}
 
 			BLT_classify->Worker->Isomorph_arguments = Descr->Isomorph_arguments;
@@ -184,18 +228,22 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity before Worker->execute" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"before Worker->execute" << endl;
 		}
 
-		BLT_classify->Worker->execute(Descr->Isomorph_arguments, verbose_level);
+		BLT_classify->Worker->execute(
+				Descr->Isomorph_arguments, verbose_level);
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity after Worker->execute" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"after Worker->execute" << endl;
 		}
 
 
 		if (f_v) {
-			cout << "blt_set_classify_activity::perform_activity f_isomorph done" << endl;
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_isomorph done" << endl;
 		}
 
 		//FREE_OBJECT(Worker);

@@ -28,6 +28,9 @@ vector_ge_description::vector_ge_description()
 	//std::string read_csv_fname;
 	//std::string read_csv_column_label;
 
+	f_vector_data = FALSE;
+	//std::string vector_data_label;
+
 }
 
 vector_ge_description::~vector_ge_description()
@@ -62,6 +65,13 @@ int vector_ge_description::read_arguments(
 				cout << "-read_csv " << read_csv_fname << " " << read_csv_column_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-vector_data") == 0) {
+			f_vector_data = TRUE;
+			vector_data_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-vector_data " << vector_data_label << endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -89,6 +99,9 @@ void vector_ge_description::print()
 	}
 	if (f_read_csv) {
 		cout << "-read_csv " << read_csv_fname << " " << read_csv_column_label << endl;
+	}
+	if (f_vector_data) {
+		cout << "-vector_data " << vector_data_label << endl;
 	}
 
 }

@@ -20,7 +20,8 @@ namespace layer3_group_actions {
 namespace groups {
 
 
-void sims::random_element(int *elt, int verbose_level)
+void sims::random_element(
+		int *elt, int verbose_level)
 // compute a random element among the group
 // elements represented by the chain
 // (chooses random cosets along the stabilizer chain)
@@ -52,7 +53,8 @@ void sims::random_element(int *elt, int verbose_level)
 		}
 }
 
-void sims::random_element_of_order(int *elt,
+void sims::random_element_of_order(
+		int *elt,
 		int order, int verbose_level)
 {
 	int f_v = (verbose_level >=1);
@@ -66,7 +68,7 @@ void sims::random_element_of_order(int *elt,
 	while (TRUE) {
 		cnt++;
 		random_element(elt, verbose_level - 1);
-		o = A->element_order(elt);
+		o = A->Group_element->element_order(elt);
 		if ((o % order) == 0) {
 			break;
 			}
@@ -76,16 +78,16 @@ void sims::random_element_of_order(int *elt,
 				<< " found with " << cnt << " trials" << endl;
 		}
 	if (f_vv) {
-		A->element_print_quick(elt, cout);
+		A->Group_element->element_print_quick(elt, cout);
 		}
 	n = o / order;
 	if (f_v) {
 		cout << "sims::random_element_of_order we will raise to the "
 				<< n << "-th power" << endl;
 		}
-	A->element_power_int_in_place(elt, n, 0);
+	A->Group_element->element_power_int_in_place(elt, n, 0);
 	if (f_vv) {
-		A->element_print_quick(elt, cout);
+		A->Group_element->element_print_quick(elt, cout);
 		}
 }
 
@@ -111,14 +113,16 @@ void sims::random_elements_of_order(
 		}
 }
 
-void sims::transitive_extension(schreier &O,
+void sims::transitive_extension(
+		schreier &O,
 		data_structures_groups::vector_ge &SG,
 		int *tl, int verbose_level)
 {
 	transitive_extension_tolerant(O, SG, tl, FALSE, verbose_level);
 }
 
-int sims::transitive_extension_tolerant(schreier &O,
+int sims::transitive_extension_tolerant(
+		schreier &O,
 		data_structures_groups::vector_ge &SG,
 		int *tl,
 	int f_tolerant, int verbose_level)
@@ -177,7 +181,7 @@ int sims::transitive_extension_tolerant(schreier &O,
 
 		random_element(Elt2, verbose_level - 1);
 
-		A->element_mult(O.cosetrep, Elt2, Elt3, FALSE);
+		A->Group_element->element_mult(O.cosetrep, Elt2, Elt3, FALSE);
 
 		if (f_vv) {
 			cout << "sims::transitive_extension_tolerant "
@@ -292,7 +296,7 @@ void sims::transitive_extension_using_coset_representatives(
 
 		random_element(Elt2, verbose_level - 1);
 
-		A->element_mult(coset_reps + j * A->elt_size_in_int,
+		A->Group_element->element_mult(coset_reps + j * A->elt_size_in_int,
 				Elt2, Elt3, 0);
 
 		if (f_vv) {
@@ -378,7 +382,7 @@ void sims::transitive_extension_using_generators(
 
 		random_element(Elt2, verbose_level - 1);
 
-		A->element_mult(Elt_gens + j * A->elt_size_in_int, Elt2, Elt3, 0);
+		A->Group_element->element_mult(Elt_gens + j * A->elt_size_in_int, Elt2, Elt3, 0);
 
 		if (f_vv) {
 			cout << "sims::transitive_extension_using_generators "
@@ -467,7 +471,7 @@ void sims::point_stabilizer_stabchain_with_action(
 			cout << "generator " << j << ":" << endl;
 			//A->element_print(gens.ith(j), cout);
 			//A->element_print_quick(gens.ith(j), cout);
-			A->element_print_as_permutation(O.gens.ith(j), cout);
+			A->Group_element->element_print_as_permutation(O.gens.ith(j), cout);
 			cout << endl;
 		}
 	}
@@ -595,20 +599,20 @@ void sims::point_stabilizer_stabchain_with_action(
 		if (f_vv) {
 			cout << "sims::point_stabilizer_stabchain_with_action "
 					"random generator no " << cnt << endl;
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 			cout << endl;
 			cout << "sims::point_stabilizer_stabchain_with_action "
 					"random generator no " << cnt
 					<< " as permutation in natural action:" << endl;
-			A->element_print_as_permutation(Elt, cout);
+			A->Group_element->element_print_as_permutation(Elt, cout);
 			cout << endl;
 			cout << "sims::point_stabilizer_stabchain_with_action "
 					"random generator no " << cnt
 					<< " as permutation in chosen action:" << endl;
-			A2->element_print_as_permutation(Elt, cout);
+			A2->Group_element->element_print_as_permutation(Elt, cout);
 			cout << endl;
 		}
-		image = A2->element_image_of(pt, Elt,
+		image = A2->Group_element->element_image_of(pt, Elt,
 				0 /* verbose_level */);
 		if (image != pt) {
 			cout << "sims::point_stabilizer_stabchain_with_action "
@@ -618,9 +622,9 @@ void sims::point_stabilizer_stabchain_with_action(
 			exit(1);
 		}
 		if (f_vvv) {
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 			if (A2->degree < 150) {
-				A2->element_print_as_permutation(Elt, cout);
+				A2->Group_element->element_print_as_permutation(Elt, cout);
 				cout << endl;
 			}
 		}
@@ -714,7 +718,8 @@ void sims::point_stabilizer_stabchain_with_action(
 	}
 }
 
-void sims::point_stabilizer(data_structures_groups::vector_ge &SG,
+void sims::point_stabilizer(
+		data_structures_groups::vector_ge &SG,
 		int *tl, int pt, int verbose_level)
 // computes strong generating set for the stabilizer of point pt
 {
@@ -733,7 +738,8 @@ void sims::point_stabilizer(data_structures_groups::vector_ge &SG,
 	}
 }
 
-void sims::point_stabilizer_with_action(actions::action *A2,
+void sims::point_stabilizer_with_action(
+		actions::action *A2,
 		data_structures_groups::vector_ge &SG,
 		int *tl, int pt,
 		int verbose_level)
@@ -773,7 +779,8 @@ void sims::point_stabilizer_with_action(actions::action *A2,
 	}
 }
 
-void sims::conjugate(actions::action *A,
+void sims::conjugate(
+		actions::action *A,
 	sims *old_G, int *Elt,
 	int f_overshooting_OK,
 	int verbose_level)
@@ -796,7 +803,7 @@ void sims::conjugate(actions::action *A,
 	}
 	if (FALSE) {
 		cout << "transporter = " << endl;
-		A->print(cout, Elt);
+		A->Group_element->print(cout, Elt);
 	}
 
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -808,7 +815,7 @@ void sims::conjugate(actions::action *A,
 	init_trivial_group(verbose_level - 1);
 	group_order(go);
 	old_G->group_order(target_go);
-	A->invert(Elt, Elt2);
+	A->Group_element->invert(Elt, Elt2);
 	cnt = 0;
 	while (TRUE) {
 
@@ -825,13 +832,13 @@ void sims::conjugate(actions::action *A,
 				cout << "sims::conjugate choosing random schreier generator" << endl;
 			}
 			random_schreier_generator(Elt1, verbose_level - 3);
-			A->element_move(Elt1, A->Elt1, FALSE);
+			A->Group_element->element_move(Elt1, A->Elt1, FALSE);
 			if (FALSE) {
 				cout << "sims::conjugate random element chosen:" << endl;
-				A->element_print(A->Elt1, cout);
+				A->Group_element->element_print(A->Elt1, cout);
 				cout << endl;
 			}
-			A->move(A->Elt1, Elt4);
+			A->Group_element->move(A->Elt1, Elt4);
 		}
 		else if ((cnt % 2) == 1){
 			if (f_vv) {
@@ -845,16 +852,16 @@ void sims::conjugate(actions::action *A,
 				cout << endl;
 			}
 			if (FALSE) {
-				A->element_print(A->Elt1, cout);
+				A->Group_element->element_print(A->Elt1, cout);
 				cout << endl;
 			}
-			A->mult(Elt, A->Elt1, Elt3);
-			A->mult(Elt3, Elt2, Elt4);
+			A->Group_element->mult(Elt, A->Elt1, Elt3);
+			A->Group_element->mult(Elt3, Elt2, Elt4);
 			if (f_vv) {
 				cout << "sims::conjugate conjugated" << endl;
 			}
 			if (FALSE) {
-				A->element_print(Elt4, cout);
+				A->Group_element->element_print(Elt4, cout);
 				cout << endl;
 			}
 		}
@@ -864,7 +871,7 @@ void sims::conjugate(actions::action *A,
 				cout << "sims::conjugate element strips through, "
 						"residue = " << endl;
 				if (FALSE) {
-					A->element_print_quick(A->Elt2, cout);
+					A->Group_element->element_print_quick(A->Elt2, cout);
 					cout << endl;
 				}
 			}
@@ -877,7 +884,7 @@ void sims::conjugate(actions::action *A,
 					<< drop_out_level << " with image "
 					<< image << endl;
 				if (FALSE) {
-					A->element_print(A->Elt2, cout);
+					A->Group_element->element_print(A->Elt2, cout);
 					cout  << endl;
 				}
 			}
@@ -926,7 +933,8 @@ void sims::conjugate(actions::action *A,
 	}
 }
 
-int sims::test_if_in_set_stabilizer(actions::action *A,
+int sims::test_if_in_set_stabilizer(
+		actions::action *A,
 		long int *set, int size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -949,7 +957,7 @@ int sims::test_if_in_set_stabilizer(actions::action *A,
 	for (i = 0; i < goi; i++) {
 		a.create(i, __FILE__, __LINE__);
 		element_unrank(a, Elt1);
-		if (A->check_if_in_set_stabilizer(Elt1,
+		if (A->Group_element->check_if_in_set_stabilizer(Elt1,
 				size, set, verbose_level)) {
 			if (f_vv) {
 				cout << "element " << i
@@ -959,7 +967,7 @@ int sims::test_if_in_set_stabilizer(actions::action *A,
 		else {
 			cout << "element " << i
 					<< " does not stabilize the set" << endl;
-			A->element_print(Elt1, cout);
+			A->Group_element->element_print(Elt1, cout);
 			cout << endl;
 			ret = FALSE;
 			break;
@@ -969,7 +977,8 @@ int sims::test_if_in_set_stabilizer(actions::action *A,
 	return ret;
 }
 
-int sims::test_if_subgroup(sims *old_G, int verbose_level)
+int sims::test_if_subgroup(
+		sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1004,7 +1013,7 @@ int sims::test_if_subgroup(sims *old_G, int verbose_level)
 		else {
 			cout << "element " << i << " is not contained" << endl;
 			old_G->element_unrank(a, Elt1);
-			A->element_print(Elt1, cout);
+			A->Group_element->element_print(Elt1, cout);
 			cout << endl;
 			ret = FALSE;
 			break;
@@ -1033,14 +1042,14 @@ int sims::find_element_with_exactly_n_fixpoints_in_given_action(
 	goi = go.as_lint();
 	for (i = 0; i < goi; i++) {
 		element_unrank_lint(i, Elt);
-		order = A_given->element_order_and_cycle_type(Elt, cycle_type);
+		order = A_given->Group_element->element_order_and_cycle_type(Elt, cycle_type);
 		if (cycle_type[0] == nb_fixpoints) {
 			if (f_v) {
 				cout << "sims::find_element_with_exactly_n_fixpoints_in_given_action "
 						"found an element of order " << order
 						<< " and with exactly " << nb_fixpoints << " fixpoints" << endl;
 				cout << "Elt=" << endl;
-				A->element_print(Elt, cout);
+				A->Group_element->element_print(Elt, cout);
 			}
 			break;
 		}
@@ -1083,7 +1092,8 @@ void sims::table_of_group_elements_in_data_form(
 		}
 }
 
-void sims::regular_representation(int *Elt,
+void sims::regular_representation(
+		int *Elt,
 		int *perm, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1099,13 +1109,13 @@ void sims::regular_representation(int *Elt,
 	goi = go.as_lint();
 	for (i = 0; i < goi; i++) {
 		element_unrank_lint(i, Elt1);
-		A->mult(Elt1, Elt, Elt2);
+		A->Group_element->mult(Elt1, Elt, Elt2);
 		j = element_rank_lint(Elt2);
 		perm[i] = j;
 		}
 	if (f_v) {
 		cout << "sims::regular_representation of" << endl;
-		A->print(cout, Elt);
+		A->Group_element->print(cout, Elt);
 		cout << endl;
 		cout << "is:" << endl;
 		Combi.perm_print(cout, perm, goi);
@@ -1115,7 +1125,8 @@ void sims::regular_representation(int *Elt,
 	FREE_int(Elt2);
 }
 
-void sims::element_ranks_subgroup(sims *subgroup,
+void sims::element_ranks_subgroup(
+		sims *subgroup,
 		int *element_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1139,7 +1150,8 @@ void sims::element_ranks_subgroup(sims *subgroup,
 	FREE_int(Elt1);
 }
 
-void sims::center(data_structures_groups::vector_ge &gens,
+void sims::center(
+		data_structures_groups::vector_ge &gens,
 		int *center_element_ranks, int &nb_elements,
 		int verbose_level)
 {
@@ -1158,7 +1170,7 @@ void sims::center(data_structures_groups::vector_ge &gens,
 	gens_inv.init(A, verbose_level - 2);
 	gens_inv.allocate(len, verbose_level - 2);
 	for (i = 0; i < len; i++) {
-		A->invert(gens.ith(i), gens_inv.ith(i));
+		A->Group_element->invert(gens.ith(i), gens_inv.ith(i));
 		}
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -1173,8 +1185,8 @@ void sims::center(data_structures_groups::vector_ge &gens,
 	for (i = 0; i < goi; i++) {
 		element_unrank_lint(i, Elt1);
 		for (j = 0; j < len; j++) {
-			A->mult(gens_inv.ith(j), Elt1, Elt2);
-			A->mult(Elt2, gens.ith(j), Elt3);
+			A->Group_element->mult(gens_inv.ith(j), Elt1, Elt2);
+			A->Group_element->mult(Elt2, gens.ith(j), Elt3);
 			k = element_rank_lint(Elt3);
 			if (k != i)
 				break;
@@ -1197,7 +1209,8 @@ void sims::center(data_structures_groups::vector_ge &gens,
 		}
 }
 
-void sims::all_cosets(int *subset, int size,
+void sims::all_cosets(
+		int *subset, int size,
 		long int *all_cosets, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1234,7 +1247,7 @@ void sims::all_cosets(int *subset, int size,
 		element_unrank_lint(i, Elt1);
 		for (j = 0; j < size; j++) {
 			element_unrank_lint(subset[j], Elt2);
-			A->mult(Elt2, Elt1, Elt3); // we need right cosets!!!
+			A->Group_element->mult(Elt2, Elt1, Elt3); // we need right cosets!!!
 			k = element_rank_lint(Elt3);
 			if (f_taken[k]) {
 				cout << "sims::all_cosets error: f_taken[k]" << endl;
@@ -1261,7 +1274,8 @@ void sims::all_cosets(int *subset, int size,
 	FREE_int(f_taken);
 }
 
-void sims::find_standard_generators_int(int ord_a, int ord_b,
+void sims::find_standard_generators_int(
+		int ord_a, int ord_b,
 		int ord_ab, int &a, int &b, int &nb_trials,
 		int verbose_level)
 {
@@ -1295,9 +1309,9 @@ void sims::find_standard_generators_int(int ord_a, int ord_b,
 		element_unrank_lint(a, Elt1);
 		element_unrank_lint(b, Elt2);
 
-		A->mult(Elt1, Elt2, Elt3);
+		A->Group_element->mult(Elt1, Elt2, Elt3);
 
-		o = A->element_order(Elt3);
+		o = A->Group_element->element_order(Elt3);
 
 		if (o == ord_ab) {
 			break;
@@ -1314,7 +1328,8 @@ void sims::find_standard_generators_int(int ord_a, int ord_b,
 	}
 }
 
-long int sims::find_element_of_given_order_int(int ord,
+long int sims::find_element_of_given_order_int(
+		int ord,
 		int &nb_trials, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1344,7 +1359,7 @@ long int sims::find_element_of_given_order_int(int ord,
 			cout << "sims::find_element_of_given_order_int :"
 					"after random_element" << endl;
 		}
-		o = A->element_order(Elt1);
+		o = A->Group_element->element_order(Elt1);
 		if (f_v) {
 			cout << "sims::find_element_of_given_order_int "
 					"random_element has order " << o << endl;
@@ -1363,7 +1378,7 @@ long int sims::find_element_of_given_order_int(int ord,
 		cout << "sims::find_element_of_given_order_int "
 				"raising to the power " << d << endl;
 	}
-	A->element_power_int_in_place(Elt1, d, verbose_level - 1);
+	A->Group_element->element_power_int_in_place(Elt1, d, verbose_level - 1);
 	if (f_v) {
 		cout << "sims::find_element_of_given_order_int "
 				"after raising to the power " << d << endl;
@@ -1373,7 +1388,8 @@ long int sims::find_element_of_given_order_int(int ord,
 	return a;
 }
 
-int sims::find_element_of_given_order_int(int *Elt,
+int sims::find_element_of_given_order_int(
+		int *Elt,
 		int ord, int &nb_trials, int max_trials,
 		int verbose_level)
 {
@@ -1407,7 +1423,7 @@ int sims::find_element_of_given_order_int(int *Elt,
 			cout << "sims::find_element_of_given_order_int "
 					"after random_element" << endl;
 		}
-		o = A->element_order(Elt1);
+		o = A->Group_element->element_order(Elt1);
 		if (f_vv) {
 			cout << "sims::find_element_of_given_order_int "
 					"random_element has order " << o << endl;
@@ -1434,12 +1450,12 @@ int sims::find_element_of_given_order_int(int *Elt,
 		cout << "sims::find_element_of_given_order_int "
 				"raising to the power " << d << endl;
 	}
-	A->element_power_int_in_place(Elt1, d, verbose_level - 1);
+	A->Group_element->element_power_int_in_place(Elt1, d, verbose_level - 1);
 	if (f_v) {
 		cout << "sims::find_element_of_given_order_int "
 				"after raising to the power " << d << endl;
 	}
-	A->element_move(Elt1, Elt, 0);
+	A->Group_element->element_move(Elt1, Elt, 0);
 	FREE_int(Elt1);
 	if (f_v) {
 		cout << "sims::find_element_of_given_order_int done" << endl;
@@ -1447,7 +1463,8 @@ int sims::find_element_of_given_order_int(int *Elt,
 	return TRUE;
 }
 
-void sims::find_element_of_prime_power_order(int p,
+void sims::find_element_of_prime_power_order(
+		int p,
 		int *Elt, int &e, int &nb_trials,
 		int verbose_level)
 {
@@ -1466,7 +1483,7 @@ void sims::find_element_of_prime_power_order(int p,
 	while (TRUE) {
 		nb_trials++;
 		random_element(Elt, 0 /*verbose_level - 1*/);
-		o = A->element_order(Elt);
+		o = A->Group_element->element_order(Elt);
 		e = 0;
 		while (o % p == 0) {
 			e++;
@@ -1476,14 +1493,15 @@ void sims::find_element_of_prime_power_order(int p,
 			break;
 		}
 	}
-	A->element_power_int_in_place(Elt, o, verbose_level - 1);
+	A->Group_element->element_power_int_in_place(Elt, o, verbose_level - 1);
 	if (f_v) {
 		cout << "sims::find_element_of_prime_power_order done, "
 				"e=" << e << " nb_trials=" << nb_trials << endl;
 	}
 }
 
-void sims::evaluate_word_int(int word_len,
+void sims::evaluate_word_int(
+		int word_len,
 		int *word, int *Elt, int verbose_level)
 {
 	int *Elt1;
@@ -1493,19 +1511,20 @@ void sims::evaluate_word_int(int word_len,
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
-	A->one(Elt);
+	A->Group_element->one(Elt);
 	for (i = 0; i < word_len; i++) {
 		j = word[i];
 		element_unrank_lint(j, Elt1);
-		A->mult(Elt1, Elt, Elt2);
-		A->move(Elt2, Elt);
+		A->Group_element->mult(Elt1, Elt, Elt2);
+		A->Group_element->move(Elt2, Elt);
 	}
 
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 }
 
-void sims::sylow_subgroup(int p, sims *P, int verbose_level)
+void sims::sylow_subgroup(
+		int p, sims *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1, *Elt2;
@@ -1521,7 +1540,8 @@ void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 
 	group_order(go);
 	if (f_v) {
-		cout << "sims::sylow_subgroup the group has order "
+		cout << "sims::sylow_subgroup "
+				"the group has order "
 				<< go << endl;
 	}
 	e = D.multiplicity_of_p(go, go1, p);
@@ -1553,24 +1573,26 @@ void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 			exit(1);
 		}
 
-		find_element_of_prime_power_order(p, Elt1, e1,
+		find_element_of_prime_power_order(
+				p, Elt1, e1,
 				nb_trials, 0 /* verbose_level */);
 
 		for (i = 0; i < e1; i++) {
 			if (P->is_normalizing(Elt1,
 					0 /* verbose_level */)) {
+
 				if (P->strip_and_add(Elt1, Elt2 /* residue */,
 						0 /* verbose_level */)) {
 					P->group_order(go_P1);
 					if (f_v) {
 						cout << "sims::sylow_subgroup "
-								"increased the order of the "
-								"subgroup to " << go_P1 << endl;
+								"the order of the "
+								"subgroup has increased to " << go_P1 << endl;
 					}
 				}
 				break;
 			}
-			A->element_power_int_in_place(Elt1, p,
+			A->Group_element->element_power_int_in_place(Elt1, p,
 					0 /* verbose_level */);
 		}
 	}
@@ -1586,7 +1608,8 @@ void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 	}
 }
 
-int sims::is_normalizing(int *Elt, int verbose_level)
+int sims::is_normalizing(
+		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = FALSE;
@@ -1606,10 +1629,10 @@ int sims::is_normalizing(int *Elt, int verbose_level)
 	Elt4 = NEW_int(A->elt_size_in_int);
 
 	for (i = 0; i < nb_gen[0]; i++) {
-		A->element_invert(Elt, Elt1, 0);
-		A->element_move(gens.ith(i), Elt2, 0);
-		A->element_mult(Elt1, Elt2, Elt3, 0);
-		A->element_mult(Elt3, Elt, Elt4, 0);
+		A->Group_element->element_invert(Elt, Elt1, 0);
+		A->Group_element->element_move(gens.ith(i), Elt2, 0);
+		A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
+		A->Group_element->element_mult(Elt3, Elt, Elt4, 0);
 		if (!strip(Elt4, Elt3 /* residue */, drop_out_level,
 				image, 0 /* verbose_level */)) {
 			if (f_v) {
@@ -1670,7 +1693,7 @@ void sims::create_Cayley_graph(
 		element_unrank_lint(i, Elt1);
 		//cout << "i=" << i << endl;
 		for (h = 0; h < gens->len; h++) {
-			A->element_mult(Elt1, gens->ith(h), Elt2, 0);
+			A->Group_element->element_mult(Elt1, gens->ith(h), Elt2, 0);
 #if 0
 			cout << "i=" << i << " h=" << h << endl;
 			cout << "Elt1=" << endl;
@@ -1705,7 +1728,8 @@ void sims::create_Cayley_graph(
 	}
 }
 
-void sims::create_group_table(int *&Table, long int &n,
+void sims::create_group_table(
+		int *&Table, long int &n,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1739,7 +1763,7 @@ void sims::create_group_table(int *&Table, long int &n,
 		for (j = 0; j < n; j++) {
 
 			element_unrank_lint(j, Elt2);
-			A->element_mult(Elt1, Elt2, Elt3, 0);
+			A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 #if 0
 			cout << "i=" << i << " j=" << j << endl;
 			cout << "Elt_i=" << endl;
@@ -1776,18 +1800,26 @@ void sims::compute_conjugacy_classes(
 	if (f_v) {
 		cout << "sims::compute_conjugacy_classes" << endl;
 	}
-	Aconj = NEW_OBJECT(actions::action);
+	//Aconj = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "sims::compute_conjugacy_classes "
 				"before Aconj->induced_action_by_conjugation" << endl;
 	}
 
-	Aconj->induced_action_by_conjugation(this,
+	Aconj = A->Induced_action->create_induced_action_by_conjugation(
 		this,
 		FALSE /* f_ownership */,
-		FALSE /* f_basis */,
+		FALSE /* f_basis */, NULL,
 		verbose_level - 1);
+
+#if 0
+	action *induced_action::create_induced_action_by_conjugation(
+			groups::sims *Base_group, int f_ownership,
+			int f_basis, groups::sims *old_G,
+			int verbose_level)
+#endif
+
 
 	if (f_v) {
 		cout << "sims::compute_conjugacy_classes "
@@ -1843,7 +1875,8 @@ void sims::compute_conjugacy_classes(
 
 }
 
-void sims::compute_all_powers(int elt_idx, int n, int *power_elt,
+void sims::compute_all_powers(
+		int elt_idx, int n, int *power_elt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1861,14 +1894,14 @@ void sims::compute_all_powers(int elt_idx, int n, int *power_elt,
 	Elt3 = NEW_int(A->elt_size_in_int);
 
 	element_unrank_lint(elt_idx, Elt1);
-	A->element_move(Elt1, Elt2, 0);
+	A->Group_element->element_move(Elt1, Elt2, 0);
 	power_elt[0] = elt_idx;
 
 	for (i = 2; i <= n; i++) {
-		A->element_mult(Elt1, Elt2, Elt3, 0);
+		A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 		a = element_rank_lint(Elt3);
 		power_elt[i - 1] = a;
-		A->element_move(Elt3, Elt1, 0);
+		A->Group_element->element_move(Elt3, Elt1, 0);
 	}
 
 	FREE_int(Elt1);
@@ -1880,7 +1913,8 @@ void sims::compute_all_powers(int elt_idx, int n, int *power_elt,
 	}
 }
 
-long int sims::mult_by_rank(long int rk_a, long int rk_b, int verbose_level)
+long int sims::mult_by_rank(
+		long int rk_a, long int rk_b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int rk_c;
@@ -1890,12 +1924,13 @@ long int sims::mult_by_rank(long int rk_a, long int rk_b, int verbose_level)
 		}
 	element_unrank_lint(rk_a, Elt1);
 	element_unrank_lint(rk_b, Elt2);
-	A->element_mult(Elt1, Elt2, Elt3, 0);
+	A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 	rk_c = element_rank_lint(Elt3);
 	return rk_c;
 }
 
-long int sims::mult_by_rank(long int rk_a, long int rk_b)
+long int sims::mult_by_rank(
+		long int rk_a, long int rk_b)
 {
 	int rk_c;
 
@@ -1903,7 +1938,8 @@ long int sims::mult_by_rank(long int rk_a, long int rk_b)
 	return rk_c;
 }
 
-long int sims::invert_by_rank(long int rk_a, int verbose_level)
+long int sims::invert_by_rank(
+		long int rk_a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int rk_b;
@@ -1912,7 +1948,7 @@ long int sims::invert_by_rank(long int rk_a, int verbose_level)
 		cout << "sims::invert_by_rank" << endl;
 		}
 	element_unrank_lint(rk_a, Elt1);
-	A->element_invert(Elt1, Elt2, 0);
+	A->Group_element->element_invert(Elt1, Elt2, 0);
 	rk_b = element_rank_lint(Elt2);
 	return rk_b;
 }
@@ -1930,14 +1966,15 @@ long int sims::conjugate_by_rank(
 		}
 	element_unrank_lint(rk_a, Elt1); // Elt1 = a
 	element_unrank_lint(rk_b, Elt2); // Elt2 = b
-	A->element_invert(Elt2, Elt3, 0); // Elt3 = b^{-1}
-	A->element_mult(Elt3, Elt1, Elt4, 0);
-	A->element_mult(Elt4, Elt2, Elt3, 0);
+	A->Group_element->element_invert(Elt2, Elt3, 0); // Elt3 = b^{-1}
+	A->Group_element->element_mult(Elt3, Elt1, Elt4, 0);
+	A->Group_element->element_mult(Elt4, Elt2, Elt3, 0);
 	rk_c = element_rank_lint(Elt3);
 	return rk_c;
 }
 
-long int sims::conjugate_by_rank_b_bv_given(long int rk_a,
+long int sims::conjugate_by_rank_b_bv_given(
+		long int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level)
 // comutes b^{-1} * a * b
 {
@@ -1948,8 +1985,8 @@ long int sims::conjugate_by_rank_b_bv_given(long int rk_a,
 		cout << "sims::conjugate_by_rank_b_bv_given" << endl;
 		}
 	element_unrank_lint(rk_a, Elt1); // Elt1 = a
-	A->element_mult(Elt_bv, Elt1, Elt4, 0);
-	A->element_mult(Elt4, Elt_b, Elt3, 0);
+	A->Group_element->element_mult(Elt_bv, Elt1, Elt4, 0);
+	A->Group_element->element_mult(Elt4, Elt_b, Elt3, 0);
 	rk_c = element_rank_lint(Elt3);
 	return rk_c;
 }
@@ -2047,7 +2084,7 @@ void sims::zuppo_list(
 			}
 		element_unrank_lint(rk, Elt1, 0 /*verbose_level*/);
 		//cout << "element created" << endl;
-		o = A->element_order(Elt1);
+		o = A->Group_element->element_order(Elt1);
 		//cout << "element order = " << o << endl;
 		if (o == 1) {
 			continue;
@@ -2064,8 +2101,8 @@ void sims::zuppo_list(
 		f_done[rk] = TRUE;
 		for (i = 1; i < o; i++) {
 			if (NT.gcd_lint(i, o) == 1) {
-				A->element_move(Elt1, Elt2, 0);
-				A->element_power_int_in_place(Elt2,
+				A->Group_element->element_move(Elt1, Elt2, 0);
+				A->Group_element->element_power_int_in_place(Elt2,
 						i, 0 /* verbose_level*/);
 				j = element_rank_lint(Elt2);
 				f_done[j] = TRUE;
@@ -2124,7 +2161,7 @@ void sims::dimino(
 				continue;
 				}
 			if (f_vv) {
-				cout << "sims::dimino n e w coset rep" << endl;
+				cout << "sims::dimino new coset rep" << endl;
 				}
 			new_coset_rep = c;
 
@@ -2140,7 +2177,7 @@ void sims::dimino(
 			}
 		}
 	if (f_vv) {
-		cout << "sims::dimino, the n e w group has order " << group_sz << endl;
+		cout << "sims::dimino, the group order has been updated to " << group_sz << endl;
 		}
 
 	if (f_v) {
@@ -2148,7 +2185,8 @@ void sims::dimino(
 		}
 }
 
-void sims::Cayley_graph(int *&Adj, int &sz,
+void sims::Cayley_graph(
+		int *&Adj, int &sz,
 		data_structures_groups::vector_ge *gens_S,
 	int verbose_level)
 {
@@ -2183,7 +2221,7 @@ void sims::Cayley_graph(int *&Adj, int &sz,
 
 		for (h = 0; h < nb_S; h++) {
 
-			A->element_mult(Elt1, gens_S->ith(h), Elt2, 0);
+			A->Group_element->element_mult(Elt1, gens_S->ith(h), Elt2, 0);
 #if 0
 			cout << "i=" << i << " h=" << h << endl;
 			cout << "Elt1=" << endl;

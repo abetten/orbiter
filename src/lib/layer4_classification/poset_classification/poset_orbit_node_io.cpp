@@ -60,12 +60,12 @@ void poset_orbit_node::read_memory_object(
 		first_strong_generator_handle = -1;
 		tl = NEW_int(A->base_len());
 		for (i = 0; i < nb_strong_generators; i++) {
-			A->element_read_from_memory_object(Elt, m, verbose_level - 2);
+			A->Group_element->element_read_from_memory_object(Elt, m, verbose_level - 2);
 			if (i == 0) {
-				first_strong_generator_handle = A->element_store(Elt, FALSE);
+				first_strong_generator_handle = A->Group_element->element_store(Elt, FALSE);
 			}
 			else {
-				A->element_store(Elt, FALSE);
+				A->Group_element->element_store(Elt, FALSE);
 			}
 			nb_group_elements++;
 		}
@@ -122,8 +122,8 @@ void poset_orbit_node::read_memory_object(
 		}
 		else if (b == EXTENSION_TYPE_FUSION) {
 			// fusion node
-			A->element_read_from_memory_object(Elt, m, verbose_level - 2);
-			E[i].set_data(A->element_store(Elt, FALSE));
+			A->Group_element->element_read_from_memory_object(Elt, m, verbose_level - 2);
+			E[i].set_data(A->Group_element->element_store(Elt, FALSE));
 			m->read_int(&b);
 			E[i].set_data1(b);
 			m->read_int(&b);
@@ -175,8 +175,8 @@ void poset_orbit_node::write_memory_object(
 	}
 	for (i = 0; i < nb_strong_generators; i++) {
 		//A->element_retrieve(hdl_strong_generators[i], Elt, FALSE);
-		A->element_retrieve(first_strong_generator_handle + i, Elt, FALSE);
-		A->element_write_to_memory_object(Elt, m, verbose_level);
+		A->Group_element->element_retrieve(first_strong_generator_handle + i, Elt, FALSE);
+		A->Group_element->element_write_to_memory_object(Elt, m, verbose_level);
 		nb_group_elements++;
 	}
 	if (nb_strong_generators) {
@@ -218,8 +218,8 @@ void poset_orbit_node::write_memory_object(
 			if (f_v) {
 				cout << "fusion node, hdl=" << E[i].get_data() << endl;
 			}
-			A->element_retrieve(E[i].get_data(), Elt, FALSE);
-			A->element_write_to_memory_object(Elt, m, verbose_level);
+			A->Group_element->element_retrieve(E[i].get_data(), Elt, FALSE);
+			A->Group_element->element_write_to_memory_object(Elt, m, verbose_level);
 			m->write_int(E[i].get_data1());
 			m->write_int(E[i].get_data2());
 			nb_group_elements++;
@@ -378,16 +378,16 @@ void poset_orbit_node::read_file(
 		tl = NEW_int(A->base_len());
 		first_strong_generator_handle = -1;
 		for (i = 0; i < nb_strong_generators; i++) {
-			A->element_read_file_fp(Elt, fp, verbose_level);
+			A->Group_element->element_read_file_fp(Elt, fp, verbose_level);
 			if (f_vv) {
 				cout << "read element" << endl;
-				A->element_print_quick(Elt, cout);
+				A->Group_element->element_print_quick(Elt, cout);
 			}
 			if (i == 0) {
-				first_strong_generator_handle = A->element_store(Elt, FALSE);
+				first_strong_generator_handle = A->Group_element->element_store(Elt, FALSE);
 			}
 			else {
-				A->element_store(Elt, FALSE);
+				A->Group_element->element_store(Elt, FALSE);
 			}
 			nb_group_elements++;
 		}
@@ -448,13 +448,13 @@ void poset_orbit_node::read_file(
 		}
 		else if (E[i].get_type() == EXTENSION_TYPE_FUSION) {
 			// fusion node
-			A->element_read_file_fp(Elt, fp, verbose_level);
+			A->Group_element->element_read_file_fp(Elt, fp, verbose_level);
 			if (f_vv) {
 				cout << "read element" << endl;
-				A->element_print_quick(Elt, cout);
+				A->Group_element->element_print_quick(Elt, cout);
 			}
 			//element_read_file(A, Elt, elt, fp, verbose_level);
-			E[i].set_data(A->element_store(Elt, FALSE));
+			E[i].set_data(A->Group_element->element_store(Elt, FALSE));
 			fp.read((char *) &b, sizeof(int));
 			E[i].set_data1(b);
 			fp.read((char *) &b, sizeof(int));
@@ -498,8 +498,8 @@ void poset_orbit_node::write_file(
 				<< nb_strong_generators << endl;
 	}
 	for (i = 0; i < nb_strong_generators; i++) {
-		A->element_retrieve(first_strong_generator_handle + i, Elt, FALSE);
-		A->element_write_file_fp(Elt, fp, 0);
+		A->Group_element->element_retrieve(first_strong_generator_handle + i, Elt, FALSE);
+		A->Group_element->element_write_file_fp(Elt, fp, 0);
 		nb_group_elements++;
 	}
 	if (nb_strong_generators) {
@@ -548,8 +548,8 @@ void poset_orbit_node::write_file(
 			if (f_vv) {
 				cout << "fusion node, hdl=" << E[i].get_data() << endl;
 			}
-			A->element_retrieve(E[i].get_data(), Elt, FALSE);
-			A->element_write_file_fp(Elt, fp, 0);
+			A->Group_element->element_retrieve(E[i].get_data(), Elt, FALSE);
+			A->Group_element->element_write_file_fp(Elt, fp, 0);
 			b = E[i].get_data1();
 			fp.write((char *) &b, sizeof(int));
 			b = E[i].get_data2();

@@ -381,23 +381,23 @@ int discreta_base::is_odd()
 
 // mathematical functions:
 
-void discreta_base::mult(discreta_base &x, discreta_base &y)
+void discreta_base::mult(discreta_base &x, discreta_base &y, int verbose_level)
 {
-	x.mult_to(y, *this);
+	x.mult_to(y, *this, verbose_level);
 }
 
 void discreta_base::mult_mod(
 		discreta_base &x,
-		discreta_base &y, discreta_base &p)
+		discreta_base &y, discreta_base &p, int verbose_level)
 {
 	discreta_base z;
 	
-	x.mult_to(y, z);
-	z.modulo(p);
+	x.mult_to(y, z, verbose_level);
+	z.modulo(p, verbose_level);
 	swap(z);
 }
 
-void discreta_base::mult_to(discreta_base &x, discreta_base &y)
+void discreta_base::mult_to(discreta_base &x, discreta_base &y, int verbose_level)
 {
 	if (s_kind() != BASE) {
 		cout << "mult_to() not implemented for class ";
@@ -410,19 +410,19 @@ void discreta_base::mult_to(discreta_base &x, discreta_base &y)
 	exit(1);
 }
 
-int discreta_base::invert()
+int discreta_base::invert(int verbose_level)
 {
 	discreta_base a;
 	int ret;
 	
-	ret = invert_to(a);
+	ret = invert_to(a, verbose_level);
 	// cout << "discreta_base::invert() a="; a.println();
 	// freeself();
 	swap(a);
 	return ret;
 }
 
-int discreta_base::invert_mod(discreta_base &p)
+int discreta_base::invert_mod(discreta_base &p, int verbose_level)
 {
 	discreta_base u, v, g;
 	
@@ -439,35 +439,35 @@ int discreta_base::invert_mod(discreta_base &p)
 	return TRUE;
 }
 
-int discreta_base::invert_to(discreta_base &x)
+int discreta_base::invert_to(discreta_base &x, int verbose_level)
 {
 	if (s_kind() != BASE) {
 		// cout << "invert_to() not implemented for class ";
 		// printobjectkindln(cout);
 		// exit(1);
-		return invert_to(x);
+		return invert_to(x, verbose_level);
 	}
 	NOT_EXISTING_FUNCTION("discreta_base::invert_to");
 	exit(1);
 }
 
-void discreta_base::mult_apply(discreta_base &x)
+void discreta_base::mult_apply(discreta_base &x, int verbose_level)
 {
 	discreta_base a;
 	
 	// cout << "discreta_base::mult_apply() calling mult_to()\n";
-	mult_to(x, a);
+	mult_to(x, a, verbose_level);
 	freeself();
 	swap(a);
 }
 
 #if 1
-discreta_base& discreta_base::power_int(int l)
+discreta_base& discreta_base::power_int(int l, int verbose_level)
 {
 	discreta_base a, b;
 	
 	if (l < 0) {
-		invert();
+		invert(verbose_level);
 		l *= -1;
 	}
 	a = *this;
@@ -514,7 +514,7 @@ discreta_base& discreta_base::power_int(int l)
 }
 #endif
 
-discreta_base& discreta_base::power_int_mod(int l, discreta_base &p)
+discreta_base& discreta_base::power_int_mod(int l, discreta_base &p, int verbose_level)
 {
 	discreta_base a, b, c;
 	
@@ -525,13 +525,13 @@ discreta_base& discreta_base::power_int_mod(int l, discreta_base &p)
 	while (l) {
 		// cout << "= " << a << " * " << b << "^" << l << endl;
 		if (EVEN(l)) {
-			c.mult_mod(b, b, p);
+			c.mult_mod(b, b, p, verbose_level);
 			c.swap(b);
 			l >>= 1;
 		}
 		// cout << "= " << a << " * " << b << "^" << l << endl;
 		if (ODD(l)) {
-			c.mult_mod(a, b, p);
+			c.mult_mod(a, b, p, verbose_level);
 			c.swap(a);
 			l--;
 		}
@@ -574,7 +574,7 @@ discreta_base& discreta_base::power_longinteger(longinteger& l)
 }
 
 discreta_base& discreta_base::power_longinteger_mod(
-		longinteger& l, discreta_base &p)
+		longinteger& l, discreta_base &p, int verbose_level)
 {
 	discreta_base a, b, c;
 	
@@ -590,12 +590,12 @@ discreta_base& discreta_base::power_longinteger_mod(
 			cout << "l=" << l << " digits=" << d << endl;
 		}
 		if (l.is_even()) {
-			c.mult_mod(b, b, p);
+			c.mult_mod(b, b, p, verbose_level);
 			c.swap(b);
 			l.divide_out_int(2);
 		}
 		if (l.is_odd()) {
-			c.mult_mod(a, b, p);
+			c.mult_mod(a, b, p, verbose_level);
 			c.swap(a);
 			l.dec();
 		}
@@ -604,13 +604,13 @@ discreta_base& discreta_base::power_longinteger_mod(
 	return *this;
 }
 
-discreta_base& discreta_base::commutator(discreta_base &x, discreta_base &y)
+discreta_base& discreta_base::commutator(discreta_base &x, discreta_base &y, int verbose_level)
 {
 	discreta_base xv, yv, a;
 	
-	x.invert_to(xv);
-	y.invert_to(yv);
-	a.mult(xv, yv);
+	x.invert_to(xv, verbose_level);
+	y.invert_to(yv, verbose_level);
+	a.mult(xv, yv, verbose_level);
 	a *= x;
 	a *= y;
 	swap(a);
@@ -619,16 +619,16 @@ discreta_base& discreta_base::commutator(discreta_base &x, discreta_base &y)
 	return *this;
 }
 
-discreta_base& discreta_base::conjugate(discreta_base &x, discreta_base &y)
+discreta_base& discreta_base::conjugate(discreta_base &x, discreta_base &y, int verbose_level)
 {
 	discreta_base yv, a;
 	
 	// cout << "discreta_base::conjugate: y.invert_to(yv)\n";
-	y.invert_to(yv);
+	y.invert_to(yv, verbose_level);
 	// cout << "yv= " << yv << endl;
 	// cout << "x= " << x << endl;
 	// cout << "discreta_base::conjugate: a.mult(yv, x)\n";
-	a.mult(yv, x);
+	a.mult(yv, x, verbose_level);
 	// cout << "a=" << a << endl;
 	// cout << "discreta_base::conjugate: a *= y\n";
 	a *= y;
@@ -636,18 +636,18 @@ discreta_base& discreta_base::conjugate(discreta_base &x, discreta_base &y)
 	return *this;
 }
 
-discreta_base& discreta_base::divide_by(discreta_base& x)
+discreta_base& discreta_base::divide_by(discreta_base& x, int verbose_level)
 {
 	discreta_base q, r;
-	integral_division(x, q, r, 0);
+	integral_division(x, q, r, verbose_level);
 	swap(q);
 	return *this;
 }
 
-discreta_base& discreta_base::divide_by_exact(discreta_base& x)
+discreta_base& discreta_base::divide_by_exact(discreta_base& x, int verbose_level)
 {
 	discreta_base q;
-	integral_division_exact(x, q);
+	integral_division_exact(x, q, verbose_level);
 	swap(q);
 	return *this;
 }
@@ -674,7 +674,7 @@ int discreta_base::order()
 	return i;
 }
 
-int discreta_base::order_mod(discreta_base &p)
+int discreta_base::order_mod(discreta_base &p, int verbose_level)
 {
 	discreta_base a, b, c;
 	int i = 1;
@@ -682,7 +682,7 @@ int discreta_base::order_mod(discreta_base &p)
 	copyobject_to(a);
 	copyobject_to(b);
 	while (!b.is_one()) {
-		c.mult_mod(a, b, p);
+		c.mult_mod(a, b, p, verbose_level);
 		b.swap(c);
 		i++;
 	}
@@ -696,12 +696,12 @@ void discreta_base::add(discreta_base &x, discreta_base &y)
 }
 
 void discreta_base::add_mod(
-		discreta_base &x, discreta_base &y, discreta_base &p)
+		discreta_base &x, discreta_base &y, discreta_base &p, int verbose_level)
 {
 	discreta_base z;
 	
 	x.add_to(y, z);
-	z.modulo(p);
+	z.modulo(p, verbose_level);
 	swap(z);
 }
 
@@ -891,7 +891,7 @@ discreta_base& discreta_base::factorial(int z)
 discreta_base& discreta_base::i_power_j(int i, int j)
 {
 	m_i_i(i);
-	power_int(j);
+	power_int(j, 0);
 	return *this;
 }
 
@@ -924,14 +924,15 @@ void discreta_base::integral_division(
 }
 
 void discreta_base::integral_division_exact(
-		discreta_base &x, discreta_base &q)
+		discreta_base &x, discreta_base &q, int verbose_level)
 {
 	discreta_base r;
 	
 	if (s_kind() != BASE) {
-		integral_division(x, q, r, 0);
-		if (r.is_zero())
+		integral_division(x, q, r, verbose_level);
+		if (r.is_zero()) {
 			return;
+		}
 		cout << "integral_division_exact "
 				"remainder not zero" << endl;
 		cout << "this=" << *this << " divided by "
@@ -943,48 +944,56 @@ void discreta_base::integral_division_exact(
 }
 
 void discreta_base::integral_division_by_integer(
-		int x, discreta_base &q, discreta_base &r)
+		int x, discreta_base &q, discreta_base &r, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "discreta_base::integral_division_by_integer" << endl;
+	}
 	discreta_base a;
 	
 	a.m_i_i(x);
 	integral_division(a, q, r, 0);
+	if (f_v) {
+		cout << "discreta_base::integral_division_by_integer done" << endl;
+	}
 }
 
 void discreta_base::integral_division_by_integer_exact(
-		int x, discreta_base &q)
+		int x, discreta_base &q, int verbose_level)
 {
 	discreta_base a;
 	
 	a.m_i_i(x);
-	integral_division_exact(a, q);
+	integral_division_exact(a, q, verbose_level);
 }
 
-void discreta_base::integral_division_by_integer_exact_apply(int x)
+void discreta_base::integral_division_by_integer_exact_apply(int x, int verbose_level)
 {
 	discreta_base a, q;
 	
 	a.m_i_i(x);
-	integral_division_exact(a, q);
+	integral_division_exact(a, q, verbose_level);
 	swap(q);
 }
 
-int discreta_base::is_divisor(discreta_base& y)
+int discreta_base::is_divisor(discreta_base& y, int verbose_level)
 {
 	discreta_base q, r;
 	
-	y.integral_division(*this, q, r, 0);
+	y.integral_division(*this, q, r, verbose_level);
 	if (r.is_zero())
 		return TRUE;
 	else
 		return FALSE;
 }
 
-void discreta_base::modulo(discreta_base &p)
+void discreta_base::modulo(discreta_base &p, int verbose_level)
 {
 	discreta_base q, r;
 	
-	integral_division(p, q, r, 0);
+	integral_division(p, q, r, verbose_level);
 	swap(r);
 }
 

@@ -31,10 +31,20 @@ public:
 	int f_export_something;
 	std::string export_something_what;
 
+	int f_export_gap;
+
 	int f_all_quartic_curves;
 
 	int f_export_all_quartic_curves;
 
+	int f_export_something_with_group_element;
+	std::string export_something_with_group_element_what;
+	std::string export_something_with_group_element_label;
+
+	int f_action_on_module;
+	std::string action_on_module_type;
+	std::string action_on_module_basis;
+	std::string action_on_module_gens;
 
 	cubic_surface_activity_description();
 	~cubic_surface_activity_description();
@@ -143,30 +153,43 @@ public:
 	void create_cubic_surface(
 			surface_create_description *Descr,
 			int verbose_level);
-	int init_with_data(surface_create_description *Descr,
+	int init_with_data(
+			surface_create_description *Descr,
 		surface_with_action *Surf_A,
 		int verbose_level);
 	int init(surface_create_description *Descr,
 		int verbose_level);
-	int create_surface_from_description(int verbose_level);
-	void override_group(std::string &group_order_text,
-			int nb_gens, std::string &gens_text, int verbose_level);
-	void create_Eckardt_surface(int a, int b, int verbose_level);
-	void create_surface_G13(int a, int verbose_level);
-	void create_surface_F13(int a, int verbose_level);
-	void create_surface_bes(int a, int c, int verbose_level);
-	void create_surface_general_abcd(int a, int b, int c, int d,
+	int create_surface_from_description(
 			int verbose_level);
-	void create_surface_by_coefficients(std::string &coefficients_text,
+	void override_group(
+			std::string &group_order_text,
+			int nb_gens, std::string &gens_text,
+			int verbose_level);
+	void create_Eckardt_surface(
+			int a, int b, int verbose_level);
+	void create_surface_G13(
+			int a, int verbose_level);
+	void create_surface_F13(
+			int a, int verbose_level);
+	void create_surface_bes(
+			int a, int c, int verbose_level);
+	void create_surface_general_abcd(
+			int a, int b, int c, int d,
+			int verbose_level);
+	void create_surface_by_coefficients(
+			std::string &coefficients_text,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
-	void create_surface_by_coefficient_vector(int *coeffs20,
+	void create_surface_by_coefficient_vector(
+			int *coeffs20,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
-	void create_surface_by_rank(std::string &rank_text, int defining_q,
+	void create_surface_by_rank(
+			std::string &rank_text, int defining_q,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
-	void create_surface_from_catalogue(int iso,
+	void create_surface_from_catalogue(
+			int iso,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
 	void create_surface_by_arc_lifting(
@@ -197,12 +220,16 @@ public:
 			std::string &given_label,
 			std::string &given_label_tex,
 			int verbose_level);
+	void create_surface_at_random(
+			int *eqn20,
+			int verbose_level);
 	void apply_transformations(
 		std::vector<std::string> &transform_coeffs,
 		std::vector<int> &f_inverse_transform,
 		int verbose_level);
 	// applies all transformations and then recomputes the properties
-	void apply_single_transformation(int f_inverse,
+	void apply_single_transformation(
+			int f_inverse,
 			int *transformation_coeffs,
 			int sz,
 			int verbose_level);
@@ -214,13 +241,23 @@ public:
 			int verbose_level);
 		// not working ToDo
 #endif
-	void export_something(std::string &what, int verbose_level);
+	void export_something(
+			std::string &what, int verbose_level);
+	void export_something_with_group_element(
+			std::string &what, std::string &label, int verbose_level);
+	void action_on_module(
+			std::string &module_type, std::string &module_basis_label, std::string &gens_label,
+			int verbose_level);
+	void export_gap(int verbose_level);
 	void do_report(int verbose_level);
-	void do_report2(std::ostream &ost, int verbose_level);
+	void do_report2(
+			std::ostream &ost, int verbose_level);
 	void report_with_group(
 			std::string &Control_six_arcs_label,
 			int verbose_level);
 	void test_group(int verbose_level);
+	void all_quartic_curves(int verbose_level);
+	void export_all_quartic_curves(int verbose_level);
 
 };
 
@@ -320,6 +357,8 @@ public:
 	int override_group_nb_gens;
 	std::string override_group_gens;
 
+	int f_random;
+
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;
 
@@ -382,15 +421,10 @@ public:
 			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
 			int verbose_level);
 
-	void prepare_surface_classify_wedge(
-			projective_geometry::projective_space_with_action *PA,
-			poset_classification::poset_classification_control *Control,
-			cubic_surfaces_and_double_sixes::surface_classify_wedge *&SCW,
-			int verbose_level);
-
 
 	void do_study_surface(
-			field_theory::finite_field *F, int nb, int verbose_level);
+			field_theory::finite_field *F,
+			int nb, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			projective_geometry::projective_space_with_action *PA,
 			std::string &Control_six_arcs_label,
@@ -417,19 +451,24 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			std::string &fname_csv, int defining_q,
 			int verbose_level);
-	void report_singular_surfaces(std::ostream &ost,
+	void report_singular_surfaces(
+			std::ostream &ost,
 			struct cubic_surface_data_set *Data,
 			int nb_orbits, int verbose_level);
-	void report_non_singular_surfaces(std::ostream &ost,
+	void report_non_singular_surfaces(
+			std::ostream &ost,
 			struct cubic_surface_data_set *Data,
 			int nb_orbits, int verbose_level);
-	void report_surfaces_by_lines(std::ostream &ost,
+	void report_surfaces_by_lines(
+			std::ostream &ost,
 			struct cubic_surface_data_set *Data,
 			data_structures::tally &T, int verbose_level);
 	void do_create_surface_reports(
 			std::string &field_orders_text, int verbose_level);
-	void do_create_surface_atlas(int q_max, int verbose_level);
-	void do_create_surface_atlas_q_e(int q_max,
+	void do_create_surface_atlas(
+			int q_max, int verbose_level);
+	void do_create_surface_atlas_q_e(
+			int q_max,
 			struct table_surfaces_field_order *T,
 			int nb_e, int *Idx, int nb,
 			std::string &fname_report_tex,
@@ -693,7 +732,7 @@ public:
 	cubic_surfaces_and_arcs::classify_trihedral_pairs
 		*Classify_trihedral_pairs;
 
-	geometry::spread_domain *SD;
+	geometry::three_skew_subspaces *Three_skew_subspaces;
 	spreads::recoordinatize *Recoordinatize;
 	long int *regulus; // [regulus_size]
 	int regulus_size; // q + 1
@@ -701,7 +740,8 @@ public:
 
 	surface_with_action();
 	~surface_with_action();
-	void init(algebraic_geometry::surface_domain *Surf,
+	void init(
+			algebraic_geometry::surface_domain *Surf,
 			projective_geometry::projective_space_with_action *PA,
 			int f_recoordinatize,
 			int verbose_level);
@@ -715,16 +755,17 @@ public:
 		int *Polarity36,
 		std::vector<std::vector<long int> > &Double_sixes,
 		int verbose_level);
+#if 0
 	void create_regulus_and_opposite_regulus(
 		long int *three_skew_lines, long int *&regulus,
 		long int *&opp_regulus, int &regulus_sz,
 		int verbose_level);
-	int create_double_six_safely(
-		long int *five_lines, long int transversal_line,
-		long int *double_six, int verbose_level);
+#endif
+#if 0
 	int create_double_six_from_five_lines_with_a_common_transversal(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);
+#endif
 	void report_basics(std::ostream &ost);
 	void report_double_triplets(std::ostream &ost);
 	void report_double_triplets_detailed(std::ostream &ost);
@@ -748,20 +789,52 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
-	void table_of_cubic_surfaces(int verbose_level);
-	void table_of_cubic_surfaces_export_csv(long int *Table,
-			int nb_cols,
-			int q, int nb_cubic_surfaces,
-			surface_create **SC,
-			int verbose_level);
-	void table_of_cubic_surfaces_export_sql(long int *Table,
-			int nb_cols,
-			int q, int nb_cubic_surfaces,
-			surface_create **SC,
-			int verbose_level);
 
 };
 
+// #############################################################################
+// table_of_surfaces.cpp
+// #############################################################################
+
+//! a table of cubic surfaces
+
+
+
+class table_of_surfaces {
+
+public:
+
+
+	projective_geometry::projective_space_with_action *PA;
+
+	int nb_cubic_surfaces;
+
+	surface_create_description *Surface_create_description;
+
+	surface_create *SC;
+
+	surface_object_with_action *SOA;
+
+
+
+
+	table_of_surfaces();
+	~table_of_surfaces();
+	void init(
+		projective_geometry::projective_space_with_action *PA,
+		int verbose_level);
+	void do_export(
+			int verbose_level);
+	void export_csv(
+			std::string *Table,
+			int nb_cols,
+			int verbose_level);
+	void export_sql(
+			std::string *Table,
+			int nb_cols,
+			int verbose_level);
+
+};
 
 
 }}}}

@@ -31,6 +31,7 @@ blt_set_invariants::blt_set_invariants()
 	intersection_matrix = NULL;
 	nb_planes = 0;
 
+	f_has_interesting_planes = FALSE;
 	Sos = NULL;
 	Sos2 = NULL;
 	Sos3 = NULL;
@@ -53,7 +54,8 @@ blt_set_invariants::~blt_set_invariants()
 	}
 }
 
-void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
+void blt_set_invariants::init(
+		blt_set_domain *D, long int *the_set,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -70,16 +72,11 @@ void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
 	Lint_vec_copy(the_set, the_set_in_orthogonal, set_size);
 
 	for (i = 0; i < set_size; i++) {
-		D->O->Hyperbolic_pair->unrank_point(v5, 1, the_set[i], 0 /* verbose_level */);
-		the_set_in_PG[i] = D->P->rank_point(v5);
-	}
 
-	if (f_v) {
-		cout << "blt_set_invariants::init before compute" << endl;
-	}
-	compute(verbose_level);
-	if (f_v) {
-		cout << "blt_set_invariants::init after compute" << endl;
+		D->O->Hyperbolic_pair->unrank_point(
+				v5, 1, the_set[i], 0 /* verbose_level */);
+
+		the_set_in_PG[i] = D->P->rank_point(v5);
 	}
 
 	if (f_v) {
@@ -105,60 +102,69 @@ void blt_set_invariants::compute(int verbose_level)
 
 
 	if (f_v) {
-		cout << "blt_set::report before P->plane_intersections" << endl;
+		cout << "blt_set_invariants::compute "
+				"before P->plane_intersections G53" << endl;
 	}
-	D->P->plane_intersections(D->G53,
-			the_set_in_PG, set_size, R, *Sos, verbose_level);
-
-
-
+	f_has_interesting_planes = D->P->plane_intersections(
+			D->G53,
+			the_set_in_PG, set_size, R, *Sos,
+			verbose_level - 1);
 	if (f_v) {
-		cout << "blt_set::report before intersection_matrix" << endl;
+		cout << "blt_set_invariants::compute "
+				"after P->plane_intersections G53" << endl;
 	}
-	Sos->intersection_matrix(
-		intersection_type, highest_intersection_number,
-		intersection_matrix, nb_planes,
-		verbose_level);
-
-	if (f_v) {
-		cout << "blt_set::report before "
-				"extract_largest_sets" << endl;
-	}
-	Sos->extract_largest_sets(*Sos2,
-			Sos2_idx, verbose_level);
-
-	if (f_v) {
-		cout << "blt_set::report before "
-				"remove_sets_of_given_size" << endl;
-	}
-	Sos->remove_sets_of_given_size(3,
-			*Sos3, Sos3_idx, verbose_level);
-
-	if (f_v) {
-		cout << "blt_set::report before "
-				"Sos2->compute_tdo_decomposition" << endl;
-	}
-	Sos2->compute_tdo_decomposition(*D2, verbose_level);
 
 
-	D2->get_row_scheme(verbose_level);
-	D2->get_col_scheme(verbose_level);
-	if (Sos3->nb_sets) {
+	if (f_has_interesting_planes) {
 		if (f_v) {
-			cout << "blt_set::report before "
-					"Sos3[h].compute_tdo_decomposition" << endl;
+			cout << "blt_set_invariants::compute "
+					"before intersection_matrix" << endl;
 		}
-		Sos3->compute_tdo_decomposition(*D3, verbose_level);
-		D3->get_row_scheme(verbose_level);
-		D3->get_col_scheme(verbose_level);
+		Sos->intersection_matrix(
+			intersection_type, highest_intersection_number,
+			intersection_matrix, nb_planes,
+			verbose_level - 1);
+
+		if (f_v) {
+			cout << "blt_set_invariants::compute before "
+					"extract_largest_sets" << endl;
+		}
+		Sos->extract_largest_sets(*Sos2,
+				Sos2_idx, verbose_level - 1);
+
+		if (f_v) {
+			cout << "blt_set_invariants::compute before "
+					"remove_sets_of_given_size" << endl;
+		}
+		Sos->remove_sets_of_given_size(3,
+				*Sos3, Sos3_idx, verbose_level - 1);
+
+		if (f_v) {
+			cout << "blt_set_invariants::compute before "
+					"Sos2->compute_tdo_decomposition" << endl;
+		}
+		Sos2->compute_tdo_decomposition(*D2, verbose_level - 1);
+
+
+		D2->get_row_scheme(verbose_level);
+		D2->get_col_scheme(verbose_level);
+		if (Sos3->nb_sets) {
+			if (f_v) {
+				cout << "blt_set_invariants::compute before "
+						"Sos3[h].compute_tdo_decomposition" << endl;
+			}
+			Sos3->compute_tdo_decomposition(*D3, verbose_level - 1);
+			D3->get_row_scheme(verbose_level - 1);
+			D3->get_col_scheme(verbose_level - 1);
+		}
+	#if 0
+		P->plane_intersection_invariant(G,
+			data2, set_size,
+			intersection_type[h], highest_intersection_number[h],
+			intersection_matrix[h], nb_planes[h],
+			verbose_level);
+	#endif
 	}
-#if 0
-	P->plane_intersection_invariant(G,
-		data2, set_size,
-		intersection_type[h], highest_intersection_number[h],
-		intersection_matrix[h], nb_planes[h],
-		verbose_level);
-#endif
 
 	FREE_OBJECTS(R);
 

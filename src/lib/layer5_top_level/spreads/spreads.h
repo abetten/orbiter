@@ -23,6 +23,10 @@ namespace spreads {
 
 class recoordinatize {
 public:
+
+	geometry::three_skew_subspaces *Three_skew_subspaces;
+
+#if 0
 	geometry::spread_domain *SD;
 
 	int n;
@@ -30,6 +34,8 @@ public:
 	int q;
 	geometry::grassmann *Grass;
 	field_theory::finite_field *F;
+	int nCkq; // n choose k in q
+#endif
 
 	actions::action *A;
 		// P Gamma L(n,q)
@@ -38,14 +44,13 @@ public:
 		// of k-subspaces of V(n,q)
 	int f_projective;
 	int f_semilinear;
-	int nCkq; // n choose k in q
 	int (*check_function_incremental)(int len, long int *S,
 		void *check_function_incremental_data, int verbose_level);
 	void *check_function_incremental_data;
 
 	//std::string fname_live_points;
 
-
+#if 0
 	int f_data_is_allocated;
 	int *M; // [(3 * k) * n]
 	int *M1; // [(3 * k) * n]
@@ -56,10 +61,14 @@ public:
 	int *B; // [n * n]
 	int *C; // [n * n + 1]
 	int *N; // [(3 * k) * n]
+#endif
+
+	int *transform; // [n * n + 1]
 	int *Elt; // [A->elt_size_in_int]
 
 	// initialized in compute_starter():
-	long int starter_j1, starter_j2, starter_j3;
+	//long int starter_j1, starter_j2, starter_j3;
+
 	actions::action *A0;
 		// P Gamma L(k,q)
 	actions::action *A0_linear;
@@ -73,12 +82,12 @@ public:
 	recoordinatize();
 	~recoordinatize();
 	void init(
-			geometry::spread_domain *SD,
+			geometry::three_skew_subspaces *Three_skew_subspaces,
 			actions::action *A, actions::action *A2,
 		int f_projective, int f_semilinear,
 		int (*check_function_incremental)(
-				int len, long int *S,
-			void *data, int verbose_level),
+				int len,
+				long int *S, void *data, int verbose_level),
 		void *check_function_incremental_data,
 		int verbose_level);
 	void do_recoordinatize(
@@ -97,9 +106,7 @@ public:
 		int &nb_live_points, int verbose_level);
 	int apply_test(
 			long int *set, int sz, int verbose_level);
-	void make_first_three(
-			long int &j1, long int &j2, long int &j3,
-			int verbose_level);
+
 };
 
 // #############################################################################
@@ -293,7 +300,7 @@ public:
 	projective_geometry::projective_space_with_action *PA;
 	groups::strong_generators *Strong_gens;
 
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 
 	long int block_size;
 		// = r = {k choose 1}_q,

@@ -109,8 +109,6 @@ public:
 
 	data_structures::classify_bitvectors *CB;
 	int canonical_labeling_len;
-	//long int *alpha;
-	//int *gamma;
 
 	// substructure stuff:
 
@@ -218,10 +216,6 @@ public:
 			int verbose_level);
 	void canonical_form_of_quartic_curve(
 			canonical_form_of_variety *Variety,
-			//quartic_curve_object *Qco,
-			//int *canonical_equation,
-			//int *transporter_to_canonical_form,
-			//groups::strong_generators *&gens_stab_of_canonical_equation,
 			int verbose_level);
 	// Computes the canonical labeling of the graph associated with
 	// the set of rational points of the curve.
@@ -248,7 +242,7 @@ public:
 
 	std::string fname_case_out;
 
-	// intput:
+	// input:
 	quartic_curve_object *Qco;
 
 
@@ -302,22 +296,10 @@ class canonical_form_substructure {
 
 public:
 
-	//std::string fname_case_out;
-
-	//canonical_form_classifier *Canonical_form_classifier;
-		// has substructure_classifier *SubC
-
 	canonical_form_of_variety *Variety;
-
-	//quartic_curve_object *Qco;
-
 
 
 	set_stabilizer::substructure_stats_and_selection *SubSt;
-
-
-
-
 
 	set_stabilizer::compute_stabilizer *CS;
 
@@ -369,8 +351,10 @@ public:
 
 	geometry::object_with_canonical_form *OwCF;
 		// do not free
+
 	groups::strong_generators *Aut_gens;
 		// generators for the automorphism group
+
 	long int ago;
 	int nb_rows, nb_cols;
 	int *canonical_labeling;
@@ -407,6 +391,13 @@ public:
 
 	int f_export_point_line_incidence_matrix;
 
+	int f_export_cubic_surface_line_vs_line_incidence_matrix;
+
+	int f_export_cubic_surface_line_tritangent_plane_incidence_matrix;
+
+	int f_export_double_sixes;
+
+
 	int f_table_of_cubic_surfaces_compute_properties;
 	std::string table_of_cubic_surfaces_compute_fname_csv;
 	int table_of_cubic_surfaces_compute_defining_q;
@@ -419,7 +410,8 @@ public:
 	int f_canonical_form_of_code;
 	std::string canonical_form_of_code_label;
 	std::string canonical_form_of_code_generator_matrix;
-	combinatorics::classification_of_objects_description *Canonical_form_codes_Descr;
+	combinatorics::classification_of_objects_description
+		*Canonical_form_codes_Descr;
 
 	int f_map;
 	std::string map_ring_label;
@@ -437,7 +429,8 @@ public:
 
 	int f_decomposition_by_subgroup;
 	std::string decomposition_by_subgroup_label;
-	groups::linear_group_description * decomposition_by_subgroup_Descr;
+	groups::linear_group_description
+		* decomposition_by_subgroup_Descr;
 
 	int f_table_of_quartic_curves;
 		// based on knowledge_base
@@ -451,23 +444,28 @@ public:
 
 	int f_sweep_4_15_lines;
 	std::string sweep_4_15_lines_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_15_lines_surface_description;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
+		*sweep_4_15_lines_surface_description;
 
 	int f_sweep_F_beta_9_lines;
 	std::string sweep_F_beta_9_lines_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_F_beta_9_lines_surface_description;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
+		*sweep_F_beta_9_lines_surface_description;
 
 	int f_sweep_6_9_lines;
 	std::string sweep_6_9_lines_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_6_9_lines_surface_description;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
+		*sweep_6_9_lines_surface_description;
 
 	int f_sweep_4_27;
 	std::string sweep_4_27_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_27_surface_description;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
+		*sweep_4_27_surface_description;
 
 	int f_sweep_4_L9_E4;
 	std::string sweep_4_L9_E4_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description *sweep_4_L9_E4_surface_description;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
+		*sweep_4_L9_E4_surface_description;
 
 	int f_cheat_sheet;
 
@@ -553,6 +551,9 @@ public:
 	int f_report_Grassmannian;
 	int report_Grassmannian_k;
 
+	int f_report_fixed_objects;
+	std::string report_fixed_objects_Elt;
+	std::string report_fixed_objects_label;
 
 
 	// classification stuff:
@@ -570,29 +571,17 @@ public:
 	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
 
 	int f_trihedra1_control;
-	poset_classification::poset_classification_control *Trihedra1_control;
+	poset_classification::poset_classification_control
+		*Trihedra1_control;
 	int f_trihedra2_control;
-	poset_classification::poset_classification_control *Trihedra2_control;
+	poset_classification::poset_classification_control
+		*Trihedra2_control;
 	int f_control_six_arcs;
 	std::string Control_six_arcs_label;
 
 	int f_six_arcs_not_on_conic;
 	int f_filter_by_nb_Eckardt_points;
 	int nb_Eckardt_points;
-
-#if 0
-	int f_classify_quartic_curves_nauty;
-	std::string classify_quartic_curves_nauty_fname_mask;
-	int classify_quartic_curves_nauty_nb;
-	std::string classify_quartic_curves_nauty_fname_classification;
-
-	int f_classify_quartic_curves_with_substructure;
-	std::string classify_quartic_curves_with_substructure_fname_mask;
-	int classify_quartic_curves_with_substructure_nb;
-	int classify_quartic_curves_with_substructure_size;
-	int classify_quartic_curves_with_substructure_degree;
-	std::string classify_quartic_curves_with_substructure_fname_classification;
-#endif
 
 	int f_classify_arcs;
 	apps_geometry::arc_generator_description
@@ -684,29 +673,6 @@ public:
 			apps_geometry::arc_generator_description
 				*Arc_generator_description,
 			int verbose_level);
-#if 0
-	void classify_quartic_curves_nauty(
-			projective_space_with_action *PA,
-			std::string &fname_mask, int nb,
-			std::string &fname_classification,
-			canonical_form_classifier *&Classifier,
-			int verbose_level);
-	void classify_quartic_curves_with_substructure(
-			projective_space_with_action *PA,
-			std::string &fname_mask,
-			int nb, int substructure_size, int degree,
-			std::string &fname_classification,
-			canonical_form_classifier *&Classifier,
-			int verbose_level);
-	void classify_quartic_curves(
-			projective_space_with_action *PA,
-			std::string &fname_mask,
-			int nb,
-			int size,
-			int degree,
-			std::string &fname_classification,
-			int verbose_level);
-#endif
 	void set_stabilizer(
 			projective_space_with_action *PA,
 			int intermediate_subset_size,
@@ -784,7 +750,7 @@ public:
 	int n; // projective dimension
 	int d; // n + 1
 	int q;
-	field_theory::finite_field *F; // do not free
+	field_theory::finite_field *F;
 	int f_semilinear;
 	int f_init_incidence_structure;
 
@@ -804,11 +770,14 @@ public:
 		*QCDA;
 
 
-	actions::action *A; // linear group PGGL(d,q) in the action on points
-	actions::action *A_on_lines; // linear group PGGL(d,q) acting on lines
+	actions::action *A;
+		// linear group PGGL(d,q) in the action on points
+	actions::action *A_on_lines;
+		// linear group PGGL(d,q) acting on lines
 
 	int f_has_action_on_planes;
-	actions::action *A_on_planes; // linear group PGGL(d,q) acting on planes
+	actions::action *A_on_planes;
+		// linear group PGGL(d,q) acting on planes
 
 
 	int *Elt1;
@@ -863,14 +832,13 @@ public:
 			poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
-	void setup_surface_with_action(
-			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action
-				*&Surf_A,
-			int verbose_level);
 	void report_decomposition_by_group(
 			groups::strong_generators *SG,
 			std::ostream &ost, std::string &fname_base,
 		int verbose_level);
+	void report_fixed_objects(
+			std::string &Elt_text,
+			std::string &fname_latex, int verbose_level);
 
 
 };
@@ -882,7 +850,7 @@ public:
 
 
 
-//! a quartic curve object with bitangents and equation
+//! a quartic curve with bitangents and equation
 
 
 

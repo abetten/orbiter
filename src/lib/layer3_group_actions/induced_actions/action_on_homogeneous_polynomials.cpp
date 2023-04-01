@@ -117,7 +117,9 @@ void action_on_homogeneous_polynomials::init_invariant_set_of_equations(
 			action_on_homogeneous_polynomials::Equations,
 			nb_equations * dimension);
 	for (i = 0; i < nb_equations; i++) {
-		F->PG_element_normalize(action_on_homogeneous_polynomials::Equations + i * dimension, 1, dimension);
+		F->Projective_space_basic->PG_element_normalize(
+				action_on_homogeneous_polynomials::Equations + i * dimension,
+				1, dimension);
 	}
 	degree = nb_equations;
 
@@ -127,7 +129,9 @@ void action_on_homogeneous_polynomials::init_invariant_set_of_equations(
 	if (f_v) {
 		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations before Table_of_equations->allocate_and_init" << endl;
 	}
-	Table_of_equations->allocate_and_init(nb_equations, dimension, action_on_homogeneous_polynomials::Equations);
+	Table_of_equations->allocate_and_init(
+			nb_equations, dimension,
+			action_on_homogeneous_polynomials::Equations);
 	if (f_v) {
 		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations after Table_of_equations->allocate_and_init" << endl;
 	}
@@ -212,7 +216,8 @@ long int action_on_homogeneous_polynomials::compute_image_int(
 	}
 
 	if (f_invariant_set) {
-		F->PG_element_normalize(v2, 1, dimension);
+		F->Projective_space_basic->PG_element_normalize(
+				v2, 1, dimension);
 
 #if 0
 		// ToDo: get rid of linear search!
@@ -234,7 +239,7 @@ long int action_on_homogeneous_polynomials::compute_image_int(
 			Int_vec_print(cout, v2, dimension);
 			cout << endl;
 			cout << "A=" << endl;
-			A->element_print_quick(Elt, cout);
+			A->Group_element->element_print_quick(Elt, cout);
 #if 1
 			{
 				ofstream f("equations.txt");
@@ -294,7 +299,7 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_semilinear;
-	groups::matrix_group *mtx;
+	algebra::matrix_group *mtx;
 	int n;
 	
 	if (f_v) {
@@ -318,7 +323,7 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	n = mtx->n;
 
 
-	A->element_invert(Elt, Elt1, 0);
+	A->Group_element->element_invert(Elt, Elt1, 0);
 
 
 	if (f_semilinear) {

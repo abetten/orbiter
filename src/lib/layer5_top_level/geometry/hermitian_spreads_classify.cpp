@@ -162,7 +162,8 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	cout << "We found " << nb_pts << " points, they are:" << endl;
 	for (i = 0; i < nb_pts; i++) {
 		cout << i << " : " << Pts[i] << " : ";
-		F->PG_element_unrank_modified(v, 1, len, Pts[i]);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, len, Pts[i]);
 		Int_vec_print(cout, v, len);
 		cout << endl;
 	}
@@ -192,12 +193,12 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 
 
-	line_type = NEW_int(P->N_lines);
+	line_type = NEW_int(P->Subspaces->N_lines);
 
-	P->line_intersection_type(Pts, nb_pts, line_type, verbose_level);
+	P->Subspaces->line_intersection_type(Pts, nb_pts, line_type, verbose_level);
 
 
-	C.init(line_type, P->N_lines, FALSE, 0);
+	C.init(line_type, P->Subspaces->N_lines, FALSE, 0);
 	cout << "The line type is:" << endl;
 	C.print(TRUE /* f_backwards*/);
 
@@ -222,7 +223,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 		cout << j << " : " << a << " : ";
 
 		P->intersection_of_subspace_with_point_set(
-			P->Grass_lines, a, Pts, nb_pts,
+			P->Subspaces->Grass_lines, a, Pts, nb_pts,
 			Intersection_sets[j], intersection_set_size,
 			0 /* verbose_level */);
 		if (intersection_set_size != sz) {
@@ -284,10 +285,15 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 	//A2r = NEW_OBJECT(action);
 
+	std::string label_of_set;
+
+	label_of_set.assign("secants");
+
+
 	cout << "Creating restricted action on secants:" << endl;
-	A2r = A2->create_induced_action_by_restriction(
+	A2r = A2->Induced_action->create_induced_action_by_restriction(
 		NULL,
-		nb_secants, secants,
+		nb_secants, secants, label_of_set,
 		FALSE /* f_induce_action */,
 		0 /* verbose_level */);
 	cout << "Creating restricted action on secants done." << endl;
@@ -515,11 +521,11 @@ static void projective_space_init_line_action(
 	if (f_v) {
 		cout << "projective_space_init_line_action" << endl;
 	}
-	A_on_lines = NEW_OBJECT(actions::action);
+	//A_on_lines = NEW_OBJECT(actions::action);
 
 	AoL = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
-	AoL->init(*A_points, P->Grass_lines, verbose_level - 5);
+	AoL->init(*A_points, P->Subspaces->Grass_lines, verbose_level - 5);
 
 
 	if (f_v) {
@@ -551,7 +557,7 @@ static void projective_space_init_line_action(
 		cout << "projective_space_init_line_action "
 				"initializing action on grassmannian" << endl;
 	}
-	A_on_lines->induced_action_on_grassmannian(A_points, AoL,
+	A_on_lines = A_points->Induced_action->induced_action_on_grassmannian_preloaded(AoL,
 		f_induce_action, &S, verbose_level);
 	if (f_v) {
 		cout << "projective_space_init_line_action "

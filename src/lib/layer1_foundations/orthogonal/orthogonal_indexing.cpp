@@ -30,7 +30,8 @@ orthogonal_indexing::~orthogonal_indexing()
 {
 }
 
-void orthogonal_indexing::init(quadratic_form *Quadratic_form,
+void orthogonal_indexing::init(
+		quadratic_form *Quadratic_form,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -184,7 +185,8 @@ void orthogonal_indexing::Q_unrank_directly(int *v,
 	if (a < x) {
 		v[0] = 0;
 		Sbar_unrank(v + stride, stride, n, a, verbose_level);
-		F->PG_element_normalize_from_front(v + stride, stride, k);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				v + stride, stride, k);
 		return;
 	}
 	a -= x;
@@ -218,7 +220,8 @@ long int orthogonal_indexing::Q_rank_directly(int *v,
 	}
 	a = x;
 	if (v[0] != 1) {
-		F->PG_element_normalize_from_front(v, stride, k + 1);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				v, stride, k + 1);
 	}
 	minusone = F->negate(1);
 	if (minusone != 1) {
@@ -364,7 +367,8 @@ long int orthogonal_indexing::Qminus_rank(int *v,
 			exit(1);
 		}
 	}
-	F->PG_element_normalize(v, stride, k + 1);
+	F->Projective_space_basic->PG_element_normalize(
+			v, stride, k + 1);
 	x1 = v[2 * n * stride];
 	x2 = v[(2 * n + 1) * stride];
 	if (x1 == 0 && x2 == 0) {
@@ -1022,7 +1026,8 @@ void orthogonal_indexing::Sbar_rank(int *v,
 	if (f_v) {
 		cout << "orthogonal_indexing::Sbar_rank" << endl;
 	}
-	F->PG_element_normalize(v, stride, 2 * n);
+	F->Projective_space_basic->PG_element_normalize(
+			v, stride, 2 * n);
 	if (f_v) {
 		cout << "orthogonal_indexing::Sbar_rank: ";
 		if (stride == 1) {

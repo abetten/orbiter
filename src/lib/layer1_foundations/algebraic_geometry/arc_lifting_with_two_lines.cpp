@@ -198,7 +198,7 @@ void arc_lifting_with_two_lines::create_surface(
 		cout << endl;
 	}
 
-	transversal_01 = Surf->P->line_through_two_points(P[0], P[1]);
+	transversal_01 = Surf->P->Subspaces->line_through_two_points(P[0], P[1]);
 	// the line c_12
 
 	if (f_vv) {
@@ -206,14 +206,14 @@ void arc_lifting_with_two_lines::create_surface(
 				"transversal_01=" << transversal_01 << endl;
 	}
 
-	transversal_23 = Surf->P->line_through_two_points(P[2], P[3]);
+	transversal_23 = Surf->P->Subspaces->line_through_two_points(P[2], P[3]);
 	// the line c_23
 
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"transversal_23=" << transversal_23 << endl;
 	}
-	transversal_45 = Surf->P->line_through_two_points(P[4], P[5]);
+	transversal_45 = Surf->P->Subspaces->line_through_two_points(P[4], P[5]);
 	// the line c_45
 
 	if (f_vv) {
@@ -307,9 +307,9 @@ void arc_lifting_with_two_lines::create_surface(
 	Surf->P->unrank_point(P2, P[1]);
 
 	for (i1 = 0; i1 <= q; i1++) {
-		pt1 = Surf->P->create_point_on_line(
+		pt1 = Surf->P->Subspaces->create_point_on_line(
 				line1, i1 /*pt_rk*/, 0 /* verbose_level*/);
-		if (!Surf->P->is_incident(pt1, transversal_01)) {
+		if (!Surf->P->Subspaces->is_incident(pt1, transversal_01)) {
 			if (f_vv) {
 				cout << "found point pt1 which is not on "
 						"transversal_01, i1=" << i1 << endl;
@@ -323,9 +323,9 @@ void arc_lifting_with_two_lines::create_surface(
 		exit(1);
 	}
 	for (i2 = i1 + 1; i2 <= q; i2++) {
-		pt2 = Surf->P->create_point_on_line(
+		pt2 = Surf->P->Subspaces->create_point_on_line(
 				line1, i2 /*pt_rk*/, 0 /* verbose_level*/);
-		if (!Surf->P->is_incident(pt2, transversal_01)) {
+		if (!Surf->P->Subspaces->is_incident(pt2, transversal_01)) {
 			break;
 		}
 	}
@@ -344,11 +344,11 @@ void arc_lifting_with_two_lines::create_surface(
 	int pt3 = 0, pt4 = 0;
 	int val;
 
-	line3 = Surf->P->line_through_two_points(P[1], pt1);
-	line4 = Surf->P->line_through_two_points(P[1], pt2);
+	line3 = Surf->P->Subspaces->line_through_two_points(P[1], pt1);
+	line4 = Surf->P->Subspaces->line_through_two_points(P[1], pt2);
 
 	for (j1 = 0; j1 <= q; j1++) {
-		pt3 = Surf->P->create_point_on_line(
+		pt3 = Surf->P->Subspaces->create_point_on_line(
 				line3, j1 /*pt_rk*/, 0 /* verbose_level */);
 		val = Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(coeff, pt3);
 		//cout << "j1=" << j1 << " pt3=" << pt3 << " val=" << val << endl;
@@ -379,7 +379,7 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 
 	for (j2 = 0; j2 <= q; j2++) {
-		pt4 = Surf->P->create_point_on_line(
+		pt4 = Surf->P->Subspaces->create_point_on_line(
 				line4, j2 /*pt_rk*/, 0 /* verbose_level*/);
 		if (pt4 == P[1]) {
 			continue;
@@ -411,7 +411,7 @@ void arc_lifting_with_two_lines::create_surface(
 	int a2;
 	int basis_a2[8];
 
-	a2 = Surf->P->line_through_two_points(pt3, pt4);
+	a2 = Surf->P->Subspaces->line_through_two_points(pt3, pt4);
 	Surf->unrank_line(basis_a2, a2);
 
 
@@ -459,16 +459,14 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
-				"before Surf->create_double_six_from_five_"
-				"lines_with_a_common_transversal" << endl;
+				"before Surf->five_plus_one_to_double_six" << endl;
 	}
-	Surf->create_double_six_from_five_lines_with_a_common_transversal(
+	Surf->five_plus_one_to_double_six(
 			five_pts, double_six_special,
 			verbose_level - 10);
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
-				"after Surf->create_double_six_from_five_"
-				"lines_with_a_common_transversal" << endl;
+				"after Surf->five_plus_one_to_double_six" << endl;
 	}
 
 	// the double six is

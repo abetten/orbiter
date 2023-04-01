@@ -783,8 +783,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 
 
 	A_on_spread_orbits = NEW_OBJECT(actions::action);
-	A_on_spread_orbits->induced_action_on_orbits(
-			P->Spread_table_with_selection->A_on_spreads,
+	A_on_spread_orbits = P->Spread_table_with_selection->A_on_spreads->Induced_action->induced_action_on_orbits(
 			Spread_orbits_under_H->Sch /* H_orbits_on_spreads*/,
 			TRUE /*f_play_it_safe*/, 0 /* verbose_level */);
 
@@ -1035,7 +1034,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 		cout << "packing_was::compute_H_orbits_on_reduced_spreads "
 				"creating action A_on_reduced_spreads" << endl;
 	}
-	A_on_reduced_spreads = P->T->A2->create_induced_action_on_sets(
+	A_on_reduced_spreads = P->T->A2->Induced_action->create_induced_action_on_sets(
 			Spread_tables_reduced->nb_spreads, P->spread_size,
 			Spread_tables_reduced->spread_table,
 			0 /* verbose_level */);
@@ -1108,8 +1107,8 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	}
 
 
-	A_on_reduced_spread_orbits = NEW_OBJECT(actions::action);
-	A_on_reduced_spread_orbits->induced_action_on_orbits(A_on_reduced_spreads,
+	//A_on_reduced_spread_orbits = NEW_OBJECT(actions::action);
+	A_on_reduced_spread_orbits = A_on_reduced_spreads->Induced_action->induced_action_on_orbits(
 			reduced_spread_orbits_under_H->Sch /* H_orbits_on_spreads*/,
 			TRUE /*f_play_it_safe*/, 0 /* verbose_level */);
 
@@ -1142,15 +1141,23 @@ actions::action *packing_was::restricted_action(
 				"we don't have any orbits of length " << orbit_length << endl;
 		exit(1);
 	}
+
+
+	std::string label_of_set;
+
+	label_of_set.assign("reduced_spreads");
+
+
 	if (f_v) {
 		cout << "orbit_idx = " << orbit_idx << endl;
 		cout << "Number of orbits of length " << orbit_length << " is "
 				<< reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[orbit_idx] << endl;
 	}
-	Ar = A_on_reduced_spread_orbits->create_induced_action_by_restriction(
+	Ar = A_on_reduced_spread_orbits->Induced_action->create_induced_action_by_restriction(
 		NULL,
 		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[orbit_idx],
 		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[orbit_idx],
+		label_of_set,
 		FALSE /* f_induce_action */,
 		verbose_level);
 
@@ -1535,13 +1542,13 @@ void packing_was::report_orbit_invariant(std::ostream &ost)
 							<< a << " is spread " << b << " is external line "
 							<< e << " is:\\\\" << endl;
 					ost << "$$" << endl;
-					P->F->print_matrix_latex(ost, basis_external_line, 2, 6);
+					P->F->Io->print_matrix_latex(ost, basis_external_line, 2, 6);
 
 					P->F->Linear_algebra->mult_matrix_matrix(basis_external_line,
 							B, basis_external_line2,
 							2, 6, 6, 0 /* verbose_level*/);
 					ost << "\\hat{=}" << endl;
-					P->F->print_matrix_latex(ost, basis_external_line2, 2, 6);
+					P->F->Io->print_matrix_latex(ost, basis_external_line2, 2, 6);
 
 					geometry::geometry_global Gg;
 
@@ -1555,7 +1562,7 @@ void packing_was::report_orbit_invariant(std::ostream &ost)
 					ost << "\\right]" << endl;
 
 					ost << "\\hat{=}" << endl;
-					Fq3->print_matrix_latex(ost, Pair, 2, 2);
+					Fq3->Io->print_matrix_latex(ost, Pair, 2, 2);
 					ost << "$$" << endl;
 				}
 			}
@@ -1570,7 +1577,7 @@ void packing_was::report2(std::ostream &ost, int verbose_level)
 {
 	ost << "\\section{Fixed Objects of $H$}" << endl;
 	ost << endl;
-	H_gens->report_fixed_objects_in_P3(
+	H_gens->report_fixed_objects_in_PG(
 			ost,
 			P->P3,
 			0 /* verbose_level */);
@@ -1675,7 +1682,7 @@ void packing_was::report(int verbose_level)
 			fp << "\\noindent The field ${\\mathbb F}_{"
 					<< P->q
 					<< "}$ :\\\\" << endl;
-			P->F->cheat_sheet(fp, verbose_level);
+			P->F->Io->cheat_sheet(fp, verbose_level);
 
 #if 0
 			fp << "\\section{The space PG$(3, " << q << ")$}" << endl;
@@ -1805,7 +1812,7 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
 	cout << "Type " << type_idx << " has " << nb_spreads << " spreads:\\\\" << endl;
 
 	spreads_in_reduced_orbits_by_type = NEW_lint(nb_spreads);
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(spreads_in_reduced_orbits_by_type, nb_spreads);
+	Lint_vec_zero(spreads_in_reduced_orbits_by_type, nb_spreads);
 
 
 

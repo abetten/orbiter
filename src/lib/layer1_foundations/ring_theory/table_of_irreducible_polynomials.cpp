@@ -23,7 +23,7 @@ static void make_linear_irreducible_polynomials(field_theory::finite_field *F, i
 
 table_of_irreducible_polynomials::table_of_irreducible_polynomials()
 {
-	k = q = 0;
+	degree_bound = q = 0;
 	F = NULL;
 	nb_irred = 0;
 	Nb_irred = NULL;
@@ -43,7 +43,7 @@ table_of_irreducible_polynomials::~table_of_irreducible_polynomials()
 			FREE_int(First_irred);
 	}
 	if (Tables) {
-		for (i = 1; i <= k; i++) {
+		for (i = 1; i <= degree_bound; i++) {
 			FREE_int(Tables[i]);
 		}
 		FREE_pint(Tables);
@@ -53,7 +53,7 @@ table_of_irreducible_polynomials::~table_of_irreducible_polynomials()
 	}
 }
 
-void table_of_irreducible_polynomials::init(int k,
+void table_of_irreducible_polynomials::init(int degree_bound,
 		field_theory::finite_field *F,
 		int verbose_level)
 {
@@ -64,17 +64,17 @@ void table_of_irreducible_polynomials::init(int k,
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init" << endl;
 	}
-	table_of_irreducible_polynomials::k = k;
+	table_of_irreducible_polynomials::degree_bound = degree_bound;
 	table_of_irreducible_polynomials::F = F;
 	q = F->q;
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
-				"k = " << k << " q = " << q << endl;
+				"degree_bound = " << degree_bound << " q = " << q << endl;
 	}
 
-	Nb_irred = NEW_int(k + 1);
-	First_irred = NEW_int(k + 1);
-	Tables = NEW_pint(k + 1);
+	Nb_irred = NEW_int(degree_bound + 1);
+	First_irred = NEW_int(degree_bound + 1);
+	Tables = NEW_pint(degree_bound + 1);
 
 	nb_irred = 0;
 
@@ -92,10 +92,10 @@ void table_of_irreducible_polynomials::init(int k,
 	nb_irred += Nb_irred[1];
 	//First_irred[2] = First_irred[1] + Nb_irred[1];
 
-	for (d = 2; d <= k; d++) {
+	for (d = 2; d <= degree_bound; d++) {
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init "
-					"degree " << d << " / " << k << endl;
+					"degree " << d << " / " << degree_bound << endl;
 		}
 		First_irred[d] = First_irred[d - 1] + Nb_irred[d - 1];
 
@@ -136,14 +136,14 @@ void table_of_irreducible_polynomials::init(int k,
 
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
-				"k = " << k << " q = " << q
+				"degree_bound = " << degree_bound << " q = " << q
 				<< " nb_irred = " << nb_irred << endl;
 	}
 
 	Degree = NEW_int(nb_irred);
 
 	j = 0;
-	for (d = 1; d <= k; d++) {
+	for (d = 1; d <= degree_bound; d++) {
 		for (i = 0; i < Nb_irred[d]; i++) {
 			Degree[j + i] = d;
 		}
@@ -151,7 +151,7 @@ void table_of_irreducible_polynomials::init(int k,
 	}
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
-				"k = " << k << " q = " << q << " Degree = ";
+				"degree_bound = " << degree_bound << " q = " << q << " Degree = ";
 		Int_vec_print(cout, Degree, nb_irred);
 		cout << endl;
 	}
@@ -162,7 +162,7 @@ void table_of_irreducible_polynomials::init(int k,
 	{
 		unipoly_domain FX(F);
 
-		for (d = 1; d <= k; d++) {
+		for (d = 1; d <= degree_bound; d++) {
 
 			for (i = 0; i < Nb_irred[d]; i++) {
 
@@ -194,7 +194,7 @@ void table_of_irreducible_polynomials::print(std::ostream &ost)
 	cout << "table_of_irreducible_polynomials::print "
 			"table of all irreducible polynomials:" << endl;
 	j = 0;
-	for (d = 1; d <= k; d++) {
+	for (d = 1; d <= degree_bound; d++) {
 		//f = First_irred[d];
 		l = Nb_irred[d];
 		ost << "There are " << l << " irreducible polynomials of "
@@ -213,7 +213,7 @@ void table_of_irreducible_polynomials::print_polynomials(std::ostream &ost)
 {
 	int d, i, j;
 
-	for (d = 1; d <= k; d++) {
+	for (d = 1; d <= degree_bound; d++) {
 		for (i = 0; i < Nb_irred[d]; i++) {
 			for (j = 0; j <= d; j++) {
 				ost << Tables[d][i * (d + 1) + j];
@@ -230,7 +230,7 @@ int table_of_irreducible_polynomials::select_polynomial_first(
 		int *Select, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, k1 = k, d, m;
+	int i, k1 = degree_bound, d, m;
 
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::select_polynomial_first" << endl;
@@ -360,7 +360,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::factorize_polynomial "
-				"k = " << k << " q = " << q << endl;
+				"degree_bound = " << degree_bound << " q = " << q << endl;
 	}
 	U.create_object_by_rank(Poly, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
 	U.create_object_by_rank(P, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
@@ -484,7 +484,8 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::factorize_polynomial "
-				"k = " << k << " q = " << q << " done" << endl;
+				"degree_bound = " << degree_bound
+				<< " q = " << q << " done" << endl;
 	}
 }
 

@@ -37,7 +37,8 @@ surface_with_action::surface_with_action()
 
 	Classify_trihedral_pairs = NULL;
 
-	SD = NULL;
+	//SD = NULL;
+	Three_skew_subspaces = NULL;
 	Recoordinatize = NULL;
 	regulus = NULL;
 	regulus_size = 0;
@@ -57,8 +58,13 @@ surface_with_action::~surface_with_action()
 	if (Classify_trihedral_pairs) {
 		FREE_OBJECT(Classify_trihedral_pairs);
 	}
+#if 0
 	if (SD) {
 		FREE_OBJECT(SD);
+	}
+#endif
+	if (Three_skew_subspaces) {
+		FREE_OBJECT(Three_skew_subspaces);
 	}
 	if (Recoordinatize) {
 		FREE_OBJECT(Recoordinatize);
@@ -96,24 +102,27 @@ void surface_with_action::init(
 		cout << "surface_with_action::init "
 				"before A->induced_action_on_wedge_product" << endl;
 	}
-	A_wedge = A->induced_action_on_wedge_product(verbose_level);
+	A_wedge = A->Induced_action->induced_action_on_wedge_product(verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"after A->induced_action_on_wedge_product" << endl;
 	}
 	if (f_v) {
-		cout << "surface_with_action::init action A_wedge:" << endl;
+		cout << "surface_with_action::init "
+				"action A_wedge:" << endl;
 		A_wedge->print_info();
 	}
 
 	A2 = PA->A_on_lines;
 	if (f_v) {
-		cout << "surface_with_action::init action A2:" << endl;
+		cout << "surface_with_action::init "
+				"action A2:" << endl;
 		A2->print_info();
 	}
 	f_semilinear = A->is_semilinear_matrix_group();
 	if (f_v) {
-		cout << "surface_with_action::init f_semilinear=" << f_semilinear << endl;
+		cout << "surface_with_action::init "
+				"f_semilinear=" << f_semilinear << endl;
 	}
 
 
@@ -134,7 +143,7 @@ void surface_with_action::init(
 		cout << "surface_with_action::init "
 				"creating action A_on_planes" << endl;
 	}
-	A_on_planes = A->induced_action_on_grassmannian(3, verbose_level);
+	A_on_planes = A->Induced_action->induced_action_on_grassmannian(3, verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"creating action A_on_planes done" << endl;
@@ -152,7 +161,8 @@ void surface_with_action::init(
 	AonHPD_3_4->init(A, Surf->PolynomialDomains->Poly3_4, verbose_level);
 	
 #if 1
-	Classify_trihedral_pairs = NEW_OBJECT(cubic_surfaces_and_arcs::classify_trihedral_pairs);
+	Classify_trihedral_pairs =
+			NEW_OBJECT(cubic_surfaces_and_arcs::classify_trihedral_pairs);
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"before Classify_trihedral_pairs->init" << endl;
@@ -162,20 +172,34 @@ void surface_with_action::init(
 
 	if (f_recoordinatize) {
 
+#if 0
 		SD = NEW_OBJECT(geometry::spread_domain);
 
 		if (f_v) {
-			cout << "surface_with_action::init before SD->init" << endl;
+			cout << "surface_with_action::init "
+					"before SD->init_spread_domain" << endl;
 		}
 
-		SD->init(
+		SD->init_spread_domain(
 				PA->F,
 				4 /*n*/, 2 /* k */,
 				verbose_level - 1);
 
 		if (f_v) {
-			cout << "surface_with_action::init after SD->init" << endl;
+			cout << "surface_with_action::init "
+					"after SD->init_spread_domain" << endl;
 		}
+#endif
+
+		//geometry::three_skew_subspaces *Three_skew_subspaces;
+
+		Three_skew_subspaces = NEW_OBJECT(geometry::three_skew_subspaces);
+
+		Three_skew_subspaces->init(
+				PA->P->Subspaces->Grass_lines,
+				PA->F,
+				2 /*k*/, 4 /*n*/,
+				verbose_level);
 
 
 
@@ -186,7 +210,7 @@ void surface_with_action::init(
 					"before Recoordinatize->init" << endl;
 		}
 		Recoordinatize->init(
-				SD,
+				Three_skew_subspaces, //SD,
 				A, A2,
 			TRUE /* f_projective */, f_semilinear,
 			NULL /*int (*check_function_incremental)(int len,
@@ -209,8 +233,8 @@ void surface_with_action::init(
 		cout << "surface_with_action::init before "
 				"Surf->Gr->line_regulus_in_PG_3_q" << endl;
 	}
-	Surf->Gr->line_regulus_in_PG_3_q(regulus,
-			regulus_size, FALSE /* f_opposite */,
+	Surf->Gr->line_regulus_in_PG_3_q(
+			regulus, regulus_size, FALSE /* f_opposite */,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init after "
@@ -220,79 +244,6 @@ void surface_with_action::init(
 	if (f_v) {
 		cout << "surface_with_action::init done" << endl;
 	}
-}
-
-int surface_with_action::create_double_six_safely(
-	long int *five_lines, long int transversal_line, long int *double_six,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	long int double_six1[12];
-	long int double_six2[12];
-	int r1, r2, c;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely" << endl;
-		cout << "five_lines=";
-		Lint_vec_print(cout, five_lines, 5);
-		cout << " transversal_line=" << transversal_line << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely "
-				"before create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
-	}
-	r1 = create_double_six_from_five_lines_with_a_common_transversal(
-		five_lines, transversal_line, double_six1,
-		0 /* verbose_level */);
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely "
-				"after create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely "
-				"before create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
-	}
-	r2 = Surf->create_double_six_from_five_lines_with_a_common_transversal(
-			five_lines, double_six2,
-			0 /* verbose_level */);
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely "
-				"after create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
-	}
-
-	if (r1 && !r2) {
-		cout << "surface_with_action::create_double_six_safely "
-				"r1 && !r2" << endl;
-		exit(1);
-	}
-	if (!r1 && r2) {
-		cout << "surface_with_action::create_double_six_safely "
-				"!r1 && r2" << endl;
-		exit(1);
-	}
-	c = Sorting.lint_vec_compare(double_six1, double_six2, 12);
-	if (!r1) {
-		return FALSE;
-	}
-	if (c) {
-		cout << "surface_with_action::create_double_six_safely "
-				"the double sixes differ" << endl;
-		cout << "double six 1: ";
-		Lint_vec_print(cout, double_six1, 12);
-		cout << endl;
-		cout << "double six 2: ";
-		Lint_vec_print(cout, double_six2, 12);
-		cout << endl;
-		exit(1);
-	}
-	Lint_vec_copy(double_six1, double_six, 12);
-	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely done" << endl;
-	}
-	return TRUE;
 }
 
 
@@ -366,16 +317,26 @@ void surface_with_action::complete_skew_hexagon(
 		PA->P->unrank_point(Forbidden_points + j * 4, forbidden_points[j]);
 	}
 	if (f_v) {
-		cout << "surface_with_action::complete_skew_hexagon Forbidden_points:" << endl;
+		cout << "surface_with_action::complete_skew_hexagon "
+				"Forbidden_points:" << endl;
 		Int_matrix_print(Forbidden_points, 6, 4);
 	}
 
-	create_regulus_and_opposite_regulus(
-			three_skew_lines, regulus_a123, opp_regulus_a123, regulus_size,
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon "
+				"before create_regulus_and_opposite_regulus" << endl;
+	}
+	Recoordinatize->Three_skew_subspaces->create_regulus_and_opposite_regulus(
+			three_skew_lines, regulus_a123,
+			opp_regulus_a123, regulus_size,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon "
+				"after create_regulus_and_opposite_regulus" << endl;
+	}
 
 
-	A->element_invert(Recoordinatize->Elt, Elt1, 0);
+	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 
 	for (i = 0; i < regulus_size; i++) {
@@ -399,14 +360,16 @@ void surface_with_action::complete_skew_hexagon(
 			if (f_v) {
 				cout << "surface_with_action::complete_skew_hexagon "
 						"i=" << i << " / " << regulus_size
-						<< " a=" << a << " contains point " << j << ", skipping" << endl;
+						<< " a=" << a << " contains point "
+						<< j << ", skipping" << endl;
 			}
 			continue;
 		}
 		b6 = a;
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon "
-					"i=" << i << " / " << regulus_size << " b6=" << b6 << endl;
+					"i=" << i << " / " << regulus_size
+					<< " b6=" << b6 << endl;
 		}
 
 		// We map b1, b2, b3 to
@@ -420,15 +383,17 @@ void surface_with_action::complete_skew_hexagon(
 				b1, b2, b3,
 				verbose_level - 2);
 
-		A->element_invert(Recoordinatize->Elt, Elt1, 0);
+		A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
-		b6_image = A2->element_image_of(b6,
+		b6_image = A2->Group_element->element_image_of(
+				b6,
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon "
 					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
-			cout << "surface_with_action::complete_skew_hexagon b6_image=" << b6_image << endl;
+			cout << "surface_with_action::complete_skew_hexagon "
+					"b6_image=" << b6_image << endl;
 		}
 
 		Surf->Gr->unrank_lint_here(Basis, b6_image, 0 /* verbose_level */);
@@ -445,9 +410,17 @@ void surface_with_action::complete_skew_hexagon(
 
 		int sz;
 
-		create_regulus_and_opposite_regulus(
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon "
+					"before create_regulus_and_opposite_regulus" << endl;
+		}
+		Recoordinatize->Three_skew_subspaces->create_regulus_and_opposite_regulus(
 				three_skew_lines, regulus_b123, opp_regulus_b123, sz,
 				verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon "
+					"after create_regulus_and_opposite_regulus" << endl;
+		}
 
 
 
@@ -465,29 +438,34 @@ void surface_with_action::complete_skew_hexagon(
 			cout << "surface_with_action::complete_skew_hexagon "
 					"before F->find_secant_points_wrt_x0x3mx1x2" << endl;
 		}
-		F->Linear_algebra->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, verbose_level);
+		F->Linear_algebra->find_secant_points_wrt_x0x3mx1x2(
+				Basis, Pts4, nb_pts, verbose_level);
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon "
 					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
-			cout << "surface_with_action::complete_skew_hexagon Pts4=" << endl;
+			cout << "surface_with_action::complete_skew_hexagon "
+					"Pts4=" << endl;
 			Int_matrix_print(Pts4, 2, 2);
 		}
 
 		if (nb_pts != 2) {
-			cout << "surface_with_action::complete_skew_hexagon nb_pts != 2" << endl;
+			cout << "surface_with_action::complete_skew_hexagon "
+					"nb_pts != 2" << endl;
 			exit(1);
 		}
 		for (j = 0; j < nb_pts; j++) {
 			v[0] = Pts4[j * 2 + 0];
 			v[1] = Pts4[j * 2 + 1];
-			F->Linear_algebra->mult_matrix_matrix(v,
+			F->Linear_algebra->mult_matrix_matrix(
+					v,
 					Basis,
 					w + j * 4,
 					1, 2, 4,
 					0 /* verbose_level */);
 		}
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon after multiplying" << endl;
+			cout << "surface_with_action::complete_skew_hexagon "
+					"after multiplying" << endl;
 			cout << "surface_with_action::complete_skew_hexagon w=" << endl;
 			Int_matrix_print(w, 2, 4);
 		}
@@ -495,12 +473,15 @@ void surface_with_action::complete_skew_hexagon(
 		// test if the intersection points lie on the quadric:
 		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 		if (u) {
-			cout << "the first secant point does not lie on the quadric" << endl;
+			cout << "the first secant point "
+					"does not lie on the quadric" << endl;
 			exit(1);
 		}
-		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w + 4);
+		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(
+				w + 4);
 		if (u) {
-			cout << "the second secant point does not lie on the quadric" << endl;
+			cout << "the second secant point "
+					"does not lie on the quadric" << endl;
 			exit(1);
 		}
 
@@ -516,7 +497,8 @@ void surface_with_action::complete_skew_hexagon(
 				idx[j] = 0;
 			}
 			else {
-				F->PG_element_normalize_from_front(z, 1, 4);
+				F->Projective_space_basic->PG_element_normalize_from_front(
+						z, 1, 4);
 				idx[j] = z[1] + 1;
 			}
 			if (f_v) {
@@ -683,12 +665,20 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		Int_matrix_print(Forbidden_points, 6, 4);
 	}
 
-	create_regulus_and_opposite_regulus(
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+				"before create_regulus_and_opposite_regulus" << endl;
+	}
+	Recoordinatize->Three_skew_subspaces->create_regulus_and_opposite_regulus(
 			three_skew_lines, regulus_a123, opp_regulus_a123, regulus_size,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+				"after create_regulus_and_opposite_regulus" << endl;
+	}
 
 
-	A->element_invert(Recoordinatize->Elt, Elt1, 0);
+	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 
 	for (i = 0; i < regulus_size; i++) {
@@ -712,7 +702,8 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 			if (f_v) {
 				cout << "surface_with_action::complete_skew_hexagon_with_polarity "
 						"i=" << i << " / " << regulus_size
-						<< " a=" << a << " contains point " << j << ", skipping" << endl;
+						<< " a=" << a << " contains point "
+						<< j << ", skipping" << endl;
 			}
 			continue;
 		}
@@ -737,9 +728,9 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 				b1, b2, b3,
 				verbose_level - 2);
 
-		A->element_invert(Recoordinatize->Elt, Elt1, 0);
+		A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
-		b6_image = A2->element_image_of(b6,
+		b6_image = A2->Group_element->element_image_of(b6,
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
 		if (f_v) {
@@ -764,9 +755,17 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 
 		int sz;
 
-		create_regulus_and_opposite_regulus(
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+					"before create_regulus_and_opposite_regulus" << endl;
+		}
+		Recoordinatize->Three_skew_subspaces->create_regulus_and_opposite_regulus(
 				three_skew_lines, regulus_b123, opp_regulus_b123, sz,
 				verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+					"after create_regulus_and_opposite_regulus" << endl;
+		}
 
 
 
@@ -785,7 +784,8 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
 					"before F->find_secant_points_wrt_x0x3mx1x2" << endl;
 		}
-		F->Linear_algebra->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, verbose_level);
+		F->Linear_algebra->find_secant_points_wrt_x0x3mx1x2(
+				Basis, Pts4, nb_pts, verbose_level);
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
 					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
@@ -819,12 +819,14 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		// test if the intersection points lie on the quadric:
 		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 		if (u) {
-			cout << "the first secant point does not lie on the quadric" << endl;
+			cout << "the first secant point "
+					"does not lie on the quadric" << endl;
 			exit(1);
 		}
 		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w + 4);
 		if (u) {
-			cout << "the second secant point does not lie on the quadric" << endl;
+			cout << "the second secant point "
+					"does not lie on the quadric" << endl;
 			exit(1);
 		}
 
@@ -840,7 +842,8 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 				idx[j] = 0;
 			}
 			else {
-				F->PG_element_normalize_from_front(z, 1, 4);
+				F->Projective_space_basic->PG_element_normalize_from_front(
+						z, 1, 4);
 				idx[j] = z[1] + 1;
 			}
 			if (f_v) {
@@ -858,17 +861,20 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 			Surf->Gr->print_single_generator_matrix_tex(cout, a5);
 		}
 
-		b4 = Surf->Klein->apply_polarity(a4, Polarity36, 0 /* verbose_level */);
+		b4 = Surf->Klein->apply_polarity(
+				a4, Polarity36, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "b4 = " << b4 << " = " << endl;
 			Surf->Gr->print_single_generator_matrix_tex(cout, b4);
 		}
-		b5 = Surf->Klein->apply_polarity(a5, Polarity36, 0 /* verbose_level */);
+		b5 = Surf->Klein->apply_polarity(
+				a5, Polarity36, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "b5 = " << b5 << " = " << endl;
 			Surf->Gr->print_single_generator_matrix_tex(cout, b5);
 		}
-		a6 = Surf->Klein->apply_polarity(b6, Polarity36, 0 /* verbose_level */);
+		a6 = Surf->Klein->apply_polarity(
+				b6, Polarity36, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "a6 = " << a6 << " = " << endl;
 			Surf->Gr->print_single_generator_matrix_tex(cout, a6);
@@ -888,7 +894,8 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		double_six[11] = b6;
 
 
-		cout << "The candidate for " << label_for_printing << " and i=" << i << " is: ";
+		cout << "The candidate for " << label_for_printing
+				<< " and i=" << i << " is: ";
 		Lint_vec_print(cout, double_six, 12);
 		cout << endl;
 		Surf->latex_double_six(cout, double_six);
@@ -907,7 +914,8 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 					double_six, 0 /* verbose_level*/);
 
 
-			cout << "A double-six for " << label_for_printing << " and i=" << i << " is: ";
+			cout << "A double-six for " << label_for_printing
+					<< " and i=" << i << " is: ";
 			Lint_vec_print(cout, double_six, 12);
 			cout << "  nb_E = " << nb_E;
 			cout << endl;
@@ -937,6 +945,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 	}
 }
 
+#if 0
 void surface_with_action::create_regulus_and_opposite_regulus(
 	long int *three_skew_lines, long int *&regulus,
 	long int *&opp_regulus, int &regulus_size,
@@ -989,16 +998,21 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 	// This is because they are part of a
 	// partial ovoid on the Klein quadric.
 	Recoordinatize->do_recoordinatize(
-			three_skew_lines[0], three_skew_lines[1], three_skew_lines[2],
+			three_skew_lines[0],
+			three_skew_lines[1],
+			three_skew_lines[2],
 			verbose_level - 2);
 
-	A->element_invert(Recoordinatize->Elt, Elt1, 0);
 
-	Recoordinatize->Grass->line_regulus_in_PG_3_q(
-			regulus, regulus_size, FALSE /* f_opposite */, verbose_level);
+	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
-	Recoordinatize->Grass->line_regulus_in_PG_3_q(
-			opp_regulus, sz, TRUE /* f_opposite */, verbose_level);
+	Recoordinatize->Three_skew_subspaces->Grass->line_regulus_in_PG_3_q(
+			regulus, regulus_size, FALSE /* f_opposite */,
+			verbose_level);
+
+	Recoordinatize->Three_skew_subspaces->Grass->line_regulus_in_PG_3_q(
+			opp_regulus, sz, TRUE /* f_opposite */,
+			verbose_level);
 
 	if (sz != regulus_size) {
 		cout << "sz != regulus_size" << endl;
@@ -1008,12 +1022,14 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 
 	// map regulus back:
 	for (i = 0; i < regulus_size; i++) {
-		regulus[i] = A2->element_image_of(regulus[i], Elt1, 0 /* verbose_level */);
+		regulus[i] = A2->Group_element->element_image_of(
+				regulus[i], Elt1, 0 /* verbose_level */);
 	}
 
 	// map opposite regulus back:
 	for (i = 0; i < regulus_size; i++) {
-		opp_regulus[i] = A2->element_image_of(opp_regulus[i], Elt1, 0 /* verbose_level */);
+		opp_regulus[i] = A2->Group_element->element_image_of(
+				opp_regulus[i], Elt1, 0 /* verbose_level */);
 	}
 
 
@@ -1021,8 +1037,10 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 		cout << "surface_with_action::create_regulus_and_opposite_regulus done" << endl;
 	}
 }
+#endif
 
 
+#if 0
 int surface_with_action::create_double_six_from_five_lines_with_a_common_transversal(
 	long int *five_lines, long int transversal_line, long int *double_six,
 	int verbose_level)
@@ -1095,7 +1113,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				<< " with line " << transversal_line << endl;
 		}
 		P[i] = Surf->P->Solid->point_of_intersection_of_a_line_and_a_line_in_three_space(
-				five_lines[i], transversal_line, 0 /* verbose_level */);
+				five_lines[i], transversal_line,
+				0 /* verbose_level */);
 	}
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
@@ -1111,6 +1130,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	// let b_i be the unique second transversal:
 	
 	nb_subsets = Combi.int_n_choose_k(5, 4);
+		// 5 choose 4 is of course 5.
 
 	for (rk = 0; rk < nb_subsets; rk++) {
 
@@ -1142,25 +1162,31 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 		if (f_vv) {
 			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
-					"subset " << rk << " / " << nb_subsets << " before do_recoordinatize" << endl;
+					"subset " << rk << " / " << nb_subsets
+					<< " before do_recoordinatize" << endl;
 		}
 		Recoordinatize->do_recoordinatize(
 				four_lines[0], four_lines[1], four_lines[2],
 				verbose_level - 2);
 		if (f_vv) {
 			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
-					"subset " << rk << " / " << nb_subsets << " after do_recoordinatize" << endl;
+					"subset " << rk << " / " << nb_subsets
+					<< " after do_recoordinatize" << endl;
 		}
 
-		A->element_invert(Recoordinatize->Elt, Elt1, 0);
+		A->Group_element->element_invert(
+				Recoordinatize->Elt, Elt1, 0);
 
 
-		ai4image = A2->element_image_of(four_lines[3],
-				Recoordinatize->Elt, 0 /* verbose_level */);
+		ai4image = A2->Group_element->element_image_of(
+				four_lines[3],
+				Recoordinatize->Elt,
+				0 /* verbose_level */);
 
 
-		Q = A->element_image_of(P4,
-				Recoordinatize->Elt, 0 /* verbose_level */);
+		Q = A->Group_element->element_image_of(P4,
+				Recoordinatize->Elt,
+				0 /* verbose_level */);
 		if (f_vv) {
 			cout << "ai4image = " << ai4image << " Q=" << Q << endl;
 		}
@@ -1174,7 +1200,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 
 
-		Surf->Gr->unrank_lint_here(L, ai4image, 0 /* verbose_level */);
+		Surf->Gr->unrank_lint_here(
+				L, ai4image, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "before F->adjust_basis" << endl;
 			cout << "L=" << endl;
@@ -1184,7 +1211,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 
 		// Adjust the basis L of the line ai4image so that Q4 is first:
-		F->Linear_algebra->adjust_basis(L, Q4, 4, 2, 1, verbose_level - 1);
+		F->Linear_algebra->adjust_basis(
+				L, Q4, 4, 2, 1, verbose_level - 1);
 		if (f_vv) {
 			cout << "after F->adjust_basis" << endl;
 			cout << "L=" << endl;
@@ -1199,13 +1227,15 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 		if (f_vv) {
 			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
-					"subset " << rk << " / " << nb_subsets << " before loop" << endl;
+					"subset " << rk << " / " << nb_subsets
+					<< " before loop" << endl;
 		}
 
 		for (a = 0; a < F->q; a++) {
 			v[0] = a;
 			v[1] = 1;
-			F->Linear_algebra->mult_matrix_matrix(v, L, w, 1, 2, 4,
+			F->Linear_algebra->mult_matrix_matrix(
+					v, L, w, 1, 2, 4,
 					0 /* verbose_level */);
 			//rk = Surf->rank_point(w);
 
@@ -1227,7 +1257,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 		if (f_vv) {
 			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
-					"subset " << rk << " / " << nb_subsets << " after loop" << endl;
+					"subset " << rk << " / " << nb_subsets
+					<< " after loop" << endl;
 		}
 
 		if (a == F->q) {
@@ -1242,8 +1273,10 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 		
 		// test that the line is not a line of the quadric:
-		F->Linear_algebra->add_vector(L, w, pt_coord, 4);
-		b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(pt_coord);
+		F->Linear_algebra->add_vector(
+				L, w, pt_coord, 4);
+		b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(
+				pt_coord);
 		if (b == 0) {
 			if (f_v) {
 				cout << "The line lies in the quadric, "
@@ -1288,13 +1321,16 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		// Let line3 be the intersection of pi1 and pi2:
 		if (f_v) {
 			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
-					"subset " << rk << " / " << nb_subsets << " before intersect_subspaces" << endl;
+					"subset " << rk << " / " << nb_subsets
+					<< " before intersect_subspaces" << endl;
 		}
-		F->Linear_algebra->intersect_subspaces(4, 3, pi1, 3, pi2,
+		F->Linear_algebra->intersect_subspaces(
+				4, 3, pi1, 3, pi2,
 			d, M, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
-					"subset " << rk << " / " << nb_subsets << " after intersect_subspaces" << endl;
+					"subset " << rk << " / " << nb_subsets
+					<< " after intersect_subspaces" << endl;
 		}
 		if (d != 2) {
 			if (f_v) {
@@ -1306,7 +1342,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		line3 = Surf->rank_line(M);
 
 		// Map line3 back to get line4 = b_i:
-		line4 = A2->element_image_of(line3, Elt1, 0 /* verbose_level */);
+		line4 = A2->Group_element->element_image_of(
+				line3, Elt1, 0 /* verbose_level */);
 		
 		double_six[10 - rk] = line4; // fill in b_i
 	} // next rk
@@ -1330,24 +1367,33 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
 				"before do_recoordinatize" << endl;
 	}
-	Recoordinatize->do_recoordinatize(b1, b2, b3, verbose_level - 2);
+	Recoordinatize->do_recoordinatize(
+			b1, b2, b3, verbose_level - 2);
 	if (f_vv) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
 				"after do_recoordinatize" << endl;
 	}
 
-	A->element_invert(Recoordinatize->Elt, Elt1, 0);
+	A->Group_element->element_invert(
+			Recoordinatize->Elt, Elt1, 0);
 
 	// map b4 and b5:
-	image[0] = A2->element_image_of(b4, Recoordinatize->Elt, 0 /* verbose_level */);
-	image[1] = A2->element_image_of(b5, Recoordinatize->Elt, 0 /* verbose_level */);
+	image[0] = A2->Group_element->element_image_of(
+			b4, Recoordinatize->Elt, 0 /* verbose_level */);
+	image[1] = A2->Group_element->element_image_of(
+			b5, Recoordinatize->Elt, 0 /* verbose_level */);
 	
 	nb_pts = 0;
 	for (h = 0; h < 2; h++) {
-		Surf->Gr->unrank_lint_here(L, image[h], 0 /* verbose_level */);
+
+		Surf->Gr->unrank_lint_here(
+				L, image[h], 0 /* verbose_level */);
+
 		for (a = 0; a < F->q + 1; a++) {
-			F->PG_element_unrank_modified(v, 1, 2, a);
-			F->Linear_algebra->mult_matrix_matrix(v, L, w, 1, 2, 4,
+			F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, 2, a);
+			F->Linear_algebra->mult_matrix_matrix(
+					v, L, w, 1, 2, 4,
 					0 /* verbose_level */);
 
 			// Evaluate the equation of the hyperboloid
@@ -1379,7 +1425,10 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	line3 = -1;
 	for (h = 0; h < 2; h++) {
 		for (k = 0; k < 2; k++) {
-			F->Linear_algebra->add_vector(pt_coord + h * 4, pt_coord + (2 + k) * 4, w, 4);
+
+			F->Linear_algebra->add_vector(
+					pt_coord + h * 4, pt_coord + (2 + k) * 4, w, 4);
+
 			b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (b == 0) {
 				if (f_vv) {
@@ -1390,7 +1439,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				Int_vec_copy(pt_coord + (2 + k) * 4, L + 4, 4);
 				line3 = Surf->rank_line(L);
 
-				if (!Surf->P->test_if_lines_are_skew(ell0,
+				if (!Surf->P->Solid->test_if_lines_are_skew(
+						ell0,
 						line3, 0 /* verbose_level */)) {
 					if (f_vv) {
 						cout << "The line intersects ell_0, so we are good" << endl;
@@ -1415,7 +1465,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		exit(1);
 	}
 	// Map line3 back to get line4 = a_6:
-	line4 = A2->element_image_of(line3, Elt1, 0 /* verbose_level */);
+	line4 = A2->Group_element->element_image_of(
+			line3, Elt1, 0 /* verbose_level */);
 	double_six[5] = line4; // fill in a_6
 
 	if (f_v) {
@@ -1423,7 +1474,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	}
 	return TRUE;
 }
-
+#endif
 
 
 
@@ -1669,7 +1720,6 @@ void surface_with_action::sweep_4_15_lines(
 						{
 							string str;
 							Int_vec_create_string_with_quotes(str, SC->SO->eqn, 20);
-							//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
 							ost_csv << str;
 						}
 
@@ -1678,7 +1728,6 @@ void surface_with_action::sweep_4_15_lines(
 						{
 							string str;
 							Lint_vec_create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
-							//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
 							ost_csv << str;
 						}
 
@@ -1693,7 +1742,6 @@ void surface_with_action::sweep_4_15_lines(
 							params[3] = delta;
 							string str;
 							Int_vec_create_string_with_quotes(str, params, 4);
-							//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
 							ost_csv << str;
 						}
 
@@ -1879,12 +1927,14 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 #if 1
 			if (SC->SO->nb_lines != 9) {
-				cout << "the number of lines is " << SC->SO->nb_lines << " skipping" << endl;
+				cout << "the number of lines is "
+						<< SC->SO->nb_lines << " skipping" << endl;
 				continue;
 			}
 			if (SC->SO->SOP->nb_singular_pts) {
 				cout << "the number of singular points is "
-						<< SC->SO->SOP->nb_singular_pts << " skipping" << endl;
+						<< SC->SO->SOP->nb_singular_pts
+						<< " skipping" << endl;
 				continue;
 			}
 #endif
@@ -1921,7 +1971,6 @@ void surface_with_action::sweep_F_beta_9_lines(
 			{
 				string str;
 				Int_vec_create_string_with_quotes(str, SC->SO->eqn, 20);
-				//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
 				ost_csv << str;
 			}
 
@@ -1930,7 +1979,6 @@ void surface_with_action::sweep_F_beta_9_lines(
 			{
 				string str;
 				Lint_vec_create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
-				//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
 				ost_csv << str;
 			}
 
@@ -1945,7 +1993,6 @@ void surface_with_action::sweep_F_beta_9_lines(
 				params[3] = d;
 				string str;
 				Int_vec_create_string_with_quotes(str, params, 4);
-				//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
 				ost_csv << str;
 			}
 
@@ -1994,7 +2041,8 @@ void surface_with_action::sweep_F_beta_9_lines(
 	fname.append("_sweep_F_beta_9_lines.csv");
 
 	Fio.lint_matrix_write_csv(fname, T, N, nb_cols);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 	fname.assign(Surface_Descr->equation_name_of_formula);
@@ -2016,7 +2064,8 @@ void surface_with_action::sweep_F_beta_9_lines(
 		ost << "-1" << endl;
 
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 
@@ -2108,7 +2157,8 @@ void surface_with_action::sweep_6_9_lines(
 							continue;
 						}
 
-						cout << "a=" << a << " c=" << c << " d=" << d << " f=" << f << endl;
+						cout << "a=" << a << " c=" << c
+								<< " d=" << d << " f=" << f << endl;
 
 						for (g = 0; g < F->q; g++) {
 
@@ -2122,7 +2172,8 @@ void surface_with_action::sweep_6_9_lines(
 
 							int top, bottom, t;
 
-							top = F->add4(F->mult(c, f), F->mult(d, f), f, F->negate(c));
+							top = F->add4(F->mult(c, f),
+									F->mult(d, f), f, F->negate(c));
 							bottom = F->add(d, 1);
 							t = F->mult(top, F->inverse(bottom));
 
@@ -2130,7 +2181,8 @@ void surface_with_action::sweep_6_9_lines(
 								continue;
 							}
 
-							cout << "a=" << a << " c=" << c << " d=" << d << " f=" << f << " g=" << g << endl;
+							cout << "a=" << a << " c=" << c << " d=" << d
+									<< " f=" << f << " g=" << g << endl;
 
 
 							for (b = 0; b < F->q; b++) {
@@ -2164,7 +2216,8 @@ void surface_with_action::sweep_6_9_lines(
 								}
 
 
-								top = F->mult(F->negate(a), F->add3(F->mult(d, g), c, g));
+								top = F->mult(F->negate(a),
+										F->add3(F->mult(d, g), c, g));
 								bottom = F->mult(c, f);
 								t = F->mult(top, F->inverse(bottom));
 
@@ -2174,7 +2227,9 @@ void surface_with_action::sweep_6_9_lines(
 
 
 
-								cout << "a=" << a << " c=" << c << " d=" << d << " f=" << f << " g=" << g << " b=" << b << endl;
+								cout << "a=" << a << " c=" << c
+										<< " d=" << d << " f=" << f
+										<< " g=" << g << " b=" << b << endl;
 
 
 
@@ -2183,7 +2238,9 @@ void surface_with_action::sweep_6_9_lines(
 
 								char str[1000];
 
-								snprintf(str, sizeof(str), "a=%d,b=%d,c=%d,d=%d,f=%d,g=%d", a, b, c, d, f, g);
+								snprintf(str, sizeof(str),
+										"a=%d,b=%d,c=%d,d=%d,f=%d,g=%d",
+										a, b, c, d, f, g);
 
 
 								Surface_Descr->equation_parameters.assign(str);
@@ -2193,27 +2250,32 @@ void surface_with_action::sweep_6_9_lines(
 								SC = NEW_OBJECT(surface_create);
 
 								if (f_v) {
-									cout << "surface_with_action::sweep_6_9_lines before SC->init" << endl;
+									cout << "surface_with_action::sweep_6_9_lines "
+											"before SC->init" << endl;
 								}
 								SC->init(Surface_Descr, verbose_level);
 								if (f_v) {
-									cout << "surface_with_action::sweep_6_9_lines after SC->init" << endl;
+									cout << "surface_with_action::sweep_6_9_lines "
+											"after SC->init" << endl;
 								}
 
 
 
 
-								cout << "the number of lines is " << SC->SO->nb_lines << endl;
+								cout << "the number of lines is "
+										<< SC->SO->nb_lines << endl;
 
 								SC->SOA->print_everything(cout, verbose_level);
 
 #if 1
 								if (SC->SO->nb_lines != 9) {
-									cout << "the number of lines is " << SC->SO->nb_lines << " skipping" << endl;
+									cout << "the number of lines is "
+											<< SC->SO->nb_lines << " skipping" << endl;
 									continue;
 								}
 								if (SC->SO->SOP->nb_singular_pts) {
-									cout << "the number of singular points is " << SC->SO->SOP->nb_singular_pts << " skipping" << endl;
+									cout << "the number of singular points is "
+											<< SC->SO->SOP->nb_singular_pts << " skipping" << endl;
 									continue;
 								}
 #endif
@@ -2251,8 +2313,8 @@ void surface_with_action::sweep_6_9_lines(
 
 								{
 									string str;
-									Int_vec_create_string_with_quotes(str, SC->SO->eqn, 20);
-									//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
+									Int_vec_create_string_with_quotes(
+											str, SC->SO->eqn, 20);
 									ost_csv << str;
 								}
 
@@ -2260,8 +2322,8 @@ void surface_with_action::sweep_6_9_lines(
 
 								{
 									string str;
-									Lint_vec_create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
-									//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+									Lint_vec_create_string_with_quotes(
+											str, SC->SO->Pts, SC->SO->nb_pts);
 									ost_csv << str;
 								}
 
@@ -2277,8 +2339,8 @@ void surface_with_action::sweep_6_9_lines(
 									params[4] = f;
 									params[5] = g;
 									string str;
-									Int_vec_create_string_with_quotes(str, params, 6);
-									//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, params, 6);
+									Int_vec_create_string_with_quotes(
+											str, params, 6);
 									ost_csv << str;
 								}
 
@@ -2334,7 +2396,8 @@ void surface_with_action::sweep_6_9_lines(
 	fname.append("_sweep_6_9_lines.csv");
 
 	Fio.lint_matrix_write_csv(fname, T, N, nb_cols);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 	fname.assign(Surface_Descr->equation_name_of_formula);
@@ -2356,7 +2419,8 @@ void surface_with_action::sweep_6_9_lines(
 		ost << "-1" << endl;
 
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 
@@ -2503,11 +2567,13 @@ void surface_with_action::sweep_4_27(
 					SC->PA = PA;
 
 					if (f_v) {
-						cout << "surface_with_action::sweep_4_27 before SC->init" << endl;
+						cout << "surface_with_action::sweep_4_27 "
+								"before SC->init" << endl;
 					}
 					SC->init(Surface_Descr, verbose_level);
 					if (f_v) {
-						cout << "surface_with_action::sweep_4_27 after SC->init" << endl;
+						cout << "surface_with_action::sweep_4_27 "
+								"after SC->init" << endl;
 					}
 
 
@@ -2583,7 +2649,8 @@ void surface_with_action::sweep_4_27(
 	fname.append("_sweep_4_27.csv");
 
 	Fio.lint_matrix_write_csv(fname, T, N, 16);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 	fname.assign(Surface_Descr->equation_name_of_formula);
@@ -2605,7 +2672,8 @@ void surface_with_action::sweep_4_27(
 		ost << "-1" << endl;
 
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
 
 
 
@@ -2666,21 +2734,25 @@ void surface_with_action::sweep_4_L9_E4(
 				for (delta = 0; delta < F->q; delta++) {
 
 
-					cout << "alpha=" << alpha << " beta=" << beta << " delta=" << delta << endl;
+					cout << "alpha=" << alpha << " beta=" << beta
+							<< " delta=" << delta << endl;
 
 
 					for (lambda = 1; lambda < F->q; lambda++) {
 
 
 						cout << "alpha=" << alpha << " beta=" << beta
-								<< " delta=" << delta << " lambda=" << lambda << endl;
+								<< " delta=" << delta
+								<< " lambda=" << lambda << endl;
 
 
 
 
 						char str[1000];
 
-						snprintf(str, sizeof(str), "alpha=%d,beta=%d,delta=%d,lambda=%d", alpha, beta, delta, lambda);
+						snprintf(str, sizeof(str),
+								"alpha=%d,beta=%d,delta=%d,lambda=%d",
+								alpha, beta, delta, lambda);
 
 
 						Surface_Descr->equation_parameters.assign(str);
@@ -2689,29 +2761,34 @@ void surface_with_action::sweep_4_L9_E4(
 						SC = NEW_OBJECT(surface_create);
 
 						if (f_v) {
-							cout << "surface_with_action::sweep_4_L9_E4 before SC->init" << endl;
+							cout << "surface_with_action::sweep_4_L9_E4 "
+									"before SC->init" << endl;
 						}
 						if (!SC->init(Surface_Descr, verbose_level - 4)) {
 							FREE_OBJECT(SC);
 							continue;
 						}
 						if (f_v) {
-							cout << "surface_with_action::sweep_4_L9_E4 after SC->init" << endl;
+							cout << "surface_with_action::sweep_4_L9_E4 "
+									"after SC->init" << endl;
 						}
 
 
 
-						cout << str << " : the number of lines is " << SC->SO->nb_lines << endl;
+						cout << str << " : the number of lines is "
+								<< SC->SO->nb_lines << endl;
 
 						SC->SOA->print_everything(cout, verbose_level);
 
 #if 1
 						if (SC->SO->nb_lines != 9) {
-							cout << "the number of lines is " << SC->SO->nb_lines << " skipping" << endl;
+							cout << "the number of lines is "
+									<< SC->SO->nb_lines << " skipping" << endl;
 							continue;
 						}
 						if (SC->SO->SOP->nb_singular_pts) {
-							cout << "the number of singular points is " << SC->SO->SOP->nb_singular_pts << " skipping" << endl;
+							cout << "the number of singular points "
+									"is " << SC->SO->SOP->nb_singular_pts << " skipping" << endl;
 							continue;
 						}
 #endif
@@ -2748,7 +2825,6 @@ void surface_with_action::sweep_4_L9_E4(
 						{
 							string str;
 							Int_vec_create_string_with_quotes(str, SC->SO->eqn, 20);
-							//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC->SO->eqn, 20);
 							ost_csv << str;
 						}
 
@@ -2757,7 +2833,6 @@ void surface_with_action::sweep_4_L9_E4(
 						{
 							string str;
 							Lint_vec_create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
-							//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
 							ost_csv << str;
 						}
 
@@ -2772,7 +2847,6 @@ void surface_with_action::sweep_4_L9_E4(
 							params[3] = lambda;
 							string str;
 							Int_vec_create_string_with_quotes(str, params, 4);
-							//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, params, 4);
 							ost_csv << str;
 						}
 
@@ -2861,486 +2935,6 @@ void surface_with_action::sweep_4_L9_E4(
 	}
 }
 
-
-
-
-void surface_with_action::table_of_cubic_surfaces(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces" << endl;
-	}
-
-
-	field_theory::finite_field *F;
-
-	F = PA->F;
-
-	int q;
-
-	q = F->q;
-
-	knowledge_base::knowledge_base K;
-
-	int nb_cubic_surfaces;
-	int h;
-	surface_create **SC;
-	int *nb_E;
-	long int *Table;
-	int nb_cols = 19;
-
-
-	poset_classification::poset_classification_control Control_six_arcs;
-
-
-	nb_cubic_surfaces = K.cubic_surface_nb_reps(q);
-
-	SC = (surface_create **) NEW_pvoid(nb_cubic_surfaces);
-
-	nb_E = NEW_int(nb_cubic_surfaces);
-
-	Table = NEW_lint(nb_cubic_surfaces * nb_cols);
-
-
-
-
-	for (h = 0; h < nb_cubic_surfaces; h++) {
-
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					<< h << " / " << nb_cubic_surfaces << endl;
-		}
-		surface_create_description Surface_create_description;
-
-		//Surface_create_description.f_q = TRUE;
-		//Surface_create_description.q = q;
-		Surface_create_description.f_catalogue = TRUE;
-		Surface_create_description.iso = h;
-
-#if 0
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					"before create_surface" << endl;
-		}
-		create_surface(
-				&Surface_create_description,
-				SC[h],
-				verbose_level);
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					"after create_surface" << endl;
-		}
-#endif
-
-
-		//surface_create *SC;
-		//SC = NEW_OBJECT(surface_create);
-
-		SC[h] = NEW_OBJECT(surface_create);
-
-		if (f_v) {
-			cout << "surface_with_action::sweep_4_27 before SC->init" << endl;
-		}
-		SC[h]->init(&Surface_create_description, verbose_level);
-		if (f_v) {
-			cout << "surface_with_action::sweep_4_27 after SC->init" << endl;
-		}
-
-
-
-
-		nb_E[h] = SC[h]->SO->SOP->nb_Eckardt_points;
-
-
-		if (!SC[h]->f_has_group) {
-			cout << "!SC[h]->f_has_group" << endl;
-			exit(1);
-		}
-
-		surface_object_with_action *SoA;
-
-		SoA = NEW_OBJECT(surface_object_with_action);
-
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					"before SoA->init_with_surface_object" << endl;
-		}
-		SoA->init_with_surface_object(this,
-				SC[h]->SO,
-				SC[h]->Sg,
-				FALSE /* f_has_nice_gens */, NULL /* vector_ge *nice_gens */,
-				verbose_level);
-		if (f_v) {
-			cout << "surface_with_action::table_of_cubic_surfaces "
-					"after SoA->init_with_surface_object" << endl;
-		}
-
-
-
-		Table[h * nb_cols + 0] = h;
-
-		if (f_v) {
-			cout << "collineation stabilizer order" << endl;
-		}
-		if (SC[h]->f_has_group) {
-			Table[h * nb_cols + 1] = SC[h]->Sg->group_order_as_lint();
-		}
-		else {
-			Table[h * nb_cols + 1] = 0;
-		}
-		if (f_v) {
-			cout << "projectivity stabilizer order" << endl;
-		}
-		if (A->is_semilinear_matrix_group()) {
-			Table[h * nb_cols + 2] = SoA->projectivity_group_gens->group_order_as_lint();
-		}
-		else {
-			Table[h * nb_cols + 2] = SC[h]->Sg->group_order_as_lint();
-		}
-
-		Table[h * nb_cols + 3] = SC[h]->SO->nb_pts;
-		Table[h * nb_cols + 4] = SC[h]->SO->nb_lines;
-		Table[h * nb_cols + 5] = SC[h]->SO->SOP->nb_Eckardt_points;
-		Table[h * nb_cols + 6] = SC[h]->SO->SOP->nb_Double_points;
-		Table[h * nb_cols + 7] = SC[h]->SO->SOP->nb_Single_points;
-		Table[h * nb_cols + 8] = SC[h]->SO->SOP->nb_pts_not_on_lines;
-		Table[h * nb_cols + 9] = SC[h]->SO->SOP->nb_Hesse_planes;
-		Table[h * nb_cols + 10] = SC[h]->SO->SOP->nb_axes;
-		if (f_v) {
-			cout << "SoA->Orbits_on_Eckardt_points->nb_orbits" << endl;
-		}
-		Table[h * nb_cols + 11] = SoA->Orbits_on_Eckardt_points->nb_orbits;
-		Table[h * nb_cols + 12] = SoA->Orbits_on_Double_points->nb_orbits;
-		Table[h * nb_cols + 13] = SoA->Orbits_on_points_not_on_lines->nb_orbits;
-		Table[h * nb_cols + 14] = SoA->Orbits_on_lines->nb_orbits;
-		Table[h * nb_cols + 15] = SoA->Orbits_on_single_sixes->nb_orbits;
-		Table[h * nb_cols + 16] = SoA->Orbits_on_tritangent_planes->nb_orbits;
-		Table[h * nb_cols + 17] = SoA->Orbits_on_Hesse_planes->nb_orbits;
-		Table[h * nb_cols + 18] = SoA->Orbits_on_trihedral_pairs->nb_orbits;
-		//Table[h * nb_cols + 19] = SoA->Orbits_on_tritangent_planes->nb_orbits;
-
-
-		FREE_OBJECT(SoA);
-
-
-	} // next h
-
-
-#if 0
-	strong_generators *projectivity_group_gens;
-	sylow_structure *Syl;
-
-	action *A_on_points;
-	action *A_on_Eckardt_points;
-	action *A_on_Double_points;
-	action *A_on_the_lines;
-	action *A_single_sixes;
-	action *A_on_tritangent_planes;
-	action *A_on_Hesse_planes;
-	action *A_on_trihedral_pairs;
-	action *A_on_pts_not_on_lines;
-
-
-	schreier *Orbits_on_points;
-	schreier *Orbits_on_Eckardt_points;
-	schreier *Orbits_on_Double_points;
-	schreier *Orbits_on_lines;
-	schreier *Orbits_on_single_sixes;
-	schreier *Orbits_on_tritangent_planes;
-	schreier *Orbits_on_Hesse_planes;
-	schreier *Orbits_on_trihedral_pairs;
-	schreier *Orbits_on_points_not_on_lines;
-#endif
-
-#if 0
-	set_of_sets *pts_on_lines;
-		// points are stored as indices into Pts[]
-	int *f_is_on_line; // [SO->nb_pts]
-
-
-	set_of_sets *lines_on_point;
-	tally *Type_pts_on_lines;
-	tally *Type_lines_on_point;
-
-	long int *Eckardt_points; // the orbiter rank of the Eckardt points
-	int *Eckardt_points_index; // index into SO->Pts
-	int *Eckardt_points_schlaefli_labels; // Schlaefli labels
-	int *Eckardt_point_bitvector_in_Schlaefli_labeling;
-		// true if the i-th Eckardt point in the Schlaefli labeling is present
-	int nb_Eckardt_points;
-
-	int *Eckardt_points_line_type; // [nb_Eckardt_points + 1]
-	int *Eckardt_points_plane_type; // [SO->Surf->P->Nb_subspaces[2]]
-
-	long int *Hesse_planes;
-	int nb_Hesse_planes;
-	int *Eckardt_point_Hesse_plane_incidence; // [nb_Eckardt_points * nb_Hesse_planes]
-
-
-	int nb_axes;
-	int *Axes_index; // [nb_axes] two times the index into trihedral pairs + 0 or +1
-	long int *Axes_Eckardt_points; // [nb_axes * 3] the Eckardt points in Schlaefli labels that lie on the axes
-	long int *Axes_line_rank;
-
-
-	long int *Double_points;
-	int *Double_points_index;
-	int nb_Double_points;
-
-	long int *Single_points;
-	int *Single_points_index;
-	int nb_Single_points;
-
-	long int *Pts_not_on_lines;
-	int nb_pts_not_on_lines;
-
-	int nb_planes;
-	int *plane_type_by_points;
-	int *plane_type_by_lines;
-	tally *C_plane_type_by_points;
-
-	long int *Tritangent_plane_rk; // [45]
-		// list of tritangent planes in Schlaefli labeling
-	int nb_tritangent_planes;
-
-	long int *Lines_in_tritangent_planes; // [nb_tritangent_planes * 3]
-
-	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
-
-	long int *All_Planes; // [nb_trihedral_pairs * 6]
-	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]
-
-	int *Adj_line_intersection_graph; // [SO->nb_lines * SO->nb_lines]
-	set_of_sets *Line_neighbors;
-	int *Line_intersection_pt; // [SO->nb_lines * SO->nb_lines]
-	int *Line_intersection_pt_idx; // [SO->nb_lines * SO->nb_lines]
-
-
-	int *gradient;
-
-	long int *singular_pts;
-	int nb_singular_pts;
-	int nb_non_singular_pts;
-
-	long int *tangent_plane_rank_global; // [SO->nb_pts]
-	long int *tangent_plane_rank_dual; // [nb_non_singular_pts]
-#endif
-
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces "
-				"before table_of_cubic_surfaces_export_csv" << endl;
-	}
-
-	table_of_cubic_surfaces_export_csv(Table,
-				nb_cols,
-				q, nb_cubic_surfaces,
-				SC,
-				verbose_level);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces "
-				"after table_of_cubic_surfaces_export_csv" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces "
-				"before table_of_cubic_surfaces_export_sql" << endl;
-	}
-
-	table_of_cubic_surfaces_export_sql(Table,
-				nb_cols,
-				q, nb_cubic_surfaces,
-				SC,
-				verbose_level);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces "
-				"after table_of_cubic_surfaces_export_sql" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces done" << endl;
-	}
-
-}
-
-
-void surface_with_action::table_of_cubic_surfaces_export_csv(long int *Table,
-		int nb_cols,
-		int q, int nb_cubic_surfaces,
-		surface_create **SC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces_export_csv" << endl;
-	}
-
-	orbiter_kernel_system::file_io Fio;
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d", q);
-
-	string fname;
-	fname.assign("table_of_cubic_surfaces");
-	fname.append(str);
-	fname.append("_info.csv");
-
-	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
-
-	{
-		ofstream f(fname);
-		int i, j;
-
-		f << "Row,OCN,CollStabOrder,ProjStabOrder,nbPts,nbLines,"
-				"nbE,nbDouble,nbSingle,nbPtsNotOn,nbHesse,nbAxes,"
-				"nbOrbE,nbOrbDouble,nbOrbPtsNotOn,nbOrbLines,"
-				"nbOrbSingleSix,nbOrbTriPlanes,nbOrbHesse,nbOrbTrihedralPairs,"
-				"Eqn20,Equation,Lines";
-
-
-
-		f << endl;
-		for (i = 0; i < nb_cubic_surfaces; i++) {
-			f << i;
-			for (j = 0; j < nb_cols; j++) {
-				f << "," << Table[i * nb_cols + j];
-			}
-			{
-				string str;
-				f << ",";
-				Int_vec_create_string_with_quotes(str, SC[i]->SO->eqn, 20);
-				//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC[i]->SO->eqn, 20);
-				f << str;
-			}
-
-#if 1
-			{
-				stringstream sstr;
-				string str;
-				SC[i]->Surf->print_equation_maple(sstr, SC[i]->SO->eqn);
-				str.assign(sstr.str());
-				f << ",";
-				f << "\"$";
-				f << str;
-				f << "$\"";
-			}
-			{
-				string str;
-				f << ",";
-				Lint_vec_create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
-				//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
-				f << str;
-			}
-#endif
-
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-
-
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces_export_csv done" << endl;
-	}
-}
-
-void surface_with_action::table_of_cubic_surfaces_export_sql(long int *Table,
-		int nb_cols,
-		int q, int nb_cubic_surfaces,
-		surface_create **SC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces_export_sql" << endl;
-	}
-
-	orbiter_kernel_system::file_io Fio;
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d", q);
-
-	string fname;
-	fname.assign("table_of_cubic_surfaces");
-	fname.append(str);
-	fname.append("_data.sql");
-
-	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
-
-	{
-		ofstream f(fname);
-		int i;
-
-		for (i = 0; i < nb_cubic_surfaces; i++) {
-
-			f << "UPDATE `cubicvt`.`surface` SET ";
-			f << "`CollStabOrder` = '" << Table[i * nb_cols + 1] << "', ";
-			f << "`ProjStabOrder` = '" << Table[i * nb_cols + 2] << "', ";
-			f << "`nbPts` = '" << Table[i * nb_cols + 3] << "', ";
-			f << "`nbLines` = '" << Table[i * nb_cols + 4] << "', ";
-			f << "`nbE` = '" << Table[i * nb_cols + 5] << "', ";
-			f << "`nbDouble` = '" << Table[i * nb_cols + 6] << "', ";
-			f << "`nbSingle` = '" << Table[i * nb_cols + 7] << "', ";
-			f << "`nbPtsNotOn` = '" << Table[i * nb_cols + 8] << "',";
-			f << "`nbHesse` = '" << Table[i * nb_cols + 9] << "', ";
-			f << "`nbAxes` = '" << Table[i * nb_cols + 10] << "', ";
-			f << "`nbOrbE` = '" << Table[i * nb_cols + 11] << "', ";
-			f << "`nbOrbDouble` = '" << Table[i * nb_cols + 12] << "', ";
-			f << "`nbOrbPtsNotOn` = '" << Table[i * nb_cols + 13] << "', ";
-			f << "`nbOrbLines` = '" << Table[i * nb_cols + 14] << "', ";
-			f << "`nbOrbSingleSix` = '" << Table[i * nb_cols + 15] << "', ";
-			f << "`nbOrbTriPlanes` = '" << Table[i * nb_cols + 16] << "', ";
-			f << "`nbOrbHesse` = '" << Table[i * nb_cols + 17] << "', ";
-			f << "`nbOrbTrihedralPairs` = '" << Table[i * nb_cols + 18] << "', ";
-			{
-				string str;
-				Int_vec_create_string_with_quotes(str, SC[i]->SO->eqn, 20);
-				//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, SC[i]->SO->eqn, 20);
-				f << "`Eqn20` = '" << str << "', ";
-			}
-			{
-				stringstream sstr;
-				string str;
-				SC[i]->Surf->print_equation_maple(sstr, SC[i]->SO->eqn);
-				str.assign(sstr.str());
-				//f << ",";
-				//f << "\"$";
-				//f << str;
-				//f << "$\"";
-				f << "`Equation` = '$" << str << "$', ";
-			}
-			{
-				string str;
-				Lint_vec_create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
-				//orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
-				f << "`Lines` = '" << str << "' ";
-			}
-			f << "WHERE `Q` = '" << q << "' AND `OCN` = '" << Table[i * nb_cols + 0] << "';" << endl;
-		}
-
-	}
-
-
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
-
-	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces_export_sql done" << endl;
-	}
-}
-
-
-// from Oznur Oztunc, 11/28/2021:
-// oznr83@gmail.com
-//UPDATE `cubicvt`.`surface` SET `CollStabOrder` = '12', `ProjStabOrder` = '12', `nbPts` = '691', `nbLines` = '27', `nbE` = '4', `nbDouble` = '123', `nbSingle` = '390', `nbPtsNotOn` = '174',`nbHesse` = '0', `nbAxes` = '1', `nbOrbE` = '2', `nbOrbDouble` = '16', `nbOrbPtsNotOn` = '16', `nbOrbLines` = '5', `nbOrbSingleSix` = '10', `nbOrbTriPlanes` = '10', `nbOrbHesse` = '0', `nbOrbTrihedralPairs` = '19', `nbOrbTritangentPlanes` = '10',`Eqn20` = '0,0,0,0,0,0,8,0,10,0,0,18,0,2,0,0,18,10,2,1', `Equation` = '$8X_0^2*X_3+10X_1^2*X_2+18X_1*X_2^2+2X_0*X_3^2+18X_0*X_1*X_2+10X_0*X_1*X_3+2X_0*X_2*X_3+X_1*X_2*X_3$', `Lines` = '529,292560,1083,4965,290982,88471,169033,6600,8548,576,293089,0,3824,9119,1698,242212,12168,59424,229610,292854,242075,120504,179157,279048,30397,181283,12150' WHERE `Q` = '23' AND `OCN` = '1';
 
 
 }}}}

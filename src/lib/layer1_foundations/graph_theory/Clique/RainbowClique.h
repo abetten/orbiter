@@ -26,7 +26,7 @@ public:
     template <typename T, typename U>
     __forceinline__
     static void find_cliques (Graph<T,U>& G, std::vector<std::vector<T>>& soln, size_t n_threads=0) {
-        const size_t nThreads = (n_threads == 0) ? std::thread::hardware_concurrency() : n_threads;
+        size_t nThreads = (n_threads == 0) ? std::thread::hardware_concurrency() : n_threads;
         std::thread threads [nThreads];
         PARAMS<T> params [nThreads];
 
@@ -39,6 +39,10 @@ public:
             params[i].color_satisfied = new bool [G.nb_colors] ();
             params[i].color_frequency = new T [G.nb_colors] ();
             params[i].n_threads = nThreads;
+
+            for (size_t j = 0; j < G.nb_colors; j++) {
+            	params[i].color_satisfied[j] = false;
+            }
 
             threads[i] = std::thread(find_cliques_parallel<T,U>, 0, 0, 0, std::ref(params[i]),
                                      &(params[0]), std::ref(G));
@@ -110,14 +114,22 @@ private:
 
             for (size_t i=0; i<depth; ++i)
                 param.t_solutions.at(param.t_solutions.size()-1).emplace_back(
-                        G.get_label(param.current_cliques[i])
+                        /*G.get_label(*/param.current_cliques[i]/*)*/
                 );
+
             if (param.tid == 0) {
-                printf("                                                        ");
-                fflush(stdout);
+                //printf("                                                        ");
+                //fflush(stdout);
                 size_t ns = 0;
-                for (size_t j=0; j<param.n_threads; ++j) ns += params[j].nb_sol;
-                printf("\rnb_sol: %ld                                         \r", ns);
+           		printf("nb_sol=");
+                for (size_t j=0; j<param.n_threads; ++j) {
+                	ns += params[j].nb_sol;
+                	printf("%ld", (long int) params[j].nb_sol);
+                	if (j < param.n_threads - 1) {
+                		printf("+");
+                	}
+                }
+        		printf("=%ld\n", (long int) ns);
                 fflush(stdout);
             }
             return;
@@ -137,7 +149,34 @@ private:
 
         U lowest_color = get_color_with_lowest_frequency_(G, param, start, end_adj);
 
+#if 0
+        if (param.tid == 0) {
+            printf("thread %ld "
+            		"level %ld "
+            		"start = %ld "
+               		"end_adj = %ld "
+               		"lowest_color = %ld "
+            		"\n",
+					(long int) param.tid, (long int) depth, (long int) start, (long int) end_adj, (long int) lowest_color);
+            fflush(stdout);
+        }
+#endif
+
         end_color_class = clump_color_class(G, param, start, end_adj, lowest_color);
+
+#if 0
+        if (param.tid == 0) {
+            printf("thread %ld "
+            		"level %ld "
+            		"end_color_class = %ld "
+            		"G.nb_colors = %ld "
+            		"G.nb_colors_per_vertex = %ld"
+            		"\n",
+					(long int) param.tid, (long int) depth, (long int) end_color_class, (long int) G.nb_colors, (long int) G.nb_colors_per_vertex);
+            fflush(stdout);
+        }
+#endif
+
 
 //        param.color_satisfied[lowest_color] = true;
 
@@ -154,7 +193,19 @@ private:
 
             for (size_t i=start; i<end_color_class; ++i) {
                 if ((i % param.n_threads) == param.tid) {
-                    satisfy_color(G, param, i, true);
+
+#if 1
+                    if (param.tid == 0) {
+                        printf("thread %ld "
+                        		"level %ld "
+                        		"at %ld of %ld"
+                        		"\n",
+								(long int) param.tid, (long int) depth, (long int) i, (long int) end_color_class);
+                        fflush(stdout);
+                    }
+#endif
+
+                	satisfy_color(G, param, i, true);
                     param.current_cliques[depth] = param.live_pts[i];
                     find_cliques_parallel(depth+1, end_color_class, end_adj, param, params, G);
                     satisfy_color(G, param, i, false);
@@ -303,17 +354,75 @@ private:
         chrono_ C;
         #endif
 
+#if 0
+        if (param.tid == 0) {
+            printf("thread %ld "
+            		"clump_color_class "
+               		"start = %ld "
+               		"end = %ld "
+               		"color = %ld "
+            		"\n",
+					(long int) param.tid, (long int) start, (long int) end, (long int) color);
+            fflush(stdout);
+        }
+#endif
 
         for (size_t i=start; i<end; ++i) {
             const T pt = live_pts[i];
             bool pick_vertex = false;
 
+
+#if 0
+            if (param.tid == 0) {
+                printf("thread %ld "
+                		"clump_color_class "
+                   		"i = %ld "
+                   		"pt = %ld "
+                		"\n",
+    					(long int) param.tid, (long int) i, (long int) pt);
+                fflush(stdout);
+            }
+#endif
+
+
             for (size_t j=0; j<G.nb_colors_per_vertex; ++j) {
                 const U pt_color = G.get_color(pt, j);
-            	if (pt_color == color) {
+
+
+#if 0
+                if (param.tid == 0) {
+                    printf("thread %ld "
+                    		"clump_color_class "
+                       		"i = %ld "
+                       		"pt = %ld "
+                       		"pt_color = %ld "
+                    		"\n",
+        					(long int) param.tid, (long int) i, (long int) pt, (long int) pt_color);
+                    fflush(stdout);
+                }
+#endif
+
+                if (pt_color == color) {
                     pick_vertex = true;
-				} else if (color_satisfied[pt_color]) {
+				}
+            	if (pick_vertex && color_satisfied[pt_color]) {
                     pick_vertex = false;
+
+#if 0
+                    if (param.tid == 0) {
+                        printf("thread %ld "
+                        		"clump_color_class "
+                           		"pt = %ld "
+                           		"j = %ld "
+                           		"pt_color = %ld "
+                           		"rejected b/c color satisfied "
+                        		"\n",
+            					(long int) param.tid, (long int) pt, (long int) j, (long int) pt_color);
+                        fflush(stdout);
+                    }
+#endif
+
+
                     break;
                 }
             }

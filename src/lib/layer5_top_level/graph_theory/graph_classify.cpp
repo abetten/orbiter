@@ -86,7 +86,7 @@ void graph_classify::init(
 
 	if (f_v) {
 		cout << "graph_classify::init" << endl;
-		}
+	}
 
 	int N;
 	int target_depth;
@@ -137,49 +137,52 @@ void graph_classify::init(
 	n2 = Combi.int_n_choose_k(Descr->n, 2);
 	if (f_v) {
 		cout << "n2=" << n2 << endl;
-		}
+	}
 
 	S1 = NEW_lint(n2);
 	int f_no_base = FALSE;
 
-	A_base->Known_groups->init_symmetric_group(Descr->n, f_no_base, verbose_level - 3);
+	A_base->Known_groups->init_symmetric_group(
+			Descr->n, f_no_base, verbose_level - 3);
 	if (f_v) {
 		cout << "A_base->init_symmetric_group done" << endl;
-		}
+	}
 	
 	if (!A_base->f_has_sims) {
 		cout << "!A_base->f_has_sims" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "generators for the symmetric group are:" << endl;
 		A_base->Sims->print_generators();
-		}
+	}
 
 	if (Descr->f_tournament) {
-		A_on_edges->induced_action_on_ordered_pairs(
-				*A_base, A_base->Sims, verbose_level - 3);
+		A_on_edges = A_base->Induced_action->induced_action_on_ordered_pairs(
+				NULL /*A_base->Sims*/, verbose_level - 3);
 		if (f_v) {
 			cout << "A_on_edges->induced_action_on_ordered_pairs "
 					"done, created the following action:" << endl;
 			A_on_edges->print_info();
-			cout << "generators for the symmetric group in the "
-					"action on ordered_pairs are:" << endl;
-			A_on_edges->Sims->print_generators();
-			}
+			//cout << "generators for the symmetric group in the "
+			//		"action on ordered_pairs are:" << endl;
+			//A_on_edges->Sims->print_generators();
 		}
+	}
 	else {
-		A_on_edges->induced_action_on_pairs(
-				*A_base, A_base->Sims, verbose_level - 3);
+		A_on_edges = A_base->Induced_action->induced_action_on_pairs(
+				verbose_level - 3);
 		if (f_v) {
 			cout << "A_on_edges->induced_action_on_pairs done, "
 					"created the following action:" << endl;
 			A_on_edges->print_info();
-			cout << "generators for the symmetric group in the action "
-					"on pairs are:" << endl;
-			A_on_edges->Sims->print_generators();
-			}
+			//cout << "generators for the symmetric group in the action "
+			//		"on pairs are:" << endl;
+			//A_on_edges->Sims->print_generators();
 		}
+	}
+
+#if 0
 	A_on_edges->lex_least_base_in_place(verbose_level - 3);
 	if (f_v) {
 		cout << "After lex_least_base, we have the following "
@@ -188,41 +191,42 @@ void graph_classify::init(
 		cout << "generators for the symmetric group in the "
 				"induced action are:" << endl;
 		A_on_edges->Sims->print_generators();
-		}
+	}
+#endif
 
 	
 	adjacency = NEW_int(Descr->n * Descr->n);
 
 	if (Descr->f_tournament) {
 		target_depth = n2;
-		}
+	}
 	if (Descr->f_regular) {
 		degree_sequence = NEW_int(Descr->n);
 		N = Descr->n * Descr->regularity;
 		if (ODD(N)) {
 			cout << "n * regularity must be even" << endl;
 			exit(1);
-			}
+		}
 		N >>= 1;
 		target_depth = N;
-		}
+	}
 	else {
 		degree_sequence = NULL;
 		target_depth = n2;
-		}
+	}
 	if (Descr->f_depth) {
 		target_depth = Descr->depth;
-		}
+	}
 	if (Descr->f_girth) {
 		neighbor = NEW_int(Descr->n);
 		neighbor_idx = NEW_int(Descr->n);
 		distance = NEW_int(Descr->n);
-		}
+	}
 	else {
 		neighbor = NULL;
 		neighbor_idx = NULL;
 		distance = NULL;
-		}
+	}
 	
 	
 	if (f_v) {

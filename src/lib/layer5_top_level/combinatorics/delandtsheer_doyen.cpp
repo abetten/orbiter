@@ -247,8 +247,8 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 	Int_vec_zero(col_sum, Ysize);
 
 
-	M1 = NEW_OBJECT(groups::matrix_group);
-	M2 = NEW_OBJECT(groups::matrix_group);
+	M1 = NEW_OBJECT(algebra::matrix_group);
+	M2 = NEW_OBJECT(algebra::matrix_group);
 
 	F1 = NEW_OBJECT(field_theory::finite_field);
 	F2 = NEW_OBJECT(field_theory::finite_field);
@@ -401,9 +401,9 @@ void delandtsheer_doyen::show_generators(int verbose_level)
 	for (i = 0; i < SG->gens->len; i++) {
 		cout << "generator " << i << " / "
 				<< SG->gens->len << " is: " << endl;
-		A->element_print_quick(SG->gens->ith(i), cout);
+		A->Group_element->element_print_quick(SG->gens->ith(i), cout);
 		cout << "as permutation: " << endl;
-		A->element_print_as_permutation_with_offset(
+		A->Group_element->element_print_as_permutation_with_offset(
 				SG->gens->ith(i), cout,
 				0 /* offset*/,
 				TRUE /* f_do_it_anyway_even_for_big_degree*/,
@@ -414,13 +414,13 @@ void delandtsheer_doyen::show_generators(int verbose_level)
 		}
 	cout << "Generators are:" << endl;
 	for (i = 0; i < SG->gens->len; i++) {
-		A->element_print_as_permutation(SG->gens->ith(i), cout);
+		A->Group_element->element_print_as_permutation(SG->gens->ith(i), cout);
 		cout << endl;
 		}
 	cout << "Generators in GAP format are:" << endl;
 	cout << "G := Group([";
 	for (i = 0; i < SG->gens->len; i++) {
-		A->element_print_as_permutation_with_offset(
+		A->Group_element->element_print_as_permutation_with_offset(
 				SG->gens->ith(i), cout,
 				1 /*offset*/,
 				TRUE /* f_do_it_anyway_even_for_big_degree */,
@@ -435,7 +435,7 @@ void delandtsheer_doyen::show_generators(int verbose_level)
 	cout << SG->gens->len << " " << A->degree << endl;
 	for (i = 0; i < SG->gens->len; i++) {
 		for (j = 0; j < A->degree; j++) {
-			a = A->element_image_of(j,
+			a = A->Group_element->element_image_of(j,
 					SG->gens->ith(i), 0 /* verbose_level */);
 			cout << a << " ";
 			}
@@ -1038,7 +1038,13 @@ void delandtsheer_doyen::create_monomial_group(int verbose_level)
 	} // next i
 
 
-	Ar = A->restricted_action(points, nb_points,
+	std::string label_of_set;
+
+
+	label_of_set.assign("points");
+
+	Ar = A->Induced_action->restricted_action(
+			points, nb_points, label_of_set,
 			verbose_level);
 
 	A = Ar;
@@ -1118,6 +1124,7 @@ void delandtsheer_doyen::create_action(int verbose_level)
 				FALSE /* f_compute_related_fields */,
 				0);
 
+		actions::action_global AG;
 
 
 		if (f_v) {
@@ -1125,10 +1132,32 @@ void delandtsheer_doyen::create_action(int verbose_level)
 		}
 
 		M1->init_affine_group(Descr->d1, F1,
-				FALSE /* f_semilinear */, A1, verbose_level);
+				FALSE /* f_semilinear */, /*A1,*/ verbose_level);
+
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action "
+					"before AG.init_base" << endl;
+		}
+		AG.init_base(A1, M1, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action "
+					"after AG.init_base" << endl;
+		}
+
 
 		M2->init_affine_group(Descr->d2, F2,
-				FALSE /* f_semilinear */, A2, verbose_level);
+				FALSE /* f_semilinear */, /*A2,*/ verbose_level);
+
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action "
+					"before AG.init_base" << endl;
+		}
+		AG.init_base(A2, M2, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action "
+					"after AG.init_base" << endl;
+		}
+
 	}
 
 	if (f_v) {

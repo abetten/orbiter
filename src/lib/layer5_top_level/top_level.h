@@ -184,12 +184,15 @@ namespace orthogonal_geometry_applications {
 	class blt_set_classify;
 	class BLT_set_create_description;
 	class BLT_set_create;
+	class blt_set_domain_with_action;
+	class blt_set_group_properties;
 	class blt_set_with_action;
-	class flock;
+	class flock_from_blt_set;
 	class orthogonal_space_activity_description;
 	class orthogonal_space_activity;
 	class orthogonal_space_with_action_description;
 	class orthogonal_space_with_action;
+	class table_of_blt_sets;
 
 }
 
@@ -331,7 +334,10 @@ namespace applications_in_algebraic_geometry {
 		class classification_of_cubic_surfaces_with_double_sixes_activity_description;
 		class classification_of_cubic_surfaces_with_double_sixes_activity;
 		class classify_double_sixes;
+		class classify_five_plus_one;
+		class identify_cubic_surface;
 		class surface_classify_wedge;
+		class surface_repository;
 
 	}
 
@@ -349,6 +355,7 @@ namespace applications_in_algebraic_geometry {
 		class surface_object_with_action;
 		class surface_study;
 		class surface_with_action;
+		class table_of_surfaces;
 
 	}
 
@@ -358,13 +365,10 @@ namespace applications_in_algebraic_geometry {
 #define Get_vector_or_set(label, set, sz) user_interface::The_Orbiter_top_level_session->get_vector_or_set(label, set, sz, 0)
 
 
-//#define Get_object_of_type_finite_field(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_finite_field(label)
-// use Get_finite_field() instead
-
 #define Get_object_of_type_any_group(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(label)
 #define Get_object_of_type_spread(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_spread(label)
-//#define Get_object_of_type_ring(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_ring(label)
 #define Get_object_of_type_poset_classification_control(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_poset_classification_control(label)
+#define Get_object_of_type_poset_classification_activity(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_poset_classification_activity(label)
 #define Get_object_of_type_vector_ge(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_vector_ge(label)
 #define Get_object_of_projective_space(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(label)
 #define Get_object_of_cubic_surface(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_cubic_surface(label)

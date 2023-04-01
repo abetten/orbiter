@@ -111,14 +111,15 @@ public:
 };
 
 
+
 // #############################################################################
-// classify_double_sixes.cpp
+// classify_five_plus_one.cpp
 // #############################################################################
 
-//! classification of double sixes in PG(3,q)
+//! classification of five plus one sets of lines in PG(3,q). A five plus one is five pairwise skew lines with a common transversal.
 
 
-class classify_double_sixes {
+class classify_five_plus_one {
 
 public:
 
@@ -130,40 +131,22 @@ public:
 	algebraic_geometry::surface_domain *Surf;
 
 
-	// pulled from surface_classify_wedge:
-
-	actions::action *A2; // the action on the wedge product
+	actions::action *A2;
+		// the action on the wedge product
 	induced_actions::action_on_wedge_product *AW;
 		// internal data structure for the wedge action
 
 	int *Elt0; // used in identify_five_plus_one
 	int *Elt1; // used in identify_five_plus_one
-	int *Elt2; // used in upstep
-	int *Elt3; // used in upstep
-	int *Elt4; // used in upstep
 
 	groups::strong_generators *SG_line_stab;
 		// stabilizer of the special line in PGL(4,q)
 		// this group acts on the set Neighbors[] in the wedge action
 
-	int l_min;
-	int short_orbit_idx;
 
-	int nb_neighbors;
-		// = (q + 1) * q * (q + 1)
+	orthogonal_geometry::linear_complex *Linear_complex;
 
-	long int *Neighbors; // [nb_neighbors]
-		// The lines which intersect the special line.
-		// In wedge ranks.
-		// The array Neighbors is sorted.
 
-	long int *Neighbor_to_line; // [nb_neighbors]
-		// The lines which intersect the special line.
-		// In grassmann (i.e., line) ranks.
-	long int *Neighbor_to_klein; // [nb_neighbors]
-		// In orthogonal ranks (i.e., points on the Klein quadric).
-
-	//long int *Line_to_neighbor; // [Surf->nb_lines_PG_3]
 
 	ring_theory::longinteger_object go, stab_go;
 	groups::sims *Stab;
@@ -173,21 +156,9 @@ public:
 	int orbit_len;
 
 	long int pt0_idx_in_orbit;
-	long int pt0_wedge;
-	long int pt0_line;
-	long int pt0_klein;
 
 
-	int Basis[8];
-	int *line_to_orbit; // [nb_lines_PG_3]
-	long int *orbit_to_line; // [nb_lines_PG_3]
 
-	long int *Pts_klein;
-	long int *Pts_wedge;
-	int nb_pts;
-
-	long int *Pts_wedge_to_line; // [nb_pts]
-	long int *line_to_pts_wedge; // [nb_lines_PG_3]
 
 	actions::action *A_on_neighbors;
 		// restricted action A2 on the set Neighbors[]
@@ -197,9 +168,58 @@ public:
 	poset_classification::poset_classification *Five_plus_one;
 		// orbits on five-plus-one configurations
 
+	int *Pts_for_partial_ovoid_test; // [5*6]
 
-	//int *u, *v, *w; // temporary vectors of length 6
-	//int *u1, *v1; // temporary vectors of length 6
+
+	classify_five_plus_one();
+	~classify_five_plus_one();
+	void init(
+			cubic_surfaces_in_general::surface_with_action
+				*Surf_A,
+			poset_classification::poset_classification_control
+				*Control,
+			int verbose_level);
+	void classify_partial_ovoids(
+		int verbose_level);
+	int line_to_neighbor(
+			long int line_rk, int verbose_level);
+	void partial_ovoid_test_early(
+			long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void identify_five_plus_one(
+			long int *five_lines,
+			long int transversal_line,
+		long int *five_lines_out_as_neighbors,
+		int &orbit_index,
+		int *transporter, int verbose_level);
+	void report(
+			std::ostream &ost,
+			graphics::layered_graph_draw_options
+				*draw_options,
+			poset_classification::poset_classification_report_options
+				*Opt,
+			int verbose_level);
+
+
+};
+
+
+// #############################################################################
+// classify_double_sixes.cpp
+// #############################################################################
+
+//! classification of double sixes in PG(3,q)
+
+
+class classify_double_sixes {
+
+public:
+
+	classify_five_plus_one *Five_p1;
+
+	int *Elt3; // used in upstep
 
 	int len;
 		// = gen->nb_orbits_at_level(5)
@@ -212,7 +232,6 @@ public:
 		// Po[Flag_orbits->nb_flag_orbits],
 		//list of orbits for which a double six exists
 
-	int *Pts_for_partial_ovoid_test; // [5*6]
 
 
 	invariant_relations::flag_orbits *Flag_orbits;
@@ -223,45 +242,108 @@ public:
 	classify_double_sixes();
 	~classify_double_sixes();
 	void init(
-			cubic_surfaces_in_general::surface_with_action
-				*Surf_A,
-			poset_classification::poset_classification_control
-				*Control,
+			classify_five_plus_one *Five_p1,
 			int verbose_level);
-	void compute_neighbors(int verbose_level);
-	void make_spreadsheet_of_neighbors(
-			data_structures::spreadsheet *&Sp,
-		int verbose_level);
-	void classify_partial_ovoids(
-		int verbose_level);
-	void report(
-			std::ostream &ost,
-			graphics::layered_graph_draw_options
-				*draw_options,
-			poset_classification::poset_classification_report_options
-				*Opt,
-			int verbose_level);
-	void partial_ovoid_test_early(long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
 	void test_orbits(int verbose_level);
-	void make_spreadsheet_of_fiveplusone_configurations(
-			data_structures::spreadsheet *&Sp,
-		int verbose_level);
-	void identify_five_plus_one(long int *five_lines,
-			long int transversal_line,
-		long int *five_lines_out_as_neighbors, int &orbit_index,
-		int *transporter, int verbose_level);
 	void classify(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void print_five_plus_ones(std::ostream &ost);
-	void identify_double_six(long int *double_six,
-		int *transporter, int &orbit_index, int verbose_level);
-	void write_file(std::ofstream &fp, int verbose_level);
-	void read_file(std::ifstream &fp, int verbose_level);
-	int line_to_neighbor(long int line_rk, int verbose_level);
+	void identify_double_six(
+			long int *double_six,
+		int *transporter, int &orbit_index,
+		int verbose_level);
+	void make_spreadsheet_of_fiveplusone_configurations(
+			data_structures::spreadsheet *&Sp,
+		int verbose_level);
+	void write_file(
+			std::ofstream &fp, int verbose_level);
+	void read_file(
+			std::ifstream &fp, int verbose_level);
+};
+
+
+
+// #############################################################################
+// identify_cubic_surface.cpp
+// #############################################################################
+
+//! identification of a cubic surface after classification using double sixes
+
+
+class identify_cubic_surface {
+public:
+
+	surface_classify_wedge *Wedge;
+
+	int *coeff_of_given_surface; // [20]
+
+	int *Elt2;
+	int *Elt3;
+	int *Elt_isomorphism_inv;
+	int *Elt_isomorphism;
+
+	std::vector<long int> My_Points;
+	int nb_points; // = My_Points.size()
+
+	std::vector<long int> My_Lines;
+
+
+	// points and lines
+	// on the surface based on the equation:
+
+	long int *Points; // [nb_points]
+	long int *Lines; // [27]
+
+
+	int *Adj; // line intersection graph
+
+	data_structures::set_of_sets *line_intersections;
+
+	int *Starter_Table; // [nb_starter * 2]
+	int nb_starter;
+
+
+	long int S3[6];
+	long int K1[6];
+		// K1[5] is the transversal
+		// of the 5 lines K1[0],...,K1[4]
+	long int W4[6];
+
+	int l;
+		// index of selected starter
+		// need l < nb_starter
+
+	int flag_orbit_idx;
+
+	long int *image;
+
+	int line_idx;
+	int subset_idx;
+
+		// line_idx = Starter_Table[l * 2 + 0];
+		// subset_idx = Starter_Table[l * 2 + 1];
+
+
+	int double_six_orbit, iso_type, idx2;
+
+	int *coeffs_transformed;
+
+	int idx;
+	long int Lines0[27];
+	int eqn0[20];
+
+
+	int isomorphic_to; // = iso_type
+
+	identify_cubic_surface();
+	~identify_cubic_surface();
+	void identify(
+			surface_classify_wedge *Wedge,
+		int *coeff_of_given_surface,
+		int verbose_level);
+
+
 };
 
 
@@ -291,13 +373,23 @@ public:
 	int *Elt2;
 	int *Elt3;
 
+	// substructures:
+
+	classify_five_plus_one *Five_p1;
+
 	classify_double_sixes *Classify_double_sixes;
 
+
 	// classification of cubic surfaces:
+
 	invariant_relations::flag_orbits *Flag_orbits;
 
 	invariant_relations::classification_step *Surfaces;
 
+
+	// created by post_process():
+
+	surface_repository *Surface_repository;
 
 
 	surface_classify_wedge();
@@ -312,6 +404,7 @@ public:
 	void do_classify_surfaces(int verbose_level);
 	void classify_surfaces_from_double_sixes(
 			int verbose_level);
+	void post_process(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void derived_arcs(int verbose_level);
@@ -319,11 +412,51 @@ public:
 			int iso_type,
 		int *&Starter_configuration_idx,
 		int &nb_starter_conf, int verbose_level);
+
+
+
+	// surface_classify_wedge_io.cpp:
 	void write_file(
 			std::ofstream &fp, int verbose_level);
 	void read_file(
 			std::ifstream &fp, int verbose_level);
+	void generate_history(int verbose_level);
+	int test_if_surfaces_have_been_computed_already();
+	void write_surfaces(int verbose_level);
+	void read_surfaces(int verbose_level);
+	int test_if_double_sixes_have_been_computed_already();
+	void write_double_sixes(int verbose_level);
+	void read_double_sixes(int verbose_level);
+	void create_report(
+			int f_with_stabilizers,
+			graphics::layered_graph_draw_options *draw_options,
+			poset_classification::poset_classification_report_options *Opt,
+			int verbose_level);
+	void report(
+			std::ostream &ost,
+			int f_with_stabilizers,
+			graphics::layered_graph_draw_options *draw_options,
+			poset_classification::poset_classification_report_options *Opt,
+			int verbose_level);
+	void latex_surfaces(
+			std::ostream &ost,
+			int f_with_stabilizers, int verbose_level);
+	void create_report_double_sixes(
+			int verbose_level);
 
+
+	// surface_classify_wedge_recognition.cpp:
+	void identify_surface(int *coeff_of_given_surface,
+		int &isomorphic_to, int *Elt_isomorphism,
+		int verbose_level);
+	void recognition(
+			cubic_surfaces_in_general::surface_create_description
+				*Descr,
+			int verbose_level);
+	void sweep_Cayley(int verbose_level);
+	void identify_general_abcd(
+		int *Iso_type, int *Nb_lines, int verbose_level);
+	void identify_general_abcd_and_print_table(int verbose_level);
 	void identify_Eckardt_and_print_table(int verbose_level);
 	void identify_F13_and_print_table(int verbose_level);
 	void identify_Bes_and_print_table(int verbose_level);
@@ -339,51 +472,47 @@ public:
 		int &isomorphic_to1, int &isomorphic_to2,
 		int *Elt_isomorphism_1to2,
 		int verbose_level);
-	void identify_surface(int *coeff_of_given_surface,
-		int &isomorphic_to, int *Elt_isomorphism,
-		int verbose_level);
-	void latex_surfaces(
-			std::ostream &ost,
-			int f_with_stabilizers, int verbose_level);
-	void report_surface(
-			std::ostream &ost,
-			int orbit_index, int verbose_level);
-	void generate_source_code(int verbose_level);
-		// no longer produces nb_E[] and single_six[]
-	void generate_history(int verbose_level);
-	int test_if_surfaces_have_been_computed_already();
-	void write_surfaces(int verbose_level);
-	void read_surfaces(int verbose_level);
-	int test_if_double_sixes_have_been_computed_already();
-	void write_double_sixes(int verbose_level);
-	void read_double_sixes(int verbose_level);
-	void create_report(int f_with_stabilizers,
-			graphics::layered_graph_draw_options *draw_options,
-			poset_classification::poset_classification_report_options *Opt,
-			int verbose_level);
-	void report(
-			std::ostream &ost,
-			int f_with_stabilizers,
-			graphics::layered_graph_draw_options *draw_options,
-			poset_classification::poset_classification_report_options *Opt,
-			int verbose_level);
-	void create_report_double_sixes(int verbose_level);
 	void test_isomorphism(
 			cubic_surfaces_in_general::surface_create_description
 				*Descr1,
 			cubic_surfaces_in_general::surface_create_description
 				*Descr2,
 			int verbose_level);
-	void recognition(
-			cubic_surfaces_in_general::surface_create_description
-				*Descr,
-			int verbose_level);
-	void sweep_Cayley(int verbose_level);
-	void identify_general_abcd(
-		int *Iso_type, int *Nb_lines, int verbose_level);
-	void identify_general_abcd_and_print_table(int verbose_level);
 
 };
+
+
+
+// #############################################################################
+// surface_repository.cpp
+// #############################################################################
+
+//! a place to store a list of cubic surfaces, for instance after a classification
+
+
+class surface_repository {
+public:
+
+	surface_classify_wedge *Wedge;
+
+	int nb_surfaces;
+	data_structures_groups::set_and_stabilizer **SaS;
+		// [nb_surfaces]
+
+	long int *Lines; // [nb_surfaces * 27]
+	int *Eqn; // [nb_surfaces * 20]
+
+	surface_repository();
+	~surface_repository();
+	void init(surface_classify_wedge *Wedge, int verbose_level);
+	void generate_source_code(int verbose_level);
+	void report_surface(
+			std::ostream &ost,
+			int orbit_index, int verbose_level);
+
+
+};
+
 
 
 }}}}

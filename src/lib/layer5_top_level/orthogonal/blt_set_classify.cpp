@@ -21,23 +21,18 @@ namespace orthogonal_geometry_applications {
 
 
 // global functions:
-static void blt_set_classify_print(std::ostream &ost, int len, long int *S, void *data);
-#if 0
-static void blt_set_classify_lifting_prepare_function_new(exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out,
-	int verbose_level);
-#endif
-static void blt_set_classify_early_test_func_callback(long int *S, int len,
+static void blt_set_classify_print(
+		std::ostream &ost, int len, long int *S, void *data);
+static void blt_set_classify_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-//static void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level);
 
 blt_set_classify::blt_set_classify()
 {
 	OA = NULL;
+	Blt_set_domain_with_action = NULL;
 	Blt_set_domain = NULL;
 	//LG = NULL;
 	A = NULL;
@@ -59,18 +54,7 @@ blt_set_classify::~blt_set_classify()
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "blt_set_classify::~blt_set_classify before A" << endl;
-	}
-	if (Blt_set_domain) {
-		FREE_OBJECT(Blt_set_domain);
-		Blt_set_domain = NULL;
-	}
-	if (A) {
-		FREE_OBJECT(A);
-		A = NULL;
-	}
-	if (f_v) {
-		cout << "blt_set_classify::~blt_set_classify before gen" << endl;
+		cout << "blt_set_classify::~blt_set_classify" << endl;
 	}
 	if (Control) {
 		FREE_OBJECT(Control);
@@ -91,7 +75,8 @@ blt_set_classify::~blt_set_classify()
 
 
 
-void blt_set_classify::init_basic(orthogonal_space_with_action *OA,
+void blt_set_classify::init_basic(
+		orthogonal_space_with_action *OA,
 		actions::action *A,
 		groups::strong_generators *Strong_gens,
 		int starter_size,
@@ -115,6 +100,8 @@ void blt_set_classify::init_basic(orthogonal_space_with_action *OA,
 	blt_set_classify::Strong_gens = Strong_gens;
 	blt_set_classify::A = A;
 
+
+	Blt_set_domain_with_action = OA->Blt_set_domain_with_action;
 
 
 	if (A->type_G != action_on_orthogonal_t) {
@@ -153,8 +140,8 @@ void blt_set_classify::init_basic(orthogonal_space_with_action *OA,
 #endif
 	
 
-	Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
-	Blt_set_domain->init(O, verbose_level);
+
+	Blt_set_domain = OA->Blt_set_domain_with_action->Blt_set_domain;
 
 	degree = Blt_set_domain->degree;
 	target_size = Blt_set_domain->target_size;
@@ -229,6 +216,58 @@ void blt_set_classify::compute_starter(
 		cout << "blt_set_classify::compute_starter finished" << endl;
 	}
 }
+
+
+void blt_set_classify::do_poset_classification_activity(
+		std::string &activity_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "blt_set_classify::do_poset_classification_activity" << endl;
+	}
+
+	poset_classification::poset_classification_activity_description *Activity_description;
+
+	Activity_description =
+			Get_object_of_type_poset_classification_activity(activity_label);
+
+
+	poset_classification::poset_classification_activity Activity;
+
+	if (f_v) {
+		cout << "blt_set_classify::do_poset_classification_activity "
+				"before Activity.init" << endl;
+	}
+	Activity.init(
+			Activity_description,
+			gen,
+			starter_size /* actual_size */,
+			verbose_level);
+	if (f_v) {
+		cout << "blt_set_classify::do_poset_classification_activity "
+				"after Activity.init" << endl;
+	}
+
+	if (f_v) {
+		cout << "blt_set_classify::do_poset_classification_activity "
+				"before Activity.perform_work" << endl;
+	}
+	Activity.perform_work(
+			verbose_level);
+	if (f_v) {
+		cout << "blt_set_classify::do_poset_classification_activity "
+				"after Activity.perform_work" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "blt_set_classify::do_poset_classification_activity done" << endl;
+	}
+}
+
 
 #if 0
 void blt_set_classify::init_group(int f_semilinear, int verbose_level)
@@ -387,7 +426,8 @@ void blt_set_classify::create_graphs(
 
 	fname_list_of_cases.assign(Blt_set_domain->prefix);
 	fname_list_of_cases.append("_list_of_cases");
-	snprintf(str2, sizeof(str2), "_%d_%d_%d", starter_size, orbit_at_level_r, orbit_at_level_m);
+	snprintf(str2, sizeof(str2), "_%d_%d_%d",
+			starter_size, orbit_at_level_r, orbit_at_level_m);
 	fname_list_of_cases.append(str2);
 	fname_list_of_cases.append(".csv");
 
@@ -399,7 +439,8 @@ void blt_set_classify::create_graphs(
 
 
 	if (f_v) {
-		cout << "blt_set_classify::create_graphs counting number of starter in file " << fname << endl;
+		cout << "blt_set_classify::create_graphs "
+				"counting number of starter in file " << fname << endl;
 	}
 	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);
 	if (f_v) {
@@ -423,7 +464,8 @@ void blt_set_classify::create_graphs(
 			continue;
 		}
 		if (f_v) {
-			cout << "blt_set_classify::create_graphs creating graph associated "
+			cout << "blt_set_classify::create_graphs "
+					"creating graph associated "
 					"with orbit " << orbit << " / " << nb_orbits
 					<< ":" << endl;
 		}
@@ -435,7 +477,8 @@ void blt_set_classify::create_graphs(
 		int t0 = Os.os_ticks();
 		
 		if (f_v3) {
-			cout << "blt_set_classify::create_graphs creating graph associated "
+			cout << "blt_set_classify::create_graphs "
+					"creating graph associated "
 					"with orbit " << orbit << " / " << nb_orbits
 					<< ": before create_graph" << endl;
 		}
@@ -455,7 +498,8 @@ void blt_set_classify::create_graphs(
 			nb_vertices = CG->nb_points;
 		}
 		if (f_v3) {
-			cout << "blt_set_classify::create_graphs creating graph associated "
+			cout << "blt_set_classify::create_graphs "
+					"creating graph associated "
 					"with orbit " << orbit << " / " << nb_orbits
 					<< ": after create_graph" << endl;
 		}
@@ -472,13 +516,15 @@ void blt_set_classify::create_graphs(
 		
 		if (f_vv) {
 			if (nb_vertices >= 0) {
-				cout << "blt_set_classify::create_graphs creating graph "
+				cout << "blt_set_classify::create_graphs "
+						"creating graph "
 						"associated with orbit " << orbit << " / "
 						<< nb_orbits << " with " << nb_vertices
 						<< " vertices created" << endl;
 			}
 			else {
-				cout << "blt_set_classify::create_graphs creating graph "
+				cout << "blt_set_classify::create_graphs "
+						"creating graph "
 						"associated with orbit " << orbit << " / "
 						<< nb_orbits << " is ruled out" << endl;
 			}
@@ -486,12 +532,14 @@ void blt_set_classify::create_graphs(
 	}
 
 	if (f_v) {
-		cout << "blt_set_classify::create_graphs writing file "
+		cout << "blt_set_classify::create_graphs "
+				"writing file "
 				<< fname_time << endl;
 	}
 	Fio.lint_matrix_write_csv(fname_time, Time, time_idx, 2);
 	if (f_v) {
-		cout << "blt_set_classify::create_graphs Written file "
+		cout << "blt_set_classify::create_graphs "
+				"Written file "
 				<< fname_time << " of size "
 				<< Fio.file_size(fname_time) << endl;
 	}
@@ -499,7 +547,8 @@ void blt_set_classify::create_graphs(
 	Fio.lint_matrix_write_csv(fname_list_of_cases,
 			list_of_cases, nb_of_cases, 1);
 	if (f_v) {
-		cout << "blt_set_classify::create_graphs Written file "
+		cout << "blt_set_classify::create_graphs "
+				"Written file "
 				<< fname_list_of_cases << " of size "
 				<< Fio.file_size(fname_list_of_cases) << endl;
 	}
@@ -595,7 +644,8 @@ void blt_set_classify::create_graphs_list_of_cases(
 		int nb_vertices = -1;
 
 
-		if (create_graph(orbit, level_of_candidates_file, 
+		if (create_graph(
+				orbit, level_of_candidates_file,
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
 			nb_vertices,
 			CG,  
@@ -637,7 +687,8 @@ void blt_set_classify::create_graphs_list_of_cases(
 		}
 	}
 
-	Fio.write_set_to_file(fname_list_of_cases,
+	Fio.write_set_to_file(
+			fname_list_of_cases,
 			list_of_cases_created, nb_of_cases_created,
 			0 /*verbose_level */);
 	if (f_v) {
@@ -700,7 +751,8 @@ int blt_set_classify::create_graph(
 		cout << "blt_set_classify::create_graph before R->init_from_file" << endl;
 	}
 
-	R->init_from_file(A, Blt_set_domain->prefix,
+	R->init_from_file(
+			A, Blt_set_domain->prefix,
 		starter_size, orbit_at_level, level_of_candidates_file, 
 		blt_set_classify_early_test_func_callback,
 		this /* early_test_func_callback_data */, 
@@ -722,13 +774,16 @@ int blt_set_classify::create_graph(
 	max_starter = R->rep[starter_size - 1];
 
 	if (f_vv) {
-		cout << "blt_set_classify::create_graph Case " << orbit_at_level
+		cout << "blt_set_classify::create_graph "
+				"Case " << orbit_at_level
 				<< " / " << R->nb_cases << " max_starter="
 				<< max_starter << endl;
-		cout << "blt_set_classify::create_graph Case " << orbit_at_level
+		cout << "blt_set_classify::create_graph "
+				"Case " << orbit_at_level
 				<< " / " << R->nb_cases << " Group order="
 				<< *R->stab_go << endl;
-		cout << "blt_set_classify::create_graph Case " << orbit_at_level
+		cout << "blt_set_classify::create_graph "
+				"Case " << orbit_at_level
 				<< " / " << R->nb_cases << " nb_candidates="
 				<< R->nb_candidates << " at level "
 				<< starter_size << endl;
@@ -740,7 +795,8 @@ int blt_set_classify::create_graph(
 		int nb_candidates2;
 	
 		if (f_v3) {
-			cout << "blt_set_classify::create_graph Case " << orbit_at_level
+			cout << "blt_set_classify::create_graph "
+					"Case " << orbit_at_level
 					<< " / " << R->nb_cases
 					<< " Before lexorder_test" << endl;
 		}
@@ -900,12 +956,14 @@ void blt_set_classify::lifting_prepare_function_new(
 	Pts1 = NEW_int(nb_free_points * 5);
 	Pts2 = NEW_int(nb_cols * 5);
 	for (i = 0; i < nb_free_points; i++) {
-		Blt_set_domain->O->Hyperbolic_pair->unrank_point(Pts1 + i * 5, 1,
+		Blt_set_domain->O->Hyperbolic_pair->unrank_point(
+				Pts1 + i * 5, 1,
 				free_point_list[i],
 				0 /*verbose_level - 1*/);
 	}
 	for (i = 0; i < nb_cols; i++) {
-		Blt_set_domain->O->Hyperbolic_pair->unrank_point(Pts2 + i * 5, 1,
+		Blt_set_domain->O->Hyperbolic_pair->unrank_point(
+				Pts2 + i * 5, 1,
 				col_labels[i],
 				0 /*verbose_level - 1*/);
 	}
@@ -913,7 +971,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 
 	Dio = NEW_OBJECT(solvers::diophant);
-	Dio->open(nb_rows, nb_cols);
+	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->sum = nb_needed;
 
 	for (i = 0; i < nb_rows; i++) {
@@ -957,7 +1015,8 @@ void blt_set_classify::lifting_prepare_function_new(
 }
 
 
-void blt_set_classify::report_from_iso(isomorph::isomorph &Iso, int verbose_level)
+void blt_set_classify::report_from_iso(
+		isomorph::isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -972,7 +1031,8 @@ void blt_set_classify::report_from_iso(isomorph::isomorph &Iso, int verbose_leve
 				"before Iso.get_orbit_transversal" << endl;
 	}
 
-	Iso.Folding->get_orbit_transversal(T, verbose_level);
+	Iso.Folding->get_orbit_transversal(
+			T, verbose_level);
 
 	if (f_v) {
 		cout << "blt_set_classify::report_from_iso "
@@ -989,7 +1049,8 @@ void blt_set_classify::report_from_iso(isomorph::isomorph &Iso, int verbose_leve
 }
 
 
-void blt_set_classify::report(data_structures_groups::orbit_transversal *T,
+void blt_set_classify::report(
+		data_structures_groups::orbit_transversal *T,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1253,8 +1314,10 @@ void blt_set_classify::subset_orbits(isomorph &Iso, int verbose_level)
 }
 #endif
 
-void blt_set_classify::report2(std::ostream &ost,
-		data_structures_groups::orbit_transversal *T, int verbose_level)
+void blt_set_classify::report2(
+		std::ostream &ost,
+		data_structures_groups::orbit_transversal *T,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1473,13 +1536,33 @@ void blt_set_classify::report2(std::ostream &ost,
 #endif
 
 
+		string label_txt;
+		string label_tex;
 		blt_set_with_action *BA;
+
+		char str[1000];
+
+		snprintf(str, sizeof(str), "_q%d_iso%d", q, h);
+
+		label_txt.assign("BLT_set_");
+		label_txt.append(str);
+
+		snprintf(str, sizeof(str), "-q%d-iso%d", q, h);
+
+		label_tex.assign("BLT_set_");
+		label_tex.append(str);
+
 
 		BA = NEW_OBJECT(blt_set_with_action);
 		BA->init_set(
-				A, Blt_set_domain, T->Reps[h].data,
-				T->Reps[h].Strong_gens, verbose_level);
-		BA->print_automorphism_group(ost);
+				A, Blt_set_domain_with_action,
+				T->Reps[h].data,
+				label_txt,
+				label_tex,
+				T->Reps[h].Strong_gens,
+				TRUE /* f_invariants */,
+				verbose_level);
+		BA->Blt_set_group_properties->print_automorphism_group(ost);
 
 		FREE_OBJECT(BA);
 	}
@@ -1507,7 +1590,8 @@ void blt_set_classify::report2(std::ostream &ost,
 
 
 
-static void blt_set_classify_print(std::ostream &ost, int len, long int *S, void *data)
+static void blt_set_classify_print(
+		std::ostream &ost, int len, long int *S, void *data)
 {
 	blt_set_classify *Gen = (blt_set_classify *) data;
 
@@ -1556,7 +1640,8 @@ static void blt_set_classify_lifting_prepare_function_new(
 #endif
 
 
-static void blt_set_classify_early_test_func_callback(long int *S, int len,
+static void blt_set_classify_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

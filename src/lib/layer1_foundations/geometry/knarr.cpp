@@ -172,8 +172,8 @@ void knarr::init(
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
 
 	if (f_v) {
-		cout << "P5->nb_points=" << P5->N_points << endl;
-		cout << "P5->nb_lines=" << P5->N_lines << endl;
+		cout << "P5->nb_points=" << P5->Subspaces->N_points << endl;
+		cout << "P5->nb_lines=" << P5->Subspaces->N_lines << endl;
 		}
 
 	G63 = NEW_OBJECT(grassmann);
@@ -244,7 +244,7 @@ void knarr::points_and_lines(int verbose_level)
 
 	q2 = q * q;
 	q5 = NT.i_power_j(q, 5);
-	type_i_points->init(P5->N_points, 0);
+	type_i_points->init(P5->Subspaces->N_points, 0);
 	for (i = 0; i < q5; i++) {
 		Gg.AG_element_unrank(q, v5, 1, 5, i);
 		v6[0] = v5[0];
@@ -267,7 +267,7 @@ void knarr::points_and_lines(int verbose_level)
 		type_i_points->println();
 		}
 	
-	type_ii_points->init(P5->N_lines, 0);
+	type_ii_points->init(P5->Subspaces->N_lines, 0);
 
 	type_a_lines->init(six_choose_three_q_int, 0);
 	type_b_lines->init(six_choose_three_q_int, 0);
@@ -325,8 +325,8 @@ void knarr::points_and_lines(int verbose_level)
 
 		for (jj = 0; jj < Gre->degree; jj++) {
 			Gre->unrank_lint(subspace_basis, jj, 0);
-			Int_vec_copy(subspace_basis, P5->Grass_lines->M, 2 * 6);
-			j = P5->Grass_lines->rank_lint(0);
+			Int_vec_copy(subspace_basis, P5->Subspaces->Grass_lines->M, 2 * 6);
+			j = P5->Subspaces->Grass_lines->rank_lint(0);
 			if (f_v4) {
 				cout << "Subspace " << jj << " has a basis:" << endl;
 				Int_vec_print_integer_matrix_width(cout, subspace_basis,
@@ -590,7 +590,7 @@ void knarr::incidence_matrix(int *&Inc,
 				}
 			else if (I == 1) {
 				a = type_ii_points->set[i];
-				P5->Grass_lines->unrank_lint_here(Basis_U, a, 0);
+				P5->Subspaces->Grass_lines->unrank_lint_here(Basis_U, a, 0);
 				dim_U = 2;
 				}
 			else {

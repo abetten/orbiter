@@ -818,13 +818,13 @@ void orbit_of_subspaces::get_transporter(int idx,
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	A->element_one(Elt1, 0);
+	A->Group_element->element_one(Elt1, 0);
 	idx1 = idx;
 	idx0 = prev[idx1];
 	while (idx0 >= 0) {
 		l = label[idx1];
-		A->element_mult(gens->ith(l), Elt1, Elt2, 0);
-		A->element_move(Elt2, Elt1, 0);
+		A->Group_element->element_mult(gens->ith(l), Elt1, Elt2, 0);
+		A->Group_element->element_move(Elt2, Elt1, 0);
 		idx1 = idx0;
 		idx0 = prev[idx1];
 		}
@@ -833,7 +833,7 @@ void orbit_of_subspaces::get_transporter(int idx,
 				"idx1 != position_of_original_subspace" << endl;
 		exit(1);
 		}
-	A->element_move(Elt1, transporter, 0);
+	A->Group_element->element_move(Elt1, transporter, 0);
 
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -939,7 +939,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 		cout << "random coset " << r1 << ", random generator " << r2 << endl;
 		}
 	
-	A->element_mult(E1, gens->ith(r2), E2, 0);
+	A->Group_element->element_mult(E1, gens->ith(r2), E2, 0);
 
 	// compute image of original subspace under E2:
 	unrank_subspace(pt1, Mtx1, verbose_level - 1);
@@ -959,8 +959,8 @@ void orbit_of_subspaces::get_random_schreier_generator(
 	pt2 = idx;
 
 	get_transporter(pt2, E3, 0);
-	A->element_invert(E3, E4, 0);
-	A->element_mult(E2, E4, E5, 0);
+	A->Group_element->element_invert(E3, E4, 0);
+	A->Group_element->element_mult(E2, E4, E5, 0);
 
 #if 0
 	// test:
@@ -971,7 +971,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 		//orbit_of_subspaces_compare_func, (void *) (sz_for_compare),
 	//	used_length, new_basis, pt3, 0 /* verbose_level */)) {
 		if (f_vv) {
-			cout << "testing: n e w subspace is at position " << pt3 << endl;
+			cout << "testing: new subspace is at position " << pt3 << endl;
 			}
 		}
 	else {
@@ -988,7 +988,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 #endif
 
 
-	A->element_move(E5, Elt, 0);
+	A->Group_element->element_move(E5, Elt, 0);
 
 
 	FREE_int(E1);
@@ -1121,7 +1121,7 @@ void orbit_of_subspaces::compute_stabilizer(
 						"element strips through" << endl;
 				if (FALSE) {
 					cout << "residue:" << endl;
-					A->element_print(residue, cout);
+					A->Group_element->element_print(residue, cout);
 					cout << endl;
 					}
 				}
@@ -1134,7 +1134,7 @@ void orbit_of_subspaces::compute_stabilizer(
 						"element needs to be inserted at level = "
 					<< drop_out_level << " with image " << image << endl;
 				if (FALSE) {
-					A->element_print(residue, cout);
+					A->Group_element->element_print(residue, cout);
 					cout  << endl;
 					}
 				}
@@ -1144,7 +1144,7 @@ void orbit_of_subspaces::compute_stabilizer(
 		Stab->group_order(cur_go);
 		if ((f_vv && f_added) || f_vvv) {
 			cout << "iteration " << cnt
-					<< " the n e w group order is " << cur_go
+					<< " the group order has been updated to " << cur_go
 				<< " expecting a group of order " << target_go << endl; 
 			}
 		cnt++;

@@ -150,7 +150,7 @@ void union_find::add_generator(int *Elt, int verbose_level)
 		cout << "union_find::add_generator" << endl;
 		}
 	if (f_vv) {
-		A->print_quick(cout, Elt);
+		A->Group_element->print_quick(cout, Elt);
 		cout << "as permutation of degree "
 				<< A->degree << " (skipped)" << endl;
 		//A->print_as_permutation(cout, Elt);
@@ -183,7 +183,7 @@ void union_find::add_generator(int *Elt, int verbose_level)
 						"too many iterations" << endl;
 				exit(1);
 				}
-			k = A->element_image_of(j, Elt, 0);
+			k = A->Group_element->element_image_of(j, Elt, 0);
 			if (f_vv) {
 				cout << "union_find::add_generator "
 						"i0=" << i0 << " j=" << j << " k=" << k << endl;

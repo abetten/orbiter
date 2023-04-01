@@ -126,7 +126,8 @@ void polynomial_function_domain::init(
 	for (i = 0; i < Q; i++) {
 		Gg.AG_element_unrank(2, v1, 1, n, i);
 		v1[n] = 1;
-		Fq->PG_element_rank_modified_lint(v1, 1, n + 1, a);
+		Fq->Projective_space_basic->PG_element_rank_modified_lint(
+				v1, 1, n + 1, a);
 		affine_points[i] = a;
 	}
 	if (FALSE) {
@@ -141,11 +142,13 @@ void polynomial_function_domain::init(
 
 
 	if (f_v) {
-		cout << "polynomial_function_domain::init before setup_polynomial_rings" << endl;
+		cout << "polynomial_function_domain::init "
+				"before setup_polynomial_rings" << endl;
 	}
 	setup_polynomial_rings(verbose_level);
 	if (f_v) {
-		cout << "polynomial_function_domain::init after setup_polynomial_rings" << endl;
+		cout << "polynomial_function_domain::init "
+				"after setup_polynomial_rings" << endl;
 	}
 
 
@@ -155,7 +158,8 @@ void polynomial_function_domain::init(
 	}
 }
 
-void polynomial_function_domain::setup_polynomial_rings(int verbose_level)
+void polynomial_function_domain::setup_polynomial_rings(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_vars;
@@ -337,14 +341,18 @@ void polynomial_function_domain::compute_polynomial_representation(
 
 
 			if (i == 0) {
-				Int_vec_copy(B_poly[q - 1], C_poly[q - 1], Poly[q - 1].get_nb_monomials());
+				Int_vec_copy(
+						B_poly[q - 1], C_poly[q - 1],
+						Poly[q - 1].get_nb_monomials());
 			}
 			else {
 				// C_poly[(i + 1) * (q - 1)] = B_poly[q - 1] * C_poly[i * (q - 1)]
 
 				multiply_i_times_j(
 							q - 1, i * (q - 1),
-							B_poly[q - 1], C_poly[i * (q - 1)], C_poly[(i + 1) * (q - 1)],
+							B_poly[q - 1],
+							C_poly[i * (q - 1)],
+							C_poly[(i + 1) * (q - 1)],
 							0 /*verbose_level*/);
 			}
 
@@ -367,7 +375,8 @@ void polynomial_function_domain::compute_polynomial_representation(
 
 			if (f_v) {
 				cout << "s=" << s << " / " << Q << " : ";
-				Poly[(i + 1) * (q - 1)].print_equation(cout, C_poly[(i + 1) * (q - 1)]);
+				Poly[(i + 1) * (q - 1)].print_equation(
+						cout, C_poly[(i + 1) * (q - 1)]);
 				cout << endl;
 			}
 
@@ -375,7 +384,8 @@ void polynomial_function_domain::compute_polynomial_representation(
 		} // next i
 		if (f_v) {
 			cout << "s=" << s << " / " << Q << " : ";
-			Poly[max_degree].print_equation(cout, C_poly[max_degree]);
+			Poly[max_degree].print_equation(
+					cout, C_poly[max_degree]);
 			cout << endl;
 		}
 
@@ -471,7 +481,8 @@ void polynomial_function_domain::compute_polynomial_representation(
 	}
 }
 
-void polynomial_function_domain::evaluate_projectively(int *coeff, int *f)
+void polynomial_function_domain::evaluate_projectively(
+		int *coeff, int *f)
 {
 	int i;
 
@@ -481,7 +492,8 @@ void polynomial_function_domain::evaluate_projectively(int *coeff, int *f)
 
 }
 
-void polynomial_function_domain::evaluate(int *coeff, int *f)
+void polynomial_function_domain::evaluate(
+		int *coeff, int *f)
 {
 	int i;
 	geometry::geometry_global Gg;
@@ -552,7 +564,8 @@ void polynomial_function_domain::multiply_i_times_j(
 	}
 }
 
-void polynomial_function_domain::algebraic_normal_form(int *func, int len,
+void polynomial_function_domain::algebraic_normal_form(
+		int *func, int len,
 		int *&coeff, int &nb_coeff,
 		int verbose_level)
 {
@@ -563,12 +576,14 @@ void polynomial_function_domain::algebraic_normal_form(int *func, int len,
 	}
 
 	if (len != Q) {
-		cout << "polynomial_function_domain::algebraic_normal_form len should be " << Q << endl;
+		cout << "polynomial_function_domain::algebraic_normal_form "
+				"len should be " << Q << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "polynomial_function_domain::algebraic_normal_form input function = ";
+		cout << "polynomial_function_domain::algebraic_normal_form "
+				"input function = ";
 		Int_vec_print(cout, func, len);
 		cout << endl;
 	}
@@ -576,7 +591,8 @@ void polynomial_function_domain::algebraic_normal_form(int *func, int len,
 	nb_coeff = Poly[max_degree].get_nb_monomials();
 
 	if (f_v) {
-		cout << "polynomial_function_domain::algebraic_normal_form nb_coeff = " << nb_coeff << endl;
+		cout << "polynomial_function_domain::algebraic_normal_form "
+				"nb_coeff = " << nb_coeff << endl;
 	}
 
 	coeff = NEW_int(nb_coeff);

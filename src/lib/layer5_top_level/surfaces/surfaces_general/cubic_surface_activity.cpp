@@ -30,7 +30,8 @@ cubic_surface_activity::~cubic_surface_activity()
 }
 
 void cubic_surface_activity::init(
-		cubic_surfaces_in_general::cubic_surface_activity_description *Cubic_surface_activity_description,
+		cubic_surfaces_in_general::cubic_surface_activity_description
+			*Cubic_surface_activity_description,
 		surface_create *SC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -81,168 +82,100 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 	}
 
+	if (Descr->f_export_gap) {
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"before SC->export_gap" << endl;
+		}
+		SC->export_gap(verbose_level);
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"after SC->export_gap" << endl;
+		}
+
+	}
+
+
 	if (Descr->f_all_quartic_curves) {
 
-		//surface_object_with_action *SoA;
-
-		if (!SC->f_has_group) {
-			cout << "-all_quartic_curves: The automorphism group "
-					"of the surface is missing" << endl;
-			exit(1);
-		}
-
-#if 0
-		if (f_v) {
-			cout << "cubic_surface_activity::perform_activity "
-					"before SC->create_surface_object_with_action" << endl;
-		}
-		SC->create_surface_object_with_action(
-				SoA,
-				verbose_level);
-		if (f_v) {
-			cout << "cubic_surface_activity::perform_activity "
-					"after SC->create_surface_object_with_action" << endl;
-		}
-#endif
-
-		string surface_prefix;
-		string fname_tex;
-		//string fname_quartics;
-		string fname_mask;
-		string label;
-		string label_tex;
-
-
-		surface_prefix.assign("surface_");
-		surface_prefix.append(SC->label_txt);
-
-		label.assign("surface_");
-		label.append(SC->label_txt);
-		label.append("_quartics");
-
-
-		fname_tex.assign(label);
-		fname_tex.append(".tex");
-
-
-
-		//fname_quartics.assign(label);
-		//fname_quartics.append(".csv");
-
-
-		label_tex.assign("surface_");
-		label_tex.append(SC->label_tex);
-
-		fname_mask.assign("surface_");
-		fname_mask.append(SC->prefix);
-		fname_mask.append("_orbit_%d");
 
 		if (f_v) {
 			cout << "cubic_surface_activity::perform_activity "
-					"fname_tex = " << fname_tex << endl;
-			//cout << "cubic_surface_activity::perform_activity "
-			//		"fname_quartics = " << fname_quartics << endl;
+					"before SC->all_quartic_curves" << endl;
 		}
-		{
-			ofstream ost(fname_tex);
-			//ofstream ost_quartics(fname_quartics);
-
-			orbiter_kernel_system::latex_interface L;
-
-			L.head_easy(ost);
-
-			if (f_v) {
-				cout << "cubic_surface_activity::perform_activity "
-						"before SC->SOA->all_quartic_curves" << endl;
-			}
-			SC->SOA->all_quartic_curves(SC->label_txt, SC->label_tex, ost, verbose_level);
-			if (f_v) {
-				cout << "cubic_surface_activity::perform_activity "
-						"after SC->SOA->all_quartic_curves" << endl;
-			}
-
-			//ost_curves << -1 << endl;
-
-			L.foot(ost);
+		SC->all_quartic_curves(verbose_level);
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"after SC->all_quartic_curves" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
-
-		cout << "Written file " << fname_tex << " of size "
-				<< Fio.file_size(fname_tex) << endl;
-
-
-		//FREE_OBJECT(SoA);
 
 	}
 
 
 	if (Descr->f_export_all_quartic_curves) {
 
-		//surface_object_with_action *SoA;
-
-		if (!SC->f_has_group) {
-			cout << "-all_quartic_curves: The automorphism group "
-					"of the surface is missing" << endl;
-			exit(1);
-		}
-
-#if 0
 		if (f_v) {
 			cout << "cubic_surface_activity::perform_activity "
-					"before SC->create_surface_object_with_action" << endl;
+					"before SC->export_all_quartic_curves" << endl;
 		}
-		SC->create_surface_object_with_action(
-				SoA,
+		SC->export_all_quartic_curves(verbose_level);
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"after SC->export_all_quartic_curves" << endl;
+		}
+
+
+	}
+
+	if (Descr->f_export_something_with_group_element) {
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"-export_something_with_group_element" << endl;
+		}
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"before SC->export_something_with_group_element" << endl;
+		}
+		SC->export_something_with_group_element(
+				Descr->export_something_with_group_element_what,
+				Descr->export_something_with_group_element_label,
 				verbose_level);
 		if (f_v) {
 			cout << "cubic_surface_activity::perform_activity "
-					"after SC->create_surface_object_with_action" << endl;
+					"after SC->export_something_with_group_element" << endl;
 		}
-#endif
-
-		string fname_curves;
-		string label;
 
 
-		label.assign("surface_");
-		label.append(SC->label_txt);
-		label.append("_quartics");
+	}
 
 
-		fname_curves.assign(label);
-		fname_curves.append(".csv");
-
+	if (Descr->f_action_on_module) {
 
 		if (f_v) {
 			cout << "cubic_surface_activity::perform_activity "
-					"fname_curves = " << fname_curves << endl;
+					"-action_on_module" << endl;
 		}
 
-		{
-			ofstream ost_curves(fname_curves);
-
-			if (f_v) {
-				cout << "cubic_surface_activity::perform_activity "
-						"before SC->SOA->export_all_quartic_curves" << endl;
-			}
-			SC->SOA->export_all_quartic_curves(ost_curves, verbose_level - 1);
-			if (f_v) {
-				cout << "cubic_surface_activity::perform_activity "
-						"after SC->SOA->export_all_quartic_curves" << endl;
-			}
-
-			ost_curves << -1 << endl;
-
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"before SC->action_on_module" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
-
-		cout << "Written file " << fname_curves << " of size "
-				<< Fio.file_size(fname_curves) << endl;
-
-
-		//FREE_OBJECT(SoA);
+		SC->action_on_module(
+				Descr->action_on_module_type,
+				Descr->action_on_module_basis,
+				Descr->action_on_module_gens,
+				verbose_level);
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"after SC->action_on_module" << endl;
+		}
 
 	}
+
+
 
 
 	if (f_v) {

@@ -57,14 +57,16 @@ void permutation_group_create::permutation_group_init(
 	int f_OK = FALSE;
 
 	if (f_v) {
-		cout << "permutation_group_create::permutation_group_init initializing group" << endl;
+		cout << "permutation_group_create::permutation_group_init "
+				"initializing group" << endl;
 	}
 
 
 	if (Descr->type == symmetric_group_t) {
 
 		if (f_v) {
-			cout << "permutation_group_create::permutation_group_init initializing symmetric_group_t" << endl;
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing symmetric_group_t" << endl;
 		}
 
 		A_initial = NEW_OBJECT(actions::action);
@@ -84,20 +86,23 @@ void permutation_group_create::permutation_group_init(
 		label_tex.assign(A_initial->label_tex);
 
 		if (f_v) {
-			cout << "permutation_group_create::permutation_group_init initializing symmetric_group_t done" << endl;
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing symmetric_group_t done" << endl;
 		}
 	}
 
 	else if (Descr->type == cyclic_group_t) {
 
 		if (f_v) {
-			cout << "permutation_group_create::permutation_group_init initializing cyclic_group_t" << endl;
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing cyclic_group_t" << endl;
 		}
 
 		A_initial = NEW_OBJECT(actions::action);
 		int f_no_base = FALSE;
 
-		A_initial->Known_groups->init_cyclic_group(Descr->degree, f_no_base, verbose_level);
+		A_initial->Known_groups->init_cyclic_group(
+				Descr->degree, f_no_base, verbose_level);
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
@@ -111,14 +116,16 @@ void permutation_group_create::permutation_group_init(
 		label_tex.assign(A_initial->label_tex);
 
 		if (f_v) {
-			cout << "permutation_group_create::permutation_group_init initializing cyclic_group_t done" << endl;
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing cyclic_group_t done" << endl;
 		}
 	}
 
 	else if (Descr->type == identity_group_t) {
 
 		if (f_v) {
-			cout << "permutation_group_create::permutation_group_init initializing identity_group_t" << endl;
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing identity_group_t" << endl;
 		}
 
 		A_initial = NEW_OBJECT(actions::action);
@@ -138,7 +145,8 @@ void permutation_group_create::permutation_group_init(
 		label_tex.assign(A_initial->label_tex);
 
 		if (f_v) {
-			cout << "permutation_group_create::permutation_group_init initializing identity_group_t done" << endl;
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing identity_group_t done" << endl;
 		}
 	}
 

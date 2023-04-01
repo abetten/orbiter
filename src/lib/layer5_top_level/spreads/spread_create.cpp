@@ -293,13 +293,13 @@ void spread_create::init(spread_create_description *Descr,
 				exit(1);
 			}
 
-			G->A_base->make_element(Elt1, transformation_coeffs, verbose_level);
+			G->A_base->Group_element->make_element(Elt1, transformation_coeffs, verbose_level);
 
 			if (Descr->transform_f_inv[h]) {
-				G->A_base->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
+				G->A_base->Group_element->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
 			}
 			else {
-				G->A_base->element_move(Elt1, Elt2, 0 /*verbose_level*/);
+				G->A_base->Group_element->element_move(Elt1, Elt2, 0 /*verbose_level*/);
 			}
 
 			//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
@@ -326,7 +326,7 @@ void spread_create::init(spread_create_description *Descr,
 			int i;
 
 			for (i = 0; i < sz; i++) {
-				image_set[i] = G_on_subspaces->A->element_image_of(set[i], Elt2, verbose_level - 1);
+				image_set[i] = G_on_subspaces->A->Group_element->element_image_of(set[i], Elt2, verbose_level - 1);
 			}
 			Lint_vec_copy(image_set, set, sz);
 

@@ -136,8 +136,13 @@ diophant::~diophant()
 	}
 }
 
-void diophant::open(int m, int n)
+void diophant::open(int m, int n, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "diophant::open" << endl;
+	}
 	int i;
 	
 	A = NEW_int(m * n);
@@ -229,7 +234,13 @@ void diophant::join_problems(
 	nb_r1 = D1->m;
 	nb_r2 = D2->m;
 	nb_rows = nb_r1 + nb_r2;
-	open(nb_rows, nb_cols);
+	if (f_v) {
+		cout << "diophant::join_problems before open" << endl;
+	}
+	open(nb_rows, nb_cols, verbose_level - 1);
+	if (f_v) {
+		cout << "diophant::join_problems after open" << endl;
+	}
 	f_has_sum = TRUE;
 	sum = D1->sum;
 	//f_x_max = D1->f_x_max;
@@ -280,7 +291,7 @@ void diophant::init_partition_problem(
 	if (f_v) {
 		cout << "diophant::init_partition_problem" << endl;
 	}
-	open(1, nb_weights);
+	open(1, nb_weights, verbose_level - 1);
 	for (j = 0; j < nb_weights; j++) {
 		x_max[j] = target_value / weights[j];
 		x_min[j] = 0;
@@ -309,7 +320,7 @@ void diophant::init_partition_problem_with_bounds(
 	if (f_v) {
 		cout << "diophant::init_partition_problem_with_bounds" << endl;
 	}
-	open(1, nb_weights);
+	open(1, nb_weights, verbose_level - 1);
 	for (j = 0; j < nb_weights; j++) {
 		x_max[j] = bounds[j]; // target_value / weights[j];
 		x_min[j] = 0;
@@ -339,7 +350,7 @@ void diophant::init_problem_of_Steiner_type_with_RHS(
 	if (f_v) {
 		cout << "diophant::init_problem_of_Steiner_type_with_RHS" << endl;
 	}
-	open(nb_rows, nb_cols);
+	open(nb_rows, nb_cols, verbose_level - 1);
 	for (j = 0; j < nb_cols; j++) {
 		x_max[j] = 1;
 		x_min[j] = 0;
@@ -369,7 +380,7 @@ void diophant::init_problem_of_Steiner_type(
 	if (f_v) {
 		cout << "diophant::init_problem_of_Steiner_type" << endl;
 	}
-	open(nb_rows, nb_cols);
+	open(nb_rows, nb_cols, verbose_level - 1);
 	for (j = 0; j < nb_cols; j++) {
 		x_max[j] = 1;
 		x_min[j] = 0;
@@ -433,7 +444,7 @@ void diophant::init_clique_finding_problem(int *Adj, int nb_pts,
 		cout << "edge density = " <<
 				(double)nb_ones / (double)total << endl;
 	}
-	open(nb_zeros, nb_pts);
+	open(nb_zeros, nb_pts, verbose_level - 1);
 	for (j = 0; j < nb_pts; j++) {
 		x_max[j] = 1;
 		x_min[j] = 0;
@@ -1436,6 +1447,12 @@ int diophant::solve_once_mckay(int verbose_level)
 int diophant::solve_all_betten(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "diophant::solve_all_betten" << endl;
+	}
+
 	int j;
 	vector<int> lo;
 	//int maxresults = 10000000;
@@ -2482,7 +2499,7 @@ diophant *diophant::trivial_column_reductions(int verbose_level)
 	diophant *D2;
 
 	D2 = NEW_OBJECT(diophant);
-	D2->open(m, n - nb_deleted);
+	D2->open(m, n - nb_deleted, verbose_level - 1);
 	D2->f_has_sum = f_has_sum;
 	D2->sum = sum;
 	//D2->f_x_max = f_x_max;
@@ -3078,7 +3095,7 @@ void diophant::read_general_format(
 					<< " f_has_var_labels=" << f_has_var_labels_save << endl;
 		}
 
-		open(m, n);
+		open(m, n, verbose_level - 1);
 		f_has_var_labels = f_has_var_labels_save;
 		f_has_sum = f_has_sum1;
 		sum = s;
@@ -3320,7 +3337,7 @@ void diophant::project(
 {
 	int i, j, f_zo;
 	
-	D->open(m, len);	
+	D->open(m, len, verbose_level - 1);
 	nb_eqns_replaced = 0;
 	eqns_replaced = NEW_int(m);
 	for (i = 0; i < m; i++) {
@@ -3573,7 +3590,7 @@ void diophant::project_to_single_equation(diophant *D, int eqn_idx,
 		cout << "diophant::project_to_single_equation" << endl;
 	}
 
-	D->open(1, n);
+	D->open(1, n, verbose_level - 1);
 
 	for (j = 0; j < n; j++) {
 		D->Aij(0, j) = Aij(eqn_idx, j);
@@ -3609,7 +3626,7 @@ void diophant::project_to_two_equations(diophant *D, int eqn1_idx, int eqn2_idx,
 		cout << "diophant::project_to_two_equations" << endl;
 	}
 
-	D->open(2, n);
+	D->open(2, n, verbose_level - 1);
 
 	for (j = 0; j < n; j++) {
 		D->Aij(0, j) = Aij(eqn1_idx, j);
@@ -3761,7 +3778,7 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 	if (f_v) {
 		cout << "diophant::read_xml M=" << M << " N=" << N << endl;
 	}
-	open(M, N);
+	open(M, N, verbose_level - 1);
 	f_has_sum = F_has_sum;
 	sum = Sum;
 	for (i = 0; i < m; i++) {

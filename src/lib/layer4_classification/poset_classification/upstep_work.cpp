@@ -178,7 +178,7 @@ void upstep_work::handle_extension(
 //
 // Handles the extension 'cur_ex' in node 'prev'.
 // We are extending a set of size 'size' to a set of size 'size' + 1. 
-// Calls poset_orbit_node::init_extension_node for the n e w node
+// Calls poset_orbit_node::init_extension_node for the new node
 // that is (possibly) created
 {
 	int f_v = (verbose_level >= 1);
@@ -318,7 +318,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 		exit(1);
 	}
 				
-	// process the node and create a n e w set orbit at level size + 1:
+	// process the node and create a new set orbit at level size + 1:
 				
 	pt_orbit_len = O_prev->get_E(prev_ex)->get_orbit_len();
 
@@ -389,7 +389,7 @@ int upstep_work::init_extension_node(int verbose_level)
 // depending on the type of action
 // then changes the type of the extension to EXTENSION_TYPE_EXTENSION
 //
-// Establishes a n e w node at depth 'size'
+// Establishes a new node at depth 'size'
 // (i.e., a set of size 'size') as an extension
 // of a previous node (prev) at depth size - 1 
 // with respect to a given point (pt).
@@ -695,9 +695,14 @@ int upstep_work::upstep_for_sets(int verbose_level)
 				<< f_indicate_not_canonicals << endl;
 		//cout << endl;
 	}
-	A_by_restriction = gen->get_A2()->create_induced_action_by_restriction(
+
+	std::string label_of_set;
+
+	label_of_set.assign("upstep_work");
+
+	A_by_restriction = gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		NULL /*sims *old_G */,
-		size, gen->get_S(),
+		size, gen->get_S(), label_of_set,
 		FALSE /* f_induce_action */,
 		0 /*verbose_level - 2*/);
 	
@@ -730,7 +735,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	up_orbit.compute_point_orbit(size - 1 /*pt*/, 0);
 		// the orbits of the group H
 		// up_orbit will be extended as soon 
-		// as n e w automorphisms are found
+		// as new automorphisms are found
 
 
 
@@ -806,7 +811,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 #endif
 		gen->get_set_i(0)[coset] = pt;
 		gen->get_set_i(0)[size - 1] = possible_image;
-		gen->get_A()->element_one(gen->get_transporter()->ith(0), 0);
+		gen->get_A()->Group_element->element_one(gen->get_transporter()->ith(0), 0);
 
 
 		if (f_v4) {
@@ -867,11 +872,11 @@ int upstep_work::upstep_for_sets(int verbose_level)
 						"mapping " << possible_image << " to " << pt << endl;
 				//gen->A->element_print_as_permutation(aut, cout);
 				if (gen->allowed_to_show_group_elements() && f_v5) {
-					gen->get_A()->element_print_quick(aut, cout);
+					gen->get_A()->Group_element->element_print_quick(aut, cout);
 					cout << endl;
 				}
 			}
-			if (gen->get_A2()->element_image_of(possible_image, aut, 0) != pt) {
+			if (gen->get_A2()->Group_element->element_image_of(possible_image, aut, 0) != pt) {
 				cout << "upstep_work::upstep_for_sets image of possible_"
 						"image is not pt" << endl;
 				exit(1);
@@ -879,7 +884,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 			UF.add_generator(aut, 0 /*verbose_level - 5*/);
 			up_orbit.extend_orbit(aut, verbose_level - 5);
 			if (f_vvv) {
-				cout << "upstep_work::upstep_for_sets n e w orbit length "
+				cout << "upstep_work::upstep_for_sets new orbit length "
 						"upstep = " << up_orbit.orbit_len[0] << endl;
 			}
 		}

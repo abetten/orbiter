@@ -137,9 +137,6 @@ public:
 		solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
-	void report_fixed_objects(
-			int *Elt, char *fname_latex,
-			int verbose_level);
 	int test_if_orbit_is_partial_packing(
 			groups::schreier *Orbits, int orbit_idx,
 		long int *orbit1, int verbose_level);
@@ -161,7 +158,8 @@ public:
 	void compute_and_save_klein_invariants(
 			std::string &prefix,
 		int iso_cnt,
-		long int *data, int data_size, int verbose_level);
+		long int *data, int data_size,
+		int verbose_level);
 	void report(
 			isomorph::isomorph *Iso, int verbose_level);
 	void report_whole(
@@ -177,21 +175,27 @@ public:
 		data_structures::tally &C_ago,
 		int verbose_level);
 	void report_isomorphism_type(
-			isomorph::isomorph *Iso, std::ostream &ost,
-		int orbit, invariants_packing *inv, int verbose_level);
+			isomorph::isomorph *Iso,
+			std::ostream &ost,
+		int orbit, invariants_packing *inv,
+		int verbose_level);
 	void report_packing_as_table(
 			isomorph::isomorph *Iso, std::ostream &ost,
-		int orbit, invariants_packing *inv, long int *list_of_lines,
+		int orbit,
+		invariants_packing *inv, long int *list_of_lines,
 		int verbose_level);
 	void report_klein_invariants(
 			isomorph::isomorph *Iso, std::ostream &ost,
-		int orbit, invariants_packing *inv, int verbose_level);
+		int orbit, invariants_packing *inv,
+		int verbose_level);
 	void report_stabilizer(
-			isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+			isomorph::isomorph &Iso,
+			std::ostream &ost, int orbit,
 			int verbose_level);
 	void report_stabilizer_in_action(
 			isomorph::isomorph &Iso,
-			std::ostream &ost, int orbit, int verbose_level);
+			std::ostream &ost, int orbit,
+			int verbose_level);
 	void report_stabilizer_in_action_gap(
 			isomorph::isomorph &Iso,
 			int orbit, int verbose_level);
@@ -620,7 +624,7 @@ public:
 
 	actions::action *A;
 	int f_semilinear;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	int dim;
 
 	groups::strong_generators *N_gens;

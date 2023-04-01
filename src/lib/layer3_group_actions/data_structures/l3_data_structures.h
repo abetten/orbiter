@@ -558,7 +558,8 @@ public:
 		long int *S, int *subplane7,
 		int verbose_level);
 	void create_latex_report(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 	void export_incma(int verbose_level);
 	void p_rank(int p, int verbose_level);
 
@@ -659,6 +660,10 @@ public:
 	std::string read_csv_fname;
 	std::string read_csv_column_label;
 
+
+	int f_vector_data;
+	std::string vector_data_label;
+
 	vector_ge_description();
 	~vector_ge_description();
 	int read_arguments(
@@ -686,6 +691,7 @@ public:
 
 	vector_ge();
 	~vector_ge();
+	void null();
 	void init(actions::action *A, int verbose_level);
 	void copy(vector_ge *&vector_copy, int verbose_level);
 	void init_by_hdl(actions::action *A,
@@ -729,7 +735,8 @@ public:
 			int f_print_as_permutation,
 		int f_offset, int offset,
 		int f_do_it_anyway_even_for_big_degree,
-		int f_print_cycles_of_length_one);
+		int f_print_cycles_of_length_one,
+		int verbose_level);
 	void print_for_make_element(std::ostream &ost);
 	void write_to_memory_object(
 			orbiter_kernel_system::memory_object *m,
@@ -774,6 +781,14 @@ public:
 			induced_actions::action_on_homogeneous_polynomials *A_on_HPD,
 			int *&M, int &nb_gens,
 			int verbose_level);
+	void stab_BLT_set_from_catalogue(
+			actions::action *A,
+		field_theory::finite_field *F, int iso,
+		std::string &target_go_text,
+		int verbose_level);
+	int test_if_in_set_stabilizer(
+			actions::action *A,
+			long int *set, int sz, int verbose_level);
 
 };
 

@@ -242,13 +242,18 @@ void poset_orbit_node::compute_schreier_vector(
 				"after downstep_apply_early_test, nb_live_points=" << nb_live_points << endl;
 	}
 
+
+	std::string label_of_set;
+
+	label_of_set.assign("live_points");
+
 	if (f_v) {
 		cout << "poset_orbit_node::compute_schreier_vector: "
 				"before gen->Poset->A2->create_induced_action_by_restriction" << endl;
 	}
-	AR = gen->get_A2()->create_induced_action_by_restriction(
+	AR = gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		NULL /*sims *old_G*/,
-		nb_live_points, live_points,
+		nb_live_points, live_points, label_of_set,
 		FALSE /*f_induce_action*/,
 		verbose_level - 2);
 	if (f_v) {
@@ -615,15 +620,18 @@ void poset_orbit_node::schreier_forest(
 #endif
 		}
 
+		std::string label_of_set;
+
+		label_of_set.assign("candidates");
 
 
 		if (f_v) {
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest before create_induced_action_by_restriction" << endl;
 		}
-		AR = gen->get_A2()->create_induced_action_by_restriction(
+		AR = gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 			NULL /*sims *old_G*/,
-			nb_candidates, candidates,
+			nb_candidates, candidates, label_of_set,
 			FALSE /*f_induce_action*/,
 			verbose_level - 2);
 		if (f_v) {

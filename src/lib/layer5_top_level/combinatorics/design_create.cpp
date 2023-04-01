@@ -198,8 +198,8 @@ void design_create::init(
 		}
 		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
-		A2 = NEW_OBJECT(actions::action);
-		A2->induced_action_on_k_subsets(*A, k, verbose_level);
+		//A2 = NEW_OBJECT(actions::action);
+		A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
 
 		Aut = NULL;
 		Aut_on_lines = NULL;
@@ -323,8 +323,8 @@ void design_create::init(
 
 		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
-		A2 = NEW_OBJECT(actions::action);
-		A2->induced_action_on_k_subsets(*A, k, verbose_level);
+		//A2 = NEW_OBJECT(actions::action);
+		A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
 
 		Aut = NULL;
 		Aut_on_lines = NULL;
@@ -391,8 +391,8 @@ void design_create::init(
 
 		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
-		A2 = NEW_OBJECT(actions::action);
-		A2->induced_action_on_k_subsets(*A, k, verbose_level);
+		//A2 = NEW_OBJECT(actions::action);
+		A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
 
 		Aut = NULL;
 		Aut_on_lines = NULL;
@@ -471,8 +471,8 @@ void design_create::init(
 
 		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
-		A2 = NEW_OBJECT(actions::action);
-		A2->induced_action_on_k_subsets(*A, k, verbose_level);
+		//A2 = NEW_OBJECT(actions::action);
+		A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
 
 		Aut = NULL;
 		Aut_on_lines = NULL;
@@ -549,15 +549,15 @@ void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 
 	design_create::k = q + 1;
 	k = q + 1;
-	degree = P->N_points;
+	degree = P->Subspaces->N_points;
 
 	block = NEW_int(k);
-	sz = P->N_lines;
+	sz = P->Subspaces->N_lines;
 	set = NEW_lint(sz);
 	for (j = 0; j < sz; j++) {
-		Int_vec_copy(P->Implementation->Lines + j * k, block, k);
+		Int_vec_copy(P->Subspaces->Implementation->Lines + j * k, block, k);
 		Sorting.int_vec_heapsort(block, k);
-		set[j] = Combi.rank_k_subset(block, P->N_points, k);
+		set[j] = Combi.rank_k_subset(block, P->Subspaces->N_points, k);
 		if (f_v) {
 			cout << "block " << j << " / " << sz << " : ";
 			Int_vec_print(cout, block, k);
@@ -580,8 +580,8 @@ void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 
 	A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
-	A2 = NEW_OBJECT(actions::action);
-	A2->induced_action_on_k_subsets(*A, k, verbose_level);
+	//A2 = NEW_OBJECT(actions::action);
+	A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
 
 	Aut = PA->A;
 	Aut_on_lines = PA->A_on_lines;
@@ -607,11 +607,11 @@ void design_create::unrank_block_in_PG_2_q(int *block,
 
 	if (f_v) {
 		cout << "design_create::unrank_block_in_PG_2_q rk=" << rk
-				<< " P->N_points=" << P->N_points << " k=" << k << endl;
+				<< " P->N_points=" << P->Subspaces->N_points << " k=" << k << endl;
 	}
 	combinatorics::combinatorics_domain Combi;
 
-	Combi.unrank_k_subset(rk, block, P->N_points, k);
+	Combi.unrank_k_subset(rk, block, P->Subspaces->N_points, k);
 	if (f_v) {
 		cout << "design_create::unrank_block_in_PG_2_q block = ";
 		Int_vec_print(cout, block, k);
@@ -635,7 +635,7 @@ int design_create::rank_block_in_PG_2_q(int *block,
 	data_structures::sorting Sorting;
 
 	Sorting.int_vec_heapsort(block, k);
-	rk = Combi.rank_k_subset(block, P->N_points, k);
+	rk = Combi.rank_k_subset(block, P->Subspaces->N_points, k);
 	if (f_v) {
 		cout << "design_create::rank_block_in_PG_2_q done" << endl;
 	}
@@ -651,7 +651,7 @@ int design_create::get_nb_colors_as_two_design(int verbose_level)
 	if (f_v) {
 		cout << "design_create::get_nb_colors_as_two_design" << endl;
 	}
-	nb_c = Combi.binomial2(P->N_points - 2);
+	nb_c = Combi.binomial2(P->Subspaces->N_points - 2);
 	if (f_v) {
 		cout << "design_create::get_nb_colors_as_two_design done" << endl;
 	}
@@ -669,7 +669,7 @@ int design_create::get_color_as_two_design_assume_sorted(
 	}
 	combinatorics::combinatorics_domain Combi;
 
-	Combi.unrank_k_subset(design[0], block, P->N_points, k);
+	Combi.unrank_k_subset(design[0], block, P->Subspaces->N_points, k);
 	if (block[0] != 0) {
 		cout << "block[0] != 0" << endl;
 		exit(1);
@@ -681,7 +681,7 @@ int design_create::get_color_as_two_design_assume_sorted(
 	for (i = 2; i < k; i++) {
 		block[i] -= 2;
 	}
-	c = Combi.rank_k_subset(block + 2, P->N_points - 2, k - 2);
+	c = Combi.rank_k_subset(block + 2, P->Subspaces->N_points - 2, k - 2);
 	if (f_v) {
 		cout << "design_create::get_color_as_two_design_assume_sorted done" << endl;
 	}

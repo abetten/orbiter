@@ -100,7 +100,7 @@ void action::coset_unrank(groups::sims *G,
 			element_print_quick(Elt, cout);
 			}
 #endif
-		element_one(Elt, 0);
+		Group_element->element_one(Elt, 0);
 		goto done;
 		}
 	base_pt = base_i(base_idx);
@@ -194,26 +194,26 @@ void action::coset_unrank(groups::sims *G,
 				}
 			//G->coset_rep(base_idx, G->orbit_inv[base_idx][elt_k], 0/* verbose_level*/);
 			G_orb.coset_rep(G_orb.orbit_inv[elt_k], 0 /* verbose_level */);
-			element_move(G_orb.cosetrep, Elt_gk, 0);
+			Group_element->element_move(G_orb.cosetrep, Elt_gk, 0);
 
 			if (f_v) {
 				cout << "gk (before)=" << endl;
-				element_print_quick(Elt_gk, cout);
-				element_print_as_permutation(Elt_gk, cout);
+				Group_element->element_print_quick(Elt_gk, cout);
+				Group_element->element_print_as_permutation(Elt_gk, cout);
 				}
 
-			minimize_base_images(base_idx + 1, G, Elt_gk, verbose_level);
+			Group_element->minimize_base_images(base_idx + 1, G, Elt_gk, verbose_level);
 			if (f_v) {
 				cout << "gk (after)=" << endl;
-				element_print_quick(Elt_gk, cout);
-				element_print_as_permutation(Elt_gk, cout);
+				Group_element->element_print_quick(Elt_gk, cout);
+				Group_element->element_print_as_permutation(Elt_gk, cout);
 				}
 
-			if (element_image_of(base_pt, Elt_gk, 0) != elt_k) {
+			if (Group_element->element_image_of(base_pt, Elt_gk, 0) != elt_k) {
 				cout << "image of base point under gk is not as expected!" << endl;
 				cout << "base_pt=" << base_pt << endl;
 				cout << "elt_k=" << elt_k << endl;
-				cout << "image=" << element_image_of(base_pt, Elt_gk, 0) << endl;
+				cout << "image=" << Group_element->element_image_of(base_pt, Elt_gk, 0) << endl;
 				exit(1);
 				}
 			groups::sims *Gk = NULL;
@@ -252,21 +252,21 @@ void action::coset_unrank(groups::sims *G,
 			if (f_v) {
 				cout << "recursion done" << endl;
 				cout << "Elt1=" << endl;
-				element_print_quick(Elt1, cout);
+				Group_element->element_print_quick(Elt1, cout);
 
 				cout << "Elt_gk=" << endl;
-				element_print_quick(Elt_gk, cout);
+				Group_element->element_print_quick(Elt_gk, cout);
 
 
 
 				}
 
-			element_mult(Elt_gk, Elt1, Elt2, 0);
+			Group_element->element_mult(Elt_gk, Elt1, Elt2, 0);
 			if (f_v) {
 				cout << "Elt_gk * Elt1=" << endl;
-				element_print_quick(Elt2, cout);
+				Group_element->element_print_quick(Elt2, cout);
 				}
-			element_move(Elt2, Elt, 0);
+			Group_element->element_move(Elt2, Elt, 0);
 			
 			delete Gk;
 			delete Uk; 
@@ -303,8 +303,8 @@ long int action::coset_rank(
 	if (f_v) {
 		cout << "##################################" << endl;
 		cout << "action::coset_rank element" << endl;
-		element_print_quick(Elt, cout);
-		element_print_base_images(Elt, cout);
+		Group_element->element_print_quick(Elt, cout);
+		Group_element->element_print_base_images(Elt, cout);
 		cout << endl;
 		cout << "in action:" << endl;
 		print_info();
@@ -425,8 +425,8 @@ long int action::coset_rank(
 		U_orb.print_and_list_orbits(cout);
 		}
 	
-	element_move(Elt, Elt1, 0);
-	im = element_image_of(base_pt, Elt1, 0);
+	Group_element->element_move(Elt, Elt1, 0);
+	im = Group_element->element_image_of(base_pt, Elt1, 0);
 	if (f_v) {
 		cout << "image of base point " << base_pt << " is " << im << endl;
 		}
@@ -465,45 +465,45 @@ long int action::coset_rank(
 
 
 	G_orb.coset_rep(G_orb.orbit_inv[elt_k], 0 /* verbose_level */);
-	element_move(G_orb.cosetrep, Elt_gk, 0);
+	Group_element->element_move(G_orb.cosetrep, Elt_gk, 0);
 
-	if (element_image_of(base_pt, Elt_gk, 0) != elt_k) {
+	if (Group_element->element_image_of(base_pt, Elt_gk, 0) != elt_k) {
 		cout << "image of base point under gk is not as expected!" << endl;
 		cout << "base_pt=" << base_pt << endl;
 		cout << "elt_k=" << elt_k << endl;
-		cout << "image=" << element_image_of(base_pt, Elt_gk, 0) << endl;
+		cout << "image=" << Group_element->element_image_of(base_pt, Elt_gk, 0) << endl;
 		cout << "gk (before minimizing base images)=" << endl;
-		element_print_quick(Elt_gk, cout);
-		element_print_base_images(Elt_gk, cout);
+		Group_element->element_print_quick(Elt_gk, cout);
+		Group_element->element_print_base_images(Elt_gk, cout);
 		cout << endl;
-		element_print_as_permutation(Elt_gk, cout);
+		Group_element->element_print_as_permutation(Elt_gk, cout);
 		exit(1);
 		}
 	if (f_v) {
 		cout << "gk (before minimizing base images)=" << endl;
-		element_print_quick(Elt_gk, cout);
+		Group_element->element_print_quick(Elt_gk, cout);
 		//element_print_base_images(Elt_gk, cout);
 		//cout << endl;
-		element_print_as_permutation(Elt_gk, cout);
+		Group_element->element_print_as_permutation(Elt_gk, cout);
 		}
 
-	minimize_base_images(base_idx + 1, G, Elt_gk, 0/*verbose_level*/);
+	Group_element->minimize_base_images(base_idx + 1, G, Elt_gk, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "gk (after minimizing base images)=" << endl;
-		element_print_quick(Elt_gk, cout);
+		Group_element->element_print_quick(Elt_gk, cout);
 		//element_print_base_images(Elt_gk, cout);
 		//cout << endl;
-		element_print_as_permutation(Elt_gk, cout);
+		Group_element->element_print_as_permutation(Elt_gk, cout);
 		}
 
-	if (element_image_of(base_pt, Elt_gk, 0) != elt_k) {
+	if (Group_element->element_image_of(base_pt, Elt_gk, 0) != elt_k) {
 		cout << "image of base point under gk is not as expected!" << endl;
 		cout << "base_pt=" << base_pt << endl;
 		cout << "elt_k=" << elt_k << endl;
-		cout << "image=" << element_image_of(base_pt, Elt_gk, 0) << endl;
+		cout << "image=" << Group_element->element_image_of(base_pt, Elt_gk, 0) << endl;
 		cout << "gk (after minimizing base images)=" << endl;
-		element_print_quick(Elt_gk, cout);
-		element_print_as_permutation(Elt_gk, cout);
+		Group_element->element_print_quick(Elt_gk, cout);
+		Group_element->element_print_as_permutation(Elt_gk, cout);
 		exit(1);
 		}
 	{
@@ -532,19 +532,19 @@ long int action::coset_rank(
 
 	if (f_v) {
 		cout << "Elt_gk=" << endl;
-		element_print_quick(Elt_gk, cout);
+		Group_element->element_print_quick(Elt_gk, cout);
 		}
-	element_invert(Elt_gk, Elt3, 0);
+	Group_element->element_invert(Elt_gk, Elt3, 0);
 	if (f_v) {
 		cout << "we are now going to divide off Elt_gk from the left." << endl;
 		cout << "Elt_gk^-1=" << endl;
-		element_print_quick(Elt3, cout);
+		Group_element->element_print_quick(Elt3, cout);
 		}
 	
-	element_mult(Elt3, Elt1, Elt2, 0);
+	Group_element->element_mult(Elt3, Elt1, Elt2, 0);
 	if (f_v) {
 		cout << "Elt_gk^-1 * Elt =" << endl;
-		element_print_quick(Elt2, cout);
+		Group_element->element_print_quick(Elt2, cout);
 		//element_print_base_images(Elt2, cout);
 		//cout << endl;
 		}
@@ -552,7 +552,7 @@ long int action::coset_rank(
 
 	int im;
 	
-	im = element_image_of(elt_k, Elt2, 0);
+	im = Group_element->element_image_of(elt_k, Elt2, 0);
 	if (im != elt_k) {
 		if (f_v) {
 			cout << "image of elt_k = " << elt_k << " is " << im << endl;
@@ -561,23 +561,23 @@ long int action::coset_rank(
 			}
 		
 		U_orb.coset_rep_inv(U_orb.orbit_inv[im], 0 /* verbose_level */);
-		element_move(U_orb.cosetrep, Elt_u, 0);
+		Group_element->element_move(U_orb.cosetrep, Elt_u, 0);
 		if (f_v) {
 			cout << "Elt_u =" << endl;
-			element_print_quick(Elt_u, cout);
+			Group_element->element_print_quick(Elt_u, cout);
 			cout << "moves " << im << " to " << elt_k << endl;
 			}
-		if (element_image_of(im, Elt_u, 0) != elt_k) {
+		if (Group_element->element_image_of(im, Elt_u, 0) != elt_k) {
 			cout << "image of " << im << " is "
-					<< element_image_of(im, Elt_u, 0)
+					<< Group_element->element_image_of(im, Elt_u, 0)
 					<< " but not " << elt_k << " fatal" << endl;
 			exit(1);
 			}
-		element_mult(Elt2, Elt_u, Elt3, 0);
-		element_move(Elt3, Elt2, 0);
+		Group_element->element_mult(Elt2, Elt_u, Elt3, 0);
+		Group_element->element_move(Elt3, Elt2, 0);
 		if (f_v) {
 			cout << "after multiplying Elt_u:" << endl;
-			element_print_quick(Elt2, cout);
+			Group_element->element_print_quick(Elt2, cout);
 			}
 		}
 	

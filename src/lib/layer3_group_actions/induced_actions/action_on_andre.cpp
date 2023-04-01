@@ -128,7 +128,7 @@ long int action_on_andre::compute_image_of_point(
 			Int_matrix_print(coords1, k, n1);
 			}
 		for (i = 0; i < k; i++) {
-			An1->element_image_of_low_level(coords1 + i * n1,
+			An1->Group_element->element_image_of_low_level(coords1 + i * n1,
 					coords2 + i * n1, Elt, verbose_level - 1);
 			}
 		if (f_v) {
@@ -166,10 +166,11 @@ long int action_on_andre::compute_image_of_point(
 		Int_vec_copy(Pt.coordinates, coords1, n);
 		coords1[n] = 1;
 
-		An1->element_image_of_low_level(coords1, coords2,
+		An1->Group_element->element_image_of_low_level(coords1, coords2,
 				Elt, verbose_level - 1);
 
-		Andre->F->PG_element_normalize(coords2, 1, n1);
+		Andre->F->Projective_space_basic->PG_element_normalize(
+				coords2, 1, n1);
 		Int_vec_copy(coords2, Pt.coordinates, n);
 		image = Pt.rank(0 /* verbose_level*/);
 		}
@@ -210,7 +211,7 @@ long int action_on_andre::compute_image_of_line(
 			}
 
 		for (i = 0; i < k1; i++) {
-			An1->element_image_of_low_level(coords1 + i * n1,
+			An1->Group_element->element_image_of_low_level(coords1 + i * n1,
 					coords2 + i * n1, Elt, verbose_level - 1);
 			}
 
@@ -222,7 +223,8 @@ long int action_on_andre::compute_image_of_line(
 				}
 			}
 
-		Andre->F->PG_element_normalize(coords2 + k * n1, 1, n1);
+		Andre->F->Projective_space_basic->PG_element_normalize(
+				coords2 + k * n1, 1, n1);
 
 		for (i = 0; i < k1; i++) {
 			for (j = 0; j < n; j++) {

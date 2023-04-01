@@ -78,7 +78,8 @@ void bitmatrix::unrank_PG_elements_in_columns_consecutively(
 		if ((j % n100) == 0) {
 			cout << "bitmatrix::unrank_PG_elements_in_columns_consecutively " << j / n100 << " % done unranking" << endl;
 		}
-		F->PG_element_unrank_modified_lint(v, 1, m, start_value + j);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(
+				v, 1, m, start_value + j);
 		for (i = 0; i < m; i++) {
 			if (v[i]) {
 				m_ij(i, j, 1);
@@ -135,7 +136,8 @@ void bitmatrix::rank_PG_elements_in_columns(
 		//cout << "j=" << j << " v=";
 		//int_vec_print(cout, v, m);
 		//cout << endl;
-		F->PG_element_rank_modified_lint(v, 1, m, b);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v, 1, m, b);
 		PG_ranks[j] = (unsigned int) b;
 	}
 	FREE_int(v);

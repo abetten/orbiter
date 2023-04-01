@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace algebra {
+namespace l1_interfaces {
 
 
 interface_magma_low::interface_magma_low()
@@ -55,9 +55,9 @@ void interface_magma_low::magma_set_stabilizer_in_collineation_group(
 		fp << "S:={};" << endl;
 		fp << "a := F.1;" << endl;
 		for (h = 0; h < nb_pts; h++) {
-			F->PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
+			F->Projective_space_basic->PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
 
-			F->PG_element_normalize_from_front(v, 1, d);
+			F->Projective_space_basic->PG_element_normalize_from_front(v, 1, d);
 
 			fp << "Include(~S,Index(I,[";
 			for (i = 0; i < d; i++) {
@@ -92,6 +92,69 @@ void interface_magma_low::magma_set_stabilizer_in_collineation_group(
 		cout << "interface_magma_low::magma_set_stabilizer_in_collineation_group done" << endl;
 	}
 }
+
+void interface_magma_low::export_colored_graph_to_magma(
+		graph_theory::colored_graph *Gamma,
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int *neighbors;
+	int nb_neighbors;
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "interface_magma_low::export_colored_graph_to_magma" << endl;
+	}
+	{
+		ofstream fp(fname);
+
+		neighbors = NEW_int(Gamma->nb_points);
+		fp << "G := Graph< " << Gamma->nb_points << " | [" << endl;
+		for (i = 0; i < Gamma->nb_points; i++) {
+
+
+			nb_neighbors = 0;
+			for (j = 0; j < Gamma->nb_points; j++) {
+				if (j == i) {
+					continue;
+				}
+				if (Gamma->is_adjacent(i, j)) {
+					neighbors[nb_neighbors++] = j;
+				}
+			}
+
+			fp << "{";
+			for (j = 0; j < nb_neighbors; j++) {
+				fp << neighbors[j] + 1;
+				if (j < nb_neighbors - 1) {
+					fp << ",";
+				}
+			}
+			fp << "}";
+			if (i < Gamma->nb_points - 1) {
+				fp << ", " << endl;
+			}
+		}
+
+		FREE_int(neighbors);
+
+		fp << "]>;" << endl;
+
+//> G := Graph< 9 | [ {4,5,6,7,8,9}, {4,5,6,7,8,9}, {4,5,6,7,8,9},
+//>                   {1,2,3,7,8,9}, {1,2,3,7,8,9}, {1,2,3,7,8,9},
+//>                   {1,2,3,4,5,6}, {1,2,3,4,5,6}, {1,2,3,4,5,6} ]>;
+
+
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "interface_magma_low::export_colored_graph_to_magma" << endl;
+	}
+}
+
 
 }}}
 

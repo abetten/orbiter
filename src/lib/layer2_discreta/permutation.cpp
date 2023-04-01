@@ -475,7 +475,7 @@ long int & permutation::s_i(int i)
 	return self.vector_pointer[i].self.integer_value;
 }
 
-void permutation::mult_to(discreta_base &x, discreta_base &y)
+void permutation::mult_to(discreta_base &x, discreta_base &y, int verbose_level)
 {
 	permutation& px = x.as_permutation();
 	permutation py;
@@ -501,7 +501,7 @@ void permutation::mult_to(discreta_base &x, discreta_base &y)
 	y.swap(py);
 }
 
-int permutation::invert_to(discreta_base &x)
+int permutation::invert_to(discreta_base &x, int verbose_level)
 {
 	permutation px;
 	int i, j, l;

@@ -14,7 +14,8 @@ namespace layer1_foundations {
 namespace graphics {
 
 
-static void projective_plane_make_affine_point(int q, int x1, int x2, int x3,
+static void projective_plane_make_affine_point(
+		int q, int x1, int x2, int x3,
 	double &a, double &b);
 static int compute_dd(int dx);
 
@@ -4512,7 +4513,8 @@ static int compute_dd(int dx)
 	return (int)(((double) dx) / 32 * DD_MULTIPLIER);
 }
 
-void mp_graphics::domino_draw_assignment_East(int Ap, int Aq, int M,
+void mp_graphics::domino_draw_assignment_East(
+		int Ap, int Aq, int M,
 		int i, int j, int dx, int dy, int rad)
 {
 	if (Ap == 1)
@@ -4553,7 +4555,8 @@ void mp_graphics::domino_draw_assignment_East(int Ap, int Aq, int M,
 		domino_draw9(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
 }
 
-void mp_graphics::domino_draw_assignment_South(int Ap, int Aq, int M,
+void mp_graphics::domino_draw_assignment_South(
+		int Ap, int Aq, int M,
 		int i, int j, int dx, int dy, int rad)
 {
 	if (Ap == 1)
@@ -4595,7 +4598,8 @@ void mp_graphics::domino_draw_assignment_South(int Ap, int Aq, int M,
 }
 
 
-void mp_graphics::domino_draw_assignment(int *A, int *matching, int *B,
+void mp_graphics::domino_draw_assignment(
+		int *A, int *matching, int *B,
 		int M, int N,
 		int dx, int dy,
 		int rad, int edge,

@@ -102,13 +102,13 @@ void spread_tables::init(projective_space *P,
 		cout << "spread_tables::init" << endl;
 	}
 
-	if (P->n != 3) {
-		cout << "spread_tables::init P->n != 3" << endl;
+	if (P->Subspaces->n != 3) {
+		cout << "spread_tables::init P->Subspaces->n != 3" << endl;
 		exit(1);
 	}
 	spread_tables::P = P;
-	spread_tables::F = P->F;
-	Gr = P->Grass_lines;
+	spread_tables::F = P->Subspaces->F;
+	Gr = P->Subspaces->Grass_lines;
 	q = F->q;
 	d = 4;
 
@@ -256,8 +256,8 @@ void spread_tables::init_reduced(
 	}
 
 	P = old_spread_table->P;
-	F = P->F;
-	Gr = P->Grass_lines;
+	F = P->Subspaces->F;
+	Gr = P->Subspaces->Grass_lines;
 	q = F->q;
 	d = 4; // = 4
 
@@ -953,7 +953,7 @@ void spread_tables::make_exact_cover_problem(
 	int nb_cols = nb_live_blocks;
 
 	Dio = NEW_OBJECT(solvers::diophant);
-	Dio->open(nb_rows, nb_cols);
+	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->f_has_sum = TRUE;
 	Dio->sum = nb_needed;
 

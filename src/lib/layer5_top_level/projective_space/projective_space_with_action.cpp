@@ -85,9 +85,11 @@ void projective_space_with_action::init(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::init, verbose_level=" << verbose_level << endl;
+		cout << "projective_space_with_action::init, "
+				"verbose_level=" << verbose_level << endl;
 	}
-	projective_space_with_action::f_init_incidence_structure = f_init_incidence_structure;
+	projective_space_with_action::f_init_incidence_structure
+		= f_init_incidence_structure;
 	projective_space_with_action::n = n;
 	projective_space_with_action::F = F;
 	projective_space_with_action::f_semilinear = f_semilinear;
@@ -132,19 +134,23 @@ void projective_space_with_action::init(
 		Dom = NEW_OBJECT(algebraic_geometry::quartic_curve_domain);
 
 		if (f_v) {
-			cout << "projective_space_with_action::init before Dom->init" << endl;
+			cout << "projective_space_with_action::init "
+					"before Dom->init" << endl;
 		}
 		Dom->init(F, verbose_level);
 		if (f_v) {
-			cout << "projective_space_with_action::init after Dom->init" << endl;
+			cout << "projective_space_with_action::init "
+					"after Dom->init" << endl;
 		}
 		QCDA = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_domain_with_action);
 		if (f_v) {
-			cout << "projective_space_with_action::init before QCDA->init" << endl;
+			cout << "projective_space_with_action::init "
+					"before QCDA->init" << endl;
 		}
 		QCDA->init(Dom, this, verbose_level);
 		if (f_v) {
-			cout << "projective_space_with_action::init after QCDA->init" << endl;
+			cout << "projective_space_with_action::init "
+					"after QCDA->init" << endl;
 		}
 	}
 
@@ -155,13 +161,15 @@ void projective_space_with_action::init(
 		}
 		PA2 = NEW_OBJECT(projective_space_with_action);
 		if (f_v) {
-			cout << "projective_space_with_action::init before PA2->init" << endl;
+			cout << "projective_space_with_action::init "
+					"before PA2->init" << endl;
 		}
 		PA2->init(F, 2, f_semilinear,
 			f_init_incidence_structure,
 			verbose_level - 2);
 		if (f_v) {
-			cout << "projective_space_with_action::init after PA2->init" << endl;
+			cout << "projective_space_with_action::init "
+					"after PA2->init" << endl;
 		}
 	}
 	if (n == 3) {
@@ -174,11 +182,13 @@ void projective_space_with_action::init(
 
 		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 		if (f_v) {
-			cout << "projective_space_with_action::init before Surf->init" << endl;
+			cout << "projective_space_with_action::init "
+					"before Surf->init_surface_domain" << endl;
 		}
-		Surf->init(F, verbose_level - 1);
+		Surf->init_surface_domain(F, verbose_level - 1);
 		if (f_v) {
-			cout << "projective_space_with_action::init after Surf->init" << endl;
+			cout << "projective_space_with_action::init "
+					"after Surf->init_surface_domain" << endl;
 		}
 
 		Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
@@ -211,14 +221,15 @@ void projective_space_with_action::init_group(
 	if (f_v) {
 		cout << "projective_space_with_action::init_group" << endl;
 	}
-	if (f_v) {
-		cout << "projective_space_with_action::init_group "
-				"creating linear group" << endl;
-	}
 
 	data_structures_groups::vector_ge *nice_gens;
 
 	A = NEW_OBJECT(actions::action);
+
+	if (f_v) {
+		cout << "projective_space_with_action::init_group "
+				"before A->Known_groups->init_linear_group" << endl;
+	}
 	A->Known_groups->init_linear_group(
 		F, d, 
 		TRUE /*f_projective*/,
@@ -230,7 +241,7 @@ void projective_space_with_action::init_group(
 		0 /* verbose_level*/);
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
-				"creating linear group done" << endl;
+				"after A->Known_groups->init_linear_group" << endl;
 	}
 #if 0
 	if (f_v) {
@@ -251,7 +262,8 @@ void projective_space_with_action::init_group(
 		cout << "projective_space_with_action::init_group "
 				"creating action on lines" << endl;
 	}
-	A_on_lines = A->induced_action_on_grassmannian(2, verbose_level);
+	A_on_lines = A->Induced_action->induced_action_on_grassmannian(
+			2, verbose_level);
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
 				"creating action on lines done" << endl;
@@ -263,7 +275,8 @@ void projective_space_with_action::init_group(
 					"creating action on planes" << endl;
 		}
 		f_has_action_on_planes = TRUE;
-		A_on_planes = A->induced_action_on_grassmannian(3, verbose_level);
+		A_on_planes = A->Induced_action->induced_action_on_grassmannian(
+				3, verbose_level);
 		if (f_v) {
 			cout << "projective_space_with_action::init_group "
 					"creating action on lines planes" << endl;
@@ -388,8 +401,8 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		cout << "projective_space_with_action::report_fixed_points_lines_and_planes" << endl;
 	}
 
-	if (P->n < 3) {
-		cout << "projective_space_with_action::report_fixed_points_lines_and_planes P->n < 3" << endl;
+	if (P->Subspaces->n < 3) {
+		cout << "projective_space_with_action::report_fixed_points_lines_and_planes P->Subspaces->n < 3" << endl;
 		exit(1);
 	}
 	geometry::projective_space *P3;
@@ -404,7 +417,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 
 	ost << "The element" << endl;
 	ost << "$$" << endl;
-	A->element_print_latex(Elt, ost);
+	A->Group_element->element_print_latex(Elt, ost);
 	ost << "$$" << endl;
 	ost << "has the following fixed objects:\\\\" << endl;
 
@@ -412,17 +425,17 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	ost << "Fixed points:\\\\" << endl;
 
 	cnt = 0;
-	for (i = 0; i < P3->N_points; i++) {
-		j = A->element_image_of(i, Elt, 0 /* verbose_level */);
+	for (i = 0; i < P3->Subspaces->N_points; i++) {
+		j = A->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 		if (j == i) {
 			cnt++;
 		}
 	}
 
 	ost << "There are " << cnt << " fixed points, they are: \\\\" << endl;
-	for (i = 0; i < P3->N_points; i++) {
-		j = A->element_image_of(i, Elt, 0 /* verbose_level */);
-		F->PG_element_unrank_modified(v, 1, 4, i);
+	for (i = 0; i < P3->Subspaces->N_points; i++) {
+		j = A->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
+		F->Projective_space_basic->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
 			Int_vec_print(ost, v, 4);
@@ -436,11 +449,11 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	{
 		actions::action *A2;
 
-		A2 = A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
+		A2 = A->Induced_action->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
 	
 		cnt = 0;
 		for (i = 0; i < A2->degree; i++) {
-			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			j = A2->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 			if (j == i) {
 				cnt++;
 				}
@@ -449,7 +462,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		ost << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
 		cnt = 0;
 		for (i = 0; i < A2->degree; i++) {
-			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			j = A2->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 			if (j == i) {
 				ost << i << " : $\\left[";
 				A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
@@ -466,11 +479,11 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	{
 		actions::action *A2;
 
-		A2 = A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
+		A2 = A->Induced_action->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
 	
 		cnt = 0;
 		for (i = 0; i < A2->degree; i++) {
-			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			j = A2->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 			if (j == i) {
 				cnt++;
 			}
@@ -479,7 +492,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		ost << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
 		cnt = 0;
 		for (i = 0; i < A2->degree; i++) {
-			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			j = A2->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 			if (j == i) {
 				ost << i << " : $\\left[";
 				A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
@@ -506,15 +519,15 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes" << endl;
 	}
 
-	if (P->n < 3) {
-		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes P->n < 3" << endl;
+	if (P->Subspaces->n < 3) {
+		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes P->Subspaces->n < 3" << endl;
 		exit(1);
 	}
 	//projective_space *P3;
 	int order;
 
 	ring_theory::longinteger_object full_group_order;
-	order = A->element_order(Elt);
+	order = A->Group_element->element_order(Elt);
 
 	full_group_order.create(order, __FILE__, __LINE__);
 
@@ -526,7 +539,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 
 	ost << "The group generated by the element" << endl;
 	ost << "$$" << endl;
-	A->element_print_latex(Elt, ost);
+	A->Group_element->element_print_latex(Elt, ost);
 	ost << "$$" << endl;
 	ost << "has the following orbits:\\\\" << endl;
 
@@ -552,7 +565,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 		actions::action *A2;
 		groups::schreier *Sch;
 
-		A2 = A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
+		A2 = A->Induced_action->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
 
 		Sch = NEW_OBJECT(groups::schreier);
 		AcGl.all_point_orbits_from_single_generator(A2,
@@ -573,7 +586,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 		groups::schreier *Sch;
 
 
-		A2 = A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
+		A2 = A->Induced_action->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
 
 		Sch = NEW_OBJECT(groups::schreier);
 		AcGl.all_point_orbits_from_single_generator(A2,
@@ -698,7 +711,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 	field_theory::finite_field *F;
 
-	F = P->F;
+	F = P->Subspaces->F;
 
 
 	{
@@ -740,11 +753,11 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 			Elt = NEW_int(A->elt_size_in_int);
 
 
-			A->make_element_from_string(Elt,
+			A->Group_element->make_element_from_string(Elt,
 					decomposition_by_element_data, verbose_level);
 
 
-			A->element_power_int_in_place(Elt,
+			A->Group_element->element_power_int_in_place(Elt,
 					decomposition_by_element_power, verbose_level);
 
 			apps_geometry::top_level_geometry_global Geo;
@@ -800,17 +813,19 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 	H_LG = NEW_OBJECT(groups::linear_group);
 
-	subgroup_Descr->F = P->F;
+	subgroup_Descr->F = P->Subspaces->F;
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup H_LG->init, "
+		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup "
+				"H_LG->init, "
 				"creating the group" << endl;
 	}
 
 	H_LG->linear_group_init(subgroup_Descr, verbose_level - 2);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup after H_LG->linear_group_init" << endl;
+		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup "
+				"after H_LG->linear_group_init" << endl;
 	}
 
 
@@ -852,7 +867,8 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 
 			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG f_decomposition_by_element" << endl;
+				cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG "
+						"f_decomposition_by_element" << endl;
 			}
 
 
@@ -1036,7 +1052,8 @@ void projective_space_with_action::canonical_form_of_code(
 
 
 	if (f_v) {
-		cout << "projective_space_with_action::canonical_form_of_code after PA->canonical_form" << endl;
+		cout << "projective_space_with_action::canonical_form_of_code "
+				"after PA->canonical_form" << endl;
 	}
 
 
@@ -1048,7 +1065,8 @@ void projective_space_with_action::canonical_form_of_code(
 
 }
 
-void projective_space_with_action::table_of_quartic_curves(int verbose_level)
+void projective_space_with_action::table_of_quartic_curves(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1073,7 +1091,8 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 
 	nb_quartic_curves = K.quartic_curves_nb_reps(q);
 
-	QC = (applications_in_algebraic_geometry::quartic_curves::quartic_curve_create **) NEW_pvoid(nb_quartic_curves);
+	QC = (applications_in_algebraic_geometry::quartic_curves::quartic_curve_create **)
+			NEW_pvoid(nb_quartic_curves);
 
 	nb_K = NEW_int(nb_quartic_curves);
 
@@ -1085,7 +1104,8 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 			cout << "projective_space_with_action::table_of_quartic_curves "
 					<< h << " / " << nb_quartic_curves << endl;
 		}
-		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description Quartic_curve_descr;
+		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description
+			Quartic_curve_descr;
 
 
 		//Quartic_curve_descr.f_q = TRUE;
@@ -1111,13 +1131,15 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 
 		if (f_v) {
 			cout << "projective_space_with_action::table_of_quartic_curves "
-					<< h << " / " << nb_quartic_curves << " before K.quartic_curves_stab_gens" << endl;
+					<< h << " / " << nb_quartic_curves
+					<< " before K.quartic_curves_stab_gens" << endl;
 		}
 		K.quartic_curves_stab_gens(q, h, data, nb_gens, data_size, stab_order);
 
 		if (f_v) {
 			cout << "projective_space_with_action::table_of_quartic_curves "
-					<< h << " / " << nb_quartic_curves << " stab_order=" << stab_order << endl;
+					<< h << " / " << nb_quartic_curves
+					<< " stab_order=" << stab_order << endl;
 		}
 		ago = ST.strtolint(stab_order);
 
@@ -1254,19 +1276,31 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 		exit(1);
 	}
 
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::table_of_surfaces *T;
 
-	setup_surface_with_action(
-			Surf_A,
-			verbose_level);
+	T = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::table_of_surfaces);
 
 	if (f_v) {
-		cout << "projective_space_with_action::table_of_cubic_surfaces before Surf_A->table_of_cubic_surfaces" << endl;
+		cout << "projective_space_with_action::table_of_cubic_surfaces "
+				"before T->init" << endl;
 	}
-	Surf_A->table_of_cubic_surfaces(verbose_level);
+	T->init(this, verbose_level);
 	if (f_v) {
-		cout << "projective_space_with_action::table_of_cubic_surfaces after Surf_A->table_of_cubic_surfaces" << endl;
+		cout << "projective_space_with_action::table_of_cubic_surfaces "
+				"after T->init" << endl;
 	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::table_of_cubic_surfaces "
+				"before T->do_export" << endl;
+	}
+	T->do_export(verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::table_of_cubic_surfaces "
+				"after T->do_export" << endl;
+	}
+
+	FREE_OBJECT(T);
 
 
 	if (f_v) {
@@ -1344,11 +1378,13 @@ void projective_space_with_action::cheat_sheet(
 
 				// ToDo PA now has a Surf_A
 
+#if 0
 				applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 				setup_surface_with_action(
 						Surf_A,
 						verbose_level);
+#endif
 
 				Surf_A->Surf->Schlaefli->print_Steiner_and_Eckardt(ost);
 
@@ -1404,16 +1440,18 @@ void projective_space_with_action::do_spread_classify(int k,
 	SD = NEW_OBJECT(geometry::spread_domain);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify before SD->init" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"before SD->init_spread_domain" << endl;
 	}
 
-	SD->init(
+	SD->init_spread_domain(
 			F,
 			n, k,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify after SD->init" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"after SD->init_spread_domain" << endl;
 	}
 
 
@@ -1422,7 +1460,8 @@ void projective_space_with_action::do_spread_classify(int k,
 	SC = NEW_OBJECT(spreads::spread_classify);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify before SC->init" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"before SC->init" << endl;
 	}
 
 	SC->init(
@@ -1430,17 +1469,20 @@ void projective_space_with_action::do_spread_classify(int k,
 			this,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify after SC->init" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"after SC->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify before SC->classify_partial_spreads" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"before SC->classify_partial_spreads" << endl;
 	}
 
 	SC->classify_partial_spreads(verbose_level);
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_spread_classify after SC->classify_partial_spreads" << endl;
+		cout << "projective_space_with_action::do_spread_classify "
+				"after SC->classify_partial_spreads" << endl;
 	}
 
 
@@ -1450,43 +1492,6 @@ void projective_space_with_action::do_spread_classify(int k,
 	if (f_v) {
 		cout << "projective_space_with_action::do_spread_classify done" << endl;
 	}
-}
-
-void projective_space_with_action::setup_surface_with_action(
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action
-			*&Surf_A,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action" << endl;
-		cout << "projective_space_with_action::setup_surface_with_action verbose_level=" << verbose_level << endl;
-	}
-
-
-	algebraic_geometry::surface_domain *Surf;
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init(F, 0 /*verbose_level - 1*/);
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action after Surf->init" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
-
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action before Surf_A->init" << endl;
-	}
-	Surf_A->init(Surf, this, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "projective_space_with_action::setup_surface_with_action after Surf_A->init" << endl;
-	}
-
 }
 
 
@@ -1526,6 +1531,85 @@ void projective_space_with_action::report_decomposition_by_group(
 }
 
 
+
+
+void projective_space_with_action::report_fixed_objects(
+		std::string &Elt_text,
+		std::string &fname_latex, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int i, j, cnt;
+	//int v[4];
+	//file_io Fio;
+
+	if (f_v) {
+		cout << "projective_space_with_action::report_fixed_objects" << endl;
+	}
+
+	int *data;
+	int sz;
+	int *Elt;
+
+	Get_int_vector_from_label(Elt_text, data, sz, 0 /* verbose_level */);
+	if (sz != A->make_element_size) {
+		cout << "projective_space_with_action::report_fixed_objects "
+				"the size of the input does not match" << endl;
+		cout << "expected: " << A->make_element_size << endl;
+		cout << "seeing: " << sz << endl;
+		exit(1);
+	}
+	Elt = NEW_int(A->elt_size_in_int);
+	A->Group_element->make_element(Elt, data, verbose_level);
+
+
+	{
+		ofstream fp(fname_latex);
+		char str[1000];
+		string title, author, extra_praeamble;
+
+		orbiter_kernel_system::latex_interface L;
+
+		snprintf(str, sizeof(str), "Fixed Objects");
+		title.assign(str);
+		author.assign("");
+
+		L.head(fp,
+			FALSE /* f_book */, TRUE /* f_title */,
+			title, author /* const char *author */,
+			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
+			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
+			extra_praeamble /* extra_praeamble */);
+		//latex_head_easy(fp);
+
+
+
+		if (f_v) {
+			cout << "projective_space_with_action::report_fixed_objects "
+					"before A->Group_element->report_fixed_objects_in_PG" << endl;
+		}
+		A->Group_element->report_fixed_objects_in_PG(fp,
+				P,
+				Elt,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_with_action::report_fixed_objects "
+					"after A->Group_element->report_fixed_objects_in_PG" << endl;
+		}
+
+
+		L.foot(fp);
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "Written file " << fname_latex << " of size "
+			<< Fio.file_size(fname_latex) << endl;
+
+	FREE_int(Elt);
+
+	if (f_v) {
+		cout << "projective_space_with_action::report_fixed_objects done" << endl;
+	}
+}
 
 
 

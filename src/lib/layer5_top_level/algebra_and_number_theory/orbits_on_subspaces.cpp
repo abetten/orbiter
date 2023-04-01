@@ -83,7 +83,7 @@ void orbits_on_subspaces::init(
 	orbits_on_subspaces_M = NEW_int(n * n);
 	orbits_on_subspaces_base_cols = NEW_int(n);
 
-	orbits_on_subspaces_VS = NEW_OBJECT(algebra::vector_space);
+	orbits_on_subspaces_VS = NEW_OBJECT(linear_algebra::vector_space);
 	orbits_on_subspaces_VS->init(Group->LG->F, n /* dimension */, verbose_level - 1);
 	orbits_on_subspaces_VS->init_rank_functions(
 			orbits_on_subspaces_rank_point_func,
@@ -203,7 +203,8 @@ static long int orbits_on_subspaces_rank_point_func(int *v, void *data)
 	OoS = (orbits_on_subspaces *) data;
 	//G = OoS->GTA;
 	gen = OoS->orbits_on_subspaces_PC;
-	gen->get_VS()->F->PG_element_rank_modified_lint(v, 1,
+	gen->get_VS()->F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1,
 			gen->get_VS()->dimension, rk);
 	return rk;
 }
@@ -220,7 +221,8 @@ static void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *dat
 	OoS = (orbits_on_subspaces *) data;
 	//G = OoS->GTA;
 	gen = OoS->orbits_on_subspaces_PC;
-	gen->get_VS()->F->PG_element_unrank_modified(v, 1,
+	gen->get_VS()->F->Projective_space_basic->PG_element_unrank_modified(
+			v, 1,
 			gen->get_VS()->dimension, rk);
 }
 

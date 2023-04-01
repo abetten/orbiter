@@ -87,10 +87,10 @@ long int action_by_conjugation::compute_image(
 				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
-	A->invert(Elt, Elt2);
+	A->Group_element->invert(Elt, Elt2);
 	Base_group->element_unrank_lint(i, Elt1);
-	A->mult(Elt2, Elt1, Elt3);
-	A->mult(Elt3, Elt, Elt1);
+	A->Group_element->mult(Elt2, Elt1, Elt3);
+	A->Group_element->mult(Elt3, Elt, Elt1);
 	j = Base_group->element_rank_lint(Elt1);
 	if (f_v) {
 		cout << "action_by_conjugation::compute_image "
@@ -130,7 +130,7 @@ long int action_by_conjugation::multiply(
 		}
 	Base_group->element_unrank_lint(i, Elt1);
 	Base_group->element_unrank_lint(j, Elt2);
-	A->mult(Elt1, Elt2, Elt3);
+	A->Group_element->mult(Elt1, Elt2, Elt3);
 	k = Base_group->element_rank_lint(Elt3);
 	if (f_v) {
 		cout << "action_by_conjugation::multiply "

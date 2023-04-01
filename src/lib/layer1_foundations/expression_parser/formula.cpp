@@ -7,19 +7,19 @@
 
 #include "foundations.h"
 
-#include "../expression_parser_sajeeb/parser.tab.hpp"
-#include "../expression_parser_sajeeb/lexer.yy.h"
+//#include "../expression_parser_sajeeb/parser.tab.hpp"
+//#include "../expression_parser_sajeeb/lexer.yy.h"
 
-#include "../expression_parser_sajeeb/Visitors/PrintVisitors/ir_tree_pretty_print_visitor.h"
-#include "../expression_parser_sajeeb/Visitors/uminus_distribute_and_reduce_visitor.h"
-#include "../expression_parser_sajeeb/Visitors/merge_nodes_visitor.h"
-#include "../expression_parser_sajeeb/Visitors/LatexVisitors/ir_tree_latex_visitor_strategy.h"
-#include "../expression_parser_sajeeb/Visitors/ToStringVisitors/ir_tree_to_string_visitor.h"
-#include "../expression_parser_sajeeb/Visitors/remove_minus_nodes_visitor.h"
-#include "../expression_parser_sajeeb/Visitors/ExpansionVisitors/multiplication_expansion_visitor.h"
-#include "../expression_parser_sajeeb/Visitors/CopyVisitors/deep_copy_visitor.h"
-#include "../expression_parser_sajeeb/Visitors/exponent_vector_visitor.h"
-#include "../expression_parser_sajeeb/Visitors/ReductionVisitors/simplify_numerical_visitor.h"
+//#include "../expression_parser_sajeeb/Visitors/PrintVisitors/ir_tree_pretty_print_visitor.h"
+//#include "../expression_parser_sajeeb/Visitors/uminus_distribute_and_reduce_visitor.h"
+//#include "../expression_parser_sajeeb/Visitors/merge_nodes_visitor.h"
+//#include "../expression_parser_sajeeb/Visitors/LatexVisitors/ir_tree_latex_visitor_strategy.h"
+//#include "../expression_parser_sajeeb/Visitors/ToStringVisitors/ir_tree_to_string_visitor.h"
+//#include "../expression_parser_sajeeb/Visitors/remove_minus_nodes_visitor.h"
+//#include "../expression_parser_sajeeb/Visitors/ExpansionVisitors/multiplication_expansion_visitor.h"
+//#include "../expression_parser_sajeeb/Visitors/CopyVisitors/deep_copy_visitor.h"
+//#include "../expression_parser_sajeeb/Visitors/exponent_vector_visitor.h"
+//#include "../expression_parser_sajeeb/Visitors/ReductionVisitors/simplify_numerical_visitor.h"
 
 
 using namespace std;

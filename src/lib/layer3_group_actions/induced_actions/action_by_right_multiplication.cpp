@@ -75,7 +75,7 @@ long int action_by_right_multiplication::compute_image(
 		exit(1);
 		}
 	Base_group->element_unrank_lint(i, Elt1);
-	A->mult(Elt1, Elt, Elt2);
+	A->Group_element->mult(Elt1, Elt, Elt2);
 	j = Base_group->element_rank_lint(Elt2);
 	if (f_v) {
 		cout << "action_by_right_multiplication::compute_image image is " << j << endl;

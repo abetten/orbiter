@@ -246,7 +246,7 @@ namespace layer1_foundations {
 
 
 
-//! algebraic algorithms, generators for certain classes of groups, conjugacy classes in the general linear group
+//! algebraic algorithms, generators for groups, conjugacy classes in the general linear group
 
 namespace algebra {
 
@@ -258,12 +258,10 @@ namespace algebra {
 	class gl_classes;
 	class group_generators_domain;
 	class heisenberg;
-	class interface_gap_low;
-	class interface_magma_low;
 	class matrix_block_data;
+	class matrix_group;
 	class null_polarity_generator;
 	class rank_checker;
-	class vector_space;
 
 }
 
@@ -303,6 +301,7 @@ namespace coding_theory {
 	class code_diagram;
 	class coding_theory_domain;
 	class crc_codes;
+	class crc_object;
 	class crc_options_description;
 	class create_BCH_code;
 	class create_RS_code;
@@ -316,6 +315,7 @@ namespace coding_theory {
 namespace combinatorics {
 
 	// combinatorics:
+	class apn_functions;
 	class boolean_function_domain;
 	class brick_domain;
 	class classification_of_objects_description;
@@ -410,6 +410,7 @@ namespace field_theory {
 	class finite_field_activity_description;
 	class finite_field_activity;
 	class finite_field_description;
+	class finite_field_io;
 	class finite_field;
 	class finite_field_implementation_by_tables;
 	class finite_field_implementation_wo_tables;
@@ -452,13 +453,16 @@ namespace geometry {
 	class point_line;
 	class points_and_lines;
 	class polarity;
+	class projective_space_basic;
 	class projective_space_implementation;
 	class projective_space_of_dimension_three;
 	class projective_space_plane;
 	class projective_space_reporting;
+	class projective_space_subspaces;
 	class projective_space;
 	class spread_domain;
 	class spread_tables;
+	class three_skew_subspaces;
 	class W3q;
 
 }
@@ -550,13 +554,27 @@ namespace knowledge_base {
 }
 
 
+
+//! interface to magma and gap
+
+namespace l1_interfaces {
+
+	class interface_gap_low;
+	class interface_magma_low;
+
+}
+
+
+
 //! linear algebra and representation theory
 
 namespace linear_algebra {
 
 	// linear_algebra:
 	class linear_algebra;
+	class module;
 	class representation_theory_domain;
+	class vector_space;
 
 }
 
@@ -602,6 +620,7 @@ namespace orthogonal_geometry {
 	// orthogonal:
 	class blt_set_domain;
 	class blt_set_invariants;
+	class linear_complex;
 	class orthogonal_global;
 	class orthogonal_group;
 	class orthogonal_indexing;
@@ -730,6 +749,7 @@ namespace solvers {
 #define Lint_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print(A, B, C)
 #define Int_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_fully(A, B, C)
 #define Lint_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_fully(A, B, C)
+#define Int_vec_print_fully_naked(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_fully_naked(A, B, C)
 
 #define Int_vec_print_integer_matrix(A,B,C,D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
 #define Int_vec_print_integer_matrix_width(A,B,C,D,E,F) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, E, F)
@@ -869,6 +889,7 @@ enum symbol_table_object_type {
 	t_action_on_forms,
 	t_orbits,
 	t_poset_classification_control,
+	t_poset_classification_activity,
 };
 
 
@@ -969,6 +990,7 @@ enum CRC_type {
 #include "graph_theory_nauty/graph_theory_nauty.h"
 #include "graphics/graphics.h"
 #include "knowledge_base/knowledge_base.h"
+#include "l1_interfaces/l1_interfaces.h"
 #include "linear_algebra/linear_algebra.h"
 #include "number_theory/number_theory.h"
 #include "orbiter_kernel_system/orbiter_kernel_system.h"

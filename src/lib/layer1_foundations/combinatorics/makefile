@@ -7,6 +7,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+		apn_functions.o \
 		boolean_function_domain.o \
 		brick_domain.o \
 		classification_of_objects_description.o \

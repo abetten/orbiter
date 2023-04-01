@@ -15,7 +15,8 @@ namespace groups {
 
 
 
-void choose_random_generator_derived_group(sims *G,
+void choose_random_generator_derived_group(
+		sims *G,
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -36,11 +37,11 @@ void choose_random_generator_derived_group(sims *G,
 	
 	G->random_element(Elt1, verbose_level - 1);
 	G->random_element(Elt2, verbose_level - 1);
-	A->invert(Elt1, Elt3);
-	A->invert(Elt2, Elt4);
-	A->mult(Elt3, Elt4, Elt5);
-	A->mult(Elt1, Elt2, Elt6);
-	A->mult(Elt5, Elt6, Elt);
+	A->Group_element->invert(Elt1, Elt3);
+	A->Group_element->invert(Elt2, Elt4);
+	A->Group_element->mult(Elt3, Elt4, Elt5);
+	A->Group_element->mult(Elt1, Elt2, Elt6);
+	A->Group_element->mult(Elt5, Elt6, Elt);
 	
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -50,7 +51,8 @@ void choose_random_generator_derived_group(sims *G,
 	FREE_int(Elt6);
 }
 
-void sims::build_up_subgroup_random_process(sims *G, 
+void sims::build_up_subgroup_random_process(
+		sims *G,
 	void (*choose_random_generator_for_subgroup)(sims *G,
 			int *Elt, int verbose_level),
 	int verbose_level)
@@ -107,7 +109,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 			//A->element_move(schreier_gen, GA->Elt1, 0);
 			if (FALSE) {
 				cout << "sims::build_up_subgroup_random_process random element chosen:" << endl;
-				A->element_print(GA->Elt1, cout);
+				A->Group_element->element_print(GA->Elt1, cout);
 				cout << endl;
 				}
 			}
@@ -122,7 +124,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 				cout << "sims::build_up_subgroup_random_process random element chosen" << endl;
 				}
 			if (FALSE) {
-				GA->element_print(GA->Elt1, cout);
+				GA->Group_element->element_print(GA->Elt1, cout);
 				cout << endl;
 				}
 			}
@@ -132,7 +134,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 				cout << "sims::build_up_subgroup_random_process element strips through" << endl;
 				if (FALSE) {
 					cout << "sims::build_up_subgroup_random_process residue = " << endl;
-					GA->element_print(GA->Elt2, cout);
+					GA->Group_element->element_print(GA->Elt2, cout);
 					cout << endl;
 					}
 				}
@@ -146,7 +148,7 @@ void sims::build_up_subgroup_random_process(sims *G,
 					<< drop_out_level << " with image "
 					<< image << endl;
 				if (TRUE) {
-					GA->element_print(GA->Elt2, cout);
+					GA->Group_element->element_print(GA->Elt2, cout);
 					cout  << endl;
 					}
 				}

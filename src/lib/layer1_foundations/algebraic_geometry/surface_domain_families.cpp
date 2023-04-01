@@ -18,7 +18,8 @@ namespace layer1_foundations {
 namespace algebraic_geometry {
 
 
-void surface_domain::create_equation_general_abcd(int a, int b, int c, int d,
+void surface_domain::create_equation_general_abcd(
+		int a, int b, int c, int d,
 		int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -108,7 +109,8 @@ void surface_domain::create_equation_general_abcd(int a, int b, int c, int d,
 	}
 }
 
-void surface_domain::create_equation_Cayley_klmn(int k, int l, int m, int n,
+void surface_domain::create_equation_Cayley_klmn(
+		int k, int l, int m, int n,
 		int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -142,7 +144,8 @@ void surface_domain::create_equation_Cayley_klmn(int k, int l, int m, int n,
 }
 
 
-void surface_domain::create_equation_bes(int a, int c, int *coeff, int verbose_level)
+void surface_domain::create_equation_bes(
+		int a, int c, int *coeff, int verbose_level)
 // bes means five in Turkish
 {
 	int f_v = (verbose_level >= 1);
@@ -190,7 +193,8 @@ void surface_domain::create_equation_bes(int a, int c, int *coeff, int verbose_l
 
 
 
-void surface_domain::create_equation_F13(int a, int *coeff, int verbose_level)
+void surface_domain::create_equation_F13(
+		int a, int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int b, c;
@@ -213,7 +217,8 @@ void surface_domain::create_equation_F13(int a, int *coeff, int verbose_level)
 	}
 }
 
-void surface_domain::create_equation_G13(int a, int *coeff, int verbose_level)
+void surface_domain::create_equation_G13(
+		int a, int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int b, c;
@@ -234,7 +239,8 @@ void surface_domain::create_equation_G13(int a, int *coeff, int verbose_level)
 	}
 }
 
-surface_object *surface_domain::create_surface_general_abcd(int a, int b, int c, int d,
+surface_object *surface_domain::create_surface_general_abcd(
+		int a, int b, int c, int d,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -277,7 +283,8 @@ surface_object *surface_domain::create_surface_general_abcd(int a, int b, int c,
 
 
 
-surface_object *surface_domain::create_surface_bes(int a, int c,
+surface_object *surface_domain::create_surface_bes(
+		int a, int c,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -318,7 +325,8 @@ surface_object *surface_domain::create_surface_bes(int a, int c,
 }
 
 
-surface_object *surface_domain::create_surface_F13(int a, int verbose_level)
+surface_object *surface_domain::create_surface_F13(
+		int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -357,7 +365,8 @@ surface_object *surface_domain::create_surface_F13(int a, int verbose_level)
 	return SO;
 }
 
-surface_object *surface_domain::create_surface_G13(int a, int verbose_level)
+surface_object *surface_domain::create_surface_G13(
+		int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -396,7 +405,8 @@ surface_object *surface_domain::create_surface_G13(int a, int verbose_level)
 	return SO;
 }
 
-surface_object *surface_domain::create_Eckardt_surface(int a, int b,
+surface_object *surface_domain::create_Eckardt_surface(
+		int a, int b,
 	int &alpha, int &beta,
 	int verbose_level)
 {
@@ -541,7 +551,7 @@ surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 
 	build_cubic_surface_from_lines(27, Lines27, coeff20,
 			0 /* verbose_level */);
-	F->PG_element_normalize_from_front(coeff20, 1, 20);
+	F->Projective_space_basic->PG_element_normalize_from_front(coeff20, 1, 20);
 
 
 
@@ -669,7 +679,8 @@ int surface_domain::test_Eckardt_form_alpha_beta(
 	return ret;
 }
 
-void surface_domain::create_Eckardt_double_six(long int *double_six,
+void surface_domain::create_Eckardt_double_six(
+		long int *double_six,
 	int a, int b, int verbose_level)
 // create double-six for the Eckardt surface
 {

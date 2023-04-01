@@ -49,7 +49,8 @@ public:
 	arc_lifting();
 	~arc_lifting();
 	void create_surface_and_group(
-			cubic_surfaces_in_general::surface_with_action *Surf_A, long int *Arc6,
+			cubic_surfaces_in_general::surface_with_action *Surf_A,
+			long int *Arc6,
 		int verbose_level);
 	void create_web_of_cubic_curves(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
@@ -155,11 +156,11 @@ class classify_trihedral_pairs {
 public:
 
 	int q;
-	field_theory::finite_field *F; // do not free
-	actions::action *A; // do not free
+	field_theory::finite_field *F;
+	actions::action *A;
 
-	cubic_surfaces_in_general::surface_with_action *Surf_A; // do not free
-	algebraic_geometry::surface_domain *Surf; // do not free
+	cubic_surfaces_in_general::surface_with_action *Surf_A;
+	algebraic_geometry::surface_domain *Surf;
 
 	groups::strong_generators *gens_type1;
 	groups::strong_generators *gens_type2;
@@ -183,7 +184,8 @@ public:
 
 	classify_trihedral_pairs();
 	~classify_trihedral_pairs();
-	void init(cubic_surfaces_in_general::surface_with_action *Surf_A,
+	void init(
+			cubic_surfaces_in_general::surface_with_action *Surf_A,
 			int verbose_level);
 
 	void classify_orbits_on_trihedra(
@@ -192,17 +194,22 @@ public:
 			int verbose_level);
 	void report_summary(std::ostream &ost);
 	void report(std::ostream &ost);
-	void list_orbits_on_trihedra_type1(std::ostream &ost, int f_detailed);
-	void list_orbits_on_trihedra_type2(std::ostream &ost, int f_detailed);
-	void early_test_func_type1(long int *S, int len,
+	void list_orbits_on_trihedra_type1(
+			std::ostream &ost, int f_detailed);
+	void list_orbits_on_trihedra_type2(
+			std::ostream &ost, int f_detailed);
+	void early_test_func_type1(
+			long int *S, int len,
 			long int *candidates, int nb_candidates,
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void early_test_func_type2(long int *S, int len,
+	void early_test_func_type2(
+			long int *S, int len,
 			long int *candidates, int nb_candidates,
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void identify_three_planes(int p1, int p2, int p3,
+	void identify_three_planes(
+			int p1, int p2, int p3,
 		int &type, int *transporter, int verbose_level);
 	void classify(
 			poset_classification::poset_classification_control *Control1,
@@ -210,13 +217,16 @@ public:
 			int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
-	void print_trihedral_pairs_summary(std::ostream &ost);
-	void print_trihedral_pairs(std::ostream &ost,
+	void print_trihedral_pairs_summary(
+			std::ostream &ost);
+	void print_trihedral_pairs(
+			std::ostream &ost,
 		int f_with_stabilizers);
 	groups::strong_generators *identify_trihedral_pair_and_get_stabilizer(
 		long int *planes6, int *transporter, int &orbit_index,
 		int verbose_level);
-	void identify_trihedral_pair(long int *planes6,
+	void identify_trihedral_pair(
+			long int *planes6,
 		int *transporter, int &orbit_index, int verbose_level);
 
 };
@@ -252,11 +262,15 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level);
-	void recognize(long int *arc6, int *transporter,
+	void recognize(
+			long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);
-	void report_latex(std::ostream &ost);
-	void report_specific_arc_basic(std::ostream &ost, int arc_idx);
-	void report_specific_arc(std::ostream &ost, int arc_idx);
+	void report_latex(
+			std::ostream &ost);
+	void report_specific_arc_basic(
+			std::ostream &ost, int arc_idx);
+	void report_specific_arc(
+			std::ostream &ost, int arc_idx);
 };
 
 
@@ -334,8 +348,11 @@ public:
 	std::string arc_label;
 	std::string arc_label_short;
 
-	cubic_surfaces_in_general::surface_clebsch_map *Clebsch; // [SOA->Orbits_on_single_sixes->nb_orbits]
-	int *Other_arc_idx; // [SOA->Orbits_on_single_sixes->nb_orbits]
+	cubic_surfaces_in_general::surface_clebsch_map *Clebsch;
+		// [SOA->Orbits_on_single_sixes->nb_orbits]
+
+	int *Other_arc_idx;
+		// [SOA->Orbits_on_single_sixes->nb_orbits]
 
 	surface_create_by_arc_lifting();
 	~surface_create_by_arc_lifting();
@@ -449,9 +466,11 @@ public:
 	// 3x3 matrices of elements in PGGL(3,q)
 	int *Elt_alpha2;
 		// Using local coordinates P6_local[6],
-		// maps the arc P6[6] to the canonical arc in the classification.
+		// maps the arc P6[6] to
+		// the canonical arc in the classification.
 	int *Elt_beta1;
-		// Moves the arc points on m1 to P1 and P2.
+		// Moves the two points of the arc
+		// lying on the line m1 to P1 and P2.
 		// Computed using
 		// Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize
 	int *Elt_beta2;
@@ -493,21 +512,28 @@ public:
 
 	surfaces_arc_lifting_trace();
 	~surfaces_arc_lifting_trace();
-	void init(surfaces_arc_lifting_upstep *Up,
+	void init(
+			surfaces_arc_lifting_upstep *Up,
 			int seventytwo_case_idx, int verbose_level);
-	void process_flag_orbit(surfaces_arc_lifting_upstep *Up, int verbose_level);
+	void process_flag_orbit(
+			surfaces_arc_lifting_upstep *Up, int verbose_level);
 	void move_arc(int verbose_level);
 	void move_plane_and_arc(long int *P6a, int verbose_level);
 	void make_arc_canonical(
 			long int *P6_local, long int *P6_local_canonical,
 			int &orbit_not_on_conic_idx, int verbose_level);
-	void compute_beta1(algebraic_geometry::seventytwo_cases *The_case, int verbose_level);
-	void compute_beta2(int orbit_not_on_conic_idx,
+	void compute_beta1(
+			algebraic_geometry::seventytwo_cases *The_case,
+			int verbose_level);
+	void compute_beta2(
+			int orbit_not_on_conic_idx,
 			int pair_orbit_idx, int &partition_orbit_idx,
 			int *the_partition4, int verbose_level);
 	void lift_group_elements_and_move_two_lines(int verbose_level);
-	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
-	void report_product(std::ostream &ost, int *Elt, int verbose_level);
+	void embed(
+			int *Elt_A3, int *Elt_A4, int verbose_level);
+	void report_product(
+			std::ostream &ost, int *Elt, int verbose_level);
 
 };
 

@@ -636,7 +636,8 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				Lint_vec_print(cout, The_arc->data, 6);
 				cout << endl;
 			}
-			Surf->F->PG_elements_embed(The_arc->data, Arc6, 6, 3, 4, v4);
+			Surf->F->Projective_space_basic->PG_elements_embed(
+					The_arc->data, Arc6, 6, 3, 4, v4);
 
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
@@ -934,7 +935,7 @@ void surfaces_arc_lifting::report2(std::ostream &ost,
 		The_arc->print_set_tex(ost);
 		ost << "$$" << endl;
 
-		F->display_table_of_projective_points(ost,
+		F->Io->display_table_of_projective_points(ost,
 			The_arc->data, 6, 3);
 
 
@@ -1123,12 +1124,12 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(std::ostream &ost, int v
 		ost << "$$" << endl;
 		ost << "\\ell_1 = " << endl;
 		//ost << "\\left[" << endl;
-		Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, line1);
+		Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, line1);
 		//ost << "\\right]" << endl;
 		ost << "\\quad" << endl;
 		ost << "\\ell_2 = " << endl;
 		//fp << "\\left[" << endl;
-		Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, line2);
+		Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, line2);
 		//fp << "\\right]" << endl;
 		ost << "$$" << endl;
 		ost << "The equation of the lifted surface is:" << endl;

@@ -275,22 +275,22 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(total_nb_points + total_nb_blocks,
 				0 /* verbose_level */);
-		Stack->subset_continguous(total_nb_points, total_nb_blocks);
+		Stack->subset_contiguous(total_nb_points, total_nb_blocks);
 		Stack->split_cell(0 /* verbose_level */);
-		Stack->subset_continguous(P->size_of_packing * P->spread_size,
+		Stack->subset_contiguous(P->size_of_packing * P->spread_size,
 				nb_fake_points);
 		Stack->split_cell(0 /* verbose_level */);
 		if (nb_fake_points >= 2) {
 
 			// isolate the fake points:
 			for (i = 1; i < nb_fake_points; i++) {
-				Stack->subset_continguous(
+				Stack->subset_contiguous(
 						P->size_of_packing * P->spread_size + i,
 						nb_fake_points - i);
 				Stack->split_cell(0 /* verbose_level */);
 			}
 		}
-		Stack->subset_continguous(total_nb_points + nb_blocks,
+		Stack->subset_contiguous(total_nb_points + nb_blocks,
 				nb_fake_blocks);
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
@@ -321,23 +321,23 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(total_nb_points + total_nb_blocks,
 				0 /* verbose_level */);
-		Stack->subset_continguous(total_nb_points,
+		Stack->subset_contiguous(total_nb_points,
 				total_nb_blocks);
 		Stack->split_cell(0 /* verbose_level */);
-		Stack->subset_continguous(P->size_of_packing * P->spread_size,
+		Stack->subset_contiguous(P->size_of_packing * P->spread_size,
 				nb_fake_points);
 		Stack->split_cell(0 /* verbose_level */);
 		if (nb_fake_points >= 2) {
 
 			// isolate the fake points:
 			for (i = 1; i < nb_fake_points; i++) {
-				Stack->subset_continguous(
+				Stack->subset_contiguous(
 						P->size_of_packing * P->spread_size + i,
 						nb_fake_points - i);
 				Stack->split_cell(0 /* verbose_level */);
 			}
 		}
-		Stack->subset_continguous(total_nb_points + nb_blocks,
+		Stack->subset_contiguous(total_nb_points + nb_blocks,
 				nb_fake_blocks);
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();

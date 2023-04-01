@@ -155,7 +155,8 @@ void grassmann::print_set(long int *v, int len)
 	}
 }
 
-void grassmann::print_set_tex(std::ostream &ost,
+void grassmann::print_set_tex(
+		std::ostream &ost,
 		long int *v, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -185,7 +186,7 @@ void grassmann::print_set_tex(std::ostream &ost,
 		//ost << "\\right]" << endl;
 		//latex_matrix(ost, Mtx);
 
-		F->print_matrix_latex(ost, Mtx, k, n);
+		F->Io->print_matrix_latex(ost, Mtx, k, n);
 
 #if 0
 		ost << "\\qquad" << endl;
@@ -234,19 +235,19 @@ void grassmann::print_set_tex_with_perp(
 		//ost << "\\right]" << endl;
 		//latex_matrix(ost, Mtx);
 
-		F->print_matrix_latex(ost, Mtx, k, n);
+		F->Io->print_matrix_latex(ost, Mtx, k, n);
 
 		ost << "\\qquad" << endl;
 
-		F->print_matrix_numerical_latex(ost, Mtx, k, n);
+		F->Io->print_matrix_numerical_latex(ost, Mtx, k, n);
 
 		ost << "\\qquad" << endl;
 
-		F->print_matrix_latex(ost, Mtx + k * n, n - k, n);
+		F->Io->print_matrix_latex(ost, Mtx + k * n, n - k, n);
 
 		ost << "\\qquad" << endl;
 
-		F->print_matrix_numerical_latex(ost, Mtx + k * n, n - k, n);
+		F->Io->print_matrix_numerical_latex(ost, Mtx + k * n, n - k, n);
 
 		ost << "$$" << endl;
 	}
@@ -263,27 +264,33 @@ int grassmann::nb_points_covered(int verbose_level)
 	return nb;
 }
 
-void grassmann::points_covered(long int *the_points, int verbose_level)
+void grassmann::points_covered(
+		long int *the_points, int verbose_level)
 {
 	int i, nb;
 	long int a;
 
 	nb = nb_points_covered(0 /* verbose_level*/);
 	for (i = 0; i < nb; i++) {
-		F->PG_element_unrank_modified(v, 1, k, i);
-		F->Linear_algebra->mult_vector_from_the_left(v, M, w, k, n);
-		F->PG_element_rank_modified_lint(w, 1, n, a);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, k, i);
+		F->Linear_algebra->mult_vector_from_the_left(
+				v, M, w, k, n);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				w, 1, n, a);
 		the_points[i] = a;
 	}
 }
 
-void grassmann::unrank_lint_here(int *Mtx, long int rk, int verbose_level)
+void grassmann::unrank_lint_here(
+		int *Mtx, long int rk, int verbose_level)
 {
 	unrank_lint(rk, verbose_level);
 	Int_vec_copy(M, Mtx, k * n);
 }
 
-long int grassmann::rank_lint_here(int *Mtx, int verbose_level)
+long int grassmann::rank_lint_here(
+		int *Mtx, int verbose_level)
 {
 	Int_vec_copy(Mtx, M, k * n);
 	return rank_lint(verbose_level);
@@ -314,7 +321,8 @@ void grassmann::unrank_embedded_subspace_lint(
 	}
 }
 
-long int grassmann::rank_embedded_subspace_lint(int verbose_level)
+long int grassmann::rank_embedded_subspace_lint(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int rk;
@@ -1032,7 +1040,8 @@ void grassmann::unrank_lint_here_and_compute_perp(
 }
 
 void grassmann::line_regulus_in_PG_3_q(
-		long int *&regulus, int &regulus_size, int f_opposite, int verbose_level)
+		long int *&regulus, int &regulus_size, int f_opposite,
+		int verbose_level)
 // the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
 {
 	int f_v = (verbose_level >= 1);
@@ -1115,7 +1124,8 @@ void grassmann::line_regulus_in_PG_3_q(
 	}
 }
 
-void grassmann::compute_dual_line_idx(int *&dual_line_idx,
+void grassmann::compute_dual_line_idx(
+		int *&dual_line_idx,
 		int *&self_dual_lines, int &nb_self_dual_lines,
 		int verbose_level)
 {
@@ -1224,17 +1234,19 @@ void grassmann::compute_dual_spread(
 }
 
 
-void grassmann::latex_matrix(std::ostream &ost, int *p)
+void grassmann::latex_matrix(
+		std::ostream &ost, int *p)
 {
 
-	F->print_matrix_latex(ost, p, k, n);
+	F->Io->print_matrix_latex(ost, p, k, n);
 
 }
 
-void grassmann::latex_matrix_numerical(std::ostream &ost, int *p)
+void grassmann::latex_matrix_numerical(
+		std::ostream &ost, int *p)
 {
 
-	F->print_matrix_numerical_latex(ost, p, k, n);
+	F->Io->print_matrix_numerical_latex(ost, p, k, n);
 
 }
 
@@ -1585,7 +1597,8 @@ void grassmann::make_spread_set_from_spread(
 }
 
 
-void grassmann::make_partition(long int *Spread, int spread_sz,
+void grassmann::make_partition(
+		long int *Spread, int spread_sz,
 		long int *&Part, int &s, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1636,7 +1649,8 @@ void grassmann::make_spread_element(
 	}
 }
 
-void grassmann::cheat_sheet_subspaces(std::ostream &f, int verbose_level)
+void grassmann::cheat_sheet_subspaces(
+		std::ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//grassmann *Gr;
@@ -1808,7 +1822,7 @@ void grassmann::Pluecker_coordinates(int line_rk, int *v6, int verbose_level)
 	unrank_lint(line_rk, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << setw(5) << line_rk << " :" << endl;
-		F->latex_matrix(cout, f_elements_exponential,
+		F->Io->latex_matrix(cout, f_elements_exponential,
 			symbol_for_print, M, 2, 4);
 		cout << endl;
 	}
@@ -1835,7 +1849,8 @@ void grassmann::Pluecker_coordinates(int line_rk, int *v6, int verbose_level)
 }
 
 
-void grassmann::do_pluecker_reverse(std::ostream &ost,
+void grassmann::do_pluecker_reverse(
+		std::ostream &ost,
 		int nb_k_subspaces, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1853,7 +1868,8 @@ void grassmann::do_pluecker_reverse(std::ostream &ost,
 	for (i = 0; i < nb_k_subspaces; i++) {
 		unrank_lint(i, 0 /* verbose_level*/);
 		Pluecker_coordinates(i, v6, 0 /* verbose_level */);
-		F->PG_element_rank_modified(v6, 1, 6, j);
+		F->Projective_space_basic->PG_element_rank_modified(
+				v6, 1, 6, j);
 		T[i] = j;
 		Pos[i] = i;
 	}
@@ -1883,7 +1899,8 @@ void grassmann::do_pluecker_reverse(std::ostream &ost,
 		int v6[6];
 
 		Pluecker_coordinates(u, v6, 0 /* verbose_level */);
-		F->PG_element_normalize(v6, 1, 6);
+		F->Projective_space_basic->PG_element_normalize(
+				v6, 1, 6);
 		ost << "$" << u0 << /*"=" << u <<*/
 				"={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 				<< v6[2] << "," << v6[3] << "," << v6[4]
@@ -2029,7 +2046,7 @@ void grassmann::klein_correspondence(
 		unrank_lint(a, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << setw(5) << h << " : " << setw(5) << a << " :" << endl;
-			P3->F->latex_matrix(cout, f_elements_exponential,
+			P3->Subspaces->F->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, M, 2, 4);
 			cout << endl;
 		}
@@ -2061,7 +2078,8 @@ void grassmann::klein_correspondence(
 			exit(1);
 		}
 
-		F->PG_element_rank_modified_lint(v6, 1, 6, set_out[h]);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v6, 1, 6, set_out[h]);
 		//set_out[h] = P5->rank_point(v6);
 	}
 	if (f_v) {
@@ -2096,14 +2114,14 @@ void grassmann::klein_correspondence_special_model(
 	half = F->inverse(F->add(1, 1));
 	if (f_v) {
 		cout << "half=" << half << endl;
-		cout << "N_lines=" << P3->N_lines << endl;
+		cout << "N_lines=" << P3->Subspaces->N_lines << endl;
 	}
 	//table = NEW_int(N_lines);
-	for (h = 0; h < P3->N_lines; h++) {
+	for (h = 0; h < P3->Subspaces->N_lines; h++) {
 		unrank_lint(h, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << setw(5) << h << " :" << endl;
-			F->latex_matrix(cout, f_elements_exponential,
+			F->Io->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, M, 2, 4);
 			cout << endl;
 		}
@@ -2145,13 +2163,14 @@ void grassmann::klein_correspondence_special_model(
 			Int_vec_print(cout, y6, 6);
 			cout << endl;
 		}
-		F->PG_element_rank_modified_lint(y6, 1, 6, table[h]);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				y6, 1, 6, table[h]);
 		//table[h] = P5->rank_point(y6);
 	}
 
 	cout << "lines in PG(3,q) to points in PG(5,q) "
 			"in special model:" << endl;
-	for (h = 0; h < P3->N_lines; h++) {
+	for (h = 0; h < P3->Subspaces->N_lines; h++) {
 		cout << setw(4) << h << " : " << setw(5) << table[h] << endl;
 	}
 
@@ -2203,7 +2222,7 @@ void grassmann::plane_intersection_type_of_klein_image(
 	}
 
 
-	N = P5->nb_rk_k_subspaces_as_lint(3);
+	N = P5->Subspaces->nb_rk_k_subspaces_as_lint(3);
 	if (f_v) {
 		cout << "grassmann::plane_intersection_type_of_klein_image N = " << N << endl;
 		cout << "grassmann::plane_intersection_type_of_klein_image threshold = " << threshold << endl;
@@ -2224,7 +2243,8 @@ void grassmann::plane_intersection_type_of_klein_image(
 	FREE_lint(the_set_out);
 }
 
-void grassmann::get_spread_matrices(int *G, int *H,
+void grassmann::get_spread_matrices(
+		int *G, int *H,
 		long int *data, int verbose_level)
 // assuming we are in PG(3,q)
 {
@@ -2289,7 +2309,54 @@ void grassmann::get_spread_matrices(int *G, int *H,
 	}
 }
 
+long int grassmann::map_line_in_PG3q(
+		long int line, int *transform16, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q" << endl;
+	}
+	long int b;
+	int Basis1[8];
+	int Basis2[8];
+
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q transform16 = " << endl;
+		Int_matrix_print(transform16, 4, 4);
+	}
+
+	Int_vec_zero(Basis1, 8);
+	unrank_lint_here(
+			Basis1, line, 0/*verbose_level - 4*/);
+
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q line = " << line << endl;
+		cout << "grassmann::map_line_in_PG3q Basis1 = " << endl;
+		Int_matrix_print(Basis1, 2, 4);
+	}
+
+
+	F->Linear_algebra->mult_matrix_matrix(
+			Basis1, transform16, Basis2,
+			2, 4, 4, 0/*verbose_level - 4*/);
+
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q Basis2 = " << endl;
+		Int_matrix_print(Basis2, 2, 4);
+	}
+
+	b = rank_lint_here(
+			Basis2, 0/*verbose_level - 4*/);
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q image line = " << b << endl;
+	}
+
+	if (f_v) {
+		cout << "grassmann::map_line_in_PG3q done" << endl;
+	}
+	return b;
+}
 
 
 }}}

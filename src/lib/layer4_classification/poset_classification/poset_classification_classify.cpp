@@ -305,32 +305,38 @@ int poset_classification::compute_orbits(
 		if (f_write_files) {
 
 			if (f_v) {
-				cout << "poset_classification::compute_orbits before write_reps_csv" << endl;
+				cout << "poset_classification::compute_orbits "
+						"before write_reps_csv" << endl;
 			}
 			write_reps_csv(level + 1, verbose_level - 1);
 			if (f_v) {
-				cout << "poset_classification::compute_orbits after write_reps_csv" << endl;
+				cout << "poset_classification::compute_orbits "
+						"after write_reps_csv" << endl;
 			}
 		}
 
 		if (Control->f_write_data_files) {
 			if (f_v) {
-				cout << "poset_classification::compute_orbits before housekeeping f_write_files = TRUE" << endl;
+				cout << "poset_classification::compute_orbits "
+						"before housekeeping f_write_files = TRUE" << endl;
 			}
 			housekeeping(level + 1, f_write_files,
 					Os.os_ticks(), verbose_level - 1);
 			if (f_v) {
-				cout << "poset_classification::compute_orbits after housekeeping" << endl;
+				cout << "poset_classification::compute_orbits "
+						"after housekeeping" << endl;
 			}
 		}
 		else {
 			if (f_v) {
-				cout << "poset_classification::compute_orbits before housekeeping_no_data_file" << endl;
+				cout << "poset_classification::compute_orbits "
+						"before housekeeping_no_data_file" << endl;
 			}
 			housekeeping_no_data_file(level + 1,
 					Os.os_ticks(), verbose_level - 1);
 			if (f_v) {
-				cout << "poset_classification::compute_orbits after housekeeping_no_data_file" << endl;
+				cout << "poset_classification::compute_orbits "
+						"after housekeeping_no_data_file" << endl;
 			}
 		}
 
@@ -615,12 +621,12 @@ void poset_classification::recognize(
 	cout << "is orbit " << orb << endl;
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
 	cout << "transporter:" << endl;
-	get_A()->element_print_quick(Elt_transporter, cout);
+	get_A()->Group_element->element_print_quick(Elt_transporter, cout);
 
-	get_A()->element_invert(Elt_transporter, Elt_transporter_inv, 0);
+	get_A()->Group_element->element_invert(Elt_transporter, Elt_transporter_inv, 0);
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
 	cout << "transporter inverse:" << endl;
-	get_A()->element_print_quick(Elt_transporter_inv, cout);
+	get_A()->Group_element->element_print_quick(Elt_transporter_inv, cout);
 
 	cout << "Stabilizer of the given set:" << endl;
 	SaS_original->print_generators_tex(cout);
@@ -695,7 +701,7 @@ void poset_classification::extend_level(
 					"size = " << size
 					<< " before write_candidates_binary_using_sv" << endl;
 		}
-		Poo->write_candidates_binary_using_sv(problem_label_with_path.c_str(),
+		Poo->write_candidates_binary_using_sv(problem_label_with_path,
 				size, t0, verbose_level - 1);
 		if (f_v) {
 			cout << "poset_classification::extend_level "

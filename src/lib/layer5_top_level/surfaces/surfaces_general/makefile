@@ -14,7 +14,8 @@ MODULES = \
 	surface_domain_high_level.o \
 	surface_object_with_action.o \
 	surface_study.o \
-	surface_with_action.o 
+	surface_with_action.o \
+	table_of_surfaces.o 
 
 
 all : $(MODULES)

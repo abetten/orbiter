@@ -195,7 +195,7 @@ int unipoly::degree()
 	return 0;
 }
 
-void unipoly::mult_to(discreta_base &x, discreta_base &y)
+void unipoly::mult_to(discreta_base &x, discreta_base &y, int verbose_level)
 {
 	unipoly& px = x.as_unipoly();
 	unipoly py;
@@ -223,7 +223,7 @@ void unipoly::mult_to(discreta_base &x, discreta_base &y)
 	for (i = 0; i <= d1; i++) {
 		for (j = 0; j <= d2; j++) {
 			k = i + j;
-			a.mult(s_i(i), px.s_i(j));
+			a.mult(s_i(i), px.s_i(j), verbose_level);
 			py[k] += a;
 			}
 		}
@@ -391,7 +391,7 @@ void unipoly::integral_division(
 	if (f_v) {
 		cout << "unipoly::integral_division before av.invert" << endl;
 		}
-	av.invert();
+	av.invert(verbose_level);
 	if (f_v) {
 		cout << "unipoly::integral_division av=" << av << endl;
 		}
@@ -407,7 +407,7 @@ void unipoly::integral_division(
 			cout << "unipoly::integral_division before mult" << endl;
 			}
 
-		bav.mult(b, av);
+		bav.mult(b, av, verbose_level);
 		qq[j] = bav;
 		// cout << "i=" << i << " bav=" << bav << endl;
 		for (ii = i, jj = dn; jj >= 0; ii--, jj--) {
@@ -532,7 +532,7 @@ int unipoly::is_primitive(
 	for (i = 0; i < l; i++) {
 		m1 = m / vp.s_ii(i);
 		a.x();
-		a.power_int_mod(m1, *this);
+		a.power_int_mod(m1, *this, verbose_level);
 		if (a.is_one())
 			return FALSE;
 		}
@@ -681,7 +681,7 @@ void unipoly::evaluate_at(
 }
 
 void unipoly::largest_divisor_prime_to(
-		unipoly& q, unipoly& r)
+		unipoly& q, unipoly& r, int verbose_level)
 //computes the monic polynomial $r$ with ($p$ is the polynomial in this)
 //\begin{enumerate}
 //\item
@@ -701,14 +701,14 @@ void unipoly::largest_divisor_prime_to(
 	r = *this;
 	r.extended_gcd(q, u, v, g, 0);
 	while (g.degree()) {
-		r.integral_division_exact(g, rr);
+		r.integral_division_exact(g, rr, verbose_level);
 		r.swap(rr);
 		r.extended_gcd(q, u, v, g, 0);
 		}
-	r.monic();
+	r.monic(verbose_level);
 }
 
-void unipoly::monic()
+void unipoly::monic(int verbose_level)
 {
 	int d, i;
 	discreta_base a;
@@ -717,7 +717,7 @@ void unipoly::monic()
 	a = s_i(d);
 	if (a.is_one())
 		return;
-	a.invert();
+	a.invert(verbose_level);
 	for (i = 0; i < d; i++) {
 		s_i(i) *= a;
 		}
@@ -748,7 +748,7 @@ void unipoly::normal_base(int p,
 		cout << "unipoly::normal_base(): V[0]=" << v << endl;
 		}
 	for (i = 1; i < f; i++) {
-		F.KX_module_apply(x, v);
+		F.KX_module_apply(x, v, verbose_level);
 		V[i] = v;
 		if (f_v) {
 			cout << "unipoly::normal_base(): V["<<i<<"]=" << v << endl;
@@ -823,7 +823,7 @@ int unipoly::first_irreducible_polynomial(int p,
 	if (f_v) {
 		cout << "regular word:" << v << endl;
 		}
-	w.mult(N, v);
+	w.mult(N, v, verbose_level);
 	a.m_l(f);
 	for (i = 0; i < f; i++) {
 		a[i] = w[i];
@@ -850,7 +850,7 @@ int unipoly::next_irreducible_polynomial(int p,
 	if (f_v) {
 		cout << "regular word:" << v << endl;
 		}
-	w.mult(N, v);
+	w.mult(N, v, verbose_level);
 	a.m_l(f);
 	for (i = 0; i < f; i++) {
 		a[i] = w[i];
@@ -884,8 +884,9 @@ void unipoly::Xnm1(int n)
 
 static int multiply(Vector & vp, Vector & ve);
 
-void unipoly::Phi(int n, int f_v)
+void unipoly::Phi(int n, int verbose_level)
 {
+	int f_v = (verbose_level = 1);
 	Vector vp, ve, vd;
 	int i, j, l, mu, d, nd;
 	unipoly p, q, r;
@@ -929,7 +930,7 @@ void unipoly::Phi(int n, int f_v)
 		if (i == l)
 			break;
 		}
-	p.integral_division_exact(q, *this);
+	p.integral_division_exact(q, *this, verbose_level);
 }
 
 static int multiply(Vector & vp, Vector & ve)
@@ -982,7 +983,7 @@ void unipoly::weight_enumerator_MDS_code(
 				cout << "  {j \\choose h} = c=" << c << endl;
 				}
 			d.m_i_i(q);
-			d.power_int(l - h + 1);
+			d.power_int(l - h + 1, verbose_level);
 			if (f_vvv) {
 				cout << "  q^" << l - h + 1 << "=" << d << endl;
 				}
@@ -1083,21 +1084,21 @@ void unipoly::charpoly(
 		cout << M << endl;
 		}
 
-	S.mult(P, Pv);
+	S.mult(P, Pv, verbose_level);
 	if (f_vv) {
 		cout << "P * Pv=\n" << S << endl;
 		}
 
-	S.mult(Q, Qv);
+	S.mult(Q, Qv, verbose_level);
 	if (f_vv) {
 		cout << "Q * Qv=\n" << S << endl;
 		}
 
-	S.mult(P, M1);
+	S.mult(P, M1, verbose_level);
 	if (f_vv) {
 		cout << "T.mult(S, Q):\n";
 		}
-	T.mult(S, Q);
+	T.mult(S, Q, verbose_level);
 	if (f_vv) {
 		cout << "T=\n" << T << endl;
 		}

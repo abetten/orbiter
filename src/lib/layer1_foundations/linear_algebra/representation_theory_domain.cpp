@@ -30,7 +30,9 @@ representation_theory_domain::~representation_theory_domain()
 
 }
 
-void representation_theory_domain::init(field_theory::finite_field *F, int verbose_level)
+void representation_theory_domain::init(
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -44,7 +46,8 @@ void representation_theory_domain::init(field_theory::finite_field *F, int verbo
 
 }
 
-void representation_theory_domain::representing_matrix8_R(int *A,
+void representation_theory_domain::representing_matrix8_R(
+		int *A,
 		int q, int a, int b, int c, int d)
 {
 	//int i;
@@ -126,7 +129,8 @@ void representation_theory_domain::representing_matrix8_R(int *A,
 	F->Linear_algebra->transpose_matrix_in_place(A, 8);
 }
 
-void representation_theory_domain::representing_matrix9_R(int *A,
+void representation_theory_domain::representing_matrix9_R(
+		int *A,
 		int q, int a, int b, int c, int d)
 {
 	//int i;
@@ -232,7 +236,8 @@ void representation_theory_domain::representing_matrix9_R(int *A,
 
 }
 
-void representation_theory_domain::representing_matrix9_U(int *A,
+void representation_theory_domain::representing_matrix9_U(
+		int *A,
 		int a, int b, int c, int d, int beta)
 {
 	int beta_q, delta, gamma;
@@ -240,7 +245,8 @@ void representation_theory_domain::representing_matrix9_U(int *A,
 	number_theory::number_theory_domain NT;
 
 	if (!F->f_has_table) {
-		cout << "representation_theory_domain::representing_matrix9_U !F->f_has_table" << endl;
+		cout << "representation_theory_domain::representing_matrix9_U "
+				"!F->f_has_table" << endl;
 		exit(1);
 	}
 	if (!F->has_quadratic_subfield()) {
@@ -352,7 +358,8 @@ void representation_theory_domain::representing_matrix9_U(int *A,
 
 }
 
-void representation_theory_domain::representing_matrix8_U(int *A, int a, int b, int c, int d, int beta)
+void representation_theory_domain::representing_matrix8_U(
+		int *A, int a, int b, int c, int d, int beta)
 {
 	int delta1, delta2;
 	int r, q, i, j;
@@ -547,7 +554,8 @@ void representation_theory_domain::representing_matrix8_U(int *A, int a, int b, 
 	FREE_int(B2);
 }
 
-void representation_theory_domain::representing_matrix8_V(int *A, int beta)
+void representation_theory_domain::representing_matrix8_V(
+		int *A, int beta)
 {
 	int delta1, delta2;
 	int beta_21, beta_12, beta_123, beta_132;
@@ -609,7 +617,8 @@ void representation_theory_domain::representing_matrix8_V(int *A, int beta)
 }
 
 
-void representation_theory_domain::representing_matrix9b(int *A, int beta)
+void representation_theory_domain::representing_matrix9b(
+		int *A, int beta)
 {
 	int r, /*q,*/ beta_q, delta, minus_one; //, i;
 		// gamma, betagamma, i, Tgamma, Tbetagamma, nTgamma;
@@ -637,7 +646,7 @@ void representation_theory_domain::representing_matrix9b(int *A, int beta)
 
 	Int_vec_zero(A, 81);
 
-	// changed to n e w base:
+	// changed to new base:
 	// attention, now transposed!
 	A[0 * 9 + 0] = 1;
 	A[1 * 9 + 1] = 1;
@@ -652,7 +661,7 @@ void representation_theory_domain::representing_matrix9b(int *A, int beta)
 	A[8 * 9 + 7] = delta;
 	A[8 * 9 + 8] = minus_one;
 #if 0
-	// changed to n e w base:
+	// changed to new base:
 	A[0 * 9 + 0] = 1;
 	A[1 * 9 + 1] = 1;
 	A[2 * 9 + 2] = 1;
@@ -668,7 +677,8 @@ void representation_theory_domain::representing_matrix9b(int *A, int beta)
 #endif
 }
 
-void representation_theory_domain::representing_matrix8a(int *A,
+void representation_theory_domain::representing_matrix8a(
+		int *A,
 		int a, int b, int c, int d, int beta)
 {
 
@@ -778,7 +788,8 @@ A[7 * 8 + 7] = N3(a);
 #endif
 }
 
-void representation_theory_domain::representing_matrix8b(int *A, int beta)
+void representation_theory_domain::representing_matrix8b(
+		int *A, int beta)
 {
 	int r, q, delta, omega; //, i;
 	number_theory::number_theory_domain NT;
@@ -850,7 +861,9 @@ int representation_theory_domain::Term1(int a1, int e1)
 	return T2(x);
 }
 
-int representation_theory_domain::Term2(int a1, int a2, int e1, int e2)
+int representation_theory_domain::Term2(
+		int a1, int a2,
+		int e1, int e2)
 {
 	int x;
 
@@ -858,7 +871,9 @@ int representation_theory_domain::Term2(int a1, int a2, int e1, int e2)
 	return T2(x);
 }
 
-int representation_theory_domain::Term3(int a1, int a2, int a3, int e1, int e2, int e3)
+int representation_theory_domain::Term3(
+		int a1, int a2, int a3,
+		int e1, int e2, int e3)
 {
 	int x;
 
@@ -866,7 +881,8 @@ int representation_theory_domain::Term3(int a1, int a2, int a3, int e1, int e2, 
 	return T2(x);
 }
 
-int representation_theory_domain::Term4(int a1, int a2, int a3, int a4,
+int representation_theory_domain::Term4(
+		int a1, int a2, int a3, int a4,
 		int e1, int e2, int e3, int e4)
 {
 	int x;
@@ -875,7 +891,8 @@ int representation_theory_domain::Term4(int a1, int a2, int a3, int a4,
 	return T2(x);
 }
 
-int representation_theory_domain::Term5(int a1, int a2, int a3, int a4, int a5,
+int representation_theory_domain::Term5(
+		int a1, int a2, int a3, int a4, int a5,
 		int e1, int e2, int e3, int e4, int e5)
 {
 	int x;
@@ -895,7 +912,8 @@ int representation_theory_domain::term1(int a1, int e1)
 	return x;
 }
 
-int representation_theory_domain::term2(int a1, int a2, int e1, int e2)
+int representation_theory_domain::term2(
+		int a1, int a2, int e1, int e2)
 {
 	int x;
 
@@ -909,7 +927,9 @@ int representation_theory_domain::term2(int a1, int a2, int e1, int e2)
 	return x;
 }
 
-int representation_theory_domain::term3(int a1, int a2, int a3, int e1, int e2, int e3)
+int representation_theory_domain::term3(
+		int a1, int a2, int a3,
+		int e1, int e2, int e3)
 {
 	int x;
 
@@ -926,7 +946,8 @@ int representation_theory_domain::term3(int a1, int a2, int a3, int e1, int e2, 
 	return x;
 }
 
-int representation_theory_domain::term4(int a1, int a2, int a3, int a4,
+int representation_theory_domain::term4(
+		int a1, int a2, int a3, int a4,
 		int e1, int e2, int e3, int e4)
 {
 	int x;
@@ -947,7 +968,8 @@ int representation_theory_domain::term4(int a1, int a2, int a3, int a4,
 	return x;
 }
 
-int representation_theory_domain::term5(int a1, int a2, int a3, int a4, int a5,
+int representation_theory_domain::term5(
+		int a1, int a2, int a3, int a4, int a5,
 		int e1, int e2, int e3, int e4, int e5)
 {
 	int x;
@@ -982,7 +1004,8 @@ int representation_theory_domain::m_term(int q, int a1, int a2, int a3)
 	return x;
 }
 
-int representation_theory_domain::beta_trinomial(int q, int beta, int a1, int a2, int a3)
+int representation_theory_domain::beta_trinomial(
+		int q, int beta, int a1, int a2, int a3)
 {
 	int x;
 

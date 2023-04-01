@@ -609,7 +609,7 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostre
 
 	for (i = 0; i < nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		QO->Dom->P->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
+		QO->Dom->P->Subspaces->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
 		ost << "$" << endl;
 
 		ost << QO->Dom->Schlaefli->Line_label_tex[i];
@@ -623,8 +623,8 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostre
 		ost << " = " << endl;
 		//print_integer_matrix_width(cout,
 		// P->Grass_lines->M, k, n, n, F->log10_of_q + 1);
-		QO->Dom->P->Grass_lines->latex_matrix(ost,
-				QO->Dom->P->Grass_lines->M);
+		QO->Dom->P->Subspaces->Grass_lines->latex_matrix(ost,
+				QO->Dom->P->Subspaces->Grass_lines->M);
 
 
 		//print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 4);
@@ -635,7 +635,7 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostre
 			ost << "=" << endl;
 			ost << "\\left[" << endl;
 			L.print_integer_matrix_tex(ost,
-					QO->Dom->P->Grass_lines->M, 2, 3);
+					QO->Dom->P->Subspaces->Grass_lines->M, 2, 3);
 			ost << "\\right]_{" << Lines[i] << "}" << endl;
 		}
 
@@ -646,7 +646,7 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostre
 			ost << "=\\bP";
 			Int_vec_print(ost, w, 3);
 
-			Int_vec_copy(QO->Dom->P->Grass_lines->M, Basis, 6);
+			Int_vec_copy(QO->Dom->P->Subspaces->Grass_lines->M, Basis, 6);
 
 			QO->Dom->F->Linear_algebra->adjust_basis(Basis, w,
 					3 /* n */, 2 /* k */, 1 /* d */, verbose_level);
@@ -769,10 +769,10 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	combinatorics::combinatorics_domain Combi;
 
 
-	Pts_off = NEW_lint(QO->Dom->P->N_points);
+	Pts_off = NEW_lint(QO->Dom->P->Subspaces->N_points);
 
 	Combi.set_complement_lint(QO->Pts, QO->nb_pts, Pts_off /*complement*/,
-			nb_pts_off, QO->Dom->P->N_points);
+			nb_pts_off, QO->Dom->P->Subspaces->N_points);
 
 	if (f_v) {
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines before "

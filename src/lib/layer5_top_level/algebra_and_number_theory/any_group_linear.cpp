@@ -69,8 +69,10 @@ void any_group::classes(int verbose_level)
 		cout << "any_group::classes "
 				"before A2->conjugacy_classes_and_normalizers" << endl;
 	}
-	M.conjugacy_classes_and_normalizers(LG->A2, G,
-			label, label_tex, verbose_level);
+	M.conjugacy_classes_and_normalizers(
+			LG->A2, G,
+			label, label_tex,
+			verbose_level);
 	if (f_v) {
 		cout << "any_group::classes "
 				"after A2->conjugacy_classes_and_normalizers" << endl;
@@ -268,7 +270,7 @@ void any_group::isomorphism_Klein_quadric(
 
 	for (i = 0; i < m; i++) {
 
-		A->make_element(Elt, M + i * A->make_element_size, 0);
+		A->Group_element->make_element(Elt, M + i * A->make_element_size, 0);
 
 		if ((i % 10000) == 0) {
 			cout << i << " / " << m << endl;
@@ -276,7 +278,7 @@ void any_group::isomorphism_Klein_quadric(
 
 		if (f_vv) {
 			cout << "Element " << i << " / " << m << endl;
-			A->element_print(Elt, cout);
+			A->Group_element->element_print(Elt, cout);
 			cout << endl;
 		}
 
@@ -324,7 +326,8 @@ void any_group::isomorphism_Klein_quadric(
 		F->Linear_algebra->mult_matrix_matrix(Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
 		F->Linear_algebra->mult_matrix_matrix(D, B, E, 6, 6, 6, 0 /*verbose_level */);
 
-		F->PG_element_normalize_from_front(E, 1, 36);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				E, 1, 36);
 
 		if (f_vv) {
 			cout << "orthogonal matrix in the special form:" << endl;
@@ -360,7 +363,7 @@ void any_group::isomorphism_Klein_quadric(
 			cout << endl;
 
 			cout << "Element :" << endl;
-			A->element_print(Elt, cout);
+			A->Group_element->element_print(Elt, cout);
 			cout << endl;
 
 			cout << "exterior square :" << endl;
@@ -637,7 +640,7 @@ int any_group::subspace_orbits_test_set(
 	orbits_on_subspaces_M = NEW_int(len * n);
 	orbits_on_subspaces_base_cols = NEW_int(n);
 
-	F->PG_elements_unrank_lint(
+	F->Projective_space_basic->PG_elements_unrank_lint(
 			orbits_on_subspaces_M, len, n, S);
 
 	if (f_vv) {

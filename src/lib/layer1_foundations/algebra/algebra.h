@@ -230,51 +230,6 @@ public:
 	void Vandermonde_matrix(
 			field_theory::finite_field *F,
 			int *&W, int *&W_inv, int verbose_level);
-	void search_APN(
-			field_theory::finite_field *F,
-			int delta_max, int verbose_level);
-	void search_APN_recursion(
-			field_theory::finite_field *F,
-			int *f, int depth, int f_normalize,
-			int &delta_max, int &nb_times,
-			std::vector<std::vector<int> > &Solutions,
-			int *A_matrix, int *B_matrix,
-			int *Count_ab, int *nb_times_ab,
-			int verbose_level);
-	int search_APN_perform_checks(field_theory::finite_field *F,
-			int *f, int depth,
-			int delta_max,
-			int *A_matrix, int *B_matrix, int *Count_ab,
-			int verbose_level);
-	void search_APN_undo_checks(field_theory::finite_field *F,
-			int *f, int depth,
-			int delta_max,
-			int *A_matrix, int *B_matrix, int *Count_ab,
-			int verbose_level);
-	int perform_single_check(field_theory::finite_field *F,
-			int *f, int depth, int i, int delta_max,
-			int *A_matrix, int *B_matrix, int *Count_ab,
-			int verbose_level);
-	void undo_single_check(field_theory::finite_field *F,
-			int *f, int depth, int i, int delta_max,
-			int *A_matrix, int *B_matrix, int *Count_ab,
-			int verbose_level);
-	void search_APN_old(
-			field_theory::finite_field *F, int verbose_level);
-	void search_APN_recursion_old(
-			field_theory::finite_field *F,
-			int *f, int depth, int f_normalize,
-			int &delta_min, int &nb_times,
-			std::vector<std::vector<int> > &Solutions,
-			int *nb_times_ab,
-			int verbose_level);
-	int differential_uniformity(
-			field_theory::finite_field *F,
-			int *f, int *nb_times_ab, int verbose_level);
-	int differential_uniformity_with_fibre(
-			field_theory::finite_field *F,
-			int *f, int *nb_times_ab, int *&Fibre,
-			int verbose_level);
 
 	void O4_isomorphism_4to2(
 			field_theory::finite_field *F,
@@ -295,7 +250,7 @@ public:
 			field_theory::finite_field *F,
 		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
 		int *tangent_plane, int verbose_level);
-	void Nth_roots(
+	void create_Nth_roots_and_write_report(
 			field_theory::finite_field *F,
 			int n, int verbose_level);
 
@@ -338,9 +293,11 @@ public:
 	~generators_symplectic_group();
 	void init(
 			field_theory::finite_field *F, int n, int verbose_level);
-	int count_strong_generators(int &nb, int *transversal_length, 
+	int count_strong_generators(
+			int &nb, int *transversal_length,
 		int &first_moved, int depth, int verbose_level);
-	int get_strong_generators(int *Data, int &nb, int &first_moved, 
+	int get_strong_generators(
+			int *Data, int &nb, int &first_moved,
 		int depth, int verbose_level);
 	void create_first_candidate_set(int verbose_level);
 	void create_next_candidate_set(int level, int verbose_level);
@@ -354,6 +311,7 @@ public:
 //! conjugacy class in GL(n,q) described using rational normal form
 
 class gl_class_rep {
+
 public:
 	data_structures::int_matrix *type_coding;
 	ring_theory::longinteger_object *centralizer_order;
@@ -361,14 +319,18 @@ public:
 
 	gl_class_rep();
 	~gl_class_rep();
-	void init(int nb_irred, int *Select_polynomial, 
+	void init(
+			int nb_irred, int *Select_polynomial,
 		int *Select_partition, int verbose_level);
-	void print(int nb_irred,  int *Select_polynomial,
+	void print(
+			int nb_irred,  int *Select_polynomial,
 			int *Select_partition, int verbose_level);
-	void compute_vector_coding(gl_classes *C, int &nb_irred, 
+	void compute_vector_coding(
+			gl_classes *C, int &nb_irred,
 		int *&Poly_degree, int *&Poly_mult, int *&Partition_idx, 
 		int verbose_level);
-	void centralizer_order_Kung(gl_classes *C,
+	void centralizer_order_Kung(
+			gl_classes *C,
 			ring_theory::longinteger_object &co,
 		int verbose_level);
 };
@@ -383,29 +345,40 @@ class group_generators_domain {
 public:
 	group_generators_domain();
 	~group_generators_domain();
-	void generators_symmetric_group(int deg,
+	void generators_symmetric_group(
+			int deg,
 		int &nb_perms, int *&perms, int verbose_level);
-	void generators_cyclic_group(int deg,
+	void generators_cyclic_group(
+			int deg,
 		int &nb_perms, int *&perms, int verbose_level);
-	void generators_dihedral_group(int deg,
+	void generators_dihedral_group(
+			int deg,
 		int &nb_perms, int *&perms, int verbose_level);
-	void generators_dihedral_involution(int deg,
+	void generators_dihedral_involution(
+			int deg,
 		int &nb_perms, int *&perms, int verbose_level);
-	void generators_identity_group(int deg,
+	void generators_identity_group(
+			int deg,
 		int &nb_perms, int *&perms, int verbose_level);
-	void generators_Hall_reflection(int nb_pairs,
+	void generators_Hall_reflection(
+			int nb_pairs,
 			int &nb_perms, int *&perms, int &degree,
 			int verbose_level);
-	void generators_Hall_reflection_normalizer_group(int nb_pairs,
+	void generators_Hall_reflection_normalizer_group(
+			int nb_pairs,
 			int &nb_perms, int *&perms, int &degree,
 			int verbose_level);
-	void order_Hall_reflection_normalizer_factorized(int nb_pairs,
+	void order_Hall_reflection_normalizer_factorized(
+			int nb_pairs,
 			int *&factors, int &nb_factors);
-	void order_Bn_group_factorized(int n,
+	void order_Bn_group_factorized(
+			int n,
 		int *&factors, int &nb_factors);
-	void generators_Bn_group(int n, int &deg,
+	void generators_Bn_group(
+			int n, int &deg,
 		int &nb_perms, int *&perms, int verbose_level);
-	void generators_direct_product(int deg1, int nb_perms1, int *perms1,
+	void generators_direct_product(
+			int deg1, int nb_perms1, int *perms1,
 		int deg2, int nb_perms2, int *perms2,
 		int &deg3, int &nb_perms3, int *&perms3,
 		int verbose_levels);
@@ -414,34 +387,46 @@ public:
 		int deg2, int nb_perms2, int *perms2,
 		int &deg3, int &nb_perms3, int *&perms3,
 		int verbose_level);
-	int matrix_group_base_len_projective_group(int n, int q,
+	int matrix_group_base_len_projective_group(
+			int n, int q,
 		int f_semilinear, int verbose_level);
-	int matrix_group_base_len_affine_group(int n, int q,
+	int matrix_group_base_len_affine_group(
+			int n, int q,
 		int f_semilinear, int verbose_level);
-	int matrix_group_base_len_general_linear_group(int n, int q,
+	int matrix_group_base_len_general_linear_group(
+			int n, int q,
 		int f_semilinear, int verbose_level);
-	void order_POmega_epsilon(int epsilon, int m, int q,
+	void order_POmega_epsilon(
+			int epsilon, int m, int q,
 			ring_theory::longinteger_object &o, int verbose_level);
-	void order_PO_epsilon(int f_semilinear, int epsilon, int k, int q,
+	void order_PO_epsilon(
+			int f_semilinear, int epsilon, int k, int q,
 			ring_theory::longinteger_object &go, int verbose_level);
 	// k is projective dimension
-	void order_PO(int epsilon, int m, int q,
+	void order_PO(
+			int epsilon, int m, int q,
 			ring_theory::longinteger_object &o,
 		int verbose_level);
-	void order_Pomega(int epsilon, int k, int q,
+	void order_Pomega(
+			int epsilon, int k, int q,
 			ring_theory::longinteger_object &go,
 		int verbose_level);
-	void order_PO_plus(int m, int q,
+	void order_PO_plus(
+			int m, int q,
 			ring_theory::longinteger_object &o, int verbose_level);
-	void order_PO_minus(int m, int q,
+	void order_PO_minus(
+			int m, int q,
 			ring_theory::longinteger_object &o, int verbose_level);
 	// m = Witt index, the dimension is n = 2m+2
-	void order_PO_parabolic(int m, int q,
+	void order_PO_parabolic(
+			int m, int q,
 			ring_theory::longinteger_object &o, int verbose_level);
-	void order_Pomega_plus(int m, int q,
+	void order_Pomega_plus(
+			int m, int q,
 			ring_theory::longinteger_object &o, int verbose_level);
 	// m = Witt index, the dimension is n = 2m
-	void order_Pomega_minus(int m, int q,
+	void order_Pomega_minus(
+			int m, int q,
 			ring_theory::longinteger_object &o, int verbose_level);
 	// m = half the dimension,
 	// the dimension is n = 2m, the Witt index is m - 1
@@ -522,7 +507,7 @@ public:
 			int coordinate_idx,
 			int field_base_idx, int *perm,
 			int verbose_level);
-		// perm points to q^n int's
+		// perm points to q^n ints
 		// field_base_idx is the base element whose
 		// translation we compute, 0 \le field_base_idx < e
 		// coordinate_idx is the coordinate in which we shift,
@@ -531,14 +516,14 @@ public:
 			int n, field_theory::finite_field *F,
 		int multiplication_order, int *perm,
 		int verbose_level);
-		// perm points to q^n int's
+		// perm points to q^n ints
 		// compute the diagonal multiplication by alpha, i.e.
 		// the multiplication by alpha of each component
 	void affine_frobenius(
 			int n, field_theory::finite_field *F,
 			int k, int *perm,
 			int verbose_level);
-		// perm points to q^n int's
+		// perm points to q^n ints
 		// compute the diagonal action of the Frobenius
 		// automorphism to the power k, i.e.,
 		// raises each component to the p^k-th power
@@ -594,7 +579,8 @@ public:
 			int *Select, int *Select_partition, int verbose_level);
 	int next(
 			int *Select, int *Select_partition, int verbose_level);
-	void make_matrix_from_class_rep(int *Mtx, gl_class_rep *R,
+	void make_matrix_from_class_rep(
+			int *Mtx, gl_class_rep *R,
 		int verbose_level);
 	void make_matrix_in_rational_normal_form(
 			int *Mtx, int *Select, int *Select_Partition,
@@ -613,21 +599,28 @@ public:
 		// according to Kung's formula~\cite{Kung81}.
 	void make_classes(
 			gl_class_rep *&R, int &nb_classes,
-		int f_no_eigenvalue_one, int verbose_level);
-	void identify_matrix(int *Mtx, gl_class_rep *R, int *Basis,
+		int f_no_eigenvalue_one,
 		int verbose_level);
-	void identify2(int *Mtx,
+	void identify_matrix(
+			int *Mtx, gl_class_rep *R, int *Basis,
+		int verbose_level);
+	void identify2(
+			int *Mtx,
 			ring_theory::unipoly_object &poly, int *Mult,
-		int *Select_partition, int *Basis, int verbose_level);
+		int *Select_partition, int *Basis,
+		int verbose_level);
 	void compute_generalized_kernels_for_each_block(
 		int *Mtx, int *Irreds, int nb_irreds,
 		int *Degree, int *Mult, matrix_block_data *Data,
 		int verbose_level);
 	void compute_generalized_kernels(
 			matrix_block_data *Data, int *M2,
-		int d, int b0, int m, int *poly_coeffs, int verbose_level);
-	int identify_partition(int *part, int m, int verbose_level);
-	void choose_basis_for_rational_normal_form(int *Mtx,
+		int d, int b0, int m, int *poly_coeffs,
+		int verbose_level);
+	int identify_partition(
+			int *part, int m, int verbose_level);
+	void choose_basis_for_rational_normal_form(
+			int *Mtx,
 		matrix_block_data *Data, int nb_irreds,
 		int *Basis,
 		int verbose_level);
@@ -652,13 +645,16 @@ public:
 		int nb_irreds, int h,
 		int **&Gens, int &nb_gens, int &nb_alloc,
 		int verbose_level);
-	int choose_basis_for_rational_normal_form_coset(int level1,
+	int choose_basis_for_rational_normal_form_coset(
+			int level1,
 		int level2, int &coset,
 		int *Mtx, matrix_block_data *Data, int &b, int *Basis,
 		int verbose_level);
-	int find_class_rep(gl_class_rep *Reps, int nb_reps,
+	int find_class_rep(
+			gl_class_rep *Reps, int nb_reps,
 		gl_class_rep *R, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 	void print_matrix_and_centralizer_order_latex(
 			std::ostream &ost,
 		gl_class_rep *R);
@@ -689,56 +685,27 @@ public:
 
 	heisenberg();
 	~heisenberg();
-	void init(field_theory::finite_field *F, int n, int verbose_level);
-	void unrank_element(int *Elt, long int rk);
-	long int rank_element(int *Elt);
-	void element_add(int *Elt1, int *Elt2, int *Elt3, int verbose_level);
-	void element_negate(int *Elt1, int *Elt2, int verbose_level);
-	int element_add_by_rank(int rk_a, int rk_b, int verbose_level);
-	int element_negate_by_rank(int rk_a, int verbose_level);
-	void group_table(int *&Table, int verbose_level);
-	void group_table_abv(int *&Table_abv, int verbose_level);
-	void generating_set(int *&gens, int &nb_gens, int verbose_level);
+	void init(
+			field_theory::finite_field *F, int n, int verbose_level);
+	void unrank_element(
+			int *Elt, long int rk);
+	long int rank_element(
+			int *Elt);
+	void element_add(
+			int *Elt1, int *Elt2, int *Elt3, int verbose_level);
+	void element_negate(
+			int *Elt1, int *Elt2, int verbose_level);
+	int element_add_by_rank(
+			int rk_a, int rk_b, int verbose_level);
+	int element_negate_by_rank(
+			int rk_a, int verbose_level);
+	void group_table(
+			int *&Table, int verbose_level);
+	void group_table_abv(
+			int *&Table_abv, int verbose_level);
+	void generating_set(
+			int *&gens, int &nb_gens, int verbose_level);
 
-
-};
-
-
-// #############################################################################
-// interface_gap_low.cpp:
-// #############################################################################
-
-//! interface to GAP at the foundation level
-
-class interface_gap_low {
-public:
-
-	interface_gap_low();
-	~interface_gap_low();
-	void fining_set_stabilizer_in_collineation_group(
-			field_theory::finite_field *F,
-			int d, long int *Pts, int nb_pts,
-			std::string &fname,
-			int verbose_level);
-
-};
-
-// #############################################################################
-// interface_magma_low.cpp:
-// #############################################################################
-
-//! interface to magma at the foundation level
-
-class interface_magma_low {
-public:
-
-	interface_magma_low();
-	~interface_magma_low();
-	void magma_set_stabilizer_in_collineation_group(
-			field_theory::finite_field *F,
-			int d, long int *Pts, int nb_pts,
-			std::string &fname,
-			int verbose_level);
 
 };
 
@@ -769,6 +736,204 @@ public:
 	void allocate(int k);
 };
 
+
+// #############################################################################
+// matrix_group.cpp
+// #############################################################################
+
+//! a matrix group over a finite field in action on a projective space, an affine space, or a vector space
+
+class matrix_group {
+
+public:
+	int f_projective;
+		// n x n matrices (possibly with Frobenius)
+		// acting on PG(n - 1, q)
+	int f_affine;
+		// n x n matrices plus translations
+		// (possibly with Frobenius)
+		// acting on F_q^n
+	int f_general_linear;
+		// n x n matrices (possibly with Frobenius)
+		// acting on F_q^n
+
+	int n;
+		// the size of the matrices
+
+	int degree;
+		// the degree of the action:
+		// (q^(n-1)-1) / (q - 1) if f_projective
+		// q^n if f_affine or f_general_linear
+
+	int f_semilinear;
+		// use Frobenius automorphism
+
+	int f_kernel_is_diagonal_matrices;
+
+	int bits_per_digit;
+	int bits_per_elt;
+	int bits_extension_degree;
+	int char_per_elt;
+	int elt_size_int;
+	int elt_size_int_half;
+	int low_level_point_size; // added Jan 26, 2010
+		// = n, the size of the vectors on which we act
+	int make_element_size;
+
+
+	std::string label;
+	std::string label_tex;
+
+	int f_GFq_is_allocated;
+		// if TRUE, GFq will be destroyed in the destructor
+		// if FALSE, it is the responsibility
+		// of someone else to destroy GFq
+
+	field_theory::finite_field *GFq;
+	void *data;
+
+	algebra::gl_classes *C; // added Dec 2, 2013
+
+
+	// temporary variables, do not use!
+	int *Elt1, *Elt2, *Elt3;
+		// used for mult, invert
+	int *Elt4;
+		// used for invert
+	int *Elt5;
+	int *tmp_M;
+		// used for GL_mult_internal
+	int *base_cols;
+		// used for Gauss during invert
+	int *v1, *v2;
+		// temporary vectors of length 2n
+	int *v3;
+		// used in GL_mult_vector_from_the_left_contragredient
+	uchar *elt1, *elt2, *elt3;
+		// temporary storage, used in element_store()
+
+	data_structures::page_storage *Elts;
+
+
+	matrix_group();
+	~matrix_group();
+
+	void init_projective_group(int n,
+			field_theory::finite_field *F,
+		int f_semilinear,
+		int verbose_level);
+	void init_affine_group(int n,
+			field_theory::finite_field *F,
+		int f_semilinear,
+		int verbose_level);
+	void init_general_linear_group(int n,
+			field_theory::finite_field *F,
+		int f_semilinear,
+		int verbose_level);
+	void allocate_data(int verbose_level);
+	void free_data(int verbose_level);
+	void setup_page_storage(
+			int page_length_log, int verbose_level);
+	void compute_elt_size(int verbose_level);
+	void init_gl_classes(int verbose_level);
+
+	int GL_element_entry_ij(
+			int *Elt, int i, int j);
+	int GL_element_entry_frobenius(int *Elt);
+	long int image_of_element(
+			int *Elt, long int a, int verbose_level);
+	long int GL_image_of_PG_element(
+			int *Elt, long int a, int verbose_level);
+	long int GL_image_of_AG_element(
+			int *Elt, long int a, int verbose_level);
+	void action_from_the_right_all_types(
+		int *v, int *A, int *vA, int verbose_level);
+	void projective_action_from_the_right(
+		int *v, int *A, int *vA, int verbose_level);
+	void general_linear_action_from_the_right(
+		int *v, int *A, int *vA, int verbose_level);
+	void substitute_surface_equation(int *Elt,
+			int *coeff_in, int *coeff_out,
+			algebraic_geometry::surface_domain *Surf,
+			int verbose_level);
+	void GL_one(int *Elt);
+	void GL_one_internal(int *Elt);
+	void GL_zero(int *Elt);
+	int GL_is_one(int *Elt);
+	void GL_mult(
+			int *A, int *B, int *AB, int verbose_level);
+	void GL_mult_internal(
+			int *A, int *B, int *AB, int verbose_level);
+	void GL_copy(int *A, int *B);
+	void GL_copy_internal(int *A, int *B);
+	void GL_transpose(
+			int *A, int *At, int verbose_level);
+	void GL_transpose_internal(
+			int *A, int *At, int verbose_level);
+	void GL_invert(int *A, int *Ainv);
+	void GL_invert_internal(
+			int *A, int *Ainv, int verbose_level);
+	void GL_unpack(
+			uchar *elt, int *Elt, int verbose_level);
+	void GL_pack(
+			int *Elt, uchar *elt, int verbose_level);
+	void GL_print_easy(
+			int *Elt, std::ostream &ost);
+	void GL_code_for_make_element(
+			int *Elt, int *data);
+	void GL_print_for_make_element(
+			int *Elt, std::ostream &ost);
+	void GL_print_for_make_element_no_commas(
+			int *Elt, std::ostream &ost);
+	void GL_print_easy_normalized(
+			int *Elt, std::ostream &ost);
+	void GL_print_latex(
+			int *Elt, std::ostream &ost);
+	void GL_print_latex_with_print_point_function(
+			int *Elt,
+			std::ostream &ost,
+			void (*point_label)(
+					std::stringstream &sstr, int pt, void *data),
+			void *point_label_data);
+	void GL_print_easy_latex(
+			int *Elt, std::ostream &ost);
+	void GL_print_easy_latex_with_option_numerical(
+			int *Elt, int f_numerical, std::ostream &ost);
+	void decode_matrix(
+			int *Elt, int n, unsigned char *elt);
+	int get_digit(
+			unsigned char *elt, int i, int j);
+	int decode_frobenius(
+			unsigned char *elt);
+	void encode_matrix(
+			int *Elt, int n,
+			unsigned char *elt, int verbose_level);
+	void put_digit(
+			unsigned char *elt, int i, int j, int d);
+	void encode_frobenius(
+			unsigned char *elt, int d);
+	void make_element(
+			int *Elt, int *data, int verbose_level);
+	void make_GL_element(
+			int *Elt, int *A, int f);
+	void matrix_minor(
+			int *Elt, int *Elt1,
+		matrix_group *mtx1, int f, int verbose_level);
+	int base_len(int verbose_level);
+	void base_and_transversal_length(
+			int base_len,
+			long int *base, int *transversal_length,
+			int verbose_level);
+	void strong_generators_low_level(
+			int *&data,
+			int &size, int &nb_gens, int verbose_level);
+	int has_shape_of_singer_cycle(int *Elt);
+};
+
+
+
+
+
 // #############################################################################
 // null_polarity_generator.cpp:
 // #############################################################################
@@ -792,7 +957,7 @@ public:
 	int *Points; // [qn * n]
 
 	int nb_gens;
-	int *Data;
+	int *Data; // [nb_gens * n * n]
 	int *transversal_length;
 
 	null_polarity_generator();
@@ -800,14 +965,20 @@ public:
 	void init(
 			field_theory::finite_field *F,
 			int n, int verbose_level);
-	int count_strong_generators(int &nb, int *transversal_length, 
+	int count_strong_generators(
+			int &nb, int *transversal_length,
 		int &first_moved, int depth, int verbose_level);
-	int get_strong_generators(int *Data, int &nb, int &first_moved, 
+	int get_strong_generators(
+			int *Data, int &nb, int &first_moved,
 		int depth, int verbose_level);
-	void backtrack_search(int &nb_sol, int depth, int verbose_level);
-	void create_first_candidate_set(int verbose_level);
-	void create_next_candidate_set(int level, int verbose_level);
-	int dot_product(int *u1, int *u2);
+	void backtrack_search(
+			int &nb_sol, int depth, int verbose_level);
+	void create_first_candidate_set(
+			int verbose_level);
+	void create_next_candidate_set(
+			int level, int verbose_level);
+	int dot_product(
+			int *u1, int *u2);
 };
 
 
@@ -837,59 +1008,17 @@ public:
 			int m, int n, int d);
 	int check_rank(
 			int len, long int *S, int verbose_level);
-	int check_rank_matrix_input(int len, long int *S, int dim_S,
+	int check_rank_matrix_input(
+			int len, long int *S, int dim_S,
 		int verbose_level);
 	int check_rank_last_two_are_fixed(
 			int len, long int *S, int verbose_level);
 	int compute_rank_row_vectors(
-			int len, long int *S, int f_projective, int verbose_level);
-};
-
-
-
-// #############################################################################
-// vector_space.cpp:
-// #############################################################################
-
-
-//! finite dimensional vector space over a finite field
-
-
-class vector_space {
-public:
-
-	int dimension;
-	field_theory::finite_field *F;
-
-	long int (*rank_point_func)(int *v, void *data);
-	void (*unrank_point_func)(int *v, long int rk, void *data);
-	void *rank_point_data;
-	int *v1; // [dimension]
-	int *base_cols; // [dimension]
-	int *base_cols2; // [dimension]
-	int *M1; // [dimension * dimension]
-	int *M2; // [dimension * dimension]
-
-
-	vector_space();
-	~vector_space();
-	void init(field_theory::finite_field *F, int dimension,
+			int len, long int *S, int f_projective,
 			int verbose_level);
-	void init_rank_functions(
-		long int (*rank_point_func)(int *v, void *data),
-		void (*unrank_point_func)(int *v, long int rk, void *data),
-		void *data,
-		int verbose_level);
-	void unrank_basis(int *Mtx, long int *set, int len);
-	void rank_basis(int *Mtx, long int *set, int len);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
-	int RREF_and_rank(int *basis, int k);
-	int is_contained_in_subspace(int *v, int *basis, int k);
-	int compare_subspaces_ranked(
-			long int *set1, long int *set2, int k, int verbose_level);
-		// equality test for subspaces given by ranks of basis elements
 };
+
+
 
 
 

@@ -18,11 +18,11 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
-static void print_table1_top(ofstream &fp);
-static void print_table1_bottom(ofstream &fp);
-static void print_table_top(ofstream &fp, int f_permutation_degree_is_small);
-static void print_table_bottom(ofstream &fp);
-static void print_set_special(ofstream &fp, long int *set, int sz);
+static void print_table1_top(ostream &fp);
+static void print_table1_bottom(ostream &fp);
+static void print_table_top(ostream &fp, int f_permutation_degree_is_small);
+static void print_table_bottom(ostream &fp);
+static void print_set_special(ostream &fp, long int *set, int sz);
 
 void poset_classification::draw_poset_fname_base_aux_poset(
 		std::string &fname, int depth)
@@ -119,7 +119,8 @@ void poset_classification::write_treefile(
 	}
 }
 
-int poset_classification::write_treefile(std::string &fname_base,
+int poset_classification::write_treefile(
+		std::string &fname_base,
 		int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1569,7 +1570,8 @@ void poset_classification::make_full_poset_graph(
 	}
 }
 
-void poset_classification::make_auxiliary_graph(int depth,
+void poset_classification::make_auxiliary_graph(
+		int depth,
 		graph_theory::layered_graph *&LG, int data1, int verbose_level)
 // makes a graph of the poset of orbits with 2 * depth + 1 layers.
 // The middle layers represent the flag orbits.
@@ -1650,7 +1652,8 @@ void poset_classification::make_auxiliary_graph(int depth,
 							"lvl=" << lvl << " po=" << po
 							<< " so=" << so << endl;
 				}
-				LG->add_edge(2 * lvl, po, 2 * lvl + 1, f + so,
+				LG->add_edge(
+						2 * lvl, po, 2 * lvl + 1, f + so,
 						verbose_level - 4);
 
 				extension *E = Poo->get_node(n)->get_E(so);
@@ -1662,7 +1665,8 @@ void poset_classification::make_auxiliary_graph(int depth,
 					if (f_v4) {
 						cout << "n1=" << n1 << endl;
 					}
-					LG->add_edge(2 * lvl + 1, f + so, 2 * lvl + 2,
+					LG->add_edge(
+							2 * lvl + 1, f + so, 2 * lvl + 2,
 							n1 - Poo->first_node_at_level(lvl + 1),
 							verbose_level - 4);
 				}
@@ -1695,7 +1699,8 @@ void poset_classification::make_auxiliary_graph(int depth,
 								<< " first_poset_orbit_node_node_at_level[lvl + 1] = "
 								<< Poo->first_node_at_level(lvl + 1) << endl;
 					}
-					LG->add_edge(2 * lvl + 1, f + so, 2 * lvl + 2,
+					LG->add_edge(
+							2 * lvl + 1, f + so, 2 * lvl + 2,
 							n1 - Poo->first_node_at_level(lvl + 1),
 							verbose_level - 4);
 				}
@@ -1717,7 +1722,8 @@ void poset_classification::make_auxiliary_graph(int depth,
 	for (lvl = 0; lvl <= depth; lvl++) {
 		f = 0;
 		if (f_vv) {
-			cout << "poset_classification::make_auxiliary_graph now making vertex "
+			cout << "poset_classification::make_auxiliary_graph "
+					"now making vertex "
 					"labels lvl " << lvl << " / " << depth << endl;
 		}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
@@ -1740,10 +1746,11 @@ void poset_classification::make_auxiliary_graph(int depth,
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text1);
 			if (lvl) {
-				snprintf(text2, 2000, "$%ld_{%s}$", Poo->get_node(n)->get_pt(), text1.c_str());
+				snprintf(text2, sizeof(text2), "$%ld_{%s}$",
+						Poo->get_node(n)->get_pt(), text1.c_str());
 			}
 			else {
-				snprintf(text2, 2000, "$\\emptyset_{%s}$", text1.c_str());
+				snprintf(text2, sizeof(text2), "$\\emptyset_{%s}$", text1.c_str());
 			}
 
 			// set label to be the automorphism group order:
@@ -1757,18 +1764,23 @@ void poset_classification::make_auxiliary_graph(int depth,
 			LG->add_text(2 * lvl + 0, po, text3, 0/*verbose_level*/);
 
 
-			LG->add_node_data1(2 * lvl + 0, po, Poo->get_node(n)->get_pt(),
+			LG->add_node_data1(
+					2 * lvl + 0, po, Poo->get_node(n)->get_pt(),
 					0/*verbose_level*/);
 			if (lvl) {
-				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1),
+				LG->add_node_data2(
+						2 * lvl + 0, po, 2 * (lvl - 1),
 						0/*verbose_level*/);
-				LG->add_node_data3(2 * lvl + 0, po,
+				LG->add_node_data3(
+						2 * lvl + 0, po,
 						Poo->get_node(n)->get_prev() - Poo->first_node_at_level(lvl - 1),
 						0/*verbose_level*/);
 			}
 			else {
-				LG->add_node_data2(2 * lvl + 0, po, -1, 0/*verbose_level*/);
-				LG->add_node_data3(2 * lvl + 0, po, -1, 0/*verbose_level*/);
+				LG->add_node_data2(
+						2 * lvl + 0, po, -1, 0/*verbose_level*/);
+				LG->add_node_data3(
+						2 * lvl + 0, po, -1, 0/*verbose_level*/);
 			}
 			for (so = 0; so < Poo->node_get_nb_of_extensions(n); so++) {
 				extension *E = Poo->get_node(n)->get_E(so);
@@ -1776,7 +1788,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 				D.integral_division_by_int(go, len, go1, r);
 
 				go1.print_to_string(text1);
-				snprintf(text2, 2000, "$%d_{%s}$", E->get_pt(), text1.c_str());
+				snprintf(text2, sizeof(text2), "$%d_{%s}$", E->get_pt(), text1.c_str());
 
 				// set label to be the automorphism group order:
 				//LG->add_text(2 * lvl + 1, f + so, text1, 0/*verbose_level*/);
@@ -1838,7 +1850,8 @@ void poset_classification::make_graph(
 	
 	LG = NEW_OBJECT(graph_theory::layered_graph);
 	if (f_vv) {
-		cout << "poset_classification::make_graph before LG->init" << endl;
+		cout << "poset_classification::make_graph "
+				"before LG->init" << endl;
 	}
 	LG->add_data1(data1, 0/*verbose_level*/);
 
@@ -1847,24 +1860,28 @@ void poset_classification::make_graph(
 
 	LG->init(nb_layers, Nb, dummy, verbose_level);
 	if (f_vv) {
-		cout << "poset_classification::make_graph after LG->init" << endl;
+		cout << "poset_classification::make_graph "
+				"after LG->init" << endl;
 	}
 	LG->place(verbose_level);
 	if (f_vv) {
-		cout << "poset_classification::make_graph after LG->place" << endl;
+		cout << "poset_classification::make_graph "
+				"after LG->place" << endl;
 	}
 
 
 	// make edges:
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_v) {
-			cout << "poset_classification::make_graph adding edges "
+			cout << "poset_classification::make_graph "
+					"adding edges "
 					"lvl=" << lvl << " / " << depth << endl;
 		}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 			if (FALSE /*f_v*/) {
-				cout << "poset_classification::make_graph adding edges "
+				cout << "poset_classification::make_graph "
+						"adding edges "
 						"lvl=" << lvl << " po=" << po << " / "
 						<< nb_orbits_at_level(lvl) << endl;
 			}
@@ -1874,7 +1891,8 @@ void poset_classification::make_graph(
 			for (so = 0; so < Poo->node_get_nb_of_extensions(n); so++) {
 
 				if (FALSE /*f_v*/) {
-					cout << "poset_classification::make_graph adding edges "
+					cout << "poset_classification::make_graph "
+							"adding edges "
 							"lvl=" << lvl << " po=" << po
 							<< " so=" << so << endl;
 				}
@@ -1964,11 +1982,11 @@ void poset_classification::make_graph(
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text);
 			if (lvl) {
-				snprintf(text2, 1000, "%ld", the_set[lvl - 1]);
+				snprintf(text2, sizeof(text2), "%ld", the_set[lvl - 1]);
 				//snprintf(text2, 1000, "%d;%s", the_set[lvl - 1], text);
 			}
 			else {
-				snprintf(text2, 1000, "$\\emptyset$");
+				snprintf(text2, sizeof(text2), "$\\emptyset$");
 				//snprintf(text2, 1000, "$\\emptyset$;%s", text);
 			}
 
@@ -1990,7 +2008,9 @@ void poset_classification::make_graph(
 			else if (TRUE /* Control->f_node_label_is_element*/) {
 				// label the node with the point:
 				if (lvl) {
-					LG->add_node_data1(lvl, po, Poo->get_node(n)->get_pt(), 0/*verbose_level*/);
+					LG->add_node_data1(
+							lvl, po, Poo->get_node(n)->get_pt(),
+							0/*verbose_level*/);
 				}
 				else {
 					// root node has no element
@@ -2113,7 +2133,8 @@ void poset_classification::make_level_graph(
 				//cout << "extension node" << endl;
 				n1 = E->get_data();
 				//cout << "n1=" << n1 << endl;
-				LG->add_edge(2, f + so, 3,
+				LG->add_edge(
+						2, f + so, 3,
 						n1 - Poo->first_node_at_level(level + 1),
 						0 /*verbose_level*/);
 			}
@@ -2140,7 +2161,8 @@ void poset_classification::make_level_graph(
 				//cout << "n1=" << n1
 				//<< " first_poset_orbit_node_at_level[lvl + 1] = "
 				//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
-				LG->add_edge(2, f + so, 3,
+				LG->add_edge(
+						2, f + so, 3,
 						n1 - Poo->first_node_at_level(level + 1),
 						0 /*verbose_level*/);
 			}
@@ -2199,10 +2221,12 @@ void poset_classification::make_level_graph(
 			text3.assign(text);
 
 			LG->add_text(l, po, text3, 0/*verbose_level*/);
-			LG->add_node_data1(l, po, Poo->get_node(n)->get_pt(), 0/*verbose_level*/);
+			LG->add_node_data1(
+					l, po, Poo->get_node(n)->get_pt(), 0/*verbose_level*/);
 			
 			get_set_by_level(lvl, po, the_set);
-			LG->add_node_vec_data(l, po, the_set, lvl, 0 /* verbose_level */);
+			LG->add_node_vec_data(
+					l, po, the_set, lvl, 0 /* verbose_level */);
 #if 0
 			if (lvl) {
 				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1),
@@ -2233,28 +2257,35 @@ void poset_classification::make_level_graph(
 					
 					//get_set_by_level(lvl, po, the_set);
 					the_set[lvl] = E->get_pt();
-					LG->add_node_vec_data(l + 1, f + so, the_set, lvl + 1,
+					LG->add_node_vec_data(
+							l + 1, f + so, the_set, lvl + 1,
 							0 /* verbose_level */);
-					LG->set_distinguished_element_index(l + 1, f + so, lvl,
+					LG->set_distinguished_element_index(
+							l + 1, f + so, lvl,
 							0 /* verbose_level */);
 
 
 					if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 						the_set[lvl] = E->get_pt();
-						LG->add_node_vec_data(l + 2, f + so, the_set, lvl + 1,
+						LG->add_node_vec_data(
+								l + 2, f + so, the_set, lvl + 1,
 								0 /* verbose_level */);
-						LG->set_distinguished_element_index(l + 2, f + so, lvl,
+						LG->set_distinguished_element_index(
+								l + 2, f + so, lvl,
 								0 /* verbose_level */);
 					}
 					else if (E->get_type() == EXTENSION_TYPE_FUSION) {
 
 						//Poset->A->element_retrieve(E->get_data(), Elt1, 0);
 
-						Poset->A2->map_a_set_based_on_hdl(the_set, the_set2, lvl + 1, Poset->A, E->get_data(), 0);
+						Poset->A2->map_a_set_based_on_hdl(
+								the_set, the_set2, lvl + 1, Poset->A, E->get_data(), 0);
 
-						LG->add_node_vec_data(l + 2, f + so, the_set2, lvl + 1,
+						LG->add_node_vec_data(
+								l + 2, f + so, the_set2, lvl + 1,
 								0 /* verbose_level */);
-						LG->set_distinguished_element_index(l + 2, f + so, lvl,
+						LG->set_distinguished_element_index(
+								l + 2, f + so, lvl,
 								0 /* verbose_level */);
 					}
 				}
@@ -2476,7 +2507,10 @@ void poset_classification::make_poset_graph_detailed(
 
 			LG->add_text(3 * L, po, text3, 0/*verbose_level*/);
 			if (L) {
-				LG->add_node_data1(3 * L, po, Poo->get_node(n)->get_pt(), 0/*verbose_level*/);
+				LG->add_node_data1(
+						3 * L, po,
+						Poo->get_node(n)->get_pt(),
+						0/*verbose_level*/);
 			}
 			
 			get_set_by_level(L, po, the_set);
@@ -2518,7 +2552,8 @@ void poset_classification::make_poset_graph_detailed(
 					
 					//get_set_by_level(lvl, po, the_set);
 					the_set[L] = E->get_pt();
-					LG->add_node_vec_data(3 * L + 1, f + so, the_set,
+					LG->add_node_vec_data(
+							3 * L + 1, f + so, the_set,
 							L + 1, 0 /* verbose_level */);
 					LG->set_distinguished_element_index(3 * L + 1,
 							f + so, L, 0 /* verbose_level */);
@@ -2534,10 +2569,14 @@ void poset_classification::make_poset_graph_detailed(
 					else if (E->get_type() == EXTENSION_TYPE_FUSION) {
 
 						//Poset->A->element_retrieve(E->get_data(), Elt1, 0);
-						Poset->A2->map_a_set_based_on_hdl(the_set, the_set2, L + 1, Poset->A, E->get_data(), 0);
-						LG->add_node_vec_data(3 * L + 2, f + so,
+						Poset->A2->map_a_set_based_on_hdl(
+								the_set, the_set2, L + 1,
+								Poset->A, E->get_data(), 0);
+						LG->add_node_vec_data(
+								3 * L + 2, f + so,
 								the_set2, L + 1, 0 /* verbose_level */);
-						LG->set_distinguished_element_index(3 * L + 2,
+						LG->set_distinguished_element_index(
+								3 * L + 2,
 								f + so, L, 0 /* verbose_level */);
 					}
 				}
@@ -2757,17 +2796,17 @@ void poset_classification::print_data_structure_tex(
 						fp << " & ";
 
 						hdl = E->get_data();
-						Poset->A->element_retrieve(hdl, Elt, FALSE);
+						Poset->A->Group_element->element_retrieve(hdl, Elt, FALSE);
 
 						fp << "$";
-						Poset->A->element_print_latex(Elt, fp);
+						Poset->A->Group_element->element_print_latex(Elt, fp);
 						fp << "$";
 
 						fp << " & ";
 
 						if (f_permutation_degree_is_small) {
 							fp << "$";
-							Poset->A2->element_print_as_permutation(Elt, fp);
+							Poset->A2->Group_element->element_print_as_permutation(Elt, fp);
 							fp << "$";
 
 							fp << " & ";
@@ -2802,7 +2841,7 @@ void poset_classification::print_data_structure_tex(
 	}
 }
 
-static void print_table1_top(ofstream &fp)
+static void print_table1_top(std::ostream &fp)
 {
 	fp << "\\begin{tabular}{|r|r|r|r|}" << endl;
 	fp << "\\hline" << endl;
@@ -2811,13 +2850,13 @@ static void print_table1_top(ofstream &fp)
 	fp << "\\hline" << endl;
 }
 
-static void print_table1_bottom(ofstream &fp)
+static void print_table1_bottom(std::ostream &fp)
 {
 	fp << "\\hline" << endl;
 	fp << "\\end{tabular}" << endl;
 }
 
-static void print_table_top(ofstream &fp, int f_permutation_degree_is_small)
+static void print_table_top(std::ostream &fp, int f_permutation_degree_is_small)
 {
 	fp << "\\begin{tabular}{|r|r|r|r|r";
 	if (f_permutation_degree_is_small) {
@@ -2834,13 +2873,13 @@ static void print_table_top(ofstream &fp, int f_permutation_degree_is_small)
 	fp << "\\hline" << endl;
 }
 
-static void print_table_bottom(ofstream &fp)
+static void print_table_bottom(std::ostream &fp)
 {
 	fp << "\\hline" << endl;
 	fp << "\\end{tabular}" << endl;
 }
 
-static void print_set_special(ofstream &fp, long int *set, int sz)
+static void print_set_special(std::ostream &fp, long int *set, int sz)
 {
 	int i;
 

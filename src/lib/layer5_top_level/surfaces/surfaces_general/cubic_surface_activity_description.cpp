@@ -26,9 +26,20 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 	f_export_something = FALSE;
 	//std::string export_something_what;
 
+	f_export_gap = FALSE;
+
 	f_all_quartic_curves = FALSE;
 
 	f_export_all_quartic_curves = FALSE;
+
+	f_export_something_with_group_element = FALSE;
+	//std::string export_something_with_group_element_what;
+	//std::string export_something_with_group_element_label;
+
+	f_action_on_module = FALSE;
+	//std::string action_on_module_type;
+	//std::string action_on_module_basis;
+	//std::string action_on_module_gens;
 
 }
 
@@ -64,6 +75,12 @@ int cubic_surface_activity_description::read_arguments(
 				cout << "-export_something " << export_something_what << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_gap") == 0) {
+			f_export_gap = TRUE;
+			if (f_v) {
+				cout << "-export_gap " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-all_quartic_curves") == 0) {
 			f_all_quartic_curves = TRUE;
 			if (f_v) {
@@ -74,6 +91,28 @@ int cubic_surface_activity_description::read_arguments(
 			f_export_all_quartic_curves = TRUE;
 			if (f_v) {
 				cout << "-export_all_quartic_curves " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_something_with_group_element") == 0) {
+			f_export_something_with_group_element = TRUE;
+			export_something_with_group_element_what.assign(argv[++i]);
+			export_something_with_group_element_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_something_with_group_element "
+						<< export_something_with_group_element_what << " "
+						<< export_something_with_group_element_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-action_on_module") == 0) {
+			f_action_on_module = TRUE;
+			action_on_module_type.assign(argv[++i]);
+			action_on_module_basis.assign(argv[++i]);
+			action_on_module_gens.assign(argv[++i]);
+			if (f_v) {
+				cout << "-action_on_module "
+						<< action_on_module_type << " "
+						<< action_on_module_basis << " "
+						<< action_on_module_gens << endl;
 			}
 		}
 
@@ -107,11 +146,24 @@ void cubic_surface_activity_description::print()
 	if (f_export_something) {
 		cout << "-export_something " << export_something_what << endl;
 	}
+	if (f_export_gap) {
+		cout << "-export_gap " << endl;
+	}
 	if (f_all_quartic_curves) {
 		cout << "-all_quartic_curves " << endl;
 	}
 	if (f_export_all_quartic_curves) {
 		cout << "-export_all_quartic_curves " << endl;
+	}
+	if (f_export_something_with_group_element) {
+		cout << "-export_something_with_group_element "
+				<< export_something_with_group_element_what << " "
+				<< export_something_with_group_element_label << endl;
+	}
+	if (f_action_on_module) {
+		cout << "-action_on_module "
+				<< action_on_module_type << " "
+				<< action_on_module_gens << endl;
 	}
 }
 

@@ -387,7 +387,7 @@ void sorting::int_vec_insert_and_reallocate_if_necessary(
 		used_length++;
 		if (FALSE) {
 			cout << "element " << a << " has been added to the "
-					"list at position " << idx << " n e w length = "
+					"list at position " << idx << " updated length = "
 					<< used_length << endl;
 			}
 		if (f_v) {
@@ -431,7 +431,7 @@ void sorting::int_vec_append_and_reallocate_if_necessary(
 	used_length++;
 	if (FALSE) {
 		cout << "element " << a << " has been appended to the list "
-				"at position " << used_length - 1 << " n e w "
+				"at position " << used_length - 1 << " updated "
 				"length = " << used_length << endl;
 		}
 	if (f_v) {
@@ -475,7 +475,7 @@ void sorting::lint_vec_append_and_reallocate_if_necessary(
 	used_length++;
 	if (FALSE) {
 		cout << "element " << a << " has been appended to the list "
-				"at position " << used_length - 1 << " n e w "
+				"at position " << used_length - 1 << " updated "
 				"length = " << used_length << endl;
 		}
 	if (f_v) {

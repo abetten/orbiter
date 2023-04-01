@@ -75,7 +75,7 @@ public:
      */
     __forceinline__
 	void set_vertex_colors(U* colors) {
-    	for (size_t i=0; i<nb_colors; ++i) {
+    	for (size_t i=0; i<nb_vertices; ++i) { // Anton: found an error, it was nb_colors, which is wrong.
     		vertex_color[i] = colors[i];
     	}
     }
@@ -124,7 +124,11 @@ public:
      */
     __forceinline__ void set_edge_from_bitvector_adjacency(orbiter::layer1_foundations::data_structures::bitvector *Bitvec, int vl=0) {
         if (vl - 2) printf("%s: %d: set_edge_from_bitvector_adjacency\n", __FILE__, __LINE__);
-        const size_t nThreads = std::thread::hardware_concurrency();
+        size_t nThreads = std::thread::hardware_concurrency();
+        printf("%s: %d: hardware_concurrency = %ld\n",
+        		__FILE__, __LINE__, (long int) std::thread::hardware_concurrency());
+        printf("%s: %d: nThreads = %ld\n",
+        		__FILE__, __LINE__, (long int) nThreads);
         const size_t n = this->nb_vertices;
 	    std::thread threads [nThreads];
         bitset adj[nThreads];

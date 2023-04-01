@@ -470,10 +470,10 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 				cout << endl;
 			}
 
-			LG->A_linear->make_element(Elt, M + i * n, 0 /* verbose_level */);
+			LG->A_linear->Group_element->make_element(Elt, M + i * n, 0 /* verbose_level */);
 			if (FALSE) {
 				cout << "computing rank of " << endl;
-				LG->A_linear->element_print_latex(Elt, cout);
+				LG->A_linear->Group_element->element_print_latex(Elt, cout);
 			}
 
 			the_ranks[i] = S->element_rank_lint(Elt);
@@ -503,10 +503,10 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 				cout << endl;
 			}
 
-			LG->A_linear->make_element(Transporter->ith(i), M + i * n, 0 /* verbose_level */);
+			LG->A_linear->Group_element->make_element(Transporter->ith(i), M + i * n, 0 /* verbose_level */);
 			if (FALSE) {
 				cout << "computing rank of " << endl;
-				LG->A_linear->element_print_latex(Elt, cout);
+				LG->A_linear->Group_element->element_print_latex(Elt, cout);
 			}
 
 		}

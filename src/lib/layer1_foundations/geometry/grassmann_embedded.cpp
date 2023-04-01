@@ -73,7 +73,8 @@ grassmann_embedded::~grassmann_embedded()
 	}
 }
 
-void grassmann_embedded::init(int big_n, int n,
+void grassmann_embedded::init(
+		int big_n, int n,
 	grassmann *G, int *M, int verbose_level)
 // M is n x big_n
 // G is for k-dimensional subspaces of an n-space.

@@ -184,7 +184,7 @@ void large_set_classify::create_action_and_poset(int verbose_level)
 		cout << "large_set_classify::create_action_and_poset "
 				"creating action A_on_designs" << endl;
 	}
-	A_on_designs = DC->A2->create_induced_action_on_sets(
+	A_on_designs = DC->A2->Induced_action->create_induced_action_on_sets(
 			Design_table->nb_designs, Design_table->design_size,
 			Design_table->the_table,
 			0 /* verbose_level */);

@@ -25,7 +25,8 @@ void orthogonal::list_points_by_type(int verbose_level)
 	}
 }
 
-void orthogonal::report_points_by_type(std::ostream &ost, int verbose_level)
+void orthogonal::report_points_by_type(
+		std::ostream &ost, int verbose_level)
 {
 	int t;
 
@@ -733,30 +734,61 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 	}
 
 
-	int N_points = Hyperbolic_pair->nb_points;
-	int N_lines = Hyperbolic_pair->nb_lines;
+	long int N_points = Hyperbolic_pair->nb_points;
+	long int N_lines = Hyperbolic_pair->nb_lines;
 
-	long int *line;
+	long int *points_on_line;
 
-	long int i, line_rk, h;
+	long int pt, line_rk, h;
 	int *T;
 	orbiter_kernel_system::file_io Fio;
 
-	line = NEW_lint(Quadratic_form->q + 1);
+	points_on_line = NEW_lint(Quadratic_form->q + 1);
 	T = NEW_int(N_points * N_lines);
 	Int_vec_zero(T, N_points * N_lines);
 
+	if (f_v) {
+		cout << "orthogonal::export_incidence_matrix_to_csv computing points on line for all lines" << endl;
+	}
+
 	for (line_rk = 0; line_rk < N_lines; line_rk++) {
+
+		if (f_v) {
+			cout << "orthogonal::export_incidence_matrix_to_csv "
+					"line_rk = " << line_rk << " / " << N_lines << endl;
+		}
 
 
 		points_on_line_by_line_rank(line_rk,
-				line, verbose_level);
+				points_on_line, verbose_level - 2);
+
+		if (f_v) {
+			cout << "orthogonal::export_incidence_matrix_to_csv "
+					"line_rk = " << line_rk << " / " << N_lines << " done, copying" << endl;
+		}
 
 		for (h = 0; h < Quadratic_form->q + 1; h++) {
-			i = line[h];
-			T[i * N_lines + line_rk] = 1;
+			pt = points_on_line[h];
+			if (pt >= N_points) {
+				cout << "orthogonal::export_incidence_matrix_to_csv "
+						"pt >= N_points" << endl;
+				cout << "pt = " << pt << endl;
+				cout << "N_points = " << N_points << endl;
+				exit(1);
+			}
+			if (f_v) {
+				cout << "orthogonal::export_incidence_matrix_to_csv "
+						"line_rk = " << line_rk << " / " << N_lines
+						<< " h = " << h << " pt = " << pt << endl;
+			}
+			T[pt * N_lines + line_rk] = 1;
 		}
 	}
+
+	if (f_v) {
+		cout << "orthogonal::export_incidence_matrix_to_csv computing points on line for all lines finished" << endl;
+	}
+
 	string fname;
 
 	make_fname_incidence_matrix_csv(fname);
@@ -768,7 +800,7 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 	}
 
 	FREE_int(T);
-	FREE_lint(line);
+	FREE_lint(points_on_line);
 
 	if (f_v) {
 		cout << "orthogonal::export_incidence_matrix_to_csv done" << endl;

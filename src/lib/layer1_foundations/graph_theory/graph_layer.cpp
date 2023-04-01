@@ -35,7 +35,8 @@ graph_layer::~graph_layer()
 		}
 }
 
-void graph_layer::init(int nb_nodes,
+void graph_layer::init(
+		int nb_nodes,
 		int id_of_first_node, int verbose_level)
 {
 	int i, id;

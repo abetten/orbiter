@@ -63,7 +63,8 @@ public:
 	enum representation_type type;
 	int n;
 	int q;
-	groups::matrix_group *M;
+	actions::action *A;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	int low_level_point_size;
 	int degree;
@@ -76,12 +77,12 @@ public:
 	action_by_representation();
 	~action_by_representation();
 	void init_action_on_conic(
-			actions::action &A, int verbose_level);
+			actions::action *A, int verbose_level);
 	long int compute_image_int(
-			actions::action &A, int *Elt,
+			int *Elt,
 			long int a, int verbose_level);
 	void compute_image_int_low_level(
-			actions::action &A, int *Elt,
+			int *Elt,
 			int *input, int *output,
 		int verbose_level);
 	void unrank_point(long int a, int *v, int verbose_level);
@@ -174,9 +175,9 @@ public:
 	actions::action *AQ;
 	actions::action *Aq;
 
-	groups::matrix_group *MQ;
+	algebra::matrix_group *MQ;
 	field_theory::finite_field *FQ;
-	groups::matrix_group *Mq;
+	algebra::matrix_group *Mq;
 	field_theory::finite_field *Fq;
 
 	field_theory::subfield_structure *S;
@@ -345,7 +346,7 @@ public:
 
 class action_on_determinant {
 public:
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	int f_projective;
 	int m;
 	int q;
@@ -372,7 +373,7 @@ public:
 
 class action_on_factor_space {
 public:
-	algebra::vector_space *VS;
+	linear_algebra::vector_space *VS;
 
 
 	// VS->dimension = length of vectors in large space
@@ -435,12 +436,12 @@ public:
 	action_on_factor_space();
 	~action_on_factor_space();
 	void init_light(
-		algebra::vector_space *VS,
+			linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int verbose_level);
 	void init_by_rank_table_mode(
-			algebra::vector_space *VS,
+			linear_algebra::vector_space *VS,
 			actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		long int *point_list, int nb_points,
@@ -452,12 +453,12 @@ public:
 			long int *point_list, int nb_points,
 			int verbose_level);
 	void init_by_rank(
-			algebra::vector_space *VS,
+			linear_algebra::vector_space *VS,
 			actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int f_compute_tables, int verbose_level);
 	void init_from_coordinate_vectors(
-			algebra::vector_space *VS,
+			linear_algebra::vector_space *VS,
 			actions::action &A_base, actions::action &A,
 		int *subspace_basis, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
@@ -515,7 +516,7 @@ public:
 	int *type;
 	int type_len;
 	geometry::flag *Flag;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	int degree;
 	int *M1;
 	int *M2;
@@ -541,7 +542,7 @@ public:
 class action_on_galois_group {
 public:
 	actions::action *A;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	int m;
 	int q;
 	int degree;
@@ -592,17 +593,21 @@ public:
 
 	action_on_grassmannian();
 	~action_on_grassmannian();
-	void init(actions::action &A,
+	void init(
+			actions::action &A,
 			geometry::grassmann *G, int verbose_level);
 	void add_print_function(
 			void (*print_function)(
 					std::ostream &ost, long int a, void *data),
 			void *print_function_data,
 			int verbose_level);
-	void init_embedding(int big_n, int *ambient_space, 
+	void init_embedding(
+			int big_n, int *ambient_space,
 		int verbose_level);
-	void unrank(long int i, int *v, int verbose_level);
-	long int rank(int *v, int verbose_level);
+	void unrank(
+			long int i, int *v, int verbose_level);
+	long int rank(
+			int *v, int verbose_level);
 	void compute_image_longinteger(
 			actions::action *A,
 			int *Elt,
@@ -635,7 +640,7 @@ public:
 	int q;
 	actions::action *A;
 	ring_theory::homogeneous_polynomial_domain *HPD;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	int low_level_point_size;
 	int degree;
@@ -722,6 +727,57 @@ public:
 			int *Elt, long int i, int verbose_level);
 };
 
+
+// #############################################################################
+// action_on_module.cpp
+// #############################################################################
+
+
+//! induced action on a module
+
+
+class action_on_module {
+public:
+
+	actions::action *A;
+	int n;
+	int q;
+	algebra::matrix_group *M;
+	field_theory::finite_field *F;
+	int low_level_point_size;
+	//long int degree;
+
+	algebraic_geometry::surface_object *SO;
+	int *module_basis; // [module_dimension_m * module_dimension_n]
+	int module_dimension_m;
+	int module_dimension_n;
+	double *module_basis_base_transposed; // [module_dimension_n * module_dimension_m]
+
+	int *module_basis_base_cols; // [module_dimension_n]
+	int *module_basis_rref; // [module_dimension_m * module_dimension_n]
+	int *module_basis_transformation; // [module_dimension_m * module_dimension]
+
+	int *v1; // [module_dimension_n]
+	int *v2; // [module_dimension_n]
+
+	actions::action *A_on_the_lines;
+	actions::action *A_on_module;
+
+	action_on_module();
+	~action_on_module();
+	void init_action_on_module(
+			algebraic_geometry::surface_object *SO,
+			actions::action *A_on_the_lines,
+			std::string &module_type,
+			int *module_basis, int module_dimension_m, int module_dimension_n,
+			int verbose_level);
+	void compute_image_int_low_level(
+			int *Elt, int *input, int *output,
+		int verbose_level);
+};
+
+
+
 // #############################################################################
 // action_on_orbits.cpp
 // #############################################################################
@@ -778,8 +834,8 @@ public:
 		int f_on_points, int f_on_lines,
 		int f_on_points_and_lines,
 		int verbose_level);
-	void unrank_point(int *v, int rk);
-	int rank_point(int *v);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
 	long int map_a_point(
 			int *Elt, long int i, int verbose_level);
 	long int map_a_line(
@@ -916,10 +972,14 @@ public:
 			std::ostream &ost, int verbose_level);
 	long int compute_image_int(
 			int *Elt, long int rk, int verbose_level);
-	void matrix_to_subspace(int *mtx, int *subspace, int verbose_level);
-	void subspace_to_matrix(int *subspace, int *mtx, int verbose_level);
-	void unrank_point(long int rk, int *mtx, int verbose_level);
-	long int rank_point(int *mtx, int verbose_level);
+	void matrix_to_subspace(
+			int *mtx, int *subspace, int verbose_level);
+	void subspace_to_matrix(
+			int *subspace, int *mtx, int verbose_level);
+	void unrank_point(
+			long int rk, int *mtx, int verbose_level);
+	long int rank_point(
+			int *mtx, int verbose_level);
 	void compute_image_low_level(
 			int *Elt, int *input, int *output,
 		int verbose_level);
@@ -975,7 +1035,7 @@ public:
 	actions::action *A;
 	int n;
 	int q;
-	groups::matrix_group *M;
+	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	int low_level_point_size;
 	long int degree;
@@ -996,15 +1056,15 @@ public:
 			int *Elt, long int a, int verbose_level);
 	int element_entry_frobenius(int *Elt,
 		int verbose_level);
-	int element_entry_ij(int *Elt, int I, int J,
-		int verbose_level);
-	int element_entry_ijkl(int *Elt,
-		int i, int j, int k, int l, int verbose_level);
+	//int element_entry_ij(int *Elt, int I, int J,
+	//	int verbose_level);
+	//int element_entry_ijkl(int *Elt,
+	//	int i, int j, int k, int l, int verbose_level);
 	void compute_image_int_low_level(
 			int *Elt, int *input, int *output,
 		int verbose_level);
-	void create_induced_matrix(
-			int *Elt, int *Mtx2, int verbose_level);
+	//void create_induced_matrix(
+	//		int *Elt, int *Mtx2, int verbose_level);
 	void element_print_latex(int *A, std::ostream &ost);
 };
 

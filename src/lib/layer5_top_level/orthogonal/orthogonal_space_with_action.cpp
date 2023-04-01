@@ -20,13 +20,12 @@ namespace orthogonal_geometry_applications {
 orthogonal_space_with_action::orthogonal_space_with_action()
 {
 	Descr = NULL;
-	//std::string label_txt;
-	//std::string label_tex;
+	P = NULL;
 	O = NULL;
 	f_semilinear = FALSE;
 	A = NULL;
 	AO = NULL;
-	Blt_Set_domain = NULL;
+	Blt_set_domain_with_action = NULL;
 }
 
 orthogonal_space_with_action::~orthogonal_space_with_action()
@@ -37,14 +36,16 @@ orthogonal_space_with_action::~orthogonal_space_with_action()
 	if (A) {
 		FREE_OBJECT(A);
 	}
-	if (Blt_Set_domain) {
-		FREE_OBJECT(Blt_Set_domain);
+	if (Blt_set_domain_with_action) {
+		FREE_OBJECT(Blt_set_domain_with_action);
 	}
 }
 
 void orthogonal_space_with_action::init(
 		orthogonal_space_with_action_description *Descr,
 		int verbose_level)
+// creates a projective space and an orthogonal space.
+// For n == 5, it also creates a blt_set_domain
 {
 	int f_v = (verbose_level >= 1);
 
@@ -53,58 +54,56 @@ void orthogonal_space_with_action::init(
 	}
 	orthogonal_space_with_action::Descr = Descr;
 
+	P = NEW_OBJECT(geometry::projective_space);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::init "
+				"before P->projective_space_init" << endl;
+	}
+
+	P->projective_space_init(Descr->n - 1, Descr->F,
+		FALSE /* f_init_incidence_structure */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::init "
+				"after P->projective_space_init" << endl;
+	}
+
 	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
 
-	if (Descr->f_label_txt) {
-		label_txt.assign(Descr->label_txt);
-	}
-	else {
-		char str[1000];
 
-		snprintf(str, sizeof(str), "O_%d_%d_%d", Descr->epsilon, Descr->n, Descr->F->q);
-		label_txt.assign(str);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::init "
+				"before O->init" << endl;
+	}
+	O->init(Descr->epsilon, Descr->n, Descr->F, verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::init "
+				"after O->init" << endl;
+	}
+
+
+	if (Descr->f_label_txt) {
+		O->label_txt.assign(Descr->label_txt);
 	}
 	if (Descr->f_label_tex) {
-		label_tex.assign(Descr->label_tex);
-	}
-	else {
-		char str[1000];
-
-		if (Descr->epsilon == 1) {
-			snprintf(str, sizeof(str), "O^+(%d,%d)", Descr->n, Descr->F->q);
-		}
-		else if (Descr->epsilon == 0) {
-			snprintf(str, sizeof(str), "O(%d,%d)", Descr->n, Descr->F->q);
-		}
-		else if (Descr->epsilon == -1) {
-			snprintf(str, sizeof(str), "O^-(%d,%d)", Descr->n, Descr->F->q);
-		}
-		else {
-			cout << "orthogonal_space_with_action::init illegal value of epsilon" << endl;
-			exit(1);
-		}
-		label_tex.assign(str);
+		O->label_tex.assign(Descr->label_tex);
 	}
 
 
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::init before O->init" << endl;
-	}
-	O->init(Descr->epsilon, Descr->n, Descr->F, verbose_level);
-	if (f_v) {
-		cout << "orthogonal_space_with_action::init after O->init" << endl;
-	}
 
 
 	if (!Descr->f_without_group) {
 
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init before init_group" << endl;
+			cout << "orthogonal_space_with_action::init "
+					"before init_group" << endl;
 		}
-		init_group(verbose_level);
+		init_group(verbose_level - 2);
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init after init_group" << endl;
+			cout << "orthogonal_space_with_action::init "
+					"after init_group" << endl;
 		}
 	}
 	else {
@@ -117,16 +116,20 @@ void orthogonal_space_with_action::init(
 	if (Descr->n == 5) {
 
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init allocating Blt_Set_domain" << endl;
+			cout << "orthogonal_space_with_action::init "
+					"allocating Blt_Set_domain" << endl;
 		}
-		Blt_Set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
+		Blt_set_domain_with_action = NEW_OBJECT(orthogonal_geometry_applications::blt_set_domain_with_action);
+
 
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init before Blt_Set_domain->init" << endl;
+			cout << "orthogonal_space_with_action::init "
+					"before Blt_set_domain_with_action->init" << endl;
 		}
-		Blt_Set_domain->init(O, verbose_level);
+		Blt_set_domain_with_action->init(A, P, O, verbose_level);
 		if (f_v) {
-			cout << "orthogonal_space_with_action::init after Blt_Set_domain->init" << endl;
+			cout << "orthogonal_space_with_action::init_blt_set_domain "
+					"after Blt_set_domain_with_action->init" << endl;
 		}
 	}
 
@@ -165,7 +168,7 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 			FALSE /* f_on_points_and_lines */,
 			f_semilinear,
 			TRUE /* f_basis */,
-			verbose_level);
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "orthogonal_space_with_action::init_group "
@@ -179,14 +182,21 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 				"degree = " << A->degree << endl;
 	}
 
-	if (f_v) {
-		cout << "orthogonal_space_with_action::init_group computing "
-				"lex-least base" << endl;
+	if (!A->f_has_sims) {
+		cout << "orthogonal_space_with_action::init_group "
+				"!A->f_has_sims" << endl;
+		exit(1);
 	}
-	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "orthogonal_space_with_action::init_group computing "
-				"lex-least base done" << endl;
+		cout << "orthogonal_space_with_action::init_group "
+				"before A->lex_least_base_in_place" << endl;
+	}
+	A->lex_least_base_in_place(A->Sims, verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::init_group "
+				"after A->lex_least_base_in_place" << endl;
+	}
+	if (f_v) {
 		cout << "orthogonal_space_with_action::init_group base: ";
 		Lint_vec_print(cout, A->get_base(), A->base_len());
 		cout << endl;
@@ -215,7 +225,7 @@ void orthogonal_space_with_action::report(
 
 	{
 		string fname_report;
-		fname_report.assign(label_txt);
+		fname_report.assign(O->label_txt);
 		fname_report.append("_report.tex");
 		orbiter_kernel_system::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
@@ -394,6 +404,195 @@ void orthogonal_space_with_action::report_line_set(
 	}
 }
 
+void orthogonal_space_with_action::make_table_of_blt_sets(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets" << endl;
+	}
+
+	if (O->Quadratic_form->n != 5) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"we need a five-dimensional orthogonal space" << endl;
+		exit(1);
+	}
+
+	table_of_blt_sets *T;
+
+	T = NEW_OBJECT(table_of_blt_sets);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"before T->init" << endl;
+	}
+	T->init(this, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"after T->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"before T->do_export" << endl;
+	}
+	T->do_export(verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets "
+				"after T->do_export" << endl;
+	}
+
+	FREE_OBJECT(T);
+
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_table_of_blt_sets done" << endl;
+	}
+
+}
+
+void orthogonal_space_with_action::make_collinearity_graph(
+		int *&Adj, int &N,
+		long int *Set, int sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph" << endl;
+	}
+
+	int i, j;
+	int d, nb_e, nb_inc;
+	int *v1, *v2;
+	long int Nb_points;
+	geometry::geometry_global Gg;
+	//orthogonal_geometry::quadratic_form *Quadratic_form;
+
+
+	d = O->Quadratic_form->n; // algebraic dimension
+
+	v1 = NEW_int(d);
+	v2 = NEW_int(d);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph" << endl;
+	}
+
+
+	Nb_points = O->Quadratic_form->nb_points;
+	//Gg.nb_pts_Qepsilon(epsilon, n, F->q);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph "
+				"number of points = " << Nb_points << endl;
+	}
+
+	N = sz;
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph field:" << endl;
+		O->Quadratic_form->F->Io->print();
+	}
+
+#if 0
+	Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph "
+				"before Quadratic_form->init" << endl;
+	}
+	Quadratic_form->init(epsilon, d, F, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph "
+				"after Quadratic_form->init" << endl;
+	}
+#endif
+
+
+
+#if 0
+	if (f_list_points) {
+		for (i = 0; i < N; i++) {
+			F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+			cout << i << " : ";
+			int_vec_print(cout, v, n + 1);
+			j = F->Q_epsilon_rank(v, 1, epsilon, n, c1, c2, c3, 0 /* verbose_level */);
+			cout << " : " << j << endl;
+
+			}
+		}
+#endif
+
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph "
+				"allocating adjacency matrix" << endl;
+	}
+	Adj = NEW_int(N * N);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph "
+				"allocating adjacency matrix was successful" << endl;
+	}
+
+	long int a, b;
+	int val;
+
+
+	for (i = 0; i < sz; i++) {
+
+		a = Set[i];
+
+		if (a < 0 || a >= Nb_points) {
+			cout << "orthogonal_space_with_action::make_collinearity_graph out of range" << endl;
+			exit(1);
+		}
+	}
+
+	nb_e = 0;
+	nb_inc = 0;
+	for (i = 0; i < sz; i++) {
+
+		a = Set[i];
+
+
+		O->Quadratic_form->unrank_point(v1, a, 0 /* verbose_level */);
+
+		for (j = i + 1; j < sz; j++) {
+
+			b = Set[j];
+
+			O->Quadratic_form->unrank_point(v2, b, 0 /* verbose_level */);
+
+			val = O->Quadratic_form->evaluate_bilinear_form(v1, v2, 1);
+
+			if (val == 0) {
+				nb_e++;
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+			}
+			else {
+				Adj[i * N + j] = 0;
+				Adj[j * N + i] = 0;
+				nb_inc++;
+			}
+		}
+		Adj[i * N + i] = 0;
+	}
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph "
+				"The adjacency matrix of the collinearity graph has been computed" << endl;
+	}
+
+
+	FREE_int(v1);
+	FREE_int(v2);
+	//FREE_OBJECT(Quadratic_form);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::make_collinearity_graph done" << endl;
+	}
+}
 
 
 

@@ -84,7 +84,7 @@ void W3q::init(
 	P3->projective_space_init(3, F,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level - 1  /*MINIMUM(verbose_level - 1, 3)*/);
-	F = P3->F;
+	F = P3->Subspaces->F;
 	Q4->init(0, 5, F, verbose_level - 1);
 
 
@@ -156,9 +156,9 @@ void W3q::find_lines(int verbose_level)
 	if (f_v) {
 		cout << "W3q::find_lines" << endl;
 	}
-	Lines = NEW_int(P3->N_lines);
+	Lines = NEW_int(P3->Subspaces->N_lines);
 	nb_lines = 0;
-	for (h = 0; h < P3->N_lines; h++) {
+	for (h = 0; h < P3->Subspaces->N_lines; h++) {
 		P3->unrank_line(Basis, h);
 		c = evaluate_symplectic_form(Basis, Basis + 4);
 		//c = F->evaluate_symmetric_form(2, Basis, Basis + 4);

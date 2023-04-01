@@ -59,7 +59,7 @@ void poset_classification::print_progress_by_extension(
 	print_level_info(size, prev);
 	cout << " **** Upstep extension " << cur_ex << " / "
 		<< Poo->node_get_nb_of_extensions(prev) << " with "
-		<< nb_ext_cur << " n e w orbits and "
+		<< nb_ext_cur << " new orbits and "
 		<< nb_fuse_cur << " fusion nodes. We now have "
 		<< cur - Poo->first_node_at_level(size)
 		<< " nodes at level " << size;
@@ -80,7 +80,7 @@ void poset_classification::print_progress(
 
 	print_level_info(size, prev);
 	cout << " **** Upstep finished with "
-		<< nb_ext_cur << " n e w orbits and "
+		<< nb_ext_cur << " new orbits and "
 		<< nb_fuse_cur << " fusion nodes. We now have "
 		<< cur - Poo->first_node_at_level(size)
 		<< " nodes at level " << size;
@@ -163,7 +163,8 @@ void poset_classification::print_statistic_on_callbacks()
 }
 
 
-void poset_classification::prepare_fname_data_file(std::string &fname,
+void poset_classification::prepare_fname_data_file(
+		std::string &fname,
 		std::string &fname_base, int depth_completed)
 {
 	char str[1000];
@@ -212,7 +213,8 @@ void poset_classification::print_problem_label()
 		}
 }
 
-void poset_classification::print_level_info(int prev_level, int prev)
+void poset_classification::print_level_info(
+		int prev_level, int prev)
 {
 	int t1, dt;
 	orbiter_kernel_system::os_interface Os;
@@ -270,7 +272,7 @@ void poset_classification::print_node(int node)
 }
 
 void poset_classification::print_extensions_at_level(
-		ostream &ost, int lvl)
+		std::ostream &ost, int lvl)
 {
 	int i, node;
 	int fst, len;
@@ -393,7 +395,8 @@ void poset_classification::read_data_file(
 
 }
 
-void poset_classification::write_data_file(int depth_completed,
+void poset_classification::write_data_file(
+		int depth_completed,
 		std::string &fname_base, int verbose_level)
 {
 	orbiter_kernel_system::memory_object *m;
@@ -495,9 +498,11 @@ void poset_classification::write_file(
 		cout << "poset_classification::write_file "
 				"depth_completed=" << depth_completed << endl;
 	}
-	size0 = Poo->calc_size_on_file(depth_completed, 0 /*verbose_level*/);
+	size0 = Poo->calc_size_on_file(
+			depth_completed, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "poset_classification::write_file size on file = " << size0 << endl;
+		cout << "poset_classification::write_file "
+				"size on file = " << size0 << endl;
 	}
 
 	if (size0 > 1000 * ONE_MILLION) {
@@ -613,7 +618,8 @@ void poset_classification::read_file(
 	}
 }
 
-void poset_classification::housekeeping(int i,
+void poset_classification::housekeeping(
+		int i,
 		int f_write_files, int t0, int verbose_level)
 {
 	int j, nb_nodes;
@@ -705,7 +711,8 @@ void poset_classification::housekeeping(int i,
 		fname_reps_csv.append(str);
 		fname_reps_csv.append(".csv");
 
-		Poo->save_representatives_at_level_to_csv(fname_reps_csv, i, verbose_level);
+		Poo->save_representatives_at_level_to_csv(
+				fname_reps_csv, i, verbose_level);
 
 
 		my_fname_base.assign(problem_label_with_path);
@@ -1512,12 +1519,21 @@ void poset_classification::create_shallow_schreier_tree_fname_mask(
 }
 
 void poset_classification::make_fname_candidates_file_default(
-		char *fname2000, int level)
+		std::string &fname, int level)
 {
-	snprintf(fname2000, 2000, "%s_lvl_%d_candidates.bin",
-			problem_label_with_path.c_str(), level);
-}
 
+	fname.assign(problem_label_with_path);
+	fname.append("_lvl_");
+
+	char str[1000];
+
+	snprintf(str, sizeof(str), "%d", level);
+	fname.append(str);
+	fname.append("_candidates.bin");
+
+	//snprintf(fname2000, 2000, "%s_lvl_%d_candidates.bin",
+	//		problem_label_with_path.c_str(), level);
+}
 
 void poset_classification::wedge_product_export_magma(
 		int n, int q, int vector_space_dimension,
@@ -1546,7 +1562,8 @@ void poset_classification::wedge_product_export_magma(
 	Elt = NEW_int(Poset->A->elt_size_in_int);
 
 	fst = Poo->first_node_at_level(level);
-	len = Poo->first_node_at_level(level + 1) - fst;
+	len = Poo->nb_orbits_at_level(level);
+	//len = Poo->first_node_at_level(level + 1) - fst;
 	if (f_v) {
 		cout << "exporting to magma" << endl;
 		cout << "fst=" << fst << " len=" << len << endl;
@@ -1634,7 +1651,8 @@ void poset_classification::wedge_product_export_magma(
 		f << "B := [ BV | " << endl;
 		for (i = 0; i < Poset->A->base_len(); i++) {
 			a = Poset->A->base_i(i);
-			Poset->VS->F->PG_element_unrank_modified(v, 1, n, a);
+			Poset->VS->F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, n, a);
 			//(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
 			f << "[ ";
 			for (h = 0; h < n; h++) {
@@ -1664,7 +1682,8 @@ void poset_classification::wedge_product_export_magma(
 			std::vector<int> gen_hdl;
 			std::vector<int> tl;
 
-			O->get_strong_generators_handle(gen_hdl, verbose_level);
+			O->get_strong_generators_handle(
+					gen_hdl, verbose_level);
 
 			O->get_tl(tl, this, verbose_level);
 
@@ -1682,7 +1701,7 @@ void poset_classification::wedge_product_export_magma(
 
 			for (j = 0; j < gen_hdl.size(); j++) {
 
-				Poset->A->element_retrieve(gen_hdl[j], Elt, 0);
+				Poset->A->Group_element->element_retrieve(gen_hdl[j], Elt, 0);
 
 				f << "[";
 				//Gen->A->element_print_quick(Elt, f);

@@ -255,16 +255,18 @@ void semifield_classify::init(
 	SD = NEW_OBJECT(geometry::spread_domain);
 
 	if (f_v) {
-		cout << "semifield_classify::init before SD->init" << endl;
+		cout << "semifield_classify::init "
+				"before SD->init_spread_domain" << endl;
 	}
 
-	SD->init(
+	SD->init_spread_domain(
 			PA->F,
 			n, k,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "semifield_classify::init after SD->init" << endl;
+		cout << "semifield_classify::init "
+				"after SD->init_spread_domain" << endl;
 	}
 
 
@@ -274,7 +276,8 @@ void semifield_classify::init(
 	//T->read_arguments(argc, argv);
 
 	if (f_v) {
-		cout << "semifield_classify::init before T->init" << endl;
+		cout << "semifield_classify::init "
+				"before T->init" << endl;
 	}
 
 	//int max_depth = k + 1;
@@ -282,7 +285,8 @@ void semifield_classify::init(
 	T->init(SD, PA, 0 /*verbose_level - 2*/);
 
 	if (f_v) {
-		cout << "semifield_classify::init after T->init" << endl;
+		cout << "semifield_classify::init "
+				"after T->init" << endl;
 	}
 
 	ring_theory::longinteger_object go1, go2;
@@ -392,13 +396,13 @@ void semifield_classify::init(
 
 
 
-	AS = NEW_OBJECT(actions::action);
+	//AS = NEW_OBJECT(actions::action);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"before induced_action_on_spread_set" << endl;
 	}
-	AS->induced_action_on_spread_set(T->A,
+	AS = T->A->Induced_action->induced_action_on_spread_set(
 		A_on_S,
 		FALSE /* f_induce_action */,
 		NULL /* old_G */,
@@ -445,7 +449,8 @@ void semifield_classify::init(
 		cout << "semifield_classify::init "
 				"before Strong_gens->create_sims" << endl;
 	}
-	Symmetry_group = Strong_gens->create_sims(0 /*verbose_level*/);
+	Symmetry_group = Strong_gens->create_sims(
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"after Strong_gens->create_sims" << endl;
@@ -470,7 +475,8 @@ void semifield_classify::init(
 	}
 }
 
-void semifield_classify::report(std::ostream &ost, int level,
+void semifield_classify::report(
+		std::ostream &ost, int level,
 		semifield_level_two *L2,
 		semifield_lifting *L3,
 		graphics::layered_graph_draw_options *draw_options,
@@ -487,7 +493,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 
 	ost << "Semifields of order " << order << "\\\\" << endl;
 
-	Mtx->GFq->report(ost, verbose_level);
+	Mtx->GFq->Io->report(ost, verbose_level);
 
 	ost << endl;
 	ost << "\\bigskip" << endl;
@@ -660,8 +666,8 @@ void semifield_classify::init_poset_classification(
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
-	algebra::vector_space *VS;
-	VS = NEW_OBJECT(algebra::vector_space);
+	linear_algebra::vector_space *VS;
+	VS = NEW_OBJECT(linear_algebra::vector_space);
 	VS->init(Mtx->GFq, vector_space_dimension,
 			verbose_level);
 	VS->init_rank_functions(
@@ -818,7 +824,7 @@ long int semifield_classify::rank_point(int *v, int verbose_level)
 		cout << "semifield_classify::rank_point" << endl;
 	}
 	Int_vec_copy(v, A_on_S->mtx1, k2);
-	G->A->make_element(Elt1, A_on_S->mtx1, 0);
+	G->A->Group_element->make_element(Elt1, A_on_S->mtx1, 0);
 	if (f_vv) {
 		cout << "semifield_classify::rank_point "
 				"The rank of" << endl;

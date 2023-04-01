@@ -470,7 +470,7 @@ void schreier_vector::relabel_points(
 	}
 	if (f_vv) {
 		cout << "schreier_vector::relabel_points "
-				"old / n e w schreier vector:" << endl;
+				"old / new schreier vector:" << endl;
 		cout << "i : pts[i] : prev[i] : label[i] :: i : "
 				"new_sv_pts[i] : new_sv_prev[i] : "
 				"new_sv_label[i] " << endl;
@@ -526,7 +526,7 @@ void schreier_vector::relabel_points(
 	}
 	if (f_v) {
 		cout << "schreier_vector::relabel_points "
-				"n e w schreier vector created" << endl;
+				"new schreier vector created" << endl;
 		cout << "schreier_vector::relabel_points done" << endl;
 	}
 }
@@ -944,7 +944,7 @@ void schreier_vector::init_shallow_schreier_forest(groups::schreier *S,
 			for (i = 0; i < local_gens->len; i++) {
 				cout << "generator " << i << " / "
 						<< local_gens->len << ":" << endl;
-				local_gens->A->element_print_quick(
+				local_gens->A->Group_element->element_print_quick(
 						local_gens->ith(i), cout);
 			}
 		}

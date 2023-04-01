@@ -109,14 +109,14 @@ void points_and_lines::init(
 	}
 
 
-	if (P->n == 3) {
+	if (P->Subspaces->n == 3) {
 		Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
 
 		if (f_v) {
 			cout << "points_and_lines::init "
 					"before Quadratic_form->init" << endl;
 		}
-		Quadratic_form->init(1 /* epsilon */, 4, P->F, verbose_level);
+		Quadratic_form->init(1 /* epsilon */, 4, P->Subspaces->F, verbose_level);
 		if (f_v) {
 			cout << "points_and_lines::init "
 					"after Quadratic_form->init" << endl;
@@ -197,7 +197,7 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 
 	for (i = 0; i < nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		P->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
+		P->Subspaces->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
 		ost << "\\ell_{" << i << "}";
 
@@ -209,18 +209,18 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 		ost << " = " << endl;
 		//print_integer_matrix_width(cout,
 		// Gr->M, k, n, n, F->log10_of_q + 1);
-		P->Grass_lines->latex_matrix(ost, P->Grass_lines->M);
+		P->Subspaces->Grass_lines->latex_matrix(ost, P->Subspaces->Grass_lines->M);
 		//print_integer_matrix_tex(ost, Gr->M, 2, 4);
 		//ost << "\\right]_{" << Lines[i] << "}" << endl;
 		ost << "_{" << Lines[i] << "}" << endl;
 		ost << "=" << endl;
 		ost << "\\left[" << endl;
-		L.print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 4);
+		L.print_integer_matrix_tex(ost, P->Subspaces->Grass_lines->M, 2, 4);
 		ost << "\\right]_{" << Lines[i] << "}" << endl;
 
 		int v6[6];
 
-		P->Grass_lines->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
+		P->Subspaces->Grass_lines->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
 
 
 

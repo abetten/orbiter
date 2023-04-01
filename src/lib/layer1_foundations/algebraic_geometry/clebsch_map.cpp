@@ -110,7 +110,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	int coefficients[3];
 
 
-	Surf->P->Grass_planes->unrank_lint_here(
+	Surf->P->Subspaces->Grass_planes->unrank_lint_here(
 			Plane, plane_rk_global, 0);
 	F->Linear_algebra->Gauss_simple(Plane, 3, 4, base_cols,
 			0 /* verbose_level */);
@@ -266,7 +266,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (f_v) {
 		cout << "clebsch_map::compute_Clebsch_map_down_worker" << endl;
 	}
-	Surf->P->Grass_planes->unrank_lint_here(Plane, plane_rk_global,
+	Surf->P->Subspaces->Grass_planes->unrank_lint_here(Plane, plane_rk_global,
 			0 /* verbose_level */);
 	r = F->Linear_algebra->Gauss_simple(Plane, 3, 4, base_cols,
 			0 /* verbose_level */);
@@ -289,7 +289,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	// the plane onto which we map:
 
 	// test line_a:
-	Surf->P->Grass_lines->unrank_lint_here(Line_a,
+	Surf->P->Subspaces->Grass_lines->unrank_lint_here(Line_a,
 			SO->Lines[line_idx[0]], 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Line a = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[0]]
@@ -308,7 +308,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	}
 
 	// test line_b:
-	Surf->P->Grass_lines->unrank_lint_here(Line_b,
+	Surf->P->Subspaces->Grass_lines->unrank_lint_here(Line_b,
 			SO->Lines[line_idx[1]], 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Line b = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[1]]
@@ -418,7 +418,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			Image_rk[h] = -1;
 			continue;
 		}
-		F->PG_element_normalize(Dual_planes + 12, 1, 4);
+		F->Projective_space_basic->PG_element_normalize(
+				Dual_planes + 12, 1, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker "
 					"intersection point normalized: ";
@@ -720,7 +721,7 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 
 
 	ost << "The plane is:" << endl;
-	Surf->P->Grass_planes->print_set_tex(ost, &plane_rk_global, 1, 0 /* verbose_level */);
+	Surf->P->Subspaces->Grass_planes->print_set_tex(ost, &plane_rk_global, 1, 0 /* verbose_level */);
 
 	ost << "Clebsch map for lines $" << line1
 			<< " = " << Surf->Schlaefli->Labels->Line_label_tex[line1] << ", "

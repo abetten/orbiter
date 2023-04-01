@@ -82,7 +82,8 @@ void arc_basic::Segre_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -152,7 +153,8 @@ void arc_basic::GlynnI_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -222,7 +224,8 @@ void arc_basic::GlynnII_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -307,7 +310,8 @@ void arc_basic::Subiaco_oval(
 	Mtx[t * 3 + 1] = 1;
 	Mtx[t * 3 + 2] = 0;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -408,7 +412,8 @@ void arc_basic::Subiaco_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		F->PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
+		F->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
 	}
 
@@ -445,7 +450,7 @@ int arc_basic::OKeefe_Penttila_32(int t)
 
 	t_powers = NEW_int(31);
 
-	F->power_table(t, t_powers, 31);
+	F->Io->power_table(t, t_powers, 31);
 	a = F->add3(t_powers[4], t_powers[16], t_powers[28]);
 	b = F->add6(t_powers[6], t_powers[10], t_powers[14],
 			t_powers[18], t_powers[22], t_powers[26]);
@@ -477,7 +482,7 @@ int arc_basic::Subiaco64_1(int t)
 
 	t_powers = NEW_int(65);
 
-	F->power_table(t, t_powers, 65);
+	F->Io->power_table(t, t_powers, 65);
 	a = F->add6(t_powers[8], t_powers[12], t_powers[20],
 			t_powers[22], t_powers[42], t_powers[52]);
 	b = F->add6(t_powers[4], t_powers[10], t_powers[14],
@@ -503,7 +508,7 @@ int arc_basic::Subiaco64_2(int t)
 
 	t_powers = NEW_int(65);
 
-	F->power_table(t, t_powers, 65);
+	F->Io->power_table(t, t_powers, 65);
 	a = F->add3(t_powers[24], t_powers[30], t_powers[62]);
 	b = F->add6(t_powers[4], t_powers[8], t_powers[10],
 			t_powers[14], t_powers[16], t_powers[34]);
@@ -530,7 +535,7 @@ int arc_basic::Adelaide64(int t)
 
 	t_powers = NEW_int(65);
 
-	F->power_table(t, t_powers, 65);
+	F->Io->power_table(t, t_powers, 65);
 	a = F->add7(t_powers[4], t_powers[8], t_powers[14], t_powers[34],
 			t_powers[42], t_powers[48], t_powers[62]);
 	b = F->add8(t_powers[6], t_powers[16], t_powers[26], t_powers[28],
@@ -582,7 +587,8 @@ void arc_basic::LunelliSce(int *pts18, int verbose_level)
 	N = Gg.nb_PG_elements(2, 16);
 	sz = 0;
 	for (i = 0; i < N; i++) {
-		F->PG_element_unrank_modified(v, 1, 3, i);
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, 3, i);
 		//cout << "i=" << i << " v=";
 		//int_vec_print(cout, v, 3);
 		//cout << endl;

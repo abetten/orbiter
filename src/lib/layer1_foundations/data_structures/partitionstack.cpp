@@ -151,7 +151,7 @@ void partitionstack::allocate_with_two_classes(
 	}
 
 	allocate(v + b, 0 /* verbose_level */);
-	subset_continguous(v, b);
+	subset_contiguous(v, b);
 	split_cell(0 /* verbose_level */);
 	sort_cells();
 
@@ -1184,7 +1184,7 @@ void partitionstack::isolate_point(int pt)
 #endif
 }
 
-void partitionstack::subset_continguous(int from, int len)
+void partitionstack::subset_contiguous(int from, int len)
 {
 #ifdef SPLIT_MULTIPLY
 	int i;
@@ -1346,19 +1346,19 @@ void partitionstack::initial_matrix_decomposition(int nbrows, int nbcols,
 	}
 
 	// split rows and columns
-	subset_continguous(nbrows, nbcols);
+	subset_contiguous(nbrows, nbcols);
 	split_cell(FALSE);
 
 	l = V[0];
 	for (i = 1; i < nb_V; i++) {
-		subset_continguous(l, nbrows - l);
+		subset_contiguous(l, nbrows - l);
 		split_cell(FALSE);
 		l += V[i];
 	}
 
 	l = B[0];
 	for (i = 1; i < nb_B; i++) {
-		subset_continguous(nbrows + l, nbcols - l);
+		subset_contiguous(nbrows + l, nbcols - l);
 		split_cell(FALSE);
 		l += B[i];
 	}
@@ -1901,7 +1901,7 @@ void partitionstack::print_column_refinement_info(
 	}
 	else {
 		cout << "the " << ht - ht0
-				<< " n e w col parts that were split off are:" << endl;
+				<< " col parts that were split off are:" << endl;
 		for (cell = ht0; cell < ht; cell++) {
 			ancestor = parent_at_height(ht0, cell);
 			first = startCell[cell];
@@ -1938,7 +1938,7 @@ void partitionstack::print_row_refinement_info(
 		cout << "no splitting" << endl;
 	}
 	else {
-		cout << "the " << ht - ht0 << " n e w row parts "
+		cout << "the " << ht - ht0 << " row parts "
 				"that were split off are:" << endl;
 		for (cell = ht0; cell < ht; cell++) {
 			ancestor = parent_at_height(ht0, cell);
@@ -2145,7 +2145,7 @@ void partitionstack::split_by_orbit_partition(
 			if (f_v) {
 				cout << "orbit " << i << " of length=" << l
 					<< " is split off from cell " << cell_idx
-					<< " to form a n e w cell C_{" << ht << "}, so "
+					<< " to form a cell C_{" << ht << "}, so "
 					<< cell_size << " = " << cell_size - l
 					<< " + " << l << endl;
 			}

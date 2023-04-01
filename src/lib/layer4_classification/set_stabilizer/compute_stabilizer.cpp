@@ -203,18 +203,23 @@ void compute_stabilizer::init(
 	Stab->init_trivial_group(0 /* verbose_level - 1*/);
 
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_set");
 
 	if (f_v) {
 		cout << "compute_stabilizer::init "
-				"before A2->restricted_action" << endl;
+				"before A2->Induced_action->restricted_action" << endl;
 	}
-	A_on_the_set = SubSt->SubC->A2->restricted_action(
+	A_on_the_set = SubSt->SubC->A2->Induced_action->restricted_action(
 			SubSt->Pts,
 			SubSt->nb_pts,
+			label_of_set,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "compute_stabilizer::init "
-				"after A2->restricted_action" << endl;
+				"after A2->Induced_action->restricted_action" << endl;
 	}
 
 
@@ -438,7 +443,7 @@ void compute_stabilizer::compute_automorphism_group_handle_case(
 			cout << "compute_stabilizer::compute_automorphism_group_handle_case "
 					"after compute_canonical_set_and_group" << endl;
 		}
-		SubSt->SubC->A->element_mult(
+		SubSt->SubC->A->Group_element->element_mult(
 				Stab_orbits->elt1,
 				Stab_orbits->elt2,
 				Stab_orbits->transporter0,
@@ -460,7 +465,7 @@ void compute_stabilizer::compute_automorphism_group_handle_case(
 			cout << "compute_stabilizer::compute_automorphism_group_handle_case "
 					"after compute_canonical_set" << endl;
 		}
-		SubSt->SubC->A->element_mult(
+		SubSt->SubC->A->Group_element->element_mult(
 				Stab_orbits->elt1,
 				Stab_orbits->elt2,
 				T2, FALSE);
@@ -663,7 +668,7 @@ void compute_stabilizer::setup_stabilizer(
 	}
 	if (FALSE) {
 		cout << "transporter1:" << endl;
-		A_induced->element_print(Stab_orbits->transporter0, cout);
+		A_induced->Group_element->element_print(Stab_orbits->transporter0, cout);
 		cout << endl;
 	}
 
@@ -678,14 +683,14 @@ void compute_stabilizer::setup_stabilizer(
 	}
 #endif
 
-	SubSt->SubC->A->element_move(Stab_orbits->transporter0, T1, 0);
+	SubSt->SubC->A->Group_element->element_move(Stab_orbits->transporter0, T1, 0);
 
 	if (FALSE) {
 		cout << "T1:" << endl;
-		SubSt->SubC->A->element_print(T1, cout);
+		SubSt->SubC->A->Group_element->element_print(T1, cout);
 		cout << endl;
 	}
-	SubSt->SubC->A->element_invert(T1, T1v, FALSE);
+	SubSt->SubC->A->Group_element->element_invert(T1, T1v, FALSE);
 
 	// T1 := elt1 * elt2
 	// moves the_set to the canonical set.
@@ -782,18 +787,24 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 		cout << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("on_interesting_points");
+
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
 				"computing induced action by restriction" << endl;
 	}
 
-	A_induced = SubSt->SubC->A2->restricted_action(
+	A_induced = SubSt->SubC->A2->Induced_action->restricted_action(
 			Stab_orbits->interesting_points,
 			Stab_orbits->nb_interesting_points,
+			label_of_set,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
-				"after A2->restricted_action" << endl;
+				"after A2->Induced_action->restricted_action" << endl;
 	}
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
@@ -810,14 +821,18 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
-				"before A_induced->induced_action_override_sims" << endl;
+				"before AG.induced_action_override_sims" << endl;
 	}
-	A_induced->induced_action_override_sims(
-		*SubSt->SubC->A, Stab_orbits->selected_set_stab,
-		0 /*verbose_level*/);
+
+	actions::action_global AG;
+
+	AG.induced_action_override_sims(
+			SubSt->SubC->A, A_induced,
+			Stab_orbits->selected_set_stab,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
-				"after A_induced->induced_action_override_sims" << endl;
+				"after AG.induced_action_override_sims" << endl;
 	}
 
 	if (!A_induced->f_has_kernel) {
@@ -1041,7 +1056,7 @@ void compute_stabilizer::compute_canonical_set(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_v4 = (verbose_level >= 4);
-	int nb_nodes;
+	long int nb_nodes;
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set" << endl;
@@ -1055,13 +1070,29 @@ void compute_stabilizer::compute_canonical_set(
 
 	my_Aut = NEW_OBJECT(groups::sims);
 
-	A_induced->make_canonical(
+	actions::action_global AG;
+	groups::sims *Sims;
+
+	Sims = A_induced->Strong_gens->create_sims(verbose_level);
+
+	if (f_v) {
+		cout << "compute_stabilizer::make_canonical_set "
+				"before AG.make_canonical" << endl;
+	}
+
+	AG.make_canonical(A_induced, Sims,
 		sz, set_in,
 		set_out, transporter, nb_nodes,
 		TRUE, my_Aut,
 		0 /*verbose_level - 1*/);
 
+	if (f_v) {
+		cout << "compute_stabilizer::make_canonical_set "
+				"after AG.make_canonical" << endl;
+	}
+
 	FREE_OBJECT(my_Aut);
+	FREE_OBJECT(Sims);
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set "
@@ -1079,28 +1110,34 @@ void compute_stabilizer::compute_canonical_set_and_group(
 // calls A_induced->make_canonical and computes a transporter and the set stabilizer
 {
 	int f_v = (verbose_level >= 1);
-	int nb_nodes;
+	long int nb_nodes;
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set_and_group" << endl;
-	}
-	if (f_v) {
-		cout << "compute_stabilizer::compute_canonical_set_and_group "
-				"before A_induced->make_canonical" << endl;
 	}
 
 
 	stab = NEW_OBJECT(groups::sims);
 
-	A_induced->make_canonical(
-		sz, set_in,
-		set_out, transporter, nb_nodes,
-		TRUE, stab,
-		0 /*verbose_level - 1*/);
+	actions::action_global AG;
+	groups::sims *Sims;
+
+	Sims = A_induced->Strong_gens->create_sims(verbose_level);
+
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set_and_group "
-				"after A_induced->make_canonical" << endl;
+				"before AG.make_canonical" << endl;
+	}
+	AG.make_canonical(A_induced, Sims,
+		sz, set_in,
+		set_out, transporter, nb_nodes,
+		TRUE, stab,
+		verbose_level - 1);
+
+	if (f_v) {
+		cout << "compute_stabilizer::compute_canonical_set_and_group "
+				"after AG.make_canonical" << endl;
 	}
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_set_and_group done" << endl;
@@ -1196,7 +1233,7 @@ void compute_stabilizer::add_automorphism(int verbose_level)
 					"element strips through" << endl;
 			if (FALSE) {
 				cout << "compute_stabilizer residue:" << endl;
-				SubSt->SubC->A->element_print(Stab_orbits->Elt4, cout);
+				SubSt->SubC->A->Group_element->element_print(Stab_orbits->Elt4, cout);
 				cout << endl;
 			}
 		}
@@ -1210,11 +1247,11 @@ void compute_stabilizer::add_automorphism(int verbose_level)
 					"element needs to be inserted at level = "
 				<< drop_out_level << " with image " << image << endl;
 			if (FALSE) {
-				SubSt->SubC->A->element_print(Stab_orbits->Elt4, cout);
+				SubSt->SubC->A->Group_element->element_print(Stab_orbits->Elt4, cout);
 				cout  << endl;
 			}
 		}
-		if (!SubSt->SubC->A2->check_if_in_set_stabilizer(
+		if (!SubSt->SubC->A2->Group_element->check_if_in_set_stabilizer(
 				Stab_orbits->Elt4, SubSt->nb_pts,
 				SubSt->Pts, 0/*verbose_level*/)) {
 			cout << "compute_stabilizer::main_loop_handle_case "
@@ -1236,7 +1273,7 @@ void compute_stabilizer::retrieve_automorphism(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	SubSt->SubC->A->element_mult(
+	SubSt->SubC->A->Group_element->element_mult(
 			T2, T1v,
 			Stab_orbits->new_automorphism, FALSE);
 	if (f_v) {
@@ -1246,11 +1283,11 @@ void compute_stabilizer::retrieve_automorphism(int verbose_level)
 	if (FALSE) {
 		cout << "compute_stabilizer::retrieve_automorphism "
 				"automorphism:" << endl;
-		SubSt->SubC->A->element_print(
+		SubSt->SubC->A->Group_element->element_print(
 				Stab_orbits->new_automorphism, cout);
 		cout << endl;
 	}
-	if (!SubSt->SubC->A2->check_if_in_set_stabilizer(
+	if (!SubSt->SubC->A2->Group_element->check_if_in_set_stabilizer(
 			Stab_orbits->new_automorphism,
 			SubSt->nb_pts, SubSt->Pts,
 			verbose_level)) {
@@ -1265,11 +1302,11 @@ void compute_stabilizer::retrieve_automorphism(int verbose_level)
 
 	if (f_v) {
 		cout << "the automorphism is: " << endl;
-		A_on_the_set->element_print(
+		A_on_the_set->Group_element->element_print(
 				Stab_orbits->new_automorphism, cout);
 		cout << endl;
 		cout << "the automorphism acts on the set as: " << endl;
-		A_on_the_set->element_print_as_permutation(
+		A_on_the_set->Group_element->element_print_as_permutation(
 				Stab_orbits->new_automorphism, cout);
 		cout << endl;
 	}
@@ -1279,25 +1316,31 @@ void compute_stabilizer::make_canonical_second_set(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v4 = (verbose_level >= 4);
-	int nb_nodes;
+	long int nb_nodes;
 
 	if (f_v) {
 		cout << "compute_stabilizer::make_canonical_second_set" << endl;
 	}
+
+	actions::action_global AG;
+	groups::sims *Sims;
+
+	Sims = A_induced->Strong_gens->create_sims(verbose_level);
+
 	if (f_v) {
 		cout << "compute_stabilizer::make_canonical_second_set "
-				"before A_induced->make_canonical" << endl;
+				"before AG.make_canonical" << endl;
 	}
-	A_induced->make_canonical(
+	AG.make_canonical(A_induced, Sims,
 			Stab_orbits->reduced_set_size,
 			Stab_orbits->reduced_set2_new_labels,
 			Stab_orbits->canonical_set2,
 			transporter2, nb_nodes,
 			TRUE, Aut,
-		0 /*verbose_level - 1*/);
+			0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "compute_stabilizer::make_canonical_second_set "
-				"after A_induced->make_canonical" << endl;
+				"after AG.make_canonical" << endl;
 	}
 
 	backtrack_nodes_total_in_loop += nb_nodes;
@@ -1316,21 +1359,24 @@ void compute_stabilizer::make_canonical_second_set(int verbose_level)
 	if (FALSE) {
 		cout << "compute_stabilizer::make_canonical_second_set "
 				"transporter2:" << endl;
-		A_induced->element_print(transporter2, cout);
+		A_induced->Group_element->element_print(transporter2, cout);
 		cout << endl;
-		A_induced->element_print_as_permutation(
+		A_induced->Group_element->element_print_as_permutation(
 				transporter2, cout);
 		cout << endl;
 	}
-	SubSt->SubC->A->mult(Stab_orbits->elt2, transporter2, T2);
+	SubSt->SubC->A->Group_element->mult(Stab_orbits->elt2, transporter2, T2);
 	if (FALSE) {
 		cout << "compute_stabilizer::make_canonical_second_set "
 				"T2:" << endl;
-		SubSt->SubC->A->element_print(T2, cout);
+		SubSt->SubC->A->Group_element->element_print(T2, cout);
 		cout << endl;
 		//A_induced.element_print_as_permutation(transporter2, cout);
 		//cout << endl;
 	}
+
+	FREE_OBJECT(Sims);
+
 	if (f_v) {
 		cout << "compute_stabilizer::make_canonical_second_set done" << endl;
 	}

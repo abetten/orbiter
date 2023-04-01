@@ -81,7 +81,8 @@ action_on_grassmannian::~action_on_grassmannian()
 		}
 }
 
-void action_on_grassmannian::init(actions::action &A,
+void action_on_grassmannian::init(
+		actions::action &A,
 		geometry::grassmann *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -157,7 +158,8 @@ void action_on_grassmannian::add_print_function(
 }
 
 
-void action_on_grassmannian::init_embedding(int big_n,
+void action_on_grassmannian::init_embedding(
+		int big_n,
 		int *ambient_space, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -178,7 +180,8 @@ void action_on_grassmannian::init_embedding(int big_n,
 }
 
 
-void action_on_grassmannian::unrank(long int i, int *v, int verbose_level)
+void action_on_grassmannian::unrank(
+		long int i, int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -191,7 +194,8 @@ void action_on_grassmannian::unrank(long int i, int *v, int verbose_level)
 	}
 }
 
-long int action_on_grassmannian::rank(int *v, int verbose_level)
+long int action_on_grassmannian::rank(
+		int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int rk;
@@ -229,7 +233,7 @@ void action_on_grassmannian::compute_image_longinteger(
 				G->k, G->n, G->n, F->log10_of_q);
 		}
 	for (h = 0; h < k; h++) {
-		A->element_image_of_low_level(G->M + h * n,
+		A->Group_element->element_image_of_low_level(G->M + h * n,
 				M1 + h * n, Elt, verbose_level - 1);
 		}
 	//A->element_image_of_low_level(G->M, M1, Elt, verbose_level - 1);
@@ -290,7 +294,7 @@ long int action_on_grassmannian::compute_image_int_ordinary(
 				G->k, G->n, G->n, 2/* M->GFq->log10_of_q*/);
 		}
 	for (h = 0; h < k; h++) {
-		A->element_image_of_low_level(G->M + h * n,
+		A->Group_element->element_image_of_low_level(G->M + h * n,
 				M1 + h * n, Elt, verbose_level - 1);
 		}
 #if 0
@@ -334,7 +338,7 @@ long int action_on_grassmannian::compute_image_int_embedded(
 				k, big_n, big_n, F->log10_of_q);
 		}
 	for (h = 0; h < k; h++) {
-		A->element_image_of_low_level(
+		A->Group_element->element_image_of_low_level(
 			subspace_basis + h * big_n,
 			subspace_basis2 + h * big_n,
 			Elt, verbose_level - 1);

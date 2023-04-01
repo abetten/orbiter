@@ -1119,12 +1119,12 @@ void poset_of_orbits::write_level_file_binary2(
 }
 
 void poset_of_orbits::write_candidates_binary_using_sv(
-		const char *fname_base,
+		std::string &fname_base,
 		int lvl, int t0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE;
-	char fname[1000];
+	string fname;
 
 	if (f_v) {
 		cout << "poset_of_orbits::write_candidates_binary_using_sv "

@@ -101,7 +101,7 @@ void semifield_flag_orbit_node::write_to_file_binary(
 	fp.write((char *) &f_fusion_node, sizeof(int));
 	if (f_fusion_node) {
 		fp.write((char *) &fusion_with, sizeof(int));
-		SL->SC->A->element_write_to_file_binary(fusion_elt, fp, 0);
+		SL->SC->A->Group_element->element_write_to_file_binary(fusion_elt, fp, 0);
 		}
 	else {
 		fp.write((char *) &upstep_orbit, sizeof(int));
@@ -133,7 +133,7 @@ void semifield_flag_orbit_node::read_from_file_binary(
 	if (f_fusion_node) {
 		fp.read((char *) &fusion_with, sizeof(int));
 		fusion_elt = NEW_int(SL->SC->A->elt_size_in_int);
-		SL->SC->A->element_read_from_file_binary(fusion_elt, fp, 0);
+		SL->SC->A->Group_element->element_read_from_file_binary(fusion_elt, fp, 0);
 		}
 	else {
 		fp.read((char *) &upstep_orbit, sizeof(int));

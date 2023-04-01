@@ -85,6 +85,10 @@ void subfield_structure::init(
 	subfield_structure::Fq = Fq;
 	Q = FQ->q;
 	q = Fq->q;
+	if (f_v) {
+		cout << "subfield_structure::init "
+				"Q=" << Q << " q=" << q << endl;
+	}
 	if (FQ->p != Fq->p) {
 		cout << "subfield_structure::init "
 				"different characteristics" << endl;
@@ -93,6 +97,9 @@ void subfield_structure::init(
 	s = FQ->e / Fq->e;
 	if (Fq->e * s != FQ->e) {
 		cout << "Fq is not a subfield of FQ" << endl;
+		cout << "subfield_structure::init "
+				"FQ->e=" << FQ->e
+				<< " Fq->e=" << Fq->e << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -101,7 +108,8 @@ void subfield_structure::init(
 
 	index_in_multiplicative_group = (Q - 1) / (q - 1);
 	if (f_v) {
-		cout << "index of multiplicative groups = " << index_in_multiplicative_group << endl;
+		cout << "index of multiplicative groups = "
+				<< index_in_multiplicative_group << endl;
 	}
 
 
@@ -117,11 +125,13 @@ void subfield_structure::init(
 
 	if (s == 2) {
 		if (f_v) {
-			cout << "subfield_structure::init before embedding_2dimensional" << endl;
+			cout << "subfield_structure::init "
+					"before embedding_2dimensional" << endl;
 		}
 		embedding_2dimensional(verbose_level);
 		if (f_v) {
-			cout << "subfield_structure::init after embedding_2dimensional" << endl;
+			cout << "subfield_structure::init "
+					"after embedding_2dimensional" << endl;
 		}
 		f_has_2D = TRUE;
 	}
@@ -239,7 +249,8 @@ int subfield_structure::retract(int b, int verbose_level)
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
-		cout << "subfield_structure::retract b=" << b << endl;
+		cout << "subfield_structure::retract "
+				"b=" << b << endl;
 	}
 
 	if (b == 0) {
@@ -248,7 +259,8 @@ int subfield_structure::retract(int b, int verbose_level)
 	else {
 		j = FQ->log_alpha(b);
 		if ((j % index_in_multiplicative_group)) {
-			cout << "subfield_structure::retract the element does not belong to the subfield" << endl;
+			cout << "subfield_structure::retract "
+					"the element does not belong to the subfield" << endl;
 			exit(1);
 		}
 		i = j / index_in_multiplicative_group;
@@ -256,7 +268,8 @@ int subfield_structure::retract(int b, int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "subfield_structure::retract b=" << b << " a=" << a << endl;
+		cout << "subfield_structure::retract "
+				"b=" << b << " a=" << a << endl;
 	}
 	if (f_v) {
 		cout << "subfield_structure::retract done" << endl;
@@ -342,7 +355,7 @@ void subfield_structure::report(std::ostream &ost)
 	ost << "Field basis:\\\\" << endl;
 	ost << "$$" << endl;
 	Int_vec_print(ost, Basis, s);
-	//cout << endl;
+	ost << endl;
 	ost << "$$" << endl;
 
 	//report_embedding(ost);
@@ -355,7 +368,8 @@ void subfield_structure::report(std::ostream &ost)
 	}
 }
 
-void subfield_structure::report_embedding(std::ostream &ost)
+void subfield_structure::report_embedding(
+		std::ostream &ost)
 {
 	int i, j;
 	geometry::geometry_global Gg;
@@ -376,7 +390,8 @@ void subfield_structure::report_embedding(std::ostream &ost)
 	ost << "$$" << endl;
 }
 
-void subfield_structure::report_embedding_reverse(std::ostream &ost)
+void subfield_structure::report_embedding_reverse(
+		std::ostream &ost)
 {
 	int i, j;
 	geometry::geometry_global Gg;
@@ -431,11 +446,17 @@ void subfield_structure::lift_matrix(
 // output is Mq[n * n] over the field Fq,
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, I, J, a, b, c, d, u, v, n;
+	//int i, j, I, J, a, b, c, d, u, v, n;
 
 	if (f_v) {
 		cout << "subfield_structure::lift_matrix" << endl;
 	}
+
+	lift_matrix_semilinear(
+			MQ, 0 /* frob */,
+			m, Mq, verbose_level - 1);
+
+#if 0
 	n = m * s;
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < m; j++) {
@@ -452,13 +473,62 @@ void subfield_structure::lift_matrix(
 			}
 		}
 	}
+#endif
 
 	if (f_v) {
 		cout << "subfield_structure::lift_matrix done" << endl;
 	}
 }
 
-void subfield_structure::retract_matrix(int *Mq,
+void subfield_structure::lift_matrix_semilinear(
+		int *MQ, int frob,
+		int m, int *Mq, int verbose_level)
+// input is MQ[m * m] over the field FQ.
+// output is Mq[n * n] over the field Fq,
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subfield_structure::lift_matrix" << endl;
+#if 0
+		cout << "subfield_structure::lift_matrix basis = ";
+		Int_vec_print(cout, Basis, s);
+		cout << endl;
+		cout << "subfield_structure::lift_matrix components = " << endl;
+		Int_matrix_print(components, Q, s);
+		cout << endl;
+#endif
+	}
+
+	int i, j, I, J, a, b, c, d, u, v, n;
+
+	n = m * s;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < m; j++) {
+			a = MQ[i * m + j];
+			I = s * i;
+			J = s * j;
+			for (u = 0; u < s; u++) {
+				b = Basis[u];
+				c = FQ->mult(b, a);
+				c = FQ->frobenius_power(c, frob); // apply the Frobenius
+				for (v = 0; v < s; v++) {
+					d = components[c * s + v];
+					Mq[(I + u) * n + J + v] = d;
+				}
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "subfield_structure::lift_matrix done" << endl;
+	}
+}
+
+
+
+void subfield_structure::retract_matrix(
+		int *Mq,
 		int n, int *MQ, int m, int verbose_level)
 // input is Mq[n * n] over the field Fq,
 // output is MQ[m * m] over the field FQ.
@@ -648,7 +718,8 @@ void subfield_structure::Adelaide_hyperoval(
 	Mtx[t * 3 + 1] = 0;
 	Mtx[t * 3 + 2] = 1;
 	for (i = 0; i < N; i++) {
-		Fq->PG_element_rank_modified(Mtx + i * 3, 1, 3, r);
+		Fq->Projective_space_basic->PG_element_rank_modified(
+				Mtx + i * 3, 1, 3, r);
 		Pts[i] = r;
 	}
 
@@ -895,9 +966,9 @@ void subfield_structure::print_embedding_2D_table_tex()
 	for (i = 0; i < q; i++) {
 		cout << i;
 		cout << " & ";
-		Fq->print_element(cout, i);
+		Fq->Io->print_element(cout, i);
 		cout << " & ";
-		FQ->print_element(cout, embedding_2D[i]);
+		FQ->Io->print_element(cout, embedding_2D[i]);
 		cout << "\\\\" << endl;
 	}
 	cout << "\\end{array}" << endl;

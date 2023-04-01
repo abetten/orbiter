@@ -140,13 +140,13 @@ void semifield_downstep_node::init(
 		}
 
 
-	A_on_cosets = NEW_OBJECT(actions::action);
+	//A_on_cosets = NEW_OBJECT(actions::action);
 
 	if (f_vv) {
 		cout << "semifield_downstep_node::init "
 				"initializing A_on_cosets:" << endl;
 		}
-	A_on_cosets->induced_action_on_cosets(
+	A_on_cosets = SC->AS->Induced_action->induced_action_on_cosets(
 		on_cosets,
 		FALSE /* f_induce_action */, NULL /* old_G */,
 		verbose_level);

@@ -300,7 +300,8 @@ void graph_node::find_all_parents(
 	}
 }
 
-int graph_node::find_parent(layered_graph *G, int verbose_level)
+int graph_node::find_parent(
+		layered_graph *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, id = 0, l, n;

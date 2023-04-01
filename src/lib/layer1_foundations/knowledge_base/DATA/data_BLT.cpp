@@ -117,7 +117,7 @@ static int BLT_7_stab_gens_len[] = { 8, 5};
 static int BLT_7_make_element_size = 25;
 
 
-
+#if 0
 static int BLT_9_size = 10;
 static int BLT_9_nb_reps = 3;
 static long int BLT_9_reps[] = {
@@ -158,6 +158,7 @@ static int BLT_9_stab_gens[] = {
 static int BLT_9_stab_gens_fst[] = { 0, 8, 18};
 static int BLT_9_stab_gens_len[] = { 8, 10, 5};
 static int BLT_9_make_element_size = 26;
+#endif
 
 
 
@@ -416,7 +417,7 @@ static int BLT_23_make_element_size = 25;
 
 
 
-
+#if 0
 static int BLT_25_size = 26;
 static int BLT_25_nb_reps = 6;
 static long int BLT_25_reps[] = {
@@ -477,10 +478,10 @@ static int BLT_25_stab_gens[] = {
 static int BLT_25_stab_gens_fst[] = { 0, 10, 18, 25, 29, 32};
 static int BLT_25_stab_gens_len[] = { 10, 8, 7, 4, 3, 5};
 static int BLT_25_make_element_size = 26;
+#endif
 
 
-
-
+#if 0
 static int BLT_27_size = 28;
 static int BLT_27_nb_reps = 6;
 static long int BLT_27_reps[] = {
@@ -538,7 +539,7 @@ static int BLT_27_stab_gens[] = {
 static int BLT_27_stab_gens_fst[] = { 0, 10, 18, 22, 28, 30};
 static int BLT_27_stab_gens_len[] = { 10, 8, 4, 6, 2, 4};
 static int BLT_27_make_element_size = 26;
-
+#endif
 
 
 static int BLT_29_size = 30;
@@ -924,7 +925,7 @@ static int BLT_47_make_element_size = 25;
 
 
 
-
+#if 0
 static int BLT_49_size = 50;
 static int BLT_49_nb_reps = 8;
 static long int BLT_49_reps[] = {
@@ -994,6 +995,7 @@ static int BLT_49_stab_gens[] = {
 static int BLT_49_stab_gens_fst[] = { 0, 10, 16, 26, 30, 32, 35, 38};
 static int BLT_49_stab_gens_len[] = { 10, 6, 10, 4, 2, 3, 3, 4};
 static int BLT_49_make_element_size = 26;
+#endif
 
 
 
@@ -1340,4 +1342,5 @@ static int BLT_73_stab_gens[] = {
 static int BLT_73_stab_gens_fst[] = { 0, 6, 15, 17, 19};
 static int BLT_73_stab_gens_len[] = { 6, 9, 2, 2, 4};
 static int BLT_73_make_element_size = 25;
+
 

@@ -123,6 +123,9 @@ void poset_classification::init_internal(
 	
 	if (f_v) {
 		cout << "poset_classification::init_internal sz=" << sz << endl;
+	}
+
+	if (f_vv) {
 		cout << "poset_classification::init_internal Control=" << endl;
 		Control->print();
 	}

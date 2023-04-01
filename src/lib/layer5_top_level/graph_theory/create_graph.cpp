@@ -60,21 +60,25 @@ void create_graph::init(
 		CG = NEW_OBJECT(graph_theory::colored_graph);
 		if (f_v) {
 			cout << "create_graph::init "
-					"before CG->load, fname=" << description->fname << endl;
+					"before CG->load, "
+					"fname=" << description->fname << endl;
 		}
 		CG->load(description->fname, verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
-					"after CG->load, fname=" << description->fname << endl;
+					"after CG->load, "
+					"fname=" << description->fname << endl;
 		}
 		f_has_CG = TRUE;
 		N = CG->nb_points;
 		if (f_v) {
-			cout << "create_graph::init number of vertices = " << N << endl;
+			cout << "create_graph::init "
+					"number of vertices = " << N << endl;
 		}
 		label.assign(description->fname);
 		if (f_v) {
-			cout << "create_graph::init label = " << label << endl;
+			cout << "create_graph::init "
+					"label = " << label << endl;
 		}
 
 		data_structures::string_tools String;
@@ -115,7 +119,8 @@ void create_graph::init(
 			cout << "create_graph::init group order "
 					"G = " << Sims->group_order_lint() << endl;
 			cout << "create_graph::init group order "
-					"coded element size = " << G->A_base->elt_size_in_int << endl;
+					"coded element size = "
+					<< G->A_base->elt_size_in_int << endl;
 		}
 
 		int *v;
@@ -174,14 +179,15 @@ void create_graph::init(
 				cout << "create_graph::init "
 						"Element " << setw(5) << i << " / "
 						<< go.as_int() << ":" << endl;
-				G->A->element_print(Elt1, cout);
+				G->A->Group_element->element_print(Elt1, cout);
 				cout << endl;
-				G->A->element_print_as_permutation(Elt1, cout);
+				G->A->Group_element->element_print_as_permutation(Elt1, cout);
 				cout << endl;
 			}
 			for (h = 0; h < nb_gens; h++) {
 
-				G->A->element_mult(Elt1, gens->ith(h), Elt2, 0 /*verbose_level*/);
+				G->A->Group_element->element_mult(
+						Elt1, gens->ith(h), Elt2, 0 /*verbose_level*/);
 
 				j = Sims->element_rank_lint(Elt2);
 
@@ -225,7 +231,8 @@ void create_graph::init(
 		int *M;
 		int m, n;
 
-		Fio.int_matrix_read_csv_no_border(description->fname, M, m, n, verbose_level);
+		Fio.int_matrix_read_csv_no_border(
+				description->fname, M, m, n, verbose_level);
 		N = n;
 		Adj = M;
 
@@ -552,9 +559,9 @@ void create_graph::init(
 					"before create_coll_orthogonal" << endl;
 		}
 		create_coll_orthogonal(
-				description->coll_orthogonal_epsilon,
-				description->coll_orthogonal_d,
-				description->coll_orthogonal_label_Fq, verbose_level);
+				description->coll_orthogonal_space_label,
+				description->coll_orthogonal_set_of_points_label,
+				verbose_level);
 
 		if (f_v) {
 			cout << "create_graph::init "
@@ -573,7 +580,7 @@ void create_graph::init(
 				FALSE /* f_without_tables */,
 				FALSE /* f_compute_related_fields */,
 				0);
-		Surf->init(F, verbose_level);
+		Surf->init_surface_domain(F, verbose_level);
 
 		Surf->Schlaefli->make_trihedral_pair_disjointness_graph(Adj, verbose_level);
 		N = 120;
@@ -1196,7 +1203,7 @@ void create_graph::create_Shrikhande(
 				v[4 + j] = 4 + ((j + 1) % 4);
 			}
 		}
-		A->make_element(gens_G->ith(i), v, 0 /* verbose_level */);
+		A->Group_element->make_element(gens_G->ith(i), v, 0 /* verbose_level */);
 	}
 
 	if (f_v) {
@@ -1204,7 +1211,7 @@ void create_graph::create_Shrikhande(
 				"generators for G:" << endl;
 		for (i = 0; i < nb_G; i++) {
 			cout << "generator " << i << ":" << endl;
-			A->element_print(gens_G->ith(i), cout);
+			A->Group_element->element_print(gens_G->ith(i), cout);
 		}
 	}
 
@@ -1257,7 +1264,7 @@ void create_graph::create_Shrikhande(
 				v[4 + j] = 4 + ((4 + j - 1) % 4);
 			}
 		}
-		A->make_element(gens_S->ith(i), v, 0 /* verbose_level */);
+		A->Group_element->make_element(gens_S->ith(i), v, 0 /* verbose_level */);
 	}
 
 	if (f_v) {
@@ -1265,7 +1272,7 @@ void create_graph::create_Shrikhande(
 				"generators for S:" << endl;
 		for (i = 0; i < nb_S; i++) {
 			cout << "generator " << i << ":" << endl;
-			A->element_print(gens_S->ith(i), cout);
+			A->Group_element->element_print(gens_S->ith(i), cout);
 		}
 	}
 
@@ -1395,7 +1402,8 @@ void create_graph::create_Grassmann(
 }
 
 void create_graph::create_coll_orthogonal(
-		int epsilon, int d, std::string &label_Fq,
+		std::string &orthogonal_space_label,
+		std::string &set_of_points_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1405,28 +1413,39 @@ void create_graph::create_coll_orthogonal(
 	}
 
 	graph_theory::graph_theory_domain GT;
-	field_theory::finite_field *F;
 
-	F = Get_finite_field(label_Fq);
+	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
+
+	OA = Get_orthogonal_space(orthogonal_space_label);
+
+	long int *Set;
+	int sz;
+
+	Get_lint_vector_from_label(
+			set_of_points_label, Set, sz, 0 /* verbose_level */);
 
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal before "
-				"GT.make_orthogonal_collinearity_graph" << endl;
+				"OA->make_collinearity_graph" << endl;
 	}
-	GT.make_orthogonal_collinearity_graph(Adj, N,
-			epsilon, d, F, verbose_level);
+	OA->make_collinearity_graph(
+			Adj, N,
+			Set, sz,
+			verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal after "
-				"GT.make_orthogonal_collinearity_graph" << endl;
+				"OA->make_collinearity_graph" << endl;
 	}
 
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Coll_orthogonal_%d_%d_%d", epsilon, d, F->q);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, F->q);
-	label_tex.assign(str);
+	label.assign(OA->O->label_txt);
+	label.append("_coll_");
+	label.append(set_of_points_label);
+
+	label_tex.assign(OA->O->label_tex);
+	label_tex.append("\\_coll\\_");
+	label_tex.append(set_of_points_label);
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal done" << endl;

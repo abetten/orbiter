@@ -286,7 +286,8 @@ void plot_tools::draw_density_multiple_curves(
 }
 
 
-void plot_tools::get_coord(int *Px, int *Py, int idx, int x, int y,
+void plot_tools::get_coord(
+		int *Px, int *Py, int idx, int x, int y,
 		int min_x, int min_y, int max_x, int max_y, int f_switch_x)
 {
 	Px[idx] = (int)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
@@ -296,7 +297,8 @@ void plot_tools::get_coord(int *Px, int *Py, int idx, int x, int y,
 	Py[idx] = (int)(1000 * (double)(y - min_y) / (double)(max_y - min_y));
 }
 
-void plot_tools::get_coord_log(int *Px, int *Py, int idx, int x, int y,
+void plot_tools::get_coord_log(
+		int *Px, int *Py, int idx, int x, int y,
 		int min_x, int min_y, int max_x, int max_y,
 		double log_base, int f_switch_x)
 {
@@ -310,7 +312,8 @@ void plot_tools::get_coord_log(int *Px, int *Py, int idx, int x, int y,
 
 
 
-void plot_tools::y_to_pt_on_curve(int y_in, int &x, int &y,
+void plot_tools::y_to_pt_on_curve(
+		int y_in, int &x, int &y,
 	int *outline_value, int *outline_number, int outline_sz)
 {
 	int f_v = FALSE;
@@ -351,7 +354,8 @@ void plot_tools::y_to_pt_on_curve(int y_in, int &x, int &y,
 
 }
 
-void plot_tools::projective_plane_draw_grid(std::string &fname,
+void plot_tools::projective_plane_draw_grid(
+		std::string &fname,
 		layered_graph_draw_options *O,
 	int q, int *Table, int nb, 
 	int f_point_labels, std::string *Point_labels,
@@ -422,7 +426,8 @@ void plot_tools::projective_plane_draw_grid(std::string &fname,
 
 
 
-void plot_tools::draw_mod_n(draw_mod_n_description *Descr,
+void plot_tools::draw_mod_n(
+		draw_mod_n_description *Descr,
 		layered_graph_draw_options *O,
 		int verbose_level)
 {
@@ -495,7 +500,8 @@ void plot_tools::draw_mod_n(draw_mod_n_description *Descr,
 #endif
 
 
-void plot_tools::draw_mod_n_work(mp_graphics &G,
+void plot_tools::draw_mod_n_work(
+		mp_graphics &G,
 		layered_graph_draw_options *O,
 		draw_mod_n_description *Descr,
 		int verbose_level)
@@ -884,11 +890,11 @@ void plot_tools::draw_point_set_in_plane(
 	if (f_v) {
 		cout << "plot_tools::draw_point_set_in_plane" << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "plot_tools::draw_point_set_in_plane n != 2" << endl;
 		exit(1);
 	}
-	q = P->F->q;
+	q = P->Subspaces->F->q;
 	Table = NEW_int(nb_pts * 3);
 	for (i = 0; i < nb_pts; i++) {
 		P->unrank_point(Table + i * 3, Pts[i]);

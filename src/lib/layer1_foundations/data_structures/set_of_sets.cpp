@@ -162,22 +162,25 @@ void set_of_sets::init_basic(int underlying_set_size,
 	if (f_v) {
 		cout << "set_of_sets::init_basic nb_sets=" << nb_sets
 				<< " underlying_set_size=" << underlying_set_size << endl;
-		}
+	}
 	set_of_sets::nb_sets = nb_sets;
 	set_of_sets::underlying_set_size = underlying_set_size;
 	Sets = NEW_plint(nb_sets);
 	Set_size = NEW_lint(nb_sets);
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
-		}
+	}
 	for (i = 0; i < nb_sets; i++) {
 		Set_size[i] = Sz[i];
 		if (FALSE /*f_v*/) {
 			cout << "set_of_sets::init_basic allocating set " << i
 					<< " of size " << Sz[i] << endl;
-			}
-		Sets[i] = NEW_lint(Sz[i]);
 		}
+		Sets[i] = NEW_lint(Sz[i]);
+	}
+	if (f_v) {
+		cout << "set_of_sets::init_basic done" << endl;
+	}
 }
 
 void set_of_sets::init_basic_with_Sz_in_int(int underlying_set_size,
@@ -557,7 +560,7 @@ void set_of_sets::init_cycle_structure(
 			l++;
 			continue;
 			}
-		// work on a n e w cycle, starting at position l:
+		// work on the next cycle, starting at position l:
 		first = l;
 		//cout << "set_of_sets::init_cycle_structure cyle
 		//starting with " << first << endl;
@@ -1010,7 +1013,7 @@ void set_of_sets::compute_and_print_tdo_row_scheme(
 	I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-	Stack->subset_continguous(set_size, nb_blocks);
+	Stack->subset_contiguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 
@@ -1066,7 +1069,7 @@ void set_of_sets::compute_and_print_tdo_col_scheme(
 	I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-	Stack->subset_continguous(set_size, nb_blocks);
+	Stack->subset_contiguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 
@@ -1334,6 +1337,26 @@ int set_of_sets::has_constant_size_property()
 	return TRUE;
 }
 
+int set_of_sets::get_constant_size()
+{
+	int s, i;
+
+	if (nb_sets == 0) {
+		cout << "set_of_sets::get_constant_size no sets" << endl;
+		exit(1);
+	}
+	s = Set_size[0];
+	for (i = 1; i < nb_sets; i++) {
+		if (Set_size[i] != s) {
+			cout << "set_of_sets::get_constant_size "
+					"the size of the sets is not constant" << endl;
+			exit(1);
+		}
+	}
+	return s;
+}
+
+
 int set_of_sets::largest_set_size()
 {
 	int s = INT_MIN;
@@ -1547,7 +1570,7 @@ void set_of_sets::get_eckardt_points(
 
 	PStack = NEW_OBJECT(partitionstack);
 	PStack->allocate(nb_sets + underlying_set_size, 0 /* verbose_level */);
-	PStack->subset_continguous(nb_sets, underlying_set_size);
+	PStack->subset_contiguous(nb_sets, underlying_set_size);
 	PStack->split_cell(0 /* verbose_level */);
 	
 	IS->compute_TDO_safe(*PStack,

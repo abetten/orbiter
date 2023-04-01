@@ -148,7 +148,7 @@ void flag_orbit_node::write_file(std::ofstream &fp, int verbose_level)
 			cout << "flag_orbit_node::write_file f_fusion_node" << endl;
 		}
 		fp.write((char *) &fusion_with, sizeof(int));
-		Flag_orbits->A->element_write_to_file_binary(fusion_elt, fp, 0);
+		Flag_orbits->A->Group_element->element_write_to_file_binary(fusion_elt, fp, 0);
 	}
 	if (f_v) {
 		cout << "flag_orbit_node::write_file "
@@ -181,7 +181,7 @@ void flag_orbit_node::read_file(std::ifstream &fp, int verbose_level)
 		}
 		fp.read((char *) &fusion_with, sizeof(int));
 		fusion_elt = NEW_int(Flag_orbits->A->elt_size_in_int);
-		Flag_orbits->A->element_read_from_file_binary(fusion_elt, fp, 0);
+		Flag_orbits->A->Group_element->element_read_from_file_binary(fusion_elt, fp, 0);
 	}
 
 	if (f_v) {
@@ -227,7 +227,7 @@ void flag_orbit_node::print_latex(flag_orbits *Flag_orbits,
 	if (f_fusion_node) {
 		ost << "Fusion element:\\\\" << endl;
 		ost << "$$" << endl;
-		Flag_orbits->A->element_print_latex(fusion_elt, ost);
+		Flag_orbits->A->Group_element->element_print_latex(fusion_elt, ost);
 		ost << "$$" << endl;
 	}
 

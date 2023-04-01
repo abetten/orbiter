@@ -24,7 +24,12 @@ namespace groups {
 orbits_on_something::orbits_on_something()
 {
 	A = NULL;
+
+	f_has_SG = FALSE;
 	SG = NULL;
+
+	gens = NULL;
+
 	Sch = NULL;
 
 	f_load_save = FALSE;
@@ -32,12 +37,6 @@ orbits_on_something::orbits_on_something()
 	//std::string fname;
 
 	Classify_orbits_by_length = NULL;
-#if 0
-	Orbits_classified = NULL;
-
-	Orbits_classified_length = NULL;
-	Orbits_classified_nb_types = 0;
-#endif
 }
 
 orbits_on_something::~orbits_on_something()
@@ -51,37 +50,11 @@ orbits_on_something::~orbits_on_something()
 	if (Classify_orbits_by_length) {
 		FREE_OBJECT(Classify_orbits_by_length);
 	}
-#if 0
-	if (Orbits_classified) {
-		FREE_OBJECT(Orbits_classified);
-	}
-	if (Orbits_classified_length) {
-		FREE_int(Orbits_classified_length);
-	}
-#endif
-	//null();
 	if (f_v) {
 		cout << "orbits_on_something::freeself "
 				"finished" << endl;
 	}
 }
-
-#if 0
-void orbits_on_something::null()
-{
-	A = NULL;
-	SG = NULL;
-	Sch = NULL;
-
-	f_load_save = FALSE;
-	//prefix = "";
-	//char fname[1000];
-}
-
-void orbits_on_something::freeself()
-{
-}
-#endif
 
 void orbits_on_something::init(
 		actions::action *A,
@@ -97,7 +70,12 @@ void orbits_on_something::init(
 		cout << "orbits_on_something::init" << endl;
 	}
 	orbits_on_something::A = A;
+
+	f_has_SG = TRUE;
 	orbits_on_something::SG = SG;
+
+	gens = SG->gens;
+
 	orbits_on_something::f_load_save = f_load_save;
 	orbits_on_something::prefix.assign(prefix);
 
@@ -205,6 +183,130 @@ void orbits_on_something::init(
 }
 
 
+void orbits_on_something::init_from_vector_ge(
+		actions::action *A,
+		data_structures_groups::vector_ge *gens,
+		int f_load_save,
+		std::string &prefix,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "orbits_on_something::init_from_vector_ge" << endl;
+	}
+	orbits_on_something::A = A;
+	f_has_SG = FALSE;
+	orbits_on_something::SG = NULL;
+	orbits_on_something::gens = gens;
+	orbits_on_something::f_load_save = f_load_save;
+	orbits_on_something::prefix.assign(prefix);
+
+	fname.assign(prefix);
+	fname.append("_orbits.bin");
+
+	fname_csv.assign(prefix);
+	fname_csv.append("_orbits.csv");
+
+
+
+
+	if (f_load_save && Fio.file_size(fname) > 0) {
+
+
+		if (f_v) {
+			cout << "orbits_on_something::init_from_vector_ge "
+					"reading orbits from file "
+					<< fname << endl;
+		}
+
+		Sch = NEW_OBJECT(schreier);
+
+		Sch->init(A, 0 /*verbose_level*/);
+		Sch->initialize_tables();
+		Sch->init_generators(*gens, 0 /*verbose_level*/);
+		//Orbits_on_lines->compute_all_point_orbits(verbose_level);
+		{
+		ifstream fp(fname);
+		if (f_v) {
+			cout << "orbits_on_something::init_from_vector_ge "
+					"before reading orbits from file "
+					<< fname << endl;
+		}
+		Sch->read_from_file_binary(fp, verbose_level);
+		}
+		if (f_v) {
+			cout << "orbits_on_something::init_from_vector_ge "
+					"after reading orbits from file "
+					<< fname << endl;
+		}
+	}
+	else {
+
+		if (f_v) {
+			cout << "orbits_on_something::init_from_vector_ge "
+					"computing orbits of the given group" << endl;
+		}
+
+		Sch = gens->orbits_on_points_schreier(
+				A, verbose_level - 2);
+
+		if (f_v) {
+			cout << "orbits_on_something::init_from_vector_ge "
+					"computing orbits done" << endl;
+			cout << "We found " << Sch->nb_orbits
+					<< " orbits of the group" << endl;
+		}
+
+
+
+
+
+		{
+			ofstream fp(fname);
+			if (f_v) {
+				cout << "orbits_on_something::init_from_vector_ge "
+						"before Sch->write_to_file_binary" << endl;
+			}
+			Sch->write_to_file_binary(fp, verbose_level);
+			if (f_v) {
+				cout << "orbits_on_something::init_from_vector_ge "
+						"after Sch->write_to_file_binary" << endl;
+			}
+		}
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname.c_str()) << endl;
+
+		if (f_v) {
+			cout << "orbits_on_something::init_from_vector_ge "
+					"before Sch->write_to_file_csv" << endl;
+		}
+		Sch->write_to_file_csv(fname_csv, verbose_level);
+		if (f_v) {
+			cout << "orbits_on_something::init_from_vector_ge "
+					"after Sch->write_to_file_csv" << endl;
+		}
+		cout << "Written file " << fname_csv << " of size "
+				<< Fio.file_size(fname_csv) << endl;
+
+	}
+
+	if (f_v) {
+		cout << "orbits_on_something::init_from_vector_ge "
+				"orbit length distribution:" << endl;
+		Sch->print_orbit_length_distribution(cout);
+	}
+
+	classify_orbits_by_length(verbose_level);
+
+
+	if (f_v) {
+		cout << "orbits_on_something::init_from_vector_ge done" << endl;
+	}
+}
+
+
 void orbits_on_something::stabilizer_any_point(int pt,
 		strong_generators *&Stab, int verbose_level)
 {
@@ -239,7 +341,8 @@ void orbits_on_something::stabilizer_any_point(int pt,
 }
 
 
-void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
+void orbits_on_something::stabilizer_of(
+		int orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2019,7 +2122,7 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 			a = Orb[0];
 
 			ost << "$$" << endl;
-			A->print_point(a, ost);
+			A->Group_element->print_point(a, ost);
 			//Orbiter->Lint_vec.print(ost, Orb, orbit_length);
 			ost << "$$" << endl;
 			ost << "\\\\" << endl;

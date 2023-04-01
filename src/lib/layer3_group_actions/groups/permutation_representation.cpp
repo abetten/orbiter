@@ -132,7 +132,7 @@ long int permutation_representation::element_image_of(
 			cout << "permutation_representation::element_image_of "
 					"using the old action" << endl;
 		}
-		b = A_original->element_image_of(a, Elt, verbose_level);
+		b = A_original->Group_element->element_image_of(a, Elt, verbose_level);
 	}
 	else {
 		if (f_v) {
@@ -152,7 +152,7 @@ void permutation_representation::element_one(int *Elt)
 {
 	int verbose_level = 0;
 
-	A_original->element_one(Elt, verbose_level);
+	A_original->Group_element->element_one(Elt, verbose_level);
 	P->one(Elt + perm_offset);
 }
 
@@ -173,7 +173,7 @@ void permutation_representation::element_mult(int *A, int *B, int *AB,
 	if (f_v) {
 		cout << "permutation_representation::element_mult" << endl;
 	}
-	A_original->element_mult(A, B, AB, verbose_level);
+	A_original->Group_element->element_mult(A, B, AB, verbose_level);
 	Combi.perm_mult(A + perm_offset, B + perm_offset, AB + perm_offset, degree);
 	if (f_v) {
 		cout << "permutation_representation::element_mult done" << endl;
@@ -201,7 +201,7 @@ void permutation_representation::element_invert(int *A, int *Av, int verbose_lev
 	if (f_v) {
 		cout << "permutation_representation::element_invert" << endl;
 	}
-	A_original->element_invert(A, Av, verbose_level);
+	A_original->Group_element->element_invert(A, Av, verbose_level);
 	Combi.perm_inverse(A + perm_offset, Av + perm_offset, degree);
 	if (f_v) {
 		cout << "permutation_representation::element_invert done" << endl;
@@ -220,17 +220,17 @@ void permutation_representation::element_unpack(uchar *elt, int *Elt)
 
 void permutation_representation::element_print_for_make_element(int *Elt, std::ostream &ost)
 {
-	A_original->element_print_for_make_element(Elt, ost);
+	A_original->Group_element->element_print_for_make_element(Elt, ost);
 }
 
 void permutation_representation::element_print_easy(int *Elt, std::ostream &ost)
 {
-	A_original->element_print_quick(Elt, ost);
+	A_original->Group_element->element_print_quick(Elt, ost);
 }
 
 void permutation_representation::element_print_latex(int *Elt, std::ostream &ost)
 {
-	A_original->element_print_latex(Elt, ost);
+	A_original->Group_element->element_print_latex(Elt, ost);
 }
 
 

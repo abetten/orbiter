@@ -971,7 +971,7 @@ void semifield_substructure::loop_over_all_subspaces(
 							= f;
 						Flag_orbits->Flag_orbit_node[f2].fusion_elt
 							= NEW_int(SC->A->elt_size_in_int);
-						SC->A->element_invert(
+						SC->A->Group_element->element_invert(
 							transporter1,
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 							0);
@@ -1028,7 +1028,7 @@ void semifield_substructure::loop_over_all_subspaces(
 								= f;
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt
 								= NEW_int(SC->A->elt_size_in_int);
-							SC->A->element_invert(transporter1,
+							SC->A->Group_element->element_invert(transporter1,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								0);
 							f_processed[f2] = TRUE;
@@ -1088,8 +1088,8 @@ void semifield_substructure::loop_over_all_subspaces(
 					}
 					Orb->get_transporter(position, transporter2,
 							0 /*verbose_level */);
-					SC->A->element_invert(transporter2, Elt1, 0);
-					SC->A->element_mult(transporter1, Elt1,
+					SC->A->Group_element->element_invert(transporter2, Elt1, 0);
+					SC->A->Group_element->element_mult(transporter1, Elt1,
 							transporter3, 0);
 
 					if (f2 == f) {
@@ -1114,7 +1114,7 @@ void semifield_substructure::loop_over_all_subspaces(
 								= f;
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt =
 								NEW_int(SC->A->elt_size_in_int);
-							SC->A->element_invert(transporter3,
+							SC->A->Group_element->element_invert(transporter3,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								0);
 							f_processed[f2] = TRUE;
@@ -1424,14 +1424,14 @@ int semifield_substructure::identify(long int *data,
 
 				if (Flag_orbits->Flag_orbit_node[f2].f_fusion_node) {
 					fo = Flag_orbits->Flag_orbit_node[f2].fusion_with;
-					SC->A->element_mult(transporter1,
+					SC->A->Group_element->element_mult(transporter1,
 						Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 						transporter,
 						0);
 				}
 				else {
 					fo = f2;
-					SC->A->element_move(transporter1,
+					SC->A->Group_element->element_move(transporter1,
 						transporter,
 						0);
 				}
@@ -1440,14 +1440,14 @@ int semifield_substructure::identify(long int *data,
 				f2 = Fo_first[trace_po] + 0;
 				if (Flag_orbits->Flag_orbit_node[f2].f_fusion_node) {
 					fo = Flag_orbits->Flag_orbit_node[f2].fusion_with;
-					SC->A->element_mult(transporter1,
+					SC->A->Group_element->element_mult(transporter1,
 						Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 						transporter,
 						0);
 				}
 				else {
 					fo = f2;
-					SC->A->element_move(transporter1,
+					SC->A->Group_element->element_move(transporter1,
 						transporter,
 						0);
 				}
@@ -1484,21 +1484,21 @@ int semifield_substructure::identify(long int *data,
 				}
 				Orb->get_transporter(position, transporter2,
 						0 /*verbose_level */);
-				SC->A->element_invert(transporter2, Elt1, 0);
-				SC->A->element_mult(transporter1, Elt1,
+				SC->A->Group_element->element_invert(transporter2, Elt1, 0);
+				SC->A->Group_element->element_mult(transporter1, Elt1,
 						transporter3, 0);
-				SC->A->element_move(transporter3,
+				SC->A->Group_element->element_move(transporter3,
 						transporter1, 0);
 				if (Flag_orbits->Flag_orbit_node[f2].f_fusion_node) {
 					fo = Flag_orbits->Flag_orbit_node[f2].fusion_with;
-					SC->A->element_mult(transporter1,
+					SC->A->Group_element->element_mult(transporter1,
 						Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 						transporter,
 						0);
 				}
 				else {
 					fo = f2;
-					SC->A->element_move(transporter1,
+					SC->A->Group_element->element_move(transporter1,
 						transporter,
 						0);
 				}

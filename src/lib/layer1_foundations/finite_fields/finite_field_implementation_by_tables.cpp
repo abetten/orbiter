@@ -187,7 +187,7 @@ void finite_field_implementation_by_tables::init(finite_field *F, int verbose_le
 					print_tables_extension_field(F->my_poly);
 				}
 				else {
-					F->print_tables();
+					F->Io->print_tables();
 				}
 			}
 		}
@@ -364,13 +364,17 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(i
 		cout << endl;
 	}
 	{
-		ring_theory::unipoly_domain Fq(&GFp, m, verbose_level - 1);
+		ring_theory::unipoly_domain Fq(&GFp, m, 0 /*verbose_level - 1*/);
 		ring_theory::unipoly_object a, c, Alpha;
 
 		Fq.create_object_by_rank(Alpha, F->alpha, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
 		Fq.create_object_by_rank(a, 1, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
 		Fq.create_object_by_rank(c, 1, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
 
+		if (f_v) {
+			cout << "finite_field_implementation_by_tables::create_alpha_table_extension_field "
+					"creating all powers of alpha" << endl;
+		}
 		for (i = 0; i < F->q; i++) {
 
 			if (FALSE) {
@@ -402,12 +406,16 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(i
 				cout << "alpha_power_table[" << i << "]=" << k << endl;
 			}
 
-			Fq.mult(a, Alpha, c, verbose_level - 1);
-			Fq.assign(c, a, verbose_level - 2);
+			Fq.mult(a, Alpha, c, 0 /*verbose_level - 1*/);
+			Fq.assign(c, a, 0 /*verbose_level - 2*/);
 		}
 		Fq.delete_object(Alpha);
 		Fq.delete_object(a);
 		Fq.delete_object(c);
+		if (f_v) {
+			cout << "finite_field_implementation_by_tables::create_alpha_table_extension_field "
+					"creating all powers of alpha finished" << endl;
+		}
 	}
 	FX.delete_object(m);
 
@@ -692,6 +700,7 @@ void finite_field_implementation_by_tables::init_quadratic_subfield(int verbose_
 void finite_field_implementation_by_tables::init_frobenius_table(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int i;
 
 	if (f_v) {
@@ -707,13 +716,21 @@ void finite_field_implementation_by_tables::init_frobenius_table(int verbose_lev
 	}
 	else {
 
+		if (f_v) {
+			cout << "finite_field_implementation_by_tables::init_frobenius_table "
+					"computing the images under the Frobenius automorphism" << endl;
+		}
 		for (i = 0; i < F->q; i++) {
 			frobenius_table[i] = F->power_verbose(i, F->p, 0 /* verbose_level */);
-			if (f_v) {
+			if (f_vv) {
 				cout << "finite_field_implementation_by_tables::init_frobenius_table "
 						"frobenius_table[" << i << "]="
 						<< frobenius_table[i] << endl;
 			}
+		}
+		if (f_v) {
+			cout << "finite_field_implementation_by_tables::init_frobenius_table "
+					"computing the images under the Frobenius automorphism finished" << endl;
 		}
 	}
 

@@ -156,6 +156,9 @@ symbol_definition::symbol_definition()
 	f_poset_classification_control = FALSE;
 	Poset_classification_control = NULL;
 
+	f_poset_classification_activity = FALSE;
+	Poset_classification_activity = NULL;
+
 }
 
 
@@ -172,7 +175,8 @@ void symbol_definition::read_definition(
 	data_structures::string_tools ST;
 
 	if (f_v) {
-		cout << "symbol_definition::read_definition i=" << i << " argc=" << argc << endl;
+		cout << "symbol_definition::read_definition "
+				"i=" << i << " argc=" << argc << endl;
 	}
 
 	symbol_definition::Sym = Sym;
@@ -1004,6 +1008,29 @@ void symbol_definition::read_definition(
 			Poset_classification_control->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-poset_classification_activity") == 0) {
+		f_poset_classification_activity = TRUE;
+
+		Poset_classification_activity = NEW_OBJECT(poset_classification::poset_classification_activity_description);
+		if (f_v) {
+			cout << "reading -poset_classification_activity" << endl;
+		}
+		i += Poset_classification_activity->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-poset_classification_activity" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-poset_classification_activity ";
+			Poset_classification_activity->print();
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -1025,340 +1052,430 @@ void symbol_definition::perform_definition(int verbose_level)
 
 	if (f_finite_field) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_finite_field" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_finite_field" << endl;
 		}
 		definition_of_finite_field(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_finite_field" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_finite_field" << endl;
 		}
 	}
 	else if (f_polynomial_ring) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_polynomial_ring" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_polynomial_ring" << endl;
 		}
 		definition_of_polynomial_ring(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_polynomial_ring" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_polynomial_ring" << endl;
 		}
 	}
 	else if (f_projective_space) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_projective_space" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_projective_space" << endl;
 		}
 		definition_of_projective_space(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_projective_space" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_projective_space" << endl;
 		}
 	}
 	else if (f_orthogonal_space) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_orthogonal_space" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_orthogonal_space" << endl;
 		}
 		definition_of_orthogonal_space(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_orthogonal_space" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_orthogonal_space" << endl;
 		}
 	}
 	else if (f_BLT_set_classifier) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_BLT_set_classifier" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_BLT_set_classifier" << endl;
 		}
 		definition_of_BLT_set_classifier(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_BLT_set_classifier" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_BLT_set_classifier" << endl;
 		}
 	}
 	else if (f_spread_classifier) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_spread_classifier" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_spread_classifier" << endl;
 		}
 		definition_of_spread_classifier(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_spread_classifier" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_spread_classifier" << endl;
 		}
 	}
 
 	else if (f_linear_group) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_linear_group" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_linear_group" << endl;
 		}
 		definition_of_linear_group(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_linear_group" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_linear_group" << endl;
 		}
 	}
 	else if (f_permutation_group) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_permutation_group" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_permutation_group" << endl;
 		}
 		definition_of_permutation_group(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_permutation_group" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_permutation_group" << endl;
 		}
 	}
 	else if (f_group_modification) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_modified_group" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_modified_group" << endl;
 		}
 		definition_of_modified_group(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_modified_group" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_modified_group" << endl;
 		}
 	}
 
 
 	else if (f_formula) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_formula" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_formula" << endl;
 		}
 		definition_of_formula(Formula, verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_formula" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_formula" << endl;
 		}
 	}
 
 	else if (f_geometric_object) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_geometric_object" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_geometric_object" << endl;
 		}
 		definition_of_geometric_object(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_geometric_object" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_geometric_object" << endl;
 		}
 	}
 	else if (f_collection) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_collection" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_collection" << endl;
 		}
 		definition_of_collection(list_of_objects, verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_collection" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_collection" << endl;
 		}
 	}
 	else if (f_graph) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_graph" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_graph" << endl;
 		}
 		definition_of_graph(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_graph" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_graph" << endl;
 		}
 	}
 	else if (f_code) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_code" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_code" << endl;
 		}
 		definition_of_code(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_code" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_code" << endl;
 		}
 	}
 	else if (f_spread) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_spread" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_spread" << endl;
 		}
 		definition_of_spread(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_spread" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_spread" << endl;
 		}
 	}
 	else if (f_cubic_surface) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_cubic_surface" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_cubic_surface" << endl;
 		}
 		definition_of_cubic_surface(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_cubic_surface" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_cubic_surface" << endl;
 		}
 	}
 	else if (f_quartic_curve) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_quartic_curve" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_quartic_curve" << endl;
 		}
 		definition_of_quartic_curve(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_quartic_curve" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_quartic_curve" << endl;
 		}
 	}
 	else if (f_BLT_set) {
 
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_BLT_set" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_BLT_set" << endl;
 		}
 		definition_of_BLT_set(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_BLT_set" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_BLT_set" << endl;
 		}
 	}
 	else if (f_translation_plane) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_translation_plane" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_translation_plane" << endl;
 		}
 		definition_of_translation_plane(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_translation_plane" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_translation_plane" << endl;
 		}
 	}
 	else if (f_spread_table) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_projective_space" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_projective_space" << endl;
 		}
 		definition_of_spread_table(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_projective_space" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_projective_space" << endl;
 		}
 	}
 	else if (f_packing_was) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_packing_was" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_packing_was" << endl;
 		}
 		definition_of_packing_was(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_packing_was" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_packing_was" << endl;
 		}
 	}
 	else if (f_packing_was_choose_fixed_points) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_packing_was_choose_fixed_points" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_packing_was_choose_fixed_points" << endl;
 		}
 		definition_of_packing_was_choose_fixed_points(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_packing_was_choose_fixed_points" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_packing_was_choose_fixed_points" << endl;
 		}
 	}
 	else if (f_packing_long_orbits) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_packing_long_orbits" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_packing_long_orbits" << endl;
 		}
 		definition_of_packing_long_orbits(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_packing_long_orbits" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_packing_long_orbits" << endl;
 		}
 	}
 	else if (f_graph_classification) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_graph_classification" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_graph_classification" << endl;
 		}
 		definition_of_graph_classification(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_graph_classification" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_graph_classification" << endl;
 		}
 	}
 	else if (f_diophant) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_graph_classification" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_graph_classification" << endl;
 		}
 		definition_of_diophant(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_graph_classification" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_graph_classification" << endl;
 		}
 	}
 	else if (f_design) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_design" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_design" << endl;
 		}
 		definition_of_design(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_design" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_design" << endl;
 		}
 	}
 	else if (f_design_table) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_design_table" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_design_table" << endl;
 		}
 		definition_of_design_table(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_design_table" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_design_table" << endl;
 		}
 	}
 	else if (f_large_set_was) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_packing_was" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_packing_was" << endl;
 		}
 		definition_of_large_set_was(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_packing_was" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_packing_was" << endl;
 		}
 	}
 	else if (f_set) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_set" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_set" << endl;
 		}
 		definition_of_set(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_set" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_set" << endl;
 		}
 	}
 	else if (f_vector) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_vector" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_vector" << endl;
 		}
 		definition_of_vector(define_label, Vector_builder_description, verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_vector" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_vector" << endl;
 		}
 	}
 	else if (f_combinatorial_objects) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_combinatorial_object" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_combinatorial_object" << endl;
 		}
 		definition_of_combinatorial_object(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_combinatorial_object" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_combinatorial_object" << endl;
 		}
 	}
 	else if (f_geometry_builder) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before do_geometry_builder" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before do_geometry_builder" << endl;
 		}
 		do_geometry_builder(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after do_geometry_builder" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after do_geometry_builder" << endl;
 		}
 	}
 	else if (f_vector_ge) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_vector_ge" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_vector_ge" << endl;
 		}
 		definition_of_vector_ge(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_vector_ge" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_vector_ge" << endl;
 		}
 	}
 	else if (f_action_on_forms) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition f_action_on_forms" << endl;
+			cout << "symbol_definition::perform_definition "
+					"f_action_on_forms" << endl;
 		}
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_action_on_forms" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_action_on_forms" << endl;
 		}
 		definition_of_action_on_forms(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_action_on_forms" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_action_on_forms" << endl;
 		}
 	}
 	else if (f_orbits) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition f_orbits" << endl;
+			cout << "symbol_definition::perform_definition "
+					"f_orbits" << endl;
 		}
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_orbits" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_orbits" << endl;
 		}
 		definition_of_orbits(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_orbits" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_orbits" << endl;
 		}
 	}
 	else if (f_poset_classification_control) {
 		if (f_v) {
-			cout << "symbol_definition::perform_definition f_poset_classification_control" << endl;
+			cout << "symbol_definition::perform_definition "
+					"f_poset_classification_control" << endl;
 		}
 		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_poset_classification_control" << endl;
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_poset_classification_control" << endl;
 		}
 		definition_of_poset_classification_control(verbose_level);
 		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_poset_classification_control" << endl;
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_poset_classification_control" << endl;
+		}
+	}
+	else if (f_poset_classification_activity) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"f_poset_classification_activity" << endl;
+		}
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_poset_classification_activity" << endl;
+		}
+		definition_of_poset_classification_activity(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_poset_classification_activityt" << endl;
 		}
 	}
 
@@ -1532,6 +1649,10 @@ void symbol_definition::print()
 		cout << "-poset_classification_control ";
 		Poset_classification_control->print();
 	}
+	if (f_poset_classification_activity) {
+		cout << "-poset_classification_activity ";
+		Poset_classification_activity->print();
+	}
 }
 
 
@@ -1550,19 +1671,23 @@ void symbol_definition::definition_of_finite_field(int verbose_level)
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_finite_field before F->init" << endl;
+		cout << "symbol_definition::definition_of_finite_field "
+				"before F->init" << endl;
 	}
 	F->init(Finite_field_description, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_finite_field after F->init" << endl;
+		cout << "symbol_definition::definition_of_finite_field "
+				"after F->init" << endl;
 	}
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_finite_field(define_label, F, verbose_level);
+	Symb->init_finite_field(
+			define_label, F, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_finite_field before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_finite_field "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -1584,20 +1709,24 @@ void symbol_definition::definition_of_polynomial_ring(int verbose_level)
 
 	HPD = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_polynomial_ring before HPD->init" << endl;
+		cout << "symbol_definition::definition_of_polynomial_ring "
+				"before HPD->init" << endl;
 	}
 	HPD->init(Polynomial_ring_description, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_polynomial_ring after F->init" << endl;
+		cout << "symbol_definition::definition_of_polynomial_ring "
+				"after F->init" << endl;
 	}
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_polynomial_ring(define_label, HPD, verbose_level);
+	Symb->init_polynomial_ring(
+			define_label, HPD, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_polynomial_ring before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_polynomial_ring "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -1614,19 +1743,23 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_projective_space, verbose_level=" << verbose_level << endl;
+		cout << "symbol_definition::definition_of_projective_space "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 
 	if (Projective_space_with_action_description->f_override_verbose_level) {
 		verbose_level = Projective_space_with_action_description->override_verbose_level;
 	}
+
 	if (f_v) {
-		cout << "symbol_definition::definition_of_projective_space before load_finite_field_PG" << endl;
+		cout << "symbol_definition::definition_of_projective_space "
+				"before load_finite_field_PG" << endl;
 	}
 	load_finite_field_PG(verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_projective_space after load_finite_field_PG" << endl;
+		cout << "symbol_definition::definition_of_projective_space "
+				"after load_finite_field_PG" << endl;
 	}
 
 
@@ -1650,7 +1783,8 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	PA = NEW_OBJECT(projective_geometry::projective_space_with_action);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_projective_space before PA->init" << endl;
+		cout << "symbol_definition::definition_of_projective_space "
+				"before PA->init" << endl;
 	}
 	PA->init(Projective_space_with_action_description->F,
 			Projective_space_with_action_description->n,
@@ -1658,7 +1792,8 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 		TRUE /*f_init_incidence_structure*/,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_projective_space after PA->init" << endl;
+		cout << "symbol_definition::definition_of_projective_space "
+				"after PA->init" << endl;
 	}
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
@@ -1666,7 +1801,8 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_projective_space(define_label, PA, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_projective_space before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_projective_space "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -1694,12 +1830,17 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 		cout << "symbol_definition::definition_of_orthogonal_space" << endl;
 	}
 
-
-	load_finite_field(
+	if (f_v) {
+		cout << "symbol_definition::definition_of_orthogonal_space "
+				"before get_or_create_finite_field" << endl;
+	}
+	Orthogonal_space_with_action_description->F = get_or_create_finite_field(
 			Orthogonal_space_with_action_description->input_q,
-			Orthogonal_space_with_action_description->F,
 			verbose_level);
-
+	if (f_v) {
+		cout << "symbol_definition::definition_of_orthogonal_space "
+				"after get_or_create_finite_field" << endl;
+	}
 
 	//int f_semilinear;
 	number_theory::number_theory_domain NT;
@@ -1718,20 +1859,24 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 	OA = NEW_OBJECT(orthogonal_geometry_applications::orthogonal_space_with_action);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_orthogonal_space before OA->init" << endl;
+		cout << "symbol_definition::definition_of_orthogonal_space "
+				"before OA->init" << endl;
 	}
 	OA->init(Orthogonal_space_with_action_description,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_orthogonal_space after OA->init" << endl;
+		cout << "symbol_definition::definition_of_orthogonal_space "
+				"after OA->init" << endl;
 	}
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_orthogonal_space(define_label, OA, verbose_level);
+	Symb->init_orthogonal_space(
+			define_label, OA, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_orthogonal_space before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_orthogonal_space "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -1756,7 +1901,8 @@ void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
 
 	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
 
-	OA = The_Orbiter_top_level_session->get_object_of_type_orthogonal_space_with_action(BLT_set_classifier_label_orthogonal_geometry);
+	OA = The_Orbiter_top_level_session->get_object_of_type_orthogonal_space_with_action(
+			BLT_set_classifier_label_orthogonal_geometry);
 
 	orthogonal_geometry_applications::blt_set_classify *BLT_classify;
 
@@ -1764,17 +1910,20 @@ void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
 
 #if 0
 	if (f_v) {
-		cout << "symbol_definition::definition_of_BLT_set_classifier before BLT_classify->init" << endl;
+		cout << "symbol_definition::definition_of_BLT_set_classifier "
+				"before BLT_classify->init" << endl;
 	}
 	BLT_classify->init(Orthogonal_space_with_action_description,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_BLT_set_classifier after BLT_classify->init" << endl;
+		cout << "symbol_definition::definition_of_BLT_set_classifier "
+				"after BLT_classify->init" << endl;
 	}
 #endif
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_BLT_set_classifier before BLT_classify->init_basic" << endl;
+		cout << "symbol_definition::definition_of_BLT_set_classifier "
+				"before BLT_classify->init_basic" << endl;
 	}
 
 	if (!Blt_set_classify_description->f_starter_size) {
@@ -1788,7 +1937,8 @@ void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
 			Blt_set_classify_description->starter_size,
 			verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_BLT_set_classifier after BLT_classify->init_basic" << endl;
+		cout << "symbol_definition::definition_of_BLT_set_classifier "
+				"after BLT_classify->init_basic" << endl;
 	}
 
 
@@ -1796,9 +1946,11 @@ void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_BLT_set_classify(define_label, BLT_classify, verbose_level);
+	Symb->init_BLT_set_classify(
+			define_label, BLT_classify, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_BLT_set_classifier before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_BLT_set_classifier "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -1822,21 +1974,25 @@ void symbol_definition::definition_of_spread_classifier(int verbose_level)
 	Spread_classify = NEW_OBJECT(spreads::spread_classify);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread_classifier before Spread_classify->init_basic" << endl;
+		cout << "symbol_definition::definition_of_spread_classifier "
+				"before Spread_classify->init_basic" << endl;
 	}
 	Spread_classify->init_basic(
 			Spread_classify_description,
 			verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread_classifier after Spread_classify->init_basic" << endl;
+		cout << "symbol_definition::definition_of_spread_classifier "
+				"after Spread_classify->init_basic" << endl;
 	}
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_spread_classify(define_label, Spread_classify, verbose_level);
+	Symb->init_spread_classify(
+			define_label, Spread_classify, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread_classifier before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_spread_classifier "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -1855,30 +2011,38 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 		cout << "symbol_definition::definition_of_linear_group" << endl;
 	}
 
-#if 0
-	if (f_v) {
-		cout << "symbol_definition::definition_of_linear_group before load_finite_field" << endl;
+	if (Linear_group_description->input_q.length()) {
+
+
+		if (f_v) {
+			cout << "symbol_definition::definition_of_linear_group "
+					"before get_or_create_finite_field" << endl;
+		}
+		Linear_group_description->F = get_or_create_finite_field(
+				Linear_group_description->input_q,
+				verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::definition_of_linear_group "
+					"after get_or_create_finite_field" << endl;
+		}
 	}
-	load_finite_field(Linear_group_description->input_q,
-			Linear_group_description->F, verbose_level);
-	if (f_v) {
-		cout << "symbol_definition::definition_of_linear_group after load_finite_field" << endl;
-	}
-#endif
 
 
 	groups::linear_group *LG;
 
 	LG = NEW_OBJECT(groups::linear_group);
 	if (f_v) {
-		cout << "symbol_definition::definition before LG->linear_group_init, "
+		cout << "symbol_definition::definition "
+				"before LG->linear_group_init, "
 				"creating the group" << endl;
 	}
 
-	LG->linear_group_init(Linear_group_description, verbose_level - 2);
+	LG->linear_group_init(
+			Linear_group_description, verbose_level - 2);
 
 	if (f_v) {
-		cout << "symbol_definition::definition after LG->linear_group_init" << endl;
+		cout << "symbol_definition::definition "
+				"after LG->linear_group_init" << endl;
 	}
 
 
@@ -1889,11 +2053,13 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 
 	AG = NEW_OBJECT(apps_algebra::any_group);
 	if (f_v) {
-		cout << "symbol_definition::definition before AG->init_linear_group" << endl;
+		cout << "symbol_definition::definition "
+				"before AG->init_linear_group" << endl;
 	}
 	AG->init_linear_group(LG, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition after AG->init_linear_group" << endl;
+		cout << "symbol_definition::definition "
+				"after AG->init_linear_group" << endl;
 	}
 
 
@@ -1902,9 +2068,11 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_any_group(define_label, AG, verbose_level);
+	Symb->init_any_group(
+			define_label, AG, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -1926,13 +2094,13 @@ void symbol_definition::definition_of_permutation_group(int verbose_level)
 
 	PGC = NEW_OBJECT(groups::permutation_group_create);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_permutation_group before PGC->permutation_group_init, "
+		cout << "symbol_definition::definition_of_permutation_group "
 				"before PGC->permutation_group_init" << endl;
 	}
 
 	PGC->permutation_group_init(Permutation_group_description, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_permutation_group after PGC->permutation_group_init, "
+		cout << "symbol_definition::definition_of_permutation_group "
 				"after PGC->permutation_group_init" << endl;
 	}
 
@@ -1950,9 +2118,11 @@ void symbol_definition::definition_of_permutation_group(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_any_group(define_label, AG, verbose_level);
+	Symb->init_any_group(
+			define_label, AG, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_permutation_group before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_permutation_group "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -1975,13 +2145,15 @@ void symbol_definition::definition_of_modified_group(int verbose_level)
 
 	MGC = NEW_OBJECT(apps_algebra::modified_group_create);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_modified_group before PGC->permutation_group_init, "
+		cout << "symbol_definition::definition_of_modified_group "
+				"before PGC->permutation_group_init, "
 				"before PGC->permutation_group_init" << endl;
 	}
 
 	MGC->modified_group_init(Group_modification_description, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_modified_group after PGC->permutation_group_init, "
+		cout << "symbol_definition::definition_of_modified_group "
+				"after PGC->permutation_group_init, "
 				"after PGC->permutation_group_init" << endl;
 	}
 
@@ -1994,9 +2166,11 @@ void symbol_definition::definition_of_modified_group(int verbose_level)
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 
-	Symb->init_any_group(define_label, AG, verbose_level);
+	Symb->init_any_group(
+			define_label, AG, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_modified_group before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_modified_group "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2021,19 +2195,23 @@ void symbol_definition::definition_of_geometric_object(int verbose_level)
 
 	projective_geometry::projective_space_with_action *PA;
 
-	PA = The_Orbiter_top_level_session->get_object_of_type_projective_space(geometric_object_projective_space_label);
+	PA = The_Orbiter_top_level_session->get_object_of_type_projective_space(
+			geometric_object_projective_space_label);
 
 	geometry::geometric_object_create *GeoObj;
 
 	GeoObj = NEW_OBJECT(geometry::geometric_object_create);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_geometric_object before GeoObj->init" << endl;
+		cout << "symbol_definition::definition_of_geometric_object "
+				"before GeoObj->init" << endl;
 	}
 
-	GeoObj->init(Geometric_object_description, PA->P, verbose_level);
+	GeoObj->init(
+			Geometric_object_description, PA->P, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_geometric_object after GeoObj->init" << endl;
+		cout << "symbol_definition::definition_of_geometric_object "
+				"after GeoObj->init" << endl;
 	}
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
@@ -2042,9 +2220,11 @@ void symbol_definition::definition_of_geometric_object(int verbose_level)
 
 
 
-	Symb->init_geometric_object(define_label, GeoObj, verbose_level);
+	Symb->init_geometric_object(
+			define_label, GeoObj, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_geometric_object before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_geometric_object "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2072,9 +2252,11 @@ void symbol_definition::definition_of_formula(
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 
-	Symb->init_formula(define_label, Formula, verbose_level);
+	Symb->init_formula(
+			define_label, Formula, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_formula before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_formula "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2096,9 +2278,11 @@ void symbol_definition::definition_of_collection(std::string &list_of_objects,
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_collection(define_label, list_of_objects, verbose_level);
+	Symb->init_collection(
+			define_label, list_of_objects, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_formula before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_formula "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2121,11 +2305,13 @@ void symbol_definition::definition_of_graph(int verbose_level)
 	Gr = NEW_OBJECT(apps_graph_theory::create_graph);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_graph before Gr->init" << endl;
+		cout << "symbol_definition::definition_of_graph "
+				"before Gr->init" << endl;
 	}
 	Gr->init(Create_graph_description, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_graph after Gr->init" << endl;
+		cout << "symbol_definition::definition_of_graph "
+				"after Gr->init" << endl;
 	}
 	if (f_v) {
 		cout << "Gr->N=" << Gr->N << endl;
@@ -2138,7 +2324,8 @@ void symbol_definition::definition_of_graph(int verbose_level)
 
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_graph we created a graph on " << Gr->N
+		cout << "symbol_definition::definition_of_graph "
+				"we created a graph on " << Gr->N
 				<< " points, called " << Gr->label << endl;
 
 #if 0
@@ -2156,9 +2343,11 @@ void symbol_definition::definition_of_graph(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_graph(define_label, Gr->CG, verbose_level);
+	Symb->init_graph(
+			define_label, Gr->CG, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_graph before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_graph "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2184,11 +2373,13 @@ void symbol_definition::definition_of_code(int verbose_level)
 	Code = NEW_OBJECT(apps_coding_theory::create_code);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_code before Code->init" << endl;
+		cout << "symbol_definition::definition_of_code "
+				"before Code->init" << endl;
 	}
 	Code->init(Create_code_description, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_code after Code->init" << endl;
+		cout << "symbol_definition::definition_of_code "
+				"after Code->init" << endl;
 	}
 	if (f_v) {
 		cout << "Code->label_txt" << Code->label_txt << endl;
@@ -2197,7 +2388,8 @@ void symbol_definition::definition_of_code(int verbose_level)
 
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_code we created a code called " << Code->label_txt << endl;
+		cout << "symbol_definition::definition_of_code "
+				"we have created a code called " << Code->label_txt << endl;
 
 	}
 
@@ -2205,9 +2397,11 @@ void symbol_definition::definition_of_code(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_code(define_label, Code, verbose_level);
+	Symb->init_code(
+			define_label, Code, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_code before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_code "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2235,15 +2429,18 @@ void symbol_definition::definition_of_spread(int verbose_level)
 	Spread = NEW_OBJECT(spreads::spread_create);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread before Spread->init" << endl;
+		cout << "symbol_definition::definition_of_spread "
+				"before Spread->init" << endl;
 	}
 	Spread->init(Spread_create_description, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread after Spread->init" << endl;
+		cout << "symbol_definition::definition_of_spread "
+				"after Spread->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread we created a spread called " << Spread->label_txt << endl;
+		cout << "symbol_definition::definition_of_spread "
+				"we have created a spread called " << Spread->label_txt << endl;
 
 	}
 
@@ -2251,9 +2448,11 @@ void symbol_definition::definition_of_spread(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_spread(define_label, Spread, verbose_level);
+	Symb->init_spread(
+			define_label, Spread, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_spread before "
+				"add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2285,7 +2484,8 @@ void symbol_definition::definition_of_cubic_surface(int verbose_level)
 
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_cubic_surface we created a cubic surface called " << SC->label_txt << endl;
+		cout << "symbol_definition::definition_of_cubic_surface "
+				"we have created a cubic surface called " << SC->label_txt << endl;
 
 	}
 
@@ -2293,9 +2493,11 @@ void symbol_definition::definition_of_cubic_surface(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_cubic_surface(define_label, SC, verbose_level);
+	Symb->init_cubic_surface(
+			define_label, SC, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_cubic_surface before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_cubic_surface "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2338,7 +2540,8 @@ void symbol_definition::definition_of_quartic_curve(int verbose_level)
 
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_quartic_curve we created a quartic curve called " << QC->label_txt << endl;
+		cout << "symbol_definition::definition_of_quartic_curve "
+				"we have created a quartic curve called " << QC->label_txt << endl;
 
 	}
 
@@ -2346,9 +2549,11 @@ void symbol_definition::definition_of_quartic_curve(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_quartic_curve(define_label, QC, verbose_level);
+	Symb->init_quartic_curve(
+			define_label, QC, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_quartic_curve before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_quartic_curve "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2385,12 +2590,12 @@ void symbol_definition::definition_of_BLT_set(int verbose_level)
 
 	BC = NEW_OBJECT(orthogonal_geometry_applications::BLT_set_create);
 
+
 	if (f_v) {
 		cout << "symbol_definition::definition_of_BLT_set "
 				"before BC->init" << endl;
 	}
 	BC->init(
-			OA->Blt_Set_domain,
 			BLT_Set_create_description,
 			OA,
 			verbose_level);
@@ -2476,7 +2681,8 @@ void symbol_definition::definition_of_translation_plane(int verbose_level)
 	An1 = Gnp1->A_base;
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_translation_plane before TP->init" << endl;
+		cout << "symbol_definition::definition_of_translation_plane "
+				"before TP->init" << endl;
 	}
 	TP->init(
 			Spread->k,
@@ -2492,23 +2698,29 @@ void symbol_definition::definition_of_translation_plane(int verbose_level)
 	// so we need to pass the arguments individually.
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_translation_plane after TP->init" << endl;
-		cout << "symbol_definition::definition_of_translation_plane TP->label_txt=" << TP->label_txt << endl;
-		cout << "symbol_definition::definition_of_translation_plane TP->label_tex=" << TP->label_tex << endl;
+		cout << "symbol_definition::definition_of_translation_plane "
+				"after TP->init" << endl;
+		cout << "symbol_definition::definition_of_translation_plane "
+				"TP->label_txt=" << TP->label_txt << endl;
+		cout << "symbol_definition::definition_of_translation_plane "
+				"TP->label_tex=" << TP->label_tex << endl;
 		//Spread->Andre->report(cout, verbose_level);
 	}
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_translation_plane we created a translation plane called " << TP->label_txt << endl;
+		cout << "symbol_definition::definition_of_translation_plane "
+				"we created a translation plane called " << TP->label_txt << endl;
 
 	}
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_translation_plane(define_label, TP, verbose_level);
+	Symb->init_translation_plane(
+			define_label, TP, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_translation_plane before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_translation_plane "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2533,13 +2745,16 @@ void symbol_definition::definition_of_spread_table(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_spread_table "
-				"using existing PA " << spread_table_label_PA << endl;
+				"using existing PA "
+				<< spread_table_label_PA << endl;
 	}
 	int idx;
 	projective_geometry::projective_space_with_action *PA;
 
-	idx = Sym->Orbiter_top_level_session->find_symbol(spread_table_label_PA);
-	PA = (projective_geometry::projective_space_with_action *) Sym->Orbiter_top_level_session->get_object(idx);
+	idx = Sym->Orbiter_top_level_session->find_symbol(
+			spread_table_label_PA);
+	PA = (projective_geometry::projective_space_with_action *)
+			Sym->Orbiter_top_level_session->get_object(idx);
 
 
 
@@ -2547,7 +2762,8 @@ void symbol_definition::definition_of_spread_table(int verbose_level)
 	packings::packing_classify *P;
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread_table before P->spread_table_init" << endl;
+		cout << "symbol_definition::definition_of_spread_table "
+				"before P->spread_table_init" << endl;
 	}
 
 	P = NEW_OBJECT(packings::packing_classify);
@@ -2561,7 +2777,8 @@ void symbol_definition::definition_of_spread_table(int verbose_level)
 
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread_table after do_spread_table_init" << endl;
+		cout << "symbol_definition::definition_of_spread_table "
+				"after do_spread_table_init" << endl;
 	}
 
 
@@ -2572,7 +2789,8 @@ void symbol_definition::definition_of_spread_table(int verbose_level)
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_spread_table(define_label, P, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_spread_table before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_spread_table "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2595,13 +2813,16 @@ void symbol_definition::definition_of_packing_was(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_packing_was "
-				"using existing spread table " << packing_was_label_spread_table << endl;
+				"using existing spread table "
+				<< packing_was_label_spread_table << endl;
 	}
 	int idx;
 	packings::packing_classify *P;
 
-	idx = Sym->Orbiter_top_level_session->find_symbol(packing_was_label_spread_table);
-	P = (packings::packing_classify *) Sym->Orbiter_top_level_session->get_object(idx);
+	idx = Sym->Orbiter_top_level_session->find_symbol(
+			packing_was_label_spread_table);
+	P = (packings::packing_classify *)
+			Sym->Orbiter_top_level_session->get_object(idx);
 
 
 
@@ -2613,13 +2834,15 @@ void symbol_definition::definition_of_packing_was(int verbose_level)
 	PW = NEW_OBJECT(packings::packing_was);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_packing_was before PW->init" << endl;
+		cout << "symbol_definition::definition_of_packing_was "
+				"before PW->init" << endl;
 	}
 
 	PW->init(packing_was_descr, P, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::perform_activity after PW->init" << endl;
+		cout << "symbol_definition::perform_activity "
+				"after PW->init" << endl;
 	}
 
 
@@ -2628,9 +2851,11 @@ void symbol_definition::definition_of_packing_was(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_packing_was(define_label, PW, verbose_level);
+	Symb->init_packing_was(
+			define_label, PW, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_packing_was before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_packing_was "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2655,13 +2880,16 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points "
-				"using existing object " << packing_with_assumed_symmetry_label << endl;
+				"using existing object "
+				<< packing_with_assumed_symmetry_label << endl;
 	}
 	int idx;
 	packings::packing_was *PW;
 
-	idx = Sym->Orbiter_top_level_session->find_symbol(packing_with_assumed_symmetry_label);
-	PW = (packings::packing_was *) Sym->Orbiter_top_level_session->get_object(idx);
+	idx = Sym->Orbiter_top_level_session->find_symbol(
+			packing_with_assumed_symmetry_label);
+	PW = (packings::packing_was *)
+			Sym->Orbiter_top_level_session->get_object(idx);
 
 
 	packings::packing_was_fixpoints *PWF;
@@ -2669,7 +2897,8 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 	PWF = NEW_OBJECT(packings::packing_was_fixpoints);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points before PWF->init" << endl;
+		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points "
+				"before PWF->init" << endl;
 	}
 
 	PWF->init(PW,
@@ -2678,7 +2907,8 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 			verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points after PWF->init" << endl;
+		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points "
+				"after PWF->init" << endl;
 	}
 
 	if (packing_with_assumed_symmetry_choose_fixed_points_clique_size > 0) {
@@ -2688,7 +2918,8 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 				verbose_level);
 	}
 	else {
-		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points clique size on fixed spreads is zero, so nothing to do" << endl;
+		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points "
+				"clique size on fixed spreads is zero, so nothing to do" << endl;
 	}
 
 
@@ -2697,9 +2928,11 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_packing_was_choose_fixed_points(define_label, PWF, verbose_level);
+	Symb->init_packing_was_choose_fixed_points(
+			define_label, PWF, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2725,14 +2958,17 @@ void symbol_definition::definition_of_packing_long_orbits(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_packing_long_orbits "
-				"using existing object " << packing_long_orbits_choose_fixed_points_label << endl;
+				"using existing object "
+				<< packing_long_orbits_choose_fixed_points_label << endl;
 	}
 	int idx;
 
 	packings::packing_was_fixpoints *PWF;
 
-	idx = Sym->Orbiter_top_level_session->find_symbol(packing_long_orbits_choose_fixed_points_label);
-	PWF = (packings::packing_was_fixpoints *) Sym->Orbiter_top_level_session->get_object(idx);
+	idx = Sym->Orbiter_top_level_session->find_symbol(
+			packing_long_orbits_choose_fixed_points_label);
+	PWF = (packings::packing_was_fixpoints *)
+			Sym->Orbiter_top_level_session->get_object(idx);
 
 
 	packings::packing_long_orbits *PL;
@@ -2740,13 +2976,15 @@ void symbol_definition::definition_of_packing_long_orbits(int verbose_level)
 	PL = NEW_OBJECT(packings::packing_long_orbits);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_packing_long_orbits before PL->init" << endl;
+		cout << "symbol_definition::definition_of_packing_long_orbits "
+				"before PL->init" << endl;
 	}
 
 	PL->init(PWF, Packing_long_orbits_description, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_packing_long_orbits after PL->init" << endl;
+		cout << "symbol_definition::definition_of_packing_long_orbits "
+				"after PL->init" << endl;
 	}
 
 
@@ -2755,9 +2993,11 @@ void symbol_definition::definition_of_packing_long_orbits(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_packing_long_orbits(define_label, PL, verbose_level);
+	Symb->init_packing_long_orbits(
+			define_label, PL, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_packing_long_orbits before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_packing_long_orbits "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2780,7 +3020,8 @@ void symbol_definition::definition_of_graph_classification(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_graph_classification "
-				"using existing object " << packing_long_orbits_choose_fixed_points_label << endl;
+				"using existing object "
+				<< packing_long_orbits_choose_fixed_points_label << endl;
 	}
 
 
@@ -2790,13 +3031,16 @@ void symbol_definition::definition_of_graph_classification(int verbose_level)
 	GC = NEW_OBJECT(apps_graph_theory::graph_classify);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_graph_classification before GC->init" << endl;
+		cout << "symbol_definition::definition_of_graph_classification "
+				"before GC->init" << endl;
 	}
 
-	GC->init(Graph_classify_description, verbose_level);
+	GC->init(
+			Graph_classify_description, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_graph_classification after GC->init" << endl;
+		cout << "symbol_definition::definition_of_graph_classification "
+				"after GC->init" << endl;
 	}
 
 
@@ -2805,9 +3049,11 @@ void symbol_definition::definition_of_graph_classification(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_graph_classify(define_label, GC, verbose_level);
+	Symb->init_graph_classify(
+			define_label, GC, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_graph_classification before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_graph_classification "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2829,7 +3075,8 @@ void symbol_definition::definition_of_diophant(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_diophant "
-				"using existing object " << packing_long_orbits_choose_fixed_points_label << endl;
+				"using existing object "
+				<< packing_long_orbits_choose_fixed_points_label << endl;
 	}
 
 
@@ -2839,14 +3086,16 @@ void symbol_definition::definition_of_diophant(int verbose_level)
 	Dio = NEW_OBJECT(solvers::diophant_create);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_diophant before Dio->init" << endl;
+		cout << "symbol_definition::definition_of_diophant "
+				"before Dio->init" << endl;
 	}
 
 	Dio->init(Diophant_description, verbose_level);
 
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_diophant after Dio->init" << endl;
+		cout << "symbol_definition::definition_of_diophant "
+				"after Dio->init" << endl;
 	}
 
 
@@ -2855,9 +3104,11 @@ void symbol_definition::definition_of_diophant(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_diophant(define_label, Dio, verbose_level);
+	Symb->init_diophant(
+			define_label, Dio, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_diophant before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_diophant "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2886,12 +3137,15 @@ void symbol_definition::definition_of_design(int verbose_level)
 	DC = NEW_OBJECT(apps_combinatorics::design_create);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_design before DC->init" << endl;
+		cout << "symbol_definition::definition_of_design "
+				"before DC->init" << endl;
 	}
 
-	DC->init(Design_create_description, verbose_level);
+	DC->init(
+			Design_create_description, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_design after DC->init" << endl;
+		cout << "symbol_definition::definition_of_design "
+				"after DC->init" << endl;
 	}
 
 
@@ -2900,9 +3154,11 @@ void symbol_definition::definition_of_design(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_design(define_label, DC, verbose_level);
+	Symb->init_design(
+			define_label, DC, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_design before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_design "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -2932,7 +3188,8 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 	apps_combinatorics::design_create *DC;
 
 	idx = Sym->Orbiter_top_level_session->find_symbol(design_table_label_design);
-	DC = (apps_combinatorics::design_create *) Sym->Orbiter_top_level_session->get_object(idx);
+	DC = (apps_combinatorics::design_create *)
+			Sym->Orbiter_top_level_session->get_object(idx);
 
 
 
@@ -2951,7 +3208,8 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 		cout << endl;
 		exit(1);
 	}
-	AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
+	AG = (apps_algebra::any_group *)
+			orbiter_kernel_system::Orbiter->get_object(idx);
 
 
 
@@ -2960,7 +3218,8 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_design_table before Combi.create_design_table" << endl;
+		cout << "symbol_definition::definition_of_design_table "
+				"before Combi.create_design_table" << endl;
 	}
 
 	Combi.create_design_table(DC,
@@ -2970,7 +3229,8 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 			verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_design_table after Combi.create_design_table" << endl;
+		cout << "symbol_definition::definition_of_design_table "
+				"after Combi.create_design_table" << endl;
 	}
 
 
@@ -2980,7 +3240,8 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 	LS = NEW_OBJECT(apps_combinatorics::large_set_classify);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_design_table before LS->init" << endl;
+		cout << "symbol_definition::definition_of_design_table "
+				"before LS->init" << endl;
 	}
 
 	LS->init(DC,
@@ -2988,7 +3249,8 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 			verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_design_table after LS->init" << endl;
+		cout << "symbol_definition::definition_of_design_table "
+				"after LS->init" << endl;
 	}
 
 
@@ -2996,9 +3258,11 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_design_table(define_label, LS, verbose_level);
+	Symb->init_design_table(
+			define_label, LS, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_design_table before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_design_table "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3021,13 +3285,15 @@ void symbol_definition::definition_of_large_set_was(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_large_set_was "
-				"using existing spread table " << packing_was_label_spread_table << endl;
+				"using existing spread table "
+				<< packing_was_label_spread_table << endl;
 	}
 	int idx;
 	apps_combinatorics::large_set_classify *LS;
 
 	idx = Sym->Orbiter_top_level_session->find_symbol(large_set_was_label_design_table);
-	LS = (apps_combinatorics::large_set_classify *) Sym->Orbiter_top_level_session->get_object(idx);
+	LS = (apps_combinatorics::large_set_classify *)
+			Sym->Orbiter_top_level_session->get_object(idx);
 
 
 
@@ -3039,13 +3305,15 @@ void symbol_definition::definition_of_large_set_was(int verbose_level)
 	LSW = NEW_OBJECT(apps_combinatorics::large_set_was);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_large_set_was before LSW->init" << endl;
+		cout << "symbol_definition::definition_of_large_set_was "
+				"before LSW->init" << endl;
 	}
 
 	LSW->init(large_set_was_descr, LS, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_large_set_was after LSW->init" << endl;
+		cout << "symbol_definition::definition_of_large_set_was "
+				"after LSW->init" << endl;
 	}
 
 
@@ -3054,9 +3322,11 @@ void symbol_definition::definition_of_large_set_was(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_large_set_was(define_label, LSW, verbose_level);
+	Symb->init_large_set_was(
+			define_label, LSW, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_large_set_was before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_large_set_was "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3082,22 +3352,26 @@ void symbol_definition::definition_of_set(int verbose_level)
 	SB = NEW_OBJECT(data_structures::set_builder);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_set before SB->init" << endl;
+		cout << "symbol_definition::definition_of_set "
+				"before SB->init" << endl;
 	}
 
 	SB->init(Set_builder_description, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_set after SB->init" << endl;
+		cout << "symbol_definition::definition_of_set "
+				"after SB->init" << endl;
 	}
 
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_set(define_label, SB, verbose_level);
+	Symb->init_set(
+			define_label, SB, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_set before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_set "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3125,6 +3399,12 @@ void symbol_definition::definition_of_vector(
 
 	if (Descr->f_field) {
 
+
+		F = get_or_create_finite_field(
+				Descr->field_label,
+				verbose_level);
+
+#if 0
 		int idx;
 
 		idx = Sym->Orbiter_top_level_session->find_symbol(Descr->field_label);
@@ -3132,12 +3412,13 @@ void symbol_definition::definition_of_vector(
 		if (f_v) {
 			cout << "symbol_definition::definition_of_vector over a field" << endl;
 		}
-
+#endif
 
 	}
 	else {
 		if (f_v) {
-			cout << "symbol_definition::definition_of_vector not over a field" << endl;
+			cout << "symbol_definition::definition_of_vector "
+					"not over a field" << endl;
 		}
 
 	}
@@ -3148,22 +3429,26 @@ void symbol_definition::definition_of_vector(
 	VB = NEW_OBJECT(data_structures::vector_builder);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector before VB->init" << endl;
+		cout << "symbol_definition::definition_of_vector "
+				"before VB->init" << endl;
 	}
 
 	VB->init(Descr, F, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector after VB->init" << endl;
+		cout << "symbol_definition::definition_of_vector "
+				"after VB->init" << endl;
 	}
 
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_vector(label, VB, verbose_level);
+	Symb->init_vector(
+			label, VB, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_vector "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3188,22 +3473,26 @@ void symbol_definition::definition_of_combinatorial_object(int verbose_level)
 	IS = NEW_OBJECT(data_structures::data_input_stream);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object before IS->init" << endl;
+		cout << "symbol_definition::definition_of_combinatorial_object "
+				"before IS->init" << endl;
 	}
 
 	IS->init(Data_input_stream_description, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object after IS->init" << endl;
+		cout << "symbol_definition::definition_of_combinatorial_object "
+				"after IS->init" << endl;
 	}
 
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_combinatorial_objects(define_label, IS, verbose_level);
+	Symb->init_combinatorial_objects(
+			define_label, IS, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_combinatorial_object "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3235,9 +3524,11 @@ void symbol_definition::do_geometry_builder(int verbose_level)
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_geometry_builder_object(define_label, GB, verbose_level);
+	Symb->init_geometry_builder_object(
+			define_label, GB, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::do_geometry_builder before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::do_geometry_builder "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3280,11 +3571,12 @@ void symbol_definition::load_finite_field_PG(int verbose_level)
 		Projective_space_with_action_description->F = NEW_OBJECT(field_theory::finite_field);
 		Projective_space_with_action_description->F->finite_field_init_small_order(q,
 				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				TRUE /* f_compute_related_fields */,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::load_finite_field_PG "
-					"the finite field of order " << q << " has been created" << endl;
+					"the finite field of order " << q
+					<< " has been created" << endl;
 		}
 
 	}
@@ -3303,14 +3595,16 @@ void symbol_definition::load_finite_field_PG(int verbose_level)
 
 
 
-void symbol_definition::load_finite_field(std::string &input_q,
-		field_theory::finite_field *&F, int verbose_level)
+field_theory::finite_field *symbol_definition::get_or_create_finite_field(
+		std::string &input_q,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "symbol_definition::load_finite_field" << endl;
+		cout << "symbol_definition::get_or_create_finite_field" << endl;
 	}
+	field_theory::finite_field *F;
 	data_structures::string_tools ST;
 
 	if (ST.starts_with_a_number(input_q)) {
@@ -3318,36 +3612,42 @@ void symbol_definition::load_finite_field(std::string &input_q,
 
 		q = ST.strtoi(input_q);
 		if (f_v) {
-			cout << "symbol_definition::load_finite_field "
+			cout << "symbol_definition::get_or_create_finite_field "
 					"creating the finite field of order " << q << endl;
 		}
 		F = NEW_OBJECT(field_theory::finite_field);
+
 		F->finite_field_init_small_order(q,
 				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				TRUE /* f_compute_related_fields */,
 				verbose_level - 1);
+
 		if (f_v) {
-			cout << "symbol_definition::load_finite_field "
-					"the finite field of order " << q << " has been created" << endl;
+			cout << "symbol_definition::get_or_create_finite_field "
+					"the finite field of order " << q
+					<< " has been created" << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "symbol_definition::load_finite_field "
+			cout << "symbol_definition::get_or_create_finite_field "
 					"using existing finite field " << input_q << endl;
 		}
 		int idx;
 		idx = Sym->Orbiter_top_level_session->find_symbol(input_q);
 		if (idx < 0) {
-			cout << "symbol_definition::load_finite_field done cannot find finite field object" << endl;
+			cout << "symbol_definition::get_or_create_finite_field "
+					"done cannot find finite field object" << endl;
 			exit(1);
 		}
-		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+		F = (field_theory::finite_field *)
+				Sym->Orbiter_top_level_session->get_object(idx);
 	}
 
 	if (f_v) {
-		cout << "symbol_definition::load_finite_field done" << endl;
+		cout << "symbol_definition::get_or_create_finite_field done" << endl;
 	}
+	return F;
 }
 
 
@@ -3365,22 +3665,26 @@ void symbol_definition::definition_of_vector_ge(int verbose_level)
 	VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector_ge before VB->init" << endl;
+		cout << "symbol_definition::definition_of_vector_ge "
+				"before VB->init" << endl;
 	}
 
 	VB->init(Vector_ge_description, verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector_ge after VB->init" << endl;
+		cout << "symbol_definition::definition_of_vector_ge "
+				"after VB->init" << endl;
 	}
 
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_vector_ge(define_label, VB, verbose_level);
+	Symb->init_vector_ge(
+			define_label, VB, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_vector_ge before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_vector_ge "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3406,7 +3710,8 @@ void symbol_definition::definition_of_action_on_forms(int verbose_level)
 	AF = NEW_OBJECT(apps_algebra::action_on_forms);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_action_on_forms before AF->create_action_on_forms" << endl;
+		cout << "symbol_definition::definition_of_action_on_forms "
+				"before AF->create_action_on_forms" << endl;
 	}
 
 	AF->create_action_on_forms(
@@ -3414,16 +3719,19 @@ void symbol_definition::definition_of_action_on_forms(int verbose_level)
 			verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_action_on_forms after AF->create_action_on_forms" << endl;
+		cout << "symbol_definition::definition_of_action_on_forms "
+				"after AF->create_action_on_forms" << endl;
 	}
 
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_action_on_forms(define_label, AF, verbose_level);
+	Symb->init_action_on_forms(
+			define_label, AF, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_action_on_forms before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_action_on_forms "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3449,7 +3757,8 @@ void symbol_definition::definition_of_orbits(int verbose_level)
 	OC = NEW_OBJECT(apps_algebra::orbits_create);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_orbits before OC->init" << endl;
+		cout << "symbol_definition::definition_of_orbits "
+				"before OC->init" << endl;
 	}
 
 	OC->init(
@@ -3457,16 +3766,19 @@ void symbol_definition::definition_of_orbits(int verbose_level)
 			verbose_level);
 
 	if (f_v) {
-		cout << "symbol_definition::definition_of_orbits after OC->init" << endl;
+		cout << "symbol_definition::definition_of_orbits "
+				"after OC->init" << endl;
 	}
 
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_orbits(define_label, OC, verbose_level);
+	Symb->init_orbits(
+			define_label, OC, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_orbits before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_orbits "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3492,9 +3804,11 @@ void symbol_definition::definition_of_poset_classification_control(int verbose_l
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_poset_classification_control(define_label, Poset_classification_control, verbose_level);
+	Symb->init_poset_classification_control(
+			define_label, Poset_classification_control, verbose_level);
 	if (f_v) {
-		cout << "symbol_definition::definition_of_poset_classification_control before add_symbol_table_entry" << endl;
+		cout << "symbol_definition::definition_of_poset_classification_control "
+				"before add_symbol_table_entry" << endl;
 	}
 	Sym->Orbiter_top_level_session->add_symbol_table_entry(
 			define_label, Symb, verbose_level);
@@ -3505,6 +3819,37 @@ void symbol_definition::definition_of_poset_classification_control(int verbose_l
 		cout << "symbol_definition::definition_of_poset_classification_control done" << endl;
 	}
 }
+
+void symbol_definition::definition_of_poset_classification_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_poset_classification_activity" << endl;
+	}
+
+
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_poset_classification_activity(
+			define_label, Poset_classification_activity, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_poset_classification_activity "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_poset_classification_activity done" << endl;
+	}
+}
+
 
 
 

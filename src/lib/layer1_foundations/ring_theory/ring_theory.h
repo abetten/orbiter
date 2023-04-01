@@ -89,6 +89,8 @@ private:
 	enum monomial_ordering_type Monomial_ordering_type;
 	field_theory::finite_field *F;
 	int nb_monomials;
+		// = Combi.int_n_choose_k(
+		// nb_variables + degree - 1, nb_variables - 1);
 	int *Monomials; // [nb_monomials * nb_variables]
 
 
@@ -131,9 +133,11 @@ public:
 
 	homogeneous_polynomial_domain();
 	~homogeneous_polynomial_domain();
-	void init(polynomial_ring_description *Descr,
+	void init(
+			polynomial_ring_description *Descr,
 			int verbose_level);
-	void init(field_theory::finite_field *F,
+	void init(
+			field_theory::finite_field *F,
 			int nb_vars, int degree,
 			monomial_ordering_type Monomial_ordering_type,
 			int verbose_level);
@@ -153,11 +157,14 @@ public:
 	int get_monomial(int i, int j);
 	std::string &get_monomial_symbol_easy(int i);
 	int *get_monomial_pointer(int i);
-	int evaluate_monomial(int idx_of_monomial, int *coords);
-	void remake_symbols(int symbol_offset,
+	int evaluate_monomial(
+			int idx_of_monomial, int *coords);
+	void remake_symbols(
+			int symbol_offset,
 			std::string &symbol_mask, std::string &symbol_mask_latex,
 			int verbose_level);
-	void remake_symbols_interval(int symbol_offset,
+	void remake_symbols_interval(
+			int symbol_offset,
 			int from, int len,
 			std::string &symbol_mask, std::string &symbol_mask_latex,
 			int verbose_level);
@@ -167,53 +174,86 @@ public:
 			std::vector<std::string> *variables_txt,
 			std::vector<std::string> *variables_tex,
 			int verbose_level);
-	void rearrange_monomials_by_partition_type(int verbose_level);
+	void rearrange_monomials_by_partition_type(
+			int verbose_level);
 	int index_of_monomial(int *v);
 	void affine_evaluation_kernel(
 			int *&Kernel, int &dim_kernel, int verbose_level);
-	void get_quadratic_form_matrix(int *eqn, int *M);
-	void print_monomial(std::ostream &ost, int i);
-	void print_monomial(std::ostream &ost, int *mon);
-	void print_monomial_latex(std::ostream &ost, int *mon);
-	void print_monomial_latex(std::ostream &ost, int i);
-	void print_monomial_relaxed(std::ostream &ost, int i);
-	void print_monomial_latex(std::string &s, int *mon);
-	void print_monomial_relaxed(std::string &s, int *mon);
-	void print_monomial_latex(std::string &s, int i);
-	void print_monomial_str(std::stringstream &ost, int i);
-	void print_monomial_latex_str(std::stringstream &ost, int i);
-	void print_equation(std::ostream &ost, int *coeffs);
-	void print_equation_simple(std::ostream &ost, int *coeffs);
-	void print_equation_tex(std::ostream &ost, int *coeffs);
-	void print_equation_relaxed(std::ostream &ost, int *coeffs);
-	void print_equation_numerical(std::ostream &ost, int *coeffs);
-	void print_equation_lint(std::ostream &ost, long int *coeffs);
-	void print_equation_lint_tex(std::ostream &ost, long int *coeffs);
-	void print_equation_str(std::stringstream &ost, int *coeffs);
-	void print_equation_with_line_breaks_tex(std::ostream &ost,
+	void get_quadratic_form_matrix(
+			int *eqn, int *M);
+	void print_monomial(
+			std::ostream &ost, int i);
+	void print_monomial(
+			std::ostream &ost, int *mon);
+	void print_monomial_latex(
+			std::ostream &ost, int *mon);
+	void print_monomial_latex(
+			std::ostream &ost, int i);
+	void print_monomial_relaxed(
+			std::ostream &ost, int i);
+	void print_monomial_latex(
+			std::string &s, int *mon);
+	void print_monomial_relaxed(
+			std::string &s, int *mon);
+	void print_monomial_latex(
+			std::string &s, int i);
+	void print_monomial_str(
+			std::stringstream &ost, int i);
+	void print_monomial_for_gap_str(
+			std::stringstream &ost, int i);
+	void print_monomial_latex_str(
+			std::stringstream &ost, int i);
+	void print_equation(
+			std::ostream &ost, int *coeffs);
+	void print_equation_simple(
+			std::ostream &ost, int *coeffs);
+	void print_equation_tex(
+			std::ostream &ost, int *coeffs);
+	void print_equation_relaxed(
+			std::ostream &ost, int *coeffs);
+	void print_equation_numerical(
+			std::ostream &ost, int *coeffs);
+	void print_equation_lint(
+			std::ostream &ost, long int *coeffs);
+	void print_equation_lint_tex(
+			std::ostream &ost, long int *coeffs);
+	void print_equation_str(
+			std::stringstream &ost, int *coeffs);
+	void print_equation_for_gap_str(
+			std::stringstream &ost, int *coeffs);
+	void print_equation_with_line_breaks_tex(
+			std::ostream &ost,
 		int *coeffs, int nb_terms_per_line,
 		const char *new_line_text);
 	void print_equation_with_line_breaks_tex_lint(
 		std::ostream &ost, long int *coeffs, int nb_terms_per_line,
 		const char *new_line_text);
-	void algebraic_set(int *Eqns, int nb_eqns,
+	void algebraic_set(
+			int *Eqns, int nb_eqns,
 			long int *Pts, int &nb_pts, int verbose_level);
-	void polynomial_function(int *coeff, int *f, int verbose_level);
+	void polynomial_function(
+			int *coeff, int *f, int verbose_level);
 	void polynomial_function_affine(
 			int *coeff, int *f, int verbose_level);
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
-	void enumerate_points_lint(int *coeff,
+	void enumerate_points_lint(
+			int *coeff,
 			long int *&Pts, int &nb_pts, int verbose_level);
-	void enumerate_points_zariski_open_set(int *coeff,
+	void enumerate_points_zariski_open_set(
+			int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
-	int evaluate_at_a_point_by_rank(int *coeff, int pt);
-	int evaluate_at_a_point(int *coeff, int *pt_vec);
-	void substitute_linear(int *coeff_in, int *coeff_out,
+	int evaluate_at_a_point_by_rank(
+			int *coeff, int pt);
+	int evaluate_at_a_point(
+			int *coeff, int *pt_vec);
+	void substitute_linear(
+			int *coeff_in, int *coeff_out,
 		int *Mtx_inv, int verbose_level);
-	void substitute_semilinear(int *coeff_in, int *coeff_out,
+	void substitute_semilinear(
+			int *coeff_in, int *coeff_out,
 		int f_semilinear, int frob_power, int *Mtx_inv,
 		int verbose_level);
 	void substitute_line(
@@ -234,17 +274,19 @@ public:
 	long int rank_point(int *v);
 	void unrank_coeff_vector(int *v, long int rk);
 	long int rank_coeff_vector(int *v);
-	int test_weierstrass_form(int rk,
+	int test_weierstrass_form(
+			int rk,
 		int &a1, int &a2, int &a3, int &a4, int &a6,
 		int verbose_level);
-	void explore_vanishing_ideal(long int *Pts,
+	void explore_vanishing_ideal(
+			long int *Pts,
 			int nb_pts, int verbose_level);
 	void vanishing_ideal(
 			long int *Pts, int nb_pts, int &r, int *Kernel,
 		int verbose_level);
 	int compare_monomials(int *M1, int *M2);
 	int compare_monomials_PART(int *M1, int *M2);
-	void print_monomial_ordering(std::ostream &ost);
+	void print_monomial_ordering_latex(std::ostream &ost);
 	int *read_from_string_coefficient_pairs(
 			std::string &str, int verbose_level);
 	int *read_from_string_coefficient_vector(
@@ -313,23 +355,30 @@ public:
 class longinteger_domain {
 
 public:
-	int compare(longinteger_object &a, longinteger_object &b);
-	int compare_unsigned(longinteger_object &a, longinteger_object &b);
+	int compare(
+			longinteger_object &a, longinteger_object &b);
+	int compare_unsigned(
+			longinteger_object &a, longinteger_object &b);
 		// returns -1 if a < b, 0 if a = b,
 		// and 1 if a > b, treating a and b as unsigned.
-	int is_less_than(longinteger_object &a, longinteger_object &b);
-	void subtract_signless(longinteger_object &a,
+	int is_less_than(
+			longinteger_object &a, longinteger_object &b);
+	void subtract_signless(
+			longinteger_object &a,
 		longinteger_object &b, longinteger_object &c);
 		// c = a - b, assuming a > b
-	void subtract_signless_in_place(longinteger_object &a,
+	void subtract_signless_in_place(
+			longinteger_object &a,
 		longinteger_object &b);
 		// a := a - b, assuming a > b
 	void add(longinteger_object &a,
 		longinteger_object &b, longinteger_object &c);
-	void add_mod(longinteger_object &a,
+	void add_mod(
+			longinteger_object &a,
 		longinteger_object &b, longinteger_object &c,
 		longinteger_object &m, int verbose_level);
-	void add_in_place(longinteger_object &a,
+	void add_in_place(
+			longinteger_object &a,
 			longinteger_object &b);
 		// a := a + b
 	void subtract_in_place(
@@ -341,11 +390,14 @@ public:
 		longinteger_object &b, longinteger_object &c);
 	void mult_in_place(
 			longinteger_object &a, longinteger_object &b);
-	void mult_integer_in_place(longinteger_object &a, int b);
-	void mult_mod(longinteger_object &a,
+	void mult_integer_in_place(
+			longinteger_object &a, int b);
+	void mult_mod(
+			longinteger_object &a,
 		longinteger_object &b, longinteger_object &c,
 		longinteger_object &m, int verbose_level);
-	void multiply_up(longinteger_object &a, int *x, int len,
+	void multiply_up(
+			longinteger_object &a, int *x, int len,
 			int verbose_level);
 	void multiply_up_lint(
 			longinteger_object &a, long int *x, int len,
@@ -354,13 +406,15 @@ public:
 			longinteger_object &a, longinteger_object &b);
 	long int quotient_as_lint(
 			longinteger_object &a, longinteger_object &b);
-	void integral_division_exact(longinteger_object &a,
+	void integral_division_exact(
+			longinteger_object &a,
 		longinteger_object &b, longinteger_object &a_over_b);
 	void integral_division(
 		longinteger_object &a, longinteger_object &b,
 		longinteger_object &q, longinteger_object &r,
 		int verbose_level);
-	void integral_division_by_int(longinteger_object &a,
+	void integral_division_by_int(
+			longinteger_object &a,
 		int b, longinteger_object &q, int &r);
 	void integral_division_by_lint(
 		longinteger_object &a,
@@ -369,24 +423,31 @@ public:
 		longinteger_object &a,
 		longinteger_object &m, longinteger_object &av,
 		int verbose_level);
-	void extended_gcd(longinteger_object &a,
+	void extended_gcd(
+			longinteger_object &a,
 			longinteger_object &b,
 		longinteger_object &g, longinteger_object &u,
 		longinteger_object &v, int verbose_level);
-	int logarithm_base_b(longinteger_object &a, int b);
-	void base_b_representation(longinteger_object &a,
+	int logarithm_base_b(
+			longinteger_object &a, int b);
+	void base_b_representation(
+			longinteger_object &a,
 		int b, int *&rep, int &len);
-	void power_int(longinteger_object &a, int n);
-	void power_int_mod(longinteger_object &a, int n,
+	void power_int(
+			longinteger_object &a, int n);
+	void power_int_mod(
+			longinteger_object &a, int n,
 		longinteger_object &m);
-	void power_longint_mod(longinteger_object &a,
+	void power_longint_mod(
+			longinteger_object &a,
 		longinteger_object &n, longinteger_object &m,
 		int verbose_level);
 	void square_root(
 			longinteger_object &a,
 			longinteger_object &sqrt_a,
 			int verbose_level);
-	int square_root_mod(int a, int p, int verbose_level);
+	int square_root_mod(
+			int a, int p, int verbose_level);
 		// solves x^2 = a mod p. Returns x
 
 
@@ -402,26 +463,33 @@ public:
 
 	int is_even(longinteger_object &a);
 	int is_odd(longinteger_object &a);
-	int remainder_mod_int(longinteger_object &a, int p);
-	int multiplicity_of_p(longinteger_object &a,
+	int remainder_mod_int(
+			longinteger_object &a, int p);
+	int multiplicity_of_p(
+			longinteger_object &a,
 		longinteger_object &residue, int p);
 	long int smallest_primedivisor(
 			longinteger_object &a, int p_min,
 		int verbose_level);
-	void factor_into_longintegers(longinteger_object &a,
+	void factor_into_longintegers(
+			longinteger_object &a,
 		int &nb_primes, longinteger_object *&primes,
 		int *&exponents, int verbose_level);
-	void factor(longinteger_object &a, int &nb_primes,
+	void factor(
+			longinteger_object &a, int &nb_primes,
 		int *&primes, int *&exponents,
 		int verbose_level);
-	int jacobi(longinteger_object &a, longinteger_object &m,
+	int jacobi(
+			longinteger_object &a, longinteger_object &m,
 		int verbose_level);
 
-	void random_number_less_than_n(longinteger_object &n,
+	void random_number_less_than_n(
+			longinteger_object &n,
 		longinteger_object &r);
 	void random_number_with_n_decimals(
 		longinteger_object &R, int n, int verbose_level);
-	void matrix_product(longinteger_object *A,
+	void matrix_product(
+			longinteger_object *A,
 			longinteger_object *B,
 		longinteger_object *&C, int Am, int An, int Bn);
 	void matrix_entries_integral_division_exact(
@@ -438,7 +506,8 @@ public:
 	void factorial(longinteger_object &result, int n);
 	void group_order_PGL(longinteger_object &result,
 		int n, int q, int f_semilinear);
-	void square_root_floor(longinteger_object &a,
+	void square_root_floor(
+			longinteger_object &a,
 			longinteger_object &x, int verbose_level);
 	void print_digits(char *rep, int len);
 	void Chinese_Remainders(
@@ -540,7 +609,8 @@ public:
 
 	partial_derivative();
 	~partial_derivative();
-	void init(homogeneous_polynomial_domain *H,
+	void init(
+			homogeneous_polynomial_domain *H,
 			homogeneous_polynomial_domain *Hd,
 			int variable_idx,
 			int verbose_level);
@@ -577,7 +647,8 @@ public:
 			polynomial_double *B);
 	void determinant_over_polynomial_ring(
 			polynomial_double *P,
-			polynomial_double *det, int n, int verbose_level);
+			polynomial_double *det, int n,
+			int verbose_level);
 	void find_all_roots(polynomial_double *p,
 			double *lambda, int verbose_level);
 	double divide_linear_factor(polynomial_double *p,
@@ -698,6 +769,8 @@ class ring_theory_global {
 public:
 	ring_theory_global();
 	~ring_theory_global();
+	void Monomial_ordering_type_as_string(
+			monomial_ordering_type Monomial_ordering_type, std::string &s);
 	void write_code_for_division(
 			field_theory::finite_field *F,
 			std::string &label_code,
@@ -803,7 +876,7 @@ public:
 
 class table_of_irreducible_polynomials {
 public:
-	int k;
+	int degree_bound;
 	int q;
 	field_theory::finite_field *F;
 	int nb_irred;
@@ -814,7 +887,7 @@ public:
 
 	table_of_irreducible_polynomials();
 	~table_of_irreducible_polynomials();
-	void init(int k,
+	void init(int degree_bound,
 			field_theory::finite_field *F,
 			int verbose_level);
 	void print(std::ostream &ost);
@@ -823,7 +896,8 @@ public:
 			int *Select, int verbose_level);
 	int select_polynomial_next(
 			int *Select, int verbose_level);
-	int is_irreducible(unipoly_object &poly, int verbose_level);
+	int is_irreducible(
+			unipoly_object &poly, int verbose_level);
 	void factorize_polynomial(
 			unipoly_object &char_poly, int *Mult,
 		int verbose_level);

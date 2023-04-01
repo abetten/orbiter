@@ -36,7 +36,7 @@ int poset_orbit_node::apply_isomorphism(
 	set = NEW_lint(len + 1); // this call should be eliminated
 	//set = gen->get_tmp_set_apply_fusion();
 
-	gen->get_A()->element_retrieve(
+	gen->get_A()->Group_element->element_retrieve(
 			E[current_extension].get_data(),
 			Elt_tmp1, 0);
 		// A Betten March 18 2012, this was gen->A2 previously
@@ -45,17 +45,17 @@ int poset_orbit_node::apply_isomorphism(
 		cout << "poset_orbit_node::apply_isomorphism "
 				"applying fusion element" << endl;
 		if (gen->allowed_to_show_group_elements()) {
-			gen->get_A2()->element_print_quick(Elt_tmp1, cout);
+			gen->get_A2()->Group_element->element_print_quick(Elt_tmp1, cout);
 			}
 		cout << "in action " << gen->get_A2()->label << ":" << endl;
 		if (gen->allowed_to_show_group_elements()) {
-			gen->get_A2()->element_print_as_permutation(Elt_tmp1, cout);
+			gen->get_A2()->Group_element->element_print_as_permutation(Elt_tmp1, cout);
 			}
 		cout << "to the set ";
 		Lint_vec_print(cout, gen->get_set_i(lvl + 1), len + 1);
 		cout << endl;
 		}
-	gen->get_A2()->map_a_set(
+	gen->get_A2()->Group_element->map_a_set(
 			gen->get_set_i(lvl + 1),
 			set,
 			len + 1,
@@ -66,7 +66,7 @@ int poset_orbit_node::apply_isomorphism(
 		cout << endl;
 		}
 
-	gen->get_A2()->element_mult(
+	gen->get_A2()->Group_element->element_mult(
 			gen->get_transporter()->ith(lvl + 1),
 			Elt_tmp1, Elt_tmp2, 0);
 	if (f_v) {
@@ -74,7 +74,7 @@ int poset_orbit_node::apply_isomorphism(
 				gen->get_set_i(lvl + 1), len + 1);
 		cout << endl;
 		}
-	gen->get_A2()->move(Elt_tmp2,
+	gen->get_A2()->Group_element->move(Elt_tmp2,
 			gen->get_transporter()->ith(lvl + 1));
 
 	if (gen->get_poset()->f_subspace_lattice) {
@@ -161,31 +161,31 @@ void poset_orbit_node::install_fusion_node(
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node" << endl;
 		cout << "transporter[lvl + 1]=" << endl;
-		gen->get_A()->element_print_quick(
+		gen->get_A()->Group_element->element_print_quick(
 				gen->get_transporter()->ith(lvl + 1), cout);
-		gen->get_A2()->element_print_as_permutation_verbose(
+		gen->get_A2()->Group_element->element_print_as_permutation_verbose(
 				gen->get_transporter()->ith(lvl + 1), cout, 0);
 	}
-	gen->get_A()->element_invert(
+	gen->get_A()->Group_element->element_invert(
 			gen->get_transporter()->ith(lvl + 1),
 			Elt_tmp, FALSE);
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node" << endl;
 		cout << "transporter[lvl + 1]^-1=Elt1=" << endl;
-		gen->get_A()->element_print_quick(Elt_tmp, cout);
-		gen->get_A2()->element_print_as_permutation_verbose(
+		gen->get_A()->Group_element->element_print_quick(Elt_tmp, cout);
+		gen->get_A2()->Group_element->element_print_as_permutation_verbose(
 				Elt_tmp, cout, 0);
 	}
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node: "
 				"fusion element:" << endl;
 		if (gen->allowed_to_show_group_elements()) {
-			gen->get_A()->element_print_quick(Elt_tmp, cout);
-			gen->get_A2()->element_print_as_permutation(Elt_tmp, cout);
+			gen->get_A()->Group_element->element_print_quick(Elt_tmp, cout);
+			gen->get_A2()->Group_element->element_print_as_permutation(Elt_tmp, cout);
 			cout << endl;
 			}
 		}
-	hdl = gen->get_A()->element_store(Elt_tmp, FALSE);
+	hdl = gen->get_A()->Group_element->element_store(Elt_tmp, FALSE);
 	//E[current_extension].type = EXTENSION_TYPE_FUSION;
 	gen->get_Poo()->change_extension_type(lvl,
 			current_node, current_extension,
@@ -245,10 +245,10 @@ void poset_orbit_node::install_fusion_node(
 		Lint_vec_print(cout, gen->get_set1(), lvl + 1);
 		cout << endl;
 		cout << "Elt1=" << endl;
-		gen->get_A()->element_print_quick(Elt_tmp, cout);
+		gen->get_A()->Group_element->element_print_quick(Elt_tmp, cout);
 		cout << "before map_a_set" << endl;
 	}
-	gen->get_A2()->map_a_set(
+	gen->get_A2()->Group_element->map_a_set(
 			gen->get_set1(),
 			gen->get_set3(),
 			lvl + 1,
@@ -440,7 +440,7 @@ int poset_orbit_node::trace_next_point_in_place(
 
 	Lint_vec_copy(tmp_set, cur_set, size);
 
-	gen->get_A()->element_move(tmp_transporter,
+	gen->get_A()->Group_element->element_move(tmp_transporter,
 			cur_transporter, 0);
 
 	if (f_v) {
@@ -474,17 +474,17 @@ void poset_orbit_node::trace_starter(
 	if (f_vv) {
 		cout << "applying:" << endl;
 		if (gen->allowed_to_show_group_elements()) {
-			gen->get_A2()->element_print(Elt, cout);
+			gen->get_A2()->Group_element->element_print(Elt, cout);
 			cout << endl;
 			}
 		}
 		
 	for (i = 0; i < size; i++) {
-		next_set[i] = gen->get_A2()->element_image_of(
+		next_set[i] = gen->get_A2()->Group_element->element_image_of(
 				cur_set[i], Elt, FALSE);
 		}
 
-	gen->get_A()->element_mult(cur_transporter,
+	gen->get_A()->Group_element->element_mult(cur_transporter,
 			Elt,
 			next_transporter,
 			FALSE);
@@ -577,10 +577,10 @@ int poset_orbit_node::trace_next_point(
 				<< " mapping "
 				<< the_point << " -> " << pt0
 				<< " under the element " << endl;
-		gen->get_A2()->element_print_quick(cosetrep, cout);
+		gen->get_A2()->Group_element->element_print_quick(cosetrep, cout);
 		cout << "in action " << gen->get_A2()->label << endl;
 		if (gen->allowed_to_show_group_elements()) {
-			gen->get_A2()->element_print_as_permutation_verbose(
+			gen->get_A2()->Group_element->element_print_as_permutation_verbose(
 					cosetrep, cout, 0);
 			cout << endl;
 		}
@@ -593,18 +593,18 @@ int poset_orbit_node::trace_next_point(
 					"and the transporter over:" << endl;
 		}
 		Lint_vec_copy(cur_set, next_set, size);
-		gen->get_A2()->element_move(cur_transporter, next_transporter, FALSE);
+		gen->get_A2()->Group_element->element_move(cur_transporter, next_transporter, FALSE);
 	}
 	else {
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 					<< " applying:" << endl;
-			gen->get_A2()->element_print_quick(cosetrep, cout);
+			gen->get_A2()->Group_element->element_print_quick(cosetrep, cout);
 
 			cout << "in action " << gen->get_A2()->label << endl;
 
 			if (gen->allowed_to_show_group_elements()) {
-				gen->get_A2()->element_print_as_permutation_verbose(
+				gen->get_A2()->Group_element->element_print_as_permutation_verbose(
 						cosetrep, cout, 0);
 				cout << endl;
 			}
@@ -623,7 +623,7 @@ int poset_orbit_node::trace_next_point(
 						<< " mapping point " << i << " / " << size
 						<< "cur_set[i]=" << cur_set[i] << endl;
 			}
-			next_set[i] = gen->get_A2()->element_image_of(
+			next_set[i] = gen->get_A2()->Group_element->element_image_of(
 					cur_set[i], cosetrep, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "poset_orbit_node::trace_next_point lvl = " << lvl
@@ -659,7 +659,7 @@ int poset_orbit_node::trace_next_point(
 			gen->A->element_print_quick(cosetrep, cout);
 			}
 #endif
-		gen->get_A()->element_mult(cur_transporter,
+		gen->get_A()->Group_element->element_mult(cur_transporter,
 				cosetrep, next_transporter, 0);
 #if 0
 		if (f_v) {
@@ -680,10 +680,10 @@ int poset_orbit_node::trace_next_point(
 			gen->get_poset()->invoke_print_function(cout, size, next_set);
 		}
 		if (gen->allowed_to_show_group_elements() && f_vv) {
-			cout << "poset_orbit_node::trace_next_point the n e w "
+			cout << "poset_orbit_node::trace_next_point the new "
 					"transporter is" << endl;
-			gen->get_A2()->element_print_quick(next_transporter, cout);
-			gen->get_A2()->element_print_as_permutation(
+			gen->get_A2()->Group_element->element_print_quick(next_transporter, cout);
+			gen->get_A2()->Group_element->element_print_as_permutation(
 					next_transporter, cout);
 			cout << endl;
 		}
@@ -732,7 +732,7 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 	}
 	if (nb_strong_generators == 0) {
 		//cosetrep = gen->get_Elt1();
-		gen->get_A()->element_one(cosetrep, FALSE);
+		gen->get_A()->Group_element->element_one(cosetrep, FALSE);
 		pt0 = pt_to_trace;
 		return TRUE;
 	}
@@ -772,7 +772,7 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 
 		//cosetrep = gen->get_schreier_vector_handler()->cosetrep;
 
-		gen->get_A2()->element_move(gen->get_schreier_vector_handler()->cosetrep, cosetrep, 0);
+		gen->get_A2()->Group_element->element_move(gen->get_schreier_vector_handler()->cosetrep, cosetrep, 0);
 
 
 		// gen->Elt1 contains the element that maps pt_to_trace to pt0
@@ -812,7 +812,7 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv cosetrep:" << endl;
-		gen->get_A2()->element_print_quick(cosetrep, cout);
+		gen->get_A2()->Group_element->element_print_quick(cosetrep, cout);
 	}
 	return TRUE;
 }

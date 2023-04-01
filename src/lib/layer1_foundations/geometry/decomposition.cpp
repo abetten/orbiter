@@ -120,7 +120,7 @@ void decomposition::setup_default_partition(int verbose_level)
 	Stack = NEW_OBJECT(data_structures::partitionstack);
 	Stack->allocate(nb_points + nb_blocks,
 			0 /* verbose_level */);
-	Stack->subset_continguous(nb_points, nb_blocks);
+	Stack->subset_contiguous(nb_points, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 	if (f_v) {

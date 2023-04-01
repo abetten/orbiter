@@ -267,9 +267,9 @@ void quartic_curve_from_surface::quartic(
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
-			"before Surf_A->A->map_a_set_and_reorder" << endl;
+			"before Surf_A->A->Group_element->map_a_set_and_reorder" << endl;
 	}
-	SOA->Surf_A->A->map_a_set_and_reorder(
+	SOA->Surf_A->A->Group_element->map_a_set_and_reorder(
 			SOA->SO->Pts, Pts_on_surface,
 			nb_pts_on_surface,
 			transporter,
@@ -538,7 +538,7 @@ void quartic_curve_from_surface::compute_quartic(
 		cout << "quartic_curve_from_surface::compute_quartic "
 				"transporter element=" << endl;
 	}
-	SOA->Surf_A->A->element_print_quick(
+	SOA->Surf_A->A->Group_element->element_print_quick(
 			transporter, cout);
 
 	SOA->Surf_A->AonHPD_3_4->compute_image_int_low_level(
@@ -566,10 +566,10 @@ void quartic_curve_from_surface::compute_quartic(
 		int Basis6[6];
 		int j;
 
-		Lines_nice[i] = SOA->Surf_A->A2->element_image_of(
+		Lines_nice[i] = SOA->Surf_A->A2->Group_element->element_image_of(
 				Lines[i], transporter, 0);
 
-		SOA->Surf_A->PA->P->Grass_lines->unrank_lint_here(
+		SOA->Surf_A->PA->P->Subspaces->Grass_lines->unrank_lint_here(
 				Basis8, Lines_nice[i], 0);
 		if (f_v) {
 			cout << "quartic_curve_from_surface::compute_quartic "
@@ -588,7 +588,7 @@ void quartic_curve_from_surface::compute_quartic(
 			Int_matrix_print(Basis6, 2, 3);
 		}
 		Bitangents[i] =
-				SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(
+				SOA->Surf_A->PA->PA2->P->Subspaces->Grass_lines->rank_lint_here(
 						Basis6, 0);
 		if (f_v) {
 			cout << "quartic_curve_from_surface::compute_quartic "
@@ -633,7 +633,7 @@ void quartic_curve_from_surface::compute_quartic(
 		Int_vec_copy(Basis12 + (j + 1) * 4 + 1, Basis6 + j * 3, 3);
 	}
 	Bitangents[nb_lines] =
-			SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(
+			SOA->Surf_A->PA->PA2->P->Subspaces->Grass_lines->rank_lint_here(
 					Basis6, 0);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_quartic "
@@ -862,7 +862,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 			"on no line of the surface is obtained by applying "
 			"the transformation" << endl;
 	ost << "$$" << endl;
-	SOA->Surf_A->A->element_print_latex(transporter, ost);
+	SOA->Surf_A->A->Group_element->element_print_latex(transporter, ost);
 	ost << "$$" << endl;
 	ost << "Which moves $P_{" << pt_A << "}$ to $P_{"
 			<< pt_B << "}$." << endl;

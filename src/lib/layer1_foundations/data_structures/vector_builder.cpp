@@ -216,6 +216,10 @@ void vector_builder::init(vector_builder_description *Descr,
 			Lint_vec_copy(VB->v, v + j, VB->len);
 			j += VB->len;
 		}
+		if (Descr->f_format) {
+			f_has_k = TRUE;
+			k = Descr->format_k;
+		}
 
 	}
 	else if (Descr->f_loop) {

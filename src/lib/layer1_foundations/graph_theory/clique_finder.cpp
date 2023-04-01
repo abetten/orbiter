@@ -1570,7 +1570,8 @@ void clique_finder::swap_point(int idx1, int idx2)
 	Sorting.int_vec_swap_points(pt_list, pt_list_inv, idx1, idx2);
 }
 
-void clique_finder::degree_of_point_statistic(int depth,
+void clique_finder::degree_of_point_statistic(
+		int depth,
 		int nb_points, int verbose_level)
 {
 	int *D;
@@ -1589,7 +1590,8 @@ void clique_finder::degree_of_point_statistic(int depth,
 	FREE_int(D);
 }
 
-int clique_finder::degree_of_point(int depth, int i, int nb_points)
+int clique_finder::degree_of_point(
+		int depth, int i, int nb_points)
 {
 	int pti, ptj, j, d;
 
@@ -1655,7 +1657,8 @@ int clique_finder::is_adjacent(int depth, int i, int j)
 	return a;
 }
 
-void clique_finder::write_entry_to_tree_file(int depth,
+void clique_finder::write_entry_to_tree_file(
+		int depth,
 		int verbose_level)
 {
 	int i;

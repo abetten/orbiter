@@ -381,7 +381,7 @@ void substructure_classifier::set_stabilizer_of_set(
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 		cout << "transporter to canonical form:" << endl;
-		A->element_print(transporter_to_canonical_form, cout);
+		A->Group_element->element_print(transporter_to_canonical_form, cout);
 		cout << "Stabilizer of the original set:" << endl;
 		Gens_stabilizer_original_set->print_generators_tex();
 	}
@@ -410,7 +410,7 @@ void substructure_classifier::set_stabilizer_of_set(
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 		cout << "transporter to canonical form:" << endl;
-		A->element_print(transporter_to_canonical_form, cout);
+		A->Group_element->element_print(transporter_to_canonical_form, cout);
 		cout << "Stabilizer of the canonical form:" << endl;
 		Gens_stabilizer_canonical_form->print_generators_tex();
 	}
@@ -462,7 +462,7 @@ void substructure_classifier::handle_orbit(
 	}
 
 
-	SubSt->SubC->A->element_move(CS->T1, transporter_to_canonical_form, 0);
+	SubSt->SubC->A->Group_element->element_move(CS->T1, transporter_to_canonical_form, 0);
 
 	Gens_stabilizer_original_set = NEW_OBJECT(groups::strong_generators);
 

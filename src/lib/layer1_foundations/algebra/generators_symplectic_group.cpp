@@ -42,37 +42,37 @@ generators_symplectic_group::~generators_symplectic_group()
 	
 	if (nb_candidates) {
 		FREE_int(nb_candidates);
-		}
+	}
 	if (cur_candidate) {
 		FREE_int(cur_candidate);
-		}
+	}
 	if (candidates) {
 		for (i = 0; i < n + 1; i++) {
 			FREE_int(candidates[i]);
-			}
-		FREE_pint(candidates);
 		}
+		FREE_pint(candidates);
+	}
 	if (Mtx) {
 		FREE_int(Mtx);
-		}
+	}
 	if (v) {
 		FREE_int(v);
-		}
+	}
 	if (v2) {
 		FREE_int(v2);
-		}
+	}
 	if (w) {
 		FREE_int(w);
-		}
+	}
 	if (Points) {
 		FREE_int(Points);
-		}
+	}
 	if (Data) {
 		FREE_int(Data);
-		}
+	}
 	if (transversal_length) {
 		FREE_int(transversal_length);
-		}
+	}
 }
 
 void generators_symplectic_group::init(
@@ -184,8 +184,9 @@ void generators_symplectic_group::init(
 	}
 }
 
-int generators_symplectic_group::count_strong_generators(int &nb,
-		int *transversal_length, int &first_moved, int depth,
+int generators_symplectic_group::count_strong_generators(
+		int &nb, int *transversal_length,
+		int &first_moved, int depth,
 		int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
@@ -196,21 +197,21 @@ int generators_symplectic_group::count_strong_generators(int &nb,
 		//int_matrix_print(Mtx, n, n);
 		if (first_moved < n) {
 			transversal_length[first_moved]++;
-			}
+		}
 		nb++;
 		return FALSE;
-		}
+	}
 	for (cur_candidate[depth] = 0;
 			cur_candidate[depth] < nb_candidates[depth];
 			cur_candidate[depth]++) {
 		if (cur_candidate[depth] && depth < first_moved) {
 			first_moved = depth;
-			}	
+		}
 		a = candidates[depth][cur_candidate[depth]];
 		if (FALSE) {
 			cout << "depth " << depth << " " << cur_candidate[depth]
 				<< " / " << nb_candidates[depth] << " which is " << a << endl;
-			}
+		}
 		Int_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
@@ -218,13 +219,14 @@ int generators_symplectic_group::count_strong_generators(int &nb,
 			first_moved, depth + 1, verbose_level)
 			&& depth > first_moved) {
 			return FALSE;
-			}
 		}
+	}
 	return TRUE;
 }
 
-int generators_symplectic_group::get_strong_generators(int *Data,
-		int &nb, int &first_moved, int depth, int verbose_level)
+int generators_symplectic_group::get_strong_generators(
+		int *Data, int &nb, int &first_moved,
+		int depth, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int a;
@@ -235,26 +237,26 @@ int generators_symplectic_group::get_strong_generators(int *Data,
 		Int_vec_copy(Mtx, Data + nb * n * n, n * n);
 		nb++;
 		return FALSE;
-		}
+	}
 	for (cur_candidate[depth] = 0;
 			cur_candidate[depth] < nb_candidates[depth];
 			cur_candidate[depth]++) {
 		if (cur_candidate[depth] && depth < first_moved) {
 			first_moved = depth;
-			}	
+		}
 		a = candidates[depth][cur_candidate[depth]];
 		if (FALSE) {
 			cout << "depth " << depth << " " << cur_candidate[depth]
 				<< " / " << nb_candidates[depth] << " which is " << a << endl;
-			}
+		}
 		Int_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
 		if (!get_strong_generators(Data, nb, first_moved,
 				depth + 1, verbose_level) && depth > first_moved) {
 			return FALSE;
-			}
 		}
+	}
 	return TRUE;
 }
 
@@ -266,17 +268,17 @@ void generators_symplectic_group::create_first_candidate_set(
 
 	if (f_v) {
 		cout << "generators_symplectic_group::create_first_candidate_set" << endl;
-		}
+	}
 	nb = 0;
 	// skip over the zero vector:
 	for (i = 1; i < qn; i++) {
 		candidates[0][nb++] = i;
-		}
+	}
 	nb_candidates[0] = nb;
 	
 	if (f_v) {
 		cout << "generators_symplectic_group::create_first_candidate_set done" << endl;
-		}
+	}
 }
 
 void generators_symplectic_group::create_next_candidate_set(
@@ -286,9 +288,9 @@ void generators_symplectic_group::create_next_candidate_set(
 	int i, ai, nb;
 
 	if (f_v) {
-		cout << "generators_symplectic_group::create_next_"
-				"candidate_set level=" << level << endl;
-		}
+		cout << "generators_symplectic_group::create_next_candidate_set "
+				"level=" << level << endl;
+	}
 	nb = 0;
 
 	if (EVEN(level)) {
@@ -300,9 +302,9 @@ void generators_symplectic_group::create_next_candidate_set(
 			Int_vec_copy(Points + ai * n, w, n);
 			if (dot_product(v, w) == 1) {
 				candidates[level + 1][nb++] = ai;
-				}
 			}
 		}
+	}
 	else {
 
 		Int_vec_copy(Mtx + (level - 1) * n, v, n);
@@ -313,16 +315,16 @@ void generators_symplectic_group::create_next_candidate_set(
 			Int_vec_copy(Points + ai * n, w, n);
 			if (dot_product(v, w) == 0 && dot_product(v2, w) == 0) {
 				candidates[level + 1][nb++] = ai;
-				}
 			}
 		}
+	}
 	nb_candidates[level + 1] = nb;
 	
 	if (f_v) {
-		cout << "generators_symplectic_group::create_next_"
-				"candidate_set done, found " << nb_candidates[level + 1]
+		cout << "generators_symplectic_group::create_next_candidate_set "
+				"done, found " << nb_candidates[level + 1]
 				<< " candidates at level " << level + 1 << endl;
-		}
+	}
 }
 
 
@@ -335,7 +337,7 @@ int generators_symplectic_group::dot_product(int *u1, int *u2)
 	for (i = 0; i < n_half; i++) {
 		c = F->add(c, F->mult(u1[2 * i + 0], u2[2 * i + 1]));
 		c = F->add(c, F->negate(F->mult(u1[2 * i + 1], u2[2 * i + 0])));
-		}
+	}
 	return c;
 }
 

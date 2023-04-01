@@ -12,12 +12,10 @@ ORBITER_MODULES= \
 		layer1_foundations/algebra/gl_classes.o \
 		layer1_foundations/algebra/group_generators_domain.o \
 		layer1_foundations/algebra/heisenberg.o \
-		layer1_foundations/algebra/interface_gap_low.o \
-		layer1_foundations/algebra/interface_magma_low.o \
 		layer1_foundations/algebra/matrix_block_data.o \
+		layer1_foundations/algebra/matrix_group.o \
 		layer1_foundations/algebra/null_polarity_generator.o \
 		layer1_foundations/algebra/rank_checker.o \
-		layer1_foundations/algebra/vector_space.o \
 		layer1_foundations/algebraic_geometry/algebraic_geometry_global.o \
 		layer1_foundations/algebraic_geometry/arc_lifting_with_two_lines.o \
 		layer1_foundations/algebraic_geometry/clebsch_map.o \
@@ -46,6 +44,7 @@ ORBITER_MODULES= \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
 		layer1_foundations/coding_theory/crc_codes_search.o \
 		layer1_foundations/coding_theory/crc_codes.o \
+		layer1_foundations/coding_theory/crc_object.o \
 		layer1_foundations/coding_theory/crc_options_description.o \
 		layer1_foundations/coding_theory/create_BCH_code.o \
 		layer1_foundations/coding_theory/create_RS_code.o \
@@ -53,6 +52,7 @@ ORBITER_MODULES= \
 		layer1_foundations/coding_theory/error_repository.o \
 		layer1_foundations/coding_theory/mindist.o \
 		layer1_foundations/coding_theory/ttp_codes.o \
+		layer1_foundations/combinatorics/apn_functions.o \
 		layer1_foundations/combinatorics/boolean_function_domain.o \
 		layer1_foundations/combinatorics/brick_domain.o \
 		layer1_foundations/combinatorics/classification_of_objects_description.o \
@@ -118,7 +118,6 @@ ORBITER_MODULES= \
 		layer1_foundations/finite_fields/finite_field_implementation_by_tables.o \
 		layer1_foundations/finite_fields/finite_field_implementation_wo_tables.o \
 		layer1_foundations/finite_fields/finite_field_io.o \
-		layer1_foundations/finite_fields/finite_field_projective.o \
 		layer1_foundations/finite_fields/finite_field.o \
 		layer1_foundations/finite_fields/minimum_polynomial.o \
 		layer1_foundations/finite_fields/norm_tables.o \
@@ -150,15 +149,17 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/point_line.o \
 		layer1_foundations/geometry/points_and_lines.o \
 		layer1_foundations/geometry/polarity.o \
+		layer1_foundations/geometry/projective_space_basic.o \
 		layer1_foundations/geometry/projective_space_implementation.o \
 		layer1_foundations/geometry/projective_space_of_dimension_three.o \
 		layer1_foundations/geometry/projective_space_plane.o \
 		layer1_foundations/geometry/projective_space_reporting.o \
+		layer1_foundations/geometry/projective_space_subspaces.o \
 		layer1_foundations/geometry/projective_space.o \
 		layer1_foundations/geometry/projective_space2.o \
-		layer1_foundations/geometry/projective_space3.o \
 		layer1_foundations/geometry/spread_domain.o \
 		layer1_foundations/geometry/spread_tables.o \
+		layer1_foundations/geometry/three_skew_subspaces.o \
 		layer1_foundations/geometry/w3q.o \
 		layer1_foundations/geometry_builder/cperm.o \
 		layer1_foundations/geometry_builder/decomposition_with_fuse.o \
@@ -220,9 +221,13 @@ ORBITER_MODULES= \
 		layer1_foundations/linear_algebra/linear_algebra.o \
 		layer1_foundations/linear_algebra/linear_algebra2.o \
 		layer1_foundations/linear_algebra/linear_algebra3.o \
+		layer1_foundations/linear_algebra/module.o \
 		layer1_foundations/linear_algebra/representation_theory_domain.o \
+		layer1_foundations/linear_algebra/vector_space.o \
 		layer1_foundations/knowledge_base/finite_field_tables.o \
 		layer1_foundations/knowledge_base/knowledge_base.o \
+		layer1_foundations/l1_interfaces/interface_gap_low.o \
+		layer1_foundations/l1_interfaces/interface_magma_low.o \
 		layer1_foundations/number_theory/cyclotomic_sets.o \
 		layer1_foundations/number_theory/elliptic_curve.o \
 		layer1_foundations/number_theory/number_theoretic_transform.o \
@@ -248,6 +253,7 @@ ORBITER_MODULES= \
 		layer1_foundations/orthogonal/hyperbolic_pair_parabolic.o \
 		layer1_foundations/orthogonal/hyperbolic_pair_rank_unrank.o \
 		layer1_foundations/orthogonal/hyperbolic_pair.o \
+		layer1_foundations/orthogonal/linear_complex.o \
 		layer1_foundations/orthogonal/orthogonal_global.o \
 		layer1_foundations/orthogonal/orthogonal_group.o \
 		layer1_foundations/orthogonal/orthogonal_indexing.o \
@@ -311,6 +317,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/action_io.o \
 		layer3_group_actions/actions/action_pointer_table.o \
 		layer3_group_actions/actions/backtrack.o \
+		layer3_group_actions/actions/group_element.o \
 		layer3_group_actions/actions/interface_direct_product.o \
 		layer3_group_actions/actions/interface_induced_action.o \
 		layer3_group_actions/actions/interface_matrix_group.o \
@@ -318,6 +325,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/interface_permutation_representation.o \
 		layer3_group_actions/actions/interface_wreath_product.o \
 		layer3_group_actions/actions/known_groups.o \
+		layer3_group_actions/actions/induced_action.o \
 		layer3_group_actions/actions/stabilizer_chain_base_data.o \
 		layer3_group_actions/data_structures/group_container.o \
 		layer3_group_actions/data_structures/incidence_structure_with_group.o \
@@ -336,7 +344,6 @@ ORBITER_MODULES= \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \
 		layer3_group_actions/groups/linear_group.o \
 		layer3_group_actions/groups/linear_group_description.o \
-		layer3_group_actions/groups/matrix_group.o \
 		layer3_group_actions/groups/orbits_on_something.o \
 		layer3_group_actions/groups/permutation_group_create.o \
 		layer3_group_actions/groups/permutation_group_description.o \
@@ -373,6 +380,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/induced_actions/action_on_homogeneous_polynomials.o \
 		layer3_group_actions/induced_actions/action_on_interior_direct_product.o \
 		layer3_group_actions/induced_actions/action_on_k_subsets.o \
+		layer3_group_actions/induced_actions/action_on_module.o \
 		layer3_group_actions/induced_actions/action_on_orbits.o \
 		layer3_group_actions/induced_actions/action_on_orthogonal.o \
 		layer3_group_actions/induced_actions/action_on_set_partitions.o \
@@ -404,12 +412,13 @@ ORBITER_MODULES= \
 		layer4_classification/poset_classification/extension.o \
 		layer4_classification/poset_classification/orbit_based_testing.o \
 		layer4_classification/poset_classification/orbit_tracer.o \
+		layer4_classification/poset_classification/poset_classification_activity_description.o \
+		layer4_classification/poset_classification/poset_classification_activity_export_source_code.o \
+		layer4_classification/poset_classification/poset_classification_activity.o \
 		layer4_classification/poset_classification/poset_classification.o \
 		layer4_classification/poset_classification/poset_classification_classify.o \
-		layer4_classification/poset_classification/poset_classification_combinatorics.o \
 		layer4_classification/poset_classification/poset_classification_control.o \
 		layer4_classification/poset_classification/poset_classification_draw.o \
-		layer4_classification/poset_classification/poset_classification_export_source_code.o \
 		layer4_classification/poset_classification/poset_classification_init.o \
 		layer4_classification/poset_classification/poset_classification_io.o \
 		layer4_classification/poset_classification/poset_classification_report_options.o \
@@ -537,12 +546,15 @@ ORBITER_MODULES= \
 		layer5_top_level/orthogonal/blt_set_classify.o \
 		layer5_top_level/orthogonal/BLT_set_create_description.o \
 		layer5_top_level/orthogonal/BLT_set_create.o \
+		layer5_top_level/orthogonal/blt_set_domain_with_action.o \
+		layer5_top_level/orthogonal/blt_set_group_properties.o \
 		layer5_top_level/orthogonal/blt_set_with_action.o \
-		layer5_top_level/orthogonal/flock.o \
+		layer5_top_level/orthogonal/flock_from_blt_set.o \
 		layer5_top_level/orthogonal/orthogonal_space_activity_description.o \
 		layer5_top_level/orthogonal/orthogonal_space_activity.o \
 		layer5_top_level/orthogonal/orthogonal_space_with_action_description.o \
 		layer5_top_level/orthogonal/orthogonal_space_with_action.o \
+		layer5_top_level/orthogonal/table_of_blt_sets.o \
 		layer5_top_level/packings/invariants_packing.o \
 		layer5_top_level/packings/packing_classify.o \
 		layer5_top_level/packings/packing_classify2.o \
@@ -618,7 +630,12 @@ ORBITER_MODULES= \
 		layer5_top_level/surfaces/surfaces_and_double_sixes/classification_of_cubic_surfaces_with_double_sixes_activity_description.o \
 		layer5_top_level/surfaces/surfaces_and_double_sixes/classification_of_cubic_surfaces_with_double_sixes_activity.o \
 		layer5_top_level/surfaces/surfaces_and_double_sixes/classify_double_sixes.o \
+		layer5_top_level/surfaces/surfaces_and_double_sixes/classify_five_plus_one.o \
+		layer5_top_level/surfaces/surfaces_and_double_sixes/identify_cubic_surface.o \
+		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge_io.o \
+		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge_recognition.o \
 		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge.o \
+		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_repository.o \
 		layer5_top_level/surfaces/surfaces_general/cubic_surface_activity_description.o \
 		layer5_top_level/surfaces/surfaces_general/cubic_surface_activity.o \
 		layer5_top_level/surfaces/surfaces_general/surface_clebsch_map.o \
@@ -627,7 +644,9 @@ ORBITER_MODULES= \
 		layer5_top_level/surfaces/surfaces_general/surface_domain_high_level.o \
 		layer5_top_level/surfaces/surfaces_general/surface_object_with_action.o \
 		layer5_top_level/surfaces/surfaces_general/surface_study.o \
-		layer5_top_level/surfaces/surfaces_general/surface_with_action.o
+		layer5_top_level/surfaces/surfaces_general/surface_with_action.o \
+		layer5_top_level/surfaces/surfaces_general/table_of_surfaces.o
+
 
 JL_MODULES=\
 	layer1_foundations/Jeffrey_Leon_partition_backtrack/addsgen.o \

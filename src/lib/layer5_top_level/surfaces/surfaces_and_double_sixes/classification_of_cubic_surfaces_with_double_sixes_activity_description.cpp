@@ -192,6 +192,7 @@ void classification_of_cubic_surfaces_with_double_sixes_activity_description::pr
 	if (f_report) {
 		cout << "-report ";
 		report_options->print();
+		cout << endl;
 	}
 	if (f_identify_Eckardt) {
 		cout << "-identify_Eckardt " << endl;

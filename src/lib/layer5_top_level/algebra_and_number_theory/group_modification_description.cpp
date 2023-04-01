@@ -41,6 +41,8 @@ group_modification_description::group_modification_description()
 	f_subfield_subgroup = FALSE;
 	subfield_subgroup_index = 0;
 
+	f_action_on_self_by_right_multiplication = FALSE;
+
 	//std::vector<std::string> from;
 
 }
@@ -117,6 +119,12 @@ int group_modification_description::read_arguments(
 				cout << "-subfield_subgroup " << subfield_subgroup_index << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-action_on_self_by_right_multiplication") == 0) {
+			f_action_on_self_by_right_multiplication = TRUE;
+			if (f_v) {
+				cout << "-action_on_self_by_right_multiplication" << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
@@ -171,6 +179,9 @@ void group_modification_description::print()
 	}
 	if (f_subfield_subgroup) {
 		cout << "-subfield_subgroup " << subfield_subgroup_index << endl;
+	}
+	if (f_action_on_self_by_right_multiplication) {
+		cout << "-action_on_self_by_right_multiplication" << endl;
 	}
 
 	if (from.size()) {

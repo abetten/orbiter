@@ -14,12 +14,10 @@ MODULES = \
 	gl_classes.o \
 	group_generators_domain.o \
 	heisenberg.o \
-	interface_gap_low.o \
-	interface_magma_low.o \
 	matrix_block_data.o \
+	matrix_group.o \
 	null_polarity_generator.o \
-	rank_checker.o \
-	vector_space.o
+	rank_checker.o
 
 
 all : $(MODULES)

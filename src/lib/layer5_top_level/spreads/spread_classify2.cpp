@@ -170,7 +170,7 @@ void spread_classify::print_isomorphism_type2(
 		SD->Grass->unrank_lint(data[i], 0);
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
-		SD->F->latex_matrix(ost, f_elements_exponential, symbol_for_print,
+		SD->F->Io->latex_matrix(ost, f_elements_exponential, symbol_for_print,
 				SD->Grass->M, SD->k, SD->n);
 		ost << "\\right]" << endl;
 		ost << "$$" << endl << endl;
@@ -183,12 +183,12 @@ void spread_classify::print_isomorphism_type2(
 		int *fp, n;
 		
 		fp = NEW_int(A->degree);
-		n = A->find_fixed_points(Stab->gens.ith(i), fp, 0);
+		n = A->Group_element->find_fixed_points(Stab->gens.ith(i), fp, 0);
 		//cout << "with " << n << " fixed points" << endl;
 		FREE_int(fp);
 
 		ost << "$$ g_{" << i + 1 << "}=" << endl;
-		A->element_print_latex(Stab->gens.ith(i), ost);
+		A->Group_element->element_print_latex(Stab->gens.ith(i), ost);
 		ost << "$$" << endl << "with " << n << " fixed points" << endl;
 	}
 
@@ -425,7 +425,7 @@ void spread_classify::klein(
 		I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-		Stack->subset_continguous(set_size, nb_blocks);
+		Stack->subset_contiguous(set_size, nb_blocks);
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
 
@@ -454,7 +454,7 @@ void spread_classify::klein(
 		I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-		Stack->subset_continguous(set_size, nb_blocks);
+		Stack->subset_contiguous(set_size, nb_blocks);
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
 
@@ -621,7 +621,7 @@ void spread_classify::report3(
 
 	for (h = 0; h < Iso.Folding->Reps->count; h++) {
 		rep = Iso.Folding->Reps->rep[h];
-		first = Iso.Lifting->orbit_fst[rep];
+		first = Iso.Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
 		Iso.Lifting->load_solution(id, data, verbose_level - 1);
@@ -778,7 +778,7 @@ void spread_classify::report3(
 
 	for (h = 0; h < Iso.Folding->Reps->count; h++) {
 		rep = Iso.Folding->Reps->rep[h];
-		first = Iso.Lifting->orbit_fst[rep];
+		first = Iso.Lifting->flag_orbit_solution_first[rep];
 		//c = Iso.starter_number[first];
 		id = Iso.Lifting->orbit_perm[first];
 		Iso.Lifting->load_solution(id, data, verbose_level - 1);
@@ -935,9 +935,16 @@ void spread_classify::report3(
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 			}
-			A1 = Iso.A->create_induced_action_by_restriction(
+
+
+			std::string label_of_set;
+
+			label_of_set.assign("spread");
+
+
+			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
-					len, set,
+					len, set, label_of_set,
 					TRUE,
 					0/*verbose_level*/);
 			if (f_v) {
@@ -981,9 +988,14 @@ void spread_classify::report3(
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 			}
-			A1 = Iso.A->create_induced_action_by_restriction(
+
+			std::string label_of_set;
+
+			label_of_set.assign("spread");
+
+			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
-					len, set,
+					len, set, label_of_set,
 					TRUE,
 					0/*verbose_level*/);
 			if (f_v) {
@@ -1002,7 +1014,7 @@ void spread_classify::report3(
 		
 
 				ost << "$$ g_{" << j + 1 << "}=" << endl;
-				A->element_print_latex(gens->ith(j), ost);
+				A->Group_element->element_print_latex(gens->ith(j), ost);
 				ost << "$$" << endl;
 			}
 			
@@ -1019,17 +1031,22 @@ void spread_classify::report3(
 
 	char prefix[1000];
 	char label_of_structure_plural[1000];
+	string prefix_str;
+	string label_of_structure_plural_str;
 
 	snprintf(prefix, sizeof(prefix), "Spreads_%d_%d", SD->q, SD->k);
 	snprintf(label_of_structure_plural, sizeof(label_of_structure_plural), "Spreads");
 
+
+	prefix_str.assign(prefix);
+	label_of_structure_plural_str.assign(label_of_structure_plural_str);
 
 	isomorph::isomorph_global IG;
 
 	IG.init(Iso.A_base, Iso.A, Iso.Sub->gen, verbose_level);
 
 	IG.report_data_in_source_code_inside_tex(Iso,
-		prefix, label_of_structure_plural, ost, verbose_level);
+		prefix_str, label_of_structure_plural_str, ost, verbose_level);
 
 
 
@@ -1120,7 +1137,7 @@ void spread_classify::cooperstein_thas_quotients(
 	}
 
 	rep = Iso.Folding->Reps->rep[h];
-	first = Iso.Lifting->orbit_fst[rep];
+	first = Iso.Lifting->flag_orbit_solution_first[rep];
 	//c = Iso.starter_number[first];
 	id = Iso.Lifting->orbit_perm[first];
 	Iso.Lifting->load_solution(id, data, verbose_level - 1);
@@ -1170,7 +1187,8 @@ void spread_classify::cooperstein_thas_quotients(
 	Gr->init(n - 1, k, SD->F, 0 /* verbose_level */);
 	for (i = 0; i < order + 1; i++) {
 		SD->Grass->unrank_lint_here(M, data[i], 0/*verbose_level - 4*/);
-		SD->F->all_PG_elements_in_subspace(M, k, n,
+		SD->F->Projective_space_basic->all_PG_elements_in_subspace(
+				M, k, n,
 				Pts[i], nb_points, 0 /* verbose_level */);
 		Sorting.lint_vec_heapsort(Pts[i], nb_points);
 	}
@@ -1191,8 +1209,10 @@ void spread_classify::cooperstein_thas_quotients(
 		}
 
 
-		SD->F->PG_element_unrank_modified(vec1, 1, n, the_point);
-		SD->F->PG_element_normalize_from_front(vec1, 1, n);
+		SD->F->Projective_space_basic->PG_element_unrank_modified(
+				vec1, 1, n, the_point);
+		SD->F->Projective_space_basic->PG_element_normalize_from_front(
+				vec1, 1, n);
 		pivot = Int_vec_find_first_nonzero_entry(vec1, n);
 
 		for (i = 0; i < order + 1; i++) {
@@ -1307,7 +1327,7 @@ void spread_classify::orbit_info_short(
 	long int data[1000];
 
 	rep = Iso.Folding->Reps->rep[h];
-	first = Iso.Lifting->orbit_fst[rep];
+	first = Iso.Lifting->flag_orbit_solution_first[rep];
 	//c = Iso.starter_number[first];
 	id = Iso.Lifting->orbit_perm[first];
 	Iso.Lifting->load_solution(id, data, verbose_level - 1);
@@ -1372,14 +1392,14 @@ void spread_classify::report_stabilizer(
 		int *fp, n, ord;
 		
 		fp = NEW_int(A->degree);
-		n = A->find_fixed_points(Stab->gens.ith(i), fp, 0);
+		n = A->Group_element->find_fixed_points(Stab->gens.ith(i), fp, 0);
 		//cout << "with " << n << " fixed points" << endl;
 		FREE_int(fp);
 
-		ord = A->element_order(Stab->gens.ith(i));
+		ord = A->Group_element->element_order(Stab->gens.ith(i));
 
 		ost << "$$ g_{" << i + 1 << "}=" << endl;
-		A->element_print_latex(Stab->gens.ith(i), ost);
+		A->Group_element->element_print_latex(Stab->gens.ith(i), ost);
 		ost << "$$" << endl << "of order $" << ord << "$ and with "
 				<< n << " fixed points" << endl;
 	}

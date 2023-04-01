@@ -173,7 +173,8 @@ void hermitian::list_of_points_embedded_in_PG(
 	Pts = NEW_lint(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, i);
-		F->PG_element_rank_modified(v, 1, k, rk);
+		F->Projective_space_basic->PG_element_rank_modified(
+				v, 1, k, rk);
 		Pts[i] = rk;
 	}
 }
@@ -932,7 +933,8 @@ int hermitian::Sbar_rank(int *v, int len, int verbose_level)
 			cout << "Sbar_rank case 2" << endl;
 		}
 
-		F->PG_element_normalize(v, 1, len);
+		F->Projective_space_basic->PG_element_normalize(
+				v, 1, len);
 		rk = cnt_Sbar[len - 1];
 
 		val = evaluate_hermitian_form(v, len - 1); 
@@ -1069,7 +1071,8 @@ void hermitian::report_points(std::ostream &ost, int verbose_level)
 	ost << "\\noindent" << endl;
 	for (rk = 0; rk < nb_pts; rk++) {
 		unrank_point(v, rk);
-		F->PG_element_rank_modified_lint(v, 1, k, rk_in_PG[rk]);
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v, 1, k, rk_in_PG[rk]);
 		ost << "$P_{" << rk << "} = ";
 		Int_vec_print(ost, v, k);
 		ost << "=" << rk_in_PG[rk] << "$\\\\" << endl;

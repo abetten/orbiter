@@ -516,7 +516,7 @@ public:
 
 	actions::action *A_PGLQ; // PGL(m,Q)
 
-	algebra::vector_space *VS;
+	linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control1;
 	poset_classification::poset_with_group_action *Poset1;
 	poset_classification::poset_classification *Gen;
@@ -746,7 +746,7 @@ public:
 
 
 	
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 		// only a copy of a pointer, not to be freed
 	orthogonal_geometry::orthogonal *O;
 		// only a copy of a pointer, not to be freed
@@ -756,7 +756,7 @@ public:
 	int *tmp_M; // [n * n]
 	int *base_cols; // [n]
 
-	algebra::vector_space *VS;
+	linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Gen;
@@ -961,7 +961,7 @@ public:
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
 	groups::wreath_product *W;
-	algebra::vector_space *VS;
+	linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Gen;

@@ -84,7 +84,7 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 	}
 
 	quartic_curve_object::Dom = Dom;
-	F = Dom->P->F;
+	F = Dom->P->Subspaces->F;
 	q = F->q;
 
 	f_has_bitangents = FALSE;
@@ -136,7 +136,7 @@ void quartic_curve_object::init_equation_and_bitangents(
 	}
 
 	quartic_curve_object::Dom = Dom;
-	F = Dom->P->F;
+	F = Dom->P->Subspaces->F;
 	q = F->q;
 
 	f_has_bitangents = TRUE;

@@ -40,6 +40,8 @@ smooth_surface_object_properties::smooth_surface_object_properties()
 	All_Planes = NULL;
 	Dual_point_ranks = NULL;
 
+	Roots = NULL;
+
 }
 
 smooth_surface_object_properties::~smooth_surface_object_properties()
@@ -63,6 +65,10 @@ smooth_surface_object_properties::~smooth_surface_object_properties()
 	if (Dual_point_ranks) {
 		FREE_int(Dual_point_ranks);
 	}
+	if (Roots) {
+		FREE_int(Roots);
+	}
+
 }
 
 void smooth_surface_object_properties::init(surface_object *SO, int verbose_level)
@@ -109,6 +115,39 @@ void smooth_surface_object_properties::init(surface_object *SO, int verbose_leve
 		cout << "smooth_surface_object_properties::init done" << endl;
 	}
 
+}
+
+void smooth_surface_object_properties::init_roots(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "smooth_surface_object_properties::init_roots" << endl;
+	}
+
+	int i, j, h;
+
+	Roots = NEW_int(72 * 6);
+	for (i = 0; i < 72; i++) {
+
+		int v6[6];
+		long int Half_double_six[6];
+		int a;
+
+		Lint_vec_copy(&SO->Surf->Schlaefli->Double_six[i * 6], Half_double_six, 6);
+		Int_vec_zero(v6, 6);
+		for (j = 0; j < 6; j++) {
+			a = Half_double_six[j];
+			for (h = 0; h < 6; h++) {
+				v6[h] = SO->Surf->F->add(v6[h], SO->SOP->Pluecker_coordinates[a * 6 + h]);
+			}
+		}
+		Int_vec_copy(v6, Roots + i * 6, 6);
+	}
+
+	if (f_v) {
+		cout << "smooth_surface_object_properties::init_roots done" << endl;
+	}
 }
 
 void smooth_surface_object_properties::compute_tritangent_planes_by_rank(int verbose_level)
@@ -414,7 +453,7 @@ void smooth_surface_object_properties::print_single_tritangent_plane(
 
 	SO->Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
 		0 /*verbose_level */);
-	SO->F->PG_element_normalize(Mtx + 12, 1, 4);
+	SO->F->Projective_space_basic->PG_element_normalize(Mtx + 12, 1, 4);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	ost << "=V\\big(" << endl;
@@ -425,7 +464,7 @@ void smooth_surface_object_properties::print_single_tritangent_plane(
 	ost << "\\big)" << endl;
 	ost << "$$" << endl;
 	ost << "dual pt rank = $" << b << "$ ";
-	SO->F->PG_element_unrank_modified(v4, 1, 4, b);
+	SO->F->Projective_space_basic->PG_element_unrank_modified(v4, 1, 4, b);
 	ost << "$=";
 	Int_vec_print(ost, v4, 4);
 	ost << "$.\\\\" << endl;
@@ -589,13 +628,13 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(int t_idx
 		c = SO->Surf->P->Solid->dual_rank_of_plane_in_three_space(
 				plane_rk[i], 0 /* verbose_level */);
 		//c = Tritangent_plane_dual[plane_idx[i]];
-		SO->F->PG_element_unrank_modified(F_planes + i * 4, 1, 4, c);
+		SO->F->Projective_space_basic->PG_element_unrank_modified(F_planes + i * 4, 1, 4, c);
 	}
 	for (i = 0; i < 3; i++) {
 		c = SO->Surf->P->Solid->dual_rank_of_plane_in_three_space(
 				plane_rk[3 + i], 0 /* verbose_level */);
 		//c = Tritangent_plane_dual[plane_idx[3 + i]];
-		SO->F->PG_element_unrank_modified(G_planes + i * 4, 1, 4, c);
+		SO->F->Projective_space_basic->PG_element_unrank_modified(G_planes + i * 4, 1, 4, c);
 	}
 	int evals[6];
 	int pt_on_surface[4];
@@ -606,7 +645,7 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(int t_idx
 
 	for (h = 0; h < SO->nb_pts; h++) {
 		pt = SO->Pts[h];
-		SO->F->PG_element_unrank_modified(pt_on_surface, 1, 4, pt);
+		SO->F->Projective_space_basic->PG_element_unrank_modified(pt_on_surface, 1, 4, pt);
 		for (i = 0; i < 3; i++) {
 			evals[i] = SO->Surf->PolynomialDomains->Poly1_4->evaluate_at_a_point(
 					F_planes + i * 4, pt_on_surface);
@@ -640,7 +679,7 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(int t_idx
 	Int_vec_copy(eqn_G, eqn_G2, 20);
 	SO->F->Linear_algebra->scalar_multiply_vector_in_place(lambda, eqn_G2, 20);
 	SO->F->Linear_algebra->add_vector(eqn_F, eqn_G2, equation, 20);
-	SO->F->PG_element_normalize(equation, 1, 20);
+	SO->F->Projective_space_basic->PG_element_normalize(equation, 1, 20);
 
 
 
@@ -778,7 +817,7 @@ void smooth_surface_object_properties::latex_trihedral_pair(
 #endif
 		SO->Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
 			0 /*verbose_level */);
-		SO->F->PG_element_normalize(Mtx + 12, 1, 4);
+		SO->F->Projective_space_basic->PG_element_normalize(Mtx + 12, 1, 4);
 		ost << "V\\big(";
 		SO->Surf->PolynomialDomains->Poly1_4->print_equation(ost, Mtx + 12);
 		ost << "\\big)=" << plane_rk;
@@ -805,7 +844,7 @@ void smooth_surface_object_properties::latex_trihedral_pair(
 		ost << "V\\big(" << endl;
 		SO->Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
 			0 /*verbose_level */);
-		SO->F->PG_element_normalize(Mtx + 12, 1, 4);
+		SO->F->Projective_space_basic->PG_element_normalize(Mtx + 12, 1, 4);
 		SO->Surf->PolynomialDomains->Poly1_4->print_equation(ost, Mtx + 12);
 		ost << "\\big)=" << plane_rk << "}\\\\" << endl;
 	}

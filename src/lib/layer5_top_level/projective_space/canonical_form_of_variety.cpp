@@ -428,14 +428,25 @@ int canonical_form_of_variety::find_equation(
 
 	//int Mtx_inv[10];
 	int frobenius;
+	linear_algebra::linear_algebra_global LA;
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
 				"before PA->P->reverse_engineer_semilinear_map" << endl;
 	}
+
+	LA.reverse_engineer_semilinear_map(
+			Canonical_form_classifier->Descr->PA->P->Subspaces->F,
+			Canonical_form_classifier->Descr->PA->P->Subspaces->n,
+			gamma, Mtx, frobenius,
+		0 /*verbose_level*/);
+
+#if 0
 	Canonical_form_classifier->Descr->PA->P->reverse_engineer_semilinear_map(
 			gamma, Mtx, frobenius,
 		0 /*verbose_level*/);
+#endif
+
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
 				"after PA->P->reverse_engineer_semilinear_map" << endl;
@@ -443,12 +454,12 @@ int canonical_form_of_variety::find_equation(
 
 	Mtx[9] = frobenius;
 
-	Canonical_form_classifier->Descr->PA->A->make_element(
+	Canonical_form_classifier->Descr->PA->A->Group_element->make_element(
 			Canonical_form_classifier->Elt, Mtx, 0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "The isomorphism from C to C1 is given by:" << endl;
-		Canonical_form_classifier->Descr->PA->A->element_print(
+		Canonical_form_classifier->Descr->PA->A->Group_element->element_print(
 				Canonical_form_classifier->Elt, cout);
 	}
 
@@ -479,7 +490,7 @@ int canonical_form_of_variety::find_equation(
 	// now, eqn2 is the image of the curve C
 	// and belongs to the orbit of equations associated with C1.
 
-	Canonical_form_classifier->Descr->PA->F->PG_element_normalize_from_front(
+	Canonical_form_classifier->Descr->PA->F->Projective_space_basic->PG_element_normalize_from_front(
 			Canonical_form_classifier->eqn2, 1,
 			Canonical_form_classifier->Poly_ring->get_nb_monomials());
 

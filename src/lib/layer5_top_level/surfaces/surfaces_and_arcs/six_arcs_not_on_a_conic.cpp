@@ -202,7 +202,8 @@ void six_arcs_not_on_a_conic::init(
 }
 
 
-void six_arcs_not_on_a_conic::recognize(long int *arc6, int *transporter,
+void six_arcs_not_on_a_conic::recognize(
+		long int *arc6, int *transporter,
 		int &orbit_not_on_conic_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -231,7 +232,8 @@ void six_arcs_not_on_a_conic::recognize(long int *arc6, int *transporter,
 }
 
 
-void six_arcs_not_on_a_conic::report_latex(std::ostream &ost)
+void six_arcs_not_on_a_conic::report_latex(
+		std::ostream &ost)
 {
 	int h;
 	
@@ -278,7 +280,8 @@ void six_arcs_not_on_a_conic::report_latex(std::ostream &ost)
 			"in $\\PG(2," << PA->F->q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
-void six_arcs_not_on_a_conic::report_specific_arc_basic(std::ostream &ost, int arc_idx)
+void six_arcs_not_on_a_conic::report_specific_arc_basic(
+		std::ostream &ost, int arc_idx)
 {
 	data_structures_groups::set_and_stabilizer *The_arc;
 	ring_theory::longinteger_object go;
@@ -309,7 +312,8 @@ void six_arcs_not_on_a_conic::report_specific_arc_basic(std::ostream &ost, int a
 
 }
 
-void six_arcs_not_on_a_conic::report_specific_arc(std::ostream &ost, int arc_idx)
+void six_arcs_not_on_a_conic::report_specific_arc(
+		std::ostream &ost, int arc_idx)
 {
 	data_structures_groups::set_and_stabilizer *The_arc;
 	ring_theory::longinteger_object go;
@@ -329,7 +333,7 @@ void six_arcs_not_on_a_conic::report_specific_arc(std::ostream &ost, int arc_idx
 	//ost << "\}_{" << go << "}";
 	ost << "$$" << endl;
 
-	PA->F->display_table_of_projective_points(ost, The_arc->data, 6, 3);
+	PA->F->Io->display_table_of_projective_points(ost, The_arc->data, 6, 3);
 
 
 	//ost << "The arc-stabilizer is the following group:\\\\" << endl;

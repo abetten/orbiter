@@ -180,13 +180,15 @@ public:
 class algebra_global_with_action {
 public:
 	void orbits_under_conjugation(
-			long int *the_set, int set_size, groups::sims *S,
+			long int *the_set, int set_size,
+			groups::sims *S,
 			groups::strong_generators *SG,
 			data_structures_groups::vector_ge *Transporter,
 			int verbose_level);
 	void create_subgroups(
 			groups::strong_generators *SG,
-			long int *the_set, int set_size, groups::sims *S,
+			long int *the_set, int set_size,
+			groups::sims *S,
 			actions::action *A_conj,
 			groups::schreier *Classes,
 			data_structures_groups::vector_ge *Transporter,
@@ -209,13 +211,16 @@ public:
 	void classes_GL(
 			field_theory::finite_field *F,
 			int d, int f_no_eigenvalue_one, int verbose_level);
-	void do_normal_form(int q, int d,
+	void do_normal_form(
+			int q, int d,
 			int f_no_eigenvalue_one, int *data, int data_sz,
 			int verbose_level);
-	void do_identify_one(int q, int d,
+	void do_identify_one(
+			int q, int d,
 			int f_no_eigenvalue_one, int elt_idx,
 			int verbose_level);
-	void do_identify_all(int q, int d,
+	void do_identify_all(
+			int q, int d,
 			int f_no_eigenvalue_one, int verbose_level);
 	void do_random(
 			int q, int d,
@@ -223,13 +228,16 @@ public:
 	void group_table(
 			int q, int d, int f_poly, std::string &poly,
 			int f_no_eigenvalue_one, int verbose_level);
-	void centralizer_brute_force(int q, int d,
+	void centralizer_brute_force(
+			int q, int d,
 			int elt_idx, int verbose_level);
-	void centralizer(int q, int d,
+	void centralizer(
+			int q, int d,
 			int elt_idx, int verbose_level);
 	// creates a finite_field, and two actions
 	// using init_projective_group and init_general_linear_group
-	void centralizer(int q, int d, int verbose_level);
+	void centralizer(
+			int q, int d, int verbose_level);
 	void compute_regular_representation(
 			actions::action *A, groups::sims *S,
 			data_structures_groups::vector_ge *SG,
@@ -242,11 +250,14 @@ public:
 	void do_eigenstuff(
 			field_theory::finite_field *F,
 			int size, int *Data, int verbose_level);
-	void A5_in_PSL_(int q, int verbose_level);
-	void A5_in_PSL_2_q(int q,
+	void A5_in_PSL_(
+			int q, int verbose_level);
+	void A5_in_PSL_2_q(
+			int q,
 			layer2_discreta::typed_objects::discreta_matrix & A,
 			layer2_discreta::typed_objects::discreta_matrix & B,
-			layer2_discreta::typed_objects::domain *dom_GFq, int verbose_level);
+			layer2_discreta::typed_objects::domain *dom_GFq,
+			int verbose_level);
 	void A5_in_PSL_2_q_easy(int q,
 			layer2_discreta::typed_objects::discreta_matrix & A,
 			layer2_discreta::typed_objects::discreta_matrix & B,
@@ -261,11 +272,12 @@ public:
 	void trace(layer2_discreta::typed_objects::discreta_matrix &A,
 			layer2_discreta::typed_objects::discreta_base &tr);
 	void elementwise_power_int(
-			layer2_discreta::typed_objects::discreta_matrix &A, int k);
+			layer2_discreta::typed_objects::discreta_matrix &A, int k, int verbose_level);
 	int is_in_center(
 			layer2_discreta::typed_objects::discreta_matrix &B);
 	void matrix_convert_to_numerical(
-			layer2_discreta::typed_objects::discreta_matrix &A, int *AA, int q);
+			layer2_discreta::typed_objects::discreta_matrix &A,
+			int *AA, int q);
 
 
 	void young_symmetrizer(
@@ -308,13 +320,23 @@ public:
 			std::string &prefix,
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
-	void find_singer_cycle(any_group *Any_group,
+	void orbits_on_points_from_vector_ge(
+			actions::action *A2,
+			data_structures_groups::vector_ge *gens,
+			int f_load_save,
+			std::string &prefix,
+			groups::orbits_on_something *&Orb,
+			int verbose_level);
+	void find_singer_cycle(
+			any_group *Any_group,
 			actions::action *A1, actions::action *A2,
 			int verbose_level);
-	void search_element_of_order(any_group *Any_group,
+	void search_element_of_order(
+			any_group *Any_group,
 			actions::action *A1, actions::action *A2,
 			int order, int verbose_level);
-	void find_standard_generators(any_group *Any_group,
+	void find_standard_generators(
+			any_group *Any_group,
 			actions::action *A1, actions::action *A2,
 			int order_a, int order_b, int order_ab, int verbose_level);
 
@@ -370,6 +392,9 @@ public:
 	void do_export_magma(int verbose_level);
 	void do_canonical_image_GAP(
 			std::string &input_set, int verbose_level);
+	void do_canonical_image_orbiter(
+			std::string &input_set_text,
+			int verbose_level);
 	void create_group_table(
 			int *&Table, long int &n, int verbose_level);
 	void normalizer(int verbose_level);
@@ -429,6 +454,10 @@ public:
 	void orbit_of(int point_idx, int verbose_level);
 	void orbits_on_points(
 			groups::orbits_on_something *&Orb, int verbose_level);
+	void orbits_on_points_from_generators(
+			data_structures_groups::vector_ge *gens,
+			groups::orbits_on_something *&Orb,
+			int verbose_level);
 
 	void create_latex_report_for_permutation_group(
 			graphics::layered_graph_draw_options *O,
@@ -678,6 +707,8 @@ public:
 	int f_subfield_subgroup;
 	int subfield_subgroup_index;
 
+	int f_action_on_self_by_right_multiplication;
+
 	std::vector<std::string> from;
 
 	group_modification_description();
@@ -732,6 +763,9 @@ public:
 	int f_export_magma;
 
 	// GAP:
+	int f_canonical_image_GAP;
+	std::string canonical_image_GAP_input_set;
+
 	int f_canonical_image;
 	std::string canonical_image_input_set;
 
@@ -793,8 +827,8 @@ public:
 
 	int f_export_group_table;
 
-	int f_test_if_geometric;
-	int test_if_geometric_depth;
+	//int f_test_if_geometric;
+	//int test_if_geometric_depth;
 
 	int f_conjugacy_class_of;
 	std::string conjugacy_class_of_label;
@@ -837,6 +871,10 @@ public:
 	int f_is_subgroup_of;
 	int f_coset_reps;
 
+	int f_evaluate_word;
+	std::string evaluate_word_word;
+	std::string evaluate_word_gens;
+
 
 
 
@@ -868,7 +906,7 @@ public:
 	int f_classify_ovoids;
 	apps_geometry::ovoid_classify_description *Ovoid_classify_description;
 
-	int f_classify_cubic_curves;
+	//int f_classify_cubic_curves;
 
 	int f_representation_on_polynomials;
 	int representation_on_polynomials_degree;
@@ -940,6 +978,10 @@ public:
 	int f_has_strong_generators;
 	groups::strong_generators *Strong_gens;
 
+	groups::sims *action_on_self_by_right_multiplication_sims;
+	induced_actions::action_by_right_multiplication *Action_by_right_multiplication;
+
+
 
 	modified_group_create();
 	~modified_group_create();
@@ -968,6 +1010,9 @@ public:
 			group_modification_description *description,
 			int verbose_level);
 	void create_subfield_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_action_on_self_by_right_multiplication(
 			group_modification_description *description,
 			int verbose_level);
 
@@ -1056,6 +1101,9 @@ public:
 
 	int f_export_trees;
 
+	int f_export_levels;
+	int export_levels_orbit_idx;
+
 	int f_draw_tree;
 	int draw_tree_idx;
 
@@ -1114,6 +1162,7 @@ public:
 	void do_report(int verbose_level);
 	void do_export(int verbose_level);
 	void do_export_trees(int verbose_level);
+	void do_export_levels(int orbit_idx, int verbose_level);
 	void do_draw_tree(int verbose_level);
 	void do_stabilizer(int verbose_level);
 	void do_stabilizer_of_orbit_rep(int verbose_level);
@@ -1144,6 +1193,9 @@ public:
 
 	int f_on_points;
 
+	int f_on_points_with_generators;
+	std::string on_points_with_generators_gens_label;
+
 	int f_on_subsets;
 	int on_subsets_size;
 	std::string on_subsets_poset_classification_control_label;
@@ -1167,6 +1219,8 @@ public:
 	projective_geometry::canonical_form_classifier_description
 		*Canonical_form_classifier_description;
 
+	int f_override_generators;
+	std::string override_generators_label;
 
 #if 0
 	int f_draw_tree;
@@ -1318,7 +1372,7 @@ public:
 		*orbits_on_subspaces_Poset;
 	poset_classification::poset_classification
 		*orbits_on_subspaces_PC;
-	algebra::vector_space *orbits_on_subspaces_VS;
+	linear_algebra::vector_space *orbits_on_subspaces_VS;
 	int *orbits_on_subspaces_M;
 	int *orbits_on_subspaces_base_cols;
 

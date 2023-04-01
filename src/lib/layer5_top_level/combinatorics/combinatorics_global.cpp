@@ -604,7 +604,7 @@ void combinatorics_global::Hill_cap56(
 		}
 	S->random_element_of_order(Elt, 7 /* order */, verbose_level);
 	cout << "an element of order 7 is:" << endl;
-	P->A->element_print_quick(Elt, cout);
+	P->A->Group_element->element_print_quick(Elt, cout);
 
 
 
@@ -722,7 +722,8 @@ void combinatorics_global::Hill_cap56(
 										}
 									for (ii = 0; ii < sz[8]; ii++) {
 										int rk;
-										O->F->PG_element_rank_modified(pt_coords + set[ii] * n, 1, n, rk);
+										O->F->Projective_space_basic->PG_element_rank_modified(
+												pt_coords + set[ii] * n, 1, n, rk);
 										Sets[nb_sol * 56 + ii] = rk;
 										}
 

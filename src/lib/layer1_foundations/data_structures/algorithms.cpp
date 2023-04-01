@@ -483,7 +483,7 @@ void algorithms::union_of_sets(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "graph_theory_domain::union_of_sets" << endl;
+		cout << "algorithms::union_of_sets" << endl;
 	}
 
 	orbiter_kernel_system::file_io Fio;
@@ -493,7 +493,7 @@ void algorithms::union_of_sets(
 	Fio.lint_matrix_read_csv(fname_set_of_sets, M, m, n, verbose_level);
 
 	if (f_v) {
-		cout << "graph_theory_domain::union_of_sets "
+		cout << "algorithms::union_of_sets "
 				"the file " << fname_set_of_sets
 				<< " contains " << m << " sets of size " << n << endl;
 	}
@@ -510,7 +510,8 @@ void algorithms::union_of_sets(
 
 
 	if (f_v) {
-		cout << "graph_theory_domain::union_of_sets the file " << fname_input << " contains " << nb_solutions << " solutions" << endl;
+		cout << "algorithms::union_of_sets "
+				"the file " << fname_input << " contains " << nb_solutions << " solutions" << endl;
 	}
 
 
@@ -557,7 +558,7 @@ void algorithms::union_of_sets(
 
 	Fio.lint_matrix_write_csv(fname_output, S, cnt, sz);
 	if (f_v) {
-		cout << "graph_theory_domain::union_of_sets "
+		cout << "algorithms::union_of_sets "
 				"written file " << fname_output
 				<< " of size " << Fio.file_size(fname_output) << endl;
 	}
@@ -566,11 +567,265 @@ void algorithms::union_of_sets(
 
 	FREE_lint(S);
 	if (f_v) {
-		cout << "graph_theory_domain::union_of_sets done" << endl;
+		cout << "algorithms::union_of_sets done" << endl;
 	}
 
 }
 
+void algorithms::dot_product_of_columns(
+		std::string &label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::dot_product_of_columns" << endl;
+	}
+
+	int *A;
+	int m, n;
+
+	Get_matrix(label, A, m, n);
+
+	int *Dot_products;
+	int i, j, h, c;
+
+	Dot_products = NEW_int(n * n);
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			c = 0;
+			for (h = 0; h < m; h++) {
+				c += A[h * n + i] * A[h * n + j];
+			}
+			Dot_products[i * n + j] = c;
+		}
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname.assign(label);
+	fname.append("_dot_products_columns.csv");
+
+	Fio.int_matrix_write_csv(fname, Dot_products,
+			n, n);
+
+	if (f_v) {
+		cout << "Dot_products:" << endl;
+		Int_matrix_print(Dot_products, n, n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algorithms::dot_product_of_columns done" << endl;
+	}
+}
+
+void algorithms::dot_product_of_rows(
+		std::string &label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::dot_product_of_rows" << endl;
+	}
+
+	int *A;
+	int m, n;
+
+	Get_matrix(label, A, m, n);
+
+	int *Dot_products;
+	int i, j, h, c;
+
+	Dot_products = NEW_int(m * m);
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < m; j++) {
+			c = 0;
+			for (h = 0; h < n; h++) {
+				c += A[i * n + h] * A[j * n + h];
+			}
+			Dot_products[i * m + j] = c;
+		}
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname.assign(label);
+	fname.append("_dot_products_rows.csv");
+
+	Fio.int_matrix_write_csv(fname, Dot_products,
+			m, m);
+
+	if (f_v) {
+		cout << "Dot_products:" << endl;
+		Int_matrix_print(Dot_products, m, m);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algorithms::dot_product_of_rows done" << endl;
+	}
+}
+
+void algorithms::matrix_multiply_over_Z(
+		std::string &label1, std::string &label2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::matrix_multiply_over_Z" << endl;
+	}
+
+	int *A1;
+	int *A2;
+	int m1, n1;
+	int m2, n2;
+
+	if (f_v) {
+		cout << "algorithms::matrix_multiply_over_Z get matrix " << label1 << endl;
+	}
+	Get_matrix(label1, A1, m1, n1);
+
+	if (f_v) {
+		cout << "algorithms::matrix_multiply_over_Z get matrix " << label2 << endl;
+	}
+	Get_matrix(label2, A2, m2, n2);
+
+	if (n1 != m2) {
+		cout << "algorithms::matrix_multiply_over_Z n1 != m2, cannot multiply" << endl;
+		exit(1);
+	}
+	int *A3;
+	int m3, n3;
+
+
+	m3 = m1;
+	n3 = n2;
+	A3 = NEW_int(m3 * n3);
+
+	linear_algebra::module Mod;
+
+	Mod.matrix_multiply_over_Z_low_level(
+			A1, A2, m1, n1, m2, n2,
+			A3, verbose_level - 2);
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname.assign(label1);
+	fname.append("_times_");
+	fname.append(label2);
+	fname.append(".csv");
+
+	Fio.int_matrix_write_csv(fname, A3,
+			m3, n3);
+
+	if (f_v) {
+		cout << "A1 * A2:" << endl;
+		Int_matrix_print(A3, m3, n3);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "algorithms::matrix_multiply_over_Z done" << endl;
+	}
+}
+
+
+
+void algorithms::matrix_rowspan_over_R(
+		std::string &label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::matrix_rowspan_over_R" << endl;
+	}
+
+	int *A;
+	int m, n;
+	double *D;
+
+	Get_matrix(label, A, m, n);
+
+
+	int i, j;
+
+	D = new double [m * n];
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			D[i * n + j] = A[i * n + j];
+		}
+	}
+
+	orbiter_kernel_system::numerics Num;
+	int *base_cols;
+	int f_complete = TRUE;
+	int r;
+
+	base_cols = NEW_int(n);
+
+	r = Num.Gauss_elimination(
+				D, m, n,
+			base_cols, f_complete,
+			verbose_level);
+
+
+
+
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname.assign(label);
+	fname.append("_rref");
+	fname.append(".csv");
+
+	Fio.double_matrix_write_csv(
+			fname, D, r, n);
+
+	if (f_v) {
+		cout << "RREF=" << endl;
+		Num.print_matrix(D, r, n);
+	}
+	if (f_v) {
+		cout << "The rank of the matrix is " << r << endl;
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	delete [] D;
+
+
+	if (f_v) {
+		cout << "algorithms::matrix_rowspan_over_R done" << endl;
+	}
+}
+
 
 }}}
+
 

@@ -71,7 +71,7 @@ void orbit_tracer::init(poset_classification *PC, int verbose_level)
 	Transporter = NEW_OBJECT(data_structures_groups::vector_ge);
 	Transporter->init(PC->get_poset()->A, verbose_level - 2);
 	Transporter->allocate(PC->get_sz() + 1, verbose_level - 2);
-	PC->get_poset()->A->element_one(Transporter->ith(0), FALSE);
+	PC->get_poset()->A->Group_element->element_one(Transporter->ith(0), FALSE);
 
 	Set = NEW_plint(PC->get_sz() + 1);
 	for (i = 0; i <= PC->get_sz(); i++) {
@@ -132,7 +132,7 @@ void orbit_tracer::recognize_start_over(
 		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, Set[0], size);
 		cout << endl;
 	}
-	PC->get_poset()->A->element_move(
+	PC->get_poset()->A->Group_element->element_move(
 		Transporter->ith(lvl + 1),
 		Transporter->ith(0), FALSE);
 	if (f_v) {
@@ -370,7 +370,7 @@ void orbit_tracer::recognize_recursion(
 	if (PC->allowed_to_show_group_elements() && f_v4) {
 		int *transporter1 = Transporter->ith(lvl + 1);
 		cout << "recognize_recursion transporter element:" << endl;
-		PC->get_poset()->A2->element_print_quick(transporter1, cout);
+		PC->get_poset()->A2->Group_element->element_print_quick(transporter1, cout);
 		//A2->element_print_as_permutation(transporter1, cout);
 		cout << endl;
 	}
@@ -514,7 +514,7 @@ void orbit_tracer::recognize(
 
 	Lint_vec_copy(the_set, Set[0], size);
 
-	PC->get_poset()->A->element_one(Transporter->ith(0), 0);
+	PC->get_poset()->A->Group_element->element_one(Transporter->ith(0), 0);
 
 	if (f_vv) {
 		Lint_vec_print(cout, Set[0], size);
@@ -549,7 +549,7 @@ void orbit_tracer::recognize(
 	}
 
 
-	PC->get_poset()->A->element_move(
+	PC->get_poset()->A->Group_element->element_move(
 			Transporter->ith(size),
 			transporter, 0);
 
@@ -603,7 +603,7 @@ void orbit_tracer::identify(long int *data, int sz,
 	}
 	if (f_v) {
 		cout << "orbit_tracer::identify transporter:" << endl;
-		PC->get_poset()->A->element_print_quick(transporter, cout);
+		PC->get_poset()->A->Group_element->element_print_quick(transporter, cout);
 	}
 
 	if (f_v) {

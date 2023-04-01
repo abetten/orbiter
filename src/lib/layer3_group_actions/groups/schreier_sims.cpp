@@ -59,37 +59,38 @@ schreier_sims::~schreier_sims()
 	if (Elt1) {
 		FREE_int(Elt1);
 		Elt1 = NULL;
-		}
+	}
 	if (Elt2) {
 		FREE_int(Elt2);
 		Elt1 = NULL;
-		}
+	}
 	if (Elt3) {
 		FREE_int(Elt3);
 		Elt1 = NULL;
-		}
+	}
 	if (G) {
 		FREE_OBJECT(G);
 		G = NULL;
-		}
+	}
 	if (K) {
 		FREE_OBJECT(K);
 		K = NULL;
-		}
+	}
 	if (f_from_generators) {
 		FREE_OBJECT(external_gens);
 		external_gens = NULL;
 	}
 }
 
-void schreier_sims::init(actions::action *A, int verbose_level)
+void schreier_sims::init(
+		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "schreier_sims::init action:" << endl;
 		A->print_info();
-		}
+	}
 	schreier_sims::GA = A;
 	Elt1 = NEW_int(GA->elt_size_in_int);
 	Elt2 = NEW_int(GA->elt_size_in_int);
@@ -103,25 +104,30 @@ void schreier_sims::init(actions::action *A, int verbose_level)
 	if (f_v) {
 		cout << "schreier_sims::init action A:" << endl;
 		A->print_info();
-		cout << "schreier_sims::init before G->init" << endl;
-		}
+		cout << "schreier_sims::init "
+				"before G->init" << endl;
+	}
 	G->init(GA, verbose_level - 2);
 	if (f_v) {
-		cout << "schreier_sims::init after G->init" << endl;
-		}
+		cout << "schreier_sims::init "
+				"after G->init" << endl;
+	}
 	if (f_v) {
-		cout << "schreier_sims::init before G->init_trivial_group" << endl;
-		}
+		cout << "schreier_sims::init "
+				"before G->init_trivial_group" << endl;
+	}
 	G->init_trivial_group(0 /*verbose_level*/);
 	if (f_v) {
-		cout << "schreier_sims::init after G->init_trivial_group" << endl;
-		}
+		cout << "schreier_sims::init "
+				"after G->init_trivial_group" << endl;
+	}
 	if (f_v) {
 		cout << "schreier_sims::init done" << endl;
-		}
+	}
 }
 
-void schreier_sims::interested_in_kernel(actions::action *KA,
+void schreier_sims::interested_in_kernel(
+		actions::action *KA,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -130,7 +136,7 @@ void schreier_sims::interested_in_kernel(actions::action *KA,
 		cout << "schreier_sims::interested_in_kernel "
 				"kernel action:" << endl;
 		KA->print_info();
-		}
+	}
 	schreier_sims::KA = KA;
 	K = NEW_OBJECT(sims);
 	K->init(KA, verbose_level - 2);
@@ -146,33 +152,55 @@ void schreier_sims::init_target_group_order(
 
 	if (f_v) {
 		cout << "schreier_sims::init_target_group_order " << tgo << endl;
-		}
+	}
 	tgo.assign_to(schreier_sims::tgo);
 	f_has_target_group_order = TRUE;
 }
 
 void schreier_sims::init_generators(
-		data_structures_groups::vector_ge *gens, int verbose_level)
+		data_structures_groups::vector_ge *gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "schreier_sims::init_generators " << endl;
-		}
+	}
 	if (f_v) {
-		cout << "schreier_sims::init_generators copying generators in" << endl;
-		}
+		cout << "schreier_sims::init_generators "
+				"copying generators in" << endl;
+		cout << "schreier_sims::init_generators "
+				"number of generators is " << gens->len << endl;
+	}
+	if (f_v) {
+		cout << "schreier_sims::init_generators "
+				"before gens->copy" << endl;
+	}
 	gens->copy(external_gens, verbose_level);
+	if (f_v) {
+		cout << "schreier_sims::init_generators "
+				"after gens->copy" << endl;
+	}
 	//schreier_sims::gens = gens;
 	if (f_v) {
-		cout << "schreier_sims::init_generators generators are:" << endl;
-		gens->print(cout, TRUE /* f_print_as_permutation */,
+		cout << "schreier_sims::init_generators "
+				"generators are:" << endl;
+		gens->print_for_make_element(cout);
+	}
+	if (f_vv) {
+		cout << "schreier_sims::init_generators "
+				"generators are:" << endl;
+		gens->print(cout, FALSE /* f_print_as_permutation */,
 				TRUE /* f_offset */, 1 /* offset */,
 				TRUE /* f_do_it_anyway_even_for_big_degree */,
-				FALSE /* f_print_cycles_of_length_one*/);
-		gens->print_for_make_element(cout);
-		}
+				FALSE /* f_print_cycles_of_length_one*/,
+				verbose_level - 1);
+	}
 	f_from_generators = TRUE;
+	if (f_v) {
+		cout << "schreier_sims::init_generators done" << endl;
+	}
 }
 
 void schreier_sims::init_random_process(
@@ -185,7 +213,7 @@ void schreier_sims::init_random_process(
 
 	if (f_v) {
 		cout << "schreier_sims::init_random_process" << endl;
-		}
+	}
 	schreier_sims::callback_choose_random_generator =
 			callback_choose_random_generator;
 	schreier_sims::callback_choose_random_generator_data =
@@ -199,7 +227,7 @@ void schreier_sims::init_old_G(sims *old_G, int verbose_level)
 
 	if (f_v) {
 		cout << "schreier_sims::init_old_G" << endl;
-		}
+	}
 	schreier_sims::old_G = old_G;
 	f_from_old_G = TRUE;
 }
@@ -212,7 +240,7 @@ void schreier_sims::init_base_of_choice(
 
 	if (f_v) {
 		cout << "schreier_sims::init_base_of_choice" << endl;
-		}
+	}
 	schreier_sims::base_of_choice_len = base_of_choice_len;
 	schreier_sims::base_of_choice = base_of_choice;
 	f_has_base_of_choice = TRUE;
@@ -227,7 +255,7 @@ void schreier_sims::init_choose_next_base_point_method(
 
 	if (f_v) {
 		cout << "schreier_sims::init_choose_next_base_point_method" << endl;
-		}
+	}
 	schreier_sims::choose_next_base_point_method =
 			choose_next_base_point_method;
 	f_override_choose_next_base_point_method = TRUE;
@@ -240,10 +268,10 @@ void schreier_sims::compute_group_orders()
 		ring_theory::longinteger_domain D;
 		K->group_order(K_order);
 		D.mult(G_order, K_order, KG_order);
-		}
+	}
 	else {
 		G_order.assign_to(KG_order);
-		}
+	}
 }
 
 void schreier_sims::print_group_orders()
@@ -251,8 +279,9 @@ void schreier_sims::print_group_orders()
 	cout << "current group order is " << G_order;
 	if (f_has_target_group_order) {
 		cout << " target group order is " << tgo;
-		}
-	cout << " : in log base 10: " << G_order.log10() << " / " << tgo.log10() << endl;
+	}
+	cout << " : in log base 10: "
+			<< G_order.log10() << " / " << tgo.log10() << endl;
 }
 
 void schreier_sims::get_generator_internal(
@@ -272,7 +301,7 @@ void schreier_sims::get_generator_internal(
 	if (f_vvv) {
 		cout << "schreier_sims::get_generator_internal "
 				"we picked the following random Schreier generator:" << endl;
-		GA->element_print_quick(Elt, cout);
+		GA->Group_element->element_print_quick(Elt, cout);
 		cout << endl;
 	}
 }
@@ -289,19 +318,22 @@ void schreier_sims::get_generator_external(
 	}
 	if (f_from_generators) {
 		if (f_v) {
-			cout << "schreier_sims::get_generator_external before get_generator_external_from_generators" << endl;
+			cout << "schreier_sims::get_generator_external "
+					"before get_generator_external_from_generators" << endl;
 		}
 		get_generator_external_from_generators(Elt, verbose_level);
 	}
 	else if (f_from_random_process) {
 		if (f_v) {
-			cout << "schreier_sims::get_generator_external before get_generator_external_random_process" << endl;
+			cout << "schreier_sims::get_generator_external "
+					"before get_generator_external_random_process" << endl;
 		}
 		get_generator_external_random_process(Elt, verbose_level);
 	}
 	else if (f_from_old_G) {
 		if (f_v) {
-			cout << "schreier_sims::get_generator_external before get_generator_external_old_G" << endl;
+			cout << "schreier_sims::get_generator_external "
+					"before get_generator_external_old_G" << endl;
 		}
 		get_generator_external_old_G(Elt, verbose_level);
 	}
@@ -324,30 +356,29 @@ void schreier_sims::get_generator_external_from_generators(
 	orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
-		cout << "schreier_sims::get_generator_external_"
-				"from_generators" << endl;
-		}
+		cout << "schreier_sims::get_generator_external_from_generators" << endl;
+	}
 	if (external_gens->len) {
 		r = Os.random_integer(external_gens->len);
 		if (f_v) {
-			cout << "schreier_sims::get_generator_external_"
-					"from_generators choosing generator "
+			cout << "schreier_sims::get_generator_external_from_generators "
+					"choosing generator "
 					<< r << " / " << external_gens->len << endl;
-			}
-		GA->element_move(external_gens->ith(r), Elt, 0);
 		}
+		GA->Group_element->element_move(
+				external_gens->ith(r), Elt, 0);
+	}
 	else {
 		if (f_v) {
-			cout << "schreier_sims::get_generator_external_"
-					"from_generators gens->len == 0" << endl;
-			}
+			cout << "schreier_sims::get_generator_external_from_generators "
+					"gens->len == 0" << endl;
+		}
 		// no generators, we are creating the identity group:
-		GA->element_one(Elt, 0);
-		}
+		GA->Group_element->element_one(Elt, 0);
+	}
 	if (f_v) {
-		cout << "schreier_sims::get_generator_external_"
-				"from_generators done" << endl;
-		}
+		cout << "schreier_sims::get_generator_external_from_generators done" << endl;
+	}
 }
 
 void schreier_sims::get_generator_external_random_process(
@@ -356,9 +387,8 @@ void schreier_sims::get_generator_external_random_process(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "schreier_sims::get_generator_external_"
-				"random_process" << endl;
-		}
+		cout << "schreier_sims::get_generator_external_random_process" << endl;
+	}
 	(*callback_choose_random_generator)((iteration >> 1),
 			Elt, callback_choose_random_generator_data, verbose_level - 1);
 }
@@ -371,14 +401,14 @@ void schreier_sims::get_generator_external_old_G(
 	
 	if (FALSE) {
 		cout << "schreier_sims::get_generator_external_old_G" << endl;
-		}
+	}
 	old_G->random_element(Elt, verbose_level - 1);
 	if (f_v) {
 		cout << "schreier_sims::get_generator_external_old_G "
 				"random element chosen, path = ";
 		Int_vec_print(cout, old_G->path, old_G->A->base_len());
 		cout << endl;
-		}
+	}
 }
 
 void schreier_sims::get_generator(int *Elt, int verbose_level)
@@ -390,20 +420,24 @@ void schreier_sims::get_generator(int *Elt, int verbose_level)
 	}
 	if ((iteration % 2) == 0) {
 		if (f_v) {
-			cout << "schreier_sims::get_generator before get_generator_internal" << endl;
+			cout << "schreier_sims::get_generator "
+					"before get_generator_internal" << endl;
 		}
 		get_generator_internal(Elt, verbose_level);
 		if (f_v) {
-			cout << "schreier_sims::get_generator after get_generator_internal" << endl;
+			cout << "schreier_sims::get_generator "
+					"after get_generator_internal" << endl;
 		}
 	}
 	else if ((iteration % 2) == 1) {
 		if (f_v) {
-			cout << "schreier_sims::get_generator before get_generator_external" << endl;
+			cout << "schreier_sims::get_generator "
+					"before get_generator_external" << endl;
 		}
 		get_generator_external(Elt, verbose_level);
 		if (f_v) {
-			cout << "schreier_sims::get_generator after get_generator_external" << endl;
+			cout << "schreier_sims::get_generator "
+					"after get_generator_external" << endl;
 		}
 	}
 	if (f_v) {
@@ -421,41 +455,44 @@ void schreier_sims::closure_group(int verbose_level)
 
 	if (f_v) {
 		cout << "schreier_sims::closure_group" << endl;
-		}
+	}
 	D.integral_division(tgo, KG_order, quo, rem, 0);
+
 	while (!quo.is_zero() && !rem.is_zero()) {
 		if (f_vvv) {
 			cout << "schreier_sims::closure_group iteration "
 					<< iteration << " cnt " << cnt
 					<< ": remainder is not zero, "
-							"this is not a subgroup" << endl;
-			}
+					"this is not a subgroup" << endl;
+		}
 		int nb_times = 30;
 
 		if (f_v) {
 			cout << "schreier_sims::closure_group "
 					"calling G->closure_group" << endl;
-			}
+		}
 		G->closure_group(nb_times, verbose_level - 3);
 		compute_group_orders();
 		D.integral_division(tgo, KG_order, quo, rem, 0);
 		if (f_vvv) {
 			cout << "schreier_sims::closure_group iteration "
 					<< iteration << " cnt " << cnt
-					<< ": after closure_group: remaining factor: "
-					<< quo << " remainder " << rem << endl;
-			}
+					<< ": after closure_group: "
+					"remaining factor: " << quo
+					<< " remainder " << rem << endl;
+		}
 		cnt++;
 		if (cnt == 10) {
 			cout << "schreier_sims::closure_group cnt == 100, "
-					"KG_order=" << KG_order << ", we are breaking off" << endl;
+					"KG_order=" << KG_order
+					<< ", we are breaking off" << endl;
 			break;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "schreier_sims::closure_group done ";
 		print_group_orders();
-		}
+	}
 }
 
 void schreier_sims::create_group(int verbose_level)
@@ -468,16 +505,20 @@ void schreier_sims::create_group(int verbose_level)
 	int drop_out_level, image, b, c, f_added, old_base_len;
 	
 	if (f_v) {
-		cout << "schreier_sims::create_group" << endl;
+		cout << "schreier_sims::create_group "
+				"verbose_level = " << verbose_level << endl;
 		if (f_has_target_group_order) {
-			cout << "schreier_sims::create_group target group order is " << tgo << endl;
+			cout << "schreier_sims::create_group "
+					"target group order is " << tgo << endl;
 		}
 		else {
-			cout << "schreier_sims::create_group no target group order given" << endl;
+			cout << "schreier_sims::create_group "
+					"target group order unavailable" << endl;
 		}
 	}
 	if (f_has_target_group_order && tgo.is_zero()) {
-		cout << "schreier_sims::create_group  target group order is 0" << endl;
+		cout << "schreier_sims::create_group "
+				"target group order is 0" << endl;
 		exit(1);
 	}
 	compute_group_orders();
@@ -525,7 +566,7 @@ void schreier_sims::create_group(int verbose_level)
 			cout << "schreier_sims::create_group "
 					"iteration " << iteration
 					<< " generator: " << endl;
-			GA->element_print_quick(Elt1, cout);
+			GA->Group_element->element_print_quick(Elt1, cout);
 		}
 
 		if (f_vv) {
@@ -540,12 +581,12 @@ void schreier_sims::create_group(int verbose_level)
 				if (f_vvvv) {
 					cout << "schreier_sims::create_group: "
 							"residue = " << endl;
-					GA->element_print_quick(Elt2, cout);
+					GA->Group_element->element_print_quick(Elt2, cout);
 					cout << endl;
 				}
 			}
 			f_added = FALSE;
-			if (!GA->element_is_one(Elt2, 0)) {
+			if (!GA->Group_element->element_is_one(Elt2, 0)) {
 				if (f_vvv) {
 					cout << "schreier_sims::create_group: "
 							"the residue is not trivial, "
@@ -569,13 +610,13 @@ void schreier_sims::create_group(int verbose_level)
 				}
 
 				if (f_vv) {
-					cout << "schreier_sims::create_group: "
+					cout << "schreier_sims::create_group "
 							"next suggested base point is "
 							<< b << endl;
 				}
 				if (b == -1) {
 					if (f_vv) {
-						cout << "schreier_sims::create_group: "
+						cout << "schreier_sims::create_group "
 								"cannot find next base point" << endl;
 					}
 					if (K->strip(Elt2, Elt3, drop_out_level,
@@ -590,18 +631,18 @@ void schreier_sims::create_group(int verbose_level)
 								cout << endl;
 								K->print(FALSE);
 								K->print_basic_orbits();
-								cout << "schreier_sims::create_group: "
+								cout << "schreier_sims::create_group "
 										"residue" << endl;
-								KA->element_print_image_of_set(
+								KA->Group_element->element_print_image_of_set(
 										Elt3, KA->base_len(), KA->get_base());
-								cout << "schreier_sims::create_group: "
+								cout << "schreier_sims::create_group "
 										"Elt2" << endl;
-								KA->element_print_image_of_set(
+								KA->Group_element->element_print_image_of_set(
 										Elt2, KA->base_len(), KA->get_base());
 							}
 						}
-						if (!KA->element_is_one(Elt3, 0)) {
-							cout << "schreier_sims::create_group: "
+						if (!KA->Group_element->element_is_one(Elt3, 0)) {
+							cout << "schreier_sims::create_group "
 									"element strips through kernel, "
 									"residue = " << endl;
 							cout << "but the element is not the "
@@ -615,13 +656,13 @@ void schreier_sims::create_group(int verbose_level)
 						}
 					}
 					if (f_vv) {
-						cout << "schreier_sims::create_group: "
+						cout << "schreier_sims::create_group "
 								"before K->add_generator_at_level" << endl;
 					}
 					K->add_generator_at_level(Elt3,
-							drop_out_level, verbose_level - 3);
+							drop_out_level, 0 /*verbose_level - 3*/);
 					if (f_vvv) {
-						cout << "schreier_sims::create_group: "
+						cout << "schreier_sims::create_group "
 								"the residue has been added as "
 								"kernel generator at level "
 								<< drop_out_level << endl;
@@ -630,11 +671,11 @@ void schreier_sims::create_group(int verbose_level)
 				}
 				else {
 					if (f_vvv) {
-						cout << "schreier_sims::create_group: "
-								"choosing n e w base point " << b << endl;
+						cout << "schreier_sims::create_group "
+								"choosing another base point " << b << endl;
 					}
 					old_base_len = GA->base_len();
-					GA->Stabilizer_chain->reallocate_base(b);
+					GA->Stabilizer_chain->reallocate_base(b, verbose_level);
 					if (f_vvv) {
 						//cout << "after reallocate_base 1" << endl;
 					}
@@ -643,15 +684,15 @@ void schreier_sims::create_group(int verbose_level)
 						//cout << "after reallocate_base 2" << endl;
 					}
 					if (f_vv) {
-						cout << "schreier_sims::create_group: "
-								"n e w base point " << b
-							<< " chosen, n e w base has length "
+						cout << "schreier_sims::create_group "
+								"A new base point " << b
+							<< " chosen, new base has length "
 							<< GA->base_len() << endl;
 						cout << "schreier_sims::create_group: "
 								"calling add_generator_at_level" << endl;
 					}
 					G->add_generator_at_level(Elt2,
-							GA->base_len() - 1, verbose_level - 3);
+							GA->base_len() - 1, 0 /*verbose_level - 3*/);
 					if (f_vv) {
 						cout << "schreier_sims::create_group: "
 								"the residue has been added "
@@ -674,11 +715,19 @@ void schreier_sims::create_group(int verbose_level)
 						"element needs to be inserted at level = "
 					<< drop_out_level << " with image "
 					<< image << endl;
-					GA->element_print(Elt2, cout);
+					GA->Group_element->element_print(Elt2, cout);
 					cout  << endl;
 			}
+			if (f_vv) {
+				cout << "schreier_sims::create_group: "
+						"before G->add_generator_at_level" << endl;
+			}
 			G->add_generator_at_level(Elt2,
-					drop_out_level, verbose_level - 3);
+					drop_out_level, 0 /*verbose_level - 3*/);
+			if (f_vv) {
+				cout << "schreier_sims::create_group: "
+						"after G->add_generator_at_level" << endl;
+			}
 		}
 		
 		compute_group_orders();
@@ -686,7 +735,7 @@ void schreier_sims::create_group(int verbose_level)
 
 		if ((f_v && f_added) || f_vv) {
 			cout << "schreier_sims::create_group: "
-					"n e w group order is ";
+					"updated group order is ";
 			print_group_orders();
 		}
 		iteration++;
@@ -720,7 +769,7 @@ void schreier_sims::create_group(int verbose_level)
 				if (f_vv) {
 					cout << "schreier_sims::create_group: before closure_group" << endl;
 				}
-				closure_group(verbose_level - 2);
+				closure_group(0 /*verbose_level - 2*/);
 				if (f_vv) {
 					cout << "schreier_sims::create_group: after closure_group" << endl;
 				}
@@ -730,7 +779,7 @@ void schreier_sims::create_group(int verbose_level)
 			if (f_vv) {
 				cout << "schreier_sims::create_group: before closure_group" << endl;
 			}
-			closure_group(verbose_level - 2);
+			closure_group(0 /*verbose_level - 2*/);
 			if (f_vv) {
 				cout << "schreier_sims::create_group: after closure_group" << endl;
 			}
@@ -740,7 +789,7 @@ void schreier_sims::create_group(int verbose_level)
 		cout << "schreier_sims::create_group finished:";
 		print_group_orders();
 
-		cout << "the n e w action has base ";
+		cout << "the new action has base ";
 		Lint_vec_print(cout, GA->get_base(), GA->base_len());
 		cout << " of length " << GA->base_len()  << endl;
 	}

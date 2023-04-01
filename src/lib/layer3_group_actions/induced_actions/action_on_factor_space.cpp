@@ -132,7 +132,7 @@ action_on_factor_space::~action_on_factor_space()
 }
 
 void action_on_factor_space::init_light(
-		algebra::vector_space *VS,
+		linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	int verbose_level)
@@ -163,7 +163,7 @@ void action_on_factor_space::init_light(
 }
 
 void action_on_factor_space::init_by_rank_table_mode(
-		algebra::vector_space *VS,
+		linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	long int *point_list, int nb_points,
@@ -377,7 +377,7 @@ void action_on_factor_space::init_coset_table(
 
 
 void action_on_factor_space::init_by_rank(
-		algebra::vector_space *VS,
+		linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	int f_compute_tables,
@@ -404,7 +404,7 @@ void action_on_factor_space::init_by_rank(
 }
 
 void action_on_factor_space::init_from_coordinate_vectors(
-		algebra::vector_space *VS,
+		linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	int *subspace_basis, int subspace_basis_size,
 	int f_compute_tables, int verbose_level)
@@ -995,14 +995,16 @@ long int action_on_factor_space::rank_in_large_space(int *v)
 void action_on_factor_space::unrank_in_small_space(
 		int *v, long int rk)
 {
-	VS->F->PG_element_unrank_modified_lint(v, 1, factor_space_len, rk);
+	VS->F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v, 1, factor_space_len, rk);
 }
 
 long int action_on_factor_space::rank_in_small_space(int *v)
 {
 	long int rk;
 
-	VS->F->PG_element_rank_modified_lint(v, 1, factor_space_len, rk);
+	VS->F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1, factor_space_len, rk);
 	return rk;
 }
 
@@ -1015,46 +1017,45 @@ long int action_on_factor_space::compute_image(
 	long int j;
 	
 	if (f_v) {
-		cout << "action_on_factor_space::compute_"
-				"image i = " << i <<
+		cout << "action_on_factor_space::compute_image i = " << i <<
 				" verbose_level =" << verbose_level << endl;
 		}
 	unrank(Tmp1, i, 0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "action_on_factor_space::compute_"
-				"image after unrank:";
+		cout << "action_on_factor_space::compute_image "
+				"after unrank:";
 		Int_vec_print(cout, Tmp1, VS->dimension);
 		cout << endl;
 		}
 	
 	if (f_v) {
-		cout << "action_on_factor_space::compute_"
-				"image before A->element_image_of_low_level"
+		cout << "action_on_factor_space::compute_image "
+				"before A->element_image_of_low_level"
 				<< endl;
 	}
-	A->element_image_of_low_level(Tmp1, Tmp2,
+	A->Group_element->element_image_of_low_level(Tmp1, Tmp2,
 			Elt, verbose_level - 1);
 	if (f_v) {
-		cout << "action_on_factor_space::compute_"
-				"image after A->element_image_of_low_level"
+		cout << "action_on_factor_space::compute_image "
+				"after A->element_image_of_low_level"
 				<< endl;
 	}
 
 	if (f_v) {
-		cout << "action_on_factor_space::compute_"
-				"image after element_image_of_low_level:";
+		cout << "action_on_factor_space::compute_image "
+				"after element_image_of_low_level:";
 		Int_vec_print(cout, Tmp2, VS->dimension);
 		cout << endl;
 		}
 	
 	j = rank(Tmp2, 0/*verbose_level - 1*/);
 	if (f_v) {
-		cout << "action_on_factor_space::compute_"
-				"image after rank, j = " << j << endl;
+		cout << "action_on_factor_space::compute_image "
+				"after rank, j = " << j << endl;
 		}
 	if (f_v) {
-		cout << "action_on_factor_space::compute_"
-				"image image of " << i << " is " << j << endl;
+		cout << "action_on_factor_space::compute_image "
+				"image of " << i << " is " << j << endl;
 		}
 	return j;
 }

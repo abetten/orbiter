@@ -39,7 +39,8 @@ geometric_object_create::~geometric_object_create()
 	}
 }
 
-void geometric_object_create::init(geometric_object_description *Descr,
+void geometric_object_create::init(
+		geometric_object_description *Descr,
 		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -54,12 +55,13 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 	field_theory::finite_field *F;
 
-	F = P->F;
+	F = P->Subspaces->F;
 
 
 	if (Descr->f_hyperoval) {
 		if (f_v) {
-			cout << "geometric_object_create::init before P->Arc_in_projective_space->create_hyperoval" << endl;
+			cout << "geometric_object_create::init "
+					"before P->Arc_in_projective_space->create_hyperoval" << endl;
 		}
 		P->Arc_in_projective_space->create_hyperoval(
 				Descr->f_translation,
@@ -73,7 +75,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 				nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after P->Arc_in_projective_space->create_hyperoval" << endl;
+			cout << "geometric_object_create::init "
+					"after P->Arc_in_projective_space->create_hyperoval" << endl;
 		}
 
 		//F->export_magma(3, Pts, nb_pts, fname);
@@ -82,7 +85,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 	else if (Descr->f_subiaco_oval) {
 		if (f_v) {
-			cout << "geometric_object_create::init before P->Arc_in_projective_space->create_subiaco_oval" << endl;
+			cout << "geometric_object_create::init "
+					"before P->Arc_in_projective_space->create_subiaco_oval" << endl;
 		}
 		P->Arc_in_projective_space->create_subiaco_oval(
 				Descr->f_short,
@@ -91,7 +95,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after P->Arc_in_projective_space->create_subiaco_oval" << endl;
+			cout << "geometric_object_create::init "
+					"after P->Arc_in_projective_space->create_subiaco_oval" << endl;
 		}
 
 		//F->export_magma(3, Pts, nb_pts, fname);
@@ -100,7 +105,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 	}
 	else if (Descr->f_subiaco_hyperoval) {
 		if (f_v) {
-			cout << "geometric_object_create::init before P->Arc_in_projective_space->create_subiaco_hyperoval" << endl;
+			cout << "geometric_object_create::init "
+					"before P->Arc_in_projective_space->create_subiaco_hyperoval" << endl;
 		}
 		P->Arc_in_projective_space->create_subiaco_hyperoval(
 				label_txt,
@@ -108,7 +114,8 @@ void geometric_object_create::init(geometric_object_description *Descr,
 			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
-			cout << "geometric_object_create::init after P->Arc_in_projective_space->create_subiaco_hyperoval" << endl;
+			cout << "geometric_object_create::init "
+					"after P->Arc_in_projective_space->create_subiaco_hyperoval" << endl;
 		}
 
 
@@ -316,7 +323,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 		Geo.create_orthogonal(
 				F,
-				Descr->orthogonal_epsilon, P->n,
+				Descr->orthogonal_epsilon, P->Subspaces->n,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -335,7 +342,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		geometry_global Geo;
 
 		Geo.create_hermitian(F,
-				P->n,
+				P->Subspaces->n,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -542,8 +549,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(
-				Descr->projective_variety_ring_label);
+		HPD = Get_ring(Descr->projective_variety_ring_label);
 
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -568,7 +574,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->intersection_of_zariski_open_sets_ring_label);
+		HPD = Get_ring(Descr->intersection_of_zariski_open_sets_ring_label);
 
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -592,7 +598,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->number_of_conditions_satisfied_ring_label);
+		HPD = Get_ring(Descr->number_of_conditions_satisfied_ring_label);
 
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -620,7 +626,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 		ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->projective_curve_ring_label);
+		HPD = Get_ring(Descr->projective_curve_ring_label);
 
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -687,17 +693,17 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 	geometry_global Gg;
 	orthogonal_geometry::quadratic_form *Quadratic_form;
 
-	if (P->n != 3) {
+	if (P->Subspaces->n != 3) {
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid n != 3" << endl;
 		exit(1);
 	}
-	d = P->n + 1;
+	d = P->Subspaces->n + 1;
 
-	nb_pts = Gg.nb_pts_Qepsilon(epsilon, P->n, P->q);
+	nb_pts = Gg.nb_pts_Qepsilon(epsilon, P->Subspaces->n, P->Subspaces->q);
 
-	v = NEW_int(P->n + 1);
-	w = NEW_int(P->n + 1);
-	Pts = NEW_lint(P->N_points);
+	v = NEW_int(P->Subspaces->n + 1);
+	w = NEW_int(P->Subspaces->n + 1);
+	Pts = NEW_lint(P->Subspaces->N_points);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -709,7 +715,7 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 				"before Quadratic_form->init" << endl;
 	}
-	Quadratic_form->init(epsilon, P->n + 1, P->F, verbose_level);
+	Quadratic_form->init(epsilon, P->Subspaces->n + 1, P->Subspaces->F, verbose_level);
 	if (f_v) {
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 				"after Quadratic_form->init" << endl;
@@ -749,8 +755,8 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 	char str[1000];
 	char str2[1000];
 
-	snprintf(str, sizeof(str), "_q%d", P->q);
-	snprintf(str2, sizeof(str2), "\\_q%d", P->q);
+	snprintf(str, sizeof(str), "_q%d", P->Subspaces->q);
+	snprintf(str2, sizeof(str2), "\\_q%d", P->Subspaces->q);
 
 
 	label_txt.assign("ovoid");
@@ -788,20 +794,20 @@ void geometric_object_create::create_ovoid_ST(
 	int v[4];
 	number_theory::number_theory_domain NT;
 
-	if (EVEN(P->F->e)) {
+	if (EVEN(P->Subspaces->F->e)) {
 		cout << "geometric_object_create::create_ovoid_ST need odd field degree" << endl;
 		exit(1);
 	}
-	if (P->F->p != 2) {
+	if (P->Subspaces->F->p != 2) {
 		cout << "geometric_object_create::create_ovoid_ST F->p != 2" << endl;
 		exit(1);
 	}
-	if (P->n != 3) {
+	if (P->Subspaces->n != 3) {
 		cout << "geometric_object_create::create_ovoid_ST need n == 3" << endl;
 		exit(1);
 	}
 
-	r = (P->F->e - 1) >> 1;
+	r = (P->Subspaces->F->e - 1) >> 1;
 
 	sigma = NT.i_power_j(2, r + 1);
 	sigma_plus_two = sigma + 2;
@@ -813,18 +819,21 @@ void geometric_object_create::create_ovoid_ST(
 		cout << "geometric_object_create::create_ovoid_ST sigma_plus_two = " << sigma_plus_two << endl;
 	}
 
-	d = P->n + 1;
+	d = P->Subspaces->n + 1;
 
-	nb_pts = P->F->q * P->F->q + 1;
+	nb_pts = P->Subspaces->F->q * P->Subspaces->F->q + 1;
 
 	Pts = NEW_lint(nb_pts);
 
 	i = 0;
 	Pts[i++] = 1; // (0,1,0,0)
-	for (x = 0; x < P->F->q; x++) {
-		for (y = 0; y < P->F->q; y++) {
+	for (x = 0; x < P->Subspaces->F->q; x++) {
+		for (y = 0; y < P->Subspaces->F->q; y++) {
 
-			z = P->F->add3(P->F->mult(x, y), P->F->power(x, sigma_plus_two), P->F->power(y, sigma));
+			z = P->Subspaces->F->add3(
+					P->Subspaces->F->mult(x, y),
+					P->Subspaces->F->power(x, sigma_plus_two),
+					P->Subspaces->F->power(y, sigma));
 
 			v[0] = 1;
 			v[1] = z;
@@ -853,8 +862,8 @@ void geometric_object_create::create_ovoid_ST(
 	char str[1000];
 	char str2[1000];
 
-	snprintf(str, sizeof(str), "_q%d", P->q);
-	snprintf(str2, sizeof(str2), "\\_q%d", P->q);
+	snprintf(str, sizeof(str), "_q%d", P->Subspaces->q);
+	snprintf(str2, sizeof(str2), "\\_q%d", P->Subspaces->q);
 
 
 	label_txt.assign("ovoid_ST");
@@ -884,26 +893,27 @@ void geometric_object_create::create_cuspidal_cubic(
 	int *v;
 	int v2[2];
 
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "geometric_object_create::create_cuspidal_cubic n != 2" << endl;
 		exit(1);
 	}
-	d = P->n + 1;
-	nb_pts = P->q + 1;
+	d = P->Subspaces->n + 1;
+	nb_pts = P->Subspaces->q + 1;
 
 	v = NEW_int(d);
-	Pts = NEW_lint(P->N_points);
+	Pts = NEW_lint(P->Subspaces->N_points);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		P->F->PG_element_unrank_modified(v2, 1, 2, i);
+		P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+				v2, 1, 2, i);
 		s = v2[0];
 		t = v2[1];
-		v[0] = P->F->mult(P->F->power(s, 3), P->F->power(t, 0));
-		v[1] = P->F->mult(P->F->power(s, 2), P->F->power(t, 1));
-		v[2] = P->F->mult(P->F->power(s, 0), P->F->power(t, 3));
+		v[0] = P->Subspaces->F->mult(P->Subspaces->F->power(s, 3), P->Subspaces->F->power(t, 0));
+		v[1] = P->Subspaces->F->mult(P->Subspaces->F->power(s, 2), P->Subspaces->F->power(t, 1));
+		v[2] = P->Subspaces->F->mult(P->Subspaces->F->power(s, 0), P->Subspaces->F->power(t, 3));
 #if 0
 		for (j = 0; j < d; j++) {
 			v[j] = F->mult(F->power(s, n - j), F->power(t, j));
@@ -929,8 +939,8 @@ void geometric_object_create::create_cuspidal_cubic(
 
 	char str[1000];
 	char str2[1000];
-	snprintf(str, sizeof(str), "cuspidal_cubic_%d", P->q);
-	snprintf(str2, sizeof(str2), "cuspidal\\_cubic\\_%d", P->q);
+	snprintf(str, sizeof(str), "cuspidal_cubic_%d", P->Subspaces->q);
+	snprintf(str2, sizeof(str2), "cuspidal\\_cubic\\_%d", P->Subspaces->q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 	//write_set_to_file(fname, L, N, verbose_level);
@@ -1006,28 +1016,29 @@ void geometric_object_create::create_twisted_cubic(
 	int *v;
 	int v2[2];
 
-	if (P->n != 3) {
+	if (P->Subspaces->n != 3) {
 		cout << "geometric_object_create::create_twisted_cubic n != 3" << endl;
 		exit(1);
 	}
-	d = P->n + 1;
+	d = P->Subspaces->n + 1;
 
-	nb_pts = P->q + 1;
+	nb_pts = P->Subspaces->q + 1;
 
-	v = NEW_int(P->n + 1);
-	Pts = NEW_lint(P->N_points);
+	v = NEW_int(P->Subspaces->n + 1);
+	Pts = NEW_lint(P->Subspaces->N_points);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		P->F->PG_element_unrank_modified(v2, 1, 2, i);
+		P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+				v2, 1, 2, i);
 		s = v2[0];
 		t = v2[1];
-		v[0] = P->F->mult(P->F->power(s, 3), P->F->power(t, 0));
-		v[1] = P->F->mult(P->F->power(s, 2), P->F->power(t, 1));
-		v[2] = P->F->mult(P->F->power(s, 1), P->F->power(t, 2));
-		v[3] = P->F->mult(P->F->power(s, 0), P->F->power(t, 3));
+		v[0] = P->Subspaces->F->mult(P->Subspaces->F->power(s, 3), P->Subspaces->F->power(t, 0));
+		v[1] = P->Subspaces->F->mult(P->Subspaces->F->power(s, 2), P->Subspaces->F->power(t, 1));
+		v[2] = P->Subspaces->F->mult(P->Subspaces->F->power(s, 1), P->Subspaces->F->power(t, 2));
+		v[3] = P->Subspaces->F->mult(P->Subspaces->F->power(s, 0), P->Subspaces->F->power(t, 3));
 		j = P->rank_point(v);
 		Pts[i] = j;
 		if (f_v) {
@@ -1048,8 +1059,8 @@ void geometric_object_create::create_twisted_cubic(
 
 	char str[1000];
 	char str2[1000];
-	snprintf(str, sizeof(str), "twisted_cubic_%d", P->q);
-	snprintf(str2, sizeof(str2), "twisted\\_cubic\\_%d", P->q);
+	snprintf(str, sizeof(str), "twisted_cubic_%d", P->Subspaces->q);
+	snprintf(str2, sizeof(str2), "twisted\\_cubic\\_%d", P->Subspaces->q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 	//write_set_to_file(fname, L, N, verbose_level);
@@ -1079,19 +1090,19 @@ void geometric_object_create::create_elliptic_curve(
 	int *v;
 	number_theory::elliptic_curve *E;
 
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "geometric_object_create::create_elliptic_curve n != 2" << endl;
 		exit(1);
 	}
-	d = P->n + 1;
+	d = P->Subspaces->n + 1;
 
-	nb_pts = P->q + 1;
+	nb_pts = P->Subspaces->q + 1;
 
 	E = NEW_OBJECT(number_theory::elliptic_curve);
-	v = NEW_int(P->n + 1);
-	Pts = NEW_lint(P->N_points);
+	v = NEW_int(P->Subspaces->n + 1);
+	Pts = NEW_lint(P->Subspaces->N_points);
 
-	E->init(P->F, elliptic_curve_b, elliptic_curve_c,
+	E->init(P->Subspaces->F, elliptic_curve_b, elliptic_curve_c,
 			verbose_level);
 
 	nb_pts = E->nb;
@@ -1100,7 +1111,8 @@ void geometric_object_create::create_elliptic_curve(
 		cout << "i : point : projective rank" << endl;
 	}
 	for (i = 0; i < nb_pts; i++) {
-		P->F->PG_element_rank_modified_lint(E->T + i * d, 1, d, a);
+		P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
+				E->T + i * d, 1, d, a);
 		Pts[i] = a;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
@@ -1121,9 +1133,9 @@ void geometric_object_create::create_elliptic_curve(
 	char str[1000];
 	char str2[1000];
 	snprintf(str, sizeof(str), "elliptic_curve_b%d_c%d_q%d",
-			elliptic_curve_b, elliptic_curve_c, P->q);
+			elliptic_curve_b, elliptic_curve_c, P->Subspaces->q);
 	snprintf(str2, sizeof(str2), "elliptic\\_curve\\_b%d\\_c%d\\_q%d",
-			elliptic_curve_b, elliptic_curve_c, P->q);
+			elliptic_curve_b, elliptic_curve_c, P->Subspaces->q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 	//write_set_to_file(fname, L, N, verbose_level);
@@ -1150,17 +1162,17 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq(
 		cout << "geometric_object_create::create_unital_XXq_YZq_ZYq" << endl;
 	}
 	//int n = 2;
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "geometric_object_create::create_unital_XXq_YZq_ZYq n != 2" << endl;
 		exit(1);
 	}
 	int i, rk, d;
 	int *v;
 
-	d = P->n + 1;
+	d = P->Subspaces->n + 1;
 
 	v = NEW_int(d);
-	Pts = NEW_lint(P->N_points);
+	Pts = NEW_lint(P->Subspaces->N_points);
 
 
 	create_unital_XXq_YZq_ZYq_brute_force(P, Pts, nb_pts, verbose_level - 1);
@@ -1182,8 +1194,8 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq(
 
 	char str[1000];
 	char str2[1000];
-	snprintf(str, sizeof(str), "unital_XXq_YZq_ZYq_Q%d", P->q);
-	snprintf(str2, sizeof(str2), "unital\\_XXq\\_YZq\\_ZYq\\_Q%d", P->q);
+	snprintf(str, sizeof(str), "unital_XXq_YZq_ZYq_Q%d", P->Subspaces->q);
+	snprintf(str2, sizeof(str2), "unital\\_XXq\\_YZq\\_ZYq\\_Q%d", P->Subspaces->q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 
@@ -1208,16 +1220,16 @@ void geometric_object_create::create_whole_space(
 	}
 	//d = n + 1;
 
-	Pts = NEW_lint(P->N_points);
-	nb_pts = P->N_points;
-	for (i = 0; i < P->N_points; i++) {
+	Pts = NEW_lint(P->Subspaces->N_points);
+	nb_pts = P->Subspaces->N_points;
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 		Pts[i] = i;
 	}
 
 	char str[1000];
 	char str2[1000];
-	snprintf(str, sizeof(str), "whole_space_PG_%d_%d", P->n, P->q);
-	snprintf(str2, sizeof(str2), "whole\\_space\\_PG\\_%d\\_%d", P->n, P->q);
+	snprintf(str, sizeof(str), "whole_space_PG_%d_%d", P->Subspaces->n, P->Subspaces->q);
+	snprintf(str2, sizeof(str2), "whole\\_space\\_PG\\_%d\\_%d", P->Subspaces->n, P->Subspaces->q);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 
@@ -1242,16 +1254,16 @@ void geometric_object_create::create_hyperplane(
 	if (f_v) {
 		cout << "geometric_object_create::create_hyperplane pt=" << pt << endl;
 	}
-	d = P->n + 1;
+	d = P->Subspaces->n + 1;
 	v1 = NEW_int(d);
 	v2 = NEW_int(d);
 
 	P->unrank_point(v1, pt);
-	Pts = NEW_lint(P->N_points);
+	Pts = NEW_lint(P->Subspaces->N_points);
 	nb_pts = 0;
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 		P->unrank_point(v2, i);
-		a = P->F->Linear_algebra->dot_product(d, v1, v2);
+		a = P->Subspaces->F->Linear_algebra->dot_product(d, v1, v2);
 		if (a == 0) {
 			Pts[nb_pts++] = i;
 			if (f_v) {
@@ -1264,8 +1276,8 @@ void geometric_object_create::create_hyperplane(
 
 	char str[1000];
 	char str2[1000];
-	snprintf(str, sizeof(str), "hyperplane_PG_%d_%d_pt%d", P->n, P->q, pt);
-	snprintf(str2, sizeof(str2), "hyperplane\\_PG\\_%d\\_%d\\_pt%d", P->n, P->q, pt);
+	snprintf(str, sizeof(str), "hyperplane_PG_%d_%d_pt%d", P->Subspaces->n, P->Subspaces->q, pt);
+	snprintf(str2, sizeof(str2), "hyperplane\\_PG\\_%d\\_%d\\_pt%d", P->Subspaces->n, P->Subspaces->q, pt);
 	label_txt.assign(str);
 	label_tex.assign(str2);
 
@@ -1293,15 +1305,15 @@ void geometric_object_create::create_Baer_substructure(
 	// projective space over the big field FQ = this
 
 	number_theory::number_theory_domain NT;
-	int Q = P->q;
-	int q = NT.i_power_j(P->F->p, P->F->e >> 1);
+	int Q = P->Subspaces->q;
+	int q = NT.i_power_j(P->Subspaces->F->p, P->Subspaces->F->e >> 1);
 	if (f_v) {
 		cout << "geometric_object_create::create_Baer_substructure Q=" << Q << " q=" << q << endl;
 	}
 
 	int sz;
 	int *v;
-	int d = P->n + 1;
+	int d = P->Subspaces->n + 1;
 	int i, j, a, b, index, f_is_in_subfield;
 
 	if (f_v) {
@@ -1316,16 +1328,17 @@ void geometric_object_create::create_Baer_substructure(
 	}
 
 	v = NEW_int(d);
-	Pts = NEW_lint(P->N_points);
+	Pts = NEW_lint(P->Subspaces->N_points);
 
 	sz = 0;
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 
-		P->F->PG_element_unrank_modified(v, 1, d, i);
+		P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, d, i);
 
 		for (j = 0; j < d; j++) {
 			a = v[j];
-			b = P->F->log_alpha(a);
+			b = P->Subspaces->F->log_alpha(a);
 			f_is_in_subfield = FALSE;
 
 			if (a == 0 || (b % index) == 0) {
@@ -1340,8 +1353,8 @@ void geometric_object_create::create_Baer_substructure(
 		}
 	}
 	cout << "the Baer substructure "
-			"PG(" << P->n << "," << q << ") inside "
-			"PG(" << P->n << "," << Q << ") has size "
+			"PG(" << P->Subspaces->n << "," << q << ") inside "
+			"PG(" << P->Subspaces->n << "," << Q << ") has size "
 			<< sz << ":" << endl;
 	for (i = 0; i < sz; i++) {
 		cout << Pts[i] << " ";
@@ -1355,11 +1368,11 @@ void geometric_object_create::create_Baer_substructure(
 	//write_set_to_file(fname, S, sz, verbose_level);
 
 
-	snprintf(str, sizeof(str), "PG_%d_%d", P->n, P->F->q);
+	snprintf(str, sizeof(str), "PG_%d_%d", P->Subspaces->n, P->Subspaces->F->q);
 	label_txt.assign("Baer_substructure_");
 	label_txt.append(str);
 
-	snprintf(str, sizeof(str), "PG(%d,%d)", P->n, P->F->q);
+	snprintf(str, sizeof(str), "PG(%d,%d)", P->Subspaces->n, P->Subspaces->F->q);
 	label_tex.assign("Baer\\_substructure\\_");
 	label_tex.append(str);
 
@@ -1384,24 +1397,24 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq_brute_force(
 	if (f_v) {
 		cout << "geometric_object_create::create_unital_XXq_YZq_ZYq" << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "geometric_object_create::create_unital_XXq_YZq_ZYq "
 				"n != 2" << endl;
 		exit(1);
  	}
-	if (ODD(P->F->e)) {
+	if (ODD(P->Subspaces->F->e)) {
 		cout << "geometric_object_create::create_unital_XXq_YZq_ZYq "
 				"ODD(F->e)" << endl;
 		exit(1);
  	}
 
 	v = NEW_int(3);
-	e = P->F->e >> 1;
+	e = P->Subspaces->F->e >> 1;
 	if (f_vv) {
 		cout << "e=" << e << endl;
 	}
 	sz = 0;
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 		P->unrank_point(v, i);
 		if (f_vvv) {
 			cout << "i=" << i << " : ";
@@ -1411,10 +1424,10 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq_brute_force(
 		X = v[0];
 		Y = v[1];
 		Z = v[2];
-		Xq = P->F->frobenius_power(X, e);
-		Yq = P->F->frobenius_power(Y, e);
-		Zq = P->F->frobenius_power(Z, e);
-		a = P->F->add3(P->F->mult(X, Xq), P->F->mult(Y, Zq), P->F->mult(Z, Yq));
+		Xq = P->Subspaces->F->frobenius_power(X, e);
+		Yq = P->Subspaces->F->frobenius_power(Y, e);
+		Zq = P->Subspaces->F->frobenius_power(Z, e);
+		a = P->Subspaces->F->add3(P->Subspaces->F->mult(X, Xq), P->Subspaces->F->mult(Y, Zq), P->Subspaces->F->mult(Z, Yq));
 		if (f_vvv) {
 			cout << " a=" << a << endl;
 		}

@@ -34,7 +34,7 @@ void projective_space_plane::init(projective_space *P, int verbose_level)
 	if (f_v) {
 		cout << "projective_space_plane::init" << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "projective_space_plane::init "
 				"need dimension two" << endl;
 		exit(1);
@@ -66,7 +66,7 @@ int projective_space_plane::determine_line_in_plane(
 	if (f_v) {
 		cout << "projective_space_plane::determine_line_in_plane" << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "projective_space_plane::determine_line_in_plane "
 				"n != 2" << endl;
 		exit(1);
@@ -83,7 +83,7 @@ int projective_space_plane::determine_line_in_plane(
 		cout << "projective_space_plane::determine_line_in_plane "
 				"points:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				coords, nb_pts, 3, 3, P->F->log10_of_q);
+				coords, nb_pts, 3, 3, P->Subspaces->F->log10_of_q);
 	}
 	for (i = 0; i < nb_pts; i++) {
 		x = coords[i * 3 + 0];
@@ -96,12 +96,13 @@ int projective_space_plane::determine_line_in_plane(
 	if (f_v) {
 		cout << "projective_space_plane::determine_line_in_plane system:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				system, nb_pts, 3, 3, P->F->log10_of_q);
+				system, nb_pts, 3, 3, P->Subspaces->F->log10_of_q);
 	}
 
 
 
-	rk = P->F->Linear_algebra->Gauss_simple(system,
+	rk = P->Subspaces->F->Linear_algebra->Gauss_simple(
+			system,
 			nb_pts, 3, base_cols, verbose_level - 2);
 	if (rk != 2) {
 		if (f_v) {
@@ -110,11 +111,13 @@ int projective_space_plane::determine_line_in_plane(
 		}
 		return FALSE;
 	}
-	P->F->Linear_algebra->matrix_get_kernel(system, 2, 3, base_cols, rk,
+	P->Subspaces->F->Linear_algebra->matrix_get_kernel(
+			system, 2, 3, base_cols, rk,
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space_plane::determine_line_in_plane line:" << endl;
-		Int_vec_print_integer_matrix_width(cout, kernel, 1, 3, 3, P->F->log10_of_q);
+		Int_vec_print_integer_matrix_width(
+				cout, kernel, 1, 3, 3, P->Subspaces->F->log10_of_q);
 	}
 	for (i = 0; i < 3; i++) {
 		three_coeffs[i] = kernel[i];
@@ -151,7 +154,8 @@ int projective_space_plane::conic_test(
 		}
 		the_set[5] = pt;
 		if (determine_conic_in_plane(
-				the_set, 6, six_coeffs, 0 /*verbose_level*/)) {
+				the_set, 6, six_coeffs,
+				0 /*verbose_level*/)) {
 			ret = FALSE;
 			break;
 		}
@@ -179,15 +183,15 @@ int projective_space_plane::test_if_conic_contains_point(
 	x = v[0];
 	y = v[1];
 	z = v[2];
-	c[0] = P->F->mult(x, x);
-	c[1] = P->F->mult(y, y);
-	c[2] = P->F->mult(z, z);
-	c[3] = P->F->mult(x, y);
-	c[4] = P->F->mult(x, z);
-	c[5] = P->F->mult(y, z);
+	c[0] = P->Subspaces->F->mult(x, x);
+	c[1] = P->Subspaces->F->mult(y, y);
+	c[2] = P->Subspaces->F->mult(z, z);
+	c[3] = P->Subspaces->F->mult(x, y);
+	c[4] = P->Subspaces->F->mult(x, z);
+	c[5] = P->Subspaces->F->mult(y, z);
 	s = 0;
 	for (i = 0; i < 6; i++) {
-		s = P->F->add(s, P->F->mult(six_coeffs[i], c[i]));
+		s = P->Subspaces->F->add(s, P->Subspaces->F->mult(six_coeffs[i], c[i]));
 	}
 	if (s == 0) {
 		return TRUE;
@@ -216,7 +220,7 @@ int projective_space_plane::determine_conic_in_plane(
 	if (f_v) {
 		cout << "projective_space_plane::determine_conic_in_plane" << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "projective_space_plane::determine_conic_in_plane "
 				"n != 2" << endl;
 		exit(1);
@@ -233,7 +237,8 @@ int projective_space_plane::determine_conic_in_plane(
 		exit(1);
 	}
 
-	if (!P->Arc_in_projective_space->arc_test(input_pts, nb_pts, verbose_level)) {
+	if (!P->Arc_in_projective_space->arc_test(
+			input_pts, nb_pts, verbose_level)) {
 		if (f_v) {
 			cout << "projective_space_plane::determine_conic_in_plane "
 					"some 3 of the points are collinear" << endl;
@@ -250,30 +255,32 @@ int projective_space_plane::determine_conic_in_plane(
 	if (f_vv) {
 		cout << "projective_space_plane::determine_conic_in_plane "
 				"points:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
-				coords, nb_pts, 3, 3, P->F->log10_of_q);
+		Int_vec_print_integer_matrix_width(
+				cout,
+				coords, nb_pts, 3, 3, P->Subspaces->F->log10_of_q);
 	}
 	for (i = 0; i < nb_pts; i++) {
 		x = coords[i * 3 + 0];
 		y = coords[i * 3 + 1];
 		z = coords[i * 3 + 2];
-		system[i * 6 + 0] = P->F->mult(x, x);
-		system[i * 6 + 1] = P->F->mult(y, y);
-		system[i * 6 + 2] = P->F->mult(z, z);
-		system[i * 6 + 3] = P->F->mult(x, y);
-		system[i * 6 + 4] = P->F->mult(x, z);
-		system[i * 6 + 5] = P->F->mult(y, z);
+		system[i * 6 + 0] = P->Subspaces->F->mult(x, x);
+		system[i * 6 + 1] = P->Subspaces->F->mult(y, y);
+		system[i * 6 + 2] = P->Subspaces->F->mult(z, z);
+		system[i * 6 + 3] = P->Subspaces->F->mult(x, y);
+		system[i * 6 + 4] = P->Subspaces->F->mult(x, z);
+		system[i * 6 + 5] = P->Subspaces->F->mult(y, z);
 	}
 	if (f_v) {
 		cout << "projective_space_plane::determine_conic_in_plane "
 				"system:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
-				system, nb_pts, 6, 6, P->F->log10_of_q);
+		Int_vec_print_integer_matrix_width(
+				cout,
+				system, nb_pts, 6, 6, P->Subspaces->F->log10_of_q);
 	}
 
 
 
-	rk = P->F->Linear_algebra->Gauss_simple(system, nb_pts,
+	rk = P->Subspaces->F->Linear_algebra->Gauss_simple(system, nb_pts,
 			6, base_cols, verbose_level - 2);
 	if (rk != 5) {
 		if (f_v) {
@@ -282,13 +289,15 @@ int projective_space_plane::determine_conic_in_plane(
 		}
 		return FALSE;
 	}
-	P->F->Linear_algebra->matrix_get_kernel(system, 5, 6, base_cols, rk,
+	P->Subspaces->F->Linear_algebra->matrix_get_kernel(
+			system, 5, 6, base_cols, rk,
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space_plane::determine_conic_in_plane "
 				"conic:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
-				kernel, 1, 6, 6, P->F->log10_of_q);
+		Int_vec_print_integer_matrix_width(
+				cout,
+				kernel, 1, 6, 6, P->Subspaces->F->log10_of_q);
 	}
 	for (i = 0; i < 6; i++) {
 		six_coeffs[i] = kernel[i];
@@ -317,7 +326,7 @@ int projective_space_plane::determine_cubic_in_plane(
 	if (f_v) {
 		cout << "projective_space_plane::determine_cubic_in_plane" << endl;
 	}
-	d = P->n + 1;
+	d = P->Subspaces->n + 1;
 	Pt_coord = NEW_int(nb_pts * d);
 	System = NEW_int(nb_pts * Poly_3_3->get_nb_monomials());
 	base_cols = NEW_int(Poly_3_3->get_nb_monomials());
@@ -348,7 +357,7 @@ int projective_space_plane::determine_cubic_in_plane(
 				"The system:" << endl;
 		Int_matrix_print(System, nb_pts, Poly_3_3->get_nb_monomials());
 	}
-	r = P->F->Linear_algebra->Gauss_simple(
+	r = P->Subspaces->F->Linear_algebra->Gauss_simple(
 			System, nb_pts, Poly_3_3->get_nb_monomials(),
 		base_cols, 0 /* verbose_level */);
 	if (f_v) {
@@ -367,7 +376,7 @@ int projective_space_plane::determine_cubic_in_plane(
 	}
 	int kernel_m, kernel_n;
 
-	P->F->Linear_algebra->matrix_get_kernel(
+	P->Subspaces->F->Linear_algebra->matrix_get_kernel(
 			System, r, Poly_3_3->get_nb_monomials(),
 		base_cols, r,
 		kernel_m, kernel_n, coeff10, 0 /* verbose_level */);
@@ -395,9 +404,10 @@ void projective_space_plane::conic_points_brute_force(
 		cout << "projective_space_plane::conic_points_brute_force" << endl;
 	}
 	nb_points = 0;
-	for (i = 0; i < P->N_points; i++) {
+	for (i = 0; i < P->Subspaces->N_points; i++) {
 		P->unrank_point(v, i);
-		a = P->F->Linear_algebra->evaluate_conic_form(six_coeffs, v);
+		a = P->Subspaces->F->Linear_algebra->evaluate_conic_form(
+				six_coeffs, v);
 		if (f_vv) {
 			cout << "point " << i << " = ";
 			Int_vec_print(cout, v, 3);
@@ -443,26 +453,27 @@ void projective_space_plane::conic_points(
 	if (f_v) {
 		cout << "projective_space_plane::conic_points" << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "projective_space_plane::conic_points P->n != 2" << endl;
 		exit(1);
 	}
-	Gram_matrix[0 * 3 + 0] = P->F->add(six_coeffs[0], six_coeffs[0]);
-	Gram_matrix[1 * 3 + 1] = P->F->add(six_coeffs[1], six_coeffs[1]);
-	Gram_matrix[2 * 3 + 2] = P->F->add(six_coeffs[2], six_coeffs[2]);
+	Gram_matrix[0 * 3 + 0] = P->Subspaces->F->add(six_coeffs[0], six_coeffs[0]);
+	Gram_matrix[1 * 3 + 1] = P->Subspaces->F->add(six_coeffs[1], six_coeffs[1]);
+	Gram_matrix[2 * 3 + 2] = P->Subspaces->F->add(six_coeffs[2], six_coeffs[2]);
 	Gram_matrix[0 * 3 + 1] = Gram_matrix[1 * 3 + 0] = six_coeffs[3];
 	Gram_matrix[0 * 3 + 2] = Gram_matrix[2 * 3 + 0] = six_coeffs[4];
 	Gram_matrix[1 * 3 + 2] = Gram_matrix[2 * 3 + 1] = six_coeffs[5];
 	if (f_vv) {
 		cout << "projective_space_plane::conic_points Gram matrix:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				Gram_matrix, 3, 3, 3, P->F->log10_of_q);
+				Gram_matrix, 3, 3, 3, P->Subspaces->F->log10_of_q);
 	}
 
 	P->unrank_point(Basis, five_pts[0]);
 	for (i = 1; i < 5; i++) {
 		P->unrank_point(Basis + 3, five_pts[i]);
-		a = P->F->Linear_algebra->evaluate_bilinear_form(3, Basis, Basis + 3, Gram_matrix);
+		a = P->Subspaces->F->Linear_algebra->evaluate_bilinear_form(
+				3, Basis, Basis + 3, Gram_matrix);
 		if (a) {
 			break;
 		}
@@ -473,24 +484,28 @@ void projective_space_plane::conic_points(
 		exit(1);
 	}
 	if (a != 1) {
-		av = P->F->inverse(a);
+		av = P->Subspaces->F->inverse(a);
 		for (i = 0; i < 3; i++) {
-			Basis[3 + i] = P->F->mult(av, Basis[3 + i]);
+			Basis[3 + i] = P->Subspaces->F->mult(av, Basis[3 + i]);
 		}
 	}
 	if (f_v) {
 		cout << "projective_space_plane::conic_points "
 				"Hyperbolic pair:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				Basis, 2, 3, 3, P->F->log10_of_q);
+				Basis, 2, 3, 3, P->Subspaces->F->log10_of_q);
 	}
-	P->F->Linear_algebra->perp(3, 2, Basis, Gram_matrix, 0 /* verbose_level */);
+	P->Subspaces->F->Linear_algebra->perp(
+			3, 2, Basis, Gram_matrix,
+			0 /* verbose_level */);
 	if (f_v) {
-		cout << "projective_space_plane::conic_points perp:" << endl;
+		cout << "projective_space_plane::conic_points "
+				"perp:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				Basis, 3, 3, 3, P->F->log10_of_q);
+				Basis, 3, 3, 3, P->Subspaces->F->log10_of_q);
 	}
-	a = P->F->Linear_algebra->evaluate_conic_form(six_coeffs, Basis + 6);
+	a = P->Subspaces->F->Linear_algebra->evaluate_conic_form(
+			six_coeffs, Basis + 6);
 	if (f_v) {
 		cout << "projective_space_plane::conic_points "
 				"form value = " << a << endl;
@@ -501,15 +516,15 @@ void projective_space_plane::conic_points(
 				"characteristic zero" << endl;
 		exit(1);
 	}
-	l = P->F->log_alpha(a);
+	l = P->Subspaces->F->log_alpha(a);
 	if ((l % 2) == 0) {
 		j = l / 2;
-		b = P->F->alpha_power(j);
-		bv = P->F->inverse(b);
+		b = P->Subspaces->F->alpha_power(j);
+		bv = P->Subspaces->F->inverse(b);
 		for (i = 0; i < 3; i++) {
-			Basis[6 + i] = P->F->mult(bv, Basis[6 + i]);
+			Basis[6 + i] = P->Subspaces->F->mult(bv, Basis[6 + i]);
 		}
-		a = P->F->Linear_algebra->evaluate_conic_form(
+		a = P->Subspaces->F->Linear_algebra->evaluate_conic_form(
 				six_coeffs, Basis + 6);
 		if (f_v) {
 			cout << "form value = " << a << endl;
@@ -527,7 +542,7 @@ void projective_space_plane::conic_points(
 	if (f_v) {
 		cout << "Basis2:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				Basis2, 3, 3, 3, P->F->log10_of_q);
+				Basis2, 3, 3, 3, P->Subspaces->F->log10_of_q);
 	}
 	// Now the form is a^{-1}y_1^2 = y_0y_2
 	// (or, equivalently, a^{-1}y_1^2 - y_0y_2 = 0)
@@ -542,7 +557,8 @@ void projective_space_plane::conic_points(
 	v[1] = 0;
 	v[2] = 0;
 
-	P->F->Linear_algebra->mult_vector_from_the_left(v, Basis2, w, 3, 3);
+	P->Subspaces->F->Linear_algebra->mult_vector_from_the_left(
+			v, Basis2, w, 3, 3);
 	if (f_v) {
 		cout << "vector corresponding to 100:" << endl;
 		Int_vec_print(cout, w, 3);
@@ -552,13 +568,14 @@ void projective_space_plane::conic_points(
 	points[0] = b;
 	nb_points = 1;
 
-	ma = P->F->negate(a);
+	ma = P->Subspaces->F->negate(a);
 
-	for (t = 0; t < P->F->q; t++) {
-		v[0] = P->F->mult(t, t);
+	for (t = 0; t < P->Subspaces->F->q; t++) {
+		v[0] = P->Subspaces->F->mult(t, t);
 		v[1] = t;
 		v[2] = ma;
-		P->F->Linear_algebra->mult_vector_from_the_left(v, Basis2, w, 3, 3);
+		P->Subspaces->F->Linear_algebra->mult_vector_from_the_left(
+				v, Basis2, w, 3, 3);
 		if (f_v) {
 			cout << "vector corresponding to t=" << t << ":" << endl;
 			Int_vec_print(cout, w, 3);
@@ -592,25 +609,27 @@ void projective_space_plane::find_tangent_lines_to_conic(
 	if (f_v) {
 		cout << "projective_space_plane::find_tangent_lines_to_conic" << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "projective_space_plane::find_tangent_lines_to_conic "
 				"P->n != 2" << endl;
 		exit(1);
 	}
-	Gram_matrix[0 * 3 + 0] = P->F->add(six_coeffs[0], six_coeffs[0]);
-	Gram_matrix[1 * 3 + 1] = P->F->add(six_coeffs[1], six_coeffs[1]);
-	Gram_matrix[2 * 3 + 2] = P->F->add(six_coeffs[2], six_coeffs[2]);
+	Gram_matrix[0 * 3 + 0] = P->Subspaces->F->add(six_coeffs[0], six_coeffs[0]);
+	Gram_matrix[1 * 3 + 1] = P->Subspaces->F->add(six_coeffs[1], six_coeffs[1]);
+	Gram_matrix[2 * 3 + 2] = P->Subspaces->F->add(six_coeffs[2], six_coeffs[2]);
 	Gram_matrix[0 * 3 + 1] = Gram_matrix[1 * 3 + 0] = six_coeffs[3];
 	Gram_matrix[0 * 3 + 2] = Gram_matrix[2 * 3 + 0] = six_coeffs[4];
 	Gram_matrix[1 * 3 + 2] = Gram_matrix[2 * 3 + 1] = six_coeffs[5];
 
 	for (i = 0; i < nb_points; i++) {
 		P->unrank_point(Basis, points[i]);
-		P->F->Linear_algebra->perp(3, 1, Basis, Gram_matrix, 0 /* verbose_level */);
+		P->Subspaces->F->Linear_algebra->perp(
+				3, 1, Basis, Gram_matrix,
+				0 /* verbose_level */);
 		if (f_vv) {
 			cout << "perp:" << endl;
 			Int_vec_print_integer_matrix_width(cout,
-					Basis, 3, 3, 3, P->F->log10_of_q);
+					Basis, 3, 3, 3, P->Subspaces->F->log10_of_q);
 		}
 		tangents[i] = P->rank_line(Basis + 3);
 		if (f_vv) {
@@ -647,19 +666,19 @@ int projective_space_plane::determine_hermitian_form_in_plane(
 	}
 	coords = NEW_int(nb_pts * 3);
 	system = NEW_int(nb_pts * 9);
-	Q = P->F->q;
-	if (ODD(P->F->e)) {
+	Q = P->Subspaces->F->q;
+	if (ODD(P->Subspaces->F->e)) {
 		cout << "projective_space_plane::determine_hermitian_form_in_plane "
 				"field degree must be even" << endl;
 		exit(1);
 	}
-	little_e = P->F->e >> 1;
-	q = NT.i_power_j(P->F->p, little_e);
+	little_e = P->Subspaces->F->e >> 1;
+	q = NT.i_power_j(P->Subspaces->F->p, little_e);
 	if (f_v) {
 		cout << "projective_space_plane::determine_hermitian_form_in_plane "
 				"Q=" << Q << " q=" << q << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "projective_space_plane::determine_hermitian_form_in_plane "
 				"n != 2" << endl;
 		exit(1);
@@ -671,41 +690,41 @@ int projective_space_plane::determine_hermitian_form_in_plane(
 		cout << "projective_space_plane::determine_hermitian_form_in_plane "
 				"points:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				coords, nb_pts, 3, 3, P->F->log10_of_q);
+				coords, nb_pts, 3, 3, P->Subspaces->F->log10_of_q);
 	}
 	for (i = 0; i < nb_pts; i++) {
 		x = coords[i * 3 + 0];
 		y = coords[i * 3 + 1];
 		z = coords[i * 3 + 2];
-		xq = P->F->frobenius_power(x, little_e);
-		yq = P->F->frobenius_power(y, little_e);
-		zq = P->F->frobenius_power(z, little_e);
-		system[i * 9 + 0] = P->F->mult(x, xq);
-		system[i * 9 + 1] = P->F->mult(y, yq);
-		system[i * 9 + 2] = P->F->mult(z, zq);
-		system[i * 9 + 3] = P->F->mult(x, yq);
-		system[i * 9 + 4] = P->F->mult(y, xq);
-		system[i * 9 + 5] = P->F->mult(x, zq);
-		system[i * 9 + 6] = P->F->mult(z, xq);
-		system[i * 9 + 7] = P->F->mult(y, zq);
-		system[i * 9 + 8] = P->F->mult(z, yq);
+		xq = P->Subspaces->F->frobenius_power(x, little_e);
+		yq = P->Subspaces->F->frobenius_power(y, little_e);
+		zq = P->Subspaces->F->frobenius_power(z, little_e);
+		system[i * 9 + 0] = P->Subspaces->F->mult(x, xq);
+		system[i * 9 + 1] = P->Subspaces->F->mult(y, yq);
+		system[i * 9 + 2] = P->Subspaces->F->mult(z, zq);
+		system[i * 9 + 3] = P->Subspaces->F->mult(x, yq);
+		system[i * 9 + 4] = P->Subspaces->F->mult(y, xq);
+		system[i * 9 + 5] = P->Subspaces->F->mult(x, zq);
+		system[i * 9 + 6] = P->Subspaces->F->mult(z, xq);
+		system[i * 9 + 7] = P->Subspaces->F->mult(y, zq);
+		system[i * 9 + 8] = P->Subspaces->F->mult(z, yq);
 	}
 	if (f_v) {
 		cout << "projective_space_plane::determine_hermitian_form_in_plane "
 				"system:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				system, nb_pts, 9, 9, P->F->log10_of_q);
+				system, nb_pts, 9, 9, P->Subspaces->F->log10_of_q);
 	}
 
 
 
-	rk = P->F->Linear_algebra->Gauss_simple(system,
+	rk = P->Subspaces->F->Linear_algebra->Gauss_simple(system,
 			nb_pts, 9, base_cols, verbose_level - 2);
 	if (f_v) {
 		cout << "projective_space_plane::determine_hermitian_form_in_plane "
 				"rk=" << rk << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				system, rk, 9, 9, P->F->log10_of_q);
+				system, rk, 9, 9, P->Subspaces->F->log10_of_q);
 	}
 #if 0
 	if (rk != 8) {
@@ -716,14 +735,15 @@ int projective_space_plane::determine_hermitian_form_in_plane(
 		return FALSE;
 	}
 #endif
-	P->F->Linear_algebra->matrix_get_kernel(system,
+	P->Subspaces->F->Linear_algebra->matrix_get_kernel(system,
 			MINIMUM(nb_pts, 9), 9, base_cols, rk,
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space_plane::determine_hermitian_form_in_plane "
 				"kernel:" << endl;
-		Int_vec_print_integer_matrix_width(cout, kernel,
-				kernel_m, kernel_n, kernel_n, P->F->log10_of_q);
+		Int_vec_print_integer_matrix_width(
+				cout, kernel,
+				kernel_m, kernel_n, kernel_n, P->Subspaces->F->log10_of_q);
 	}
 	six_coeffs[0] = kernel[0 * kernel_n + 0];
 	six_coeffs[1] = kernel[1 * kernel_n + 0];
@@ -748,7 +768,8 @@ int projective_space_plane::determine_hermitian_form_in_plane(
 void projective_space_plane::conic_type_randomized(
 		int nb_times,
 	long int *set, int set_size,
-	long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,
+	long int **&Pts_on_conic,
+	int *&nb_pts_on_conic, int &len,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -776,13 +797,14 @@ void projective_space_plane::conic_type_randomized(
 	if (f_v) {
 		cout << "projective_space_plane::conic_type_randomized" << endl;
 	}
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "projective_space_plane::conic_type_randomized "
-				"P->n != 2" << endl;
+				"P->Subspaces->n != 2" << endl;
 		exit(1);
 	}
 	if (f_vv) {
-		P->Reporting->print_set_numerical(cout, set, set_size);
+		P->Reporting->print_set_numerical(
+				cout, set, set_size);
 	}
 
 	if (!Sorting.test_if_set_with_return_value_lint(set, set_size)) {
@@ -816,8 +838,10 @@ void projective_space_plane::conic_type_randomized(
 		}
 
 		for (i = 0; i < len; i++) {
-			if (Sorting.lint_vec_is_subset_of(subset, 5,
-					Pts_on_conic[i], nb_pts_on_conic[i], 0 /* verbose_level */)) {
+			if (Sorting.lint_vec_is_subset_of(
+					subset, 5,
+					Pts_on_conic[i], nb_pts_on_conic[i],
+					0 /* verbose_level */)) {
 
 #if 0
 				cout << "The set ";
@@ -850,8 +874,9 @@ void projective_space_plane::conic_type_randomized(
 		}
 
 
-		P->F->PG_element_normalize(six_coeffs, 1, 6);
-		Gg.AG_element_rank_longinteger(P->F->q, six_coeffs, 1, 6, conic_rk);
+		P->Subspaces->F->Projective_space_basic->PG_element_normalize(
+				six_coeffs, 1, 6);
+		Gg.AG_element_rank_longinteger(P->Subspaces->F->q, six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";
 			Int_vec_print(cout, subset, 5);
@@ -890,7 +915,8 @@ void projective_space_plane::conic_type_randomized(
 				}
 
 				P->unrank_point(vec, set[h]);
-				a = P->F->Linear_algebra->evaluate_conic_form(six_coeffs, vec);
+				a = P->Subspaces->F->Linear_algebra->evaluate_conic_form(
+						six_coeffs, vec);
 
 
 				if (a == 0) {
@@ -1023,7 +1049,8 @@ void projective_space_plane::conic_intersection_type(
 	int i, j, idx, f, l, a, t;
 
 	if (f_v) {
-		cout << "projective_space_plane::conic_intersection_type threshold = " << threshold << endl;
+		cout << "projective_space_plane::conic_intersection_type "
+				"threshold = " << threshold << endl;
 	}
 
 	if (f_randomized) {
@@ -1123,13 +1150,15 @@ void projective_space_plane::determine_nonconical_six_subsets(
 	if (f_v) {
 		cout << "projective_space_plane::determine_nonconical_six_subsets" << endl;
 	}
-	if (P->n != 2) {
-		cout << "projective_space_plane::determine_nonconical_six_subsets P->n != 2" << endl;
+	if (P->Subspaces->n != 2) {
+		cout << "projective_space_plane::determine_nonconical_six_subsets "
+				"P->Subspaces->n != 2" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "projective_space_plane::determine_nonconical_six_subsets before conic_type" << endl;
+		cout << "projective_space_plane::determine_nonconical_six_subsets "
+				"before conic_type" << endl;
 	}
 	conic_type(
 		set, set_size,
@@ -1137,10 +1166,12 @@ void projective_space_plane::determine_nonconical_six_subsets(
 		Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
 		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "projective_space_plane::determine_nonconical_six_subsets after conic_type" << endl;
+		cout << "projective_space_plane::determine_nonconical_six_subsets "
+				"after conic_type" << endl;
 	}
 	if (f_v) {
-		cout << "There are " << len << " conics. They contain the following points:" << endl;
+		cout << "There are " << len << " conics. "
+				"They contain the following points:" << endl;
 		for (i = 0; i < len; i++) {
 			cout << i << " : " << nb_pts_on_conic[i] << " : ";
 			Lint_vec_print(cout, Pts_on_conic[i], nb_pts_on_conic[i]);
@@ -1162,14 +1193,17 @@ void projective_space_plane::determine_nonconical_six_subsets(
 
 		Combi.unrank_k_subset(rk, subset, set_size, 6);
 		if (f_v) {
-			cout << "projective_space_plane::conic_type rk=" << rk << " / " << N << " : ";
+			cout << "projective_space_plane::conic_type "
+					"rk=" << rk << " / " << N << " : ";
 			Int_vec_print(cout, subset, 6);
 			cout << endl;
 		}
 
 		for (i = 0; i < len; i++) {
-			if (Sorting.lint_vec_is_subset_of(subset, 6,
-					Pts_on_conic[i], nb_pts_on_conic[i], 0 /* verbose_level */)) {
+			if (Sorting.lint_vec_is_subset_of(
+					subset, 6,
+					Pts_on_conic[i], nb_pts_on_conic[i],
+					0 /* verbose_level */)) {
 
 #if 1
 				if (f_v) {
@@ -1211,7 +1245,7 @@ void projective_space_plane::determine_nonconical_six_subsets(
 	nb = Rk.size();
 	Nb_E = NEW_int(nb);
 	if (f_v) {
-		cout << "computing Eckardt point number distribution" << endl;
+		cout << "Computing Eckardt point number distribution" << endl;
 	}
 	for (i = 0; i < nb; i++) {
 		if ((i % 500) == 0) {
@@ -1258,7 +1292,8 @@ void projective_space_plane::determine_nonconical_six_subsets(
 
 			rk = Rk[idx];
 			if (f_v) {
-				cout << i << " / " << nb_idx << " idx=" << idx << ", rk=" << rk << " :" << endl;
+				cout << i << " / " << nb_idx
+						<< " idx=" << idx << ", rk=" << rk << " :" << endl;
 			}
 			Combi.unrank_k_subset(rk, subset, set_size, 6);
 
@@ -1288,7 +1323,8 @@ void projective_space_plane::determine_nonconical_six_subsets(
 
 		fname.assign("set_system.csv");
 		Fio.int_matrix_write_csv(fname, System, nb_idx, 6);
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 
 
 		data_structures::tally T2;
@@ -1313,7 +1349,8 @@ void projective_space_plane::conic_type(
 	long int *set, int set_size,
 	int threshold,
 	long int **&Pts_on_conic,
-	int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
+	int **&Conic_eqn,
+	int *&nb_pts_on_conic, int &nb_conics,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1335,10 +1372,12 @@ void projective_space_plane::conic_type(
 	data_structures::sorting Sorting;
 
 	if (f_v) {
-		cout << "projective_space_plane::conic_type, threshold = " << threshold << endl;
+		cout << "projective_space_plane::conic_type, "
+				"threshold = " << threshold << endl;
 	}
-	if (P->n != 2) {
-		cout << "projective_space_plane::conic_type P->n != 2" << endl;
+	if (P->Subspaces->n != 2) {
+		cout << "projective_space_plane::conic_type "
+				"P->Subspaces->n != 2" << endl;
 		exit(1);
 	}
 	if (f_vv) {
@@ -1381,7 +1420,8 @@ void projective_space_plane::conic_type(
 
 		Combi.unrank_k_subset(rk, subset, set_size, 5);
 		if (FALSE) {
-			cout << "projective_space_plane::conic_type rk=" << rk << " / " << N << " : ";
+			cout << "projective_space_plane::conic_type "
+					"rk=" << rk << " / " << N << " : ";
 			Int_vec_print(cout, subset, 5);
 			cout << endl;
 		}
@@ -1426,9 +1466,11 @@ void projective_space_plane::conic_type(
 			continue;
 		}
 		if (f_v) {
-			cout << "projective_space_plane::conic_type rk=" << rk << " / " << N << " : ";
+			cout << "projective_space_plane::conic_type "
+					"rk=" << rk << " / " << N << " : ";
 			Int_vec_print(cout, subset, 5);
-			cout << " has not yet been considered and a conic exists" << endl;
+			cout << " has not yet been considered "
+					"and a conic exists" << endl;
 		}
 		if (f_v) {
 			cout << "determine_conic_in_plane the conic exists" << endl;
@@ -1438,8 +1480,9 @@ void projective_space_plane::conic_type(
 		}
 
 
-		P->F->PG_element_normalize(six_coeffs, 1, 6);
-		Gg.AG_element_rank_longinteger(P->F->q, six_coeffs, 1, 6, conic_rk);
+		P->Subspaces->F->Projective_space_basic->PG_element_normalize(
+				six_coeffs, 1, 6);
+		Gg.AG_element_rank_longinteger(P->Subspaces->F->q, six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";
 			Int_vec_print(cout, subset, 5);
@@ -1467,7 +1510,8 @@ void projective_space_plane::conic_type(
 		}
 		else {
 			if (f_v) {
-				cout << "considering conic of rank conic_rk=" << conic_rk << ":" << endl;
+				cout << "considering conic of rank "
+						"conic_rk=" << conic_rk << ":" << endl;
 			}
 			pts_on_conic = NEW_lint(set_size);
 			l = 0;
@@ -1480,7 +1524,8 @@ void projective_space_plane::conic_type(
 					Int_vec_print(cout, vec, 3);
 					cout << endl;
 				}
-				a = P->F->Linear_algebra->evaluate_conic_form(six_coeffs, vec);
+				a = P->Subspaces->F->Linear_algebra->evaluate_conic_form(
+						six_coeffs, vec);
 
 
 				if (a == 0) {
@@ -1591,7 +1636,8 @@ void projective_space_plane::conic_type(
 			else {
 				// we skip this conic:
 				if (f_v) {
-					cout << "projective_space_plane::conic_type we skip this conic" << endl;
+					cout << "projective_space_plane::conic_type "
+							"we will skip this conic" << endl;
 				}
 				FREE_lint(pts_on_conic);
 			}
@@ -1624,39 +1670,39 @@ void projective_space_plane::find_nucleus(
 		cout << "projective_space_plane::find_nucleus" << endl;
 	}
 
-	if (P->n != 2) {
+	if (P->Subspaces->n != 2) {
 		cout << "projective_space_plane::find_nucleus n != 2" << endl;
 		exit(1);
 	}
-	if (set_size != P->F->q + 1) {
+	if (set_size != P->Subspaces->F->q + 1) {
 		cout << "projective_space_plane::find_nucleus "
 				"set_size != F->q + 1" << endl;
 		exit(1);
 	}
 
-	if (P->Implementation->Lines_on_point == NULL) {
+	if (P->Subspaces->Implementation->Lines_on_point == NULL) {
 		if (f_v) {
 			cout << "projective_space_plane::find_nucleus "
 					"before P->init_incidence_structure" << endl;
 		}
-		P->init_incidence_structure(verbose_level);
+		P->Subspaces->init_incidence_structure(verbose_level);
 		if (f_v) {
 			cout << "projective_space_plane::find_nucleus "
 					"after P->init_incidence_structure" << endl;
 		}
 	}
 
-	Lines = NEW_int(P->r);
+	Lines = NEW_int(P->Subspaces->r);
 	a = set[0];
-	for (i = 0; i < P->r; i++) {
-		Lines[i] = P->Implementation->Lines_on_point[a * P->r + i];
+	for (i = 0; i < P->Subspaces->r; i++) {
+		Lines[i] = P->Subspaces->Implementation->Lines_on_point[a * P->Subspaces->r + i];
 	}
-	sz = P->r;
-	Sorting.int_vec_heapsort(Lines, P->r);
+	sz = P->Subspaces->r;
+	Sorting.int_vec_heapsort(Lines, P->Subspaces->r);
 
 	for (i = 0; i < set_size - 1; i++) {
 		b = set[1 + i];
-		l = P->line_through_two_points(a, b);
+		l = P->Subspaces->line_through_two_points(a, b);
 		if (!Sorting.int_vec_search(Lines, sz, l, idx)) {
 			cout << "projective_space_plane::find_nucleus "
 					"cannot find secant in pencil" << endl;
@@ -1668,22 +1714,24 @@ void projective_space_plane::find_nucleus(
 		sz--;
 	}
 	if (sz != 1) {
-		cout << "projective_space_plane::find_nucleus sz != 1" << endl;
+		cout << "projective_space_plane::find_nucleus "
+				"sz != 1" << endl;
 		exit(1);
 	}
 	t1 = Lines[0];
 	if (f_v) {
-		cout << "projective_space_plane::find_nucleus t1 = " << t1 << endl;
+		cout << "projective_space_plane::find_nucleus "
+				"t1 = " << t1 << endl;
 	}
 
 
 
 	a = set[1];
-	for (i = 0; i < P->r; i++) {
-		Lines[i] = P->Implementation->Lines_on_point[a * P->r + i];
+	for (i = 0; i < P->Subspaces->r; i++) {
+		Lines[i] = P->Subspaces->Implementation->Lines_on_point[a * P->Subspaces->r + i];
 	}
-	sz = P->r;
-	Sorting.int_vec_heapsort(Lines, P->r);
+	sz = P->Subspaces->r;
+	Sorting.int_vec_heapsort(Lines, P->Subspaces->r);
 
 	for (i = 0; i < set_size - 1; i++) {
 		if (i == 0) {
@@ -1692,7 +1740,7 @@ void projective_space_plane::find_nucleus(
 		else {
 			b = set[1 + i];
 		}
-		l = P->line_through_two_points(a, b);
+		l = P->Subspaces->line_through_two_points(a, b);
 		if (!Sorting.int_vec_search(Lines, sz, l, idx)) {
 			cout << "projective_space_plane::find_nucleus "
 					"cannot find secant in pencil" << endl;
@@ -1712,7 +1760,7 @@ void projective_space_plane::find_nucleus(
 		cout << "projective_space_plane::find_nucleus t2 = " << t2 << endl;
 	}
 
-	nucleus = P->intersection_of_two_lines(t1, t2);
+	nucleus = P->Subspaces->intersection_of_two_lines(t1, t2);
 	if (f_v) {
 		cout << "projective_space_plane::find_nucleus "
 				"nucleus = " << nucleus << endl;
@@ -1743,17 +1791,26 @@ void projective_space_plane::points_on_projective_triangle(
 	if (f_v) {
 		cout << "projective_space_plane::points_on_projective_triangle" << endl;
 	}
-	set_size = 3 * (P->q - 1);
+	set_size = 3 * (P->Subspaces->q - 1);
 	set = NEW_lint(set_size);
-	sz = 3 * (P->q + 1);
+	sz = 3 * (P->Subspaces->q + 1);
 	Pts = NEW_lint(sz);
-	three_lines[0] = P->line_through_two_points(three_points[0], three_points[1]);
-	three_lines[1] = P->line_through_two_points(three_points[0], three_points[2]);
-	three_lines[2] = P->line_through_two_points(three_points[1], three_points[2]);
+	three_lines[0] = P->Subspaces->line_through_two_points(three_points[0], three_points[1]);
+	three_lines[1] = P->Subspaces->line_through_two_points(three_points[0], three_points[2]);
+	three_lines[2] = P->Subspaces->line_through_two_points(three_points[1], three_points[2]);
 
-	P->create_points_on_line(three_lines[0], Pts, 0 /* verbose_level */);
-	P->create_points_on_line(three_lines[1], Pts + (P->q + 1), 0 /* verbose_level */);
-	P->create_points_on_line(three_lines[2], Pts + 2 * (P->q + 1), 0 /* verbose_level */);
+	P->Subspaces->create_points_on_line(
+			three_lines[0],
+			Pts,
+			0 /* verbose_level */);
+	P->Subspaces->create_points_on_line(
+			three_lines[1],
+			Pts + (P->Subspaces->q + 1),
+			0 /* verbose_level */);
+	P->Subspaces->create_points_on_line(
+			three_lines[2],
+			Pts + 2 * (P->Subspaces->q + 1),
+			0 /* verbose_level */);
 	h = 0;
 	for (i = 0; i < sz; i++) {
 		a = Pts[i];
@@ -1794,7 +1851,7 @@ long int projective_space_plane::dual_rank_of_line_in_plane(
 		cout << "projective_space_plane::dual_rank_of_line_in_plane" << endl;
 	}
 	P->unrank_line(Basis, line_rank);
-	rk = P->F->Linear_algebra->RREF_and_kernel(3, 2, Basis, 0 /* verbose_level*/);
+	rk = P->Subspaces->F->Linear_algebra->RREF_and_kernel(3, 2, Basis, 0 /* verbose_level*/);
 	if (rk != 2) {
 		cout << "projective_space_plane::dual_rank_of_line_in_plane rk != 2" << endl;
 		exit(1);
@@ -1818,7 +1875,8 @@ long int projective_space_plane::line_rank_using_dual_coordinates_in_plane(
 		cout << "projective_space_plane::line_rank_using_dual_coordinates_in_plane" << endl;
 	}
 	Int_vec_copy(eqn3, Basis, 3);
-	rk = P->F->Linear_algebra->RREF_and_kernel(3, 1, Basis, 0 /* verbose_level*/);
+	rk = P->Subspaces->F->Linear_algebra->RREF_and_kernel(
+			3, 1, Basis, 0 /* verbose_level*/);
 	if (rk != 1) {
 		cout << "projective_space_plane::line_rank_using_dual_coordinates_in_plane rk != 1" << endl;
 		exit(1);

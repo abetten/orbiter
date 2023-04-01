@@ -871,7 +871,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 			}
 
 			for (j = 0; j < Variety_table[i]->Qco->nb_pts; j++) {
-				Pts_canonical[j] = A->element_image_of(Pts_orig[j],
+				Pts_canonical[j] = A->Group_element->element_image_of(Pts_orig[j],
 						Variety_table[i]->transporter_to_canonical_form,
 						0 /* verbose_level */);
 			}
@@ -911,7 +911,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 			}
 
 			for (j = 0; j < Variety_table[i]->Qco->nb_bitangents; j++) {
-				bitangents_canonical[j] = A_on_lines->element_image_of(
+				bitangents_canonical[j] = A_on_lines->Group_element->element_image_of(
 						bitangents_orig[j],
 						Variety_table[i]->transporter_to_canonical_form,
 						0 /* verbose_level */);
@@ -1165,7 +1165,7 @@ void canonical_form_classifier::generate_source_code(
 				bitangents_canonical = NEW_lint(Variety_table[idx]->Qco->nb_bitangents);
 				for (j = 0; j < Variety_table[idx]->Qco->nb_bitangents; j++) {
 					bitangents_canonical[j] =
-							A_on_lines->element_image_of(
+							A_on_lines->Group_element->element_image_of(
 									bitangents_orig[j],
 							Variety_table[idx]->transporter_to_canonical_form, 0 /* verbose_level */);
 				}
@@ -1313,7 +1313,7 @@ void canonical_form_classifier::generate_source_code(
 
 
 						if (gens) {
-							A->element_print_for_make_element(gens->gens->ith(j), f);
+							A->Group_element->element_print_for_make_element(gens->gens->ith(j), f);
 							f << endl;
 						}
 						else {

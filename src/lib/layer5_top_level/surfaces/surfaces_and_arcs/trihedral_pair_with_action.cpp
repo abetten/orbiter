@@ -501,11 +501,11 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 		}
 
 
-		AL->Surf_A->A->element_invert(transporter, Elt1, 0);
-		AL->Surf_A->A->element_mult(transporter0, Elt1, Elt2, 0);
+		AL->Surf_A->A->Group_element->element_invert(transporter, Elt1, 0);
+		AL->Surf_A->A->Group_element->element_mult(transporter0, Elt1, Elt2, 0);
 		if (f_vv) {
 			cout << "Elt2:" << endl;
-			AL->Surf_A->A->element_print_quick(Elt2, cout);
+			AL->Surf_A->A->Group_element->element_print_quick(Elt2, cout);
 		}
 
 		for (j = 0; j < cosets->len; j++) {
@@ -518,13 +518,13 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 
 			// contragredient action:
 
-			AL->Surf_A->A->element_transpose(Elt2, Elt3, 0 /* verbose_level*/);
+			AL->Surf_A->A->Group_element->element_transpose(Elt2, Elt3, 0 /* verbose_level*/);
 
 
 
-			AL->Surf_A->A->element_move(cosets->ith(j), Elt5, 0);
+			AL->Surf_A->A->Group_element->element_move(cosets->ith(j), Elt5, 0);
 			//AL->Surf_A->A->element_invert(cosets->ith(j), Elt5, 0);
-			AL->Surf_A->A->element_mult(Elt5, Elt3, Elt4, 0);
+			AL->Surf_A->A->Group_element->element_mult(Elt5, Elt3, Elt4, 0);
 			//AL->Surf_A->A->element_mult(Elt3, Elt5, Elt4, 0);
 
 			//cout << "transporter transposed:" << endl;
@@ -538,12 +538,12 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 			if (FALSE) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
 						"Elt4:" << endl;
-				AL->Surf_A->A->element_print_quick(Elt4, cout);
+				AL->Surf_A->A->Group_element->element_print_quick(Elt4, cout);
 			}
 
 
 
-			groups::matrix_group *M;
+			algebra::matrix_group *M;
 
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
@@ -557,7 +557,8 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 					verbose_level - 6);
 
 
-			AL->F->PG_element_normalize(coeff_out, 1, 20);
+			AL->F->Projective_space_basic->PG_element_normalize(
+					coeff_out, 1, 20);
 
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
@@ -575,7 +576,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 							<< " gives automorphism, increased "
 							"orbit length is " << orbit_length + 1 << endl;
 					cout << "coset rep = " << endl;
-					AL->Surf_A->A->element_print_quick(Elt3, cout);
+					AL->Surf_A->A->Group_element->element_print_quick(Elt3, cout);
 				}
 #if 0
 				Surf->compute_nine_lines_by_dual_point_ranks(
@@ -595,7 +596,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 #endif
 
 
-				AL->Surf_A->A->element_move(Elt4, coset_reps->ith(orbit_length), 0);
+				AL->Surf_A->A->Group_element->element_move(Elt4, coset_reps->ith(orbit_length), 0);
 
 				aut_T_index[orbit_length] = i;
 				aut_coset_index[orbit_length] = j;
@@ -901,7 +902,7 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(int verbos
 					<< orbit_index << "\\\\" << endl;
 			cout << "An isomorphism is given by" << endl;
 			cout << "$$" << endl;
-			AL->Surf_A->A->element_print_latex(transporter, cout);
+			AL->Surf_A->A->Group_element->element_print_latex(transporter, cout);
 			cout << "$$" << endl;
 		}
 
@@ -1310,7 +1311,8 @@ void trihedral_pair_with_action::report(std::ostream &ost, int verbose_level)
 
 	coeffs = The_surface_equations + lambda_rk * 20;
 	Int_vec_copy(coeffs, coeffs2, 20);
-	AL->F->PG_element_normalize_from_front(coeffs2, 1, 20);
+	AL->F->Projective_space_basic->PG_element_normalize_from_front(
+			coeffs2, 1, 20);
 
 	ost << "\\bigskip" << endl;
 	ost << "The normalized equation of the surface is:" << endl;
@@ -1368,7 +1370,7 @@ void trihedral_pair_with_action::report(std::ostream &ost, int verbose_level)
 		ost << "Coset " << i << " / " << cosets->len
 			<< ", coset rep:" << endl;
 		ost << "$$" << endl;
-		AL->Surf_A->A->element_print_latex(cosets->ith(i), ost);
+		AL->Surf_A->A->Group_element->element_print_latex(cosets->ith(i), ost);
 		ost << "$$" << endl;
 		}
 	ost << "The stabilizer of the trihedral pair and the equation is "

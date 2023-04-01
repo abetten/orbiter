@@ -151,7 +151,7 @@ void orbit_of_sets::compute(int verbose_level)
 				cout << endl;
 			}
 
-			A2->map_a_set(
+			A2->Group_element->map_a_set(
 					cur_set, new_set, sz, gens->ith(j),
 					0 /*verbose_level*/);
 
@@ -482,10 +482,10 @@ void orbit_of_sets::make_table_of_coset_reps(
 		prev = Extra[2 * j + 0];
 		label = Extra[2 * j + 1];
 		if (prev == -1) {
-			A->element_one(Coset_reps->ith(j), 0);
+			A->Group_element->element_one(Coset_reps->ith(j), 0);
 		}
 		else {
-			A->element_mult(
+			A->Group_element->element_mult(
 					Coset_reps->ith(prev),
 					gens->ith(label),
 					Coset_reps->ith(j), 0);
@@ -507,11 +507,11 @@ void orbit_of_sets::coset_rep(int j)
 	if (Extra[2 * j + 0] != -1) {
 		coset_rep(Extra[2 * j + 0]);
 		gen = gens->ith(Extra[2 * j + 1]);
-		A->element_mult(cosetrep, gen, cosetrep_tmp, 0);
-		A->element_move(cosetrep_tmp, cosetrep, 0);
+		A->Group_element->element_mult(cosetrep, gen, cosetrep_tmp, 0);
+		A->Group_element->element_move(cosetrep_tmp, cosetrep, 0);
 	}
 	else {
-		A->element_one(cosetrep, 0);
+		A->Group_element->element_one(cosetrep, 0);
 	}
 }
 

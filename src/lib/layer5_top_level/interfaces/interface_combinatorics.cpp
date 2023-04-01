@@ -117,6 +117,20 @@ interface_combinatorics::interface_combinatorics()
 	//std::string union_set_of_sets_fname;
 	//std::string union_input_fname;
 	//std::string union_output_fname;
+
+	f_dot_product_of_columns = FALSE;
+	//std::string dot_product_of_columns_fname;
+
+	f_dot_product_of_rows = FALSE;
+	//std::string dot_product_of_rows_fname;
+
+	f_matrix_multiply_over_Z = FALSE;
+	//std::string matrix_multiply_over_Z_label1;
+	//std::string matrix_multiply_over_Z_label2;
+
+	f_rowspan_over_R = FALSE;
+	//std::string rowspan_over_R_label;
+
 }
 
 
@@ -200,6 +214,18 @@ void interface_combinatorics::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-union") == 0) {
 		cout << "-union <fname : set_of_sets> <fname : input> <fname : output> " << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-dot_product_of_columns") == 0) {
+		cout << "-dot_product_of_columns <label : matrix> " << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-dot_product_of_rows") == 0) {
+		cout << "-dot_product_of_rows <label : matrix> " << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-matrix_multiply_over_Z") == 0) {
+		cout << "-matrix_multiply_over_Z <label : matrix1> <label : matrix2> " << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-rowspan_over_R") == 0) {
+		cout << "-rowspan_over_R <label : matrix> " << endl;
+	}
 }
 
 int interface_combinatorics::recognize_keyword(int argc,
@@ -282,6 +308,18 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-union") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-dot_product_of_columns") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-dot_product_of_rows") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-matrix_multiply_over_Z") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-rowspan_over_R") == 0) {
 		return true;
 	}
 	return false;
@@ -604,6 +642,46 @@ void interface_combinatorics::read_arguments(int argc,
 				<< " " << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-dot_product_of_columns") == 0) {
+		f_dot_product_of_columns = TRUE;
+		dot_product_of_columns_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-dot_product_of_columns "
+					<< dot_product_of_columns_fname
+				<< " " << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-dot_product_of_rows") == 0) {
+		f_dot_product_of_rows = TRUE;
+		dot_product_of_rows_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-dot_product_of_rows "
+					<< dot_product_of_rows_fname
+				<< " " << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-matrix_multiply_over_Z") == 0) {
+		f_matrix_multiply_over_Z = TRUE;
+		matrix_multiply_over_Z_label1.assign(argv[++i]);
+		matrix_multiply_over_Z_label2.assign(argv[++i]);
+		if (f_v) {
+			cout << "-matrix_multiply_over_Z "
+					<< " " << matrix_multiply_over_Z_label1
+					<< " " << matrix_multiply_over_Z_label2
+				<< " " << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-rowspan_over_R") == 0) {
+		f_rowspan_over_R = TRUE;
+		rowspan_over_R_label.assign(argv[++i]);
+		if (f_v) {
+			cout << "-rowspan_over_R "
+					<< " " << rowspan_over_R_label
+				<< " " << endl;
+		}
+	}
+
+
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
@@ -721,6 +799,28 @@ void interface_combinatorics::print()
 				<< " " << union_output_fname
 				<< " " << endl;
 	}
+	if (f_dot_product_of_columns) {
+		cout << "-dot_product_of_columns "
+				<< dot_product_of_columns_fname
+			<< " " << endl;
+	}
+	if (f_dot_product_of_rows) {
+		cout << "-dot_product_of_rows "
+				<< dot_product_of_rows_fname
+			<< " " << endl;
+	}
+	if (f_matrix_multiply_over_Z) {
+		cout << "-matrix_multiply_over_Z "
+				<< " " << matrix_multiply_over_Z_label1
+				<< " " << matrix_multiply_over_Z_label2
+			<< " " << endl;
+	}
+	if (f_rowspan_over_R) {
+		cout << "-rowspan_over_R "
+				<< " " << rowspan_over_R_label
+			<< " " << endl;
+	}
+
 }
 
 
@@ -968,15 +1068,67 @@ void interface_combinatorics::worker(int verbose_level)
 
 		Algo.union_of_sets(union_set_of_sets_fname,
 				union_input_fname, union_output_fname, verbose_level);
-
-
-
 	}
+
+	else if (f_dot_product_of_columns) {
+		if (f_v) {
+			cout << "interface_combinatorics::worker -dot_product_of_columns" << endl;
+		}
+
+		data_structures::algorithms Algo;
+
+
+
+		Algo.dot_product_of_columns(dot_product_of_columns_fname, verbose_level);
+	}
+
+	else if (f_dot_product_of_rows) {
+		if (f_v) {
+			cout << "interface_combinatorics::worker -dot_product_of_rows" << endl;
+		}
+
+		data_structures::algorithms Algo;
+
+
+
+		Algo.dot_product_of_rows(dot_product_of_rows_fname, verbose_level);
+	}
+
+
+	else if (f_matrix_multiply_over_Z) {
+		if (f_v) {
+			cout << "interface_combinatorics::worker -matrix_multiply_over_Z" << endl;
+		}
+
+		data_structures::algorithms Algo;
+
+
+
+		Algo.matrix_multiply_over_Z(
+				matrix_multiply_over_Z_label1,
+				matrix_multiply_over_Z_label2,
+				verbose_level);
+	}
+
+	else if (f_rowspan_over_R) {
+		if (f_v) {
+			cout << "interface_combinatorics::worker -rowspan_over_R" << endl;
+		}
+
+		data_structures::algorithms Algo;
+
+
+
+		Algo.matrix_rowspan_over_R(rowspan_over_R_label, verbose_level);
+	}
+
+
 
 }
 
 
-void interface_combinatorics::do_diophant(solvers::diophant_description *Descr, int verbose_level)
+void interface_combinatorics::do_diophant(
+		solvers::diophant_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

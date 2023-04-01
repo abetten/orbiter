@@ -30,7 +30,8 @@ group_generators_domain::~group_generators_domain()
 }
 
 
-void group_generators_domain::generators_symmetric_group(int deg,
+void group_generators_domain::generators_symmetric_group(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -54,7 +55,8 @@ void group_generators_domain::generators_symmetric_group(int deg,
 		perms[i * deg + i + 1] = i;
 	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_symmetric_group generators are:" << endl;
+		cout << "group_generators_domain::generators_symmetric_group "
+				"generators are:" << endl;
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -63,11 +65,13 @@ void group_generators_domain::generators_symmetric_group(int deg,
 		}
 	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_symmetric_group done" << endl;
+		cout << "group_generators_domain::generators_symmetric_group "
+				"done" << endl;
 	}
 }
 
-void group_generators_domain::generators_cyclic_group(int deg,
+void group_generators_domain::generators_cyclic_group(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -90,7 +94,8 @@ void group_generators_domain::generators_cyclic_group(int deg,
 	}
 	perms[i * deg + i + deg - 1] = 0;
 	if (f_v) {
-		cout << "group_generators_domain::generators_cyclic_group generators are:" << endl;
+		cout << "group_generators_domain::generators_cyclic_group "
+				"generators are:" << endl;
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -99,11 +104,13 @@ void group_generators_domain::generators_cyclic_group(int deg,
 		}
 	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_cyclic_group done" << endl;
+		cout << "group_generators_domain::generators_cyclic_group "
+				"done" << endl;
 	}
 }
 
-void group_generators_domain::generators_dihedral_group(int deg,
+void group_generators_domain::generators_dihedral_group(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -147,7 +154,8 @@ void group_generators_domain::generators_dihedral_group(int deg,
 	}
 }
 
-void group_generators_domain::generators_dihedral_involution(int deg,
+void group_generators_domain::generators_dihedral_involution(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -187,7 +195,8 @@ void group_generators_domain::generators_dihedral_involution(int deg,
 	}
 }
 
-void group_generators_domain::generators_identity_group(int deg,
+void group_generators_domain::generators_identity_group(
+		int deg,
 		int &nb_perms, int *&perms, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1146,7 +1155,7 @@ void group_generators_domain::diagonal_orbit_perm(
 				cout << v[j] << " ";
 			}
 		}
-		F->PG_element_rank_modified_lint(v, 1, n, a);
+		F->Projective_space_basic->PG_element_rank_modified_lint(v, 1, n, a);
 		if (f_vv) {
 			cout << " : " << a << endl;
 		}
@@ -1199,7 +1208,7 @@ void group_generators_domain::frobenius_orbit_perm(
 		cout << "before PG_element_unrank_modified("
 				<< n + F->p << ")" << endl;
 	}
-	F->PG_element_unrank_modified(v, 1, n, n + F->p);
+	F->Projective_space_basic->PG_element_unrank_modified(v, 1, n, n + F->p);
 	if (f_v) {
 		cout << "after PG_element_unrank_modified("
 				<< n + F->p << ")" << endl;
@@ -1211,7 +1220,7 @@ void group_generators_domain::frobenius_orbit_perm(
 				cout << v[j] << " ";
 			}
 		}
-		F->PG_element_rank_modified_lint(v, 1, n, a);
+		F->Projective_space_basic->PG_element_rank_modified_lint(v, 1, n, a);
 		if (f_vv) {
 			cout << " : " << a << endl;
 		}
@@ -1221,7 +1230,7 @@ void group_generators_domain::frobenius_orbit_perm(
 		orbit[b] = c;
 		orbit_inv[a] = i;
 		orbit_inv[c] = b;
-		F->PG_element_apply_frobenius(n, v, 1);
+		F->Projective_space_basic->PG_element_apply_frobenius(n, v, 1);
 	}
 	FREE_int(v);
 	if (f_v) {
@@ -2400,10 +2409,10 @@ void group_generators_domain::builtin_transversal_rep_GLnq(
 	}
 	else {
 		if (i == 0) {
-			F->PG_element_unrank_modified(A + i, n, n, j);
+			F->Projective_space_basic->PG_element_unrank_modified(A + i, n, n, j);
 		}
 		else {
-			F->PG_element_unrank_modified_not_in_subspace(
+			F->Projective_space_basic->PG_element_unrank_modified_not_in_subspace(
 					A + i, n, n, i - 1, j);
 		}
 		i0 = -1;
@@ -2436,7 +2445,7 @@ void group_generators_domain::affine_translation(
 		int n, field_theory::finite_field *F,
 		int coordinate_idx, int field_base_idx, int *perm,
 		int verbose_level)
-// perm points to q^n int's
+// perm points to q^n ints
 // field_base_idx is the base element whose translation
 // we compute, 0 \le field_base_idx < e
 // coordinate_idx is the coordinate in which we shift,
@@ -2469,7 +2478,7 @@ void group_generators_domain::affine_multiplication(
 		int n, field_theory::finite_field *F,
 		int multiplication_order, int *perm,
 		int verbose_level)
-// perm points to q^n int's
+// perm points to q^n ints
 // compute the diagonal multiplication by alpha, i.e.
 // the multiplication by alpha of each component
 {
@@ -2506,7 +2515,7 @@ void group_generators_domain::affine_frobenius(
 		int n, field_theory::finite_field *F,
 		int k, int *perm,
 		int verbose_level)
-// perm points to q^n int's
+// perm points to q^n ints
 // compute the diagonal action of the Frobenius automorphism
 // to the power k, i.e.,
 // raises each component to the p^k-th power
@@ -2634,7 +2643,7 @@ void group_generators_domain::PG_element_modified_not_in_subspace_perm(
 		cout << "group_generators_domain::PG_element_modified_not_in_subspace_perm" << endl;
 	}
 	for (i = 0; i < l; i++) {
-		F->PG_element_unrank_modified_lint(v, 1, n + 1, i);
+		F->Projective_space_basic->PG_element_unrank_modified_lint(v, 1, n + 1, i);
 		f_in = Gg.PG_element_modified_is_in_subspace(n, m, v);
 		if (f_v) {
 			cout << i << " : ";

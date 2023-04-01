@@ -20,11 +20,8 @@ namespace solvers {
 
 diophant_description::diophant_description()
 {
-	f_q = FALSE;
-	input_q = 0;
-	f_override_polynomial = FALSE;
-	//override_polynomial;
-	//F = NULL;
+	f_field = FALSE;
+	//std::string field_label;
 
 	f_maximal_arc = FALSE;
 	maximal_arc_sz = 0;
@@ -92,7 +89,14 @@ int diophant_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 
-		if (ST.stringcmp(argv[i], "-maximal_arc") == 0) {
+		if (ST.stringcmp(argv[i], "-field") == 0) {
+			f_field = TRUE;
+			field_label = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-field" << field_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-maximal_arc") == 0) {
 			f_maximal_arc = TRUE;
 			maximal_arc_sz = ST.strtoi(argv[++i]);
 			maximal_arc_d = ST.strtoi(argv[++i]);
@@ -191,20 +195,6 @@ int diophant_description::read_arguments(
 				cout << "-has_sum " << has_sum << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
-			input_q = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-q" << input_q << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-override_polynomial") == 0) {
-			f_override_polynomial = TRUE;
-			override_polynomial.assign(argv[++i]);
-			if (f_v) {
-				cout << "-override_polynomial" << override_polynomial << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -226,6 +216,9 @@ int diophant_description::read_arguments(
 
 void diophant_description::print()
 {
+	if (f_field) {
+		cout << "-field" << field_label << endl;
+	}
 	if (f_maximal_arc) {
 		cout << "-maximal_arc " << maximal_arc_sz << " " << maximal_arc_d
 				<< " " << maximal_arc_secants_text
@@ -268,12 +261,6 @@ void diophant_description::print()
 	}
 	if (f_has_sum) {
 		cout << "-has_sum " << has_sum << endl;
-	}
-	if (f_q) {
-		cout << "-q" << input_q << endl;
-	}
-	if (f_override_polynomial) {
-		cout << "-override_polynomial" << override_polynomial << endl;
 	}
 }
 

@@ -92,10 +92,12 @@ spread_domain::~spread_domain()
 
 }
 
-void spread_domain::init(
+void spread_domain::init_spread_domain(
 		field_theory::finite_field *F,
 		int n, int k,
 		int verbose_level)
+// creates grassmann n,k
+// creates klein_correspondence and orthogonal if (n,k) = (4,2)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -104,7 +106,7 @@ void spread_domain::init(
 
 
 	if (f_v) {
-		cout << "spread_domain::init" << endl;
+		cout << "spread_domain::init_spread_domain" << endl;
 		cout << "n=" << n << endl;
 		cout << "k=" << k << endl;
 		cout << "q=" << F->q << endl;
@@ -133,7 +135,7 @@ void spread_domain::init(
 	nb_points_total = nb_pts = nC1q;
 
 	if (f_v) {
-		cout << "spread_domain::init" << endl;
+		cout << "spread_domain::init_spread_domain" << endl;
 		cout << "q=" << q << endl;
 		cout << "n=" << n << endl;
 		cout << "k=" << k << endl;
@@ -153,11 +155,11 @@ void spread_domain::init(
 
 
 	if (f_v) {
-		cout << "spread_domain::init "
+		cout << "spread_domain::init_spread_domain "
 				"nCkq = {n \\choose k}_q = " << nCkq << endl;
-		cout << "spread_domain::init "
+		cout << "spread_domain::init_spread_domain "
 				"r = {k \\choose 1}_q = " << r << endl;
-		cout << "spread_domain::init "
+		cout << "spread_domain::init_spread_domain "
 				"nb_pts = {n \\choose 1}_q = " << nb_pts << endl;
 	}
 
@@ -167,7 +169,7 @@ void spread_domain::init(
 	if (k == 2 && n == 4) {
 
 		if (f_v) {
-			cout << "spread_domain::init k == 2 and n == 4, "
+			cout << "spread_domain::init_spread_domain k == 2 and n == 4, "
 					"initializing the Klein correspondence" << endl;
 		}
 		Klein = NEW_OBJECT(geometry::klein_correspondence);
@@ -178,7 +180,7 @@ void spread_domain::init(
 	}
 	else {
 		if (f_v) {
-			cout << "spread_domain::init we are not "
+			cout << "spread_domain::init_spread_domain we are not "
 					"initializing the Klein correspondence" << endl;
 		}
 		O = NULL;
@@ -186,21 +188,23 @@ void spread_domain::init(
 	}
 
 	if (f_v) {
-		cout << "spread_domain::init done" << endl;
+		cout << "spread_domain::init_spread_domain done" << endl;
 	}
 }
 
 
 void spread_domain::unrank_point(int *v, long int a)
 {
-	F->PG_element_unrank_modified_lint(v, 1, n, a);
+	F->Projective_space_basic->PG_element_unrank_modified_lint(
+			v, 1, n, a);
 }
 
 long int spread_domain::rank_point(int *v)
 {
 	long int a;
 
-	F->PG_element_rank_modified_lint(v, 1, n, a);
+	F->Projective_space_basic->PG_element_rank_modified_lint(
+			v, 1, n, a);
 	return a;
 }
 
@@ -292,8 +296,10 @@ void spread_domain::print_elements_and_points()
 		}
 		unrank_subspace(M, i);
 		for (a = 0; a < r; a++) {
-			F->PG_element_unrank_modified(v, 1, k, a);
-			F->Linear_algebra->mult_matrix_matrix(v, M, w, 1, k, n,
+			F->Projective_space_basic->PG_element_unrank_modified(
+					v, 1, k, a);
+			F->Linear_algebra->mult_matrix_matrix(
+					v, M, w, 1, k, n,
 					0 /* verbose_level */);
 			b = rank_point(w);
 			Line[a] = b;
@@ -618,7 +624,7 @@ void spread_domain::print(
 		Grass->unrank_lint(S[i], 0);
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
-		F->latex_matrix(ost, f_elements_exponential, symbol_for_print,
+		F->Io->latex_matrix(ost, f_elements_exponential, symbol_for_print,
 			Grass->M, k, n);
 		ost << "\\right]" << endl;
 		ost << "$$" << endl << endl;
@@ -1661,11 +1667,13 @@ void spread_domain::HMO(
 
 
 	if (f_v) {
-		cout << "spread_domain::HMO before Grass->get_spread_matrices" << endl;
+		cout << "spread_domain::HMO "
+				"before Grass->get_spread_matrices" << endl;
 	}
 	Grass->get_spread_matrices(G, H, data, verbose_level);
 	if (f_v) {
-		cout << "spread_domain::HMO after Grass->get_spread_matrices" << endl;
+		cout << "spread_domain::HMO "
+				"after Grass->get_spread_matrices" << endl;
 	}
 
 
@@ -1680,14 +1688,16 @@ void spread_domain::HMO(
 	Sub = NEW_OBJECT(field_theory::subfield_structure);
 
 	if (f_v) {
-		cout << "spread_domain::HMO before Fq2->finite_field_init_small_order" << endl;
+		cout << "spread_domain::HMO "
+				"before Fq2->finite_field_init_small_order" << endl;
 	}
 	Fq2->finite_field_init_small_order(q2,
 			FALSE /* f_without_tables */,
 			FALSE /* f_compute_related_fields */,
 			verbose_level);
 	if (f_v) {
-		cout << "spread_domain::HMO after Fq2->finite_field_init_small_order" << endl;
+		cout << "spread_domain::HMO "
+				"after Fq2->finite_field_init_small_order" << endl;
 	}
 
 	Sub->init(Fq2, F, verbose_level);
@@ -1715,7 +1725,8 @@ void spread_domain::HMO(
 			x = Sub->components[beta * 2 + 0];
 			y = Sub->components[beta * 2 + 1];
 			if (f_v) {
-				cout << "spread_domain::HMO alpha=" << alpha << " beta=" << beta
+				cout << "spread_domain::HMO "
+						"alpha=" << alpha << " beta=" << beta
 						<< " x=" << x << " y=" << y << endl;
 			}
 			tmp1 = Ge[x * q + y];
@@ -1763,7 +1774,8 @@ void spread_domain::HMO(
 			y = h1 % q2;
 			x = (h1 - y) / q2;
 			if (f_v) {
-				cout << "spread_domain::HMO h=" << h << " x=" << x << " y=" << y << endl;
+				cout << "spread_domain::HMO "
+						"h=" << h << " x=" << x << " y=" << y << endl;
 			}
 			M[0 * 4 + 2] = x;
 			M[0 * 4 + 3] = y;
@@ -1771,7 +1783,8 @@ void spread_domain::HMO(
 			M[1 * 4 + 3] = HH[x * q2 + y];
 		}
 		if (f_v) {
-			cout << "spread_domain::HMO element " << h << ":" << endl;
+			cout << "spread_domain::HMO "
+					"element " << h << ":" << endl;
 			Int_matrix_print(M, 2, 4);
 		}
 #if 0
@@ -1781,7 +1794,8 @@ void spread_domain::HMO(
 #endif
 		Data2[h] = Gq2->rank_lint_here(M, 0);
 		if (f_v) {
-			cout << "spread_domain::HMO has rank " << Data2[h] << endl;
+			cout << "spread_domain::HMO "
+					"has rank " << Data2[h] << endl;
 		}
 	}
 

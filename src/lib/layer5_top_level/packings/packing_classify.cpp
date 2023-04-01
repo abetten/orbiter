@@ -119,10 +119,11 @@ void packing_classify::spread_table_init(
 
 	if (f_v) {
 		cout << "packing_classify::spread_table_init "
-				"dimension_of_spread_elements=" << dimension_of_spread_elements << endl;
+				"dimension_of_spread_elements="
+				<< dimension_of_spread_elements << endl;
 	}
 	int n, q;
-	groups::matrix_group *Mtx;
+	algebra::matrix_group *Mtx;
 	spreads::spread_classify *T;
 
 
@@ -144,16 +145,18 @@ void packing_classify::spread_table_init(
 	SD = NEW_OBJECT(geometry::spread_domain);
 
 	if (f_v) {
-		cout << "packing_classify::spread_table_init before SD->init" << endl;
+		cout << "packing_classify::spread_table_init "
+				"before SD->init_spread_domain" << endl;
 	}
 
-	SD->init(
+	SD->init_spread_domain(
 			F,
 			n, dimension_of_spread_elements,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "packing_classify::spread_table_init after SD->init" << endl;
+		cout << "packing_classify::spread_table_init "
+				"after SD->init_spread_domain" << endl;
 	}
 
 
@@ -161,23 +164,27 @@ void packing_classify::spread_table_init(
 
 
 	if (f_v) {
-		cout << "packing_classify::spread_table_init before T->init" << endl;
+		cout << "packing_classify::spread_table_init "
+				"before T->init" << endl;
 	}
 
 
 	T->init(SD, PA, verbose_level - 1);
 
 	if (f_v) {
-		cout << "packing_classify::spread_table_init after T->init" << endl;
+		cout << "packing_classify::spread_table_init "
+				"after T->init" << endl;
 	}
 
 #if 0
 	if (f_v) {
-		cout << "packing_classify::spread_table_init before T->init2" << endl;
+		cout << "packing_classify::spread_table_init "
+				"before T->init2" << endl;
 	}
 	T->init2(Control, verbose_level);
 	if (f_v) {
-		cout << "packing_classify::spread_table_init after T->init2" << endl;
+		cout << "packing_classify::spread_table_init "
+				"after T->init2" << endl;
 	}
 #endif
 
@@ -206,7 +213,8 @@ void packing_classify::spread_table_init(
 
 
 	if (f_v) {
-		cout << "packing_classify::spread_table_init before init" << endl;
+		cout << "packing_classify::spread_table_init "
+				"before init" << endl;
 	}
 	init(
 		PA,
@@ -214,7 +222,8 @@ void packing_classify::spread_table_init(
 		TRUE,
 		verbose_level);
 	if (f_v) {
-		cout << "packing_classify::spread_table_init after init" << endl;
+		cout << "packing_classify::spread_table_init "
+				"after init" << endl;
 	}
 
 #if 0
@@ -229,11 +238,13 @@ void packing_classify::spread_table_init(
 #endif
 
 	if (f_v) {
-		cout << "packing_classify::spread_table_init before P->compute_spread_table" << endl;
+		cout << "packing_classify::spread_table_init "
+				"before P->compute_spread_table" << endl;
 	}
 	Spread_table_with_selection->compute_spread_table(verbose_level);
 	if (f_v) {
-		cout << "packing_classify::spread_table_init after P->compute_spread_table" << endl;
+		cout << "packing_classify::spread_table_init "
+				"after P->compute_spread_table" << endl;
 	}
 
 	if (f_v) {
@@ -348,8 +359,8 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 		0 /* verbose_level - 2 */);
 
 	if (f_v) {
-		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_points=" << P3->N_points << endl;
-		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_lines=" << P3->N_lines << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_points=" << P3->Subspaces->N_points << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_lines=" << P3->Subspaces->N_lines << endl;
 	}
 
 	P5 = NEW_OBJECT(geometry::projective_space);
@@ -359,8 +370,8 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 		0 /* verbose_level - 2 */);
 
 	if (f_v) {
-		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_points=" << P5->N_points << endl;
-		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_lines=" << P5->N_lines << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_points=" << P5->Subspaces->N_points << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_lines=" << P5->Subspaces->N_lines << endl;
 	}
 
 	the_packing = NEW_lint(size_of_packing);
@@ -600,60 +611,6 @@ void packing_classify::lifting_prepare_function_new(
 
 
 
-void packing_classify::report_fixed_objects(int *Elt,
-		char *fname_latex, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int i, j, cnt;
-	//int v[4];
-	//file_io Fio;
-
-	if (f_v) {
-		cout << "packing_classify::report_fixed_objects" << endl;
-	}
-
-
-	{
-		ofstream fp(fname_latex);
-		char str[1000];
-		string title, author, extra_praeamble;
-
-		orbiter_kernel_system::latex_interface L;
-
-		snprintf(str, sizeof(str), "Fixed Objects");
-		title.assign(str);
-		author.assign("");
-
-		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
-			title, author /* const char *author */,
-			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
-			extra_praeamble /* extra_praeamble */);
-		//latex_head_easy(fp);
-
-	
-		actions::action_global AcGl;
-
-		AcGl.report_fixed_objects_in_P3(fp,
-				T->A,
-				P3,
-				Elt,
-				verbose_level);
-	
-
-		L.foot(fp);
-	}
-	orbiter_kernel_system::file_io Fio;
-
-	cout << "Written file " << fname_latex << " of size "
-			<< Fio.file_size(fname_latex) << endl;
-
-	
-	if (f_v) {
-		cout << "packing::report_fixed_objects done" << endl;
-	}
-}
 
 
 int packing_classify::test_if_orbit_is_partial_packing(

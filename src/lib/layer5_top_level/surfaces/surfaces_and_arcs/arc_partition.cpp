@@ -96,12 +96,19 @@ void arc_partition::init(
 		cout << endl;
 	}
 
+	std::string label_of_set;
+
+
+	label_of_set.assign("remaining4");
+
+
 	if (f_v) {
 		cout << "arc_partition::init "
 				"creating restricted action on the arc" << endl;
 	}
 
-	A_on_rest = A_on_arc->restricted_action(arc_remainder, 4 /* nb_points */,
+	A_on_rest = A_on_arc->Induced_action->restricted_action(
+			arc_remainder, 4 /* nb_points */, label_of_set,
 			verbose_level);
 
 	if (f_v) {
@@ -109,7 +116,7 @@ void arc_partition::init(
 				"creating action on the partition" << endl;
 	}
 
-	A_on_partition = A_on_rest->induced_action_on_set_partitions(
+	A_on_partition = A_on_rest->Induced_action->induced_action_on_set_partitions(
 			2,
 			verbose_level);
 

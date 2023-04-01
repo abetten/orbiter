@@ -57,6 +57,11 @@ interface_coding_theory::interface_coding_theory()
 	random_noise_of_burst_type_in_bitmap_file_denominator = 0;
 	random_noise_of_burst_type_in_bitmap_file_burst_length = 0;
 
+	f_crc_test = FALSE;
+	//std::string crc_test_type;
+	crc_test_N = 0;
+	crc_test_k = 0;
+
 }
 
 
@@ -89,7 +94,11 @@ void interface_coding_theory::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-random_noise_of_burst_type_in_bitmap_file") == 0) {
 		cout << "-random_noise_of_burst_type_in_bitmap_file <fname_in> <fname_out> <numerator> <denominator> <burst_length>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-crc_test") == 0) {
+		cout << "-crc_test <type> <N> <k>" << endl;
+	}
 }
+
 
 int interface_coding_theory::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
@@ -126,6 +135,9 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-random_noise_of_burst_type_in_bitmap_file") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-crc_test") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -279,11 +291,25 @@ void interface_coding_theory::read_arguments(int argc,
 				<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-crc_test") == 0) {
+		f_crc_test = TRUE;
+		crc_test_type.assign(argv[++i]);
+		crc_test_N = ST.strtoi(argv[++i]);
+		crc_test_k = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-crc_test "
+					<< " " << crc_test_type
+					<< " " << crc_test_N
+				<< " " << crc_test_k
+				<< endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments done" << endl;
 	}
 }
+
 
 
 void interface_coding_theory::print()
@@ -324,6 +350,13 @@ void interface_coding_theory::print()
 			<< " " << random_noise_of_burst_type_in_bitmap_file_numerator
 			<< " " << random_noise_of_burst_type_in_bitmap_file_denominator
 			<< " " << random_noise_of_burst_type_in_bitmap_file_burst_length
+			<< endl;
+	}
+	if (f_crc_test) {
+		cout << "-crc_test "
+				<< " " << crc_test_type
+				<< " " << crc_test_N
+			<< " " << crc_test_k
 			<< endl;
 	}
 }
@@ -442,6 +475,19 @@ void interface_coding_theory::worker(int verbose_level)
 				random_noise_of_burst_type_in_bitmap_file_denominator,
 				random_noise_of_burst_type_in_bitmap_file_burst_length,
 				verbose_level);
+	}
+
+	else if (f_crc_test) {
+
+		cout << "f_crc_test" << endl;
+
+		coding_theory::crc_object CRC_object;
+
+		CRC_object.init(crc_test_type, verbose_level);
+
+		coding_theory::crc_codes CRC;
+
+		CRC.test_crc_object(&CRC_object, crc_test_N, crc_test_k, verbose_level);
 	}
 
 

@@ -191,10 +191,10 @@ void singer_cycle::init(int n,
 	//A->element_move(Elt, gens->ith(0), 0);
 	if (f_v) {
 		cout << "singer_cycle::init created Singer cycle:" << endl;
-		A->element_print_as_permutation(nice_gens->ith(0), cout);
+		A->Group_element->element_print_as_permutation(nice_gens->ith(0), cout);
 		cout << endl;
 		cout << "singer_cycle::init Singer cycle on lines:" << endl;
-		A2->element_print_as_permutation(nice_gens->ith(0), cout);
+		A2->Group_element->element_print_as_permutation(nice_gens->ith(0), cout);
 		cout << endl;
 	}
 	if (f_v) {
@@ -222,23 +222,23 @@ void singer_cycle::init_lines(int verbose_level)
 		verbose_level);
 
 
-	singer_point_list = NEW_int(P->N_points);
-	singer_point_list_inv = NEW_int(P->N_points);
+	singer_point_list = NEW_int(P->Subspaces->N_points);
+	singer_point_list_inv = NEW_int(P->Subspaces->N_points);
 	a = 0;
 	singer_point_list[0] = 0;
 	singer_point_list_inv[0] = 0;
-	for (i = 0; i < P->N_points - 1; i++) {
-		b = A->element_image_of(a, nice_gens->ith(0), 0);
+	for (i = 0; i < P->Subspaces->N_points - 1; i++) {
+		b = A->Group_element->element_image_of(a, nice_gens->ith(0), 0);
 		singer_point_list[1 + i] = b;
 		singer_point_list_inv[b] = i + 1;
 		a = b;
 	}
 
-	line = NEW_int(P->k);
+	line = NEW_int(P->Subspaces->k);
 
 	if (f_v) {
 		cout << "singer_cycle::init_lines singer_point_list:" << endl;
-		for (i = 0; i < P->N_points; i++) {
+		for (i = 0; i < P->Subspaces->N_points; i++) {
 			cout << i << " : " << singer_point_list[i] << " : ";
 			P->unrank_point(v, singer_point_list[i]);
 			Int_vec_print(cout, v, n);
@@ -248,14 +248,14 @@ void singer_cycle::init_lines(int verbose_level)
 
 	if (f_v) {
 		cout << "Lines on point P_0:" << endl;
-		for (i = 0; i < P->r; i++) {
-			a = P->Implementation->Lines_on_point[0 * P->r + i];
+		for (i = 0; i < P->Subspaces->r; i++) {
+			a = P->Subspaces->Implementation->Lines_on_point[0 * P->Subspaces->r + i];
 			cout << "Line " <<  i << " has rank " << a << ":" << endl;
-			P->Grass_lines->unrank_lint(a, 0);
-			Int_matrix_print(P->Grass_lines->M, 2, n);
+			P->Subspaces->Grass_lines->unrank_lint(a, 0);
+			Int_matrix_print(P->Subspaces->Grass_lines->M, 2, n);
 			h = 0;
-			for (j = 0; j < P->k; j++) {
-				b = P->Implementation->Lines[a * P->k + j];
+			for (j = 0; j < P->Subspaces->k; j++) {
+				b = P->Subspaces->Implementation->Lines[a * P->Subspaces->k + j];
 				c = singer_point_list_inv[b];
 				if (c != 0) {
 					line[h++] = c;
@@ -285,10 +285,10 @@ void singer_cycle::init_lines(int verbose_level)
 	line_orbit_len = NEW_int(nb_line_orbits);
 	line_orbit_first = NEW_int(nb_line_orbits);
 
-	line_orbit_label = new string[P->N_lines];
-	line_orbit_label_tex = new string[P->N_lines];
-	line_orbit = NEW_int(P->N_lines);
-	line_orbit_inv = NEW_int(P->N_lines);
+	line_orbit_label = new string[P->Subspaces->N_lines];
+	line_orbit_label_tex = new string[P->Subspaces->N_lines];
+	line_orbit = NEW_int(P->Subspaces->N_lines);
+	line_orbit_inv = NEW_int(P->Subspaces->N_lines);
 	for (i = 0; i < Sch->nb_orbits; i++) {
 		line_orbit_reps[i] = Sch->orbit[Sch->orbit_first[i]];
 		line_orbit_len[i] = Sch->orbit_len[i];
@@ -331,14 +331,14 @@ void singer_cycle::init_lines(int verbose_level)
 			}
 			line_orbit_label_tex[h].assign(str);
 
-			b = A2->element_image_of(a, nice_gens->ith(0), 0);
+			b = A2->Group_element->element_image_of(a, nice_gens->ith(0), 0);
 			a = b;
 			h++;
 		}
 	}
 	if (f_v) {
 		cout << "h=" << h << endl;
-		for (i = 0; i < P->N_lines; i++) {
+		for (i = 0; i < P->Subspaces->N_lines; i++) {
 			cout << i << " : " << line_orbit_label[i] << " : " << line_orbit[i] << endl;
 		}
 	}
@@ -347,10 +347,10 @@ void singer_cycle::init_lines(int verbose_level)
 
 	Inc = NEW_OBJECT(geometry::incidence_structure);
 
-	Inc->init_by_matrix_as_bitmatrix(P->N_points, P->N_lines, P->Implementation->Bitmatrix, 0);
+	Inc->init_by_matrix_as_bitmatrix(P->Subspaces->N_points, P->Subspaces->N_lines, P->Subspaces->Implementation->Bitmatrix, 0);
 
 	T = NEW_OBJECT(apps_combinatorics::tactical_decomposition);
-	T->init(P->N_points, P->N_lines,
+	T->init(P->Subspaces->N_points, P->Subspaces->N_lines,
 			Inc,
 			f_combined_action,
 			NULL /* Aut */,

@@ -65,7 +65,7 @@ void cubic_curve_with_action::init(
 		cout << "cubic_curve_with_action::init "
 				"creating action on lines" << endl;
 	}
-	A2 = A->induced_action_on_grassmannian(2, verbose_level);
+	A2 = A->Induced_action->induced_action_on_grassmannian(2, verbose_level);
 	if (f_v) {
 		cout << "cubic_curve_with_action::init "
 				"creating action on lines done" << endl;

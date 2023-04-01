@@ -16,14 +16,6 @@ namespace orbiter {
 namespace layer5_applications {
 namespace apps_combinatorics {
 
-#if 0
-static void difference_set_in_heisenberg_group_early_test_func(
-		long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		void *data, int verbose_level);
-#endif
-
 
 void difference_set_in_heisenberg_group::init(int n,
 		field_theory::finite_field *F,
@@ -199,9 +191,9 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	E1 = NEW_int(A->elt_size_in_int);
 
 	cout << "making element" << endl;
-	A->make_element_from_base_image(E1, A->Sims, base_image, verbose_level);
+	A->Group_element->make_element_from_base_image(E1, A->Sims, base_image, verbose_level);
 	cout << "generator has been created:" << endl;
-	A->element_print(E1, cout);
+	A->Group_element->element_print(E1, cout);
 	cout << endl;
 
 
@@ -269,10 +261,10 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	rk_E1 = N->Sims->element_rank_lint(E1);
 	cout << "rk_E1 = " << rk_E1 << endl;
 
-	N_on_orbits = NEW_OBJECT(actions::action);
+	//N_on_orbits = NEW_OBJECT(actions::action);
 
 	cout << "creating action on orbits:" << endl;
-	N_on_orbits->induced_action_on_orbits(N, Sch,
+	N_on_orbits = N->Induced_action->induced_action_on_orbits(Sch,
 		TRUE /* f_play_it_safe */,
 		verbose_level);
 
@@ -436,9 +428,16 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 			Long_pairs, nb_pairs_of_type2, 2, FALSE /* f_tex */);
 
 
+
+	std::string label_of_set;
+
+
+	label_of_set.assign("short_orbits");
+
 	cout << "creating restricted action on short orbits:" << endl;
-	A_on_short_orbits = N_on_orbits->restricted_action(
-			Short_pairs, nb_short_orbits, verbose_level);
+	A_on_short_orbits = N_on_orbits->Induced_action->restricted_action(
+			Short_pairs, nb_short_orbits, label_of_set,
+			verbose_level);
 
 
 	//create_minimal_overgroups(verbose_level);
@@ -481,7 +480,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 	cout << "making element Elt1:" << endl;
 	N->Sims->element_unrank_lint(rk_E1, Elt1, 0);
-	A->element_print(Elt1, cout);
+	A->Group_element->element_print(Elt1, cout);
 	cout << endl;
 
 
@@ -499,7 +498,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		cout << "making element" << endl;
 		N->Sims->element_unrank_lint(second_gen_idx[h], Elt2, 0);
 		cout << "second generator has been created:" << endl;
-		A->element_print(Elt2, cout);
+		A->Group_element->element_print(Elt2, cout);
 		cout << endl;
 
 
@@ -843,10 +842,13 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 			actions::action *A_on_subgroups;
 
 			cout << "creating action on the subgroups:" << endl;
-			A_on_subgroups = N->create_induced_action_on_subgroups(
+			A_on_subgroups = N->Induced_action->create_induced_action_on_subgroups(
 				N->Sims,
 				nb_subgroups, o /* group_order */,
-				Subgroups_of_order, verbose_level);
+				Subgroups_of_order,
+				verbose_level);
+
+
 			cout << "action on subgroups created:" << endl;
 			A_on_subgroups->print_info();
 
@@ -939,7 +941,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 
 				cout << "creating action on the overgroups of order "
 						<< oo << ":" << endl;
-				A_on_overgroups = N->create_induced_action_on_subgroups(
+				A_on_overgroups = N->Induced_action->create_induced_action_on_subgroups(
 					N->Sims,
 					nb_overgroups, oo /* group_order */,
 					Overgroups_of_order,

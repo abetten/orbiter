@@ -37,7 +37,8 @@ orthogonal_space_activity::~orthogonal_space_activity()
 #endif
 }
 
-void orthogonal_space_activity::init(orthogonal_space_activity_description *Descr,
+void orthogonal_space_activity::init(
+		orthogonal_space_activity_description *Descr,
 		orthogonal_space_with_action *OA,
 		int verbose_level)
 {
@@ -66,6 +67,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		cout << "orthogonal_space_activity::perform_activity" << endl;
 	}
 
+#if 0
 	if (Descr->f_create_BLT_set) {
 
 		if (f_v) {
@@ -115,6 +117,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 	}
+#endif
 
 #if 0
 	else if (Descr->f_BLT_set_starter) {
@@ -228,7 +231,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 #endif
 
 
-	else if (Descr->f_cheat_sheet_orthogonal) {
+	if (Descr->f_cheat_sheet_orthogonal) {
 
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity before OA->report" << endl;
@@ -388,7 +391,6 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		long int *pts;
 		int nb_pts;
 
-		//Lint_vec_scan(Descr->perp_text.c_str(), pts, nb_pts);
 		Get_vector_or_set(Descr->perp_text, pts, nb_pts);
 
 		if (f_v) {
@@ -400,12 +402,63 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		long int *Perp;
 		int sz;
 
+		if (nb_pts >= 2) {
 
-		OA->O->perp_of_k_points(pts, nb_pts, Perp, sz, verbose_level);
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity before OA->O->perp_of_k_points" << endl;
+			}
+			OA->O->perp_of_k_points(pts, nb_pts, Perp, sz, verbose_level);
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity after OA->O->perp_of_k_points" << endl;
+			}
 
-		cout << "The common perp of the set has size " << sz << " and is ";
+		}
+		else if (nb_pts == 1) {
+
+
+			Perp = NEW_lint(OA->O->Hyperbolic_pair->alpha * (OA->O->Quadratic_form->q + 1));
+
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity before OA->O->perp" << endl;
+			}
+			OA->O->perp(pts[0], Perp, sz, verbose_level);
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity after OA->O->perp" << endl;
+			}
+
+		}
+		else {
+			cout << "orthogonal_space_activity::perform_activity nb_pts = " << nb_pts << endl;
+			exit(1);
+		}
+
+		cout << "The perp of the set has size " << sz << endl;
+
+		cout << "The perp is the following set:" << endl;
 		Lint_vec_print_fully(cout, Perp, sz);
 		cout << endl;
+
+
+		orbiter_kernel_system::file_io Fio;
+		char str[1000];
+
+		snprintf(str, sizeof(str), "_q%d", OA->O->F->q);
+
+		string fname;
+		fname.assign("perp_of_");
+		fname.append(Descr->perp_text);
+		fname.append(str);
+		fname.append(".csv");
+
+		Fio.lint_matrix_write_csv(fname, Perp, sz, 1);
+
+
+
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
 
 		FREE_lint(Perp);
 		FREE_lint(pts);
@@ -450,18 +503,6 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 	}
 
-	if (Descr->f_intersect_with_subspace) {
-
-		if (f_v) {
-			cout << "orthogonal_space_activity::perform_activity "
-					"f_intersect_with_subspace" << endl;
-		}
-		OA->O->export_incidence_matrix_to_csv(verbose_level);
-		if (f_v) {
-			cout << "orthogonal_space_activity::perform_activity "
-					"f_intersect_with_subspace done" << endl;
-		}
-	}
 
 	if (Descr->f_intersect_with_subspace) {
 		cout << "orthogonal_space_activity::perform_activity "
@@ -497,6 +538,23 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		cout << endl;
 
 	}
+	else if (Descr->f_table_of_blt_sets) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_table_of_blt_sets" << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"before OA->make_table_of_blt_sets" << endl;
+		}
+		OA->make_table_of_blt_sets(verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"after OA->make_table_of_blt_sets" << endl;
+		}
+	}
+
 
 
 	if (f_v) {

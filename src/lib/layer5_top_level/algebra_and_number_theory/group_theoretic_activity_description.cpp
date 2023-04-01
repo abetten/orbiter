@@ -51,6 +51,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_export_magma = FALSE;
 
+	// GAP
+	f_canonical_image_GAP = FALSE;
+	//std::string canonical_image_GAP_input_set;
+
 	f_canonical_image = FALSE;
 	//std::string canonical_image_input_set;
 
@@ -111,8 +115,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_export_group_table = FALSE;
 
 
-	f_test_if_geometric = FALSE;
-	test_if_geometric_depth = 0;
+	//f_test_if_geometric = FALSE;
+	//test_if_geometric_depth = 0;
 
 	f_conjugacy_class_of = FALSE;
 	//std::string conjugacy_class_of_label;
@@ -154,6 +158,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_is_subgroup_of = FALSE;
 	f_coset_reps = FALSE;
 
+	f_evaluate_word = FALSE;
+	//std::string evaluate_word_word;
+	//std::string evaluate_word_gens;
+
 
 	// orbit stuff:
 
@@ -185,7 +193,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_classify_ovoids = FALSE;
 	Ovoid_classify_description = NULL;
 
-	f_classify_cubic_curves = FALSE;
+	//f_classify_cubic_curves = FALSE;
 
 	f_representation_on_polynomials = FALSE;
 	representation_on_polynomials_degree = 0;
@@ -291,6 +299,13 @@ int group_theoretic_activity_description::read_arguments(
 			f_export_magma = TRUE;
 			if (f_v) {
 				cout << "-export_magma " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-canonical_image_GAP") == 0) {
+			f_canonical_image_GAP = TRUE;
+			canonical_image_GAP_input_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-canonical_image_GAP " << canonical_image_GAP_input_set << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-canonical_image") == 0) {
@@ -445,6 +460,7 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-export_group_table" << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-test_if_geometric") == 0) {
 			f_test_if_geometric = TRUE;
 			test_if_geometric_depth = ST.strtoi(argv[++i]);
@@ -452,7 +468,7 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-test_if_geometric" << endl;
 			}
 		}
-
+#endif
 		else if (ST.stringcmp(argv[i], "-conjugacy_class_of") == 0) {
 			f_conjugacy_class_of = TRUE;
 			conjugacy_class_of_label.assign(argv[++i]);
@@ -564,6 +580,19 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-coset_reps " << endl;
 			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-evaluate_word") == 0) {
+			f_evaluate_word = TRUE;
+			evaluate_word_word.assign(argv[++i]);
+			evaluate_word_gens.assign(argv[++i]);
+			if (f_v) {
+				cout << "-evaluate_word "
+						<< " " << evaluate_word_word
+						<< " " << evaluate_word_gens
+						<< endl;
+			}
+		}
+
 
 		// orbit stuff:
 
@@ -717,6 +746,9 @@ void group_theoretic_activity_description::print()
 	if (f_export_magma) {
 		cout << "-export_magma " << endl;
 	}
+	if (f_canonical_image_GAP) {
+		cout << "-canonical_image_GAP " << canonical_image_GAP_input_set << endl;
+	}
 	if (f_canonical_image) {
 		cout << "-canonical_image " << canonical_image_input_set << endl;
 	}
@@ -790,9 +822,11 @@ void group_theoretic_activity_description::print()
 	if (f_export_group_table) {
 		cout << "-export_group_table" << endl;
 	}
+#if 0
 	if (f_test_if_geometric) {
 		cout << "-test_if_geometric " << test_if_geometric_depth << endl;
 	}
+#endif
 	if (f_conjugacy_class_of) {
 		cout << "-conjugacy_class_of " << conjugacy_class_of_label
 				<< " " << conjugacy_class_of_data << endl;
@@ -852,20 +886,31 @@ void group_theoretic_activity_description::print()
 	if (f_coset_reps) {
 		cout << "-coset_reps " << endl;
 	}
+	if (f_evaluate_word) {
+		cout << "-evaluate_word "
+				<< " " << evaluate_word_word
+				<< " " << evaluate_word_gens
+				<< endl;
+	}
+
+
+	// orbit stuff:
+
+
 
 
 	if (f_orbit_of) {
 		cout << "-orbit_of " << orbit_of_point_idx << endl;
-	}
-	if (f_orbit_of_set_from_file) {
-		cout << "-orbit_of_set_from_file"
-					<< orbit_of_set_from_file_fname << endl;
 	}
 	if (f_orbits_on_set_system_from_file) {
 		cout << "-orbits_on_set_system_from_file"
 				<< orbits_on_set_system_from_file_fname
 				<< " " << orbits_on_set_system_first_column << " "
 				<< orbits_on_set_system_number_of_columns << endl;
+	}
+	if (f_orbit_of_set_from_file) {
+		cout << "-orbit_of_set_from_file"
+					<< orbit_of_set_from_file_fname << endl;
 	}
 
 
@@ -885,13 +930,13 @@ void group_theoretic_activity_description::print()
 	}
 
 
+
 	// ovoids:
 
 	if (f_classify_ovoids) {
 		cout << "-classify_ovoids" << endl;
 		Ovoid_classify_description->print();
 	}
-
 
 
 	if (f_representation_on_polynomials) {

@@ -25,6 +25,9 @@ orbits_create_description::orbits_create_description()
 
 	f_on_points = FALSE;
 
+	f_on_points_with_generators = FALSE;
+	//std::string on_points_with_generators_gens_label;
+
 	f_on_subsets = FALSE;
 	on_subsets_size = 0;
 	//std::string on_subsets_poset_classification_control_label;
@@ -46,6 +49,9 @@ orbits_create_description::orbits_create_description()
 
 	f_classification_by_canonical_form = FALSE;
 	Canonical_form_classifier_description = NULL;
+
+	f_override_generators = FALSE;
+	//std::string override_generators_label;
 
 	#if 0
 	f_draw_tree = FALSE;
@@ -83,12 +89,21 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 				cout << "-on_points" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-on_points_with_generators") == 0) {
+			f_on_points_with_generators = TRUE;
+			on_points_with_generators_gens_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_points_with_generators " << on_points_with_generators_gens_label << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-on_subsets") == 0) {
 			f_on_subsets = TRUE;
 			on_subsets_size = ST.strtoi(argv[++i]);
 			on_subsets_poset_classification_control_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-on_subsets " << on_subsets_size << " " << on_subsets_poset_classification_control_label << endl;
+				cout << "-on_subsets " << on_subsets_size << " "
+						<< on_subsets_poset_classification_control_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_subspaces") == 0) {
@@ -147,7 +162,16 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 				Canonical_form_classifier_description->print();
 			}
 		}
-#if 0
+		else if (ST.stringcmp(argv[i], "-override_generators") == 0) {
+			f_override_generators = TRUE;
+			override_generators_label = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-override_generators " << override_generators_label << endl;
+			}
+		}
+
+
+	#if 0
 		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
 			f_draw_tree = TRUE;
 			draw_tree_idx = ST.strtoi(argv[++i]);
@@ -209,6 +233,9 @@ void orbits_create_description::print()
 	if (f_classification_by_canonical_form) {
 		cout << "-classification_by_canonical_form " << endl;
 		Canonical_form_classifier_description->print();
+	}
+	if (f_override_generators) {
+		cout << "-override_generators " << override_generators_label << endl;
 	}
 #if 0
 	if (f_recognize) {
