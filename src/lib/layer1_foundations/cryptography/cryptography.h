@@ -183,21 +183,27 @@ public:
 			std::string &square_root_mod_n,
 			std::vector<long int> &S,
 			int verbose_level);
-	void square_root(std::string &square_root_number,
+	void square_root(
+			std::string &square_root_number,
 			int verbose_level);
-	void square_root_mod(std::string &square_root_number,
+	void square_root_mod(
+			std::string &square_root_number,
 			std::string &mod_number, int verbose_level);
-	void reduce_primes(std::vector<int> &primes,
+	void reduce_primes(
+			std::vector<int> &primes,
 			ring_theory::longinteger_object &M,
 			int &f_found_small_factor, int &small_factor,
 			int verbose_level);
-	void do_sift_smooth(int sift_smooth_from,
+	void do_sift_smooth(
+			int sift_smooth_from,
 			int sift_smooth_len,
 			std::string &sift_smooth_factor_base,
 			int verbose_level);
-	void do_discrete_log(long int y,
+	void do_discrete_log(
+			long int y,
 			long int a, long int p, int verbose_level);
-	void do_primitive_root(long int p, int verbose_level);
+	void do_primitive_root(
+			long int p, int verbose_level);
 	void do_primitive_root_longinteger(
 			ring_theory::longinteger_object &p,
 			int verbose_level);
@@ -308,7 +314,8 @@ public:
 			ring_theory::longinteger_object &n, int k,
 		int nb_tests_solovay_strassen,
 		int f_miller_rabin_test, int verbose_level);
-	void RSA_setup(ring_theory::longinteger_object &n,
+	void RSA_setup(
+			ring_theory::longinteger_object &n,
 			ring_theory::longinteger_object &p,
 			ring_theory::longinteger_object &q,
 			ring_theory::longinteger_object &a,

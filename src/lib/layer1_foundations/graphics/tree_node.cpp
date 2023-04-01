@@ -48,7 +48,8 @@ tree_node::~tree_node()
 {
 }
 
-void tree_node::init(int depth, tree_node *parent, int f_value, int value, 
+void tree_node::init(
+		int depth, tree_node *parent, int f_value, int value,
 	int f_has_color, int color, std::string &label,
 	int verbose_level)
 {
@@ -120,7 +121,8 @@ void tree_node::compute_DFS_rank(int &rk)
 	}
 }
 
-int tree_node::find_node(int &DFS_rk, int *path, int sz, int verbose_level)
+int tree_node::find_node(
+		int &DFS_rk, int *path, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -187,7 +189,8 @@ int tree_node::find_node_and_path(
 }
 
 
-void tree_node::get_coordinates(int &idx, int *coord_xy)
+void tree_node::get_coordinates(
+		int &idx, int *coord_xy)
 {
 	int i;
 	
@@ -199,7 +202,8 @@ void tree_node::get_coordinates(int &idx, int *coord_xy)
 		}
 }
 
-void tree_node::get_coordinates_and_width(int &idx, int *coord_xyw)
+void tree_node::get_coordinates_and_width(
+		int &idx, int *coord_xyw)
 {
 	int i;
 	
@@ -223,7 +227,8 @@ void tree_node::calc_weight()
 		}
 }
 
-void tree_node::place_xy(int left, int right, int ymax, int max_depth)
+void tree_node::place_xy(
+		int left, int right, int ymax, int max_depth)
 {
 	int i, w, w0, w1, lft, rgt;
 	double dx;
@@ -245,7 +250,8 @@ void tree_node::place_xy(int left, int right, int ymax, int max_depth)
 	}
 }
 
-void tree_node::place_on_circle(int xmax, int ymax, int max_depth)
+void tree_node::place_on_circle(
+		int xmax, int ymax, int max_depth)
 {
 	int i, dy;
 	double x, y;
@@ -269,7 +275,8 @@ void tree_node::place_on_circle(int xmax, int ymax, int max_depth)
 	}
 }
 
-void tree_node::add_node(int l,
+void tree_node::add_node(
+		int l,
 		int depth, int *path, int color, std::string &label,
 		int verbose_level)
 {
@@ -333,7 +340,8 @@ void tree_node::add_node(int l,
 	children[idx]->add_node(l, depth + 1, path, color, label, verbose_level);
 }
 
-int tree_node::find_child(int val)
+int tree_node::find_child(
+		int val)
 {
 	int i;
 	
@@ -345,7 +353,8 @@ int tree_node::find_child(int val)
 	return -1;
 }
 
-void tree_node::get_values(int *v, int verbose_level)
+void tree_node::get_values(
+		int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -362,7 +371,8 @@ void tree_node::get_values(int *v, int verbose_level)
 	}
 }
 
-void tree_node::draw_edges(mp_graphics &G,
+void tree_node::draw_edges(
+		mp_graphics &G,
 		tree_draw_options *Tree_draw_options,
 		layered_graph_draw_options *Opt,
 	int f_has_parent, int parent_x, int parent_y, int max_depth,
@@ -461,7 +471,8 @@ void tree_node::draw_edges(mp_graphics &G,
 	}
 }
 
-void tree_node::draw_vertices(mp_graphics &G,
+void tree_node::draw_vertices(
+		mp_graphics &G,
 		tree_draw_options *Tree_draw_options,
 		layered_graph_draw_options *Opt,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
@@ -637,7 +648,8 @@ void tree_node::draw_vertices(mp_graphics &G,
 
 }
 
-void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i, 
+void tree_node::draw_sideways(
+		mp_graphics &G, int f_circletext, int f_i,
 	int f_has_parent, int parent_x, int parent_y, int max_depth, int f_edge_labels)
 {
 	int x, y, i;
@@ -722,7 +734,8 @@ void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i,
 }
 
 
-int tree_node::calc_y_coordinate(int ymax, int l, int max_depth)
+int tree_node::calc_y_coordinate(
+		int ymax, int l, int max_depth)
 {
 	int dy, y;
 	

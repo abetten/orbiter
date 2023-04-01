@@ -646,7 +646,7 @@ void web_of_cubic_curves::create_surface_equation_from_trihedral_pair(
 	int *The_surface_equations;
 	long int row_col_Eckardt_points[6];
 	int The_six_plane_equations[6 * 4];
-	int lambda_rk;
+	long int lambda_rk;
 
 	if (f_v) {
 		cout << "web_of_cubic_curves::create_surface_equation_from_trihedral_pair "
@@ -717,7 +717,7 @@ void web_of_cubic_curves::extract_six_curves_from_web(
 
 void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 	long int *arc6, int t_idx,
-	int &lambda, int &lambda_rk,
+	int &lambda, long int &lambda_rk,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

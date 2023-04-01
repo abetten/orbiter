@@ -544,6 +544,11 @@ public:
 	//int f_make_relation;
 	//long int make_relation_plane_rk;
 
+	int f_plane_intersection_type;
+	int plane_intersection_type_threshold;
+	std::string plane_intersection_type_input;
+
+
 	int f_plane_intersection_type_of_klein_image;
 	int plane_intersection_type_of_klein_image_threshold;
 	std::string plane_intersection_type_of_klein_image_input;

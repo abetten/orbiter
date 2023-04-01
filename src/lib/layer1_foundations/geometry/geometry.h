@@ -185,29 +185,42 @@ public:
 
 	arc_in_projective_space();
 	~arc_in_projective_space();
-	void init(projective_space *P, int verbose_level);
+	void init(
+			projective_space *P, int verbose_level);
 
-	void PG_2_8_create_conic_plus_nucleus_arc_1(long int *the_arc, int &size,
+	void PG_2_8_create_conic_plus_nucleus_arc_1(
+			long int *the_arc, int &size,
 		int verbose_level);
-	void PG_2_8_create_conic_plus_nucleus_arc_2(long int *the_arc, int &size,
+	void PG_2_8_create_conic_plus_nucleus_arc_2(
+			long int *the_arc, int &size,
 		int verbose_level);
-	void create_Maruta_Hamada_arc(long int *the_arc, int &size,
+	void create_Maruta_Hamada_arc(
+			long int *the_arc, int &size,
 		int verbose_level);
-	void create_Maruta_Hamada_arc2(long int *the_arc, int &size,
+	void create_Maruta_Hamada_arc2(
+			long int *the_arc, int &size,
 		int verbose_level);
-	void create_pasch_arc(long int *the_arc, int &size, int verbose_level);
-	void create_Cheon_arc(long int *the_arc, int &size, int verbose_level);
-	void create_regular_hyperoval(long int *the_arc, int &size,
+	void create_pasch_arc(
+			long int *the_arc, int &size, int verbose_level);
+	void create_Cheon_arc(
+			long int *the_arc, int &size, int verbose_level);
+	void create_regular_hyperoval(
+			long int *the_arc, int &size,
 		int verbose_level);
-	void create_translation_hyperoval(long int *the_arc, int &size,
+	void create_translation_hyperoval(
+			long int *the_arc, int &size,
 		int exponent, int verbose_level);
-	void create_Segre_hyperoval(long int *the_arc, int &size,
+	void create_Segre_hyperoval(
+			long int *the_arc, int &size,
 		int verbose_level);
-	void create_Payne_hyperoval(long int *the_arc, int &size,
+	void create_Payne_hyperoval(
+			long int *the_arc, int &size,
 		int verbose_level);
-	void create_Cherowitzo_hyperoval(long int *the_arc, int &size,
+	void create_Cherowitzo_hyperoval(
+			long int *the_arc, int &size,
 		int verbose_level);
-	void create_OKeefe_Penttila_hyperoval_32(long int *the_arc, int &size,
+	void create_OKeefe_Penttila_hyperoval_32(
+			long int *the_arc, int &size,
 		int verbose_level);
 
 	void arc_lifting_diophant(
@@ -295,9 +308,11 @@ public:
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,
 		int verbose_level);
-	int arc_test(long int *input_pts, int nb_pts,
+	int arc_test(
+			long int *input_pts, int nb_pts,
 		int verbose_level);
-	void compute_bisecants_and_conics(long int *arc6,
+	void compute_bisecants_and_conics(
+			long int *arc6,
 			int *&bisecants, int *&conics, int verbose_level);
 		// bisecants[15 * 3]
 		// conics[6 * 6]
@@ -336,9 +351,6 @@ public:
 	int *w4; // [6]
 	int *w5; // [6]
 
-	//int *components;
-	//int *embedding;
-	//int *pair_embedding;
 
 	long int *ovoid;
 	long int *U;
@@ -378,12 +390,18 @@ public:
 			field_theory::finite_field *FQ,
 		int f_Uab, int a, int b, 
 		int f_classical, int verbose_level);
-	void init_ovoid(int verbose_level);
-	void init_ovoid_Uab_even(int a, int b, int verbose_level);
-	void create_unital(int verbose_level);
-	void create_unital_tex(int verbose_level);
-	void create_unital_Uab_tex(int verbose_level);
-	void compute_the_design(int verbose_level);
+	void init_ovoid(
+			int verbose_level);
+	void init_ovoid_Uab_even(
+			int a, int b, int verbose_level);
+	void create_unital(
+			int verbose_level);
+	void create_unital_tex(
+			int verbose_level);
+	void create_unital_Uab_tex(
+			int verbose_level);
+	void compute_the_design(
+			int verbose_level);
 	void write_unital_to_file();
 	void get_name(std::string &name);
 
@@ -426,22 +444,30 @@ public:
 
 	decomposition();
 	~decomposition();
-	void init_inc_and_stack(incidence_structure *Inc, 
+	void init_inc_and_stack(
+			incidence_structure *Inc,
 			data_structures::partitionstack *Stack,
 		int verbose_level);
-	void init_incidence_matrix(int m, int n, int *M, 
+	void init_incidence_matrix(
+			int m, int n, int *M,
 		int verbose_level);
 		// copies the incidence matrix
-	void setup_default_partition(int verbose_level);
-	void compute_TDO(int max_depth, int verbose_level);
-	void print_row_decomposition_tex(std::ostream &ost,
+	void setup_default_partition(
+			int verbose_level);
+	void compute_TDO(
+			int max_depth, int verbose_level);
+	void print_row_decomposition_tex(
+			std::ostream &ost,
 		int f_enter_math, int f_print_subscripts, 
 		int verbose_level);
-	void print_column_decomposition_tex(std::ostream &ost,
+	void print_column_decomposition_tex(
+			std::ostream &ost,
 		int f_enter_math, int f_print_subscripts, 
 		int verbose_level);
-	void get_row_scheme(int verbose_level);
-	void get_col_scheme(int verbose_level);
+	void get_row_scheme(
+			int verbose_level);
+	void get_col_scheme(
+			int verbose_level);
 	
 };
 
@@ -490,24 +516,35 @@ public:
 
 	desarguesian_spread();
 	~desarguesian_spread();
-	void init(int n, int m, int s, 
+	void init(
+			int n, int m, int s,
 			field_theory::subfield_structure *SubS,
 		int verbose_level);
-	void calculate_spread_elements(int verbose_level);
-	void compute_intersection_type(int k, int *subspace, 
+	void calculate_spread_elements(
+			int verbose_level);
+	void compute_intersection_type(
+			int k, int *subspace,
 		int *intersection_dimensions, int verbose_level);
 	// intersection_dimensions[h]
-	void compute_shadow(int *Basis, int basis_sz, 
+	void compute_shadow(
+			int *Basis, int basis_sz,
 		int *is_in_shadow, int verbose_level);
-	void compute_linear_set(int *Basis, int basis_sz, 
+	void compute_linear_set(
+			int *Basis, int basis_sz,
 		long int *&the_linear_set, int &the_linear_set_sz,
 		int verbose_level);
-	void print_spread_element_table_tex(std::ostream &ost);
-	void print_spread_elements_tex(std::ostream &ost);
-	void print_linear_set_tex(long int *set, int sz);
-	void print_linear_set_element_tex(long int a, int sz);
-	void create_latex_report(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void print_spread_element_table_tex(
+			std::ostream &ost);
+	void print_spread_elements_tex(
+			std::ostream &ost);
+	void print_linear_set_tex(
+			long int *set, int sz);
+	void print_linear_set_element_tex(
+			long int a, int sz);
+	void create_latex_report(
+			int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 
 };
 
@@ -549,10 +586,14 @@ public:
 	void init_recursion(
 			int n, int *type, int type_len, int idx,
 			field_theory::finite_field *F, int verbose_level);
-	void unrank(long int rk, int *subspace, int verbose_level);
-	void unrank_recursion(long int rk, int *subspace, int verbose_level);
-	long int rank(int *subspace, int verbose_level);
-	long int rank_recursion(int *subspace, int *big_space, int verbose_level);
+	void unrank(
+			long int rk, int *subspace, int verbose_level);
+	void unrank_recursion(
+			long int rk, int *subspace, int verbose_level);
+	long int rank(
+			int *subspace, int verbose_level);
+	long int rank_recursion(
+			int *subspace, int *big_space, int verbose_level);
 };
 
 
@@ -961,6 +1002,11 @@ public:
 			std::string &col_objects,
 			std::string &file_name,
 			int verbose_level);
+	void plane_intersection_type(
+			geometry::projective_space *P,
+			std::string &input,
+			int threshold,
+			int verbose_level);
 	void plane_intersection_type_of_klein_image(
 			geometry::projective_space *P,
 			std::string &input,
@@ -1097,20 +1143,25 @@ public:
 
 	grassmann();
 	~grassmann();
-	void init(int n, int k,
-			field_theory::finite_field *F, int verbose_level);
-	long int nb_of_subspaces(int verbose_level);
+	void init(
+			int n, int k,
+			field_theory::finite_field *F,
+			int verbose_level);
+	long int nb_of_subspaces(
+			int verbose_level);
 	void print_single_generator_matrix_tex(
 			std::ostream &ost, long int a);
 	void print_single_generator_matrix_tex_numerical(
 			std::ostream &ost, long int a);
-	void print_set(long int *v, int len);
+	void print_set(
+			long int *v, int len);
 	void print_set_tex(
 			std::ostream &ost,
 			long int *v, int len, int verbose_level);
 	void print_set_tex_with_perp(
 			std::ostream &ost, long int *v, int len);
-	int nb_points_covered(int verbose_level);
+	int nb_points_covered(
+			int verbose_level);
 	void points_covered(
 			long int *the_points, int verbose_level);
 	void unrank_lint_here(
@@ -1123,12 +1174,16 @@ public:
 			int verbose_level);
 	void unrank_embedded_subspace_lint_here(
 			int *Basis, long int rk, int verbose_level);
-	void unrank_lint(long int rk, int verbose_level);
-	long int rank_lint(int verbose_level);
-	void unrank_longinteger_here(int *Mtx,
+	void unrank_lint(
+			long int rk, int verbose_level);
+	long int rank_lint(
+			int verbose_level);
+	void unrank_longinteger_here(
+			int *Mtx,
 			ring_theory::longinteger_object &rk,
 		int verbose_level);
-	void rank_longinteger_here(int *Mtx,
+	void rank_longinteger_here(
+			int *Mtx,
 			ring_theory::longinteger_object &rk,
 		int verbose_level);
 	void unrank_longinteger(
@@ -1164,12 +1219,18 @@ public:
 			std::ostream &ost, int *p);
 	void create_Schlaefli_graph(
 			int *&Adj, int &sz, int verbose_level);
-	long int make_special_element_zero(int verbose_level);
-	long int make_special_element_one(int verbose_level);
-	long int make_special_element_infinity(int verbose_level);
-	void make_identity_front(int *M, int verbose_level);
-	void make_identity_back(int *M, int verbose_level);
-	void copy_matrix_back(int *A, int *M, int verbose_level);
+	long int make_special_element_zero(
+			int verbose_level);
+	long int make_special_element_one(
+			int verbose_level);
+	long int make_special_element_infinity(
+			int verbose_level);
+	void make_identity_front(
+			int *M, int verbose_level);
+	void make_identity_back(
+			int *M, int verbose_level);
+	void copy_matrix_back(
+			int *A, int *M, int verbose_level);
 	void extract_matrix_from_back(
 			int *A, int *M, int verbose_level);
 	void make_spread_from_spread_set(
@@ -1192,7 +1253,8 @@ public:
 	void do_pluecker_reverse(
 			std::ostream &ost,
 			int nb_k_subspaces, int verbose_level);
-	void create_latex_report(int verbose_level);
+	void create_latex_report(
+			int verbose_level);
 	void klein_correspondence(
 			projective_space *P3,
 			//projective_space *P5,
@@ -1307,7 +1369,8 @@ public:
 	
 	hermitian();
 	~hermitian();
-	void init(field_theory::finite_field *F,
+	void init(
+			field_theory::finite_field *F,
 			int nb_vars, int verbose_level);
 	int nb_points();
 	void unrank_point(int *v, int rk);
@@ -1353,7 +1416,8 @@ public:
 
 	hjelmslev();
 	~hjelmslev();
-	void init(ring_theory::finite_ring *R,
+	void init(
+			ring_theory::finite_ring *R,
 			int n, int k, int verbose_level);
 	long int number_of_submodules();
 	void unrank_lint(int *M, long int rk, int verbose_level);
@@ -1560,30 +1624,37 @@ class incidence_structure {
 	void print_non_tactical_decomposition_scheme_tex(
 			std::ostream &ost, int f_enter_math,
 			data_structures::partitionstack &PStack);
-	void print_line(std::ostream &ost,
+	void print_line(
+			std::ostream &ost,
 			data_structures::partitionstack &P,
 		int row_cell, int i, int *col_classes, int nb_col_classes, 
 		int width, int f_labeled);
 	void print_column_labels(
 			std::ostream &ost, data_structures::partitionstack &P,
 		int *col_classes, int nb_col_classes, int width);
-	void print_hline(std::ostream &ost,
+	void print_hline(
+			std::ostream &ost,
 			data_structures::partitionstack &P,
 		int *col_classes, int nb_col_classes, 
 		int width, int f_labeled);
-	void print_partitioned(std::ostream &ost,
+	void print_partitioned(
+			std::ostream &ost,
 			data_structures::partitionstack &P, int f_labeled);
-	void point_collinearity_graph(int *Adj, int verbose_level);
+	void point_collinearity_graph(
+			int *Adj, int verbose_level);
 		// G[nb_points() * nb_points()]
-	void line_intersection_graph(int *Adj, int verbose_level);
+	void line_intersection_graph(
+			int *Adj, int verbose_level);
 		// G[nb_lines() * nb_lines()]
-	void latex_it(std::ostream &ost,
+	void latex_it(
+			std::ostream &ost,
 			data_structures::partitionstack &P);
 	void rearrange(
 			int *&Vi, int &nb_V,
 		int *&Bj, int &nb_B, int *&R, int *&X,
 		data_structures::partitionstack &P);
-	void decomposition_print_tex(std::ostream &ost,
+	void decomposition_print_tex(
+			std::ostream &ost,
 			data_structures::partitionstack &PStack,
 			int f_row_tactical, int f_col_tactical,
 		int f_detailed,
@@ -1628,7 +1699,8 @@ class incidence_structure {
 		int nb_distinguished_line_sets, 
 		int Aut_counter, int *Aut, int *Base, int Base_length, 
 		int verbose_level);
-	void print_aut_generators(int Aut_counter, int *Aut, 
+	void print_aut_generators(
+			int Aut_counter, int *Aut,
 		int Base_length, int *Base, int *Transversal_length);
 	void compute_extended_collinearity_graph(
 		int *&Adj, int &v, int *&partition, 
@@ -1658,7 +1730,8 @@ class incidence_structure {
 	data_structures::bitvector *encode_as_bitvector();
 	incidence_structure *apply_canonical_labeling(
 			long int *canonical_labeling, int verbose_level);
-	void save_as_csv(std::string &fname_csv, int verbose_level);
+	void save_as_csv(
+			std::string &fname_csv, int verbose_level);
 	void init_large_set(
 			long int *blocks,
 			int N_points, int design_b, int design_k,
@@ -1710,7 +1783,8 @@ public:
 		projective_space *P,
 		grassmann *Gr,
 		int verbose_level);
-	void compute_heighest_weight_objects(int verbose_level);
+	void compute_heighest_weight_objects(
+			int verbose_level);
 
 
 };
@@ -1779,12 +1853,18 @@ public:
 		int *&nb_pts_on_plane, 
 		int &nb_planes, 
 		int verbose_level);
-	long int point_on_quadric_embedded_in_P5(long int pt);
-	long int line_to_point_on_quadric(long int line_rk, int verbose_level);
-	void line_to_Pluecker(long int line_rk, int *v6, int verbose_level);
-	long int point_on_quadric_to_line(long int point_rk, int verbose_level);
-	void Pluecker_to_line(int *v6, int *basis_line, int verbose_level);
-	long int Pluecker_to_line_rk(int *v6, int verbose_level);
+	long int point_on_quadric_embedded_in_P5(
+			long int pt);
+	long int line_to_point_on_quadric(
+			long int line_rk, int verbose_level);
+	void line_to_Pluecker(
+			long int line_rk, int *v6, int verbose_level);
+	long int point_on_quadric_to_line(
+			long int point_rk, int verbose_level);
+	void Pluecker_to_line(
+			int *v6, int *basis_line, int verbose_level);
+	long int Pluecker_to_line_rk(
+			int *v6, int verbose_level);
 	void exterior_square_to_line(
 			int *v, int *basis_line,
 			int verbose_level);
@@ -1853,9 +1933,12 @@ public:
 	void init(
 			field_theory::finite_field *F,
 			int BLT_no, int verbose_level);
-	void points_and_lines(int verbose_level);
-	void incidence_matrix(int *&Inc, int &nb_points, 
-		int &nb_lines, int verbose_level);
+	void points_and_lines(
+			int verbose_level);
+	void incidence_matrix(
+			int *&Inc, int &nb_points,
+		int &nb_lines,
+		int verbose_level);
 	
 };
 
@@ -1916,13 +1999,18 @@ public:
 
 	object_with_canonical_form();
 	~object_with_canonical_form();
-	void print(std::ostream &ost);
-	void print_rows(std::ostream &ost,
+	void print(
+			std::ostream &ost);
+	void print_rows(
+			std::ostream &ost,
 			int f_show_incma, int verbose_level);
-	void print_tex_detailed(std::ostream &ost,
+	void print_tex_detailed(
+			std::ostream &ost,
 			int f_show_incma, int verbose_level);
-	void print_tex(std::ostream &ost, int verbose_level);
-	void get_packing_as_set_system(long int *&Sets,
+	void print_tex(
+			std::ostream &ost, int verbose_level);
+	void get_packing_as_set_system(
+			long int *&Sets,
 			int &nb_sets, int &set_size, int verbose_level);
 	void init_point_set(
 			long int *set, int sz,
@@ -2029,11 +2117,14 @@ public:
 			incidence_structure *&Inc,
 			data_structures::partitionstack *&Stack,
 			int verbose_level);
-	void encode_object(long int *&encoding, int &encoding_sz,
+	void encode_object(
+			long int *&encoding, int &encoding_sz,
 		int verbose_level);
-	void encode_object_points(long int *&encoding, int &encoding_sz,
+	void encode_object_points(
+			long int *&encoding, int &encoding_sz,
 		int verbose_level);
-	void encode_object_lines(long int *&encoding, int &encoding_sz,
+	void encode_object_lines(
+			long int *&encoding, int &encoding_sz,
 		int verbose_level);
 	void encode_object_points_and_lines(
 			long int *&encoding, int &encoding_sz,
@@ -2156,7 +2247,8 @@ public:
 	int plane_next_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4);
 	int plane_quadrangle_first_i(int *pt, int i);
 	int plane_quadrangle_next_i(int *pt, int i);
-	void coordinatize_plane(int O, int I, int X, int Y,
+	void coordinatize_plane(
+			int O, int I, int X, int Y,
 			int *MOLS, int verbose_level);
 	// needs pt_labels, points, pts_on_line_x_eq_y, pts_on_line_x_eq_y_labels, 
 	// lines_through_X, lines_through_Y, pts_on_line, MOLS to be allocated
@@ -2166,12 +2258,17 @@ public:
 	int ternary_field_is_linear(int *MOLS, int verbose_level);
 	void print_MOLS(std::ostream &ost);
 
-	int is_projective_plane(data_structures::partitionstack &P,
+	int is_projective_plane(
+			data_structures::partitionstack &P,
 			int &order, int verbose_level);
 		// if it is a projective plane, the order is returned.
 		// otherwise, 0 is returned.
-	int count_RC(data_structures::partitionstack &P, int row_cell, int col_cell);
-	int count_CR(data_structures::partitionstack &P, int col_cell, int row_cell);
+	int count_RC(
+			data_structures::partitionstack &P,
+			int row_cell, int col_cell);
+	int count_CR(
+			data_structures::partitionstack &P,
+			int col_cell, int row_cell);
 	int count_RC_representative(
 			data_structures::partitionstack &P,
 		int row_cell, int row_cell_pt, int col_cell);
@@ -2330,9 +2427,9 @@ public:
 	void PG_element_unrank_gary_cook(
 			int *v, int len, int a);
 	void PG_element_rank_modified(
-			int *v, int stride, int len, int &a);
+			int *v, int stride, int len, long int &a);
 	void PG_element_unrank_modified(
-			int *v, int stride, int len, int a);
+			int *v, int stride, int len, long int a);
 	void PG_element_rank_modified_lint(
 			int *v, int stride, int len, long int &a);
 	void PG_elements_unrank_lint(
@@ -2694,7 +2791,7 @@ public:
 		long int point_rk, long int plane_rk,
 		long int *line_pencil, int verbose_level);
 	int create_point_on_line(
-		long int line_rk, int pt_rk, int verbose_level);
+		long int line_rk, long int pt_rk, int verbose_level);
 	// pt_rk is between 0 and q-1.
 	void make_incidence_matrix(int &m, int &n,
 		int *&Inc, int verbose_level);
@@ -2820,6 +2917,17 @@ public:
 			long int *Lines, int nb_lines,
 			long int *&Plane_ranks,
 			int &nb_planes_on_one_line, int verbose_level);
+	void plane_intersection(
+			int plane_rank,
+			long int *set, int set_size,
+			std::vector<int> &point_indices,
+			std::vector<int> &point_local_coordinates,
+			int verbose_level);
+	void line_intersection(
+			int line_rank,
+			long int *set, int set_size,
+			std::vector<int> &point_indices,
+			int verbose_level);
 
 };
 
@@ -2905,13 +3013,13 @@ public:
 		intersection_type *&Int_type,
 		int verbose_level);
 	int plane_intersections(
-			grassmann *G,
+		grassmann *G,
 		long int *set, int set_size,
 		ring_theory::longinteger_object *&R,
 		data_structures::set_of_sets &SoS,
 		int verbose_level);
 	void plane_intersection_type_fast(
-			grassmann *G,
+		grassmann *G,
 		long int *set, int set_size,
 		ring_theory::longinteger_object *&R,
 		long int **&Pts_on_plane, int *&nb_pts_on_plane, int &len,
@@ -2922,17 +3030,6 @@ public:
 		int s,
 		std::vector<int> &plane_ranks,
 		int verbose_level);
-	void plane_intersection(
-			int plane_rank,
-			long int *set, int set_size,
-			std::vector<int> &point_indices,
-			std::vector<int> &point_local_coordinates,
-			int verbose_level);
-	void line_intersection(
-			int line_rank,
-			long int *set, int set_size,
-			std::vector<int> &point_indices,
-			int verbose_level);
 	void line_plane_incidence_matrix_restricted(
 			long int *Lines, int nb_lines,
 		int *&M, int &nb_planes, int verbose_level);

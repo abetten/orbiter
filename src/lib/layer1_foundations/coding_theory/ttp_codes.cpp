@@ -686,7 +686,8 @@ void ttp_codes::make_tensor_code_9dimensional_as_point_set(
 
 	the_set = NEW_int(length);
 
-	int pt[9], rk;
+	int pt[9];
+	long int rk;
 
 	for (t = 0; t < length; t++) {
 		for (i = 0; i < 9; i++) {

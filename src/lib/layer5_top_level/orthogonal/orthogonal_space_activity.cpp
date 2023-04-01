@@ -271,14 +271,14 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 		if (f_v) {
-			cout << "orthogonal_space_activity::perform_activity before OA->report_point_set" << endl;
+			cout << "orthogonal_space_activity::perform_activity before OA->O->report_point_set" << endl;
 		}
-		OA->report_point_set(
+		OA->O->report_point_set(
 				Pts, nb_pts,
 				label_txt,
 				verbose_level);
 		if (f_v) {
-			cout << "orthogonal_space_activity::perform_activity after OA->report_point_set" << endl;
+			cout << "orthogonal_space_activity::perform_activity after OA->O->report_point_set" << endl;
 		}
 
 		FREE_lint(Pts);
@@ -304,17 +304,17 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 		if (f_v) {
-			cout << "orthogonal_space_activity::perform_activity before OA->report_line_set" << endl;
+			cout << "orthogonal_space_activity::perform_activity before OA->O->report_line_set" << endl;
 		}
 
 
-		OA->report_line_set(
+		OA->O->report_line_set(
 				Lines, nb_lines,
 				label_txt,
 				verbose_level);
 
 		if (f_v) {
-			cout << "orthogonal_space_activity::perform_activity after OA->report_line_set" << endl;
+			cout << "orthogonal_space_activity::perform_activity after OA->O->report_line_set" << endl;
 		}
 
 		FREE_lint(Lines);

@@ -978,6 +978,132 @@ long int quadratic_form::rank_point(
 	return a;
 }
 
+void quadratic_form::make_collinearity_graph(
+		int *&Adj, int &N,
+		long int *Set, int sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quadratic_form::make_collinearity_graph" << endl;
+	}
+
+	int i, j;
+	int d, nb_e, nb_inc;
+	int *v1, *v2;
+	long int Nb_points;
+
+
+	d = n; // algebraic dimension
+
+	v1 = NEW_int(d);
+	v2 = NEW_int(d);
+
+	if (f_v) {
+		cout << "quadratic_form::make_collinearity_graph" << endl;
+	}
+
+
+	Nb_points = nb_points;
+
+	if (f_v) {
+		cout << "quadratic_form::make_collinearity_graph "
+				"number of points = " << Nb_points << endl;
+	}
+
+	N = sz;
+
+	if (f_v) {
+		cout << "quadratic_form::make_collinearity_graph field:" << endl;
+		F->Io->print();
+	}
+
+
+
+
+#if 0
+	if (f_list_points) {
+		for (i = 0; i < N; i++) {
+			F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+			cout << i << " : ";
+			int_vec_print(cout, v, n + 1);
+			j = F->Q_epsilon_rank(v, 1, epsilon, n, c1, c2, c3, 0 /* verbose_level */);
+			cout << " : " << j << endl;
+
+			}
+		}
+#endif
+
+
+	if (f_v) {
+		cout << "quadratic_form::make_collinearity_graph "
+				"allocating adjacency matrix" << endl;
+	}
+	Adj = NEW_int(N * N);
+	if (f_v) {
+		cout << "quadratic_form::make_collinearity_graph "
+				"allocating adjacency matrix was successful" << endl;
+	}
+
+	long int a, b;
+	int val;
+
+
+	for (i = 0; i < sz; i++) {
+
+		a = Set[i];
+
+		if (a < 0 || a >= Nb_points) {
+			cout << "quadratic_form::make_collinearity_graph out of range" << endl;
+			exit(1);
+		}
+	}
+
+	nb_e = 0;
+	nb_inc = 0;
+	for (i = 0; i < sz; i++) {
+
+		a = Set[i];
+
+
+		unrank_point(v1, a, 0 /* verbose_level */);
+
+		for (j = i + 1; j < sz; j++) {
+
+			b = Set[j];
+
+			unrank_point(v2, b, 0 /* verbose_level */);
+
+			val = evaluate_bilinear_form(v1, v2, 1);
+
+			if (val == 0) {
+				nb_e++;
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+			}
+			else {
+				Adj[i * N + j] = 0;
+				Adj[j * N + i] = 0;
+				nb_inc++;
+			}
+		}
+		Adj[i * N + i] = 0;
+	}
+	if (f_v) {
+		cout << "quadratic_form::make_collinearity_graph "
+				"The adjacency matrix of the collinearity graph has been computed" << endl;
+	}
+
+
+	FREE_int(v1);
+	FREE_int(v2);
+
+	if (f_v) {
+		cout << "quadratic_form::make_collinearity_graph done" << endl;
+	}
+}
+
 
 }}}
 

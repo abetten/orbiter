@@ -559,6 +559,7 @@ namespace knowledge_base {
 
 namespace l1_interfaces {
 
+	class expression_parser_sajeeb;
 	class interface_gap_low;
 	class interface_magma_low;
 
@@ -624,6 +625,7 @@ namespace orthogonal_geometry {
 	class orthogonal_global;
 	class orthogonal_group;
 	class orthogonal_indexing;
+	class orthogonal_plane_invariant;
 	class orthogonal;
 	class quadratic_form_list_coding;
 	class quadratic_form;

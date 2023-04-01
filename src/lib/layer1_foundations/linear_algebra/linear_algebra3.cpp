@@ -231,7 +231,8 @@ int linear_algebra::Pluecker_43(int *x4, int *y4)
 	return Pluecker_ij(3, 2, x4, y4);
 }
 
-int linear_algebra::Pluecker_ij(int i, int j, int *x4, int *y4)
+int linear_algebra::Pluecker_ij(
+		int i, int j, int *x4, int *y4)
 {
 	return F->add(F->mult(x4[i], y4[j]), F->negate(F->mult(x4[j], y4[i])));
 }

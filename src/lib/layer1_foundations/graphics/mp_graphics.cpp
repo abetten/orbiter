@@ -839,7 +839,8 @@ void mp_graphics::draw_axes_and_grid(
 
 }
 
-void mp_graphics::plot_curve(int N, int *f_DNE,
+void mp_graphics::plot_curve(
+		int N, int *f_DNE,
 		double *Dx, double *Dy, double dx, double dy)
 {
 	int *Px;
@@ -916,7 +917,8 @@ void mp_graphics::plot_curve(int N, int *f_DNE,
 }
 
 
-void mp_graphics::nice_circle(int x, int y, int rad)
+void mp_graphics::nice_circle(
+		int x, int y, int rad)
 {
 	//fp_log << "NiceCircle " << x << " " << y << " " << rad << endl;
 
@@ -928,7 +930,8 @@ void mp_graphics::nice_circle(int x, int y, int rad)
 	circle(x, y, rad);
 }
 
-void mp_graphics::grid_polygon2(grid_frame *F, 
+void mp_graphics::grid_polygon2(
+		grid_frame *F,
 	int x0, int y0, int x1, int y1)
 {
 	int *Px, *Py, *Idx;
@@ -959,7 +962,8 @@ void mp_graphics::grid_polygon2(grid_frame *F,
 	FREE_int(Idx);
 }
 
-void mp_graphics::grid_polygon4(grid_frame *F, 
+void mp_graphics::grid_polygon4(
+		grid_frame *F,
 	int x0, int y0, int x1, int y1,
 	int x2, int y2, int x3, int y3)
 {
@@ -999,7 +1003,8 @@ void mp_graphics::grid_polygon4(grid_frame *F,
 	FREE_int(Idx);
 }
 
-void mp_graphics::grid_polygon5(grid_frame *F, 
+void mp_graphics::grid_polygon5(
+		grid_frame *F,
 	int x0, int y0, int x1, int y1,
 	int x2, int y2, int x3, int y3,
 	int x4, int y4)
@@ -1044,7 +1049,8 @@ void mp_graphics::grid_polygon5(grid_frame *F,
 	FREE_int(Idx);
 }
 
-void mp_graphics::polygon(int *Px, int *Py, int n)
+void mp_graphics::polygon(
+		int *Px, int *Py, int n)
 {
 	int *Idx = NEW_int(n);
 	int i;
@@ -1057,7 +1063,8 @@ void mp_graphics::polygon(int *Px, int *Py, int n)
 	FREE_int(Idx);
 }
 
-void mp_graphics::polygon2(int *Px, int *Py, int i1, int i2)
+void mp_graphics::polygon2(
+		int *Px, int *Py, int i1, int i2)
 {
 	int Idx[2];
 	Idx[0] = i1;
@@ -1065,7 +1072,8 @@ void mp_graphics::polygon2(int *Px, int *Py, int i1, int i2)
 	polygon_idx(Px, Py, Idx, 2);
 }
 
-void mp_graphics::polygon3(int *Px, int *Py,
+void mp_graphics::polygon3(
+		int *Px, int *Py,
 		int i1, int i2, int i3)
 {
 	int Idx[3];
@@ -1075,7 +1083,8 @@ void mp_graphics::polygon3(int *Px, int *Py,
 	polygon_idx(Px, Py, Idx, 3);
 }
 
-void mp_graphics::polygon4(int *Px, int *Py,
+void mp_graphics::polygon4(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4)
 {
 	int Idx[4];
@@ -1086,7 +1095,8 @@ void mp_graphics::polygon4(int *Px, int *Py,
 	polygon_idx(Px, Py, Idx, 4);
 }
 
-void mp_graphics::polygon5(int *Px, int *Py,
+void mp_graphics::polygon5(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5)
 {
 	int Idx[5];
@@ -1099,7 +1109,8 @@ void mp_graphics::polygon5(int *Px, int *Py,
 	polygon_idx(Px, Py, Idx, 5);
 }
 
-void mp_graphics::polygon6(int *Px, int *Py,
+void mp_graphics::polygon6(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6)
 {
 	int Idx[10];
@@ -1112,7 +1123,8 @@ void mp_graphics::polygon6(int *Px, int *Py,
 	polygon_idx(Px, Py, Idx, 6);
 }
 
-void mp_graphics::polygon7(int *Px, int *Py,
+void mp_graphics::polygon7(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7)
 {
@@ -1127,7 +1139,8 @@ void mp_graphics::polygon7(int *Px, int *Py,
 	polygon_idx(Px, Py, Idx, 7);
 }
 
-void mp_graphics::polygon8(int *Px, int *Py,
+void mp_graphics::polygon8(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7, int i8)
 {
@@ -1143,7 +1156,8 @@ void mp_graphics::polygon8(int *Px, int *Py,
 	polygon_idx(Px, Py, Idx, 8);
 }
 
-void mp_graphics::polygon9(int *Px, int *Py,
+void mp_graphics::polygon9(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7, int i8, int i9)
 {
@@ -1160,7 +1174,8 @@ void mp_graphics::polygon9(int *Px, int *Py,
 	polygon_idx(Px, Py, Idx, 9);
 }
 
-void mp_graphics::polygon10(int *Px, int *Py,
+void mp_graphics::polygon10(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7, int i8, int i9, int i10)
 {
@@ -1178,7 +1193,8 @@ void mp_graphics::polygon10(int *Px, int *Py,
 	polygon_idx(Px, Py, Idx, 10);
 }
 
-void mp_graphics::polygon11(int *Px, int *Py,
+void mp_graphics::polygon11(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7, int i8, int i9, int i10, int i11)
 {
@@ -1197,7 +1213,8 @@ void mp_graphics::polygon11(int *Px, int *Py,
 	polygon_idx(Px, Py, Idx, 11);
 }
 
-void mp_graphics::polygon_idx(int *Px, int *Py, int *Idx, int n)
+void mp_graphics::polygon_idx(
+		int *Px, int *Py, int *Idx, int n)
 {
 	polygon_idx_log(Px, Py, Idx, n);
 	polygon_idx2(Px, Py, Idx, n, FALSE);

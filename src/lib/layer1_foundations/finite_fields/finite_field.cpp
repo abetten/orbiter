@@ -781,7 +781,8 @@ void finite_field::set_default_symbol_for_print()
 }
 
 
-void finite_field::init_symbol_for_print(std::string &symbol)
+void finite_field::init_symbol_for_print(
+		std::string &symbol)
 {
 	symbol_for_print.assign(symbol);
 }
@@ -814,7 +815,8 @@ int finite_field::has_quadratic_subfield()
 #endif
 }
 
-int finite_field::belongs_to_quadratic_subfield(int a)
+int finite_field::belongs_to_quadratic_subfield(
+		int a)
 {
 	if ((e % 2) != 0) {
 		cout << "finite_field::belongs_to_quadratic_subfield "
@@ -1015,7 +1017,8 @@ long int finite_field::compute_subfield_polynomial(
 	return a;
 }
 
-void finite_field::compute_subfields(int verbose_level)
+void finite_field::compute_subfields(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1066,7 +1069,8 @@ void finite_field::compute_subfields(int verbose_level)
 }
 
 
-int finite_field::find_primitive_element(int verbose_level)
+int finite_field::find_primitive_element
+(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, ord;
@@ -1077,14 +1081,17 @@ int finite_field::find_primitive_element(int verbose_level)
 	for (i = 2; i < q; i++) {
 
 		if (f_v) {
-			cout << "finite_field::find_primitive_element trying i=" << i << " / " << q << endl;
+			cout << "finite_field::find_primitive_element "
+					"trying i=" << i << " / " << q << endl;
 		}
 		if (f_v) {
-			cout << "finite_field::find_primitive_element before compute_order_of_element" << endl;
+			cout << "finite_field::find_primitive_element "
+					"before compute_order_of_element" << endl;
 		}
 		ord = compute_order_of_element(i, 0 /*verbose_level - 3*/);
 		if (f_v) {
-			cout << "finite_field::find_primitive_element after compute_order_of_element" << endl;
+			cout << "finite_field::find_primitive_element "
+					"after compute_order_of_element" << endl;
 		}
 		if (f_v) {
 			cout << "finite_field::find_primitive_element "
@@ -1130,14 +1137,16 @@ int finite_field::compute_order_of_element(
 	finite_field GFp;
 
 	if (f_v) {
-		cout << "finite_field::compute_order_of_element before GFp.finite_field_init_small_order" << endl;
+		cout << "finite_field::compute_order_of_element "
+				"before GFp.finite_field_init_small_order" << endl;
 	}
 	GFp.finite_field_init_small_order(p,
 			FALSE /* f_without_tables */,
 			FALSE /* f_compute_related_fields */,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "finite_field::compute_order_of_element after GFp.finite_field_init_small_order" << endl;
+		cout << "finite_field::compute_order_of_element "
+				"after GFp.finite_field_init_small_order" << endl;
 	}
 
 	ring_theory::unipoly_domain FX(&GFp);
@@ -1151,7 +1160,8 @@ int finite_field::compute_order_of_element(
 	}
 	{
 		if (f_v) {
-			cout << "finite_field::compute_order_of_element before defining Fq" << endl;
+			cout << "finite_field::compute_order_of_element "
+					"before defining Fq" << endl;
 		}
 		ring_theory::unipoly_domain Fq(&GFp, m, verbose_level - 1);
 		ring_theory::unipoly_object a, c, Alpha;
@@ -1256,12 +1266,14 @@ int finite_field::is_one(int i)
 	}
 }
 
-int finite_field::mult(int i, int j)
+int finite_field::mult(
+		int i, int j)
 {
 	return mult_verbose(i, j, 0);
 }
 
-int finite_field::mult_verbose(int i, int j, int verbose_level)
+int finite_field::mult_verbose(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int c;
@@ -1631,7 +1643,8 @@ void finite_field::frobenius_power_vec_to_vec(
 	}
 }
 
-int finite_field::frobenius_power(int a, int frob_power)
+int finite_field::frobenius_power(
+		int a, int frob_power)
 // computes a^{p^i}
 {
 	if (!f_has_table) {
@@ -1726,7 +1739,8 @@ int finite_field::multiplicative_order(int a)
 	return order;
 }
 
-void finite_field::all_square_roots(int a, int &nb_roots, int *roots2)
+void finite_field::all_square_roots(
+		int a, int &nb_roots, int *roots2)
 {
 	if (a == 0) {
 		nb_roots = 1;
@@ -1909,176 +1923,6 @@ void finite_field::abc2xy(
 	exit(1);
 }
 
-#if 0
-int finite_field::retract(
-		finite_field &subfield,
-		int index, int a, int verbose_level)
-{
-	int b;
-	
-	retract_int_vec(subfield, index, &a, &b, 1, verbose_level);
-	return b;
-}
-
-void finite_field::retract_int_vec(
-		finite_field &subfield,
-		int index, int *v_in, int *v_out, int len,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int a, b, i, j, idx, m, n, k;
-	number_theory::number_theory_domain NT;
-		
-	if (f_v) {
-		cout << "finite_field::retract_int_vec index=" << index << endl;
-		}
-	n = e / index;
-	m = NT.i_power_j(p, n);
-	if (m != subfield.q) {
-		cout << "finite_field::retract_int_vec subfield "
-				"order does not match" << endl;
-		exit(1);
-	}
-	idx = (q - 1) / (m - 1);
-	if (f_v) {
-		cout << "finite_field::retract_int_vec "
-				"subfield " << p << "^" << n << " = " << n << endl;
-		cout << "idx = " << idx << endl;
-	}
-		
-	for (k = 0; k < len; k++) {
-		a = v_in[k];
-		if (a == 0) {
-			v_out[k] = 0;
-			continue;
-		}
-		i = log_alpha(a);
-		if (i % idx) {
-			cout << "finite_field::retract_int_vec index=" << index
-					<< " k=" << k << " a=" << a << endl;
-			cout << "element does not lie in the subfield" << endl;
-			exit(1);
-		}
-		j = i / idx;
-		b = subfield.alpha_power(j);
-		v_out[k] = b;
-	}
-	if (f_v) {
-		cout << "finite_field::retract_int_vec done" << endl;
-	}
-}
-
-int finite_field::embed(
-		finite_field &subfield,
-		int index, int b, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int a, i, j, idx, m, n;
-	number_theory::number_theory_domain NT;
-		
-	if (f_v) {
-		cout << "finite_field::embed index=" << index
-				<< " b=" << b << endl;
-	}
-	if (b == 0) {
-		a = 0;
-		goto finish;
-	}
-	j = subfield.log_alpha(b);
-	n = e / index;
-	m = NT.i_power_j(p, n);
-	if (m != subfield.q) {
-		cout << "finite_field::embed subfield order does not match" << endl;
-		exit(1);
-	}
-	idx = (q - 1) / (m - 1);
-	if (f_v) {
-		cout << "subfield " << p << "^" << n << " = " << n << endl;
-		cout << "idx = " << idx << endl;
-	}
-	i = j * idx;
-	a = alpha_power(i);
-finish:
-	if (f_v) {
-		cout << "finite_field::embed index=" << index
-				<< " b=" << b << " a=" << a << endl;
-	}
-	return a;
-}
-
-void finite_field::subfield_embedding_2dimensional(
-		finite_field &subfield,
-	int *&components, int *&embedding, int *&pair_embedding,
-	int verbose_level)
-// we think of F as two dimensional vector space over f with basis (1,alpha)
-// for i,j \in f, with x = i + j * alpha \in F, we have 
-// pair_embedding[i * q + j] = x;
-// also, 
-// components[x * 2 + 0] = i;
-// components[x * 2 + 1] = j;
-// also, for i \in f, embedding[i] is the element in F that corresponds to i 
-// components[Q * 2]
-// embedding[q]
-// pair_embedding[q * q]
-
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 1);
-	int alpha, i, j, I, J, x, q, Q;
-	
-	if (f_v) {
-		cout << "finite_field::subfield_embedding_2dimensional" << endl;
-	}
-	Q = finite_field::q;
-	q = subfield.q;
-	components = NEW_int(Q * 2);
-	embedding = NEW_int(q);
-	pair_embedding = NEW_int(q * q);
-	alpha = p;
-	embedding[0] = 0;
-	for (i = 0; i < q * q; i++) {
-		pair_embedding[i] = -1;
-	}
-	for (i = 0; i < Q * 2; i++) {
-		components[i] = -1;
-	}
-	for (i = 1; i < q; i++) {
-		j = embed(subfield, 2, i, verbose_level - 2);
-		embedding[i] = j;
-	}
-	for (i = 0; i < q; i++) {
-		I = embed(subfield, 2, i, verbose_level - 4);
-		if (f_vv) {
-			cout << "i=" << i << " I=" << I << endl;
-		}
-		for (j = 0; j < q; j++) {
-			J = embed(subfield, 2, j, verbose_level - 4);
-			x = add(I, mult(alpha, J));
-			if (pair_embedding[i * q + j] != -1) {
-				cout << "error" << endl;
-				cout << "element (" << i << "," << j << ") embeds "
-						"as (" << I << "," << J << ") = " << x << endl;
-				exit(1);
-			}
-			pair_embedding[i * q + j] = x;
-			components[x * 2 + 0] = i;
-			components[x * 2 + 1] = j;
-			if (f_vv) {
-				cout << "element (" << i << "," << j << ") embeds "
-						"as (" << I << "," << J << ") = " << x << endl;
-			}
-		}
-	}
-	if (f_vv) {
-		print_embedding(subfield, components,
-				embedding, pair_embedding);
-	}
-	if (f_v) {
-		cout << "finite_field::subfield_embedding_2dimensional "
-				"done" << endl;
-	}
-}
-#endif
 
 int finite_field::nb_times_mult_called()
 {

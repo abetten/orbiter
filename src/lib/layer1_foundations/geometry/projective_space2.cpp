@@ -254,7 +254,8 @@ void projective_space::plane_intersection_invariant(
 		cout << "projective_space::plane_intersection_invariant "
 				"before plane_intersection_type_fast" << endl;
 	}
-	plane_intersection_type_fast(G,
+	plane_intersection_type_fast(
+			G,
 		set, set_size,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes_total,
 		verbose_level - 1);
@@ -518,25 +519,29 @@ void projective_space::plane_intersection_type_fast(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = FALSE; //(verbose_level >= 3);
-	int r, rk, rr, h, i, j, a, d, N_planes, N, N2, idx, l;
+	int idx;
+	long int r, rk, rr, h, i, j, a, d, N_planes, N, N2, intersection_sz;
 
 	int *Basis;
 	int *Basis_save;
 	int *f_subset_done;
 	int *rank_idx;
-	int *Coords;
+	int *Pt_coords;
 
 	int subset[3];
 	int subset2[3];
 	int subset3[3];
 	ring_theory::longinteger_object plane_rk, aa;
-	long int *pts_on_plane;
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
+	linear_algebra::linear_algebra LA;
 
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type_fast" << endl;
 	}
+
+	LA.init(Subspaces->F, verbose_level);
+
 	if (f_vv) {
 		Reporting->print_set_numerical(cout, set, set_size);
 	}
@@ -567,18 +572,18 @@ void projective_space::plane_intersection_type_fast(
 	Basis_save = NEW_int(4 * d);
 	rank_idx = NEW_int(N);
 	f_subset_done = NEW_int(N);
-	Coords = NEW_int(set_size * d);
+	Pt_coords = NEW_int(set_size * d);
 
 	for (i = 0; i < N; i++) {
 		f_subset_done[i] = FALSE;
 	}
 	for (i = 0; i < set_size; i++) {
-		unrank_point(Coords + i * d, set[i]);
+		unrank_point(Pt_coords + i * d, set[i]);
 	}
 	if (f_vv) {
 		cout << "projective_space::plane_intersection_type_fast "
-				"Coords:" << endl;
-		Int_matrix_print(Coords, set_size, d);
+				"Pt_coords:" << endl;
+		Int_matrix_print(Pt_coords, set_size, d);
 	}
 
 
@@ -600,7 +605,7 @@ void projective_space::plane_intersection_type_fast(
 		for (j = 0; j < 3; j++) {
 			a = subset[j];
 			//a = set[subset[j]];
-			Int_vec_copy(Coords + a * d, Basis + j * d, d);
+			Int_vec_copy(Pt_coords + a * d, Basis + j * d, d);
 			//unrank_point(Basis + j * d, a);
 		}
 		if (f_v3) {
@@ -644,6 +649,9 @@ void projective_space::plane_intersection_type_fast(
 				cout << "plane_rk=" << plane_rk
 						<< " was not found" << endl;
 			}
+
+			long int *pts_on_plane;
+
 			pts_on_plane = NEW_lint(set_size);
 			//if (f_v3) {
 				//cout << "after allocating pts_on_plane,
@@ -659,59 +667,27 @@ void projective_space::plane_intersection_type_fast(
 				Int_matrix_print(Basis_save, 3, d);
 			}
 
-			l = 0;
-			for (h = 0; h < set_size; h++) {
-				if (FALSE && f_v3) {
-					cout << "testing point " << h << ":" << endl;
-					cout << "plane_rk=" << plane_rk << endl;
-				}
-#if 0
-				plane_rk.assign_to(aa);
-				G->unrank_longinteger(aa, 0 /* verbose_level */);
-				if (f_v3) {
-					cout << "after unrank " << plane_rk << ":" << endl;
-					int_matrix_print(G->M, 3, d);
-				}
-				for (j = 0; j < 3 * d; j++) {
-					Basis[j] = G->M[j];
-				}
-#endif
-
-				Int_vec_copy(Basis_save, Basis, 3 * d);
-				//a = set[h];
-
-				Int_vec_copy(Coords + h * d, Basis + 3 * d, d);
-
-				//unrank_point(Basis + 3 * d, set[h]);
-				if (FALSE && f_v3) {
-					cout << "Basis and point:" << endl;
-					Int_matrix_print(Basis, 4, d);
-				}
-				r = Subspaces->F->Linear_algebra->rank_of_rectangular_matrix(
-						Basis,
-						4, d, 0 /* verbose_level */);
-				if (r == 3) {
-					pts_on_plane[l++] = h;
-					if (f_v3) {
-						cout << "point " << h
-								<< " is on the plane" << endl;
-					}
-				}
-				else {
-					if (FALSE && f_v3) {
-						cout << "point " << h
-								<< " is not on the plane" << endl;
-					}
-				}
-			}
 
 
-			if (l >= 3) {
+			LA.intersect_with_subspace(
+					Pt_coords, set_size /* nb_pts */,
+					Basis_save, Basis, 3, d,
+					pts_on_plane /* Intersection_idx */,
+					intersection_sz,
+					verbose_level);
+			// Pt_coords[nb_pts * n]
+			// Basis_save[m * n]
+			// Basis[(m + 1) * n]
+			// Intersection_idx[nb_pts]
+
+
+
+			if (intersection_sz >= 3) {
 				if (f_vv) {
-					cout << "We found an " << l << "-plane, "
+					cout << "We found an " << intersection_sz << "-plane, "
 							"its rank is " << plane_rk << endl;
 					cout << "The ranks of points on that plane are : ";
-					Lint_vec_print(cout, pts_on_plane, l);
+					Lint_vec_print(cout, pts_on_plane, intersection_sz);
 					cout << endl;
 				}
 
@@ -736,9 +712,9 @@ void projective_space::plane_intersection_type_fast(
 
 
 
-				N2 = Combi.int_n_choose_k(l, 3);
+				N2 = Combi.int_n_choose_k(intersection_sz, 3);
 				for (i = 0; i < N2; i++) {
-					Combi.unrank_k_subset(i, subset2, l, 3);
+					Combi.unrank_k_subset(i, subset2, intersection_sz, 3);
 					for (h = 0; h < 3; h++) {
 						subset3[h] = pts_on_plane[subset2[h]];
 					}
@@ -764,7 +740,7 @@ void projective_space::plane_intersection_type_fast(
 					}
 				}
 				Pts_on_plane[idx] = pts_on_plane;
-				nb_pts_on_plane[idx] = l;
+				nb_pts_on_plane[idx] = intersection_sz;
 			}
 			else {
 				// now l <= 2, we skip those planes:
@@ -780,7 +756,7 @@ void projective_space::plane_intersection_type_fast(
 	FREE_int(Basis_save);
 	FREE_int(f_subset_done);
 	FREE_int(rank_idx);
-	FREE_int(Coords);
+	FREE_int(Pt_coords);
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type_fast done" << endl;
 	}
@@ -870,7 +846,8 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 		}
 	} // rk
 	if (f_v) {
-		cout << "projective_space::find_planes_which_intersect_in_at_least_s_points we found "
+		cout << "projective_space::find_planes_which_intersect_in_at_least_s_points "
+				"we found "
 				<< plane_ranks.size() << " planes which intersect "
 						"in at least " << s << " points" << endl;
 	}
@@ -883,138 +860,6 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 				"done" << endl;
 	}
 }
-
-void projective_space::plane_intersection(
-		int plane_rank,
-		long int *set, int set_size,
-		vector<int> &point_indices,
-		vector<int> &point_local_coordinates,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int r, i, u, d;
-
-	int *Basis;
-	int *Basis_save;
-	int *Coords;
-	int base_cols[3];
-	int coefficients[3];
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "projective_space::plane_intersection" << endl;
-	}
-	d = Subspaces->n + 1;
-	// allocate temporary data:
-	Basis = NEW_int(4 * d);
-	Basis_save = NEW_int(4 * d);
-	Coords = NEW_int(set_size * d);
-
-	for (i = 0; i < set_size; i++) {
-		unrank_point(Coords + i * d, set[i]);
-	}
-	if (f_vv) {
-		cout << "projective_space::plane_intersection "
-				"Coords:" << endl;
-		Int_matrix_print(Coords, set_size, d);
-	}
-
-	Subspaces->Grass_planes->unrank_lint_here(
-			Basis_save, plane_rank, 0 /* verbose_level */);
-
-	int nb_pts_on_plane = 0;
-	int local_rank;
-
-	for (u = 0; u < set_size; u++) {
-		Int_vec_copy(Basis_save, Basis, 3 * d);
-		Int_vec_copy(Coords + u * d, Basis + 3 * d, d);
-		r = Subspaces->F->Linear_algebra->rank_of_rectangular_matrix(
-				Basis,
-				4, d, 0 /* verbose_level */);
-		if (r < 4) {
-			nb_pts_on_plane++;
-			point_indices.push_back(u);
-
-			Int_vec_copy(Basis_save, Basis, 3 * d);
-			Int_vec_copy(Coords + u * d, Basis + 3 * d, d);
-
-			Subspaces->F->Linear_algebra->Gauss_simple(Basis, 3, d,
-					base_cols, 0 /*verbose_level */);
-			Subspaces->F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
-				3, d, Basis, base_cols,
-				Basis + 3 * d, coefficients, verbose_level);
-			Subspaces->F->Projective_space_basic->PG_element_rank_modified(
-					coefficients, 1, 3, local_rank);
-			point_local_coordinates.push_back(local_rank);
-		}
-	}
-
-	FREE_int(Basis);
-	FREE_int(Basis_save);
-	FREE_int(Coords);
-	if (f_v) {
-		cout << "projective_space::plane_intersection "
-				"done" << endl;
-	}
-}
-
-void projective_space::line_intersection(
-		int line_rank,
-		long int *set, int set_size,
-		vector<int> &point_indices,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int r, i, u, d;
-
-	int *Basis;
-	int *Basis_save;
-	int *Coords;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "projective_space::line_intersection" << endl;
-	}
-	d = Subspaces->n + 1;
-	// allocate temporary data:
-	Basis = NEW_int(3 * d);
-	Basis_save = NEW_int(3 * d);
-	Coords = NEW_int(set_size * d);
-
-	for (i = 0; i < set_size; i++) {
-		unrank_point(Coords + i * d, set[i]);
-	}
-	if (f_vv) {
-		cout << "projective_space::line_intersection "
-				"Coords:" << endl;
-		Int_matrix_print(Coords, set_size, d);
-	}
-
-	Subspaces->Grass_lines->unrank_lint_here(
-			Basis_save, line_rank, 0 /* verbose_level */);
-
-	for (u = 0; u < set_size; u++) {
-		Int_vec_copy(Basis_save, Basis, 2 * d);
-		Int_vec_copy(Coords + u * d, Basis + 2 * d, d);
-		r = Subspaces->F->Linear_algebra->rank_of_rectangular_matrix(Basis,
-				3, d, 0 /* verbose_level */);
-		if (r < 3) {
-			point_indices.push_back(u);
-		}
-	}
-
-	FREE_int(Basis);
-	FREE_int(Basis_save);
-	FREE_int(Coords);
-	if (f_v) {
-		cout << "projective_space::line_intersection "
-				"done" << endl;
-	}
-}
-
-
 
 
 void projective_space::line_plane_incidence_matrix_restricted(
@@ -1055,7 +900,8 @@ void projective_space::line_plane_incidence_matrix_restricted(
 			Int_vec_copy(Basis, Work, 3 * (Subspaces->n + 1));
 			Int_vec_copy(the_lines + i * line_sz,
 					Work + 3 * (Subspaces->n + 1), line_sz);
-			if (Subspaces->F->Linear_algebra->Gauss_easy(Work, 5, Subspaces->n + 1) == 3) {
+			if (Subspaces->F->Linear_algebra->Gauss_easy(
+					Work, 5, Subspaces->n + 1) == 3) {
 				M[i * nb_planes + j] = 1;
 			}
 		}

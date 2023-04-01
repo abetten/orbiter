@@ -2967,7 +2967,8 @@ void cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint(
 	}
 }
 
-void cryptography_domain::square_root(std::string &square_root_number, int verbose_level)
+void cryptography_domain::square_root(
+		std::string &square_root_number, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
@@ -2990,7 +2991,8 @@ void cryptography_domain::square_root(std::string &square_root_number, int verbo
 	}
 }
 
-void cryptography_domain::square_root_mod(std::string &square_root_number,
+void cryptography_domain::square_root_mod(
+		std::string &square_root_number,
 		std::string &mod_number, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3021,7 +3023,8 @@ void cryptography_domain::square_root_mod(std::string &square_root_number,
 	}
 }
 
-void cryptography_domain::reduce_primes(std::vector<int> &primes,
+void cryptography_domain::reduce_primes(
+		std::vector<int> &primes,
 		ring_theory::longinteger_object &M,
 		int &f_found_small_factor, int &small_factor,
 		int verbose_level)
@@ -3069,7 +3072,8 @@ void cryptography_domain::reduce_primes(std::vector<int> &primes,
 }
 
 
-void cryptography_domain::do_sift_smooth(int sift_smooth_from,
+void cryptography_domain::do_sift_smooth(
+		int sift_smooth_from,
 		int sift_smooth_len,
 		std::string &sift_smooth_factor_base,
 		int verbose_level)
@@ -3118,7 +3122,8 @@ void cryptography_domain::do_sift_smooth(int sift_smooth_from,
 	}
 }
 
-void cryptography_domain::do_discrete_log(long int y,
+void cryptography_domain::do_discrete_log(
+		long int y,
 		long int a, long int p,
 		int verbose_level)
 {
@@ -3162,7 +3167,8 @@ void cryptography_domain::do_discrete_log(long int y,
 	cout << endl;
 }
 
-void cryptography_domain::do_primitive_root(long int p, int verbose_level)
+void cryptography_domain::do_primitive_root(
+		long int p, int verbose_level)
 {
 	number_theory::number_theory_domain NT;
 	long int a;
@@ -3204,7 +3210,8 @@ void cryptography_domain::do_primitive_root_longinteger(
 
 
 
-void cryptography_domain::do_smallest_primitive_root(long int p, int verbose_level)
+void cryptography_domain::do_smallest_primitive_root(
+		long int p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;

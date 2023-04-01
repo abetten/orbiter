@@ -1789,7 +1789,7 @@ void algebra_global::O4_isomorphism_4to2(
 	int a, b, c, d, e, f, g, h;
 	int ev, fv;
 	int P[4], Q[4], R[4], S[4];
-	int Rx, Ry, Sx, Sy;
+	long int Rx, Ry, Sx, Sy;
 	int /*b11,*/ b12, b13, b14;
 	int /*b21,*/ b22, b23, b24;
 	int /*b31,*/ b32, b33, b34;
@@ -2001,7 +2001,7 @@ void algebra_global::O4_isomorphism_2to4(
 
 void algebra_global::O4_grid_coordinates_rank(
 		field_theory::finite_field *F,
-		int x1, int x2, int x3, int x4, int &grid_x, int &grid_y,
+		int x1, int x2, int x3, int x4, long int &grid_x, long int &grid_y,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2098,7 +2098,9 @@ void algebra_global::O4_find_tangent_plane(
 	int f_v = (verbose_level >= 1);
 	//int A[4];
 	int C[3 * 4];
-	int size, x, y, z, xx, yy, zz, h, k;
+	int size, x, y, z;
+	long int xx, yy;
+	int zz, h, k;
 	int x1, x2, x3, x4;
 	int y1, y2, y3, y4;
 	int f_special = FALSE;

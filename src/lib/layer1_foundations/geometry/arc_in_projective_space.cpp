@@ -31,7 +31,8 @@ arc_in_projective_space::~arc_in_projective_space()
 
 }
 
-void arc_in_projective_space::init(projective_space *P, int verbose_level)
+void arc_in_projective_space::init(
+		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2344,7 +2345,8 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 	}
 }
 
-int arc_in_projective_space::arc_test(long int *input_pts, int nb_pts,
+int arc_in_projective_space::arc_test(
+		long int *input_pts, int nb_pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

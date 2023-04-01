@@ -416,7 +416,8 @@ void diophant::init_RHS(int RHS_value, int verbose_level)
 	}
 }
 
-void diophant::init_clique_finding_problem(int *Adj, int nb_pts, 
+void diophant::init_clique_finding_problem(
+		int *Adj, int nb_pts,
 	int nb_to_select, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -41,7 +41,8 @@ create_BCH_code::~create_BCH_code()
 {
 }
 
-void create_BCH_code::init(field_theory::finite_field *F,
+void create_BCH_code::init(
+		field_theory::finite_field *F,
 		int n, int d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -134,7 +135,8 @@ void create_BCH_code::init(field_theory::finite_field *F,
 }
 
 
-void create_BCH_code::do_report(int verbose_level)
+void create_BCH_code::do_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i;
@@ -204,7 +206,8 @@ void create_BCH_code::do_report(int verbose_level)
 	}
 }
 
-void create_BCH_code::report(std::ostream &ost, int verbose_level)
+void create_BCH_code::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

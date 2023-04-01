@@ -273,7 +273,8 @@ public:
 		int *Inc, int nb_to_select, int verbose_level);
 	void init_RHS(
 			int RHS_value, int verbose_level);
-	void init_clique_finding_problem(int *Adj, int nb_pts, 
+	void init_clique_finding_problem(
+			int *Adj, int nb_pts,
 		int nb_to_select, int verbose_level);
 	void fill_coefficient_matrix_with(int a);
 	void set_x_min_constant(int a);

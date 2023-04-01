@@ -7,19 +7,6 @@
 
 #include "foundations.h"
 
-//#include "../expression_parser_sajeeb/parser.tab.hpp"
-//#include "../expression_parser_sajeeb/lexer.yy.h"
-
-//#include "../expression_parser_sajeeb/Visitors/PrintVisitors/ir_tree_pretty_print_visitor.h"
-//#include "../expression_parser_sajeeb/Visitors/uminus_distribute_and_reduce_visitor.h"
-//#include "../expression_parser_sajeeb/Visitors/merge_nodes_visitor.h"
-//#include "../expression_parser_sajeeb/Visitors/LatexVisitors/ir_tree_latex_visitor_strategy.h"
-//#include "../expression_parser_sajeeb/Visitors/ToStringVisitors/ir_tree_to_string_visitor.h"
-//#include "../expression_parser_sajeeb/Visitors/remove_minus_nodes_visitor.h"
-//#include "../expression_parser_sajeeb/Visitors/ExpansionVisitors/multiplication_expansion_visitor.h"
-//#include "../expression_parser_sajeeb/Visitors/CopyVisitors/deep_copy_visitor.h"
-//#include "../expression_parser_sajeeb/Visitors/exponent_vector_visitor.h"
-//#include "../expression_parser_sajeeb/Visitors/ReductionVisitors/simplify_numerical_visitor.h"
 
 
 using namespace std;
@@ -28,28 +15,6 @@ using namespace std;
 namespace orbiter {
 namespace layer1_foundations {
 namespace expression_parser {
-
-#if 0
-void remove_minus_nodes(shared_ptr<irtree_node>& root) {
-    static remove_minus_nodes_visitor remove_minus_nodes;
-    root->accept(&remove_minus_nodes);
-}
-
-void merge_redundant_nodes(shared_ptr<irtree_node>& root) {
-    static merge_nodes_visitor merge_redundant_nodes;
-    root->accept(&merge_redundant_nodes);
-}
-
-shared_ptr<irtree_node> generate_abstract_syntax_tree(std::string& exp, managed_variables_index_table managed_variables_table) {
-    shared_ptr<irtree_node> ir_tree_root;
-    YY_BUFFER_STATE buffer = yy_scan_string( exp.c_str() );
-    yy_switch_to_buffer(buffer);
-    int result = yyparse(ir_tree_root, managed_variables_table);
-    yy_delete_buffer(buffer);
-    yylex_destroy();
-    return ir_tree_root;
-}
-#endif
 
 
 
@@ -67,12 +32,20 @@ formula::formula()
 	f_is_homogeneous = FALSE;
 	degree = 0;
 
+	f_Sajeeb = FALSE;
+	Expression_parser_sajeeb = NULL;
+
 }
 
 formula::~formula()
 {
 	if (tree) {
 		FREE_OBJECT(tree);
+	}
+	if (f_Sajeeb) {
+		if (Expression_parser_sajeeb) {
+			delete Expression_parser_sajeeb;
+		}
 	}
 }
 
@@ -88,14 +61,14 @@ void formula::print()
 }
 
 
-void formula::init(std::string &label, std::string &label_tex,
+void formula::init_formula(std::string &label, std::string &label_tex,
 		std::string &managed_variables, std::string &formula_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "formula::init" << endl;
+		cout << "formula::init_formula" << endl;
 	}
 
 	name_of_formula.assign(label);
@@ -111,8 +84,10 @@ void formula::init(std::string &label, std::string &label_tex,
 	tree = NEW_OBJECT(syntax_tree);
 
 	if (f_v) {
-		cout << "formula::init Formula " << name_of_formula << " is " << formula_text << endl;
-		cout << "formula::init Managed variables: " << managed_variables << endl;
+		cout << "formula::init_formula "
+				"Formula " << name_of_formula << " is " << formula_text << endl;
+		cout << "formula::init_formula "
+				"Managed variables: " << managed_variables << endl;
 	}
 
 	const char *p = managed_variables.c_str();
@@ -126,7 +101,8 @@ void formula::init(std::string &label, std::string &label_tex,
 
 		var.assign(str);
 		if (f_v) {
-			cout << "formula::init adding managed variable " << var << endl;
+			cout << "formula::init_formula "
+					"adding managed variable " << var << endl;
 		}
 
 		tree->managed_variables.push_back(var);
@@ -138,7 +114,8 @@ void formula::init(std::string &label, std::string &label_tex,
 	nb_managed_vars = tree->managed_variables.size();
 
 	if (f_v) {
-		cout << "formula::init Managed variables: " << endl;
+		cout << "formula::init_formula "
+				"Managed variables: " << endl;
 		for (i = 0; i < nb_managed_vars; i++) {
 			cout << i << " : " << tree->managed_variables[i] << endl;
 		}
@@ -146,16 +123,19 @@ void formula::init(std::string &label, std::string &label_tex,
 
 
 	if (f_v) {
-		cout << "formula::init Starting to parse " << name_of_formula << endl;
+		cout << "formula::init_formula "
+				"Starting to parse " << name_of_formula << endl;
 	}
 	Parser.parse(tree, formula_text, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "formula::init Parsing " << name_of_formula << " finished" << endl;
+		cout << "formula::init_formula "
+				"Parsing " << name_of_formula << " finished" << endl;
 	}
 
 
 	if (FALSE) {
-		cout << "formula::init Syntax tree:" << endl;
+		cout << "formula::init_formula "
+				"Syntax tree:" << endl;
 		tree->print(cout);
 	}
 
@@ -169,31 +149,34 @@ void formula::init(std::string &label, std::string &label_tex,
 	}
 
 	if (f_is_homogeneous) {
-		cout << "formula::init before tree->is_homogeneous" << endl;
+		cout << "formula::init_formula "
+				"before tree->is_homogeneous" << endl;
 	}
 	f_is_homogeneous = tree->is_homogeneous(degree, verbose_level - 3);
 	if (f_is_homogeneous) {
-		cout << "formula::init after tree->is_homogeneous" << endl;
+		cout << "formula::init_formula "
+				"after tree->is_homogeneous" << endl;
 	}
 
 	if (f_is_homogeneous) {
-		cout << "formula::init the formula is homogeneous of degree " << degree << endl;
+		cout << "formula::init_formula "
+				"the formula is homogeneous of degree " << degree << endl;
 	}
 
 	if (f_v) {
-		cout << "formula::init done" << endl;
+		cout << "formula::init_formula done" << endl;
 	}
 }
 
-#if 0
-void formula::init_Sajeeb(std::string &label, std::string &label_tex,
+#if 1
+void formula::init_formula_Sajeeb(std::string &label, std::string &label_tex,
 		std::string &managed_variables, std::string &formula_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "formula::init_Sajeeb" << endl;
+		cout << "formula::init_formula_Sajeeb" << endl;
 	}
 
 	name_of_formula.assign(label);
@@ -203,29 +186,52 @@ void formula::init_Sajeeb(std::string &label, std::string &label_tex,
 
 	//expression_parser Parser;
 	data_structures::string_tools ST;
-	int i;
+	//int i;
 
 	//tree = NEW_OBJECT(syntax_tree);
 
 	if (f_v) {
-		cout << "formula::init_Sajeeb Formula " << name_of_formula << " is " << formula_text << endl;
-		cout << "formula::init_Sajeeb Managed variables: " << managed_variables << endl;
+		cout << "formula::init_formula_Sajeeb "
+				"Formula " << name_of_formula << " is " << formula_text << endl;
+		cout << "formula::init_formula_Sajeeb "
+				"Managed variables: " << managed_variables << endl;
 	}
 
+	f_Sajeeb = TRUE;
+	Expression_parser_sajeeb = new l1_interfaces::expression_parser_sajeeb;
+
+	if (f_v) {
+		cout << "formula::init_formula_Sajeeb "
+				"before Expression_parser_sajeeb->init_formula" << endl;
+	}
+
+	Expression_parser_sajeeb->init_formula(
+			this,
+			verbose_level);
+
+	if (f_v) {
+		cout << "formula::init_formula_Sajeeb "
+				"after Expression_parser_sajeeb->init_formula" << endl;
+	}
+
+
+#if 0
 	managed_variables_index_table managed_variables_table;
 
 	const char *p = managed_variables.c_str();
 	char str[1000];
 
 	while (TRUE) {
-		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
+		if (!ST.s_scan_token_comma_separated(
+				&p, str, 0 /* verbose_level */)) {
 			break;
 		}
 		string var;
 
 		var.assign(str);
 		if (f_v) {
-			cout << "formula::init_Sajeeb adding managed variable " << var << endl;
+			cout << "formula::init_formula_Sajeeb "
+					"adding managed variable " << var << endl;
 		}
 
 		managed_variables_table.insert(var);
@@ -240,7 +246,8 @@ void formula::init_Sajeeb(std::string &label, std::string &label_tex,
 	//nb_managed_vars = tree->managed_variables.size();
 
 	if (f_v) {
-		cout << "formula::init_Sajeeb Managed variables: " << endl;
+		cout << "formula::init_formula_Sajeeb "
+				"Managed variables are: " << endl;
 		for (i = 0; i < nb_managed_vars; i++) {
 			//cout << i << " : " << tree->managed_variables[i] << endl;
 			//cout << i << " : " << managed_variables_table[i] << endl;
@@ -249,39 +256,79 @@ void formula::init_Sajeeb(std::string &label, std::string &label_tex,
 
 
 	if (f_v) {
-		cout << "formula::init_Sajeeb Starting to parse " << name_of_formula << endl;
+		cout << "formula::init_formula_Sajeeb "
+				"Starting to parse " << name_of_formula << endl;
 	}
 
-	shared_ptr<irtree_node> ir_tree_root = generate_abstract_syntax_tree(
-			formula_text, managed_variables_table);
+	//shared_ptr<irtree_node> ir_tree_root = generate_abstract_syntax_tree(
+	//		formula_text, managed_variables_table);
+
+    shared_ptr<irtree_node> ir_tree_root =
+    		parser::parse_expression(formula_text, managed_variables_table);
 
 
 
 	//Parser.parse(tree, formula_text, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "formula::init_Sajeeb Parsing " << name_of_formula << " finished" << endl;
+		cout << "formula::init_formula_Sajeeb "
+				"Parsing " << name_of_formula << " finished" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "formula::init_Sajeeb before remove_minus_nodes" << endl;
+		cout << "formula::init_formula_Sajeeb "
+				"before remove_minus_nodes" << endl;
 	}
-	remove_minus_nodes(ir_tree_root);
+    dispatcher::visit(ir_tree_root, remove_minus_nodes_visitor());
 	if (f_v) {
-		cout << "formula::init_Sajeeb after remove_minus_nodes" << endl;
+		cout << "formula::init_formula_Sajeeb "
+				"after remove_minus_nodes" << endl;
 	}
 
 	if (f_v) {
-		cout << "formula::init_Sajeeb before merge_redundant_nodes" << endl;
+		cout << "formula::init_formula_Sajeeb "
+				"before merge_redundant_nodes" << endl;
 	}
-	merge_redundant_nodes(ir_tree_root);
+    dispatcher::visit(ir_tree_root, merge_nodes_visitor());
 	if (f_v) {
-		cout << "formula::init_Sajeeb after merge_redundant_nodes" << endl;
+		cout << "formula::init_formula_Sajeeb "
+				"after merge_redundant_nodes" << endl;
 	}
+
+
+	f_is_homogeneous = TRUE;
+
+
+    exponent_vector_visitor evv;
+    dispatcher::visit(ir_tree_root, evv(managed_variables_table));
+#if 0
+	unordered_map<string, int> assignemnt = {
+			{"a", 4},
+			{"b", 2},
+			{"c", 2},
+			{"d", 4}
+	};
+	for (auto& it : evv.monomial_coefficient_table_) {
+		const vector<unsigned int>& vec = it.first;
+		std::cout << "[";
+		for (const auto& itit : vec) std::cout << itit << " ";
+		std::cout << "]: ";
+
+		auto root_nodes = it.second;
+		int val = 0;
+		for (auto& node : root_nodes) {
+			auto tmp = dispatcher::visit(node, evalVisitor, &Fq, assignemnt);
+			val += tmp;
+		}
+		cout << val << endl;
+	}
+#endif
+#endif
+
 
 #if 0
 	if (FALSE) {
-		cout << "formula::init_Sajeeb Syntax tree:" << endl;
+		cout << "formula::init_formula_Sajeeb Syntax tree:" << endl;
 		tree->print(cout);
 	}
 
@@ -295,20 +342,20 @@ void formula::init_Sajeeb(std::string &label, std::string &label_tex,
 	}
 
 	if (f_is_homogeneous) {
-		cout << "formula::init_Sajeeb before tree->is_homogeneous" << endl;
+		cout << "formula::init_formula_Sajeeb before tree->is_homogeneous" << endl;
 	}
 	f_is_homogeneous = tree->is_homogeneous(degree, verbose_level - 3);
 	if (f_is_homogeneous) {
-		cout << "formula::init_Sajeeb after tree->is_homogeneous" << endl;
+		cout << "formula::init_formula_Sajeeb after tree->is_homogeneous" << endl;
 	}
 
 	if (f_is_homogeneous) {
-		cout << "formula::init_Sajeeb the formula is homogeneous of degree " << degree << endl;
+		cout << "formula::init_formula_Sajeeb the formula is homogeneous of degree " << degree << endl;
 	}
 #endif
 
 	if (f_v) {
-		cout << "formula::init_Sajeeb done" << endl;
+		cout << "formula::init_formula_Sajeeb done" << endl;
 	}
 }
 #endif
@@ -332,7 +379,8 @@ int formula::is_homogeneous(int &degree, int verbose_level)
 	return TRUE;
 }
 
-void formula::get_subtrees(ring_theory::homogeneous_polynomial_domain *Poly,
+void formula::get_subtrees(
+		ring_theory::homogeneous_polynomial_domain *Poly,
 		syntax_tree_node **&Subtrees, int &nb_monomials,
 		int verbose_level)
 {
@@ -342,26 +390,47 @@ void formula::get_subtrees(ring_theory::homogeneous_polynomial_domain *Poly,
 		cout << "formula::get_subtrees" << endl;
 	}
 
-	if (!f_is_homogeneous) {
-		cout << "formula::get_subtrees !f_is_homogeneous" << endl;
-		exit(1);
+
+	if (f_Sajeeb) {
+
+
+		if (f_v) {
+			cout << "formula::get_subtrees "
+					"before Expression_parser_sajeeb->get_subtrees" << endl;
+		}
+		Expression_parser_sajeeb->get_subtrees(
+				Poly,
+				verbose_level);
+		if (f_v) {
+			cout << "formula::get_subtrees "
+					"after Expression_parser_sajeeb->get_subtrees" << endl;
+		}
+
+	}
+	else {
+		if (!f_is_homogeneous) {
+			cout << "formula::get_subtrees !f_is_homogeneous" << endl;
+			exit(1);
+		}
+
+
+		if (f_v) {
+			cout << "homogeneous of degree " << degree << endl;
+		}
+
+		if (degree != Poly->degree) {
+			cout << "formula::get_subtrees degree != Poly->degree" << endl;
+			exit(1);
+		}
+
+		//int i;
+
+		nb_monomials = Poly->get_nb_monomials();
+
+		tree->split_by_monomials(Poly, Subtrees, verbose_level);
 	}
 
 
-	if (f_v) {
-		cout << "homogeneous of degree " << degree << endl;
-	}
-
-	if (degree != Poly->degree) {
-		cout << "formula::get_subtrees degree != Poly->degree" << endl;
-		exit(1);
-	}
-
-	//int i;
-
-	nb_monomials = Poly->get_nb_monomials();
-
-	tree->split_by_monomials(Poly, Subtrees, verbose_level);
 
 #if 0
 	if (Descr->f_evaluate) {
@@ -450,8 +519,10 @@ void formula::get_subtrees(ring_theory::homogeneous_polynomial_domain *Poly,
 	}
 }
 
-void formula::evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
-		syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
+void formula::evaluate(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		syntax_tree_node **Subtrees,
+		std::string &evaluate_text, int *Values,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -477,27 +548,65 @@ void formula::evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
 
 	//Values = NEW_int(nb_monomials);
 
-	for (i = 0; i < Poly->get_nb_monomials(); i++) {
-		cout << "Monomial " << i << " : ";
-		if (Subtrees[i]) {
-			//Subtrees[i]->print_expression(cout);
-			a = Subtrees[i]->evaluate(symbol_table, Poly->get_F(), verbose_level);
-			Values[i] = a;
-			cout << a << " * ";
+
+	if (f_Sajeeb) {
+
+
+		if (f_v) {
+			cout << "formula::get_subtrees "
+					"f_Sajeeb" << endl;
+		}
+
+		if (f_v) {
+			cout << "formula::get_subtrees "
+					"before Expression_parser_sajeeb->evaluate" << endl;
+		}
+
+		Expression_parser_sajeeb->evaluate(
+				Poly,
+				symbol_table,
+				Values,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "formula::get_subtrees "
+					"after Expression_parser_sajeeb->evaluate" << endl;
+		}
+
+	}
+	else {
+
+
+		if (f_v) {
+			cout << "formula::get_subtrees "
+					"!f_Sajeeb" << endl;
+		}
+
+
+		for (i = 0; i < Poly->get_nb_monomials(); i++) {
+			cout << "Monomial " << i << " : ";
+			if (Subtrees[i]) {
+				//Subtrees[i]->print_expression(cout);
+				a = Subtrees[i]->evaluate(symbol_table, Poly->get_F(), verbose_level);
+				Values[i] = a;
+				cout << a << " * ";
+				Poly->print_monomial(cout, i);
+				cout << endl;
+			}
+			else {
+				cout << "no subtree" << endl;
+				Values[i] = 0;
+			}
+		}
+		cout << "evaluated polynomial:" << endl;
+		for (i = 0; i < Poly->get_nb_monomials(); i++) {
+			cout << Values[i] << " * ";
 			Poly->print_monomial(cout, i);
 			cout << endl;
 		}
-		else {
-			cout << "no subtree" << endl;
-			Values[i] = 0;
-		}
 	}
-	cout << "evaluated polynomial:" << endl;
-	for (i = 0; i < Poly->get_nb_monomials(); i++) {
-		cout << Values[i] << " * ";
-		Poly->print_monomial(cout, i);
-		cout << endl;
-	}
+
 	cout << "coefficient vector: ";
 	Int_vec_print(cout, Values, Poly->get_nb_monomials());
 	cout << endl;
@@ -508,12 +617,14 @@ void formula::evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
 	}
 }
 
-void formula::print(std::ostream &ost)
+void formula::print(
+		std::ostream &ost)
 {
 	tree->print(ost);
 }
 
-void formula::print_easy(field_theory::finite_field *F,
+void formula::print_easy(
+		field_theory::finite_field *F,
 		std::ostream &ost)
 {
 	if (f_is_homogeneous) {

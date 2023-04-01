@@ -61,7 +61,8 @@ void orthogonal_space_with_action::init(
 				"before P->projective_space_init" << endl;
 	}
 
-	P->projective_space_init(Descr->n - 1, Descr->F,
+	P->projective_space_init(
+			Descr->n - 1, Descr->F,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level);
 
@@ -119,7 +120,8 @@ void orthogonal_space_with_action::init(
 			cout << "orthogonal_space_with_action::init "
 					"allocating Blt_Set_domain" << endl;
 		}
-		Blt_set_domain_with_action = NEW_OBJECT(orthogonal_geometry_applications::blt_set_domain_with_action);
+		Blt_set_domain_with_action = NEW_OBJECT(
+				orthogonal_geometry_applications::blt_set_domain_with_action);
 
 
 		if (f_v) {
@@ -162,7 +164,8 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 				"A->Known_groups->init_orthogonal_group_with_O" << endl;
 	}
 
-	A->Known_groups->init_orthogonal_group_with_O(O,
+	A->Known_groups->init_orthogonal_group_with_O(
+			O,
 			TRUE /* f_on_points */,
 			FALSE /* f_on_lines */,
 			FALSE /* f_on_points_and_lines */,
@@ -300,109 +303,6 @@ void orthogonal_space_with_action::report2(
 	}
 }
 
-void orthogonal_space_with_action::report_point_set(
-		long int *Pts, int nb_pts,
-		std::string &label_txt,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::report_point_set" << endl;
-	}
-
-	{
-		string fname_report;
-		fname_report.assign(label_txt);
-		fname_report.append("_set_report.tex");
-		orbiter_kernel_system::latex_interface L;
-		orbiter_kernel_system::file_io Fio;
-
-		{
-			ofstream ost(fname_report);
-			L.head_easy(ost);
-
-			if (f_v) {
-				cout << "orthogonal_space_with_action::report_point_set "
-						"before report_given_point_set" << endl;
-			}
-			//report2(ost, LG_Draw_options, verbose_level);
-
-			O->report_given_point_set(ost, Pts, nb_pts, verbose_level);
-
-
-			if (f_v) {
-				cout << "orthogonal_space_with_action::report_point_set "
-						"after report_given_point_set" << endl;
-			}
-
-			L.foot(ost);
-		}
-
-		if (f_v) {
-			cout << "orthogonal_space_with_action::report_point_set "
-					"Written file " << fname_report << " of size "
-					<< Fio.file_size(fname_report) << endl;
-		}
-	}
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::report_point_set done" << endl;
-	}
-}
-
-
-
-void orthogonal_space_with_action::report_line_set(
-		long int *Lines, int nb_lines,
-		std::string &label_txt,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::report_line_set" << endl;
-	}
-
-	{
-		string fname_report;
-		fname_report.assign(label_txt);
-		fname_report.append("_set_of_lines_report.tex");
-		orbiter_kernel_system::latex_interface L;
-		orbiter_kernel_system::file_io Fio;
-
-		{
-			ofstream ost(fname_report);
-			L.head_easy(ost);
-
-			if (f_v) {
-				cout << "orthogonal_space_with_action::report_line_set "
-						"before report_given_line_set" << endl;
-			}
-			//report2(ost, LG_Draw_options, verbose_level);
-
-			O->report_given_line_set(ost, Lines, nb_lines, verbose_level);
-
-
-			if (f_v) {
-				cout << "orthogonal_space_with_action::report_line_set "
-						"after report_given_line_set" << endl;
-			}
-
-			L.foot(ost);
-		}
-
-		if (f_v) {
-			cout << "orthogonal_space_with_action::report_line_set "
-					"Written file " << fname_report << " of size "
-					<< Fio.file_size(fname_report) << endl;
-		}
-	}
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::report_line_set done" << endl;
-	}
-}
 
 void orthogonal_space_with_action::make_table_of_blt_sets(int verbose_level)
 {
@@ -449,149 +349,6 @@ void orthogonal_space_with_action::make_table_of_blt_sets(int verbose_level)
 		cout << "orthogonal_space_with_action::make_table_of_blt_sets done" << endl;
 	}
 
-}
-
-void orthogonal_space_with_action::make_collinearity_graph(
-		int *&Adj, int &N,
-		long int *Set, int sz,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph" << endl;
-	}
-
-	int i, j;
-	int d, nb_e, nb_inc;
-	int *v1, *v2;
-	long int Nb_points;
-	geometry::geometry_global Gg;
-	//orthogonal_geometry::quadratic_form *Quadratic_form;
-
-
-	d = O->Quadratic_form->n; // algebraic dimension
-
-	v1 = NEW_int(d);
-	v2 = NEW_int(d);
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph" << endl;
-	}
-
-
-	Nb_points = O->Quadratic_form->nb_points;
-	//Gg.nb_pts_Qepsilon(epsilon, n, F->q);
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph "
-				"number of points = " << Nb_points << endl;
-	}
-
-	N = sz;
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph field:" << endl;
-		O->Quadratic_form->F->Io->print();
-	}
-
-#if 0
-	Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph "
-				"before Quadratic_form->init" << endl;
-	}
-	Quadratic_form->init(epsilon, d, F, verbose_level);
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph "
-				"after Quadratic_form->init" << endl;
-	}
-#endif
-
-
-
-#if 0
-	if (f_list_points) {
-		for (i = 0; i < N; i++) {
-			F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
-			cout << i << " : ";
-			int_vec_print(cout, v, n + 1);
-			j = F->Q_epsilon_rank(v, 1, epsilon, n, c1, c2, c3, 0 /* verbose_level */);
-			cout << " : " << j << endl;
-
-			}
-		}
-#endif
-
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph "
-				"allocating adjacency matrix" << endl;
-	}
-	Adj = NEW_int(N * N);
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph "
-				"allocating adjacency matrix was successful" << endl;
-	}
-
-	long int a, b;
-	int val;
-
-
-	for (i = 0; i < sz; i++) {
-
-		a = Set[i];
-
-		if (a < 0 || a >= Nb_points) {
-			cout << "orthogonal_space_with_action::make_collinearity_graph out of range" << endl;
-			exit(1);
-		}
-	}
-
-	nb_e = 0;
-	nb_inc = 0;
-	for (i = 0; i < sz; i++) {
-
-		a = Set[i];
-
-
-		O->Quadratic_form->unrank_point(v1, a, 0 /* verbose_level */);
-
-		for (j = i + 1; j < sz; j++) {
-
-			b = Set[j];
-
-			O->Quadratic_form->unrank_point(v2, b, 0 /* verbose_level */);
-
-			val = O->Quadratic_form->evaluate_bilinear_form(v1, v2, 1);
-
-			if (val == 0) {
-				nb_e++;
-				Adj[i * N + j] = 1;
-				Adj[j * N + i] = 1;
-			}
-			else {
-				Adj[i * N + j] = 0;
-				Adj[j * N + i] = 0;
-				nb_inc++;
-			}
-		}
-		Adj[i * N + i] = 0;
-	}
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph "
-				"The adjacency matrix of the collinearity graph has been computed" << endl;
-	}
-
-
-	FREE_int(v1);
-	FREE_int(v2);
-	//FREE_OBJECT(Quadratic_form);
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::make_collinearity_graph done" << endl;
-	}
 }
 
 

@@ -73,7 +73,8 @@ tally_vector_data::~tally_vector_data()
 }
 
 
-void tally_vector_data::init(int *data, int data_length, int data_set_sz,
+void tally_vector_data::init(
+		int *data, int data_length, int data_set_sz,
 		int verbose_level)
 // data[data_length * data_set_sz]
 {

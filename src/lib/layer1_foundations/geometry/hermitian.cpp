@@ -64,7 +64,8 @@ hermitian::~hermitian()
 }
 
 
-void hermitian::init(field_theory::finite_field *F,
+void hermitian::init(
+		field_theory::finite_field *F,
 		int nb_vars, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -165,7 +166,7 @@ int hermitian::rank_point(int *v)
 void hermitian::list_of_points_embedded_in_PG(
 	long int *&Pts, int &nb_pts, int verbose_level)
 {
-	int i, rk;
+	long int i, rk;
 	int *v;
 
 	v = NEW_int(k);

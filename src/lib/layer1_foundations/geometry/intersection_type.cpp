@@ -68,6 +68,9 @@ void intersection_type::plane_intersection_type_slow(
 	projective_space *P,
 	grassmann *Gr,
 	int verbose_level)
+// Does a complete sweep over all planes
+// in the given projective space.
+// This is expensive.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -90,7 +93,6 @@ void intersection_type::plane_intersection_type_slow(
 	intersection_type::P = P;
 	intersection_type::Gr = Gr;
 
-	//G = Grass_planes;
 
 	if (f_vv) {
 		P->Reporting->print_set_numerical(cout, set, set_size);
@@ -107,6 +109,9 @@ void intersection_type::plane_intersection_type_slow(
 		cout << "intersection_type::plane_intersection_type_slow "
 				"N_planes=" << N_planes << endl;
 	}
+
+
+
 	// allocate data that is returned:
 	R = NEW_OBJECTS(ring_theory::longinteger_object, N_planes);
 	Pts_on_plane = NEW_plint(N_planes);
@@ -141,7 +146,8 @@ void intersection_type::plane_intersection_type_slow(
 		if (N_planes > 1000000) {
 			if ((rk % N_planes_100) == 0) {
 				cout << "intersection_type::plane_intersection_type_slow "
-						<< rk << " / " << N_planes << " = " << rk / N_planes_100 << " %" << endl;
+						<< rk << " / " << N_planes << " = "
+						<< rk / N_planes_100 << " %" << endl;
 			}
 		}
 
@@ -155,7 +161,8 @@ void intersection_type::plane_intersection_type_slow(
 		for (u = 0; u < set_size; u++) {
 			Int_vec_copy(Basis_save, Basis, 3 * d);
 			Int_vec_copy(Coords + u * d, Basis + 3 * d, d);
-			r = P->Subspaces->F->Linear_algebra->rank_of_rectangular_matrix(Basis,
+			r = P->Subspaces->F->Linear_algebra->rank_of_rectangular_matrix(
+					Basis,
 					4, d, 0 /* verbose_level */);
 			if (r < 4) {
 				pts_on_plane[nb++] = u;
@@ -184,7 +191,8 @@ void intersection_type::plane_intersection_type_slow(
 	}
 }
 
-void intersection_type::compute_heighest_weight_objects(int verbose_level)
+void intersection_type::compute_heighest_weight_objects(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -214,7 +222,9 @@ void intersection_type::compute_heighest_weight_objects(int verbose_level)
 	highest_intersection_number = C.data_sorted[f];
 
 	the_intersection_type = NEW_int(highest_intersection_number + 1);
-	Int_vec_zero(the_intersection_type, highest_intersection_number + 1);
+	Int_vec_zero(
+			the_intersection_type,
+			highest_intersection_number + 1);
 
 	for (i = 0; i < C.nb_types; i++) {
 		f = C.type_first[i];
@@ -234,7 +244,8 @@ void intersection_type::compute_heighest_weight_objects(int verbose_level)
 
 	if (f_v) {
 		cout << "intersection_type::compute_heighest_weight_objects "
-				"class with highest intersection value has size " << nb_pts << endl;
+				"class with highest intersection "
+				"value has size " << nb_pts << endl;
 		Int_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 	}
@@ -255,30 +266,42 @@ void intersection_type::compute_heighest_weight_objects(int verbose_level)
 
 	int j;
 
-	Intersection_sets = NEW_int(nb_highest_weight_objects * highest_intersection_number);
+	Intersection_sets = NEW_int(
+			nb_highest_weight_objects * highest_intersection_number);
+
 	for (i = 0; i < nb_highest_weight_objects; i++) {
 		a = Pts[i];
 		for (j = 0; j < highest_intersection_number; j++) {
-			Intersection_sets[i * highest_intersection_number + j] = Pts_on_plane[a][j];
+			Intersection_sets[i * highest_intersection_number + j]
+							  = Pts_on_plane[a][j];
 		}
 	}
 	if (f_v) {
 		cout << "intersection_type::compute_heighest_weight_objects "
 				"Intersection_sets: " << endl;
-		Int_matrix_print(Intersection_sets, nb_highest_weight_objects, highest_intersection_number);
+		Int_matrix_print(
+				Intersection_sets,
+				nb_highest_weight_objects,
+				highest_intersection_number);
 	}
 
 
 	M = NEW_OBJECT(data_structures::int_matrix);
 
-	M->allocate_and_init(nb_highest_weight_objects, highest_intersection_number, Intersection_sets);
+	M->allocate_and_init(
+			nb_highest_weight_objects,
+			highest_intersection_number,
+			Intersection_sets);
 
 	M->sort_rows(verbose_level);
 
 	if (f_v) {
 		cout << "intersection_type::compute_heighest_weight_objects "
 				"Intersection_sets sorted: " << endl;
-		Int_matrix_print(M->M, nb_highest_weight_objects, highest_intersection_number);
+		Int_matrix_print(
+				M->M,
+				nb_highest_weight_objects,
+				highest_intersection_number);
 	}
 
 

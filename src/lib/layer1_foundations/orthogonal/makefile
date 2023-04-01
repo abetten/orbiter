@@ -16,6 +16,7 @@ MODULES = \
 	orthogonal_global.o \
 	orthogonal_group.o \
 	orthogonal_indexing.o \
+	orthogonal_plane_invariant.o \
 	orthogonal_io.o \
 	orthogonal.o \
 	quadratic_form_list_coding.o \

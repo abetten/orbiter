@@ -176,6 +176,10 @@ projective_space_activity_description::projective_space_activity_description()
 	make_relation_plane_rk = 0;
 #endif
 
+	f_plane_intersection_type = FALSE;
+	plane_intersection_type_threshold = 0;
+	//std::string plane_intersection_type_input;
+
 	f_plane_intersection_type_of_klein_image = FALSE;
 	plane_intersection_type_of_klein_image_threshold = 0;
 	//std::string plane_intersection_type_of_klein_image_input;
@@ -763,6 +767,18 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 #endif
+
+		else if (ST.stringcmp(argv[i], "-plane_intersection_type") == 0) {
+			f_plane_intersection_type = TRUE;
+			plane_intersection_type_threshold = ST.strtoi(argv[++i]);
+			plane_intersection_type_input.assign(argv[++i]);
+			if (f_v) {
+				cout << "-plane_intersection_type "
+						<< plane_intersection_type_threshold
+						<< " " << plane_intersection_type_input << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-plane_intersection_type_of_klein_image") == 0) {
 			f_plane_intersection_type_of_klein_image = TRUE;
 			plane_intersection_type_of_klein_image_threshold = ST.strtoi(argv[++i]);
@@ -1206,6 +1222,13 @@ void projective_space_activity_description::print()
 		cout << "-make_relation " << make_relation_plane_rk << endl;
 	}
 #endif
+
+	if (f_plane_intersection_type) {
+		cout << "-plane_intersection_type "
+				<< plane_intersection_type_threshold
+				<< " " << plane_intersection_type_input << endl;
+	}
+
 	if (f_plane_intersection_type_of_klein_image) {
 		cout << "-plane_intersection_type_of_klein_image "
 				<< plane_intersection_type_of_klein_image_threshold

@@ -698,7 +698,8 @@ public:
 	int The_six_plane_equations[6 * 4]; // [6 * 4]
 	int *The_surface_equations; // [(q + 1) * 20]
 	long int plane6_by_dual_ranks[6];
-	int lambda, lambda_rk;
+	int lambda;
+	long int lambda_rk;
 	int t_idx;
 
 	groups::strong_generators *stab_gens_trihedral_pair; // stabilizer of trihedral pair

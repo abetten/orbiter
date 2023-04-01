@@ -379,7 +379,7 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-formula") == 0) {
 		if (f_v) {
-			cout << "-formula" << endl;
+			cout << "symbol_definition::read_definition -formula" << endl;
 		}
 		f_formula = TRUE;
 
@@ -393,7 +393,19 @@ void symbol_definition::read_definition(
 
 
 		Formula = NEW_OBJECT(expression_parser::formula);
-		Formula->init(label, label_tex, managed_variables, formula_text, verbose_level);
+		//Formula->init_formula(label, label_tex, managed_variables, formula_text, verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::read_definition "
+					"before Formula->init_formula_Sajeeb" << endl;
+		}
+		Formula->init_formula_Sajeeb(
+				label, label_tex,
+				managed_variables, formula_text,
+				verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::read_definition "
+					"after Formula->init_formula_Sajeeb" << endl;
+		}
 
 	}
 
@@ -403,7 +415,7 @@ void symbol_definition::read_definition(
 		geometric_object_projective_space_label.assign(argv[++i]);
 		Geometric_object_description = NEW_OBJECT(geometry::geometric_object_description);
 		if (f_v) {
-			cout << "reading -geometric_object" << endl;
+			cout << "symbol_definition::read_definition reading -geometric_object" << endl;
 		}
 		i += Geometric_object_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
@@ -423,7 +435,7 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-collection") == 0) {
 		if (f_v) {
-			cout << "-collection" << endl;
+			cout << "symbol_definition::read_definition -collection" << endl;
 		}
 
 		f_collection = TRUE;
@@ -437,7 +449,7 @@ void symbol_definition::read_definition(
 		f_graph = TRUE;
 		Create_graph_description = NEW_OBJECT(apps_graph_theory::create_graph_description);
 		if (f_v) {
-			cout << "reading -graph" << endl;
+			cout << "symbol_definition::read_definition reading -graph" << endl;
 		}
 
 		i += Create_graph_description->read_arguments(argc - (i + 1),
@@ -461,7 +473,7 @@ void symbol_definition::read_definition(
 		f_code = TRUE;
 		Create_code_description = NEW_OBJECT(apps_coding_theory::create_code_description);
 		if (f_v) {
-			cout << "reading -code" << endl;
+			cout << "symbol_definition::read_definition reading -code" << endl;
 		}
 
 		i += Create_code_description->read_arguments(argc - (i + 1),

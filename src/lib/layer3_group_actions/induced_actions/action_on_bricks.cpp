@@ -70,8 +70,10 @@ long int action_on_bricks::compute_image_linear_action(
 	//verbose_level = 3; // !!!
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int v[3], w[3], rk_v, rk_w;
-	int vv[3], ww[3], rk_vv, rk_ww;
+	int v[3], w[3];
+	long int rk_v, rk_w;
+	int vv[3], ww[3];
+	long int rk_vv, rk_ww;
 	long int j;
 
 	if (f_v) {

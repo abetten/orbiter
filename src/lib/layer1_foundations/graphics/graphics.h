@@ -126,14 +126,16 @@ public:
 			int h, int nb_frames, int round,
 			double clipping_radius,
 			std::ostream &fp);
-	void draw_text(std::string &text,
+	void draw_text(
+			std::string &text,
 			double thickness_half, double extra_spacing,
 			double scale,
 			double off_x, double off_y, double off_z,
 			std::string &color_options,
 			int idx_point,
 			std::ostream &ost, int verbose_level);
-	void draw_text_with_selection(int *selection, int nb_select,
+	void draw_text_with_selection(
+			int *selection, int nb_select,
 		double thickness_half, double extra_spacing,
 		double scale,
 		double off_x, double off_y, double off_z,
@@ -238,10 +240,6 @@ public:
 
 	int f_labelling_blocks;
 	std::string *block_labels;
-
-// width for one box in 0.1mm
-// width_10 is 1 10th of width
-// example: width = 40, width_10 = 4
 
 	draw_incidence_structure_description();
 	~draw_incidence_structure_description();
@@ -672,38 +670,55 @@ public:
 		int f_v_lines, int subdivide_v, 
 		int f_h_lines, int subdivide_h,
 		int verbose_level);
-	void plot_curve(int N, int *f_DNE, 
+	void plot_curve(
+			int N, int *f_DNE,
 		double *Dx, double *Dy, double dx, double dy);
-	void nice_circle(int x, int y, int rad);
-	void grid_polygon2(grid_frame *F, int x0, int y0, 
+	void nice_circle(
+			int x, int y, int rad);
+	void grid_polygon2(
+			grid_frame *F, int x0, int y0,
 		int x1, int y1);
-	void grid_polygon4(grid_frame *F, int x0, int y0, 
+	void grid_polygon4(
+			grid_frame *F, int x0, int y0,
 		int x1, int y1, int x2, int y2, int x3, int y3);
-	void grid_polygon5(grid_frame *F, int x0, int y0, 
+	void grid_polygon5(
+			grid_frame *F, int x0, int y0,
 		int x1, int y1, int x2, int y2, 
 		int x3, int y3, int x4, int y4);
-	void polygon(int *Px, int *Py, int n);
-	void polygon2(int *Px, int *Py, int i1, int i2);
-	void polygon3(int *Px, int *Py, int i1, int i2, int i3);
-	void polygon4(int *Px, int *Py, int i1, int i2, int i3, 
+	void polygon(
+			int *Px, int *Py, int n);
+	void polygon2(
+			int *Px, int *Py, int i1, int i2);
+	void polygon3(
+			int *Px, int *Py, int i1, int i2, int i3);
+	void polygon4(
+			int *Px, int *Py, int i1, int i2, int i3,
 		int i4);
-	void polygon5(int *Px, int *Py, int i1, int i2, int i3, 
+	void polygon5(
+			int *Px, int *Py, int i1, int i2, int i3,
 		int i4, int i5);
-	void polygon6(int *Px, int *Py, int i1, int i2, int i3, 
+	void polygon6(
+			int *Px, int *Py, int i1, int i2, int i3,
 		int i4, int i5, int i6);
-	void polygon7(int *Px, int *Py, int i1, int i2, int i3, 
+	void polygon7(
+			int *Px, int *Py, int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7);
-	void polygon8(int *Px, int *Py, int i1, int i2, int i3, 
+	void polygon8(
+			int *Px, int *Py, int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7, int i8);
-	void polygon9(int *Px, int *Py, int i1, int i2, int i3, 
+	void polygon9(
+			int *Px, int *Py, int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7, int i8, int i9);
-	void polygon10(int *Px, int *Py, int i1, int i2, int i3, 
+	void polygon10(
+			int *Px, int *Py, int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7, int i8, int i9, 
 		int i10);
-	void polygon11(int *Px, int *Py, int i1, int i2, int i3, 
+	void polygon11(
+			int *Px, int *Py, int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7, int i8, int i9, 
 		int i10, int i11);
-	void polygon_idx(int *Px, int *Py, int *Idx, int n);
+	void polygon_idx(
+			int *Px, int *Py, int *Idx, int n);
 	void bezier(int *Px, int *Py, int n);
 	void bezier2(int *Px, int *Py, int i1, int i2);
 	void bezier3(int *Px, int *Py, int i1, int i2, int i3);
@@ -1124,31 +1139,41 @@ public:
 
 	povray_interface();
 	~povray_interface();
-	void beginning(std::ostream &ost,
+	void beginning(
+			std::ostream &ost,
 			double angle,
 			double *sky,
 			double *location,
 			double *look_at,
 			int f_with_background);
-	void animation_rotate_around_origin_and_1_1_1(std::ostream &ost);
-	void animation_rotate_around_origin_and_given_vector(double *v,
+	void animation_rotate_around_origin_and_1_1_1(
+			std::ostream &ost);
+	void animation_rotate_around_origin_and_given_vector(
+			double *v,
 			std::ostream &ost);
 	void animation_rotate_xyz(
 		double angle_x_deg, double angle_y_deg, double angle_z_deg,
 		std::ostream &ost);
 	void animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 		double *v, double angle_zero_one, std::ostream &ost);
-	void union_start(std::ostream &ost);
-	void union_end(std::ostream &ost,
+	void union_start(
+			std::ostream &ost);
+	void union_end(
+			std::ostream &ost,
 			double scale_factor, double clipping_radius);
-	void union_end_box_clipping(std::ostream &ost, double scale_factor,
+	void union_end_box_clipping(
+			std::ostream &ost, double scale_factor,
 			double box_x, double box_y, double box_z);
-	void union_end_no_clipping(std::ostream &ost, double scale_factor);
-	void bottom_plane(std::ostream &ost);
-	void rotate_111(int h, int nb_frames, std::ostream &fp);
+	void union_end_no_clipping(
+			std::ostream &ost, double scale_factor);
+	void bottom_plane(
+			std::ostream &ost);
+	void rotate_111(
+			int h, int nb_frames, std::ostream &fp);
 	void rotate_around_z_axis(
 			int h, int nb_frames, std::ostream &fp);
-	void ini(std::ostream &ost,
+	void ini(
+			std::ostream &ost,
 			const char *fname_pov, int first_frame,
 		int last_frame);
 };
@@ -1554,25 +1579,35 @@ public:
 	scene *transformed_copy(double *A4, double *A4_inv, 
 		double rad, int verbose_level);
 	void print();
-	void transform_lines(scene *S, double *A4, double *A4_inv, 
+	void transform_lines(
+			scene *S, double *A4, double *A4_inv,
 		double rad, int verbose_level);
-	void copy_edges(scene *S, double *A4, double *A4_inv, 
+	void copy_edges(
+			scene *S, double *A4, double *A4_inv,
 		int verbose_level);
-	void transform_points(scene *S, double *A4, double *A4_inv, 
+	void transform_points(
+			scene *S, double *A4, double *A4_inv,
 		int verbose_level);
-	void transform_planes(scene *S, double *A4, double *A4_inv, 
+	void transform_planes(
+			scene *S, double *A4, double *A4_inv,
 		int verbose_level);
-	void transform_quadrics(scene *S, double *A4, double *A4_inv, 
+	void transform_quadrics(
+			scene *S, double *A4, double *A4_inv,
 		int verbose_level);
-	void transform_cubics(scene *S, double *A4, double *A4_inv, 
+	void transform_cubics(
+			scene *S, double *A4, double *A4_inv,
 		int verbose_level);
-	void transform_quartics(scene *S, double *A4, double *A4_inv,
+	void transform_quartics(
+			scene *S, double *A4, double *A4_inv,
 		int verbose_level);
-	void transform_quintics(scene *S, double *A4, double *A4_inv,
+	void transform_quintics(
+			scene *S, double *A4, double *A4_inv,
 		int verbose_level);
-	void copy_faces(scene *S, double *A4, double *A4_inv, 
+	void copy_faces(
+			scene *S, double *A4, double *A4_inv,
 		int verbose_level);
-	void points(double *Coords, int nb_points);
+	void points(
+			double *Coords, int nb_points);
 	int point_center_of_mass_of_face(int face_idx);
 	int point_center_of_mass_of_edge(int edge_idx);
 	int point_center_of_mass(int *Pt_idx, int nb_pts);
@@ -1717,19 +1752,24 @@ public:
 
 	tree();
 	~tree();
-	void init(graphics::tree_draw_options *Tree_draw_options,
+	void init(
+			graphics::tree_draw_options *Tree_draw_options,
 			int xmax, int ymax, int verbose_level);
-	void draw(std::string &fname,
+	void draw(
+			std::string &fname,
 			graphics::tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
-	void draw_preprocess(std::string &fname,
+	void draw_preprocess(
+			std::string &fname,
 			graphics::tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
-	void circle_center_and_radii(int xmax, int ymax, int max_depth, 
+	void circle_center_and_radii(
+			int xmax, int ymax, int max_depth,
 		int &x0, int &y0, int *&rad);
-	void compute_DFS_ranks(int &nb_nodes, int verbose_level);
+	void compute_DFS_ranks(
+			int &nb_nodes, int verbose_level);
 };
 
 // #############################################################################
@@ -1803,40 +1843,53 @@ public:
 
 	tree_node();
 	~tree_node();
-	void init(int depth, tree_node *parent, int f_value, int value, 
+	void init(
+			int depth, tree_node *parent, int f_value, int value,
 		int f_has_color, int color, std::string &label,
 		int verbose_level);
 	void print_path();
 	void print_depth_first();
 	void compute_DFS_rank(int &rk);
-	int find_node(int &DFS_rk, int *path, int sz, int verbose_level);
+	int find_node(
+			int &DFS_rk, int *path, int sz, int verbose_level);
 	int find_node_and_path(
 			std::vector<int> &Rk, int *path,
 			int sz, int verbose_level);
-	void get_coordinates(int &idx, int *coord_xy);
-	void get_coordinates_and_width(int &idx, int *coord_xyw);
+	void get_coordinates(
+			int &idx, int *coord_xy);
+	void get_coordinates_and_width(
+			int &idx, int *coord_xyw);
 	void calc_weight();
-	void place_xy(int left, int right, int ymax, int max_depth);
-	void place_on_circle(int xmax, int ymax, int max_depth);
-	void add_node(int l, int depth, int *path,
+	void place_xy(
+			int left, int right, int ymax, int max_depth);
+	void place_on_circle(
+			int xmax, int ymax, int max_depth);
+	void add_node(
+			int l, int depth, int *path,
 			int color, std::string &label,
 		int verbose_level);
-	int find_child(int val);
-	void get_values(int *v, int verbose_level);
-	void draw_edges(mp_graphics &G,
+	int find_child(
+			int val);
+	void get_values(
+			int *v, int verbose_level);
+	void draw_edges(
+			mp_graphics &G,
 			tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Opt,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
 		tree *T, int verbose_level);
-	void draw_vertices(mp_graphics &G,
+	void draw_vertices(
+			mp_graphics &G,
 			tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Opt,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
 		tree *T, int verbose_level);
-	void draw_sideways(mp_graphics &G, int f_circletext, int f_i, 
+	void draw_sideways(
+			mp_graphics &G, int f_circletext, int f_i,
 		int f_has_parent, int parent_x, int parent_y, 
 		int max_depth, int f_edge_labels);
-	int calc_y_coordinate(int ymax, int l, int max_depth);
+	int calc_y_coordinate(
+			int ymax, int l, int max_depth);
 
 };
 

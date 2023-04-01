@@ -241,7 +241,7 @@ public:
 	void O4_grid_coordinates_rank(
 			field_theory::finite_field *F,
 		int x1, int x2, int x3, int x4,
-		int &grid_x, int &grid_y, int verbose_level);
+		long int &grid_x, long int &grid_y, int verbose_level);
 	void O4_grid_coordinates_unrank(
 			field_theory::finite_field *F,
 		int &x1, int &x2, int &x3, int &x4, int grid_x,

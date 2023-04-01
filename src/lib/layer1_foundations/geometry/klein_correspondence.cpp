@@ -403,7 +403,8 @@ void klein_correspondence::plane_intersections(
 		}
 }
 
-long int klein_correspondence::point_on_quadric_embedded_in_P5(long int pt)
+long int klein_correspondence::point_on_quadric_embedded_in_P5(
+		long int pt)
 {
 	int v6[6];
 	long int r;
@@ -413,7 +414,8 @@ long int klein_correspondence::point_on_quadric_embedded_in_P5(long int pt)
 	return r;
 }
 
-long int klein_correspondence::line_to_point_on_quadric(long int line_rk, int verbose_level)
+long int klein_correspondence::line_to_point_on_quadric(
+		long int line_rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -439,7 +441,8 @@ long int klein_correspondence::line_to_point_on_quadric(long int line_rk, int ve
 	return point_rk;
 }
 
-void klein_correspondence::line_to_Pluecker(long int line_rk, int *v6, int verbose_level)
+void klein_correspondence::line_to_Pluecker(
+		long int line_rk, int *v6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -475,7 +478,8 @@ void klein_correspondence::line_to_Pluecker(long int line_rk, int *v6, int verbo
 	}
 }
 
-long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int verbose_level)
+long int klein_correspondence::point_on_quadric_to_line(
+		long int point_rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -513,7 +517,8 @@ long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int v
 	return line_rk;
 }
 
-void klein_correspondence::Pluecker_to_line(int *v6, int *basis_line, int verbose_level)
+void klein_correspondence::Pluecker_to_line(
+		int *v6, int *basis_line, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -548,7 +553,8 @@ void klein_correspondence::Pluecker_to_line(int *v6, int *basis_line, int verbos
 	}
 }
 
-long int klein_correspondence::Pluecker_to_line_rk(int *v6, int verbose_level)
+long int klein_correspondence::Pluecker_to_line_rk(
+		int *v6, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);

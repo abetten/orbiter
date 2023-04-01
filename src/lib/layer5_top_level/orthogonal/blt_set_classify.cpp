@@ -43,7 +43,7 @@ blt_set_classify::blt_set_classify()
 	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
-	degree = 0;
+	nb_points_on_quadric = 0;
 	target_size = 0;
 	Worker = NULL;
 	//null();
@@ -143,13 +143,15 @@ void blt_set_classify::init_basic(
 
 	Blt_set_domain = OA->Blt_set_domain_with_action->Blt_set_domain;
 
-	degree = Blt_set_domain->degree;
+	nb_points_on_quadric = Blt_set_domain->nb_points_on_quadric;
 	target_size = Blt_set_domain->target_size;
 
 
 	if (f_v) {
 		cout << "blt_set_classify::init_basic q=" << q
-				<< " target_size = " << target_size << endl;
+				<< " target_size = " << target_size
+				<< " nb_points_on_quadric = " << nb_points_on_quadric
+				<< endl;
 	}
 	
 	if (f_v) {

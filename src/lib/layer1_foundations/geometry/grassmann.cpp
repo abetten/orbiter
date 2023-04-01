@@ -67,8 +67,10 @@ grassmann::~grassmann()
 	}
 }
 
-void grassmann::init(int n, int k,
-		field_theory::finite_field *F, int verbose_level)
+void grassmann::init(
+		int n, int k,
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -111,7 +113,8 @@ void grassmann::init(int n, int k,
 	}
 }
 
-long int grassmann::nb_of_subspaces(int verbose_level)
+long int grassmann::nb_of_subspaces(
+		int verbose_level)
 {
 	long int nb;
 	combinatorics::combinatorics_domain Combi;
@@ -141,7 +144,8 @@ void grassmann::print_single_generator_matrix_tex_numerical(
 	//print_integer_matrix_tex(ost, M, k, n);
 }
 
-void grassmann::print_set(long int *v, int len)
+void grassmann::print_set(
+		long int *v, int len)
 {
 	int i;
 	
@@ -255,7 +259,8 @@ void grassmann::print_set_tex_with_perp(
 }
 
 
-int grassmann::nb_points_covered(int verbose_level)
+int grassmann::nb_points_covered(
+		int verbose_level)
 {
 	int nb;
 	combinatorics::combinatorics_domain Combi;
@@ -361,7 +366,8 @@ void grassmann::unrank_embedded_subspace_lint_here(
 }
 
 
-void grassmann::unrank_lint(long int rk, int verbose_level)
+void grassmann::unrank_lint(
+		long int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int r, h, a = 1, A;
@@ -504,7 +510,8 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 	}
 }
 
-long int grassmann::rank_lint(int verbose_level)
+long int grassmann::rank_lint(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int k1, r, h, a, A;
@@ -631,7 +638,8 @@ long int grassmann::rank_lint(int verbose_level)
 	return r;
 }
 
-void grassmann::unrank_longinteger_here(int *Mtx,
+void grassmann::unrank_longinteger_here(
+		int *Mtx,
 		ring_theory::longinteger_object &rk,
 		int verbose_level)
 {
@@ -639,7 +647,8 @@ void grassmann::unrank_longinteger_here(int *Mtx,
 	Int_vec_copy(M, Mtx, k * n);
 }
 
-void grassmann::rank_longinteger_here(int *Mtx,
+void grassmann::rank_longinteger_here(
+		int *Mtx,
 		ring_theory::longinteger_object &rk,
 		int verbose_level)
 {
@@ -1332,7 +1341,8 @@ void grassmann::create_Schlaefli_graph(
 
 }
 
-long int grassmann::make_special_element_zero(int verbose_level)
+long int grassmann::make_special_element_zero(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v3 = (verbose_level >= 3);
@@ -1364,7 +1374,8 @@ long int grassmann::make_special_element_zero(int verbose_level)
 	return a;
 }
 
-long int grassmann::make_special_element_one(int verbose_level)
+long int grassmann::make_special_element_one(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v3 = (verbose_level >= 3);
@@ -1398,7 +1409,8 @@ long int grassmann::make_special_element_one(int verbose_level)
 	return a;
 }
 
-long int grassmann::make_special_element_infinity(int verbose_level)
+long int grassmann::make_special_element_infinity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v3 = (verbose_level >= 3);
@@ -1434,7 +1446,8 @@ long int grassmann::make_special_element_infinity(int verbose_level)
 }
 
 
-void grassmann::make_identity_front(int *M, int verbose_level)
+void grassmann::make_identity_front(
+		int *M, int verbose_level)
 {
 	int i, j, a;
 
@@ -1451,7 +1464,8 @@ void grassmann::make_identity_front(int *M, int verbose_level)
 	}
 }
 
-void grassmann::make_identity_back(int *M, int verbose_level)
+void grassmann::make_identity_back(
+		int *M, int verbose_level)
 {
 	int i, j, a;
 
@@ -1468,7 +1482,8 @@ void grassmann::make_identity_back(int *M, int verbose_level)
 	}
 }
 
-void grassmann::copy_matrix_back(int *A, int *M, int verbose_level)
+void grassmann::copy_matrix_back(
+		int *A, int *M, int verbose_level)
 {
 	int i, j, a;
 
@@ -1854,7 +1869,7 @@ void grassmann::do_pluecker_reverse(
 		int nb_k_subspaces, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
+	long int i, j;
 	int v6[6];
 	int *T;
 	int *Pos;
@@ -1939,7 +1954,8 @@ void grassmann::do_pluecker_reverse(
 	}
 }
 
-void grassmann::create_latex_report(int verbose_level)
+void grassmann::create_latex_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

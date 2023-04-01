@@ -202,27 +202,32 @@ public:
 	int f_is_homogeneous;
 	int degree;
 
+	int f_Sajeeb;
+	l1_interfaces::expression_parser_sajeeb *Expression_parser_sajeeb;
+
 
 	formula();
 	~formula();
 	void print();
-	void init(std::string &label, std::string &label_tex,
+	void init_formula(std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
 			int verbose_level);
-#if 0
-	void init_Sajeeb(std::string &label, std::string &label_tex,
+	void init_formula_Sajeeb(std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
 			int verbose_level);
-#endif
 	int is_homogeneous(int &degree, int verbose_level);
-	void get_subtrees(ring_theory::homogeneous_polynomial_domain *Poly,
+	void get_subtrees(
+			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int &nb_monomials,
 			int verbose_level);
-	void evaluate(ring_theory::homogeneous_polynomial_domain *Poly,
+	void evaluate(
+			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
 			int verbose_level);
-	void print(std::ostream &ost);
-	void print_easy(field_theory::finite_field *F, std::ostream &ost);
+	void print(
+			std::ostream &ost);
+	void print_easy(
+			field_theory::finite_field *F, std::ostream &ost);
 
 };
 

@@ -430,7 +430,8 @@ void scene::print()
 	}
 }
 
-void scene::transform_lines(scene *S, 
+void scene::transform_lines(
+		scene *S,
 	double *A4, double *A4_inv, 
 	double rad, 
 	int verbose_level)
@@ -486,7 +487,8 @@ void scene::transform_lines(scene *S,
 	}
 }
 
-void scene::copy_edges(scene *S, double *A4, double *A4_inv, 
+void scene::copy_edges(
+		scene *S, double *A4, double *A4_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -508,7 +510,8 @@ void scene::copy_edges(scene *S, double *A4, double *A4_inv,
 	}
 }
 
-void scene::transform_points(scene *S, double *A4, double *A4_inv, 
+void scene::transform_points(
+		scene *S, double *A4, double *A4_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -545,7 +548,8 @@ void scene::transform_points(scene *S, double *A4, double *A4_inv,
 	}
 }
 
-void scene::transform_planes(scene *S, double *A4, double *A4_inv, 
+void scene::transform_planes(
+		scene *S, double *A4, double *A4_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -578,7 +582,8 @@ void scene::transform_planes(scene *S, double *A4, double *A4_inv,
 	}
 }
 
-void scene::transform_quadrics(scene *S, double *A4, double *A4_inv, 
+void scene::transform_quadrics(
+		scene *S, double *A4, double *A4_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -607,7 +612,8 @@ void scene::transform_quadrics(scene *S, double *A4, double *A4_inv,
 	}
 }
 
-void scene::transform_cubics(scene *S, double *A4, double *A4_inv, 
+void scene::transform_cubics(
+		scene *S, double *A4, double *A4_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -636,7 +642,8 @@ void scene::transform_cubics(scene *S, double *A4, double *A4_inv,
 	}
 }
 
-void scene::transform_quartics(scene *S, double *A4, double *A4_inv,
+void scene::transform_quartics(
+		scene *S, double *A4, double *A4_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -668,7 +675,8 @@ void scene::transform_quartics(scene *S, double *A4, double *A4_inv,
 	}
 }
 
-void scene::transform_quintics(scene *S, double *A4, double *A4_inv,
+void scene::transform_quintics(
+		scene *S, double *A4, double *A4_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -700,7 +708,8 @@ void scene::transform_quintics(scene *S, double *A4, double *A4_inv,
 	}
 }
 
-void scene::copy_faces(scene *S, double *A4, double *A4_inv, 
+void scene::copy_faces(
+		scene *S, double *A4, double *A4_inv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -724,7 +733,8 @@ void scene::copy_faces(scene *S, double *A4, double *A4_inv,
 
 
 
-void scene::points(double *Coords, int nb_points)
+void scene::points(
+		double *Coords, int nb_points)
 {
 	int i;
 	

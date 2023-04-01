@@ -55,7 +55,8 @@ povray_interface::~povray_interface()
 }
 
 
-void povray_interface::beginning(std::ostream &ost,
+void povray_interface::beginning(
+		std::ostream &ost,
 		double angle,
 		double *sky,
 		double *location,
@@ -183,7 +184,8 @@ void povray_interface::beginning(std::ostream &ost,
 }
 
 
-void povray_interface::animation_rotate_around_origin_and_1_1_1(std::ostream &ost)
+void povray_interface::animation_rotate_around_origin_and_1_1_1(
+		std::ostream &ost)
 {
 	ost << "	// the next three steps will perform a rotation" << endl;
 	ost << "	// around the axis of symmetry 1,1,1:" << endl;
@@ -367,7 +369,8 @@ void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_give
 }
 
 
-void povray_interface::union_start(std::ostream &ost)
+void povray_interface::union_start(
+		std::ostream &ost)
 {
 	ost << "union{ " << endl;
 	ost << endl;
@@ -392,7 +395,8 @@ void povray_interface::union_start(std::ostream &ost)
 	ost << "} */" << endl;
 }
 
-void povray_interface::union_end(std::ostream &ost,
+void povray_interface::union_end(
+		std::ostream &ost,
 		double scale_factor, double clipping_radius)
 {
 	ost << endl;
@@ -420,7 +424,8 @@ void povray_interface::union_end_box_clipping(
 	ost << "} // union" << endl;
 }
 
-void povray_interface::union_end_no_clipping(std::ostream &ost, double scale_factor)
+void povray_interface::union_end_no_clipping(
+		std::ostream &ost, double scale_factor)
 {
 	ost << endl;
 	ost << " 	scale  " << scale_factor << endl;
@@ -479,7 +484,8 @@ void povray_interface::bottom_plane(std::ostream &ost)
 
 }
 
-void povray_interface::rotate_111(int h, int nb_frames, std::ostream &fp)
+void povray_interface::rotate_111(
+		int h, int nb_frames, std::ostream &fp)
 {
 	//int nb_frames_per_rotation;
 	//nb_frames_per_rotation = nb_frames;
@@ -507,7 +513,8 @@ void povray_interface::rotate_around_z_axis(
 }
 
 
-void povray_interface::ini(std::ostream &ost,
+void povray_interface::ini(
+		std::ostream &ost,
 		const char *fname_pov,
 	int first_frame, int last_frame)
 {

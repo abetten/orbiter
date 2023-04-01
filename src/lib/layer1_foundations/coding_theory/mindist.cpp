@@ -52,7 +52,8 @@ static void padic(int ind, int *v, int L, int A);
 static int nextsub(int k, int l, int *sub);
 static void vmmult(MINDIST *MD, int *v, int **mx, int *cv);
 
-int coding_theory_domain::mindist(int n, int k, int q, int *G,
+int coding_theory_domain::mindist(
+		int n, int k, int q, int *G,
 	int verbose_level, int idx_zero, int idx_one,
 	int *add_table, int *mult_table)
 //Main routine for the code minimum distance computation.

@@ -79,7 +79,8 @@ void linear_algebra::Kronecker_product_square_but_arbitrary(
 	}
 }
 
-int linear_algebra::dependency(int d,
+int linear_algebra::dependency(
+		int d,
 		int *v, int *A, int m, int *rho,
 		int verbose_level)
 // Lueneburg~\cite{Lueneburg87a} p. 104.
@@ -503,7 +504,7 @@ int linear_algebra::test_if_commute(
 }
 
 void linear_algebra::unrank_point_in_PG(
-		int *v, int len, int rk)
+		int *v, int len, long int rk)
 // len is the length of the vector, not the projective dimension
 {
 
@@ -511,20 +512,20 @@ void linear_algebra::unrank_point_in_PG(
 			v, 1 /* stride */, len, rk);
 }
 
-int linear_algebra::rank_point_in_PG(
+long int linear_algebra::rank_point_in_PG(
 		int *v, int len)
 {
-	int rk;
+	long int rk;
 
 	F->Projective_space_basic->PG_element_rank_modified(
 			v, 1 /* stride */, len, rk);
 	return rk;
 }
 
-int linear_algebra::nb_points_in_PG(int n)
+long int linear_algebra::nb_points_in_PG(int n)
 // n is projective dimension
 {
-	int N;
+	long int N;
 	geometry::geometry_global Gg;
 
 	N = Gg.nb_PG_elements(n, F->q);
@@ -815,7 +816,7 @@ void linear_algebra::map_points_to_points_projectively(
 	int *B_set;
 	int *image_set;
 	int *v;
-	int h, i, j, a;
+	long int h, i, j, a;
 	int *subset; // [d + k + 1]
 	int nCk;
 	int cnt, overall_cnt;

@@ -244,7 +244,8 @@ void elliptic_curve::compute_points(int verbose_level)
 	}
 }
 
-void elliptic_curve::add_point_to_table(int x, int y, int z)
+void elliptic_curve::add_point_to_table(
+		int x, int y, int z)
 {
 	T[nb * 3 + 0] = x;
 	T[nb * 3 + 1] = y;
@@ -662,7 +663,8 @@ void elliptic_curve::draw_grid2(
 	}
 }
 
-void elliptic_curve::make_affine_point(int x1, int x2, int x3,
+void elliptic_curve::make_affine_point(
+		int x1, int x2, int x3,
 		int &a, int &b, int verbose_level)
 {
 	if (x3 == 0) {
@@ -767,7 +769,8 @@ int elliptic_curve::index_of_point(int x1, int x2, int x3)
 }
 #endif
 
-int elliptic_curve::index_of_point(int x1, int x2, int x3)
+int elliptic_curve::index_of_point(
+		int x1, int x2, int x3)
 //int int_vec_search(int *v, int len, int a, int &idx)
 // This function finds the last occurence of the element a.
 // If a is not found, it returns in idx
@@ -870,7 +873,8 @@ int elliptic_curve::index_of_point(int x1, int x2, int x3)
 	return l;
 }
 
-void elliptic_curve::latex_points_with_order(std::ostream &ost)
+void elliptic_curve::latex_points_with_order(
+		std::ostream &ost)
 {
 	vector<int> Ord;
 	int *p;
@@ -903,7 +907,8 @@ void elliptic_curve::latex_points_with_order(std::ostream &ost)
 }
 
 
-void elliptic_curve::latex_order_of_all_points(std::ostream &ost)
+void elliptic_curve::latex_order_of_all_points(
+		std::ostream &ost)
 {
 	vector<int> Ord;
 	int *p;
@@ -920,7 +925,8 @@ void elliptic_curve::latex_order_of_all_points(std::ostream &ost)
 	FREE_int(p);
 }
 
-void elliptic_curve::order_of_all_points(vector<int> &Ord)
+void elliptic_curve::order_of_all_points(
+		vector<int> &Ord)
 {
 	int i;
 	int ord;

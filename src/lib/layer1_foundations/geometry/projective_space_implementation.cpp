@@ -72,7 +72,8 @@ void projective_space_implementation::init(
 	int f_vv = FALSE; //(verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 
-	int i, j, a, b, i1, i2, j1, j2;
+	int i, j, a, i1, i2, j1, j2;
+	long int b;
 	long int N_points, N_lines;
 	int k, r, n;
 

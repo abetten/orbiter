@@ -99,7 +99,8 @@ void decomposition::init_incidence_matrix(
 	}
 }
 
-void decomposition::setup_default_partition(int verbose_level)
+void decomposition::setup_default_partition(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -128,7 +129,8 @@ void decomposition::setup_default_partition(int verbose_level)
 	}
 }
 
-void decomposition::compute_TDO(int max_depth, int verbose_level)
+void decomposition::compute_TDO(
+		int max_depth, int verbose_level)
 // put max_depth = INT_MAX if you want full depth
 {
 	int f_v = (verbose_level >= 1);
@@ -163,7 +165,8 @@ void decomposition::compute_TDO(int max_depth, int verbose_level)
 		
 }
 
-void decomposition::get_row_scheme(int verbose_level)
+void decomposition::get_row_scheme(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -186,7 +189,8 @@ void decomposition::get_row_scheme(int verbose_level)
 	}
 }
 
-void decomposition::get_col_scheme(int verbose_level)
+void decomposition::get_col_scheme(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

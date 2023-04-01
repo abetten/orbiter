@@ -2939,7 +2939,8 @@ void homogeneous_polynomial_domain::create_projective_curve(
 	label_txt.assign(variety_label_txt);
 	label_tex.assign(variety_label_tex);
 	int *coeffs;
-	int len, i, j, a, b, c, s, t;
+	int len;
+	long int i, j, a, b, c, s, t;
 	int *v;
 	int v2[2];
 
@@ -3006,6 +3007,8 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 		Formula->print();
 	}
 
+
+#if 0
 	if (!Formula->f_is_homogeneous) {
 		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
 				"Formula is not homogeneous" << endl;
@@ -3029,7 +3032,7 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 				"Formula->nb_managed_vars != degree" << endl;
 		exit(1);
 	}
-
+#endif
 
 	expression_parser::syntax_tree_node **Subtrees;
 	int nb_monomials;
@@ -3044,42 +3047,62 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 				"after Formula->get_subtrees" << endl;
 	}
 
-	int i;
+	if (Formula->f_Sajeeb) {
 
-	for (i = 0; i < nb_monomials; i++) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector Monomial " << i << " : ";
-		if (Subtrees[i]) {
-			Subtrees[i]->print_expression(cout);
-			cout << " * ";
-			print_monomial(cout, i);
-			cout << endl;
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+					"before Formula->evaluate" << endl;
 		}
-		else {
-			cout << "homogeneous_polynomial_domain::get_coefficient_vector no subtree" << endl;
+		Formula->evaluate(this,
+				Subtrees, evaluate_text, Coefficient_vector,
+				verbose_level);
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+					"after Formula->evaluate" << endl;
 		}
+
+
 	}
+	else {
+
+		int i;
 
 
-	//int *Coefficient_vector;
+		for (i = 0; i < nb_monomials; i++) {
+			cout << "homogeneous_polynomial_domain::get_coefficient_vector Monomial " << i << " : ";
+			if (Subtrees[i]) {
+				Subtrees[i]->print_expression(cout);
+				cout << " * ";
+				print_monomial(cout, i);
+				cout << endl;
+			}
+			else {
+				cout << "homogeneous_polynomial_domain::get_coefficient_vector no subtree" << endl;
+			}
+		}
 
-	//Coefficient_vector = NEW_int(nb_monomials);
 
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
-				"before Formula->evaluate" << endl;
-	}
-	Formula->evaluate(this,
-			Subtrees, evaluate_text, Coefficient_vector,
-			verbose_level);
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
-				"after Formula->evaluate" << endl;
+		//int *Coefficient_vector;
+
+		//Coefficient_vector = NEW_int(nb_monomials);
+
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+					"before Formula->evaluate" << endl;
+		}
+		Formula->evaluate(this,
+				Subtrees, evaluate_text, Coefficient_vector,
+				verbose_level);
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+					"after Formula->evaluate" << endl;
+		}
 	}
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
 				"coefficient vector:" << endl;
-		Int_vec_print(cout, Coefficient_vector, nb_monomials);
+		Int_vec_print(cout, Coefficient_vector, homogeneous_polynomial_domain::nb_monomials);
 		cout << endl;
 	}
 

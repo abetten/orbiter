@@ -51,7 +51,8 @@ void arc_basic::Segre_hyperoval(
 {
 	int f_v = (verbose_level >= 1);
 	int N = F->q + 2;
-	int i, t, a, t6;
+	int i, t, t6;
+	long int a;
 	int *Mtx;
 
 	if (f_v) {
@@ -100,7 +101,8 @@ void arc_basic::GlynnI_hyperoval(
 {
 	int f_v = (verbose_level >= 1);
 	int N = F->q + 2;
-	int i, t, te, a;
+	int i, t, te;
+	long int a;
 	int sigma, gamma = 0, Sigma, /*Gamma,*/ exponent;
 	int *Mtx;
 	number_theory::number_theory_domain NT;
@@ -170,7 +172,8 @@ void arc_basic::GlynnII_hyperoval(
 {
 	int f_v = (verbose_level >= 1);
 	int N = F->q + 2;
-	int i, t, te, a;
+	int i, t, te;
+	long int a;
 	int sigma, gamma = 0, Sigma, Gamma, exponent;
 	int *Mtx;
 	number_theory::number_theory_domain NT;
@@ -246,7 +249,8 @@ void arc_basic::Subiaco_oval(
 {
 	int f_v = (verbose_level >= 1);
 	int N = F->q + 1;
-	int i, t, a, b, h, k, top, bottom;
+	int i, t, b, h, k, top, bottom;
+	long int a;
 	int omega, omega2;
 	int t2, t3, t4, sqrt_t;
 	int *Mtx;
@@ -343,7 +347,8 @@ void arc_basic::Subiaco_hyperoval(
 {
 	int f_v = (verbose_level >= 1);
 	int N = F->q + 2;
-	int i, t, d, dv, d2, one_d_d2, a, h;
+	int i, t, d, dv, d2, one_d_d2, h;
+	long int a;
 	int t2, t3, t4, sqrt_t;
 	int top1, top2, top3, top4, top, bottom;
 	int *Mtx;

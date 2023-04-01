@@ -27,7 +27,8 @@ blt_set_domain::blt_set_domain()
 	n = 0;
 	q = 0;
 	target_size = 0;
-	degree = 0;
+	nb_points_on_quadric = 0;
+	max_degree = 0;
 
 
 	O = NULL;
@@ -73,17 +74,6 @@ blt_set_domain::~blt_set_domain()
 	if (Candidates) {
 		FREE_int(Candidates);
 	}
-#if 0
-	if (P) {
-		FREE_OBJECT(P);
-	}
-	if (G53) {
-		FREE_OBJECT(G53);
-	}
-	if (G54) {
-		FREE_OBJECT(G54);
-	}
-#endif
 	if (G43) {
 		FREE_OBJECT(G43);
 	}
@@ -130,6 +120,9 @@ void blt_set_domain::init_blt_set_domain(
 	n = O->Quadratic_form->n; // vector space dimension
 	epsilon = O->Quadratic_form->epsilon;
 
+
+	max_degree = 1 * (q - 1);
+
 	char str[1000];
 
 	snprintf(str, sizeof(str), "BLT_q%d", q);
@@ -137,7 +130,7 @@ void blt_set_domain::init_blt_set_domain(
 
 
 	target_size = q + 1;
-	degree = O->Hyperbolic_pair->nb_points;
+	nb_points_on_quadric = O->Hyperbolic_pair->nb_points;
 
 
 	if (f_v) {
@@ -164,7 +157,7 @@ void blt_set_domain::init_blt_set_domain(
 
 	Pts = NEW_int(target_size * n);
 
-	Candidates = NEW_int(degree * n);
+	Candidates = NEW_int(nb_points_on_quadric * n);
 
 
 	P = P4;
@@ -224,13 +217,14 @@ void blt_set_domain::create_extension_fields(
 
 
 
+
 	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 	if (f_v) {
 		cout << "blt_set_domain::create_extension_fields "
 				"before Poly2->init" << endl;
 	}
-	Poly2->init(F2, 2, degree,
+	Poly2->init(F2, 2, max_degree,
 				t_PART,
 				verbose_level);
 	if (f_v) {
@@ -257,7 +251,7 @@ void blt_set_domain::create_extension_fields(
 		cout << "blt_set_domain::create_extension_fields "
 				"before Poly3->init" << endl;
 	}
-	Poly3->init(F3, 2, degree,
+	Poly3->init(F3, 2, max_degree,
 				t_PART,
 				verbose_level);
 	if (f_v) {
@@ -295,7 +289,8 @@ long int blt_set_domain::intersection_of_hyperplanes(
 		rk_int, C, 0 /* verbose_level */);
 
 	if (rk_int != 3) {
-		cout << "blt_set_domain::intersection_of_hyperplanes rk_int != 3" << endl;
+		cout << "blt_set_domain::intersection_of_hyperplanes "
+				"rk_int != 3" << endl;
 		exit(1);
 	}
 
@@ -579,9 +574,12 @@ void blt_set_domain::compute_colors(
 	starter_t = NEW_int(starter_sz);
 	starter_t[0] = -1;
 	for (i = 1; i < starter_sz; i++) {
-		O->Hyperbolic_pair->unrank_point(v3, 1, starter[i], 0);
-		a = O->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
-		b = O->Quadratic_form->evaluate_bilinear_form(v2, v3, 1);
+		O->Hyperbolic_pair->unrank_point(
+				v3, 1, starter[i], 0);
+		a = O->Quadratic_form->evaluate_bilinear_form(
+				v1, v3, 1);
+		b = O->Quadratic_form->evaluate_bilinear_form(
+				v2, v3, 1);
 		if (a == 0) {
 			cout << "a == 0, this should not be" << endl;
 			exit(1);
@@ -662,8 +660,10 @@ void blt_set_domain::compute_colors(
 			Int_vec_print(cout, v3, 5);
 			cout << endl;
 		}
-		a = O->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
-		b = O->Quadratic_form->evaluate_bilinear_form(v2, v3, 1);
+		a = O->Quadratic_form->evaluate_bilinear_form(
+				v1, v3, 1);
+		b = O->Quadratic_form->evaluate_bilinear_form(
+				v2, v3, 1);
 		if (a == 0) {
 			cout << "a == 0, this should not be" << endl;
 			exit(1);
@@ -738,7 +738,8 @@ void blt_set_domain::early_test_func(
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
-				O->Hyperbolic_pair->unrank_point(v, 1, candidates[i],
+				O->Hyperbolic_pair->unrank_point(
+						v, 1, candidates[i],
 						0/*verbose_level - 4*/);
 				cout << "candidate " << i << "="
 						<< candidates[i] << ": ";
@@ -752,7 +753,8 @@ void blt_set_domain::early_test_func(
 				"unranking points" << endl;
 	}
 	for (i = 0; i < len; i++) {
-		O->Hyperbolic_pair->unrank_point(Pts + i * 5, 1,
+		O->Hyperbolic_pair->unrank_point(
+				Pts + i * 5, 1,
 				S[i], 0/*verbose_level - 4*/);
 	}
 	if (f_v) {
@@ -933,11 +935,11 @@ int blt_set_domain::check_conditions(
 		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
-	if (!collinearity_test(S, len, verbose_level)) {
+	if (!collinearity_test(S, len, 0 /*verbose_level*/)) {
 		f_OK = FALSE;
 		f_collinearity_test = TRUE;
 	}
-	if (!OG.BLT_test(O, len, S, verbose_level)) {
+	if (!OG.BLT_test(O, len, S, 0 /*verbose_level*/)) {
 		f_OK = FALSE;
 		f_BLT_test = TRUE;
 	}
@@ -976,13 +978,15 @@ int blt_set_domain::collinearity_test(
 	if (f_v) {
 		cout << "blt_set_domain::collinearity_test for" << endl;
 		for (i = 0; i < len; i++) {
-			O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, S[i], 0);
+			O->Hyperbolic_pair->unrank_point(
+					O->Hyperbolic_pair->v1, 1, S[i], 0);
 			Int_vec_print(cout, O->Hyperbolic_pair->v1, n);
 			cout << endl;
 		}
 	}
 	y = S[len - 1];
-	O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, y, 0);
+	O->Hyperbolic_pair->unrank_point(
+			O->Hyperbolic_pair->v1, 1, y, 0);
 
 	for (i = 0; i < len - 1; i++) {
 
@@ -992,7 +996,8 @@ int blt_set_domain::collinearity_test(
 				O->Hyperbolic_pair->v2, 1, x, 0);
 
 		fxy = O->Quadratic_form->evaluate_bilinear_form(
-				O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
+				O->Hyperbolic_pair->v1,
+				O->Hyperbolic_pair->v2, 1);
 
 		if (fxy == 0) {
 
@@ -1026,7 +1031,8 @@ void blt_set_domain::print(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		O->Hyperbolic_pair->unrank_point(O->Hyperbolic_pair->v1, 1, S[i], 0);
+		O->Hyperbolic_pair->unrank_point(
+				O->Hyperbolic_pair->v1, 1, S[i], 0);
 		Int_vec_print(ost, O->Hyperbolic_pair->v1, n);
 		ost << endl;
 	}
@@ -1160,7 +1166,8 @@ int blt_set_domain::create_graph(
 		cout << "blt_set_domain::create_graph "
 				"before compute_colors" << endl;
 	}
-	compute_colors(case_number,
+	compute_colors(
+			case_number,
 			Starter_set, starter_size,
 			special_line,
 			candidates, nb_candidates,
@@ -1242,7 +1249,8 @@ int blt_set_domain::create_graph(
 
 	if (f_vv) {
 		cout << "blt_set_domain::create_graph Case " << case_number
-				<< " / " << nb_cases_total << " Computing adjacency list, "
+				<< " / " << nb_cases_total
+				<< " Computing adjacency list, "
 						"nb_points=" << nb_candidates << endl;
 	}
 
@@ -1252,7 +1260,8 @@ int blt_set_domain::create_graph(
 		cout << "blt_set_domain::create_graph "
 				"before compute_adjacency_list_fast" << endl;
 	}
-	compute_adjacency_list_fast(Starter_set[0],
+	compute_adjacency_list_fast(
+			Starter_set[0],
 			candidates, nb_candidates, point_color,
 			Bitvec,
 			verbose_level - 2);
@@ -1270,7 +1279,8 @@ int blt_set_domain::create_graph(
 
 
 	if (f_v) {
-		cout << "blt_set_domain::create_graph creating colored_graph" << endl;
+		cout << "blt_set_domain::create_graph "
+				"creating colored_graph" << endl;
 		}
 
 	CG = NEW_OBJECT(graph_theory::colored_graph);
@@ -1284,7 +1294,8 @@ int blt_set_domain::create_graph(
 		snprintf(str, sizeof(str), "BLT\\_%d", case_number);
 		label_tex.assign(str);
 
-		CG->init(nb_candidates /* nb_points */,
+		CG->init(
+				nb_candidates /* nb_points */,
 				nb_colors, 1 /* nb_colors_per_vertex */,
 				point_color, Bitvec, TRUE,
 				label, label_tex,
@@ -1301,16 +1312,19 @@ int blt_set_domain::create_graph(
 		char str[1000];
 		std::string fname;
 
-		snprintf(str, sizeof(str), "_graph_%d_%d", starter_size, case_number);
+		snprintf(str, sizeof(str), "_graph_%d_%d",
+				starter_size, case_number);
 		fname.assign(prefix);
 		fname.append(str);
-		CG->init_user_data(Starter_set, starter_size, verbose_level - 2);
+		CG->init_user_data(
+				Starter_set, starter_size, verbose_level - 2);
 		CG->fname_base.assign(fname);
 	}
 
 
 	if (f_v) {
-		cout << "blt_set_domain::create_graph colored_graph created" << endl;
+		cout << "blt_set_domain::create_graph "
+				"the colored_graph has been created" << endl;
 	}
 
 finish:
@@ -1330,7 +1344,8 @@ void blt_set_domain::test_flock_condition(
 		int *&outcome,
 		int &N,
 		int verbose_level)
-// F is given because the field might be an extension field of the current field
+// F is given because the field might be
+// an extension field of the current field
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
@@ -1396,15 +1411,19 @@ void blt_set_domain::test_flock_condition(
 }
 
 void blt_set_domain::quadratic_lift(
-		int *coeff_f, int *coeff_g, int nb_coeff, int verbose_level)
+		int *coeff_f, int *coeff_g, int nb_coeff,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = FALSE; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "blt_set_domain::quadratic_lift" << endl;
-		cout << "blt_set_domain::quadratic_lift nb_coeff = " << nb_coeff << endl;
-		cout << "blt_set_domain::quadratic_lift Poly2->get_nb_monomials() = " << Poly2->get_nb_monomials() << endl;
+		cout << "blt_set_domain::quadratic_lift "
+				"nb_coeff = " << nb_coeff << endl;
+		cout << "blt_set_domain::quadratic_lift "
+				"Poly2->get_nb_monomials() = "
+				<< Poly2->get_nb_monomials() << endl;
 	}
 
 
@@ -1498,8 +1517,11 @@ void blt_set_domain::cubic_lift(
 
 	if (f_v) {
 		cout << "blt_set_domain::cubic_lift" << endl;
-		cout << "blt_set_domain::cubic_lift nb_coeff = " << nb_coeff << endl;
-		cout << "blt_set_domain::cubic_lift Poly3->get_nb_monomials() = " << Poly3->get_nb_monomials() << endl;
+		cout << "blt_set_domain::cubic_lift "
+				"nb_coeff = " << nb_coeff << endl;
+		cout << "blt_set_domain::cubic_lift "
+				"Poly3->get_nb_monomials() = "
+				<< Poly3->get_nb_monomials() << endl;
 	}
 
 

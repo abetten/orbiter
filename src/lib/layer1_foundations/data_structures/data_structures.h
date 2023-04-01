@@ -1979,7 +1979,8 @@ public:
 
 	tally_vector_data();
 	~tally_vector_data();
-	void init(int *data, int data_length, int data_set_sz,
+	void init(
+			int *data, int data_length, int data_set_sz,
 		int verbose_level);
 	int hash_and_find(int *data,
 			int &idx, uint32_t &h, int verbose_level);

@@ -366,7 +366,8 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 
 		int *subset;
 		subset = NEW_int(level - 1);
-		int s, N, h, u, c, e, t, f;
+		int s, N, h, u, c, e, t;
+		long int f;
 		int *v1;
 		//int *v2;
 		int *v3;

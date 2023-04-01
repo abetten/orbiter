@@ -80,7 +80,8 @@ public:
 			field_theory::finite_field *F,
 			int b, int c, int verbose_level);
 	void compute_points(int verbose_level);
-	void add_point_to_table(int x, int y, int z);
+	void add_point_to_table(
+			int x, int y, int z);
 	int evaluate_RHS(int x);
 		// evaluates x^3 + bx + c
 	void print_points();
@@ -102,14 +103,19 @@ public:
 			int f_with_grid, int f_with_points, int point_density,
 			int f_path, int start_idx, int nb_steps,
 			int verbose_level);
-	void make_affine_point(int x1, int x2, int x3,
+	void make_affine_point(
+			int x1, int x2, int x3,
 		int &a, int &b, int verbose_level);
 	void compute_addition_table(int verbose_level);
 	void print_addition_table();
-	int index_of_point(int x1, int x2, int x3);
-	void latex_points_with_order(std::ostream &ost);
-	void latex_order_of_all_points(std::ostream &ost);
-	void order_of_all_points(std::vector<int> &Ord);
+	int index_of_point(
+			int x1, int x2, int x3);
+	void latex_points_with_order(
+			std::ostream &ost);
+	void latex_order_of_all_points(
+			std::ostream &ost);
+	void order_of_all_points(
+			std::vector<int> &Ord);
 	int order_of_point(int i);
 	void print_all_powers(int i);
 };

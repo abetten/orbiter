@@ -36,7 +36,8 @@ tree::~tree()
 #define TREEPATHLEN 10000
 #define BUFSIZE_TREE 100000
 
-void tree::init(graphics::tree_draw_options *Tree_draw_options,
+void tree::init(
+		graphics::tree_draw_options *Tree_draw_options,
 		int xmax, int ymax, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -221,7 +222,8 @@ void tree::init(graphics::tree_draw_options *Tree_draw_options,
 
 }
 
-void tree::draw(std::string &fname,
+void tree::draw(
+		std::string &fname,
 		graphics::tree_draw_options *Tree_draw_options,
 		layered_graph_draw_options *Opt,
 		int verbose_level)
@@ -355,7 +357,8 @@ void tree::draw(std::string &fname,
 	
 }
 
-void tree::draw_preprocess(std::string &fname,
+void tree::draw_preprocess(
+		std::string &fname,
 		graphics::tree_draw_options *Tree_draw_options,
 		layered_graph_draw_options *Opt,
 		int verbose_level)
@@ -417,7 +420,8 @@ void tree::draw_preprocess(std::string &fname,
 }
 
 
-void tree::circle_center_and_radii(int xmax, int ymax,
+void tree::circle_center_and_radii(
+		int xmax, int ymax,
 		int max_depth, int &x0, int &y0, int *&rad)
 {
 	int l, dy;
@@ -437,7 +441,8 @@ void tree::circle_center_and_radii(int xmax, int ymax,
 	}
 }
 
-void tree::compute_DFS_ranks(int &nb_nodes, int verbose_level)
+void tree::compute_DFS_ranks(
+		int &nb_nodes, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk;

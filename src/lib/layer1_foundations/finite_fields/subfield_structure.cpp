@@ -618,7 +618,8 @@ void subfield_structure::Adelaide_hyperoval(
 	int i, t, b, bq, bk, tr_b, tr_bk, tr_b_down, tr_bk_down, tr_b_down_inv;
 	int a, tr_a, tr_a_down, t_lift, alpha, k;
 	int sqrt_t, c, cv, d, f;
-	int top1, top2, u, v, w, r;
+	int top1, top2, u, v, w;
+	long int r;
 	int *Mtx;
 
 	if (f_v) {

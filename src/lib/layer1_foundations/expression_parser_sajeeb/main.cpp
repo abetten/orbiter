@@ -29,7 +29,8 @@
 #include "Visitors/ReductionVisitors/simplify_numerical_visitor.h"
 #include "Visitors/EvaluateVisitors/eval_visitor.h"
 
-#include "layer1_foundations/foundations.h"
+#include "orbiter.h"
+//#include "layer1_foundations/foundations.h"
 
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
 
@@ -140,8 +141,8 @@ int main(int argc, const char** argv) {
 
 
     // orbiter stuff
-    //orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-    //orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+    orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+    orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
 
     //std::string *Argv;
     //data_structures::string_tools ST;
@@ -150,41 +151,49 @@ int main(int argc, const char** argv) {
     cout << "after ST.convert_arguments, argc=" << argc << endl;
     cout << "before Top_level_session.startup_and_read_arguments" << endl;
     //static_cast<void>(Top_level_session.startup_and_read_arguments(argc, Argv, 1));
-    orbiter::layer1_foundations::field_theory::finite_field_description Descr;
-    orbiter::layer1_foundations::field_theory::finite_field Fq;
-    Descr.f_q = TRUE;
-    Descr.q_text.assign("5");
-    ;
-    Fq.init(&Descr, 1);
-    unordered_map<string, int> assignemnt = {
-            {"a", 4},
-            {"b", 2},
-            {"c", 2},
-            {"d", 4}
-    };
-    for (auto& it : evv.monomial_coefficient_table_) {
-        const vector<unsigned int>& vec = it.first;
-        std::cout << "[";
-        for (const auto& itit : vec) std::cout << itit << " ";
-        std::cout << "]: ";
 
-        auto root_nodes = it.second;
-        int val = 0;
-        for (auto& node : root_nodes) {
-            auto tmp = dispatcher::visit(node, evalVisitor, &Fq, assignemnt);
-            val += tmp;
-        }
-        cout << val << endl;
+    {
+		orbiter::layer1_foundations::field_theory::finite_field_description Descr;
+		orbiter::layer1_foundations::field_theory::finite_field Fq;
+		Descr.f_q = TRUE;
+		Descr.q_text.assign("5");
+		;
+
+		LOG("before Fq.init");
+		Fq.init(&Descr, 5);
+		LOG("after Fq.init");
+		unordered_map<string, int> assignemnt = {
+				{"a", 4},
+				{"b", 2},
+				{"c", 2},
+				{"d", 4}
+		};
+		for (auto& it : evv.monomial_coefficient_table_) {
+			const vector<unsigned int>& vec = it.first;
+			std::cout << "[";
+			for (const auto& itit : vec) std::cout << itit << " ";
+			std::cout << "]: ";
+
+			auto root_nodes = it.second;
+			int val = 0;
+			for (auto& node : root_nodes) {
+				auto tmp = dispatcher::visit(node, evalVisitor, &Fq, assignemnt);
+				val += tmp;
+			}
+			cout << val << endl;
+		}
+	   dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
+
+
+
+
+		// print string representation of the IR tree
+		ir_tree_to_string_visitor to_string_visitor;
+		dispatcher::visit(ir_tree_root, to_string_visitor);
+		cout << "in:  " << exp << endl;
+		cout << "out: " << to_string_visitor.get_string_representation() << endl;
+	    LOG("before deleting orbiter objects")
     }
-   dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
-
-
-
-    // print string representation of the IR tree
-    ir_tree_to_string_visitor to_string_visitor;
-    dispatcher::visit(ir_tree_root, to_string_visitor);
-    cout << "in:  " << exp << endl;
-    cout << "out: " << to_string_visitor.get_string_representation() << endl;
-
+    LOG("after deleting orbiter objects")
 }

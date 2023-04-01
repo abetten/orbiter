@@ -46,7 +46,8 @@ void diophant_create::init(
 
 
 	if (!Descr->f_label) {
-		cout << "please use -label <label> to give the system a name" << endl;
+		cout << "please use -label <label> "
+				"to give the system a name" << endl;
 		exit(1);
 	}
 
@@ -61,7 +62,8 @@ void diophant_create::init(
 			F = Get_finite_field(Descr->field_label);
 		}
 		else {
-			cout << "diophant_create::init please specify the field using -field <label>" << endl;
+			cout << "diophant_create::init "
+					"please specify the field using -field <label>" << endl;
 			exit(1);
 		}
 
@@ -89,7 +91,8 @@ void diophant_create::init(
 				Descr->maximal_arc_sz, Descr->maximal_arc_d);
 		fname.assign(str);
 		D->save_in_general_format(fname, verbose_level);
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 
 		FREE_OBJECT(P);
 	}
@@ -122,7 +125,8 @@ void diophant_create::init(
 			cout << "reading coefficient matrix from file "
 					<< Descr->coefficient_matrix_csv << endl;
 		}
-		Fio.int_matrix_read_csv(Descr->problem_of_Steiner_type_covering_matrix_fname,
+		Fio.int_matrix_read_csv(
+				Descr->problem_of_Steiner_type_covering_matrix_fname,
 				Covering_matrix,
 				nb_rows, nb_cols, verbose_level);
 
@@ -228,7 +232,8 @@ void diophant_create::init(
 		orbiter_kernel_system::file_io Fio;
 
 		if (D == NULL) {
-			cout << "-RHS_csv please specify the coefficient matrix first" << endl;
+			cout << "-RHS_csv please specify "
+					"the coefficient matrix first" << endl;
 			exit(1);
 		}
 		Fio.int_matrix_read_csv(Descr->RHS_csv_text,
@@ -240,7 +245,8 @@ void diophant_create::init(
 			exit(1);
 		}
 		if (m != D->m) {
-			cout << "number of rows in csv file must match number of rows of the system" << endl;
+			cout << "number of rows in csv file must match "
+					"number of rows of the system" << endl;
 			exit(1);
 		}
 		for (i = 0; i < m; i++) {
@@ -279,7 +285,8 @@ void diophant_create::init(
 		int i;
 
 		if (D == NULL) {
-			cout << "-RHS_constant please specify the coefficient matrix first" << endl;
+			cout << "-RHS_constant please specify "
+					"the coefficient matrix first" << endl;
 			exit(1);
 		}
 		Int_vec_scan(Descr->RHS_constant_text, RHS, sz);
@@ -322,7 +329,8 @@ void diophant_create::init(
 		int j;
 
 		if (D == NULL) {
-			cout << "-x_max_global please specify the coefficient matrix first" << endl;
+			cout << "-x_max_global please specify "
+					"the coefficient matrix first" << endl;
 			exit(1);
 		}
 		for (j = 0; j < D->n; j++) {
@@ -334,7 +342,8 @@ void diophant_create::init(
 		int j;
 
 		if (D == NULL) {
-			cout << "-x_min_global please specify the coefficient matrix first" << endl;
+			cout << "-x_min_global please specify "
+					"the coefficient matrix first" << endl;
 			exit(1);
 		}
 		for (j = 0; j < D->n; j++) {
@@ -344,7 +353,8 @@ void diophant_create::init(
 
 	if (Descr->f_x_bounds) {
 		if (D == NULL) {
-			cout << "-x_bounds please specify the coefficient matrix first" << endl;
+			cout << "-x_bounds please specify "
+					"the coefficient matrix first" << endl;
 			exit(1);
 		}
 		int *x_bounds;
@@ -370,7 +380,8 @@ void diophant_create::init(
 		orbiter_kernel_system::file_io Fio;
 
 		if (D == NULL) {
-			cout << "-x_bounds_csv please specify the coefficient matrix first" << endl;
+			cout << "-x_bounds_csv please specify "
+					"the coefficient matrix first" << endl;
 			exit(1);
 		}
 		Fio.int_matrix_read_csv(Descr->x_bounds_csv,
@@ -396,7 +407,8 @@ void diophant_create::init(
 	if (Descr->f_has_sum) {
 
 		if (D == NULL) {
-			cout << "-has_sum please specify the coefficient matrix first" << endl;
+			cout << "-has_sum please specify the "
+					"coefficient matrix first" << endl;
 			exit(1);
 		}
 		D->f_has_sum = TRUE;

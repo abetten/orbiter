@@ -369,7 +369,7 @@ void projective_space_basic::PG_element_unrank_gary_cook(
 }
 
 void projective_space_basic::PG_element_rank_modified(
-		int *v, int stride, int len, int &a)
+		int *v, int stride, int len, long int &a)
 {
 	int i, j, q_power_j, b, sqj;
 	int f_v = FALSE;
@@ -490,7 +490,7 @@ void projective_space_basic::PG_element_rank_modified(
 }
 
 void projective_space_basic::PG_element_unrank_modified(
-		int *v, int stride, int len, int a)
+		int *v, int stride, int len, long int a)
 {
 	int n, l, ql, sql, k, j, r, a1 = a;
 
@@ -901,7 +901,7 @@ void projective_space_basic::all_PG_elements_in_subspace_array_is_given(
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int *message;
 	int *word;
-	int i, j;
+	long i, j;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -945,7 +945,7 @@ void projective_space_basic::display_all_PG_elements(int n)
 	int *v = NEW_int(n + 1);
 	geometry::geometry_global Gg;
 	int l = Gg.nb_PG_elements(n, F->q);
-	int i, j, a;
+	long int i, j, a;
 
 	for (i = 0; i < l; i++) {
 		PG_element_unrank_modified(v, 1, n + 1, i);

@@ -742,7 +742,8 @@ int point_line::plane_quadrangle_next_i(int *pt, int i)
 	return FALSE;
 }
 
-void point_line::coordinatize_plane(int O, int I, int X, int Y,
+void point_line::coordinatize_plane(
+		int O, int I, int X, int Y,
 		int *MOLS, int verbose_level)
 // needs pt_labels, points, pts_on_line_x_eq_y, pts_on_line_x_eq_y_labels, 
 // lines_through_X, lines_through_Y, pts_on_line, MOLS to be allocated
@@ -1028,7 +1029,8 @@ void point_line::print_MOLS(std::ostream &ost)
 		}
 }
 
-int point_line::is_projective_plane(data_structures::partitionstack &P,
+int point_line::is_projective_plane(
+		data_structures::partitionstack &P,
 		int &order, int verbose_level)
 // if it is a projective plane, the order is returned.
 // otherwise, 0 is returned.
@@ -1122,7 +1124,8 @@ int point_line::is_projective_plane(data_structures::partitionstack &P,
 	return TRUE;
 }
 
-int point_line::count_RC(data_structures::partitionstack &P,
+int point_line::count_RC(
+		data_structures::partitionstack &P,
 		int row_cell, int col_cell)
 {
 	int l1, i, nb = -1, nb1;
@@ -1144,7 +1147,8 @@ int point_line::count_RC(data_structures::partitionstack &P,
 	return nb;
 }
 
-int point_line::count_CR(data_structures::partitionstack &P,
+int point_line::count_CR(
+		data_structures::partitionstack &P,
 		int col_cell, int row_cell)
 {
 	int l1, i, nb = -1, nb1;

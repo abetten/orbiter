@@ -131,8 +131,8 @@ public:
 		int verbose_level);
 	void print(int len, long int *S);
 	void print_set_in_affine_plane(int len, long int *S);
-	void point_unrank(int *v, int rk);
-	int point_rank(int *v);
+	void point_unrank(int *v, long int rk);
+	long int point_rank(int *v);
 	void compute_line_type(
 			long int *set, int len, int verbose_level);
 	void lifting_prepare_function_new(

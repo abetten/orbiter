@@ -27,6 +27,10 @@ blt_set_activity_description::blt_set_activity_description()
 
 	f_BLT_test = FALSE;
 
+	f_export_set_in_PG = FALSE;
+
+	f_plane_invariant = FALSE;
+
 }
 
 blt_set_activity_description::~blt_set_activity_description()
@@ -70,6 +74,20 @@ int blt_set_activity_description::read_arguments(int argc, std::string *argv,
 				cout << "-BLT_test " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_set_in_PG") == 0) {
+			f_export_set_in_PG = TRUE;
+			if (f_v) {
+				cout << "-export_set_in_PG " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-plane_invariant") == 0) {
+			f_plane_invariant = TRUE;
+			if (f_v) {
+				cout << "-plane_invariant " << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -99,6 +117,12 @@ void blt_set_activity_description::print()
 	}
 	if (f_BLT_test) {
 		cout << "-BLT_test " << endl;
+	}
+	if (f_export_set_in_PG) {
+		cout << "-export_set_in_PG " << endl;
+	}
+	if (f_plane_invariant) {
+		cout << "-plane_invariant " << endl;
 	}
 }
 

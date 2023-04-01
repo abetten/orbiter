@@ -523,14 +523,16 @@ public:
 			std::string &surface_label,
 			std::string &col_postfix,
 			int verbose_level);
-	void report_properties_simple(std::ostream &ost, int verbose_level);
+	void report_properties_simple(
+			std::ostream &ost, int verbose_level);
 	void print_equation(std::ostream &ost);
 	void print_gradient(std::ostream &ost);
 	void print_general(std::ostream &ost);
 	void print_points(std::ostream &ost);
 	void print_all_points(std::ostream &ost);
 	void print_bitangents(std::ostream &ost);
-	void print_lines_with_points_on_them(std::ostream &ost,
+	void print_lines_with_points_on_them(
+			std::ostream &ost,
 			long int *Lines, int nb_lines,
 			data_structures::set_of_sets *SoS);
 	//void print_bitangents_with_points_on_them(std::ostream &ost);
@@ -592,9 +594,11 @@ public:
 	void enumerate_points(int verbose_level);
 	void compute_properties(int verbose_level);
 	void recompute_properties(int verbose_level);
-	void identify_lines(long int *lines, int nb_lines, int *line_idx,
+	void identify_lines(
+			long int *lines, int nb_lines, int *line_idx,
 		int verbose_level);
-	int find_point(long int P, int &idx);
+	int find_point(
+			long int P, int &idx);
 
 };
 
@@ -1774,7 +1778,7 @@ public:
 		int verbose_level);
 	void create_lambda_from_trihedral_pair_and_arc(
 		long int *arc6, int t_idx,
-		int &lambda, int &lambda_rk,
+		int &lambda, long int &lambda_rk,
 		int verbose_level);
 	void find_point_not_on_six_curves(
 			int &pt, int &f_point_was_found,

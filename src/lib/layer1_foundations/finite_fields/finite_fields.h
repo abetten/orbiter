@@ -289,7 +289,8 @@ public:
 
 	finite_field_activity();
 	~finite_field_activity();
-	void init(finite_field_activity_description *Descr,
+	void init(
+			finite_field_activity_description *Descr,
 			finite_field *F,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -337,7 +338,8 @@ public:
 
 	finite_field_implementation_by_tables();
 	~finite_field_implementation_by_tables();
-	void init(finite_field *F, int verbose_level);
+	void init(
+			finite_field *F, int verbose_level);
 	int *private_add_table();
 	int *private_mult_table();
 	int has_quadratic_subfield();
@@ -473,7 +475,8 @@ public:
 
 	finite_field_io();
 	~finite_field_io();
-	void init(finite_field *F, int verbose_level);
+	void init(
+			finite_field *F, int verbose_level);
 
 	void report(
 			std::ostream &ost, int verbose_level);
@@ -681,16 +684,20 @@ public:
 	void init_implementation(
 			int f_without_tables, int verbose_level);
 	void set_default_symbol_for_print();
-	void init_symbol_for_print(std::string &symbol);
+	void init_symbol_for_print(
+			std::string &symbol);
 	std::string &get_symbol_for_print();
 	finite_field_implementation_by_tables *get_T();
 	int has_quadratic_subfield();
-	int belongs_to_quadratic_subfield(int a);
+	int belongs_to_quadratic_subfield(
+			int a);
 	long int compute_subfield_polynomial(
 			int order_subfield,
 			int verbose_level);
-	void compute_subfields(int verbose_level);
-	int find_primitive_element(int verbose_level);
+	void compute_subfields(
+			int verbose_level);
+	int find_primitive_element(
+			int verbose_level);
 	int compute_order_of_element(
 			int elt, int verbose_level);
 	int *private_add_table();
@@ -700,8 +707,10 @@ public:
 	int minus_one();
 	int is_zero(int i);
 	int is_one(int i);
-	int mult(int i, int j);
-	int mult_verbose(int i, int j, int verbose_level);
+	int mult(
+			int i, int j);
+	int mult_verbose(
+			int i, int j, int verbose_level);
 	int a_over_b(int a, int b);
 	int mult3(int a1, int a2, int a3);
 	int product3(int a1, int a2, int a3);
@@ -731,16 +740,19 @@ public:
 		// computes a^n
 	void frobenius_power_vec(
 			int *v, int len, int frob_power);
-	void frobenius_power_vec_to_vec(int *v_in, int *v_out,
+	void frobenius_power_vec_to_vec(
+			int *v_in, int *v_out,
 			int len, int frob_power);
-	int frobenius_power(int a, int frob_power);
+	int frobenius_power(
+			int a, int frob_power);
 		// computes a^{p^frob_power}
 	int absolute_trace(int i);
 	int absolute_norm(int i);
 	int alpha_power(int i);
 	int log_alpha(int i);
 	int multiplicative_order(int a);
-	void all_square_roots(int a, int &nb_roots, int *roots2);
+	void all_square_roots(
+			int a, int &nb_roots, int *roots2);
 	int is_square(int i);
 	int square_root(int i);
 	int primitive_root();

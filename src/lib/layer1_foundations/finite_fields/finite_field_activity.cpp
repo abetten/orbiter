@@ -32,7 +32,8 @@ finite_field_activity::~finite_field_activity()
 {
 }
 
-void finite_field_activity::init(finite_field_activity_description *Descr,
+void finite_field_activity::init(
+		finite_field_activity_description *Descr,
 		finite_field *F,
 		int verbose_level)
 {

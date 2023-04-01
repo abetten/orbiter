@@ -236,7 +236,8 @@ public:
 	// creates a combinatorics::boolean_function_domain object
 
 	// mindist.cpp:
-	int mindist(int n, int k, int q, int *G,
+	int mindist(
+			int n, int k, int q, int *G,
 		int f_verbose_level, int idx_zero, int idx_one,
 		int *add_table, int *mult_table);
 	//Main routine for the code minimum distance computation.
@@ -259,7 +260,8 @@ public:
 	~crc_codes();
 
 	// crc_codes_search.cpp:
-	void find_CRC_polynomials(field_theory::finite_field *F,
+	void find_CRC_polynomials(
+			field_theory::finite_field *F,
 			int t, int da, int dc,
 			int verbose_level);
 	void search_for_CRC_polynomials(int t,
@@ -473,10 +475,13 @@ public:
 
 	create_BCH_code();
 	~create_BCH_code();
-	void init(field_theory::finite_field *F,
+	void init(
+			field_theory::finite_field *F,
 			int n, int d, int verbose_level);
-	void do_report(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void do_report(
+			int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 
 
 };
@@ -508,10 +513,13 @@ public:
 
 	create_RS_code();
 	~create_RS_code();
-	void init(field_theory::finite_field *F,
+	void init(
+			field_theory::finite_field *F,
 			int n, int d, int verbose_level);
-	void do_report(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void do_report(
+			int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 
 
 };

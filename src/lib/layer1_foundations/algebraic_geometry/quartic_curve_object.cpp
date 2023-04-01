@@ -282,7 +282,8 @@ void quartic_curve_object::recompute_properties(int verbose_level)
 
 
 
-void quartic_curve_object::identify_lines(long int *lines, int nb_lines,
+void quartic_curve_object::identify_lines(
+		long int *lines, int nb_lines,
 	int *line_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -308,7 +309,8 @@ void quartic_curve_object::identify_lines(long int *lines, int nb_lines,
 
 
 
-int quartic_curve_object::find_point(long int P, int &idx)
+int quartic_curve_object::find_point(
+		long int P, int &idx)
 {
 	data_structures::sorting Sorting;
 

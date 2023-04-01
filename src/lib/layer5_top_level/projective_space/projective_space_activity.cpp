@@ -880,6 +880,35 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	}
 #endif
+
+	else if (Descr->f_plane_intersection_type) {
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity plane_intersection_type:" << Descr->plane_intersection_type_of_klein_image_input << endl;
+			cout << "projective_space_activity::perform_activity plane_intersection_type_threshold = " << Descr->plane_intersection_type_of_klein_image_threshold << endl;
+		}
+
+		geometry::geometry_global G;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before G.plane_intersection_type" << endl;
+		}
+		G.plane_intersection_type(
+				PA->P,
+				Descr->plane_intersection_type_input,
+				Descr->plane_intersection_type_threshold,
+				verbose_level);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after G.plane_intersection_type" << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_plane_intersection_type_of_klein_image) {
 
 

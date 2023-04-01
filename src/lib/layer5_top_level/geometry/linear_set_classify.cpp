@@ -402,7 +402,7 @@ void linear_set_classify::init(
 	}
 
 	int *vec;
-	int i, j;
+	long int i, j;
 
 	if (f_v) {
 		cout << "linear_set_classify::init computing spread_embedding" << endl;
@@ -1193,7 +1193,7 @@ int linear_set_classify::test_set_secondary(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int ret = TRUE;
-	int i, rk;
+	long int i, rk;
 	int *v;
 	int *w;
 	int nb;

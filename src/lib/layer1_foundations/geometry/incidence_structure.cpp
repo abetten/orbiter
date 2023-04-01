@@ -2697,7 +2697,9 @@ void incidence_structure::line_intersection_graph(
 	}
 }
 
-void incidence_structure::latex_it(std::ostream &ost, data_structures::partitionstack &P)
+void incidence_structure::latex_it(
+		std::ostream &ost,
+		data_structures::partitionstack &P)
 {
 
 	cout << "incidence_structure::latex_it" << endl;
@@ -2819,7 +2821,8 @@ void incidence_structure::rearrange(
 
 
 
-void incidence_structure::decomposition_print_tex(std::ostream &ost,
+void incidence_structure::decomposition_print_tex(
+		std::ostream &ost,
 		data_structures::partitionstack &PStack,
 		int f_row_tactical, int f_col_tactical,
 	int f_detailed,
@@ -3947,7 +3950,8 @@ incidence_structure *incidence_structure::apply_canonical_labeling(
 	return Inc_out;
 }
 
-void incidence_structure::save_as_csv(std::string &fname_csv, int verbose_level)
+void incidence_structure::save_as_csv(
+		std::string &fname_csv, int verbose_level)
 {
 	orbiter_kernel_system::file_io Fio;
 

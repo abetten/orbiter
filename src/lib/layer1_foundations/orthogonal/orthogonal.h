@@ -24,13 +24,24 @@ namespace orthogonal_geometry {
 class blt_set_domain {
 
 public:
+
 	field_theory::finite_field *F;
-	int f_semilinear; // from the command line
-	int epsilon; // the type of the quadric (0, 1 or -1)
-	int n; // algebraic dimension
-	int q; // field order
-	int target_size; // q + 1
-	int degree; // number of points on the quadric
+
+	int f_semilinear;
+		// from the command line
+	int epsilon;
+		// = 0, the type of the quadric (0, 1 or -1)
+	int n;
+		// = 5, the algebraic dimension
+	int q;
+		// field order, must be odd
+	int target_size;
+		// = q + 1, the size of a BLT-set
+	int nb_points_on_quadric;
+		// number of points on the quadric
+	int max_degree;
+		// = 1 * (q - 1), the degree of the polynomial
+		// representation of the flock functions
 
 	std::string prefix; // "BLT_q%d"
 
@@ -788,11 +799,6 @@ public:
 			long int *set, int verbose_level);
 	int collinearity_test(orthogonal *O,
 			int size, long int *set, int verbose_level);
-	void plane_invariant(orthogonal *O,
-		int size, int *set,
-		int &nb_planes, int *&intersection_matrix,
-		int &Block_size, int *&Blocks,
-		int verbose_level);
 	void create_Fisher_BLT_set(
 			long int *Fisher_BLT, int *ABC,
 			field_theory::finite_field *FQ,
@@ -922,6 +928,42 @@ public:
 	void test_Siegel(int index, int verbose_level);
 
 };
+
+
+
+// #############################################################################
+// orthogonal_plane_invariant.cpp
+// #############################################################################
+
+//! an invariant based on planes for a subset of an orthogonal geometry
+
+
+class orthogonal_plane_invariant {
+
+public:
+
+	orthogonal *O;
+
+	int size;
+	long int *set;
+
+	int nb_planes;
+	int *intersection_matrix;
+	int Block_size;
+	int *Blocks;
+
+
+	orthogonal_plane_invariant();
+	~orthogonal_plane_invariant();
+	void init(
+			orthogonal *O,
+		int size, long int *set,
+		int verbose_level);
+
+
+};
+
+
 
 
 // #############################################################################
@@ -1063,6 +1105,14 @@ public:
 	void create_latex_report(int verbose_level);
 	void export_incidence_matrix_to_csv(int verbose_level);
 	void make_fname_incidence_matrix_csv(std::string &fname);
+	void report_point_set(
+			long int *Pts, int nb_pts,
+			std::string &label_txt,
+			int verbose_level);
+	void report_line_set(
+			long int *Lines, int nb_lines,
+			std::string &label_txt,
+			int verbose_level);
 
 
 
@@ -1244,6 +1294,10 @@ public:
 			int *v, long int a, int verbose_level);
 	long int rank_point(
 			int *v, int verbose_level);
+	void make_collinearity_graph(
+			int *&Adj, int &N,
+			long int *Set, int sz,
+			int verbose_level);
 
 
 };

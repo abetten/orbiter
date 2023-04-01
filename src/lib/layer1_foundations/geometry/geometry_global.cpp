@@ -3610,6 +3610,91 @@ void geometry_global::make_restricted_incidence_matrix(
 	}
 }
 
+
+void geometry_global::plane_intersection_type(
+		geometry::projective_space *P,
+		std::string &input,
+		int threshold,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type" << endl;
+	}
+	long int *Set;
+	int sz;
+
+	Get_lint_vector_from_label(input, Set, sz, 0 /* verbose_level */);
+
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type "
+				"before plane_intersection_type_of_klein_image" << endl;
+	}
+
+	geometry::intersection_type *Int_type;
+
+	P->plane_intersection_type(
+		Set, sz, threshold,
+		Int_type,
+		verbose_level);
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type "
+				"after plane_intersection_type_of_klein_image" << endl;
+	}
+
+	cout << "geometry_global::plane_intersection_type "
+			"intersection numbers: ";
+	Int_vec_print(cout,
+			Int_type->the_intersection_type,
+			Int_type->highest_intersection_number + 1);
+	cout << endl;
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type "
+				"highest weight objects: " << endl;
+		Lint_vec_print(cout,
+				Int_type->Highest_weight_objects,
+				Int_type->nb_highest_weight_objects);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type "
+				"Intersection_sets: " << endl;
+		Int_matrix_print(Int_type->Intersection_sets,
+				Int_type->nb_highest_weight_objects,
+				Int_type->highest_intersection_number);
+	}
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type "
+				"Intersection_sets sorted: " << endl;
+		Int_matrix_print(Int_type->M->M,
+				Int_type->nb_highest_weight_objects,
+				Int_type->highest_intersection_number);
+	}
+
+	string fname;
+	data_structures::string_tools ST;
+
+	fname.assign(input);
+	ST.chop_off_extension(fname);
+	fname.append("_highest_weight_objects.csv");
+
+	Int_type->M->write_csv(fname, verbose_level);
+
+
+	FREE_OBJECT(Int_type);
+
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type done" << endl;
+	}
+}
+
+
 void geometry_global::plane_intersection_type_of_klein_image(
 		geometry::projective_space *P,
 		std::string &input,
@@ -4322,7 +4407,7 @@ void geometry_global::create_orthogonal(
 	if (f_v) {
 		cout << "geometry_global::create_orthogonal" << endl;
 	}
-	int i, j;
+	long int i, j;
 	int d = n + 1;
 	int *v;
 	geometry::geometry_global Gg;
@@ -4410,7 +4495,7 @@ void geometry_global::create_hermitian(
 	if (f_v) {
 		cout << "geometry_global::create_hermitian" << endl;
 	}
-	int i, j;
+	long int i, j;
 	int d = n + 1;
 	int *v;
 	geometry::hermitian *H;

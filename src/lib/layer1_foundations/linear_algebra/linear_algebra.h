@@ -94,7 +94,8 @@ public:
 			int *Elt, int n, int i, int j, int k, int l,
 			int verbose_level);
 	void wedge_product(
-			int *Elt, int *Mtx2, int n, int n2, int verbose_level);
+			int *Elt, int *Mtx2,
+			int n, int n2, int verbose_level);
 	void mult_vector_from_the_left(
 			int *v, int *A,
 		int *vA, int m, int n);
@@ -156,16 +157,26 @@ public:
 	void linear_combination_of_vectors(
 			int a, int *A, int b, int *B, int *C, int len);
 	void linear_combination_of_three_vectors(
-			int a, int *A, int b, int *B, int c, int *C, int *D, int len);
-	void negate_vector(int *A, int *B, int m);
-	void negate_vector_in_place(int *A, int m);
-	void scalar_multiply_vector_in_place(int c, int *A, int m);
-	void vector_frobenius_power_in_place(int *A, int m, int f);
-	int dot_product(int len, int *v, int *w);
-	void transpose_matrix(int *A, int *At, int ma, int na);
-	void transpose_matrix_in_place(int *A, int m);
-	void transform_form_matrix(int *A, int *Gram,
-		int *new_Gram, int d, int verbose_level);
+			int a, int *A, int b, int *B,
+			int c, int *C, int *D, int len);
+	void negate_vector(
+			int *A, int *B, int m);
+	void negate_vector_in_place(
+			int *A, int m);
+	void scalar_multiply_vector_in_place(
+			int c, int *A, int m);
+	void vector_frobenius_power_in_place(
+			int *A, int m, int f);
+	int dot_product(
+			int len, int *v, int *w);
+	void transpose_matrix(
+			int *A, int *At, int ma, int na);
+	void transpose_matrix_in_place(
+			int *A, int m);
+	void transform_form_matrix(
+			int *A, int *Gram,
+		int *new_Gram, int d,
+		int verbose_level);
 		// computes new_Gram = A * Gram * A^\top
 	int n_choose_k_mod_p(
 			int n, int k, int verbose_level);
@@ -176,7 +187,8 @@ public:
 		// from F_q to F_q
 	void projective_action_on_columns_from_the_left(
 			int *A,
-		int *M, int m, int n, int *perm, int verbose_level);
+		int *M, int m, int n, int *perm,
+		int verbose_level);
 	int evaluate_bilinear_form(
 			int n, int *v1, int *v2, int *Gram);
 	int evaluate_standard_hyperbolic_bilinear_form(
@@ -213,8 +225,10 @@ public:
 	void restrict_quadratic_form(
 			int k, int n, int *basis,
 		int *C, int *D, int verbose_level);
-	void exterior_square(int *An, int *An2, int n, int verbose_level);
-	void lift_to_Klein_quadric(int *A4, int *A6, int verbose_level);
+	void exterior_square(
+			int *An, int *An2, int n, int verbose_level);
+	void lift_to_Klein_quadric(
+			int *A4, int *A6, int verbose_level);
 
 
 	// linear_algebra2.cpp
@@ -224,7 +238,8 @@ public:
 	void Kronecker_product_square_but_arbitrary(
 			int *A, int *B,
 		int na, int nb, int *AB, int &N, int verbose_level);
-	int dependency(int d, int *v, int *A, int m, int *rho,
+	int dependency(
+			int d, int *v, int *A, int m, int *rho,
 		int verbose_level);
 		// Lueneburg~\cite{Lueneburg87a} p. 104.
 		// A is a matrix of size d + 1 times d
@@ -251,12 +266,12 @@ public:
 	int test_if_commute(
 			int *A, int *B, int k, int verbose_level);
 	void unrank_point_in_PG(
-			int *v, int len, int rk);
+			int *v, int len, long int rk);
 		// len is the length of the vector,
 		// not the projective dimension
-	int rank_point_in_PG(
+	long int rank_point_in_PG(
 			int *v, int len);
-	int nb_points_in_PG(int n);
+	long int nb_points_in_PG(int n);
 		// n is projective dimension
 	void Borel_decomposition(
 			int n, int *M, int *B1, int *B2,
@@ -306,7 +321,8 @@ public:
 	int Pluecker_42(int *x4, int *y4);
 	int Pluecker_34(int *x4, int *y4);
 	int Pluecker_43(int *x4, int *y4);
-	int Pluecker_ij(int i, int j, int *x4, int *y4);
+	int Pluecker_ij(
+			int i, int j, int *x4, int *y4);
 	int evaluate_symplectic_form(
 			int len, int *x, int *y);
 	int evaluate_symmetric_form(
@@ -456,14 +472,14 @@ public:
 		void *rank_point_data,
 		int verbose_level);
 	int Gauss_canonical_form_ranked(
-			int *set1, int *set2, int size,
+			long int *set1, long int *set2, int size,
 		int vector_space_dimension, int verbose_level);
 		// Computes the Gauss canonical form
 		// for the generating set in set1.
 		// The result is written to set2.
 		// Returns the rank of the span of the elements in set1.
 	int lexleast_canonical_form_ranked(
-			int *set1, int *set2, int size,
+			long int *set1, long int *set2, int size,
 		int vector_space_dimension, int verbose_level);
 		// Computes the lexleast generating set of the subspace
 		// spanned by the elements in set1.
@@ -545,6 +561,16 @@ public:
 		int *Ainv, int n, int verbose_level);
 		// Tmp points to n * n + 1 int's
 		// Tmp_basecols points to n int's
+	void intersect_with_subspace(
+			int *Pt_coords, int nb_pts,
+			int *Basis_save, int *Basis, int m, int n,
+			long int *Intersection_idx,
+			long int &intersection_sz,
+			int verbose_level);
+	// Pt_coords[nb_pts * n]
+	// Basis_save[m * n]
+	// Basis[(m + 1) * n]
+	// Intersection_idx[nb_pts]
 
 };
 

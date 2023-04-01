@@ -752,10 +752,13 @@ public:
 
 	encoded_combinatorial_object();
 	~encoded_combinatorial_object();
-	void init_everything(int nb_rows, int nb_cols,
+	void init_everything(
+			int nb_rows, int nb_cols,
 			int *Incma, int *partition,
 			int verbose_level);
-	void init(int nb_rows, int nb_cols, int verbose_level);
+	void init(
+			int nb_rows, int nb_cols,
+			int verbose_level);
 	int *get_Incma();
 	void set_incidence_ij(int i, int j);
 	int get_incidence_ij(int i, int j);
@@ -766,7 +769,8 @@ public:
 			int verbose_level);
 	void print_incma();
 	void print_partition();
-	void compute_canonical_incma(int *canonical_labeling,
+	void compute_canonical_incma(
+			int *canonical_labeling,
 			int *&Incma_out, int verbose_level);
 	void compute_canonical_form(
 			data_structures::bitvector *&Canonical_form,
@@ -779,26 +783,35 @@ public:
 			int *canonical_labeling,
 			data_structures::bitvector *&B,
 			int verbose_level);
-	void latex_set_system_by_columns(std::ostream &ost,
+	void latex_set_system_by_columns(
+			std::ostream &ost,
 			int verbose_level);
-	void latex_set_system_by_rows(std::ostream &ost,
+	void latex_set_system_by_rows(
+			std::ostream &ost,
 			int verbose_level);
-	void latex_incma(std::ostream &ost, int verbose_level);
-	void latex_TDA(std::ostream &ost,
+	void latex_incma(
+			std::ostream &ost, int verbose_level);
+	void latex_TDA(
+			std::ostream &ost,
 			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 			int verbose_level);
-	void latex_TDA_with_labels(std::ostream &ost,
+	void latex_TDA_with_labels(
+			std::ostream &ost,
 			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 			int verbose_level);
-	void latex_canonical_form(std::ostream &ost,
+	void latex_canonical_form(
+			std::ostream &ost,
 			data_structures::nauty_output *NO,
 			int verbose_level);
-	void apply_canonical_labeling(int *&Inc2,
+	void apply_canonical_labeling(
+			int *&Inc2,
 			data_structures::nauty_output *NO);
-	void apply_canonical_labeling_and_get_flags(int *&Inc2,
+	void apply_canonical_labeling_and_get_flags(
+			int *&Inc2,
 			int *&Flags, int &nb_flags_counted,
 			data_structures::nauty_output *NO);
-	void latex_canonical_form_with_labels(std::ostream &ost,
+	void latex_canonical_form_with_labels(
+			std::ostream &ost,
 			data_structures::nauty_output *NO,
 			std::string *row_labels,
 			std::string *col_labels,

@@ -36,6 +36,10 @@ public:
 
 	int f_BLT_test;
 
+	int f_export_set_in_PG;
+
+	int f_plane_invariant;
+
 	blt_set_activity_description();
 	~blt_set_activity_description();
 	int read_arguments(int argc, std::string *argv,
@@ -202,7 +206,7 @@ public:
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
-	int degree;
+	int nb_points_on_quadric;
 
 
 	int target_size;
@@ -285,9 +289,6 @@ public:
 	int f_space;
 	std::string space_label;
 
-	//int f_space_pointer;
-	//orthogonal_space_with_action *space_pointer;
-
 	int f_invariants;
 
 	BLT_set_create_description();
@@ -348,6 +349,8 @@ public:
 	void export_gap(int verbose_level);
 	void create_flock(int point_idx, int verbose_level);
 	void BLT_test(int verbose_level);
+	void export_set_in_PG(int verbose_level);
+	void plane_invariant(int verbose_level);
 	void report2(std::ostream &ost, int verbose_level);
 	void print_set_of_points(
 				std::ostream &ost, long int *Pts, int nb_pts);
@@ -523,20 +526,10 @@ public:
 	~flock_from_blt_set();
 	void init(
 				blt_set_with_action *BLT_set,
-				int point_idx, int verbose_level);
+				int point_idx,
+				int verbose_level);
 	void report(
 			std::ostream &ost, int verbose_level);
-#if 0
-	void test_flock_condition(
-			field_theory::finite_field *F,
-			int *ABC,
-			int *&outcome,
-			int &N,
-			int verbose_level);
-	// F is given because the field might be an extension field of the current field
-	void quadratic_lift(int verbose_level);
-	void cubic_lift(int verbose_level);
-#endif
 
 };
 
@@ -550,11 +543,6 @@ public:
 
 class orthogonal_space_activity_description {
 public:
-
-#if 0
-	int f_create_BLT_set;
-	BLT_set_create_description * BLT_Set_create_description;
-#endif
 
 	int f_cheat_sheet_orthogonal;
 
@@ -705,19 +693,7 @@ public:
 			std::ostream &ost,
 			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
-	void report_point_set(
-			long int *Pts, int nb_pts,
-			std::string &label_txt,
-			int verbose_level);
-	void report_line_set(
-			long int *Lines, int nb_lines,
-			std::string &label_txt,
-			int verbose_level);
 	void make_table_of_blt_sets(int verbose_level);
-	void make_collinearity_graph(
-			int *&Adj, int &N,
-			long int *Set, int sz,
-			int verbose_level);
 
 };
 

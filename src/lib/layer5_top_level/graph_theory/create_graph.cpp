@@ -1427,15 +1427,15 @@ void create_graph::create_coll_orthogonal(
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal before "
-				"OA->make_collinearity_graph" << endl;
+				"OA->O->Quadratic_form->make_collinearity_graph" << endl;
 	}
-	OA->make_collinearity_graph(
+	OA->O->Quadratic_form->make_collinearity_graph(
 			Adj, N,
 			Set, sz,
 			verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal after "
-				"OA->make_collinearity_graph" << endl;
+				"OA->O->Quadratic_form->make_collinearity_graph" << endl;
 	}
 
 

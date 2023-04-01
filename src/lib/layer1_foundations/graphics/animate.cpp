@@ -3048,7 +3048,8 @@ void animate::union_end(
 }
 
 
-void animate::draw_text(std::string &text,
+void animate::draw_text(
+		std::string &text,
 		double thickness_half, double extra_spacing,
 		double scale,
 		double off_x, double off_y, double off_z,
@@ -3187,7 +3188,8 @@ void animate::draw_text(std::string &text,
 		}
 }
 
-void animate::draw_text_with_selection(int *selection, int nb_select,
+void animate::draw_text_with_selection(
+		int *selection, int nb_select,
 	double thickness_half, double extra_spacing,
 	double scale,
 	double off_x, double off_y, double off_z,

@@ -112,6 +112,18 @@ ORBITER_MODULES= \
 		layer1_foundations/expression_parser/syntax_tree_node_terminal.o \
 		layer1_foundations/expression_parser/syntax_tree_node.o \
 		layer1_foundations/expression_parser/syntax_tree.o \
+		layer1_foundations/expression_parser_sajeeb/parser.o \
+		layer1_foundations/expression_parser_sajeeb/lexer.yy.o \
+		layer1_foundations/expression_parser_sajeeb/parser.tab.o \
+		layer1_foundations/expression_parser_sajeeb/IRTree/node.o \
+		layer1_foundations/expression_parser_sajeeb/Visitors/*.o \
+		layer1_foundations/expression_parser_sajeeb/Visitors/LatexVisitors/*.o \
+		layer1_foundations/expression_parser_sajeeb/Visitors/ToStringVisitors/*.o \
+		layer1_foundations/expression_parser_sajeeb/Visitors/ExpansionVisitors/*.o \
+		layer1_foundations/expression_parser_sajeeb/Visitors/CopyVisitors/*.o \
+		layer1_foundations/expression_parser_sajeeb/Visitors/PrintVisitors/*.o \
+		layer1_foundations/expression_parser_sajeeb/Visitors/ReductionVisitors/*.o \
+		layer1_foundations/expression_parser_sajeeb/Visitors/EvaluateVisitors/*.o \
 		layer1_foundations/finite_fields/finite_field_activity_description.o \
 		layer1_foundations/finite_fields/finite_field_activity.o \
 		layer1_foundations/finite_fields/finite_field_description.o \
@@ -226,6 +238,7 @@ ORBITER_MODULES= \
 		layer1_foundations/linear_algebra/vector_space.o \
 		layer1_foundations/knowledge_base/finite_field_tables.o \
 		layer1_foundations/knowledge_base/knowledge_base.o \
+		layer1_foundations/l1_interfaces/expression_parser_sajeeb.o \
 		layer1_foundations/l1_interfaces/interface_gap_low.o \
 		layer1_foundations/l1_interfaces/interface_magma_low.o \
 		layer1_foundations/number_theory/cyclotomic_sets.o \
@@ -258,6 +271,7 @@ ORBITER_MODULES= \
 		layer1_foundations/orthogonal/orthogonal_group.o \
 		layer1_foundations/orthogonal/orthogonal_indexing.o \
 		layer1_foundations/orthogonal/orthogonal_io.o \
+		layer1_foundations/orthogonal/orthogonal_plane_invariant.o \
 		layer1_foundations/orthogonal/orthogonal.o \
 		layer1_foundations/orthogonal/quadratic_form_list_coding.o \
 		layer1_foundations/orthogonal/quadratic_form.o \

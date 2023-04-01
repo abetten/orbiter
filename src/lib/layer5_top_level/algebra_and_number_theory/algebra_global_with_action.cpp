@@ -2139,7 +2139,8 @@ void algebra_global_with_action::do_eigenstuff(
 {
 	int f_v = (verbose_level >= 1);
 	typed_objects::discreta_matrix M;
-	int i, j, k, a, h;
+	int i, j, k, h;
+	long int a;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
 	number_theory::number_theory_domain NT;

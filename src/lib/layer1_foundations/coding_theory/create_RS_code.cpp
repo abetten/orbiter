@@ -41,7 +41,8 @@ create_RS_code::~create_RS_code()
 }
 
 
-void create_RS_code::init(field_theory::finite_field *F,
+void create_RS_code::init(
+		field_theory::finite_field *F,
 		int n, int d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -115,7 +116,8 @@ void create_RS_code::init(field_theory::finite_field *F,
 	}
 }
 
-void create_RS_code::do_report(int verbose_level)
+void create_RS_code::do_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i;
@@ -185,7 +187,8 @@ void create_RS_code::do_report(int verbose_level)
 	}
 }
 
-void create_RS_code::report(std::ostream &ost, int verbose_level)
+void create_RS_code::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

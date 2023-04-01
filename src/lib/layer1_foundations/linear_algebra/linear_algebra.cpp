@@ -178,7 +178,8 @@ int linear_algebra::minor_2x2(
 }
 
 void linear_algebra::wedge_product(
-		int *Elt, int *Mtx2, int n, int n2, int verbose_level)
+		int *Elt, int *Mtx2,
+		int n, int n2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -823,7 +824,8 @@ void linear_algebra::linear_combination_of_vectors(
 }
 
 void linear_algebra::linear_combination_of_three_vectors(
-		int a, int *A, int b, int *B, int c, int *C, int *D, int len)
+		int a, int *A, int b, int *B,
+		int c, int *C, int *D, int len)
 {
 	int i;
 
@@ -832,7 +834,8 @@ void linear_algebra::linear_combination_of_three_vectors(
 	}
 }
 
-void linear_algebra::negate_vector(int *A, int *B, int m)
+void linear_algebra::negate_vector(
+		int *A, int *B, int m)
 {
 	int i;
 
@@ -841,7 +844,8 @@ void linear_algebra::negate_vector(int *A, int *B, int m)
 	}
 }
 
-void linear_algebra::negate_vector_in_place(int *A, int m)
+void linear_algebra::negate_vector_in_place(
+		int *A, int m)
 {
 	int i;
 
@@ -850,7 +854,8 @@ void linear_algebra::negate_vector_in_place(int *A, int m)
 	}
 }
 
-void linear_algebra::scalar_multiply_vector_in_place(int c, int *A, int m)
+void linear_algebra::scalar_multiply_vector_in_place(
+		int c, int *A, int m)
 {
 	int i;
 
@@ -859,7 +864,8 @@ void linear_algebra::scalar_multiply_vector_in_place(int c, int *A, int m)
 	}
 }
 
-void linear_algebra::vector_frobenius_power_in_place(int *A, int m, int f)
+void linear_algebra::vector_frobenius_power_in_place(
+		int *A, int m, int f)
 {
 	int i;
 
@@ -868,7 +874,8 @@ void linear_algebra::vector_frobenius_power_in_place(int *A, int m, int f)
 	}
 }
 
-int linear_algebra::dot_product(int len, int *v, int *w)
+int linear_algebra::dot_product(
+		int len, int *v, int *w)
 {
 	int i, a = 0, b;
 
@@ -879,7 +886,8 @@ int linear_algebra::dot_product(int len, int *v, int *w)
 	return a;
 }
 
-void linear_algebra::transpose_matrix(int *A, int *At, int ma, int na)
+void linear_algebra::transpose_matrix(
+		int *A, int *At, int ma, int na)
 {
 	int i, j;
 
@@ -890,7 +898,8 @@ void linear_algebra::transpose_matrix(int *A, int *At, int ma, int na)
 	}
 }
 
-void linear_algebra::transpose_matrix_in_place(int *A, int m)
+void linear_algebra::transpose_matrix_in_place(
+		int *A, int m)
 {
 	int i, j, a;
 
@@ -903,8 +912,10 @@ void linear_algebra::transpose_matrix_in_place(int *A, int m)
 	}
 }
 
-void linear_algebra::transform_form_matrix(int *A,
-		int *Gram, int *new_Gram, int d, int verbose_level)
+void linear_algebra::transform_form_matrix(
+		int *A,
+		int *Gram, int *new_Gram, int d,
+		int verbose_level)
 // computes new_Gram = A * Gram * A^\top
 {
 	int f_v = (verbose_level >= 1);
@@ -1536,7 +1547,8 @@ void linear_algebra::restrict_quadratic_form(
 }
 
 
-void linear_algebra::exterior_square(int *An, int *An2, int n, int verbose_level)
+void linear_algebra::exterior_square(
+		int *An, int *An2, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1604,7 +1616,8 @@ void linear_algebra::exterior_square(int *An, int *An2, int n, int verbose_level
 	}
 }
 
-void linear_algebra::lift_to_Klein_quadric(int *A4, int *A6, int verbose_level)
+void linear_algebra::lift_to_Klein_quadric(
+		int *A4, int *A6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

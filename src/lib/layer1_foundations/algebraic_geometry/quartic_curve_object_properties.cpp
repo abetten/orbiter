@@ -256,7 +256,8 @@ void quartic_curve_object_properties::create_summary_file(std::string &fname,
 
 }
 
-void quartic_curve_object_properties::report_properties_simple(std::ostream &ost, int verbose_level)
+void quartic_curve_object_properties::report_properties_simple(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -592,7 +593,8 @@ void quartic_curve_object_properties::print_bitangents(std::ostream &ost)
 	}
 }
 
-void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostream &ost,
+void quartic_curve_object_properties::print_lines_with_points_on_them(
+		std::ostream &ost,
 		long int *Lines, int nb_lines,
 		data_structures::set_of_sets *SoS)
 {

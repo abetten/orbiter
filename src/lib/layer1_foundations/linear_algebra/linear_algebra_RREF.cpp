@@ -1893,7 +1893,7 @@ ret:
 }
 
 int linear_algebra::Gauss_canonical_form_ranked(
-	int *set1, int *set2, int size,
+	long int *set1, long int *set2, int size,
 	int vector_space_dimension, int verbose_level)
 // Computes the Gauss canonical form for the generating set in set1.
 // The result is written to set2.
@@ -1912,7 +1912,7 @@ int linear_algebra::Gauss_canonical_form_ranked(
 	if (f_vv) {
 		cout << "linear_algebra::Gauss_canonical_form_ranked" << endl;
 		cout << "set1: ";
-		Int_vec_print(cout, set1, size);
+		Lint_vec_print(cout, set1, size);
 		cout << endl;
 	}
 	M = NEW_int(size * vector_space_dimension);
@@ -1962,7 +1962,7 @@ int linear_algebra::Gauss_canonical_form_ranked(
 }
 
 int linear_algebra::lexleast_canonical_form_ranked(
-	int *set1, int *set2, int size,
+	long int *set1, long int *set2, int size,
 	int vector_space_dimension, int verbose_level)
 // Computes the lexleast generating set of the
 // subspace spanned by the elements in set1.
@@ -1976,14 +1976,14 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	int *w;
 	int *base_cols;
 	int *f_allowed;
-	int *basis_vectors;
-	int *list_of_ranks;
-	int *list_of_ranks_PG;
-	int *list_of_ranks_PG_sorted;
+	long int *basis_vectors;
+	long int *list_of_ranks;
+	long int *list_of_ranks_PG;
+	long int *list_of_ranks_PG_sorted;
 	int size_list, idx;
 	int *tmp;
-	int i, j, h, N, a, sz, Sz;
-	int rk;
+	long int i, j, h, N, a, sz, Sz;
+	long int rk;
 	number_theory::number_theory_domain NT;
 	geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
@@ -1994,12 +1994,14 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	if (f_vv) {
 		cout << "linear_algebra::lexleast_canonical_form_ranked" << endl;
 		cout << "set1: ";
-		Int_vec_print(cout, set1, size);
+		Lint_vec_print(cout, set1, size);
 		cout << endl;
 	}
+
 	tmp = NEW_int(vector_space_dimension);
 	M1 = NEW_int(size * vector_space_dimension);
 	base_cols = NEW_int(vector_space_dimension);
+
 	for (i = 0; i < size; i++) {
 		F->Projective_space_basic->PG_element_unrank_modified(
 				M1 + i * vector_space_dimension,
@@ -2014,8 +2016,10 @@ int linear_algebra::lexleast_canonical_form_ranked(
 
 	rk = Gauss_simple(M1, size, vector_space_dimension,
 			base_cols, 0/*int verbose_level*/);
+
 	v = NEW_int(rk);
 	w = NEW_int(rk);
+
 	if (f_vv) {
 		cout << "after Gauss" << endl;
 		cout << "matrix:" << endl;
@@ -2029,10 +2033,14 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	}
 	N = NT.i_power_j(F->q, rk);
 	M2 = NEW_int(N * vector_space_dimension);
-	list_of_ranks = NEW_int(N);
-	list_of_ranks_PG = NEW_int(N);
-	list_of_ranks_PG_sorted = NEW_int(N);
-	basis_vectors = NEW_int(rk);
+
+
+	list_of_ranks = NEW_lint(N);
+	list_of_ranks_PG = NEW_lint(N);
+	list_of_ranks_PG_sorted = NEW_lint(N);
+	basis_vectors = NEW_lint(rk);
+
+
 	size_list = 0;
 	list_of_ranks_PG[0] = -1;
 	for (a = 0; a < N; a++) {
@@ -2048,8 +2056,8 @@ int linear_algebra::lexleast_canonical_form_ranked(
 		F->Projective_space_basic->PG_element_rank_modified(
 				M2 + a * vector_space_dimension, 1,
 				vector_space_dimension, list_of_ranks_PG[a]);
-		if (!Sorting.int_vec_search(list_of_ranks_PG_sorted,
-				size_list, list_of_ranks_PG[a], idx)) {
+		if (!Sorting.lint_vec_search(list_of_ranks_PG_sorted,
+				size_list, list_of_ranks_PG[a], idx, 0 /* verbose_level */)) {
 			for (h = size_list; h > idx; h--) {
 				list_of_ranks_PG_sorted[h] = list_of_ranks_PG_sorted[h - 1];
 				}
@@ -2063,13 +2071,13 @@ int linear_algebra::lexleast_canonical_form_ranked(
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 		cout << "list_of_ranks:" << endl;
-		Int_vec_print(cout, list_of_ranks, N);
+		Lint_vec_print(cout, list_of_ranks, N);
 		cout << endl;
 		cout << "list_of_ranks_PG:" << endl;
-		Int_vec_print(cout, list_of_ranks_PG, N);
+		Lint_vec_print(cout, list_of_ranks_PG, N);
 		cout << endl;
 		cout << "list_of_ranks_PG_sorted:" << endl;
-		Int_vec_print(cout, list_of_ranks_PG_sorted, size_list);
+		Lint_vec_print(cout, list_of_ranks_PG_sorted, size_list);
 		cout << endl;
 	}
 	f_allowed = NEW_int(size_list);
@@ -2082,7 +2090,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 		if (f_vv) {
 			cout << "step " << i << " ";
 			cout << " list_of_ranks_PG_sorted=";
-			Int_vec_print(cout, list_of_ranks_PG_sorted, size_list);
+			Lint_vec_print(cout, list_of_ranks_PG_sorted, size_list);
 			cout << " ";
 			cout << "f_allowed=";
 			Int_vec_print(cout, f_allowed, size_list);
@@ -2163,7 +2171,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	}
 	if (f_vv) {
 		cout << "basis_vectors by rank: ";
-		Int_vec_print(cout, basis_vectors, rk);
+		Lint_vec_print(cout, basis_vectors, rk);
 		cout << endl;
 	}
 	if (f_vv) {
@@ -2181,7 +2189,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	}
 	if (f_vv) {
 		cout << "basis_vectors by rank again (double check): ";
-		Int_vec_print(cout, set2, rk);
+		Lint_vec_print(cout, set2, rk);
 		cout << endl;
 	}
 
@@ -2193,10 +2201,10 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	FREE_int(w);
 	FREE_int(base_cols);
 	FREE_int(f_allowed);
-	FREE_int(list_of_ranks);
-	FREE_int(list_of_ranks_PG);
-	FREE_int(list_of_ranks_PG_sorted);
-	FREE_int(basis_vectors);
+	FREE_lint(list_of_ranks);
+	FREE_lint(list_of_ranks_PG);
+	FREE_lint(list_of_ranks_PG_sorted);
+	FREE_lint(basis_vectors);
 	if (f_v) {
 		cout << "linear_algebra::lexleast_canonical_form_ranked done" << endl;
 	}
@@ -3057,6 +3065,68 @@ void linear_algebra::matrix_invert_affine(
 	}
 	if (f_v) {
 		cout << "linear_algebra::matrix_invert_affine done" << endl;
+	}
+}
+
+void linear_algebra::intersect_with_subspace(
+		int *Pt_coords, int nb_pts,
+		int *Basis_save, int *Basis, int m, int n,
+		long int *Intersection_idx,
+		long int &intersection_sz,
+		int verbose_level)
+// Pt_coords[nb_pts * n]
+// Basis_save[m * n]
+// Basis[(m + 1) * n]
+// Intersection_idx[nb_pts]
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; // (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_algebra::intersect_with_subspace" << endl;
+	}
+
+	int h, r;
+
+
+
+	intersection_sz = 0;
+	for (h = 0; h < nb_pts; h++) {
+		if (FALSE && f_vv) {
+			cout << "linear_algebra::intersect_with_subspace "
+					"testing point " << h << ":" << endl;
+		}
+
+		Int_vec_copy(Basis_save, Basis, m * n);
+
+		Int_vec_copy(Pt_coords + h * n, Basis + m * n, n);
+
+		if (FALSE && f_vv) {
+			cout << "linear_algebra::intersect_with_subspace "
+					"augmented Basis:" << endl;
+			Int_matrix_print(Basis, m + 1, n);
+		}
+		r = F->Linear_algebra->rank_of_rectangular_matrix(
+				Basis,
+				m + 1, n, 0 /* verbose_level */);
+		if (r == m) {
+			Intersection_idx[intersection_sz++] = h;
+			if (f_vv) {
+				cout << "linear_algebra::intersect_with_subspace "
+						"point " << h << " belongs to the subspace" << endl;
+			}
+		}
+		else {
+			if (FALSE && f_vv) {
+				cout << "linear_algebra::intersect_with_subspace "
+						"point " << h << " does not belong to the subspace" << endl;
+			}
+		}
+	}
+
+
+	if (f_v) {
+		cout << "linear_algebra::intersect_with_subspace" << endl;
 	}
 }
 

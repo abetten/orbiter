@@ -17,6 +17,37 @@ namespace l1_interfaces {
 
 
 // #############################################################################
+// expression_parser_sajeeb.cpp:
+// #############################################################################
+
+//! interface to Sajeeb's expression parser
+
+class expression_parser_sajeeb {
+public:
+
+	expression_parser::formula *Formula;
+
+	void *private_data;
+
+	expression_parser_sajeeb();
+	~expression_parser_sajeeb();
+	void init_formula(
+			expression_parser::formula *Formula,
+			int verbose_level);
+	void get_subtrees(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			int verbose_level);
+	void evaluate(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::map<std::string, std::string> &symbol_table, int *Values,
+			int verbose_level);
+
+
+};
+
+
+
+// #############################################################################
 // interface_gap_low.cpp:
 // #############################################################################
 

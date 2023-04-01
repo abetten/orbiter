@@ -216,7 +216,8 @@ void knarr::init(
 
 }
 
-void knarr::points_and_lines(int verbose_level)
+void knarr::points_and_lines(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -540,8 +541,10 @@ void knarr::points_and_lines(int verbose_level)
 
 }
 
-void knarr::incidence_matrix(int *&Inc,
-		int &nb_points, int &nb_lines, int verbose_level)
+void knarr::incidence_matrix(
+		int *&Inc,
+		int &nb_points, int &nb_lines,
+		int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);

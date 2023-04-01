@@ -69,7 +69,8 @@ object_with_canonical_form::~object_with_canonical_form()
 	}
 }
 
-void object_with_canonical_form::print(std::ostream &ost)
+void object_with_canonical_form::print(
+		std::ostream &ost)
 {
 
 	cout << "set_as_string: " << set_as_string << endl;
@@ -108,7 +109,8 @@ void object_with_canonical_form::print(std::ostream &ost)
 	}
 }
 
-void object_with_canonical_form::print_rows(std::ostream &ost,
+void object_with_canonical_form::print_rows(
+		std::ostream &ost,
 		int f_show_incma, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -139,7 +141,8 @@ void object_with_canonical_form::print_rows(std::ostream &ost,
 	}
 }
 
-void object_with_canonical_form::print_tex_detailed(std::ostream &ost,
+void object_with_canonical_form::print_tex_detailed(
+		std::ostream &ost,
 		int f_show_incma, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -215,7 +218,8 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost,
 	}
 }
 
-void object_with_canonical_form::print_tex(std::ostream &ost, int verbose_level)
+void object_with_canonical_form::print_tex(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -317,7 +321,8 @@ void object_with_canonical_form::print_tex(std::ostream &ost, int verbose_level)
 	}
 }
 
-void object_with_canonical_form::get_packing_as_set_system(long int *&Sets,
+void object_with_canonical_form::get_packing_as_set_system(
+		long int *&Sets,
 		int &nb_sets, int &set_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1753,7 +1758,8 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 }
 
 void object_with_canonical_form::encode_object(
-		long int *&encoding, int &encoding_sz, int verbose_level)
+		long int *&encoding, int &encoding_sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1806,7 +1812,8 @@ void object_with_canonical_form::encode_object(
 }
 
 void object_with_canonical_form::encode_object_points(
-		long int *&encoding, int &encoding_sz, int verbose_level)
+		long int *&encoding, int &encoding_sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -28,7 +28,8 @@ finite_field_io::~finite_field_io()
 {
 }
 
-void finite_field_io::init(finite_field *F, int verbose_level)
+void finite_field_io::init(
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

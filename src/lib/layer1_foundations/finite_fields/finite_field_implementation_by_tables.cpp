@@ -101,7 +101,8 @@ finite_field_implementation_by_tables::~finite_field_implementation_by_tables()
 
 }
 
-void finite_field_implementation_by_tables::init(finite_field *F, int verbose_level)
+void finite_field_implementation_by_tables::init(
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -123,22 +124,26 @@ void finite_field_implementation_by_tables::init(finite_field *F, int verbose_le
 	v3 = NEW_int(F->e);
 
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::init before create_alpha_table" << endl;
+		cout << "finite_field_implementation_by_tables::init "
+				"before create_alpha_table" << endl;
 	}
 	create_alpha_table(verbose_level);
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::init after create_alpha_table" << endl;
+		cout << "finite_field_implementation_by_tables::init "
+				"after create_alpha_table" << endl;
 	}
 
 
 
 
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::init before init_binary_operations" << endl;
+		cout << "finite_field_implementation_by_tables::init "
+				"before init_binary_operations" << endl;
 	}
 	init_binary_operations(0 /*verbose_level */);
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::init after init_binary_operations" << endl;
+		cout << "finite_field_implementation_by_tables::init "
+				"after init_binary_operations" << endl;
 	}
 
 	F->f_has_table = TRUE;
@@ -179,7 +184,8 @@ void finite_field_implementation_by_tables::init(finite_field *F, int verbose_le
 
 
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::init field of order "
+		cout << "finite_field_implementation_by_tables::init "
+				"field of order "
 				<< F->q << " initialized" << endl;
 		if (f_v) {
 			if (FALSE) {
@@ -258,7 +264,8 @@ void finite_field_implementation_by_tables::create_alpha_table(int verbose_level
 	}
 }
 
-void finite_field_implementation_by_tables::create_alpha_table_prime_field(int verbose_level)
+void finite_field_implementation_by_tables::create_alpha_table_prime_field(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
@@ -318,7 +325,8 @@ void finite_field_implementation_by_tables::create_alpha_table_prime_field(int v
 	}
 }
 
-void finite_field_implementation_by_tables::create_alpha_table_extension_field(int verbose_level)
+void finite_field_implementation_by_tables::create_alpha_table_extension_field(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

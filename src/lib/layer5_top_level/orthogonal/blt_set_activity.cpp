@@ -121,6 +121,40 @@ void blt_set_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_export_set_in_PG) {
+
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity f_export_set_in_PG" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity before BC->export_set_in_PG" << endl;
+		}
+		BC->export_set_in_PG(verbose_level);
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity after BC->export_set_in_PG" << endl;
+		}
+
+	}
+
+	else if (Descr->f_plane_invariant) {
+
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity f_plane_invariant" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity before BC->plane_invariant" << endl;
+		}
+		BC->plane_invariant(verbose_level);
+		if (f_v) {
+			cout << "blt_set_activity::perform_activity after BC->plane_invariant" << endl;
+		}
+
+	}
+
+
+
 
 	if (f_v) {
 		cout << "blt_set_activity::perform_activity done" << endl;

@@ -166,7 +166,8 @@ void flag::init_recursion(
 	}
 }
 
-void flag::unrank(long int rk, int *subspace, int verbose_level)
+void flag::unrank(
+		long int rk, int *subspace, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int a, b;
@@ -199,7 +200,8 @@ void flag::unrank(long int rk, int *subspace, int verbose_level)
 	Int_vec_copy(M, subspace, K * n);
 }
 
-void flag::unrank_recursion(long int rk, int *subspace, int verbose_level)
+void flag::unrank_recursion(
+		long int rk, int *subspace, int verbose_level)
 // subspace is K x n
 {
 	int f_v = (verbose_level >= 1);
@@ -250,7 +252,8 @@ void flag::unrank_recursion(long int rk, int *subspace, int verbose_level)
 	Int_vec_copy(M, subspace, K * n);
 }
 
-long int flag::rank(int *input_subspace, int verbose_level)
+long int flag::rank(
+		int *input_subspace, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int a, b, rk;
@@ -294,7 +297,8 @@ long int flag::rank(int *input_subspace, int verbose_level)
 	return rk;
 }
 
-long int flag::rank_recursion(int *input_subspace,
+long int flag::rank_recursion(
+		int *input_subspace,
 		int *big_space, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

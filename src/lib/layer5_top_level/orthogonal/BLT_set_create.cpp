@@ -745,6 +745,91 @@ void BLT_set_create::BLT_test(int verbose_level)
 	}
 }
 
+void BLT_set_create::export_set_in_PG(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::export_set_in_PG" << endl;
+	}
+	int sz;
+	int i;
+	long int j;
+	int v[5];
+	long int *Pts;
+	field_theory::finite_field *F;
+
+	sz = Blt_set_domain_with_action->Blt_set_domain->target_size;
+
+	F = Blt_set_domain_with_action->Blt_set_domain->O->F;
+
+	Pts = NEW_lint(sz);
+	for (i = 0; i < sz; i++) {
+
+		Blt_set_domain_with_action->Blt_set_domain->O->Hyperbolic_pair->unrank_point(
+				v,
+				1, set[i],
+				0 /*verbose_level - 1*/);
+
+		F->Projective_space_basic->PG_element_rank_modified(
+				v, 1, 5, j);
+
+		Pts[i] = j;
+
+		if (f_v) {
+			cout << setw(4) << i << " : ";
+			Int_vec_print(cout, v, 5);
+			cout << " : " << setw(5) << j << endl;
+		}
+	}
+
+	string fname_csv;
+	orbiter_kernel_system::file_io Fio;
+
+
+	fname_csv.assign(label_txt);
+	fname_csv.append("_in_PG.csv");
+
+	Fio.lint_matrix_write_csv(fname_csv, Pts, sz, 1);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
+	FREE_lint(Pts);
+
+	if (f_v) {
+		cout << "BLT_set_create::export_set_in_PG done" << endl;
+	}
+}
+
+void BLT_set_create::plane_invariant(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::plane_invariant" << endl;
+	}
+
+	int sz;
+	orthogonal_geometry::orthogonal_plane_invariant *PI;
+
+	sz = Blt_set_domain_with_action->Blt_set_domain->target_size;
+
+	//F = Blt_set_domain_with_action->Blt_set_domain->O->F;
+
+
+	PI = NEW_OBJECT(orthogonal_geometry::orthogonal_plane_invariant);
+
+	PI->init(
+			Blt_set_domain_with_action->Blt_set_domain->O,
+		sz, set,
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "BLT_set_create::plane_invariant" << endl;
+	}
+}
+
 
 void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 {
