@@ -97,7 +97,7 @@ void bt_key::init(
 	bt_key::field2() = field2;
 	int_vec_first() = 0;
 	int_vec_len() = 0;
-	f_ascending() = TRUE;
+	f_ascending() = true;
 	
 }
 

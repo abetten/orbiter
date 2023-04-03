@@ -86,17 +86,17 @@ int linear_algebra::is_identity_matrix(int *A, int n)
 		for (j = 0; j < n; j++) {
 			if (i == j) {
 				if (A[i * n + j] != 1) {
-					return FALSE;
+					return false;
 				}
 			}
 			else {
 				if (A[i * n + j]) {
-					return FALSE;
+					return false;
 				}
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int linear_algebra::is_diagonal_matrix(int *A, int n)
@@ -112,15 +112,15 @@ int linear_algebra::is_scalar_multiple_of_identity_matrix(
 	int i;
 
 	if (!is_diagonal_matrix(A, n)) {
-		return FALSE;
+		return false;
 	}
 	scalar = A[0 * n + 0];
 	for (i = 1; i < n; i++) {
 		if (A[i * n + i] != scalar) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void linear_algebra::diagonal_matrix(
@@ -567,9 +567,9 @@ int linear_algebra::matrix_determinant(
 	cout << "before Gauss:" << endl;
 	print_integer_matrix_width(cout, Tmp, n, n, n, 2);
 	rk = Gauss_int(Tmp,
-		TRUE /* f_special */,
-		FALSE /*f_complete */, Tmp_basecols,
-		TRUE /* f_P */, P, n, n, n, verbose_level - 2);
+		true /* f_special */,
+		false /*f_complete */, Tmp_basecols,
+		true /* f_P */, P, n, n, n, verbose_level - 2);
 	cout << "after Gauss:" << endl;
 	print_integer_matrix_width(cout, Tmp, n, n, n, 2);
 	cout << "P:" << endl;
@@ -797,10 +797,10 @@ int linear_algebra::is_zero_vector(int *A, int m)
 
 	for (i = 0; i < m; i++) {
 		if (A[i]) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void linear_algebra::add_vector(

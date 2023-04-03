@@ -339,7 +339,7 @@ void spreadsheet::save(std::string &fname, int verbose_level)
 
 	{
 	ofstream f(fname);
-	print_table(f, FALSE);
+	print_table(f, false);
 	f << "END" << endl;
 	}
 	if (f_v) {
@@ -351,7 +351,7 @@ void spreadsheet::save(std::string &fname, int verbose_level)
 void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int i;
 	orbiter_kernel_system::file_io Fio;
 
@@ -393,7 +393,7 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 				<< nb_lines << " lines" << endl;
 		}
 	
-	if (FALSE) {
+	if (false) {
 		{
 		int f, l, j;
 	
@@ -428,7 +428,7 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 			}
 		}
 
-	if (FALSE) {
+	if (false) {
 		cout << "spreadsheet::read_spreadsheet" << endl;
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
@@ -464,7 +464,7 @@ void spreadsheet::print_table_latex_all_columns(
 
 	f_column_select = NEW_int(nb_cols);
 	for (j = 0; j < nb_cols; j++) {
-		f_column_select[j] = TRUE;
+		f_column_select[j] = true;
 		}
 	
 	//cout << "Table:" << endl;
@@ -546,10 +546,10 @@ void spreadsheet::print_table_row(int row,
 #if 0
 			int f_enclose;
 			if (tokens[t][0] == '\"') {
-				f_enclose = FALSE;
+				f_enclose = false;
 			}
 			else {
-				f_enclose = TRUE;
+				f_enclose = true;
 			}
 			if (f_enclose) {
 				ost << "\"";
@@ -580,14 +580,14 @@ void spreadsheet::print_table_row_latex(int row,
 		ostream &ost)
 {
 	int j, t, l; //, h;
-	int f_first = TRUE;
+	int f_first = true;
 	
 	//cout << "Row " << row << " : ";
 	//ost << row;
 	for (j = 0; j < nb_cols; j++) {
 		if (f_column_select[j]) {
 			if (f_first) {
-				f_first = FALSE;
+				f_first = false;
 				}
 			else {
 				ost << " & ";
@@ -676,10 +676,10 @@ void spreadsheet::print_table_row_with_column_selection(int row,
 			}
 #endif
 			if (tokens[t][0] == '\"') {
-				f_enclose = FALSE;
+				f_enclose = false;
 			}
 			else {
-				f_enclose = TRUE;
+				f_enclose = true;
 			}
 			if (f_enclose) {
 				ost << "\"";
@@ -715,7 +715,7 @@ void spreadsheet::print_table_with_row_selection(
 		if (!f_selected[i]) {
 			continue;
 			}
-		print_table_row(i, FALSE, ost);
+		print_table_row(i, false, ost);
 		}
 }
 
@@ -762,7 +762,7 @@ void spreadsheet::print_table_sorted(std::ostream &ost,
 		else {
 			ii = perm[i - 1] + 1;
 			}
-		print_table_row(ii, FALSE, ost);
+		print_table_row(ii, false, ost);
 		}
 }
 
@@ -946,7 +946,7 @@ void spreadsheet::tokenize(std::string &fname,
 		ifstream fp(fname);
 		i = 0;
 		line_cnt = 0;
-		while (TRUE) {
+		while (true) {
 			line_cnt++;
 			if (fp.eof()) {
 				if (f_vv) {
@@ -985,7 +985,7 @@ void spreadsheet::tokenize(std::string &fname,
 	#endif
 
 			//i = 0;
-			while (TRUE) {
+			while (true) {
 				if (*p_buf == 0) {
 					break;
 				}
@@ -1014,7 +1014,7 @@ void spreadsheet::tokenize(std::string &fname,
 	nb_tokens = i;
 
 
-		//f_vv = TRUE;
+		//f_vv = true;
 
 
 	tokens = NEW_pchar(nb_tokens);
@@ -1022,7 +1022,7 @@ void spreadsheet::tokenize(std::string &fname,
 		string_tools ST;
 		ifstream fp(fname);
 		i = 0;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}
@@ -1051,7 +1051,7 @@ void spreadsheet::tokenize(std::string &fname,
 		#endif
 
 			//i = 0;
-			while (TRUE) {
+			while (true) {
 				if (*p_buf == 0) {
 					break;
 				}
@@ -1134,10 +1134,10 @@ void spreadsheet::remove_rows(const char *drop_column,
 	for (i = 1; i < nb_rows; i++) {
 		t = Table[i * nb_cols + idx];
 		if (t >= 0 && strcmp(tokens[t], drop_label) == 0) {
-			f_delete = TRUE;
+			f_delete = true;
 			}
 		else {
-			f_delete = FALSE;
+			f_delete = false;
 			}
 		if (!f_delete) {
 			for (j = 0; j < nb_cols; j++) {
@@ -1170,13 +1170,13 @@ void spreadsheet::remove_rows_where_field_is_empty(
 	for (i = 1; i < nb_rows; i++) {
 		t = Table[i * nb_cols + idx];
 		if (t == -1) {
-			f_delete = TRUE;
+			f_delete = true;
 			}
 		else if (t >= 0 && strlen(tokens[t]) == 0) {
-			f_delete = TRUE;
+			f_delete = true;
 			}
 		else {
-			f_delete = FALSE;
+			f_delete = false;
 			}
 		if (!f_delete) {
 			for (j = 0; j < nb_cols; j++) {
@@ -1241,11 +1241,11 @@ void spreadsheet::get_value_double_or_NA(int i, int j,
 	cout << "spreadsheet::get_value_double_or_NA str=" << str << endl;
 	if (ST.stringcmp(str, "NA") == 0) {
 		val = 0;
-		f_NA = TRUE;
+		f_NA = true;
 	}
 	else {
 		val = get_double(i, j);
-		f_NA = FALSE;
+		f_NA = false;
 	}
 }
 
@@ -1456,7 +1456,7 @@ void spreadsheet::join_with(spreadsheet *S2,
 						<< i1 << " in first table" << endl;
 				}
 			tt1 = Table[i1 * nb_cols + j1];
-			f_need_to_add = TRUE;
+			f_need_to_add = true;
 			if (tt1 >= 0) {
 				if (f_v3) {
 					cout << "i1=" << i1 << " i2=" << i2 << " we have "
@@ -1465,7 +1465,7 @@ void spreadsheet::join_with(spreadsheet *S2,
 					}
 				if (ST.strcmp_with_or_without(tokens[tt1],
 						S2->tokens[tt2]) == 0) {
-					f_need_to_add = FALSE;
+					f_need_to_add = false;
 					}
 				}
 			if (f_v3) {

@@ -27,8 +27,8 @@ void poset_classification::compute_orbits_on_subsets(
 	int f_v = (verbose_level >= 1);
 	//int nb_poset_orbit_nodes = 1000;
 	int schreier_depth = target_depth;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
@@ -44,7 +44,7 @@ void poset_classification::compute_orbits_on_subsets(
 
 
 	// !!!
-	//f_allowed_to_show_group_elements = FALSE;
+	//f_allowed_to_show_group_elements = false;
 
 	if (f_v) {
 		cout << "poset_classification::compute_orbits_on_subsets "
@@ -116,8 +116,8 @@ int poset_classification::main(int t0,
 	int verbose_level)
 // f_use_invariant_subset_if_available
 // is an option that affects the downstep.
-// if FALSE, the orbits of the stabilizer on all points are computed. 
-// if TRUE, the orbits of the stabilizer on the set of points that were 
+// if false, the orbits of the stabilizer on all points are computed. 
+// if true, the orbits of the stabilizer on the set of points that were 
 // possible in the previous level are computed only 
 // (using Schreier.orbits_on_invariant_subset_fast).
 // The set of possible points is stored 
@@ -128,7 +128,7 @@ int poset_classification::main(int t0,
 	//int f_create_schreier_vector;
 	int target_depth;
 	//int f_write_files;
-	//int f_embedded = TRUE;
+	//int f_embedded = true;
 	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
@@ -225,8 +225,8 @@ int poset_classification::compute_orbits(
 {
 	int f_v = (verbose_level >= 1);
 	int level;
-	int f_create_schreier_vector = TRUE;
-	int f_debug = FALSE;
+	int f_create_schreier_vector = true;
+	int f_debug = false;
 	int f_write_files;
 	orbiter_kernel_system::os_interface Os;
 
@@ -252,20 +252,20 @@ int poset_classification::compute_orbits(
 			cout << " level " << level << endl;
 		}
 
-		int f_write_candidate_file = FALSE;
+		int f_write_candidate_file = false;
 
 #if 1
 		if (Control->f_W && level) {
-			f_write_candidate_file = TRUE;
+			f_write_candidate_file = true;
 		}
 
 		if (Control->f_w && level == to_level - 1) {
-			f_write_candidate_file = TRUE;
+			f_write_candidate_file = true;
 		}
 #endif
 
 		if (level <= schreier_depth) {
-			f_create_schreier_vector = TRUE;
+			f_create_schreier_vector = true;
 			if (f_v) {
 				cout << "poset_classification::compute_orbits "
 						"we will store schreier vectors "
@@ -278,7 +278,7 @@ int poset_classification::compute_orbits(
 						"we will NOT store schreier vectors "
 						"for this level" << endl;
 			}
-			f_create_schreier_vector = FALSE;
+			f_create_schreier_vector = false;
 		}
 
 		if (f_v) {
@@ -318,7 +318,7 @@ int poset_classification::compute_orbits(
 		if (Control->f_write_data_files) {
 			if (f_v) {
 				cout << "poset_classification::compute_orbits "
-						"before housekeeping f_write_files = TRUE" << endl;
+						"before housekeeping f_write_files = true" << endl;
 			}
 			housekeeping(level + 1, f_write_files,
 					Os.os_ticks(), verbose_level - 1);
@@ -406,7 +406,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 #endif
 
 			list_all_orbits_at_level(d,
-					FALSE /* f_has_print_function */,
+					false /* f_has_print_function */,
 					NULL /* void (*print_function)(std::ostream &ost, int len, int *S, void *data)*/,
 					NULL /* void *print_function_data*/,
 					Control->f_show_orbit_decomposition /* f_show_orbit_decomposition */,
@@ -421,17 +421,17 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			cout << "poset_classification::post_processing f_list" << endl;
 		}
 #if 1
-		//int f_show_orbit_decomposition = TRUE;
-		//int f_show_stab = TRUE;
-		//int f_save_stab = TRUE;
-		//int f_show_whole_orbit = FALSE;
+		//int f_show_orbit_decomposition = true;
+		//int f_show_stab = true;
+		//int f_save_stab = true;
+		//int f_show_whole_orbit = false;
 
 		if (f_v) {
 			cout << "poset_classification::post_processing before "
 					"list_all_orbits_at_level" << endl;
 		}
 		list_all_orbits_at_level(actual_size,
-			FALSE,
+			false,
 			NULL,
 			this,
 			Control->f_show_orbit_decomposition,
@@ -810,7 +810,7 @@ void poset_classification::compute_flag_orbits(
 				cout << " found " << nb << " live points in "
 					<< Poo->node_get_nb_of_extensions(prev) << " orbits : ";
 
-				if (FALSE) {
+				if (false) {
 					int *live_points = Poo->get_node(prev)->live_points();
 					cout << "The live points are : ";
 					Int_vec_print(cout, live_points, nb);
@@ -821,7 +821,7 @@ void poset_classification::compute_flag_orbits(
 				print_level_info(size, prev);
 				cout << " compute_flag_orbits level " << size << " node " << u << " / " << l
 						<< " the extensions are : ";
-				if (FALSE) {
+				if (false) {
 					Poo->get_node(prev)->print_extensions(this);
 				}
 			}
@@ -832,11 +832,11 @@ void poset_classification::compute_flag_orbits(
 		progress = (double) u / (double) l;
 
 		if (f_v && ABS(progress - progress_last_time) > progress_epsilon) {
-			f_print = TRUE;
+			f_print = true;
 			progress_last_time = progress;
 		}
 		else {
-			f_print = FALSE;
+			f_print = false;
 		}
 		
 		
@@ -858,7 +858,7 @@ void poset_classification::upstep(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f, cur, l, prev, u;
-	int f_indicate_not_canonicals = FALSE;
+	int f_indicate_not_canonicals = false;
 	int f_print = f_v;
 
 	if (f_v) {
@@ -942,11 +942,11 @@ void poset_classification::upstep(
 
 		if (f_v &&
 				ABS(progress - progress_last_time) > progress_epsilon) {
-			f_print = TRUE;
+			f_print = true;
 			progress_last_time = progress;
 		}
 		else {
-			f_print = FALSE;
+			f_print = false;
 		}
 
 	}
@@ -1021,7 +1021,7 @@ void poset_classification::extend_node(
 		cout << " with " << Poo->node_get_nb_of_extensions(prev)
 				<< " extensions" << endl;
 		cout << " verbose_level=" << verbose_level << endl;
-		if (FALSE) {
+		if (false) {
 			cout << "poset_classification::extend_node prev=" << prev
 					<< " cur=" << cur << " extensions:" << endl;
 			Poo->get_node(prev)->print_extensions(this);
@@ -1030,9 +1030,9 @@ void poset_classification::extend_node(
 
 
 
-	int f_show_progress = FALSE;
+	int f_show_progress = false;
 	if (Poo->node_get_nb_of_extensions(prev) > 10000) {
-		f_show_progress = TRUE;
+		f_show_progress = true;
 	}
 	int nb_flags_10;
 
@@ -1050,7 +1050,7 @@ void poset_classification::extend_node(
 
 		}
 
-		if (FALSE) {
+		if (false) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
@@ -1064,7 +1064,7 @@ void poset_classification::extend_node(
 
 
 #if 0
-		if (FALSE /*prev == 32 && prev_ex == 3*/) { 
+		if (false /*prev == 32 && prev_ex == 3*/) { 
 			cout << "poset_classification::extend_node "
 					"we are at node (32,3)" << endl;
 			verbose_level_down = verbose_level + 20; 
@@ -1105,7 +1105,7 @@ void poset_classification::extend_node(
 						prev, prev_ex, nb_ext_cur, nb_fuse_cur);
 			}
 		}
-		if (FALSE) {
+		if (false) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
@@ -1117,7 +1117,7 @@ void poset_classification::extend_node(
 			verbose_level - 2);
 		// in upstep_work.cpp
 
-		if (FALSE) {
+		if (false) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node after "
 					"Work.handle_extension" << endl;

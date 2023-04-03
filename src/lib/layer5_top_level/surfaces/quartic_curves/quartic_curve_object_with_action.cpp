@@ -25,7 +25,7 @@ quartic_curve_object_with_action::quartic_curve_object_with_action()
 	DomA = NULL;
 	QO = NULL;
 	Aut_gens = NULL;
-	f_has_nice_gens = FALSE;
+	f_has_nice_gens = false;
 	nice_gens = NULL;
 	projectivity_group_gens = NULL;
 	Syl = NULL;

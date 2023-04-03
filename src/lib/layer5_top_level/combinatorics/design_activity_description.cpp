@@ -20,7 +20,7 @@ namespace apps_combinatorics {
 design_activity_description::design_activity_description()
 {
 
-	f_load_table = FALSE;
+	f_load_table = false;
 	//std::string load_table_label;
 	//std::string load_table_group;
 
@@ -29,23 +29,23 @@ design_activity_description::design_activity_description()
 	//std::string load_table_H_gens;
 	load_table_selected_orbit_length = 0;
 
-	f_canonical_form = FALSE;
+	f_canonical_form = false;
 	Canonical_form_Descr = NULL;
 
 
-	f_extract_solutions_by_index_csv = FALSE;
-	f_extract_solutions_by_index_txt = FALSE;
+	f_extract_solutions_by_index_csv = false;
+	f_extract_solutions_by_index_txt = false;
 	//std::string extract_solutions_by_index_label;
 	//std::string extract_solutions_by_index_group;
 	//std::string extract_solutions_by_index_fname_solutions_in;
 	//std::string extract_solutions_by_index_fname_solutions_out;
 	//std::string extract_solutions_by_index_prefix;
 
-	f_export_inc = FALSE;
-	f_intersection_matrix = FALSE;
-	f_export_blocks = FALSE;
-	f_row_sums = FALSE;
-	f_tactical_decomposition = FALSE;
+	f_export_inc = false;
+	f_intersection_matrix = false;
+	f_export_blocks = false;
+	f_row_sums = false;
+	f_tactical_decomposition = false;
 }
 
 design_activity_description::~design_activity_description()
@@ -67,7 +67,7 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-load_table") == 0) {
-			f_load_table = TRUE;
+			f_load_table = true;
 			load_table_label.assign(argv[++i]);
 			load_table_group.assign(argv[++i]);
 			load_table_H_label.assign(argv[++i]);
@@ -85,7 +85,7 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-canonical_form") == 0) {
-			f_canonical_form = TRUE;
+			f_canonical_form = true;
 			if (f_v) {
 				cout << "-canonical_form, reading extra arguments" << endl;
 			}
@@ -103,7 +103,7 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-extract_solutions_by_index_csv") == 0) {
-			f_extract_solutions_by_index_csv = TRUE;
+			f_extract_solutions_by_index_csv = true;
 			extract_solutions_by_index_label.assign(argv[++i]);
 			extract_solutions_by_index_group.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_in.assign(argv[++i]);
@@ -120,7 +120,7 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-extract_solutions_by_index_txt") == 0) {
-			f_extract_solutions_by_index_txt = TRUE;
+			f_extract_solutions_by_index_txt = true;
 			extract_solutions_by_index_label.assign(argv[++i]);
 			extract_solutions_by_index_group.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_in.assign(argv[++i]);
@@ -137,31 +137,31 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_inc") == 0) {
-			f_export_inc = TRUE;
+			f_export_inc = true;
 			if (f_v) {
 				cout << "-export_inc " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-intersection_matrix") == 0) {
-			f_intersection_matrix = TRUE;
+			f_intersection_matrix = true;
 			if (f_v) {
 				cout << "-intersection_matrix " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_blocks") == 0) {
-			f_export_blocks = TRUE;
+			f_export_blocks = true;
 			if (f_v) {
 				cout << "-export_blocks " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-row_sums") == 0) {
-			f_row_sums = TRUE;
+			f_row_sums = true;
 			if (f_v) {
 				cout << "-row_sums " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-tactical_decomposition") == 0) {
-			f_tactical_decomposition = TRUE;
+			f_tactical_decomposition = true;
 			if (f_v) {
 				cout << "-tactical_decomposition " << endl;
 			}

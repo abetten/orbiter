@@ -167,7 +167,7 @@ void hollerith::read_mem(memory & m, int debug_depth)
 	
 	freeself();
 	l = 0;
-	while (TRUE) {
+	while (true) {
 		m.read_char(&c);
 		if (c == 0 || l == BUFSIZE) {
 			buf[l] = 0;

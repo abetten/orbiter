@@ -270,8 +270,8 @@ int cp_onep(CPERM *p)
 	
 	for (i = 0; i < p->l; i++)
 		if (p->a[i] != i)
-			return FALSE;
-	return TRUE;
+			return false;
+	return true;
 }
 
 int cp_cmp(CPERM *a, CPERM *b)

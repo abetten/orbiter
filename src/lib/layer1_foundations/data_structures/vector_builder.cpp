@@ -22,7 +22,7 @@ vector_builder::vector_builder()
 	Descr = NULL;
 	F = NULL;
 	v = NULL;
-	f_has_k = FALSE;
+	f_has_k = false;
 	k = 0;
 	len = 0;
 }
@@ -55,7 +55,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		Lint_vec_scan(Descr->dense_text, v, len);
 
 		if (Descr->f_format) {
-			f_has_k = TRUE;
+			f_has_k = true;
 			k = Descr->format_k;
 		}
 
@@ -87,7 +87,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		}
 
 		if (Descr->f_format) {
-			f_has_k = TRUE;
+			f_has_k = true;
 			k = Descr->format_k;
 		}
 
@@ -115,7 +115,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		}
 
 		if (Descr->f_format) {
-			f_has_k = TRUE;
+			f_has_k = true;
 			k = Descr->format_k;
 		}
 
@@ -129,7 +129,7 @@ void vector_builder::init(vector_builder_description *Descr,
 
 		Fio.lint_matrix_read_csv(Descr->file_name, v, m, n, verbose_level);
 		len = m * n;
-		f_has_k = TRUE;
+		f_has_k = true;
 		k = m;
 
 	}
@@ -142,7 +142,7 @@ void vector_builder::init(vector_builder_description *Descr,
 
 		Fio.lint_matrix_read_csv_no_border(Descr->load_csv_no_border_fname, v, m, n, verbose_level);
 		len = m * n;
-		f_has_k = TRUE;
+		f_has_k = true;
 		k = m;
 
 	}
@@ -158,7 +158,7 @@ void vector_builder::init(vector_builder_description *Descr,
 				Descr->load_csv_data_column_idx,
 				verbose_level);
 		len = m * n;
-		f_has_k = TRUE;
+		f_has_k = true;
 		k = m;
 
 	}
@@ -190,7 +190,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		FREE_int(pairs);
 
 		if (Descr->f_format) {
-			f_has_k = TRUE;
+			f_has_k = true;
 			k = Descr->format_k;
 		}
 
@@ -217,7 +217,7 @@ void vector_builder::init(vector_builder_description *Descr,
 			j += VB->len;
 		}
 		if (Descr->f_format) {
-			f_has_k = TRUE;
+			f_has_k = true;
 			k = Descr->format_k;
 		}
 

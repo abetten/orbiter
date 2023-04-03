@@ -426,7 +426,7 @@ void orthogonal_group::Siegel_Transformation3(int *T,
 		cout << "the vector -x is:" << endl;
 		Int_vec_print_integer_matrix(cout, x, 1, O->Quadratic_form->n);
 	}
-	make_Siegel_Transformation(T, x, B, O->Quadratic_form->n, O->Quadratic_form->Gram_matrix, FALSE);
+	make_Siegel_Transformation(T, x, B, O->Quadratic_form->n, O->Quadratic_form->Gram_matrix, false);
 	if (f_vv) {
 		cout << "the Siegel transformation is:" << endl;
 		Int_vec_print_integer_matrix(cout, T, O->Quadratic_form->n, O->Quadratic_form->n);
@@ -459,7 +459,7 @@ void orthogonal_group::random_generator_for_orthogonal_group(
 	}
 
 
-	while (TRUE) {
+	while (true) {
 		r = Os.random_integer(4);
 		if (r == 0 && f_siegel) {
 			break;
@@ -568,7 +568,7 @@ void orthogonal_group::create_random_Siegel_transformation(
 	//Q_epsilon_unrank(*F, u, 1 /*stride*/, epsilon, d - 1,
 	// form_c1, form_c2, form_c3, rk_u);
 
-	while (TRUE) {
+	while (true) {
 
 #if 0
 		rk_v = random_integer(nb_pts_affine);
@@ -832,7 +832,7 @@ void orthogonal_group::create_random_orthogonal_reflection(
 #endif
 
 	cnt = 0;
-	while (TRUE) {
+	while (true) {
 		if (f_v) {
 			cout << "orthogonal_group::create_random_orthogonal_reflection "
 					"iteration = " << cnt << endl;
@@ -1536,7 +1536,7 @@ void orthogonal_group::test_Siegel(int index, int verbose_level)
 			exit(1);
 		}
 		O->Hyperbolic_pair->parabolic_neighbor51_odd_unrank(
-				j, O->Hyperbolic_pair->v3, FALSE);
+				j, O->Hyperbolic_pair->v3, false);
 		//rk3 = type_and_index_to_point_rk(t2, j);
 		//unrank_point(v3, 1, rk3);
 		rk3 = O->Hyperbolic_pair->rank_point(

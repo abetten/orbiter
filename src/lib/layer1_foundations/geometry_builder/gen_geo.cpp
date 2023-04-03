@@ -32,8 +32,8 @@ gen_geo::gen_geo()
 
 	inc = NULL;
 
-	forget_ivhbar_in_last_isot = FALSE;
-	//gen_print_intervall = FALSE;
+	forget_ivhbar_in_last_isot = false;
+	//gen_print_intervall = false;
 
 	//std::string inc_file_name;
 
@@ -91,7 +91,7 @@ void gen_geo::init(geometry_builder *GB, int verbose_level)
 		cout << "gen_geo::init after inc->init" << endl;
 	}
 
-	forget_ivhbar_in_last_isot = FALSE;
+	forget_ivhbar_in_last_isot = false;
 
 
 	Decomposition_with_fuse = NEW_OBJECT(decomposition_with_fuse);
@@ -316,7 +316,7 @@ void gen_geo::generate_all(int verbose_level)
 		cout << "gen_geo::generate_all, verbose_level = " << verbose_level << endl;
 	}
 
-	//int ret = FALSE;
+	//int ret = false;
 	int f_already_there;
 	//int s_nb_i_vbar, s_nb_i_hbar;
 	iso_type *it0, *it1;
@@ -355,15 +355,15 @@ void gen_geo::generate_all(int verbose_level)
 
 	inc->gl_nb_GEN = 0;
 	if (!Geometric_backtrack_search->First(0 /*verbose_level - 5*/)) {
-		//ret = TRUE;
+		//ret = true;
 
 		cout << "gen_geo::generate_all Geometric_backtrack_search->First "
-				"returns FALSE, no geometry exists. This is perhaps a bit unusual." << endl;
+				"returns false, no geometry exists. This is perhaps a bit unusual." << endl;
 		goto l_exit;
 	}
 
 
-	while (TRUE) {
+	while (true) {
 
 
 		inc->gl_nb_GEN++;
@@ -384,8 +384,8 @@ void gen_geo::generate_all(int verbose_level)
 		//cout << "*** do_geo *** geometry no. " << gg->inc.gl_nb_GEN << endl;
 #if 0
 		if (incidence_back_test(&gg->inc,
-			TRUE /* f_verbose */,
-			FALSE /* f_very_verbose */)) {
+			true /* f_verbose */,
+			false /* f_very_verbose */)) {
 			}
 #endif
 
@@ -404,7 +404,7 @@ void gen_geo::generate_all(int verbose_level)
 		}
 
 		it0->add_geometry(inc->Encoding,
-				FALSE /* f_partition_fixing_last */,
+				false /* f_partition_fixing_last */,
 				f_already_there,
 				verbose_level);
 
@@ -418,7 +418,7 @@ void gen_geo::generate_all(int verbose_level)
 		}
 
 
-		if (FALSE) {
+		if (false) {
 			cout << "gen_geo::generate_all after isot_add for it0" << endl;
 		}
 
@@ -438,7 +438,7 @@ void gen_geo::generate_all(int verbose_level)
 			inc->nb_i_vbar = 1;
 			inc->nb_i_hbar = 1;
 
-			if (FALSE) {
+			if (false) {
 				cout << "gen_geo::generate_all before isot_add for it1" << endl;
 			}
 			it1->add_geometry(inc->Encoding,
@@ -448,7 +448,7 @@ void gen_geo::generate_all(int verbose_level)
 
 			//record_tree(inc->Encoding->v, f_already_there);
 
-			if (FALSE) {
+			if (false) {
 				cout << "gen_geo::generate_all after isot_add for it1" << endl;
 			}
 			if (!f_already_there) {
@@ -464,7 +464,7 @@ void gen_geo::generate_all(int verbose_level)
 		if (!Geometric_backtrack_search->Next(0 /*verbose_level - 5*/)) {
 			if (f_v) {
 				cout << "gen_geo::generate_all Geometric_backtrack_search->Next "
-						"returns FALSE, finished" << endl;
+						"returns false, finished" << endl;
 			}
 			break;
 		}
@@ -647,7 +647,7 @@ int gen_geo::check_girth_condition(int i, int j_idx, int j, int verbose_level)
 		return Girth_test->check_girth_condition(i, j_idx, j, verbose_level);
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -722,7 +722,7 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 								<< " J=" << J << " n=" << n << " j=" << j
 								<< " rejected because not simple" << endl;
 					}
-					return FALSE;
+					return false;
 				}
 			}
 		} // JS
@@ -764,7 +764,7 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 						<< " rejected because of pair test" << endl;
 			}
 
-			return FALSE;
+			return false;
 		}
 
 		// increment the pairs counter:
@@ -794,7 +794,7 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 							<< " n=" << n << " j=" << j << " rejected because at least "
 									"one pair is not covered lambda times" << endl;
 				}
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -819,7 +819,7 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 							<< " n=" << n << " j=" << j << " rejected because "
 									"of square condition" << endl;
 				}
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -841,18 +841,18 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 					<< " n=" << n << " j=" << j << " rejected because "
 							"of girth condition" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 
 
 
-	return TRUE;
+	return true;
 }
 
 void gen_geo::print(std::ostream &ost, int v, int v_cut)
 {
 	inc->Encoding->print_partitioned(ost,
-			v, v_cut, this, TRUE /* f_print_isot */);
+			v, v_cut, this, true /* f_print_isot */);
 }
 
 
@@ -860,7 +860,7 @@ void gen_geo::print_override_theX(std::ostream &ost,
 		int *theX, int v, int v_cut)
 {
 	inc->Encoding->print_partitioned_override_theX(ost,
-			v, v_cut, this, theX, TRUE /* f_print_isot */);
+			v, v_cut, this, theX, true /* f_print_isot */);
 }
 
 

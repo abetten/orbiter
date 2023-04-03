@@ -19,10 +19,10 @@ namespace apps_coding_theory {
 
 crc_process_description::crc_process_description()
 {
-	f_code = FALSE;
+	f_code = false;
 	//std::string code_label;
 
-	f_crc_options = FALSE;
+	f_crc_options = false;
 	Crc_options = NULL;
 
 }
@@ -44,14 +44,14 @@ int crc_process_description::read_arguments(
 		code_modification_description M;
 
 		if (ST.stringcmp(argv[i], "-code") == 0) {
-			f_code = TRUE;
+			f_code = true;
 			code_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-code " << code_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-crc_options") == 0) {
-			f_crc_options = TRUE;
+			f_crc_options = true;
 			Crc_options = NEW_OBJECT(coding_theory::crc_options_description);
 			if (f_v) {
 				cout << "-crc_options" << endl;

@@ -321,7 +321,7 @@ public:
 	recoordinatize *R;
 	poset_classification::classification_base_case *Base_case;
 
-	// if f_recoordinatize is TRUE:
+	// if f_recoordinatize is true:
 	long int *Starter;
 	int Starter_size;
 	groups::strong_generators *Starter_Strong_gens;

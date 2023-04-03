@@ -32,11 +32,11 @@ semifield_classify_with_substructure::semifield_classify_with_substructure()
 	identify_semifields_from_file_Po = NULL;
 	identify_semifields_from_file_m = 0;
 
-	f_trace_record_prefix = FALSE;
+	f_trace_record_prefix = false;
 	//trace_record_prefix = NULL;
-	f_FstLen = FALSE;
+	f_FstLen = false;
 	//fname_FstLen = NULL;
-	f_Data = FALSE;
+	f_Data = false;
 	//fname_Data = NULL;
 
 	p = e = e1 = n = k = q = k2 = 0;
@@ -128,11 +128,11 @@ void semifield_classify_with_substructure::init(
 	Sub->SC = NEW_OBJECT(semifield_classify);
 
 	if (!Descr->f_level_two_prefix) {
-		Descr->f_level_two_prefix = TRUE;
+		Descr->f_level_two_prefix = true;
 		Descr->level_two_prefix.assign("L2");
 	}
 	if (!Descr->f_level_three_prefix) {
-		Descr->f_level_three_prefix = TRUE;
+		Descr->f_level_three_prefix = true;
 		Descr->level_three_prefix.assign("L3");
 	}
 
@@ -264,10 +264,10 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 
 
 
-	C.init(Sub->Len, Sub->nb_orbits_at_level_3, FALSE, 0);
+	C.init(Sub->Len, Sub->nb_orbits_at_level_3, false, 0);
 	if (f_v) {
 		cout << "classification of Len:" << endl;
-		C.print_naked(TRUE);
+		C.print_naked(true);
 		cout << endl;
 	}
 
@@ -327,21 +327,21 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	{
 		data_structures::tally C;
 
-		C.init(Non_unique_cases_len, nb_non_unique_cases, FALSE, 0);
+		C.init(Non_unique_cases_len, nb_non_unique_cases, false, 0);
 		if (f_v) {
 			cout << "classification of Len amongst the non-unique cases:" << endl;
-			C.print_naked(TRUE);
+			C.print_naked(true);
 			cout << endl;
 		}
 	}
 	{
 		data_structures::tally C;
 
-		C.init_lint(Non_unique_cases_go, nb_non_unique_cases, FALSE, 0);
+		C.init_lint(Non_unique_cases_go, nb_non_unique_cases, false, 0);
 		if (f_v) {
 			cout << "classification of group orders amongst "
 					"the non-unique cases:" << endl;
-			C.print_naked(TRUE);
+			C.print_naked(true);
 			cout << endl;
 		}
 	}
@@ -638,7 +638,7 @@ void semifield_classify_with_substructure::latex_report(
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i;
 
 	if (f_v) {
@@ -664,20 +664,20 @@ void semifield_classify_with_substructure::latex_report(
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
 		//latex_head_easy(fp);
 		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
+			false /* f_book */,
+			true /* f_title */,
 			title,
 			author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -691,12 +691,12 @@ void semifield_classify_with_substructure::latex_report(
 			Go[i] = Semifields->Orbit[i].gens->group_order_as_lint();
 		}
 
-		C.init_lint(Go, Semifields->nb_orbits, FALSE, 0);
+		C.init_lint(Go, Semifields->nb_orbits, false, 0);
 
 		fp << "\\section*{Summary}" << endl;
 		fp << "Classification by stabilizer order:\\\\" << endl;
 		fp << "$$" << endl;
-		C.print_array_tex(fp, TRUE /*f_backwards */);
+		C.print_array_tex(fp, true /*f_backwards */);
 		fp << "$$" << endl;
 
 		if (f_v) {
@@ -718,8 +718,8 @@ void semifield_classify_with_substructure::latex_report(
 
 		Semifields->print_latex(fp,
 			title,
-			TRUE /* f_print_stabilizer_gens */,
-			TRUE,
+			true /* f_print_stabilizer_gens */,
+			true,
 			semifield_print_function_callback,
 			Sub);
 
@@ -786,9 +786,9 @@ void semifield_classify_with_substructure::latex_report(
 			fp << " has  type ";
 			data_structures::tally C;
 
-			C.init(Po2, Sub->N2, FALSE, 0);
+			C.init(Po2, Sub->N2, false, 0);
 			fp << "$";
-			C.print_naked_tex(fp, FALSE /* f_backwards */);
+			C.print_naked_tex(fp, false /* f_backwards */);
 			fp << "$";
 			fp << "\\\\" << endl;
 		}
@@ -922,7 +922,7 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 			po_up = F1[h1].upstep_orbit;
 		}
 		i2 = po_up;
-		f_success = FALSE;
+		f_success = false;
 		//cout << "searching i1=" << i1 << " h1=" << h1 << " i2=" << i2 << endl;
 		for (h2 = 0; h2 < F2->nb_flag_orbits; h2++) {
 			if (F2->Flag_orbit_node[h2].downstep_primary_orbit != i2) {
@@ -939,7 +939,7 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 				po_up = F2->Flag_orbit_node[h2].upstep_primary_orbit;
 			}
 			if (po_up == i3) {
-				f_success = TRUE;
+				f_success = true;
 				//cout << i1 << " - " << h1 << " - " << i2 << " - " << h2 << " - " << i3 << endl;
 			}
 		}
@@ -995,7 +995,7 @@ static void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
 	semifield_substructure *Sub = (semifield_substructure *) print_function_data;
 	semifield_classify *SC;
 	semifield_classify_with_substructure *SCWS;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	long int *R;
 	long int a;
 	int i, j;

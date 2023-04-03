@@ -189,7 +189,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 
 
-		while (TRUE) {
+		while (true) {
 
 			int ht0, ht1;
 
@@ -215,22 +215,22 @@ void top_level_geometry_global::report_decomposition_by_group(
 			}
 		}
 
-		int f_labeled = TRUE;
+		int f_labeled = true;
 
 		Inc->print_partitioned(cout, *Stack, f_labeled);
 		Inc->get_and_print_decomposition_schemes(*Stack);
 		Stack->print_classes(cout);
 
 
-		int f_print_subscripts = FALSE;
+		int f_print_subscripts = false;
 		ost << "Decomposition based on orbit lengths:\\\\" << endl;
 		ost << "Row scheme:\\\\" << endl;
 		Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-			ost, TRUE /* f_enter_math */,
+			ost, true /* f_enter_math */,
 			f_print_subscripts, *Stack);
 		ost << "Column scheme:\\\\" << endl;
 		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-			ost, TRUE /* f_enter_math */,
+			ost, true /* f_enter_math */,
 			f_print_subscripts, *Stack);
 
 
@@ -262,15 +262,15 @@ void top_level_geometry_global::report_decomposition_by_group(
 		}
 
 
-		int f_print_subscripts = FALSE;
+		int f_print_subscripts = false;
 		ost << "Decomposition based on orbits:\\\\" << endl;
 		ost << "Row scheme:\\\\" << endl;
 		Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-			ost, TRUE /* f_enter_math */,
+			ost, true /* f_enter_math */,
 			f_print_subscripts, *Stack);
 		ost << "Column scheme:\\\\" << endl;
 		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-			ost, TRUE /* f_enter_math */,
+			ost, true /* f_enter_math */,
 			f_print_subscripts, *Stack);
 
 
@@ -525,14 +525,14 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	}
 
 
-	int f_print_subscripts = FALSE;
+	int f_print_subscripts = false;
 	ost << "Row scheme:\\\\" << endl;
 	Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-		ost, TRUE /* f_enter_math */,
+		ost, true /* f_enter_math */,
 		f_print_subscripts, *Stack);
 	ost << "Column scheme:\\\\" << endl;
 	Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-		ost, TRUE /* f_enter_math */,
+		ost, true /* f_enter_math */,
 		f_print_subscripts, *Stack);
 
 

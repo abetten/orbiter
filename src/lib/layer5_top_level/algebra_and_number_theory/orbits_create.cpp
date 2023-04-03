@@ -21,25 +21,25 @@ orbits_create::orbits_create()
 
 	Group = NULL;
 
-	f_has_Orb = FALSE;
+	f_has_Orb = false;
 	Orb = NULL;
 
-	f_has_On_subsets = FALSE;
+	f_has_On_subsets = false;
 	On_subsets = NULL;
 
-	f_has_On_Subspaces = FALSE;
+	f_has_On_Subspaces = false;
 	On_Subspaces = NULL;
 
-	f_has_On_tensors = FALSE;
+	f_has_On_tensors = false;
 	On_tensors = NULL;
 
-	f_has_Cascade = FALSE;
+	f_has_Cascade = false;
 	Cascade = NULL;
 
-	f_has_On_polynomials = FALSE;
+	f_has_On_polynomials = false;
 	On_polynomials = NULL;
 
-	f_has_classification_by_canonical_form = FALSE;
+	f_has_classification_by_canonical_form = false;
 	Canonical_form_classifier = NULL;
 
 	//std::string prefix;
@@ -83,7 +83,7 @@ void orbits_create::init(
 			exit(1);
 		}
 
-		//f_override_generators = FALSE;
+		//f_override_generators = false;
 		//std::string override_generators_label;
 
 		if (f_v) {
@@ -94,7 +94,7 @@ void orbits_create::init(
 
 
 
-		f_has_Orb = TRUE;
+		f_has_Orb = true;
 
 
 		if (f_v) {
@@ -197,7 +197,7 @@ void orbits_create::init(
 		Group->orbits_on_points_from_generators(Gens->V, Orb, verbose_level);
 
 
-		f_has_Orb = TRUE;
+		f_has_Orb = true;
 
 
 		if (f_v) {
@@ -227,7 +227,7 @@ void orbits_create::init(
 		Group->orbits_on_subsets(Control, On_subsets,
 				Descr->on_subsets_size, verbose_level);
 
-		f_has_On_subsets = TRUE;
+		f_has_On_subsets = true;
 
 		if (f_v) {
 			cout << "orbits_create::init after Group->orbits_on_subsets" << endl;
@@ -261,7 +261,7 @@ void orbits_create::init(
 			cout << "orbits_create::init after Group->do_orbits_on_subspaces" << endl;
 		}
 
-		f_has_On_Subspaces = TRUE;
+		f_has_On_Subspaces = true;
 
 
 		if (f_v) {
@@ -290,7 +290,7 @@ void orbits_create::init(
 				Descr->on_tensors_dimension,
 				verbose_level);
 
-		f_has_On_tensors = TRUE;
+		f_has_On_tensors = true;
 
 		if (f_v) {
 			cout << "orbits_create::init after Group->do_tensor_classify" << endl;
@@ -322,7 +322,7 @@ void orbits_create::init(
 				Descr->on_partition_poset_classification_control_label,
 				verbose_level);
 
-		f_has_Cascade = TRUE;
+		f_has_Cascade = true;
 
 		if (f_v) {
 			cout << "orbits_create::init after Cascade->init" << endl;
@@ -361,7 +361,7 @@ void orbits_create::init(
 			cout << "orbits_create::init after On_polynomials->init" << endl;
 		}
 
-		f_has_On_polynomials = TRUE;
+		f_has_On_polynomials = true;
 
 
 
@@ -436,7 +436,7 @@ void orbits_create::init(
 			}
 #endif
 
-			f_has_classification_by_canonical_form = TRUE;
+			f_has_classification_by_canonical_form = true;
 
 		}
 		else if (Descr->Canonical_form_classifier_description->f_algorithm_nauty) {
@@ -484,7 +484,7 @@ void orbits_create::init(
 			}
 #endif
 
-			f_has_classification_by_canonical_form = TRUE;
+			f_has_classification_by_canonical_form = true;
 
 		}
 		else {

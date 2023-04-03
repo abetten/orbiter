@@ -51,9 +51,9 @@ void action_on_galois_group::init(
 		exit(1);
 	}
 	M = A->G.matrix_grp;
-	if (M->f_semilinear == FALSE) {
+	if (M->f_semilinear == false) {
 		cout << "action_on_galois_group::init "
-				"M->f_semilinear == FALSE" << endl;
+				"M->f_semilinear == false" << endl;
 		exit(1);
 	}
 	q = M->GFq->q;

@@ -20,29 +20,29 @@ namespace quartic_curves {
 quartic_curve_create_description::quartic_curve_create_description()
 {
 
-	f_space = FALSE;
+	f_space = false;
 	//std::string space_label;
 
-	f_space_pointer = FALSE;
+	f_space_pointer = false;
 	space_pointer = NULL;
 
-	f_label_txt = FALSE;
+	f_label_txt = false;
 	//label_txt
 
-	f_label_tex = FALSE;
+	f_label_tex = false;
 	//label_tex
 
-	f_label_for_summary = FALSE;
+	f_label_for_summary = false;
 	//label_for_summary
 
 
-	f_catalogue = FALSE;
+	f_catalogue = false;
 	iso = 0;
-	f_by_coefficients = FALSE;
+	f_by_coefficients = false;
 	//coefficients_text = NULL;
 
 
-	f_by_equation = FALSE;
+	f_by_equation = false;
 	//std::string equation_name_of_formula;
 	//std::string equation_name_of_formula_tex;
 	//std::string equation_managed_variables;
@@ -55,11 +55,11 @@ quartic_curve_create_description::quartic_curve_create_description()
 	//nb_select_double_six = 0;
 	//select_double_six_string[];
 
-	f_from_cubic_surface = FALSE;
+	f_from_cubic_surface = false;
 	//std::string from_cubic_surface_label;
 	from_cubic_surface_point_orbit_idx = 0;
 
-	f_override_group = FALSE;
+	f_override_group = false;
 	//std::string override_group_order;
 	override_group_nb_gens = 0;
 	//std::string override_group_gens;
@@ -84,37 +84,37 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-space") == 0) {
-			f_space = TRUE;
+			f_space = true;
 			space_label.assign(argv[++i]);
 			cout << "-space " << space_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-label_txt") == 0) {
-			f_label_txt = TRUE;
+			f_label_txt = true;
 			label_txt.assign(argv[++i]);
 			cout << "-label_txt " << label_txt << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-label_tex") == 0) {
-			f_label_tex = TRUE;
+			f_label_tex = true;
 			label_tex.assign(argv[++i]);
 			cout << "-label_tex " << label_tex << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-label_for_summary") == 0) {
-			f_label_for_summary = TRUE;
+			f_label_for_summary = true;
 			label_for_summary.assign(argv[++i]);
 			cout << "-label_for_summary " << label_for_summary << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-catalogue") == 0) {
-			f_catalogue = TRUE;
+			f_catalogue = true;
 			iso = ST.strtoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-by_coefficients") == 0) {
-			f_by_coefficients = TRUE;
+			f_by_coefficients = true;
 			coefficients_text.assign(argv[++i]);
 			cout << "-by_coefficients " << coefficients_text << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-by_equation") == 0) {
-			f_by_equation = TRUE;
+			f_by_equation = true;
 			equation_name_of_formula.assign(argv[++i]);
 			equation_name_of_formula_tex.assign(argv[++i]);
 			equation_managed_variables.assign(argv[++i]);
@@ -131,7 +131,7 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-from_cubic_surface") == 0) {
-			f_from_cubic_surface = TRUE;
+			f_from_cubic_surface = true;
 
 			from_cubic_surface_label.assign(argv[++i]);
 			from_cubic_surface_point_orbit_idx = ST.strtoi(argv[++i]);
@@ -142,7 +142,7 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-override_group") == 0) {
-			f_override_group = TRUE;
+			f_override_group = true;
 
 			override_group_order.assign(argv[++i]);
 			override_group_nb_gens = ST.strtoi(argv[++i]);
@@ -161,7 +161,7 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 
 			s.assign(argv[++i]);
 			transform_coeffs.push_back(s);
-			f_inverse_transform.push_back(FALSE);
+			f_inverse_transform.push_back(false);
 			cout << "-transform " << transform_coeffs[transform_coeffs.size() - 1]
 					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
 		}
@@ -171,7 +171,7 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 
 			s.assign(argv[++i]);
 			transform_coeffs.push_back(s);
-			f_inverse_transform.push_back(TRUE);
+			f_inverse_transform.push_back(true);
 			cout << "-transform_inverse " << transform_coeffs[transform_coeffs.size() - 1]
 					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
 		}

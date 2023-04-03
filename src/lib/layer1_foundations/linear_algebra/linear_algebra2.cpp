@@ -181,10 +181,10 @@ int linear_algebra::dependency(
 	}
 
 	if (m == d) {
-		f_null = TRUE;
+		f_null = true;
 	}
 	else {
-		f_null = FALSE;
+		f_null = false;
 	}
 
 	if (!f_null) {
@@ -420,7 +420,7 @@ void linear_algebra::random_invertible_matrix(
 		if (f_vv) {
 			cout << "i=" << i << endl;
 		}
-		while (TRUE) {
+		while (true) {
 			r = Os.random_integer(qk);
 			if (f_vv) {
 				cout << "r=" << r << endl;
@@ -489,10 +489,10 @@ int linear_algebra::test_if_commute(
 	mult_matrix_matrix(A, B, M1, k, k, k, 0 /* verbose_level */);
 	mult_matrix_matrix(B, A, M2, k, k, k, 0 /* verbose_level */);
 	if (Sorting.int_vec_compare(M1, M2, k * k) == 0) {
-		ret = TRUE;
+		ret = true;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 
 	FREE_int(M1);
@@ -557,7 +557,7 @@ void linear_algebra::Borel_decomposition(
 
 	f_is_pivot = NEW_int(n);
 	for (i = 0; i < n; i++) {
-		f_is_pivot[i] = FALSE;
+		f_is_pivot[i] = false;
 	}
 	if (f_v) {
 		cout << "linear_algebra::Borel_decomposition going down "
@@ -573,7 +573,7 @@ void linear_algebra::Borel_decomposition(
 					cout << "linear_algebra::Borel_decomposition pivot "
 							"at (" << i << " " << j << ")" << endl;
 				}
-				f_is_pivot[i] = TRUE;
+				f_is_pivot[i] = true;
 				pivots[j] = i;
 				a = M[i * n + j];
 				av = F->inverse(a);
@@ -806,7 +806,7 @@ void linear_algebra::map_points_to_points_projectively(
 		int verbose_level)
 // A and B are (d + k + 1) x d
 // Transform is d x d
-// returns TRUE if a map exists
+// returns true if a map exists
 {
 	int f_v = (verbose_level >= 1);
 	int *lehmercode;
@@ -876,7 +876,7 @@ void linear_algebra::map_points_to_points_projectively(
 
 		cnt = 0;
 		Combi.first_lehmercode(d + 1, lehmercode);
-		while (TRUE) {
+		while (true) {
 			if (f_v) {
 				cout << "lehmercode: ";
 				Int_vec_print(cout, lehmercode, d + 1);
@@ -985,16 +985,16 @@ int linear_algebra::is_unit_vector(
 	for (i = 0; i < len; i++) {
 		if (i == k) {
 			if (v[i] != 1) {
-				return FALSE;
+				return false;
 			}
 		}
 		else {
 			if (v[i] != 0) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 

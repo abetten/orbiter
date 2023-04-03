@@ -18,11 +18,11 @@ namespace groups {
 
 void schreier::latex(std::string &fname)
 {
-	int f_with_cosetrep = TRUE;
+	int f_with_cosetrep = true;
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -359,12 +359,12 @@ void schreier::make_orbit_trees(std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "schreier::make_orbit_trees" << endl;
 	}
-	int f_has_point_labels = FALSE;
+	int f_has_point_labels = false;
 	long int *point_labels = NULL;
 
 	if (f_v) {
@@ -422,7 +422,7 @@ void schreier::print_and_list_orbits_with_original_labels_tex(
 				<< " of size " << orbit_len[orbit_no] << " : ";
 		//print_and_list_orbit_tex(i, ost);
 		print_orbit_sorted_with_original_labels_tex(ost,
-				orbit_no, FALSE /* f_truncate */, 0 /* max_length*/);
+				orbit_no, false /* f_truncate */, 0 /* max_length*/);
 		ost << "\\\\" << endl;
 	}
 	ost << endl;
@@ -433,7 +433,7 @@ void schreier::print_and_list_orbit_tex(int i, std::ostream &ost)
 	ost << " Orbit " << i << " / " << nb_orbits
 			<< " of size " << orbit_len[i] << " : ";
 	//print_orbit_tex(ost, i);
-	print_orbit_sorted_tex(ost, i, FALSE /* f_truncate */, 0 /* max_length*/);
+	print_orbit_sorted_tex(ost, i, false /* f_truncate */, 0 /* max_length*/);
 	ost << "\\\\" << endl;
 }
 
@@ -520,7 +520,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 	strong_generators *gens, std::ostream &ost)
 {
 	data_structures::sorting Sorting;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	ring_theory::longinteger_object full_group_order;
 
 	gens->group_order(full_group_order);
@@ -556,7 +556,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost,
 				Subgroup_elements_by_index, sz_subgroup,
-				10 /* width */, TRUE /* f_tex */);
+				10 /* width */, true /* f_tex */);
 		ost << "$$" << endl;
 
 		FREE_lint(Subgroup_elements_by_index);
@@ -570,13 +570,13 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 void schreier::print_and_list_orbits_sorted_by_length_tex(
 		std::ostream &ost)
 {
-	print_and_list_orbits_sorted_by_length(ost, TRUE);
+	print_and_list_orbits_sorted_by_length(ost, true);
 }
 
 void schreier::print_and_list_orbits_sorted_by_length(
 		std::ostream &ost)
 {
-	print_and_list_orbits_sorted_by_length(ost, FALSE);
+	print_and_list_orbits_sorted_by_length(ost, false);
 }
 
 void schreier::print_and_list_orbits_sorted_by_length(
@@ -593,7 +593,7 @@ void schreier::print_and_list_orbits_sorted_by_length(
 	Perm_inv = NEW_int(nb_orbits);
 	Int_vec_copy(orbit_len, Len, nb_orbits);
 	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
-			Perm, Perm_inv, TRUE /*f_increasingly*/);
+			Perm, Perm_inv, true /*f_increasingly*/);
 
 	ost << "There are " << nb_orbits
 			<< " orbits under a group with "
@@ -651,7 +651,7 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 	Perm_inv = NEW_int(nb_orbits);
 	Int_vec_copy(orbit_len, Len, nb_orbits);
 	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
-			Perm, Perm_inv, TRUE /*f_increasingly*/);
+			Perm, Perm_inv, true /*f_increasingly*/);
 
 	ost << "There are " << nb_orbits << " orbits under a group with "
 			<< gens.len << " generators:";
@@ -711,7 +711,7 @@ void schreier::print_fancy(
 	Perm_inv = NEW_int(nb_orbits);
 	Int_vec_copy(orbit_len, Len, nb_orbits);
 	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
-			Perm, Perm_inv, TRUE /*f_increasingly*/);
+			Perm, Perm_inv, true /*f_increasingly*/);
 
 	ost << "There are " << nb_orbits << " orbits under a group with "
 			<< gens.len << " generators:";
@@ -807,7 +807,7 @@ void schreier::print_tables(std::ostream &ost,
 	for (i = 0; i < A->degree; i++) {
 		ost << i;
 		for (j = 0; j < gens.len; j++) {
-			k = A->element_image_of(i, gens.ith(j), FALSE);
+			k = A->element_image_of(i, gens.ith(j), false);
 			ost << " : " << k;
 			}
 		ost << endl;
@@ -858,7 +858,7 @@ void schreier::print_tables_latex(
 	for (i = 0; i < A->degree; i++) {
 		ost << i;
 		for (j = 0; j < gens.len; j++) {
-			k = A->element_image_of(i, gens.ith(j), FALSE);
+			k = A->element_image_of(i, gens.ith(j), false);
 			ost << " : " << k;
 			}
 		ost << endl;
@@ -1035,7 +1035,7 @@ void schreier::print_orbit_with_original_labels(
 
 void schreier::print_orbit_tex(std::ostream &ost, int orbit_no)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, first, len;
 	int *v;
 	data_structures::sorting Sorting;
@@ -1058,7 +1058,7 @@ void schreier::print_orbit_sorted_tex(
 		std::ostream &ost,
 		int orbit_no, int f_truncate, int max_length)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, first, len;
 	int *v;
 	data_structures::sorting Sorting;
@@ -1103,7 +1103,7 @@ void schreier::print_orbit_sorted_with_original_labels_tex(
 		std::ostream &ost,
 		int orbit_no, int f_truncate, int max_length)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, first, len;
 	long int *v;
 	long int *w;
@@ -1177,7 +1177,7 @@ void schreier::print_orbit_type(int f_backwards)
 {
 	data_structures::tally C;
 
-	C.init(orbit_len, nb_orbits, FALSE, 0);
+	C.init(orbit_len, nb_orbits, false, 0);
 	C.print_naked(f_backwards);
 }
 
@@ -1366,7 +1366,7 @@ void schreier::get_orbit_by_levels(
 
 
 	//classify C;
-	//C.init(depth, len, FALSE, 0);
+	//C.init(depth, len, false, 0);
 	Nb = NEW_int(nb_layers);
 	Nb1 = NEW_int(nb_layers);
 	Int_vec_zero(Nb, nb_layers);
@@ -1451,7 +1451,7 @@ void schreier::export_tree_as_layered_graph(
 
 
 	//classify C;
-	//C.init(depth, len, FALSE, 0);
+	//C.init(depth, len, false, 0);
 	Nb = NEW_int(nb_layers);
 	Nb1 = NEW_int(nb_layers);
 	Int_vec_zero(Nb, nb_layers);
@@ -1615,7 +1615,7 @@ void schreier::draw_tree(std::string &fname,
 		placement_x[j] = 0;
 	}
 	subtree_calc_weight(weight, max_depth, i, last);
-	if (FALSE) {
+	if (false) {
 		cout << "the weights: " << endl;
 		for (j = i; j < last; j++) {
 			cout << j << " : " << weight[j] << " : " << endl;
@@ -1628,7 +1628,7 @@ void schreier::draw_tree(std::string &fname,
 		cout << "max_depth = " << max_depth << endl;
 	}
 	subtree_place(weight, placement_x, 0, Opt->xin, i, last);
-	if (FALSE) {
+	if (false) {
 		for (j = i; j < last; j++) {
 			cout << j << " : " << placement_x[j] << endl;
 		}
@@ -1636,7 +1636,7 @@ void schreier::draw_tree(std::string &fname,
 	}
 #if 0
 	if (orbit_len[orbit_no] > 100) {
-		f_circletext = FALSE;
+		f_circletext = false;
 	}
 #endif
 
@@ -2226,7 +2226,7 @@ void schreier::list_elements_as_permutations_vertically(std::ostream &ost)
 {
 	if (f_images_only) {
 		cout << "schreier::list_elements_as_permutations_vertically is not "
-				"allowed if f_images_only is TRUE" << endl;
+				"allowed if f_images_only is true" << endl;
 		exit(1);
 	}
 	A->list_elements_as_permutations_vertically(&gens, ost);

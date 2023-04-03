@@ -156,7 +156,7 @@ void young::init(int n, int verbose_level)
 	if (f_v) {
 		cout << "young::init" << endl;
 		}
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	young::n = n;
 	A = NEW_OBJECT(actions::action);
@@ -252,7 +252,7 @@ void young::create_module(
 		}
 
 
-	if (FALSE) {
+	if (false) {
 		cout << "M1=" << endl;
 		Int_matrix_print(M1, goi, sz);
 		}
@@ -266,9 +266,9 @@ void young::create_module(
 		D->print_matrix(Base, goi, sz);
 		}
 
-	int f_special = FALSE;
-	int f_complete = TRUE;
-	int f_P = FALSE;
+	int f_special = false;
+	int f_complete = true;
+	int f_P = false;
 	
 	base_cols = NEW_int(sz);
 

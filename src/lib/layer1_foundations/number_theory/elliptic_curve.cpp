@@ -448,30 +448,30 @@ void elliptic_curve::draw_grid2(
 		G.draw_axes_and_grid(
 			0., (double)(q - 1), 0., (double)(q - 1),
 			x_stretch, y_stretch,
-			TRUE /* f_x_axis_at_y_min */,
-			TRUE /* f_y_axis_at_x_min */,
+			true /* f_x_axis_at_y_min */,
+			true /* f_y_axis_at_x_min */,
 			1 /* x_mod */, 1 /* y_mod */, 1, 1,
 			-2. /* x_labels_offset */,
 			-2. /* y_labels_offset */,
 			0.5 /* x_tick_half_width */,
 			0.5 /* y_tick_half_width */,
-			TRUE /* f_v_lines */, 1 /* subdivide_v */,
-			TRUE /* f_h_lines */, 1 /* subdivide_h */,
+			true /* f_v_lines */, 1 /* subdivide_v */,
+			true /* f_h_lines */, 1 /* subdivide_h */,
 			verbose_level - 1);
 	}
 	else {
 		G.draw_axes_and_grid(
 			0., (double)(q - 1), 0., (double)(q - 1),
 			x_stretch, y_stretch,
-			TRUE /* f_x_axis_at_y_min */,
-			TRUE /* f_y_axis_at_x_min */,
+			true /* f_x_axis_at_y_min */,
+			true /* f_y_axis_at_x_min */,
 			1 /* x_mod */, 1 /* y_mod */, 1, 1,
 			-2. /* x_labels_offset */,
 			-2. /* y_labels_offset */,
 			0.5 /* x_tick_half_width */,
 			0.5 /* y_tick_half_width */,
-			TRUE /* f_v_lines */, q - 1 /* subdivide_v */,
-			TRUE /* f_h_lines */, q - 1 /* subdivide_h */,
+			true /* f_v_lines */, q - 1 /* subdivide_v */,
+			true /* f_h_lines */, q - 1 /* subdivide_h */,
 			verbose_level - 1);
 
 	}
@@ -718,7 +718,7 @@ void elliptic_curve::compute_addition_table(int verbose_level)
 			y1 = T[3 * j + 0];
 			y2 = T[3 * j + 1];
 			y3 = T[3 * j + 2];
-			if (FALSE) {
+			if (false) {
 				cout << "add " << i << " " << j << endl;
 			}
 			addition(
@@ -738,7 +738,7 @@ void elliptic_curve::compute_addition_table(int verbose_level)
 
 void elliptic_curve::print_addition_table()
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	Int_matrix_print(A, nb, nb);
 	L.int_matrix_print_tex(cout, A, nb, nb);
@@ -779,8 +779,8 @@ int elliptic_curve::index_of_point(
 
 {
 	int l, r, m, res, a;
-	int f_found = FALSE;
-	int f_v = FALSE;
+	int f_found = false;
+	int f_v = false;
 	
 	if (nb == 0) {
 		cout << "elliptic_curve::index_of_point "
@@ -846,7 +846,7 @@ int elliptic_curve::index_of_point(
 						"moving to the right" << endl;
 			}
 			if (res == 0) {
-				f_found = TRUE;
+				f_found = true;
 			}
 		}
 		else {
@@ -879,7 +879,7 @@ void elliptic_curve::latex_points_with_order(
 	vector<int> Ord;
 	int *p;
 	int i;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	order_of_all_points(Ord);
 	p = NEW_int(Ord.size());
@@ -913,7 +913,7 @@ void elliptic_curve::latex_order_of_all_points(
 	vector<int> Ord;
 	int *p;
 	int i;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	order_of_all_points(Ord);
 	p = NEW_int(Ord.size());
@@ -921,7 +921,7 @@ void elliptic_curve::latex_order_of_all_points(
 		p[i] = Ord[i];
 	}
 	L.print_integer_matrix_with_standard_labels(ost,
-			p, Ord.size(), 1, TRUE /* f_tex */);
+			p, Ord.size(), 1, true /* f_tex */);
 	FREE_int(p);
 }
 

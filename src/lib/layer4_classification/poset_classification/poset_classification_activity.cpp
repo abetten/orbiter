@@ -142,7 +142,7 @@ void poset_classification_activity::perform_work(
 #endif
 
 			PC->list_all_orbits_at_level(d,
-					FALSE /* f_has_print_function */,
+					false /* f_has_print_function */,
 					NULL /* void (*print_function)(std::ostream &ost, int len, int *S, void *data)*/,
 					NULL /* void *print_function_data*/,
 					Descr->f_show_orbit_decomposition /* f_show_orbit_decomposition */,
@@ -157,17 +157,17 @@ void poset_classification_activity::perform_work(
 			cout << "poset_classification_activity::perform_work f_list" << endl;
 		}
 #if 1
-		//int f_show_orbit_decomposition = TRUE;
-		//int f_show_stab = TRUE;
-		//int f_save_stab = TRUE;
-		//int f_show_whole_orbit = FALSE;
+		//int f_show_orbit_decomposition = true;
+		//int f_show_stab = true;
+		//int f_save_stab = true;
+		//int f_show_whole_orbit = false;
 
 		if (f_v) {
 			cout << "poset_classification_activity::perform_work before "
 					"list_all_orbits_at_level" << endl;
 		}
 		PC->list_all_orbits_at_level(actual_size,
-			FALSE,
+			false,
 			NULL,
 			this,
 			Descr->f_show_orbit_decomposition,
@@ -891,7 +891,7 @@ void poset_classification_activity::Kramer_Mesner_matrix_neighboring(
 // we assume that we don't use implicit fusion nodes
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 2);
+	int f_vv = false;//(verbose_level >= 2);
 	int f1, f2, i, j, k, I, J, len;
 	poset_orbit_node *O;
 
@@ -981,9 +981,9 @@ void poset_classification_activity::Kramer_Mesner_matrix_neighboring(
 					level, I /* current_node */,
 					//0 /* my_node */, 0 /* my_extension */, 0 /* my_coset */,
 					k /* current_extension */, level + 1,
-					FALSE /* f_tolerant */,
+					false /* f_tolerant */,
 					0/*verbose_level - 2*/);
-				if (FALSE) {
+				if (false) {
 					cout << "after apply_isomorphism J=" << J << endl;
 				}
 #else

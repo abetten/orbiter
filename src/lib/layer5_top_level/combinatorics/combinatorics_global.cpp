@@ -38,7 +38,7 @@ void combinatorics_global::create_design_table(
 	if (f_v) {
 		cout << "combinatorics_global::create_design_table" << endl;
 	}
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorics_global::create_design_table design:" << endl;
@@ -89,7 +89,7 @@ void combinatorics_global::load_design_table(design_create *DC,
 	if (f_v) {
 		cout << "combinatorics_global::load_design_table" << endl;
 	}
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	//actions::action *A;
 	//int *Elt1;
 	//int *Elt2;
@@ -161,7 +161,7 @@ void combinatorics_global::load_design_table(design_create *DC,
 
 	LS = NEW_OBJECT(large_set_classify);
 
-	int f_lexorder_test = TRUE;
+	int f_lexorder_test = true;
 	char str[1000];
 	string base_fname;
 
@@ -294,9 +294,9 @@ void combinatorics_global::load_design_table(design_create *DC,
 		LS->process_starter_case(lift_starter, 0 /*lift_starter_sz*/,
 				SG, group_label,
 				group_label, orbit_length,
-				FALSE /*f_read_solution_file*/, solution_file_name,
+				false /*f_read_solution_file*/, solution_file_name,
 				Large_sets, nb_large_sets,
-				TRUE /* f_compute_normalizer_orbits */, gens_N,
+				true /* f_compute_normalizer_orbits */, gens_N,
 				verbose_level);
 		cout << "processing starter case done" << endl;
 
@@ -414,7 +414,7 @@ void combinatorics_global::load_design_table(design_create *DC,
 					prefix, group_label, orbit_length,
 					f_read_solution_file, solution_file_name,
 					Large_sets, nb_large_sets,
-					FALSE /* f_compute_normalizer_orbits */, NULL /* gens_N */,
+					false /* f_compute_normalizer_orbits */, NULL /* gens_N */,
 					verbose_level);
 			cout << "processing starter case done" << endl;
 			if (f_read_solution_file) {
@@ -476,8 +476,8 @@ void combinatorics_global::Hill_cap56(
 	F = NEW_OBJECT(field_theory::finite_field);
 
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 	if (f_v) {
 		cout << "Hill_cap before init_orthogonal" << endl;
@@ -486,10 +486,10 @@ void combinatorics_global::Hill_cap56(
 	int f_semilinear;
 
 	if (NT.is_prime(F->q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 		}
 	else {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 		}
 
 	if (f_v) {
@@ -498,9 +498,9 @@ void combinatorics_global::Hill_cap56(
 
 	A->Known_groups->init_orthogonal_group(epsilon,
 		n, F,
-		TRUE /* f_on_points */, FALSE /* f_on_lines */,
-		FALSE /* f_on_points_and_lines */,
-		f_semilinear, TRUE /* f_basis */,
+		true /* f_on_points */, false /* f_on_lines */,
+		false /* f_on_points_and_lines */,
+		f_semilinear, true /* f_basis */,
 		0/*verbose_level*/);
 
 
@@ -522,8 +522,8 @@ void combinatorics_global::Hill_cap56(
 		}
 	data_structures_groups::vector_ge *nice_gens;
 
-	An->Known_groups->init_projective_group(n, F, TRUE /* f_semilinear */,
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
+	An->Known_groups->init_projective_group(n, F, true /* f_semilinear */,
+		true /* f_basis */, true /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);
 

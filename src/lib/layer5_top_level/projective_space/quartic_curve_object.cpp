@@ -53,7 +53,7 @@ void quartic_curve_object::init(
 
 	data_structures::string_tools ST;
 
-	if (FALSE) {
+	if (false) {
 		cout << "pts_txt=" << pts_txt << " =" << bitangents_txt << endl;
 	}
 

@@ -71,7 +71,7 @@ int coding_theory_domain::mindist(
 	MD.verbose_level = verbose_level;
 	MD.f_v = (verbose_level >= 1);
 	MD.f_vv = (verbose_level >= 2);
-	MD.f_vvv = FALSE;
+	MD.f_vvv = false;
 	MD.k = k;
 	MD.n = n;
 	MD.q = q;

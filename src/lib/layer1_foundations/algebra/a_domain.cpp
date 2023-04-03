@@ -157,10 +157,10 @@ int a_domain::is_zero_vector(int *elt, int len, int verbose_level)
 			//cout << "a_domain::is_zero_vector element "
 			// << i << " is nonzero" << endl;
 
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -174,18 +174,18 @@ int a_domain::is_zero(int *elt, int verbose_level)
 	}
 	if (kind == domain_the_integers) {
 		if (elt[0] == 0) {
-			ret = TRUE;
+			ret = true;
 		}
 		else {
-			ret = FALSE;
+			ret = false;
 		}
 	}
 	else if (kind == domain_integer_fractions) {
 		if (elt[0] == 0) {
-			ret = TRUE;
+			ret = true;
 		}
 		else {
-			ret = FALSE;
+			ret = false;
 		}
 	}
 	else {
@@ -218,7 +218,7 @@ void a_domain::make_one(int *elt, int verbose_level)
 int a_domain::is_one(int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = FALSE;
+	int ret = false;
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
@@ -226,10 +226,10 @@ int a_domain::is_one(int *elt, int verbose_level)
 	}
 	if (kind == domain_the_integers) {
 		if (elt[0] == 1) {
-			ret = TRUE;
+			ret = true;
 		}
 		else {
-			ret = FALSE;
+			ret = false;
 		}
 	}
 	else if (kind == domain_integer_fractions) {
@@ -238,7 +238,7 @@ int a_domain::is_one(int *elt, int verbose_level)
 		at = elt[0];
 		ab = elt[1];
 		if (at == 0) {
-			ret = FALSE;
+			ret = false;
 		}
 		else {
 			g = NT.gcd_lint(at, ab);
@@ -249,10 +249,10 @@ int a_domain::is_one(int *elt, int verbose_level)
 				at *= -1;
 			}
 			if (at == 1) {
-				ret = TRUE;
+				ret = true;
 			}
 			else {
-				ret = FALSE;
+				ret = false;
 			}
 		}
 	}
@@ -551,7 +551,7 @@ void a_domain::power(int *elt_a, int *elt_b, int n, int verbose_level)
 	}
 	make_one(tmp1, 0);
 	copy(elt_a, tmp3, 0);
-	while (TRUE) {
+	while (true) {
 		if (n % 2) {
 			mult(tmp3, tmp1, tmp2, 0);
 			copy(tmp2, tmp1, 0);
@@ -835,7 +835,7 @@ int a_domain::Gauss_echelon_form(int *A,
 	int f_P, int *P, int m, int n, int Pn, int verbose_level)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
-// P is a m x Pn matrix (if f_P is TRUE)
+// P is a m x Pn matrix (if f_P is true)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -897,7 +897,7 @@ int a_domain::Gauss_echelon_form(int *A,
 		}
 		
 		base_cols[i] = j;
-		//if (FALSE) {
+		//if (false) {
 		//	cout << "."; cout.flush();
 		//	}
 
@@ -1031,7 +1031,7 @@ int a_domain::Gauss_echelon_form(int *A,
 	} // next j
 	rank = i;
 	if (f_complete) {
-		//if (FALSE) {
+		//if (false) {
 		//	cout << ";"; cout.flush();
 		//	}
 		for (i = rank - 1; i >= 0; i--) {
@@ -1300,10 +1300,10 @@ void a_domain::get_image_and_kernel(
 		int n, int &rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_special = FALSE;
-	int f_complete = TRUE;
+	int f_special = false;
+	int f_complete = true;
 	int *base_cols;
-	int f_P = FALSE;
+	int f_P = false;
 	int kernel_m, kernel_n;
 	
 	if (f_v) {
@@ -1332,9 +1332,9 @@ void a_domain::complete_basis(
 		int *M, int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_special = FALSE;
-	int f_complete = TRUE;
-	int f_P = FALSE;
+	int f_special = false;
+	int f_complete = true;
+	int f_P = false;
 	int *M1;
 	int *base_cols;
 	int *kernel_cols;
@@ -1573,10 +1573,10 @@ void a_domain::matrix_invert(int *A,
 	copy_vector(A, T, n * n, 0);
 	make_identity_matrix(Ainv, n, 0);
 	rk = Gauss_echelon_form(T,
-		FALSE /* f_special */,
-		TRUE /* f_complete */,
+		false /* f_special */,
+		true /* f_complete */,
 		basecols,
-		TRUE /* f_P */, Ainv, n, n, n,
+		true /* f_P */, Ainv, n, n, n,
 		verbose_level - 2);
 	if (rk < n) {
 		cout << "a_domain::matrix_invert not invertible" << endl;

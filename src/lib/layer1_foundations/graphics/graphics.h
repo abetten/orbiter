@@ -1931,10 +1931,10 @@ public:
 	int f_H;
 	int H;
 
-	int f_default_angle; // = FALSE;
+	int f_default_angle; // = false;
 	int default_angle; // = 22;
 
-	int f_clipping_radius; // = TRUE;
+	int f_clipping_radius; // = true;
 	double clipping_radius; // = 0.9;
 
 

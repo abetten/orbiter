@@ -24,7 +24,7 @@ orthogonal::orthogonal()
 
 #if 0
 	epsilon = n = m = q = 0;
-	f_even = FALSE;
+	f_even = false;
 	form_c1 = form_c2 = form_c3 = 0;
 
 	//std::string label_txt;
@@ -317,7 +317,7 @@ void orthogonal::init(
 				Quadratic_form->n, Quadratic_form->n, Quadratic_form->n,
 				F->log10_of_q + 1);
 	}
-	if (FALSE) {
+	if (false) {
 
 		int *v1;
 
@@ -343,7 +343,7 @@ void orthogonal::init(
 		FREE_int(v1);
 
 	}
-	if (FALSE) {
+	if (false) {
 		if (Hyperbolic_pair->nb_points < 300) {
 			cout << "points of O^" << epsilon
 					<< "(" << n << "," << Quadratic_form->q << ") by type:" << endl;
@@ -546,7 +546,7 @@ void orthogonal::points_on_line(
 		long int *line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 2);
+	int f_vv = false; // (verbose_level >= 2);
 	int *v1, *v2, *v3;
 	int coeff[2], t, i, a, b;
 	
@@ -665,7 +665,7 @@ void orthogonal::lines_on_point(long int pt,
 		long int *line_pencil_point_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	long int t, i, rk, rk1, root1, root2;
 	
 	if (f_v) {
@@ -916,7 +916,7 @@ void orthogonal::make_initial_partition(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int i, j, l, a, f;
 	
 	if (f_v) {
@@ -929,7 +929,7 @@ void orthogonal::make_initial_partition(
 	// split off the column class:
 	S.subset_contiguous(
 			Hyperbolic_pair->nb_points, Hyperbolic_pair->nb_lines);
-	S.split_cell(FALSE);
+	S.split_cell(false);
 	
 	for (i = Hyperbolic_pair->nb_point_classes; i >= 2; i--) {
 		l = Hyperbolic_pair->P[i - 1];
@@ -948,7 +948,7 @@ void orthogonal::make_initial_partition(
 			S.subset[j] = a;
 		}
 		S.subset_size = l;
-		S.split_cell(FALSE);
+		S.split_cell(false);
 	}
 	for (i = Hyperbolic_pair->nb_line_classes; i >= 2; i--) {
 		f = Hyperbolic_pair->nb_points;
@@ -968,7 +968,7 @@ void orthogonal::make_initial_partition(
 			S.subset[j] = f + j;
 		}
 		S.subset_size = l;
-		S.split_cell(FALSE);
+		S.split_cell(false);
 		f += l;
 	}
 	if (f_vv) {
@@ -1034,10 +1034,10 @@ int orthogonal::test_if_minimal_on_line(
 		rk = Hyperbolic_pair->rank_point(
 				v3, 1, verbose_level - 1);
 		if (rk < rk0) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void orthogonal::find_minimal_point_on_line(
@@ -1093,10 +1093,10 @@ int orthogonal::is_zero_vector(int *u, int stride, int len)
 	
 	for (i = 0; i < len; i++) {
 		if (u[stride * i]) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void orthogonal::change_form_value(int *u,
@@ -1155,15 +1155,15 @@ int orthogonal::is_ending_dependent(int *vec1, int *vec2)
 			Gauss_step(vec1, vec2, Quadratic_form->n, i);
 			if (vec2[Quadratic_form->n - 2] == 0
 					&& vec2[Quadratic_form->n - 1] == 0) {
-				return TRUE;
+				return true;
 			}
 			else {
-				return FALSE;
+				return false;
 			}
 		}
 	}
 	//now vec2 is zero;
-	return TRUE;
+	return true;
 }
 
 void orthogonal::Gauss_step(int *v1, int *v2, int len, int idx)
@@ -1507,10 +1507,10 @@ int orthogonal::triple_is_collinear(
 			T1 + 2 * Quadratic_form->n, 1, pt3, verbose_level - 1);
 	rk = F->Linear_algebra->Gauss_int(
 			T1,
-			FALSE /* f_special */,
-			FALSE /* f_complete */,
+			false /* f_special */,
+			false /* f_complete */,
 			base_cols,
-			FALSE /* f_P */, NULL, 3, Quadratic_form->n, 0,
+			false /* f_P */, NULL, 3, Quadratic_form->n, 0,
 			0 /* verbose_level */);
 	FREE_int(base_cols);
 	if (rk < 2) {
@@ -1518,10 +1518,10 @@ int orthogonal::triple_is_collinear(
 		exit(1);
 	}
 	if (rk == 2) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 

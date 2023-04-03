@@ -327,7 +327,7 @@ void group_generators_domain::order_Hall_reflection_normalizer_factorized(
 		int *&factors, int &nb_factors)
 {
 	int i, j, nb_perms;
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "group_generators_domain::order_Hall_reflection_normalizer_factorized" << endl;
@@ -756,7 +756,7 @@ void group_generators_domain::order_PO_plus(
 	T.assign_to(O);
 
 	D.mult(O, Q, T);
-	if (TRUE /*EVEN(q)*/) {
+	if (true /*EVEN(q)*/) {
 		D.mult(T, Two, o);
 	}
 	else {
@@ -1125,7 +1125,7 @@ void group_generators_domain::diagonal_orbit_perm(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	int *v = NEW_int(n + 1);
 	geometry::geometry_global Gg;
 	long int l, ll;
@@ -1178,7 +1178,7 @@ void group_generators_domain::frobenius_orbit_perm(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;// (verbose_level >= 1);
+	int f_vv = false;// (verbose_level >= 1);
 	int *v = NEW_int(n);
 	geometry::geometry_global Gg;
 	long int l;
@@ -1247,7 +1247,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int i;
 	geometry::geometry_global Gg;
 
@@ -1296,7 +1296,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(
 					"after PG_element_modified_not_in_subspace_perm" << endl;
 		}
 
-		if (FALSE) {
+		if (false) {
 			Lint_vec_print(cout, orbit[i], degree);
 			cout << endl;
 			Lint_vec_print(cout, orbit_inv[i], degree);
@@ -1321,7 +1321,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(
 					"after diagonal_orbit_perm" << endl;
 		}
 
-		if (FALSE) {
+		if (false) {
 			Lint_vec_print(cout, orbit[i], degree);
 			cout << endl;
 			Lint_vec_print(cout, orbit_inv[i], degree);
@@ -1348,7 +1348,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(
 					"after frobenius_orbit_perm" << endl;
 		}
 
-		if (FALSE) {
+		if (false) {
 			Lint_vec_print(cout, orbit[i], degree);
 			cout << endl;
 			Lint_vec_print(cout, orbit_inv[i], degree);

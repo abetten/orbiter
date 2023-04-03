@@ -86,7 +86,7 @@ int main(int argc, const char **argv)
 
 	Top_level_session.handle_everything(argc, Argv, i, verbose_level);
 
-	if (FALSE) {
+	if (false) {
 		cout << "main, after Top_level_session.handle_everything" << endl;
 	}
 

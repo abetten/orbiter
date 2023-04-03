@@ -134,10 +134,10 @@ void grassmann_embedded::init(
 	//rk = F->Gauss_simple(M_Gauss, n, big_n,
 	//base_cols, verbose_level - 1);
 	rk = F->Linear_algebra->Gauss_int(M_Gauss,
-		FALSE /*f_special*/,
-		TRUE/* f_complete*/,
+		false /*f_special*/,
+		true/* f_complete*/,
 		base_cols,
-		TRUE /* f_P */, transform, n, big_n, n /* Pn */,
+		true /* f_P */, transform, n, big_n, n /* Pn */,
 		0/*int verbose_level*/);
 	if (f_vv) {
 		cout << "grassmann_embedded::init subspace "

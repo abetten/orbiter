@@ -22,98 +22,98 @@ projective_space_activity_description::projective_space_activity_description()
 {
 
 
-	f_export_point_line_incidence_matrix = FALSE;
+	f_export_point_line_incidence_matrix = false;
 
-	f_export_cubic_surface_line_vs_line_incidence_matrix = FALSE;
+	f_export_cubic_surface_line_vs_line_incidence_matrix = false;
 
-	f_export_cubic_surface_line_tritangent_plane_incidence_matrix = FALSE;
+	f_export_cubic_surface_line_tritangent_plane_incidence_matrix = false;
 
-	f_export_double_sixes = FALSE;
+	f_export_double_sixes = false;
 
-	f_table_of_cubic_surfaces_compute_properties = FALSE;
+	f_table_of_cubic_surfaces_compute_properties = false;
 	//std::string _table_of_cubic_surfaces_compute_fname_csv;
 	table_of_cubic_surfaces_compute_defining_q = 0;
 	table_of_cubic_surfaces_compute_column_offset = 0;
 
-	f_cubic_surface_properties_analyze = FALSE;
+	f_cubic_surface_properties_analyze = false;
 	//std::string cubic_surface_properties_fname_csv;
 	cubic_surface_properties_defining_q = 0;
 
-	f_canonical_form_of_code = FALSE;
+	f_canonical_form_of_code = false;
 	//canonical_form_of_code_label;
 	//canonical_form_of_code_generator_matrix;
 	Canonical_form_codes_Descr = NULL;
 
-	f_map = FALSE;
+	f_map = false;
 	//std::string map_ring_label;
 	//std::string map_formula_label;
 	//std::string map_parameters;
 
-	f_analyze_del_Pezzo_surface = FALSE;
+	f_analyze_del_Pezzo_surface = false;
 	//analyze_del_Pezzo_surface_label;
 	//analyze_del_Pezzo_surface_parameters;
 
-	f_decomposition_by_element_PG = FALSE;
+	f_decomposition_by_element_PG = false;
 	decomposition_by_element_power = 0;
 	//std::string decomposition_by_element_data;
 	//std::string decomposition_by_element_fname;
 
 
-	f_decomposition_by_subgroup = FALSE;
+	f_decomposition_by_subgroup = false;
 	//std::string decomposition_by_subgroup_label;
 	decomposition_by_subgroup_Descr = NULL;
 
-	f_table_of_quartic_curves = FALSE;
+	f_table_of_quartic_curves = false;
 
-	f_table_of_cubic_surfaces = FALSE;
+	f_table_of_cubic_surfaces = false;
 
-	//f_create_surface = FALSE;
+	//f_create_surface = false;
 	//surface_description = NULL;
 
-	f_sweep = FALSE;
+	f_sweep = false;
 	//std::string sweep_fname;
 
-	f_sweep_4_15_lines = FALSE;
+	f_sweep_4_15_lines = false;
 	//std::string sweep_4_15_lines_fname;
 	sweep_4_15_lines_surface_description = NULL;
 
-	f_sweep_F_beta_9_lines = FALSE;
+	f_sweep_F_beta_9_lines = false;
 	//std::string sweep_F_beta_9_lines_fname;
 	sweep_F_beta_9_lines_surface_description = NULL;
 
-	f_sweep_6_9_lines = FALSE;
+	f_sweep_6_9_lines = false;
 	//std::string sweep_6_9_lines_fname;
 	sweep_6_9_lines_surface_description = NULL;
 
-	f_sweep_4_27 = FALSE;
+	f_sweep_4_27 = false;
 	//std::string sweep_4_27_fname;
 	sweep_4_27_surface_description = NULL;
 
-	f_sweep_4_L9_E4 = FALSE;
+	f_sweep_4_L9_E4 = false;
 	//std::string sweep_4_L9_E4_fname;
 	sweep_4_L9_E4_surface_description = NULL;
 
 
-	f_cheat_sheet = FALSE;
+	f_cheat_sheet = false;
 
-	f_set_stabilizer = FALSE;
+	f_set_stabilizer = false;
 	set_stabilizer_intermediate_set_size = 0;
 	//std::string set_stabilizer_fname_mask;
 	set_stabilizer_nb = 0;
 	//std::string set_stabilizer_column_label;
 	//std::string set_stabilizer_fname_out;
 
-	f_conic_type = FALSE;
+	f_conic_type = false;
 	conic_type_threshold = 0;
 	//std::string conic_type_set_text;
 
-	f_lift_skew_hexagon = FALSE;
+	f_lift_skew_hexagon = false;
 	//lift_skew_hexagon_text
 
-	f_lift_skew_hexagon_with_polarity = FALSE;
+	f_lift_skew_hexagon_with_polarity = false;
 	//std::string lift_skew_hexagon_with_polarity_polarity;
 
-	f_arc_with_given_set_as_s_lines_after_dualizing = FALSE;
+	f_arc_with_given_set_as_s_lines_after_dualizing = false;
 	arc_size = 0;
 	arc_d = 0;
 	arc_d_low = 0;
@@ -121,49 +121,49 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string arc_input_set;
 	//std::string arc_label;
 
-	f_arc_with_two_given_sets_of_lines_after_dualizing = FALSE;
+	f_arc_with_two_given_sets_of_lines_after_dualizing = false;
 	//int arc_size;
 	//int arc_d;
 	arc_t = 0;
 	//t_lines_string;
 
-	f_arc_with_three_given_sets_of_lines_after_dualizing = FALSE;
+	f_arc_with_three_given_sets_of_lines_after_dualizing = false;
 	arc_u = 0;
 	//u_lines_string;
 
-	f_dualize_hyperplanes_to_points = FALSE;
-	f_dualize_points_to_hyperplanes = FALSE;
+	f_dualize_hyperplanes_to_points = false;
+	f_dualize_points_to_hyperplanes = false;
 	//std::string dualize_input_set;
 
-	f_dualize_rank_k_subspaces = FALSE;
+	f_dualize_rank_k_subspaces = false;
 	dualize_rank_k_subspaces_k = 0;
 
-	f_lines_on_point_but_within_a_plane = FALSE;
+	f_lines_on_point_but_within_a_plane = false;
 	lines_on_point_but_within_a_plane_point_rk = 0;
 	lines_on_point_but_within_a_plane_plane_rk = 0;
 
-	f_rank_lines_in_PG = FALSE;
+	f_rank_lines_in_PG = false;
 	//rank_lines_in_PG_label;
 
-	f_unrank_lines_in_PG = FALSE;
+	f_unrank_lines_in_PG = false;
 	//std::string unrank_lines_in_PG_text;
 
-	f_move_two_lines_in_hyperplane_stabilizer = FALSE;
+	f_move_two_lines_in_hyperplane_stabilizer = false;
 	line1_from = 0;
 	line2_from = 0;
 	line1_to = 0;
 	line2_to = 0;
 
-	f_move_two_lines_in_hyperplane_stabilizer_text = FALSE;
+	f_move_two_lines_in_hyperplane_stabilizer_text = false;
 	//std:string line1_from_text;
 	//std:string line2_from_text;
 	//std:string line1_to_text;
 	//std:string line2_to_text;
 
-	f_planes_through_line = FALSE;
+	f_planes_through_line = false;
 	//std::string planes_through_line_rank;
 
-	f_restricted_incidence_matrix = FALSE;
+	f_restricted_incidence_matrix = false;
 	restricted_incidence_matrix_type_row_objects = 0;
 	restricted_incidence_matrix_type_col_objects = 0;
 	std::string restricted_incidence_matrix_row_objects;
@@ -172,24 +172,24 @@ projective_space_activity_description::projective_space_activity_description()
 
 
 #if 0
-	f_make_relation = FALSE;
+	f_make_relation = false;
 	make_relation_plane_rk = 0;
 #endif
 
-	f_plane_intersection_type = FALSE;
+	f_plane_intersection_type = false;
 	plane_intersection_type_threshold = 0;
 	//std::string plane_intersection_type_input;
 
-	f_plane_intersection_type_of_klein_image = FALSE;
+	f_plane_intersection_type_of_klein_image = false;
 	plane_intersection_type_of_klein_image_threshold = 0;
 	//std::string plane_intersection_type_of_klein_image_input;
 
-	f_report_Grassmannian = FALSE;
+	f_report_Grassmannian = false;
 	report_Grassmannian_k = 0;
 
 
 
-	f_report_fixed_objects = FALSE;
+	f_report_fixed_objects = false;
 	//std::string report_fixed_objects_Elt;
 	//std::string report_fixed_objects_label;
 
@@ -200,45 +200,45 @@ projective_space_activity_description::projective_space_activity_description()
 
 	// classification stuff:
 
-	f_classify_surfaces_with_double_sixes = FALSE;
+	f_classify_surfaces_with_double_sixes = false;
 	//std::string classify_surfaces_with_double_sixes_label;
 	//std::string classify_surfaces_with_double_sixes_control_label;
 
 
 
-	f_classify_surfaces_through_arcs_and_two_lines = FALSE;
+	f_classify_surfaces_through_arcs_and_two_lines = false;
 
-	f_test_nb_Eckardt_points = FALSE;
+	f_test_nb_Eckardt_points = false;
 	nb_E = 0;
 
-	f_classify_surfaces_through_arcs_and_trihedral_pairs = FALSE;
+	f_classify_surfaces_through_arcs_and_trihedral_pairs = false;
 
-	f_trihedra1_control = FALSE;
+	f_trihedra1_control = false;
 	Trihedra1_control = NULL;
-	f_trihedra2_control = FALSE;
+	f_trihedra2_control = false;
 	Trihedra2_control = NULL;
 
-	f_control_six_arcs = FALSE;
+	f_control_six_arcs = false;
 	//std::string &Control_six_arcs_label;
 
-	f_six_arcs_not_on_conic = FALSE;
-	f_filter_by_nb_Eckardt_points = FALSE;
+	f_six_arcs_not_on_conic = false;
+	f_filter_by_nb_Eckardt_points = false;
 	nb_Eckardt_points = 0;
 
 
-	f_classify_arcs = FALSE;
+	f_classify_arcs = false;
 	Arc_generator_description = NULL;
 
-	f_classify_cubic_curves = FALSE;
+	f_classify_cubic_curves = false;
 
 
 
-	f_classify_semifields = FALSE;
+	f_classify_semifields = false;
 	Semifield_classify_description = NULL;
 	Semifield_classify_Control = NULL;
 
 
-	f_classify_bent_functions = FALSE;
+	f_classify_bent_functions = false;
 	classify_bent_functions_n = 0;
 
 }
@@ -263,28 +263,28 @@ int projective_space_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
-			f_export_point_line_incidence_matrix = TRUE;
+			f_export_point_line_incidence_matrix = true;
 			if (f_v) {
 				cout << "-export_point_line_incidence_matrix " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-export_cubic_surface_line_vs_line_incidence_matrix") == 0) {
-			f_export_cubic_surface_line_vs_line_incidence_matrix = TRUE;
+			f_export_cubic_surface_line_vs_line_incidence_matrix = true;
 			if (f_v) {
 				cout << "-export_cubic_surface_line_vs_line_incidence_matrix " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-export_cubic_surface_line_tritangent_plane_incidence_matrix") == 0) {
-			f_export_cubic_surface_line_tritangent_plane_incidence_matrix = TRUE;
+			f_export_cubic_surface_line_tritangent_plane_incidence_matrix = true;
 			if (f_v) {
 				cout << "-export_cubic_surface_line_tritangent_plane_incidence_matrix " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-export_double_sixes") == 0) {
-			f_export_double_sixes = TRUE;
+			f_export_double_sixes = true;
 			if (f_v) {
 				cout << "-export_double_sixes " << endl;
 			}
@@ -293,7 +293,7 @@ int projective_space_activity_description::read_arguments(
 
 
 		else if (ST.stringcmp(argv[i], "-table_of_cubic_surfaces_compute_properties") == 0) {
-			f_table_of_cubic_surfaces_compute_properties = TRUE;
+			f_table_of_cubic_surfaces_compute_properties = true;
 			if (f_v) {
 				cout << "-table_of_cubic_surfaces_compute_properties next argument is " << argv[i + 1] << endl;
 				table_of_cubic_surfaces_compute_fname_csv.assign(argv[++i]);
@@ -308,7 +308,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-cubic_surface_properties_analyze") == 0) {
-			f_cubic_surface_properties_analyze = TRUE;
+			f_cubic_surface_properties_analyze = true;
 			cubic_surface_properties_fname_csv.assign(argv[++i]);
 			cubic_surface_properties_defining_q = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -319,7 +319,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-canonical_form_of_code") == 0) {
-			f_canonical_form_of_code = TRUE;
+			f_canonical_form_of_code = true;
 			canonical_form_of_code_label.assign(argv[++i]);
 			canonical_form_of_code_generator_matrix.assign(argv[++i]);
 
@@ -346,7 +346,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-map") == 0) {
-			f_map = TRUE;
+			f_map = true;
 			map_ring_label.assign(argv[++i]);
 			map_formula_label.assign(argv[++i]);
 			map_parameters.assign(argv[++i]);
@@ -360,7 +360,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-analyze_del_Pezzo_surface") == 0) {
-			f_analyze_del_Pezzo_surface = TRUE;
+			f_analyze_del_Pezzo_surface = true;
 			analyze_del_Pezzo_surface_label.assign(argv[++i]);
 			analyze_del_Pezzo_surface_parameters.assign(argv[++i]);
 			if (f_v) {
@@ -372,7 +372,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-decomposition_by_element_PG") == 0) {
-			f_decomposition_by_element_PG = TRUE;
+			f_decomposition_by_element_PG = true;
 			decomposition_by_element_power = ST.strtoi(argv[++i]);
 			decomposition_by_element_data.assign(argv[++i]);
 			decomposition_by_element_fname.assign(argv[++i]);
@@ -386,7 +386,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-decomposition_by_subgroup") == 0) {
-			f_decomposition_by_subgroup = TRUE;
+			f_decomposition_by_subgroup = true;
 			decomposition_by_subgroup_label.assign(argv[++i]);
 			decomposition_by_subgroup_Descr = NEW_OBJECT(groups::linear_group_description);
 			i += decomposition_by_subgroup_Descr->read_arguments(argc - (i + 1),
@@ -408,21 +408,21 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-table_of_quartic_curves") == 0) {
-			f_table_of_quartic_curves = TRUE;
+			f_table_of_quartic_curves = true;
 			if (f_v) {
 				cout << "-table_of_quartic_curves " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-table_of_cubic_surfaces") == 0) {
-			f_table_of_cubic_surfaces = TRUE;
+			f_table_of_cubic_surfaces = true;
 			if (f_v) {
 				cout << "-table_of_cubic_surfaces " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-sweep") == 0) {
-			f_sweep = TRUE;
+			f_sweep = true;
 			sweep_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-sweep " << sweep_fname << endl;
@@ -430,7 +430,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-sweep_4_15_lines") == 0) {
-			f_sweep_4_15_lines = TRUE;
+			f_sweep_4_15_lines = true;
 			sweep_4_15_lines_fname.assign(argv[++i]);
 			sweep_4_15_lines_surface_description =
 					NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
@@ -453,7 +453,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-sweep_F_beta_9_lines") == 0) {
-			f_sweep_F_beta_9_lines = TRUE;
+			f_sweep_F_beta_9_lines = true;
 			sweep_F_beta_9_lines_fname.assign(argv[++i]);
 			sweep_F_beta_9_lines_surface_description =
 					NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
@@ -477,7 +477,7 @@ int projective_space_activity_description::read_arguments(
 
 
 		else if (ST.stringcmp(argv[i], "-sweep_6_9_lines") == 0) {
-			f_sweep_6_9_lines = TRUE;
+			f_sweep_6_9_lines = true;
 			sweep_6_9_lines_fname.assign(argv[++i]);
 			sweep_6_9_lines_surface_description =
 					NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
@@ -500,7 +500,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-sweep_4_27") == 0) {
-			f_sweep_4_27 = TRUE;
+			f_sweep_4_27 = true;
 			sweep_4_27_fname.assign(argv[++i]);
 			sweep_4_27_surface_description =
 					NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
@@ -522,7 +522,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-sweep_4_L9_E4") == 0) {
-			f_sweep_4_L9_E4 = TRUE;
+			f_sweep_4_L9_E4 = true;
 			sweep_4_L9_E4_fname.assign(argv[++i]);
 			sweep_4_L9_E4_surface_description =
 					NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
@@ -544,14 +544,14 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-cheat_sheet") == 0) {
-			f_cheat_sheet = TRUE;
+			f_cheat_sheet = true;
 			if (f_v) {
 				cout << "-cheat_sheet " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-set_stabilizer") == 0) {
-			f_set_stabilizer = TRUE;
+			f_set_stabilizer = true;
 			set_stabilizer_intermediate_set_size = ST.strtoi(argv[++i]);
 			set_stabilizer_fname_mask.assign(argv[++i]);
 			set_stabilizer_nb = ST.strtoi(argv[++i]);
@@ -569,7 +569,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-conic_type") == 0) {
-			f_conic_type = TRUE;
+			f_conic_type = true;
 			conic_type_threshold = ST.strtoi(argv[++i]);
 			conic_type_set_text.assign(argv[++i]);
 			if (f_v) {
@@ -580,7 +580,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-lift_skew_hexagon") == 0) {
-			f_lift_skew_hexagon = TRUE;
+			f_lift_skew_hexagon = true;
 			lift_skew_hexagon_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-lift_skew_hexagon "
@@ -589,7 +589,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-lift_skew_hexagon_with_polarity") == 0) {
-			f_lift_skew_hexagon_with_polarity = TRUE;
+			f_lift_skew_hexagon_with_polarity = true;
 			lift_skew_hexagon_with_polarity_polarity.assign(argv[++i]);
 			if (f_v) {
 				cout << "-lift_skew_hexagon_with_polarity "
@@ -599,7 +599,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-arc_with_given_set_as_s_lines_after_dualizing") == 0) {
-			f_arc_with_given_set_as_s_lines_after_dualizing = TRUE;
+			f_arc_with_given_set_as_s_lines_after_dualizing = true;
 			arc_size = ST.strtoi(argv[++i]);
 			arc_d = ST.strtoi(argv[++i]);
 			arc_d_low = ST.strtoi(argv[++i]);
@@ -613,7 +613,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-arc_with_two_given_sets_of_lines_after_dualizing") == 0) {
-			f_arc_with_two_given_sets_of_lines_after_dualizing = TRUE;
+			f_arc_with_two_given_sets_of_lines_after_dualizing = true;
 			arc_size = ST.strtoi(argv[++i]);
 			arc_d = ST.strtoi(argv[++i]);
 			arc_d_low = ST.strtoi(argv[++i]);
@@ -629,7 +629,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-arc_with_three_given_sets_of_lines_after_dualizing") == 0) {
-			f_arc_with_three_given_sets_of_lines_after_dualizing = TRUE;
+			f_arc_with_three_given_sets_of_lines_after_dualizing = true;
 			arc_size = ST.strtoi(argv[++i]);
 			arc_d = ST.strtoi(argv[++i]);
 			arc_d_low = ST.strtoi(argv[++i]);
@@ -649,7 +649,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-dualize_hyperplanes_to_points") == 0) {
-			f_dualize_hyperplanes_to_points = TRUE;
+			f_dualize_hyperplanes_to_points = true;
 			dualize_input_set.assign(argv[++i]);
 			if (f_v) {
 				cout << "-dualize_hyperplanes_to_points " << dualize_input_set << endl;
@@ -657,14 +657,14 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-dualize_points_to_hyperplanes") == 0) {
-			f_dualize_points_to_hyperplanes = TRUE;
+			f_dualize_points_to_hyperplanes = true;
 			dualize_input_set.assign(argv[++i]);
 			if (f_v) {
 				cout << "-dualize_points_to_hyperplanes " << dualize_input_set << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-dualize_rank_k_subspaces") == 0) {
-			f_dualize_rank_k_subspaces = TRUE;
+			f_dualize_rank_k_subspaces = true;
 			dualize_rank_k_subspaces_k = ST.strtoi(argv[++i]);
 			dualize_input_set.assign(argv[++i]);
 			if (f_v) {
@@ -675,7 +675,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-lines_on_point_but_within_a_plane") == 0) {
-			f_lines_on_point_but_within_a_plane = TRUE;
+			f_lines_on_point_but_within_a_plane = true;
 			lines_on_point_but_within_a_plane_point_rk = ST.strtoi(argv[++i]);
 			lines_on_point_but_within_a_plane_plane_rk = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -686,7 +686,7 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-rank_lines_in_PG") == 0) {
-			f_rank_lines_in_PG = TRUE;
+			f_rank_lines_in_PG = true;
 			rank_lines_in_PG_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-rank_lines_in_PG " << rank_lines_in_PG_label << endl;
@@ -694,14 +694,14 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-unrank_lines_in_PG") == 0) {
-			f_unrank_lines_in_PG = TRUE;
+			f_unrank_lines_in_PG = true;
 			unrank_lines_in_PG_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-unrank_lines_in_PG " << unrank_lines_in_PG_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
-			f_move_two_lines_in_hyperplane_stabilizer = TRUE;
+			f_move_two_lines_in_hyperplane_stabilizer = true;
 			line1_from = ST.strtoi(argv[++i]);
 			line2_from = ST.strtoi(argv[++i]);
 			line1_to = ST.strtoi(argv[++i]);
@@ -716,7 +716,7 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer_text") == 0) {
-			f_move_two_lines_in_hyperplane_stabilizer_text = TRUE;
+			f_move_two_lines_in_hyperplane_stabilizer_text = true;
 			line1_from_text.assign(argv[++i]);
 			line2_from_text.assign(argv[++i]);
 			line1_to_text.assign(argv[++i]);
@@ -732,7 +732,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-planes_through_line") == 0) {
-			f_planes_through_line = TRUE;
+			f_planes_through_line = true;
 			planes_through_line_rank.assign(argv[++i]);
 			if (f_v) {
 				cout << "-planes_through_line"
@@ -742,7 +742,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-restricted_incidence_matrix") == 0) {
-			f_restricted_incidence_matrix = TRUE;
+			f_restricted_incidence_matrix = true;
 			restricted_incidence_matrix_type_row_objects = ST.strtoi(argv[++i]);
 			restricted_incidence_matrix_type_col_objects = ST.strtoi(argv[++i]);
 			restricted_incidence_matrix_row_objects.assign(argv[++i]);
@@ -760,7 +760,7 @@ int projective_space_activity_description::read_arguments(
 		}
 #if 0
 		else if (ST.stringcmp(argv[i], "-make_relation") == 0) {
-			f_make_relation = TRUE;
+			f_make_relation = true;
 			make_relation_plane_rk = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-make_relation " << make_relation_plane_rk << endl;
@@ -769,7 +769,7 @@ int projective_space_activity_description::read_arguments(
 #endif
 
 		else if (ST.stringcmp(argv[i], "-plane_intersection_type") == 0) {
-			f_plane_intersection_type = TRUE;
+			f_plane_intersection_type = true;
 			plane_intersection_type_threshold = ST.strtoi(argv[++i]);
 			plane_intersection_type_input.assign(argv[++i]);
 			if (f_v) {
@@ -780,7 +780,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-plane_intersection_type_of_klein_image") == 0) {
-			f_plane_intersection_type_of_klein_image = TRUE;
+			f_plane_intersection_type_of_klein_image = true;
 			plane_intersection_type_of_klein_image_threshold = ST.strtoi(argv[++i]);
 			plane_intersection_type_of_klein_image_input.assign(argv[++i]);
 			if (f_v) {
@@ -790,14 +790,14 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-report_Grassmannian") == 0) {
-			f_report_Grassmannian = TRUE;
+			f_report_Grassmannian = true;
 			report_Grassmannian_k = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-report_Grassmannian " << report_Grassmannian_k << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-report_fixed_objects") == 0) {
-			f_report_fixed_objects = TRUE;
+			f_report_fixed_objects = true;
 			report_fixed_objects_Elt.assign(argv[++i]);
 			report_fixed_objects_label.assign(argv[++i]);
 			if (f_v) {
@@ -814,7 +814,7 @@ int projective_space_activity_description::read_arguments(
 
 		// cubic surfaces:
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_with_double_sixes") == 0) {
-			f_classify_surfaces_with_double_sixes = TRUE;
+			f_classify_surfaces_with_double_sixes = true;
 			classify_surfaces_with_double_sixes_label.assign(argv[++i]);
 			classify_surfaces_with_double_sixes_control_label.assign(argv[++i]);
 
@@ -826,14 +826,14 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_through_arcs_and_two_lines") == 0) {
-			f_classify_surfaces_through_arcs_and_two_lines = TRUE;
+			f_classify_surfaces_through_arcs_and_two_lines = true;
 			if (f_v) {
 				cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-test_nb_Eckardt_points") == 0) {
-			f_test_nb_Eckardt_points = TRUE;
+			f_test_nb_Eckardt_points = true;
 			nb_E = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-test_nb_Eckardt_points " << nb_E << endl;
@@ -841,13 +841,13 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
-			f_classify_surfaces_through_arcs_and_trihedral_pairs = TRUE;
+			f_classify_surfaces_through_arcs_and_trihedral_pairs = true;
 			if (f_v) {
 				cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-trihedra1_control") == 0) {
-			f_trihedra1_control = TRUE;
+			f_trihedra1_control = true;
 			Trihedra1_control =
 					NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Trihedra1_control->read_arguments(argc - (i + 1),
@@ -864,7 +864,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-trihedra2_control") == 0) {
-			f_trihedra2_control = TRUE;
+			f_trihedra2_control = true;
 			Trihedra2_control =
 					NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Trihedra2_control->read_arguments(argc - (i + 1),
@@ -881,7 +881,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-control_six_arcs") == 0) {
-			f_control_six_arcs = TRUE;
+			f_control_six_arcs = true;
 			Control_six_arcs_label.assign(argv[++i]);
 
 			if (f_v) {
@@ -890,21 +890,21 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-six_arcs_not_on_conic") == 0) {
-			f_six_arcs_not_on_conic = TRUE;
+			f_six_arcs_not_on_conic = true;
 			if (f_v) {
 				cout << "-six_arcs_not_on_conic" << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-filter_by_nb_Eckardt_points") == 0) {
-			f_filter_by_nb_Eckardt_points = TRUE;
+			f_filter_by_nb_Eckardt_points = true;
 			nb_Eckardt_points = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-classify_arcs") == 0) {
-			f_classify_arcs = TRUE;
+			f_classify_arcs = true;
 			Arc_generator_description =
 					NEW_OBJECT(apps_geometry::arc_generator_description);
 			if (f_v) {
@@ -924,7 +924,7 @@ int projective_space_activity_description::read_arguments(
 		}
 		// cubic curves
 		else if (ST.stringcmp(argv[i], "-classify_cubic_curves") == 0) {
-			f_classify_cubic_curves = TRUE;
+			f_classify_cubic_curves = true;
 			Arc_generator_description =
 					NEW_OBJECT(apps_geometry::arc_generator_description);
 			if (f_v) {
@@ -946,7 +946,7 @@ int projective_space_activity_description::read_arguments(
 
 		// semifields
 		else if (ST.stringcmp(argv[i], "-classify_semifields") == 0) {
-			f_classify_semifields = TRUE;
+			f_classify_semifields = true;
 			Semifield_classify_description =
 					NEW_OBJECT(semifields::semifield_classify_description);
 			if (f_v) {
@@ -978,7 +978,7 @@ int projective_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-classify_bent_functions") == 0) {
-			f_classify_bent_functions = TRUE;
+			f_classify_bent_functions = true;
 			classify_bent_functions_n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-classify_bent_functions "

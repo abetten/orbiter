@@ -22,59 +22,59 @@ namespace apps_combinatorics {
 delandtsheer_doyen_description::delandtsheer_doyen_description()
 {
 
-	f_depth = FALSE;
+	f_depth = false;
 	depth = 0;
 
-	f_d1 = FALSE;
+	f_d1 = false;
 	d1 = 0;
-	f_d2 = FALSE;
+	f_d2 = false;
 	d2 = 0;
-	f_q1 = FALSE;
+	f_q1 = false;
 	q1 = 0;
-	f_q2 = FALSE;
+	f_q2 = false;
 	q2 = 0;
 
-	f_group_label = FALSE;
+	f_group_label = false;
 	//group_label = NULL;
 
-	f_mask_label = FALSE;
+	f_mask_label = false;
 	//mask_label = NULL;
 
-	f_problem_label = FALSE;
+	f_problem_label = false;
 	//std::string problem_label;
 
 	DELANDTSHEER_DOYEN_X = -1;
 	DELANDTSHEER_DOYEN_Y = -1;
-	f_K = FALSE;
+	f_K = false;
 	K = 0;
 
 
-	f_pair_search_control = FALSE;
+	f_pair_search_control = false;
 	Pair_search_control = NULL;
 
-	f_search_control = FALSE;
+	f_search_control = false;
 	Search_control = NULL;
 
-	f_R = FALSE;
+	f_R = false;
 	nb_row_types = 0;
 	row_type = NULL;     		// [nb_row_types + 1]
 
-	f_C = FALSE;
+	f_C = false;
 	nb_col_types = 0;
 	col_type = NULL;     		// [nb_col_types + 1]
 
-	f_nb_orbits_on_blocks = FALSE;
+	f_nb_orbits_on_blocks = false;
 	nb_orbits_on_blocks = 1;
 
 	// mask related test:
 	nb_mask_tests = 0;
 
-	f_singletons = FALSE;
-	f_subgroup = FALSE;
+	f_singletons = false;
+	f_subgroup = false;
 	//subgroup_gens = NULL;
 	//subgroup_order = NULL;
 
-	f_search_wrt_subgroup = FALSE;
+	f_search_wrt_subgroup = false;
 
 }
 
@@ -114,42 +114,42 @@ int delandtsheer_doyen_description::read_arguments(
 
 
 		if (ST.stringcmp(argv[i], "-group_label") == 0) {
-			f_group_label = TRUE;
+			f_group_label = true;
 			group_label.assign(argv[++i]);
 			cout << "-group_label " << group_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-mask_label") == 0) {
-			f_mask_label = TRUE;
+			f_mask_label = true;
 			mask_label.assign(argv[++i]);
 			cout << "-mask_label " << mask_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-problem_label") == 0) {
-			f_problem_label = TRUE;
+			f_problem_label = true;
 			problem_label.assign(argv[++i]);
 			cout << "-problem_label " << problem_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-depth") == 0) {
-			f_depth = TRUE;
+			f_depth = true;
 			depth = ST.strtoi(argv[++i]);
 			cout << "-depth " << depth << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-d1") == 0) {
-			f_d1 = TRUE;
+			f_d1 = true;
 			d1 = ST.strtoi(argv[++i]);
 			cout << "-d1 " << d1 << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-d2") == 0) {
-			f_d2 = TRUE;
+			f_d2 = true;
 			d2 = ST.strtoi(argv[++i]);
 			cout << "-d2 " << d2 << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-q1") == 0) {
-			f_q1 = TRUE;
+			f_q1 = true;
 			q1 = ST.strtoi(argv[++i]);
 			cout << "-q1 " << q1 << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-q2") == 0) {
-			f_q2 = TRUE;
+			f_q2 = true;
 			q2 = ST.strtoi(argv[++i]);
 			cout << "-q2 " << q2 << endl;
 		}
@@ -162,12 +162,12 @@ int delandtsheer_doyen_description::read_arguments(
 			cout << "-DDy " << DELANDTSHEER_DOYEN_Y << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-K") == 0) {
-			f_K = TRUE;
+			f_K = true;
 			K = ST.strtoi(argv[++i]);
 			cout << "-K " << K << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-R") == 0) {
-			f_R = TRUE;
+			f_R = true;
 			nb_row_types = ST.strtoi(argv[++i]);
 			row_type = NEW_int(nb_row_types + 1);
 			row_type[0] = 0;
@@ -180,7 +180,7 @@ int delandtsheer_doyen_description::read_arguments(
 			cout << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-C") == 0) {
-			f_C = TRUE;
+			f_C = true;
 			nb_col_types = ST.strtoi(argv[++i]);
 			col_type = NEW_int(nb_col_types + 1);
 			col_type[0] = 0;
@@ -193,7 +193,7 @@ int delandtsheer_doyen_description::read_arguments(
 			cout << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-nb_orbits_on_blocks") == 0) {
-			f_nb_orbits_on_blocks = TRUE;
+			f_nb_orbits_on_blocks = true;
 			nb_orbits_on_blocks = ST.strtoi(argv[++i]);
 			cout << "-nb_orbits_on_blocks " << nb_orbits_on_blocks << endl;
 		}
@@ -239,17 +239,17 @@ int delandtsheer_doyen_description::read_arguments(
 			cout << "nb_mask_tests=" << nb_mask_tests << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-singletons") == 0) {
-			f_singletons = TRUE;
+			f_singletons = true;
 			cout << "-singletons" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-subgroup") == 0) {
-			f_subgroup = TRUE;
+			f_subgroup = true;
 			subgroup_gens.assign(argv[++i]);
 			subgroup_order.assign(argv[++i]);
 			cout << "-subgroup " << subgroup_gens << " " << subgroup_order << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-pair_search_control") == 0) {
-			f_pair_search_control = TRUE;
+			f_pair_search_control = true;
 			Pair_search_control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Pair_search_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
@@ -262,7 +262,7 @@ int delandtsheer_doyen_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-search_control") == 0) {
-			f_search_control = TRUE;
+			f_search_control = true;
 			Search_control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Search_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
@@ -275,7 +275,7 @@ int delandtsheer_doyen_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-search_wrt_subgroup") == 0) {
-			f_search_wrt_subgroup = TRUE;
+			f_search_wrt_subgroup = true;
 			cout << "-search_wrt_subgroup " << endl;
 		}
 

@@ -24,7 +24,7 @@ quartic_curve_from_surface::quartic_curve_from_surface()
 	//std::string label;
 	//std::string label_tex;
 
-	f_has_SC = FALSE;
+	f_has_SC = false;
 	SC = NULL;
 
 	SOA = NULL;
@@ -164,7 +164,7 @@ void quartic_curve_from_surface::init_surface_create(
 	if (f_v) {
 		cout << "quartic_curve_from_surface::init_surface_create" << endl;
 	}
-	f_has_SC = TRUE;
+	f_has_SC = true;
 	quartic_curve_from_surface::SC = SC;
 	if (f_v) {
 		cout << "quartic_curve_from_surface::init_surface_create done" << endl;
@@ -406,7 +406,7 @@ void quartic_curve_from_surface::quartic(
 	ost << "$$" << endl;
 	tally C;
 
-	C.init(line_type, SOA->Surf->P->N_lines, FALSE, 0);
+	C.init(line_type, SOA->Surf->P->N_lines, false, 0);
 	C.get_class_by_value(Class_pts, nb_class_pts,
 			SOA->q + 1 /* value */, 0 /* verbose_level */);
 
@@ -673,7 +673,7 @@ void quartic_curve_from_surface::compute_stabilizer(
 	ring_theory::longinteger_object pt_stab_order;
 	geometry::object_with_canonical_form *OiP = NULL;
 
-	int f_compute_canonical_form = FALSE;
+	int f_compute_canonical_form = false;
 	data_structures::bitvector *Canonical_form;
 
 

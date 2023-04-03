@@ -630,13 +630,13 @@ void surface_classify_wedge::sweep_Cayley(
 
 					SC = NEW_OBJECT(cubic_surfaces_in_general::surface_create);
 
-					Descr.f_Cayley_form = TRUE;
+					Descr.f_Cayley_form = true;
 					Descr.Cayley_form_k = k;
 					Descr.Cayley_form_l = l;
 					Descr.Cayley_form_m = m;
 					Descr.Cayley_form_n = n;
 
-					//Descr.f_q = TRUE;
+					//Descr.f_q = true;
 					//Descr.q = q;
 
 					if (f_v) {
@@ -644,7 +644,7 @@ void surface_classify_wedge::sweep_Cayley(
 								<< " n=" << n << " before SC->init" << endl;
 					}
 					SC->init(&Descr, 0 /*verbose_level*/);
-					if (FALSE) {
+					if (false) {
 						cout << "after SC->init" << endl;
 					}
 
@@ -1461,14 +1461,14 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 	}
 
 	if (isomorphic_to1 != isomorphic_to2) {
-		ret = FALSE;
+		ret = false;
 		if (f_v) {
 			cout << "surface_classify_wedge::isomorphism_test_pairwise "
 					"not isomorphic" << endl;
 		}
 	}
 	else {
-		ret = TRUE;
+		ret = true;
 		if (f_v) {
 			cout << "surface_classify_wedge::isomorphism_test_pairwise "
 					"they are isomorphic" << endl;

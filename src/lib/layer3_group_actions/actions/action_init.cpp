@@ -72,7 +72,7 @@ void action::init_group_from_generators(
 	S.init_trivial_group(verbose_level);
 	S.init_generators(*gens, verbose_level);
 	S.compute_base_orbits(verbose_level);
-	while (TRUE) {
+	while (true) {
 		S.closure_group(nb_times, 0/*verbose_level*/);
 		S.group_order(cur_go);
 		cout << "cur_go=" << cur_go << endl;
@@ -156,7 +156,7 @@ void action::init_group_from_generators_by_base_images(
 	S.init_trivial_group(verbose_level);
 	S.init_generators(*gens, verbose_level);
 	S.compute_base_orbits(verbose_level);
-	while (TRUE) {
+	while (true) {
 		S.closure_group(nb_times, 0/*verbose_level*/);
 		S.group_order(cur_go);
 		cout << "cur_go=" << cur_go << endl;
@@ -172,7 +172,7 @@ void action::init_group_from_generators_by_base_images(
 
 	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(&S, verbose_level - 1);
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 
 	FREE_int(Elt);
 	if (f_v) {
@@ -257,7 +257,7 @@ groups::sims *action::create_sims_from_generators_with_target_group_order_factor
 				"before create_sims_from_generators_randomized" << endl;
 	}
 	S = create_sims_from_generators_randomized(
-		gens, TRUE /* f_target_go */, go, verbose_level - 3);
+		gens, true /* f_target_go */, go, verbose_level - 3);
 	if (f_v) {
 		cout << "action::create_sims_from_generators_with_target_group_order_factorized done" << endl;
 	}
@@ -281,7 +281,7 @@ groups::sims *action::create_sims_from_generators_with_target_group_order(
 	int verbose_level)
 {
 	return create_sims_from_generators_randomized(
-		gens, TRUE /* f_target_go */, target_go, verbose_level - 3);
+		gens, true /* f_target_go */, target_go, verbose_level - 3);
 }
 
 groups::sims *action::create_sims_from_generators_without_target_group_order(
@@ -290,7 +290,7 @@ groups::sims *action::create_sims_from_generators_without_target_group_order(
 	ring_theory::longinteger_object dummy;
 
 	return create_sims_from_generators_randomized(
-		gens, FALSE /* f_target_go */, dummy, verbose_level - 3);
+		gens, false /* f_target_go */, dummy, verbose_level - 3);
 }
 
 groups::sims *action::create_sims_from_single_generator_without_target_group_order(
@@ -309,7 +309,7 @@ groups::sims *action::create_sims_from_single_generator_without_target_group_ord
 	gens->init_single(this, Elt, verbose_level - 2);
 
 	S = create_sims_from_generators_randomized(
-		gens, FALSE /* f_target_go */, dummy, verbose_level - 3);
+		gens, false /* f_target_go */, dummy, verbose_level - 3);
 
 	FREE_OBJECT(gens);
 	if (f_v) {
@@ -686,10 +686,10 @@ void action::init_automorphism_group_from_group_table(
 
 	Known_groups->init_permutation_group_from_generators(
 		group_order /* degree */,
-		TRUE, go,
+		true, go,
 		N_nb_gens, N_gens,
 		nb_gens /* given_base_length */, gens1 /* given_base */,
-		FALSE /* f_no_base */,
+		false /* f_no_base */,
 		verbose_level);
 	{
 		ring_theory::longinteger_object go;

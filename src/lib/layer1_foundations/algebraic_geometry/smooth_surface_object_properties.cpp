@@ -295,7 +295,7 @@ void smooth_surface_object_properties::compute_planes_and_dual_point_ranks(int v
 
 void smooth_surface_object_properties::print_planes_in_trihedral_pairs(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	ost << "\\clearpage\n\\subsection*{All planes "
 			"in trihedral pairs}" << endl;
@@ -304,17 +304,17 @@ void smooth_surface_object_properties::print_planes_in_trihedral_pairs(std::ostr
 
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels(ost,
-		All_Planes, 30, 6, TRUE /* f_tex */);
+		All_Planes, 30, 6, true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		All_Planes + 30 * 6, 30, 6, 30, 0, TRUE /* f_tex */);
+		All_Planes + 30 * 6, 30, 6, 30, 0, true /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		All_Planes + 60 * 6, 30, 6, 60, 0, TRUE /* f_tex */);
+		All_Planes + 60 * 6, 30, 6, 60, 0, true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		All_Planes + 90 * 6, 30, 6, 90, 0, TRUE /* f_tex */);
+		All_Planes + 90 * 6, 30, 6, 90, 0, true /* f_tex */);
 	ost << "$$" << endl;
 
 
@@ -322,17 +322,17 @@ void smooth_surface_object_properties::print_planes_in_trihedral_pairs(std::ostr
 	ost << "All planes by dual point rank:" << endl;
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(ost,
-		Dual_point_ranks, 30, 6, TRUE /* f_tex */);
+		Dual_point_ranks, 30, 6, true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-		Dual_point_ranks + 30 * 6, 30, 6, 30, 0, TRUE /* f_tex */);
+		Dual_point_ranks + 30 * 6, 30, 6, 30, 0, true /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-		Dual_point_ranks + 60 * 6, 30, 6, 60, 0, TRUE /* f_tex */);
+		Dual_point_ranks + 60 * 6, 30, 6, 60, 0, true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-		Dual_point_ranks + 90 * 6, 30, 6, 90, 0, TRUE /* f_tex */);
+		Dual_point_ranks + 90 * 6, 30, 6, 90, 0, true /* f_tex */);
 	ost << "$$" << endl;
 }
 
@@ -353,12 +353,12 @@ void smooth_surface_object_properties::print_tritangent_planes(std::ostream &ost
 #if 0
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
-			Tritangent_planes, 9, 5, TRUE /* f_tex */);
+			Tritangent_planes, 9, 5, true /* f_tex */);
 	ost << "$$" << endl;
 	ost << "Their dual point ranks are:" << endl;
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
-			Tritangent_plane_dual, 9, 5, TRUE /* f_tex */);
+			Tritangent_plane_dual, 9, 5, true /* f_tex */);
 	ost << "$$" << endl;
 
 	for (i = 0; i < nb_tritangent_planes; i++) {
@@ -381,12 +381,12 @@ void smooth_surface_object_properties::print_tritangent_planes(std::ostream &ost
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
 			iso_type_of_tritangent_plane, nb_tritangent_planes / 5, 5,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	ost << "$$" << endl;
 
 	ost << "Type iso of tritangent planes: ";
 	ost << "$$" << endl;
-	Type_iso_tritangent_planes->print_naked_tex(ost, TRUE);
+	Type_iso_tritangent_planes->print_naked_tex(ost, true);
 	ost << endl;
 	ost << "$$" << endl;
 	ost << endl;
@@ -395,32 +395,32 @@ void smooth_surface_object_properties::print_tritangent_planes(std::ostream &ost
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
 			Tritangent_plane_to_Eckardt, nb_tritangent_planes / 5, 5,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	ost << "$$" << endl;
 	ost << "Eckardt\\_to\\_Tritangent\\_plane:" << endl;
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
 			Eckardt_to_Tritangent_plane, nb_tritangent_planes / 5, 5,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	ost << "$$" << endl;
 
 	ost << "Trihedral\\_pairs\\_as\\_tritangent\\_planes:" << endl;
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
-			Trihedral_pairs_as_tritangent_planes, 30, 6, TRUE /* f_tex */);
+			Trihedral_pairs_as_tritangent_planes, 30, 6, true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	print_integer_matrix_with_standard_labels_and_offset(ost,
 			Trihedral_pairs_as_tritangent_planes + 30 * 6, 30, 6, 30, 0,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels_and_offset(ost,
 			Trihedral_pairs_as_tritangent_planes + 60 * 6, 30, 6, 60, 0,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	print_integer_matrix_with_standard_labels_and_offset(ost,
 			Trihedral_pairs_as_tritangent_planes + 90 * 6, 30, 6, 90, 0,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	ost << "$$" << endl;
 #endif
 
@@ -671,10 +671,10 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(int t_idx
 
 	SO->Surf->PolynomialDomains->multiply_linear_times_linear_times_linear_in_space(F_planes,
 		F_planes + 4, F_planes + 8,
-		eqn_F, FALSE /* verbose_level */);
+		eqn_F, false /* verbose_level */);
 	SO->Surf->PolynomialDomains->multiply_linear_times_linear_times_linear_in_space(G_planes,
 		G_planes + 4, G_planes + 8,
-		eqn_G, FALSE /* verbose_level */);
+		eqn_G, false /* verbose_level */);
 
 	Int_vec_copy(eqn_G, eqn_G2, 20);
 	SO->F->Linear_algebra->scalar_multiply_vector_in_place(lambda, eqn_G2, 20);

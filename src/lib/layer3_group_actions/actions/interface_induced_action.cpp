@@ -1333,7 +1333,7 @@ static void induced_action_element_print_latex_with_print_point_function(
 	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data)
 {
-	int f_v = FALSE;
+	int f_v = false;
 	int *Elt = (int *) elt;
 	int i, j;
 	combinatorics::combinatorics_domain Combi;
@@ -1347,9 +1347,9 @@ static void induced_action_element_print_latex_with_print_point_function(
 		//cout << "matrix_group_element_print_as_permutation
 		//computing image of i=" << i << endl;
 		//if (i == 3)
-			//f_v = TRUE;
+			//f_v = true;
 		//else
-			//f_v = FALSE;
+			//f_v = false;
 		j = A.Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
 	}
@@ -1655,7 +1655,7 @@ static void induced_action_print_point(action &A,
 		ost << a;
 	}
 	else if (A.type_G == action_on_grassmannian_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_grassmannian_t" << endl;
 			}
 		induced_actions::action_on_grassmannian *AG = A.G.AG;
@@ -1675,7 +1675,7 @@ static void induced_action_print_point(action &A,
 		//b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
 	}
 	else if (A.type_G == action_on_spread_set_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_spread_set_t" << endl;
 			}
 		//action_on_spread_set *AS = A.G.AS;
@@ -1683,7 +1683,7 @@ static void induced_action_print_point(action &A,
 		ost << a;
 	}
 	else if (A.type_G == action_on_orthogonal_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_orthogonal_t" << endl;
 			}
 		induced_actions::action_on_orthogonal *AO = A.G.AO;
@@ -1709,7 +1709,7 @@ static void induced_action_print_point(action &A,
 #endif
 	}
 	else if (A.type_G == action_on_interior_direct_product_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_interior_direct_product_t" << endl;
 		}
 		induced_actions::action_on_interior_direct_product *IDP;
@@ -1721,7 +1721,7 @@ static void induced_action_print_point(action &A,
 		ost << "(" << i << "," << j << ")";
 	}
 	else if (A.type_G == action_on_wedge_product_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_wedge_product_t" << endl;
 		}
 		induced_actions::action_on_wedge_product *AW = A.G.AW;
@@ -1923,7 +1923,7 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 		//ost << a;
 		}
 	else if (A.type_G == action_on_grassmannian_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_grassmannian_t" << endl;
 			}
 		induced_actions::action_on_grassmannian *AG = A.G.AG;
@@ -1931,7 +1931,7 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 		AG->unrank(rk, v, 0 /*verbose_level*/);
 		}
 	else if (A.type_G == action_on_spread_set_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_spread_set_t" << endl;
 			}
 		//action_on_spread_set *AS = A.G.AS;
@@ -1939,7 +1939,7 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 		//ost << a;
 		}
 	else if (A.type_G == action_on_orthogonal_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_orthogonal_t" << endl;
 			}
 		induced_actions::action_on_orthogonal *AO = A.G.AO;
@@ -1959,7 +1959,7 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 #endif
 		}
 	else if (A.type_G == action_on_wedge_product_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "induced_action_unrank_point "
 					"action_on_wedge_product_t" << endl;
 		}
@@ -1977,7 +1977,7 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 		//b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
 	}
 	else if (A.type_G == action_by_representation_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "induced_action_unrank_point "
 					"action_by_representation_t" << endl;
 		}
@@ -2173,7 +2173,7 @@ static long int induced_action_rank_point(action &A, int *v)
 		//ost << a;
 		}
 	else if (A.type_G == action_on_grassmannian_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_grassmannian_t" << endl;
 			}
 		//action_on_grassmannian *AG = A.G.AG;
@@ -2193,7 +2193,7 @@ static long int induced_action_rank_point(action &A, int *v)
 		//b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_spread_set_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_spread_set_t" << endl;
 			}
 		//action_on_spread_set *AS = A.G.AS;
@@ -2201,7 +2201,7 @@ static long int induced_action_rank_point(action &A, int *v)
 		//ost << a;
 		}
 	else if (A.type_G == action_on_orthogonal_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "action_on_orthogonal_t" << endl;
 			}
 		induced_actions::action_on_orthogonal *AO = A.G.AO;
@@ -2221,7 +2221,7 @@ static long int induced_action_rank_point(action &A, int *v)
 #endif
 		}
 	else if (A.type_G == action_on_wedge_product_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "induced_action_rank_point "
 					"action_on_wedge_product_t" << endl;
 			}
@@ -2239,7 +2239,7 @@ static long int induced_action_rank_point(action &A, int *v)
 		//b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_by_representation_t) {
-		if (FALSE) {
+		if (false) {
 			cout << "induced_action_rank_point "
 					"action_by_representation_t" << endl;
 		}

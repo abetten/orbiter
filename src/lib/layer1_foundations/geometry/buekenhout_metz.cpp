@@ -27,8 +27,8 @@ buekenhout_metz::buekenhout_metz()
 
 	SubS = NULL;
 
-	f_classical = FALSE;
-	f_Uab = FALSE;
+	f_classical = false;
+	f_Uab = false;
 	parameter_a = 0;
 	parameter_b = 0;
 
@@ -178,8 +178,8 @@ void buekenhout_metz::buekenhout_metz_init(
 	P3 = NEW_OBJECT(projective_space);
 	
 
-	P2->projective_space_init(2, FQ, TRUE, verbose_level);
-	P3->projective_space_init(3, Fq, TRUE, verbose_level);
+	P2->projective_space_init(2, FQ, true, verbose_level);
+	P3->projective_space_init(3, Fq, true, verbose_level);
 
 
 	SubS = NEW_OBJECT(field_theory::subfield_structure);
@@ -596,7 +596,7 @@ void buekenhout_metz::create_unital_tex(
 	for (i = 1; i < q * q + 1; i++) {
 		a = ovoid[i];
 		P3->unrank_point(w2, a);
-		if (FALSE) {
+		if (false) {
 			cout << i << "-th ovoidal point is " << a << " : ";
 			Int_vec_print(cout, w2, 4);
 			cout << endl;
@@ -612,35 +612,35 @@ void buekenhout_metz::create_unital_tex(
 		w3[2] = 0;
 		w3[3] = w2[2];
 		w3[4] = w2[3];
-		if (FALSE) {
+		if (false) {
 			cout << "after embedding:" << endl;
 			Int_vec_print(cout, w3, 5);
 			cout << endl;
 		}
 		cout << "(";
 		Fq->Io->print_element_with_symbol(cout, w3[0],
-				TRUE /* f_exponential */, 8, symbol);
+				true /* f_exponential */, 8, symbol);
 		cout << ",";
 		Fq->Io->print_element_with_symbol(cout, w3[1],
-				TRUE /* f_exponential */, 8, symbol);
+				true /* f_exponential */, 8, symbol);
 		cout << ",*,";
 		Fq->Io->print_element_with_symbol(cout, w3[3],
-				TRUE /* f_exponential */, 8, symbol);
+				true /* f_exponential */, 8, symbol);
 		cout << ",";
 		Fq->Io->print_element_with_symbol(cout, w3[4],
-				TRUE /* f_exponential */, 8, symbol);
+				true /* f_exponential */, 8, symbol);
 		cout << ") ";
 
 		
 		for (j = 0; j < q; j++) {
 			cout << " & ";
-			if (FALSE) {
+			if (false) {
 				cout << "j=" << j << " : ";
 			}
 			for (h = 0; h < 5; h++) {
 				w4[h] = Fq->mult(j, w1[h]);
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "w4:" << endl;
 				Int_vec_print(cout, w4, 5);
 				cout << endl;
@@ -650,7 +650,7 @@ void buekenhout_metz::create_unital_tex(
 				w5[h] = Fq->add(w4[h], w3[h]);
 			}
 			w5[5] = 0;
-			if (FALSE) {
+			if (false) {
 				cout << "w5 (with added 0):" << endl;
 				Int_vec_print(cout, w5, 6);
 				cout << endl;
@@ -664,7 +664,7 @@ void buekenhout_metz::create_unital_tex(
 				v[h] = SubS->pair_embedding_2D[c1 * q + c2];
 			}
 
-			if (FALSE) {
+			if (false) {
 				cout << " : ";
 				Int_vec_print(cout, v, 3);
 				//cout << endl;
@@ -674,13 +674,13 @@ void buekenhout_metz::create_unital_tex(
 #if 0
 			cout << "(";
 			FQ->print_element_with_symbol(cout, v[0],
-					TRUE /* f_exponential */, 8, "\\alpha");
+					true /* f_exponential */, 8, "\\alpha");
 			cout << ",";
 			FQ->print_element_with_symbol(cout, v[1],
-					TRUE /* f_exponential */, 8, "\\alpha");
+					true /* f_exponential */, 8, "\\alpha");
 			cout << ",";
 			FQ->print_element_with_symbol(cout, v[2],
-					TRUE /* f_exponential */, 8, "\\alpha");
+					true /* f_exponential */, 8, "\\alpha");
 			cout << ") ";
 #endif
 
@@ -705,24 +705,24 @@ void buekenhout_metz::create_unital_tex(
 				cout << "y != v[1]" << endl;
 				cout << "y = ";
 				FQ->print_element_with_symbol(cout, y,
-						TRUE /* f_exponential */, 8, "\\alpha");
+						true /* f_exponential */, 8, "\\alpha");
 				cout << endl;
 				cout << "a*x^2 = ";
 				FQ->print_element_with_symbol(cout, t1,
-						TRUE /* f_exponential */, 8, "\\alpha");
+						true /* f_exponential */, 8, "\\alpha");
 				cout << endl;
 				cout << "b*x^(q+1) = ";
 				FQ->print_element_with_symbol(cout, t2,
-						TRUE /* f_exponential */, 8, "\\alpha");
+						true /* f_exponential */, 8, "\\alpha");
 				cout << endl;
 				cout << "r = ";
 				FQ->print_element_with_symbol(cout, t3,
-						TRUE /* f_exponential */, 8, "\\alpha");
+						true /* f_exponential */, 8, "\\alpha");
 				cout << endl;
 				//exit(1);
 			}
 			FQ->print_element_with_symbol(cout, y,
-					TRUE /* f_exponential */, 8, "\\alpha");
+					true /* f_exponential */, 8, "\\alpha");
 
 			b = P2->rank_point(v);
 #endif
@@ -749,7 +749,7 @@ void buekenhout_metz::create_unital_Uab_tex(
 	for (r = 0; r < q; r++) {
 		cout << " & ";
 		Fq->Io->print_element_with_symbol(cout, r,
-				TRUE /* f_exponential */, 8, symbol);
+				true /* f_exponential */, 8, symbol);
 	}
 	cout << "\\\\" << endl;
 	cout << "\\hline" << endl;
@@ -762,7 +762,7 @@ void buekenhout_metz::create_unital_Uab_tex(
 			x = FQ->alpha_power(i - 1);
 		}
 		FQ->Io->print_element_with_symbol(cout, x,
-				TRUE /* f_exponential */, 8, symbol);
+				true /* f_exponential */, 8, symbol);
 
 		for (r = 0; r < q; r++) {
 			cout << " & ";
@@ -787,13 +787,13 @@ void buekenhout_metz::create_unital_Uab_tex(
 #if 0
 			cout << "(";
 			FQ->print_element_with_symbol(cout, v[0],
-					TRUE /* f_exponential */, 8, "\\alpha");
+					true /* f_exponential */, 8, "\\alpha");
 			cout << ",";
 			FQ->print_element_with_symbol(cout, v[1],
-					TRUE /* f_exponential */, 8, "\\alpha");
+					true /* f_exponential */, 8, "\\alpha");
 			cout << ",";
 			FQ->print_element_with_symbol(cout, v[2],
-					TRUE /* f_exponential */, 8, "\\alpha");
+					true /* f_exponential */, 8, "\\alpha");
 			cout << ") ";
 #endif
 
@@ -809,25 +809,25 @@ void buekenhout_metz::create_unital_Uab_tex(
 				cout << "y != v[1]" << endl;
 				cout << "y = ";
 				FQ->print_element_with_symbol(cout, y,
-						TRUE /* f_exponential */, 8, "\\alpha");
+						true /* f_exponential */, 8, "\\alpha");
 				cout << endl;
 				cout << "a*x^2 = ";
 				FQ->print_element_with_symbol(cout, t1,
-						TRUE /* f_exponential */, 8, "\\alpha");
+						true /* f_exponential */, 8, "\\alpha");
 				cout << endl;
 				cout << "b*x^(q+1) = ";
 				FQ->print_element_with_symbol(cout, t2,
-						TRUE /* f_exponential */, 8, "\\alpha");
+						true /* f_exponential */, 8, "\\alpha");
 				cout << endl;
 				cout << "r = ";
 				FQ->print_element_with_symbol(cout, t3,
-						TRUE /* f_exponential */, 8, "\\alpha");
+						true /* f_exponential */, 8, "\\alpha");
 				cout << endl;
 				//exit(1);
 			}
 #endif
 			//FQ->print_element_with_symbol(cout, y,
-			// TRUE /* f_exponential */, 8, "\\alpha");
+			// true /* f_exponential */, 8, "\\alpha");
 
 		}
 
@@ -882,12 +882,12 @@ void buekenhout_metz::compute_the_design(
 		tangent_line_at_point[i] = -1;
 	}
 	for (i = 0; i < P2->Subspaces->N_lines; i++) {
-		f_is_tangent_line[i] = FALSE;
+		f_is_tangent_line[i] = false;
 		point_of_tangency[i] = -1;
 	}
 	for (h = 0; h < nb_tangent_lines; h++) {
 		a = tangent_lines[h];
-		f_is_tangent_line[a] = TRUE;
+		f_is_tangent_line[a] = true;
 		P2->Subspaces->intersect_with_line(U, sz,
 				a /* line_rk */, block, block_size,
 				0 /* verbose_level*/);
@@ -1199,7 +1199,7 @@ void buekenhout_metz::investigate_line_orbit(int h, int verbose_level)
 		
 	C->init("pairs", this /*void *data*/, 
 		P2->A, P2->A2, 
-		FALSE /* f_choose_lines */, 
+		false /* f_choose_lines */, 
 		2 /*nb_points_or_lines */, 
 		buekenhout_metz_check_good_points, 
 		t0, 
@@ -1399,7 +1399,7 @@ int buekenhout_metz_check_good_points(int len,
 // used in buekenhout_metz::investigate_line_orbit
 {
 	int i, a, idx;
-	int f_v = FALSE;
+	int f_v = false;
 	buekenhout_metz *BM = (buekenhout_metz *) data;
 	sorting Sorting;
 
@@ -1415,13 +1415,13 @@ int buekenhout_metz_check_good_points(int len,
 			if (f_v) {
 				cout << "The set is rejected" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 	}
 	if (f_v) {
 		cout << "The set is accepted" << endl;
 	}
-	return TRUE;
+	return true;
 }
 #endif
 

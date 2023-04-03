@@ -106,7 +106,7 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 		cout << "flag_orbits::find_node_by_po_so" << endl;
 	}
 	int l, r, m, res;
-	int f_found = FALSE;
+	int f_found = false;
 	int len;
 
 	len = nb_flag_orbits;
@@ -115,7 +115,7 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 	}
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 	}
 	l = 0;
 	r = len;
@@ -159,7 +159,7 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 		if (res <= 0) {
 			l = m + 1;
 			if (res == 0) {
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		else {
@@ -178,7 +178,7 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 void flag_orbits::write_file(ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
@@ -213,7 +213,7 @@ void flag_orbits::read_file(ifstream &fp,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	int i;
 	
 	if (f_v) {

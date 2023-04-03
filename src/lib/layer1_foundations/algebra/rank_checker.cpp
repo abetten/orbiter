@@ -62,7 +62,7 @@ int rank_checker::check_rank(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, j, aj, rk, f_OK = TRUE;
+	int i, j, aj, rk, f_OK = true;
 	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
@@ -81,10 +81,10 @@ int rank_checker::check_rank(
 		Int_vec_print_integer_matrix(cout, M1, m, len);
 	}
 	if (len <= 1) {
-		return TRUE;
+		return true;
 	}
 	if (d <= 1) {
-		return TRUE;
+		return true;
 	}
 	int d1 = MINIMUM(d - 2, len  - 1);
 	if (f_vv) {
@@ -95,7 +95,7 @@ int rank_checker::check_rank(
 	// M2 will be used as a m x (d1 + 1) matrix	
 	
 	Combi.first_k_subset(set, len - 1, d1);
-	while (TRUE) {
+	while (true) {
 	
 		// get the subset of columns:
 		if (f_vv) {
@@ -113,19 +113,19 @@ int rank_checker::check_rank(
 		for (i = 0; i < m; i++) {
 			M2[i * (d1 + 1) + d1] = M1[i * len + len - 1];
 		}
-		if (FALSE) {
+		if (false) {
 			Int_vec_print_integer_matrix(cout, M2, m, d1 + 1);
 		}
 		
 		rk = GFq->Linear_algebra->Gauss_int(M2,
-			FALSE /* f_special */,
-			FALSE /* f_complete */,
+			false /* f_special */,
+			false /* f_complete */,
 			base_cols,
-			FALSE /* f_P */, NULL,
+			false /* f_P */, NULL,
 			m /* m */, d1 + 1 /* n */, 0 /* Pn */,
 			0 /* verbose_level */);
 		if (rk <= d1) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				cout << "not OK; subset: ";
 				Int_vec_print(cout, set, d1);
@@ -138,9 +138,9 @@ int rank_checker::check_rank(
 		}
 	}
 	if (!f_OK) {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 int rank_checker::check_rank_matrix_input(
@@ -148,15 +148,15 @@ int rank_checker::check_rank_matrix_input(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, j, aj, rk, f_OK = TRUE;
+	int i, j, aj, rk, f_OK = true;
 	combinatorics::combinatorics_domain Combi;
 	
 	// S is a m x len matrix
 	if (len <= 1) {
-		return TRUE;
+		return true;
 	}
 	if (d <= 1) {
-		return TRUE;
+		return true;
 	}
 	int d1 = MINIMUM(d - 2, len  - 1);
 	if (f_vv) {
@@ -167,7 +167,7 @@ int rank_checker::check_rank_matrix_input(
 	// M2 will be used as a m x (d1 + 1) matrix	
 	
 	Combi.first_k_subset(set, len - 1, d1);
-	while (TRUE) {
+	while (true) {
 	
 		// get the subset of columns:
 		if (f_vv) {
@@ -187,14 +187,14 @@ int rank_checker::check_rank_matrix_input(
 		}
 		
 		rk = GFq->Linear_algebra->Gauss_int(M2,
-			FALSE /* f_special */,
-			FALSE /* f_complete */,
+			false /* f_special */,
+			false /* f_complete */,
 			base_cols,
-			FALSE /* f_P */, NULL,
+			false /* f_P */, NULL,
 			m /* m */, d1 + 1 /* n */, 0 /* Pn */,
 			0 /* verbose_level */);
 		if (rk <= d1) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				cout << "not OK; subset: ";
 				Int_vec_print(cout, set, d1);
@@ -209,9 +209,9 @@ int rank_checker::check_rank_matrix_input(
 		}
 	}
 	if (!f_OK) {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 int rank_checker::check_rank_last_two_are_fixed(
@@ -219,7 +219,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, j, aj, rk, f_OK = TRUE;
+	int i, j, aj, rk, f_OK = true;
 	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
@@ -239,10 +239,10 @@ int rank_checker::check_rank_last_two_are_fixed(
 		Int_vec_print_integer_matrix(cout, M1, m, len);
 	}
 	if (len <= 1) {
-		return TRUE;
+		return true;
 	}
 	if (d <= 2) {
-		return TRUE;
+		return true;
 	}
 	int d1 = MINIMUM(d - 3, len  - 2);
 	if (f_vv) {
@@ -253,7 +253,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 	// M2 will be used as a m x (d1 + 2) matrix	
 	
 	Combi.first_k_subset(set, len - 2, d1);
-	while (TRUE) {
+	while (true) {
 	
 		// get the subset of columns:
 		if (f_vv) {
@@ -272,19 +272,19 @@ int rank_checker::check_rank_last_two_are_fixed(
 			M2[i * (d1 + 2) + d1] = M1[i * len + len - 2];
 			M2[i * (d1 + 2) + d1 + 1] = M1[i * len + len - 1];
 		}
-		if (FALSE) {
+		if (false) {
 			Int_vec_print_integer_matrix(cout, M2, m, d1 + 2);
 		}
 		
 		rk = GFq->Linear_algebra->Gauss_int(M2,
-			FALSE /* f_special */,
-			FALSE /* f_complete */,
+			false /* f_special */,
+			false /* f_complete */,
 			base_cols,
-			FALSE /* f_P */, NULL,
+			false /* f_P */, NULL,
 			m /* m */, d1 + 2 /* n */, 0 /* Pn */,
 			0 /* verbose_level */);
 		if (rk <= d1 + 1) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				cout << "not OK; subset: ";
 				Int_vec_print(cout, set, d1);
@@ -297,12 +297,12 @@ int rank_checker::check_rank_last_two_are_fixed(
 		}
 	}
 	if (!f_OK) {
-		return FALSE;
+		return false;
 	}
 	if (f_v) {
 		cout << "is OK" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int rank_checker::compute_rank_row_vectors(
@@ -337,10 +337,10 @@ int rank_checker::compute_rank_row_vectors(
 
 		
 	rk = GFq->Linear_algebra->Gauss_int(M1,
-		FALSE /* f_special */,
-		FALSE /* f_complete */,
+		false /* f_special */,
+		false /* f_complete */,
 		base_cols,
-		FALSE /* f_P */, NULL,
+		false /* f_P */, NULL,
 		len /* m */, n /* n */, 0 /* Pn */,
 		0 /* verbose_level */);
 

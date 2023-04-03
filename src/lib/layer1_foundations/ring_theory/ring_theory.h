@@ -65,7 +65,7 @@ public:
 		// returns the rank which is the number
 		// of entries in base_cols
 		// A is a m x n matrix,
-		// P is a m x Pn matrix (if f_P is TRUE)
+		// P is a m x Pn matrix (if f_P is true)
 	int PHG_element_normalize(int *v, int stride, int len);
 	// last unit element made one
 	int PHG_element_normalize_from_front(int *v,
@@ -532,7 +532,7 @@ public:
 class longinteger_object {
 
 private:
-	char sgn; // TRUE if negative
+	char sgn; // true if negative
 	int l;
 	char *r;
 

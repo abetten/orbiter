@@ -76,7 +76,7 @@ void test_semicanonical::init(
 	f_vbar = NEW_int(gg->GB->V * gg->inc->Encoding->dim_n);
 
 	for (i = 0; i < gg->GB->V * gg->inc->Encoding->dim_n; i++) {
-		f_vbar[i] = FALSE;
+		f_vbar[i] = false;
 	}
 
 	hbar = NEW_int(gg->GB->V + 1);
@@ -199,7 +199,7 @@ void test_semicanonical::markers_update(
 			cout << "test_semicanonical::markers_update !f_vbar[i1 * inc->Encoding->dim_n + r - 1]" << endl;
 			exit(1);
 		}
-		f_vbar[i1 * gg->inc->Encoding->dim_n + r - 1] = FALSE;
+		f_vbar[i1 * gg->inc->Encoding->dim_n + r - 1] = false;
 		vbar[j0 + j] = MAX_V;
 		// the value MAX_V indicates that there is no vbar
 	}
@@ -211,7 +211,7 @@ void test_semicanonical::markers_update(
 		exit(1);
 	}
 	if (vbar[j0 + j + 1] > i1) {
-		f_vbar[i1 * gg->inc->Encoding->dim_n + r] = TRUE;
+		f_vbar[i1 * gg->inc->Encoding->dim_n + r] = true;
 		vbar[j0 + j + 1] = i1;
 	}
 
@@ -246,7 +246,7 @@ void test_semicanonical::marker_move_on(
 		exit(1);
 	}
 	if (vbar[j0 + j + 1] > i1) {
-		f_vbar[i1 * gg->inc->Encoding->dim_n + r] = TRUE;
+		f_vbar[i1 * gg->inc->Encoding->dim_n + r] = true;
 		vbar[j0 + j + 1] = i1;
 	}
 
@@ -334,17 +334,17 @@ int test_semicanonical::col_marker_test(
 		int j0, int j, int i1)
 {
 	if (gg->GB->Descr->f_orderly) {
-		return FALSE;
+		return false;
 	}
 
 	if (vbar[j0 + j] > i1) {
 		// no vbar, skip
-		if (FALSE) {
+		if (false) {
 			//cout << "gen_geo::X_Fst I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of vbar" << endl;
 		}
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 
 }
 
@@ -360,7 +360,7 @@ void test_semicanonical::col_marker_remove(
 	// remove vbar:
 	if (f_vbar[i1 * gg->inc->Encoding->dim_n + r]) {
 		vbar[old_x + 1] = MAX_V;
-		f_vbar[i1 * gg->inc->Encoding->dim_n + r] = FALSE;
+		f_vbar[i1 * gg->inc->Encoding->dim_n + r] = false;
 	}
 
 	// possibly create new vbar on the left:
@@ -368,7 +368,7 @@ void test_semicanonical::col_marker_remove(
 		if (vbar[old_x] > i1 &&
 			gg->inc->Encoding->theX[i1 * gg->inc->Encoding->dim_n + r - 1] == old_x - 1) {
 			vbar[old_x] = i1;
-			f_vbar[i1 * gg->inc->Encoding->dim_n + r - 1] = TRUE;
+			f_vbar[i1 * gg->inc->Encoding->dim_n + r - 1] = true;
 		}
 	}
 

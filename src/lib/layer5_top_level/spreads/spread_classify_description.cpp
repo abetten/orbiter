@@ -16,23 +16,23 @@ namespace spreads {
 
 spread_classify_description::spread_classify_description()
 {
-	f_projective_space = FALSE;
+	f_projective_space = false;
 	//std::string projective_space_label;
 
-	f_starter_size = FALSE;
+	f_starter_size = false;
 	starter_size = 0;
 
-	f_k = FALSE;
+	f_k = false;
 	k = 0;
 
-	f_poset_classification_control = FALSE;
+	f_poset_classification_control = false;
 	//std::string poset_classification_control_label;
 	//Control = NULL;
 
-	f_output_prefix = FALSE;
+	f_output_prefix = false;
 	//std::string output_prefix;
 
-	f_recoordinatize = FALSE;
+	f_recoordinatize = false;
 }
 
 spread_classify_description::~spread_classify_description()
@@ -52,28 +52,28 @@ int spread_classify_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-projective_space") == 0) {
-			f_projective_space = TRUE;
+			f_projective_space = true;
 			projective_space_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-projective_space " << projective_space_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-starter_size") == 0) {
-			f_starter_size = TRUE;
+			f_starter_size = true;
 			starter_size = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-starter_size " << starter_size << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-k") == 0) {
-			f_k = TRUE;
+			f_k = true;
 			k = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-k " << k << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
-			f_poset_classification_control = TRUE;
+			f_poset_classification_control = true;
 			poset_classification_control_label.assign(argv[++i]);
 #if 0
 			Control = NEW_OBJECT(poset_classification::poset_classification_control);
@@ -89,14 +89,14 @@ int spread_classify_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-output_prefix") == 0) {
-			f_output_prefix = TRUE;
+			f_output_prefix = true;
 			output_prefix.assign(argv[++i]);
 			if (f_v) {
 				cout << "-output_prefix " << output_prefix << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-recoordinatize") == 0) {
-			f_recoordinatize = TRUE;
+			f_recoordinatize = true;
 			if (f_v) {
 				cout << "-recoordinatize " << endl;
 			}

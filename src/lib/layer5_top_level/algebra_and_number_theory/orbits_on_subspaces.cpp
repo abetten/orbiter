@@ -67,7 +67,7 @@ void orbits_on_subspaces::init(
 
 	n = Group->LG->n;
 
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = depth;
 	if (f_v) {
 		cout << "orbits_on_subspaces::init "
@@ -94,11 +94,11 @@ void orbits_on_subspaces::init(
 
 #if 0
 	if (Descr->f_print_generators) {
-		int f_print_as_permutation = FALSE;
-		int f_offset = TRUE;
+		int f_print_as_permutation = false;
+		int f_offset = true;
 		int offset = 1;
-		int f_do_it_anyway_even_for_big_degree = TRUE;
-		int f_print_cycles_of_length_one = TRUE;
+		int f_do_it_anyway_even_for_big_degree = true;
+		int f_print_cycles_of_length_one = true;
 
 		cout << "orbits_on_subspaces::init "
 				"printing generators "
@@ -129,7 +129,7 @@ void orbits_on_subspaces::init(
 	}
 
 	Control->problem_label.assign(Group->LG->label);
-	Control->f_problem_label = TRUE;
+	Control->f_problem_label = true;
 
 	orbits_on_subspaces_PC->initialize_and_allocate_root_node(
 			Control, orbits_on_subspaces_Poset,
@@ -138,8 +138,8 @@ void orbits_on_subspaces::init(
 
 
 	int schreier_depth = Control->depth;
-	int f_use_invariant_subset_if_available = FALSE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = false;
+	int f_debug = false;
 	int nb_orbits;
 
 	orbiter_kernel_system::os_interface Os;

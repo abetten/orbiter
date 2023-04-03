@@ -547,7 +547,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 			cout << "Vandermonde inverse:" << endl;
 			Int_matrix_print(W_inv, F->q, F->q);
 
-			orbiter_kernel_system::latex_interface LI;
+			l1_interfaces::latex_interface LI;
 
 			cout << "Vandermonde:" << endl;
 
@@ -1293,8 +1293,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 		Fq = NEW_OBJECT(finite_field);
 		Fq->finite_field_init_small_order(
 				Descr->field_reduction_q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				verbose_level);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -1332,7 +1332,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->parse_name_of_formula,
 				Descr->parse_text,
 				Descr->parse_managed_variables,
-				TRUE,
+				true,
 				Descr->parse_parameters,
 				verbose_level);
 		if (f_v) {

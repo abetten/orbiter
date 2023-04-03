@@ -155,7 +155,7 @@ void points_and_lines::print_all_points(std::ostream &ost)
 
 	if (nb_pts < 1000) {
 		//ost << "$$" << endl;
-		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, TRUE /* f_tex */);
+		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, true /* f_tex */);
 		//ost << "$$" << endl;
 		//ost << "\\clearpage" << endl;
 		ost << "The points on the surface are:\\\\" << endl;
@@ -188,7 +188,7 @@ void points_and_lines::print_all_lines(std::ostream &ost)
 void points_and_lines::print_lines_tex(std::ostream &ost)
 {
 	int i;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	long int *Rk;
 
 	Rk = NEW_lint(nb_lines);

@@ -31,7 +31,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	induced_actions::action_on_factor_space *AF;
 	actions::action *A_factor_space;
 
-	//int f_check_image = FALSE;
+	//int f_check_image = false;
 
 
 	A_factor_space = A_on_upset;
@@ -48,7 +48,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 
 #if 0
 
-	//if (TRUE /*gen->f_early_test_func*/) {
+	//if (true /*gen->f_early_test_func*/) {
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_"
 					"rep_inv_subspace_action "
@@ -82,7 +82,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		}
 		gen->root[node].setup_factor_space_action(gen,
 			AF, A_factor_space, lvl,
-			FALSE /*f_compute_tables*/,
+			false /*f_compute_tables*/,
 			verbose_level - 4);
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_"

@@ -27,8 +27,8 @@ incidence_structure::incidence_structure()
 
 	nb_rows = nb_cols = 0;
 
-	f_rowsums_constant = FALSE;
-	f_colsums_constant = FALSE;
+	f_rowsums_constant = false;
+	f_colsums_constant = false;
 	r = k = 0;
 	nb_lines_on_point = NULL;
 	nb_points_on_line = NULL;
@@ -126,8 +126,8 @@ void incidence_structure::init_projective_space(
 	nb_rows = P->Subspaces->N_points;
 	nb_cols = P->Subspaces->N_lines;
 
-	f_rowsums_constant = TRUE;
-	f_colsums_constant = TRUE;
+	f_rowsums_constant = true;
+	f_colsums_constant = true;
 	r = P->Subspaces->r;
 	k = P->Subspaces->k;
 	nb_lines_on_point = NEW_int(nb_rows);
@@ -161,8 +161,8 @@ void incidence_structure::init_hjelmslev(
 	}
 	realization_type = INCIDENCE_STRUCTURE_REALIZATION_BY_HJELMSLEV;
 	incidence_structure::H = H;
-	f_rowsums_constant = TRUE;
-	f_colsums_constant = TRUE;
+	f_rowsums_constant = true;
+	f_colsums_constant = true;
 	//max_r = min_r = r = O->alpha;
 	//max_k = min_k = k = O->q + 1;
 	nb_rows = H->R->nb_PHG_elements(H->k);
@@ -191,7 +191,7 @@ void incidence_structure::init_hjelmslev(
 			H->unrank_lint(Mtx + n, j, 0);
 			Int_vec_print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
 			mtx_rk = H->R->Gauss_int(
-				Mtx, TRUE, FALSE, base_cols, FALSE, NULL,
+				Mtx, true, false, base_cols, false, NULL,
 				k + 1, n, n, 2);
 			cout << "after Gauss:" << endl;
 			Int_vec_print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
@@ -258,8 +258,8 @@ void incidence_structure::init_orthogonal(
 	}
 	realization_type = INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL;
 	incidence_structure::O = O;
-	f_rowsums_constant = TRUE;
-	f_colsums_constant = TRUE;
+	f_rowsums_constant = true;
+	f_colsums_constant = true;
 	max_r = min_r = r = O->Hyperbolic_pair->alpha;
 	max_k = min_k = k = O->Quadratic_form->q + 1;
 	nb_rows = O->Hyperbolic_pair->nb_points;
@@ -465,18 +465,18 @@ void incidence_structure::init_by_matrix2(int verbose_level)
 	}
 
 	if (max_r == min_r) {
-		f_rowsums_constant = TRUE;
+		f_rowsums_constant = true;
 		r = max_r;
 	}
 	else {
-		f_rowsums_constant = FALSE;
+		f_rowsums_constant = false;
 	}
 	if (max_k == min_k) {
-		f_colsums_constant = TRUE;
+		f_colsums_constant = true;
 		k = max_k;
 	}
 	else {
-		f_colsums_constant = FALSE;
+		f_colsums_constant = false;
 	}
 	lines_on_point = NEW_int(m * max_r);
 	points_on_line = NEW_int(n * max_k);
@@ -557,10 +557,10 @@ int incidence_structure::get_ij(int i, int j)
 		FREE_int(base_cols);
 
 		if (rk == 2) {
-			return TRUE;
+			return true;
 		}
 		if (rk == 3) {
-			return FALSE;
+			return false;
 		}
 		cout << "incidence_structure::get_ij fatal: rk=" << rk << endl;
 		exit(1);
@@ -777,14 +777,14 @@ void incidence_structure::compute_TDO_safe_first(
 		cout << "incidence_structure::compute_TDO_safe_first" << endl;
 	}
 	step = 0;
-	f_refine_prev = TRUE;
+	f_refine_prev = true;
 }
 
 int incidence_structure::compute_TDO_safe_next(
 	data_structures::partitionstack &PStack,
 	int depth, int &step, int &f_refine, int &f_refine_prev,
 	int verbose_level)
-// returns TRUE when we are done, FALSE otherwise
+// returns true when we are done, false otherwise
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -808,24 +808,24 @@ int incidence_structure::compute_TDO_safe_next(
 	}
 	if (f_vvv) {
 		if (EVEN(step)) {
-			int f_list_incidences = FALSE;
+			int f_list_incidences = false;
 			get_and_print_col_decomposition_scheme(PStack,
-					f_list_incidences, FALSE, verbose_level);
+					f_list_incidences, false, verbose_level);
 			PStack.print_classes_points_and_lines(cout);
 		}
 		else {
-			int f_list_incidences = FALSE;
+			int f_list_incidences = false;
 			get_and_print_row_decomposition_scheme(PStack,
-					f_list_incidences, FALSE, verbose_level);
+					f_list_incidences, false, verbose_level);
 			PStack.print_classes_points_and_lines(cout);
 		}
 	}
 	step++;
 	if (!f_refine_prev && !f_refine) {
-		return TRUE;
+		return true;
 	}
 	f_refine_prev = f_refine;
-	return FALSE;
+	return false;
 }
 
 void incidence_structure::compute_TDO_safe(
@@ -842,7 +842,7 @@ void incidence_structure::compute_TDO_safe(
 		cout << "incidence_structure::compute_TDO_safe" << endl;
 	}
 	
-	f_refine_prev = TRUE;
+	f_refine_prev = true;
 	for (i = 0; i < depth; i++) {
 		if (f_v) {
 			cout << "incidence_structure::compute_TDO_safe i = " << i << endl;
@@ -872,15 +872,15 @@ void incidence_structure::compute_TDO_safe(
 			cout << "incidence_structure::compute_TDO_safe "
 					"i=" << i << " after refine" << endl;
 			if (EVEN(i)) {
-				int f_list_incidences = FALSE;
+				int f_list_incidences = false;
 				get_and_print_col_decomposition_scheme(PStack,
-						f_list_incidences, FALSE, verbose_level);
+						f_list_incidences, false, verbose_level);
 				PStack.print_classes_points_and_lines(cout);
 			}
 			else {
-				int f_list_incidences = FALSE;
+				int f_list_incidences = false;
 				get_and_print_row_decomposition_scheme(PStack,
-						f_list_incidences, FALSE, verbose_level);
+						f_list_incidences, false, verbose_level);
 				PStack.print_classes_points_and_lines(cout);
 			}
 		}
@@ -985,9 +985,9 @@ int incidence_structure::compute_TDO_step(
 					"refine_column_partition ht=" << PStack.ht << endl;
 		}
 		if (f_vv) {
-			int f_list_incidences = FALSE;
+			int f_list_incidences = false;
 			get_and_print_col_decomposition_scheme(PStack,
-					f_list_incidences, FALSE, verbose_level);
+					f_list_incidences, false, verbose_level);
 		}
 		if (f_vvv) {
 			PStack.print_classes_points_and_lines(cout);
@@ -1008,9 +1008,9 @@ int incidence_structure::compute_TDO_step(
 					"refine_row_partition ht=" << PStack.ht << endl;
 		}
 		if (f_vv) {
-			int f_list_incidences = FALSE;
+			int f_list_incidences = false;
 			get_and_print_row_decomposition_scheme(
-					PStack, f_list_incidences, FALSE, verbose_level);
+					PStack, f_list_incidences, false, verbose_level);
 		}
 		if (f_vvv) {
 			PStack.print_classes_points_and_lines(cout);
@@ -1129,7 +1129,7 @@ int incidence_structure::refine_column_partition_safe(
 
 		PStack.radix_sort(first /* left */,
 				   next - 1 /* right */,
-				   data, nb_row_classes, 0 /*radix*/, FALSE);
+				   data, nb_row_classes, 0 /*radix*/, false);
 	}
 
 	FREE_int(data);
@@ -1143,10 +1143,10 @@ int incidence_structure::refine_column_partition_safe(
 		cout << "incidence_structure::refine_column_partition_safe done" << endl;
 	}
 	if (PStack.ht == ht) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -1228,7 +1228,7 @@ int incidence_structure::refine_row_partition_safe(
 
 		PStack.radix_sort(first /* left */,
 				   next - 1 /* right */,
-				   data, nb_col_classes, 0 /*radix*/, FALSE);
+				   data, nb_col_classes, 0 /*radix*/, false);
 	}
 
 	FREE_int(data);
@@ -1242,10 +1242,10 @@ int incidence_structure::refine_row_partition_safe(
 		cout << "incidence_structure::refine_row_partition_safe done" << endl;
 	}
 	if (PStack.ht == ht) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -1352,7 +1352,7 @@ int incidence_structure::refine_column_partition(
 
 		PStack.radix_sort(first /* left */,
 				   next - 1 /* right */,
-				   data, depth, 0 /*radix*/, FALSE);
+				   data, depth, 0 /*radix*/, false);
 	}
 	if (f_vv) {
 		cout << "incidence_structure::refine_column_partition "
@@ -1470,7 +1470,7 @@ int incidence_structure::refine_row_partition(
 
 		PStack.radix_sort(first /* left */,
 				   next - 1 /* right */,
-				   data, depth, 0 /*radix*/, FALSE);
+				   data, depth, 0 /*radix*/, false);
 	}
 	if (f_vv) {
 		cout << "incidence_structure::refine_row_partition "
@@ -2068,7 +2068,7 @@ void incidence_structure::get_and_print_row_decomposition_scheme(
 		cout << "incidences by row-scheme:" << endl;
 		print_row_tactical_decomposition_scheme_incidences_tex(
 			PStack, 
-			cout, FALSE /* f_enter_math_mode */, 
+			cout, false /* f_enter_math_mode */, 
 			row_classes, row_class_inv, nb_row_classes,
 			col_classes, col_class_inv, nb_col_classes, 
 			f_local_coordinates, 0 /*verbose_level*/);
@@ -2121,7 +2121,7 @@ void incidence_structure::get_and_print_col_decomposition_scheme(
 		cout << "incidences by col-scheme:" << endl;
 		print_col_tactical_decomposition_scheme_incidences_tex(
 			PStack, 
-			cout, FALSE /* f_enter_math_mode */, 
+			cout, false /* f_enter_math_mode */, 
 			row_classes, row_class_inv, nb_row_classes,
 			col_classes, col_class_inv, nb_col_classes, 
 			f_local_coordinates, 0 /*verbose_level*/);
@@ -2235,7 +2235,7 @@ void incidence_structure::get_and_print_decomposition_schemes_tex(
 	PStack.print_tactical_decomposition_scheme_tex(cout, 
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes, 
-		row_scheme, col_scheme, FALSE /* f_print_subscripts */);
+		row_scheme, col_scheme, false /* f_print_subscripts */);
 
 	FREE_int(row_classes);
 	FREE_int(row_class_inv);
@@ -2281,7 +2281,7 @@ void incidence_structure::get_and_print_tactical_decomposition_scheme_tex(
 		ost, f_enter_math,
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes, 
-		row_scheme, col_scheme, FALSE /* f_print_subscripts */);
+		row_scheme, col_scheme, false /* f_print_subscripts */);
 
 	FREE_int(row_classes);
 	FREE_int(row_class_inv);
@@ -2340,7 +2340,7 @@ void incidence_structure::get_and_print_row_tactical_decomposition_scheme_tex(
 	int *col_classes, *col_class_inv, nb_col_classes;
 	int *row_scheme; //, *col_scheme;
 	int verbose_level = 0;
-	int f_v = FALSE;
+	int f_v = false;
 	
 	if (f_v) {
 		cout << "incidence_structure::get_and_print_row_tactical_"
@@ -2392,7 +2392,7 @@ void incidence_structure::get_and_print_column_tactical_decomposition_scheme_tex
 	int *col_classes, *col_class_inv, nb_col_classes;
 	int *col_scheme;
 	int verbose_level = 0;
-	int f_v = FALSE;
+	int f_v = false;
 	
 	if (f_v) {
 		cout << "incidence_structure::get_and_print_column_"
@@ -2435,7 +2435,7 @@ void incidence_structure::print_non_tactical_decomposition_scheme_tex(
 	int *col_classes, *col_class_inv, nb_col_classes;
 	int *row_scheme;
 	int verbose_level = 0;
-	int f_v = FALSE;
+	int f_v = false;
 	
 	if (f_v) {
 		cout << "incidence_structure::print_non_tactical_decomposition_scheme_tex" << endl;
@@ -2456,7 +2456,7 @@ void incidence_structure::print_non_tactical_decomposition_scheme_tex(
 	PStack.print_row_tactical_decomposition_scheme_tex(ost, f_enter_math, 
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes, 
-		row_scheme, FALSE /* f_print_subscripts */);
+		row_scheme, false /* f_print_subscripts */);
 
 	FREE_int(row_classes);
 	FREE_int(row_class_inv);
@@ -2711,7 +2711,7 @@ void incidence_structure::latex_it(
 	int *Vi, *Bj;
 	int *R;
 	int *X;
-	int f_v = TRUE;
+	int f_v = true;
 	latex_interface L;
 
 	rearrange(Vi, nb_V, Bj, nb_B, R, X, P);
@@ -2865,7 +2865,7 @@ void incidence_structure::decomposition_print_tex(
 			ost << "\\subsection*{Incidences by row-scheme}" << endl;
 			print_row_tactical_decomposition_scheme_incidences_tex(
 				PStack, 
-				ost, FALSE /* f_enter_math_mode */, 
+				ost, false /* f_enter_math_mode */, 
 				row_classes, row_class_inv, nb_row_classes,
 				col_classes, col_class_inv, nb_col_classes, 
 				f_local_coordinates, 0 /*verbose_level*/);
@@ -2893,7 +2893,7 @@ void incidence_structure::decomposition_print_tex(
 			ost << "\\subsection*{Incidences by col-scheme}" << endl;
 			print_col_tactical_decomposition_scheme_incidences_tex(
 				PStack, 
-				ost, FALSE /* f_enter_math_mode */, 
+				ost, false /* f_enter_math_mode */, 
 				row_classes, row_class_inv, nb_row_classes,
 				col_classes, col_class_inv, nb_col_classes, 
 				f_local_coordinates, 0 /*verbose_level*/);
@@ -3000,7 +3000,7 @@ void incidence_structure::compute_tdo(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	string fname;
-	int f_list_incidences = FALSE;
+	int f_list_incidences = false;
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
@@ -3019,7 +3019,7 @@ void incidence_structure::compute_tdo(
 	N = nb_points() + nb_lines();
 
 	int TDO_depth = N;
-	int f_labeled = TRUE;
+	int f_labeled = true;
 
 	compute_TDO_safe(S, TDO_depth, verbose_level - 1);
 
@@ -3032,11 +3032,11 @@ void incidence_structure::compute_tdo(
 		if (TDO_depth < N) {
 			if (EVEN(TDO_depth)) {
 				get_and_print_row_decomposition_scheme(
-						S, f_list_incidences, FALSE, verbose_level);
+						S, f_list_incidences, false, verbose_level);
 			}
 			else {
 				get_and_print_col_decomposition_scheme(
-						S, f_list_incidences, FALSE, verbose_level);
+						S, f_list_incidences, false, verbose_level);
 			}
 		}
 		else {
@@ -3053,7 +3053,7 @@ void incidence_structure::compute_tdo(
 
 				//fp << "$$" << endl;
 				get_and_print_tactical_decomposition_scheme_tex(
-						fp, TRUE /* f_enter_math */, S);
+						fp, true /* f_enter_math */, S);
 				//fp << "$$" << endl;
 		}
 		if (f_v) {
@@ -3073,7 +3073,7 @@ void incidence_structure::compute_tdo(
 					fp << "\\\\" << endl;
 				}
 				get_and_print_tactical_decomposition_scheme_tex(
-					fp, FALSE /* f_enter_math */, S);
+					fp, false /* f_enter_math */, S);
 				fp << "\\end{array}$" << endl;
 			}
 			else {
@@ -3104,8 +3104,8 @@ void incidence_structure::compute_tdo_stepwise(
 	string fname_scheme;
 	string fname_extra;
 	int step, f_refine, f_refine_prev, f_done;
-	int f_local_coordinates = FALSE;
-	int f_list_incidences = FALSE;
+	int f_local_coordinates = false;
+	int f_list_incidences = false;
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
@@ -3118,30 +3118,30 @@ void incidence_structure::compute_tdo_stepwise(
 
 	S.sort_cells();
 
-	f_done = FALSE;
-	while (TRUE) {
+	f_done = false;
+	while (true) {
 		if (f_v) {
 			cout << "incidence_structure::compute_tdo_stepwise "
 					"TDO step=" << step << " ht=" << S.ht << endl;
 			if (step == 0) {
 				print_non_tactical_decomposition_scheme_tex(
-						cout, FALSE /* f_enter_math */, S);
+						cout, false /* f_enter_math */, S);
 			}
 			else if (EVEN(step - 1)) {
 
 				get_and_print_col_decomposition_scheme(
-						S, f_list_incidences, FALSE, verbose_level);
+						S, f_list_incidences, false, verbose_level);
 				get_and_print_column_tactical_decomposition_scheme_tex(
-					cout, TRUE /* f_enter_math */,
-					FALSE /* f_print_subscripts */, S);
+					cout, true /* f_enter_math */,
+					false /* f_print_subscripts */, S);
 			}
 			else {
 
 				get_and_print_row_decomposition_scheme(
-						S, f_list_incidences, FALSE, verbose_level);
+						S, f_list_incidences, false, verbose_level);
 				get_and_print_row_tactical_decomposition_scheme_tex(
-					cout, TRUE /* f_enter_math */,
-					FALSE /* f_print_subscripts */, S);
+					cout, true /* f_enter_math */,
+					false /* f_print_subscripts */, S);
 			}
 			S.print_classes_points_and_lines(cout);
 		}
@@ -3187,37 +3187,37 @@ void incidence_structure::compute_tdo_stepwise(
 					fp << "\\input " << fname_scheme << endl;
 					if (step == 0) {
 						print_non_tactical_decomposition_scheme_tex(
-							fp_scheme, FALSE /* f_enter_math */, S);
+							fp_scheme, false /* f_enter_math */, S);
 					}
 					else if (EVEN(step - 1)) {
 						get_and_print_column_tactical_decomposition_scheme_tex(
-							fp_scheme, FALSE /* f_enter_math */,
-							FALSE /* f_print_subscripts */, S);
+							fp_scheme, false /* f_enter_math */,
+							false /* f_print_subscripts */, S);
 					}
 					else {
 						get_and_print_row_tactical_decomposition_scheme_tex(
-							fp_scheme, FALSE /* f_enter_math */,
-							FALSE /* f_print_subscripts */, S);
+							fp_scheme, false /* f_enter_math */,
+							false /* f_print_subscripts */, S);
 					}
 					fp << "\\end{array}$" << endl;
 
 					if (f_include_extra) {
 						if (step == 0) {
 							decomposition_print_tex(fp_extra, S,
-									FALSE, FALSE, FALSE,
+									false, false, false,
 									f_local_coordinates, verbose_level);
 							fp << "\\input " << fname_extra << endl;
 						}
 						else if (EVEN(step - 1)) {
 							decomposition_print_tex(fp_extra, S,
-									FALSE, TRUE, TRUE,
+									false, true, true,
 									f_local_coordinates, verbose_level);
 							fp << "\\input " << fname_extra << endl;
 							//PStack.print_classes_points_and_lines(cout);
 						}
 						else {
 							decomposition_print_tex(fp_extra, S,
-									TRUE, FALSE, TRUE,
+									true, false, true,
 									f_local_coordinates, verbose_level);
 							fp << "\\input " << fname_extra << endl;
 						}
@@ -3250,7 +3250,7 @@ void incidence_structure::compute_tdo_stepwise(
 
 
 	if (f_vv) {
-		int f_labeled = FALSE;
+		int f_labeled = false;
 		
 		print_partitioned(cout, S, f_labeled);
 	}
@@ -3260,11 +3260,11 @@ void incidence_structure::compute_tdo_stepwise(
 		if (TDO_depth < nb_points() + nb_lines()) {
 			if (EVEN(TDO_depth)) {
 				get_and_print_row_decomposition_scheme(S,
-						f_list_incidences, FALSE, verbose_level);
+						f_list_incidences, false, verbose_level);
 			}
 			else {
 				get_and_print_col_decomposition_scheme(S,
-						f_list_incidences, FALSE, verbose_level);
+						f_list_incidences, false, verbose_level);
 			}
 		}
 		else {
@@ -3299,7 +3299,7 @@ void incidence_structure::compute_tdo_stepwise(
 				}
 				fp << "\\input " << fname_scheme << endl;
 				get_and_print_tactical_decomposition_scheme_tex(
-					fp_scheme, FALSE /* f_enter_math */, S);
+					fp_scheme, false /* f_enter_math */, S);
 				fp << "\\end{array}$" << endl;
 			}
 			else {
@@ -3402,7 +3402,7 @@ void incidence_structure::init_partitionstack(
 			cout << endl;
 		}
 		S->split_multiple_cells(distinguished_point_sets[j],
-				distinguished_point_set_size[j], TRUE, verbose_level);
+				distinguished_point_set_size[j], true, verbose_level);
 		if (f_vv) {
 			cout << "incidence_structure::init_partitionstack "
 					"partition:" << endl;
@@ -3444,7 +3444,7 @@ void incidence_structure::init_partitionstack(
 		}
 
 
-		S->split_multiple_cells(set, set_sz, TRUE, verbose_level);
+		S->split_multiple_cells(set, set_sz, true, verbose_level);
 		FREE_int(set);
 		if (f_vv) {
 			cout << "incidence_structure::init_partitionstack "
@@ -3552,7 +3552,7 @@ void incidence_structure::print_aut_generators(
 			cout << AUT[i] << " ";
 		cout << endl;
 		Combi.perm_print_product_action(cout, AUT, m + n, m,
-				0 /* offset */, FALSE /* f_cycle_length */);
+				0 /* offset */, false /* f_cycle_length */);
 		cout << endl;
 		//for ( j = 0; j < m + n; j++ ){
 			//cout << Aut[h * (m + n) + j] << " ";
@@ -4046,8 +4046,8 @@ void incidence_structure::init_large_set(
 	if (f_v) {
 		data_structures::tally T;
 
-		T.init(partition, N, FALSE, 0);
-		T.print_array_tex(cout, TRUE);
+		T.init(partition, N, false, 0);
+		T.print_array_tex(cout, true);
 	}
 
 

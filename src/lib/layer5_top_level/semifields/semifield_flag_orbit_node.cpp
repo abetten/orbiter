@@ -25,9 +25,9 @@ semifield_flag_orbit_node::semifield_flag_orbit_node()
 	pt_local = 0;
 	pt = 0;
 	downstep_orbit_len = 0;
-	f_long_orbit = FALSE;
+	f_long_orbit = false;
 	upstep_orbit = 0;
-	f_fusion_node = FALSE;
+	f_fusion_node = false;
 	fusion_with = 0;
 	fusion_elt = NULL;
 

@@ -97,7 +97,7 @@ void sims::build_up_subgroup_random_process(
 			exit(1);
 			}
 #endif
-		if (FALSE) {
+		if (false) {
 			G->A->print_base();
 			G->print_orbit_len();
 			}
@@ -107,7 +107,7 @@ void sims::build_up_subgroup_random_process(
 				}
 			random_schreier_generator(GA->Elt1, 0/*verbose_level - 3*/);
 			//A->element_move(schreier_gen, GA->Elt1, 0);
-			if (FALSE) {
+			if (false) {
 				cout << "sims::build_up_subgroup_random_process random element chosen:" << endl;
 				A->Group_element->element_print(GA->Elt1, cout);
 				cout << endl;
@@ -120,10 +120,10 @@ void sims::build_up_subgroup_random_process(
 				}
 			(*choose_random_generator_for_subgroup)(G,
 					GA->Elt1, verbose_level - 1);
-			if (FALSE) {
+			if (false) {
 				cout << "sims::build_up_subgroup_random_process random element chosen" << endl;
 				}
-			if (FALSE) {
+			if (false) {
 				GA->Group_element->element_print(GA->Elt1, cout);
 				cout << endl;
 				}
@@ -132,22 +132,22 @@ void sims::build_up_subgroup_random_process(
 				image, 0/*verbose_level*/)) {
 			if (f_vvv) {
 				cout << "sims::build_up_subgroup_random_process element strips through" << endl;
-				if (FALSE) {
+				if (false) {
 					cout << "sims::build_up_subgroup_random_process residue = " << endl;
 					GA->Group_element->element_print(GA->Elt2, cout);
 					cout << endl;
 					}
 				}
-			f_added = FALSE;
+			f_added = false;
 			closure_group(100, verbose_level - 2);
 			}
 		else {
-			f_added = TRUE;
+			f_added = true;
 			if (f_v) {
 				cout << "sims::build_up_subgroup_random_process element needs to be inserted at level = "
 					<< drop_out_level << " with image "
 					<< image << endl;
-				if (TRUE) {
+				if (true) {
 					GA->Group_element->element_print(GA->Elt2, cout);
 					cout  << endl;
 					}

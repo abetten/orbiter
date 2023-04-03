@@ -82,15 +82,15 @@ void action::lex_least_base_in_place(
 		print_info();
 		//cout << "the generators are:" << endl;
 		//Sims->print_generators();
-		int f_changed = FALSE;
+		int f_changed = false;
 
 		if (old_base_len != base_len()) {
-			f_changed = TRUE;
+			f_changed = true;
 		}
 		if (!f_changed) {
 			for (i = 0; i < base_len(); i++) {
 				if (old_base[i] != base_i(i)) {
-					f_changed = TRUE;
+					f_changed = true;
 					break;
 				}
 			}
@@ -204,16 +204,16 @@ int action::test_if_lex_least_base(int verbose_level)
 		if (AA->base_len() >= i) {
 			if (base_i(i) > AA->base_i(i)) {
 				cout << "action::test_if_lex_least_base "
-						"returns FALSE" << endl;
+						"returns false" << endl;
 				cout << "base[i]=" << base_i(i) << endl;
 				cout << "AA->base[i]=" << AA->base_i(i) << endl;
 				FREE_OBJECT(AA);
-				return FALSE;
+				return false;
 			}
 		}
 	}
 	FREE_OBJECT(AA);
-	return TRUE;
+	return true;
 }
 
 void action::base_change_in_place(
@@ -286,7 +286,7 @@ void action::base_change_in_place(
 					"after FREE_OBJECT Sims" << endl;
 		}
 		Sims = NULL;
-		f_has_sims = FALSE;
+		f_has_sims = false;
 	}
 
 	if (f_v) {
@@ -302,12 +302,12 @@ void action::base_change_in_place(
 	}
 
 	if (f_has_strong_generators) {
-		f_has_strong_generators = FALSE;
+		f_has_strong_generators = false;
 		FREE_OBJECT(Strong_gens);
 		Strong_gens = NULL;
 	}
 
-	A->f_has_sims = FALSE;
+	A->f_has_sims = false;
 	A->Sims = NULL;
 
 	if (f_v) {
@@ -345,7 +345,7 @@ void action::create_orbits_on_subset_using_restricted_action(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_induce = FALSE;
+	int f_induce = false;
 
 	if (f_v) {
 		cout << "action::create_orbits_on_subset_using_restricted_action" << endl;
@@ -373,7 +373,7 @@ void action::create_orbits_on_sets_using_action_on_sets(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_induce = FALSE;
+	//int f_induce = false;
 
 	if (f_v) {
 		cout << "action::create_orbits_on_sets_using_action_on_sets" << endl;

@@ -23,16 +23,16 @@ namespace graphics {
 
 tree_draw_options::tree_draw_options()
 {
-	f_file = FALSE;
+	f_file = false;
 	//file_name;
 
-	f_restrict = FALSE;
+	f_restrict = false;
 	restrict_excluded_color = 0;
 
-	f_select_path = FALSE;
+	f_select_path = false;
 	//select_path_text;
 
-	f_has_draw_vertex_callback = FALSE;
+	f_has_draw_vertex_callback = false;
 	draw_vertex_callback = NULL;
 
 }
@@ -59,21 +59,21 @@ int tree_draw_options::read_arguments(
 
 
 		if (ST.stringcmp(argv[i], "-file") == 0) {
-			f_file = TRUE;
+			f_file = true;
 			file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-file " << file_name << " " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-restrict") == 0) {
-			f_restrict = TRUE;
+			f_restrict = true;
 			restrict_excluded_color = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-restrict " << restrict_excluded_color << " " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-select_path") == 0) {
-			f_select_path = TRUE;
+			f_select_path = true;
 			select_path_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-select_path " << select_path_text << " " << endl;

@@ -20,44 +20,44 @@ namespace user_interface {
 
 interface_coding_theory::interface_coding_theory()
 {
-	f_make_macwilliams_system = FALSE;
+	f_make_macwilliams_system = false;
 	make_macwilliams_system_q = 0;
 	make_macwilliams_system_n = 0;
 	make_macwilliams_system_k = 0;
 
-	f_table_of_bounds = FALSE;
+	f_table_of_bounds = false;
 	table_of_bounds_n_max = 0;
 	table_of_bounds_q = 0;
 
-	f_make_bounds_for_d_given_n_and_k_and_q = FALSE;
+	f_make_bounds_for_d_given_n_and_k_and_q = false;
 	make_bounds_n = 0;
 	make_bounds_k = 0;
 	make_bounds_q = 0;
 
 
-	f_introduce_errors = FALSE;
+	f_introduce_errors = false;
 	introduce_errors_crc_options_description = NULL;
 
-	f_check_errors = FALSE;
+	f_check_errors = false;
 	check_errors_crc_options_description = NULL;
 
-	f_extract_block = FALSE;
+	f_extract_block = false;
 	extract_block_crc_options_description = NULL;
 
-	f_random_noise_in_bitmap_file = FALSE;
+	f_random_noise_in_bitmap_file = false;
 	//std::string random_noise_in_bitmap_file_input;
 	//std::string random_noise_in_bitmap_file_output;
 	random_noise_in_bitmap_file_numerator = 0;
 	random_noise_in_bitmap_file_denominator = 0;
 
-	f_random_noise_of_burst_type_in_bitmap_file = FALSE;
+	f_random_noise_of_burst_type_in_bitmap_file = false;
 	//std::string random_noise_of_burst_type_in_bitmap_file_input;
 	//std::string random_noise_of_burst_type_in_bitmap_file_output;
 	random_noise_of_burst_type_in_bitmap_file_numerator = 0;
 	random_noise_of_burst_type_in_bitmap_file_denominator = 0;
 	random_noise_of_burst_type_in_bitmap_file_burst_length = 0;
 
-	f_crc_test = FALSE;
+	f_crc_test = false;
 	//std::string crc_test_type;
 	crc_test_N = 0;
 	crc_test_k = 0;
@@ -165,7 +165,7 @@ void interface_coding_theory::read_arguments(int argc,
 
 
 	if (ST.stringcmp(argv[i], "-make_macwilliams_system") == 0) {
-		f_make_macwilliams_system = TRUE;
+		f_make_macwilliams_system = true;
 		make_macwilliams_system_n = ST.strtoi(argv[++i]);
 		make_macwilliams_system_k = ST.strtoi(argv[++i]);
 		make_macwilliams_system_q = ST.strtoi(argv[++i]);
@@ -174,7 +174,7 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-table_of_bounds") == 0) {
-		f_table_of_bounds = TRUE;
+		f_table_of_bounds = true;
 		table_of_bounds_n_max = ST.strtoi(argv[++i]);
 		table_of_bounds_q = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -183,7 +183,7 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
-		f_make_bounds_for_d_given_n_and_k_and_q = TRUE;
+		f_make_bounds_for_d_given_n_and_k_and_q = true;
 		make_bounds_n = ST.strtoi(argv[++i]);
 		make_bounds_k = ST.strtoi(argv[++i]);
 		make_bounds_q = ST.strtoi(argv[++i]);
@@ -193,7 +193,7 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-introduce_errors") == 0) {
-		f_introduce_errors = TRUE;
+		f_introduce_errors = true;
 
 		introduce_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
 		if (f_v) {
@@ -216,7 +216,7 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-check_errors") == 0) {
-		f_check_errors = TRUE;
+		f_check_errors = true;
 		check_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
 		if (f_v) {
 			cout << "-check_errors " << endl;
@@ -238,7 +238,7 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-extract_block") == 0) {
-		f_extract_block = TRUE;
+		f_extract_block = true;
 		extract_block_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
 		if (f_v) {
 			cout << "-extract_block " << endl;
@@ -260,7 +260,7 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-random_noise_in_bitmap_file") == 0) {
-		f_random_noise_in_bitmap_file = TRUE;
+		f_random_noise_in_bitmap_file = true;
 		random_noise_in_bitmap_file_input.assign(argv[++i]);
 		random_noise_in_bitmap_file_output.assign(argv[++i]);
 		random_noise_in_bitmap_file_numerator = ST.strtoi(argv[++i]);
@@ -275,7 +275,7 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-random_noise_of_burst_type_in_bitmap_file") == 0) {
-		f_random_noise_of_burst_type_in_bitmap_file = TRUE;
+		f_random_noise_of_burst_type_in_bitmap_file = true;
 		random_noise_of_burst_type_in_bitmap_file_input.assign(argv[++i]);
 		random_noise_of_burst_type_in_bitmap_file_output.assign(argv[++i]);
 		random_noise_of_burst_type_in_bitmap_file_numerator = ST.strtoi(argv[++i]);
@@ -292,7 +292,7 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-crc_test") == 0) {
-		f_crc_test = TRUE;
+		f_crc_test = true;
 		crc_test_type.assign(argv[++i]);
 		crc_test_N = ST.strtoi(argv[++i]);
 		crc_test_k = ST.strtoi(argv[++i]);

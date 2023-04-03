@@ -55,7 +55,7 @@ hermitian_spreads_classify::hermitian_spreads_classify()
 
 hermitian_spreads_classify::~hermitian_spreads_classify()
 {
-	int f_v = FALSE;
+	int f_v = false;
 	int i;
 
 	if (F) {
@@ -140,8 +140,8 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	hermitian_spreads_classify::Q = Q;
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(Q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	len = n + 1;
@@ -173,7 +173,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 	cout << "Creating projective_space" << endl;
 	P->projective_space_init(n, F,
-		TRUE /* f_init_incidence_structure */,
+		true /* f_init_incidence_structure */,
 		0 /* verbose_level */);
 	cout << "Creating projective_space done" << endl;
 
@@ -182,7 +182,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	cout << "Creating linear group" << endl;
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_general_linear_group(n + 1, F,
-			TRUE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
+			true /* f_semilinear */, true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	FREE_OBJECT(nice_gens);
@@ -198,9 +198,9 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	P->Subspaces->line_intersection_type(Pts, nb_pts, line_type, verbose_level);
 
 
-	C.init(line_type, P->Subspaces->N_lines, FALSE, 0);
+	C.init(line_type, P->Subspaces->N_lines, false, 0);
 	cout << "The line type is:" << endl;
-	C.print(TRUE /* f_backwards*/);
+	C.print(true /* f_backwards*/);
 
 	cout << "The secants are:" << endl;
 	f = C.type_first[1];
@@ -294,7 +294,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	A2r = A2->Induced_action->create_induced_action_by_restriction(
 		NULL,
 		nb_secants, secants, label_of_set,
-		FALSE /* f_induce_action */,
+		false /* f_induce_action */,
 		0 /* verbose_level */);
 	cout << "Creating restricted action on secants done." << endl;
 
@@ -365,12 +365,12 @@ void hermitian_spreads_classify::init2(int verbose_level)
 				verbose_level);
 
 
-	//gen->f_allowed_to_show_group_elements = TRUE;
+	//gen->f_allowed_to_show_group_elements = true;
 
 
 
 #if 0
-	gen->f_print_function = TRUE;
+	gen->f_print_function = true;
 	gen->print_function = print_set;
 	gen->print_function_data = this;
 #endif
@@ -385,13 +385,13 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = depth;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	int t0;
 	orbiter_kernel_system::os_interface Os;
 
 
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = depth;
 
 
@@ -427,7 +427,7 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 	length = gen->nb_orbits_at_level(depth);
 
 #if 0
-	int f_sideways = FALSE;
+	int f_sideways = false;
 
 	gen->draw_poset(gen->get_problem_label_with_path(), depth, 0 /* data1 */,
 			f_embedded, f_sideways, 100, verbose_level);
@@ -537,7 +537,7 @@ static void projective_space_init_line_action(
 		cout << "projective_space_init_line_action "
 				"initializing A_on_lines" << endl;
 	}
-	int f_induce_action = TRUE;
+	int f_induce_action = true;
 	groups::sims S;
 	ring_theory::longinteger_object go1;
 

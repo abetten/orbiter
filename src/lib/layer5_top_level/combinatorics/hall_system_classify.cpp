@@ -50,7 +50,7 @@ hall_system_classify::hall_system_classify()
 	//std::string fname_orbits_on_triples;
 	Orbits_on_triples = NULL;
 	A_on_orbits = NULL;
-	f_play_it_safe = FALSE;
+	f_play_it_safe = false;
 
 	Control = NULL;
 	Poset = NULL;
@@ -179,7 +179,7 @@ void hall_system_classify::init(
 				"before A->init_permutation_group" << endl;
 		}
 	A = NEW_OBJECT(actions::action);
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A->Known_groups->init_symmetric_group(
 			nm1 /* degree */, f_no_base, verbose_level - 1);
@@ -230,7 +230,7 @@ void hall_system_classify::init(
 	}
 	A_on_triples = A->Induced_action->induced_action_on_sets(S /*sims *old_G*/,
 			N /* nb_sets*/, 3 /* set_size */, triples,
-			FALSE /* f_induce_action*/, verbose_level - 1);
+			false /* f_induce_action*/, verbose_level - 1);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"after A->Induced_action->induced_action_on_sets" << endl;
@@ -264,7 +264,7 @@ void hall_system_classify::init(
 				this /* void *data */,
 				verbose_level);
 
-	Poset->f_print_function = TRUE;
+	Poset->f_print_function = true;
 	Poset->print_function = hall_system_print_set;
 	Poset->print_function_data = (void *) this;
 
@@ -282,8 +282,8 @@ void hall_system_classify::init(
 
 
 	int depth_completed;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	int schreier_depth = INT_MAX;
 	int t0;
 	orbiter_kernel_system::os_interface Os;
@@ -513,7 +513,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 				row_sum[T[a]]++;
 				for (b = a + 1; b < 3; b++) {
 					p = Combi.ij2k(T[a], T[b], nm1);
-					pair_covering[p] = TRUE;
+					pair_covering[p] = true;
 				} // next b
 			} // next a
 		} // next j
@@ -553,7 +553,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 
 		}
 
-		f_OK = TRUE;
+		f_OK = true;
 
 		for (h = 0; h < l; h++ ) {
 			t = Orbits_on_triples->orbit[f + h];
@@ -564,7 +564,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 						cout << "bad because of row sum "
 								"in row " << T[a] << endl;
 					}
-					f_OK = FALSE;
+					f_OK = false;
 					break;
 				} // if
 			} // next a
@@ -585,7 +585,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 								cout << "bad because of pair covering in pair "
 									<< T[a] << "," << T[b] << "=" << p << endl;
 							}
-							f_OK = FALSE;
+							f_OK = false;
 							break;
 							}
 						}

@@ -53,7 +53,7 @@ void poset_orbit_node::read_memory_object(
 		tl = NEW_int(A->base_len());
 		for (i = 0; i < nb_strong_generators; i++) {
 			A->element_read_from_memory_object(Elt, m, verbose_level - 2);
-			hdl_strong_generators[i] = A->element_store(Elt, FALSE);
+			hdl_strong_generators[i] = A->element_store(Elt, false);
 			nb_group_elements++;
 		}
 #else
@@ -62,10 +62,10 @@ void poset_orbit_node::read_memory_object(
 		for (i = 0; i < nb_strong_generators; i++) {
 			A->Group_element->element_read_from_memory_object(Elt, m, verbose_level - 2);
 			if (i == 0) {
-				first_strong_generator_handle = A->Group_element->element_store(Elt, FALSE);
+				first_strong_generator_handle = A->Group_element->element_store(Elt, false);
 			}
 			else {
-				A->Group_element->element_store(Elt, FALSE);
+				A->Group_element->element_store(Elt, false);
 			}
 			nb_group_elements++;
 		}
@@ -123,7 +123,7 @@ void poset_orbit_node::read_memory_object(
 		else if (b == EXTENSION_TYPE_FUSION) {
 			// fusion node
 			A->Group_element->element_read_from_memory_object(Elt, m, verbose_level - 2);
-			E[i].set_data(A->Group_element->element_store(Elt, FALSE));
+			E[i].set_data(A->Group_element->element_store(Elt, false));
 			m->read_int(&b);
 			E[i].set_data1(b);
 			m->read_int(&b);
@@ -174,8 +174,8 @@ void poset_orbit_node::write_memory_object(
 				<< nb_strong_generators << endl;
 	}
 	for (i = 0; i < nb_strong_generators; i++) {
-		//A->element_retrieve(hdl_strong_generators[i], Elt, FALSE);
-		A->Group_element->element_retrieve(first_strong_generator_handle + i, Elt, FALSE);
+		//A->element_retrieve(hdl_strong_generators[i], Elt, false);
+		A->Group_element->element_retrieve(first_strong_generator_handle + i, Elt, false);
 		A->Group_element->element_write_to_memory_object(Elt, m, verbose_level);
 		nb_group_elements++;
 	}
@@ -218,7 +218,7 @@ void poset_orbit_node::write_memory_object(
 			if (f_v) {
 				cout << "fusion node, hdl=" << E[i].get_data() << endl;
 			}
-			A->Group_element->element_retrieve(E[i].get_data(), Elt, FALSE);
+			A->Group_element->element_retrieve(E[i].get_data(), Elt, false);
 			A->Group_element->element_write_to_memory_object(Elt, m, verbose_level);
 			m->write_int(E[i].get_data1());
 			m->write_int(E[i].get_data2());
@@ -275,7 +275,7 @@ long int poset_orbit_node::calc_size_on_file(actions::action *A, int verbose_lev
 		else if (E[i].get_type() == EXTENSION_TYPE_FUSION) {
 			// fusion node
 			s += A->coded_elt_size_in_char; // group element
-			//A->element_retrieve(E[i].data, Elt, FALSE);
+			//A->element_retrieve(E[i].data, Elt, false);
 			//A->element_write_to_memory_object(Elt, m, verbose_level);
 
 			s += 2 * sizeof(int); // data1, data2
@@ -371,7 +371,7 @@ void poset_orbit_node::read_file(
 				cout << "read element" << endl;
 				A->element_print_quick(Elt, cout);
 				}
-			hdl_strong_generators[i] = A->element_store(Elt, FALSE);
+			hdl_strong_generators[i] = A->element_store(Elt, false);
 			nb_group_elements++;
 		}
 #else
@@ -384,10 +384,10 @@ void poset_orbit_node::read_file(
 				A->Group_element->element_print_quick(Elt, cout);
 			}
 			if (i == 0) {
-				first_strong_generator_handle = A->Group_element->element_store(Elt, FALSE);
+				first_strong_generator_handle = A->Group_element->element_store(Elt, false);
 			}
 			else {
-				A->Group_element->element_store(Elt, FALSE);
+				A->Group_element->element_store(Elt, false);
 			}
 			nb_group_elements++;
 		}
@@ -454,7 +454,7 @@ void poset_orbit_node::read_file(
 				A->Group_element->element_print_quick(Elt, cout);
 			}
 			//element_read_file(A, Elt, elt, fp, verbose_level);
-			E[i].set_data(A->Group_element->element_store(Elt, FALSE));
+			E[i].set_data(A->Group_element->element_store(Elt, false));
 			fp.read((char *) &b, sizeof(int));
 			E[i].set_data1(b);
 			fp.read((char *) &b, sizeof(int));
@@ -481,8 +481,8 @@ void poset_orbit_node::write_file(
 {
 	int i;
 	int *Elt;
-	int f_v = FALSE;//(verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 2);
+	int f_v = false;//(verbose_level >= 1);
+	int f_vv = false;//(verbose_level >= 2);
 	orbiter_kernel_system::file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -498,7 +498,7 @@ void poset_orbit_node::write_file(
 				<< nb_strong_generators << endl;
 	}
 	for (i = 0; i < nb_strong_generators; i++) {
-		A->Group_element->element_retrieve(first_strong_generator_handle + i, Elt, FALSE);
+		A->Group_element->element_retrieve(first_strong_generator_handle + i, Elt, false);
 		A->Group_element->element_write_file_fp(Elt, fp, 0);
 		nb_group_elements++;
 	}
@@ -548,7 +548,7 @@ void poset_orbit_node::write_file(
 			if (f_vv) {
 				cout << "fusion node, hdl=" << E[i].get_data() << endl;
 			}
-			A->Group_element->element_retrieve(E[i].get_data(), Elt, FALSE);
+			A->Group_element->element_retrieve(E[i].get_data(), Elt, false);
 			A->Group_element->element_write_file_fp(Elt, fp, 0);
 			b = E[i].get_data1();
 			fp.write((char *) &b, sizeof(int));
@@ -621,7 +621,7 @@ void poset_orbit_node::save_shallow_schreier_forest(
 	if (PC->get_control()->f_export_schreier_trees) {
 		if (f_v) {
 			cout << "poset_orbit_node::save_shallow_schreier_forest "
-					"f_export_schreier_trees is TRUE" << endl;
+					"f_export_schreier_trees is true" << endl;
 		}
 		int orbit_no, nb_orbits;
 		int *orbit_reps;
@@ -698,7 +698,7 @@ void poset_orbit_node::draw_schreier_forest(
 		nb_orbits = Schreier->nb_orbits;
 		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
 
-			int f_has_point_labels = FALSE;
+			int f_has_point_labels = false;
 			long int *point_labels = NULL;
 
 			string fname_mask;
@@ -713,7 +713,7 @@ void poset_orbit_node::draw_schreier_forest(
 
 
 			if (f_using_invariant_subset) {
-				f_has_point_labels = TRUE;
+				f_has_point_labels = true;
 				point_labels = AR->G.ABR->points;
 			}
 

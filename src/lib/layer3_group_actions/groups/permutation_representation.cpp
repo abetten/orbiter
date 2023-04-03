@@ -24,7 +24,7 @@ namespace groups {
 permutation_representation::permutation_representation()
 {
 	A_original = NULL;
-	f_stay_in_the_old_action = FALSE;
+	f_stay_in_the_old_action = false;
 	nb_gens = 0;
 	gens = NULL;
 	Perms = NULL;
@@ -159,9 +159,9 @@ void permutation_representation::element_one(int *Elt)
 int permutation_representation::element_is_one(int *Elt)
 {
 		if (!P->is_one(Elt)) {
-			return FALSE;
+			return false;
 		}
-		return TRUE;
+		return true;
 }
 
 void permutation_representation::element_mult(int *A, int *B, int *AB,

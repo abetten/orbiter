@@ -66,7 +66,7 @@ void del_pezzo_surface_of_degree_two_domain::init(
 
 	P2 = NEW_OBJECT(geometry::projective_space);
 	P2->projective_space_init(2, F,
-		FALSE /*f_init_incidence_structure*/,
+		false /*f_init_incidence_structure*/,
 		verbose_level);
 
 	Gr = NEW_OBJECT(geometry::grassmann);

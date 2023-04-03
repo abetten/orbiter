@@ -81,17 +81,17 @@ void unipoly::copyobject_to(discreta_base &x)
 #endif
 }
 
-int my_unip_f_print_sub = FALSE;
-int my_unip_f_use_variable_name = FALSE;
+int my_unip_f_print_sub = false;
+int my_unip_f_use_variable_name = false;
 char my_unip_variable_name[128];
 
 
 ostream& unipoly::print(ostream& ost)
 {
-	int d, i, f_print_k, k, f_prev = FALSE;
+	int d, i, f_print_k, k, f_prev = false;
 	discreta_base coef;
 	const char *x, *y;
-	int f_nothing_printed_at_all = TRUE;
+	int f_nothing_printed_at_all = true;
 	
 	if (my_unip_f_use_variable_name)
 		x = my_unip_variable_name;
@@ -113,7 +113,7 @@ ostream& unipoly::print(ostream& ost)
 					}
 				continue;
 				}
-			f_nothing_printed_at_all = FALSE;
+			f_nothing_printed_at_all = false;
 			if (k < 0) {
 				ost << " - ";
 				}
@@ -127,10 +127,10 @@ ostream& unipoly::print(ostream& ost)
 				}
 			}
 		else {
-			f_nothing_printed_at_all = FALSE;
-			f_print_k = TRUE; 
+			f_nothing_printed_at_all = false;
+			f_print_k = true; 
 			if (coef.is_one() && i > 0)
-				f_print_k = FALSE;
+				f_print_k = false;
 			if (f_prev)
 				ost << " + ";
 			if (f_print_k) {
@@ -164,7 +164,7 @@ ostream& unipoly::print(ostream& ost)
 				ost << i;
 				}
 			}
-		f_prev = TRUE;
+		f_prev = true;
 		}
 	// ost << ")";
 	return ost;
@@ -317,7 +317,7 @@ int unipoly::is_one()
 	
 	d = degree();
 	if (d > 0)
-		return FALSE;
+		return false;
 	return s_i(0).is_one();
 }
 
@@ -327,7 +327,7 @@ int unipoly::is_zero()
 	
 	d = degree();
 	if (d > 0)
-		return FALSE;
+		return false;
 	return s_i(0).is_zero();
 }
 
@@ -467,9 +467,9 @@ int unipoly::is_squarefree(int verbose_level)
 		}
 	d = g.degree();
 	if (d >= 1)
-		return FALSE;
+		return false;
 	else
-		return TRUE;
+		return true;
 }
 
 int unipoly::is_irreducible_GFp(int p, int verbose_level)
@@ -481,7 +481,7 @@ int unipoly::is_irreducible_GFp(int p, int verbose_level)
 	int l, r;
 	
 	if (!is_squarefree(verbose_level))
-		return FALSE;
+		return false;
 	B.Berlekamp(*this, p, verbose_level - 1);
 	l = B.s_m();
 	r = B.rank();
@@ -489,9 +489,9 @@ int unipoly::is_irreducible_GFp(int p, int verbose_level)
 		cout << "has rank " << r << endl;
 		}
 	if (r == l - 1)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int unipoly::is_irreducible(int q, int verbose_level)
@@ -501,7 +501,7 @@ int unipoly::is_irreducible(int q, int verbose_level)
 	int l, r;
 	
 	if (!is_squarefree(verbose_level))
-		return FALSE;
+		return false;
 	B.Berlekamp(*this, q, verbose_level);
 	l = B.s_m();
 	r = B.rank();
@@ -509,14 +509,14 @@ int unipoly::is_irreducible(int q, int verbose_level)
 		cout << "has rank " << r << endl;
 		}
 	if (r == l - 1)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int unipoly::is_primitive(
 		int m, int p, Vector& vp, int verbose_level)
-//Returns TRUE iff the polynomial $x$ has order $m$ 
+//Returns true iff the polynomial $x$ has order $m$ 
 //modulo the polynomial this (over GF(p)). 
 //The prime factorization of $m$ must be given in vp (only the primes).
 //A polynomial $a$ has order $m$ mod $q$ ($q = this$) iff 
@@ -534,9 +534,9 @@ int unipoly::is_primitive(
 		a.x();
 		a.power_int_mod(m1, *this, verbose_level);
 		if (a.is_one())
-			return FALSE;
+			return false;
 		}
-	return TRUE;
+	return true;
 }
 
 void unipoly::numeric_polynomial(int n, int q)
@@ -736,7 +736,7 @@ void unipoly::normal_base(int p,
 	unipoly x, mue;
 	
 	f = degree();
-	F.Frobenius(*this, p, FALSE);
+	F.Frobenius(*this, p, false);
 	if (f_v) {
 		cout << "unipoly::normal_base(): Frobenius:\n" << F << endl;
 		}
@@ -770,7 +770,7 @@ void unipoly::normal_base(int p,
 	if (f_v) {
 		cout << "F - x * Id=\n" << T << endl;
 		}
-	T.smith_normal_form(P, Pv, Q, Qv, f_vv, FALSE);
+	T.smith_normal_form(P, Pv, Q, Qv, f_vv, false);
 	
 	if (f_v) {
 		cout << "Q=\n" << Q << endl;
@@ -818,7 +818,7 @@ int unipoly::first_irreducible_polynomial(int p,
 	f = F.s_m();
 	v.first_regular_word(f, p);
 	if (!v.next_regular_word(p))
-		return FALSE;
+		return false;
 	
 	if (f_v) {
 		cout << "regular word:" << v << endl;
@@ -829,7 +829,7 @@ int unipoly::first_irreducible_polynomial(int p,
 		a[i] = w[i];
 		}
 	F.KX_module_minpol(a, m, *this, verbose_level - 1);
-	return TRUE;
+	return true;
 }
 
 int unipoly::next_irreducible_polynomial(int p,
@@ -845,7 +845,7 @@ int unipoly::next_irreducible_polynomial(int p,
 	
 	f = F.s_m();
 	if (!v.next_regular_word(p))
-		return FALSE;
+		return false;
 
 	if (f_v) {
 		cout << "regular word:" << v << endl;
@@ -856,7 +856,7 @@ int unipoly::next_irreducible_polynomial(int p,
 		a[i] = w[i];
 		}
 	F.KX_module_minpol(a, m, *this, verbose_level - 1);
-	return TRUE;
+	return true;
 }
 
 void unipoly::normalize(discreta_base &p)
@@ -902,7 +902,7 @@ void unipoly::Phi(int n, int verbose_level)
 	p.s_i(0).one();
 	q.s_i(0).one();
 	
-	while (TRUE) {
+	while (true) {
 		d = multiply(vp, vd);
 		nd = n / d;
 		mu = Moebius(nd);
@@ -1050,8 +1050,8 @@ void unipoly::charpoly(
 		}
 	Fq.finite_field_init_small_order(
 			q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			verbose_level - 1);
 
 	domain d(q);

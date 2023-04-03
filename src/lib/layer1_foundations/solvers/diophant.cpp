@@ -29,10 +29,10 @@ diophant::diophant()
 
 	m = 0;
 	n = 0;
-	f_has_sum = FALSE;
+	f_has_sum = false;
 	sum = sum1 = 0;
 
-	//f_x_max = FALSE;
+	//f_x_max = false;
 
 	A = NULL;
 	G = NULL;
@@ -45,19 +45,19 @@ diophant::diophant()
 	type = NULL;
 	eqn_label = NULL;
 
-	f_has_var_labels = FALSE;
+	f_has_var_labels = false;
 	var_labels = NULL;
 
-	X = FALSE;
-	Y = FALSE;
+	X = false;
+	Y = false;
 
 	// results
 	_maxresults = 0;
 	_resultanz = 0;
 	_cur_result = 0;
 	nb_steps_betten = 0;
-	f_max_time = FALSE;
-	f_broken_off_because_of_maxtime = FALSE;
+	f_max_time = false;
+	f_broken_off_because_of_maxtime = false;
 	max_time_in_sec = 0;
 	max_time_in_ticks = 0;
 	t0 = 0;
@@ -174,10 +174,10 @@ void diophant::open(int m, int n, int verbose_level)
 		type[i] = t_EQ;
 		eqn_label[i] = NULL;
 	}
-	f_has_sum = FALSE;
-	//f_x_max = FALSE;
-	f_max_time = FALSE;
-	f_has_var_labels = FALSE;
+	f_has_sum = false;
+	//f_x_max = false;
+	f_max_time = false;
+	f_has_var_labels = false;
 }
 
 void diophant::init_var_labels(
@@ -189,7 +189,7 @@ void diophant::init_var_labels(
 		cout << "diophant::init_var_labels" << endl;
 	}
 	var_labels = NEW_int(n);
-	f_has_var_labels = TRUE;
+	f_has_var_labels = true;
 	Lint_vec_copy_to_int(labels, var_labels, n);
 	if (f_v) {
 		cout << "diophant::init_var_labels done" << endl;
@@ -241,7 +241,7 @@ void diophant::join_problems(
 	if (f_v) {
 		cout << "diophant::join_problems after open" << endl;
 	}
-	f_has_sum = TRUE;
+	f_has_sum = true;
 	sum = D1->sum;
 	//f_x_max = D1->f_x_max;
 #if 0
@@ -296,8 +296,8 @@ void diophant::init_partition_problem(
 		x_max[j] = target_value / weights[j];
 		x_min[j] = 0;
 	}
-	//f_x_max = TRUE;
-	f_has_sum = FALSE;
+	//f_x_max = true;
+	f_has_sum = false;
 	//sum = nb_to_select;
 	for (j = 0; j < nb_weights; j++) {
 		Aij(0, j) = weights[j];
@@ -325,8 +325,8 @@ void diophant::init_partition_problem_with_bounds(
 		x_max[j] = bounds[j]; // target_value / weights[j];
 		x_min[j] = 0;
 	}
-	//f_x_max = TRUE;
-	f_has_sum = FALSE;
+	//f_x_max = true;
+	f_has_sum = false;
 	//sum = nb_to_select;
 	for (j = 0; j < nb_weights; j++) {
 		Aij(0, j) = weights[j];
@@ -355,8 +355,8 @@ void diophant::init_problem_of_Steiner_type_with_RHS(
 		x_max[j] = 1;
 		x_min[j] = 0;
 	}
-	//f_x_max = TRUE;
-	f_has_sum = TRUE;
+	//f_x_max = true;
+	f_has_sum = true;
 	sum = nb_to_select;
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
@@ -385,8 +385,8 @@ void diophant::init_problem_of_Steiner_type(
 		x_max[j] = 1;
 		x_min[j] = 0;
 	}
-	//f_x_max = TRUE;
-	f_has_sum = TRUE;
+	//f_x_max = true;
+	f_has_sum = true;
 	sum = nb_to_select;
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
@@ -450,8 +450,8 @@ void diophant::init_clique_finding_problem(
 		x_max[j] = 1;
 		x_min[j] = 0;
 	}
-	//f_x_max = TRUE;
-	f_has_sum = TRUE;
+	//f_x_max = true;
+	f_has_sum = true;
 	sum = nb_to_select;
 	i = 0;
 	for (i1 = 0; i1 < nb_pts; i1++) {
@@ -572,7 +572,7 @@ void diophant::init_eqn_label(int i, char *label)
 
 void diophant::print()
 {
-	print2(FALSE);
+	print2(false);
 }
 
 void diophant::print_tight()
@@ -793,28 +793,28 @@ int diophant::RHS_ge_zero()
 	
 	for (k = 0; k < m; k++) {
 		if (RHS1[k] < 0) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int diophant::solve_first(int verbose_level)
 {
 
 #if 0
-	if (FALSE/*n >= 50*/) {
+	if (false/*n >= 50*/) {
 		return solve_first_wassermann(verbose_level);
 	}
 #endif
 
-	if (TRUE) {
+	if (true) {
 		return solve_first_betten(verbose_level);
 	}
 	else {
 		//cout << "diophant::solve_first
 		//solve_first_mckay is disabled" << endl;
-		return solve_first_mckay(FALSE, verbose_level);
+		return solve_first_mckay(false, verbose_level);
 	}
 }
 
@@ -835,7 +835,7 @@ int diophant::solve_first_wassermann(int verbose_level)
 int diophant::solve_first_mckay(
 		int f_once, int verbose_level)
 {
-	int f_v = TRUE;//(verbose_level >= 1);
+	int f_v = true;//(verbose_level >= 1);
 	int j;
 	//int maxresults = 10000000;
 	int maxresults = INT_MAX;
@@ -859,7 +859,7 @@ int diophant::solve_first_mckay(
 	}
 	_cur_result = 0;
 	if (_resultanz == 0) {
-		return FALSE;
+		return false;
 	}
 	res = _results.front();
 	for (j = 0; j < n; j++) {
@@ -870,7 +870,7 @@ int diophant::solve_first_mckay(
 	if (f_v) {
 		cout << "diophant::solve_first_mckay done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 #if 0
@@ -913,7 +913,7 @@ void diophant::draw_solutions(std::string &fname_base, int verbose_level)
 
 		draw_partitioned(fname_base2,
 				//xmax_in, ymax_in, xmax_out, ymax_out,
-			TRUE /*f_solution*/, solution, solution_sz, 
+			true /*f_solution*/, solution, solution_sz, 
 			verbose_level);
 		_results.pop_front();
 	}
@@ -1194,12 +1194,12 @@ int diophant::solve_all_DLX(int verbose_level)
 
 	dlx_problem_description Descr;
 
-	Descr.f_label_txt = TRUE;
+	Descr.f_label_txt = true;
 	Descr.label_txt.assign(label);
-	Descr.f_label_tex = TRUE;
+	Descr.f_label_tex = true;
 	Descr.label_tex.assign(label);
 
-	Descr.f_data_matrix = TRUE;
+	Descr.f_data_matrix = true;
 	Descr.data_matrix = Inc;
 	Descr.data_matrix_m = m;
 	Descr.data_matrix_n = n;
@@ -1227,7 +1227,7 @@ int diophant::solve_all_DLX(int verbose_level)
 	
 #if 0
 	DlxTransposeAppendAndSolve(Inc, m, n, nb_sol, nb_backtrack, 
-		FALSE, "", 
+		false, "", 
 		verbose_level - 1);
 
 	nb_steps_betten = nb_backtrack;
@@ -1285,7 +1285,7 @@ int diophant::solve_all_DLX_with_RHS(
 				"the system:" << endl;
 		Int_matrix_print(Inc, m, n);
 	}
-	f_has_type = TRUE;
+	f_has_type = true;
 	my_RHS = NEW_int(m);
 	my_type = NEW_OBJECTS(diophant_equation_type, m);
 	for (i = 0; i < m; i++) {
@@ -1304,7 +1304,7 @@ int diophant::solve_all_DLX_with_RHS(
 	DlxTransposeAndSolveRHS(Inc, m, n, 
 		my_RHS, f_has_type, my_type, 
 		nb_sol, nb_backtrack, 
-		FALSE, "", 
+		false, "", 
 		f_write_tree, fname_tree, 
 		verbose_level - 1);
 	
@@ -1365,7 +1365,7 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 				"the system:" << endl;
 		Int_matrix_print(Inc, m, n);
 	}
-	f_has_type = TRUE;
+	f_has_type = true;
 	my_RHS = NEW_int(m);
 	my_type = NEW_OBJECTS(diophant_equation_type, m);
 	//my_f_le = NEW_int(m);
@@ -1386,7 +1386,7 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 	DlxTransposeAndSolveRHS(Inc, m, n, 
 		my_RHS, f_has_type, my_type, 
 		nb_sol, nb_backtrack, 
-		FALSE, "", 
+		false, "", 
 		f_write_tree, fname_tree, 
 		verbose_level - 1);
 	
@@ -1499,12 +1499,12 @@ int diophant::solve_all_betten_with_conditions(int verbose_level,
 	_cur_result = 0;
 	
 	if (f_max_time) {
-		diophant::f_max_time = TRUE;
+		diophant::f_max_time = true;
 		diophant::max_time_in_sec = max_time_in_seconds;
-		f_broken_off_because_of_maxtime = FALSE;
+		f_broken_off_because_of_maxtime = false;
 		t0 = Os.os_ticks();
 		max_time_in_ticks = max_time_in_seconds * Os.os_ticks_per_second();
-		if (TRUE || f_v) {
+		if (true || f_v) {
 			cout << "solve_all_betten_with_conditions maxtime "
 					"max_time_in_sec=" << max_time_in_sec << endl;
 		}
@@ -1518,7 +1518,7 @@ int diophant::solve_all_betten_with_conditions(int verbose_level,
 		_results.push_back(lo);
 		_resultanz++;
 		if (f_max_sol && _resultanz == max_sol) {
-			return TRUE;
+			return true;
 		}
 		while (solve_next_betten(verbose_level - 2)) {
 			lo.resize(n);
@@ -1528,19 +1528,19 @@ int diophant::solve_all_betten_with_conditions(int verbose_level,
 			_results.push_back(lo);
 			_resultanz++;
 			if (f_max_sol && _resultanz == max_sol) {
-				return TRUE;
+				return true;
 			}
 		}
 	}
 	if (f_broken_off_because_of_maxtime) {
-		return TRUE;
+		return true;
 	}
 	//solve_mckay(maxresults, verbose_level - 2);
 	if (f_v) {
 		cout << "diophant::solve_all_betten found " << _resultanz 
 			<< " solutions in " << nb_steps_betten << " steps" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 int diophant::solve_first_betten(int verbose_level)
@@ -1561,7 +1561,7 @@ int diophant::solve_first_betten(int verbose_level)
 		if (f_v) {
 			cout << "diophant::solve_first_betten(): m <= 0" << endl;
 		}
-		return TRUE;
+		return true;
 		}
 	if (n == 0) {
 		//cout << "diophant::solve_first_betten(): n == 0" << endl;
@@ -1574,11 +1574,11 @@ int diophant::solve_first_betten(int verbose_level)
 							"RHS=" << RHS[i] << " and not an inequality"
 							<< endl;
 					}
-					return FALSE;
+					return false;
 				}
 			}
 		}
-		return TRUE;
+		return true;
 	}
 	for (i = 0; i < m; i++) {
 		RHS1[i] = RHS[i];
@@ -1595,7 +1595,7 @@ int diophant::solve_first_betten(int verbose_level)
 					<< total_max << " < sum = " << sum
 					<< ", no solution" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 	//}
 	
@@ -1629,18 +1629,18 @@ int diophant::solve_first_betten(int verbose_level)
 	}
 	if (f_vv) {
 		cout << "diophant::solve_first_betten: gcd computed:" << endl;
-		print2(TRUE);
+		print2(true);
 	}
 
 	j = 0;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			if (j >= n) {
 				if (f_v) {
 					cout << "diophant::solve_first_betten solution" << endl;
 					print_x(nb_steps_betten);
 				}
-				return TRUE;
+				return true;
 			}
 			nb_steps_betten++;
 			if ((nb_steps_betten % 1000000) == 0) {
@@ -1658,8 +1658,8 @@ int diophant::solve_first_betten(int verbose_level)
 					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
 					if (dt > max_time_in_ticks) {
-						f_broken_off_because_of_maxtime = TRUE;
-						return FALSE;
+						f_broken_off_because_of_maxtime = true;
+						return false;
 					}
 				}
 			}
@@ -1681,13 +1681,13 @@ int diophant::solve_first_betten(int verbose_level)
 			}
 			j++;
 		}
-		while (TRUE) {
+		while (true) {
 			if (j == 0) {
 				if (f_v) {
 					cout << "diophant::solve_first_betten "
 							"no solution" << endl;
 				}
-				return FALSE;
+				return false;
 			}
 			j--;
 			nb_steps_betten++;
@@ -1706,8 +1706,8 @@ int diophant::solve_first_betten(int verbose_level)
 					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
 					if (dt > max_time_in_ticks) {
-						f_broken_off_because_of_maxtime = TRUE;
-						return FALSE;
+						f_broken_off_because_of_maxtime = true;
+						return false;
 					}
 				}
 			}
@@ -1741,10 +1741,10 @@ int diophant::solve_next_mckay(int verbose_level)
 		}
 		_results.pop_front();
 		_cur_result++;
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -1758,14 +1758,14 @@ int diophant::solve_next_betten(int verbose_level)
 		exit(1);
 	}
 	if (m == 0) {
-		return FALSE;
+		return false;
 		}
 	if (n == 0) {
-		return FALSE;
+		return false;
 	}
 	j = n - 1;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			nb_steps_betten++;
 			if ((nb_steps_betten % 1000000) == 0) {
 				cout << "diophant::solve_next_betten nb_steps_betten="
@@ -1782,8 +1782,8 @@ int diophant::solve_next_betten(int verbose_level)
 					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
 					if (dt > max_time_in_ticks) {
-						f_broken_off_because_of_maxtime = TRUE;
-						return FALSE;
+						f_broken_off_because_of_maxtime = true;
+						return false;
 					}
 				}
 			}
@@ -1791,13 +1791,13 @@ int diophant::solve_next_betten(int verbose_level)
 				break;
 			}
 			if (j == 0) {
-				return FALSE;
+				return false;
 			}
 			j--;
 		}
-		while (TRUE) {
+		while (true) {
 			if (j >= n - 1) {
-				return TRUE;
+				return true;
 			}
 			j++;
 			nb_steps_betten++;
@@ -1815,8 +1815,8 @@ int diophant::solve_next_betten(int verbose_level)
 					int t1 = Os.os_ticks();
 					int dt = t1 - t0;
 					if (dt > max_time_in_ticks) {
-						f_broken_off_because_of_maxtime = TRUE;
-						return FALSE;
+						f_broken_off_because_of_maxtime = true;
+						return false;
 					}
 				}
 			}
@@ -1829,7 +1829,7 @@ int diophant::solve_next_betten(int verbose_level)
 }
 
 int diophant::j_fst(int j, int verbose_level)
-// if return value is FALSE, 
+// if return value is false, 
 // x[j] is 0 and RHS1[i] unchanged;
 // otherwise RHS1[i] := RHS1[i] - lf->x[j] * lf->a[i][j] 
 // and RHS1[i] divisible by g[i][j] 
@@ -1946,12 +1946,12 @@ int diophant::j_fst(int j, int verbose_level)
 				cout << "m=" << m << endl;
 				print_x(nb_steps_betten);
 			}
-			return FALSE;
+			return false;
 		}
-		return TRUE;
+		return true;
 	}
 	
-	while (TRUE) {
+	while (true) {
 		// check gcd restrictions: 
 		for (i = 0; i < m; i++) {
 			if (type[i] == t_LE) {
@@ -2035,7 +2035,7 @@ int diophant::j_fst(int j, int verbose_level)
 				cout << "Gij(i,j)=" << Gij(i,j) << endl;
 				print_x(nb_steps_betten);
 			}
-			return FALSE;
+			return false;
 		}
 		x[j]--;
 		sum1++;
@@ -2047,7 +2047,7 @@ int diophant::j_fst(int j, int verbose_level)
 					<< "] = " << x[j] << endl;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int diophant::j_nxt(int j, int verbose_level)
@@ -2071,7 +2071,7 @@ int diophant::j_nxt(int j, int verbose_level)
 			cout << "n=" << n << endl;
 			print_x(nb_steps_betten);
 		}
-		return FALSE;
+		return false;
 	}
 	
 	while (x[j] > 0) {
@@ -2108,7 +2108,7 @@ int diophant::j_nxt(int j, int verbose_level)
 		}
 		if (i == m) {
 			// OK
-			return TRUE;
+			return true;
 		}
 		if (f_vv) {
 			char *label;
@@ -2128,7 +2128,7 @@ int diophant::j_nxt(int j, int verbose_level)
 		cout << "j=" << j << endl;
 		print_x(nb_steps_betten);
 	}
-	return FALSE;
+	return false;
 }
 
 void diophant::solve_mckay(
@@ -2416,23 +2416,23 @@ void diophant::trivial_row_reductions(
 		cout << "diophant::trivial_row_reductions" << endl;
 	}
 	m1 = m;
-	f_no_solution = FALSE;
+	f_no_solution = false;
 	for (i = m - 1; i >= 0; i--) {
-		f_trivial = FALSE;
+		f_trivial = false;
 		d = count_non_zero_coefficients_in_row(i);
 		if (type[i] == t_LE) {
 			if (d <= RHS[i]) {
-				f_trivial = FALSE; // this is only valid if x_max = 1
+				f_trivial = false; // this is only valid if x_max = 1
 			}
 		}
 		else if (type[i] == t_INT) {
 			if (d <= RHS[i]) {
-				f_trivial = FALSE; // this is only valid if x_max = 1
+				f_trivial = false; // this is only valid if x_max = 1
 			}
 		}
 		else if (type[i] == t_EQ) {
 			if (RHS[i] > d) {
-				f_no_solution = FALSE; // this is only valid if x_max = 1
+				f_no_solution = false; // this is only valid if x_max = 1
 			}
 		}
 		if (f_trivial) {
@@ -2469,7 +2469,7 @@ diophant *diophant::trivial_column_reductions(int verbose_level)
 			for (j = 0; j < n; j++) {
 				a = Aij(i, j);
 				if (a > rhs) {
-					f_deleted[j] = TRUE;
+					f_deleted[j] = true;
 				}
 			}
 		}
@@ -2504,7 +2504,7 @@ diophant *diophant::trivial_column_reductions(int verbose_level)
 	D2->f_has_sum = f_has_sum;
 	D2->sum = sum;
 	//D2->f_x_max = f_x_max;
-	D2->f_has_var_labels = TRUE;
+	D2->f_has_var_labels = true;
 	D2->var_labels = NEW_int(n - nb_deleted);
 	for (i = 0; i < m; i++) {
 		D2->type[i] = type[i];
@@ -2641,7 +2641,7 @@ void diophant::save_as_Levi_graph(std::string &fname, int verbose_level)
 
 		CG->create_Levi_graph_from_incidence_matrix(
 			M, nb_rows, nb_cols,
-			FALSE /* f_point_labels */,
+			false /* f_point_labels */,
 			NULL /* *point_labels */,
 			verbose_level);
 		if (f_v) {
@@ -3033,11 +3033,11 @@ void diophant::read_general_format(
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	int m, n, s;
 	int cnt, i, j, d, h, a, nb_types, t, val;
 	int f_has_sum1;
-	int f_has_var_labels_save = FALSE;
+	int f_has_var_labels_save = false;
 	
 	if (f_v) {
 		cout << "diophant::read_general_format" << endl;
@@ -3270,7 +3270,7 @@ void diophant::eliminate_zero_rows(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, mm;
-	int f_delete = FALSE;
+	int f_delete = false;
 	
 	eqn_number = NEW_int(m);
 	mm = 0;
@@ -3281,13 +3281,13 @@ void diophant::eliminate_zero_rows(
 			}
 		}
 		if (j < n) {
-			f_delete = FALSE;
+			f_delete = false;
 		}
 		else {
-			f_delete = TRUE;
+			f_delete = true;
 		}
 		if (f_delete && type[i] == t_EQ && RHS[i]) {
-			f_delete = FALSE;
+			f_delete = false;
 		}
 		if (!f_delete) {
 			eqn_number[mm] = i;
@@ -3325,10 +3325,10 @@ int diophant::is_zero_outside(int first, int len, int i)
 			continue;
 		}
 		if (Aij(i, j)) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void diophant::project(
@@ -3569,9 +3569,9 @@ void diophant::project_to_single_equation_and_solve(
 
 	data_structures::tally C;
 
-	C.init_lint(nb_sol_in_eqn, h, FALSE, 0);
+	C.init_lint(nb_sol_in_eqn, h, false, 0);
 	cout << "number of solutions of individual equations classified:" << endl;
-	C.print(TRUE);
+	C.print(true);
 
 	FREE_int(eqn_idx);
 	FREE_lint(nb_sol_in_eqn);
@@ -3609,7 +3609,7 @@ void diophant::project_to_single_equation(diophant *D, int eqn_idx,
 		}
 	}
 
-	D->f_has_sum = FALSE;
+	D->f_has_sum = false;
 	D->sum = 0;
 
 	if (f_v) {
@@ -3649,7 +3649,7 @@ void diophant::project_to_two_equations(diophant *D, int eqn1_idx, int eqn2_idx,
 		}
 	}
 
-	D->f_has_sum = FALSE;
+	D->f_has_sum = false;
 	D->sum = 0;
 
 	if (f_v) {
@@ -3808,14 +3808,14 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 		}
 
 		//f.ignore(INT_MAX, '\"');
-		while (TRUE) {
+		while (true) {
 			f >> c;
 			if (c == '\"') {
 				break;
 			}
 		}
 		l = 0;
-		while (TRUE) {
+		while (true) {
 			f >> c;
 			if (c == '\"') {
 				break;
@@ -4010,17 +4010,17 @@ void diophant::draw_as_bitmap(std::string &fname,
 	Draw_bitmap_control.f_box_width = f_box_width;
 	Draw_bitmap_control.box_width = box_width;
 	Draw_bitmap_control.bit_depth = bit_depth;
-	Draw_bitmap_control.f_invert_colors = FALSE;
+	Draw_bitmap_control.f_invert_colors = false;
 
 
 	GO.draw_bitmap(&Draw_bitmap_control, verbose_level);
 
 #if 0
 	draw_bitmap(fname, M, m1, n1,
-			FALSE /* f_partition */, 0 /* part_width*/,
+			false /* f_partition */, 0 /* part_width*/,
 			0, NULL, 0, NULL, //int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 			f_box_width, box_width,
-			FALSE /* f_invert_colors */, bit_depth,
+			false /* f_invert_colors */, bit_depth,
 			verbose_level);
 #endif
 
@@ -4037,11 +4037,11 @@ void diophant::draw_it(
 		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
-	int f_dots = FALSE;
-	int f_partition = FALSE;
-	int f_bitmatrix = FALSE;
-	int f_row_grid = FALSE;
-	int f_col_grid = FALSE;
+	int f_dots = false;
+	int f_partition = false;
+	int f_bitmatrix = false;
+	int f_row_grid = false;
+	int f_col_grid = false;
 	graph_theory::graph_theory_domain Graph;
 
 
@@ -4053,7 +4053,7 @@ void diophant::draw_it(
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, NULL, A, 
 		m, n,
-		FALSE, NULL,
+		false, NULL,
 		verbose_level);
 }
 
@@ -4064,8 +4064,8 @@ void diophant::draw_partitioned(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_dots = FALSE;
-	int f_bitmatrix = FALSE;
+	int f_dots = false;
+	int f_bitmatrix = false;
 	int i, ii, j, jj;
 	combinatorics::combinatorics_domain Combi;
 	graph_theory::graph_theory_domain Graph;
@@ -4100,7 +4100,7 @@ void diophant::draw_partitioned(
 
 	data_structures::tally C;
 
-	C.init(T, m, FALSE, 0);
+	C.init(T, m, false, 0);
 	if (f_v) {
 		cout << "diophant::draw_partitioned we found " << C.nb_types
 				<< " classes according to type[]" << endl;
@@ -4172,24 +4172,24 @@ void diophant::draw_partitioned(
 			A2[i * n + j] = a;
 		}
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "diophant::draw_partitioned A2=" << endl;
 		Int_matrix_print(A2, m, n);
 	}
 
-	int f_row_grid = FALSE;
-	int f_col_grid = FALSE;
+	int f_row_grid = false;
+	int f_col_grid = false;
 
 
 	Graph.draw_bitmatrix(
 			fname_base,
 			Draw_options,
 			f_dots,
-		TRUE /* f_partition */, C.nb_types, part, col_part_size, part_col, 
+		true /* f_partition */, C.nb_types, part, col_part_size, part_col, 
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, NULL,
 		A2, m, n,
-		FALSE, NULL, verbose_level - 1);
+		false, NULL, verbose_level - 1);
 
 
 	FREE_int(T);
@@ -4210,7 +4210,7 @@ int diophant::test_solution(int *sol, int len, int verbose_level)
 	if (f_v) {
 		cout << "diophant::test_solution" << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		Int_vec_print(cout, sol, len);
 		cout << endl;
 		data_structures::set_of_sets *S;
@@ -4233,24 +4233,24 @@ int diophant::test_solution(int *sol, int len, int verbose_level)
 		}
 		Y[i] = b;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "Y=";
 		Int_vec_print_fully(cout, Y, m);
 		cout << endl;
 	}
-	ret = TRUE;
+	ret = true;
 	for (i = 0; i < m; i++) {
 		if (type[i] == t_EQ) {
 			if (Y[i] != RHS[i]) {
 				cout << "diophant::test_solution t_EQ and Y[i] != RHS[i]" << endl;
-				ret = FALSE;
+				ret = false;
 				break;
 			}
 		}
 		else if (type[i] == t_LE) {
 			if (Y[i] > RHS[i]) {
 				cout << "diophant::test_solution t_LE and Y[i] > RHS[i]" << endl;
-				ret = FALSE;
+				ret = false;
 				break;
 			}
 
@@ -4258,19 +4258,19 @@ int diophant::test_solution(int *sol, int len, int verbose_level)
 		else if (type[i] == t_INT) {
 			if (Y[i] > RHS[i]) {
 				cout << "diophant::test_solution t_INT and Y[i] > RHS[i]" << endl;
-				ret = FALSE;
+				ret = false;
 				break;
 			}
 			if (Y[i] < RHS_low[i]) {
 				cout << "diophant::test_solution t_INT and Y[i] < RHS_low[i]" << endl;
-				ret = FALSE;
+				ret = false;
 				break;
 			}
 
 		}
 		else if (type[i] == t_ZOR) {
 			if (Y[i] != 0 && Y[i] != RHS[i]) {
-				ret = FALSE;
+				ret = false;
 				break;
 			}
 		}
@@ -4353,9 +4353,9 @@ void diophant::test_solution_file(std::string &solution_file,
 
 		data_structures::tally C;
 
-		C.init(Y, m, FALSE, 0);
+		C.init(Y, m, false, 0);
 		cout << "classification: ";
-		C.print_naked(FALSE);
+		C.print_naked(false);
 		cout << endl;
 	}
 	if (f_v) {
@@ -4410,13 +4410,13 @@ int diophant::is_of_Steiner_type()
 
 	for (i = 0; i < m; i++) {
 		if (type[i] != t_EQ || type[i] != t_EQ) {
-			return FALSE;
+			return false;
 		}
 		if (RHSi(i) != 1) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&Adj,
@@ -4466,7 +4466,7 @@ void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&A
 	}
 #endif
 	for (i = 0; i < m; i++) {
-		if (FALSE) {
+		if (false) {
 			cout << "diophant::make_clique_graph_adjacency_matrix i=" << i << endl;
 		}
 		for (j1 = 0; j1 < n; j1++) {
@@ -4509,7 +4509,7 @@ void diophant::make_clique_graph(
 	label.assign("clique_graph");
 	label_tex.assign("clique\\_graph");
 
-	CG->init_no_colors(n, Adj, TRUE, label, label_tex, verbose_level - 1);
+	CG->init_no_colors(n, Adj, true, label, label_tex, verbose_level - 1);
 	
 	
 	if (f_v) {
@@ -4567,7 +4567,7 @@ void diophant::test_if_the_last_solution_is_unique()
 int diophant::solve_first_mckay_once_option(
 		int f_once, int verbose_level)
 {
-	int f_v = TRUE;//(verbose_level >= 1);
+	int f_v = true;//(verbose_level >= 1);
 	int j;
 	int maxresults = 10000000;
 	vector<int> res;
@@ -4593,7 +4593,7 @@ int diophant::solve_first_mckay_once_option(
 	}
 	_cur_result = 0;
 	if (_resultanz == 0) {
-		return FALSE;
+		return false;
 	}
 	res = _results.front();
 	for (j = 0; j < n; j++) {
@@ -4604,7 +4604,7 @@ int diophant::solve_first_mckay_once_option(
 	if (f_v) {
 		cout << "diophant::solve_first_mckay done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -4617,13 +4617,13 @@ int diophant::solve_first_mckay_once_option(
 static void diophant_callback_solution_found(int *sol, int len,
 	int nb_sol, void *data)
 {
-	int f_v = FALSE;
+	int f_v = false;
 	diophant *D = (diophant *) data;
 	vector<int> lo;
 	int i, j;
 
 	if ((nb_sol % 1000) == 0) {
-		f_v = TRUE;
+		f_v = true;
 	}
 	if (f_v) {
 		cout << "diophant_callback_solution_found recording solution "
@@ -4650,7 +4650,7 @@ static void diophant_callback_solution_found(int *sol, int len,
 	else {
 		if (f_v) {
 			cout << "diophant_callback_solution_found D->test_solution "
-					"returns TRUE" << endl;
+					"returns true" << endl;
 		}
 	}
 

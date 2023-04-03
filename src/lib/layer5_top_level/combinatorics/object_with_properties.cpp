@@ -25,7 +25,7 @@ object_with_properties::object_with_properties()
 
 	NO = NULL;
 
-	f_projective_space = FALSE;
+	f_projective_space = false;
 	PA = NULL;
 
 	SG = NULL;
@@ -91,7 +91,7 @@ void object_with_properties::init(
 				"after Nau.automorphism_group_as_permutation_group" << endl;
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "object_with_properties::init "
 				"A_perm:" << endl;
 
@@ -154,7 +154,7 @@ void object_with_properties::compute_flag_orbits(int verbose_level)
 		cout << "object_with_properties::compute_flag_orbits "
 				"before Flags->init" << endl;
 	}
-	Flags->init(this, FALSE, A_perm, A_perm->Strong_gens, verbose_level - 2);
+	Flags->init(this, false, A_perm, A_perm->Strong_gens, verbose_level - 2);
 	if (f_v) {
 		cout << "object_with_properties::compute_flag_orbits "
 				"after Flags->init" << endl;
@@ -164,7 +164,7 @@ void object_with_properties::compute_flag_orbits(int verbose_level)
 		cout << "object_with_properties::compute_flag_orbits "
 				"before Anti_Flags->init" << endl;
 	}
-	Anti_Flags->init(this, TRUE, A_perm, A_perm->Strong_gens, verbose_level - 2);
+	Anti_Flags->init(this, true, A_perm, A_perm->Strong_gens, verbose_level - 2);
 	if (f_v) {
 		cout << "object_with_properties::compute_flag_orbits "
 				"after Anti_Flags->init" << endl;
@@ -582,7 +582,7 @@ void object_with_properties::latex_report(std::ostream &ost,
 			cout << "object_with_properties::latex_report after find_object" << endl;
 		}
 
-		// if f_found is TRUE, B[idx] agrees with the given object
+		// if f_found is true, B[idx] agrees with the given object
 
 
 		if (!f_found) {

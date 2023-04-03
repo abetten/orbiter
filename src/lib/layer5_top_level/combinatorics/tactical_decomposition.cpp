@@ -22,7 +22,7 @@ tactical_decomposition::tactical_decomposition()
 	set_size = 0;
 	nb_blocks = 0;
 	Inc = NULL;
-	f_combined_action = FALSE;
+	f_combined_action = false;
 	A = NULL;
 	A_on_points = NULL;
 	A_on_lines = NULL;
@@ -157,13 +157,13 @@ void tactical_decomposition::init(int nb_rows, int nb_cols,
 		cout << "translation_plane_via_andre_model::init "
 				"Row-scheme:" << endl;
 		Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-			cout, FALSE /* f_enter_math */,
-			TRUE /* f_print_subscripts */, *Stack);
+			cout, false /* f_enter_math */,
+			true /* f_print_subscripts */, *Stack);
 		cout << "translation_plane_via_andre_model::init "
 				"Col-scheme:" << endl;
 		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-			cout, FALSE /* f_enter_math */,
-			TRUE /* f_print_subscripts */, *Stack);
+			cout, false /* f_enter_math */,
+			true /* f_print_subscripts */, *Stack);
 		}
 #endif
 
@@ -184,14 +184,14 @@ void tactical_decomposition::report(int f_enter_math, std::ostream &ost)
 	ost << "Tactical decomposition schemes:\\\\" << endl;
 	ost << "$$" << endl;
 	Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-		ost, FALSE /* f_enter_math */,
-		TRUE /* f_print_subscripts */, *Stack);
+		ost, false /* f_enter_math */,
+		true /* f_print_subscripts */, *Stack);
 	cout << "translation_plane_via_andre_model::report "
 			"Col-scheme:" << endl;
 	ost << "\\qquad" << endl;
 	Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-		ost, FALSE /* f_enter_math */,
-		TRUE /* f_print_subscripts */, *Stack);
+		ost, false /* f_enter_math */,
+		true /* f_print_subscripts */, *Stack);
 	ost << "$$" << endl;
 #endif
 }

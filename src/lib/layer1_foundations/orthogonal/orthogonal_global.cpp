@@ -751,18 +751,18 @@ int orthogonal_global::BLT_test_full(orthogonal *O,
 		if (f_v) {
 			cout << "orthogonal_global::BLT_test_full fails due to collinearity_test" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	if (!BLT_test(O, size, set, verbose_level)) {
 		if (f_v) {
 			cout << "orthogonal_global::BLT_test_full fails due to BLT_test" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	if (f_v) {
 		cout << "orthogonal_global::BLT_test_full passes" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int orthogonal_global::BLT_test(orthogonal *O,
@@ -771,13 +771,13 @@ int orthogonal_global::BLT_test(orthogonal *O,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, x, y, z, a;
-	int f_OK = TRUE;
+	int f_OK = true;
 	int fxy, fxz, fyz, l1, l2, l3;
 	int two;
 	int m1[5], m3[5];
 
 	if (size <= 2) {
-		return TRUE;
+		return true;
 	}
 	if (f_v) {
 		cout << "orthogonal_global::BLT_test BLT_test for" << endl;
@@ -885,7 +885,7 @@ int orthogonal_global::BLT_test(orthogonal *O,
 
 
 		if (O->SN->f_is_minus_square[a]) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				l1 = O->F->log_alpha(fxz);
 				l2 = O->F->log_alpha(fxy);
@@ -941,7 +941,7 @@ int orthogonal_global::collinearity_test(orthogonal *O,
 {
 	int f_v = (verbose_level >= 1);
 	int i, x, y;
-	int f_OK = TRUE;
+	int f_OK = true;
 	int fxy;
 
 	if (f_v) {
@@ -974,7 +974,7 @@ int orthogonal_global::collinearity_test(orthogonal *O,
 				O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v2, 1);
 
 		if (fxy == 0) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				cout << "not OK; ";
 				cout << "{x,y}={" << x << "," << y

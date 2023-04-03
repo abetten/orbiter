@@ -147,7 +147,7 @@ void boolean_function_domain::init(field_theory::finite_field *F2,
 	}
 
 	//Fq = NEW_OBJECT(field_theory::finite_field);
-	//Fq->finite_field_init(2, FALSE /* f_without_tables */, 0);
+	//Fq->finite_field_init(2, false /* f_without_tables */, 0);
 
 	//FQ = NEW_OBJECT(finite_field);
 	//FQ->finite_field_init(Q, 0);
@@ -175,7 +175,7 @@ void boolean_function_domain::init(field_theory::finite_field *F2,
 				v1, 1, n + 1, a);
 		affine_points[i] = a;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "affine_points" << endl;
 		for (i = 0; i < Q; i++) {
 			Gg.AG_element_unrank(2, v1, 1, n, i);
@@ -257,7 +257,7 @@ void boolean_function_domain::setup_polynomial_rings(int verbose_level)
 				"after Poly[n].affine_evaluation_kernel" << endl;
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "Kernel of evaluation map:" << endl;
 		Int_matrix_print(Kernel, dim_kernel, 2);
 	}
@@ -403,7 +403,7 @@ void boolean_function_domain::compute_polynomial_representation(
 		cout << endl;
 
 		int *f;
-		int f_error = FALSE;
+		int f_error = false;
 
 		f = NEW_int(Q);
 		evaluate(coeff, f);
@@ -413,7 +413,7 @@ void boolean_function_domain::compute_polynomial_representation(
 #if 0
 			if (func[h] == f[h]) {
 				cout << "error";
-				f_error = TRUE;
+				f_error = true;
 			}
 #endif
 			cout << endl;
@@ -437,7 +437,7 @@ void boolean_function_domain::compute_polynomial_representation(
 
 
 		int *f;
-		int f_error = FALSE;
+		int f_error = false;
 
 		f = NEW_int(Q);
 		evaluate(coeff, f);
@@ -446,7 +446,7 @@ void boolean_function_domain::compute_polynomial_representation(
 			cout << h << " : " << func[h] << " : " << f[h];
 			if (func[h] != f[h]) {
 				cout << "error";
-				f_error = TRUE;
+				f_error = true;
 			}
 			cout << endl;
 		}
@@ -527,10 +527,10 @@ int boolean_function_domain::is_bent(int *T)
 		}
 	}
 	if (i == Q) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -548,10 +548,10 @@ int boolean_function_domain::is_near_bent(int *T)
 		}
 	}
 	if (i == Q) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 

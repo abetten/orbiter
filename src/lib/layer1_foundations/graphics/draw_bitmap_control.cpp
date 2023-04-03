@@ -19,35 +19,35 @@ namespace graphics {
 
 draw_bitmap_control::draw_bitmap_control()
 {
-	f_input_csv_file = FALSE;
+	f_input_csv_file = false;
 	//std::string input_csv_file_name;
 
-	f_secondary_input_csv_file = FALSE;
+	f_secondary_input_csv_file = false;
 	//std::string secondary_input_csv_file_name;
 
 
-	f_input_object = FALSE;
+	f_input_object = false;
 	//std::string input_object_label;
 
 
-	f_input_matrix = FALSE;
+	f_input_matrix = false;
 	M = NULL;
 	M2 = NULL;
 	m = 0;
 	n = 0;
 
-	f_partition = FALSE;
+	f_partition = false;
 	part_width = 4;
 	//std::string part_row;
 	//std::string part_col;
 
-	f_box_width = FALSE;
+	f_box_width = false;
 	box_width = 10;
 
-	f_invert_colors = FALSE;
+	f_invert_colors = false;
 	bit_depth = 8;
 
-	f_grayscale = FALSE;
+	f_grayscale = false;
 
 }
 
@@ -71,21 +71,21 @@ int draw_bitmap_control::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-input_csv_file") == 0) {
-			f_input_csv_file = TRUE;
+			f_input_csv_file = true;
 			input_csv_file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-input_csv_file " << input_csv_file_name << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-secondary_input_csv_file") == 0) {
-			f_secondary_input_csv_file = TRUE;
+			f_secondary_input_csv_file = true;
 			secondary_input_csv_file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-secondary_input_csv_file " << secondary_input_csv_file_name << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-input_object") == 0) {
-			f_input_object = TRUE;
+			f_input_object = true;
 			input_object_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-input_object " << input_object_label << endl;
@@ -93,7 +93,7 @@ int draw_bitmap_control::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-partition") == 0) {
-			f_partition = TRUE;
+			f_partition = true;
 			part_width = ST.strtoi(argv[++i]);
 			part_row.assign(argv[++i]);
 			part_col.assign(argv[++i]);
@@ -102,7 +102,7 @@ int draw_bitmap_control::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-box_width") == 0) {
-			f_box_width = TRUE;
+			f_box_width = true;
 			box_width = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-box_width " << box_width << endl;
@@ -115,13 +115,13 @@ int draw_bitmap_control::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-invert_colors") == 0) {
-			f_invert_colors = TRUE;
+			f_invert_colors = true;
 			if (f_v) {
 				cout << "-invert_colors " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-grayscale") == 0) {
-			f_grayscale = TRUE;
+			f_grayscale = true;
 			if (f_v) {
 				cout << "-grayscale " << endl;
 			}

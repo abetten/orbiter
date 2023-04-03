@@ -160,7 +160,7 @@ void desarguesian_spread::calculate_spread_elements(
 		}
 		for (i = 0; i < s; i++) {
 
-			if (FALSE) {
+			if (false) {
 				cout << "i=" << i << " / " << s << endl;
 			}
 			// multiply by the i-th basis element,
@@ -168,7 +168,7 @@ void desarguesian_spread::calculate_spread_elements(
 			a = SubS->Basis[i];
 			for (j = 0; j < m; j++) {
 				b = v[j];
-				if (FALSE) {
+				if (false) {
 					cout << "j=" << j << " / " << m
 							<< " a=" << a << " b=" << b << endl;
 				}
@@ -309,18 +309,18 @@ void desarguesian_spread::compute_shadow(
 	}
 	
 	for (i = 0; i < nb_points; i++) {
-		is_in_shadow[i] = FALSE;
+		is_in_shadow[i] = false;
 	}
 	for (i = 0; i < N; i++) {
 		if (Intersection_dimensions[i]) {
 			for (j = 0; j < nb_points_per_spread_element; j++) {
 				rk = List_of_points[i * nb_points_per_spread_element + j];
 				if (is_in_shadow[rk]) {
-					cout << "is_in_shadow[rk] is TRUE, something is "
+					cout << "is_in_shadow[rk] is true, something is "
 							"wrong with the spread" << endl;
 					exit(1);
 				}
-				is_in_shadow[rk] = TRUE;
+				is_in_shadow[rk] = true;
 			}
 		}
 	}
@@ -512,17 +512,17 @@ void desarguesian_spread::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 

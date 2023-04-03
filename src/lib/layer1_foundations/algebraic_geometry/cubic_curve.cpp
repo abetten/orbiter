@@ -37,7 +37,7 @@ cubic_curve::cubic_curve()
 
 cubic_curve::~cubic_curve()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "cubic_curve::~cubic_curve" << endl;
@@ -80,7 +80,7 @@ void cubic_curve::init(
 		cout << "cubic_curve::init before P->projective_space_init" << endl;
 	}
 	P->projective_space_init(2, F,
-		TRUE /*f_init_incidence_structure */,
+		true /*f_init_incidence_structure */,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "cubic_curve::init after P->projective_space_init" << endl;
@@ -135,7 +135,7 @@ int cubic_curve::compute_system_in_RREF(
 	System = NEW_int(nb_pts * nb_monomials);
 	base_cols = NEW_int(nb_monomials);
 
-	if (FALSE) {
+	if (false) {
 		cout << "cubic_curve::compute_system_in_RREF list of "
 				"covered points by lines:" << endl;
 		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(pt_list, nb_pts, P->Subspaces->k);
@@ -143,7 +143,7 @@ int cubic_curve::compute_system_in_RREF(
 	for (i = 0; i < nb_pts; i++) {
 		P->unrank_point(Pts + i * 3, pt_list[i]);
 	}
-	if (f_v && FALSE) {
+	if (f_v && false) {
 		cout << "cubic_curve::compute_system_in_RREF list of "
 				"covered points in coordinates:" << endl;
 		Int_matrix_print(Pts, nb_pts, 3);
@@ -155,14 +155,14 @@ int cubic_curve::compute_system_in_RREF(
 					Poly->evaluate_monomial(j, Pts + i * 3);
 		}
 	}
-	if (f_v && FALSE) {
+	if (f_v && false) {
 		cout << "cubic_curve::compute_system_in_RREF "
 				"The system:" << endl;
 		Int_matrix_print(System, nb_pts, nb_monomials);
 	}
 	r = F->Linear_algebra->Gauss_simple(System, nb_pts, nb_monomials,
 		base_cols, 0 /* verbose_level */);
-	if (FALSE) {
+	if (false) {
 		cout << "cubic_curve::compute_system_in_RREF "
 				"The system in RREF:" << endl;
 		Int_matrix_print(System, nb_pts, nb_monomials);
@@ -222,7 +222,7 @@ void cubic_curve::compute_singular_points(
 // We compute the set of singular points into Pts[nb_pts]
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int h, i, a, rk;
 	int nb_eqns = 3;
 	int v[3];

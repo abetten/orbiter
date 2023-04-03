@@ -40,15 +40,15 @@ semifield_classify::semifield_classify()
 	//LG = NULL;
 	Mtx = NULL;
 	//F = NULL;
-	//f_semilinear = FALSE;
+	//f_semilinear = false;
 
 	q = 0;
 	order = 0;
 
-	//f_level_two_prefix = FALSE;
+	//f_level_two_prefix = false;
 	//level_two_prefix = NULL;
 
-	//f_level_three_prefix = FALSE;
+	//f_level_three_prefix = false;
 	//level_three_prefix = NULL;
 
 	SD = NULL;
@@ -225,12 +225,12 @@ void semifield_classify::init(
 #if 0
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-level2_prefix") == 0) {
-			f_level_two_prefix = TRUE;
+			f_level_two_prefix = true;
 			level_two_prefix = argv[++i];
 			cout << "-level2_prefix " << level_two_prefix << endl;
 		}
 		else if (strcmp(argv[i], "-level3_prefix") == 0) {
-			f_level_three_prefix = TRUE;
+			f_level_three_prefix = true;
 			level_three_prefix = argv[++i];
 			cout << "-level3_prefix " << level_three_prefix << endl;
 		}
@@ -290,11 +290,11 @@ void semifield_classify::init(
 	}
 
 	ring_theory::longinteger_object go1, go2;
-	//int f_semilinear = TRUE;
+	//int f_semilinear = true;
 
 #if 0
 	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 #endif
 
@@ -310,7 +310,7 @@ void semifield_classify::init(
 
 	A0->Known_groups->init_projective_group(
 		k, Mtx->GFq, Mtx->f_semilinear,
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
+		true /* f_basis */, true /* f_init_sims */,
 		nice_gens,
 		0 /* verbose_level */);
 	FREE_OBJECT(nice_gens);
@@ -339,8 +339,8 @@ void semifield_classify::init(
 	}
 
 	A0_linear->Known_groups->init_projective_group(k,
-			Mtx->GFq, FALSE /*f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			Mtx->GFq, false /*f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			0 /* verbose_level */);
 	FREE_OBJECT(nice_gens);
@@ -404,7 +404,7 @@ void semifield_classify::init(
 	}
 	AS = T->A->Induced_action->induced_action_on_spread_set(
 		A_on_S,
-		FALSE /* f_induce_action */,
+		false /* f_induce_action */,
 		NULL /* old_G */,
 		verbose_level - 2);
 	if (f_v) {
@@ -501,8 +501,8 @@ void semifield_classify::report(
 
 	ost << "\\section*{The Group}" << endl;
 
-	A0_linear->report(ost, TRUE /* f_sims */, G,
-			TRUE /* f_strong_gens */, A0_linear->Strong_gens,
+	A0_linear->report(ost, true /* f_sims */, G,
+			true /* f_strong_gens */, A0_linear->Strong_gens,
 			draw_options,
 			verbose_level);
 
@@ -555,8 +555,8 @@ void semifield_classify::report(
 			{
 				data_structures::tally C;
 
-				C.init_lint(Go, L2->nb_flag_orbits, FALSE, 0);
-				C.print_file_tex(ost, TRUE /* f_backwards */);
+				C.init_lint(Go, L2->nb_flag_orbits, false, 0);
+				C.print_file_tex(ost, true /* f_backwards */);
 			}
 			FREE_lint(Go);
 		}
@@ -568,8 +568,8 @@ void semifield_classify::report(
 		{
 			data_structures::tally C;
 
-			C.init_lint(L2->Go, L2->nb_orbits, FALSE, 0);
-			C.print_file_tex(ost, TRUE /* f_backwards */);
+			C.init_lint(L2->Go, L2->nb_orbits, false, 0);
+			C.print_file_tex(ost, true /* f_backwards */);
 		}
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
@@ -609,8 +609,8 @@ void semifield_classify::report(
 			{
 				data_structures::tally C;
 
-				C.init_lint(Go, L3->nb_flag_orbits, FALSE, 0);
-				C.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+				C.init_lint(Go, L3->nb_flag_orbits, false, 0);
+				C.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
 			}
 			FREE_lint(Go);
 		}
@@ -631,8 +631,8 @@ void semifield_classify::report(
 
 			data_structures::tally C;
 
-			C.init_lint(Go, L3->nb_orbits, FALSE, 0);
-			C.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+			C.init_lint(Go, L3->nb_orbits, false, 0);
+			C.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
 			FREE_lint(Go);
 
 		}
@@ -738,8 +738,8 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 	//Gen->depth = depth;
 	Gen->main(t0,
 		schreier_depth,
-		FALSE /*f_use_invariant_subset_if_available*/,
-		FALSE /*f_debug*/,
+		false /*f_use_invariant_subset_if_available*/,
+		false /*f_debug*/,
 		verbose_level - 1);
 
 	int nb_orbits;
@@ -934,7 +934,7 @@ void semifield_classify::early_test_func(long int *S, int len,
 			}
 		}
 		if (j == N) {
-			if (FALSE) {
+			if (false) {
 				cout << "The candidate " << i << " / " << nb_candidates
 						<< " which is " << candidates[i]
 						<< " survives" << endl;
@@ -942,7 +942,7 @@ void semifield_classify::early_test_func(long int *S, int len,
 			good_candidates[nb_good_candidates++] = candidates[i];
 		}
 		else {
-			if (FALSE) {
+			if (false) {
 				cout << "The candidate " << i << " / " << nb_candidates
 						<< " which is " << candidates[i]
 						<< " is eliminated" << endl;
@@ -974,7 +974,7 @@ int semifield_classify::test_candidate(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = TRUE;
+	int ret = true;
 	int *v;
 	int *w;
 	int *base_cols;
@@ -1010,7 +1010,7 @@ int semifield_classify::test_candidate(
 		}
 		r = A_on_S->F->Linear_algebra->Gauss_easy_memory_given(w, k, k, base_cols);
 		if (r != k) {
-			ret = FALSE;
+			ret = false;
 			break;
 		}
 	}
@@ -1068,7 +1068,7 @@ int semifield_classify::test_partial_semifield(
 		int *Basis, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = TRUE;
+	int ret = true;
 	int N, h, i, j, a, b, c, r;
 	int *base_cols;
 	int *v;
@@ -1101,8 +1101,8 @@ int semifield_classify::test_partial_semifield(
 		}
 		r = Mtx->GFq->Linear_algebra->Gauss_easy_memory_given(w, k, k, base_cols);
 		if (r != k) {
-			ret = FALSE;
-			if (TRUE) {
+			ret = false;
+			if (true) {
 				cout << "semifield_classify::test_partial_semifield "
 						"fail for vector h=" << h << " / " << N << " : ";
 				cout << "r=" << r << endl;
@@ -1312,9 +1312,9 @@ int semifield_classify::test_if_third_basis_vector_is_ok(int *Basis)
 		v[i] = Basis[2 * k2 + i * k + 0];
 	}
 	if (!Mtx->GFq->Linear_algebra->is_unit_vector(v, k, k - 1)) {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 void semifield_classify::candidates_classify_by_first_column(
@@ -1476,8 +1476,8 @@ void semifield_classify::compute_orbit_of_subspaces(
 
 	Orb->init_lint(A, AS, Mtx->GFq,
 		input_data, k, k2 /* n */,
-		TRUE /* f_has_desired_pivots */, desired_pivots,
-		TRUE /* f_has_rank_functions */, this /* rank_unrank_data */,
+		true /* f_has_desired_pivots */, desired_pivots,
+		true /* f_has_rank_functions */, this /* rank_unrank_data */,
 		canonial_form_rank_vector_callback,
 		canonial_form_unrank_vector_callback,
 		canonial_form_compute_image_of_vector_callback,

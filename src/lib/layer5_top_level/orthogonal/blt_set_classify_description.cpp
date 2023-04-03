@@ -17,7 +17,7 @@ namespace orthogonal_geometry_applications {
 
 blt_set_classify_description::blt_set_classify_description()
 {
-	f_starter_size = FALSE;
+	f_starter_size = false;
 	starter_size = 0;
 }
 
@@ -39,7 +39,7 @@ int blt_set_classify_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-starter_size") == 0) {
-			f_starter_size = TRUE;
+			f_starter_size = true;
 			starter_size = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-starter_size " << starter_size << endl;

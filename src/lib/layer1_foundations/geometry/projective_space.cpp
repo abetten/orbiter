@@ -45,7 +45,7 @@ projective_space::projective_space()
 
 projective_space::~projective_space()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "projective_space::~projective_space" << endl;
@@ -489,7 +489,7 @@ void projective_space::Baer_subline(
 		PG_element_rank_modified(*F, w, 1, 2, a);
 		pts[t] = a;
 		if (!int_vec_search(Local_pts_sorted, nb_pts, a, idx)) {
-			ret = FALSE;
+			ret = false;
 			if (f_vv) {
 				cout << "did not find this point in the list of "
 						"points, hence not contained in Baer subline" << endl;

@@ -29,7 +29,7 @@ surface_object_with_action::surface_object_with_action()
 	SO = NULL;
 	Aut_gens = NULL;
 
-	f_has_nice_gens = FALSE;
+	f_has_nice_gens = false;
 	nice_gens = NULL;
 
 
@@ -177,7 +177,7 @@ void surface_object_with_action::init_equation(
 	if (SO->nb_lines != 27) {
 		cout << "surface_object_with_action::init_equation "
 				"the surface does not have 27 lines" << endl;
-		return FALSE;
+		return false;
 	}
 #endif
 
@@ -1239,7 +1239,7 @@ void surface_object_with_action::print_automorphism_group(
 	int verbose_level)
 {
 	ring_theory::longinteger_object go;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	Aut_gens->group_order(go);
 	
@@ -1248,7 +1248,7 @@ void surface_object_with_action::print_automorphism_group(
 	ost << "\\bigskip" << endl;
 	ost << "\\subsection*{Orbits on points}" << endl;
 	//Orbits_on_points->print_and_list_orbits_and_
-	//stabilizer_sorted_by_length(ost, TRUE, Surf_A->A, go);
+	//stabilizer_sorted_by_length(ost, true, Surf_A->A, go);
 	Orbits_on_points->print_and_list_orbits_with_original_labels_tex(ost);
 
 
@@ -1403,7 +1403,7 @@ void surface_object_with_action::cheat_sheet_basic(std::ostream &ost, int verbos
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet_basic" << endl;
@@ -1559,7 +1559,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 
 	go = Aut_gens->group_order_as_lint();
 	if (go < 50) {
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		int *Table;
 		Aut_gens->create_group_table(Table, go, verbose_level - 1);
 		L.print_integer_matrix_tex_block_by_block(ost,
@@ -1808,7 +1808,7 @@ void surface_object_with_action::investigate_surface_and_write_report(
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -1865,7 +1865,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 	cheat_sheet(ost,
 		label,
 		label_tex,
-		TRUE /* f_print_orbits */,
+		true /* f_print_orbits */,
 		fname_mask /* const char *fname_mask*/,
 		Opt,
 		verbose_level);
@@ -1978,7 +1978,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 		HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
 		HPD->init(SC->F, 3, 2 /* degree */,
-				TRUE /* f_init_incidence_structure */,
+				true /* f_init_incidence_structure */,
 				t_PART,
 				verbose_level);
 
@@ -1987,7 +1987,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 		A_on_poly = NEW_OBJECT(action);
 		A_on_poly->induced_action_on_homogeneous_polynomials(A,
 			HPD,
-			FALSE /* f_induce_action */, NULL,
+			false /* f_induce_action */, NULL,
 			verbose_level);
 
 		cout << "created action A_on_poly" << endl;
@@ -2030,10 +2030,10 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 
 		T->print_table_latex(
 				ost,
-				TRUE /* f_has_callback */,
+				true /* f_has_callback */,
 				HPD_callback_print_function2,
 				HPD /* callback_data */,
-				TRUE /* f_has_callback */,
+				true /* f_has_callback */,
 				HPD_callback_print_function,
 				HPD /* callback_data */,
 				verbose_level);
@@ -2064,7 +2064,7 @@ void surface_object_with_action::all_quartic_curves(
 {
 	int f_v = (verbose_level >= 1);
 
-	int f_TDO = FALSE;
+	int f_TDO = false;
 
 	if (f_v) {
 		cout << "surface_object_with_action::all_quartic_curves "
@@ -2137,7 +2137,7 @@ void surface_object_with_action::export_all_quartic_curves(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_TDO = FALSE;
+	//int f_TDO = false;
 
 	if (f_v) {
 		cout << "surface_object_with_action::export_all_quartic_curves" << endl;
@@ -2279,11 +2279,11 @@ void surface_object_with_action::print_full_del_Pezzo(std::ostream &ost, int ver
 		// P_idx = index into SO->Pts[]
 
 		ost << "\\{";
-		f_first = TRUE;
+		f_first = true;
 		for (j = 0; j < SO->SOP->nb_pts_not_on_lines; j++) {
 			if (!f_deleted[j]) {
 				if (f_first) {
-					f_first = FALSE;
+					f_first = false;
 				}
 				else {
 					ost << ",";
@@ -2568,11 +2568,11 @@ void surface_object_with_action::print_summary(std::ostream &ost)
 
 
 	ost << "\\mbox{Type of points on lines} & ";
-	SO->SOP->Type_pts_on_lines->print_naked_tex(ost, TRUE);
+	SO->SOP->Type_pts_on_lines->print_naked_tex(ost, true);
 	ost << " & \\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of lines on points} & ";
-	SO->SOP->Type_lines_on_point->print_naked_tex(ost, TRUE);
+	SO->SOP->Type_lines_on_point->print_naked_tex(ost, true);
 	ost << " & \\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
@@ -2580,11 +2580,11 @@ void surface_object_with_action::print_summary(std::ostream &ost)
 #if 0
 	ost << "Points on lines:" << endl;
 	ost << "$$" << endl;
-	Type_pts_on_lines->print_naked_tex(ost, TRUE);
+	Type_pts_on_lines->print_naked_tex(ost, true);
 	ost << "$$" << endl;
 	ost << "Lines on points:" << endl;
 	ost << "$$" << endl;
-	Type_lines_on_point->print_naked_tex(ost, TRUE);
+	Type_lines_on_point->print_naked_tex(ost, true);
 	ost << "$$" << endl;
 #endif
 }
@@ -2624,7 +2624,7 @@ void surface_object_with_action::print_action_on_surface(
 
 	{
 		ofstream ost(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		int i, ord;
 
 		L.head_easy(ost);
@@ -2651,9 +2651,9 @@ void surface_object_with_action::print_action_on_surface(
 			ost << "Element " << setw(5) << i << " / "
 					<< nb_elements << " of order " << ord << ":" << endl;
 
-			A->print_one_element_tex(ost, Elt, FALSE /*f_with_permutation*/);
+			A->print_one_element_tex(ost, Elt, false /*f_with_permutation*/);
 
-			if (TRUE /* f_with_fix_structure*/) {
+			if (true /* f_with_fix_structure*/) {
 				int f;
 
 				f = A->Group_element->count_fixed_points(Elt, 0 /* verbose_level */);

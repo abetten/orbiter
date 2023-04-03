@@ -534,8 +534,8 @@ class discreta_base
 		// y := this * x
 	int invert(int verbose_level);
 		// this := this^(-1)
-		// returns TRUE if the object was invertible,
-		// FALSE otherwise
+		// returns true if the object was invertible,
+		// false otherwise
 	int invert_mod(discreta_base &p, int verbose_level);
 	virtual int invert_to(discreta_base &x, int verbose_level);
 	void mult_apply(discreta_base &x, int verbose_level);
@@ -588,11 +588,11 @@ class discreta_base
 	virtual void dec();
 		// this := this - 1
 	virtual int is_zero();
-		// TRUE iff this = 0
+		// true iff this = 0
 	virtual int is_one();
-		// TRUE iff this = 1
+		// true iff this = 1
 	virtual int is_m_one();
-		// TRUE iff this = -1
+		// true iff this = -1
 	discreta_base& factorial(int z);
 		// this := z!
 	discreta_base& i_power_j(int i, int j);
@@ -928,7 +928,7 @@ class Vector: public discreta_base
 		// behind the x already there.
 		// returns true if the element was already in the vector.
 	bool search(discreta_base& x, int *idx);
-		// returns TRUE if the object x has been found. 
+		// returns true if the object x has been found. 
 		// idx contains the position where the object which 
 		// has been found lies. 
 		// if there are more than one element equal to x in the vector, 
@@ -954,7 +954,7 @@ class Vector: public discreta_base
 		// computes the lexicographically first k-subset of {0,...,n-1}
 	int n_choose_k_next(int n, int k);
 		// computes the lexicographically next k-subset
-		// returns FALSE if there is no further k-subset
+		// returns false if there is no further k-subset
 		// example: n = 4, k = 2
 		// first gives (0,1),
 		// next gives (0,2), then (0,3), (1,2), (1,3), (2,3).
@@ -963,7 +963,7 @@ class Vector: public discreta_base
 		// first lehmercode = 0...0 (n times)
 	int next_lehmercode();
 		// computes the next lehmercode,
-		// returns FALSE iff there is no next lehmercode.
+		// returns false iff there is no next lehmercode.
 		// the last lehmercode is n-1,n-2,...,2,1,0
 		// example: n = 3,
 		// first_lehmercode gives 

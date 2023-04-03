@@ -20,9 +20,9 @@ namespace apps_graph_theory {
 
 graph_modification_description::graph_modification_description()
 {
-	f_complement = FALSE;
+	f_complement = false;
 
-	f_distance_2 = FALSE;
+	f_distance_2 = false;
 }
 
 graph_modification_description::~graph_modification_description()
@@ -42,25 +42,25 @@ int graph_modification_description::check_and_parse_argument(
 		cout << "next argument is " << argv[i] << endl;
 	}
 	if (ST.stringcmp(argv[i], "-complement") == 0) {
-		f_complement = TRUE;
+		f_complement = true;
 		i++;
 		if (f_v) {
 			cout << "-complement " << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-distance_2") == 0) {
-		f_distance_2 = TRUE;
+		f_distance_2 = true;
 		i++;
 		if (f_v) {
 			cout << "-distance_2 " << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	if (f_v) {
 		cout << "graph_modification_description::read_arguments done" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 int graph_modification_description::read_arguments(
@@ -77,14 +77,14 @@ int graph_modification_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-complement") == 0) {
-			f_complement = TRUE;
+			f_complement = true;
 			if (f_v) {
 				cout << "-complement " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-distance_2") == 0) {
-			f_distance_2 = TRUE;
+			f_distance_2 = true;
 			if (f_v) {
 				cout << "-distance_2 " << endl;
 			}

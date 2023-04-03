@@ -293,7 +293,7 @@ void arc_basic::Subiaco_oval(
 		else {
 			top = F->add3(t3, t2, F->mult(omega2, t));
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "t=" << t << " top=" << top
 					<< " bottom=" << bottom << endl;
 		}

@@ -32,7 +32,7 @@ gen_geo_conf::gen_geo_conf()
 	// int k1;
 	i0 = 0;
 	j0 = 0;
-	f_last_non_zero_in_fuse = FALSE;
+	f_last_non_zero_in_fuse = false;
 
 }
 

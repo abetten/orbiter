@@ -19,30 +19,30 @@ namespace apps_geometry {
 arc_generator_description::arc_generator_description()
 {
 
-	f_control = FALSE;
+	f_control = false;
 	//std::string control_label;
 
-	//f_poset_classification_control = FALSE;
+	//f_poset_classification_control = false;
 	//Control = NULL;
 
-	f_d = FALSE;
+	f_d = false;
 	d = 0;
 
-	f_target_size = FALSE;
+	f_target_size = false;
 	target_size = 0;
 
-	f_conic_test = FALSE;
+	f_conic_test = false;
 
-	f_test_nb_Eckardt_points = FALSE;
+	f_test_nb_Eckardt_points = false;
 	nb_E = 0;
 	//Surf = NULL;
-	f_affine = FALSE;
-	f_no_arc_testing = FALSE;
+	f_affine = false;
+	f_no_arc_testing = false;
 
-	f_has_forbidden_point_set = FALSE;
+	f_has_forbidden_point_set = false;
 	//forbidden_point_set_string = NULL;
 
-	f_override_group = FALSE;
+	f_override_group = false;
 	//std::string override_group_label;
 
 }
@@ -67,7 +67,7 @@ int arc_generator_description::read_arguments(
 
 #if 0
 		if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
-			f_poset_classification_control = TRUE;
+			f_poset_classification_control = true;
 			Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			if (f_v) {
 				cout << "-poset_classification_control " << endl;
@@ -86,53 +86,53 @@ int arc_generator_description::read_arguments(
 		}
 #endif
 		if (ST.stringcmp(argv[i], "-control") == 0) {
-			f_control = TRUE;
+			f_control = true;
 			control_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-control " << control_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-d") == 0) {
-			f_d = TRUE;
+			f_d = true;
 			d = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-d " << d << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-target_size") == 0) {
-			f_target_size = TRUE;
+			f_target_size = true;
 			target_size = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-target_size " << target_size << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-conic_test") == 0) {
-			f_conic_test = TRUE;
+			f_conic_test = true;
 			if (f_v) {
 				cout << "-conic_test " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-test_nb_Eckardt_points") == 0) {
-			f_test_nb_Eckardt_points = TRUE;
+			f_test_nb_Eckardt_points = true;
 			nb_E = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-test_nb_Eckardt_points " << nb_E << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-affine") == 0) {
-			f_affine = TRUE;
+			f_affine = true;
 			if (f_v) {
 				cout << "-affine " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-no_arc_testing") == 0) {
-			f_no_arc_testing = TRUE;
+			f_no_arc_testing = true;
 			if (f_v) {
 				cout << "-no_arc_testing " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-forbidden_point_set") == 0) {
-			f_has_forbidden_point_set = TRUE;
+			f_has_forbidden_point_set = true;
 			orbiter_kernel_system::os_interface Os;
 
 			i++;
@@ -144,7 +144,7 @@ int arc_generator_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-override_group") == 0) {
-			f_override_group = TRUE;
+			f_override_group = true;
 			override_group_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-override_group " << override_group_label << endl;

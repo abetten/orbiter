@@ -31,7 +31,7 @@ subfield_structure::subfield_structure()
 	FQ_embedding = NULL;
 	Fq_element = NULL;
 	v = NULL;
-	f_has_2D = FALSE;
+	f_has_2D = false;
 	components_2D = NULL;
 	embedding_2D = NULL;
 	pair_embedding_2D = NULL;
@@ -133,7 +133,7 @@ void subfield_structure::init(
 			cout << "subfield_structure::init "
 					"after embedding_2dimensional" << endl;
 		}
-		f_has_2D = TRUE;
+		f_has_2D = true;
 	}
 
 
@@ -764,7 +764,7 @@ void subfield_structure::create_adelaide_hyperoval(
 
 
 		P->projective_space_init(n, F,
-			FALSE /* f_init_incidence_structure */,
+			false /* f_init_incidence_structure */,
 			verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 		cout << "i : point : projective rank" << endl;
 		for (i = 0; i < nb_pts; i++) {
@@ -824,7 +824,7 @@ void subfield_structure::field_reduction(
 		a = Basis[i];
 		for (j = 0; j < sz; j++) {
 			b = input[j];
-			if (FALSE) {
+			if (false) {
 				cout << "j=" << j << " / " << sz
 						<< " a=" << a << " b=" << b << endl;
 			}

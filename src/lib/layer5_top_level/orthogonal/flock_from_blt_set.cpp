@@ -278,9 +278,9 @@ void flock_from_blt_set::init(
 
 	data_structures::tally T;
 
-	T.init(outcome, N, FALSE, 0);
+	T.init(outcome, N, false, 0);
 	cout << "outcome : ";
-	T.print_first(FALSE /*f_backwards*/);
+	T.print_first(false /*f_backwards*/);
 	cout << endl;
 
 	FREE_int(outcome);
@@ -393,10 +393,10 @@ void flock_from_blt_set::report(
 
 	data_structures::tally T;
 
-	T.init(outcome, N, FALSE, 0);
+	T.init(outcome, N, false, 0);
 	ost << "flock condition : ";
 	//ost << "$";
-	T.print_file_tex(ost, FALSE /*f_backwards*/);
+	T.print_file_tex(ost, false /*f_backwards*/);
 	//ost << "$";
 	ost << "\\\\";
 	ost << endl;

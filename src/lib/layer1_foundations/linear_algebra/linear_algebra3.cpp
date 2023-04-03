@@ -439,11 +439,11 @@ int linear_algebra::is_totally_isotropic_wrt_symplectic_form(
 	for (i = 0; i < k; i++) {
 		for (j = i + 1; j < k; j++) {
 			if (evaluate_symplectic_form(n, Basis + i * n, Basis + j * n)) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int linear_algebra::evaluate_monomial(

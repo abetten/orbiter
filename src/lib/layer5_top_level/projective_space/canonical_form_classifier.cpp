@@ -181,14 +181,14 @@ int canonical_form_classifier::skip_this_one(int counter)
 
 	if (Descr->f_skip) {
 		if (Sorting.int_vec_search(skip_vector, skip_sz, counter, idx)) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 
 }
@@ -757,7 +757,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 
 #if 0
-			// CFS_table is only available if f_algorithm_substructure is TRUE
+			// CFS_table is only available if f_algorithm_substructure is true
 			if (CFS_table == NULL) {
 				continue;
 			}
@@ -1372,7 +1372,7 @@ void canonical_form_classifier::report(
 
 	{
 		ofstream ost(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(ost);
 
@@ -1476,10 +1476,10 @@ void canonical_form_classifier::report2(std::ostream &ost, int verbose_level)
 		data_structures::tally_lint T;
 
 		T.init_vector_lint(Ago,
-				FALSE /* f_second */, 0 /* verbose_level */);
+				false /* f_second */, 0 /* verbose_level */);
 		ost << "Automorphism group order statistic: " << endl;
 		//ost << "$";
-		T.print_file_tex(ost, TRUE /* f_backwards */);
+		T.print_file_tex(ost, true /* f_backwards */);
 		ost << "\\\\" << endl;
 
 

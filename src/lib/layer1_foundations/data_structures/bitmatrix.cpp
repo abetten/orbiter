@@ -97,7 +97,7 @@ void bitmatrix::rank_PG_elements_in_columns(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;
+	int f_vv = false;
 	int *v;
 	int i;
 	int j;
@@ -226,7 +226,7 @@ void bitmatrix::mult_int_matrix_from_the_left(
 		bitmatrix *Out, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;
+	int f_vv = false;
 	int i, j, h;
 
 	if (f_v) {

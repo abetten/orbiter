@@ -22,11 +22,11 @@ namespace apps_algebra {
 action_on_forms_description::action_on_forms_description()
 {
 
-	f_space = FALSE;
+	f_space = false;
 	//std::string space_label;
 
 
-	f_degree = FALSE;
+	f_degree = false;
 	degree = 0;
 
 
@@ -52,12 +52,12 @@ int action_on_forms_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-space") == 0) {
-			f_space = TRUE;
+			f_space = true;
 			space_label.assign(argv[++i]);
 			cout << "-space " << space_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-degree") == 0) {
-			f_degree = TRUE;
+			f_degree = true;
 			degree = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-degree " << degree << endl;

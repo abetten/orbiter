@@ -23,112 +23,112 @@ namespace user_interface {
 
 interface_combinatorics::interface_combinatorics()
 {
-	f_diophant = FALSE;
+	f_diophant = false;
 	Diophant_description = NULL;
 
-	f_diophant_activity = FALSE;
+	f_diophant_activity = false;
 	Diophant_activity_description = NULL;
 
-	f_random_permutation = FALSE;
+	f_random_permutation = false;
 	random_permutation_degree = 0;
 	//random_permutation_fname_csv = NULL;
 
-	f_create_random_k_subsets = FALSE;
+	f_create_random_k_subsets = false;
 	create_random_k_subsets_n = 0;
 	create_random_k_subsets_k = 0;
 	create_random_k_subsets_nb = 0;
 
-	f_read_poset_file = FALSE;
+	f_read_poset_file = false;
 	//read_poset_file_fname;
 
-	f_grouping = FALSE;
+	f_grouping = false;
 	grouping_x_stretch = 0.7;
 
-	f_list_parameters_of_SRG = FALSE;
+	f_list_parameters_of_SRG = false;
 	list_parameters_of_SRG_v_max = 0;
 
-	f_conjugacy_classes_Sym_n = FALSE;
+	f_conjugacy_classes_Sym_n = false;
 	conjugacy_classes_Sym_n_n = 0;
 
-	f_tree_of_all_k_subsets = FALSE;
+	f_tree_of_all_k_subsets = false;
 	tree_of_all_k_subsets_n = 0;
 	tree_of_all_k_subsets_k = 0;
 
-	f_Delandtsheer_Doyen = FALSE;
+	f_Delandtsheer_Doyen = false;
 	Delandtsheer_Doyen_description = NULL;
 
 
-	f_tdo_refinement = FALSE;
+	f_tdo_refinement = false;
 	Tdo_refinement_descr = NULL;
 
-	f_tdo_print = FALSE;
+	f_tdo_print = false;
 	//tdo_print_fname;
 
-	f_convert_stack_to_tdo = FALSE;
+	f_convert_stack_to_tdo = false;
 	//stack_fname;
 
-	f_maximal_arc_parameters = FALSE;
+	f_maximal_arc_parameters = false;
 	maximal_arc_parameters_q = 0;
 	maximal_arc_parameters_r = 0;
 
-	f_arc_parameters = FALSE;
+	f_arc_parameters = false;
 	arc_parameters_q = arc_parameters_s = arc_parameters_r = 0;
 
 
-	f_pentomino_puzzle = FALSE;
+	f_pentomino_puzzle = false;
 
-	f_regular_linear_space_classify = FALSE;
+	f_regular_linear_space_classify = false;
 	Rls_descr = NULL;
 
-	f_draw_layered_graph = FALSE;
+	f_draw_layered_graph = false;
 	//draw_layered_graph_fname;
 	Layered_graph_draw_options = NULL;
 
-	f_domino_portrait = FALSE;
+	f_domino_portrait = false;
 	domino_portrait_D = 0;
 	domino_portrait_s = 0;
 	//std::string domino_portrait_fname;
 	domino_portrait_draw_options = NULL;
 
-	f_read_solutions_and_tally = FALSE;
+	f_read_solutions_and_tally = false;
 	//read_solutions_and_tally_fname
 	read_solutions_and_tally_sz = 0;
 
 
-	f_make_elementary_symmetric_functions = FALSE;
+	f_make_elementary_symmetric_functions = false;
 	make_elementary_symmetric_functions_n = 0;
 	make_elementary_symmetric_functions_k_max = 0;
 
-	f_Dedekind_numbers = FALSE;
+	f_Dedekind_numbers = false;
 	Dedekind_n_min = 0;
 	Dedekind_n_max = 0;
 	Dedekind_q_min = 0;
 	Dedekind_q_max = 0;
 
-	f_rank_k_subset = FALSE;
+	f_rank_k_subset = false;
 	rank_k_subset_n = 0;
 	rank_k_subset_k = 0;
 	//rank_k_subset_text;
 
-	f_geometry_builder = FALSE;
+	f_geometry_builder = false;
 	Geometry_builder_description = NULL;
 
-	f_union = FALSE;
+	f_union = false;
 	//std::string union_set_of_sets_fname;
 	//std::string union_input_fname;
 	//std::string union_output_fname;
 
-	f_dot_product_of_columns = FALSE;
+	f_dot_product_of_columns = false;
 	//std::string dot_product_of_columns_fname;
 
-	f_dot_product_of_rows = FALSE;
+	f_dot_product_of_rows = false;
 	//std::string dot_product_of_rows_fname;
 
-	f_matrix_multiply_over_Z = FALSE;
+	f_matrix_multiply_over_Z = false;
 	//std::string matrix_multiply_over_Z_label1;
 	//std::string matrix_multiply_over_Z_label2;
 
-	f_rowspan_over_R = FALSE;
+	f_rowspan_over_R = false;
 	//std::string rowspan_over_R_label;
 
 }
@@ -341,7 +341,7 @@ void interface_combinatorics::read_arguments(int argc,
 	}
 
 	if (ST.stringcmp(argv[i], "-diophant") == 0) {
-		f_diophant = TRUE;
+		f_diophant = true;
 		if (f_v) {
 			cout << "-diophant " << endl;
 		}
@@ -360,7 +360,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
-		f_diophant_activity = TRUE;
+		f_diophant_activity = true;
 		if (f_v) {
 			cout << "-diophant_activity " << endl;
 		}
@@ -379,7 +379,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
-		f_random_permutation = TRUE;
+		f_random_permutation = true;
 		random_permutation_degree = ST.strtoi(argv[++i]);
 		random_permutation_fname_csv.assign(argv[++i]);
 		if (f_v) {
@@ -387,7 +387,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-create_random_k_subsets") == 0) {
-		f_create_random_k_subsets = TRUE;
+		f_create_random_k_subsets = true;
 		create_random_k_subsets_n = ST.strtoi(argv[++i]);
 		create_random_k_subsets_k = ST.strtoi(argv[++i]);
 		create_random_k_subsets_nb = ST.strtoi(argv[++i]);
@@ -396,16 +396,16 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-read_poset_file") == 0) {
-		f_read_poset_file = TRUE;
-		f_grouping = FALSE;
+		f_read_poset_file = true;
+		f_grouping = false;
 		read_poset_file_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-read_poset_file " << read_poset_file_fname << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
-		f_read_poset_file = TRUE;
-		f_grouping = TRUE;
+		f_read_poset_file = true;
+		f_grouping = true;
 		read_poset_file_fname.assign(argv[++i]);
 		grouping_x_stretch = ST.strtof(argv[++i]);
 		if (f_v) {
@@ -414,21 +414,21 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
-		f_list_parameters_of_SRG = TRUE;
+		f_list_parameters_of_SRG = true;
 		list_parameters_of_SRG_v_max = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-list_parameters_of_SRG " << list_parameters_of_SRG_v_max << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
-		f_conjugacy_classes_Sym_n = TRUE;
+		f_conjugacy_classes_Sym_n = true;
 		conjugacy_classes_Sym_n_n = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-conjugacy_classes_Sym_n " << conjugacy_classes_Sym_n_n << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
-		f_tree_of_all_k_subsets = TRUE;
+		f_tree_of_all_k_subsets = true;
 		tree_of_all_k_subsets_n = ST.strtoi(argv[++i]);
 		tree_of_all_k_subsets_k = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -436,7 +436,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
-		f_Delandtsheer_Doyen = TRUE;
+		f_Delandtsheer_Doyen = true;
 		Delandtsheer_Doyen_description = NEW_OBJECT(apps_combinatorics::delandtsheer_doyen_description);
 		i += Delandtsheer_Doyen_description->read_arguments(argc - (i - 1),
 				argv + i, verbose_level);
@@ -446,7 +446,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-tdo_refinement") == 0) {
-		f_tdo_refinement = TRUE;
+		f_tdo_refinement = true;
 		if (f_v) {
 			cout << "-tdo_refinement " << endl;
 		}
@@ -464,21 +464,21 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-tdo_print") == 0) {
-		f_tdo_print = TRUE;
+		f_tdo_print = true;
 		tdo_print_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-tdo_print " << tdo_print_fname << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
-		f_convert_stack_to_tdo = TRUE;
+		f_convert_stack_to_tdo = true;
 		stack_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-convert_stack_to_tdo " << stack_fname << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-maximal_arc_parameters") == 0) {
-		f_maximal_arc_parameters = TRUE;
+		f_maximal_arc_parameters = true;
 		maximal_arc_parameters_q = ST.strtoi(argv[++i]);
 		maximal_arc_parameters_r = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -487,7 +487,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-arc_parameters") == 0) {
-		f_arc_parameters = TRUE;
+		f_arc_parameters = true;
 		arc_parameters_q = ST.strtoi(argv[++i]);
 		arc_parameters_s = ST.strtoi(argv[++i]);
 		arc_parameters_r = ST.strtoi(argv[++i]);
@@ -499,13 +499,13 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-pentomino_puzzle") == 0) {
-		f_pentomino_puzzle = TRUE;
+		f_pentomino_puzzle = true;
 		if (f_v) {
 			cout << "-pentomino_puzzle " << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
-		f_regular_linear_space_classify = TRUE;
+		f_regular_linear_space_classify = true;
 
 		if (f_v) {
 			cout << "-regular_linear_space_classify " << endl;
@@ -527,7 +527,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
-		f_draw_layered_graph = TRUE;
+		f_draw_layered_graph = true;
 		draw_layered_graph_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-draw_layered_graph " << endl;
@@ -546,7 +546,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
-		f_domino_portrait = TRUE;
+		f_domino_portrait = true;
 		if (f_v) {
 			cout << "-draw_layered_graph " << endl;
 		}
@@ -567,7 +567,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
-		f_read_solutions_and_tally = TRUE;
+		f_read_solutions_and_tally = true;
 		read_solutions_and_tally_fname.assign(argv[++i]);
 		read_solutions_and_tally_sz = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -577,7 +577,7 @@ void interface_combinatorics::read_arguments(int argc,
 	}
 
 	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
-		f_make_elementary_symmetric_functions = TRUE;
+		f_make_elementary_symmetric_functions = true;
 		make_elementary_symmetric_functions_n = ST.strtoi(argv[++i]);
 		make_elementary_symmetric_functions_k_max = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -586,7 +586,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-Dedekind_numbers") == 0) {
-		f_Dedekind_numbers = TRUE;
+		f_Dedekind_numbers = true;
 		Dedekind_n_min = ST.strtoi(argv[++i]);
 		Dedekind_n_max = ST.strtoi(argv[++i]);
 		Dedekind_q_min = ST.strtoi(argv[++i]);
@@ -600,7 +600,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-rank_k_subset") == 0) {
-		f_rank_k_subset = TRUE;
+		f_rank_k_subset = true;
 		rank_k_subset_n = ST.strtoi(argv[++i]);
 		rank_k_subset_k = ST.strtoi(argv[++i]);
 		rank_k_subset_text.assign(argv[++i]);
@@ -612,7 +612,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-geometry_builder") == 0) {
-		f_geometry_builder = TRUE;
+		f_geometry_builder = true;
 		if (f_v) {
 			cout << "-geometry_builder " << endl;
 		}
@@ -631,7 +631,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-union") == 0) {
-		f_union = TRUE;
+		f_union = true;
 		union_set_of_sets_fname.assign(argv[++i]);
 		union_input_fname.assign(argv[++i]);
 		union_output_fname.assign(argv[++i]);
@@ -643,7 +643,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-dot_product_of_columns") == 0) {
-		f_dot_product_of_columns = TRUE;
+		f_dot_product_of_columns = true;
 		dot_product_of_columns_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-dot_product_of_columns "
@@ -652,7 +652,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-dot_product_of_rows") == 0) {
-		f_dot_product_of_rows = TRUE;
+		f_dot_product_of_rows = true;
 		dot_product_of_rows_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-dot_product_of_rows "
@@ -661,7 +661,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-matrix_multiply_over_Z") == 0) {
-		f_matrix_multiply_over_Z = TRUE;
+		f_matrix_multiply_over_Z = true;
 		matrix_multiply_over_Z_label1.assign(argv[++i]);
 		matrix_multiply_over_Z_label2.assign(argv[++i]);
 		if (f_v) {
@@ -672,7 +672,7 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-rowspan_over_R") == 0) {
-		f_rowspan_over_R = TRUE;
+		f_rowspan_over_R = true;
 		rowspan_over_R_label.assign(argv[++i]);
 		if (f_v) {
 			cout << "-rowspan_over_R "
@@ -1185,7 +1185,7 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 		field_theory::finite_field *F;
 
 		F = NEW_OBJECT(field_theory::finite_field);
-		F->finite_field_init(2, FALSE /* f_without_tables */, 0);
+		F->finite_field_init(2, false /* f_without_tables */, 0);
 
 		combinatorics::boolean_function_domain *BF;
 

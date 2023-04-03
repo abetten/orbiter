@@ -43,7 +43,7 @@ public:
 	// desired size of the arc
 
 	int f_conic_test;
-	// if TRUE, ensure that no six points lie on a conic
+	// if true, ensure that no six points lie on a conic
 
 	int f_test_nb_Eckardt_points;
 	int nb_E;
@@ -239,12 +239,12 @@ public:
 	actions::action *A;
 	actions::action *A_lines;
 	actions::action *A2;
-		// = A if f_choose_lines is FALSE
-		// = A_lines if f_choose_lines is TRUE
+		// = A if f_choose_lines is false
+		// = A_lines if f_choose_lines is true
 	
 	int f_choose_lines;
-		// TRUE if we are looking for a set of lines
-		// FALSE if we are looking for a set of points
+		// true if we are looking for a set of lines
+		// false if we are looking for a set of points
 	int nb_points_or_lines;
 		// the size of the set we are looking for
 

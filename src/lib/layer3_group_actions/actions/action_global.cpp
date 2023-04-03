@@ -530,8 +530,8 @@ void action_global::compute_generators_GL_n_q(
 				"before A->Known_groups->init_projective_group" << endl;
 	}
 	A->Known_groups->init_projective_group(n, F,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	if (f_v) {
@@ -586,10 +586,10 @@ void action_global::compute_generators_GL_n_q(
 // callbacks for Schreier Sims:
 
 
-	int f_generator_orthogonal_siegel = TRUE;
-	int f_generator_orthogonal_reflection = TRUE;
-	int f_generator_orthogonal_similarity = TRUE;
-	int f_generator_orthogonal_semisimilarity = TRUE;
+	int f_generator_orthogonal_siegel = true;
+	int f_generator_orthogonal_reflection = true;
+	int f_generator_orthogonal_similarity = true;
+	int f_generator_orthogonal_semisimilarity = true;
 
 
 void action_global::set_orthogonal_group_type(
@@ -869,7 +869,7 @@ void action_global::perm_print_cycles_sorted_by_length(
 		int degree, int *perm, int verbose_level)
 {
 	perm_print_cycles_sorted_by_length_offset(ost,
-			degree, perm, 0, FALSE, TRUE, verbose_level);
+			degree, perm, 0, false, true, verbose_level);
 }
 
 void action_global::perm_print_cycles_sorted_by_length_offset(
@@ -884,8 +884,8 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 	action *A;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_big = FALSE;
-	int f_doit = TRUE;
+	int f_big = false;
+	int f_doit = true;
 	
 	if (f_v) {
 		cout << "action_global::perm_print_cycles_sorted_by_length, "
@@ -893,10 +893,10 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 	}
 	
 	if (degree > 500) {
-		f_big = TRUE;
+		f_big = true;
 	}
 	A = NEW_OBJECT(action);
-	int f_no_base = FALSE;
+	int f_no_base = false;
 	
 	if (f_v) {
 		cout << "action_global::perm_print_cycles_sorted_by_length "
@@ -970,7 +970,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 		}
 	}
 	if (f_big && !f_do_it_anyway_even_for_big_degree) {
-		f_doit = FALSE;
+		f_doit = false;
 	}
 	if (f_doit) {
 		for (i = 0; i < nb_types; i++) {
@@ -994,7 +994,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 				ost << "(";
 				a = m;
 				ost << (a + offset);
-				while (TRUE) {
+				while (true) {
 					b = perm[a];
 					if (b == m)
 						break;
@@ -1014,9 +1014,9 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 #if 0
 	classify C;
 
-	C.init(S.orbit_len, S.nb_orbits, FALSE, 0);
+	C.init(S.orbit_len, S.nb_orbits, false, 0);
 	ost << " cycle type: ";
-	C.print_file(ost, TRUE /* f_backwards */);
+	C.print_file(ost, true /* f_backwards */);
 #endif
 
 	FREE_int(orbit_len_sorted);
@@ -1078,7 +1078,7 @@ action *action_global::init_direct_product_group_and_restrict(
 		cout << "action_global::init_direct_product_group_and_restrict "
 				"after A_direct_product->Induced_action->restricted_action" << endl;
 	}
-	Adp->f_is_linear = FALSE;
+	Adp->f_is_linear = false;
 
 
 	if (f_v) {
@@ -1110,7 +1110,7 @@ action *action_global::init_direct_product_group(
 
 	A->type_G = direct_product_t;
 	A->G.direct_product_group = P;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
 	if (f_v) {
 		cout << "action_global::init_direct_product_group "
@@ -1122,7 +1122,7 @@ action *action_global::init_direct_product_group(
 				"after P->init" << endl;
 	}
 
-	A->f_is_linear = FALSE;
+	A->f_is_linear = false;
 	A->dimension = 0;
 
 
@@ -1207,7 +1207,7 @@ action *action_global::init_direct_product_group(
 				"after A->Strong_gens->init_from_data" << endl;
 	}
 	FREE_OBJECT(nice_gens);
-	A->f_has_strong_generators = TRUE;
+	A->f_has_strong_generators = true;
 	FREE_int(gens_data);
 
 	groups::sims *S;
@@ -1347,9 +1347,9 @@ void action_global::compute_decomposition_based_on_orbit_length(
 
 	data_structures::tally T1, T2;
 
-	T1.init(L1, Sch1->A->degree, FALSE, 0);
+	T1.init(L1, Sch1->A->degree, false, 0);
 
-	T2.init(L2, Sch2->A->degree, FALSE, 0);
+	T2.init(L2, Sch2->A->degree, false, 0);
 
 
 
@@ -1395,7 +1395,7 @@ void action_global::orbits_on_equations(
 			A->Induced_action->induced_action_on_homogeneous_polynomials_given_by_equations(
 		HPD,
 		The_equations, nb_equations,
-		FALSE /* f_induce_action */, NULL /* sims *old_G */,
+		false /* f_induce_action */, NULL /* sims *old_G */,
 		verbose_level);
 	if (f_v) {
 		cout << "action_global::orbits_on_equations "
@@ -1411,7 +1411,7 @@ void action_global::orbits_on_equations(
 			A_on_equations,
 			verbose_level - 2);
 
-	if (FALSE) {
+	if (false) {
 		cout << "action_global::orbits_on_equations "
 				"We found " << Orb->nb_orbits
 				<< " orbits on the equations:" << endl;
@@ -1477,7 +1477,7 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 	SG = Nau.set_stabilizer_of_object(
 			OwCF,
 		A_linear,
-		FALSE /* f_compute_canonical_form */, Canonical_form,
+		false /* f_compute_canonical_form */, Canonical_form,
 		NO,
 		verbose_level - 2);
 
@@ -2026,17 +2026,17 @@ void action_global::apply_based_on_text(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2146,17 +2146,17 @@ void action_global::multiply_based_on_text(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2253,17 +2253,17 @@ void action_global::inverse_based_on_text(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2359,18 +2359,18 @@ void action_global::consecutive_powers_based_on_text(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 			int i;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2520,17 +2520,17 @@ void action_global::raise_to_the_power_based_on_text(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2844,7 +2844,7 @@ void action_global::compute_set_orbit(
 	Sorting.lint_vec_heapsort(Sets[0], size);
 
 	Transporter[0] = NEW_int(A->elt_size_in_int);
-	A->element_one(Transporter[0], FALSE);
+	A->element_one(Transporter[0], false);
 
 	nb_sets = 1;
 	nb_finished = 0;
@@ -2858,7 +2858,7 @@ void action_global::compute_set_orbit(
 		for (i = 0; i < nb_gens; i++) {
 			A->map_a_set_and_reorder(Sets[nb_finished], image_set, size,
 				gens.ith(i), 0);
-			if (FALSE) {
+			if (false) {
 				cout << "action_global::compute_set_orbit "
 						"image under generator " << i << ":";
 				Lint_vec_print(cout, image_set, size);
@@ -3239,7 +3239,7 @@ void action_global::induce(
 	}
 	G->build_up_group_random_process(
 			K, old_G, go,
-		FALSE /*f_override_chose_next_base_point*/,
+		false /*f_override_chose_next_base_point*/,
 		NULL /*choose_next_base_point_method*/,
 		verbose_level - 1);
 	if (f_v) {
@@ -3306,7 +3306,7 @@ void action_global::induce(
 		cout << "action_global::induce "
 				"after init_sims_only" << endl;
 	}
-	new_action->f_has_kernel = TRUE;
+	new_action->f_has_kernel = true;
 	new_action->Kernel = K;
 
 	//init_transversal_reps_from_stabilizer_chain(G, verbose_level - 2);
@@ -3383,7 +3383,7 @@ void action_global::make_canonical(
 	long int *set2;
 	int backtrack_level;
 	long int backtrack_nodes, cnt = 0;
-	//int f_get_automorphism_group = TRUE;
+	//int f_get_automorphism_group = true;
 	//sims Aut;
 
 	total_backtrack_nodes = 0;
@@ -3419,11 +3419,11 @@ void action_global::make_canonical(
 	set2 = NEW_lint(size);
 
 	Lint_vec_copy(set, set1, size);
-	A->Group_element->element_one(Elt1, FALSE);
+	A->Group_element->element_one(Elt1, false);
 
 	int c;
 
-	while (TRUE) {
+	while (true) {
 		cnt++;
 		//if (cnt == 4) verbose_level += 10;
 		if (f_v) {
@@ -3468,12 +3468,12 @@ void action_global::make_canonical(
 
 	}
 	Lint_vec_copy(set1, canonical_set, size);
-	A->Group_element->element_move(Elt1, transporter, FALSE);
+	A->Group_element->element_move(Elt1, transporter, false);
 
 	if (!A->Group_element->check_if_transporter_for_set(transporter,
 			size, set, canonical_set, verbose_level - 3)) {
 		cout << "action_global::make_canonical "
-				"check_if_transporter_for_set returns FALSE" << endl;
+				"check_if_transporter_for_set returns false" << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -3653,10 +3653,10 @@ void callback_choose_random_generator_orthogonal(int iteration,
 	action *subaction = ss->KA;
 	algebra::matrix_group *M;
 #if 0
-	int f_siegel = TRUE;
-	int f_reflection = TRUE;
-	int f_similarity = TRUE;
-	int f_semisimilarity = TRUE;
+	int f_siegel = true;
+	int f_reflection = true;
+	int f_similarity = true;
+	int f_semisimilarity = true;
 #endif
 
 	induced_actions::action_on_orthogonal *AO;

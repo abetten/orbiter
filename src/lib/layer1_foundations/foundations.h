@@ -223,11 +223,11 @@ typedef void *pvoid;
 #define ONE_HUNDRED_THOUSAND 100000
 
 
-#ifndef TRUE
-#define TRUE 1
+#ifndef true
+#define true 1
 #endif
-#ifndef FALSE
-#define FALSE 0
+#ifndef false
+#define false 0
 #endif
 #ifndef M_PI
 #define M_PI 3.14159265358979323846264
@@ -505,8 +505,6 @@ namespace graph_theory {
 
 }
 
-// graph_theory_nauty
-class nauty_interface;
 
 //! graphical output interfaces: 2D graphics (BMP, TikZ, Metapost) and 3D graphics (povray)
 
@@ -562,6 +560,8 @@ namespace l1_interfaces {
 	class expression_parser_sajeeb;
 	class interface_gap_low;
 	class interface_magma_low;
+	class latex_interface;
+	class nauty_interface;
 
 }
 
@@ -598,7 +598,6 @@ namespace orbiter_kernel_system {
 	class create_file_description;
 	class file_io;
 	class file_output;
-	class latex_interface;
 	class mem_object_registry_entry;
 	class mem_object_registry;
 	class memory_object;
@@ -989,7 +988,6 @@ enum CRC_type {
 #include "geometry/geometry.h"
 #include "geometry_builder/geometry_builder.h"
 #include "graph_theory/graph_theory.h"
-#include "graph_theory_nauty/graph_theory_nauty.h"
 #include "graphics/graphics.h"
 #include "knowledge_base/knowledge_base.h"
 #include "l1_interfaces/l1_interfaces.h"

@@ -293,7 +293,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
 	data_structures::sorting Sorting;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_properties" << endl;
@@ -340,7 +340,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		cout << "surface_object_properties::compute_properties "
 				"The points on the surface are:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
-			SO->Pts, SO->nb_pts, 1, FALSE /* f_tex */);
+			SO->Pts, SO->nb_pts, 1, false /* f_tex */);
 	}
 
 
@@ -380,10 +380,10 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 	Type_pts_on_lines = NEW_OBJECT(data_structures::tally);
 	Type_pts_on_lines->init_lint(pts_on_lines->Set_size,
-		pts_on_lines->nb_sets, FALSE, 0);
+		pts_on_lines->nb_sets, false, 0);
 	if (f_v) {
 		cout << "points on lines:" << endl;
-		Type_pts_on_lines->print_naked_tex(cout, TRUE);
+		Type_pts_on_lines->print_naked_tex(cout, true);
 		cout << endl;
 	}
 
@@ -395,11 +395,11 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 	Type_lines_on_point = NEW_OBJECT(data_structures::tally);
 	Type_lines_on_point->init_lint(lines_on_point->Set_size,
-		lines_on_point->nb_sets, FALSE, 0);
+		lines_on_point->nb_sets, false, 0);
 	if (f_v) {
 		cout << "surface_object::compute_properties "
 				"type of lines_on_point:" << endl;
-		Type_lines_on_point->print_naked_tex(cout, TRUE);
+		Type_lines_on_point->print_naked_tex(cout, true);
 		cout << endl;
 	}
 
@@ -466,7 +466,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		Int_vec_zero(Eckardt_point_bitvector_in_Schlaefli_labeling, 45);
 		for (p = 0; p < nb_Eckardt_points; p++) {
 			idx = Eckardt_points_schlaefli_labels[p];
-			Eckardt_point_bitvector_in_Schlaefli_labeling[idx] = TRUE;
+			Eckardt_point_bitvector_in_Schlaefli_labeling[idx] = true;
 		}
 
 		if (f_v) {
@@ -603,7 +603,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		data_structures::sorting Sorting;
 
 		T_planes.init(Eckardt_points_plane_type,
-				SO->Surf->P->Subspaces->Nb_subspaces[2], FALSE, 0);
+				SO->Surf->P->Subspaces->Nb_subspaces[2], false, 0);
 
 		T_planes.get_class_by_value(H_planes,
 				nb_Hesse_planes, 9 /* value */,
@@ -624,7 +624,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 					Eckardt_point_Hesse_plane_incidence,
 					verbose_level);
 
-		//T_planes.print_file_tex_we_are_in_math_mode(ost, TRUE);
+		//T_planes.print_file_tex_we_are_in_math_mode(ost, true);
 	}
 
 
@@ -742,7 +742,7 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 // We compute the set of singular points into Pts[nb_pts]
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_singular_points_and_tangent_planes" << endl;
@@ -792,7 +792,7 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 				cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 						"gradient i=" << i << " / " << nb_eqns << endl;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 						"gradient " << i << " = ";
 				Int_vec_print(cout,
@@ -971,10 +971,10 @@ void surface_object_properties::compute_plane_type_by_points(int verbose_level)
 
 		C_plane_type_by_points = NEW_OBJECT(data_structures::tally);
 
-		C_plane_type_by_points->init(plane_type_by_points, nb_planes, FALSE, 0);
+		C_plane_type_by_points->init(plane_type_by_points, nb_planes, false, 0);
 		if (f_v) {
 			cout << "plane types by points: ";
-			C_plane_type_by_points->print_naked(TRUE);
+			C_plane_type_by_points->print_naked(true);
 			cout << endl;
 		}
 	}
@@ -1571,7 +1571,7 @@ void surface_object_properties::print_plane_type_by_points(std::ostream &ost)
 	ost << "\\subsection*{Plane types by points}" << endl;
 		//*fp << "$$" << endl;
 		//*fp << "\\Big(" << endl;
-	C_plane_type_by_points->print_naked_tex(ost, TRUE);
+	C_plane_type_by_points->print_naked_tex(ost, true);
 		//*fp << "\\Big)" << endl;
 	ost << "\\\\" << endl;
 }
@@ -1584,7 +1584,7 @@ void surface_object_properties::print_lines(std::ostream &ost)
 
 void surface_object_properties::print_lines_with_points_on_them(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	ost << "\\subsection*{The " << SO->nb_lines << " lines with points on them}" << endl;
 	int i, j;
@@ -1730,11 +1730,11 @@ void surface_object_properties::print_summary(std::ostream &ost)
 	ost << "\\mbox{Number of axes} & " << nb_axes << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of points on lines} & ";
-	Type_pts_on_lines->print_naked_tex(ost, TRUE);
+	Type_pts_on_lines->print_naked_tex(ost, true);
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of lines on points} & ";
-	Type_lines_on_point->print_naked_tex(ost, TRUE);
+	Type_lines_on_point->print_naked_tex(ost, true);
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
@@ -1742,11 +1742,11 @@ void surface_object_properties::print_summary(std::ostream &ost)
 #if 0
 	ost << "Points on lines:" << endl;
 	ost << "$$" << endl;
-	Type_pts_on_lines->print_naked_tex(ost, TRUE);
+	Type_pts_on_lines->print_naked_tex(ost, true);
 	ost << "$$" << endl;
 	ost << "Lines on points:" << endl;
 	ost << "$$" << endl;
-	Type_lines_on_point->print_naked_tex(ost, TRUE);
+	Type_lines_on_point->print_naked_tex(ost, true);
 	ost << "$$" << endl;
 #endif
 }
@@ -1942,10 +1942,10 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 		ost << "Plane type of Eckardt points: $";
 		tally T_planes;
 
-		T_planes.init(Eckardt_points_plane_type, SO->Surf->P->Nb_subspaces[2], FALSE, 0);
+		T_planes.init(Eckardt_points_plane_type, SO->Surf->P->Nb_subspaces[2], false, 0);
 
 
-		T_planes.print_file_tex_we_are_in_math_mode(ost, TRUE);
+		T_planes.print_file_tex_we_are_in_math_mode(ost, true);
 		ost << "$\\\\" << endl;
 	}
 
@@ -2052,7 +2052,7 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 
 void surface_object_properties::print_axes(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, j, idx, t_idx, t_r, a;
 
 	ost << "\\subsection*{Axes}" << endl;
@@ -2076,7 +2076,7 @@ void surface_object_properties::print_axes(std::ostream &ost)
 
 void surface_object_properties::print_singular_points(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, j, p;
 	int v[4];
 
@@ -2123,7 +2123,7 @@ void surface_object_properties::print_singular_points(std::ostream &ost)
 
 void surface_object_properties::print_double_points(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, p, a, b;
 	int v[4];
 
@@ -2136,13 +2136,13 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost,
 				Double_points, nb_Double_points, 10,
-				TRUE /* f_tex */);
+				true /* f_tex */);
 		ost << "$$" << endl;
 
 		ost << "$$" << endl;
 		L.int_vec_print_as_matrix(ost,
 				Double_points_index, nb_Double_points, 10,
-				TRUE /* f_tex */);
+				true /* f_tex */);
 		ost << "$$" << endl;
 #endif
 
@@ -2225,7 +2225,7 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 
 void surface_object_properties::print_single_points(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, p, a;
 	int v[4];
 
@@ -2238,12 +2238,12 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost,
 				Single_points, nb_Single_points, 10,
-				TRUE /* f_tex */);
+				true /* f_tex */);
 		ost << "$$" << endl;
 		ost << "$$" << endl;
 		L.int_vec_print_as_matrix(ost,
 				Single_points_index, nb_Single_points, 10,
-				TRUE /* f_tex */);
+				true /* f_tex */);
 		ost << "$$" << endl;
 #endif
 
@@ -2291,7 +2291,7 @@ void surface_object_properties::print_points_on_surface(std::ostream &ost)
 #if 0
 	if (SO->nb_pts < 1000) {
 		ost << "$$" << endl;
-		L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, TRUE /* f_tex */);
+		L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, true /* f_tex */);
 		ost << "$$" << endl;
 		//ost << "\\clearpage" << endl;
 		ost << "The points on the surface are:\\\\" << endl;
@@ -2322,7 +2322,7 @@ void surface_object_properties::print_all_points_on_surface(std::ostream &ost)
 
 	if (SO->nb_pts < 1000) {
 		//ost << "$$" << endl;
-		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, TRUE /* f_tex */);
+		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, true /* f_tex */);
 		//ost << "$$" << endl;
 		//ost << "\\clearpage" << endl;
 		ost << "The points on the surface are:\\\\" << endl;
@@ -2348,7 +2348,7 @@ void surface_object_properties::print_all_points_on_surface(std::ostream &ost)
 
 void surface_object_properties::print_points_on_lines(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i;
 
 	//ost << "\\clearpage" << endl;
@@ -2381,7 +2381,7 @@ void surface_object_properties::print_points_on_lines(std::ostream &ost)
 void surface_object_properties::print_points_on_surface_but_not_on_a_line(
 			std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i;
 	int v[4];
 
@@ -2393,9 +2393,9 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost,
 				Pts_not_on_lines, nb_pts_not_on_lines, 10,
-				TRUE /* f_tex */);
+				true /* f_tex */);
 		//print_integer_matrix_with_standard_labels(ost, Pts3,
-		//(nb_pts_not_on_lines + 9) / 10, 10, TRUE /* f_tex */);
+		//(nb_pts_not_on_lines + 9) / 10, 10, true /* f_tex */);
 		ost << "$$" << endl;
 #endif
 		//ost << "%%\\clearpage" << endl;
@@ -2449,17 +2449,17 @@ void surface_object_properties::print_half_double_sixes(std::ostream &ost)
 
 void surface_object_properties::print_half_double_sixes_numerically(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	ost << "The half double sixes are:\\\\" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels(ost,
-			SO->Surf->Schlaefli->Half_double_sixes, 36, 6, TRUE /* f_tex */);
+			SO->Surf->Schlaefli->Half_double_sixes, 36, 6, true /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
 			SO->Surf->Schlaefli->Half_double_sixes + 36 * 6,
-		36, 6, 36, 0, TRUE /* f_tex */);
+		36, 6, 36, 0, true /* f_tex */);
 	ost << "$$" << endl;
 }
 
@@ -2473,7 +2473,7 @@ void surface_object_properties::print_trihedral_pairs(std::ostream &ost)
 
 void surface_object_properties::print_trihedral_pairs_numerically(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Trihedral pairs}" << endl;
@@ -2481,15 +2481,15 @@ void surface_object_properties::print_trihedral_pairs_numerically(std::ostream &
 			"point labeling are:\\\\" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels(ost,
-			SO->Surf->Schlaefli->Trihedral_to_Eckardt, 40, 6, TRUE /* f_tex */);
+			SO->Surf->Schlaefli->Trihedral_to_Eckardt, 40, 6, true /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-			SO->Surf->Schlaefli->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, TRUE /* f_tex */);
+			SO->Surf->Schlaefli->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, true /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-			SO->Surf->Schlaefli->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex */);
+			SO->Surf->Schlaefli->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, true /* f_tex */);
 	ost << "$$" << endl;
 }
 
@@ -2648,7 +2648,7 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 // P_idx = index into SO->Pts[]
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;
+	int f_vv = false;
 	int i, idx;
 	long int P, R, Q;
 	int Basis_of_PR[8];
@@ -2692,7 +2692,7 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 			Q = SO->Surf->rank_point(w);
 
 			if (SO->find_point(Q, idx)) {
-				f_deleted[i] = TRUE;
+				f_deleted[i] = true;
 			}
 
 		}
@@ -2742,14 +2742,14 @@ int surface_object_properties::test_full_del_pezzo(
 		SO->Surf->unrank_point(Basis + 12, R);
 		rk = SO->F->Linear_algebra->Gauss_easy(Basis, 4, 4);
 		if (rk != 3) {
-			return FALSE;
+			return false;
 		}
 	}
 
 	if (f_v) {
 		cout << "surface_object_properties::test_full_del_pezzo done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 

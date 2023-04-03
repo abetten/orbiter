@@ -201,18 +201,18 @@ void intersection_type::compute_heighest_weight_objects(
 	}
 
 	data_structures::tally C;
-	int f_second = FALSE;
+	int f_second = false;
 
 	C.init(nb_pts_on_plane, len, f_second, 0);
 	if (f_v) {
 		cout << "intersection_type::compute_heighest_weight_objects "
 				"plane-intersection type: ";
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 	}
 
 	if (f_v) {
 		cout << "The plane intersection type is (";
-		C.print_naked(FALSE /*f_backwards*/);
+		C.print_naked(false /*f_backwards*/);
 		cout << ")" << endl << endl;
 	}
 

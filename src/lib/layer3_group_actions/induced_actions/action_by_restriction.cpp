@@ -20,7 +20,7 @@ action_by_restriction::action_by_restriction()
 	points = NULL;
 	points_sorted = NULL;
 	perm_inv = NULL;
-	f_single_orbit = FALSE;
+	f_single_orbit = false;
 	pt = 0;
 	idx_of_root_node = 0;
 }
@@ -49,7 +49,7 @@ void action_by_restriction::init_single_orbit_from_schreier_vector(
 				"pt=" << pt << endl;
 	}
 
-	f_single_orbit = TRUE;
+	f_single_orbit = true;
 	action_by_restriction::pt = pt;
 
 	long int *orbit_elts;

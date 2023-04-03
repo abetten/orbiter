@@ -31,7 +31,7 @@ action_on_homogeneous_polynomials::action_on_homogeneous_polynomials()
 	v3 = NULL;
 	Elt1 = NULL;
 
-	f_invariant_set = FALSE;
+	f_invariant_set = false;
 	Equations = NULL;
 	nb_equations = 0;
 
@@ -110,7 +110,7 @@ void action_on_homogeneous_polynomials::init_invariant_set_of_equations(
 		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations" << endl;
 		cout << "nb_equations = " << nb_equations << endl;
 	}
-	f_invariant_set = TRUE;
+	f_invariant_set = true;
 	action_on_homogeneous_polynomials::Equations = NEW_int(nb_equations * dimension);
 	action_on_homogeneous_polynomials::nb_equations = nb_equations;
 	Int_vec_copy(Equations,

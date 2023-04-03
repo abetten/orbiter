@@ -440,14 +440,14 @@ int discreta_matrix::invert_to(discreta_base &x, int verbose_level)
 	P = *this;
 	P.one();
 	
-	rank = Gauss(FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
-		TRUE /* f_P */, P, FALSE /* f_v */);
+	rank = Gauss(false /* f_special */, true /* f_complete */, base_cols, 
+		true /* f_P */, P, false /* f_v */);
 	P.swap(x);
 	if (rank < m) {
 		cout << "warning: matrix is not invertible\n";
-		return FALSE;
+		return false;
 		}
-	return TRUE;
+	return true;
 }
 
 void discreta_matrix::add_to(discreta_base &x, discreta_base &y)
@@ -550,9 +550,9 @@ int discreta_matrix::is_zero()
 	n = s_n();
 	B.m_mn_n(m, n);
 	if (compare_with(B) == 0)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 	
 }
 
@@ -573,9 +573,9 @@ int discreta_matrix::is_one()
 		}
 	}
 	if (compare_with(B) == 0)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 	
 }
 
@@ -746,7 +746,7 @@ int discreta_matrix::rank()
 	Vector base_cols;
 	discreta_matrix P;
 	
-	return Gauss(FALSE, FALSE, base_cols, FALSE, P, FALSE);
+	return Gauss(false, false, base_cols, false, P, false);
 }
 
 int discreta_matrix::get_kernel(
@@ -823,7 +823,7 @@ int discreta_matrix::get_kernel(
 			ii++;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 discreta_matrix& discreta_matrix::transpose()
@@ -874,7 +874,7 @@ int discreta_matrix::Asup2Ainf(int verbose_level)
 			s_ij(i, j).divide_by_exact(orbit_size[i], verbose_level - 2);
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -883,7 +883,7 @@ int discreta_matrix::Ainf2Asup(int verbose_level)
 	transpose();
 	Asup2Ainf(verbose_level);
 	transpose();
-	return TRUE;
+	return true;
 }
 
 int discreta_matrix::Asup2Acover(int verbose_level)
@@ -918,7 +918,7 @@ int discreta_matrix::Asup2Acover(int verbose_level)
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int discreta_matrix::Acover2nl(Vector& nl, int verbose_level)
@@ -954,7 +954,7 @@ int discreta_matrix::Acover2nl(Vector& nl, int verbose_level)
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void discreta_matrix::Frobenius(unipoly& m, int p, int verbose_level)
@@ -1001,7 +1001,7 @@ void discreta_matrix::Berlekamp(unipoly& m, int p, int verbose_level)
 	int i, l;
 	integer m1;
 	
-	Frobenius(m, p, FALSE);
+	Frobenius(m, p, false);
 	if (f_v) {
 		cout << "discreta_matrix matrix=\n" << *this;
 	}
@@ -1138,7 +1138,7 @@ void discreta_matrix::smith_normal_form(
 		}
 	}
 	Qv = Q;
-	if (FALSE) {
+	if (false) {
 		cout << "this=" << endl << *this << endl;
 		cout << "P=" << endl << P << endl;
 		cout << "Q=" << endl << Q << endl;
@@ -1149,9 +1149,9 @@ void discreta_matrix::smith_normal_form(
 			cout << "discreta_matrix::smith_normal_form "
 					"pivot column is " << i << " / " << l << endl;
 		}
-		stable = FALSE;
+		stable = false;
 		while (!stable) {
-			stable = TRUE;
+			stable = true;
 			if (f_v) {
 				cout << "before smith_eliminate_column " << i << endl;
 				cout << "this=" << endl << *this << endl;
@@ -1159,7 +1159,7 @@ void discreta_matrix::smith_normal_form(
 				//cout << "Q=" << endl << Q << endl;
 			}
 			if (smith_eliminate_column(P, Pv, i, verbose_level - 2)) {
-				stable = FALSE;
+				stable = false;
 			}
 			if (f_v) {
 				cout << "after smith_eliminate_column " << i << endl;
@@ -1175,7 +1175,7 @@ void discreta_matrix::smith_normal_form(
 				//cout << "Q=" << endl << Q << endl;
 			}
 			if (smith_eliminate_row(Q, Qv, i, verbose_level - 2)) {
-				stable = FALSE;
+				stable = false;
 			}
 			if (f_v) {
 				cout << "after smith_eliminate_row " << i << endl;
@@ -1206,10 +1206,10 @@ void discreta_matrix::smith_normal_form(
 					am1 = a1;
 					am1.negate();
 					Qv.multiply_2by2_from_left(i, jj, a1, a0, am1, a1, 0);
-					if (FALSE) {
+					if (false) {
 						cout << *this;
 					}
-					stable = FALSE;
+					stable = false;
 					break;
 				}
 			}
@@ -1231,7 +1231,7 @@ int discreta_matrix::smith_eliminate_column(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int m, j, action = FALSE;
+	int m, j, action = false;
 	discreta_base x, y, u, v, g, x1, y1;
 	
 	if (f_v) {
@@ -1323,7 +1323,7 @@ int discreta_matrix::smith_eliminate_column(
 			cout << "discreta_matrix::smith_eliminate_column i=" << i
 					<< " after Pv.multiply_2by2_from_right" << endl;
 		}
-		action = TRUE;
+		action = true;
 	}
 	return action;
 }
@@ -1334,7 +1334,7 @@ int discreta_matrix::smith_eliminate_row(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int n, j, action = FALSE;
+	int n, j, action = false;
 	discreta_base x, y, u, v, g, x1, y1;
 	
 	if (f_v) {
@@ -1381,7 +1381,7 @@ int discreta_matrix::smith_eliminate_row(
 		v.negate();
 		y1.negate();
 		Qv.multiply_2by2_from_left(i, j, x1, y1, v, u, 0);
-		action = TRUE;
+		action = true;
 		}
 	return action;
 }
@@ -1576,8 +1576,8 @@ static int gfq_dep(
 		c.invert(verbose_level);
 		c *= A[m][k];
 		c.negate();
-		A.multiply_2by2_from_left(k, m, a1, a0, c, a1, FALSE);
-		P.multiply_2by2_from_left(k, m, a1, a0, c, a1, FALSE);
+		A.multiply_2by2_from_left(k, m, a1, a0, c, a1, false);
+		P.multiply_2by2_from_left(k, m, a1, a0, c, a1, false);
 		if (f_vv) {
 			cout << "A=\n" << A << endl;
 			cout << "P=\n" << P << endl;
@@ -1847,7 +1847,7 @@ void discreta_matrix::KX_module_minpol(
 	if (f_vv) {
 		cout << "p^{sigma^" << l - 1 << "}=" << p << " = " << v << endl;
 	}
-	while (TRUE) {
+	while (true) {
 		KX_module_apply(x, v, verbose_level);
 		if (v.compare_with(v0) == 0) {
 			break;
@@ -1924,7 +1924,7 @@ void discreta_matrix::stirling_second(
 		int k_min, int k_max, int f_ordered)
 {
 	int i, j, m, n;
-	int f_v = FALSE;
+	int f_v = false;
 	
 	m = n_max + 1 - n_min;
 	n = k_max + 1 - k_min;
@@ -1942,7 +1942,7 @@ void discreta_matrix::stirling_first(
 		int k_min, int k_max, int f_signless)
 {
 	int i, j, m, n;
-	int f_v = FALSE;
+	int f_v = false;
 	
 	m = n_max + 1 - n_min;
 	n = k_max + 1 - k_min;
@@ -1984,17 +1984,17 @@ int discreta_matrix::hip()
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			if (s_ij(i, j).s_kind() != INTEGER) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int discreta_matrix::hip1()
 // homogeneous integer matrix predicate, 
 // test for 1 char numbers; 
-// only to apply if hip TRUE. 
+// only to apply if hip true. 
 {
 	int i, j, m, n, k;
 	
@@ -2008,11 +2008,11 @@ int discreta_matrix::hip1()
 			}
 			k = s_iji(i, j);
 			if (!FITS_INTO_ONE_BYTE(k)) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void discreta_matrix::write_mem(memory & M, int debug_depth)
@@ -2284,7 +2284,7 @@ void discreta_matrix::incma_print_ascii_permuted_and_decomposed(
 		l1 += l;
 		row_decomp.append_integer(l);
 	}
-	M.incma_print_ascii(ost, f_tex, TRUE, row_decomp, TRUE, col_decomp);
+	M.incma_print_ascii(ost, f_tex, true, row_decomp, true, col_decomp);
 }
 
 void discreta_matrix::print_decomposed(
@@ -2309,16 +2309,16 @@ void discreta_matrix::print_decomposed(
 	hbar.m_l_n(M);
 	vbar.m_l_n(N);
 	i0 = 0;
-	hbar.m_ii(2 * i0, TRUE);
+	hbar.m_ii(2 * i0, true);
 	for (i = 0; i < row_decomp.s_l(); i++) {
 		i0 += row_decomp.s_ii(i);
-		hbar.m_ii(2 * i0, TRUE);
+		hbar.m_ii(2 * i0, true);
 	}
 	j0 = 0;
-	vbar.m_ii(2 * j0, TRUE);
+	vbar.m_ii(2 * j0, true);
 	for (j = 0; j < col_decomp.s_l(); j++) {
 		j0 += col_decomp.s_ii(j);
-		vbar.m_ii(2 * j0, TRUE);
+		vbar.m_ii(2 * j0, true);
 	}
 	// cout << "hbar=" << hbar << endl;
 	// cout << "vbar=" << vbar << endl;
@@ -2403,16 +2403,16 @@ void discreta_matrix::incma_print_ascii(
 	hbar.m_l_n(M);
 	vbar.m_l_n(N);
 	i0 = 0;
-	hbar.m_ii(2 * i0, TRUE);
+	hbar.m_ii(2 * i0, true);
 	for (i = 0; i < rd.s_l(); i++) {
 		i0 += rd.s_ii(i);
-		hbar.m_ii(2 * i0, TRUE);
+		hbar.m_ii(2 * i0, true);
 	}
 	j0 = 0;
-	vbar.m_ii(2 * j0, TRUE);
+	vbar.m_ii(2 * j0, true);
 	for (j = 0; j < cd.s_l(); j++) {
 		j0 += cd.s_ii(j);
-		vbar.m_ii(2 * j0, TRUE);
+		vbar.m_ii(2 * j0, true);
 	}
 	// cout << "hbar=" << hbar << endl;
 	// cout << "vbar=" << vbar << endl;
@@ -2491,7 +2491,7 @@ void discreta_matrix::incma_print_latex(
 	incma_print_latex2(f, 
 		40 /* width */, 
 		10 /* width_10 */,  
-		FALSE /* f_outline_thin */, 
+		false /* f_outline_thin */, 
 		"0.065mm" /* unit_length */, 
 		"0.5mm" /* thick_lines */ , 
 		"0.15mm" /* thin_lines */ , 
@@ -2657,7 +2657,7 @@ void discreta_matrix::calc_hash_key(
 	char *key = NULL;
 	int i, j, k, v, b, nb_inc, pr, x, y;
 	char c;
-	int f_vv = FALSE;
+	int f_vv = false;
 	Vector P;
 	int nb_primes = 25;
 	
@@ -2824,7 +2824,7 @@ int discreta_matrix::proj_order_mod(integer &P, int verbose_level)
 		cout << "is zero matrix!" << endl;
 	}
 	else {
-		while (B.is_in_center() == FALSE) {
+		while (B.is_in_center() == false) {
 			ord++;
 			power_mod(ord, P, B, verbose_level);
 			if (ord > p)
@@ -3138,12 +3138,12 @@ void discreta_matrix::det_modify_input_matrix(
 {
 	int f_v = (verbose_level >= 1);
 	int rk, i;
-	int f_special = TRUE;
-	int f_complete = FALSE;
+	int f_special = true;
+	int f_complete = false;
 	
 	Vector base_cols;
 	discreta_matrix P;
-	int f_P = FALSE;
+	int f_P = false;
 
 	if (f_v) {
 		cout << "in det():" << endl << *this << endl;

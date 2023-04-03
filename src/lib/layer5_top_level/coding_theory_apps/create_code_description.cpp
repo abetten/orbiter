@@ -20,48 +20,48 @@ namespace apps_coding_theory {
 
 create_code_description::create_code_description()
 {
-	f_field = FALSE;
+	f_field = false;
 	//std::string field_label;
 
-	f_generator_matrix = FALSE;
+	f_generator_matrix = false;
 	//std::string generator_matrix_label_genma;
 
-	f_basis = FALSE;
+	f_basis = false;
 	basis_n = 0;
 	//std::string basis_label;
 
-	f_long_code = FALSE;
+	f_long_code = false;
 	long_code_n = 0;
 	//long_code_generators;
 
-	f_projective_set = FALSE;
+	f_projective_set = false;
 	projective_set_nmk = 0;
 	//std::string projective_set_set;
 
-	f_columns_of_generator_matrix = FALSE;
+	f_columns_of_generator_matrix = false;
 	columns_of_generator_matrix_k = 0;
 	//std::string by_columns_of_generator_matrix_set;
 
-	f_Reed_Muller = FALSE;
+	f_Reed_Muller = false;
 	Reed_Muller_m = 0;
 
-	f_BCH = FALSE;
+	f_BCH = false;
 	BCH_n = 0;
 	BCH_d = 0;
 
-	f_Reed_Solomon = FALSE;
+	f_Reed_Solomon = false;
 	Reed_Solomon_n = 0;
 	Reed_Solomon_d = 0;
 
-	f_Gilbert_Varshamov = FALSE;
+	f_Gilbert_Varshamov = false;
 	Gilbert_Varshamov_n = 0;
 	Gilbert_Varshamov_k = 0;
 	Gilbert_Varshamov_d = 0;
 
-	f_ttpA = FALSE;
+	f_ttpA = false;
 	//std::string ttpA_field_label;
 
-	f_ttpB = FALSE;
+	f_ttpB = false;
 	//std::string ttpB_field_label;
 
 	std::vector<code_modification_description> Modifications;
@@ -85,21 +85,21 @@ int create_code_description::read_arguments(
 		code_modification_description M;
 
 		if (ST.stringcmp(argv[i], "-field") == 0) {
-			f_field = TRUE;
+			f_field = true;
 			field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-field " << field_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-generator_matrix") == 0) {
-			f_generator_matrix = TRUE;
+			f_generator_matrix = true;
 			generator_matrix_label_genma.assign(argv[++i]);
 			if (f_v) {
 				cout << "-generator_matrix " << generator_matrix_label_genma << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-basis") == 0) {
-			f_basis = TRUE;
+			f_basis = true;
 			basis_n = ST.strtoi(argv[++i]);
 			basis_label.assign(argv[++i]);
 			if (f_v) {
@@ -107,7 +107,7 @@ int create_code_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-long_code") == 0) {
-			f_long_code = TRUE;
+			f_long_code = true;
 			long_code_n = ST.strtoi(argv[++i]);
 
 			int n, h;
@@ -126,7 +126,7 @@ int create_code_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-projective_set") == 0) {
-			f_projective_set = TRUE;
+			f_projective_set = true;
 			projective_set_nmk = ST.strtoi(argv[++i]);
 			projective_set_set.assign(argv[++i]);
 			if (f_v) {
@@ -136,7 +136,7 @@ int create_code_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-columns_of_generator_matrix") == 0) {
-			f_columns_of_generator_matrix = TRUE;
+			f_columns_of_generator_matrix = true;
 			columns_of_generator_matrix_k = ST.strtoi(argv[++i]);
 			columns_of_generator_matrix_set.assign(argv[++i]);
 			if (f_v) {
@@ -146,14 +146,14 @@ int create_code_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-Reed_Muller") == 0) {
-			f_Reed_Muller = TRUE;
+			f_Reed_Muller = true;
 			Reed_Muller_m = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Reed_Muller " << Reed_Muller_m << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-BCH") == 0) {
-			f_BCH = TRUE;
+			f_BCH = true;
 			BCH_n = ST.strtoi(argv[++i]);
 			BCH_d = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -161,7 +161,7 @@ int create_code_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-Reed_Solomon") == 0) {
-			f_Reed_Solomon = TRUE;
+			f_Reed_Solomon = true;
 			Reed_Solomon_n = ST.strtoi(argv[++i]);
 			Reed_Solomon_d = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -170,7 +170,7 @@ int create_code_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-Gilbert_Varshamov") == 0) {
-			f_Gilbert_Varshamov = TRUE;
+			f_Gilbert_Varshamov = true;
 			Gilbert_Varshamov_n = ST.strtoi(argv[++i]);
 			Gilbert_Varshamov_k = ST.strtoi(argv[++i]);
 			Gilbert_Varshamov_d = ST.strtoi(argv[++i]);
@@ -182,7 +182,7 @@ int create_code_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-ttpA") == 0) {
-			f_ttpA = TRUE;
+			f_ttpA = true;
 			ttpA_field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-ttpA " << ttpA_field_label
@@ -190,7 +190,7 @@ int create_code_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-ttpB") == 0) {
-			f_ttpB = TRUE;
+			f_ttpB = true;
 			ttpB_field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-ttpB " << ttpB_field_label

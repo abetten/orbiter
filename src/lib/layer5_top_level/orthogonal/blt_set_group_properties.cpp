@@ -113,7 +113,7 @@ void blt_set_group_properties::init_orbits_on_points(
 
 	Orbits_on_points = NEW_OBJECT(groups::orbits_on_something);
 
-	int f_load_save = FALSE;
+	int f_load_save = false;
 	std::string prefix;
 
 	if (f_v) {

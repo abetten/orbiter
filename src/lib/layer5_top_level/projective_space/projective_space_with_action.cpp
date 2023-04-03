@@ -25,8 +25,8 @@ projective_space_with_action::projective_space_with_action()
 	d = 0;
 	q = 0;
 	F = NULL;
-	f_semilinear = FALSE;
-	f_init_incidence_structure = FALSE;
+	f_semilinear = false;
+	f_init_incidence_structure = false;
 	P = NULL;
 	PA2 = NULL;
 	Surf_A = NULL;
@@ -35,7 +35,7 @@ projective_space_with_action::projective_space_with_action()
 	A = NULL;
 	A_on_lines = NULL;
 
-	f_has_action_on_planes = FALSE;
+	f_has_action_on_planes = false;
 	A_on_planes = NULL;
 
 	Elt1 = NULL;
@@ -196,7 +196,7 @@ void projective_space_with_action::init(
 		if (f_v) {
 			cout << "projective_space_with_action::init before Surf_A->init" << endl;
 		}
-		Surf_A->init(Surf, this, TRUE /* f_recoordinatize */, verbose_level - 1);
+		Surf_A->init(Surf, this, true /* f_recoordinatize */, verbose_level - 1);
 		if (f_v) {
 			cout << "projective_space_with_action::init after Surf_A->init" << endl;
 		}
@@ -232,11 +232,11 @@ void projective_space_with_action::init_group(
 	}
 	A->Known_groups->init_linear_group(
 		F, d, 
-		TRUE /*f_projective*/,
-		FALSE /* f_general*/,
-		FALSE /* f_affine */,
+		true /*f_projective*/,
+		false /* f_general*/,
+		false /* f_affine */,
 		f_semilinear,
-		FALSE /* f_special */,
+		false /* f_special */,
 		nice_gens,
 		0 /* verbose_level*/);
 	if (f_v) {
@@ -274,7 +274,7 @@ void projective_space_with_action::init_group(
 			cout << "projective_space_with_action::init_group "
 					"creating action on planes" << endl;
 		}
-		f_has_action_on_planes = TRUE;
+		f_has_action_on_planes = true;
 		A_on_planes = A->Induced_action->induced_action_on_grassmannian(
 				3, verbose_level);
 		if (f_v) {
@@ -283,7 +283,7 @@ void projective_space_with_action::init_group(
 		}
 	}
 	else {
-		f_has_action_on_planes = FALSE;
+		f_has_action_on_planes = false;
 		A_on_planes = NULL;
 	}
 
@@ -325,7 +325,7 @@ void projective_space_with_action::canonical_form(
 	}
 	OC->do_the_work(
 			Canonical_form_PG_Descr,
-			TRUE,
+			true,
 			this,
 			IS,
 			verbose_level);
@@ -630,7 +630,7 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 	Descr = NEW_OBJECT(projective_space_object_classifier_description);
 	Classifier = NEW_OBJECT(classification_of_objects);
 
-	Descr->f_input = TRUE;
+	Descr->f_input = true;
 	Descr->Data = NEW_OBJECT(data_input_stream_description);
 	Descr->Data->input_type[Descr->Data->nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
 	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
@@ -652,7 +652,7 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 
 	Classifier->do_the_work(
 			Descr,
-			TRUE,
+			true,
 			this,
 			verbose_level);
 
@@ -730,17 +730,17 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 		{
 			ofstream ost(fname_tex);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -852,17 +852,17 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -1022,21 +1022,21 @@ void projective_space_with_action::canonical_form_of_code(
 
 #endif
 
-	COAD.f_canonical_form_PG = TRUE;
-	COAD.f_canonical_form_PG_has_PA = TRUE;
+	COAD.f_canonical_form_PG = true;
+	COAD.f_canonical_form_PG_has_PA = true;
 	COAD.Canonical_form_PG_PA = this;
 	COAD.Canonical_form_PG_Descr = Canonical_form_codes_Descr;
 
-	COAD.f_report = TRUE;
+	COAD.f_report = true;
 	COAD.Classification_of_objects_report_options = NEW_OBJECT(combinatorics::classification_of_objects_report_options);
-	COAD.Classification_of_objects_report_options->f_prefix = TRUE;
+	COAD.Classification_of_objects_report_options->f_prefix = true;
 	COAD.Classification_of_objects_report_options->prefix.assign(COAD.Canonical_form_PG_Descr->label);
-	COAD.Classification_of_objects_report_options->f_export_flag_orbits = TRUE;
-	COAD.Classification_of_objects_report_options->f_show_incidence_matrices = TRUE;
-	COAD.Classification_of_objects_report_options->f_show_TDO = TRUE;
-	COAD.Classification_of_objects_report_options->f_show_TDA = TRUE;
-	COAD.Classification_of_objects_report_options->f_export_group_GAP = TRUE;
-	COAD.Classification_of_objects_report_options->f_export_group_orbiter = TRUE;
+	COAD.Classification_of_objects_report_options->f_export_flag_orbits = true;
+	COAD.Classification_of_objects_report_options->f_show_incidence_matrices = true;
+	COAD.Classification_of_objects_report_options->f_show_TDO = true;
+	COAD.Classification_of_objects_report_options->f_show_TDA = true;
+	COAD.Classification_of_objects_report_options->f_export_group_GAP = true;
+	COAD.Classification_of_objects_report_options->f_export_group_orbiter = true;
 
 
 
@@ -1108,16 +1108,16 @@ void projective_space_with_action::table_of_quartic_curves(
 			Quartic_curve_descr;
 
 
-		//Quartic_curve_descr.f_q = TRUE;
+		//Quartic_curve_descr.f_q = true;
 		//Quartic_curve_descr.q = q;
 
-		//Quartic_curve_descr.f_space = TRUE;
+		//Quartic_curve_descr.f_space = true;
 		//Quartic_curve_descr.space_label.assign(label_of_projective_space);
 
-		Quartic_curve_descr.f_space_pointer = TRUE;
+		Quartic_curve_descr.f_space_pointer = true;
 		Quartic_curve_descr.space_pointer = this;
 
-		Quartic_curve_descr.f_catalogue = TRUE;
+		Quartic_curve_descr.f_catalogue = true;
 		Quartic_curve_descr.iso = h;
 
 
@@ -1338,17 +1338,17 @@ void projective_space_with_action::cheat_sheet(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -1567,17 +1567,17 @@ void projective_space_with_action::report_fixed_objects(
 		char str[1000];
 		string title, author, extra_praeamble;
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		snprintf(str, sizeof(str), "Fixed Objects");
 		title.assign(str);
 		author.assign("");
 
 		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
+			false /* f_book */, true /* f_title */,
 			title, author /* const char *author */,
-			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
+			false /* f_toc */, false /* f_landscape */, true /* f_12pt */,
+			true /* f_enlarged_page */, true /* f_pagenumbers */,
 			extra_praeamble /* extra_praeamble */);
 		//latex_head_easy(fp);
 
@@ -1677,7 +1677,7 @@ void compute_ago_distribution(
 		Ago[i] = OiPA->ago; //OiPA->Aut_gens->group_order_as_lint();
 	}
 	C_ago = NEW_OBJECT(tally);
-	C_ago->init_lint(Ago, CB->nb_types, FALSE, 0);
+	C_ago->init_lint(Ago, CB->nb_types, false, 0);
 	FREE_lint(Ago);
 	if (f_v) {
 		cout << "compute_ago_distribution done" << endl;
@@ -1704,7 +1704,7 @@ void compute_ago_distribution_permuted(
 		Ago[i] = OiPA->ago; //OiPA->Aut_gens->group_order_as_lint();
 	}
 	C_ago = NEW_OBJECT(tally);
-	C_ago->init_lint(Ago, CB->nb_types, FALSE, 0);
+	C_ago->init_lint(Ago, CB->nb_types, false, 0);
 	FREE_lint(Ago);
 	if (f_v) {
 		cout << "compute_ago_distribution_permuted done" << endl;
@@ -1723,7 +1723,7 @@ void compute_and_print_ago_distribution(std::ostream &ost,
 	compute_ago_distribution(CB, C_ago, verbose_level);
 	ost << "ago distribution: " << endl;
 	ost << "$$" << endl;
-	C_ago->print_naked_tex(ost, TRUE /* f_backwards */);
+	C_ago->print_naked_tex(ost, true /* f_backwards */);
 	ost << endl;
 	ost << "$$" << endl;
 	FREE_OBJECT(C_ago);
@@ -1743,7 +1743,7 @@ void compute_and_print_ago_distribution_with_classes(std::ostream &ost,
 	compute_ago_distribution_permuted(CB, C_ago, verbose_level);
 	ost << "Ago distribution: " << endl;
 	ost << "$$" << endl;
-	C_ago->print_naked_tex(ost, TRUE /* f_backwards */);
+	C_ago->print_naked_tex(ost, true /* f_backwards */);
 	ost << endl;
 	ost << "$$" << endl;
 	set_of_sets *SoS;
@@ -1762,7 +1762,7 @@ void compute_and_print_ago_distribution_with_classes(std::ostream &ost,
 		L.lint_set_print_tex(ost, SoS->Sets[i], SoS->Set_size[i]);
 		ost << "$\\\\" << endl;
 		//int_vec_print_as_matrix(ost, SoS->Sets[i],
-		//SoS->Set_size[i], 10 /* width */, TRUE /* f_tex */);
+		//SoS->Set_size[i], 10 /* width */, true /* f_tex */);
 		//ost << "$$" << endl;
 
 	}

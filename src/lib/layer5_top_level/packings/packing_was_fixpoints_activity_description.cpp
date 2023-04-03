@@ -18,12 +18,12 @@ namespace packings {
 
 packing_was_fixpoints_activity_description::packing_was_fixpoints_activity_description()
 {
-	f_report = FALSE;
+	f_report = false;
 
-	f_print_packing = FALSE;
+	f_print_packing = false;
 	//std::string print_packing_text;
 
-	f_compare_files_of_packings = FALSE;
+	f_compare_files_of_packings = false;
 	//std::string compare_files_of_packings_fname1;
 	//std::string compare_files_of_packings_fname2;
 
@@ -48,16 +48,16 @@ int packing_was_fixpoints_activity_description::read_arguments(
 
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+			f_report = true;
 			cout << "-report" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-print_packing") == 0) {
-			f_print_packing = TRUE;
+			f_print_packing = true;
 			print_packing_text.assign(argv[++i]);
 			cout << "-print_packing" << print_packing_text << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-compare_files_of_packings") == 0) {
-			f_compare_files_of_packings = TRUE;
+			f_compare_files_of_packings = true;
 			compare_files_of_packings_fname1.assign(argv[++i]);
 			compare_files_of_packings_fname2.assign(argv[++i]);
 			cout << "-compare_files_of_packings" << compare_files_of_packings_fname1 << " " << compare_files_of_packings_fname2 << endl;

@@ -29,10 +29,10 @@ formula::formula()
 
 	nb_managed_vars = 0;
 
-	f_is_homogeneous = FALSE;
+	f_is_homogeneous = false;
 	degree = 0;
 
-	f_Sajeeb = FALSE;
+	f_Sajeeb = false;
 	Expression_parser_sajeeb = NULL;
 
 }
@@ -93,7 +93,7 @@ void formula::init_formula(std::string &label, std::string &label_tex,
 	const char *p = managed_variables.c_str();
 	char str[1000];
 
-	while (TRUE) {
+	while (true) {
 		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
@@ -106,7 +106,7 @@ void formula::init_formula(std::string &label, std::string &label_tex,
 		}
 
 		tree->managed_variables.push_back(var);
-		tree->f_has_managed_variables = TRUE;
+		tree->f_has_managed_variables = true;
 
 	}
 
@@ -133,7 +133,7 @@ void formula::init_formula(std::string &label, std::string &label_tex,
 	}
 
 
-	if (FALSE) {
+	if (false) {
 		cout << "formula::init_formula "
 				"Syntax tree:" << endl;
 		tree->print(cout);
@@ -197,7 +197,7 @@ void formula::init_formula_Sajeeb(std::string &label, std::string &label_tex,
 				"Managed variables: " << managed_variables << endl;
 	}
 
-	f_Sajeeb = TRUE;
+	f_Sajeeb = true;
 	Expression_parser_sajeeb = new l1_interfaces::expression_parser_sajeeb;
 
 	if (f_v) {
@@ -221,7 +221,7 @@ void formula::init_formula_Sajeeb(std::string &label, std::string &label_tex,
 	const char *p = managed_variables.c_str();
 	char str[1000];
 
-	while (TRUE) {
+	while (true) {
 		if (!ST.s_scan_token_comma_separated(
 				&p, str, 0 /* verbose_level */)) {
 			break;
@@ -237,7 +237,7 @@ void formula::init_formula_Sajeeb(std::string &label, std::string &label_tex,
 		managed_variables_table.insert(var);
 
 		//tree->managed_variables.push_back(var);
-		//tree->f_has_managed_variables = TRUE;
+		//tree->f_has_managed_variables = true;
 
 	}
 
@@ -296,7 +296,7 @@ void formula::init_formula_Sajeeb(std::string &label, std::string &label_tex,
 	}
 
 
-	f_is_homogeneous = TRUE;
+	f_is_homogeneous = true;
 
 
     exponent_vector_visitor evv;
@@ -327,7 +327,7 @@ void formula::init_formula_Sajeeb(std::string &label, std::string &label_tex,
 
 
 #if 0
-	if (FALSE) {
+	if (false) {
 		cout << "formula::init_formula_Sajeeb Syntax tree:" << endl;
 		tree->print(cout);
 	}
@@ -370,13 +370,13 @@ int formula::is_homogeneous(int &degree, int verbose_level)
 	}
 
 	if (!tree->is_homogeneous(degree, verbose_level - 3)) {
-		return FALSE;
+		return false;
 	}
 
 	if (f_v) {
 		cout << "formula::is_homogeneous done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void formula::get_subtrees(
@@ -444,7 +444,7 @@ void formula::get_subtrees(
 		//vector<string> symbols;
 		//vector<string> values;
 
-		while (TRUE) {
+		while (true) {
 			if (!s_scan_token_comma_separated(&p, str)) {
 				break;
 			}

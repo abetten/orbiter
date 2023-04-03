@@ -179,11 +179,11 @@ void set_and_stabilizer::init_stab_from_data(int *data_gens,
 		}
 
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		gens, Strong_gens, 
 		0 /*verbose_level*/);
 
-	if (FALSE) {
+	if (false) {
 		cout << "strong generators are:" << endl;
 		Strong_gens->print_generators(cout);
 		}
@@ -249,11 +249,11 @@ void set_and_stabilizer::init_stab_from_file(
 	}
 
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		gens, Strong_gens, 
 		0 /*verbose_level*/);
 
-	if (FALSE) {
+	if (false) {
 		cout << "strong generators are:" << endl;
 		Strong_gens->print_generators(cout);
 		}
@@ -269,7 +269,7 @@ void set_and_stabilizer::init_stab_from_file(
 
 void set_and_stabilizer::print_set_tex(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	L.lint_set_print_tex(ost, data, sz);
 	ost << "_{";
@@ -279,7 +279,7 @@ void set_and_stabilizer::print_set_tex(std::ostream &ost)
 
 void set_and_stabilizer::print_set_tex_for_inline_text(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	L.lint_set_print_tex_for_inline_text(ost, data, sz);
 	ost << "_{";
@@ -338,7 +338,7 @@ void set_and_stabilizer::apply_to_self(
 			}
 		}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		gens, sg, 
 		0 /*verbose_level*/);
 	Lint_vec_copy(data2, data, sz);
@@ -474,7 +474,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 	//int d;
 
 	d = 0;
-	C.init(Orb->orbit_len, Orb->nb_orbits, FALSE, 0);
+	C.init(Orb->orbit_len, Orb->nb_orbits, false, 0);
 	for (t = 0; t < C.nb_types; t++) {
 		ff = C.type_first[t];
 		c = C.data_sorted[ff + 0];

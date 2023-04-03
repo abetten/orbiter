@@ -385,7 +385,7 @@ void encoded_combinatorial_object::latex_set_system_by_columns(
 		return;
 	}
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, j;
 	int *B;
 	int sz;
@@ -421,7 +421,7 @@ void encoded_combinatorial_object::latex_set_system_by_rows(
 		return;
 	}
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, j;
 	int *B;
 	int sz;
@@ -458,7 +458,7 @@ void encoded_combinatorial_object::latex_incma(
 		cout << "encoded_combinatorial_object::latex_incma" << endl;
 	}
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	int *Vi;
 	int *Bj;
@@ -532,7 +532,7 @@ void encoded_combinatorial_object::latex_TDA(
 		cout << "encoded_combinatorial_object::latex_TDA" << endl;
 	}
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	int *Vi;
 	int *Bj;
@@ -624,7 +624,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 		cout << "encoded_combinatorial_object::latex_TDA_with_labels" << endl;
 	}
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	int *Vi;
 	int *Bj;
@@ -719,8 +719,8 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 			nb_cols /*b */,
 			V, B, Vi, Bj,
 			Inc2,
-			TRUE, point_labels,
-			TRUE, block_labels,
+			true, point_labels,
+			true, block_labels,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_TDA_with_labels "
@@ -752,7 +752,7 @@ void encoded_combinatorial_object::latex_canonical_form(
 		cout << "encoded_combinatorial_object::latex_canonical_form" << endl;
 	}
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	int *Vi;
 	int *Bj;
@@ -926,7 +926,7 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(
 		cout << "encoded_combinatorial_object::latex_canonical_form" << endl;
 	}
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	int *Vi;
 	int *Bj;
@@ -1021,8 +1021,8 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(
 			nb_cols /*b */,
 			V, B, Vi, Bj,
 			Inc2,
-			TRUE, row_labels,
-			TRUE, col_labels,
+			true, row_labels,
+			true, col_labels,
 			verbose_level - 1);
 
 	if (f_v) {

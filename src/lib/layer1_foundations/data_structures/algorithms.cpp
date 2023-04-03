@@ -259,7 +259,7 @@ void algorithms::read_hex_data(std::string &str,
 unsigned char algorithms::read_hex_digit(char digit)
 {
 	char val;
-	int f_v = TRUE;
+	int f_v = true;
 
 	if (f_v) {
 		cout << "algorithms::read_hex_data digit = " << digit << endl;
@@ -332,7 +332,7 @@ void algorithms::solve_diophant(int *Inc,
 			0 /* verbose_level */);
 	}
 
-	if (FALSE /*f_v4*/) {
+	if (false /*f_v4*/) {
 		Dio->print();
 	}
 
@@ -347,7 +347,7 @@ void algorithms::solve_diophant(int *Inc,
 	nb_sol = Dio->_resultanz;
 	if (nb_sol) {
 		Dio->get_solutions(Solutions, nb_sol, 1 /* verbose_level */);
-		if (FALSE /*f_v4*/) {
+		if (false /*f_v4*/) {
 			cout << "Solutions:" << endl;
 			Lint_matrix_print(Solutions, nb_sol, nb_needed);
 		}
@@ -780,7 +780,7 @@ void algorithms::matrix_rowspan_over_R(
 
 	orbiter_kernel_system::numerics Num;
 	int *base_cols;
-	int f_complete = TRUE;
+	int f_complete = true;
 	int r;
 
 	base_cols = NEW_int(n);

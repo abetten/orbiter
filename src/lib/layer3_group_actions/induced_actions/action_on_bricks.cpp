@@ -19,7 +19,7 @@ action_on_bricks::action_on_bricks()
 	A = NULL;
 	B = NULL;
 	degree = 0;
-	f_linear_action = FALSE;
+	f_linear_action = false;
 }
 
 action_on_bricks::~action_on_bricks()

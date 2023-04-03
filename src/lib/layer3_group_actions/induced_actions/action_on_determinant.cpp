@@ -17,7 +17,7 @@ namespace induced_actions {
 action_on_determinant::action_on_determinant()
 {
 	M = NULL;
-	f_projective = FALSE;
+	f_projective = false;
 	m = 0;
 	q = 0;
 	degree = 0;

@@ -185,7 +185,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 
 
-	if (FALSE) {
+	if (false) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
 				"after handle_orbit" << endl;
 		cout << "canonical point set: ";
@@ -202,7 +202,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	}
 
 
-	if (FALSE) {
+	if (false) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
 				"after handle_orbit" << endl;
 		cout << "canonical point set: ";

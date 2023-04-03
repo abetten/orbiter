@@ -36,9 +36,9 @@ void choose_points_or_lines::null()
 	gen = NULL;
 	Control = NULL;
 	Poset = NULL;
-	f_has_favorite = FALSE;
-	f_iso_test_only = FALSE;
-	f_has_orbit_select = FALSE;
+	f_has_favorite = false;
+	f_iso_test_only = false;
+	f_has_orbit_select = false;
 	print_generators_verbose_level = 0;
 	null_representative();
 	
@@ -85,7 +85,7 @@ void choose_points_or_lines::null_representative()
 
 void choose_points_or_lines::free_representative()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "choose_points_or_lines::free_representative freeing representative" << endl;
@@ -195,7 +195,7 @@ void choose_points_or_lines::compute_orbits(
 	}
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = nb_points_or_lines;
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
@@ -210,15 +210,15 @@ void choose_points_or_lines::compute_orbits(
 
 
 #if 0
-	gen->f_print_function = TRUE;
+	gen->f_print_function = true;
 	gen->print_function = print_set;
 	gen->print_function_data = this;
 #endif	
 
 	
-	int f_use_invariant_subset_if_available = TRUE;
-	//int f_implicit_fusion = FALSE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	//int f_implicit_fusion = false;
+	int f_debug = false;
 	
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "
@@ -265,7 +265,7 @@ void choose_points_or_lines::choose_orbit(
 	data_structures_groups::group_container *G;
 	poset_classification::poset_orbit_node *O;
 	
-	f_hit_favorite = FALSE;
+	f_hit_favorite = false;
 	if (f_v) {
 		cout << "choose_points_or_lines::choose_orbit " << label
 				<< " orbit_no " << orbit_no << " / " << nb_orbits << endl;
@@ -307,14 +307,14 @@ void choose_points_or_lines::choose_orbit(
 	}
 
 
-	f_changed = FALSE;
+	f_changed = false;
 	if (f_has_favorite) {
 		f_hit_favorite = favorite_orbit_representative(
 				transporter, transporter_inv,
 				the_favorite_representative, verbose_level - 3);
 		if (f_hit_favorite) {
 			if (f_iso_test_only) {
-				f_changed = FALSE;
+				f_changed = false;
 				if (f_v) {
 					cout << "choose_points_or_lines::choose_orbit "
 							<< label << " isomorphism test only" << endl;
@@ -326,7 +326,7 @@ void choose_points_or_lines::choose_orbit(
 				}
 			}
 			else {
-				f_changed = TRUE;
+				f_changed = true;
 			}
 		}
 	}
@@ -351,7 +351,7 @@ void choose_points_or_lines::choose_orbit(
 #if 0
 	G->init(A, verbose_level - 2);
 	G->init_strong_generators_by_hdl(O->nb_strong_generators,
-			O->hdl_strong_generators, O->tl, FALSE);
+			O->hdl_strong_generators, O->tl, false);
 	G->schreier_sims(0);
 	G->group_order(go);
 #endif
@@ -377,7 +377,7 @@ void choose_points_or_lines::choose_orbit(
 		//NewStab->group_order(stab_order);
 
 		NewStab->conjugate(A, G->S, transporter_inv,
-				FALSE, 0 /*verbose_level - 1*/);
+				false, 0 /*verbose_level - 1*/);
 		NewStab->group_order(go1);
 		if (f_vv) {
 			cout << "The conjugated stabilizer has order " << go1 << endl;
@@ -445,13 +445,13 @@ int choose_points_or_lines::favorite_orbit_representative(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_implicit_fusion = FALSE;
+	//int f_implicit_fusion = false;
 	long int *canonical_set1;
 	long int *canonical_set2;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
-	int f_OK = TRUE;
+	int f_OK = true;
 	int i;
 	
 	if (f_v) {
@@ -463,7 +463,7 @@ int choose_points_or_lines::favorite_orbit_representative(
 				<< label << " not the right size" << endl;
 		cout << "nb_points_or_lines=" << nb_points_or_lines << endl;		
 		cout << "favorite_size=" << favorite_size << endl;		
-		return FALSE;
+		return false;
 	}
 	
 	canonical_set1 = NEW_lint(nb_points_or_lines);
@@ -482,11 +482,11 @@ int choose_points_or_lines::favorite_orbit_representative(
 	
 	for (i = 0; i < nb_points_or_lines; i++) {
 		if (canonical_set1[i] != representative[i]) {
-			f_OK = FALSE;
+			f_OK = false;
 			break;
 		}
 	}
-	A2->Group_element->element_invert(transporter_inv, transporter, FALSE);
+	A2->Group_element->element_invert(transporter_inv, transporter, false);
 	if (f_OK) {
 		if (f_v) {
 			cout << "arc::favorite_zero_lines: transporter "
@@ -504,10 +504,10 @@ int choose_points_or_lines::favorite_orbit_representative(
 	FREE_int(Elt2);
 	FREE_int(Elt3);
 	if (f_OK) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 	
 }
@@ -546,10 +546,10 @@ int choose_points_or_lines::is_in_rep(int a)
 
 	for (i = 0; i < nb_points_or_lines; i++) {
 		if (a == representative[i]) {
-			return TRUE;
+			return true;
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 }}}

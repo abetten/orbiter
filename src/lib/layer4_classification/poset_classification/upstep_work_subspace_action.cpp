@@ -25,8 +25,8 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 // The extension is initiated from node 'prev'
 // and from extension 'prev_ex'
 // The node 'prev' is at depth 'size' - 1 
-// returns FALSE if the set is not canonical
-// (provided f_indicate_not_canonicals is TRUE)
+// returns false if the set is not canonical
+// (provided f_indicate_not_canonicals is true)
 {
 	//if (prev == 1)  verbose_level += 20;
 	
@@ -161,7 +161,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 
 	A_on_hyperplanes = gen->get_A2()->Induced_action->induced_action_on_grassmannian_preloaded(
 		AG, 
-		FALSE /* f_induce_action*/,
+		false /* f_induce_action*/,
 		NULL /*sims *old_G*/,
 		verbose_level - 3);
 	if (f_vv) {
@@ -186,7 +186,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	if (f_vvv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"generators for H:" << endl;
-		H->print_strong_generators(cout, TRUE);
+		H->print_strong_generators(cout, true);
 
 #if 1
 		cout << "generators in the action on hyperplanes:" << endl;
@@ -402,7 +402,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 
 		r = recognize(
 				final_node, final_ex,
-				TRUE /* f_tolerant */,
+				true /* f_tolerant */,
 				verbose_level - 1);
 			// upstep_work_trace.cpp
 			// gen->set[0] is the set we want to trace
@@ -446,7 +446,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 				cout << "upstep_work::upstep_subspace_action "
 						"found automorphism in coset " << coset << endl;
 				if (coset > 0 &&
-						TRUE /*gen->f_allowed_to_show_group_elements*/
+						true /*gen->f_allowed_to_show_group_elements*/
 						&& f_v) {
 					gen->get_A()->Group_element->element_print_quick(aut, cout);
 					cout << endl;
@@ -465,7 +465,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			}
 #if 0
 			if (A_on_hyperplanes.element_image_of(coset,
-					aut, FALSE) != 0) {
+					aut, false) != 0) {
 				cout << "upstep_work::upstep_subspace_action fatal: "
 						"automorphism does not map " << coset
 						<< " to 0 as it should" << endl;
@@ -487,7 +487,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 					cout << "upstep_work::upstep_subspace_action "
 							"not canonical" << endl;
 				}
-				return FALSE;
+				return false;
 			}
 			cout << "upstep_work::upstep_subspace_action: "
 					"recognize returns not_canonical, "
@@ -538,7 +538,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		data_structures_groups::vector_ge SG_extension;
 		int *tl_extension = NEW_int(gen->get_A()->base_len());
 		int f_OK;
-		int f_tolerant = FALSE;
+		int f_tolerant = false;
 	
 #if 0
 		if (cur == 26) {
@@ -597,7 +597,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	if (f_v) {
 		cout << "upstep_work::upstep_subspace_action done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 }}}

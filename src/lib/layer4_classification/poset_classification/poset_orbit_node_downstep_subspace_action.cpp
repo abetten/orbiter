@@ -36,7 +36,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	int f_v4 = (verbose_level >= 4);
 	int nb_orbits;
 	//int good_orbits1, nb_points1;
-	int f_using_invariant_subset = FALSE;
+	int f_using_invariant_subset = false;
 	groups::schreier *Schreier;
 
 
@@ -95,7 +95,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	}
 	
 
-	//if (TRUE /*gen->f_early_test_func*/) {
+	//if (true /*gen->f_early_test_func*/) {
 
 		if (f_v) {
 			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
@@ -125,7 +125,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		}
 		setup_factor_space_action(gen,
 				*AF, *A_factor_space, lvl,
-				TRUE /*f_compute_tables*/,
+				true /*f_compute_tables*/,
 				verbose_level - 7);
 		if (f_v) {
 			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
@@ -400,7 +400,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 
 	FREE_lint(candidates);
 	FREE_lint(the_set);
-	if (TRUE /* lvl == 0*/) {
+	if (true /* lvl == 0*/) {
 		FREE_lint(subset);
 	}
 
@@ -412,7 +412,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 
 	A_factor_space = gen->get_A2()->Induced_action->induced_action_on_factor_space(
 		AF,
-		FALSE /*f_induce_action*/,
+		false /*f_induce_action*/,
 		NULL /* sims */,
 		0/*verbose_level - 3*/);
 
@@ -496,7 +496,7 @@ void poset_orbit_node::setup_factor_space_action(
 	}
 	A_factor_space = gen->get_A2()->Induced_action->induced_action_on_factor_space(
 		AF,
-		FALSE /*f_induce_action*/,
+		false /*f_induce_action*/,
 		NULL /* sims */,
 		0/*verbose_level - 3*/);
 	if (f_vv) {
@@ -592,7 +592,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 				"verbose_level = " << verbose_level << endl;
 	}
 		
-	if (FALSE) {
+	if (false) {
 		gen->print_level_info(lvl, node);
 		cout << " : generators:" << endl;
 		Schreier.print_generators();
@@ -682,25 +682,25 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 	}
 
 #if 0
-	if (FALSE) {
+	if (false) {
 		cout << "Schreier structure generators:" << endl;
 		Schreier.list_elements_as_permutations_vertically(cout);
 
 
 		cout << "Schreier structure table:" << endl;
-		Schreier.print_tables(cout, FALSE/* f_with_cosetrep*/);
+		Schreier.print_tables(cout, false/* f_with_cosetrep*/);
 
 		int h;
 		char fname[1000];
 		int xmax = 2000000;
 		int ymax = 1000000;
-		int f_circletext = TRUE;
+		int f_circletext = true;
 		int rad = 20000;
-		int f_embedded = TRUE;
-		int f_sideways = TRUE;
+		int f_embedded = true;
+		int f_sideways = true;
 		double scale = 0.35;
 		double line_width = 0.6;
-		int f_has_point_labels = FALSE;
+		int f_has_point_labels = false;
 		long int *point_labels = NULL;
 
 		for (h = 0; h < Schreier.nb_orbits; h++) {
@@ -721,10 +721,10 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 	if (f_v10) {
 		Schreier.print(cout);
 		Schreier.print_generators();
-		Schreier.print_tables(cout, FALSE /* f_with_cosetrep */);
-		if (gen->A->degree < 1000 && FALSE) {
+		Schreier.print_tables(cout, false /* f_with_cosetrep */);
+		if (gen->A->degree < 1000 && false) {
 			//Schreier.print_tree(0);
-			Schreier.print_tables(cout, FALSE /* f_with_cosetrep */);
+			Schreier.print_tables(cout, false /* f_with_cosetrep */);
 			}
 		}
 #endif

@@ -1517,7 +1517,7 @@ class incidence_structure {
 			data_structures::partitionstack &PStack,
 		int depth, int &step, int &f_refine, 
 		int &f_refine_prev, int verbose_level);
-		// returns TRUE when we are done, FALSE otherwise
+		// returns true when we are done, false otherwise
 	void compute_TDO_safe(
 			data_structures::partitionstack &PStack,
 		int depth, int verbose_level);
@@ -2599,9 +2599,9 @@ public:
 			long int *input_pts, int nb_pts,
 			int *six_coeffs,
 			int verbose_level);
-			// returns FALSE if the rank of the
+			// returns false if the rank of the
 			// coefficient matrix is not 5.
-			// TRUE otherwise.
+			// true otherwise.
 	int determine_cubic_in_plane(
 			ring_theory::homogeneous_polynomial_domain *Poly_3_3,
 			int nb_pts, long int *Pts, int *coeff10,

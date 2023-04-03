@@ -198,7 +198,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 	//int s, a;
 
 	node = PC->find_poset_orbit_node_for_set(len, local_S,
-		FALSE /* f_tolerant */, 0);
+		false /* f_tolerant */, 0);
 	O = PC->get_node(node);
 
 	if (f_v) {
@@ -243,7 +243,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 		l = Schreier.orbit_len[i];
 		pt = Schreier.orbit[f];
 		local_S[len] = pt;
-		f_orbit_is_good = TRUE;
+		f_orbit_is_good = true;
 		if (f_v) {
 			cout << "orbit_based_testing::early_test_func_by_using_group "
 					"testing orbit " << i << " / " << Schreier.nb_orbits << " of length " << l << endl;
@@ -256,7 +256,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 			}
 			if (!(*callback_testing[j])(this,
 					local_S, len + 1, callback_data[j], verbose_level - 1)) {
-				f_orbit_is_good = FALSE;
+				f_orbit_is_good = false;
 				break;
 			}
 		}
@@ -264,18 +264,18 @@ void orbit_based_testing::early_test_func_by_using_group(
 		if (f_linear) {
 			if (rc.check_rank_last_two_are_fixed(len + 1,
 				local_S, verbose_level - 1)) {
-				f_orbit_is_good = TRUE;
+				f_orbit_is_good = true;
 			}
 			else {
-				f_orbit_is_good = FALSE;
+				f_orbit_is_good = false;
 			}
 		}
 		else {
-			f_orbit_is_good = TRUE;
+			f_orbit_is_good = true;
 			for (s = 0; s < len; s++) {
 				a = local_S[s];
 				if (Hamming_distance(a, pt) < d) {
-					f_orbit_is_good = FALSE;
+					f_orbit_is_good = false;
 					break;
 				}
 			}

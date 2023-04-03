@@ -161,14 +161,14 @@ void union_find::add_generator(int *Elt, int verbose_level)
 		}
 	f_seen = NEW_int(A->degree);
 	for (i = 0; i < A->degree; i++) {
-		f_seen[i] = FALSE;
+		f_seen[i] = false;
 		}
 
 	for (i = 0; i < A->degree; i++) {
 		if (f_seen[i])
 			continue;
 		i0 = i;
-		f_seen[i0] = TRUE;
+		f_seen[i0] = true;
 		j = i0;
 
 		if (f_vv) {
@@ -176,7 +176,7 @@ void union_find::add_generator(int *Elt, int verbose_level)
 			//print();
 			}
 		
-		while (TRUE) {
+		while (true) {
 			cnt++;
 			if (cnt > A->degree) {
 				cout << "union_find::add_generator "
@@ -190,7 +190,7 @@ void union_find::add_generator(int *Elt, int verbose_level)
 				}
 			if (k == i0)
 				break;
-			f_seen[k] = TRUE;
+			f_seen[k] = true;
 			do_union(i0, k);
 			j = k;
 			}

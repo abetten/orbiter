@@ -59,7 +59,7 @@ projective_space_subspaces::projective_space_subspaces()
 
 projective_space_subspaces::~projective_space_subspaces()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::~projective_space_subspaces" << endl;
@@ -645,10 +645,10 @@ void projective_space_subspaces::make_incidence_matrix(
 
 int projective_space_subspaces::is_incident(int pt, int line)
 {
-	int f_v = FALSE;
+	int f_v = false;
 	long int rk;
 
-	if (TRUE /*incidence_bitvec == NULL*/) {
+	if (true /*incidence_bitvec == NULL*/) {
 		Grass_lines->unrank_lint(line, 0/*verbose_level - 4*/);
 
 		if (f_v) {
@@ -668,16 +668,16 @@ int projective_space_subspaces::is_incident(int pt, int line)
 		rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 				Mtx,
 				3, n + 1, Mtx2, v /* base_cols */,
-				FALSE /* f_complete */,
+				false /* f_complete */,
 				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "rk = " << rk << endl;
 		}
 		if (rk == 3) {
-			return FALSE;
+			return false;
 		}
 		else {
-			return TRUE;
+			return true;
 		}
 	}
 	else {
@@ -846,7 +846,7 @@ void projective_space_subspaces::incma_for_type_ij(
 			}
 			rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(Basis,
 					row_type + col_type, d, Basis2, base_cols,
-					FALSE /* f_complete */,
+					false /* f_complete */,
 					0 /*verbose_level*/);
 			if (rk == col_type) {
 				Incma[i * nb_cols + j] = 1;
@@ -873,7 +873,7 @@ int projective_space_subspaces::incidence_test_for_objects_of_type_ij(
 	int *base_cols;
 	int d = n + 1;
 	//int nb_rows, nb_cols;
-	int f_incidence = FALSE;
+	int f_incidence = false;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::incidence_test_for_objects_of_type_ij" << endl;
@@ -935,10 +935,10 @@ int projective_space_subspaces::incidence_test_for_objects_of_type_ij(
 	}
 	rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(Basis,
 			type_i + type_j, d, Basis2, base_cols,
-			FALSE /* f_complete */,
+			false /* f_complete */,
 			0 /*verbose_level*/);
 	if (rk == type_j) {
-		f_incidence = TRUE;
+		f_incidence = true;
 	}
 
 	FREE_int(Basis);
@@ -1187,10 +1187,10 @@ int projective_space_subspaces::test_if_lines_are_disjoint_from_scratch(
 	rk = F->Linear_algebra->Gauss_easy(Mtx, 4, m);
 	FREE_int(Mtx);
 	if (rk == 4) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -1361,7 +1361,7 @@ void projective_space_subspaces::line_intersection_type_through_hyperplane(
 // type[N_lines]
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;
+	int f_vv = false;
 	long int rk, h, i, j, d, cnt, i1;
 	int *M;
 	int *M2;
@@ -1474,7 +1474,7 @@ void projective_space_subspaces::line_intersection_type_through_hyperplane(
 			}
 			Int_vec_copy(Pts1 + i * d, M, d);
 			Int_vec_copy(Pts2 + j * d, M + d, d);
-			f_taken[j] = TRUE;
+			f_taken[j] = true;
 			if (f_vv) {
 				Int_matrix_print(M, 2, d);
 			}
@@ -1492,7 +1492,7 @@ void projective_space_subspaces::line_intersection_type_through_hyperplane(
 						M2,
 						3, d, 0 /*verbose_level*/) == 2) {
 					cnt++;
-					f_taken[h] = TRUE;
+					f_taken[h] = true;
 				}
 			}
 			type[rk] = cnt;
@@ -2053,7 +2053,7 @@ void projective_space_subspaces::polarity_rank_k_subspace(int k,
 			F->log10_of_q + 1);
 	}
 	F->Linear_algebra->perp_standard(d, k, A, 0);
-	if (FALSE) {
+	if (false) {
 		cout << "projective_space_subspaces::polarity_rank_k_subspace "
 				"after F->perp_standard:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
@@ -2133,7 +2133,7 @@ void projective_space_subspaces::planes_through_a_line(
 		}
 		Int_vec_copy(M1, M2, 2 * d);
 		Int_vec_copy(v, M2 + 2 * d, d);
-		if (FALSE) {
+		if (false) {
 			cout << "projective_space_subspaces::planes_through_a_line "
 					"h = " << h << ", M2=" << endl;
 			Int_matrix_print(M2, 3, d);

@@ -432,7 +432,7 @@ surface_object *surface_domain::create_Eckardt_surface(
 	if (a2p1 == 0 || a2m1 == 0) {
 		cout << "surface_domain::create_Eckardt_surface "
 				"a2p1 == 0 || a2m1 == 0" << endl;
-		return FALSE;
+		return false;
 	}
 
 
@@ -588,7 +588,7 @@ surface_object *surface_domain::create_Eckardt_surface(
 	}
 	SO->init_with_27_lines(this,
 		Lines27, coeff20,
-		FALSE /* f_find_double_six_and_rearrange_lines */,
+		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
 		cout << "surface_domain::create_Eckardt_surface "
@@ -633,7 +633,7 @@ int surface_domain::test_Eckardt_form_alpha_beta(
 	int &alpha, int &beta, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = TRUE;
+	int ret = true;
 	int zeroes[] = {0,1,2,4,5,7,8,10,11,13,14,15,17,18,19};
 	int alphas[] = {6,9,12};
 	int betas[] = {16};
@@ -646,12 +646,12 @@ int surface_domain::test_Eckardt_form_alpha_beta(
 		zeroes, sizeof(zeroes) / sizeof(int), a)) {
 		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not constant on zero set" << endl;
-		return FALSE;
+		return false;
 	}
 	if (a != 0) {
 		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not zero on zero set" << endl;
-		return FALSE;
+		return false;
 	}
 	if (coeff[3] != 1) {
 		cout << "surface_domain::test_Eckardt_form_alpha_beta "
@@ -662,14 +662,14 @@ int surface_domain::test_Eckardt_form_alpha_beta(
 		alphas, sizeof(alphas) / sizeof(int), a)) {
 		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not constant on alpha set" << endl;
-		return FALSE;
+		return false;
 	}
 	alpha = a;
 	if (!orbiter_kernel_system::Orbiter->Int_vec->is_constant_on_subset(coeff,
 		betas, sizeof(betas) / sizeof(int), a)) {
 		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not constant on beta set" << endl;
-		return FALSE;
+		return false;
 	}
 	beta = a;
 

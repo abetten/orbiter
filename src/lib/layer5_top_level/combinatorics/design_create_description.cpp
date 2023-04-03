@@ -19,36 +19,36 @@ namespace apps_combinatorics {
 
 design_create_description::design_create_description()
 {
-	f_field = FALSE;
+	f_field = false;
 	//std::string field_label;
 
-	f_catalogue = FALSE;
+	f_catalogue = false;
 	iso = 0;
-	f_family = FALSE;
+	f_family = false;
 	//family_name;
 
-	f_list_of_blocks_coded = FALSE;
+	f_list_of_blocks_coded = false;
 	list_of_blocks_coded_v = 0;
 	list_of_blocks_coded_k = 0;
 	//std::string list_of_blocks_coded_label;
 
-	f_list_of_sets_coded = FALSE;
+	f_list_of_sets_coded = false;
 	list_of_sets_coded_v = 0;
 	//std::string list_of_sets_coded_label;
 
 
-	f_list_of_blocks_coded_from_file = FALSE;
+	f_list_of_blocks_coded_from_file = false;
 	//std::string list_of_blocks_coded_from_file_fname;
 
-	f_list_of_blocks_from_file = FALSE;
+	f_list_of_blocks_from_file = false;
 	list_of_blocks_from_file_v = 0;
 	//std::string list_of_blocks_from_file_fname;
 
-	f_wreath_product_designs = FALSE;
+	f_wreath_product_designs = false;
 	wreath_product_designs_n = 0;
 	wreath_product_designs_k = 0;
 
-	f_no_group = FALSE;
+	f_no_group = false;
 }
 
 design_create_description::~design_create_description()
@@ -66,28 +66,28 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-field") == 0) {
-			f_field = TRUE;
+			f_field = true;
 			field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-field " << field_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-catalogue") == 0) {
-			f_catalogue = TRUE;
+			f_catalogue = true;
 			iso = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-catalogue " << iso << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-family") == 0) {
-			f_family = TRUE;
+			f_family = true;
 			family_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-family " << family_name << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-list_of_blocks_coded") == 0) {
-			f_list_of_blocks_coded = TRUE;
+			f_list_of_blocks_coded = true;
 			list_of_blocks_coded_v = ST.strtoi(argv[++i]);
 			list_of_blocks_coded_k = ST.strtoi(argv[++i]);
 			list_of_blocks_coded_label.assign(argv[++i]);
@@ -99,7 +99,7 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-list_of_sets_coded") == 0) {
-			f_list_of_sets_coded = TRUE;
+			f_list_of_sets_coded = true;
 			list_of_sets_coded_v = ST.strtoi(argv[++i]);
 			list_of_sets_coded_label.assign(argv[++i]);
 			if (f_v) {
@@ -109,7 +109,7 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-list_of_blocks_coded_from_file") == 0) {
-			f_list_of_blocks_coded_from_file = TRUE;
+			f_list_of_blocks_coded_from_file = true;
 			list_of_blocks_coded_v = ST.strtoi(argv[++i]);
 			list_of_blocks_coded_k = ST.strtoi(argv[++i]);
 			list_of_blocks_coded_from_file_fname.assign(argv[++i]);
@@ -121,7 +121,7 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-list_of_blocks_from_file") == 0) {
-			f_list_of_blocks_from_file = TRUE;
+			f_list_of_blocks_from_file = true;
 			list_of_blocks_from_file_v = ST.strtoi(argv[++i]);
 			list_of_blocks_from_file_fname.assign(argv[++i]);
 			if (f_v) {
@@ -132,7 +132,7 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 		}
 
 		else if (ST.stringcmp(argv[i], "-wreath_product_designs") == 0) {
-			f_wreath_product_designs = TRUE;
+			f_wreath_product_designs = true;
 			wreath_product_designs_n = ST.strtoi(argv[++i]);
 			wreath_product_designs_k = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -143,7 +143,7 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-no_group") == 0) {
-			f_no_group = TRUE;
+			f_no_group = true;
 			if (f_v) {
 				cout << "-no_group " << endl;
 			}

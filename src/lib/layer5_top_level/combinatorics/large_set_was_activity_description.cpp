@@ -19,23 +19,23 @@ namespace apps_combinatorics {
 
 large_set_was_activity_description::large_set_was_activity_description()
 {
-	f_normalizer_on_orbits_of_a_given_length = FALSE;
+	f_normalizer_on_orbits_of_a_given_length = false;
 	normalizer_on_orbits_of_a_given_length_length = 0;
 	normalizer_on_orbits_of_a_given_length_nb_orbits = 0;
 	normalizer_on_orbits_of_a_given_length_control = NULL;
 
-	f_create_graph_on_orbits_of_length = FALSE;
+	f_create_graph_on_orbits_of_length = false;
 	//std::string create_graph_on_orbits_of_length_fname;
 	create_graph_on_orbits_of_length_length = 0;
 
-	f_create_graph_on_orbits_of_length_based_on_N_orbits = FALSE;
+	f_create_graph_on_orbits_of_length_based_on_N_orbits = false;
 	//std::string create_graph_on_orbits_of_length_based_on_N_orbits_fname_mask;
 	create_graph_on_orbits_of_length_based_on_N_orbits_length = 0;
 	create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected = 0;
 	create_graph_on_orbits_of_length_based_on_N_orbits_r = 0;
 	create_graph_on_orbits_of_length_based_on_N_orbits_m = 1;
 
-	f_read_solution_file = FALSE;
+	f_read_solution_file = false;
 	read_solution_file_orbit_length = 0;
 	//std::string read_solution_file_name;
 }
@@ -60,7 +60,7 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 
 
 		if (ST.stringcmp(argv[i], "-normalizer_on_orbits_of_a_given_length") == 0) {
-			f_normalizer_on_orbits_of_a_given_length = TRUE;
+			f_normalizer_on_orbits_of_a_given_length = true;
 			normalizer_on_orbits_of_a_given_length_length = ST.strtoi(argv[++i]);
 			normalizer_on_orbits_of_a_given_length_nb_orbits = ST.strtoi(argv[++i]);
 
@@ -82,7 +82,7 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-create_graph_on_orbits_of_length") == 0) {
-			f_create_graph_on_orbits_of_length = TRUE;
+			f_create_graph_on_orbits_of_length = true;
 			create_graph_on_orbits_of_length_fname.assign(argv[++i]);
 			create_graph_on_orbits_of_length_length = ST.strtoi(argv[++i]);
 			cout << "-create_graph_on_orbits_of_length "
@@ -91,7 +91,7 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-create_graph_on_orbits_of_length_based_on_N_orbits") == 0) {
-			f_create_graph_on_orbits_of_length_based_on_N_orbits = TRUE;
+			f_create_graph_on_orbits_of_length_based_on_N_orbits = true;
 			create_graph_on_orbits_of_length_based_on_N_orbits_fname_mask.assign(argv[++i]);
 			create_graph_on_orbits_of_length_based_on_N_orbits_length = ST.strtoi(argv[++i]);
 			create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected = ST.strtoi(argv[++i]);
@@ -107,7 +107,7 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 
 		}
 		else if (ST.stringcmp(argv[i], "-read_solution_file") == 0) {
-			f_read_solution_file = TRUE;
+			f_read_solution_file = true;
 			read_solution_file_orbit_length = ST.strtoi(argv[++i]);
 			read_solution_file_name.assign(argv[++i]);
 			cout << "-read_solution_file "

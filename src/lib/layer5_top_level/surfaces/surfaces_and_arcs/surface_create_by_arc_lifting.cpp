@@ -150,8 +150,8 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	SOA->init_with_group(SCA->Surf_A,
 		AL->Web->Lines27, 27, AL->the_equation,
 		AL->Trihedral_pair->Aut_gens,
-		FALSE /* f_find_double_six_and_rearrange_lines */,
-		FALSE, NULL,
+		false /* f_find_double_six_and_rearrange_lines */,
+		false, NULL,
 		verbose_level);
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::init "
@@ -173,7 +173,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	SOA->SO->identify_lines(
 			AL->Trihedral_pair->nine_lines, 9,
 			nine_lines_idx,
-			FALSE /* verbose_level */);
+			false /* verbose_level */);
 
 
 
@@ -229,7 +229,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 				Other_arc_idx[orbit_idx], verbose_level - 2);
 
 #endif
-		SCA->f_deleted[Other_arc_idx[orbit_idx]] = TRUE;
+		SCA->f_deleted[Other_arc_idx[orbit_idx]] = true;
 
 		SCA->Arc_identify[SCA->nb_surfaces * SCA->Six_arcs->nb_arcs_not_on_conic + orbit_idx] = Other_arc_idx[orbit_idx];
 
@@ -418,7 +418,7 @@ void surface_create_by_arc_lifting::report(std::ostream &ost,
 	fname_mask.append("_%d");
 
 	SOA->print_automorphism_group(ost,
-		TRUE /* f_print_orbits */,
+		true /* f_print_orbits */,
 		fname_mask, Opt,
 		verbose_level - 1);
 

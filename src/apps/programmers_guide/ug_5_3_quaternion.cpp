@@ -21,14 +21,14 @@ int main()
 
 	int verbose_level = 2;
 	int q = 3;
-	int f_without_tables = FALSE;
+	int f_without_tables = false;
 	field_theory::finite_field *F;
 
 	F = NEW_OBJECT(field_theory::finite_field);
 
 	F->finite_field_init_small_order(q,
 			f_without_tables,
-			TRUE /* f_compute_related_fields */,
+			true /* f_compute_related_fields */,
 			verbose_level);
 
 	int gens[] = { 1,1,1,2, 2,1,1,1, 0,2,1,0 };
@@ -41,7 +41,7 @@ int main()
 	A = NEW_OBJECT(actions::action);
 
 	A->init_general_linear_group(2, F,
-			FALSE /*f_semilinear */, TRUE /* f_basis */, FALSE /* f_init_sims */,
+			false /*f_semilinear */, true /* f_basis */, false /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 

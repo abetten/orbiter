@@ -44,7 +44,7 @@ packing_was::packing_was()
 
 
 	A = NULL;
-	f_semilinear = FALSE;
+	f_semilinear = false;
 	M = NULL;
 	dim = 0;
 
@@ -581,7 +581,7 @@ void packing_was::compute_H_orbits_on_points(int verbose_level)
 				"prefix_point_orbits_under_H=" << prefix_point_orbits_under_H << endl;
 	}
 
-	Point_orbits_under_H->init(P->T->A, H_gens, TRUE /*f_load_save*/,
+	Point_orbits_under_H->init(P->T->A, H_gens, true /*f_load_save*/,
 			prefix_point_orbits_under_H,
 			verbose_level - 2);
 
@@ -616,7 +616,7 @@ void packing_was::compute_N_orbits_on_points(int verbose_level)
 				"prefix_point_orbits_under_N=" << prefix_point_orbits_under_N << endl;
 	}
 
-	Point_orbits_under_N->init(P->T->A, N_gens, TRUE /*f_load_save*/,
+	Point_orbits_under_N->init(P->T->A, N_gens, true /*f_load_save*/,
 			prefix_point_orbits_under_N,
 			verbose_level - 2);
 
@@ -653,7 +653,7 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 				"prefix_line_orbits_under_H=" << prefix_line_orbits_under_H << endl;
 	}
 
-	Line_orbits_under_H->init(P->T->A2, H_gens, TRUE /*f_load_save*/,
+	Line_orbits_under_H->init(P->T->A2, H_gens, true /*f_load_save*/,
 			prefix_line_orbits_under_H,
 			verbose_level - 2);
 
@@ -688,7 +688,7 @@ void packing_was::compute_N_orbits_on_lines(int verbose_level)
 				"prefix_line_orbits_under_N=" << prefix_line_orbits_under_N << endl;
 	}
 
-	Line_orbits_under_N->init(P->T->A2, N_gens, TRUE /*f_load_save*/,
+	Line_orbits_under_N->init(P->T->A2, N_gens, true /*f_load_save*/,
 			prefix_line_orbits_under_N,
 			verbose_level - 2);
 
@@ -722,7 +722,7 @@ void packing_was::compute_spread_types_wrt_H(int verbose_level)
 			P->Spread_table_with_selection->Spread_tables->spread_table,
 			H_goi,
 			verbose_level - 2);
-	if (FALSE) {
+	if (false) {
 		cout << "The spread types are:" << endl;
 		Spread_type->report(cout, verbose_level);
 	}
@@ -758,7 +758,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 	}
 	Spread_orbits_under_H->init(P->Spread_table_with_selection->A_on_spreads,
 			H_gens,
-			TRUE /*f_load_save*/, prefix_spread_orbits,
+			true /*f_load_save*/, prefix_spread_orbits,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_spreads after Spread_orbits_under_H->init" << endl;
@@ -785,7 +785,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 	A_on_spread_orbits = NEW_OBJECT(actions::action);
 	A_on_spread_orbits = P->Spread_table_with_selection->A_on_spreads->Induced_action->induced_action_on_orbits(
 			Spread_orbits_under_H->Sch /* H_orbits_on_spreads*/,
-			TRUE /*f_play_it_safe*/, 0 /* verbose_level */);
+			true /*f_play_it_safe*/, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "prime_at_a_time::compute_H_orbits_on_spreads "
@@ -1008,7 +1008,7 @@ void packing_was::compute_reduced_spread_types_wrt_H(int verbose_level)
 			H_goi,
 			verbose_level - 2);
 
-	if (FALSE) {
+	if (false) {
 		cout << "The reduced spread types are:" << endl;
 		Spread_type_reduced->report(cout, verbose_level);
 	}
@@ -1071,7 +1071,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 				"before reduced_spread_orbits_under_H->init" << endl;
 	}
 	reduced_spread_orbits_under_H->init(A_on_reduced_spreads,
-			H_gens, TRUE /*f_load_save*/,
+			H_gens, true /*f_load_save*/,
 			prefix_reduced_spread_orbits,
 			verbose_level);
 	if (f_v) {
@@ -1110,7 +1110,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	//A_on_reduced_spread_orbits = NEW_OBJECT(actions::action);
 	A_on_reduced_spread_orbits = A_on_reduced_spreads->Induced_action->induced_action_on_orbits(
 			reduced_spread_orbits_under_H->Sch /* H_orbits_on_spreads*/,
-			TRUE /*f_play_it_safe*/, 0 /* verbose_level */);
+			true /*f_play_it_safe*/, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "prime_at_a_time::compute_H_orbits_on_reduced_spreads "
@@ -1158,7 +1158,7 @@ actions::action *packing_was::restricted_action(
 		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[orbit_idx],
 		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[orbit_idx],
 		label_of_set,
-		FALSE /* f_induce_action */,
+		false /* f_induce_action */,
 		verbose_level);
 
 	if (f_v) {
@@ -1175,7 +1175,7 @@ int packing_was::test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 // is line-disjoint from every spread from set2
 // using Spread_tables_reduced
 {
-	int f_v = FALSE; // (verbose_level >= 1);
+	int f_v = false; // (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "packing_was::test_if_pair_of_sets_of_reduced_spreads_are_adjacent" << endl;
@@ -1211,7 +1211,7 @@ void packing_was::create_graph_and_save_to_file(
 		orbit_length,
 		type_idx,
 		f_has_user_data, user_data, user_data_size,
-		FALSE /* f_has_colors */, 1 /* nb_colors */, NULL /* color_table */,
+		false /* f_has_colors */, 1 /* nb_colors */, NULL /* color_table */,
 		packing_was_set_of_reduced_spreads_adjacency_test_function,
 		this /* void *test_function_data */,
 		verbose_level - 3);
@@ -1460,7 +1460,7 @@ void packing_was::classify_orbit_invariant(int verbose_level)
 
 	for (i = 0; i < nb_sets; i++) {
 		Classify_spread_invariant_by_orbit_length[i].init_lint(
-				Orbit_invariant->Sets[i], Orbit_invariant->Set_size[i], FALSE, 0);
+				Orbit_invariant->Sets[i], Orbit_invariant->Set_size[i], false, 0);
 	}
 	if (f_v) {
 		cout << "packing_was::classify_orbit_invariant after "
@@ -1485,7 +1485,7 @@ void packing_was::report_orbit_invariant(std::ostream &ost)
 				reduced_spread_orbits_under_H->Classify_orbits_by_length->data_values[i]
 				<< " have the following spread type:\\\\" << endl;
 
-		//Classify_spread_invariant_by_orbit_length[i].print(FALSE);
+		//Classify_spread_invariant_by_orbit_length[i].print(false);
 		for (h = 0; h < Classify_spread_invariant_by_orbit_length[i].nb_types; h++) {
 			f = Classify_spread_invariant_by_orbit_length[i].type_first[h];
 			l = Classify_spread_invariant_by_orbit_length[i].type_len[h];
@@ -1517,14 +1517,14 @@ void packing_was::report_orbit_invariant(std::ostream &ost)
 
 			//P->F->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 			field_theory::finite_field *Fq3;
 			number_theory::number_theory_domain NT;
 
 			Fq3 = NEW_OBJECT(field_theory::finite_field);
 			Fq3->finite_field_init_small_order(NT.i_power_j(P->F->q, 3),
-					FALSE /* f_without_tables */,
-					FALSE /* f_compute_related_fields */,
+					false /* f_without_tables */,
+					false /* f_compute_related_fields */,
 					0);
 
 			ost << "Orbits of length one:\\\\" << endl;
@@ -1619,12 +1619,12 @@ void packing_was::report2(std::ostream &ost, int verbose_level)
 	ost << endl;
 
 
-	int f_original_spread_numbers = TRUE;
+	int f_original_spread_numbers = true;
 
 	report_reduced_spread_orbits(ost, f_original_spread_numbers, verbose_level);
 
 #if 0
-	f_original_spread_numbers = FALSE;
+	f_original_spread_numbers = false;
 
 	report_reduced_spread_orbits(ost, f_original_spread_numbers, verbose_level);
 #endif
@@ -1653,7 +1653,7 @@ void packing_was::report(int verbose_level)
 		string fname, title, author, extra_praeamble;
 
 		char str[1000];
-		//int f_with_stabilizers = TRUE;
+		//int f_with_stabilizers = true;
 
 		snprintf(str, sizeof(str), "Packings in PG(3,%d) ", P->q);
 		title.assign(str);
@@ -1664,18 +1664,18 @@ void packing_was::report(int verbose_level)
 
 		{
 			ofstream fp(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(fp,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
+				false /* f_book */,
+				true /* f_title */,
 				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
 				extra_praeamble /* extra_praeamble */);
 
 			fp << "\\section{The field of order " << P->q << "}" << endl;
@@ -1721,7 +1721,7 @@ void packing_was::report_line_orbits_under_H(
 	//Line_orbits_under_H->report_classified_orbits_by_lengths(ost);
 	int i, j, h;
 	long int a, b;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 
 
@@ -1857,7 +1857,7 @@ void packing_was::export_reduced_spread_orbits_csv(
 		cout << "packing_was::export_reduced_spread_orbits_csv" << endl;
 	}
 	//reduced_spread_orbits_under_H->report_classified_orbits_by_lengths(ost);
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int type_idx;
 	string fname;
 
@@ -1905,7 +1905,7 @@ void packing_was::report_reduced_spread_orbits(
 	//ost << "\\noindent" << endl;
 
 	//reduced_spread_orbits_under_H->report_classified_orbits_by_lengths(ost);
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int type_idx;
 
 
@@ -2000,15 +2000,15 @@ void packing_was::report_reduced_spread_orbits(
 
 	tally T1;
 
-	T1.init_lint(spreads_in_reduced_orbits, nb_spreads * orbit_length, FALSE, 0);
+	T1.init_lint(spreads_in_reduced_orbits, nb_spreads * orbit_length, false, 0);
 
 	ost << "$$" << endl;
-	T1.print_naked_tex(ost, TRUE /* f_backwards */);
+	T1.print_naked_tex(ost, true /* f_backwards */);
 	ost << "$$" << endl;
 
 #if 0
 	ost << "$$" << endl;
-	T1.print_array_tex(ost, TRUE /* f_backwards */);
+	T1.print_array_tex(ost, true /* f_backwards */);
 	ost << "$$" << endl;
 #endif
 
@@ -2028,11 +2028,11 @@ void packing_was::report_reduced_spread_orbits(
 
 	T2.init(lines_in_spreads,
 			nb_spreads * orbit_length * Spread_tables_reduced->spread_size,
-			FALSE, 0);
+			false, 0);
 
 	ost << "Frequencies of lines appearing in spreads appearing in these orbits:\\\\" << endl;
 	ost << "$$" << endl;
-	T2.print_naked_tex(ost, TRUE /* f_backwards */);
+	T2.print_naked_tex(ost, true /* f_backwards */);
 	ost << "$$" << endl;
 
 	long int *spreads_in_reduced_orbits_with_original_labels;
@@ -2153,7 +2153,7 @@ static int packing_was_set_of_reduced_spreads_adjacency_test_function(
 static int packing_was_evaluate_orbit_invariant_function(int a, int i, int j,
 		void *evaluate_data, int verbose_level)
 {
-	int f_v = FALSE; //(verbose_level >= 1);
+	int f_v = false; //(verbose_level >= 1);
 	packing_was *P = (packing_was *) evaluate_data;
 
 	if (f_v) {

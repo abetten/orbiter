@@ -536,7 +536,7 @@ syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
 				N->Nodes[N->nb_nodes] = N2;
 				N->nb_nodes++;
 				if (ODD(nb_minus_signs)) {
-					N->f_has_minus = TRUE;
+					N->f_has_minus = true;
 				}
 			}
 		}
@@ -559,7 +559,7 @@ syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
 #endif
       default:
     	 if (Tree->managed_variables.size()) {
-    		 N->f_has_monomial = TRUE;
+    		 N->f_has_monomial = true;
     		 N->monomial = monomial;
     	 }
  		if (f_v) {
@@ -678,7 +678,7 @@ syntax_tree_node *expression_parser::Term(int verbose_level, const bool get)
 						N->Nodes[N->nb_nodes] = N2;
 						N->nb_nodes++;
 						if (ODD(nb_minus_signs)) {
-							N->f_has_minus = TRUE;
+							N->f_has_minus = true;
 						}
 					}
 				}
@@ -701,7 +701,7 @@ syntax_tree_node *expression_parser::Term(int verbose_level, const bool get)
 #endif
 			default:
 				N->monomial = monomial;
-				N->f_has_monomial = TRUE;
+				N->f_has_monomial = true;
 				if (f_v) {
 					std::cout << "expression_parser::Term before return ";
 					if (N->f_has_monomial) {

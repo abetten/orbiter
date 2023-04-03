@@ -262,11 +262,11 @@ void spread_domain::print_elements()
 
 	M = NEW_int(kn);
 	for (i = 0; i < nCkq; i++) {
-		if (FALSE) {
+		if (false) {
 			cout << i << ":" << endl;
 		}
 		unrank_subspace(M, i);
-		if (FALSE) {
+		if (false) {
 			Int_vec_print_integer_matrix_width(cout, M,
 					k, n, n, F->log10_of_q + 1);
 		}
@@ -291,7 +291,7 @@ void spread_domain::print_elements_and_points()
 	w = NEW_int(n);
 	Line = NEW_int(r);
 	for (i = 0; i < nCkq; i++) {
-		if (FALSE) {
+		if (false) {
 			cout << i << ":" << endl;
 		}
 		unrank_subspace(M, i);
@@ -350,7 +350,7 @@ void spread_domain::early_test_func(
 			}
 			else {
 				cout << "too many to print" << endl;
-				f_vv = FALSE;
+				f_vv = false;
 			}
 		}
 	}
@@ -398,7 +398,7 @@ void spread_domain::early_test_func(
 			}
 			rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 					M, 2 * k, n, B, base_cols,
-					FALSE /* f_complete */,
+					false /* f_complete */,
 					0 /* verbose_level */);
 
 			if (rk < 2 * k) {
@@ -432,7 +432,7 @@ int spread_domain::check_function(
 // checks all {len \choose 2} pairs. This is very inefficient.
 // This function should not be used for poset classification!
 {
-	int f_OK = TRUE;
+	int f_OK = true;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, rk;
@@ -472,13 +472,13 @@ int spread_domain::check_function(
 			}
 			rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 					M, 2 * k, n, B, base_cols,
-					FALSE /* f_complete */,
+					false /* f_complete */,
 					0 /* verbose_level */);
 			if (rk < 2 * k) {
 				if (f_vv) {
 					cout << "rank is " << rk << " which is bad" << endl;
 				}
-				f_OK = FALSE;
+				f_OK = false;
 				break;
 			}
 			else {
@@ -487,7 +487,7 @@ int spread_domain::check_function(
 				}
 			}
 		}
-		if (f_OK == FALSE) {
+		if (f_OK == false) {
 			break;
 		}
 	}
@@ -496,13 +496,13 @@ int spread_domain::check_function(
 		if (f_v) {
 			cout << "OK" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	else {
 		if (f_v) {
 			cout << "not OK" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 
 }
@@ -512,7 +512,7 @@ int spread_domain::incremental_check_function(
 // checks the pairs (0,len-1),(1,len-1),\ldots,(len-2,len-1)
 // for recoordinatize
 {
-	int f_OK = TRUE;
+	int f_OK = true;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, rk;
@@ -525,7 +525,7 @@ int spread_domain::incremental_check_function(
 		cout << endl;
 	}
 	if (len <= 1) {
-		f_OK = TRUE;
+		f_OK = true;
 		goto finish;
 	}
 	M1 = tmp_M1; // [kn]
@@ -557,13 +557,13 @@ int spread_domain::incremental_check_function(
 		}
 		rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 				M, 2 * k, n, B, base_cols,
-				FALSE /* f_complete */,
+				false /* f_complete */,
 				0 /* verbose_level */);
 		if (rk < 2 * k) {
 			if (f_vv) {
 				cout << "rank is " << rk << " which is bad" << endl;
 			}
-			f_OK = FALSE;
+			f_OK = false;
 			break;
 		}
 		else {
@@ -578,13 +578,13 @@ finish:
 		if (f_v) {
 			cout << "OK" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	else {
 		if (f_v) {
 			cout << "not OK" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 
 }
@@ -611,7 +611,7 @@ void spread_domain::print(
 		std::ostream &ost, int len, long int *S)
 {
 	int i;
-	int f_elements_exponential = FALSE;
+	int f_elements_exponential = false;
 	string symbol_for_print;
 
 	symbol_for_print.assign("\\alpha");
@@ -1692,8 +1692,8 @@ void spread_domain::HMO(
 				"before Fq2->finite_field_init_small_order" << endl;
 	}
 	Fq2->finite_field_init_small_order(q2,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			verbose_level);
 	if (f_v) {
 		cout << "spread_domain::HMO "

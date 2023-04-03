@@ -83,7 +83,7 @@ void orbiter_top_level_session::handle_everything(
 {
 	int f_v = (verbose_level >= 1);
 
-	if (FALSE) {
+	if (false) {
 		cout << "orbiter_top_level_session::handle_everything" << endl;
 	}
 	if (Orbiter_session->f_list_arguments) {
@@ -131,7 +131,7 @@ void orbiter_top_level_session::handle_everything(
 			Os.random_integer(1000);
 		}
 		if (Orbiter_session->f_memory_debug) {
-			orbiter_kernel_system::Orbiter->f_memory_debug = TRUE;
+			orbiter_kernel_system::Orbiter->f_memory_debug = true;
 		}
 
 		// main dispatch:
@@ -176,9 +176,9 @@ void orbiter_top_level_session::parse_and_execute(
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;
+	int f_vv = false;
 
-	if (FALSE) {
+	if (false) {
 		cout << "orbiter_top_level_session::parse_and_execute, "
 				"parsing the orbiter dash code" << endl;
 	}
@@ -248,7 +248,7 @@ void orbiter_top_level_session::parse(
 {
 	int cnt = 0;
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;
+	int f_vv = false;
 	int i_prev = -1;
 
 	if (f_v) {

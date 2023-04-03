@@ -546,7 +546,7 @@ int incidence::is_block_tactical(int v, long int *theInc)
 		Incma[i] = 0;
 	}
 
-	ret = TRUE;
+	ret = true;
 	s = 0;
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < Encoding->R[i]; j++, s++) {
@@ -566,7 +566,7 @@ int incidence::is_block_tactical(int v, long int *theInc)
 		}
 		else {
 			if (k != h) {
-				ret = FALSE;
+				ret = false;
 				break;
 			}
 		}

@@ -23,9 +23,9 @@ namespace graphics {
 layered_graph_draw_options::layered_graph_draw_options()
 {
 
-	f_paperheight = FALSE;
+	f_paperheight = false;
 	paperheight = 0;
-	f_paperwidth = FALSE;
+	f_paperwidth = false;
 	paperwidth = 0;
 
 
@@ -34,42 +34,42 @@ layered_graph_draw_options::layered_graph_draw_options()
 	xout = ONE_MILLION;
 	yout = ONE_MILLION;
 
-	f_spanning_tree = FALSE;
+	f_spanning_tree = false;
 
-	f_circle = TRUE;
-	f_corners = FALSE;
+	f_circle = true;
+	f_corners = false;
 	rad = 200;
-	f_embedded = FALSE;
-	f_sideways = FALSE;
-	f_show_level_info = FALSE;
-	f_label_edges = FALSE;
-	f_x_stretch = FALSE;
+	f_embedded = false;
+	f_sideways = false;
+	f_show_level_info = false;
+	f_label_edges = false;
+	f_x_stretch = false;
 	x_stretch = 1.;
-	f_y_stretch = FALSE;
+	f_y_stretch = false;
 	y_stretch = 1.;
-	f_scale = FALSE;
+	f_scale = false;
 	scale = .45;
-	f_line_width = FALSE;
+	f_line_width = false;
 	line_width = 1.5;
-	f_rotated = FALSE;
+	f_rotated = false;
 
 
-	f_nodes = FALSE;
-	f_nodes_empty = FALSE;
+	f_nodes = false;
+	f_nodes_empty = false;
 
-	f_select_layers = FALSE;
+	f_select_layers = false;
 	//select_layers = NULL;
 	nb_layer_select = 0;
 	layer_select = NULL;
 
-	f_has_draw_begining_callback = FALSE;
+	f_has_draw_begining_callback = false;
 	draw_begining_callback = NULL;
-	f_has_draw_ending_callback = FALSE;
+	f_has_draw_ending_callback = false;
 	draw_ending_callback = NULL;
-	f_has_draw_vertex_callback = FALSE;
+	f_has_draw_vertex_callback = false;
 	draw_vertex_callback = NULL;
 
-	f_paths_in_between = FALSE;
+	f_paths_in_between = false;
 	layer1 = 0;
 	node1 = 0;;
 	layer2 = 0;
@@ -94,14 +94,14 @@ int layered_graph_draw_options::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-paperheight") == 0) {
-			f_paperheight = TRUE;
+			f_paperheight = true;
 			paperheight = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-paperheight " << paperheight << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-paperwidth") == 0) {
-			f_paperwidth = TRUE;
+			f_paperwidth = true;
 			paperwidth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-paperwidth " << paperwidth << endl;
@@ -132,19 +132,19 @@ int layered_graph_draw_options::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-spanning_tree") == 0) {
-			f_spanning_tree = TRUE;
+			f_spanning_tree = true;
 			if (f_v) {
 				cout << "-spanning_tree " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-circle") == 0) {
-			f_circle = TRUE;
+			f_circle = true;
 			if (f_v) {
 				cout << "-circle " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-corners") == 0) {
-			f_corners = TRUE;
+			f_corners = true;
 			if (f_v) {
 				cout << "-corners " << endl;
 			}
@@ -156,77 +156,77 @@ int layered_graph_draw_options::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-embedded") == 0) {
-			f_embedded = TRUE;
+			f_embedded = true;
 			if (f_v) {
 				cout << "-embedded " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-sideways") == 0) {
-			f_sideways = TRUE;
+			f_sideways = true;
 			if (f_v) {
 				cout << "-sideways " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-show_level_info") == 0) {
-			f_show_level_info = TRUE;
+			f_show_level_info = true;
 			if (f_v) {
 				cout << "-show_level_info " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label_edges") == 0) {
-			f_label_edges = TRUE;
+			f_label_edges = true;
 			if (f_v) {
 				cout << "-label_edges " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-x_stretch") == 0) {
-			f_x_stretch = TRUE;
+			f_x_stretch = true;
 			x_stretch = ST.strtof(argv[++i]);
 			if (f_v) {
 				cout << "-x_stretch " << x_stretch << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-y_stretch") == 0) {
-			f_y_stretch = TRUE;
+			f_y_stretch = true;
 			y_stretch = ST.strtof(argv[++i]);
 			if (f_v) {
 				cout << "-y_stretch " << y_stretch << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-scale") == 0) {
-			f_scale = TRUE;
+			f_scale = true;
 			scale = ST.strtof(argv[++i]);
 			if (f_v) {
 				cout << "-scale " << scale << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-line_width") == 0) {
-			f_line_width = TRUE;
+			f_line_width = true;
 			line_width = ST.strtof(argv[++i]);
 			if (f_v) {
 				cout << "-line_width " << line_width << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-rotated") == 0) {
-			f_rotated = TRUE;
+			f_rotated = true;
 			if (f_v) {
 				cout << "-rotated " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-nodes") == 0) {
-			f_nodes = TRUE;
+			f_nodes = true;
 			if (f_v) {
 				cout << "-nodes " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-nodes_empty") == 0) {
-			f_nodes_empty = TRUE;
+			f_nodes_empty = true;
 			if (f_v) {
 				cout << "-nodes_empty " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-select_layers") == 0) {
-			f_select_layers = TRUE;
+			f_select_layers = true;
 			select_layers.assign(argv[++i]);
 			Int_vec_scan(select_layers, layer_select, nb_layer_select);
 			if (f_v) {
@@ -236,7 +236,7 @@ int layered_graph_draw_options::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-paths_in_between") == 0) {
-			f_paths_in_between = TRUE;
+			f_paths_in_between = true;
 			layer1 = ST.strtoi(argv[++i]);
 			node1 = ST.strtoi(argv[++i]);
 			layer2 = ST.strtoi(argv[++i]);

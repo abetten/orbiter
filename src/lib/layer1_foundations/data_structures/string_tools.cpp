@@ -36,10 +36,10 @@ int string_tools::is_csv_file(const char *fname)
 
 	get_extension_if_present(fname, ext);
 	if (strcmp(ext, ".csv") == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -49,10 +49,10 @@ int string_tools::is_inc_file(const char *fname)
 
 	get_extension_if_present(fname, ext);
 	if (strcmp(ext, ".inc") == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -62,10 +62,10 @@ int string_tools::is_xml_file(const char *fname)
 
 	get_extension_if_present(fname, ext);
 	if (strcmp(ext, ".xml") == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -74,16 +74,16 @@ int string_tools::s_scan_int(char **s, int *i)
 	char str1[512];
 
 	if (!s_scan_token(s, str1)) {
-		return FALSE;
+		return false;
 	}
 	if (strcmp(str1, ",") == 0) {
 		if (!s_scan_token(s, str1)) {
-			return FALSE;
+			return false;
 		}
 	}
 	//*i = atoi(str1);
 	sscanf(str1, "%d", i);
-	return TRUE;
+	return true;
 }
 
 int string_tools::s_scan_lint(char **s, long int *i)
@@ -91,16 +91,16 @@ int string_tools::s_scan_lint(char **s, long int *i)
 	char str1[512];
 
 	if (!s_scan_token(s, str1)) {
-		return FALSE;
+		return false;
 	}
 	if (strcmp(str1, ",") == 0) {
 		if (!s_scan_token(s, str1)) {
-			return FALSE;
+			return false;
 		}
 	}
 	//*i = atoi(str1);
 	sscanf(str1, "%ld", i);
-	return TRUE;
+	return true;
 }
 
 int string_tools::s_scan_double(char **s, double *d)
@@ -110,10 +110,10 @@ int string_tools::s_scan_double(char **s, double *d)
 	int len;
 
 	//cout << "s_scan_double input='" << *s << "'" << endl;
-	while (TRUE) {
+	while (true) {
 		c = **s;
 		if (c == 0) {
-			return(FALSE);
+			return(false);
 		}
 		if (c == ' ' || c == '\t' ||
 			c == '\r' || c == 10 || c == 13) {
@@ -138,7 +138,7 @@ int string_tools::s_scan_double(char **s, double *d)
 	}
 	//cout << "s_scan_double token = " << str1 << endl;
 	sscanf(str1, "%lf", d);
-	return TRUE;
+	return true;
 }
 
 int string_tools::s_scan_token(char **s, char *str)
@@ -146,10 +146,10 @@ int string_tools::s_scan_token(char **s, char *str)
 	char c;
 	int len;
 
-	while (TRUE) {
+	while (true) {
 		c = **s;
 		if (c == 0) {
-			return(FALSE);
+			return(false);
 		}
 		if (c == ' ' || c == '\t' ||
 			c == '\r' || c == 10 || c == 13) {
@@ -194,7 +194,7 @@ int string_tools::s_scan_token(char **s, char *str)
 		(*s)++;
 	}
 	// printf("token = \"%s\"\n", str);
-	return TRUE;
+	return true;
 }
 
 int string_tools::s_scan_token_arbitrary(char **s, char *str)
@@ -202,10 +202,10 @@ int string_tools::s_scan_token_arbitrary(char **s, char *str)
 	char c;
 	int len;
 
-	while (TRUE) {
+	while (true) {
 		c = **s;
 		if (c == 0) {
-			return(FALSE);
+			return(false);
 		}
 		if (c == ' ' || c == '\t' ||
 			c == '\r' || c == 10 || c == 13) {
@@ -227,7 +227,7 @@ int string_tools::s_scan_token_arbitrary(char **s, char *str)
 	}
 	str[len] = 0;
 	//printf("token = \"%s\"\n", str);
-	return TRUE;
+	return true;
 }
 
 
@@ -236,10 +236,10 @@ int string_tools::s_scan_str(char **s, char *str)
 	char c;
 	int len, f_break;
 
-	while (TRUE) {
+	while (true) {
 		c = **s;
 		if (c == 0) {
-			return(FALSE);
+			return(false);
 		}
 		if (c == ' ' || c == '\t' ||
 			c == '\r' || c == 10 || c == 13) {
@@ -250,12 +250,12 @@ int string_tools::s_scan_str(char **s, char *str)
 	}
 	if (c != '\"') {
 		cout << "s_scan_str() error: c != '\"'" << endl;
-		return(FALSE);
+		return(false);
 	}
 	(*s)++;
 	len = 0;
-	f_break = FALSE;
-	while (TRUE) {
+	f_break = false;
+	while (true) {
 		c = **s;
 		if (c == 0) {
 			break;
@@ -267,7 +267,7 @@ int string_tools::s_scan_str(char **s, char *str)
 			len++;
 		}
 		else if (c == '\"') {
-			f_break = TRUE;
+			f_break = true;
 		}
 		else {
 			str[len] = c;
@@ -279,7 +279,7 @@ int string_tools::s_scan_str(char **s, char *str)
 		}
 	}
 	str[len] = 0;
-	return TRUE;
+	return true;
 }
 
 int string_tools::s_scan_token_comma_separated(
@@ -301,14 +301,14 @@ int string_tools::s_scan_token_comma_separated(
 	if (c == 10 || c == 13) {
 		(*s)++;
 		//sprintf(str, "END_OF_LINE");
-		return FALSE;
+		return false;
 	}
 #endif
 	if (c == ',') {
 		(*s)++;
 		str[0] = 0;
 		//sprintf(str, "");
-		return TRUE;
+		return true;
 	}
 	while (c != 13 && c != ',') {
 		if (c == 0) {
@@ -319,7 +319,7 @@ int string_tools::s_scan_token_comma_separated(
 			len++;
 			(*s)++;
 			c = **s;
-			while (TRUE) {
+			while (true) {
 				//cout << "read '" << c << "'" << endl;
 				if (c == 0) {
 					str[len] = 0;
@@ -353,7 +353,7 @@ int string_tools::s_scan_token_comma_separated(
 		(*s)++;
 	}
 	// printf("token = \"%s\"\n", str);
-	return TRUE;
+	return true;
 }
 
 void string_tools::scan_permutation_from_string(std::string &s,
@@ -400,7 +400,7 @@ void string_tools::scan_permutation_from_stream(std::istream & is,
 	//cycle.m_l_n(l);
 	Combi.perm_identity(perm, l);
 	//perm.one();
-	while (TRUE) {
+	while (true) {
 		c = get_character(is, verbose_level - 2);
 		while (c == ' ' || c == '\t') {
 			c = get_character(is, verbose_level - 2);
@@ -413,7 +413,7 @@ void string_tools::scan_permutation_from_stream(std::istream & is,
 			cout << "opening parenthesis" << endl;
 		}
 		c = get_character(is, verbose_level - 2);
-		while (TRUE) {
+		while (true) {
 			while (c == ' ' || c == '\t') {
 				c = get_character(is, verbose_level - 2);
 			}
@@ -554,13 +554,13 @@ void string_tools::chop_string(const char *str, int &argc, char **&argv)
 	strcpy(s, str);
 	p_buf = s;
 	i = 0;
-	while (TRUE) {
+	while (true) {
 		if (*p_buf == 0) {
 			break;
 		}
 		s_scan_token_arbitrary(&p_buf, buf);
 
-		if (FALSE) {
+		if (false) {
 			cout << "Token " << setw(6) << i << " is '"
 					<< buf << "'" << endl;
 		}
@@ -570,13 +570,13 @@ void string_tools::chop_string(const char *str, int &argc, char **&argv)
 	argv = NEW_pchar(argc);
 	i = 0;
 	p_buf = s;
-	while (TRUE) {
+	while (true) {
 		if (*p_buf == 0) {
 			break;
 		}
 		s_scan_token_arbitrary(&p_buf, buf);
 
-		if (FALSE) {
+		if (false) {
 			cout << "Token " << setw(6) << i << " is '"
 					<< buf << "'" << endl;
 		}
@@ -620,13 +620,13 @@ void string_tools::chop_string_comma_separated(
 	strcpy(s, str);
 	p_buf = s;
 	i = 0;
-	while (TRUE) {
+	while (true) {
 		if (*p_buf == 0) {
 			break;
 		}
 		s_scan_token_comma_separated(&p_buf, buf, 0 /* verbose_level */);
 
-		if (FALSE) {
+		if (false) {
 			cout << "Token " << setw(6) << i << " is '"
 					<< buf << "'" << endl;
 		}
@@ -636,13 +636,13 @@ void string_tools::chop_string_comma_separated(
 	argv = NEW_pchar(argc);
 	i = 0;
 	p_buf = s;
-	while (TRUE) {
+	while (true) {
 		if (*p_buf == 0) {
 			break;
 		}
 		s_scan_token_comma_separated(&p_buf, buf, 0 /* verbose_level */);
 
-		if (FALSE) {
+		if (false) {
 			cout << "Token " << setw(6) << i << " is '"
 					<< buf << "'" << endl;
 		}
@@ -680,7 +680,7 @@ void string_tools::convert_arguments(
 
 	for (i = 0; i < argc; i++) {
 
-		if (FALSE /*strcmp(argv[i], "-repeat") == 0*/) {
+		if (false /*strcmp(argv[i], "-repeat") == 0*/) {
 			string variable_name;
 			int loop_from;
 			int loop_upper_bound;
@@ -1045,15 +1045,15 @@ int string_tools::is_all_whitespace(const char *str)
 		if (str[i] == '\\') {
 			i++;
 			if (str[i] == 0) {
-				return TRUE;
+				return true;
 			}
 			if (str[i] == 'n') {
 				continue;
 			}
 		}
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 void string_tools::text_to_three_double(std::string &text, double *d)
@@ -1113,10 +1113,10 @@ int string_tools::starts_with_a_number(std::string &str)
 
 	c = str.c_str()[0];
 	if (c >= '0' && c <= '9') {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -1176,7 +1176,7 @@ void string_tools::parse_value_pairs(
 	//vector<string> symbols;
 	//vector<string> values;
 
-	while (TRUE) {
+	while (true) {
 		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
@@ -1227,7 +1227,7 @@ void string_tools::parse_comma_separated_values(
 		cout << "string_tools::parse_comma_separated_values" << endl;
 	}
 
-	while (TRUE) {
+	while (true) {
 		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
@@ -1275,7 +1275,7 @@ void string_tools::parse_comma_separated_strings(
 	const char *p = in.c_str();
 	char str[1000];
 
-	while (TRUE) {
+	while (true) {
 		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}

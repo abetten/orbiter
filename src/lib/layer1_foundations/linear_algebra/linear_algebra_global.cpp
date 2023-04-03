@@ -215,7 +215,7 @@ void linear_algebra_global::do_nullspace(
 	int *base_cols;
 	int rk, i, rk1;
 
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace" << endl;
@@ -247,8 +247,8 @@ void linear_algebra_global::do_nullspace(
 	}
 
 	rk1 = F->Linear_algebra->Gauss_int(A + rk * n,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, n - rk, n, n,
+		false /* f_special */, true /* f_complete */, base_cols,
+		false /* f_P */, NULL /*P*/, n - rk, n, n,
 		0 /*verbose_level*/);
 
 
@@ -338,17 +338,17 @@ void linear_algebra_global::do_nullspace(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -417,7 +417,7 @@ void linear_algebra_global::do_RREF(
 	int *A;
 	int *base_cols;
 	int rk, i;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_RREF" << endl;
@@ -435,8 +435,8 @@ void linear_algebra_global::do_RREF(
 	}
 
 	rk = F->Linear_algebra->Gauss_int(A,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, m, n, n,
+		false /* f_special */, true /* f_complete */, base_cols,
+		false /* f_P */, NULL /*P*/, m, n, n,
 		0 /*verbose_level*/);
 
 
@@ -547,17 +547,17 @@ void linear_algebra_global::RREF_demo(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					FALSE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					false /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -594,7 +594,7 @@ void linear_algebra_global::RREF_with_steps_latex(
 	int f_v = (verbose_level >= 1);
 	int *base_cols;
 	int i, j, rk;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 	int cnt = 0;
 
 	if (f_v) {
@@ -627,7 +627,7 @@ void linear_algebra_global::RREF_with_steps_latex(
 
 	i = 0;
 	j = 0;
-	while (TRUE) {
+	while (true) {
 		if (F->Linear_algebra->RREF_search_pivot(A, m, n,
 			i, j, base_cols, verbose_level)) {
 			ost << "\\noindent  Position $(i,j)=(" << i << "," << j << "),$ "
@@ -1036,7 +1036,7 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 		cout << "linear_algebra_global::reverse_engineer_semilinear_map done" << endl;
 	}
 
-	return TRUE;
+	return true;
 }
 
 

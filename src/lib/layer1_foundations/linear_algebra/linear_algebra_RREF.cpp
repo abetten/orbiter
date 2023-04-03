@@ -24,11 +24,11 @@ int linear_algebra::Gauss_int(
 	int verbose_level)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
-// P is a m x Pn matrix (if f_P is TRUE)
+// P is a m x Pn matrix (if f_P is true)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
-	int f_vvv = FALSE; //(verbose_level >= 3);
+	int f_vv = false; //(verbose_level >= 2);
+	int f_vvv = false; //(verbose_level >= 3);
 	int rank, i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f;
 	data_structures::algorithms Algo;
@@ -82,7 +82,7 @@ int linear_algebra::Gauss_int(
 		}
 
 		base_cols[i] = j;
-		//if (FALSE) {
+		//if (false) {
 		//	cout << ".";
 		//	}
 
@@ -187,7 +187,7 @@ int linear_algebra::Gauss_int(
 		cout << "linear_algebra::Gauss_int rank = " << i << endl;
 	}
 	if (f_complete) {
-		//if (FALSE) {
+		//if (false) {
 		//	cout << ";"; cout.flush();
 		//	}
 		for (i = rank - 1; i >= 0; i--) {
@@ -264,8 +264,8 @@ int linear_algebra::Gauss_int_with_pivot_strategy(
 // A is a m x n matrix
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
-	int f_vvv = FALSE; //(verbose_level >= 3);
+	int f_vv = false; //(verbose_level >= 2);
+	int f_vvv = false; //(verbose_level >= 3);
 	int rank, i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f, pi;
 	data_structures::algorithms Algo;
@@ -458,8 +458,8 @@ int linear_algebra::Gauss_int_with_given_pivots(
 // A is a m x n matrix
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
-	int f_vvv = FALSE; //(verbose_level >= 3);
+	int f_vv = false; //(verbose_level >= 2);
+	int f_vvv = false; //(verbose_level >= 3);
 	int i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f;
 	data_structures::algorithms Algo;
@@ -495,7 +495,7 @@ int linear_algebra::Gauss_int_with_given_pivots(
 				cout << "linear_algebra::Gauss_int_with_given_pivots "
 						"no pivot found in column " << j << endl;
 			}
-			return FALSE;
+			return false;
 		}
 
 		if (f_vv) {
@@ -630,7 +630,7 @@ int linear_algebra::Gauss_int_with_given_pivots(
 	if (f_v) {
 		cout << "linear_algebra::Gauss_int_with_given_pivots done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -687,9 +687,9 @@ int linear_algebra::RREF_search_pivot(
 					<< k << " colum " << j << endl;
 		}
 		base_cols[i] = j;
-		return TRUE;
+		return true;
 	} // next j
-	return FALSE;
+	return false;
 }
 
 void linear_algebra::RREF_make_pivot_one(
@@ -850,9 +850,9 @@ int linear_algebra::rank_of_matrix_memory_given(
 		cout << "linear_algebra::rank_of_matrix_memory_given" << endl;
 	}
 	Int_vec_copy(A, B, m * m);
-	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
+	rk = Gauss_int(B, false, false, base_cols, false,
 			NULL, m, m, m, 0 /* verbose_level */);
-	if (FALSE) {
+	if (false) {
 		cout << "the matrix ";
 		if (f_vv) {
 			cout << endl;
@@ -880,7 +880,7 @@ int linear_algebra::rank_of_rectangular_matrix(
 	B = NEW_int(m * n);
 	base_cols = NEW_int(n);
 
-	int f_complete = FALSE;
+	int f_complete = false;
 
 
 	rk = rank_of_rectangular_matrix_memory_given(
@@ -908,10 +908,10 @@ int linear_algebra::rank_of_rectangular_matrix_memory_given(
 	//B = NEW_int(m * n);
 	//base_cols = NEW_int(n);
 	Int_vec_copy(A, B, m * n);
-	rk = Gauss_int(B, FALSE, f_complete, base_cols, FALSE,
+	rk = Gauss_int(B, false, f_complete, base_cols, false,
 			NULL, m, n, n, 0 /* verbose_level */);
 
-	if (FALSE) {
+	if (false) {
 		cout << "the matrix ";
 		if (f_vv) {
 			cout << endl;
@@ -938,9 +938,9 @@ int linear_algebra::rank_and_basecols(int *A, int m,
 	}
 	B = NEW_int(m * m);
 	Int_vec_copy(A, B, m * m);
-	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
+	rk = Gauss_int(B, false, false, base_cols, false,
 			NULL, m, m, m, 0 /* verbose_level */);
-	if (FALSE) {
+	if (false) {
 		cout << "the matrix ";
 		if (f_vv) {
 			cout << endl;
@@ -963,7 +963,7 @@ void linear_algebra::Gauss_step(
 {
 	int i, a;
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 2);
+	int f_vv = false;//(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "linear_algebra::Gauss_step" << endl;
@@ -1014,7 +1014,7 @@ void linear_algebra::Gauss_step_make_pivot_one(
 {
 	int i, a, av;
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 2);
+	int f_vv = false;//(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "linear_algebra::Gauss_step_make_pivot_one" << endl;
@@ -1077,7 +1077,7 @@ void linear_algebra::extend_basis(
 // Does not change the first m rows of Basis.
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 2);
+	int f_vv = false; // (verbose_level >= 2);
 	int *B;
 	int *base_cols;
 	int *embedding;
@@ -1123,7 +1123,7 @@ int linear_algebra::base_cols_and_embedding(
 // It leaves A unchanged
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int *B;
 	int i, j, rk, idx;
 	data_structures::sorting Sorting;
@@ -1176,7 +1176,7 @@ int linear_algebra::Gauss_easy(
 
 	base_cols = NEW_int(n);
 	rk = Gauss_int(
-			A, FALSE, TRUE, base_cols, FALSE, NULL, m, n, n, 0);
+			A, false, true, base_cols, false, NULL, m, n, n, 0);
 	FREE_int(base_cols);
 	return rk;
 }
@@ -1189,7 +1189,7 @@ int linear_algebra::Gauss_easy_memory_given(
 	int rk;
 
 	//base_cols = NEW_int(n);
-	rk = Gauss_int(A, FALSE, TRUE, base_cols, FALSE, NULL, m, n, n, 0);
+	rk = Gauss_int(A, false, true, base_cols, false, NULL, m, n, n, 0);
 	//FREE_int(base_cols);
 	return rk;
 }
@@ -1206,8 +1206,8 @@ int linear_algebra::Gauss_simple(
 	if (f_v) {
 		cout << "linear_algebra::Gauss_simple before Gauss_int" << endl;
 	}
-	ret = Gauss_int(A, FALSE, TRUE, base_cols,
-			FALSE, NULL, m, n, n, verbose_level);
+	ret = Gauss_int(A, false, true, base_cols,
+			false, NULL, m, n, n, verbose_level);
 	if (f_v) {
 		cout << "linear_algebra::Gauss_simple after Gauss_int" << endl;
 	}
@@ -1362,8 +1362,8 @@ int linear_algebra::perp(
 	mult_matrix_matrix(A, Gram, B, k, n, n, 0 /* verbose_level */);
 
 	nb_base_cols = Gauss_int(B,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, k, n, n,
+		false /* f_special */, true /* f_complete */, base_cols,
+		false /* f_P */, NULL /*P*/, k, n, n,
 		0 /* verbose_level */);
 
 	if (nb_base_cols != k) {
@@ -1425,8 +1425,8 @@ int linear_algebra::RREF_and_kernel(
 				"before Gauss_int" << endl;
 	}
 	nb_base_cols = Gauss_int(B,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, k, n, n, 0 /* verbose_level */);
+		false /* f_special */, true /* f_complete */, base_cols,
+		false /* f_P */, NULL /*P*/, k, n, n, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "linear_algebra::RREF_and_kernel "
 				"after Gauss_int, "
@@ -1513,8 +1513,8 @@ int linear_algebra::perp_standard_with_temporary_data(
 				"before Gauss_int" << endl;
 	}
 	nb_base_cols = Gauss_int(B,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, k, n, n,
+		false /* f_special */, true /* f_complete */, base_cols,
+		false /* f_P */, NULL /*P*/, k, n, n,
 		0 /*verbose_level*/);
 	if (f_v) {
 		cout << "linear_algebra::perp_standard_temporary_data "
@@ -2082,7 +2082,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	}
 	f_allowed = NEW_int(size_list);
 	for (i = 0; i < size_list; i++) {
-		f_allowed[i] = TRUE;
+		f_allowed[i] = true;
 	}
 
 	sz = 1;
@@ -2122,7 +2122,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 				if (f_vv) {
 					cout << "disallowing " << h << endl;
 				}
-				f_allowed[h] = FALSE;
+				f_allowed[h] = false;
 				break;
 			}
 		}
@@ -2162,7 +2162,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 					if (f_vv) {
 						cout << "disallowing " << h << endl;
 					}
-					f_allowed[h] = FALSE;
+					f_allowed[h] = false;
 					break;
 				}
 			}
@@ -2252,9 +2252,9 @@ void linear_algebra::get_coefficients_in_linear_combination(
 		Int_matrix_print(M, n, k + 1);
 	}
 
-	Gauss_int(M, FALSE /* f_special */,
-			TRUE /* f_complete */, base_cols,
-			FALSE /* f_P */, NULL /* P */, n, k + 1,
+	Gauss_int(M, false /* f_special */,
+			true /* f_complete */, base_cols,
+			false /* f_P */, NULL /* P */, n, k + 1,
 			k + 1 /* Pn */, 0 /* verbose_level */);
 
 
@@ -2404,7 +2404,7 @@ int linear_algebra::is_contained_in_subspace(
 				cout << "linear_algebra::is_contained_in_subspace "
 						"is NOT in the subspace" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 	}
 	if (f_vv) {
@@ -2414,7 +2414,7 @@ int linear_algebra::is_contained_in_subspace(
 	if (f_v) {
 		cout << "linear_algebra::is_contained_in_subspace done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int linear_algebra::is_subspace(
@@ -2436,11 +2436,11 @@ int linear_algebra::is_subspace(
 		Int_vec_copy(Basis_U + h * d, Basis + dim_V * d, d);
 		rk = Gauss_easy(Basis, dim_V + 1, d);
 		if (rk > dim_V) {
-			ret = FALSE;
+			ret = false;
 			goto done;
 		}
 	}
-	ret = TRUE;
+	ret = true;
 done:
 	FREE_int(Basis);
 	if (f_v) {
@@ -2658,7 +2658,7 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 	int *w;
 	int *z;
 	int i, j, b;
-	int ret = TRUE;
+	int ret = true;
 	number_theory::number_theory_domain NT;
 	geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
@@ -2717,13 +2717,13 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 
 	int a;
 
-	while (TRUE) {
+	while (true) {
 		if (coset >= NT.i_power_j(F->q, k)) {
 			if (f_vv) {
 				cout << "coset = " << coset << " = " << NT.i_power_j(F->q, k)
 						<< " break" << endl;
 			}
-			ret = FALSE;
+			ret = false;
 			break;
 		}
 		Gg.AG_element_unrank(F->q, w, 1, k, coset);
@@ -2839,9 +2839,9 @@ void linear_algebra::invert_matrix_memory_given(
 	Int_vec_copy(A, A_tmp, n * n);
 
 	rk = Gauss_int(A_tmp,
-			FALSE /* f_special */,
-			TRUE /*f_complete */, base_cols,
-			TRUE /* f_P */, A_inv, n, n, n, 0 /* verbose_level */);
+			false /* f_special */,
+			true /*f_complete */, base_cols,
+			true /* f_P */, A_inv, n, n, n, 0 /* verbose_level */);
 	if (rk < n) {
 		cout << "linear_algebra::invert_matrix "
 				"matrix is not invertible, the rank is " << rk << endl;
@@ -2897,8 +2897,8 @@ void linear_algebra::matrix_invert(
 
 	rk = Gauss_int(
 			Tmp,
-		FALSE /* f_special */, TRUE /*f_complete */, Tmp_basecols,
-		TRUE /* f_P */, Ainv, n, n, n,
+		false /* f_special */, true /*f_complete */, Tmp_basecols,
+		true /* f_P */, Ainv, n, n, n,
 		verbose_level - 2);
 
 	if (rk < n) {
@@ -3080,7 +3080,7 @@ void linear_algebra::intersect_with_subspace(
 // Intersection_idx[nb_pts]
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 1);
+	int f_vv = false; // (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "linear_algebra::intersect_with_subspace" << endl;
@@ -3092,7 +3092,7 @@ void linear_algebra::intersect_with_subspace(
 
 	intersection_sz = 0;
 	for (h = 0; h < nb_pts; h++) {
-		if (FALSE && f_vv) {
+		if (false && f_vv) {
 			cout << "linear_algebra::intersect_with_subspace "
 					"testing point " << h << ":" << endl;
 		}
@@ -3101,7 +3101,7 @@ void linear_algebra::intersect_with_subspace(
 
 		Int_vec_copy(Pt_coords + h * n, Basis + m * n, n);
 
-		if (FALSE && f_vv) {
+		if (false && f_vv) {
 			cout << "linear_algebra::intersect_with_subspace "
 					"augmented Basis:" << endl;
 			Int_matrix_print(Basis, m + 1, n);
@@ -3117,7 +3117,7 @@ void linear_algebra::intersect_with_subspace(
 			}
 		}
 		else {
-			if (FALSE && f_vv) {
+			if (false && f_vv) {
 				cout << "linear_algebra::intersect_with_subspace "
 						"point " << h << " does not belong to the subspace" << endl;
 			}

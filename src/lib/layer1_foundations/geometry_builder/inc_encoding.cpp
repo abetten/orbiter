@@ -111,10 +111,10 @@ int inc_encoding::find_square(int m, int n)
 	int f_found_u;
 
 	if (m == 0) {
-		return FALSE;
+		return false;
 	}
 	if (n == 0) {
-		return FALSE;
+		return false;
 	}
 
 	v = theX[m * dim_n + n];
@@ -125,14 +125,14 @@ int inc_encoding::find_square(int m, int n)
 
 			// search for u:
 
-			f_found_u = FALSE;
+			f_found_u = false;
 			for (j = 0; j < R[i] - 1; j++) {
 
 				// < R[i] - 1,
 				// since one incidence is reserved for v
 
 				if (theX[i * dim_n + j] == u) {
-					f_found_u = TRUE;
+					f_found_u = true;
 					break;
 				}
 			}
@@ -143,14 +143,14 @@ int inc_encoding::find_square(int m, int n)
 			// look for v
 			for (j++; j < R[i]; j++) {
 				if (theX[i * dim_n + j] == v) {
-					return TRUE;
+					return true;
 				}
 			}
 			// v is not found, square test is negative
 
 		} // next i
 	} // next l
-	return FALSE;
+	return false;
 }
 
 void inc_encoding::print_horizontal_bar(
@@ -174,7 +174,7 @@ void inc_encoding::print_horizontal_bar(
 		ost << "-";
 	}
 	if (f_print_isot && it) {
-		it->print_status(ost, TRUE /* f_with_flags */);
+		it->print_status(ost, true /* f_with_flags */);
 	}
 	ost << endl;
 
@@ -203,7 +203,7 @@ void inc_encoding::print_partitioned_override_theX(
 	ost << endl;
 	//I = 0;
 
-	print_horizontal_bar(ost, gg, FALSE /* f_print_isot */, NULL);
+	print_horizontal_bar(ost, gg, false /* f_print_isot */, NULL);
 
 	for (i = 0; i <= v; i++) {
 
@@ -214,7 +214,7 @@ void inc_encoding::print_partitioned_override_theX(
 		if ((i == v) ||
 				(I < gg->Test_semicanonical->nb_i_hbar &&
 						i == gg->Test_semicanonical->i_hbar[I])) {
-			print_horizontal_bar(ost, gg, FALSE /* f_print_isot */, NULL);
+			print_horizontal_bar(ost, gg, false /* f_print_isot */, NULL);
 			I++;
 		}
 #endif
@@ -242,13 +242,13 @@ void inc_encoding::print_partitioned_override_theX(
 			}
 
 			if (i >= v_cut || r >= R[i]) {
-				f_kreuz = FALSE;
+				f_kreuz = false;
 			}
 			else if (the_X[r] == j) {
-				f_kreuz = TRUE;
+				f_kreuz = true;
 			}
 			else {
-				f_kreuz = FALSE;
+				f_kreuz = false;
 			}
 
 			if (f_kreuz) {
@@ -297,7 +297,7 @@ void inc_encoding::print_partitioned_override_theX(
 
 				it = gg->inc->iso_type_at_line[i];
 
-				it->print_status(ost, TRUE /* f_with_flags */);
+				it->print_status(ost, true /* f_with_flags */);
 			}
 		}
 		ost << endl;
@@ -305,24 +305,24 @@ void inc_encoding::print_partitioned_override_theX(
 		the_X += dim_n;
 
 		if (gg->GB->V_partition[i]) {
-			f_h_bar = TRUE;
+			f_h_bar = true;
 		}
 		else {
-			f_h_bar = FALSE;
+			f_h_bar = false;
 
 		}
 
 		if (f_h_bar) {
-			print_horizontal_bar(ost, gg, FALSE /* f_print_isot */, NULL);
+			print_horizontal_bar(ost, gg, false /* f_print_isot */, NULL);
 		}
 
 
-		//print_horizontal_bar(ost, gg, TRUE /* f_print_isot */, gg->inc->iso_type_no_vhbars);
+		//print_horizontal_bar(ost, gg, true /* f_print_isot */, gg->inc->iso_type_no_vhbars);
 
 	} // next i
 
 	if (i == v && gg->inc->iso_type_no_vhbars && f_print_isot) {
-		print_horizontal_bar(ost, gg, TRUE /* f_print_isot */, gg->inc->iso_type_no_vhbars);
+		print_horizontal_bar(ost, gg, true /* f_print_isot */, gg->inc->iso_type_no_vhbars);
 
 		ost << endl;
 	}
@@ -381,7 +381,7 @@ tactical_decomposition *inc_encoding::calc_tdo_without_vhbar(
 
 	tdo->calc2(v, verbose_level);
 
-	tdo->tdos = tdo->get_tdos(tdo->G_current, tdo->G_next, FALSE, verbose_level);
+	tdo->tdos = tdo->get_tdos(tdo->G_current, tdo->G_next, false, verbose_level);
 
 	if (f_second_tactical_decomposition) {
 

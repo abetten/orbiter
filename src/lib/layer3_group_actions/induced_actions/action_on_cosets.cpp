@@ -23,7 +23,7 @@ action_on_cosets::action_on_cosets()
 	subspace_basis = NULL;
 	base_cols = NULL;
 
-	f_lint = FALSE;
+	f_lint = false;
 	nb_points = 0;
 	Points = NULL;
 	lint_Points = NULL;
@@ -40,8 +40,8 @@ action_on_cosets::action_on_cosets()
 
 action_on_cosets::~action_on_cosets()
 {
-	int f_v = FALSE;
-	//int f_vv = FALSE;
+	int f_v = false;
+	//int f_vv = false;
 
 	if (f_v) {
 		cout << "action_on_cosets::~action_on_coset" << endl;
@@ -69,7 +69,7 @@ void action_on_cosets::init(int nb_points, int *Points,
 	void *rank_unrank_data, 
 	int verbose_level)
 {
-	int f_v = FALSE;
+	int f_v = false;
 	int i;
 
 	if (f_v) {
@@ -77,7 +77,7 @@ void action_on_cosets::init(int nb_points, int *Points,
 				<< " dimension_of_subspace=" << dimension_of_subspace
 				<< " n=" << n << endl;
 		}
-	f_lint = FALSE;
+	f_lint = false;
 	action_on_cosets::nb_points = nb_points;
 	action_on_cosets::Points = Points;
 	action_on_cosets::A_linear = A_linear;
@@ -115,7 +115,7 @@ void action_on_cosets::init_lint(int nb_points, long int *Points,
 	void *rank_unrank_data,
 	int verbose_level)
 {
-	int f_v = FALSE;
+	int f_v = false;
 	int i;
 
 	if (f_v) {
@@ -124,7 +124,7 @@ void action_on_cosets::init_lint(int nb_points, long int *Points,
 				<< " n=" << n << endl;
 		}
 
-	f_lint = TRUE;
+	f_lint = true;
 	action_on_cosets::nb_points = nb_points;
 	action_on_cosets::lint_Points = Points;
 	action_on_cosets::A_linear = A_linear;

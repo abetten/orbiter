@@ -118,7 +118,7 @@ void parametric_curve::init(int nb_dimensions,
 		double epsilon = 0.0001;
 		tl = t;
 		tr = t;
-		while (TRUE) {
+		while (true) {
 			tr = tr + dt;
 
 			if (f_v) {
@@ -216,7 +216,7 @@ void parametric_curve::init(int nb_dimensions,
 			cout << "t_last = " << setw(8) << t_last << " Future.size() = " << Future.size() << endl;
 		}
 		if (Future.size()) {
-			f_success = FALSE;
+			f_success = false;
 			while (Future.size()) {
 				if (!Future[Future.size() - 1].f_is_valid) {
 					break;
@@ -228,7 +228,7 @@ void parametric_curve::init(int nb_dimensions,
 					if (f_v) {
 						cout << "t_last = " << setw(8) << t_last << " t = " << setw(8) << t << " tf=" << setw(8) << tf << endl;
 					}
-					f_success = TRUE;
+					f_success = true;
 					if (f_v) {
 						cout << "t_last = " << setw(8) << t_last << " tf = " << setw(8) << tf << " t = " << setw(8) << t << " popped from Future" << endl;
 					}
@@ -250,7 +250,7 @@ void parametric_curve::init(int nb_dimensions,
 		}
 		else {
 			t += dt;
-			f_success = TRUE;
+			f_success = true;
 		}
 
 		if (ABS(t_last - t) < epsilon) {
@@ -258,14 +258,14 @@ void parametric_curve::init(int nb_dimensions,
 			cout << "t_last = " << setw(8) << t_last << endl;
 			cout << "adding dt" << endl;
 			t += dt;
-			f_success = FALSE;
+			f_success = false;
 		}
 #if 0
 		if (ABS(t - t_last) < epsilon) {
 			if (f_v) {
 				cout << "no success, ABS(t - t_last) < epsilon, ABS(t - t_last)=" << ABS(t - t_last) << endl;
 			}
-			f_success = FALSE;
+			f_success = false;
 		}
 #endif
 		if (f_v) {

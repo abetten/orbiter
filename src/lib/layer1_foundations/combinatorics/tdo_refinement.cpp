@@ -42,7 +42,7 @@ tdo_refinement::tdo_refinement()
 	//geo_parameter GP2;
 
 
-	f_doit = FALSE;
+	f_doit = false;
 	nb_written = 0;
 	nb_written_tactical = 0;
 	nb_tactical = 0;
@@ -144,7 +144,7 @@ void tdo_refinement::main_loop(int verbose_level)
 	#endif
 
 			if (!GP.input_mode_stack(f, 0 /*verbose_level - 1*/)) {
-				//cout << "GP.input_mode_stack returns FALSE" << endl;
+				//cout << "GP.input_mode_stack returns false" << endl;
 				break;
 			}
 
@@ -153,10 +153,10 @@ void tdo_refinement::main_loop(int verbose_level)
 						"cnt=" << cnt << " read input TDO" << endl;
 			}
 
-			f_doit = TRUE;
+			f_doit = true;
 			if (Descr->f_range) {
 				if (cnt + 1 < Descr->range_first || cnt + 1 >= Descr->range_first + Descr->range_len) {
-					f_doit = FALSE;
+					f_doit = false;
 				}
 			}
 			if (Descr->f_select) {
@@ -172,7 +172,7 @@ void tdo_refinement::main_loop(int verbose_level)
 				if (f_vv) {
 					GP.print_schemes();
 				}
-				if (FALSE) {
+				if (false) {
 					cout << "after print_schemes" << endl;
 				}
 				do_it(g, verbose_level - 1);
@@ -557,7 +557,7 @@ int tdo_refinement::do_row_refinement(
 	int *point_types, int nb_point_types, int point_type_len,
 	int *distributions, int nb_distributions,
 	int verbose_level)
-// returns TRUE or FALSE depending on whether the
+// returns true or false depending on whether the
 // refinement gave a tactical decomposition
 {
 	int r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
@@ -724,10 +724,10 @@ int tdo_refinement::do_row_refinement(
 			cout << GP2.label << " written" << endl;
 		}
 		if (new_nb_parts == G.col_level) {
-			f_tactical = TRUE;
+			f_tactical = true;
 		}
 		else {
-			f_tactical = FALSE;
+			f_tactical = false;
 		}
 	}
 
@@ -744,7 +744,7 @@ int tdo_refinement::do_column_refinement(
 	int *line_types, int nb_line_types, int line_type_len,
 	int *distributions, int nb_distributions,
 	int verbose_level)
-// returns TRUE or FALSE depending on whether the
+// returns true or false depending on whether the
 // refinement gave a tactical decomposition
 {
 	int r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
@@ -908,10 +908,10 @@ int tdo_refinement::do_column_refinement(
 			cout << GP2.label << " written" << endl;
 		}
 		if (new_nb_parts == G.row_level) {
-			f_tactical = TRUE;
+			f_tactical = true;
 		}
 		else {
-			f_tactical = FALSE;
+			f_tactical = false;
 		}
 		FREE_OBJECT(G2);
 	}
@@ -981,7 +981,7 @@ static void print_distribution(std::ostream &ost,
 	int f_first, a;
 	for (i = 0; i < nb_distributions; i++) {
 		ost << setw(3) << i + 1 << " & ";
-		f_first = TRUE;
+		f_first = true;
 		for (j = 0; j < nb_types; j++) {
 			a = distributions[i * nb_types + j];
 			if (a == 0) {
@@ -991,7 +991,7 @@ static void print_distribution(std::ostream &ost,
 				ost << ",";
 			}
 			ost << nb_types - 1 - j << "^{" << a << "}";
-			f_first = FALSE;
+			f_first = false;
 		}
 		ost << "\\\\" << endl;
 	}

@@ -42,12 +42,12 @@ void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair
 		The_six_plane_equations + 0 * 4,
 		The_six_plane_equations + 1 * 4,
 		The_six_plane_equations + 2 * 4,
-		eqn_F, FALSE /* verbose_level */);
+		eqn_F, false /* verbose_level */);
 	PolynomialDomains->multiply_linear_times_linear_times_linear_in_space(
 		The_six_plane_equations + 3 * 4,
 		The_six_plane_equations + 4 * 4,
 		The_six_plane_equations + 5 * 4,
-		eqn_G, FALSE /* verbose_level */);
+		eqn_G, false /* verbose_level */);
 
 
 	for (l = 0; l < q + 1; l++) {
@@ -115,7 +115,7 @@ void surface_domain::Trihedral_pairs_to_planes(
 	long int rk;
 	long int lines_in_tritangent_plane[3];
 	long int three_lines[3];
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "surface_domain::Trihedral_pairs_to_planes" << endl;
@@ -141,7 +141,7 @@ void surface_domain::Trihedral_pairs_to_planes(
 	if (f_v) {
 		cout << "Trihedral_pairs_to_planes:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
-				Planes_by_rank, Schlaefli->nb_trihedral_pairs, 6, FALSE /* f_tex */);
+				Planes_by_rank, Schlaefli->nb_trihedral_pairs, 6, false /* f_tex */);
 	}
 	if (f_v) {
 		cout << "surface_domain::Trihedral_pairs_to_planes done" << endl;
@@ -186,10 +186,10 @@ void surface_domain::compute_tritangent_planes_slow(long int *Lines,
 	}
 	tally Plane_type;
 
-	Plane_type.init(The_plane_type, nb_planes, FALSE, 0);
+	Plane_type.init(The_plane_type, nb_planes, false, 0);
 	if (f_v) {
 		cout << "surface_domain::compute_tritangent_planes_slow The plane type is: ";
-		Plane_type.print_naked(TRUE);
+		Plane_type.print_naked(true);
 		cout << endl;
 	}
 

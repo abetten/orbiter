@@ -76,10 +76,10 @@ void classify_using_canonical_forms::orderly_test(
 				"before NO->belong_to_the_same_orbit" << endl;
 	}
 	if (NO->belong_to_the_same_orbit(last_row, last_pt, 0 /* verbose_level*/)) {
-		f_accept = TRUE;
+		f_accept = true;
 	}
 	else {
-		f_accept = FALSE;
+		f_accept = false;
 	}
 	if (f_v) {
 		cout << "classify_using_canonical_forms::orderly_test "
@@ -101,7 +101,7 @@ void classify_using_canonical_forms::find_object(
 		nauty_output *&NO,
 		bitvector *&Canonical_form,
 		int verbose_level)
-// if f_found is TRUE, B[idx] agrees with the given object
+// if f_found is true, B[idx] agrees with the given object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -114,7 +114,7 @@ void classify_using_canonical_forms::find_object(
 				"before OwCF->run_nauty" << endl;
 	}
 	OwCF->run_nauty(
-			TRUE /* f_compute_canonical_form */, Canonical_form,
+			true /* f_compute_canonical_form */, Canonical_form,
 			NO,
 			verbose_level);
 	if (f_v) {
@@ -132,7 +132,7 @@ void classify_using_canonical_forms::find_object(
 
 	itr1 = Hashing.lower_bound(h);
 	itr2 = Hashing.upper_bound(h);
-	f_found = FALSE;
+	f_found = false;
 	for (itr = itr1; itr != itr2; ++itr) {
     	idx = itr->second;
     	c = sorting.uchar_vec_compare(
@@ -144,7 +144,7 @@ void classify_using_canonical_forms::find_object(
 				cout << "classify_using_canonical_forms::find_object "
 						"found object at position " << idx << endl;
 			}
-			f_found = TRUE;
+			f_found = true;
 			break;
 		}
     }
@@ -172,7 +172,7 @@ void classify_using_canonical_forms::add_object(
 				"before OwCF->run_nauty" << endl;
 	}
 	OwCF->run_nauty(
-			TRUE /* f_compute_canonical_form */, Canonical_form,
+			true /* f_compute_canonical_form */, Canonical_form,
 			NO,
 			verbose_level);
 	if (f_v) {
@@ -190,7 +190,7 @@ void classify_using_canonical_forms::add_object(
 
 	itr1 = Hashing.lower_bound(h);
 	itr2 = Hashing.upper_bound(h);
-	f_found = FALSE;
+	f_found = false;
 	for (itr = itr1; itr != itr2; ++itr) {
     	idx = itr->second;
     	c = sorting.uchar_vec_compare(
@@ -198,7 +198,7 @@ void classify_using_canonical_forms::add_object(
     			B[idx]->get_data(),
 				Canonical_form->get_allocated_length());
 		if (c == 0) {
-			f_found = TRUE;
+			f_found = true;
 			break;
 		}
     }
@@ -220,7 +220,7 @@ void classify_using_canonical_forms::add_object(
 	h = Canonical_form->compute_hash();
 
 	if (!f_found) {
-		f_new_object = TRUE;
+		f_new_object = true;
 		idx = B.size();
 		B.push_back(Canonical_form);
 		Objects.push_back(OwCF);
@@ -229,7 +229,7 @@ void classify_using_canonical_forms::add_object(
 		input_index.push_back(nb_input_objects);
 	}
 	else {
-		f_new_object = FALSE;
+		f_new_object = false;
 		FREE_OBJECT(Canonical_form);
 		FREE_OBJECT(OwCF);
 	}

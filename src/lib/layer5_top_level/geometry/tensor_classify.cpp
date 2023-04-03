@@ -201,11 +201,11 @@ void tensor_classify::classify_poset(int depth,
 			this /* void *data */,
 			verbose_level);
 
-	Poset->f_print_function = TRUE;
+	Poset->f_print_function = true;
 	Poset->print_function = wreath_product_print_set;
 	Poset->print_function_data = this;
 
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = depth;
 
 	if (f_v) {
@@ -228,8 +228,8 @@ void tensor_classify::classify_poset(int depth,
 	int f_debug;
 
 	//schreier_depth = Gen->depth;
-	f_use_invariant_subset_if_available = TRUE;
-	f_debug = FALSE;
+	f_use_invariant_subset_if_available = true;
+	f_debug = false;
 
 	//int t0 = os_ticks();
 
@@ -242,7 +242,7 @@ void tensor_classify::classify_poset(int depth,
 	}
 
 
-	//Gen->f_allowed_to_show_group_elements = TRUE;
+	//Gen->f_allowed_to_show_group_elements = true;
 
 	if (f_v) {
 		cout << "tensor_classify::classify_poset "
@@ -297,7 +297,7 @@ void tensor_classify::create_restricted_action_on_rank_one_tensors(
 	Ar = A->Induced_action->restricted_action(
 			points, nb_points, label_of_set,
 			verbose_level);
-	Ar->f_is_linear = TRUE;
+	Ar->f_is_linear = true;
 	if (f_v) {
 		cout << "tensor_classify::create_restricted_action_on_rank_one_tensors "
 				"after A->restricted_action" << endl;
@@ -348,12 +348,12 @@ void tensor_classify::early_test_func(long int *S, int len,
 						<< nb_candidates << endl;
 			}
 
-			f_OK = TRUE;
+			f_OK = true;
 			c = candidates[j];
 
 			for (i = 0; i < len; i++) {
 				if (S[i] == c) {
-					f_OK = FALSE;
+					f_OK = false;
 					break;
 				}
 			}
@@ -389,11 +389,11 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 
 
 	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	string fname, title, author, extra_praeamble;
 	char str[1000];
-	//int f_with_stabilizers = TRUE;
+	//int f_with_stabilizers = true;
 
 	snprintf(str, 1000, "Wreath product $%s$", W->label_tex.c_str());
 	title.assign(str);
@@ -404,18 +404,18 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
+			false /* f_book */,
+			true /* f_title */,
 			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
 			extra_praeamble /* extra_praeamble */);
 
 		fp << "\\section{The field of order " << q << "}" << endl;
@@ -467,8 +467,8 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 			Gen->draw_poset(fname_poset,
 					poset_classify_depth /*depth*/,
 					0 /* data1 */,
-					FALSE /* f_embedded */,
-					FALSE /* f_sideways */,
+					false /* f_embedded */,
+					false /* f_sideways */,
 					100 /* rad */,
 					verbose_level);
 			}
@@ -543,9 +543,9 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 
 				data_structures::tally C;
 
-				C.init_lint(data, orbit_length, TRUE, 0);
+				C.init_lint(data, orbit_length, true, 0);
 				fp << "$$";
-				C.print_naked_tex(fp, TRUE /* f_backwards */);
+				C.print_naked_tex(fp, true /* f_backwards */);
 				fp << "$$";
 				FREE_lint(data);
 			}

@@ -18,7 +18,7 @@ action_on_orbits::action_on_orbits()
 {
 	A = NULL;
 	Sch = NULL;
-	f_play_it_safe = FALSE;
+	f_play_it_safe = false;
 	degree = 0;
 }
 

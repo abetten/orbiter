@@ -22,7 +22,7 @@ namespace graphics {
 video_draw_options::video_draw_options()
 {
 
-	f_rotate = TRUE;
+	f_rotate = true;
 	rotation_axis_type = 1;
 		// 1 = 1,1,1
 		// 2 = 0,0,1
@@ -34,24 +34,24 @@ video_draw_options::video_draw_options()
 		// 2 = box
 		// 3 = no clipping
 
-	f_has_global_picture_scale = FALSE;
+	f_has_global_picture_scale = false;
 	global_picture_scale = 0.;
 
-	f_has_font_size = TRUE;
+	f_has_font_size = true;
 	font_size = 36; // works well for 800 x 600
 
-	f_has_stroke_width = TRUE;
+	f_has_stroke_width = true;
 	stroke_width = 2; // works well for 800 x 600
 
-	f_W = FALSE;
+	f_W = false;
 	W = 0;
-	f_H = FALSE;
+	f_H = false;
 	H = 0;
 
-	f_default_angle = TRUE;
+	f_default_angle = true;
 	default_angle = 22;
 
-	f_clipping_radius = TRUE;
+	f_clipping_radius = true;
 	clipping_radius = 2.1;
 
 	nb_clipping = 0;
@@ -124,7 +124,7 @@ video_draw_options::video_draw_options()
 
 
 	latex_file_count = 0;
-	f_omit_bottom_plane = FALSE;
+	f_omit_bottom_plane = false;
 
 	//sky = "<1,1,1>";
 	//location = "<-3,1,3>";
@@ -135,15 +135,15 @@ video_draw_options::video_draw_options()
 	location[0] = -3;
 	location[1] = 1;
 	location[2] = 3;
-	f_look_at = FALSE;
+	f_look_at = false;
 	look_at[0] = 0;
 	look_at[1] = 0;
 	look_at[2] = 0;
 
-	f_scale_factor = FALSE;
+	f_scale_factor = false;
 	scale_factor = 1.;
 
-	f_line_radius = FALSE;
+	f_line_radius = false;
 	line_radius = 0.02;
 
 }
@@ -171,27 +171,27 @@ int video_draw_options::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-do_not_rotate") == 0) {
-			f_rotate = FALSE;
+			f_rotate = false;
 			if (f_v) {
 				cout << "video_draw_options::read_arguments -do_not_rotate " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-rotate_about_z_axis") == 0) {
-			f_rotate = TRUE;
+			f_rotate = true;
 			rotation_axis_type = 2;
 			if (f_v) {
 				cout << "-rotate_about_z_axis " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-rotate_about_111") == 0) {
-			f_rotate = TRUE;
+			f_rotate = true;
 			rotation_axis_type = 1;
 			if (f_v) {
 				cout << "-rotate_about_111 " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-rotate_about_custom_axis") == 0) {
-			f_rotate = TRUE;
+			f_rotate = true;
 			rotation_axis_type = 3;
 
 			ST.text_to_three_double(argv[++i], rotation_axis_custom);
@@ -218,35 +218,35 @@ int video_draw_options::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-font_size") == 0) {
-			f_has_font_size = TRUE;
+			f_has_font_size = true;
 			font_size = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-font_size " << font_size << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-stroke_width") == 0) {
-			f_has_stroke_width = TRUE;
+			f_has_stroke_width = true;
 			stroke_width = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-stroke_width " << stroke_width << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-omit_bottom_plane") == 0) {
-			f_omit_bottom_plane = TRUE;
+			f_omit_bottom_plane = true;
 			if (f_v) {
 				cout << "-omit_bottom_plane " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-W") == 0) {
-			f_W = TRUE;
+			f_W = true;
 			W = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-W " << W << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-H") == 0) {
-			f_H = TRUE;
+			f_H = true;
 			H = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-H " << H << endl;
@@ -299,7 +299,7 @@ int video_draw_options::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-pan") == 0) {
 			pan_round[nb_pan] = ST.strtoi(argv[++i]);
-			pan_f_reverse[nb_pan] = FALSE;
+			pan_f_reverse[nb_pan] = false;
 			orbiter_kernel_system::numerics Num;
 
 
@@ -322,7 +322,7 @@ int video_draw_options::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-pan_reverse") == 0) {
 			pan_round[nb_pan] = ST.strtoi(argv[++i]);
-			pan_f_reverse[nb_pan] = TRUE;
+			pan_f_reverse[nb_pan] = true;
 			orbiter_kernel_system::numerics Num;
 
 
@@ -438,7 +438,7 @@ int video_draw_options::read_arguments(
 			latex_extras_for_praeamble[nb_latex_label].assign(argv[++i]);
 			latex_label_gravity[nb_latex_label].assign(argv[++i]);
 			latex_label_text[nb_latex_label].assign(argv[++i]);
-			latex_f_label_has_been_prepared[nb_latex_label] = FALSE;
+			latex_f_label_has_been_prepared[nb_latex_label] = false;
 			//latex_fname_base[nb_latex_label] = NEW_char(1000);
 			if (f_v) {
 				cout << "-latex "
@@ -453,7 +453,7 @@ int video_draw_options::read_arguments(
 			nb_latex_label++;
 		}
 		else if (ST.stringcmp(argv[i], "-global_picture_scale") == 0) {
-			f_has_global_picture_scale = TRUE;
+			f_has_global_picture_scale = true;
 			double d;
 			d = ST.strtof(argv[++i]);
 			global_picture_scale = d;
@@ -480,7 +480,7 @@ int video_draw_options::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-look_at") == 0) {
 			//look_at = argv[++i];
-			f_look_at = TRUE;
+			f_look_at = true;
 
 			ST.text_to_three_double(argv[++i], look_at);
 			if (f_v) {
@@ -490,28 +490,28 @@ int video_draw_options::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-default_angle") == 0) {
-			f_default_angle = TRUE;
+			f_default_angle = true;
 			default_angle = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-default_angle " << default_angle << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-clipping_radius") == 0) {
-			f_clipping_radius = TRUE;
+			f_clipping_radius = true;
 			clipping_radius = ST.strtof(argv[++i]);
 			if (f_v) {
 				cout << "-clipping_radius " << clipping_radius << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-scale_factor") == 0) {
-			f_scale_factor = TRUE;
+			f_scale_factor = true;
 			scale_factor = ST.strtof(argv[++i]);
 			if (f_v) {
 				cout << "-scale_factor " << scale_factor << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-line_radius") == 0) {
-			f_line_radius = TRUE;
+			f_line_radius = true;
 			line_radius = ST.strtof(argv[++i]);
 			if (f_v) {
 				cout << "-line_radius " << line_radius << endl;
@@ -538,7 +538,7 @@ int video_draw_options::read_arguments(
 
 void video_draw_options::print()
 {
-	if (f_rotate == FALSE) {
+	if (f_rotate == false) {
 		cout << "-do_not_rotate " << endl;
 	}
 	if (f_rotate && rotation_axis_type == 2) {

@@ -427,7 +427,7 @@ void strong_generators::init_from_data_with_target_go(
 				"before A->generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		nice_gens, SG,
 		verbose_level - 1);
 	if (f_v) {
@@ -605,7 +605,7 @@ void strong_generators::init_generators_for_the_conjugate_group_avGa(
 				"before generators_to_strong_generators" << endl;
 	}
 	SG->A->generators_to_strong_generators(
-		TRUE /* f_target_go */, go, 
+		true /* f_target_go */, go, 
 		gens, SG1, 
 		0 /*verbose_level*/);
 
@@ -646,7 +646,7 @@ void strong_generators::init_generators_for_the_conjugate_group_aGav(
 				"before generators_to_strong_generators" << endl;
 	}
 	SG->A->generators_to_strong_generators(
-		TRUE /* f_target_go */, go, 
+		true /* f_target_go */, go, 
 		gens, SG1, 
 		0 /*verbose_level*/);
 	if (f_v) {
@@ -702,7 +702,7 @@ void strong_generators::init_transposed_group(
 				"before A->generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, go, 
+		true /* f_target_go */, go, 
 		gens, SG1, 
 		verbose_level);
 	if (f_v) {
@@ -760,11 +760,11 @@ void strong_generators::init_group_extension(
 	}
 	
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, 
 		0 /*verbose_level*/);
 
-	if (FALSE) {
+	if (false) {
 		cout << "strong_generators::init_group_extension "
 				"strong generators are:" << endl;
 		SG->print_generators(cout);
@@ -849,11 +849,11 @@ void strong_generators::init_group_extension(
 	}
 
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, 
 		0 /*verbose_level - 2*/);
 
-	if (FALSE) {
+	if (false) {
 		cout << "strong_generators::init_group_extension "
 				"strong generators are:" << endl;
 		SG->print_generators(cout);
@@ -926,11 +926,11 @@ void strong_generators::switch_to_subgroup(
 	SG = NEW_OBJECT(strong_generators);
 	
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, 
 		0 /*verbose_level*/);
 
-	if (FALSE) {
+	if (false) {
 		cout << "strong_generators::switch_to_subgroup "
 				"strong generators are:" << endl;
 		SG->print_generators(cout);
@@ -995,11 +995,11 @@ void strong_generators::init_subgroup(
 	SG = NEW_OBJECT(strong_generators);
 	
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, 
 		0 /*verbose_level*/);
 
-	if (FALSE) {
+	if (false) {
 		cout << "strong_generators::init_subgroup "
 				"strong generators are:" << endl;
 		SG->print_generators(cout);
@@ -1074,11 +1074,11 @@ void strong_generators::init_subgroup_by_generators(
 	SG = NEW_OBJECT(strong_generators);
 
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		nice_gens, SG,
 		0 /*verbose_level*/);
 
-	if (FALSE) {
+	if (false) {
 		cout << "strong_generators::init_subgroup_by_generators "
 				"strong generators are:" << endl;
 		SG->print_generators(cout);
@@ -1304,8 +1304,8 @@ void strong_generators::print_generators_gap(std::ostream &ost)
 			A->Group_element->element_print_as_permutation_with_offset(
 					gens->ith(i), ost,
 					1 /*offset*/,
-					TRUE /* f_do_it_anyway_even_for_big_degree */,
-					FALSE /* f_print_cycles_of_length_one */,
+					true /* f_do_it_anyway_even_for_big_degree */,
+					false /* f_print_cycles_of_length_one */,
 					0 /* verbose_level*/);
 			if (i < gens->len - 1) {
 				ost << ", " << endl;
@@ -1333,8 +1333,8 @@ void strong_generators::print_generators_gap_in_different_action(std::ostream &o
 			A2->Group_element->element_print_as_permutation_with_offset(
 					gens->ith(i), ost,
 					1 /*offset*/,
-					TRUE /* f_do_it_anyway_even_for_big_degree */,
-					FALSE /* f_print_cycles_of_length_one */,
+					true /* f_do_it_anyway_even_for_big_degree */,
+					false /* f_print_cycles_of_length_one */,
 					0 /* verbose_level*/);
 			if (i < gens->len - 1) {
 				ost << ", " << endl;
@@ -1391,8 +1391,8 @@ void strong_generators::print_generators(std::ostream &ost)
 			A->Group_element->element_print_as_permutation_with_offset(
 					gens->ith(i), ost,
 					0 /* offset*/,
-					TRUE /* f_do_it_anyway_even_for_big_degree*/,
-					TRUE /* f_print_cycles_of_length_one*/,
+					true /* f_do_it_anyway_even_for_big_degree*/,
+					true /* f_print_cycles_of_length_one*/,
 					0 /* verbose_level*/);
 			//A->element_print_as_permutation(SG->gens->ith(i), cout);
 			ost << endl;
@@ -1442,7 +1442,7 @@ void strong_generators::print_generators_in_latex_individually(
 
 		//A->element_print_latex_not_in_math_mode(gens->ith(i), ost);
 
-		if (TRUE /* A->f_is_linear */) {
+		if (true /* A->f_is_linear */) {
 			ost << "$";
 			A->Group_element->element_print_latex(gens->ith(i), ost);
 			ost << "$";
@@ -1665,7 +1665,7 @@ void strong_generators::canonical_image_orbiter(
 	long int *canonical_set;
 	int *transporter;
 	long int total_backtrack_nodes;
-	int f_get_automorphism_group = TRUE;
+	int f_get_automorphism_group = true;
 	groups::sims Aut;
 
 	transporter = NEW_int(A->elt_size_in_int);
@@ -2094,9 +2094,9 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 	}
 	data_structures::tally C;
 
-	C.init(nb_fix_points, m, FALSE, 0);
+	C.init(nb_fix_points, m, false, 0);
 	ost << "The distribution of the number of fix points is $";
-	C.print_file_tex_we_are_in_math_mode(ost, TRUE);
+	C.print_file_tex_we_are_in_math_mode(ost, true);
 	ost << "$\\\\" << endl;
 	FREE_OBJECT(S);
 	FREE_int(Elt);
@@ -2285,7 +2285,7 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 	}
 	Orb->init(Ar,
 			this,
-			FALSE /* f_load_save */,
+			false /* f_load_save */,
 			prefix,
 			verbose_level - 1);
 	if (f_v) {
@@ -2296,8 +2296,8 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 	data_structures::tally *Classify_orbits_by_length;
 
 	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
-	Classify_orbits_by_length->init(Orb->Sch->orbit_len, Orb->Sch->nb_orbits, FALSE, 0);
-	Classify_orbits_by_length->print_naked_stringstream(orbit_type, TRUE /* f_backwards */);
+	Classify_orbits_by_length->init(Orb->Sch->orbit_len, Orb->Sch->nb_orbits, false, 0);
+	Classify_orbits_by_length->print_naked_stringstream(orbit_type, true /* f_backwards */);
 
 
 	FREE_OBJECT(Classify_orbits_by_length);
@@ -2356,7 +2356,7 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	}
 	Orb->init(Ar,
 			this,
-			FALSE /* f_load_save */,
+			false /* f_load_save */,
 			prefix,
 			verbose_level);
 	if (f_v) {
@@ -2371,7 +2371,7 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	int idx, orb_idx, len;
 
 	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
-	Classify_orbits_by_length->init(Orb->Sch->orbit_len, Orb->Sch->nb_orbits, FALSE, 0);
+	Classify_orbits_by_length->init(Orb->Sch->orbit_len, Orb->Sch->nb_orbits, false, 0);
 
 	SoS = Classify_orbits_by_length->get_set_partition_and_types(types,
 			nb_types, verbose_level);
@@ -2407,7 +2407,7 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 		exit(1);
 	}
 
-	//Classify_orbits_by_length->print_naked_stringstream(orbit_type, TRUE /* f_backwards */);
+	//Classify_orbits_by_length->print_naked_stringstream(orbit_type, true /* f_backwards */);
 
 
 	FREE_OBJECT(SoS);
@@ -2469,7 +2469,7 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 	}
 	Orb->init(Ar,
 			this,
-			FALSE /* f_load_save */,
+			false /* f_load_save */,
 			prefix,
 			verbose_level);
 	if (f_v) {
@@ -2487,7 +2487,7 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 	Classify_orbits_by_length->init(
 			Orb->Sch->orbit_len,
 			Orb->Sch->nb_orbits,
-			FALSE, 0);
+			false, 0);
 
 	SoS = Classify_orbits_by_length->get_set_partition_and_types(types,
 			nb_types, verbose_level);
@@ -2522,7 +2522,7 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 		exit(1);
 	}
 
-	//Classify_orbits_by_length->print_naked_stringstream(orbit_type, TRUE /* f_backwards */);
+	//Classify_orbits_by_length->print_naked_stringstream(orbit_type, true /* f_backwards */);
 
 
 	FREE_OBJECT(SoS);
@@ -2656,7 +2656,7 @@ void strong_generators::orbits_light(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);	
-	int f_vv = FALSE; //(verbose_level >= 2);	
+	int f_vv = false; //(verbose_level >= 2);	
 	data_structures::bitvector *Has_been_reached;
 	int Orbit_allocated;
 	int Orbit_len;
@@ -2706,7 +2706,7 @@ void strong_generators::orbits_light(
 	nb_gens = gens->len;
 
 	if (A_given->degree > ONE_MILLION) {
-		f_v = TRUE;
+		f_v = true;
 	}
 
 	Nb_per_generator = NEW_int(nb_gens);
@@ -2746,7 +2746,7 @@ void strong_generators::orbits_light(
 					cout << "strong_generators::orbits_light "
 							"applying generator " << h << endl;
 				}
-				b = A_given->Group_element->element_image_of(a, gens->ith(h), FALSE);
+				b = A_given->Group_element->element_image_of(a, gens->ith(h), false);
 				if (f_vv) {
 					cout << "strong_generators::orbits_light "
 							"under generator " << h
@@ -3064,7 +3064,7 @@ void strong_generators::generators_for_shallow_schreier_tree(
 				"schreier_tree created sims" << endl;
 		}
 	AR = new_action_by_right_multiplication(S,
-			TRUE /* f_transfer_ownership */, verbose_level - 2);
+			true /* f_transfer_ownership */, verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::generators_for_shallow_"
 				"schreier_tree created action by right "
@@ -3077,7 +3077,7 @@ void strong_generators::generators_for_shallow_schreier_tree(
 		A->element_move(gens->ith(i), chosen_gens->ith(i), 0);
 		}
 
-	while (TRUE) {
+	while (true) {
 
 		schreier *Sch;
 
@@ -3102,15 +3102,15 @@ void strong_generators::generators_for_shallow_schreier_tree(
 		char label1[1000];
 		int xmax = 1000000;
 		int ymax = 1000000;
-		int f_circletext = TRUE;
+		int f_circletext = true;
 		int rad = 3000;
 
 		snprintf(label1, sizeof(label1), "%s_%d", label, cnt);
 		Sch->draw_tree(label1, 0 /* orbit_no */,
 			xmax, ymax, f_circletext, rad,
-			TRUE /* f_embedded */, FALSE /* f_sideways */, 
+			true /* f_embedded */, false /* f_sideways */, 
 			0.3 /* scale */, 1. /* line_width */, 
-			FALSE, NULL, 
+			false, NULL, 
 			0 /* verbose_level */);
 
 		
@@ -3123,10 +3123,10 @@ void strong_generators::generators_for_shallow_schreier_tree(
 			}
 		tally Cl;
 
-		Cl.init(Depth, Sch->A->degree, FALSE, 0);
+		Cl.init(Depth, Sch->A->degree, false, 0);
 		if (f_v) {
 			cout << "distribution of depth in tree is: ";
-			Cl.print(TRUE);
+			Cl.print(true);
 			cout << endl;
 			}
 		avg = Cl.average();
@@ -3208,7 +3208,7 @@ void strong_generators::compute_ascii_coding(
 		Os.code_int4(p, (int_4) tl[i]);
 	}
 	for (i = 0; i < gens->len; i++) {
-		A->Group_element->element_pack(gens->ith(i), A->elt1, FALSE);
+		A->Group_element->element_pack(gens->ith(i), A->elt1, false);
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
 			Os.code_uchar(p, A->elt1[j]);
 		}
@@ -3283,7 +3283,7 @@ void strong_generators::decode_ascii_coding(
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
 			Os.decode_uchar(p, A->elt1[j]);
 		}
-		A->Group_element->element_unpack(A->elt1, gens->ith(i), FALSE);
+		A->Group_element->element_unpack(A->elt1, gens->ith(i), false);
 	}
 	FREE_int(base1);
 	if (p - p0 != str_len) {
@@ -3343,8 +3343,8 @@ void strong_generators::export_permutation_group_to_GAP(
 			A2->Group_element->element_print_as_permutation_with_offset(
 				gens->ith(i), fp,
 				1 /* offset */,
-				TRUE /* f_do_it_anyway_even_for_big_degree */,
-				FALSE /* f_print_cycles_of_length_one */,
+				true /* f_do_it_anyway_even_for_big_degree */,
+				false /* f_print_cycles_of_length_one */,
 				0 /* verbose_level */);
 			if (i < gens->len - 1) {
 				fp << ", " << endl;
@@ -3503,14 +3503,14 @@ int strong_generators::test_if_normalizing(sims *S, int verbose_level)
 						"generator " << i << " / " << gens->len
 						<< " does not normalize the given group" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 	}
 	if (f_v) {
 		cout << "strong_generators::test_if_normalizing done, "
 				"the given generators normalize the given group" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -3518,7 +3518,7 @@ int strong_generators::test_if_subgroup(sims *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	int ret = TRUE;
+	int ret = true;
 
 	if (f_v) {
 		cout << "strong_generators::test_if_subgroup" << endl;
@@ -3535,7 +3535,7 @@ int strong_generators::test_if_subgroup(sims *S, int verbose_level)
 						"generator " << i << " / " << gens->len
 						<< " does not belong to the group" << endl;
 			}
-			ret = FALSE;
+			ret = false;
 			break;
 		}
 	}
@@ -3599,10 +3599,10 @@ int strong_generators::test_if_they_stabilize_the_equation(
 
 	}
 	if (i < gens->len) {
-		ret = FALSE;
+		ret = false;
 	}
 	else {
-		ret = TRUE;
+		ret = true;
 	}
 	if (f_v) {
 		cout << "strong_generators::test_if_they_stabilize_the_equation done" << endl;
@@ -3889,7 +3889,7 @@ void strong_generators::export_group_to_GAP_and_copy_to_latex(
 		ifstream fp1(export_fname);
 		char line[100000];
 
-		while (TRUE) {
+		while (true) {
 			if (fp1.eof()) {
 				break;
 			}
@@ -4064,7 +4064,7 @@ void strong_generators::export_to_orbiter_as_bsgs(
 			fp << "GENERATOR_" << label << "_" << i << " = \\" << endl;
 			fp << "\t\"";
 			for (j = 0; j < A2->degree; j++) {
-				if (FALSE) {
+				if (false) {
 					cout << "strong_generators::export_to_orbiter_as_bsgs computing image of " << j << " under generator " << i << endl;
 				}
 				a = A2->element_image_of(j, gens->ith(i), 0 /* verbose_level*/);
@@ -4174,17 +4174,17 @@ void strong_generators::report_group(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 

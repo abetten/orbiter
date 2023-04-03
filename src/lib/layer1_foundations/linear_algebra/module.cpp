@@ -86,7 +86,7 @@ void module::multiply_2by2_from_the_left(
 		cout << "(" << aji << ", " << ajj << ")" << endl;
 	}
 	for (k = 0; k < M->n; k++) {
-		if (FALSE) {
+		if (false) {
 			cout << "k=" << k << endl;
 		}
 		x1 = aii * M->s_ij(i, k);
@@ -119,7 +119,7 @@ void module::multiply_2by2_from_the_right(
 		cout << "(" << aji << ", " << ajj << ")" << endl;
 	}
 	for (k = 0; k < M->m; k++) {
-		if (FALSE) {
+		if (false) {
 			cout << "k=" << k << endl;
 		}
 		x1 = aii * M->s_ij(k, i);
@@ -150,7 +150,7 @@ int module::clean_column(
 		//cout << "this=" << endl << *this << endl;
 	}
 
-	f_activity = FALSE;
+	f_activity = false;
 
 	for (j = i + 1; j < M->m; j++) {
 		if (f_vv) {
@@ -275,12 +275,12 @@ int module::clean_column(
 			cout << "module::clean_column i=" << i
 					<< " after multiply_2by2_from_the_right" << endl;
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "module::clean_column i=" << i << endl;
 			cout << "M=" << endl;
 			M->print();
 		}
-		f_activity = TRUE;
+		f_activity = true;
 	}
 	return f_activity;
 }
@@ -295,7 +295,7 @@ int module::clean_row(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int j;
-	int f_activity = FALSE;
+	int f_activity = false;
 	int x, y, u, v, g, x1, y1;
 	number_theory::number_theory_domain Num;
 
@@ -367,12 +367,12 @@ int module::clean_row(
 		multiply_2by2_from_the_right(Q, i, j, u, y1, v, x1, verbose_level - 2);
 
 		multiply_2by2_from_the_left(Qv, i, j, x1, -y1, -v, u, verbose_level - 2);
-		if (FALSE) {
+		if (false) {
 			cout << "module::clean_row i=" << i << endl;
 			cout << "M=" << endl;
 			M->print();
 		}
-		f_activity = TRUE;
+		f_activity = true;
 		}
 	return f_activity;
 }
@@ -462,9 +462,9 @@ void module::smith_normal_form(
 					"M=" << endl;
 			M->print();
 		}
-		f_stable = FALSE;
+		f_stable = false;
 		while (!f_stable) {
-			f_stable = TRUE;
+			f_stable = true;
 
 
 			if (f_v) {
@@ -475,7 +475,7 @@ void module::smith_normal_form(
 			if (clean_column(
 					M, P, Pv,
 					i, verbose_level)) {
-				f_stable = FALSE;
+				f_stable = false;
 			}
 			if (f_v) {
 				cout << "module::smith_normal_form "
@@ -495,7 +495,7 @@ void module::smith_normal_form(
 			if (clean_row(
 					M, Q, Qv,
 					i, verbose_level)) {
-				f_stable = FALSE;
+				f_stable = false;
 			}
 			if (f_v) {
 				cout << "module::smith_normal_form "
@@ -517,11 +517,11 @@ void module::smith_normal_form(
 						"cleaning middle: " << i << endl;
 			}
 			for (jj = i + 1; jj < n; jj++) {
-				if (FALSE) {
+				if (false) {
 					cout << "jj=" << jj << endl;
 				}
 				for (ii = i + 1; ii < m; ii++) {
-					if (FALSE) {
+					if (false) {
 						cout << "ii=" << ii << endl;
 					}
 					if (M->s_ij(ii, jj) % pivot) {
@@ -536,7 +536,7 @@ void module::smith_normal_form(
 					multiply_2by2_from_the_right(M, i, jj, 1, 0, 1, 1, verbose_level - 2);
 					multiply_2by2_from_the_right(Q, i, jj, 1, 0, 1, 1, verbose_level - 2);
 					multiply_2by2_from_the_left(Qv, i, jj, 1, 0, -1, 1, verbose_level - 2);
-					f_stable = FALSE;
+					f_stable = false;
 					break;
 				}
 			}

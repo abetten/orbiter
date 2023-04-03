@@ -522,7 +522,7 @@ void poset_classification::write_file(
 	}
 	Poo->write_memory_object(depth_completed, m,
 			nb_group_elements, 0 /*verbose_level*/);
-	if (TRUE) {
+	if (true) {
 		cout << "poset_classification::write_file "
 				"after write_memory_object" << endl;
 		cout << "m->used_length=" << m->used_length << endl;
@@ -626,7 +626,7 @@ void poset_classification::housekeeping(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v5 = (verbose_level >= 5);
-	//int f_embedded = TRUE;
+	//int f_embedded = true;
 	
 	if (f_v) {
 		cout << "poset_classification::housekeeping "
@@ -683,8 +683,8 @@ void poset_classification::housekeeping(
 #endif
 	if (f_vv) {
 		if (nb_nodes < 1000) {
-			int f_with_strong_generators = FALSE;
-			int f_long_version = FALSE;
+			int f_with_strong_generators = false;
+			int f_long_version = false;
 			Poo->write_lvl(cout, i, t0, f_with_strong_generators,
 					f_long_version, verbose_level - 2);
 		}
@@ -746,7 +746,7 @@ void poset_classification::housekeeping(
 						"before write_sv_level_file_binary" << endl;
 			}
 			write_sv_level_file_binary(i - 1, my_fname_base, 
-				FALSE, 0, 0, 0 /*verbose_level*/);
+				false, 0, 0, 0 /*verbose_level*/);
 		}
 #endif
 		if (f_v) {
@@ -754,8 +754,8 @@ void poset_classification::housekeeping(
 					"before write_lvl_file" << endl;
 		}
 		Poo->write_lvl_file(problem_label_with_path, i, t0,
-				FALSE /* f_with_strong_generators */,
-				FALSE /* f_long_version */, 0);
+				false /* f_with_strong_generators */,
+				false /* f_long_version */, 0);
 		if (f_v) {
 			cout << "poset_classification_housekeeping "
 					"after write_lvl_file" << endl;
@@ -788,7 +788,7 @@ void poset_classification::housekeeping(
 		cout << "There are " << len
 				<< " nodes at level " << i << ":" << endl;
 		for (j = 0; j < len; j++) {
-			Log_nodes(f + j, i, cout, FALSE, verbose_level);
+			Log_nodes(f + j, i, cout, false, verbose_level);
 		}
 	}
 
@@ -803,7 +803,7 @@ void poset_classification::housekeeping(
 			cout << "There are " << len
 					<< " nodes at level " << ii << ":" << endl;
 			for (j = 0; j < len; j++) {
-				Log_nodes(f + j, ii, cout, FALSE, verbose_level);
+				Log_nodes(f + j, ii, cout, false, verbose_level);
 			}
 		}
 	}
@@ -844,7 +844,7 @@ void poset_classification::housekeeping_no_data_file(
 	int j;
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
-	//int f_embedded = TRUE;
+	//int f_embedded = true;
 	
 	if (f_v) {
 		cout << "poset_classification::"
@@ -883,13 +883,13 @@ void poset_classification::housekeeping_no_data_file(
 			snprintf(fname_base2, sizeof(fname_base2), "%sb", fname_base);
 			write_level_file_binary(i - 1, fname_base2, 1/*verbose_level*/);
 			write_sv_level_file_binary(i - 1, 
-				fname_base, FALSE, 0, 0, 1/*verbose_level*/);
+				fname_base, false, 0, 0, 1/*verbose_level*/);
 		}
 #endif
 
 		Poo->write_lvl_file(problem_label_with_path, i, t0,
-				FALSE /* f_with_strong_generators */,
-				FALSE /* f_long_version */, 0);
+				false /* f_with_strong_generators */,
+				false /* f_long_version */, 0);
 		
 		//poset_classification_write_data_file(gen,
 		// i /* depth_completed */, gen->fname_base, 0);
@@ -927,10 +927,10 @@ int poset_classification::test_sv_level_file_binary(
 	
 	create_fname_sv_level_file_binary(fname, fname_base, level);
 	if (Fio.file_size(fname) >= 1) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -1142,7 +1142,7 @@ void poset_classification::Log_nodes(int cur, int depth,
 		f << "Node " << cur << endl;
 		f << "===============" << endl;
 		node->log_current_node(this, depth, f,
-				FALSE /* f_with_strong_generators */,
+				false /* f_with_strong_generators */,
 				verbose_level);
 		//f << "the stabilizer has order ";
 		//G.print_group_order(f);
@@ -1195,7 +1195,7 @@ void poset_classification::Log_nodes(int cur, int depth,
 		//cout << "log_current_node node=" << node->node
 		// << " prev=" << node->prev << endl;
 		node->log_current_node(this, depth, f,
-				FALSE /* f_with_strong_generators */, 0);
+				false /* f_with_strong_generators */, 0);
 		}
 	
 	if (f_recurse) {
@@ -1204,7 +1204,7 @@ void poset_classification::Log_nodes(int cur, int depth,
 			if (node->get_E(i)->get_type() == EXTENSION_TYPE_EXTENSION) {
 				if (node->get_E(i)->get_data() >= 0) {
 					next = node->get_E(i)->get_data();
-					Log_nodes(next, depth + 1, f, TRUE, verbose_level);
+					Log_nodes(next, depth + 1, f, true, verbose_level);
 					}
 				}
 			}
@@ -1320,7 +1320,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 1);
+	//int f_vv = false; //(verbose_level >= 1);
 	int nb_rows, Nb_orbits, nb_orbits, i, level;
 	string *Text_label;
 	string *Text_nb_orbits;
@@ -1377,7 +1377,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 		for (i = 0; i < nb_orbits; i++) {
 			
-			if (FALSE) {
+			if (false) {
 				cout << "poset_classification::"
 						"make_spreadsheet_of_level_info "
 						"level = " << level << " / " << max_depth
@@ -1415,7 +1415,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 		//cout << "poset_classification::make_spreadsheet_of_level_info
 		// computing binomial coeffcient" << endl;
-		C.binomial(a, Poset->A2->degree, level, FALSE);
+		C.binomial(a, Poset->A2->degree, level, false);
 
 		Nb_orbits += nb_orbits;
 		D.add_in_place(orbit_length_total, orbit_length_sum);

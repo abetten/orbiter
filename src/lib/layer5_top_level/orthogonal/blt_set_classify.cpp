@@ -38,7 +38,7 @@ blt_set_classify::blt_set_classify()
 	A = NULL;
 	starter_size = 0;
 	Strong_gens = NULL;
-	f_semilinear = FALSE;
+	f_semilinear = false;
 	q = 0;
 	Control = NULL;
 	Poset = NULL;
@@ -51,7 +51,7 @@ blt_set_classify::blt_set_classify()
 
 blt_set_classify::~blt_set_classify()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "blt_set_classify::~blt_set_classify" << endl;
@@ -191,7 +191,7 @@ void blt_set_classify::compute_starter(
 				"Poset->add_testing_without_group" << endl;
 	}
 
-	Poset->f_print_function = FALSE;
+	Poset->f_print_function = false;
 	Poset->print_function = blt_set_classify_print;
 	Poset->print_function_data = (void *) this;
 
@@ -276,7 +276,7 @@ void blt_set_classify::init_group(int f_semilinear, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_basis = TRUE;
+	int f_basis = true;
 
 	if (f_v) {
 		cout << "blt_set_classify::init_group" << endl;
@@ -289,9 +289,9 @@ void blt_set_classify::init_group(int f_semilinear, int verbose_level)
 	A = NEW_OBJECT(action);
 
 	A->init_orthogonal_group_with_O(Blt_set_domain->O,
-		TRUE /* f_on_points */, 
-		FALSE /* f_on_lines */, 
-		FALSE /* f_on_points_and_lines */, 
+		true /* f_on_points */, 
+		false /* f_on_lines */, 
+		false /* f_on_points_and_lines */, 
 		f_semilinear, f_basis, 0 /* verbose_level - 1*/);
 	degree = A->degree;
 	if (f_vv) {
@@ -337,7 +337,7 @@ void blt_set_classify::init_group(int f_semilinear, int verbose_level)
 #endif
 	//A->Sims->print_all_group_elements();
 
-	if (FALSE) {
+	if (false) {
 		cout << "blt_set_classify::init_group before "
 				"A->Sims->print_all_transversal_elements" << endl;
 		A->Sims->print_all_transversal_elements();
@@ -346,7 +346,7 @@ void blt_set_classify::init_group(int f_semilinear, int verbose_level)
 	}
 
 
-	if (FALSE /*f_vv*/) {
+	if (false /*f_vv*/) {
 		Blt_set_domain->O->F->print();
 	}
 
@@ -402,7 +402,7 @@ void blt_set_classify::create_graphs(
 	}
 
 
-	//f_memory_debug = TRUE;
+	//f_memory_debug = true;
 
 
 	char str1[1000];
@@ -580,7 +580,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 	}
 
 	
-	//f_memory_debug = TRUE;
+	//f_memory_debug = true;
 
 	int *list_of_cases = NULL;
 	int nb_of_cases;
@@ -716,7 +716,7 @@ int blt_set_classify::create_graph(
 	int &nb_vertices,
 	graph_theory::colored_graph *&CG,
 	int verbose_level)
-// returns TRUE if a graph was written, FALSE otherwise
+// returns true if a graph was written, false otherwise
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -828,7 +828,7 @@ int blt_set_classify::create_graph(
 							"the case is eliminated" << endl;
 		}
 		FREE_OBJECT(R);
-		return FALSE;
+		return false;
 	}
 		//}
 
@@ -1122,15 +1122,15 @@ void blt_set_classify::subset_orbits(isomorph &Iso, int verbose_level)
 
 	{
 	ofstream f(fname);
-	int f_book = FALSE;
-	int f_title = TRUE;
+	int f_book = false;
+	int f_title = true;
 	char title[1000];
 	const char *author = "Orbiter";
-	int f_toc = TRUE;
-	int f_landscape = FALSE;
-	int f_12pt = FALSE;
-	int f_enlarged_page = TRUE;
-	int f_pagenumbers = TRUE;
+	int f_toc = true;
+	int f_landscape = false;
+	int f_12pt = false;
+	int f_enlarged_page = true;
+	int f_pagenumbers = true;
 
 	snprintf(title, sizeof(title), sizeof(snprintf(str_a, sizeof(str_a), ), "BLT-sets of Q$(4,%d)$", q);
 	cout << "Writing file " << fname << " with "
@@ -1232,9 +1232,9 @@ void blt_set_classify::subset_orbits(isomorph &Iso, int verbose_level)
 		int *transporter;
 		int u;
 		int case_nb;
-		int f_implicit_fusion = FALSE;
+		int f_implicit_fusion = false;
 		int cnt_special_orbits;
-		int f_vv = FALSE;
+		int f_vv = false;
 		int idx;
 
 		rearranged_set = NEW_int(Iso.size);
@@ -1327,17 +1327,17 @@ void blt_set_classify::report2(
 		cout << "blt_set_classify::report2" << endl;
 	}
 
-	int f_book = FALSE;
-	int f_title = TRUE;
+	int f_book = false;
+	int f_title = true;
 	char str[1000];
 	string title, author, extra_praeamble;
 
-	int f_toc = FALSE;
-	int f_landscape = FALSE;
-	int f_12pt = FALSE;
-	int f_enlarged_page = TRUE;
-	int f_pagenumbers = TRUE;
-	orbiter_kernel_system::latex_interface L;
+	int f_toc = false;
+	int f_landscape = false;
+	int f_12pt = false;
+	int f_enlarged_page = true;
+	int f_pagenumbers = true;
+	l1_interfaces::latex_interface L;
 
 	snprintf(str, sizeof(str), "BLT-sets of ${\\cal Q}(4,%d)$", q);
 	title.assign(str);
@@ -1499,11 +1499,11 @@ void blt_set_classify::report2(
 
 		classify C_ol;
 
-		C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
+		C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 
 		f << "Orbit lengths: $";
 		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
-		C_ol.print_naked_tex(f, FALSE /* f_reverse */);
+		C_ol.print_naked_tex(f, false /* f_reverse */);
 		f << "$ \\\\" << endl;
 #endif
 
@@ -1562,7 +1562,7 @@ void blt_set_classify::report2(
 				label_txt,
 				label_tex,
 				T->Reps[h].Strong_gens,
-				TRUE /* f_invariants */,
+				true /* f_invariants */,
 				verbose_level);
 		BA->Blt_set_group_properties->print_automorphism_group(ost);
 

@@ -177,10 +177,10 @@ int partitionstack::is_discrete()
 		exit(1);
 		}
 	if (ht == n) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -302,11 +302,11 @@ int partitionstack::is_subset_of_cell(int *set, int size, int &cell_idx)
 		}
 		else {
 			if (cell_idx != c) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void partitionstack::sort_cells()
@@ -541,7 +541,7 @@ void partitionstack::print_classes_points_and_lines(std::ostream& ost)
 ostream& partitionstack::print(std::ostream& ost)
 {
 	int i, j, first, len, a, /*pt,*/ prev_pt, j0;
-	int f_erroneous2 = FALSE;
+	int f_erroneous2 = false;
 
 	//check();
 	//ost << "partitionstack of height " << ht << " : ";
@@ -574,7 +574,7 @@ ostream& partitionstack::print(std::ostream& ost)
 			if (j < len) {
 				a = pointList[first + j];
 				if (invPointList[a] != first + j) {
-					f_erroneous2 = TRUE;
+					f_erroneous2 = true;
 				}
 			}
 		}
@@ -918,7 +918,7 @@ void partitionstack::refine_arbitrary_set(
 			}
 		}
 		if (subset_size < cellSize[c]) {
-			split_cell(FALSE);
+			split_cell(false);
 		}
 		sz = sz2;
 	}
@@ -968,7 +968,7 @@ void partitionstack::split_multiple_cells(int *set,
 	set2 = NEW_int(set_size);
 	
 	for (i = 0; i < set_size; i++) {
-		f_done[i] = FALSE;
+		f_done[i] = false;
 	}
 	for (i = 0; i < set_size; i++) {
 		a = set[i];
@@ -995,7 +995,7 @@ void partitionstack::split_multiple_cells(int *set,
 			if (!f_done[i] && cell_nb[i] == c) {
 				set2[set2_sz++] = set[i];
 				nb_done++;
-				f_done[i] = TRUE;
+				f_done[i] = true;
 			}
 		}
 		if (f_vv) {
@@ -1086,7 +1086,7 @@ void partitionstack::split_cell_front_or_back(
 		else {
 			new_pos = f + l - 1 - j;
 		}
-		if (FALSE /*f_vv*/) {
+		if (false /*f_vv*/) {
 			cout << "split_cell_front_or_back: a=" << a
 				<< " pos_a=" << pos_a << " new_pos="
 				<< new_pos << endl;
@@ -1137,7 +1137,7 @@ void partitionstack::split_cell(
 	if (f_v) {
 		cout << "partitionstack::split_cell" << endl;
 	}
-	split_cell_front_or_back(set, set_size, FALSE, verbose_level);
+	split_cell_front_or_back(set, set_size, false, verbose_level);
 }
 
 void partitionstack::join_cell()
@@ -1210,10 +1210,10 @@ int partitionstack::is_row_class(int c)
 		exit(1);
 	}
 	if (pointList[startCell[c]] >= first_column_element) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -1224,10 +1224,10 @@ int partitionstack::is_col_class(int c)
 		exit(1);
 	}
 	if (is_row_class(c)) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -1347,19 +1347,19 @@ void partitionstack::initial_matrix_decomposition(int nbrows, int nbcols,
 
 	// split rows and columns
 	subset_contiguous(nbrows, nbcols);
-	split_cell(FALSE);
+	split_cell(false);
 
 	l = V[0];
 	for (i = 1; i < nb_V; i++) {
 		subset_contiguous(l, nbrows - l);
-		split_cell(FALSE);
+		split_cell(false);
 		l += V[i];
 	}
 
 	l = B[0];
 	for (i = 1; i < nb_B; i++) {
 		subset_contiguous(nbrows + l, nbcols - l);
-		split_cell(FALSE);
+		split_cell(false);
 		l += B[i];
 	}
 
@@ -1386,7 +1386,7 @@ int partitionstack::is_descendant_of(int cell,
 			cout << "is_descendant_of: "
 					"cell == ancestor_cell, so yes" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	while (parent[c] != c) {
 		c = parent[c];
@@ -1398,13 +1398,13 @@ int partitionstack::is_descendant_of(int cell,
 				cout << "is_descendant_of: "
 						"c == ancestor_cell, so yes" << endl;
 			}
-			return TRUE;
+			return true;
 		}
 	}
 	if (f_v) {
 		cout << "is_descendant_of: parent[c] == c, so no" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 int partitionstack::is_descendant_of_at_level(int cell,
@@ -1423,7 +1423,7 @@ int partitionstack::is_descendant_of_at_level(int cell,
 			cout << "is_descendant_of_at_level: "
 					"cell == ancestor_cell, so yes" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	c = cell;
 	if (c < level) {
@@ -1431,7 +1431,7 @@ int partitionstack::is_descendant_of_at_level(int cell,
 			cout << "is_descendant_of_at_level: "
 					"c < level, so no" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	while (parent[c] != c) {
 		c = parent[c];
@@ -1443,21 +1443,21 @@ int partitionstack::is_descendant_of_at_level(int cell,
 				cout << "is_descendant_of_at_level: "
 						"c == ancestor_cell, so yes" << endl;
 			}
-			return TRUE;
+			return true;
 		}
 		if (c < level) {
 			if (f_v) {
 				cout << "is_descendant_of_at_level: "
 						"c < level, so no" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 	}
 	if (f_v) {
 		cout << "is_descendant_of_at_level: "
 				"parent[c] == c, so no" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 int partitionstack::cellSizeAtLevel(int cell, int level)
@@ -1465,7 +1465,7 @@ int partitionstack::cellSizeAtLevel(int cell, int level)
 	int i, s, S = 0;
 
 	for (i = level; i < ht; i++) {
-		if (is_descendant_of_at_level(i, cell, level, FALSE)) {
+		if (is_descendant_of_at_level(i, cell, level, false)) {
 			//cout << "cell " << i << " of size "
 			//<< cellSize[i] << " is a descendant of cell " << cell << endl;
 			s = cellSize[i];
@@ -1613,7 +1613,7 @@ void partitionstack::print_tactical_decomposition_scheme_tex(
 	int *row_scheme, int *col_scheme,
 	int f_print_subscripts)
 {
-	print_tactical_decomposition_scheme_tex_internal(ost, TRUE, 
+	print_tactical_decomposition_scheme_tex_internal(ost, true, 
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes,
 		row_scheme, col_scheme, f_print_subscripts);
@@ -2071,7 +2071,7 @@ void partitionstack::radix_sort_bits(
 		}
 		//cout << "radix_sort split partition, len = " << len << endl;
 		subset_size = len;
-		split_cell(FALSE);
+		split_cell(false);
 
 		radix_sort_bits(left, r, C, length, radix, mask, verbose_level);
 		radix_sort_bits(l, right, C, length, radix, mask, verbose_level);

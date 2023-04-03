@@ -449,7 +449,7 @@ static void direct_product_group_element_print_as_permutation(
 {
 	//direct_product &P = *A.G.direct_product_group;
 	combinatorics_domain Combi;
-	int f_v = FALSE;
+	int f_v = false;
 	int *Elt = (int *) elt;
 	int i, j;
 
@@ -462,9 +462,9 @@ static void direct_product_group_element_print_as_permutation(
 		//cout << "matrix_group_element_print_as_permutation "
 		//"computing image of i=" << i << endl;
 		//if (i == 3)
-			//f_v = TRUE;
+			//f_v = true;
 		//else
-			//f_v = FALSE;
+			//f_v = false;
 		j = A.element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
 		}

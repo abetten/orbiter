@@ -76,7 +76,7 @@ void orbiter_data_file::load(std::string &fname, int verbose_level)
 		}
 	
 	Fio.parse_sets(nb_cases, data,
-		FALSE /*f_casenumbers */,
+		false /*f_casenumbers */,
 		set_sizes, sets, Ago_ascii, Aut_ascii, 
 		Casenumbers, 
 		verbose_level - 2);

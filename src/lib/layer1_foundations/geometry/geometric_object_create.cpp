@@ -173,7 +173,7 @@ void geometric_object_create::init(
 					"before K.retrieve_BLT_set_from_database" << endl;
 		}
 		K.retrieve_BLT_set_from_database(Quadratic_form,
-				FALSE /* f_embedded */,
+				false /* f_embedded */,
 				Descr->BLT_database_k,
 				label_txt,
 				label_tex,
@@ -221,10 +221,10 @@ void geometric_object_create::init(
 #if 0
 	else if (f_BLT_Linear) {
 		create_BLT(f_BLT_in_PG /* f_embedded */, F,
-			TRUE /* f_Linear */,
-			FALSE /* f_Fisher */,
-			FALSE /* f_Mondello */,
-			FALSE /* f_FTWKB */,
+			true /* f_Linear */,
+			false /* f_Fisher */,
+			false /* f_Mondello */,
+			false /* f_FTWKB */,
 			f_poly, poly,
 			f_poly_Q, poly_Q,
 			fname, nb_pts, Pts,
@@ -232,10 +232,10 @@ void geometric_object_create::init(
 	}
 	else if (f_BLT_Fisher) {
 		create_BLT(f_BLT_in_PG /* f_embedded */, q,
-			FALSE /* f_Linear */,
-			TRUE /* f_Fisher */,
-			FALSE /* f_Mondello */,
-			FALSE /* f_FTWKB */,
+			false /* f_Linear */,
+			true /* f_Fisher */,
+			false /* f_Mondello */,
+			false /* f_FTWKB */,
 			f_poly, poly,
 			f_poly_Q, poly_Q,
 			fname, nb_pts, Pts,
@@ -243,10 +243,10 @@ void geometric_object_create::init(
 	}
 	else if (f_BLT_Mondello) {
 		create_BLT(f_BLT_in_PG /* f_embedded */, q,
-			FALSE /* f_Linear */,
-			FALSE /* f_Fisher */,
-			TRUE /* f_Mondello */,
-			FALSE /* f_FTWKB */,
+			false /* f_Linear */,
+			false /* f_Fisher */,
+			true /* f_Mondello */,
+			false /* f_FTWKB */,
 			f_poly, poly,
 			f_poly_Q, poly_Q,
 			fname, nb_pts, Pts,
@@ -254,10 +254,10 @@ void geometric_object_create::init(
 	}
 	else if (f_BLT_FTWKB) {
 		create_BLT(f_BLT_in_PG /* f_embedded */, q,
-			FALSE /* f_Linear */,
-			FALSE /* f_Fisher */,
-			FALSE /* f_Mondello */,
-			TRUE /* f_FTWKB */,
+			false /* f_Linear */,
+			false /* f_Fisher */,
+			false /* f_Mondello */,
+			true /* f_FTWKB */,
 			f_poly, poly,
 			f_poly_Q, poly_Q,
 			fname, nb_pts, Pts,
@@ -1339,10 +1339,10 @@ void geometric_object_create::create_Baer_substructure(
 		for (j = 0; j < d; j++) {
 			a = v[j];
 			b = P->Subspaces->F->log_alpha(a);
-			f_is_in_subfield = FALSE;
+			f_is_in_subfield = false;
 
 			if (a == 0 || (b % index) == 0) {
-				f_is_in_subfield = TRUE;
+				f_is_in_subfield = true;
 			}
 			if (!f_is_in_subfield) {
 				break;

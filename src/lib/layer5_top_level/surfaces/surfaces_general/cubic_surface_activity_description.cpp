@@ -21,22 +21,22 @@ namespace cubic_surfaces_in_general {
 
 cubic_surface_activity_description::cubic_surface_activity_description()
 {
-	f_report = FALSE;
+	f_report = false;
 
-	f_export_something = FALSE;
+	f_export_something = false;
 	//std::string export_something_what;
 
-	f_export_gap = FALSE;
+	f_export_gap = false;
 
-	f_all_quartic_curves = FALSE;
+	f_all_quartic_curves = false;
 
-	f_export_all_quartic_curves = FALSE;
+	f_export_all_quartic_curves = false;
 
-	f_export_something_with_group_element = FALSE;
+	f_export_something_with_group_element = false;
 	//std::string export_something_with_group_element_what;
 	//std::string export_something_with_group_element_label;
 
-	f_action_on_module = FALSE;
+	f_action_on_module = false;
 	//std::string action_on_module_type;
 	//std::string action_on_module_basis;
 	//std::string action_on_module_gens;
@@ -63,38 +63,38 @@ int cubic_surface_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+			f_report = true;
 			if (f_v) {
 				cout << "-report " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_something") == 0) {
-			f_export_something = TRUE;
+			f_export_something = true;
 			export_something_what.assign(argv[++i]);
 			if (f_v) {
 				cout << "-export_something " << export_something_what << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_gap") == 0) {
-			f_export_gap = TRUE;
+			f_export_gap = true;
 			if (f_v) {
 				cout << "-export_gap " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-all_quartic_curves") == 0) {
-			f_all_quartic_curves = TRUE;
+			f_all_quartic_curves = true;
 			if (f_v) {
 				cout << "-all_quartic_curves " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_all_quartic_curves") == 0) {
-			f_export_all_quartic_curves = TRUE;
+			f_export_all_quartic_curves = true;
 			if (f_v) {
 				cout << "-export_all_quartic_curves " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_something_with_group_element") == 0) {
-			f_export_something_with_group_element = TRUE;
+			f_export_something_with_group_element = true;
 			export_something_with_group_element_what.assign(argv[++i]);
 			export_something_with_group_element_label.assign(argv[++i]);
 			if (f_v) {
@@ -104,7 +104,7 @@ int cubic_surface_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-action_on_module") == 0) {
-			f_action_on_module = TRUE;
+			f_action_on_module = true;
 			action_on_module_type.assign(argv[++i]);
 			action_on_module_basis.assign(argv[++i]);
 			action_on_module_gens.assign(argv[++i]);

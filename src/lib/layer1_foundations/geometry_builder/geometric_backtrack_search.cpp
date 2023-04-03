@@ -67,10 +67,10 @@ int geometric_backtrack_search::First(int verbose_level)
 	int I;
 
 	I = 0;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			if (I >= gg->GB->v_len) {
-				return TRUE;
+				return true;
 			}
 			if (!BlockFirst(I, verbose_level)) {
 				break;
@@ -78,9 +78,9 @@ int geometric_backtrack_search::First(int verbose_level)
 			I++;
 		}
 		// I-th element could not initialize, move on
-		while (TRUE) {
+		while (true) {
 			if (I == 0) {
-				return FALSE;
+				return false;
 			}
 			I--;
 			if (BlockNext(I, verbose_level)) {
@@ -102,20 +102,20 @@ int geometric_backtrack_search::Next(int verbose_level)
 	int I;
 
 	I = gg->GB->v_len - 1;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			if (BlockNext(I, verbose_level)) {
 				break;
 			}
 			if (I == 0) {
-				return FALSE;
+				return false;
 			}
 			I--;
 		}
 		// I-th element has been incremented. Initialize elements after it:
-		while (TRUE) {
+		while (true) {
 			if (I >= gg->GB->v_len - 1) {
-				return TRUE;
+				return true;
 			}
 			I++;
 			if (!BlockFirst(I, verbose_level)) {
@@ -139,10 +139,10 @@ int geometric_backtrack_search::BlockFirst(int I, int verbose_level)
 	int m;
 
 	m = 0;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			if (m >= C->v) {
-				return TRUE;
+				return true;
 			}
 			if (!RowFirstSplit(I, m, verbose_level)) {
 				break;
@@ -150,9 +150,9 @@ int geometric_backtrack_search::BlockFirst(int I, int verbose_level)
 			m++;
 		}
 		// m-th element could not initialize, move on
-		while (TRUE) {
+		while (true) {
 			if (m == 0) {
-				return FALSE;
+				return false;
 			}
 			m--;
 			if (RowNextSplit(I, m, verbose_level)) {
@@ -176,20 +176,20 @@ int geometric_backtrack_search::BlockNext(int I, int verbose_level)
 	int m;
 
 	m = C->v - 1;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			if (RowNextSplit(I, m, verbose_level)) {
 				break;
 			}
 			if (m == 0) {
-				return FALSE;
+				return false;
 			}
 			m--;
 		}
 		// m-th element has been incremented. Initialize elements after it:
-		while (TRUE) {
+		while (true) {
 			if (m >= C->v - 1) {
-				return TRUE;
+				return true;
 			}
 			m++;
 			if (!RowFirstSplit(I, m, verbose_level)) {
@@ -221,13 +221,13 @@ int geometric_backtrack_search::RowFirstSplit(int I, int m, int verbose_level)
 	it = gg->inc->iso_type_at_line[i1];
 	if (it && it->f_split) {
 		if ((it->Canonical_forms->B.size() % it->split_modulo) != it->split_remainder) {
-			return FALSE;
+			return false;
 		}
 	}
 	if (!RowFirst0(I, m, verbose_level)) {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 #else
 	return RowFirst0(I, m, verbose_level);
 #endif
@@ -250,13 +250,13 @@ int geometric_backtrack_search::RowNextSplit(int I, int m, int verbose_level)
 	it = gg->inc->iso_type_at_line[i1];
 	if (it && it->f_split) {
 		if ((it->Canonical_forms->B.size() % it->split_modulo) != it->split_remainder) {
-			return FALSE;
+			return false;
 		}
 	}
 	if (!RowNext0(I, m, verbose_level)) {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 #else
 	return LineNext0(gg, I, m, verbose_level);
 #endif
@@ -283,7 +283,7 @@ int geometric_backtrack_search::geo_back_test(int I, int verbose_level)
 		if (it && it->f_generate_first && !it->f_beginning_checked) {
 
 			it->add_geometry(gg->inc->Encoding,
-					FALSE /* f_partition_fixing_last */,
+					false /* f_partition_fixing_last */,
 					f_already_there,
 					verbose_level - 2);
 
@@ -293,14 +293,14 @@ int geometric_backtrack_search::geo_back_test(int I, int verbose_level)
 
 
 			if (!f_already_there) {
-				it->f_beginning_checked = TRUE;
+				it->f_beginning_checked = true;
 				continue;
 			}
 			gg->inc->back_to_line = i1;
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -319,21 +319,21 @@ int geometric_backtrack_search::RowFirst0(int I, int m, int verbose_level)
 
 	i1 = C->i0 + m;
 	if (!RowFirst(I, m, verbose_level)) {
-		return FALSE;
+		return false;
 	}
 	control_line = C->i0 + C->v - 1;
 	it = gg->inc->iso_type_at_line[i1];
 	if (i1 != control_line && it && it->f_generate_first) {
-		it->f_beginning_checked = FALSE;
-		return TRUE;
+		it->f_beginning_checked = false;
+		return true;
 	}
 	if (i1 == control_line) {
 		if (!geo_back_test(I, verbose_level)) {
 			if (!RowNext(I, m, verbose_level)) {
-				return FALSE;
+				return false;
 			}
 			cout << "geometric_backtrack_search::RowFirst0 "
-					"back_to_line && f_new_situation == TRUE" << endl;
+					"back_to_line && f_new_situation == true" << endl;
 			exit(1);
 		}
 		// survived the back test,
@@ -342,14 +342,14 @@ int geometric_backtrack_search::RowFirst0(int I, int m, int verbose_level)
 	if (i1 == gg->inc->Encoding->v - 1) {
 		// a new geometry is completed
 		// let the main routine add it
-		return TRUE;
+		return true;
 	}
 
 	// now we know we have a partial geometry on i1 < v lines.
 
 	if (it) {
 		// test of the first kind
-		while (TRUE) {
+		while (true) {
 			if (f_v) {
 				cout << "geometric_backtrack_search::RowFirst0 "
 						"I=" << I << " m=" << m
@@ -358,7 +358,7 @@ int geometric_backtrack_search::RowFirst0(int I, int m, int verbose_level)
 			}
 
 			it->add_geometry(gg->inc->Encoding,
-					FALSE /* f_partition_fixing_last */,
+					false /* f_partition_fixing_last */,
 					f_already_there,
 					verbose_level - 2);
 
@@ -373,13 +373,13 @@ int geometric_backtrack_search::RowFirst0(int I, int m, int verbose_level)
 				break;
 			}
 			if (!RowNext(I, m, verbose_level)) {
-				return FALSE;
+				return false;
 			}
 		}
 		// now: a new geometry has been produced,
-		// f_already_there is FALSE
+		// f_already_there is false
 	}
-	return TRUE;
+	return true;
 }
 
 int geometric_backtrack_search::RowNext0(int I, int m, int verbose_level)
@@ -397,25 +397,25 @@ int geometric_backtrack_search::RowNext0(int I, int m, int verbose_level)
 
 	i1 = C->i0 + m;
 	if (!RowNext(I, m, verbose_level)) {
-		return FALSE;
+		return false;
 	}
 	control_line = C->i0 + C->v - 1;
 	it = gg->inc->iso_type_at_line[i1];
 	if (i1 != control_line && it && it->f_generate_first) {
-		it->f_beginning_checked = FALSE;
+		it->f_beginning_checked = false;
 #if 0
 		gg->inc.nb_GEO[i1] = ((ISO_TYPE *)
 		gg->inc.iso_type[control_line])->nb_GEO;
 #endif
-		return TRUE;
+		return true;
 	}
 	if (i1 == control_line) {
 		if (!geo_back_test(I, verbose_level)) {
 			if (!RowNext(I, m, verbose_level)) {
-				return FALSE;
+				return false;
 			}
 			cout << "geometric_backtrack_search::RowNext0 "
-					"back_to_line && f_new_situation == TRUE" << endl;
+					"back_to_line && f_new_situation == true" << endl;
 			exit(1);
 		}
 		// survived the back test,
@@ -424,12 +424,12 @@ int geometric_backtrack_search::RowNext0(int I, int m, int verbose_level)
 	if (i1 == gg->inc->Encoding->v - 1) {
 		// a new geometry is completed
 		// let the main routine add it
-		return TRUE;
+		return true;
 	}
 	if (it) {
-		while (TRUE) {
+		while (true) {
 			it->add_geometry(gg->inc->Encoding,
-					FALSE /* f_partition_fixing_last */,
+					false /* f_partition_fixing_last */,
 				f_already_there,
 				verbose_level - 2);
 
@@ -440,13 +440,13 @@ int geometric_backtrack_search::RowNext0(int I, int m, int verbose_level)
 				break;
 			}
 			if (!RowNext(I, m, verbose_level)) {
-				return FALSE;
+				return false;
 			}
 		}
 		// now: a new geometry has been produced,
-		// f_already_there is FALSE
+		// f_already_there is false
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -498,7 +498,7 @@ int geometric_backtrack_search::RowNext(int I, int m, int verbose_level)
 	i1 = C->i0 + m;
 	if (gg->inc->back_to_line != -1 && gg->inc->back_to_line < i1) {
 		RowClear(I, m);
-		return FALSE;
+		return false;
 	}
 	if (gg->inc->back_to_line != -1 && gg->inc->back_to_line == i1) {
 		gg->inc->back_to_line = -1;
@@ -533,14 +533,14 @@ int geometric_backtrack_search::RowFirstLexLeast(int I, int m, int verbose_level
 
 
 	J = 0;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			if (J >= gg->GB->b_len) {
 				if (f_v) {
 					cout << "geometric_backtrack_search::RowFirstLexLeast" << endl;
 					gg->print(cout, i1 + 1, gg->inc->Encoding->v);
 				}
-				return TRUE;
+				return true;
 			}
 			if (!ConfFirst(I, m, J, verbose_level)) {
 				break;
@@ -548,9 +548,9 @@ int geometric_backtrack_search::RowFirstLexLeast(int I, int m, int verbose_level
 			J++;
 		}
 		// J-th element could not initialize, move on
-		while (TRUE) {
+		while (true) {
 			if (J == 0) {
-				return FALSE;
+				return false;
 			}
 			J--;
 			if (ConfNext(I, m, J, verbose_level)) {
@@ -577,24 +577,24 @@ int geometric_backtrack_search::RowNextLexLeast(int I, int m, int verbose_level)
 	}
 
 	J = gg->GB->b_len - 1;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			if (ConfNext(I, m, J, verbose_level)) {
 				break;
 			}
 			if (J == 0) {
-				return FALSE;
+				return false;
 			}
 			J--;
 		}
 		// J-th element has been incremented. Initialize elements after it:
-		while (TRUE) {
+		while (true) {
 			if (J >= gg->GB->b_len - 1) {
 				if (f_v) {
 					cout << "geometric_backtrack_search::RowNextLexLeast" << endl;
 					gg->print(cout, i1 + 1, gg->inc->Encoding->v);
 				}
-				return TRUE;
+				return true;
 			}
 			J++;
 			if (!ConfFirst(I, m, J, verbose_level)) {
@@ -612,7 +612,7 @@ int geometric_backtrack_search::RowFirstOrderly(int I, int m, int verbose_level)
 
 	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int i1;
-	int ret = FALSE;
+	int ret = false;
 	int f_already_there;
 
 	i1 = C->i0 + m;
@@ -629,16 +629,16 @@ int geometric_backtrack_search::RowFirstOrderly(int I, int m, int verbose_level)
 	It = Row_stabilizer_orbits[i1];
 
 	It->init(gg, i1 + 1,
-			FALSE /* f_orderly */,
+			false /* f_orderly */,
 			verbose_level);
 
 	if (!RowFirstLexLeast(I, m, verbose_level - 5)) {
 	}
 	else {
 
-		while (TRUE) {
+		while (true) {
 			It->add_geometry(gg->inc->Encoding,
-					TRUE /* f_partition_fixing_last */,
+					true /* f_partition_fixing_last */,
 					f_already_there,
 					0 /*verbose_level - 2*/);
 
@@ -658,7 +658,7 @@ int geometric_backtrack_search::RowFirstOrderly(int I, int m, int verbose_level)
 
 		place_row(I, m, 0 /* idx */, verbose_level);
 
-		ret = TRUE;
+		ret = true;
 		Row_stabilizer_orbit_idx[i1] = 0;
 
 	}
@@ -666,7 +666,7 @@ int geometric_backtrack_search::RowFirstOrderly(int I, int m, int verbose_level)
 		FREE_OBJECT(It);
 		Row_stabilizer_orbits[i1] = NULL;
 		Row_stabilizer_orbit_idx[i1] = -1;
-		ret = FALSE;
+		ret = false;
 	}
 
 	return ret;
@@ -751,7 +751,7 @@ int geometric_backtrack_search::RowNextOrderly(int I, int m, int verbose_level)
 
 	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int i1;
-	int ret = FALSE;
+	int ret = false;
 
 	i1 = C->i0 + m;
 
@@ -774,7 +774,7 @@ int geometric_backtrack_search::RowNextOrderly(int I, int m, int verbose_level)
 			cout << "geometric_backtrack_search::RowNextOrderly "
 					"I=" << I << " m=" << m << " i1=" << i1 << " finished" << endl;
 		}
-		ret = FALSE;
+		ret = false;
 	}
 	else {
 
@@ -787,7 +787,7 @@ int geometric_backtrack_search::RowNextOrderly(int I, int m, int verbose_level)
 			gg->print(cout, i1 + 1, gg->inc->Encoding->v);
 		}
 
-		ret = TRUE;
+		ret = true;
 
 	}
 
@@ -828,15 +828,15 @@ int geometric_backtrack_search::ConfFirst(int I, int m, int J, int verbose_level
 
 	}
 	n = 0;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			if (n >= C->r) {
 				if (f_v) {
 					cout << "geometric_backtrack_search::ConfFirst "
 							"I=" << I << " m=" << m
-							<< " J=" << J << " returns TRUE" << endl;
+							<< " J=" << J << " returns true" << endl;
 				}
-				return TRUE;
+				return true;
 			}
 			if (!XFirst(I, m, J, n, verbose_level)) {
 				break;
@@ -844,14 +844,14 @@ int geometric_backtrack_search::ConfFirst(int I, int m, int J, int verbose_level
 			n++;
 		}
 		// n-th element could not initialize, move on
-		while (TRUE) {
+		while (true) {
 			if (n == 0) {
 				if (f_v) {
 					cout << "geometric_backtrack_search::ConfFirst "
 							"I=" << I << " m=" << m
-							<< " J=" << J << " returns FALSE" << endl;
+							<< " J=" << J << " returns false" << endl;
 				}
-				return FALSE;
+				return false;
 			}
 			n--;
 			if (XNext(I, m, J, n, verbose_level)) {
@@ -881,33 +881,33 @@ int geometric_backtrack_search::ConfNext(int I, int m, int J, int verbose_level)
 
 
 	if (C->r == 0) {
-		return FALSE;
+		return false;
 	}
 	n = C->r - 1;
-	while (TRUE) {
-		while (TRUE) {
+	while (true) {
+		while (true) {
 			if (XNext(I, m, J, n, verbose_level)) {
 				break;
 			}
 			if (n == 0) {
-				return FALSE;
+				return false;
 				if (f_v) {
 					cout << "geometric_backtrack_search::ConfNext "
 							"I=" << I << " m=" << m
-							<< " J=" << J << " returns FALSE" << endl;
+							<< " J=" << J << " returns false" << endl;
 				}
 			}
 			n--;
 		}
 		// n-th element has been incremented. Initialize elements after it:
-		while (TRUE) {
+		while (true) {
 			if (n >= C->r - 1) {
 				if (f_v) {
 					cout << "geometric_backtrack_search::ConfNext "
 							"I=" << I << " m=" << m
-							<< " J=" << J << " returns TRUE" << endl;
+							<< " J=" << J << " returns true" << endl;
 				}
-				return TRUE;
+				return true;
 			}
 			n++;
 			if (!XFirst(I, m, J, n, verbose_level)) {
@@ -1011,7 +1011,7 @@ int geometric_backtrack_search::XNext(int I, int m, int J, int n, int verbose_le
 
 			if (J == 0 && n == 0) {
 				if (C->f_last_non_zero_in_fuse) {
-					return FALSE;
+					return false;
 				}
 			}
 
@@ -1030,9 +1030,9 @@ int geometric_backtrack_search::XNext(int I, int m, int J, int n, int verbose_le
 			if (f_v) {
 				cout << "geometric_backtrack_search::XNext "
 						"I=" << I << " m=" << m << " J=" << J
-						<< " n=" << n << " j=" << j << " returns TRUE" << endl;
+						<< " n=" << n << " j=" << j << " returns true" << endl;
 			}
-			return TRUE;
+			return true;
 
 		}
 
@@ -1040,9 +1040,9 @@ int geometric_backtrack_search::XNext(int I, int m, int J, int n, int verbose_le
 	if (f_v) {
 		cout << "geometric_backtrack_search::XNext "
 				"I=" << I << " m=" << m << " J=" << J
-				<< " n=" << n << " returns FALSE" << endl;
+				<< " n=" << n << " returns false" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 void geometric_backtrack_search::XClear(int I, int m, int J, int n)
@@ -1122,15 +1122,15 @@ int geometric_backtrack_search::X_First(int I, int m, int J, int n, int j,
 			if (f_v) {
 				cout << "geometric_backtrack_search::X_First "
 						"I=" << I << " m=" << m << " J=" << J
-						<< " n=" << n << " j=" << j << " returns TRUE" << endl;
+						<< " n=" << n << " j=" << j << " returns true" << endl;
 			}
-			return TRUE;
+			return true;
 		}
 		// continue with the next choice of j
 
 	} // next j
 
-	return FALSE;
+	return false;
 }
 
 
@@ -1165,12 +1165,12 @@ int geometric_backtrack_search::TryToPlace(int I, int m, int J, int n, int j,
 					<< " n=" << n << " j=" << j
 					<< " skipped because of column sum" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 
 
 	if (gg->Test_semicanonical->col_marker_test(j0, j, i1)) {
-		return FALSE;
+		return false;
 	}
 
 	//gg->inc->Encoding->theX[i1 * gg->inc->Encoding->dim_n + r] = j1;
@@ -1190,7 +1190,7 @@ int geometric_backtrack_search::TryToPlace(int I, int m, int J, int n, int j,
 					<< " n=" << n << " j=" << j <<
 					" skipped because of test" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 
 	// the incidence passes the tests:
@@ -1200,7 +1200,7 @@ int geometric_backtrack_search::TryToPlace(int I, int m, int J, int n, int j,
 	gg->inc->K[j1]++;
 
 
-	return TRUE;
+	return true;
 
 }
 

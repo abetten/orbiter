@@ -41,11 +41,11 @@ orbit_of_equations::orbit_of_equations()
 	prev = NULL;
 	label = NULL;
 
-	f_has_print_function = FALSE;
+	f_has_print_function = false;
 	print_function = NULL;
 	print_function_data = NULL;
 
-	f_has_reduction = FALSE;
+	f_has_reduction = false;
 	reduction_function = NULL;
 	reduction_function_data = NULL;
 }
@@ -293,7 +293,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 				cout << "orbit_of_equations::compute_orbit  "
 						"before search_data" << endl;
 			}
-			if (search_data(new_object, idx, FALSE)) {
+			if (search_data(new_object, idx, false)) {
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit "
 							"image object is already in the list, "
@@ -488,7 +488,7 @@ void orbit_of_equations::get_random_schreier_generator(
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int len, r1, r2, pt1, pt2, pt3;
 	int *E1, *E2, *E3, *E4, *E5;
 	int *cur_object;
@@ -535,7 +535,7 @@ void orbit_of_equations::get_random_schreier_generator(
 			new_object,
 			E2, 0 /* verbose_level*/);
 
-	if (search_data(new_object, pt2, FALSE)) {
+	if (search_data(new_object, pt2, false)) {
 		if (f_vv) {
 			cout << "orbit_of_equations::get_random_schreier_generator "
 					"the new object is at position " << pt2 << endl;
@@ -554,7 +554,7 @@ void orbit_of_equations::get_random_schreier_generator(
 
 	// test:
 	map_an_equation(cur_object, new_object, E5, 0 /* verbose_level*/);
-	if (search_data(new_object, pt3, FALSE)) {
+	if (search_data(new_object, pt3, false)) {
 		if (f_vv) {
 			cout << "testing: new object is at position " << pt3 << endl;
 		}
@@ -732,7 +732,7 @@ void orbit_of_equations::stabilizer_orbit_rep_work(
 	
 	Stab->init(default_action, verbose_level - 2);
 	Stab->init_trivial_group(verbose_level - 1);
-	while (TRUE) {
+	while (true) {
 		Stab->group_order(cur_go);
 		if (D.compare(cur_go, target_go) == 0) {
 			break;
@@ -765,21 +765,21 @@ void orbit_of_equations::stabilizer_orbit_rep_work(
 			if (f_vvv) {
 				cout << "orbit_of_equations::stabilizer_orbit_rep_work "
 						"element strips through" << endl;
-				if (FALSE) {
+				if (false) {
 					cout << "residue:" << endl;
 					A->Group_element->element_print(residue, cout);
 					cout << endl;
 				}
 			}
-			f_added = FALSE;
+			f_added = false;
 		}
 		else {
-			f_added = TRUE;
+			f_added = true;
 			if (f_vvv) {
 				cout << "orbit_of_equations::stabilizer_orbit_rep_work "
 						"element needs to be inserted at level = "
 					<< drop_out_level << " with image " << image << endl;
-				if (FALSE) {
+				if (false) {
 					A->Group_element->element_print(residue, cout);
 					cout  << endl;
 				}
@@ -893,14 +893,14 @@ int orbit_of_equations::search_equation(
 			cout << "orbit_of_equations::search_data "
 					"we found the equation at " << idx << endl;
 		}
-		ret = TRUE;
+		ret = true;
 	}
 	else {
 		if (f_v) {
 			cout << "orbit_of_equations::search_data "
 					"we did not find the equation" << endl;
 		}
-		ret = FALSE;
+		ret = false;
 	}
 	if (f_v) {
 		cout << "orbit_of_equations::search_data done" << endl;
@@ -937,14 +937,14 @@ int orbit_of_equations::search_data(
 			cout << "orbit_of_equations::search_data "
 					"we found the equation at " << idx << endl;
 		}
-		ret = TRUE;
+		ret = true;
 	}
 	else {
 		if (f_v) {
 			cout << "orbit_of_equations::search_data "
 					"we did not find the equation" << endl;
 		}
-		ret = FALSE;
+		ret = false;
 	}
 	if (f_v) {
 		cout << "orbit_of_equations::search_data done" << endl;

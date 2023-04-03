@@ -171,7 +171,7 @@ int numerics::Gauss_elimination(
 			}
 		
 		base_cols[i] = j;
-		//if (FALSE) {
+		//if (false) {
 		//	cout << "."; cout.flush();
 		//	}
 
@@ -247,7 +247,7 @@ int numerics::Gauss_elimination(
 		if (f_v) {
 			cout << "completing" << endl;
 			}
-		//if (FALSE) {
+		//if (false) {
 		//	cout << ";"; cout.flush();
 		//	}
 		for (i = rank - 1; i >= 0; i--) {
@@ -398,7 +398,7 @@ int numerics::Null_space(double *M, int m, int n, double *K,
 	base_cols = NEW_int(n);
 	
 	rk = Gauss_elimination(M, m, n, base_cols, 
-		TRUE /* f_complete */, 0 /* verbose_level */);
+		true /* f_complete */, 0 /* verbose_level */);
 	
 	get_kernel(M, m, n, base_cols, rk /* nb_base_cols */, 
 		kernel_m, kernel_n, Ker);
@@ -554,7 +554,7 @@ int numerics::triangular_prism(
 	if (ABS(P4[1]) > EPS) {
 		cout << "something is wrong in step 1, "
 				"the y-coordinate is too big" << endl;
-		return FALSE;
+		return false;
 		}
 
 
@@ -588,7 +588,7 @@ int numerics::triangular_prism(
 	if (ABS(P6[2]) > EPS) {
 		cout << "something is wrong in step 2, "
 				"the z-coordinate is too big" << endl;
-		return FALSE;
+		return false;
 		}
 
 	if (f_vv) {
@@ -622,7 +622,7 @@ int numerics::triangular_prism(
 	if (ABS(P9[1]) > EPS) {
 		cout << "something is wrong in step 3, "
 				"the y-coordinate is too big" << endl;
-		return FALSE;
+		return false;
 		}
 
 
@@ -638,7 +638,7 @@ int numerics::triangular_prism(
 	if (f_v) {
 		cout << "numerics::triangular_prism done" << endl;
 		}
-	return TRUE;
+	return true;
 }
 
 int numerics::general_prism(
@@ -749,7 +749,7 @@ int numerics::general_prism(
 	if (ABS(P4[1]) > EPS) {
 		cout << "something is wrong in step 1, the y-coordinate "
 				"is too big" << endl;
-		return FALSE;
+		return false;
 		}
 
 
@@ -786,7 +786,7 @@ int numerics::general_prism(
 	if (ABS(P6[2]) > EPS) {
 		cout << "something is wrong in step 2, the z-coordinate "
 				"is too big" << endl;
-		return FALSE;
+		return false;
 		}
 
 	if (f_vv) {
@@ -823,7 +823,7 @@ int numerics::general_prism(
 	if (ABS(P9[1]) > EPS) {
 		cout << "something is wrong in step 3, the y-coordinate "
 				"is too big" << endl;
-		return FALSE;
+		return false;
 		}
 
 
@@ -849,7 +849,7 @@ int numerics::general_prism(
 	if (f_v) {
 		cout << "numerics::general_prism done" << endl;
 		}
-	return TRUE;
+	return true;
 }
 
 void numerics::mult_matrix(
@@ -1451,7 +1451,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 	nb_affine = NT.i_power_j(n, degree);
 
 
-	if (FALSE) {
+	if (false) {
 		cout << "Variables:" << endl;
 		Int_matrix_print(Variables, 20, 3);
 		}
@@ -1463,7 +1463,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 			Monomials[i * n + a]++;
 			}
 		}
-	if (FALSE) {
+	if (false) {
 		cout << "Monomials:" << endl;
 		Int_matrix_print(Monomials, nb_monomials, n);
 		}
@@ -1491,7 +1491,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		Affine_to_monomial[i] = idx;	
 		}
 
-	if (FALSE) {
+	if (false) {
 		cout << "Affine_to_monomial:";
 		Int_vec_print(cout, Affine_to_monomial, nb_affine);
 		cout << endl;
@@ -1657,7 +1657,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 	nb_affine = NT.i_power_j(n, degree);
 
 
-	if (FALSE) {
+	if (false) {
 		cout << "Variables:" << endl;
 		Int_matrix_print(Variables, 35, 4);
 		}
@@ -1669,7 +1669,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 			Monomials[i * n + a]++;
 			}
 		}
-	if (FALSE) {
+	if (false) {
 		cout << "Monomials:" << endl;
 		Int_matrix_print(Monomials, nb_monomials, n);
 		}
@@ -1697,7 +1697,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 		Affine_to_monomial[i] = idx;
 		}
 
-	if (FALSE) {
+	if (false) {
 		cout << "Affine_to_monomial:";
 		Int_vec_print(cout, Affine_to_monomial, nb_affine);
 		cout << endl;
@@ -1815,7 +1815,7 @@ void numerics::matrix_double_inverse(
 			}
 		}
 	rk = Gauss_elimination(M, n, two_n, base_cols, 
-		TRUE /* f_complete */, 0 /* verbose_level */);
+		true /* f_complete */, 0 /* verbose_level */);
 	if (rk < n) {
 		cout << "matrix_double_inverse the matrix "
 				"is not invertible" << endl;
@@ -1845,7 +1845,7 @@ int numerics::line_centered(
 	double *pt1_out, double *pt2_out, double r,
 	int verbose_level)
 {
-	int f_v = TRUE; //(verbose_level >= 1);
+	int f_v = true; //(verbose_level >= 1);
 	double v[3];
 	double x1, x2, x3, y1, y2, y3;
 	double a, b, c, av, d, e;
@@ -1915,7 +1915,7 @@ int numerics::line_centered(
 		vec_print(v, 3);
 		cout << endl;
 		exit(1);
-		//return FALSE;
+		//return false;
 		//d = 0;
 		}
 	e = sqrt(d);
@@ -1931,7 +1931,7 @@ int numerics::line_centered(
 	if (f_v) {
 		cout << "numerics::line_centered done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int numerics::line_centered_tolerant(
@@ -2009,7 +2009,7 @@ int numerics::line_centered_tolerant(
 		vec_print(v, 3);
 		cout << endl;
 		//exit(1);
-		return FALSE;
+		return false;
 		}
 	e = sqrt(d);
 	lambda1 = -b * 0.5 + e;
@@ -2023,7 +2023,7 @@ int numerics::line_centered_tolerant(
 	if (f_v) {
 		cout << "numerics::line_centered_tolerant done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -2287,7 +2287,7 @@ void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
 	h = 0;
 	l = 0;
 
-	while (TRUE) {
+	while (true) {
 		if (!is) {
 			len = h;
 			return;
@@ -2304,7 +2304,7 @@ void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
 			len = h;
 			return;
 			}
-		while (TRUE) {
+		while (true) {
 			while (c != 0) {
 
 				if (f_v) {
@@ -2345,7 +2345,7 @@ void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
 			s[l] = 0;
 			sscanf(s, "%lf", &a);
 			//a = atoi(s);
-			if (FALSE) {
+			if (false) {
 				cout << "digit as string: " << s << ", numeric: " << a << endl;
 				}
 			if (h == len) {
@@ -2871,7 +2871,7 @@ int numerics::intersect_line_and_line(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 2);
+	int f_vv = false; // (verbose_level >= 2);
 	//double B[3];
 	double M[9];
 	int i;
@@ -2935,7 +2935,7 @@ int numerics::intersect_line_and_line(
 		}
 
 	rk = N.Gauss_elimination(M, 3, 3,
-			base_cols, TRUE /* f_complete */,
+			base_cols, true /* f_complete */,
 			0 /* verbose_level */);
 
 	if (f_vv) {
@@ -2948,7 +2948,7 @@ int numerics::intersect_line_and_line(
 	if (rk < 2) {
 		cout << "numerics::intersect_line_and_line "
 				"the matrix M does not have full rank" << endl;
-		return FALSE;
+		return false;
 		}
 	lambda = M[0 * 3 + 2];
 	for (i = 0; i < 3; i++) {
@@ -2967,7 +2967,7 @@ int numerics::intersect_line_and_line(
 	if (f_v) {
 		cout << "numerics::intersect_line_and_line done" << endl;
 		}
-	return TRUE;
+	return true;
 }
 
 void numerics::clebsch_map_up(

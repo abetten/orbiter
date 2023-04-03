@@ -2748,7 +2748,7 @@ void knowledge_base::retrieve_BLT_set_from_database_embedded(
 
 	retrieve_BLT_set_from_database(
 			Quadratic_form,
-			TRUE /* f_embedded */,
+			true /* f_embedded */,
 			BLT_k,
 			label_txt,
 			label_tex,

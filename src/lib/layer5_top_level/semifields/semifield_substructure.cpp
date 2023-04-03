@@ -148,11 +148,11 @@ void semifield_substructure::compute_cases(
 		data_structures::tally C;
 
 		C.init(Need_orbits_len,
-				nb_non_unique_cases_with_non_trivial_group, FALSE,
+				nb_non_unique_cases_with_non_trivial_group, false,
 				0);
 		if (f_v) {
 			cout << "classification of Len amongst the need orbits cases:" << endl;
-			C.print_naked(TRUE);
+			C.print_naked(true);
 			cout << endl;
 			}
 	}
@@ -241,7 +241,7 @@ void semifield_substructure::compute_orbits(
 				Lint_vec_print(cout, input_data, SC->k);
 				cout << endl;
 				}
-			if (FALSE) {
+			if (false) {
 				cout << "The stabilizer is:" << endl;
 				L3->Stabilizer_gens[a].print_generators(cout);
 			}
@@ -267,13 +267,13 @@ void semifield_substructure::compute_orbits(
 				if (f_reached[g]) {
 					continue;
 					}
-				if (FALSE) {
+				if (false) {
 					cout << "testing subspace " << g << " / " << len << ":" << endl;
 				}
 				if (Orb->find_subspace_lint(
 						Data + (fst + g) * data_size + start_column,
 						idx, 0 /*verbose_level*/)) {
-					f_reached[g] = TRUE;
+					f_reached[g] = true;
 					position[g] = idx;
 					orbit_idx[g] = cnt;
 					c++;
@@ -341,7 +341,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 	nb_flag_orbits = 0;
 	for (o = 0; o < nb_orbits_at_level_3; o++) {
 
-		if (FALSE) {
+		if (false) {
 			cout << "orbit " << o << " number of semifields = "
 				<< Len[o] << " group order = "
 				<< L3->Stabilizer_gens[o].group_order_as_lint() << endl;
@@ -415,7 +415,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 				o /* downstep_primary_orbit */,
 				0 /* downstep_secondary_orbit */,
 				1 /* downstep_orbit_len */,
-				FALSE /* f_long_orbit */,
+				false /* f_long_orbit */,
 				data /* int *pt_representation */,
 				&L3->Stabilizer_gens[o],
 				0 /*verbose_level - 2 */);
@@ -431,7 +431,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 					o /* downstep_primary_orbit */,
 					g /* downstep_secondary_orbit */,
 					1 /* downstep_orbit_len */,
-					FALSE /* f_long_orbit */,
+					false /* f_long_orbit */,
 					data /* int *pt_representation */,
 					&L3->Stabilizer_gens[o],
 					0 /*verbose_level - 2*/);
@@ -445,7 +445,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 				cout << "cannot find orbit " << o << " in the list " << endl;
 				exit(1);
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "Found orbit " << o
 					<< " at position " << idx << endl;
 			}
@@ -465,7 +465,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 					o /* downstep_primary_orbit */,
 					g /* downstep_secondary_orbit */,
 					Orb->used_length /* downstep_orbit_len */,
-					FALSE /* f_long_orbit */,
+					false /* f_long_orbit */,
 					data /* int *pt_representation */,
 					gens,
 					0 /*verbose_level - 2*/);
@@ -509,7 +509,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 	int po, so;
 	ring_theory::longinteger_object go;
-	int f_skip = FALSE;
+	int f_skip = false;
 	int i;
 
 
@@ -590,7 +590,7 @@ void semifield_substructure::do_classify(int verbose_level)
 			Int_matrix_print(Basis1, SC->k, SC->k2);
 			SC->basis_print(Basis1, SC->k);
 		}
-		f_skip = FALSE;
+		f_skip = false;
 		for (i = 0; i < SC->k; i++) {
 			v3[i] = Basis1[2 * SC->k2 + i * SC->k + 0];
 		}
@@ -601,7 +601,7 @@ void semifield_substructure::do_classify(int verbose_level)
 			Int_vec_print(cout, v3, SC->k);
 			cout << " which is not the (k-1)-th unit vector, "
 					"so we skip" << endl;
-			f_skip = TRUE;
+			f_skip = true;
 		}
 
 		if (f_skip) {
@@ -611,7 +611,7 @@ void semifield_substructure::do_classify(int verbose_level)
 					<< ", first vector is not the unit vector, "
 					"so we skip" << endl;
 			}
-			f_processed[f] = TRUE;
+			f_processed[f] = true;
 			nb_processed++;
 			continue;
 		}
@@ -697,7 +697,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 		FREE_OBJECT(Aut_gens);
 
-		f_processed[f] = TRUE;
+		f_processed[f] = true;
 		nb_processed++;
 		Flag_orbits->nb_primary_orbits_upper++;
 
@@ -741,7 +741,7 @@ void semifield_substructure::loop_over_all_subspaces(
 #if 0
 	if (f == 1) {
 		verbose_level += 10;
-		f_v = f_vv = f_vvv = TRUE;
+		f_v = f_vv = f_vvv = true;
 		cout << "CASE 1, STARTS HERE" << endl;
 	}
 #endif
@@ -810,15 +810,15 @@ void semifield_substructure::loop_over_all_subspaces(
 			trace_po,
 			verbose_level - 3);
 
-		f_skip = FALSE;
+		f_skip = false;
 
-		if (ret == FALSE) {
+		if (ret == false) {
 			cout << "flag orbit " << f << " / "
 				<< nb_flag_orbits << ", subspace "
 				<< rk << " / " << N
-				<< " : trace_to_level_three return FALSE" << endl;
+				<< " : trace_to_level_three return false" << endl;
 
-			f_skip = TRUE;
+			f_skip = true;
 		}
 
 		T->trace_po = trace_po;
@@ -841,11 +841,11 @@ void semifield_substructure::loop_over_all_subspaces(
 		for (i = 0; i < k; i++) {
 			v3[i] = Basis2[2 * k2 + i * k + 0];
 		}
-		if (f_skip == FALSE) {
+		if (f_skip == false) {
 			if (!F->Linear_algebra->is_unit_vector(v1, k, 0) ||
 					!F->Linear_algebra->is_unit_vector(v2, k, 1) ||
 					!F->Linear_algebra->is_unit_vector(v3, k, k - 1)) {
-				f_skip = TRUE;
+				f_skip = true;
 			}
 		}
 		T->f_skip = f_skip;
@@ -861,8 +861,8 @@ void semifield_substructure::loop_over_all_subspaces(
 
 			F->Linear_algebra->Gauss_int_with_given_pivots(
 				Basis2 + 3 * k2,
-				FALSE /* f_special */,
-				TRUE /* f_complete */,
+				false /* f_special */,
+				true /* f_complete */,
 				SC->desired_pivots + 3,
 				k - 3 /* nb_pivots */,
 				k - 3, k2,
@@ -897,7 +897,7 @@ void semifield_substructure::loop_over_all_subspaces(
 					<< nb_flag_orbits << ", subspace "
 					<< rk << " / " << N << ":" << endl;
 
-				cout << "find_semifield_in_table returns FALSE" << endl;
+				cout << "find_semifield_in_table returns false" << endl;
 
 				cout << "trace_po=" << trace_po << endl;
 				cout << "data2=";
@@ -966,7 +966,7 @@ void semifield_substructure::loop_over_all_subspaces(
 						Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit =
 								Flag_orbits->nb_primary_orbits_upper;
 						Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-							= TRUE;
+							= true;
 						Flag_orbits->Flag_orbit_node[f2].fusion_with
 							= f;
 						Flag_orbits->Flag_orbit_node[f2].fusion_elt
@@ -975,7 +975,7 @@ void semifield_substructure::loop_over_all_subspaces(
 							transporter1,
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 							0);
-						f_processed[f2] = TRUE;
+						f_processed[f2] = true;
 						nb_processed++;
 						if (f_vv) {
 							cout << "Flag orbit f2 = " << f2
@@ -1023,7 +1023,7 @@ void semifield_substructure::loop_over_all_subspaces(
 							Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit =
 									Flag_orbits->nb_primary_orbits_upper;
 							Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-								= TRUE;
+								= true;
 							Flag_orbits->Flag_orbit_node[f2].fusion_with
 								= f;
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt
@@ -1031,7 +1031,7 @@ void semifield_substructure::loop_over_all_subspaces(
 							SC->A->Group_element->element_invert(transporter1,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								0);
-							f_processed[f2] = TRUE;
+							f_processed[f2] = true;
 							nb_processed++;
 							if (f_vv) {
 								cout << "Flag orbit f2 = " << f2
@@ -1109,7 +1109,7 @@ void semifield_substructure::loop_over_all_subspaces(
 							Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit =
 									Flag_orbits->nb_primary_orbits_upper;
 							Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-								= TRUE;
+								= true;
 							Flag_orbits->Flag_orbit_node[f2].fusion_with
 								= f;
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt =
@@ -1117,7 +1117,7 @@ void semifield_substructure::loop_over_all_subspaces(
 							SC->A->Group_element->element_invert(transporter3,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								0);
-							f_processed[f2] = TRUE;
+							f_processed[f2] = true;
 							nb_processed++;
 							if (f_vv) {
 								cout << "Flag orbit f2 = " << f2
@@ -1310,13 +1310,13 @@ int semifield_substructure::identify(long int *data,
 			trace_po,
 			verbose_level - 3);
 
-		f_skip = FALSE;
+		f_skip = false;
 
-		if (ret == FALSE) {
+		if (ret == false) {
 			cout << "semifield_substructure::identify "
-					"trace_to_level_three return FALSE" << endl;
+					"trace_to_level_three return false" << endl;
 
-			f_skip = TRUE;
+			f_skip = true;
 		}
 
 
@@ -1340,11 +1340,11 @@ int semifield_substructure::identify(long int *data,
 		for (i = 0; i < k; i++) {
 			v3[i] = Basis2[2 * k2 + i * k + 0];
 		}
-		if (f_skip == FALSE) {
+		if (f_skip == false) {
 			if (!F->Linear_algebra->is_unit_vector(v1, k, 0) ||
 					!F->Linear_algebra->is_unit_vector(v2, k, 1) ||
 					!F->Linear_algebra->is_unit_vector(v3, k, k - 1)) {
-				f_skip = TRUE;
+				f_skip = true;
 			}
 		}
 
@@ -1360,8 +1360,8 @@ int semifield_substructure::identify(long int *data,
 
 			F->Linear_algebra->Gauss_int_with_given_pivots(
 				Basis2 + 3 * k2,
-				FALSE /* f_special */,
-				TRUE /* f_complete */,
+				false /* f_special */,
+				true /* f_complete */,
 				SC->desired_pivots + 3,
 				k - 3 /* nb_pivots */,
 				k - 3, k2,
@@ -1393,7 +1393,7 @@ int semifield_substructure::identify(long int *data,
 				verbose_level)) {
 
 				cout << "semifield_substructure::identify "
-						"find_semifield_in_table returns FALSE" << endl;
+						"find_semifield_in_table returns false" << endl;
 
 				cout << "semifield_substructure::identify "
 						"trace_po=" << trace_po << endl;
@@ -1406,7 +1406,7 @@ int semifield_substructure::identify(long int *data,
 				Int_matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 
-				return FALSE;
+				return false;
 			}
 
 			long int go;
@@ -1517,7 +1517,7 @@ int semifield_substructure::identify(long int *data,
 						<< "po=" << po
 						<< endl;
 			}
-			return TRUE;
+			return true;
 		} // end else
 
 
@@ -1526,7 +1526,7 @@ int semifield_substructure::identify(long int *data,
 	if (f_v) {
 		cout << "semifield_substructure::identify done" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 int semifield_substructure::find_semifield_in_table(
@@ -1562,7 +1562,7 @@ int semifield_substructure::find_semifield_in_table(
 	// in the table for orbit po:
 	if (len == 0) {
 		cout << "find_semifield_in_table len == 0" << endl;
-		return FALSE;
+		return false;
 		}
 
 	if (Sorting.lint_vec_compare(Data + fst * data_size + start_column,
@@ -1605,14 +1605,14 @@ int semifield_substructure::find_semifield_in_table(
 						given_data, SC->k);
 				cout << endl;
 			}
-			return FALSE;
+			return false;
 		}
 	}
 
 	if (f_v) {
 		cout << "find_semifield_in_table done, idx = " << idx << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 

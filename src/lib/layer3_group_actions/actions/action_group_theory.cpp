@@ -82,15 +82,15 @@ void action::report_fixed_objects(int *Elt,
 	{
 		ofstream fp(fname_latex);
 		string title, author, extra_praeamble;
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		title.assign("Fixed Objects");
 
 		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
+			false /* f_book */, true /* f_title */,
 			title, author /* const char *author */,
-			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
+			false /* f_toc */, false /* f_landscape */, true /* f_12pt */,
+			true /* f_enlarged_page */, true /* f_pagenumbers */,
 			extra_praeamble /* extra_praeamble */);
 		//latex_head_easy(fp);
 

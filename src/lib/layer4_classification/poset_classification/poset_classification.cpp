@@ -164,10 +164,10 @@ classification_base_case *poset_classification::get_Base_case()
 int poset_classification::node_has_schreier_vector(int node_idx)
 {
 	if (Poo->get_node(node_idx)->has_Schreier_vector()) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -239,7 +239,7 @@ int poset_classification::poset_structure_is_contained(
 		cout << endl;
 	}
 	if (sz1 > sz2) {
-		f_contained = FALSE;
+		f_contained = false;
 	}
 	else {
 		if (Poset->f_subspace_lattice) {
@@ -274,10 +274,10 @@ int poset_classification::poset_structure_is_contained(
 					sz1 * dim);
 			rk2 = Poset->VS->F->Linear_algebra->Gauss_easy(B2, sz1 + sz2, dim);
 			if (rk2 > sz2) {
-				f_contained = FALSE;
+				f_contained = false;
 			}
 			else {
-				f_contained = TRUE;
+				f_contained = true;
 			}
 
 			FREE_int(B1);
@@ -519,7 +519,7 @@ int poset_classification::find_poset_orbit_node_for_set_basic(
 		j = Poo->find_extension_from_point(
 				node, pt, 0 /* verbose_level */);
 
-		//j = root[node].find_extension_from_point(this, pt, FALSE);
+		//j = root[node].find_extension_from_point(this, pt, false);
 
 		if (j == -1) {
 			if (f_v) {
@@ -628,7 +628,7 @@ void poset_classification::count_automorphism_group_orders(
 	multiplicities = NULL;
 	for (i = 0; i < l; i++) {
 		get_stabilizer_order(lvl, i, ago);
-		f_added = FALSE;
+		f_added = false;
 		for (j = 0; j < nb_agos; j++) {
 			c = D.compare_unsigned(ago, agos[j]);
 			//cout << "comparing " << ago << " with " << agos[j]
@@ -658,7 +658,7 @@ void poset_classification::count_automorphism_group_orders(
 						FREE_int(tmp_multiplicities);
 					}
 				}
-				f_added = TRUE;
+				f_added = true;
 				break;
 			}
 		}
@@ -695,7 +695,7 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 	ring_theory::longinteger_domain D;
 	
 	count_automorphism_group_orders(lvl, nb_agos, agos,
-			multiplicities, FALSE);
+			multiplicities, false);
 	S.create(0, __FILE__, __LINE__);
 	N = 0;
 	for (j = 0; j < nb_agos; j++) {
@@ -824,10 +824,10 @@ void poset_classification::recreate_schreier_vectors_at_level(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = FALSE;//(verbose_level >= 3);
+	int f_vvv = false;//(verbose_level >= 3);
 	int f, l, prev, u;
-	int f_recreate_extensions = FALSE;
-	int f_dont_keep_sv = FALSE;
+	int f_recreate_extensions = false;
+	int f_dont_keep_sv = false;
 
 	if (f_v) {
 		cout << "poset_classification::recreate_schreier_vectors_at_level "
@@ -858,7 +858,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 					"We will read this file" << endl;
 		}
 
-		read_sv_level_file_binary(level, problem_label_with_path, FALSE, 0, 0,
+		read_sv_level_file_binary(level, problem_label_with_path, false, 0, 0,
 			f_recreate_extensions, f_dont_keep_sv, 
 			verbose_level - 2);
 		if (f_vv) {
@@ -901,7 +901,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 				verbose_level - 1);
 	}
 	write_sv_level_file_binary(
-			level, problem_label_with_path, FALSE, 0, 0,
+			level, problem_label_with_path, false, 0, 0,
 			verbose_level);
 	if (f_vv) {
 		cout << "poset_classification::recreate_schreier_vectors_at_level "
@@ -1057,7 +1057,7 @@ void poset_classification::get_stabilizer_group(
 				"G->init_strong_generators_by_hdl" << endl;
 	}
 	G->init_strong_generators_by_hdl(O->nb_strong_generators,
-			O->hdl_strong_generators, O->tl, FALSE);
+			O->hdl_strong_generators, O->tl, false);
 	G->schreier_sims(0);
 #else
 	ring_theory::longinteger_object go;
@@ -1744,7 +1744,7 @@ void poset_classification::map_to_canonical_k_subset(
 	}
 	
 	// ToDo
-	//Poset->A->element_one(poset_classification::transporter->ith(0), FALSE);
+	//Poset->A->element_one(poset_classification::transporter->ith(0), false);
 
 
 	// trace the subset:
@@ -1784,7 +1784,7 @@ void poset_classification::map_to_canonical_k_subset(
 		Poset->A->Group_element->element_print(Elt1, cout);
 		cout << endl;
 	}
-	Poset->A->Group_element->element_move(Elt1, transporter, FALSE);
+	Poset->A->Group_element->element_move(Elt1, transporter, false);
 
 	for (i = 0; i < reduced_set_size; i++) {
 		reduced_set[i] = canonical_subset[subset_size + i];
@@ -1866,7 +1866,7 @@ void poset_classification::find_interesting_k_subsets(
 
 
 	if (f_v) {
-		C->print_naked(FALSE);
+		C->print_naked(false);
 		cout << endl;
 	}
 
@@ -1924,7 +1924,7 @@ void poset_classification::classify_k_subsets(
 	
 	C = NEW_OBJECT(data_structures::tally);
 
-	C->init(isotype, nCk, FALSE, 0);
+	C->init(isotype, nCk, false, 0);
 
 	if (f_v) {
 		cout << "poset_classification::classify_k_subsets "
@@ -1972,13 +1972,13 @@ void poset_classification::trace_all_k_subsets(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 2);
+	//int f_vv = false; //(verbose_level >= 2);
 	int *index_set;
 	long int *subset;
 	long int *canonical_subset;
 	int *Elt;
 	long int subset_rk, local_idx, i;
-	//int f_implicit_fusion = TRUE;
+	//int f_implicit_fusion = true;
 	combinatorics::combinatorics_domain Combi;
 
 	nCk = Combi.int_n_choose_k(n, k);
@@ -2000,8 +2000,8 @@ void poset_classification::trace_all_k_subsets(
 	Combi.first_k_subset(index_set, n, k);
 	subset_rk = 0;
 
-	while (TRUE) {
-		if (TRUE && ((subset_rk % 10000) == 0)) {
+	while (true) {
+		if (true && ((subset_rk % 10000) == 0)) {
 			cout << "poset_classification::trace_all_k_subsets "
 					"k=" << k
 				<< " testing set " << subset_rk << " / " << nCk 
@@ -2015,7 +2015,7 @@ void poset_classification::trace_all_k_subsets(
 		}
 		//Lint_vec_copy(subset, set[0], k);
 
-		if (FALSE /*f_v2*/) {
+		if (false /*f_v2*/) {
 			cout << "poset_classification::trace_all_k_subsets "
 					"corresponding to set ";
 			Lint_vec_print(cout, subset, k);
@@ -2028,25 +2028,25 @@ void poset_classification::trace_all_k_subsets(
 		}
 		else {
 
-			if (FALSE) {
+			if (false) {
 				cout << "poset_classification::trace_all_k_subsets "
 						"before trace_set" << endl;
 			}
 			local_idx = trace_set(subset, k, k, 
 				canonical_subset, Elt, 
 				0 /*verbose_level - 3*/);
-			if (FALSE) {
+			if (false) {
 				cout << "poset_classification::trace_all_k_subsets "
 						"after trace_set, local_idx = "
 						<< local_idx << endl;
 			}
 			
-			if (FALSE /*f_vvv*/) {
+			if (false /*f_vvv*/) {
 				cout << "poset_classification::trace_all_k_subsets "
 						"local_idx=" << local_idx << endl;
 			}
 			isotype[subset_rk] = local_idx;
-			if (FALSE) {
+			if (false) {
 				cout << "poset_classification::trace_all_k_subsets "
 						"the transporter is" << endl;
 				Poset->A->Group_element->element_print(Elt, cout);

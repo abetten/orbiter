@@ -77,8 +77,8 @@ void orthogonal_plane_invariant::init(
 	int *Mtx;
 	int *Hash;
 	int rk, H, log2_of_q, n_choose_k;
-	int f_special = FALSE;
-	int f_complete = TRUE;
+	int f_special = false;
+	int f_complete = true;
 	int base_col[1000];
 	int subset[1000];
 	int level = 3;
@@ -111,7 +111,7 @@ void orthogonal_plane_invariant::init(
 		cout << "orthogonal_plane_invariant::init "
 				"log2_of_q=" << log2_of_q << endl;
 	}
-	while (TRUE) {
+	while (true) {
 		cnt++;
 
 		for (i = 0; i < level; i++) {
@@ -128,7 +128,7 @@ void orthogonal_plane_invariant::init(
 		//print_integer_matrix_width(cout, Mtx, level, n, n, 3);
 		rk = O->F->Linear_algebra->Gauss_int(
 				Mtx, f_special, f_complete,
-				base_col, FALSE, NULL, level, n, n, 0);
+				base_col, false, NULL, level, n, n, 0);
 		if (f_vvv) {
 			cout << "orthogonal_plane_invariant::init "
 					"after Gauss, rank = " << rk << endl;
@@ -278,7 +278,7 @@ void orthogonal_plane_invariant::init(
 			}
 			rk = O->F->Linear_algebra->Gauss_int(
 					Mtx, f_special,
-					f_complete, base_col, FALSE, NULL, level, n, n, 0);
+					f_complete, base_col, false, NULL, level, n, n, 0);
 			if (f_vvv)  {
 				cout << "orthogonal_plane_invariant::init "
 						"after Gauss, rank = " << rk << endl;

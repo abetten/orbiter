@@ -18,7 +18,7 @@ product_action::product_action()
 {
 	A1 = NULL;
 	A2 = NULL;
-	f_use_projections = FALSE;
+	f_use_projections = false;
 	offset = 0;
 	degree = 0;
 	elt_size_in_int = 0;
@@ -114,11 +114,11 @@ long int product_action::compute_image(
 	if (f_use_projections) {
 		if (i < offset) {
 			if (i < A1->degree) {
-				j = A1->Group_element->element_image_of(i, Elt, FALSE);
+				j = A1->Group_element->element_image_of(i, Elt, false);
 				}
 			else {
 				i -= A1->degree;
-				j = A2->Group_element->element_image_of(i, Elt + A1->elt_size_in_int, FALSE);
+				j = A2->Group_element->element_image_of(i, Elt + A1->elt_size_in_int, false);
 				j += A1->degree;
 				}
 			}
@@ -126,8 +126,8 @@ long int product_action::compute_image(
 			i -= offset;
 			x = i / A2->degree;
 			y = i % A2->degree;
-			xx = A1->Group_element->element_image_of(x, Elt, FALSE);
-			yy = A2->Group_element->element_image_of(y, Elt + A1->elt_size_in_int, FALSE);
+			xx = A1->Group_element->element_image_of(x, Elt, false);
+			yy = A2->Group_element->element_image_of(y, Elt + A1->elt_size_in_int, false);
 			j = xx * A2->degree + yy;
 			j += offset;
 			}
@@ -135,8 +135,8 @@ long int product_action::compute_image(
 	else {
 		x = i / A2->degree;
 		y = i % A2->degree;
-		xx = A1->Group_element->element_image_of(x, Elt, FALSE);
-		yy = A2->Group_element->element_image_of(y, Elt + A1->elt_size_in_int, FALSE);
+		xx = A1->Group_element->element_image_of(x, Elt, false);
+		yy = A2->Group_element->element_image_of(y, Elt + A1->elt_size_in_int, false);
 		j = xx * A2->degree + yy;
 		}
 	if (f_v) {
@@ -157,12 +157,12 @@ int product_action::element_is_one(
 		actions::action *A, int *Elt, int verbose_level)
 {
 	if (!A1->Group_element->element_is_one(Elt, verbose_level)) {
-		return FALSE;
+		return false;
 		}
 	if (!A2->Group_element->element_is_one(Elt + A1->elt_size_in_int, verbose_level)) {
-		return FALSE;
+		return false;
 		}
-	return TRUE;
+	return true;
 }
 
 void product_action::element_unpack(

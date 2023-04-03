@@ -72,7 +72,7 @@ knarr::knarr()
 	six_choose_three_q = NULL;
 	six_choose_three_q_int = 0;
 
-	f_show = FALSE;
+	f_show = false;
 	dim_intersection = 0;
 
 	Basis_intersection = NULL;
@@ -168,7 +168,7 @@ void knarr::init(
 
 	W->init(F, verbose_level - 1);
 	P5->projective_space_init(5, F,
-		FALSE /* f_init_incidence_structure */, 
+		false /* f_init_incidence_structure */, 
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
 
 	if (f_v) {
@@ -548,7 +548,7 @@ void knarr::incidence_matrix(
 {
 	//int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	//int f_vvv = FALSE;
+	//int f_vvv = false;
 
 	int i, j, a, b, c;
 

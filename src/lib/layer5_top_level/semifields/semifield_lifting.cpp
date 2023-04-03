@@ -31,7 +31,7 @@ semifield_lifting::semifield_lifting()
 	cur_level = 0;
 	prev_level_nb_orbits = 0;
 
-	f_prefix = FALSE;
+	f_prefix = false;
 	//prefix = NULL;
 
 	Prev_stabilizer_gens = NULL;
@@ -310,7 +310,7 @@ void semifield_lifting::report(std::ostream &ost, int verbose_level)
 
 			SC->matrix_unrank(Pt[i], Mtx2);
 
-			int f_elements_exponential = FALSE;
+			int f_elements_exponential = false;
 
 			SC->matrix_unrank(L2->Pt[po], Mtx1);
 
@@ -733,10 +733,10 @@ void semifield_lifting::downstep(
 		}
 		data_structures::tally C;
 
-		C.init(Nb_orbits, prev_level_nb_orbits, FALSE, 0);
+		C.init(Nb_orbits, prev_level_nb_orbits, false, 0);
 		cout << "semifield_lifting::downstep "
 				"level " << level << " distribution of orbit lengths: ";
-		C.print(TRUE /* f_backwards */);
+		C.print(true /* f_backwards */);
 		FREE_int(Nb_orbits);
 	}
 	if (f_v) {
@@ -846,10 +846,10 @@ void semifield_lifting::compute_flag_orbits(
 			pt = Downstep_nodes[po].Candidates[pt_local];
 			len = S->orbit_len[so];
 			if (len == go_prev_int) {
-				f_long_orbit = TRUE;
+				f_long_orbit = true;
 			}
 			else {
-				f_long_orbit = FALSE;
+				f_long_orbit = false;
 			}
 			Flag_orbits[f].init(po, so,
 					pt_local, pt, len, f_long_orbit,
@@ -875,7 +875,7 @@ void semifield_lifting::compute_flag_orbits(
 			}
 
 			if (!f_long_orbit) {
-				if (FALSE/*M[j].go.is_one()*/) {
+				if (false/*M[j].go.is_one()*/) {
 					Flag_orbits[f].gens = NEW_OBJECT(groups::strong_generators);
 					Flag_orbits[f].gens->init_trivial_group(SC->A, 0);
 				}
@@ -935,11 +935,11 @@ void semifield_lifting::compute_flag_orbits(
 		}
 		data_structures::tally C;
 
-		C.init_lint(Go, nb_flag_orbits, FALSE, 0);
+		C.init_lint(Go, nb_flag_orbits, false, 0);
 		cout << "semifield_lifting::compute_flag_orbits "
 				"level " << level << " distribution of "
 						"stabilizer orders of flag orbits is: ";
-		C.print(TRUE /* f_backwards */);
+		C.print(true /* f_backwards */);
 		FREE_lint(Go);
 	}
 
@@ -1312,7 +1312,7 @@ void semifield_lifting::upstep_loop_over_down_set(
 			if (Flag_orbits[mo].fusion_elt) {
 				FREE_int(Flag_orbits[mo].fusion_elt);
 			}
-			Flag_orbits[mo].f_fusion_node = TRUE;
+			Flag_orbits[mo].f_fusion_node = true;
 			Flag_orbits[mo].fusion_with = f;
 			Flag_orbits[mo].fusion_elt = NEW_int(SC->A->elt_size_in_int);
 			SC->A->Group_element->element_invert(
@@ -1380,11 +1380,11 @@ void semifield_lifting::find_all_candidates(
 	if (f_v) {
 		data_structures::tally C;
 
-		C.init(Nb_candidates, prev_level_nb_orbits, FALSE, 0);
+		C.init(Nb_candidates, prev_level_nb_orbits, false, 0);
 		cout << "semifield_lifting::find_all_candidates "
 				"level " << level
 				<< " distribution of number of candidates: ";
-		C.print(TRUE /* f_backwards */);
+		C.print(true /* f_backwards */);
 	}
 
 	if (f_v) {
@@ -1550,9 +1550,9 @@ int semifield_lifting::trace_to_level_three(
 		cout << "semifield_lifting::trace_to_level_three "
 				"after trace_step_up" << endl;
 	}
-	if (ret == FALSE) {
+	if (ret == false) {
 		cout << "semifield_lifting::trace_to_level_three "
-				"trace_step_up return FALSE" << endl;
+				"trace_step_up return false" << endl;
 
 	}
 
@@ -1576,7 +1576,7 @@ int semifield_lifting::trace_step_up(
 	int f_vv = (verbose_level >= 1);
 	int fo, f0;
 	int i, j;
-	int ret = TRUE;
+	int ret = true;
 
 	if (f_v) {
 		cout << "semifield_lifting::trace_step_up po=" << po << " so=" << so << endl;
@@ -1654,8 +1654,8 @@ int semifield_lifting::trace_step_up(
 	}
 	if (!SC->Mtx->GFq->Linear_algebra->Gauss_int_with_given_pivots(
 		changed_basis,
-		FALSE /* f_special */,
-		TRUE /* f_complete */,
+		false /* f_special */,
+		true /* f_complete */,
 		SC->desired_pivots,
 		3 /* nb_pivots */,
 		3, //basis_sz  m
@@ -1663,11 +1663,11 @@ int semifield_lifting::trace_step_up(
 		verbose_level)) {
 		if (f_vv) {
 			cout << "semifield_lifting::trace_step_up "
-					"Gauss_int_with_given_pivots returns FALSE, "
+					"Gauss_int_with_given_pivots returns false, "
 					"pivot cannot be found" << endl;
 			Int_matrix_print(changed_basis, basis_sz, k2);
 		}
-		ret = FALSE;
+		ret = false;
 	}
 	else {
 		if (f_vv) {
@@ -2185,7 +2185,7 @@ void semifield_lifting::deep_search(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 2);
+	//int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "semifield_lifting::deep_search "
@@ -2333,9 +2333,9 @@ void semifield_lifting::print_stabilizer_orders()
 #endif
 	data_structures::tally C;
 
-	C.init_lint(Go, nb_orbits, FALSE, 0);
+	C.init_lint(Go, nb_orbits, false, 0);
 	cout << "distribution of stabilizer orders at level " << cur_level << " : ";
-	C.print(TRUE /* f_backwards */);
+	C.print(true /* f_backwards */);
 	//FREE_lint(Go);
 }
 
@@ -2352,7 +2352,7 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
-	int f_v4 = FALSE; //(verbose_level >= 3);
+	int f_v4 = false; //(verbose_level >= 3);
 	int po;
 	long int a1, a2, a3;
 	int cur_pivot_row;
@@ -2722,7 +2722,7 @@ int semifield_lifting::candidate_testing(
 		C_out->Set_size[u] = set_sz;
 
 		if (u && C_out->Set_size[u] == 0) {
-			return FALSE;
+			return false;
 		}
 
 	} // next u
@@ -2733,7 +2733,7 @@ int semifield_lifting::candidate_testing(
 		cout << "semifield_lifting::candidate_testing "
 				"done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void semifield_lifting::level_three_get_a1_a2_a3(
@@ -2888,7 +2888,7 @@ void semifield_lifting::read_level_info_file(int verbose_level)
 void semifield_lifting::save_flag_orbits(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 2);
+	//int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "semifield_lifting::save_flag_orbits "
@@ -2918,7 +2918,7 @@ void semifield_lifting::save_flag_orbits(int verbose_level)
 void semifield_lifting::read_flag_orbits(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 2);
+	//int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "semifield_lifting::read_flag_orbits "
@@ -2974,7 +2974,7 @@ void semifield_lifting::read_flag_orbits(int verbose_level)
 void semifield_lifting::save_stabilizers(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 2);
+	//int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "semifield_lifting::save_stabilizers "
@@ -3004,7 +3004,7 @@ void semifield_lifting::save_stabilizers(int verbose_level)
 void semifield_lifting::read_stabilizers(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 2);
+	//int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "semifield_lifting::read_stabilizers "

@@ -59,8 +59,9 @@ void expression_parser_domain::parse_and_evaluate(
 	const char *p = managed_variables.c_str();
 	char str[1000];
 
-	while (TRUE) {
-		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
+	while (true) {
+		if (!ST.s_scan_token_comma_separated(
+				&p, str, 0 /* verbose_level */)) {
 			break;
 		}
 		string var;
@@ -72,7 +73,7 @@ void expression_parser_domain::parse_and_evaluate(
 		}
 
 		tree->managed_variables.push_back(var);
-		tree->f_has_managed_variables = TRUE;
+		tree->f_has_managed_variables = true;
 
 	}
 
@@ -153,7 +154,8 @@ void expression_parser_domain::parse_and_evaluate(
 
 		nb_monomials = Poly->get_nb_monomials();
 
-		tree->split_by_monomials(Poly, Subtrees, verbose_level);
+		tree->split_by_monomials(
+				Poly, Subtrees, verbose_level);
 
 		if (f_v) {
 			for (i = 0; i < nb_monomials; i++) {
@@ -186,8 +188,9 @@ void expression_parser_domain::parse_and_evaluate(
 			//vector<string> symbols;
 			//vector<string> values;
 
-			while (TRUE) {
-				if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
+			while (true) {
+				if (!ST.s_scan_token_comma_separated(
+						&p, str, 0 /* verbose_level */)) {
 					break;
 				}
 				string assignment;
@@ -204,8 +207,8 @@ void expression_parser_domain::parse_and_evaluate(
 							"did not find '=' in variable assignment" << endl;
 					exit(1);
 				}
-				std::string symb = assignment.substr (0, found);
-				std::string val = assignment.substr (found + 1, len - found - 1);
+				std::string symb = assignment.substr(0, found);
+				std::string val = assignment.substr(found + 1, len - found - 1);
 
 
 
@@ -238,7 +241,8 @@ void expression_parser_domain::parse_and_evaluate(
 						"Monomial " << i << " : ";
 				if (Subtrees[i]) {
 					//Subtrees[i]->print_expression(cout);
-					a = Subtrees[i]->evaluate(symbol_table, F, verbose_level);
+					a = Subtrees[i]->evaluate(
+							symbol_table, F, verbose_level);
 					Values[i] = a;
 					cout << a << " * ";
 					Poly->print_monomial(cout, i);
@@ -290,8 +294,9 @@ void expression_parser_domain::parse_and_evaluate(
 			//vector<string> symbols;
 			//vector<string> values;
 
-			while (TRUE) {
-				if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
+			while (true) {
+				if (!ST.s_scan_token_comma_separated(
+						&p, str, 0 /* verbose_level */)) {
 					break;
 				}
 				string assignment;
@@ -370,7 +375,8 @@ void expression_parser_domain::evaluate(
 		exit(1);
 	}
 
-	if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
+	if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].type
+			!= orbiter_kernel_system::t_object) {
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}
@@ -603,7 +609,8 @@ void expression_parser_domain::evaluate_managed_formula(
 
 	int degree;
 	if (!F->is_homogeneous(degree, verbose_level - 3)) {
-		cout << "expression_parser_domain::evaluate_managed_formula not homogeneous" << endl;
+		cout << "expression_parser_domain::evaluate_managed_formula "
+				"not homogeneous" << endl;
 		exit(1);
 	}
 	if (f_v) {

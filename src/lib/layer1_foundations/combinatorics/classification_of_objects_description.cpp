@@ -20,10 +20,10 @@ namespace combinatorics {
 classification_of_objects_description::classification_of_objects_description()
 {
 
-	f_label = FALSE;
+	f_label = false;
 	//std::string label;
 
-	f_save_classification = FALSE;
+	f_save_classification = false;
 	//std::string save_prefix;
 
 #if 0
@@ -31,17 +31,17 @@ classification_of_objects_description::classification_of_objects_description()
 	//fixed_structure_order_list;
 #endif
 
-	f_max_TDO_depth = FALSE;
+	f_max_TDO_depth = false;
 	max_TDO_depth = 0;
 
-	f_classification_prefix = FALSE;
+	f_classification_prefix = false;
 	//std::string classification_prefix;
 
-	f_save_canonical_labeling = FALSE;
+	f_save_canonical_labeling = false;
 
-	f_save_ago = FALSE;
+	f_save_ago = false;
 
-	f_save_transversal = FALSE;
+	f_save_transversal = false;
 
 }
 
@@ -63,13 +63,13 @@ int classification_of_objects_description::read_arguments(
 		cout << "classification_of_objects_description::read_arguments, next argument is " << argv[i] << endl;
 
 		if (ST.stringcmp(argv[i], "-label") == 0) {
-			f_label = TRUE;
+			f_label = true;
 			label.assign(argv[++i]);
 			cout << "-label" << label << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-save_classification") == 0) {
-			f_save_classification = TRUE;
+			f_save_classification = true;
 			save_prefix.assign(argv[++i]);
 			cout << "-save_classification" << save_prefix << endl;
 		}
@@ -83,29 +83,29 @@ int classification_of_objects_description::read_arguments(
 #endif
 
 		else if (ST.stringcmp(argv[i], "-max_TDO_depth") == 0) {
-			f_max_TDO_depth = TRUE;
+			f_max_TDO_depth = true;
 			max_TDO_depth = ST.strtoi(argv[++i]);
 			cout << "-max_TDO_depth " << max_TDO_depth << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-classification_prefix") == 0) {
-			f_classification_prefix = TRUE;
+			f_classification_prefix = true;
 			classification_prefix.assign(argv[++i]);
 			cout << "-classification_prefix " << classification_prefix << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-save_canonical_labeling") == 0) {
-			f_save_canonical_labeling = TRUE;
+			f_save_canonical_labeling = true;
 			cout << "-save_canonical_labeling " << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-save_ago") == 0) {
-			f_save_ago = TRUE;
+			f_save_ago = true;
 			cout << "-save_ago " << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-save_transversal") == 0) {
-			f_save_transversal = TRUE;
+			f_save_transversal = true;
 			cout << "-save_transversal " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {

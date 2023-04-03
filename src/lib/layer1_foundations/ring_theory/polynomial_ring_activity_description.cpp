@@ -24,22 +24,22 @@ namespace ring_theory {
 
 polynomial_ring_activity_description::polynomial_ring_activity_description()
 {
-	f_cheat_sheet = FALSE;
+	f_cheat_sheet = false;
 
-	f_ideal = FALSE;
+	f_ideal = false;
 	//ideal_label;
 	//ideal_label_txt
 	//std::string ideal_point_set_label;
 
-	f_apply_transformation = FALSE;
+	f_apply_transformation = false;
 	//std::string apply_transformation_Eqn_in_label;
 	//std::string apply_transformation_vector_ge_label;
 
-	f_set_variable_names = FALSE;
+	f_set_variable_names = false;
 	//std::string set_variable_names_txt;
 	//std::string set_variable_names_tex;
 
-	f_print_equation = FALSE;
+	f_print_equation = false;
 	//std::string print_equation_input;
 
 }
@@ -65,13 +65,13 @@ int polynomial_ring_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-cheat_sheet") == 0) {
-			f_cheat_sheet = TRUE;
+			f_cheat_sheet = true;
 			if (f_v) {
 				cout << "-cheat_sheet " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-ideal") == 0) {
-			f_ideal = TRUE;
+			f_ideal = true;
 
 			ideal_label_txt.assign(argv[++i]);
 			ideal_label_tex.assign(argv[++i]);
@@ -86,7 +86,7 @@ int polynomial_ring_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-apply_transformation") == 0) {
-			f_apply_transformation = TRUE;
+			f_apply_transformation = true;
 			apply_transformation_Eqn_in_label.assign(argv[++i]);
 			apply_transformation_vector_ge_label.assign(argv[++i]);
 
@@ -98,7 +98,7 @@ int polynomial_ring_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-set_variable_names") == 0) {
-			f_set_variable_names = TRUE;
+			f_set_variable_names = true;
 			set_variable_names_txt.assign(argv[++i]);
 			set_variable_names_tex.assign(argv[++i]);
 
@@ -110,7 +110,7 @@ int polynomial_ring_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-print_equation") == 0) {
-			f_print_equation = TRUE;
+			f_print_equation = true;
 			print_equation_input.assign(argv[++i]);
 
 			if (f_v) {

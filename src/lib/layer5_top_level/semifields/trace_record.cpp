@@ -22,7 +22,7 @@ trace_record::trace_record()
 {
 	coset = 0;
 	trace_po = 0;
-	f_skip = FALSE;
+	f_skip = false;
 	solution_idx = -1;
 	nb_sol = -1;
 	go = -1;

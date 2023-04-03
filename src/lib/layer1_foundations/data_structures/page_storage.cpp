@@ -33,7 +33,7 @@ page_storage::page_storage()
 	next_free_entry = 0;
 	nb_free_entries = 0;
 
-	f_elt_print_function = FALSE;
+	f_elt_print_function = false;
 	elt_print = NULL;
 	elt_print_data = NULL;
 }
@@ -72,13 +72,13 @@ void page_storage::init(int entry_size,
 		cout << "page_storage::init "
 				"verbose_level=" << verbose_level << endl;
 		}
-	f_elt_print_function = FALSE;
+	f_elt_print_function = false;
 	
 	overall_length = 0;
 	next_free_entry = -1;
 	nb_free_entries = 0;
 	
-	//f_v = TRUE;
+	//f_v = true;
 	
 	page_storage::entry_size = entry_size;
 	if (entry_size < (int)sizeof(int)) {
@@ -90,7 +90,7 @@ void page_storage::init(int entry_size,
 		}
 
 	page_storage::page_length_log = page_length_log;
-	while (TRUE) {
+	while (true) {
 		page_length = 1L << page_storage::page_length_log;
 		page_size = page_length * page_storage::entry_size;
 
@@ -165,7 +165,7 @@ void page_storage::add_elt_print_function(
 		void (* elt_print)(void *p, void *data, std::ostream &ost),
 		void *elt_print_data)
 {
-	f_elt_print_function = TRUE;
+	f_elt_print_function = true;
 	page_storage::elt_print = elt_print;
 	page_storage::elt_print_data = elt_print_data;
 }
@@ -370,10 +370,10 @@ uchar *page_storage::s_i_and_allocation_bit(long int i, int &f_allocated)
 	int bit = page_idx & 7;
 	uchar mask = ((uchar) 1) << bit;
 	if (allocation_tables[page][word] & mask) {
-		f_allocated = TRUE;
+		f_allocated = true;
 		}
 	else
-		f_allocated = FALSE;
+		f_allocated = false;
 	//cout << "s_i(" << i << ") page=" << page
 	// << " page_idx=" << page_idx << endl;
 	return pages[page] + page_idx * entry_size;
@@ -549,7 +549,7 @@ void page_storage::check_free_list()
 	if (nb_free_entries == 0)
 		return;
 	nfe = next_free_entry;
-	while (TRUE) {
+	while (true) {
 		nb++;
 		p = s_i_and_allocation_bit(nfe, f_allocated);
 		if (f_allocated) {

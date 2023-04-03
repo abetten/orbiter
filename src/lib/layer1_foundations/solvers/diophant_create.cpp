@@ -73,7 +73,7 @@ void diophant_create::init(
 		P = NEW_OBJECT(geometry::projective_space);
 
 		P->projective_space_init(2, F,
-				TRUE /* f_init_incidence_structure */,
+				true /* f_init_incidence_structure */,
 				verbose_level);
 
 		P->Arc_in_projective_space->maximal_arc_by_diophant(
@@ -411,7 +411,7 @@ void diophant_create::init(
 					"coefficient matrix first" << endl;
 			exit(1);
 		}
-		D->f_has_sum = TRUE;
+		D->f_has_sum = true;
 		D->sum = Descr->has_sum;
 	}
 

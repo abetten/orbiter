@@ -137,8 +137,8 @@ void regular_ls_classify::init_and_run(
 
 	orbiter_kernel_system::os_interface Os;
 	int schreier_depth = Descr->target_size;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	int t0 = Os.os_ticks();
 
 	if (f_v) {
@@ -174,7 +174,7 @@ void regular_ls_classify::init_group(int verbose_level)
 				"creating symmetric group of degree " << Descr->m << endl;
 	}
 	A = NEW_OBJECT(actions::action);
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A->Known_groups->init_symmetric_group(
 			Descr->m /* degree */, f_no_base, 0 /* verbose_level - 2*/);
@@ -240,7 +240,7 @@ void regular_ls_classify::init_generator(
 				this /* void *data */,
 				verbose_level);
 
-	Poset->f_print_function = FALSE;
+	Poset->f_print_function = false;
 	Poset->print_function = regular_ls_classify_print_set;
 	Poset->print_function_data = (void *) this;
 
@@ -299,7 +299,7 @@ void regular_ls_classify::early_test_func(long int *S, int len,
 			row_sum[v1[a]]++;
 			for (b = a + 1; b < Descr->k; b++) {
 				p = Combi.ij2k(v1[a], v1[b], Descr->m);
-				pairs[p] = TRUE;
+				pairs[p] = true;
 			}
 		}
 		
@@ -314,7 +314,7 @@ void regular_ls_classify::early_test_func(long int *S, int len,
 	nb_good_candidates = 0;
 	
 	for (j = 0; j < nb_candidates; j++) {
-		f_OK = TRUE;
+		f_OK = true;
 
 		if (f_vv) {
 			cout << "Testing candidate " << j << " = "
@@ -332,13 +332,13 @@ void regular_ls_classify::early_test_func(long int *S, int len,
 		}
 		for (a = 0; a < Descr->k; a++) {
 			if (row_sum[v1[a]] == Descr->r) {
-				f_OK = FALSE;
+				f_OK = false;
 				break;
 			}
 			for (b = a + 1; b < Descr->k; b++) {
 				p = Combi.ij2k(v1[a], v1[b], Descr->m);
 				if (pairs[p]) {
-					f_OK = FALSE;
+					f_OK = false;
 					break;
 				}
 			}
@@ -389,7 +389,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	}
 
 	nb_needed = Descr->target_size - E->starter_size;
-	f_ruled_out = FALSE;
+	f_ruled_out = false;
 
 
 	//int_vec_copy(initial_pair_covering, pairs, m2);
@@ -411,7 +411,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 			row_sum[v1[h1]]++;
 			for (h2 = h1 + 1; h2 < Descr->k; h2++) {
 				p = Combi.ij2k(v1[h1], v1[h2], Descr->m);
-				pairs[p] = TRUE;
+				pairs[p] = true;
 			}
 		}
 	}
@@ -430,7 +430,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	Int_vec_mone(open_pair_idx, m2);
 
 	for (i = 0; i < m2; i++) {
-		if (pairs[i] == FALSE) {
+		if (pairs[i] == false) {
 			open_pairs[nb_open_pairs] = i;
 			open_pair_idx[i] = nb_open_pairs;
 			nb_open_pairs++;
@@ -467,7 +467,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 
 	Dio = NEW_OBJECT(solvers::diophant);
 	Dio->open(nb_rows, nb_cols, verbose_level - 1);
-	Dio->f_has_sum = TRUE;
+	Dio->f_has_sum = true;
 	Dio->sum = nb_needed;
 
 	for (i = 0; i < nb_open_rows; i++) {

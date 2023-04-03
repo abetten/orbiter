@@ -407,7 +407,7 @@ int geo_parameter::input(std::ifstream &aStream)
 	}
 	else {
 		cout << "geo_parameter::input str = " << str << endl;
-		return FALSE;
+		return false;
 	}
 #endif
 #ifdef SYSTEMWINDOWS
@@ -418,7 +418,7 @@ int geo_parameter::input(std::ifstream &aStream)
 #endif
 	cout << "geo_parameter::input neither SYSTEMUNIX "
 			"nor SYSTEMWINDOWS" << endl;
-	return FALSE;
+	return false;
 }
 
 int geo_parameter::input_mode_single(std::ifstream &aStream)
@@ -608,7 +608,7 @@ int geo_parameter::input_mode_single(std::ifstream &aStream)
 			"has a problem under windows" << endl;
 	exit(1);
 #endif
-	return TRUE;
+	return true;
 }
 
 int geo_parameter::input_mode_stack(
@@ -627,7 +627,7 @@ int geo_parameter::input_mode_stack(
 	}
 	aStream >> str;
 	if (str == "-1") {
-		return FALSE;
+		return false;
 	}
 	if (f_v) {
 		cout << "geo_parameter::input_mode_stack "
@@ -657,7 +657,7 @@ int geo_parameter::input_mode_stack(
 				"reading part" << endl;
 	}
 	part = NULL;
-	while (TRUE) {
+	while (true) {
 		aStream >> val;
 		if (val == -1) {
 			append_to_part(val);
@@ -677,7 +677,7 @@ int geo_parameter::input_mode_stack(
 		entries = NULL;
 	}
 	entries = NULL;
-	while (TRUE) {
+	while (true) {
 		aStream >> v1;
 		if (v1 == -1) {
 			break;
@@ -712,7 +712,7 @@ int geo_parameter::input_mode_stack(
 	if (f_v) {
 		cout << "geo_parameter::input_mode_stack done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void geo_parameter::init_tdo_scheme(
@@ -765,36 +765,36 @@ void geo_parameter::print_schemes(tdo_scheme_synthetic &G)
 {
 	cout << "geo_parameter::print_schemes" << endl;
 	cout << "decomposition " << label << ":" << endl;
-	G.print_scheme(LAMBDA_SCHEME, FALSE);
+	G.print_scheme(LAMBDA_SCHEME, false);
 	if (row_level >= 2) {
-		G.print_scheme(ROW_SCHEME, FALSE);
+		G.print_scheme(ROW_SCHEME, false);
 	}
 	if (col_level >= 2) {
-		G.print_scheme(COL_SCHEME, FALSE);
+		G.print_scheme(COL_SCHEME, false);
 	}
 	if (extra_row_level > 2) {
-		G.print_scheme(EXTRA_ROW_SCHEME, FALSE);
+		G.print_scheme(EXTRA_ROW_SCHEME, false);
 	}
 	if (extra_col_level > 2) {
-		G.print_scheme(EXTRA_COL_SCHEME, FALSE);
+		G.print_scheme(EXTRA_COL_SCHEME, false);
 	}
 }
 
 void geo_parameter::print_schemes_tex(tdo_scheme_synthetic &G)
 {
 	cout << "decomposition " << label << ":" << endl;
-	G.print_scheme_tex_fancy(cout, LAMBDA_SCHEME, TRUE, label);
+	G.print_scheme_tex_fancy(cout, LAMBDA_SCHEME, true, label);
 	if (row_level >= 2) {
-		G.print_scheme_tex_fancy(cout, ROW_SCHEME, TRUE, label);
+		G.print_scheme_tex_fancy(cout, ROW_SCHEME, true, label);
 	}
 	if (col_level >= 2) {
-		G.print_scheme_tex_fancy(cout, COL_SCHEME, TRUE, label);
+		G.print_scheme_tex_fancy(cout, COL_SCHEME, true, label);
 	}
 	if (extra_row_level > 2) {
-		G.print_scheme_tex_fancy(cout, EXTRA_ROW_SCHEME, TRUE, label);
+		G.print_scheme_tex_fancy(cout, EXTRA_ROW_SCHEME, true, label);
 	}
 	if (extra_col_level > 2) {
-		G.print_scheme_tex_fancy(cout, EXTRA_COL_SCHEME, TRUE, label);
+		G.print_scheme_tex_fancy(cout, EXTRA_COL_SCHEME, true, label);
 	}
 }
 
@@ -802,7 +802,7 @@ void geo_parameter::print_scheme_tex(
 		std::ostream &ost,
 		tdo_scheme_synthetic &G, int h)
 {
-	G.print_scheme_tex_fancy(ost, h, TRUE, label);
+	G.print_scheme_tex_fancy(ost, h, true, label);
 }
 
 void geo_parameter::print_C_source()
@@ -828,14 +828,14 @@ void geo_parameter::print_C_source()
 	cout << "int extra_row_level = " << extra_row_level << ";" << endl;
 	cout << "int extra_col_level = " << extra_col_level << ";" << endl;
 	cout << "int lambda_level = " << lambda_level << ";" << endl;
-	cout << "int f_has_lambda = TRUE;" << endl;
+	cout << "int f_has_lambda = true;" << endl;
 	cout << "int lambda_target[] = {1};" << endl;
 	cout << "int lambda_mode[] = {EQ};" << endl;
-	cout << "int f_has_mu = FALSE;" << endl;
+	cout << "int f_has_mu = false;" << endl;
 	cout << "int mu = 0;" << endl;
-	cout << "int f_girth = FALSE;" << endl;
+	cout << "int f_girth = false;" << endl;
 	cout << "int girth = 0;" << endl;
-	cout << "int f_starter = FALSE;" << endl;
+	cout << "int f_starter = false;" << endl;
 	cout << "int starter[] = {};" << endl;
 	cout << "int listofcases_table_depth = 0;" << endl;
 	cout << "int listofcases_table_length = 0;" << endl;

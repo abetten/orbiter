@@ -75,7 +75,7 @@ void packing_was_activity::perform_activity(int verbose_level)
 			cout << "packing_was_activity::perform_activity before PW->export_reduced_spread_orbits_csv" << endl;
 		}
 
-		int f_original_spread_numbers = TRUE;
+		int f_original_spread_numbers = true;
 
 		PW->export_reduced_spread_orbits_csv(Descr->export_reduced_spread_orbits_fname_base,
 				f_original_spread_numbers, verbose_level);
@@ -98,7 +98,7 @@ void packing_was_activity::perform_activity(int verbose_level)
 
 		PW->create_graph_on_mixed_orbits_and_save_to_file(
 				Descr->create_graph_on_mixed_orbits_orbit_lengths,
-				FALSE  /* f_has_user_data */, NULL /* long int *user_data */, 0 /* int user_data_size */,
+				false  /* f_has_user_data */, NULL /* long int *user_data */, 0 /* int user_data_size */,
 				verbose_level);
 
 		if (f_v) {

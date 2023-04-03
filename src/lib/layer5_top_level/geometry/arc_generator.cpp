@@ -168,7 +168,7 @@ void arc_generator::init(
 		Int_vec_zero(f_is_forbidden, PA->P->Subspaces->N_points);
 		for (i = 0; i < nb_forbidden_points; i++) {
 			a = forbidden_points[i];
-			f_is_forbidden[a] = TRUE;
+			f_is_forbidden[a] = true;
 			cout << "arc_generator::init point " << a << " is forbidden" << endl;
 		}
 	}
@@ -230,7 +230,7 @@ void arc_generator::prepare_generator(int verbose_level)
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(PA->A, PA->A, SG /* A->Strong_gens*/, verbose_level);
 
-	Poset->f_print_function = FALSE;
+	Poset->f_print_function = false;
 	Poset->print_function = arc_generator_print_arc;
 	Poset->print_function_data = this;
 
@@ -304,11 +304,11 @@ void arc_generator::compute_starter(int verbose_level)
 	}
 
 	int schreier_depth = 1000;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	int depth;
-	//int f_embedded = TRUE;
-	//int f_sideways = FALSE;
+	//int f_embedded = true;
+	//int f_sideways = false;
 
 
 #if 0
@@ -368,7 +368,7 @@ int arc_generator::test_nb_Eckardt_points(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = TRUE;
+	int ret = true;
 	geometry::geometry_global Gg;
 
 	if (f_v) {
@@ -385,7 +385,7 @@ int arc_generator::conic_test(
 		long int *S, int len, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = TRUE;
+	int ret = true;
 
 	if (f_v) {
 		cout << "arc_generator::conic_test" << endl;
@@ -423,11 +423,11 @@ void arc_generator::early_test_func(
 	for (i = 0; i < nb_candidates; i++) {
 		a = candidates[i];
 
-		f_survive = TRUE;
+		f_survive = true;
 
 		if (Descr->f_has_forbidden_point_set) {
 			if (f_is_forbidden[a]) {
-				f_survive = FALSE;
+				f_survive = false;
 			}
 		}
 
@@ -438,10 +438,10 @@ void arc_generator::early_test_func(
 				b = PA->P->Subspaces->Implementation->Lines_on_point[a * PA->P->Subspaces->r + j];
 				if (line_type[b] == Descr->d) {
 					if (Descr->f_affine && b < nb_affine_lines) {
-						f_survive = FALSE;
+						f_survive = false;
 					}
 					else if (!Descr->f_affine) {
-						f_survive = FALSE;
+						f_survive = false;
 					}
 					break;
 				}
@@ -449,15 +449,15 @@ void arc_generator::early_test_func(
 		}
 
 		if (f_survive && Descr->f_conic_test) {
-			if (conic_test(S, len, a, verbose_level) == FALSE) {
-				f_survive = FALSE;
+			if (conic_test(S, len, a, verbose_level) == false) {
+				f_survive = false;
 			}
 		}
 
 		if (f_survive && Descr->f_test_nb_Eckardt_points) {
 			if (test_nb_Eckardt_points(S, len, a,
-					Descr->nb_E, verbose_level) == FALSE) {
-				f_survive = FALSE;
+					Descr->nb_E, verbose_level) == false) {
+				f_survive = false;
 			}
 		}
 
@@ -484,8 +484,8 @@ void arc_generator::print(int len, long int *S)
 
 	data_structures::tally C;
 
-	C.init(line_type, PA->P->Subspaces->N_lines, FALSE, 0);
-	C.print_naked(TRUE);
+	C.init(line_type, PA->P->Subspaces->N_lines, false, 0);
+	C.print_naked(true);
 	cout << endl;
 
 	int *Coord;
@@ -649,7 +649,7 @@ void arc_generator::lifting_prepare_function_new(
 	}
 
 	nb_needed = Descr->target_size - starter_size;
-	f_ruled_out = FALSE;
+	f_ruled_out = false;
 
 
 
@@ -659,11 +659,11 @@ void arc_generator::lifting_prepare_function_new(
 
 	data_structures::tally C;
 
-	C.init(line_type, PA->P->Subspaces->N_lines, FALSE, 0);
+	C.init(line_type, PA->P->Subspaces->N_lines, false, 0);
 	if (f_v) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"line_type:" << endl;
-		C.print_naked(TRUE);
+		C.print_naked(true);
 		cout << endl;
 	}
 
@@ -845,19 +845,19 @@ void arc_generator::report(
 
 	{
 		ofstream f(fname);
-		int f_book = TRUE;
-		int f_title = TRUE;
+		int f_book = true;
+		int f_title = true;
 		string title, author, extra_praeamble;
 		char str[1000];
 
 
 		author.assign("Orbiter");
-		int f_toc = TRUE;
-		int f_landscape = FALSE;
-		int f_12pt = FALSE;
-		int f_enlarged_page = TRUE;
-		int f_pagenumbers = TRUE;
-		orbiter_kernel_system::latex_interface L;
+		int f_toc = true;
+		int f_landscape = false;
+		int f_12pt = false;
+		int f_enlarged_page = true;
+		int f_pagenumbers = true;
+		l1_interfaces::latex_interface L;
 
 		if (Descr->target_size == PA->q + 2) {
 			snprintf(str, sizeof(str), "Hyperovals over ${\\mathbb F}_{%d}$", PA->q);
@@ -951,16 +951,16 @@ void arc_generator::report_do_the_work(
 
 	data_structures::tally C_ago;
 
-	C_ago.init(Ago_int, Iso.Folding->Reps->count, FALSE, 0);
+	C_ago.init(Ago_int, Iso.Folding->Reps->count, false, 0);
 	cout << "Classification by ago:" << endl;
-	C_ago.print(FALSE /*f_backwards*/);
+	C_ago.print(false /*f_backwards*/);
 
 
 
 	ost << "\\chapter{Invariants}" << endl << endl;
 
 	ost << "Classification by automorphism group order: ";
-	C_ago.print_naked_tex(ost, FALSE /*f_backwards*/);
+	C_ago.print_naked_tex(ost, false /*f_backwards*/);
 	ost << "\\\\" << endl;
 
 	ost << "\\begin{center}" << endl;
@@ -1133,11 +1133,11 @@ void arc_generator::report_do_the_work(
 
 		data_structures::tally C_ol;
 
-		C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
+		C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 
 		ost << "Orbit lengths: ";
 		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
-		C_ol.print_naked_tex(ost, FALSE /*f_backwards*/);
+		C_ol.print_naked_tex(ost, false /*f_backwards*/);
 		ost << " \\\\" << endl;
 	
 		tt = (Descr->target_size + 3) / 4;

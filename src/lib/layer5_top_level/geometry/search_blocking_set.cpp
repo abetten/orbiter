@@ -37,8 +37,8 @@ search_blocking_set::search_blocking_set()
 	
 
 	nb_solutions = 0;
-	f_find_only_one = FALSE;
-	f_blocking_set_size_desired = FALSE;
+	f_find_only_one = false;
+	f_blocking_set_size_desired = false;
 	blocking_set_size_desired = 0;
 
 	max_search_depth = 0;
@@ -154,7 +154,7 @@ void search_blocking_set::find_partial_blocking_sets(
 		exit(1);
 		}
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = Inc->nb_rows;
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
@@ -178,17 +178,17 @@ void search_blocking_set::find_partial_blocking_sets(
 		//check_mindist_incremental, 
 		//this /* candidate_check_data */);
 
-	//gen->f_its_OK_to_not_have_an_early_test_func = TRUE;
+	//gen->f_its_OK_to_not_have_an_early_test_func = true;
 	
 #if 0
-	gen->f_print_function = TRUE;
+	gen->f_print_function = true;
 	gen->print_function = print_set;
 	gen->print_function_data = this;
 #endif	
 
 	int schreier_depth = Inc->nb_rows;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	
 	
 	if (f_v) {
@@ -222,7 +222,7 @@ int search_blocking_set::test_level(int depth, int verbose_level)
 				<< " orbits on partial blocking sets "
 				"of size " << depth << endl;
 		}
-	f_OK = FALSE;
+	f_OK = false;
 	for (h = 0; h < nb_orbits; h++) {
 		gen->get_node(f + h)->store_set_to(gen, depth - 1, blocking_set);
 		
@@ -249,9 +249,9 @@ int search_blocking_set::test_level(int depth, int verbose_level)
 			}
 		}
 	if (f_OK) {
-		return TRUE;
+		return true;
 		}
-	return FALSE;
+	return false;
 }
 
 int search_blocking_set::test_blocking_set(
@@ -261,7 +261,7 @@ int search_blocking_set::test_blocking_set(
 // tests if Line_intersections[j] is greater than zero 
 // but less than Inc->nb_points_on_line[j]  for all j
 {
-	int f_OK = TRUE;
+	int f_OK = true;
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a;
 	
@@ -289,23 +289,23 @@ int search_blocking_set::test_blocking_set(
 	if (f_v) {
 		data_structures::tally C;
 
-		C.init(sz, Inc->nb_cols, FALSE, 0);
+		C.init(sz, Inc->nb_cols, false, 0);
 
 		cout << "the line type is:";
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 		}
 	
 	for (j = 0; j < Inc->nb_cols; j++) {
 		a = Line_intersections[j].k;
 		if (a == 0) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				cout << "not OK, line " << j << " is disjoint" << endl;
 				}
 			break;
 			}
 		if (a >= Inc->nb_points_on_line[j]) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				cout << "not OK, line " << j
 						<< " is completely contained" << endl;
@@ -322,7 +322,7 @@ int search_blocking_set::test_blocking_set(
 				}
 			}
 		if (a == Inc->nb_lines_on_point[i]) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				cout << "not OK, point S[" << h << "]=" << i
 						<< " is not on a 1-line" << endl;
@@ -337,7 +337,7 @@ done:
 int search_blocking_set::test_blocking_set_upper_bound_only(
 		int len, long int *S, int verbose_level)
 {
-	int f_OK = TRUE;
+	int f_OK = true;
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a;
 	
@@ -368,16 +368,16 @@ int search_blocking_set::test_blocking_set_upper_bound_only(
 	if (f_v) {
 		data_structures::tally C;
 
-		C.init(sz, Inc->nb_cols, FALSE, 0);
+		C.init(sz, Inc->nb_cols, false, 0);
 
 		cout << "the line type is:";
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 		}
 	
 	for (j = 0; j < Inc->nb_cols; j++) {
 		a = Line_intersections[j].k;
 		if (a >= Inc->nb_points_on_line[j]) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				cout << "not OK, line " << j
 						<< " is completely contained" << endl;
@@ -394,7 +394,7 @@ int search_blocking_set::test_blocking_set_upper_bound_only(
 				}
 			}
 		if (a == Inc->nb_lines_on_point[i]) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_v) {
 				cout << "not OK, point S[" << h << "]=" << i
 						<< " is not on a 1-line" << endl;
@@ -435,10 +435,10 @@ void search_blocking_set::search_for_blocking_set(
 	nb_solutions = 0;
 	
 	if (f_all) {
-		f_find_only_one = FALSE;
+		f_find_only_one = false;
 		}
 	else {
-		f_find_only_one = TRUE;
+		f_find_only_one = true;
 		}
 
 	f = gen->first_node_at_level(level);
@@ -532,7 +532,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 				cout << "we backtrack since we reached the "
 						"desired size" << endl;
 				}
-			return TRUE;
+			return true;
 			}
 		}
 
@@ -541,11 +541,11 @@ int search_blocking_set::recursive_search_for_blocking_set(
 		}
 	data_structures::tally C;
 
-	C.init(sz, Inc->nb_cols, FALSE, 0);
+	C.init(sz, Inc->nb_cols, false, 0);
 
 	if (f_v) {
 		cout << "the current line type is:";
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 		}
 	for (j = 0; j < Inc->nb_cols; j++) {
 		if (sz[j] == Inc->nb_points_on_line[j]) {
@@ -554,7 +554,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 				cout << "we backtrack since line " << j
 						<< " is contained in the blocking set" << endl;
 				}
-			return TRUE;
+			return true;
 			}
 		}
 
@@ -566,7 +566,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 				<< starter_level + level << " : ";
 		Lint_vec_print(cout, blocking_set, starter_level + level);
 		cout << " line type = ";
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 		cout << " : solution no " << nb_solutions + 1;
 		cout << " : ";
 		for (i = 0; i < level; i++) {
@@ -587,10 +587,10 @@ int search_blocking_set::recursive_search_for_blocking_set(
 		nb_solutions++;
 		
 		if (f_find_only_one) {
-			return FALSE;
+			return false;
 			}
 		else {
-			return TRUE;
+			return true;
 			}
 		}
 	else {
@@ -638,7 +638,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 		
 		if (!recursive_search_for_blocking_set(input_no,
 				starter_level, level + 1, verbose_level)) {
-			return FALSE;
+			return false;
 			}
 		else {
 			active_set->k = sz_active_set[level + 1];
@@ -648,7 +648,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 		restore_line_intersection_size(level);
 		
 		}
-	return TRUE;
+	return true;
 }
 
 void search_blocking_set::save_line_intersection_size(int level)
@@ -675,7 +675,7 @@ int callback_check_partial_blocking_set(int len, int *S,
 		void *data, int verbose_level)
 {
 	search_blocking_set *SBS = (search_blocking_set *) data;
-	int f_OK = TRUE;
+	int f_OK = true;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -685,7 +685,7 @@ int callback_check_partial_blocking_set(int len, int *S,
 		}
 
 	if (len && S[len - 1] >= SBS->Inc->nb_rows) {
-		return FALSE;
+		return false;
 		}
 
 	//cout << "before SBS->test_blocking_set_upper_bound_only" << endl;
@@ -697,10 +697,10 @@ int callback_check_partial_blocking_set(int len, int *S,
 		if (f_v) {
 			cout << "OK" << endl;
 			}
-		return TRUE;
+		return true;
 		}
 	else {
-		return FALSE;
+		return false;
 		}
 }
 #endif

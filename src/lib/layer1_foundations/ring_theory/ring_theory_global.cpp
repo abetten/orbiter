@@ -1033,17 +1033,17 @@ void ring_theory_global::mult_polynomials(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -1110,17 +1110,17 @@ void ring_theory_global::polynomial_division_with_report(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -1185,17 +1185,17 @@ void ring_theory_global::polynomial_division_from_file_with_report(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -1267,17 +1267,17 @@ void ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -1526,7 +1526,7 @@ void ring_theory_global::compute_nth_roots_as_polynomials(
 	}
 
 #if 0
-	Fp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level - 1);
+	Fp.finite_field_init(p, false /* f_without_tables */, verbose_level - 1);
 
 	algebra_global Algebra;
 	unipoly_domain FpX(&Fp);
@@ -1819,7 +1819,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 	cnt = 0;
 
 	Combi.int_vec_first_regular_word(v, d, F->q);
-	while (TRUE) {
+	while (true) {
 		if (f_vv) {
 			cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
@@ -1988,7 +1988,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 
 	cnt = 0;
 	Combi.int_vec_first_regular_word(v, d, F->q);
-	while (TRUE) {
+	while (true) {
 		if (f_vv) {
 			cout << "ring_theory_global::count_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
@@ -2122,19 +2122,19 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 			geometry::geometry_global GG;
 			long int rk;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2242,8 +2242,8 @@ char *ring_theory_global::search_for_primitive_polynomial_of_given_degree(
 		cout << "ring_theory_global::search_for_primitive_polynomial_of_given_degree" << endl;
 	}
 	Fp.finite_field_init_small_order(p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0 /*verbose_level*/);
 	unipoly_domain FX(&Fp);
 
@@ -2291,7 +2291,7 @@ void ring_theory_global::search_for_primitive_polynomials(
 	number_theory::number_theory_domain NT;
 
 
-	orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = FALSE;
+	orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = false;
 
 
 	if (f_v) {
@@ -2314,8 +2314,8 @@ void ring_theory_global::search_for_primitive_polynomials(
 		{
 			field_theory::finite_field Fq;
 			Fq.finite_field_init_small_order(q,
-					FALSE /* f_without_tables */,
-					FALSE /* f_compute_related_fields */,
+					false /* f_without_tables */,
+					false /* f_compute_related_fields */,
 					0 /*verbose_level*/);
 			unipoly_domain FX(&Fq);
 
@@ -2379,19 +2379,19 @@ void ring_theory_global::factor_cyclotomic(
 
 	if (f_poly) {
 		Fq.init_override_polynomial_small_order(q, poly,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				verbose_level - 1);
 	}
 	else {
 		Fq.finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				verbose_level - 2);
 	}
 	FQ.finite_field_init_small_order(Q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			verbose_level - 2);
 
 	FQ.compute_subfields(verbose_level);
@@ -2477,7 +2477,7 @@ void ring_theory_global::factor_cyclotomic(
 			continue;
 		C.create(c, __FILE__, __LINE__);
 		N.create(n, __FILE__, __LINE__);
-		D.extended_gcd(C, N, G, U, V, FALSE);
+		D.extended_gcd(C, N, G, U, V, false);
 		cv = U.as_int();
 		ccv= c * cv;
 		cout << c << " : " << cv << " : ";
@@ -2605,7 +2605,7 @@ void finite_field::do_ideal(int n,
 		cout << "finite_field::do_ideal before HPD->init" << endl;
 	}
 	HPD->init(this, n + 1, degree,
-		FALSE /* f_init_incidence_structure */,
+		false /* f_init_incidence_structure */,
 		Monomial_ordering_type,
 		verbose_level - 2);
 	if (f_v) {

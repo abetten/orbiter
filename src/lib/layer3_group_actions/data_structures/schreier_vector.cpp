@@ -20,7 +20,7 @@ schreier_vector::schreier_vector()
 	nb_gen = 0;
 	number_of_orbits = -1;
 	sv = NULL;
-	f_has_local_generators = FALSE;
+	f_has_local_generators = false;
 	local_gens = NULL;
 }
 
@@ -54,7 +54,7 @@ void schreier_vector::init(
 	else {
 		number_of_orbits = -1;
 	}
-	f_has_local_generators = FALSE;
+	f_has_local_generators = false;
 	if (f_v) {
 		cout << "schreier_vector::init done" << endl;
 	}
@@ -72,7 +72,7 @@ void schreier_vector::init_local_generators(
 	}
 
 	gens->copy(local_gens, verbose_level - 2);
-	f_has_local_generators = TRUE;
+	f_has_local_generators = true;
 
 	if (f_v) {
 		cout << "schreier_vector::init_local_generators done" << endl;
@@ -298,10 +298,10 @@ void schreier_vector::relabel_points(
 		cout << "schreier_vector::relabel_points" << endl;
 	}
 	if (nb_gen == 0) {
-		f_trivial_group = TRUE;
+		f_trivial_group = true;
 	}
 	else {
-		f_trivial_group = FALSE;
+		f_trivial_group = false;
 	}
 #if 0
 	if (!f_compact) {
@@ -326,7 +326,7 @@ void schreier_vector::relabel_points(
 			pre = AF->preimage(pt, 0 /*verbose_level - 3*/);
 			q = AF->project_onto_Gauss_reduced_vector(
 					pre, 0 /*verbose_level - 2*/);
-			if (FALSE) {
+			if (false) {
 				cout << "i=" << i << " pt=" << pt
 						<< " pre=" << pre << " q=" << q << endl;
 			}
@@ -402,16 +402,16 @@ void schreier_vector::relabel_points(
 	}
 	for (i = 0; i < n; i++) {
 		pt = pts[i];
-		if (FALSE) {
+		if (false) {
 			cout << "i=" << i << " pt=" << pt << endl;
 		}
 		pre = AF->preimage(pt, 0/*verbose_level - 3*/);
-		if (FALSE) {
+		if (false) {
 			cout << "pre=" << pre << endl;
 		}
 		q = AF->project_onto_Gauss_reduced_vector(
 				pre, 0 /*verbose_level - 2*/);
-		if (FALSE) {
+		if (false) {
 			if (Sorting.int_vec_search(old_orbit_reps,
 					nb_old_orbit_reps, pt, idx)) {
 				cout << "i=" << i << " pt=" << pt
@@ -591,7 +591,7 @@ void schreier_vector::orbit_stats(
 		}
 	for (i = 0; i < n; i++) {
 		Sorting.schreier_vector_determine_depth_recursion(n,
-				pts, prev, FALSE, NULL, depth, ancestor, i);
+				pts, prev, false, NULL, depth, ancestor, i);
 		}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_stats "
@@ -716,7 +716,7 @@ void schreier_vector::orbit_of_point(
 	}
 	for (i = 0; i < n; i++) {
 		Sorting.schreier_vector_determine_depth_recursion(n,
-				pts, prev, FALSE, NULL, depth, ancestor, i);
+				pts, prev, false, NULL, depth, ancestor, i);
 	}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
@@ -787,7 +787,7 @@ void schreier_vector::orbit_of_point(
 void schreier_vector::init_from_schreier(groups::schreier *S,
 	int f_trivial_group, int verbose_level)
 // allocated and creates array sv[size] using NEW_int
-// where size is n + 1 if  f_trivial_group is TRUE
+// where size is n + 1 if  f_trivial_group is true
 // and size is 3 * n + 1 otherwise
 // Here, n is the combined size of all orbits counted by nb_orbits
 // sv[0] is equal to n
@@ -873,7 +873,7 @@ void schreier_vector::init_shallow_schreier_forest(groups::schreier *S,
 		label = prev + n;
 		Int_vec_copy(point_list, svec + 1, n);
 
-		f_has_local_generators = TRUE;
+		f_has_local_generators = true;
 		local_gens = NEW_OBJECT(vector_ge);
 		local_gens->init(S->A, verbose_level - 2);
 		fst_gen_idx = 0;
@@ -1017,7 +1017,7 @@ void schreier_vector::export_tree_as_layered_graph(
 			max_depth = MAX(max_depth, orbit_depth[j]);
 		}
 
-		if (FALSE) {
+		if (false) {
 			cout << "j : orbit_elts[j] : orbit_prev[j] : orbit_depth[j]" << endl;
 			for (j = 0; j < len; j++) {
 				cout << j << " : " << orbit_elts[j] << " : "
@@ -1039,7 +1039,7 @@ void schreier_vector::export_tree_as_layered_graph(
 
 
 	//classify C;
-	//C.init(depth, len, FALSE, 0);
+	//C.init(depth, len, false, 0);
 	Nb = NEW_int(nb_layers);
 	Nb1 = NEW_int(nb_layers);
 	Int_vec_zero(Nb, nb_layers);
@@ -1195,7 +1195,7 @@ void schreier_vector::trace_back(int pt, int &depth)
 		depth = 1;
 	}
 	depth = 1;
-	while (TRUE) {
+	while (true) {
 		if (!Sorting.int_vec_search(points, n, pt, pos)) {
 			cout << "schreier_vector::trace_back "
 					"could not find point" << endl;

@@ -103,7 +103,7 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 		if (/*S->get_num_points() != total_points_in_old_forest
 				|| */ S->nb_orbits != sch.nb_orbits) {
 			FREE_OBJECT(S);
-			if (TRUE) {
+			if (true) {
 				cout << "schreier::shallow_tree_generators_ai reverting to previous schreier" << endl;
 			}
 			S = previous_schreier;

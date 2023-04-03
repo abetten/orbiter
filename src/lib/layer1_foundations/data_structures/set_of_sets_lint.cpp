@@ -97,7 +97,7 @@ void set_of_sets_lint::init_basic(long int underlying_set_size,
 		}
 	for (i = 0; i < nb_sets; i++) {
 		Set_size[i] = Sz[i];
-		if (FALSE /*f_v*/) {
+		if (false /*f_v*/) {
 			cout << "set_of_sets::init_basic allocating set " << i
 					<< " of size " << Sz[i] << endl;
 			}

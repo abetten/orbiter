@@ -47,7 +47,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_colore
 
 	A = create_automorphism_group_and_canonical_labeling_of_colored_graph(
 		CG->nb_points,
-		TRUE /* f_bitvec */, CG->Bitvec, NULL /* int  *Adj */,
+		true /* f_bitvec */, CG->Bitvec, NULL /* int  *Adj */,
 		CG->point_color,
 		labeling,
 		verbose_level);
@@ -75,7 +75,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 
 	A = create_automorphism_group_and_canonical_labeling_of_colored_graph(
 		CG->nb_points,
-		TRUE /* f_bitvec */, CG->Bitvec, NULL /* int  *Adj */,
+		true /* f_bitvec */, CG->Bitvec, NULL /* int  *Adj */,
 		CG->point_color,
 		labeling,
 		verbose_level);
@@ -111,7 +111,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 
 	data_structures::tally C;
 
-	C.init(vertex_colors, n, FALSE, 0);
+	C.init(vertex_colors, n, false, 0);
 
 
 	if (f_v) {
@@ -136,11 +136,11 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 	nb_edges = 0;
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
-			f_on = FALSE;
+			f_on = false;
 			k = Combi.ij2k(i, j, n);
 			if (f_bitvec) {
 				if (Bitvec->s_i(k)) {
-					f_on = TRUE;
+					f_on = true;
 				}
 			}
 			else {
@@ -199,7 +199,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 #endif
 
 	A = create_automorphism_group_of_graph_with_partition_and_labeling(
-			n1, TRUE, Adj1, NULL,
+			n1, true, Adj1, NULL,
 			nb_parts, parts, labeling, verbose_level);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_"
@@ -228,7 +228,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_bitvec" << endl;
 	}
 	A = create_automorphism_group_of_graph_with_partition_and_labeling(
-			n, TRUE, Bitvec, NULL,
+			n, true, Bitvec, NULL,
 			1, parts, labeling, verbose_level);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_bitvec done" << endl;
@@ -251,7 +251,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 	int f_vv = (verbose_level >= 2);
 	int *partitions;
 	int i, u, a;
-	nauty_interface Nau;
+	layer1_foundations::l1_interfaces::nauty_interface Nau;
 	data_structures::nauty_output *NO;
 
 
@@ -312,7 +312,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 
 
 	if (f_v) {
-		if (TRUE /*(input_no % 500) == 0*/) {
+		if (true /*(input_no % 500) == 0*/) {
 			cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 					"partition_and_labeling: "
 					"The group order is = " << *NO->Ago << " = ";
@@ -397,7 +397,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph(
 
 	int *partition;
 	int i;
-	nauty_interface Nau;
+	layer1_foundations::l1_interfaces::nauty_interface Nau;
 	data_structures::nauty_output *NO;
 
 
@@ -484,7 +484,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 	int *partition;
 	//longinteger_object Ago;
 	int i;
-	nauty_interface Nau;
+	layer1_foundations::l1_interfaces::nauty_interface Nau;
 	data_structures::nauty_output *NO;
 
 
@@ -807,7 +807,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 		Transversal_length, Ago);
 
 	if (f_v) {
-		if (TRUE /*(input_no % 500) == 0*/) {
+		if (true /*(input_no % 500) == 0*/) {
 			cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure_with_partition: "
 					"The group order is = " << Ago << endl;
 			}
@@ -853,7 +853,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 	Ago.assign_to(ago);
 	//ago.create(Ago, __FILE__, __LINE__);
 	A->init_permutation_group_from_generators(m + n,
-		TRUE, ago,
+		true, ago,
 		Aut_counter, Aut,
 		Base_length, Base_lint,
 		verbose_level - 2);
@@ -884,8 +884,8 @@ void nauty_interface_with_group::test_self_dual_self_polar(int input_no,
 	int *Mtx, *Y;
 
 	if (m != n) {
-		f_self_dual = FALSE;
-		f_self_polar = FALSE;
+		f_self_dual = false;
+		f_self_polar = false;
 		return;
 		}
 	M = 2 * m;
@@ -944,7 +944,7 @@ void nauty_interface_with_group::do_self_dual_self_polar(int input_no,
 	//n = # cols
 
 	if (ODD(m)) {
-		f_self_dual = f_self_polar = FALSE;
+		f_self_dual = f_self_polar = false;
 		return;
 		}
 	Aut = NEW_int((m+n) * (m+n));
@@ -1016,14 +1016,14 @@ void nauty_interface_with_group::do_self_dual_self_polar(int input_no,
 			aut[h * m + i] = Aut[h * (m + n) + i];
 			}
 		}
-	f_self_dual = FALSE;
-	f_self_polar = FALSE;
+	f_self_dual = false;
+	f_self_polar = false;
 	for (h = 0; h < Aut_counter; h++) {
 		p_aut = aut + h * m;
 
 		a = p_aut[0];
 		if (a >= m_half ) {
-			f_self_dual = TRUE;
+			f_self_dual = true;
 			if (f_v) {
 				cout << "no " << input_no << " is self dual" << endl;
 				}
@@ -1062,7 +1062,7 @@ void nauty_interface_with_group::do_self_dual_self_polar(int input_no,
 
 	//ago.create(Ago, __FILE__, __LINE__);
 	A.init_permutation_group_from_generators(m + n,
-		TRUE, ago,
+		true, ago,
 		Aut_counter, Aut,
 		Base_length, Base_lint,
 		verbose_level);
@@ -1102,7 +1102,7 @@ void nauty_interface_with_group::do_self_dual_self_polar(int input_no,
 				cout << "found a polarity:" << endl;
 				A.element_print(Elt, cout);
 				cout << endl;
-				f_self_polar = TRUE;
+				f_self_polar = true;
 				break;
 				}
 			}
@@ -1147,15 +1147,15 @@ void nauty_interface_with_group::add_configuration_graph(ofstream &g,
 	Inc.init_by_incidences(m, n, nb_inc, X, verbose_level);
 	joining_table = NEW_int(m * m);
 	for (i = 0; i < m * m; i++) {
-		joining_table[i] = FALSE;
+		joining_table[i] = false;
 		}
 	nb_joined_pairs = 0;
 	for (i = 0; i < m; i++) {
 		for (j = i + 1; j < m; j++) {
 			for (h = 0; h < n; h++) {
 				if (Inc.get_ij(i, h) && Inc.get_ij(j, h)) {
-					joining_table[i * m + j] = TRUE;
-					joining_table[j * m + i] = TRUE;
+					joining_table[i * m + j] = true;
+					joining_table[j * m + i] = true;
 					nb_joined_pairs++;
 					}
 				}
@@ -1175,7 +1175,7 @@ void nauty_interface_with_group::add_configuration_graph(ofstream &g,
 	h = 0;
 	for (i = 0; i < m; i++) {
 		for (j = i + 1; j < m; j++) {
-			if (joining_table[i * m + j] == FALSE) {
+			if (joining_table[i * m + j] == false) {
 				M1[i * n1 + n + h] = 1;
 				M1[j * n1 + n + h] = 1;
 				h++;

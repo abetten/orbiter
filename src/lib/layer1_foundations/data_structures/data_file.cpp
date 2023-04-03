@@ -28,7 +28,7 @@ data_file::data_file()
 	casenumbers = NULL;
 	Ago_ascii = NULL;
 	Aut_ascii = NULL;
-	f_has_candidates = FALSE;
+	f_has_candidates = false;
 	nb_candidates = NULL;
 	candidates = NULL;
 }
@@ -105,7 +105,7 @@ void data_file::read_candidates(
 	{
 	ifstream fp(candidates_fname);
 	cnt = 0;
-	while (TRUE) {
+	while (true) {
 		fp >> a;
 		if (a == -1) {
 			break;
@@ -135,7 +135,7 @@ void data_file::read_candidates(
 		exit(1);
 		}
 	}
-	f_has_candidates = TRUE;
+	f_has_candidates = true;
 	if (f_v) {
 		cout << "data_file::read_candidates finished" << endl;
 		}	

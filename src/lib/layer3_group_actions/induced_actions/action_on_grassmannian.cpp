@@ -25,7 +25,7 @@ action_on_grassmannian::action_on_grassmannian()
 	M1 = NULL;
 	M2 = NULL;
 
-	f_embedding = FALSE;
+	f_embedding = false;
 	big_n = 0;
 	GE = NULL;
 	subspace_basis = NULL;
@@ -34,7 +34,7 @@ action_on_grassmannian::action_on_grassmannian()
 	//ring_theory::longinteger_object degree;
 	max_string_length = 0;
 
-	f_has_print_function = FALSE;
+	f_has_print_function = false;
 	print_function = NULL;
 	print_function_data = NULL;
 }
@@ -42,7 +42,7 @@ action_on_grassmannian::action_on_grassmannian()
 
 action_on_grassmannian::~action_on_grassmannian()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (M1) {
 		if (f_v) {
@@ -152,7 +152,7 @@ void action_on_grassmannian::add_print_function(
 	if (f_v) {
 		cout << "action_on_grassmannian::add_print_function" << endl;
 	}
-	action_on_grassmannian::f_has_print_function = TRUE;
+	action_on_grassmannian::f_has_print_function = true;
 	action_on_grassmannian::print_function = print_function;
 	action_on_grassmannian::print_function_data = print_function_data;
 }
@@ -172,7 +172,7 @@ void action_on_grassmannian::init_embedding(
 				n, big_n, big_n, F->log10_of_q);
 		}
 	action_on_grassmannian::big_n = big_n;
-	f_embedding = TRUE;
+	f_embedding = true;
 	GE = NEW_OBJECT(geometry::grassmann_embedded);
 	GE->init(big_n, n, G, ambient_space, verbose_level);
 	subspace_basis = NEW_int(n * big_n);
@@ -359,7 +359,7 @@ long int action_on_grassmannian::compute_image_int_embedded(
 	if (M->f_semilinear) {
 		f = Elt[big_n * big_n];
 		if (f_v) {
-			cout << "f_semilinear is TRUE, f=" << f << endl;
+			cout << "f_semilinear is true, f=" << f << endl;
 			}
 		F->vector_frobenius_power_in_place(subspace_basis2, k * big_n, f);
 		}
@@ -388,7 +388,7 @@ void action_on_grassmannian::print_point(long int a, std::ostream &ost)
 	print_integer_matrix_width(ost, G->M,
 			G->k, G->n, G->n, 2 /*M->GFq->log10_of_q*/);
 #else
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	ost << "\\left[" << endl;
 	Li.print_integer_matrix_tex(ost,

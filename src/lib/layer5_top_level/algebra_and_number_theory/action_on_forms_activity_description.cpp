@@ -21,16 +21,16 @@ namespace apps_algebra {
 action_on_forms_activity_description::action_on_forms_activity_description()
 {
 
-	f_algebraic_normal_form = FALSE;
+	f_algebraic_normal_form = false;
 	//std::string algebraic_normal_form_input;
 
-	f_orbits_on_functions = FALSE;
+	f_orbits_on_functions = false;
 	//std::string orbits_on_functions_input;
 
-	f_associated_set_in_plane = FALSE;
+	f_associated_set_in_plane = false;
 	//std::string associated_set_in_plane_input;
 
-	f_differential_uniformity = FALSE;
+	f_differential_uniformity = false;
 	//std::string differential_uniformity_input;
 
 
@@ -56,22 +56,22 @@ int action_on_forms_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-algebraic_normal_form") == 0) {
-			f_algebraic_normal_form = TRUE;
+			f_algebraic_normal_form = true;
 			algebraic_normal_form_input.assign(argv[++i]);
 			cout << "-algebraic_normal_form " << algebraic_normal_form_input << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-orbits_on_functions") == 0) {
-			f_orbits_on_functions = TRUE;
+			f_orbits_on_functions = true;
 			orbits_on_functions_input.assign(argv[++i]);
 			cout << "-orbits_on_functions " << orbits_on_functions_input << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-associated_set_in_plane") == 0) {
-			f_associated_set_in_plane = TRUE;
+			f_associated_set_in_plane = true;
 			associated_set_in_plane_input.assign(argv[++i]);
 			cout << "-associated_set_in_plane " << associated_set_in_plane_input << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-differential_uniformity") == 0) {
-			f_differential_uniformity = TRUE;
+			f_differential_uniformity = true;
 			differential_uniformity_input.assign(argv[++i]);
 			cout << "-differential_uniformity " << differential_uniformity_input << endl;
 		}

@@ -541,7 +541,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 			i /* downstep_primary_orbit */,
 			0 /* downstep_secondary_orbit */,
 			1 /* downstep_orbit_len */,
-			FALSE /* f_long_orbit */,
+			false /* f_long_orbit */,
 			Lines /* int *pt_representation */,
 			R->Strong_gens,
 			0/*verbose_level - 2*/);
@@ -720,13 +720,13 @@ void surface_classify_wedge::upstep(int verbose_level)
 				if (!f_processed[f2]) {
 					Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit
 						= Flag_orbits->nb_primary_orbits_upper;
-					Flag_orbits->Flag_orbit_node[f2].f_fusion_node = TRUE;
+					Flag_orbits->Flag_orbit_node[f2].f_fusion_node = true;
 					Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
 					Flag_orbits->Flag_orbit_node[f2].fusion_elt
 						= NEW_int(A->elt_size_in_int);
 					A->Group_element->element_invert(Elt1,
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
-					f_processed[f2] = TRUE;
+					f_processed[f2] = true;
 					nb_processed++;
 				}
 				else {
@@ -795,7 +795,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 		FREE_OBJECT(coset_reps);
 		FREE_OBJECT(S);
 		
-		f_processed[f] = TRUE;
+		f_processed[f] = true;
 		nb_processed++;
 		Flag_orbits->nb_primary_orbits_upper++;
 	} // next f

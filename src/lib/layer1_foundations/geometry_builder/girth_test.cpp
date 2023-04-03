@@ -178,7 +178,7 @@ int girth_test::check_girth_condition(
 						cout << "a1 = " << a1 << ", a2 = " << a2 << ", and nb_completed_rows = " << i << endl;
 						cout << "path from a1 to a2 = " << S[i][a1 * V + a2] << ", and girth = " << girth << endl;
 					}
-					return FALSE;
+					return false;
 				}
 			}
 		}
@@ -186,7 +186,7 @@ int girth_test::check_girth_condition(
 	if (f_v) {
 		cout << "girth_test::check_girth_condition OK" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void girth_test::print_Si(int i)

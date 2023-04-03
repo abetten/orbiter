@@ -260,7 +260,7 @@ void unipoly_domain::division_with_remainder_from_file_with_report(
 	ost << input_fname << " / " << setw(db + 1) << rk_b << " = " << endl;
 
 
-	division_with_remainder_with_report(a, b, q, r, TRUE, ost, verbose_level);
+	division_with_remainder_with_report(a, b, q, r, true, ost, verbose_level);
 
 	int *rr = (int *) r;
 	int *R = rr + 1;
@@ -379,7 +379,7 @@ void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 		cout << endl;
 
 
-		division_with_remainder_with_report(a, b, q, r, FALSE, ost, verbose_level);
+		division_with_remainder_with_report(a, b, q, r, false, ost, verbose_level);
 
 		ost << " : ";
 		print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(r, db - 1, ost);
@@ -449,7 +449,7 @@ void unipoly_domain::division_with_remainder_numerically_with_report(
 
 
 
-	division_with_remainder_with_report(a, b, q, r, TRUE, ost, verbose_level);
+	division_with_remainder_with_report(a, b, q, r, true, ost, verbose_level);
 
 
 	int *rr = (int *) r;

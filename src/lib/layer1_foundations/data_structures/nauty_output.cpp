@@ -150,7 +150,7 @@ int nauty_output::belong_to_the_same_orbit(int a, int b, int verbose_level)
 					FREE_int(prev);
 					FREE_int(orbit);
 					FREE_int(Q);
-					return TRUE;
+					return true;
 				}
 			}
 		}
@@ -159,7 +159,7 @@ int nauty_output::belong_to_the_same_orbit(int a, int b, int verbose_level)
 	if (f_v) {
 		cout << "nauty_output::belong_to_the_same_orbit done" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 

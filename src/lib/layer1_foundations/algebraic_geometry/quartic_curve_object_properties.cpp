@@ -31,8 +31,8 @@ quartic_curve_object_properties::quartic_curve_object_properties()
 	//line_type_distribution[3];
 	lines_on_point = NULL;
 	Point_type = NULL;
-	f_fullness_has_been_established = FALSE;
-	f_is_full = FALSE;
+	f_fullness_has_been_established = false;
+	f_is_full = false;
 	nb_Kovalevski = 0;
 	nb_Kovalevski_on = 0;
 	nb_Kovalevski_off = 0;
@@ -451,11 +451,11 @@ void quartic_curve_object_properties::print_general(std::ostream &ost)
 	ost << "\\mbox{Number of axes} & " << nb_axes << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of points on lines} & ";
-	Type_pts_on_lines->print_naked_tex(ost, TRUE);
+	Type_pts_on_lines->print_naked_tex(ost, true);
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of lines on points} & ";
-	Type_lines_on_point->print_naked_tex(ost, TRUE);
+	Type_lines_on_point->print_naked_tex(ost, true);
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 #endif
@@ -466,11 +466,11 @@ void quartic_curve_object_properties::print_general(std::ostream &ost)
 #if 0
 	ost << "Points on lines:" << endl;
 	ost << "$$" << endl;
-	Type_pts_on_lines->print_naked_tex(ost, TRUE);
+	Type_pts_on_lines->print_naked_tex(ost, true);
 	ost << "$$" << endl;
 	ost << "Lines on points:" << endl;
 	ost << "$$" << endl;
-	Type_lines_on_point->print_naked_tex(ost, TRUE);
+	Type_lines_on_point->print_naked_tex(ost, true);
 	ost << "$$" << endl;
 #endif
 }
@@ -499,7 +499,7 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 
 	if (QO->nb_pts < 1000) {
 		//ost << "$$" << endl;
-		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, TRUE /* f_tex */);
+		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, true /* f_tex */);
 		//ost << "$$" << endl;
 		//ost << "\\clearpage" << endl;
 		ost << "The points on the quartic curve are:\\\\" << endl;
@@ -525,12 +525,12 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 		algebraic_geometry::schlaefli_labels *Labels;
 
 		Labels = NEW_OBJECT(algebraic_geometry::schlaefli_labels);
-		if (FALSE) {
+		if (false) {
 			cout << "quartic_curve_object_properties::print_all_points "
 					"before Labels->init" << endl;
 		}
 		Labels->init(0 /*verbose_level*/);
-		if (FALSE) {
+		if (false) {
 			cout << "quartic_curve_object_properties::print_all_points "
 					"after Labels->init" << endl;
 		}
@@ -601,7 +601,7 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(
 	int i, j, h;
 	int verbose_level = 1;
 	long int a;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int w[3];
 	int coeff_out[5];
 	int Basis[6];
@@ -800,11 +800,11 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 
 	Bitangent_line_type = NEW_OBJECT(data_structures::tally);
 	Bitangent_line_type->init_lint(pts_on_lines->Set_size,
-		pts_on_lines->nb_sets, FALSE, 0);
+		pts_on_lines->nb_sets, false, 0);
 
 	if (f_v) {
 		cout << "Line type:" << endl;
-		Bitangent_line_type->print_naked_tex(cout, TRUE);
+		Bitangent_line_type->print_naked_tex(cout, true);
 		cout << endl;
 	}
 
@@ -830,11 +830,11 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 
 	Point_type = NEW_OBJECT(data_structures::tally);
 	Point_type->init_lint(lines_on_point->Set_size,
-		lines_on_point->nb_sets, FALSE, 0);
+		lines_on_point->nb_sets, false, 0);
 	if (f_v) {
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
 				"type of lines_on_point:" << endl;
-		Point_type->print_naked_tex(cout, TRUE);
+		Point_type->print_naked_tex(cout, true);
 		cout << endl;
 	}
 
@@ -842,14 +842,14 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	vector<int> K;
 
 
-	f_is_full = TRUE;
+	f_is_full = true;
 	nb_Kovalevski_on = 0;
 	for (i = Point_type->nb_types - 1; i >= 0; i--) {
 		f = Point_type->type_first[i];
 		l = Point_type->type_len[i];
 		a = Point_type->data_sorted[f];
 		if (a == 0) {
-			f_is_full = FALSE;
+			f_is_full = false;
 		}
 		if (a == 4) {
 			nb_Kovalevski_on += l;
@@ -859,7 +859,7 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 			}
 		}
 	}
-	f_fullness_has_been_established = TRUE;
+	f_fullness_has_been_established = true;
 
 
 
@@ -894,11 +894,11 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 
 	Point_off_type = NEW_OBJECT(data_structures::tally);
 	Point_off_type->init_lint(lines_on_points_off->Set_size,
-			lines_on_points_off->nb_sets, FALSE, 0);
+			lines_on_points_off->nb_sets, false, 0);
 	if (f_v) {
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
 				"type of lines_on_point off:" << endl;
-		Point_off_type->print_naked_tex(cout, TRUE);
+		Point_off_type->print_naked_tex(cout, true);
 		cout << endl;
 	}
 
@@ -939,35 +939,35 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 void quartic_curve_object_properties::report_bitangent_line_type(std::ostream &ost)
 {
 	if (QO->f_has_bitangents) {
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		int i;
 		long int a;
 		int v[3];
 
 
 		ost << "Line type: $" << endl;
-		Bitangent_line_type->print_naked_tex(ost, TRUE);
+		Bitangent_line_type->print_naked_tex(ost, true);
 		ost << "$\\\\" << endl;
 
 		ost << "$$" << endl;
-		Bitangent_line_type->print_array_tex(ost, TRUE /* f_backwards */);
+		Bitangent_line_type->print_array_tex(ost, true /* f_backwards */);
 		ost << "$$" << endl;
 
 
 		ost << "point types: $" << endl;
-		Point_type->print_naked_tex(ost, TRUE);
+		Point_type->print_naked_tex(ost, true);
 		ost << "$\\\\" << endl;
 
 		ost << "$$" << endl;
-		Point_type->print_array_tex(ost, TRUE /* f_backwards */);
+		Point_type->print_array_tex(ost, true /* f_backwards */);
 		ost << "$$" << endl;
 
 		ost << "point types for points off the curve: $" << endl;
-		Point_off_type->print_naked_tex(ost, TRUE);
+		Point_off_type->print_naked_tex(ost, true);
 		ost << "$\\\\" << endl;
 
 		ost << "$$" << endl;
-		Point_off_type->print_array_tex(ost, TRUE /* f_backwards */);
+		Point_off_type->print_array_tex(ost, true /* f_backwards */);
 		ost << "$$" << endl;
 
 		ost << "Lines on points off the curve:\\\\" << endl;
@@ -1021,7 +1021,7 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 // We compute the set of singular points into Pts[nb_pts]
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines" << endl;
@@ -1071,7 +1071,7 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 				cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines "
 						"gradient i=" << i << " / " << nb_eqns << endl;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines "
 						"gradient " << i << " = ";
 				Int_vec_print(cout,

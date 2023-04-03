@@ -609,7 +609,7 @@ int any_group::subspace_orbits_test_set(
 #if 1
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int ret = TRUE;
+	int ret = true;
 	int rk;
 	int n;
 	field_theory::finite_field *F;
@@ -660,7 +660,7 @@ int any_group::subspace_orbits_test_set(
 	FREE_int(orbits_on_subspaces_M);
 
 	if (rk < len) {
-		ret = FALSE;
+		ret = false;
 	}
 
 #if 0

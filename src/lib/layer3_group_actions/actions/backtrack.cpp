@@ -49,7 +49,7 @@ struct action_is_minimal_data {
 	int first_moved;
 	int f_automorphism_seen;
 	int *is_minimal_base_point;  // [A->base_len]
-		// is_minimal_base_point[i] = TRUE means that 
+		// is_minimal_base_point[i] = true means that 
 		// the i-th base point b_i is the first moved point 
 		// under the (i-1)-th group in the stabilizer chain.
 };
@@ -107,7 +107,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 	if (depth == A->base_len()) {
 		cmp = Sorting.lint_vec_compare(current_set, D->the_set, D->size);
 		if (cmp == 0) {
-			D->f_automorphism_seen = TRUE;
+			D->f_automorphism_seen = true;
 			if (D->nb_auts == D->nb_auts_allocated) {
 				action_is_minimal_reallocate_aut_data(*D);
 			}
@@ -166,7 +166,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			}
 			D->nb_auts++;
 		}
-		return TRUE;
+		return true;
 	}
 	
 	transversal_length = A->transversal_length_i(depth);
@@ -182,7 +182,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 	}
 	D->nb_choices[depth] = 0;
 	for (i = 0; i < transversal_length; i++) {
-		int f_accept = FALSE;
+		int f_accept = false;
 		int base_point;
 		
 		base_point = A->orbit_ij(depth, 0);
@@ -190,11 +190,11 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		if (D->is_minimal_base_point[depth] &&
 				Sorting.lint_vec_search(current_set, D->size, base_point, idx, 0)) {
 			if (Sorting.lint_vec_search(current_set, D->size, image_point, idx, 0)) {
-				f_accept = TRUE;
+				f_accept = true;
 			}
 		}
 		else {
-			f_accept = TRUE;
+			f_accept = true;
 		}
 		if (f_accept) {
 			D->choices[depth * A->degree +
@@ -234,13 +234,13 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 						<< D->current_choice[depth]
 						<< " and first_moved = " << D->first_moved << endl;
 				}
-				return TRUE;
+				return true;
 			}
 			if (D->first_moved > depth) {
 				D->first_moved = depth;
 			}
 			if (depth == D->first_moved) {
-				D->f_automorphism_seen = FALSE;
+				D->f_automorphism_seen = false;
 			}
 		}
 		image_point = D->choices[depth * A->degree +
@@ -261,7 +261,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 				0 /*verbose_level*/);
 
 		// result is in A->Sims->cosetrep
-		if (FALSE /*f_vvv*/) {
+		if (false /*f_vvv*/) {
 			cout << "cosetrep:" << endl;
 			A->Group_element->element_print(D->coset_rep, cout);
 			cout << endl;
@@ -269,7 +269,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			cout << endl;
 		}
 		A->Group_element->map_a_set(current_set, next_set, D->size, D->coset_rep, 0);
-		if (FALSE /*f_vv*/) {
+		if (false /*f_vv*/) {
 			cout << "image set: ";
 			Lint_vec_print(cout, next_set, D->size);
 			cout << endl;
@@ -322,7 +322,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 				exit(1);
 			}
 
-			return FALSE;
+			return false;
 		}
 		ret = action_is_minimal_recursion(D, depth + 1, verbose_level);
 		if (f_vv) {
@@ -332,7 +332,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			// << " finished, return value = " << ret << endl;
 		}
 		if (!ret) {
-			return FALSE;
+			return false;
 		}
 	}
 	
@@ -341,7 +341,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		//int_vec_print(cout, current_set, D->size);
 		//cout << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int action::is_minimal(int size, long int *set, groups::sims *old_Sims,
@@ -351,7 +351,7 @@ int action::is_minimal(int size, long int *set, groups::sims *old_Sims,
 	int *transporter_witness;
 	int ret;
 	long int backtrack_nodes;
-	int f_get_automorphism_group = FALSE;
+	int f_get_automorphism_group = false;
 	groups::sims Aut;
 	
 	witness = NEW_lint(size);
@@ -377,7 +377,7 @@ int action::is_minimal_witness(
 {
 	action *A;
 	action_is_minimal_data D;
-	int ret = TRUE;
+	int ret = true;
 	int i;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 4);
@@ -456,7 +456,7 @@ int action::is_minimal_witness(
 	D.nb_auts_allocated = AUTS_ALLOCATE_BLOCK_SIZE;
 	D.aut_data = NEW_int(D.nb_auts_allocated * A->base_len());
 	D.first_moved = A->base_len();
-	D.f_automorphism_seen = FALSE;
+	D.f_automorphism_seen = false;
 	
 	if (f_vv) {
 		cout << "action::is_minimal_witness "
@@ -517,7 +517,7 @@ int action::is_minimal_witness(
 						<< " contains " << p 
 						<< " which is a smaller point" << endl;
 				}
-				if (FALSE) {
+				if (false) {
 					cout << "action::is_minimal_witness partitionstack:" << endl;
 					S->print(cout);
 					S->print_raw();
@@ -541,7 +541,7 @@ int action::is_minimal_witness(
 				backtrack_level = k;
 				//cout << "action::is_minimal_witness backtrack_level "
 				//"= k = " << backtrack_level << endl;
-				ret = FALSE;
+				ret = false;
 				goto finish;
 			}
 		}
@@ -560,10 +560,10 @@ int action::is_minimal_witness(
 			}
 		}
 		if (j < b) {
-			D.is_minimal_base_point[i] = FALSE;
+			D.is_minimal_base_point[i] = false;
 		}
 		else {
-			D.is_minimal_base_point[i] = TRUE;
+			D.is_minimal_base_point[i] = true;
 		}
 	}
 	if (f_v) {
@@ -654,7 +654,7 @@ finish:
 					"before Aut.build_up_group_random_process" << endl;
 		}
 		Aut.build_up_group_random_process(&K, &Aut2, go2, 
-			FALSE /* f_override_choose_next_base_point */,
+			false /* f_override_choose_next_base_point */,
 			NULL, 
 			verbose_level - 4);	
 		if (f_v) {
@@ -669,7 +669,7 @@ finish:
 		}
 	}
 	
-	if (FALSE) {
+	if (false) {
 		cout << "action::is_minimal_witness freeing memory" << endl;
 	}
 	

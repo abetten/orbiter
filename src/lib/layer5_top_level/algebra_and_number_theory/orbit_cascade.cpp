@@ -300,7 +300,7 @@ void orbit_cascade::init(
 				"after downstep" << endl;
 
 		Flag_orbits->print_latex(cout,
-			title, TRUE /* f_print_stabilizer_gens*/);
+			title, true /* f_print_stabilizer_gens*/);
 	}
 
 
@@ -334,9 +334,9 @@ void orbit_cascade::init(
 	data_structures::tally_lint T;
 
 	T.init_vector_lint(Ago,
-			FALSE /* f_second */, 0 /* verbose_level */);
+			false /* f_second */, 0 /* verbose_level */);
 	cout << "Orbit length statistic:" << endl;
-	T.print_first(FALSE /* f_backwards */);
+	T.print_first(false /* f_backwards */);
 	cout << endl;
 
 
@@ -476,7 +476,7 @@ void orbit_cascade::downstep(int verbose_level)
 				0 /* downstep_primary_orbit */,
 				so /* downstep_secondary_orbit */,
 				ol.as_int() /* downstep_orbit_len */,
-				FALSE /* f_long_orbit */,
+				false /* f_long_orbit */,
 				primary_data2 /* int *pt_representation */,
 				R->Strong_gens,
 				verbose_level - 2);
@@ -777,13 +777,13 @@ void orbit_cascade::upstep(
 						cout << "orbit_cascade::upstep We are identifying with flag orbit "
 							<< f1 << "=(" << po1 << "," << so1 << ")" << endl;
 					}
-					Flag_orbits->Flag_orbit_node[f1].f_fusion_node = TRUE;
+					Flag_orbits->Flag_orbit_node[f1].f_fusion_node = true;
 					Flag_orbits->Flag_orbit_node[f1].fusion_with = f;
 					Flag_orbits->Flag_orbit_node[f1].fusion_elt =
 							NEW_int(G->A_base->elt_size_in_int);
 					G->A_base->Group_element->element_invert(Elt3,
 							Flag_orbits->Flag_orbit_node[f1].fusion_elt, 0);
-					f_processed[f1] = TRUE;
+					f_processed[f1] = true;
 					nb_processed++;
 				}
 				else {
@@ -845,7 +845,7 @@ void orbit_cascade::upstep(
 				partition1 /*Rep*/,
 				NULL /* extra_data */, verbose_level);
 
-		f_processed[f] = TRUE;
+		f_processed[f] = true;
 		nb_processed++;
 		Flag_orbits->nb_primary_orbits_upper++;
 
@@ -874,9 +874,9 @@ void orbit_cascade::upstep(
 		data_structures::tally_lint T;
 
 		T.init_vector_lint(Ago,
-				FALSE /* f_second */, 0 /* verbose_level */);
+				false /* f_second */, 0 /* verbose_level */);
 		cout << "Orbit length statistic:" << endl;
-		T.print_first(FALSE /* f_backwards */);
+		T.print_first(false /* f_backwards */);
 		cout << endl;
 	}
 

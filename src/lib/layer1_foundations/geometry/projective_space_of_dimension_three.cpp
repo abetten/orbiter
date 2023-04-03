@@ -643,10 +643,10 @@ int projective_space_of_dimension_three::test_if_lines_are_skew(
 	}
 
 	if (rk == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -936,7 +936,7 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 						"we could not find a second intersection point"
 						<< endl;
 			}
-			return FALSE;
+			return false;
 		}
 
 
@@ -951,7 +951,7 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 				cout << "projective_space_of_dimension_three::five_plus_one_to_double_six The line lies on the quadric, "
 						"this five plus one is not good." << endl;
 			}
-			return FALSE;
+			return false;
 		}
 
 		// Pick two lines out of the three lines ell_0,ell_1,ell_2
@@ -1006,7 +1006,7 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 				cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
 						"intersection is not a line" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 		line3 = Projective_space->Subspaces->Grass_lines->rank_lint_here(
 				M, 0 /* verbose_level */);
@@ -1182,7 +1182,7 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 	if (f_v) {
 		cout << "projective_space_of_dimension_three::five_plus_one_to_double_six done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 long int projective_space_of_dimension_three::map_point(

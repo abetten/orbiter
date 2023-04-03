@@ -107,7 +107,7 @@ void spread_activity::init(
 	}
 
 	A2 = A->Induced_action->induced_action_on_grassmannian_preloaded(AG,
-		FALSE /*f_induce_action*/, NULL /*sims *old_G */,
+		false /*f_induce_action*/, NULL /*sims *old_G */,
 		0 /*verbose_level - 2*/);
 
 	if (f_v) {
@@ -205,17 +205,17 @@ void spread_activity::report(int verbose_level)
 	{
 		ofstream ost(fname);
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head(ost,
-				FALSE /* f_book*/,
-				TRUE /* f_title */,
+				false /* f_book*/,
+				true /* f_title */,
 				title, author,
-				FALSE /* f_toc */,
-				FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+				false /* f_toc */,
+				false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extra_praeamble */);
 
 
@@ -263,7 +263,7 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 	int sz, i, k, k2;
 	k = Spread_create->k;
 	k2 = k * k;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	if (f_v) {
 		cout << "spread_activity::report2 "
@@ -318,7 +318,7 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 
 		O1->init(A2,
 				Spread_create->Sg,
-				FALSE /* f_load_save */,
+				false /* f_load_save */,
 				prefix1,
 				verbose_level);
 
@@ -330,7 +330,7 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 
 		O2->init(AGr,
 				Spread_create->Sg,
-				FALSE /* f_load_save */,
+				false /* f_load_save */,
 				prefix2,
 				verbose_level);
 
@@ -390,7 +390,7 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 						"before P5->projective_space_init" << endl;
 			}
 			P5->projective_space_init(5, Spread_create->F,
-				FALSE /*f_init_incidence_structure */,
+				false /*f_init_incidence_structure */,
 				verbose_level - 2);
 			if (f_v) {
 				cout << "spread_activity::report2 "
@@ -488,7 +488,7 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 
 				int rk;
 				int base_cols[6];
-				int f_complete = TRUE;
+				int f_complete = true;
 
 				rk = Spread_create->F->Linear_algebra->rank_of_rectangular_matrix_memory_given(v,
 						l, 6, w, base_cols, f_complete, 0 /* verbose_level*/);
@@ -521,7 +521,7 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 
 				data_structures::tally T;
 
-				T.init(type, nb_planes, FALSE, 0);
+				T.init(type, nb_planes, false, 0);
 
 
 
@@ -535,7 +535,7 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 
 				ost << "Plane type: ";
 				ost << "$";
-				T.print_naked_tex(ost, TRUE /* f_backwards */);
+				T.print_naked_tex(ost, true /* f_backwards */);
 				ost << "$";
 				ost << "\\\\" << endl;
 

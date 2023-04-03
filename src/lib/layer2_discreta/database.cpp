@@ -100,7 +100,7 @@ void database::init_with_file_type(
 	database::filename().init(filename);
 	database::objectkind() = objectkind;
 	database::f_compress() = f_compress;
-	f_open() = FALSE;
+	f_open() = false;
 	database::file_type() = file_type;
 	file_size() = 0;
 }
@@ -175,7 +175,7 @@ void database::delete_files()
 void database::put_file_size()
 {
 	int_4 l, l1;
-	int f_v = FALSE;
+	int f_v = false;
 	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
@@ -190,7 +190,7 @@ void database::put_file_size()
 void database::get_file_size()
 {
 	int_4 l;
-	int f_v = FALSE;
+	int f_v = false;
 	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
@@ -279,27 +279,27 @@ void database::add_object_return_datref(
 	
 	memory M;
 
-	if (FALSE) {
+	if (false) {
 		cout << "database::add_object_return_datref packing object" << endl;
 	}
-	the_object.pack(M, FALSE, 0/*debug_depth*/);
+	the_object.pack(M, false, 0/*debug_depth*/);
 
 	if (f_compress()) {
-		if (FALSE) {
+		if (false) {
 			cout << "database::add_object_return_datref compressing object" << endl;
 		}
-		M.compress(FALSE);
+		M.compress(false);
 	}
 	int i, size;
 	//uint4 datref;
 	char *pc;
 	size = M.used_length();
 	pc = (char *) M.self.char_pointer;
-	if (FALSE) {
+	if (false) {
 		cout << "database::add_object_return_datref saving data via add_data_DB()" << endl;
 	}
 	add_data_DB((void *)pc, size, &datref, verbose_level - 4);
-	if (FALSE) {
+	if (false) {
 		cout << "finished with add_data_DB" << endl;
 	}
 	data_type.datref = datref;
@@ -499,7 +499,7 @@ void database::get_object(
 	M.cur_pointer() = 0;
 	
 	the_object.freeself();
-	the_object.unpack(M, FALSE, 0/*debug_depth*/);
+	the_object.unpack(M, false, 0/*debug_depth*/);
 	
 	delete [] d;
 }
@@ -540,12 +540,12 @@ int database::get_object_by_unique_int8_if_there(
 		cout << "datref=" << datref << endl;
 		}
 	if (datref == -1)
-		return FALSE;
+		return false;
 	if (f_v) {
 		cout << "calling get_object" << endl;
 		}
 	get_object(datref, the_object, verbose_level - 1);
-	return TRUE;
+	return true;
 }
 
 long int database::get_highest_int8(
@@ -926,7 +926,7 @@ void database::add_data_DB_standard(
 	user2total(size, total, pad);
 	data2 = (char *) new char[total];
 	header[0] = MAGIC_SYNC;
-	header[1] = TRUE;
+	header[1] = true;
 	header[2] = (int_4) size;
 	header[3] = (int_4) total;
 	Os.block_swap_chars((char *)header, sizeof(int_4), 4);
@@ -1104,8 +1104,8 @@ void database::free_data_DB(
 		cout << "database::free_data_DB header2: header[7] != header[3]" << endl;
 		exit(1);
 	}
-	header[1] = FALSE;
-	header[5] = FALSE;
+	header[1] = false;
+	header[5] = false;
 	Os.block_swap_chars((char *)header, 4, 8);
 	file_seek(((unsigned int)datref) << size_of_header_log());
 	file_write(header, 1, total);
@@ -1117,9 +1117,9 @@ void database::file_open(int verbose_level)
 	int idx = fstream_table_get_free_entry();
 	fstream *f = new fstream(filename().s(), ios::in | ios::out | ios::binary);
 	fstream_table[idx] = f;
-	fstream_table_used[idx] = TRUE;
+	fstream_table_used[idx] = true;
 	stream() = idx;
-	f_open() = TRUE;
+	f_open() = true;
 	get_file_size();
 	if (f_v) {
 		cout << "database::file_open file " << filename().s() << " opened" << endl;
@@ -1151,9 +1151,9 @@ void database::file_create(int verbose_level)
 		exit(1);
 	}
 	fstream_table[idx] = f;
-	fstream_table_used[idx] = TRUE;
+	fstream_table_used[idx] = true;
 	stream() = idx;
-	f_open() = TRUE;
+	f_open() = true;
 	if (f_v) {
 		cout << "database::file_create file " << filename().s() << " created" << endl;
 	}
@@ -1169,9 +1169,9 @@ void database::file_close(int verbose_level)
 		exit(1);
 	}
 	delete fstream_table[idx];
-	fstream_table_used[idx] = FALSE;
+	fstream_table_used[idx] = false;
 	stream() = 0;
-	f_open() = FALSE;
+	f_open() = false;
 	if (f_v) {
 		cout << "database::file_close file " << filename().s() << " closed" << endl;
 	}

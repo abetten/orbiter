@@ -22,7 +22,7 @@ tree::tree()
 	f_node_select = NULL;
 
 	path = NULL;
-	f_count_leaves = FALSE;
+	f_count_leaves = false;
 	leaf_count = 0;
 }
 
@@ -61,7 +61,7 @@ void tree::init(
 	{
 		ifstream f(Tree_draw_options->file_name);
 		//f.getline(buf, BUFSIZE_TREE);
-		while (TRUE) {
+		while (true) {
 			if (f.eof()) {
 				cout << "tree::init premature end of file" << endl;
 				exit(1);
@@ -100,7 +100,7 @@ void tree::init(
 	}
 	root = NEW_OBJECT(tree_node);
 	root->init(0 /* depth */,
-			NULL, FALSE, 0, FALSE, 0, dummy,
+			NULL, false, 0, false, 0, dummy,
 			verbose_level - 1);
 	
 	if (f_v) {
@@ -109,7 +109,7 @@ void tree::init(
 	{
 		ifstream f(Tree_draw_options->file_name);
 		//f.getline(buf, BUFSIZE_TREE);
-		while (TRUE) {
+		while (true) {
 			if (f.eof()) {
 				cout << "premature end of file" << endl;
 				exit(1);
@@ -280,7 +280,7 @@ void tree::draw(
 #endif
 
 		//root->draw_sideways(G, f_circletext, f_i,
-		//FALSE, 10000 - 0, 10000 - 0, max_depth, f_edge_labels);
+		//false, 10000 - 0, 10000 - 0, max_depth, f_edge_labels);
 
 
 #if 0
@@ -307,8 +307,8 @@ void tree::draw(
 
 		leaf_count = 0;
 
-		//int f_circletext = TRUE;
-		//int f_i = TRUE;
+		//int f_circletext = true;
+		//int f_i = true;
 
 
 		if (f_v) {
@@ -316,7 +316,7 @@ void tree::draw(
 		}
 		root->draw_edges(
 				G, Tree_draw_options, Opt,
-				FALSE, 0, 0,
+				false, 0, 0,
 				max_depth,
 				this, verbose_level);
 		if (f_v) {
@@ -330,7 +330,7 @@ void tree::draw(
 			cout << "tree::draw before root->draw_vertices" << endl;
 		}
 		root->draw_vertices(G, Tree_draw_options, Opt,
-				FALSE, 0, 0,
+				false, 0, 0,
 				max_depth,
 				this, verbose_level);
 		if (f_v) {
@@ -392,7 +392,7 @@ void tree::draw_preprocess(
 			cout << endl;
 		}
 
-		if (FALSE) {
+		if (false) {
 			int DFS_rk;
 			root->find_node(DFS_rk, my_path, sz, verbose_level);
 			if (f_v) {
@@ -400,7 +400,7 @@ void tree::draw_preprocess(
 				Int_vec_print(cout, my_path, sz);
 				cout << " rk=" << DFS_rk << endl;
 			}
-			f_node_select[DFS_rk] = TRUE;
+			f_node_select[DFS_rk] = true;
 		}
 		else {
 			int i, a;
@@ -408,7 +408,7 @@ void tree::draw_preprocess(
 			root->find_node_and_path(Rk, my_path, sz, verbose_level);
 			for (i = 0; i < Rk.size(); i++) {
 				a = Rk[i];
-				f_node_select[a] = TRUE;
+				f_node_select[a] = true;
 			}
 		}
 

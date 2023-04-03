@@ -70,17 +70,17 @@ void coding_theory_domain::make_mac_williams_equations(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -89,7 +89,7 @@ void coding_theory_domain::make_mac_williams_equations(
 						"before print_longinteger_matrix_tex" << endl;
 			}
 
-			orbiter_kernel_system::latex_interface Li;
+			l1_interfaces::latex_interface Li;
 
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
@@ -357,7 +357,7 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 		cout << "coding_theory_domain::make_gilbert_varshamov_code nmk = " << nmk << endl;
 	}
 
-	f_forbidden[a] = TRUE;
+	f_forbidden[a] = true;
 	add_set.push_back(a);
 	cnt = 1;
 
@@ -419,7 +419,7 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 					cout << " : " << f;
 				}
 				if (!f_forbidden[f]) {
-					f_forbidden[f] = TRUE;
+					f_forbidden[f] = true;
 					add_set.push_back(f);
 					cnt++;
 					if (f_v) {
@@ -452,7 +452,7 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 
 	for (i = 0; i < add_set.size(); i++) {
 		b = add_set[i];
-		f_forbidden[b] = FALSE;
+		f_forbidden[b] = false;
 	}
 
 
@@ -483,7 +483,7 @@ int coding_theory_domain::gilbert_varshamov_lower_bound_for_d(
 	S.create(0, __FILE__, __LINE__);
 	//cout << "gilbert_varshamov_lower_bound_for_d: q=" << q << " n=" << n << " k=" << k << " " << q << "^" << n - k << " = " << qnmk << endl;
 	for (i = 0; ; i++) {
-		Combi.binomial(b, n - 1, i, FALSE);
+		Combi.binomial(b, n - 1, i, false);
 		D.mult(b, qm1_power, s);
 		D.add(S, s, a);
 		a.assign_to(S);
@@ -542,7 +542,7 @@ int coding_theory_domain::hamming_bound_for_d(
 			<< q << "^" << n - k << " = " << qnmk << endl;
 	}
 	for (e = 0; ; e++) {
-		Combi.binomial(b, n, e, FALSE);
+		Combi.binomial(b, n, e, false);
 		D.mult(b, qm1_power, s);
 		D.add(B, s, a);
 		a.assign_to(B);
@@ -605,7 +605,7 @@ int coding_theory_domain::plotkin_bound_for_d(
 		cout << "coding_theory_domain::plotkin_bound_for_d "
 				"q=" << q << " n=" << n << " k=" << k << endl;
 	}
-	D.integral_division(c, b, Q, R, FALSE /* verbose_level */);
+	D.integral_division(c, b, Q, R, false /* verbose_level */);
 	d = Q.as_int();
 	if (f_vv) {
 		cout << c << " / " << b << " = " << d << endl;
@@ -660,7 +660,7 @@ int coding_theory_domain::griesmer_bound_for_n(
 				<< " d=" << d << " k=" << k << endl;
 	}
 	for (i = 0; i < k; i++) {
-		D.integral_division(d1, qi, Q, R, FALSE /* verbose_level */);
+		D.integral_division(d1, qi, Q, R, false /* verbose_level */);
 		if (!R.is_zero()) {
 			D.add(Q, one, a);
 			D.add(S, a, b);
@@ -1421,7 +1421,7 @@ void coding_theory_domain::do_weight_enumerator(
 	int *base_cols;
 	int *weight_enumerator;
 	int rk, i;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_weight_enumerator" << endl;
@@ -1451,8 +1451,8 @@ void coding_theory_domain::do_weight_enumerator(
 	}
 
 	rk = F->Linear_algebra->Gauss_int(A,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, m, n, n,
+		false /* f_special */, true /* f_complete */, base_cols,
+		false /* f_P */, NULL /*P*/, m, n, n,
 		verbose_level);
 
 	if (f_v) {
@@ -1500,14 +1500,14 @@ void coding_theory_domain::do_weight_enumerator(
 			cout << i << " : " << weight_enumerator[i] << endl;
 		}
 
-		int f_first = TRUE;
+		int f_first = true;
 
 		for (i = 0; i <= n; i++) {
 			if (weight_enumerator[i] == 0) {
 				continue;
 			}
 			if (f_first) {
-				f_first = FALSE;
+				f_first = false;
 			}
 			else {
 				cout << " + ";
@@ -1550,14 +1550,14 @@ void coding_theory_domain::do_weight_enumerator(
 			cout << i << " : " << weight_enumerator[i] << endl;
 		}
 
-		f_first = TRUE;
+		f_first = true;
 
 		for (i = 0; i <= n; i++) {
 			if (weight_enumerator[i] == 0) {
 				continue;
 			}
 			if (f_first) {
-				f_first = FALSE;
+				f_first = false;
 			}
 			else {
 				cout << " + ";
@@ -1658,7 +1658,7 @@ void coding_theory_domain::do_minimum_distance(
 	int *base_cols;
 	//int *weight_enumerator;
 	int rk, i;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 	orbiter_kernel_system::os_interface Os;
 	long int t0, t1, dt, tps;
 
@@ -1687,8 +1687,8 @@ void coding_theory_domain::do_minimum_distance(
 	}
 
 	rk = F->Linear_algebra->Gauss_int(A,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, m, n, n,
+		false /* f_special */, true /* f_complete */, base_cols,
+		false /* f_P */, NULL /*P*/, m, n, n,
 		0 /*verbose_level*/);
 
 
@@ -1878,14 +1878,14 @@ void coding_theory_domain::do_linear_code_through_columns_of_generator_matrix(
 			ofstream ost(fname);
 
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 
-			L.head(ost, FALSE /* f_book*/, TRUE /* f_title */,
-				title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+			L.head(ost, false /* f_book*/, true /* f_title */,
+				title, author, false /* f_toc */, false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -1966,8 +1966,8 @@ void coding_theory_domain::do_polynomial(
 	Fq = NEW_OBJECT(field_theory::finite_field);
 
 	Fq->finite_field_init_small_order(2,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0 /* verbose_level */);
 
 	Poly->init(Fq, polynomial_nb_vars, polynomial_degree,
@@ -2098,7 +2098,7 @@ void coding_theory_domain::do_sylvester_hadamard(
 	//field_theory::finite_field *F;
 
 	//F = NEW_OBJECT(field_theory::finite_field);
-	//F->finite_field_init(3, FALSE /* f_without_tables */, 0);
+	//F->finite_field_init(3, false /* f_without_tables */, 0);
 	Int_vec_copy(H2, M1, 4);
 	sz = 2;
 	for (i = 0; i < nb_factors; i++) {
@@ -2267,7 +2267,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 		fp << "$$" << endl;
@@ -2326,7 +2326,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 
 	cout << "before create_Levi_graph_from_incidence_matrix" << endl;
 	CG->create_Levi_graph_from_incidence_matrix(M, nb_rows, nb_cols,
-		FALSE /* f_point_labels */, NULL /* *point_labels */,
+		false /* f_point_labels */, NULL /* *point_labels */,
 		verbose_level);
 
 	cout << "after create_Levi_graph_from_incidence_matrix" << endl;
@@ -2498,7 +2498,7 @@ void coding_theory_domain::do_long_code(
 	field_theory::finite_field *F;
 
 	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
+	F->finite_field_init(2, false /* f_without_tables */, 0);
 
 	Wt = NEW_int(sz);
 	Int_vec_zero(Wt, sz);
@@ -2538,8 +2538,8 @@ void coding_theory_domain::do_long_code(
 		cout << "Weight distribution:";
 		data_structures::tally C;
 
-		C.init(Wt, sz, FALSE, 0);
-		C.print_first(FALSE /* f_backwards */);
+		C.init(Wt, sz, false, 0);
+		C.print_first(false /* f_backwards */);
 		cout << endl;
 
 		cout << "i : weight of the i-th codeword" << endl;
@@ -2649,8 +2649,8 @@ void coding_theory_domain::do_long_code(
 			cout << "distance distribution:";
 			data_structures::tally C;
 
-			C.init(D, sz, FALSE, 0);
-			C.print_first(FALSE /* f_backwards */);
+			C.init(D, sz, false, 0);
+			C.print_first(false /* f_backwards */);
 			cout << endl;
 
 			cout << "i : distance from the i-th codeword" << endl;
@@ -2752,7 +2752,7 @@ void coding_theory_domain::do_it(int n, int r, int a, int c, int seed, int verbo
 	int nb_rows, nb_cols;
 	int *v;
 	int *W;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	N = 1 << n;
 
@@ -2990,17 +2990,17 @@ void coding_theory_domain::field_reduction(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 

@@ -299,24 +299,24 @@ void packing_classify::report_whole(
 	data_structures::tally C_ago;
 
 	
-	C_ago.init(inv->Ago_int, Iso->Folding->Reps->count, FALSE, 0);
+	C_ago.init(inv->Ago_int, Iso->Folding->Reps->count, false, 0);
 	ost << "Classification by Ago: ";
-	C_ago.print_naked_tex(ost, TRUE /*f_backwards*/);
+	C_ago.print_naked_tex(ost, true /*f_backwards*/);
 	ost << "\\\\" << endl;
 
 	ost << "\\chapter{Invariants: Types of Packing}" << endl << endl;
 
 
 
-	inv->make_table(Iso, ost, FALSE, FALSE, verbose_level);
+	inv->make_table(Iso, ost, false, false, verbose_level);
 
 	ost << "\\clearpage" << endl << endl;
 
-	inv->make_table(Iso, ost, TRUE, FALSE, verbose_level);
+	inv->make_table(Iso, ost, true, false, verbose_level);
 
 	ost << "\\clearpage" << endl << endl;
 
-	inv->make_table(Iso, ost, FALSE, TRUE, verbose_level);
+	inv->make_table(Iso, ost, false, true, verbose_level);
 
 	ost << "\\clearpage" << endl << endl;
 
@@ -328,7 +328,7 @@ void packing_classify::report_whole(
 	report_extra_stuff(Iso, ost, verbose_level);
 	
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	L.foot(ost);
 	if (inv) {
 		FREE_OBJECT(inv);
@@ -340,17 +340,17 @@ void packing_classify::report_title_page(
 		std::ostream &ost,
 		int verbose_level)
 {
-	int f_book = TRUE;
-	int f_title = TRUE;
+	int f_book = true;
+	int f_title = true;
 	string title, author, extra_praeamble;
 	char str[1000];
 
-	int f_toc = TRUE;
-	int f_landscape = FALSE;
-	int f_12pt = FALSE;
-	int f_enlarged_page = TRUE;
-	int f_pagenumbers = TRUE;
-	orbiter_kernel_system::latex_interface L;
+	int f_toc = true;
+	int f_landscape = false;
+	int f_12pt = false;
+	int f_enlarged_page = true;
+	int f_pagenumbers = true;
+	l1_interfaces::latex_interface L;
 
 	snprintf(str, sizeof(str), "The Packings of PG$(%d,%d)$", (int)3, (int)q);
 	title.assign(str);
@@ -496,15 +496,15 @@ void packing_classify::report_isomorphism_type(
 
 	data_structures::tally C_iso;
 
-	C_iso.init_lint(spread_iso_type, Iso->size, FALSE, 0);
+	C_iso.init_lint(spread_iso_type, Iso->size, false, 0);
 	ost << "Classification by isomorphism type of spreads: ";
-	C_iso.print_naked_tex(ost, FALSE /*f_backwards*/);
+	C_iso.print_naked_tex(ost, false /*f_backwards*/);
 	ost << "\\\\" << endl;
 		
 		
 	int dual_idx;
 #if 0
-	int f_implicit_fusion = TRUE;
+	int f_implicit_fusion = true;
 	dual_idx = Iso->identify_database_is_open(
 			dual_packing, f_implicit_fusion, verbose_level - 2);
 #endif
@@ -525,7 +525,7 @@ void packing_classify::report_isomorphism_type(
 
 #if 0
 	ost << "Plane type of Klein-image is $($ ";
-	inv->Inv[orbit].C->print_naked_tex(ost, TRUE /*f_backwards*/);
+	inv->Inv[orbit].C->print_naked_tex(ost, true /*f_backwards*/);
 	ost << " $)$" << endl << endl;
 	ost << "\\bigskip" << endl << endl;
 #endif
@@ -575,7 +575,7 @@ void packing_classify::report_isomorphism_type(
 	data_structures::tally C;
 
 
-	C.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
+	C.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 
 
 	ost << "\\bigskip" << endl;
@@ -583,7 +583,7 @@ void packing_classify::report_isomorphism_type(
 	ost << "There are $" << Orb.nb_orbits
 			<< "$ orbits on the set.\\\\" << endl;
 	ost << "The orbit type is $[$ ";
-	C.print_naked_tex(ost, FALSE /*f_backwards*/);
+	C.print_naked_tex(ost, false /*f_backwards*/);
 	ost << " $]$\\\\" << endl;
 	ost << "\\bigskip" << endl;
 	
@@ -607,7 +607,7 @@ void packing_classify::report_packing_as_table(
 	invariants_packing *inv, long int *list_of_lines,
 	int verbose_level)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 #if 1
 	{
@@ -804,8 +804,8 @@ void packing_classify::report_stabilizer_in_action(
 	for (i = 0; i < Stab->gens.len; i++) {
 		
 		int offset = 1;
-		int f_do_it_anyway_even_for_big_degree = TRUE;
-		int f_print_cycles_of_length_one = FALSE;
+		int f_do_it_anyway_even_for_big_degree = true;
+		int f_print_cycles_of_length_one = false;
 
 		//int *fp, n, ord;
 		
@@ -852,8 +852,8 @@ void packing_classify::report_stabilizer_in_action_gap(
 		for (i = 0; i < Stab->gens.len; i++) {
 
 			int offset = 1;
-			int f_do_it_anyway_even_for_big_degree = TRUE;
-			int f_print_cycles_of_length_one = FALSE;
+			int f_do_it_anyway_even_for_big_degree = true;
+			int f_print_cycles_of_length_one = false;
 
 			//int *fp, n, ord;
 

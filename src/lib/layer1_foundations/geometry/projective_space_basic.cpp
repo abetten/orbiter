@@ -91,11 +91,11 @@ int projective_space_basic::test_if_vectors_are_projectively_equal(
 
 	for (i = 0; i < len; i++) {
 		if (w1[i] != w2[i]) {
-			ret = FALSE;
+			ret = false;
 			goto finish;
 		}
 	}
-	ret = TRUE;
+	ret = true;
 finish:
 	FREE_int(w1);
 	FREE_int(w2);
@@ -372,7 +372,7 @@ void projective_space_basic::PG_element_rank_modified(
 		int *v, int stride, int len, long int &a)
 {
 	int i, j, q_power_j, b, sqj;
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (len <= 0) {
 		cout << "projective_space_basic::PG_element_rank_modified "
@@ -569,7 +569,7 @@ void projective_space_basic::PG_element_rank_modified_lint(
 {
 	int i, j;
 	long int q_power_j, b, sqj;
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (len <= 0) {
 		cout << "projective_space_basic::PG_element_rank_modified_lint "
@@ -849,7 +849,7 @@ void projective_space_basic::all_PG_elements_in_subspace(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int *message;
 	int *word;
 	int i;
@@ -898,7 +898,7 @@ void projective_space_basic::all_PG_elements_in_subspace_array_is_given(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int *message;
 	int *word;
 	long i, j;

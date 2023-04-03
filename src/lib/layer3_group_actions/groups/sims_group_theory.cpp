@@ -65,7 +65,7 @@ void sims::random_element_of_order(
 		cout << "sims::random_element_of_order " << order << endl;
 		}
 	cnt = 0;
-	while (TRUE) {
+	while (true) {
 		cnt++;
 		random_element(elt, verbose_level - 1);
 		o = A->Group_element->element_order(elt);
@@ -118,7 +118,7 @@ void sims::transitive_extension(
 		data_structures_groups::vector_ge &SG,
 		int *tl, int verbose_level)
 {
-	transitive_extension_tolerant(O, SG, tl, FALSE, verbose_level);
+	transitive_extension_tolerant(O, SG, tl, false, verbose_level);
 }
 
 int sims::transitive_extension_tolerant(
@@ -164,14 +164,14 @@ int sims::transitive_extension_tolerant(
 			cout << "current group order = " << cur_ego << endl;
 			cout << "target group order = " << ego << endl;
 			if (f_tolerant) {
-				cout << "we are tolerant, so we return FALSE" << endl;
-				return FALSE;
+				cout << "we are tolerant, so we return false" << endl;
+				return false;
 				}
 			cout << "we are not tolerant, so we exit" << endl;
 			exit(1);
 			}
 
-		while (TRUE) {
+		while (true) {
 			j = Os.random_integer(orbit_len);
 			if (j)
 				break;
@@ -181,7 +181,7 @@ int sims::transitive_extension_tolerant(
 
 		random_element(Elt2, verbose_level - 1);
 
-		A->Group_element->element_mult(O.cosetrep, Elt2, Elt3, FALSE);
+		A->Group_element->element_mult(O.cosetrep, Elt2, Elt3, false);
 
 		if (f_vv) {
 			cout << "sims::transitive_extension_tolerant "
@@ -216,7 +216,7 @@ int sims::transitive_extension_tolerant(
 				"extracting strong generators" << endl;
 		}
 	extract_strong_generators_in_order(SG, tl, verbose_level - 2);
-	return TRUE;
+	return true;
 }
 
 void sims::transitive_extension_using_coset_representatives_extract_generators(
@@ -287,7 +287,7 @@ void sims::transitive_extension_using_coset_representatives(
 			exit(1);
 			}
 
-		while (TRUE) {
+		while (true) {
 			j = Os.random_integer(orbit_len);
 			if (j) {
 				break;
@@ -416,7 +416,7 @@ void sims::transitive_extension_using_generators(
 				"extracting strong generators" << endl;
 		}
 	extract_strong_generators_in_order(SG, tl, verbose_level - 2);
-	//return TRUE;
+	//return true;
 }
 
 
@@ -549,7 +549,7 @@ void sims::point_stabilizer_stabchain_with_action(
 				"after S.init_generators" << endl;
 	}
 	S.compute_base_orbits(verbose_level - 1);
-	if (FALSE) {
+	if (false) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"generators:" << endl;
 		S.gens.print(cout);
@@ -638,7 +638,7 @@ void sims::point_stabilizer_stabchain_with_action(
 				Elt1 /* residue */, verbose_level - 3)) {
 			if (f_vvv) {
 				cout << "sims::point_stabilizer_stabchain_with_action "
-						"strip_and_add returns FALSE" << endl;
+						"strip_and_add returns false" << endl;
 			}
 			//continue;
 		}
@@ -701,7 +701,7 @@ void sims::point_stabilizer_stabchain_with_action(
 			cout << "internal action: " << A->label << endl;
 			cout << "The orbit of point " << pt << " is:" << endl;
 			O.print_and_list_orbits(cout);
-			//O.print_tables(cout, TRUE /* f_with_cosetrep */);
+			//O.print_tables(cout, true /* f_with_cosetrep */);
 			cout << "sims::point_stabilizer_stabchain_with_action "
 					"cur_stab_order > stab_order, error" << endl;
 			exit(1);
@@ -801,7 +801,7 @@ void sims::conjugate(
 	if (f_v) {
 		cout << "action = " << A->label << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "transporter = " << endl;
 		A->Group_element->print(cout, Elt);
 	}
@@ -817,7 +817,7 @@ void sims::conjugate(
 	old_G->group_order(target_go);
 	A->Group_element->invert(Elt, Elt2);
 	cnt = 0;
-	while (TRUE) {
+	while (true) {
 
 		if (f_vv) {
 			cout << "sims::conjugate iteration " << cnt << endl;
@@ -832,8 +832,8 @@ void sims::conjugate(
 				cout << "sims::conjugate choosing random schreier generator" << endl;
 			}
 			random_schreier_generator(Elt1, verbose_level - 3);
-			A->Group_element->element_move(Elt1, A->Elt1, FALSE);
-			if (FALSE) {
+			A->Group_element->element_move(Elt1, A->Elt1, false);
+			if (false) {
 				cout << "sims::conjugate random element chosen:" << endl;
 				A->Group_element->element_print(A->Elt1, cout);
 				cout << endl;
@@ -846,12 +846,12 @@ void sims::conjugate(
 						"by which we extend" << endl;
 			}
 			old_G->random_element(A->Elt1, verbose_level - 1);
-			if (FALSE) {
+			if (false) {
 				cout << "sims::conjugate random element chosen, path = ";
 				Int_vec_print(cout, old_G->path, old_G->A->base_len());
 				cout << endl;
 			}
-			if (FALSE) {
+			if (false) {
 				A->Group_element->element_print(A->Elt1, cout);
 				cout << endl;
 			}
@@ -860,7 +860,7 @@ void sims::conjugate(
 			if (f_vv) {
 				cout << "sims::conjugate conjugated" << endl;
 			}
-			if (FALSE) {
+			if (false) {
 				A->Group_element->element_print(Elt4, cout);
 				cout << endl;
 			}
@@ -870,20 +870,20 @@ void sims::conjugate(
 			if (f_vv) {
 				cout << "sims::conjugate element strips through, "
 						"residue = " << endl;
-				if (FALSE) {
+				if (false) {
 					A->Group_element->element_print_quick(A->Elt2, cout);
 					cout << endl;
 				}
 			}
-			f_added = FALSE;
+			f_added = false;
 		}
 		else {
-			f_added = TRUE;
+			f_added = true;
 			if (f_vv) {
 				cout << "sims::conjugate element needs to be inserted at level = "
 					<< drop_out_level << " with image "
 					<< image << endl;
-				if (FALSE) {
+				if (false) {
 					A->Group_element->element_print(A->Elt2, cout);
 					cout  << endl;
 				}
@@ -909,7 +909,7 @@ void sims::conjugate(
 			break;
 		}
 		if (c < 0) {
-			if (TRUE) {
+			if (true) {
 				cout << "sims::conjugate overshooting the expected "
 						"group after " << cnt << " iterations" << endl;
 				cout << "current group order is " << go
@@ -953,7 +953,7 @@ int sims::test_if_in_set_stabilizer(
 	if (f_v) {
 		cout << "testing group of order " << goi << endl;
 		}
-	ret = TRUE;
+	ret = true;
 	for (i = 0; i < goi; i++) {
 		a.create(i, __FILE__, __LINE__);
 		element_unrank(a, Elt1);
@@ -969,7 +969,7 @@ int sims::test_if_in_set_stabilizer(
 					<< " does not stabilize the set" << endl;
 			A->Group_element->element_print(Elt1, cout);
 			cout << endl;
-			ret = FALSE;
+			ret = false;
 			break;
 			}
 		}
@@ -996,7 +996,7 @@ int sims::test_if_subgroup(
 	if (f_v) {
 		cout << "testing group of order " << goi << endl;
 		}
-	ret = TRUE;
+	ret = true;
 	for (i = 0; i < goi; i++) {
 		a.create(i, __FILE__, __LINE__);
 		old_G->element_unrank(a, Elt1);
@@ -1015,7 +1015,7 @@ int sims::test_if_subgroup(
 			old_G->element_unrank(a, Elt1);
 			A->Group_element->element_print(Elt1, cout);
 			cout << endl;
-			ret = FALSE;
+			ret = false;
 			break;
 			}
 		}
@@ -1238,7 +1238,7 @@ void sims::all_cosets(
 		}
 	f_taken = NEW_int(goi);
 	for (i = 0; i < goi; i++) {
-		f_taken[i] = FALSE;
+		f_taken[i] = false;
 		}
 	cnt = 0;
 	for (i = 0; i < goi; i++) {
@@ -1254,7 +1254,7 @@ void sims::all_cosets(
 				exit(1);
 				}
 			all_cosets[cnt * size + j] = k;
-			f_taken[k] = TRUE;
+			f_taken[k] = true;
 			}
 		cnt++;
 		}
@@ -1294,7 +1294,7 @@ void sims::find_standard_generators_int(
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
-	while (TRUE) {
+	while (true) {
 
 		a = find_element_of_given_order_int(ord_a,
 				nb_trials1, verbose_level - 1);
@@ -1348,7 +1348,7 @@ long int sims::find_element_of_given_order_int(
 		cout << "looking for an element of order " << ord << endl;
 	}
 	Elt1 = NEW_int(A->elt_size_in_int);
-	while (TRUE) {
+	while (true) {
 		nb_trials++;
 		if (f_v) {
 			cout << "sims::find_element_of_given_order_int "
@@ -1443,7 +1443,7 @@ int sims::find_element_of_given_order_int(
 			cout << "sims::find_element_of_given_order_int "
 					"unsuccessful" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	d = o / ord;
 	if (f_v) {
@@ -1460,7 +1460,7 @@ int sims::find_element_of_given_order_int(
 	if (f_v) {
 		cout << "sims::find_element_of_given_order_int done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void sims::find_element_of_prime_power_order(
@@ -1480,7 +1480,7 @@ void sims::find_element_of_prime_power_order(
 		cout << "group of order " << go << endl;
 		cout << "prime " << p << endl;
 	}
-	while (TRUE) {
+	while (true) {
 		nb_trials++;
 		random_element(Elt, 0 /*verbose_level - 1*/);
 		o = A->Group_element->element_order(Elt);
@@ -1559,7 +1559,7 @@ void sims::sylow_subgroup(
 	P->init_trivial_group(verbose_level - 1);
 
 	P->group_order(go_P1);
-	while (TRUE) {
+	while (true) {
 
 		c = D.compare(go_P1, go_P);
 
@@ -1612,7 +1612,7 @@ int sims::is_normalizing(
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = FALSE;
+	int ret = false;
 	int i;
 	int *Elt1;
 	int *Elt2;
@@ -1649,10 +1649,10 @@ int sims::is_normalizing(
 					"normalizes all " << nb_gen[0]
 					<< " generators" << endl;
 		}
-		ret = TRUE;
+		ret = true;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 
 	FREE_int(Elt1);
@@ -1809,8 +1809,8 @@ void sims::compute_conjugacy_classes(
 
 	Aconj = A->Induced_action->create_induced_action_by_conjugation(
 		this,
-		FALSE /* f_ownership */,
-		FALSE /* f_basis */, NULL,
+		false /* f_ownership */,
+		false /* f_basis */, NULL,
 		verbose_level - 1);
 
 #if 0
@@ -2098,14 +2098,14 @@ void sims::zuppo_list(
 					"nb_zuppos = " << nb_zuppos << endl;
 		}
 		Zuppos[nb_zuppos++] = rk;
-		f_done[rk] = TRUE;
+		f_done[rk] = true;
 		for (i = 1; i < o; i++) {
 			if (NT.gcd_lint(i, o) == 1) {
 				A->Group_element->element_move(Elt1, Elt2, 0);
 				A->Group_element->element_power_int_in_place(Elt2,
 						i, 0 /* verbose_level*/);
 				j = element_rank_lint(Elt2);
-				f_done[j] = TRUE;
+				f_done[j] = true;
 				}
 			}
 		}

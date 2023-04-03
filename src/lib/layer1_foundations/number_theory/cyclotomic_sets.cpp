@@ -76,7 +76,7 @@ void cyclotomic_sets::init(
 	f_taken = NEW_int(n);
 	transversal = NEW_int(n);
 	for (i = 0; i < n; i++) {
-		f_taken[i] = FALSE;
+		f_taken[i] = false;
 	}
 
 
@@ -102,7 +102,7 @@ void cyclotomic_sets::init(
 			continue;
 		}
 		transversal[tl] = i;
-		f_taken[i] = TRUE;
+		f_taken[i] = true;
 		set = NEW_lint(n);
 		set[0] = i;
 		sz = 1;
@@ -111,12 +111,12 @@ void cyclotomic_sets::init(
 			cout << q << "-cyclotomic coset of "
 					<< i << " : " << i;
 		}
-		while (TRUE) {
+		while (true) {
 			i = (q * i) % n;
 			if (f_taken[i]) {
 				break;
 			}
-			f_taken[i] = TRUE;
+			f_taken[i] = true;
 			set[sz++] = i;
 			Index[i] = tl;
 		}

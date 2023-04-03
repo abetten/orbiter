@@ -27,7 +27,7 @@ spread_table_with_selection::spread_table_with_selection()
 	spread_size = 0;
 	size_of_packing = 0;
 	nb_lines = 0;
-	f_select_spread = FALSE;
+	f_select_spread = false;
 	//select_spread_text = NULL;
 	select_spread = NULL;
 	select_spread_nb = 0;
@@ -157,7 +157,7 @@ void spread_table_with_selection::init(spread_classify *T,
 	}
 
 	Spread_tables->init(T->PA->P,
-				FALSE /* f_load */,
+				false /* f_load */,
 				nb_iso_types_of_spreads,
 				path_to_spread_tables,
 				verbose_level);
@@ -331,7 +331,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 				"before Spread_tables->init" << endl;
 	}
 
-	Spread_tables->init(T->PA->P, FALSE, nb_iso_types_of_spreads,
+	Spread_tables->init(T->PA->P, false, nb_iso_types_of_spreads,
 			path_to_spread_tables,
 			verbose_level);
 
@@ -506,7 +506,7 @@ int spread_table_with_selection::test_if_packing_is_self_dual(
 		int *packing, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = FALSE;
+	int ret = false;
 	int i, a, b;
 	data_structures::sorting Sorting;
 
@@ -526,7 +526,7 @@ int spread_table_with_selection::test_if_packing_is_self_dual(
 	}
 	Sorting.int_vec_heapsort(dual_packing, size_of_packing);
 	if (Sorting.int_vec_compare(sorted_packing, dual_packing, size_of_packing) == 0) {
-		ret = TRUE;
+		ret = true;
 	}
 
 	if (f_v) {
@@ -553,7 +553,7 @@ void packing_classify::read_spread_table(int verbose_level)
 	}
 
 	Spread_tables->init(F,
-			TRUE /* f_load */, nb_iso_types_of_spreads,
+			true /* f_load */, nb_iso_types_of_spreads,
 			spread_tables_prefix,
 			verbose_level);
 
@@ -650,15 +650,15 @@ void spread_table_with_selection::predict_spread_table_length(
 				0 /*verbose_level*/);
 
 
-		f_do_it = FALSE;
+		f_do_it = false;
 		if (f_select_spread) {
 			if (Sorting.int_vec_search_linear(select_spread,
 					select_spread_nb, no, idx)) {
-				f_do_it = TRUE;
+				f_do_it = true;
 			}
 		}
 		else {
-			f_do_it = TRUE;
+			f_do_it = true;
 		}
 		if (f_do_it) {
 			long int *rep;
@@ -813,7 +813,7 @@ void spread_table_with_selection::make_spread_table(
 #endif
 
 
-	if (FALSE) {
+	if (false) {
 		cout << "spread_table_with_selection::make_spread_table "
 				"The labeled spreads are:" << endl;
 		for (i = 0; i < total_nb_of_spreads; i++) {
@@ -969,32 +969,32 @@ int spread_table_with_selection::is_adjacent(int i, int j)
 	combinatorics::combinatorics_domain Combi;
 
 	if (i == j) {
-		return FALSE;
+		return false;
 	}
 #if 1
 	if (Bitvec) {
 		k = Combi.ij2k(i, j, Spread_tables->nb_spreads);
 		if (Bitvec->s_i(k)) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 	else {
 		if (Spread_tables->test_if_spreads_are_disjoint(i, j)) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 #else
 	if (Spread_tables->test_if_spreads_are_disjoint(i, j)) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 #endif
 }

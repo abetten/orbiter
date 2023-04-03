@@ -31,7 +31,7 @@ blt_set_invariants::blt_set_invariants()
 	intersection_matrix = NULL;
 	nb_planes = 0;
 
-	f_has_interesting_planes = FALSE;
+	f_has_interesting_planes = false;
 	Sos = NULL;
 	Sos2 = NULL;
 	Sos3 = NULL;
@@ -225,8 +225,8 @@ void blt_set_invariants::latex(std::ostream &ost, int verbose_level)
 		ost << "too big (" << nb_planes << " planes)\\\\" << endl;
 	}
 
-	int f_enter_math = FALSE;
-	int f_print_subscripts = TRUE;
+	int f_enter_math = false;
+	int f_print_subscripts = true;
 
 	ost << "$$" << endl;
 	D2->print_row_decomposition_tex(

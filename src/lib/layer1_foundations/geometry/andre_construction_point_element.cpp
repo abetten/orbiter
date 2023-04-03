@@ -31,7 +31,7 @@ andre_construction_point_element::andre_construction_point_element()
 	spread_size = 0;
 	F = NULL;
 	point_rank = 0;
-	f_is_at_infinity = FALSE;
+	f_is_at_infinity = false;
 	at_infinity_idx = 0;
 	affine_numeric = 0;
 	coordinates = NULL;
@@ -76,11 +76,11 @@ void andre_construction_point_element::unrank(
 	}
 	andre_construction_point_element::point_rank = point_rank;
 	if (point_rank < spread_size) {
-		f_is_at_infinity = TRUE;
+		f_is_at_infinity = true;
 		at_infinity_idx = point_rank;
 	}
 	else {
-		f_is_at_infinity = FALSE;
+		f_is_at_infinity = false;
 		point_rank -= spread_size;
 		Gg.AG_element_unrank(q, coordinates, 1, n, point_rank);
 	}

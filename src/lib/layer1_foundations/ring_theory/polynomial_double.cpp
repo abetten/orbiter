@@ -143,7 +143,7 @@ double polynomial_double::root_finder(int verbose_level)
 		}
 		else {
 			if (ABS(vm) < eps) {
-				if (TRUE) {
+				if (true) {
 					cout << "polynomial_double::root_finder hit on a root by chance" << endl;
 				}
 				return m;

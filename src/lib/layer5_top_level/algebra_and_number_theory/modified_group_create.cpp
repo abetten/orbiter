@@ -30,7 +30,7 @@ modified_group_create::modified_group_create()
 		A_previous = NULL;
 		A_modified = NULL;
 
-		f_has_strong_generators = FALSE;
+		f_has_strong_generators = false;
 		Strong_gens = NULL;
 
 		action_on_self_by_right_multiplication_sims = NULL;
@@ -256,7 +256,7 @@ void modified_group_create::create_restricted_action(
 	}
 	A_modified->f_is_linear = A_previous->f_is_linear;
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "modified_group_create::create_restricted_action "
 				"before Strong_gens = AG->Subgroup_gens" << endl;
@@ -370,7 +370,7 @@ void modified_group_create::create_action_on_k_subspaces(
 	}
 
 	A_modified = A_previous->Induced_action->induced_action_on_grassmannian_preloaded(AonG,
-		FALSE /* f_induce_action */, NULL /*sims *old_G */,
+		false /* f_induce_action */, NULL /*sims *old_G */,
 		verbose_level - 2);
 
 	if (f_v) {
@@ -379,14 +379,14 @@ void modified_group_create::create_action_on_k_subspaces(
 	}
 
 
-	A_modified->f_is_linear = TRUE;
+	A_modified->f_is_linear = true;
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 
 	A_modified->f_is_linear = A_previous->f_is_linear;
 	A_modified->dimension = A_previous->dimension;
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_k_subspaces "
 				"before Strong_gens = AG->Subgroup_gens" << endl;
@@ -464,14 +464,14 @@ void modified_group_create::create_action_on_k_subsets(
 	}
 
 
-	A_modified->f_is_linear = FALSE;
+	A_modified->f_is_linear = false;
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 
 	A_modified->f_is_linear = A_previous->f_is_linear;
 	A_modified->dimension = A_previous->dimension;
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_k_subsets "
 				"before Strong_gens = AG->Subgroup_gens" << endl;
@@ -549,7 +549,7 @@ void modified_group_create::create_action_on_wedge_product(
 
 
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 
 	//A_modified->f_is_linear = A_previous->f_is_linear;
 	//A_modified->dimension = A_previous->dimension;
@@ -617,7 +617,7 @@ void modified_group_create::create_special_subgroup(
 
 
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "modified_group_create::create_special_subgroup "
 				"before Strong_gens = AG->Subgroup_gens" << endl;
@@ -733,7 +733,7 @@ void modified_group_create::create_point_stabilizer_subgroup(
 
 
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "modified_group_create::create_point_stabilizer_subgroup "
 				"before Strong_gens = AG->Subgroup_gens" << endl;
@@ -838,7 +838,7 @@ void modified_group_create::create_projectivity_subgroup(
 				"after A_previous->compute_projectivity_subgroup" << endl;
 	}
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 
 
 	if (f_v) {
@@ -911,7 +911,7 @@ void modified_group_create::create_subfield_subgroup(
 
 
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "modified_group_create::create_subfield_subgroup "
 				"before Strong_gens = AG->Subgroup_gens" << endl;
@@ -1023,21 +1023,21 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 
 
 	A_modified = A_previous->Induced_action->induced_action_by_right_multiplication(
-			FALSE /* f_basis */, NULL,
-			action_on_self_by_right_multiplication_sims, FALSE /* f_ownership */,
+			false /* f_basis */, NULL,
+			action_on_self_by_right_multiplication_sims, false /* f_ownership */,
 			verbose_level);
 
 
 
 
-	A_modified->f_is_linear = FALSE;
+	A_modified->f_is_linear = false;
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 
 	//A_modified->f_is_linear = A_previous->f_is_linear;
 	//A_modified->dimension = A_previous->dimension;
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
 				"before Strong_gens = AG->Subgroup_gens" << endl;

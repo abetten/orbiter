@@ -518,7 +518,7 @@ typedef unsigned long nauty_counter;
 #define EMPTYSET0(setadd,m) \
     {setword *es; \
     for (es = (setword*)(setadd)+(m); --es >= (setword*)(setadd);) *es=0;}
-#define GRAPHROW0(g,v,m) ((set*)(g) + (m)*(size_t)(v))
+#define GRAPHROW0(g,v,m) ((setword*)(g) + (m)*(size_t)(v))
 #define ADDONEARC0(g,v,w,m) ADDELEMENT0(GRAPHROW0(g,v,m),w)
 #define ADDONEEDGE0(g,v,w,m) { ADDONEARC0(g,v,w,m); ADDONEARC0(g,w,v,m); }
 #define EMPTYGRAPH0(g,m,n) EMPTYSET0(g,(m)*(size_t)(n))

@@ -997,10 +997,10 @@ void arc_in_projective_space::arc_lifting_diophant(
 	}
 
 	data_structures::tally C;
-	C.init(line_type, P->Subspaces->N_lines, FALSE, 0);
+	C.init(line_type, P->Subspaces->N_lines, false, 0);
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting_diophant line_type:";
-		C.print_naked(TRUE);
+		C.print_naked(true);
 		cout << endl;
 		cout << "nb_free_points=" << nb_free_points << endl;
 	}
@@ -1008,12 +1008,12 @@ void arc_in_projective_space::arc_lifting_diophant(
 
 	D = NEW_OBJECT(solvers::diophant);
 	D->open(P->Subspaces->N_lines + 1, nb_free_points, verbose_level - 1);
-	//D->f_x_max = TRUE;
+	//D->f_x_max = true;
 	for (j = 0; j < nb_free_points; j++) {
 		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 	}
-	D->f_has_sum = TRUE;
+	D->f_has_sum = true;
 	D->sum = target_sz - arc_sz;
 	h = 0;
 	for (i = 0; i < P->Subspaces->N_lines; i++) {
@@ -1116,12 +1116,12 @@ void arc_in_projective_space::arc_with_given_set_of_s_lines_diophant(
 
 	D = NEW_OBJECT(solvers::diophant);
 	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points, verbose_level - 1);
-	//D->f_x_max = TRUE;
+	//D->f_x_max = true;
 	for (j = 0; j < P->Subspaces->N_points; j++) {
 		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 	}
-	D->f_has_sum = TRUE;
+	D->f_has_sum = true;
 	D->sum = target_sz;
 	h = 0;
 	for (i = 0; i < nb_s_lines; i++) {
@@ -1249,12 +1249,12 @@ void arc_in_projective_space::arc_with_two_given_line_sets_diophant(
 
 	D = NEW_OBJECT(solvers::diophant);
 	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points, verbose_level - 1);
-	//D->f_x_max = TRUE;
+	//D->f_x_max = true;
 	for (j = 0; j < P->Subspaces->N_points; j++) {
 		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 	}
-	D->f_has_sum = TRUE;
+	D->f_has_sum = true;
 	D->sum = target_sz;
 	h = 0;
 	for (i = 0; i < nb_s_lines; i++) {
@@ -1407,12 +1407,12 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 
 	D = NEW_OBJECT(solvers::diophant);
 	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points, verbose_level - 1);
-	//D->f_x_max = TRUE;
+	//D->f_x_max = true;
 	for (j = 0; j < P->Subspaces->N_points; j++) {
 		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 	}
-	D->f_has_sum = TRUE;
+	D->f_has_sum = true;
 	D->sum = target_sz;
 	h = 0;
 	for (i = 0; i < nb_s_lines; i++) {
@@ -1663,12 +1663,12 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 
 	D = NEW_OBJECT(solvers::diophant);
 	D->open(nb_eqns, nb_vars, verbose_level - 1);
-	//D->f_x_max = TRUE;
+	//D->f_x_max = true;
 	for (j = 0; j < nb_vars; j++) {
 		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 	}
-	D->f_has_sum = TRUE;
+	D->f_has_sum = true;
 	D->sum = arc_sz + (arc_d - 1) * nb_pencil_conditions;
 	h = 0;
 	for (i = 0; i < nb_secant_lines; i++) {
@@ -1784,7 +1784,7 @@ void arc_in_projective_space::arc_lifting1(
 		cout << "arc_in_projective_space::arc_lifting1" << endl;
 	}
 	solvers::diophant *D = NULL;
-	int f_save_system = TRUE;
+	int f_save_system = true;
 
 	long int *the_set_in;
 	int set_size_in;
@@ -1795,11 +1795,11 @@ void arc_in_projective_space::arc_lifting1(
 			the_set_in /*one_lines*/, set_size_in /* nb_one_lines */,
 			arc_size /*target_sz*/, arc_d /* target_d */,
 			arc_d_low, arc_s /* target_s */,
-			TRUE /* f_dualize */,
+			true /* f_dualize */,
 			D,
 			verbose_level);
 
-	if (FALSE) {
+	if (false) {
 		D->print_tight();
 	}
 
@@ -1895,17 +1895,17 @@ void arc_in_projective_space::arc_lifting2(
 
 
 	solvers::diophant *D = NULL;
-	int f_save_system = TRUE;
+	int f_save_system = true;
 
 	arc_with_two_given_line_sets_diophant(
 			the_set_in /* s_lines */, set_size_in /* nb_s_lines */, arc_s,
 			t_lines, nb_t_lines, arc_t,
 			arc_size /*target_sz*/, arc_d, arc_d_low,
-			TRUE /* f_dualize */,
+			true /* f_dualize */,
 			D,
 			verbose_level);
 
-	if (FALSE) {
+	if (false) {
 		D->print_tight();
 	}
 
@@ -1990,7 +1990,7 @@ void arc_in_projective_space::arc_lifting3(
 	//int arc_size;
 	//int arc_d;
 	solvers::diophant *D = NULL;
-	int f_save_system = TRUE;
+	int f_save_system = true;
 
 	long int *t_lines;
 	int nb_t_lines;
@@ -2022,11 +2022,11 @@ void arc_in_projective_space::arc_lifting3(
 			t_lines, nb_t_lines, arc_t,
 			u_lines, nb_u_lines, arc_u,
 			arc_size /*target_sz*/, arc_d, arc_d_low,
-			TRUE /* f_dualize */,
+			true /* f_dualize */,
 			D,
 			verbose_level);
 
-	if (FALSE) {
+	if (false) {
 		D->print_tight();
 	}
 	if (f_save_system) {
@@ -2353,7 +2353,7 @@ int arc_in_projective_space::arc_test(
 	int *Pts;
 	int *Mtx;
 	int set[3];
-	int ret = TRUE;
+	int ret = true;
 	int h, i, N;
 	combinatorics::combinatorics_domain Combi;
 
@@ -2384,7 +2384,7 @@ int arc_in_projective_space::arc_test(
 				cout << "Points P_" << set[0] << ", P_" << set[1]
 					<< " and P_" << set[2] << " are collinear" << endl;
 			}
-			ret = FALSE;
+			ret = false;
 		}
 	}
 

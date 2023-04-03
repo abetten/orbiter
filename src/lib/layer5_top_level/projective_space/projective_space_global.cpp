@@ -186,7 +186,7 @@ void projective_space_global::do_lift_skew_hexagon(
 		cout << "projective_space_global::do_lift_skew_hexagon "
 				"before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	Surf_A->init(Surf, PA, true /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon "
 				"after Surf_A->init" << endl;
@@ -305,7 +305,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
 				"before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	Surf_A->init(Surf, PA, true /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
 				"after Surf_A->init" << endl;
@@ -653,18 +653,18 @@ void projective_space_global::do_classify_cubic_curves(
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
+			false /* f_book */,
+			true /* f_title */,
 			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
 			extra_praeamble /* extra_praeamble */);
 
 		fp << "\\subsection*{" << title << "}" << endl;

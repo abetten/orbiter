@@ -123,8 +123,8 @@ void nth_roots::init(
 	Fp = NEW_OBJECT(finite_field);
 
 	Fp->finite_field_init_small_order(F->p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			verbose_level - 1);
 
 	FX = NEW_OBJECT(ring_theory::unipoly_domain);
@@ -303,14 +303,14 @@ void nth_roots::init(
 
 		//Codes.print_polynomial_tight(*Fq, Cyc->S->Set_size[i], generator[i]);
 
-		int f_first = TRUE;
+		int f_first = true;
 		int degree = Cyc->S->Set_size[i];
 
 		for (j = 0; j <= degree; j++) {
 			if (!f_first) {
 				cout << " + ";
 			}
-			f_first = FALSE;
+			f_first = false;
 
 			for (h = 0; h < field_degree; h++) {
 				input_vector[h] = FpX->s_i(min_poly_beta_FQ[i][j], h);
@@ -580,7 +580,7 @@ void nth_roots::report(
 	int i;
 	string label;
 	coding_theory::cyclic_codes Cyclic_codes;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	if (f_v) {
 		cout << "nth_roots::report" << endl;

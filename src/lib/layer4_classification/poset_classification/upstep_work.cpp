@@ -27,9 +27,9 @@ upstep_work::upstep_work()
 	nb_fusion_nodes = 0;
 	nb_fuse_cur = 0;
 	nb_ext_cur = 0;
-	f_debug = FALSE;
-	f_implicit_fusion = FALSE;
-	f_indicate_not_canonicals = FALSE;
+	f_debug = false;
+	f_implicit_fusion = false;
+	f_indicate_not_canonicals = false;
 	mod_for_printing = 1;
 	pt = 0;
 	pt_orbit_len = 0;
@@ -346,12 +346,12 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 	}
 	if (ret) {
 		if (f_vv) {
-			cout << "init_extension_node returns TRUE" << endl;
+			cout << "init_extension_node returns true" << endl;
 		}
 	}
 	else {
 		if (f_vv) {
-			cout << "init_extension_node returns FALSE, "
+			cout << "init_extension_node returns false, "
 					"the set is not canonical" << endl;
 		//cout << "u=" << gen->split_case << " @(" << prev
 			//<< "," << prev_ex << ") not canonical" << endl;
@@ -397,8 +397,8 @@ int upstep_work::init_extension_node(int verbose_level)
 // free poset_orbit_node which will
 // become the descendant of the previous node (prev).
 // the extension node corresponds to the point pt. 
-// returns FALSE if the set is not canonical
-// (provided f_indicate_not_canonicals is TRUE)
+// returns false if the set is not canonical
+// (provided f_indicate_not_canonicals is true)
 {
 
 #if 0
@@ -565,9 +565,9 @@ int upstep_work::init_extension_node(int verbose_level)
 				if (f_vv) {
 					cout << "the set is not canonical" << endl;
 				}
-				return FALSE;
+				return false;
 			}
-			cout << "upstep_subspace_action returns FALSE, "
+			cout << "upstep_subspace_action returns false, "
 					"the set is not canonical, this should not happen"
 					<< endl;
 			exit(1);
@@ -592,9 +592,9 @@ int upstep_work::init_extension_node(int verbose_level)
 				if (f_vv) {
 					cout << "the set is not canonical" << endl;
 				}
-				return FALSE;
+				return false;
 			}
-			cout << "upstep_for_sets returns FALSE, "
+			cout << "upstep_for_sets returns false, "
 					"the set is not canonical, "
 					"this should not happen" << endl;
 			exit(1);
@@ -662,15 +662,15 @@ int upstep_work::init_extension_node(int verbose_level)
 		cout << "} (double check)" << endl;
 		cout << "upstep_work::init_extension_node done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int upstep_work::upstep_for_sets(int verbose_level)
 // This routine is called from upstep_work::init_extension_node
 // It is testing a set of size 'size'.
 // The newly added point is in gen->S[size - 1]
-// returns FALSE if the set is not canonical
-// (provided f_indicate_not_canonicals is TRUE)
+// returns false if the set is not canonical
+// (provided f_indicate_not_canonicals is true)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -703,7 +703,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	A_by_restriction = gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		NULL /*sims *old_G */,
 		size, gen->get_S(), label_of_set,
-		FALSE /* f_induce_action */,
+		false /* f_induce_action */,
 		0 /*verbose_level - 2*/);
 	
 	// the newly added point:
@@ -831,7 +831,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		
 		r = recognize(final_node, 
 				final_ex, 
-				TRUE /*f_tolerant*/, 
+				true /*f_tolerant*/, 
 				verbose_level - 4);
 
 		if (f_v) {
@@ -895,7 +895,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 							<< endl;
 				}
 				FREE_OBJECT(A_by_restriction);
-				return FALSE;
+				return false;
 			}
 #if 0
 			print_level_extension_coset_info();
@@ -937,7 +937,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	}
 	data_structures_groups::vector_ge SG_extension;
 	int *tl_extension = NEW_int(gen->get_A()->base_len());
-	int f_tolerant = TRUE;
+	int f_tolerant = true;
 	
 	if (f_vvv) {
 		cout << "upstep_work::upstep_for_sets H->S->transitive_extension_tolerant "
@@ -959,7 +959,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 				"nb_cosets_processed = " << nb_cosets_processed << endl;
 	}
 	FREE_OBJECT(A_by_restriction);
-	return TRUE;
+	return true;
 }
 
 

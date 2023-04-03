@@ -317,7 +317,7 @@ void wreath_product::init_tensor_wreath_product(
 	}
 	base_len_in_component = GG.matrix_group_base_len_general_linear_group(
 			dimension_of_matrix_group, q,
-			FALSE /*f_semilinear */, verbose_level - 1);
+			false /*f_semilinear */, verbose_level - 1);
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
 				"base_len_in_component = " << base_len_in_component << endl;
@@ -331,7 +331,7 @@ void wreath_product::init_tensor_wreath_product(
 
 	GGD.general_linear_matrix_group_base_and_transversal_length(
 		dimension_of_matrix_group, F,
-		FALSE /* f_semilinear */,
+		false /* f_semilinear */,
 		base_len_in_component, degree_of_matrix_group,
 		base_for_component, tl_for_component,
 		verbose_level - 1);
@@ -600,22 +600,22 @@ int wreath_product::element_is_one(int *Elt)
 		int f; //, scalar;
 
 		if (!P->is_one(Elt)) {
-			return FALSE;
+			return false;
 		}
 		for (f = 0; f < nb_factors; f++) {
 			if (!F->Linear_algebra->is_identity_matrix(
 					Elt + offset_i(f), dimension_of_matrix_group)) {
-				return FALSE;
+				return false;
 			}
 #if 0
 			if (!F->is_scalar_multiple_of_identity_matrix(
 					Elt + offset_i(f), dimension_of_matrix_group,
 					scalar)) {
-				return FALSE;
+				return false;
 			}
 #endif
 		}
-		return TRUE;
+		return true;
 }
 
 void wreath_product::element_mult(int *A, int *B, int *AB,
@@ -1059,7 +1059,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 
 	GGD.strong_generators_for_general_linear_group(
 		dimension_of_matrix_group, F,
-		FALSE /*M->f_semilinear*/,
+		false /*M->f_semilinear*/,
 		GL_data, GL_size, GL_nb_gens,
 		verbose_level - 1);
 
@@ -1124,7 +1124,7 @@ void wreath_product::report_rank_one_tensors(
 	combinatorics::combinatorics_domain Combi;
 	number_theory::number_theory_domain NT;
 	geometry::geometry_global Gg;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int *coords;
 	int *Proj;
 	int *projections;
@@ -1499,7 +1499,7 @@ void wreath_product::compute_tensor_ranks(
 		char *&TR, uint32_t *&Prev, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;
+	int f_vv = false;
 	long int i;
 	int r;
 	long int sz;
@@ -1763,13 +1763,13 @@ void wreath_product::compute_tensor_ranks(
 		int *types;
 		int nb_types;
 
-		C.init(R, N, FALSE, 0);
+		C.init(R, N, false, 0);
 
 		SoS = C.get_set_partition_and_types(types,
 				nb_types, verbose_level);
 
 		cout << "classification of orbit reps by tensor rank:" << endl;
-		C.print_naked(TRUE);
+		C.print_naked(true);
 		cout << endl;
 		for (int t = 0; t < nb_types; t++) {
 			cout << "working on type " << t << " of value " << types[t] << ":" << endl;
@@ -1788,14 +1788,14 @@ void wreath_product::compute_tensor_ranks(
 			data_structures::tally C1;
 			data_structures::tally C2;
 
-			C1.init(L, SoS->Set_size[t], FALSE, 0);
+			C1.init(L, SoS->Set_size[t], false, 0);
 			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;
-			C1.print_naked_tex(cout, TRUE);
+			C1.print_naked_tex(cout, true);
 			cout << endl;
 
-			C2.init(Ago, SoS->Set_size[t], FALSE, 0);
+			C2.init(Ago, SoS->Set_size[t], false, 0);
 			cout << "classification of ago for tensor rank " << types[t] << ":" << endl;
-			C2.print_naked_tex(cout, TRUE);
+			C2.print_naked_tex(cout, true);
 			cout << endl;
 
 			FREE_int(L);
@@ -1862,13 +1862,13 @@ void wreath_product::compute_tensor_ranks(
 		int *types;
 		int nb_types;
 
-		C.init(R, N, FALSE, 0);
+		C.init(R, N, false, 0);
 
 		SoS = C.get_set_partition_and_types(types,
 				nb_types, verbose_level);
 
 		cout << "classification of orbit reps by tensor rank:" << endl;
-		C.print_naked(TRUE);
+		C.print_naked(true);
 		cout << endl;
 		for (int t = 0; t < nb_types; t++) {
 			cout << "working on type " << t << " of value " << types[t] << ":" << endl;
@@ -1887,14 +1887,14 @@ void wreath_product::compute_tensor_ranks(
 			data_structures::tally C1;
 			data_structures::tally C2;
 
-			C1.init(L, SoS->Set_size[t], FALSE, 0);
+			C1.init(L, SoS->Set_size[t], false, 0);
 			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;
-			C1.print_naked_tex(cout, TRUE);
+			C1.print_naked_tex(cout, true);
 			cout << endl;
 
-			C2.init(Ago, SoS->Set_size[t], FALSE, 0);
+			C2.init(Ago, SoS->Set_size[t], false, 0);
 			cout << "classification of ago for tensor rank " << types[t] << ":" << endl;
-			C2.print_naked_tex(cout, TRUE);
+			C2.print_naked_tex(cout, true);
 			cout << endl;
 
 			FREE_int(L);
@@ -2405,10 +2405,10 @@ int wreath_product::test_if_file_exists(int nb_factors, int h, int b)
 
 	make_fname(fname, nb_factors, h, b);
 	if (Fio.file_size(fname) > 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -3020,7 +3020,7 @@ void wreath_product::orbits_restricted_compute(
 
 	A_perm = NEW_OBJECT(actions::action);
 	A_perm->Known_groups->init_permutation_representation(A,
-			FALSE /* f_stay_in_the_old_action */,
+			false /* f_stay_in_the_old_action */,
 			SG->gens,
 			Perms, degree,
 			verbose_level);
@@ -3030,7 +3030,7 @@ void wreath_product::orbits_restricted_compute(
 
 	A_perm_matrix = NEW_OBJECT(actions::action);
 	A_perm_matrix->Known_groups->init_permutation_representation(A,
-			TRUE /* f_stay_in_the_old_action */,
+			true /* f_stay_in_the_old_action */,
 			SG->gens,
 			Perms, degree,
 			verbose_level);

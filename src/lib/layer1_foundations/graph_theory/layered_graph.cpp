@@ -26,7 +26,7 @@ layered_graph::layered_graph()
 	id_of_first_node = 0;
 	L = NULL;
 	// fname_base
-	f_has_data1 = FALSE;
+	f_has_data1 = false;
 	data1 = -1;
 }
 
@@ -247,7 +247,7 @@ void layered_graph::add_data1(
 	if (f_v) {
 		cout << "layered_graph::add_data1" << endl;
 		}
-	f_has_data1 = TRUE;
+	f_has_data1 = true;
 	data1 = data;
 }
 
@@ -789,7 +789,7 @@ void layered_graph::draw_with_options(
 				if (O->f_nodes_empty) {
 					if (f_v) {
 						cout << "Vertex " << i << " " << j
-								<< " f_nodes_empty is TRUE" << endl;
+								<< " f_nodes_empty is true" << endl;
 					}
 				}
 				else {
@@ -1100,11 +1100,11 @@ void layered_graph::remove_edges(
 				if (l1 < l) {
 					continue;
 				}
-				f_found = FALSE;
+				f_found = false;
 				d = layer2 - l1;
 				for (h = 0; h < All_Paths.size(); h++) {
 					if (All_Paths[h][d] == n1 && All_Paths[h][d + 1] == n) {
-						f_found = TRUE;
+						f_found = true;
 						break;
 					}
 				}
@@ -1519,7 +1519,7 @@ void layered_graph::init_poset_from_file(
 			}
 		}
 
-		while (TRUE) {
+		while (true) {
 			fp >> l1;
 			if (l1 == -1) {
 				break;

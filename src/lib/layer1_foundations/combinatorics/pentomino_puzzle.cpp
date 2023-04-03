@@ -55,7 +55,7 @@ void pentomino_puzzle::main(int verbose_level)
 	make_coefficient_matrix(D);
 
 
-	int f_write_tree = FALSE;
+	int f_write_tree = false;
 	const char *fname_tree = "";
 
 	D->solve_all_DLX_with_RHS(f_write_tree, fname_tree, verbose_level);
@@ -88,7 +88,7 @@ void pentomino_puzzle::main(int verbose_level)
 
 	fname.assign("solutions.csv");
 
-	L->save_csv(fname, TRUE /* f_make_heading */, verbose_level);
+	L->save_csv(fname, true /* f_make_heading */, verbose_level);
 	}
 
 	cout << "Solution 8:" << endl;
@@ -118,7 +118,7 @@ void pentomino_puzzle::main(int verbose_level)
 	{
 		const char *fname = "pentomino_all.tex";
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface La;
+		l1_interfaces::latex_interface La;
 
 		La.head_easy(fp);
 
@@ -167,7 +167,7 @@ void pentomino_puzzle::main(int verbose_level)
 	{
 		const char *fname = "pentomino_orbits.tex";
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface La;
+		l1_interfaces::latex_interface La;
 
 		La.head_easy(fp);
 
@@ -225,7 +225,7 @@ void pentomino_puzzle::main(int verbose_level)
 	{
 	const char *fname = "pentomino_orbits_reduced.tex";
 	ofstream fp(fname);
-	orbiter_kernel_system::latex_interface La;
+	l1_interfaces::latex_interface La;
 
 
 	La.head_easy(fp);
@@ -291,16 +291,16 @@ int pentomino_puzzle::has_interlocking_Ps(long int *set)
 			}
 		}
 	if (nb_L <= 1) {
-		return FALSE;
+		return false;
 		}
 	for (i = 0; i < nb_L; i++) {
 		for (j = i + 1; j < nb_L; j++) {
 			if (test_if_interlocking_Ps(L[i], L[j])) {
-				return TRUE;
+				return true;
 				}
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 int pentomino_puzzle::has_interlocking_Pprime(long int *set)
@@ -316,16 +316,16 @@ int pentomino_puzzle::has_interlocking_Pprime(long int *set)
 			}
 		}
 	if (nb_L <= 1) {
-		return FALSE;
+		return false;
 		}
 	for (i = 0; i < nb_L; i++) {
 		for (j = i + 1; j < nb_L; j++) {
 			if (test_if_interlocking_Ps(L[i], L[j])) {
-				return TRUE;
+				return true;
 				}
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 int pentomino_puzzle::has_interlocking_Ls(long int *set)
@@ -341,16 +341,16 @@ int pentomino_puzzle::has_interlocking_Ls(long int *set)
 			}
 		}
 	if (nb_L <= 1) {
-		return FALSE;
+		return false;
 		}
 	for (i = 0; i < nb_L; i++) {
 		for (j = i + 1; j < nb_L; j++) {
 			if (test_if_interlocking_Ls(L[i], L[j])) {
-				return TRUE;
+				return true;
 				}
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 int pentomino_puzzle::has_interlocking_Lprime(long int *set)
@@ -366,16 +366,16 @@ int pentomino_puzzle::has_interlocking_Lprime(long int *set)
 			}
 		}
 	if (nb_L <= 1) {
-		return FALSE;
+		return false;
 		}
 	for (i = 0; i < nb_L; i++) {
 		for (j = i + 1; j < nb_L; j++) {
 			if (test_if_interlocking_Ls(L[i], L[j])) {
-				return TRUE;
+				return true;
 				}
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 int pentomino_puzzle::test_if_interlocking_Ps(int a1, int a2)
@@ -395,18 +395,18 @@ int pentomino_puzzle::test_if_interlocking_Ps(int a1, int a2)
 	rr2 = R[h2][r2];
 
 	if (((rr1 + 2) % 4) != rr2) {
-		return FALSE;
+		return false;
 		}
 	if (y1 != 0) {
-		return FALSE;
+		return false;
 		}
 	if (y2 != 0) {
-		return FALSE;
+		return false;
 		}
 	if (x1 + x2 != 3) {
-		return FALSE;
+		return false;
 		}
-	return TRUE;
+	return true;
 }
 
 int pentomino_puzzle::test_if_interlocking_Ls(int a1, int a2)
@@ -426,18 +426,18 @@ int pentomino_puzzle::test_if_interlocking_Ls(int a1, int a2)
 	rr2 = R[h2][r2];
 
 	if (((rr1 + 2) % 4) != rr2) {
-		return FALSE;
+		return false;
 		}
 	if (y1 != 1) {
-		return FALSE;
+		return false;
 		}
 	if (y2 != 1) {
-		return FALSE;
+		return false;
 		}
 	if (x1 + x2 != 3) {
-		return FALSE;
+		return false;
 		}
-	return TRUE;
+	return true;
 }
 
 int pentomino_puzzle::number_of_pieces_of_type(int t, long int *set)
@@ -460,10 +460,10 @@ int pentomino_puzzle::does_it_contain_an_I(long int *set)
 	for (i = 0; i < 5; i++) {
 		a = set[i];
 		if (a >= var_start[3] && a < var_start[4]) {
-			return TRUE;
+			return true;
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 void pentomino_puzzle::decode_assembly(long int *set)
@@ -1144,7 +1144,7 @@ void pentomino_puzzle::make_coefficient_matrix(solvers::diophant *D)
 	for (i = 0; i < D->m; i++) {
 		D->RHS[i] = 1;
 		}
-	D->f_has_sum = TRUE;
+	D->f_has_sum = true;
 	D->sum = 5;
 }
 

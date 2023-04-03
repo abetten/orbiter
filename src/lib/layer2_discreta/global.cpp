@@ -485,17 +485,17 @@ int nb_primes(int n)
 
 int factor_if_prime_power(int n, int *p, int *e)
 //Computes $p$ and $e$ with $n=p^e$. 
-//If $n$ is not a prime power, FALSE is returned.
+//If $n$ is not a prime power, false is returned.
 {
 	Vector vp, ve;
 
 	factor_integer(n, vp, ve);
 	if (vp.s_l() != 1) {
-		return FALSE;
+		return false;
 		}
 	*p = vp.s_ii(0);
 	*e = ve.s_ii(0);
-	return TRUE;
+	return true;
 }
 
 int Euler(int n)
@@ -730,7 +730,7 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 	cout << "initialization:\n";
 #endif	
 	round = 0;
-	while (TRUE) {
+	while (true) {
 #ifdef TONELLI_VERBOSE
 		cout << "Z=" << Z << endl;
 		cout << "Y=" << Y << endl;
@@ -870,7 +870,7 @@ void sieve(
 	for (i = 0; ; i++) {
 		from = i * unit_size + 1;
 		to = from + unit_size - 1;
-		sieve_primes(primes, from, to, factorbase, FALSE);
+		sieve_primes(primes, from, to, factorbase, false);
 		l = primes.s_l();
 		cout << "[" << from << "," << to 
 			<< "], total number of primes = " 
@@ -899,13 +899,13 @@ void sieve_primes(
 	for (; x <= to; x++, x++) {
 		if (x <= 1)
 			continue;
-		f_prime = TRUE;
+		f_prime = true;
 		for (k = 0; k < l; k++) {
 			p = v[k].s_i_i();
 			y = x / p;
 			// cout << "x=" << x << " p=" << p << " y=" << y << endl;
 			if ((x - y * p) == 0) {
-				f_prime = FALSE;
+				f_prime = false;
 				break;
 				}
 			if (y < p)
@@ -1348,7 +1348,7 @@ void Krawtchouk(
 
 void tuple2_rank(
 		int rank, int &i, int &j, int n, int f_injective)
-//enumeration of 2-tuples $(i,j)$ (f_injective TRUE iff $i=j$ forbidden).
+//enumeration of 2-tuples $(i,j)$ (f_injective true iff $i=j$ forbidden).
 //this routine produces the tuple with number ``rank'' into $i$ and $j$. 
 //$n$ is the number of points $1 \le i,j \le n$.
 {
@@ -1513,7 +1513,7 @@ void bit_clear(uint & g, int k)
 
 int bit_test(uint & g, int k)
 {
-	return ( (g & (((uint) 1) << k)) ? TRUE : FALSE );
+	return ( (g & (((uint) 1) << k)) ? true : false );
 }
 
 void bitset2vector(uint g, Vector &v)
@@ -1754,7 +1754,7 @@ int Gauss_int(
 	int *negate_table, int *inv_table, int verbose_level)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
-// P is a m x Pn matrix (if f_P is TRUE)
+// P is a m x Pn matrix (if f_P is true)
 {
 	int f_v = (verbose_level >= 1);
 	int rank, i, j, k, jj;
@@ -2060,8 +2060,8 @@ int code_is_irreducible(int k, int nmk, int idx_zero, int *M)
 	// printf("code_is_irreducible() c_processed = %d r_processed = %d "
 	//	"nmk = %d k = %d\n", c_processed, r_processed, nmk, k);
 	if (c_processed < nmk || r_processed < k)
-		return FALSE;
-	return TRUE;
+		return false;
+	return true;
 }
 
 

@@ -55,7 +55,7 @@ schlaefli_labels::~schlaefli_labels()
 void schlaefli_labels::init(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	int i, j, h, h2;
 
@@ -90,7 +90,7 @@ void schlaefli_labels::init(int verbose_level)
 	if (f_v) {
 		cout << "schlaefli_labels::init Sets:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
-			Sets, 30, 2, FALSE /* f_tex */);
+			Sets, 30, 2, false /* f_tex */);
 	}
 
 
@@ -111,7 +111,7 @@ void schlaefli_labels::init(int verbose_level)
 	if (f_v) {
 		cout << "Sets2:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
-			Sets2, 15, 2, FALSE /* f_tex */);
+			Sets2, 15, 2, false /* f_tex */);
 	}
 
 

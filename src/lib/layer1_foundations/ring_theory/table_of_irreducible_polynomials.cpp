@@ -242,22 +242,22 @@ int table_of_irreducible_polynomials::select_polynomial_first(
 		Select[i] = m;
 		k1 -= m * d;
 		if (k1 == 0) {
-			return TRUE;
+			return true;
 		}
 	}
 	if (k1 == 0) {
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::select_polynomial_first "
-					"returns TRUE" << endl;
+					"returns true" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	else {
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::select_polynomial_first "
-					"returns FALSE" << endl;
+					"returns false" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 }
 
@@ -286,9 +286,9 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 		if (i == nb_irred) {
 			if (f_v) {
 				cout << "table_of_irreducible_polynomials::select_polynomial_next "
-						"return FALSE" << endl;
+						"return false" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 		if (f_vv) {
 			cout << "k1=" << k1 << endl;
@@ -305,9 +305,9 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 			if (k1 == 0) {
 				if (f_v) {
 					cout << "table_of_irreducible_polynomials::select_polynomial_next "
-							"return FALSE" << endl;
+							"return false" << endl;
 				}
-				return TRUE;
+				return true;
 			}
 		}
 		k1 += Select[0] * Degree[0];
@@ -315,9 +315,9 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 	} while (k1);
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::select_polynomial_next "
-				"return FALSE" << endl;
+				"return false" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 int table_of_irreducible_polynomials::is_irreducible(unipoly_object &poly, int verbose_level)
@@ -338,10 +338,10 @@ int table_of_irreducible_polynomials::is_irreducible(unipoly_object &poly, int v
 	}
 	FREE_int(Mult);
 	if (sum > 1) {
-		f_is_irred = FALSE;
+		f_is_irred = false;
 	}
 	else {
-		f_is_irred = TRUE;
+		f_is_irred = true;
 	}
 
 	if (f_v) {

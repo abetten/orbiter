@@ -18,18 +18,18 @@ namespace orthogonal_geometry_applications {
 
 blt_set_activity_description::blt_set_activity_description()
 {
-	f_report = FALSE;
+	f_report = false;
 
-	f_export_gap = FALSE;
+	f_export_gap = false;
 
-	f_create_flock = FALSE;
+	f_create_flock = false;
 	create_flock_point_idx = 0;
 
-	f_BLT_test = FALSE;
+	f_BLT_test = false;
 
-	f_export_set_in_PG = FALSE;
+	f_export_set_in_PG = false;
 
-	f_plane_invariant = FALSE;
+	f_plane_invariant = false;
 
 }
 
@@ -50,38 +50,38 @@ int blt_set_activity_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+			f_report = true;
 			if (f_v) {
 				cout << "-report " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_gap") == 0) {
-			f_export_gap = TRUE;
+			f_export_gap = true;
 			if (f_v) {
 				cout << "-export_gap " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-create_flock") == 0) {
-			f_create_flock = TRUE;
+			f_create_flock = true;
 			create_flock_point_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-create_flock " << create_flock_point_idx << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-BLT_test") == 0) {
-			f_BLT_test = TRUE;
+			f_BLT_test = true;
 			if (f_v) {
 				cout << "-BLT_test " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_set_in_PG") == 0) {
-			f_export_set_in_PG = TRUE;
+			f_export_set_in_PG = true;
 			if (f_v) {
 				cout << "-export_set_in_PG " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-plane_invariant") == 0) {
-			f_plane_invariant = TRUE;
+			f_plane_invariant = true;
 			if (f_v) {
 				cout << "-plane_invariant " << endl;
 			}

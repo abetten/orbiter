@@ -482,7 +482,7 @@ void code_diagram::report(int verbose_level)
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 		fp << "Place values:" << endl;

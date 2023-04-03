@@ -359,10 +359,10 @@ int scene::line_pt_and_dir(double *x6, double rad, int verbose_level)
 			exit(1);
 		}
 #endif
-		ret = TRUE;
+		ret = true;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 	if (f_v) {
 		cout << "scene::line_pt_and_dir done" << endl;
@@ -407,7 +407,7 @@ int scene::line_pt_and_dir_and_copy_points(
 		}
 #endif
 		points(pt2, 2);
-		ret = TRUE;
+		ret = true;
 	}
 	else {
 		cout << "line_pt_and_dir_and_copy_points could not create points" << endl;

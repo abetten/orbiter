@@ -198,20 +198,20 @@ int design_parameter::increased_t(design_parameter& p, int verbose_level)
 	a.m_i(K() - t());
 	b.m_i(v() - t());
 	if (a.is_zero())
-		return FALSE;
+		return false;
 	if (b.is_zero())
-		return FALSE;
+		return false;
 	lambda_new.mult(lambda(), a, verbose_level);
 	lambda_new.integral_division(b, q, r, 0);
 	lambda_new.swap(q);
 	if (!r.is_zero())
-		return FALSE;
+		return false;
 	p.init();
 	p.v() = v();
 	p.t() = t() + 1;
 	p.K() = K();
 	p.lambda() = lambda_new;
-	return TRUE;
+	return true;
 }
 
 void design_parameter::supplementary_reduced_t(design_parameter& p, int verbose_level)
@@ -264,9 +264,9 @@ int design_parameter::derived_inverse(design_parameter& p, int verbose_level)
 	p1.K() = K() + 1;
 	p1.lambda() = lambda();
 	if (!design_parameters_admissible(p1.v(), p1.t(), p1.K(), p1.lambda()))
-		return FALSE;
+		return false;
 	p1.swap(p);
-	return TRUE;
+	return true;
 }
 
 void design_parameter::supplementary_derived(design_parameter& p, int verbose_level)
@@ -327,12 +327,12 @@ int design_parameter::residual_inverse(design_parameter& p, int verbose_level)
 	b.m_i_i(v() + 1 - K());
 	a.integral_division(b, q, r, 0);
 	if (!r.is_zero())
-		return FALSE;
+		return false;
 	p1.lambda() = q;
 	if (!design_parameters_admissible(p1.v(), p1.t(), p1.K(), p1.lambda()))
-		return FALSE;
+		return false;
 	p1.swap(p);
-	return TRUE;
+	return true;
 }
 
 void design_parameter::ancestor(
@@ -341,7 +341,7 @@ void design_parameter::ancestor(
 {
 	int f_v = (verbose_level >= 1);
 	design_parameter s, q;
-	int f_special = FALSE;
+	int f_special = false;
 	number_theory::number_theory_domain NT;
 	
 	path.m_l_n(3);
@@ -355,7 +355,7 @@ void design_parameter::ancestor(
 				cout << "determining ancestor of steiner system "
 						<< s.t() << "(" << s.v() << "," << s.K()
 						<< "1) with v - t prime" << endl;
-				f_special = TRUE;
+				f_special = true;
 				}
 			}
 		}
@@ -439,7 +439,7 @@ int design_parameter::trung_complementary(design_parameter& p, int verbose_level
 	design_parameter_source S;
 
 	if (v() != 2 * K() + 1)
-		return FALSE;
+		return false;
 	
 	// lambda_new = (lambda * (2 * k + 2 - t)) / (k + 1 - t);
 	a.m_i(2 * K() + 2 - t());
@@ -456,7 +456,7 @@ int design_parameter::trung_complementary(design_parameter& p, int verbose_level
 	S.prev() = id();
 	S.rule() = rule_trung_complementary;
 	p.source().append(S);
-	return TRUE;
+	return true;
 }
 
 int design_parameter::trung_left_partner(
@@ -470,10 +470,10 @@ int design_parameter::trung_left_partner(
 	a.mult(lambda(), c, verbose_level);
 	b.m_i(v() - K() + 1);
 	if (b.is_zero())
-		return FALSE;
+		return false;
 	a.integral_division(b, q, r, 0);
 	if (!r.is_zero())
-		return FALSE;
+		return false;
 	t1 = t();
 	v1 = v();
 	k1 = K() - 1;
@@ -482,7 +482,7 @@ int design_parameter::trung_left_partner(
 	v_new = v() + 1;
 	k_new = K();
 	lambda_new.add(lambda(), lambda1);
-	return TRUE;
+	return true;
 }
 
 int design_parameter::trung_right_partner(
@@ -496,10 +496,10 @@ int design_parameter::trung_right_partner(
 	a.mult(lambda(), c, verbose_level);
 	b.m_i(K() + 1 - t());
 	if (b.is_zero())
-		return FALSE;
+		return false;
 	a.integral_division(b, q, r, 0);
 	if (!r.is_zero())
-		return FALSE;
+		return false;
 	t1 = t();
 	v1 = v();
 	k1 = K() + 1;
@@ -508,12 +508,12 @@ int design_parameter::trung_right_partner(
 	v_new = v() + 1;
 	k_new = K() + 1;
 	lambda_new.add(lambda(), lambda1);
-	return TRUE;
+	return true;
 }
 
 int design_parameter::alltop(design_parameter& p)
 // Alltop~\cite{Alltop75}.
-// returns TRUE iff alltop could be applied;
+// returns true iff alltop could be applied;
 // in this case, p contains the new design parameter set.
 {
 	design_parameter_source S;
@@ -528,7 +528,7 @@ int design_parameter::alltop(design_parameter& p)
 		S.prev() = id();
 		S.rule() = rule_alltop;
 		p.source().append(S);
-		return TRUE;
+		return true;
 		}
 	if (v() == 2 * K() + 1 && ODD(t())) {
 		discreta_base lmax, lmax_half, two, r;
@@ -550,10 +550,10 @@ int design_parameter::alltop(design_parameter& p)
 			S.prev() = id();
 			S.rule() = rule_alltop;
 			p.source().append(S);
-			return TRUE;
+			return true;
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 void design_parameter::complementary(design_parameter& p, int verbose_level)
@@ -628,9 +628,9 @@ int design_parameter::is_selfsupplementary(int verbose_level)
 	b.negate();
 	c.add(a, b);
 	if (c.is_zero())
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 void design_parameter::lambda_of_supplementary(discreta_base& lambda_supplementary, int verbose_level)
@@ -653,8 +653,8 @@ void design_parameter::init_database(database& D, char *path)
 {
 	btree B;
 	hollerith hh, h0, h1, h2, h3, h4;
-	int f_compress = TRUE;
-	int f_duplicatekeys = TRUE;
+	int f_compress = true;
+	int f_duplicatekeys = true;
 	
 	hh.init(path);
 	h0.init(path);

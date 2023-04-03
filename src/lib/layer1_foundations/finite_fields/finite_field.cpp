@@ -25,7 +25,7 @@ finite_field::finite_field()
 	//orbiter_kernel_system::Orbiter->nb_times_finite_field_created++;
 
 	Descr = NULL;
-	f_has_table = FALSE;
+	f_has_table = false;
 	T = NULL;
 	Iwo = NULL;
 	//std::string symbol_for_print;
@@ -41,7 +41,7 @@ finite_field::finite_field()
 	my_poly_lint = 0;
 	my_poly_vec = NULL;
 	//std::symbol_for_print;
-	f_is_prime_field = FALSE;
+	f_is_prime_field = false;
 	//std::string q_text;
 	q_longinteger = NULL;
 	q_long = 0;
@@ -51,7 +51,7 @@ finite_field::finite_field()
 	alpha = 0;
 	log10_of_q = 1;
 
-	f_print_as_exponentials = TRUE;
+	f_print_as_exponentials = true;
 
 	nb_times_mult = 0;
 	nb_times_add = 0;
@@ -61,7 +61,7 @@ finite_field::finite_field()
 	Projective_space_basic = NULL;
 	//Orthogonal_indexing = NULL;
 
-	f_related_fields_have_been_computed = FALSE;
+	f_related_fields_have_been_computed = false;
 	Related_fields = NULL;
 
 }
@@ -360,7 +360,7 @@ void finite_field::finite_field_init_small_order(int q,
 	string poly;
 
 	if (e > 1) {
-		f_is_prime_field = FALSE;
+		f_is_prime_field = false;
 		knowledge_base::knowledge_base K;
 
 		K.get_primitive_polynomial(poly, p, e, verbose_level - 2);
@@ -393,7 +393,7 @@ void finite_field::finite_field_init_small_order(int q,
 #endif
 	}
 	else {
-		f_is_prime_field = TRUE;
+		f_is_prime_field = true;
 		poly.assign("");
 		if (f_v) {
 			cout << "finite_field::finite_field_init_small_order q=" << q
@@ -456,7 +456,7 @@ void finite_field::setup_related_fields(
 				cout << "finite_field::setup_related_fields "
 						"after Related_fields->init" << endl;
 			}
-			f_related_fields_have_been_computed = TRUE;
+			f_related_fields_have_been_computed = true;
 		}
 	}
 	else {
@@ -578,7 +578,7 @@ void finite_field::init_override_polynomial_small_order(
 			cout << "finite_field::init_override_polynomial_small_order "
 					"poly = " << poly << endl;
 		}
-		f_is_prime_field = FALSE;
+		f_is_prime_field = false;
 		knowledge_base::knowledge_base K;
 
 		if (poly.length() == 0) {
@@ -630,7 +630,7 @@ void finite_field::init_override_polynomial_small_order(
 			cout << "finite_field::init_override_polynomial_small_order "
 					"detected a prime field" << endl;
 		}
-		f_is_prime_field = TRUE;
+		f_is_prime_field = true;
 	}
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial_small_order "
@@ -716,7 +716,7 @@ void finite_field::init_implementation(
 			cout << "finite_field::init_implementation "
 					"implementation without field tables" << endl;
 		}
-		f_has_table = FALSE;
+		f_has_table = false;
 
 		Iwo = NEW_OBJECT(finite_field_implementation_wo_tables);
 
@@ -742,7 +742,7 @@ void finite_field::init_implementation(
 		if (f_v) {
 			cout << "finite_field::init_implementation after T->init" << endl;
 		}
-		f_has_table = TRUE;
+		f_has_table = true;
 
 	}
 
@@ -807,10 +807,10 @@ int finite_field::has_quadratic_subfield()
 	return T->has_quadratic_subfield();
 #else
 	if ((e % 2) == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 #endif
 }
@@ -858,8 +858,8 @@ long int finite_field::compute_subfield_polynomial(
 
 	finite_field GFp;
 	GFp.finite_field_init_small_order(p1,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	ring_theory::unipoly_domain FX(&GFp);
@@ -1032,8 +1032,8 @@ void finite_field::compute_subfields(
 	
 	finite_field GFp;
 	GFp.finite_field_init_small_order(p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	ring_theory::unipoly_domain FX(&GFp);
@@ -1050,7 +1050,7 @@ void finite_field::compute_subfields(
 
 			poly = compute_subfield_polynomial(
 					NT.i_power_j(p, e1),
-					//FALSE, cout,
+					//false, cout,
 					verbose_level);
 			{
 				ring_theory::unipoly_object elt;
@@ -1141,8 +1141,8 @@ int finite_field::compute_order_of_element(
 				"before GFp.finite_field_init_small_order" << endl;
 	}
 	GFp.finite_field_init_small_order(p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "finite_field::compute_order_of_element "
@@ -1249,20 +1249,20 @@ int finite_field::minus_one()
 int finite_field::is_zero(int i)
 {
 	if (i == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
 int finite_field::is_one(int i)
 {
 	if (i == 1) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -1778,9 +1778,9 @@ int finite_field::is_square(int i)
 
 	r = log_alpha(i);
 	if (ODD(r)) {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -1792,7 +1792,7 @@ int finite_field::square_root(int i)
 	if (ODD(r)) {
 		cout << "finite_field::square_root not a square: " << i << endl;
 		exit(1);
-		//return FALSE;
+		//return false;
 	}
 	r >>= 1;
 	root = alpha_power(r);
@@ -1970,7 +1970,7 @@ int finite_field::primitive_element()
 	number_theory::number_theory_domain NT;
 
 	if (e == 1) {
-		return NT.primitive_root(p, FALSE);
+		return NT.primitive_root(p, false);
 		}
 	return p;
 }

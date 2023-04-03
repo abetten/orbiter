@@ -316,18 +316,18 @@ void quartic_curve_activity::do_report(
 			title.assign(str);
 
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
+				false /* f_book */,
+				true /* f_title */,
 				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
 				extra_praeamble /* extra_praeamble */);
 
 

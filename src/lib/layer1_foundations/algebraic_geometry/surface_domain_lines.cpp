@@ -108,7 +108,7 @@ void surface_domain::build_cubic_surface_from_lines(
 				"after F->Gauss_simple" << endl;
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "surface_domain::create_system "
 				"The system in RREF:" << endl;
 		Int_matrix_print(System, nb_rows, PolynomialDomains->nb_monomials);
@@ -240,7 +240,7 @@ void surface_domain::create_system(
 				"nb_pts > max_pts" << endl;
 		exit(1);
 		}
-	if (FALSE) {
+	if (false) {
 		cout << "surface_domain::create_system list of "
 				"covered points by lines:" << endl;
 		lint_matrix_print(pt_list, len, P->k);
@@ -267,7 +267,7 @@ void surface_domain::create_system(
 		unrank_point(Pt_coords + i * n, Pts[i]);
 	}
 
-	if (f_v && FALSE) {
+	if (f_v && false) {
 		cout << "surface_domain::create_system list of "
 				"covered points in coordinates:" << endl;
 		Int_matrix_print(Pt_coords, nb_rows, n);
@@ -294,7 +294,7 @@ void surface_domain::create_system(
 		cout << "surface_domain::create_system "
 				"The system has been created" << endl;
 	}
-	if (f_v && FALSE) {
+	if (f_v && false) {
 		cout << "surface_domain::create_system "
 				"The system:" << endl;
 		Int_matrix_print(System, nb_rows, PolynomialDomains->nb_monomials);
@@ -506,7 +506,7 @@ int surface_domain::perp_of_four_lines(
 	long int o_rank[4];
 	int i;
 	long int *Perp;
-	int ret = TRUE;
+	int ret = true;
 
 	if (f_v) {
 		cout << "surface_domain::perp_of_four_lines" << endl;
@@ -526,7 +526,7 @@ int surface_domain::perp_of_four_lines(
 		if (f_v) {
 			cout << "perp_sz = " << perp_sz << " != 2" << endl;
 		}
-		ret = FALSE;
+		ret = false;
 		goto finish;
 	}
 
@@ -591,7 +591,7 @@ int surface_domain::five_plus_one_to_double_six(
 	int f_v = (verbose_level >= 1);
 	long int o_rank[12];
 	int i, j;
-	int ret = TRUE;
+	int ret = true;
 
 	if (f_v) {
 		cout << "surface_domain::five_plus_one_to_double_six" << endl;
@@ -650,7 +650,7 @@ int surface_domain::five_plus_one_to_double_six(
 				pts, 4,
 			Perp[rk], Perp_sz[rk],
 			0/*verbose_level - 1*/);
-		if (FALSE) {
+		if (false) {
 			cout << "surface_domain::five_plus_one_to_double_six the perp of the subset ";
 			Int_vec_print(cout, subset, 4);
 			cout << " has size " << Perp_sz[rk] << " : ";
@@ -662,7 +662,7 @@ int surface_domain::five_plus_one_to_double_six(
 					"Perp_opp_sz != 2, something is wrong" << endl;
 			cout << "subset " << rk << " / " << nb_subsets << endl;
 			exit(1);
-			ret = FALSE;
+			ret = false;
 			nb_subsets = rk + 1;
 			goto finish;
 		}
@@ -700,7 +700,7 @@ int surface_domain::five_plus_one_to_double_six(
 			}
 		}
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "surface_domain::five_plus_one_to_double_six" << endl;
 		cout << "opposites ";
 		Lint_vec_print(cout, opposites, 5);
@@ -726,7 +726,7 @@ int surface_domain::five_plus_one_to_double_six(
 	if (f_v) {
 		cout << "surface_domain::five_plus_one_to_double_six after O->perp_of_k_points" << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "the perp of the opposite subset ";
 		Lint_vec_print(cout, opposites, 4);
 		cout << " has size " << Perp_opp_sz << ":";
@@ -734,7 +734,7 @@ int surface_domain::five_plus_one_to_double_six(
 		cout << endl;
 	}
 	if (Perp_opp_sz != 2) {
-		ret = FALSE;
+		ret = false;
 		cout << "surface_domain::five_plus_one_to_double_six Perp_opp_sz != 2, "
 				"something is wrong" << endl;
 		exit(1);
@@ -821,7 +821,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 	int f_v = (verbose_level >= 1);
 	long int o_rank[12];
 	int i, j;
-	int ret = FALSE;
+	int ret = false;
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
 
@@ -980,7 +980,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 
 		if (I5_sz[rk] != 1) {
 			cout << "surface_domain::create_double_six I5_sz[rk] != 1" << endl;
-			ret = FALSE;
+			ret = false;
 			goto free_it;
 		}
 	}
@@ -992,7 +992,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 				o_rank[i], 0 /* verbose_level*/);
 	}
 
-	ret = TRUE;
+	ret = true;
 free_it:
 	for (i = 0; i < 6; i++) {
 		FREE_lint(Perp_without_pt[i]);
@@ -1155,7 +1155,7 @@ int surface_domain::test_double_six_property(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	int expect;
-	int f_fail = FALSE;
+	int f_fail = false;
 
 	if (f_v) {
 		cout << "surface_domain::test_double_six_property" << endl;
@@ -1186,7 +1186,7 @@ int surface_domain::test_double_six_property(
 			if (Adj[i * 12 + j] != expect) {
 				cout << "surface_domain::test_double_six_property double six property is "
 						"violated for " << Schlaefli->Labels->Line_label[i] << " and " << Schlaefli->Labels->Line_label[j] << endl;
-				f_fail = TRUE;
+				f_fail = true;
 			}
 		}
 	}
@@ -1197,10 +1197,10 @@ int surface_domain::test_double_six_property(
 		cout << "surface_domain::test_double_six_property done" << endl;
 	}
 	if (f_fail) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -1344,7 +1344,7 @@ void surface_domain::compute_points_on_lines(
 			r = F->Linear_algebra->Gauss_easy(Mtx, 3, 4);
 			if (r == 2) {
 				pts_on_lines->add_element(i, j);
-				f_is_on_line[j] = TRUE;
+				f_is_on_line[j] = true;
 				//cout << j << " ";
 			}
 		}
@@ -1368,7 +1368,7 @@ int surface_domain::compute_rank_of_any_four(
 	int subset[4];
 	long int four_lines[4];
 	int i, rk;
-	int ret = TRUE;
+	int ret = true;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -1394,7 +1394,7 @@ int surface_domain::compute_rank_of_any_four(
 			four_lines, 0 /* verbose_level */);
 
 		if (Rk[rk] < 4) {
-			ret = FALSE;
+			ret = false;
 		}
 	}
 	if (f_v) {
@@ -1942,7 +1942,7 @@ int surface_domain::compute_transversals_of_any_four(
 	int subset[4];
 	long int four_lines[4];
 	int i, rk, perp_sz;
-	int ret = TRUE;
+	int ret = true;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -1972,7 +1972,7 @@ int surface_domain::compute_transversals_of_any_four(
 				Lint_vec_print(cout, four_lines, 4);
 				cout << " perp_sz=" << perp_sz << endl;
 			}
-			ret = FALSE;
+			ret = false;
 			//break;
 			trans12[0] = -1;
 			trans12[1] = -1;
@@ -2048,7 +2048,7 @@ int surface_domain::create_double_six_safely(
 	}
 	c = Sorting.lint_vec_compare(double_six1, double_six2, 12);
 	if (!r1) {
-		return FALSE;
+		return false;
 	}
 	if (c) {
 		cout << "surface_domain::create_double_six_safely "
@@ -2065,7 +2065,7 @@ int surface_domain::create_double_six_safely(
 	if (f_v) {
 		cout << "surface_domain::create_double_six_safely done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 

@@ -41,7 +41,7 @@ finite_field_implementation_by_tables::finite_field_implementation_by_tables()
 	v1 = NULL;
 	v2 = NULL;
 	v3 = NULL;
-	f_has_quadratic_subfield = FALSE;
+	f_has_quadratic_subfield = false;
 	f_belongs_to_quadratic_subfield = NULL;
 
 	reordered_list_of_elements = NULL;
@@ -146,7 +146,7 @@ void finite_field_implementation_by_tables::init(
 				"after init_binary_operations" << endl;
 	}
 
-	F->f_has_table = TRUE;
+	F->f_has_table = true;
 	// do this so that finite_field_by_tables::mult_verbose does not complain
 	// after all, the multiplication table has been computed by now
 
@@ -188,7 +188,7 @@ void finite_field_implementation_by_tables::init(
 				"field of order "
 				<< F->q << " initialized" << endl;
 		if (f_v) {
-			if (FALSE) {
+			if (false) {
 				if (F->e > 1) {
 					print_tables_extension_field(F->my_poly);
 				}
@@ -268,7 +268,7 @@ void finite_field_implementation_by_tables::create_alpha_table_prime_field(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int i, a;
 	number_theory::number_theory_domain NT;
 
@@ -358,8 +358,8 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(
 
 	finite_field GFp;
 	GFp.finite_field_init_small_order(F->p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	ring_theory::unipoly_domain FX(&GFp);
@@ -385,11 +385,11 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(
 		}
 		for (i = 0; i < F->q; i++) {
 
-			if (FALSE) {
+			if (false) {
 				cout << "i=" << i << endl;
 			}
 			k = Fq.rank(a);
-			if (FALSE) {
+			if (false) {
 				cout << "a=";
 				Fq.print_object(a, cout);
 				cout << " has rank " << k << endl;
@@ -410,7 +410,7 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(
 				log_alpha_table[k] = i;
 			}
 
-			if (FALSE) {
+			if (false) {
 				cout << "alpha_power_table[" << i << "]=" << k << endl;
 			}
 
@@ -474,7 +474,7 @@ void finite_field_implementation_by_tables::init_binary_operations(int verbose_l
 					"after create_tables_extension_field" << endl;
 		}
 	}
-	if (FALSE) {
+	if (false) {
 		print_add_mult_tables(cout);
 	}
 
@@ -588,7 +588,7 @@ void finite_field_implementation_by_tables::create_tables_extension_field(int ve
 			kk = (ii + jj) % (F->q - 1);
 			k = alpha_power_table[kk];
 			mult_table[i * F->q + j] = k;
-			if (FALSE) {
+			if (false) {
 				cout << "finite_field_implementation_by_tables::create_tables_extension_field " << i << " * " << j << " = " << k << endl;
 			}
 			if (k == 1) {
@@ -687,18 +687,18 @@ void finite_field_implementation_by_tables::init_quadratic_subfield(int verbose_
 		number_theory::number_theory_domain NT;
 
 
-		f_has_quadratic_subfield = TRUE;
+		f_has_quadratic_subfield = true;
 		sqrt_q = NT.i_power_j(F->p, F->e >> 1);
 		idx = (F->q - 1) / (sqrt_q - 1);
-		f_belongs_to_quadratic_subfield[0] = TRUE;
+		f_belongs_to_quadratic_subfield[0] = true;
 		for (i = 0; i < sqrt_q - 1; i++) {
 			a = idx * i;
 			b = F->alpha_power(a);
-			f_belongs_to_quadratic_subfield[b] = TRUE;
+			f_belongs_to_quadratic_subfield[b] = true;
 		}
 	}
 	else {
-		f_has_quadratic_subfield = FALSE;
+		f_has_quadratic_subfield = false;
 	}
 	if (f_v) {
 		cout << "finite_field_implementation_by_tables::init_quadratic_subfield done" << endl;
@@ -708,7 +708,7 @@ void finite_field_implementation_by_tables::init_quadratic_subfield(int verbose_
 void finite_field_implementation_by_tables::init_frobenius_table(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	int i;
 
 	if (f_v) {
@@ -781,8 +781,8 @@ void finite_field_implementation_by_tables::print_tables_extension_field(std::st
 
 	finite_field GFp;
 	GFp.finite_field_init_small_order(F->p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	ring_theory::unipoly_domain FX(&GFp);

@@ -71,7 +71,7 @@ long int action_on_sign::compute_image(
 		exit(1);
 		}
 	for (u = 0; u < perm_degree; u++) {
-		v = A->Group_element->element_image_of(u, Elt, FALSE);
+		v = A->Group_element->element_image_of(u, Elt, false);
 		perm[u] = v;
 		}
 	sgn = Combi.perm_signum(perm, perm_degree);

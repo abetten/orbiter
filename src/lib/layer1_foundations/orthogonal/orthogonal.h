@@ -1218,7 +1218,7 @@ public:
 
 	int q;
 
-	int f_even; // TRUE in characteristic two
+	int f_even; // true in characteristic two
 
 	int form_c1, form_c2, form_c3;
 

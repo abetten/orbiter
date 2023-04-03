@@ -20,42 +20,42 @@ namespace data_structures {
 
 vector_builder_description::vector_builder_description()
 {
-	f_field = FALSE;
+	f_field = false;
 	//std::string field_label;
 
-	f_allow_negatives = FALSE;
+	f_allow_negatives = false;
 
-	f_dense = FALSE;
+	f_dense = false;
 	//std::string dense_text;
 
-	f_compact = FALSE;
+	f_compact = false;
 	//std::string compact_text;
 
-	f_repeat = FALSE;
+	f_repeat = false;
 	//std::string repeat_text;
 	repeat_length = 0;
 
-	f_format = FALSE;
+	f_format = false;
 	format_k = 0;
 
-	f_file = FALSE;
+	f_file = false;
 	//std::string file_name;
 
-	f_load_csv_no_border = FALSE;
+	f_load_csv_no_border = false;
 	//std::string load_csv_no_border_fname;
 
-	f_load_csv_data_column = FALSE;
+	f_load_csv_data_column = false;
 	//std::string load_csv_data_column_fname;
 	load_csv_data_column_idx = 0;
 
-	f_sparse = FALSE;
+	f_sparse = false;
 	sparse_len = 0;
 	//std::string sparse_pairs;
 
-	f_concatenate = FALSE;
+	f_concatenate = false;
 	//std::vector<std::string> concatenate_list;
 
-	f_loop = FALSE;
+	f_loop = false;
 	loop_start = 0;
 	loop_upper_bound = 0;
 	loop_increment = 0;
@@ -81,34 +81,34 @@ int vector_builder_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-field") == 0) {
-			f_field = TRUE;
+			f_field = true;
 			field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-field " << field_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-allow_negatives") == 0) {
-			f_allow_negatives = TRUE;
+			f_allow_negatives = true;
 			if (f_v) {
 				cout << "-allow_negatives " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-dense") == 0) {
-			f_dense = TRUE;
+			f_dense = true;
 			dense_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-dense " << dense_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-compact") == 0) {
-			f_compact = TRUE;
+			f_compact = true;
 			compact_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-compact " << compact_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-repeat") == 0) {
-			f_repeat = TRUE;
+			f_repeat = true;
 			repeat_text.assign(argv[++i]);
 			repeat_length = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -116,28 +116,28 @@ int vector_builder_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-format") == 0) {
-			f_format = TRUE;
+			f_format = true;
 			format_k = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-format " << format_k << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-file") == 0) {
-			f_file = TRUE;
+			f_file = true;
 			file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-file " << file_name << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-load_csv_no_border") == 0) {
-			f_load_csv_no_border = TRUE;
+			f_load_csv_no_border = true;
 			load_csv_no_border_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-load_csv_no_border " << load_csv_no_border_fname << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-load_csv_data_column") == 0) {
-			f_load_csv_data_column = TRUE;
+			f_load_csv_data_column = true;
 			load_csv_data_column_fname.assign(argv[++i]);
 			load_csv_data_column_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -147,7 +147,7 @@ int vector_builder_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-sparse") == 0) {
-			f_sparse = TRUE;
+			f_sparse = true;
 			sparse_len = ST.strtoi(argv[++i]);
 			sparse_pairs.assign(argv[++i]);
 			if (f_v) {
@@ -164,7 +164,7 @@ int vector_builder_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-loop") == 0) {
-			f_loop = TRUE;
+			f_loop = true;
 			loop_start = ST.strtoi(argv[++i]);
 			loop_upper_bound = ST.strtoi(argv[++i]);
 			loop_increment = ST.strtoi(argv[++i]);

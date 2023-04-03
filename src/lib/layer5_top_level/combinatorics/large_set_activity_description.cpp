@@ -38,7 +38,7 @@ int large_set_activity_description::read_arguments(int argc, std::string *argv,
 
 #if 0
 		if (stringcmp(argv[i], "-create_table") == 0) {
-			f_create_table = TRUE;
+			f_create_table = true;
 			create_table_label.assign(argv[++i]);
 			create_table_group_order.assign(argv[++i]);
 			create_table_gens.assign(argv[++i]);
@@ -48,7 +48,7 @@ int large_set_activity_description::read_arguments(int argc, std::string *argv,
 					<< endl;
 		}
 		else if (stringcmp(argv[i], "-load_table") == 0) {
-			f_load_table = TRUE;
+			f_load_table = true;
 			create_table_label.assign(argv[++i]);
 			create_table_group_order.assign(argv[++i]);
 			create_table_gens.assign(argv[++i]);

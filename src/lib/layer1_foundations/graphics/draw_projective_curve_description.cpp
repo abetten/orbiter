@@ -21,20 +21,20 @@ namespace graphics {
 
 draw_projective_curve_description::draw_projective_curve_description()
 {
-	f_number = FALSE;
+	f_number = false;
 	number = 0;
 
-	f_file = FALSE;
+	f_file = false;
 	//std::string fname;
 
-	f_animate = FALSE;
+	f_animate = false;
 	animate_nb_of_steps = 0;
 
-	f_animate_with_transition = FALSE;
+	f_animate_with_transition = false;
 	animate_transition_nb_of_steps = 0;
 
-	f_title_page = FALSE;
-	f_trailer_page = FALSE;
+	f_title_page = false;
+	f_trailer_page = false;
 
 
 }
@@ -60,28 +60,28 @@ int draw_projective_curve_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-number") == 0) {
-			f_number = TRUE;
+			f_number = true;
 			number = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-number " << number << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-file") == 0) {
-			f_file = TRUE;
+			f_file = true;
 			fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-file " << fname << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-animate") == 0) {
-			f_animate = TRUE;
+			f_animate = true;
 			animate_nb_of_steps = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-animate " << animate_nb_of_steps << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-animate_with_transition") == 0) {
-			f_animate_with_transition = TRUE;
+			f_animate_with_transition = true;
 			animate_nb_of_steps = ST.strtoi(argv[++i]);
 			animate_transition_nb_of_steps = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -90,13 +90,13 @@ int draw_projective_curve_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-title_page") == 0) {
-			f_title_page = TRUE;
+			f_title_page = true;
 			if (f_v) {
 				cout << "-title_page " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-trailer_page") == 0) {
-			f_trailer_page = TRUE;
+			f_trailer_page = true;
 			if (f_v) {
 				cout << "-trailer_page " << endl;
 			}

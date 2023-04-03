@@ -129,8 +129,8 @@ void action_by_subfield_structure::init(
 
 	Aq = NEW_OBJECT(actions::action);
 
-	int f_basis = TRUE;
-	int f_semilinear = FALSE;
+	int f_basis = true;
+	int f_semilinear = false;
 
 
 	if (f_v) {
@@ -141,7 +141,7 @@ void action_by_subfield_structure::init(
 	data_structures_groups::vector_ge *nice_gens;
 
 	Aq->Known_groups->init_projective_group(m, Fq,
-			f_semilinear, f_basis, FALSE /* f_init_sims */,
+			f_semilinear, f_basis, false /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	Mq = Aq->G.matrix_grp;

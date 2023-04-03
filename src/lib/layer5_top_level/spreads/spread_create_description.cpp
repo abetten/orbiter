@@ -21,30 +21,30 @@ namespace spreads {
 
 spread_create_description::spread_create_description()
 {
-	f_kernel_field = FALSE;
+	f_kernel_field = false;
 	//std::string kernel_field_label;
 
-	f_group = FALSE;
+	f_group = false;
 	//std::string group_label;
 
-	f_group_on_subspaces = FALSE;
+	f_group_on_subspaces = false;
 	//std::string group_on_subspaces_label;
 
-	f_k = FALSE;
+	f_k = false;
 	k = 0;
 
-	f_catalogue = FALSE;
+	f_catalogue = false;
 	iso = 0;
 
-	f_family = FALSE;
+	f_family = false;
 	//family_name;
 
-	f_spread_set = FALSE;
+	f_spread_set = false;
 	//std::string spread_set_label;
 	//std::string spread_set_label_tex;
 	//std::string spread_set_data;
 
-	f_transform = FALSE;
+	f_transform = false;
 	//std::vector<std::string> transform_text;
 	//std::vector<int> transform_f_inv;
 }
@@ -64,37 +64,37 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-kernel_field") == 0) {
-			f_kernel_field = TRUE;
+			f_kernel_field = true;
 			kernel_field_label.assign(argv[++i]);
 			cout << "-kernel_field " << kernel_field_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-group") == 0) {
-			f_group = TRUE;
+			f_group = true;
 			group_label.assign(argv[++i]);
 			cout << "-group " << group_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-group_on_subspaces") == 0) {
-			f_group_on_subspaces = TRUE;
+			f_group_on_subspaces = true;
 			group_on_subspaces_label.assign(argv[++i]);
 			cout << "-group_on_subspaces " << group_on_subspaces_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-k") == 0) {
-			f_k = TRUE;
+			f_k = true;
 			k = ST.strtoi(argv[++i]);
 			cout << "-k " << k << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-catalogue") == 0) {
-			f_catalogue = TRUE;
+			f_catalogue = true;
 			iso = ST.strtoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-family") == 0) {
-			f_family = TRUE;
+			f_family = true;
 			family_name.assign(argv[++i]);
 			cout << "-family " << family_name << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-spread_set") == 0) {
-			f_spread_set = TRUE;
+			f_spread_set = true;
 			spread_set_label.assign(argv[++i]);
 			spread_set_label_tex.assign(argv[++i]);
 			spread_set_data.assign(argv[++i]);
@@ -103,26 +103,26 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 					<< " " << spread_set_data << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-transform") == 0) {
-			f_transform = TRUE;
+			f_transform = true;
 
 			string text;
 
 			text.assign(argv[++i]);
 
 			transform_text.push_back(text);
-			transform_f_inv.push_back(FALSE);
+			transform_f_inv.push_back(false);
 
 			cout << "-transform " << transform_text[transform_text.size() - 1] << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-transform_inv") == 0) {
-			f_transform = TRUE;
+			f_transform = true;
 
 			string text;
 
 			text.assign(argv[++i]);
 
 			transform_text.push_back(text);
-			transform_f_inv.push_back(TRUE);
+			transform_f_inv.push_back(true);
 
 			cout << "-transform_inv " << transform_text[transform_text.size() - 1] << endl;
 		}

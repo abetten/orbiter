@@ -62,7 +62,7 @@ void object_in_projective_space_with_action::init(
 	object_in_projective_space_with_action::nb_rows = nb_rows;
 	object_in_projective_space_with_action::nb_cols = nb_cols;
 	object_in_projective_space_with_action::canonical_labeling = canonical_labeling;
-	OwCF->f_has_known_ago = TRUE;
+	OwCF->f_has_known_ago = true;
 	OwCF->known_ago = ago; //Aut_gens->group_order_as_lint();
 	if (f_v) {
 		cout << "object_in_projective_space_with_action::init done" << endl;
@@ -124,7 +124,7 @@ void object_in_projective_space_with_action::report(
 	SG = Nau.set_stabilizer_of_object(
 			OwCF,
 		PA->A,
-		TRUE /* f_compute_canonical_form */, Canonical_form,
+		true /* f_compute_canonical_form */, Canonical_form,
 		NO,
 		verbose_level - 2);
 
@@ -216,7 +216,7 @@ void object_in_projective_space_with_action::report(
 		Base_group = SG->create_sims(verbose_level);
 
 		A_conj = PA->A->create_induced_action_by_conjugation(
-			Base_group, FALSE /* f_ownership */,
+			Base_group, false /* f_ownership */,
 			verbose_level);
 
 		fp << "Generators in conjugation action on the group itself:\\\\" << endl;
@@ -307,21 +307,21 @@ void object_in_projective_space_with_action::report(
 
 
 	Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-		fp, TRUE /* f_enter_math */,
-		TRUE /* f_print_subscripts */, *Stack);
+		fp, true /* f_enter_math */,
+		true /* f_print_subscripts */, *Stack);
 
 #if 0
 	Inc->get_and_print_tactical_decomposition_scheme_tex(
-		fp, TRUE /* f_enter_math */,
+		fp, true /* f_enter_math */,
 		*Stack);
 #endif
 
 
 
 	int f_refine_prev, f_refine, h;
-	int f_print_subscripts = TRUE;
+	int f_print_subscripts = true;
 
-	f_refine_prev = TRUE;
+	f_refine_prev = true;
 	for (h = 0; h < max_TDO_depth; h++) {
 		if (EVEN(h)) {
 			f_refine = Inc->refine_column_partition_safe(
@@ -337,21 +337,21 @@ void object_in_projective_space_with_action::report(
 					"h=" << h << " after refine" << endl;
 		}
 		if (EVEN(h)) {
-			//int f_list_incidences = FALSE;
+			//int f_list_incidences = false;
 			Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-				fp, TRUE /* f_enter_math */,
+				fp, true /* f_enter_math */,
 				f_print_subscripts, *Stack);
 			//get_and_print_col_decomposition_scheme(
-			//PStack, f_list_incidences, FALSE);
+			//PStack, f_list_incidences, false);
 			//PStack.print_classes_points_and_lines(cout);
 		}
 		else {
-			//int f_list_incidences = FALSE;
+			//int f_list_incidences = false;
 			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-				fp, TRUE /* f_enter_math */,
+				fp, true /* f_enter_math */,
 				f_print_subscripts, *Stack);
 			//get_and_print_row_decomposition_scheme(
-			//PStack, f_list_incidences, FALSE);
+			//PStack, f_list_incidences, false);
 			//PStack.print_classes_points_and_lines(cout);
 		}
 

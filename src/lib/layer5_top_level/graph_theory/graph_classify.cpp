@@ -140,7 +140,7 @@ void graph_classify::init(
 	}
 
 	S1 = NEW_lint(n2);
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A_base->Known_groups->init_symmetric_group(
 			Descr->n, f_no_base, verbose_level - 3);
@@ -250,7 +250,7 @@ void graph_classify::init(
 			verbose_level);
 
 	
-	Poset->f_print_function = TRUE;
+	Poset->f_print_function = true;
 	Poset->print_function = graph_classify_print_set;
 	Poset->print_function_data = (void *) this;
 
@@ -269,8 +269,8 @@ void graph_classify::init(
 	}
 	depth = gen->main(t0,
 			target_depth /*schreier_depth*/,
-		TRUE /*f_use_invariant_subset_if_available*/,
-		FALSE /*f_debug*/,
+		true /*f_use_invariant_subset_if_available*/,
+		false /*f_debug*/,
 		verbose_level);
 	if (f_v) {
 		cout << "graph_classify::init after gen->main" << endl;
@@ -289,9 +289,9 @@ int graph_classify::check_conditions(int len,
 {
 	//verbose_level = 2;
 
-	int f_OK = TRUE;
-	int f_not_regular = FALSE;
-	int f_bad_girth = FALSE;
+	int f_OK = true;
+	int f_not_regular = false;
+	int f_bad_girth = false;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -299,20 +299,20 @@ int graph_classify::check_conditions(int len,
 		Lint_vec_print(cout, S, len);
 		}
 	if (Descr->f_regular && !check_regularity(S, len, verbose_level - 1)) {
-		f_not_regular = TRUE;
-		f_OK = FALSE;
+		f_not_regular = true;
+		f_OK = false;
 		}
 	if (f_OK) {
 		if (Descr->f_girth && !girth_check(S, len, verbose_level - 1)) {
-			f_bad_girth = TRUE;
-			f_OK = FALSE;
+			f_bad_girth = true;
+			f_OK = false;
 			}
 		}
 	if (f_OK) {
 		if (f_v) {
 			cout << "OK" << endl;
 			}
-		return TRUE;
+		return true;
 		}
 	else {
 		if (f_v) {
@@ -325,7 +325,7 @@ int graph_classify::check_conditions(int len,
 				}
 			cout << endl;
 			}
-		return FALSE;
+		return false;
 		}
 }
 
@@ -336,7 +336,7 @@ int graph_classify::check_conditions_tournament(
 	//verbose_level = 2;
 
 
-	int f_OK = TRUE;
+	int f_OK = true;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int a, a2, swap, swap2, b2, b, i, idx;
@@ -367,7 +367,7 @@ int graph_classify::check_conditions_tournament(
 						"elements " << a << " and " << b
 						<< " cannot both exist" << endl;
 				}
-			f_OK = FALSE;
+			f_OK = false;
 			break;
 			}
 		}
@@ -387,13 +387,13 @@ int graph_classify::check_conditions_tournament(
 			if (swap) {
 				score[v]++;
 				if (score[v] == Descr->n - 1) {
-					f_OK = FALSE;
+					f_OK = false;
 					}
 				}
 			else {
 				score[u]++;
 				if (score[u] == Descr->n - 1) {
-					f_OK = FALSE;
+					f_OK = false;
 					}
 				}
 			}
@@ -406,13 +406,13 @@ int graph_classify::check_conditions_tournament(
 		if (f_v) {
 			cout << "OK" << endl;
 			}
-		return TRUE;
+		return true;
 		}
 	else {
 		if (f_v) {
 			cout << "not OK" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 }
 
@@ -450,7 +450,7 @@ int graph_classify::compute_degree_sequence(
 	
 	if (Descr->f_tournament) {
 		cout << "graph_classify::compute_degree_sequence "
-				"tournament is TRUE" << endl;
+				"tournament is true" << endl;
 		exit(1);
 		}
 	Int_vec_zero(degree_sequence, Descr->n);
@@ -459,20 +459,20 @@ int graph_classify::compute_degree_sequence(
 		Combi.k2ij_lint(a, i, j, Descr->n);
 		degree_sequence[i]++;
 		if (degree_sequence[i] > Descr->regularity) {
-			return FALSE;
+			return false;
 			}
 		degree_sequence[j]++;
 		if (degree_sequence[j] > Descr->regularity) {
-			return FALSE;
+			return false;
 			}
 		}
-	return TRUE;
+	return true;
 }
 
 int graph_classify::girth_check(long int *line, int len,
 		int verbose_level)
 {
-	int f_OK = TRUE, i;
+	int f_OK = true, i;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	
@@ -484,7 +484,7 @@ int graph_classify::girth_check(long int *line, int len,
 	for (i = 0; i < Descr->n; i++) {
 		if (!girth_test_vertex(line, len, i,
 				Descr->girth, verbose_level - 2)) {
-			f_OK = FALSE;
+			f_OK = false;
 			if (f_vv) {
 				cout << "girth check fails for vertex " << i << endl;
 				}
@@ -534,7 +534,7 @@ int graph_classify::girth_test_vertex(long int *S, int len,
 							cout << da << " + " << 1
 									<< " + " << db << endl;
 							}
-						return FALSE;
+						return false;
 						}
 					else {
 						if (da + 1 < db) {
@@ -561,7 +561,7 @@ int graph_classify::girth_test_vertex(long int *S, int len,
 			}
 		cur++;
 		}
-	return TRUE;
+	return true;
 }
 
 void graph_classify::get_adjacency(long int *S, int len, int verbose_level)
@@ -901,7 +901,7 @@ void graph_classify::draw_graphs(int level,
 
 
 		ofstream fp(fname_list);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -991,7 +991,7 @@ void graph_classify::recognize_graph_from_adjacency_list(int *Adj, int N2,
 		}
 
 		gen->get_Orbit_tracer()->recognize(
-				the_set, size, transporter, //FALSE /* f_implicit_fusion */,
+				the_set, size, transporter, //false /* f_implicit_fusion */,
 				final_node, verbose_level - 4);
 
 		if (f_v) {

@@ -22,7 +22,7 @@ namespace orthogonal_geometry {
 quadratic_form::quadratic_form()
 {
 	epsilon = n = m = q = 0;
-	f_even = FALSE;
+	f_even = false;
 	form_c1 = form_c2 = form_c3 = 0;
 
 	nb_points = 0;
@@ -123,10 +123,10 @@ void quadratic_form::init(
 	}
 
 	if (EVEN(q)) {
-		f_even = TRUE;
+		f_even = true;
 	}
 	else {
-		f_even = FALSE;
+		f_even = false;
 	}
 
 	if (f_v) {
@@ -482,7 +482,7 @@ void quadratic_form::report_quadratic_form(
 	if (f_v) {
 		cout << "quadratic_form::report_quadratic_form" << endl;
 	}
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	ost << "The quadratic form is: " << endl;
 	ost << "$$" << endl;

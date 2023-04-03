@@ -292,7 +292,7 @@ void spread_classify::init(
 	block_size = SD->kC1q;
 
 #if 0
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = spread_size;
 	if (f_v) {
 		cout << "spread_classify::init" << endl;
@@ -305,10 +305,10 @@ void spread_classify::init(
 	
 #if 0
 	if (k == (n >> 1)) {
-		f_recoordinatize = TRUE;
+		f_recoordinatize = true;
 	}
 	else {
-		f_recoordinatize = FALSE;
+		f_recoordinatize = false;
 	}
 
 	if (f_v) {
@@ -360,7 +360,7 @@ void spread_classify::init(
 	}
 
 	A2 = A->Induced_action->induced_action_on_grassmannian_preloaded(AG,
-		FALSE /*f_induce_action*/, NULL /*sims *old_G */,
+		false /*f_induce_action*/, NULL /*sims *old_G */,
 		0 /*verbose_level - 2*/);
 	
 	if (f_v) {
@@ -382,12 +382,12 @@ void spread_classify::init(
 
 
 
-	if (FALSE) {
-		int f_print_as_permutation = TRUE;
-		int f_offset = FALSE;
+	if (false) {
+		int f_print_as_permutation = true;
+		int f_offset = false;
 		int offset = 1;
-		int f_do_it_anyway_even_for_big_degree = TRUE;
-		int f_print_cycles_of_length_one = FALSE;
+		int f_do_it_anyway_even_for_big_degree = true;
+		int f_print_cycles_of_length_one = false;
 		
 		cout << "printing generators for the group:" << endl;
 		A->Strong_gens->gens->print(cout, f_print_as_permutation, 
@@ -426,7 +426,7 @@ void spread_classify::init(
 #endif
 
 
-	if (TRUE /*f_v*/) {
+	if (true /*f_v*/) {
 		ring_theory::longinteger_object go;
 		
 		A->Strong_gens->group_order(go);
@@ -456,7 +456,7 @@ void spread_classify::init(
 		R = NEW_OBJECT(recoordinatize);
 		R->init(Three_skew_subspaces, // SD,  // SD->n, SD->k, SD->F, SD->Grass,
 				A, A2,
-				TRUE /*f_projective*/, Mtx->f_semilinear,
+				true /*f_projective*/, Mtx->f_semilinear,
 				callback_incremental_check_function, (void *) this,
 				//fname_live_points,
 				verbose_level);
@@ -474,7 +474,7 @@ void spread_classify::init(
 
 		ring_theory::longinteger_object go;
 		Starter_Strong_gens->group_order(go);
-		if (TRUE /*f_v*/) {
+		if (true /*f_v*/) {
 			cout << "spread_classify::init The stabilizer of the "
 					"first three components has order " << go << endl;
 		}
@@ -562,7 +562,7 @@ void spread_classify::init2(int verbose_level)
 	if (Descr->f_recoordinatize) {
 		if (f_v) {
 			cout << "spread_classify::init2 "
-					"f_recoordinatize is TRUE" << endl;
+					"f_recoordinatize is true" << endl;
 		}
 		if (f_v) {
 			cout << "spread_classify::init2 "
@@ -594,7 +594,7 @@ void spread_classify::init2(int verbose_level)
 	else {
 		if (f_v) {
 			cout << "spread_classify::init2 "
-					"f_recoordinatize is FALSE" << endl;
+					"f_recoordinatize is false" << endl;
 		}
 		if (f_v) {
 			cout << "spread_classify::init2 "
@@ -610,11 +610,11 @@ void spread_classify::init2(int verbose_level)
 		}
 	}
 
-	//gen->f_allowed_to_show_group_elements = TRUE;
+	//gen->f_allowed_to_show_group_elements = true;
 
 
 #if 0
-	gen->f_print_function = TRUE;
+	gen->f_print_function = true;
 	gen->print_function = callback_spread_print;
 	gen->print_function_data = this;
 #endif
@@ -634,8 +634,8 @@ void spread_classify::classify_partial_spreads(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	int t0;
 	orbiter_kernel_system::os_interface Os;
 
@@ -723,7 +723,7 @@ void spread_classify::lifting(
 				"level_of_candidates_file=" << level_of_candidates_file << endl;
 	}
 
-	f_ruled_out = FALSE;
+	f_ruled_out = false;
 
 	data_structures_groups::orbit_rep *R;
 
@@ -812,7 +812,7 @@ void spread_classify::lifting(
 							"the case is eliminated" << endl;
 		}
 		FREE_OBJECT(R);
-		f_ruled_out = TRUE;
+		f_ruled_out = true;
 
 		spread_lifting *SL;
 
@@ -826,7 +826,7 @@ void spread_classify::lifting(
 				R,
 				Descr->output_prefix,
 				//Strong_gens,
-				FALSE /* E->f_lex */,
+				false /* E->f_lex */,
 				verbose_level);
 		if (f_v) {
 			cout << "spread_classify::lifting "
@@ -901,7 +901,7 @@ void spread_classify::setup_lifting(
 		//R->orbit_at_level, R->nb_cases,
 		//R->candidates, R->nb_candidates,
 		//Strong_gens,
-		FALSE /* E->f_lex */,
+		false /* E->f_lex */,
 		verbose_level);
 	if (f_v) {
 		cout << "spread_classify::setup_lifting "
@@ -1125,7 +1125,7 @@ void spread_classify::lifting_prepare_function_new(
 	}
 	CG->init_with_point_labels(SL->nb_cols, nb_colors, 1,
 		col_color,
-		Adj, TRUE /* f_ownership_of_bitvec */,
+		Adj, true /* f_ownership_of_bitvec */,
 		SL->col_labels /* point_labels */,
 		label, label_tex,
 		verbose_level);
@@ -1255,7 +1255,7 @@ static int starter_canonize_callback(long int *Set, int len,
 		cout << "starter_canonize_callback" << endl;
 	}
 	Spread->R->do_recoordinatize(Set[0], Set[1], Set[2], verbose_level - 2);
-	Spread->A->Group_element->element_move(Spread->R->Elt, Elt, FALSE);
+	Spread->A->Group_element->element_move(Spread->R->Elt, Elt, false);
 	if (f_v) {
 		cout << "starter_canonize_callback done" << endl;
 	}
@@ -1263,7 +1263,7 @@ static int starter_canonize_callback(long int *Set, int len,
 		cout << "transporter:" << endl;
 		Spread->A->Group_element->element_print(Elt, cout);
 	}
-	return TRUE;
+	return true;
 }
 
 static int callback_incremental_check_function(

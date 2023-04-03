@@ -78,7 +78,7 @@ action *induced_action::induced_action_on_interior_direct_product(
 				<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	IDP = NEW_OBJECT(induced_actions::action_on_interior_direct_product);
 
@@ -86,11 +86,11 @@ action *induced_action::induced_action_on_interior_direct_product(
 
 	A->type_G = action_on_interior_direct_product_t;
 	A->G.OnInteriorDirectProduct = IDP;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = 0;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = IDP->degree;
 	//A->base_len = 0;
@@ -160,7 +160,7 @@ action *induced_action::induced_action_on_set_partitions(
 				<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	OSP = NEW_OBJECT(induced_actions::action_on_set_partitions);
 
@@ -168,11 +168,11 @@ action *induced_action::induced_action_on_set_partitions(
 			A_old, verbose_level);
 	A->type_G = action_on_set_partitions_t;
 	A->G.OnSetPartitions = OSP;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = 0;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = OSP->nb_set_partitions;
 	//A->base_len = 0;
@@ -268,7 +268,7 @@ void action::init_action_on_lines(
 		}
 	induced_action_on_grassmannian(
 			A, A_lines,
-		TRUE /* f_induce_action */, &S,
+		true /* f_induce_action */, &S,
 		verbose_level);
 	if (f_v) {
 		cout << "induced_action::init_action_on_lines "
@@ -318,7 +318,7 @@ action *induced_action::induced_action_by_representation_on_conic(
 				<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (A_old->type_G != matrix_group_t) {
 		cout << "induced_action::induced_action_by_representation_on_conic "
@@ -337,11 +337,11 @@ action *induced_action::induced_action_by_representation_on_conic(
 
 	A->type_G = action_by_representation_t;
 	A->G.Rep = Rep;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = Rep->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = Rep->degree;
 	//base_len = 0;
@@ -414,7 +414,7 @@ action *induced_action::induced_action_on_cosets(
 		//		<< " has base_length = " << A->base_len()
 		//	<< " and degree " << A->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (!A_old->f_is_linear) {
 		cout << "induced_action::induced_action_on_cosets "
@@ -423,11 +423,11 @@ action *induced_action::induced_action_on_cosets(
 	}
 	A->type_G = action_on_cosets_t;
 	A->G.OnCosets = A_on_cosets;
-	A->f_allocated = FALSE;
+	A->f_allocated = false;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = A_old->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = A_on_cosets->nb_points;
 	//base_len = 0;
@@ -497,7 +497,7 @@ action *induced_action::induced_action_on_factor_space(
 				<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (!A_old->f_is_linear) {
 		cout << "induced_action::induced_action_on_factor_space "
@@ -509,11 +509,11 @@ action *induced_action::induced_action_on_factor_space(
 
 	A->type_G = action_on_factor_space_t;
 	A->G.AF = AF;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = A_old->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = AF->degree;
 	//base_len = 0;
@@ -580,7 +580,7 @@ action *induced_action::induced_action_on_grassmannian(int k, int verbose_level)
 				<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (A_old->type_G != matrix_group_t) {
 		cout << "induced_action::induced_action_on_grassmannian "
@@ -602,11 +602,11 @@ action *induced_action::induced_action_on_grassmannian(int k, int verbose_level)
 	AG->init(*A_old, Gr, verbose_level);
 	A->type_G = action_on_grassmannian_t;
 	A->G.AG = AG;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = AG->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = AG->degree.as_int();
 	//A->base_len = 0;
@@ -672,7 +672,7 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 			<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	if (f_v) {
 		cout << "induced_action::induced_action_on_grassmannian_preloaded "
 				"before subaction = A_old" << endl;
@@ -695,11 +695,11 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 	}
 	A->type_G = action_on_grassmannian_t;
 	A->G.AG = AG;
-	A->f_allocated = FALSE;
+	A->f_allocated = false;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = AG->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = AG->degree.as_int();
 
@@ -795,7 +795,7 @@ action *induced_action::induced_action_on_spread_set(
 			<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (!A_old->f_is_linear) {
 		cout << "induced_action::induced_action_on_spread_set "
@@ -808,16 +808,16 @@ action *induced_action::induced_action_on_spread_set(
 		exit(1);
 	}
 
-	A->f_is_linear = TRUE;
+	A->f_is_linear = true;
 
 
 	A->type_G = action_on_spread_set_t;
 	A->G.AS = AS;
-	A->f_allocated = FALSE;
+	A->f_allocated = false;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = AS->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = AS->degree;
 	//base_len = 0;
@@ -905,7 +905,7 @@ void induced_action::induced_action_on_orthogonal(action *A_old,
 				<< " has base_length = " << A->base_len()
 			<< " and degree " << A->degree << endl;
 	}
-	f_has_subaction = TRUE;
+	f_has_subaction = true;
 	subaction = A;
 	if (!A->f_is_linear) {
 		cout << "induced_action::induced_action_on_orthogonal "
@@ -914,11 +914,11 @@ void induced_action::induced_action_on_orthogonal(action *A_old,
 	}
 	type_G = action_on_orthogonal_t;
 	G.AO = AO;
-	f_allocated = TRUE;
+	f_allocated = true;
 	make_element_size = A->make_element_size;
 	low_level_point_size = AO->low_level_point_size;
 
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = false;
 
 	degree = AO->degree;
 	//base_len = 0;
@@ -972,7 +972,7 @@ action *induced_action::induced_action_on_wedge_product(int verbose_level)
 				<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (A_old->type_G != matrix_group_t) {
 		cout << "induced_action::induced_action_on_wedge_product "
@@ -1005,11 +1005,11 @@ action *induced_action::induced_action_on_wedge_product(int verbose_level)
 
 	A->type_G = action_on_wedge_product_t;
 	A->G.AW = AW;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = AW->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = AW->degree;
 	//A->base_len = 0;
@@ -1025,7 +1025,7 @@ action *induced_action::induced_action_on_wedge_product(int verbose_level)
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->f_is_linear = TRUE;
+	A->f_is_linear = true;
 	A->dimension = AW->wedge_dimension;
 
 	if (f_v) {
@@ -1080,7 +1080,7 @@ void induced_action::induced_action_by_subfield_structure(
 				<< " has base_length = " << A->base_len()
 			<< " and degree " << A->degree << endl;
 		}
-	f_has_subaction = TRUE;
+	f_has_subaction = true;
 	subaction = A;
 	if (A->type_G != matrix_group_t) {
 		cout << "induced_action::induced_action_by_subfield_structure "
@@ -1090,17 +1090,17 @@ void induced_action::induced_action_by_subfield_structure(
 	//M = A->G.matrix_grp;
 	type_G = action_by_subfield_structure_t;
 	G.SubfieldStructure = SubfieldStructure;
-	f_allocated = TRUE;
+	f_allocated = true;
 	make_element_size = A->make_element_size;
 	low_level_point_size = SubfieldStructure->low_level_point_size;
 
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = false;
 
 	degree = SubfieldStructure->degree;
 	//base_len = 0;
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
-	f_is_linear = TRUE;
+	f_is_linear = true;
 	dimension = SubfieldStructure->m;
 
 
@@ -1162,7 +1162,7 @@ action *induced_action::induced_action_on_Galois_group(
 			<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 		}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (A_old->type_G != matrix_group_t) {
 		cout << "action::induced_action_on_Galois_group "
@@ -1184,10 +1184,10 @@ action *induced_action::induced_action_on_Galois_group(
 
 	A->type_G = action_on_galois_group_t;
 	A->G.on_Galois_group = AG;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = AG->degree;
 	//base_len = 0;
@@ -1258,7 +1258,7 @@ action *induced_action::induced_action_on_determinant(
 				<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (A_old->type_G != matrix_group_t) {
 		cout << "induced_action::induced_action_on_determinant "
@@ -1287,10 +1287,10 @@ action *induced_action::induced_action_on_determinant(
 
 	A->type_G = action_on_determinant_t;
 	A->G.AD = AD;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = AD->degree;
 	//base_len = 0;
@@ -1359,16 +1359,16 @@ action *induced_action::induced_action_on_sign(
 			<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 		}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	OnSign = NEW_OBJECT(induced_actions::action_on_sign);
 	OnSign->init(A_old, verbose_level);
 	A->type_G = action_on_sign_t;
 	A->G.OnSign = OnSign;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = OnSign->degree;
 	//base_len = 0;
@@ -1450,16 +1450,16 @@ action *induced_action::create_induced_action_by_conjugation(
 
 
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	ABC = NEW_OBJECT(induced_actions::action_by_conjugation);
 	ABC->init(Base_group, f_ownership, verbose_level);
 	A->type_G = action_by_conjugation_t;
 	A->G.ABC = ABC;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = goi;
 	//base_len = 0;
@@ -1542,16 +1542,16 @@ void induced_action::induced_action_by_conjugation(
 
 
 
-	f_has_subaction = TRUE;
+	f_has_subaction = true;
 	subaction = A;
 	ABC = NEW_OBJECT(induced_actions::action_by_conjugation);
 	ABC->init(Base_group, f_ownership, verbose_level);
 	type_G = action_by_conjugation_t;
 	G.ABC = ABC;
-	f_allocated = TRUE;
+	f_allocated = true;
 	make_element_size = A->make_element_size;
 
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = false;
 
 	degree = goi;
 	//base_len = 0;
@@ -1620,16 +1620,16 @@ action *induced_action::induced_action_by_right_multiplication(
 	if (f_v) {
 		cout << "we are acting on a group of order " << goi << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	ABRM = NEW_OBJECT(induced_actions::action_by_right_multiplication);
 	ABRM->init(Base_group, f_ownership, verbose_level);
 	A->type_G = action_by_right_multiplication_t;
 	A->G.ABRM = ABRM;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = goi;
 	//base_len = 0;
@@ -1685,7 +1685,7 @@ action *induced_action::create_induced_action_on_sets(
 	}
 	A = induced_action_on_sets(NULL,
 		nb_sets, set_size, sets,
-		FALSE /*f_induce_action*/,
+		false /*f_induce_action*/,
 		verbose_level);
 	if (f_v) {
 		cout << "induced_action::create_induced_action_on_sets "
@@ -1735,7 +1735,7 @@ action *induced_action::induced_action_on_sets(
 	A->label_tex.append(str2);
 
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (f_v) {
 		cout << "induced_action::induced_action_on_sets "
@@ -1751,11 +1751,11 @@ action *induced_action::induced_action_on_sets(
 	}
 	A->type_G = action_on_sets_t;
 	A->G.on_sets = AOS;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = 0;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = nb_sets;
 	//base_len = 0;
@@ -1857,7 +1857,7 @@ action *induced_action::induced_action_on_subgroups(
 	A->label_tex.assign(old_action->label_tex);
 	A->label_tex.append(str2);
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = old_action;
 	if (f_v) {
 		cout << "induced_action::induced_action_on_subgroups "
@@ -1872,11 +1872,11 @@ action *induced_action::induced_action_on_subgroups(
 	}
 	A->type_G = action_on_subgroups_t;
 	A->G.on_subgroups = AOS;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = old_action->make_element_size;
 	A->low_level_point_size = 0;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = nb_subgroups;
 	//base_len = 0;
@@ -1937,7 +1937,7 @@ action *induced_action::induced_action_by_restriction_on_orbit_with_schreier_vec
 	A->label_tex.assign(A_old->label_tex);
 	A->label_tex.append(str2);
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	ABR = NEW_OBJECT(induced_actions::action_by_restriction);
 
@@ -1953,17 +1953,17 @@ action *induced_action::induced_action_by_restriction_on_orbit_with_schreier_vec
 
 	A->type_G = action_by_restriction_t;
 	A->G.ABR = ABR;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = A_old->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = ABR->nb_points;
 	//base_len = 0;
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
-	if (FALSE) {
+	if (false) {
 		cout << "induced_action::induced_action_by_restriction_on_orbit_with_schreier_vector "
 				"calling allocate_base_data" << endl;
 	}
@@ -2057,23 +2057,23 @@ action *induced_action::restricted_action(
 	A->label_tex.append(label_of_set);
 
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	ABR = NEW_OBJECT(induced_actions::action_by_restriction);
 	ABR->init(nb_points, points, verbose_level);
 	A->type_G = action_by_restriction_t;
 	A->G.ABR = ABR;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size =A_old->make_element_size;
 	A->low_level_point_size = A_old->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = nb_points;
 	//A->base_len = 0;
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
-	if (FALSE) {
+	if (false) {
 		cout << "induced_action::restricted_action "
 				"calling allocate_base_data" << endl;
 	}
@@ -2150,23 +2150,23 @@ action *induced_action::induced_action_by_restriction(
 	A->label_tex.append(label_of_set);
 
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = old_action;
 	ABR = NEW_OBJECT(induced_actions::action_by_restriction);
 	ABR->init(nb_points, points, verbose_level);
 	A->type_G = action_by_restriction_t;
 	A->G.ABR = ABR;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = old_action->make_element_size;
 	A->low_level_point_size = old_action->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = nb_points;
 	//base_len = 0;
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
-	if (FALSE) {
+	if (false) {
 		cout << "induced_action::induced_action_by_restriction "
 				"calling allocate_base_data" << endl;
 	}
@@ -2268,12 +2268,12 @@ void induced_action::induced_action_on_pairs(
 	label_tex.append(str2);
 
 
-	f_has_subaction = TRUE;
+	f_has_subaction = true;
 	subaction = &old_action;
 	type_G = action_on_pairs_t;
-	f_allocated = FALSE;
+	f_allocated = false;
 
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = false;
 
 	degree = Combi.int_n_choose_k(old_action.degree, 2);
 	//base_len = 0;
@@ -2342,12 +2342,12 @@ action *induced_action::induced_action_on_ordered_pairs(
 	A->label_tex.append(" {\\rm OnOrderedPairs}");
 
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	A->type_G = action_on_ordered_pairs_t;
-	A->f_allocated = FALSE;
+	A->f_allocated = false;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = A_old->degree * (A_old->degree - 1);
 	//base_len = 0;
@@ -2419,14 +2419,14 @@ action *induced_action::induced_action_on_k_subsets(
 	On_k_subsets->init(A_old, k, verbose_level);
 
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	A->type_G = action_on_k_subsets_t;
 	A->G.on_k_subsets = On_k_subsets;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = On_k_subsets->degree;
 	//base_len = 0;
@@ -2483,14 +2483,14 @@ action *induced_action::induced_action_on_orbits(
 	On_orbits->init(A_old, Sch, f_play_it_safe, verbose_level);
 
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	A->type_G = action_on_orbits_t;
 	A->G.OnOrbits = On_orbits;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = On_orbits->degree;
 	//base_len = 0;
@@ -2547,14 +2547,14 @@ void induced_action::induced_action_on_flags(
 			type_len, verbose_level);
 
 
-	f_has_subaction = TRUE;
+	f_has_subaction = true;
 	subaction = old_action;
 	type_G = action_on_flags_t;
 	G.OnFlags = On_flags;
-	f_allocated = TRUE;
+	f_allocated = true;
 
 
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = false;
 
 	degree = On_flags->degree;
 	//base_len = 0;
@@ -2607,14 +2607,14 @@ void induced_action::induced_action_on_bricks(
 	On_bricks->init(&old_action, B, f_linear_action, verbose_level);
 
 
-	f_has_subaction = TRUE;
+	f_has_subaction = true;
 	subaction = &old_action;
 	type_G = action_on_bricks_t;
 	G.OnBricks = On_bricks;
-	f_allocated = TRUE;
+	f_allocated = true;
 
 
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = false;
 
 	degree = B->nb_bricks;
 	//base_len = 0;
@@ -2669,14 +2669,14 @@ action *induced_action::induced_action_on_andre(
 	On_andre->init(An, An1, Andre, verbose_level);
 
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = An1;
 	A->type_G = action_on_andre_t;
 	A->G.OnAndre = On_andre;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = On_andre->degree;
 	//base_len = 0;
@@ -2731,13 +2731,13 @@ void induced_action::setup_product_action(
 
 	PA = NEW_OBJECT(induced_actions::product_action);
 	PA->init(A1, A2, f_use_projections, verbose_level);
-	f_has_subaction = TRUE;
+	f_has_subaction = true;
 	subaction = NULL;
 	type_G = product_action_t;
 	G.product_action_data = PA;
-	f_allocated = TRUE;
+	f_allocated = true;
 
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = false;
 
 	degree = PA->degree;
 
@@ -2826,7 +2826,7 @@ action *induced_action::induced_action_on_homogeneous_polynomials(
 			<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (A_old->type_G != matrix_group_t) {
 		cout << "induced_action::induced_action_on_homogeneous_polynomials "
@@ -2850,17 +2850,17 @@ action *induced_action::induced_action_on_homogeneous_polynomials(
 
 	A->type_G = action_on_homogeneous_polynomials_t;
 	A->G.OnHP = OnHP;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = OnHP->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = OnHP->degree;
 	//base_len = 0;
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
-	A->f_is_linear = TRUE;
+	A->f_is_linear = true;
 	A->dimension = OnHP->dimension;
 
 
@@ -2933,7 +2933,7 @@ action *induced_action::induced_action_on_homogeneous_polynomials_given_by_equat
 			<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_old;
 	if (A_old->type_G != matrix_group_t) {
 		cout << "induced_action::induced_action_on_homogeneous_polynomials_given_by_equations "
@@ -2969,17 +2969,17 @@ action *induced_action::induced_action_on_homogeneous_polynomials_given_by_equat
 
 	A->type_G = action_on_homogeneous_polynomials_t;
 	A->G.OnHP = OnHP;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 	A->make_element_size = A_old->make_element_size;
 	A->low_level_point_size = OnHP->low_level_point_size;
 
-	A->f_has_strong_generators = FALSE;
+	A->f_has_strong_generators = false;
 
 	A->degree = OnHP->degree;
 	//base_len = 0;
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();
-	A->f_is_linear = TRUE;
+	A->f_is_linear = true;
 	A->dimension = OnHP->dimension;
 
 
@@ -3049,12 +3049,12 @@ action *induced_action::base_change(
 
 	new_action = NEW_OBJECT(action);
 
-	new_action->f_has_subaction = TRUE;
+	new_action->f_has_subaction = true;
 	new_action->subaction = old_action;
 	new_action->type_G = base_change_t;
-	new_action->f_allocated = FALSE;
+	new_action->f_allocated = false;
 
-	new_action->f_has_strong_generators = FALSE;
+	new_action->f_has_strong_generators = false;
 
 	new_action->degree = old_action->degree;
 	//base_len = 0;
@@ -3105,7 +3105,7 @@ action *induced_action::base_change(
 		//cout << "generators are:" << endl;
 		//Sims->print_generators();
 	}
-	if (FALSE) {
+	if (false) {
 		new_action->Sims->print_generators();
 		new_action->Sims->print_generators_as_permutations();
 		new_action->Sims->print_basic_orbits();

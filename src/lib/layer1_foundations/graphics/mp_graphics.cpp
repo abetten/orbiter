@@ -32,7 +32,7 @@ mp_graphics::mp_graphics()
 	//std::ofstream fp_tikz;
 
 
-	f_file_open = FALSE;
+	f_file_open = false;
 	//int user[4]; // llx/lly/urx/ury
 	//int dev[4]; // llx/lly/urx/ury
 
@@ -40,7 +40,7 @@ mp_graphics::mp_graphics()
 	x_max = INT_MIN;
 	y_min = INT_MAX;
 	y_max = INT_MIN;
-	f_min_max_set = FALSE;
+	f_min_max_set = false;
 
 	txt_halign = 0;
 	txt_valign = 0;
@@ -94,7 +94,7 @@ void mp_graphics::init(
 	fp_mp.open(fname_mp);
 	fp_log.open(fname_log);
 	fp_tikz.open(fname_tikz);
-	f_file_open = TRUE;
+	f_file_open = true;
 	
 	user[0] = 0; //xmin;
 	user[1] = 0; //ymin;
@@ -133,11 +133,11 @@ void mp_graphics::exit(std::ostream &ost, int verbose_level)
 			ost << "written file " << fname_tikz
 					<< " of size " << Fio.file_size(fname_tikz) << endl;
 		}
-		f_file_open = FALSE;
+		f_file_open = false;
 	}
 	else {
 		if (f_v) {
-			cout << "mp_graphics::exit f_file_open is FALSE" << endl;
+			cout << "mp_graphics::exit f_file_open is false" << endl;
 		}
 	}
 	if (f_v) {
@@ -852,7 +852,7 @@ void mp_graphics::plot_curve(
 	Py = NEW_int(N);
 	j = 0;
 	for (i = 0; i < N; i++) {
-		if (f_DNE[i] == FALSE) {
+		if (f_DNE[i] == false) {
 			Px[j] = Dx[i] * dx;
 			Py[j] = Dy[i] * dy;
 			j++;
@@ -860,7 +860,7 @@ void mp_graphics::plot_curve(
 			// << " Py[i]=" << Py[i] << endl;
 
 #if 0
-			if (i > 2 && f_DNE[i - 1] == FALSE && f_DNE[i - 2] == FALSE) {
+			if (i > 2 && f_DNE[i - 1] == false && f_DNE[i - 2] == false) {
 				Dx1 = Px[i - 1] - Px[i - 2];
 				Dy1 = Py[i - 1] - Py[i - 2];
 				L1 = Dx1 * Dx1 + Dy1 * Dy1;
@@ -868,7 +868,7 @@ void mp_graphics::plot_curve(
 				Dy2 = Py[i] - Py[i - 1];
 				L2 = Dx2 * Dx2 + Dy2 * Dy2;
 				if (L2 > 10 * L1) {
-					f_DNE[i] = TRUE;
+					f_DNE[i] = true;
 				}
 			}
 #endif
@@ -1217,7 +1217,7 @@ void mp_graphics::polygon_idx(
 		int *Px, int *Py, int *Idx, int n)
 {
 	polygon_idx_log(Px, Py, Idx, n);
-	polygon_idx2(Px, Py, Idx, n, FALSE);
+	polygon_idx2(Px, Py, Idx, n, false);
 }
 
 void mp_graphics::bezier(int *Px, int *Py, int n)
@@ -1304,7 +1304,7 @@ void mp_graphics::bezier7(int *Px, int *Py,
 void mp_graphics::bezier_idx(int *Px, int *Py, int *Idx, int n)
 {
 	bezier_idx_log(Px, Py, Idx, n);
-	bezier_idx2(Px, Py, Idx, n, FALSE);
+	bezier_idx2(Px, Py, Idx, n, false);
 }
 
 void mp_graphics::grid_fill_polygon4(grid_frame *F, 
@@ -1341,7 +1341,7 @@ void mp_graphics::grid_fill_polygon4(grid_frame *F,
 		Px[3] = (int)(F->origin_x + x3 * F->dx);
 		Py[3] = (int)(F->origin_y + y3 * F->dy);
 	}
-	fill_idx(Px, Py, Idx, 4, "--", TRUE);
+	fill_idx(Px, Py, Idx, 4, "--", true);
 	FREE_int(Px);
 	FREE_int(Py);
 	FREE_int(Idx);
@@ -1385,7 +1385,7 @@ void mp_graphics::grid_fill_polygon5(grid_frame *F,
 		Px[4] = (int)(F->origin_x + x4 * F->dx);
 		Py[4] = (int)(F->origin_y + y4 * F->dy);
 	}
-	fill_idx(Px, Py, Idx, 5, "--", TRUE);
+	fill_idx(Px, Py, Idx, 5, "--", true);
 	FREE_int(Px);
 	FREE_int(Py);
 	FREE_int(Idx);
@@ -1398,7 +1398,7 @@ void mp_graphics::fill_polygon3(int *Px, int *Py,
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
-	fill_idx(Px, Py, Idx, 3, "--", FALSE);
+	fill_idx(Px, Py, Idx, 3, "--", false);
 }
 
 void mp_graphics::fill_polygon4(int *Px, int *Py,
@@ -1409,7 +1409,7 @@ void mp_graphics::fill_polygon4(int *Px, int *Py,
 	Idx[1] = i2;
 	Idx[2] = i3;
 	Idx[3] = i4;
-	fill_idx(Px, Py, Idx, 4, "--", FALSE);
+	fill_idx(Px, Py, Idx, 4, "--", false);
 }
 
 void mp_graphics::fill_polygon5(int *Px, int *Py,
@@ -1421,7 +1421,7 @@ void mp_graphics::fill_polygon5(int *Px, int *Py,
 	Idx[2] = i3;
 	Idx[3] = i4;
 	Idx[4] = i5;
-	fill_idx(Px, Py, Idx, 5, "--", FALSE);
+	fill_idx(Px, Py, Idx, 5, "--", false);
 }
 
 void mp_graphics::fill_polygon6(int *Px, int *Py,
@@ -1434,7 +1434,7 @@ void mp_graphics::fill_polygon6(int *Px, int *Py,
 	Idx[3] = i4;
 	Idx[4] = i5;
 	Idx[5] = i6;
-	fill_idx(Px, Py, Idx, 6, "--", FALSE);
+	fill_idx(Px, Py, Idx, 6, "--", false);
 }
 
 void mp_graphics::fill_polygon7(int *Px, int *Py,
@@ -1449,7 +1449,7 @@ void mp_graphics::fill_polygon7(int *Px, int *Py,
 	Idx[4] = i5;
 	Idx[5] = i6;
 	Idx[6] = i7;
-	fill_idx(Px, Py, Idx, 7, "--", FALSE);
+	fill_idx(Px, Py, Idx, 7, "--", false);
 }
 
 void mp_graphics::fill_polygon8(int *Px, int *Py,
@@ -1465,7 +1465,7 @@ void mp_graphics::fill_polygon8(int *Px, int *Py,
 	Idx[5] = i6;
 	Idx[6] = i7;
 	Idx[7] = i8;
-	fill_idx(Px, Py, Idx, 8, "--", FALSE);
+	fill_idx(Px, Py, Idx, 8, "--", false);
 }
 
 void mp_graphics::fill_polygon9(int *Px, int *Py,
@@ -1482,7 +1482,7 @@ void mp_graphics::fill_polygon9(int *Px, int *Py,
 	Idx[6] = i7;
 	Idx[7] = i8;
 	Idx[8] = i9;
-	fill_idx(Px, Py, Idx, 9, "--", FALSE);
+	fill_idx(Px, Py, Idx, 9, "--", false);
 }
 
 void mp_graphics::fill_polygon10(int *Px, int *Py,
@@ -1500,7 +1500,7 @@ void mp_graphics::fill_polygon10(int *Px, int *Py,
 	Idx[7] = i8;
 	Idx[8] = i9;
 	Idx[9] = i10;
-	fill_idx(Px, Py, Idx, 10, "--", FALSE);
+	fill_idx(Px, Py, Idx, 10, "--", false);
 }
 
 void mp_graphics::fill_polygon11(int *Px, int *Py,
@@ -1519,7 +1519,7 @@ void mp_graphics::fill_polygon11(int *Px, int *Py,
 	Idx[8] = i9;
 	Idx[9] = i10;
 	Idx[10] = i11;
-	fill_idx(Px, Py, Idx, 11, "--", FALSE);
+	fill_idx(Px, Py, Idx, 11, "--", false);
 }
 
 void mp_graphics::polygon2_arrow_halfway(
@@ -1753,7 +1753,7 @@ void mp_graphics::coords_min_max(int x, int y)
 		x_max = MAXIMUM(x_max, x);
 		y_max = MAXIMUM(y_max, y);
 	}
-	f_min_max_set = TRUE;
+	f_min_max_set = true;
 }
 
 
@@ -1764,7 +1764,7 @@ void mp_graphics::coords_min_max(int x, int y)
 void mp_graphics::header()
 {
 	
-	f_min_max_set = FALSE;
+	f_min_max_set = false;
 	//system("rm a");
 
 	orbiter_kernel_system::os_interface Os;
@@ -2484,7 +2484,7 @@ void mp_graphics::output_circle_text_tikz(int x, int y,
 void mp_graphics::polygon_idx_tikz(int *Px, int *Py,
 		int *Idx, int n, int f_cycle)
 {
-	int f_need_comma = FALSE;
+	int f_need_comma = false;
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	int x, y, i;
@@ -2492,22 +2492,22 @@ void mp_graphics::polygon_idx_tikz(int *Px, int *Py,
 	fp_tikz << "\\draw [";
 	if (line_end_style == 1 && line_beg_style == 0) {
 		fp_tikz << "->";
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 	else if (line_end_style == 0 && line_beg_style == 1) {
 		fp_tikz << "<-";
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 	else if (line_end_style == 1 && line_beg_style == 0) {
 		fp_tikz << "<->";
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 	if (line_thickness != 100) {
 		if (f_need_comma) {
 			fp_tikz << ",";
 		}
 		fp_tikz << "line width=" << ((double)line_thickness * 0.01) << "mm";
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 	if (line_color != 1) {
 		if (f_need_comma) {
@@ -2515,7 +2515,7 @@ void mp_graphics::polygon_idx_tikz(int *Px, int *Py,
 		}
 		fp_tikz << "color=";
 		color_tikz(fp_tikz, line_color);
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 
 	fp_tikz << "] ";
@@ -2544,28 +2544,28 @@ void mp_graphics::polygon_idx_tikz(int *Px, int *Py,
 void mp_graphics::bezier_idx_tikz(int *Px, int *Py,
 		int *Idx, int n, int f_cycle)
 {
-	int f_need_comma = FALSE;
+	int f_need_comma = false;
 	int x, y, i;
 	
 	fp_tikz << "\\draw [";
 	if (line_end_style == 1 && line_beg_style == 0) {
 		fp_tikz << "->";
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 	else if (line_end_style == 0 && line_beg_style == 1) {
 		fp_tikz << "<-";
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 	else if (line_end_style == 1 && line_beg_style == 0) {
 		fp_tikz << "<->";
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 	if (line_thickness != 100) {
 		if (f_need_comma) {
 			fp_tikz << ",";
 		}
 		fp_tikz << "line width=" << ((double)line_thickness * 0.01) << "mm";
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 	if (line_color != 1) {
 		if (f_need_comma) {
@@ -2573,7 +2573,7 @@ void mp_graphics::bezier_idx_tikz(int *Px, int *Py,
 		}
 		fp_tikz << "color=";
 		color_tikz(fp_tikz, line_color);
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 	
 	fp_tikz << "] ";
@@ -2690,7 +2690,7 @@ void mp_graphics::fill_idx_tikz(ofstream &fp, int *Px, int *Py,
 	if (fill_interior < 100) {
 		fp << "!" << fill_interior;
 	}
-	f_need_comma = TRUE;
+	f_need_comma = true;
 	if (line_end_style == 1 && line_beg_style == 0) {
 		if (f_need_comma) {
 			fp << ", ";
@@ -3145,7 +3145,7 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 	int indent = 0;
 
 	mn = MAXIMUM(m, n);
-	F.f_matrix_notation = TRUE;
+	F.f_matrix_notation = true;
 	F.m = m;
 	F.n = n;
 	F.origin_x = 0.;
@@ -3415,10 +3415,10 @@ void mp_graphics::draw_density2(int no,
 	sigma = sqrt(sum1 / max_x);
 
 
-	Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
+	Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, false);
 	for (i = 0; i < outline_sz; i++) {
 		Pt.get_coord(Px, Py, 2, outline_number[i], outline_value[i],
-			min_x, min_y, max_x, max_y, FALSE);
+			min_x, min_y, max_x, max_y, false);
 		Px[1] = Px[0];
 		Py[1] = Py[2];
 		polygon3(Px, Py, 0, 1, 2);
@@ -3426,12 +3426,12 @@ void mp_graphics::draw_density2(int no,
 		Py[0] = Py[2];
 	}
 	Pt.get_coord(Px, Py, 2, max_x, max_value,
-		min_x, min_y, max_x, max_y, FALSE);
+		min_x, min_y, max_x, max_y, false);
 	polygon2(Px, Py, 0, 2);
-	Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
-	Pt.get_coord(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, FALSE);
-	Pt.get_coord(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, FALSE);
-	Pt.get_coord(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, FALSE);
+	Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, false);
+	Pt.get_coord(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, false);
+	Pt.get_coord(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, false);
+	Pt.get_coord(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, false);
 	polygon5(Px, Py, 0, 1, 2, 3, 0);
 
 
@@ -3500,9 +3500,9 @@ void mp_graphics::draw_density2(int no,
 		y_in = (int) average;
 		Pt.y_to_pt_on_curve(y_in, x, y,
 			outline_value, outline_number, outline_sz);
-		Pt.get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		Pt.get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, FALSE);
-		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, false);
 		Py[0] -= 10;
 		polygon3(Px, Py, 0, 1, 2);
 		s.assign("$\\overline{x}$");
@@ -3513,7 +3513,7 @@ void mp_graphics::draw_density2(int no,
 	if (f_circle) {
 		Pt.y_to_pt_on_curve(circle_at, x, y,
 			outline_value, outline_number, outline_sz);
-		Pt.get_coord(Px, Py, 0, x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, x, y, min_x, min_y, max_x, max_y, false);
 		circle(Px[0], Py[0], circle_rad);
 	}
 
@@ -3522,9 +3522,9 @@ void mp_graphics::draw_density2(int no,
 		y_in = (int) (average + k * sigma);
 		Pt.y_to_pt_on_curve(y_in, x, y,
 			outline_value, outline_number, outline_sz);
-		Pt.get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		Pt.get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, FALSE);
-		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, false);
 		Py[0] -= 10;
 		polygon3(Px, Py, 0, 1, 2);
 		if (k > 1) {
@@ -3539,9 +3539,9 @@ void mp_graphics::draw_density2(int no,
 		y_in = (int) (average - k * sigma);
 		Pt.y_to_pt_on_curve(y_in, x, y,
 			outline_value, outline_number, outline_sz);
-		Pt.get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		Pt.get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, FALSE);
-		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(Px, Py, 1, x, y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(Px, Py, 2, min_x, y, min_x, min_y, max_x, max_y, false);
 		Py[0] -= 10;
 		polygon3(Px, Py, 0, 1, 2);
 		if (k > 1) {
@@ -3697,19 +3697,19 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 
 	if (f_v_logarithmic) {
 		Pt.get_coord_log(Px, Py, 0,
-				min_x, min_y, min_x, min_y, max_x, max_y, log_base, FALSE);
+				min_x, min_y, min_x, min_y, max_x, max_y, log_base, false);
 		Pt.get_coord_log(Px, Py, 1,
-				max_x, min_y, min_x, min_y, max_x, max_y, log_base, FALSE);
+				max_x, min_y, min_x, min_y, max_x, max_y, log_base, false);
 		Pt.get_coord_log(Px, Py, 2,
-				max_x, max_y, min_x, min_y, max_x, max_y, log_base, FALSE);
+				max_x, max_y, min_x, min_y, max_x, max_y, log_base, false);
 		Pt.get_coord_log(Px, Py, 3,
-				min_x, max_y, min_x, min_y, max_x, max_y, log_base, FALSE);
+				min_x, max_y, min_x, min_y, max_x, max_y, log_base, false);
 	}
 	else {
-		Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		Pt.get_coord(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, FALSE);
-		Pt.get_coord(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, FALSE);
-		Pt.get_coord(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, FALSE);
+		Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, false);
 	}
 	polygon5(Px, Py, 0, 1, 2, 3, 0);
 
@@ -3757,7 +3757,7 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 	sl_thickness(line_thickness);
 
 	if (f_v_grid) {
-		if (FALSE) {
+		if (false) {
 			double delta, a;
 
 			delta = log10(max_x - min_x) / v_grid;
@@ -3791,7 +3791,7 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 				a = min_y + pow(log_base, i * delta);
 				Pt.get_coord_log(Px, Py, 2, min_x, (int)a,
 						min_x, min_y, max_x, max_y, log_base,
-						FALSE /* f_switch_x */);
+						false /* f_switch_x */);
 				Px[0] = Px[2];
 				Py[0] = Py[2];
 				Px[1] = 1000;
@@ -3879,12 +3879,12 @@ void mp_graphics::projective_plane_draw_grid2(
 
 	draw_axes_and_grid(O,
 		0., (double)(q - 1), 0., (double)(q - 1), dx, dy,
-		TRUE /* f_x_axis_at_y_min */, TRUE /* f_y_axis_at_x_min */,
+		true /* f_x_axis_at_y_min */, true /* f_y_axis_at_x_min */,
 		1 /* x_mod */, 1 /* y_mod */, 1, 1,
 		-1. /* x_labels_offset */, -1. /* y_labels_offset */,
 		0.5 /* x_tick_half_width */, 0.5 /* y_tick_half_width */,
-		TRUE /* f_v_lines */, 1 /* subdivide_v */,
-		TRUE /* f_h_lines */, 1 /* subdivide_h */,
+		true /* f_v_lines */, 1 /* subdivide_v */,
+		true /* f_h_lines */, 1 /* subdivide_h */,
 		verbose_level - 1);
 
 
@@ -4016,7 +4016,7 @@ void mp_graphics::draw_matrix_in_color(
 	string s;
 
 	mn = MAXIMUM(m, n);
-	F.f_matrix_notation = TRUE;
+	F.f_matrix_notation = true;
 	F.m = m;
 	F.n = n;
 	F.origin_x = 0.;
@@ -4119,10 +4119,10 @@ void mp_graphics::draw_matrix_in_color(
 	//cout << "shade_step=" << shade_step << endl;
 
 	if (nb_colors_in_scale > nb_colors) {
-		f_sufficiently_many_colors = TRUE;
+		f_sufficiently_many_colors = true;
 	}
 	else {
-		f_sufficiently_many_colors = FALSE;
+		f_sufficiently_many_colors = false;
 	}
 
 	for (i = 0; i < m; i++) {
@@ -4535,41 +4535,41 @@ void mp_graphics::domino_draw_assignment_East(
 		int i, int j, int dx, int dy, int rad)
 {
 	if (Ap == 1)
-		domino_draw1(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw1(M, i, j, dx, dy, rad, true /* f_horizontal */);
 	if (Aq == 1)
-		domino_draw1(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw1(M, i, j + 1, dx, dy, rad, true /* f_horizontal */);
 	if (Ap == 2)
-		domino_draw2(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw2(M, i, j, dx, dy, rad, true /* f_horizontal */);
 	if (Aq == 2)
-		domino_draw2(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw2(M, i, j + 1, dx, dy, rad, true /* f_horizontal */);
 	if (Ap == 3)
-		domino_draw3(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw3(M, i, j, dx, dy, rad, true /* f_horizontal */);
 	if (Aq == 3)
-		domino_draw3(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw3(M, i, j + 1, dx, dy, rad, true /* f_horizontal */);
 	if (Ap == 4)
-		domino_draw4(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw4(M, i, j, dx, dy, rad, true /* f_horizontal */);
 	if (Aq == 4)
-		domino_draw4(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw4(M, i, j + 1, dx, dy, rad, true /* f_horizontal */);
 	if (Ap == 5)
-		domino_draw5(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw5(M, i, j, dx, dy, rad, true /* f_horizontal */);
 	if (Aq == 5)
-		domino_draw5(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw5(M, i, j + 1, dx, dy, rad, true /* f_horizontal */);
 	if (Ap == 6)
-		domino_draw6(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw6(M, i, j, dx, dy, rad, true /* f_horizontal */);
 	if (Aq == 6)
-		domino_draw6(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw6(M, i, j + 1, dx, dy, rad, true /* f_horizontal */);
 	if (Ap == 7)
-		domino_draw7(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw7(M, i, j, dx, dy, rad, true /* f_horizontal */);
 	if (Aq == 7)
-		domino_draw7(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw7(M, i, j + 1, dx, dy, rad, true /* f_horizontal */);
 	if (Ap == 8)
-		domino_draw8(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw8(M, i, j, dx, dy, rad, true /* f_horizontal */);
 	if (Aq == 8)
-		domino_draw8(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw8(M, i, j + 1, dx, dy, rad, true /* f_horizontal */);
 	if (Ap == 9)
-		domino_draw9(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw9(M, i, j, dx, dy, rad, true /* f_horizontal */);
 	if (Aq == 9)
-		domino_draw9(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+		domino_draw9(M, i, j + 1, dx, dy, rad, true /* f_horizontal */);
 }
 
 void mp_graphics::domino_draw_assignment_South(
@@ -4577,41 +4577,41 @@ void mp_graphics::domino_draw_assignment_South(
 		int i, int j, int dx, int dy, int rad)
 {
 	if (Ap == 1)
-		domino_draw1(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw1(M, i, j, dx, dy, rad, false /* f_horizontal */);
 	if (Aq == 1)
-		domino_draw1(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw1(M, i + 1, j, dx, dy, rad, false /* f_horizontal */);
 	if (Ap == 2)
-		domino_draw2(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw2(M, i, j, dx, dy, rad, false /* f_horizontal */);
 	if (Aq == 2)
-		domino_draw2(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw2(M, i + 1, j, dx, dy, rad, false /* f_horizontal */);
 	if (Ap == 3)
-		domino_draw3(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw3(M, i, j, dx, dy, rad, false /* f_horizontal */);
 	if (Aq == 3)
-		domino_draw3(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw3(M, i + 1, j, dx, dy, rad, false /* f_horizontal */);
 	if (Ap == 4)
-		domino_draw4(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw4(M, i, j, dx, dy, rad, false /* f_horizontal */);
 	if (Aq == 4)
-		domino_draw4(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw4(M, i + 1, j, dx, dy, rad, false /* f_horizontal */);
 	if (Ap == 5)
-		domino_draw5(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw5(M, i, j, dx, dy, rad, false /* f_horizontal */);
 	if (Aq == 5)
-		domino_draw5(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw5(M, i + 1, j, dx, dy, rad, false /* f_horizontal */);
 	if (Ap == 6)
-		domino_draw6(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw6(M, i, j, dx, dy, rad, false /* f_horizontal */);
 	if (Aq == 6)
-		domino_draw6(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw6(M, i + 1, j, dx, dy, rad, false /* f_horizontal */);
 	if (Ap == 7)
-		domino_draw7(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw7(M, i, j, dx, dy, rad, false /* f_horizontal */);
 	if (Aq == 7)
-		domino_draw7(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw7(M, i + 1, j, dx, dy, rad, false /* f_horizontal */);
 	if (Ap == 8)
-		domino_draw8(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw8(M, i, j, dx, dy, rad, false /* f_horizontal */);
 	if (Aq == 8)
-		domino_draw8(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw8(M, i + 1, j, dx, dy, rad, false /* f_horizontal */);
 	if (Ap == 9)
-		domino_draw9(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw9(M, i, j, dx, dy, rad, false /* f_horizontal */);
 	if (Aq == 9)
-		domino_draw9(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+		domino_draw9(M, i + 1, j, dx, dy, rad, false /* f_horizontal */);
 }
 
 

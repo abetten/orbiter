@@ -51,7 +51,7 @@ representatives::representatives()
 representatives::~representatives()
 {
 	int i;
-	int f_v = TRUE;
+	int f_v = true;
 
 	if (f_v) {
 		cout << "representatives::free" << endl;
@@ -184,7 +184,7 @@ void representatives::write_fusion(int verbose_level)
 			}
 			else {
 				A->Group_element->element_retrieve(
-						handle[i], Elt1, FALSE);
+						handle[i], Elt1, false);
 			}
 			A->Group_element->element_write_file_fp(
 					Elt1, f2, 0/* verbose_level*/);
@@ -257,7 +257,7 @@ void representatives::read_fusion(int verbose_level)
 			A->Group_element->element_read_file_fp(
 					Elt1, f2, 0/* verbose_level*/);
 			handle[i] = A->Group_element->element_store(
-					Elt1, FALSE);
+					Elt1, false);
 			}
 	}
 	if (f_v) {
@@ -337,7 +337,7 @@ void representatives::read_representatives_and_stabilizers(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >=2);
+	int f_vv = false;//(verbose_level >=2);
 	
 	if (f_v) {
 		cout << "representatives::read_representatives_and_stabilizers" << endl;
@@ -404,7 +404,7 @@ void representatives::read_representatives_and_stabilizers(
 				cout << endl;
 			}
 			Stab->init(A, verbose_level - 2);
-			Stab->init_generators(gens, FALSE);
+			Stab->init_generators(gens, false);
 			Stab->compute_base_orbits(0/*verbose_level - 5*/);
 			Stab->group_order(go);
 			if (f_v) {
@@ -470,7 +470,7 @@ void representatives::get_stabilizer(
 				"generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, SG,
 		0 /* verbose_level */);
 

@@ -33,7 +33,7 @@ void sims::subgroup_make_characteristic_vector(
 	for (i = 0; i < go_sub; i++) {
 		Sub->element_unrank_lint(i, Elt1);
 		j = element_rank_lint(Elt1);
-		C[j] = TRUE;
+		C[j] = true;
 		}
 	if (f_v) {
 		cout << "The characteristic vector of the "

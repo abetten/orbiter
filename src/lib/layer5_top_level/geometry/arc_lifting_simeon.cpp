@@ -30,11 +30,11 @@ arc_lifting_simeon::arc_lifting_simeon()
 	n = 0; // projective dimension
 	k = 0; // size of the arc
 	F = NULL;
-	f_projective = TRUE;
-	f_general = FALSE;
-	f_affine = FALSE;
-	f_semilinear = FALSE;
-	f_special = FALSE;
+	f_projective = true;
+	f_general = false;
+	f_affine = false;
+	f_semilinear = false;
+	f_special = false;
 	//S = NULL;
 	A = NULL;
 	//longinteger_object go;
@@ -69,18 +69,18 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	arc_lifting_simeon::n = n;
 	arc_lifting_simeon::k = k;
 
-	f_projective = TRUE;
-	f_general = FALSE;
-	f_affine = FALSE;
-	f_semilinear = FALSE;
-	f_special = FALSE;
+	f_projective = true;
+	f_general = false;
+	f_affine = false;
+	f_semilinear = false;
+	f_special = false;
 
 	v = NEW_int(n + 1);
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	data_structures_groups::vector_ge *nice_gens;
@@ -127,7 +127,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 
 	P->projective_space_init(n /* n */,
 		F /* finite_field *F*/,
-		TRUE /* f_init_incidence_structure */,
+		true /* f_init_incidence_structure */,
 		0 /* verbose_level */);
 
 	P->Subspaces->init_incidence_structure(0 /*verbose_level*/);
@@ -156,7 +156,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	Gen->compute_orbits_on_subsets(
 		k /* target_depth */,
 		//"" /* const char *prefix */,
-		//FALSE /* f_W */, FALSE /* f_w */,
+		//false /* f_W */, false /* f_w */,
 		Control,
 		Poset,
 		verbose_level);
@@ -216,7 +216,7 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 
 			int i;
 
-			f_OK = TRUE;
+			f_OK = true;
 
 			S[len] = candidates[j];
 
@@ -229,7 +229,7 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 			for (i = d + 1; i <= len + 1; i++) {
 				if (type_collected[i]) {
 					//cout << "test_function_for_arc fail" << endl;
-					f_OK = FALSE;
+					f_OK = false;
 					}
 				}
 

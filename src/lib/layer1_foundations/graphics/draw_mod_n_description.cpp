@@ -21,16 +21,16 @@ namespace graphics {
 
 draw_mod_n_description::draw_mod_n_description()
 {
-	f_n = FALSE;
+	f_n = false;
 	n = 0;
 
-	f_mod_s = FALSE;
+	f_mod_s = false;
 	mod_s = 0;
 
-	f_divide_out_by = FALSE;
+	f_divide_out_by = false;
 	divide_out_by = 0;
 
-	f_file = FALSE;
+	f_file = false;
 	//std::string fname;
 	f_inverse = 0;
 	f_additive_inverse = 0;
@@ -38,14 +38,14 @@ draw_mod_n_description::draw_mod_n_description()
 	f_power_cycle = 0;
 	power_cycle_base = 0;
 
-	f_cyclotomic_sets = FALSE;
+	f_cyclotomic_sets = false;
 	cyclotomic_sets_q = 0;
 	//std::string cyclotomic_sets_reps;
 
-	f_cyclotomic_sets_thickness = FALSE;
+	f_cyclotomic_sets_thickness = false;
 	cyclotomic_sets_thickness = 100;
 
-	f_eigenvalues = FALSE;
+	f_eigenvalues = false;
 	//double eigenvalues_A[4];
 
 }
@@ -71,52 +71,52 @@ int draw_mod_n_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-n") == 0) {
-			f_n = TRUE;
+			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			cout << "-n " << n << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-mod_s") == 0) {
-			f_mod_s = TRUE;
+			f_mod_s = true;
 			mod_s = ST.strtoi(argv[++i]);
 			cout << "-mod_s " << mod_s << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-divide_out_by") == 0) {
-			f_divide_out_by = TRUE;
+			f_divide_out_by = true;
 			divide_out_by = ST.strtoi(argv[++i]);
 			cout << "-divide_out_by " << divide_out_by << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-file") == 0) {
-			f_file = TRUE;
+			f_file = true;
 			fname.assign(argv[++i]);
 			cout << "-file " << fname << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-inverse") == 0) {
-			f_inverse = TRUE;
+			f_inverse = true;
 			cout << "-inverse " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-additive_inverse") == 0) {
-			f_additive_inverse = TRUE;
+			f_additive_inverse = true;
 			cout << "-additive_inverse " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-power_cycle") == 0) {
-			f_power_cycle = TRUE;
+			f_power_cycle = true;
 			power_cycle_base = ST.strtoi(argv[++i]);
 			cout << "-power_cycle " << power_cycle_base << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-cyclotomic_sets") == 0) {
-			f_cyclotomic_sets = TRUE;
+			f_cyclotomic_sets = true;
 			cyclotomic_sets_q = ST.strtoi(argv[++i]);
 			cyclotomic_sets_reps.assign(argv[++i]);
 			cout << "-cyclotomic_sets " << cyclotomic_sets_q << " " << cyclotomic_sets_reps << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-cyclotomic_sets_thickness") == 0) {
-			f_cyclotomic_sets_thickness = TRUE;
+			f_cyclotomic_sets_thickness = true;
 			cyclotomic_sets_thickness = ST.strtoi(argv[++i]);
 			cout << "-cyclotomic_sets_thickness " << cyclotomic_sets_thickness << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-eigenvalues") == 0) {
-			f_eigenvalues = TRUE;
+			f_eigenvalues = true;
 			eigenvalues_A[0] = ST.strtof(argv[++i]);
 			eigenvalues_A[1] = ST.strtof(argv[++i]);
 			eigenvalues_A[2] = ST.strtof(argv[++i]);

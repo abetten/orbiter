@@ -39,14 +39,14 @@ geometry_builder::geometry_builder()
 	V_partition = NULL;
 	R = NULL;
 
-	f_transpose_it = FALSE;
-	f_save_file = FALSE;
+	f_transpose_it = false;
+	f_save_file = false;
 	//std::string fname;
 
 	//control_file_name;
 	no = 0;
 	flag_numeric = 0;
-	f_no_inc_files = FALSE;
+	f_no_inc_files = false;
 
 	gg = NULL;
 
@@ -99,16 +99,16 @@ void geometry_builder::init_description(
 	}
 	V_partition = NEW_int(V + 1);
 	for (i = 0; i < V + 1; i++) {
-		V_partition[i] = FALSE;
+		V_partition[i] = false;
 	}
 	int V2;
 
 	V2 = 0;
 	for (i = 0; i < v_len; i++) {
 		V2 += v[i];
-		V_partition[V2 - 1] = TRUE;
+		V_partition[V2 - 1] = true;
 	}
-	V_partition[V] = TRUE;
+	V_partition[V] = true;
 
 
 	if (!Descr->f_B) {
@@ -149,8 +149,8 @@ void geometry_builder::init_description(
 		}
 	}
 
-	f_transpose_it = FALSE;
-	f_save_file = FALSE;
+	f_transpose_it = false;
+	f_save_file = false;
 
 
 	if (f_v) {

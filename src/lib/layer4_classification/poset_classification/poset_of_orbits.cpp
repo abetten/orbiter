@@ -48,7 +48,7 @@ poset_of_orbits::poset_of_orbits()
 
 poset_of_orbits::~poset_of_orbits()
 {
-	int f_v = FALSE; //(verbose_level >= 1);
+	int f_v = false; //(verbose_level >= 1);
 
 	if (f_v) {
 		cout << "poset_of_orbits::exit_poset_orbit_node" << endl;
@@ -913,7 +913,7 @@ void poset_of_orbits::read_sv_level_file_binary2(
 				<< f_recreate_extensions << endl;
 		cout << "f_dont_keep_sv=" << f_dont_keep_sv << endl;
 		if (f_split) {
-			cout << "f_split is TRUE, split_mod=" << split_mod
+			cout << "f_split is true, split_mod=" << split_mod
 					<< " split_case=" << split_case << endl;
 		}
 	}
@@ -1090,7 +1090,7 @@ void poset_of_orbits::write_level_file_binary2(
 	int &nb_group_elements, int verbose_level)
 {
 	int f, i, nb_nodes, tmp;
-	int f_v = FALSE;//(verbose_level >= 1);
+	int f_v = false;//(verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
 
 	f = first_node_at_level(level);
@@ -1123,7 +1123,7 @@ void poset_of_orbits::write_candidates_binary_using_sv(
 		int lvl, int t0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;
+	int f_vv = false;
 	string fname;
 
 	if (f_v) {
@@ -1274,7 +1274,7 @@ void poset_of_orbits::read_level_file(int level,
 		cout << endl;
 
 		J = PC->find_poset_orbit_node_for_set(level - 1,
-				sets[i], FALSE /* f_tolerant */,
+				sets[i], false /* f_tolerant */,
 				0/*verbose_level*/);
 		cout << "J=" << J << endl;
 
@@ -1304,7 +1304,7 @@ void poset_of_orbits::read_level_file(int level,
 				s.assign(data[i]);
 				Aut.init_ascii_coding(s, verbose_level - 2);
 
-				Aut.decode_ascii(FALSE);
+				Aut.decode_ascii(false);
 
 				// now strong poset_classifications are available
 
@@ -1542,7 +1542,7 @@ void poset_of_orbits::log_nodes_for_treefile(
 	}
 
 	node->log_current_node(PC, depth, f,
-			FALSE /* f_with_strong_generators */, 0);
+			false /* f_with_strong_generators */, 0);
 
 	if (f_recurse) {
 		//cout << "recursing into dependent nodes" << endl;
@@ -1551,7 +1551,7 @@ void poset_of_orbits::log_nodes_for_treefile(
 				if (node->get_E(i)->get_data() >= 0) {
 					next = node->get_E(i)->get_data();
 					log_nodes_for_treefile(next,
-							depth + 1, f, TRUE, verbose_level);
+							depth + 1, f, true, verbose_level);
 				}
 			}
 		}

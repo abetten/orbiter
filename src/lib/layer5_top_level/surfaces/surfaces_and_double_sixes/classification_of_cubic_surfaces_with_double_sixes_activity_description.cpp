@@ -21,27 +21,27 @@ namespace cubic_surfaces_and_double_sixes {
 
 classification_of_cubic_surfaces_with_double_sixes_activity_description::classification_of_cubic_surfaces_with_double_sixes_activity_description()
 {
-	f_report = FALSE;
+	f_report = false;
 	report_options = NULL;
 
-	f_identify_Eckardt = FALSE;
+	f_identify_Eckardt = false;
 
-	f_identify_F13 = FALSE;
+	f_identify_F13 = false;
 
-	f_identify_Bes = FALSE;
+	f_identify_Bes = false;
 
-	f_identify_general_abcd = FALSE;
+	f_identify_general_abcd = false;
 
-	f_isomorphism_testing = FALSE;
+	f_isomorphism_testing = false;
 	isomorphism_testing_surface1 = NULL;
 	isomorphism_testing_surface2 = NULL;
 
-	f_recognize = FALSE;
+	f_recognize = false;
 	recognize_surface = NULL;
 
-	f_create_source_code = FALSE;
+	f_create_source_code = false;
 
-	f_sweep_Cayley = FALSE;
+	f_sweep_Cayley = false;
 
 }
 
@@ -65,7 +65,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments, next argument is " << argv[i] << endl;
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+			f_report = true;
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 			if (f_v) {
 				cout << "-report " << endl;
@@ -87,31 +87,31 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-identify_Eckardt") == 0) {
-			f_identify_Eckardt = TRUE;
+			f_identify_Eckardt = true;
 			if (f_v) {
 				cout << "-identify_Eckardt " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-identify_F13") == 0) {
-			f_identify_F13 = TRUE;
+			f_identify_F13 = true;
 			if (f_v) {
 				cout << "-identify_F13 " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-identify_Bes") == 0) {
-			f_identify_Bes = TRUE;
+			f_identify_Bes = true;
 			if (f_v) {
 				cout << "-identify_Bes " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-identify_general_abcd") == 0) {
-			f_identify_general_abcd = TRUE;
+			f_identify_general_abcd = true;
 			if (f_v) {
 				cout << "-identify_general_abcd " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-isomorphism_testing") == 0) {
-			f_isomorphism_testing = TRUE;
+			f_isomorphism_testing = true;
 			if (f_v) {
 				cout << "-isomorphism_testing" << endl;
 				cout << "-isomorphism_testing reading description of first surface" << endl;
@@ -140,7 +140,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
-			f_recognize = TRUE;
+			f_recognize = true;
 			if (f_v) {
 				cout << "-recognize reading description of surface" << endl;
 			}
@@ -159,10 +159,10 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-create_source_code") == 0) {
-			f_create_source_code = TRUE;
+			f_create_source_code = true;
 		}
 		else if (ST.stringcmp(argv[i], "-sweep_Cayley") == 0) {
-			f_sweep_Cayley = TRUE;
+			f_sweep_Cayley = true;
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {

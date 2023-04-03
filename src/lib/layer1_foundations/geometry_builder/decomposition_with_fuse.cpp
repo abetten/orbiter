@@ -328,7 +328,7 @@ void decomposition_with_fuse::init_k(int verbose_level)
 			if (fuse_idx == 0) {
 				K0[fuse_idx * gg->GB->b_len + J] = 0;
 			}
-			F_last_k_in_col[fuse_idx * gg->GB->b_len + J] = FALSE;
+			F_last_k_in_col[fuse_idx * gg->GB->b_len + J] = false;
 		}
 	}
 	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
@@ -359,7 +359,7 @@ void decomposition_with_fuse::init_k(int verbose_level)
 		for (fuse_idx = nb_fuse - 1; fuse_idx >= 0; fuse_idx--) {
 			k = KK[fuse_idx * gg->GB->b_len + J];
 			if (k) {
-				F_last_k_in_col[fuse_idx * gg->GB->b_len + J] = TRUE;
+				F_last_k_in_col[fuse_idx * gg->GB->b_len + J] = true;
 				break;
 			}
 		}
@@ -415,13 +415,13 @@ void decomposition_with_fuse::conf_init_last_non_zero_flag(int verbose_level)
 		fl = Fuse_len[fuse_idx];
 		for (i = fl - 1; i >= 0; i--) {
 			I = ff + i;
-			Conf[I * gg->GB->b_len + 0].f_last_non_zero_in_fuse = FALSE;
+			Conf[I * gg->GB->b_len + 0].f_last_non_zero_in_fuse = false;
 		}
 		for (i = fl - 1; i >= 0; i--) {
 			I = ff + i;
 			r = Conf[I * gg->GB->b_len + 0].r;
 			if (r > 0) {
-				Conf[I * gg->GB->b_len + 0].f_last_non_zero_in_fuse = TRUE;
+				Conf[I * gg->GB->b_len + 0].f_last_non_zero_in_fuse = true;
 				break;
 			}
 		}

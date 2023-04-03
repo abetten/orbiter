@@ -199,7 +199,7 @@ int generators_symplectic_group::count_strong_generators(
 			transversal_length[first_moved]++;
 		}
 		nb++;
-		return FALSE;
+		return false;
 	}
 	for (cur_candidate[depth] = 0;
 			cur_candidate[depth] < nb_candidates[depth];
@@ -208,7 +208,7 @@ int generators_symplectic_group::count_strong_generators(
 			first_moved = depth;
 		}
 		a = candidates[depth][cur_candidate[depth]];
-		if (FALSE) {
+		if (false) {
 			cout << "depth " << depth << " " << cur_candidate[depth]
 				<< " / " << nb_candidates[depth] << " which is " << a << endl;
 		}
@@ -218,10 +218,10 @@ int generators_symplectic_group::count_strong_generators(
 		if (!count_strong_generators(nb, transversal_length,
 			first_moved, depth + 1, verbose_level)
 			&& depth > first_moved) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int generators_symplectic_group::get_strong_generators(
@@ -236,7 +236,7 @@ int generators_symplectic_group::get_strong_generators(
 		//int_matrix_print(Mtx, n, n);
 		Int_vec_copy(Mtx, Data + nb * n * n, n * n);
 		nb++;
-		return FALSE;
+		return false;
 	}
 	for (cur_candidate[depth] = 0;
 			cur_candidate[depth] < nb_candidates[depth];
@@ -245,7 +245,7 @@ int generators_symplectic_group::get_strong_generators(
 			first_moved = depth;
 		}
 		a = candidates[depth][cur_candidate[depth]];
-		if (FALSE) {
+		if (false) {
 			cout << "depth " << depth << " " << cur_candidate[depth]
 				<< " / " << nb_candidates[depth] << " which is " << a << endl;
 		}
@@ -254,10 +254,10 @@ int generators_symplectic_group::get_strong_generators(
 
 		if (!get_strong_generators(Data, nb, first_moved,
 				depth + 1, verbose_level) && depth > first_moved) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void generators_symplectic_group::create_first_candidate_set(

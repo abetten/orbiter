@@ -49,7 +49,7 @@ void action::null()
 	type_G = unknown_symmetry_group_t;
 	
 	subaction = NULL;
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = false;
 	Strong_gens = NULL;
 	//strong_generators = NULL;
 
@@ -59,10 +59,10 @@ void action::null()
 	null_element_data();
 
 	degree = 0;
-	f_is_linear = FALSE;
+	f_is_linear = false;
 	dimension = 0;
 
-	f_has_stabilizer_chain = FALSE;
+	f_has_stabilizer_chain = false;
 
 	Stabilizer_chain = NULL;
 
@@ -73,25 +73,25 @@ void action::null()
 	elt_size_in_int = 0;
 	coded_elt_size_in_char = 0;
 	//group_prefix[0] = 0;
-	//f_has_transversal_reps = FALSE;
-	f_group_order_is_small = FALSE;
+	//f_has_transversal_reps = false;
+	f_group_order_is_small = false;
 	make_element_size = 0;
 	low_level_point_size = 0;
 
 	ptr = NULL;
 
-	f_allocated = FALSE;
-	f_has_subaction = FALSE;
-	f_subaction_is_allocated = FALSE;
-	f_has_sims = FALSE;
-	f_has_kernel = FALSE;
+	f_allocated = false;
+	f_has_subaction = false;
+	f_subaction_is_allocated = false;
+	f_has_sims = false;
+	f_has_kernel = false;
 }
 
 void action::freeself()
 {
 	//int i;
-	int f_v = FALSE;
-	int f_vv = FALSE;
+	int f_v = false;
+	int f_vv = false;
 
 	if (f_v) {
 		cout << "action::freeself deleting action " << label << endl;
@@ -297,7 +297,7 @@ void action::freeself()
 			cout << endl;
 			exit(1);
 		}
-		f_allocated = FALSE;
+		f_allocated = false;
 		type_G = unknown_symmetry_group_t;
 	}
 	if (f_v) {
@@ -338,7 +338,7 @@ void action::freeself()
 		//FREE_int(tl);
 		//strong_generators = NULL;
 		//tl = NULL;
-		f_has_strong_generators = FALSE;
+		f_has_strong_generators = false;
 	}
 
 	if (f_v) {
@@ -352,8 +352,8 @@ void action::freeself()
 		}
 		FREE_OBJECT(subaction);
 		subaction = NULL;
-		f_subaction_is_allocated = FALSE;
-		f_has_subaction = FALSE;
+		f_subaction_is_allocated = false;
+		f_has_subaction = false;
 	}
 
 	if (f_v) {
@@ -366,7 +366,7 @@ void action::freeself()
 		}
 		FREE_OBJECT(Sims);
 		Sims = NULL;
-		f_has_sims = FALSE;
+		f_has_sims = false;
 		if (f_v) {
 			cout << "action::freeself freeing Sims finished" << endl;
 		}
@@ -382,7 +382,7 @@ void action::freeself()
 		}
 		FREE_OBJECT(Kernel);
 		Kernel = NULL;
-		f_has_kernel = FALSE;
+		f_has_kernel = false;
 		if (f_v) {
 			cout << "action::freeself freeing Kernel finished" << endl;
 		}
@@ -404,7 +404,7 @@ int action::f_has_base()
 		return Stabilizer_chain->get_f_has_base();
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -585,7 +585,7 @@ void action::map_a_set_based_on_hdl(
 	}
 	Elt = NEW_int(elt_size_in_int);
 
-	A_base->Group_element->element_retrieve(hdl, Elt, FALSE);
+	A_base->Group_element->element_retrieve(hdl, Elt, false);
 
 	Group_element->map_a_set(set,
 		image_set, n, Elt, verbose_level);
@@ -613,7 +613,7 @@ void action::init_sims_only(groups::sims *G, int verbose_level)
 	if (f_has_sims) {
 		FREE_OBJECT(Sims);
 		Sims = NULL;
-		f_has_sims = FALSE;
+		f_has_sims = false;
 	}
 	if (G->A != this) {
 		cout << "action::init_sims_only action " << label
@@ -622,7 +622,7 @@ void action::init_sims_only(groups::sims *G, int verbose_level)
 		exit(1);
 	}
 	Sims = G;
-	f_has_sims = TRUE;
+	f_has_sims = true;
 	if (f_v) {
 		cout << "action::init_sims_only "
 				"before Stabilizer_chain->init_base_from_sims" << endl;
@@ -663,11 +663,11 @@ void action::compute_strong_generators_from_sims(int verbose_level)
 	if (f_has_strong_generators) {
 		FREE_OBJECT(Strong_gens);
 		Strong_gens = NULL;
-		f_has_strong_generators = FALSE;
+		f_has_strong_generators = false;
 	}
 	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(Sims, verbose_level - 2);
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "action::compute_strong_generators_from_sims done" << endl;
 	}
@@ -820,11 +820,11 @@ void action::compute_stabilizer_orbits(
 
 	for (i = 0; i < base_len(); i++) {
 		strong_generators_at_depth(i, gen, verbose_level - 2);
-		if (FALSE) {
+		if (false) {
 			cout << "level " << i << " found "
 					<< gen.len << " strong generators" << endl;
 		}
-		if (FALSE) {
+		if (false) {
 			gen.print(cout);
 		}
 
@@ -833,20 +833,20 @@ void action::compute_stabilizer_orbits(
 
 
 		S = &Staborbits[i];
-		S->allocate(degree, FALSE);
+		S->allocate(degree, false);
 
-		if (FALSE) {
+		if (false) {
 			cout << "computing point orbits" << endl;
 		}
 
 		compute_all_point_orbits(Schreier, gen, 0 /*verbose_level - 2*/);
 
-		if (FALSE) {
+		if (false) {
 			Schreier.print(cout);
 		}
 
 		Schreier.get_orbit_partition(*S, 0 /*verbose_level - 2*/);
-		if (FALSE) {
+		if (false) {
 			cout << "found " << S->ht << " orbits" << endl;
 		}
 		if (f_vv) {
@@ -994,7 +994,7 @@ void action::lexorder_test(
 	int verbose_level)
 {
 	int f_v = (verbose_level  >= 1);
-	int f_v5 = FALSE; //(verbose_level  >= 1);
+	int f_v5 = false; //(verbose_level  >= 1);
 	groups::schreier *Sch;
 	int i, orb, first, a, a0;
 
@@ -1040,7 +1040,7 @@ void action::lexorder_test(
 	set_sz_after_test = 0;
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
-		if (FALSE) {
+		if (false) {
 			cout << "action::lexorder_test "
 					"Looking at point " << a << endl;
 		}
@@ -1316,10 +1316,10 @@ int action::is_semilinear_matrix_group()
 
 		M = get_matrix_group();
 		if (M->f_semilinear) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 }
@@ -1335,10 +1335,10 @@ int action::is_projective()
 
 		M = get_matrix_group();
 		if (M->f_projective) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 }
@@ -1354,10 +1354,10 @@ int action::is_affine()
 
 		M = get_matrix_group();
 		if (M->f_affine) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 }
@@ -1373,10 +1373,10 @@ int action::is_general_linear()
 
 		M = get_matrix_group();
 		if (M->f_general_linear) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 }
@@ -1384,16 +1384,16 @@ int action::is_general_linear()
 int action::is_matrix_group()
 {
 	if (type_G == matrix_group_t) {
-			return TRUE;
+			return true;
 	}
 	else if (type_G == action_on_orthogonal_t) {
-			return TRUE;
+			return true;
 	}
 	else {
 		if (f_has_subaction) {
 			return subaction->is_matrix_group();
 		}
-		return FALSE;
+		return false;
 	}
 }
 

@@ -38,7 +38,7 @@ large_set_classify::large_set_classify()
 	//std::string prefix_with_directory;
 
 
-	f_lexorder_test = FALSE;
+	f_lexorder_test = false;
 	size_of_large_set = 0;
 
 
@@ -212,17 +212,17 @@ void large_set_classify::create_action_and_poset(int verbose_level)
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	gen = NEW_OBJECT(poset_classification::poset_classification);
 
-	Control->f_T = TRUE;
-	Control->f_W = TRUE;
+	Control->f_T = true;
+	Control->f_W = true;
 	Control->problem_label.assign(problem_label);
-	Control->f_problem_label = TRUE;
+	Control->f_problem_label = true;
 	//Control->path = path;
-	//Control->f_path = TRUE;
-	Control->f_depth = TRUE;
+	//Control->f_path = true;
+	Control->f_depth = true;
 	Control->depth = search_depth;
 
 #if 0
-	Control->f_print_function = TRUE;
+	Control->f_print_function = true;
 	Control->print_function = print_set;
 	Control->print_function_data = this;
 #endif
@@ -258,8 +258,8 @@ void large_set_classify::compute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = search_depth;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	int t0;
 	orbiter_kernel_system::os_interface Os;
 
@@ -501,7 +501,7 @@ void large_set_classify::process_starter_case(
 
 	OoS->init(A_reduced,
 				SG,
-				FALSE /* f_load_save */,
+				false /* f_load_save */,
 				prefix,
 				verbose_level);
 
@@ -519,7 +519,7 @@ void large_set_classify::process_starter_case(
 
 	colored_graph *CG;
 	std::string fname;
-	int f_has_user_data = FALSE;
+	int f_has_user_data = false;
 
 	fname.assign(prefix);
 	fname.append(group_label);
@@ -657,7 +657,7 @@ void large_set_classify::process_starter_case(
 			orbit_length,
 			selected_type_idx,
 			f_has_user_data, NULL /* int *user_data */, 0 /* user_data_size */,
-			TRUE /* f_has_colors */, nb_remaining_colors, reduced_design_color_table,
+			true /* f_has_colors */, nb_remaining_colors, reduced_design_color_table,
 			large_set_design_test_pair_of_orbits,
 			this /* *test_function_data */,
 			verbose_level);
@@ -684,7 +684,7 @@ void large_set_classify::process_starter_case(
 		cout << "large_set_classify::process_starter_case "
 				"The orbits on the reduced set of designs are:" << endl;
 		//Orbits_on_reduced->print_and_list_orbits_sorted_by_length(
-		//	cout, TRUE /* f_tex */);
+		//	cout, true /* f_tex */);
 	}
 
 
@@ -706,9 +706,9 @@ void large_set_classify::process_starter_case(
 	}
 	tally C;
 
-	C.init(reduced_design_color, nb_reduced, FALSE, 0);
+	C.init(reduced_design_color, nb_reduced, false, 0);
 	cout << "color distribution of reduced designs:" << endl;
-	C.print_naked_tex(cout, FALSE /* f_backwards */);
+	C.print_naked_tex(cout, false /* f_backwards */);
 	cout << endl;
 
 	FREE_int(reduced_design_color);
@@ -739,7 +739,7 @@ int large_set_design_test_orbit(long int *orbit, int orbit_length,
 		void *extra_data)
 {
 	large_set_classify *LS = (large_set_classify *) extra_data;
-	int ret = FALSE;
+	int ret = false;
 
 	ret = LS->test_orbit(orbit, orbit_length);
 

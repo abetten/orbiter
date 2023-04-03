@@ -22,9 +22,9 @@ action_on_orthogonal::action_on_orthogonal()
 	v2 = NULL;
 	w1 = NULL;
 	w2 = NULL;
-	f_on_points = FALSE;
-	f_on_lines = FALSE;
-	f_on_points_and_lines = FALSE;
+	f_on_points = false;
+	f_on_lines = false;
+	f_on_points_and_lines = false;
 	low_level_point_size = 0;
 	degree = 0;
 }

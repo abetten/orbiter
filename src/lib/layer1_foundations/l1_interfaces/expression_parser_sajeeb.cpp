@@ -94,7 +94,8 @@ void expression_parser_sajeeb::init_formula(
 
 	if (f_v) {
 		cout << "expression_parser_sajeeb::init_formula "
-				"Formula " << Formula->name_of_formula << " is " << Formula->formula_text << endl;
+				"Formula " << Formula->name_of_formula
+				<< " is " << Formula->formula_text << endl;
 		cout << "expression_parser_sajeeb::init_formula "
 				"Managed variables: " << Formula->managed_variables << endl;
 	}
@@ -112,7 +113,7 @@ void expression_parser_sajeeb::init_formula(
 	const char *p = Formula->managed_variables.c_str();
 	char str[1000];
 
-	while (TRUE) {
+	while (true) {
 		if (!ST.s_scan_token_comma_separated(
 				&p, str, 0 /* verbose_level */)) {
 			break;
@@ -128,7 +129,7 @@ void expression_parser_sajeeb::init_formula(
 		PD->managed_variables_table.insert(var);
 
 		//tree->managed_variables.push_back(var);
-		//tree->f_has_managed_variables = TRUE;
+		//tree->f_has_managed_variables = true;
 
 	}
 
@@ -159,7 +160,8 @@ void expression_parser_sajeeb::init_formula(
 
 
 	PD->ir_tree_root =
-    		parser::parse_expression(Formula->formula_text, PD->managed_variables_table);
+    		parser::parse_expression(
+    				Formula->formula_text, PD->managed_variables_table);
 
 
 
@@ -191,7 +193,7 @@ void expression_parser_sajeeb::init_formula(
 	}
 
 
-	Formula->f_is_homogeneous = TRUE;
+	Formula->f_is_homogeneous = true;
 
 
     //exponent_vector_visitor evv;
@@ -224,7 +226,7 @@ void expression_parser_sajeeb::init_formula(
 
 
 #if 0
-	if (FALSE) {
+	if (false) {
 		cout << "expression_parser_sajeeb::init_formula Syntax tree:" << endl;
 		tree->print(cout);
 	}
@@ -289,7 +291,8 @@ void expression_parser_sajeeb::get_subtrees(
 		const vector<unsigned int>& vec = it.first;
 
 		if (vec.size() != Poly->nb_variables) {
-			cout << "expression_parser_sajeeb::get_subtrees vec.size() != Poly->nb_variables" << endl;
+			cout << "expression_parser_sajeeb::get_subtrees "
+					"vec.size() != Poly->nb_variables" << endl;
 			exit(1);
 		}
 		d = 0;
@@ -317,7 +320,7 @@ void expression_parser_sajeeb::get_subtrees(
 	Formula->degree = deg;
 
 
-	Formula->f_is_homogeneous = TRUE;
+	Formula->f_is_homogeneous = true;
 
 
 	if (f_v) {

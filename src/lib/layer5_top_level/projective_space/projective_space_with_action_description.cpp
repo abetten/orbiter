@@ -21,20 +21,20 @@ namespace projective_geometry {
 
 projective_space_with_action_description::projective_space_with_action_description()
 {
-	f_n = FALSE;
+	f_n = false;
 	n = 0;
 
-	f_q = FALSE;
+	f_q = false;
 	q = 0;
 
-	f_field = FALSE;
+	f_field = false;
 	//field_label;
 
 	F = NULL;
 
-	f_use_projectivity_subgroup = FALSE;
+	f_use_projectivity_subgroup = false;
 
-	f_override_verbose_level = FALSE;
+	f_override_verbose_level = false;
 	override_verbose_level = 0;
 
 }
@@ -69,34 +69,34 @@ int projective_space_with_action_description::read_arguments(
 	for (; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-use_projectivity_subgroup") == 0) {
-			f_use_projectivity_subgroup = TRUE;
+			f_use_projectivity_subgroup = true;
 			if (f_v) {
 				cout << "-use_projectivity_subgroup" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-n") == 0) {
-			f_n = TRUE;
+			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-n " << n << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
+			f_q = true;
 			q = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-q " << q << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-field") == 0) {
-			f_field = TRUE;
+			f_field = true;
 			field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-field " << field_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-v") == 0) {
-			f_override_verbose_level = TRUE;
+			f_override_verbose_level = true;
 			override_verbose_level = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-v " << override_verbose_level << endl;

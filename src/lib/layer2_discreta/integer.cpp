@@ -252,7 +252,7 @@ int integer::invert_to(discreta_base &x, int verbose_level)
 		exit(1);
 		}
 	if (is_zero())
-		return FALSE;
+		return false;
 	i = s_i();
 	if (is_GFp_domain(dom)) {
 		if (f_v) {
@@ -273,7 +273,7 @@ int integer::invert_to(discreta_base &x, int verbose_level)
 			cout << "integer::invert_to av=" << av << endl;
 		}
 		x.m_i_i( av );
-		return TRUE;
+		return true;
 		}
 	else if (is_GFq_domain(dom)) {
 		if (f_v) {
@@ -302,7 +302,7 @@ int integer::invert_to(discreta_base &x, int verbose_level)
 #endif
 		res = a.polynomial_numeric(p);
 		x.m_i_i(res);
-		return TRUE;
+		return true;
 		}
 	else if (is_Orbiter_finite_field_domain(dom)) {
 		if (f_v) {
@@ -312,17 +312,17 @@ int integer::invert_to(discreta_base &x, int verbose_level)
 		a = s_i();
 		av = dom->get_F()->inverse(a);
 		x.m_i_i(av);
-		return TRUE;
+		return true;
 		}
 	if (i == 1 || i == -1) {
 		x.m_i_i( i );
-		return TRUE;
+		return true;
 		}
 	else {
 		cout << "integer::invert_to cannot invert " << *this << endl;
 		exit(1);
 		}
-	return FALSE;
+	return false;
 }
 
 void integer::add_to(discreta_base &x, discreta_base &y)
@@ -562,9 +562,9 @@ int integer::is_zero()
 	
 	a.zero();
 	if (compare_with(a) == 0)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int integer::is_one()
@@ -573,9 +573,9 @@ int integer::is_one()
 	
 	a.one();
 	if (compare_with(a) == 0)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int integer::is_m_one()
@@ -584,9 +584,9 @@ int integer::is_m_one()
 	
 	a.m_one();
 	if (compare_with(a) == 0)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int integer::compare_with_euclidean(discreta_base &a)

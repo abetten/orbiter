@@ -214,7 +214,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 
 		    itr1 = Hashing.lower_bound(h);
 		    itr2 = Hashing.upper_bound(h);
-		    f_found = FALSE;
+		    f_found = false;
 		    for (itr = itr1; itr != itr2; ++itr) {
 		        pos = itr->second;
 		        for (j = 0; j < BF->Q; j++) {
@@ -223,7 +223,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 		        	}
 		        }
 		        if (j == BF->Q) {
-		        	f_found = TRUE;
+		        	f_found = true;
 		        	break;
 		        }
 		    }
@@ -246,11 +246,11 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 
 				Orb = NEW_OBJECT(orbits_schreier::orbit_of_equations);
 
-				Orb->f_has_print_function = TRUE;
+				Orb->f_has_print_function = true;
 				Orb->print_function = boolean_function_classify_print_function;
 				Orb->print_function_data = this;
 
-				Orb->f_has_reduction = TRUE;
+				Orb->f_has_reduction = true;
 				Orb->reduction_function = boolean_function_classify_reduction_function;
 				Orb->reduction_function_data = this;
 

@@ -866,7 +866,7 @@ void surfaces_arc_lifting_trace::embed(
 		}
 	}
 	M4[3 * 4 + 3] = 1;
-	if (FALSE) {
+	if (false) {
 		cout << "surfaces_arc_lifting_trace::embed M4=" << endl;
 		Int_vec_print(cout, M4, 17);
 		cout << endl;
@@ -874,7 +874,7 @@ void surfaces_arc_lifting_trace::embed(
 	if (Up->Lift->f_semilinear) {
 		M4[16] = Elt_A3[9];
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "surfaces_arc_lifting_trace::embed "
 				"before make_element" << endl;
 	}
@@ -901,11 +901,11 @@ void surfaces_arc_lifting_trace::report_product(
 
 	int f_print_as_exponentials_save = Up->Lift->F->f_print_as_exponentials;
 
-	if (f_print_as_exponentials_save == FALSE) {
+	if (f_print_as_exponentials_save == false) {
 		return;
 	}
 
-	Up->Lift->F->f_print_as_exponentials = FALSE;
+	Up->Lift->F->f_print_as_exponentials = false;
 
 	ost << "$$" << endl;
 	Up->Lift->A4->Group_element->element_print_latex(Elt_Alpha1, ost);

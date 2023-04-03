@@ -19,29 +19,29 @@ namespace packings {
 
 packing_long_orbits_description::packing_long_orbits_description()
 {
-	f_split = FALSE;
+	f_split = false;
 	split_r = 0;
 	split_m = 0;
 
 
-	f_orbit_length = FALSE;
+	f_orbit_length = false;
 	orbit_length = 0;
 
-	f_mixed_orbits = FALSE;
+	f_mixed_orbits = false;
 	//std::string mixed_orbits_length_text;
 
 
-	f_list_of_cases_from_file = FALSE;
+	f_list_of_cases_from_file = false;
 	//std::string process_list_of_cases_from_file_fname;
 
-	f_solution_path = FALSE;
+	f_solution_path = false;
 	//std::string solution_path;
 
-	f_create_graphs = FALSE;
+	f_create_graphs = false;
 
-	f_solve = FALSE;
+	f_solve = false;
 
-	f_read_solutions = FALSE;
+	f_read_solutions = false;
 }
 
 packing_long_orbits_description::~packing_long_orbits_description()
@@ -61,7 +61,7 @@ int packing_long_orbits_description::read_arguments(int argc, std::string *argv,
 
 
 		if (ST.stringcmp(argv[i], "-split") == 0) {
-			f_split = TRUE;
+			f_split = true;
 			split_r = ST.strtoi(argv[++i]);
 			split_m = ST.strtoi(argv[++i]);
 			cout << "-split " << split_r << " " << split_m << " " << endl;
@@ -69,20 +69,20 @@ int packing_long_orbits_description::read_arguments(int argc, std::string *argv,
 
 
 		else if (ST.stringcmp(argv[i], "-orbit_length") == 0) {
-			f_orbit_length = TRUE;
+			f_orbit_length = true;
 			orbit_length = ST.strtoi(argv[++i]);
 			cout << "-orbit_length " << orbit_length << " " << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-mixed_orbits") == 0) {
-			f_mixed_orbits = TRUE;
+			f_mixed_orbits = true;
 			mixed_orbits_length_text.assign(argv[++i]);
 			cout << "-mixed_orbits " << mixed_orbits_length_text << " " << endl;
 		}
 
 
 		else if (ST.stringcmp(argv[i], "-list_of_cases_from_file") == 0) {
-			f_list_of_cases_from_file = TRUE;
+			f_list_of_cases_from_file = true;
 			list_of_cases_from_file_fname.assign(argv[++i]);
 			cout << "-list_of_cases_from_file "
 				<< list_of_cases_from_file_fname << " "
@@ -93,23 +93,23 @@ int packing_long_orbits_description::read_arguments(int argc, std::string *argv,
 
 
 		else if (ST.stringcmp(argv[i], "-solution_path") == 0) {
-			f_solution_path = TRUE;
+			f_solution_path = true;
 			solution_path.assign(argv[++i]);
 			cout << "-solution_path " << solution_path << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-create_graphs") == 0) {
-			f_create_graphs = TRUE;
+			f_create_graphs = true;
 			cout << "-create_graphs " << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-solve") == 0) {
-			f_solve = TRUE;
+			f_solve = true;
 			cout << "-solve " << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-read_solutions") == 0) {
-			f_read_solutions = TRUE;
+			f_read_solutions = true;
 			cout << "-read_solutions " << endl;
 		}
 

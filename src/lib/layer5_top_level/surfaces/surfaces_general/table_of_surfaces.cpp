@@ -86,13 +86,13 @@ void table_of_surfaces::init(
 					<< h << " / " << nb_cubic_surfaces << endl;
 		}
 
-		//Surface_create_description.f_q = TRUE;
+		//Surface_create_description.f_q = true;
 		//Surface_create_description.q = q;
-		Surface_create_description[h].f_catalogue = TRUE;
+		Surface_create_description[h].f_catalogue = true;
 		Surface_create_description[h].iso = h;
 
 
-		Surface_create_description[h].f_space_pointer = TRUE;
+		Surface_create_description[h].f_space_pointer = true;
 		Surface_create_description[h].space_pointer = PA;
 
 
@@ -121,7 +121,7 @@ void table_of_surfaces::init(
 		SOA[h].init_with_surface_object(PA->Surf_A,
 				SC[h].SO,
 				SC[h].Sg,
-				FALSE /* f_has_nice_gens */,
+				false /* f_has_nice_gens */,
 				NULL /* vector_ge *nice_gens */,
 				verbose_level);
 		if (f_v) {

@@ -369,7 +369,7 @@ void algebra_global::subexponent(
 	c = a / g;
 	c = c % (q - 1);
 #if 0
-	for (s = 1; TRUE; s++) {
+	for (s = 1; true; s++) {
 		b = a * s;
 		if ((b % f) == 0) {
 			c = b / f;
@@ -487,7 +487,7 @@ void algebra_global::test_unipoly2(field_theory::finite_field *F)
 
 	FX.create_object_by_rank(a, 0, __FILE__, __LINE__, 0);
 	for (i = 1; i < F->q; i++) {
-		FX.minimum_polynomial(a, i, F->p, TRUE);
+		FX.minimum_polynomial(a, i, F->p, true);
 		//cout << "minpoly_" << i << " = ";
 		//FX.print_object(a, cout); cout << endl;
 		}
@@ -505,12 +505,12 @@ int algebra_global::is_diagonal_matrix(int *A, int n)
 			}
 			else {
 				if (A[i * n + j]) {
-					return FALSE;
+					return false;
 				}
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -566,7 +566,7 @@ void algebra_global::test_longinteger3()
 
 	for (i = 0; i < 10; i++) {
 		for (j = 0; j < 10; j++) {
-			D.binomial(a, i, j, FALSE);
+			D.binomial(a, i, j, false);
 			a.print(cout);
 			cout << " ";
 		}
@@ -661,7 +661,7 @@ void algebra_global::test_longinteger8()
 	cryptography::cryptography_domain Crypto;
 	ring_theory::longinteger_object a, b, one;
 	int nb_solovay_strassen_tests = 100;
-	int f_miller_rabin_test = TRUE;
+	int f_miller_rabin_test = true;
 
 	one.create(1, __FILE__, __LINE__);
 	a.create(197659, __FILE__, __LINE__);
@@ -695,7 +695,7 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 	int *tmp_multiplicities;
 	ring_theory::longinteger_domain D;
 
-	f_added = FALSE;
+	f_added = false;
 	for (j = 0; j < nb_agos; j++) {
 		c = D.compare_unsigned(ago, agos[j]);
 		//cout << "comparing " << ago << " with "
@@ -725,7 +725,7 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 					FREE_int(tmp_multiplicities);
 				}
 			}
-			f_added = TRUE;
+			f_added = true;
 			break;
 		}
 	}
@@ -1107,16 +1107,16 @@ void algebra_global::do_cheat_sheet_GF(
 		ofstream ost(fname);
 
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
 		L.head(ost,
-				FALSE /* f_book*/, TRUE /* f_title */,
+				false /* f_book*/, true /* f_title */,
 				title, author,
-				FALSE /* f_toc */, FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+				false /* f_toc */, false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extra_praeamble */);
 
 
@@ -1128,9 +1128,9 @@ void algebra_global::do_cheat_sheet_GF(
 
 		F->Io->cheat_sheet_multiplication_table(ost, verbose_level);
 
-		F->Io->cheat_sheet_power_table(ost, TRUE, verbose_level);
+		F->Io->cheat_sheet_power_table(ost, true, verbose_level);
 
-		F->Io->cheat_sheet_power_table(ost, FALSE, verbose_level);
+		F->Io->cheat_sheet_power_table(ost, false, verbose_level);
 
 
 
@@ -1203,16 +1203,16 @@ void algebra_global::do_cheat_sheet_ring(
 		ofstream ost(fname);
 
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
 		L.head(ost,
-				FALSE /* f_book*/, TRUE /* f_title */,
+				false /* f_book*/, true /* f_title */,
 				title, author,
-				FALSE /* f_toc */, FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+				false /* f_toc */, false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extra_praeamble */);
 
 		HPD->print_latex(ost);
@@ -1371,7 +1371,7 @@ void algebra_global::algebraic_normal_form(
 	}
 
 
-	F->f_print_as_exponentials = FALSE;
+	F->f_print_as_exponentials = false;
 
 
 	combinatorics::polynomial_function_domain *PF;
@@ -1839,10 +1839,10 @@ void algebra_global::O4_isomorphism_4to2(
 				<< " Sx=" << Sx << " Sy=" << Sy << endl;
 	}
 	if (Ry == Sy) {
-		f_switch = FALSE;
+		f_switch = false;
 	}
 	else {
-		f_switch = TRUE;
+		f_switch = true;
 	}
 	if (f_vv) {
 		cout << "f_switch=" << f_switch << endl;
@@ -2103,10 +2103,10 @@ void algebra_global::O4_find_tangent_plane(
 	int zz, h, k;
 	int x1, x2, x3, x4;
 	int y1, y2, y3, y4;
-	int f_special = FALSE;
-	int f_complete = FALSE;
+	int f_special = false;
+	int f_complete = false;
 	int base_cols[4];
-	int f_P = FALSE;
+	int f_P = false;
 	int rk, det;
 	int vec2[2];
 
@@ -2351,17 +2351,17 @@ void algebra_global::create_Nth_roots_and_write_report(
 
 
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 

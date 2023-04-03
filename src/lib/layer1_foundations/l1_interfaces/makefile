@@ -9,7 +9,9 @@ LFLAGS = -lm
 MODULES = \
 	expression_parser_sajeeb.o \
 	interface_gap_low.o \
-	interface_magma_low.o
+	interface_magma_low.o \
+	latex_interface.o \
+	nauty_interface.o
 
 
 all : $(MODULES)

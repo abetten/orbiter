@@ -194,7 +194,7 @@ void seventytwo_cases::compute_arc(
 	nb_t = 4;
 	nb = 2;
 	for (i = 0; i < nb_t; i++) {
-		f_taken[i] = FALSE;
+		f_taken[i] = false;
 	}
 	for (i = 0; i < nb_t; i++) {
 		if (f_taken[i]) {
@@ -203,7 +203,7 @@ void seventytwo_cases::compute_arc(
 		if (SO->SOP->Adj_ij(transversals4[i], m2)) {
 			P6[nb++] = SO->Surf->P->Subspaces->intersection_of_two_lines(
 					SO->Lines[transversals4[i]], SO->Lines[m2]);
-			f_taken[i] = TRUE;
+			f_taken[i] = true;
 		}
 	}
 	if (nb != 4) {
@@ -217,7 +217,7 @@ void seventytwo_cases::compute_arc(
 		if (SO->SOP->Adj_ij(transversals4[i], m3)) {
 			P6[nb++] = SO->Surf->P->Subspaces->intersection_of_two_lines(
 					SO->Lines[transversals4[i]], SO->Lines[m3]);
-			f_taken[i] = TRUE;
+			f_taken[i] = true;
 		}
 	}
 	if (nb != 6) {

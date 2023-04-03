@@ -530,9 +530,9 @@ long int grassmann::rank_lint(
 	if (k == 0) {
 		return 0;
 	}
-	k1 = F->Linear_algebra->Gauss_int(M, FALSE /*f_special */,
-		TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL, k, n, n,
+	k1 = F->Linear_algebra->Gauss_int(M, false /*f_special */,
+		true /* f_complete */, base_cols,
+		false /* f_P */, NULL, k, n, n,
 		0 /* verbose_level */);
 	
 	if (f_v) {
@@ -813,9 +813,9 @@ void grassmann::rank_longinteger(
 	if (k == 0) {
 		return;
 	}
-	k1 = F->Linear_algebra->Gauss_int(M, FALSE /*f_special */,
-		TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL, k, n, n,
+	k1 = F->Linear_algebra->Gauss_int(M, false /*f_special */,
+		true /* f_complete */, base_cols,
+		false /* f_P */, NULL, k, n, n,
 		0 /* verbose_level */);
 	
 	if (f_v) {
@@ -1673,7 +1673,7 @@ void grassmann::cheat_sheet_subspaces(
 	//int n1, k1;
 	int nb_k_subspaces;
 	int i, j, u;
-	int f_need_comma = FALSE;
+	int f_need_comma = false;
 	combinatorics::combinatorics_domain Combi;
 
 
@@ -1686,7 +1686,7 @@ void grassmann::cheat_sheet_subspaces(
 	v = NEW_int(n);
 
 	if (F->q >= 10) {
-		f_need_comma = TRUE;
+		f_need_comma = true;
 	}
 
 	//Gr = NEW_OBJECT(grassmann);
@@ -1827,7 +1827,7 @@ void grassmann::Pluecker_coordinates(int line_rk, int *v6, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int basis8[8];
 	int *x4, *y4;
-	int f_elements_exponential = FALSE;
+	int f_elements_exponential = false;
 	string symbol_for_print;
 
 	if (f_v) {
@@ -1899,7 +1899,7 @@ void grassmann::do_pluecker_reverse(
 
 	int u, u0;
 	//int n1, k1;
-	int f_need_comma = FALSE;
+	int f_need_comma = false;
 
 	//n1 = n + 1;
 	//k1 = k + 1;
@@ -1983,17 +1983,17 @@ void grassmann::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2044,7 +2044,7 @@ void grassmann::klein_correspondence(
 	int v6[6];
 	int *x4, *y4;
 	long int a, b, c;
-	int f_elements_exponential = TRUE;
+	int f_elements_exponential = true;
 	string symbol_for_print;
 
 
@@ -2119,7 +2119,7 @@ void grassmann::klein_correspondence_special_model(
 	int *x4, *y4;
 	int a, b, c;
 	int half;
-	int f_elements_exponential = TRUE;
+	int f_elements_exponential = true;
 	string symbol_for_print;
 	//int *table;
 

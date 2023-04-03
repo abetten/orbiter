@@ -551,7 +551,7 @@ void surface_repository::report_surface(
 			Wedge->Surf,
 			Lines + orbit_index * 27,
 			equation,
-			TRUE /*f_find_double_six_and_rearrange_lines*/,
+			true /*f_find_double_six_and_rearrange_lines*/,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_repository::report_surface "

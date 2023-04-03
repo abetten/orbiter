@@ -278,12 +278,12 @@ void poset_classification_activity::generate_history(int level, int verbose_leve
 			fp << "};" << endl;
 
 
-			int f_progress = FALSE;
+			int f_progress = false;
 			long int L = 0;
 			long int L100 = 0;
 
 			if (nb_iso > ONE_MILLION) {
-				f_progress = TRUE;
+				f_progress = true;
 				L = nb_iso;
 				L100 = L / 100 + 1;
 			}

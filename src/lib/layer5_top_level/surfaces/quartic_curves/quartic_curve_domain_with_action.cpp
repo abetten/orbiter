@@ -22,7 +22,7 @@ namespace quartic_curves {
 quartic_curve_domain_with_action::quartic_curve_domain_with_action()
 {
 		PA = NULL;
-		f_semilinear = FALSE;
+		f_semilinear = false;
 		Dom = NULL;
 		A = NULL;
 		A_on_lines = NULL;

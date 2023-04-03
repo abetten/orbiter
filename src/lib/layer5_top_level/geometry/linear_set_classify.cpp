@@ -34,11 +34,11 @@ static void linear_set_classify_secondary_early_test_func(long int *S, int len,
 linear_set_classify::linear_set_classify()
 {
 	s = n = m = q = Q = depth = 0;
-	f_semilinear = FALSE;
+	f_semilinear = false;
 	schreier_depth = 0;
-	f_use_invariant_subset_if_available = FALSE;
-	f_debug = FALSE;
-	f_has_extra_test_func = FALSE;
+	f_use_invariant_subset_if_available = false;
+	f_debug = false;
+	f_has_extra_test_func = false;
 	extra_test_func = NULL;
 	extra_test_func_data = NULL;
 	Basis = NULL;
@@ -63,7 +63,7 @@ linear_set_classify::linear_set_classify()
 	D1 = NULL;
 	spread_embedding = NULL;
 
-	f_identify = FALSE;
+	f_identify = false;
 	k = 0;
 	order = 0;
 	SD = NULL;
@@ -89,7 +89,7 @@ linear_set_classify::linear_set_classify()
 
 linear_set_classify::~linear_set_classify()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (VS) {
 		if (f_v) {
@@ -238,10 +238,10 @@ void linear_set_classify::init(
 
 	vector_space_dimension = n;
 	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 	else {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	}
 
 	Fq = NEW_OBJECT(field_theory::finite_field);
@@ -249,8 +249,8 @@ void linear_set_classify::init(
 		cout << "linear_set_classify::init before Fq->init" << endl;
 	}
 	Fq->init_override_polynomial_small_order(q, poly_q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	FQ = NEW_OBJECT(field_theory::finite_field);
@@ -258,8 +258,8 @@ void linear_set_classify::init(
 		cout << "linear_set_classify::init before FQ->init" << endl;
 	}
 	FQ->init_override_polynomial_small_order(Q, poly_Q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	SubS = NEW_OBJECT(field_theory::subfield_structure);
@@ -280,7 +280,7 @@ void linear_set_classify::init(
 		cout << "linear_set_classify::init before P->projective_space_init" << endl;
 	}
 	P->projective_space_init(n - 1, Fq,
-		FALSE /* f_init_incidence_structure */,
+		false /* f_init_incidence_structure */,
 		0 /*verbose_level*/);
 	if (f_v) {
 		cout << "linear_set_classify::init after P->projective_space_init" << endl;
@@ -296,8 +296,8 @@ void linear_set_classify::init(
 
 	Aq = NEW_OBJECT(actions::action);
 	Aq->Known_groups->init_general_linear_group(n, Fq,
-		FALSE /* f_semilinear */,
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
+		false /* f_semilinear */,
+		true /* f_basis */, true /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);
 	FREE_OBJECT(nice_gens);
@@ -315,8 +315,8 @@ void linear_set_classify::init(
 				"GL(" << m << "," << FQ->q << ")" << endl;
 	}
 	AQ->Known_groups->init_general_linear_group(m, FQ,
-		FALSE /* f_semilinear */,
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
+		false /* f_semilinear */,
+		true /* f_basis */, true /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);
 	FREE_OBJECT(nice_gens);
@@ -338,8 +338,8 @@ void linear_set_classify::init(
 				"PGL(" << m << "," << FQ->q << ")" << endl;
 	}
 	A_PGLQ->Known_groups->init_projective_group(m, FQ,
-		FALSE /* f_semilinear */,
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
+		false /* f_semilinear */,
+		true /* f_basis */, true /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);
 	FREE_OBJECT(nice_gens);
@@ -439,7 +439,7 @@ void linear_set_classify::init(
 
 
 
-	Control1->f_depth = TRUE;
+	Control1->f_depth = true;
 	Control1->depth = depth;
 
 	Poset1->init_subspace_lattice(Aq, Aq, Strong_gens, VS,
@@ -456,8 +456,8 @@ void linear_set_classify::init(
 
 
 	schreier_depth = depth;
-	f_use_invariant_subset_if_available = TRUE;
-	f_debug = FALSE;
+	f_use_invariant_subset_if_available = true;
+	f_debug = false;
 
 
 	if (f_identify) {
@@ -491,7 +491,7 @@ void linear_set_classify::init(
 
 		T = NEW_OBJECT(spreads::spread_classify);
 
-		//int f_recoordinatize = TRUE;
+		//int f_recoordinatize = true;
 
 		k = n >> 1;
 		order = NT.i_power_j(q, k);
@@ -554,7 +554,7 @@ void linear_set_classify::do_classify(int verbose_level)
 	}
 
 	int schreier_depth = depth;
-	int f_use_invariant_subset_if_available = TRUE;
+	int f_use_invariant_subset_if_available = true;
 
 
 	Gen->compute_orbits(0, depth, schreier_depth, f_use_invariant_subset_if_available,
@@ -590,7 +590,7 @@ int linear_set_classify::test_set(int len, long int *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int ret = TRUE;
+	int ret = true;
 	int i, rk;
 
 	if (f_v) {
@@ -616,7 +616,7 @@ int linear_set_classify::test_set(int len, long int *S, int verbose_level)
 		cout << "the matrix has rank " << rk << endl;
 	}
 	if (rk < len) {
-		ret = FALSE;
+		ret = false;
 	}
 	if (ret) {
 		if (f_has_extra_test_func) {
@@ -711,8 +711,8 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 			{
 				data_structures::tally C;
 
-				C.init(Intersection_dimensions[level] + i * D->N, D->N, FALSE, 0);
-				C.print_naked(TRUE);
+				C.init(Intersection_dimensions[level] + i * D->N, D->N, false, 0);
+				C.print_naked(true);
 			}
 			cout << " : ";
 			Gen->get_stabilizer_order(level, i, go);
@@ -799,8 +799,8 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 					"read_sv_level_file_binary level=" << level << endl;
 		}
 		Gen->read_sv_level_file_binary(level, prefix,
-			FALSE /* f_split */, 0 /* split_mod */, 0 /*split_case*/,
-			FALSE /*f_recreate_extensions*/, FALSE /* f_dont_keep_sv */,
+			false /* f_split */, 0 /* split_mod */, 0 /*split_case*/,
+			false /*f_recreate_extensions*/, false /* f_dont_keep_sv */,
 			verbose_level - 2);
 	}
 
@@ -811,7 +811,7 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 	cout << "before draw_poset" << endl;
 	Gen->draw_poset("test",
 			depth, 0 /* data1 */,
-			TRUE /* f_embedded */,
+			true /* f_embedded */,
 			10 /* gen->verbose_level */);
 #endif
 
@@ -999,7 +999,7 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 
 	secondary_depth = n - secondary_level;
 
-	Control2->f_depth = TRUE;
+	Control2->f_depth = true;
 	Control2->depth = secondary_depth;
 
 
@@ -1043,9 +1043,9 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 
 
 	secondary_schreier_depth = secondary_depth;
-	//f_use_invariant_subset_if_available = TRUE;
-	//f_lex = FALSE;
-	//f_debug = FALSE;
+	//f_use_invariant_subset_if_available = true;
+	//f_lex = false;
+	//f_debug = false;
 
 
 
@@ -1192,7 +1192,7 @@ int linear_set_classify::test_set_secondary(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int ret = TRUE;
+	int ret = true;
 	long int i, rk;
 	int *v;
 	int *w;
@@ -1224,7 +1224,7 @@ int linear_set_classify::test_set_secondary(
 		cout << "the matrix has rank " << rk << endl;
 	}
 	if (rk < len) {
-		ret = FALSE;
+		ret = false;
 	}
 
 	if (ret) {
@@ -1245,8 +1245,8 @@ int linear_set_classify::test_set_secondary(
 					v, Basis, w, len, n);
 			Fq->Projective_space_basic->PG_element_rank_modified(
 					w, 1, n, rk);
-			if (is_allowed[rk] == FALSE) {
-				ret = FALSE;
+			if (is_allowed[rk] == false) {
+				ret = false;
 				break;
 			}
 		}
@@ -1378,7 +1378,7 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	Poset_stab = NEW_OBJECT(poset_classification::poset_with_group_action);
 
 
-	Control_stab->f_depth = TRUE;
+	Control_stab->f_depth = true;
 	Control_stab->depth = level;
 
 
@@ -1449,7 +1449,7 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 		verbose_level);
 #endif
 #if 0
-	Gen->f_print_function = TRUE;
+	Gen->f_print_function = true;
 	Gen->print_function = print_set;
 	Gen->print_function_data = this;
 #endif
@@ -1641,7 +1641,7 @@ void linear_set_classify::do_compute_stabilizer(
 		Int_vec_print(cout, Intersection_dimensions, D->N);
 		cout << endl;
 
-		//int f_lex = TRUE;
+		//int f_lex = true;
 
 		orbit = Gen->trace_set(set2, level, level,
 			set3 /* canonical_set */, Elt1 /* *Elt_transporter */,
@@ -1890,7 +1890,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 
 	is_deleted = NEW_int(large_linear_set_sz);
 	for (i = 0; i < large_linear_set_sz; i++) {
-		is_deleted[i] = FALSE;
+		is_deleted[i] = false;
 	}
 
 	for (i = 0; i < small_linear_set_sz; i++) {
@@ -1901,7 +1901,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 					"in large linear set, something is wrong" << endl;
 			exit(1);
 		}
-		is_deleted[idx] = TRUE;
+		is_deleted[idx] = true;
 	}
 
 	long int *linear_set;
@@ -2155,7 +2155,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		}
 
 		int *transporter;
-		//int f_implicit_fusion = FALSE;
+		//int f_implicit_fusion = false;
 		int final_node;
 
 		transporter = NEW_int(T->gen->get_A()->elt_size_in_int);

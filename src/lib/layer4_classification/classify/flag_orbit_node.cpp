@@ -25,11 +25,11 @@ flag_orbit_node::flag_orbit_node()
 	flag_orbit_index = -1;
 	downstep_primary_orbit = -1;
 	downstep_secondary_orbit = -1;
-	f_long_orbit = FALSE;
+	f_long_orbit = false;
 	upstep_primary_orbit = -1;
 	upstep_secondary_orbit = -1;
 	downstep_orbit_len = 0;
-	f_fusion_node = FALSE;
+	f_fusion_node = false;
 	fusion_with = -1;
 	fusion_elt = NULL;
 	gens = NULL;
@@ -91,7 +91,7 @@ void flag_orbit_node::init(
 	flag_orbit_node::downstep_primary_orbit = downstep_primary_orbit;
 	flag_orbit_node::downstep_secondary_orbit = downstep_secondary_orbit;
 	flag_orbit_node::downstep_orbit_len = downstep_orbit_len;
-	flag_orbit_node::f_long_orbit = FALSE;
+	flag_orbit_node::f_long_orbit = false;
 	Lint_vec_copy(pt_representation,
 			Flag_orbits->Pt +
 			flag_orbit_index * Flag_orbits->pt_representation_sz,

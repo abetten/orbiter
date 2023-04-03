@@ -20,14 +20,14 @@ namespace algebra {
 
 matrix_group::matrix_group()
 {
-	f_projective = FALSE;
-	f_affine = FALSE;
-	f_general_linear = FALSE;
+	f_projective = false;
+	f_affine = false;
+	f_general_linear = false;
 	n = 0;
 	degree = 0;
 
-	f_semilinear = FALSE;
-	f_kernel_is_diagonal_matrices = FALSE;
+	f_semilinear = false;
+	f_kernel_is_diagonal_matrices = false;
 	bits_per_digit = 0;
 	bits_per_elt = 0;
 	bits_extension_degree = 0;
@@ -40,7 +40,7 @@ matrix_group::matrix_group()
 	//std::string label;
 	//std::string label_tex;
 
-	f_GFq_is_allocated = FALSE;
+	f_GFq_is_allocated = false;
 	GFq = NULL;
 	data = NULL;
 	C = NULL;
@@ -114,19 +114,19 @@ void matrix_group::init_projective_group(
 		cout << "f_semilinear=" << f_semilinear << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 	}
-	matrix_group::f_projective = TRUE;
-	matrix_group::f_affine = FALSE;
-	matrix_group::f_general_linear = FALSE;
+	matrix_group::f_projective = true;
+	matrix_group::f_affine = false;
+	matrix_group::f_general_linear = false;
 	matrix_group::f_semilinear = f_semilinear;
 	matrix_group::n = n;
 	matrix_group::GFq = F;
-	f_GFq_is_allocated = FALSE;
+	f_GFq_is_allocated = false;
 	low_level_point_size = n;
 	make_element_size = n * n;
 	if (f_semilinear) {
 		make_element_size++;
 	}
-	f_kernel_is_diagonal_matrices = TRUE;
+	f_kernel_is_diagonal_matrices = true;
 	degree = Gg.nb_PG_elements(n - 1, F->q);
 
 
@@ -136,7 +136,7 @@ void matrix_group::init_projective_group(
 			label,
 			label_tex,
 			n, F->q,
-			f_semilinear, FALSE /* f_special */,
+			f_semilinear, false /* f_special */,
 			verbose_level - 1);
 
 	if (f_v) {
@@ -210,15 +210,15 @@ void matrix_group::init_affine_group(
 	if (f_vv) {
 		cout << "matrix_group::init_affine_group" << endl;
 	}
-	matrix_group::f_projective = FALSE;
-	matrix_group::f_affine = TRUE;
-	matrix_group::f_general_linear = FALSE;
+	matrix_group::f_projective = false;
+	matrix_group::f_affine = true;
+	matrix_group::f_general_linear = false;
 	matrix_group::f_semilinear = f_semilinear;
 	matrix_group::n = n;
 	matrix_group::GFq = F;
-	f_GFq_is_allocated = FALSE;
+	f_GFq_is_allocated = false;
 	low_level_point_size = n;
-	f_kernel_is_diagonal_matrices = FALSE;
+	f_kernel_is_diagonal_matrices = false;
 	degree = Gg.nb_AG_elements(n, F->q);
 	make_element_size = n * n + n;
 	if (f_semilinear) {
@@ -230,7 +230,7 @@ void matrix_group::init_affine_group(
 	String.name_of_group_affine(
 			label,
 			label_tex,
-			n, F->q, f_semilinear, FALSE /* f_special */,
+			n, F->q, f_semilinear, false /* f_special */,
 			verbose_level - 1);
 
 
@@ -282,15 +282,15 @@ void matrix_group::init_general_linear_group(
 	if (f_vv) {
 		cout << "matrix_group::init_general_linear_group" << endl;
 	}
-	matrix_group::f_projective = FALSE;
-	matrix_group::f_affine = FALSE;
-	matrix_group::f_general_linear = TRUE;
+	matrix_group::f_projective = false;
+	matrix_group::f_affine = false;
+	matrix_group::f_general_linear = true;
 	matrix_group::f_semilinear = f_semilinear;
 	matrix_group::n = n;
 	matrix_group::GFq = F;
-	f_GFq_is_allocated = FALSE;
+	f_GFq_is_allocated = false;
 	low_level_point_size = n;
-	f_kernel_is_diagonal_matrices = FALSE;
+	f_kernel_is_diagonal_matrices = false;
 	degree = Gg.nb_AG_elements(n, F->q);
 	make_element_size = n * n;
 	if (f_semilinear) {
@@ -302,7 +302,7 @@ void matrix_group::init_general_linear_group(
 	String.name_of_group_general_linear(
 			label,
 			label_tex,
-			n, F->q, f_semilinear, FALSE /* f_special */,
+			n, F->q, f_semilinear, false /* f_special */,
 			verbose_level - 1);
 
 
@@ -731,7 +731,7 @@ void matrix_group::action_from_the_right_all_types(
 				v, A, vA, n);
 			// vA = (v * A)^{p^f} + b
 			// where b = A + n * n
-			// and f = A[n * n + n] if f_semilinear is TRUE
+			// and f = A[n * n + n] if f_semilinear is true
 	}
 	else if (f_general_linear) {
 		general_linear_action_from_the_right(v,
@@ -801,7 +801,7 @@ void matrix_group::substitute_surface_equation(int *Elt,
 		// (GFq->e - Elt[n * n]) % GFq->e
 		Surf->substitute_semilinear(coeff_in,
 					coeff_out,
-					TRUE /* f_semilinear */,
+					true /* f_semilinear */,
 					me,
 					Elt,
 					0 /*verbose_level*/);
@@ -812,7 +812,7 @@ void matrix_group::substitute_surface_equation(int *Elt,
 	else {
 		Surf->substitute_semilinear(coeff_in,
 					coeff_out,
-					FALSE /* f_semilinear */,
+					false /* f_semilinear */,
 					0,
 					Elt,
 					0 /*verbose_level*/);
@@ -900,11 +900,11 @@ int matrix_group::GL_is_one(int *Elt)
 	if (f_projective) {
 		if (!GFq->Linear_algebra->is_scalar_multiple_of_identity_matrix(
 				Elt, n, c)) {
-			return FALSE;
+			return false;
 		}
 		if (f_semilinear) {
 			if (Elt[n * n] != 0) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -914,16 +914,16 @@ int matrix_group::GL_is_one(int *Elt)
 			//cout << "matrix_group::GL_is_one
 			// not the identity matrix" << endl;
 			//print_integer_matrix(cout, Elt, n, n);
-			return FALSE;
+			return false;
 		}
 		if (!GFq->Linear_algebra->is_zero_vector(Elt + n * n, n)) {
 			//cout << "matrix_group::GL_is_one
 			// not the zero vector" << endl;
-			return FALSE;
+			return false;
 		}
 		if (f_semilinear) {
 			if (Elt[n * n + n] != 0) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -933,11 +933,11 @@ int matrix_group::GL_is_one(int *Elt)
 			//cout << "matrix_group::GL_is_one
 			// not the identity matrix" << endl;
 			//print_integer_matrix(cout, Elt, n, n);
-			return FALSE;
+			return false;
 		}
 		if (f_semilinear) {
 			if (Elt[n * n] != 0) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -945,7 +945,7 @@ int matrix_group::GL_is_one(int *Elt)
 		cout << "matrix_group::GL_is_one unknown group type" << endl;
 		exit(1);
 	}
-	return TRUE;
+	return true;
 }
 
 void matrix_group::GL_mult(
@@ -1440,7 +1440,7 @@ void matrix_group::GL_print_for_make_element_no_commas(
 void matrix_group::GL_print_easy_normalized(
 		int *Elt, std::ostream &ost)
 {
-	int f_v = FALSE;
+	int f_v = false;
     int i, j, a;
     int w;
 	
@@ -1599,7 +1599,7 @@ void matrix_group::GL_print_easy_latex(
 		int *Elt, std::ostream &ost)
 {
 
-	GL_print_easy_latex_with_option_numerical(Elt, FALSE, ost);
+	GL_print_easy_latex_with_option_numerical(Elt, false, ost);
 
 }
 
@@ -1916,7 +1916,7 @@ void matrix_group::make_GL_element(
 				"unknown group type" << endl;
 		exit(1);
 	}
-	GL_invert_internal(Elt, Elt + elt_size_int_half, FALSE);
+	GL_invert_internal(Elt, Elt + elt_size_int_half, false);
 }
 
 #if 0
@@ -1978,7 +1978,7 @@ void matrix_group::matrices_without_eigenvector_one(
 		if (f_path_select && S->path[0] > select_value) {
 			break;
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "testing matrix " << rk << " / " << goi << endl;
 			Int_matrix_print(Elt1, n, n);
 			S->path_unrank_lint(rk);
@@ -1990,16 +1990,16 @@ void matrix_group::matrices_without_eigenvector_one(
 			Int_vec_copy(Elt1, Mtx1, (i + 1) * n);
 			GFq->Linear_algebra->add_vector(
 					Id, Mtx1, Mtx2, (i + 1) * n);
-			if (FALSE) {
+			if (false) {
 				cout << "testing level " << i << " / " << n << ":" << endl;
 				Int_matrix_print(Mtx2, (i + 1), n);
 			}
 			if (GFq->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 					Mtx2,
 					(i + 1), n, Mtx3, Mtx4,
-					FALSE /* f_complete */,
+					false /* f_complete */,
 					0 /* verbose_level */) < i + 1) {
-				if (FALSE) {
+				if (false) {
 					cout << "failing level " << i << endl;
 				}
 				break;
@@ -2017,13 +2017,13 @@ void matrix_group::matrices_without_eigenvector_one(
 			for (h = i + 1; h < S->A->base_len(); h++) {
 				S->path[h] = 0;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "moving on to path ";
 				Int_vec_print(cout, S->path, S->A->base_len());
 				cout << endl;
 			}
 			rk = S->path_rank_lint();
-			if (FALSE) {
+			if (false) {
 				cout << "moving on to matrix " << rk << " / " << goi << endl;
 			}
 			if (rk == 0) {
@@ -2244,17 +2244,17 @@ int matrix_group::has_shape_of_singer_cycle(int *Elt)
 			a = Elt[i * n + j];
 			if (j == i + 1) {
 				if (a != a0) {
-					return FALSE;
+					return false;
 				}
 			}
 			else {
 				if (a) {
-					return FALSE;
+					return false;
 				}
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 }}}

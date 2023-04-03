@@ -28,7 +28,7 @@ square_nonsquare::square_nonsquare()
 	minus_squares = NULL;
 	minus_squares_without = NULL;
 	minus_nonsquares = NULL;
-	f_is_minus_square = FALSE;
+	f_is_minus_square = false;
 	index_minus_square = NULL;
 	index_minus_square_without = NULL;
 	index_minus_nonsquare = NULL;
@@ -69,7 +69,7 @@ void square_nonsquare::init(
 		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 1);
+	//int f_vv = false; //(verbose_level >= 1);
 
 	if (f_v) {
 		cout << "square_nonsquare::init" << endl;
@@ -100,7 +100,7 @@ void square_nonsquare::init(
 		index_minus_square[i] = -1;
 		index_minus_square_without[i] = -1;
 		index_minus_nonsquare[i] = -1;
-		f_is_minus_square[i]= FALSE;
+		f_is_minus_square[i]= false;
 	}
 	for (i = 0; i < q - 1; i++) {
 		if (f_v) {
@@ -115,7 +115,7 @@ void square_nonsquare::init(
 				cout << "i=" << i << " j=" << j
 						<< " is minus a square" << endl;
 			}
-			f_is_minus_square[j]= TRUE;
+			f_is_minus_square[j]= true;
 			minus_squares[a] = j;
 			index_minus_square[j] = a;
 			if (j != F->negate(1)) {
@@ -156,18 +156,18 @@ int square_nonsquare::is_minus_square(int i)
 {
 	if (DOUBLYEVEN(F->q - 1)) {
 		if (EVEN(i)) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 	else {
 		if (EVEN(i)) {
-			return FALSE;
+			return false;
 		}
 		else {
-			return TRUE;
+			return true;
 		}
 	}
 }

@@ -475,7 +475,7 @@ void stabilizer_orbits_and_types::find_orbit_pattern(
 
 	Sorting.lint_vec_heapsort(
 			reduced_set1, reduced_set_size);
-	if (FALSE) {
+	if (false) {
 		cout << "stabilizer_orbits_and_types::find_orbit_pattern STABILIZER "
 				<< setw(4) << cnt << " : " << setw(4)
 				<< CS->SubSt->interesting_subsets[cnt] << " : ";
@@ -709,12 +709,12 @@ void stabilizer_orbits_and_types::map_the_first_set_and_do_orbit_counting(int cn
 
 
 	Sorting.lint_vec_heapsort(reduced_set1, reduced_set_size);
-	if (FALSE) {
+	if (false) {
 		cout << setw(4) << cnt << " : " << setw(4) << CS->SubSt->interesting_subsets[cnt] << " : ";
 		Orbiter->Lint_vec.print(cout, reduced_set1, reduced_set_size);
 		cout << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "elt1:" << endl;
 		CS->SubSt->SubC->A->element_print(elt1, cout);
 		cout << endl;
@@ -750,7 +750,7 @@ void stabilizer_orbits_and_types::map_reduced_set_and_do_orbit_counting(
 
 
 	Sorting.lint_vec_heapsort(reduced_set1, reduced_set_size);
-	if (FALSE) {
+	if (false) {
 		cout << "stabilizer_orbits_and_types::map_the_second_set STABILIZER "
 				<< setw(4) << cnt << " : " << setw(4)
 				<< interesting_subsets_reduced[cnt] << " : ";
@@ -786,7 +786,7 @@ int stabilizer_orbits_and_types::compute_second_reduced_set()
 		}
 	}
 	if (i < reduced_set_size) {
-		return FALSE;
+		return false;
 	}
 
 	Sorting.lint_vec_heapsort(reduced_set2_new_labels, reduced_set_size);
@@ -812,7 +812,7 @@ int stabilizer_orbits_and_types::compute_second_reduced_set()
 	}
 #endif
 
-	return TRUE;
+	return true;
 }
 #endif
 
@@ -826,10 +826,10 @@ int stabilizer_orbits_and_types::check_orbit_count()
 		}
 	}
 	if (i < nb_orbits) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 

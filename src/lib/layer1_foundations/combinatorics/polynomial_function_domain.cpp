@@ -130,7 +130,7 @@ void polynomial_function_domain::init(
 				v1, 1, n + 1, a);
 		affine_points[i] = a;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "affine_points" << endl;
 		for (i = 0; i < Q; i++) {
 			Gg.AG_element_unrank(2, v1, 1, n, i);
@@ -204,7 +204,7 @@ void polynomial_function_domain::setup_polynomial_rings(
 				"dim_kernel = " << dim_kernel << endl;
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "Kernel of evaluation map:" << endl;
 		Int_matrix_print(Kernel, dim_kernel, 2);
 	}
@@ -415,7 +415,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 		cout << endl;
 
 		int *f;
-		int f_error = FALSE;
+		int f_error = false;
 
 		f = NEW_int(Q);
 		evaluate(coeff, f);
@@ -425,7 +425,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 #if 0
 			if (func[h] != f[h]) {
 				cout << "error";
-				f_error = TRUE;
+				f_error = true;
 			}
 #endif
 			cout << endl;
@@ -450,7 +450,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 
 
 		int *f;
-		int f_error = FALSE;
+		int f_error = false;
 
 		f = NEW_int(Q);
 		evaluate(coeff, f);
@@ -459,7 +459,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 			cout << h << " : " << func[h] << " : " << f[h];
 			if (func[h] != f[h]) {
 				cout << "error";
-				f_error = TRUE;
+				f_error = true;
 			}
 			cout << endl;
 		}

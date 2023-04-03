@@ -88,7 +88,7 @@ void classify_double_sixes::test_orbits(int verbose_level)
 {
 	//verbose_level += 2;
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 2);
+	int f_vv = false; // (verbose_level >= 2);
 	int i, r;
 	long int S[5];
 	long int S2[6];
@@ -226,7 +226,7 @@ void classify_double_sixes::downstep(int verbose_level)
 		cout << "classify_double_sixes::downstep "
 				"after test_orbits. Number of orbits = " << nb << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "Idx=";
 		Int_vec_print(cout, Idx, nb);
 		cout << endl;
@@ -254,11 +254,11 @@ void classify_double_sixes::downstep(int verbose_level)
 				"initializing flag orbits" << endl;
 	}
 
-	int f_process = FALSE;
+	int f_process = false;
 	int nb_100 = 1;
 
 	if (nb > 1000) {
-		f_process = TRUE;
+		f_process = true;
 		nb_100 = nb / 100 + 1;
 	}
 
@@ -353,7 +353,7 @@ void classify_double_sixes::downstep(int verbose_level)
 				i /* downstep_primary_orbit */,
 				0 /* downstep_secondary_orbit */,
 				ol.as_int() /* downstep_orbit_len */,
-				FALSE /* f_long_orbit */,
+				false /* f_long_orbit */,
 				dataset /* int *pt_representation */,
 				R->Strong_gens,
 				verbose_level - 2);
@@ -402,7 +402,7 @@ void classify_double_sixes::downstep(int verbose_level)
 void classify_double_sixes::upstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int i, j, h, k, i0;
 	int f, po, so;
 	int *f_processed;
@@ -598,7 +598,7 @@ void classify_double_sixes::upstep(int verbose_level)
 						Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit
 							= Flag_orbits->nb_primary_orbits_upper;
 						Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-							= TRUE;
+							= true;
 						Flag_orbits->Flag_orbit_node[f2].fusion_with
 							= f;
 						Flag_orbits->Flag_orbit_node[f2].fusion_elt
@@ -607,7 +607,7 @@ void classify_double_sixes::upstep(int verbose_level)
 								Elt3,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								0);
-						f_processed[f2] = TRUE;
+						f_processed[f2] = true;
 						nb_processed++;
 					}
 					else {
@@ -685,7 +685,7 @@ void classify_double_sixes::upstep(int verbose_level)
 		FREE_OBJECT(coset_reps);
 		FREE_OBJECT(S);
 		
-		f_processed[f] = TRUE;
+		f_processed[f] = true;
 		nb_processed++;
 		Flag_orbits->nb_primary_orbits_upper++;
 	} // next f

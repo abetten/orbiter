@@ -212,9 +212,9 @@ void spread_table_activity::perform_activity(int verbose_level)
 		}
 		data_structures::tally N_t;
 
-		N_t.init(N, P->P3->Subspaces->N_lines, FALSE, 0);
+		N_t.init(N, P->P3->Subspaces->N_lines, false, 0);
 		cout << "type of covering based on all lines together with line " << line1 << ":" << endl;
-		N_t.print(TRUE);
+		N_t.print(true);
 		cout << endl;
 
 	}
@@ -295,17 +295,17 @@ void spread_table_activity::report_spreads(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 

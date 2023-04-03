@@ -104,8 +104,8 @@ void spread_classify_activity::perform_activity(int verbose_level)
 		Spread_classify->lifting(
 				Descr->prepare_lifting_single_case_case_number /* orbit_at_level */,
 				Spread_classify->starter_size - 1 /*int level_of_candidates_file*/,
-				FALSE /* f_lexorder_test */,
-				TRUE /* f_eliminate_graphs_if_possible*/,
+				false /* f_lexorder_test */,
+				true /* f_eliminate_graphs_if_possible*/,
 				nb_vertices,
 				Dio,
 				col_labels,
@@ -160,8 +160,8 @@ void spread_classify_activity::perform_activity(int verbose_level)
 			Spread_classify->lifting(
 					case_nb /* orbit_at_level */,
 					Spread_classify->starter_size - 1 /*int level_of_candidates_file*/,
-					FALSE /* f_lexorder_test */,
-					TRUE /* f_eliminate_graphs_if_possible*/,
+					false /* f_lexorder_test */,
+					true /* f_eliminate_graphs_if_possible*/,
 					nb_vertices,
 					Dio,
 					col_labels,

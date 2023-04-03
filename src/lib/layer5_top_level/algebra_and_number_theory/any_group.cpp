@@ -19,13 +19,13 @@ namespace apps_algebra {
 
 any_group::any_group()
 {
-	f_linear_group = FALSE;
+	f_linear_group = false;
 	LG = NULL;
 
-	f_permutation_group = FALSE;
+	f_permutation_group = false;
 	PGC = NULL;
 
-	f_modified_group = FALSE;
+	f_modified_group = false;
 	MGC = NULL;
 
 	A_base = NULL;
@@ -53,7 +53,7 @@ void any_group::init_linear_group(
 		cout << "any_group::init_linear_group" << endl;
 	}
 
-	f_linear_group = TRUE;
+	f_linear_group = true;
 	any_group::LG = LG;
 
 	A_base = LG->A_linear;
@@ -97,7 +97,7 @@ void any_group::init_permutation_group(
 		cout << "any_group::init_permutation_group" << endl;
 	}
 
-	f_permutation_group = TRUE;
+	f_permutation_group = true;
 	any_group::PGC = PGC;
 
 	A_base = PGC->A_initial;
@@ -143,7 +143,7 @@ void any_group::init_modified_group(
 		cout << "any_group::init_modified_group" << endl;
 	}
 
-	f_modified_group = TRUE;
+	f_modified_group = true;
 	any_group::MGC = MGC;
 
 	A_base = MGC->A_base;
@@ -574,17 +574,17 @@ void any_group::normalizer(int verbose_level)
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 			ost << "\\noindent The group $" << label_tex << "$ "
@@ -796,13 +796,13 @@ void any_group::do_find_subgroups(
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		//latex_head_easy(fp);
 		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
+			false /* f_book */, true /* f_title */,
 			title, author,
-			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
-			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
+			false /*f_toc*/, false /* f_landscape*/, false /* f_12pt*/,
+			true /*f_enlarged_page*/, true /* f_pagenumbers*/,
 			extras_for_preamble);
 
 		A->report_groups_and_normalizers(fp,
@@ -912,7 +912,7 @@ void any_group::print_elements_tex(int f_with_permutation,
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		L.head_easy(fp);
 
 		H->print_all_group_elements_tex(fp,
@@ -935,7 +935,7 @@ void any_group::print_elements_tex(int f_with_permutation,
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		//L.head_easy(fp);
 
 		//H->print_all_group_elements_tex(fp);
@@ -999,12 +999,12 @@ void any_group::order_of_products_of_elements_by_rank(
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		L.head_easy(fp);
 
-		int f_override_action = FALSE;
+		int f_override_action = false;
 
-		H->print_all_group_elements_tex(fp, FALSE, f_override_action, NULL);
+		H->print_all_group_elements_tex(fp, false, f_override_action, NULL);
 		//H->print_all_group_elements_with_permutations_tex(fp);
 
 		//Schreier.print_and_list_orbits_tex(fp);
@@ -1044,7 +1044,7 @@ void any_group::order_of_products_of_elements_by_rank(
 
 		fp << "$$" << endl;
 		L.print_integer_matrix_with_labels(fp, order_table,
-				nb_elements, nb_elements, elements, elements, TRUE /* f_tex */);
+				nb_elements, nb_elements, elements, elements, true /* f_tex */);
 		fp << "$$" << endl;
 
 		L.foot(fp);
@@ -1324,7 +1324,7 @@ void any_group::random_element(
 
 	Descr = NEW_OBJECT(data_structures::vector_builder_description);
 
-	Descr->f_file = TRUE;
+	Descr->f_file = true;
 	Descr->file_name.assign(fname);
 
 	Symbol_definition = NEW_OBJECT(user_interface::symbol_definition);
@@ -1534,8 +1534,8 @@ void any_group::conjugacy_class_of(
 		cout << "before A->Induced_action->create_induced_action_by_conjugation" << endl;
 	}
 	A_conj = A->Induced_action->create_induced_action_by_conjugation(
-			Subgroup_sims /*Base_group*/, FALSE /* f_ownership */,
-			FALSE /* f_basis */, NULL /* old_G */,
+			Subgroup_sims /*Base_group*/, false /* f_ownership */,
+			false /* f_basis */, NULL /* old_G */,
 			verbose_level);
 	if (f_v) {
 		cout << "after A->Induced_action->create_induced_action_by_conjugation" << endl;
@@ -1924,7 +1924,7 @@ void any_group::orbit_of(
 	#endif
 
 	int orbit_idx = 0;
-	int f_randomized = TRUE;
+	int f_randomized = true;
 
 	Sch->shallow_tree_generators(orbit_idx,
 			f_randomized,
@@ -1960,7 +1960,7 @@ void any_group::orbits_on_points(
 	algebra_global_with_action Algebra;
 
 
-	int f_load_save = TRUE;
+	int f_load_save = true;
 	string prefix;
 
 	prefix.assign(label);
@@ -2000,7 +2000,7 @@ void any_group::orbits_on_points_from_generators(
 	algebra_global_with_action Algebra;
 
 
-	int f_load_save = TRUE;
+	int f_load_save = true;
 	string prefix;
 
 	prefix.assign(label);
@@ -2056,17 +2056,17 @@ void any_group::create_latex_report_for_permutation_group(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2158,17 +2158,17 @@ void any_group::create_latex_report_for_modified_group(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2228,7 +2228,7 @@ void any_group::create_latex_report_for_modified_group(
 
 groups::strong_generators *any_group::get_strong_generators()
 {
-	int f_v = FALSE;
+	int f_v = false;
 	groups::strong_generators *SG;
 
 	if (Subgroup_gens) {
@@ -2254,7 +2254,7 @@ int any_group::is_subgroup_of(
 		any_group *AG_secondary, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = FALSE;
+	int ret = false;
 
 
 	if (f_v) {
@@ -2359,7 +2359,7 @@ void any_group::report_coset_reps(
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		L.head_easy(fp);
 
 		//H->print_all_group_elements_tex(fp);
@@ -2422,7 +2422,7 @@ void any_group::print_given_elements_tex(
 
 	{
 		ofstream ost(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		int i, ord;
 
 		L.head_easy(ost);
@@ -2502,7 +2502,7 @@ void any_group::process_given_elements(
 
 	{
 		ofstream ost(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		int i, ord;
 
 		L.head_easy(ost);
@@ -2529,7 +2529,7 @@ void any_group::process_given_elements(
 			ost << "Element " << setw(5) << i << " / "
 					<< nb_elements << " of order " << ord << ":" << endl;
 
-			A->print_one_element_tex(ost, Elt, FALSE /* f_with_permutation */);
+			A->print_one_element_tex(ost, Elt, false /* f_with_permutation */);
 
 		}
 
@@ -2788,7 +2788,7 @@ void any_group::conjugate(
 					Output_table + i * A->make_element_size, Elt3);
 
 
-			//A->print_one_element_tex(cout, Elt3, FALSE /* f_with_permutation */);
+			//A->print_one_element_tex(cout, Elt3, false /* f_with_permutation */);
 
 
 		}

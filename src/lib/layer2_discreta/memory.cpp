@@ -419,7 +419,7 @@ static int decode(uchar *pc2, int l2, uchar *pc, uchar code_char)
 	uchar cc = 0;
 	int pos = 0, pos2 = 0, i = 8;
 	
-	while (TRUE) {
+	while (true) {
 	/* for (; pos2 < l2; ) { */
 		if (pos2 >= l2 && i >= 8) {
 			break;

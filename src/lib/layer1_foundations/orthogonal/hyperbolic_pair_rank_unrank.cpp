@@ -136,7 +136,7 @@ int hyperbolic_pair::line_type_given_point_types(
 	}
 	else if (epsilon == 0) {
 		return parabolic_line_type_given_point_types(
-				pt1, pt2, pt1_type, pt2_type, FALSE);
+				pt1, pt2, pt1_type, pt2_type, false);
 	}
 	else {
 		cout << "type_and_index_to_point_rk "

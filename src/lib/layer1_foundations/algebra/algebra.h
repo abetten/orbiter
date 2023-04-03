@@ -76,7 +76,7 @@ public:
 		// returns the rank which is the number 
 		// of entries in base_cols
 		// A is a m x n matrix,
-		// P is a m x Pn matrix (if f_P is TRUE)
+		// P is a m x Pn matrix (if f_P is true)
 	void Gauss_step(
 			int *v1, int *v2, int len, int idx, int verbose_level);
 		// afterwards: v2[idx] = 0 and v1,v2 span the same space as before
@@ -785,8 +785,8 @@ public:
 	std::string label_tex;
 
 	int f_GFq_is_allocated;
-		// if TRUE, GFq will be destroyed in the destructor
-		// if FALSE, it is the responsibility
+		// if true, GFq will be destroyed in the destructor
+		// if false, it is the responsibility
 		// of someone else to destroy GFq
 
 	field_theory::finite_field *GFq;

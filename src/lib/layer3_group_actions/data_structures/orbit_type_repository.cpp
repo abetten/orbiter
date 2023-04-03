@@ -102,7 +102,7 @@ void orbit_type_repository::init(
 				"before Heapsort_general" << endl;
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "orbit_type_repository::init "
 				"before Heapsort_general" << endl;
 		cout << "Type_repository:" << endl;
@@ -120,7 +120,7 @@ void orbit_type_repository::init(
 			orbit_type_repository_swap_types,
 			this /* void  *extra_data */);
 
-	if (FALSE) {
+	if (false) {
 		cout << "orbit_type_repository::init "
 				"after Heapsort_general" << endl;
 		cout << "Sorted Type_repository:" << endl;
@@ -162,7 +162,7 @@ void orbit_type_repository::init(
 	}
 
 
-	if (FALSE) {
+	if (false) {
 		cout << "orbit_type_repository::init "
 				"The types are:" << endl;
 		for (i = 0; i < nb_types; i++) {
@@ -179,7 +179,7 @@ void orbit_type_repository::init(
 				Sets + i * set_size, set_size, goi,
 				Type_repository + i * orbit_type_size,
 				0 /*verbose_level*/);
-		if (FALSE) {
+		if (false) {
 			if (i < 10) {
 				cout << "type[" << i << "]=";
 				Lint_vec_print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
@@ -257,17 +257,17 @@ void orbit_type_repository::create_latex_report(
 
 		{
 			ofstream ost(fname_tex);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -303,8 +303,8 @@ void orbit_type_repository::report(std::ostream &ost, int verbose_level)
 
 #if 0
 	graphics::layered_graph_draw_options LG_Draw_options;
-	Oos->A->report(ost, FALSE /* f_sims*/, NULL /* sims *S*/,
-			TRUE /* f_strong_gens */, Oos->SG,
+	Oos->A->report(ost, false /* f_sims*/, NULL /* sims *S*/,
+			true /* f_strong_gens */, Oos->SG,
 			&LG_Draw_options,
 			0 /* verbose_level*/);
 #endif
@@ -400,7 +400,7 @@ void orbit_type_repository::report_one_type(std::ostream &ost,
 						}
 						data_structures::tally By_orbit_number;
 
-						By_orbit_number.init(v, len, FALSE, 0);
+						By_orbit_number.init(v, len, false, 0);
 
 						data_structures::set_of_sets *SoS;
 						int *types;

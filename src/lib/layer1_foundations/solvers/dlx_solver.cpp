@@ -53,7 +53,7 @@ dlx_solver::dlx_solver()
 	nRow = 0;
 	nCol = 0;
 
-	f_has_RHS = FALSE; // [nCol]
+	f_has_RHS = false; // [nCol]
 	target_RHS = NULL; // [nCol]
 	current_RHS = NULL; // [nCol]
 	current_row = NULL; // [nCol]
@@ -65,7 +65,7 @@ dlx_solver::dlx_solver()
 	// inequalities t_LE
 	// zero or a fixed value t_ZOR
 
-	f_type = FALSE;
+	f_type = false;
 	type = NULL; // [nCol]
 	changed_type_columns = NULL; // [nCol]
 	nb_changed_type_columns = NULL; // [sum_rhs]
@@ -80,7 +80,7 @@ dlx_solver::dlx_solver()
 	nb_backtrack_nodes = 0;
 	Matrix = NULL; // [nRow * nCol]
 	Root = NULL;
-	f_has_callback_solution_found = FALSE;
+	f_has_callback_solution_found = false;
 	callback_solution_found = NULL;
 	callback_solution_found_data = NULL;
 
@@ -156,7 +156,7 @@ void dlx_solver::install_callback_solution_found(
 			int *solution, int len, int nb_sol, void *data),
 	void *callback_solution_found_data)
 {
-	f_has_callback_solution_found = TRUE;
+	f_has_callback_solution_found = true;
 	dlx_solver::callback_solution_found =
 			callback_solution_found;
 	dlx_solver::callback_solution_found_data =
@@ -165,7 +165,7 @@ void dlx_solver::install_callback_solution_found(
 
 void dlx_solver::de_install_callback_solution_found()
 {
-	f_has_callback_solution_found = FALSE;
+	f_has_callback_solution_found = false;
 }
 
 #if 0
@@ -457,7 +457,7 @@ void dlx_solver::Create_RHS(int nb_cols, int *RHS, int f_has_type,
 		cout << "dlx_solver::Create_RHS" << endl;
 	}
 
-	f_has_RHS = TRUE;
+	f_has_RHS = true;
 	if (nb_cols != nCol) {
 		cout << "dlx_solver::Create_RHS nb_cols != nCol" << endl;
 		exit(1);
@@ -857,7 +857,7 @@ void dlx_solver::count_nb_choices(int k, dlx_node *Column)
 			Nb_choices[k]++;
 		}
 
-		if (FALSE) {
+		if (false) {
 			cout << "Choice set: ";
 			for (RowNode = Column->Down;
 					RowNode != Column;
@@ -883,15 +883,15 @@ int dlx_solver::IsDone()
 		}
 #endif
 	N = Root->Left;
-	while (TRUE) {
+	while (true) {
 		if (N == Root) {
 			//cout << "is done" << endl;
-			return TRUE;
+			return true;
 		}
 		c = N->col;
 		if (IsColumnNotDone(c)) {
 			//cout << "is not done because of column " << c << endl;
-			return FALSE;
+			return false;
 		}
 		N = N->Left;
 	}
@@ -900,17 +900,17 @@ int dlx_solver::IsDone()
 int dlx_solver::IsColumnDone(int c)
 {
 	if (current_RHS[c] == target_RHS[c]) {
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 }
 
 int dlx_solver::IsColumnNotDone(int c)
 {
 	if (type[c] == t_EQ && current_RHS[c] < target_RHS[c]) {
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 }
 
 void dlx_solver::Search(int k)

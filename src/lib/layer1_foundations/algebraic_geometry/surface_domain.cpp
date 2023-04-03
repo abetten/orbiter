@@ -56,7 +56,7 @@ surface_domain::surface_domain()
 
 surface_domain::~surface_domain()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "surface_domain::~surface_domain" << endl;
@@ -136,7 +136,7 @@ void surface_domain::init_surface_domain(
 				"before P->projective_space_init" << endl;
 	}
 	P->projective_space_init(3, F,
-		TRUE /*f_init_incidence_structure */, 
+		true /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init_surface_domain "
@@ -149,7 +149,7 @@ void surface_domain::init_surface_domain(
 				"before P2->projective_space_init" << endl;
 	}
 	P2->projective_space_init(2, F,
-		TRUE /*f_init_incidence_structure */, 
+		true /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init_surface_domain "
@@ -616,7 +616,7 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(
 
 	SO->init_with_27_lines(this,
 		Lines27, coeffs20,
-		FALSE /* f_find_double_six_and_rearrange_lines */,
+		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
 		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "

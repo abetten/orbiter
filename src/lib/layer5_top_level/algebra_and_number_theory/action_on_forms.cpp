@@ -28,7 +28,7 @@ action_on_forms::action_on_forms()
 	q = 0;
 	F = NULL;
 
-	f_semilinear = FALSE;
+	f_semilinear = false;
 
 	PA = NULL;
 
@@ -36,7 +36,7 @@ action_on_forms::action_on_forms()
 
 	A_on_poly = NULL;
 
-	f_has_group = FALSE;
+	f_has_group = false;
 	Sg = NULL;
 
 }
@@ -102,7 +102,7 @@ void action_on_forms::create_action_on_forms(
 	}
 	A_on_poly = PA->A->Induced_action->induced_action_on_homogeneous_polynomials(
 			HPD,
-		FALSE /* f_induce_action */, NULL,
+		false /* f_induce_action */, NULL,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "action_on_forms::create_action_on_forms "
@@ -112,7 +112,7 @@ void action_on_forms::create_action_on_forms(
 
 	int pt = 0;
 
-	f_has_group = TRUE;
+	f_has_group = true;
 
 	if (f_v) {
 		cout << "action_on_forms::create_action_on_forms "
@@ -274,7 +274,7 @@ void action_on_forms::orbits_on_functions(
 		cout << "action_on_forms::orbits_on_functions" << endl;
 	}
 	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
-	Classify_orbits_by_length->init(Orb->orbit_len, Orb->nb_orbits, FALSE, 0);
+	Classify_orbits_by_length->init(Orb->orbit_len, Orb->nb_orbits, false, 0);
 
 
 	data_structures::set_of_sets *SoS;
@@ -370,7 +370,7 @@ void action_on_forms::orbits_on_functions(
 	if (f_v) {
 		cout << "action_on_forms::orbits_on_functions "
 				"The distribution of orbit lengths is: ";
-		Classify_orbits_by_length->print_naked(FALSE);
+		Classify_orbits_by_length->print_naked(false);
 		cout << endl;
 	}
 

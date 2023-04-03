@@ -27,38 +27,38 @@ exact_cover_arguments::~exact_cover_arguments()
 
 void exact_cover_arguments::null()
 {
-	f_lift = FALSE;
-	f_has_base_fname = FALSE;
+	f_lift = false;
+	f_has_base_fname = false;
 	//base_fname = "";
-	f_has_input_prefix = FALSE;
+	f_has_input_prefix = false;
 	//input_prefix = "";
-	f_has_output_prefix = FALSE;
+	f_has_output_prefix = false;
 	//output_prefix = "";
-	f_has_solution_prefix = FALSE;
+	f_has_solution_prefix = false;
 	//solution_prefix = "";
-	f_lift = FALSE;
-	f_starter_size = FALSE;
+	f_lift = false;
+	f_starter_size = false;
 	starter_size = 0;
-	f_lex = FALSE;
-	f_split = FALSE;
+	f_lex = false;
+	f_split = false;
 	split_r = 0;
 	split_m = 1;
-	f_solve = FALSE;
-	f_save = FALSE;
-	f_read = FALSE;
-	f_draw_system = FALSE;
+	f_solve = false;
+	f_save = false;
+	f_read = false;
+	f_draw_system = false;
 	//fname_system = NULL;
-	f_write_tree = FALSE;
+	f_write_tree = false;
 	//fname_tree = NULL;
-	f_has_solution_test_function = FALSE;
-	f_has_late_cleanup_function = FALSE;
+	f_has_solution_test_function = false;
+	f_has_late_cleanup_function = false;
 	prepare_function_new = NULL;
 	early_test_function = NULL;
 	early_test_function_data = NULL;
 	solution_test_func = NULL;
 	solution_test_func_data = NULL;
 	late_cleanup_function = NULL;
-	f_randomized = FALSE;
+	f_randomized = false;
 	//random_permutation_fname = NULL;
 }
 
@@ -75,69 +75,69 @@ int exact_cover_arguments::read_arguments(int argc, std::string *argv,
 
 	for (i = 1; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-starter_size") == 0) {
-			f_starter_size = TRUE;
+			f_starter_size = true;
 			starter_size = ST.strtoi(argv[++i]);
 			cout << "-starter_size " << starter_size << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-lift") == 0) {
-			f_lift = TRUE;
+			f_lift = true;
 			//lift_prefix = argv[++i]; 
 			cout << "-lift " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-lex") == 0) {
-			f_lex = TRUE;
+			f_lex = true;
 			cout << "-lex" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-solve") == 0) {
-			f_solve = TRUE;
+			f_solve = true;
 			cout << "-solve" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-save") == 0) {
-			f_save = TRUE;
+			f_save = true;
 			cout << "-save" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-read") == 0) {
-			f_read = TRUE;
+			f_read = true;
 			cout << "-read" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-split") == 0) {
-			f_split = TRUE;
+			f_split = true;
 			split_r = ST.strtoi(argv[++i]);
 			split_m = ST.strtoi(argv[++i]);
 			cout << "-split " << split_r << " " << split_m << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-draw_system") == 0) {
-			f_draw_system = TRUE;
+			f_draw_system = true;
 			fname_system.assign(argv[++i]);
 			cout << "-draw_system " << fname_system << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-write_tree") == 0) {
-			f_write_tree = TRUE;
+			f_write_tree = true;
 			fname_tree.assign(argv[++i]);
 			cout << "-write_tree " << fname_tree << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-base_fname") == 0) {
-			f_has_base_fname = TRUE;
+			f_has_base_fname = true;
 			base_fname = argv[++i];
 			cout << "-base_fname " << base_fname << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-input_prefix") == 0) {
-			f_has_input_prefix = TRUE;
+			f_has_input_prefix = true;
 			input_prefix.assign(argv[++i]);
 			cout << "-input_prefix " << input_prefix << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-output_prefix") == 0) {
-			f_has_output_prefix = TRUE;
+			f_has_output_prefix = true;
 			output_prefix.assign(argv[++i]);
 			cout << "-output_prefix " << output_prefix << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-solution_prefix") == 0) {
-			f_has_solution_prefix = TRUE;
+			f_has_solution_prefix = true;
 			solution_prefix.assign(argv[++i]);
 			cout << "-solution_prefix " << solution_prefix << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-randomized") == 0) {
-			f_randomized = TRUE;
+			f_randomized = true;
 			random_permutation_fname.assign(argv[++i]);
 			cout << "-randomized " << random_permutation_fname << endl;
 		}

@@ -22,7 +22,7 @@ namespace graphics {
 parametric_curve_point::parametric_curve_point()
 {
 	t = 0;
-	f_is_valid = FALSE;
+	f_is_valid = false;
 }
 
 parametric_curve_point::~parametric_curve_point()

@@ -105,7 +105,7 @@ int tdo_data::solve_first_system(int verbose_level,
 	nb_sol = 0;
 	if (D1->solve_first(0/*verbose_level - 4*/)) {
 	
-		while (TRUE) {
+		while (true) {
 			if (nb_line_types >= line_types_allocated) {
 				int new_nb_line_types = line_types_allocated + 100;
 				if (f_v) {
@@ -185,7 +185,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 	}
 	D2->project(&D, f, l, eqn_number, nb_eqns_replaced,
 			eqns_replaced, verbose_level - 1);
-	D.f_has_sum = TRUE;
+	D.f_has_sum = true;
 	D.sum = s;
 	if (f_vv) {
 		cout << "after projection:" << endl;
@@ -210,7 +210,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			cout << "tdo_data::solve_second_system_omit "
 					"N=" << N << " / " << nb_sol << endl;
 		}
-		f_bad = FALSE;
+		f_bad = false;
 		for (j = 0; j < nb_line_types; j++) {
 			distributions[nb_distributions * nb_line_types + j] = 0;
 		}
@@ -266,14 +266,14 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		D2->project(&DD, F, L, eqn_number2,
 				nb_eqns_replaced2, eqns_replaced2,
 				verbose_level - 1);
-		DD.f_has_sum = TRUE;
+		DD.f_has_sum = true;
 		DD.sum = s;
 		for (i = 0; i < DD.m; i++) {
 			ii = eqn_number2[i];
 			a = D2->RHS1[ii];
 			DD.RHS[i] -= a;
 			if (DD.RHS[i] < 0) {
-				f_bad = TRUE;
+				f_bad = true;
 				break;
 			}
 		}
@@ -287,7 +287,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			continue;
 		}
 		
-		if (FALSE) {
+		if (false) {
 			// here we test if a givemn solution of the projected system 
 			// extends to a global solution.
 			// Since out solver finds in fact all solutions, this test is 
@@ -362,7 +362,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			}
 		D2->project(&D, f, l, nb_eqns_replaced,
 				eqns_replaced, verbose_level);
-		D.f_has_sum = TRUE;
+		D.f_has_sum = true;
 		D.sum = classes_len[r];
 		D.print();
 		D.solve_first(verbose_level);
@@ -417,7 +417,7 @@ void tdo_data::solve_second_system_from_file(int verbose_level,
 	{
 		ifstream ff(solution_file_name);
 
-		for (i = 0; TRUE; i++) {
+		for (i = 0; true; i++) {
 			if (ff.eof()) {
 				break;
 			}
@@ -520,7 +520,7 @@ void tdo_data::solve_second_system(int verbose_level,
 	if (ret) {
 	
 		nb_steps += D2->nb_steps_betten;
-		while (TRUE) {
+		while (true) {
 			if (nb_distributions && (nb_distributions % 1000) == 0) {
 				cout << "solve_second_system: " << nb_distributions
 					<< " distributions" << endl;
@@ -576,7 +576,7 @@ void tdo_data::solve_second_system(int verbose_level,
 			
 			nb_sol++;
 			if (f_once) {
-				ret = FALSE;
+				ret = false;
 			}
 			else {
 				if (f_use_mckay_solver) {

@@ -50,14 +50,14 @@ int poset_classification::find_isomorphism(
 		0 /* verbose_level */);
 
 	if (orb1 == orb2) {
-		ret = TRUE;
+		ret = true;
 		Poset->A->Group_element->element_invert(Elt2, Elt3, 0);
 		Poset->A->Group_element->element_mult(Elt1, Elt3, transporter, 0);
 		orbit_idx = orb1;
 	}
 	else {
 		orbit_idx = -1;
-		ret = FALSE;
+		ret = false;
 	}
 
 	FREE_lint(set1_canonical);
@@ -143,7 +143,7 @@ void poset_classification::test_identify(
 {
 	int f_v = (verbose_level >= 1);
 	int *transporter;
-	//int f_implicit_fusion = FALSE;
+	//int f_implicit_fusion = false;
 	int final_node;
 	int *Elt;
 	int nb_orbits, cnt, r, r2;
@@ -249,7 +249,7 @@ void poset_classification::poset_classification_apply_isomorphism_no_transporter
 	poset_classification_apply_isomorphism(cur_level, size, cur_node, cur_ex, 
 		set_in, set_out, set_tmp, 
 		Elt1, Elt2, 
-		TRUE /* f_tolerant */, 
+		true /* f_tolerant */, 
 		0 /*verbose_level*/);
 
 	FREE_int(Elt1);
@@ -413,10 +413,10 @@ int poset_classification::trace_set_recursion(
 			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : ";
-			cout << "O->trace_next_point_in_place returns FALSE, "
+			cout << "O->trace_next_point_in_place returns false, "
 					"sorting and restarting" << endl;
 		}
-		// this can only happen if f_lex is TRUE
+		// this can only happen if f_lex is true
 		// we need to sort and restart the trace:
 
 		Sorting.lint_vec_heapsort(canonical_set, cur_level + 1);
@@ -551,7 +551,7 @@ int poset_classification::trace_set_recursion(
 			cout << endl;
 		}
 
-		if (next_node == -1) { // can only happen if f_tolerant is TRUE
+		if (next_node == -1) { // can only happen if f_tolerant is true
 			if (f_v) {
 				cout << "poset_classification::trace_set_recursion "
 						"cur_level = " << cur_level
@@ -650,7 +650,7 @@ int poset_classification::trace_set(
 		0 /* cur_node */,  size, level,
 		canonical_set, tmp_set1, tmp_set2, 
 		Elt_transporter, tmp_Elt1, tmp_Elt2,
-		FALSE /*f_tolerant*/, 
+		false /*f_tolerant*/, 
 		verbose_level - 1);
 	if (f_v) {
 		cout << "poset_classification::trace_set "
@@ -783,10 +783,10 @@ int trace_result_is_no_result(trace_result r)
 	if (r == no_result_extension_not_found ||
 		r == no_result_fusion_node_installed ||
 		r == no_result_fusion_node_already_installed) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 

@@ -19,7 +19,7 @@ int main()
 	field_theory::finite_field_description Descr;
 	field_theory::finite_field Fq;
 
-	Descr.f_q = TRUE;
+	Descr.f_q = true;
 	Descr.q_text.assign("11");
 	Fq.init(&Descr, 1 /* verbose_level */);
 
@@ -67,7 +67,7 @@ int main()
 #endif
 #if 0
 	finite_field F;
-	F.finite_field_init(16, FALSE /* f_without_tables */, 0);
+	F.finite_field_init(16, false /* f_without_tables */, 0);
 
 	cout << "8 x 15 = " << F.mult(8, 15) << endl;
 #endif
@@ -88,12 +88,12 @@ int main()
 
 	target_go.create(target_go_lint, __FILE__, __LINE__);
 	actions::action *A;
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A = NEW_OBJECT(actions::action);
 
 	A->init_permutation_group_from_generators(degree,
-			TRUE /*  f_target_go */, target_go,
+			true /*  f_target_go */, target_go,
 			nb_gens, generators,
 			base_len, given_base,
 			f_no_base,

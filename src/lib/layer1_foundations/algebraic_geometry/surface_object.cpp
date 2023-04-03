@@ -112,7 +112,7 @@ void surface_object::init_equation_points_and_lines_only(
 		cout << "Surf->nb_pts_on_surface=" << Surf->nb_pts_on_surface << endl;
 		//FREE_lint(Points);
 		Points = NULL;
-		return FALSE;
+		return false;
 	}
 #endif
 	if (f_v) {
@@ -282,7 +282,7 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 				"does not have 27 lines" << endl;
 		//FREE_lint(Points);
 		//Points = NULL;
-		return FALSE;
+		return false;
 	}
 #endif
 
@@ -626,7 +626,7 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 				"Lines_in_tritangent_plane: " << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
 				Lines_in_tritangent_plane, nb_tritangent_planes, 3,
-				FALSE);
+				false);
 	}
 
 
@@ -682,10 +682,10 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 
 	Type_iso_tritangent_planes = NEW_OBJECT(tally);
 	Type_iso_tritangent_planes->init(iso_type_of_tritangent_plane, 
-		nb_tritangent_planes, FALSE, 0);
+		nb_tritangent_planes, false, 0);
 	if (f_v) {
 		cout << "Type iso of tritangent planes: ";
-		Type_iso_tritangent_planes->print_naked(TRUE);
+		Type_iso_tritangent_planes->print_naked(true);
 		cout << endl;
 	}
 	
@@ -786,15 +786,15 @@ void surface_object::print_generalized_quadrangle(std::ostream &ost)
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
 			Lines_in_tritangent_plane, 15, 3,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	print_integer_matrix_with_standard_labels_and_offset(ost,
 			Lines_in_tritangent_plane + 15 * 3, 15, 3, 15, 0,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	print_integer_matrix_with_standard_labels_and_offset(ost,
 			Lines_in_tritangent_plane + 30 * 3, 15, 3, 30, 0,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	ost << "$$" << endl;
 #endif
 
@@ -833,15 +833,15 @@ void surface_object::print_generalized_quadrangle(std::ostream &ost)
 #if 0
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
-		Tritangent_planes_on_lines, 9, 5, TRUE /* f_tex */);
+		Tritangent_planes_on_lines, 9, 5, true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	print_integer_matrix_with_standard_labels_and_offset(ost,
 		Tritangent_planes_on_lines + 9 * 5, 9, 5, 9, 0,
-		TRUE /* f_tex */);
+		true /* f_tex */);
 	ost << "\\;\\;" << endl;
 	print_integer_matrix_with_standard_labels_and_offset(ost,
 		Tritangent_planes_on_lines + 18 * 5, 9, 5, 18, 0,
-		TRUE /* f_tex */);
+		true /* f_tex */);
 	ost << "$$" << endl;
 #endif
 
@@ -850,7 +850,7 @@ void surface_object::print_generalized_quadrangle(std::ostream &ost)
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
 		Unitangent_planes_on_lines, 27, q + 1 - 5,
-		TRUE /* f_tex */);
+		true /* f_tex */);
 	ost << "$$" << endl;
 #endif
 
@@ -1631,7 +1631,7 @@ int surface_object::find_tritangent_plane_through_two_lines(
 void surface_object::get_planes_through_line(int *new_lines, 
 	int line_idx, int *planes5)
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "surface_object::get_planes_through_line " << endl;
@@ -1690,7 +1690,7 @@ int surface_object::find_unique_line_in_plane(int plane_idx,
 int surface_object::choose_tritangent_plane(
 	int line_a, int line_b, int transversal_line, int verbose_level)
 {
-	int f_v = TRUE; // (verbose_level >= 1);
+	int f_v = true; // (verbose_level >= 1);
 	int i, plane, idx, a;
 	sorting Sorting;
 
@@ -1702,7 +1702,7 @@ int surface_object::choose_tritangent_plane(
 		//cout << "Tritangent_planes_on_lines:" << endl;
 		//int_matrix_print(Tritangent_planes_on_lines, 27, 5);
 		}
-	if (FALSE) {
+	if (false) {
 		cout << "Testing the following planes: ";
 		int_vec_print(cout,
 			Tritangent_planes_on_lines + transversal_line * 5, 5);
@@ -1746,7 +1746,7 @@ void surface_object::find_all_tritangent_planes(
 	int *tritangent_planes3, 
 	int verbose_level)
 {
-	int f_v = TRUE; // (verbose_level >= 1);
+	int f_v = true; // (verbose_level >= 1);
 	int i, plane, idx, a, nb;
 	sorting Sorting;
 	
@@ -1758,7 +1758,7 @@ void surface_object::find_all_tritangent_planes(
 		//cout << "Tritangent_planes_on_lines:" << endl;
 		//int_matrix_print(Tritangent_planes_on_lines, 27, 5);
 		}
-	if (FALSE) {
+	if (false) {
 		cout << "Testing the following planes: ";
 		int_vec_print(cout,
 				Tritangent_planes_on_lines + transversal_line * 5, 5);
@@ -1827,12 +1827,12 @@ void surface_object::identify_lines(
 void surface_object::print_nine_lines_latex(std::ostream &ost,
 	long int *nine_lines, int *nine_lines_idx)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, j, idx;
 
 	ost << "$$";
 	L.print_lint_matrix_with_standard_labels(ost,
-			nine_lines, 3, 3, TRUE /* f_tex*/);
+			nine_lines, 3, 3, true /* f_tex*/);
 
 
 	ost << "\\qquad" << endl;
@@ -1992,10 +1992,10 @@ int surface_object::find_point(long int P, int &idx)
 
 	if (Sorting.lint_vec_search(Pts, nb_pts, P,
 			idx, 0 /* verbose_level */)) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 

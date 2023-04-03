@@ -23,7 +23,7 @@ namespace actions {
 stabilizer_chain_base_data::stabilizer_chain_base_data()
 {
 	A = NULL;
-	f_has_base = FALSE;
+	f_has_base = false;
 	base_len = 0;
 	base = NULL;
 	transversal_length = NULL;
@@ -40,7 +40,7 @@ stabilizer_chain_base_data::~stabilizer_chain_base_data()
 void stabilizer_chain_base_data::free_base_data()
 {
 	int i;
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::free_base_data" << endl;
@@ -79,7 +79,7 @@ void stabilizer_chain_base_data::free_base_data()
 		FREE_int(path);
 		path = NULL;
 	}
-	f_has_base = FALSE;
+	f_has_base = false;
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::free_base_data finished" << endl;
 	}
@@ -100,7 +100,7 @@ void stabilizer_chain_base_data::allocate_base_data(
 	if (f_has_base) {
 		free_base_data();
 		}
-	f_has_base = TRUE;
+	f_has_base = true;
 
 	stabilizer_chain_base_data::A = A;
 	stabilizer_chain_base_data::base_len = base_len;
@@ -228,7 +228,7 @@ void stabilizer_chain_base_data::init_base_from_sims(
 				"base length " << base_len << endl;
 		cout << "stabilizer_chain_base_data::init_base_from_sims "
 				"A->degree = " << A->degree << endl;
-		//G->print(TRUE);
+		//G->print(true);
 	}
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 		int i, j, k, l;

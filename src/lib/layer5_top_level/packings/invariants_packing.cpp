@@ -275,7 +275,7 @@ void invariants_packing::compute_dual_packings(
 	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 
 		int rep, first, /*c,*/ id;
-		int f_implicit_fusion = TRUE;
+		int f_implicit_fusion = true;
 		
 		rep = Iso->Folding->Reps->rep[orbit];
 		first = Iso->Lifting->flag_orbit_solution_first[rep];
@@ -295,10 +295,10 @@ void invariants_packing::compute_dual_packings(
 			}
 		}
 		if (i == Iso->size) {
-			f_self_dual[orbit] = TRUE;
+			f_self_dual[orbit] = true;
 		}
 		else {
-			f_self_dual[orbit] = FALSE;
+			f_self_dual[orbit] = false;
 		}
 	
 
@@ -424,10 +424,10 @@ void invariants_packing::make_table(
 
 		data_structures::tally C;
 
-		C.init(ago, nb, FALSE, 0);
+		C.init(ago, nb, false, 0);
 		
 		ost << nb << " & ";
-		C.print_naked_tex(ost, TRUE /*f_backwards*/);
+		C.print_naked_tex(ost, true /*f_backwards*/);
 
 		ost << "\\\\" << endl;
 		FREE_int(set);

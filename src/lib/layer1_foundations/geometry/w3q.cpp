@@ -66,8 +66,8 @@ void W3q::init(
 // and an orthogonal object O^+(4,q)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
-	int f_vvv = FALSE; //(verbose_level >= 3);
+	int f_vv = false; //(verbose_level >= 2);
+	int f_vvv = false; //(verbose_level >= 3);
 	int h, rk;
 	int v5[5];
 
@@ -82,7 +82,7 @@ void W3q::init(
 	//Basis = NEW_int(2 * 4);
 	
 	P3->projective_space_init(3, F,
-		FALSE /* f_init_incidence_structure */, 
+		false /* f_init_incidence_structure */, 
 		verbose_level - 1  /*MINIMUM(verbose_level - 1, 3)*/);
 	F = P3->Subspaces->F;
 	Q4->init(0, 5, F, verbose_level - 1);

@@ -232,11 +232,11 @@ void classify_trihedral_pairs::report_summary(std::ostream &ost)
 {
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type1" << endl;
-	list_orbits_on_trihedra_type1(ost, FALSE);
+	list_orbits_on_trihedra_type1(ost, false);
 
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type2" << endl;
-	list_orbits_on_trihedra_type2(ost, FALSE);
+	list_orbits_on_trihedra_type2(ost, false);
 
 	cout << "classify_trihedral_pairs::report "
 			"before print_trihedral_pairs no stabs" << endl;
@@ -249,7 +249,7 @@ void classify_trihedral_pairs::report_summary(std::ostream &ost)
 	cout << "classify_trihedral_pairs::report "
 			"before print_trihedral_pairs with stabs" << endl;
 	print_trihedral_pairs(ost,
-			TRUE /* f_with_stabilizers */);
+			true /* f_with_stabilizers */);
 #endif
 }
 
@@ -258,22 +258,22 @@ void classify_trihedral_pairs::report(std::ostream &ost)
 {
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type1" << endl;
-	list_orbits_on_trihedra_type1(ost, TRUE);
+	list_orbits_on_trihedra_type1(ost, true);
 
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type2" << endl;
-	list_orbits_on_trihedra_type2(ost, TRUE);
+	list_orbits_on_trihedra_type2(ost, true);
 
 	cout << "classify_trihedral_pairs::report "
 			"before print_trihedral_pairs no stabs" << endl;
 	print_trihedral_pairs(ost,
-			FALSE /* f_with_stabilizers */);
+			false /* f_with_stabilizers */);
 
 #if 0
 	cout << "classify_trihedral_pairs::report "
 			"before print_trihedral_pairs with stabs" << endl;
 	print_trihedral_pairs(ost,
-			TRUE /* f_with_stabilizers */);
+			true /* f_with_stabilizers */);
 #endif
 }
 
@@ -535,28 +535,28 @@ void classify_trihedral_pairs::early_test_func_type1(
 
 #if 0
 		int f_bad;
-		f_bad = FALSE;
+		f_bad = false;
 		if (len == 0) {
 			// nothing else to test
 		}
 		else if (len == 1) {
 			rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, S[0], 0 /* verbose_level */);
 			if (int_vec_search(Lines2, (len + 1) * 3, rk, idx)) {
-				f_bad = TRUE;
+				f_bad = true;
 			}
 		}
 		else if (len == 2) {
 			rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, S[0], 0 /* verbose_level */);
 			if (int_vec_search(Lines2, (len + 1) * 3, rk, idx)) {
-				f_bad = TRUE;
+				f_bad = true;
 			}
 			rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(a, S[1], 0 /* verbose_level */);
 			if (int_vec_search(Lines2, (len + 1) * 3, rk, idx)) {
-				f_bad = TRUE;
+				f_bad = true;
 			}
 			rk = Surf->P->line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates(S[0], S[1], 0 /* verbose_level */);
 			if (int_vec_search(Lines2, (len + 1) * 3, rk, idx)) {
-				f_bad = TRUE;
+				f_bad = true;
 			}
 		}
 #endif
@@ -721,7 +721,7 @@ void classify_trihedral_pairs::identify_three_planes(
 	Int_vec_copy(M1, M2, 12);
 	rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(M2, 3, 4,
 			M3, base_cols,
-			FALSE /* f_complete */,
+			false /* f_complete */,
 			0 /* verbose_level */);
 	Combi.set_complement(base_cols, rk, base_cols + rk, size_complement, 4);
 	if (f_v) {
@@ -737,7 +737,7 @@ void classify_trihedral_pairs::identify_three_planes(
 		Int_vec_copy(M1, M2, 8);
 		F->Linear_algebra->rank_of_rectangular_matrix_memory_given(M2, 2, 4, M3,
 				base_cols2,
-				FALSE /* f_complete */,
+				false /* f_complete */,
 				0 /* verbose_level */);
 
 
@@ -901,7 +901,7 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 			0 /* downstep_primary_orbit */,
 			i /* downstep_secondary_orbit */,
 			ol.as_int() /* downstep_orbit_len */,
-			FALSE /* f_long_orbit */,
+			false /* f_long_orbit */,
 			R->data /* int *pt_representation */,
 			R->Strong_gens,
 			verbose_level - 2);
@@ -938,7 +938,7 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 			1 /* downstep_primary_orbit */,
 			i /* downstep_secondary_orbit */,
 			ol.as_int() /* downstep_orbit_len */,
-			FALSE /* f_long_orbit */,
+			false /* f_long_orbit */,
 			R->data /* int *pt_representation */,
 			R->Strong_gens,
 			verbose_level - 2);
@@ -1091,13 +1091,13 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 						<< " so=" << orb << ", which is "
 								"flag orbit " << f2 << endl;
 			}
-			Flag_orbits->Flag_orbit_node[f2].f_fusion_node = TRUE;
+			Flag_orbits->Flag_orbit_node[f2].f_fusion_node = true;
 			Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
 			Flag_orbits->Flag_orbit_node[f2].fusion_elt =
 					NEW_int(A->elt_size_in_int);
 			A->Group_element->element_invert(Elt3,
 					Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
-			f_processed[f2] = TRUE;
+			f_processed[f2] = true;
 			nb_processed++;
 		}
 		S->group_order(go);
@@ -1116,7 +1116,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 			S, Rep, NULL /* extra_data */, verbose_level);
 
 		
-		f_processed[f] = TRUE;
+		f_processed[f] = true;
 		nb_processed++;
 		Flag_orbits->nb_primary_orbits_upper++;
 	}
@@ -1160,7 +1160,7 @@ void classify_trihedral_pairs::print_trihedral_pairs(
 	title.assign("Classification of Double Triplets");
 	Trihedral_pairs->print_latex(ost, 
 		title, f_with_stabilizers,
-		FALSE, NULL, NULL);
+		false, NULL, NULL);
 }
 
 groups::strong_generators

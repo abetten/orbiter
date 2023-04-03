@@ -234,7 +234,7 @@ public:
 			int sz,
 			int verbose_level);
 	// transforms SO->eqn, SO->Lines and SO->Pts,
-	// Also transforms Sg (if f_has_group is TRUE)
+	// Also transforms Sg (if f_has_group is true)
 #if 0
 	void compute_group(
 			projective_geometry::projective_space_with_action *PA,

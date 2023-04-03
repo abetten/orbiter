@@ -70,7 +70,7 @@ void strong_generators::prepare_from_generator_data(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, Strong_gens2,
 		0 /* verbose_level */);
 
@@ -112,8 +112,8 @@ void strong_generators::init_linear_group_from_scratch(
 	A = NEW_OBJECT(actions::action);
 	strong_generators::A = A;
 
-	int f_basis = TRUE;
-	int f_init_sims = FALSE;
+	int f_basis = true;
+	int f_init_sims = false;
 	
 	if (Descr->f_projective) {
 		if (f_v) {
@@ -195,10 +195,10 @@ void strong_generators::init_linear_group_from_scratch(
 		}
 		A->Known_groups->init_orthogonal_group(epsilon,
 			n, F,
-			TRUE /* f_on_points */, FALSE /* f_on_lines */,
-			FALSE /* f_on_points_and_lines */,
+			true /* f_on_points */, false /* f_on_lines */,
+			false /* f_on_points_and_lines */,
 			Descr->f_semilinear,
-			TRUE /* f_basis */, verbose_level);
+			true /* f_basis */, verbose_level);
 
 
 	}
@@ -234,7 +234,7 @@ void strong_generators::init_linear_group_from_scratch(
 			String.name_of_group_projective(
 					label,
 					label_tex,
-					n, F->q, Descr->f_semilinear, TRUE /* f_special */,
+					n, F->q, Descr->f_semilinear, true /* f_special */,
 					verbose_level - 1);
 
 		}
@@ -245,7 +245,7 @@ void strong_generators::init_linear_group_from_scratch(
 			String.name_of_group_affine(
 					label,
 					label_tex,
-					n, F->q, Descr->f_semilinear, TRUE /* f_special */,
+					n, F->q, Descr->f_semilinear, true /* f_special */,
 					verbose_level - 1);
 
 		}
@@ -256,7 +256,7 @@ void strong_generators::init_linear_group_from_scratch(
 			String.name_of_group_general_linear(
 					label,
 					label_tex,
-					n, F->q, Descr->f_semilinear, TRUE /* f_special */,
+					n, F->q, Descr->f_semilinear, true /* f_special */,
 					verbose_level - 1);
 
 
@@ -611,7 +611,7 @@ void strong_generators::generators_for_the_monomial_group(
 	// = n! * (q - 1)^(n-1) * e if projective
 	// = n! * (q - 1)^n * e if general linear
 	// = n! * (q - 1)^n * q^n * e if affine
-	// where e is the degree of the field if f_semilinear is TRUE
+	// where e is the degree of the field if f_semilinear is true
 	// and e = 1 otherwise
 	
 	for (i = 0; i < n; i++) {
@@ -713,7 +713,7 @@ void strong_generators::generators_for_the_monomial_group(
 				"creating group" << endl;
 	}
 	S = A->create_sims_from_generators_randomized(
-		my_gens, TRUE /* f_target_go */, 
+		my_gens, true /* f_target_go */, 
 		target_go, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_monomial_group "
@@ -725,11 +725,11 @@ void strong_generators::generators_for_the_monomial_group(
 				"after extracting strong generators" << endl;
 	}
 	if (f_vv) {
-		int f_print_as_permutation = FALSE;
-		int f_offset = FALSE;
+		int f_print_as_permutation = false;
+		int f_offset = false;
 		int offset = 0;
-		int f_do_it_anyway_even_for_big_degree = FALSE;
-		int f_print_cycles_of_length_one = FALSE;
+		int f_do_it_anyway_even_for_big_degree = false;
+		int f_print_cycles_of_length_one = false;
 		
 		ring_theory::longinteger_object go;
 	
@@ -790,7 +790,7 @@ void strong_generators::generators_for_the_diagonal_group(
 	// group order 
 	// = q^n * e if not projective
 	// = q^(n-1) * e if projective
-	// where e is the degree of the field if f_semilinear is TRUE
+	// where e is the degree of the field if f_semilinear is true
 	// and e = 1 otherwise
 	
 	for (i = 0; i < n; i++) {
@@ -858,7 +858,7 @@ void strong_generators::generators_for_the_diagonal_group(
 				"creating group" << endl;
 	}
 	S = A->create_sims_from_generators_randomized(
-		my_gens, TRUE /* f_target_go */, 
+		my_gens, true /* f_target_go */, 
 		target_go, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_diagonal_group "
@@ -870,11 +870,11 @@ void strong_generators::generators_for_the_diagonal_group(
 				"after extracting strong generators" << endl;
 	}
 	if (f_vv) {
-		int f_print_as_permutation = FALSE;
-		int f_offset = FALSE;
+		int f_print_as_permutation = false;
+		int f_offset = false;
 		int offset = 0;
-		int f_do_it_anyway_even_for_big_degree = FALSE;
-		int f_print_cycles_of_length_one = FALSE;
+		int f_do_it_anyway_even_for_big_degree = false;
+		int f_print_cycles_of_length_one = false;
 		
 		ring_theory::longinteger_object go;
 	
@@ -970,8 +970,8 @@ void strong_generators::generators_for_the_singer_cycle(
 #endif
 	
 		Fq.finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0 /*verbose_level*/);
 		ring_theory::unipoly_domain FX(&Fq);
 
@@ -1045,7 +1045,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	}
 	S = A->create_sims_from_generators_randomized(
 		nice_gens,
-		TRUE /* f_target_go */,
+		true /* f_target_go */,
 		target_go, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_singer_cycle "
@@ -1058,11 +1058,11 @@ void strong_generators::generators_for_the_singer_cycle(
 				"strong generators" << endl;
 	}
 	if (f_vv) {
-		int f_print_as_permutation = FALSE;
-		int f_offset = FALSE;
+		int f_print_as_permutation = false;
+		int f_offset = false;
 		int offset = 0;
-		int f_do_it_anyway_even_for_big_degree = FALSE;
-		int f_print_cycles_of_length_one = FALSE;
+		int f_do_it_anyway_even_for_big_degree = false;
+		int f_print_cycles_of_length_one = false;
 		
 		cout << "strong generators are:" << endl;
 		gens->print(cout,
@@ -1153,8 +1153,8 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		}
 
 		Fp.finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0 /*verbose_level*/);
 		ring_theory::unipoly_domain FX(&Fp);
 
@@ -1238,7 +1238,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	}
 	S = A->create_sims_from_generators_randomized(
 		nice_gens,
-		TRUE /* f_target_go */,
+		true /* f_target_go */,
 		target_go, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_singer_cycle_and_the_Frobenius "
@@ -1250,11 +1250,11 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 				"after extracting strong generators" << endl;
 	}
 	if (f_vv) {
-		int f_print_as_permutation = FALSE;
-		int f_offset = FALSE;
+		int f_print_as_permutation = false;
+		int f_offset = false;
 		int offset = 0;
-		int f_do_it_anyway_even_for_big_degree = FALSE;
-		int f_print_cycles_of_length_one = FALSE;
+		int f_do_it_anyway_even_for_big_degree = false;
+		int f_print_cycles_of_length_one = false;
 
 		cout << "strong generators are:" << endl;
 		gens->print(cout,
@@ -1582,8 +1582,8 @@ void strong_generators::field_reduction(
 	}
 	FQ = NEW_OBJECT(field_theory::finite_field);
 	FQ->finite_field_init_small_order(Q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	AQ = NEW_OBJECT(actions::action);
@@ -1601,8 +1601,8 @@ void strong_generators::field_reduction(
 	}
 	AQ->Known_groups->init_general_linear_group(m,
 			FQ,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, FALSE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, false /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	if (f_v) {
@@ -1959,8 +1959,8 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 				"before A_PGL_k_q->Known_groups->init_projective_group" << endl;
 	}
 	A_PGL_k_q->Known_groups->init_projective_group(k,
-		F, FALSE /*f_semilinear */, TRUE /* f_init_sims */,
-		TRUE /* f_basis */,
+		F, false /*f_semilinear */, true /* f_init_sims */,
+		true /* f_basis */,
 		nice_gens,
 		0 /* verbose_level */);
 	if (f_v) {
@@ -2004,7 +2004,7 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 	}
 
 	A_PGL_n_q->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
@@ -2074,8 +2074,8 @@ void strong_generators::regulus_stabilizer(
 				"before A_PGL_k_q->Known_groups->init_projective_group" << endl;
 	}
 	A_PGL_k_q->Known_groups->init_projective_group(k,
-		F, FALSE /*f_semilinear */, TRUE /* f_init_sims */,
-		TRUE /* f_basis */,
+		F, false /*f_semilinear */, true /* f_init_sims */,
+		true /* f_basis */,
 		nice_gens,
 		0 /* verbose_level */);
 	if (f_v) {
@@ -2186,7 +2186,7 @@ void strong_generators::regulus_stabilizer(
 	strong_generators *SG;
 
 	A_PGL_n_q->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
@@ -2322,7 +2322,7 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 	strong_generators *SG;
 
 	A_linear->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
@@ -2451,7 +2451,7 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 	strong_generators *SG;
 
 	A_linear->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
@@ -2540,7 +2540,7 @@ void strong_generators::generators_for_the_identity_subgroup(
 	strong_generators *SG;
 
 	A_linear->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
@@ -2639,7 +2639,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 	strong_generators *SG;
 
 	A_PGL_n_q->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
@@ -2748,7 +2748,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	strong_generators *SG;
 
 	A_PGL_4_q->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
@@ -2850,7 +2850,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	strong_generators *SG;
 
 	A_PGL_4_q->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
@@ -2898,10 +2898,10 @@ void strong_generators::generators_for_the_orthogonal_group(
 
 	A2->Known_groups->init_orthogonal_group(epsilon,
 		n, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */,
-		FALSE /* f_on_points_and_lines */,
+		true /* f_on_points */, false /* f_on_lines */,
+		false /* f_on_points_and_lines */,
 		f_semilinear, 
-		TRUE /* f_basis */, verbose_level - 1);
+		true /* f_basis */, verbose_level - 1);
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_orthogonal_group "
@@ -2918,7 +2918,7 @@ void strong_generators::generators_for_the_orthogonal_group(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		&A2->Sims->gens, Strong_gens2, 
 		0 /* verbose_level */);
 
@@ -2994,7 +2994,7 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 				"generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		gens, Strong_gens2, 
 		0 /* verbose_level */);
 
@@ -3047,7 +3047,7 @@ void strong_generators::init_reduced_generating_set(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, Strong_gens2,
 		0 /* verbose_level */);
 
@@ -3139,7 +3139,7 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, Strong_gens2,
 		0 /* verbose_level */);
 
@@ -3218,7 +3218,7 @@ strong_generators::stabilizer_of_Eckardt_surface(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		nice_gens, Strong_gens2,
 		0 /* verbose_level */);
 
@@ -3290,7 +3290,7 @@ void strong_generators::stabilizer_of_G13_surface(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		nice_gens, Strong_gens2,
 		verbose_level);
 
@@ -3361,7 +3361,7 @@ void strong_generators::stabilizer_of_F13_surface(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		nice_gens, Strong_gens2,
 		verbose_level);
 
@@ -3444,7 +3444,7 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		gens, Strong_gens2, 
 		verbose_level - 3);
 
@@ -3526,7 +3526,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go, 
+		true /* f_target_go */, target_go, 
 		gens, Strong_gens2, 
 		0 /* verbose_level */);
 
@@ -3617,7 +3617,7 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, Strong_gens2,
 		0 /* verbose_level */);
 
@@ -3730,7 +3730,7 @@ void strong_generators::Janko1(
 				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, Strong_gens2,
 		0 /* verbose_level */);
 
@@ -3815,7 +3815,7 @@ void strong_generators::Hall_reflection(
 				"before A->init_permutation_group" << endl;
 	}
 	A = NEW_OBJECT(actions::action);
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A->Known_groups->init_permutation_group(
 			degree, f_no_base, verbose_level);
@@ -3828,7 +3828,7 @@ void strong_generators::Hall_reflection(
 	}
 
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, SG, verbose_level - 3);
 
 	if (f_v) {
@@ -3919,7 +3919,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 				"before A->init_permutation_group" << endl;
 	}
 	A = NEW_OBJECT(actions::action);
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 	//A->init_permutation_group(degree, verbose_level);
@@ -3932,7 +3932,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 	}
 
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, SG, verbose_level - 3);
 
 	if (f_v) {
@@ -3971,7 +3971,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 	gens->init(A, verbose_level - 2);
 
 	int i;
-	int f_semilinear = FALSE;
+	int f_semilinear = false;
 	int frobenius = 0;
 	geometry::geometry_global Gg;
 
@@ -4057,7 +4057,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 	strong_generators *SG;
 
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, SG, verbose_level - 3);
 
 	if (f_v) {
@@ -4095,7 +4095,7 @@ void strong_generators::exterior_square(
 	gens->init(A_detached, verbose_level - 2);
 
 	int i, n, n2;
-	int f_semilinear = FALSE;
+	int f_semilinear = false;
 	int frobenius = 0;
 	int *An2;
 	field_theory::finite_field *F;
@@ -4201,7 +4201,7 @@ void strong_generators::exterior_square(
 	strong_generators *SG;
 
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, SG, verbose_level - 3);
 
 	if (f_v) {

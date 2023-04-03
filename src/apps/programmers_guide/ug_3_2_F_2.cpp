@@ -37,7 +37,7 @@ void first()
 
 	int verbose_level = 2;
 
-	Descr.f_q = TRUE;
+	Descr.f_q = true;
 	Descr.q_text.assign("2");
 	Fq.init(&Descr, verbose_level);
 
@@ -52,12 +52,12 @@ void second()
 {
 	int q = 2;
 	int verbose_level = 2;
-	int f_without_tables = FALSE;
+	int f_without_tables = false;
 	field_theory::finite_field Fq;
 
 	Fq.finite_field_init_small_order(q,
 			f_without_tables,
-			TRUE /* f_compute_related_fields */,
+			true /* f_compute_related_fields */,
 			verbose_level);
 
 	cout << "in F_2, 1 + 1 = " << Fq.add(1, 1) << endl;
@@ -71,14 +71,14 @@ void third()
 {
 	int q = 2;
 	int verbose_level = 2;
-	int f_without_tables = FALSE;
+	int f_without_tables = false;
 	field_theory::finite_field *Fq;
 
 	Fq = NEW_OBJECT(field_theory::finite_field);
 
 	Fq->finite_field_init_small_order(q,
 			f_without_tables,
-			TRUE /* f_compute_related_fields */,
+			true /* f_compute_related_fields */,
 			verbose_level);
 
 	cout << "in F_2, 1 + 1 = " << Fq->add(1, 1) << endl;

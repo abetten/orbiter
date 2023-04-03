@@ -17,21 +17,21 @@ namespace apps_graph_theory {
 
 graph_classify_description::graph_classify_description()
 {
-	f_n = FALSE;
-	f_regular = FALSE;
+	f_n = false;
+	f_regular = false;
 
-	f_control = FALSE;
+	f_control = false;
 	Control = NULL;
 
-	f_girth = FALSE;
-	f_tournament = FALSE;
-	f_no_superking = FALSE;
+	f_girth = false;
+	f_tournament = false;
+	f_no_superking = false;
 
 
 
-	f_depth = FALSE;
-	f_test_multi_edge = FALSE;
-	f_identify = FALSE;
+	f_depth = false;
+	f_test_multi_edge = false;
+	f_identify = false;
 
 	regularity = 0;
 	girth = 0;
@@ -58,12 +58,12 @@ int graph_classify_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-regular") == 0) {
-			f_regular = TRUE;
+			f_regular = true;
 			regularity = ST.strtoi(argv[++i]);
 			cout << "-regular " << regularity << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
-			f_control = TRUE;
+			f_control = true;
 			Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
@@ -76,33 +76,33 @@ int graph_classify_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-n") == 0) {
-			f_n = TRUE;
+			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			cout << "-n " << n << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-girth") == 0) {
-			f_girth = TRUE;
+			f_girth = true;
 			girth = ST.strtoi(argv[++i]);
 			cout << "-girth " << girth << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-tournament") == 0) {
-			f_tournament = TRUE;
+			f_tournament = true;
 			cout << "-tournament " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-no_transmitter") == 0) {
-			f_no_superking = TRUE;
+			f_no_superking = true;
 			cout << "-no_superking " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-test_multi_edge") == 0) {
-			f_test_multi_edge = TRUE;
+			f_test_multi_edge = true;
 			cout << "-test_multi_edge " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-identify") == 0) {
 			int a, j;
 
-			f_identify = TRUE;
+			f_identify = true;
 			j = 0;
-			while (TRUE) {
+			while (true) {
 				a = ST.strtoi(argv[++i]);
 				if (a == -1) {
 					break;
@@ -115,7 +115,7 @@ int graph_classify_description::read_arguments(int argc, std::string *argv,
 			cout << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-depth") == 0) {
-			f_depth = TRUE;
+			f_depth = true;
 			depth = ST.strtoi(argv[++i]);
 			cout << "-depth " << depth << endl;
 		}

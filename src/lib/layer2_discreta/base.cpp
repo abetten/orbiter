@@ -289,10 +289,10 @@ int discreta_base::eq(discreta_base &a)
 {
 	int r = compare_with(a);
 	if (r == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -300,10 +300,10 @@ int discreta_base::neq(discreta_base &a)
 {
 	int r = compare_with(a);
 	if (r != 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -311,10 +311,10 @@ int discreta_base::le(discreta_base &a)
 {
 	int r = compare_with(a);
 	if (r <= 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -324,10 +324,10 @@ int discreta_base::lt(discreta_base &a)
 	int r = compare_with(a);
 	//cout << " r=" << r << endl;
 	if (r < 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -335,10 +335,10 @@ int discreta_base::ge(discreta_base &a)
 {
 	int r = compare_with(a);
 	if (r >= 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -346,10 +346,10 @@ int discreta_base::gt(discreta_base &a)
 {
 	int r = compare_with(a);
 	if (r > 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -360,20 +360,20 @@ int discreta_base::is_even()
 	a.m_i_i(2);
 	integral_division(a, q, r, 0);
 	if (r.is_zero()) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
 int discreta_base::is_odd()
 {
 	if (is_even()) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -432,11 +432,11 @@ int discreta_base::invert_mod(discreta_base &p, int verbose_level)
 	//"gcd = " << g << " = " << u << " * " << *this
 	// << " + " << v << " * " << p << endl;
 	if (!g.is_one()) {
-		return FALSE;
+		return false;
 	}
 	swap(u);
 	// normalize(p);
-	return TRUE;
+	return true;
 }
 
 int discreta_base::invert_to(discreta_base &x, int verbose_level)
@@ -984,9 +984,9 @@ int discreta_base::is_divisor(discreta_base& y, int verbose_level)
 	
 	y.integral_division(*this, q, r, verbose_level);
 	if (r.is_zero())
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 void discreta_base::modulo(discreta_base &p, int verbose_level)
@@ -1060,7 +1060,7 @@ void discreta_base::extended_gcd(
 	u2 = *this; u2.zero();
 	v1 = n; v1.zero();
 	v2 = n; v2.one();
-	while (TRUE) {
+	while (true) {
 		if (f_v) {
 			cout << "loop:" << endl;
 			cout << "M=" << M << "(" << kind_ascii(M.s_kind()) << ") N=" 
@@ -1455,7 +1455,7 @@ void discreta_base::save_ascii(ostream & f)
 // writes in ASCII text format (uuencoded like) into the stream f. 
 {
 	memory M;
-	int f_v = FALSE, f_vv = FALSE;
+	int f_v = false, f_vv = false;
 	int size, debug_depth;
 	int i;
 	unsigned int a, a1, a2;
@@ -1510,8 +1510,8 @@ void discreta_base::load_ascii(istream & f)
 	memory M;
 	char buf[BUFSIZE];
 	char str[1024], *p;
-	int f_v = TRUE;
-	int f_vv = FALSE;
+	int f_v = true;
+	int f_vv = false;
 	int size, i, debug_depth;
 	uchar *pc;
 	uchar c;
@@ -1536,7 +1536,7 @@ void discreta_base::load_ascii(istream & f)
 	M.alloc(size);
 	pc = (uchar *) M.self.char_pointer;
 	for (i = 0; i < size; i++) {
-		while (TRUE) {
+		while (true) {
 			if (f.eof()) {
 				cout << "discreta_base::load_ascii "
 						"primature EOF" << endl;
@@ -1563,7 +1563,7 @@ void discreta_base::load_ascii(istream & f)
 		pc[i] = c; 
 		}
 #if 1
-	while (TRUE) {
+	while (true) {
 		f.getline(buf, sizeof(buf));
 		if (strlen(buf))
 			break;
@@ -1587,7 +1587,7 @@ void discreta_base::load_ascii(istream & f)
 		}
 	M.used_length() = size;
 #ifdef SAVE_ASCII_USE_COMPRESS
-	M.decompress(TRUE /* f_verbose */);
+	M.decompress(true /* f_verbose */);
 #endif
 	M.cur_pointer() = 0;
 	if (f_vv)

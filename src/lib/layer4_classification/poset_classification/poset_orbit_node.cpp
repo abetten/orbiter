@@ -261,10 +261,10 @@ int poset_orbit_node::get_tl(int i)
 int poset_orbit_node::has_Schreier_vector()
 {
 	if (Schreier_vector == NULL) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -513,7 +513,7 @@ void poset_orbit_node::log_current_node(
 
 #if 0
 	G.init_strong_generators_by_hdl(
-			nb_strong_generators, hdl_strong_generators, tl, FALSE);
+			nb_strong_generators, hdl_strong_generators, tl, false);
 	if (f_v) {
 		cout << "poset_orbit_node::log_current_node "
 				"node=" << node << " before schreier_sims" << endl;
@@ -547,7 +547,7 @@ void poset_orbit_node::log_current_node(
 		//f << go << endl;
 	}
 	else {
-		G.code_ascii(FALSE);
+		G.code_ascii(false);
 		go.print_not_scientific(f);
 		f << " " << G.ascii_coding << endl;
 		//f << go << " " << G.ascii_coding << endl;
@@ -651,7 +651,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 	G.init_strong_generators_by_hdl(
 			nb_strong_generators,
 			hdl_strong_generators, tl,
-			FALSE);
+			false);
 	G.schreier_sims(0);
 	G.group_order(go);
 #else
@@ -672,7 +672,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 		f << go << endl;
 		}
 	else {
-		G.code_ascii(FALSE);
+		G.code_ascii(false);
 		f << go << " " << G.ascii_coding << endl;
 		}
 
@@ -692,8 +692,8 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 			for (i = 0; i < G.SG->len; i++) {
 				f << "# ";
 				//G.A->element_print(G.SG->ith(i), f);
-				G.A->Group_element->element_mult(Elt_inv, G.SG->ith(i), Elt1, FALSE);
-				G.A->Group_element->element_mult(Elt1, Elt, Elt2, FALSE);
+				G.A->Group_element->element_mult(Elt_inv, G.SG->ith(i), Elt1, false);
+				G.A->Group_element->element_mult(Elt1, Elt, Elt2, false);
 				G.A->Group_element->element_print(Elt2, f);
 				//f << endl;
 				}
@@ -735,7 +735,7 @@ void poset_orbit_node::log_current_node_with_candidates(
 		n, subset, f_subset_is_allocated, 
 		verbose_level)) {
 		cout << "poset_orbit_node::log_current_node_with_candidates "
-				"downstep_get_invariant_subset returns FALSE" << endl;
+				"downstep_get_invariant_subset returns false" << endl;
 		exit(1);
 		}
 	candidates = NEW_int(n);
@@ -834,11 +834,11 @@ int poset_orbit_node::check_node_and_set_consistency(
 		poset_classification *gen, int i, long int *set)
 {
 	if (i < 0) {
-		return TRUE;
+		return true;
 	}
 	if (set[i] != pt) {
 		cout << "check_node_and_set_consistency inconsistent" << endl;
-		return FALSE;
+		return false;
 	}
 	if (i >= 0) {
 		if (prev == -1) {
@@ -848,7 +848,7 @@ int poset_orbit_node::check_node_and_set_consistency(
 		gen->get_node(prev)->check_node_and_set_consistency(
 				gen, i - 1, set);
 	}
-	return TRUE;
+	return true;
 }
 
 void poset_orbit_node::print_set_verbose(poset_classification *gen)
@@ -953,7 +953,7 @@ void poset_orbit_node::print_node(poset_classification *gen)
 			}
 		else if (E[i].type == EXTENSION_TYPE_FUSION) {
 			//cout << "fusion node from ";
-			gen->A->element_retrieve(E[i].data, gen->Elt1, FALSE);
+			gen->A->element_retrieve(E[i].data, gen->Elt1, false);
 			store_set(gen, depth - 1);
 			gen->S[depth] = E[i].pt;
 			//int_vec_print(cout, gen->S, depth + 1);
@@ -1021,7 +1021,7 @@ void poset_orbit_node::print_extensions(poset_classification *gen)
 				<< nb_strong_generators << endl;
 #endif
 
-		if (FALSE) {
+		if (false) {
 			len = gen->A2->compute_orbit_of_point_generators_by_handle(
 				nb_strong_generators,
 				hdl_strong_generators,
@@ -1048,7 +1048,7 @@ void poset_orbit_node::print_extensions(poset_classification *gen)
 			int_vec_print(cout, gen->S, depth + 1);
 
 			cout << "fusion handle=" << E[i].data << endl;
-			gen->A->element_retrieve(E[i].data, gen->Elt1, FALSE);
+			gen->A->element_retrieve(E[i].data, gen->Elt1, false);
 			cout << "fusion element:" << endl;
 			gen->A2->element_print_quick(gen->Elt1, cout);
 

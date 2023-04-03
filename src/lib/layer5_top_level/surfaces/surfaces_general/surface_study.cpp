@@ -81,10 +81,10 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 
 
 	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 		}
 	else {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 		}
 
 	cout << "creating linear group" << endl;
@@ -94,10 +94,10 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 
 	A->Known_groups->init_linear_group(
 		F, 4,
-		TRUE /*f_projective*/,
-		FALSE /* f_general*/,
-		FALSE /* f_affine */,
-		f_semilinear, FALSE /* f_special */,
+		true /*f_projective*/,
+		false /* f_general*/,
+		false /* f_affine */,
+		f_semilinear, false /* f_special */,
 		nice_gens,
 		0 /*verbose_level*/);
 
@@ -386,7 +386,7 @@ void surface_study::study_intersection_points(int verbose_level)
 
 	{
 		ofstream fp(fname_intersection_pts_tex);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 		//latex_head_easy_sideways(fp);
@@ -398,7 +398,7 @@ void surface_study::study_intersection_points(int verbose_level)
 			fst, len, 1,
 			fst, len, 1,
 			matrix_entry_print, (void *) Surf,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 		fp << "$$}" << endl;
 		L.foot(fp);
 	}
@@ -563,8 +563,8 @@ void surface_study::study_group(int verbose_level)
 	cout << "creating linear group A3" << endl;
 	create_linear_group(PGL3, A3,
 		F, 3,
-		TRUE /*f_projective*/, FALSE /* f_general*/, FALSE /* f_affine */,
-		FALSE /* f_semilinear */, FALSE /* f_special */,
+		true /*f_projective*/, false /* f_general*/, false /* f_affine */,
+		false /* f_semilinear */, false /* f_special */,
 		0 /*verbose_level*/);
 	cout << "creating linear group A3 done" << endl;
 	gens = NEW_OBJECT(vector_ge);
@@ -580,7 +580,7 @@ void surface_study::study_group(int verbose_level)
 		A3->make_element(gens->ith(h), Mtx3, 0 /* verbose_level */);
 		}
 	generators_to_strong_generators(A3,
-		TRUE /* f_target_go */, go,
+		true /* f_target_go */, go,
 		gens, Strong_gens,
 		verbose_level);
 	cout << "Strong generators:" << endl;
@@ -734,7 +734,7 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 
 		{
 		ofstream fp(fname_intersection_pts_tex);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 		//latex_head_easy_sideways(fp);
@@ -746,7 +746,7 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 			Orb->orbit_first, Orb->orbit_len, Orb->nb_orbits,
 			Orb->orbit_first, Orb->orbit_len, Orb->nb_orbits,
 			matrix_entry_print, (void *) Surf,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 		fp << "$$}" << endl;
 		L.foot(fp);
 		}
@@ -758,9 +758,9 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 
 	data_structures::tally C;
 
-	C.init_lint(Intersection_pt, SaS->sz * SaS->sz, FALSE, 0);
+	C.init_lint(Intersection_pt, SaS->sz * SaS->sz, false, 0);
 	cout << "classification of points by multiplicity:" << endl;
-	C.print_naked(TRUE);
+	C.print_naked(true);
 	cout << endl;
 
 
@@ -913,7 +913,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 
 	// this is how we find the third transformation:
 
-	set_and_stabilizer_apply(SaS, Elt, FALSE, verbose_level);
+	set_and_stabilizer_apply(SaS, Elt, false, verbose_level);
 
 	cout << "The transporter is:" << endl;
 	A->print_for_make_element(cout, Elt);
@@ -1430,7 +1430,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 			Orb->orbit_first, Orb->orbit_len, Orb->nb_orbits,
 			Orb->orbit_first, Orb->orbit_len, Orb->nb_orbits,
 			matrix_entry_print, (void *) Surf,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 		fp << "$$}" << endl;
 		latex_foot(fp);
 		}
@@ -1487,10 +1487,10 @@ void compute_decomposition(orthogonal *O,
 	N = O->nb_points + O->nb_lines;
 
 	//O.make_initial_partition(S, verbose_level);
-	S.allocate(N, FALSE);
+	S.allocate(N, false);
 	// split off the column class:
 	S.subset_continguous(O->nb_points, O->nb_lines);
-	S.split_cell(FALSE);
+	S.split_cell(false);
 
 	ht0 = S.ht;
 
@@ -1538,8 +1538,8 @@ static void move_point_set(actions::action *A2,
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 	//char prefix[1000];
-	//int f_W = FALSE;
-	//int f_w = FALSE;
+	//int f_W = false;
+	//int f_w = false;
 	long int *data_in;
 	long int *data_out;
 	long int *data2;

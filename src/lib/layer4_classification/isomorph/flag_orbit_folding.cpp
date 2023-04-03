@@ -70,7 +70,7 @@ flag_orbit_folding::flag_orbit_folding()
 	nb_is_minimal = 0;
 	nb_sets_reached = 0;
 
-	f_tmp_data_has_been_allocated = FALSE;
+	f_tmp_data_has_been_allocated = false;
 	tmp_set1 = NULL;
 	tmp_set2 = NULL;
 	tmp_set3 = NULL;
@@ -100,7 +100,7 @@ flag_orbit_folding::~flag_orbit_folding()
 		AA = NULL;
 	}
 	if (f_tmp_data_has_been_allocated) {
-		f_tmp_data_has_been_allocated = FALSE;
+		f_tmp_data_has_been_allocated = false;
 		FREE_lint(tmp_set1);
 		FREE_lint(tmp_set2);
 		FREE_lint(tmp_set3);
@@ -135,7 +135,7 @@ void flag_orbit_folding::init(
 
 	flag_orbit_folding::Iso = Iso;
 
-	f_tmp_data_has_been_allocated = TRUE;
+	f_tmp_data_has_been_allocated = true;
 	tmp_set1 = NEW_lint(Iso->size);
 	tmp_set2 = NEW_lint(Iso->size);
 	tmp_set3 = NEW_lint(Iso->size);
@@ -181,7 +181,7 @@ void flag_orbit_folding::isomorph_testing(
 // calls do_iso_test
 {
 	int f_v = (verbose_level >= 1);
-	//int f_v4 = FALSE;// (verbose_level >= 1);
+	//int f_v4 = false;// (verbose_level >= 1);
 	groups::sims *Stab;
 	ring_theory::longinteger_object go;
 	int f_eof;
@@ -213,7 +213,7 @@ void flag_orbit_folding::isomorph_testing(
 		skip_through_event_file(*play_back_file, verbose_level);
 		play_back_file->close();
 		delete play_back_file;
-		f_play_back = FALSE;
+		f_play_back = false;
 #endif
 	}
 
@@ -245,7 +245,7 @@ void flag_orbit_folding::isomorph_testing(
 			*fp_event_out << "O " << current_flag_orbit << endl;
 
 			if (f_play_back) {
-				f_eof = FALSE;
+				f_eof = false;
 			}
 
 			if (f_v) {
@@ -261,7 +261,7 @@ void flag_orbit_folding::isomorph_testing(
 
 			if (f_play_back && f_eof) {
 				play_back_file->close();
-				f_play_back = FALSE;
+				f_play_back = false;
 				delete play_back_file;
 			}
 
@@ -405,9 +405,9 @@ void flag_orbit_folding::do_iso_test(
 		cout << "flag_orbit_folding::do_iso_test "
 				"subset_rank=" << subset_rank << endl;
 	}
-	f_continue = FALSE;
+	f_continue = false;
 
-	while (TRUE) {
+	while (true) {
 
 #if 0
 		if ((iso_nodes % 500000) == 0) {
@@ -499,12 +499,12 @@ int flag_orbit_folding::next_subset(int t0,
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
 
-	f_continue = FALSE;
+	f_continue = false;
 
 	if (f_play_back) {
 		if (!next_subset_play_back(subset_rank, play_back_file,
 			f_eof, verbose_level)) {
-			return FALSE;
+			return false;
 		}
 	}
 	subset_rank = Combi.rank_k_subset(subset, Iso->size, Iso->level);
@@ -513,7 +513,7 @@ int flag_orbit_folding::next_subset(int t0,
 
 
 	if (f_play_back) {
-		f_is_minimal = TRUE;
+		f_is_minimal = true;
 	}
 	else {
 		f_is_minimal = is_minimal(verbose_level);
@@ -527,10 +527,10 @@ int flag_orbit_folding::next_subset(int t0,
 		//<< backtrack_level << endl;
 		if (!Combi.next_k_subset(subset, Iso->size, Iso->level)) {
 
-			return FALSE;
+			return false;
 		}
-		f_continue = TRUE;
-		return TRUE;
+		f_continue = true;
+		return true;
 	}
 
 	if (f_vvv) {
@@ -550,7 +550,7 @@ int flag_orbit_folding::next_subset(int t0,
 
 
 
-	if (FALSE) {
+	if (false) {
 		print_statistics_iso_test(t0, Stab);
 	}
 	if (f_v6) {
@@ -569,7 +569,7 @@ int flag_orbit_folding::next_subset(int t0,
 
 
 
-	return TRUE;
+	return true;
 }
 
 void flag_orbit_folding::process_rearranged_set(
@@ -610,7 +610,7 @@ void flag_orbit_folding::process_rearranged_set(
 	}
 	if (!f_found) {
 #if 0
-		if (TRUE /*f_vv*/) {
+		if (true /*f_vv*/) {
 			cout << "flag_orbit_folding::process_rearranged_set flag orbit "
 					<< orbit_no << " subset " << subset_rank
 					<< " : not found" << endl;
@@ -635,7 +635,7 @@ void flag_orbit_folding::process_rearranged_set(
 		}
 		exit(1);
 #endif
-		if (FALSE) {
+		if (false) {
 			cout << "flag_orbit_folding::process_rearranged_set flag orbit "
 					<< current_flag_orbit << " subset " << subset_rank
 					<< " : not found" << endl;
@@ -694,12 +694,12 @@ void flag_orbit_folding::process_rearranged_set(
 					<< current_flag_orbit << " subset " << subset_rank
 					<<  " fusion" << endl;
 		}
-		Iso->A->Group_element->element_invert(transporter, tmp_Elt, FALSE);
-		if (FALSE && f_v6) {
+		Iso->A->Group_element->element_invert(transporter, tmp_Elt, false);
+		if (false && f_v6) {
 			cout << "fusion element:" << endl;
 			Iso->A->Group_element->element_print(tmp_Elt, cout);
 		}
-		hdl = Iso->A->Group_element->element_store(tmp_Elt, FALSE);
+		hdl = Iso->A->Group_element->element_store(tmp_Elt, false);
 		if (f_v6) {
 			//cout << "hdl=" << hdl << endl;
 		}
@@ -725,12 +725,12 @@ void flag_orbit_folding::process_rearranged_set(
 			cout << "orbit_no0 = " << orbit_no0 << endl;
 			cout << "fusion[orbit_no0] = " << Reps->fusion[orbit_no0] << endl;
 			cout << "handle[orbit_no0] = " << Reps->handle[orbit_no0] << endl;
-			Iso->A->Group_element->element_retrieve(Reps->handle[orbit_no0], Elt1, FALSE);
+			Iso->A->Group_element->element_retrieve(Reps->handle[orbit_no0], Elt1, false);
 			cout << "old transporter inverse:" << endl;
 			Iso->A->Group_element->element_print(Elt1, cout);
 			cout << "new transporter:" << endl;
 			Iso->A->Group_element->element_print(transporter, cout);
-			Iso->A->Group_element->element_mult(transporter, Elt1, tmp_Elt, FALSE);
+			Iso->A->Group_element->element_mult(transporter, Elt1, tmp_Elt, false);
 			cout << "new transporter times old transporter inverse:" << endl;
 			Iso->A->Group_element->element_print(tmp_Elt, cout);
 			cout << "subset: ";
@@ -762,9 +762,9 @@ void flag_orbit_folding::process_rearranged_set(
 		}
 		hdl = Reps->handle[orbit_no0];
 		//cout << "hdl=" << hdl << endl;
-		Iso->A->Group_element->element_retrieve(hdl, Elt1, FALSE);
+		Iso->A->Group_element->element_retrieve(hdl, Elt1, false);
 		//A->element_print(Elt1, cout);
-		Iso->A->Group_element->element_mult(transporter, Elt1, tmp_Elt, FALSE);
+		Iso->A->Group_element->element_mult(transporter, Elt1, tmp_Elt, false);
 
 		if (handle_automorphism(data, Stab, tmp_Elt, verbose_level)) {
 			Stab->group_order(new_go);
@@ -786,10 +786,10 @@ int flag_orbit_folding::is_minimal(int verbose_level)
 	rk = Combi.rank_k_subset(subset, Iso->size, Iso->level);
 	rk0 = UF->ancestor(rk);
 	if (rk0 == rk) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -1151,7 +1151,7 @@ void flag_orbit_folding::induced_action_on_set_basic(
 	AA = Iso->Sub->gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		S,
 		Iso->size, set, label_of_set,
-		TRUE,
+		true,
 		0/*verbose_level*/);
 	if (f_vv) {
 		cout << "flag_orbit_folding::induced_action_on_set_basic "
@@ -1226,7 +1226,7 @@ void flag_orbit_folding::induced_action_on_set(
 	AA = Iso->Sub->gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 			S,
 			Iso->size, set, label_of_set,
-			TRUE,
+			true,
 			0/*verbose_level*/);
 	if (f_v) {
 		cout << "flag_orbit_folding::induced_action_on_set "
@@ -1267,7 +1267,7 @@ void flag_orbit_folding::induced_action_on_set(
 				"before AA_perm->Known_groups->init_permutation_group" << endl;
 	}
 
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	AA_perm->Known_groups->init_permutation_group(
 			Iso->size, f_no_base, 0/*verbose_level*/);
@@ -1317,7 +1317,7 @@ void flag_orbit_folding::induced_action_on_set(
 	Elt1 = NEW_int(AA_perm->elt_size_in_int);
 
 	for (h = 0; h < len; h++) {
-		if (FALSE /*f_v*/) {
+		if (false /*f_v*/) {
 			cout << "flag_orbit_folding::induced_action_on_set "
 					"generator " << h << " / " << len << ":" << endl;
 		}
@@ -1325,7 +1325,7 @@ void flag_orbit_folding::induced_action_on_set(
 			j = AA->Group_element->image_of(gens->ith(h), i);
 			data1[i] = j;
 		}
-		if (FALSE /*f_v*/) {
+		if (false /*f_v*/) {
 			cout << "flag_orbit_folding::induced_action_on_set permutation: ";
 			Int_vec_print(cout, data1, Iso->size);
 			cout << endl;
@@ -1440,7 +1440,7 @@ int flag_orbit_folding::handle_automorphism(
 			}
 			induced_action_on_set(Stab, set, 0/*verbose_level - 1*/);
 		}
-		ret = TRUE;
+		ret = true;
 	}
 	else {
 		if (f_vvv) {
@@ -1448,7 +1448,7 @@ int flag_orbit_folding::handle_automorphism(
 					<< " subset " << subset_rank <<  " : ";
 			cout << "already known" << endl;
 		}
-		ret = FALSE;
+		ret = false;
 	}
 	return ret;
 }
@@ -1566,8 +1566,8 @@ int flag_orbit_folding::identify_solution_relaxed(
 // returns the orbit number corresponding to
 // the canonical version of set and the extension.
 // Calls trace_set and find_extension_easy.
-// Returns FALSE if f_failure_to_find_point is TRUE after trace_set.
-// Returns FALSE if find_extension_easy returns FALSE.
+// Returns false if f_failure_to_find_point is true after trace_set.
+// Returns false if find_extension_easy returns false.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1575,7 +1575,7 @@ int flag_orbit_folding::identify_solution_relaxed(
 	long int *canonical_set, *data;
 	int *Elt;
 
-	f_failure_to_find_point = FALSE;
+	f_failure_to_find_point = false;
 	canonical_set = tmp_set1;
 	data = tmp_set2;
 	Elt = tmp_Elt1;
@@ -1590,9 +1590,9 @@ int flag_orbit_folding::identify_solution_relaxed(
 	}
 
 	Lint_vec_copy(set, canonical_set, Iso->size);
-	Iso->A->Group_element->element_one(transporter, FALSE);
+	Iso->A->Group_element->element_one(transporter, false);
 
-	while (TRUE) {
+	while (true) {
 		// this while loop is not needed
 
 		if (f_vv) {
@@ -1611,7 +1611,7 @@ int flag_orbit_folding::identify_solution_relaxed(
 						"after trace: trace_set returns "
 						"f_failure_to_find_point" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 		if (f_v) {
 			cout << "iso_node " << iso_nodes
@@ -1682,7 +1682,7 @@ int flag_orbit_folding::identify_solution_relaxed(
 			cout << " : ";
 			cout << "did not find extension" << endl;
 		}
-		return FALSE;
+		return false;
 		//make_set_smaller(case_nb, canonical_set, transporter,
 		//verbose_level - 2);
 		//cnt++;
@@ -1729,7 +1729,7 @@ int flag_orbit_folding::identify_solution_relaxed(
 		cout << "solution is identified as id=" << id << endl;
 	}
 
-	return TRUE;
+	return true;
 }
 
 
@@ -1764,9 +1764,9 @@ int flag_orbit_folding::identify_solution(
 	}
 
 	Lint_vec_copy(set, canonical_set, Iso->size);
-	Iso->A->Group_element->element_one(transporter, FALSE);
+	Iso->A->Group_element->element_one(transporter, false);
 
-	while (TRUE) {
+	while (true) {
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
 					<< " flag_orbit_folding::identify_solution "
@@ -2043,8 +2043,8 @@ void flag_orbit_folding::make_set_smaller(
 		if (b < m) {
 			Iso->A->Group_element->map_a_set_and_reorder(set, image_set, Iso->size, Elt1, 0);
 			Lint_vec_copy(image_set, set, Iso->size);
-			Iso->A->Group_element->element_mult(transporter, Elt1, Elt2, FALSE);
-			Iso->A->Group_element->element_move(Elt2, transporter, FALSE);
+			Iso->A->Group_element->element_mult(transporter, Elt1, Elt2, false);
+			Iso->A->Group_element->element_move(Elt2, transporter, false);
 			if (f_vv) {
 				cout << "iso_node " << iso_nodes
 					<< "flag_orbit_folding::make_set_smaller "
@@ -2122,7 +2122,7 @@ int flag_orbit_folding::trace_set_recursion(
 	int ret;
 	data_structures::sorting Sorting;
 
-	f_failure_to_find_point = FALSE;
+	f_failure_to_find_point = false;
 	if (f_v) {
 		cout << "iso_node "
 				<< iso_nodes
@@ -2207,7 +2207,7 @@ int flag_orbit_folding::trace_set_recursion(
 					<< iso_nodes << " flag_orbit_folding::trace_set_recursion ";
 			Iso->print_node_global(cur_level, cur_node_global);
 			cout << " : ";
-			cout << "trace_next_point returns FALSE" << endl;
+			cout << "trace_next_point returns false" << endl;
 		}
 		if (Iso->Sub->gen->has_base_case()) {
 			Sorting.lint_vec_heapsort(canonical_set + Iso->Sub->gen->get_Base_case()->size,
@@ -2283,7 +2283,7 @@ int flag_orbit_folding::trace_next_point(
 // Called from trace_set_recursion
 // Calls ::trace_next_point_in_place
 // and (possibly) trace_next_point_database
-// Returns FALSE is the set becomes lexicographically smaller
+// Returns false is the set becomes lexicographically smaller
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2291,7 +2291,7 @@ int flag_orbit_folding::trace_next_point(
 	//int f_failure_to_find_point;
 
 
-	f_failure_to_find_point = FALSE;
+	f_failure_to_find_point = false;
 
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
@@ -2342,7 +2342,7 @@ int flag_orbit_folding::trace_next_point(
 			Iso->print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "cur_level <= depth_completed" << endl;
-			return FALSE;
+			return false;
 		}
 		if (f_v) {
 			cout << "iso_node " << iso_nodes
@@ -2376,7 +2376,7 @@ int flag_orbit_folding::trace_next_point(
 				<< " flag_orbit_folding::trace_next_point ";
 		Iso->print_node_global(cur_level, cur_node_global);
 		cout << " : ";
-		cout << "returning FALSE" << endl;
+		cout << "returning false" << endl;
 	}
 	if (f_vv) {
 		//cout << "iso_node " << iso_nodes
@@ -2396,7 +2396,7 @@ int flag_orbit_folding::trace_next_point_database(
 	int cur_level, int cur_node_global,
 	long int *canonical_set, int *Elt_transporter,
 	int verbose_level)
-// Returns FALSE if the set becomes lexicographically smaller
+// Returns false if the set becomes lexicographically smaller
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2520,7 +2520,7 @@ int flag_orbit_folding::trace_next_point_database(
 		goto final_check;
 	}
 
-	if (FALSE /*f_vvv*/) {
+	if (false /*f_vvv*/) {
 		cout << "applying:" << endl;
 		Iso->Sub->gen->get_A()->Group_element->element_print(tmp_ELT, cout);
 		cout << endl;
@@ -2528,7 +2528,7 @@ int flag_orbit_folding::trace_next_point_database(
 
 	for (i = cur_level; i < Iso->size; i++) {
 		canonical_set[i] = Iso->Sub->gen->get_A2()->Group_element->element_image_of(
-				canonical_set[i], tmp_ELT, FALSE);
+				canonical_set[i], tmp_ELT, false);
 	}
 
 	//gen->A->map_a_set(gen->set[lvl],
@@ -2567,12 +2567,12 @@ final_check:
 			Iso->print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "the set becomes lexicographically less, "
-					"we return FALSE" << endl;
+					"we return false" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 #endif
-	return TRUE;
+	return true;
 
 }
 
@@ -2776,7 +2776,7 @@ int flag_orbit_folding::handle_extension_database(
 
 		Sorting.lint_vec_heapsort(canonical_set, cur_level + 1);
 
-		if (FALSE) {
+		if (false) {
 			cout << "iso_node " << iso_nodes
 				<< " handle_extension_database cur_level = " << cur_level
 				<< " cur_node_global = " << cur_node_global << " : "
@@ -2786,7 +2786,7 @@ int flag_orbit_folding::handle_extension_database(
 			cout << endl;
 		}
 		next_node_global = Iso->Sub->gen->find_poset_orbit_node_for_set(cur_level + 1,
-				canonical_set, FALSE /*f_tolerant*/, 0);
+				canonical_set, false /*f_tolerant*/, 0);
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
 					<< " flag_orbit_folding::handle_extension_database "
@@ -2825,7 +2825,7 @@ int flag_orbit_folding::handle_extension_tree(
 	int pt0, current_extension, t, d, next_node_global;
 	data_structures::sorting Sorting;
 
-	f_failure_to_find_point = FALSE;
+	f_failure_to_find_point = false;
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
 				<< " flag_orbit_folding::handle_extension_tree "
@@ -2834,7 +2834,7 @@ int flag_orbit_folding::handle_extension_tree(
 		cout << endl;
 	}
 	pt0 = canonical_set[cur_level];
-	current_extension = O->find_extension_from_point(Iso->Sub->gen, pt0, FALSE);
+	current_extension = O->find_extension_from_point(Iso->Sub->gen, pt0, false);
 	if (current_extension < 0) {
 		cout << "iso_node " << iso_nodes
 				<< " flag_orbit_folding::handle_extension_tree "
@@ -2842,7 +2842,7 @@ int flag_orbit_folding::handle_extension_tree(
 		Iso->print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "did not find point pt0=" << pt0 << endl;
-		f_failure_to_find_point = TRUE;
+		f_failure_to_find_point = true;
 		return -1;
 	}
 	if (f_v) {
@@ -2946,7 +2946,7 @@ int flag_orbit_folding::handle_extension_tree(
 					<< " before gen->find_oracle_node_for_set" << endl;
 		}
 		next_node_global = Iso->Sub->gen->find_poset_orbit_node_for_set(
-				cur_level + 1, canonical_set, FALSE /*f_tolerant*/,
+				cur_level + 1, canonical_set, false /*f_tolerant*/,
 				verbose_level);
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
@@ -3044,11 +3044,11 @@ void flag_orbit_folding::apply_isomorphism_database(
 	Sorting.lint_vec_heapsort(apply_fusion_tmp_set1, cur_level + 1);
 
 	gen->get_A()->element_mult(Elt_transporter,
-			gen->get_Elt1(), apply_fusion_Elt1, FALSE);
+			gen->get_Elt1(), apply_fusion_Elt1, false);
 
 	Lint_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
 	gen->get_A()->element_move(apply_fusion_Elt1,
-			Elt_transporter, FALSE);
+			Elt_transporter, false);
 #endif
 }
 
@@ -3073,7 +3073,7 @@ void flag_orbit_folding::apply_isomorphism_tree(
 	data_structures::sorting Sorting;
 	Iso->Sub->gen->get_A()->Group_element->element_retrieve(
 			O->get_E(current_extension)->get_data(),
-			apply_isomorphism_tree_tmp_Elt, FALSE);
+			apply_isomorphism_tree_tmp_Elt, false);
 
 	Iso->Sub->gen->get_A2()->Group_element->map_a_set(canonical_set,
 			apply_fusion_tmp_set1, Iso->size, apply_isomorphism_tree_tmp_Elt, 0);
@@ -3081,11 +3081,11 @@ void flag_orbit_folding::apply_isomorphism_tree(
 	Sorting.lint_vec_heapsort(apply_fusion_tmp_set1, cur_level + 1);
 
 	Iso->Sub->gen->get_A()->Group_element->element_mult(Elt_transporter,
-			apply_isomorphism_tree_tmp_Elt, apply_fusion_Elt1, FALSE);
+			apply_isomorphism_tree_tmp_Elt, apply_fusion_Elt1, false);
 
 	Lint_vec_copy(apply_fusion_tmp_set1, canonical_set, Iso->size);
 	Iso->Sub->gen->get_A()->Group_element->element_move(apply_fusion_Elt1,
-			Elt_transporter, FALSE);
+			Elt_transporter, false);
 #endif
 
 }
@@ -3142,7 +3142,7 @@ void flag_orbit_folding::skip_through_event_file(
 
 	cout << "flag_orbit_folding::skip_through_event_file" << endl;
 
-	while (TRUE) {
+	while (true) {
 
 		if (f.eof()) {
 			break;
@@ -3200,7 +3200,7 @@ void flag_orbit_folding::skip_through_event_file1(
 	data_structures::string_tools ST;
 
 
-	while (TRUE) {
+	while (true) {
 
 		if (f.eof()) {
 			break;
@@ -3302,7 +3302,7 @@ void flag_orbit_folding::event_file_completed_cases(
 	data_structures::string_tools ST;
 
 	nb_completed_cases = 0;
-	while (TRUE) {
+	while (true) {
 
 		if (f.eof()) {
 			break;
@@ -3342,7 +3342,7 @@ void flag_orbit_folding::event_file_read_case(
 	ifstream f(event_file_name);
 	data_structures::string_tools ST;
 
-	while (TRUE) {
+	while (true) {
 
 		if (f.eof()) {
 			break;
@@ -3388,7 +3388,7 @@ void flag_orbit_folding::event_file_read_case1(
 	data_structures::string_tools ST;
 
 
-	while (TRUE) {
+	while (true) {
 
 		if (f.eof()) {
 			break;
@@ -3457,11 +3457,11 @@ int flag_orbit_folding::next_subset_play_back(
 	combinatorics::combinatorics_domain Combi;
 	data_structures::string_tools ST;
 
-	f_eof = FALSE;
+	f_eof = false;
 	if (play_back_file->eof()) {
 		cout << "end of file reached" << endl;
-		f_eof = TRUE;
-		return FALSE;
+		f_eof = true;
+		return false;
 	}
 	play_back_file->getline(buf, MY_BUFSIZE, '\n');
 	if (strlen(buf) == 0) {
@@ -3479,17 +3479,17 @@ int flag_orbit_folding::next_subset_play_back(
 	}
 	if (strncmp(buf, "-1", 2) == 0) {
 		cout << "end of file marker -1 reached" << endl;
-		f_eof = TRUE;
-		return FALSE;
+		f_eof = true;
+		return false;
 	}
 	if (strncmp(buf, "END-EOF", 7) == 0) {
 		cout << "END-EOF reached" << endl;
-		f_eof = TRUE;
-		return FALSE;
+		f_eof = true;
+		return false;
 	}
 	if (strncmp(buf, "END", 3) == 0) {
 		cout << "END reached" << endl;
-		return FALSE;
+		return false;
 	}
 	if (f_v) {
 		cout << "parsing: " << buf << endl;
@@ -3523,7 +3523,7 @@ int flag_orbit_folding::next_subset_play_back(
 			cout << "moved to set " << subset_rank << endl;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void flag_orbit_folding::write_classification_matrix(
@@ -4034,7 +4034,7 @@ void flag_orbit_folding::test_memory(int verbose_level)
 	//cout << "calling induced_action_on_set" << endl;
 	//AA = NULL;
 
-	while (TRUE) {
+	while (true) {
 		induced_action_on_set(Stab, data, 0/*verbose_level*/);
 	}
 
@@ -4076,9 +4076,9 @@ void flag_orbit_folding::test_edges(
 	/*r2 =*/ test_edge(74, subset2, transporter2, verbose_level);
 	id2 = Iso->Lifting->orbit_perm[Iso->Lifting->flag_orbit_solution_first[74]];
 
-	Iso->A->Group_element->element_invert(transporter2, Elt1, FALSE);
-	Iso->A->Group_element->element_mult(transporter1, Elt1, Elt2, FALSE);
-	Iso->A->Group_element->element_invert(Elt2, Elt1, FALSE);
+	Iso->A->Group_element->element_invert(transporter2, Elt1, false);
+	Iso->A->Group_element->element_mult(transporter1, Elt1, Elt2, false);
+	Iso->A->Group_element->element_invert(Elt2, Elt1, false);
 
 	Iso->Lifting->setup_and_open_solution_database(verbose_level - 1);
 
@@ -4093,7 +4093,7 @@ void flag_orbit_folding::test_edges(
 	}
 	for (j = 0; j < Iso->level; j++) {
 		b = data2[j];
-		a = Iso->A->Group_element->element_image_of(b, Elt1, FALSE);
+		a = Iso->A->Group_element->element_image_of(b, Elt1, false);
 		for (i = 0; i < Iso->size; i++) {
 			if (data1[i] == a) {
 				subset[j] = i;
@@ -4376,7 +4376,7 @@ void flag_orbit_folding::compute_stabilizer(
 
 
 	S->init(Iso->A_base, verbose_level - 2);
-	S->init_generators(*gens, FALSE);
+	S->init_generators(*gens, false);
 	S->compute_base_orbits(0/*verbose_level - 4*/);
 
 	if (f_v) {
@@ -4414,7 +4414,7 @@ void flag_orbit_folding::compute_stabilizer(
 	gens->allocate(O->nb_strong_generators);
 
 	for (j = 0; j < O->nb_strong_generators; j++) {
-		A->element_retrieve(O->hdl_strong_generators[j], gens->ith(j), FALSE);
+		A->element_retrieve(O->hdl_strong_generators[j], gens->ith(j), false);
 	}
 #endif
 
@@ -4426,7 +4426,7 @@ void flag_orbit_folding::compute_stabilizer(
 
 	A_induced = Iso->A->Induced_action->induced_action_on_sets(
 			S, l, Iso->size,
-			sets, TRUE, verbose_level - 2);
+			sets, true, verbose_level - 2);
 
 	if (f_v) {
 		cout << "flag_orbit_folding::compute_stabilizer "

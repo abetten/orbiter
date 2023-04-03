@@ -69,7 +69,7 @@ void projective_space_implementation::init(
 		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 
 	int i, j, a, i1, i2, j1, j2;
@@ -195,7 +195,7 @@ void projective_space_implementation::init(
 		cout << "projective_space_implementation::init "
 				"number of points = " << N_points << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		for (i = 0; i < N_points; i++) {
 			P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
 					v, 1, n + 1, i);
@@ -256,7 +256,7 @@ void projective_space_implementation::init(
 			}
 #endif
 			P->Subspaces->Grass_lines->unrank_lint(i, 0/*verbose_level - 4*/);
-			if (FALSE) {
+			if (false) {
 				Int_vec_print_integer_matrix_width(cout,
 						P->Subspaces->Grass_lines->M, 2, n + 1, n + 1,
 						P->Subspaces->F->log10_of_q + 1);
@@ -343,7 +343,7 @@ void projective_space_implementation::init(
 				a++;
 			}
 		}
-		if (FALSE /*f_vv */) {
+		if (false /*f_vv */) {
 			cout << "lines on point " << i << " = ";
 			PG_element_unrank_modified(*F, w, 1, n + 1, i);
 			int_vec_print(cout, w, n + 1);
@@ -357,7 +357,7 @@ void projective_space_implementation::init(
 	}
 #endif
 
-	if (FALSE) {
+	if (false) {
 		//cout << "incidence matrix:" << endl;
 		//print_integer_matrix_width(cout, Incidence, N_points, N_lines, N_lines, 1);
 		cout << "projective_space::init_incidence_structure Lines:" << endl;
@@ -385,7 +385,7 @@ void projective_space_implementation::init(
 				}
 			}
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "line through points i,j is" << endl;
 			for (i = 0; i < N_points; i++) {
 				for (j = i + 1; j < N_points; j++) {
@@ -423,7 +423,7 @@ void projective_space_implementation::init(
 				}
 			}
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "projective_space_implementation::init "
 					"point of intersection of lines i,j is" << endl;
 			for (i = 0; i < N_lines; i++) {

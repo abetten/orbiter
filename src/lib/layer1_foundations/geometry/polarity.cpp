@@ -53,7 +53,7 @@ polarity::~polarity()
 void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	long int i, j;
 	int *A;
 	long int a;
@@ -88,7 +88,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 				P->Subspaces->F->log10_of_q + 1);
 		}
 		P->Subspaces->F->Linear_algebra->perp_standard(d, n, A, 0);
-		if (FALSE) {
+		if (false) {
 			Int_vec_print_integer_matrix_width(cout,
 				A, d, d, d,
 				P->Subspaces->F->log10_of_q + 1);
@@ -103,7 +103,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 		Point_to_hyperplane[a] = i;
 		Hyperplane_to_point[i] = a;
 	}
-	if (FALSE /* f_vv */) {
+	if (false /* f_vv */) {
 		cout << "i : pt_to_hyperplane[i] : hyperplane_to_pt[i]" << endl;
 		for (i = 0; i < N_points; i++) {
 			cout << setw(4) << i << " "
@@ -123,7 +123,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 					P->Subspaces->F->log10_of_q + 1);
 			}
 			P->Subspaces->F->Linear_algebra->perp_standard(d, 2, A, 0);
-			if (FALSE) {
+			if (false) {
 				Int_vec_print_integer_matrix_width(cout,
 					A, d, d, d,
 					P->Subspaces->F->log10_of_q + 1);
@@ -171,7 +171,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	int i;
 	int *v;
 	int *A;
@@ -216,7 +216,7 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 				P->Subspaces->F->log10_of_q + 1);
 		}
 		P->Subspaces->F->Linear_algebra->perp_standard(d, 1, A, 0);
-		if (FALSE) {
+		if (false) {
 			Int_vec_print_integer_matrix_width(cout,
 				A, d, d, d,
 				P->Subspaces->F->log10_of_q + 1);
@@ -230,7 +230,7 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 		Point_to_hyperplane[i] = a;
 		Hyperplane_to_point[a] = i;
 	}
-	if (FALSE /* f_vv */) {
+	if (false /* f_vv */) {
 		cout << "i : pt_to_hyperplane[i] : hyperplane_to_pt[i]" << endl;
 		for (i = 0; i < N_points; i++) {
 			cout << setw(4) << i << " "
@@ -254,7 +254,7 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 					B, 2, d, d, 0 /* verbose_level*/);
 
 			P->Subspaces->F->Linear_algebra->perp_standard(d, 2, B, 0);
-			if (FALSE) {
+			if (false) {
 				Int_vec_print_integer_matrix_width(cout,
 					B, d, d, d,
 					P->Subspaces->F->log10_of_q + 1);
@@ -329,7 +329,7 @@ void polarity::determine_absolute_points(int *&f_absolute, int verbose_level)
 			1 /* type_i */, P->Subspaces->n /* type_j */, i, j,
 			0 /* verbose_level */);
 		if (f_absolute[i]) {
-			if (FALSE) {
+			if (false) {
 				cout << "polarity::determine_absolute_points "
 						"absolute point: " << i << endl;
 			}
@@ -365,13 +365,13 @@ void polarity::determine_absolute_lines(int verbose_level)
 	for (i = 0; i < P->Subspaces->N_lines; i++) {
 		j = Line_to_line[i];
 		if (P->Subspaces->test_if_lines_are_disjoint_from_scratch(i, j)) {
-			f_absolute_line[i] = FALSE;
+			f_absolute_line[i] = false;
 		}
 		else {
-			f_absolute_line[i] = TRUE;
+			f_absolute_line[i] = true;
 		}
 		if (f_absolute_line[i]) {
-			if (FALSE) {
+			if (false) {
 				cout << "polarity::determine_absolute_lines "
 						"absolute line: " << i << endl;
 			}

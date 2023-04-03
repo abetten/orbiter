@@ -183,7 +183,7 @@ void packing_was_fixpoints::create_graph_on_fixpoints(int verbose_level)
 	PW->create_graph_and_save_to_file(
 		fname_fixp_graph,
 		1 /* orbit_length */,
-		FALSE /* f_has_user_data */, NULL /* int *user_data */,
+		false /* f_has_user_data */, NULL /* int *user_data */,
 		0 /* int user_data_size */,
 		verbose_level);
 
@@ -598,9 +598,9 @@ void packing_was_fixpoints::print_packing(
 	for (i = 0; i < sz; i++) {
 		data_structures::tally T;
 
-		T.init(Orbit_number + i * PW->P->spread_size, PW->P->spread_size, TRUE, 0);
+		T.init(Orbit_number + i * PW->P->spread_size, PW->P->spread_size, true, 0);
 		cout << i << " : ";
-		T.print_naked(TRUE /* f_backwards*/);
+		T.print_naked(true /* f_backwards*/);
 		cout << endl;
 	}
 
@@ -622,7 +622,7 @@ void packing_was_fixpoints::report(int verbose_level)
 	{
 	string fname, title, author, extra_praeamble;
 	char str[1000];
-	//int f_with_stabilizers = TRUE;
+	//int f_with_stabilizers = true;
 
 	snprintf(str, sizeof(str), "Packings in PG(3,%d) ", PW->P->q);
 	title.assign(str);
@@ -633,18 +633,18 @@ void packing_was_fixpoints::report(int verbose_level)
 
 		{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface Li;
+		l1_interfaces::latex_interface Li;
 
 		//latex_head_easy(fp);
 		Li.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
+			false /* f_book */,
+			true /* f_title */,
 			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
 			extra_praeamble /* extra_praeamble */);
 
 		fp << "\\section{The field of order " << PW->P->q << "}" << endl;
@@ -722,7 +722,7 @@ void packing_was_fixpoints::report2(
 	ost << "Reduced spread orbits under $H$: \\\\" << endl;
 
 
-	int f_original_spread_numbers = TRUE;
+	int f_original_spread_numbers = true;
 
 
 	PW->report_reduced_spread_orbits(ost, f_original_spread_numbers, verbose_level);

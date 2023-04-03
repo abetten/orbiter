@@ -349,12 +349,12 @@ void direct_product::element_one(int *Elt)
 int direct_product::element_is_one(int *Elt)
 {
 	if (!M1->GL_is_one(Elt + offset_i(0))) {
-		return FALSE;
+		return false;
 	}
 	if (!M2->GL_is_one(Elt + offset_i(1))) {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 void direct_product::element_mult(int *A, int *B, int *AB,
@@ -742,7 +742,7 @@ void direct_product::lift_generators(
 	SG2->group_order(go2);
 	D.mult(go1, go2, go3);
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, go3,
+		true /* f_target_go */, go3,
 		gens, SG3,
 		verbose_level);
 	FREE_OBJECT(gens);

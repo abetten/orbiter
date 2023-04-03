@@ -21,7 +21,7 @@ namespace data_structures {
 tally::tally()
 {
 	data_length = 0;
-	f_data_ownership = FALSE;
+	f_data_ownership = false;
 	data = NULL;
 	data_sorted = NULL;
 	sorting_perm = NULL;
@@ -30,7 +30,7 @@ tally::tally()
 	type_first = NULL;
 	type_len = NULL;
 
-	f_second = FALSE;
+	f_second = false;
 	second_data_sorted = NULL;
 	second_sorting_perm = NULL;
 	second_sorting_perm_inv = NULL;
@@ -98,7 +98,7 @@ void tally::init(int *data,
 	if (f_v) {
 		cout << "tally::init" << endl;
 	}
-	f_data_ownership = FALSE;
+	f_data_ownership = false;
 	tally::data = data;
 	tally::data_length = data_length;
 	tally::f_second = f_second;
@@ -202,7 +202,7 @@ void tally::init_lint(long int *data,
 #endif
 
 	}
-	f_data_ownership = TRUE;
+	f_data_ownership = true;
 	tally::data = data_int;
 	tally::data_length = data_length;
 	tally::f_second = f_second;
@@ -255,7 +255,7 @@ void tally::sort_and_classify()
 	}
 	Sorting.int_vec_sorting_permutation(data_sorted,
 			data_length, sorting_perm, sorting_perm_inv,
-			TRUE /* f_increasingly */);
+			true /* f_increasingly */);
 	for (i = 0; i < data_length; i++) {
 		data_sorted[sorting_perm[i]] = data[i];
 	}
@@ -275,7 +275,7 @@ void tally::sort_and_classify_second()
 	}
 	Sorting.int_vec_sorting_permutation(second_data_sorted,
 			nb_types, second_sorting_perm, second_sorting_perm_inv,
-			TRUE /* f_increasingly */);
+			true /* f_increasingly */);
 	for (i = 0; i < nb_types; i++) {
 		second_data_sorted[second_sorting_perm[i]] = type_len[i];
 	}

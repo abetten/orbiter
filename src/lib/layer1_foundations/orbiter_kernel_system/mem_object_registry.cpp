@@ -33,7 +33,7 @@ mem_object_registry::mem_object_registry()
 {
 	int verbose_level = 0;
 
-	f_automatic_dump = FALSE;
+	f_automatic_dump = false;
 	automatic_dump_interval = 0;
 	automatic_dump_fname_mask[0] = 0;
 
@@ -42,8 +42,8 @@ mem_object_registry::mem_object_registry()
 	nb_delete_total = 0;
 	cur_time = 0;
 
-	f_ignore_duplicates = FALSE;
-	f_accumulate = FALSE;
+	f_ignore_duplicates = false;
+	f_accumulate = false;
 
 	init(verbose_level);
 }
@@ -71,8 +71,8 @@ void mem_object_registry::init(int verbose_level)
 	nb_delete_total = 0;
 	cur_time = 0;
 
-	f_ignore_duplicates = FALSE;
-	f_accumulate = FALSE;
+	f_ignore_duplicates = false;
+	f_accumulate = false;
 
 	if (f_v) {
 		cout << "mem_object_registry::init trying to allocate "
@@ -99,8 +99,8 @@ void mem_object_registry::accumulate_and_ignore_duplicates(
 	if (f_v) {
 		cout << "mem_object_registry::accumulate_and_ignore_duplicates" << endl;
 	}
-	f_accumulate = TRUE;
-	f_ignore_duplicates = TRUE;
+	f_accumulate = true;
+	f_ignore_duplicates = true;
 }
 
 void mem_object_registry::allocate(int N, int verbose_level)
@@ -143,7 +143,7 @@ void mem_object_registry::set_automatic_dump(
 	if (f_v) {
 		cout << "mem_object_registry::set_automatic_dump" << endl;
 	}
-	f_automatic_dump = TRUE;
+	f_automatic_dump = true;
 	mem_object_registry::automatic_dump_interval = automatic_dump_interval;
 	strcpy(automatic_dump_fname_mask, fname_mask);
 }
@@ -790,11 +790,11 @@ void mem_object_registry::free_OBJECT(void *p,
 int mem_object_registry::search(void *p, int &idx)
 {
 	int l, r, m;
-	int f_found = FALSE;
+	int f_found = false;
 
 	if (nb_entries_used == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = nb_entries_used;
@@ -812,7 +812,7 @@ int mem_object_registry::search(void *p, int &idx)
 		if (p >= entries[m].pointer) {
 			l = m + 1;
 			if (p == entries[m].pointer)
-				f_found = TRUE;
+				f_found = true;
 			}
 		else
 			r = m;
@@ -1015,7 +1015,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 	Int_vec_copy(type_len, frequency, nb_types);
 
 	Sorting.int_vec_sorting_permutation(frequency, nb_types,
-			perm, perm_inv, FALSE /* f_increasingly */);
+			perm, perm_inv, false /* f_increasingly */);
 
 	for (t = nb_types - 1; t >= 0; t--) {
 		i = perm_inv[t];

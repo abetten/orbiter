@@ -98,7 +98,7 @@ void table_of_blt_sets::init(
 					<< h << " / " << nb_objects << endl;
 		}
 
-		Object_create_description[h].f_catalogue = TRUE;
+		Object_create_description[h].f_catalogue = true;
 		Object_create_description[h].iso = h;
 
 
@@ -154,7 +154,7 @@ void table_of_blt_sets::init(
 				label_txt,
 				label_tex,
 				Object_create[h].Sg,
-				TRUE /* f_invariants */,
+				true /* f_invariants */,
 				verbose_level);
 
 		if (f_v) {

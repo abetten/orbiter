@@ -116,7 +116,7 @@ ostream& number_partition::print(ostream& ost)
 		}
 	else {
 		ost << "(";
-		int f_first = TRUE;
+		int f_first = true;
 		for (i = 0; i < l; i++) {
 			a = s_i(i);
 			if (a == 0)
@@ -132,7 +132,7 @@ ostream& number_partition::print(ostream& ost)
 					ost << "^{" << a << "}";
 					}
 				}
-			f_first = FALSE;
+			f_first = false;
 			}
 		ost << ")";
 		}
@@ -174,16 +174,16 @@ int number_partition::next_exponent()
 				s -= a * (j + 1);
 				s_i(j) = a;
 				}
-			return TRUE;
+			return true;
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 int number_partition::next_vector()
 {
 	// cout << "number_partition::next_vector()\n";
-	return FALSE;
+	return false;
 }
 
 int number_partition::first_into_k_parts(int n, int k)
@@ -194,9 +194,9 @@ int number_partition::first_into_k_parts(int n, int k)
 	do {
 		s = nb_parts();
 		if (s == k)
-			return TRUE;
+			return true;
 		} while (next());
-	return FALSE;
+	return false;
 }
 
 int number_partition::next_into_k_parts(int n, int k)
@@ -206,9 +206,9 @@ int number_partition::next_into_k_parts(int n, int k)
 	while (next()) {
 		s = nb_parts();
 		if (s == k)
-			return TRUE;
+			return true;
 		}
-	return FALSE;
+	return false;
 }
 
 int number_partition::first_into_at_most_k_parts(int n, int k)
@@ -219,9 +219,9 @@ int number_partition::first_into_at_most_k_parts(int n, int k)
 	do {
 		s = nb_parts();
 		if (s <= k)
-			return TRUE;
+			return true;
 		} while (next());
-	return FALSE;
+	return false;
 }
 
 int number_partition::next_into_at_most_k_parts(int n, int k)
@@ -231,9 +231,9 @@ int number_partition::next_into_at_most_k_parts(int n, int k)
 	while (next()) {
 		s = nb_parts();
 		if (s <= k)
-			return TRUE;
+			return true;
 		}
-	return FALSE;
+	return false;
 }
 
 int number_partition::nb_parts()

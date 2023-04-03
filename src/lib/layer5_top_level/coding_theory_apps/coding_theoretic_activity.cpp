@@ -20,10 +20,10 @@ coding_theoretic_activity::coding_theoretic_activity()
 {
 	Descr = NULL;
 
-	f_has_finite_field = FALSE;
+	f_has_finite_field = false;
 	F = NULL;
 
-	f_has_code = FALSE;
+	f_has_code = false;
 	Code = NULL;
 }
 
@@ -44,7 +44,7 @@ void coding_theoretic_activity::init_field(
 	}
 
 	coding_theoretic_activity::Descr = Descr;
-	f_has_finite_field = TRUE;
+	f_has_finite_field = true;
 	coding_theoretic_activity::F = F;
 
 	if (f_v) {
@@ -70,7 +70,7 @@ void coding_theoretic_activity::init_code(
 
 	coding_theoretic_activity::Descr = Descr;
 
-	f_has_code = TRUE;
+	f_has_code = true;
 	coding_theoretic_activity::Code = Code;
 
 	if (f_v) {
@@ -551,7 +551,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		Codes.make_Hamming_space_distance_matrix(
 				Descr->Hamming_space_distance_matrix_n, F,
-				FALSE /* f_projective */, verbose_level - 1);
+				false /* f_projective */, verbose_level - 1);
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "

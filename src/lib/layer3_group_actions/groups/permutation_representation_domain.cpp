@@ -22,8 +22,8 @@ namespace groups {
 permutation_representation_domain::permutation_representation_domain()
 {
 	degree = 0;
-	f_induced_action = FALSE;
-	f_product_action = FALSE;
+	f_induced_action = false;
+	f_product_action = false;
 	m = n = mn = offset = 0;
 	char_per_elt = 0;
 	elt_size_int = 0;
@@ -100,7 +100,7 @@ void permutation_representation_domain::init_product_action(int m, int n,
 		cout << "permutation_representation_domain::init_product_action "
 				"m=" << m << " n=" << n << endl;
 	}
-	f_product_action = TRUE;
+	f_product_action = true;
 	permutation_representation_domain::m = m;
 	permutation_representation_domain::n = n;
 	mn = m * n;
@@ -127,7 +127,7 @@ void permutation_representation_domain::init(int degree,
 		cout << "permutation_representation_domain::init" << endl;
 	}
 	permutation_representation_domain::degree = degree;
-	f_product_action = FALSE;
+	f_product_action = false;
 	
 	elt_size_int = degree;
 	char_per_elt = elt_size_int * sizeof(int);
@@ -206,7 +206,7 @@ void permutation_representation_domain::init_with_base(int degree,
 	int i, hdl;
 	
 	permutation_representation_domain::degree = degree;
-	f_product_action = FALSE;
+	f_product_action = false;
 	
 	//A.base_len = base_length;
 	A.degree = degree;
@@ -333,10 +333,10 @@ int permutation_representation_domain::is_one(int *Elt)
 	
 	for (i = 0; i < degree; i++) {
 		if (Elt[i] != i) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void permutation_representation_domain::mult(int *A, int *B, int *AB)
@@ -485,9 +485,9 @@ void permutation_representation_domain::print_with_action(actions::action *A, in
 	//perm_print(ost, Elt, degree);
 	ost << " : ";
 	Combi.perm_print_offset(ost, Elt, degree, 0 /* offset */,
-			FALSE /* f_print_cycles_of_length_one */,
-			FALSE /* f_cycle_length */, FALSE, 0,
-			FALSE /* f_orbit_structure */,
+			false /* f_print_cycles_of_length_one */,
+			false /* f_cycle_length */, false, 0,
+			false /* f_orbit_structure */,
 			NULL, NULL);
 	ost << " : ";
 	Combi.perm_print_list_offset(ost, Elt, degree, 1);

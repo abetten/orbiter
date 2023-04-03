@@ -52,7 +52,7 @@ void poset_classification::report(
 	string fname_report;
 	fname_report.assign(problem_label);
 	fname_report.append("_poset.tex");
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	orbiter_kernel_system::file_io Fio;
 
 	{
@@ -65,8 +65,8 @@ void poset_classification::report(
 		}
 
 		get_A2()->report(ost,
-				FALSE /* f_sims */, NULL,
-				FALSE /* f_strong_gens */, NULL,
+				false /* f_sims */, NULL,
+				false /* f_strong_gens */, NULL,
 				Control->draw_options,
 				verbose_level - 1);
 
@@ -284,8 +284,8 @@ void poset_classification::report_number_of_orbits_at_level(
 
 		data_structures::tally T;
 
-		T.init_lint(Ago, nb, FALSE, 0);
-		T.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+		T.init_lint(Ago, nb, false, 0);
+		T.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
 
 
 
@@ -352,7 +352,7 @@ void poset_classification::report_orbits_summary(
 	poset_orbit_node *O;
 	ring_theory::longinteger_object stab_order, orbit_length;
 	data_structures_groups::schreier_vector *Schreier_vector;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 
 	rep = NEW_lint(depth + 1);
@@ -651,7 +651,7 @@ void poset_classification::report_orbit(
 	char str2[1000];
 	long int *rep = NULL;
 	data_structures_groups::schreier_vector *Schreier_vector;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	long int so;
 
 	str2[0] = 0;
@@ -783,10 +783,10 @@ void poset_classification::report_orbit(
 
 		data_structures::tally T;
 
-		T.init(orbit_length, nb_o, FALSE, 0);
+		T.init(orbit_length, nb_o, false, 0);
 		ost << "Orbit type of flag orbits: \\\\" << endl;
 		ost << "$$" << endl;
-		T.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards*/);
+		T.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards*/);
 		ost << "$$" << endl;
 
 		for (h = 0; h < nb_o; h++) {

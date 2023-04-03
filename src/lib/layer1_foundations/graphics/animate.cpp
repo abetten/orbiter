@@ -76,16 +76,16 @@ void animate::animate_one_round(
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::numerics N;
 	int h, i, j;
-	int f_has_camera = FALSE;
+	int f_has_camera = false;
 	double camera_sky[3];
 	double camera_location[3];
 	double camera_look_at[3];
-	int f_has_zoom = FALSE;
+	int f_has_zoom = false;
 	int zoom_start = 0;
 	int zoom_end = 0;
 	double zoom_clipping_start = 0.;
 	double zoom_clipping_end = 0.;
-	int f_has_zoom_sequence = FALSE;
+	int f_has_zoom_sequence = false;
 	double *zoom_sequence = NULL;
 	int zoom_sequence_length = 0;
 	double *zoom_sequence_value = NULL;
@@ -97,8 +97,8 @@ void animate::animate_one_round(
 	double zoom_increment = 0;
 	double zoom_clipping_increment = 0;
 	int nb_frames_this_round = 0;
-	int f_has_pan = FALSE;
-	int pan_f_reverse = FALSE;
+	int f_has_pan = false;
+	int pan_f_reverse = false;
 	double pan_from[3];
 	double pan_to[3];
 	double pan_center[3];
@@ -121,7 +121,7 @@ void animate::animate_one_round(
 	nb_frames_this_round = nb_frames;
 	for (i = 0; i < Opt->nb_camera; i++) {
 		if (Opt->camera_round[i] == round) {
-			f_has_camera = TRUE;
+			f_has_camera = true;
 			for (j = 0; j < 3; j++) {
 				camera_sky[j] = Opt->camera_sky[i * 3 + j];
 				camera_location[j] = Opt->camera_location[i * 3 + j];
@@ -136,7 +136,7 @@ void animate::animate_one_round(
 		}
 	for (i = 0; i < Opt->nb_zoom; i++) {
 		if (Opt->zoom_round[i] == round) {
-			f_has_zoom = TRUE;
+			f_has_zoom = true;
 			zoom_start = Opt->zoom_start[i];
 			zoom_end = Opt->zoom_end[i];
 			zoom_clipping_start = Opt->zoom_clipping_start[i];
@@ -149,7 +149,7 @@ void animate::animate_one_round(
 		}
 	for (i = 0; i < Opt->nb_zoom_sequence; i++) {
 		if (Opt->zoom_sequence_round[i] == round) {
-			f_has_zoom_sequence = TRUE;
+			f_has_zoom_sequence = true;
 			N.vec_scan(Opt->zoom_sequence_text[i],
 					zoom_sequence, zoom_sequence_length);
 			cout << "round " << round << " : zoom_sequence ";
@@ -186,7 +186,7 @@ void animate::animate_one_round(
 	}
 	for (i = 0; i < Opt->nb_pan; i++) {
 		if (Opt->pan_round[i] == round) {
-			f_has_pan = TRUE;
+			f_has_pan = true;
 			pan_f_reverse = Opt->pan_f_reverse[i];
 			pan_from[0] = Opt->pan_from[i * 3 + 0];
 			pan_from[1] = Opt->pan_from[i * 3 + 1];
@@ -290,10 +290,10 @@ void animate::animate_one_round(
 
 			}
 		}
-	int f_with_background = TRUE;
+	int f_with_background = true;
 	for (i = 0; i < Opt->nb_no_background; i++) {
 		if (Opt->no_background_round[i] == round) {
-			f_with_background = FALSE;
+			f_with_background = false;
 			}
 		}
 
@@ -483,10 +483,10 @@ void animate::animate_one_round(
 		if (Opt->f_omit_bottom_plane) {
 			}
 		else {
-			int f_has_bottom_plane = TRUE;
+			int f_has_bottom_plane = true;
 			for (i = 0; i < Opt->nb_no_bottom_plane; i++) {
 				if (Opt->no_bottom_plane_round[i] == round) {
-					f_has_bottom_plane = FALSE;
+					f_has_bottom_plane = false;
 					}
 				}
 
@@ -670,7 +670,7 @@ void animate::animate_one_round(
 						cout << "end latex source" << endl;
 						{
 							ofstream fp(fname_tex);
-							orbiter_kernel_system::latex_interface L;
+							l1_interfaces::latex_interface L;
 							//latex_head_easy(fp);
 							L.head_easy_with_extras_in_the_praeamble(fp,
 									Opt->latex_extras_for_praeamble[i]);
@@ -688,7 +688,7 @@ void animate::animate_one_round(
 						system(cmd.c_str());
 						//fpm << "\t" << cmd << endl;
 
-						Opt->latex_f_label_has_been_prepared[i] = TRUE;
+						Opt->latex_f_label_has_been_prepared[i] = true;
 						}
 					else {
 

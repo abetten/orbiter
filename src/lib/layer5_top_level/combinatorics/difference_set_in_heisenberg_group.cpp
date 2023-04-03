@@ -23,7 +23,7 @@ void difference_set_in_heisenberg_group::init(int n,
 {
 	int f_v = (verbose_level >= 1);
 	int i; //, j, a, b, ord;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::init" << endl;
@@ -40,7 +40,7 @@ void difference_set_in_heisenberg_group::init(int n,
 	cout << "group_table:" << endl;
 	if (H->group_order < 50) {
 		L.print_integer_matrix_with_standard_labels(cout,
-				Table, H->group_order, H->group_order, FALSE /* f_tex */);
+				Table, H->group_order, H->group_order, false /* f_tex */);
 		}
 	else {
 		cout << "Too big to print" << endl;
@@ -159,7 +159,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, t;
 	int h, k, f, /*l,*/ u, v, len1, len2, /*pos,*/ s;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::do_n2q3" << endl;
@@ -243,12 +243,12 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 	N = NEW_OBJECT(actions::action);
 	ring_theory::longinteger_object n_go;
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	n_go.create(N_go, __FILE__, __LINE__);
 	N->Known_groups->init_permutation_group_from_generators(
 			H->group_order /* degree */,
-		TRUE, n_go,
+		true, n_go,
 		N_nb_gens, N_gens,
 		given_base_length, given_base,
 		f_no_base,
@@ -265,7 +265,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 	cout << "creating action on orbits:" << endl;
 	N_on_orbits = N->Induced_action->induced_action_on_orbits(Sch,
-		TRUE /* f_play_it_safe */,
+		true /* f_play_it_safe */,
 		verbose_level);
 
 	cout << "action on orbits has been created, degree = "
@@ -335,7 +335,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 
 	data_structures::tally Pair_orbit_type;
-	Pair_orbit_type.init(Pair_orbit_length, nb_paired_orbits, FALSE, 0);
+	Pair_orbit_type.init(Pair_orbit_length, nb_paired_orbits, false, 0);
 
 	data_structures::sorting Sorting;
 
@@ -387,10 +387,10 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 		}
 	cout << "Sets1:" << endl;
 	L.print_integer_matrix_with_standard_labels(cout,
-			Sets1, nb_pairs_of_type1, 2, FALSE /* f_tex */);
+			Sets1, nb_pairs_of_type1, 2, false /* f_tex */);
 	cout << "Sets2:" << endl;
 	L.print_integer_matrix_with_standard_labels(cout,
-			Sets2, nb_pairs_of_type2, 6, FALSE /* f_tex */);
+			Sets2, nb_pairs_of_type2, 6, false /* f_tex */);
 
 
 
@@ -422,10 +422,10 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 	cout << "Short_pairs:" << endl;
 	L.print_lint_matrix_with_standard_labels(cout,
-			Short_pairs, nb_pairs_of_type1, 2, FALSE /* f_tex */);
+			Short_pairs, nb_pairs_of_type1, 2, false /* f_tex */);
 	cout << "Long_pairs:" << endl;
 	L.print_lint_matrix_with_standard_labels(cout,
-			Long_pairs, nb_pairs_of_type2, 2, FALSE /* f_tex */);
+			Long_pairs, nb_pairs_of_type2, 2, false /* f_tex */);
 
 
 
@@ -451,7 +451,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 
 
@@ -531,9 +531,9 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 		data_structures::tally Overgroup_orbit_type;
 		Overgroup_orbit_type.init(Sch1->orbit_len,
-				Sch1->nb_orbits, FALSE, 0);
+				Sch1->nb_orbits, false, 0);
 		cout << "Overgroup orbit type:" << endl;
-		Overgroup_orbit_type.print_naked(TRUE);
+		Overgroup_orbit_type.print_naked(true);
 		cout << endl;
 
 		int *Pairing;
@@ -558,7 +558,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 			}
 		cout << "Pairing:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
-				Pairing, Sch1->nb_orbits, 1, FALSE /* f_tex */);
+				Pairing, Sch1->nb_orbits, 1, false /* f_tex */);
 
 
 		int *long_orbits;
@@ -593,7 +593,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		cout << "Pairs_of_long_orbits:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
 				Pairs_of_long_orbits, nb_pairs_of_long_orbits,
-				2, FALSE /* f_tex */);
+				2, false /* f_tex */);
 
 
 		int N;
@@ -676,9 +676,9 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 				}
 
 			data_structures::tally D_type;
-			D_type.init(count, H->group_order, FALSE, 0);
+			D_type.init(count, H->group_order, false, 0);
 			cout << "D type:" << endl;
-			D_type.print_naked(TRUE);
+			D_type.print_naked(true);
 			cout << endl;
 			for (i = 0; i < H->group_order; i++) {
 				if (count[i] > 60) {
@@ -794,9 +794,9 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	int nb_subgroups;
 	int o, idx_E1;
 
-	Group_orders.init(Group_order, nb_zuppos, FALSE, 0);
+	Group_orders.init(Group_order, nb_zuppos, false, 0);
 	cout << "We found the following group orders: ";
-	Group_orders.print_naked(TRUE);
+	Group_orders.print_naked(true);
 	cout << endl;
 
 
@@ -899,9 +899,9 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 				}
 			data_structures::tally Overgroup_orders;
 
-			Overgroup_orders.init(Overgroup_order, nb_zuppos, FALSE, 0);
+			Overgroup_orders.init(Overgroup_order, nb_zuppos, false, 0);
 			cout << "We found the following overgroup orders: ";
-			Overgroup_orders.print_naked(TRUE);
+			Overgroup_orders.print_naked(true);
 			cout << endl;
 
 			int *Idx_overgroup;
@@ -988,7 +988,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 				cout << "the second generators are:" << endl;
 				//print_integer_matrix_with_standard_labels(cout,
 				// second_generator, Sch_overgroups->nb_orbits,
-				// 1, FALSE /* f_tex */);
+				// 1, false /* f_tex */);
 				orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(cout,
 					second_generator, Sch_overgroups->nb_orbits);
 				cout << endl;
@@ -998,8 +998,8 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 		}
 #if 0
 	char prefix[000];
-	int f_W = TRUE;
-	int f_w = FALSE;
+	int f_W = true;
+	int f_w = false;
 	int target_depth = nb_pairs_of_type1;
 
 	snprintf(prefix, sizeof(prefix), "H_%d_%d_short", n, q);
@@ -1053,7 +1053,7 @@ void difference_set_in_heisenberg_group::early_test_func(long int *S, int len,
 			cout << "set element " << i << " / " << len << ":" << endl;
 			}
 		a = S[i];
-		f_orbit_select[a] = TRUE;
+		f_orbit_select[a] = true;
 		aa = Short_pairs[a];
 		bb = Paired_with[aa];
 		b = Short_orbit_inverse[bb];

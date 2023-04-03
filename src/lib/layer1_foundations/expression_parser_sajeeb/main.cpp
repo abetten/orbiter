@@ -155,7 +155,7 @@ int main(int argc, const char** argv) {
     {
 		orbiter::layer1_foundations::field_theory::finite_field_description Descr;
 		orbiter::layer1_foundations::field_theory::finite_field Fq;
-		Descr.f_q = TRUE;
+		Descr.f_q = true;
 		Descr.q_text.assign("5");
 		;
 

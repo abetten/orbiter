@@ -25,18 +25,18 @@ namespace ring_theory {
 polynomial_ring_description::polynomial_ring_description()
 {
 
-	f_field = FALSE;
+	f_field = false;
 	//std::string finite_field_label;
 
-	f_homogeneous = FALSE;
+	f_homogeneous = false;
 	homogeneous_of_degree = 0;
 
-	f_number_of_variables = FALSE;
+	f_number_of_variables = false;
 	number_of_variables = 0;
 
 	Monomial_ordering_type = t_PART;
 
-	f_variables = FALSE;
+	f_variables = false;
 	//std::string variables_txt;
 	//std::string variables_tex;
 
@@ -60,21 +60,21 @@ int polynomial_ring_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-field") == 0) {
-			f_field = TRUE;
+			f_field = true;
 			finite_field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-field " << finite_field_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-homogeneous_of_degree") == 0) {
-			f_homogeneous = TRUE;
+			f_homogeneous = true;
 			homogeneous_of_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-homogeneous_of_degree " << homogeneous_of_degree << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-number_of_variables") == 0) {
-			f_number_of_variables = TRUE;
+			f_number_of_variables = true;
 			number_of_variables = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-number_of_variables " << number_of_variables << endl;
@@ -93,7 +93,7 @@ int polynomial_ring_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-variables") == 0) {
-			f_variables = TRUE;
+			f_variables = true;
 			variables_txt.assign(argv[++i]);
 			variables_tex.assign(argv[++i]);
 			if (f_v) {

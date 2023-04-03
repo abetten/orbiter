@@ -102,7 +102,7 @@ int error_repository::search(int offset, int error_pattern,
 	int &idx, int verbose_level)
 {
 	int l, r, m, res;
-	int f_found = FALSE;
+	int f_found = false;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
@@ -111,7 +111,7 @@ int error_repository::search(int offset, int error_pattern,
 	idx = 0;
 	if (nb_errors == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 	}
 	l = 0;
 	r = nb_errors;
@@ -146,7 +146,7 @@ int error_repository::search(int offset, int error_pattern,
 		if (res <= 0) {
 			l = m + 1;
 			if (res == 0) {
-				f_found = TRUE;
+				f_found = true;
 			}
 		}
 		else {

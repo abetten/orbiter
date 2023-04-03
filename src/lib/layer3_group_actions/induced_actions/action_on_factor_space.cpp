@@ -31,8 +31,8 @@ action_on_factor_space::action_on_factor_space()
 	tmp = NULL;
 	Tmp1 = NULL;
 	Tmp2 = NULL;
-	f_tables_have_been_computed = FALSE;
-	f_table_mode = FALSE;
+	f_tables_have_been_computed = false;
+	f_table_mode = false;
 	nb_cosets = 0;
 	coset_reps_Gauss = NULL;
 	tmp_w = NULL;
@@ -44,8 +44,8 @@ action_on_factor_space::action_on_factor_space()
 
 action_on_factor_space::~action_on_factor_space()
 {
-	int f_v = FALSE;
-	int f_vv = FALSE;
+	int f_v = false;
+	int f_vv = false;
 
 	if (f_v) {
 		cout << "action_on_factor_space::~action_on_factor_space" << endl;
@@ -153,7 +153,7 @@ void action_on_factor_space::init_light(
 	VS->unrank_basis(subspace_basis,
 			subspace_basis_ranks, subspace_basis_size);
 
-	init2(A_base, A, FALSE /*f_compute_tables*/,
+	init2(A_base, A, false /*f_compute_tables*/,
 			verbose_level - 1);
 
 
@@ -188,13 +188,13 @@ void action_on_factor_space::init_by_rank_table_mode(
 	action_on_factor_space::subspace_basis =
 			NEW_int(subspace_basis_size * VS->dimension);
 
-	f_table_mode = TRUE;
+	f_table_mode = true;
 
 	VS->unrank_basis(subspace_basis,
 			subspace_basis_ranks, subspace_basis_size);
 
 	init2(A_base, A,
-			FALSE /*f_compute_tables*/,
+			false /*f_compute_tables*/,
 			verbose_level - 1);
 
 	if (f_v) {
@@ -235,7 +235,7 @@ void action_on_factor_space::init_by_rank_table_mode(
 		preimage_table[i] = lexleast_element_in_coset(
 				coset_reps_Gauss[i], 0 /* verbose_level */);
 		}
-	f_tables_have_been_computed = TRUE;
+	f_tables_have_been_computed = true;
 	
 	if (f_vvv) {
 		cout << "action_on_factor_space::init_"
@@ -509,7 +509,7 @@ void action_on_factor_space::init2(actions::action &A_base,
 		cout << "factor_space_len=" << factor_space_len << endl;
 		exit(1);
 	}
-	if (FALSE /*f_v8*/) {
+	if (false /*f_v8*/) {
 		cout << "embedding: ";
 		Int_vec_print(cout, embedding, factor_space_len);
 		cout << endl;
@@ -565,7 +565,7 @@ void action_on_factor_space::compute_projection_table(
 			preimage_table[a] = i;
 		}
 	}
-	if (FALSE /*f_vv*/) {
+	if (false /*f_vv*/) {
 		cout << "projection_table: ";
 		Lint_vec_print(cout, projection_table, large_degree);
 		cout << endl;
@@ -573,10 +573,10 @@ void action_on_factor_space::compute_projection_table(
 		Lint_vec_print(cout, preimage_table, degree);
 		cout << endl;
 	}
-	if (FALSE /*f_v10*/) {
+	if (false /*f_v10*/) {
 		list_all_elements();
 	}
-	f_tables_have_been_computed = TRUE;
+	f_tables_have_been_computed = true;
 }
 
 
@@ -835,7 +835,7 @@ long int action_on_factor_space::project(long int rk, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i;
 	long int a;
-	int f_nonzero = FALSE;
+	int f_nonzero = false;
 	
 	if (f_v) {
 		cout << "action_on_factor_space::project rk = " << rk << endl;
@@ -847,7 +847,7 @@ long int action_on_factor_space::project(long int rk, int verbose_level)
 	for (i = 0; i < factor_space_len; i++) {
 		tmp[i] = Tmp1[embedding[i]];
 		if (tmp[i]) {
-			f_nonzero = TRUE;
+			f_nonzero = true;
 		}
 	}
 	if (f_nonzero) {

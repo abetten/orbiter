@@ -90,12 +90,12 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 		}
 	if (Opt->f_spanning_tree) {
 		// create updated x coordinates
-		LG->create_spanning_tree(TRUE /* f_place_x */, verbose_level);
+		LG->create_spanning_tree(true /* f_place_x */, verbose_level);
 		}
 #if 0
 	if (Opt->f_numbering_on) {
 		// create depth first ranks at each node:
-		LG->create_spanning_tree(FALSE /* f_place_x */, verbose_level);
+		LG->create_spanning_tree(false /* f_place_x */, verbose_level);
 		}
 #endif
 
@@ -273,7 +273,7 @@ void graphical_output::do_domino_portrait(int D, int s,
 	cost = Domino_Assignment->cost_function();
 	Domino_Assignment->draw_domino_matrix(fname,
 			Domino_Assignment->tot_dom,
-			TRUE /* f_has_cost */, cost,
+			true /* f_has_cost */, cost,
 			Opt,
 			verbose_level - 1);
 
@@ -788,12 +788,12 @@ static int do_create_points_on_quartic_compute_point_function(double t,
 	num = 4. - 4. * t;
 	denom = 4. - 25. * t * 0.25;
 	if (ABS(denom) < epsilon) {
-		return FALSE;
+		return false;
 	}
 	else {
 		b = num / denom;
 		if (b < 0) {
-			return FALSE;
+			return false;
 		}
 		else {
 			pt[0] = sqrt(t);
@@ -801,7 +801,7 @@ static int do_create_points_on_quartic_compute_point_function(double t,
 		}
 	}
 	cout << "created point " << pt[0] << ", " << pt[1] << endl;
-	return TRUE;
+	return true;
 }
 
 static int do_create_points_on_parabola_compute_point_function(double t,
@@ -815,7 +815,7 @@ static int do_create_points_on_parabola_compute_point_function(double t,
 	pt[0] = t;
 	pt[1] = a * t * t + b * t + c;
 	//cout << "created point " << pt[0] << ", " << pt[1] << endl;
-	return TRUE;
+	return true;
 }
 
 
@@ -824,7 +824,7 @@ static int do_create_points_smooth_curve_compute_point_function(double t,
 {
 	int f_v = (verbose_level >= 1);
 	graphical_output *I = (graphical_output *) extra_data;
-	int ret = FALSE;
+	int ret = false;
 	double epsilon = 0.0001;
 	double *input; // to store the input variable and all local variables during evaluate
 
@@ -845,7 +845,7 @@ static int do_create_points_smooth_curve_compute_point_function(double t,
 
 	if (I->smooth_curve_Polish->Entry.size() == 4) {
 		if (ABS(output[3]) < epsilon) {
-			ret = FALSE;
+			ret = false;
 		}
 		else {
 			double av = 1. / output[3];
@@ -853,11 +853,11 @@ static int do_create_points_smooth_curve_compute_point_function(double t,
 			output[1] *= av;
 			output[2] *= av;
 			output[3] *= av;
-			ret = TRUE;
+			ret = true;
 		}
 	}
 	else {
-		ret = TRUE;
+		ret = true;
 	}
 	if (f_v) {
 		cout << "do_create_points_smooth_curve_compute_point_function after evaluate t = " << t << endl;
@@ -1347,8 +1347,8 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			//G.frame(0.05);
 
 
-			draw_projective(G, Descr->number, i, Descr->animate_nb_of_steps, FALSE, 0, 0, FALSE, 0, FALSE, 0);
-			G.finish(cout, TRUE);
+			draw_projective(G, Descr->number, i, Descr->animate_nb_of_steps, false, 0, 0, false, 0, false, 0);
+			G.finish(cout, true);
 
 		}
 	}
@@ -1373,10 +1373,10 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 				//		xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
 				//		verbose_level - 1);
 
-				draw_projective(G, Descr->number, 0, Descr->animate_nb_of_steps, TRUE, i, Descr->animate_transition_nb_of_steps, TRUE, i, FALSE, 0);
+				draw_projective(G, Descr->number, 0, Descr->animate_nb_of_steps, true, i, Descr->animate_transition_nb_of_steps, true, i, false, 0);
 
 
-				G.finish(cout, TRUE);
+				G.finish(cout, true);
 
 
 			}
@@ -1404,8 +1404,8 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			//G.frame(0.05);
 
 
-			draw_projective(G, Descr->number, 0, Descr->animate_nb_of_steps, TRUE, i, Descr->animate_transition_nb_of_steps, FALSE, 0, FALSE, 0);
-			G.finish(cout, TRUE);
+			draw_projective(G, Descr->number, 0, Descr->animate_nb_of_steps, true, i, Descr->animate_transition_nb_of_steps, false, 0, false, 0);
+			G.finish(cout, true);
 
 		}
 
@@ -1432,8 +1432,8 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			//G.frame(0.05);
 
 
-			draw_projective(G, Descr->number, i, Descr->animate_nb_of_steps, FALSE, 0, 0, FALSE, 0, FALSE, 0);
-			G.finish(cout, TRUE);
+			draw_projective(G, Descr->number, i, Descr->animate_nb_of_steps, false, 0, 0, false, 0, false, 0);
+			G.finish(cout, true);
 
 		}
 
@@ -1460,10 +1460,10 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 
 
 			draw_projective(G, Descr->number,
-					Descr->animate_nb_of_steps, Descr->animate_nb_of_steps, TRUE,
+					Descr->animate_nb_of_steps, Descr->animate_nb_of_steps, true,
 					Descr->animate_transition_nb_of_steps - i, Descr->animate_transition_nb_of_steps,
-					FALSE, 0, FALSE, 0);
-			G.finish(cout, TRUE);
+					false, 0, false, 0);
+			G.finish(cout, true);
 
 		}
 		if (Descr->f_trailer_page) {
@@ -1483,11 +1483,11 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 				//		verbose_level - 1);
 
 				draw_projective(G, Descr->number, 0,
-						Descr->animate_nb_of_steps, TRUE, i, Descr->animate_transition_nb_of_steps,
-						FALSE, 0, TRUE, i);
+						Descr->animate_nb_of_steps, true, i, Descr->animate_transition_nb_of_steps,
+						false, 0, true, i);
 
 
-				G.finish(cout, TRUE);
+				G.finish(cout, true);
 
 
 			}
@@ -1534,8 +1534,8 @@ void graphical_output::draw_projective(mp_graphics &G,
 	double x, y, t;
 	//int subdivide_v = 4;
 	//int subdivide_h = 4;
-	int f_plot_grid = TRUE;
-	int f_plot_curve = TRUE;
+	int f_plot_grid = true;
+	int f_plot_curve = true;
 	//int x_mod = 1;
 	//int y_mod = 1;
 	//int x_tick_mod = 1;
@@ -1543,7 +1543,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 	double height = 3.;
 	double R, R2, X, Y;
 	int mirror;
-	int f_projection_on = TRUE;
+	int f_projection_on = true;
 	double radius = 10.;
 	int N_curve = 500;
 	orbiter_kernel_system::numerics Num;
@@ -1570,18 +1570,18 @@ void graphical_output::draw_projective(mp_graphics &G,
 		subdivide_v = 1;
 		subdivide_h = 1;
 #endif
-		f_plot_curve = TRUE;
+		f_plot_curve = true;
 #if 0
 		x_labels_offset = -.5;
 		y_labels_offset = -.5;
 		x_tick_half_width = 0.2;
 		y_tick_half_width = 0.1;
 #endif
-		f_plot_grid = TRUE;
-		f_plot_curve = TRUE;
+		f_plot_grid = true;
+		f_plot_curve = true;
 		height = 6;
 		R = 20;
-		f_projection_on = TRUE;
+		f_projection_on = true;
 		radius = 10.;
 		}
 	else if (number == 2 || number == 4) {
@@ -1603,18 +1603,18 @@ void graphical_output::draw_projective(mp_graphics &G,
 		subdivide_v = 1;
 		subdivide_h = 1;
 #endif
-		f_plot_curve = TRUE;
+		f_plot_curve = true;
 #if 0
 		x_labels_offset = -.5;
 		y_labels_offset = -.5;
 		x_tick_half_width = 0.2;
 		y_tick_half_width = 0.1;
 #endif
-		f_plot_grid = TRUE;
-		f_plot_curve = TRUE;
+		f_plot_grid = true;
+		f_plot_curve = true;
 		height = 6;
 		R = 20;
-		f_projection_on = FALSE;
+		f_projection_on = false;
 		radius = 10.;
 		}
 	else if (number == 5) {
@@ -1636,18 +1636,18 @@ void graphical_output::draw_projective(mp_graphics &G,
 		subdivide_v = 1;
 		subdivide_h = 1;
 #endif
-		f_plot_curve = TRUE;
+		f_plot_curve = true;
 #if 0
 		x_labels_offset = -.5;
 		y_labels_offset = -.5;
 		x_tick_half_width = 0.2;
 		y_tick_half_width = 0.1;
 #endif
-		f_plot_grid = TRUE;
-		f_plot_curve = TRUE;
+		f_plot_grid = true;
+		f_plot_curve = true;
 		height = 6;
 		R = 20;
-		f_projection_on = TRUE;
+		f_projection_on = true;
 		radius = 10.;
 		}
 	else if (number == 7 || number == 8) {
@@ -1669,22 +1669,22 @@ void graphical_output::draw_projective(mp_graphics &G,
 		subdivide_v = 1;
 		subdivide_h = 1;
 #endif
-		f_plot_curve = TRUE;
+		f_plot_curve = true;
 #if 0
 		x_labels_offset = -.5;
 		y_labels_offset = -.5;
 		x_tick_half_width = 0.2;
 		y_tick_half_width = 0.1;
 #endif
-		f_plot_grid = TRUE;
-		f_plot_curve = TRUE;
+		f_plot_grid = true;
+		f_plot_curve = true;
 		height = 6;
 		R = 20;
 		if (number == 8) {
-			f_projection_on = FALSE;
+			f_projection_on = false;
 			}
 		else {
-			f_projection_on = TRUE;
+			f_projection_on = true;
 			}
 		radius = 10.;
 		N_curve = 2000;
@@ -1871,7 +1871,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 				step = Delta_t / (double) N;
 
 				for (i = 0; i < N; i++) {
-					f_DNE[i] = FALSE;
+					f_DNE[i] = false;
 					t = t_min + i * step;
 
 
@@ -1885,12 +1885,12 @@ void graphical_output::draw_projective(mp_graphics &G,
 						}
 
 
-					if (f_DNE[i] == FALSE) {
+					if (f_DNE[i] == false) {
 						Dx[i] = X;
 						Dy[i] = Y;
 						Num.project_to_disc(f_projection_on, f_transition, transition_step, transition_nb_steps, radius, height, Dx[i], Dy[i], Dx[i], Dy[i]);
 						if (Dx[i] < box_x_min || Dx[i] > box_x_max || Dy[i] < box_y_min || Dy[i] > box_y_max) {
-							f_DNE[i] = TRUE;
+							f_DNE[i] = true;
 							}
 						}
 					}
@@ -1910,7 +1910,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 				step = Delta_t / (double) N;
 
 				for (i = 0; i < N; i++) {
-					f_DNE[i] = FALSE;
+					f_DNE[i] = false;
 					t = t_min + i * step;
 
 
@@ -1924,12 +1924,12 @@ void graphical_output::draw_projective(mp_graphics &G,
 						}
 
 
-					if (f_DNE[i] == FALSE) {
+					if (f_DNE[i] == false) {
 						Dx[i] = X;
 						Dy[i] = Y;
 						Num.project_to_disc(f_projection_on, f_transition, transition_step, transition_nb_steps, radius, height, Dx[i], Dy[i], Dx[i], Dy[i]);
 						if (Dx[i] < box_x_min || Dx[i] > box_x_max || Dy[i] < box_y_min || Dy[i] > box_y_max) {
-							f_DNE[i] = TRUE;
+							f_DNE[i] = true;
 							}
 						}
 					}
@@ -2007,7 +2007,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 			for (i = 0; i < N; i++) {
 
 
-				f_DNE[i] = FALSE;
+				f_DNE[i] = false;
 
 				s = exp(s_min + i * step);
 					// this allows us to get many very small values and many very big values as well.
@@ -2034,7 +2034,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 					X = t;
 					Y = t * t * t + 5 * t + 7;
 					if (Y < 0) {
-						f_DNE[i] = TRUE;
+						f_DNE[i] = true;
 						}
 					else {
 						Y = sqrt(Y);
@@ -2047,7 +2047,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 					denom = x * sin_omega + cos_omega;
 
 					if (ABS(denom) < 0.0000000001) {
-						f_DNE[i] = TRUE;
+						f_DNE[i] = true;
 						}
 					else {
 						if (h == 0) {
@@ -2062,12 +2062,12 @@ void graphical_output::draw_projective(mp_graphics &G,
 				else if (number == 7 || number == 8) {
 					X = t;
 					if (t < 0) {
-						f_DNE[i] = TRUE;
+						f_DNE[i] = true;
 						}
 					else {
 						Y = log(t);
 						if (ABS(Y) < 0.0001) {
-							f_DNE[i] = TRUE;
+							f_DNE[i] = true;
 							}
 						}
 					}
@@ -2078,7 +2078,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 
 					z = sqrt(X * X + Y * Y);
 					if (z > 2 * R) {
-						f_DNE[i] = TRUE;
+						f_DNE[i] = true;
 						//cout << endl;
 						//cout << "x=" << x << " y=" << y << " is out of bounds" << endl;
 						}
@@ -2087,7 +2087,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 
 #if 0
 				cout << "i=" << i << " s=" << s << " t=" << t << " f_DNE[i]=" << f_DNE[i];
-				if (f_DNE[i] == FALSE) {
+				if (f_DNE[i] == false) {
 					cout << " X=" << X << " Y=" << Y << endl;
 					}
 				else {
@@ -2095,7 +2095,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 					}
 #endif
 
-				if (f_DNE[i] == FALSE) {
+				if (f_DNE[i] == false) {
 					//double z;
 
 					Dx[i] = X;
@@ -2109,21 +2109,21 @@ void graphical_output::draw_projective(mp_graphics &G,
 
 					//z = sqrt(Dx[i] * Dx[i] + Dy[i] * Dy[i]);
 					if (Dx[i] < box_x_min || Dx[i] > box_x_max || Dy[i] < box_y_min || Dy[i] > box_y_max) {
-						f_DNE[i] = TRUE;
+						f_DNE[i] = true;
 						//cout << endl;
 						//cout << "x=" << x << " y=" << y << " is out of bounds" << endl;
 						}
 					if (!f_DNE[i] && isnan(Dx[i])) {
-						f_DNE[i] = TRUE;
+						f_DNE[i] = true;
 						}
 					if (!f_DNE[i] && isnan(Dy[i])) {
-						f_DNE[i] = TRUE;
+						f_DNE[i] = true;
 						}
 					if (!f_DNE[i] && ABS(Dx[i]) < 0.0001) {
-						f_DNE[i] = TRUE;
+						f_DNE[i] = true;
 						}
 					if (!f_DNE[i] && ABS(Dy[i]) < 0.0001) {
-						f_DNE[i] = TRUE;
+						f_DNE[i] = true;
 						}
 					}
 				cout << i << " : s=" << s << " : " << " : t=" << t << " : ";
@@ -2136,7 +2136,7 @@ void graphical_output::draw_projective(mp_graphics &G,
 				cout << endl;
 				}
 
-			if (FALSE) {
+			if (false) {
 				cout << "before plot_curve:" << endl;
 				for (i = 0; i < N; i++) {
 					cout << i << " : ";
@@ -2629,14 +2629,14 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 
 #if 0
 	if (/* T.nb_nodes > 200 ||*/ f_no_circletext) {
-		f_circletext = FALSE;
+		f_circletext = false;
 		}
 	if (f_on_circle) {
 		T.root->place_on_circle(xmax, ymax, T.max_depth);
 		}
 
 	if (f_count_leaves) {
-		T.f_count_leaves = TRUE;
+		T.f_count_leaves = true;
 		}
 #endif
 
@@ -2662,21 +2662,21 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 		cout << "treedraw.out drawing as graph" << endl;
 		T.draw(fname_out,
 			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
-			f_i, f_e, TRUE, draw_vertex_callback,
+			f_i, f_e, true, draw_vertex_callback,
 			f_embedded, f_sideways, f_on_circle,
 			scale, line_width, verbose_level - 1);
 		}
 	else if (f_placeholder_labels) {
 		T.draw(fname_out,
 			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
-			f_i, f_e, TRUE, draw_vertex_callback_placeholders,
+			f_i, f_e, true, draw_vertex_callback_placeholders,
 			f_embedded, f_sideways, f_on_circle,
 			scale, line_width, verbose_level - 1);
 		}
 	else {
 		T.draw(fname_out,
 			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
-			f_i, f_e, TRUE, draw_vertex_callback_standard,
+			f_i, f_e, true, draw_vertex_callback_standard,
 			f_embedded, f_sideways, f_on_circle,
 			scale, line_width, verbose_level - 1);
 		}
@@ -2801,9 +2801,9 @@ static void interface_povray_draw_frame(
 
 		for (i = 0; i < (int) Anim->S->Drawables.size(); i++) {
 			drawable_set_of_objects D;
-			int f_group_is_animated = FALSE;
+			int f_group_is_animated = false;
 
-			if (FALSE) {
+			if (false) {
 				cout << "drawable " << i << ":" << endl;
 			}
 			D = Anim->S->Drawables[i];
@@ -2814,9 +2814,9 @@ static void interface_povray_draw_frame(
 				}
 			}
 			if (j < Anim->S->animated_groups.size()) {
-				f_group_is_animated = TRUE;
+				f_group_is_animated = true;
 			}
-			if (FALSE) {
+			if (false) {
 				if (f_group_is_animated) {
 					cout << "is animated" << endl;
 				}

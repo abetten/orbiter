@@ -111,10 +111,10 @@ void cubic_curve_with_action::init_group(int f_semilinear,
 
 	A->init_linear_group(//S,
 		F, 3,
-		TRUE /*f_projective*/,
-		FALSE /* f_general*/,
-		FALSE /* f_affine */,
-		f_semilinear, FALSE /* f_special */,
+		true /*f_projective*/,
+		false /* f_general*/,
+		false /* f_affine */,
+		f_semilinear, false /* f_special */,
 		nice_gens,
 		0 /* verbose_level*/);
 

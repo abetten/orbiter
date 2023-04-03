@@ -20,43 +20,43 @@ namespace apps_graph_theory {
 
 graph_theoretic_activity_description::graph_theoretic_activity_description()
 {
-	f_find_cliques = FALSE;
+	f_find_cliques = false;
 	Clique_finder_control = NULL;
 
-	f_find_subgraph = FALSE;
+	f_find_subgraph = false;
 	//std::string find_subgraph_label;
 
 
-	f_export_magma = FALSE;
-	f_export_maple = FALSE;
-	f_export_csv = FALSE;
-	f_export_graphviz = FALSE;
+	f_export_magma = false;
+	f_export_maple = false;
+	f_export_csv = false;
+	f_export_graphviz = false;
 
-	f_print = FALSE;
+	f_print = false;
 
-	f_sort_by_colors = FALSE;
+	f_sort_by_colors = false;
 
-	f_split = FALSE;
+	f_split = false;
 	//std::string split_input_fname;
 	//std::string split_by_file = NULL;
 
-	f_split_by_starters = FALSE;
+	f_split_by_starters = false;
 	//std::string split_by_starters_fname_reps;
 	//std::string split_by_starters_col_label;
 
-	f_split_by_clique = FALSE;
+	f_split_by_clique = false;
 	//std::string split_by_clique_label;
 	//std::string split_by_clique_set;
 
-	f_save = FALSE;
+	f_save = false;
 
-	f_automorphism_group = FALSE;
+	f_automorphism_group = false;
 
-	f_properties = FALSE;
+	f_properties = false;
 
-	f_eigenvalues = FALSE;
+	f_eigenvalues = false;
 
-	f_draw = FALSE;
+	f_draw = false;
 
 }
 
@@ -77,55 +77,55 @@ int graph_theoretic_activity_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-find_cliques") == 0) {
-			f_find_cliques = TRUE;
+			f_find_cliques = true;
 			Clique_finder_control = NEW_OBJECT(graph_theory::clique_finder_control);
 			i += Clique_finder_control->parse_arguments(argc - i, argv + i);
 		}
 		else if (ST.stringcmp(argv[i], "-find_subgraph") == 0) {
-			f_find_subgraph = TRUE;
+			f_find_subgraph = true;
 			find_subgraph_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-find_subgraph " << find_subgraph_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
-			f_export_magma = TRUE;
+			f_export_magma = true;
 			if (f_v) {
 				cout << "-export_magma" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_maple") == 0) {
-			f_export_maple = TRUE;
+			f_export_maple = true;
 			if (f_v) {
 				cout << "-export_maple" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_csv") == 0) {
-			f_export_csv = TRUE;
+			f_export_csv = true;
 			if (f_v) {
 				cout << "-export_csv" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_graphviz") == 0) {
-			f_export_graphviz = TRUE;
+			f_export_graphviz = true;
 			if (f_v) {
 				cout << "-export_graphviz" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-print") == 0) {
-			f_print = TRUE;
+			f_print = true;
 			if (f_v) {
 				cout << "-print" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-sort_by_colors") == 0) {
-			f_sort_by_colors = TRUE;
+			f_sort_by_colors = true;
 			if (f_v) {
 				cout << "-sort_by_colors " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-split") == 0) {
-			f_split = TRUE;
+			f_split = true;
 			split_input_fname.assign(argv[++i]);
 			split_by_file.assign(argv[++i]);
 			if (f_v) {
@@ -133,7 +133,7 @@ int graph_theoretic_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-split_by_starters") == 0) {
-			f_split_by_starters = TRUE;
+			f_split_by_starters = true;
 			split_by_starters_fname_reps.assign(argv[++i]);
 			split_by_starters_col_label.assign(argv[++i]);
 			if (f_v) {
@@ -141,7 +141,7 @@ int graph_theoretic_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-split_by_clique") == 0) {
-			f_split_by_clique = TRUE;
+			f_split_by_clique = true;
 			split_by_clique_label.assign(argv[++i]);
 			split_by_clique_set.assign(argv[++i]);
 			if (f_v) {
@@ -149,31 +149,31 @@ int graph_theoretic_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-save") == 0) {
-			f_save = TRUE;
+			f_save = true;
 			if (f_v) {
 				cout << "-save " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-automorphism_group") == 0) {
-			f_automorphism_group = TRUE;
+			f_automorphism_group = true;
 			if (f_v) {
 				cout << "-automorphism_group " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-properties") == 0) {
-			f_properties = TRUE;
+			f_properties = true;
 			if (f_v) {
 				cout << "-properties " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-eigenvalues") == 0) {
-			f_eigenvalues = TRUE;
+			f_eigenvalues = true;
 			if (f_v) {
 				cout << "-eigenvalues " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw") == 0) {
-			f_draw = TRUE;
+			f_draw = true;
 			if (f_v) {
 				cout << "-draw " << endl;
 			}

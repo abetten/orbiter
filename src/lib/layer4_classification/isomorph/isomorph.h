@@ -226,13 +226,13 @@ public:
 		// Called from trace_set_recursion
 		// Calls trace_next_point_in_place
 		// and (possibly) trace_next_point_database
-		// Returns FALSE is the set becomes lexicographically smaller
+		// Returns false is the set becomes lexicographically smaller
 	int trace_next_point_database(
 			int cur_level,
 		int cur_node_global,
 		long int *canonical_set, int *Elt_transporter,
 		int verbose_level);
-		// Returns FALSE is the set becomes lexicographically smaller
+		// Returns false is the set becomes lexicographically smaller
 	int handle_extension(
 			int cur_level,
 		int cur_node_global,
@@ -804,7 +804,7 @@ public:
 		// for all levels i from 0 to level
 		// Uses letter a files for i from 0 to level - 1
 		// and letter b file for i = level.
-		// If gen->f_starter is TRUE,
+		// If gen->f_starter is true,
 		// we start from i = gen->starter_size instead.
 		// Finally, it computes nb_starter.
 	void compute_nb_starter(int level, int verbose_level);
@@ -828,7 +828,7 @@ public:
 	void find_extension_easy(long int *set,
 		int case_nb, int &idx,
 		int &f_found, int verbose_level);
-		// returns TRUE if found, FALSE otherwise
+		// returns true if found, false otherwise
 		// Called from identify_solution
 		// Linear search through all solutions at a given starter.
 		// calls load solution for each of the solutions

@@ -22,10 +22,10 @@ combinatorial_object_activity::combinatorial_object_activity()
 {
 	Descr = NULL;
 
-	f_has_geometric_object = FALSE;
+	f_has_geometric_object = false;
 	GOC = NULL;
 
-	f_has_input_stream = FALSE;
+	f_has_input_stream = false;
 	IS = NULL;
 
 }
@@ -47,7 +47,7 @@ void combinatorial_object_activity::init(
 	}
 
 	combinatorial_object_activity::Descr = Descr;
-	f_has_geometric_object = TRUE;
+	f_has_geometric_object = true;
 	combinatorial_object_activity::GOC = GOC;
 
 	if (f_v) {
@@ -69,7 +69,7 @@ void combinatorial_object_activity::init_input_stream(
 	}
 
 	combinatorial_object_activity::Descr = Descr;
-	f_has_input_stream = TRUE;
+	f_has_input_stream = true;
 	combinatorial_object_activity::IS = IS;
 
 
@@ -127,11 +127,11 @@ void combinatorial_object_activity::perform_activity_geometric_object(int verbos
 
 		data_structures::tally T;
 
-		T.init(type, P->Subspaces->N_lines, FALSE, 0);
+		T.init(type, P->Subspaces->N_lines, false, 0);
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_geometric_object line type:" << endl;
-			T.print(TRUE /* f_backwards*/);
+			T.print(true /* f_backwards*/);
 			cout << endl;
 		}
 
@@ -338,7 +338,7 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 		}
 		CO->perform_classification(
 				Descr->Canonical_form_PG_Descr,
-				TRUE /* f_projective_space */, PA->P,
+				true /* f_projective_space */, PA->P,
 				IS,
 				verbose_level);
 		if (f_v) {
@@ -357,7 +357,7 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 		post_process_classification(
 					CO,
 					OwP,
-					TRUE /* f_projective_space */, PA,
+					true /* f_projective_space */, PA,
 					CO->Descr->label,
 					verbose_level);
 		if (f_v) {
@@ -404,7 +404,7 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 		}
 		CO->perform_classification(
 				Descr->Canonical_form_Descr,
-				FALSE /* f_projective_space */, NULL /* P */,
+				false /* f_projective_space */, NULL /* P */,
 				IS,
 				verbose_level);
 		if (f_v) {
@@ -422,7 +422,7 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 		post_process_classification(
 					CO,
 					OwP,
-					FALSE /* f_projective_space */, NULL,
+					false /* f_projective_space */, NULL,
 					CO->Descr->label,
 					verbose_level);
 		if (f_v) {
@@ -511,9 +511,9 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 
 		data_structures::tally T;
 
-		T.init(F_distinguishing, IS->Objects.size(), FALSE, 0);
+		T.init(F_distinguishing, IS->Objects.size(), false, 0);
 		cout << "classification : ";
-		T.print_first(TRUE /* f_backwards*/);
+		T.print_first(true /* f_backwards*/);
 		cout << endl;
 
 		cout << "distinguishing sets are:";
@@ -577,7 +577,7 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 		}
 
 		do_save(Descr->save_as_fname,
-				FALSE, NULL, 0,
+				false, NULL, 0,
 				verbose_level);
 
 
@@ -595,7 +595,7 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 				Descr->extract_subset_set,
 				extract_idx_set, extract_size, 0 /* verbose_level */);
 		do_save(Descr->extract_subset_fname,
-				TRUE /* f_extract */, extract_idx_set, extract_size,
+				true /* f_extract */, extract_idx_set, extract_size,
 				verbose_level);
 
 
@@ -685,7 +685,7 @@ void combinatorial_object_activity::do_save(
 
 	for (input_idx = 0; input_idx < N; input_idx++) {
 
-		if (FALSE) {
+		if (false) {
 			cout << "combinatorial_object_activity::perform_activity_IS "
 					"input_idx = " << input_idx << " / " << IS->Objects.size() << endl;
 		}
@@ -828,7 +828,7 @@ void combinatorial_object_activity::classification_report(
 
 	combinatorics::classification_of_objects_report_options *Report_options;
 
-	if (CO->Descr->f_classification_prefix == FALSE) {
+	if (CO->Descr->f_classification_prefix == false) {
 		cout << "please use option -classification_prefix <prefix> to set the "
 				"prefix for the output file" << endl;
 		exit(1);
@@ -861,7 +861,7 @@ void combinatorial_object_activity::latex_report(
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::latex_report" << endl;
@@ -887,7 +887,7 @@ void combinatorial_object_activity::latex_report(
 	}
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -896,7 +896,7 @@ void combinatorial_object_activity::latex_report(
 
 
 		fp << "Ago : ";
-		CO->T_Ago->print_file_tex(fp, FALSE /* f_backwards*/);
+		CO->T_Ago->print_file_tex(fp, false /* f_backwards*/);
 		fp << "\\\\" << endl;
 
 		if (f_v) {
@@ -936,7 +936,7 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 	}
 	int i;
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	for (i = 0; i < CO->CB->nb_types; i++) {
 
@@ -968,7 +968,7 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 #if 0
 				fp << "$$" << endl;
 				L.int_vec_print_as_matrix(fp, Input_objects,
-					nb_input_objects, 10 /* width */, TRUE /* f_tex */);
+					nb_input_objects, 10 /* width */, true /* f_tex */);
 				fp << "$$" << endl;
 #endif
 			}
@@ -1010,7 +1010,7 @@ void combinatorial_object_activity::report_isomorphism_type(
 				"i=" << i << endl;
 	}
 	int j;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	//j = CB->perm[i];
 	//j = CB->Type_rep[i];
@@ -1037,7 +1037,7 @@ void combinatorial_object_activity::report_isomorphism_type(
 		if (nb_input_objects < 10) {
 			L.int_vec_print_as_matrix(cout, Input_objects,
 					nb_input_objects, 10 /* width */,
-					FALSE /* f_tex */);
+					false /* f_tex */);
 		}
 		else {
 			cout << "too many to print" << endl;
@@ -1101,7 +1101,7 @@ void combinatorial_object_activity::report_object(
 				"after OwCF->print_tex_detailed" << endl;
 	}
 
-	if (FALSE /*CO->f_projective_space*/) {
+	if (false /*CO->f_projective_space*/) {
 
 #if 0
 		object_in_projective_space_with_action *OiPA;
@@ -1136,7 +1136,7 @@ void combinatorial_object_activity::draw_incidence_matrices(
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::draw_incidence_matrices" << endl;
@@ -1157,7 +1157,7 @@ void combinatorial_object_activity::draw_incidence_matrices(
 
 	{
 		ofstream ost(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(ost);
 
@@ -1241,7 +1241,7 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::unpack_from_restricted_action" << endl;
@@ -1358,7 +1358,7 @@ void combinatorial_object_activity::line_covering_type(
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::line_covering_type" << endl;
@@ -1449,7 +1449,7 @@ void combinatorial_object_activity::line_type(
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::line_type" << endl;
@@ -1514,11 +1514,11 @@ void combinatorial_object_activity::line_type(
 #if 1
 			data_structures::tally T;
 
-			T.init(type, P->Subspaces->N_lines, FALSE, 0);
+			T.init(type, P->Subspaces->N_lines, false, 0);
 
 			if (f_v) {
 				cout << "combinatorial_object_activity::perform_activity_GOC line type:" << endl;
-				T.print(TRUE /* f_backwards*/);
+				T.print(true /* f_backwards*/);
 				cout << endl;
 			}
 
@@ -1531,7 +1531,7 @@ void combinatorial_object_activity::line_type(
 			fname_line_type.append(str);
 
 			T.save_classes_individually(fname_line_type);
-			if (TRUE) {
+			if (true) {
 				cout << "Written file " << fname_line_type << " of size "
 						<< Fio.file_size(fname_line_type) << endl;
 			}

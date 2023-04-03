@@ -91,7 +91,7 @@ void orbit_of_sets::init(
 void orbit_of_sets::compute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int i, cur, j;
 	long int *cur_set;
 	long int *new_set;
@@ -171,12 +171,12 @@ void orbit_of_sets::compute(int verbose_level)
 
 		    itr1 = Hashing.lower_bound(h);
 		    itr2 = Hashing.upper_bound(h);
-		    f_found = FALSE;
+		    f_found = false;
 		    for (itr = itr1; itr != itr2; ++itr) {
 		        pos = itr->second;
 		        if (Sorting.lint_vec_compare(
 		        		new_set, Sets[pos], sz) == 0) {
-		        	f_found = TRUE;
+		        	f_found = true;
 		        	break;
 		        }
 		    }
@@ -251,11 +251,11 @@ void orbit_of_sets::compute(int verbose_level)
 
 	    itr1 = Hashing.lower_bound(h);
 	    itr2 = Hashing.upper_bound(h);
-	    f_found = FALSE;
+	    f_found = false;
 	    for (itr = itr1; itr != itr2; ++itr) {
 	        pos = itr->second;
 	        if (p == pos) {
-	        	f_found = TRUE;
+	        	f_found = true;
 	        	break;
 	        }
 	    }

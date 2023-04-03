@@ -20,23 +20,23 @@ namespace orthogonal_geometry_applications {
 
 BLT_set_create_description::BLT_set_create_description()
 {
-	//f_q = FALSE;
+	//f_q = false;
 	//q = 0;
-	f_catalogue = FALSE;
+	f_catalogue = false;
 	iso = 0;
-	f_family = FALSE;
+	f_family = false;
 	//family_name;
 
-	f_flock = FALSE;
+	f_flock = false;
 	//std::string flock_label;
 
-	f_space = FALSE;
+	f_space = false;
 	//std::string space_label;
 
-	//f_space_pointer = FALSE;
+	//f_space_pointer = false;
 	//space_pointer = NULL;
 
-	f_invariants = FALSE;
+	f_invariants = false;
 }
 
 BLT_set_create_description::~BLT_set_create_description()
@@ -56,35 +56,35 @@ int BLT_set_create_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-catalogue") == 0) {
-			f_catalogue = TRUE;
+			f_catalogue = true;
 			iso = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-catalogue " << iso << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-family") == 0) {
-			f_family = TRUE;
+			f_family = true;
 			family_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-family " << family_name << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-flock") == 0) {
-			f_flock = TRUE;
+			f_flock = true;
 			flock_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-flock " << flock_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-space") == 0) {
-			f_space = TRUE;
+			f_space = true;
 			space_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-space " << space_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-invariants") == 0) {
-			f_invariants = TRUE;
+			f_invariants = true;
 			if (f_v) {
 				cout << "-invariants " << endl;
 			}

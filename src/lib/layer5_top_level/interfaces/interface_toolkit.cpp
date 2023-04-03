@@ -23,94 +23,94 @@ namespace user_interface {
 
 interface_toolkit::interface_toolkit()
 {
-	f_create_files = FALSE;
+	f_create_files = false;
 	Create_file_description = NULL;
 
-	f_save_matrix_csv = FALSE;
+	f_save_matrix_csv = false;
 	//std::string save_matrix_csv_label;
 
 
-	f_csv_file_select_rows = FALSE;
+	f_csv_file_select_rows = false;
 	//std::string csv_file_select_rows_fname;
 	//std::string csv_file_select_rows_text;
 
-	f_csv_file_split_rows_modulo = FALSE;
+	f_csv_file_split_rows_modulo = false;
 	//std::string csv_file_split_rows_modulo_fname;
 	csv_file_split_rows_modulo_n = 0;
 
-	f_csv_file_select_cols = FALSE;
+	f_csv_file_select_cols = false;
 	//std::string csv_file_select_cols_fname;
 	//std::string csv_file_select_cols_text;
 
-	f_csv_file_select_rows_and_cols = FALSE;
+	f_csv_file_select_rows_and_cols = false;
 	//csv_file_select_rows_and_cols_fname;
 	//std::string csv_file_select_rows_and_cols_R_text;
 	//std::string csv_file_select_rows_and_cols_C_text;
 
-	f_csv_file_sort_each_row = FALSE;
+	f_csv_file_sort_each_row = false;
 	//std::string csv_file_sort_each_row_fname;
 
-	f_csv_file_join = FALSE;
+	f_csv_file_join = false;
 	//csv_file_join_fname
 	//csv_file_join_identifier
 
 
-	f_csv_file_concatenate = FALSE;
+	f_csv_file_concatenate = false;
 	//std::string csv_file_concatenate_fname_out;
 	//std::vector<std::string> csv_file_concatenate_fname_in;
 
-	f_csv_file_concatenate_from_mask = FALSE;
+	f_csv_file_concatenate_from_mask = false;
 	csv_file_concatenate_from_mask_N = 0;
 	//std::string csv_file_concatenate_from_mask_mask;
 	//std::string csv_file_concatenate_from_mask_fname_out;
 
-	f_csv_file_extract_column_to_txt = FALSE;
+	f_csv_file_extract_column_to_txt = false;
 	//std::string csv_file_extract_column_to_txt_fname;
 	//std::string csv_file_extract_column_to_txt_col_label;
 
-	f_csv_file_latex = FALSE;
-	f_produce_latex_header = FALSE;
+	f_csv_file_latex = false;
+	f_produce_latex_header = false;
 	//std::vector<std::string> csv_file_latex_fname;
 
-	f_grade_statistic_from_csv = FALSE;
+	f_grade_statistic_from_csv = false;
 	//std::string grade_statistic_from_csv_fname;
 	//std::string grade_statistic_from_csv_m1_label;
 	//std::string grade_statistic_from_csv_m2_label;
 	//std::string grade_statistic_from_csv_final_label;
 	//std::string grade_statistic_from_csv_oracle_grade_label;
 
-	f_draw_matrix = FALSE;
+	f_draw_matrix = false;
 	Draw_bitmap_control = NULL;
 
 
-	f_reformat = FALSE;
+	f_reformat = false;
 	//std::string reformat_fname_in;
 	//std::string reformat_fname_out;
 	reformat_nb_cols = 0;
 
-	f_split_by_values = FALSE;
+	f_split_by_values = false;
 	//std::string split_by_values_fname_in;
 
-	f_change_values = FALSE;
+	f_change_values = false;
 	//std::string change_values_fname_in;
 	//std::string change_values_fname_out;
 	//std::string change_values_function_input;
 	//std::string change_values_function_output;
 
-	f_store_as_csv_file = FALSE;
+	f_store_as_csv_file = false;
 	//std::string> store_as_csv_file_fname;
 	store_as_csv_file_m = 0;
 	store_as_csv_file_n = 0;
 	//std::string store_as_csv_file_data;
 
-	f_mv = FALSE;
+	f_mv = false;
 	//std::string mv_a;
 	//std::string mv_b;
 
-	f_system = FALSE;
+	f_system = false;
 	//std::string system_command;
 
-	f_loop = FALSE;
+	f_loop = false;
 	loop_start_idx = 0;
 	loop_end_idx = 0;
 	//std::string loop_variable;
@@ -119,34 +119,34 @@ interface_toolkit::interface_toolkit()
 	loop_step = 0;
 	loop_argv = NULL;
 
-	f_loop_over = FALSE;
+	f_loop_over = false;
 	loop_over_start_idx = 0;
 	loop_over_end_idx = 0;
 	//std::string loop_over_variable;
 	//std::string loop_over_domain;
 	loop_over_argv = NULL;
 
-	f_plot_function = FALSE;
+	f_plot_function = false;
 	//std::string plot_function_fname;
 
-	f_draw_projective_curve = FALSE;
+	f_draw_projective_curve = false;
 	Draw_projective_curve_description = NULL;
 
-	f_tree_draw = FALSE;
+	f_tree_draw = false;
 	Tree_draw_options = NULL;
 
-	f_extract_from_file = FALSE;
+	f_extract_from_file = false;
 	//std::string extract_from_file_fname;
 	//std::string extract_from_file_label;
 	//std::string extract_from_file_target_fname;
 
-	f_extract_from_file_with_tail = FALSE;
+	f_extract_from_file_with_tail = false;
 	//std::string extract_from_file_with_tail_fname;
 	//std::string extract_from_file_with_tail_label;
 	//std::string extract_from_file_with_tail_tail;
 	//std::string extract_from_file_with_tail_target_fname;
 
-	f_serialize_file_names = FALSE;
+	f_serialize_file_names = false;
 	//std::string serialize_file_names_fname;
 	//std::string serialize_file_names_output_mask;
 
@@ -357,7 +357,7 @@ void interface_toolkit::read_arguments(int argc,
 				"the next argument is " << argv[i] << endl;
 	}
 	if (ST.stringcmp(argv[i], "-create_files") == 0) {
-		f_create_files = TRUE;
+		f_create_files = true;
 
 		if (f_v) {
 			cout << "-create_files " << endl;
@@ -380,14 +380,14 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-save_matrix_csv") == 0) {
-		f_save_matrix_csv = TRUE;
+		f_save_matrix_csv = true;
 		save_matrix_csv_label.assign(argv[++i]);
 		if (f_v) {
 			cout << "-save_matrix_csv " << save_matrix_csv_label << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
-		f_csv_file_select_rows = TRUE;
+		f_csv_file_select_rows = true;
 		csv_file_select_rows_fname.assign(argv[++i]);
 		csv_file_select_rows_text.assign(argv[++i]);
 		if (f_v) {
@@ -397,7 +397,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
-		f_csv_file_split_rows_modulo = TRUE;
+		f_csv_file_split_rows_modulo = true;
 		csv_file_split_rows_modulo_fname.assign(argv[++i]);
 		csv_file_split_rows_modulo_n = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -407,7 +407,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_cols") == 0) {
-		f_csv_file_select_cols = TRUE;
+		f_csv_file_select_cols = true;
 		csv_file_select_cols_fname.assign(argv[++i]);
 		csv_file_select_cols_text.assign(argv[++i]);
 		if (f_v) {
@@ -417,7 +417,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
-		f_csv_file_select_rows_and_cols = TRUE;
+		f_csv_file_select_rows_and_cols = true;
 		csv_file_select_rows_and_cols_fname.assign(argv[++i]);
 		csv_file_select_rows_and_cols_R_text.assign(argv[++i]);
 		csv_file_select_rows_and_cols_C_text.assign(argv[++i]);
@@ -430,7 +430,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
-		f_csv_file_sort_each_row = TRUE;
+		f_csv_file_sort_each_row = true;
 		csv_file_sort_each_row_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-csv_file_sort_each_row "
@@ -442,7 +442,7 @@ void interface_toolkit::read_arguments(int argc,
 		string s;
 		int nb, j;
 
-		f_csv_file_join = TRUE;
+		f_csv_file_join = true;
 		nb = ST.strtoi(argv[++i]);
 		for (j = 0; j < nb; j++) {
 			s.assign(argv[++i]);
@@ -463,7 +463,7 @@ void interface_toolkit::read_arguments(int argc,
 		string s;
 		int nb, j;
 
-		f_csv_file_concatenate = TRUE;
+		f_csv_file_concatenate = true;
 		csv_file_concatenate_fname_out.assign(argv[++i]);
 		nb = ST.strtoi(argv[++i]);
 		for (j = 0; j < nb; j++) {
@@ -479,7 +479,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_concatenate_from_mask") == 0) {
-		f_csv_file_concatenate_from_mask = TRUE;
+		f_csv_file_concatenate_from_mask = true;
 		csv_file_concatenate_from_mask_N = ST.strtoi(argv[++i]);
 		csv_file_concatenate_from_mask_mask.assign(argv[++i]);
 		csv_file_concatenate_from_mask_fname_out.assign(argv[++i]);
@@ -492,7 +492,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
-		f_csv_file_extract_column_to_txt = TRUE;
+		f_csv_file_extract_column_to_txt = true;
 		csv_file_extract_column_to_txt_fname.assign(argv[++i]);
 		csv_file_extract_column_to_txt_col_label.assign(argv[++i]);
 		if (f_v) {
@@ -503,7 +503,7 @@ void interface_toolkit::read_arguments(int argc,
 	}
 
 	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
-		f_csv_file_latex = TRUE;
+		f_csv_file_latex = true;
 		f_produce_latex_header = ST.strtoi(argv[++i]);
 		csv_file_latex_fname.assign(argv[++i]);
 		if (f_v) {
@@ -512,7 +512,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-grade_statistic_from_csv") == 0) {
-		f_grade_statistic_from_csv = TRUE;
+		f_grade_statistic_from_csv = true;
 		grade_statistic_from_csv_fname.assign(argv[++i]);
 		grade_statistic_from_csv_m1_label.assign(argv[++i]);
 		grade_statistic_from_csv_m2_label.assign(argv[++i]);
@@ -529,7 +529,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
-		f_draw_matrix = TRUE;
+		f_draw_matrix = true;
 		Draw_bitmap_control = NEW_OBJECT(graphics::draw_bitmap_control);
 		if (f_v) {
 			cout << "reading -draw_matrix" << endl;
@@ -547,7 +547,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-reformat") == 0) {
-		f_reformat = TRUE;
+		f_reformat = true;
 		reformat_fname_in.assign(argv[++i]);
 		reformat_fname_out.assign(argv[++i]);
 		reformat_nb_cols = ST.strtoi(argv[++i]);
@@ -558,7 +558,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-split_by_values") == 0) {
-		f_split_by_values = TRUE;
+		f_split_by_values = true;
 		split_by_values_fname_in.assign(argv[++i]);
 		if (f_v) {
 			cout << "-split_by_values "
@@ -566,7 +566,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-change_values") == 0) {
-		f_change_values = TRUE;
+		f_change_values = true;
 		change_values_fname_in.assign(argv[++i]);
 		change_values_fname_out.assign(argv[++i]);
 		change_values_function_input.assign(argv[++i]);
@@ -581,7 +581,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-store_as_csv_file") == 0) {
-		f_store_as_csv_file = TRUE;
+		f_store_as_csv_file = true;
 		store_as_csv_file_fname.assign(argv[++i]);
 		store_as_csv_file_m = ST.strtoi(argv[++i]);
 		store_as_csv_file_n = ST.strtoi(argv[++i]);
@@ -595,7 +595,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-mv") == 0) {
-		f_mv = TRUE;
+		f_mv = true;
 		mv_a.assign(argv[++i]);
 		mv_b.assign(argv[++i]);
 		if (f_v) {
@@ -604,14 +604,14 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-system") == 0) {
-		f_system = TRUE;
+		f_system = true;
 		system_command.assign(argv[++i]);
 		if (f_v) {
 			cout << "-system " << system_command << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-loop") == 0) {
-		f_loop = TRUE;
+		f_loop = true;
 		loop_start_idx = i + 5;
 		loop_variable.assign(argv[++i]);
 		loop_from = ST.strtoi(argv[++i]);
@@ -651,7 +651,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-loop_over") == 0) {
-		f_loop_over = TRUE;
+		f_loop_over = true;
 		loop_over_start_idx = i + 3;
 		loop_over_variable.assign(argv[++i]);
 		//loop_over_index.assign(argv[++i]);
@@ -686,14 +686,14 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-plot_function") == 0) {
-		f_plot_function = TRUE;
+		f_plot_function = true;
 		plot_function_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-plot_function " << plot_function_fname << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-draw_projective_curve") == 0) {
-		f_draw_projective_curve = TRUE;
+		f_draw_projective_curve = true;
 		Draw_projective_curve_description =
 				NEW_OBJECT(graphics::draw_projective_curve_description);
 		if (f_v) {
@@ -712,7 +712,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-tree_draw") == 0) {
-		f_tree_draw = TRUE;
+		f_tree_draw = true;
 		Tree_draw_options = NEW_OBJECT(graphics::tree_draw_options);
 		if (f_v) {
 			cout << "reading -tree_draw" << endl;
@@ -730,7 +730,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-extract_from_file") == 0) {
-		f_extract_from_file = TRUE;
+		f_extract_from_file = true;
 		extract_from_file_fname.assign(argv[++i]);
 		extract_from_file_label.assign(argv[++i]);
 		extract_from_file_target_fname.assign(argv[++i]);
@@ -743,7 +743,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-extract_from_file_with_tail") == 0) {
-		f_extract_from_file_with_tail = TRUE;
+		f_extract_from_file_with_tail = true;
 		extract_from_file_with_tail_fname.assign(argv[++i]);
 		extract_from_file_with_tail_label.assign(argv[++i]);
 		extract_from_file_with_tail_tail.assign(argv[++i]);
@@ -758,7 +758,7 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-serialize_file_names") == 0) {
-		f_serialize_file_names = TRUE;
+		f_serialize_file_names = true;
 		serialize_file_names_fname.assign(argv[++i]);
 		serialize_file_names_output_mask.assign(argv[++i]);
 		if (f_v) {
@@ -1099,10 +1099,10 @@ void interface_toolkit::worker(int verbose_level)
 					"f_grade_statistic_from_csv" << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
-		int f_midterm1 = TRUE;
-		int f_midterm2 = TRUE;
-		int f_final = TRUE;
-		int f_oracle_grade = TRUE;
+		int f_midterm1 = true;
+		int f_midterm2 = true;
+		int f_final = true;
+		int f_oracle_grade = true;
 
 		Fio.grade_statistic_from_csv(
 				grade_statistic_from_csv_fname,
@@ -1344,11 +1344,11 @@ void interface_toolkit::worker(int verbose_level)
 				string index_object;
 
 				while ((pos = arg.find(token)) != std::string::npos) {
-					f_square_bracket = FALSE;
+					f_square_bracket = false;
 					if ((pos1 = arg.find('[', pos + token.length())) != std::string::npos) {
 
 						if ((pos2 = arg.find(']', pos1 + 1)) != std::string::npos) {
-							f_square_bracket = TRUE;
+							f_square_bracket = true;
 							index_object = arg.substr(pos + token.length() + 1, pos2 - pos1 - 1);
 						}
 						else {
@@ -1482,7 +1482,7 @@ void interface_toolkit::worker(int verbose_level)
 
 		Fio.extract_from_makefile(extract_from_file_fname,
 				extract_from_file_label,
-				FALSE /*  f_tail */, tail,
+				false /*  f_tail */, tail,
 				text,
 				verbose_level);
 
@@ -1519,7 +1519,7 @@ void interface_toolkit::worker(int verbose_level)
 		Fio.extract_from_makefile(
 				extract_from_file_with_tail_fname,
 				extract_from_file_with_tail_label,
-				TRUE /*  f_tail */, extract_from_file_with_tail_tail,
+				true /*  f_tail */, extract_from_file_with_tail_tail,
 				text,
 				verbose_level);
 

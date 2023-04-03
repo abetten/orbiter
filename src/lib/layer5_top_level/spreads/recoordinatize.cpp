@@ -36,15 +36,15 @@ recoordinatize::recoordinatize()
 
 	A = NULL;
 	A2 = NULL;
-	f_projective = FALSE;
-	f_semilinear = FALSE;
+	f_projective = false;
+	f_semilinear = false;
 	check_function_incremental = NULL;
 	check_function_incremental_data = NULL;
 
 	//fname_live_points
 
 #if 0
-	f_data_is_allocated = FALSE;
+	f_data_is_allocated = false;
 	M = M1 = AA = AAv = TT = TTv = B = C = N = Elt = NULL;
 #endif
 
@@ -142,7 +142,7 @@ void recoordinatize::init(
 	transform = NEW_int(Three_skew_subspaces->n * Three_skew_subspaces->n + 1);
 
 	Elt = NEW_int(A->elt_size_in_int);
-	//f_data_is_allocated = TRUE;
+	//f_data_is_allocated = true;
 	if (f_v) {
 		cout << "recoordinatize::init done" << endl;
 	}
@@ -369,8 +369,8 @@ void recoordinatize::stabilizer_of_first_three(
 			Three_skew_subspaces->k,
 			Three_skew_subspaces->F,
 		f_semilinear, 
-		TRUE /* f_basis */,
-		TRUE /* f_init_sims */,
+		true /* f_basis */,
+		true /* f_init_sims */,
 		nice_gens,
 		0/*verbose_level - 2*/);
 	if (f_v) {
@@ -397,8 +397,8 @@ void recoordinatize::stabilizer_of_first_three(
 	A0_linear->Known_groups->init_projective_group(
 			Three_skew_subspaces->k,
 			Three_skew_subspaces->F,
-		FALSE /*f_semilinear*/, 
-		TRUE /*f_basis*/, TRUE /* f_init_sims */,
+		false /*f_semilinear*/, 
+		true /*f_basis*/, true /* f_init_sims */,
 		nice_gens,
 		0/*verbose_level - 2*/);
 	FREE_OBJECT(nice_gens);
@@ -461,7 +461,7 @@ void recoordinatize::stabilizer_of_first_three(
 
 
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go2, 
+		true /* f_target_go */, target_go2, 
 		gens2, Strong_gens, verbose_level - 1);
 
 
@@ -485,7 +485,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 
 
 #if 0
-	int f_path_select = TRUE;
+	int f_path_select = true;
 	int select_value;
 	int len;
 
@@ -601,7 +601,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 			}
 		Mtx->matrices_without_eigenvector_one(
 			A0_linear->Sims, live_points, nb_live_points,
-			FALSE /* f_path_select */, 0 /*select_value*/, verbose_level);
+			false /* f_path_select */, 0 /*select_value*/, verbose_level);
 
 		if (f_v) {
 			cout << "recoordinatize::compute_live_points "
@@ -622,7 +622,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 
 
 #if 0
-	if (FALSE) {
+	if (false) {
 		for (h = 0; h < nb_live_points; h++) {
 			cout << "live point " << h << " is point " << live_points[h] << ":" << endl;
 			Grass->unrank_int(live_points[h], 0);
@@ -760,7 +760,7 @@ void recoordinatize::compute_live_points_low_level(
 							Three_skew_subspaces->n,
 							Three_skew_subspaces->n, 2);
 				}
-				if (FALSE || ((h & ((1 << 15) - 1)) == 0 && z == 1)) {
+				if (false || ((h & ((1 << 15) - 1)) == 0 && z == 1)) {
 					cout << h << " / " << gos
 							<< " nb_live_points=" << nb_live_points << endl;
 					Int_vec_print_integer_matrix_width(

@@ -410,7 +410,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 		Nine_lines0,
 		0 /* verbose_level */);
 
-	if (FALSE) {
+	if (false) {
 		cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
 				"The first trihedral pair gives "
 				"the following nine lines: ";
@@ -444,7 +444,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 			Nine_lines,
 			0 /* verbose_level */);
 
-		if (FALSE) {
+		if (false) {
 			cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
 					"The " << i << "-th trihedral "
 					"pair gives the following nine lines: ";
@@ -454,7 +454,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 
 		Sorting.vec_intersect(Nine_lines0, 9, Nine_lines, 9, v, sz);
 
-		if (FALSE) {
+		if (false) {
 			cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
 					"The nine lines of the " << i
 					<< "-th trihedral pair intersect the "
@@ -464,7 +464,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 			cout << endl;
 		}
 
-		if (FALSE) {
+		if (false) {
 			Surf->print_trihedral_pair_in_dual_coordinates_in_GAP(
 				planes6, planes6 + 3);
 			cout << endl;
@@ -535,7 +535,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 
 			//Surf_A->A->element_invert(Elt4, Elt5, 0);
 
-			if (FALSE) {
+			if (false) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
 						"Elt4:" << endl;
 				AL->Surf_A->A->Group_element->element_print_quick(Elt4, cout);
@@ -585,7 +585,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 					0 /* verbose_level */);
 
 
-				if (FALSE) {
+				if (false) {
 					cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
 							"The " << orbit_length + 1 << "-th "
 							"trihedral pair in the orbit gives "
@@ -913,7 +913,7 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(int verbos
 
 	Double_triplet_type_distribution = NEW_OBJECT(data_structures::tally);
 
-	Double_triplet_type_distribution->init(Iso_type_as_double_triplet, 120, FALSE, 0);
+	Double_triplet_type_distribution->init(Iso_type_as_double_triplet, 120, false, 0);
 	data_structures::sorting Sorting;
 
 	Double_triplet_types = Double_triplet_type_distribution->get_set_partition_and_types(
@@ -933,17 +933,17 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(int verbos
 
 void trihedral_pair_with_action::print_FG(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	ost << "$F$-planes:\\\\";
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(ost,
-			F_plane, 3, 4, TRUE /* f_tex*/);
+			F_plane, 3, 4, true /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$G$-planes:\\\\";
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(ost,
-			G_plane, 3, 4, TRUE /* f_tex*/);
+			G_plane, 3, 4, true /* f_tex*/);
 	ost << "$$" << endl;
 }
 
@@ -1070,13 +1070,13 @@ void trihedral_pair_with_action::print_isomorphism_types_of_trihedral_pairs(
 			"in the list of double triplets are:" << endl;
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-			Iso + 0 * 1, 40, 1, 0, 0, TRUE /* f_tex */);
+			Iso + 0 * 1, 40, 1, 0, 0, true /* f_tex */);
 	ost << "\\quad" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-			Iso + 40 * 1, 40, 1, 40, 0, TRUE /* f_tex */);
+			Iso + 40 * 1, 40, 1, 40, 0, true /* f_tex */);
 	ost << "\\quad" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-			Iso + 80 * 1, 40, 1, 80, 0, TRUE /* f_tex */);
+			Iso + 80 * 1, 40, 1, 80, 0, true /* f_tex */);
 	ost << "$$" << endl;
 
 	int I, h, iso;
@@ -1356,7 +1356,7 @@ void trihedral_pair_with_action::report(std::ostream &ost, int verbose_level)
 			"surfaces on the line are:\\\\" << endl;
 #if 0
 	Orb->print_fancy(
-			ost, TRUE, AL->Surf_A->A, stab_gens_trihedral_pair);
+			ost, true, AL->Surf_A->A, stab_gens_trihedral_pair);
 #else
 	ost << "The stabilizer of the trihedral pair has " << Orb->nb_orbits << " orbits on the pencil of surfaces.\\\\" << endl;
 #endif
@@ -1409,7 +1409,7 @@ void trihedral_pair_with_action::report(std::ostream &ost, int verbose_level)
 
 void trihedral_pair_with_action::report_iso_type_as_double_triplets(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i;
 
 	ost << "The isomorphism types of the trihedral pairs "
@@ -1417,7 +1417,7 @@ void trihedral_pair_with_action::report_iso_type_as_double_triplets(std::ostream
 	ost << "$$" << endl;
 	for (i = 0; i < 6; i++) {
 		L.print_integer_matrix_with_standard_labels_and_offset(ost,
-				Iso_type_as_double_triplet + i * 20, 20, 1, i * 20, 0, TRUE /* f_tex */);
+				Iso_type_as_double_triplet + i * 20, 20, 1, i * 20, 0, true /* f_tex */);
 		if (i < 6 - 1) {
 			ost << "\\quad" << endl;
 		}
@@ -1427,7 +1427,7 @@ void trihedral_pair_with_action::report_iso_type_as_double_triplets(std::ostream
 
 	ost << "Distribution of isomorphism types:\\\\" << endl;
 	ost << "$$" << endl;
-	Double_triplet_type_distribution->print_naked_tex(ost, FALSE/* f_backwards*/);
+	Double_triplet_type_distribution->print_naked_tex(ost, false/* f_backwards*/);
 	ost << "$$" << endl;
 
 

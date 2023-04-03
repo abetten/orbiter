@@ -26,13 +26,13 @@ create_code::create_code()
 	//std::string label_txt;
 	//std::string label_tex;
 
-	f_field = FALSE;
+	f_field = false;
 	F = NULL;
 
-	f_has_generator_matrix = FALSE;
+	f_has_generator_matrix = false;
 	genma = NULL;
 
-	f_has_check_matrix = FALSE;
+	f_has_check_matrix = false;
 	checkma = NULL;
 	n = 0;
 	nmk = 0;
@@ -66,7 +66,7 @@ void create_code::init(
 			cout << "create_code::init f_field" << endl;
 		}
 
-		f_field = TRUE;
+		f_field = true;
 
 
 		F = Get_finite_field(description->field_label);
@@ -91,7 +91,7 @@ void create_code::init(
 				description->generator_matrix_label_genma,
 				genma, nb_rows, nb_cols);
 
-		f_has_generator_matrix = TRUE;
+		f_has_generator_matrix = true;
 		n = nb_cols;
 		k = nb_rows;
 		nmk = n - k;
@@ -160,7 +160,7 @@ void create_code::init(
 					genma + i * nb_cols, 1, nb_cols, v[i]);
 		}
 
-		f_has_generator_matrix = TRUE;
+		f_has_generator_matrix = true;
 		n = nb_cols;
 		k = nb_rows;
 		nmk = n - k;
@@ -234,7 +234,7 @@ void create_code::init(
 				checkma[i * n + j] = Col[i];
 			}
 		}
-		f_has_check_matrix = TRUE;
+		f_has_check_matrix = true;
 
 		if (f_v) {
 			cout << "create_code::init checkma from projective set:" << endl;
@@ -299,7 +299,7 @@ void create_code::init(
 				k,
 				genma,
 				verbose_level);
-		f_has_generator_matrix = TRUE;
+		f_has_generator_matrix = true;
 
 		if (f_v) {
 			cout << "create_code::init genma:" << endl;
@@ -384,7 +384,7 @@ void create_code::init(
 				k,
 				genma,
 				verbose_level);
-		f_has_generator_matrix = TRUE;
+		f_has_generator_matrix = true;
 
 		if (f_v) {
 			cout << "create_code::init genma:" << endl;
@@ -443,7 +443,7 @@ void create_code::init(
 		genma = NEW_int(k * n);
 
 		Int_vec_copy(Create_BCH_code->Genma, genma, k * n);
-		f_has_generator_matrix = TRUE;
+		f_has_generator_matrix = true;
 
 		if (f_v) {
 			cout << "create_code::init before create_checkma_from_genma" << endl;
@@ -494,7 +494,7 @@ void create_code::init(
 		genma = NEW_int(k * n);
 
 		Int_vec_copy(Create_RS_code->Genma, genma, k * n);
-		f_has_generator_matrix = TRUE;
+		f_has_generator_matrix = true;
 
 		if (f_v) {
 			cout << "create_code::init before create_checkma_from_genma" << endl;
@@ -548,8 +548,8 @@ void create_code::init(
 			cout << "create_code::init "
 					"after Coding.make_gilbert_varshamov_code" << endl;
 		}
-		f_has_generator_matrix = TRUE;
-		f_has_check_matrix = TRUE;
+		f_has_generator_matrix = true;
+		f_has_check_matrix = true;
 
 		nmk = n - k;
 
@@ -625,7 +625,7 @@ void create_code::init(
 			Int_matrix_print(genma, nb_rows, nb_cols);
 		}
 
-		f_has_generator_matrix = TRUE;
+		f_has_generator_matrix = true;
 		n = nb_cols;
 		k = nb_rows;
 		nmk = n - k;
@@ -678,15 +678,15 @@ void create_code::init(
 		TTP.twisted_tensor_product_codes(
 			FQ,
 			F /* Fq */,
-			TRUE /* f_construction_A */, TRUE /* f_hyperoval */,
-			FALSE /* f_construction_B */,
+			true /* f_construction_A */, true /* f_hyperoval */,
+			false /* f_construction_B */,
 			checkma, nb_rows, nb_cols,
 			verbose_level);
 
 		n = nb_cols;
 		nmk = nb_rows;
 
-		f_has_check_matrix = TRUE;
+		f_has_check_matrix = true;
 
 
 
@@ -883,7 +883,7 @@ void create_code::create_genma_from_checkma(int verbose_level)
 
 	genma = NEW_int(k * n);
 	Int_vec_copy(M + nmk * n, genma, k * n);
-	f_has_generator_matrix = TRUE;
+	f_has_generator_matrix = true;
 
 	FREE_int(M);
 
@@ -940,7 +940,7 @@ void create_code::create_checkma_from_genma(int verbose_level)
 
 	checkma = NEW_int(nmk * n);
 	Int_vec_copy(M + k * n, checkma, nmk * n);
-	f_has_check_matrix = TRUE;
+	f_has_check_matrix = true;
 
 	FREE_int(M);
 
@@ -1105,7 +1105,7 @@ void create_code::export_codewords_by_weight(
 				"after Code.make_codewords_sorted" << endl;
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "Codewords : ";
 		Lint_vec_print_fully(cout, codewords, N);
 		cout << endl;
@@ -1143,7 +1143,7 @@ void create_code::export_codewords_by_weight(
 	int nb_types;
 
 	T = NEW_OBJECT(data_structures::tally);
-	T->init(Wt, N, FALSE, 0 /* verbose_level */);
+	T->init(Wt, N, false, 0 /* verbose_level */);
 
 	SoS = T->get_set_partition_and_types(types, nb_types, 0 /* verbose_level */);
 
@@ -1281,8 +1281,8 @@ void create_code::weight_enumerator(int verbose_level)
 	}
 	Codes.do_weight_enumerator(F,
 			genma, k, n,
-			FALSE /* f_normalize_from_the_left */,
-			FALSE /* f_normalize_from_the_right */,
+			false /* f_normalize_from_the_left */,
+			false /* f_normalize_from_the_right */,
 			verbose_level);
 	if (f_v) {
 		cout << "create_code::weight_enumerator "
@@ -1393,7 +1393,7 @@ void create_code::make_diagram(
 				"after Code.make_codewords_sorted" << endl;
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "Codewords : ";
 		Lint_vec_print_fully(cout, Words, nb_words);
 		cout << endl;
@@ -1460,7 +1460,7 @@ void create_code::polynomial_representation_of_boolean_function(
 				"after Codes.make_codewords_sorted" << endl;
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "Codewords : ";
 		Lint_vec_print_fully(cout, Words, nb_words);
 		cout << endl;
@@ -1502,7 +1502,7 @@ void create_code::report(int verbose_level)
 
 	string label;
 	//coding_theory_domain Codes;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 	orbiter_kernel_system::file_io Fio;
 
 	{
@@ -1533,17 +1533,17 @@ void create_code::report(int verbose_level)
 			number_theory::number_theory_domain NT;
 
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -1586,7 +1586,7 @@ void create_code::report2(std::ofstream &ost, int verbose_level)
 			Create_RS_code->do_report(verbose_level);
 		}
 		else {
-			orbiter_kernel_system::latex_interface Li;
+			l1_interfaces::latex_interface Li;
 
 			ost << "The generator matrix is:" << endl;
 			ost << "$$" << endl;

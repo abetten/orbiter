@@ -21,41 +21,41 @@ namespace projective_geometry {
 canonical_form_classifier_description::canonical_form_classifier_description()
 {
 
-	f_space = FALSE;
+	f_space = false;
 	//std::string space_label;
 
-	f_input_fname_mask = FALSE;
+	f_input_fname_mask = false;
 	std::string fname_mask;
 
-	f_nb_files = FALSE;
+	f_nb_files = false;
 	nb_files = 0;
 
 
-	f_output_fname = FALSE;
+	f_output_fname = false;
 	//std::string fname_base_out;
 
-	f_label_po = FALSE;
+	f_label_po = false;
 	column_label_po.assign("PO");
-	f_label_so = FALSE;
+	f_label_so = false;
 	column_label_so.assign("orbit");
-	f_label_equation = FALSE;
+	f_label_equation = false;
 	column_label_eqn.assign("curve");
-	f_label_points = FALSE;
+	f_label_points = false;
 	column_label_pts.assign("pts_on_curve");
-	f_label_lines = FALSE;
+	f_label_lines = false;
 	column_label_bitangents.assign("bitangents");
 
 
-	f_degree = FALSE;
+	f_degree = false;
 	degree = 0;
 
-	f_algorithm_nauty = FALSE;
-	f_algorithm_substructure = FALSE;
+	f_algorithm_nauty = false;
+	f_algorithm_substructure = false;
 
-	f_substructure_size = FALSE;
+	f_substructure_size = false;
 	substructure_size = 0;
 
-	f_skip = FALSE;
+	f_skip = false;
 	//std::string skip_label;
 
 	PA = NULL;
@@ -81,96 +81,96 @@ int canonical_form_classifier_description::read_arguments(int argc, std::string 
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-space") == 0) {
-			f_space = TRUE;
+			f_space = true;
 			space_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-space " << space_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-input_fname_mask") == 0) {
-			f_input_fname_mask = TRUE;
+			f_input_fname_mask = true;
 			fname_mask.assign(argv[++i]);
 			if (f_v) {
 				cout << "-input_fname_mask " << fname_mask << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-nb_files") == 0) {
-			f_nb_files = TRUE;
+			f_nb_files = true;
 			nb_files = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-nb_files " << nb_files << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-output_fname") == 0) {
-			f_output_fname = TRUE;
+			f_output_fname = true;
 			fname_base_out.assign(argv[++i]);
 			if (f_v) {
 				cout << "-output_fname " << fname_base_out << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label_po") == 0) {
-			f_label_po = TRUE;
+			f_label_po = true;
 			column_label_po.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_po " << column_label_po << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label_so") == 0) {
-			f_label_so = TRUE;
+			f_label_so = true;
 			column_label_so.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_so " << column_label_so << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label_equation") == 0) {
-			f_label_equation = TRUE;
+			f_label_equation = true;
 			column_label_eqn.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_equation " << column_label_eqn << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label_points") == 0) {
-			f_label_points = TRUE;
+			f_label_points = true;
 			column_label_pts.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_points " << column_label_pts << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label_lines") == 0) {
-			f_label_lines = TRUE;
+			f_label_lines = true;
 			column_label_bitangents.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_lines " << column_label_bitangents << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-degree") == 0) {
-			f_degree = TRUE;
+			f_degree = true;
 			degree = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-degree " << degree << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-algorithm_nauty") == 0) {
-			f_algorithm_nauty = TRUE;
+			f_algorithm_nauty = true;
 			if (f_v) {
 				cout << "-algorithm_nauty" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-algorithm_substructure") == 0) {
-			f_algorithm_substructure = TRUE;
+			f_algorithm_substructure = true;
 			if (f_v) {
 				cout << "-algorithm_substructure" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-substructure_size") == 0) {
-			f_substructure_size = TRUE;
+			f_substructure_size = true;
 			substructure_size = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-substructure_size" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-skip") == 0) {
-			f_skip = TRUE;
+			f_skip = true;
 			skip_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-skip " << skip_label << endl;

@@ -218,7 +218,7 @@ void singer_cycle::init_lines(int verbose_level)
 	P = NEW_OBJECT(geometry::projective_space);
 
 	P->projective_space_init(n - 1, F,
-		FALSE /* f_init_incidence_structure */, 
+		false /* f_init_incidence_structure */, 
 		verbose_level);
 
 
@@ -343,7 +343,7 @@ void singer_cycle::init_lines(int verbose_level)
 		}
 	}
 
-	int f_combined_action = FALSE;
+	int f_combined_action = false;
 
 	Inc = NEW_OBJECT(geometry::incidence_structure);
 
@@ -363,11 +363,11 @@ void singer_cycle::init_lines(int verbose_level)
 #if 0
 	partitionstack *Stack;
 	incidence_structure *Inc;
-	int f_combined_action = FALSE;
-	int f_write_tda_files = FALSE;
-	int f_include_group_order = FALSE;
-	int f_pic = FALSE;
-	int f_include_tda_scheme = FALSE;
+	int f_combined_action = false;
+	int f_write_tda_files = false;
+	int f_include_group_order = false;
+	int f_pic = false;
+	int f_include_tda_scheme = false;
 	
 
 	int set_size = P->N_points;
@@ -409,8 +409,8 @@ void singer_cycle::init_lines(int verbose_level)
 	cout << "before compute_TDO_safe" << endl;
 	Inc->compute_TDO_safe(*Stack, TDO_depth, verbose_level - 3);
 	cout << "after compute_TDO_safe" << endl;
-	Inc->get_and_print_row_tactical_decomposition_scheme_tex(cout, FALSE /* f_enter_math */, *Stack);
-	Inc->get_and_print_column_tactical_decomposition_scheme_tex(cout, FALSE /* f_enter_math */, *Stack);
+	Inc->get_and_print_row_tactical_decomposition_scheme_tex(cout, false /* f_enter_math */, *Stack);
+	Inc->get_and_print_column_tactical_decomposition_scheme_tex(cout, false /* f_enter_math */, *Stack);
 #endif
 
 	//FREE_OBJECT(Inc);

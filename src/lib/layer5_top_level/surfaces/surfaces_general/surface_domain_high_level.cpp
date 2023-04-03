@@ -284,7 +284,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 #endif
 
 #if 0
-	if (FALSE) {
+	if (false) {
 
 		layered_graph_draw_options *O;
 
@@ -296,7 +296,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		O = Orbiter->draw_options;
 
 
-		SCW->create_report(TRUE /*f_with_stabilizers */,
+		SCW->create_report(true /*f_with_stabilizers */,
 				O,
 				verbose_level);
 	}
@@ -410,7 +410,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 				"before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level - 1*/);
+	Surf_A->init(Surf, PA, true /* f_recoordinatize */, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 				"after Surf_A->init" << endl;
@@ -435,7 +435,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 				"after SAL->init" << endl;
 	}
 
-	if (TRUE) {
+	if (true) {
 		if (f_v) {
 			cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 					"before SAL->report" << endl;
@@ -507,7 +507,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, verbose_level - 1);
+	Surf_A->init(Surf, PA, true /* f_recoordinatize */, verbose_level - 1);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"after Surf_A->init" << endl;
@@ -613,9 +613,9 @@ void surface_domain_high_level::do_six_arcs(
 	Six_arcs = NEW_OBJECT(cubic_surfaces_and_arcs::six_arcs_not_on_a_conic);
 
 	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
-	Six_arc_descr->f_target_size = TRUE;
+	Six_arc_descr->f_target_size = true;
 	Six_arc_descr->target_size = 6;
-	Six_arc_descr->f_control = TRUE;
+	Six_arc_descr->f_control = true;
 	Six_arc_descr->control_label.assign(Control_six_arcs_label);
 
 
@@ -638,7 +638,7 @@ void surface_domain_high_level::do_six_arcs(
 	Six_arcs->init(
 			Six_arc_descr,
 			PA,
-			FALSE, 0, //NULL,
+			false, 0, //NULL,
 			verbose_level);
 
 	transporter = NEW_int(Six_arcs->Gen->PA->A->elt_size_in_int);
@@ -753,10 +753,10 @@ void surface_domain_high_level::do_six_arcs(
 
 	data_structures::tally C;
 
-	C.init(Nb_E, nb_orbits, FALSE, 0);
+	C.init(Nb_E, nb_orbits, false, 0);
 
 	cout << "nb_E distribution: ";
-	C.print_naked_tex(cout, FALSE);
+	C.print_naked_tex(cout, false);
 	cout << endl;
 
 
@@ -847,8 +847,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 
 	F0 = NEW_OBJECT(field_theory::finite_field);
 	F0->finite_field_init_small_order(defining_q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	F = PA->P->Subspaces->F;
@@ -867,7 +867,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		cout << "surface_domain_high_level::do_cubic_surface_properties "
 				"before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	Surf_A->init(Surf, PA, true /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties "
 				"after Surf_A->init" << endl;
@@ -937,9 +937,9 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		surface_create_description *Descr;
 
 		Descr = NEW_OBJECT(surface_create_description);
-		//Descr->f_q = TRUE;
+		//Descr->f_q = true;
 		//Descr->q = F->q;
-		Descr->f_by_coefficients = TRUE;
+		Descr->f_by_coefficients = true;
 		snprintf(str, sizeof(str), "%d,0", coeff20[0]);
 		Descr->coefficients_text.assign(str);
 		for (i = 1; i < 20; i++) {
@@ -964,7 +964,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 
 
 		if (SC->F->e == 1) {
-			SC->F->f_print_as_exponentials = FALSE;
+			SC->F->f_print_as_exponentials = false;
 		}
 
 		SC->F->Projective_space_basic->PG_element_normalize(
@@ -989,7 +989,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		// Otherwise we don't, because it would take too long.
 
 
-		if (FALSE /* F->q <= 8*/) {
+		if (false /* F->q <= 8*/) {
 
 #if 0
 			if (f_v) {
@@ -1140,8 +1140,8 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 	F0 = NEW_OBJECT(field_theory::finite_field);
 	F0->finite_field_init_small_order(defining_q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	F = PA->P->Subspaces->F;
@@ -1160,7 +1160,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
 				"before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	Surf_A->init(Surf, PA, true /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
 				"after Surf_A->init" << endl;
@@ -1212,10 +1212,10 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 	data_structures::tally T_S;
 
-	T_S.init_lint(Nb_singular_pts, nb_orbits, FALSE, 0);
+	T_S.init_lint(Nb_singular_pts, nb_orbits, false, 0);
 
 	cout << "Classification by the number of singular points:" << endl;
-	T_S.print(TRUE /* f_backwards */);
+	T_S.print(true /* f_backwards */);
 
 	{
 		string fname_report;
@@ -1224,7 +1224,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 		fname_report.assign(fname_csv);
 		ST.chop_off_extension(fname_report);
 		fname_report.append("_report.tex");
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
 
 		{
@@ -1242,9 +1242,9 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 				exit(1);
 			}
 			PA->A->report(ost,
-					FALSE /* f_sims */,
+					false /* f_sims */,
 					NULL, //A1/*LG->A_linear*/->Sims,
-					FALSE /* f_strong_gens */,
+					false /* f_strong_gens */,
 					NULL,
 					Descr->draw_options,
 					verbose_level - 1);
@@ -1267,7 +1267,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 			ost << "Number of surfaces: " << nb_orbits << "\\\\" << endl;
 			ost << "Classification by the number of singular points:" << endl;
 			ost << "$$" << endl;
-			T_S.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+			T_S.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
 			ost << "$$" << endl;
 
 
@@ -1355,12 +1355,12 @@ void surface_domain_high_level::report_singular_surfaces(
 
 	data_structures::tally T_L;
 
-	T_L.init_lint(Selected_Nb_lines, nb_S, FALSE, 0);
+	T_L.init_lint(Selected_Nb_lines, nb_S, false, 0);
 
 	ost << "Number of surfaces: " << nb_S << "\\\\" << endl;
 	ost << "Classification by the number of lines:" << endl;
 	ost << "$$" << endl;
-	T_L.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+	T_L.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
 	ost << "$$" << endl;
 
 	report_surfaces_by_lines(ost, Data_S, T_L, verbose_level);
@@ -1429,12 +1429,12 @@ void surface_domain_high_level::report_non_singular_surfaces(
 
 	data_structures::tally T_L;
 
-	T_L.init_lint(Selected_Nb_lines, nb_NS, FALSE, 0);
+	T_L.init_lint(Selected_Nb_lines, nb_NS, false, 0);
 
 	ost << "Number of surfaces: " << nb_NS << "\\\\" << endl;
 	ost << "Classification by the number of lines:" << endl;
 	ost << "$$" << endl;
-	T_L.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+	T_L.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
 	ost << "$$" << endl;
 
 
@@ -1699,10 +1699,10 @@ void surface_domain_high_level::do_create_surface_atlas(
 		int f_semilinear;
 
 		if (h > 1) {
-			f_semilinear = TRUE;
+			f_semilinear = true;
 		}
 		else {
-			f_semilinear = FALSE;
+			f_semilinear = false;
 		}
 
 #if 0
@@ -1710,21 +1710,21 @@ void surface_domain_high_level::do_create_surface_atlas(
 
 		T[cur].Descr->n = 4;
 		T[cur].Descr->input_q = q;
-		T[cur].Descr->f_projective = TRUE;
-		T[cur].Descr->f_general = FALSE;
-		T[cur].Descr->f_affine = FALSE;
-		T[cur].Descr->f_semilinear = FALSE;
+		T[cur].Descr->f_projective = true;
+		T[cur].Descr->f_general = false;
+		T[cur].Descr->f_affine = false;
+		T[cur].Descr->f_semilinear = false;
 
 		if (h > 1) {
-			T[cur].Descr->f_semilinear = TRUE;
+			T[cur].Descr->f_semilinear = true;
 		}
-		T[cur].Descr->f_special = FALSE;
+		T[cur].Descr->f_special = false;
 #endif
 
 		T[cur].F = NEW_OBJECT(field_theory::finite_field);
 		T[cur].F->finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0);
 
 		//T[cur].Descr->F = T[cur].F;
@@ -1734,7 +1734,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 
 		T[cur].PA->init(
 				T[cur].F, 3, f_semilinear,
-				TRUE /* f_init_incidence_structure */,
+				true /* f_init_incidence_structure */,
 				verbose_level);
 
 		//T[cur].LG = NEW_OBJECT(linear_group);
@@ -1767,7 +1767,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 					"before Surf_A->init_with_linear_group" << endl;
 		}
 		T[cur].Surf_A->init(
-				T[cur].Surf, T[cur].PA, TRUE /* f_recoordinatize */,
+				T[cur].Surf, T[cur].PA, true /* f_recoordinatize */,
 				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "surface_domain_high_level::do_create_surface_atlas "
@@ -1800,7 +1800,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 
 		T[cur].T_nb_E = NEW_OBJECT(data_structures::tally);
 
-		T[cur].T_nb_E->init(T[cur].nb_E, T[cur].nb_total, FALSE, 0);
+		T[cur].T_nb_E->init(T[cur].nb_E, T[cur].nb_total, false, 0);
 
 
 		cur++;
@@ -1834,17 +1834,17 @@ void surface_domain_high_level::do_create_surface_atlas(
 			title.assign("ATLAS of Cubic Surfaces");
 			author.assign("Anton Betten and Fatma Karaoglu");
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
+				false /* f_book */,
+				true /* f_title */,
 				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
 				extra_praeamble /* extra_praeamble */);
 
 
@@ -2014,18 +2014,18 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 
 			author.assign("Anton Betten and Fatma Karaoglu");
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
+				false /* f_book */,
+				true /* f_title */,
 				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
 				extra_praeamble /* extra_praeamble */);
 
 
@@ -2106,18 +2106,18 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 			title.assign("ATLAS of Dickson Surfaces");
 			author.assign("Fatma Karaoglu");
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
+				false /* f_book */,
+				true /* f_title */,
 				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
 				extra_praeamble /* extra_praeamble */);
 
 

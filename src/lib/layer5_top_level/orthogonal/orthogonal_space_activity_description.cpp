@@ -20,29 +20,29 @@ namespace orthogonal_geometry_applications {
 orthogonal_space_activity_description::orthogonal_space_activity_description()
 {
 #if 0
-	f_create_BLT_set = FALSE;
+	f_create_BLT_set = false;
 	BLT_Set_create_description = NULL;
 #endif
 
-	f_cheat_sheet_orthogonal = FALSE;
+	f_cheat_sheet_orthogonal = false;
 
-	f_print_points = FALSE;
+	f_print_points = false;
 	//std::string print_points_label;
 
-	f_print_lines = FALSE;
+	f_print_lines = false;
 	//std::string print_lines_label;
 
-	f_unrank_line_through_two_points = FALSE;
+	f_unrank_line_through_two_points = false;
 	//std::string unrank_line_through_two_points_p1;
 	//std::string unrank_line_through_two_points_p2;
 
-	f_lines_on_point = FALSE;
+	f_lines_on_point = false;
 	lines_on_point_rank = 0;
 
-	f_perp = FALSE;
+	f_perp = false;
 	//std::string perp_text;
 
-	f_set_stabilizer = FALSE;
+	f_set_stabilizer = false;
 	set_stabilizer_intermediate_set_size = 0;
 	//std::string set_stabilizer_fname_mask;
 	set_stabilizer_nb = 0;
@@ -50,12 +50,12 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	//std::string set_stabilizer_fname_out;
 
 
-	f_export_point_line_incidence_matrix = FALSE;
+	f_export_point_line_incidence_matrix = false;
 
-	f_intersect_with_subspace = FALSE;
+	f_intersect_with_subspace = false;
 	//std::string intersect_with_subspace_label;
 
-	f_table_of_blt_sets = FALSE;
+	f_table_of_blt_sets = false;
 
 }
 
@@ -80,7 +80,7 @@ int orthogonal_space_activity_description::read_arguments(
 
 #if 0
 		if (ST.stringcmp(argv[i], "-create_BLT_set") == 0) {
-			f_create_BLT_set = TRUE;
+			f_create_BLT_set = true;
 			BLT_Set_create_description = NEW_OBJECT(BLT_set_create_description);
 			if (f_v) {
 				cout << "-create_BLT_set" << endl;
@@ -99,27 +99,27 @@ int orthogonal_space_activity_description::read_arguments(
 #endif
 
 		if (ST.stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
-			f_cheat_sheet_orthogonal = TRUE;
+			f_cheat_sheet_orthogonal = true;
 			if (f_v) {
 				cout << "-cheat_sheet_orthogonal "<< endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-print_points") == 0) {
-			f_print_points = TRUE;
+			f_print_points = true;
 			print_points_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-print_points " << print_points_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-print_lines") == 0) {
-			f_print_lines = TRUE;
+			f_print_lines = true;
 			print_lines_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-print_lines " << print_lines_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-unrank_line_through_two_points") == 0) {
-			f_unrank_line_through_two_points = TRUE;
+			f_unrank_line_through_two_points = true;
 			unrank_line_through_two_points_p1.assign(argv[++i]);
 			unrank_line_through_two_points_p2.assign(argv[++i]);
 			if (f_v) {
@@ -128,7 +128,7 @@ int orthogonal_space_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-lines_on_point") == 0) {
-			f_lines_on_point = TRUE;
+			f_lines_on_point = true;
 			lines_on_point_rank = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-lines_on_point " << lines_on_point_rank << endl;
@@ -136,7 +136,7 @@ int orthogonal_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-perp") == 0) {
-			f_perp = TRUE;
+			f_perp = true;
 			perp_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-perp " << perp_text << endl;
@@ -144,7 +144,7 @@ int orthogonal_space_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-set_stabilizer") == 0) {
-			f_set_stabilizer = TRUE;
+			f_set_stabilizer = true;
 			set_stabilizer_intermediate_set_size = ST.strtoi(argv[++i]);
 			set_stabilizer_fname_mask.assign(argv[++i]);
 			set_stabilizer_nb = ST.strtoi(argv[++i]);
@@ -161,20 +161,20 @@ int orthogonal_space_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
-			f_export_point_line_incidence_matrix = TRUE;
+			f_export_point_line_incidence_matrix = true;
 			if (f_v) {
 				cout << "-export_point_line_incidence_matrix " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-intersect_with_subspace") == 0) {
-			f_intersect_with_subspace = TRUE;
+			f_intersect_with_subspace = true;
 			intersect_with_subspace_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-intersect_with_subspace " << intersect_with_subspace_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-table_of_blt_sets") == 0) {
-			f_table_of_blt_sets = TRUE;
+			f_table_of_blt_sets = true;
 			if (f_v) {
 				cout << "-table_of_blt_sets " << endl;
 			}
@@ -229,7 +229,7 @@ void orthogonal_space_activity_description::print()
 	}
 #endif
 	if (f_cheat_sheet_orthogonal) {
-		f_cheat_sheet_orthogonal = TRUE;
+		f_cheat_sheet_orthogonal = true;
 		cout << "-cheat_sheet_orthogonal "<< endl;
 	}
 	if (f_print_points) {

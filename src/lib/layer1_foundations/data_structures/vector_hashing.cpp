@@ -114,7 +114,7 @@ void vector_hashing::compute_tables(int verbose_level)
 		}
 	
 	//int_vec_sorting_permutation(H, N, perm, perm_inv,
-	//TRUE /* f_increasingly */);
+	//true /* f_increasingly */);
 	
 	
 #if 0

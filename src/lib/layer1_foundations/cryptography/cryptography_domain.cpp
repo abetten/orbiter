@@ -343,7 +343,7 @@ int cryptography_domain::kasiski_test(
 	f_taken = new int[l];
 	Nb_candidates = new int[l];
 	for (i = 0; i < l; i++) {
-		f_taken[i] = FALSE;
+		f_taken[i] = false;
 	}
 
 	for (i = 0; i < l; i++) {
@@ -553,7 +553,7 @@ double cryptography_domain::friedman_index_shifted(
 
 void cryptography_domain::print_frequencies(int *mult)
 {
-	int i, j = 0, k = 0, h, l = 0, f_first = TRUE;
+	int i, j = 0, k = 0, h, l = 0, f_first = true;
 	char c;
 
 	for (i = 0; i < 26; i++) {
@@ -594,7 +594,7 @@ void cryptography_domain::print_frequencies(int *mult)
 		if (j > 1) {
 			cout << "^" << j;
 		}
-		f_first = FALSE;
+		f_first = false;
 	}
 }
 
@@ -708,12 +708,12 @@ char cryptography_domain::upper_case(char c)
 char cryptography_domain::is_alnum(char c)
 {
 	if (c >= 'A' && c <= 'Z') {
-		return TRUE;
+		return true;
 	}
 	if (c >= 'a' && c <= 'z') {
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 }
 
 void cryptography_domain::get_random_permutation(std::string &p)
@@ -767,8 +767,8 @@ void cryptography_domain::make_affine_sequence(
 		x = x0;
 		orbit[0] = x0;
 		len = 1;
-		while (TRUE) {
-			f_reached[x] = TRUE;
+		while (true) {
+			f_reached[x] = true;
 			y = NT.mult_mod(a, x, m);
 			y = NT.add_mod(y, c, m);
 
@@ -2288,14 +2288,14 @@ void cryptography_domain::do_solovay_strassen(
 	ofstream f(fname);
 
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
+	L.head(f, false /* f_book*/, true /* f_title */,
+		title, author, false /* f_toc */, false /* f_landscape */,
+			true /* f_12pt */,
+			true /* f_enlarged_page */,
+			true /* f_pagenumbers */,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -2355,14 +2355,14 @@ void cryptography_domain::do_miller_rabin(
 	ofstream f(fname);
 
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
+	L.head(f, false /* f_book*/, true /* f_title */,
+		title, author, false /* f_toc */, false /* f_landscape */,
+			true /* f_12pt */,
+			true /* f_enlarged_page */,
+			true /* f_pagenumbers */,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -2430,14 +2430,14 @@ void cryptography_domain::do_fermat_test(
 	ofstream f(fname);
 
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
+	L.head(f, false /* f_book*/, true /* f_title */,
+		title, author, false /* f_toc */, false /* f_landscape */,
+			true /* f_12pt */,
+			true /* f_enlarged_page */,
+			true /* f_pagenumbers */,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -2501,14 +2501,14 @@ void cryptography_domain::do_find_pseudoprime(
 		ofstream ost(fname);
 
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
-		L.head(ost, FALSE /* f_book*/, TRUE /* f_title */,
-			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+		L.head(ost, false /* f_book*/, true /* f_title */,
+			title, author, false /* f_toc */, false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extra_praeamble */);
 
 
@@ -2520,7 +2520,7 @@ void cryptography_domain::do_find_pseudoprime(
 
 		//f << "\\begin{multicols}{2}" << endl;
 		ost << "\\begin{enumerate}[(1)]" << endl;
-		while (TRUE) {
+		while (true) {
 
 			cnt++;
 
@@ -2637,14 +2637,14 @@ void cryptography_domain::do_find_strong_pseudoprime(
 		ofstream f(fname);
 
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
-		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+		L.head(f, false /* f_book*/, true /* f_title */,
+			title, author, false /* f_toc */, false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extra_praeamble */);
 
 
@@ -2656,7 +2656,7 @@ void cryptography_domain::do_find_strong_pseudoprime(
 
 		f << "\\begin{multicols}{2}" << endl;
 		f << "\\begin{enumerate}[(1)]" << endl;
-		while (TRUE) {
+		while (true) {
 
 			cnt++;
 
@@ -2749,14 +2749,14 @@ void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 		ofstream f(fname);
 
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
-		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+		L.head(f, false /* f_book*/, true /* f_title */,
+			title, author, false /* f_toc */, false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extra_praeamble */);
 
 
@@ -2811,7 +2811,7 @@ void cryptography_domain::quadratic_sieve(int n,
 	ring_theory::longinteger_object M, sqrtM;
 	ring_theory::longinteger_domain D;
 	number_theory::number_theory_domain NT;
-	int f_found_small_factor = FALSE;
+	int f_found_small_factor = false;
 	int small_factor;
 	int i;
 
@@ -2852,7 +2852,7 @@ void cryptography_domain::quadratic_sieve(int n,
 				"calling reduce_primes" << endl;
 	}
 	//small_primes.m_l(0);
-	while (TRUE) {
+	while (true) {
 		//int p;
 		reduce_primes(primes, M,
 				f_found_small_factor, small_factor,
@@ -2899,7 +2899,7 @@ void cryptography_domain::quadratic_sieve(int n,
 	calc_log2(primes, primes_log2, 0 /*verbose_level - 1*/);
 
 
-	int f_x_file = FALSE;
+	int f_x_file = false;
 	vector<int> X;
 
 	if (f_x_file) {
@@ -2911,10 +2911,10 @@ void cryptography_domain::quadratic_sieve(int n,
 #endif
 		}
 	else {
-		Quadratic_Sieve(factorbase, FALSE /* f_mod */, 0 /* mod_n */, 0 /* mod_r */, x0,
+		Quadratic_Sieve(factorbase, false /* f_mod */, 0 /* mod_n */, 0 /* mod_r */, x0,
 			n, M, sqrtM,
 			primes, primes_log2, R1, R2, X, verbose_level - 1);
-		if (FALSE /*f_mod*/) {
+		if (false /*f_mod*/) {
 			exit(1);
 			}
 		}
@@ -3037,7 +3037,7 @@ void cryptography_domain::reduce_primes(
 	if (f_v) {
 		cout << "cryptography_domain::reduce_primes" << endl;
 	}
-	f_found_small_factor = FALSE;
+	f_found_small_factor = false;
 	small_factor = 0;
 	l = primes.size();
 	for (i = 0; i < l; i++) {
@@ -3057,7 +3057,7 @@ void cryptography_domain::reduce_primes(
 			cout << "cryptography_domain::reduce_primes "
 					"M is divisible by " << p << endl;
 			//exit(1);
-			f_found_small_factor = TRUE;
+			f_found_small_factor = true;
 			small_factor = p;
 			return;
 			}
@@ -3594,7 +3594,7 @@ void cryptography_domain::Quadratic_Sieve(
 
 
 
-	while (TRUE) {
+	while (true) {
 		from = to;
 		to = from + step_size;
 		count++;
@@ -3712,13 +3712,13 @@ int cryptography_domain::quadratic_sieve(
 			if (f_v) {
 				cout << "cryptography_domain::quadratic_sieve done" << endl;
 			}
-			return TRUE;
+			return true;
 		}
 	} // next x
 	if (f_v) {
 		cout << "cryptography_domain::quadratic_sieve done" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 int cryptography_domain::factor_over_factor_base(
@@ -3750,10 +3750,10 @@ int cryptography_domain::factor_over_factor_base(
 		}
 	}
 	if (D.compare_unsigned(y, z1) == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -3785,10 +3785,10 @@ int cryptography_domain::factor_over_factor_base2(
 		}
 	}
 	if (D.compare_unsigned(x, z1) == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -3808,7 +3808,7 @@ void cryptography_domain::find_probable_prime_above(
 		cout << "cryptography_domain::find_probable_prime_above" << endl;
 	}
 	one.create(1, __FILE__, __LINE__);
-	while (TRUE) {
+	while (true) {
 		if (f_vv) {
 			cout << "considering " << a << endl;
 		}
@@ -3861,10 +3861,10 @@ int cryptography_domain::solovay_strassen_is_prime(
 				cout << "is not prime after "
 						<< i + 1 << " tests" << endl;
 				}
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int cryptography_domain::solovay_strassen_is_prime_single_test(
@@ -3900,7 +3900,7 @@ int cryptography_domain::fermat_test_iterated_with_latex_key(
 		std::ostream &ost,
 		ring_theory::longinteger_object &P, int nb_times,
 		int verbose_level)
-// returns TRUE is the test is conclusive, i.e. if the number is not prime.
+// returns true is the test is conclusive, i.e. if the number is not prime.
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
@@ -3943,11 +3943,11 @@ int cryptography_domain::fermat_test_iterated_with_latex_key(
 	ost << "\\end{enumerate}" << endl;
 	if (i == nb_times) {
 		//ost << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
-		ret = FALSE;
+		ret = false;
 	}
 	else {
 		//ost << "Fermat: The number $" << P << "$ is not prime.\\\\" << endl;
-		ret = TRUE;
+		ret = true;
 	}
 	if (f_v) {
 		cout << "cryptography_domain::fermat_test_iterated_with_latex_key done" << endl;
@@ -3989,7 +3989,7 @@ int cryptography_domain::fermat_test_with_latex_key(
 				"inconclusive" << endl;
 		}
 		ost << "The Fermat test is inconclusive.\\\\" << endl;
-		return FALSE;
+		return false;
 	}
 	else {
 		if (f_v) {
@@ -3997,7 +3997,7 @@ int cryptography_domain::fermat_test_with_latex_key(
 				"not prime (sure)" << endl;
 		}
 		ost << "The number $" << n << "$ is not prime because of the Fermat test.\\\\" << endl;
-		return TRUE;
+		return true;
 	}
 }
 
@@ -4027,7 +4027,7 @@ int cryptography_domain::solovay_strassen_test(
 		if (f_v) {
 			cout << "not prime (sure)" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	D.add(n, m_one, b);
 	D.integral_division_by_int(b, 2, n2, r);
@@ -4046,14 +4046,14 @@ int cryptography_domain::solovay_strassen_test(
 				cout << "cryptography_domain::solovay_strassen_test "
 					"inconclusive" << endl;
 			}
-			return TRUE;
+			return true;
 		}
 		else {
 			if (f_v) {
 				cout << "cryptography_domain::solovay_strassen_test "
 					"not prime (sure)" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 	}
 	if (x == -1) {
@@ -4062,14 +4062,14 @@ int cryptography_domain::solovay_strassen_test(
 				cout << "cryptography_domain::solovay_strassen_test "
 					"inconclusive" << endl;
 			}
-			return TRUE;
+			return true;
 		}
 		else {
 			if (f_v) {
 				cout << "cryptography_domain::solovay_strassen_test "
 					"not prime (sure)" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 	}
 	// we should never be here:
@@ -4109,7 +4109,7 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(
 		if (f_v) {
 			cout << "not prime (sure)" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	D.add(n, m_one, b);
 	D.integral_division_by_int(b, 2, n2, r);
@@ -4137,7 +4137,7 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(
 					"inconclusive" << endl;
 			}
 			ost << "The Solovay-Strassen test is inconclusive.\\\\" << endl;
-			return TRUE;
+			return true;
 		}
 		else {
 			if (f_v) {
@@ -4145,7 +4145,7 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(
 					"not prime (sure)" << endl;
 			}
 			ost << "The number $n$ is not prime by the Solovay-Strassen test.\\\\" << endl;
-			return FALSE;
+			return false;
 		}
 	}
 	if (x == -1) {
@@ -4155,7 +4155,7 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(
 					"inconclusive" << endl;
 			}
 			ost << "The Solovay-Strassen test is inconclusive.\\\\" << endl;
-			return TRUE;
+			return true;
 		}
 		else {
 			if (f_v) {
@@ -4163,7 +4163,7 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(
 					"not prime (sure)" << endl;
 			}
 			ost << "The number $n$ is not prime by the Solovay-Strassen test.\\\\" << endl;
-			return FALSE;
+			return false;
 		}
 	}
 	// we should never be here:
@@ -4176,7 +4176,7 @@ int cryptography_domain::solovay_strassen_test_iterated_with_latex_key(
 		std::ostream &ost,
 		ring_theory::longinteger_object &P, int nb_times,
 		int verbose_level)
-// returns TRUE is the test is conclusive, i.e. if the number is not prime.
+// returns true is the test is conclusive, i.e. if the number is not prime.
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -4226,11 +4226,11 @@ int cryptography_domain::solovay_strassen_test_iterated_with_latex_key(
 
 	if (i == nb_times) {
 		//ost << "Solovay-Strassen: The number $" << P << "$ is probably prime. Solovay-Strassen test is inconclusive.\\\\" << endl;
-		ret = FALSE;
+		ret = false;
 	}
 	else {
 		//ost << "Solovay-Strassen: The number $" << P << "$ is not prime.\\\\" << endl;
-		ret = TRUE;
+		ret = true;
 	}
 	if (f_v) {
 		cout << "cryptography_domain::solovay_strassen_test_iterated_with_latex_key done" << endl;
@@ -4280,7 +4280,7 @@ int cryptography_domain::miller_rabin_test(
 
 	// compute b := a^m mod n
 	a.assign_to(b);
-	D.power_longint_mod(b, m, n, FALSE /* f_v */);
+	D.power_longint_mod(b, m, n, false /* f_v */);
 	if (f_vv) {
 		cout << a << "^" << mm << " = " << b << endl;
 	}
@@ -4288,13 +4288,13 @@ int cryptography_domain::miller_rabin_test(
 		if (f_v) {
 			cout << "a^m = 1 mod n, so the test is inconclusive" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	if (D.compare_unsigned(b, n_minus_one) == 0) {
 		if (f_v) {
 			cout << "is minus one, so the test is inconclusive" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	for (i = 0; i < k; i++) {
 		D.mult_mod(b, b, c, n, 0);
@@ -4307,20 +4307,20 @@ int cryptography_domain::miller_rabin_test(
 			if (f_v) {
 				cout << "is minus one, so the test is inconclusive" << endl;
 			}
-			return TRUE;
+			return true;
 		}
 		if (D.compare_unsigned(b, one) == 0) {
 			if (f_v) {
 				cout << "is one, we reject as composite" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 		//mult(b, b, c);
 	}
 	if (f_v) {
 		cout << "inconclusive, we accept as probably prime" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int cryptography_domain::miller_rabin_test_with_latex_key(
@@ -4370,7 +4370,7 @@ int cryptography_domain::miller_rabin_test_with_latex_key(
 
 		// do a Fermat test:
 		a.assign_to(b);
-		D.power_longint_mod(b, n_minus_one, n, FALSE /* f_v */);
+		D.power_longint_mod(b, n_minus_one, n, false /* f_v */);
 		if (f_vv) {
 			cout << a << "^{n-1} = " << b << endl;
 		}
@@ -4382,7 +4382,7 @@ int cryptography_domain::miller_rabin_test_with_latex_key(
 				cout << "a^{n-1} != 1 mod n, so the number is not prime by Fermat" << endl;
 			}
 			ost << "The number is not prime, a=" << a << " is a Fermat witness\\\\" << endl;
-			return TRUE;
+			return true;
 		}
 		else {
 			ost << "The number survives the Fermat test\\\\" << endl;
@@ -4401,7 +4401,7 @@ int cryptography_domain::miller_rabin_test_with_latex_key(
 
 		// compute b := a^m mod n
 		a.assign_to(b);
-		D.power_longint_mod(b, m, n, FALSE /* f_v */);
+		D.power_longint_mod(b, m, n, false /* f_v */);
 		if (f_vv) {
 			cout << a << "^" << mm << " = " << b << endl;
 		}
@@ -4413,14 +4413,14 @@ int cryptography_domain::miller_rabin_test_with_latex_key(
 				cout << "a^m = 1 mod n, so the test is inconclusive" << endl;
 			}
 			ost << "The Miller-Rabin test is inconclusive\\\\" << endl;
-			return FALSE;
+			return false;
 		}
 		if (D.compare_unsigned(b, n_minus_one) == 0) {
 			if (f_v) {
 				cout << "is minus one, so the test is inconclusive" << endl;
 			}
 			ost << "The Miller-Rabin test is inconclusive\\\\" << endl;
-			return FALSE;
+			return false;
 		}
 		ost << "$b_{0} = " << b << "$\\\\" << endl;
 		for (i = 0; i < k; i++) {
@@ -4436,14 +4436,14 @@ int cryptography_domain::miller_rabin_test_with_latex_key(
 					cout << "is minus one, so the test is inconclusive" << endl;
 				}
 				ost << "The Miller-Rabin test is inconclusive.\\\\" << endl;
-				return FALSE;
+				return false;
 			}
 			if (D.compare_unsigned(b, one) == 0) {
 				if (f_v) {
 					cout << "is one, we reject as composite" << endl;
 				}
 				ost << "The number is not prime because of the Miller-Rabin test.\\\\" << endl;
-				return TRUE;
+				return true;
 			}
 			//mult(b, b, c);
 		}
@@ -4456,14 +4456,14 @@ int cryptography_domain::miller_rabin_test_with_latex_key(
 		cout << "cryptography_domain::miller_rabin_test_with_latex_key "
 				"done" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 int cryptography_domain::miller_rabin_test_iterated_with_latex_key(
 		std::ostream &ost,
 		ring_theory::longinteger_object &P, int nb_times,
 		int verbose_level)
-// returns TRUE if the test is conclusive,
+// returns true if the test is conclusive,
 // i.e. if the number is not prime.
 {
 	int f_v = (verbose_level >= 1);
@@ -4493,11 +4493,11 @@ int cryptography_domain::miller_rabin_test_iterated_with_latex_key(
 	ost << "\\end{enumerate}" << endl;
 	if (i == nb_times) {
 		//ost << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
-		ret = FALSE;
+		ret = false;
 	}
 	else {
 		//ost << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
-		ret = TRUE;
+		ret = true;
 	}
 	if (f_v) {
 		cout << "cryptography_domain::miller_rabin_test_iterated_with_latex_key done" << endl;
@@ -4584,7 +4584,7 @@ void cryptography_domain::RSA_setup(
 				<< phi_n << endl;
 	}
 
-	while (TRUE) {
+	while (true) {
 		D.random_number_less_than_n(n, a);
 		if (f_v) {
 			cout << "choosing integer " << a

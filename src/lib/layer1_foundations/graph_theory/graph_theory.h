@@ -213,7 +213,7 @@ public:
 	void init_suspicious_points(int nb, int *point_list);
 	void backtrack_search(int depth, int verbose_level);
 	int solve_decision_problem(int depth, int verbose_level);
-		// returns TRUE if we found a solution
+		// returns true if we found a solution
 	//void backtrack_search_not_recursive(int verbose_level);
 	void open_tree_file(std::string &fname_base);
 	void close_tree_file();

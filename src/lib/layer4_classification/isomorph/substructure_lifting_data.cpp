@@ -55,7 +55,7 @@ substructure_lifting_data::substructure_lifting_data()
 	schreier_vector = NULL;
 	schreier_prev = NULL;
 
-	f_use_table_of_solutions = FALSE;
+	f_use_table_of_solutions = false;
 	table_of_solutions = NULL;
 
 	first_flag_orbit_of_starter = NULL;
@@ -79,7 +79,7 @@ substructure_lifting_data::~substructure_lifting_data()
 	if (table_of_solutions) {
 		FREE_lint(table_of_solutions);
 		table_of_solutions = NULL;
-		f_use_table_of_solutions = FALSE;
+		f_use_table_of_solutions = false;
 	}
 	if (v) {
 		delete [] v;
@@ -325,7 +325,7 @@ void substructure_lifting_data::load_table_of_solutions(int verbose_level)
 		cout << endl;
 #endif
 	}
-	f_use_table_of_solutions = TRUE;
+	f_use_table_of_solutions = true;
 	close_solution_database(verbose_level - 2);
 	if (f_v) {
 		cout << "substructure_lifting_data::load_table_of_solutions done" << endl;
@@ -589,15 +589,15 @@ void substructure_lifting_data::orbits_of_stabilizer(int verbose_level)
 				data_structures::tally C;
 
 				C.init(flag_orbit_solution_len + nb_orbits_prev,
-						nb_flag_orbits - nb_orbits_prev, FALSE, 0);
-				C.print_naked(TRUE /* f_backwards */);
+						nb_flag_orbits - nb_orbits_prev, false, 0);
+				C.print_naked(true /* f_backwards */);
 				cout << endl;
 			}
 			else {
 				cout << endl;
 			}
 		}
-		if (FALSE && f_vvvv) {
+		if (false && f_vvvv) {
 			cout << "i : orbit_perm : orbit_number : schreier_vector : "
 					"schreier_prev" << endl;
 			for (j = 0; j < l; j++) {
@@ -643,13 +643,13 @@ void substructure_lifting_data::orbits_of_stabilizer(int verbose_level)
 				<< " orbits : ";
 		data_structures::tally C;
 
-		C.init(flag_orbit_solution_len, nb_flag_orbits, FALSE, 0);
-		C.print_naked(TRUE /* f_backwards */);
+		C.init(flag_orbit_solution_len, nb_flag_orbits, false, 0);
+		C.print_naked(true /* f_backwards */);
 		cout << endl;
 	}
 
 #if 0
-	if (FALSE && f_vv) {
+	if (false && f_vv) {
 		cout << "nb_starter=" << nb_starter << endl;
 		cout << "i : solution_first[i] : solution_len[i]" << endl;
 		for (i = 0; i < nb_starter; i++) {
@@ -792,13 +792,13 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 	for (j = 0; j < l; j++) {
 
 		load_solution(f + j, sets + j * Iso->size, verbose_level - 1);
-		if (FALSE && f_vv) {
+		if (false && f_vv) {
 			cout << "solution " << j << "        : ";
 			Lint_vec_print(cout, sets + j * Iso->size, Iso->size);
 			cout << endl;
 		}
 		Sorting.lint_vec_heapsort(sets + j * Iso->size, Iso->size);
-		if (FALSE && f_vv) {
+		if (false && f_vv) {
 			cout << "solution " << j << " sorted : ";
 			Lint_vec_print(cout, sets + j * Iso->size, Iso->size);
 			cout << endl;
@@ -820,7 +820,7 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 	}
 
 	A_induced = Iso->A->Induced_action->induced_action_on_sets(S, //K,
-		l, Iso->size, sets, FALSE /*TRUE*/ /* A Betten 1/26/13*/,
+		l, Iso->size, sets, false /*true*/ /* A Betten 1/26/13*/,
 		verbose_level /*- 2*/);
 
 	if (f_vv) {
@@ -863,7 +863,7 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 				"after AA->compute_all_point_orbits" << endl;
 	}
 	if (f_v4) {
-		Schreier->print_tables(cout, TRUE);
+		Schreier->print_tables(cout, true);
 	}
 
 	for (k = 0; k < l; k++) {
@@ -874,9 +874,9 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 		// << " prev=" << prev << " label " << hdl << endl;
 		if (prev != -1) {
 			//A->element_retrieve(O->hdl_strong_generators[hdl],
-			// A->Elt1, FALSE);
+			// A->Elt1, false);
 			b = A_induced->Group_element->element_image_of(
-					prev, gens.ith(hdl), FALSE);
+					prev, gens.ith(hdl), false);
 			//cout << "image of " << prev << " results in =" << b << endl;
 			if (b != p) {
 				cout << "b != p" << endl;
@@ -968,12 +968,12 @@ void substructure_lifting_data::orbit_representative(
 		cout << "substructure_lifting_data::orbit_representative "
 				"after load_strong_generators" << endl;
 	}
-	Iso->A->Group_element->element_one(transporter, FALSE);
+	Iso->A->Group_element->element_one(transporter, false);
 	if (f_vv) {
 		cout << "substructure_lifting_data::orbit_representative "
 				"i=" << i << endl;
 	}
-	while (TRUE) {
+	while (true) {
 		i_loc = orbit_perm_inv[i];
 		p = schreier_prev[i_loc];
 		if (f_vv) {
@@ -989,10 +989,10 @@ void substructure_lifting_data::orbit_representative(
 		l = schreier_vector[i_loc];
 		//cout << "l=" << l << endl;
 		//hdl = O->hdl_strong_generators[l];
-		//A->element_retrieve(hdl, Elt1, FALSE);
-		Iso->A->Group_element->element_invert(gens.ith(l), Elt2, FALSE);
-		Iso->A->Group_element->element_mult(transporter, Elt2, Elt1, FALSE);
-		Iso->A->Group_element->element_move(Elt1, transporter, FALSE);
+		//A->element_retrieve(hdl, Elt1, false);
+		Iso->A->Group_element->element_invert(gens.ith(l), Elt2, false);
+		Iso->A->Group_element->element_mult(transporter, Elt2, Elt1, false);
+		Iso->A->Group_element->element_move(Elt1, transporter, false);
 		i = p;
 	}
 	if (f_v) {
@@ -1169,8 +1169,8 @@ void substructure_lifting_data::init_DB_sol(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	layer2_discreta::typed_objects::database &D = *DB_sol;
 	layer2_discreta::typed_objects::btree B1, B2, B3, B4;
-	int f_compress = TRUE;
-	int f_duplicatekeys = TRUE;
+	int f_compress = true;
+	int f_duplicatekeys = true;
 	int i;
 
 	if (f_v) {
@@ -1576,10 +1576,10 @@ void substructure_lifting_data::init_solutions(long int **Solutions, int *Nb_sol
 	{
 		data_structures::tally_lint C;
 
-		C.init(hash_vs_id_hash, N, TRUE, 0);
+		C.init(hash_vs_id_hash, N, true, 0);
 		cout << "substructure_lifting_data::init_solutions "
 				"Classification of hash values:" << endl;
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 	}
 	Sorting.lint_vec_heapsort_with_log(
 			hash_vs_id_hash, hash_vs_id_id, N);
@@ -1824,10 +1824,10 @@ void substructure_lifting_data::read_solutions_from_clique_finder_case_by_case(
 	{
 		data_structures::tally_lint C;
 
-		C.init(hash_vs_id_hash, N, TRUE, 0);
+		C.init(hash_vs_id_hash, N, true, 0);
 		cout << "substructure_lifting_data::read_solutions_from_clique_finder_case_by_case "
 				"Classification of hash values:" << endl;
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 	}
 	Sorting.lint_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
@@ -1994,10 +1994,10 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 	{
 		data_structures::tally_lint C;
 
-		C.init(hash_vs_id_hash, N, TRUE, 0);
+		C.init(hash_vs_id_hash, N, true, 0);
 		cout << "substructure_lifting_data::read_solutions_from_clique_finder "
 				"Classification of hash values:" << endl;
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 	}
 	Sorting.lint_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
@@ -2072,7 +2072,7 @@ void substructure_lifting_data::build_up_database(
 					<< Fio.file_size(fname[i]) << endl;
 		}
 
-		while (TRUE) {
+		while (true) {
 
 			if (f.eof()) {
 				break;
@@ -2185,10 +2185,10 @@ void substructure_lifting_data::build_up_database(
 	{
 		data_structures::tally_lint C;
 
-		C.init(hash_vs_id_hash, N, TRUE, 0);
+		C.init(hash_vs_id_hash, N, true, 0);
 		cout << "substructure_lifting_data::build_up_database "
 				"Classification of hash values:" << endl;
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 	}
 	Sorting.lint_vec_heapsort_with_log(
 			hash_vs_id_hash, hash_vs_id_id, N);
@@ -2251,7 +2251,7 @@ void substructure_lifting_data::get_statistics(int nb_files,
 			cout << "problems reading file " << fname_summary << endl;
 			return;
 		}
-		while (TRUE) {
+		while (true) {
 			fp >> the_case;
 			if (the_case == -1)
 				break;
@@ -2476,10 +2476,10 @@ void substructure_lifting_data::write_hash_and_datref_file(
 
 		data_structures::tally_lint TA;
 
-		TA.init(id_to_hash, N, TRUE, 0);
+		TA.init(id_to_hash, N, true, 0);
 		cout << "substructure_lifting_data::write_hash_and_datref_file "
 				"id_to_hash tallied:" << endl;
-		TA.print_second(FALSE /* f_backwards */);
+		TA.print_second(false /* f_backwards */);
 		cout << endl;
 
 #if 0
@@ -2860,8 +2860,8 @@ void substructure_lifting_data::test_hash(int verbose_level)
 			}
 		{
 			data_structures::tally_lint C;
-			C.init(H, l, TRUE, 0);
-			C.print(FALSE /*f_backwards*/);
+			C.init(H, l, true, 0);
+			C.print(false /*f_backwards*/);
 		}
 		FREE_lint(H);
 		}

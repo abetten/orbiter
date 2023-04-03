@@ -117,7 +117,7 @@ void arc_orbits_on_pairs::init(
 		}
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = 2;
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
@@ -125,7 +125,7 @@ void arc_orbits_on_pairs::init(
 			The_arc->Strong_gens,
 			verbose_level);
 
-	Poset->f_print_function = FALSE;
+	Poset->f_print_function = false;
 	Poset->print_function = NULL;
 	Poset->print_function_data = (void *) this;
 
@@ -151,8 +151,8 @@ void arc_orbits_on_pairs::init(
 	}
 	//Orbits_on_pairs->depth = 2;
 	Orbits_on_pairs->main(t0, 2 /*schreier_depth */,
-				TRUE /* f_use_invariant_subset_if_available */,
-				FALSE /* f_debug*/,
+				true /* f_use_invariant_subset_if_available */,
+				false /* f_debug*/,
 				verbose_level);
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init after Orbits_on_pairs->main" << endl;

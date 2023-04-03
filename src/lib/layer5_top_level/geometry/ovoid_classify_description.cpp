@@ -19,11 +19,11 @@ namespace apps_geometry {
 
 ovoid_classify_description::ovoid_classify_description()
 {
-	f_control = FALSE;
+	f_control = false;
 	//std::string control_label;
-	f_epsilon = FALSE;
+	f_epsilon = false;
 	epsilon = 0;
-	f_d = FALSE;
+	f_d = false;
 	d = 0;
 }
 
@@ -47,21 +47,21 @@ int ovoid_classify_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-control") == 0) {
-			f_control = TRUE;
+			f_control = true;
 			control_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-control " << control_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-epsilon") == 0) {
-			f_epsilon = TRUE;
+			f_epsilon = true;
 			epsilon = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-epsilon " << epsilon << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-d") == 0) {
-			f_d = TRUE;
+			f_d = true;
 			d = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-d " << d << endl;

@@ -20,7 +20,7 @@ namespace ring_theory {
 
 longinteger_object::longinteger_object()
 {
-	sgn = FALSE;
+	sgn = false;
 	l = 0;
 	r = NULL;
 }
@@ -32,7 +32,7 @@ longinteger_object::~longinteger_object()
 
 void longinteger_object::freeself()
 {
-	int f_v = FALSE;
+	int f_v = false;
 	
 	if (r) {
 		if (f_v) {
@@ -54,17 +54,17 @@ void longinteger_object::freeself()
 void longinteger_object::create(long int i, const char *file, int line)
 {
 	long int ii, j, dj;
-	int f_v = FALSE;
+	int f_v = false;
 	number_theory::number_theory_domain NT;
 
 	ii = i;
 	freeself();
 	if (i < 0) {
-		sgn = TRUE;
+		sgn = true;
 		i = -i;
 	}
 	else {
-		sgn = FALSE;
+		sgn = false;
 	}
 	if (i == 0) {
 		r = NEW_char_with_tracking(1, file, line);
@@ -221,7 +221,7 @@ long int longinteger_object::as_lint()
 void longinteger_object::assign_to(longinteger_object &b)
 {
 	int i;
-	int f_v = FALSE;
+	int f_v = false;
 	
 	if (f_v) {
 		cout << "longinteger_object::assign_to "
@@ -414,7 +414,7 @@ void longinteger_object::normalize()
 	}
 	l = (int) i + 1;
 	if (l == 1 && r[0] == 0) {
-		sgn = FALSE;
+		sgn = false;
 	}
 }
 
@@ -424,10 +424,10 @@ void longinteger_object::negate()
 		return;
 	}
 	if (sign()) {
-		sign() = FALSE;
+		sign() = false;
 	}
 	else {
-		sign() = TRUE;
+		sign() = true;
 	}
 	
 }
@@ -436,10 +436,10 @@ int longinteger_object::is_zero()
 {
 	normalize();
 	if (l == 1 && r[0] == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -452,10 +452,10 @@ int longinteger_object::is_one()
 {
 	normalize();
 	if (!sgn && l == 1 && r[0] == 1) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -463,10 +463,10 @@ int longinteger_object::is_mone()
 {
 	normalize();
 	if (sgn && l == 1 && r[0] == 1) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -474,10 +474,10 @@ int longinteger_object::is_one_or_minus_one()
 {
 	normalize();
 	if (l == 1 && r[0] == 1) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 

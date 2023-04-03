@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace orbiter_kernel_system {
+namespace l1_interfaces {
 
 
 latex_interface::latex_interface()
@@ -36,14 +36,14 @@ void latex_interface::head_easy(std::ostream& ost)
 	dummy.assign("");
 
 	head(ost,
-		FALSE /* f_book */,
-		FALSE /* f_title */,
+		false /* f_book */,
+		false /* f_title */,
 		dummy, dummy,
-		FALSE /*f_toc */,
-		FALSE /* f_landscape */,
-		FALSE /* f_12pt */,
-		FALSE /* f_enlarged_page */,
-		TRUE /* f_pagenumbers */,
+		false /*f_toc */,
+		false /* f_landscape */,
+		false /* f_12pt */,
+		false /* f_enlarged_page */,
+		true /* f_pagenumbers */,
 		dummy /* extras_for_preamble */);
 
 }
@@ -56,14 +56,14 @@ void latex_interface::head_easy_with_extras_in_the_praeamble(
 	dummy.assign("");
 
 	head(ost,
-		FALSE /* f_book */,
-		FALSE /* f_title */,
+		false /* f_book */,
+		false /* f_title */,
 		dummy, dummy,
-		FALSE /*f_toc */,
-		FALSE /* f_landscape */,
-		FALSE /* f_12pt */,
-		FALSE /* f_enlarged_page */,
-		TRUE /* f_pagenumbers */,
+		false /*f_toc */,
+		false /* f_landscape */,
+		false /* f_12pt */,
+		false /* f_enlarged_page */,
+		true /* f_pagenumbers */,
 		extras /* extras_for_preamble */);
 
 }
@@ -74,14 +74,14 @@ void latex_interface::head_easy_sideways(std::ostream& ost)
 
 	dummy.assign("");
 
-	head(ost, FALSE /* f_book */,
-		FALSE /* f_title */,
+	head(ost, false /* f_book */,
+		false /* f_title */,
 		dummy, dummy,
-		FALSE /*f_toc */,
-		TRUE /* f_landscape */,
-		FALSE /* f_12pt */,
-		FALSE /* f_enlarged_page */,
-		TRUE /* f_pagenumbers */,
+		false /*f_toc */,
+		true /* f_landscape */,
+		false /* f_12pt */,
+		false /* f_enlarged_page */,
+		true /* f_pagenumbers */,
 		dummy /* extras_for_preamble */);
 
 }
@@ -753,7 +753,7 @@ void latex_interface::incma_latex(std::ostream &fp,
 	}
 	graphics::draw_incidence_structure_description *Descr;
 
-	Descr = Orbiter->Draw_incidence_structure_description;
+	Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
 
 	if (f_v) {
 		cout << "latex_interface::incma_latex before incma_latex_with_text_labels" << endl;
@@ -761,8 +761,8 @@ void latex_interface::incma_latex(std::ostream &fp,
 	incma_latex_with_text_labels(fp,
 			Descr,
 		v, b, V, B, Vi, Bj, incma,
-		FALSE /* f_labelling_points */, NULL,
-		FALSE /* f_labelling_blocks */, NULL,
+		false /* f_labelling_points */, NULL,
+		false /* f_labelling_blocks */, NULL,
 		verbose_level);
 	if (f_v) {
 		cout << "latex_interface::incma_latex after incma_latex_with_text_labels" << endl;
@@ -790,7 +790,7 @@ void latex_interface::incma_latex_with_labels(
 	}
 	graphics::draw_incidence_structure_description *Descr;
 
-	Descr = Orbiter->Draw_incidence_structure_description;
+	Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
 
 	std::string *point_labels;
 	std::string *block_labels;
@@ -819,8 +819,8 @@ void latex_interface::incma_latex_with_labels(
 	incma_latex_with_text_labels(fp,
 			Descr,
 		v, b, V, B, Vi, Bj, incma,
-		TRUE /* f_labelling_points */, point_labels,
-		TRUE /* f_labelling_blocks */, block_labels,
+		true /* f_labelling_points */, point_labels,
+		true /* f_labelling_blocks */, block_labels,
 		verbose_level);
 	if (f_v) {
 		cout << "latex_interface::incma_latex after incma_latex_with_text_labels" << endl;
@@ -1055,7 +1055,7 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset_text(
 {
 	int i, j, w;
 
-	w = Orbiter->Int_vec->matrix_max_log_of_entries(p, m, n);
+	w = orbiter_kernel_system::Orbiter->Int_vec->matrix_max_log_of_entries(p, m, n);
 
 	for (j = 0; j < w; j++) {
 		ost << " ";
@@ -1079,7 +1079,7 @@ void latex_interface::print_lint_matrix_with_standard_labels_and_offset_text(
 {
 	int i, j, w;
 
-	w = Orbiter->Lint_vec->matrix_max_log_of_entries(p, m, n);
+	w = orbiter_kernel_system::Orbiter->Lint_vec->matrix_max_log_of_entries(p, m, n);
 
 	for (j = 0; j < w; j++) {
 		ost << " ";
@@ -1181,7 +1181,7 @@ void latex_interface::print_integer_matrix_tex_block_by_block(
 				ost, M, v, w,
 				I * block_width,
 				J * block_width,
-				TRUE /* f_tex*/);
+				true /* f_tex*/);
 #if 0
 			ost << "\\begin{array}{*{" << w << "}{r}}" << endl;
 			for (i = 0; i < block_width; i++) {
@@ -1558,7 +1558,7 @@ void latex_interface::print_type_vector_tex(
 // v[len + 1]
 {
 	int i, a;
-	int f_first = TRUE;
+	int f_first = true;
 
 
 	for (i = len; i >= 0; i--) {
@@ -1568,7 +1568,7 @@ void latex_interface::print_type_vector_tex(
 			continue;
 		}
 		if (f_first) {
-			f_first = FALSE;
+			f_first = false;
 		}
 		else {
 			ost << ",\\,";

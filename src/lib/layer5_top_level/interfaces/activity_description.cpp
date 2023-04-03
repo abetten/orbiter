@@ -19,83 +19,83 @@ activity_description::activity_description()
 {
 	Sym = NULL;
 
-	f_finite_field_activity = FALSE;
+	f_finite_field_activity = false;
 	Finite_field_activity_description = NULL;
 
-	f_polynomial_ring_activity = FALSE;
+	f_polynomial_ring_activity = false;
 	Polynomial_ring_activity_description = NULL;
 
-	f_projective_space_activity = FALSE;
+	f_projective_space_activity = false;
 	Projective_space_activity_description = NULL;
 
-	f_orthogonal_space_activity = FALSE;
+	f_orthogonal_space_activity = false;
 	Orthogonal_space_activity_description = NULL;
 
-	f_group_theoretic_activity = FALSE;
+	f_group_theoretic_activity = false;
 	Group_theoretic_activity_description = NULL;
 
-	f_coding_theoretic_activity = FALSE;
+	f_coding_theoretic_activity = false;
 	Coding_theoretic_activity_description = NULL;
 
-	f_cubic_surface_activity = FALSE;
+	f_cubic_surface_activity = false;
 	Cubic_surface_activity_description = NULL;
 
-	f_quartic_curve_activity = FALSE;
+	f_quartic_curve_activity = false;
 	Quartic_curve_activity_description = NULL;
 
-	f_blt_set_activity = FALSE;
+	f_blt_set_activity = false;
 	Blt_set_activity_description = NULL;
 
-	f_combinatorial_object_activity = FALSE;
+	f_combinatorial_object_activity = false;
 	Combinatorial_object_activity_description = NULL;
 
-	f_graph_theoretic_activity = FALSE;
+	f_graph_theoretic_activity = false;
 	Graph_theoretic_activity_description = NULL;
 
-	f_classification_of_cubic_surfaces_with_double_sixes_activity = FALSE;
+	f_classification_of_cubic_surfaces_with_double_sixes_activity = false;
 	Classification_of_cubic_surfaces_with_double_sixes_activity_description = NULL;
 
-	f_spread_table_activity = FALSE;
+	f_spread_table_activity = false;
 	Spread_table_activity_description = NULL;
 
-	f_packing_with_symmetry_assumption_activity = FALSE;
+	f_packing_with_symmetry_assumption_activity = false;
 	Packing_was_activity_description = NULL;
 
-	f_packing_fixed_points_activity = FALSE;
+	f_packing_fixed_points_activity = false;
 	Packing_was_fixpoints_activity_description = NULL;
 
-	f_graph_classification_activity = FALSE;
+	f_graph_classification_activity = false;
 	Graph_classification_activity_description = NULL;
 
-	f_diophant_activity = FALSE;
+	f_diophant_activity = false;
 	Diophant_activity_description = NULL;
 
-	f_design_activity = FALSE;
+	f_design_activity = false;
 	Design_activity_description = NULL;
 
 
-	f_large_set_was_activity = FALSE;
+	f_large_set_was_activity = false;
 	Large_set_was_activity_description = NULL;
 
-	f_formula_activity = FALSE;
+	f_formula_activity = false;
 	Formula_activity_description = NULL;
 
-	f_BLT_set_classify_activity = FALSE;
+	f_BLT_set_classify_activity = false;
 	Blt_set_classify_activity_description = NULL;
 
-	f_spread_classify_activity = FALSE;
+	f_spread_classify_activity = false;
 	Spread_classify_activity_description = NULL;
 
-	f_spread_activity = FALSE;
+	f_spread_activity = false;
 	Spread_activity_description = NULL;
 
-	f_translation_plane_activity = FALSE;
+	f_translation_plane_activity = false;
 	Translation_plane_activity_description = NULL;
 
-	f_action_on_forms_activity = FALSE;
+	f_action_on_forms_activity = false;
 	Action_on_forms_activity_description = NULL;
 
-	f_orbits_activity = FALSE;
+	f_orbits_activity = false;
 	Orbits_activity_description = NULL;
 
 }
@@ -120,7 +120,7 @@ void activity_description::read_arguments(
 	activity_description::Sym = Sym;
 
 	if (ST.stringcmp(argv[i], "-finite_field_activity") == 0) {
-		f_finite_field_activity = TRUE;
+		f_finite_field_activity = true;
 		Finite_field_activity_description =
 				NEW_OBJECT(field_theory::finite_field_activity_description);
 		if (f_v) {
@@ -142,7 +142,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-ring_theoretic_activity") == 0) {
-		f_polynomial_ring_activity = TRUE;
+		f_polynomial_ring_activity = true;
 		Polynomial_ring_activity_description =
 				NEW_OBJECT(ring_theory::polynomial_ring_activity_description);
 		if (f_v) {
@@ -165,7 +165,7 @@ void activity_description::read_arguments(
 	}
 
 	else if (ST.stringcmp(argv[i], "-projective_space_activity") == 0) {
-		f_projective_space_activity = TRUE;
+		f_projective_space_activity = true;
 		Projective_space_activity_description =
 				NEW_OBJECT(projective_geometry::projective_space_activity_description);
 		if (f_v) {
@@ -187,7 +187,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-orthogonal_space_activity") == 0) {
-		f_orthogonal_space_activity = TRUE;
+		f_orthogonal_space_activity = true;
 		Orthogonal_space_activity_description =
 				NEW_OBJECT(orthogonal_geometry_applications::orthogonal_space_activity_description);
 		if (f_v) {
@@ -209,7 +209,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-group_theoretic_activity") == 0) {
-		f_group_theoretic_activity = TRUE;
+		f_group_theoretic_activity = true;
 		Group_theoretic_activity_description =
 				NEW_OBJECT(apps_algebra::group_theoretic_activity_description);
 		if (f_v) {
@@ -231,7 +231,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-coding_theoretic_activity") == 0) {
-		f_coding_theoretic_activity = TRUE;
+		f_coding_theoretic_activity = true;
 		Coding_theoretic_activity_description =
 				NEW_OBJECT(apps_coding_theory::coding_theoretic_activity_description);
 		if (f_v) {
@@ -253,7 +253,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-cubic_surface_activity") == 0) {
-		f_cubic_surface_activity = TRUE;
+		f_cubic_surface_activity = true;
 		Cubic_surface_activity_description =
 				NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::cubic_surface_activity_description);
 		if (f_v) {
@@ -275,7 +275,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-quartic_curve_activity") == 0) {
-		f_quartic_curve_activity = TRUE;
+		f_quartic_curve_activity = true;
 		Quartic_curve_activity_description =
 				NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_activity_description);
 		if (f_v) {
@@ -297,7 +297,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-blt_set_activity") == 0) {
-		f_blt_set_activity = TRUE;
+		f_blt_set_activity = true;
 		Blt_set_activity_description =
 				NEW_OBJECT(orthogonal_geometry_applications::blt_set_activity_description);
 		if (f_v) {
@@ -320,7 +320,7 @@ void activity_description::read_arguments(
 	}
 
 	else if (ST.stringcmp(argv[i], "-combinatorial_object_activity") == 0) {
-		f_combinatorial_object_activity = TRUE;
+		f_combinatorial_object_activity = true;
 		Combinatorial_object_activity_description =
 				NEW_OBJECT(apps_combinatorics::combinatorial_object_activity_description);
 		if (f_v) {
@@ -342,7 +342,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
-		f_graph_theoretic_activity = TRUE;
+		f_graph_theoretic_activity = true;
 		Graph_theoretic_activity_description =
 				NEW_OBJECT(apps_graph_theory::graph_theoretic_activity_description);
 		if (f_v) {
@@ -364,7 +364,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-classification_of_cubic_surfaces_with_double_sixes_activity") == 0) {
-		f_classification_of_cubic_surfaces_with_double_sixes_activity = TRUE;
+		f_classification_of_cubic_surfaces_with_double_sixes_activity = true;
 		Classification_of_cubic_surfaces_with_double_sixes_activity_description =
 				NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity_description);
 		if (f_v) {
@@ -386,7 +386,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-spread_table_activity") == 0) {
-		f_spread_table_activity = TRUE;
+		f_spread_table_activity = true;
 		Spread_table_activity_description =
 				NEW_OBJECT(spreads::spread_table_activity_description);
 		if (f_v) {
@@ -408,7 +408,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-packing_with_symmetry_assumption_activity") == 0) {
-		f_packing_with_symmetry_assumption_activity = TRUE;
+		f_packing_with_symmetry_assumption_activity = true;
 		Packing_was_activity_description =
 				NEW_OBJECT(packings::packing_was_activity_description);
 		if (f_v) {
@@ -430,7 +430,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-packing_fixed_points_activity") == 0) {
-		f_packing_fixed_points_activity = TRUE;
+		f_packing_fixed_points_activity = true;
 		Packing_was_fixpoints_activity_description =
 				NEW_OBJECT(packings::packing_was_fixpoints_activity_description);
 		if (f_v) {
@@ -452,7 +452,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-graph_classification_activity") == 0) {
-		f_graph_classification_activity = TRUE;
+		f_graph_classification_activity = true;
 		Graph_classification_activity_description =
 				NEW_OBJECT(apps_graph_theory::graph_classification_activity_description);
 		if (f_v) {
@@ -474,7 +474,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
-		f_diophant_activity = TRUE;
+		f_diophant_activity = true;
 		Diophant_activity_description =
 				NEW_OBJECT(solvers::diophant_activity_description);
 		if (f_v) {
@@ -496,7 +496,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-design_activity") == 0) {
-		f_design_activity = TRUE;
+		f_design_activity = true;
 		Design_activity_description =
 				NEW_OBJECT(apps_combinatorics::design_activity_description);
 		if (f_v) {
@@ -518,7 +518,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-large_set_with_symmetry_assumption_activity") == 0) {
-		f_large_set_was_activity = TRUE;
+		f_large_set_was_activity = true;
 		Large_set_was_activity_description =
 				NEW_OBJECT(apps_combinatorics::large_set_was_activity_description);
 		if (f_v) {
@@ -540,7 +540,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-formula_activity") == 0) {
-		f_formula_activity = TRUE;
+		f_formula_activity = true;
 		Formula_activity_description =
 				NEW_OBJECT(expression_parser::formula_activity_description);
 		if (f_v) {
@@ -562,7 +562,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-BLT_set_classify_activity") == 0) {
-		f_BLT_set_classify_activity = TRUE;
+		f_BLT_set_classify_activity = true;
 		Blt_set_classify_activity_description =
 				NEW_OBJECT(orthogonal_geometry_applications::blt_set_classify_activity_description);
 		if (f_v) {
@@ -584,7 +584,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-spread_classify_activity") == 0) {
-		f_spread_classify_activity = TRUE;
+		f_spread_classify_activity = true;
 		Spread_classify_activity_description =
 				NEW_OBJECT(spreads::spread_classify_activity_description);
 		if (f_v) {
@@ -606,7 +606,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-spread_activity") == 0) {
-		f_spread_activity = TRUE;
+		f_spread_activity = true;
 		Spread_activity_description =
 				NEW_OBJECT(spreads::spread_activity_description);
 		if (f_v) {
@@ -628,7 +628,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-translation_plane_activity") == 0) {
-		f_translation_plane_activity = TRUE;
+		f_translation_plane_activity = true;
 		Translation_plane_activity_description =
 				NEW_OBJECT(spreads::translation_plane_activity_description);
 		if (f_v) {
@@ -650,7 +650,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-action_on_forms_activity") == 0) {
-		f_action_on_forms_activity = TRUE;
+		f_action_on_forms_activity = true;
 		Action_on_forms_activity_description =
 				NEW_OBJECT(apps_algebra::action_on_forms_activity_description);
 		if (f_v) {
@@ -672,7 +672,7 @@ void activity_description::read_arguments(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-orbits_activity") == 0) {
-		f_orbits_activity = TRUE;
+		f_orbits_activity = true;
 		Orbits_activity_description =
 				NEW_OBJECT(apps_algebra::orbits_activity_description);
 		if (f_v) {
@@ -1073,7 +1073,7 @@ void activity_description::do_finite_field_activity(int verbose_level)
 	field_theory::finite_field_activity FA;
 	FA.init(Finite_field_activity_description, F, verbose_level);
 #if 0
-	Finite_field_activity_description->f_q = TRUE;
+	Finite_field_activity_description->f_q = true;
 	Finite_field_activity_description->q = F->q;
 	FA.Descr = Finite_field_activity_description;
 	FA.F = F;

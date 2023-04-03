@@ -133,13 +133,13 @@ int geometry_global::AG_element_next(
 	for (i = len - 1; i >= 0; i--) {
 		if (v[i * stride] < q - 1) {
 			v[i * stride]++;
-			return TRUE;
+			return true;
 		}
 		else {
 			v[i * stride] = 0;
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 
@@ -203,10 +203,10 @@ int geometry_global::PG_element_modified_is_in_subspace(
 
 	for (j = m + 1; j < n + 1; j++) {
 		if (v[j]) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -231,14 +231,14 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 		Lint_vec_print(cout, input_pts, nb_pts);
 		cout << endl;
 		}
-	F.init_override_polynomial(q, override_poly, FALSE /* f_without_tables */, verbose_level);
+	F.init_override_polynomial(q, override_poly, false /* f_without_tables */, verbose_level);
 
 	P = NEW_OBJECT(projective_space);
 	if (f_vv) {
 		cout << "determine_conic before P->init" << endl;
 		}
 	P->init(len - 1, &F,
-		FALSE,
+		false,
 		verbose_level - 2/*MINIMUM(2, verbose_level)*/);
 
 	if (f_vv) {
@@ -280,12 +280,12 @@ int geometry_global::test_if_arc(
 		int *set, int set_sz, int k, int verbose_level)
 // Used by Hill_cap56()
 {
-	int f_v = FALSE; //(verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_v = false; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 2);
 	int subset[3];
 	int subset1[3];
 	int *Mtx;
-	int ret = FALSE;
+	int ret = false;
 	int i, j, a, rk;
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
@@ -299,7 +299,7 @@ int geometry_global::test_if_arc(
 	Mtx = NEW_int(3 * k);
 
 	Combi.first_k_subset(subset, set_sz, 3);
-	while (TRUE) {
+	while (true) {
 		for (i = 0; i < 3; i++) {
 			subset1[i] = set[subset[i]];
 		}
@@ -334,7 +334,7 @@ int geometry_global::test_if_arc(
 	if (f_v) {
 		cout << "geometry_global::test_if_arc: passes the arc test" << endl;
 	}
-	ret = TRUE;
+	ret = true;
 done:
 
 	FREE_int(Mtx);
@@ -706,7 +706,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 	int verbose_level = 0;
 
 	cout << "geometry_global::test_Orthogonal" << endl;
-	GFq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
+	GFq.finite_field_init(q, false /* f_without_tables */, verbose_level);
 	v = NEW_int(k + 1);
 	//n = Witt_index(epsilon, k);
 	len = k + 1;
@@ -719,7 +719,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 	else if (epsilon == 1) {
 		}
 	else if (epsilon == -1) {
-		GFq.Linear_algebra->choose_anisotropic_form(c1, c2, c3, TRUE);
+		GFq.Linear_algebra->choose_anisotropic_form(c1, c2, c3, true);
 		}
 	for (i = 0; i < nb; i++) {
 		GFq.Orthogonal_indexing->Q_epsilon_unrank(v,
@@ -769,7 +769,7 @@ void geometry_global::test_orthogonal(int n, int q)
 	int verbose_level = 0;
 
 	cout << "geometry_global::test_orthogonal" << endl;
-	GFq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
+	GFq.finite_field_init(q, false /* f_without_tables */, verbose_level);
 	v = NEW_int(2 * n);
 	nb = nb_pts_Sbar(n, q);
 	cout << "\\Omega^+(" << 2 * n << "," << q << ") has " << nb
@@ -1062,11 +1062,11 @@ int geometry_global::braun_test_single_type(int v, int k, int ak)
 		m = MAXIMUM(k - i, 0);
 		s += m;
 		if (s > v) {
-			return FALSE;
+			return false;
 		}
 		i++;
 	}
-	return TRUE;
+	return true;
 }
 
 int geometry_global::braun_test_upper_bound(int v, int k)
@@ -1084,7 +1084,7 @@ int geometry_global::braun_test_upper_bound(int v, int k)
 		v2 = (v * (v - 1)) >> 1;
 		k2 = (k * (k - 1)) >> 1;
 		for (n = 1; ; n++) {
-			if (braun_test_single_type(v, k, n) == FALSE) {
+			if (braun_test_single_type(v, k, n) == false) {
 				bound = n - 1;
 				break;
 			}
@@ -1213,12 +1213,12 @@ int geometry_global::braun_test_on_line_type(int v, int *type)
 			m = MAXIMUM(k - i, 0);
 			s += m;
 			if (s > v) {
-				return FALSE;
+				return false;
 			}
 			i++;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 static int maxfit_table_v_max = -1;
@@ -1728,7 +1728,7 @@ void geometry_global::do_cheat_sheet_PG(field_theory::finite_field *F,
 		cout << "geometry_global::do_cheat_sheet_PG before P->init" << endl;
 	}
 	P->projective_space_init(n, F,
-		TRUE /*f_init_incidence_structure*/,
+		true /*f_init_incidence_structure*/,
 		0 /* verbose_level */);
 	if (f_v) {
 		cout << "geometry_global::do_cheat_sheet_PG after P->init" << endl;
@@ -1774,7 +1774,7 @@ void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
 		cout << "geometry_global::do_cheat_sheet_Gr before P->init" << endl;
 	}
 	P->projective_space_init(n - 1, F,
-		TRUE /*f_init_incidence_structure*/,
+		true /*f_init_incidence_structure*/,
 		0 /* verbose_level */);
 	if (f_v) {
 		cout << "geometry_global::do_cheat_sheet_Gr after P->init" << endl;
@@ -1963,10 +1963,10 @@ void geometry_global::create_decomposition_of_projective_plane(
 		}
 
 		Stack->split_cell_front_or_back(
-				the_points, nb_points, TRUE /* f_front*/, verbose_level);
+				the_points, nb_points, true /* f_front*/, verbose_level);
 
 		Stack->split_line_cell_front_or_back(
-				the_lines, nb_lines, TRUE /* f_front*/, verbose_level);
+				the_lines, nb_lines, true /* f_front*/, verbose_level);
 
 
 		FREE_int(the_points);
@@ -1984,11 +1984,11 @@ void geometry_global::create_decomposition_of_projective_plane(
 
 
 		I->get_and_print_row_tactical_decomposition_scheme_tex(
-			cout, FALSE /* f_enter_math */,
-			TRUE /* f_print_subscripts */, *Stack);
+			cout, false /* f_enter_math */,
+			true /* f_print_subscripts */, *Stack);
 		I->get_and_print_column_tactical_decomposition_scheme_tex(
-			cout, FALSE /* f_enter_math */,
-			TRUE /* f_print_subscripts */, *Stack);
+			cout, false /* f_enter_math */,
+			true /* f_print_subscripts */, *Stack);
 
 
 
@@ -2004,11 +2004,11 @@ void geometry_global::create_decomposition_of_projective_plane(
 			ofstream fp_row_scheme(fname_row_scheme);
 			ofstream fp_col_scheme(fname_col_scheme);
 			I->get_and_print_row_tactical_decomposition_scheme_tex(
-				fp_row_scheme, FALSE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, *Stack);
+				fp_row_scheme, false /* f_enter_math */,
+				true /* f_print_subscripts */, *Stack);
 			I->get_and_print_column_tactical_decomposition_scheme_tex(
-				fp_col_scheme, FALSE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, *Stack);
+				fp_col_scheme, false /* f_enter_math */,
+				true /* f_print_subscripts */, *Stack);
 		}
 
 
@@ -2164,14 +2164,14 @@ int geometry_global::test_nb_Eckardt_points(
 		long int *S, int len, int pt, int nb_E, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = TRUE;
+	int ret = true;
 	long int Arc6[6];
 
 	if (f_v) {
 		cout << "geometry_global::test_nb_Eckardt_points" << endl;
 	}
 	if (len != 5) {
-		return TRUE;
+		return true;
 	}
 
 	Lint_vec_copy(S, Arc6, 5);
@@ -2183,7 +2183,7 @@ int geometry_global::test_nb_Eckardt_points(
 
 
 	if (E->nb_E != nb_E) {
-		ret = FALSE;
+		ret = false;
 	}
 
 	FREE_OBJECT(E);
@@ -2521,7 +2521,7 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		Int_matrix_print(P2A, 1, 3);
 	}
 	if (Sorting.int_vec_compare(P1A, Line1, 3) == 0) {
-		f_swap = FALSE;
+		f_swap = false;
 		if (Sorting.int_vec_compare(P2A, Line2, 3)) {
 			cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"We don't have a swap but A3 does not stabilize P2" << endl;
@@ -2529,7 +2529,7 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		}
 	}
 	else if (Sorting.int_vec_compare(P1A, Line2, 3) == 0) {
-		f_swap = TRUE;
+		f_swap = true;
 		if (Sorting.int_vec_compare(P2A, Line1, 3)) {
 			cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"We have a swap but A3 does not map P2 to P1" << endl;
@@ -2939,7 +2939,7 @@ void geometry_global::andre_preimage(
 	alpha = FQ->p;
 	if (f_vv) {
 		cout << "alpha=" << alpha << endl;
-		//FQ->print(TRUE /* f_add_mult_table */);
+		//FQ->print(true /* f_add_mult_table */);
 	}
 
 
@@ -3024,7 +3024,7 @@ void geometry_global::andre_preimage(
 				w2[2 * h + 0] = b0;
 				w2[2 * h + 1] = b1;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "w1=";
 				Int_vec_print(cout, w1, 4);
 				cout << "w2=";
@@ -3040,7 +3040,7 @@ void geometry_global::andre_preimage(
 
 			for (h = 0; h < q + 1; h++) {
 				Fq->PG_element_unrank_modified(v2, 1, 2, h);
-				if (FALSE) {
+				if (false) {
 					cout << "v2=";
 					Int_vec_print(cout, v2, 2);
 					cout << " : ";
@@ -3169,7 +3169,7 @@ void geometry_global::find_lines_which_are_contained(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = FALSE;
+	int f_vvv = false;
 	long int rk;
 	long int h, i, j, d, a, b;
 	int idx;
@@ -3360,7 +3360,7 @@ void geometry_global::find_lines_which_are_contained(
 			Int_vec_copy(Pts1 + i * d, M, d);
 			Int_vec_copy(Pts2 + j * d, M + d, d);
 
-			f_taken[j] = TRUE;
+			f_taken[j] = true;
 
 			if (f_vvv) {
 				Int_matrix_print(M, 2, d);
@@ -3395,7 +3395,7 @@ void geometry_global::find_lines_which_are_contained(
 						cout << "eliminating point " << idx << endl;
 					}
 					// we don't need to consider this point for P2:
-					f_taken[idx] = TRUE;
+					f_taken[idx] = true;
 				}
 			}
 			if (a == P->Subspaces->q) {
@@ -3719,7 +3719,7 @@ void geometry_global::plane_intersection_type_of_klein_image(
 
 	P5 = NEW_OBJECT(geometry::projective_space);
 
-	int f_init_incidence_structure = TRUE;
+	int f_init_incidence_structure = true;
 
 	if (f_v) {
 		cout << "geometry_global::plane_intersection_type_of_klein_image "
@@ -4105,11 +4105,11 @@ void geometry_global::do_cone_over(int n,
 	P2 = NEW_OBJECT(projective_space);
 
 	P1->init(n, this,
-		FALSE /* f_init_incidence_structure */,
+		false /* f_init_incidence_structure */,
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
 
 	P2->init(n + 1, this,
-		FALSE /* f_init_incidence_structure */,
+		false /* f_init_incidence_structure */,
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
 #endif
 
@@ -4197,7 +4197,7 @@ void geometry_global::do_blocking_set_family_3(int n,
 	P = NEW_OBJECT(geometry::projective_space);
 
 	P->projective_space_init(n, F,
-		FALSE /* f_init_incidence_structure */,
+		false /* f_init_incidence_structure */,
 		0 /* verbose_level - 2 */);
 
 
@@ -4221,7 +4221,7 @@ void geometry_global::do_blocking_set_family_3(int n,
 	idx = NEW_int(set_size);
 
 #if 1
-	while (TRUE) {
+	while (true) {
 		cout << "choosing random permutation" << endl;
 		Combi.random_permutation(idx, set_size);
 
@@ -4351,11 +4351,11 @@ void geometry_global::do_blocking_set_family_3(int n,
 
 	data_structures::tally C;
 
-	C.init(pt_type, P->Subspaces->N_points, FALSE, 0);
+	C.init(pt_type, P->Subspaces->N_points, false, 0);
 
 
 	cout << "the point types are:" << endl;
-	C.print_naked(FALSE /*f_backwards*/);
+	C.print_naked(false /*f_backwards*/);
 	cout << endl;
 
 #if 0
@@ -4565,7 +4565,7 @@ void geometry_global::create_ttp_code(
 	int *v;
 	int *H_subfield;
 	int m, n;
-	int f_elements_exponential = TRUE;
+	int f_elements_exponential = true;
 	string symbol_for_print_subfield;
 	coding_theory::ttp_codes Ttp_codes;
 
@@ -4597,7 +4597,7 @@ void geometry_global::create_ttp_code(
 
 
 	P->projective_space_init(d - 1, Fq_subfield,
-		FALSE /* f_init_incidence_structure */,
+		false /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 	nb_pts = n;
 
@@ -4782,11 +4782,11 @@ void geometry_global::do_andre(
 
 
 	P2->projective_space_init(2, FQ,
-		FALSE /* f_init_incidence_structure */,
+		false /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
 	P4->projective_space_init(4, Fq,
-		FALSE /* f_init_incidence_structure */,
+		false /* f_init_incidence_structure */,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
 	//d = 5;
@@ -4826,7 +4826,7 @@ void geometry_global::do_andre(
 	alpha = FQ->p;
 	if (f_vv) {
 		cout << "finite_field::do_andre alpha=" << alpha << endl;
-		//FQ->print(TRUE /* f_add_mult_table */);
+		//FQ->print(true /* f_add_mult_table */);
 	}
 
 
@@ -4884,7 +4884,7 @@ void geometry_global::do_andre(
 				w2[2 * h + 0] = b0;
 				w2[2 * h + 1] = b1;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "w1=";
 				Int_vec_print(cout, w1, 4);
 				cout << "w2=";
@@ -4900,7 +4900,7 @@ void geometry_global::do_andre(
 
 			for (h = 0; h < Fq->q + 1; h++) {
 				Fq->PG_element_unrank_modified(v2, 1, 2, h);
-				if (FALSE) {
+				if (false) {
 					cout << "v2=";
 					Int_vec_print(cout, v2, 2);
 					cout << " : ";
@@ -5112,7 +5112,7 @@ void geometry_global::simeon(
 		int n, int len, long int *S, int s, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	int k, nb_rows, nb_cols, nb_r1, nb_r2, row, col;
 	int *Coord;
 	int *M;
@@ -5246,7 +5246,7 @@ void geometry_global::simeon(
 	}
 
 	//print_integer_matrix_with_standard_labels(cout, M,
-	//nb_rows, nb_cols, TRUE /* f_tex*/);
+	//nb_rows, nb_cols, true /* f_tex*/);
 	//int_matrix_print_tex(cout, M, nb_rows, nb_cols);
 
 	if (f_v) {

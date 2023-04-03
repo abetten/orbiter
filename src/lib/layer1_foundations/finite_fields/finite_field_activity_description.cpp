@@ -21,74 +21,74 @@ namespace field_theory {
 finite_field_activity_description::finite_field_activity_description()
 {
 
-	f_cheat_sheet_GF = FALSE;
+	f_cheat_sheet_GF = false;
 
-	f_export_tables = FALSE;
+	f_export_tables = false;
 
-	f_polynomial_division = FALSE;
+	f_polynomial_division = false;
 	//polynomial_division_A;
 	//polynomial_division_B;
 
-	f_extended_gcd_for_polynomials = FALSE;
+	f_extended_gcd_for_polynomials = false;
 
-	f_polynomial_mult_mod = FALSE;
+	f_polynomial_mult_mod = false;
 	//std::string polynomial_mult_mod_A;
 	//std::string polynomial_mult_mod_B;
 	//std::string polynomial_mult_mod_M;
 
-	f_polynomial_power_mod = FALSE;
+	f_polynomial_power_mod = false;
 	//std::string polynomial_power_mod_A;
 	//std::string polynomial_power_mod_n;
 	//std::string polynomial_power_mod_M;
 
 
-	f_Berlekamp_matrix = FALSE;
+	f_Berlekamp_matrix = false;
 	//Berlekamp_matrix_label;
 
 
-	f_polynomial_find_roots = FALSE;
+	f_polynomial_find_roots = false;
 	//polynomial_find_roots_label;
 
-	f_product_of = FALSE;
+	f_product_of = false;
 	//std::string product_of_elements;
 
-	f_sum_of = FALSE;
+	f_sum_of = false;
 	//std::string sum_of_elements;
 
-	f_negate = FALSE;
+	f_negate = false;
 	//std::string negate_elements;
 
-	f_inverse = FALSE;
+	f_inverse = false;
 	//std::string inverse_elements;
 
-	f_power_map = FALSE;
+	f_power_map = false;
 	power_map_k = 0;
 	//std::string power_map_elements;
 
-	f_parse_and_evaluate = FALSE;
+	f_parse_and_evaluate = false;
 	//parse_name_of_formula
 	//parse_managed_variables
 	//std::string parse_text;
 	//std::string parse_parameters
 
-	f_evaluate = FALSE;
+	f_evaluate = false;
 	//std::string evaluate_formula_label;
 	//std::string evaluate_parameters;
 
 
 	// Extension fields:
 
-	f_trace = FALSE;
+	f_trace = false;
 
-	f_norm = FALSE;
+	f_norm = false;
 
-	f_normal_basis = FALSE;
+	f_normal_basis = false;
 	normal_basis_d = 0;
 
-	f_nth_roots = FALSE;
+	f_nth_roots = false;
 	nth_roots_n = 0;
 
-	f_field_reduction = FALSE;
+	f_field_reduction = false;
 	//field_reduction_label
 	field_reduction_q = 0;
 	field_reduction_m = 0;
@@ -99,23 +99,23 @@ finite_field_activity_description::finite_field_activity_description()
 
 	// Linear Algebra
 
-	f_nullspace = FALSE;
+	f_nullspace = false;
 	//nullspace_input_matrix = NULL;
 
-	f_RREF = FALSE;
+	f_RREF = false;
 	//RREF_input_matrix
 
-	f_normalize_from_the_right = FALSE;
-	f_normalize_from_the_left = FALSE;
+	f_normalize_from_the_right = false;
+	f_normalize_from_the_left = false;
 
-	f_RREF_random_matrix = FALSE;
+	f_RREF_random_matrix = false;
 	RREF_random_matrix_m = 0;
 	RREF_random_matrix_n = 0;
 
-	f_Walsh_matrix = FALSE;
+	f_Walsh_matrix = false;
 	Walsh_matrix_n = 0;
 
-	f_Vandermonde_matrix = FALSE;
+	f_Vandermonde_matrix = false;
 
 
 
@@ -125,121 +125,121 @@ finite_field_activity_description::finite_field_activity_description()
 	//cout << "finite_field_activity_description::finite_field_activity_description 3" << endl;
 	//RREF_text = NULL;
 
-	f_Walsh_Hadamard_transform = FALSE;
+	f_Walsh_Hadamard_transform = false;
 	//std::string Walsh_Hadamard_transform_fname_csv_in;
 	Walsh_Hadamard_transform_n = 0;
 
-	f_algebraic_normal_form_of_boolean_function = FALSE;
+	f_algebraic_normal_form_of_boolean_function = false;
 	//std::string algebraic_normal_form_of_boolean_function_fname_csv_in;
 	algebraic_normal_form_of_boolean_function_n = 0;
 
-	f_algebraic_normal_form = FALSE;
+	f_algebraic_normal_form = false;
 	algebraic_normal_form_n = 0;
 	//std::string algebraic_normal_form_input;
 
 
-	f_apply_trace_function = FALSE;
+	f_apply_trace_function = false;
 	//std::string apply_trace_function_fname_csv_in;
 
-	f_apply_power_function = FALSE;
+	f_apply_power_function = false;
 	//std::string apply_power_function_fname_csv_in;
 	apply_power_function_d = 0;
 
-	f_identity_function = FALSE;
+	f_identity_function = false;
 	//std::string identity_function_fname_csv_out;
 
 
-	f_search_APN_function = FALSE;
+	f_search_APN_function = false;
 
-	f_make_table_of_irreducible_polynomials = FALSE;
+	f_make_table_of_irreducible_polynomials = false;
 	make_table_of_irreducible_polynomials_degree = 0;
 
-	f_get_primitive_polynomial = FALSE;
+	f_get_primitive_polynomial = false;
 	get_primitive_polynomial_degree = 0;
 
-	f_get_primitive_polynomial_in_range = FALSE;
+	f_get_primitive_polynomial_in_range = false;
 	get_primitive_polynomial_in_range_min = 0;
 	get_primitive_polynomial_in_range_max = 0;
 
 
 	// cryptography:
 
-	f_EC_Koblitz_encoding = FALSE;
+	f_EC_Koblitz_encoding = false;
 	EC_s = 0;
 	//EC_message = NULL;
-	f_EC_points = FALSE;
-	f_EC_add = FALSE;
+	f_EC_points = false;
+	f_EC_add = false;
 	//EC_pt1_text = NULL;
 	//EC_pt2_text = NULL;
-	f_EC_cyclic_subgroup = FALSE;
+	f_EC_cyclic_subgroup = false;
 	EC_b = 0;
 	EC_c = 0;
 	//EC_pt_text = NULL;
-	f_EC_multiple_of = FALSE;
+	f_EC_multiple_of = false;
 	EC_multiple_of_n = 0;
-	f_EC_discrete_log = FALSE;
+	f_EC_discrete_log = false;
 	//EC_discrete_log_pt_text = NULL;
-	f_EC_baby_step_giant_step = FALSE;
+	f_EC_baby_step_giant_step = false;
 	//EC_bsgs_G = NULL;
 	EC_bsgs_N = 0;
 	//EC_bsgs_cipher_text = NULL;
-	f_EC_baby_step_giant_step_decode = FALSE;
+	f_EC_baby_step_giant_step_decode = false;
 	//EC_bsgs_A = NULL;
 	//EC_bsgs_keys = NULL;
 
 
 	//cout << "finite_field_activity_description::finite_field_activity_description done" << endl;
-	f_NTRU_encrypt = FALSE;
+	f_NTRU_encrypt = false;
 	NTRU_encrypt_N = 0;
 	NTRU_encrypt_p = 0;
 	//NTRU_encrypt_H, NTRU_encrypt_R, NTRU_encrypt_Msg
-	f_polynomial_center_lift = FALSE;
+	f_polynomial_center_lift = false;
 	//polynomial_center_lift_A
-	f_polynomial_reduce_mod_p = FALSE;
+	f_polynomial_reduce_mod_p = false;
 	//polynomial_reduce_mod_p_A;
 
 #if 0
-	f_cheat_sheet_Gr = FALSE;
+	f_cheat_sheet_Gr = false;
 	cheat_sheet_Gr_n = 0;
 	cheat_sheet_Gr_k = 0;
 #endif
 
-	f_cheat_sheet_hermitian = FALSE;
+	f_cheat_sheet_hermitian = false;
 	cheat_sheet_hermitian_projective_dimension = 0;
 
-	f_cheat_sheet_desarguesian_spread = FALSE;
+	f_cheat_sheet_desarguesian_spread = false;
 	cheat_sheet_desarguesian_spread_m = 0;
 
-	f_sift_polynomials = FALSE;
+	f_sift_polynomials = false;
 	sift_polynomials_r0 = 0;
 	sift_polynomials_r1 = 0;
 
-	f_mult_polynomials = FALSE;
+	f_mult_polynomials = false;
 	mult_polynomials_r0 = 0;
 	mult_polynomials_r1 = 0;
 
-	f_polynomial_division_ranked = FALSE;
+	f_polynomial_division_ranked = false;
 	polynomial_division_r0 = 0;
 	polynomial_division_r1 = 0;
 
 
 
-	f_transversal = FALSE;
+	f_transversal = false;
 	//transversal_line_1_basis = NULL;
 	//transversal_line_2_basis = NULL;
 	//transversal_point = NULL;
-	f_intersection_of_two_lines = FALSE;
+	f_intersection_of_two_lines = false;
 	//line_1_basis = NULL;
 	//line_2_basis = NULL;
 
 
-	f_inverse_isomorphism_klein_quadric = FALSE;
+	f_inverse_isomorphism_klein_quadric = false;
 	// std::string inverse_isomorphism_klein_quadric_matrix_A6;
 
-	f_rank_point_in_PG = FALSE;
+	f_rank_point_in_PG = false;
 	//rank_point_in_PG_label;
 
-	f_unrank_point_in_PG = FALSE;
+	f_unrank_point_in_PG = false;
 	unrank_point_in_PG_n = 0;
 	//std::string unrank_point_in_PG_text;
 
@@ -266,20 +266,20 @@ int finite_field_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-cheat_sheet_GF") == 0) {
-			f_cheat_sheet_GF = TRUE;
+			f_cheat_sheet_GF = true;
 			if (f_v) {
 				cout << "-cheat_sheet_GF " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_tables") == 0) {
-			f_export_tables = TRUE;
+			f_export_tables = true;
 			if (f_v) {
 				cout << "-export_tables " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-polynomial_division") == 0) {
-			f_polynomial_division = TRUE;
+			f_polynomial_division = true;
 			polynomial_division_A.assign(argv[++i]);
 			polynomial_division_B.assign(argv[++i]);
 			if (f_v) {
@@ -288,7 +288,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-extended_gcd_for_polynomials") == 0) {
-			f_extended_gcd_for_polynomials = TRUE;
+			f_extended_gcd_for_polynomials = true;
 			polynomial_division_A.assign(argv[++i]);
 			polynomial_division_B.assign(argv[++i]);
 			if (f_v) {
@@ -297,7 +297,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-polynomial_mult_mod") == 0) {
-			f_polynomial_mult_mod = TRUE;
+			f_polynomial_mult_mod = true;
 			polynomial_mult_mod_A.assign(argv[++i]);
 			polynomial_mult_mod_B.assign(argv[++i]);
 			polynomial_mult_mod_M.assign(argv[++i]);
@@ -309,7 +309,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-polynomial_power_mod") == 0) {
-			f_polynomial_power_mod = TRUE;
+			f_polynomial_power_mod = true;
 			polynomial_power_mod_A.assign(argv[++i]);
 			polynomial_power_mod_n.assign(argv[++i]);
 			polynomial_power_mod_M.assign(argv[++i]);
@@ -323,28 +323,28 @@ int finite_field_activity_description::read_arguments(
 
 
 		else if (ST.stringcmp(argv[i], "-Berlekamp_matrix") == 0) {
-			f_Berlekamp_matrix = TRUE;
+			f_Berlekamp_matrix = true;
 			Berlekamp_matrix_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-Berlekamp_matrix " << Berlekamp_matrix_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-nullspace") == 0) {
-			f_nullspace = TRUE;
+			f_nullspace = true;
 			nullspace_input_matrix.assign(argv[++i]);
 			if (f_v) {
 				cout << "-nullspace " << nullspace_input_matrix << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-polynomial_find_roots") == 0) {
-			f_polynomial_find_roots = TRUE;
+			f_polynomial_find_roots = true;
 			polynomial_find_roots_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-polynomial_find_roots " << polynomial_find_roots_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-product_of") == 0) {
-			f_product_of = TRUE;
+			f_product_of = true;
 			product_of_elements.assign(argv[++i]);
 			if (f_v) {
 				cout << "-product_of " << product_of_elements
@@ -352,7 +352,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-sum_of") == 0) {
-			f_sum_of = TRUE;
+			f_sum_of = true;
 			sum_of_elements.assign(argv[++i]);
 			if (f_v) {
 				cout << "-sum_of " << sum_of_elements
@@ -360,7 +360,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-negate") == 0) {
-			f_negate = TRUE;
+			f_negate = true;
 			negate_elements.assign(argv[++i]);
 			if (f_v) {
 				cout << "-negate " << negate_elements
@@ -368,7 +368,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-inverse") == 0) {
-			f_inverse = TRUE;
+			f_inverse = true;
 			inverse_elements.assign(argv[++i]);
 			if (f_v) {
 				cout << "-inverse " << inverse_elements
@@ -376,7 +376,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-power_map") == 0) {
-			f_power_map = TRUE;
+			f_power_map = true;
 			power_map_k = ST.strtoi(argv[++i]);
 			power_map_elements.assign(argv[++i]);
 			if (f_v) {
@@ -386,7 +386,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-parse_and_evaluate") == 0) {
-			f_parse_and_evaluate = TRUE;
+			f_parse_and_evaluate = true;
 			parse_name_of_formula.assign(argv[++i]);
 			parse_managed_variables.assign(argv[++i]);
 			parse_text.assign(argv[++i]);
@@ -401,7 +401,7 @@ int finite_field_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-evaluate") == 0) {
-			f_evaluate = TRUE;
+			f_evaluate = true;
 			evaluate_formula_label.assign(argv[++i]);
 			evaluate_parameters.assign(argv[++i]);
 			if (f_v) {
@@ -414,34 +414,34 @@ int finite_field_activity_description::read_arguments(
 		// Extension fields:
 
 		else if (ST.stringcmp(argv[i], "-trace") == 0) {
-			f_trace = TRUE;
+			f_trace = true;
 			if (f_v) {
 				cout << "-trace " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-norm") == 0) {
-			f_norm = TRUE;
+			f_norm = true;
 			if (f_v) {
 				cout << "-norm " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-normal_basis") == 0) {
-			f_normal_basis = TRUE;
+			f_normal_basis = true;
 			normal_basis_d = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-normal_basis " << normal_basis_d << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-nth_roots") == 0) {
-			f_nth_roots = TRUE;
+			f_nth_roots = true;
 			nth_roots_n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-nth_roots " << nth_roots_n << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-field_reduction") == 0) {
-			f_field_reduction = TRUE;
+			f_field_reduction = true;
 			field_reduction_label.assign(argv[++i]);
 			field_reduction_q = ST.strtoi(argv[++i]);
 			field_reduction_m = ST.strtoi(argv[++i]);
@@ -463,26 +463,26 @@ int finite_field_activity_description::read_arguments(
 
 		// Linear Algebra:
 		else if (ST.stringcmp(argv[i], "-RREF") == 0) {
-			f_RREF = TRUE;
+			f_RREF = true;
 			RREF_input_matrix.assign(argv[++i]);
 			if (f_v) {
 				cout << "-RREF " << RREF_input_matrix << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-normalize_from_the_right") == 0) {
-			f_normalize_from_the_right = TRUE;
+			f_normalize_from_the_right = true;
 			if (f_v) {
 				cout << "-normalize_from_the_right " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-normalize_from_the_left") == 0) {
-			f_normalize_from_the_left = TRUE;
+			f_normalize_from_the_left = true;
 			if (f_v) {
 				cout << "-normalize_from_the_left " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-RREF_random_matrix") == 0) {
-			f_RREF_random_matrix = TRUE;
+			f_RREF_random_matrix = true;
 			RREF_random_matrix_m = ST.strtolint(argv[++i]);
 			RREF_random_matrix_n = ST.strtolint(argv[++i]);
 			if (f_v) {
@@ -493,7 +493,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-Walsh_matrix") == 0) {
-			f_Walsh_matrix = TRUE;
+			f_Walsh_matrix = true;
 			Walsh_matrix_n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Walsh_matrix " << Walsh_matrix_n << endl;
@@ -501,7 +501,7 @@ int finite_field_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-Vandermonde_matrix") == 0) {
-			f_Vandermonde_matrix = TRUE;
+			f_Vandermonde_matrix = true;
 			if (f_v) {
 				cout << "-Vandermonde_matrix " << endl;
 			}
@@ -513,7 +513,7 @@ int finite_field_activity_description::read_arguments(
 
 
 		else if (ST.stringcmp(argv[i], "-Walsh_Hadamard_transform") == 0) {
-			f_Walsh_Hadamard_transform = TRUE;
+			f_Walsh_Hadamard_transform = true;
 			Walsh_Hadamard_transform_fname_csv_in.assign(argv[++i]);
 			Walsh_Hadamard_transform_n = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -524,7 +524,7 @@ int finite_field_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-algebraic_normal_form_of_boolean_function") == 0) {
-			f_algebraic_normal_form_of_boolean_function = TRUE;
+			f_algebraic_normal_form_of_boolean_function = true;
 			algebraic_normal_form_of_boolean_function_fname_csv_in.assign(argv[++i]);
 			algebraic_normal_form_of_boolean_function_n = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -535,7 +535,7 @@ int finite_field_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-algebraic_normal_form") == 0) {
-			f_algebraic_normal_form = TRUE;
+			f_algebraic_normal_form = true;
 			algebraic_normal_form_n = ST.strtoi(argv[++i]);
 			algebraic_normal_form_input.assign(argv[++i]);
 			if (f_v) {
@@ -547,7 +547,7 @@ int finite_field_activity_description::read_arguments(
 
 
 		else if (ST.stringcmp(argv[i], "-apply_trace_function") == 0) {
-			f_apply_trace_function = TRUE;
+			f_apply_trace_function = true;
 			apply_trace_function_fname_csv_in.assign(argv[++i]);
 			if (f_v) {
 				cout << "-apply_trace_function "
@@ -557,7 +557,7 @@ int finite_field_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-apply_power_function") == 0) {
-			f_apply_power_function = TRUE;
+			f_apply_power_function = true;
 			apply_power_function_fname_csv_in.assign(argv[++i]);
 			apply_power_function_d = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -569,7 +569,7 @@ int finite_field_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-identity_function") == 0) {
-			f_identity_function = TRUE;
+			f_identity_function = true;
 			identity_function_fname_csv_out.assign(argv[++i]);
 			if (f_v) {
 				cout << "-identity_function "
@@ -579,14 +579,14 @@ int finite_field_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-search_APN_function") == 0) {
-			f_search_APN_function = TRUE;
+			f_search_APN_function = true;
 			if (f_v) {
 				cout << "-search_APN_function " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-make_table_of_irreducible_polynomials") == 0) {
-			f_make_table_of_irreducible_polynomials = TRUE;
+			f_make_table_of_irreducible_polynomials = true;
 			make_table_of_irreducible_polynomials_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-make_table_of_irreducible_polynomials "
@@ -594,14 +594,14 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-get_primitive_polynomial") == 0) {
-			f_get_primitive_polynomial = TRUE;
+			f_get_primitive_polynomial = true;
 			get_primitive_polynomial_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-get_primitive_polynomial " << get_primitive_polynomial_degree << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-get_primitive_polynomial_in_range") == 0) {
-			f_get_primitive_polynomial_in_range = TRUE;
+			f_get_primitive_polynomial_in_range = true;
 			get_primitive_polynomial_in_range_min = ST.strtoi(argv[++i]);
 			get_primitive_polynomial_in_range_max = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -615,7 +615,7 @@ int finite_field_activity_description::read_arguments(
 		// cryptography stuff:
 
 		else if (ST.stringcmp(argv[i], "-EC_Koblitz_encoding") == 0) {
-			f_EC_Koblitz_encoding = TRUE;
+			f_EC_Koblitz_encoding = true;
 			EC_b = ST.strtoi(argv[++i]);
 			EC_c = ST.strtoi(argv[++i]);
 			EC_s = ST.strtoi(argv[++i]);
@@ -628,7 +628,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-EC_points") == 0) {
-			f_EC_points = TRUE;
+			f_EC_points = true;
 			EC_label.assign(argv[++i]);
 			EC_b = ST.strtoi(argv[++i]);
 			EC_c = ST.strtoi(argv[++i]);
@@ -637,7 +637,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-EC_add") == 0) {
-			f_EC_add = TRUE;
+			f_EC_add = true;
 			EC_b = ST.strtoi(argv[++i]);
 			EC_c = ST.strtoi(argv[++i]);
 			EC_pt1_text.assign(argv[++i]);
@@ -647,7 +647,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-EC_cyclic_subgroup") == 0) {
-			f_EC_cyclic_subgroup = TRUE;
+			f_EC_cyclic_subgroup = true;
 			EC_b = ST.strtoi(argv[++i]);
 			EC_c = ST.strtoi(argv[++i]);
 			EC_pt_text.assign(argv[++i]);
@@ -656,7 +656,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-EC_multiple_of") == 0) {
-			f_EC_multiple_of = TRUE;
+			f_EC_multiple_of = true;
 			EC_b = ST.strtoi(argv[++i]);
 			EC_c = ST.strtoi(argv[++i]);
 			EC_pt_text.assign(argv[++i]);
@@ -667,7 +667,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-EC_discrete_log") == 0) {
-			f_EC_discrete_log = TRUE;
+			f_EC_discrete_log = true;
 			EC_b = ST.strtoi(argv[++i]);
 			EC_c = ST.strtoi(argv[++i]);
 			EC_pt_text.assign(argv[++i]);
@@ -678,7 +678,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-EC_bsgs") == 0) {
-			f_EC_baby_step_giant_step = TRUE;
+			f_EC_baby_step_giant_step = true;
 			EC_b = ST.strtoi(argv[++i]);
 			EC_c = ST.strtoi(argv[++i]);
 			EC_bsgs_G.assign(argv[++i]);
@@ -692,7 +692,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-EC_bsgs_decode") == 0) {
-			f_EC_baby_step_giant_step_decode = TRUE;
+			f_EC_baby_step_giant_step_decode = true;
 			EC_b = ST.strtoi(argv[++i]);
 			EC_c = ST.strtoi(argv[++i]);
 			EC_bsgs_A.assign(argv[++i]);
@@ -710,7 +710,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-NTRU_encrypt") == 0) {
-			f_NTRU_encrypt = TRUE;
+			f_NTRU_encrypt = true;
 			NTRU_encrypt_N = ST.strtoi(argv[++i]);
 			NTRU_encrypt_p = ST.strtoi(argv[++i]);
 			NTRU_encrypt_H.assign(argv[++i]);
@@ -725,14 +725,14 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-polynomial_center_lift") == 0) {
-			f_polynomial_center_lift = TRUE;
+			f_polynomial_center_lift = true;
 			polynomial_center_lift_A.assign(argv[++i]);
 			if (f_v) {
 				cout << "-polynomial_center_lift " << polynomial_center_lift_A << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
-			f_polynomial_reduce_mod_p = TRUE;
+			f_polynomial_reduce_mod_p = true;
 			polynomial_reduce_mod_p_A.assign(argv[++i]);
 			if (f_v) {
 				cout << "-polynomial_reduce_mod_p " << polynomial_reduce_mod_p_A << endl;
@@ -741,7 +741,7 @@ int finite_field_activity_description::read_arguments(
 
 #if 0
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_Gr") == 0) {
-			f_cheat_sheet_Gr = TRUE;
+			f_cheat_sheet_Gr = true;
 			cheat_sheet_Gr_n = ST.strtoi(argv[++i]);
 			cheat_sheet_Gr_k = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -752,21 +752,21 @@ int finite_field_activity_description::read_arguments(
 
 
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_hermitian") == 0) {
-			f_cheat_sheet_hermitian = TRUE;
+			f_cheat_sheet_hermitian = true;
 			cheat_sheet_hermitian_projective_dimension = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-cheat_sheet_hermitian " << cheat_sheet_hermitian_projective_dimension << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_desarguesian_spread") == 0) {
-			f_cheat_sheet_desarguesian_spread = TRUE;
+			f_cheat_sheet_desarguesian_spread = true;
 			cheat_sheet_desarguesian_spread_m = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-cheat_sheet_desarguesian_spread " << cheat_sheet_desarguesian_spread_m << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-sift_polynomials") == 0) {
-			f_sift_polynomials = TRUE;
+			f_sift_polynomials = true;
 			sift_polynomials_r0 = ST.strtolint(argv[++i]);
 			sift_polynomials_r1 = ST.strtolint(argv[++i]);
 			if (f_v) {
@@ -777,7 +777,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-mult_polynomials") == 0) {
-			f_mult_polynomials = TRUE;
+			f_mult_polynomials = true;
 			mult_polynomials_r0 = ST.strtolint(argv[++i]);
 			mult_polynomials_r1 = ST.strtolint(argv[++i]);
 			if (f_v) {
@@ -788,7 +788,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-polynomial_division_ranked") == 0) {
-			f_polynomial_division_ranked = TRUE;
+			f_polynomial_division_ranked = true;
 			polynomial_division_r0 = ST.strtolint(argv[++i]);
 			polynomial_division_r1 = ST.strtolint(argv[++i]);
 			if (f_v) {
@@ -801,7 +801,7 @@ int finite_field_activity_description::read_arguments(
 
 
 		else if (ST.stringcmp(argv[i], "-transversal") == 0) {
-			f_transversal = TRUE;
+			f_transversal = true;
 			transversal_line_1_basis.assign(argv[++i]);
 			transversal_line_2_basis.assign(argv[++i]);
 			transversal_point.assign(argv[++i]);
@@ -813,7 +813,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-intersection_of_two_lines") == 0) {
-			f_intersection_of_two_lines = TRUE;
+			f_intersection_of_two_lines = true;
 			line_1_basis.assign(argv[++i]);
 			line_2_basis.assign(argv[++i]);
 			if (f_v) {
@@ -824,7 +824,7 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
-			f_inverse_isomorphism_klein_quadric = TRUE;
+			f_inverse_isomorphism_klein_quadric = true;
 			inverse_isomorphism_klein_quadric_matrix_A6.assign(argv[++i]);
 			if (f_v) {
 				cout << "-inverse_isomorphism_klein_quadric "
@@ -832,14 +832,14 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-rank_point_in_PG") == 0) {
-			f_rank_point_in_PG = TRUE;
+			f_rank_point_in_PG = true;
 			rank_point_in_PG_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-rank_point_in_PG " << rank_point_in_PG_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-unrank_point_in_PG") == 0) {
-			f_unrank_point_in_PG = TRUE;
+			f_unrank_point_in_PG = true;
 			unrank_point_in_PG_n = ST.strtolint(argv[++i]);
 			unrank_point_in_PG_text.assign(argv[++i]);
 			if (f_v) {

@@ -23,17 +23,17 @@ graph_node::graph_node()
 {
 	// std::string label;
 	id = -1;
-	f_has_data1 = FALSE;
+	f_has_data1 = false;
 	data1 = -1;
-	f_has_data2 = FALSE;
+	f_has_data2 = false;
 	data2 = -1;
-	f_has_data3 = FALSE;
+	f_has_data3 = false;
 	data3 = -1;
-	f_has_vec_data = FALSE;
+	f_has_vec_data = false;
 	vec_data = NULL;
 	vec_data_len = 0;
 
-	f_has_distinguished_element = FALSE;
+	f_has_distinguished_element = false;
 	distinguished_element_index = -1;
 
 
@@ -105,31 +105,31 @@ void graph_node::add_vec_data(long int *v, int len)
 	vec_data = NEW_lint(len);
 	vec_data_len = len;
 	Lint_vec_copy(v, vec_data, len);
-	f_has_vec_data = TRUE;
+	f_has_vec_data = true;
 }
 
 void graph_node::set_distinguished_element(int idx)
 {
-	f_has_distinguished_element = TRUE;
+	f_has_distinguished_element = true;
 	distinguished_element_index = idx;
 }
 
 
 void graph_node::add_data1(int data)
 {
-	f_has_data1 = TRUE;
+	f_has_data1 = true;
 	data1 = data;
 }
 
 void graph_node::add_data2(int data)
 {
-	f_has_data2 = TRUE;
+	f_has_data2 = true;
 	data2 = data;
 }
 
 void graph_node::add_data3(int data)
 {
-	f_has_data3 = TRUE;
+	f_has_data3 = true;
 	data3 = data;
 }
 
@@ -255,14 +255,14 @@ int graph_node::remove_neighbor(
 				neighbor_list[j - 1] = neighbor_list[j];
 			}
 			nb_neighbors--;
-			return TRUE;
+			return true;
 		}
 	}
 
 	if (f_v) {
 		cout << "graph_node::remove_neighbor done" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 void graph_node::find_all_parents(

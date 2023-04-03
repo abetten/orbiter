@@ -24,7 +24,7 @@ surface_with_action::surface_with_action()
 {
 	PA = NULL;
 
-	f_semilinear = FALSE;
+	f_semilinear = false;
 	Surf = NULL;
 	A = NULL;
 	A_wedge = NULL;
@@ -212,7 +212,7 @@ void surface_with_action::init(
 		Recoordinatize->init(
 				Three_skew_subspaces, //SD,
 				A, A2,
-			TRUE /* f_projective */, f_semilinear,
+			true /* f_projective */, f_semilinear,
 			NULL /*int (*check_function_incremental)(int len,
 				int *S, void *data, int verbose_level)*/,
 			NULL /*void *check_function_incremental_data */,
@@ -234,7 +234,7 @@ void surface_with_action::init(
 				"Surf->Gr->line_regulus_in_PG_3_q" << endl;
 	}
 	Surf->Gr->line_regulus_in_PG_3_q(
-			regulus, regulus_size, FALSE /* f_opposite */,
+			regulus, regulus_size, false /* f_opposite */,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init after "
@@ -1007,11 +1007,11 @@ void surface_with_action::create_regulus_and_opposite_regulus(
 	A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 	Recoordinatize->Three_skew_subspaces->Grass->line_regulus_in_PG_3_q(
-			regulus, regulus_size, FALSE /* f_opposite */,
+			regulus, regulus_size, false /* f_opposite */,
 			verbose_level);
 
 	Recoordinatize->Three_skew_subspaces->Grass->line_regulus_in_PG_3_q(
-			opp_regulus, sz, TRUE /* f_opposite */,
+			opp_regulus, sz, true /* f_opposite */,
 			verbose_level);
 
 	if (sz != regulus_size) {
@@ -1267,7 +1267,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 						"we could not find a second intersection point"
 						<< endl;
 			}
-			return FALSE;
+			return false;
 		}
 
 
@@ -1282,7 +1282,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				cout << "The line lies in the quadric, "
 						"this five plus one is not good." << endl;
 			}
-			return FALSE;
+			return false;
 		}
 
 		// Pick two lines out of the three lines ell_0,ell_1,ell_2 
@@ -1337,7 +1337,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				cout << "projective_space::create_double_six_from_five_lines_with_a_common_transversal "
 						"intersection is not a line" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 		line3 = Surf->rank_line(M);
 
@@ -1472,7 +1472,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 #endif
 
@@ -1501,7 +1501,7 @@ void surface_with_action::report_double_triplets_detailed(std::ostream &ost)
 
 
 
-	Classify_trihedral_pairs->print_trihedral_pairs(ost, TRUE /* f_with_stabilizers */);
+	Classify_trihedral_pairs->print_trihedral_pairs(ost, true /* f_with_stabilizers */);
 
 }
 

@@ -42,7 +42,7 @@ surfaces_arc_lifting_definition_node::surfaces_arc_lifting_definition_node()
 
 	relative_order_table = NULL;
 
-	f_has_F2 = FALSE;
+	f_has_F2 = false;
 	F2 = NULL;
 	tally_F2 = NULL;
 }
@@ -73,7 +73,7 @@ void surfaces_arc_lifting_definition_node::init_with_27_lines(surfaces_arc_lifti
 		cout << "surfaces_arc_lifting_definition_node::init_with_27_lines before SO->init_with_27_lines" << endl;
 	}
 	SO->init_with_27_lines(Lift->Surf_A->Surf, Lines27, eqn20,
-			FALSE /* f_find_double_six_and_rearrange_lines */,
+			false /* f_find_double_six_and_rearrange_lines */,
 			verbose_level - 2);
 
 	if (f_v) {
@@ -100,9 +100,9 @@ void surfaces_arc_lifting_definition_node::tally_f2(
 		F2[i] = Seventytwo[i].f2;
 	}
 	tally_F2 = NEW_OBJECT(data_structures::tally);
-	tally_F2->init(F2, 45 * 72, FALSE, 0);
+	tally_F2->init(F2, 45 * 72, false, 0);
 
-	f_has_F2 = TRUE;
+	f_has_F2 = true;
 	if (f_v) {
 		cout << "surfaces_arc_lifting_definition_node::tally_f2 done" << endl;
 	}
@@ -111,7 +111,7 @@ void surfaces_arc_lifting_definition_node::tally_f2(
 void surfaces_arc_lifting_definition_node::report(int verbose_level)
 {
 	char fname_base[1000];
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	snprintf(fname_base, sizeof(fname_base), "clebsch_maps_surface_%d", orbit_idx);
 
@@ -129,14 +129,14 @@ void surfaces_arc_lifting_definition_node::report(int verbose_level)
 	{
 		ofstream fp(fname_report.c_str());
 		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
+			false /* f_book */,
+			true /* f_title */,
 			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -374,7 +374,7 @@ void surfaces_arc_lifting_definition_node::report_tally_F2(std::ostream &ost, in
 {
 	if (f_has_F2) {
 		ost << "Tally of flag orbits: ";
-		tally_F2->print_file_tex(ost, FALSE /* f_backwards */);
+		tally_F2->print_file_tex(ost, false /* f_backwards */);
 		ost << "\\\\" << endl;
 	}
 }

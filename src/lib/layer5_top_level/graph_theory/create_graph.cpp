@@ -22,7 +22,7 @@ create_graph::create_graph()
 {
 	description = NULL;
 
-	f_has_CG = FALSE;
+	f_has_CG = false;
 	CG = NULL;
 
 	N = 0;
@@ -49,14 +49,14 @@ void create_graph::init(
 	}
 	create_graph::description = description;
 
-	f_has_CG = FALSE;
+	f_has_CG = false;
 
 	if (description->f_load) {
 		if (f_v) {
 			cout << "create_graph::init f_load" << endl;
 		}
 
-		f_has_CG = TRUE;
+		f_has_CG = true;
 		CG = NEW_OBJECT(graph_theory::colored_graph);
 		if (f_v) {
 			cout << "create_graph::init "
@@ -69,7 +69,7 @@ void create_graph::init(
 					"after CG->load, "
 					"fname=" << description->fname << endl;
 		}
-		f_has_CG = TRUE;
+		f_has_CG = true;
 		N = CG->nb_points;
 		if (f_v) {
 			cout << "create_graph::init "
@@ -202,7 +202,7 @@ void create_graph::init(
 		FREE_int(Elt2);
 
 
-		f_has_CG = FALSE;
+		f_has_CG = false;
 		if (f_v) {
 			cout << "create_graph::init "
 					"number of vertices = " << N << endl;
@@ -323,7 +323,7 @@ void create_graph::init(
 		for (h = 0; h < Edges.size(); h++) {
 			i = Edges[h][0];
 			j = Edges[h][1];
-			if (FALSE) {
+			if (false) {
 				cout << "create_graph::init "
 						"edge " << h << " is " << i << " to " << j << endl;
 			}
@@ -577,8 +577,8 @@ void create_graph::init(
 		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 
 		F->finite_field_init_small_order(5,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0);
 		Surf->init_surface_domain(F, verbose_level);
 
@@ -760,7 +760,7 @@ void create_graph::init(
 				description->subset_label_tex,
 				verbose_level);
 
-		f_has_CG = TRUE;
+		f_has_CG = true;
 
 		label.append(description->subset_label);
 		label_tex.append(description->subset_label_tex);
@@ -787,7 +787,7 @@ void create_graph::init(
 						"after CG->init_adjacency_no_colors" << endl;
 			}
 
-			f_has_CG = TRUE;
+			f_has_CG = true;
 
 			if (f_v) {
 				cout << "create_graph::init "
@@ -1013,7 +1013,7 @@ void create_graph::create_Sarnak(
 	}
 
 
-	int l, f_special = FALSE;
+	int l, f_special = false;
 	number_theory::number_theory_domain NT;
 
 
@@ -1027,13 +1027,13 @@ void create_graph::create_Sarnak(
 
 	field_theory::finite_field *F;
 	actions::action *A;
-	int f_semilinear = FALSE;
-	int f_basis = TRUE;
+	int f_semilinear = false;
+	int f_basis = true;
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 	//F->init_override_polynomial(q, override_poly, verbose_level);
 
@@ -1043,7 +1043,7 @@ void create_graph::create_Sarnak(
 	// create PSL(2,q) or PGL(2,q) depending on Legendre(p, q):
 
 	if (l == 1) {
-		f_special = TRUE;
+		f_special = true;
 
 		if (f_v) {
 			cout << "create_graph::create_Sarnak "
@@ -1063,7 +1063,7 @@ void create_graph::create_Sarnak(
 		}
 		A->Known_groups->init_projective_group(2, F,
 			f_semilinear,
-			f_basis, TRUE /* f_init_sims */,
+			f_basis, true /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 		FREE_OBJECT(nice_gens);
@@ -1160,7 +1160,7 @@ void create_graph::create_Shrikhande(
 	int i, j;
 	int nb_G, nb_S;
 	long int goi;
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_symmetric_group(n, f_no_base, verbose_level);

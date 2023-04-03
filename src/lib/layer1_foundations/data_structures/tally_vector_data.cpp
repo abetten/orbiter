@@ -103,7 +103,7 @@ void tally_vector_data::init(
 		cout << "tally_vector_data::init starting to collect data" << endl;
 	}
 	for (i = 0; i < data_length; i++) {
-		if (FALSE) {
+		if (false) {
 			cout << "tally_vector_data::init starting to collect data i=" << i << " / " << data_length << endl;
 		}
 		if (!hash_and_find(data + i * data_set_sz,
@@ -205,13 +205,13 @@ int tally_vector_data::hash_and_find(int *data,
 
     itr1 = Hashing.lower_bound(h);
     itr2 = Hashing.upper_bound(h);
-    f_found = FALSE;
+    f_found = false;
 	for (itr = itr1; itr != itr2; ++itr) {
     	idx = itr->second;
 		if (Sorting.int_vec_compare(data,
 				Reps + idx * data_set_sz,
 				data_set_sz) == 0) {
-			f_found = TRUE;
+			f_found = true;
 			break;
         }
     }

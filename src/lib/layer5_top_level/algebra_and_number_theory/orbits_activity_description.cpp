@@ -20,34 +20,34 @@ namespace apps_algebra {
 orbits_activity_description::orbits_activity_description()
 {
 
-	f_report = FALSE;
+	f_report = false;
 
-	f_export_something = FALSE;
+	f_export_something = false;
 	//std::string export_something_what;
 	export_something_data1 = 0;
 
-	f_export_trees = FALSE;
+	f_export_trees = false;
 
-	f_export_levels = FALSE;
+	f_export_levels = false;
 	export_levels_orbit_idx = 0;
 
-	f_draw_tree = FALSE;
+	f_draw_tree = false;
 	draw_tree_idx = 0;
 
-	f_stabilizer = FALSE;
+	f_stabilizer = false;
 	stabilizer_point = 0;
 
-	f_stabilizer_of_orbit_rep = FALSE;
+	f_stabilizer_of_orbit_rep = false;
 	stabilizer_of_orbit_rep_orbit_idx = 0;
 
-	f_Kramer_Mesner_matrix = FALSE;
+	f_Kramer_Mesner_matrix = false;
 	Kramer_Mesner_t = 0;
 	Kramer_Mesner_k = 0;
 
-	f_recognize = FALSE;
+	f_recognize = false;
 	//std::vector<std::string> recognize;
 
-	f_report_options = FALSE;
+	f_report_options = false;
 	report_options = NULL;
 
 }
@@ -72,26 +72,26 @@ int orbits_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+			f_report = true;
 			if (f_v) {
 				cout << "-report" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_trees") == 0) {
-			f_export_trees = TRUE;
+			f_export_trees = true;
 			if (f_v) {
 				cout << "-export_trees" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_levels") == 0) {
-			f_export_levels = TRUE;
+			f_export_levels = true;
 			export_levels_orbit_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-export_levels " << export_levels_orbit_idx << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_something") == 0) {
-			f_export_something = TRUE;
+			f_export_something = true;
 			export_something_what.assign(argv[++i]);
 			export_something_data1 = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -99,7 +99,7 @@ int orbits_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
-			f_draw_tree = TRUE;
+			f_draw_tree = true;
 			draw_tree_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-export_trees" << draw_tree_idx << endl;
@@ -107,7 +107,7 @@ int orbits_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-stabilizer") == 0) {
-			f_stabilizer = TRUE;
+			f_stabilizer = true;
 			stabilizer_point = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-stabilizer " << stabilizer_point << endl;
@@ -115,14 +115,14 @@ int orbits_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-stabilizer_of_orbit_rep") == 0) {
-			f_stabilizer_of_orbit_rep = TRUE;
+			f_stabilizer_of_orbit_rep = true;
 			stabilizer_of_orbit_rep_orbit_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-stabilizer_of_orbit_rep " << stabilizer_of_orbit_rep_orbit_idx << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
-			f_Kramer_Mesner_matrix = TRUE;
+			f_Kramer_Mesner_matrix = true;
 			Kramer_Mesner_t = ST.strtoi(argv[++i]);
 			Kramer_Mesner_k = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -131,7 +131,7 @@ int orbits_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
 
-			f_recognize = TRUE;
+			f_recognize = true;
 			string s;
 
 			s.assign(argv[++i]);
@@ -141,7 +141,7 @@ int orbits_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-report_options") == 0) {
-			f_report_options = TRUE;
+			f_report_options = true;
 
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 			if (f_v) {

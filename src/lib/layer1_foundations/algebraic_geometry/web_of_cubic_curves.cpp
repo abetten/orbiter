@@ -213,10 +213,10 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	rank_of_foursubsets(Rk, N, 0 /*verbose_level*/);
 	{
 		data_structures::tally C;
-		C.init(Rk, N, FALSE, 0 /* verbose_level */);
+		C.init(Rk, N, false, 0 /* verbose_level */);
 		cout << "web_of_cubic_curves::init "
 				"classification of ranks of 4-subsets:" << endl;
-		C.print_naked_tex(cout, TRUE /* f_backwards */);
+		C.print_naked_tex(cout, true /* f_backwards */);
 		cout << endl;
 	}
 
@@ -257,7 +257,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	The_plane_rank = NEW_lint(45);
 	The_plane_duals = NEW_lint(45);
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	int Basis[16];
 	for (i = 0; i < 45; i++) {
@@ -272,7 +272,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 		cout << "web_of_cubic_curves::init "
 				"The_plane_ranks:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
-				The_plane_rank, 45, 1, TRUE /* f_tex */);
+				The_plane_rank, 45, 1, true /* f_tex */);
 	}
 
 	for (i = 0; i < 45; i++) {
@@ -810,7 +810,7 @@ void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 		pt_on_surface[3] = evals[4];
 #endif
 
-		if (FALSE) {
+		if (false) {
 			cout << "lambda = " << lambda << endl;
 		}
 
@@ -878,11 +878,11 @@ void web_of_cubic_curves::find_point_not_on_six_curves(
 		cout << "web_of_cubic_curves::find_point_not_on_six_curves "
 				"could not find a point which is not on "
 				"any of the six curves" << endl;
-		f_point_was_found = FALSE;
+		f_point_was_found = false;
 		pt = -1;
 	}
 	else {
-		f_point_was_found = TRUE;
+		f_point_was_found = true;
 	}
 	if (f_v) {
 		cout << "web_of_cubic_curves::find_point_not_on_six_curves done" << endl;
@@ -910,7 +910,7 @@ void web_of_cubic_curves::print_lines(std::ostream &ost)
 
 void web_of_cubic_curves::print_trihedral_plane_equations(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i;
 
 	ost << "The chosen abstract trihedral pair is no "
@@ -941,7 +941,7 @@ void web_of_cubic_curves::print_trihedral_plane_equations(std::ostream &ost)
 	ost << "The coefficients of the six curves are:\\\\";
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(ost,
-			six_curves, 6, 10, TRUE /* f_tex*/);
+			six_curves, 6, 10, true /* f_tex*/);
 	ost << "$$" << endl;
 
 
@@ -969,7 +969,7 @@ void web_of_cubic_curves::print_trihedral_plane_equations(std::ostream &ost)
 	ost << "The coefficients of the four base curves are:\\\\";
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(ost,
-			base_curves, 4, 10, TRUE /* f_tex*/);
+			base_curves, 4, 10, true /* f_tex*/);
 	ost << "$$" << endl;
 
 	ost << "The resulting tritangent plane equations are:\\\\";
@@ -984,24 +984,24 @@ void web_of_cubic_curves::print_trihedral_plane_equations(std::ostream &ost)
 	ost << "The dual coordinates of the plane equations are:\\\\";
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(ost,
-			Tritangent_plane_equations, 15, 4, TRUE /* f_tex*/);
+			Tritangent_plane_equations, 15, 4, true /* f_tex*/);
 	ost << "\\;\\;" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-			Tritangent_plane_equations + 15 * 4, 15, 4, 15, 0, TRUE /* f_tex*/);
+			Tritangent_plane_equations + 15 * 4, 15, 4, 15, 0, true /* f_tex*/);
 	ost << "\\;\\;" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-			Tritangent_plane_equations + 30 * 4, 15, 4, 30, 0, TRUE /* f_tex*/);
+			Tritangent_plane_equations + 30 * 4, 15, 4, 30, 0, true /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "The dual ranks are:\\\\";
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels(ost,
-		The_plane_duals, 15, 1, TRUE /* f_tex*/);
+		The_plane_duals, 15, 1, true /* f_tex*/);
 	ost << "\\;\\;" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		The_plane_duals + 15 * 1, 15, 1, 15, 0, TRUE /* f_tex*/);
+		The_plane_duals + 15 * 1, 15, 1, 15, 0, true /* f_tex*/);
 	ost << "\\;\\;" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		The_plane_duals + 30 * 1, 15, 1, 30, 0, TRUE /* f_tex*/);
+		The_plane_duals + 30 * 1, 15, 1, 30, 0, true /* f_tex*/);
 	ost << "$$" << endl;
 
 	print_lines(ost);
@@ -1011,13 +1011,13 @@ void web_of_cubic_curves::print_the_six_plane_equations(
 	int *The_six_plane_equations,
 	long int *plane6, std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, h;
 
 	ost << "The six plane equations are:" << endl;
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(ost,
-			The_six_plane_equations, 6, 4, TRUE /* f_tex*/);
+			The_six_plane_equations, 6, 4, true /* f_tex*/);
 	ost << "$$" << endl;
 
 	ost << "The six plane equations are:\\\\";
@@ -1034,14 +1034,14 @@ void web_of_cubic_curves::print_surface_equations_on_line(
 	int *The_surface_equations,
 	int lambda, int lambda_rk, std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i;
 	int v[2];
 
 	ost << "The $q+1$ equations on the line are:" << endl;
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(ost,
-			The_surface_equations, Surf->F->q + 1, 20, TRUE /* f_tex*/);
+			The_surface_equations, Surf->F->q + 1, 20, true /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	ost << "\\lambda = " << lambda << ", \\; \\mbox{in row} \\; "
@@ -1094,12 +1094,12 @@ void web_of_cubic_curves::print_surface_equations_on_line(
 
 void web_of_cubic_curves::print_dual_point_ranks(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	ost << "Dual point ranks:\\\\";
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels(ost,
-			Dual_point_ranks, nb_T, 6, TRUE /* f_tex*/);
+			Dual_point_ranks, nb_T, 6, true /* f_tex*/);
 	ost << "$$" << endl;
 }
 
@@ -1172,22 +1172,22 @@ void web_of_cubic_curves::report(std::ostream &ost, int verbose_level)
 void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, std::ostream &ost)
 {
 	combinatorics::combinatorics_domain Combi;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	ost << "The web of cubic curves is:\\\\" << endl;
 
 #if 0
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost,
-		Web_of_cubic_curves, 15, 10, TRUE /* f_tex*/);
+		Web_of_cubic_curves, 15, 10, true /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels_and_offset(ost,
-		Web_of_cubic_curves + 15 * 10, 15, 10, 15, 0, TRUE /* f_tex*/);
+		Web_of_cubic_curves + 15 * 10, 15, 10, 15, 0, true /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels_and_offset(ost,
-		Web_of_cubic_curves + 30 * 10, 15, 10, 30, 0, TRUE /* f_tex*/);
+		Web_of_cubic_curves + 30 * 10, 15, 10, 30, 0, true /* f_tex*/);
 	ost << "$$" << endl;
 #endif
 
@@ -1268,7 +1268,7 @@ void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, std::ostream
 		row_fst, row_len, 1,
 		col_fst, col_len, 1,
 		Web_of_cubic_curves_entry_print, (void *) this,
-		TRUE /* f_tex */);
+		true /* f_tex */);
 	ost << "$$" << endl;
 
 	for (i = 0; i < 15; i++) {
@@ -1281,7 +1281,7 @@ void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, std::ostream
 		row_fst, row_len, 1,
 		col_fst, col_len, 1,
 		Web_of_cubic_curves_entry_print, (void *) this,
-		TRUE /* f_tex */);
+		true /* f_tex */);
 	ost << "$$" << endl;
 
 	for (i = 0; i < 15; i++) {
@@ -1294,7 +1294,7 @@ void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, std::ostream
 		row_fst, row_len, 1,
 		col_fst, col_len, 1,
 		Web_of_cubic_curves_entry_print, (void *) this,
-		TRUE /* f_tex */);
+		true /* f_tex */);
 	ost << "$$" << endl;
 
 	FREE_int(bisecants);

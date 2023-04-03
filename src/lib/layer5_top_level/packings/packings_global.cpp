@@ -114,8 +114,8 @@ void packings_global::merge_packings(
 		S = NEW_OBJECT(spreadsheet);
 
 		S->read_spreadsheet(fnames[f], 0 /*verbose_level*/);
-		if (FALSE /*f_v3*/) {
-			S->print_table(cout, FALSE);
+		if (false /*f_v3*/) {
+			S->print_table(cout, false);
 			}
 
 		int ago_idx, original_file_idx, input_idx_idx, input_set_idx;
@@ -162,15 +162,15 @@ void packings_global::merge_packings(
 				//cout << endl;
 				}
 
-			if (FALSE) {
+			if (false) {
 				cout << "canonical_form_idx=" << canonical_form_idx << endl;
 			}
 			text = S->get_string(g + 1, canonical_form_idx);
-			if (FALSE) {
+			if (false) {
 				cout << "text=" << text << endl;
 			}
 			Orbitr->Lint_vec.scan(text, canonical_labeling, canonical_labeling_sz);
-			if (FALSE) {
+			if (false) {
 				cout << "File " << f << " / " << nb_files
 						<< ", input set " << g << " / "
 						<< table_length << " canonical_labeling = ";
@@ -186,18 +186,18 @@ void packings_global::merge_packings(
 
 			OiP = NEW_OBJECT(object_in_projective_space);
 
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::merge_packings "
 						"before init_packing_from_spread_table" << endl;
 			}
 			OiP->init_packing_from_spread_table(P, the_set_in,
 				Spread_table, nb_spreads, spread_size,
 				0 /*verbose_level*/);
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::merge_packings "
 						"after init_packing_from_spread_table" << endl;
 			}
-			OiP->f_has_known_ago = TRUE;
+			OiP->f_has_known_ago = true;
 			OiP->known_ago = ago;
 
 			int *Incma_in;
@@ -208,13 +208,13 @@ void packings_global::merge_packings(
 			int canonical_form_len;
 
 
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::merge_packings "
 						"before encode_incma" << endl;
 			}
 			OiP->encode_incma(Incma_in, nb_rows1, nb_cols1,
 					partition, 0 /*verbose_level - 1*/);
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::merge_packings "
 						"after encode_incma" << endl;
 			}
@@ -249,7 +249,7 @@ void packings_global::merge_packings(
 					Incma_out[i * nb_cols + j] = Incma_in[ii * nb_cols + jj];
 					}
 				}
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::merge_packings "
 						"before bitvector_allocate_and_coded_length" << endl;
 			}
@@ -439,8 +439,8 @@ void packings_global::select_packings(
 	S = NEW_OBJECT(spreadsheet);
 
 	S->read_spreadsheet(fname, 0 /*verbose_level*/);
-	if (FALSE /*f_v3*/) {
-		S->print_table(cout, FALSE);
+	if (false /*f_v3*/) {
+		S->print_table(cout, false);
 		}
 
 	int ago_idx, original_file_idx, input_idx_idx, input_set_idx;
@@ -458,7 +458,7 @@ void packings_global::select_packings(
 
 	//rep,ago,original_file,input_idx,
 	//input_set,nb_rows,nb_cols,canonical_form
-	int f_first = TRUE;
+	int f_first = true;
 
 
 	for (g = 0; g < table_length; g++) {
@@ -471,7 +471,7 @@ void packings_global::select_packings(
 		int canonical_labeling_sz;
 		int nb_rows, nb_cols;
 		object_in_projective_space *OiP;
-		int f_accept = FALSE;
+		int f_accept = false;
 		int *set1;
 		int *set2;
 
@@ -521,20 +521,20 @@ void packings_global::select_packings(
 #endif
 			if (int_vec_compare(set1, set2, packing_size) == 0) {
 				cout << "The packing is self-polar" << endl;
-				f_accept = TRUE;
+				f_accept = true;
 			}
 			else {
-				f_accept = FALSE;
+				f_accept = false;
 			}
 			FREE_int(set1);
 			FREE_int(set2);
 		}
 		if (f_ago) {
 			if (ago == select_ago) {
-				f_accept = TRUE;
+				f_accept = true;
 			}
 			else {
-				f_accept = FALSE;
+				f_accept = false;
 			}
 		}
 
@@ -545,15 +545,15 @@ void packings_global::select_packings(
 			nb_accept++;
 
 
-			if (FALSE) {
+			if (false) {
 				cout << "canonical_form_idx=" << canonical_form_idx << endl;
 			}
 			text = S->get_string(g + 1, canonical_form_idx);
-			if (FALSE) {
+			if (false) {
 				cout << "text=" << text << endl;
 			}
 			Orbiter->Lint_vec.scan(text, canonical_labeling, canonical_labeling_sz);
-			if (FALSE) {
+			if (false) {
 				cout << "File " << fname
 						<< ", input set " << g << " / "
 						<< table_length << " canonical_labeling = ";
@@ -569,18 +569,18 @@ void packings_global::select_packings(
 
 			OiP = NEW_OBJECT(object_in_projective_space);
 
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings "
 						"before init_packing_from_spread_table" << endl;
 			}
 			OiP->init_packing_from_spread_table(P, the_set_in,
 				Spread_table, nb_spreads, spread_size,
 				0 /*verbose_level*/);
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::merge_packings "
 						"after init_packing_from_spread_table" << endl;
 			}
-			OiP->f_has_known_ago = TRUE;
+			OiP->f_has_known_ago = true;
 			OiP->known_ago = ago;
 
 			int *Incma_in;
@@ -591,13 +591,13 @@ void packings_global::select_packings(
 			int canonical_form_len;
 
 
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings "
 						"before encode_incma" << endl;
 			}
 			OiP->encode_incma(Incma_in, nb_rows1, nb_cols1,
 					partition, 0 /*verbose_level - 1*/);
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings "
 						"after encode_incma" << endl;
 			}
@@ -632,7 +632,7 @@ void packings_global::select_packings(
 					Incma_out[i * nb_cols + j] = Incma_in[ii * nb_cols + jj];
 					}
 				}
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings "
 						"before bitvector_allocate_and_coded_length" << endl;
 			}
@@ -653,7 +653,7 @@ void packings_global::select_packings(
 							"before CB->init" << endl;
 				}
 				CB->init(table_length, canonical_form_len, verbose_level);
-				f_first = FALSE;
+				f_first = false;
 			}
 
 
@@ -837,8 +837,8 @@ void packings_global::select_packings_self_dual(
 	S = NEW_OBJECT(spreadsheet);
 
 	S->read_spreadsheet(fname, 0 /*verbose_level*/);
-	if (FALSE /*f_v3*/) {
-		S->print_table(cout, FALSE);
+	if (false /*f_v3*/) {
+		S->print_table(cout, false);
 		}
 
 	if (f_v) {
@@ -867,7 +867,7 @@ void packings_global::select_packings_self_dual(
 
 	//rep,ago,original_file,input_idx,
 	//input_set,nb_rows,nb_cols,canonical_form
-	int f_first = TRUE;
+	int f_first = true;
 
 
 	if (f_v) {
@@ -907,7 +907,7 @@ void packings_global::select_packings_self_dual(
 			}
 
 
-		f_accept = TRUE;
+		f_accept = true;
 
 
 
@@ -916,15 +916,15 @@ void packings_global::select_packings_self_dual(
 			nb_accept++;
 
 
-			if (FALSE) {
+			if (false) {
 				cout << "canonical_form_idx=" << canonical_form_idx << endl;
 			}
 			text = S->get_string(g + 1, canonical_form_idx);
-			if (FALSE) {
+			if (false) {
 				cout << "text=" << text << endl;
 			}
 			Orbiter->Lint_vec.scan(text, canonical_labeling, canonical_labeling_sz);
-			if (FALSE) {
+			if (false) {
 				cout << "File " << fname
 						<< ", input set " << g << " / "
 						<< table_length << " canonical_labeling = ";
@@ -941,18 +941,18 @@ void packings_global::select_packings_self_dual(
 
 			OiP = NEW_OBJECT(object_in_projective_space);
 
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings_self_dual "
 						"before init_packing_from_spread_table" << endl;
 			}
 			OiP->init_packing_from_spread_table(P, the_set_in,
 					Spread_table_original, nb_spreads, spread_size,
 				0 /*verbose_level*/);
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings_self_dual "
 						"after init_packing_from_spread_table" << endl;
 			}
-			OiP->f_has_known_ago = TRUE;
+			OiP->f_has_known_ago = true;
 			OiP->known_ago = ago;
 
 			int *Incma_in;
@@ -963,13 +963,13 @@ void packings_global::select_packings_self_dual(
 			int canonical_form_len;
 
 
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings_self_dual "
 						"before encode_incma" << endl;
 			}
 			OiP->encode_incma(Incma_in, nb_rows1, nb_cols1,
 					partition, 0 /*verbose_level - 1*/);
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings_self_dual "
 						"after encode_incma" << endl;
 			}
@@ -1004,7 +1004,7 @@ void packings_global::select_packings_self_dual(
 					Incma_out[i * nb_cols + j] = Incma_in[ii * nb_cols + jj];
 					}
 				}
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings_self_dual "
 						"before bitvector_allocate_and_coded_length" << endl;
 			}
@@ -1025,11 +1025,11 @@ void packings_global::select_packings_self_dual(
 							"before CB->init" << endl;
 				}
 				CB->init(table_length, canonical_form_len, verbose_level);
-				f_first = FALSE;
+				f_first = false;
 			}
 
 
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings_self_dual "
 						"before CB->add" << endl;
 			}
@@ -1042,7 +1042,7 @@ void packings_global::select_packings_self_dual(
 				cout << "reject" << endl;
 				nb_reject++;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "packings_global::select_packings_self_dual "
 						"CB->add f_found = " << f_found
 						<< " nb iso = " << CB->nb_types
@@ -1187,7 +1187,7 @@ void packings_global::select_packings_self_dual(
 		OiP1 = NEW_OBJECT(object_in_projective_space);
 		OiP2 = NEW_OBJECT(object_in_projective_space);
 
-		if (FALSE) {
+		if (false) {
 			cout << "packings_global::select_packings_self_dual "
 					"before init_packing_from_spread_table" << endl;
 		}
@@ -1197,11 +1197,11 @@ void packings_global::select_packings_self_dual(
 		OiP2->init_packing_from_spread_table(P, set2,
 				Spread_table_original, nb_spreads, spread_size,
 				0 /*verbose_level*/);
-		if (FALSE) {
+		if (false) {
 			cout << "packings_global::select_packings_self_dual "
 					"after init_packing_from_spread_table" << endl;
 		}
-		OiP1->f_has_known_ago = TRUE;
+		OiP1->f_has_known_ago = true;
 		OiP1->known_ago = ago;
 
 
@@ -1223,7 +1223,7 @@ void packings_global::select_packings_self_dual(
 		//int canonical_form_len;
 
 
-		if (FALSE) {
+		if (false) {
 			cout << "packings_global::select_packings_self_dual "
 					"before encode_incma" << endl;
 		}
@@ -1231,7 +1231,7 @@ void packings_global::select_packings_self_dual(
 				partition, 0 /*verbose_level - 1*/);
 		OiP2->encode_incma(Incma_in2, nb_rows1, nb_cols1,
 				partition, 0 /*verbose_level - 1*/);
-		if (FALSE) {
+		if (false) {
 			cout << "packings_global::select_packings_self_dual "
 					"after encode_incma" << endl;
 		}
@@ -1247,7 +1247,7 @@ void packings_global::select_packings_self_dual(
 		}
 
 
-		if (FALSE) {
+		if (false) {
 			cout << "packings_global::select_packings_self_dual "
 					"before PA->set_stabilizer_of_object" << endl;
 			}
@@ -1300,7 +1300,7 @@ void packings_global::select_packings_self_dual(
 				Incma_out2[i * nb_cols + j] = Incma_in2[ii * nb_cols + jj];
 				}
 			}
-		if (FALSE) {
+		if (false) {
 			cout << "packings_global::select_packings_self_dual "
 					"before bitvector_allocate_and_coded_length" << endl;
 		}
@@ -1326,7 +1326,7 @@ void packings_global::select_packings_self_dual(
 			}
 
 
-		if (FALSE) {
+		if (false) {
 			cout << "packings_global::select_packings_self_dual "
 					"before CB->search" << endl;
 		}
@@ -1335,7 +1335,7 @@ void packings_global::select_packings_self_dual(
 
 		ret = CB->search(canonical_form1, idx1, 0 /*verbose_level*/);
 
-		if (ret == FALSE) {
+		if (ret == false) {
 			cout << "cannot find the dual packing, "
 					"something is wrong" << endl;
 			ret = CB->search(canonical_form1, idx1, 5 /* verbose_level*/);
@@ -1353,13 +1353,13 @@ void packings_global::select_packings_self_dual(
 #endif
 			exit(1);
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "packings_global::select_packings_self_dual "
 					"CB->search returns idx1=" << idx1 << endl;
 		}
 		ret = CB->search(canonical_form2, idx2, 0 /*verbose_level*/);
 
-		if (ret == FALSE) {
+		if (ret == false) {
 			cout << "cannot find the dual packing, "
 					"something is wrong" << endl;
 			ret = CB->search(canonical_form2, idx2, 5 /* verbose_level*/);
@@ -1376,7 +1376,7 @@ void packings_global::select_packings_self_dual(
 #endif
 			exit(1);
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "packings_global::select_packings_self_dual "
 					"CB->search returns idx2=" << idx2 << endl;
 		}

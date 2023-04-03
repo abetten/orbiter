@@ -27,24 +27,24 @@ quartic_curve_create::quartic_curve_create()
 	//std::string label_txt;
 	//std::string label_tex;
 
-	f_ownership = FALSE;
+	f_ownership = false;
 
 	q = 0;
 	F = NULL;
 
-	f_semilinear = FALSE;
+	f_semilinear = false;
 
 	PA = NULL;
 	QCDA = NULL;
 	QO = NULL;
 	QOA = NULL;
 
-	f_has_group = FALSE;
+	f_has_group = false;
 	Sg = NULL;
-	f_has_nice_gens = FALSE;
+	f_has_nice_gens = false;
 	nice_gens = NULL;
 
-	f_has_quartic_curve_from_surface = FALSE;
+	f_has_quartic_curve_from_surface = false;
 	QC_from_surface = NULL;
 }
 
@@ -167,16 +167,16 @@ void quartic_curve_create::init_with_data(
 
 	quartic_curve_create::Descr = Descr;
 
-	f_ownership = FALSE;
+	f_ownership = false;
 	quartic_curve_create::PA = PA;
 	quartic_curve_create::QCDA = PA->QCDA;
 
 
 	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 	else {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	}
 
 	quartic_curve_create::F = PA->F;
@@ -245,10 +245,10 @@ void quartic_curve_create::init(
 
 
 	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 	else {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	}
 
 
@@ -348,7 +348,7 @@ void quartic_curve_create::create_quartic_curve_from_description(
 		create_quartic_curve_from_cubic_surface(
 				Descr->from_cubic_surface_label,
 				Descr->from_cubic_surface_point_orbit_idx,
-				//TRUE /* f_TDO */,
+				//true /* f_TDO */,
 				verbose_level);
 
 		if (f_v) {
@@ -474,7 +474,7 @@ void quartic_curve_create::override_group(
 	FREE_OBJECT(nice_gens);
 
 
-	f_has_group = TRUE;
+	f_has_group = true;
 
 	if (f_v) {
 		cout << "quartic_curve_create::override_group done" << endl;
@@ -698,7 +698,7 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 	Sg->stabilizer_of_quartic_curve_from_catalogue(PA->A,
 		F, iso,
 		verbose_level - 2);
-	f_has_group = TRUE;
+	f_has_group = true;
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue "
@@ -792,7 +792,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	const char *p = managed_variables.c_str();
 	char str[1000];
 
-	while (TRUE) {
+	while (true) {
 		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
@@ -805,12 +805,12 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		}
 
 		tree->managed_variables.push_back(var);
-		tree->f_has_managed_variables = TRUE;
+		tree->f_has_managed_variables = true;
 
 	}
 #else
 	ST.parse_comma_separated_strings(managed_variables, tree->managed_variables);
-	tree->f_has_managed_variables = TRUE;
+	tree->f_has_managed_variables = true;
 #endif
 
 	int nb_vars;
@@ -946,7 +946,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	//vector<string> symbols;
 	//vector<string> values;
 
-	while (TRUE) {
+	while (true) {
 		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
@@ -1055,7 +1055,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 
 
-	f_has_group = FALSE;
+	f_has_group = false;
 
 	char str_q[1000];
 
@@ -1169,7 +1169,7 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 
 	//quartic_curves::quartic_curve_from_surface *QC;
 
-	f_has_quartic_curve_from_surface = TRUE;
+	f_has_quartic_curve_from_surface = true;
 	QC_from_surface = NEW_OBJECT(quartic_curves::quartic_curve_from_surface);
 
 	if (f_v) {
@@ -1241,10 +1241,10 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 
 #endif
 
-	f_has_group = TRUE;
+	f_has_group = true;
 	Sg = QC_from_surface->Stab_gens_quartic;
 
-	f_has_nice_gens = FALSE;
+	f_has_nice_gens = false;
 
 	if (QC_from_surface->nb_bitangents != 28) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
@@ -1516,7 +1516,7 @@ void quartic_curve_create::apply_single_transformation(
 		QOA->Aut_gens = Sg;
 
 
-		f_has_nice_gens = FALSE;
+		f_has_nice_gens = false;
 		// ToDo: need to conjugate nice_gens
 	}
 
@@ -1610,7 +1610,7 @@ void quartic_curve_create::compute_group(
 	Descr = NEW_OBJECT(projective_space_object_classifier_description);
 	Classifier = NEW_OBJECT(projective_space_object_classifier);
 
-	Descr->f_input = TRUE;
+	Descr->f_input = true;
 	Descr->Data = NEW_OBJECT(data_input_stream_description);
 	Descr->Data->input_type[Descr->Data->nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
 	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
@@ -1633,7 +1633,7 @@ void quartic_curve_create::compute_group(
 #if 0
 	Classifier->do_the_work(
 			Descr,
-			TRUE,
+			true,
 			PA,
 			verbose_level);
 #endif
@@ -1695,7 +1695,7 @@ void quartic_curve_create::compute_group(
 	Sg = OiPA->Aut_gens;
 
 	Sg->A = A;
-	f_has_group = TRUE;
+	f_has_group = true;
 
 
 	if (f_v) {
@@ -1797,7 +1797,7 @@ void quartic_curve_create::report(
 					"constructed from a cubic surface. \\\\" << endl;
 			ost << endl;
 
-			int f_TDO = TRUE;
+			int f_TDO = true;
 
 			QC_from_surface->cheat_sheet_quartic_curve(
 					ost,

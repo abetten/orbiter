@@ -116,7 +116,7 @@ void substructure_stats_and_selection::init(
 
 	T = NEW_OBJECT(data_structures::tally);
 
-	T->init(orbit_frequencies, nb_orbits, FALSE, 0);
+	T->init(orbit_frequencies, nb_orbits, false, 0);
 
 
 	if (f_v) {
@@ -130,7 +130,7 @@ void substructure_stats_and_selection::init(
 		Int_vec_print(cout, orbit_frequencies, nb_orbits);
 		cout << endl;
 		cout << "substructure_stats_and_selection::init orbit frequency types=";
-		T->print_naked(FALSE /* f_backwards */);
+		T->print_naked(false /* f_backwards */);
 		cout << endl;
 	}
 

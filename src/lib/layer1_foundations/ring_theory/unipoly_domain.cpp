@@ -21,12 +21,12 @@ unipoly_domain::unipoly_domain()
 {
 	F = NULL;
 	variable_name.assign("X");
-	f_factorring = FALSE;
+	f_factorring = false;
 	factor_degree = 0;
 	factor_coeffs = NULL;
 	factor_poly = NULL;
-	f_print_sub = FALSE;
-	//f_use_variable_name = FALSE;
+	f_print_sub = false;
+	//f_use_variable_name = false;
 	//std::string variable_name;
 }
 
@@ -35,12 +35,12 @@ unipoly_domain::unipoly_domain(
 {
 	unipoly_domain::F = F;
 	variable_name.assign("X");
-	f_factorring = FALSE;
+	f_factorring = false;
 	factor_degree = 0;
 	factor_coeffs = NULL;
 	factor_poly = NULL;
-	f_print_sub = FALSE;
-	//f_use_variable_name = FALSE;
+	f_print_sub = false;
+	//f_use_variable_name = false;
 	//std::string variable_name;
 }
 
@@ -54,12 +54,12 @@ void unipoly_domain::init_basic(
 	}
 	unipoly_domain::F = F;
 	variable_name.assign("X");
-	f_factorring = FALSE;
+	f_factorring = false;
 	factor_degree = 0;
 	factor_coeffs = NULL;
 	factor_poly = NULL;
-	f_print_sub = FALSE;
-	//f_use_variable_name = FALSE;
+	f_print_sub = false;
+	//f_use_variable_name = false;
 	//std::string variable_name;
 	if (f_v) {
 		cout << "unipoly_domain::init_basic done" << endl;
@@ -76,8 +76,8 @@ unipoly_domain::unipoly_domain(
 	
 	unipoly_domain::F = F;
 	variable_name.assign("X");
-	f_print_sub = FALSE;
-	f_factorring = FALSE;
+	f_print_sub = false;
+	f_factorring = false;
 
 	if (f_v) {
 		cout << "unipoly_domain::unipoly_domain "
@@ -89,7 +89,7 @@ unipoly_domain::unipoly_domain(
 
 #if 0
 	variable_name.assign("X");
-	f_factorring = TRUE;
+	f_factorring = true;
 	factor_degree = ((int *)m)[0];
 	factor_coeffs = NEW_int(factor_degree + 1);
 	for (i = 0; i <= factor_degree; i++) {
@@ -116,7 +116,7 @@ unipoly_domain::unipoly_domain(
 		Orbiter->Int_vec.print(cout, factor_coeffs, factor_degree + 1);
 		cout << endl;
 	}
-	f_print_sub = FALSE;
+	f_print_sub = false;
 #else
 
 	init_factorring(F, m, verbose_level);
@@ -157,7 +157,7 @@ void unipoly_domain::init_factorring(
 	}
 	unipoly_domain::F = F;
 	variable_name.assign("X");
-	f_factorring = TRUE;
+	f_factorring = true;
 	factor_degree = ((int *)m)[0];
 	factor_coeffs = NEW_int(factor_degree + 1);
 	for (i = 0; i <= factor_degree; i++) {
@@ -184,7 +184,7 @@ void unipoly_domain::init_factorring(
 		Int_vec_print(cout, factor_coeffs, factor_degree + 1);
 		cout << endl;
 	}
-	f_print_sub = FALSE;
+	f_print_sub = false;
 	if (f_v) {
 		cout << "unipoly_domain::init_factorring done" << endl;
 	}
@@ -529,9 +529,9 @@ void unipoly_domain::print_object(unipoly_object p, std::ostream &ost)
 {
 #if 0
 	int i, k;
-	int f_prev = FALSE;
+	int f_prev = false;
 	string x, y;
-	int f_nothing_printed_at_all = TRUE;
+	int f_nothing_printed_at_all = true;
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
 	int *coeff = rep + 1;
@@ -549,7 +549,7 @@ void unipoly_domain::print_object(unipoly_object p, std::ostream &ost)
 		if (k == 0) {
 			continue;
 		}
-		f_nothing_printed_at_all = FALSE;
+		f_nothing_printed_at_all = false;
 		if (f_prev) {
 			ost << " + ";
 		}
@@ -575,7 +575,7 @@ void unipoly_domain::print_object(unipoly_object p, std::ostream &ost)
 			ost << y;
 			ost << "{" << i << "}";
 		}
-		f_prev = TRUE;
+		f_prev = true;
 	}
 	if (f_nothing_printed_at_all) {
 		ost << "0";
@@ -594,9 +594,9 @@ void unipoly_domain::print_object_sstr(
 		unipoly_object p, std::stringstream &ost)
 {
 	int i, k;
-	int f_prev = FALSE;
+	int f_prev = false;
 	string x, y;
-	int f_nothing_printed_at_all = TRUE;
+	int f_nothing_printed_at_all = true;
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
 	int *coeff = rep + 1;
@@ -614,7 +614,7 @@ void unipoly_domain::print_object_sstr(
 		if (k == 0) {
 			continue;
 		}
-		f_nothing_printed_at_all = FALSE;
+		f_nothing_printed_at_all = false;
 		if (f_prev) {
 			ost << " + ";
 		}
@@ -640,7 +640,7 @@ void unipoly_domain::print_object_sstr(
 			ost << y;
 			ost << "{" << i << "}";
 		}
-		f_prev = TRUE;
+		f_prev = true;
 	}
 	if (f_nothing_printed_at_all) {
 		ost << "0";
@@ -671,7 +671,7 @@ void unipoly_domain::print_object_sparse(
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
 	int *coeff = rep + 1;
-	int f_first = TRUE;
+	int f_first = true;
 
 
 	for (i = 0; i <= d; i++) {
@@ -679,7 +679,7 @@ void unipoly_domain::print_object_sparse(
 
 		if (a) {
 			if (f_first) {
-				f_first = FALSE;
+				f_first = false;
 			}
 			else {
 				ost << ",";
@@ -846,13 +846,13 @@ int unipoly_domain::is_one(unipoly_object p)
 	
 	for (i = d; i >= 1; i--) {
 		if (coeff[i]) {
-			return FALSE;
+			return false;
 		}
 	}
 	if (coeff[0] != 1) {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 int unipoly_domain::is_zero(unipoly_object p)
@@ -868,10 +868,10 @@ int unipoly_domain::is_zero(unipoly_object p)
 	
 	for (i = d; i >= 0; i--) {
 		if (coeff[i]) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void unipoly_domain::negate(unipoly_object a)
@@ -1152,7 +1152,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = FALSE;
+	int f_vvv = false;
 
 	if (f_v) {
 		cout << "unipoly_domain::Frobenius_matrix" << endl;
@@ -1519,7 +1519,7 @@ void unipoly_domain::greatest_common_divisor(
 	assign(m, M, 0 /*verbose_level*/);
 	assign(n, N, 0 /*verbose_level*/);
 
-	while (TRUE) {
+	while (true) {
 		if (f_vv) {
 			cout << "unipoly::greatest_common_divisor M=";
 			print_object(M, cout);
@@ -1628,7 +1628,7 @@ void unipoly_domain::extended_gcd(
 	assign(m, M, 0 /*verbose_level*/);
 	assign(n, N, 0 /*verbose_level*/);
 
-	while (TRUE) {
+	while (true) {
 		if (f_vv) {
 			cout << "M=";
 			print_object(M, cout);
@@ -1747,10 +1747,10 @@ int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 		cout << "unipoly::is_squarefree done" << endl;
 	}
 	if (d >= 1) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 
@@ -2433,7 +2433,7 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 			cout << "unipoly_domain::is_irreducible "
 					"is not squarefree" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	if (f_v) {
 		cout << "unipoly_domain::is_irreducible "
@@ -2460,10 +2460,10 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 	base_cols = NEW_int(factor_polynomial_degree);
 	
 	r = F->Linear_algebra->Gauss_int(B,
-		FALSE /* f_special */,
-		FALSE /* f_complete */,
+		false /* f_special */,
+		false /* f_complete */,
 		base_cols,
-		FALSE /* f_P */, NULL /* P */, 
+		false /* f_P */, NULL /* P */, 
 		factor_polynomial_degree, factor_polynomial_degree,
 		0 /* Pn */, 0 /* verbose_level */);
 
@@ -2476,10 +2476,10 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 	FREE_int(base_cols);
 
 	if (r == factor_polynomial_degree - 1) {
-		ret = TRUE;
+		ret = true;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 	if (f_v) {
 		cout << "unipoly_domain::is_irreducible done" << endl;
@@ -2502,7 +2502,7 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 	longinteger_object &qm1, 
 	int nb_primes, longinteger_object *primes, 
 	int verbose_level)
-//Returns TRUE iff the polynomial $x$ has order $qm1$ 
+//Returns true iff the polynomial $x$ has order $qm1$ 
 //modulo the polynomial m (over GF(p)). 
 //The prime factorization of $qm1$
 // must be given in primes (only the primes).
@@ -2582,7 +2582,7 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 						"power is one, hence m is not primitive" << endl;
 			}
 			Fq.delete_object(a);
-			return FALSE;
+			return false;
 		}
 		
 		Fq.delete_object(a);
@@ -2611,7 +2611,7 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 	if (f_v) {
 		cout << "unipoly_domain::is_primitive done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void unipoly_domain::get_a_primitive_polynomial(
@@ -2719,7 +2719,7 @@ void unipoly_domain::get_a_primitive_polynomial(
 
 	low.assign_to(current);
 	
-	while (TRUE) {
+	while (true) {
 		
 		create_object_by_rank_longinteger(x, current,
 				__FILE__, __LINE__, 0 /*verbose_level*/);
@@ -2808,7 +2808,7 @@ void unipoly_domain::get_an_irreducible_polynomial(
 
 	low.assign_to(current);
 	
-	while (TRUE) {
+	while (true) {
 		
 		create_object_by_rank_longinteger(x,
 				current, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
@@ -2984,7 +2984,7 @@ void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = FALSE; //(verbose_level >= 2);
+	int f_vvv = false; //(verbose_level >= 2);
 	unipoly_object b, c, d;
 
 	if (f_v) {
@@ -3135,7 +3135,7 @@ void unipoly_domain::minimum_polynomial(
 	assign(u, v, 0 /*verbose_level*/);
 	
 	cnt = 0;
-	while (TRUE) {
+	while (true) {
 		if (f_vv) {
 			cout << "unipoly_domain::minimum_polynomial "
 					"Iteration " << cnt;
@@ -3252,7 +3252,7 @@ int unipoly_domain::minimum_polynomial_factorring(
 	assign(b, coeffs[0], 0 /*verbose_level*/);
 	
 	i = 1;
-	while (TRUE) {
+	while (true) {
 		if (f_vv) {
 			cout << "unipoly_domain::minimum_polynomial_factorring "
 					"i=" << i << " b=";
@@ -3429,7 +3429,7 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	// Then we have M(Y) = (Y + b) * (Y + b^\varphi) * (Y + b^{\varphi^2}) * ...
 	
 	i = 1;
-	while (TRUE) {
+	while (true) {
 
 		if (f_vv) {
 			cout << "i=" << i << " b=";
@@ -3574,7 +3574,7 @@ void unipoly_domain::minimum_polynomial_extension_field(
 	assign(g, sigma[1], 0 /*verbose_level*/);
 
 	i = 1;
-	while (TRUE) {
+	while (true) {
 		i++;
 
 		if (f_vv) {

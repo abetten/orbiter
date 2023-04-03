@@ -580,7 +580,7 @@ void orbits_activity::do_draw_tree(int verbose_level)
 		OC->Orb->Sch->draw_tree(fname,
 				orbiter_kernel_system::Orbiter->draw_options,
 				Descr->draw_tree_idx,
-				FALSE /* f_has_point_labels */, NULL /* long int *point_labels*/,
+				false /* f_has_point_labels */, NULL /* long int *point_labels*/,
 				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_draw_tree "
@@ -629,7 +629,7 @@ void orbits_activity::do_draw_tree(int verbose_level)
 		OC->On_polynomials->Sch->draw_tree(fname,
 				orbiter_kernel_system::Orbiter->draw_options,
 				Descr->draw_tree_idx,
-				FALSE /* f_has_point_labels */, NULL /* long int *point_labels*/,
+				false /* f_has_point_labels */, NULL /* long int *point_labels*/,
 				verbose_level);
 
 

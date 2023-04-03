@@ -328,7 +328,7 @@ private:
 	int *v2; // [e]
 	int *v3; // [e]
 
-	int f_has_quadratic_subfield; // TRUE if e is even.
+	int f_has_quadratic_subfield; // true if e is even.
 	int *f_belongs_to_quadratic_subfield; // [q]
 
 	int *reordered_list_of_elements; // [q]
@@ -614,7 +614,7 @@ public:
 	finite_field_description *Descr;
 
 	int f_has_table;
-		// if TRUE, T is available, otherwise Iwo is available.
+		// if true, T is available, otherwise Iwo is available.
 
 	std::string label;
 	std::string label_tex;

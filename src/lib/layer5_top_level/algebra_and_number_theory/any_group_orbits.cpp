@@ -120,13 +120,13 @@ void any_group::orbits_on_poset_post_processing(
 
 		cout << "Orbits on subsets of size " << d << ":" << endl;
 		PC->list_all_orbits_at_level(d,
-				FALSE /* f_has_print_function */,
+				false /* f_has_print_function */,
 				NULL /* void (*print_function)(std::ostream &ost, int len, int *S, void *data)*/,
 				NULL /* void *print_function_data*/,
-				TRUE /* f_show_orbit_decomposition */,
-				TRUE /* f_show_stab */,
-				FALSE /* f_save_stab */,
-				TRUE /* f_show_whole_orbit*/);
+				true /* f_show_orbit_decomposition */,
+				true /* f_show_stab */,
+				false /* f_save_stab */,
+				true /* f_show_whole_orbit*/);
 		int nb_orbits, orbit_idx;
 
 		nb_orbits = PC->nb_orbits_at_level(d);
@@ -302,7 +302,7 @@ void any_group::do_conjugacy_class_of_element(
 				"before A_conj.induced_action_by_conjugation" << endl;
 	}
 	A_conj.induced_action_by_conjugation(S, S,
-			FALSE /* f_ownership */, FALSE /* f_basis */,
+			false /* f_ownership */, false /* f_basis */,
 			verbose_level);
 	if (f_v) {
 		cout << "any_group::do_conjugacy_class_of_element "
@@ -464,20 +464,20 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 		the_ranks = NEW_lint(m);
 		for (i = 0; i < m; i++) {
 
-			if (FALSE) {
+			if (false) {
 				cout << i << " : ";
 				Int_vec_print(cout, M + i * n, n);
 				cout << endl;
 			}
 
 			LG->A_linear->Group_element->make_element(Elt, M + i * n, 0 /* verbose_level */);
-			if (FALSE) {
+			if (false) {
 				cout << "computing rank of " << endl;
 				LG->A_linear->Group_element->element_print_latex(Elt, cout);
 			}
 
 			the_ranks[i] = S->element_rank_lint(Elt);
-			if (FALSE) {
+			if (false) {
 				cout << i << " : " << the_ranks[i] << endl;
 			}
 		}
@@ -497,14 +497,14 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 		Transporter->allocate(m, 0);
 		for (i = 0; i < m; i++) {
 
-			if (FALSE) {
+			if (false) {
 				cout << i << " : ";
 				Int_vec_print(cout, M + i * n, n);
 				cout << endl;
 			}
 
 			LG->A_linear->Group_element->make_element(Transporter->ith(i), M + i * n, 0 /* verbose_level */);
-			if (FALSE) {
+			if (false) {
 				cout << "computing rank of " << endl;
 				LG->A_linear->Group_element->element_print_latex(Elt, cout);
 			}

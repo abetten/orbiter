@@ -127,8 +127,8 @@ long int hjelmslev::rank_lint(int *M, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	long int c, i, j, h, rk_mtx;
 	long int a, b, rk;
-	int f_special = FALSE;
-	int f_complete = TRUE;
+	int f_special = false;
+	int f_complete = true;
 	geometry_global Gg;
 	
 	if (f_v) {
@@ -141,7 +141,7 @@ long int hjelmslev::rank_lint(int *M, int verbose_level)
 		}
 	rk_mtx = R->Gauss_int(Mtx,
 			f_special, f_complete,
-			base_cols, FALSE, NULL, k, n, n, 0);
+			base_cols, false, NULL, k, n, n, 0);
 	if (f_v) {
 		cout << "hjelmslev::rank_lint after Gauss, "
 				"rk_mtx=" << rk_mtx << endl;

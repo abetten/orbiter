@@ -320,9 +320,9 @@ long int flag::rank_recursion(
 	Int_vec_copy(big_space, M_Gauss, s2 * n);
 	F->Linear_algebra->identity_matrix(transform, s2);
 	r = F->Linear_algebra->Gauss_int(M_Gauss,
-		FALSE /*f_special*/,
-		TRUE/* f_complete*/, base_cols,
-		TRUE /* f_P */, transform, s2, n,
+		false /*f_special*/,
+		true/* f_complete*/, base_cols,
+		true /* f_P */, transform, s2, n,
 		s2 /* Pn */,
 		0/*int verbose_level*/);
 	if (r != s2) {

@@ -100,11 +100,11 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 	Descr = NEW_OBJECT(apps_geometry::arc_generator_description);
-	Descr->f_d = TRUE;
+	Descr->f_d = true;
 	Descr->d = 2;
-	Descr->f_target_size = TRUE;
+	Descr->f_target_size = true;
 	Descr->target_size = 6;
-	Descr->f_control = TRUE;
+	Descr->f_control = true;
 	Descr->control_label.assign(Control_six_arcs_label);
 
 
@@ -252,18 +252,18 @@ void surface_classify_using_arc::report(
 
 
 		ofstream fp(fname_arc_lifting);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
 		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
+			false /* f_book */,
+			true /* f_title */,
 			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -354,8 +354,8 @@ void surface_classify_using_arc::report2(std::ostream &ost,
 		Six_arcs->Gen->gen->draw_poset(
 			fname_base,
 			6 /* depth */, 0 /* data */,
-			TRUE /* f_embedded */,
-			FALSE /* f_sideways */,
+			true /* f_embedded */,
+			false /* f_sideways */,
 			100 /* rad */,
 			verbose_level);
 	}
@@ -478,7 +478,7 @@ void surface_classify_using_arc::report2(std::ostream &ost,
 void surface_classify_using_arc::report_decomposition_matrix(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "surface_classify_using_arc::report_decomposition_matrix" << endl;
@@ -493,13 +493,13 @@ void surface_classify_using_arc::report_decomposition_matrix(std::ostream &ost, 
 	cout << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(cout, Decomp,
 			Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
-			TRUE /* f_tex */);
+			true /* f_tex */);
 	cout << "$$" << endl;
 
 	ost << "Decomposition matrix:" << endl;
 	//fp << "$$" << endl;
 	//print_integer_matrix_with_standard_labels(fp, Decomp,
-	//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
+	//nb_arcs_not_on_conic, nb_surfaces, true /* f_tex */);
 	L.print_integer_matrix_tex_block_by_block(ost, Decomp,
 			Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
 	//fp << "$$" << endl;

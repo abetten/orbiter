@@ -176,7 +176,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 						<< go_subgroup << ":" << endl;
 				A->Group_element->element_print(Elt1, cout);
 				j = S->element_rank_lint(Elt1);
-				f_subgroup[j] = TRUE;
+				f_subgroup[j] = true;
 				}
 			}
 		else if (group == 4) {
@@ -187,10 +187,10 @@ void cayley_graph_search::init_group2(int verbose_level)
 				A->Group_element->element_print(Elt1, cout);
 				cout << endl;
 				if (F->Linear_algebra->is_identity_matrix(Elt1, 4)) {
-					f_subgroup[i] = TRUE;
+					f_subgroup[i] = true;
 					}
 				else {
-					f_subgroup[i] = FALSE;
+					f_subgroup[i] = false;
 					}
 				}
 			}
@@ -202,7 +202,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 					<< go_subgroup << ":" << endl;
 			A->Group_element->element_print(Elt1, cout);
 			j = S->element_rank_lint(Elt1);
-			f_subgroup[j] = TRUE;
+			f_subgroup[j] = true;
 			}
 		}
 
@@ -216,11 +216,11 @@ void cayley_graph_search::init_group2(int verbose_level)
 		cout << endl;
 		ord = A->Group_element->element_order(Elt1);
 		if (ord == 2) {
-			f_has_order2[i] = TRUE;
+			f_has_order2[i] = true;
 			nb_involutions++;
 			}
 		else {
-			f_has_order2[i] = FALSE;
+			f_has_order2[i] = false;
 			}
 		}
 
@@ -261,8 +261,8 @@ void cayley_graph_search::init_group2(int verbose_level)
 
 	//A2 = NEW_OBJECT(actions::action);
 	A2 = S->A->Induced_action->induced_action_by_right_multiplication(
-		FALSE /* f_basis */, S,
-		S /* Base_group */, FALSE /* f_ownership */,
+		false /* f_basis */, S,
+		S /* Base_group */, false /* f_ownership */,
 		verbose_level);
 #endif
 
@@ -288,7 +288,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 
 	A = NEW_OBJECT(actions::action);
 
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A->Known_groups->init_permutation_group(degree, f_no_base, verbose_level);
 
@@ -323,7 +323,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 	go_subgroup = go / 2;
 	target_go.create(go, __FILE__, __LINE__);
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, Strong_gens,
 		verbose_level);
 	Strong_gens->print_generators(cout);
@@ -366,7 +366,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 
 
 	if (degree) {
-		int f_no_base = FALSE;
+		int f_no_base = false;
 		A->Known_groups->init_permutation_group(degree, f_no_base, verbose_level);
 		}
 	else if (group == 4) {
@@ -375,12 +375,12 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 
 		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0);
 		A->Known_groups->init_affine_group(4, F,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 		FREE_OBJECT(nice_gens);
@@ -599,13 +599,13 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 
 	cout << "creating generators for the group:" << endl;
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go,
+		true /* f_target_go */, target_go,
 		gens, Strong_gens,
 		verbose_level);
 
 	cout << "creating generators for the subgroup:" << endl;
 	A->generators_to_strong_generators(
-		TRUE /* f_target_go */, target_go_subgroup,
+		true /* f_target_go */, target_go_subgroup,
 		gens_subgroup, Strong_gens_subgroup,
 		verbose_level);
 
@@ -646,12 +646,12 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 
 		F = NEW_OBJECT(field_theory::finite_field);
 		F->finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0);
 		A->Known_groups->init_affine_group(5, F,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 		FREE_OBJECT(nice_gens);
@@ -714,7 +714,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 
 	cout << "creating generators for the group:" << endl;
 	A->generators_to_strong_generators(
-		FALSE /* f_target_go */, target_go,
+		false /* f_target_go */, target_go,
 		gens, Strong_gens,
 		verbose_level);
 
@@ -726,7 +726,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 
 	cout << "creating generators for the subgroup:" << endl;
 	A->generators_to_strong_generators(
-		FALSE /* f_target_go */, target_go_subgroup,
+		false /* f_target_go */, target_go_subgroup,
 		gens_subgroup, Strong_gens_subgroup,
 		verbose_level);
 
@@ -739,7 +739,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 int cayley_graph_search::incremental_check_func(
 		int len, long int *S, int verbose_level)
 {
-	int f_OK = TRUE;
+	int f_OK = true;
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int a;
@@ -752,20 +752,20 @@ int cayley_graph_search::incremental_check_func(
 	if (len) {
 		a = S[len - 1];
 		if (a == 0) {
-			f_OK = FALSE;
+			f_OK = false;
 			}
-		if (f_has_order2[a] == FALSE) {
-			f_OK = FALSE;
+		if (f_has_order2[a] == false) {
+			f_OK = false;
 			}
 		}
 	if (f_OK) {
 		if (f_v) {
 			cout << "OK" << endl;
 			}
-		return TRUE;
+		return true;
 		}
 	else {
-		return FALSE;
+		return false;
 		}
 }
 
@@ -791,11 +791,11 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 	cout << "classifying subsets:" << endl;
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	Control->f_W = TRUE;
-	Control->f_w = TRUE;
+	Control->f_W = true;
+	Control->f_w = true;
 
 	Control->problem_label = prefix;
-	Control->f_problem_label = TRUE;
+	Control->f_problem_label = true;
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 	Poset->init_subset_lattice(Aut, Aut,
@@ -822,8 +822,8 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 #if 0
 	snprintf(fname, sizeof(fname), "Ferdinand%d_%d", level, group);
 	gen->draw_poset(fname, target_depth, 0 /* data */,
-			TRUE /* f_embedded */,
-			FALSE /* f_sideways */,
+			true /* f_embedded */,
+			false /* f_sideways */,
 			0 /* verbose_level */);
 #endif
 
@@ -929,7 +929,7 @@ void cayley_graph_search::write_file(int verbose_level)
 				verbose_level);
 			//cout << "The adjacency sets are:" << endl;
 			//print_integer_matrix_with_standard_labels(cout,
-			//Adj, go, sz, FALSE /* f_tex */);
+			//Adj, go, sz, false /* f_tex */);
 			fp << "{";
 			for (i = 0; i < go; i++) {
 				fp << i << ":[";
@@ -1003,7 +1003,7 @@ void cayley_graph_search::create_Adjacency_list(long int *Adj,
 	int verbose_level)
 // Adj[go * connection_set_sz]
 {
-	int f_v = FALSE;//(verbose_level >= 1);
+	int f_v = false;//(verbose_level >= 1);
 	int i;
 
 	if (f_v) {
@@ -1037,7 +1037,7 @@ void cayley_graph_search::create_Adjacency_list(long int *Adj,
 #if 0
 	//cout << "The adjacency sets are:" << endl;
 	//print_integer_matrix_with_standard_labels(cout,
-	//Adj, go, sz, FALSE /* f_tex */);
+	//Adj, go, sz, false /* f_tex */);
 	cout << "{";
 	for (i = 0; i < go; i++) {
 		cout << i << ":[";

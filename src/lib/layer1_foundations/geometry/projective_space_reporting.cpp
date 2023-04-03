@@ -75,17 +75,17 @@ void projective_space_reporting::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -190,7 +190,7 @@ void projective_space_reporting::report(
 					O,
 					P,
 					set, P->Subspaces->N_points,
-					TRUE /*f_point_labels*/,
+					true /*f_point_labels*/,
 					verbose_level);
 			FREE_lint(set);
 			ost << "{\\scriptsize" << endl;
@@ -580,7 +580,7 @@ void projective_space_reporting::cheat_sheet_points_on_lines(
 	if (f_v) {
 		cout << "projective_space_reporting::cheat_sheet_points_on_lines" << endl;
 	}
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 
 	f << "PG$(" << P->Subspaces->n << ", " << P->Subspaces->q << ")$ has " << P->Subspaces->N_lines
@@ -608,7 +608,7 @@ void projective_space_reporting::cheat_sheet_points_on_lines(
 			f << "$$" << endl;
 			L.print_integer_matrix_with_labels(f,
 					P->Subspaces->Implementation->Lines + i * P->Subspaces->k, nb, P->Subspaces->k, row_labels + i,
-					col_labels, TRUE /* f_tex */);
+					col_labels, true /* f_tex */);
 			f << "$$" << endl;
 		}
 		FREE_int(row_labels);
@@ -627,7 +627,7 @@ void projective_space_reporting::cheat_sheet_lines_on_points(
 	if (f_v) {
 		cout << "projective_space_reporting::cheat_sheet_lines_on_points" << endl;
 	}
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	f << "PG$(" << P->Subspaces->n << ", " << P->Subspaces->q << ")$ has " << P->Subspaces->N_points
 			<< " points, each with " << P->Subspaces->r << " lines:\\\\" << endl;
@@ -653,7 +653,7 @@ void projective_space_reporting::cheat_sheet_lines_on_points(
 			f << "$$" << endl;
 			L.print_integer_matrix_with_labels(f,
 					P->Subspaces->Implementation->Lines_on_point + i * P->Subspaces->r, nb, P->Subspaces->r,
-				row_labels + i, col_labels, TRUE /* f_tex */);
+				row_labels + i, col_labels, true /* f_tex */);
 			f << "$$" << endl;
 		}
 		FREE_int(row_labels);

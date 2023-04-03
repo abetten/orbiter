@@ -16,7 +16,7 @@ namespace layer2_discreta {
 namespace typed_objects {
 
 
-//int bt_debug = FALSE;
+//int bt_debug = false;
 
 #undef USE_TABLE
 #define WRITE_INFO_ONLY_AT_END
@@ -78,16 +78,16 @@ void database_init(int verbose_level)
 		exit(1);
 		}
 	for (i = 0; i < MAX_ROOT_BUF; i++) {
-		f_RootBF_free[i] = TRUE;
+		f_RootBF_free[i] = true;
 		}
-	f_RootBF_free[0] = FALSE;
+	f_RootBF_free[0] = false;
 	
 	
 	
 	tmpBF = RootBF;
 	
 	for (i = 0; i < MAX_FSTREAM_TABLE; i++) {
-		fstream_table_used[i] = FALSE;
+		fstream_table_used[i] = false;
 		}
 
 	page_table_init(verbose_level - 1);
@@ -129,7 +129,7 @@ int root_buf_alloc(void)
 	
 	for (i = 0; i < MAX_ROOT_BUF; i++) {
 		if (f_RootBF_free[i]) {
-			f_RootBF_free[i] = FALSE;
+			f_RootBF_free[i] = false;
 			return i;
 			}
 		}
@@ -143,7 +143,7 @@ void root_buf_free(int i)
 		cout << "root_buf_free()|i illegal" << endl;
 		exit(1);
 		}
-	f_RootBF_free[i] = TRUE;
+	f_RootBF_free[i] = true;
 }
 
 
@@ -231,7 +231,7 @@ void btree::init(
 	key().m_l(0);
 	filename().change_to_hollerith();
 	filename().init(file_name);
-	f_open() = FALSE;
+	f_open() = false;
 	stream() = 0;
 	buf_idx() = 0;
 	Root() = 0;
@@ -284,7 +284,7 @@ void btree::create(int verbose_level)
 	if (f_v) {
 		cout << "btree::create" << endl;
 		}
-	if (f_open() == TRUE) {
+	if (f_open() == true) {
 		cout << "btree::create() already open" << endl;
 		exit(1);
 		}
@@ -298,9 +298,9 @@ void btree::create(int verbose_level)
 	AllocRec() = 0;
 	Root() = 0;
 	
-	f_open() = TRUE;
+	f_open() = true;
 	
-	WriteInfo(FALSE);
+	WriteInfo(false);
 	
 	if (f_vv) {
 		cout << "before page_table_alloc" << endl;
@@ -320,7 +320,7 @@ void btree::open(int verbose_level)
 	if (f_v) {
 		cout << "btree::open verbose_level=" << verbose_level << endl;
 		}
-	if (f_open() == TRUE) {
+	if (f_open() == true) {
 		cout << "btree::open() already open" << endl;
 		exit(1);
 		}
@@ -472,7 +472,7 @@ int btree::AllocateRec(int verbose_level)
 		AllocRec()++;
 #ifdef WRITE_INFO_ONLY_AT_END
 #else
-		WriteInfo(FALSE);
+		WriteInfo(false);
 #endif
 		x = AllocRec();
 #ifdef USE_TABLE
@@ -525,7 +525,7 @@ void btree::ReleaseRec(int x)
 	FreeRec() = x;
 #ifdef WRITE_INFO_ONLY_AT_END
 #else
-	WriteInfo(FALSE);
+	WriteInfo(false);
 #endif
 #ifdef USE_TABLE
 	cout << "btree::ReleaseRec not yet implemented" << endl;
@@ -551,7 +551,7 @@ void btree::LoadPage(Buffer *BF, int x, int verbose_level)
 		cout << "btree::LoadPage() not open" << endl;
 		exit(1);
 		}
-	if (FALSE /* x == Root() */) {
+	if (false /* x == Root() */) {
 		Buffer *Root_BF;
 		Root_BF = RootBF + buf_idx();
 		*BF = *Root_BF;
@@ -599,7 +599,7 @@ void btree::SavePage(Buffer *BF, int verbose_level)
 		cout << "btree::SavePage() not open" << endl;
 		exit(1);
 		}
-	if (FALSE /*BF->PageNum == Root()*/) {
+	if (false /*BF->PageNum == Root()*/) {
 		Buffer *Root_BF;
 		Root_BF = RootBF + buf_idx();
 		*Root_BF = *BF;
@@ -1025,7 +1025,7 @@ int btree::SearchBtree(int page,
 		cout << "btree::SearchBtree page=" << page << endl;
 		}
 	if (page == 0) {
-		f_found = FALSE;
+		f_found = false;
 		}
 	else {
 		LoadPage(Buf, page, verbose_level - 1);
@@ -1056,7 +1056,7 @@ int btree::SearchBtree(int page,
 				LoadPage(Buf, page, verbose_level - 1);
 				*pData = Buf->Page.Item[x].Data;
 				}
-			f_found = TRUE;
+			f_found = true;
 			*idx = idx1;
 			}
 #if 0
@@ -1130,7 +1130,7 @@ int btree::SearchPage(Buffer *buffer,
 	int childs;
 	int r, l, i;
 	int res;
-	int f_found = FALSE;
+	int f_found = false;
 	
 	if (f_v) {
 		cout << "btree::SearchPage" << endl;
@@ -1171,7 +1171,7 @@ int btree::SearchPage(Buffer *buffer,
 				}
 			}
 		if (res == 0) {
-			f_found = TRUE;
+			f_found = true;
 			l = *x;
 			}
 		else {
@@ -1267,7 +1267,7 @@ void btree::ith(int l,
 	
 	page = Root();
 	cur = 0;
-	while (TRUE) {
+	while (true) {
 		LoadPage(buffer, page, verbose_level - 1);
 		if (f_v) {
 			cout << "btree::ith loaded page = " << page << endl;
@@ -1318,7 +1318,7 @@ int btree::page_i_th(int l,
 		childs = buffer->Page.Item[j].Childs;
 		if (*cur + childs > l) {
 			*i = j;
-			return FALSE;
+			return false;
 			}
 		if (*cur + childs == l) {
 			if (j == page_len) {
@@ -1328,7 +1328,7 @@ int btree::page_i_th(int l,
 				}
 			/* gefunden: (in j + 1) */
 			*i = j + 1;
-			return TRUE;
+			return true;
 			}
 		/* naechster Zweig: */
 		*cur += childs + 1;
@@ -1374,10 +1374,10 @@ void btree::insert_key(KEYTYPE *pKey,
 	BF1 = new Buffer;
 	fill_char((char *)NewRoot, sizeof(Buffer), 0);
 	fill_char((char *)BF1, sizeof(Buffer), 0);
-	f_keyadded = FALSE;
+	f_keyadded = false;
 	IKpKey = pKey;
 	IKpData = pData;
-	RootSplit = FALSE;
+	RootSplit = false;
 	IKBF = BF1;
 	if (f_v) {
 		cout << "btree::insert_key: calling Update() Root=" << Root() << endl;
@@ -1444,7 +1444,7 @@ void btree::Update(int Node, int *Rise,
 	ItemTyp *RisenItem, int *RisenNeighbourChilds, 
 	int verbose_level)
 /* Einfuegen in den Zweig Node.
- * RisenNeighbourChilds nur gesetzt, wenn Rise TRUE ist. */
+ * RisenNeighbourChilds nur gesetzt, wenn Rise true ist. */
 {
 	int f_v = (verbose_level >= 1);
 	int x, idx, z;
@@ -1457,14 +1457,14 @@ void btree::Update(int Node, int *Rise,
 		 * eingefuegt als wenn ein RisenItem eingefuegt 
 		 * werden muesste. Deswegen wird hier diese
 		 * Situation vorbereitet. */
-		*Rise = TRUE;
+		*Rise = true;
 		*RisenNeighbourChilds = 0;
 		/* Nachbar darf ebenfalls keine Nachfolger haben */
 		RisenItem->Key = *IKpKey;
 		RisenItem->Data = *IKpData;
 		RisenItem->Ref = 0;
 		RisenItem->Childs = 0;
-		f_keyadded = TRUE;
+		f_keyadded = true;
 		return;
 		}
 	if (f_v) {
@@ -1494,11 +1494,11 @@ void btree::Update(int Node, int *Rise,
 		IKBF->Page.Item[x].Data = *IKpData;
 		SavePage(IKBF, verbose_level - 1);
 		/* keine doppelten Schluessel erlaubt */
-		/* Rise bleibt unveraendert FALSE */
+		/* Rise bleibt unveraendert false */
 		return;
 		}
 	/* Einfuegen in den Zweig von x: */
-	IKRisen = FALSE;
+	IKRisen = false;
 	if (f_v) {
 		cout << "Update() in page " << Node << " calling update in branch x=" << x << endl;
 		}
@@ -1534,7 +1534,7 @@ void btree::Update(int Node, int *Rise,
 				}
 			/* IKBF->Page.Item[x + 1] = *RisenItem; */
 			bt_item_copy(RisenItem, &IKBF->Page.Item[x + 1]);
-			*Rise = FALSE;
+			*Rise = false;
 			}
 		else {
 			// page full, split:
@@ -1548,10 +1548,10 @@ void btree::Update(int Node, int *Rise,
 				RisenNeighbourChilds, 
 				verbose_level);
 			
-			*Rise = TRUE;
+			*Rise = true;
 			}
 		}
-	else { /* IKRisen == FALSE */
+	else { /* IKRisen == false */
 		if (f_keyadded) {
 			IKBF->Page.Item[x].Childs++;
 			}
@@ -1687,7 +1687,7 @@ void btree::delete_ith(int idx, int verbose_level)
 	DKidx = idx;
 	DKcur = 0;
 	/* DKBF = &BF; */
-	f_keydeleted = FALSE;
+	f_keydeleted = false;
 	Delete(Root(), Underflow, verbose_level);
 #if 0
 	Root_BF = RootBF + buf_idx();
@@ -1705,7 +1705,7 @@ void btree::delete_ith(int idx, int verbose_level)
 		if (z2 == 0) { /* leere Datenbank */
 #ifdef WRITE_INFO_ONLY_AT_END
 #else
-			WriteInfo(FALSE /* f_v */);
+			WriteInfo(false /* f_v */);
 #endif
 			return;
 			}
@@ -1716,7 +1716,7 @@ void btree::delete_ith(int idx, int verbose_level)
 		
 #ifdef WRITE_INFO_ONLY_AT_END
 #else
-		WriteInfo(FALSE /* f_v */);
+		WriteInfo(false /* f_v */);
 #endif
 		}
 	if (f_v) {
@@ -1735,7 +1735,7 @@ void btree::Delete(
 		cout << "btree::Delete Node=" << Node << endl;
 		}
 	if (Node == 0) {
-		Underflow = FALSE;
+		Underflow = false;
 		return;
 		}
 	DKBF = new Buffer;
@@ -1754,7 +1754,7 @@ void btree::Delete(
 				DKBF->Page.Item[z] = DKBF->Page.Item[z + 1];
 				}
 			SavePage(DKBF, verbose_level - 1);
-			f_keydeleted = TRUE;
+			f_keydeleted = true;
 			}
 		else {
 			FindGreatest(y, 
@@ -1831,7 +1831,7 @@ void btree::FindGreatest(int Node1,
 	else {
 		DKBF->Page.Item[x].Key = buf->Page.Item[NumBF].Key;
 		DKBF->Page.Item[x].Data = buf->Page.Item[NumBF].Data;
-		f_keydeleted = TRUE;
+		f_keydeleted = true;
 		if (DKBF->PageNum == Root()) {
 			Root_BF = RootBF + buf_idx();
 			*Root_BF = *DKBF;
@@ -1917,7 +1917,7 @@ void btree::Compensate(int Precedent,
 			SavePage(BF1, verbose_level - 1);
 			SavePage(BF2, verbose_level - 1);
 			SavePage(BF3, verbose_level - 1);
-			Underflow = FALSE;
+			Underflow = false;
 			}
 		else {
 			if (f_v) {
@@ -1978,7 +1978,7 @@ void btree::Compensate(int Precedent,
 			SavePage(BF1, verbose_level - 1);
 			SavePage(BF2, verbose_level - 1);
 			SavePage(BF3, verbose_level - 1);
-			Underflow = FALSE;
+			Underflow = false;
 			}
 		else {
 			if (f_v) {
@@ -2128,9 +2128,9 @@ void btree::file_open()
 	int idx = fstream_table_get_free_entry();
 	fstream *f = new fstream(filename().s(), ios::in | ios::out | ios::binary);
 	fstream_table[idx] = f;
-	fstream_table_used[idx] = TRUE;
+	fstream_table_used[idx] = true;
 	stream() = idx;
-	f_open() = TRUE;
+	f_open() = true;
 	// cout << "btree::file_open() file " << filename().s() << " opened" << endl;
 }
 
@@ -2158,9 +2158,9 @@ void btree::file_create()
 		exit(1);
 		}
 	fstream_table[idx] = f;
-	fstream_table_used[idx] = TRUE;
+	fstream_table_used[idx] = true;
 	stream() = idx;
-	f_open() = TRUE;
+	f_open() = true;
 	// cout << "btree::file_create() file " << filename().s() << " created" << endl;
 }
 
@@ -2173,9 +2173,9 @@ void btree::file_close()
 		exit(1);
 		}
 	delete fstream_table[idx];
-	fstream_table_used[idx] = FALSE;
+	fstream_table_used[idx] = false;
 	stream() = 0;
-	f_open() = FALSE;
+	f_open() = false;
 	// cout << "btree::file_close() file " << filename().s() << " closed" << endl;
 }
 

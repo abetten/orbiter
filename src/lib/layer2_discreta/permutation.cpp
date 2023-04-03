@@ -178,12 +178,12 @@ ostream& permutation::print_cycle(ostream& ost)
 	if (current_printing_mode() == printing_mode_ascii || current_printing_mode() == printing_mode_latex) {
 		Vector have_seen;
 		int l, l1, first, next, len, n;
-		int f_nothing_printed_at_all = TRUE;
+		int f_nothing_printed_at_all = true;
 		
 		n = s_l();
 		have_seen.m_l(n);
 		for (l = 0; l < n; l++) {
-			have_seen[l].m_i_i(FALSE);
+			have_seen[l].m_i_i(false);
 			}
 		l = 0;
 		while (l < n) {
@@ -195,8 +195,8 @@ ostream& permutation::print_cycle(ostream& ost)
 			first = l;
 			l1 = l;
 			len = 1;
-			while (TRUE) {
-				have_seen[l1].m_i_i(TRUE);
+			while (true) {
+				have_seen[l1].m_i_i(true);
 				next = s_ii(l1);
 				if (next > n) {
 					cout << "permutation::print_cycle: next = " 
@@ -217,11 +217,11 @@ ostream& permutation::print_cycle(ostream& ost)
 				}
 			if (len == 1)
 				continue;
-			f_nothing_printed_at_all = FALSE;
+			f_nothing_printed_at_all = false;
 			/* Drucke Zyklus, beginnend mit first: */
 			l1 = first;
 			ost << "(";
-			while (TRUE) {
+			while (true) {
 				{
 				hollerith a;
 				convert_digit(l1, a);
@@ -244,12 +244,12 @@ ostream& permutation::print_cycle(ostream& ost)
 	else if (current_printing_mode() == printing_mode_gap) {
 		Vector have_seen;
 		int l, l1, first, next, len, n;
-		int f_nothing_printed_at_all = TRUE;
+		int f_nothing_printed_at_all = true;
 		
 		n = s_l();
 		have_seen.m_l(n);
 		for (l = 0; l < n; l++) {
-			have_seen[l].m_i_i(FALSE);
+			have_seen[l].m_i_i(false);
 			}
 		l = 0;
 		while (l < n) {
@@ -261,8 +261,8 @@ ostream& permutation::print_cycle(ostream& ost)
 			first = l;
 			l1 = l;
 			len = 1;
-			while (TRUE) {
-				have_seen[l1].m_i_i(TRUE);
+			while (true) {
+				have_seen[l1].m_i_i(true);
 				next = s_ii(l1);
 				if (next > n) {
 					cout << "permutation::print_cycle: next = " 
@@ -283,11 +283,11 @@ ostream& permutation::print_cycle(ostream& ost)
 				}
 			if (len == 1)
 				continue;
-			f_nothing_printed_at_all = FALSE;
+			f_nothing_printed_at_all = false;
 			/* Drucke Zyklus, beginnend mit first: */
 			l1 = first;
 			ost << "(";
-			while (TRUE) {
+			while (true) {
 				{
 				hollerith a;
 				convert_digit(l1, a);
@@ -341,7 +341,7 @@ void permutation::scan(istream & is, int verbose_level)
 	perm.m_l(l);
 	cycle.m_l_n(l);
 	perm.one();
-	while (TRUE) {
+	while (true) {
 		c = ST.get_character(is, verbose_level);
 		while (c == ' ' || c == '\t') {
 			c = ST.get_character(is, f_v);
@@ -354,7 +354,7 @@ void permutation::scan(istream & is, int verbose_level)
 			cout << "opening parenthesis" << endl;
 			}
 		c = ST.get_character(is, verbose_level);
-		while (TRUE) {
+		while (true) {
 			while (c == ' ' || c == '\t')
 				c = ST.get_character(is, verbose_level);
 			
@@ -517,7 +517,7 @@ int permutation::invert_to(discreta_base &x, int verbose_level)
 		px[j] = i;
 		}
 	x.swap(px);
-	return TRUE;
+	return true;
 }
 
 void permutation::one()
@@ -536,8 +536,8 @@ int permutation::is_one()
 	l = s_l();
 	for (i = 0; i < l; i++)
 		if (s_i(i) != i)
-			return FALSE;
-	return TRUE;
+			return false;
+	return true;
 }
 
 int permutation::compare_with(discreta_base &a)
@@ -1013,7 +1013,7 @@ void permutation::cycle_type(Vector& type, int verbose_level)
 	have_seen.m_l(n);
 	type.m_l_n(n);
 	for (l = 0; l < n; l++) {
-		have_seen[l].m_i_i(FALSE);
+		have_seen[l].m_i_i(false);
 		}
 	l = 0;
 	while (l < n) {
@@ -1025,8 +1025,8 @@ void permutation::cycle_type(Vector& type, int verbose_level)
 		first = l;
 		l1 = l;
 		len = 1;
-		while (TRUE) {
-			have_seen[l1].m_i_i(TRUE);
+		while (true) {
+			have_seen[l1].m_i_i(true);
 			next = s_ii(l1);
 			if (next > n) {
 				cout << "permutation::cycle_type: next = " 
@@ -1079,9 +1079,9 @@ int permutation::is_even(int verbose_level)
 {
 	int inv = nb_of_inversions(verbose_level);
 	if (EVEN(inv))
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 
@@ -1094,7 +1094,7 @@ void permutation::cycles(Vector &cycles)
 	n = s_l();
 	have_seen.m_l(n);
 	for (l = 0; l < n; l++) {
-		have_seen[l].m_i_i(FALSE);
+		have_seen[l].m_i_i(false);
 		}
 	l = 0;
 	while (l < n) {
@@ -1108,8 +1108,8 @@ void permutation::cycles(Vector &cycles)
 		len = 1;
 		cycle.m_l_n(n);
 		cycle.m_ii(len - 1, l);
-		while (TRUE) {
-			have_seen[l1].m_i_i(TRUE);
+		while (true) {
+			have_seen[l1].m_i_i(true);
 			next = s_ii(l1);
 			if (next > n) {
 				cout << "permutation::cycles: next = " 
@@ -1226,7 +1226,7 @@ void permutation::singer_cycle_on_points_of_projective_plane(int p,
 	unipoly a;
 	discreta_matrix M;
 	int l;
-	int f_action_from_right = TRUE;
+	int f_action_from_right = true;
 	geometry::geometry_global Gg;
 	
 	a.Singer(p, 3, verbose_level - 2);
@@ -1299,7 +1299,7 @@ void signum_map(discreta_base & x, discreta_base &d)
 		exit(1);
 		}
 	permutation & p = x.as_permutation();
-	int f_v = FALSE;
+	int f_v = false;
 	sgn = p.signum(f_v);
 	d.change_to_integer();
 	d.m_i_i(sgn);

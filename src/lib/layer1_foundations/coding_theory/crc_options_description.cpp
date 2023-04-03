@@ -24,33 +24,33 @@ namespace coding_theory {
 
 crc_options_description::crc_options_description()
 {
-	f_input = FALSE;
+	f_input = false;
 	//std::string input_fname;
 
-	f_output = FALSE;
+	f_output = false;
 	//std::string output_fname;
 
-	f_crc_type = FALSE;
+	f_crc_type = false;
 	//std::string crc_type;
 
-	f_block_length = FALSE;
+	f_block_length = false;
 	block_length = 0;
 
-	f_block_based_error_generator = FALSE;
+	f_block_based_error_generator = false;
 
-	f_file_based_error_generator = FALSE;
+	f_file_based_error_generator = false;
 	file_based_error_generator_threshold = 0;
 
-	f_nb_repeats = FALSE;
+	f_nb_repeats = false;
 	nb_repeats = 0;
 
-	f_threshold = FALSE;
+	f_threshold = false;
 	threshold = 0;
 
-	f_error_log = FALSE;
+	f_error_log = false;
 	//std::string error_log_fname;
 
-	f_selected_block = FALSE;
+	f_selected_block = false;
 	selected_block = 0;
 }
 
@@ -73,21 +73,21 @@ int crc_options_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-input") == 0) {
-			f_input = TRUE;
+			f_input = true;
 			input_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-input " << input_fname << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-output") == 0) {
-			f_output = TRUE;
+			f_output = true;
 			output_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-output " << output_fname << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-crc_type") == 0) {
-			f_crc_type = TRUE;
+			f_crc_type = true;
 			crc_type.assign(argv[++i]);
 			if (f_v) {
 				cout << "-crc_type " << crc_type << endl;
@@ -95,27 +95,27 @@ int crc_options_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-block_length") == 0) {
-			f_block_length = TRUE;
+			f_block_length = true;
 			block_length = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-block_length " << block_length << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-block_based_error_generator") == 0) {
-			f_block_based_error_generator = TRUE;
+			f_block_based_error_generator = true;
 			if (f_v) {
 				cout << "-block_based_error_generator " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-file_based_error_generator") == 0) {
-			f_file_based_error_generator = TRUE;
+			f_file_based_error_generator = true;
 			file_based_error_generator_threshold = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-file_based_error_generator " << file_based_error_generator_threshold << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-nb_repeats") == 0) {
-			f_nb_repeats = TRUE;
+			f_nb_repeats = true;
 			nb_repeats = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-nb_repeats " << nb_repeats << endl;
@@ -123,21 +123,21 @@ int crc_options_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-threshold") == 0) {
-			f_threshold = TRUE;
+			f_threshold = true;
 			threshold = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-threshold " << threshold << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-error_log") == 0) {
-			f_error_log = TRUE;
+			f_error_log = true;
 			error_log_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-error_log " << error_log_fname << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-selected_block") == 0) {
-			f_selected_block = TRUE;
+			f_selected_block = true;
 			selected_block = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-selected_block " << selected_block << endl;

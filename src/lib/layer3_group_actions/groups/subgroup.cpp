@@ -104,10 +104,10 @@ int subgroup::contains_this_element(int elt)
 	data_structures::sorting Sorting;
 	
 	if (Sorting.int_vec_search(Elements, group_order, elt, idx)) {
-		return TRUE;
+		return true;
 		}
 	else {
-		return FALSE;
+		return false;
 		}
 }
 

@@ -622,7 +622,7 @@ void hyperbolic_pair::parabolic_even_point_to_type_and_index(
 		f_middle_is_zero = O->is_zero_vector(v + 1, 1, n - 3);
 	}
 	else {
-		f_middle_is_zero = FALSE;
+		f_middle_is_zero = false;
 	}
 	if (f_v) {
 		cout << "hyperbolic_pair::parabolic_even_point_to_type_and_index: "
@@ -763,7 +763,7 @@ void hyperbolic_pair::parabolic_odd_point_to_type_and_index(
 		f_middle_is_zero = O->is_zero_vector(v + 1, 1, n - 3);
 	}
 	else {
-		f_middle_is_zero = FALSE;
+		f_middle_is_zero = false;
 	}
 	if (f_v) {
 		cout << "f_middle_is_zero=" << f_middle_is_zero << endl;
@@ -1979,7 +1979,7 @@ void hyperbolic_pair::parabolic_unrank_line_L2_even(
 	p1 = type_and_index_to_point_rk(
 			5, idx, verbose_level);
 	parabolic_neighbor52_even_unrank(
-			index2, v3, FALSE);
+			index2, v3, false);
 
 	O->Orthogonal_group->Siegel_move_forward_by_index(
 			rk1, p1, v3, v4, verbose_level);
@@ -2026,7 +2026,7 @@ void hyperbolic_pair::parabolic_unrank_line_L2_odd(
 	p1 = type_and_index_to_point_rk(
 			5, idx, verbose_level);
 	parabolic_neighbor52_odd_unrank(
-			index2, v3, FALSE);
+			index2, v3, false);
 
 	O->Orthogonal_group->Siegel_move_forward_by_index(
 			rk1, p1, v3, v4, verbose_level);
@@ -3466,10 +3466,10 @@ void hyperbolic_pair::parabolic_point_properties(
 					"v[0] != 1" << endl;
 			exit(1);
 		}
-		f_start_with_one = TRUE;
+		f_start_with_one = true;
 	}
 	else {
-		f_start_with_one = FALSE;
+		f_start_with_one = false;
 		F->Projective_space_basic->PG_element_normalize(
 				v + 1, stride, n - 1);
 		if (f_v) {

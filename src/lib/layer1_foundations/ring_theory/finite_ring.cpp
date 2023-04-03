@@ -29,7 +29,7 @@ finite_ring::finite_ring()
 	Fp = NULL;
 
 	q = 0;
-	f_chain_ring = FALSE;
+	f_chain_ring = false;
 }
 
 
@@ -67,16 +67,16 @@ void finite_ring::init(int q, int verbose_level)
 		}
 	finite_ring::q = q;
 	if (NT.is_prime_power(q)) {
-		f_chain_ring = TRUE;
+		f_chain_ring = true;
 		NT.factor_prime_power(q, p, e);
 		Fp = NEW_OBJECT(field_theory::finite_field);
 		Fp->finite_field_init_small_order(p,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				verbose_level);
 	}
 	else {
-		f_chain_ring = FALSE;
+		f_chain_ring = false;
 		p = 0;
 		e = 0;
 		Fp = NULL;
@@ -87,7 +87,7 @@ void finite_ring::init(int q, int verbose_level)
 	negate_table = NEW_int(q);
 	inv_table = NEW_int(q);
 	for (i = 0; i < q; i++) {
-		f_is_unit_table[i] = FALSE;
+		f_is_unit_table[i] = false;
 		negate_table[i] = -1;
 		inv_table[i] = -1;
 	}
@@ -99,7 +99,7 @@ void finite_ring::init(int q, int verbose_level)
 			}
 			mult_table[i * q + j] = a = (i * j) % q;
 			if (a == 1) {
-				f_is_unit_table[i] = TRUE;
+				f_is_unit_table[i] = true;
 				inv_table[i] = j;
 			}
 		}
@@ -134,17 +134,17 @@ int finite_ring::one()
 int finite_ring::is_zero(int i)
 {
 	if (i == 0)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int finite_ring::is_one(int i)
 {
 	if (i == 1)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int finite_ring::is_unit(int i)
@@ -208,7 +208,7 @@ int finite_ring::Gauss_int(int *A, int f_special,
 	int f_P, int *P, int m, int n, int Pn, int verbose_level)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
-// P is a m x Pn matrix (if f_P is TRUE)
+// P is a m x Pn matrix (if f_P is true)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -261,7 +261,7 @@ int finite_ring::Gauss_int(int *A, int f_special,
 			}
 		
 		base_cols[i] = j;
-		//if (FALSE) {
+		//if (false) {
 		//	cout << "."; cout.flush();
 		//	}
 
@@ -345,7 +345,7 @@ int finite_ring::Gauss_int(int *A, int f_special,
 			if (f_vv) {
 				cout << endl;
 				}
-			if (FALSE) {
+			if (false) {
 				cout << "A=" << endl;
 				Int_vec_print_integer_matrix_width(cout, A, m, n, n, 5);
 				}
@@ -363,7 +363,7 @@ int finite_ring::Gauss_int(int *A, int f_special,
 		} // next j 
 	rank = i;
 	if (f_complete) {
-		//if (FALSE) {
+		//if (false) {
 		//	cout << ";"; cout.flush();
 		//	}
 		for (i = rank - 1; i >= 0; i--) {
@@ -482,7 +482,7 @@ int finite_ring::PHG_element_rank(
 		int *v, int stride, int len)
 {
 	long int i, j, idx, a, b, r1, r2, rk, N;
-	int f_v = FALSE;
+	int f_v = false;
 	int *w;
 	int *embedding;
 	geometry::geometry_global Gg;
@@ -549,7 +549,7 @@ void finite_ring::PHG_element_unrank(
 		int *v, int stride, int len, int rk)
 {
 	int i, j, idx, r1, r2, N;
-	int f_v = FALSE;
+	int f_v = false;
 	int *w;
 	int *embedding;
 	geometry::geometry_global Gg;

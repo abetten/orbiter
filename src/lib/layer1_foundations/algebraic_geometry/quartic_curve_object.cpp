@@ -36,7 +36,7 @@ quartic_curve_object::quartic_curve_object()
 
 	//eqn15[15]
 
-	f_has_bitangents = FALSE;
+	f_has_bitangents = false;
 	//bitangents28[28]
 
 	QP = NULL;
@@ -87,7 +87,7 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 	F = Dom->P->Subspaces->F;
 	q = F->q;
 
-	f_has_bitangents = FALSE;
+	f_has_bitangents = false;
 	Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
 
 
@@ -139,7 +139,7 @@ void quartic_curve_object::init_equation_and_bitangents(
 	F = Dom->P->Subspaces->F;
 	q = F->q;
 
-	f_has_bitangents = TRUE;
+	f_has_bitangents = true;
 	Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
 	Lint_vec_copy(bitangents28, quartic_curve_object::bitangents28, 28);
 
@@ -316,10 +316,10 @@ int quartic_curve_object::find_point(
 
 	if (Sorting.lint_vec_search(Pts, nb_pts, P,
 			idx, 0 /* verbose_level */)) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 

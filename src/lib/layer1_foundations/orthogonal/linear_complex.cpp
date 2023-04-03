@@ -191,20 +191,20 @@ void linear_complex::compute_neighbors(int verbose_level)
 				w, 1, 6 /* wedge_dimension */, a);
 
 		Surf->wedge_to_klein(w, v);
-		if (FALSE) {
+		if (false) {
 			cout << i << " : ";
 			Int_vec_print(cout, v, 6);
 			cout << endl;
 		}
 		b = Surf->O->Hyperbolic_pair->rank_point(
 				v, 1, 0 /* verbose_level*/);
-		if (FALSE) {
+		if (false) {
 			cout << " : " << b;
 			cout << endl;
 		}
 		c = Surf->Klein->point_on_quadric_to_line(
 				b, 0 /* verbose_level*/);
-		if (FALSE) {
+		if (false) {
 			cout << " : " << c << endl;
 			cout << endl;
 		}

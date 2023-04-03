@@ -52,10 +52,10 @@ void spread_classify::print_isomorphism_type(
 
 	
 	int save_longinteger_f_print_scientific = orbiter_kernel_system::Orbiter->longinteger_f_print_scientific;
-	orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = FALSE;
+	orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = false;
 	{
 		ofstream file(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		string title, author, extra_praeamble;
 
@@ -68,13 +68,13 @@ void spread_classify::print_isomorphism_type(
 		}
 	
 		L.head(file,
-			FALSE/* f_book*/, FALSE /* f_title */,
+			false/* f_book*/, false /* f_title */,
 			title /*title*/,
-			author /*char *author*/, FALSE/* f_toc*/,
-			FALSE /* f_landscape*/,
-			FALSE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
+			author /*char *author*/, false/* f_toc*/,
+			false /* f_landscape*/,
+			false /* f_12pt */,
+			true /* f_enlarged_page */,
+			true /* f_pagenumbers */,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -112,7 +112,7 @@ void spread_classify::print_isomorphism_type2(
 	long int *pt_list;
 	int f, l, j, idx, pt;
 	int p, h;
-	int f_elements_exponential = FALSE;
+	int f_elements_exponential = false;
 	string symbol_for_print;
 
 	number_theory::number_theory_domain NT;
@@ -128,7 +128,7 @@ void spread_classify::print_isomorphism_type2(
 
 	NT.factor_prime_power(SD->q, p, h);
 	if (h > 1) {
-		f_elements_exponential = TRUE;
+		f_elements_exponential = true;
 	}
 
 	ost << "\\parindent=0pt" << endl;
@@ -142,7 +142,7 @@ void spread_classify::print_isomorphism_type2(
 	data_structures::tally C;
 
 
-	C.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
+	C.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 
 	ost << "Stabilizer has order " << so << "\\\\" << endl;
 	
@@ -151,7 +151,7 @@ void spread_classify::print_isomorphism_type2(
 	ost << "There are $" << Orb.nb_orbits
 			<< "$ orbits on the set.\\\\" << endl;
 	ost << "The orbit type is $[";
-	C.print_naked_tex(ost, FALSE /*f_backwards*/);
+	C.print_naked_tex(ost, false /*f_backwards*/);
 	ost << "]$\\\\" << endl;
 	ost << "\\bigskip" << endl;
 	
@@ -353,16 +353,16 @@ void spread_classify::klein(
 		verbose_level);
 
 	data_structures::tally C;
-	int f_second = FALSE;
+	int f_second = false;
 
 	C.init(nb_pts_on_plane, nb_planes, f_second, 0);
 	if (f_v) {
 		cout << "spread::klein: plane-intersection type: ";
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 	}
 	
 	ost << "Plane type of Klein-image is $( ";
-	C.print_naked_tex(ost, FALSE /*f_backwards*/);
+	C.print_naked_tex(ost, false /*f_backwards*/);
 	ost << " )$" << endl << endl;
 	ost << "\\bigskip" << endl << endl;
 
@@ -477,11 +477,11 @@ void spread_classify::klein(
 			ofstream fp_row_scheme(fname_row_scheme);
 			ofstream fp_col_scheme(fname_col_scheme);
 			I->get_and_print_row_tactical_decomposition_scheme_tex(
-				fp_row_scheme, FALSE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, *Stack);
+				fp_row_scheme, false /* f_enter_math */,
+				true /* f_print_subscripts */, *Stack);
 			I->get_and_print_column_tactical_decomposition_scheme_tex(
-				fp_col_scheme, FALSE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, *Stack);
+				fp_col_scheme, false /* f_enter_math */,
+				true /* f_print_subscripts */, *Stack);
 		}
 
 
@@ -497,7 +497,7 @@ void spread_classify::klein(
 
 
 		tally C0;
-		C0.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
+		C0.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 		
 		ost2 << "There are $" << Orb.nb_orbits << "$ orbits on the set.\\\\" << endl;
 		ost2 << "The orbit type is $[";
@@ -550,17 +550,17 @@ void spread_classify::report2(
 
 	{
 	ofstream f(fname);
-	int f_book = TRUE;
-	int f_title = TRUE;
+	int f_book = true;
+	int f_title = true;
 	char str[1000];
 	string title, author, extra_praeamble;
 
-	int f_toc = TRUE;
-	int f_landscape = FALSE;
-	int f_12pt = FALSE;
-	int f_enlarged_page = TRUE;
-	int f_pagenumbers = TRUE;
-	orbiter_kernel_system::latex_interface L;
+	int f_toc = true;
+	int f_landscape = false;
+	int f_12pt = false;
+	int f_enlarged_page = true;
+	int f_pagenumbers = true;
+	l1_interfaces::latex_interface L;
 
 	snprintf(str, sizeof(str), "$%d$-Spreads of PG($%d,%d$)", SD->k - 1, 2 * SD->k - 1, SD->q);
 	title.assign(str);
@@ -647,16 +647,16 @@ void spread_classify::report3(
 
 	data_structures::tally C_ago;
 
-	C_ago.init(Ago_int, Iso.Folding->Reps->count, FALSE, 0);
+	C_ago.init(Ago_int, Iso.Folding->Reps->count, false, 0);
 	cout << "Classification by ago:" << endl;
-	C_ago.print(FALSE /*f_backwards*/);
+	C_ago.print(false /*f_backwards*/);
 
 
 
 	ost << "\\chapter{Invariants}" << endl << endl;
 
 	ost << "Classification by automorphism group order: $";
-	C_ago.print_naked_tex(ost, FALSE /*f_backwards*/);
+	C_ago.print_naked_tex(ost, false /*f_backwards*/);
 	ost << "$" << endl;
 	ost << "\\\\" << endl;
 
@@ -846,11 +846,11 @@ void spread_classify::report3(
 
 		data_structures::tally C_ol;
 
-		C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
+		C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 
 		ost << "Orbit lengths: $";
 		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
-		C_ol.print_naked_tex(ost, FALSE /*f_backwards*/);
+		C_ol.print_naked_tex(ost, false /*f_backwards*/);
 		ost << "$ \\\\" << endl;
 
 		ost << "Orbits: $";
@@ -945,7 +945,7 @@ void spread_classify::report3(
 			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
 					len, set, label_of_set,
-					TRUE,
+					true,
 					0/*verbose_level*/);
 			if (f_v) {
 				cout << "after induced_action_by_restriction" << endl;
@@ -996,7 +996,7 @@ void spread_classify::report3(
 			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
 					len, set, label_of_set,
-					TRUE,
+					true,
 					0/*verbose_level*/);
 			if (f_v) {
 				cout << "after induced_action_by_restriction" << endl;
@@ -1362,12 +1362,12 @@ void spread_classify::orbit_info_short(
 
 	data_structures::tally C_ol;
 
-	C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
+	C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 
 	//f << "Orbit lengths: ";
 	//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
 	ost << "$";
-	C_ol.print_naked_tex(ost, FALSE /*f_backwards*/);
+	C_ol.print_naked_tex(ost, false /*f_backwards*/);
 	ost << "$";
 	//f << " \\\\" << endl;
 	

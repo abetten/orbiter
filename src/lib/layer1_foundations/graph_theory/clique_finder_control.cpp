@@ -21,36 +21,36 @@ namespace graph_theory {
 
 clique_finder_control::clique_finder_control()
 {
-	f_rainbow = FALSE;
-	f_target_size = FALSE;
+	f_rainbow = false;
+	f_target_size = false;
 	target_size = 0;
-	f_weighted = FALSE;
-	weights_total = FALSE;
+	f_weighted = false;
+	weights_total = false;
 	weights_offset = 0;
 	//weights_string;
 	//weights_bounds
-	f_Sajeeb = FALSE;
-	//f_file = FALSE;
+	f_Sajeeb = false;
+	//f_file = false;
 	//fname_graph = NULL;
-	f_nonrecursive = FALSE;
-	f_output_solution_raw = FALSE;
-	f_store_solutions = TRUE;
-	f_output_file = FALSE;
+	f_nonrecursive = false;
+	f_output_solution_raw = false;
+	f_store_solutions = true;
+	f_output_file = false;
 	//output_file;
-	f_maxdepth = FALSE;
+	f_maxdepth = false;
 	maxdepth = 0;
-	f_restrictions = FALSE;
+	f_restrictions = false;
 	nb_restrictions = 0;
-	f_tree = FALSE;
-	f_decision_nodes_only = FALSE;
+	f_tree = false;
+	f_decision_nodes_only = false;
 	//fname_tree = NULL;
 	print_interval = 1;
 
-	f_has_additional_test_function = FALSE;
+	f_has_additional_test_function = false;
 	call_back_additional_test_function = NULL;
 	additional_test_function_data = NULL;
 
-	f_has_print_current_choice_function = FALSE;
+	f_has_print_current_choice_function = false;
 	call_back_print_current_choice = NULL;
 	print_current_choice_data = NULL;
 
@@ -79,16 +79,16 @@ int clique_finder_control::parse_arguments(
 	cout << "clique_finder_control::parse_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-rainbow") == 0) {
-			f_rainbow = TRUE;
+			f_rainbow = true;
 			cout << "-rainbow " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-target_size") == 0) {
-			f_target_size = TRUE;
+			f_target_size = true;
 			target_size = ST.strtoi(argv[++i]);
 			cout << "-target_size " << target_size << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-weighted") == 0) {
-			f_weighted = TRUE;
+			f_weighted = true;
 			weights_total = ST.strtoi(argv[++i]);
 			weights_offset = ST.strtoi(argv[++i]);
 			weights_string.assign(argv[++i]);
@@ -100,42 +100,42 @@ int clique_finder_control::parse_arguments(
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-Sajeeb") == 0) {
-			f_Sajeeb = TRUE;
+			f_Sajeeb = true;
 			cout << "-Sajeeb " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-nonrecursive") == 0) {
-			f_nonrecursive = TRUE;
+			f_nonrecursive = true;
 			cout << "-nonrecursive " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-tree") == 0) {
-			f_tree = TRUE;
-			f_decision_nodes_only = FALSE;
+			f_tree = true;
+			f_decision_nodes_only = false;
 			fname_tree.assign(argv[++i]);
 			cout << "-tree " << fname_tree << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-tree_decision_nodes_only") == 0) {
-			f_tree = TRUE;
-			f_decision_nodes_only = TRUE;
+			f_tree = true;
+			f_decision_nodes_only = true;
 			fname_tree.assign(argv[++i]);
 			cout << "-tree_decision_nodes_only " << fname_tree << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-output_file") == 0) {
-			f_output_file = TRUE;
+			f_output_file = true;
 			output_file.assign(argv[++i]);
 			cout << "-output_file " << output_file << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-output_solution_raw") == 0) {
-			f_output_solution_raw = TRUE;
+			f_output_solution_raw = true;
 			cout << "-output_solution_raw " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-count_solutions_only") == 0) {
-			f_store_solutions = FALSE;
+			f_store_solutions = false;
 			cout << "-count_solutions_only " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-restrictions") == 0) {
-			f_restrictions = TRUE;
+			f_restrictions = true;
 			int j;
-			for (j = 0; TRUE; j++) {
+			for (j = 0; true; j++) {
 				restrictions[j] = ST.strtoi(argv[++i]);
 				if (restrictions[j] == -1) {
 					nb_restrictions = j / 3;

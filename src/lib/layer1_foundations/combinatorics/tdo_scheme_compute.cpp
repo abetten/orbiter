@@ -99,8 +99,8 @@ void tdo_scheme_compute::init(encoded_combinatorial_object *Enc,
 void tdo_scheme_compute::print_schemes(std::ostream &ost)
 {
 	int verbose_level = 0;
-	int f_enter_math = FALSE;
-	int f_print_subscripts = TRUE;
+	int f_enter_math = false;
+	int f_print_subscripts = true;
 
 	ost << "$$" << endl;
 	Decomp->print_row_decomposition_tex(

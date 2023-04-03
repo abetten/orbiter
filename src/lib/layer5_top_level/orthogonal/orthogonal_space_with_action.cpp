@@ -22,7 +22,7 @@ orthogonal_space_with_action::orthogonal_space_with_action()
 	Descr = NULL;
 	P = NULL;
 	O = NULL;
-	f_semilinear = FALSE;
+	f_semilinear = false;
 	A = NULL;
 	AO = NULL;
 	Blt_set_domain_with_action = NULL;
@@ -63,7 +63,7 @@ void orthogonal_space_with_action::init(
 
 	P->projective_space_init(
 			Descr->n - 1, Descr->F,
-		FALSE /* f_init_incidence_structure */,
+		false /* f_init_incidence_structure */,
 		verbose_level);
 
 	if (f_v) {
@@ -151,9 +151,9 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 
 	number_theory::number_theory_domain NT;
 
-	f_semilinear = TRUE;
+	f_semilinear = true;
 	if (NT.is_prime(Descr->F->q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 
 
@@ -166,11 +166,11 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 
 	A->Known_groups->init_orthogonal_group_with_O(
 			O,
-			TRUE /* f_on_points */,
-			FALSE /* f_on_lines */,
-			FALSE /* f_on_points_and_lines */,
+			true /* f_on_points */,
+			false /* f_on_lines */,
+			false /* f_on_points_and_lines */,
 			f_semilinear,
-			TRUE /* f_basis */,
+			true /* f_basis */,
 			verbose_level - 1);
 
 	if (f_v) {
@@ -230,7 +230,7 @@ void orthogonal_space_with_action::report(
 		string fname_report;
 		fname_report.assign(O->label_txt);
 		fname_report.append("_report.tex");
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
 
 		{
@@ -275,8 +275,8 @@ void orthogonal_space_with_action::report2(
 		}
 
 		A->report(ost,
-				FALSE /* f_sims */, NULL,
-				FALSE /* f_strong_gens */, NULL,
+				false /* f_sims */, NULL,
+				false /* f_strong_gens */, NULL,
 				LG_Draw_options,
 				verbose_level - 1);
 

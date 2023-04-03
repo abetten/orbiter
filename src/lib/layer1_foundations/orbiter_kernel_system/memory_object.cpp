@@ -237,7 +237,7 @@ void memory_object::read_string(std::string &p)
 	used_length = 0;
 	q = NEW_char(alloc_length);
 
-	while (TRUE) {
+	while (true) {
 		read_char(&c);
 		if (used_length == alloc_length) {
 			long int new_alloc_length = 2 * alloc_length;
@@ -340,7 +340,7 @@ void memory_object::write_int(int i)
 
 void memory_object::read_int(int *i)
 {
-	int f_v = FALSE;
+	int f_v = false;
 	int_4 i1;
 	long int l1, j, cur_p, l;
 	char *cp, *cp1;
@@ -506,7 +506,7 @@ static int decode(uchar *pc2, int l2, uchar *pc, uchar code_char)
 	uchar cc = 0;
 	int pos = 0, pos2 = 0, i = 8;
 	
-	while (TRUE) {
+	while (true) {
 	/* for (; pos2 < l2; ) { */
 		if (pos2 >= l2 && i >= 8)
 			break;

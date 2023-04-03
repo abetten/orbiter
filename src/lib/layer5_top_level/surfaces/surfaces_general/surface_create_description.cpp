@@ -22,68 +22,68 @@ namespace cubic_surfaces_in_general {
 surface_create_description::surface_create_description()
 {
 
-	f_space = FALSE;
+	f_space = false;
 	//std::string space_label;
 
-	f_space_pointer = FALSE;
+	f_space_pointer = false;
 	space_pointer = NULL;
 
 
-	f_label_txt = FALSE;
+	f_label_txt = false;
 	//label_txt
 
-	f_label_tex = FALSE;
+	f_label_tex = false;
 	//label_tex
 
-	f_label_for_summary = FALSE;
+	f_label_for_summary = false;
 	//label_for_summary
 
 
-	f_catalogue = FALSE;
+	f_catalogue = false;
 	iso = 0;
 
-	f_by_coefficients = FALSE;
+	f_by_coefficients = false;
 	//coefficients_text = NULL;
 
-	f_by_rank = FALSE;
+	f_by_rank = false;
 	//std::string rank_text;
 	rank_defining_q = 0;
 
 
-	f_family_Eckardt = FALSE;
+	f_family_Eckardt = false;
 	family_Eckardt_a = 0;
 	family_Eckardt_b = 0;
 
-	f_family_G13 = FALSE;
+	f_family_G13 = false;
 	family_G13_a = 0;
 
-	f_family_F13 = FALSE;
+	f_family_F13 = false;
 	family_F13_a = 0;
 
-	f_family_bes = FALSE;
+	f_family_bes = false;
 	family_bes_a = 0;
 	family_bes_c = 0;
 
 
-	f_family_general_abcd = FALSE;
+	f_family_general_abcd = false;
 	family_general_abcd_a = 0;
 	family_general_abcd_b = 0;
 	family_general_abcd_c = 0;
 	family_general_abcd_d = 0;
 
-	f_arc_lifting = FALSE;
+	f_arc_lifting = false;
 	//arc_lifting_text = NULL;
 	//arc_lifting_two_lines_text = NULL;
-	f_arc_lifting_with_two_lines = FALSE;
+	f_arc_lifting_with_two_lines = false;
 
-	f_Cayley_form = FALSE;
+	f_Cayley_form = false;
 	Cayley_form_k = 0;
 	Cayley_form_l = 0;
 	Cayley_form_m = 0;
 	Cayley_form_n = 0;
 
 
-	f_by_equation = FALSE;
+	f_by_equation = false;
 	//std::string equation_name_of_formula;
 	//std::string equation_name_of_formula_tex;
 	//std::string equation_managed_variables;
@@ -92,25 +92,25 @@ surface_create_description::surface_create_description()
 	//std::string equation_parameters_tex;
 
 
-	f_by_double_six = FALSE;
+	f_by_double_six = false;
 	//std::string by_double_six_label;
 	//std::string by_double_six_label_tex;
 	//std::string by_double_six_text;
 
 
-	f_by_skew_hexagon = FALSE;
+	f_by_skew_hexagon = false;
 	//std::string by_skew_hexagon_label;
 	//std::string by_skew_hexagon_label_tex
 
 	//nb_select_double_six = 0;
 	//select_double_six_string[];
 
-	f_override_group = FALSE;
+	f_override_group = false;
 	//std::string override_group_order;
 	override_group_nb_gens = 0;
 	//std::string override_group_gens;
 
-	f_random = FALSE;
+	f_random = false;
 
 
 	//std::vector<std::string> transform_coeffs;
@@ -132,65 +132,65 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-space") == 0) {
-			f_space = TRUE;
+			f_space = true;
 			space_label.assign(argv[++i]);
 			cout << "-space " << space_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-label_txt") == 0) {
-			f_label_txt = TRUE;
+			f_label_txt = true;
 			label_txt.assign(argv[++i]);
 			cout << "-label_txt " << label_txt << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-label_tex") == 0) {
-			f_label_tex = TRUE;
+			f_label_tex = true;
 			label_tex.assign(argv[++i]);
 			cout << "-label_tex " << label_tex << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-label_for_summary") == 0) {
-			f_label_for_summary = TRUE;
+			f_label_for_summary = true;
 			label_for_summary.assign(argv[++i]);
 			cout << "-label_for_summary " << label_for_summary << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-catalogue") == 0) {
-			f_catalogue = TRUE;
+			f_catalogue = true;
 			iso = ST.strtoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-by_coefficients") == 0) {
-			f_by_coefficients = TRUE;
+			f_by_coefficients = true;
 			coefficients_text.assign(argv[++i]);
 			cout << "-by_coefficients " << coefficients_text << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-by_rank") == 0) {
-			f_by_rank = TRUE;
+			f_by_rank = true;
 			rank_text.assign(argv[++i]);
 			rank_defining_q = ST.strtoi(argv[++i]);
 			cout << "-by_rank " << rank_text << " " << rank_defining_q << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-family_Eckardt") == 0) {
-			f_family_Eckardt = TRUE;
+			f_family_Eckardt = true;
 			family_Eckardt_a = ST.strtoi(argv[++i]);
 			family_Eckardt_b = ST.strtoi(argv[++i]);
 			cout << "-family_Eckardt " << family_Eckardt_a << " " << family_Eckardt_b << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-family_G13") == 0) {
-			f_family_G13 = TRUE;
+			f_family_G13 = true;
 			family_G13_a = ST.strtoi(argv[++i]);
 			cout << "-family_G13 " << family_G13_a << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-family_F13") == 0) {
-			f_family_F13 = TRUE;
+			f_family_F13 = true;
 			family_F13_a = ST.strtoi(argv[++i]);
 			cout << "-family_F13 " << family_F13_a << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-family_bes") == 0) {
-			f_family_bes = TRUE;
+			f_family_bes = true;
 			family_bes_a = ST.strtoi(argv[++i]);
 			family_bes_c = ST.strtoi(argv[++i]);
 			cout << "-family_bes " << family_bes_a << " " << family_bes_c << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-family_general_abcd") == 0) {
-			f_family_general_abcd = TRUE;
+			f_family_general_abcd = true;
 			family_general_abcd_a = ST.strtoi(argv[++i]);
 			family_general_abcd_b = ST.strtoi(argv[++i]);
 			family_general_abcd_c = ST.strtoi(argv[++i]);
@@ -201,19 +201,19 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-arc_lifting") == 0) {
-			f_arc_lifting = TRUE;
+			f_arc_lifting = true;
 			arc_lifting_text.assign(argv[++i]);
 			cout << "-arc_lifting " << arc_lifting_text << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-arc_lifting_with_two_lines") == 0) {
-			f_arc_lifting_with_two_lines = TRUE;
+			f_arc_lifting_with_two_lines = true;
 			arc_lifting_text.assign(argv[++i]);
 			arc_lifting_two_lines_text.assign(argv[++i]);
 			cout << "-arc_lifting_with_two_lines " << arc_lifting_text
 					<< " " << arc_lifting_two_lines_text << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-Cayley_form") == 0) {
-			f_Cayley_form = TRUE;
+			f_Cayley_form = true;
 			Cayley_form_k = ST.strtoi(argv[++i]);
 			Cayley_form_l = ST.strtoi(argv[++i]);
 			Cayley_form_m = ST.strtoi(argv[++i]);
@@ -224,7 +224,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-by_equation") == 0) {
-			f_by_equation = TRUE;
+			f_by_equation = true;
 			equation_name_of_formula.assign(argv[++i]);
 			equation_name_of_formula_tex.assign(argv[++i]);
 			equation_managed_variables.assign(argv[++i]);
@@ -241,7 +241,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-by_double_six") == 0) {
-			f_by_double_six = TRUE;
+			f_by_double_six = true;
 			by_double_six_label.assign(argv[++i]);
 			by_double_six_label_tex.assign(argv[++i]);
 			by_double_six_text.assign(argv[++i]);
@@ -252,7 +252,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-by_skew_hexagon") == 0) {
-			f_by_skew_hexagon = TRUE;
+			f_by_skew_hexagon = true;
 
 			by_skew_hexagon_label.assign(argv[++i]);
 			by_skew_hexagon_label_tex.assign(argv[++i]);
@@ -263,7 +263,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 		}
 
 		else if (ST.stringcmp(argv[i], "-select_double_six") == 0) {
-			//f_select_double_six = TRUE;
+			//f_select_double_six = true;
 			string s;
 
 			s.assign(argv[++i]);
@@ -274,7 +274,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 
 
 		else if (ST.stringcmp(argv[i], "-override_group") == 0) {
-			f_override_group = TRUE;
+			f_override_group = true;
 
 			override_group_order.assign(argv[++i]);
 			override_group_nb_gens = ST.strtoi(argv[++i]);
@@ -288,7 +288,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 		}
 
 		else if (ST.stringcmp(argv[i], "-random") == 0) {
-			f_random = TRUE;
+			f_random = true;
 
 			cout << "-random " << endl;
 		}
@@ -300,7 +300,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 
 			s.assign(argv[++i]);
 			transform_coeffs.push_back(s);
-			f_inverse_transform.push_back(FALSE);
+			f_inverse_transform.push_back(false);
 			cout << "-transform " << transform_coeffs[transform_coeffs.size() - 1]
 					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
 		}
@@ -310,7 +310,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 
 			s.assign(argv[++i]);
 			transform_coeffs.push_back(s);
-			f_inverse_transform.push_back(TRUE);
+			f_inverse_transform.push_back(true);
 			cout << "-transform_inverse " << transform_coeffs[transform_coeffs.size() - 1]
 					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
 		}

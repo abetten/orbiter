@@ -134,7 +134,7 @@ void surfaces_arc_lifting_upstep::init(surfaces_arc_lifting *Lift, int verbose_l
 					"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits << endl;
 		}
 
-		f_processed[f] = TRUE;
+		f_processed[f] = true;
 		nb_processed++;
 
 		if (f_v) {
@@ -257,14 +257,14 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 		D->SOA->init_with_group(Lift->Surf_A,
 				Lines, 27, eqn20,
 				Aut_gens,
-				FALSE /*f_find_double_six_and_rearrange_lines*/,
-				FALSE /*f_has_nice_gens*/, NULL /*vector_ge *nice_gens*/,
+				false /*f_find_double_six_and_rearrange_lines*/,
+				false /*f_has_nice_gens*/, NULL /*vector_ge *nice_gens*/,
 				verbose_level);
 #if 0
 	D->SOA->init_with_surface_object(Lift->Surf_A,
 			SO,
 			Aut_gens,
-			FALSE /*f_has_nice_gens*/, NULL /*vector_ge *nice_gens*/,
+			false /*f_has_nice_gens*/, NULL /*vector_ge *nice_gens*/,
 			verbose_level);
 #endif
 	}
@@ -402,12 +402,12 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 					"after Algebra.relative_order_vector_of_cosets" << endl;
 			cout << "relative_order_table:" << endl;
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.print_integer_matrix_with_standard_labels(cout,
 					D->relative_order_table,
 					D->coset_reps->len, 1,
-					FALSE /* f_tex */);
+					false /* f_tex */);
 
 		}
 	}
@@ -524,7 +524,7 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 				Lift->Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit
 					= Lift->Flag_orbits->nb_primary_orbits_upper;
 
-				Lift->Flag_orbits->Flag_orbit_node[f2].f_fusion_node = TRUE;
+				Lift->Flag_orbits->Flag_orbit_node[f2].f_fusion_node = true;
 
 				Lift->Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
 
@@ -535,7 +535,7 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 				Lift->A4->Group_element->element_invert(T->Elt_T4,
 						Lift->Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
 
-				f_processed[f2] = TRUE;
+				f_processed[f2] = true;
 				nb_processed++;
 				}
 			else {

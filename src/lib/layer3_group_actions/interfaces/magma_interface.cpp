@@ -122,17 +122,17 @@ void magma_interface::centralizer_of_element(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -273,17 +273,17 @@ void magma_interface::normalizer_of_cyclic_subgroup(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 			ring_theory::longinteger_object go;
@@ -393,8 +393,8 @@ void magma_interface::print_generators_MAGMA(
 		A->Group_element->element_print_as_permutation_with_offset(
 			SG->gens->ith(i), ost,
 			1 /* offset */,
-			TRUE /* f_do_it_anyway_even_for_big_degree */,
-			FALSE /* f_print_cycles_of_length_one */,
+			true /* f_do_it_anyway_even_for_big_degree */,
+			false /* f_print_cycles_of_length_one */,
 			0 /* verbose_level */);
 		if (i < SG->gens->len - 1) {
 			ost << ", " << endl;
@@ -651,8 +651,8 @@ void magma_interface::export_permutation_group_to_magma2(
 		A2->Group_element->element_print_as_permutation_with_offset(
 			SG->gens->ith(i), ost,
 			1 /* offset */,
-			TRUE /* f_do_it_anyway_even_for_big_degree */,
-			FALSE /* f_print_cycles_of_length_one */,
+			true /* f_do_it_anyway_even_for_big_degree */,
+			false /* f_print_cycles_of_length_one */,
 			0 /* verbose_level */);
 		if (i < SG->gens->len - 1) {
 			ost << ", " << endl;
@@ -700,7 +700,7 @@ void magma_interface::export_group_to_magma_and_copy_to_latex(
 		ifstream fp1(export_fname);
 		char line[100000];
 
-		while (TRUE) {
+		while (true) {
 			if (fp1.eof()) {
 				break;
 			}
@@ -1176,7 +1176,7 @@ void magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA(
 				fp >> perms[i * A->degree + j];
 			}
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "perms:" << endl;
 			Int_matrix_print(perms, nb_classes, A->degree);
 		}
@@ -1427,8 +1427,8 @@ void magma_interface::centralizer_using_magma2(
 
 		fp << "h := G ! ";
 		A->Group_element->element_print_as_permutation_with_offset(Elt, fp,
-				1 /* offset */, TRUE /* f_do_it_anyway_even_for_big_degree */,
-				FALSE /* f_print_cycles_of_length_one */, 0 /* verbose_level */);
+				1 /* offset */, true /* f_do_it_anyway_even_for_big_degree */,
+				false /* f_print_cycles_of_length_one */, 0 /* verbose_level */);
 		fp << ";" << endl;
 
 		fp << "C := Centralizer(G, h);" << endl;
@@ -1962,7 +1962,7 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 	{
 		ofstream fp(fname_latex);
 		string title, author, extra_praeamble;
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		title.assign("Conjugacy classes of ");
 		title.append("$");
@@ -1972,10 +1972,10 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 		author.assign("computed by Orbiter and MAGMA");
 
 		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
+			false /* f_book */, true /* f_title */,
 			title, author /* const char *author */,
-			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
+			false /* f_toc */, false /* f_landscape */, true /* f_12pt */,
+			true /* f_enlarged_page */, true /* f_pagenumbers */,
 			extra_praeamble /* extra_praeamble */);
 		//latex_head_easy(fp);
 

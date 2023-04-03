@@ -105,7 +105,7 @@ void klein_correspondence::init(
 		cout << "klein_correspondence::init before P3->projective_space_init" << endl;
 	}
 	P3->projective_space_init(3, F,
-		FALSE /* f_init_incidence_structure */, 
+		false /* f_init_incidence_structure */, 
 		verbose_level - 2);
 
 	P5 = NEW_OBJECT(projective_space);
@@ -114,7 +114,7 @@ void klein_correspondence::init(
 		cout << "klein_correspondence::init before P5->projective_space_init" << endl;
 	}
 	P5->projective_space_init(5, F,
-		FALSE /* f_init_incidence_structure */, 
+		false /* f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
 		cout << "klein_correspondence::after after P5->projective_space_init" << endl;
@@ -217,7 +217,7 @@ void klein_correspondence::init(
 		}
 		//j = P5->rank_point(v6);
 		j = O->rank_point(v6, 1, 0 /* verbose_level */);
-		if (FALSE) {
+		if (false) {
 			cout << "klein_correspondence::init i=" << i
 					<< " / " << P3->N_lines << " v6 : ";
 			int_vec_print(cout, v6, 6);
@@ -428,7 +428,7 @@ long int klein_correspondence::line_to_point_on_quadric(
 	line_to_Pluecker(line_rk, v6, verbose_level);
 
 	point_rk = O->Hyperbolic_pair->rank_point(v6, 1, 0 /* verbose_level */);
-	if (FALSE) {
+	if (false) {
 		cout << "klein_correspondence::line_to_point_on_quadric line_rk=" << line_rk
 				<< " / " << P3->Subspaces->N_lines << " v6 : ";
 		Int_vec_print(cout, v6, 6);
@@ -804,7 +804,7 @@ void klein_correspondence::identify_external_lines_and_spreads(
 
 			O->Hyperbolic_pair->unrank_point(basis_elliptic_quadric + j * d, 1, b, 0);
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "klein_correspondence::identify_external_lines_and_spreads"
 					"spread " << i
 					<< " the elliptic quadric space" << endl;

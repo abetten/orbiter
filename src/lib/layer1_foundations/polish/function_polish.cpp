@@ -339,7 +339,7 @@ void function_polish::evaluate(
 				f = Stack[Stack.size() - 1];
 				variable_values[Code[i].arg] = f;
 				Stack.pop_back();
-				if (f_v || TRUE) {
+				if (f_v || true) {
 					cout << "storing value " << f << " to variable " << Variables[Code[i].arg] << " : stacksize = " << Stack.size() << endl;
 				}
 			}

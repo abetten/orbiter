@@ -25,7 +25,7 @@ flag_orbits_incidence_structure::flag_orbits_incidence_structure()
 	OwP = NULL;
 	nb_rows = 0;
 	nb_cols = 0;
-	f_flag_orbits_have_been_computed = FALSE;
+	f_flag_orbits_have_been_computed = false;
 	nb_flags = 0;
 	Flags = NULL;
 	Flag_table = NULL;
@@ -107,7 +107,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 		Flag_table[h * 2 + 0] = i;
 		Flag_table[h * 2 + 1] = nb_rows + j;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "flag_orbits_incidence_structure::init "
 				"Flag_table:" << endl;
 		Lint_matrix_print(Flag_table, nb_flags, 2);
@@ -137,7 +137,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 	Orb->init(
 			A_on_flags,
 			SG,
-			FALSE /* f_load_save */,
+			false /* f_load_save */,
 			prefix,
 			verbose_level - 2);
 	if (f_v) {
@@ -145,7 +145,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 				"after Orb->init" << endl;
 	}
 
-	f_flag_orbits_have_been_computed = TRUE;
+	f_flag_orbits_have_been_computed = true;
 
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::init done" << endl;

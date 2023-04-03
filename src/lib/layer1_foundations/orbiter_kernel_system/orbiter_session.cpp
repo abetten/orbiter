@@ -47,30 +47,30 @@ orbiter_session::orbiter_session()
 
 	t0 = 0;
 
-	f_draw_options = TRUE;
+	f_draw_options = true;
 	draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 
-	f_draw_incidence_structure_description = TRUE;
+	f_draw_incidence_structure_description = true;
 	Draw_incidence_structure_description = NEW_OBJECT(graphics::draw_incidence_structure_description);
 
-	f_list_arguments = FALSE;
+	f_list_arguments = false;
 
-	f_seed = FALSE;
-	the_seed = TRUE;
+	f_seed = false;
+	the_seed = true;
 
-	f_memory_debug = FALSE;
+	f_memory_debug = false;
 	memory_debug_verbose_level = 0;
 
-	f_override_polynomial = FALSE;
+	f_override_polynomial = false;
 	//override_polynomial = NULL;
 
-	f_orbiter_path = FALSE;
+	f_orbiter_path = false;
 	//orbiter_path;
 
-	f_magma_path = FALSE;
+	f_magma_path = false;
 	//magma_path
 
-	f_fork = FALSE;
+	f_fork = false;
 	fork_argument_idx = 0;
 	// fork_variable
 	// fork_logfile_mask
@@ -90,7 +90,7 @@ orbiter_session::orbiter_session()
 	Lint_vec = NEW_OBJECT(lint_vec);
 
 
-	longinteger_f_print_scientific = FALSE;
+	longinteger_f_print_scientific = false;
 	syntax_tree_node_index = 0;
 
 	cout << "orbiter_session::orbiter_session done" << endl;
@@ -205,7 +205,7 @@ int orbiter_session::read_arguments(int argc,
 		std::string *argv, int i0)
 {
 	int i;
-	int f_v = FALSE;
+	int f_v = false;
 	string_tools ST;
 
 	cout << "orbiter_session::read_arguments" << endl;
@@ -223,7 +223,7 @@ int orbiter_session::read_arguments(int argc,
 			//cout << "-v " << verbose_level << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
-			f_draw_options = TRUE;
+			f_draw_options = true;
 
 			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 			//cout << "-draw_options " << endl;
@@ -242,7 +242,7 @@ int orbiter_session::read_arguments(int argc,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_incidence_structure_description") == 0) {
-			f_draw_incidence_structure_description = TRUE;
+			f_draw_incidence_structure_description = true;
 
 			Draw_incidence_structure_description = NEW_OBJECT(graphics::draw_incidence_structure_description);
 			//cout << "-draw_incidence_structure_description " << endl;
@@ -262,48 +262,48 @@ int orbiter_session::read_arguments(int argc,
 
 
 		else if (ST.stringcmp(argv[i], "-list_arguments") == 0) {
-			f_list_arguments = TRUE;
+			f_list_arguments = true;
 			if (f_v) {
 				cout << "-list_arguments " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-seed") == 0) {
-			f_seed = TRUE;
+			f_seed = true;
 			the_seed = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-seed " << the_seed << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-memory_debug") == 0) {
-			f_memory_debug = TRUE;
+			f_memory_debug = true;
 			memory_debug_verbose_level = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-memory_debug " << memory_debug_verbose_level << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-override_polynomial") == 0) {
-			f_override_polynomial = TRUE;
+			f_override_polynomial = true;
 			override_polynomial.assign(argv[++i]);
 			if (f_v) {
 				cout << "-override_polynomial " << override_polynomial << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-orbiter_path") == 0) {
-			f_orbiter_path = TRUE;
+			f_orbiter_path = true;
 			orbiter_path.assign(argv[++i]);
 			if (f_v) {
 				cout << "-orbiter_path " << orbiter_path << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-magma_path") == 0) {
-			f_magma_path = TRUE;
+			f_magma_path = true;
 			magma_path.assign(argv[++i]);
 			if (f_v) {
 				cout << "-magma_path " << magma_path << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-fork") == 0) {
-			f_fork = TRUE;
+			f_fork = true;
 			fork_argument_idx = i;
 			fork_variable.assign(argv[++i]);
 			fork_logfile_mask.assign(argv[++i]);
@@ -774,13 +774,13 @@ vector_builder *orbiter_session::get_object_of_type_vector(
 
 void orbiter_session::start_memory_debug()
 {
-	f_memory_debug = TRUE;
+	f_memory_debug = true;
 	cout << "memory debugging started" << endl;
 }
 
 void orbiter_session::stop_memory_debug()
 {
-	f_memory_debug = FALSE;
+	f_memory_debug = false;
 	cout << "memory debugging stopped" << endl;
 }
 

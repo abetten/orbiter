@@ -80,7 +80,7 @@ void group_element::one(void *elt)
 int group_element::is_one(void *elt)
 {
 	return element_is_one(elt, 0);
-	//return (*ptr_element_is_one)(*A, elt, FALSE);
+	//return (*ptr_element_is_one)(*A, elt, false);
 }
 
 void group_element::unpack(void *elt, void *Elt)
@@ -302,9 +302,9 @@ int group_element::element_is_one(
 					"returning " << ret << endl;
 			}
 		if (ret)
-			return TRUE;
+			return true;
 		else
-			return FALSE;
+			return false;
 		}
 	ret = (*A->ptr->ptr_element_is_one)(*A, elt, verbose_level);
 	if (f_v) {
@@ -455,7 +455,7 @@ void group_element::element_print_as_permutation(
 		void *elt, std::ostream &ost)
 {
 	element_print_as_permutation_with_offset(
-			elt, ost, 0, FALSE, TRUE, 0);
+			elt, ost, 0, false, true, 0);
 }
 
 void group_element::element_print_as_permutation_verbose(
@@ -463,7 +463,7 @@ void group_element::element_print_as_permutation_verbose(
 		std::ostream &ost, int verbose_level)
 {
 	element_print_as_permutation_with_offset(elt,
-			ost, 0, FALSE, TRUE, verbose_level);
+			ost, 0, false, true, verbose_level);
 }
 
 void group_element::element_as_permutation(
@@ -499,12 +499,12 @@ void group_element::element_print_as_permutation_with_offset(
 	int f_print_cycles_of_length_one, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int *v, i, j;
-	int f_cycle_length = FALSE;
-	int f_max_cycle_length = FALSE;
+	int f_cycle_length = false;
+	int f_max_cycle_length = false;
 	int max_cycle_length = 50;
-	int f_orbit_structure = FALSE;
+	int f_orbit_structure = false;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -581,14 +581,14 @@ void group_element::element_print_as_permutation_with_offset_and_max_cycle_lengt
 	int f_orbit_structure)
 {
 	int *v, i, j;
-	int f_print_cycles_of_length_one = FALSE;
-	int f_cycle_length = FALSE;
-	int f_max_cycle_length = TRUE;
+	int f_print_cycles_of_length_one = false;
+	int f_cycle_length = false;
+	int f_max_cycle_length = true;
 	combinatorics::combinatorics_domain Combi;
 
 	v = NEW_int(A->degree);
 	for (i = 0; i < A->degree; i++) {
-		j = element_image_of(i, elt, FALSE);
+		j = element_image_of(i, elt, false);
 		v[i] = j;
 	}
 	//perm_print(ost, v, degree);
@@ -606,7 +606,7 @@ void group_element::element_print_image_of_set(
 	long int i, j;
 
 	for (i = 0; i < size; i++) {
-		j = element_image_of(set[i], elt, FALSE);
+		j = element_image_of(set[i], elt, false);
 		cout << i << " -> " << j << endl;
 	}
 }
@@ -619,7 +619,7 @@ int group_element::element_signum_of_permutation(void *elt)
 
 	v = NEW_int(A->degree);
 	for (i = 0; i < A->degree; i++) {
-		j = element_image_of(i, elt, FALSE);
+		j = element_image_of(i, elt, false);
 		v[i] = j;
 	}
 	sgn = Combi.perm_signum(v, A->degree);
@@ -645,7 +645,7 @@ void group_element::element_write_file_fp(int *Elt,
 		Int_vec_print(cout, Elt, A->elt_size_in_int);
 		cout << endl;
 	}
-	element_pack(Elt, elt, FALSE);
+	element_pack(Elt, elt, false);
 	fp.write(elt, A->coded_elt_size_in_char);
 	//fwrite(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
 }
@@ -659,7 +659,7 @@ void group_element::element_read_file_fp(int *Elt,
 	elt = A->element_rw_memory_object;
 	fp.read(elt, A->coded_elt_size_in_char);
 	//fread(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
-	element_unpack(elt, Elt, FALSE);
+	element_unpack(elt, Elt, false);
 	if (f_v) {
 		element_print(Elt, cout);
 		Int_vec_print(cout, Elt, A->elt_size_in_int);
@@ -732,7 +732,7 @@ void group_element::element_write_to_memory_object(
 	}
 	elt = A->element_rw_memory_object;
 
-	element_pack(Elt, elt, FALSE);
+	element_pack(Elt, elt, false);
 	m->append(A->coded_elt_size_in_char, elt, 0);
 }
 
@@ -755,7 +755,7 @@ void group_element::element_read_from_memory_object(
 	for (i = 0; i < A->coded_elt_size_in_char; i++) {
 		m->read_char(elt + i);
 	}
-	element_unpack(elt, Elt, FALSE);
+	element_unpack(elt, Elt, false);
 }
 
 void group_element::element_write_to_file_binary(int *Elt,
@@ -846,10 +846,10 @@ int group_element::element_has_order_two(int *E1, int verbose_level)
 
 	element_mult(E1, E1, A->Elt1, 0);
 	if (is_one(A->Elt1)) {
-		ret = TRUE;
+		ret = true;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 
 	if (f_v) {
@@ -871,10 +871,10 @@ int group_element::product_has_order_two(int *E1,
 	element_mult(E1, E2, A->Elt1, 0);
 	element_mult(A->Elt1, A->Elt1, A->Elt2, 0);
 	if (is_one(A->Elt2)) {
-		ret = TRUE;
+		ret = true;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 
 	if (f_v) {
@@ -897,10 +897,10 @@ int group_element::product_has_order_three(int *E1,
 	element_mult(A->Elt1, A->Elt1, A->Elt2, 0);
 	element_mult(A->Elt2, A->Elt1, A->Elt3, 0);
 	if (is_one(A->Elt3)) {
-		ret = TRUE;
+		ret = true;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 
 	if (f_v) {
@@ -951,7 +951,7 @@ int group_element::element_order_and_cycle_type_verbose(
 	Int_vec_zero(cycle_type, A->degree);
 	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
-		have_seen[l] = FALSE;
+		have_seen[l] = false;
 	}
 	l = 0;
 	while (l < n) {
@@ -963,8 +963,8 @@ int group_element::element_order_and_cycle_type_verbose(
 		first = l;
 		l1 = l;
 		len = 1;
-		while (TRUE) {
-			have_seen[l1] = TRUE;
+		while (true) {
+			have_seen[l1] = true;
 			next = element_image_of(l1, elt, 0);
 			if (next > n) {
 				cout << "group_element::element_order_verbose: next = "
@@ -1010,7 +1010,7 @@ int group_element::element_order_if_divisor_of(void *elt, int o)
 	n = A->degree;
 	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
-		have_seen[l] = FALSE;
+		have_seen[l] = false;
 	}
 	l = 0;
 	while (l < n) {
@@ -1022,8 +1022,8 @@ int group_element::element_order_if_divisor_of(void *elt, int o)
 		first = l;
 		l1 = l;
 		len = 1;
-		while (TRUE) {
-			have_seen[l1] = TRUE;
+		while (true) {
+			have_seen[l1] = true;
 			next = element_image_of(l1, elt, 0);
 			if (next > n) {
 				cout << "group_element::element_order_if_divisor_of next = "
@@ -1392,16 +1392,16 @@ int group_element::test_if_set_stabilizes(int *Elt,
 	if (cmp == 0) {
 		if (f_v) {
 			cout << "group_element::test_if_set_stabilizes "
-					"done, returning TRUE" << endl;
+					"done, returning true" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	else {
 		if (f_v) {
 			cout << "group_element::test_if_set_stabilizes "
-					"done, returning FALSE" << endl;
+					"done, returning false" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 }
 
@@ -1485,7 +1485,7 @@ void group_element::make_element_from_base_image(
 		int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int *base_image;
 	int *Elt1;
 	int *Elt2;
@@ -1495,8 +1495,8 @@ void group_element::make_element_from_base_image(
 	//sims *S;
 #if 1
 	int offset = 0;
-	int f_do_it_anyway_even_for_big_degree = TRUE;
-	int f_print_cycles_of_length_one = FALSE;
+	int f_do_it_anyway_even_for_big_degree = true;
+	int f_print_cycles_of_length_one = false;
 #endif
 
 	int i, j, yi, z, b, c, b_pt;
@@ -1859,11 +1859,11 @@ int group_element::check_if_in_set_stabilizer(
 						<< " is not found" << endl;
 			}
 			FREE_lint(ordered_set);
-			return FALSE;
+			return false;
 		}
 	}
 	FREE_lint(ordered_set);
-	return TRUE;
+	return true;
 
 }
 
@@ -1933,7 +1933,7 @@ int group_element::check_if_transporter_for_set(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 4);
+	int f_vv = false; //(verbose_level >= 4);
 	int i, a, b, idx;
 	long int *ordered_set2;
 	data_structures::sorting Sorting;
@@ -1962,11 +1962,11 @@ int group_element::check_if_transporter_for_set(
 	}
 	for (i = 0; i < size; i++) {
 		a = set1[i];
-		if (FALSE) {
+		if (false) {
 			cout << "i=" << i << " a=" << a << endl;
 		}
 		b = element_image_of(a, Elt, 0);
-		if (FALSE) {
+		if (false) {
 			cout << "i=" << i << " a=" << a << " b=" << b << endl;
 		}
 		if (!Sorting.lint_vec_search(ordered_set2, size, b, idx, 0)) {
@@ -1986,11 +1986,11 @@ int group_element::check_if_transporter_for_set(
 						<< " is not found" << endl;
 			}
 			FREE_lint(ordered_set2);
-			return FALSE;
+			return false;
 		}
 	}
 	FREE_lint(ordered_set2);
-	return TRUE;
+	return true;
 
 }
 
@@ -2196,7 +2196,7 @@ int group_element::test_if_it_fixes_the_polynomial(
 	int f_v = (verbose_level >= 1);
 	int *input1;
 	int *output;
-	int ret = TRUE;
+	int ret = true;
 	algebra::matrix_group *mtx;
 
 	if (f_v) {
@@ -2258,14 +2258,14 @@ int group_element::test_if_it_fixes_the_polynomial(
 			cout << "group_element::test_if_it_fixes_the_polynomial "
 					"the element does not fix the equation" << endl;
 		}
-		ret = FALSE;
+		ret = false;
 	}
 	else {
 		if (f_v) {
 			cout << "group_element::test_if_it_fixes_the_polynomial "
 					"the element fixes the equation" << endl;
 		}
-		ret = TRUE;
+		ret = true;
 	}
 
 

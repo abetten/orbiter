@@ -40,7 +40,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	int goi;
 	int *Elt;
 	int i, j;
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_symmetric_group(n, f_no_base, verbose_level);
@@ -78,7 +78,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	Aconj = A->Induced_action->create_induced_action_by_conjugation(
 			S,
-		FALSE /* f_ownership */, FALSE /* f_basis */, NULL,
+		false /* f_ownership */, false /* f_basis */, NULL,
 		verbose_level);
 
 	if (f_v) {
@@ -310,7 +310,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		Int_matrix_print(character_table, nb_classes, nb_classes);
 	}
 
-	int f_special = TRUE;
+	int f_special = true;
 	int **Gens;
 	int nb_gens;
 	int t_max;
@@ -444,7 +444,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	}
 
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	L.print_integer_matrix_tex(cout, character_table, nb_classes, nb_classes);
 
@@ -1297,7 +1297,7 @@ int character_table_burnside::double_Gauss(
 			}
 
 		base_cols[i] = j;
-		//if (FALSE) {
+		//if (false) {
 		//	cout << "."; cout.flush();
 		//	}
 

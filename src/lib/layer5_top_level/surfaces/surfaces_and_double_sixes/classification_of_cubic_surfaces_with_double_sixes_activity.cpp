@@ -106,7 +106,7 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 		exit(1);
 	}
 
-	int f_with_stabilizers = TRUE;
+	int f_with_stabilizers = true;
 
 	if (f_v) {
 		cout << "surface_domain_high_level::report "

@@ -229,11 +229,11 @@ static int matrix_group_element_is_one(action &A, void *elt, int verbose_level)
 	else {
 		cout << "matrix_group_element_is_one: warning: "
 				"using slow identity element test" << endl;
-		f_is_one = TRUE;
+		f_is_one = true;
 		for (i = 0; i < A.degree; i++) {
-			j = A.Group_element->element_image_of(i, elt, FALSE);
+			j = A.Group_element->element_image_of(i, elt, false);
 			if (j != i) {
-				f_is_one = FALSE;
+				f_is_one = false;
 				break;
 				}
 			}
@@ -553,7 +553,7 @@ static void matrix_group_element_print_quick(action &A,
 	//n = A.find_fixed_points(elt, fp, 0);
 	//cout << "with " << n << " fixed points" << endl;
 	//FREE_int(fp);
-	if (FALSE /*A.degree < 0*/ /*1000*/) {
+	if (false /*A.degree < 0*/ /*1000*/) {
 		//cout << "matrix_group_element_print:
 		//printing element as permutation" << endl;
 		matrix_group_element_print_as_permutation(A, elt, ost);
@@ -571,7 +571,7 @@ static void matrix_group_element_print_latex(action &A,
 #if 0
 	ost << "=" << endl;
 	//G.GL_print_easy_normalized(Elt, ost);
-	G.GL_print_easy_latex_with_option_numerical(Elt, TRUE, ost);
+	G.GL_print_easy_latex_with_option_numerical(Elt, true, ost);
 #endif
 }
 
@@ -592,7 +592,7 @@ static void matrix_group_element_print_as_permutation(action &A,
 		void *elt, std::ostream &ost)
 {
 	//matrix_group &G = *A.G.matrix_grp;
-	int f_v = FALSE;
+	int f_v = false;
 	int *Elt = (int *) elt;
 	int i, j;
 	combinatorics::combinatorics_domain Combi;
@@ -606,9 +606,9 @@ static void matrix_group_element_print_as_permutation(action &A,
 		//cout << "matrix_group_element_print_as_permutation
 		//computing image of i=" << i << endl;
 		//if (i == 3)
-			//f_v = TRUE;
+			//f_v = true;
 		//else
-			//f_v = FALSE;
+			//f_v = false;
 		j = A.Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
 		}
@@ -630,7 +630,7 @@ static void matrix_group_element_print_verbose(action &A,
 	if (A.degree < 100) {
 		int *p = NEW_int(A.degree);
 		for (i = 0; i < A.degree; i++) {
-			j = A.Group_element->element_image_of(i, Elt, FALSE);
+			j = A.Group_element->element_image_of(i, Elt, false);
 			p[i] = j;
 			}
 		Combi.perm_print(ost, p, A.degree);
@@ -640,7 +640,7 @@ static void matrix_group_element_print_verbose(action &A,
 #if 0
 		cout << "i : image" << endl;
 		for (i = 0; i < MINIMUM(40, G.degree); i++) {
-			j = A.element_image_of(i, Elt, FALSE);
+			j = A.element_image_of(i, Elt, false);
 			cout << i << " : " << j << endl;
 			}
 #endif

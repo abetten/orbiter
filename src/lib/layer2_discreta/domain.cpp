@@ -127,9 +127,9 @@ int domain::characteristic()
 int domain::is_Orbiter_finite_field_domain()
 {
 	if (type() == Orbiter_finite_field) {
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 }
 
 #if 0
@@ -173,9 +173,9 @@ void pop_domain(domain *& d)
 int has_domain()
 {
 	if (domain_stack_len > 0)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 domain *get_current_domain()
@@ -205,49 +205,49 @@ domain *get_domain_if_pc_group()
 int is_GFp_domain(domain *& d)
 {
 	if (!has_domain())
-		return FALSE;
+		return false;
 	
 	d = get_current_domain();
 	if (d->type() == GFp) {
-		return TRUE;
+		return true;
 		}
 	d = NULL;
-	return FALSE;
+	return false;
 }
 
 int is_GFq_domain(domain *& d)
 {
 	if (!has_domain())
-		return FALSE;
+		return false;
 	
 	d = get_current_domain();
 	if (d->type() == GFq) {
-		return TRUE;
+		return true;
 		}
 	d = NULL;
-	return FALSE;
+	return false;
 }
 
 int is_Orbiter_finite_field_domain(domain *& d)
 {
 	if (!has_domain())
-		return FALSE;
+		return false;
 
 	d = get_current_domain();
 	if (d->type() == Orbiter_finite_field) {
-		return TRUE;
+		return true;
 	}
 	d = NULL;
-	return FALSE;
+	return false;
 }
 
 int is_finite_field_domain(domain *& d)
 {
 	if (is_GFp_domain(d))
-		return TRUE;
+		return true;
 	if (is_GFq_domain(d))
-		return TRUE;
-	return FALSE;
+		return true;
+	return false;
 }
 
 int finite_field_domain_order_int(domain * d)
@@ -286,7 +286,7 @@ int finite_field_domain_primitive_root()
 		}
 	q = finite_field_domain_order_int(d);
 	if (is_GFp_domain(d)) {
-		return NT.primitive_root(q, FALSE /* f_v */);
+		return NT.primitive_root(q, false /* f_v */);
 		}
 	else {
 		integer a;
@@ -420,7 +420,7 @@ void free_finite_field_domain(domain *dom)
 	
 	for (i = 0; i < nb_ffm; i++) {
 		if (Ffm[i]->dom == dom) {
-			if (FALSE) {
+			if (false) {
 				cout << "deleting ff domain no " << i << endl;
 				}
 			if (Ffm[i]->f > 1) {

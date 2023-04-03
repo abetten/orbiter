@@ -133,12 +133,12 @@ number_theory_domain::~number_theory_domain()
 
 long int number_theory_domain::mod(long int a, long int p)
 {
-	int f_negative = FALSE;
+	int f_negative = false;
 	long int r;
 
 	if (a < 0) {
 		a = -1 * a; // 5/6/2020: here was an error: it was a = -1;
-		f_negative = TRUE;
+		f_negative = true;
 	}
 	r = a % p;
 	if (f_negative && r) {
@@ -273,7 +273,7 @@ long int number_theory_domain::gcd_lint(long int m, long int n)
 	if (n == 0) {
 		return m;
 	}
-	while (TRUE) {
+	while (true) {
 		s = m / n;
 		r = m - (s * n);
 		if (r == 0) {
@@ -334,7 +334,7 @@ long int number_theory_domain::gcd_with_key_in_latex(std::ostream &ost,
 		b1 = a;
 	}
 
-	while (TRUE) {
+	while (true) {
 
 
 		r1 = a1 % b1;
@@ -732,9 +732,9 @@ int number_theory_domain::is_strict_prime_power(int q)
 	
 	p = smallest_primedivisor(q);
 	if (q != p)
-		return TRUE;
+		return true;
 	else 
-		return FALSE;
+		return false;
 }
 
 int number_theory_domain::is_prime(int p)
@@ -743,9 +743,9 @@ int number_theory_domain::is_prime(int p)
 	
 	p1 = smallest_primedivisor(p);
 	if (p1 != p)
-		return FALSE;
+		return false;
 	else 
-		return TRUE;
+		return true;
 }
 
 int number_theory_domain::is_prime_power(int q)
@@ -767,12 +767,12 @@ int number_theory_domain::is_prime_power(int q, int &p, int &h)
 		i = q % p;
 		//cout << "q=" << q << " i=" << i << endl;
 		if (i) {
-			return FALSE;
+			return false;
 			}
 		q = q / p;
 		h++;
 		}
-	return TRUE;
+	return true;
 }
 
 int number_theory_domain::smallest_primedivisor(int n)
@@ -789,7 +789,7 @@ int number_theory_domain::smallest_primedivisor(int n)
 	}
 	i = 5;
 	flag = 0;
-	while (TRUE) {
+	while (true) {
 		q = n / i;
 		if (n == q * i) {
 			return(i);
@@ -830,7 +830,7 @@ int number_theory_domain::sp_ge(int n, int p_min)
 	if (EVEN(p_min))
 		p_min--;
 	i = p_min;
-	while (TRUE) {
+	while (true) {
 		q = n / i;
 		// cout << "n=" << n << " i=" << i << " q=" << q << endl;
 		if (n == q * i)
@@ -844,10 +844,10 @@ int number_theory_domain::sp_ge(int n, int p_min)
 	
 	if (EVEN((p_min - 1) >> 1))
 		/* p_min cong 1 mod 4 ? */
-		flag = FALSE;
+		flag = false;
 	else
-		flag = TRUE;
-	while (TRUE) {
+		flag = true;
+	while (true) {
 		q = n / i;
 		cout << "n=" << n << " i=" << i << " q=" << q << endl;
 		if (n == q * i)
@@ -856,11 +856,11 @@ int number_theory_domain::sp_ge(int n, int p_min)
 			return(n);
 		if (flag) {
 			i += 4;
-			flag = FALSE;
+			flag = false;
 			}
 		else {
 			i += 2;
-			flag = TRUE;
+			flag = true;
 			}
 		}
 #endif
@@ -1024,7 +1024,7 @@ long int number_theory_domain::primitive_root_randomized(long int p, int verbose
 		cout << "number_theory_domain::primitive_root_randomized after factor_lint " << pm1 << endl;
 		cout << "number_theory_domain::primitive_root_randomized number of factors is " << primes.size() << endl;
 	}
-	while (TRUE) {
+	while (true) {
 		cnt++;
 		a = Os.random_integer(pm1);
 		if (a == 0) {
@@ -1100,7 +1100,7 @@ int number_theory_domain::Jacobi(long int a, long int m, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	long int a1, m1, ord2, r1;
 	long int g;
-	int f_negative = FALSE;
+	int f_negative = false;
 	long int t, t1, t2;
 	
 	if (f_v) {
@@ -1113,7 +1113,7 @@ int number_theory_domain::Jacobi(long int a, long int m, int verbose_level)
 	if (ABS(g) != 1) {
 		return 0;
 		}
-	while (TRUE) {
+	while (true) {
 		/* Invariante: 
 		 * r1 enthaelt bereits ausgerechnete Faktoren.
 		 * ABS(r1) == 1.
@@ -1130,9 +1130,9 @@ int number_theory_domain::Jacobi(long int a, long int m, int verbose_level)
 #if 0
 		a1 = NormRemainder(a1, m1);
 		if (a1 < 0)
-			f_negative = TRUE;
+			f_negative = true;
 		else
-			f_negative = FALSE;
+			f_negative = false;
 #endif
 		ord2 = ny2(a1, a1);
 		
@@ -1185,7 +1185,7 @@ int number_theory_domain::Jacobi_with_key_in_latex(std::ostream &ost,
 	int f_v = (verbose_level >= 1);
 	long int a1, m1, ord2, r1;
 	long int g;
-	int f_negative = FALSE;
+	int f_negative = false;
 	long int t, t1, t2;
 	
 	if (f_v) {
@@ -1204,7 +1204,7 @@ int number_theory_domain::Jacobi_with_key_in_latex(std::ostream &ost,
 	if (ABS(g) != 1) {
 		return 0;
 	}
-	while (TRUE) {
+	while (true) {
 		// Invariant:
 		// r1 contains partial results.
 		// ABS(r1) == 1.
@@ -1416,7 +1416,7 @@ int number_theory_domain::Legendre_with_key_in_latex(std::ostream &ost,
 	int f_v = (verbose_level >= 1);
 	long int a1, m1, ord2, r1;
 	long int g;
-	int f_negative = FALSE;
+	int f_negative = false;
 	long int t, t1, t2;
 
 	if (f_v) {
@@ -1435,7 +1435,7 @@ int number_theory_domain::Legendre_with_key_in_latex(std::ostream &ost,
 	if (ABS(g) != 1) {
 		return 0;
 	}
-	while (TRUE) {
+	while (true) {
 		// invariant:
 		// r1 contains partial result.
 		// ABS(r1) == 1.
@@ -1652,12 +1652,12 @@ int number_theory_domain::ny2(long int x, long int &x1)
 	}
 	if (xx < 0) {
 		xx = -xx;
-		f_negative = TRUE;
+		f_negative = true;
 	}
 	else {
-		f_negative = FALSE;
+		f_negative = false;
 	}
-	while (TRUE) {
+	while (true) {
 		// while xx congruent 0 mod 2:
 		if (ODD(xx)) {
 			break;
@@ -1843,7 +1843,7 @@ int number_theory_domain::choose_a_prime_greater_than(int lower_bound)
 	int nb_primes = sizeof(the_first_thousand_primes) / sizeof(int);
 	orbiter_kernel_system::os_interface Os;
 
-	while (TRUE) {
+	while (true) {
 		r = Os.random_integer(nb_primes);
 		p = the_first_thousand_primes[r];
 		if (p > lower_bound) {
@@ -1858,7 +1858,7 @@ int number_theory_domain::choose_a_prime_in_interval(int lower_bound, int upper_
 	int nb_primes = sizeof(the_first_thousand_primes) / sizeof(int);
 	orbiter_kernel_system::os_interface Os;
 
-	while (TRUE) {
+	while (true) {
 		r = Os.random_integer(nb_primes);
 		p = the_first_thousand_primes[r];
 		if (p > lower_bound && p < upper_bound) {
@@ -1872,7 +1872,7 @@ int number_theory_domain::random_integer_greater_than(int n, int lower_bound)
 	int r;
 	orbiter_kernel_system::os_interface Os;
 
-	while (TRUE) {
+	while (true) {
 		r = Os.random_integer(n);
 		if (r > lower_bound) {
 			return r;
@@ -1976,7 +1976,7 @@ void number_theory_domain::sieve(std::vector<int> &primes,
 	for (i = 0; ; i++) {
 		from = i * unit_size + 1;
 		to = from + unit_size - 1;
-		sieve_primes(primes, from, to, factorbase, FALSE);
+		sieve_primes(primes, from, to, factorbase, false);
 		l = primes.size();
 		cout << "[" << from << "," << to
 			<< "], total number of primes = "
@@ -2011,13 +2011,13 @@ void number_theory_domain::sieve_primes(std::vector<int> &v,
 		if (x <= 1) {
 			continue;
 		}
-		f_prime = TRUE;
+		f_prime = true;
 		for (k = 0; k < l; k++) {
 			p = v[k];
 			y = x / p;
 			// cout << "x=" << x << " p=" << p << " y=" << y << endl;
 			if ((x - y * p) == 0) {
-				f_prime = FALSE;
+				f_prime = false;
 				break;
 			}
 			if (y < p) {
@@ -2081,7 +2081,7 @@ void number_theory_domain::cyclotomic_set(
 	if (f_v) {
 		cout << "push " << b << endl;
 	}
-	while (TRUE) {
+	while (true) {
 		c = (b * q) % n;
 		if (c == a) {
 			break;
@@ -2438,7 +2438,7 @@ void number_theory_domain::elliptic_curve_all_point_multiples(
 	x2 = x1;
 	y2 = y1;
 	z2 = z1;
-	while (TRUE) {
+	while (true) {
 		{
 			vector<int> pts;
 
@@ -2489,7 +2489,7 @@ int number_theory_domain::elliptic_curve_discrete_log(
 	x2 = x1;
 	y2 = y1;
 	z2 = z1;
-	while (TRUE) {
+	while (true) {
 		if (x2 == x3 && y2 == y3 && z2 == z3) {
 			break;
 		}
@@ -2575,14 +2575,14 @@ void number_theory_domain::do_jacobi(
 	ofstream f(fname);
 
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
+	L.head(f, false /* f_book*/, true /* f_title */,
+		title, author, false /* f_toc */, false /* f_landscape */,
+			true /* f_12pt */,
+			true /* f_enlarged_page */,
+			true /* f_pagenumbers */,
 			extra_praeamble /* extra_praeamble */);
 
 

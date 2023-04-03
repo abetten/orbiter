@@ -32,10 +32,10 @@ syntax_tree_node::syntax_tree_node()
 	nb_nodes = 0;
 	//Nodes = 0L;
 
-	f_has_monomial = FALSE;
+	f_has_monomial = false;
 	monomial = NULL;
 
-	f_has_minus = FALSE;
+	f_has_minus = false;
 }
 
 syntax_tree_node::~syntax_tree_node()
@@ -114,7 +114,7 @@ int syntax_tree_node::is_homogeneous(int &degree, int verbose_level)
 		cout << "syntax_tree_node::is_homogeneous Node " << idx << endl;
 	}
 	if (f_terminal) {
-		return TRUE;
+		return true;
 	}
 	else {
 		if (type == operation_type_mult) {
@@ -139,10 +139,10 @@ int syntax_tree_node::is_homogeneous(int &degree, int verbose_level)
 					if (f_v) {
 						cout << "syntax_tree_node::is_homogeneous node " << idx << " has degree " << deg << " which is different from " << degree << ", so not homogeneous" << endl;
 					}
-					return FALSE;
+					return false;
 				}
 			}
-			return TRUE;
+			return true;
 		}
 		else {
 			int i, ret;
@@ -150,11 +150,11 @@ int syntax_tree_node::is_homogeneous(int &degree, int verbose_level)
 			if (f_v) {
 				cout << "checking subtree" << endl;
 			}
-			ret = TRUE;
+			ret = true;
 			for (i = 0; i < nb_nodes; i++) {
 				ret = Nodes[i]->is_homogeneous(degree, verbose_level);
-				if (ret == FALSE) {
-					return FALSE;
+				if (ret == false) {
+					return false;
 				}
 			}
 			return ret;

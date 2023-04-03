@@ -10,7 +10,6 @@ MODULES = \
 	naurng.o \
 	nautil.o \
 	nauty.o \
-	nauty_interface.o \
 	schreier.o 
 
 
@@ -22,7 +21,6 @@ naugraph.o : naugraph.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 naurng.o : naurng.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 nautil.o : nautil.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 nauty.o : nauty.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-nauty_interface.o : nauty_interface.cpp; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 schreier.o : schreier.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 

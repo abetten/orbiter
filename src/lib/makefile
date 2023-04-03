@@ -198,7 +198,6 @@ ORBITER_MODULES= \
 		layer1_foundations/graph_theory_nauty/naurng.o \
 		layer1_foundations/graph_theory_nauty/nautil.o \
 		layer1_foundations/graph_theory_nauty/nauty.o \
-		layer1_foundations/graph_theory_nauty/nauty_interface.o \
 		layer1_foundations/graph_theory_nauty/schreier.o \
 		layer1_foundations/graphics/animate.o \
 		layer1_foundations/graphics/draw_bitmap_control.o \
@@ -241,6 +240,8 @@ ORBITER_MODULES= \
 		layer1_foundations/l1_interfaces/expression_parser_sajeeb.o \
 		layer1_foundations/l1_interfaces/interface_gap_low.o \
 		layer1_foundations/l1_interfaces/interface_magma_low.o \
+		layer1_foundations/l1_interfaces/latex_interface.o \
+		layer1_foundations/l1_interfaces/nauty_interface.o \
 		layer1_foundations/number_theory/cyclotomic_sets.o \
 		layer1_foundations/number_theory/elliptic_curve.o \
 		layer1_foundations/number_theory/number_theoretic_transform.o \
@@ -248,7 +249,6 @@ ORBITER_MODULES= \
 		layer1_foundations/orbiter_kernel_system/create_file_description.o \
 		layer1_foundations/orbiter_kernel_system/file_io.o \
 		layer1_foundations/orbiter_kernel_system/file_output.o \
-		layer1_foundations/orbiter_kernel_system/latex_interface.o \
 		layer1_foundations/orbiter_kernel_system/mem_object_registry_entry.o \
 		layer1_foundations/orbiter_kernel_system/mem_object_registry.o \
 		layer1_foundations/orbiter_kernel_system/memory_object.o \

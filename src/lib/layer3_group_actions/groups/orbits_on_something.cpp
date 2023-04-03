@@ -25,14 +25,14 @@ orbits_on_something::orbits_on_something()
 {
 	A = NULL;
 
-	f_has_SG = FALSE;
+	f_has_SG = false;
 	SG = NULL;
 
 	gens = NULL;
 
 	Sch = NULL;
 
-	f_load_save = FALSE;
+	f_load_save = false;
 	//prefix = "";
 	//std::string fname;
 
@@ -71,7 +71,7 @@ void orbits_on_something::init(
 	}
 	orbits_on_something::A = A;
 
-	f_has_SG = TRUE;
+	f_has_SG = true;
 	orbits_on_something::SG = SG;
 
 	gens = SG->gens;
@@ -197,7 +197,7 @@ void orbits_on_something::init_from_vector_ge(
 		cout << "orbits_on_something::init_from_vector_ge" << endl;
 	}
 	orbits_on_something::A = A;
-	f_has_SG = FALSE;
+	f_has_SG = false;
 	orbits_on_something::SG = NULL;
 	orbits_on_something::gens = gens;
 	orbits_on_something::f_load_save = f_load_save;
@@ -509,7 +509,7 @@ void orbits_on_something::report_type(
 	ost << "\\right]" << endl;
 #else
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 #if 0
 	ost << "\\left[" << endl;
@@ -531,7 +531,7 @@ void orbits_on_something::report_type(
 
 	L.print_lint_matrix_with_labels(ost,
 			compact_type, m, n, row_labels, col_labels,
-		TRUE /* f_tex */);
+		true /* f_tex */);
 
 	FREE_lint(compact_type);
 	FREE_lint(row_labels);
@@ -562,8 +562,8 @@ void orbits_on_something::compute_compact_type(
 	for (i = 1; i <= goi; i++) {
 		for (j = 1; j <= goi; j++) {
 			if (orbit_type[i * goi + j - 1]) {
-				f_row_used[i - 1] = TRUE;
-				f_col_used[j - 1] = TRUE;
+				f_row_used[i - 1] = true;
+				f_col_used[j - 1] = true;
 			}
 		}
 	}
@@ -658,12 +658,12 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 		cout << "orbits_on_something::classify_orbits_by_length" << endl;
 	}
 	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
-	Classify_orbits_by_length->init(Sch->orbit_len, Sch->nb_orbits, FALSE, 0);
+	Classify_orbits_by_length->init(Sch->orbit_len, Sch->nb_orbits, false, 0);
 
 	if (f_v) {
 		cout << "orbits_on_something::classify_orbits_by_length "
 				"The distribution of orbit lengths is: ";
-		Classify_orbits_by_length->print_naked(FALSE);
+		Classify_orbits_by_length->print_naked(false);
 		cout << endl;
 	}
 #if 0
@@ -716,7 +716,7 @@ void orbits_on_something::report_classified_orbits_by_lengths(std::ostream &ost)
 {
 	int i, j;
 	long int a;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
 		ost << "Set " << i << " has size " << Classify_orbits_by_length->Set_partition->Set_size[i] << " : ";
@@ -918,10 +918,10 @@ int orbits_on_something::test_pair_of_orbits_of_a_equal_length(
 		exit(1);
 	}
 	if ((*test_function)(Orbit1, orbit_length, Orbit2, orbit_length, test_function_data)) {
-		ret = TRUE;
+		ret = true;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 	return ret;
 }
@@ -1119,7 +1119,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	Bitvec = NEW_OBJECT(data_structures::bitvector);
 	Bitvec->allocate(L);
 
-	if (FALSE) {
+	if (false) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering point sets:" << endl;
 		for (i = 0; i < filtered_set_of_orbits_size; i++) {
 			a = filtered_set_of_orbits[i];
@@ -1189,7 +1189,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 			filtered_set_of_orbits_size /* nb_points */,
 			nb_reduced_colors /* number_colors */, orbit_length,
 			point_color,
-			Bitvec, TRUE /* f_ownership_of_bitvec */,
+			Bitvec, true /* f_ownership_of_bitvec */,
 			filtered_set_of_orbits /*Orbits_classified->Sets[type_idx]*/ /* point_labels */,
 			fname, fname,
 			verbose_level - 2);
@@ -1324,7 +1324,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	Bitvec = NEW_OBJECT(data_structures::bitvector);
 	Bitvec->allocate(L);
 
-	if (FALSE) {
+	if (false) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length point sets:" << endl;
 		for (i = 0; i < nb_points; i++) {
 			a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
@@ -1392,7 +1392,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	CG->init_with_point_labels(nb_points, number_colors, orbit_length,
 		point_color,
-		Bitvec, TRUE /* f_ownership_of_bitvec */,
+		Bitvec, true /* f_ownership_of_bitvec */,
 		Classify_orbits_by_length->Set_partition->Sets[type_idx] /* point_labels */,
 		fname, fname,
 		verbose_level - 2);
@@ -1649,7 +1649,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 			1 /*nb_colors*/,
 			1 /* nb_colors_per_vertex */,
 			NULL /*point_color*/,
-			Bitvec, TRUE /* f_ownership_of_bitvec */,
+			Bitvec, true /* f_ownership_of_bitvec */,
 			my_orbits_classified->Sets[type_idx],
 			fname, fname,
 			verbose_level - 2);
@@ -1886,7 +1886,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 			nb_colors,
 			1 /* nb_colors_per_vertex */,
 			Pt_color /* point_color */,
-			Bitvec, TRUE /* f_ownership_of_bitvec */,
+			Bitvec, true /* f_ownership_of_bitvec */,
 			Pt_labels,
 			fname, fname,
 			verbose_level - 2);
@@ -2008,17 +2008,17 @@ void orbits_on_something::create_latex_report(int verbose_level)
 
 		{
 			ofstream ost(fname_tex);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -2253,7 +2253,7 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 		Table[2 * i + 1] = Classify_orbits_by_length->Set_partition->Set_size[i];
 	}
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	ost << "$$" << endl;
 	L.print_lint_matrix_tex(ost,

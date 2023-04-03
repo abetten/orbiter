@@ -23,20 +23,20 @@ namespace poset_classification {
 
 poset_classification_report_options::poset_classification_report_options()
 {
-	f_select_orbits_by_level = FALSE;
+	f_select_orbits_by_level = false;
 	select_orbits_by_level_level = 0;
 
-	f_select_orbits_by_stabilizer_order = FALSE;
+	f_select_orbits_by_stabilizer_order = false;
 	select_orbits_by_stabilizer_order_so = 0;
 
-	f_select_orbits_by_stabilizer_order_multiple_of = FALSE;
+	f_select_orbits_by_stabilizer_order_multiple_of = false;
 	select_orbits_by_stabilizer_order_so_multiple_of = 0;
 
-	f_include_projective_stabilizer = FALSE;
+	f_include_projective_stabilizer = false;
 
-	f_draw_poset = FALSE;
+	f_draw_poset = false;
 
-	f_fname = FALSE;
+	f_fname = false;
 	//std::string fname;
 }
 
@@ -59,7 +59,7 @@ int poset_classification_report_options::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-select_orbits_by_level") == 0) {
-			f_select_orbits_by_level = TRUE;
+			f_select_orbits_by_level = true;
 			select_orbits_by_level_level = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-select_orbits_by_level "
@@ -67,7 +67,7 @@ int poset_classification_report_options::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-select_orbits_by_stabilizer_order") == 0) {
-			f_select_orbits_by_stabilizer_order = TRUE;
+			f_select_orbits_by_stabilizer_order = true;
 			select_orbits_by_stabilizer_order_so = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-select_orbits_by_stabilizer_order "
@@ -75,7 +75,7 @@ int poset_classification_report_options::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-select_orbits_by_stabilizer_order_multiple_of") == 0) {
-			f_select_orbits_by_stabilizer_order_multiple_of = TRUE;
+			f_select_orbits_by_stabilizer_order_multiple_of = true;
 			select_orbits_by_stabilizer_order_so_multiple_of = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-select_orbits_by_stabilizer_order_multiple_of "
@@ -83,19 +83,19 @@ int poset_classification_report_options::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-include_projective_stabilizer") == 0) {
-			f_include_projective_stabilizer = TRUE;
+			f_include_projective_stabilizer = true;
 			if (f_v) {
 				cout << "-include_projective_stabilizer" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_poset") == 0) {
-			f_draw_poset = TRUE;
+			f_draw_poset = true;
 			if (f_v) {
 				cout << "-draw_poset" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-fname") == 0) {
-			f_fname = TRUE;
+			f_fname = true;
 			fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-fname" << fname << endl;
@@ -147,22 +147,22 @@ int poset_classification_report_options::is_selected_by_group_order(long int so)
 {
 	if (f_select_orbits_by_stabilizer_order) {
 		if (select_orbits_by_stabilizer_order_so == so) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 	else if (f_select_orbits_by_stabilizer_order_multiple_of) {
 		if ((so % select_orbits_by_stabilizer_order_so_multiple_of) == 0) {
-			return TRUE;
+			return true;
 		}
 		else {
-			return FALSE;
+			return false;
 		}
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 

@@ -22,7 +22,7 @@ namespace orthogonal_geometry {
 blt_set_domain::blt_set_domain()
 {
 	F = NULL;
-	f_semilinear = FALSE;
+	f_semilinear = false;
 	epsilon = 0;
 	n = 0;
 	q = 0;
@@ -32,7 +32,7 @@ blt_set_domain::blt_set_domain()
 
 
 	O = NULL;
-	f_orthogonal_allocated = FALSE;
+	f_orthogonal_allocated = false;
 	Pts = NULL;
 	Candidates = NULL;
 	P = NULL;
@@ -53,7 +53,7 @@ blt_set_domain::blt_set_domain()
 
 blt_set_domain::~blt_set_domain()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "blt_set_domain::~blt_set_domain" << endl;
@@ -65,7 +65,7 @@ blt_set_domain::~blt_set_domain()
 		if (O) {
 			FREE_OBJECT(O);
 		}
-		f_orthogonal_allocated = FALSE;
+		f_orthogonal_allocated = false;
 		O = NULL;
 	}
 	if (Pts) {
@@ -114,7 +114,7 @@ void blt_set_domain::init_blt_set_domain(
 
 
 	blt_set_domain::O = O;
-	f_orthogonal_allocated = FALSE;
+	f_orthogonal_allocated = false;
 	blt_set_domain::F = O->F;
 	blt_set_domain::q = F->q;
 	n = O->Quadratic_form->n; // vector space dimension
@@ -139,9 +139,9 @@ void blt_set_domain::init_blt_set_domain(
 	}
 
 
-	f_semilinear = TRUE;
+	f_semilinear = true;
 	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 	if (f_v) {
 		cout << "blt_set_domain::init_blt_set_domain "
@@ -211,8 +211,8 @@ void blt_set_domain::create_extension_fields(
 
 
 	F2->finite_field_init_small_order(Q2,
-			FALSE /* f_without_tables */,
-			TRUE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			true /* f_compute_related_fields */,
 			verbose_level);
 
 
@@ -239,8 +239,8 @@ void blt_set_domain::create_extension_fields(
 
 
 	F3->finite_field_init_small_order(Q3,
-			FALSE /* f_without_tables */,
-			TRUE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			true /* f_compute_related_fields */,
 			verbose_level);
 
 
@@ -831,7 +831,7 @@ void blt_set_domain::early_test_func(
 
 
 			if (fxz == 0) {
-				f_OK = FALSE;
+				f_OK = false;
 			}
 			else {
 				m3[0] = O->F->mult(two, v3[0]);
@@ -840,7 +840,7 @@ void blt_set_domain::early_test_func(
 				m3[3] = v3[4];
 				m3[4] = v3[3];
 
-				f_OK = TRUE;
+				f_OK = true;
 				for (i = 1; i < len; i++) {
 					//fxy = evaluate_bilinear_form(v1, v2, 1);
 
@@ -866,11 +866,11 @@ void blt_set_domain::early_test_func(
 					a = O->F->product3(fxy, fxz, fyz);
 
 					if (a == 0) {
-						f_OK = FALSE;
+						f_OK = false;
 						break;
 					}
 					if (O->SN->f_is_minus_square[a]) {
-						f_OK = FALSE;
+						f_OK = false;
 						break;
 					}
 
@@ -906,13 +906,13 @@ int blt_set_domain::pair_test(
 	f23 = O->Quadratic_form->evaluate_bilinear_form(v2, v3, 1);
 	d = O->F->product3(f12, f13, f23);
 	if (d == 0) {
-		return FALSE;
+		return false;
 	}
 	if (O->SN->f_is_minus_square[d]) {
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 
 }
@@ -920,15 +920,15 @@ int blt_set_domain::pair_test(
 int blt_set_domain::check_conditions(
 		int len, long int *S, int verbose_level)
 {
-	int f_OK = TRUE;
-	int f_BLT_test = FALSE;
-	int f_collinearity_test = FALSE;
+	int f_OK = true;
+	int f_BLT_test = false;
+	int f_collinearity_test = false;
 	//int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	orthogonal_global OG;
 
-	//f_v = TRUE;
-	//f_vv = TRUE;
+	//f_v = true;
+	//f_vv = true;
 
 	if (f_vv) {
 		cout << "checking set ";
@@ -936,12 +936,12 @@ int blt_set_domain::check_conditions(
 		cout << endl;
 	}
 	if (!collinearity_test(S, len, 0 /*verbose_level*/)) {
-		f_OK = FALSE;
-		f_collinearity_test = TRUE;
+		f_OK = false;
+		f_collinearity_test = true;
 	}
 	if (!OG.BLT_test(O, len, S, 0 /*verbose_level*/)) {
-		f_OK = FALSE;
-		f_BLT_test = TRUE;
+		f_OK = false;
+		f_BLT_test = true;
 	}
 
 
@@ -949,7 +949,7 @@ int blt_set_domain::check_conditions(
 		if (f_vv) {
 			cout << "OK" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	else {
 		if (f_vv) {
@@ -962,7 +962,7 @@ int blt_set_domain::check_conditions(
 			}
 			cout << endl;
 		}
-		return FALSE;
+		return false;
 	}
 }
 
@@ -972,7 +972,7 @@ int blt_set_domain::collinearity_test(
 	int f_v = (verbose_level >= 1);
 	int i;
 	long int x, y;
-	int f_OK = TRUE;
+	int f_OK = true;
 	int fxy;
 
 	if (f_v) {
@@ -1001,7 +1001,7 @@ int blt_set_domain::collinearity_test(
 
 		if (fxy == 0) {
 
-			f_OK = FALSE;
+			f_OK = false;
 
 			if (f_v) {
 				cout << "not OK; ";
@@ -1082,9 +1082,9 @@ void blt_set_domain::find_free_points(
 	}
 
 
-	C.init_lint(Perp, S_sz * (q + 1) * (q + 1), TRUE, 0);
+	C.init_lint(Perp, S_sz * (q + 1) * (q + 1), true, 0);
 
-	C.print(FALSE /* f_reverse */);
+	C.print(false /* f_reverse */);
 
 
 	// find the points which are in Perp only once:
@@ -1138,7 +1138,7 @@ int blt_set_domain::create_graph(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int special_line;
-	int ret = TRUE;
+	int ret = true;
 
 	if (f_v) {
 		cout << "blt_set_domain::create_graph" << endl;
@@ -1181,24 +1181,24 @@ int blt_set_domain::create_graph(
 
 	data_structures::tally C;
 
-	C.init(point_color, nb_candidates, FALSE, 0);
+	C.init(point_color, nb_candidates, false, 0);
 	if (f_vv) {
 		cout << "blt_set_domain::create_graph Case " << case_number
 				<< " / " << nb_cases_total /* R->nb_cases*/
 				<< " point colors (1st classification): ";
-		C.print(FALSE /* f_reverse */);
+		C.print(false /* f_reverse */);
 		cout << endl;
 	}
 
 
 	data_structures::tally C2;
 
-	C2.init(point_color, nb_candidates, TRUE, 0);
+	C2.init(point_color, nb_candidates, true, 0);
 	if (f_vv) {
 		cout << "blt_set_domain::create_graph Case " << case_number
 				<< " / " << nb_cases_total
 				<< " point colors (2nd classification): ";
-		C2.print(FALSE /* f_reverse */);
+		C2.print(false /* f_reverse */);
 		cout << endl;
 	}
 
@@ -1240,7 +1240,7 @@ int blt_set_domain::create_graph(
 					<< " / " << nb_cases_total << " Color class "
 					<< minimal_type << " is empty, the case is "
 							"eliminated" << endl;
-			ret = FALSE;
+			ret = false;
 			goto finish;
 		}
 	}
@@ -1297,7 +1297,7 @@ int blt_set_domain::create_graph(
 		CG->init(
 				nb_candidates /* nb_points */,
 				nb_colors, 1 /* nb_colors_per_vertex */,
-				point_color, Bitvec, TRUE,
+				point_color, Bitvec, true,
 				label, label_tex,
 				verbose_level - 2);
 			// Bitvec becomes part of the colored_graph object
@@ -1348,7 +1348,7 @@ void blt_set_domain::test_flock_condition(
 // an extension field of the current field
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "blt_set_domain::test_flock_condition" << endl;
@@ -1415,7 +1415,7 @@ void blt_set_domain::quadratic_lift(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 2);
+	//int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "blt_set_domain::quadratic_lift" << endl;
@@ -1489,9 +1489,9 @@ void blt_set_domain::quadratic_lift(
 
 	data_structures::tally T;
 
-	T.init(outcome, N, FALSE, 0);
+	T.init(outcome, N, false, 0);
 	cout << "outcome : ";
-	T.print_first(FALSE /*f_backwards*/);
+	T.print_first(false /*f_backwards*/);
 	cout << endl;
 
 	FREE_int(outcome);
@@ -1513,7 +1513,7 @@ void blt_set_domain::cubic_lift(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; //(verbose_level >= 2);
+	//int f_vv = false; //(verbose_level >= 2);
 
 	if (f_v) {
 		cout << "blt_set_domain::cubic_lift" << endl;
@@ -1571,9 +1571,9 @@ void blt_set_domain::cubic_lift(
 
 	data_structures::tally T;
 
-	T.init(outcome, N, FALSE, 0);
+	T.init(outcome, N, false, 0);
 	cout << "outcome : ";
-	T.print_first(FALSE /*f_backwards*/);
+	T.print_first(false /*f_backwards*/);
 	cout << endl;
 
 	FREE_int(outcome);

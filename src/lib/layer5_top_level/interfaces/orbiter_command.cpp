@@ -23,28 +23,28 @@ orbiter_command::orbiter_command()
 {
 	Orbiter_top_level_session = NULL;
 
-	f_algebra = FALSE;
+	f_algebra = false;
 	Algebra = NULL;
 
-	f_coding_theory = FALSE;
+	f_coding_theory = false;
 	Coding_theory = NULL;
 
-	f_combinatorics = FALSE;
+	f_combinatorics = false;
 	Combinatorics = NULL;
 
-	f_cryptography = FALSE;
+	f_cryptography = false;
 	Cryptography = NULL;
 
-	f_povray = FALSE;
+	f_povray = false;
 	Povray = NULL;
 
-	f_projective = FALSE;
+	f_projective = false;
 	Projective = NULL;
 
-	f_symbol_table = FALSE;
+	f_symbol_table = false;
 	Symbol_table = NULL;
 
-	f_toolkit = FALSE;
+	f_toolkit = false;
 	Toolkit = NULL;
 }
 
@@ -85,7 +85,7 @@ void orbiter_command::parse(
 			}
 			//Interface_symbol_table.worker(verbose_level);
 
-			f_symbol_table = TRUE;
+			f_symbol_table = true;
 			Symbol_table = Interface_symbol_table;
 			return;
 		}
@@ -111,7 +111,7 @@ void orbiter_command::parse(
 			Interface_algebra->read_arguments(argc, Argv, i, verbose_level);
 			i++;
 			//Interface_algebra.worker(verbose_level);
-			f_algebra = TRUE;
+			f_algebra = true;
 			Algebra = Interface_algebra;
 			return;
 		}
@@ -136,7 +136,7 @@ void orbiter_command::parse(
 			Interface_cryptography->read_arguments(argc, Argv, i, verbose_level);
 			i++;
 			//Interface_cryptography.worker(verbose_level);
-			f_cryptography = TRUE;
+			f_cryptography = true;
 			Cryptography = Interface_cryptography;
 			return;
 		}
@@ -161,7 +161,7 @@ void orbiter_command::parse(
 			Interface_combinatorics->read_arguments(argc, Argv, i, verbose_level);
 			i++;
 			//Interface_combinatorics.worker(verbose_level);
-			f_combinatorics = TRUE;
+			f_combinatorics = true;
 			Combinatorics = Interface_combinatorics;
 			return;
 		}
@@ -186,7 +186,7 @@ void orbiter_command::parse(
 			Interface_coding_theory->read_arguments(argc, Argv, i, verbose_level);
 			i++;
 			//Interface_coding_theory.worker(verbose_level);
-			f_coding_theory = TRUE;
+			f_coding_theory = true;
 			Coding_theory = Interface_coding_theory;
 			return;
 		}
@@ -211,7 +211,7 @@ void orbiter_command::parse(
 			Interface_povray->read_arguments(argc, Argv, i, verbose_level);
 			i++;
 			//Interface_povray.worker(verbose_level);
-			f_povray = TRUE;
+			f_povray = true;
 			Povray = Interface_povray;
 			return;
 		}
@@ -232,7 +232,7 @@ void orbiter_command::parse(
 			Interface_projective->read_arguments(argc, Argv, i, verbose_level);
 			i++;
 			//Interface_projective.worker(verbose_level);
-			f_projective = TRUE;
+			f_projective = true;
 			Projective = Interface_projective;
 			return;
 		}
@@ -253,7 +253,7 @@ void orbiter_command::parse(
 			Interface_toolkit->read_arguments(argc, Argv, i, verbose_level);
 			i++;
 			//Interface_toolkit.worker(verbose_level);
-			f_toolkit = TRUE;
+			f_toolkit = true;
 			Toolkit = Interface_toolkit;
 			return;
 		}

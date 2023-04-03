@@ -261,7 +261,7 @@ public:
 			nauty_output *&NO,
 			bitvector *&Canonical_form,
 			int verbose_level);
-		// if f_found is TRUE, B[idx] agrees with the given object
+		// if f_found is true, B[idx] agrees with the given object
 	void add_object(
 			geometry::object_with_canonical_form *OwCF,
 			int &f_new_object,

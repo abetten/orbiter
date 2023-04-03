@@ -28,12 +28,12 @@ iso_type::iso_type()
 	sum_R_before = 0;
 	sum_R = 0;
 
-	f_orderly = FALSE;
+	f_orderly = false;
 
-	f_generate_first = FALSE;
-	f_beginning_checked = FALSE;
+	f_generate_first = false;
+	f_beginning_checked = false;
 
-	f_split = FALSE;
+	f_split = false;
 	split_remainder = 0;
 	split_modulo = 1;
 
@@ -43,7 +43,7 @@ iso_type::iso_type()
 
 	Canonical_forms = NULL;
 
-	f_print_mod = TRUE;
+	f_print_mod = true;
 	print_mod = 1;
 
 }
@@ -142,10 +142,10 @@ void iso_type::add_geometry(
 	}
 
 	if (f_new_object) {
-		f_already_there = FALSE;
+		f_already_there = false;
 	}
 	else {
-		f_already_there = TRUE;
+		f_already_there = true;
 	}
 
 
@@ -196,7 +196,7 @@ void iso_type::find_and_add_geo(
 		cout<< "iso_type::find_and_add_geo setting partition" << endl;
 	}
 
-	OwCF->f_partition = TRUE;
+	OwCF->f_partition = true;
 
 	if (f_partition_fixing_last) {
 		OwCF->partition = gg->Decomposition_with_fuse->Partition_fixing_last[v];
@@ -250,13 +250,13 @@ void iso_type::find_and_add_geo(
 
 void iso_type::second()
 {
-	f_generate_first = TRUE;
-	f_beginning_checked = FALSE;
+	f_generate_first = true;
+	f_beginning_checked = false;
 }
 
 void iso_type::set_split(int remainder, int modulo)
 {
-	f_split = TRUE;
+	f_split = true;
 	split_remainder = remainder;
 	split_modulo = modulo;
 }
@@ -306,8 +306,8 @@ void iso_type::print_geos(int verbose_level)
 			Ago[h] = Canonical_forms->Ago[h];
 		}
 
-		T.init_lint(Ago, nb_geo, FALSE, 0);
-		T.print_file(cout, TRUE /* f_backwards*/);
+		T.init_lint(Ago, nb_geo, false, 0);
+		T.print_file(cout, true /* f_backwards*/);
 		cout << endl;
 	}
 	if (f_v) {
@@ -352,8 +352,8 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 			Ago[h] = Canonical_forms->Ago[h];
 		}
 
-		T.init_lint(Ago, nb_geo, FALSE, 0);
-		T.print_file(ost, TRUE /* f_backwards*/);
+		T.init_lint(Ago, nb_geo, false, 0);
+		T.print_file(ost, true /* f_backwards*/);
 		ost << endl;
 	}
 	if (f_v) {
@@ -387,8 +387,8 @@ void iso_type::write_sage_file(std::string &fname, int verbose_level)
 			Ago[h] = Canonical_forms->Ago[h];
 		}
 
-		T.init_lint(Ago, nb_geo, FALSE, 0);
-		T.print_file(ost, TRUE /* f_backwards*/);
+		T.init_lint(Ago, nb_geo, false, 0);
+		T.print_file(ost, true /* f_backwards*/);
 		ost << endl;
 
 
@@ -478,8 +478,8 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 			Ago[h] = Canonical_forms->Ago[h];
 		}
 
-		T.init_lint(Ago, nb_geo, FALSE, 0);
-		T.print_file(ost, TRUE /* f_backwards*/);
+		T.init_lint(Ago, nb_geo, false, 0);
+		T.print_file(ost, true /* f_backwards*/);
 		ost << endl;
 	}
 	if (f_v) {
@@ -568,8 +568,8 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 			Ago[h] = Canonical_forms->Ago[h];
 		}
 
-		T.init_lint(Ago, nb_geo, FALSE, 0);
-		T.print_file(ost, TRUE /* f_backwards*/);
+		T.init_lint(Ago, nb_geo, false, 0);
+		T.print_file(ost, true /* f_backwards*/);
 		ost << endl;
 	}
 	if (f_v) {
@@ -634,7 +634,7 @@ void iso_type::print_geometry(
 		inc_encoding *Encoding, int v, incidence *inc)
 {
 	cout << "geo" << endl;
-	Encoding->print_partitioned(cout, v, v, gg, FALSE /* f_print_isot */);
+	Encoding->print_partitioned(cout, v, v, gg, false /* f_print_isot */);
 	cout << "end geo" << endl;
 }
 

@@ -20,24 +20,24 @@ namespace solvers {
 
 dlx_problem_description::dlx_problem_description()
 {
-	f_label_txt = FALSE;
+	f_label_txt = false;
 	//std::string label_txt;
-	f_label_tex = FALSE;
+	f_label_tex = false;
 	//std::string label_tex;
 
-	f_data_label = FALSE;
+	f_data_label = false;
 	//std::string data_label;
 
-	f_data_matrix = FALSE;
+	f_data_matrix = false;
 	data_matrix = NULL;
 	data_matrix_m = 0;
 	data_matrix_n = 0;
 
 
-	f_write_solutions = FALSE;
-	f_write_tree = FALSE;
+	f_write_solutions = false;
+	f_write_tree = false;
 
-	f_tracking_depth = FALSE;
+	f_tracking_depth = false;
 	tracking_depth = 0;
 
 }
@@ -60,40 +60,40 @@ int dlx_problem_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-label_txt") == 0) {
-			f_label_txt = TRUE;
+			f_label_txt = true;
 			label_txt.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_txt " << label_txt << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label_tex") == 0) {
-			f_label_tex = TRUE;
+			f_label_tex = true;
 			label_tex.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_tex " << label_tex << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-data_label") == 0) {
-			f_data_label = TRUE;
+			f_data_label = true;
 			data_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-data_label " << data_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-write_solutions") == 0) {
-			f_write_solutions = TRUE;
+			f_write_solutions = true;
 			if (f_v) {
 				cout << "-write_solutions " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-write_tree") == 0) {
-			f_write_tree = TRUE;
+			f_write_tree = true;
 			if (f_v) {
 				cout << "-write_tree " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-tracking_depth") == 0) {
-			f_tracking_depth = TRUE;
+			f_tracking_depth = true;
 			tracking_depth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-tracking_depth " << tracking_depth << endl;

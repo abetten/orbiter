@@ -789,9 +789,9 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		cout << "after reading file " << fname << endl;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
@@ -1169,9 +1169,9 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		cout << "-group_is_animated " << group_idx << endl;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 int scene::read_scene_objects(int argc, std::string *argv,

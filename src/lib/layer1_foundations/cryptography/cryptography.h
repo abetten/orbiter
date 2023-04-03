@@ -295,7 +295,7 @@ public:
 			ring_theory::longinteger_object &P,
 			int nb_times,
 			int verbose_level);
-	// returns TRUE is the test is conclusive,
+	// returns true is the test is conclusive,
 	// i.e. if the number is not prime.
 	int miller_rabin_test(
 			ring_theory::longinteger_object &n,
@@ -308,7 +308,7 @@ public:
 			std::ostream &ost,
 			ring_theory::longinteger_object &P, int nb_times,
 			int verbose_level);
-	// returns TRUE is the test is conclusive,
+	// returns true is the test is conclusive,
 	// i.e. if the number is not prime.
 	void get_k_bit_random_pseudoprime(
 			ring_theory::longinteger_object &n, int k,

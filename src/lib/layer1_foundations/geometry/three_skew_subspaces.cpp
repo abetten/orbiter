@@ -30,7 +30,7 @@ three_skew_subspaces::three_skew_subspaces()
 
 	nCkq = 0;
 
-	f_data_is_allocated = FALSE;
+	f_data_is_allocated = false;
 	M = M1 = AA = AAv = TT = TTv = B = N = NULL;
 
 	starter_j1 = starter_j2 = starter_j3 = 0;
@@ -88,7 +88,7 @@ void three_skew_subspaces::init(
 	//C = NEW_int(n * n + 1);
 	N = NEW_int((3 * k) * n);
 
-	f_data_is_allocated = TRUE;
+	f_data_is_allocated = true;
 
 	if (f_v) {
 		cout << "three_skew_subspaces::init "
@@ -364,11 +364,11 @@ void three_skew_subspaces::create_regulus_and_opposite_regulus(
 	//A->Group_element->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 	Grass->line_regulus_in_PG_3_q(
-			regulus, regulus_size, FALSE /* f_opposite */,
+			regulus, regulus_size, false /* f_opposite */,
 			verbose_level);
 
 	Grass->line_regulus_in_PG_3_q(
-			opp_regulus, sz, TRUE /* f_opposite */,
+			opp_regulus, sz, true /* f_opposite */,
 			verbose_level);
 
 	if (sz != regulus_size) {

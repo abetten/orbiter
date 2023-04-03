@@ -33,7 +33,7 @@ spread_create::spread_create()
 	F = NULL;
 	k = 0;
 
-	f_semilinear = FALSE;
+	f_semilinear = false;
 
 	A = NULL;
 	degree = 0;
@@ -43,7 +43,7 @@ spread_create::spread_create()
 	set = NULL;
 	sz = 0;
 
-	f_has_group = FALSE;
+	f_has_group = false;
 	Sg = NULL;
 
 	Andre = NULL;
@@ -187,7 +187,7 @@ void spread_create::init(spread_create_description *Descr,
 					"after Sg->stabilizer_of_spread_from_catalogue" << endl;
 		}
 
-		f_has_group = TRUE;
+		f_has_group = true;
 
 		char str[1000];
 

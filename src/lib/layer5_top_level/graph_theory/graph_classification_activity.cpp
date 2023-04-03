@@ -146,7 +146,7 @@ void graph_classification_activity::perform_activity(int verbose_level)
 
 		data_structures::tally By_orbit_number;
 
-		By_orbit_number.init(Iso_type, m, FALSE, 0);
+		By_orbit_number.init(Iso_type, m, false, 0);
 
 		data_structures::set_of_sets *SoS;
 		int *types;

@@ -27,11 +27,11 @@ prepare_frames::prepare_frames()
 	//int input_first[1000];
 	//int input_len[1000];
 	//const char *input_mask[1000];
-	f_o = FALSE;
+	f_o = false;
 	//output_mask;
-	f_output_starts_at = FALSE;
+	f_output_starts_at = false;
 	output_starts_at = 0;
-	f_step = FALSE;
+	f_step = false;
 	step = 0;
 
 }
@@ -61,21 +61,21 @@ int prepare_frames::parse_arguments(int argc, std::string *argv, int verbose_lev
 			nb_inputs++;
 		}
 		else if (ST.stringcmp(argv[i], "-step") == 0) {
-			f_step = TRUE;
+			f_step = true;
 			step = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-step " << step << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-o") == 0) {
-			f_o = TRUE;
+			f_o = true;
 			output_mask.assign(argv[++i]);
 			if (f_v) {
 				cout << "-o " << output_mask << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-output_starts_at") == 0) {
-			f_output_starts_at = TRUE;
+			f_output_starts_at = true;
 			output_starts_at = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-output_starts_at " << output_starts_at << endl;

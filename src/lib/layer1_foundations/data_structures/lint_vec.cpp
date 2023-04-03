@@ -379,7 +379,7 @@ void lint_vec::scan_from_stream(std::istream & is, long int *&v, int &len)
 	h = 0;
 	l = 0;
 
-	while (TRUE) {
+	while (true) {
 		if (!is) {
 			len = h;
 			if (f_v) {
@@ -402,7 +402,7 @@ void lint_vec::scan_from_stream(std::istream & is, long int *&v, int &len)
 			}
 			return;
 		}
-		while (TRUE) {
+		while (true) {
 			// read digits:
 			//cout << "int_vec_scan_from_stream: \"" << c
 			//<< "\", ascii=" << (int)c << endl;
@@ -452,7 +452,7 @@ void lint_vec::scan_from_stream(std::istream & is, long int *&v, int &len)
 				cout << "lint_vec::scan_from_stream reading " << s << endl;
 			}
 			a = atol(s);
-			if (FALSE) {
+			if (false) {
 				cout << "digit as string: " << s
 						<< ", numeric: " << a << endl;
 			}

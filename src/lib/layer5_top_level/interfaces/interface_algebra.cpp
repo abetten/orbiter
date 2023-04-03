@@ -20,51 +20,51 @@ namespace user_interface {
 
 interface_algebra::interface_algebra()
 {
-	f_count_subprimitive = FALSE;
+	f_count_subprimitive = false;
 	count_subprimitive_Q_max = 0;
 	count_subprimitive_H_max = 0;
 
 
-	f_character_table_symmetric_group = FALSE;
+	f_character_table_symmetric_group = false;
 	character_table_symmetric_group_n = 0;
 
-	f_make_A5_in_PSL_2_q = FALSE;
+	f_make_A5_in_PSL_2_q = false;
 	make_A5_in_PSL_2_q_q = 0;
 
-	f_order_of_q_mod_n = FALSE;
+	f_order_of_q_mod_n = false;
 	order_of_q_mod_n_q = 0;
 	order_of_q_mod_n_n_min = 0;
 	order_of_q_mod_n_n_max = 0;
 
-	f_eulerfunction_interval = FALSE;
+	f_eulerfunction_interval = false;
 	eulerfunction_interval_n_min = 0;
 	eulerfunction_interval_n_max = 0;
 
-	f_young_symmetrizer = FALSE;
+	f_young_symmetrizer = false;
 	young_symmetrizer_n = 0;
 
-	f_young_symmetrizer_sym_4 = FALSE;
+	f_young_symmetrizer_sym_4 = false;
 
 
-	f_draw_mod_n = FALSE;
+	f_draw_mod_n = false;
 	Draw_mod_n_description = NULL;
 
-	f_power_function_mod_n = FALSE;
+	f_power_function_mod_n = false;
 	power_function_mod_n_k = 0;
 	power_function_mod_n_n = 0;
 
 
-	f_all_rational_normal_forms = FALSE;
+	f_all_rational_normal_forms = false;
 	//std::string all_rational_normal_forms_finite_field_label;
 	all_rational_normal_forms_d = 0;
 
-	f_eigenstuff = FALSE;
+	f_eigenstuff = false;
 	//std::string eigenstuff_finite_field_label;
 	eigenstuff_n = 0;
 	//eigenstuff_coeffs = NULL;
 	//eigenstuff_fname = NULL;
 
-	f_smith_normal_form = FALSE;
+	f_smith_normal_form = false;
 	//std::string smith_normal_form_matrix
 
 }
@@ -184,7 +184,7 @@ void interface_algebra::read_arguments(int argc,
 	}
 
 	if (ST.stringcmp(argv[i], "-count_subprimitive") == 0) {
-		f_count_subprimitive = TRUE;
+		f_count_subprimitive = true;
 		count_subprimitive_Q_max = ST.strtoi(argv[++i]);
 		count_subprimitive_H_max = ST.strtoi(argv[++i]);
 		cout << "-count_subprimitive "
@@ -193,18 +193,18 @@ void interface_algebra::read_arguments(int argc,
 				<< endl;
 	}
 	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
-		f_character_table_symmetric_group = TRUE;
+		f_character_table_symmetric_group = true;
 		character_table_symmetric_group_n = ST.strtoi(argv[++i]);
 		cout << "-character_table_symmetric_group " << character_table_symmetric_group_n << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
-		f_make_A5_in_PSL_2_q = TRUE;
+		f_make_A5_in_PSL_2_q = true;
 		make_A5_in_PSL_2_q_q = ST.strtoi(argv[++i]);
 		cout << "-make_A5_in_PSL_2_q " << make_A5_in_PSL_2_q_q << endl;
 	}
 
 	else if (ST.stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
-		f_order_of_q_mod_n = TRUE;
+		f_order_of_q_mod_n = true;
 		order_of_q_mod_n_q = ST.strtoi(argv[++i]);
 		order_of_q_mod_n_n_min = ST.strtoi(argv[++i]);
 		order_of_q_mod_n_n_max = ST.strtoi(argv[++i]);
@@ -214,7 +214,7 @@ void interface_algebra::read_arguments(int argc,
 	}
 
 	else if (ST.stringcmp(argv[i], "-eulerfunction_interval") == 0) {
-		f_eulerfunction_interval = TRUE;
+		f_eulerfunction_interval = true;
 		eulerfunction_interval_n_min = ST.strtoi(argv[++i]);
 		eulerfunction_interval_n_max = ST.strtoi(argv[++i]);
 		cout << "-eulerfunction_interval "
@@ -225,16 +225,16 @@ void interface_algebra::read_arguments(int argc,
 
 
 	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
-		f_young_symmetrizer = TRUE;
+		f_young_symmetrizer = true;
 		young_symmetrizer_n = ST.strtoi(argv[++i]);
 		cout << "-young_symmetrizer " << " " << young_symmetrizer_n << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
-		f_young_symmetrizer_sym_4 = TRUE;
+		f_young_symmetrizer_sym_4 = true;
 		cout << "-young_symmetrizer_sym_4 " << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
-		f_draw_mod_n = TRUE;
+		f_draw_mod_n = true;
 		cout << "-draw_mod_n " << endl;
 		Draw_mod_n_description = NEW_OBJECT(graphics::draw_mod_n_description);
 		i += Draw_mod_n_description->read_arguments(argc - (i + 1),
@@ -251,7 +251,7 @@ void interface_algebra::read_arguments(int argc,
 		Draw_mod_n_description->print();
 	}
 	else if (ST.stringcmp(argv[i], "-power_function_mod_n") == 0) {
-		f_power_function_mod_n = TRUE;
+		f_power_function_mod_n = true;
 		power_function_mod_n_k = ST.strtoi(argv[++i]);
 		power_function_mod_n_n = ST.strtoi(argv[++i]);
 		cout << "-power_mod_n " << " "
@@ -259,7 +259,7 @@ void interface_algebra::read_arguments(int argc,
 				<< power_function_mod_n_n << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
-		f_all_rational_normal_forms = TRUE;
+		f_all_rational_normal_forms = true;
 		all_rational_normal_forms_finite_field_label.assign(argv[++i]);
 		all_rational_normal_forms_d = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -269,7 +269,7 @@ void interface_algebra::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-eigenstuff") == 0) {
-		f_eigenstuff = TRUE;
+		f_eigenstuff = true;
 		eigenstuff_finite_field_label.assign(argv[++i]);
 		eigenstuff_n = ST.strtoi(argv[++i]);
 		eigenstuff_coeffs.assign(argv[++i]);
@@ -281,7 +281,7 @@ void interface_algebra::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-smith_normal_form") == 0) {
-		f_smith_normal_form = TRUE;
+		f_smith_normal_form = true;
 		smith_normal_form_matrix.assign(argv[++i]);
 		if (f_v) {
 			cout << "-smith_normal_form "
@@ -461,7 +461,7 @@ void interface_algebra::worker(int verbose_level)
 		F = (field_theory::finite_field *) The_Orbiter_top_level_session->get_object(idx);
 
 		Algebra.classes_GL(F, all_rational_normal_forms_d,
-				FALSE /* f_no_eigenvalue_one */, verbose_level);
+				false /* f_no_eigenvalue_one */, verbose_level);
 
 
 

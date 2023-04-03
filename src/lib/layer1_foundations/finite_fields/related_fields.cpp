@@ -137,8 +137,8 @@ void related_fields::init(
 		Subfield[h1].init_override_polynomial_small_order(
 				Subfield_order[h1],
 				Subfield_minimum_polynomial[h1].min_poly_rank_as_string,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				verbose_level);
 	}
 

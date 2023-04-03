@@ -73,10 +73,10 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 		latex_interface L;
 		//latex_head_easy(fp);
 		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
+			false /* f_book */, true /* f_title */,
 			title, author,
-			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
-			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
+			false /*f_toc*/, false /* f_landscape*/, false /* f_12pt*/,
+			true /*f_enlarged_page*/, true /* f_pagenumbers*/,
 			extras_for_preamble);
 
 		//LG->report(fp, f_sylow, f_group_table, verbose_level);
@@ -182,7 +182,7 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 
 			HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 			HPD->init(F, 3 /* nb_vars */, 2 /* degree */,
-					FALSE /* f_init_incidence_structure */, t_PART, verbose_level);
+					false /* f_init_incidence_structure */, t_PART, verbose_level);
 
 			//print the monomials in Orbiter ordering:
 			for (col = 0; col < HPD->get_nb_monomials(); col++) {
@@ -305,7 +305,7 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 			int f_first;
 			double Eqn[6];
 
-			f_first = TRUE;
+			f_first = true;
 			fp << "The equation of the conic $C_" << j << "$ is" << endl;
 			fp << "$$" << endl;
 			for (col = 0; col < 6; col++) {
@@ -326,7 +326,7 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 					cout << "E" << endl;
 
 					if (f_first) {
-						f_first = FALSE;
+						f_first = false;
 					}
 					else {
 						fp << " + ";

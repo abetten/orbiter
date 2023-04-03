@@ -45,7 +45,7 @@ void page_table_init(int verbose_level)
 	
 	for (i = 0; i < MAX_BTREE_PAGE_TABLE; i++) {
 		btree_page_table[i] = NULL;
-		btree_page_table_f_used[i] = FALSE;
+		btree_page_table_f_used[i] = false;
 		}
 	
 }
@@ -86,7 +86,7 @@ int page_table_alloc(int verbose_level)
 			
 			btree_page_table[i]->init(verbose_level - 1);
 			
-			btree_page_table_f_used[i] = TRUE;
+			btree_page_table_f_used[i] = true;
 			if (f_vv) {
 				cout << " slot " << i << " is " << btree_page_table[i] << endl;
 				}
@@ -123,7 +123,7 @@ void page_table_free(int idx, int verbose_level)
 		}
 	
 	btree_page_table[idx] = NULL;
-	btree_page_table_f_used[idx] = FALSE;
+	btree_page_table_f_used[idx] = false;
 	if (f_v) {
 		cout << "page_table_free done" << endl;
 		}
@@ -278,11 +278,11 @@ int page_table::search_key_pair(int len, btree_page_registry_key_pair *K, int &i
 {
 	int l, r, m, c;
 	//void *res;
-	int f_found = FALSE;
+	int f_found = false;
 	
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = len;
@@ -301,7 +301,7 @@ int page_table::search_key_pair(int len, btree_page_registry_key_pair *K, int &i
 		if (c <= 0) {
 			l = m + 1;
 			if (c == 0) {
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		else {
@@ -374,12 +374,12 @@ int page_table::load_page(Buffer *BF, int x, int buf_idx, int verbose_level)
 			}
 		//print();
 		//exit(1);
-		return FALSE;
+		return false;
 		}
 	ref = btree_table[idx].ref;
 	P = (PageTyp *) btree_pages->s_i(ref);
 	BF->Page = *P;
-	return TRUE;
+	return true;
 }
 
 void page_table::allocate_rec(Buffer *BF, int buf_idx, int x, int verbose_level)

@@ -78,7 +78,7 @@ void diophant_activity::perform_activity(
 		cout << "Found " << Dio->_resultanz << " solutions with "
 				<< Dio->nb_steps_betten << " backtrack steps" << endl;
 
-		if (TRUE) {
+		if (true) {
 			string output_file;
 
 			output_file.assign(Dio->label);
@@ -98,7 +98,7 @@ void diophant_activity::perform_activity(
 		cout << "Found " << Dio->_resultanz << " solutions with "
 				<< Dio->nb_steps_betten << " backtrack steps" << endl;
 
-		if (TRUE) {
+		if (true) {
 			string output_file;
 
 			output_file.assign(Dio->label);
@@ -118,7 +118,7 @@ void diophant_activity::perform_activity(
 		cout << "Found " << Dio->_resultanz << " solutions with "
 				<< Dio->nb_steps_betten << " backtrack steps" << endl;
 
-		if (TRUE) {
+		if (true) {
 			string output_file;
 
 			output_file.assign(Dio->label);
@@ -133,7 +133,7 @@ void diophant_activity::perform_activity(
 
 		fname_base.assign(Descr->input_file);
 		ST.replace_extension_with(fname_base, "_drawing");
-		Dio->draw_as_bitmap(fname_base, TRUE, Descr->box_width, Descr->bit_depth,
+		Dio->draw_as_bitmap(fname_base, true, Descr->box_width, Descr->bit_depth,
 			verbose_level);
 
 	}
@@ -145,7 +145,7 @@ void diophant_activity::perform_activity(
 	else if (Descr->f_project_to_single_equation_and_solve) {
 		Dio->split_by_equation(
 				Descr->eqn_idx,
-				TRUE,
+				true,
 				Descr->solve_case_idx,
 				verbose_level);
 	}
@@ -155,7 +155,7 @@ void diophant_activity::perform_activity(
 			Dio->split_by_two_equations(
 					Descr->eqn1_idx,
 					Descr->eqn2_idx,
-					FALSE,
+					false,
 					0, 1,
 					verbose_level);
 		}
@@ -163,7 +163,7 @@ void diophant_activity::perform_activity(
 			Dio->split_by_two_equations(
 					Descr->eqn1_idx,
 					Descr->eqn2_idx,
-					TRUE,
+					true,
 					Descr->solve_case_idx_r,
 					Descr->solve_case_idx_m,
 					verbose_level);
@@ -177,7 +177,7 @@ void diophant_activity::perform_activity(
 
 		Dio->draw_partitioned(fname_base,
 				orbiter_kernel_system::Orbiter->draw_options,
-			FALSE, 0, 0,
+			false, 0, 0,
 			verbose_level);
 	}
 	else if (Descr->f_perform_column_reductions) {

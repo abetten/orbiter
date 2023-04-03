@@ -211,7 +211,7 @@ static void perm_group_element_retrieve(action &A,
 		}
 
 #if 0
-	if (FALSE /* A.f_group_order_is_small */) {
+	if (false /* A.f_group_order_is_small */) {
 			//cout << "Eltrk1=" << G.Eltrk1 << endl;
 			//cout << "Eltrk2=" << G.Eltrk2 << endl;
 			//cout << "Eltrk3=" << G.Eltrk3 << endl;
@@ -264,7 +264,7 @@ static int perm_group_element_store(action &A, void *elt, int verbose_level)
 		cout << "perm_group_element_store()" << endl;
 		}
 #if 0
-	if (FALSE /* A.f_group_order_is_small */) {
+	if (false /* A.f_group_order_is_small */) {
 		int i, j, bi, jj, l;
 		int a;
 	
@@ -402,7 +402,7 @@ static void perm_group_element_dispose(action &A,
 	if (f_v) {
 		cout << "perm_group_element_dispose hdl = " << hdl << endl;
 		}
-	if (FALSE /* A.f_group_order_is_small */) {
+	if (false /* A.f_group_order_is_small */) {
 		// do nothing
 		}
 	else {

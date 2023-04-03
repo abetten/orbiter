@@ -22,8 +22,8 @@ schreier_vector_handler::schreier_vector_handler()
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
-	f_check_image = FALSE;
-	f_allow_failure = FALSE;
+	f_check_image = false;
+	f_allow_failure = false;
 	nb_calls_to_coset_rep_inv = 0;
 	nb_calls_to_coset_rep_inv_recursion = 0;
 }
@@ -192,10 +192,10 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 			if (f_v) {
 				cout << "schreier_vector_handler::coset_rep_inv_recursion "
 						"did not find point. "
-						"f_allow_failure is TRUE, "
-						"so we return FALSE" << endl;
+						"f_allow_failure is true, "
+						"so we return false" << endl;
 			}
-			return FALSE;
+			return false;
 			}
 		else {
 			cout << "schreier_vector_handler::coset_rep_inv_recursion "
@@ -211,7 +211,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 	// test if the group is trivial:
 	if (S->nb_gen == 0) {
 		pt0 = pt;
-		return TRUE;
+		return true;
 		}
 	pr = S->sv[1 + n + pt_loc];
 	la = S->sv[1 + 2 * n + pt_loc];
@@ -250,7 +250,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 
 			if (f_v) {
 				cout << "schreier_vector_handler::coset_rep_inv_recursion "
-						"check_image is TRUE" << endl;
+						"check_image is true" << endl;
 			}
 			prev = A2->Group_element->element_image_of(pt, Elt2, 0);
 
@@ -284,7 +284,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 			S,
 			pr, pt0,
 			verbose_level)) {
-			return FALSE;
+			return false;
 			}
 		if (f_v) {
 			cout << "schreier_vector_handler::coset_rep_inv_recursion "
@@ -299,7 +299,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 			}
 		pt0 = pt;
 		}
-	return TRUE;
+	return true;
 }
 
 
@@ -379,10 +379,10 @@ void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
 		tmp = 1;
 		fp.write((char *)&tmp, sizeof(int));
 		if (Sv->nb_gen == 0) {
-			f_trivial_group = TRUE;
+			f_trivial_group = true;
 			}
 		else {
-			f_trivial_group = FALSE;
+			f_trivial_group = false;
 			}
 		//Fio.fwrite_int4(fp, f_trivial_group);
 		fp.write((char *)&f_trivial_group, sizeof(int));
@@ -464,11 +464,11 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 		}
 	for (i = 0; i < n; i++) {
 		Sorting.schreier_vector_determine_depth_recursion(n,
-				pts, prev, FALSE, depth, ancestor, i);
+				pts, prev, false, depth, ancestor, i);
 		}
 #else
 	Sorting.schreier_vector_compute_depth_and_ancestor(
-			n, pts, prev, FALSE /* f_prev_is_point_index */, NULL,
+			n, pts, prev, false /* f_prev_is_point_index */, NULL,
 			depth, ancestor, verbose_level - 2);
 #endif
 #if 0
@@ -481,7 +481,7 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 	data_structures::tally C;
 	int f, a;
 
-	C.init(ancestor, n, FALSE, 0);
+	C.init(ancestor, n, false, 0);
 
 	SoS->init_basic_with_Sz_in_int(A2->degree /* underlying_set_size*/,
 			C.nb_types, C.type_len, verbose_level);

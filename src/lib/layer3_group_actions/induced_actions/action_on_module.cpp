@@ -124,9 +124,9 @@ void action_on_module::init_action_on_module(
 
 	Int_vec_copy(module_basis, module_basis_rref, module_dimension * 45);
 
-	int f_special = FALSE;
-	int f_complete = TRUE;
-	int f_P = TRUE;
+	int f_special = false;
+	int f_complete = true;
+	int f_P = true;
 	int rk;
 
 
@@ -145,7 +145,7 @@ void action_on_module::init_action_on_module(
 			verbose_level);
 	// returns the rank which is the number of entries in base_cols
 	// A is a m x n matrix,
-	// P is a m x Pn matrix (if f_P is TRUE)
+	// P is a m x Pn matrix (if f_P is true)
 
 	if (f_v) {
 		cout << "action_on_module::init_action_on_module after F->Linear_algebra->Gauss_int" << endl;
@@ -300,7 +300,7 @@ void action_on_module::compute_image_int_low_level(
 
 	orbiter_kernel_system::numerics Num;
 	int *base_cols;
-	int f_complete = TRUE;
+	int f_complete = true;
 	int r;
 
 	base_cols = NEW_int(module_dimension_m + 1);

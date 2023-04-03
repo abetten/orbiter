@@ -35,11 +35,11 @@ design_create::design_create()
 
 	degree = 0;
 
-	f_has_set = FALSE;
+	f_has_set = false;
 	set = NULL;
 	sz = 0;
 
-	f_has_group = FALSE;
+	f_has_group = false;
 	Sg = NULL;
 
 	PA = NULL;
@@ -49,7 +49,7 @@ design_create::design_create()
 	v = 0;
 	b = 0;
 	nb_inc = 0;
-	f_has_incma = FALSE;
+	f_has_incma = false;
 	incma = NULL;
 }
 
@@ -112,7 +112,7 @@ void design_create::init(
 			}
 			create_design_PG_2_q(F, set, sz, k, verbose_level);
 
-			f_has_set = TRUE;
+			f_has_set = true;
 
 			v = q * q + q + 1;
 			b = v;
@@ -174,7 +174,7 @@ void design_create::init(
 		Get_lint_vector_from_label(Descr->list_of_blocks_coded_label, set, sz, 0 /* verbose_level */);
 		//Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
 
-		f_has_set = TRUE;
+		f_has_set = true;
 		v = degree;
 		b = sz;
 
@@ -191,10 +191,10 @@ void design_create::init(
 
 		A = NEW_OBJECT(actions::action);
 
-		int f_no_base = FALSE;
+		int f_no_base = false;
 
 		if (Descr->f_no_group) {
-			f_no_base = TRUE;
+			f_no_base = true;
 		}
 		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
@@ -203,7 +203,7 @@ void design_create::init(
 
 		Aut = NULL;
 		Aut_on_lines = NULL;
-		f_has_group = FALSE;
+		f_has_group = false;
 		Sg = NULL;
 
 		if (f_v) {
@@ -229,7 +229,7 @@ void design_create::init(
 		Get_lint_vector_from_label(Descr->list_of_sets_coded_label, set, sz, 0 /* verbose_level */);
 		//Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
 
-		f_has_set = TRUE;
+		f_has_set = true;
 		v = degree;
 		b = sz;
 
@@ -246,10 +246,10 @@ void design_create::init(
 
 		A = NEW_OBJECT(actions::action);
 
-		int f_no_base = FALSE;
+		int f_no_base = false;
 
 		if (Descr->f_no_group) {
-			f_no_base = TRUE;
+			f_no_base = true;
 		}
 		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
@@ -258,7 +258,7 @@ void design_create::init(
 
 		Aut = NULL;
 		Aut_on_lines = NULL;
-		f_has_group = FALSE;
+		f_has_group = false;
 		Sg = NULL;
 
 
@@ -297,7 +297,7 @@ void design_create::init(
 		}
 		sz = m;
 
-		f_has_set = TRUE;
+		f_has_set = true;
 		v = degree;
 		b = sz;
 
@@ -315,10 +315,10 @@ void design_create::init(
 
 		A = NEW_OBJECT(actions::action);
 
-		int f_no_base = FALSE;
+		int f_no_base = false;
 
 		if (Descr->f_no_group) {
-			f_no_base = TRUE;
+			f_no_base = true;
 		}
 
 		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
@@ -328,7 +328,7 @@ void design_create::init(
 
 		Aut = NULL;
 		Aut_on_lines = NULL;
-		f_has_group = FALSE;
+		f_has_group = false;
 		Sg = NULL;
 
 
@@ -365,7 +365,7 @@ void design_create::init(
 
 
 
-		f_has_set = FALSE;
+		f_has_set = false;
 		v = degree;
 		b = sz;
 
@@ -383,10 +383,10 @@ void design_create::init(
 
 		A = NEW_OBJECT(actions::action);
 
-		int f_no_base = FALSE;
+		int f_no_base = false;
 
 		if (Descr->f_no_group) {
-			f_no_base = TRUE;
+			f_no_base = true;
 		}
 
 		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
@@ -396,7 +396,7 @@ void design_create::init(
 
 		Aut = NULL;
 		Aut_on_lines = NULL;
-		f_has_group = FALSE;
+		f_has_group = false;
 		Sg = NULL;
 
 
@@ -446,7 +446,7 @@ void design_create::init(
 		sz = nb_blocks;
 		//Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
 
-		f_has_set = TRUE;
+		f_has_set = true;
 		v = degree;
 		b = sz;
 
@@ -463,10 +463,10 @@ void design_create::init(
 
 		A = NEW_OBJECT(actions::action);
 
-		int f_no_base = FALSE;
+		int f_no_base = false;
 
 		if (Descr->f_no_group) {
-			f_no_base = TRUE;
+			f_no_base = true;
 		}
 
 		A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
@@ -476,7 +476,7 @@ void design_create::init(
 
 		Aut = NULL;
 		Aut_on_lines = NULL;
-		f_has_group = FALSE;
+		f_has_group = false;
 		Sg = NULL;
 
 
@@ -496,7 +496,7 @@ void design_create::init(
 	else {
 		cout << "design_create::init no design created" << endl;
 		sz = 0;
-		f_has_group = FALSE;
+		f_has_group = false;
 
 
 		//exit(1);
@@ -535,14 +535,14 @@ void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 	//int *block;
 
 	if (F->e > 1) {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	}
 	else {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 	PA = NEW_OBJECT(projective_geometry::projective_space_with_action);
 	PA->init(F, 2 /* n */, f_semilinear,
-			TRUE /*f_init_incidence_structure*/, verbose_level);
+			true /*f_init_incidence_structure*/, verbose_level);
 
 	P = PA->P;
 
@@ -576,7 +576,7 @@ void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 	}
 	A = NEW_OBJECT(actions::action);
 
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	A->Known_groups->init_symmetric_group(degree, f_no_base, verbose_level);
 
@@ -585,7 +585,7 @@ void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 
 	Aut = PA->A;
 	Aut_on_lines = PA->A_on_lines;
-	f_has_group = TRUE;
+	f_has_group = true;
 	Sg = Aut->Strong_gens;
 
 
@@ -731,7 +731,7 @@ void design_create::compute_incidence_matrix(int verbose_level)
 					incma, verbose_level);
 
 		}
-		f_has_incma = TRUE;
+		f_has_incma = true;
 	}
 	else {
 		cout << "design_create::compute_incidence_matrix please give a set" << endl;
@@ -778,7 +778,7 @@ void design_create::compute_incidence_matrix_from_blocks(
 		}
 	}
 
-	f_has_incma = TRUE;
+	f_has_incma = true;
 
 	if (f_v) {
 		cout << "design_create::compute_incidence_matrix_from_blocks The incidence matrix is:" << endl;

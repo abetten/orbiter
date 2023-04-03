@@ -60,7 +60,7 @@ void rainbow_cliques::search(
 	color_frequency = NEW_int(graph->nb_colors);
 	
 	for (i = 0; i < graph->nb_colors; i++) {
-		f_color_satisfied[i] = FALSE;
+		f_color_satisfied[i] = false;
 	}
 
 
@@ -73,8 +73,8 @@ void rainbow_cliques::search(
 	
 	CF->init(Control,
 			graph->fname_base, graph->nb_points,
-		FALSE, NULL, 
-		TRUE, graph->Bitvec,
+		false, NULL, 
+		true, graph->Bitvec,
 		verbose_level - 2);
 
 	CF->call_back_clique_found = call_back_colored_graph_clique_found;
@@ -336,7 +336,7 @@ void rainbow_cliques::clique_found_record_in_original_labels(
 void call_back_colored_graph_clique_found(
 		clique_finder *CF, int verbose_level)
 {
-	int f_v = FALSE; //(verbose_level >= 1);
+	int f_v = false; //(verbose_level >= 1);
 
 	//cout << "call_back_colored_graph_clique_found" << endl;
 	
@@ -386,7 +386,7 @@ void call_back_colored_graph_add_point(clique_finder *CF,
 					"color already satisfied" << endl;
 			exit(1);
 		}
-		R->f_color_satisfied[c] = TRUE;
+		R->f_color_satisfied[c] = true;
 	}
 	if (f_v) {
 		cout << "call_back_colored_graph_add_point "
@@ -411,7 +411,7 @@ void call_back_colored_graph_delete_point(clique_finder *CF,
 					"color not satisfied" << endl;
 			exit(1);
 		}
-		R->f_color_satisfied[c] = FALSE;
+		R->f_color_satisfied[c] = false;
 	}
 	if (f_v) {
 		cout << "call_back_colored_graph_delete_point "

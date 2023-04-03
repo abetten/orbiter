@@ -21,12 +21,12 @@ namespace packings {
 
 packing_was_activity_description::packing_was_activity_description()
 {
-	f_report = FALSE;
+	f_report = false;
 
-	f_export_reduced_spread_orbits = FALSE;
+	f_export_reduced_spread_orbits = false;
 	//std::string export_reduced_spread_orbits_fname_base;
 
-	f_create_graph_on_mixed_orbits = FALSE;
+	f_create_graph_on_mixed_orbits = false;
 	//std::string create_graph_on_mixed_orbits_orbit_lengths;
 }
 
@@ -49,16 +49,16 @@ int packing_was_activity_description::read_arguments(
 
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+			f_report = true;
 			cout << "-report" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-export_reduced_spread_orbits") == 0) {
-			f_export_reduced_spread_orbits = TRUE;
+			f_export_reduced_spread_orbits = true;
 			export_reduced_spread_orbits_fname_base.assign(argv[++i]);
 			cout << "-export_reduced_spread_orbits " << export_reduced_spread_orbits_fname_base << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-create_graph_on_mixed_orbits") == 0) {
-			f_create_graph_on_mixed_orbits = TRUE;
+			f_create_graph_on_mixed_orbits = true;
 			create_graph_on_mixed_orbits_orbit_lengths.assign(argv[++i]);
 			cout << "-create_graph_on_mixed_orbits " << create_graph_on_mixed_orbits_orbit_lengths << endl;
 		}

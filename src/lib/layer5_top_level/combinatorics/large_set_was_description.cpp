@@ -21,20 +21,20 @@ namespace apps_combinatorics {
 large_set_was_description::large_set_was_description()
 {
 
-	f_H = FALSE;
+	f_H = false;
 	//std::string H_go;
 	//std::string H_generators_text;
 
-	f_N = FALSE;
+	f_N = false;
 	//std::string N_go;
 	//std::string N_generators_text;
 
-	f_report = FALSE;
+	f_report = false;
 
-	f_prefix = FALSE;
+	f_prefix = false;
 	//std::string prefix;
 
-	f_selected_orbit_length = FALSE;
+	f_selected_orbit_length = false;
 	selected_orbit_length = 0;
 
 }
@@ -57,7 +57,7 @@ int large_set_was_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-H") == 0) {
-			f_H = TRUE;
+			f_H = true;
 			H_go.assign(argv[++i]);
 			H_generators_text.assign(argv[++i]);
 			cout << "-H " << H_go
@@ -66,7 +66,7 @@ int large_set_was_description::read_arguments(int argc, std::string *argv,
 		}
 
 		else if (ST.stringcmp(argv[i], "-N") == 0) {
-			f_N = TRUE;
+			f_N = true;
 			N_go.assign(argv[++i]);
 			N_generators_text.assign(argv[++i]);
 			cout << "-N " << N_go
@@ -74,16 +74,16 @@ int large_set_was_description::read_arguments(int argc, std::string *argv,
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+			f_report = true;
 			cout << "-report " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-prefix") == 0) {
-			f_prefix = TRUE;
+			f_prefix = true;
 			prefix.assign(argv[++i]);
 			cout << "-prefix " << prefix << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-selected_orbit_length") == 0) {
-			f_selected_orbit_length = TRUE;
+			f_selected_orbit_length = true;
 			selected_orbit_length = ST.strtoi(argv[++i]);
 			cout << "-selected_orbit_length " << selected_orbit_length << endl;
 		}

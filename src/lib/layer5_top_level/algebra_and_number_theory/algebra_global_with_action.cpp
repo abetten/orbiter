@@ -41,7 +41,7 @@ void algebra_global_with_action::orbits_under_conjugation(
 				"before create_induced_action_by_conjugation" << endl;
 	}
 	A_conj = S->A->Induced_action->create_induced_action_by_conjugation(S,
-			FALSE /* f_ownership */, FALSE /* f_basis */, S,
+			false /* f_ownership */, false /* f_basis */, S,
 			verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation "
@@ -312,7 +312,7 @@ void algebra_global_with_action::create_subgroups(
 			}
 			continue;
 		}
-		f_is_definition[flag] = TRUE;
+		f_is_definition[flag] = true;
 		iso_type_of_flag_orbit[flag] = nb_iso;
 		flag_orbit_of_iso_type[nb_iso] = flag;
 		upstep_transversal_size[nb_iso] = 1;
@@ -410,7 +410,7 @@ void algebra_global_with_action::create_subgroups(
 					exit(1);
 				}
 				cout << "flag " << flag << " coset " << h << ", fusing with flag " << idx << endl;
-				f_fused[idx] = TRUE;
+				f_fused[idx] = true;
 			}
 
 		}
@@ -475,17 +475,17 @@ void algebra_global_with_action::create_subgroups(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -816,7 +816,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 	if (f_v) {
 		cout << "before C.make_classes" << endl;
 	}
-	C.make_classes(R, nb_classes, FALSE /*f_no_eigenvalue_one*/, verbose_level);
+	C.make_classes(R, nb_classes, false /*f_no_eigenvalue_one*/, verbose_level);
 	if (f_v) {
 		cout << "after C.make_classes" << endl;
 	}
@@ -876,12 +876,12 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 
 	data_structures::tally T_order;
 
-	T_order.init(Order, nb_classes, FALSE, 0);
+	T_order.init(Order, nb_classes, false, 0);
 
 
 	{
 		ofstream ost(fname_output);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(ost);
 		//C.report(fp, verbose_level);
@@ -890,16 +890,16 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 		ost << "The distribution of element orders is:" << endl;
 #if 0
 		ost << "$$" << endl;
-		T_order.print_file_tex_we_are_in_math_mode(ost, FALSE /* f_backwards */);
+		T_order.print_file_tex_we_are_in_math_mode(ost, false /* f_backwards */);
 		ost << "$$" << endl;
 #endif
 
 		//ost << "$" << endl;
-		T_order.print_file_tex(ost, FALSE /* f_backwards */);
+		T_order.print_file_tex(ost, false /* f_backwards */);
 		ost << "\\\\" << endl;
 
 		ost << "$$" << endl;
-		T_order.print_array_tex(ost, FALSE /* f_backwards */);
+		T_order.print_array_tex(ost, false /* f_backwards */);
 		ost << "$$" << endl;
 
 
@@ -1018,8 +1018,8 @@ void algebra_global_with_action::classes_GL(
 
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_projective_group(d /* n */, F,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -1053,7 +1053,7 @@ void algebra_global_with_action::classes_GL(
 	snprintf(fname, sizeof(fname), "Class_reps_GL_%d_%d.tex", d, F->q);
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 		C.report(fp, verbose_level);
@@ -1090,8 +1090,8 @@ void algebra_global_with_action::do_normal_form(
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	if (f_v) {
@@ -1124,7 +1124,7 @@ void algebra_global_with_action::do_normal_form(
 
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_projective_group(d /* n */, F,
-			FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */, true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);
@@ -1197,8 +1197,8 @@ void algebra_global_with_action::do_identify_one(
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	C.init(d, F, verbose_level);
@@ -1215,8 +1215,8 @@ void algebra_global_with_action::do_identify_one(
 
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_projective_group(d /* n */, F,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -1288,8 +1288,8 @@ void algebra_global_with_action::do_identify_all(
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	C.init(d, F, verbose_level);
@@ -1306,8 +1306,8 @@ void algebra_global_with_action::do_identify_all(
 
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_projective_group(d /* n */, F,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -1387,8 +1387,8 @@ void algebra_global_with_action::do_random(
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 	C.init(d, F, verbose_level);
 
@@ -1449,14 +1449,14 @@ void algebra_global_with_action::group_table(
 	F = NEW_OBJECT(field_theory::finite_field);
 	if (f_poly) {
 		F->init_override_polynomial_small_order(q, poly,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0);
 	}
 	else {
 		F->finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0);
 	}
 
@@ -1473,8 +1473,8 @@ void algebra_global_with_action::group_table(
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_projective_group(d /* n */,
 			F,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -1612,12 +1612,12 @@ void algebra_global_with_action::group_table(
 
 
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
-		L.head(fp, FALSE /* f_book */, FALSE /* f_title */,
+		L.head(fp, false /* f_book */, false /* f_title */,
 			title /*const char *title */, author /*const char *author */,
-			FALSE /* f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */,
-			FALSE /* f_enlarged_page */, FALSE /* f_pagenumbers */,
+			false /* f_toc */, false /* f_landscape */, false /* f_12pt */,
+			false /* f_enlarged_page */, false /* f_pagenumbers */,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -1664,14 +1664,14 @@ void algebra_global_with_action::centralizer_brute_force(
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_projective_group(d /* n */, F,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -1807,14 +1807,14 @@ void algebra_global_with_action::centralizer(
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	A_PGL = NEW_OBJECT(actions::action);
 	A_PGL->Known_groups->init_projective_group(d /* n */, F,
-		FALSE /* f_semilinear */,
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
+		false /* f_semilinear */,
+		true /* f_basis */, true /* f_init_sims */,
 		nice_gens,
 		0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);
@@ -1823,8 +1823,8 @@ void algebra_global_with_action::centralizer(
 
 	A_GL = NEW_OBJECT(actions::action);
 	A_GL->Known_groups->init_general_linear_group(d /* n */, F,
-		FALSE /* f_semilinear */,
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
+		false /* f_semilinear */,
+		true /* f_basis */, true /* f_init_sims */,
 		nice_gens,
 		0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);
@@ -1895,13 +1895,13 @@ void algebra_global_with_action::centralizer(
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	F->finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 	A = NEW_OBJECT(actions::action);
 	A->Known_groups->init_projective_group(d /* n */, F,
-			FALSE /* f_semilinear */,
-			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);
@@ -1976,9 +1976,9 @@ void algebra_global_with_action::compute_regular_representation(
 	for (i = 0; i < SG->len; i++) {
 		Combi.perm_print_offset(cout,
 			perm + i * goi, goi, 1 /* offset */,
-			FALSE /* f_print_cycles_of_length_one */,
-			FALSE /* f_cycle_length */, FALSE, 0,
-			TRUE /* f_orbit_structure */,
+			false /* f_print_cycles_of_length_one */,
+			false /* f_cycle_length */, false, 0,
+			true /* f_orbit_structure */,
 			NULL, NULL);
 		cout << endl;
 	}
@@ -2286,11 +2286,11 @@ void algebra_global_with_action::do_eigenstuff(
 		Int_vec_print_integer_matrix_width(cout, Bt,
 				size, size, size, F->log10_of_q);
 
-		int f_special = FALSE;
-		int f_complete = TRUE;
+		int f_special = false;
+		int f_complete = true;
 		int *base_cols;
 		int nb_base_cols;
-		int f_P = FALSE;
+		int f_P = false;
 		int kernel_m, kernel_n, *kernel;
 
 		base_cols = new int[size];
@@ -2747,7 +2747,7 @@ int algebra_global_with_action::proj_order(
 	else {
 		B = A;
 		ord = 1;
-		while (is_in_center(B) == FALSE) {
+		while (is_in_center(B) == false) {
 			ord++;
 			B *= A;
 		}
@@ -2805,14 +2805,14 @@ int algebra_global_with_action::is_in_center(
 
 			e = A[i][j];
 			if (i != j && !e.is_zero()) {
-				return FALSE;
+				return false;
 			}
 			if (i == j && e.s_i() != c.s_i()) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -2909,7 +2909,7 @@ void algebra_global_with_action::young_symmetrizer(
 	cnt = 0;
 
 
-	while (TRUE) {
+	while (true) {
 		int nb_parts;
 
 		// turn the partition from exponential notation into the list of parts:
@@ -3265,7 +3265,7 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 	#if 0
 	// ToDo:
 	S.split_cell_front_or_back(data, target_size,
-			TRUE /* f_front */, 0 /* verbose_level*/);
+			true /* f_front */, 0 /* verbose_level*/);
 	#endif
 
 
@@ -3284,8 +3284,8 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 	if (S.ht < size_limit_for_printing) {
 		ost << "The TDO decomposition is" << endl;
 		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-				ost, TRUE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, S);
+				ost, true /* f_enter_math */,
+				true /* f_print_subscripts */, S);
 	}
 	else {
 		ost << "The TDO decomposition is very large (with "
@@ -3331,8 +3331,8 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 	if (S.ht < size_limit_for_printing) {
 		ost << "The TDA decomposition is" << endl;
 		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-				ost, TRUE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, S);
+				ost, true /* f_enter_math */,
+				true /* f_print_subscripts */, S);
 	}
 	else {
 		ost << "The TDA decomposition is very large (with "
@@ -3363,7 +3363,7 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 	poset_classification::poset_classification *PC;
 
 
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = target_depth;
 
 
@@ -3388,7 +3388,7 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 			verbose_level);
 
 #if 0
-	Poset->f_print_function = FALSE;
+	Poset->f_print_function = false;
 	Poset->print_function = print_code;
 	Poset->print_function_data = this;
 #endif
@@ -3409,8 +3409,8 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 
 	depth = PC->main(t0,
 			target_depth /*schreier_depth*/,
-		TRUE /*f_use_invariant_subset_if_available*/,
-		FALSE /*f_debug */,
+		true /*f_use_invariant_subset_if_available*/,
+		false /*f_debug */,
 		verbose_level);
 
 	if (f_v) {
@@ -3477,17 +3477,17 @@ void algebra_global_with_action::permutation_representation_of_element(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -3561,7 +3561,7 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 	for (i = 0; i < cosets->len; i++) {
 		A->Group_element->element_move(cosets->ith(i), Elt1, 0);
 		order = 1;
-		while (TRUE) {
+		while (true) {
 			if (S->strip(Elt1, Elt2, drop_out_level, image, 0 /*verbose_level*/)) {
 				break;
 			}
@@ -3620,7 +3620,7 @@ void algebra_global_with_action::do_orbits_on_polynomials(
 		O->Sch->draw_tree(fname,
 				Opt,
 				draw_tree_idx,
-				FALSE /* f_has_point_labels */, NULL /* long int *point_labels*/,
+				false /* f_has_point_labels */, NULL /* long int *point_labels*/,
 				verbose_level);
 	}
 
@@ -3641,8 +3641,8 @@ void algebra_global_with_action::representation_on_polynomials(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_stabilizer = TRUE;
-	//int f_draw_tree = TRUE;
+	//int f_stabilizer = true;
+	//int f_draw_tree = true;
 
 
 	if (f_v) {
@@ -3694,7 +3694,7 @@ void algebra_global_with_action::representation_on_polynomials(
 	}
 	A2 = A->Induced_action->induced_action_on_homogeneous_polynomials(
 		HPD,
-		FALSE /* f_induce_action */, NULL,
+		false /* f_induce_action */, NULL,
 		verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::representation_on_polynomials "

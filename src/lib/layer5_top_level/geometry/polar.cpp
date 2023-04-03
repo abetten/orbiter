@@ -33,7 +33,7 @@ polar::polar()
 	q = 0;
 	depth = 0;
 
-	f_print_generators = FALSE;
+	f_print_generators = false;
 
 	A = NULL; // the orthogonal action
 
@@ -52,11 +52,11 @@ polar::polar()
 	Gen = NULL;
 
 	schreier_depth = 0;
-	f_use_invariant_subset_if_available = FALSE;
-	f_debug = FALSE;
+	f_use_invariant_subset_if_available = false;
+	f_debug = false;
 
-	f_has_strong_generators = FALSE;
-	f_has_strong_generators_allocated = FALSE;
+	f_has_strong_generators = false;
+	f_has_strong_generators_allocated = false;
 	Strong_gens = NULL;
 
 	first_node = 0;
@@ -110,8 +110,8 @@ void polar::init_group_by_base_images(
 		f_group_order_target, group_order_target, 
 		&gens, Strong_gens, 
 		verbose_level);
-	f_has_strong_generators = TRUE;
-	f_has_strong_generators_allocated = TRUE;
+	f_has_strong_generators = true;
+	f_has_strong_generators_allocated = true;
 }
 
 void polar::init_group(
@@ -131,8 +131,8 @@ void polar::init_group(
 		f_group_order_target, group_order_target, 
 		&gens, Strong_gens, 
 		verbose_level);
-	f_has_strong_generators = TRUE;
-	f_has_strong_generators_allocated = TRUE;
+	f_has_strong_generators = true;
+	f_has_strong_generators_allocated = true;
 }
 
 void polar::init(
@@ -198,11 +198,11 @@ void polar::init2(int depth, int verbose_level)
 		}
 
 	if (f_print_generators) {
-		int f_print_as_permutation = TRUE;
-		int f_offset = TRUE;
+		int f_print_as_permutation = true;
+		int f_offset = true;
 		int offset = 1;
-		int f_do_it_anyway_even_for_big_degree = TRUE;
-		int f_print_cycles_of_length_one = FALSE;
+		int f_do_it_anyway_even_for_big_degree = true;
+		int f_print_cycles_of_length_one = false;
 		
 		cout << "printing generators for the group:" << endl;
 		gens->gens->print(cout, f_print_as_permutation, 
@@ -222,7 +222,7 @@ void polar::init2(int depth, int verbose_level)
 			verbose_level - 1);
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = depth;
 
 
@@ -249,14 +249,14 @@ void polar::init2(int depth, int verbose_level)
 
 
 #if 0
-	Gen->f_print_function = TRUE;
+	Gen->f_print_function = true;
 	Gen->print_function = print_set;
 	Gen->print_function_data = this;
 #endif	
 
 	schreier_depth = depth;
-	f_use_invariant_subset_if_available = FALSE;
-	f_debug = FALSE;
+	f_use_invariant_subset_if_available = false;
+	f_debug = false;
 }
 
 void polar::compute_orbits(
@@ -508,12 +508,12 @@ void polar::dual_polar_graph(
 
 		//if (!(c == 2 || c == 4)) {continue;}
 
-		if (FALSE) {
+		if (false) {
 			cout << "Coset " << c << endl;
 			}
 		Gen->coset_unrank(depth, orbit_idx, c, Elt1, 0/*verbose_level*/);
 
-		if (FALSE) {
+		if (false) {
 			cout << "Left coset " << c << " is represented by" << endl;
 			Gen->get_A()->Group_element->element_print_quick(Elt1, cout);
 			cout << endl;
@@ -522,7 +522,7 @@ void polar::dual_polar_graph(
 		Gen->get_A()->Group_element->element_invert(Elt1, Elt2, 0);
 
 
-		if (FALSE) {
+		if (false) {
 			cout << "Right coset " << c
 					<< " is represented by" << endl;
 			Gen->get_A()->Group_element->element_print_quick(Elt2, cout);
@@ -784,7 +784,7 @@ void polar::compute_Kramer_Mesner_matrix(int t, int k, int verbose_level)
 	
 	discreta_matrix Mtk, Mtk_inf;
 	
-	Mtk_from_MM(V, Mtk, t, k, TRUE, q, verbose_level - 2);
+	Mtk_from_MM(V, Mtk, t, k, true, q, verbose_level - 2);
 	cout << "M_{" << t << "," << k << "} sup:" << endl;
 	Mtk.print(cout);
 	
@@ -804,7 +804,7 @@ int polar::test(int *S, int len, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, rk;
-	int f_OK = TRUE;
+	int f_OK = true;
 
 	if (f_v) {
 		cout << "polar::test" << endl;
@@ -829,7 +829,7 @@ int polar::test(int *S, int len, int verbose_level)
 		cout << "the matrix has rank " << rk << endl;
 		}
 	if (rk > n - len) {
-		f_OK = FALSE;
+		f_OK = false;
 		}
 	if (rk < n - len) {
 		cout << "polar::test rk < n - len, fatal. "
@@ -1060,7 +1060,7 @@ void polar::test_if_closed_under_cosets(
 			Int_vec_print(cout, v, n);
 			cout << endl;
 			}
-		f_OK = TRUE;
+		f_OK = true;
 		for (j = 0; j < nb; j++) {
 			for (y = 1; y < F->q; y++) {
 				for (h = 0; h < n; h++) {
@@ -1080,7 +1080,7 @@ void polar::test_if_closed_under_cosets(
 								"coset point " << d << " is not found "
 								"j=" << j << " y=" << y << endl;
 						}
-					f_OK = FALSE;
+					f_OK = false;
 					break;
 					}
 				}
@@ -1278,7 +1278,7 @@ int polar_callback_test_func(int len, int *S,
 		void *data, int verbose_level)
 {
 	polar *P = (polar *) data;
-	int f_OK = TRUE;
+	int f_OK = true;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -1290,10 +1290,10 @@ int polar_callback_test_func(int len, int *S,
 		if (f_v) {
 			cout << "OK" << endl;
 			}
-		return TRUE;
+		return true;
 		}
 	else {
-		return FALSE;
+		return false;
 		}
 }
 #endif

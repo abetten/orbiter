@@ -29,7 +29,7 @@ BLT_set_create::BLT_set_create()
 	OA = NULL;
 	set = NULL;
 	ABC = NULL;
-	f_has_group = FALSE;
+	f_has_group = false;
 	Sg = NULL;
 	Blt_set_domain_with_action = NULL;
 	BA = NULL;
@@ -83,7 +83,7 @@ void BLT_set_create::init(
 
 		char str[1000];
 		char str_q[1000];
-		f_has_group = FALSE;
+		f_has_group = false;
 		orthogonal_geometry::orthogonal_global OG;
 
 		if (ST.stringcmp(Descr->family_name, "Linear") == 0) {
@@ -106,8 +106,8 @@ void BLT_set_create::init(
 						"before FQ->finite_field_init_small_order Q=" << Q << endl;
 			}
 			FQ->finite_field_init_small_order(Q,
-					FALSE /* f_without_tables */,
-					FALSE /* f_compute_related_fields */,
+					false /* f_without_tables */,
+					false /* f_compute_related_fields */,
 					verbose_level);
 			if (f_v) {
 				cout << "BLT_set_create::init "
@@ -139,8 +139,8 @@ void BLT_set_create::init(
 			q = OA->Descr->F->q;
 			Q = q * q;
 			FQ->finite_field_init_small_order(Q,
-					FALSE /* f_without_tables */,
-					FALSE /* f_compute_related_fields */,
+					false /* f_without_tables */,
+					false /* f_compute_related_fields */,
 					0 /* verbose_level */);
 
 			OG.create_Fisher_BLT_set(set, ABC,
@@ -168,8 +168,8 @@ void BLT_set_create::init(
 			q = OA->Descr->F->q;
 			Q = q * q;
 			FQ->finite_field_init_small_order(Q,
-					FALSE /* f_without_tables */,
-					FALSE /* f_compute_related_fields */,
+					false /* f_without_tables */,
+					false /* f_compute_related_fields */,
 					0 /* verbose_level */);
 
 			OG.create_Mondello_BLT_set(set, ABC,
@@ -300,7 +300,7 @@ void BLT_set_create::init(
 			cout << "BLT_set_create::init f_flock" << endl;
 		}
 
-		f_has_group = FALSE;
+		f_has_group = false;
 		orthogonal_geometry::orthogonal_global OG;
 
 		int *ABC;
@@ -446,7 +446,7 @@ void BLT_set_create::init(
 					"before generators_to_strong_generators" << endl;
 		}
 		OA->A->generators_to_strong_generators(
-			TRUE /* f_target_go */, target_go,
+			true /* f_target_go */, target_go,
 			gens, Sg,
 			verbose_level - 3);
 
@@ -456,7 +456,7 @@ void BLT_set_create::init(
 		}
 
 #endif
-		f_has_group = TRUE;
+		f_has_group = true;
 
 		char str_q[1000];
 		char str_iso[1000];
@@ -839,18 +839,18 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 		cout << "BLT_set_create::report2" << endl;
 	}
 
-	int f_book = FALSE;
-	int f_title = TRUE;
+	int f_book = false;
+	int f_title = true;
 	char str[1000];
 
 	string title, author, extra_praeamble;
 
-	int f_toc = FALSE;
-	int f_landscape = FALSE;
-	int f_12pt = FALSE;
-	int f_enlarged_page = TRUE;
-	int f_pagenumbers = TRUE;
-	orbiter_kernel_system::latex_interface L;
+	int f_toc = false;
+	int f_landscape = false;
+	int f_12pt = false;
+	int f_enlarged_page = true;
+	int f_pagenumbers = true;
+	l1_interfaces::latex_interface L;
 
 	snprintf(str, sizeof(str), "BLT-set %s", label_tex.c_str());
 	title.assign(str);

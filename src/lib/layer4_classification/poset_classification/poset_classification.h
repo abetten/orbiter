@@ -221,8 +221,8 @@ public:
 		int lvl, int current_node,
 		int &final_node, int verbose_level);
 	// Called from poset_orbit_node::recognize_recursion
-	// when trace_next_point returns FALSE
-	// This can happen only if f_implicit_fusion is TRUE
+	// when trace_next_point returns false
+	// This can happen only if f_implicit_fusion is true
 	void recognize_recursion(
 		int size,
 		int lvl, int current_node, int &final_node,
@@ -459,7 +459,7 @@ public:
 
 
 	int f_do_group_extension_in_upstep;
-		// is TRUE by default
+		// is true by default
 
 	int f_allowed_to_show_group_elements;
 	int downstep_orbits_print_max_orbits;
@@ -812,9 +812,9 @@ public:
 		int verbose_level);
 		// f_use_invariant_subset_if_available is 
 		// an option that affects the downstep.
-		// if FALSE, the orbits of the stabilizer 
+		// if false, the orbits of the stabilizer 
 		// on all points are computed. 
-		// if TRUE, the orbits of the stabilizer 
+		// if true, the orbits of the stabilizer 
 		// on the set of points that were 
 		// possible in the previous level are computed only 
 		// (using Schreier.orbits_on_invariant_subset_fast).
@@ -1643,7 +1643,7 @@ public:
 		// (i.e. the lvl+1-st point) to its orbit representative.
 		// also maps all the other points under that permutation.
 		// we are dealing with a set of size len + 1
-		// returns FALSE if we are using implicit fusion nodes 
+		// returns false if we are using implicit fusion nodes 
 		// and the set becomes lexicographically
 		// less than before, in which case trace has to be restarted.
 	int trace_next_point_in_place(
@@ -1670,14 +1670,14 @@ public:
 		int verbose_level);
 		// Called by poset_orbit_node::trace_next_point_wrapper 
 		// and by poset_orbit_node::trace_next_point_in_place
-		// returns FALSE only if f_implicit_fusion is TRUE and
+		// returns false only if f_implicit_fusion is true and
 		// the set becomes lexicographically less
 	int orbit_representative_and_coset_rep_inv(
 			poset_classification *gen,
 		int lvl, long int pt_to_trace, long int &pt0, int *cosetrep,
 		int verbose_level);
 		// called by poset_orbit_node::trace_next_point
-		// FALSE means the point to trace was not found. 
+		// false means the point to trace was not found. 
 		// This can happen if nodes were eliminated due to clique_test
 
 	// poset_orbit_node_upstep_subspace_action.cpp:
@@ -2096,14 +2096,14 @@ public:
 		// free poset_orbit_node node which will 
 		// become the descendant of the previous node (prev).
 		// the extension node corresponds to the point pt. 
-		// returns FALSE if the set is not canonical 
-		// (provided f_indicate_not_canonicals is TRUE)
+		// returns false if the set is not canonical 
+		// (provided f_indicate_not_canonicals is true)
 	int upstep_for_sets(int verbose_level);
 		// This routine is called from upstep_work::init_extension_node
 		// It is testing a set of size 'size'. 
 		// The newly added point is in gen->S[size - 1]
-		// returns FALSE if the set is not canonical 
-		// (provided f_indicate_not_canonicals is TRUE)
+		// returns false if the set is not canonical 
+		// (provided f_indicate_not_canonicals is true)
 	//void print_level_extension_info_original_size();
 	void print_level_extension_info();
 	void print_level_extension_coset_info();
@@ -2117,8 +2117,8 @@ public:
 		// The extension is initiated from node 'prev' 
 		// and from extension 'prev_ex' 
 		// The node 'prev' is at depth 'size' - 1 
-		// returns FALSE if the set is not canonical 
-		// (provided f_indicate_not_canonicals is TRUE)
+		// returns false if the set is not canonical 
+		// (provided f_indicate_not_canonicals is true)
 
 
 	// upstep_work_trace.cpp:

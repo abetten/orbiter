@@ -29,7 +29,7 @@ andre_construction_line_element::andre_construction_line_element()
 	spread_size = 0;
 	F = NULL;
 	line_rank = 0;
-	f_is_at_infinity = FALSE;
+	f_is_at_infinity = false;
 	affine_numeric = 0;
 	parallel_class_idx = 0;
 	coset_idx = 0;
@@ -91,10 +91,10 @@ void andre_construction_line_element::unrank(
 	}
 	andre_construction_line_element::line_rank = line_rank;
 	if (line_rank < 1) {
-		f_is_at_infinity = TRUE;
+		f_is_at_infinity = true;
 	}
 	else {
-		f_is_at_infinity = FALSE;
+		f_is_at_infinity = false;
 		line_rank -= 1;
 		coset_idx = line_rank % Andre->order;
 		parallel_class_idx = line_rank / Andre->order;

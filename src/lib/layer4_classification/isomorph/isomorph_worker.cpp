@@ -70,7 +70,7 @@ void isomorph_worker::init(
 
 	Iso = NEW_OBJECT(isomorph);
 
-	//int f_use_database_for_starter = TRUE;
+	//int f_use_database_for_starter = true;
 
 	if (f_v) {
 		cout << "isomorph_worker::init before Iso->init" << endl;
@@ -484,8 +484,8 @@ void isomorph_worker::read_solutions(int verbose_level)
 		cout << "isomorph_global::read_solutions "
 				"before Iso->Lifting->count_solutions" << endl;
 	}
-	int f_get_statistics = FALSE;
-	int f_has_final_test_function = FALSE;
+	int f_get_statistics = false;
+	int f_has_final_test_function = false;
 	int *Nb_sol_per_file;
 
 	Iso->Lifting->count_solutions(
@@ -645,9 +645,9 @@ void isomorph_worker::isomorph_testing(int verbose_level)
 				"after Iso->Folding->iso_test_init" << endl;
 	}
 
-	int f_implicit_fusion = FALSE;
+	int f_implicit_fusion = false;
 
-	//Iso.gen->f_allowed_to_show_group_elements = FALSE;
+	//Iso.gen->f_allowed_to_show_group_elements = false;
 
 	if (f_v) {
 		cout << "isomorph_worker::isomorph_testing "
@@ -668,7 +668,7 @@ void isomorph_worker::isomorph_testing(int verbose_level)
 	std::string play_back_file_name;
 
 	Iso->Folding->isomorph_testing(0 /*t0*/,
-			FALSE /*f_play_back*/, play_back_file_name,
+			false /*f_play_back*/, play_back_file_name,
 			f_implicit_fusion, 1 /* print_mod*/,
 			verbose_level);
 	if (f_v) {
@@ -709,7 +709,7 @@ void isomorph_worker::isomorph_testing(int verbose_level)
 
 			Iso->Lifting->load_solution(
 					id, data1, verbose_level - 1);
-			if (FALSE) {
+			if (false) {
 				cout << "read representative of orbit " << orbit
 						<< " (id=" << id << ")" << endl;
 				Lint_vec_print(cout, data1, Iso->size);
@@ -793,17 +793,17 @@ void isomorph_worker::isomorph_report(int verbose_level)
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -921,7 +921,7 @@ void isomorph_worker::export_source_code(int verbose_level)
 void isomorph_worker::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 
 	if (f_v) {
 		cout << "isomorph_worker::report" << endl;
@@ -1209,17 +1209,17 @@ void isomorph_worker::recognize(std::string &label, int verbose_level)
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 

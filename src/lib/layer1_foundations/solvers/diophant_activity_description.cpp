@@ -19,30 +19,30 @@ namespace solvers {
 
 diophant_activity_description::diophant_activity_description()
 {
-	f_input_file = FALSE;
+	f_input_file = false;
 	//input_file = NULL;
-	f_print = FALSE;
-	f_solve_mckay = FALSE;
-	f_solve_standard = FALSE;
-	f_solve_DLX = FALSE;
+	f_print = false;
+	f_solve_mckay = false;
+	f_solve_standard = false;
+	f_solve_DLX = false;
 
-	f_draw_as_bitmap = FALSE;
+	f_draw_as_bitmap = false;
 	box_width = 1;
 	bit_depth = 8;
-	f_draw = FALSE;
-	f_perform_column_reductions = FALSE;
+	f_draw = false;
+	f_perform_column_reductions = false;
 
-	f_project_to_single_equation_and_solve = FALSE;
+	f_project_to_single_equation_and_solve = false;
 	eqn_idx = 0;
 	solve_case_idx = 0;
 
-	f_project_to_two_equations_and_solve = FALSE;
+	f_project_to_two_equations_and_solve = false;
 	eqn1_idx = 0;
 	eqn2_idx = 0;
 	solve_case_idx_r = 0;
 	solve_case_idx_m = 0;
 
-	f_test_single_equation = FALSE;
+	f_test_single_equation = false;
 	max_number_of_coefficients = 0;
 
 }
@@ -65,38 +65,38 @@ int diophant_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-input_file") == 0) {
-			f_input_file = TRUE;
+			f_input_file = true;
 			input_file.assign(argv[++i]);
 			if (f_v) {
 				cout << "-input_file " << input_file << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-print") == 0) {
-			f_print = TRUE;
+			f_print = true;
 			if (f_v) {
 				cout << "-print " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-solve_mckay") == 0) {
-			f_solve_mckay = TRUE;
+			f_solve_mckay = true;
 			if (f_v) {
 				cout << "-solve_mckay " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-solve_standard") == 0) {
-			f_solve_standard = TRUE;
+			f_solve_standard = true;
 			if (f_v) {
 				cout << "-solve_standard " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-solve_DLX") == 0) {
-			f_solve_DLX = TRUE;
+			f_solve_DLX = true;
 			if (f_v) {
 				cout << "-solve_DLX " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_as_bitmap") == 0) {
-			f_draw_as_bitmap = TRUE;
+			f_draw_as_bitmap = true;
 			box_width = ST.strtoi(argv[++i]);
 			bit_depth = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -104,26 +104,26 @@ int diophant_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw") == 0) {
-			f_draw = TRUE;
+			f_draw = true;
 			if (f_v) {
 				cout << "-draw " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-perform_column_reductions") == 0) {
-			f_perform_column_reductions = TRUE;
+			f_perform_column_reductions = true;
 			if (f_v) {
 				cout << "-perform_column_reductions " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-test_single_equation") == 0) {
-			f_test_single_equation = TRUE;
+			f_test_single_equation = true;
 			max_number_of_coefficients = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-test_single_equation " << max_number_of_coefficients << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-project_to_single_equation_and_solve") == 0) {
-			f_project_to_single_equation_and_solve = TRUE;
+			f_project_to_single_equation_and_solve = true;
 			eqn_idx = ST.strtoi(argv[++i]);
 			solve_case_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -131,7 +131,7 @@ int diophant_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-project_to_two_equations_and_solve") == 0) {
-			f_project_to_two_equations_and_solve = TRUE;
+			f_project_to_two_equations_and_solve = true;
 			eqn1_idx = ST.strtoi(argv[++i]);
 			eqn2_idx = ST.strtoi(argv[++i]);
 			solve_case_idx_r = ST.strtoi(argv[++i]);

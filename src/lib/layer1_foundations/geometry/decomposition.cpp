@@ -22,16 +22,16 @@ decomposition::decomposition()
 	Inc = 0;
 	I = 0;
 	Stack = NULL;
-	f_has_decomposition = FALSE;
+	f_has_decomposition = false;
 	row_classes = NULL;
 	row_class_inv = NULL;
 	nb_row_classes = 0;
 	col_classes = NULL;
 	col_class_inv = NULL;
 	nb_col_classes = 0;
-	f_has_row_scheme = FALSE;
+	f_has_row_scheme = false;
 	row_scheme = NULL;
-	f_has_col_scheme = FALSE;
+	f_has_col_scheme = false;
 	col_scheme = NULL;
 }
 
@@ -156,7 +156,7 @@ void decomposition::compute_TDO(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
 		0);
-	f_has_decomposition = TRUE;
+	f_has_decomposition = true;
 
 
 	if (f_v) {
@@ -178,7 +178,7 @@ void decomposition::get_row_scheme(
 				"!f_has_decomposition" << endl;
 		exit(1);
 	}
-	f_has_row_scheme = TRUE;
+	f_has_row_scheme = true;
 	row_scheme = NEW_int(nb_row_classes * nb_col_classes);
 	I->get_row_decomposition_scheme(*Stack, 
 		row_classes, row_class_inv, nb_row_classes,
@@ -202,7 +202,7 @@ void decomposition::get_col_scheme(
 				"!f_has_decomposition" << endl;
 		exit(1);
 	}
-	f_has_col_scheme = TRUE;
+	f_has_col_scheme = true;
 	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
 	I->get_col_decomposition_scheme(*Stack, 
 		row_classes, row_class_inv, nb_row_classes,
@@ -229,7 +229,7 @@ void decomposition::print_row_decomposition_tex(
 		exit(1);
 	}
 	//I->get_and_print_row_tactical_decomposition_scheme_tex(
-	//	file, FALSE /* f_enter_math */, *Stack);
+	//	file, false /* f_enter_math */, *Stack);
 	Stack->print_row_tactical_decomposition_scheme_tex(
 		ost, f_enter_math,
 		row_classes, nb_row_classes,
@@ -248,7 +248,7 @@ void decomposition::print_column_decomposition_tex(
 		cout << "decomposition::print_column_decomposition_tex" << endl;
 	}
 	//I->get_and_print_column_tactical_decomposition_scheme_tex(
-	//	file, FALSE /* f_enter_math */, *Stack);
+	//	file, false /* f_enter_math */, *Stack);
 	Stack->print_column_tactical_decomposition_scheme_tex(
 		ost, f_enter_math,
 		row_classes, nb_row_classes,

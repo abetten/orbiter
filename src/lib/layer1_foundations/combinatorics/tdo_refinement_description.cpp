@@ -23,30 +23,30 @@ namespace combinatorics {
 tdo_refinement_description::tdo_refinement_description()
 {
 	//fname_in;
-	f_lambda3 = FALSE;
+	f_lambda3 = false;
 	lambda3 = 0;
 	block_size = 0;
-	f_scale = FALSE;
+	f_scale = false;
 	scaling = 0;
-	f_range = FALSE;
+	f_range = false;
 	range_first = 0;
 	range_len = 1;
-	f_select = FALSE;
+	f_select = false;
 	//select_label;
-	f_omit1 = FALSE;
+	f_omit1 = false;
 	omit1 = 0;
-	f_omit2 = FALSE;
+	f_omit2 = false;
 	omit2 = 0;
-	f_D1_upper_bound_x0 = FALSE;
+	f_D1_upper_bound_x0 = false;
 	D1_upper_bound_x0 = 0;
-	f_reverse = FALSE;
-	f_reverse_inverse = FALSE;
-	f_use_packing_numbers = FALSE;
-	f_dual_is_linear_space = FALSE;
-	f_do_the_geometric_test = FALSE;
-	f_once = FALSE;
-	f_use_mckay_solver = FALSE;
-	f_input_file = FALSE;
+	f_reverse = false;
+	f_reverse_inverse = false;
+	f_use_packing_numbers = false;
+	f_dual_is_linear_space = false;
+	f_do_the_geometric_test = false;
+	f_once = false;
+	f_use_mckay_solver = false;
+	f_input_file = false;
 	//fname_in;
 
 	Sol = NULL;
@@ -71,18 +71,18 @@ int tdo_refinement_description::read_arguments(int argc, std::string *argv, int 
 
 	for (i = 0; i < argc - 1; i++) {
 		if (ST.stringcmp(argv[i], "-lambda3") == 0) {
-			f_lambda3 = TRUE;
+			f_lambda3 = true;
 			lambda3 = ST.strtoi(argv[++i]);
 			block_size = ST.strtoi(argv[++i]);
 			cout << "-lambda3 " << lambda3 << " " << block_size << endl;
 		}
 		if (ST.stringcmp(argv[i], "-scale") == 0) {
-			f_scale = TRUE;
+			f_scale = true;
 			scaling = ST.strtoi(argv[++i]);
 			cout << "-scale " << scaling << endl;
 		}
 		if (ST.stringcmp(argv[i], "-solution") == 0) {
-			//f_solution = TRUE;
+			//f_solution = true;
 			Sol->system_no.push_back(ST.strtoi(argv[++i]));
 			string s;
 
@@ -94,61 +94,61 @@ int tdo_refinement_description::read_arguments(int argc, std::string *argv, int 
 			Sol->nb_solution_files++;
 		}
 		else if (ST.stringcmp(argv[i], "-range") == 0) {
-			f_range = TRUE;
+			f_range = true;
 			range_first = ST.strtoi(argv[++i]);
 			range_len = ST.strtoi(argv[++i]);
 			cout << "-range " << range_first << " " << range_len << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-select") == 0) {
-			f_select = TRUE;
+			f_select = true;
 			select_label.assign(argv[++i]);
 			cout << "-select " << select_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-o1") == 0) {
-			f_omit1 = TRUE;
+			f_omit1 = true;
 			omit1 = ST.strtoi(argv[++i]);
 			cout << "-o1 " << omit1 << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-o2") == 0) {
-			f_omit2 = TRUE;
+			f_omit2 = true;
 			omit2 = ST.strtoi(argv[++i]);
 			cout << "-o2 " << omit2 << endl;
 		}
 		if (ST.stringcmp(argv[i], "-D1_upper_bound_x0") == 0) {
-			f_D1_upper_bound_x0 = TRUE;
+			f_D1_upper_bound_x0 = true;
 			D1_upper_bound_x0 = ST.strtoi(argv[++i]);
 			cout << "-D1_upper_bound_x0 " << D1_upper_bound_x0 << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-reverse") == 0) {
-			f_reverse = TRUE;
+			f_reverse = true;
 			cout << "-reverse" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-reverse_inverse") == 0) {
-			f_reverse_inverse = TRUE;
+			f_reverse_inverse = true;
 			cout << "-reverse_inverse" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-nopacking") == 0) {
-			f_use_packing_numbers = FALSE;
+			f_use_packing_numbers = false;
 			cout << "-nopacking" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-dual_is_linear_space") == 0) {
-			f_dual_is_linear_space = TRUE;
+			f_dual_is_linear_space = true;
 			cout << "-dual_is_linear_space" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-geometric_test") == 0) {
-			f_do_the_geometric_test = TRUE;
+			f_do_the_geometric_test = true;
 			cout << "-geometric_test" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-once") == 0) {
-			f_once = TRUE;
+			f_once = true;
 			cout << "-once" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-mckay") == 0) {
-			f_use_mckay_solver = TRUE;
+			f_use_mckay_solver = true;
 			cout << "-mckay" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-input_file") == 0) {
-			f_input_file = TRUE;
+			f_input_file = true;
 			fname_in.assign(argv[++i]);
 			cout << "-input_file" << fname_in << endl;
 		}
@@ -176,7 +176,7 @@ void tdo_refinement_description::print()
 	}
 #if 0
 	if (stringcmp(argv[i], "-solution") == 0) {
-		//f_solution = TRUE;
+		//f_solution = true;
 		Sol->system_no.push_back(strtoi(argv[++i]));
 		string s;
 

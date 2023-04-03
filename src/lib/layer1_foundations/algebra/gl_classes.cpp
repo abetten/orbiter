@@ -120,7 +120,7 @@ int gl_classes::select_partition_first(
 		cout << "gl_classes::select_partition_first" << endl;
 	}
 	Int_vec_zero(Select_partition, Table_of_polynomials->nb_irred);
-	return TRUE;
+	return true;
 }
 
 int gl_classes::select_partition_next(
@@ -138,12 +138,12 @@ int gl_classes::select_partition_next(
 		if (m > 1) {
 			if (Select_partition[i] < Nb_part[m] - 1) {
 				Select_partition[i]++;
-				return TRUE;
+				return true;
 			}
 			Select_partition[i] = 0;
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 int gl_classes::first(
@@ -157,16 +157,16 @@ int gl_classes::first(
 	}
 	if (!Table_of_polynomials->select_polynomial_first(
 			Select, verbose_level)) {
-		return FALSE;
+		return false;
 	}
-	while (TRUE) {
+	while (true) {
 		if (select_partition_first(Select,
 			Select_partition, verbose_level)) {
-			return TRUE;
+			return true;
 		}
 		if (!Table_of_polynomials->select_polynomial_next(
 				Select, verbose_level)) {
-			return FALSE;
+			return false;
 		}
 	}
 }
@@ -181,16 +181,16 @@ int gl_classes::next(
 		cout << "gl_classes::next" << endl;
 	}
 	if (select_partition_next(Select, Select_partition, verbose_level)) {
-		return TRUE;
+		return true;
 	}
-	while (TRUE) {
+	while (true) {
 		if (!Table_of_polynomials->select_polynomial_next(
 				Select, verbose_level)) {
-			return FALSE;
+			return false;
 		}
 		if (select_partition_first(Select,
 			Select_partition, verbose_level)) {
-			return TRUE;
+			return true;
 		}
 	}
 }
@@ -522,7 +522,7 @@ void gl_classes::make_classes(
 
 	cnt = 0;
 	first(Select_polynomial, Select_partition, verbose_level - 2);
-	while (TRUE) {
+	while (true) {
 
 
 		if (f_no_eigenvalue_one) {
@@ -538,7 +538,7 @@ void gl_classes::make_classes(
 					Table_of_polynomials->nb_irred);
 			cout << " : ";
 
-			int f_first = TRUE;
+			int f_first = true;
 			for (i = 0; i < Table_of_polynomials->nb_irred; i++) {
 				m = Select_polynomial[i];
 				//d = Degree[i];
@@ -553,7 +553,7 @@ void gl_classes::make_classes(
 					}
 					Combi.partition_print(cout, Partitions[m] + p * m, m);
 				}
-				f_first = FALSE;
+				f_first = false;
 			}
 			cout << endl;
 		}
@@ -617,7 +617,7 @@ loop1:
 
 	cnt = 0;
 	first(Select_polynomial, Select_partition, verbose_level - 2);
-	while (TRUE) {
+	while (true) {
 
 		if (f_no_eigenvalue_one) {
 			if (Select_polynomial[0]) {
@@ -631,7 +631,7 @@ loop1:
 			Int_vec_print(cout, Select_polynomial,
 					Table_of_polynomials->nb_irred);
 			cout << " : ";
-			int f_first = TRUE;
+			int f_first = true;
 			for (i = 0; i < Table_of_polynomials->nb_irred; i++) {
 				m = Select_polynomial[i];
 				//d = Degree[i];
@@ -644,7 +644,7 @@ loop1:
 						cout << ", ";
 					}
 					Combi.partition_print(cout, Partitions[m] + p * m, m);
-					f_first = FALSE;
+					f_first = false;
 				}
 			}
 			cout << endl;
@@ -1692,7 +1692,7 @@ void gl_classes::centralizer_generators_block(
 			}
 
 			coset = 0;
-			while (TRUE) {
+			while (true) {
 
 				Int_vec_zero(Basis, k * k);
 
@@ -1790,7 +1790,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 	int f_vv = (verbose_level >= 2);
 	int c, e, f, af, B0, b0, g, ii, coeff, i, j;
 	int *v, *w;
-	int ret = TRUE;
+	int ret = true;
 
 
 	if (f_v) {
@@ -1834,7 +1834,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 					if (!F->Linear_algebra->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
 							coset, &Data->K[f], &Data->K[f - 1],
 							Forbidden_subspace, v, verbose_level - 2)) {
-						ret = FALSE;
+						ret = false;
 					}
 				}
 				else {
@@ -1857,7 +1857,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 							coset, &Data->K[f], Dummy_subspace,
 							Forbidden_subspace, v,
 							verbose_level - 2)) {
-						ret = FALSE;
+						ret = false;
 					}
 				}
 				else {
@@ -1872,7 +1872,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 			FREE_OBJECT(Forbidden_subspace);
 			
 
-			if (ret == FALSE) {
+			if (ret == false) {
 				if (f_v) {
 					cout << "gl_classes::choose_basis_for_rational_normal_form_coset "
 							"level1 = " << level1 << " level2 = "
@@ -1983,7 +1983,7 @@ void gl_classes::report(
 		cout << "gl_classes::report" << endl;
 	}
 	make_classes(R, nb_classes,
-			FALSE /* f_no_eigenvalue_one */,
+			false /* f_no_eigenvalue_one */,
 			verbose_level - 1);
 
 	int i;
@@ -1993,7 +1993,7 @@ void gl_classes::report(
 
 
 	int *M;
-	int f_elements_exponential = FALSE;
+	int f_elements_exponential = false;
 	string symbol_for_print;
 
 
@@ -2050,7 +2050,7 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	ring_theory::longinteger_domain D;
 	int *Select_polynomial, *Select_Partition;
 	int i, a, m, p, b;
-	int f_elements_exponential = FALSE;
+	int f_elements_exponential = false;
 	string symbol_for_print;
 	number_theory::number_theory_domain NT;
 

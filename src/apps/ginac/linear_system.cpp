@@ -47,13 +47,13 @@ int main(int argc, const char **argv);
 void linear_system(int argc, const char **argv)
 {
 	int verbose_level = 0;
-	int f_output_mask = FALSE;
+	int f_output_mask = false;
 	const char *output_mask = NULL;
-	int f_nb_frames_default = FALSE;
+	int f_nb_frames_default = false;
 	int nb_frames_default;
-	int f_round = FALSE;
+	int f_round = false;
 	int round;
-	int f_rounds = FALSE;
+	int f_rounds = false;
 	const char *rounds_as_string = NULL;
 	video_draw_options *Opt = NULL;
 
@@ -72,23 +72,23 @@ void linear_system(int argc, const char **argv)
 			cout << "-linear" << endl;
 			}
 		else if (strcmp(argv[i], "-round") == 0) {
-			f_round = TRUE;
+			f_round = true;
 			round = atoi(argv[++i]);
 			cout << "-round " << round << endl;
 			}
 
 		else if (strcmp(argv[i], "-rounds") == 0) {
-			f_rounds = TRUE;
+			f_rounds = true;
 			rounds_as_string = argv[++i];
 			cout << "-rounds " << rounds_as_string << endl;
 			}
 		else if (strcmp(argv[i], "-nb_frames_default") == 0) {
-			f_nb_frames_default = TRUE;
+			f_nb_frames_default = true;
 			nb_frames_default = atoi(argv[++i]);
 			cout << "-nb_frames_default " << nb_frames_default << endl;
 			}
 		else if (strcmp(argv[i], "-output_mask") == 0) {
-			f_output_mask = TRUE;
+			f_output_mask = true;
 			output_mask = argv[++i];
 			cout << "-output_mask " << output_mask << endl;
 			}
@@ -130,10 +130,10 @@ void linear_system(int argc, const char **argv)
 		latex_interface L;
 		//latex_head_easy(fp);
 		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
+			false /* f_book */, true /* f_title */,
 			title, author,
-			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
-			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
+			false /*f_toc*/, false /* f_landscape*/, false /* f_12pt*/,
+			true /*f_enlarged_page*/, true /* f_pagenumbers*/,
 			extras_for_preamble);
 
 

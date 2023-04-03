@@ -50,8 +50,8 @@ void known_groups::init_linear_group(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int f_basis = TRUE;
-	int f_init_sims = FALSE;
+	int f_basis = true;
+	int f_init_sims = false;
 
 	if (f_v) {
 		cout << "known_groups::init_linear_group "
@@ -234,9 +234,9 @@ void known_groups::init_projective_group(
 
 	A->type_G = matrix_group_t;
 	A->G.matrix_grp = M;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
-	A->f_is_linear = TRUE;
+	A->f_is_linear = true;
 	A->dimension = n;
 
 	if (f_v) {
@@ -339,9 +339,9 @@ void known_groups::init_affine_group(
 
 	A->type_G = matrix_group_t;
 	A->G.matrix_grp = M;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
-	A->f_is_linear = TRUE;
+	A->f_is_linear = true;
 	A->dimension = n;
 
 	if (f_v) {
@@ -430,9 +430,9 @@ void known_groups::init_general_linear_group(
 
 	A->type_G = matrix_group_t;
 	A->G.matrix_grp = M;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
-	A->f_is_linear = TRUE;
+	A->f_is_linear = true;
 	A->dimension = n;
 
 	M->init_general_linear_group(n, F,
@@ -601,7 +601,7 @@ void known_groups::init_projective_special_group(
 
 
 	data_structures_groups::vector_ge *nice_gens;
-	int f_init_sims = TRUE;
+	int f_init_sims = true;
 
 	if (f_v) {
 		cout << "known_groups::init_projective_special_group "
@@ -744,7 +744,7 @@ void known_groups::init_matrix_group_strong_generators_builtin(
 	}
 
 
-	A->f_has_strong_generators = TRUE;
+	A->f_has_strong_generators = true;
 	A->Strong_gens = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
@@ -794,7 +794,7 @@ void known_groups::init_permutation_group(
 	P = NEW_OBJECT(groups::permutation_representation_domain);
 	A->type_G = perm_group_t;
 	A->G.perm_grp = P;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_group "
@@ -882,10 +882,10 @@ void known_groups::init_permutation_group_from_nauty_output(
 	}
 	init_permutation_group_from_generators(
 			NO->N,
-		TRUE, *NO->Ago,
+		true, *NO->Ago,
 		NO->Aut_counter, NO->Aut,
 		NO->Base_length, NO->Base_lint,
-		FALSE /* f_no_base */,
+		false /* f_no_base */,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "known_groups::init_permutation_group_from_nauty_output "
@@ -1088,8 +1088,8 @@ void known_groups::init_affine_group(
 	}
 
 	F.finite_field_init_small_order(q,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			verbose_level - 1);
 
 
@@ -1116,10 +1116,10 @@ void known_groups::init_affine_group(
 				"before init_permutation_group_from_generators" << endl;
 	}
 	init_permutation_group_from_generators(degree,
-		FALSE, go,
+		false, go,
 		nb_gens, gens,
 		given_base_length, given_base,
-		FALSE /* f_no_base */,
+		false /* f_no_base */,
 		verbose_level);
 	if (f_v) {
 		cout << "known_groups::init_affine_group "
@@ -1185,7 +1185,7 @@ void known_groups::init_symmetric_group(
 				"before init_permutation_group_from_generators" << endl;
 	}
 	init_permutation_group_from_generators(degree,
-		TRUE, go,
+		true, go,
 		nb_gens, gens,
 		given_base_length, given_base,
 		f_no_base,
@@ -1253,7 +1253,7 @@ void known_groups::init_cyclic_group(
 				"before init_permutation_group_from_generators" << endl;
 	}
 	init_permutation_group_from_generators(degree,
-		TRUE, go,
+		true, go,
 		nb_gens, gens,
 		given_base_length, given_base,
 		f_no_base,
@@ -1319,7 +1319,7 @@ void known_groups::init_identity_group(
 				"before init_permutation_group_from_generators" << endl;
 	}
 	init_permutation_group_from_generators(degree,
-		TRUE, go,
+		true, go,
 		nb_gens, gens,
 		given_base_length, given_base,
 		f_no_base,
@@ -1459,7 +1459,7 @@ void known_groups::create_orthogonal_group(
 		A->init_sims_only(ss.G, verbose_level);
 		A->compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 
-		A->f_has_kernel = TRUE;
+		A->f_has_kernel = true;
 		A->Kernel = ss.K;
 
 		ss.K = NULL;
@@ -1535,7 +1535,7 @@ void known_groups::init_wreath_product_group_and_restrict(
 	Awr = A_wreath->Induced_action->restricted_action(
 			points, nb_points, label_of_set,
 			verbose_level);
-	Awr->f_is_linear = TRUE;
+	Awr->f_is_linear = true;
 	if (f_v) {
 		cout << "known_groups::init_wreath_product_group_and_restrict "
 				"after A_wreath->Induced_action->restricted_action" << endl;
@@ -1572,14 +1572,14 @@ void known_groups::init_wreath_product_group(
 
 	A->type_G = wreath_product_t;
 	A->G.wreath_product_group = W;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
 	if (f_v) {
 		cout << "known_groups::init_wreath_product_group "
 				"before M->init_general_linear_group" << endl;
 	}
 	M->init_general_linear_group(n,
-			F, FALSE /* f_semilinear */, //A_mtx,
+			F, false /* f_semilinear */, //A_mtx,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "known_groups::init_wreath_product_group "
@@ -1609,7 +1609,7 @@ void known_groups::init_wreath_product_group(
 				"after W->init_tensor_wreath_product" << endl;
 	}
 
-	A->f_is_linear = TRUE;
+	A->f_is_linear = true;
 	A->dimension = W->dimension_of_tensor_action;
 
 
@@ -1693,7 +1693,7 @@ void known_groups::init_wreath_product_group(
 		cout << "known_groups::init_wreath_product_group "
 				"after Strong_gens->init_from_data" << endl;
 	}
-	A->f_has_strong_generators = TRUE;
+	A->f_has_strong_generators = true;
 	FREE_int(gens_data);
 
 
@@ -1794,7 +1794,7 @@ void known_groups::init_permutation_representation(
 
 	A->type_G = permutation_representation_t;
 	A->G.Permutation_representation = P;
-	A->f_allocated = TRUE;
+	A->f_allocated = true;
 
 	if (f_stay_in_the_old_action) {
 		A->f_is_linear = A_original->f_is_linear;
@@ -1842,7 +1842,7 @@ void known_groups::init_permutation_representation(
 		A->label_tex.append(str2);
 	}
 	else {
-		A->f_is_linear = FALSE;
+		A->f_is_linear = false;
 		A->dimension = 0;
 		A->low_level_point_size = 0;
 		A->degree = degree;
@@ -1969,8 +1969,8 @@ void known_groups::init_orthogonal_group_with_O(
 			O->Quadratic_form->n,
 			O->F,
 			f_semilinear,
-			FALSE /* f_basis */, // we don't need a basis
-			TRUE /* f_init_sims */,
+			false /* f_basis */, // we don't need a basis
+			true /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	if (f_v) {
@@ -1998,7 +1998,7 @@ void known_groups::init_orthogonal_group_with_O(
 	A->type_G = action_on_orthogonal_t;
 	A->G.AO = AO;
 
-	A->f_has_subaction = TRUE;
+	A->f_has_subaction = true;
 	A->subaction = A_PGL;
 	A->degree = AO->degree;
 	A->low_level_point_size = A_PGL->low_level_point_size;
@@ -2108,7 +2108,7 @@ void known_groups::init_orthogonal_group_with_O(
 		}
 		create_orthogonal_group(
 				A_PGL /*subaction*/,
-			TRUE /* f_has_target_go */, target_go,
+			true /* f_has_target_go */, target_go,
 			callback_choose_random_generator_orthogonal,
 			verbose_level - 2);
 		if (f_v) {
@@ -2129,7 +2129,7 @@ void known_groups::init_BLT(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int p, hh, epsilon, n;
-	int f_semilinear = FALSE;
+	int f_semilinear = false;
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
@@ -2140,9 +2140,9 @@ void known_groups::init_BLT(
 	}
 	NT.is_prime_power(F->q, p, hh);
 	if (hh > 1)
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	else
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	epsilon = 0;
 	n = 5;
 
@@ -2152,9 +2152,9 @@ void known_groups::init_BLT(
 				"before init_orthogonal_group" << endl;
 	}
 	init_orthogonal_group(epsilon, n, F,
-		TRUE /* f_on_points */,
-		FALSE /* f_on_lines */,
-		FALSE /* f_on_points_and_lines */,
+		true /* f_on_points */,
+		false /* f_on_lines */,
+		false /* f_on_points_and_lines */,
 		f_semilinear,
 		f_basis,
 		verbose_level - 2);
@@ -2282,8 +2282,8 @@ void known_groups::init_group_from_strong_generators(
 	G->group_order(G_order);
 
 	G->build_up_group_from_generators(K, gens,
-		FALSE, NULL, /* target_go */
-		FALSE /* f_override_choose_next_base_point */,
+		false, NULL, /* target_go */
+		false /* f_override_choose_next_base_point */,
 		NULL,
 		verbose_level);
 
@@ -2291,7 +2291,7 @@ void known_groups::init_group_from_strong_generators(
 
 
 	if (f_vvv) {
-		//G.print(TRUE);
+		//G.print(true);
 		//G.print_generator_depth_and_perm();
 	}
 

@@ -49,7 +49,7 @@ packing_classify::packing_classify()
 	nb_lines = 0;
 
 
-	f_lexorder_test = TRUE;
+	f_lexorder_test = true;
 	q = 0;
 	size_of_packing = 0;
 		// the number of spreads in a packing,
@@ -219,7 +219,7 @@ void packing_classify::spread_table_init(
 	init(
 		PA,
 		Spread_table_with_selection,
-		TRUE,
+		true,
 		verbose_level);
 	if (f_v) {
 		cout << "packing_classify::spread_table_init "
@@ -355,7 +355,7 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 	P3 = NEW_OBJECT(geometry::projective_space);
 	
 	P3->projective_space_init(3, F,
-		TRUE /* f_init_incidence_structure */, 
+		true /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 
 	if (f_v) {
@@ -366,7 +366,7 @@ void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 	P5 = NEW_OBJECT(geometry::projective_space);
 
 	P5->projective_space_init(5, F,
-		TRUE /* f_init_incidence_structure */,
+		true /* f_init_incidence_structure */,
 		0 /* verbose_level - 2 */);
 
 	if (f_v) {
@@ -425,7 +425,7 @@ void packing_classify::prepare_generator(
 
 
 #if 0
-	Control->f_print_function = TRUE;
+	Control->f_print_function = true;
 	Control->print_function = print_set;
 	Control->print_function_data = this;
 #endif
@@ -452,8 +452,8 @@ void packing_classify::compute(int search_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = search_depth;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	int t0;
 	orbiter_kernel_system::os_interface Os;
 
@@ -617,7 +617,7 @@ int packing_classify::test_if_orbit_is_partial_packing(
 		groups::schreier *Orbits, int orbit_idx,
 	long int *orbit1, int verbose_level)
 {
-	int f_v = FALSE; // (verbose_level >= 1);
+	int f_v = false; // (verbose_level >= 1);
 	int len;
 
 	if (f_v) {
@@ -635,7 +635,7 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 // tests if every spread from orbit a
 // is line-disjoint from every spread from orbit b
 {
-	int f_v = FALSE; // (verbose_level >= 1);
+	int f_v = false; // (verbose_level >= 1);
 	int len1, len2;
 
 	if (f_v) {
@@ -643,7 +643,7 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 				"a=" << a << " b=" << b << endl;
 	}
 	if (a == b) {
-		return FALSE;
+		return false;
 	}
 	Orbits->get_orbit(a, orbit1, len1, 0 /* verbose_level*/);
 	Orbits->get_orbit(b, orbit2, len2, 0 /* verbose_level*/);
@@ -678,7 +678,7 @@ static void callback_packing_compute_klein_invariants(
 		isomorph *Iso, void *data, int verbose_level)
 {
 	packing_classify *P = (packing_classify *) data;
-	int f_split = FALSE;
+	int f_split = false;
 	int split_r = 0;
 	int split_m = 1;
 	

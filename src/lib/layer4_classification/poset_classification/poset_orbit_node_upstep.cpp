@@ -168,7 +168,7 @@ void poset_orbit_node::install_fusion_node(
 	}
 	gen->get_A()->Group_element->element_invert(
 			gen->get_transporter()->ith(lvl + 1),
-			Elt_tmp, FALSE);
+			Elt_tmp, false);
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node" << endl;
 		cout << "transporter[lvl + 1]^-1=Elt1=" << endl;
@@ -185,7 +185,7 @@ void poset_orbit_node::install_fusion_node(
 			cout << endl;
 			}
 		}
-	hdl = gen->get_A()->Group_element->element_store(Elt_tmp, FALSE);
+	hdl = gen->get_A()->Group_element->element_store(Elt_tmp, false);
 	//E[current_extension].type = EXTENSION_TYPE_FUSION;
 	gen->get_Poo()->change_extension_type(lvl,
 			current_node, current_extension,
@@ -327,7 +327,7 @@ int poset_orbit_node::trace_next_point_wrapper(
 // (i.e. the lvl+1-st point) to its orbit representative.
 // also maps all the other points under that permutation.
 // we are dealing with a set of size len + 1
-// returns FALSE if we are using implicit fusion
+// returns false if we are using implicit fusion
 // nodes and the set becomes lexicographically
 // less than before, in which case trace has to be restarted.
 {
@@ -481,13 +481,13 @@ void poset_orbit_node::trace_starter(
 		
 	for (i = 0; i < size; i++) {
 		next_set[i] = gen->get_A2()->Group_element->element_image_of(
-				cur_set[i], Elt, FALSE);
+				cur_set[i], Elt, false);
 		}
 
 	gen->get_A()->Group_element->element_mult(cur_transporter,
 			Elt,
 			next_transporter,
-			FALSE);
+			false);
 
 	if (f_v) {
 		cout << "after canonize:" << endl;
@@ -510,7 +510,7 @@ int poset_orbit_node::trace_next_point(
 	int verbose_level)
 // Called by poset_orbit_node::trace_next_point_wrapper
 // and by poset_orbit_node::trace_next_point_in_place
-// returns FALSE only if f_implicit_fusion is TRUE and
+// returns false only if f_implicit_fusion is true and
 // the set becomes lexicographically less
 {
 	long int the_point, pt0;
@@ -521,7 +521,7 @@ int poset_orbit_node::trace_next_point(
 	//int f_v10 = (verbose_level >= 10);
 	int ret;
 	
-	f_failure_to_find_point = FALSE;
+	f_failure_to_find_point = false;
 	the_point = cur_set[lvl];
 
 	if (f_v) {
@@ -561,11 +561,11 @@ int poset_orbit_node::trace_next_point(
 			verbose_level - 1)) {
 			if (f_v) {
 				cout << "poset_orbit_node::trace_next_point "
-						"orbit_representative_and_coset_rep_inv returns FALSE, "
-						"f_failure_to_find_point = TRUE" << endl;
+						"orbit_representative_and_coset_rep_inv returns false, "
+						"f_failure_to_find_point = true" << endl;
 			}
-			f_failure_to_find_point = TRUE;
-			return TRUE;
+			f_failure_to_find_point = true;
+			return true;
 		}
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point "
@@ -593,7 +593,7 @@ int poset_orbit_node::trace_next_point(
 					"and the transporter over:" << endl;
 		}
 		Lint_vec_copy(cur_set, next_set, size);
-		gen->get_A2()->Group_element->element_move(cur_transporter, next_transporter, FALSE);
+		gen->get_A2()->Group_element->element_move(cur_transporter, next_transporter, false);
 	}
 	else {
 		if (f_v) {
@@ -698,14 +698,14 @@ int poset_orbit_node::trace_next_point(
 				cout << "poset_orbit_node::trace_next_point the set becomes "
 						"lexicographically less" << endl;
 			}
-			ret = FALSE;
+			ret = false;
 		}
 		else {
-			ret = TRUE;
+			ret = true;
 		}
 	}
 	else {
-		ret = TRUE;
+		ret = true;
 	}
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point "
@@ -722,8 +722,8 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 // called by poset_orbit_node::trace_next_point
 {
 	int f_v = (verbose_level >= 1);
-	//int f_check_image = FALSE;
-	//int f_allow_failure = TRUE;
+	//int f_check_image = false;
+	//int f_allow_failure = true;
 
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
@@ -732,9 +732,9 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 	}
 	if (nb_strong_generators == 0) {
 		//cosetrep = gen->get_Elt1();
-		gen->get_A()->Group_element->element_one(cosetrep, FALSE);
+		gen->get_A()->Group_element->element_one(cosetrep, false);
 		pt0 = pt_to_trace;
-		return TRUE;
+		return true;
 	}
 
 	if (Schreier_vector) {
@@ -758,10 +758,10 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 
 			if (f_v) {
 				cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
-						"schreier_vector_coset_rep_inv_lint returns FALSE, "
+						"schreier_vector_coset_rep_inv_lint returns false, "
 						"point not found" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 
 		if (f_v) {
@@ -814,7 +814,7 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv cosetrep:" << endl;
 		gen->get_A2()->Group_element->element_print_quick(cosetrep, cout);
 	}
-	return TRUE;
+	return true;
 }
 
 }}}

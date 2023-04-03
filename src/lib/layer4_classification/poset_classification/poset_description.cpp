@@ -17,11 +17,11 @@ namespace poset_classification {
 
 poset_description::poset_description()
 {
-	f_subset_lattice = FALSE;
-	f_subspace_lattice = FALSE;
+	f_subset_lattice = false;
+	f_subspace_lattice = false;
 	dimension = 0;
 	q = 0;
-	f_independence_condition = FALSE;
+	f_independence_condition = false;
 	independence_condition_value = 0;
 }
 
@@ -85,17 +85,17 @@ int poset_description::read_arguments(
 #endif
 
 		if (strcmp(argv[i], "-subset_lattice") == 0) {
-			f_subset_lattice = TRUE;
+			f_subset_lattice = true;
 			cout << "-subset_lattice " << endl;
 			}
 		else if (strcmp(argv[i], "-subspace_lattice") == 0) {
-			f_subspace_lattice = TRUE;
+			f_subspace_lattice = true;
 			dimension = atoi(argv[++i]);
 			q = atoi(argv[++i]);
 			cout << "-subset_lattice " << dimension << " " << q << endl;
 			}
 		else if (strcmp(argv[i], "-independence_condition") == 0) {
-			f_independence_condition = TRUE;
+			f_independence_condition = true;
 			//independence_condition_max_depth = atoi(argv[++i]);
 			independence_condition_value = atoi(argv[++i]);
 			cout << "-independence_condition "

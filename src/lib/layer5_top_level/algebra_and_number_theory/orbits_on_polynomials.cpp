@@ -97,7 +97,7 @@ void orbits_on_polynomials::init(
 		cout << "orbits_on_polynomials::init before P->projective_space_init" << endl;
 	}
 	P->projective_space_init(n - 1, F,
-		FALSE /*f_init_incidence_structure*/,
+		false /*f_init_incidence_structure*/,
 		verbose_level);
 	if (f_v) {
 		cout << "orbits_on_polynomials::init after P->projective_space_init" << endl;
@@ -106,7 +106,7 @@ void orbits_on_polynomials::init(
 	//A2 = NEW_OBJECT(actions::action);
 	A2 = A->Induced_action->induced_action_on_homogeneous_polynomials(
 		HPD,
-		FALSE /* f_induce_action */, NULL,
+		false /* f_induce_action */, NULL,
 		verbose_level - 2);
 
 	if (f_v) {
@@ -303,17 +303,17 @@ void orbits_on_polynomials::report(int verbose_level)
 
 	{
 		ofstream ost(fname_report);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head(ost,
-				FALSE /* f_book*/,
-				TRUE /* f_title */,
+				false /* f_book*/,
+				true /* f_title */,
 				title, author,
-				FALSE /* f_toc */,
-				FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+				false /* f_toc */,
+				false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extra_praeamble */);
 
 		ost << "\\small" << endl;
@@ -334,10 +334,10 @@ void orbits_on_polynomials::report(int verbose_level)
 #if 0
 		T->print_table_latex(
 				f,
-				TRUE /* f_has_callback */,
+				true /* f_has_callback */,
 				polynomial_orbits_callback_print_function2,
 				HPD /* callback_data */,
-				TRUE /* f_has_callback */,
+				true /* f_has_callback */,
 				polynomial_orbits_callback_print_function,
 				HPD /* callback_data */,
 				verbose_level);
@@ -356,10 +356,10 @@ void orbits_on_polynomials::report(int verbose_level)
 		number_theory::number_theory_domain NT;
 
 		if (NT.is_prime(F->q)) {
-			f_semilinear = FALSE;
+			f_semilinear = false;
 		}
 		else {
-			f_semilinear = TRUE;
+			f_semilinear = true;
 		}
 
 		PA = NEW_OBJECT(projective_geometry::projective_space_with_action);
@@ -369,7 +369,7 @@ void orbits_on_polynomials::report(int verbose_level)
 		}
 		PA->init(
 			F, n - 1 /*n*/, f_semilinear,
-			TRUE /* f_init_incidence_structure */,
+			true /* f_init_incidence_structure */,
 			verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::do_cubic_surface_properties after PA->init" << endl;
@@ -384,7 +384,7 @@ void orbits_on_polynomials::report(int verbose_level)
 		data_structures::tally T_nb_pts;
 		int h, j, f, l, a;
 
-		T_nb_pts.init(Nb_pts, T->nb_orbits, FALSE, 0);
+		T_nb_pts.init(Nb_pts, T->nb_orbits, false, 0);
 
 		for (h = T_nb_pts.nb_types - 1; h >= 0; h--) {
 
@@ -514,9 +514,9 @@ void orbits_on_polynomials::report_detailed_list(
 
 	data_structures::tally T1;
 
-	T1.init(Nb_pts, T->nb_orbits, FALSE, 0);
+	T1.init(Nb_pts, T->nb_orbits, false, 0);
 	ost << "Distribution of the number of points: $";
-	T1.print_naked_tex(ost, TRUE);
+	T1.print_naked_tex(ost, true);
 	ost << "$\\\\" << endl;
 
 	ost << "\\section{The Varieties of degree $" << degree_of_poly
@@ -592,7 +592,7 @@ void orbits_on_polynomials::report_detailed_list(
 			stringstream sstr;
 			Int_vec_print_classified_str(sstr,
 					line_type, P->Subspaces->N_lines,
-					TRUE /* f_backwards*/);
+					true /* f_backwards*/);
 			string s = sstr.str();
 			ost << "$" << s << "$\\\\" << endl;
 			//int_vec_print_classified(line_type, HPD->P->N_lines);

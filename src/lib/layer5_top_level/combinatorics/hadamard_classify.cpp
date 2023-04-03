@@ -87,7 +87,7 @@ void hadamard_classify::init(int n,
 
 			d = dot_product(i, j, n);
 
-			if (FALSE) {
+			if (false) {
 				cout << "dotproduct i=" << i << " j=" << j << " is " << d << endl;
 				}
 
@@ -160,7 +160,7 @@ void hadamard_classify::init(int n,
 		Int_vec_zero(color, N);
 
 
-		CG->init(N, 1, 1, color, Bitvec, FALSE, label, label_tex, verbose_level);
+		CG->init(N, 1, 1, color, Bitvec, false, label, label_tex, verbose_level);
 
 		fname.assign(label);
 		fname.append(".colored_graph");
@@ -186,7 +186,7 @@ void hadamard_classify::init(int n,
 	color = NEW_int(N);
 	Int_vec_zero(color, N);
 
-	CG->init(N, 1, 1, color, Bitvec, FALSE, label, label_tex, verbose_level);
+	CG->init(N, 1, 1, color, Bitvec, false, label, label_tex, verbose_level);
 
 	if (f_v) {
 		cout << "initializing colored graph done" << endl;
@@ -336,15 +336,15 @@ void hadamard_classify::init(int n,
 
 	gen = NEW_OBJECT(poset_classification::poset_classification);
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	Control->f_W = TRUE;
+	Control->f_W = true;
 	Control->problem_label = prefix;
-	Control->f_problem_label = TRUE;
+	Control->f_problem_label = true;
 
 
 	gen->compute_orbits_on_subsets(
 		n /* target_depth */,
 		//prefix,
-		//TRUE /* f_W */, FALSE /* f_w */,
+		//true /* f_W */, false /* f_w */,
 		Control,
 		Poset,
 		verbose_level_clique);
@@ -426,11 +426,11 @@ int hadamard_classify::clique_test(long int *set, int sz)
 				}
 			else {
 				//cout << "pair (" << i << "," << j << ") vertices " << a << " and " << b << " are NOT adjacent" << endl;
-				return FALSE;
+				return false;
 				}
 			}
 		}
-	return TRUE;
+	return true;
 }
 
 void hadamard_classify::early_test_func(long int *S, int len,

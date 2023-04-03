@@ -21,23 +21,23 @@ namespace apps_algebra {
 
 element_processing_description::element_processing_description()
 {
-	f_input = FALSE;
+	f_input = false;
 	//std::string input_label;
 
-	f_print = FALSE;
+	f_print = false;
 
-	f_apply_isomorphism_wedge_product_4to6 = FALSE;
+	f_apply_isomorphism_wedge_product_4to6 = false;
 
-	f_with_permutation = FALSE;
+	f_with_permutation = false;
 
-	f_with_fix_structure = FALSE;
+	f_with_fix_structure = false;
 
-	f_order_of_products_of_pairs = FALSE;
+	f_order_of_products_of_pairs = false;
 
-	f_conjugate = FALSE;
+	f_conjugate = false;
 	//std::string conjugate_data;
 
-	f_print_action_on_surface = FALSE;
+	f_print_action_on_surface = false;
 	//std::string print_action_on_surface_label;
 
 
@@ -61,51 +61,51 @@ int element_processing_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-input") == 0) {
-			f_input = TRUE;
+			f_input = true;
 			input_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-input " << input_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-print") == 0) {
-			f_print = TRUE;
+			f_print = true;
 			if (f_v) {
 				cout << "-print " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-apply_isomorphism_wedge_product_4to6") == 0) {
-			f_apply_isomorphism_wedge_product_4to6 = TRUE;
+			f_apply_isomorphism_wedge_product_4to6 = true;
 			if (f_v) {
 				cout << "-apply_isomorphism_wedge_product_4to6 " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-with_permutation") == 0) {
-			f_with_permutation = TRUE;
+			f_with_permutation = true;
 			if (f_v) {
 				cout << "-with_permutation " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-with_fix_structure") == 0) {
-			f_with_fix_structure = TRUE;
+			f_with_fix_structure = true;
 			if (f_v) {
 				cout << "-with_fix_structure " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-order_of_products_of_pairs") == 0) {
-			f_order_of_products_of_pairs = TRUE;
+			f_order_of_products_of_pairs = true;
 			if (f_v) {
 				cout << "-order_of_products_of_pairs " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-conjugate") == 0) {
-			f_conjugate = TRUE;
+			f_conjugate = true;
 			conjugate_data.assign(argv[++i]);
 			if (f_v) {
 				cout << "-conjugate " << conjugate_data << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-print_action_on_surface") == 0) {
-			f_print_action_on_surface = TRUE;
+			f_print_action_on_surface = true;
 			print_action_on_surface_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-print_action_on_surface " << print_action_on_surface_label << endl;

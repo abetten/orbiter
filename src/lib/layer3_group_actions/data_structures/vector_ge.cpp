@@ -223,9 +223,9 @@ void vector_ge::init_conjugate_svas_of(vector_ge *v,
 	Elt3 = NEW_int(A->elt_size_in_int);
 	A->Group_element->invert(Elt, Elt1);
 	for (i = 0; i < len; i++) {
-		A->Group_element->element_mult(Elt1, v->ith(i), Elt2, FALSE);
-		A->Group_element->element_mult(Elt2, Elt, Elt3, FALSE);
-		A->Group_element->element_move(Elt3, ith(i), FALSE);
+		A->Group_element->element_mult(Elt1, v->ith(i), Elt2, false);
+		A->Group_element->element_mult(Elt2, Elt, Elt3, false);
+		A->Group_element->element_move(Elt3, ith(i), false);
 	}
 	
 	FREE_int(Elt1);
@@ -255,9 +255,9 @@ void vector_ge::init_conjugate_sasv_of(vector_ge *v,
 	Elt3 = NEW_int(A->elt_size_in_int);
 	A->Group_element->invert(Elt, Elt1);
 	for (i = 0; i < len; i++) {
-		A->Group_element->element_mult(Elt, v->ith(i), Elt2, FALSE);
-		A->Group_element->element_mult(Elt2, Elt1, Elt3, FALSE);
-		A->Group_element->element_move(Elt3, ith(i), FALSE);
+		A->Group_element->element_mult(Elt, v->ith(i), Elt2, false);
+		A->Group_element->element_mult(Elt2, Elt1, Elt3, false);
+		A->Group_element->element_move(Elt3, ith(i), false);
 	}
 	
 	FREE_int(Elt1);
@@ -418,7 +418,7 @@ void vector_ge::reallocate(int new_length, int verbose_level)
 	for (i = 0; i < l; i++) {
 		elt = ith(i);
 		elt2 = data2 + i * A->elt_size_in_int;
-		A->Group_element->element_move(elt, elt2, FALSE);
+		A->Group_element->element_move(elt, elt2, false);
 	}
 	if (data) {
 		FREE_int(data);
@@ -451,7 +451,7 @@ void vector_ge::reallocate_and_insert_at(
 		else {
 			elt2 = data2 + i * A->elt_size_in_int;
 		}
-		A->Group_element->element_move(elt1, elt2, FALSE);
+		A->Group_element->element_move(elt1, elt2, false);
 	}
 	if (data) {
 		FREE_int(data);
@@ -493,7 +493,7 @@ void vector_ge::insert_at(int length_before,
 		
 		elt1 = ith(i);
 		elt2 = ith(i + 1);
-		A->Group_element->element_move(elt1, elt2, FALSE);
+		A->Group_element->element_move(elt1, elt2, false);
 	}
 	copy_in(position, elt);
 	if (f_v) {
@@ -517,13 +517,13 @@ void vector_ge::append(int *elt, int verbose_level)
 void vector_ge::copy_in(int i, int *elt)
 {
 	int *elt2 = ith(i);
-	A->Group_element->element_move(elt, elt2, FALSE);
+	A->Group_element->element_move(elt, elt2, false);
 };
 
 void vector_ge::copy_out(int i, int *elt)
 {
 	int *elt2 = ith(i);
-	A->Group_element->element_move(elt2, elt, FALSE);
+	A->Group_element->element_move(elt2, elt, false);
 }
 
 void vector_ge::conjugate_svas(int *Elt)
@@ -536,9 +536,9 @@ void vector_ge::conjugate_svas(int *Elt)
 	Elt3 = NEW_int(A->elt_size_in_int);
 	A->Group_element->invert(Elt, Elt1);
 	for (i = 0; i < len; i++) {
-		A->Group_element->element_mult(Elt1, ith(i), Elt2, FALSE);
-		A->Group_element->element_mult(Elt2, Elt, Elt3, FALSE);
-		A->Group_element->element_move(Elt3, ith(i), FALSE);
+		A->Group_element->element_mult(Elt1, ith(i), Elt2, false);
+		A->Group_element->element_mult(Elt2, Elt, Elt3, false);
+		A->Group_element->element_move(Elt3, ith(i), false);
 	}
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -555,9 +555,9 @@ void vector_ge::conjugate_sasv(int *Elt)
 	Elt3 = NEW_int(A->elt_size_in_int);
 	A->Group_element->invert(Elt, Elt1);
 	for (i = 0; i < len; i++) {
-		A->Group_element->element_mult(Elt, ith(i), Elt2, FALSE);
-		A->Group_element->element_mult(Elt2, Elt1, Elt3, FALSE);
-		A->Group_element->element_move(Elt3, ith(i), FALSE);
+		A->Group_element->element_mult(Elt, ith(i), Elt2, false);
+		A->Group_element->element_mult(Elt2, Elt1, Elt3, false);
+		A->Group_element->element_move(Elt3, ith(i), false);
 	}
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -1011,10 +1011,10 @@ int vector_ge::test_if_all_elements_stabilize_a_point(
 	
 	for (i = 0; i < len; i++) {
 		if (A2->Group_element->element_image_of(pt, ith(i), 0) != pt) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int vector_ge::test_if_all_elements_stabilize_a_set(
@@ -1034,13 +1034,13 @@ int vector_ge::test_if_all_elements_stabilize_a_set(
 		}
 		if (!A2->Group_element->test_if_set_stabilizes(ith(i),
 				sz, set, 0 /* verbose_level*/)) {
-			return FALSE;
+			return false;
 		}
 	}
 	if (f_v) {
 		cout << "vector_ge::test_if_all_elements_stabilize_a_set done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -1232,7 +1232,7 @@ int vector_ge::test_if_in_set_stabilizer(
 		cout << "vector_ge::test_if_in_set_stabilizer" << endl;
 	}
 
-	ret = TRUE;
+	ret = true;
 	for (i = 0; i < len; i++) {
 		c = A->Group_element->check_if_in_set_stabilizer(
 				ith(i),
@@ -1242,7 +1242,7 @@ int vector_ge::test_if_in_set_stabilizer(
 				cout << "vector_ge::test_if_in_set_stabilizer element "
 						<< i << " fails to stabilize the given set" << endl;
 			}
-			ret = FALSE;
+			ret = false;
 			break;
 		}
 	}

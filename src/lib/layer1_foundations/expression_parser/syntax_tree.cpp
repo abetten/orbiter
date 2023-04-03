@@ -20,7 +20,7 @@ namespace expression_parser {
 
 syntax_tree::syntax_tree()
 {
-	f_has_managed_variables = FALSE;
+	f_has_managed_variables = false;
 	//std::vector<std::string> managed_variables;
 	Root = NULL;
 }
@@ -73,7 +73,7 @@ int syntax_tree::is_homogeneous(int &degree, int verbose_level)
 	int ret;
 
 	if (!f_has_managed_variables) {
-		ret = FALSE;
+		ret = false;
 	}
 	else {
 		degree = -1;

@@ -476,7 +476,7 @@ bool Vector::insert_sorted(discreta_base& x)
 }
 
 bool Vector::search(discreta_base& x, int *idx)
-	// returns TRUE if the object x has been found. 
+	// returns true if the object x has been found. 
 	// idx contains the position where the object which 
 	// has been found lies. 
 	// if there are more than one element equal to x in the Vector, 
@@ -596,7 +596,7 @@ static void partition(Vector& v, int left, int right, int *middle)
 	l = left;
 	r = right;
 	while (l < r) {
-		while (TRUE) {
+		while (true) {
 			if (l > right)
 				break;
 			res = v[l].compare_with(v[pivot]);
@@ -604,7 +604,7 @@ static void partition(Vector& v, int left, int right, int *middle)
 				break;
 			l++;
 			}
-		while (TRUE) {
+		while (true) {
 			if (r < left)
 				break;
 			res = v[r].compare_with(v[pivot]);
@@ -638,7 +638,7 @@ static void partition_with_logging(Vector& v, permutation& p, int left, int righ
 	l = left;
 	r = right;
 	while (l < r) {
-		while (TRUE) {
+		while (true) {
 			if (l > right) {
 				break;
 			}
@@ -648,7 +648,7 @@ static void partition_with_logging(Vector& v, permutation& p, int left, int righ
 			}
 			l++;
 		}
-		while (TRUE) {
+		while (true) {
 			if (r < left) {
 				break;
 			}
@@ -712,10 +712,10 @@ int Vector::n_choose_k_next(int n, int k)
 			for (ii = i - 1; ii >= 0; ii--) {
 				m_ii(k - 1 - ii, s_ii(k - 1 - ii - 1) + 1);
 			}
-			return TRUE;
+			return true;
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 int Vector::next_lehmercode()
@@ -726,13 +726,13 @@ int Vector::next_lehmercode()
 	for (i = l - 1, j = 0; i >= 0; i--, j++) {
 		if (s_ii(i) < j) {
 			s_i(i).inc();
-			return TRUE;
+			return true;
 		}
 		else {
 			m_ii(i, 0);
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 void Vector::lehmercode2perm(permutation& p)
@@ -810,11 +810,11 @@ int Vector::next_word(int q)
 		m_ii(i, 0);
 		i--;
 		if (i < 0) {
-			return FALSE;
+			return false;
 		}
 	}
 	s_i(i).inc();
-	return TRUE;
+	return true;
 }
 
 void Vector::first_regular_word(int n, int q)
@@ -826,10 +826,10 @@ int Vector::next_regular_word(int q)
 {
 	do {
 		if (!next_word(q)) {
-			return FALSE;
+			return false;
 		}
 	} while (!is_regular_word());
-	return TRUE;
+	return true;
 }
 
 int Vector::is_regular_word()
@@ -839,7 +839,7 @@ int Vector::is_regular_word()
 	
 	n = s_l();
 	if (n == 1) {
-		return TRUE;
+		return true;
 	}
 	k = 1;
 	do {
@@ -938,16 +938,16 @@ int Vector::hip()
 	l = s_l();
 	for (i = 0; i < l; i++) {
 		if (s_i(i).s_kind() != INTEGER) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int Vector::hip1()
 // homogeneous integer Vector predicate, 
 // test for 1 char numbers; 
-// only to apply if hip TRUE. */
+// only to apply if hip true. */
 {
 	int i, l, k;
 	
@@ -959,10 +959,10 @@ int Vector::hip1()
 		}
 		k = s_ii(i);
 		if (!FITS_INTO_ONE_BYTE(k)) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void Vector::write_mem(memory & m, int debug_depth)
@@ -1121,19 +1121,19 @@ void merge(Vector &v1, Vector &v2, Vector &v3)
 	l3 = l1 + l2;
 	v3.m_l(l3);
 	while (i1 < l1 || i2 < l2) {
-		f_add1 = FALSE;
-		//f_add2 = FALSE;
+		f_add1 = false;
+		//f_add2 = false;
 		if (i1 < l1 && i2 < l2) {
 			r = v1[i1].compare_with(v2[i2]);
 			if (r < 0)
-				f_add1 = TRUE;
+				f_add1 = true;
 			//else
-			//	f_add2 = TRUE;
+			//	f_add2 = true;
 			}
 		else if (i1 < l1)
-			f_add1 = TRUE;
+			f_add1 = true;
 		//else
-		//	f_add2 = TRUE;
+		//	f_add2 = true;
 		if (f_add1) {
 			v3[i1 + i2] = v1[i1];
 			i1++;
@@ -1158,19 +1158,19 @@ void merge_with_fellows(Vector &v1, Vector &v1_fellow,
 	v3.m_l(l3);
 	v3_fellow.m_l(l3);
 	while (i1 < l1 || i2 < l2) {
-		f_add1 = FALSE;
-		//f_add2 = FALSE;
+		f_add1 = false;
+		//f_add2 = false;
 		if (i1 < l1 && i2 < l2) {
 			r = v1[i1].compare_with(v2[i2]);
 			if (r < 0)
-				f_add1 = TRUE;
+				f_add1 = true;
 			//else
-			//	f_add2 = TRUE;
+			//	f_add2 = true;
 			}
 		else if (i1 < l1)
-			f_add1 = TRUE;
+			f_add1 = true;
 		//else
-		//	f_add2 = TRUE;
+		//	f_add2 = true;
 		if (f_add1) {
 			v3[i1 + i2] = v1[i1];
 			v3_fellow[i1 + i2] = v1_fellow[i1];
@@ -1197,8 +1197,8 @@ void merge_with_value(Vector &idx1, Vector &idx2, Vector &idx3,
 	l1 = idx1.s_l();
 	l2 = idx2.s_l();
 	while (i1 < l1 || i2 < l2) {
-		f_add1 = FALSE;
-		f_add2 = FALSE;
+		f_add1 = false;
+		f_add2 = false;
 		if (i1 < l1 && i2 < l2) {
 			a1 = idx1.s_ii(i1);
 			a2 = idx2.s_ii(i2);
@@ -1212,15 +1212,15 @@ void merge_with_value(Vector &idx1, Vector &idx2, Vector &idx3,
 				i2++;
 				}
 			else if (a1 < a2)
-				f_add1 = TRUE;
+				f_add1 = true;
 			else 
-				f_add2 = TRUE;
+				f_add2 = true;
 			}
 		else {
 			if (i1 < l1)
-				f_add1 = TRUE;
+				f_add1 = true;
 			else
-				f_add2 = TRUE;
+				f_add2 = true;
 			}
 		if (f_add1) {
 			a1 = idx1.s_ii(i1);
@@ -1689,15 +1689,15 @@ int Vector::next_divisor(Vector &exponents)
 	n = s_l();
 	i = n - 1;
 	if (i < 0)
-		return FALSE;
+		return false;
 	while (s_ii(i) == exponents.s_ii(i)) {
 		m_ii(i, 0);
 		i--;
 		if (i < 0)
-			return FALSE;
+			return false;
 		}
 	s_i(i).inc();
-	return TRUE;
+	return true;
 }
 
 int Vector::next_non_trivial_divisor(Vector &exponents)
@@ -1707,12 +1707,12 @@ int Vector::next_non_trivial_divisor(Vector &exponents)
 	n = s_l();
 	i = n - 1;
 	if (i < 0)
-		return FALSE;
+		return false;
 	while (s_ii(i) == exponents.s_ii(i)) {
 		m_ii(i, 0);
 		i--;
 		if (i < 0)
-			return FALSE;
+			return false;
 		}
 	s_i(i).inc();
 	for (i = 0; i < n; i++) {
@@ -1720,9 +1720,9 @@ int Vector::next_non_trivial_divisor(Vector &exponents)
 			break;
 		}
 	if (i < n)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 void Vector::multiply_out(Vector &primes, discreta_base &x, int verbose_level)
@@ -1765,9 +1765,9 @@ int Vector::is_subset_of(Vector &w)
 	
 	for (i = 0; i < s_l(); i++) {
 		if (!w.search(s_i(i), &idx))
-			return FALSE;
+			return false;
 		}
-	return TRUE;
+	return true;
 }
 
 void Vector::concatenation(Vector &v1, Vector &v2)

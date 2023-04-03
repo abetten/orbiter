@@ -22,29 +22,29 @@ namespace orbiter_kernel_system {
 
 create_file_description::create_file_description()
 {
-	f_file_mask = FALSE;
+	f_file_mask = false;
 	//file_mask ;
-	f_N = FALSE;
+	f_N = false;
 	N = 0;
 	nb_lines = 0;
 	//const char *lines[MAX_LINES];
 	nb_final_lines = 0;
 	//const char *final_lines[MAX_LINES];
-	f_command = FALSE;
+	f_command = false;
 	//command;
-	f_repeat = FALSE;
+	f_repeat = false;
 	repeat_N = 0;
 	repeat_start = 0;
 	repeat_increment = 0;
 	//repeat_mask;
-	f_split = FALSE;
+	f_split = false;
 	split_m = 0;
-	f_read_cases = FALSE;
+	f_read_cases = false;
 	//read_cases_fname = NULL;
-	f_read_cases_text = FALSE;
+	f_read_cases_text = false;
 	read_cases_column_of_case = 0;
 	read_cases_column_of_fname = 0;
-	f_tasks = FALSE;
+	f_tasks = false;
 	nb_tasks = 0;
 	//tasks_line;
 
@@ -66,22 +66,22 @@ int create_file_description::read_arguments(
 	cout << "create_file_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-file_mask") == 0) {
-			f_file_mask = TRUE;
+			f_file_mask = true;
 			file_mask.assign(argv[++i]);
 			cout << "-file_mask " << file_mask << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-N") == 0) {
-			f_N = TRUE;
+			f_N = true;
 			N = ST.strtoi(argv[++i]);
 			cout << "-N " << N << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-read_cases") == 0) {
-			f_read_cases = TRUE;
+			f_read_cases = true;
 			read_cases_fname.assign(argv[++i]);
 			cout << "-read_cases " << read_cases_fname << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-read_cases_text") == 0) {
-			f_read_cases_text = TRUE;
+			f_read_cases_text = true;
 			read_cases_fname.assign(argv[++i]);
 			read_cases_column_of_case = ST.strtoi(argv[++i]);
 			read_cases_column_of_fname = ST.strtoi(argv[++i]);
@@ -91,13 +91,13 @@ int create_file_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-line") == 0) {
 			lines[nb_lines].assign(argv[++i]);
-			f_line_numeric[nb_lines] = FALSE;
+			f_line_numeric[nb_lines] = false;
 			cout << "-line " << lines[nb_lines] << endl;
 			nb_lines++;
 		}
 		else if (ST.stringcmp(argv[i], "-line_numeric") == 0) {
 			lines[nb_lines].assign(argv[++i]);
-			f_line_numeric[nb_lines] = TRUE;
+			f_line_numeric[nb_lines] = true;
 			cout << "-line_numeric " << lines[nb_lines] << endl;
 			nb_lines++;
 		}
@@ -107,12 +107,12 @@ int create_file_description::read_arguments(
 			nb_final_lines++;
 		}
 		else if (ST.stringcmp(argv[i], "-command") == 0) {
-			f_command = TRUE;
+			f_command = true;
 			command.assign(argv[++i]);
 			cout << "-command " << command << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-repeat") == 0) {
-			f_repeat = TRUE;
+			f_repeat = true;
 			repeat_N = ST.strtoi(argv[++i]);
 			repeat_start = ST.strtoi(argv[++i]);
 			repeat_increment = ST.strtoi(argv[++i]);
@@ -124,12 +124,12 @@ int create_file_description::read_arguments(
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-split") == 0) {
-			f_split = TRUE;
+			f_split = true;
 			split_m = ST.strtoi(argv[++i]);
 			cout << "-split " << split_m << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-tasks") == 0) {
-			f_tasks = TRUE;
+			f_tasks = true;
 			nb_tasks = ST.strtoi(argv[++i]);
 			tasks_line.assign(argv[++i]);
 			cout << "-tasks " << nb_tasks << " " << tasks_line << endl;

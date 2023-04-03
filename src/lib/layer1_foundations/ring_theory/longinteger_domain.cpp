@@ -67,9 +67,9 @@ int longinteger_domain::is_less_than(
 		longinteger_object &a, longinteger_object &b)
 {
 	if (compare_unsigned(a, b) == -1)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 void longinteger_domain::subtract_signless(
@@ -81,7 +81,7 @@ void longinteger_domain::subtract_signless(
 	char ai, bi, carry;
 	
 	c.freeself();
-	c.sign() = FALSE;
+	c.sign() = false;
 	c.len() = a.len();
 	c.rep() = NEW_char(c.len());
 	for (i = 0; i < c.len(); i++)
@@ -272,17 +272,17 @@ void longinteger_domain::mult(
 {
 	int i, j;
 	char ai, bj, d, carry;
-	int f_v = FALSE;
+	int f_v = false;
 	
 	if (a.is_zero() || b.is_zero()) {
 		c.create(0, __FILE__, __LINE__);
 		return;
 	}
 	if ((a.sign() && !b.sign()) || (!a.sign() && b.sign())) {
-		c.sign() = TRUE;
+		c.sign() = true;
 	}
 	else {
-		c.sign() = FALSE;
+		c.sign() = false;
 	}
 	
 	c.freeself();
@@ -403,10 +403,10 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 		exit(1);
 	}
 	if ((a.sign() && !b.sign()) || (!a.sign() && b.sign())) {
-		c.sign() = TRUE;
+		c.sign() = true;
 	}
 	else {
-		c.sign() = FALSE;
+		c.sign() = false;
 	}
 
 #if 0
@@ -681,7 +681,7 @@ void longinteger_domain::integral_division(
 	r.freeself();
 	
 	// load r with leading b.len() digits of a: 
-	r.sign() = FALSE;
+	r.sign() = false;
 	r.len() = b.len() + 1;
 	r.rep() = NEW_char(r.len());
 	l = a.len() - b.len();
@@ -691,7 +691,7 @@ void longinteger_domain::integral_division(
 	r.rep()[b.len()] = 0;
 	
 	// allocate q of length a.len() - b.len() + 1
-	q.sign() = FALSE;
+	q.sign() = false;
 	q.len() = a.len() - b.len() + 1;
 	q.rep() = NEW_char(q.len());
 	for (i = 0; i < q.len(); i++) {
@@ -867,7 +867,7 @@ void longinteger_domain::extended_gcd(
 	tm1.create(0, __FILE__, __LINE__);
 	s.create(0, __FILE__, __LINE__);
 	t.create(1, __FILE__, __LINE__);
-	while (TRUE) {
+	while (true) {
 		integral_division(rm1, r, q, rp1, verbose_level - 1);
 		if (rp1.is_zero()) {
 			r.assign_to(g);
@@ -1264,7 +1264,7 @@ int longinteger_domain::square_root_mod(
 		cout << "initialization:" << endl;
 	}
 	round = 0;
-	while (TRUE) {
+	while (true) {
 		if (f_v) {
 			cout << "Y=" << Y << endl;
 			cout << "r=" << r << endl;
@@ -1468,9 +1468,9 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
 		cout << "\\frac{1}{" << n << "} \\Big( ";
 	}
 
-	int f_first = TRUE;
+	int f_first = true;
 	for (i = 0; i < N; i++) {
-		if (FALSE) {
+		if (false) {
 			cout << "i=" << i << endl;
 		}
 		Gg.AG_element_unrank(2, v, 1, len, i);
@@ -1486,7 +1486,7 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
 		//a = NT.i_power_j(q, d_prime);
 		create_q_to_the_n(A, q, d_prime);
 
-		if (FALSE) {
+		if (false) {
 			cout << "d=" << d << " d_prime=" << d_prime << " A=" << A << " S=" << S << endl;
 		}
 
@@ -1505,7 +1505,7 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
 			add_in_place(S, A);
 		}
 		if (f_first) {
-			f_first = FALSE;
+			f_first = false;
 		}
 		if (f_v) {
 			cout << "q^{" << d_prime << "}";
@@ -1541,17 +1541,17 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
 int longinteger_domain::is_even(longinteger_object &a)
 {
 	if (((a.rep()[0] % 2)) == 0)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int longinteger_domain::is_odd(longinteger_object &a)
 {
 	if (is_even(a))
-		return FALSE;
+		return false;
 	else
-		return TRUE;
+		return true;
 }
 
 
@@ -1625,7 +1625,7 @@ long int longinteger_domain::smallest_primedivisor(
 		p_min--;
 	}
 	p = p_min;
-	while (TRUE) {
+	while (true) {
 		cnt++;
 		if (f_vv) {
 			cout << "longinteger_domain::smallest_primedivisor n=" << n
@@ -1869,7 +1869,7 @@ int longinteger_domain::jacobi(
 		return 0;
 	}
 	
-	while (TRUE) {
+	while (true) {
 		// we now have
 		// jacobi(a, m) = r1 * jacobi(a1, m1);
 		integral_division(a1, m1, q, r, verbose_level - 2);
@@ -1932,7 +1932,7 @@ void longinteger_domain::random_number_less_than_n(
 	n.assign_to(r);
 	//n_rep = n.rep();
 	r_rep = r.rep();
-	while (TRUE) {
+	while (true) {
 		for (i = l - 1; i >= 0; i--) {
 			rr = Os.random_integer(10);
 			r_rep[i] = (char) rr;
@@ -2174,12 +2174,12 @@ void longinteger_domain::square_root_floor(
 		la++;
 	}
 	len = (la >> 1) + 1;
-	Y.sign() = FALSE;
+	Y.sign() = false;
 	Y.len() = len;
 	Y.rep() = NEW_char(len);
 
 	//Y.allocate_empty(len);
-	//Y.s_sign() = FALSE;
+	//Y.s_sign() = false;
 	for (l = 0; l < len; l++) {
 		Y.ith(l) = (char) 0;
 	}

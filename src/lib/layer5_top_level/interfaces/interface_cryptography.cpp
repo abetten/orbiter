@@ -22,18 +22,18 @@ interface_cryptography::interface_cryptography()
 	//cout << "interface_cryptography::interface_cryptography" << endl;
 	//cout << "sizeof(interface_cryptography)=" << sizeof(interface_cryptography) << endl;
 
-	f_cipher = FALSE;
+	f_cipher = false;
 	t = no_cipher_type;
 	//cout << "interface_cryptography::interface_cryptography 0" << endl;
 
-	f_decipher = FALSE;
+	f_decipher = false;
 	//cout << "interface_cryptography::interface_cryptography 00a" << endl;
 
-	f_analyze = FALSE;
+	f_analyze = false;
 	//cout << "interface_cryptography::interface_cryptography 00b" << endl;
 
-	f_kasiski = FALSE;
-	f_avk = FALSE;
+	f_kasiski = false;
+	f_avk = false;
 	key_length = 0;
 	threshold = 0;
 	//cout << "interface_cryptography::interface_cryptography 00c" << endl;
@@ -46,127 +46,127 @@ interface_cryptography::interface_cryptography()
 	//std::string key;
 	//cout << "interface_cryptography::interface_cryptography 00e" << endl;
 
-	f_RSA = FALSE;
+	f_RSA = false;
 	RSA_d = 0;
 	RSA_m = 0;
 	//RSA_text = NULL;
 	//cout << "interface_cryptography::interface_cryptography 00f" << endl;
 
-	f_primitive_root = FALSE;
+	f_primitive_root = false;
 	//std::string primitive_root_p;
 
-	f_smallest_primitive_root = FALSE;
+	f_smallest_primitive_root = false;
 	smallest_primitive_root_p = 0;
 
-	f_smallest_primitive_root_interval = FALSE;
+	f_smallest_primitive_root_interval = false;
 	smallest_primitive_root_interval_min = 0;
 	smallest_primitive_root_interval_max = 0;
 
-	f_number_of_primitive_roots_interval = FALSE;
+	f_number_of_primitive_roots_interval = false;
 
-	f_inverse_mod = FALSE;
+	f_inverse_mod = false;
 	inverse_mod_a = 0;
 	inverse_mod_n = 0;
 	//cout << "interface_cryptography::interface_cryptography 00g" << endl;
 
-	f_extended_gcd = FALSE;
+	f_extended_gcd = false;
 	extended_gcd_a = 0;
 	extended_gcd_b = 0;
 
-	f_power_mod = FALSE;
+	f_power_mod = false;
 	//std::string power_mod_a;
 	//std::string power_mod_k;
 	//std::string power_mod_n;
 	//cout << "interface_cryptography::interface_cryptography 00h" << endl;
 
-	f_discrete_log = FALSE;
+	f_discrete_log = false;
 	//cout << "interface_cryptography::interface_cryptography 0b" << endl;
 	discrete_log_y = 0;
 	discrete_log_a = 0;
 	discrete_log_m = 0;
 
-	f_RSA_setup = FALSE;
+	f_RSA_setup = false;
 	RSA_setup_nb_bits = 0;
 	RSA_setup_nb_tests_solovay_strassen = 0;
 	RSA_setup_f_miller_rabin_test = 0;
 
-	f_RSA_encrypt_text = FALSE;
+	f_RSA_encrypt_text = false;
 	RSA_block_size = 0;
 	//RSA_encrypt_text = NULL;
 
-	f_sift_smooth = FALSE;
+	f_sift_smooth = false;
 	sift_smooth_from = 0;
 	sift_smooth_len = 0;
 	//cout << "interface_cryptography::interface_cryptography 1" << endl;
 	//sift_smooth_factor_base = NULL;
 
-	f_square_root = FALSE;
+	f_square_root = false;
 	//square_root_number = NULL;
 
-	f_square_root_mod = FALSE;
+	f_square_root_mod = false;
 	//square_root_mod_a = NULL;
 	//square_root_mod_m = NULL;
 	//cout << "interface_cryptography::interface_cryptography 1a" << endl;
 
-	f_all_square_roots_mod_n = FALSE;
+	f_all_square_roots_mod_n = false;
 	//std::string f_all_square_roots_mod_n_a;
 	//std::string f_all_square_roots_mod_n_n;
 
-	f_quadratic_sieve = FALSE;
+	f_quadratic_sieve = false;
 	quadratic_sieve_n = 0;
 	quadratic_sieve_factorbase = 0;
 	quadratic_sieve_x0 = 0;
 	//cout << "interface_cryptography::interface_cryptography 1b" << endl;
 
-	f_jacobi = FALSE;
+	f_jacobi = false;
 	jacobi_top = 0;
 	jacobi_bottom = 0;
 	//cout << "interface_cryptography::interface_cryptography 1c" << endl;
 
-	f_solovay_strassen = FALSE;
+	f_solovay_strassen = false;
 	solovay_strassen_p = 0;
 	solovay_strassen_a = 0;
 	//cout << "interface_cryptography::interface_cryptography 1d" << endl;
 
-	f_miller_rabin = FALSE;
+	f_miller_rabin = false;
 	miller_rabin_p = 0;
 	miller_rabin_nb_times = 0;
 	//cout << "interface_cryptography::interface_cryptography 1e" << endl;
 
-	f_fermat_test = FALSE;
+	f_fermat_test = false;
 	fermat_test_p = 0;
 	fermat_test_nb_times = 0;
 	//cout << "interface_cryptography::interface_cryptography 1f" << endl;
 
-	f_find_pseudoprime = FALSE;
+	f_find_pseudoprime = false;
 	find_pseudoprime_nb_digits = 0;
 	find_pseudoprime_nb_fermat = 0;
 	find_pseudoprime_nb_miller_rabin = 0;
 	find_pseudoprime_nb_solovay_strassen = 0;
 	//cout << "interface_cryptography::interface_cryptography 1g" << endl;
 
-	f_find_strong_pseudoprime = FALSE;
+	f_find_strong_pseudoprime = false;
 
-	f_miller_rabin_text = FALSE;
+	f_miller_rabin_text = false;
 	miller_rabin_text_nb_times = 0;
 	//miller_rabin_number_text = NULL;
 	//cout << "interface_cryptography::interface_cryptography 1h" << endl;
 
-	f_random = FALSE;
+	f_random = false;
 	random_nb = 0;
 	//random_fname_csv = NULL;
 
-	f_random_last = FALSE;
+	f_random_last = false;
 	random_last_nb = 0;
 	//cout << "interface_cryptography::interface_cryptography 1i" << endl;
 
-	f_affine_sequence = FALSE;
+	f_affine_sequence = false;
 	affine_sequence_a = 0;
 	//cout << "interface_cryptography::interface_cryptography 2" << endl;
 	affine_sequence_c = 0;
 	affine_sequence_m = 0;
 
-	f_Chinese_remainders = FALSE;
+	f_Chinese_remainders = false;
 	//std::string Chinese_remainders_R;
 	//std::string Chinese_remainders_M;
 
@@ -434,7 +434,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 	}
 
 	if (ST.stringcmp(argv[i], "-cipher_substitution") == 0) {
-		f_cipher = TRUE;
+		f_cipher = true;
 		t = substitution;
 		ptext.assign(argv[++i]);
 		if (f_v) {
@@ -442,7 +442,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-cipher_vigenere") == 0) {
-		f_cipher = TRUE;
+		f_cipher = true;
 		t = vigenere;
 		ptext.assign(argv[++i]);
 		key.assign(argv[++i]);
@@ -451,7 +451,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-cipher_affine") == 0) {
-		f_cipher = TRUE;
+		f_cipher = true;
 		t = affine;
 		ptext.assign(argv[++i]);
 		affine_a = ST.strtoi(argv[++i]);
@@ -461,7 +461,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-analyze_substitution") == 0) {
-		f_analyze = TRUE;
+		f_analyze = true;
 		t = substitution;
 		ctext.assign(argv[++i]);
 		if (f_v) {
@@ -469,7 +469,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-analyze_vigenere") == 0) {
-		f_analyze = TRUE;
+		f_analyze = true;
 		t = vigenere;
 		ctext.assign(argv[++i]);
 		if (f_v) {
@@ -477,7 +477,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-analyze_vigenere_kasiski") == 0) {
-		f_avk = TRUE;
+		f_avk = true;
 		ctext.assign(argv[++i]);
 		key_length = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -485,7 +485,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-kasiski") == 0) {
-		f_kasiski = TRUE;
+		f_kasiski = true;
 		ctext.assign(argv[++i]);
 		threshold = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -493,7 +493,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-decipher_substitution") == 0) {
-		f_decipher = TRUE;
+		f_decipher = true;
 		t = substitution;
 		ctext.assign(argv[++i]);
 		guess.assign(argv[++i]);
@@ -502,19 +502,19 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-decipher_vigenere") == 0) {
-		f_decipher = TRUE;
+		f_decipher = true;
 		t = vigenere;
 		ctext.assign(argv[++i]);
 		key.assign(argv[++i]);
 	}
 	else if (ST.stringcmp(argv[i], "-decipher_affine") == 0) {
-		f_decipher = TRUE;
+		f_decipher = true;
 		t = affine;
 		ctext.assign(argv[++i]);
 		guess.assign(argv[++i]);
 	}
 	else if (ST.stringcmp(argv[i], "-RSA") == 0) {
-		f_RSA = TRUE;
+		f_RSA = true;
 		RSA_d = ST.strtoi(argv[++i]);
 		RSA_m = ST.strtoi(argv[++i]);
 		RSA_block_size = ST.strtoi(argv[++i]);
@@ -524,7 +524,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
-		f_RSA_encrypt_text = TRUE;
+		f_RSA_encrypt_text = true;
 		RSA_d = ST.strtoi(argv[++i]);
 		RSA_m = ST.strtoi(argv[++i]);
 		RSA_block_size = ST.strtoi(argv[++i]);
@@ -535,7 +535,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-RSA_setup") == 0) {
-		f_RSA_setup = TRUE;
+		f_RSA_setup = true;
 		RSA_setup_nb_bits = ST.strtoi(argv[++i]);
 		RSA_setup_nb_tests_solovay_strassen = ST.strtoi(argv[++i]);
 		RSA_setup_f_miller_rabin_test = ST.strtoi(argv[++i]);
@@ -546,21 +546,21 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-primitive_root") == 0) {
-		f_primitive_root = TRUE;
+		f_primitive_root = true;
 		primitive_root_p.assign(argv[++i]);
 		if (f_v) {
 			cout << "-primitive_root " << primitive_root_p << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-smallest_primitive_root") == 0) {
-		f_smallest_primitive_root = TRUE;
+		f_smallest_primitive_root = true;
 		smallest_primitive_root_p = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-smallest_primitive_root " << smallest_primitive_root_p << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-smallest_primitive_root_interval") == 0) {
-		f_smallest_primitive_root_interval = TRUE;
+		f_smallest_primitive_root_interval = true;
 		smallest_primitive_root_interval_min = ST.strtoi(argv[++i]);
 		smallest_primitive_root_interval_max = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -569,7 +569,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-number_of_primitive_roots_interval") == 0) {
-		f_number_of_primitive_roots_interval = TRUE;
+		f_number_of_primitive_roots_interval = true;
 		smallest_primitive_root_interval_min = ST.strtoi(argv[++i]);
 		smallest_primitive_root_interval_max = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -578,7 +578,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-inverse_mod") == 0) {
-		f_inverse_mod = TRUE;
+		f_inverse_mod = true;
 		inverse_mod_a = ST.strtoi(argv[++i]);
 		inverse_mod_n = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -586,7 +586,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-extended_gcd") == 0) {
-		f_extended_gcd = TRUE;
+		f_extended_gcd = true;
 		extended_gcd_a = ST.strtoi(argv[++i]);
 		extended_gcd_b = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -594,7 +594,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-power_mod") == 0) {
-		f_power_mod = TRUE;
+		f_power_mod = true;
 		power_mod_a.assign(argv[++i]);
 		power_mod_k.assign(argv[++i]);
 		power_mod_n.assign(argv[++i]);
@@ -603,7 +603,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-discrete_log") == 0) {
-		f_discrete_log = TRUE;
+		f_discrete_log = true;
 		discrete_log_y = ST.strtoi(argv[++i]);
 		discrete_log_a = ST.strtoi(argv[++i]);
 		discrete_log_m = ST.strtoi(argv[++i]);
@@ -613,7 +613,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
-		f_sift_smooth = TRUE;
+		f_sift_smooth = true;
 		sift_smooth_from = ST.strtoi(argv[++i]);
 		sift_smooth_len = ST.strtoi(argv[++i]);
 		sift_smooth_factor_base = argv[++i];
@@ -623,14 +623,14 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-square_root") == 0) {
-		f_square_root = TRUE;
+		f_square_root = true;
 		square_root_number.assign(argv[++i]);
 		if (f_v) {
 			cout << "-square_root " << square_root_number << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-square_root_mod") == 0) {
-		f_square_root_mod = TRUE;
+		f_square_root_mod = true;
 		square_root_mod_a.assign(argv[++i]);
 		square_root_mod_m.assign(argv[++i]);
 		if (f_v) {
@@ -639,7 +639,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-all_square_roots_mod_n") == 0) {
-		f_all_square_roots_mod_n = TRUE;
+		f_all_square_roots_mod_n = true;
 		all_square_roots_mod_n_a.assign(argv[++i]);
 		all_square_roots_mod_n_n.assign(argv[++i]);
 		if (f_v) {
@@ -648,7 +648,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-quadratic_sieve") == 0) {
-		f_quadratic_sieve = TRUE;
+		f_quadratic_sieve = true;
 		quadratic_sieve_n = ST.strtoi(argv[++i]);
 		quadratic_sieve_factorbase = ST.strtoi(argv[++i]);
 		quadratic_sieve_x0 = ST.strtoi(argv[++i]);
@@ -658,7 +658,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
-		f_jacobi = TRUE;
+		f_jacobi = true;
 		jacobi_top = ST.strtoi(argv[++i]);
 		jacobi_bottom = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -667,7 +667,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-solovay_strassen") == 0) {
-		f_solovay_strassen = TRUE;
+		f_solovay_strassen = true;
 		solovay_strassen_p = ST.strtoi(argv[++i]);
 		solovay_strassen_a = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -676,7 +676,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-miller_rabin") == 0) {
-		f_miller_rabin = TRUE;
+		f_miller_rabin = true;
 		miller_rabin_p = ST.strtoi(argv[++i]);
 		miller_rabin_nb_times = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -684,7 +684,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-fermat_test") == 0) {
-		f_fermat_test = TRUE;
+		f_fermat_test = true;
 		fermat_test_p = ST.strtoi(argv[++i]);
 		fermat_test_nb_times = ST.strtoi(argv[++i]);
 		if (f_v) {
@@ -692,7 +692,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-find_pseudoprime") == 0) {
-		f_find_pseudoprime = TRUE;
+		f_find_pseudoprime = true;
 		find_pseudoprime_nb_digits = ST.strtoi(argv[++i]);
 		find_pseudoprime_nb_fermat = ST.strtoi(argv[++i]);
 		find_pseudoprime_nb_miller_rabin = ST.strtoi(argv[++i]);
@@ -705,7 +705,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-find_strong_pseudoprime") == 0) {
-		f_find_strong_pseudoprime = TRUE;
+		f_find_strong_pseudoprime = true;
 		find_pseudoprime_nb_digits = ST.strtoi(argv[++i]);
 		find_pseudoprime_nb_fermat = ST.strtoi(argv[++i]);
 		find_pseudoprime_nb_miller_rabin = ST.strtoi(argv[++i]);
@@ -717,7 +717,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-miller_rabin_text") == 0) {
-		f_miller_rabin_text = TRUE;
+		f_miller_rabin_text = true;
 		miller_rabin_text_nb_times = ST.strtoi(argv[++i]);
 		miller_rabin_number_text.assign(argv[++i]);
 		if (f_v) {
@@ -727,7 +727,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-random") == 0) {
-		f_random = TRUE;
+		f_random = true;
 		random_nb = ST.strtoi(argv[++i]);
 		random_fname_csv.assign(argv[++i]);
 		if (f_v) {
@@ -735,14 +735,14 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-random_last") == 0) {
-		f_random_last = TRUE;
+		f_random_last = true;
 		random_last_nb = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-random_last " << random_last_nb << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-affine_sequence") == 0) {
-		f_affine_sequence = TRUE;
+		f_affine_sequence = true;
 		affine_sequence_a = ST.strtoi(argv[++i]);
 		affine_sequence_c = ST.strtoi(argv[++i]);
 		affine_sequence_m = ST.strtoi(argv[++i]);
@@ -752,7 +752,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
-		f_Chinese_remainders = TRUE;
+		f_Chinese_remainders = true;
 		Chinese_remainders_R.assign(argv[++i]);
 		Chinese_remainders_M.assign(argv[++i]);
 		if (f_v) {

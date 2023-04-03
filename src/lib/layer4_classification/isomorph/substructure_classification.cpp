@@ -25,9 +25,9 @@ substructure_classification::substructure_classification()
 {
 	Iso = NULL;
 
-	f_use_database_for_starter = FALSE;
+	f_use_database_for_starter = false;
 	depth_completed = 0;
-	f_use_implicit_fusion = FALSE;
+	f_use_implicit_fusion = false;
 
 
 
@@ -55,7 +55,7 @@ substructure_classification::substructure_classification()
 
 substructure_classification::~substructure_classification()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "substructure_classification::~substructure_classification before deleting D1" << endl;
@@ -109,7 +109,7 @@ void substructure_classification::read_data_files_for_starter(int level,
 // Calls gen->read_level_file_binary for all levels i from 0 to level
 // Uses letter a files for i from 0 to level - 1
 // and letter b file for i = level.
-// If gen->f_starter is TRUE, we start from i = gen->starter_size instead.
+// If gen->f_starter is true, we start from i = gen->starter_size instead.
 // Finally, it computes nb_starter.
 {
 	int f_v = (verbose_level >= 1);
@@ -326,9 +326,9 @@ void substructure_classification::find_extension_easy(
 // with that starter.
 // If so, we wish to determine the number of that solution amongst all
 // solutions for that starter (returned in idx).
-// Otherwise, we return FALSE.
+// Otherwise, we return false.
 
-// returns TRUE if found, FALSE otherwise
+// returns true if found, false otherwise
 // Called from identify_solution
 // Linear search through all solutions at a given starter.
 // calls load solution for each of the solutions
@@ -340,7 +340,7 @@ void substructure_classification::find_extension_easy(
 		cout << "substructure_classification::find_extension_easy "
 				"case_nb=" << case_nb << endl;
 	}
-	f_found = FALSE;
+	f_found = false;
 #if 0
 	int ret1, idx1;
 	int ret2, idx2;
@@ -404,7 +404,7 @@ int substructure_classification::find_extension_search_interval(long int *set,
 		}
 	}
 	if (i == len) {
-		return FALSE;
+		return false;
 		//cout << "isomorph::find_extension_search_interval "
 		//"did not find extension" << endl;
 		//exit(1);
@@ -413,7 +413,7 @@ int substructure_classification::find_extension_search_interval(long int *set,
 	if (f_v) {
 		cout << "substructure_classification::find_extension_search_interval done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int substructure_classification::find_extension_easy_old(long int *set,
@@ -431,7 +431,7 @@ int substructure_classification::find_extension_easy_old(long int *set,
 	first = Iso->Lifting->starter_solution_first[case_nb];
 	len = Iso->Lifting->starter_solution_len[case_nb];
 	ret = find_extension_search_interval(set,
-		first, len, idx, FALSE, 0, FALSE, verbose_level);
+		first, len, idx, false, 0, false, verbose_level);
 	if (f_v) {
 		if (ret) {
 			cout << "substructure_classification::find_extension_easy_old "
@@ -449,7 +449,7 @@ void substructure_classification::find_extension_easy_new(long int *set,
 		int case_nb, int &idx, int &f_found, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; // (verbose_level >= 2);
+	//int f_vv = false; // (verbose_level >= 2);
 	//int ret;
 	int first, idx2, len;
 	data_structures::sorting Sorting;
@@ -531,7 +531,7 @@ void substructure_classification::find_extension_easy_new(long int *set,
 #endif
 
 	if (len == 0) {
-		f_found = FALSE;
+		f_found = false;
 	}
 	else {
 		if (f_v) {
@@ -540,7 +540,7 @@ void substructure_classification::find_extension_easy_new(long int *set,
 		}
 
 		f_found = find_extension_search_interval(set,
-			first, len, idx, FALSE, 3, TRUE, 0 /*verbose_level*/);
+			first, len, idx, false, 3, true, 0 /*verbose_level*/);
 
 		if (f_v) {
 			cout << "substructure_classification::find_extension_easy_new after "
@@ -612,8 +612,8 @@ void substructure_classification::init_DB_level(
 {
 	int f_v = (verbose_level >= 1);
 	layer2_discreta::typed_objects::btree B1, B2;
-	int f_compress = TRUE;
-	int f_duplicatekeys = TRUE;
+	int f_compress = true;
+	int f_duplicatekeys = true;
 	int i;
 	char str[1000];
 
@@ -708,7 +708,7 @@ void substructure_classification::init_DB_level(
 void substructure_classification::create_level_database(int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;//(verbose_level >= 2);
+	int f_vv = false;//(verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int f, nb_nodes, I, J, i, j, idx, print_mod = 1;
 	poset_classification::poset_orbit_node *O;
@@ -843,7 +843,7 @@ void substructure_classification::create_level_database(int level, int verbose_l
 					v.m_ii(idx++, O->get_E(j)->get_data());
 				}
 				else if (O->get_E(j)->get_type() == EXTENSION_TYPE_FUSION) {
-					//gen->get_A()->element_retrieve(O->get_E(j)->get_data(), gen->get_Elt1(), FALSE);
+					//gen->get_A()->element_retrieve(O->get_E(j)->get_data(), gen->get_Elt1(), false);
 
 
 					gen->get_A2()->map_a_set_based_on_hdl(set1, set2, level + 1, gen->get_A(), O->get_E(j)->get_data(), 0);
@@ -859,7 +859,7 @@ void substructure_classification::create_level_database(int level, int verbose_l
 
 
 					J = gen->find_poset_orbit_node_for_set(level + 1,
-							set2, FALSE /* f_tolerant */, 0);
+							set2, false /* f_tolerant */, 0);
 					v.m_ii(idx++, J);
 				}
 				else {
@@ -882,8 +882,8 @@ void substructure_classification::create_level_database(int level, int verbose_l
 			idx1 = 0;
 			for (j = 0; j < O->nb_strong_generators; j++) {
 				gen->A->element_retrieve(O->hdl_strong_generators[j],
-						gen->Elt1, FALSE);
-				gen->A->element_pack(gen->Elt1, elt, FALSE);
+						gen->Elt1, false);
+				gen->A->element_pack(gen->Elt1, elt, false);
 				for (h = 0; h < gen->A->coded_elt_size_in_char; h++) {
 					mem[idx1++] = elt[h];
 				}
@@ -891,8 +891,8 @@ void substructure_classification::create_level_database(int level, int verbose_l
 			for (j = 0; j < O->nb_extensions; j++) {
 				if (O->E[j].type == 1)
 					continue;
-				gen->A->element_retrieve(O->E[j].data, gen->Elt1, FALSE);
-				gen->A->element_pack(gen->Elt1, elt, FALSE);
+				gen->A->element_retrieve(O->E[j].data, gen->Elt1, false);
+				gen->A->element_pack(gen->Elt1, elt, false);
 				for (h = 0; h < gen->A->coded_elt_size_in_char; h++) {
 					mem[idx1++] = elt[h];
 				}
@@ -945,7 +945,7 @@ void substructure_classification::create_level_database(int level, int verbose_l
 				if (O->get_E(j)->get_type() == EXTENSION_TYPE_EXTENSION) {
 					continue;
 				}
-				gen->get_A()->Group_element->element_retrieve(O->get_E(j)->get_data(), Iso->Folding->Elt1, FALSE);
+				gen->get_A()->Group_element->element_retrieve(O->get_E(j)->get_data(), Iso->Folding->Elt1, false);
 				gen->get_A()->Group_element->element_write_file_fp(Iso->Folding->Elt1, fp,
 						0/* verbose_level*/);
 				cnt++;
@@ -1086,7 +1086,7 @@ void substructure_classification::load_strong_generators_tree(int cur_level,
 	for (i = 0; i < gen_hdl.size(); i++) {
 		gen->get_A()->Group_element->element_retrieve(
 				gen_hdl[i],
-				gens.ith(i), FALSE);
+				gens.ith(i), false);
 	}
 //finish:
 	if (f_v) {

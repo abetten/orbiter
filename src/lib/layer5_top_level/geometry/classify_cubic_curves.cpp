@@ -99,7 +99,7 @@ void classify_cubic_curves::init(
 			F,
 			A, A->Strong_gens,
 			9 /* starter_size */,
-			FALSE /* f_conic_test */,
+			false /* f_conic_test */,
 			Control,
 			verbose_level);
 #endif
@@ -134,7 +134,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 {
 	//verbose_level += 2;
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 2);
+	int f_vv = false; // (verbose_level >= 2);
 	int i, r;
 	long int S[9];
 	//long int *Pts_on_curve;
@@ -225,7 +225,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 
 			data_structures::tally Cl;
 
-			Cl.init(type, CC->P->Subspaces->N_lines, FALSE, 0);
+			Cl.init(type, CC->P->Subspaces->N_lines, false, 0);
 			idx = Cl.determine_class_by_value(q + 1);
 
 			if (idx == -1) {
@@ -271,7 +271,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 void classify_cubic_curves::downstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 2);
+	int f_vv = false; // (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int f, i, nb_flag_orbits;
 
@@ -376,7 +376,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 			i /* downstep_primary_orbit */,
 			0 /* downstep_secondary_orbit */,
 			ol.as_int() /* downstep_orbit_len */,
-			FALSE /* f_long_orbit */,
+			false /* f_long_orbit */,
 			dataset /* int *pt_representation */,
 			R->Strong_gens,
 			0 /*verbose_level - 2*/);
@@ -558,7 +558,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 
 		for (i = 0; i < N; i++) {
-			if (FALSE) {
+			if (false) {
 				cout << "po=" << po << " so=" << so
 						<< " i=" << i << " / " << N << endl;
 			}
@@ -629,7 +629,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 				//2 /* group_index */, verbose_level - 2);
 			}
 			else {
-				if (FALSE) {
+				if (false) {
 					cout << "We are identifying flag orbit "
 							<< f2 << " with flag orbit " << f << endl;
 				}
@@ -637,7 +637,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 					Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit
 						= Flag_orbits->nb_primary_orbits_upper;
 					Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-						= TRUE;
+						= true;
 					Flag_orbits->Flag_orbit_node[f2].fusion_with
 						= f;
 					Flag_orbits->Flag_orbit_node[f2].fusion_elt
@@ -645,11 +645,11 @@ void classify_cubic_curves::upstep(int verbose_level)
 					A->Group_element->element_invert(Elt,
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 							0);
-					f_processed[f2] = TRUE;
+					f_processed[f2] = true;
 					nb_processed++;
 				}
 				else {
-					if (FALSE) {
+					if (false) {
 						cout << "Flag orbit " << f2 << " has already been "
 								"identified with flag orbit " << f << endl;
 					}
@@ -708,7 +708,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		FREE_OBJECT(coset_reps);
 		FREE_OBJECT(S);
 
-		f_processed[f] = TRUE;
+		f_processed[f] = true;
 		nb_processed++;
 		Flag_orbits->nb_primary_orbits_upper++;
 	} // next f
@@ -842,10 +842,10 @@ int classify_cubic_curves::recognize(int *eqn_in,
 			Pts_on_curve, nb_pts_on_curve /* set_size */, type, 0 /*verbose_level*/);
 	// type[N_lines]
 
-	ret = TRUE;
+	ret = true;
 	for (j = 0; j < CCA->CC->P->Subspaces->N_lines; j++) {
 		if (type[j] > 3) {
-			ret = FALSE;
+			ret = false;
 			break;
 		}
 	}
@@ -859,7 +859,7 @@ int classify_cubic_curves::recognize(int *eqn_in,
 				0 /*verbose_level*/);
 
 		if (nb_singular_pts) {
-			ret = FALSE;
+			ret = false;
 		}
 	}
 #endif
@@ -967,10 +967,10 @@ int classify_cubic_curves::recognize(int *eqn_in,
 		if (i == N) {
 			cout << "classify_cubic_curves::recognize "
 					"could not identify the curve" << endl;
-			ret = FALSE;
+			ret = false;
 		}
 		else {
-			ret = TRUE;
+			ret = true;
 		}
 	}
 
@@ -1305,7 +1305,7 @@ void classify_cubic_curves::familyG_recognize(int *Iso_type,
 void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_with_stabilizers = TRUE;
+	int f_with_stabilizers = true;
 
 
 	if (f_v) {
@@ -1378,7 +1378,7 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 		int nb_pts_on_curve;
 		int nb_singular_pts;
 		int nb_inflection_pts;
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		data = Curves->Rep + i * Curves->representation_sz;
 		eqn1 = data + 9;
@@ -1489,8 +1489,8 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 
 		ost << "The line type is $";
 		data_structures::tally C;
-		C.init(type, CCA->CC->P->Subspaces->N_lines, FALSE, 0);
-		C.print_naked_tex(ost, TRUE /* f_backwards*/);
+		C.init(type, CCA->CC->P->Subspaces->N_lines, false, 0);
+		C.print_naked_tex(ost, true /* f_backwards*/);
 		ost << ".$ \\\\" << endl;
 
 
@@ -1718,9 +1718,9 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 
 	data_structures::tally C;
 
-	C.init(Ago, Curves->nb_orbits, FALSE, 0);
+	C.init(Ago, Curves->nb_orbits, false, 0);
 	ost << "Distribution: $(";
-	C.print_naked_tex(ost, TRUE /* f_backwards */);
+	C.print_naked_tex(ost, true /* f_backwards */);
 	ost << ")$\\\\" << endl;
 
 

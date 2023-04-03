@@ -113,7 +113,7 @@ void large_set_was::init(large_set_was_description *Descr,
 
 	H_orbits->init(LS->A_on_designs,
 			H_gens,
-			FALSE /* f_load_save */,
+			false /* f_load_save */,
 			Descr->prefix,
 			verbose_level);
 
@@ -238,7 +238,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 	//A_on_orbits = NEW_OBJECT(actions::action);
 	A_on_orbits = LS->A_on_designs->Induced_action->induced_action_on_orbits(
 			H_orbits->Sch /* H_orbits_on_spreads*/,
-			TRUE /*f_play_it_safe*/,
+			true /*f_play_it_safe*/,
 			verbose_level - 1);
 
 	std::string label_of_set;
@@ -388,7 +388,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
 
 #if 0
 	Control = NEW_OBJECT(poset_classification_control);
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = nb_of_orbits_to_choose;
 #endif
 
@@ -469,8 +469,8 @@ void large_set_was::create_graph_on_orbits_of_length(
 		fname,
 		orbit_length,
 		selected_type_idx,
-		FALSE /*f_has_user_data*/, NULL /* int *user_data */, 0 /* user_data_size */,
-		TRUE /* f_has_colors */, LS->nb_colors, LS->design_color_table,
+		false /*f_has_user_data*/, NULL /* int *user_data */, 0 /* user_data_size */,
+		true /* f_has_colors */, LS->nb_colors, LS->design_color_table,
 		large_set_was_classify_test_pair_of_orbits,
 		this /* *test_function_data */,
 		verbose_level);
@@ -586,10 +586,10 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 				extracted_set_size /*filter_by_set_size*/,
 				orbit_length2,
 				type_idx2,
-				TRUE /*f_has_user_data*/,
+				true /*f_has_user_data*/,
 					extracted_set /* long int *user_data */,
 					extracted_set_size /* user_data_size */,
-				TRUE /* f_has_colors */,
+				true /* f_has_colors */,
 					LS->nb_colors,
 					LS->design_color_table,
 				large_set_was_classify_test_pair_of_orbits,
@@ -823,7 +823,7 @@ int large_set_was::normalizer_orbits_check_conditions(
 					"not OK, "
 					"repeat entry" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 
 	for (i = 0; i < len - 1; i++) {
@@ -838,10 +838,10 @@ int large_set_was::normalizer_orbits_check_conditions(
 				large_set_was_classify_test_pair_of_orbits,
 				this /*  test_function_data */,
 				verbose_level)) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -885,7 +885,7 @@ int large_set_was_design_test_orbit(
 		void *extra_data)
 {
 	large_set_was *LSW = (large_set_was *) extra_data;
-	int ret = FALSE;
+	int ret = false;
 
 	ret = LSW->LS->Design_table->test_set_within_itself(orbit, orbit_length);
 
@@ -898,7 +898,7 @@ int large_set_was_classify_test_pair_of_orbits(
 		void *extra_data)
 {
 	large_set_was *LSW = (large_set_was *) extra_data;
-	int ret = FALSE;
+	int ret = false;
 
 	ret = LSW->LS->Design_table->test_between_two_sets(orbit1, orbit_length1,
 			orbit2, orbit_length2);

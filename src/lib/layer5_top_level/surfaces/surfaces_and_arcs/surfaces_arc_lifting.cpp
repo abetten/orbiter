@@ -32,7 +32,7 @@ surfaces_arc_lifting::surfaces_arc_lifting()
 	q = 0;
 	LG4 = NULL;
 
-	f_semilinear = FALSE;
+	f_semilinear = false;
 
 	fname_base[0] = 0;
 
@@ -163,9 +163,9 @@ void surfaces_arc_lifting::init(
 				"before Six_arcs->init" << endl;
 	}
 
-	Descr->f_control = TRUE;
+	Descr->f_control = true;
 	Descr->control_label.assign(Control_six_arcs_label);
-	Descr->f_target_size = TRUE;
+	Descr->f_target_size = true;
 	Descr->target_size = 6;
 
 	Six_arcs->init(
@@ -744,7 +744,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				arc_idx /* downstep_primary_orbit */,
 				downstep_secondary_orbit,
 				downstep_orbit_len,
-				FALSE /* f_long_orbit */,
+				false /* f_long_orbit */,
 				Flag /* int *pt_representation */,
 				SG_induced,
 				verbose_level - 2);
@@ -804,17 +804,17 @@ void surfaces_arc_lifting::report(
 
 	{
 		ofstream fp(fname_arc_lifting.c_str());
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
+			false /* f_book */,
+			true /* f_title */,
 			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -872,8 +872,8 @@ void surfaces_arc_lifting::report2(std::ostream &ost,
 
 	//ost << "\\section{The Group}" << endl << endl;
 
-	A4->report(ost, FALSE /* f_sims */, NULL /* sims *S */,
-				FALSE /* f_strong_gens */, NULL /* strong_generators *SG */,
+	A4->report(ost, false /* f_sims */, NULL /* sims *S */,
+				false /* f_strong_gens */, NULL /* strong_generators *SG */,
 				draw_options,
 				verbose_level);
 
@@ -883,8 +883,8 @@ void surfaces_arc_lifting::report2(std::ostream &ost,
 
 
 	Surfaces->print_latex(ost,
-		title, TRUE /* f_print_stabilizer_gens */,
-		TRUE /* f_has_print_function */,
+		title, true /* f_print_stabilizer_gens */,
+		true /* f_has_print_function */,
 		callback_surfaces_arc_lifting_report /* void (*print_function)(std::ostream &ost, int i,
 				classification_step *Step, void *print_function_data) */,
 		this /* void *print_function_data */);
@@ -993,7 +993,7 @@ void surfaces_arc_lifting::report_flag_orbits(std::ostream &ost, int verbose_lev
 {
 	int flag_orbit_idx;
 	int i;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	ost << "Flag orbits: \\\\" << endl;
 	ost << "The number of flag orbits is " << Flag_orbits->nb_flag_orbits << " \\\\" << endl;
@@ -1479,8 +1479,8 @@ void surfaces_arc_lifting::report_surfaces_in_detail(std::ostream &ost, int verb
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	int f_print_stabilizer_gens = TRUE;
-	orbiter_kernel_system::latex_interface L;
+	int f_print_stabilizer_gens = true;
+	l1_interfaces::latex_interface L;
 	surfaces_arc_lifting_definition_node *D;
 	ring_theory::longinteger_domain Dom;
 	ring_theory::longinteger_object go1, ol;

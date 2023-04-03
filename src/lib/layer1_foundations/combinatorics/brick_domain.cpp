@@ -109,7 +109,7 @@ int brick_domain::rank_coordinates(int x1, int y1,
 	int x0, y0, f_vertical;
 	
 	if (x1 == x2) {
-		f_vertical = TRUE;
+		f_vertical = true;
 		x0 = x1;
 		if (y2 == F->add(y1, 1)) {
 			y0 = y1;
@@ -123,7 +123,7 @@ int brick_domain::rank_coordinates(int x1, int y1,
 			}
 		}
 	else if (y1 == y2) {
-		f_vertical = FALSE;
+		f_vertical = false;
 		y0 = y1;
 		if (x2 == F->add(x1, 1)) {
 			x0 = x1;
@@ -164,7 +164,7 @@ void brick_test(int q, int verbose_level)
 	int f_vertical, x, y, x2, y2;
 	finite_field F;
 	
-	F.finite_field_init(q, FALSE /* f_without_tables */, 0);
+	F.finite_field_init(q, false /* f_without_tables */, 0);
 	B.init(&F, verbose_level);
 	for (i = 0; i < B.nb_bricks; i++) {
 		B.unrank(i, f_vertical, x, y, 0);

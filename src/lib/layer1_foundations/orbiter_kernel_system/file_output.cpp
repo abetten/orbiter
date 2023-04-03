@@ -17,7 +17,7 @@ namespace orbiter_kernel_system {
 file_output::file_output()
 {
 	//std::string fname;
-	f_file_is_open = FALSE;
+	f_file_is_open = false;
 	fp = NULL;
 	user_data = NULL;
 }
@@ -43,7 +43,7 @@ void file_output::open(std::string &fname,
 	
 	fp = new ofstream;
 	fp->open(fname);
-	f_file_is_open = TRUE;
+	f_file_is_open = true;
 	
 
 	
@@ -57,7 +57,7 @@ void file_output::close()
 	//*fp << "-1" << endl;
 	delete fp;
 	fp = NULL;
-	f_file_is_open = FALSE;
+	f_file_is_open = false;
 }
 
 void file_output::write_line(int nb, int *data,

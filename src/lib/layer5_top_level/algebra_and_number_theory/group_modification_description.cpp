@@ -20,28 +20,28 @@ namespace apps_algebra {
 
 group_modification_description::group_modification_description()
 {
-	f_restricted_action = FALSE;
+	f_restricted_action = false;
 	//std::string restricted_action_set_text;
 
-	f_on_k_subspaces = FALSE;
+	f_on_k_subspaces = false;
 	on_k_subspaces_k = 0;
 
-	f_on_k_subsets = FALSE;
+	f_on_k_subsets = false;
 	on_k_subsets_k = 0;
 
-	f_on_wedge_product = FALSE;
+	f_on_wedge_product = false;
 
-	f_create_special_subgroup = FALSE;
+	f_create_special_subgroup = false;
 
-	f_point_stabilizer = FALSE;
+	f_point_stabilizer = false;
 	point_stabilizer_index = 0;
 
-	f_projectivity_subgroup = FALSE;
+	f_projectivity_subgroup = false;
 
-	f_subfield_subgroup = FALSE;
+	f_subfield_subgroup = false;
 	subfield_subgroup_index = 0;
 
-	f_action_on_self_by_right_multiplication = FALSE;
+	f_action_on_self_by_right_multiplication = false;
 
 	//std::vector<std::string> from;
 
@@ -67,60 +67,60 @@ int group_modification_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-restricted_action") == 0) {
-			f_restricted_action = TRUE;
+			f_restricted_action = true;
 			restricted_action_set_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-restricted_action " << restricted_action_set_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_k_subspaces") == 0) {
-			f_on_k_subspaces = TRUE;
+			f_on_k_subspaces = true;
 			on_k_subspaces_k = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-on_k_subspaces " << on_k_subspaces_k << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_k_subsets") == 0) {
-			f_on_k_subsets = TRUE;
+			f_on_k_subsets = true;
 			on_k_subsets_k = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-on_k_subsets " << on_k_subsets_k << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_wedge_product") == 0) {
-			f_on_wedge_product = TRUE;
+			f_on_wedge_product = true;
 			if (f_v) {
 				cout << "-on_wedge_product " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-create_special_subgroup") == 0) {
-			f_create_special_subgroup = TRUE;
+			f_create_special_subgroup = true;
 			if (f_v) {
 				cout << "-create_special_subgroup " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-point_stabilizer") == 0) {
-			f_point_stabilizer = TRUE;
+			f_point_stabilizer = true;
 			point_stabilizer_index = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-point_stabilizer " << point_stabilizer_index << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-projectivity_subgroup") == 0) {
-			f_projectivity_subgroup = TRUE;
+			f_projectivity_subgroup = true;
 			if (f_v) {
 				cout << "-projectivity_subgroup " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-subfield_subgroup") == 0) {
-			f_subfield_subgroup = TRUE;
+			f_subfield_subgroup = true;
 			subfield_subgroup_index = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-subfield_subgroup " << subfield_subgroup_index << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-action_on_self_by_right_multiplication") == 0) {
-			f_action_on_self_by_right_multiplication = TRUE;
+			f_action_on_self_by_right_multiplication = true;
 			if (f_v) {
 				cout << "-action_on_self_by_right_multiplication" << endl;
 			}

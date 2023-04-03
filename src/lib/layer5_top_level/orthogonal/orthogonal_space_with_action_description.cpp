@@ -25,13 +25,13 @@ orthogonal_space_with_action_description::orthogonal_space_with_action_descripti
 	//input_q;
 	F = NULL;
 
-	f_label_txt = FALSE;
+	f_label_txt = false;
 	//std::string label_txt;
-	f_label_tex = FALSE;
+	f_label_tex = false;
 	//std::string label_tex;
 
 
-	f_without_group = FALSE;
+	f_without_group = false;
 
 }
 
@@ -68,21 +68,21 @@ int orthogonal_space_with_action_description::read_arguments(
 		//cout << "projective_space_object_classifier_description::read_arguments, next argument is " << argv[i] << endl;
 
 		if (ST.stringcmp(argv[i], "-label_txt") == 0) {
-			f_label_txt = TRUE;
+			f_label_txt = true;
 			label_txt.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_txt " << label_txt << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label_tex") == 0) {
-			f_label_tex = TRUE;
+			f_label_tex = true;
 			label_tex.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_tet " << label_tex << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-without_group") == 0) {
-			f_without_group = TRUE;
+			f_without_group = true;
 			if (f_v) {
 				cout << "-without_group "<< endl;
 			}

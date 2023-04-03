@@ -251,7 +251,7 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set(
 
 	int idx1;
 	int found_at = -1;
-	int f_found_eqn = FALSE;
+	int f_found_eqn = false;
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
@@ -360,7 +360,7 @@ int canonical_form_of_variety::find_equation(
 	long int *alpha_inv;
 	long int *beta_inv;
 	int i, j;
-	int f_found = FALSE;
+	int f_found = false;
 
 	canonical_form_nauty *C1;
 	C1 = (canonical_form_nauty *) Canonical_form_classifier->CB->Type_extra_data[idx1];
@@ -509,7 +509,7 @@ int canonical_form_of_variety::find_equation(
 
 	if (!C1->Orb->search_equation(
 			Canonical_form_classifier->eqn2 /*new_object */, idx2,
-			TRUE)) {
+			true)) {
 		// need to map points and bitangents under gamma:
 		if (f_v) {
 			cout << "canonical_form_of_variety::find_equation "
@@ -528,7 +528,7 @@ int canonical_form_of_variety::find_equation(
 					<< " We found the canonical form and the equation "
 							"at idx2 " << idx2 << ", idx1=" << idx1 << endl;
 		}
-		f_found = TRUE;
+		f_found = true;
 		found_at = idx2;
 	}
 

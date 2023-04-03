@@ -23,19 +23,19 @@ static int callback_test_independence_condition(
 poset_with_group_action::poset_with_group_action()
 {
 	description = NULL;
-	f_subset_lattice = FALSE;
+	f_subset_lattice = false;
 	n = 0;
-	f_subspace_lattice = FALSE;
+	f_subspace_lattice = false;
 	VS = NULL;
 
 	A = NULL;
 	A2 = NULL;
 	Strong_gens = NULL;
 
-	f_has_orbit_based_testing = FALSE;
+	f_has_orbit_based_testing = false;
 	Orbit_based_testing = NULL;
 
-	f_print_function = FALSE;;
+	f_print_function = false;;
 	print_function = NULL;
 	print_function_data = NULL;
 
@@ -61,18 +61,18 @@ void poset_with_group_action::init_subset_lattice(
 	if (f_v) {
 		cout << "poset_with_group_action::init_subset_lattice" << endl;
 	}
-	f_subset_lattice = TRUE;
+	f_subset_lattice = true;
 	n = A2->degree;
 	if (f_v) {
 		cout << "poset_with_group_action::init_subset_lattice "
 				"degree of action = " << n << endl;
 	}
-	f_subspace_lattice = FALSE;
+	f_subspace_lattice = false;
 	poset_with_group_action::A = A;
 	poset_with_group_action::A2 = A2;
 	poset_with_group_action::Strong_gens = Strong_gens;
 	Strong_gens->group_order(go);
-	f_has_orbit_based_testing = FALSE;
+	f_has_orbit_based_testing = false;
 	if (f_v) {
 		cout << "poset_with_group_action::init_subset_lattice done" << endl;
 	}
@@ -89,15 +89,15 @@ void poset_with_group_action::init_subspace_lattice(
 	if (f_v) {
 		cout << "poset_with_group_action::init_subspace_lattice" << endl;
 	}
-	f_subset_lattice = FALSE;
+	f_subset_lattice = false;
 	n = A2->degree;
-	f_subspace_lattice = TRUE;
+	f_subspace_lattice = true;
 	poset_with_group_action::VS = VS;
 	poset_with_group_action::A = A;
 	poset_with_group_action::A2 = A2;
 	poset_with_group_action::Strong_gens = Strong_gens;
 	Strong_gens->group_order(go);
-	f_has_orbit_based_testing = FALSE;
+	f_has_orbit_based_testing = false;
 	if (f_v) {
 		cout << "poset_with_group_action::init_subspace_lattice done" << endl;
 	}
@@ -135,7 +135,7 @@ void poset_with_group_action::init(
 	}
 	VS->init(F, description->dimension, verbose_level);
 	Strong_gens->group_order(go);
-	f_has_orbit_based_testing = FALSE;
+	f_has_orbit_based_testing = false;
 
 	if (description->f_independence_condition) {
 		add_independence_condition(
@@ -189,7 +189,7 @@ void poset_with_group_action::add_independence_condition(
 			independence_value + 1);
 
 	if (Orbit_based_testing == NULL) {
-		f_has_orbit_based_testing = TRUE;
+		f_has_orbit_based_testing = true;
 		Orbit_based_testing = NEW_OBJECT(orbit_based_testing);
 		if (f_v) {
 			cout << "poset_with_group_action::add_independence_condition before "
@@ -229,7 +229,7 @@ void poset_with_group_action::add_testing(
 	}
 
 	if (Orbit_based_testing == NULL) {
-		f_has_orbit_based_testing = TRUE;
+		f_has_orbit_based_testing = true;
 		Orbit_based_testing = NEW_OBJECT(orbit_based_testing);
 		if (f_v) {
 			cout << "poset_with_group_action::add_testing before "
@@ -270,7 +270,7 @@ void poset_with_group_action::add_testing_without_group(
 	}
 
 	if (Orbit_based_testing == NULL) {
-		f_has_orbit_based_testing = TRUE;
+		f_has_orbit_based_testing = true;
 		Orbit_based_testing = NEW_OBJECT(orbit_based_testing);
 		if (f_v) {
 			cout << "poset_with_group_action::add_testing_without_group before "
@@ -436,8 +436,8 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 
 	orbiter_kernel_system::os_interface Os;
 	int schreier_depth = k;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	int t0 = Os.os_ticks();
 
 	if (f_v) {
@@ -482,10 +482,10 @@ static int callback_test_independence_condition(
 	rc = (algebra::rank_checker *) data;
 	if (rc->check_rank_last_two_are_fixed(len,
 		S, verbose_level - 1)) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 
 }

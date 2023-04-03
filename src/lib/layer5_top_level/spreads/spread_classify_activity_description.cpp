@@ -18,18 +18,18 @@ namespace spreads {
 
 spread_classify_activity_description::spread_classify_activity_description()
 {
-	f_compute_starter = FALSE;
+	f_compute_starter = false;
 
-	f_prepare_lifting_single_case = FALSE;
+	f_prepare_lifting_single_case = false;
 	prepare_lifting_single_case_case_number = 0;
 
-	f_prepare_lifting_all_cases = FALSE;
+	f_prepare_lifting_all_cases = false;
 
-	f_split = FALSE;
+	f_split = false;
 	split_r = 0;
 	split_m = 1;
 
-	f_isomorph = FALSE;
+	f_isomorph = false;
 	//std::string prefix_classify;
 	//std::string prefix_iso;
 	Isomorph_arguments = NULL;
@@ -53,27 +53,27 @@ int spread_classify_activity_description::read_arguments(int argc, std::string *
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-compute_starter") == 0) {
-			f_compute_starter = TRUE;
+			f_compute_starter = true;
 			if (f_v) {
 				cout << "-compute_starter " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-prepare_lifting_single_case") == 0) {
-			f_prepare_lifting_single_case = TRUE;
+			f_prepare_lifting_single_case = true;
 			prepare_lifting_single_case_case_number = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-prepare_lifting_single_case " << prepare_lifting_single_case_case_number << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-prepare_lifting_all_cases") == 0) {
-			f_prepare_lifting_all_cases = TRUE;
+			f_prepare_lifting_all_cases = true;
 			if (f_v) {
 				cout << "-prepare_lifting_all_cases " << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-split") == 0) {
-			f_split = TRUE;
+			f_split = true;
 			split_r = ST.strtoi(argv[++i]);
 			split_m = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -81,7 +81,7 @@ int spread_classify_activity_description::read_arguments(int argc, std::string *
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-isomorph") == 0) {
-			f_isomorph = TRUE;
+			f_isomorph = true;
 			//prefix_classify.assign(argv[++i]);
 			//prefix_iso.assign(argv[++i]);
 			Isomorph_arguments = NEW_OBJECT(layer4_classification::isomorph::isomorph_arguments);

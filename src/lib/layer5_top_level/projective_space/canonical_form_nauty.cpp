@@ -150,7 +150,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 	Set_stab = Nau.set_stabilizer_of_object(
 			OwCF,
 			Classifier->Descr->PA->A,
-		TRUE /* f_compute_canonical_form */,
+		true /* f_compute_canonical_form */,
 		Canonical_form,
 		NO,
 		0 /*verbose_level*/);

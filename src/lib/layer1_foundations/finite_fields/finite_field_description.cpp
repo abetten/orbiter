@@ -23,18 +23,18 @@ namespace field_theory {
 
 finite_field_description::finite_field_description()
 {
-	f_q = FALSE;
+	f_q = false;
 	//std::string q_text;
 	//q = 0;
 
-	f_override_polynomial = FALSE;
+	f_override_polynomial = false;
 	//std::string override_polynomial;
 
-	f_without_tables = FALSE;
+	f_without_tables = false;
 
-	f_compute_related_fields = TRUE;
+	f_compute_related_fields = true;
 
-	f_symbol = FALSE;
+	f_symbol = false;
 	//std::string symbol_label;
 
 }
@@ -56,33 +56,33 @@ int finite_field_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
+			f_q = true;
 			q_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-q " << q_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-override_polynomial") == 0) {
-			f_override_polynomial = TRUE;
+			f_override_polynomial = true;
 			override_polynomial.assign(argv[++i]);
 			if (f_v) {
 				cout << "-override_polynomial " << override_polynomial << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-without_tables") == 0) {
-			f_without_tables = TRUE;
+			f_without_tables = true;
 			if (f_v) {
 				cout << "-without_tables " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-compute_related_fields") == 0) {
-			f_compute_related_fields = TRUE;
+			f_compute_related_fields = true;
 			if (f_v) {
 				cout << "-compute_related_fields " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-symbol") == 0) {
-			f_symbol = TRUE;
+			f_symbol = true;
 			symbol_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-symbol " << symbol_label << endl;

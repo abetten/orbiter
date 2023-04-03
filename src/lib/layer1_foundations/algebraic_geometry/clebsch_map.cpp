@@ -46,7 +46,7 @@ clebsch_map::clebsch_map()
 
 clebsch_map::~clebsch_map()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "clebsch_map::~clebsch_map" << endl;
@@ -304,7 +304,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (i == 2) {
 		cout << "clebsch_map::compute_Clebsch_map_down_worker Line a lies "
 				"inside the hyperplane" << endl;
-		return FALSE;
+		return false;
 	}
 
 	// test line_b:
@@ -323,7 +323,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (i == 2) {
 		cout << "clebsch_map::compute_Clebsch_map_down_worker Line b lies "
 				"inside the hyperplane" << endl;
-		return FALSE;
+		return false;
 	}
 
 	// and now, map all surface points:
@@ -446,7 +446,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (f_v) {
 		cout << "clebsch_map::compute_Clebsch_map_down_worker done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void clebsch_map::clebsch_map_print_fibers()
@@ -457,10 +457,10 @@ void clebsch_map::clebsch_map_print_fibers()
 	{
 		data_structures::tally_lint C2;
 
-		C2.init(Clebsch_map, SO->nb_pts, TRUE, 0);
+		C2.init(Clebsch_map, SO->nb_pts, true, 0);
 		cout << "clebsch_map::clebsch_map_print_fibers The fibers "
 				"have the following sizes: ";
-		C2.print_naked(TRUE);
+		C2.print_naked(true);
 		cout << endl;
 
 		int t2, f2, l2, sz;
@@ -518,11 +518,11 @@ void clebsch_map::clebsch_map_find_arc_and_lines(
 	{
 		data_structures::tally_lint C2;
 
-		C2.init(Clebsch_map, SO->nb_pts, TRUE, 0);
+		C2.init(Clebsch_map, SO->nb_pts, true, 0);
 		if (f_v) {
 			cout << "clebsch_map::clebsch_map_find_arc_and_lines "
 					"The fibers have the following sizes: ";
-			C2.print_naked(TRUE);
+			C2.print_naked(true);
 			cout << endl;
 		}
 
@@ -667,9 +667,9 @@ void clebsch_map::clebsch_map_find_arc_and_lines(
 				{
 					tally C_fiber;
 
-					C_fiber.init(Fiber_recognize, w, FALSE, 0);
+					C_fiber.init(Fiber_recognize, w, false, 0);
 					cout << "The fiber type is : ";
-					C_fiber.print_naked(TRUE);
+					C_fiber.print_naked(true);
 					cout << endl;
 				}
 				Blown_up_lines[i] = -1;
@@ -692,7 +692,7 @@ void clebsch_map::clebsch_map_find_arc_and_lines(
 
 void clebsch_map::report(std::ostream &ost, int verbose_level)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	int h;
 

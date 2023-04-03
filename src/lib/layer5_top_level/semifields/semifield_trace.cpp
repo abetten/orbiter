@@ -465,7 +465,7 @@ void semifield_trace::trace_very_general(
 
 	if (cur_level >= 3) {
 		// we need to keep going, since we are working on level 4 or higher:
-		//f_vv = TRUE;
+		//f_vv = true;
 
 		if (f_vv) {
 			cout << "semifield_trace::trace_very_general "
@@ -506,7 +506,7 @@ void semifield_trace::trace_very_general(
 
 	if (cur_level >= 4) {
 		// we need to keep going, since we are working on level 5 or higher:
-		//f_vv = TRUE;
+		//f_vv = true;
 
 		if (f_vv) {
 			cout << "semifield_trace::trace_very_general "
@@ -780,8 +780,8 @@ void semifield_trace::trace_step_up(
 		}
 	F->Gauss_int_with_given_pivots(
 		changed_basis,
-		FALSE /* f_special */,
-		TRUE /* f_complete */,
+		false /* f_special */,
+		true /* f_complete */,
 		pivots,
 		step /* nb_pivots */,
 		basis_sz /* m */,

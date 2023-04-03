@@ -31,8 +31,8 @@ clique_finder::clique_finder()
 
 	//print_interval = 0;
 
-	f_write_tree = FALSE;
-	//f_decision_nodes_only = FALSE;
+	f_write_tree = false;
+	//f_decision_nodes_only = false;
 	//std::string fname_tree;
 
 	fp_tree = NULL;
@@ -42,13 +42,13 @@ clique_finder::clique_finder()
 
 	verbose_level = 0;
 
-	f_has_adj_list = FALSE;
+	f_has_adj_list = false;
 	adj_list_coded = NULL;
-	f_has_bitvector = FALSE;
+	f_has_bitvector = false;
 	Bitvec_adjacency = NULL;
 
 
-	f_has_row_by_row_adjacency_matrix = FALSE;
+	f_has_row_by_row_adjacency_matrix = false;
 	row_by_row_adjacency_matrix = NULL;
 
 	pt_list = NULL;
@@ -78,7 +78,7 @@ clique_finder::clique_finder()
 	call_back_after_reduction = NULL;
 
 #if 0
-	f_has_print_current_choice_function = FALSE;
+	f_has_print_current_choice_function = false;
 	call_back_print_current_choice = NULL;
 	print_current_choice_data = NULL;
 #endif
@@ -177,7 +177,7 @@ void clique_finder::init(
 	clique_finder::f_has_bitvector = f_has_bitvector;
 	clique_finder::Bitvec_adjacency = Bitvec_adjacency;
 
-	f_has_row_by_row_adjacency_matrix = FALSE;
+	f_has_row_by_row_adjacency_matrix = false;
 	row_by_row_adjacency_matrix = NULL;
 	
 	if (f_v) {
@@ -257,7 +257,7 @@ void clique_finder::init_restrictions(int *restrictions,
 					"i >= target_size" << endl;
 			exit(1);
 		}
-		f_level_mod[i] = TRUE;
+		f_level_mod[i] = true;
 		level_r[i] = r;
 		level_m[i] = m;
 		cout << "clique_finder::init_restrictions level "
@@ -287,7 +287,7 @@ void clique_finder::init_suspicious_points(int nb, int *point_list)
 	Sorting.int_vec_heapsort(point_list_ordered, nb);
 	point_is_suspicious = NEW_int(n);
 	for (i = 0; i < n; i++) {
-		point_is_suspicious[i] = FALSE;
+		point_is_suspicious[i] = false;
 	}
 	for (i = 0; i < n; i++) {
 		if (point_labels) {
@@ -297,7 +297,7 @@ void clique_finder::init_suspicious_points(int nb, int *point_list)
 			j = i;
 		}
 		if (Sorting.int_vec_search(point_list_ordered, nb, j, idx)) {
-			point_is_suspicious[i] = TRUE;
+			point_is_suspicious[i] = true;
 		}
 	}
 	FREE_int(point_list_ordered);
@@ -605,11 +605,11 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 					<< nb_candidates[depth] << endl;
 		}
 
-		f_go = TRUE;  // Whether we want to go in the recursion.
+		f_go = true;  // Whether we want to go in the recursion.
 
 		if (f_level_mod[depth]) {
 			if ((level_counter[depth] % level_m[depth]) != level_r[depth]) {
-				f_go = FALSE;
+				f_go = false;
 			}
 		}
 
@@ -629,11 +629,11 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 		current_clique[depth] = pt;
 
 		if (call_back_add_point) {
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "before call_back_add_point" << endl;
 			}
 			(*call_back_add_point)(this, depth, current_clique, pt, 0/*verbose_level*/);
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "after call_back_add_point" << endl;
 			}
 		}
@@ -646,10 +646,10 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 				//int_set_print(cout, current_clique, depth);
 				cout << " depth = " << depth << " nb_old="
 						<< nb_old << endl;
-				f_go = TRUE;
+				f_go = true;
 			}
 			else {
-				f_go = FALSE;
+				f_go = false;
 			}
 		}
 	
@@ -667,12 +667,12 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 		// We delete the point:
 
 		if (call_back_delete_point) {
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "before call_back_delete_point" << endl;
 			}
 			(*call_back_delete_point)(this, depth, 
 				current_clique, pt, 0/*verbose_level*/);
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "after call_back_delete_point" << endl;
 			}
 		}
@@ -689,7 +689,7 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 }
 
 int clique_finder::solve_decision_problem(int depth, int verbose_level)
-// returns TRUE if we found a solution
+// returns true if we found a solution
 {
 	int nb_old, i, nb_new;
 	int pt1, pt2, pt, pass, f_go;
@@ -733,12 +733,12 @@ int clique_finder::solve_decision_problem(int depth, int verbose_level)
 		//cout << " depth = " << depth << endl;
 		//exit(1);
 
-		return TRUE;
+		return true;
 	}
 
 
 	if (Control->f_maxdepth && depth == Control->maxdepth) {
-		return FALSE;
+		return false;
 	}
 	if (depth == 0) {
 		nb_old = n;
@@ -920,7 +920,7 @@ int clique_finder::solve_decision_problem(int depth, int verbose_level)
 
 		pt = candidates[depth * n + current_choice[depth]];
 
-		f_go = TRUE;
+		f_go = true;
 
 		if (f_vv) {
 			log_position_and_choice(depth, counter_save, counter);
@@ -931,12 +931,12 @@ int clique_finder::solve_decision_problem(int depth, int verbose_level)
 		current_clique[depth] = pt;
 
 		if (call_back_add_point) {
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "before call_back_add_point" << endl;
 			}
 			(*call_back_add_point)(this, depth, 
 				current_clique, pt, 0/*verbose_level*/);
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "after call_back_add_point" << endl;
 			}
 		}
@@ -949,28 +949,28 @@ int clique_finder::solve_decision_problem(int depth, int verbose_level)
 				//int_set_print(cout, current_clique, depth);
 				cout << " depth = " << depth << " nb_old="
 						<< nb_old << endl;
-				f_go = TRUE;
+				f_go = true;
 			}
 			else {
-				f_go = FALSE;
+				f_go = false;
 			}
 		}
 	
 		if (f_go) {
 			if (solve_decision_problem(depth + 1, verbose_level)) {
-				return TRUE;
+				return true;
 			}
 		} // if (f_go)
 
 		// delete a point:
 
 		if (call_back_delete_point) {
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "before call_back_delete_point" << endl;
 			}
 			(*call_back_delete_point)(this, depth, 
 				current_clique, pt, 0/*verbose_level*/);
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "after call_back_delete_point" << endl;
 			}
 		}
@@ -984,7 +984,7 @@ int clique_finder::solve_decision_problem(int depth, int verbose_level)
 		log_position(depth, counter_save, counter);
 		cout << " nb_sol=" << solutions.size() << " done" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 #if 0
@@ -1300,11 +1300,11 @@ entrance_point:
 				<< " / " << nb_candidates[depth] << endl;
 		}
 
-		f_go[depth] = TRUE;  // Whether we want to go in the recursion.
+		f_go[depth] = true;  // Whether we want to go in the recursion.
 
 		if (f_level_mod[depth]) {
 			if ((level_counter[depth] % level_m[depth]) != level_r[depth]) {
-				f_go[depth] = FALSE;
+				f_go[depth] = false;
 			}
 		}
 
@@ -1324,12 +1324,12 @@ entrance_point:
 		current_clique[depth] = pt[depth];
 
 		if (call_back_add_point) {
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "before call_back_add_point" << endl;
 			}
 			(*call_back_add_point)(this, depth, 
 				current_clique, pt[depth], 0/*verbose_level*/);
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "after call_back_add_point" << endl;
 			}
 		}
@@ -1341,10 +1341,10 @@ entrance_point:
 				print_set(depth + 1, current_clique);
 				//int_set_print(cout, current_clique, depth);
 				cout << " depth = " << depth << " nb_old=" << nb_old << endl;
-				f_go[depth] = TRUE;
+				f_go[depth] = true;
 			}
 			else {
-				f_go[depth] = FALSE;
+				f_go[depth] = false;
 			}
 		}
 	
@@ -1368,12 +1368,12 @@ continuation_point:
 		// We delete the point:
 
 		if (call_back_delete_point) {
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "before call_back_delete_point" << endl;
 				}
 			(*call_back_delete_point)(this, depth, 
 				current_clique, pt[depth], 0/*verbose_level*/);
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "after call_back_delete_point" << endl;
 			}
 		}
@@ -1404,7 +1404,7 @@ continuation_point:
 
 void clique_finder::open_tree_file(std::string &fname_base)
 {
-	f_write_tree = TRUE;
+	f_write_tree = true;
 	fname_tree.assign(fname_base);
 	fname_tree.append(".tree");
 	//clique_finder::f_decision_nodes_only = Control->f_decision_nodes_only;
@@ -1437,7 +1437,7 @@ void clique_finder::get_solutions(
 	nb_solutions = nb_sol;//solutions.size();
 	//nb_sol = nb_sol;
 
-	if (Control->f_store_solutions == FALSE) {
+	if (Control->f_store_solutions == false) {
 		cout << "clique_finder::get_solutions we did not store the solutions" << endl;
 		exit(1);
 	}
@@ -1529,7 +1529,7 @@ void clique_finder::log_position_and_choice(int depth,
 	cout << "node " << counter << " at depth " << depth << " : ";
 	log_choice(depth + 1);
 	cout << " nb_sol=" << solutions.size() << " ";
-	if (FALSE) {
+	if (false) {
 		cout << " clique ";
 		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, current_clique, depth);
 	}
@@ -1541,7 +1541,7 @@ void clique_finder::log_position(int depth,
 {
 	cout << "node " << counter << " at depth " << depth << " : ";
 	log_choice(depth);
-	if (FALSE) {
+	if (false) {
 		cout << " clique ";
 		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, current_clique, depth);
 	}
@@ -1582,10 +1582,10 @@ void clique_finder::degree_of_point_statistic(
 		D[i] = degree_of_point(depth, i, nb_points);
 	}
 	data_structures::tally C;
-	int f_second = FALSE;
+	int f_second = false;
 
 	C.init(D, nb_points, f_second, verbose_level);
-	C.print(FALSE /* f_backwards */);
+	C.print(false /* f_backwards */);
 
 	FREE_int(D);
 }
@@ -1612,7 +1612,7 @@ int clique_finder::degree_of_point(
 int clique_finder::is_suspicious(int i)
 {
 	if (point_is_suspicious == NULL) {
-		return FALSE;
+		return false;
 	}
 	return point_is_suspicious[i];
 }
@@ -1796,7 +1796,7 @@ void clique_finder::delinearize_adjacency_list(int verbose_level)
 			k++;
 		}
 	}
-	f_has_row_by_row_adjacency_matrix = TRUE;
+	f_has_row_by_row_adjacency_matrix = true;
 	if (f_v) {
 		cout << "clique_finder::delinearize_adjacency_list done" << endl;
 	}

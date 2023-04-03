@@ -19,7 +19,7 @@ namespace spreads {
 
 spread_activity_description::spread_activity_description()
 {
-	f_report = FALSE;
+	f_report = false;
 }
 
 spread_activity_description::~spread_activity_description()
@@ -39,7 +39,7 @@ int spread_activity_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+			f_report = true;
 			if (f_v) {
 				cout << "-report " << endl;
 			}

@@ -56,7 +56,7 @@ ovoid_classify::ovoid_classify()
 
 ovoid_classify::~ovoid_classify()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "ovoid_classify::~ovoid_classify" << endl;
@@ -107,7 +107,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	//int f_vvv = (verbose_level >= 4);
 
 	//int f_semilinear;
-	//int f_basis = TRUE;
+	//int f_basis = true;
 	number_theory::number_theory_domain NT;
 	geometry::geometry_global Gg;
 
@@ -132,20 +132,20 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 
 #if 0
 	if (h > 1) {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	}
 	else {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 #endif
 
 
 
 #if 0
-	int f_siegel = TRUE;
-	int f_reflection = TRUE;
-	int f_similarity = TRUE;
-	int f_semisimilarity = TRUE;
+	int f_siegel = true;
+	int f_reflection = true;
+	int f_similarity = true;
+	int f_semisimilarity = true;
 	action_global AG;
 	AG.set_orthogonal_group_type(f_siegel, f_reflection,
 			f_similarity, f_semisimilarity);
@@ -164,9 +164,9 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	
 
 	A->init_orthogonal_group(Descr->epsilon, Descr->d, LG->F,
-		TRUE /* f_on_points */, 
-		FALSE /* f_on_lines */, 
-		FALSE /* f_on_points_and_lines */, 
+		true /* f_on_points */, 
+		false /* f_on_lines */, 
+		false /* f_on_points_and_lines */, 
 		f_semilinear, f_basis, verbose_level);
 	
 #endif
@@ -217,7 +217,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 			}
 		}
 
-	//Control->f_depth = TRUE;
+	//Control->f_depth = true;
 	//Control->depth = depth;
 
 
@@ -236,7 +236,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 			this /* void *data */,
 			verbose_level);
 
-	Poset->f_print_function = FALSE;
+	Poset->f_print_function = false;
 	Poset->print_function = callback_ovoid_print_set;
 	Poset->print_function_data = (void *) this;
 
@@ -275,8 +275,8 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
 				K->P3->Subspaces->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
 				LG->F->Linear_algebra->Gauss_int_with_given_pivots(B,
-					FALSE /* f_special */,
-					TRUE /* f_complete */,
+					false /* f_special */,
+					true /* f_complete */,
 					pivots,
 					2 /*nb_pivots*/,
 					2 /*m*/, 4 /* n*/,
@@ -304,8 +304,8 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
 				K->P3->Subspaces->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
 				LG->F->Linear_algebra->Gauss_int_with_given_pivots(B,
-					FALSE /* f_special */,
-					TRUE /* f_complete */,
+					false /* f_special */,
+					true /* f_complete */,
 					pivots,
 					2 /*nb_pivots*/,
 					2 /*m*/, 4 /* n*/,
@@ -772,7 +772,7 @@ void ovoid_classify::create_graph(
 
 	CG->init(nb_points, nb_colors_used, 1,
 		point_color,
-		Bitvec, TRUE /* f_ownership_of_bitvec */,
+		Bitvec, true /* f_ownership_of_bitvec */,
 		label, label_tex,
 		verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object

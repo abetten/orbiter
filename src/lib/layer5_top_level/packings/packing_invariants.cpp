@@ -29,7 +29,7 @@ packing_invariants::packing_invariants()
 	iso_cnt = 0;
 	the_packing = NULL;
 	list_of_lines = NULL;
-	f_has_klein = FALSE;
+	f_has_klein = false;
 	R = NULL;
 	Pts_on_plane = NULL;
 	nb_pts_on_plane = NULL;
@@ -105,10 +105,10 @@ void packing_invariants::init(packing_classify *P,
 		Lint_matrix_print(list_of_lines,
 				P->size_of_packing, P->spread_size);
 	}
-	f_has_klein = FALSE;
+	f_has_klein = false;
 
 #if 0
-	if (TRUE /*v.s_l() == 0*/) {
+	if (true /*v.s_l() == 0*/) {
 		//cout << "packing_invariants::init no Klein invariants, "
 		// "skipping" << endl;
 		nb_planes = -1;
@@ -151,7 +151,7 @@ void packing_invariants::init_klein_invariants(
 				v.s_i(2).as_vector().s_i(i).as_vector().s_ii(j);
 		}
 	}
-	f_has_klein = TRUE;
+	f_has_klein = true;
 	if (f_v) {
 		cout << "packing_invariants::init_klein_invariants done" << endl;
 	}
@@ -168,15 +168,15 @@ void packing_invariants::compute_decomposition(int verbose_level)
 	}
 	
 
-	int f_second = FALSE;
+	int f_second = false;
 
 	C = NEW_OBJECT(data_structures::tally);
 	C->init(nb_pts_on_plane, nb_planes, f_second, 0);
 	if (f_v) {
 		cout << "packing_invariants::compute_decomposition: "
 				"plane-intersection type: ";
-		C->print(FALSE /*f_backwards*/);
-		C->print_naked_tex(cout, FALSE /*f_backwards*/);
+		C->print(false /*f_backwards*/);
+		C->print_naked_tex(cout, false /*f_backwards*/);
 	}
 	
 #if 0
@@ -201,7 +201,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		f = C->type_first[i];
 		l = C->type_len[i];
 		a = C->data_sorted[f];
-		if (TRUE /*a == m*/) {
+		if (true /*a == m*/) {
 			nb_blocks += l;
 		}
 	}
@@ -232,7 +232,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		f = C->type_first[h];
 		l = C->type_len[h];
 		a = C->data_sorted[f];
-		if (TRUE /*a == m*/) {
+		if (true /*a == m*/) {
 			for (u = 0; u < l; u++) {
 				a = C->data_sorted[f + u];
 				idx = C->sorting_perm_inv[f + u];
@@ -261,7 +261,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		Inc[i * total_nb_blocks + j] = 1;
 	}
 
-	if (FALSE /*nb_blocks < 20*/) {
+	if (false /*nb_blocks < 20*/) {
 
 		cout << "we will draw an incidence picture" << endl;
 		
@@ -360,11 +360,11 @@ void packing_invariants::compute_decomposition(int verbose_level)
 			ofstream fp_row_scheme(fname_row_scheme);
 			ofstream fp_col_scheme(fname_col_scheme);
 			I->get_and_print_row_tactical_decomposition_scheme_tex(
-				fp_row_scheme, FALSE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, *Stack);
+				fp_row_scheme, false /* f_enter_math */,
+				true /* f_print_subscripts */, *Stack);
 			I->get_and_print_column_tactical_decomposition_scheme_tex(
-				fp_col_scheme, FALSE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, *Stack);
+				fp_col_scheme, false /* f_enter_math */,
+				true /* f_print_subscripts */, *Stack);
 		}
 	}
 

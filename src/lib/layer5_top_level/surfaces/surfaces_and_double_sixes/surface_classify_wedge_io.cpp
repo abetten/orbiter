@@ -127,11 +127,11 @@ int surface_classify_wedge::test_if_surfaces_have_been_computed_already()
 
 	snprintf(fname, sizeof(fname), "Surfaces_q%d.data", q);
 	if (Fio.file_size(fname) > 0) {
-		//ret = TRUE;
-		ret = FALSE; // !!! ToDo don't use data file
+		//ret = true;
+		ret = false; // !!! ToDo don't use data file
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 	return ret;
 }
@@ -215,11 +215,11 @@ int surface_classify_wedge::test_if_double_sixes_have_been_computed_already()
 
 	snprintf(fname, sizeof(fname), "Double_sixes_q%d.data", q);
 	if (Fio.file_size(fname) > 0) {
-		//ret = TRUE;
-		ret = FALSE; // !!! ToDo
+		//ret = true;
+		ret = false; // !!! ToDo
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 	return ret;
 }
@@ -318,18 +318,18 @@ void surface_classify_wedge::create_report(
 
 		{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
+			false /* f_book */,
+			true /* f_title */,
 			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -360,7 +360,7 @@ void surface_classify_wedge::report(
 	if (f_v) {
 		cout << "surface_classify_wedge::report" << endl;
 	}
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 
 #if 0
@@ -402,7 +402,7 @@ void surface_classify_wedge::report(
 
 		title.assign("Flag orbits for double sixes");
 
-		Classify_double_sixes->Flag_orbits->print_latex(ost, title, TRUE);
+		Classify_double_sixes->Flag_orbits->print_latex(ost, title, true);
 	}
 	if (f_v) {
 		cout << "surface_classify_wedge::report "
@@ -417,8 +417,8 @@ void surface_classify_wedge::report(
 		string title;
 
 		title.assign("Double Sixes");
-		Classify_double_sixes->Double_sixes->print_latex(ost, title, TRUE,
-				FALSE, NULL, NULL);
+		Classify_double_sixes->Double_sixes->print_latex(ost, title, true,
+				false, NULL, NULL);
 	}
 	if (f_v) {
 		cout << "surface_classify_wedge::report "
@@ -434,7 +434,7 @@ void surface_classify_wedge::report(
 
 		title.assign("Flag orbits for cubic surfaces");
 
-		Flag_orbits->print_latex(ost, title, TRUE);
+		Flag_orbits->print_latex(ost, title, true);
 	}
 	if (f_v) {
 		cout << "surface_classify_wedge::report "
@@ -449,8 +449,8 @@ void surface_classify_wedge::report(
 		string title;
 
 		title.assign("Surfaces");
-		Surfaces->print_latex(ost, title, TRUE,
-				FALSE, NULL, NULL);
+		Surfaces->print_latex(ost, title, true,
+				false, NULL, NULL);
 	}
 	if (f_v) {
 		cout << "surface_classify_wedge::report "
@@ -514,7 +514,7 @@ void surface_classify_wedge::latex_surfaces(
 	}
 	Surfaces->print_latex(
 			ost, title, f_with_stabilizers,
-			FALSE, NULL, NULL);
+			false, NULL, NULL);
 	if (f_v) {
 		cout << "surface_classify_wedge::latex_surfaces "
 				"after Surfaces->print_latex" << endl;
@@ -571,18 +571,18 @@ void surface_classify_wedge::create_report_double_sixes(
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
+			false /* f_book */,
+			true /* f_title */,
 			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
 			extra_praeamble /* extra_praeamble */);
 
 
@@ -606,8 +606,8 @@ void surface_classify_wedge::create_report_double_sixes(
 			}
 			Classify_double_sixes->Double_sixes->print_latex(
 					fp,
-				title, FALSE /* f_with_stabilizers*/,
-				FALSE, NULL, NULL);
+				title, false /* f_with_stabilizers*/,
+				false, NULL, NULL);
 			if (f_v) {
 				cout << "surface_classify_wedge::create_report_double_sixes "
 						"after Classify_double_sixes->Double_sixes->print_latex" << endl;

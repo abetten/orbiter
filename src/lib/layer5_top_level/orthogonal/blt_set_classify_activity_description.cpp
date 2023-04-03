@@ -17,19 +17,19 @@ namespace orthogonal_geometry_applications {
 
 blt_set_classify_activity_description::blt_set_classify_activity_description()
 {
-	f_compute_starter = FALSE;
+	f_compute_starter = false;
 	starter_control = NULL;
 
-	f_poset_classification_activity = FALSE;
+	f_poset_classification_activity = false;
 	//std::string poset_classification_activity_label;
 
-	f_create_graphs = FALSE;
+	f_create_graphs = false;
 
-	f_split = FALSE;
+	f_split = false;
 	split_r = 0;
 	split_m = 1;
 
-	f_isomorph = FALSE;
+	f_isomorph = false;
 	Isomorph_arguments = NULL;
 
 }
@@ -51,7 +51,7 @@ int blt_set_classify_activity_description::read_arguments(int argc, std::string 
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-compute_starter") == 0) {
-			f_compute_starter = TRUE;
+			f_compute_starter = true;
 			if (f_v) {
 				cout << "-compute_starter " << endl;
 			}
@@ -62,7 +62,7 @@ int blt_set_classify_activity_description::read_arguments(int argc, std::string 
 
 		}
 		else if (ST.stringcmp(argv[i], "-poset_classification_activity") == 0) {
-			f_poset_classification_activity = TRUE;
+			f_poset_classification_activity = true;
 			poset_classification_activity_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-poset_classification_activity "
@@ -70,13 +70,13 @@ int blt_set_classify_activity_description::read_arguments(int argc, std::string 
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-create_graphs") == 0) {
-			f_create_graphs = TRUE;
+			f_create_graphs = true;
 			if (f_v) {
 				cout << "-create_graphs " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-split") == 0) {
-			f_split = TRUE;
+			f_split = true;
 			split_r = ST.strtoi(argv[++i]);
 			split_m = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -84,7 +84,7 @@ int blt_set_classify_activity_description::read_arguments(int argc, std::string 
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-isomorph") == 0) {
-			f_isomorph = TRUE;
+			f_isomorph = true;
 			//prefix_classify.assign(argv[++i]);
 			//prefix_iso.assign(argv[++i]);
 			Isomorph_arguments = NEW_OBJECT(layer4_classification::isomorph::isomorph_arguments);

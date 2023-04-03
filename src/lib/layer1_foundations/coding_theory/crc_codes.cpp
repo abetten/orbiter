@@ -189,13 +189,13 @@ void crc_codes::test_alfa(long int Nb_test, int k, int verbose_level)
 		for (j = 0; j < k; j++) {
 			int f_repeat;
 
-			while (TRUE) {
+			while (true) {
 				a = Len_check + Os.random_integer(Len_info);
 
-				f_repeat = FALSE;
+				f_repeat = false;
 				for (h = 0; h < j; h++) {
 					if (A[h] == a) {
-						f_repeat = TRUE;
+						f_repeat = true;
 					}
 				}
 				if (!f_repeat) {
@@ -266,13 +266,13 @@ void crc_codes::test_bravo(long int Nb_test, int k, int verbose_level)
 		for (j = 0; j < k; j++) {
 			int f_repeat;
 
-			while (TRUE) {
+			while (true) {
 				a = Len_check + Os.random_integer(Len_info);
 
-				f_repeat = FALSE;
+				f_repeat = false;
 				for (h = 0; h < j; h++) {
 					if (A[h] == a) {
-						f_repeat = TRUE;
+						f_repeat = true;
 					}
 				}
 				if (!f_repeat) {
@@ -344,13 +344,13 @@ void crc_codes::test_crc32(long int Nb_test, int k, int verbose_level)
 		for (j = 0; j < k; j++) {
 			int f_repeat;
 
-			while (TRUE) {
+			while (true) {
 				a = Len_check + Os.random_integer(Len_info);
 
-				f_repeat = FALSE;
+				f_repeat = false;
 				for (h = 0; h < j; h++) {
 					if (A[h] == a) {
-						f_repeat = TRUE;
+						f_repeat = true;
 					}
 				}
 				if (!f_repeat) {
@@ -420,13 +420,13 @@ void crc_codes::test_charlie(long int Nb_test, int k, int verbose_level)
 		for (j = 0; j < k; j++) {
 			int f_repeat;
 
-			while (TRUE) {
+			while (true) {
 				a = Len_check + Os.random_integer(Len_info);
 
-				f_repeat = FALSE;
+				f_repeat = false;
 				for (h = 0; h < j; h++) {
 					if (A[h] == a) {
-						f_repeat = TRUE;
+						f_repeat = true;
 					}
 				}
 				if (!f_repeat) {
@@ -493,13 +493,13 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 		for (j = 0; j < k; j++) {
 			int f_repeat;
 
-			while (TRUE) {
+			while (true) {
 				a = Crc->Len_check + Os.random_integer(Crc->Len_info);
 
-				f_repeat = FALSE;
+				f_repeat = false;
 				for (h = 0; h < j; h++) {
 					if (A[h] == a) {
-						f_repeat = TRUE;
+						f_repeat = true;
 					}
 				}
 				if (!f_repeat) {
@@ -603,7 +603,7 @@ void crc_codes::crc256_test_k_subsets(
 
 	Combi.first_k_subset(set, message_length_in_bits, k);
 
-	while (TRUE) {
+	while (true) {
 
 
 		for (i = 0; i < k; i++) {
@@ -791,7 +791,7 @@ void crc_codes::crc32_remainders_compute(
 
 	Combi.first_k_subset(set, message_length_in_bits, k);
 
-	while (TRUE) {
+	while (true) {
 
 
 		for (i = 0; i < k; i++) {
@@ -1782,7 +1782,7 @@ void crc_codes::check_errors(
 			}
 
 
-			f_faulty = FALSE;
+			f_faulty = false;
 
 			if (type == t_CRC_16) {
 				uint16_t crc;
@@ -1796,7 +1796,7 @@ void crc_codes::check_errors(
 					}
 				}
 				if (i < nb_check_bytes) {
-					f_faulty = TRUE;
+					f_faulty = true;
 				}
 
 			}
@@ -1814,7 +1814,7 @@ void crc_codes::check_errors(
 					}
 				}
 				if (i < nb_check_bytes) {
-					f_faulty = TRUE;
+					f_faulty = true;
 				}
 
 			}

@@ -40,19 +40,19 @@ static int max_m(
 int design_parameters_admissible(
 		int v, int t, int k, discreta_base & lambda)
 {
-	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+	int delta_lambda = calc_delta_lambda(v, t, k, false);
 	discreta_base b, q, r;
 	
 	b.m_i_i(delta_lambda);
 	lambda.integral_division(b, q, r, 0);
 	if (!r.is_zero())
-		return FALSE;
+		return false;
 	
 	discreta_base lambda_max;
 	design_lambda_max(t, v, k, lambda_max);
 	if (lambda.gt(lambda_max))
-		return FALSE;
-	return TRUE;
+		return false;
+	return true;
 }
 
 int calc_delta_lambda(
@@ -63,7 +63,7 @@ int calc_delta_lambda(
 	int i;
 	discreta_base a, b, a1, b1, g, rhs_a, rhs_b, delta_lambda, dl, a2, b2, gg;
 	
-	// f_v = TRUE;
+	// f_v = true;
 
 	lambda.m_i_i(1);
 	if (f_v) {
@@ -185,13 +185,13 @@ int is_trivial_clan(
 {
 	discreta_base dl, lambda_max;
 	
-	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+	int delta_lambda = calc_delta_lambda(v, t, k, false);
 	dl.m_i_i(delta_lambda);
 	design_lambda_max(t, v, k, lambda_max);
 	if (dl.eq(lambda_max))
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 void print_clan_tex_int(
@@ -200,7 +200,7 @@ void print_clan_tex_int(
 	integer T(t), V(v), K(k);
 	discreta_base lambda_max, m_max;
 	
-	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+	int delta_lambda = calc_delta_lambda(v, t, k, false);
 	design_lambda_max(t, v, k, lambda_max);
 	lambda_max.integral_division_by_integer_exact(delta_lambda, m_max, verbose_level);
 	print_clan_tex(T, V, K, delta_lambda, m_max);
@@ -240,7 +240,7 @@ void print_clan_tex(
 int is_ancestor(
 		int t, int v, int k)
 {
-	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+	int delta_lambda = calc_delta_lambda(v, t, k, false);
 	return is_ancestor(t, v, k, delta_lambda);
 }
 
@@ -252,19 +252,19 @@ int is_ancestor(
 	if (calc_redinv(t, v, k, delta_lambda, c, T, V, K, Delta_lambda) && c == 1) {
 		// cout << "is_ancestor(): " << t << " " << v << " " << k
 		//<< " is not ancestor, red^-1 is possible for c=" << c << endl;
-		return FALSE;
+		return false;
 		}
 	if (calc_derinv(t, v, k, delta_lambda, c, T, V, K, Delta_lambda) && c == 1) {
 		// cout << "is_ancestor(): " << t << " " << v << " " << k
 		//<< " is not ancestor, der^-1 is possible for c=" << c << endl;
-		return FALSE;
+		return false;
 		}
 	if (calc_resinv(t, v, k, delta_lambda, c, T, V, K, Delta_lambda) && c == 1) {
 		// cout << "is_ancestor(): " << t << " " << v << " " << k
 		//<< " is not ancestor, res^-1 is possible for c=" << c << endl;
-		return FALSE;
+		return false;
 		}
-	return TRUE;
+	return true;
 }
 
 int calc_redinv(
@@ -275,7 +275,7 @@ int calc_redinv(
 	number_theory::number_theory_domain NT;
 	
 	if (t == k)
-		return FALSE;
+		return false;
 	T = t + 1;
 	V = v;
 	K = k;
@@ -287,7 +287,7 @@ int calc_redinv(
 	gg = NT.gcd_lint(delta_lambda, v1);
 	c = v1 / gg;
 	Delta_lambda = k1 * delta_lambda / gg;
-	return TRUE;
+	return true;
 }
 
 int calc_derinv(
@@ -297,9 +297,9 @@ int calc_derinv(
 	T = t + 1;
 	V = v + 1;
 	K = k + 1;
-	Delta_lambda = calc_delta_lambda(V, T, K, FALSE);
+	Delta_lambda = calc_delta_lambda(V, T, K, false);
 	c = Delta_lambda / delta_lambda;
-	return TRUE;
+	return true;
 }
 
 int calc_resinv(
@@ -310,16 +310,16 @@ int calc_resinv(
 	number_theory::number_theory_domain NT;
 	
 	if (t == k)
-		return FALSE;
+		return false;
 	T = t + 1;
 	V = v + 1;
 	K = k;
-	Delta_lambda = calc_delta_lambda(V, T, K, FALSE);
+	Delta_lambda = calc_delta_lambda(V, T, K, false);
 	a = Delta_lambda * (v + 1 - k);
 	b = delta_lambda * (k - t);
 	g = NT.gcd_lint(a, b);
 	c = a / g;
-	return TRUE;
+	return true;
 }
 
 void design_mendelsohn_coefficient_matrix(
@@ -369,9 +369,9 @@ int design_parameter_database_already_there(
 	idx = B_tvkl.search_unique_int8_int8_int8_int8(
 		p.t(), p.v(), p.K(), p.lambda().s_i_i(), verbose_level);
 	if (idx == -1)
-		return FALSE;
+		return false;
 	else
-		return TRUE;
+		return true;
 }
 
 void design_parameter_database_add_if_new(
@@ -400,7 +400,7 @@ void design_parameter_database_add_if_new(
 		
 		B_tvkl.ith(idx, &key, &data, verbose_level - 1);
 		D.get_object(&data, p1, verbose_level - 2);
-		// D.ith_object(idx, btree_idx, p1, FALSE, FALSE);
+		// D.ith_object(idx, btree_idx, p1, false, false);
 		for (int i = 0; i < p.source().s_l(); i++) {
 			p1.source().append(p.source_i(i));
 			}
@@ -612,7 +612,7 @@ void design_parameter_database_read_design_txt(
 
 	long int id = 0;
 	long int highest_id_already_closed = -1;
-	while (TRUE) {
+	while (true) {
 		if (f.eof()) {
 			break;
 			}
@@ -718,19 +718,19 @@ void design_parameter_database_export_tex(
 
 
 	ofstream f("designs.tex", ios::trunc);
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	string title, author, extra_praeamble;
 
 	title.assign("$t$-Designs");
 	author.assign("DISCRETA");
 
-	L.head(f, TRUE /* f_book */, TRUE /* f_title */,
-		title, author, TRUE /* f_toc */,
-		FALSE /* f_landscape */,
-		TRUE /* f_12pt */, 
-		TRUE /* f_enlarged_page */, 
-		TRUE /* f_pagenumbers */,
+	L.head(f, true /* f_book */, true /* f_title */,
+		title, author, true /* f_toc */,
+		false /* f_landscape */,
+		true /* f_12pt */, 
+		true /* f_enlarged_page */, 
+		true /* f_pagenumbers */,
 		extra_praeamble /* extra_praeamble */);
 	printing_mode pm(printing_mode_latex);
 	
@@ -852,7 +852,7 @@ void design_parameter_database_export_tex(
 				design_lambda_max(t, v, k, lambda_max);
 				design_lambda_max_half(t, v, k, lambda_max_half);
 				// cout << "t=" << t << " v=" << v << " k=" << k << " lambda_max=" << lambda_max << endl;
-				int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+				int delta_lambda = calc_delta_lambda(v, t, k, false);
 
 
 
@@ -1127,7 +1127,7 @@ int determine_restricted_number_of_designs_t_v(
 		design_lambda_max(t, v, k, lambda_max);
 		design_lambda_max_half(t, v, k, lambda_max_half);
 		// cout << "t=" << t << " v=" << v << " k=" << k << " lambda_max=" << lambda_max << endl;
-		// int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		// int delta_lambda = calc_delta_lambda(v, t, k, false);
 
 		int l = 0;
 		for (int i = 0; i < len; i++) {
@@ -1274,7 +1274,7 @@ void design_parameter_database_clans(
 		int v = g.s_ii(1);
 		int k = g.s_ii(2);
 		
-		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int delta_lambda = calc_delta_lambda(v, t, k, false);
 		cout << " delta_lambda = " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half;
 		design_lambda_max(t, v, k, lambda_max);
@@ -1290,7 +1290,7 @@ void design_parameter_database_clans(
 		int v = g.s_ii(1);
 		int k = g.s_ii(2);
 		
-		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int delta_lambda = calc_delta_lambda(v, t, k, false);
 		cout << " & " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half;
 		design_lambda_max(t, v, k, lambda_max);
@@ -1321,7 +1321,7 @@ void design_parameter_database_clans(
 		int v = g.s_ii(1);
 		int k = g.s_ii(2);
 		
-		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int delta_lambda = calc_delta_lambda(v, t, k, false);
 		cout << " delta_lambda = " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half;
 		design_lambda_max(t, v, k, lambda_max);
@@ -1506,7 +1506,7 @@ void design_parameter_database_clan_report(
 		int t = a.s_ii(0);
 		int v = a.s_ii(1);
 		int k = a.s_ii(2);
-		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int delta_lambda = calc_delta_lambda(v, t, k, false);
 		//cout << " delta_lambda = " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half, m_max, dl, r;
 		dl.m_i_i(delta_lambda);
@@ -1566,7 +1566,7 @@ void design_parameter_database_clan_report(
 		html_head(fhtml, h1.s(), h2.s());	
 
 
-		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int delta_lambda = calc_delta_lambda(v, t, k, false);
 		//cout << " delta_lambda = " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half, m_max, dl, r;
 		dl.m_i_i(delta_lambda);

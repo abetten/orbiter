@@ -316,7 +316,7 @@ void plot_tools::y_to_pt_on_curve(
 		int y_in, int &x, int &y,
 	int *outline_value, int *outline_number, int outline_sz)
 {
-	int f_v = FALSE;
+	int f_v = false;
 	int idx, f_found;
 	data_structures::sorting Sorting;
 
@@ -518,7 +518,7 @@ void plot_tools::draw_mod_n_work(
 	int i, j;
 	double start_angle = 0;
 	orbiter_kernel_system::numerics Num;
-	int f_do_it = FALSE;
+	int f_do_it = false;
 	char str[1000];
 
 
@@ -602,14 +602,14 @@ void plot_tools::draw_mod_n_work(
 
 		if (Descr->f_mod_s) {
 			if ((i % Descr->mod_s) == 0) {
-				f_do_it = TRUE;
+				f_do_it = true;
 			}
 			else {
-				f_do_it = FALSE;
+				f_do_it = false;
 			}
 		}
 		else {
-			f_do_it = TRUE;
+			f_do_it = true;
 		}
 
 		if (f_do_it) {
@@ -643,14 +643,14 @@ void plot_tools::draw_mod_n_work(
 
 		if (Descr->f_mod_s) {
 			if ((i % Descr->mod_s) == 0) {
-				f_do_it = TRUE;
+				f_do_it = true;
 			}
 			else {
-				f_do_it = FALSE;
+				f_do_it = false;
 			}
 		}
 		else {
-			f_do_it = TRUE;
+			f_do_it = true;
 		}
 		if (f_do_it) {
 			string s;
@@ -913,7 +913,7 @@ void plot_tools::draw_point_set_in_plane(
 					"before projective_plane_draw_grid" << endl;
 		}
 		projective_plane_draw_grid(fname, O,
-			q, Table, nb_pts, TRUE, Labels,
+			q, Table, nb_pts, true, Labels,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "plot_tools::draw_point_set_in_plane "
@@ -927,7 +927,7 @@ void plot_tools::draw_point_set_in_plane(
 					"before projective_plane_draw_grid" << endl;
 		}
 		projective_plane_draw_grid(fname, O,
-			q, Table, nb_pts, FALSE, NULL,
+			q, Table, nb_pts, false, NULL,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "plot_tools::draw_point_set_in_plane "

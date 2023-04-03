@@ -22,141 +22,141 @@ symbol_definition::symbol_definition()
 
 	//std::string define_label;
 
-	f_finite_field = FALSE;
+	f_finite_field = false;
 	Finite_field_description = NULL;
 
-	f_polynomial_ring = FALSE;
+	f_polynomial_ring = false;
 	Polynomial_ring_description = NULL;
 
-	f_projective_space = FALSE;
+	f_projective_space = false;
 	Projective_space_with_action_description = NULL;
 
-	f_orthogonal_space = FALSE;
+	f_orthogonal_space = false;
 	Orthogonal_space_with_action_description = NULL;
 
-	f_BLT_set_classifier = FALSE;
+	f_BLT_set_classifier = false;
 	//std::string BLT_set_classifier_label_orthogonal_geometry;
 	Blt_set_classify_description = NULL;
 
-	f_spread_classifier = FALSE;
+	f_spread_classifier = false;
 	Spread_classify_description = NULL;
 
 
-	f_linear_group = FALSE;
+	f_linear_group = false;
 	Linear_group_description = NULL;
 
-	f_permutation_group = FALSE;
+	f_permutation_group = false;
 	Permutation_group_description = NULL;
 
-	f_group_modification = FALSE;
+	f_group_modification = false;
 	Group_modification_description = NULL;
 
-	f_formula = FALSE;
+	f_formula = false;
 	Formula = NULL;
 	//std::string label;
 	//std::string label_tex;
 	//std::string managed_variables;
 	//std::string formula_text;
 
-	f_collection = FALSE;
+	f_collection = false;
 	//std::string list_of_objects;
 
-	f_geometric_object = FALSE;
+	f_geometric_object = false;
 	//std::string geometric_object_projective_space_label;
 	Geometric_object_description = NULL;
 
-	f_graph = FALSE;
+	f_graph = false;
 	Create_graph_description = NULL;
 
-	f_code = FALSE;
+	f_code = false;
 	Create_code_description = NULL;
 
-	f_spread = FALSE;
+	f_spread = false;
 	Spread_create_description = NULL;
 
-	f_cubic_surface = FALSE;
+	f_cubic_surface = false;
 	Surface_Descr = NULL;
 
-	f_quartic_curve = FALSE;
+	f_quartic_curve = false;
 	Quartic_curve_descr = NULL;
 
-	f_BLT_set = FALSE;
+	f_BLT_set = false;
 	BLT_Set_create_description = NULL;
 
 
-	f_translation_plane = FALSE;
+	f_translation_plane = false;
 	//std::string translation_plane_spread_label;
 	//std::string translation_plane_group_n_label;
 	//std::string translation_plane_group_np1_label;
 
 
-	f_spread_table = FALSE;
+	f_spread_table = false;
 	//std::string spread_table_label_PA;
 	dimension_of_spread_elements = 0;
 	//std::string spread_selection_text;
 	//std::string spread_tables_prefix;
 
 
-	f_packing_was = FALSE;
+	f_packing_was = false;
 	//std::string packing_was_label_spread_table;
 	packing_was_descr = NULL;
 
-	f_packing_was_choose_fixed_points = FALSE;
+	f_packing_was_choose_fixed_points = false;
 	//std::string packing_with_assumed_symmetry_label;
 	packing_with_assumed_symmetry_choose_fixed_points_clique_size = 0;
 	packing_with_assumed_symmetry_choose_fixed_points_control = NULL;
 
 
-	f_packing_long_orbits = FALSE;
+	f_packing_long_orbits = false;
 	//std::string packing_long_orbits_choose_fixed_points_label
 	Packing_long_orbits_description = NULL;
 
-	f_graph_classification = FALSE;
+	f_graph_classification = false;
 	Graph_classify_description = NULL;
 
-	f_diophant = FALSE;
+	f_diophant = false;
 	Diophant_description = NULL;
 
-	f_design = FALSE;
+	f_design = false;
 	Design_create_description = NULL;
 
 
-	f_design_table = FALSE;
+	f_design_table = false;
 	//std::string design_table_label_design;
 	//std::string design_table_label;
 	//std::string design_table_group;
 
 
-	f_large_set_was = FALSE;
+	f_large_set_was = false;
 	//std::string  large_set_was_label_design_table;
 	large_set_was_descr = NULL;
 
 
-	f_set = FALSE;
-	Set_builder_description = FALSE;
+	f_set = false;
+	Set_builder_description = false;
 
-	f_vector = FALSE;
-	Vector_builder_description = FALSE;
+	f_vector = false;
+	Vector_builder_description = false;
 
-	f_combinatorial_objects = FALSE;
-	Data_input_stream_description = FALSE;
+	f_combinatorial_objects = false;
+	Data_input_stream_description = false;
 
-	f_geometry_builder = FALSE;
+	f_geometry_builder = false;
 	Geometry_builder_description = NULL;
 
-	f_vector_ge = FALSE;
+	f_vector_ge = false;
 	Vector_ge_description = NULL;
 
-	f_action_on_forms = FALSE;
+	f_action_on_forms = false;
 	Action_on_forms_descr = NULL;
 
-	f_orbits = FALSE;
+	f_orbits = false;
 	Orbits_create_description = NULL;
 
-	f_poset_classification_control = FALSE;
+	f_poset_classification_control = false;
 	Poset_classification_control = NULL;
 
-	f_poset_classification_activity = FALSE;
+	f_poset_classification_activity = false;
 	Poset_classification_activity = NULL;
 
 }
@@ -181,7 +181,7 @@ void symbol_definition::read_definition(
 
 	symbol_definition::Sym = Sym;
 
-	//f_define = TRUE;
+	//f_define = true;
 	define_label.assign(argv[++i]);
 	if (f_v) {
 		cout << "symbol_definition::read_definition "
@@ -192,7 +192,7 @@ void symbol_definition::read_definition(
 		cout << "-define " << define_label << endl;
 	}
 	if (ST.stringcmp(argv[i], "-finite_field") == 0) {
-		f_finite_field = TRUE;
+		f_finite_field = true;
 		Finite_field_description = NEW_OBJECT(field_theory::finite_field_description);
 		if (f_v) {
 			cout << "reading -finite_field" << endl;
@@ -212,7 +212,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-polynomial_ring") == 0) {
-		f_polynomial_ring = TRUE;
+		f_polynomial_ring = true;
 		Polynomial_ring_description = NEW_OBJECT(ring_theory::polynomial_ring_description);
 		if (f_v) {
 			cout << "reading -polynomial_ring" << endl;
@@ -232,7 +232,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-projective_space") == 0) {
-		f_projective_space = TRUE;
+		f_projective_space = true;
 		Projective_space_with_action_description = NEW_OBJECT(projective_geometry::projective_space_with_action_description);
 		if (f_v) {
 			cout << "reading -projective_space" << endl;
@@ -252,7 +252,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-orthogonal_space") == 0) {
-		f_orthogonal_space = TRUE;
+		f_orthogonal_space = true;
 		Orthogonal_space_with_action_description = NEW_OBJECT(orthogonal_geometry_applications::orthogonal_space_with_action_description);
 		if (f_v) {
 			cout << "reading -orthogonal_space" << endl;
@@ -272,7 +272,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-BLT_set_classifier") == 0) {
-		f_BLT_set_classifier = TRUE;
+		f_BLT_set_classifier = true;
 		BLT_set_classifier_label_orthogonal_geometry.assign(argv[++i]);
 		Blt_set_classify_description = NEW_OBJECT(orthogonal_geometry_applications::blt_set_classify_description);
 		if (f_v) {
@@ -293,7 +293,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-spread_classifier") == 0) {
-		f_spread_classifier = TRUE;
+		f_spread_classifier = true;
 		Spread_classify_description = NEW_OBJECT(spreads::spread_classify_description);
 		if (f_v) {
 			cout << "reading -spread_classifier" << endl;
@@ -315,7 +315,7 @@ void symbol_definition::read_definition(
 	}
 
 	else if (ST.stringcmp(argv[i], "-linear_group") == 0) {
-		f_linear_group = TRUE;
+		f_linear_group = true;
 		Linear_group_description = NEW_OBJECT(groups::linear_group_description);
 		if (f_v) {
 			cout << "reading -linear_group" << endl;
@@ -336,7 +336,7 @@ void symbol_definition::read_definition(
 	}
 
 	else if (ST.stringcmp(argv[i], "-permutation_group") == 0) {
-		f_permutation_group = TRUE;
+		f_permutation_group = true;
 		Permutation_group_description = NEW_OBJECT(groups::permutation_group_description);
 		if (f_v) {
 			cout << "reading -permutation_group" << endl;
@@ -357,7 +357,7 @@ void symbol_definition::read_definition(
 	}
 
 	else if (ST.stringcmp(argv[i], "-modified_group") == 0) {
-		f_group_modification = TRUE;
+		f_group_modification = true;
 		Group_modification_description = NEW_OBJECT(apps_algebra::group_modification_description);
 		if (f_v) {
 			cout << "reading -modified_group" << endl;
@@ -381,7 +381,7 @@ void symbol_definition::read_definition(
 		if (f_v) {
 			cout << "symbol_definition::read_definition -formula" << endl;
 		}
-		f_formula = TRUE;
+		f_formula = true;
 
 		label.assign(argv[++i]);
 		label_tex.assign(argv[++i]);
@@ -410,7 +410,7 @@ void symbol_definition::read_definition(
 	}
 
 	else if (ST.stringcmp(argv[i], "-geometric_object") == 0) {
-		f_geometric_object = TRUE;
+		f_geometric_object = true;
 
 		geometric_object_projective_space_label.assign(argv[++i]);
 		Geometric_object_description = NEW_OBJECT(geometry::geometric_object_description);
@@ -438,7 +438,7 @@ void symbol_definition::read_definition(
 			cout << "symbol_definition::read_definition -collection" << endl;
 		}
 
-		f_collection = TRUE;
+		f_collection = true;
 
 		list_of_objects.assign(argv[++i]);
 		i++;
@@ -446,7 +446,7 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-graph") == 0) {
 
-		f_graph = TRUE;
+		f_graph = true;
 		Create_graph_description = NEW_OBJECT(apps_graph_theory::create_graph_description);
 		if (f_v) {
 			cout << "symbol_definition::read_definition reading -graph" << endl;
@@ -470,7 +470,7 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-code") == 0) {
 
-		f_code = TRUE;
+		f_code = true;
 		Create_code_description = NEW_OBJECT(apps_coding_theory::create_code_description);
 		if (f_v) {
 			cout << "symbol_definition::read_definition reading -code" << endl;
@@ -494,7 +494,7 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-spread") == 0) {
 
-		f_spread = TRUE;
+		f_spread = true;
 		Spread_create_description = NEW_OBJECT(spreads::spread_create_description);
 		if (f_v) {
 			cout << "reading -spread" << endl;
@@ -519,7 +519,7 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-cubic_surface") == 0) {
 
-		f_cubic_surface = TRUE;
+		f_cubic_surface = true;
 		Surface_Descr = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
 		if (f_v) {
 			cout << "reading -cubic_surface" << endl;
@@ -544,7 +544,7 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-quartic_curve") == 0) {
 
-		f_quartic_curve = TRUE;
+		f_quartic_curve = true;
 		Quartic_curve_descr = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description);
 		if (f_v) {
 			cout << "reading -quartic_curve" << endl;
@@ -569,7 +569,7 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-BLT_set") == 0) {
 
-		f_BLT_set = TRUE;
+		f_BLT_set = true;
 		BLT_Set_create_description = NEW_OBJECT(orthogonal_geometry_applications::BLT_set_create_description);
 		if (f_v) {
 			cout << "reading -BLT_set" << endl;
@@ -593,7 +593,7 @@ void symbol_definition::read_definition(
 	}
 
 	else if (ST.stringcmp(argv[i], "-translation_plane") == 0) {
-		f_translation_plane = TRUE;
+		f_translation_plane = true;
 		translation_plane_spread_label.assign(argv[++i]);
 		translation_plane_group_n_label.assign(argv[++i]);
 		translation_plane_group_np1_label.assign(argv[++i]);
@@ -610,7 +610,7 @@ void symbol_definition::read_definition(
 
 
 	else if (ST.stringcmp(argv[i], "-spread_table") == 0) {
-		f_spread_table = TRUE;
+		f_spread_table = true;
 
 		spread_table_label_PA.assign(argv[++i]);
 		dimension_of_spread_elements = ST.strtoi(argv[++i]);
@@ -638,7 +638,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-packing_with_symmetry_assumption") == 0) {
-		f_packing_was = TRUE;
+		f_packing_was = true;
 
 		packing_was_label_spread_table.assign(argv[++i]);
 
@@ -663,7 +663,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-packing_choose_fixed_points") == 0) {
-		f_packing_was_choose_fixed_points = TRUE;
+		f_packing_was_choose_fixed_points = true;
 
 		packing_with_assumed_symmetry_label.assign(argv[++i]);
 		packing_with_assumed_symmetry_choose_fixed_points_clique_size = ST.strtoi(argv[++i]);
@@ -692,7 +692,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-packing_long_orbits") == 0) {
-		f_packing_long_orbits = TRUE;
+		f_packing_long_orbits = true;
 
 		packing_long_orbits_choose_fixed_points_label.assign(argv[++i]);
 
@@ -718,7 +718,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-graph_classification") == 0) {
-		f_graph_classification = TRUE;
+		f_graph_classification = true;
 
 		Graph_classify_description = NEW_OBJECT(apps_graph_theory::graph_classify_description);
 		if (f_v) {
@@ -741,7 +741,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-diophant") == 0) {
-		f_diophant = TRUE;
+		f_diophant = true;
 
 		Diophant_description = NEW_OBJECT(solvers::diophant_description);
 		if (f_v) {
@@ -765,7 +765,7 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-design") == 0) {
 
-		f_design = TRUE;
+		f_design = true;
 		Design_create_description = NEW_OBJECT(apps_combinatorics::design_create_description);
 		if (f_v) {
 			cout << "reading -design" << endl;
@@ -786,7 +786,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-design_table") == 0) {
-		f_design_table = TRUE;
+		f_design_table = true;
 
 		design_table_label_design.assign(argv[++i]);
 		design_table_label.assign(argv[++i]);
@@ -807,7 +807,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-large_set_with_symmetry_assumption") == 0) {
-		f_large_set_was = TRUE;
+		f_large_set_was = true;
 
 		large_set_was_label_design_table.assign(argv[++i]);
 
@@ -832,7 +832,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-set") == 0) {
-		f_set = TRUE;
+		f_set = true;
 
 
 		Set_builder_description = NEW_OBJECT(data_structures::set_builder_description);
@@ -856,7 +856,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-vector") == 0) {
-		f_vector = TRUE;
+		f_vector = true;
 
 
 		Vector_builder_description = NEW_OBJECT(data_structures::vector_builder_description);
@@ -880,7 +880,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-combinatorial_objects") == 0) {
-		f_combinatorial_objects = TRUE;
+		f_combinatorial_objects = true;
 
 
 		Data_input_stream_description = NEW_OBJECT(data_structures::data_input_stream_description);
@@ -904,7 +904,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-geometry_builder") == 0) {
-		f_geometry_builder = TRUE;
+		f_geometry_builder = true;
 
 
 		Geometry_builder_description = NEW_OBJECT(geometry_builder::geometry_builder_description);
@@ -928,7 +928,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-vector_ge") == 0) {
-		f_vector_ge = TRUE;
+		f_vector_ge = true;
 
 
 		Vector_ge_description = NEW_OBJECT(data_structures_groups::vector_ge_description);
@@ -952,7 +952,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-action_on_forms") == 0) {
-		f_action_on_forms = TRUE;
+		f_action_on_forms = true;
 
 		Action_on_forms_descr = NEW_OBJECT(apps_algebra::action_on_forms_description);
 		if (f_v) {
@@ -975,7 +975,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-orbits") == 0) {
-		f_orbits = TRUE;
+		f_orbits = true;
 
 		Orbits_create_description = NEW_OBJECT(apps_algebra::orbits_create_description);
 		if (f_v) {
@@ -998,7 +998,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
-		f_poset_classification_control = TRUE;
+		f_poset_classification_control = true;
 
 		Poset_classification_control = NEW_OBJECT(poset_classification::poset_classification_control);
 		if (f_v) {
@@ -1021,7 +1021,7 @@ void symbol_definition::read_definition(
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-poset_classification_activity") == 0) {
-		f_poset_classification_activity = TRUE;
+		f_poset_classification_activity = true;
 
 		Poset_classification_activity = NEW_OBJECT(poset_classification::poset_classification_activity_description);
 		if (f_v) {
@@ -1780,14 +1780,14 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 
 
 	if (NT.is_prime(Projective_space_with_action_description->F->q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 	else {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	}
 
 	if (Projective_space_with_action_description->f_use_projectivity_subgroup) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 
 	projective_geometry::projective_space_with_action *PA;
@@ -1801,7 +1801,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	PA->init(Projective_space_with_action_description->F,
 			Projective_space_with_action_description->n,
 		f_semilinear,
-		TRUE /*f_init_incidence_structure*/,
+		true /*f_init_incidence_structure*/,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space "
@@ -1859,10 +1859,10 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 
 #if 0
 	if (NT.is_prime(Orthogonal_space_with_action_description->F->q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 	else {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	}
 #endif
 
@@ -2783,7 +2783,7 @@ void symbol_definition::definition_of_spread_table(int verbose_level)
 	P->spread_table_init(
 			PA,
 			dimension_of_spread_elements,
-			TRUE /* f_select_spread */, spread_selection_text,
+			true /* f_select_spread */, spread_selection_text,
 			spread_tables_prefix,
 			verbose_level);
 
@@ -3582,8 +3582,8 @@ void symbol_definition::load_finite_field_PG(int verbose_level)
 		}
 		Projective_space_with_action_description->F = NEW_OBJECT(field_theory::finite_field);
 		Projective_space_with_action_description->F->finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				TRUE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				true /* f_compute_related_fields */,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::load_finite_field_PG "
@@ -3630,8 +3630,8 @@ field_theory::finite_field *symbol_definition::get_or_create_finite_field(
 		F = NEW_OBJECT(field_theory::finite_field);
 
 		F->finite_field_init_small_order(q,
-				FALSE /* f_without_tables */,
-				TRUE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				true /* f_compute_related_fields */,
 				verbose_level - 1);
 
 		if (f_v) {

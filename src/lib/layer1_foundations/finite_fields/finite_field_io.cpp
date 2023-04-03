@@ -71,8 +71,8 @@ void finite_field_io::print_minimum_polynomial_to_str(
 	finite_field GFp;
 
 	GFp.finite_field_init_small_order(p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	ring_theory::unipoly_domain FX(&GFp);
@@ -434,7 +434,7 @@ void finite_field_io::int_vec_print_elements_exponential(
 			exit(1);
 		}
 		print_element_with_symbol(ost, v[i],
-			TRUE /*f_print_as_exponentials*/,
+			true /*f_print_as_exponentials*/,
 			10 /*width*/, symbol_for_print);
 		if (i < len - 1) {
 			ost << ", ";
@@ -698,7 +698,7 @@ void finite_field_io::cheat_sheet(
 		f << "The numerical value of the polynomial is " << F->my_poly << "\\\\" << endl;
 	}
 
-	int f_add_mult_table = TRUE;
+	int f_add_mult_table = true;
 
 	if (f_add_mult_table) {
 
@@ -754,19 +754,19 @@ void finite_field_io::cheat_sheet(
 	}
 
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet before cheat_sheet_power_table TRUE" << endl;
+		cout << "finite_field_io::cheat_sheet before cheat_sheet_power_table true" << endl;
 	}
-	cheat_sheet_power_table(f, TRUE /* f_with_polynomials */, verbose_level);
+	cheat_sheet_power_table(f, true /* f_with_polynomials */, verbose_level);
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet after cheat_sheet_power_table TRUE" << endl;
+		cout << "finite_field_io::cheat_sheet after cheat_sheet_power_table true" << endl;
 	}
 
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet before cheat_sheet_power_table FALSE" << endl;
+		cout << "finite_field_io::cheat_sheet before cheat_sheet_power_table false" << endl;
 	}
-	cheat_sheet_power_table(f, FALSE /* f_with_polynomials */, verbose_level);
+	cheat_sheet_power_table(f, false /* f_with_polynomials */, verbose_level);
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet after cheat_sheet_power_table FALSE" << endl;
+		cout << "finite_field_io::cheat_sheet after cheat_sheet_power_table false" << endl;
 	}
 
 	if (f_v) {
@@ -792,8 +792,8 @@ void finite_field_io::cheat_sheet_subfields(
 		f << "The polynomial used to define the field is : ";
 		finite_field GFp;
 		GFp.finite_field_init_small_order(F->p,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0);
 
 		ring_theory::unipoly_domain FX(&GFp);
@@ -846,13 +846,13 @@ void finite_field_io::report_subfields(
 
 			poly = F->compute_subfield_polynomial(
 					NT.i_power_j(F->p, h),
-					//FALSE, cout,
+					//false, cout,
 					verbose_level);
 			{
 				finite_field GFp;
 				GFp.finite_field_init_small_order(F->p,
-						FALSE /* f_without_tables */,
-						FALSE /* f_compute_related_fields */,
+						false /* f_without_tables */,
+						false /* f_compute_related_fields */,
 						0);
 
 				ring_theory::unipoly_domain FX(&GFp);
@@ -916,7 +916,7 @@ void finite_field_io::report_subfields_detailed(
 		M->compute_subfield_polynomial(
 				F,
 				q0 /* order_subfield */,
-				FALSE /*verbose_level*/);
+				false /*verbose_level*/);
 
 
 
@@ -930,8 +930,8 @@ void finite_field_io::report_subfields_detailed(
 
 		poly_text.assign(str);
 		Fq->init_override_polynomial_small_order(q0, poly_text,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				verbose_level);
 
 		subfield_structure *Sub;
@@ -973,7 +973,7 @@ void finite_field_io::cheat_sheet_addition_table(
 
 	if (F->q <= 64) {
 		f << "$$" << endl;
-		latex_addition_table(f, FALSE /* f_elements_exponential */,
+		latex_addition_table(f, false /* f_elements_exponential */,
 				F->get_symbol_for_print());
 #if 0
 		const char *symbol_for_print = "\\alpha";
@@ -984,7 +984,7 @@ void finite_field_io::cheat_sheet_addition_table(
 		else {
 			f << "\\qquad" << endl;
 		}
-		latex_addition_table(f, TRUE /* f_elements_exponential */,
+		latex_addition_table(f, true /* f_elements_exponential */,
 				symbol_for_print);
 #endif
 		f << "$$" << endl;
@@ -1012,7 +1012,7 @@ void finite_field_io::cheat_sheet_multiplication_table(
 
 	if (F->q <= 64) {
 		f << "$$" << endl;
-		latex_multiplication_table(f, FALSE /* f_elements_exponential */,
+		latex_multiplication_table(f, false /* f_elements_exponential */,
 				F->get_symbol_for_print());
 #if 0
 		const char *symbol_for_print = "\\alpha";
@@ -1023,7 +1023,7 @@ void finite_field_io::cheat_sheet_multiplication_table(
 		else {
 			f << "\\qquad" << endl;
 		}
-		latex_multiplication_table(f, TRUE /* f_elements_exponential */,
+		latex_multiplication_table(f, true /* f_elements_exponential */,
 				symbol_for_print);
 #endif
 		f << "$$" << endl;
@@ -1147,7 +1147,7 @@ void finite_field_io::cheat_sheet_table_of_elements(
 		Gg.AG_element_unrank(F->p, v, 1, F->e, i);
 		ost << setw(3) << i;
 		ost << " & ";
-		//f_first = TRUE;
+		//f_first = true;
 
 
 		for (j = F->e - 1; j >= 0; j--) {
@@ -1162,7 +1162,7 @@ void finite_field_io::cheat_sheet_table_of_elements(
 #if 0
 		ost << " & ";
 		print_element_with_symbol(ost, i,
-			TRUE /*f_print_as_exponentials*/,
+			true /*f_print_as_exponentials*/,
 			10 /*width*/, my_symbol);
 #endif
 	}
@@ -1178,7 +1178,7 @@ void finite_field_io::print_element_as_polynomial(
 		std::ostream &ost, int *v, int verbose_level)
 {
 	int j;
-	int f_first = TRUE;
+	int f_first = true;
 
 	for (j = F->e - 1; j >= 0; j--) {
 		if (v[j] == 0) {
@@ -1186,7 +1186,7 @@ void finite_field_io::print_element_as_polynomial(
 		}
 
 		if (f_first) {
-			f_first = FALSE;
+			f_first = false;
 		}
 		else {
 			ost << " + ";
@@ -1248,14 +1248,14 @@ void finite_field_io::cheat_sheet_main_table(
 		for (i = 0; i < F->q; i++) {
 			Gg.AG_element_unrank(F->p, v, 1, F->e, i);
 			f << setw(3) << i << " & ";
-			f_first = TRUE;
+			f_first = true;
 			for (j = F->e - 1; j >= 0; j--) {
 				if (v[j] == 0) {
 					continue;
 				}
 
 				if (f_first) {
-					f_first = FALSE;
+					f_first = false;
 				}
 				else {
 					f << " + ";
@@ -1277,7 +1277,7 @@ void finite_field_io::cheat_sheet_main_table(
 
 			f << " = ";
 			print_element_with_symbol(f, i,
-				TRUE /*f_print_as_exponentials*/,
+				true /*f_print_as_exponentials*/,
 				10 /*width*/, F->get_symbol_for_print());
 
 

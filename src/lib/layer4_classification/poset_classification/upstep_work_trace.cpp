@@ -238,14 +238,14 @@ trace_result upstep_work::recognize_recursion(
 		f_failure_to_find_point,
 		verbose_level - 5)) {
 
-		// FALSE in trace_next_point_wrapper can
+		// false in trace_next_point_wrapper can
 		// only happen if f_implicit_fusion is true.
 		
 		
 		if (f_v) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::recognize_"
-					"recursion trace_next_point_wrapper returns FALSE, "
+					"recursion trace_next_point_wrapper returns false, "
 					"starting over" << endl;
 		}
 		trace_result r;
@@ -278,7 +278,7 @@ trace_result upstep_work::recognize_recursion(
 	}
 
 	pt0 = gen->get_set_i(lvl + 1)[lvl];
-	current_extension = O->find_extension_from_point(gen, pt0, FALSE);
+	current_extension = O->find_extension_from_point(gen, pt0, false);
 	
 	if (current_extension == -1) {
 
@@ -679,8 +679,8 @@ trace_result upstep_work::start_over(
 	int &final_node, int &final_ex,
 	int f_tolerant, int verbose_level)
 // Called from poset_orbit_node::recognize_recursion
-// when trace_next_point returns FALSE
-// This can happen only if f_implicit_fusion is TRUE
+// when trace_next_point returns false
+// This can happen only if f_implicit_fusion is true
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -714,7 +714,7 @@ trace_result upstep_work::start_over(
 	gen->get_A()->Group_element->element_move(
 		gen->get_transporter()->ith(lvl + 1),
 		gen->get_transporter()->ith(0),
-		FALSE);
+		false);
 
 	trace_result r;
 	if (f_v) {

@@ -68,7 +68,7 @@ schlaefli::schlaefli()
 
 schlaefli::~schlaefli()
 {
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (Eckard_point_label) {
 		delete [] Eckard_point_label;
@@ -440,7 +440,7 @@ void schlaefli::make_trihedral_pairs(int verbose_level)
 	int size_complement;
 	char label[1000];
 	combinatorics::combinatorics_domain Combi;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "schlaefli::make_trihedral_pairs" << endl;
@@ -519,9 +519,9 @@ void schlaefli::make_trihedral_pairs(int verbose_level)
 	if (f_v) {
 		cout << "The trihedral pairs are:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
-				Trihedral_pairs, 120, 9, FALSE /* f_tex */);
+				Trihedral_pairs, 120, 9, false /* f_tex */);
 		L.print_integer_matrix_with_standard_labels(cout,
-				Trihedral_pairs, 120, 9, TRUE /* f_tex */);
+				Trihedral_pairs, 120, 9, true /* f_tex */);
 	}
 
 	if (f_v) {
@@ -536,7 +536,7 @@ void schlaefli::process_trihedral_pairs(int verbose_level)
 	int i, j, h, rk, a;
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "schlaefli::process_trihedral_pairs" << endl;
@@ -573,37 +573,37 @@ void schlaefli::process_trihedral_pairs(int verbose_level)
 				"The trihedral pairs row sets:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
 			Trihedral_pairs_row_sets, 120, 3,
-			FALSE /* f_tex */);
+			false /* f_tex */);
 
 		cout << "The trihedral pairs col sets:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
 			Trihedral_pairs_col_sets, 120, 3,
-			FALSE /* f_tex */);
+			false /* f_tex */);
 	}
 
 	Classify_trihedral_pairs_row_values = NEW_OBJECT(data_structures::tally);
 	Classify_trihedral_pairs_row_values->init(
-		Trihedral_pairs_row_sets, 120 * 3, FALSE, 0);
+		Trihedral_pairs_row_sets, 120 * 3, false, 0);
 
 	if (f_v) {
 		cout << "schlaefli::process_trihedral_pairs "
 				"sorted row values:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
 			Classify_trihedral_pairs_row_values->data_sorted,
-			120 * 3 / 10, 10, FALSE /* f_tex */);
+			120 * 3 / 10, 10, false /* f_tex */);
 	}
 
 	Classify_trihedral_pairs_col_values = NEW_OBJECT(data_structures::tally);
 	Classify_trihedral_pairs_col_values->init(
 		Trihedral_pairs_col_sets,
-		120 * 3, FALSE, 0);
+		120 * 3, false, 0);
 
 	if (f_v) {
 		cout << "schlaefli::process_trihedral_pairs "
 				"sorted col values:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
 			Classify_trihedral_pairs_col_values->data_sorted,
-			120 * 3 / 10, 10, FALSE /* f_tex */);
+			120 * 3 / 10, 10, false /* f_tex */);
 	}
 	if (f_v) {
 		cout << "schlaefli::process_trihedral_pairs done" << endl;
@@ -850,7 +850,7 @@ void schlaefli::init_Trihedral_to_Eckardt(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int t, i, j, rk;
 	int tritangent_plane[3];
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "schlaefli::init_Trihedral_to_Eckardt" << endl;
@@ -877,7 +877,7 @@ void schlaefli::init_Trihedral_to_Eckardt(int verbose_level)
 		cout << "Trihedral_to_Eckardt:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
 			Trihedral_to_Eckardt, nb_trihedral_pairs, 6,
-			FALSE /* f_tex */);
+			false /* f_tex */);
 	}
 	if (f_v) {
 		cout << "schlaefli::init_Trihedral_to_Eckardt done" << endl;
@@ -920,7 +920,7 @@ void schlaefli::init_collinear_Eckardt_triples(int verbose_level)
 	int subset[3];
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "schlaefli::init_collinear_Eckardt_triples" << endl;
@@ -941,13 +941,13 @@ void schlaefli::init_collinear_Eckardt_triples(int verbose_level)
 		cout << "collinear_Eckardt_triples_rank:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
 			collinear_Eckardt_triples_rank, nb_trihedral_pairs, 2,
-			FALSE /* f_tex */);
+			false /* f_tex */);
 	}
 
 	Classify_collinear_Eckardt_triples = NEW_OBJECT(data_structures::tally);
 	Classify_collinear_Eckardt_triples->init(
 		collinear_Eckardt_triples_rank, nb_collinear_Eckardt_triples,
-		FALSE, 0);
+		false, 0);
 
 	if (f_v) {
 		cout << "schlaefli::init_collinear_Eckardt_triples done" << endl;
@@ -1032,9 +1032,9 @@ void schlaefli::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 #if 1
 	data_structures::tally C;
 
-	C.init(T_idx, nb_T, TRUE, 0);
+	C.init(T_idx, nb_T, true, 0);
 	cout << "The trihedral pairs come in these multiplicities: ";
-	C.print_naked(TRUE);
+	C.print_naked(true);
 	cout << endl;
 
 	int t2, f2, l2, sz;
@@ -2070,7 +2070,7 @@ void schlaefli::latex_table_of_trihedral_pairs(std::ostream &ost)
 
 void schlaefli::latex_triads(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, j, a;
 
 	cout << "schlaefli::latex_triads" << endl;
@@ -2080,7 +2080,7 @@ void schlaefli::latex_triads(std::ostream &ost)
 
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-			Triads, 40, 3, 0, 0, TRUE /* f_tex*/);
+			Triads, 40, 3, 0, 0, true /* f_tex*/);
 	ost << "$$";
 
 	ost << "\\begin{multicols}{2}" << endl;
@@ -2102,7 +2102,7 @@ void schlaefli::latex_triads(std::ostream &ost)
 
 void schlaefli::print_trihedral_pairs(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, j, a;
 
 	//ost << "\\clearpage" << endl;
@@ -2143,7 +2143,7 @@ void schlaefli::print_trihedral_pairs(std::ostream &ost)
 	ost << "\\end{array}" << endl;
 
 	//L.print_integer_matrix_with_standard_labels(ost,
-	//	Surf->Trihedral_to_Eckardt, 40, 6, TRUE /* f_tex */);
+	//	Surf->Trihedral_to_Eckardt, 40, 6, true /* f_tex */);
 	ost << "$$" << endl;
 
 
@@ -2176,7 +2176,7 @@ void schlaefli::print_trihedral_pairs(std::ostream &ost)
 
 	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
 	//	Surf->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0,
-	//	TRUE /* f_tex */);
+	//	true /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 
@@ -2207,7 +2207,7 @@ void schlaefli::print_trihedral_pairs(std::ostream &ost)
 
 	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
 	//	Surf->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0,
-	//	TRUE /* f_tex */);
+	//	true /* f_tex */);
 	ost << "$$}" << endl;
 }
 
@@ -2237,17 +2237,17 @@ void schlaefli::print_trihedral_pairs(std::ostream &ost)
 	ost << "List of trihedral pairs numerically:\\\\" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		Trihedral_to_Eckardt, 40, 6, 0, 0, TRUE /* f_tex*/);
+		Trihedral_to_Eckardt, 40, 6, 0, 0, true /* f_tex*/);
 	ost << "\\;";
 	//ost << "$$" << endl;
 	//ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, TRUE /* f_tex*/);
+		Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, true /* f_tex*/);
 	ost << "\\;";
 	//ost << "$$" << endl;
 	//ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex*/);
+		Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, true /* f_tex*/);
 	ost << "$$" << endl;
 }
 #endif

@@ -100,7 +100,7 @@ void cyclic_codes::make_cyclic_code(
 	taken = NEW_int(n);
 	transversal = NEW_int(n);
 	for (i = 0; i < n; i++) {
-		taken[i] = FALSE;
+		taken[i] = false;
 	}
 
 
@@ -114,18 +114,18 @@ void cyclic_codes::make_cyclic_code(
 		if (!taken[j]) {
 			transversal[tl++] = j;
 		}
-		taken[j] = TRUE;
+		taken[j] = true;
 		degree++;
 		if (f_v) {
 			cout << q << "-cyclotomic coset of "
 					<< j << " : " << j;
 		}
-		while (TRUE) {
+		while (true) {
 			j = (q * j) % n;
 			if (taken[j]) {
 				break;
 			}
-			taken[j] = TRUE;
+			taken[j] = true;
 			degree++;
 			if (f_v) {
 				cout << "," << j;
@@ -179,8 +179,8 @@ void cyclic_codes::make_cyclic_code(
 				"creating the finite field of order " << p << endl;
 	}
 	Fp.finite_field_init_small_order(p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			verbose_level - 1);
 
 	ring_theory::unipoly_domain FpX(&Fp);
@@ -453,7 +453,7 @@ void cyclic_codes::make_cyclic_code(
 	}
 
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	int k = n - degree;
 
@@ -509,7 +509,7 @@ void cyclic_codes::print_polynomial(
 		ring_theory::unipoly_domain &Fq,
 		int degree, ring_theory::unipoly_object *coeffs)
 {
-	int i, f_first = TRUE;
+	int i, f_first = true;
 
 	for (i = 0; i <= degree; i++) {
 		if (Fq.is_zero(coeffs[i])) {
@@ -518,7 +518,7 @@ void cyclic_codes::print_polynomial(
 		if (!f_first) {
 			cout << " + ";
 		}
-		f_first = FALSE;
+		f_first = false;
 		if (!Fq.is_one(coeffs[i])) {
 			cout << "(";
 			Fq.print_object(coeffs[i], cout);
@@ -533,13 +533,13 @@ void cyclic_codes::print_polynomial_tight(
 		ring_theory::unipoly_domain &Fq,
 		int degree, ring_theory::unipoly_object *coeffs)
 {
-	int i, f_first = TRUE;
+	int i, f_first = true;
 
 	for (i = 0; i <= degree; i++) {
 		if (!f_first) {
 			ost << " + ";
 		}
-		f_first = FALSE;
+		f_first = false;
 
 		ost << "(";
 		Fq.print_object_tight(coeffs[i], ost);
@@ -666,8 +666,8 @@ void cyclic_codes::field_reduction(
 
 		fq.init_override_polynomial_small_order(
 				q, poly,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				verbose_level);
 		cout << "q = " << q << " override polynomial = " << poly << endl;
 
@@ -856,7 +856,7 @@ void cyclic_codes::BCH_generator_polynomial(
 	transversal_length = 0;
 
 	for (i = 0; i < n; i++) {
-		chosen[i] = FALSE;
+		chosen[i] = false;
 	}
 
 	for (i = 1; i <= 1 + designed_distance - 2; i++) {
@@ -882,7 +882,7 @@ void cyclic_codes::BCH_generator_polynomial(
 		ai.assign_to(bi);
 		i0 = i;
 		do {
-			chosen[i] = TRUE;
+			chosen[i] = true;
 			Fq.create_object_by_rank_longinteger(c, bi, __FILE__, __LINE__, verbose_level);
 			if (f_vvv) {
 				cout << bi << " = ";

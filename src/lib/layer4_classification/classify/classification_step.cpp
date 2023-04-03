@@ -115,7 +115,7 @@ void classification_step::write_file(
 		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
@@ -158,7 +158,7 @@ void classification_step::read_file(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
@@ -267,7 +267,7 @@ void classification_step::generate_source_code(
 				orbit_index++) {
 
 
-			if (FALSE) {
+			if (false) {
 				cout << "classification_step::generate_source_code orbit_index = " << orbit_index << endl;
 			}
 
@@ -378,7 +378,7 @@ void classification_step::generate_source_code(
 			int j;
 
 			for (j = 0; j < stab_gens_len[orbit_index]; j++) {
-				if (FALSE) {
+				if (false) {
 					cout << "classification_step::generate_source_code "
 							"before extract_strong_generators_in_order generator " << j << " / "
 							<< stab_gens_len[orbit_index] << endl;
@@ -442,7 +442,7 @@ void classification_step::print_summary(std::ostream &ost)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "classification_step::print_summary" << endl;
@@ -470,7 +470,7 @@ void classification_step::print_latex(std::ostream &ost,
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "classification_step::print_latex" << endl;

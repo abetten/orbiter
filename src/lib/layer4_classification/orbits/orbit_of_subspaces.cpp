@@ -26,9 +26,9 @@ orbit_of_subspaces::orbit_of_subspaces()
 	A2 = NULL;
 	F = NULL;
 	gens = NULL;
-	f_lint = FALSE;
+	f_lint = false;
 	k = n = kn = sz = 0; // sz_for_compare = 0;
-	f_has_desired_pivots = FALSE;
+	f_has_desired_pivots = false;
 	desired_pivots = NULL;
 	subspace_by_rank = NULL;
 	subspace_by_rank_lint = NULL;
@@ -37,7 +37,7 @@ orbit_of_subspaces::orbit_of_subspaces()
 	Mtx2 = NULL;
 	Mtx3 = NULL;
 
-	f_has_rank_functions = FALSE;
+	f_has_rank_functions = false;
 	rank_unrank_data = NULL;
 	rank_vector_callback = NULL;
 	rank_vector_lint_callback = NULL;
@@ -121,7 +121,7 @@ void orbit_of_subspaces::init(
 	if (f_v) {
 		cout << "orbit_of_subspaces::init" << endl;
 		}
-	f_lint = FALSE;
+	f_lint = false;
 	orbit_of_subspaces::A = A;
 	orbit_of_subspaces::A2 = A2;
 	orbit_of_subspaces::F = F;
@@ -189,7 +189,7 @@ void orbit_of_subspaces::init_lint(
 	if (f_v) {
 		cout << "orbit_of_subspaces::init_lint" << endl;
 		}
-	f_lint = TRUE;
+	f_lint = true;
 	orbit_of_subspaces::A = A;
 	orbit_of_subspaces::A2 = A2;
 	orbit_of_subspaces::F = F;
@@ -427,8 +427,8 @@ void orbit_of_subspaces::rref(int *subspace, int verbose_level)
 			}
 		F->Linear_algebra->Gauss_int_with_given_pivots(
 			subspace,
-			FALSE /* f_special */,
-			TRUE /* f_complete */,
+			false /* f_special */,
+			true /* f_complete */,
 			desired_pivots,
 			k /* nb_pivots */,
 			k, n, 
@@ -567,18 +567,18 @@ int orbit_of_subspaces::rank_hash_and_find(
 
 	itr1 = Hashing.lower_bound(h);
 	itr2 = Hashing.upper_bound(h);
-	f_found = FALSE;
+	f_found = false;
 	for (itr = itr1; itr != itr2; ++itr) {
     	idx = itr->second;
         if (f_lint) {
 			if (Sorting.lint_vec_compare(subspace_by_rank_lint, Subspaces_lint[idx], sz) == 0) {
-				f_found = TRUE;
+				f_found = true;
 				break;
 			}
         }
         else {
 			if (Sorting.int_vec_compare(subspace_by_rank, Subspaces[idx], sz) == 0) {
-				f_found = TRUE;
+				f_found = true;
 				break;
 			}
         }
@@ -904,7 +904,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int len, r1, r2, pt1, pt2;
 	int *E1, *E2, *E3, *E4, *E5;
 	int f_found, idx;
@@ -1089,7 +1089,7 @@ void orbit_of_subspaces::compute_stabilizer(
 	
 	Stab->init(default_action, verbose_level - 2);
 	Stab->init_trivial_group(verbose_level - 1);
-	while (TRUE) {
+	while (true) {
 		Stab->group_order(cur_go);
 		if (D.compare(cur_go, target_go) == 0) {
 			break;
@@ -1119,21 +1119,21 @@ void orbit_of_subspaces::compute_stabilizer(
 			if (f_vvv) {
 				cout << "orbit_of_subspaces::compute_stabilizer "
 						"element strips through" << endl;
-				if (FALSE) {
+				if (false) {
 					cout << "residue:" << endl;
 					A->Group_element->element_print(residue, cout);
 					cout << endl;
 					}
 				}
-			f_added = FALSE;
+			f_added = false;
 			}
 		else {
-			f_added = TRUE;
+			f_added = true;
 			if (f_vvv) {
 				cout << "orbit_of_subspaces::compute_stabilizer "
 						"element needs to be inserted at level = "
 					<< drop_out_level << " with image " << image << endl;
-				if (FALSE) {
+				if (false) {
 					A->Group_element->element_print(residue, cout);
 					cout  << endl;
 					}

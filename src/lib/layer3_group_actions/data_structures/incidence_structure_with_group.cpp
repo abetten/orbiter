@@ -26,11 +26,11 @@ incidence_structure_with_group::incidence_structure_with_group()
 	N = 0;
 	partition = NULL;
 
-	f_has_canonical_form = FALSE;
+	f_has_canonical_form = false;
 	canonical_form = NULL;
 	//canonical_form_len = 0;
 
-	f_has_canonical_labeling = FALSE;
+	f_has_canonical_labeling = false;
 	canonical_labeling = NULL;
 
 	A_perm = NULL;
@@ -113,7 +113,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	}
 
 
-	nauty_interface Nau;
+	layer1_foundations::l1_interfaces::nauty_interface Nau;
 	int N;
 
 	N = Inc->nb_rows + Inc->nb_cols;

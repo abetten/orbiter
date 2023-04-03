@@ -86,7 +86,7 @@ void apn_functions::search_APN(
 	search_APN_recursion(
 			f,
 			0 /* depth */,
-			TRUE,
+			true,
 			delta, nb_times,
 			Solutions,
 			A_matrix, B_matrix, Count_ab, nb_times_ab,
@@ -152,14 +152,14 @@ void apn_functions::search_APN_recursion(
 
 			if (nb_times > 100) {
 				if ((nb_times % 10000) == 0) {
-					f_do_it = TRUE;
+					f_do_it = true;
 				}
 				else {
-					f_do_it = FALSE;
+					f_do_it = false;
 				}
 			}
 			else {
-				f_do_it = TRUE;
+				f_do_it = true;
 			}
 
 			vector<int> S;
@@ -186,7 +186,7 @@ void apn_functions::search_APN_recursion(
 	for (fxd = 0; fxd < F->q; fxd++) {
 		if (f_normalize) {
 			if (fxd) {
-				f_normalize_below = FALSE;
+				f_normalize_below = false;
 				if (fxd != 1) {
 					continue;
 				}
@@ -243,10 +243,10 @@ int apn_functions::search_APN_perform_checks(
 								A_matrix, B_matrix, Count_ab,
 								verbose_level);
 			}
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void apn_functions::search_APN_undo_checks(
@@ -282,7 +282,7 @@ int apn_functions::perform_single_check(
 	a1 = A_matrix[i * q + depth];
 	b1 = F->add(f[depth], F->negate(f[i]));
 	if (Count_ab[a1 * q + b1] == delta_max) {
-		return FALSE;
+		return false;
 	}
 	B_matrix[i * q + depth] = b1;
 	Count_ab[a1 * q + b1]++;
@@ -292,11 +292,11 @@ int apn_functions::perform_single_check(
 	if (Count_ab[a2 * q + b2] == delta_max) {
 		Count_ab[a1 * q + b1]--;
 		B_matrix[i * q + depth] = 0;
-		return FALSE;
+		return false;
 	}
 	B_matrix[depth * q + i] = b2;
 	Count_ab[a2 * q + b2]++;
-	return TRUE;
+	return true;
 }
 
 void apn_functions::undo_single_check(
@@ -351,7 +351,7 @@ void apn_functions::search_APN_old(
 	search_APN_recursion_old(
 			f,
 			0 /* depth */,
-			TRUE,
+			true,
 			delta_min, nb_times, Solutions,
 			tmp_qxq,
 			verbose_level);
@@ -410,14 +410,14 @@ void apn_functions::search_APN_recursion_old(
 
 			if (nb_times > 100) {
 				if ((nb_times % 1000) == 0) {
-					f_do_it = TRUE;
+					f_do_it = true;
 				}
 				else {
-					f_do_it = FALSE;
+					f_do_it = false;
 				}
 			}
 			else {
-				f_do_it = TRUE;
+				f_do_it = true;
 			}
 
 			vector<int> S;
@@ -444,7 +444,7 @@ void apn_functions::search_APN_recursion_old(
 	for (a = 0; a < F->q; a++) {
 		if (f_normalize) {
 			if (a) {
-				f_normalize_below = FALSE;
+				f_normalize_below = false;
 				if (a != 1) {
 					continue;
 				}

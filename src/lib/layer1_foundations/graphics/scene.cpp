@@ -132,7 +132,7 @@ scene::scene()
 
 	extra_data = NULL;
 
-	f_has_affine_space = FALSE;
+	f_has_affine_space = false;
 	affine_space_q = 0;
 	affine_space_starting_point = 0;
 
@@ -807,7 +807,7 @@ int scene::point_as_intersection_of_two_lines(int line1, int line2)
 		System[i * 3 + 2] = y[i] - x[i];
 	}
 	// rk = Gauss_elimination(System, 3, 3,
-	//base_cols, TRUE /* f_complete */, 0 /* verbose_level */);
+	//base_cols, true /* f_complete */, 0 /* verbose_level */);
 	ker = N.Null_space(System, 3, 3, Ker, 0 /* verbose_level */);
 	if (ker != 1) {
 		cout << "scene::point_as_intersection_of_two_lines ker != 1" << endl;
@@ -1141,7 +1141,7 @@ void scene::draw_faces_with_selection(int *selection, int nb_select,
 void scene::draw_face(int idx, double thickness_half, std::string &options,
 		std::ostream &ost)
 {
-	int f_v = FALSE;
+	int f_v = false;
 	int *pts;
 	int nb_pts, i;
 	double *Pts_in;
@@ -1598,7 +1598,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 2);
+	int f_vv = false; // (verbose_level >= 2);
 	double B[9];
 	double M[12];
 	int i;
@@ -1725,7 +1725,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 
 	// find Q_0:
 
-	while (TRUE) {
+	while (true) {
 		B[0] = (double) Os.random_integer(5);
 		B[1] = (double) Os.random_integer(5);
 		B[2] = (double) Os.random_integer(5);
@@ -1757,7 +1757,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	}
 	
 	rk = N.Gauss_elimination(M, 3, 4,
-			base_cols, TRUE /* f_complete */,
+			base_cols, true /* f_complete */,
 			0 /* verbose_level */);
 
 	if (f_vv) {
@@ -1770,7 +1770,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	if (rk < 3) {
 		cout << "scene::intersect_line_and_plane "
 				"the matrix M does not have full rank" << endl;
-		return FALSE;
+		return false;
 	}
 	lambda = 1. * M[0 * 4 + 3];
 	for (i = 0; i < 3; i++) {
@@ -1789,7 +1789,7 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	if (f_v) {
 		cout << "scene::intersect_line_and_plane done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int scene::intersect_line_and_line(int line1_idx, int line2_idx, 
@@ -1797,7 +1797,7 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; // (verbose_level >= 2);
+	//int f_vv = false; // (verbose_level >= 2);
 	orbiter_kernel_system::numerics N;
 
 	if (f_v) {
@@ -1818,7 +1818,7 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 	if (f_v) {
 		cout << "scene::intersect_line_and_line done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -1888,7 +1888,7 @@ int scene::map_a_point(int line1, int line2,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	double line1_pt1[4], line1_pt2[4];
 	double line2_pt1[4], line2_pt2[4];
 	double M1[4 * 4];
@@ -1935,7 +1935,7 @@ int scene::map_a_point(int line1, int line2,
 	k1 = N.Null_space(M1, 3, 4, K1, 0 /* verbose_level */);
 	if (k1 != 1) {
 		cout << "map_a_point k1 != 1" << endl;
-		return FALSE;
+		return false;
 	}
 	if (f_vv) {
 		cout << "M1 after:" << endl;
@@ -1947,7 +1947,7 @@ int scene::map_a_point(int line1, int line2,
 	k2 = N.Null_space(M2, 3, 4, K2, 0 /* verbose_level */);
 	if (k2 != 1) {
 		cout << "map_a_point k2 != 1" << endl;
-		return FALSE;
+		return false;
 	}
 	if (f_vv) {
 		cout << "K2:" << endl;
@@ -1959,7 +1959,7 @@ int scene::map_a_point(int line1, int line2,
 	k3 = N.Null_space(K3, 2, 4, K4, 0 /* verbose_level */);
 	if (k3 != 2) {
 		cout << "map_a_point k3 != 2" << endl;
-		return FALSE;
+		return false;
 	}
 	if (f_vv) {
 		cout << "K4:" << endl;
@@ -1981,7 +1981,7 @@ int scene::map_a_point(int line1, int line2,
 		if (ABS(K4[3] - 1.) > 0.01) {
 			cout << "after fixing, K4 (1) is not an affine point, "
 					"this is not good" << endl;
-			return FALSE;
+			return false;
 		}
 	}
 	else if (ABS(K4[4 + 3] - 1.) > 0.01) {
@@ -1992,7 +1992,7 @@ int scene::map_a_point(int line1, int line2,
 		if (ABS(K4[4 + 3] - 1.) > 0.01) {
 			cout << "after fixing, K4 (2) is not an affine point, "
 					"this is not good" << endl;
-			return FALSE;
+			return false;
 		}
 	}
 	new_line_idx = line_extended(K4[0], K4[1], K4[2],
@@ -2004,7 +2004,7 @@ int scene::map_a_point(int line1, int line2,
 	if (f_v) {
 		cout << "map_a_point done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void scene::fourD_cube(double rad_desired)
@@ -3629,7 +3629,7 @@ void scene::create_affine_space(int q, int verbose_level)
 	//center[1] = -half;
 	//center[2] = -half;
 
-	f_has_affine_space = TRUE;
+	f_has_affine_space = true;
 	affine_space_q = 0;
 	affine_space_starting_point = nb_points;
 
@@ -3955,7 +3955,7 @@ void scene::create_twisted_cubic(int N, int verbose_level)
 	int i;
 	double t, x, y, z;
 
-	if (TRUE) {
+	if (true) {
 		cout << "scene::create_twisted_cubic" << endl;
 	}
 
@@ -4126,7 +4126,7 @@ void scene::read_obj_file(std::string &fname, int verbose_level)
 		data_structures::string_tools ST;
 
 
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}
@@ -4223,7 +4223,7 @@ void scene::read_obj_file(std::string &fname, int verbose_level)
 				//int_vec_print(cout, w, l);
 				//cout << endl;
 				idx = face(w, l);
-				if (FALSE && idx == 2920) {
+				if (false && idx == 2920) {
 					cout << "added face " << idx << ": ";
 					Int_vec_print(cout, w, l);
 					cout << endl;
@@ -4268,7 +4268,7 @@ void scene::add_a_group_of_things(int *Idx, int sz, int verbose_level)
 
 	group_of_things.push_back(v);
 
-	//f_group_is_animated.push_back(FALSE);
+	//f_group_is_animated.push_back(false);
 
 	if (f_v) {
 		cout << "scene::add_a_group_of_things done" << endl;

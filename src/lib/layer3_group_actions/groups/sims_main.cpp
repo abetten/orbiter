@@ -37,7 +37,7 @@ void sims::compute_base_orbits(
 				"base_len=" << A->base_len() << endl;
 	}
 	for (i = A->base_len() - 1; i >= 0; i--) {
-		if (FALSE) {
+		if (false) {
 			cout << "sims::compute_base_orbits "
 					"level " << i << endl;
 		}
@@ -179,7 +179,7 @@ void sims::extend_base_orbit(
 				<< lvl << " finished" << endl;
 		cout << lvl << "-th base point " << A->base_i(lvl)
 			<< " orbit extended to length " << orbit_len[lvl];
-		if (FALSE) {
+		if (false) {
 			cout << " { ";
 			for (i = 0; i < orbit_len[lvl]; i++) {
 				cout << orbit[lvl][i];
@@ -222,7 +222,7 @@ void sims::compute_base_orbit(
 	orbit_len[lvl] = 1;
 	while (cur < orbit_len[lvl]) {
 		cur_pt = orbit[lvl][cur];
-		if (FALSE) {
+		if (false) {
 			cout << "sims::compute_base_orbit "
 					"applying generator to " << cur_pt << endl;
 		}
@@ -230,7 +230,7 @@ void sims::compute_base_orbit(
 			gen_idx = gen_perm[i];
 			next_pt = get_image(cur_pt, gen_idx);
 			next_pt_loc = orbit_inv[lvl][next_pt];
-			if (FALSE) {
+			if (false) {
 				cout << "sims::compute_base_orbit "
 						"generator " << i << " maps " << cur_pt
 						<< " to " << next_pt << endl;
@@ -238,7 +238,7 @@ void sims::compute_base_orbit(
 			if (next_pt_loc < orbit_len[lvl]) {
 				continue;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "additional pt " << next_pt << " reached from "
 						<< cur_pt << " under generator "
 						<< i << endl;
@@ -247,7 +247,7 @@ void sims::compute_base_orbit(
 			prev[lvl][orbit_len[lvl]] = cur_pt;
 			label[lvl][orbit_len[lvl]] = gen_idx;
 			orbit_len[lvl]++;
-			if (FALSE) {
+			if (false) {
 				cout << "sims::compute_base_orbit "
 						"cur = " << cur << endl;
 				cout << "sims::compute_base_orbit "
@@ -262,7 +262,7 @@ void sims::compute_base_orbit(
 			<< lvl << "-th base orbit of length "
 			<< orbit_len[lvl] << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "{ ";
 		for (i = 0; i < orbit_len[lvl]; i++) {
 			cout << orbit[lvl][i];
@@ -284,9 +284,9 @@ void sims::compute_base_orbit_known_length(
 // the generators are the first nb_gen[lvl] in the generator array
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;
+	int f_vv = false;
 	//int f_vvv = (verbose_level >= 3);
-	//int f_v10 = FALSE; // (verbose_level >= 10);
+	//int f_v10 = false; // (verbose_level >= 10);
 	int pt, pt_loc, cur, cur_pt, i, next_pt, next_pt_loc, gen_idx;
 	double progress;
 
@@ -300,9 +300,9 @@ void sims::compute_base_orbit_known_length(
 			<< " nb_gens=" << nb_gen[lvl] << endl;
 	}
 	if (target_length > 1000000) {
-		f_vv = TRUE;
+		f_vv = true;
 	}
-	if (FALSE) {
+	if (false) {
 		for (i = 0; i < nb_gen[lvl]; i++) {
 			gen_idx = gen_perm[i];
 			cout << "sims::compute_base_orbit_known_length "
@@ -332,7 +332,7 @@ void sims::compute_base_orbit_known_length(
 						<< " progress=" << progress * 100 << "%" << endl;
 			}
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "sims::compute_base_orbit_known_length "
 					"applying " << nb_gen[lvl] << " generators to "
 					<< cur_pt << " orbit_len[lvl]=" << orbit_len[lvl]
@@ -342,7 +342,7 @@ void sims::compute_base_orbit_known_length(
 			gen_idx = gen_perm[i];
 			next_pt = get_image(cur_pt, gen_idx);
 			next_pt_loc = orbit_inv[lvl][next_pt];
-			if (FALSE) {
+			if (false) {
 				cout << "sims::compute_base_orbit_known_length "
 						"generator " << i << " maps " << cur_pt
 						<< " to " << next_pt << endl;
@@ -350,7 +350,7 @@ void sims::compute_base_orbit_known_length(
 			if (next_pt_loc < orbit_len[lvl]) {
 				continue;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "sims::compute_base_orbit_known_length "
 						"additional pt " << next_pt << " reached from "
 						<< cur_pt << " under generator " << i << endl;
@@ -359,7 +359,7 @@ void sims::compute_base_orbit_known_length(
 			prev[lvl][orbit_len[lvl]] = cur_pt;
 			label[lvl][orbit_len[lvl]] = gen_idx;
 			orbit_len[lvl]++;
-			if (FALSE) {
+			if (false) {
 				cout << "sims::compute_base_orbit_known_length "
 						"cur = " << cur << endl;
 				cout << "sims::compute_base_orbit_known_length "
@@ -374,7 +374,7 @@ void sims::compute_base_orbit_known_length(
 				<< lvl << "-th base orbit of length "
 				<< orbit_len[lvl] << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "{ ";
 		for (i = 0; i < orbit_len[lvl]; i++) {
 			cout << orbit[lvl][i];
@@ -391,8 +391,8 @@ void sims::compute_base_orbit_known_length(
 
 int sims::strip_and_add(
 		int *elt, int *residue, int verbose_level)
-// returns TRUE if something was added,
-// FALSE if element stripped through
+// returns true if something was added,
+// false if element stripped through
 {
 	int drop_out_level, image;
 	int f_v = (verbose_level >= 1);
@@ -408,14 +408,14 @@ int sims::strip_and_add(
 			cout << "sims::strip_and_add "
 					"element strips to the identity, finished" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	if (f_v) {
 		cout << "sims::strip_and_add after strip, "
 				"drop_out_level = " << drop_out_level
 				<< " image = " << image << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "sims::strip_and_add residue = " << endl;
 		A->Group_element->element_print_quick(residue, cout);
 		//A->element_print_as_permutation(residue, cout);
@@ -430,7 +430,7 @@ int sims::strip_and_add(
 	//add_generator_at_level_only(residue, drop_out_level, verbose_level);
 	// !!! this was add_generator_at_level previously
 
-	if (FALSE) {
+	if (false) {
 		cout << "sims::strip_and_add increased set of generators:" << endl;
 		gens.print(cout);
 		gens.print_as_permutation(cout);
@@ -443,14 +443,14 @@ int sims::strip_and_add(
 	if (f_v) {
 		cout << "sims::strip_and_add done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int sims::strip(
 		int *elt, int *residue,
 		int &drop_out_level, int &image,
 		int verbose_level)
-// returns TRUE if the element sifts through
+// returns true if the element sifts through
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -472,7 +472,7 @@ int sims::strip(
 		A->Group_element->element_print_quick(elt, cout);
 		cout << endl;
 	}
-	A->Group_element->element_move(elt, strip1, FALSE);
+	A->Group_element->element_move(elt, strip1, false);
 	for (i = 0; i < my_base_len; i++) {
 		if (f_v) {
 			cout << "sims::strip level " << i
@@ -507,12 +507,12 @@ int sims::strip(
 			}
 			image = j;
 			drop_out_level = i;
-			A->Group_element->element_move(strip1, residue, FALSE);
+			A->Group_element->element_move(strip1, residue, false);
 			if (f_v) {
-				cout << "sims::strip returns FALSE, "
+				cout << "sims::strip returns false, "
 						"drop_out_level=" << drop_out_level << endl;
 			}
-			return FALSE;
+			return false;
 		}
 		else {
 			if (f_v) {
@@ -520,30 +520,30 @@ int sims::strip(
 						"of coset " << j_coset << endl;
 			}
 			coset_rep_inv(eltrk3, i, j_coset, verbose_level);
-			if (FALSE) {
+			if (false) {
 				cout << "sims::strip representative "
 						"of coset " << j_coset << " is " << endl;
 				A->Group_element->element_print(eltrk3, cout);
 				cout << endl;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "sims::strip before element_mult, "
 						"strip1=" << endl;
 				A->Group_element->element_print(strip1, cout);
 				cout << endl;
 			}
-			if (FALSE) {
+			if (false) {
 				cout << "sims::strip before element_mult, "
 						"cosetrep=" << endl;
 				A->Group_element->element_print(eltrk3, cout);
 				cout << endl;
 			}
 			A->Group_element->element_mult(strip1, eltrk3, strip2, 0 /*verboe_level*/);
-			if (FALSE) {
+			if (false) {
 				cout << "sims::strip before element_move" << endl;
 			}
-			A->Group_element->element_move(strip2, strip1, FALSE);
-			if (FALSE) {
+			A->Group_element->element_move(strip2, strip1, false);
+			if (false) {
 				cout << "sims::strip after dividing off, "
 						"we have strip1= " << endl;
 				A->Group_element->element_print(strip1, cout);
@@ -554,11 +554,11 @@ int sims::strip(
 	if (f_v) {
 		cout << "sims::strip after loop" << endl;
 	}
-	A->Group_element->element_move(strip1, residue, FALSE);
+	A->Group_element->element_move(strip1, residue, false);
 	if (f_v) {
-		cout << "sims::strip returns TRUE" << endl;
+		cout << "sims::strip returns true" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void sims::add_generator_at_level(
@@ -575,7 +575,7 @@ void sims::add_generator_at_level(
 				"level " << lvl
 				<< " verbose_level = " << verbose_level<< endl;
 		print_generator_depth_and_perm();
-		if (FALSE) {
+		if (false) {
 			A->Group_element->element_print_quick(elt, cout);
 			cout << endl;
 		}
@@ -658,7 +658,7 @@ void sims::build_up_group_random_process_no_kernel(
 				"before build_up_group_random_process" << endl;
 	}
 	build_up_group_random_process(&K, old_G, go,
-		FALSE /* f_override_chose_next_base_point */,
+		false /* f_override_chose_next_base_point */,
 		NULL /* choose_next_base_point_method */,
 		verbose_level - 1);
 	if (f_v) {
@@ -693,7 +693,7 @@ void sims::extend_group_random_process_no_kernel(
 		&K,
 		extending_by_G,
 		target_go,
-		FALSE /* f_override_chose_next_base_point */,
+		false /* f_override_chose_next_base_point */,
 		NULL /* choose_next_base_point_method */,
 		verbose_level + 3);
 	if (f_v) {
@@ -762,7 +762,7 @@ void sims::build_up_group_random_process(
 				"target_go = " << target_go << endl;
 	}
 	cnt = 0;
-	while (TRUE) {
+	while (true) {
 
 		if (f_vv) {
 			cout << "sims::build_up_group_random_process "
@@ -826,7 +826,7 @@ void sims::build_up_group_random_process(
 					cout << endl;
 				}
 			}
-			//f_added = FALSE;
+			//f_added = false;
 			if (!GA->Group_element->element_is_one(GA->Elt2, 0)) {
 				if (f_vvv) {
 					cout << "sims::build_up_group_random_process "
@@ -861,7 +861,7 @@ void sims::build_up_group_random_process(
 										"residue = " << endl;
 								KA->Group_element->element_print_quick(GA->Elt3, cout);
 								cout << endl;
-								K->print(FALSE);
+								K->print(false);
 								K->print_basic_orbits();
 								cout << "sims::build_up_group_random_process "
 										"residue" << endl;
@@ -873,7 +873,7 @@ void sims::build_up_group_random_process(
 										GA->Elt2, KA->base_len(), KA->get_base());
 							}
 						}
-						if (!KA->Group_element->element_is_one(GA->Elt3, FALSE)) {
+						if (!KA->Group_element->element_is_one(GA->Elt3, false)) {
 							cout << "sims::build_up_group_random_process "
 									"element strips through kernel, "
 									"residue = " << endl;
@@ -929,7 +929,7 @@ void sims::build_up_group_random_process(
 									<< endl;
 						}
 					}
-					//f_added = TRUE;
+					//f_added = true;
 				}
 				else {
 					if (f_vvv) {
@@ -990,13 +990,13 @@ void sims::build_up_group_random_process(
 			}
 		}
 		else {
-			//f_added = TRUE;
+			//f_added = true;
 			if (f_vv) {
 				cout << "sims::build_up_group_random_process "
 						"element needs to be inserted at level = "
 					<< drop_out_level << " with image "
 					<< image << endl;
-				if (FALSE) {
+				if (false) {
 					GA->Group_element->element_print(GA->Elt2, cout);
 					cout  << endl;
 				}
@@ -1041,12 +1041,12 @@ void sims::build_up_group_random_process(
 			cout << "sims::build_up_group_random_process ";
 			print_transversal_lengths();
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "sims::build_up_group_random_process "
 					"before D.compare" << endl;
 		}
 		c = D.compare(target_go, KG_order);
-		if (FALSE) {
+		if (false) {
 			cout << "sims::build_up_group_random_process "
 					"after D.compare c=" << c
 					<< " cnt=" << cnt << endl;
@@ -1061,7 +1061,7 @@ void sims::build_up_group_random_process(
 			break;
 		}
 		if (c < 0) {
-			if (TRUE) {
+			if (true) {
 				cout << "sims::build_up_group_random_process "
 						"overshooting the expected group after "
 						<< cnt << " iterations" << endl;
@@ -1073,7 +1073,7 @@ void sims::build_up_group_random_process(
 			//break;
 			exit(1);
 		}
-	} // while TRUE
+	} // while true
 	FREE_int(Elt);
 	if (f_vv) {
 		cout << "sims::build_up_group_random_process "
@@ -1086,11 +1086,11 @@ void sims::build_up_group_random_process(
 				<< GA->base_len()
 				<< " and degree " << GA->degree << endl;
 			print_transversal_lengths();
-			if (FALSE) {
+			if (false) {
 				print_transversals();
 			}
-			if (FALSE) {
-				print(FALSE);
+			if (false) {
+				print(false);
 			}
 		}
 	}
@@ -1191,18 +1191,18 @@ void sims::build_up_group_from_generators(
 			cout << "sims::build_up_group_from_generators "
 					"point " << base_point << " lies in an orbit "
 					"of size " << O.orbit_len[0] << endl;
-			if (FALSE) {
+			if (false) {
 				O.print(cout);
-				O.print_tables(cout, FALSE);
+				O.print_tables(cout, false);
 			}
 		}
 		for (j = 0; j < O.orbit_len[0]; j++) {
-			if (FALSE) {
+			if (false) {
 				cout << "sims::build_up_group_from_generators "
 						"level " << level << " coset rep " << j << endl;
 			}
 			O.coset_rep(j, 0 /* verbose_level */);
-			if (FALSE) {
+			if (false) {
 				GA->Group_element->element_print(O.cosetrep, cout);
 				cout << endl;
 			}
@@ -1211,14 +1211,14 @@ void sims::build_up_group_from_generators(
 				if (f_vv) {
 					cout << "sims::build_up_group_from_generators "
 							"element strips through" << endl;
-					if (FALSE /*f_vvv */) {
+					if (false /*f_vvv */) {
 						cout << "sims::build_up_group_from_generators "
 								"residue=" << endl;
 						GA->Group_element->element_print_quick(GA->Elt2, cout);
 						cout << endl;
 					}
 				}
-				if (FALSE) {
+				if (false) {
 					cout << "sims::build_up_group_from_generators "
 							"element strips through." << endl;
 					cout << "if it is the identity element, that's OK,"
@@ -1231,7 +1231,7 @@ void sims::build_up_group_from_generators(
 							<< endl;
 					GA->Group_element->element_print(GA->Elt2, cout);
 				}
-				if (!GA->Group_element->element_is_one(GA->Elt2, FALSE)) {
+				if (!GA->Group_element->element_is_one(GA->Elt2, false)) {
 					if (f_vvv) {
 						cout << "sims::build_up_group_from_generators "
 								"the residue is not trivial, "
@@ -1261,7 +1261,7 @@ void sims::build_up_group_from_generators(
 									KA->Group_element->element_print(GA->Elt3, cout);
 									cout << endl;
 									}
-								K->print(FALSE);
+								K->print(false);
 								K->print_basic_orbits();
 								cout << "sims::build_up_group_from_generators "
 										"residue" << endl;
@@ -1271,7 +1271,7 @@ void sims::build_up_group_from_generators(
 								KA->Group_element->element_print_image_of_set(
 										GA->Elt2, KA->base_len(), KA->get_base());
 							}
-							if (!KA->Group_element->element_is_one(GA->Elt3, FALSE)) {
+							if (!KA->Group_element->element_is_one(GA->Elt3, false)) {
 								cout << "sims::build_up_group_from_generators "
 										"but the element is not the identity, "
 										"something is wrong" << endl;
@@ -1288,7 +1288,7 @@ void sims::build_up_group_from_generators(
 									"kernel generator at level "
 									<< drop_out_level << endl;
 						}
-						f_added = TRUE;
+						f_added = true;
 					}
 					else {
 						if (f_vv) {
@@ -1329,10 +1329,10 @@ void sims::build_up_group_from_generators(
 					}
 				}
 
-				f_added = FALSE;
+				f_added = false;
 			}
 			else {
-				f_added = TRUE;
+				f_added = true;
 				if (f_vv) {
 					cout << "sims::build_up_group_from_generators "
 							"before add_generator_at_level" << endl;
@@ -1372,7 +1372,7 @@ void sims::build_up_group_from_generators(
 		int c, cnt;
 
 		cnt = 0;
-		while (TRUE) {
+		while (true) {
 			group_order(G_order);
 			K->group_order(K_order);
 			D.mult(G_order, K_order, KG_order);
@@ -1388,7 +1388,7 @@ void sims::build_up_group_from_generators(
 				break;
 			}
 			if (c < 0) {
-				if (TRUE) {
+				if (true) {
 					cout << "sims::build_up_group_from_generators "
 							"overshooting the expected group after "
 							<< cnt << " iterations" << endl;
@@ -1432,7 +1432,7 @@ void sims::build_up_group_from_generators(
 			print_transversals();
 		}
 		if (f_vvv) {
-			print(FALSE);
+			print(false);
 		}
 #endif
 	}
@@ -1453,7 +1453,7 @@ int sims::closure_group(
 	//int f_vvv = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 6);
-	int i, f_extended = FALSE;
+	int i, f_extended = false;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -1479,10 +1479,10 @@ int sims::closure_group(
 		FREE_int(Elt1);
 		FREE_int(Elt2);
 		if (f_v) {
-			cout << "sims::closure_group finishing with FALSE "
+			cout << "sims::closure_group finishing with false "
 					"because the old group order is one" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	group_order(go);
 	for (i = 0; i < nb_times; i++) {
@@ -1516,7 +1516,7 @@ int sims::closure_group(
 				cout << "additional generator:" << endl;
 				A->Group_element->element_print_quick(Elt2, cout);
 			}
-			f_extended = TRUE;
+			f_extended = true;
 		}
 	}
 	FREE_int(Elt1);

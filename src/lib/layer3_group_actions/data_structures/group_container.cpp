@@ -17,14 +17,14 @@ namespace data_structures_groups {
 group_container::group_container()
 {
 	A = NULL;
-	f_has_ascii_coding = FALSE;
+	f_has_ascii_coding = false;
 	//std::string ascii_coding;
 
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = false;
 	SG = NULL;
 	tl = NULL;
 
-	f_has_sims = FALSE;
+	f_has_sims = false;
 	S = NULL;
 }
 
@@ -67,7 +67,7 @@ void group_container::init_ascii_coding(
 	delete_ascii_coding();
 	
 	group_container::ascii_coding.assign(ascii_coding);
-	f_has_ascii_coding = TRUE;
+	f_has_ascii_coding = true;
 }
 
 void group_container::delete_ascii_coding()
@@ -87,7 +87,7 @@ void group_container::init_strong_generators_empty_set(int verbose_level)
 	for (i = 0; i < A->base_len(); i++) {
 		group_container::tl[i] = 1;
 	}
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 }
 
 void group_container::init_strong_generators(vector_ge &SG,
@@ -107,7 +107,7 @@ void group_container::init_strong_generators(vector_ge &SG,
 	for (i = 0; i < A->base_len(); i++) {
 		group_container::tl[i] = tl[i];
 	}
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 }
 
 void group_container::init_strong_generators_by_handle_and_with_tl(
@@ -202,7 +202,7 @@ void group_container::init_strong_generators_by_hdl(
 			group_container::tl[i] = 1;
 		}
 	}
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "group::init_strong_generators_by_hdl done" << endl;
 	}
@@ -215,7 +215,7 @@ void group_container::delete_strong_generators()
 		FREE_int(tl);
 		SG = NULL;
 		tl = NULL;
-		f_has_strong_generators = FALSE;
+		f_has_strong_generators = false;
 	}
 }
 
@@ -226,7 +226,7 @@ void group_container::delete_sims()
 			FREE_OBJECT(S);
 			S = NULL;
 		}
-		f_has_sims = FALSE;
+		f_has_sims = false;
 	}
 }
 
@@ -320,7 +320,7 @@ void group_container::code_ascii(int verbose_level)
 		Os.code_int4(p, (int_4) tl[i]);
 	}
 	for (i = 0; i < SG->len; i++) {
-		A->Group_element->element_pack(SG->ith(i), A->elt1, FALSE);
+		A->Group_element->element_pack(SG->ith(i), A->elt1, false);
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
 			Os.code_uchar(p, A->elt1[j]);
 		}
@@ -332,7 +332,7 @@ void group_container::code_ascii(int verbose_level)
 	}
 
 	ascii_coding.assign(p0);
-	f_has_ascii_coding = TRUE;
+	f_has_ascii_coding = true;
 	if (f_v) {
 		cout << "group_container::code_ascii " << ascii_coding << endl;
 	}
@@ -384,7 +384,7 @@ void group_container::decode_ascii(int verbose_level)
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
 			Os.decode_uchar(p, A->elt1[j]);
 		}
-		A->Group_element->element_unpack(A->elt1, SG->ith(i), FALSE);
+		A->Group_element->element_unpack(A->elt1, SG->ith(i), false);
 	}
 	FREE_int(base1);
 	if (p - p0 != str_len) {
@@ -393,7 +393,7 @@ void group_container::decode_ascii(int verbose_level)
 		cout << "str_len = " << str_len << endl;
 		exit(1);
 	}
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 	if (f_v) {
 		if (SG->len < 10) {
 			SG->print(cout);
@@ -422,14 +422,14 @@ void group_container::schreier_sims(int verbose_level)
 		cout << "group_container::schreier_sims after delete_sims" << endl;
 	}
 	S = NEW_OBJECT(groups::sims);
-	if (FALSE) {
+	if (false) {
 		cout << "group_container::schreier_sims calling S->init(A)" << endl;
 	}
 	S->init(A, verbose_level - 2);
-	if (FALSE) {
+	if (false) {
 		cout << "group_container::schreier_sims calling S->init_generators" << endl;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "generators" << endl;
 		SG->print(cout);
 	}
@@ -455,7 +455,7 @@ void group_container::schreier_sims(int verbose_level)
 		S->print_group_order(cout);
 		cout << endl;
 	}
-	f_has_sims = TRUE;
+	f_has_sims = true;
 }
 
 void group_container::get_strong_generators(int verbose_level)
@@ -700,10 +700,10 @@ void group_container::induced_action(
 #if 0
 		if (f_vv) {
 			cout << "induced group:" << endl;
-			HH.print(FALSE);
+			HH.print(false);
 			cout << endl;
 			cout << "kernel:" << endl;
-			KK.print(FALSE);
+			KK.print(false);
 			cout << endl;
 			cout << H.SG->len << " strong generators for induced group:" << endl;
 			H.SG->print(cout);

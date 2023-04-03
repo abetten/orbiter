@@ -31,7 +31,7 @@ poset_classification::poset_classification()
 
 	Poset = NULL;
 
-	f_base_case = FALSE;
+	f_base_case = false;
 	Base_case = NULL;
 
 	depth = 0;
@@ -202,7 +202,7 @@ void poset_classification::init_internal(
 	
 	Schreier_vector_handler = NEW_OBJECT(data_structures_groups::schreier_vector_handler);
 	Schreier_vector_handler->init(Poset->A, Poset->A2,
-			TRUE /* f_allow_failure */,
+			true /* f_allow_failure */,
 			verbose_level);
 	
 	if (f_v) {
@@ -311,7 +311,7 @@ void poset_classification::initialize_and_allocate_root_node(
 	
 
 	// !!!
-	//f_allowed_to_show_group_elements = TRUE;
+	//f_allowed_to_show_group_elements = true;
 
 	if (f_vv) {
 		cout << "poset_classification::initialize_and_allocate_root_node "
@@ -357,7 +357,7 @@ void poset_classification::initialize_with_base_case(
 	
 
 	// !!!
-	//f_allowed_to_show_group_elements = TRUE;
+	//f_allowed_to_show_group_elements = true;
 
 	if (f_vv) {
 		cout << "poset_classification::initialize_with_base_case "
@@ -397,7 +397,7 @@ void poset_classification::init_base_case(
 	if (f_v) {
 		cout << "poset_classification::init_base_case" << endl;
 	}
-	f_base_case = TRUE;
+	f_base_case = true;
 	poset_classification::Base_case = Base_case;
 }
 

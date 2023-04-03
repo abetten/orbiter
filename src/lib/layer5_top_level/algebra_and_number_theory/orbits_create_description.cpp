@@ -20,44 +20,44 @@ namespace apps_algebra {
 
 orbits_create_description::orbits_create_description()
 {
-	f_group = FALSE;
+	f_group = false;
 	//std::string group_label;
 
-	f_on_points = FALSE;
+	f_on_points = false;
 
-	f_on_points_with_generators = FALSE;
+	f_on_points_with_generators = false;
 	//std::string on_points_with_generators_gens_label;
 
-	f_on_subsets = FALSE;
+	f_on_subsets = false;
 	on_subsets_size = 0;
 	//std::string on_subsets_poset_classification_control_label;
 
-	f_on_subspaces = FALSE;
+	f_on_subspaces = false;
 	on_subspaces_dimension = 0;
 	//std::string on_subspaces_poset_classification_control_label;
 
-	f_on_tensors = FALSE;
+	f_on_tensors = false;
 	on_tensors_dimension = 0;
 	//std::string on_tensors_poset_classification_control_label;
 
-	f_on_partition = FALSE;
+	f_on_partition = false;
 	on_partition_k = 0;
 	//std::string on_partition_poset_classification_control_label;
 
-	f_on_polynomials = FALSE;
+	f_on_polynomials = false;
 	on_polynomials_degree = 0;
 
-	f_classification_by_canonical_form = FALSE;
+	f_classification_by_canonical_form = false;
 	Canonical_form_classifier_description = NULL;
 
-	f_override_generators = FALSE;
+	f_override_generators = false;
 	//std::string override_generators_label;
 
 	#if 0
-	f_draw_tree = FALSE;
+	f_draw_tree = false;
 	draw_tree_idx = 0;
 
-	f_recognize = FALSE;
+	f_recognize = false;
 	//std::string recognize_text;
 #endif
 }
@@ -77,20 +77,20 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-group") == 0) {
-			f_group = TRUE;
+			f_group = true;
 			group_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-group " << group_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_points") == 0) {
-			f_on_points = TRUE;
+			f_on_points = true;
 			if (f_v) {
 				cout << "-on_points" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_points_with_generators") == 0) {
-			f_on_points_with_generators = TRUE;
+			f_on_points_with_generators = true;
 			on_points_with_generators_gens_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-on_points_with_generators " << on_points_with_generators_gens_label << endl;
@@ -98,7 +98,7 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 		}
 
 		else if (ST.stringcmp(argv[i], "-on_subsets") == 0) {
-			f_on_subsets = TRUE;
+			f_on_subsets = true;
 			on_subsets_size = ST.strtoi(argv[++i]);
 			on_subsets_poset_classification_control_label.assign(argv[++i]);
 			if (f_v) {
@@ -107,7 +107,7 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_subspaces") == 0) {
-			f_on_subspaces = TRUE;
+			f_on_subspaces = true;
 			on_subspaces_dimension = ST.strtoi(argv[++i]);
 			on_subspaces_poset_classification_control_label.assign(argv[++i]);
 			if (f_v) {
@@ -116,7 +116,7 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_tensors") == 0) {
-			f_on_tensors = TRUE;
+			f_on_tensors = true;
 			on_tensors_dimension = ST.strtoi(argv[++i]);
 			on_tensors_poset_classification_control_label.assign(argv[++i]);
 			if (f_v) {
@@ -125,7 +125,7 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_partition") == 0) {
-			f_on_partition = TRUE;
+			f_on_partition = true;
 			on_partition_k = ST.strtoi(argv[++i]);
 			on_partition_poset_classification_control_label.assign(argv[++i]);
 			if (f_v) {
@@ -134,14 +134,14 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_polynomials") == 0) {
-			f_on_polynomials = TRUE;
+			f_on_polynomials = true;
 			on_polynomials_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-on_polynomials " << on_polynomials_degree << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-classification_by_canonical_form") == 0) {
-			f_classification_by_canonical_form = TRUE;
+			f_classification_by_canonical_form = true;
 			Canonical_form_classifier_description = NEW_OBJECT(projective_geometry::canonical_form_classifier_description);
 			if (f_v) {
 				cout << "-classification_by_canonical_form" << endl;
@@ -163,7 +163,7 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-override_generators") == 0) {
-			f_override_generators = TRUE;
+			f_override_generators = true;
 			override_generators_label = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-override_generators " << override_generators_label << endl;
@@ -173,7 +173,7 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 
 	#if 0
 		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
-			f_draw_tree = TRUE;
+			f_draw_tree = true;
 			draw_tree_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-draw_tree " << draw_tree_idx << endl;
@@ -181,7 +181,7 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 		}
 
 		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
-			f_recognize = TRUE;
+			f_recognize = true;
 			recognize_text = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-recognize " << recognize_text << endl;

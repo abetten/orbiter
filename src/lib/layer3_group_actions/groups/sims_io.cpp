@@ -253,7 +253,7 @@ void sims::print_generators_tex(std::ostream &ost)
 	ost << "\\\\" << endl;
 	ost << "\\begin{align*}" << endl;
 	cnt = 0;
-	f_first = TRUE;
+	f_first = true;
 	for (i = A->base_len() - 1; i >= 0; i--) {
 		nbg = nb_gen[i];
 		nbg1 = nb_gen[i + 1];
@@ -270,7 +270,7 @@ void sims::print_generators_tex(std::ostream &ost)
 			}
 			A->Group_element->element_print_latex(gens.ith(gen_idx), ost);
 			cnt++;
-			f_first = FALSE;
+			f_first = false;
 			if (j < nbg - 1) {
 				ost << ", \\; " << endl;
 			}
@@ -374,12 +374,12 @@ void sims::print_group_order(std::ostream &ost)
 
 void sims::print_group_order_factored(std::ostream &ost)
 {
-	int i, j, f_first = TRUE;
+	int i, j, f_first = true;
 
 	j = last_moved_base_point();
 	for (i = 0; i <= j; i++) {
 		if (f_first) {
-			f_first = FALSE;
+			f_first = false;
 			}
 		else {
 			cout << " * ";
@@ -530,11 +530,11 @@ void sims::print_all_group_elements_tex(
 
 	data_structures::tally T;
 
-	T.init(Order, goi, FALSE, 0 /*verbose_level*/);
+	T.init(Order, goi, false, 0 /*verbose_level*/);
 
 	ost << "Order structure:\\\\" << endl;
 	ost << "$" << endl;
-	T.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+	T.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
 	ost << "$" << endl;
 	ost << "\\\\" << endl;
 
@@ -816,7 +816,7 @@ void sims::report(
 
 		ring_theory::longinteger_object go;
 
-		subgroup_order_verbose(go, i, FALSE /*verbose_level*/);
+		subgroup_order_verbose(go, i, false /*verbose_level*/);
 		ost << i << " & " << get_orbit(i, 0) << " & " << get_orbit_length(i) << " & ";
 		go.print_not_scientific(ost);
 		ost << "\\\\" << endl;
@@ -850,7 +850,7 @@ void sims::report(
 			}
 			Sorting.schreier_vector_tree(
 				orbit_len[orbit_idx], orbit[orbit_idx], prev[orbit_idx],
-				TRUE /* f_use_pts_inv */, orbit_inv[orbit_idx],
+				true /* f_use_pts_inv */, orbit_inv[orbit_idx],
 				fname_base,
 				LG_Draw_options,
 				LG,

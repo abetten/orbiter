@@ -31,7 +31,7 @@ int projective_space::is_contained_in_Baer_subline(
 	long int *subline;
 	int sz;
 	int i, idx, a;
-	int ret = TRUE;
+	int ret = true;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -53,7 +53,7 @@ int projective_space::is_contained_in_Baer_subline(
 	for (i = 0; i < nb_pts; i++) {
 		a = pts[i];
 		if (!Sorting.lint_vec_search(subline, sz, a, idx, 0)) {
-			ret = FALSE;
+			ret = false;
 			if (f_vv) {
 				cout << "did not find " << i << "-th point " << a
 						<< " in the list of points, hence not "
@@ -265,18 +265,18 @@ void projective_space::plane_intersection_invariant(
 	}
 
 	data_structures::tally C;
-	int f_second = FALSE;
+	int f_second = false;
 
 	C.init(nb_pts_on_plane, nb_planes_total, f_second, 0);
 	if (f_v) {
 		cout << "projective_space::plane_intersection_invariant "
 				"plane-intersection type: ";
-		C.print(FALSE /* f_backwards*/);
+		C.print(false /* f_backwards*/);
 	}
 
 	if (f_v) {
 		cout << "The plane intersection type is (";
-		C.print_naked(FALSE /*f_backwards*/);
+		C.print_naked(false /*f_backwards*/);
 		cout << ")" << endl << endl;
 	}
 	f = C.type_first[C.nb_types - 1];
@@ -492,10 +492,10 @@ int projective_space::plane_intersections(
 			cout << "projective_space::plane_intersections "
 					"after Sos.init" << endl;
 		}
-		ret = TRUE;
+		ret = true;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 	for (i = 0; i < nb_planes; i++) {
 		FREE_lint(Pts_on_plane[i]);
@@ -518,7 +518,7 @@ void projective_space::plane_intersection_type_fast(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_v3 = FALSE; //(verbose_level >= 3);
+	int f_v3 = false; //(verbose_level >= 3);
 	int idx;
 	long int r, rk, rr, h, i, j, a, d, N_planes, N, N2, intersection_sz;
 
@@ -575,7 +575,7 @@ void projective_space::plane_intersection_type_fast(
 	Pt_coords = NEW_int(set_size * d);
 
 	for (i = 0; i < N; i++) {
-		f_subset_done[i] = FALSE;
+		f_subset_done[i] = false;
 	}
 	for (i = 0; i < set_size; i++) {
 		unrank_point(Pt_coords + i * d, set[i]);
@@ -641,7 +641,7 @@ void projective_space::plane_intersection_type_fast(
 			// this case should never happen:
 			cout << "projective_space::plane_intersection_type_fast "
 					"longinteger_vec_search(R, len, plane_rk, idx) "
-					"is TRUE" << endl;
+					"is true" << endl;
 			exit(1);
 		}
 		else {
@@ -725,7 +725,7 @@ void projective_space::plane_intersection_type_fast(
 						cout << " rr=" << rr << endl;
 					}
 					if (!f_subset_done[rr]) {
-						f_subset_done[rr] = TRUE;
+						f_subset_done[rr] = true;
 						rank_idx[rr] = idx;
 					}
 					else if (rank_idx[rr] == -1) {
@@ -746,7 +746,7 @@ void projective_space::plane_intersection_type_fast(
 				// now l <= 2, we skip those planes:
 
 				FREE_lint(pts_on_plane);
-				f_subset_done[rk] = TRUE;
+				f_subset_done[rk] = true;
 				rank_idx[rk] = -2;
 			}
 		} // else
@@ -1000,7 +1000,7 @@ void projective_space::decomposition_from_set_partition(
 #if 0
 		int hash;
 		int TDO_depth;
-		int f_labeled = TRUE;
+		int f_labeled = true;
 		int f_vv = (verbose_level >= 2);
 
 
@@ -1016,7 +1016,7 @@ void projective_space::decomposition_from_set_partition(
 					"after compute_TDO" << endl;
 		}
 
-		if (FALSE) {
+		if (false) {
 			Inc->print_partitioned(cout, *Stack, f_labeled);
 		}
 		if (f_v) {

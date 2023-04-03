@@ -17,7 +17,7 @@ namespace induced_actions {
 action_by_right_multiplication::action_by_right_multiplication()
 {
 	Base_group = NULL;
-	f_ownership = FALSE;
+	f_ownership = false;
 	goi = 0;
 	Elt1 = NULL;
 	Elt2 = NULL;

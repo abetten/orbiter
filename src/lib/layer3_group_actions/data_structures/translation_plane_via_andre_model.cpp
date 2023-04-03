@@ -37,7 +37,7 @@ translation_plane_via_andre_model::translation_plane_via_andre_model()
 	Andre = NULL;
 	N = 0;
 	twoN = 0;
-	f_semilinear = FALSE;
+	f_semilinear = false;
 	Line = NULL;
 	Incma = NULL;
 	pts_on_line = NULL;
@@ -336,11 +336,11 @@ void translation_plane_via_andre_model::init(
 			"Automorphism group order = " << ago << endl;
 #endif
 
-	//int f_combined_action = TRUE;
-	//int f_write_tda_files = TRUE;
-	//int f_include_group_order = TRUE;
-	//int f_pic = FALSE;
-	//int f_include_tda_scheme = TRUE;
+	//int f_combined_action = true;
+	//int f_write_tda_files = true;
+	//int f_include_group_order = true;
+	//int f_pic = false;
+	//int f_include_tda_scheme = true;
 	int nb_rows = N;
 	int nb_cols = N;
 	
@@ -478,13 +478,13 @@ void translation_plane_via_andre_model::init(
 		cout << "translation_plane_via_andre_model::init "
 				"Row-scheme:" << endl;
 		Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-			cout, FALSE /* f_enter_math */,
-			TRUE /* f_print_subscripts */, *Stack);
+			cout, false /* f_enter_math */,
+			true /* f_print_subscripts */, *Stack);
 		cout << "translation_plane_via_andre_model::init "
 				"Col-scheme:" << endl;
 		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-			cout, FALSE /* f_enter_math */,
-			TRUE /* f_print_subscripts */, *Stack);
+			cout, false /* f_enter_math */,
+			true /* f_print_subscripts */, *Stack);
 	}
 #endif
 	//FREE_OBJECT(T);
@@ -520,8 +520,8 @@ void translation_plane_via_andre_model::classify_arcs(
 	//Control = NEW_OBJECT(poset_classification::poset_classification_control);
 
 #if 0
-	Control->f_w = TRUE;
-	Control->f_depth = TRUE;
+	Control->f_w = true;
+	Control->f_depth = true;
 	Control->depth = depth;
 #endif
 
@@ -543,7 +543,7 @@ void translation_plane_via_andre_model::classify_arcs(
 
 	
 #if 0
-	arcs->f_print_function = TRUE;
+	arcs->f_print_function = true;
 	arcs->print_function = print_arc;
 	arcs->print_function_data = this;
 #endif
@@ -558,9 +558,9 @@ void translation_plane_via_andre_model::classify_arcs(
 #endif
 
 	int schreier_depth = 1000;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
-	//int f_implicit_fusion = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
+	//int f_implicit_fusion = false;
 
 
 	if (f_v) {
@@ -603,9 +603,9 @@ void translation_plane_via_andre_model::classify_subplanes(
 #if 0
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 
-	Control->f_w = TRUE;
+	Control->f_w = true;
 #endif
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = depth;
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
@@ -634,7 +634,7 @@ void translation_plane_via_andre_model::classify_subplanes(
 
 	
 #if 0
-	arcs->f_print_function = TRUE;
+	arcs->f_print_function = true;
 	arcs->print_function = print_arc;
 	arcs->print_function_data = this;
 #endif
@@ -650,9 +650,9 @@ void translation_plane_via_andre_model::classify_subplanes(
 #endif
 
 	int schreier_depth = 1000;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
-	//int f_implicit_fusion = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
+	//int f_implicit_fusion = false;
 
 
 	if (f_v) {
@@ -683,7 +683,7 @@ int translation_plane_via_andre_model::check_arc(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int ret = TRUE;
+	int ret = true;
 	int i, j, h, a, b, c, l;
 
 	if (f_v) {
@@ -696,7 +696,7 @@ int translation_plane_via_andre_model::check_arc(
 	}
 	for (i = 0; i < len; i++) {
 		if (/*S[i] < Andre->spread_size ||*/ S[i] >= N) {
-			ret = FALSE;
+			ret = false;
 			goto finish;
 		}
 	}
@@ -715,7 +715,7 @@ int translation_plane_via_andre_model::check_arc(
 					}
 					c = S[h];
 					if (Incma[c * N + l]) {
-						ret = FALSE;
+						ret = false;
 						goto finish;
 					}
 				}
@@ -735,7 +735,7 @@ int translation_plane_via_andre_model::check_subplane(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int ret = TRUE;
+	int ret = true;
 	int len2;
 	int i, j, h, a, b, c, l;
 	int *L;
@@ -765,7 +765,7 @@ int translation_plane_via_andre_model::check_subplane(
 		for (j = i + 1; j < len; j++) {
 			b = S[j];
 			if (a == b) {
-				ret = FALSE;
+				ret = false;
 				goto finish;
 			}
 		}
@@ -773,7 +773,7 @@ int translation_plane_via_andre_model::check_subplane(
 
 	for (i = 0; i < len; i++) {
 		if (/*S[i] < Andre->spread_size ||*/ S[i] >= N) {
-			ret = FALSE;
+			ret = false;
 			goto finish;
 		}
 	}
@@ -807,7 +807,7 @@ int translation_plane_via_andre_model::check_subplane(
 		}
 		data_structures::tally C;
 
-		C.init(L, len2, FALSE, 0);
+		C.init(L, len2, false, 0);
 
 		// check if no more than 7 lines:
 		if (C.nb_types > 7) {
@@ -815,7 +815,7 @@ int translation_plane_via_andre_model::check_subplane(
 				cout << "The set determines too many lines, "
 						"namely " << C.nb_types << endl;
 			}
-			ret = FALSE;
+			ret = false;
 			goto finish;
 		}
 		//check if no more than three points per line:
@@ -825,7 +825,7 @@ int translation_plane_via_andre_model::check_subplane(
 				if (f_v) {
 					cout << "The set contains 4 collinear points" << endl;
 				}
-				ret = FALSE;
+				ret = false;
 				goto finish;
 			}
 		}
@@ -844,7 +844,7 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int ret = TRUE;
+	int ret = true;
 	int i, j, h, a, b, l[6], d1, d2, d3, dl;
 
 	if (f_v) {
@@ -873,7 +873,7 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 	d3 = Line_intersection[l[2] * N + l[3]];
 	dl = Line_through_two_points[d1 * N + d2];
 	if (Incma[d3 * N + dl]) {
-		ret = TRUE;
+		ret = true;
 		for (i = 0; i < 4; i++) {
 			subplane7[i] = S[i];
 		}
@@ -882,7 +882,7 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 		subplane7[6] = d3;
 	}
 	else {
-		ret = FALSE;
+		ret = false;
 	}
 
 //finish:
@@ -916,17 +916,17 @@ void translation_plane_via_andre_model::create_latex_report(int verbose_level)
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -979,7 +979,7 @@ void translation_plane_via_andre_model::report(
 	strong_gens->print_generators_tex(ost);
 	ost << "}" << endl;
 
-	//T->report(TRUE /* f_enter_math */, ost);
+	//T->report(true /* f_enter_math */, ost);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::report done" << endl;
@@ -1024,8 +1024,8 @@ void translation_plane_via_andre_model::p_rank(int p, int verbose_level)
 	F = NEW_OBJECT(field_theory::finite_field);
 
 	F->finite_field_init_small_order(p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0 /*verbose_level*/);
 
 	int *base_cols;
@@ -1038,8 +1038,8 @@ void translation_plane_via_andre_model::p_rank(int p, int verbose_level)
 	Int_vec_copy(Incma, Mtx, N * N);
 
 	rk = F->Linear_algebra->Gauss_int(Mtx,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, N, N, N,
+		false /* f_special */, true /* f_complete */, base_cols,
+		false /* f_P */, NULL /*P*/, N, N, N,
 		0 /*verbose_level*/);
 
 
@@ -1075,7 +1075,7 @@ static int translation_plane_via_andre_model_check_arc(
 	translation_plane_via_andre_model *TP =
 			(translation_plane_via_andre_model *) data;
 	int f_OK;
-	int f_v = FALSE; //(verbose_level >= 1);
+	int f_v = false; //(verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "translation_plane_via_andre_model_check_arc "
@@ -1088,13 +1088,13 @@ static int translation_plane_via_andre_model_check_arc(
 		if (f_v) {
 			cout << "accepted" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	else {
 		if (f_v) {
 			cout << "rejected" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 }
 
@@ -1117,13 +1117,13 @@ static int translation_plane_via_andre_model_check_subplane(
 		if (f_v) {
 			cout << "accepted" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	else {
 		if (f_v) {
 			cout << "rejected" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 }
 #endif

@@ -143,7 +143,7 @@ int os_interface::os_ticks()
 #endif
 }
 
-static int f_system_time_set = FALSE;
+static int f_system_time_set = false;
 static int system_time0 = 0;
 
 int os_interface::os_ticks_system()
@@ -152,7 +152,7 @@ int os_interface::os_ticks_system()
 
 	t = time(NULL);
 	if (!f_system_time_set) {
-		f_system_time_set = TRUE;
+		f_system_time_set = true;
 		system_time0 = t;
 		}
 	//t -= system_time0;
@@ -162,7 +162,7 @@ int os_interface::os_ticks_system()
 
 int os_interface::os_ticks_per_second()
 {
-	static int f_tps_computed = FALSE;
+	static int f_tps_computed = false;
 	static int tps = 0;
 #ifdef SYSTEMUNIX
 #ifndef SYSTEMWINDOWS
@@ -173,7 +173,7 @@ int os_interface::os_ticks_per_second()
 	else {
 		clk_tck = sysconf(_SC_CLK_TCK);
 		tps = clk_tck;
-		f_tps_computed = TRUE;
+		f_tps_computed = true;
 		//cout << endl << "clock ticks per second = " << tps << endl;
 		return(clk_tck);
 		}
@@ -188,7 +188,7 @@ void os_interface::os_ticks_to_dhms(int ticks,
 		int tps, int &d, int &h, int &m, int &s)
 {
 	int l1;
-	int f_v = FALSE;
+	int f_v = false;
 
 	if (f_v) {
 		cout << "os_ticks_to_dhms ticks = " << ticks << endl;
@@ -330,7 +330,7 @@ void os_interface::get_string_from_command_line(std::string &p, int argc, std::s
 	if (ST.stringcmp(argv[i], "-long_string") == 0) {
 		i++;
 		p.assign("");
-		while (TRUE) {
+		while (true) {
 			if (ST.stringcmp(argv[i], "-end_string") == 0) {
 				i++;
 				break;
@@ -347,7 +347,7 @@ void os_interface::get_string_from_command_line(std::string &p, int argc, std::s
 
 static const char *ascii_code = "abcdefghijklmnop";
 
-static int f_has_swap_initialized = FALSE;
+static int f_has_swap_initialized = false;
 static int f_has_swap = 0;
 	// indicates if char swap is present
 	// i.e., little endian / big endian
@@ -360,18 +360,18 @@ void os_interface::test_swap()
 
 	ptr = (char *) &test;
 	if (ptr[0] == 0x44) {
-		f_has_swap = TRUE;
+		f_has_swap = true;
 		cout << "we have a swap" << endl;
 	}
 	else if (ptr[0] == 0x11) {
-		f_has_swap = FALSE;
+		f_has_swap = false;
 		cout << "we don't have a swap" << endl;
 	}
 	else {
 		cout << "The test_swap test is inconclusive" << endl;
 		exit(1);
 	}
-	f_has_swap_initialized = TRUE;
+	f_has_swap_initialized = true;
 }
 
 // block_swap_chars:

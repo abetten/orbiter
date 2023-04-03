@@ -410,13 +410,13 @@ int design_tables::test_if_table_exists(
 		if (f_v) {
 			cout << "design_tables::test_if_table_exists design table " << fname_design_table << " exists" << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	else {
 		if (f_v) {
 			cout << "design_tables::test_if_table_exists design table " << fname_design_table << " does not exist" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 }
 
@@ -493,10 +493,10 @@ int design_tables::test_if_designs_are_disjoint(int i, int j)
 	p2 = the_table + j * design_size;
 	if (Sorting.test_if_sets_are_disjoint_assuming_sorted_lint(
 			p1, p2, design_size, design_size)) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -518,11 +518,11 @@ int design_tables::test_set_within_itself(
 			p2 = the_table + b * design_size;
 			if (!Sorting.test_if_sets_are_disjoint_assuming_sorted_lint(
 					p1, p2, design_size, design_size)) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int design_tables::test_between_two_sets(
@@ -542,11 +542,11 @@ int design_tables::test_between_two_sets(
 			p2 = the_table + b * design_size;
 			if (!Sorting.test_if_sets_are_disjoint_assuming_sorted_lint(
 					p1, p2, design_size, design_size)) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 

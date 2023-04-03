@@ -132,8 +132,8 @@ void blt_set_classify_activity::perform_activity(int verbose_level)
 				Descr->split_r,
 				Descr->split_m,
 				BLT_classify->starter_size - 1,
-				TRUE /* f_lexorder_test */,
-				FALSE /* f_eliminate_graphs_if_possible */,
+				true /* f_lexorder_test */,
+				false /* f_eliminate_graphs_if_possible */,
 				verbose_level);
 
 		if (f_v) {

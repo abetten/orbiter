@@ -26,7 +26,7 @@ permutation_group_description::permutation_group_description()
 	degree = 0;
 	type = unknown_permutation_group_t;
 
-	f_bsgs = FALSE;
+	f_bsgs = false;
 	//std::string bsgs_label;
 	//std::string bsgs_label_tex;
 	//std::string bsgs_order_text;
@@ -34,7 +34,7 @@ permutation_group_description::permutation_group_description()
 	bsgs_nb_generators = 0;
 	//std::string bsgs_generators;
 
-	f_subgroup_by_generators = FALSE;
+	f_subgroup_by_generators = false;
 	//std::string subgroup_label;
 	//std::string subgroup_order_text;
 	nb_subgroup_generators = 0;
@@ -91,7 +91,7 @@ int permutation_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-bsgs") == 0) {
-			f_bsgs = TRUE;
+			f_bsgs = true;
 			bsgs_label.assign(argv[++i]);
 			bsgs_label_tex.assign(argv[++i]);
 			degree = ST.strtoi(argv[++i]);
@@ -114,7 +114,7 @@ int permutation_group_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-subgroup_by_generators") == 0) {
-			f_subgroup_by_generators = TRUE;
+			f_subgroup_by_generators = true;
 			subgroup_label.assign(argv[++i]);
 			subgroup_order_text.assign(argv[++i]);
 			nb_subgroup_generators = ST.strtoi(argv[++i]);

@@ -81,8 +81,8 @@ void minimum_polynomial::compute_subfield_polynomial(
 
 	finite_field GFp;
 	GFp.finite_field_init_small_order(F->p,
-			FALSE /* f_without_tables */,
-			FALSE /* f_compute_related_fields */,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
 			0);
 
 	ring_theory::unipoly_domain FX(&GFp);

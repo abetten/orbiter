@@ -20,7 +20,7 @@ namespace apps_coding_theory {
 
 code_modification_description::code_modification_description()
 {
-	f_dual = FALSE;
+	f_dual = false;
 
 }
 
@@ -40,17 +40,17 @@ int code_modification_description::check_and_parse_argument(
 		cout << "code_modification_description::check_and_parse_argument" << endl;
 	}
 	if (ST.stringcmp(argv[i], "-dual") == 0) {
-		f_dual = TRUE;
+		f_dual = true;
 		i++;
 		if (f_v) {
 			cout << "-dual " << endl;
 		}
-		return TRUE;
+		return true;
 	}
 	if (f_v) {
 		cout << "code_modification_description::read_arguments done" << endl;
 	}
-	return FALSE;
+	return false;
 }
 
 int code_modification_description::read_arguments(
@@ -67,7 +67,7 @@ int code_modification_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-dual") == 0) {
-			f_dual = TRUE;
+			f_dual = true;
 			if (f_v) {
 				cout << "-complement " << endl;
 			}

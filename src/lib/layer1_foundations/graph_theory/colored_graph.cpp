@@ -34,10 +34,10 @@ colored_graph::colored_graph()
 	user_data_size = 0;
 	user_data = NULL;
 
-	f_ownership_of_bitvec = FALSE;
+	f_ownership_of_bitvec = false;
 	Bitvec = NULL;
 	//bitvector_adjacency = NULL;
-	f_has_list_of_edges = FALSE;
+	f_has_list_of_edges = false;
 	nb_edges = 0;
 	list_of_edges = NULL;
 }
@@ -132,7 +132,7 @@ void colored_graph::compute_edges(int verbose_level)
 		exit(1);
 	}
 
-	f_has_list_of_edges = TRUE;
+	f_has_list_of_edges = true;
 	if (f_v) {
 		cout << "colored_graph::compute_edges done" << endl;
 	}
@@ -144,7 +144,7 @@ int colored_graph::is_adjacent(int i, int j)
 	combinatorics::combinatorics_domain Combi;
 
 	if (i == j) {
-		return FALSE;
+		return false;
 	}
 	if (i > j) {
 		return is_adjacent(j, i);
@@ -223,10 +223,10 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 
 	data_structures::tally C;
 
-	C.init(point_color, nb_points, FALSE, 0);
+	C.init(point_color, nb_points, false, 0);
 	if (f_v) {
 		cout << "point color distribution: ";
-		C.print_naked(TRUE);
+		C.print_naked(true);
 		cout << endl;
 	}
 
@@ -314,10 +314,10 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 
 	data_structures::tally C;
 
-	C.init(point_color, nb_points, FALSE, 0);
+	C.init(point_color, nb_points, false, 0);
 	if (f_v) {
 		cout << "point color distribution: ";
-		C.print_naked(TRUE);
+		C.print_naked(true);
 		cout << endl;
 	}
 
@@ -395,10 +395,10 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 
 	data_structures::tally C;
 
-	C.init(point_color, nb_points, FALSE, 0);
+	C.init(point_color, nb_points, false, 0);
 	if (f_v) {
 		cout << "point color distribution: ";
-		C.print_naked(TRUE);
+		C.print_naked(true);
 		cout << endl;
 	}
 
@@ -497,7 +497,7 @@ void colored_graph::print()
 	
 	data_structures::tally C;
 
-	C.init(point_color, nb_points, TRUE, 0);
+	C.init(point_color, nb_points, true, 0);
 
 	int I, f1, l1, ii, idx1;
 
@@ -520,11 +520,11 @@ void colored_graph::print()
 	
 
 	cout << "point colors: ";
-	C.print_first(TRUE);
+	C.print_first(true);
 	cout << endl;
 
 	cout << "color class sizes: ";
-	C.print_second(TRUE);
+	C.print_second(true);
 	cout << endl;
 
 #if 0
@@ -582,12 +582,12 @@ void colored_graph::print_points_and_colors()
 void colored_graph::print_adjacency_list()
 {
 	int i, j;
-	int f_first = TRUE;
+	int f_first = true;
 	
 	cout << "Adjacency list:" << endl;
 	for (i = 0; i < nb_points; i++) {
 		cout << i << " : ";
-		f_first = TRUE;
+		f_first = true;
 		for (j = 0; j < nb_points; j++) {
 			if (i == j) {
 				continue;
@@ -599,7 +599,7 @@ void colored_graph::print_adjacency_list()
 					cout << ", ";
 				}
 				cout << j;
-				f_first = FALSE;
+				f_first = false;
 			}
 		}
 		cout << endl;
@@ -607,7 +607,7 @@ void colored_graph::print_adjacency_list()
 	cout << "Adjacency list using point labels:" << endl;
 	for (i = 0; i < nb_points; i++) {
 		cout << points[i] << " : ";
-		f_first = TRUE;
+		f_first = true;
 		for (j = 0; j < nb_points; j++) {
 			if (i == j) {
 				continue;
@@ -619,7 +619,7 @@ void colored_graph::print_adjacency_list()
 					cout << ", ";
 				}
 				cout << points[j];
-				f_first = FALSE;
+				f_first = false;
 			}
 		}
 		cout << endl;
@@ -773,7 +773,7 @@ void colored_graph::init_adjacency(
 	}
 	init(
 			nb_points, nb_colors, nb_colors_per_vertex,
-		colors, Bitvec, TRUE /* f_ownership_of_bitvec */,
+		colors, Bitvec, true /* f_ownership_of_bitvec */,
 		label, label_tex,
 		verbose_level);
 
@@ -818,7 +818,7 @@ void colored_graph::init_adjacency_upper_triangle(
 	}
 	init(
 			nb_points, nb_colors, nb_colors_per_vertex,
-		colors, Bitvec, TRUE /* f_ownership_of_bitvec */,
+		colors, Bitvec, true /* f_ownership_of_bitvec */,
 		label, label_tex,
 		verbose_level);
 
@@ -960,7 +960,7 @@ void colored_graph::load(
 		cout << "colored_graph::load after Graph.load_colored_graph" << endl;
 	}
 
-	f_ownership_of_bitvec = TRUE;
+	f_ownership_of_bitvec = true;
 
 	fname_base.assign(fname);
 	ST.replace_extension_with(fname_base, "");
@@ -1003,7 +1003,7 @@ void colored_graph::draw_on_circle(
 		G.end_figure();
 		G.footer();
 	
-		//G.finish(cout, TRUE);
+		//G.finish(cout, true);
 	}
 	if (f_v) {
 		cout << "colored_graph::draw_on_circle done" << endl;
@@ -1028,7 +1028,7 @@ void colored_graph::draw_on_circle_2(
 	Px1 = NEW_int(n);
 	Py1 = NEW_int(n);
 	
-	if (TRUE) {
+	if (true) {
 		rad2 = Draw_options->rad;
 	}
 	for (i = 0; i < n; i++) {
@@ -1154,7 +1154,7 @@ void colored_graph::draw(
 	if (f_v) {
 		cout << "colored_graph::draw" << endl;
 	}
-	int f_dots = FALSE;
+	int f_dots = false;
 	data_structures::bitmatrix *Bitmatrix;
 	combinatorics::combinatorics_domain Combi;
 	graph_theory_domain Graph;
@@ -1163,18 +1163,18 @@ void colored_graph::draw(
 
 	create_bitmatrix(Bitmatrix, verbose_level);
 
-	int f_row_grid = FALSE;
-	int f_col_grid = FALSE;
+	int f_row_grid = false;
+	int f_col_grid = false;
 	
 	Graph.draw_bitmatrix(
 			fname,
 			Draw_options,
 			f_dots,
-		FALSE, 0, NULL, 0, NULL, 
+		false, 0, NULL, 0, NULL, 
 		f_row_grid, f_col_grid, 
-		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
+		true /* f_bitmatrix */, Bitmatrix, NULL,
 		nb_points, nb_points,
-		FALSE, NULL, verbose_level - 1);
+		false, NULL, verbose_level - 1);
 	
 
 	FREE_OBJECT(Bitmatrix);
@@ -1193,7 +1193,7 @@ void colored_graph::draw_Levi(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_dots = FALSE;
+	int f_dots = false;
 	data_structures::bitmatrix *Bitmatrix;
 	long int len, i, j, k;
 	combinatorics::combinatorics_domain Combi;
@@ -1229,8 +1229,8 @@ void colored_graph::draw_Levi(
 		}
 	}
 
-	int f_row_grid = FALSE;
-	int f_col_grid = FALSE;
+	int f_row_grid = false;
+	int f_col_grid = false;
 	int *labels = NULL;
 
 	if (f_draw_labels) {
@@ -1250,7 +1250,7 @@ void colored_graph::draw_Levi(
 		f_partition, nb_row_parts, row_part_first,
 			nb_col_parts, col_part_first,
 		f_row_grid, f_col_grid, 
-		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
+		true /* f_bitmatrix */, Bitmatrix, NULL,
 		m, n, 
 		f_draw_labels, labels,
 		verbose_level - 1);
@@ -1274,9 +1274,9 @@ void colored_graph::draw_with_a_given_partition(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_dots = FALSE;
-	int f_row_grid = FALSE;
-	int f_col_grid = FALSE;
+	int f_dots = false;
+	int f_row_grid = false;
+	int f_col_grid = false;
 	data_structures::bitmatrix *Bitmatrix;
 	int i;
 	int *P;
@@ -1300,11 +1300,11 @@ void colored_graph::draw_with_a_given_partition(
 			fname,
 			Draw_options,
 			f_dots,
-		TRUE, nb_parts, P, nb_parts, P, 
+		true, nb_parts, P, nb_parts, P, 
 		f_row_grid, f_col_grid, 
-		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
+		true /* f_bitmatrix */, Bitmatrix, NULL,
 		nb_points, nb_points, 
-		FALSE /*f_has_labels*/, NULL /*labels*/,
+		false /*f_has_labels*/, NULL /*labels*/,
 		verbose_level - 1);
 
 
@@ -1324,7 +1324,7 @@ void colored_graph::draw_partitioned(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_dots = FALSE;
+	int f_dots = false;
 	data_structures::bitmatrix *Bitmatrix;
 	long int len, i, j, k;
 	combinatorics::combinatorics_domain Combi;
@@ -1344,7 +1344,7 @@ void colored_graph::draw_partitioned(
 
 	data_structures::tally C;
 
-	C.init(point_color, nb_points, FALSE, 0);
+	C.init(point_color, nb_points, false, 0);
 	if (f_v) {
 		cout << "colored_graph::draw_partitioned we found "
 				<< C.nb_types << " classes" << endl;
@@ -1375,16 +1375,16 @@ void colored_graph::draw_partitioned(
 	}
 	part[C.nb_types] = nb_points;
 
-	int f_row_grid = FALSE;
-	int f_col_grid = FALSE;
+	int f_row_grid = false;
+	int f_col_grid = false;
 
 	Graph.draw_bitmatrix(
 			fname,
 			Draw_options,
 			f_dots,
-		TRUE, C.nb_types, part, C.nb_types, part, 
+		true, C.nb_types, part, C.nb_types, part, 
 		f_row_grid, f_col_grid, 
-		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
+		true /* f_bitmatrix */, Bitmatrix, NULL,
 		nb_points, nb_points,
 		f_labels /*f_has_labels*/,
 		C.sorting_perm_inv /*labels*/,
@@ -1490,7 +1490,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 	S->init(nb_points_subgraph,
 			color_subset->k, nb_colors_per_vertex,
 			color_in_subgraph,
-			Bitvec, TRUE,
+			Bitvec, true,
 			label, label_tex,
 			verbose_level);
 
@@ -1633,7 +1633,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_based_on_subset(
 	S->init(nb_points_subgraph,
 			color_subset->k, nb_colors_per_vertex,
 			color_in_subgraph,
-			Bitvec, TRUE,
+			Bitvec, true,
 			label, label_tex,
 			0 /*verbose_level*/);
 
@@ -1758,7 +1758,7 @@ colored_graph
 		bitvec[i] = 0;
 	}
 	S->init(nb_points_subgraph, color_subset->k, nb_colors_per_vertex,
-			color_in_subgraph, bitvec, TRUE,
+			color_in_subgraph, bitvec, true,
 			verbose_level);
 	for (i = 0; i < nb_points_subgraph; i++) {
 		ii = vertex_subset->set[i];
@@ -2335,10 +2335,10 @@ int colored_graph::is_cycle(
 		v[y]++;
 	}
 
-	//ret = TRUE;
+	//ret = true;
 	for (i = 0; i < nb_points; i++) {
 		if (v[i] != 0 && v[i] != 2) {
-			//ret = FALSE;
+			//ret = false;
 			break;
 		}
 	}
@@ -2348,7 +2348,7 @@ int colored_graph::is_cycle(
 	if (f_v) {
 		cout << "colored_graph::is_cycle done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -2397,13 +2397,13 @@ void colored_graph::create_Levi_graph_from_incidence_matrix(
 	if (f_point_labels) {
 		init_with_point_labels(N, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 			NULL /*point_color*/, Bitvec_adjacency,
-			TRUE, point_labels, verbose_level - 2);
+			true, point_labels, verbose_level - 2);
 			// the adjacency becomes part of the colored_graph object
 	}
 	else {
 		init(N, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 			NULL /*point_color*/, bitvector_adjacency,
-			TRUE, verbose_level - 2);
+			true, verbose_level - 2);
 			// the adjacency becomes part of the colored_graph object
 	}
 
@@ -3322,8 +3322,8 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 	CF->init(
 			Control,
 			dummy, nb_points,
-			FALSE /* f_has_adj_list */, NULL /* int *adj_list_coded */,
-			TRUE /* f_has_bitvector */, Bitvec,
+			false /* f_has_adj_list */, NULL /* int *adj_list_coded */,
+			true /* f_has_bitvector */, Bitvec,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_colors "
@@ -3413,13 +3413,13 @@ void colored_graph::complement(int verbose_level)
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
 			if (is_adjacent(i, j)) {
-				if (FALSE) {
+				if (false) {
 					cout << "set_adjacency(" << i << "," << j << ",0)" << endl;
 				}
 				set_adjacency(i, j, 0);
 			}
 			else {
-				if (FALSE) {
+				if (false) {
 					cout << "set_adjacency(" << i << "," << j << ",1)" << endl;
 				}
 				set_adjacency(i, j, 1);
@@ -3464,7 +3464,7 @@ void colored_graph::distance_2(int verbose_level)
 					continue;
 				}
 				if (is_adjacent(i, k) && is_adjacent(k, j)) {
-					if (FALSE) {
+					if (false) {
 						cout << "set_adjacency(" << i << "," << j << ",0)" << endl;
 					}
 					M[i * nb_points + j] = 1;
@@ -3477,13 +3477,13 @@ void colored_graph::distance_2(int verbose_level)
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
 			if (M[i * nb_points + j]) {
-				if (FALSE) {
+				if (false) {
 					cout << "set_adjacency(" << i << "," << j << ",0)" << endl;
 				}
 				set_adjacency(i, j, 1);
 			}
 			else {
-				if (FALSE) {
+				if (false) {
 					cout << "set_adjacency(" << i << "," << j << ",1)" << endl;
 				}
 				set_adjacency(i, j, 0);
@@ -3525,9 +3525,9 @@ void colored_graph::properties(int verbose_level)
 	}
 	data_structures::tally T;
 
-	T.init(Degree, nb_points, FALSE, 0);
+	T.init(Degree, nb_points, false, 0);
 	cout << "Degree type: ";
-	T.print_first_tex(TRUE /* f_backwards */);
+	T.print_first_tex(true /* f_backwards */);
 	cout << endl;
 
 	if (f_v) {
@@ -3540,7 +3540,7 @@ int colored_graph::test_distinguishing_property(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_distinguishing = FALSE;
+	int f_distinguishing = false;
 	int *neighbor_set;
 
 	if (f_v) {
@@ -3565,15 +3565,15 @@ int colored_graph::test_distinguishing_property(
 		}
 		if (n == 0) {
 			FREE_int(neighbor_set);
-			return FALSE;
+			return false;
 		}
 		if (neighbor_set[n]) {
 			FREE_int(neighbor_set);
-			return FALSE;
+			return false;
 		}
-		neighbor_set[n] = TRUE;
+		neighbor_set[n] = true;
 	}
-	f_distinguishing = TRUE;
+	f_distinguishing = true;
 
 	if (f_v) {
 		cout << "colored_graph::test_distinguishing_property done" << endl;

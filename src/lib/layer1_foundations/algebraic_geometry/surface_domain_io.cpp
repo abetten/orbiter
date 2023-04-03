@@ -190,7 +190,7 @@ void surface_domain::print_web_of_cubic_curves(std::ostream &ost,
 	ost << "Web of cubic curves:\\\\" << endl;
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels(ost,
-		Web_of_cubic_curves, 45, 10, TRUE /* f_tex*/);
+		Web_of_cubic_curves, 45, 10, true /* f_tex*/);
 	ost << "$$" << endl;
 }
 #endif
@@ -252,7 +252,7 @@ void surface_domain::print_one_line_tex(
 		std::ostream &ost,
 		long int *Lines, int nb_lines, int idx)
 {
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int vv[6];
 	long int klein_rk;
 
@@ -453,13 +453,13 @@ void surface_domain::make_table_of_surfaces(int verbose_level)
 
 	{
 		ofstream fp(fname);
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		//latex_head_easy(fp);
 		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
+			false /* f_book */, true /* f_title */,
 			title, author,
-			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
-			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
+			false /*f_toc*/, false /* f_landscape*/, false /* f_12pt*/,
+			true /*f_enlarged_page*/, true /* f_pagenumbers*/,
 			extras_for_preamble);
 
 
@@ -681,9 +681,9 @@ void surface_domain::make_table_of_surfaces2(
 		}
 		tally C;
 
-		C.init(Ago, nb_reps, FALSE, 0);
+		C.init(Ago, nb_reps, false, 0);
 		f << q << ", ";
-		C.print_naked_tex(f, TRUE /* f_backwards*/);
+		C.print_naked_tex(f, true /* f_backwards*/);
 		f << endl;
 
 		FREE_int(Ago);
@@ -867,10 +867,10 @@ void surface_domain::make_table_of_surfaces2(
 				}
 				data_structures::tally C;
 
-				C.init(Ago, nb_reps, FALSE, 0);
+				C.init(Ago, nb_reps, false, 0);
 				ost << q << " & " << nb_reps << " & ";
 				ost << "$";
-				C.print_naked_tex(ost, TRUE /* f_backwards*/);
+				C.print_naked_tex(ost, true /* f_backwards*/);
 				ost << "$\\\\" << endl;
 
 				FREE_int(Ago);

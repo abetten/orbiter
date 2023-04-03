@@ -95,7 +95,7 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 
 
 	//F = NEW_OBJECT(finite_field);
-	//F->finite_field_init(q, FALSE /* f_without_tables */, 0 /* verbose_level */);
+	//F->finite_field_init(q, false /* f_without_tables */, 0 /* verbose_level */);
 
 
 	minus_one = F->negate(1);
@@ -146,8 +146,8 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 		Q = q * q;
 		FQ = NEW_OBJECT(field_theory::finite_field);
 		FQ->finite_field_init_small_order(Q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0);
 		alphaQ = FQ->primitive_element();
 
@@ -631,11 +631,11 @@ void number_theoretic_transform::write_code(std::string &fname_code,
 		int nb_mult = 0;
 		write_code_header(ost, fname_code, verbose_level);
 
-		write_code2(ost, TRUE /* f_forward */, nb_add, nb_negate, nb_mult, verbose_level);
+		write_code2(ost, true /* f_forward */, nb_add, nb_negate, nb_mult, verbose_level);
 		nb_add = 0;
 		nb_negate = 0;
 		nb_mult = 0;
-		write_code2(ost, FALSE /* f_forward */, nb_add, nb_negate, nb_mult, verbose_level);
+		write_code2(ost, false /* f_forward */, nb_add, nb_negate, nb_mult, verbose_level);
 
 	}
 	cout << "Written file " << fname_code << " of size " << Fio.file_size(fname_code) << endl;
@@ -860,7 +860,7 @@ void number_theoretic_transform::write_code2(std::ostream &ost,
 			}
 		}
 		ost << "\toutput[" << i << "] = ";
-		if (f_forward == FALSE) {
+		if (f_forward == false) {
 			ost << "F->negate(";
 			nb_negate++;
 		}
@@ -891,7 +891,7 @@ void number_theoretic_transform::write_code2(std::ostream &ost,
 			nb_mult++;
 		}
 		ost << ")";
-		if (f_forward == FALSE) {
+		if (f_forward == false) {
 			ost << ")";
 		}
 		ost << ";" << endl;
@@ -943,7 +943,7 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 	ost << "\tint i;" << endl;
 	ost << "\t" << endl;
 	ost << "\tF = NEW_OBJECT(orbiter::layer1_foundations::field_theory::finite_field);" << endl;
-	ost << "\tF->finite_field_init_small_order(q, FALSE /*f_without_tables*/, 0 /*verbose_level*/);" << endl;
+	ost << "\tF->finite_field_init_small_order(q, false /*f_without_tables*/, 0 /*verbose_level*/);" << endl;
 	ost << "\t" << endl;
 	ost << "\tint *input;" << endl;
 	ost << "\tint *output;" << endl;

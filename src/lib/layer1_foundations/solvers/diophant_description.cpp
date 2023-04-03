@@ -20,53 +20,53 @@ namespace solvers {
 
 diophant_description::diophant_description()
 {
-	f_field = FALSE;
+	f_field = false;
 	//std::string field_label;
 
-	f_maximal_arc = FALSE;
+	f_maximal_arc = false;
 	maximal_arc_sz = 0;
 	maximal_arc_d = 0;
 	//maximal_arc_secants_text;
 	//external_lines_as_subset_of_secants_text;
 
-	f_label = FALSE;
+	f_label = false;
 	//label = NULL;
 	//from_scratch_m = 0;
 	//from_scratch_n = 0;
 
-	f_coefficient_matrix = FALSE;
+	f_coefficient_matrix = false;
 	//coefficient_matrix_label;
 
-	f_problem_of_Steiner_type = FALSE;
+	f_problem_of_Steiner_type = false;
 	problem_of_Steiner_type_nb_t_orbits = 0;
 	//std::string problem_of_Steiner_type_covering_matrix_fname;
 
-	f_coefficient_matrix_csv = FALSE;
+	f_coefficient_matrix_csv = false;
 	//coefficient_matrix_csv;
 
-	f_RHS_constant = FALSE;
+	f_RHS_constant = false;
 	//RHS_constant_text;
 
 
-	f_RHS = FALSE;
+	f_RHS = false;
 	//RHS_text;
 
-	f_RHS_csv = FALSE;
+	f_RHS_csv = false;
 	//RHS_csv_text;
 
-	f_x_max_global = FALSE;
+	f_x_max_global = false;
 	x_max_global = 0;
 
-	f_x_min_global = FALSE;
+	f_x_min_global = false;
 	x_min_global = 0;
 
-	f_x_bounds = FALSE;
+	f_x_bounds = false;
 	//x_bounds_text;
 
-	f_x_bounds_csv = FALSE;
+	f_x_bounds_csv = false;
 	//x_bounds_csv;
 
-	f_has_sum = FALSE;
+	f_has_sum = false;
 	has_sum = 0;
 }
 
@@ -90,14 +90,14 @@ int diophant_description::read_arguments(
 
 
 		if (ST.stringcmp(argv[i], "-field") == 0) {
-			f_field = TRUE;
+			f_field = true;
 			field_label = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-field" << field_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-maximal_arc") == 0) {
-			f_maximal_arc = TRUE;
+			f_maximal_arc = true;
 			maximal_arc_sz = ST.strtoi(argv[++i]);
 			maximal_arc_d = ST.strtoi(argv[++i]);
 			maximal_arc_secants_text.assign(argv[++i]);
@@ -109,21 +109,21 @@ int diophant_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label") == 0) {
-			f_label = TRUE;
+			f_label = true;
 			label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label " << label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-coefficient_matrix") == 0) {
-			f_coefficient_matrix = TRUE;
+			f_coefficient_matrix = true;
 			coefficient_matrix_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-coefficient_matrix " << coefficient_matrix_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-problem_of_Steiner_type") == 0) {
-			f_problem_of_Steiner_type = TRUE;
+			f_problem_of_Steiner_type = true;
 			problem_of_Steiner_type_nb_t_orbits = ST.strtoi(argv[++i]);
 			problem_of_Steiner_type_covering_matrix_fname.assign(argv[++i]);
 			if (f_v) {
@@ -133,63 +133,63 @@ int diophant_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-coefficient_matrix_csv") == 0) {
-			f_coefficient_matrix_csv = TRUE;
+			f_coefficient_matrix_csv = true;
 			coefficient_matrix_csv.assign(argv[++i]);
 			if (f_v) {
 				cout << "-coefficient_matrix_csv " << coefficient_matrix_csv << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-RHS") == 0) {
-			f_RHS = TRUE;
+			f_RHS = true;
 			RHS_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-RHS " << RHS_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-RHS_csv") == 0) {
-			f_RHS_csv = TRUE;
+			f_RHS_csv = true;
 			RHS_csv_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-RHS_csv " << RHS_csv_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-RHS_constant") == 0) {
-			f_RHS_constant = TRUE;
+			f_RHS_constant = true;
 			RHS_constant_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-RHS_constant " << RHS_constant_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-x_max_global") == 0) {
-			f_x_max_global = TRUE;
+			f_x_max_global = true;
 			x_max_global = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-x_max_global " << x_max_global << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-x_min_global") == 0) {
-			f_x_min_global = TRUE;
+			f_x_min_global = true;
 			x_min_global = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-x_min_global " << x_min_global << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-x_bounds") == 0) {
-			f_x_bounds = TRUE;
+			f_x_bounds = true;
 			x_bounds_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-x_bounds " << x_bounds_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-x_bounds_csv") == 0) {
-			f_x_bounds_csv = TRUE;
+			f_x_bounds_csv = true;
 			x_bounds_csv.assign(argv[++i]);
 			if (f_v) {
 				cout << "-x_bounds_csv " << x_bounds_csv << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-has_sum") == 0) {
-			f_has_sum = TRUE;
+			f_has_sum = true;
 			has_sum = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-has_sum " << has_sum << endl;

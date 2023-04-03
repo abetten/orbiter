@@ -142,7 +142,7 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 	int len;
 	int i, a, d = Quadratic_form->n;
 	long int p1, p2;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 	data_structures::sorting Sorting;
 
 	ost << "The number of lines is " << Hyperbolic_pair->nb_lines << "\\\\" << endl;
@@ -241,7 +241,7 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 	}
 	int i, a, d = Quadratic_form->n;
 	long int p1, p2, rk;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 	data_structures::sorting Sorting;
 
 	ost << "A set of lines of size " << nb_lines << "\\\\" << endl;
@@ -562,7 +562,7 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 						"before Stack->split_cell_front_or_back for points" << endl;
 			}
 			Stack->split_cell_front_or_back(set, l,
-					TRUE /* f_front */, 0 /*verbose_level*/);
+					true /* f_front */, 0 /*verbose_level*/);
 			f += l;
 		}
 		FREE_int(set);
@@ -584,7 +584,7 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 						"before Stack->split_cell_front_or_back for lines" << endl;
 			}
 			Stack->split_cell_front_or_back(set, l,
-					TRUE /* f_front */, 0 /*verbose_level*/);
+					true /* f_front */, 0 /*verbose_level*/);
 			f += l;
 		}
 		FREE_int(set);
@@ -609,20 +609,20 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 					"before Stack->print_row_tactical_decomposition_scheme_tex" << endl;
 		}
 		Stack->print_row_tactical_decomposition_scheme_tex(ost,
-				TRUE /*f_enter_math*/,
+				true /*f_enter_math*/,
 				row_classes, nb_row_classes,
 				col_classes, nb_col_classes,
-				row_scheme, FALSE /* f_print_subscripts */);
+				row_scheme, false /* f_print_subscripts */);
 
 		if (f_v) {
 			cout << "orthogonal::report_schemes "
 					"before Stack->print_column_tactical_decomposition_scheme_tex" << endl;
 		}
 		Stack->print_column_tactical_decomposition_scheme_tex(ost,
-				TRUE /*f_enter_math*/,
+				true /*f_enter_math*/,
 				row_classes, nb_row_classes,
 				col_classes, nb_col_classes,
-				col_scheme, FALSE /* f_print_subscripts */);
+				col_scheme, false /* f_print_subscripts */);
 
 		FREE_int(row_classes);
 		FREE_int(col_classes);
@@ -643,16 +643,16 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 
 void orthogonal::report_schemes_easy(std::ostream &ost)
 {
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	Li.print_row_tactical_decomposition_scheme_tex(
-			ost, TRUE /* f_enter_math_mode */,
+			ost, true /* f_enter_math_mode */,
 			Hyperbolic_pair->P, Hyperbolic_pair->nb_point_classes,
 			Hyperbolic_pair->L, Hyperbolic_pair->nb_line_classes,
 			Hyperbolic_pair->A);
 
 	Li.print_column_tactical_decomposition_scheme_tex(
-			ost, TRUE /* f_enter_math_mode */,
+			ost, true /* f_enter_math_mode */,
 			Hyperbolic_pair->P, Hyperbolic_pair->nb_point_classes,
 			Hyperbolic_pair->L, Hyperbolic_pair->nb_line_classes,
 			Hyperbolic_pair->B);
@@ -688,17 +688,17 @@ void orthogonal::create_latex_report(int verbose_level)
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -829,7 +829,7 @@ void orthogonal::report_point_set(
 		string fname_report;
 		fname_report.assign(label_txt);
 		fname_report.append("_set_report.tex");
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
 
 		{
@@ -882,7 +882,7 @@ void orthogonal::report_line_set(
 		string fname_report;
 		fname_report.assign(label_txt);
 		fname_report.append("_set_of_lines_report.tex");
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
 
 		{

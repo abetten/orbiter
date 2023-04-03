@@ -49,9 +49,9 @@ longinteger::longinteger(const char *s)
 	k = LONGINTEGER;
 	clearself();
 	if (s[0] == '-')
-		allocate(TRUE, s + 1);
+		allocate(true, s + 1);
 	else
-		allocate(FALSE, s);
+		allocate(false, s);
 	normalize_representation();
 }
 
@@ -199,7 +199,7 @@ void longinteger::allocate_empty(int len)
 		}
 	self.longinteger_rep = (LONGINTEGER_REPRESENTATION *)
 			new char[sizeof(LONGINTEGER_REPRESENTATION) + len];
-	s_sign() = FALSE;
+	s_sign() = false;
 	s_len() = len;
 	for (i = 0; i < len; i++) {
 		s_p(i) = (char) 0;
@@ -316,10 +316,10 @@ void longinteger::mult_to(discreta_base &x, discreta_base &y, int verbose_level)
 	len = s_len() + X.s_len() + 2;
 	Y.allocate_empty(len);
 	if ((s_sign() && X.s_sign()) || (!s_sign() && !X.s_sign())) {
-		Y.s_sign() = FALSE;
+		Y.s_sign() = false;
 		}
 	else {
-		Y.s_sign() = TRUE;
+		Y.s_sign() = true;
 		}
 	
 	int la, lb;
@@ -358,7 +358,7 @@ int longinteger::invert_to(discreta_base &x, int verbose_level)
 		exit(1);
 		}
 	cout << "longinteger::invert_to() not yet implemented\n";
-	return FALSE;
+	return false;
 }
 
 void longinteger::add_to(discreta_base &x, discreta_base &y)
@@ -410,7 +410,7 @@ void longinteger::add_to(discreta_base &x, discreta_base &y)
 		else {
 			// |a| = |b|
 			Y.s_len() = 1;
-			Y.s_sign() = FALSE;
+			Y.s_sign() = false;
 			Y.s_p(0) = 0;
 			goto l_exit;
 			}
@@ -448,7 +448,7 @@ static void subtract_signless(longinteger &x, longinteger &y, longinteger &z)
 	len = x.s_len();
 	z.freeself_longinteger();
 	z.allocate_empty(len);
-	z.s_sign() = FALSE;
+	z.s_sign() = false;
 	carry = 0;
 	for (l = 0; l < len; l++) {
 		if (l < y.s_len())
@@ -481,9 +481,9 @@ void longinteger::negate_to(discreta_base &x)
 	if (X.is_zero())
 		return;
 	if (X.s_sign())
-		X.s_sign() = FALSE;
+		X.s_sign() = false;
 	else
-		X.s_sign() = TRUE;
+		X.s_sign() = true;
 }
 
 void longinteger::zero()
@@ -531,8 +531,8 @@ int longinteger::is_zero()
 	longinteger x = ("0");
 	
 	if (compare_with(x) == 0)
-		return TRUE;
-	return FALSE;
+		return true;
+	return false;
 }
 
 int longinteger::is_one()
@@ -540,8 +540,8 @@ int longinteger::is_one()
 	longinteger x = ("1");
 	
 	if (compare_with(x) == 0)
-		return TRUE;
-	return FALSE;
+		return true;
+	return false;
 }
 
 int longinteger::is_m_one()
@@ -549,8 +549,8 @@ int longinteger::is_m_one()
 	longinteger x = ("-1");
 	
 	if (compare_with(x) == 0)
-		return TRUE;
-	return FALSE;
+		return true;
+	return false;
 }
 
 int longinteger::is_even()
@@ -631,19 +631,19 @@ void longinteger::integral_division(
 		return;
 		}
 	Q.allocate_empty(len);
-	Q.s_sign() = FALSE;
+	Q.s_sign() = false;
 	
 	if (s_sign() == X.s_sign()) {
-		Q.s_sign() = FALSE;
+		Q.s_sign() = false;
 		sign_r = s_sign();
 		}
 	else {
-		Q.s_sign() = TRUE;
+		Q.s_sign() = true;
 		sign_r = s_sign();
 		}
 	
 	sign_x = X.s_sign();
-	X.s_sign() = FALSE;
+	X.s_sign() = false;
 	for (i = 0; i < 10; i++) {
 #ifdef DEBUG_LONGINTEGER_DIVISION
 		cout << "i = " << i << " ";
@@ -754,7 +754,7 @@ void longinteger::square_root_floor(discreta_base &x, int verbose_level)
 		exit(1); 
 		}
 	if (is_zero()) {
-		X.allocate(FALSE, "0");
+		X.allocate(false, "0");
 		return;
 		}
 	
@@ -763,7 +763,7 @@ void longinteger::square_root_floor(discreta_base &x, int verbose_level)
 		la++;
 	len = (la >> 1) + 1;
 	Y.allocate_empty(len);
-	Y.s_sign() = FALSE;
+	Y.s_sign() = false;
 	for (l = 0; l < len; l++) {
 		Y.s_p(l) = (char) 0;
 		}
@@ -829,10 +829,10 @@ int longinteger::retract_to_integer_if_possible(integer &x)
 	if (s_len() < 6) {
 		int i = s_i();
 		x.m_i(i);
-		return TRUE;
+		return true;
 		}
 	else
-		return FALSE;
+		return false;
 }
 
 int longinteger::modp(int p)
@@ -850,7 +850,7 @@ int longinteger::ny_p(int p)
 	int n = 0;
 	
 	P.homo_z(p);
-	while (TRUE) {
+	while (true) {
 		integral_division(P, Q, R, 0);
 		if (!R.is_zero())
 			break;
@@ -887,9 +887,9 @@ int longinteger::Lucas_test_Mersenne(int m, int verbose_level)
 			cout << "s_" << i << " = " << s << endl;
 		}
 	if (s.is_zero())
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 }}}

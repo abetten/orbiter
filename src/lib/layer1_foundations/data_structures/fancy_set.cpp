@@ -111,10 +111,10 @@ int fancy_set::is_contained(int a)
 
 	pos_a = set_inv[a];
 	if (pos_a < k) {
-		return TRUE;
+		return true;
 		}
 	else {
-		return FALSE;
+		return false;
 		}
 }
 
@@ -275,21 +275,21 @@ int fancy_set::is_subset(fancy_set *set2)
 	int i, a;
 	
 	if (set2->k < k)
-		return FALSE;
+		return false;
 	for (i = 0; i < k; i++) {
 		a = set[i];
 		if (!set2->is_contained(a))
-			return FALSE;
+			return false;
 		}
-	return TRUE;
+	return true;
 }
 
 int fancy_set::is_equal(fancy_set *set2)
 {
 	if (is_subset(set2) && k == set2->k) {
-		return TRUE;
+		return true;
 		}
-	return FALSE;
+	return false;
 }
 
 void fancy_set::save(std::string &fname, int verbose_level)

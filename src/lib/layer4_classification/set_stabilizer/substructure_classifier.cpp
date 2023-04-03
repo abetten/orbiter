@@ -73,7 +73,7 @@ void substructure_classifier::classify_substructures(
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = substructure_size;
 
 

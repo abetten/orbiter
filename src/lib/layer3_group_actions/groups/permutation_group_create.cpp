@@ -30,11 +30,11 @@ permutation_group_create::permutation_group_create()
 		//initial_strong_gens = NULL;
 		A_initial = NULL;
 
-		f_has_strong_generators = FALSE;
+		f_has_strong_generators = false;
 		Strong_gens = NULL;
 		A2 = NULL;
 
-		f_has_nice_gens = FALSE;
+		f_has_nice_gens = false;
 		nice_gens = NULL;
 }
 
@@ -54,7 +54,7 @@ void permutation_group_create::permutation_group_init(
 		cout << "permutation_group_create::permutation_group_init" << endl;
 	}
 	permutation_group_create::Descr = description;
-	int f_OK = FALSE;
+	int f_OK = false;
 
 	if (f_v) {
 		cout << "permutation_group_create::permutation_group_init "
@@ -70,7 +70,7 @@ void permutation_group_create::permutation_group_init(
 		}
 
 		A_initial = NEW_OBJECT(actions::action);
-		int f_no_base = FALSE;
+		int f_no_base = false;
 
 		A_initial->Known_groups->init_symmetric_group(Descr->degree, f_no_base, verbose_level);
 
@@ -99,7 +99,7 @@ void permutation_group_create::permutation_group_init(
 		}
 
 		A_initial = NEW_OBJECT(actions::action);
-		int f_no_base = FALSE;
+		int f_no_base = false;
 
 		A_initial->Known_groups->init_cyclic_group(
 				Descr->degree, f_no_base, verbose_level);
@@ -129,7 +129,7 @@ void permutation_group_create::permutation_group_init(
 		}
 
 		A_initial = NEW_OBJECT(actions::action);
-		int f_no_base = FALSE;
+		int f_no_base = false;
 
 		A_initial->Known_groups->init_identity_group(Descr->degree, f_no_base, verbose_level);
 
@@ -185,7 +185,7 @@ void permutation_group_create::permutation_group_init(
 		Get_int_vector_from_label(Descr->bsgs_generators, gens, sz, verbose_level);
 #endif
 
-		int f_no_base = FALSE;
+		int f_no_base = false;
 
 		target_go.create_from_base_10_string(Descr->bsgs_order_text);
 
@@ -194,7 +194,7 @@ void permutation_group_create::permutation_group_init(
 
 		A_initial->Known_groups->init_permutation_group_from_generators(
 				Descr->degree,
-			TRUE /* f_target_go */, target_go,
+			true /* f_target_go */, target_go,
 			Descr->bsgs_nb_generators, gens,
 			given_base_length, given_base,
 			f_no_base,
@@ -228,7 +228,7 @@ void permutation_group_create::permutation_group_init(
 			cout << "permutation_group_create::permutation_group_init "
 					"after init_subgroup_by_generators" << endl;
 		}
-		f_OK = TRUE;
+		f_OK = true;
 
 	}
 
@@ -244,7 +244,7 @@ void permutation_group_create::permutation_group_init(
 			cout << "permutation_group_create::permutation_group_init !f_OK, A2 = A_initial" << endl;
 		}
 		A2 = A_initial;
-		f_has_strong_generators = TRUE;
+		f_has_strong_generators = true;
 		Strong_gens = A_initial->Strong_gens;
 
 	}
@@ -300,19 +300,19 @@ void permutation_group_create::init_subgroup_by_generators(
 				"Strong_gens->init_subgroup_by_generators" << endl;
 	}
 
-	f_has_nice_gens = TRUE;
+	f_has_nice_gens = true;
 
 	if (f_v) {
 		cout << "permutation_group_create::init_subgroup_by_generators after "
 				"Strong_gens->init_subgroup_by_generators" << endl;
 	}
 
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 
 	A2 = A_initial;
 
 	stringstream str;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int max_len = 80;
 	int line_skip = 0;
 

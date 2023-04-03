@@ -293,7 +293,7 @@ public:
 		int &nb_maps, int verbose_level);
 		// A and B are (d + k + 1) x d
 		// Transform is d x d
-		// returns TRUE if a map exists
+		// returns true if a map exists
 	int BallChowdhury_matrix_entry(
 			int *Coord, int *C,
 		int *U, int k, int sz_U,
@@ -352,7 +352,7 @@ public:
 		// returns the rank which is the
 		// number of entries in base_cols
 		// A is m x n,
-		// P is m x Pn (provided f_P is TRUE)
+		// P is m x Pn (provided f_P is true)
 	int Gauss_int_with_pivot_strategy(
 		int *A,
 		int f_special, int f_complete, int *pivot_perm,
@@ -371,7 +371,7 @@ public:
 		int m, int n,
 		int verbose_level);
 		// A is a m x n matrix
-		// returns FALSE if pivot cannot be found at one of the steps
+		// returns false if pivot cannot be found at one of the steps
 	int RREF_search_pivot(
 			int *A, int m, int n,
 			int &i, int &j, int *base_cols,

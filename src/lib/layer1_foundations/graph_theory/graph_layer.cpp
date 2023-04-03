@@ -102,7 +102,7 @@ void graph_layer::place_with_grouping(
 					<< " group_size[j]=" << group_size[j] << endl;
 			}
 		for (i = 0; i < group_size[j]; i++) {
-			if (FALSE) {
+			if (false) {
 				cout << "i=" << i << " / " << group_size[j] << endl;
 				}
 			Nodes[group_start[j] + i].x_coordinate = 

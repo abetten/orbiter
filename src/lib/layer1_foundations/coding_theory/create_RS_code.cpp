@@ -123,7 +123,7 @@ void create_RS_code::do_report(
 	//int i;
 	string label;
 	coding_theory_domain Codes;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	if (f_v) {
 		cout << "create_RS_code::do_report" << endl;
@@ -157,17 +157,17 @@ void create_RS_code::do_report(
 			number_theory::number_theory_domain NT;
 
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 
@@ -194,7 +194,7 @@ void create_RS_code::report(
 	int i;
 	string label;
 	coding_theory_domain Codes;
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	if (f_v) {
 		cout << "create_RS_code::report" << endl;

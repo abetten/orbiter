@@ -21,21 +21,21 @@ namespace apps_combinatorics {
 
 regular_linear_space_description::regular_linear_space_description()
 {
-	f_m = FALSE;
+	f_m = false;
 	m = 0;
-	f_n = FALSE;
+	f_n = false;
 	n = 0;
-	f_k = FALSE;
+	f_k = false;
 	k = 0;
-	f_r = FALSE;
+	f_r = false;
 	r = 0;
-	f_target_size = FALSE;
+	f_target_size = false;
 	target_size = 0;
 
 	starter_size = 0;
 	initial_pair_covering = NULL;
 
-	f_has_control = FALSE;
+	f_has_control = false;
 	Control = NULL;
 
 };
@@ -63,32 +63,32 @@ int regular_linear_space_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-m") == 0) {
-			f_m = TRUE;
+			f_m = true;
 			m = ST.strtoi(argv[++i]);
 			cout << "-m " << m << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-n") == 0) {
-			f_n = TRUE;
+			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			cout << "-n " << n << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-k") == 0) {
-			f_k = TRUE;
+			f_k = true;
 			k = ST.strtoi(argv[++i]);
 			cout << "-k " << k << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-r") == 0) {
-			f_r = TRUE;
+			f_r = true;
 			r = ST.strtoi(argv[++i]);
 			cout << "-r " << r << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-target_size") == 0) {
-			f_target_size = TRUE;
+			f_target_size = true;
 			target_size = ST.strtoi(argv[++i]);
 			cout << "-target_size " << target_size << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-control") == 0) {
-			f_has_control = TRUE;
+			f_has_control = true;
 			Control = NEW_OBJECT(poset_classification::poset_classification_control);
 			i += Control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);

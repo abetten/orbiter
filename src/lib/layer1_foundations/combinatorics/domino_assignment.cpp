@@ -201,7 +201,7 @@ void domino_assignment::stage1(int verbose_level)
 		cout << "stage 1: after rotate_once" << endl;
 
 
-		//shift_new(FALSE,i);
+		//shift_new(false,i);
 
 		cout << "stage 1: before flip_after_shift" << endl;
 		flip_after_shift(verbose_level - 1);
@@ -666,8 +666,8 @@ void domino_assignment::draw_domino_matrix(std::string &fname,
 
 	draw_domino_matrix2(fname,
 			f_has_cost, cost,
-			FALSE, FALSE, FALSE, NULL,
-			FALSE, FALSE,
+			false, false, false, NULL,
+			false, false,
 			Draw_options,
 			verbose_level - 1);
 }
@@ -701,11 +701,11 @@ void domino_assignment::draw_domino_matrix2(std::string &fname,
 	scale = (double) N * .1;
 	if (dx * N * scale > 4000) {
 		//scale = ((double)4000) / (N * dx);
-		f_numbers = FALSE;
+		f_numbers = false;
 	}
 	if (dy * M * scale > 4000) {
 		//scale = ((double)4000)  / (M * dy);
-		f_numbers = FALSE;
+		f_numbers = false;
 	}
 	//cout << "scale=" << scale << endl;
 	dx = (int) (((double) dx) * scale);
@@ -729,8 +729,8 @@ void domino_assignment::draw_domino_matrix2(std::string &fname,
 		cout << "domino_assignment::draw_domino_matrix2 fname=" << fname_full << endl;
 	}
 	{
-		//int f_embedded = FALSE;
-		//int f_sideways = FALSE;
+		//int f_embedded = false;
+		//int f_sideways = false;
 		//double scale = 0.2;
 		//double line_width = 0.75;
 
@@ -762,7 +762,7 @@ void domino_assignment::draw_domino_matrix2(std::string &fname,
 				dx, dy,
 				rad, edge,
 				f_grid, f_gray, f_numbers, f_frame,
-				TRUE /* f_cost */, cost);
+				true /* f_cost */, cost);
 
 		G.end_figure();
 		G.footer();
@@ -1461,7 +1461,7 @@ int domino_assignment::modify_matching(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int pos1, pos_i1, pos_j1, pos2, ret = TRUE, l, u, v, p, q, i;
+	int pos1, pos_i1, pos_j1, pos2, ret = true, l, u, v, p, q, i;
 	int q_count = 1;
 
 	int *used;
@@ -1488,7 +1488,7 @@ int domino_assignment::modify_matching(
 	length2 = new int [M * N];
 	prec1 = new int [M * N];
 	prec2 = new int [M * N];
-	do_brake = new int [tot_dom]; // do_brake[i] is TRUE if the i-th domino is part of the path
+	do_brake = new int [tot_dom]; // do_brake[i] is true if the i-th domino is part of the path
 	point_q = new int [M * N];
 	point_p = new int [M * N];
 
@@ -1503,15 +1503,15 @@ int domino_assignment::modify_matching(
 	Int_vec_zero(do_brake, tot_dom);
 
 	brake[0] = idx_first_broken;
-	do_brake[idx_first_broken] = TRUE;
+	do_brake[idx_first_broken] = true;
 	brake_cnt = 1;
 
-	used[ass_i * N + ass_j] = TRUE;
+	used[ass_i * N + ass_j] = true;
 	if (ass_o == 0 || ass_o == 2 || ass_o == 3) {
-		used[(ass_i + 1) * N + ass_j] = TRUE;
+		used[(ass_i + 1) * N + ass_j] = true;
 	}
 	else {
-		used[ass_i * N + ass_j + 1] = TRUE;
+		used[ass_i * N + ass_j + 1] = true;
 	}
 	pos_i1 = ass_i;
 	pos_j1 = ass_j;
@@ -1541,8 +1541,8 @@ int domino_assignment::modify_matching(
 
 
 
-	reached1[pos1] = TRUE;
-	reached2[pos2] = TRUE;
+	reached1[pos1] = true;
+	reached2[pos2] = true;
 	list1[0] = pos1;
 	list2[0] = pos2;
 	length1[0] = 1;
@@ -1586,7 +1586,7 @@ int domino_assignment::modify_matching(
 			if (f_vv) {
 				cout << "cannot change the matching, breaking off" << endl;
 				}
-			ret = FALSE;
+			ret = false;
 			goto finish;
 			}
 		if (f_v) {
@@ -1618,18 +1618,18 @@ int domino_assignment::modify_matching(
 			cout << "do_brake[broken_dom[q]]=" << do_brake[broken_dom[q]] << endl;
 		}
 
-		if (do_brake[broken_dom[q]] == FALSE) {
+		if (do_brake[broken_dom[q]] == false) {
 			if (f_v) {
 				cout << "brake_cnt=" << brake_cnt << endl;
 			}
 			brake[brake_cnt] = broken_dom[q];
-			do_brake[broken_dom[q]] = TRUE;
+			do_brake[broken_dom[q]] = true;
 			brake_cnt++;
 		}
 
-		if (do_brake[broken_dom[p]] == FALSE) {
+		if (do_brake[broken_dom[p]] == false) {
 			brake[brake_cnt] = broken_dom[p];
-			do_brake[broken_dom[p]] = TRUE;
+			do_brake[broken_dom[p]] = true;
 			brake_cnt++;
 		}
 		if (q < p) {
@@ -1848,7 +1848,7 @@ void domino_assignment::follow_the_matching(
 		}
 		list[length[l]] = q;
 		prec[length[l]] = u;
-		reached[q] = TRUE;
+		reached[q] = true;
 		length[l]++;
 	}
 	if (f_v) {
@@ -1894,28 +1894,28 @@ int domino_assignment::breadth_search(
 		p = list[u];
 		q = North[p];
 		if (q != -1 && !used[q] && !reached[q]) {
-			reached[q] = TRUE;
+			reached[q] = true;
 			prec[length[l]] = u;
 			list[length[l]] = q;
 			length[l]++;
 		}
 		q = South[p];
 		if (q != -1 && !used[q] && !reached[q]) {
-			reached[q] = TRUE;
+			reached[q] = true;
 			prec[length[l]] = u;
 			list[length[l]] = q;
 			length[l]++;
 		}
 		q = West[p];
 		if (q != -1 && !used[q] && !reached[q]) {
-			reached[q] = TRUE;
+			reached[q] = true;
 			prec[length[l]] = u;
 			list[length[l]] = q;
 			length[l]++;
 		}
 		q = East[p];
 		if (q != -1 && !used[q] && !reached[q]) {
-			reached[q] = TRUE;
+			reached[q] = true;
 			prec[length[l]] = u;
 			list[length[l]] = q;
 			length[l]++;
@@ -1925,10 +1925,10 @@ int domino_assignment::breadth_search(
 	//print_list(l + 1, list, length, prec);
 	if (length[l] == length[l - 1]) {
 		//cout << "breadth_search() did not find new points" << endl;
-		return FALSE;
+		return false;
 	}
 	else {
-		return TRUE;
+		return true;
 	}
 }
 

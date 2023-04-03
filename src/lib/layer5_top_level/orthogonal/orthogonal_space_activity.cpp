@@ -93,7 +93,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 		BC->init(Blt_set_domain, Descr->BLT_Set_create_description, OA, verbose_level);
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
 		cout << "We have created the following BLT-set:" << endl;
@@ -216,7 +216,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 				Descr->BLT_set_graphs_r,
 				Descr->BLT_set_graphs_m,
 				Descr->BLT_set_graphs_starter_size - 1,
-				TRUE /* f_lexorder_test */, FALSE /* f_eliminate_graphs_if_possible */,
+				true /* f_lexorder_test */, false /* f_eliminate_graphs_if_possible */,
 				verbose_level);
 
 		if (f_v) {
@@ -342,7 +342,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 		rk = OA->O->Hyperbolic_pair->rank_line(p1, p2, verbose_level);
 
-		if (TRUE) {
+		if (true) {
 			cout << "line rank = " << rk << endl;
 		}
 
@@ -369,7 +369,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		OA->O->lines_on_point_by_line_rank(Descr->lines_on_point_rank,
 				line_pencil_line_ranks, verbose_level);
 
-		if (TRUE) {
+		if (true) {
 			cout << "There are " << OA->O->Hyperbolic_pair->alpha << " lines on point = "
 					<< Descr->lines_on_point_rank << ". They are: ";
 			Lint_vec_print_fully(cout, line_pencil_line_ranks, OA->O->Hyperbolic_pair->alpha);

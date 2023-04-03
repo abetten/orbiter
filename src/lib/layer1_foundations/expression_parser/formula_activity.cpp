@@ -120,7 +120,7 @@ void formula_activity::perform_activity(int verbose_level)
 
 		F = orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(Descr->sweep_field_label);
 
-		do_sweep(FALSE /* f_affine */,
+		do_sweep(false /* f_affine */,
 				f,
 				F, Descr->sweep_variables,
 				verbose_level);
@@ -134,7 +134,7 @@ void formula_activity::perform_activity(int verbose_level)
 
 		F = orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(Descr->sweep_affine_field_label);
 
-		do_sweep(TRUE /* f_affine */,
+		do_sweep(true /* f_affine */,
 				f,
 				F, Descr->sweep_affine_variables,
 				verbose_level);

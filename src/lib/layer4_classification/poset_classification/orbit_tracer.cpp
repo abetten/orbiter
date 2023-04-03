@@ -71,7 +71,7 @@ void orbit_tracer::init(poset_classification *PC, int verbose_level)
 	Transporter = NEW_OBJECT(data_structures_groups::vector_ge);
 	Transporter->init(PC->get_poset()->A, verbose_level - 2);
 	Transporter->allocate(PC->get_sz() + 1, verbose_level - 2);
-	PC->get_poset()->A->Group_element->element_one(Transporter->ith(0), FALSE);
+	PC->get_poset()->A->Group_element->element_one(Transporter->ith(0), false);
 
 	Set = NEW_plint(PC->get_sz() + 1);
 	for (i = 0; i <= PC->get_sz(); i++) {
@@ -103,8 +103,8 @@ void orbit_tracer::recognize_start_over(
 	int lvl, int current_node,
 	int &final_node, int verbose_level)
 // Called from poset_orbit_node::recognize_recursion
-// when trace_next_point returns FALSE
-// This can happen only if f_implicit_fusion is TRUE
+// when trace_next_point returns false
+// This can happen only if f_implicit_fusion is true
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -134,7 +134,7 @@ void orbit_tracer::recognize_start_over(
 	}
 	PC->get_poset()->A->Group_element->element_move(
 		Transporter->ith(lvl + 1),
-		Transporter->ith(0), FALSE);
+		Transporter->ith(0), false);
 	if (f_v) {
 		cout << "orbit_tracer::recognize_start_over "
 				"before recognize_recursion" << endl;
@@ -271,7 +271,7 @@ void orbit_tracer::recognize_recursion(
 		f_failure_to_find_point,
 		verbose_level)) {
 
-		// FALSE in trace_next_point_wrapper
+		// false in trace_next_point_wrapper
 		// can only happen if f_implicit_fusion is true.
 
 
@@ -279,7 +279,7 @@ void orbit_tracer::recognize_recursion(
 			cout << "orbit_tracer::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node
 					<< ") O->trace_next_point_wrapper "
-							"returns FALSE, starting over" << endl;
+							"returns false, starting over" << endl;
 		}
 
 
@@ -291,7 +291,7 @@ void orbit_tracer::recognize_recursion(
 			cout << "orbit_tracer::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << ") "
 					"O->trace_next_point_wrapper "
-					"returns FALSE, after over" << endl;
+					"returns false, after over" << endl;
 		}
 	}
 
@@ -318,7 +318,7 @@ void orbit_tracer::recognize_recursion(
 
 
 
-	current_extension = O->find_extension_from_point(PC, pt0, FALSE);
+	current_extension = O->find_extension_from_point(PC, pt0, false);
 
 	if (f_v) {
 		cout << "orbit_tracer::recognize_recursion at ";
@@ -391,7 +391,7 @@ void orbit_tracer::recognize_recursion(
 		next_node = O->apply_isomorphism(PC,
 			lvl, current_node,
 			current_extension, size - 1 /* len */,
-			FALSE /* f_tolerant */,
+			false /* f_tolerant */,
 			Elt1, Elt2,
 			verbose_level - 6);
 
@@ -565,7 +565,7 @@ void orbit_tracer::identify(long int *data, int sz,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_implicit_fusion = FALSE;
+	//int f_implicit_fusion = false;
 	int final_node;
 
 	if (f_v) {

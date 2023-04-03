@@ -20,52 +20,52 @@ namespace apps_combinatorics {
 
 combinatorial_object_activity_description::combinatorial_object_activity_description()
 {
-	f_save = FALSE;
+	f_save = false;
 
-	f_save_as = FALSE;
+	f_save_as = false;
 	//std::string save_as_fname;
 
-	f_extract_subset = FALSE;
+	f_extract_subset = false;
 	//std::string extract_subset_set;
 	//std::string extract_subset_fname;
 
-	f_line_type = FALSE;
+	f_line_type = false;
 	//std::string line_type_projective_space_label;
 	//std::string line_type_prefix;
 
-	f_conic_type = FALSE;
+	f_conic_type = false;
 	conic_type_threshold = 0;
 
-	f_non_conical_type = FALSE;
+	f_non_conical_type = false;
 
-	f_ideal = FALSE;
+	f_ideal = false;
 	//std::string ideal_ring_label;
 	//ideal_degree = 0;
 
 
-	f_canonical_form_PG = FALSE;
+	f_canonical_form_PG = false;
 	//std::string &canonical_form_PG_PG_label;
-	f_canonical_form_PG_has_PA = FALSE;
+	f_canonical_form_PG_has_PA = false;
 	Canonical_form_PG_PA = NULL;
 	Canonical_form_PG_Descr = NULL;
 
-	f_canonical_form = FALSE;
+	f_canonical_form = false;
 	Canonical_form_Descr = NULL;
 
-	f_report = FALSE;
+	f_report = false;
 	Classification_of_objects_report_options = NULL;
 
-	f_draw_incidence_matrices = FALSE;
+	f_draw_incidence_matrices = false;
 	//std::string draw_incidence_matrices_prefix;
 
-	f_test_distinguishing_property = FALSE;
+	f_test_distinguishing_property = false;
 	//test_distinguishing_property_graph
 
-	f_unpack_from_restricted_action = FALSE;
+	f_unpack_from_restricted_action = false;
 	//std::string unpack_from_restricted_action_prefix;
 	//std::string unpack_from_restricted_action_group_label;
 
-	f_line_covering_type = FALSE;
+	f_line_covering_type = false;
 	//std::string line_covering_type_prefix;
 	//std::string line_covering_type_projective_space;
 	//std::string line_covering_type_lines;
@@ -95,20 +95,20 @@ int combinatorial_object_activity_description::read_arguments(
 
 
 		if (ST.stringcmp(argv[i], "-save") == 0) {
-			f_save = TRUE;
+			f_save = true;
 			if (f_v) {
 				cout << "-save " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-save_as") == 0) {
-			f_save_as = TRUE;
+			f_save_as = true;
 			save_as_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-save_as " << save_as_fname << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-extract_subset") == 0) {
-			f_extract_subset = TRUE;
+			f_extract_subset = true;
 			extract_subset_set.assign(argv[++i]);
 			extract_subset_fname.assign(argv[++i]);
 			if (f_v) {
@@ -117,7 +117,7 @@ int combinatorial_object_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-line_type") == 0) {
-			f_line_type = TRUE;
+			f_line_type = true;
 			line_type_projective_space_label.assign(argv[++i]);
 			line_type_prefix.assign(argv[++i]);
 			if (f_v) {
@@ -125,20 +125,20 @@ int combinatorial_object_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-conic_type") == 0) {
-			f_conic_type = TRUE;
+			f_conic_type = true;
 			conic_type_threshold = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-conic_type " << conic_type_threshold << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-non_conical_type") == 0) {
-			f_non_conical_type = TRUE;
+			f_non_conical_type = true;
 			if (f_v) {
 				cout << "-non_conical_type " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-ideal") == 0) {
-			f_ideal = TRUE;
+			f_ideal = true;
 			ideal_ring_label.assign(argv[++i]);
 			//ideal_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -149,7 +149,7 @@ int combinatorial_object_activity_description::read_arguments(
 		// activities for IS:
 
 		else if (ST.stringcmp(argv[i], "-canonical_form_PG") == 0) {
-			f_canonical_form_PG = TRUE;
+			f_canonical_form_PG = true;
 			if (f_v) {
 				cout << "-canonical_form_PG, reading extra arguments" << endl;
 			}
@@ -171,7 +171,7 @@ int combinatorial_object_activity_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-canonical_form") == 0) {
-			f_canonical_form = TRUE;
+			f_canonical_form = true;
 			if (f_v) {
 				cout << "-canonical_form, reading extra arguments" << endl;
 			}
@@ -189,30 +189,30 @@ int combinatorial_object_activity_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
+			f_report = true;
 
 			Classification_of_objects_report_options = NEW_OBJECT(combinatorics::classification_of_objects_report_options);
 			i += Classification_of_objects_report_options->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 		}
 		else if (ST.stringcmp(argv[i], "-draw_incidence_matrices") == 0) {
-			f_draw_incidence_matrices = TRUE;
+			f_draw_incidence_matrices = true;
 			draw_incidence_matrices_prefix.assign(argv[++i]);
 
 		}
 		else if (ST.stringcmp(argv[i], "-test_distinguishing_property") == 0) {
-			f_test_distinguishing_property = TRUE;
+			f_test_distinguishing_property = true;
 			test_distinguishing_property_graph.assign(argv[++i]);
 			cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-unpack_from_restricted_action") == 0) {
-			f_unpack_from_restricted_action = TRUE;
+			f_unpack_from_restricted_action = true;
 			unpack_from_restricted_action_prefix.assign(argv[++i]);
 			unpack_from_restricted_action_group_label.assign(argv[++i]);
 			cout << "-unpack_from_restricted_action " << unpack_from_restricted_action_prefix
 					<< " " << unpack_from_restricted_action_group_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-line_covering_type") == 0) {
-			f_line_covering_type = TRUE;
+			f_line_covering_type = true;
 			line_covering_type_prefix.assign(argv[++i]);
 			line_covering_type_projective_space.assign(argv[++i]);
 			line_covering_type_lines.assign(argv[++i]);

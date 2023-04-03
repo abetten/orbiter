@@ -32,15 +32,15 @@ exact_cover::~exact_cover()
 void exact_cover::null()
 {
 	starter = NULL;
-	f_has_solution_test_func = FALSE;
-	f_has_late_cleanup_function = FALSE;
+	f_has_solution_test_func = false;
+	f_has_late_cleanup_function = false;
 	late_cleanup_function = NULL;
 
 	prepare_function_new = NULL;
 	early_test_func = NULL;
 	early_test_func_data = NULL;
 
-	f_randomized = FALSE;
+	f_randomized = false;
 	//random_permutation_fname = NULL;
 	random_permutation = NULL;
 }
@@ -91,8 +91,8 @@ void exact_cover::init_basic(
 	exact_cover::target_size = target_size;
 	exact_cover::starter_size = starter_size;
 	exact_cover::f_lex = f_lex;
-	f_split = FALSE;
-	f_single_case = FALSE;
+	f_split = false;
+	f_single_case = false;
 	exact_cover::input_prefix.assign(input_prefix);
 	exact_cover::output_prefix.assign(output_prefix);
 	exact_cover::solution_prefix.assign(solution_prefix);
@@ -184,7 +184,7 @@ void exact_cover::set_split(int split_r, int split_m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	exact_cover::f_split = TRUE;
+	exact_cover::f_split = true;
 	exact_cover::split_r = split_r;
 	exact_cover::split_m = split_m;
 
@@ -217,7 +217,7 @@ void exact_cover::set_single_case(int single_case, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	exact_cover::f_single_case = TRUE;
+	exact_cover::f_single_case = true;
 	exact_cover::single_case = single_case;
 
 	char str[1000];
@@ -256,7 +256,7 @@ void exact_cover::randomize(
 		}
 	int m, n;
 	
-	f_randomized = TRUE;
+	f_randomized = true;
 	exact_cover::random_permutation_fname.assign(random_permutation_fname);
 	Fio.int_matrix_read_csv(random_permutation_fname,
 			random_permutation, m, n, verbose_level);
@@ -289,7 +289,7 @@ void exact_cover::add_solution_test_function(
 	if (f_v) {
 		cout << "exact_cover::add_solution_test_function" << endl;
 		}	
-	f_has_solution_test_func = TRUE;
+	f_has_solution_test_func = true;
 	exact_cover::solution_test_func = solution_test_func;
 	exact_cover::solution_test_func_data = solution_test_func_data;
 }
@@ -300,7 +300,7 @@ void exact_cover::add_late_cleanup_function(
 			int starter_case, int verbose_level)
 	)
 {
-	f_has_late_cleanup_function = TRUE;
+	f_has_late_cleanup_function = true;
 	exact_cover::late_cleanup_function = late_cleanup_function;
 }
 
@@ -363,15 +363,15 @@ void exact_cover::compute_liftings_new(
 	//total_solutions = 0;
 
 	for (starter_case = 0; starter_case < starter_nb_cases; starter_case++) {
-		f_do_it = FALSE;
+		f_do_it = false;
 
 		if (f_split) {
 			if ((starter_case % split_m) == split_r) {
-				f_do_it = TRUE;
+				f_do_it = true;
 				}
 			}
 		else {
-			f_do_it = TRUE;
+			f_do_it = true;
 			}
 
 		if (!f_do_it) {
@@ -466,7 +466,7 @@ void exact_cover::compute_liftings_new(
 			int i, j, f_do_it;
 
 			for (i = 0; i < nb_sol; i++) {
-				if (FALSE /* f_v3 */) {
+				if (false /* f_v3 */) {
 					cout << "exact_cover::compute_liftings_new "
 							"solution " << i << " / " << nb_sol << endl;
 					}
@@ -478,7 +478,7 @@ void exact_cover::compute_liftings_new(
 					}
 
 				if (f_has_solution_test_func) {
-					if (FALSE /* f_v3 */) {
+					if (false /* f_v3 */) {
 						cout << "exact_cover::compute_liftings_new "
 								"calling solution_test_func" << endl;
 						}
@@ -487,7 +487,7 @@ void exact_cover::compute_liftings_new(
 						solution_test_func_data, 0 /* verbose_level */);
 					}
 				else {
-					f_do_it = TRUE;
+					f_do_it = true;
 					}
 
 
@@ -679,7 +679,7 @@ void exact_cover::compute_liftings_single_case_new(
 
 	solvers::diophant *Dio = NULL;
 	long int *col_labels;
-	int f_ruled_out = FALSE;
+	int f_ruled_out = false;
 
 	(*prepare_function_new)(this, starter_case, 
 		R->candidates, R->nb_candidates, R->Strong_gens, 
@@ -705,7 +705,7 @@ void exact_cover::compute_liftings_single_case_new(
 		if (f_vv) {
 			cout << "The system is " << Dio->m << " x " << Dio->n << endl;
 			}
-		if (FALSE && f_v4) {
+		if (false && f_v4) {
 			Dio->print();
 			}
 		

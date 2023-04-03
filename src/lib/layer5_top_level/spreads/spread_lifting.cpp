@@ -30,7 +30,7 @@ spread_lifting::spread_lifting()
 	//nb_candidates = 0;
 	//Strong_gens = NULL;
 
-	f_lex = FALSE;
+	f_lex = false;
 
 	points_covered_by_starter = NULL;
 	nb_points_covered_by_starter = 0;
@@ -310,7 +310,7 @@ void spread_lifting::compute_colors(int &f_ruled_out, int verbose_level)
 				"nb_free_points = " << nb_free_points << endl;
 	}
 
-	f_ruled_out = FALSE;
+	f_ruled_out = false;
 
 	v = NEW_int(S->SD->n);
 	colors = NEW_int(nb_free_points);
@@ -357,7 +357,7 @@ void spread_lifting::compute_colors(int &f_ruled_out, int verbose_level)
 	if (nb_colors != nb_needed) {
 		cout << "spread_lifting::compute_colors "
 				"nb_colors != nb_needed" << endl;
-		f_ruled_out = TRUE;
+		f_ruled_out = true;
 		return;
 	}
 	
@@ -382,11 +382,11 @@ void spread_lifting::compute_colors(int &f_ruled_out, int verbose_level)
 	data_structures::tally T;
 
 
-	T.init(col_color, nb_cols, FALSE, verbose_level);
+	T.init(col_color, nb_cols, false, verbose_level);
 	if (f_v) {
 		cout << "spread_lifting::compute_colors color frequencies amongst columns:" << endl;
 	}
-	T.print(FALSE /* f_backwards */);
+	T.print(false /* f_backwards */);
 #endif
 
 
@@ -455,7 +455,7 @@ void spread_lifting::reduce_candidates(int verbose_level)
 		}
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "spread_lifting::reduce_candidates Adj:" << endl;
 		Int_matrix_print(Adj, nb_free_points, R->nb_candidates);
 	}
@@ -465,17 +465,17 @@ void spread_lifting::reduce_candidates(int verbose_level)
 
 	nb_reduced_candidates = 0;
 	for (j = 0; j < R->nb_candidates; j++) {
-		if (FALSE) {
+		if (false) {
 			cout << "spread_lifting::reduce_candidates "
 					"j=" << j << endl;
 		}
 		for (c = 0; c < nb_colors; c++) {
-			if (FALSE) {
+			if (false) {
 				cout << "spread_lifting::reduce_candidates "
 						"j=" << j << " c=" << c << endl;
 			}
 			i = colors[c];
-			if (FALSE) {
+			if (false) {
 				cout << "spread_lifting::reduce_candidates "
 						"j=" << j << " c=" << c << " i=" << i << endl;
 			}
@@ -483,7 +483,7 @@ void spread_lifting::reduce_candidates(int verbose_level)
 				break;
 			}
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "spread_lifting::reduce_candidates "
 					"j=" << j << " c=" << c << endl;
 		}
@@ -513,12 +513,12 @@ void spread_lifting::reduce_candidates(int verbose_level)
 	data_structures::tally T;
 
 
-	T.init(col_color, nb_cols, FALSE, verbose_level);
+	T.init(col_color, nb_cols, false, verbose_level);
 	if (f_v) {
 		cout << "spread_lifting::reduce_candidates "
 				"color frequencies amongst columns:" << endl;
 	}
-	T.print(FALSE /* f_backwards */);
+	T.print(false /* f_backwards */);
 
 
 	FREE_lint(Part);
@@ -546,7 +546,7 @@ solvers::diophant *spread_lifting::create_system(int verbose_level)
 
 	Dio = NEW_OBJECT(solvers::diophant);
 	Dio->open(nb_rows, nb_cols, verbose_level - 1);
-	Dio->f_has_sum = TRUE;
+	Dio->f_has_sum = true;
 	Dio->sum = nb_needed;
 
 	for (i = 0; i < nb_rows; i++) {
@@ -586,7 +586,7 @@ solvers::diophant *spread_lifting::create_system(int verbose_level)
 					"nb_points != S->block_size" << endl;
 			exit(1);
 		}
-		if (FALSE /*f_vv*/) {
+		if (false /*f_vv*/) {
 			cout << "List of points: ";
 			Lint_vec_print(cout, point_list, nb_points);
 			cout << endl;
@@ -614,7 +614,7 @@ solvers::diophant *spread_lifting::create_system(int verbose_level)
 		FREE_lint(point_list);
 	}
 
-	if (FALSE) {
+	if (false) {
 		cout << "spread_lifting::create_system "
 				"coefficient matrix" << endl;
 		for (i = 0; i < nb_rows; i++) {
@@ -636,14 +636,14 @@ int spread_lifting::is_e1_vector(int *v)
 	int j;
 
 	if (v[0] != 1) {
-		return FALSE;
+		return false;
 	}
 	for (j = 1; j < S->SD->k; j++) {
 		if (v[j] != 0) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int spread_lifting::is_zero_vector(int *v)
@@ -652,10 +652,10 @@ int spread_lifting::is_zero_vector(int *v)
 
 	for (j = 0; j < S->SD->k; j++) {
 		if (v[j] != 0) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void spread_lifting::create_graph(
@@ -687,7 +687,7 @@ void spread_lifting::create_graph(
 	}
 	CG->init_with_point_labels(nb_cols, nb_colors, 1,
 		col_color,
-		Adj, FALSE /* f_ownership_of_bitvec */,
+		Adj, false /* f_ownership_of_bitvec */,
 		col_labels /* point_labels */,
 		label, label_tex,
 		verbose_level);
@@ -791,7 +791,7 @@ void spread_lifting::create_dummy_graph(int verbose_level)
 
 	CG->init_with_point_labels(n /* nb_vertices */, 2 /* nb_colors */, 1,
 		col_color,
-		Adj, FALSE /* f_ownership_of_bitvec */,
+		Adj, false /* f_ownership_of_bitvec */,
 		col_labels /* point_labels */,
 		label, label_tex,
 		verbose_level);

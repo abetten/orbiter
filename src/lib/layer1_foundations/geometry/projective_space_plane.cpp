@@ -50,8 +50,8 @@ int projective_space_plane::determine_line_in_plane(
 	long int *two_input_pts,
 	int *three_coeffs,
 	int verbose_level)
-// returns FALSE is the rank of the coefficient matrix is not 2.
-// TRUE otherwise.
+// returns false is the rank of the coefficient matrix is not 2.
+// true otherwise.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -109,7 +109,7 @@ int projective_space_plane::determine_line_in_plane(
 			cout << "projective_space_plane::determine_line_in_plane "
 					"system undetermined" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	P->Subspaces->F->Linear_algebra->matrix_get_kernel(
 			system, 2, 3, base_cols, rk,
@@ -124,7 +124,7 @@ int projective_space_plane::determine_line_in_plane(
 	}
 	FREE_int(coords);
 	FREE_int(system);
-	return TRUE;
+	return true;
 }
 
 
@@ -134,7 +134,7 @@ int projective_space_plane::conic_test(
 		long int *S, int len, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret = TRUE;
+	int ret = true;
 	int subset[5];
 	long int the_set[6];
 	int six_coeffs[6];
@@ -145,10 +145,10 @@ int projective_space_plane::conic_test(
 		cout << "projective_space_plane::conic_test" << endl;
 	}
 	if (len < 5) {
-		return TRUE;
+		return true;
 	}
 	Combi.first_k_subset(subset, len, 5);
-	while (TRUE) {
+	while (true) {
 		for (i = 0; i < 5; i++) {
 			the_set[i] = S[subset[i]];
 		}
@@ -156,12 +156,12 @@ int projective_space_plane::conic_test(
 		if (determine_conic_in_plane(
 				the_set, 6, six_coeffs,
 				0 /*verbose_level*/)) {
-			ret = FALSE;
+			ret = false;
 			break;
 		}
 
 		if (!Combi.next_k_subset(subset, len, 5)) {
-			ret = TRUE;
+			ret = true;
 			break;
 		}
 	}
@@ -194,10 +194,10 @@ int projective_space_plane::test_if_conic_contains_point(
 		s = P->Subspaces->F->add(s, P->Subspaces->F->mult(six_coeffs[i], c[i]));
 	}
 	if (s == 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
  }
 
@@ -205,8 +205,8 @@ int projective_space_plane::determine_conic_in_plane(
 	long int *input_pts, int nb_pts,
 	int *six_coeffs,
 	int verbose_level)
-// returns FALSE if the rank of the coefficient
-// matrix is not 5. TRUE otherwise.
+// returns false if the rank of the coefficient
+// matrix is not 5. true otherwise.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -243,7 +243,7 @@ int projective_space_plane::determine_conic_in_plane(
 			cout << "projective_space_plane::determine_conic_in_plane "
 					"some 3 of the points are collinear" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 
 
@@ -287,7 +287,7 @@ int projective_space_plane::determine_conic_in_plane(
 			cout << "projective_space_plane::determine_conic_in_plane "
 					"system undetermined" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	P->Subspaces->F->Linear_algebra->matrix_get_kernel(
 			system, 5, 6, base_cols, rk,
@@ -307,7 +307,7 @@ int projective_space_plane::determine_conic_in_plane(
 	if (f_v) {
 		cout << "projective_space_plane::determine_conic_in_plane done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -732,7 +732,7 @@ int projective_space_plane::determine_hermitian_form_in_plane(
 			cout << "projective_space_plane::determine_hermitian_form_"
 					"in_plane system under-determined" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 #endif
 	P->Subspaces->F->Linear_algebra->matrix_get_kernel(system,
@@ -762,7 +762,7 @@ int projective_space_plane::determine_hermitian_form_in_plane(
 	if (f_v) {
 		cout << "projective_space_plane::determine_hermitian_form_in_plane done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void projective_space_plane::conic_type_randomized(
@@ -861,7 +861,7 @@ void projective_space_plane::conic_type_randomized(
 			a = subset[j];
 			input_pts[j] = set[a];
 		}
-		if (FALSE /* f_v3 */) {
+		if (false /* f_v3 */) {
 			cout << "subset: ";
 			Int_vec_print(cout, subset, 5);
 			cout << "input_pts: ";
@@ -877,18 +877,18 @@ void projective_space_plane::conic_type_randomized(
 		P->Subspaces->F->Projective_space_basic->PG_element_normalize(
 				six_coeffs, 1, 6);
 		Gg.AG_element_rank_longinteger(P->Subspaces->F->q, six_coeffs, 1, 6, conic_rk);
-		if (FALSE /* f_vv */) {
+		if (false /* f_vv */) {
 			cout << rk << "-th subset ";
 			Int_vec_print(cout, subset, 5);
 			cout << " conic_rk=" << conic_rk << endl;
 		}
 
-		if (FALSE /* longinteger_vec_search(R, len, conic_rk, idx) */) {
+		if (false /* longinteger_vec_search(R, len, conic_rk, idx) */) {
 
 #if 0
 			cout << "projective_space_plane::conic_type_randomized "
 					"longinteger_vec_search(R, len, conic_rk, idx) "
-					"is TRUE" << endl;
+					"is true" << endl;
 			cout << "The current set is ";
 			int_vec_print(cout, subset, 5);
 			cout << endl;
@@ -909,7 +909,7 @@ void projective_space_plane::conic_type_randomized(
 			pts_on_conic = NEW_lint(set_size);
 			l = 0;
 			for (h = 0; h < set_size; h++) {
-				if (FALSE && f_v3) {
+				if (false && f_v3) {
 					cout << "testing point " << h << ":" << endl;
 					cout << "conic_rk=" << conic_rk << endl;
 				}
@@ -926,13 +926,13 @@ void projective_space_plane::conic_type_randomized(
 					}
 				}
 				else {
-					if (FALSE && f_v3) {
+					if (false && f_v3) {
 						cout << "point " << h
 								<< " is not on the conic" << endl;
 					}
 				}
 			}
-			if (FALSE /*f_v*/) {
+			if (false /*f_v*/) {
 				cout << "We found an " << l
 						<< "-conic, its rank is " << conic_rk << endl;
 
@@ -980,13 +980,13 @@ void projective_space_plane::conic_type_randomized(
 
 
 					data_structures::tally C;
-					int f_second = FALSE;
+					int f_second = false;
 
 					C.init(nb_pts_on_conic, len, f_second, 0);
 
 					if (f_v) {
 						cout << "The conic intersection type is (";
-						C.print_naked(FALSE /*f_backwards*/);
+						C.print_naked(false /*f_backwards*/);
 						cout << ")" << endl << endl;
 					}
 
@@ -1075,18 +1075,18 @@ void projective_space_plane::conic_intersection_type(
 	}
 
 	data_structures::tally C;
-	int f_second = FALSE;
+	int f_second = false;
 
 	C.init(nb_pts_on_conic, nb_conics, f_second, 0);
 	if (f_v) {
 		cout << "projective_space_plane::conic_intersection_type "
 				"conic-intersection type: ";
-		C.print(FALSE /*f_backwards*/);
+		C.print(false /*f_backwards*/);
 	}
 
 	if (f_v) {
 		cout << "The conic intersection type is (";
-		C.print_naked(FALSE /*f_backwards*/);
+		C.print_naked(false /*f_backwards*/);
 		cout << ")" << endl << endl;
 	}
 
@@ -1219,7 +1219,7 @@ void projective_space_plane::determine_nonconical_six_subsets(
 				break;
 			}
 			else {
-				if (FALSE) {
+				if (false) {
 					cout << " not on conic " << i << endl;
 				}
 			}
@@ -1263,10 +1263,10 @@ void projective_space_plane::determine_nonconical_six_subsets(
 
 	data_structures::tally T;
 
-	T.init(Nb_E, nb, FALSE, 0);
+	T.init(Nb_E, nb, false, 0);
 	if (f_v) {
 		cout << "Eckardt point number distribution : ";
-		T.print_file_tex(cout, TRUE /* f_backwards*/);
+		T.print_file_tex(cout, true /* f_backwards*/);
 		cout << endl;
 	}
 
@@ -1329,10 +1329,10 @@ void projective_space_plane::determine_nonconical_six_subsets(
 
 		data_structures::tally T2;
 
-		T2.init(System, nb_idx * 6, FALSE, 0);
+		T2.init(System, nb_idx * 6, false, 0);
 		if (f_v) {
 			cout << "distribution of points: ";
-			T2.print_file_tex(cout, TRUE /* f_backwards*/);
+			T2.print_file_tex(cout, true /* f_backwards*/);
 			cout << endl;
 		}
 
@@ -1419,7 +1419,7 @@ void projective_space_plane::conic_type(
 	for (rk = 0; rk < N; rk++) {
 
 		Combi.unrank_k_subset(rk, subset, set_size, 5);
-		if (FALSE) {
+		if (false) {
 			cout << "projective_space_plane::conic_type "
 					"rk=" << rk << " / " << N << " : ";
 			Int_vec_print(cout, subset, 5);
@@ -1449,7 +1449,7 @@ void projective_space_plane::conic_type(
 			a = subset[j];
 			input_pts[j] = set[a];
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "subset: ";
 			Int_vec_print(cout, subset, 5);
 			cout << endl;
@@ -1460,8 +1460,8 @@ void projective_space_plane::conic_type(
 
 		if (!determine_conic_in_plane(input_pts, 5,
 				six_coeffs, verbose_level - 2)) {
-			if (FALSE) {
-				cout << "determine_conic_in_plane returns FALSE" << endl;
+			if (false) {
+				cout << "determine_conic_in_plane returns false" << endl;
 			}
 			continue;
 		}
@@ -1483,18 +1483,18 @@ void projective_space_plane::conic_type(
 		P->Subspaces->F->Projective_space_basic->PG_element_normalize(
 				six_coeffs, 1, 6);
 		Gg.AG_element_rank_longinteger(P->Subspaces->F->q, six_coeffs, 1, 6, conic_rk);
-		if (FALSE /* f_vv */) {
+		if (false /* f_vv */) {
 			cout << rk << "-th subset ";
 			Int_vec_print(cout, subset, 5);
 			cout << " conic_rk=" << conic_rk << endl;
 		}
 
-		if (FALSE /* longinteger_vec_search(R, len, conic_rk, idx) */) {
+		if (false /* longinteger_vec_search(R, len, conic_rk, idx) */) {
 
 #if 0
 			cout << "projective_space_plane::conic_type_randomized "
 					"longinteger_vec_search(R, len, conic_rk, idx) "
-					"is TRUE" << endl;
+					"is true" << endl;
 			cout << "The current set is ";
 			int_vec_print(cout, subset, 5);
 			cout << endl;
@@ -1530,13 +1530,13 @@ void projective_space_plane::conic_type(
 
 				if (a == 0) {
 					pts_on_conic[l++] = h;
-					if (FALSE) {
+					if (false) {
 						cout << "point " << h
 								<< " is on the conic" << endl;
 					}
 				}
 				else {
-					if (FALSE && f_v3) {
+					if (false && f_v3) {
 						cout << "point " << h
 								<< " is not on the conic" << endl;
 					}
@@ -1589,13 +1589,13 @@ void projective_space_plane::conic_type(
 
 
 					data_structures::tally C;
-					int f_second = FALSE;
+					int f_second = false;
 
 					C.init(nb_pts_on_conic, nb_conics, f_second, 0);
 
 					if (f_v) {
 						cout << "The conic intersection type is (";
-						C.print_naked(FALSE /*f_backwards*/);
+						C.print_naked(false /*f_backwards*/);
 						cout << ")" << endl << endl;
 					}
 

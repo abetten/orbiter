@@ -105,13 +105,13 @@ void union_find_on_k_subsets::init(
 	}
 	Ar = A_original->Induced_action->create_induced_action_by_restriction(
 			S, set_sz, set, label_of_set,
-			TRUE, 0/*verbose_level*/);
+			true, 0/*verbose_level*/);
 	//action *create_induced_action_by_restriction(
 	//		sims *S, int size, int *set, int f_induce,
 	//		int verbose_level);
 #if 0
 	Ar->induced_action_by_restriction(*A_original,
-			TRUE, S, set_sz, set, 0/*verbose_level*/);
+			true, S, set_sz, set, 0/*verbose_level*/);
 #endif
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init "
@@ -149,7 +149,7 @@ void union_find_on_k_subsets::init(
 	//K->print_generators_as_permutations();
 
 
-	int f_no_base = FALSE;
+	int f_no_base = false;
 
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init "
@@ -192,7 +192,7 @@ void union_find_on_k_subsets::init(
 	Arkr = Ark->Induced_action->create_induced_action_by_restriction(
 			NULL /* sims *S */,
 			nb_interesting_k_subsets, interesting_k_subsets, label_of_set,
-			FALSE, 0/*verbose_level*/);
+			false, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init "
 				"after Ark->Induced_action->create_induced_action_by_restriction" << endl;
@@ -222,7 +222,7 @@ void union_find_on_k_subsets::init(
 	Elt1 = NEW_int(Ar_perm->elt_size_in_int);
 
 	for (h = 0; h < len; h++) {
-		if (FALSE /*f_v*/) {
+		if (false /*f_v*/) {
 			cout << "union_find_on_k_subsets::init "
 					"generator " << h << " / " << len << ":" << endl;
 		}
@@ -230,7 +230,7 @@ void union_find_on_k_subsets::init(
 			j = Ar->Group_element->image_of(gens->ith(h), i);
 			data1[i] = j;
 		}
-		if (FALSE /*f_v*/) {
+		if (false /*f_v*/) {
 			cout << "union_find_on_k_subsets::init permutation: ";
 			Int_vec_print(cout, data1, set_sz);
 			cout << endl;
@@ -286,10 +286,10 @@ int union_find_on_k_subsets::is_minimal(int rk, int verbose_level)
 	
 	rk0 = UF->ancestor(rk);
 	if (rk0 == rk) {
-		return TRUE;
+		return true;
 		}
 	else {
-		return FALSE;
+		return false;
 		}
 }
 

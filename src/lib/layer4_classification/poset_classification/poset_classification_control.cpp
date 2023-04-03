@@ -32,52 +32,52 @@ static void poset_classification_control_early_test_function_cliques(
 poset_classification_control::poset_classification_control()
 {
 
-	f_problem_label = FALSE;
+	f_problem_label = false;
 	//problem_label = NULL;
 
-	f_path = FALSE;
+	f_path = false;
 	//path = NULL;
 
-	f_depth = FALSE;
+	f_depth = false;
 	depth = 0;
 
 	verbose_level = 0;
 	verbose_level_group_theory = 0;
 
-	f_recover = FALSE;
+	f_recover = false;
 	//recover_fname = NULL;
 
-	f_extend = FALSE;
+	f_extend = false;
 	extend_from = 0;
 	extend_to = 0;
 	extend_r = 0;
 	extend_m = 1;
 
-	f_lex = FALSE;
+	f_lex = false;
 
-	f_w = FALSE;
-	f_W = FALSE;
-	f_write_data_files = FALSE;
-	f_t = FALSE;
-	f_T = FALSE;
+	f_w = false;
+	f_W = false;
+	f_write_data_files = false;
+	f_t = false;
+	f_T = false;
 
 
 
-	f_draw_options = TRUE;
+	f_draw_options = true;
 	draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 
 
 
 
-	f_preferred_choice = FALSE;
+	f_preferred_choice = false;
 	//std::vector<std::vector<int> > preferred_choice;
 
-	f_clique_test = FALSE;
+	f_clique_test = false;
 	//std::string clique_test_graph;
 	clique_test_CG = NULL;
 
 
-	f_has_invariant_subset_for_root_node = FALSE;
+	f_has_invariant_subset_for_root_node = false;
 	invariant_subset_for_root_node = NULL;
 	invariant_subset_for_root_node_size = 0;
 
@@ -85,9 +85,9 @@ poset_classification_control::poset_classification_control()
 
 
 
-	f_do_group_extension_in_upstep = TRUE;
+	f_do_group_extension_in_upstep = true;
 
-	f_allowed_to_show_group_elements = FALSE;
+	f_allowed_to_show_group_elements = false;
 	downstep_orbits_print_max_orbits = 25;
 	downstep_orbits_print_max_points_per_orbit = 50;
 
@@ -114,21 +114,21 @@ int poset_classification_control::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-problem_label") == 0) {
-			f_problem_label = TRUE;
+			f_problem_label = true;
 			problem_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-problem_label " << problem_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-path") == 0) {
-			f_path = TRUE;
+			f_path = true;
 			path.assign(argv[++i]);
 			if (f_v) {
 				cout << "-path " << path << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-depth") == 0) {
-			f_depth = TRUE;
+			f_depth = true;
 			depth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-depth " << depth << endl;
@@ -149,14 +149,14 @@ int poset_classification_control::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-recover") == 0) {
-			f_recover = TRUE;
+			f_recover = true;
 			recover_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-recover " << recover_fname << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-extend") == 0) {
-			f_extend = TRUE;
+			f_extend = true;
 			extend_from = ST.strtoi(argv[++i]);
 			extend_to = ST.strtoi(argv[++i]);
 			extend_r = ST.strtoi(argv[++i]);
@@ -171,38 +171,38 @@ int poset_classification_control::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-lex") == 0) {
-			f_lex = TRUE;
+			f_lex = true;
 			if (f_v) {
 				cout << "-lex" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-w") == 0) {
-			f_w = TRUE;
+			f_w = true;
 			if (f_v) {
 				cout << "-w" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-W") == 0) {
-			f_W = TRUE;
+			f_W = true;
 			if (f_v) {
 				cout << "-W" << endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-write_data_files") == 0) {
-			f_write_data_files = TRUE;
+			f_write_data_files = true;
 			if (f_v) {
 				cout << "-write_data_files" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-t") == 0) {
-			f_t = TRUE;
+			f_t = true;
 			if (f_v) {
 				cout << "-t" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-T") == 0) {
-			f_T = TRUE;
+			f_T = true;
 			if (f_v) {
 				cout << "-T" << endl;
 			}
@@ -211,7 +211,7 @@ int poset_classification_control::read_arguments(
 
 
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
-			f_draw_options = TRUE;
+			f_draw_options = true;
 
 			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 			if (f_v) {
@@ -234,7 +234,7 @@ int poset_classification_control::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-preferred_choice") == 0) {
 
-			f_preferred_choice = TRUE;
+			f_preferred_choice = true;
 
 			int node, pt, pt_pref;
 			vector<int> v;
@@ -252,7 +252,7 @@ int poset_classification_control::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-clique_test") == 0) {
-			f_clique_test = TRUE;
+			f_clique_test = true;
 			clique_test_graph.assign(argv[++i]);
 			if (f_v) {
 				cout << "-clique_test " << clique_test_graph << endl;
@@ -438,7 +438,7 @@ void poset_classification_control::init_root_node_invariant_subset(
 	if (f_v) {
 		cout << "poset_classification_control::init_root_node_invariant_subset" << endl;
 	}
-	f_has_invariant_subset_for_root_node = TRUE;
+	f_has_invariant_subset_for_root_node = true;
 	invariant_subset_for_root_node = invariant_subset;
 	invariant_subset_for_root_node_size = invariant_subset_size;
 	if (f_v) {

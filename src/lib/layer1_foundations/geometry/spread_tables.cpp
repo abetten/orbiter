@@ -383,17 +383,17 @@ void spread_tables::find_spreads_containing_two_lines(std::vector<int> &v,
 
 	for (spread_idx = 0; spread_idx < nb_spreads; spread_idx++) {
 		S = get_spread(spread_idx);
-		f_found_line1 = FALSE;
+		f_found_line1 = false;
 		for (i = 0; i < spread_size; i++) {
 			if (S[i] == line1) {
-				f_found_line1 = TRUE;
+				f_found_line1 = true;
 				break;
 			}
 		}
-		f_found_line2 = FALSE;
+		f_found_line2 = false;
 		for (i = 0; i < spread_size; i++) {
 			if (S[i] == line2) {
-				f_found_line2 = TRUE;
+				f_found_line2 = true;
 				break;
 			}
 		}
@@ -449,10 +449,10 @@ int spread_tables::files_exist(int verbose_level)
 		cout << "spread_tables::files_exist testing whether file exists: " << fname_spreads << endl;
 	}
 	if (Fio.file_size(fname_spreads) > 0) {
-		return TRUE;
+		return true;
 	}
 	else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -725,7 +725,7 @@ void spread_tables::compute_adjacency_matrix(
 
 		CG->init(nb_spreads, 1, 1,
 				color, Bitvec,
-				FALSE,
+				false,
 				label, label_tex,
 				verbose_level);
 
@@ -790,7 +790,7 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 			dual_spread[j] = b;
 		}
 
-		if (FALSE) {
+		if (false) {
 			cout << "spread_tables::compute_dual_spreads spread "
 					<< i << " / " << nb_spreads << endl;
 			Lint_vec_print(cout,
@@ -801,7 +801,7 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 		}
 		Sorting.lint_vec_heapsort(dual_spread, spread_size);
 		//dual_spread[0] = int_vec_hash(dual_spread + 1, spread_size);
-		if (FALSE) {
+		if (false) {
 			Lint_vec_print(cout, dual_spread, spread_size);
 			cout << endl;
 		}
@@ -814,7 +814,7 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 				spread_table_compare_func, (void *) v,
 				nb_spreads, dual_spread, idx,
 				0 /* verbose_level */)) {
-			if (FALSE) {
+			if (false) {
 				cout << "spread_tables::compute_dual_spreads Dual "
 						"spread of spread " << i
 						<< " is spread no " << idx << endl;
@@ -854,7 +854,7 @@ int spread_tables::test_if_pair_of_sets_are_adjacent(
 		long int *set2, int sz2,
 		int verbose_level)
 {
-	int f_v = FALSE; // (verbose_level >= 1);
+	int f_v = false; // (verbose_level >= 1);
 	long int s1, s2;
 	int i, j;
 
@@ -866,11 +866,11 @@ int spread_tables::test_if_pair_of_sets_are_adjacent(
 		for (j = 0; j < sz2; j++) {
 			s2 = set2[j];
 			if (!test_if_spreads_are_disjoint(s1, s2)) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int spread_tables::test_if_set_of_spreads_is_line_disjoint(
@@ -893,10 +893,10 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint(
 	}
 	if (i < len) {
 		//cout << "is NOT a partial packing" << endl;
-		ret = FALSE;
+		ret = false;
 	}
 	else {
-		ret = TRUE;
+		ret = true;
 		//cout << "IS a partial packing" << endl;
 	}
 	return ret;
@@ -924,10 +924,10 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
 	}
 	if (i < len) {
 		//cout << "is NOT a partial packing" << endl;
-		ret = FALSE;
+		ret = false;
 	}
 	else {
-		ret = TRUE;
+		ret = true;
 		//cout << "IS a partial packing" << endl;
 	}
 	return ret;
@@ -954,7 +954,7 @@ void spread_tables::make_exact_cover_problem(
 
 	Dio = NEW_OBJECT(solvers::diophant);
 	Dio->open(nb_rows, nb_cols, verbose_level - 1);
-	Dio->f_has_sum = TRUE;
+	Dio->f_has_sum = true;
 	Dio->sum = nb_needed;
 
 	for (i = 0; i < nb_rows; i++) {

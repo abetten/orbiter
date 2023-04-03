@@ -681,8 +681,8 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "group_theoretic_activity::perform_activity "
 					"f_print_elements_tex" << endl;
 		}
-		int f_with_permutation = TRUE;
-		int f_override_action = TRUE;
+		int f_with_permutation = true;
+		int f_override_action = true;
 		actions::action *A_special;
 
 		A_special = AG->A;
@@ -751,7 +751,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->multiply_elements_csv_column_major_ordering_fname1,
 				Descr->multiply_elements_csv_column_major_ordering_fname2,
 				Descr->multiply_elements_csv_column_major_ordering_fname3,
-				TRUE, verbose_level);
+				true, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->multiply_elements_csv" << endl;
@@ -771,7 +771,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->multiply_elements_csv_row_major_ordering_fname1,
 				Descr->multiply_elements_csv_row_major_ordering_fname2,
 				Descr->multiply_elements_csv_row_major_ordering_fname3,
-				FALSE, verbose_level);
+				false, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->multiply_elements_csv" << endl;
@@ -913,7 +913,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		Get_int_vector_from_label(
 				Descr->evaluate_word_word,
 				word, len,
-				FALSE /* verbose_level */);
+				false /* verbose_level */);
 
 		if (f_v) {
 			cout << "length = " << len << endl;

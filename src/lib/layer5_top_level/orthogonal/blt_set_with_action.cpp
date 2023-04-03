@@ -261,7 +261,7 @@ void blt_set_with_action::report_basics(
 	ost << "\\bigskip" << endl;
 
 
-	orbiter_kernel_system::latex_interface Li;
+	l1_interfaces::latex_interface Li;
 
 	ost << "$\\Pi_{ij}$ matrix:" << endl;
 	ost << "$$" << endl;

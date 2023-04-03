@@ -113,15 +113,15 @@ int sorting::int_vec_is_subset_of(
 			j++;
 			}
 		if (j == big_set_sz) {
-			return FALSE;
+			return false;
 			}
 		if (big_set[j] == a) {
 			j++;
 			continue;
 			}
-		return FALSE;
+		return false;
 		}
-	return TRUE;
+	return true;
 }
 
 int sorting::lint_vec_is_subset_of(
@@ -139,7 +139,7 @@ int sorting::lint_vec_is_subset_of(
 			j++;
 		}
 		if (j == big_set_sz) {
-			return FALSE;
+			return false;
 		}
 		if (big_set[j] == a) {
 			j++;
@@ -148,9 +148,9 @@ int sorting::lint_vec_is_subset_of(
 			}
 			continue;
 		}
-		return FALSE;
+		return false;
 		}
-	return TRUE;
+	return true;
 }
 
 void sorting::int_vec_swap_points(
@@ -175,10 +175,10 @@ int sorting::int_vec_is_sorted(int *v, int len)
 	
 	for (i = 1; i < len; i++) {
 		if (v[i - 1] > v[i]) {
-			return FALSE;
+			return false;
 			}
 		}
-	return TRUE;
+	return true;
 }
 
 void sorting::int_vec_sort_and_remove_duplicates(
@@ -222,7 +222,7 @@ int sorting::int_vec_sort_and_test_if_contained(
 	int_vec_heapsort(v2, len2);
 	for (i = 0, j = 0; i < len1; ) {
 		if (j == len2) {
-			return FALSE;
+			return false;
 			}
 		if (v1[i] == v2[j]) {
 			i++;
@@ -232,10 +232,10 @@ int sorting::int_vec_sort_and_test_if_contained(
 			j++;
 			}
 		else if (v1[i] < v2[j]) {
-			return FALSE;
+			return false;
 			}
 		}
-	return TRUE;
+	return true;
 }
 
 int sorting::lint_vec_sort_and_test_if_contained(
@@ -247,7 +247,7 @@ int sorting::lint_vec_sort_and_test_if_contained(
 	lint_vec_heapsort(v2, len2);
 	for (i = 0, j = 0; i < len1; ) {
 		if (j == len2) {
-			return FALSE;
+			return false;
 			}
 		if (v1[i] == v2[j]) {
 			i++;
@@ -257,10 +257,10 @@ int sorting::lint_vec_sort_and_test_if_contained(
 			j++;
 			}
 		else if (v1[i] < v2[j]) {
-			return FALSE;
+			return false;
 			}
 		}
-	return TRUE;
+	return true;
 }
 
 int sorting::int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2)
@@ -269,7 +269,7 @@ int sorting::int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2)
 
 	i = 0;
 	j = 0;
-	while (TRUE) {
+	while (true) {
 		if (i == len1) {
 			break;
 			}
@@ -277,7 +277,7 @@ int sorting::int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2)
 			break;
 			}
 		if (v1[i] == v2[j]) {
-			return FALSE;
+			return false;
 			}
 		if (v1[i] < v2[j]) {
 			i++;
@@ -286,7 +286,7 @@ int sorting::int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2)
 			j++;
 			}
 		}
-	return TRUE;
+	return true;
 }
 
 int sorting::int_vecs_find_common_element(int *v1, int len1,
@@ -296,7 +296,7 @@ int sorting::int_vecs_find_common_element(int *v1, int len1,
 
 	i = 0;
 	j = 0;
-	while (TRUE) {
+	while (true) {
 		if (i == len1) {
 			break;
 			}
@@ -306,7 +306,7 @@ int sorting::int_vecs_find_common_element(int *v1, int len1,
 		if (v1[i] == v2[j]) {
 			idx1 = i;
 			idx2 = j;
-			return TRUE;
+			return true;
 			}
 		if (v1[i] < v2[j]) {
 			i++;
@@ -315,7 +315,7 @@ int sorting::int_vecs_find_common_element(int *v1, int len1,
 			j++;
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 int sorting::lint_vecs_find_common_element(long int *v1, int len1,
@@ -325,7 +325,7 @@ int sorting::lint_vecs_find_common_element(long int *v1, int len1,
 
 	i = 0;
 	j = 0;
-	while (TRUE) {
+	while (true) {
 		if (i == len1) {
 			break;
 			}
@@ -335,7 +335,7 @@ int sorting::lint_vecs_find_common_element(long int *v1, int len1,
 		if (v1[i] == v2[j]) {
 			idx1 = i;
 			idx2 = j;
-			return TRUE;
+			return true;
 			}
 		if (v1[i] < v2[j]) {
 			i++;
@@ -344,7 +344,7 @@ int sorting::lint_vecs_find_common_element(long int *v1, int len1,
 			j++;
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 void sorting::int_vec_insert_and_reallocate_if_necessary(
@@ -385,7 +385,7 @@ void sorting::int_vec_insert_and_reallocate_if_necessary(
 			}
 		vec[idx] = a;
 		used_length++;
-		if (FALSE) {
+		if (false) {
 			cout << "element " << a << " has been added to the "
 					"list at position " << idx << " updated length = "
 					<< used_length << endl;
@@ -429,7 +429,7 @@ void sorting::int_vec_append_and_reallocate_if_necessary(
 		}
 	vec[used_length] = a;
 	used_length++;
-	if (FALSE) {
+	if (false) {
 		cout << "element " << a << " has been appended to the list "
 				"at position " << used_length - 1 << " updated "
 				"length = " << used_length << endl;
@@ -473,7 +473,7 @@ void sorting::lint_vec_append_and_reallocate_if_necessary(
 		}
 	vec[used_length] = a;
 	used_length++;
-	if (FALSE) {
+	if (false) {
 		cout << "element " << a << " has been appended to the list "
 				"at position " << used_length - 1 << " updated "
 				"length = " << used_length << endl;
@@ -495,10 +495,10 @@ int sorting::int_vec_is_zero(int *v, int len)
 
 	for (i = 0; i < len; i++) {
 		if (v[i]) {
-			return FALSE;
+			return false;
 			}
 		}
-	return TRUE;
+	return true;
 }
 
 int sorting::test_if_sets_are_equal(
@@ -517,12 +517,12 @@ int sorting::test_if_sets_are_equal(
 		if (S1[i] != S2[i]) {
 			FREE_int(S1);
 			FREE_int(S2);
-			return FALSE;
+			return false;
 		}
 	}
 	FREE_int(S1);
 	FREE_int(S2);
-	return TRUE;
+	return true;
 }
 
 int sorting::test_if_sets_are_disjoint(
@@ -543,12 +543,12 @@ int sorting::test_if_sets_are_disjoint(
 		if (lint_vec_search(S2, sz2, a, idx, 0 /*verbose_level*/)) {
 			FREE_lint(S1);
 			FREE_lint(S2);
-			return FALSE;
+			return false;
 		}
 	}
 	FREE_lint(S1);
 	FREE_lint(S2);
-	return TRUE;
+	return true;
 }
 
 void sorting::test_if_set(int *set, int set_size)
@@ -583,11 +583,11 @@ int sorting::lint_vec_test_if_set(long int *set, int set_size)
 	lint_vec_heapsort(S, set_size);
 	for (i = 0; i < set_size - 1; i++) {
 		if (S[i] == S[i + 1]) {
-			return FALSE;
+			return false;
 		}
 	}
 	FREE_lint(S);
-	return TRUE;
+	return true;
 }
 
 int sorting::test_if_set_with_return_value(
@@ -606,11 +606,11 @@ int sorting::test_if_set_with_return_value(
 			cout << "the set is not a set: the element "
 				<< S[i] << " is repeated" << endl;
 			FREE_int(S);
-			return FALSE;
+			return false;
 			}
 		}
 	FREE_int(S);
-	return TRUE;
+	return true;
 }
 
 int sorting::test_if_set_with_return_value_lint(
@@ -629,11 +629,11 @@ int sorting::test_if_set_with_return_value_lint(
 			cout << "the set is not a set: the element "
 				<< S[i] << " is repeated" << endl;
 			FREE_int(S);
-			return FALSE;
+			return false;
 			}
 		}
 	FREE_int(S);
-	return TRUE;
+	return true;
 }
 
 void sorting::rearrange_subset(int n, int k,
@@ -721,10 +721,10 @@ int sorting::int_vec_search_linear(int *v, int len, int a, int &idx)
 	for (i = 0; i < len; i++) {
 		if (v[i] == a) {
 			idx = i;
-			return TRUE;
+			return true;
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 int sorting::lint_vec_search_linear(
@@ -735,10 +735,10 @@ int sorting::lint_vec_search_linear(
 	for (i = 0; i < len; i++) {
 		if (v[i] == a) {
 			idx = i;
-			return TRUE;
+			return true;
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 void sorting::int_vec_intersect(int *v1, int len1,
@@ -808,7 +808,7 @@ void sorting::int_vec_intersect_sorted_vectors(int *v1, int len1,
 	len3 = 0;
 	i = 0;
 	j = 0;
-	while (TRUE) {
+	while (true) {
 		if (i >= len1 || j >= len2) {
 			break;
 			}
@@ -837,7 +837,7 @@ void sorting::lint_vec_intersect_sorted_vectors(long int *v1, int len1,
 	len3 = 0;
 	i = 0;
 	j = 0;
-	while (TRUE) {
+	while (true) {
 		if (i >= len1 || j >= len2) {
 			break;
 			}
@@ -998,7 +998,7 @@ int sorting::vec_search(
 	int len, void *a, int &idx, int verbose_level)
 {
 	int l, r, m, res;
-	int f_found = FALSE;
+	int f_found = false;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -1007,7 +1007,7 @@ int sorting::vec_search(
 	idx = 0;
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 	}
 	l = 0;
 	r = len;
@@ -1032,7 +1032,7 @@ int sorting::vec_search(
 		if (res <= 0) {
 			l = m + 1;
 			if (res == 0) {
-				f_found = TRUE;
+				f_found = true;
 			}
 		}
 		else {
@@ -1059,7 +1059,7 @@ int sorting::vec_search_general(void *vec,
 	int len, void *a, int &idx, int verbose_level)
 {
 	int l, r, m, res;
-	int f_found = FALSE;
+	int f_found = false;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -1067,7 +1067,7 @@ int sorting::vec_search_general(void *vec,
 		}
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = len;
@@ -1092,7 +1092,7 @@ int sorting::vec_search_general(void *vec,
 		if (res <= 0) {
 			l = m + 1;
 			if (res == 0) {
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		else {
@@ -1119,10 +1119,10 @@ int sorting::int_vec_search_and_insert_if_necessary(
 			}
 		v[idx] = a;
 		len++;
-		return TRUE;
+		return true;
 		}
 	else {
-		return FALSE;
+		return false;
 		}
 }
 
@@ -1136,10 +1136,10 @@ int sorting::int_vec_search_and_remove_if_found(
 			v[t] = v[t + 1];
 			}
 		len--;
-		return TRUE;
+		return true;
 		}
 	else {
-		return FALSE;
+		return false;
 		}
 }
 
@@ -1152,12 +1152,12 @@ int sorting::int_vec_search(int *v, int len, int a, int &idx)
 
 {
 	int l, r, m, res;
-	int f_found = FALSE;
-	int f_v = FALSE;
+	int f_found = false;
+	int f_v = false;
 	
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = len;
@@ -1186,7 +1186,7 @@ int sorting::int_vec_search(int *v, int len, int a, int &idx)
 				cout << "moving to the right" << endl;
 				}
 			if (res == 0) {
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		else {
@@ -1218,14 +1218,14 @@ int sorting::lint_vec_search(long int *v, int len,
 	int f_v = (verbose_level >= 1);
 	int l, r, m;
 	long int res;
-	int f_found = FALSE;
+	int f_found = false;
 
 	if (f_v) {
 		cout << "sorting::lint_vec_search len=" << len << ", searching for " << a << endl;
 	}
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = len;
@@ -1257,9 +1257,9 @@ int sorting::lint_vec_search(long int *v, int len,
 				}
 			if (res == 0) {
 				if (f_v) {
-					cout << "f_found = TRUE" << endl;
+					cout << "f_found = true" << endl;
 					}
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		else {
@@ -1297,7 +1297,7 @@ int sorting::vector_lint_search(std::vector<long int> &v,
 	int len;
 	int l, r, m;
 	long int res;
-	int f_found = FALSE;
+	int f_found = false;
 
 	len = v.size();
 	if (f_v) {
@@ -1305,7 +1305,7 @@ int sorting::vector_lint_search(std::vector<long int> &v,
 	}
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = len;
@@ -1337,9 +1337,9 @@ int sorting::vector_lint_search(std::vector<long int> &v,
 				}
 			if (res == 0) {
 				if (f_v) {
-					cout << "f_found = TRUE" << endl;
+					cout << "f_found = true" << endl;
 					}
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		else {
@@ -1372,7 +1372,7 @@ int sorting::int_vec_search_first_occurrence(
 // This function finds the first occurrence of the element a.
 {
 	int l, r, m; //, res;
-	int f_found = FALSE;
+	int f_found = false;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -1381,7 +1381,7 @@ int sorting::int_vec_search_first_occurrence(
 		}
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = len;
@@ -1427,7 +1427,7 @@ int sorting::int_vec_search_first_occurrence(
 					cout << "sorting::int_vec_search_first_occurrence "
 							"we found the element" << endl;
 					}
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		}
@@ -1452,7 +1452,7 @@ int sorting::lint_vec_search_first_occurrence(long int *v,
 // This function finds the first occurrence of the element a.
 {
 	int l, r, m; //, res;
-	int f_found = FALSE;
+	int f_found = false;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
@@ -1461,7 +1461,7 @@ int sorting::lint_vec_search_first_occurrence(long int *v,
 		}
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = len;
@@ -1507,7 +1507,7 @@ int sorting::lint_vec_search_first_occurrence(long int *v,
 					cout << "int_vec_search_first_occurrence "
 							"we found the element" << endl;
 					}
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		}
@@ -1532,12 +1532,12 @@ int sorting::longinteger_vec_search(
 		ring_theory::longinteger_object &a, int &idx)
 {
 	int l, r, m, res;
-	int f_found = FALSE;
+	int f_found = false;
 	ring_theory::longinteger_domain D;
 	
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = len;
@@ -1561,7 +1561,7 @@ int sorting::longinteger_vec_search(
 		if (res <= 0) {
 			l = m + 1;
 			if (res == 0) {
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		else {
@@ -1581,9 +1581,9 @@ void sorting::int_vec_classify_and_print(
 		std::ostream &ost, int *v, int l)
 {
 	tally C;
-	int f_backwards = TRUE;
+	int f_backwards = true;
 
-	C.init(v, l, FALSE, 0);
+	C.init(v, l, false, 0);
 	C.print_file(ost, f_backwards);
 }
 
@@ -1591,10 +1591,10 @@ void sorting::int_vec_values(
 		int *v, int l, int *&w, int &w_len)
 {
 	tally C;
-	//int f_backwards = TRUE;
+	//int f_backwards = true;
 	int i, f, a;
 
-	C.init(v, l, FALSE, 0);
+	C.init(v, l, false, 0);
 	w_len = C.nb_types;
 	w = NEW_int(w_len);
 	for (i = 0; i < w_len; i++) {
@@ -1609,10 +1609,10 @@ void sorting::int_vec_multiplicities(
 	int *&w, int &w_len)
 {
 	tally C;
-	//int f_backwards = TRUE;
+	//int f_backwards = true;
 	int i;
 
-	C.init(v, l, FALSE, 0);
+	C.init(v, l, false, 0);
 	w_len = C.nb_types;
 	w = NEW_int(w_len);
 	for (i = 0; i < w_len; i++) {
@@ -1625,10 +1625,10 @@ void sorting::int_vec_values_and_multiplicities(
 	int *&val, int *&mult, int &nb_values)
 {
 	tally C;
-	//int f_backwards = TRUE;
+	//int f_backwards = true;
 	int i, f, len, a;
 
-	C.init(v, l, FALSE, 0);
+	C.init(v, l, false, 0);
 	nb_values = C.nb_types;
 	val = NEW_int(nb_values);
 	mult = NEW_int(nb_values);
@@ -1679,7 +1679,7 @@ void sorting::int_vec_classify_with_arrays(
 		}
 	int_vec_sorting_permutation(the_vec_sorted,
 			length, sorting_perm, sorting_perm_inv,
-			TRUE /* f_increasingly */);
+			true /* f_increasingly */);
 	for (i = 0; i < length; i++) {
 		the_vec_sorted[sorting_perm[i]] = the_vec[i];
 		}
@@ -1790,7 +1790,7 @@ void sorting::int_vec_print_classified(
 		}
 	ost << " )";
 #endif
-	int_vec_print_types(ost, FALSE /* f_backwards */, the_vec_sorted, 
+	int_vec_print_types(ost, false /* f_backwards */, the_vec_sorted, 
 		nb_types, type_first, type_len);
 	FREE_int(the_vec_sorted);
 	FREE_int(sorting_perm);
@@ -2208,7 +2208,7 @@ int sorting::search_general(
 {
 	int f_v = (verbose_level >= 1);
 	int l, r, m, res;
-	int f_found = FALSE;
+	int f_found = false;
 
 	if (f_v) {
 		cout << "search_general len = " << len << endl;
@@ -2216,7 +2216,7 @@ int sorting::search_general(
 	
 	if (len == 0) {
 		idx = 0;
-		return FALSE;
+		return false;
 		}
 	l = 0;
 	r = len;
@@ -2261,7 +2261,7 @@ int sorting::search_general(
 				cout << "moving to the right" << endl;
 				}
 			if (res == 0) {
-				f_found = TRUE;
+				f_found = true;
 				}
 			}
 		else {
@@ -2648,7 +2648,7 @@ void sorting::find_points_by_multiplicity(
 		int *&pts, int &nb_pts)
 {
 	tally C;
-	C.init(data, data_sz, FALSE, 0);
+	C.init(data, data_sz, false, 0);
 	C.get_data_by_multiplicity(pts, nb_pts, multiplicity, 0 /* verbose_level */);
 }
 
@@ -2814,7 +2814,7 @@ void sorting::schreier_vector_tree(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int i, r;
 	int *depth;
 	int *ancestor;
@@ -2877,7 +2877,7 @@ void sorting::schreier_vector_tree(
 	//int f, a, t;
 
 	SoS = NEW_OBJECT(set_of_sets);
-	C.init(depth, n, FALSE, 0);
+	C.init(depth, n, false, 0);
 
 	int *types;
 	int nb_types;
@@ -2976,7 +2976,7 @@ void sorting::schreier_vector_tree(
 		cout << "sorting::schreier_vector_tree before LG->create_spanning_tree" << endl;
 	}
 	LG->create_spanning_tree(
-			TRUE /* f_place_x */, verbose_level);
+			true /* f_place_x */, verbose_level);
 	if (f_v) {
 		cout << "sorting::schreier_vector_tree after LG->create_spanning_tree" << endl;
 	}
@@ -3095,7 +3095,7 @@ int sorting::test_if_sets_are_disjoint(
 	u = v = 0;
 	while (u < sz1 && v < sz2) {
 		if (set1[u] == set2[v]) {
-			return FALSE;
+			return false;
 		}
 		else if (set1[u] < set2[v]) {
 			u++;
@@ -3105,7 +3105,7 @@ int sorting::test_if_sets_are_disjoint(
 			v++;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 void sorting::d_partition(
@@ -3127,14 +3127,14 @@ void sorting::d_partition(
 	l = left;
 	r = right;
 	while (l < r) {
-		while (TRUE) {
+		while (true) {
 			if (l > right)
 				break;
 			if (v[l] < v[pivot])
 				break;
 			l++;
 			}
-		while (TRUE) {
+		while (true) {
 			if (r < left)
 				break;
 			if (v[r] >= v[pivot])
@@ -3190,7 +3190,7 @@ int sorting::test_if_sets_are_disjoint_assuming_sorted(
 	q = set2;
 	while (u + v < sz) {
 		if (p[u] == q[v]) {
-			return FALSE;
+			return false;
 		}
 		if (u == sz1) {
 			v++;
@@ -3205,7 +3205,7 @@ int sorting::test_if_sets_are_disjoint_assuming_sorted(
 			v++;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int sorting::test_if_sets_are_disjoint_assuming_sorted_lint(
@@ -3221,7 +3221,7 @@ int sorting::test_if_sets_are_disjoint_assuming_sorted_lint(
 	q = set2;
 	while (u + v < sz) {
 		if (p[u] == q[v]) {
-			return FALSE;
+			return false;
 		}
 		if (u == sz1) {
 			v++;
@@ -3236,7 +3236,7 @@ int sorting::test_if_sets_are_disjoint_assuming_sorted_lint(
 			v++;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int sorting::uchar_vec_compare(uchar *p, uchar *q, int len)
@@ -3261,10 +3261,10 @@ int sorting::test_if_sets_are_disjoint_not_assuming_sorted(
 	for (i = 0; i < len; i++) {
 		a = v[i];
 		if (lint_vec_search_linear(w, len, a, idx)) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 int sorting::int_vec_compare(int *p, int *q, int len)
@@ -3355,7 +3355,7 @@ static void int_vec_partition(int *v,
 	l = left;
 	r = right;
 	while (l < r) {
-		while (TRUE) {
+		while (true) {
 			if (l > right)
 				break;
 			res = (*compare_func)(v[l], v[pivot]);
@@ -3363,7 +3363,7 @@ static void int_vec_partition(int *v,
 				break;
 			l++;
 			}
-		while (TRUE) {
+		while (true) {
 			if (r < left)
 				break;
 			res = (*compare_func)(v[r], v[pivot]);
@@ -3407,7 +3407,7 @@ static void lint_vec_partition(long int *v,
 	l = left;
 	r = right;
 	while (l < r) {
-		while (TRUE) {
+		while (true) {
 			if (l > right)
 				break;
 			res = (*compare_func)(v[l], v[pivot]);
@@ -3415,7 +3415,7 @@ static void lint_vec_partition(long int *v,
 				break;
 			l++;
 			}
-		while (TRUE) {
+		while (true) {
 			if (r < left)
 				break;
 			res = (*compare_func)(v[r], v[pivot]);
@@ -3465,7 +3465,7 @@ static void partition(void **v, int *perm,
 	l = left;
 	r = right;
 	while (l < r) {
-		while (TRUE) {
+		while (true) {
 			if (l > right)
 				break;
 			res = (*compare_func)(v[l], v[pivot], data);
@@ -3473,7 +3473,7 @@ static void partition(void **v, int *perm,
 				break;
 			l++;
 			}
-		while (TRUE) {
+		while (true) {
 			if (r < left)
 				break;
 			res = (*compare_func)(v[r], v[pivot], data);

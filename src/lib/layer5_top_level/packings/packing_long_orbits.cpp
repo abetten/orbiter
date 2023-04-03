@@ -557,7 +557,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 				exit(1);
 			}
 
-			if (FALSE) {
+			if (false) {
 				cout << "packing_long_orbits::filter_orbits t=" << t << " i=" << i << " b=" << b << " orbit=";
 				Lint_vec_print(cout, set, len1);
 				cout << endl;
@@ -569,12 +569,12 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 				// add b to the list in Reduced_Orbits_by_length:
 
 				Filtered_orbits->add_element(t, b);
-				if (FALSE) {
+				if (false) {
 					cout << "accepted as vertex " << Filtered_orbits->Set_size[t] - 1 << endl;
 				}
 			}
 			else {
-				if (FALSE) {
+				if (false) {
 					cout << "rejected" << endl;
 				}
 			}
@@ -665,7 +665,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		create_graph_and_save_to_file(
 					CG,
 					fname_graph,
-					FALSE /* f_has_user_data */, NULL /*user_data*/, 0 /*user_data_sz*/,
+					false /* f_has_user_data */, NULL /*user_data*/, 0 /*user_data_sz*/,
 					verbose_level);
 		if (f_v) {
 			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
@@ -676,7 +676,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		FREE_OBJECT(CG);
 	}
 	else {
-		cout << "Descr->f_create_graphs is FALSE, we are not creating the graph" << endl;
+		cout << "Descr->f_create_graphs is false, we are not creating the graph" << endl;
 	}
 
 	if (Descr->f_solve) {
@@ -985,7 +985,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		orbiter_kernel_system::file_io Fio;
 		int nb_points;
 
-		nb_points = Fio.number_of_vertices_in_colored_graph(fname_graph, FALSE /* verbose_level */);
+		nb_points = Fio.number_of_vertices_in_colored_graph(fname_graph, false /* verbose_level */);
 
 		cout << nb_points << " & ";
 		cout << nb_solutions   << " & ";
@@ -994,8 +994,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		{
 			data_structures::tally Cl;
 
-			Cl.init(Orbits->orbit_len, Orbits->nb_orbits, FALSE, 0);
-			Cl.print_tex_no_lf(FALSE);
+			Cl.init(Orbits->orbit_len, Orbits->nb_orbits, false, 0);
+			Cl.print_tex_no_lf(false);
 			cout << " & ";
 		}
 		cout << Orbits->nb_orbits;
@@ -1147,7 +1147,7 @@ void packing_long_orbits::create_graph_on_long_orbits(
 	create_graph_and_save_to_file(
 			CG,
 			fname_graph,
-			TRUE /* f_has_user_data */, user_data, user_data_sz,
+			true /* f_has_user_data */, user_data, user_data_sz,
 			verbose_level);
 
 	if (f_v) {

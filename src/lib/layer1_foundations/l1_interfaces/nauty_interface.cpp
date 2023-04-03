@@ -31,13 +31,14 @@ using namespace std;
 // must be defined before reading nauty.h
 
 
-#include "nauty.h"
+#include "../graph_theory_nauty/nauty.h"
 #include "foundations.h"
 
 
 
 namespace orbiter {
 namespace layer1_foundations {
+namespace l1_interfaces {
 
 
 #define HAS_NAUTY 1
@@ -81,17 +82,17 @@ void nauty_interface::nauty_interface_graph_bitvec(int v,
 	int f_v = (verbose_level >= 1);
 	static DEFAULTOPTIONS(options);
 	statsblk stats;
-	set *row;
+	setword *row;
 	int m, n, i, j, k;
 
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_graph_bitvec" << endl;
 	}
-	options.getcanon = TRUE;
-	options.defaultptn = FALSE;
-	//	options.writeautoms = TRUE;
-	// 		options.cartesian = TRUE;
-	// 		options.writemarkers = TRUE;
+	options.getcanon = true;
+	options.defaultptn = false;
+	//	options.writeautoms = true;
+	// 		options.cartesian = true;
+	// 		options.writemarkers = true;
 
 	n = v;
 	nauty_interface_allocate_data(n);
@@ -194,17 +195,17 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 	int f_v = (verbose_level >= 1);
 	static DEFAULTOPTIONS(options);
 	statsblk stats;
-	set *row;
+	setword *row;
 	int m, n, i, j;
 
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_graph_int" << endl;
 	}
-	options.getcanon = TRUE;
-	options.defaultptn = FALSE;
-//	options.writeautoms = TRUE;
-// 		options.cartesian = TRUE;
-// 		options.writemarkers = TRUE;
+	options.getcanon = true;
+	options.defaultptn = false;
+//	options.writeautoms = true;
+// 		options.cartesian = true;
+// 		options.writemarkers = true;
 
 	n = v;
 	nauty_interface_allocate_data(n);
@@ -297,18 +298,18 @@ void nauty_interface::nauty_interface_matrix_int(
 	int f_vv = (verbose_level >= 2);
 	static DEFAULTOPTIONS(options);
 	statsblk stats;
-	set *row;
+	setword *row;
 	int m, n, i, j, p1, p2;
 
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_matrix_int "
 				"nb_rows=" << Enc->nb_rows << " nb_cols=" << Enc->nb_cols << endl;
 	}
-	options.getcanon = TRUE;
-	options.defaultptn = FALSE;
-	//options.writeautoms = TRUE;
-// 		options.cartesian = TRUE;
-// 		options.writemarkers = TRUE;
+	options.getcanon = true;
+	options.defaultptn = false;
+	//options.writeautoms = true;
+// 		options.cartesian = true;
+// 		options.writemarkers = true;
 
 	n = Enc->nb_rows + Enc->nb_cols;
 
@@ -486,8 +487,8 @@ static void nauty_interface_fill_nauty_output(int n,
 	}
 }
 
-}
-}
+}}}
+
 
 
 

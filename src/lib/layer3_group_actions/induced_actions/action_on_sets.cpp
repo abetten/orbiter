@@ -53,7 +53,7 @@ void action_on_sets::init(int nb_sets,
 {
 	int i, j;
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 5);
+	int f_vv = false; //(verbose_level >= 5);
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
 	

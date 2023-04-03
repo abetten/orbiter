@@ -58,7 +58,7 @@ void quartic_curve_domain::init(
 				"before P->projective_space_init" << endl;
 	}
 	P->projective_space_init(2, F,
-		TRUE /*f_init_incidence_structure */,
+		true /*f_init_incidence_structure */,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_domain::init "
@@ -244,7 +244,7 @@ void quartic_curve_domain::print_lines_tex(
 		std::ostream &ost, long int *Lines, int nb_lines)
 {
 	int i;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	ost << "The lines are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
@@ -325,7 +325,7 @@ void quartic_curve_domain::compute_points_on_lines(
 			r = F->Linear_algebra->Gauss_easy(Mtx, 3, 3);
 			if (r == 2) {
 				pts_on_lines->add_element(i, j);
-				f_is_on_line[j] = TRUE;
+				f_is_on_line[j] = true;
 			}
 		}
 	}

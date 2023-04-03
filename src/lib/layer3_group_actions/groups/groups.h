@@ -1494,13 +1494,13 @@ public:
 		int target_length, int verbose_level);
 	int strip_and_add(
 			int *elt, int *residue, int verbose_level);
-		// returns TRUE if something was added,
-		// FALSE if element stripped through
+		// returns true if something was added,
+		// false if element stripped through
 	int strip(
 			int *elt, int *residue,
 			int &drop_out_level,
 		int &image, int verbose_level);
-		// returns TRUE if the element sifts through
+		// returns true if the element sifts through
 	void add_generator_at_level(
 			int *elt, int lvl,
 		int verbose_level);

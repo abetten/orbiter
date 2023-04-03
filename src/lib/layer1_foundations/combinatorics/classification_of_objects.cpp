@@ -27,7 +27,7 @@ classification_of_objects::classification_of_objects()
 
 	Descr = NULL;
 
-	f_projective_space = FALSE;
+	f_projective_space = false;
 
 	P = NULL;
 
@@ -178,7 +178,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		geometry::object_with_canonical_form *OwCF;
 
 		OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
-		if (FALSE) {
+		if (false) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"OwCF:" << endl;
 			OwCF->print(cout);
@@ -186,7 +186,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 
 
-		if (FALSE) {
+		if (false) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"before process_any_object" << endl;
 		}
@@ -202,7 +202,7 @@ void classification_of_objects::classify_objects_using_nauty(
 					verbose_level - 1);
 
 
-		if (FALSE) {
+		if (false) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"after process_any_object" << endl;
 		}
@@ -272,11 +272,11 @@ void classification_of_objects::classify_objects_using_nauty(
 
 
 	T_Ago = NEW_OBJECT(data_structures::tally);
-	T_Ago->init_lint(Ago_transversal, nb_orbits, FALSE, 0);
+	T_Ago->init_lint(Ago_transversal, nb_orbits, false, 0);
 
 	if (f_v) {
 		cout << "Automorphism group orders of orbit transversal: ";
-		T_Ago->print_first(TRUE /* f_backwards */);
+		T_Ago->print_first(true /* f_backwards */);
 		cout << endl;
 	}
 
@@ -285,7 +285,7 @@ void classification_of_objects::classify_objects_using_nauty(
 	if (Descr->f_save_ago) {
 		if (f_v) {
 			cout << "classification_of_objects::process_multiple_objects_from_file "
-					"f_save_ago is TRUE" << endl;
+					"f_save_ago is true" << endl;
 		}
 
 		save_automorphism_group_order(verbose_level);
@@ -295,7 +295,7 @@ void classification_of_objects::classify_objects_using_nauty(
 	if (Descr->f_save_transversal) {
 		if (f_v) {
 			cout << "classification_of_objects::process_multiple_objects_from_file "
-					"f_save_transversal is TRUE" << endl;
+					"f_save_transversal is true" << endl;
 		}
 
 		save_transversal(verbose_level);
@@ -487,7 +487,7 @@ int classification_of_objects::process_object(
 	int &iso_idx_if_found,
 	data_structures::nauty_output *&NO,
 	int verbose_level)
-// returns f_found, which is TRUE if the object is rejected
+// returns f_found, which is true if the object is rejected
 {
 	int f_v = (verbose_level >= 1);
 
@@ -515,7 +515,7 @@ int classification_of_objects::process_object(
 	}
 
 	OwCF->run_nauty(
-			TRUE /* f_compute_canonical_form */, Canonical_form,
+			true /* f_compute_canonical_form */, Canonical_form,
 			NO,
 			verbose_level);
 
@@ -597,7 +597,7 @@ int classification_of_objects::process_object_with_known_canonical_labeling(
 	int &idx,
 	nauty_output *NO,
 	int verbose_level)
-// returns f_found, which is TRUE if the object is rejected
+// returns f_found, which is true if the object is rejected
 {
 	int f_v = (verbose_level >= 1);
 
@@ -624,7 +624,7 @@ int classification_of_objects::process_object_with_known_canonical_labeling(
 	SG = PA->set_stabilizer_of_object(
 		OiP,
 		Descr->f_save_incma_in_and_out, Descr->save_incma_in_and_out_prefix,
-		TRUE /* f_compute_canonical_form */,
+		true /* f_compute_canonical_form */,
 		canonical_form, canonical_form_len,
 		canonical_labeling, canonical_labeling_len,
 		verbose_level - 2);
@@ -792,7 +792,7 @@ void classification_of_objects::report_summary_of_orbits(
 	if (f_v) {
 		cout << "classification_of_objects::report_summary_of_orbits" << endl;
 	}
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int i, j;
 
 
@@ -858,7 +858,7 @@ void classification_of_objects::report_summary_of_orbits(
 		col_part_first, col_part_len, nb_col_parts,
 		print_summary_table_entry,
 		this /*void *data*/,
-		TRUE /* f_tex */);
+		true /* f_tex */);
 	fp << "$$" << endl;
 
 	if (f_v) {
@@ -885,7 +885,7 @@ void classification_of_objects::report_all_isomorphism_types(
 	}
 	int i;
 
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	for (i = 0; i < CB->nb_types; i++) {
 
@@ -917,7 +917,7 @@ void classification_of_objects::report_all_isomorphism_types(
 #if 0
 				fp << "$$" << endl;
 				L.int_vec_print_as_matrix(fp, Input_objects,
-					nb_input_objects, 10 /* width */, TRUE /* f_tex */);
+					nb_input_objects, 10 /* width */, true /* f_tex */);
 				fp << "$$" << endl;
 #endif
 			}
@@ -953,7 +953,7 @@ void classification_of_objects::report_isomorphism_type(
 		cout << "classification_of_objects::report_isomorphism_type i=" << i << endl;
 	}
 	int j;
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 
 	//j = CB->perm[i];
 	//j = CB->Type_rep[i];
@@ -980,7 +980,7 @@ void classification_of_objects::report_isomorphism_type(
 		if (nb_input_objects < 10) {
 			L.int_vec_print_as_matrix(cout, Input_objects,
 					nb_input_objects, 10 /* width */,
-					FALSE /* f_tex */);
+					false /* f_tex */);
 		}
 		else {
 			cout << "too many to print" << endl;
@@ -1033,7 +1033,7 @@ static void print_summary_table_entry(int *Table,
 		int m, int n, int i, int j, int val,
 		std::string &output, void *data)
 {
-	int f_v = TRUE;
+	int f_v = true;
 	data_structures::classify_bitvectors *CB;
 	//object_in_projective_space_with_action *OiPA;
 	//void *extra_data;

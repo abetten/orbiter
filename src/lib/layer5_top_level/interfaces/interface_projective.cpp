@@ -24,16 +24,16 @@ namespace user_interface {
 interface_projective::interface_projective()
 {
 
-	f_create_points_on_quartic = FALSE;
+	f_create_points_on_quartic = false;
 	desired_distance = 0;
 
-	f_create_points_on_parabola = FALSE;
+	f_create_points_on_parabola = false;
 	parabola_N = 0;
 	parabola_a = 0;
 	parabola_b = 0.;
 	parabola_c = 0.;
 
-	f_smooth_curve = FALSE;
+	f_smooth_curve = false;
 	//smooth_curve_label;
 	smooth_curve_N = 0;
 	smooth_curve_t_min = 0;
@@ -42,15 +42,15 @@ interface_projective::interface_projective()
 	//smooth_curve_Polish = NULL;
 	FP_descr = NULL;
 
-	f_make_table_of_surfaces = FALSE;
+	f_make_table_of_surfaces = false;
 
-	f_create_surface_reports = FALSE;
+	f_create_surface_reports = false;
 	//std::string create_surface_reports_field_orders_text;
 
-	f_create_surface_atlas = FALSE;
+	f_create_surface_atlas = false;
 	create_surface_atlas_q_max = 0;
 
-	f_create_dickson_atlas = FALSE;
+	f_create_dickson_atlas = false;
 
 
 
@@ -132,14 +132,14 @@ void interface_projective::read_arguments(int argc,
 		cout << "interface_projective::read_arguments the next argument is " << argv[i] << endl;
 	}
 	if (ST.stringcmp(argv[i], "-create_points_on_quartic") == 0) {
-		f_create_points_on_quartic = TRUE;
+		f_create_points_on_quartic = true;
 		desired_distance = ST.strtof(argv[++i]);
 		if (f_v) {
 			cout << "-create_points_on_quartic " << desired_distance << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-create_points_on_parabola") == 0) {
-		f_create_points_on_parabola = TRUE;
+		f_create_points_on_parabola = true;
 		desired_distance = ST.strtof(argv[++i]);
 		parabola_N = ST.strtoi(argv[++i]);
 		parabola_a = ST.strtof(argv[++i]);
@@ -152,7 +152,7 @@ void interface_projective::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-smooth_curve") == 0) {
-		f_smooth_curve = TRUE;
+		f_smooth_curve = true;
 		smooth_curve_label.assign(argv[++i]);
 		desired_distance = ST.strtof(argv[++i]);
 		smooth_curve_N = ST.strtoi(argv[++i]);
@@ -177,27 +177,27 @@ void interface_projective::read_arguments(int argc,
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
-		f_make_table_of_surfaces = TRUE;
+		f_make_table_of_surfaces = true;
 		if (f_v) {
 			cout << "-make_table_of_surfaces" << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-create_surface_atlas") == 0) {
-		f_create_surface_atlas = TRUE;
+		f_create_surface_atlas = true;
 		create_surface_atlas_q_max = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-create_surface_atlas " << create_surface_atlas_q_max << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-create_surface_reports") == 0) {
-		f_create_surface_reports = TRUE;
+		f_create_surface_reports = true;
 		create_surface_reports_field_orders_text.assign(argv[++i]);
 		if (f_v) {
 			cout << "-create_surface_reports " << create_surface_reports_field_orders_text << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-create_dickson_atlas") == 0) {
-		f_create_dickson_atlas = TRUE;
+		f_create_dickson_atlas = true;
 		if (f_v) {
 			cout << "-create_dickson_atlas " << endl;
 		}

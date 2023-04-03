@@ -61,11 +61,11 @@ void six_arcs_not_on_a_conic::init(
 
 	
 
-	Descr->f_target_size = TRUE;
+	Descr->f_target_size = true;
 	Descr->target_size = 6;
-	Descr->f_d = TRUE;
+	Descr->f_d = true;
 	Descr->d = 2;
-	Descr->f_conic_test = TRUE;
+	Descr->f_conic_test = true;
 	Descr->f_test_nb_Eckardt_points = f_test_nb_Eckardt_points;
 	Descr->nb_E = nb_E;
 

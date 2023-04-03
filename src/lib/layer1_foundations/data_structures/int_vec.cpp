@@ -76,15 +76,15 @@ int int_vec::is_constant_on_subset(int *v,
 	a = v[subset[0]];
 	if (sz == 1) {
 		value = a;
-		return TRUE;
+		return true;
 	}
 	for (i = 1; i < sz; i++) {
 		if (v[subset[i]] != a) {
-			return FALSE;
+			return false;
 		}
 	}
 	value = a;
-	return TRUE;
+	return true;
 }
 
 void int_vec::take_away(int *v, int &len,
@@ -147,10 +147,10 @@ int int_vec::is_zero(int *v, long int len)
 
 	for (i = 0; i < len; i++) {
 		if (v[i]) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -604,8 +604,8 @@ void int_vec::print_classified(int *v, int len)
 {
 	tally C;
 
-	C.init(v, len, FALSE /*f_second */, 0);
-	C.print(TRUE /* f_backwards*/);
+	C.init(v, len, false /*f_second */, 0);
+	C.print(true /* f_backwards*/);
 	cout << endl;
 }
 
@@ -614,8 +614,8 @@ void int_vec::print_classified_str(stringstream &sstr,
 {
 	tally C;
 
-	C.init(v, len, FALSE /*f_second */, 0);
-	//C.print(TRUE /* f_backwards*/);
+	C.init(v, len, false /*f_second */, 0);
+	//C.print(true /* f_backwards*/);
 	C.print_naked_stringstream(sstr, f_backwards);
 }
 
@@ -654,7 +654,7 @@ void int_vec::scan_from_stream(istream & is, int *&v, int &len)
 	h = 0;
 	l = 0;
 
-	while (TRUE) {
+	while (true) {
 		if (!is) {
 			len = h;
 			if (f_v) {
@@ -685,7 +685,7 @@ void int_vec::scan_from_stream(istream & is, int *&v, int &len)
 			}
 			return;
 		}
-		while (TRUE) {
+		while (true) {
 			// read digits:
 			//cout << "int_vec_scan_from_stream: \"" << c
 			//<< "\", ascii=" << (int)c << endl;

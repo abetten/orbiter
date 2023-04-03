@@ -66,7 +66,7 @@ void action::report(
 
 			P = NEW_OBJECT(geometry::projective_space);
 
-			P->projective_space_init(M->n - 1, F, TRUE, verbose_level);
+			P->projective_space_init(M->n - 1, F, true, verbose_level);
 
 			ost << "The base action is on projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
 
@@ -242,7 +242,7 @@ void action::report_what_we_act_on(
 
 			P = NEW_OBJECT(geometry::projective_space);
 
-			P->projective_space_init(M->n - 1, F, TRUE, verbose_level);
+			P->projective_space_init(M->n - 1, F, true, verbose_level);
 
 			ost << "\\section*{The Group Acts on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
 
@@ -545,7 +545,7 @@ void action::read_representatives(
 		int *&Reps, int &nb_reps, int &size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_casenumbers = FALSE;
+	int f_casenumbers = false;
 	int nb_cases;
 	int *Set_sizes;
 	long int **Sets;
@@ -588,7 +588,7 @@ void action::read_representatives_and_strong_generators(
 	char **&Aut_ascii, int &nb_reps, int &size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_casenumbers = FALSE;
+	int f_casenumbers = false;
 	int nb_cases;
 	int *Set_sizes;
 	long int **Sets;
@@ -644,7 +644,7 @@ void action::read_file_and_print_representatives(
 		int f_print_stabilizer_generators, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_casenumbers = FALSE;
+	int f_casenumbers = false;
 	int nb_cases;
 	int *Set_sizes;
 	long int **Sets;
@@ -723,7 +723,7 @@ void action::read_set_and_stabilizer(
 {
 	int f_v = (verbose_level  >= 1);
 	int f_vv = (verbose_level  >= 2);
-	int f_casenumbers = FALSE;
+	int f_casenumbers = false;
 	//int nb_cases;
 	int *Set_sizes;
 	long int **Sets;
@@ -780,7 +780,7 @@ void action::read_set_and_stabilizer(
 
 	stab = G->S;
 	G->S = NULL;
-	G->f_has_sims = FALSE;
+	G->f_has_sims = false;
 
 	ring_theory::longinteger_object go;
 
@@ -789,7 +789,7 @@ void action::read_set_and_stabilizer(
 
 	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init_from_sims(stab, 0);
-	f_has_strong_generators = TRUE;
+	f_has_strong_generators = true;
 
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "
@@ -1142,17 +1142,17 @@ void action::write_set_of_elements_latex_file(
 
 		string author, extra_praeamble;
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head(ost,
-				FALSE /* f_book*/,
-				TRUE /* f_title */,
+				false /* f_book*/,
+				true /* f_title */,
 				title, author,
-				FALSE /* f_toc */,
-				FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+				false /* f_toc */,
+				false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extra_praeamble */);
 
 
@@ -1204,7 +1204,7 @@ void action::export_to_orbiter(
 		for (i = 0; i < SG->gens->len; i++) {
 			fp << "\t\"";
 			for (j = 0; j < degree; j++) {
-				if (FALSE) {
+				if (false) {
 					cout << "action::export_to_orbiter computing image of " << j << " under generator " << i << endl;
 				}
 				a = Group_element->element_image_of(j, SG->gens->ith(i), 0 /* verbose_level*/);

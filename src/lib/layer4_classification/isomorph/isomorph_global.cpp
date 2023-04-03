@@ -64,7 +64,7 @@ void isomorph_global::read_statistic_files(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_implicit_fusion = FALSE;
+	int f_implicit_fusion = false;
 	
 
 	if (f_v) {
@@ -79,7 +79,7 @@ void isomorph_global::read_statistic_files(
 
 	{
 		isomorph Iso;
-		int f_use_database_for_starter = TRUE;
+		int f_use_database_for_starter = true;
 		orbiter_kernel_system::file_io Fio;
 
 
@@ -244,7 +244,7 @@ void isomorph_global::read_statistic_files(
 			cout << "isomorph_read_statistic_files "
 					"before Iso.count_solutions" << endl;
 		}
-		int f_get_statistics = FALSE;
+		int f_get_statistics = false;
 
 
 		Iso.count_solutions(nb_files, fname,
@@ -271,7 +271,7 @@ void isomorph_global::init_solutions_from_memory(
 	long int **Solutions, int *Nb_sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_implicit_fusion = FALSE;
+	int f_implicit_fusion = false;
 
 	if (f_v) {
 		cout << "isomorph_global::init_solutions_from_memory" << endl;
@@ -284,7 +284,7 @@ void isomorph_global::init_solutions_from_memory(
 
 	{
 		isomorph Iso;
-		int f_use_database_for_starter = TRUE;
+		int f_use_database_for_starter = true;
 
 
 		if (f_v) {
@@ -323,7 +323,7 @@ void isomorph_global::init_solutions_from_memory(
 			cout << "isomorph_global::init_solutions_from_memory "
 					"before Iso.init_solutions" << endl;
 		}
-		//int f_get_statistics = FALSE;
+		//int f_get_statistics = false;
 		Iso.Lifting->init_solutions(Solutions, Nb_sol, verbose_level - 1);
 				//
 				// now we know Iso.N, the number of solutions
@@ -349,7 +349,7 @@ void isomorph_global::classification_graph(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_implicit_fusion = FALSE;
+	int f_implicit_fusion = false;
 	//int t0;
 
 
@@ -365,7 +365,7 @@ void isomorph_global::classification_graph(
 
 	{
 		isomorph Iso;
-		int f_use_database_for_starter = FALSE;
+		int f_use_database_for_starter = false;
 	
 
 		if (f_v) {
@@ -439,7 +439,7 @@ void isomorph_global::identify(
 	int f_save, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_implicit_fusion = FALSE;
+	int f_implicit_fusion = false;
 	long int *the_set;
 	int set_size;
 	string fname_transporter;
@@ -456,7 +456,7 @@ void isomorph_global::identify(
 
 	{
 		isomorph Iso;
-		int f_use_database_for_starter = FALSE;
+		int f_use_database_for_starter = false;
 		orbiter_kernel_system::file_io Fio;
 	
 
@@ -555,7 +555,7 @@ void isomorph_global::identify_table(
 // Table[nb_rows * size]
 {
 	int f_v = (verbose_level >= 1);
-	int f_implicit_fusion = FALSE;
+	int f_implicit_fusion = false;
 	long int *the_set;
 	int set_size;
 
@@ -571,7 +571,7 @@ void isomorph_global::identify_table(
 
 	{
 		isomorph Iso;
-		int f_use_database_for_starter = FALSE;
+		int f_use_database_for_starter = false;
 	
 
 		if (f_v) {
@@ -670,8 +670,8 @@ void isomorph_global::worker(
 
 	{
 		isomorph Iso;
-		int f_use_database_for_starter = FALSE;
-		int f_implicit_fusion = FALSE;
+		int f_use_database_for_starter = false;
+		int f_implicit_fusion = false;
 
 		if (f_v) {
 			cout << "isomorph_global::worker "
@@ -840,7 +840,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 		cout << "$\\\\" << endl;
 	}
 
-	if (FALSE /*go1.is_one()*/) {
+	if (false /*go1.is_one()*/) {
 		cnt_orbits = Combi.int_n_choose_k(Iso->size, Iso->level);
 		cnt_special_orbits = 1;
 	}
@@ -884,7 +884,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 		int *transporter;
 		int u;
 		int case_nb;
-		int f_implicit_fusion = FALSE;
+		int f_implicit_fusion = false;
 		int idx;
 		
 		rearranged_set = NEW_lint(Iso->size);
@@ -1229,7 +1229,7 @@ static void callback_compute_down_orbits_worker(
 	}
 	isomorph_global *IG = (isomorph_global *) data;
 
-	//f_memory_debug = TRUE;
+	//f_memory_debug = true;
 	Nb_orbits = NEW_int(Iso->Folding->Reps->count * 2);
 	Down_orbit_identify = NEW_pint(Iso->Folding->Reps->count);
 	for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {

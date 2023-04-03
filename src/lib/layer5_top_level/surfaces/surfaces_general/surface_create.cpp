@@ -29,12 +29,12 @@ surface_create::surface_create()
 	//std::string label_txt;
 	//std::string label_tex;
 
-	f_ownership = FALSE;
+	f_ownership = false;
 
 	q = 0;
 	F = NULL;
 
-	f_semilinear = FALSE;
+	f_semilinear = false;
 
 	PA = NULL;
 
@@ -42,9 +42,9 @@ surface_create::surface_create()
 	Surf_A = NULL;
 	SO = NULL;
 
-	f_has_group = FALSE;
+	f_has_group = false;
 	Sg = NULL;
-	f_has_nice_gens = FALSE;
+	f_has_nice_gens = false;
 	nice_gens = NULL;
 
 	SOA = NULL;
@@ -220,15 +220,15 @@ int surface_create::init_with_data(
 
 	surface_create::Descr = Descr;
 
-	f_ownership = FALSE;
+	f_ownership = false;
 	surface_create::Surf_A = Surf_A;
 
 
 	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 	else {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	}
 
 	surface_create::F = Surf_A->PA->F;
@@ -242,9 +242,9 @@ int surface_create::init_with_data(
 	if (!create_surface_from_description(verbose_level - 1)) {
 		if (f_v) {
 			cout << "surface_create::init_with_data "
-					"create_surface_from_description returns FALSE" << endl;
+					"create_surface_from_description returns false" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	if (f_v) {
 		cout << "surface_create::init_with_data "
@@ -255,7 +255,7 @@ int surface_create::init_with_data(
 		cout << "surface_create::init_with_data "
 				"done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int surface_create::init(surface_create_description *Descr,
@@ -301,10 +301,10 @@ int surface_create::init(surface_create_description *Descr,
 
 
 	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
+		f_semilinear = false;
 	}
 	else {
-		f_semilinear = TRUE;
+		f_semilinear = true;
 	}
 
 
@@ -318,7 +318,7 @@ int surface_create::init(surface_create_description *Descr,
 					"create_surface_from_description "
 					"could not create surface" << endl;
 		}
-		return FALSE;
+		return false;
 	}
 	if (f_v) {
 		cout << "surface_create::init "
@@ -329,7 +329,7 @@ int surface_create::init(surface_create_description *Descr,
 	if (f_v) {
 		cout << "surface_create::init done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 int surface_create::create_surface_from_description(int verbose_level)
@@ -580,7 +580,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 				cout << "surface_create::init2 "
 						"cannot create surface" << endl;
 			}
-			return FALSE;
+			return false;
 		}
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
@@ -715,7 +715,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 	if (f_v) {
 		cout << "surface_create::create_surface_from_description done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 void surface_create::override_group(
@@ -766,7 +766,7 @@ void surface_create::override_group(
 	FREE_OBJECT(nice_gens);
 
 
-	f_has_group = TRUE;
+	f_has_group = true;
 
 	if (f_v) {
 		cout << "surface_create::override_group done" << endl;
@@ -814,7 +814,7 @@ void surface_create::create_Eckardt_surface(
 
 	Sg->stabilizer_of_Eckardt_surface(
 		Surf_A->A,
-		F, FALSE /* f_with_normalizer */,
+		F, false /* f_with_normalizer */,
 		f_semilinear,
 		nice_gens,
 		verbose_level);
@@ -824,8 +824,8 @@ void surface_create::create_Eckardt_surface(
 				"after Sg->stabilizer_of_Eckardt_surface" << endl;
 	}
 
-	f_has_group = TRUE;
-	f_has_nice_gens = TRUE;
+	f_has_group = true;
+	f_has_nice_gens = true;
 
 	char str_q[1000];
 	char str_a[1000];
@@ -908,8 +908,8 @@ void surface_create::create_surface_G13(
 				"after Sg->stabilizer_of_G13_surface" << endl;
 	}
 
-	f_has_group = TRUE;
-	f_has_nice_gens = TRUE;
+	f_has_group = true;
+	f_has_nice_gens = true;
 
 	char str_q[1000];
 	char str_a[1000];
@@ -982,8 +982,8 @@ void surface_create::create_surface_F13(
 				"after Sg->stabilizer_of_F13_surface" << endl;
 	}
 
-	f_has_group = TRUE;
-	f_has_nice_gens = TRUE;
+	f_has_group = true;
+	f_has_nice_gens = true;
 
 	char str_q[1000];
 	char str_a[1000];
@@ -1060,8 +1060,8 @@ void surface_create::create_surface_bes(
 				"after Sg->stabilizer_of_bes_surface" << endl;
 	}
 #endif
-	f_has_group = FALSE;
-	f_has_nice_gens = TRUE;
+	f_has_group = false;
+	f_has_nice_gens = true;
 
 	char str_q[1000];
 	char str[1000];
@@ -1140,8 +1140,8 @@ void surface_create::create_surface_general_abcd(
 	}
 #endif
 
-	f_has_group = FALSE;
-	f_has_nice_gens = TRUE;
+	f_has_group = false;
+	f_has_nice_gens = true;
 
 	char str_q[1000];
 	char str[1000];
@@ -1203,7 +1203,7 @@ void surface_create::create_surface_by_coefficients(
 		a = surface_coeffs[2 * i + 0];
 		b = surface_coeffs[2 * i + 1];
 		if (a < 0) {
-			if (TRUE /*F->e == 1*/) {
+			if (true /*F->e == 1*/) {
 				number_theory::number_theory_domain NT;
 
 				a = NT.mod(a, F->p);
@@ -1300,7 +1300,7 @@ void surface_create::create_surface_by_coefficient_vector(
 	}
 	PA->init(
 		F, 3 /*n*/, f_semilinear,
-		TRUE /* f_init_incidence_structure */,
+		true /* f_init_incidence_structure */,
 		verbose_level);
 	if (f_v) {
 		cout << "group_theoretic_activity::create_surface_by_coefficient_vector after PA->init" << endl;
@@ -1430,8 +1430,8 @@ void surface_create::create_surface_by_rank(
 		field_theory::finite_field F0;
 
 		F0.finite_field_init_small_order(defining_q,
-				FALSE /* f_without_tables */,
-				FALSE /* f_compute_related_fields */,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
 				0);
 
 		F0.Projective_space_basic->PG_element_unrank_modified_lint(
@@ -1574,7 +1574,7 @@ void surface_create::create_surface_from_catalogue(
 	}
 	SO->init_with_27_lines(Surf,
 		Lines27, coeffs20,
-		FALSE /* f_find_double_six_and_rearrange_lines */,
+		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue "
@@ -1591,7 +1591,7 @@ void surface_create::create_surface_from_catalogue(
 	Sg->stabilizer_of_cubic_surface_from_catalogue(Surf_A->A,
 		F, iso,
 		verbose_level);
-	f_has_group = TRUE;
+	f_has_group = true;
 
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue "
@@ -1705,7 +1705,7 @@ void surface_create::create_surface_by_arc_lifting(
 	}
 	SO->init_with_27_lines(Surf,
 		Lines27, coeffs20,
-		FALSE /* f_find_double_six_and_rearrange_lines */,
+		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
 		cout << "surface_create::create_surface_by_arc_lifting "
@@ -1714,7 +1714,7 @@ void surface_create::create_surface_by_arc_lifting(
 
 
 	Sg = AL->Trihedral_pair->Aut_gens->create_copy(verbose_level - 2);
-	f_has_group = TRUE;
+	f_has_group = true;
 
 
 	char str_q[1000];
@@ -1838,7 +1838,7 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 
 	SO->init_with_27_lines(Surf,
 		Lines27, coeffs20,
-		FALSE /* f_find_double_six_and_rearrange_lines */,
+		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 
 	if (f_v) {
@@ -1847,7 +1847,7 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 	}
 
 
-	f_has_group = FALSE;
+	f_has_group = false;
 
 	char str_q[1000];
 	char str_lines[1000];
@@ -1950,7 +1950,7 @@ void surface_create::create_surface_Cayley_form(
 	}
 
 
-	f_has_group = FALSE;
+	f_has_group = false;
 
 	char str_q[1000];
 	char str_parameters[1000];
@@ -2042,7 +2042,7 @@ int surface_create::create_surface_by_equation(
 	const char *p = managed_variables.c_str();
 	char str[1000];
 
-	while (TRUE) {
+	while (true) {
 		if (!ST.s_scan_token_comma_separated(
 				&p, str, 0 /* verbose_level */)) {
 			break;
@@ -2056,7 +2056,7 @@ int surface_create::create_surface_by_equation(
 		}
 
 		tree->managed_variables.push_back(var);
-		tree->f_has_managed_variables = TRUE;
+		tree->f_has_managed_variables = true;
 
 	}
 
@@ -2193,7 +2193,7 @@ int surface_create::create_surface_by_equation(
 	//vector<string> symbols;
 	//vector<string> values;
 
-	while (TRUE) {
+	while (true) {
 		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}
@@ -2281,7 +2281,7 @@ int surface_create::create_surface_by_equation(
 
 
 	if (Int_vec_is_zero(coeffs20, 20)) {
-		return FALSE;
+		return false;
 	}
 
 
@@ -2305,7 +2305,7 @@ int surface_create::create_surface_by_equation(
 	}
 
 
-	f_has_group = FALSE;
+	f_has_group = false;
 
 	char str_q[1000];
 
@@ -2350,7 +2350,7 @@ int surface_create::create_surface_by_equation(
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation done" << endl;
 	}
-	return TRUE;
+	return true;
 }
 
 
@@ -2461,7 +2461,7 @@ void surface_create::create_surface_by_double_six(
 
 	SO->init_with_27_lines(Surf,
 		Lines27, coeffs20,
-		FALSE /* f_find_double_six_and_rearrange_lines */,
+		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 
 	if (f_v) {
@@ -2473,7 +2473,7 @@ void surface_create::create_surface_by_double_six(
 #endif
 
 
-	f_has_group = FALSE;
+	f_has_group = false;
 
 	char str_q[1000];
 
@@ -2625,7 +2625,7 @@ void surface_create::create_surface_by_skew_hexagon(
 	SO->init_with_27_lines(
 			Surf,
 		Lines27, coeffs20,
-		FALSE /* f_find_double_six_and_rearrange_lines */,
+		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 
 	if (f_v) {
@@ -2635,7 +2635,7 @@ void surface_create::create_surface_by_skew_hexagon(
 
 
 
-	f_has_group = FALSE;
+	f_has_group = false;
 
 	char str_q[1000];
 
@@ -2804,9 +2804,9 @@ void surface_create::create_surface_at_random(
 				"after init_generators_for_the_conjugate_group_avGa" << endl;
 	}
 
-	f_has_group = TRUE;
+	f_has_group = true;
 	Sg = Gens_conj; //Aut_gens;
-	f_has_nice_gens = FALSE;
+	f_has_nice_gens = false;
 	//data_structures_groups::vector_ge *nice_gens;
 
 
@@ -2966,7 +2966,7 @@ void surface_create::apply_single_transformation(
 		int sz,
 		int verbose_level)
 // transforms SO->eqn, SO->Lines and SO->Pts,
-// Also transforms Sg (if f_has_group is TRUE)
+// Also transforms Sg (if f_has_group is true)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3059,7 +3059,7 @@ void surface_create::apply_single_transformation(
 		FREE_OBJECT(Sg);
 		Sg = SG2;
 
-		f_has_nice_gens = FALSE;
+		f_has_nice_gens = false;
 		// ToDo: need to conjugate nice_gens
 	}
 
@@ -3151,7 +3151,7 @@ void surface_create::compute_group(
 	Descr = NEW_OBJECT(projective_space_object_classifier_description);
 	Classifier = NEW_OBJECT(projective_space_object_classifier);
 
-	Descr->f_input = TRUE;
+	Descr->f_input = true;
 	Descr->Data = NEW_OBJECT(data_input_stream_description);
 	Descr->Data->input_type[Descr->Data->nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
 	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
@@ -3173,7 +3173,7 @@ void surface_create::compute_group(
 #if 0
 	Classifier->do_the_work(
 			Descr,
-			TRUE,
+			true,
 			PA,
 			verbose_level);
 #endif
@@ -3230,7 +3230,7 @@ void surface_create::compute_group(
 	Sg = OiPA->Aut_gens;
 
 	Sg->A = A;
-	f_has_group = TRUE;
+	f_has_group = true;
 
 
 	if (f_v) {
@@ -3688,18 +3688,18 @@ void surface_create::do_report(int verbose_level)
 			title.assign(str);
 
 
-			orbiter_kernel_system::latex_interface L;
+			l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
+				false /* f_book */,
+				true /* f_title */,
 				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
 				extra_praeamble /* extra_praeamble */);
 
 
@@ -3797,7 +3797,7 @@ void surface_create::do_report2(
 	}
 	else {
 
-		int f_print_orbits = FALSE;
+		int f_print_orbits = false;
 		std::string fname_mask;
 
 
@@ -3869,9 +3869,9 @@ void surface_create::report_with_group(
 	Six_arcs = NEW_OBJECT(cubic_surfaces_and_arcs::six_arcs_not_on_a_conic);
 
 	Six_arc_descr = NEW_OBJECT(apps_geometry::arc_generator_description);
-	Six_arc_descr->f_target_size = TRUE;
+	Six_arc_descr->f_target_size = true;
 	Six_arc_descr->target_size = 6;
-	Six_arc_descr->f_control = TRUE;
+	Six_arc_descr->f_control = true;
 	Six_arc_descr->control_label.assign(Control_six_arcs_label);
 
 
@@ -3887,7 +3887,7 @@ void surface_create::report_with_group(
 	Six_arcs->init(
 			Six_arc_descr,
 			PA->PA2,
-			FALSE, 0,
+			false, 0,
 			verbose_level);
 
 	transporter = NEW_int(Six_arcs->Gen->PA->A->elt_size_in_int);
@@ -4042,7 +4042,7 @@ void surface_create::all_quartic_curves(int verbose_level)
 		ofstream ost(fname_tex);
 		//ofstream ost_quartics(fname_quartics);
 
-		orbiter_kernel_system::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 		L.head_easy(ost);
 

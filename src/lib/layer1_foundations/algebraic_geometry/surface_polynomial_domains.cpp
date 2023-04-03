@@ -42,7 +42,7 @@ surface_polynomial_domains::surface_polynomial_domains()
 
 	Partials = NULL;
 
-	f_has_large_polynomial_domains = FALSE;
+	f_has_large_polynomial_domains = false;
 	Poly2_27 = NULL;
 	Poly4_27 = NULL;
 	Poly6_27 = NULL;
@@ -335,7 +335,7 @@ void surface_polynomial_domains::init_large_polynomial_domains(int verbose_level
 	if (f_v) {
 		cout << "surface_polynomial_domains::init_large_polynomial_domains" << endl;
 	}
-	f_has_large_polynomial_domains = TRUE;
+	f_has_large_polynomial_domains = true;
 	Poly2_27 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	Poly4_27 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	Poly6_27 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
@@ -840,7 +840,7 @@ void surface_polynomial_domains::clebsch_cubics(int verbose_level)
 
 	if (!f_has_large_polynomial_domains) {
 		cout << "surface_polynomial_domains::clebsch_cubics f_has_large_"
-				"polynomial_domains is FALSE" << endl;
+				"polynomial_domains is false" << endl;
 		exit(1);
 	}
 	int Monomial[27];
@@ -1086,7 +1086,7 @@ void surface_polynomial_domains::multiply_222_27_and_add(
 
 	if (!f_has_large_polynomial_domains) {
 		cout << "surface_polynomial_domains::multiply_222_27_and_add "
-				"f_has_large_polynomial_domains is FALSE" << endl;
+				"f_has_large_polynomial_domains is false" << endl;
 		exit(1);
 	}
 	//int_vec_zero(MM, nb_monomials6);
@@ -1143,7 +1143,7 @@ void surface_polynomial_domains::minor22(
 
 	if (!f_has_large_polynomial_domains) {
 		cout << "surface_polynomial_domains::minor22 "
-				"f_has_large_polynomial_domains is FALSE" << endl;
+				"f_has_large_polynomial_domains is false" << endl;
 		exit(1);
 	}
 	Int_vec_zero(Ad, nb_monomials4);
@@ -1217,7 +1217,7 @@ void surface_polynomial_domains::multiply42_and_add(
 
 	if (!f_has_large_polynomial_domains) {
 		cout << "surface_polynomial_domains::multiply42_and_add "
-				"f_has_large_polynomial_domains is FALSE" << endl;
+				"f_has_large_polynomial_domains is false" << endl;
 		exit(1);
 	}
 	for (i = 0; i < nb_monomials4; i++) {
@@ -1419,7 +1419,7 @@ long int surface_polynomial_domains::compute_tangent_plane(
 			cout << "surface_polynomial_domains::compute_tangent_plane "
 					"gradient i=" << i << " / " << nb_eqns << endl;
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "surface_polynomial_domains::compute_tangent_plane "
 					"gradient " << i << " = ";
 			Int_vec_print(cout,
@@ -1463,7 +1463,7 @@ void surface_polynomial_domains::print_clebsch_P(
 
 	if (!f_has_large_polynomial_domains) {
 		cout << "surface_polynomial_domains::print_clebsch_P "
-				"f_has_large_polynomial_domains is FALSE" << endl;
+				"f_has_large_polynomial_domains is false" << endl;
 		//exit(1);
 		return;
 	}
@@ -1494,7 +1494,7 @@ void surface_polynomial_domains::print_clebsch_P(
 	for (h = 0; h < 4; h++) {
 		ost << "x_" << h << " &= C_" << h
 				<< "(y_0,y_1,y_2)=\\\\" << endl;
-		f_first = TRUE;
+		f_first = true;
 		for (i = 0; i < Poly3->get_nb_monomials(); i++) {
 
 			if (Poly3_24->is_zero(CC[h * Poly3->get_nb_monomials() + i])) {
@@ -1503,7 +1503,7 @@ void surface_polynomial_domains::print_clebsch_P(
 			ost << "&";
 
 			if (f_first) {
-				f_first = FALSE;
+				f_first = false;
 			}
 			else {
 				ost << "+";
@@ -1530,7 +1530,7 @@ void surface_polynomial_domains::print_clebsch_P_matrix_only(
 
 	if (!f_has_large_polynomial_domains) {
 		cout << "surface_polynomial_domains::print_clebsch_P_matrix_only "
-				"f_has_large_polynomial_domains is FALSE" << endl;
+				"f_has_large_polynomial_domains is false" << endl;
 		exit(1);
 	}
 	ost << "\\left[" << endl;
@@ -1556,7 +1556,7 @@ void surface_polynomial_domains::print_clebsch_cubics(
 
 	if (!f_has_large_polynomial_domains) {
 		cout << "surface_polynomial_domains::print_clebsch_cubics "
-				"f_has_large_polynomial_domains is FALSE" << endl;
+				"f_has_large_polynomial_domains is false" << endl;
 		exit(1);
 	}
 	ost << "The Clebsch coefficients are:" << endl;

@@ -158,7 +158,7 @@ void classify_five_plus_one::init(
 	A_on_neighbors = A2->Induced_action->create_induced_action_by_restriction(
 		NULL,
 		Linear_complex->nb_neighbors, Linear_complex->Neighbors, label_of_set,
-		FALSE /* f_induce_action */,
+		false /* f_induce_action */,
 		0 /* verbose_level */);
 
 	if (f_v) {
@@ -183,7 +183,7 @@ void classify_five_plus_one::init(
 				this /* void *data */,
 				verbose_level);
 
-	Control->f_depth = TRUE;
+	Control->f_depth = true;
 	Control->depth = 5;
 
 
@@ -214,8 +214,8 @@ void classify_five_plus_one::classify_partial_ovoids(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = 10000;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
+	int f_use_invariant_subset_if_available = true;
+	int f_debug = false;
 	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
@@ -299,7 +299,7 @@ void classify_five_plus_one::partial_ovoid_test_early(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	int i, j;
 	int u[6];
 	int v[6];
@@ -350,13 +350,13 @@ void classify_five_plus_one::partial_ovoid_test_early(
 			AW->unrank_point(u, Linear_complex->Neighbors[candidates[j]]);
 			Surf->wedge_to_klein(u, v);
 
-			f_OK = TRUE;
+			f_OK = true;
 			for (i = 0; i < len; i++) {
 				fxy = Surf->O->Quadratic_form->evaluate_bilinear_form(
 						Pts_for_partial_ovoid_test + i * 6, v, 1);
 
 				if (fxy == 0) {
-					f_OK = FALSE;
+					f_OK = false;
 					break;
 				}
 			}

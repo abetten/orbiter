@@ -134,7 +134,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 
 
 	data_structures::tally C;
-	C.init(Intersections, 15 * 15, FALSE, 0);
+	C.init(Intersections, 15 * 15, false, 0);
 	C.get_data_by_multiplicity(B_pts, nb_B_pts,
 		multiplicity, 0 /* verbose_level */);
 
@@ -184,7 +184,7 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 			int *Labels;
 			int nb_labels;
 
-			C2.init(H, 12, FALSE, 0);
+			C2.init(H, 12, false, 0);
 			C2.get_data_by_multiplicity(
 				Labels, nb_labels,
 				4 /*multiplicity*/,
@@ -427,7 +427,7 @@ void eckardt_point_info::print_bisecants(std::ostream &ost, int verbose_level)
 void eckardt_point_info::print_intersections(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::latex_interface L;
+	l1_interfaces::latex_interface L;
 	int labels[15];
 	int fst[1];
 	int len[1];
@@ -450,7 +450,7 @@ void eckardt_point_info::print_intersections(std::ostream &ost, int verbose_leve
 		fst, len, 1,
 		fst, len, 1,
 		intersection_matrix_entry_print, (void *) this,
-		TRUE /* f_tex */);
+		true /* f_tex */);
 	ost << "$$}" << endl;
 	if (f_v) {
 		cout << "eckardt_point_info::print_intersections done" << endl;

@@ -21,21 +21,21 @@ namespace combinatorics {
 
 classification_of_objects_report_options::classification_of_objects_report_options()
 {
-	f_prefix = FALSE;
+	f_prefix = false;
 	//std::string prefix;
 
-	f_export_flag_orbits = FALSE;
+	f_export_flag_orbits = false;
 
-	f_show_incidence_matrices = FALSE;
+	f_show_incidence_matrices = false;
 
-	f_show_TDO = FALSE;
+	f_show_TDO = false;
 
-	f_show_TDA = FALSE;
+	f_show_TDA = false;
 
-	f_export_group_orbiter = FALSE;
-	f_export_group_GAP = FALSE;
+	f_export_group_orbiter = false;
+	f_export_group_GAP = false;
 
-	f_lex_least = FALSE;
+	f_lex_least = false;
 	//std::string lex_least_geometry_builder;
 
 }
@@ -58,57 +58,57 @@ int classification_of_objects_report_options::read_arguments(
 		cout << "classification_of_objects_report_options::read_arguments, next argument is " << argv[i] << endl;
 
 		if (ST.stringcmp(argv[i], "-prefix") == 0) {
-			f_prefix = TRUE;
+			f_prefix = true;
 			prefix.assign(argv[++i]);
 			cout << "-prefix " << prefix << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-export_flag_orbits") == 0) {
-			f_export_flag_orbits = TRUE;
+			f_export_flag_orbits = true;
 			cout << "-export_flag_orbits" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-dont_export_flag_orbits") == 0) {
-			f_export_flag_orbits = FALSE;
+			f_export_flag_orbits = false;
 			cout << "-export_flag_orbits" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-show_incidence_matrices") == 0) {
-			f_show_incidence_matrices = TRUE;
+			f_show_incidence_matrices = true;
 			cout << "-show_incidence_matrices" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-dont_show_incidence_matrices") == 0) {
-			f_show_incidence_matrices = FALSE;
+			f_show_incidence_matrices = false;
 			cout << "-dont_show_incidence_matrices" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-show_TDA") == 0) {
-			f_show_TDA = TRUE;
+			f_show_TDA = true;
 			cout << "-show_TDA" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-dont_show_TDA") == 0) {
-			f_show_TDA = FALSE;
+			f_show_TDA = false;
 			cout << "-dont_show_TDA" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-show_TDO") == 0) {
-			f_show_TDO = TRUE;
+			f_show_TDO = true;
 			cout << "-show_TDO" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-dont_show_TDO") == 0) {
-			f_show_TDO = FALSE;
+			f_show_TDO = false;
 			cout << "-dont_show_TDO" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-export_group_orbiter") == 0) {
-			f_export_group_orbiter = TRUE;
+			f_export_group_orbiter = true;
 			cout << "-export_group_orbiter" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-export_group_GAP") == 0) {
-			f_export_group_GAP = TRUE;
+			f_export_group_GAP = true;
 			cout << "-export_group_GAP" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-dont_export_group") == 0) {
-			f_export_group_orbiter = FALSE;
-			f_export_group_GAP = FALSE;
+			f_export_group_orbiter = false;
+			f_export_group_GAP = false;
 			cout << "-dont_export_group" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-lex_least") == 0) {
-			f_lex_least = TRUE;
+			f_lex_least = true;
 			lex_least_geometry_builder.assign(argv[++i]);
 			cout << "-lex_least" << lex_least_geometry_builder << endl;
 		}

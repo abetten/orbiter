@@ -327,7 +327,7 @@ public:
 		int &iso_idx_if_found,
 		data_structures::nauty_output *&NO,
 		int verbose_level);
-	// returns f_found, which is TRUE if the object is already in the list
+	// returns f_found, which is true if the object is already in the list
 	void report_summary_of_orbits(
 			std::ostream &fp, int verbose_level);
 	void report_all_isomorphism_types(
@@ -374,7 +374,7 @@ public:
 	int partition_next(int *v, int n);
 	void partition_print(std::ostream &ost, int *v, int n);
 	int int_vec_is_regular_word(int *v, int len, int q);
-		// Returns TRUE if the word v of length len is regular, i.~e.
+		// Returns true if the word v of length len is regular, i.~e.
 		// lies in an orbit of length $len$ under the action of the cyclic group
 		// $C_{len}$ acting on the coordinates.
 		// Lueneburg~\cite{Lueneburg87a} p. 118.
@@ -1215,7 +1215,7 @@ class tdo_refinement {
 		int *point_types, int nb_point_types, int point_type_len,
 		int *distributions, int nb_distributions,
 		int verbose_level);
-		// returns TRUE or FALSE depending on whether the
+		// returns true or false depending on whether the
 		// refinement gave a tactical decomposition
 	int do_column_refinement(
 			int t, std::string &label_in,
@@ -1224,7 +1224,7 @@ class tdo_refinement {
 		int *line_types, int nb_line_types, int line_type_len,
 		int *distributions, int nb_distributions,
 		int verbose_level);
-		// returns TRUE or FALSE depending on whether the
+		// returns true or false depending on whether the
 		// refinement gave a tactical decomposition
 };
 

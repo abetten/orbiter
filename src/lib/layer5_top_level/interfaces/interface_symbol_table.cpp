@@ -26,15 +26,15 @@ interface_symbol_table::interface_symbol_table()
 
 	Orbiter_top_level_session = NULL;
 
-	f_define = FALSE;
+	f_define = false;
 	Symbol_definition = NULL;
 
-	f_print_symbols = FALSE;
+	f_print_symbols = false;
 
-	f_with = FALSE;
+	f_with = false;
 	//std::vector<std::string> with_labels;
 
-	f_activity = FALSE;
+	f_activity = false;
 	Activity_description = NULL;
 
 }
@@ -110,7 +110,7 @@ void interface_symbol_table::read_arguments(
 
 	if (ST.stringcmp(argv[i], "-define") == 0) {
 
-		f_define = TRUE;
+		f_define = true;
 		Symbol_definition = NEW_OBJECT(symbol_definition);
 
 
@@ -138,7 +138,7 @@ void interface_symbol_table::read_arguments(
 	}
 
 	else if (ST.stringcmp(argv[i], "-print_symbols") == 0) {
-		f_print_symbols = TRUE;
+		f_print_symbols = true;
 		if (f_v) {
 			cout << "-print_symbols" << endl;
 		}
@@ -169,14 +169,14 @@ void interface_symbol_table::read_with(
 		cout << "interface_symbol_table::read_with" << endl;
 	}
 
-	f_with = TRUE;
+	f_with = true;
 	string s;
 	data_structures::string_tools ST;
 
 	s.assign(argv[++i]);
 	with_labels.push_back(s);
 
-	while (TRUE) {
+	while (true) {
 		i++;
 		if (ST.stringcmp(argv[i], "-and") == 0) {
 			string s;
@@ -187,7 +187,7 @@ void interface_symbol_table::read_with(
 		else if (ST.stringcmp(argv[i], "-do") == 0) {
 			i++;
 
-			f_activity = TRUE;
+			f_activity = true;
 			Activity_description = NEW_OBJECT(activity_description);
 
 			Activity_description->read_arguments(this, argc, argv, i, verbose_level);

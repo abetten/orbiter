@@ -350,7 +350,7 @@ void orbiter_symbol_table_entry::init_collection(
 	std::vector<std::string> *the_list;
 	the_list = new std::vector<std::string>;
 
-	while (TRUE) {
+	while (true) {
 		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
 		}

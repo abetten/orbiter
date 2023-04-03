@@ -24,7 +24,7 @@ int point_line::is_desarguesian_plane(int verbose_level)
 	int *pts_on_line;
 	int u, v, o, e = 0, loe, p0, a, i, y1, y2;
 	int slope, b, x, f_slope, f_b, f_x;
-	int f_found_quadrangle = FALSE;
+	int f_found_quadrangle = false;
 	int aa;
 	number_theory::number_theory_domain NT;
 	
@@ -69,7 +69,7 @@ int point_line::is_desarguesian_plane(int verbose_level)
 			if (p0 == e)
 				continue;
 			// now: (o,e,u,v) is a quadrangle with u and v both on line
-			f_found_quadrangle = TRUE;
+			f_found_quadrangle = true;
 			break;
 			}
 		if (f_found_quadrangle)
@@ -96,7 +96,7 @@ int point_line::is_desarguesian_plane(int verbose_level)
 		}
 	if (NT.i_power_j(plane_prime, plane_exponent) != plane_order) {
 		cout << "plane order not a power of a prime." << endl;
-		return FALSE;
+		return false;
 		}
 	if (plane_exponent > 1) {
 		if (f_v) {
@@ -149,7 +149,7 @@ int point_line::is_desarguesian_plane(int verbose_level)
 							cout << "y2 = " << y2 << endl;
 							cout << "a = " << a << endl;
 							}
-						return FALSE;
+						return false;
 						}
 					}
 				}
@@ -158,7 +158,7 @@ int point_line::is_desarguesian_plane(int verbose_level)
 	if (f_v) {
 		cout << "the plane is desarguesian" << endl;
 		}	
-	return TRUE;
+	return true;
 }
 
 int point_line::identify_field_not_of_prime_order(int verbose_level)
@@ -191,7 +191,7 @@ int point_line::identify_field_not_of_prime_order(int verbose_level)
 	int nb_row_parts = 3;
 	int nb_col_parts = 3;
 	finite_field F;
-	int ret = TRUE;
+	int ret = true;
 	
 	d = plane_order;
 	d2 = d * d;
@@ -253,23 +253,23 @@ int point_line::identify_field_not_of_prime_order(int verbose_level)
 	
 #if 0
 	compute_canonical_labeling_of_01matrix(M1, m, n, 
-		TRUE, row_parts, nb_row_parts, col_parts, nb_col_parts, 
+		true, row_parts, nb_row_parts, col_parts, nb_col_parts, 
 		canonical_form1, canonical_form_inv1, 
 		Aut_gens1, 
-		FALSE, FALSE, FALSE, FALSE);
+		false, false, false, false);
 #endif
 
 	Aut_gens1.compute_group_order(ago1);
 	if (ago1.as_int() != plane_exponent) {
 		cout << "the planar ternanry ring does not have the right number of automorphisms, not desarguesian" << endl;
-		ret = FALSE;
+		ret = false;
 		goto finish;
 		}
 
 	if (f_v) {
 		cout << "setting up the field of order " << plane_order << endl;
 		}
-	F.init(plane_order, FALSE, FALSE);
+	F.init(plane_order, false, false);
 	nb_inc = 0;
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -310,10 +310,10 @@ int point_line::identify_field_not_of_prime_order(int verbose_level)
 		}
 #if 0
 	compute_canonical_labeling_of_01matrix(M2, m, n, 
-		TRUE, row_parts, nb_row_parts, col_parts, nb_col_parts, 
+		true, row_parts, nb_row_parts, col_parts, nb_col_parts, 
 		canonical_form2, canonical_form_inv2, 
 		Aut_gens2, 
-		FALSE, FALSE, FALSE, FALSE);
+		false, false, false, false);
 #endif
 	Aut_gens2.compute_group_order(ago2);
 	if (ago2.as_int() != plane_exponent) {
@@ -364,7 +364,7 @@ int point_line::identify_field_not_of_prime_order(int verbose_level)
 		}
 	// at this point, the fields are really isomorphic!!!
 	
-	ret = TRUE;
+	ret = true;
 finish:
 	FREE_int(M1);
 	FREE_int(canonical_form1);
@@ -384,7 +384,7 @@ void point_line::init_projective_plane(int order, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
 	
-	f_plane_data_computed = FALSE;
+	f_plane_data_computed = false;
 	if (f_v) {
 		cout << "computing data for a projective plane of order "
 				<< order << " with " << m << " points" << endl;
@@ -440,7 +440,7 @@ void point_line::init_projective_plane(int order, int verbose_level)
 	if (f_v) {
 		cout << "finished" << endl;
 	}
-	f_plane_data_computed = TRUE;
+	f_plane_data_computed = true;
 }
 
 void point_line::free_projective_plane()
@@ -460,7 +460,7 @@ void point_line::free_projective_plane()
 		FREE_int(MOLS);
 		FREE_int(field_element);
 		FREE_int(field_element_inv);
-		f_plane_data_computed = FALSE;
+		f_plane_data_computed = false;
 	}
 }
 
@@ -615,9 +615,9 @@ int point_line::plane_points_collinear(int pt1, int pt2, int pt3)
 	int line;
 	line = plane_line_through_two_points(pt1, pt2);
 	if (a[pt3 * n + line])
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int point_line::plane_lines_concurrent(int line1, int line2, int line3)
@@ -625,9 +625,9 @@ int point_line::plane_lines_concurrent(int line1, int line2, int line3)
 	int pt;
 	pt = plane_line_intersection(line1, line2);
 	if (a[pt * n + line3])
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 
 int point_line::plane_first_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4)
@@ -649,7 +649,7 @@ int point_line::plane_first_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4)
 		pt2 = pts[1];
 		pt3 = pts[2];
 		pt4 = pts[3];
-		return TRUE;
+		return true;
 		}
 }
 
@@ -663,14 +663,14 @@ int point_line::plane_next_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4)
 	pts[2] = pt3;
 	pts[3] = pt4;
 	if (!plane_quadrangle_next_i(pts, 0)) {
-		return FALSE;
+		return false;
 		}
 	else {
 		pt1 = pts[0];
 		pt2 = pts[1];
 		pt3 = pts[2];
 		pt4 = pts[3];
-		return TRUE;
+		return true;
 		}
 }
 
@@ -697,15 +697,15 @@ int point_line::plane_quadrangle_first_i(int *pt, int i)
 			}
 			
 		if (i == 3)
-			return TRUE;
+			return true;
 		else {
 			if (!plane_quadrangle_first_i(pt, i + 1))
 				continue;
 			else
-				return TRUE;
+				return true;
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 int point_line::plane_quadrangle_next_i(int *pt, int i)
@@ -714,7 +714,7 @@ int point_line::plane_quadrangle_next_i(int *pt, int i)
 	
 	if (i < 3) {
 		if (plane_quadrangle_next_i(pt, i + 1))
-			return TRUE;
+			return true;
 		}
 	while (pt[i] < v) {
 		pt[i]++;
@@ -731,15 +731,15 @@ int point_line::plane_quadrangle_next_i(int *pt, int i)
 				continue;
 			}
 		if (i == 3)
-			return TRUE;
+			return true;
 		else {
 			if (!plane_quadrangle_first_i(pt, i + 1))
 				continue;
 			else
-				return TRUE;
+				return true;
 			}
 		}
-	return FALSE;
+	return false;
 }
 
 void point_line::coordinatize_plane(
@@ -985,12 +985,12 @@ int point_line::ternary_field_is_linear(int *MOLS, int verbose_level)
 						cout << "mx=" << mx << endl;
 						cout << "y2=" << y2 << endl;
 						}
-					return FALSE;
+					return false;
 					}
 				}
 			}
 		}
-	return TRUE;
+	return true;
 }
 
 void point_line::print_MOLS(std::ostream &ost)
@@ -1047,14 +1047,14 @@ int point_line::is_projective_plane(
 			cout << "not a projective plane: "
 					"partition has more than two parts" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 	if (P.cellSize[0] != P.cellSize[1]) {
 		if (f_vv) {
 			cout << "not a projective plane: "
 					"partition classes have different sizes" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 	v = P.cellSize[0];
 	r = count_RC(P, 0, 1);
@@ -1063,7 +1063,7 @@ int point_line::is_projective_plane(
 			cout << "not a projective plane: "
 					"r not constant" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 	k = count_CR(P, 1, 0);
 	if (k == -1) {
@@ -1071,7 +1071,7 @@ int point_line::is_projective_plane(
 			cout << "not a projective plane: "
 					"k not constant" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 	if (f_vv) {
 		cout << "r = " << r << endl;
@@ -1081,13 +1081,13 @@ int point_line::is_projective_plane(
 		if (f_vv) {
 			cout << "not a projective plane: r != k" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 	if (r < 3) {
 		if (f_vv) {
 			cout << "not a projective plane: r < 3" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 	n = r - 1;
 	if (v != n * n + n + 1) {
@@ -1095,7 +1095,7 @@ int point_line::is_projective_plane(
 			cout << "not a projective plane: "
 					"v != n^2 + n + 1" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 	lambda = count_pairs_RRC(P, 0, 0, 1);
 	if (lambda != 1) {
@@ -1103,7 +1103,7 @@ int point_line::is_projective_plane(
 			cout << "not a projective plane: "
 					"rows are not joined correctly" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 	mu = count_pairs_CCR(P, 1, 1, 0);
 	if (mu != 1) {
@@ -1111,7 +1111,7 @@ int point_line::is_projective_plane(
 			cout << "not a projective plane: "
 					"cols are not joined correctly" << endl;
 			}
-		return FALSE;
+		return false;
 		}
 	if (f_vv) {
 		cout << "lambda = " << lambda << endl;
@@ -1121,7 +1121,7 @@ int point_line::is_projective_plane(
 		cout << "detected a projective plane of order " << n << endl;
 		}
 	order = n;
-	return TRUE;
+	return true;
 }
 
 int point_line::count_RC(

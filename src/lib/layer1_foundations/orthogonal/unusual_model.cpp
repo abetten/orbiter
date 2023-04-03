@@ -49,7 +49,7 @@ void unusual_model::setup_sum_of_squares(int q,
 		std::string &poly_q, std::string &poly_Q,
 		int verbose_level)
 {
-	setup2(q, poly_q, poly_Q, TRUE, verbose_level);
+	setup2(q, poly_q, poly_Q, true, verbose_level);
 }
 #endif
 
@@ -58,7 +58,7 @@ void unusual_model::setup(
 		field_theory::finite_field *Fq,
 		int verbose_level)
 {
-	setup2(FQ, Fq, FALSE, verbose_level);
+	setup2(FQ, Fq, false, verbose_level);
 }
 
 void unusual_model::setup2(
@@ -549,7 +549,7 @@ void unusual_model::create_Fisher_BLT_set(
 			FQ->mult(beta, FQ->mult(norm_one_table[i], norm_one_table[i]));
 		ABC[(nb_norm_one + i) * 3 + 2] = 1;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "Table:" << endl;
 		Int_vec_print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
 	}
@@ -602,7 +602,7 @@ void unusual_model::create_Linear_BLT_set(
 		ABC[i * 3 + 1] = 0;
 		ABC[i * 3 + 2] = 1;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "ABC:" << endl;
 		Int_vec_print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
 	}
@@ -688,7 +688,7 @@ void unusual_model::create_Mondello_BLT_set(
 		ABC[i * 3 + 1] = FQ->mult(gamma, FQ->power(norm_one_table[i], 3));
 		ABC[i * 3 + 2] = 1;
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "ABC:" << endl;
 		Int_vec_print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
 	}
@@ -844,7 +844,7 @@ int unusual_model::build_candidate_set(
 	
 	return build_candidate_set_with_or_without_test(
 		O, q, gamma, delta, offset,
-		m, Set, f_second_half, TRUE, verbose_level);
+		m, Set, f_second_half, true, verbose_level);
 }
 
 int unusual_model::build_candidate_set_with_offset(
@@ -855,7 +855,7 @@ int unusual_model::build_candidate_set_with_offset(
 {
 	return build_candidate_set_with_or_without_test(
 		O, q, gamma, delta, offset,
-		m, Set, f_second_half, TRUE, verbose_level);
+		m, Set, f_second_half, true, verbose_level);
 }
 
 int unusual_model::build_candidate_set_with_or_without_test(
@@ -901,7 +901,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 				cout << "BLT test fails in point " << i
 					<< " in 1st half" << endl;
 				FREE_int(Table);
-				return FALSE;
+				return false;
 			}
 		}
 		if (f_vv) {
@@ -929,7 +929,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 					cout << "BLT test fails in point " << i
 						<< " in 2nd half" << endl;
 					FREE_int(Table);
-					return FALSE;
+					return false;
 				}
 			}
 			if (f_vv) {
@@ -937,7 +937,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 			}
 		}
 	}
-	if (FALSE) {
+	if (false) {
 		cout << "Table:" << endl;
 		Int_vec_print_integer_matrix_width(cout, Table, Len, 3, 3, 2);
 	}
@@ -956,7 +956,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 		if (Set[i] == Set[i + 1]) {
 			cout << "the set contains repeats" << endl;
 			FREE_int(Table);
-			return FALSE;
+			return false;
 		}
 	}
 #endif
@@ -969,7 +969,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 						<< " in the joining" << endl;
 					}
 				FREE_int(Table);
-				return FALSE;
+				return false;
 			}
 		}
 		if (f_v) {
@@ -978,10 +978,10 @@ int unusual_model::build_candidate_set_with_or_without_test(
 	}
 	if (Len < q + 1) {
 		FREE_int(Table);
-		return FALSE;
+		return false;
 	}
 	FREE_int(Table);
-	return TRUE;
+	return true;
 }
 
 int unusual_model::create_orbit_of_psi(
@@ -1022,7 +1022,7 @@ int unusual_model::create_orbit_of_psi(
 				cout << "BLT test fails in point " << i
 					<< " in create_orbit_of_psi" << endl;
 				FREE_int(Table);
-				return FALSE;
+				return false;
 			}
 		}
 		if (f_vv) {
@@ -1031,7 +1031,7 @@ int unusual_model::create_orbit_of_psi(
 	}
 
 	FREE_int(Table);
-	return TRUE;
+	return true;
 }
 
 void unusual_model::transform_matrix_unusual_to_usual(
@@ -1207,7 +1207,7 @@ void unusual_model::parse_4by4_matrix(
 			y = M4[i * 8 + j * 2 + 1];
 			if (x == 0 && y == 0) {
 				image1 = 0;
-				f_semi = FALSE;
+				f_semi = false;
 			}
 			else {
 				image1 = Quadratic_form_list_coding->SubS->pair_embedding_2D[x * q + y];
@@ -1217,7 +1217,7 @@ void unusual_model::parse_4by4_matrix(
 				u = FQ->inverse(image1);
 				v = FQ->mult(image2, u);
 				if (v == q) {
-					f_semi = FALSE;
+					f_semi = false;
 				}
 				else {
 					if (v != FQ->power(q, q)) {
@@ -1225,7 +1225,7 @@ void unusual_model::parse_4by4_matrix(
 								"v != FQ->power(q, q)" << endl;
 						exit(1);
 					}
-					f_semi = TRUE;
+					f_semi = true;
 				}
 			}
 			if (i == 0 && j == 0) {
@@ -1257,7 +1257,7 @@ void unusual_model::create_4by4_matrix(
 {
 	int i, j, f_phi, coeff = 0, image1, image2;
 	
-	f_phi = FALSE;
+	f_phi = false;
 	for (i = 0; i < 2; i++) {
 		for (j = 0; j < 2; j++) {
 			if (i == 0 && j == 0) {

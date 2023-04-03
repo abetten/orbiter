@@ -258,14 +258,14 @@ void graph_theory_domain::save_colored_graph(
 		fp.write((char*) &nb_colors, sizeof(int));
 		fp.write((char*) &nb_colors_per_vertex, sizeof(int));
 		fp.write((char*) &data_sz, sizeof(int));
-		if (FALSE) {
+		if (false) {
 			cout << "save_colored_graph before writing data" << endl;
 		}
 		for (i = 0; i < data_sz; i++) {
 			fp.write((char*) &data[i], sizeof(long int));
 		}
 		for (i = 0; i < nb_vertices; i++) {
-			if (FALSE) {
+			if (false) {
 				cout << "save_colored_graph before writing vertex " << i << " / " << nb_vertices << endl;
 			}
 			if (points) {
@@ -279,12 +279,12 @@ void graph_theory_domain::save_colored_graph(
 				fp.write((char*) &point_color[i * nb_colors_per_vertex + j], sizeof(int));
 			}
 		}
-		if (FALSE) {
+		if (false) {
 			cout << "save_colored_graph before writing bitvec" << endl;
 		}
 		//Bitvec->save(fp);
 		fp.write((char*) Bitvec->get_data(), Bitvec->get_allocated_length());
-		if (FALSE) {
+		if (false) {
 			cout << "save_colored_graph after writing bitvec" << endl;
 		}
 	}
@@ -497,7 +497,7 @@ int graph_theory_domain::is_association_scheme(
 	int N;
 	int *M1;
 	int k, i, j;
-	int ret = FALSE;
+	int ret = false;
 
 	if (f_v) {
 		cout << "graph_theory_domain::is_association_scheme" << endl;
@@ -518,7 +518,7 @@ int graph_theory_domain::is_association_scheme(
 
 	data_structures::tally Cl;
 
-	Cl.init(M1, N, FALSE, 0);
+	Cl.init(M1, N, false, 0);
 	nb_colors = Cl.nb_types + 1;
 	colors = NEW_int(nb_colors);
 	colors[0] = color_graph[0];
@@ -605,7 +605,7 @@ int graph_theory_domain::is_association_scheme(
 		} // next i
 	} // next k
 
-	ret = TRUE;
+	ret = true;
 
 	if (f_v) {
 		cout << "graph_theory_domain::is_association_scheme "
@@ -741,7 +741,7 @@ void graph_theory_domain::draw_bitmatrix(
 				f_bitmatrix, Bitmatrix, M, m, n,
 				f_has_labels, labels);
 
-		G.finish(cout, TRUE);
+		G.finish(cout, true);
 	}
 	if (f_v) {
 		cout << "graph_theory_domain::draw_bitmatrix done" << endl;
@@ -1438,7 +1438,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 
 		CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 				color, B,
-				FALSE,
+				false,
 				prefix_for_graph, prefix_for_graph,
 				verbose_level);
 
@@ -1509,7 +1509,7 @@ void graph_theory_domain::all_cliques_of_given_size(int *Adj,
 	int i, j, h;
 	clique_finder *C;
 	std::string label;
-	int f_maxdepth = FALSE;
+	int f_maxdepth = false;
 	int maxdepth = 0;
 
 
@@ -1532,7 +1532,7 @@ void graph_theory_domain::all_cliques_of_given_size(int *Adj,
 	Control->target_size = clique_sz;
 	Control->f_maxdepth = f_maxdepth;
 	Control->maxdepth = maxdepth;
-	Control->f_store_solutions = TRUE;
+	Control->f_store_solutions = true;
 
 	C = NEW_OBJECT(clique_finder);
 
@@ -1542,8 +1542,8 @@ void graph_theory_domain::all_cliques_of_given_size(int *Adj,
 	}
 	C->init(Control,
 			label, nb_pts,
-			TRUE, adj_list_coded,
-			FALSE, NULL,
+			true, adj_list_coded,
+			false, NULL,
 			verbose_level);
 
 	C->backtrack_search(0 /* depth */, 0 /* verbose_level */);
@@ -1624,17 +1624,17 @@ void graph_theory_domain::eigenvalues(
 
 		{
 			ofstream ost(fname);
-			orbiter_kernel_system::latex_interface Li;
+			l1_interfaces::latex_interface Li;
 
 			Li.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
+					false /* f_book*/,
+					true /* f_title */,
 					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
 

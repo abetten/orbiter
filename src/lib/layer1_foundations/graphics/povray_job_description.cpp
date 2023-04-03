@@ -22,13 +22,13 @@ namespace graphics {
 
 povray_job_description::povray_job_description()
 {
-	f_output_mask = FALSE;
+	f_output_mask = false;
 	//output_mask;
-	f_nb_frames_default = FALSE;
+	f_nb_frames_default = false;
 	nb_frames_default = 0;
-	f_round = FALSE;
+	f_round = false;
 	round = 0;
-	f_rounds = FALSE;
+	f_rounds = false;
 	//rounds_as_string;
 	Video_draw_options = NULL;
 
@@ -73,7 +73,7 @@ int povray_job_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-round") == 0) {
-			f_round = TRUE;
+			f_round = true;
 			round = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-round " << round << endl;
@@ -81,21 +81,21 @@ int povray_job_description::read_arguments(
 		}
 
 		else if (ST.stringcmp(argv[i], "-rounds") == 0) {
-			f_rounds = TRUE;
+			f_rounds = true;
 			rounds_as_string.assign(argv[++i]);
 			if (f_v) {
 				cout << "-rounds " << rounds_as_string << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-nb_frames_default") == 0) {
-			f_nb_frames_default = TRUE;
+			f_nb_frames_default = true;
 			nb_frames_default = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-nb_frames_default " << nb_frames_default << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-output_mask") == 0) {
-			f_output_mask = TRUE;
+			f_output_mask = true;
 			output_mask.assign(argv[++i]);
 			if (f_v) {
 				cout << "-output_mask " << output_mask << endl;

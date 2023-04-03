@@ -26,7 +26,7 @@ object_with_canonical_form::object_with_canonical_form()
 	type = t_PTS;
 	//input_fname = NULL;
 	input_idx = 0;
-	f_has_known_ago = FALSE;
+	f_has_known_ago = false;
 	known_ago = 0;
 	//set_as_string = NULL;
 
@@ -39,7 +39,7 @@ object_with_canonical_form::object_with_canonical_form()
 	v = 0;
 	b = 0;
 
-	f_partition = FALSE;
+	f_partition = false;
 	partition = NULL;
 
 	design_k = 0;
@@ -635,7 +635,7 @@ void object_with_canonical_form::init_packing_from_spread_table(
 	}
 
 	// test if the object is a packing:
-	SoS->sort_all(FALSE /*verbose_level*/);
+	SoS->sort_all(false /*verbose_level*/);
 	int *M;
 	int j;
 	SoS->pairwise_intersection_matrix(M, 0 /*verbose_level*/);
@@ -948,17 +948,17 @@ void object_with_canonical_form::encoding_size_point_set(
 
 	C = NEW_OBJECT(data_structures::tally);
 
-	C->init_lint(set, sz, TRUE, 0);
+	C->init_lint(set, sz, true, 0);
 	if (C->second_nb_types > 1) {
 		cout << "object_with_canonical_form::encoding_size_point_set "
 				"The set is a multiset:" << endl;
-		C->print(FALSE /*f_backwards*/);
+		C->print(false /*f_backwards*/);
 	}
 
 
 	if (f_v) {
 		cout << "The type of the set is:" << endl;
-		C->print(FALSE /*f_backwards*/);
+		C->print(false /*f_backwards*/);
 		cout << "C->second_nb_types = " << C->second_nb_types << endl;
 	}
 
@@ -1170,7 +1170,7 @@ void object_with_canonical_form::encode_point_set(
 		cout << "object_with_canonical_form::encode_point_set" << endl;
 	}
 	int i, j;
-	int f_vvv = FALSE; // (verbose_level >= 3);
+	int f_vvv = false; // (verbose_level >= 3);
 	
 
 	C = NEW_OBJECT(data_structures::tally);
@@ -1180,17 +1180,17 @@ void object_with_canonical_form::encode_point_set(
 		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
-	C->init_lint(set, sz, TRUE, 0);
+	C->init_lint(set, sz, true, 0);
 	if (C->second_nb_types > 1) {
 		cout << "object_with_canonical_form::encode_point_set "
 				"The set is a multiset:" << endl;
-		C->print(FALSE /*f_backwards*/);
+		C->print(false /*f_backwards*/);
 	}
 
 
 	if (f_v) {
 		cout << "The type of the set is:" << endl;
-		C->print(FALSE /*f_backwards*/);
+		C->print(false /*f_backwards*/);
 		cout << "C->second_nb_types = " << C->second_nb_types << endl;
 	}
 
@@ -1943,7 +1943,7 @@ void object_with_canonical_form::klein(int verbose_level)
 	P5 = NEW_OBJECT(projective_space);
 	
 	P5->init(5, P->F, 
-		FALSE /* f_init_incidence_structure */, 
+		false /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 
 	pts_klein = NEW_lint(sz);
@@ -1981,9 +1981,9 @@ void object_with_canonical_form::klein(int verbose_level)
 
 		tally C;
 
-		C.init(nb_pts_on_plane, nb_planes, FALSE, 0);
+		C.init(nb_pts_on_plane, nb_planes, false, 0);
 		cout << "plane types are: ";
-		C.print(TRUE /* f_backwards*/);
+		C.print(true /* f_backwards*/);
 		cout << endl;
 #if 0
 		for (i = 0; i < nb_planes; i++) {
@@ -2040,7 +2040,7 @@ void object_with_canonical_form::run_nauty(
 	//int L;
 	combinatorics::combinatorics_domain Combi;
 	orbiter_kernel_system::file_io Fio;
-	nauty_interface Nau;
+	l1_interfaces::nauty_interface Nau;
 	combinatorics::encoded_combinatorial_object *Enc;
 
 	if (f_v) {
@@ -2151,7 +2151,7 @@ void object_with_canonical_form::canonical_labeling(
 	int f_vv = (verbose_level >= 2);
 
 	combinatorics::encoded_combinatorial_object *Enc;
-	nauty_interface Nau;
+	l1_interfaces::nauty_interface Nau;
 
 
 	if (f_v) {
@@ -2258,7 +2258,7 @@ void object_with_canonical_form::run_nauty_basic(
 				"before OwCF->run_nauty" << endl;
 	}
 	run_nauty(
-			FALSE /* f_compute_canonical_form */, Canonical_form,
+			false /* f_compute_canonical_form */, Canonical_form,
 			NO,
 			verbose_level);
 	if (f_v) {

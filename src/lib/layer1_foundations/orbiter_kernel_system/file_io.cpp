@@ -69,7 +69,7 @@ void file_io::concatenate_files(
 				ifstream fp(fname);
 
 				cnt = 0;
-				while (TRUE) {
+				while (true) {
 					if (fp.eof()) {
 						cout << "Encountered End-of-file without having seem EOF "
 								"marker, perhaps the file is corrupt. "
@@ -150,7 +150,7 @@ void file_io::concatenate_files_into(
 				ifstream fp(fname);
 
 				cnt = 0;
-				while (TRUE) {
+				while (true) {
 					if (fp.eof()) {
 						cout << "Encountered End-of-file without having seem EOF "
 								"marker, perhaps the file is corrupt. "
@@ -385,7 +385,7 @@ int file_io::find_orbit_index_in_data_file(
 
 	orbit_idx = 0;
 
-	while (TRUE) {
+	while (true) {
 		if (f.eof()) {
 			break;
 		}
@@ -627,7 +627,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 		int line_number = 1;
 
 
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
 						"eof, break" << endl;
@@ -708,7 +708,7 @@ void file_io::count_number_of_solutions_in_file(
 		ifstream fp(fname);
 
 
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				cout << "count_number_of_solutions_in_file "
 						"eof, break" << endl;
@@ -778,7 +778,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 
 		//nb_sol = 0;
 		the_case = -1;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				cout << "count_number_of_solutions_in_file_by_case "
 						"eof, break" << endl;
@@ -1090,7 +1090,7 @@ void file_io::read_solutions_from_file_by_case(
 		//nb_sol = 0;
 		nb_case1 = 0;
 		the_case = -1;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}
@@ -1166,7 +1166,7 @@ void file_io::copy_file_to_ostream(
 		ifstream fp(fname);
 
 #if 0
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 				}
@@ -1181,7 +1181,7 @@ void file_io::copy_file_to_ostream(
 			ost << buf << endl;
 			}
 #endif
-		while (TRUE) {
+		while (true) {
 			char c;
 			fp.get(c);
 			if (fp.eof()) {
@@ -2266,7 +2266,7 @@ int file_io::count_number_of_orbits_in_file(
 
 
 		nb_sol = 0;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}
@@ -2296,7 +2296,7 @@ int file_io::count_number_of_orbits_in_file(
 				break;
 			}
 			else {
-				if (FALSE) {
+				if (false) {
 					cout << "count_number_of_orbits_in_file "
 							"found a set of size " << len << endl;
 				}
@@ -2339,7 +2339,7 @@ int file_io::count_number_of_lines_in_file(
 
 
 		nb_lines = 0;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}
@@ -2395,7 +2395,7 @@ int file_io::try_to_read_file(std::string &fname,
 #endif
 
 		nb_sol = 0;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}
@@ -2442,7 +2442,7 @@ int file_io::try_to_read_file(std::string &fname,
 #endif
 
 		nb_sol = 0;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}
@@ -2478,11 +2478,11 @@ int file_io::try_to_read_file(std::string &fname,
 	}
 
 	FREE_char(buf);
-	return TRUE;
+	return true;
 
 return_false:
 	FREE_char(buf);
-	return FALSE;
+	return false;
 }
 
 void file_io::read_and_parse_data_file(
@@ -2530,7 +2530,7 @@ void file_io::read_and_parse_data_file(
 	int *Casenumbers;
 	int i;
 
-	parse_sets(nb_cases, data, FALSE /*f_casenumbers */,
+	parse_sets(nb_cases, data, false /*f_casenumbers */,
 		set_sizes, sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
 		0/*verbose_level - 2*/);
@@ -2562,7 +2562,7 @@ void file_io::parse_sets_and_check_sizes_easy(
 	int *set_sizes;
 	int i;
 
-	parse_sets(nb_cases, data, FALSE /*f_casenumbers */,
+	parse_sets(nb_cases, data, false /*f_casenumbers */,
 		set_sizes, sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
 		0/*verbose_level - 2*/);
@@ -3182,7 +3182,7 @@ void file_io::read_incidence_matrix_from_inc_file(
 		}
 		X = NEW_int(nb_inc);
 		cnt = 0;
-		while (TRUE) {
+		while (true) {
 			if (f.eof()) {
 				break;
 			}
@@ -3293,7 +3293,7 @@ void file_io::read_incidence_file(
 		}
 		X = NEW_int(nb_flags);
 		cnt = 0;
-		while (TRUE) {
+		while (true) {
 			if (f.eof()) {
 				break;
 			}
@@ -3396,7 +3396,7 @@ void file_io::read_incidence_by_row_ranks_file(
 
 		Row = NEW_int(m);
 		cnt = 0;
-		while (TRUE) {
+		while (true) {
 			if (f.eof()) {
 				break;
 			}
@@ -3496,7 +3496,7 @@ int file_io::inc_file_get_number_of_geometries(
 		}
 		X = NEW_int(nb_inc);
 		cnt = 0;
-		while (TRUE) {
+		while (true) {
 			if (f.eof()) {
 				break;
 			}
@@ -3641,7 +3641,7 @@ void file_io::read_numbers_from_file(
 	set_size = 1000;
 	the_set = NEW_int(set_size);
 
-	for (i = 0; TRUE; i++) {
+	for (i = 0; true; i++) {
 		if (f.eof()) {
 			break;
 		}
@@ -3704,7 +3704,7 @@ void file_io::read_ascii_set_of_sets_constant_size(
 
 
 		nb_sets = 0;
-		while (TRUE) {
+		while (true) {
 			fp >> nb;
 			if (nb == -1) {
 				break;
@@ -3910,17 +3910,17 @@ void file_io::create_file(
 
 		cout << "Read spreadsheet with " << S->nb_rows << " rows" << endl;
 
-		//S->print_table(cout, FALSE /* f_enclose_in_parentheses */);
+		//S->print_table(cout, false /* f_enclose_in_parentheses */);
 		for (row = 0; row < MINIMUM(10, S->nb_rows); row++) {
 			cout << "row " << row << " : ";
 			S->print_table_row(row,
-					FALSE /* f_enclose_in_parentheses */, cout);
+					false /* f_enclose_in_parentheses */, cout);
 		}
 		cout << "..." << endl;
 		for (row = MAXIMUM(S->nb_rows - 10, 0); row < S->nb_rows; row++) {
 			cout << "row " << row << " : ";
 			S->print_table_row(row,
-					FALSE /* f_enclose_in_parentheses */, cout);
+					false /* f_enclose_in_parentheses */, cout);
 		}
 
 
@@ -4268,10 +4268,10 @@ void file_io::do_csv_file_select_rows(
 	{
 		ofstream ost(fname_out);
 		//ost << "Row,";
-		S.print_table_row(0, FALSE, ost);
+		S.print_table_row(0, false, ost);
 		for (i = 0; i < nb_rows; i++) {
 			//ost << i << ",";
-			S.print_table_row(Rows[i] + 1, FALSE, ost);
+			S.print_table_row(Rows[i] + 1, false, ost);
 			}
 		ost << "END" << endl;
 	}
@@ -4319,13 +4319,13 @@ void file_io::do_csv_file_split_rows_modulo(
 
 		{
 			ofstream ost(fname_out);
-			S.print_table_row(0, FALSE, ost);
+			S.print_table_row(0, false, ost);
 			for (i = 0; i < S.nb_rows - 1; i++) {
 				if ((i % split_modulo) != I) {
 					continue;
 				}
 				//ost << i << ",";
-				S.print_table_row(i + 1, FALSE, ost);
+				S.print_table_row(i + 1, false, ost);
 				}
 			ost << "END" << endl;
 		}
@@ -4379,10 +4379,10 @@ void file_io::do_csv_file_select_cols(
 		ofstream ost(fname_out);
 		ost << "Row,";
 		S.print_table_row_with_column_selection(
-				0, FALSE, Cols, nb_cols, ost, verbose_level);
+				0, false, Cols, nb_cols, ost, verbose_level);
 		for (i = 0; i < nb_rows - 1; i++) {
 			ost << i << ",";
-			S.print_table_row_with_column_selection(i + 1, FALSE,
+			S.print_table_row_with_column_selection(i + 1, false,
 					Cols, nb_cols, ost, verbose_level);
 			}
 		ost << "END" << endl;
@@ -4397,10 +4397,10 @@ void file_io::do_csv_file_select_cols(
 	{
 		ofstream ost(fname_out);
 		//ost << "Row,";
-		//S.print_table_row_with_column_selection(0, FALSE, Cols, nb_cols, ost);
+		//S.print_table_row_with_column_selection(0, false, Cols, nb_cols, ost);
 		for (i = 0; i < nb_rows - 1; i++) {
 			ost << "Orb" << i << "=";
-			S.print_table_row_with_column_selection(i + 1, FALSE,
+			S.print_table_row_with_column_selection(i + 1, false,
 					Cols, nb_cols, ost, verbose_level);
 			}
 		ost << "END" << endl;
@@ -4465,16 +4465,16 @@ void file_io::do_csv_file_select_rows_and_cols(
 
 		ost << "Row,";
 		S.print_table_row_with_column_selection(
-				0, FALSE, Cols, nb_cols, ost, verbose_level);
+				0, false, Cols, nb_cols, ost, verbose_level);
 
 		for (i = 0; i < nb_rows; i++) {
 
 
-			S.print_table_row(Rows[i] + 1, FALSE, cout);
+			S.print_table_row(Rows[i] + 1, false, cout);
 			cout << endl;
 
 			ost << i << ",";
-			S.print_table_row_with_column_selection(Rows[i] + 1, FALSE,
+			S.print_table_row_with_column_selection(Rows[i] + 1, false,
 					Cols, nb_cols, ost, verbose_level);
 			}
 		ost << "END" << endl;
@@ -4617,12 +4617,12 @@ void file_io::do_csv_file_join(
 #if 0
 		if (i == 0) {
 			cout << "The first table is:" << endl;
-			S[0].print_table(cout, FALSE);
+			S[0].print_table(cout, false);
 			}
 #endif
-		if (FALSE) {
+		if (false) {
 			cout << "The " << i << "th table is:" << endl;
-			S[i].print_table(cout, FALSE);
+			S[i].print_table(cout, false);
 			}
 
 
@@ -4654,7 +4654,7 @@ void file_io::do_csv_file_join(
 		cout << "joining " << csv_file_join_fname[0] << " with table " << csv_file_join_fname[i] << " done" << endl;
 #if 0
 		cout << "After join, the table is:" << endl;
-		S[0].print_table(cout, FALSE);
+		S[0].print_table(cout, false);
 #endif
 		}
 
@@ -4679,7 +4679,7 @@ void file_io::do_csv_file_join(
 
 	{
 		ofstream f(save_fname);
-		S[0].print_table(f, FALSE);
+		S[0].print_table(f, false);
 		f << "END" << endl;
 	}
 	cout << "Written file " << save_fname
@@ -4717,9 +4717,9 @@ void file_io::do_csv_file_concatenate(
 		S[i].read_spreadsheet(fname_in[i], 0 /*verbose_level*/);
 		cout << "Table " << fname_in[i] << " has been read" << endl;
 
-		if (FALSE) {
+		if (false) {
 			cout << "The " << i << "-th table is:" << endl;
-			S[i].print_table(cout, FALSE);
+			S[i].print_table(cout, false);
 		}
 
 
@@ -4728,11 +4728,11 @@ void file_io::do_csv_file_concatenate(
 	{
 		ofstream ost(fname_out);
 		int j;
-		int f_enclose_in_parentheses = FALSE;
+		int f_enclose_in_parentheses = false;
 
 		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
 		for (i = 0; i < nb_files; i++) {
-			//S[i].print_table(ost, FALSE);
+			//S[i].print_table(ost, false);
 			for (j = 1; j < S[i].nb_rows; j++) {
 				S[i].print_table_row(j, f_enclose_in_parentheses, ost);
 			}
@@ -4781,9 +4781,9 @@ void file_io::do_csv_file_concatenate_from_mask(
 		S[i].read_spreadsheet(fname_in, 0 /*verbose_level*/);
 		cout << "Table " << fname_in << " has been read" << endl;
 
-		if (FALSE) {
+		if (false) {
 			cout << "The " << i << "-th table is:" << endl;
-			S[i].print_table(cout, FALSE);
+			S[i].print_table(cout, false);
 		}
 
 
@@ -4793,12 +4793,12 @@ void file_io::do_csv_file_concatenate_from_mask(
 		ofstream ost(fname_out);
 		int j;
 		int cnt = 0;
-		int f_enclose_in_parentheses = FALSE;
+		int f_enclose_in_parentheses = false;
 
 		ost << "Line,PO,";
 		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
 		for (i = 0; i < nb_files; i++) {
-			//S[i].print_table(ost, FALSE);
+			//S[i].print_table(ost, false);
 			for (j = 1; j < S[i].nb_rows; j++) {
 				ost << "\"" << cnt << "\"" << ",";
 				ost << "\"" << i << "\"" << ",";
@@ -4864,37 +4864,37 @@ void file_io::do_csv_file_latex(
 
 	{
 		ofstream ost(fname_out);
-		latex_interface L;
+		l1_interfaces::latex_interface L;
 
-		//S.print_table_latex_all_columns(ost, FALSE /* f_enclose_in_parentheses */);
+		//S.print_table_latex_all_columns(ost, false /* f_enclose_in_parentheses */);
 
 		int *f_column_select;
 		int j;
 
 		f_column_select = NEW_int(S.nb_cols);
 		for (j = 0; j < S.nb_cols; j++) {
-			f_column_select[j] = TRUE;
+			f_column_select[j] = true;
 		}
-		f_column_select[0] = FALSE;
+		f_column_select[0] = false;
 
 
 		if (f_produce_latex_header) {
 			//L.head_easy(ost);
 			L.head(ost,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
+				false /* f_book */,
+				true /* f_title */,
 				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				FALSE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				false /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extras_for_preamble */);
 		}
 
 		S.print_table_latex(ost,
 				f_column_select,
-				FALSE /* f_enclose_in_parentheses */,
+				false /* f_enclose_in_parentheses */,
 				nb_lines_per_table);
 
 		FREE_int(f_column_select);
@@ -4942,9 +4942,9 @@ void file_io::read_solutions_and_tally(
 
 	data_structures::tally T;
 
-	T.init_lint(Sol, nb_solutions * solution_size, TRUE, 0);
+	T.init_lint(Sol, nb_solutions * solution_size, true, 0);
 	cout << "tally:" << endl;
-	T.print(TRUE);
+	T.print(true);
 	cout << endl;
 
 
@@ -5018,12 +5018,12 @@ void file_io::save_fibration(
 		cout << "file_io::save_fibration "
 				"before File_idx->save_csv" << endl;
 	}
-	File_idx->save_csv(data_fname1, TRUE, verbose_level);
+	File_idx->save_csv(data_fname1, true, verbose_level);
 	if (f_v) {
 		cout << "file_io::save_fibration "
 				"before Obj_idx->save_csv" << endl;
 	}
-	Obj_idx->save_csv(data_fname2, TRUE, verbose_level);
+	Obj_idx->save_csv(data_fname2, true, verbose_level);
 	if (f_v) {
 		cout << "file_io::save_fibration "
 				"after Obj_idx->save_csv" << endl;
@@ -5118,14 +5118,14 @@ void file_io::save_cumulative_ago(
 
 	data_structures::tally T;
 
-	T.init_lint(M, Cumulative_Ago.size(), FALSE, 0);
+	T.init_lint(M, Cumulative_Ago.size(), false, 0);
 	if (f_v) {
 		cout << "Written file " << ago_fname << " of size " << file_size(ago_fname) << endl;
 	}
 
 	if (f_v) {
 		cout << "Ago distribution: ";
-		T.print(TRUE);
+		T.print(true);
 		cout << endl;
 	}
 
@@ -5238,10 +5238,10 @@ void file_io::extract_from_makefile(
 	{
 		ifstream fp(fname);
 		int f_found;
-		int f_has_been_found = FALSE;
+		int f_has_been_found = false;
 
 		nb_lines = 0;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}
@@ -5250,19 +5250,19 @@ void file_io::extract_from_makefile(
 			// "reading line, nb_sol = " << nb_sol << endl;
 			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
 
-			f_found = FALSE;
+			f_found = false;
 
 			if (strncmp(buf, label.c_str(), label.length()) == 0) {
-				f_found = TRUE;
+				f_found = true;
 			}
 			if (f_found && f_tail) {
 				if (strncmp(buf + label.length(), tail.c_str(), tail.length()) != 0) {
-					f_found = FALSE;
+					f_found = false;
 				}
 			}
 
 			if (f_found) {
-				f_has_been_found = TRUE;
+				f_has_been_found = true;
 				if (f_v) {
 					cout << "file_io::extract_from_makefile found label " << label << " at line " << nb_lines << endl;
 				}
@@ -5270,7 +5270,7 @@ void file_io::extract_from_makefile(
 
 				s.assign(buf);
 				text.push_back(s);
-				while (TRUE) {
+				while (true) {
 					if (fp.eof()) {
 						break;
 					}
@@ -5287,7 +5287,7 @@ void file_io::extract_from_makefile(
 		}
 		if (!f_has_been_found) {
 			cout << "label not be found: " << label << endl;
-			while (TRUE) {
+			while (true) {
 				;
 			}
 		}
@@ -5445,35 +5445,35 @@ void file_io::grade_statistic_from_csv(
 		ofstream ost(fname_out);
 		latex_interface L;
 
-		//S.print_table_latex_all_columns(ost, FALSE /* f_enclose_in_parentheses */);
+		//S.print_table_latex_all_columns(ost, false /* f_enclose_in_parentheses */);
 
 		int *f_column_select;
 		int j;
 
 		f_column_select = NEW_int(S.nb_cols);
 		for (j = 0; j < S.nb_cols; j++) {
-			f_column_select[j] = TRUE;
+			f_column_select[j] = true;
 		}
-		f_column_select[0] = FALSE;
+		f_column_select[0] = false;
 
 
 		if (f_produce_latex_header) {
 			//L.head_easy(ost);
 			L.head(ost,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
+				false /* f_book */,
+				true /* f_title */,
 				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				FALSE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				false /* f_enlarged_page */,
+				true /* f_pagenumbers */,
 				extra_praeamble /* extras_for_preamble */);
 		}
 
 		S.print_table_latex(ost,
 				f_column_select,
-				FALSE /* f_enclose_in_parentheses */,
+				false /* f_enclose_in_parentheses */,
 				nb_lines_per_table);
 
 		FREE_int(f_column_select);
@@ -5549,7 +5549,7 @@ void file_io::count_solutions_in_list_of_files(
 				exit(1);
 			}
 			line_number = 0;
-			while (TRUE) {
+			while (true) {
 
 				if (f.eof()) {
 					break;
@@ -5569,7 +5569,7 @@ void file_io::count_solutions_in_list_of_files(
 					}
 					buf[l] = 0;
 				}
-				if (FALSE) {
+				if (false) {
 					cout << "line " << line_number << " read: " << buf << endl;
 				}
 
@@ -5641,9 +5641,9 @@ void file_io::split_by_values(
 	len = m * n;
 	data_structures::tally T;
 
-	T.init(M, m * n, FALSE, 0);
+	T.init(M, m * n, false, 0);
 	cout << "values in the file : ";
-	T.print(FALSE);
+	T.print(false);
 	cout << endl;
 
 	M2 = NEW_int(len);
@@ -5772,7 +5772,7 @@ void file_io::read_file_as_array_of_strings(
 
 
 		nb_lines = 0;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}
@@ -5794,7 +5794,7 @@ void file_io::read_file_as_array_of_strings(
 
 
 		cnt = 0;
-		while (TRUE) {
+		while (true) {
 			if (fp.eof()) {
 				break;
 			}

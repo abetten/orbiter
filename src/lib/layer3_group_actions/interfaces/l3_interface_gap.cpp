@@ -47,8 +47,8 @@ void l3_interface_gap::canonical_image_GAP(
 		SG->A->Group_element->element_print_as_permutation_with_offset(
 				SG->gens->ith(i), ost,
 				1 /*offset*/,
-				TRUE /* f_do_it_anyway_even_for_big_degree */,
-				FALSE /* f_print_cycles_of_length_one */,
+				true /* f_do_it_anyway_even_for_big_degree */,
+				false /* f_print_cycles_of_length_one */,
 				0 /* verbose_level*/);
 		if (i < SG->gens->len - 1) {
 			ost << ", " << endl;

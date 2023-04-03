@@ -67,7 +67,7 @@ void design_activity::perform_activity(
 				Descr->extract_solutions_by_index_fname_solutions_in,
 				Descr->extract_solutions_by_index_fname_solutions_out,
 				Descr->extract_solutions_by_index_prefix,
-				TRUE /* f_csv */,
+				true /* f_csv */,
 				verbose_level);
 
 		if (f_v) {
@@ -89,7 +89,7 @@ void design_activity::perform_activity(
 				Descr->extract_solutions_by_index_fname_solutions_in,
 				Descr->extract_solutions_by_index_fname_solutions_out,
 				Descr->extract_solutions_by_index_prefix,
-				FALSE /* f_csv */,
+				false /* f_csv */,
 				verbose_level);
 
 		if (f_v) {
@@ -426,7 +426,7 @@ void design_activity::do_canonical_form(
 	}
 	OC->do_the_work(
 			Canonical_form_Descr,
-			FALSE,
+			false,
 			NULL,
 			verbose_level);
 	if (f_v) {
@@ -664,10 +664,10 @@ void design_activity::do_row_sums(
 
 	data_structures::tally T;
 
-	T.init(R, DC->v, FALSE, 0);
+	T.init(R, DC->v, false, 0);
 	if (f_v) {
 		cout << "distribution of row sums: ";
-		T.print(TRUE /* f_backwards */);
+		T.print(true /* f_backwards */);
 		cout << endl;
 	}
 
@@ -714,7 +714,7 @@ void design_activity::do_tactical_decomposition(
 
 
 
-		while (TRUE) {
+		while (true) {
 
 			int ht0, ht1;
 
@@ -744,22 +744,22 @@ void design_activity::do_tactical_decomposition(
 			}
 		}
 
-		int f_labeled = TRUE;
+		int f_labeled = true;
 
 		Inc->print_partitioned(cout, *Stack, f_labeled);
 		Inc->get_and_print_decomposition_schemes(*Stack);
 		Stack->print_classes(cout);
 
 
-		int f_print_subscripts = FALSE;
+		int f_print_subscripts = false;
 		cout << "Decomposition:\\\\" << endl;
 		cout << "Row scheme:\\\\" << endl;
 		Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-				cout, TRUE /* f_enter_math */,
+				cout, true /* f_enter_math */,
 			f_print_subscripts, *Stack);
 		cout << "Column scheme:\\\\" << endl;
 		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-				cout, TRUE /* f_enter_math */,
+				cout, true /* f_enter_math */,
 			f_print_subscripts, *Stack);
 
 		data_structures::set_of_sets *Row_classes;
