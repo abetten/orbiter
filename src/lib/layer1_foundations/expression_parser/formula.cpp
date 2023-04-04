@@ -61,7 +61,8 @@ void formula::print()
 }
 
 
-void formula::init_formula(std::string &label, std::string &label_tex,
+void formula::init_formula(
+		std::string &label, std::string &label_tex,
 		std::string &managed_variables, std::string &formula_text,
 		int verbose_level)
 {
@@ -94,7 +95,8 @@ void formula::init_formula(std::string &label, std::string &label_tex,
 	char str[1000];
 
 	while (true) {
-		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
+		if (!ST.s_scan_token_comma_separated(
+				&p, str, 0 /* verbose_level */)) {
 			break;
 		}
 		string var;
@@ -169,7 +171,8 @@ void formula::init_formula(std::string &label, std::string &label_tex,
 }
 
 #if 1
-void formula::init_formula_Sajeeb(std::string &label, std::string &label_tex,
+void formula::init_formula_Sajeeb(
+		std::string &label, std::string &label_tex,
 		std::string &managed_variables, std::string &formula_text,
 		int verbose_level)
 {
@@ -361,7 +364,8 @@ void formula::init_formula_Sajeeb(std::string &label, std::string &label_tex,
 #endif
 
 
-int formula::is_homogeneous(int &degree, int verbose_level)
+int formula::is_homogeneous(
+		int &degree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

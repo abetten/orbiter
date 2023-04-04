@@ -123,7 +123,7 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 	if (f_v) {
 		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface "
 				"coefficient vector:" << endl;
-		Int_vec_print(cout, Coefficient_vector, nb_monomials);
+		Int_vec_print(cout, Coefficient_vector, Poly4_3->get_nb_monomials());
 		cout << endl;
 	}
 

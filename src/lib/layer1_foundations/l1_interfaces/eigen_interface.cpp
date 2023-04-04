@@ -9,10 +9,15 @@
 #include "foundations.h"
 
 
-#include <Eigen/Eigenvalues>
+#include <../Eigen_interface/Eigen/Eigenvalues>
 
 using namespace Eigen;
 using namespace std;
+
+
+namespace orbiter {
+namespace layer1_foundations {
+namespace l1_interfaces {
 
 
 void orbiter_eigenvalues(int *Mtx, int nb_points, double *E, int verbose_level)
@@ -74,4 +79,7 @@ void orbiter_eigenvalues(int *Mtx, int nb_points, double *E, int verbose_level)
 		cout << "orbiter_eigenvalues done" << endl;
 	}
 }
+
+
+}}}
 

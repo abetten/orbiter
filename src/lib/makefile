@@ -102,7 +102,6 @@ ORBITER_MODULES= \
 		layer1_foundations/data_structures/vector_builder_description.o \
 		layer1_foundations/data_structures/vector_builder.o \
 		layer1_foundations/data_structures/vector_hashing.o \
-		layer1_foundations/Eigen_interface/eigen_interface.o \
 		layer1_foundations/expression_parser/expression_parser_domain.o \
 		layer1_foundations/expression_parser/expression_parser.o \
 		layer1_foundations/expression_parser/formula_activity_description.o \
@@ -237,6 +236,7 @@ ORBITER_MODULES= \
 		layer1_foundations/linear_algebra/vector_space.o \
 		layer1_foundations/knowledge_base/finite_field_tables.o \
 		layer1_foundations/knowledge_base/knowledge_base.o \
+		layer1_foundations/l1_interfaces/eigen_interface.o \
 		layer1_foundations/l1_interfaces/expression_parser_sajeeb.o \
 		layer1_foundations/l1_interfaces/interface_gap_low.o \
 		layer1_foundations/l1_interfaces/interface_magma_low.o \

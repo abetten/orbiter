@@ -209,13 +209,16 @@ public:
 	formula();
 	~formula();
 	void print();
-	void init_formula(std::string &label, std::string &label_tex,
+	void init_formula(
+			std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
 			int verbose_level);
-	void init_formula_Sajeeb(std::string &label, std::string &label_tex,
+	void init_formula_Sajeeb(
+			std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
 			int verbose_level);
-	int is_homogeneous(int &degree, int verbose_level);
+	int is_homogeneous(
+			int &degree, int verbose_level);
 	void get_subtrees(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int &nb_monomials,

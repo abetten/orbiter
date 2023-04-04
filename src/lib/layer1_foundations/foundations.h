@@ -1000,8 +1000,6 @@ enum CRC_type {
 #include "solvers/solvers.h"
 
 
-// Eigen_interface:
-void orbiter_eigenvalues(int *Mtx, int nb_points, double *E, int verbose_level);
 
 
 

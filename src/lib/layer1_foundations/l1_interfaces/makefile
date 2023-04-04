@@ -7,6 +7,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	eigen_interface.o \
 	expression_parser_sajeeb.o \
 	interface_gap_low.o \
 	interface_magma_low.o \

@@ -75,6 +75,7 @@ int main(int argc, const char** argv) {
 //    std::string exp = "1+2+-(3*-2)+(4*5*6*2^3^2)";
 //    std::string exp = "(a*b*c)*x0*x2 + 1*x1 + 1*x2 + x0^2*x1 + x1^2*x2 + x2*x0*x1 + a^2*x2^2";
 
+#if 0
     std::string exp = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0^2*X2 \
 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 \
 + (a^2*c - a^2*d - a*c^2 + b*c^2 + a*d - b*c)*(b - d)*X0*X1*X3 \
@@ -88,10 +89,12 @@ int main(int argc, const char** argv) {
 - b^2*c^2*d - a^2*b*c + a^2*c*d + a^2*d^2 + a*b^2*c + a*b*c^2 \
 - (1+1+1+1)*a*b*c*d - a*c^2*d + a*c*d^2 + b^2*c^2)*X1*X2*X3 \
 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3^2";
+#endif
 
+    std::string exp = "x^4+y^4+z^4-x^2*y^2";
 
     managed_variables_index_table managed_variables_table;
-    for (int i=0; i<4; ++i)
+    for (int i=0; i<3; ++i)
         managed_variables_table.insert("X"+std::to_string(i));
     cout << "managed_variables_table:\n" << managed_variables_table << endl;
 
@@ -163,10 +166,10 @@ int main(int argc, const char** argv) {
 		Fq.init(&Descr, 5);
 		LOG("after Fq.init");
 		unordered_map<string, int> assignemnt = {
-				{"a", 4},
-				{"b", 2},
-				{"c", 2},
-				{"d", 4}
+				//{"a", 4},
+				//{"b", 2},
+				//{"c", 2},
+				//{"d", 4}
 		};
 		for (auto& it : evv.monomial_coefficient_table_) {
 			const vector<unsigned int>& vec = it.first;

@@ -3612,7 +3612,7 @@ void colored_graph::eigenvalues(
 		Int_matrix_print(Adj, nb_points, nb_points);
 	}
 
-	orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
+	l1_interfaces::orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
 
 	FREE_int(Adj);
 
@@ -3661,7 +3661,7 @@ void colored_graph::Laplace_eigenvalues(
 
 	E = new double[nb_points];
 
-	orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
+	l1_interfaces::orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
 
 	FREE_int(Adj);
 	FREE_int(D);

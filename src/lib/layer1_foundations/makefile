@@ -20,7 +20,6 @@ all: \
 	combinatorics \
 	cryptography \
 	data_structures \
-	Eigen_interface \
 	expression_parser \
 	finite_fields \
 	geometry \
@@ -48,7 +47,6 @@ coding_theory : coding_theory2
 combinatorics : combinatorics2  
 cryptography : cryptography2
 data_structures : data_structures2  
-Eigen_interface : Eigen_interface2  
 expression_parser : expression_parser2  
 finite_fields : finite_fields2  
 geometry : geometry2 
@@ -75,7 +73,6 @@ coding_theory2 : ; cd coding_theory; $(MAKE)
 combinatorics2 : ; cd combinatorics; $(MAKE)
 cryptography2 : ; cd cryptography; $(MAKE)
 data_structures2 : ; cd data_structures; $(MAKE)
-Eigen_interface2 : ; cd Eigen_interface; $(MAKE)
 expression_parser2 : ; cd expression_parser; $(MAKE)
 finite_fields2 : ; cd finite_fields; $(MAKE)
 geometry2 : ; cd geometry; $(MAKE)
