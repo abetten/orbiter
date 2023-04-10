@@ -35,7 +35,8 @@ vector_builder::~vector_builder()
 	}
 }
 
-void vector_builder::init(vector_builder_description *Descr,
+void vector_builder::init(
+		vector_builder_description *Descr,
 		field_theory::finite_field *F,
 		int verbose_level)
 {
@@ -67,7 +68,6 @@ void vector_builder::init(vector_builder_description *Descr,
 		int i, j;
 		char c;
 
-		//len = Descr->compact_text.length();
 		len = 0;
 		for (i = 0; i < Descr->compact_text.length(); i++) {
 			c = Descr->compact_text[i];
@@ -122,12 +122,14 @@ void vector_builder::init(vector_builder_description *Descr,
 	}
 	else if (Descr->f_file) {
 		if (f_v) {
-			cout << "vector_builder::init -file " << Descr->file_name << endl;
+			cout << "vector_builder::init "
+					"-file " << Descr->file_name << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.lint_matrix_read_csv(Descr->file_name, v, m, n, verbose_level);
+		Fio.lint_matrix_read_csv(
+				Descr->file_name, v, m, n, verbose_level);
 		len = m * n;
 		f_has_k = true;
 		k = m;
@@ -135,12 +137,16 @@ void vector_builder::init(vector_builder_description *Descr,
 	}
 	else if (Descr->f_load_csv_no_border) {
 		if (f_v) {
-			cout << "vector_builder::init -load_csv_no_border " << Descr->load_csv_no_border_fname << endl;
+			cout << "vector_builder::init "
+					"-load_csv_no_border "
+					<< Descr->load_csv_no_border_fname << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.lint_matrix_read_csv_no_border(Descr->load_csv_no_border_fname, v, m, n, verbose_level);
+		Fio.lint_matrix_read_csv_no_border(
+				Descr->load_csv_no_border_fname,
+				v, m, n, verbose_level);
 		len = m * n;
 		f_has_k = true;
 		k = m;
@@ -148,12 +154,15 @@ void vector_builder::init(vector_builder_description *Descr,
 	}
 	else if (Descr->f_load_csv_data_column) {
 		if (f_v) {
-			cout << "vector_builder::init -load_csv_data_column " << Descr->load_csv_data_column_fname << endl;
+			cout << "vector_builder::init "
+					"-load_csv_data_column "
+					<< Descr->load_csv_data_column_fname << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.lint_matrix_read_csv_data_column(Descr->load_csv_data_column_fname,
+		Fio.lint_matrix_read_csv_data_column(
+				Descr->load_csv_data_column_fname,
 				v, m, n,
 				Descr->load_csv_data_column_idx,
 				verbose_level);
@@ -204,7 +213,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		for (i = 0; i < Descr->concatenate_list.size(); i++) {
 			vector_builder *VB;
 
-			VB = orbiter_kernel_system::Orbiter->get_object_of_type_vector(Descr->concatenate_list[i]);
+			VB = Get_vector(Descr->concatenate_list[i]);
 			len += VB->len;
 		}
 		v = NEW_lint(len);
@@ -212,7 +221,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		for (i = 0; i < Descr->concatenate_list.size(); i++) {
 			vector_builder *VB;
 
-			VB = orbiter_kernel_system::Orbiter->get_object_of_type_vector(Descr->concatenate_list[i]);
+			VB = Get_vector(Descr->concatenate_list[i]);
 			Lint_vec_copy(VB->v, v + j, VB->len);
 			j += VB->len;
 		}
@@ -224,7 +233,8 @@ void vector_builder::init(vector_builder_description *Descr,
 	}
 	else if (Descr->f_loop) {
 		if (f_v) {
-			cout << "vector_builder::init using index set through loop, start="
+			cout << "vector_builder::init "
+					"using index set through loop, start="
 					<< Descr->loop_start
 					<< " upper_bound=" <<  Descr->loop_upper_bound
 					<< " increment=" << Descr->loop_increment << endl;
@@ -247,7 +257,8 @@ void vector_builder::init(vector_builder_description *Descr,
 		}
 	}
 	else {
-		cout << "vector_builder::init please specify how the vector should be created" << endl;
+		cout << "vector_builder::init please specify "
+				"how the vector should be created" << endl;
 		exit(1);
 	}
 
@@ -263,26 +274,31 @@ void vector_builder::init(vector_builder_description *Descr,
 
 					a0 = a;
 					v[i] = NT.mod(a, F->p);
-					cout << "vector_builder::init entry mapped from = " << a0 << " to " << v[i] << endl;
+					cout << "vector_builder::init "
+							"entry mapped from = " << a0 << " to " << v[i] << endl;
 				}
 				else {
-					cout << "vector_builder::init entry is out of range: value = " << a << endl;
+					cout << "vector_builder::init "
+							"entry is out of range: value = " << a << endl;
 					exit(1);
 				}
 			}
 			if (a >= F->q) {
-				cout << "vector_builder::init entry is out of range: value = " << a << endl;
+				cout << "vector_builder::init "
+						"entry is out of range: value = " << a << endl;
 				exit(1);
 			}
 		}
 	}
 
 	if (f_v) {
-		cout << "vector_builder::init created vector of length " << len << endl;
+		cout << "vector_builder::init "
+				"created vector of length " << len << endl;
 		Lint_vec_print(cout, v, len);
 		cout << endl;
 		if (f_has_k) {
-			cout << "also seen as matrix of size  " << k << " x " << len / k << endl;
+			cout << "also seen as matrix of size "
+					<< k << " x " << len / k << endl;
 			if (k > 20) {
 				cout << "too large to print" << endl;
 			}

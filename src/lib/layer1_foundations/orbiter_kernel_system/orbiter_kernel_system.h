@@ -999,6 +999,8 @@ public:
 			std::string &label);
 	data_structures::vector_builder *get_object_of_type_vector(
 			std::string &label);
+	data_structures::symbolic_object_builder *get_object_of_type_symbolic_object(
+			std::string &label);
 	void start_memory_debug();
 	void stop_memory_debug();
 
@@ -1135,6 +1137,9 @@ public:
 	void init_vector(
 			std::string &label,
 			void *VB, int verbose_level);
+	void init_symbolic_object(
+			std::string &label,
+			void *SB, int verbose_level);
 	void init_combinatorial_objects(
 			std::string &label,
 			data_structures::data_input_stream *IS, int verbose_level);

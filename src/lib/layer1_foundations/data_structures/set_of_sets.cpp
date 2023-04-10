@@ -72,7 +72,7 @@ void set_of_sets::init_simple(int underlying_set_size,
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
 		}
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(Set_size, nb_sets);
+	Lint_vec_zero(Set_size, nb_sets);
 }
 
 void set_of_sets::init_from_adjacency_matrix(
@@ -96,7 +96,7 @@ void set_of_sets::init_from_adjacency_matrix(
 	for (i = 0; i < n; i++) {
 		Sets[i] = NEW_lint(Set_size[i]);
 		}
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(Set_size, n);
+	Lint_vec_zero(Set_size, n);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			if (Adj[i * n + j]) {
@@ -353,7 +353,7 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size,
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
 		}
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(Set_size, nb_sets);
+	Lint_vec_zero(Set_size, nb_sets);
 
 	char *buf, *p_buf;
 	int sz;
@@ -754,7 +754,7 @@ void set_of_sets::dualize(set_of_sets *&S, int verbose_level)
 	S = NEW_OBJECT(set_of_sets);
 	S->init_basic_constant_size(nb_sets,
 			underlying_set_size, nb_sets, verbose_level - 1);
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(S->Set_size, underlying_set_size);
+	Lint_vec_zero(S->Set_size, underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {
 		for (j = 0; j < Set_size[i]; j++) {
 			a = Sets[i][j];

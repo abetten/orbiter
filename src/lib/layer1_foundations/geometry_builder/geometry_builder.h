@@ -166,10 +166,14 @@ public:
 
 	decomposition_with_fuse();
 	~decomposition_with_fuse();
-	gen_geo_conf *get_conf_IJ(int I, int J);
-	void init(gen_geo *gg, int verbose_level);
-	void TDO_init(int *v, int *b, int *theTDO, int verbose_level);
-	void init_tdo_line(int fuse_idx,
+	gen_geo_conf *get_conf_IJ(
+			int I, int J);
+	void init(
+			gen_geo *gg, int verbose_level);
+	void TDO_init(
+			int *v, int *b, int *theTDO, int verbose_level);
+	void init_tdo_line(
+			int fuse_idx,
 			int tdo_line, int v, int *b, int *r, int verbose_level);
 	void print_conf();
 	void init_fuse(int verbose_level);
@@ -513,9 +517,11 @@ public:
 	inc_encoding();
 	~inc_encoding();
 	int &theX_ir(int i, int r);
-	void init(int v, int b, int *R, int verbose_level);
+	void init(
+			int v, int b, int *R, int verbose_level);
 	long int rank_row(int row);
-	void get_flags(int row, std::vector<int> &flags);
+	void get_flags(
+			int row, std::vector<int> &flags);
 	int find_square(int m, int n);
 	void print_horizontal_bar(
 		std::ostream &ost,
@@ -526,8 +532,10 @@ public:
 	void print_partitioned_override_theX(
 			std::ostream &ost, int v_cur, int v_cut,
 			gen_geo *gg, int *the_X, int f_print_isot);
-	void print_permuted(cperm *pv, cperm *qv);
-	void apply_permutation(incidence *inc, int v,
+	void print_permuted(
+			cperm *pv, cperm *qv);
+	void apply_permutation(
+			incidence *inc, int v,
 		int *theY, cperm *p, cperm *q, int verbose_level);
 
 

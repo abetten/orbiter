@@ -320,7 +320,7 @@ void surface_domain::compute_intersection_points(
 
 	Intersection_pt = NEW_lint(nb_lines * nb_lines);
 
-	orbiter_kernel_system::Orbiter->Lint_vec->mone(
+	Lint_vec_mone(
 			Intersection_pt, nb_lines * nb_lines);
 
 	for (j1 = 0; j1 < nb_lines; j1++) {

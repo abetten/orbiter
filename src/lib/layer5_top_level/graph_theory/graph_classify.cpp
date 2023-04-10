@@ -680,7 +680,7 @@ void graph_classify::score_sequence(
 	int i, a, swap, a2, u, v;
 	combinatorics::combinatorics_domain Combi;
 
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(score, n);
+	Lint_vec_zero(score, n);
 	for (i = 0; i < sz; i++) {
 		a = set[i];
 

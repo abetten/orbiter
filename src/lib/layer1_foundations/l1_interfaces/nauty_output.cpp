@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace data_structures {
+namespace l1_interfaces {
 
 
 nauty_output::nauty_output()

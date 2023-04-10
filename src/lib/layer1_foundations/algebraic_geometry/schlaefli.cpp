@@ -1901,7 +1901,7 @@ void schlaefli::init_incidence_matrix_of_lines_vs_tritangent_planes(
 
 
 	Lines_in_tritangent_planes = NEW_lint(45 * 3);
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(Lines_in_tritangent_planes, 45 * 3);
+	Lint_vec_zero(Lines_in_tritangent_planes, 45 * 3);
 
 	for (j = 0; j < nb_Eckardt_points; j++) {
 		eckardt_point *E;

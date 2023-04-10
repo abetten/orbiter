@@ -59,7 +59,7 @@ void animate::init(
 	animate::nb_frames = Povray_job_description->nb_frames_default;
 	animate::Opt = Povray_job_description->Video_draw_options;
 	animate::extra_data = extra_data;
-	Pov = NEW_OBJECT(povray_interface);
+	Pov = NEW_OBJECT(l1_interfaces::povray_interface);
 	snprintf(fname_makefile, sizeof(fname_makefile), "makefile_animation");
 
 

@@ -288,7 +288,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 				<< " current_extension=" << current_extension << endl;
 		cout << "level=" << level << endl;		
 		cout << "applying fusion element to the set ";
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, set_in, size);
+		Lint_vec_set_print(cout, set_in, size);
 		cout << endl;
 	}
 

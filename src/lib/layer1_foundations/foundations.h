@@ -366,7 +366,6 @@ namespace data_structures {
 	class int_vec;
 	class int_vector;
 	class lint_vec;
-	class nauty_output;
 	class page_storage;
 	class partitionstack;
 	class set_builder_description;
@@ -376,6 +375,8 @@ namespace data_structures {
 	class sorting;
 	class spreadsheet;
 	class string_tools;
+	class symbolic_object_builder_description;
+	class symbolic_object_builder;
 	class tally_lint;
 	class tally_vector_data;
 	class tally;
@@ -523,7 +524,6 @@ namespace graphics {
 	class parametric_curve_point;
 	class parametric_curve;
 	class plot_tools;
-	class povray_interface;
 	class povray_job_description;
 	class scene_element_of_type_edge;
 	class scene_element_of_type_face;
@@ -557,11 +557,14 @@ namespace knowledge_base {
 
 namespace l1_interfaces {
 
+	class easy_BMP_interface;
 	class expression_parser_sajeeb;
 	class interface_gap_low;
 	class interface_magma_low;
 	class latex_interface;
 	class nauty_interface;
+	class nauty_output;
+	class povray_interface;
 
 }
 
@@ -795,6 +798,7 @@ namespace solvers {
 #define Int_vec_apply_lint(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->apply_lint(A, B, C, D)
 
 #define Int_vec_mone(A, B) orbiter_kernel_system::Orbiter->Int_vec->mone(A, B)
+#define Lint_vec_mone(A, B) orbiter_kernel_system::Orbiter->Lint_vec->mone(A, B)
 
 #define Int_vec_print_Cpp(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(A, B, C)
 
@@ -803,9 +807,14 @@ namespace solvers {
 
 #define Lint_vec_complement_to(A, B, C, D) orbiter_kernel_system::Orbiter->Lint_vec->complement(A, B, C, D)
 
+#define Int_vec_maximum(v, len) orbiter_kernel_system::Orbiter->Int_vec->maximum(v, len)
+#define Lint_vec_maximum(v, len) orbiter_kernel_system::Orbiter->Lint_vec->maximum(v, len)
+#define Int_vec_minimum(v, len) orbiter_kernel_system::Orbiter->Int_vec->minimum(v, len)
+#define Lint_vec_minimum(v, len) orbiter_kernel_system::Orbiter->Lint_vec->minimum(v, len)
+
 
 #define Int_vec_set_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->set_print(A, B, C)
-
+#define Lint_vec_set_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->set_print(A, B, C)
 
 
 #define Int_vec_print_classified_str(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->print_classified_str(A, B, C, D)
@@ -819,11 +828,13 @@ namespace solvers {
 #define Lint_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, v, len)
 
 
+#define Get_vector(A) orbiter_kernel_system::Orbiter->get_object_of_type_vector(A)
 #define Get_int_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_int_vector_from_label(A, B, C, D)
 #define Get_lint_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_lint_vector_from_label(A, B, C, D)
 #define Get_matrix(label, A, m, n) orbiter_kernel_system::Orbiter->get_matrix_from_label(label, A, m, n)
 #define Get_ring(label) orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(label)
 #define Get_finite_field(label) orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(label)
+#define Get_symbol(label) orbiter_kernel_system::Orbiter->get_object_of_type_symbolic_object(label)
 
 
 
@@ -884,6 +895,7 @@ enum symbol_table_object_type {
 	t_large_set_was,
 	t_set,
 	t_vector,
+	t_symbolic_object,
 	t_combinatorial_objects,
 	t_geometry_builder,
 	t_vector_ge,

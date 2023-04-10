@@ -299,7 +299,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	if (f_v) {
 		cout << "web_of_cubic_curves::init "
 				"Dual_point_ranks:" << endl;
-		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(
+		Lint_matrix_print(
 				Dual_point_ranks, nb_T, 6);
 	}
 

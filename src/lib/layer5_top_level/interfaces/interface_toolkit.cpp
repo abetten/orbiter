@@ -1120,9 +1120,9 @@ void interface_toolkit::worker(int verbose_level)
 			cout << "interface_toolkit::worker "
 					"f_draw_matrix" << endl;
 		}
-		graphics::graphical_output GO;
+		l1_interfaces::easy_BMP_interface BMP;
 
-		GO.draw_bitmap(Draw_bitmap_control, verbose_level);
+		BMP.draw_bitmap(Draw_bitmap_control, verbose_level);
 
 		FREE_int(Draw_bitmap_control->M);
 	}

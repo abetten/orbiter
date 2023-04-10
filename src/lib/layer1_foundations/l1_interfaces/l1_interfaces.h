@@ -16,9 +16,42 @@ namespace layer1_foundations {
 namespace l1_interfaces {
 
 
+
+
+
+// #############################################################################
+// easy_BMP_interface.cpp:
+// #############################################################################
+
+//! interface to the easy_BMP library for working with bmp files:
+
+
+class easy_BMP_interface {
+public:
+
+	void draw_bitmap(
+			graphics::draw_bitmap_control *C, int verbose_level);
+	void random_noise_in_bitmap_file(
+			std::string fname_input,
+			std::string fname_output,
+			int probability_numerator,
+			int probability_denominator,
+			int verbose_level);
+	void random_noise_in_bitmap_file_burst(
+			std::string fname_input,
+			std::string fname_output,
+			int probability_numerator,
+			int probability_denominator,
+			int burst_length_max,
+			int verbose_level);
+
+};
+
 // #############################################################################
 // Eigen_interface.cpp:
 // #############################################################################
+
+//! interface to Eigen:
 
 void orbiter_eigenvalues(int *Mtx, int nb_points, double *E, int verbose_level);
 
@@ -41,12 +74,20 @@ public:
 	void init_formula(
 			expression_parser::formula *Formula,
 			int verbose_level);
+	void print(
+			std::ostream &ost,
+			int verbose_level);
+	std::string string_representation();
 	void get_subtrees(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			int verbose_level);
 	void evaluate(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::map<std::string, std::string> &symbol_table, int *Values,
+			int verbose_level);
+	void multiply(
+			expression_parser_sajeeb **terms,
+			int n,
 			int verbose_level);
 
 
@@ -58,7 +99,7 @@ public:
 // interface_gap_low.cpp:
 // #############################################################################
 
-//! interface to GAP at the foundation level
+//! interface to GAP
 
 class interface_gap_low {
 public:
@@ -90,7 +131,7 @@ public:
 // interface_magma_low.cpp:
 // #############################################################################
 
-//! interface to magma at the foundation level
+//! interface to magma
 
 class interface_magma_low {
 public:
@@ -114,7 +155,7 @@ public:
 // #############################################################################
 
 
-//! interface to create latex output files
+//! interface to latex to create latex source files
 
 
 
@@ -280,7 +321,7 @@ public:
 // nauty_interface.cpp
 // #############################################################################
 
-//! low-level interface to the graph canonization software nauty
+//! interface to the graph canonization software nauty
 
 class nauty_interface {
 
@@ -289,18 +330,141 @@ public:
 	void nauty_interface_graph_bitvec(int v,
 			data_structures::bitvector *Bitvec,
 		int *partition,
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		int verbose_level);
 	void nauty_interface_graph_int(int v, int *Adj,
 		int *partition,
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		int verbose_level);
 	void nauty_interface_matrix_int(
 		combinatorics::encoded_combinatorial_object *Enc,
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		int verbose_level);
 
 
+};
+
+
+// #############################################################################
+// nauty_output.cpp:
+// #############################################################################
+
+
+//! output data created by a run of nauty
+
+class nauty_output {
+public:
+
+
+	int N;
+
+	int *Aut;  // [Aut_counter * N]
+	int Aut_counter;
+
+	int *Base; // [Base_length]
+	int Base_length;
+
+	long int *Base_lint;
+	int *Transversal_length;
+
+
+	ring_theory::longinteger_object *Ago;
+
+	int *canonical_labeling; // [N]
+
+	long int nb_firstpathnode;
+	long int nb_othernode;
+	long int nb_processnode;
+	long int nb_firstterminal;
+
+	nauty_output();
+	~nauty_output();
+	void allocate(int N, int verbose_level);
+	void print();
+	void print_stats();
+	int belong_to_the_same_orbit(int a, int b, int verbose_level);
+
+};
+
+// #############################################################################
+// povray_interface.cpp
+// #############################################################################
+
+//! povray interface for 3D graphics
+
+
+
+class povray_interface {
+public:
+
+
+	std::string color_white_simple;
+	std::string color_white;
+	std::string color_white_very_transparent;
+	std::string color_black;
+	std::string color_pink;
+	std::string color_pink_transparent;
+	std::string color_green;
+	std::string color_gold;
+	std::string color_red;
+	std::string color_blue;
+	std::string color_yellow;
+	std::string color_yellow_transparent;
+	std::string color_scarlet;
+	std::string color_brown;
+	std::string color_orange;
+	std::string color_orange_transparent;
+	std::string color_orange_no_phong;
+	std::string color_chrome;
+	std::string color_gold_dode;
+	std::string color_gold_transparent;
+	std::string color_red_wine_transparent;
+	std::string color_yellow_lemon_transparent;
+
+	double sky[3];
+	double location[3];
+	double look_at[3];
+
+
+	povray_interface();
+	~povray_interface();
+	void beginning(
+			std::ostream &ost,
+			double angle,
+			double *sky,
+			double *location,
+			double *look_at,
+			int f_with_background);
+	void animation_rotate_around_origin_and_1_1_1(
+			std::ostream &ost);
+	void animation_rotate_around_origin_and_given_vector(
+			double *v,
+			std::ostream &ost);
+	void animation_rotate_xyz(
+		double angle_x_deg, double angle_y_deg, double angle_z_deg,
+		std::ostream &ost);
+	void animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+		double *v, double angle_zero_one, std::ostream &ost);
+	void union_start(
+			std::ostream &ost);
+	void union_end(
+			std::ostream &ost,
+			double scale_factor, double clipping_radius);
+	void union_end_box_clipping(
+			std::ostream &ost, double scale_factor,
+			double box_x, double box_y, double box_z);
+	void union_end_no_clipping(
+			std::ostream &ost, double scale_factor);
+	void bottom_plane(
+			std::ostream &ost);
+	void rotate_111(
+			int h, int nb_frames, std::ostream &fp);
+	void rotate_around_z_axis(
+			int h, int nb_frames, std::ostream &fp);
+	void ini(
+			std::ostream &ost,
+			const char *fname_pov, int first_frame,
+		int last_frame);
 };
 
 

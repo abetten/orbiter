@@ -164,7 +164,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 	OWCF_transversal = (geometry::object_with_canonical_form **) NEW_pvoid(IS->Objects.size());
 
-	NO_transversal = (data_structures::nauty_output **) NEW_pvoid(IS->Objects.size());
+	NO_transversal = (l1_interfaces::nauty_output **) NEW_pvoid(IS->Objects.size());
 
 
 	nb_orbits = 0;
@@ -192,7 +192,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		}
 
 
-		data_structures::nauty_output *NO;
+		l1_interfaces::nauty_output *NO;
 
 		process_any_object(OwCF,
 					input_idx,
@@ -385,7 +385,7 @@ void classification_of_objects::save_transversal(int verbose_level)
 void classification_of_objects::process_any_object(
 		geometry::object_with_canonical_form *OwCF,
 		int input_idx, long int &ago, int &f_reject,
-		data_structures::nauty_output *&NO,
+		l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -485,7 +485,7 @@ int classification_of_objects::process_object(
 		geometry::object_with_canonical_form *OwCF,
 	long int &ago,
 	int &iso_idx_if_found,
-	data_structures::nauty_output *&NO,
+	l1_interfaces::nauty_output *&NO,
 	int verbose_level)
 // returns f_found, which is true if the object is rejected
 {

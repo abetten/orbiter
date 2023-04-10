@@ -38,7 +38,7 @@ void classify_using_canonical_forms::orderly_test(
 		cout << "classify_using_canonical_forms::orderly_test" << endl;
 	}
 
-	nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
 
 	if (f_v) {
@@ -98,7 +98,7 @@ void classify_using_canonical_forms::orderly_test(
 void classify_using_canonical_forms::find_object(
 		geometry::object_with_canonical_form *OwCF,
 		int &f_found, int &idx,
-		nauty_output *&NO,
+		l1_interfaces::nauty_output *&NO,
 		bitvector *&Canonical_form,
 		int verbose_level)
 // if f_found is true, B[idx] agrees with the given object
@@ -163,7 +163,7 @@ void classify_using_canonical_forms::add_object(
 		cout << "classify_using_canonical_forms::add_object" << endl;
 	}
 
-	nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 	bitvector *Canonical_form;
 
 #if 0

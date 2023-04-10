@@ -145,7 +145,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 
 		//cout << " bitangents=";
-		//Orbiter->Lint_vec.print(cout, bitangents, nb_bitangents);
+		//Lint_vec_print(cout, bitangents, nb_bitangents);
 	}
 
 

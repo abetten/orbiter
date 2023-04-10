@@ -315,7 +315,7 @@ void quartic_curve_domain::compute_points_on_lines(
 		P->unrank_point(pt_coords + i * 3, Pts[i]);
 	}
 
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(pts_on_lines->Set_size, nb_lines);
+	Lint_vec_zero(pts_on_lines->Set_size, nb_lines);
 	for (i = 0; i < nb_lines; i++) {
 		l = Lines[i];
 		P->unrank_line(Basis, l);

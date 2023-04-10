@@ -298,7 +298,7 @@ public:
 
 	geometry::object_with_canonical_form **OWCF_transversal; // [nb_orbits]
 
-	data_structures::nauty_output **NO_transversal; // [nb_orbits]
+	l1_interfaces::nauty_output **NO_transversal; // [nb_orbits]
 
 
 	data_structures::tally *T_Ago;
@@ -319,13 +319,13 @@ public:
 	void process_any_object(
 			geometry::object_with_canonical_form *OwCF,
 			int input_idx, long int &ago, int &f_reject,
-			data_structures::nauty_output *&NO,
+			l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 	int process_object(
 			geometry::object_with_canonical_form *OwCF,
 		long int &ago,
 		int &iso_idx_if_found,
-		data_structures::nauty_output *&NO,
+		l1_interfaces::nauty_output *&NO,
 		int verbose_level);
 	// returns f_found, which is true if the object is already in the list
 	void report_summary_of_orbits(
@@ -765,7 +765,7 @@ public:
 	void set_incidence(int a);
 	void init_canonical_form(
 			encoded_combinatorial_object *Enc,
-			data_structures::nauty_output *NO,
+			l1_interfaces::nauty_output *NO,
 			int verbose_level);
 	void print_incma();
 	void print_partition();
@@ -801,18 +801,18 @@ public:
 			int verbose_level);
 	void latex_canonical_form(
 			std::ostream &ost,
-			data_structures::nauty_output *NO,
+			l1_interfaces::nauty_output *NO,
 			int verbose_level);
 	void apply_canonical_labeling(
 			int *&Inc2,
-			data_structures::nauty_output *NO);
+			l1_interfaces::nauty_output *NO);
 	void apply_canonical_labeling_and_get_flags(
 			int *&Inc2,
 			int *&Flags, int &nb_flags_counted,
-			data_structures::nauty_output *NO);
+			l1_interfaces::nauty_output *NO);
 	void latex_canonical_form_with_labels(
 			std::ostream &ost,
-			data_structures::nauty_output *NO,
+			l1_interfaces::nauty_output *NO,
 			std::string *row_labels,
 			std::string *col_labels,
 			int verbose_level);

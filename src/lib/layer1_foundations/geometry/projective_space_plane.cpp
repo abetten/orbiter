@@ -1277,7 +1277,7 @@ void projective_space_plane::determine_nonconical_six_subsets(
 		int nb_idx;
 		int *System;
 
-		m = orbiter_kernel_system::Orbiter->Int_vec->maximum(Nb_E, nb);
+		m = Int_vec_maximum(Nb_E, nb);
 		T.get_class_by_value(Idx, nb_idx, m /* value */, verbose_level);
 		if (f_v) {
 			cout << "The class of " << m << " is ";

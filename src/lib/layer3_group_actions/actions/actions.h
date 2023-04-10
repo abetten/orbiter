@@ -901,7 +901,7 @@ public:
 	void init_permutation_group(
 			int degree, int f_no_base, int verbose_level);
 	void init_permutation_group_from_nauty_output(
-			data_structures::nauty_output *NO,
+			l1_interfaces::nauty_output *NO,
 		int verbose_level);
 	void init_permutation_group_from_generators(
 			int degree,

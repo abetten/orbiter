@@ -48,7 +48,8 @@ public:
 	unsigned char read_hex_digit(char digit);
 	void print_repeated_character(std::ostream &ost, char c, int n);
 	uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
-	void solve_diophant(int *Inc,
+	void solve_diophant(
+			int *Inc,
 		int nb_rows, int nb_cols, int nb_needed,
 		int f_has_Rhs, int *Rhs,
 		long int *&Solutions, int &nb_sol,
@@ -258,7 +259,7 @@ public:
 	void find_object(
 			geometry::object_with_canonical_form *OwCF,
 			int &f_found, int &idx,
-			nauty_output *&NO,
+			l1_interfaces::nauty_output *&NO,
 			bitvector *&Canonical_form,
 			int verbose_level);
 		// if f_found is true, B[idx] agrees with the given object
@@ -325,29 +326,41 @@ public:
 	data_input_stream_description_element();
 	~data_input_stream_description_element();
 	void print();
-	void init_set_of_points(std::string &a);
-	void init_set_of_lines(std::string &a);
+	void init_set_of_points(
+			std::string &a);
+	void init_set_of_lines(
+			std::string &a);
 	void init_set_of_points_and_lines(
 			std::string &a, std::string &b);
-	void init_packing(std::string &a, int q);
-	void init_file_of_points(std::string &a);
-	void init_file_of_lines(std::string &a);
-	void init_file_of_packings(std::string &a);
+	void init_packing(
+			std::string &a, int q);
+	void init_file_of_points(
+			std::string &a);
+	void init_file_of_lines(
+			std::string &a);
+	void init_file_of_packings(
+			std::string &a);
 	void init_file_of_packings_through_spread_table(
 			std::string &a, std::string &b, int q);
-	void init_file_of_point_set(std::string &a);
-	void init_file_of_designs(std::string &a,
+	void init_file_of_point_set(
+			std::string &a);
+	void init_file_of_designs(
+			std::string &a,
 				int N_points, int b, int k, int partition_class_size);
-	void init_file_of_incidence_geometries(std::string &a,
+	void init_file_of_incidence_geometries(
+			std::string &a,
 				int v, int b, int f);
 	void init_file_of_incidence_geometries_by_row_ranks(
 			std::string &a,
 				int v, int b, int r);
-	void init_incidence_geometry(std::string &a,
+	void init_incidence_geometry(
+			std::string &a,
 				int v, int b, int f);
-	void init_incidence_geometry_by_row_ranks(std::string &a,
+	void init_incidence_geometry_by_row_ranks(
+			std::string &a,
 				int v, int b, int r);
-	void init_from_parallel_search(std::string &fname_mask,
+	void init_from_parallel_search(
+			std::string &fname_mask,
 			int nb_cases, std::string &cases_fname);
 
 };
@@ -702,47 +715,6 @@ public:
 };
 
 
-
-// #############################################################################
-// nauty_output.cpp:
-// #############################################################################
-
-
-//! output data created by a run of nauty
-
-class nauty_output {
-public:
-
-
-	int N;
-
-	int *Aut;  // [Aut_counter * N]
-	int Aut_counter;
-
-	int *Base; // [Base_length]
-	int Base_length;
-
-	long int *Base_lint;
-	int *Transversal_length;
-
-
-	ring_theory::longinteger_object *Ago;
-
-	int *canonical_labeling; // [N]
-
-	long int nb_firstpathnode;
-	long int nb_othernode;
-	long int nb_processnode;
-	long int nb_firstterminal;
-
-	nauty_output();
-	~nauty_output();
-	void allocate(int N, int verbose_level);
-	void print();
-	void print_stats();
-	int belong_to_the_same_orbit(int a, int b, int verbose_level);
-
-};
 
 
 // #############################################################################
@@ -1242,7 +1214,8 @@ public:
 			long int *big_set, int big_set_sz, int verbose_level);
 	void int_vec_swap_points(
 			int *list, int *list_inv, int idx1, int idx2);
-	int int_vec_is_sorted(int *v, int len);
+	int int_vec_is_sorted(
+			int *v, int len);
 	void int_vec_sort_and_remove_duplicates(
 			int *v, int &len);
 	void lint_vec_sort_and_remove_duplicates(
@@ -1251,10 +1224,13 @@ public:
 			int *v1, int len1, int *v2, int len2);
 	int lint_vec_sort_and_test_if_contained(
 			long int *v1, int len1, long int *v2, int len2);
-	int int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2);
-	int int_vecs_find_common_element(int *v1, int len1,
+	int int_vecs_are_disjoint(
+			int *v1, int len1, int *v2, int len2);
+	int int_vecs_find_common_element(
+			int *v1, int len1,
 		int *v2, int len2, int &idx1, int &idx2);
-	int lint_vecs_find_common_element(long int *v1, int len1,
+	int lint_vecs_find_common_element(
+			long int *v1, int len1,
 		long int *v2, int len2, int &idx1, int &idx2);
 	void int_vec_insert_and_reallocate_if_necessary(
 			int *&vec,
@@ -1268,44 +1244,59 @@ public:
 			long int *&vec,
 			int &used_length, int &alloc_length, long int a,
 			int verbose_level);
-	int int_vec_is_zero(int *v, int len);
+	int int_vec_is_zero(
+			int *v, int len);
 	int test_if_sets_are_equal(
 			int *set1, int *set2, int set_size);
 	int test_if_sets_are_disjoint(
 			long int *set1, int sz1, long int *set2, int sz2);
-	void test_if_set(int *set, int set_size);
-	int lint_vec_test_if_set(long int *set, int set_size);
+	void test_if_set(
+			int *set, int set_size);
+	int lint_vec_test_if_set(
+			long int *set, int set_size);
 	int test_if_set_with_return_value(
 			int *set, int set_size);
 	int test_if_set_with_return_value_lint(
 			long int *set, int set_size);
-	void rearrange_subset(int n, int k, int *set,
+	void rearrange_subset(
+			int n, int k, int *set,
 		int *subset, int *rearranged_set, int verbose_level);
-	void rearrange_subset_lint(int n, int k,
+	void rearrange_subset_lint(
+			int n, int k,
 		long int *set, int *subset, long int *rearranged_set,
 		int verbose_level);
-	void rearrange_subset_lint_all(int n, int k,
+	void rearrange_subset_lint_all(
+			int n, int k,
 		long int *set, long int *subset, long int *rearranged_set,
 		int verbose_level);
-	int int_vec_search_linear(int *v, int len, int a, int &idx);
+	int int_vec_search_linear(
+			int *v, int len, int a, int &idx);
 	int lint_vec_search_linear(
 			long int *v, int len, long int a, int &idx);
-	void int_vec_intersect(int *v1, int len1, int *v2, int len2,
+	void int_vec_intersect(
+			int *v1, int len1, int *v2, int len2,
 		int *&v3, int &len3);
-	void vec_intersect(long int *v1, int len1,
+	void vec_intersect(
+			long int *v1, int len1,
 		long int *v2, int len2, long int *&v3, int &len3);
-	void int_vec_intersect_sorted_vectors(int *v1, int len1,
+	void int_vec_intersect_sorted_vectors(
+			int *v1, int len1,
 		int *v2, int len2, int *v3, int &len3);
-	void lint_vec_intersect_sorted_vectors(long int *v1, int len1,
+	void lint_vec_intersect_sorted_vectors(
+			long int *v1, int len1,
 			long int *v2, int len2, long int *v3, int &len3);
-	void int_vec_sorting_permutation(int *v, int len, int *perm,
+	void int_vec_sorting_permutation(
+			int *v, int len, int *perm,
 		int *perm_inv, int f_increasingly);
-	void lint_vec_sorting_permutation(long int *v, int len,
+	void lint_vec_sorting_permutation(
+			long int *v, int len,
 		int *perm, int *perm_inv, int f_increasingly);
 	// perm and perm_inv must be allocated to len elements
-	void int_vec_quicksort(int *v, int (*compare_func)(int a, int b),
+	void int_vec_quicksort(
+			int *v, int (*compare_func)(int a, int b),
 		int left, int right);
-	void lint_vec_quicksort(long int *v,
+	void lint_vec_quicksort(
+			long int *v,
 		int (*compare_func)(long int a, long int b), int left, int right);
 	void int_vec_quicksort_increasingly(
 			int *v, int len);
@@ -1315,7 +1306,8 @@ public:
 			long int *v, int len);
 	void lint_vec_quicksort_decreasingly(
 			long int *v, int len);
-	void quicksort_array(int len, void **v,
+	void quicksort_array(
+			int len, void **v,
 		int (*compare_func)(void *a, void *b, void *data), void *data);
 	void quicksort_array_with_perm(
 			int len, void **v, int *perm,
@@ -1333,24 +1325,28 @@ public:
 			int *v, int &len, int a);
 	int int_vec_search_and_remove_if_found(
 			int *v, int &len, int a);
-	int int_vec_search(int *v, int len, int a, int &idx);
+	int int_vec_search(
+			int *v, int len, int a, int &idx);
 		// This function finds the last occurrence of the element a.
 		// If a is not found, it returns in idx the position
 		// where it should be inserted if
 		// the vector is assumed to be in increasing order.
-	int lint_vec_search(long int *v, int len, long int a,
+	int lint_vec_search(
+			long int *v, int len, long int a,
 			int &idx, int verbose_level);
 		// This function finds the last occurrence of the element a.
 		// If a is not found, it returns in idx the position
 		// where it should be inserted if
 		// the vector is assumed to be in increasing order.
-	int vector_lint_search(std::vector<long int> &v,
+	int vector_lint_search(
+			std::vector<long int> &v,
 			long int a, int &idx, int verbose_level);
 	int int_vec_search_first_occurrence(
 			int *v, int len, int a, int &idx,
 			int verbose_level);
 		// This function finds the first occurrence of the element a.
-	int lint_vec_search_first_occurrence(long int *v,
+	int lint_vec_search_first_occurrence(
+			long int *v,
 			int len, long int a, int &idx,
 			int verbose_level);
 	// This function finds the first occurrence of the element a.
@@ -1387,7 +1383,8 @@ public:
 			std::ostream &ost,
 		int f_backwards, int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void lint_vec_print_types(std::ostream &ost,
+	void lint_vec_print_types(
+			std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void int_vec_print_types_naked_stringstream(
@@ -1410,7 +1407,8 @@ public:
 			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void lint_vec_print_types_naked_tex(std::ostream &ost,
+	void lint_vec_print_types_naked_tex(
+			std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void int_vec_print_types_naked_tex_we_are_in_math_mode(
@@ -1421,13 +1419,16 @@ public:
 			std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void Heapsort(void *v, int len, int entry_size_in_chars,
+	void Heapsort(
+			void *v, int len, int entry_size_in_chars,
 		int (*compare_func)(void *v1, void *v2));
-	void Heapsort_general(void *data, int len,
+	void Heapsort_general(
+			void *data, int len,
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
-	void Heapsort_general_with_log(void *data, int *w, int len,
+	void Heapsort_general_with_log(
+			void *data, int *w, int len,
 		int (*compare_func)(void *data,
 				int i, int j, void *extra_data),
 		void (*swap_func)(void *data,
@@ -1442,14 +1443,18 @@ public:
 		// If a is not found, it returns in idx the position
 		// where it should be inserted if
 		// the vector is assumed to be in increasing order.
-	void int_vec_heapsort(int *v, int len);
-	void lint_vec_heapsort(long int *v, int len);
+	void int_vec_heapsort(
+			int *v, int len);
+	void lint_vec_heapsort(
+			long int *v, int len);
 	void int_vec_heapsort_with_log(
 			int *v, int *w, int len);
 	void lint_vec_heapsort_with_log(
 			long int *v, long int *w, int len);
-	void heapsort_make_heap(int *v, int len);
-	void lint_heapsort_make_heap(long int *v, int len);
+	void heapsort_make_heap(
+			int *v, int len);
+	void lint_heapsort_make_heap(
+			long int *v, int len);
 	void heapsort_make_heap_with_log(
 			int *v, int *w, int len);
 	void lint_heapsort_make_heap_with_log(
@@ -1488,15 +1493,19 @@ public:
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
-	void heapsort_swap(int *v, int i, int j);
-	void lint_heapsort_swap(long int *v, int i, int j);
+	void heapsort_swap(
+			int *v, int i, int j);
+	void lint_heapsort_swap(
+			long int *v, int i, int j);
 	void Heapsort_swap(
 			void *v, int i, int j, int entry_size_in_chars);
 	void find_points_by_multiplicity(
 			int *data, int data_sz, int multiplicity,
 		int *&pts, int &nb_pts);
-	void int_vec_bubblesort_increasing(int len, int *p);
-	int integer_vec_compare(int *p, int *q, int len);
+	void int_vec_bubblesort_increasing(
+			int len, int *p);
+	int integer_vec_compare(
+			int *p, int *q, int len);
 	int integer_vec_std_compare(
 			const std::vector<unsigned int> &p,
 			const std::vector<unsigned int> &q);
@@ -1514,7 +1523,8 @@ public:
 		graphics::layered_graph_draw_options *LG_Draw_options,
 		graph_theory::layered_graph *&LG,
 		int verbose_level);
-	int compare_sets(int *set1, int *set2, int sz1, int sz2);
+	int compare_sets(
+			int *set1, int *set2, int sz1, int sz2);
 	int compare_sets_lint(
 			long int *set1, long int *set2, int sz1, int sz2);
 	int test_if_sets_are_disjoint(
@@ -1523,15 +1533,18 @@ public:
 			double *v, int left, int right, int *middle);
 	void d_quicksort(
 			double *v, int left, int right);
-	void d_quicksort_array(int len, double *v);
+	void d_quicksort_array(
+			int len, double *v);
 	int test_if_sets_are_disjoint_assuming_sorted(
 			int *set1, int *set2, int sz1, int sz2);
 	int test_if_sets_are_disjoint_assuming_sorted_lint(
 			long int *set1, long int *set2, int sz1, int sz2);
-	int uchar_vec_compare(uchar *p, uchar *q, int len);
+	int uchar_vec_compare(
+			uchar *p, uchar *q, int len);
 	int test_if_sets_are_disjoint_not_assuming_sorted(
 			long int *v, long int *w, int len);
-	int int_vec_compare(int *p, int *q, int len);
+	int int_vec_compare(
+			int *p, int *q, int len);
 	int uint_vec_compare(
 			unsigned int *p, unsigned int *q, int len);
 	int int_vec_compare_stride(
@@ -1689,6 +1702,9 @@ public:
 	void remove_specific_character(std::string &str, char c);
 	void create_comma_separated_list(
 			std::string &output, long int *input, int input_sz);
+	void parse_comma_separated_list(
+			std::string &input_text, std::vector<std::string> &output,
+			int verbose_level);
 	int is_all_whitespace(const char *str);
 	void text_to_three_double(std::string &text, double *d);
 	int strcmp_with_or_without(char *p, char *q);
@@ -1742,6 +1758,84 @@ public:
 };
 
 int string_tools_compare_strings(void *a, void *b, void *data);
+
+
+// #############################################################################
+// symbolic_object_builder_description.cpp
+// #############################################################################
+
+
+
+//! to define a symbolic object
+
+
+class symbolic_object_builder_description {
+public:
+
+	int f_text;
+	std::string text_txt;
+
+	int f_ring;
+	std::string ring_label;
+
+	int f_file;
+	std::string file_name;
+
+	int f_matrix;
+	int nb_rows;
+
+	int f_test;
+	std::string test_object1;
+
+	symbolic_object_builder_description();
+	~symbolic_object_builder_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+
+};
+
+
+// #############################################################################
+// symbolic_object_builder.cpp
+// #############################################################################
+
+
+
+//! to create a vector of symbolic objects from class symbolic_object_builder_description
+
+
+class symbolic_object_builder {
+public:
+
+	symbolic_object_builder_description *Descr;
+
+
+	ring_theory::homogeneous_polynomial_domain *Ring;
+
+
+	expression_parser::formula *V;
+	int len;
+
+	int f_matrix;
+	int nb_rows;
+	int nb_cols;
+
+	symbolic_object_builder();
+	~symbolic_object_builder();
+	void init(symbolic_object_builder_description *Descr,
+			int verbose_level);
+	void print(std::ostream &ost);
+	void multiply_terms(
+			expression_parser::formula **terms,
+			int n,
+			int verbose_level);
+
+};
+
 
 
 // #############################################################################

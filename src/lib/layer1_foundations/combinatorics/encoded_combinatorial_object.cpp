@@ -124,7 +124,7 @@ void encoded_combinatorial_object::set_incidence(int a)
 
 void encoded_combinatorial_object::init_canonical_form(
 		encoded_combinatorial_object *Enc,
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -743,7 +743,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 
 void encoded_combinatorial_object::latex_canonical_form(
 		std::ostream &ost,
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -870,7 +870,7 @@ void encoded_combinatorial_object::latex_canonical_form(
 
 void encoded_combinatorial_object::apply_canonical_labeling(
 		int *&Inc2,
-		data_structures::nauty_output *NO)
+		l1_interfaces::nauty_output *NO)
 {
 	int i, j, i0, j0;
 
@@ -892,7 +892,7 @@ void encoded_combinatorial_object::apply_canonical_labeling(
 void encoded_combinatorial_object::apply_canonical_labeling_and_get_flags(
 		int *&Inc2,
 		int *&Flags, int &nb_flags_counted,
-		data_structures::nauty_output *NO)
+		l1_interfaces::nauty_output *NO)
 {
 	int i, j;
 
@@ -915,7 +915,7 @@ void encoded_combinatorial_object::apply_canonical_labeling_and_get_flags(
 
 void encoded_combinatorial_object::latex_canonical_form_with_labels(
 		std::ostream &ost,
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		std::string *row_labels,
 		std::string *col_labels,
 		int verbose_level)

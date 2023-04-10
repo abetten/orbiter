@@ -40,7 +40,8 @@ int &inc_encoding::theX_ir(int i, int r)
 	return theX[i * dim_n + r];
 }
 
-void inc_encoding::init(int v, int b, int *R, int verbose_level)
+void inc_encoding::init(
+		int v, int b, int *R, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -90,7 +91,8 @@ long int inc_encoding::rank_row(int row)
 	return rk;
 }
 
-void inc_encoding::get_flags(int row, std::vector<int> &flags)
+void inc_encoding::get_flags(
+		int row, std::vector<int> &flags)
 {
 	int i, h, r, a;
 
@@ -330,7 +332,8 @@ void inc_encoding::print_partitioned_override_theX(
 	ost << endl;
 }
 
-void inc_encoding::print_permuted(cperm *pv, cperm *qv)
+void inc_encoding::print_permuted(
+		cperm *pv, cperm *qv)
 {
 	int i, j, i1, j1, o;
 
@@ -400,7 +403,8 @@ tactical_decomposition *inc_encoding::calc_tdo_without_vhbar(
 }
 #endif
 
-void inc_encoding::apply_permutation(incidence *inc, int v,
+void inc_encoding::apply_permutation(
+		incidence *inc, int v,
 	int *theY, cperm *p, cperm *q, int verbose_level)
 /* p vertauscht nur innerhalb
  * der Bereiche gleicher R[] Laenge.

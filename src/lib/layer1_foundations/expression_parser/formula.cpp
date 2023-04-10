@@ -49,8 +49,22 @@ formula::~formula()
 	}
 }
 
-void formula::print()
+std::string formula::string_representation()
 {
+	std::string s;
+
+	if (f_Sajeeb) {
+		s = Expression_parser_sajeeb->string_representation();
+	}
+	else {
+
+	}
+	return s;
+}
+
+void formula::print(std::ostream &ost)
+{
+#if 0
 	cout << "formula: " << name_of_formula << endl;
 	cout << "formula: " << name_of_formula_latex << endl;
 	cout << "managed_variables: " << managed_variables << endl;
@@ -58,6 +72,17 @@ void formula::print()
 	cout << "formula_text=" << formula_text << endl;
 	cout << "f_is_homogeneous=" << f_is_homogeneous << endl;
 	cout << "degree=" << degree << endl;
+#endif
+
+	std::string s;
+
+	if (f_Sajeeb) {
+		s = Expression_parser_sajeeb->string_representation();
+	}
+	else {
+		tree->print(ost);
+	}
+	ost << s;
 }
 
 
@@ -555,7 +580,6 @@ void formula::evaluate(
 
 	if (f_Sajeeb) {
 
-
 		if (f_v) {
 			cout << "formula::get_subtrees "
 					"f_Sajeeb" << endl;
@@ -621,56 +645,55 @@ void formula::evaluate(
 	}
 }
 
-void formula::print(
-		std::ostream &ost)
-{
-	tree->print(ost);
-}
-
 void formula::print_easy(
 		field_theory::finite_field *F,
 		std::ostream &ost)
 {
-	if (f_is_homogeneous) {
-		ring_theory::homogeneous_polynomial_domain *Poly;
-		monomial_ordering_type Monomial_ordering_type = t_PART;
-		//t_LEX, // lexicographical
-		//t_PART, // by partition type
-
-		Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-
-		Poly->init(F, nb_managed_vars, degree,
-				Monomial_ordering_type,
-				0 /*verbose_level*/);
-
-		syntax_tree_node **Subtrees;
-		int nb_monomials;
-		int i;
-
-		nb_monomials = Poly->get_nb_monomials();
-
-		get_subtrees(Poly,
-				Subtrees, nb_monomials,
-				0 /*verbose_level*/);
-
-		for (i = 0; i < nb_monomials; i++) {
-			//cout << "Monomial " << i << " : ";
-			if (Subtrees[i]) {
-				Subtrees[i]->print_easy_without_monomial(cout);
-				cout << " * ";
-				Poly->print_monomial(cout, i);
-				cout << endl;
-			}
-			else {
-				//cout << "no subtree" << endl;
-				//Values[i] = 0;
-			}
-		}
-
-		FREE_OBJECT(Poly);
+	if (f_Sajeeb) {
+		cout << "formula::print_easy Sajeeb not yet implemented" << endl;
 	}
 	else {
-		tree->print_easy(ost);
+		if (f_is_homogeneous) {
+			ring_theory::homogeneous_polynomial_domain *Poly;
+			monomial_ordering_type Monomial_ordering_type = t_PART;
+			//t_LEX, // lexicographical
+			//t_PART, // by partition type
+
+			Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+			Poly->init(F, nb_managed_vars, degree,
+					Monomial_ordering_type,
+					0 /*verbose_level*/);
+
+			syntax_tree_node **Subtrees;
+			int nb_monomials;
+			int i;
+
+			nb_monomials = Poly->get_nb_monomials();
+
+			get_subtrees(Poly,
+					Subtrees, nb_monomials,
+					0 /*verbose_level*/);
+
+			for (i = 0; i < nb_monomials; i++) {
+				//cout << "Monomial " << i << " : ";
+				if (Subtrees[i]) {
+					Subtrees[i]->print_easy_without_monomial(cout);
+					cout << " * ";
+					Poly->print_monomial(cout, i);
+					cout << endl;
+				}
+				else {
+					//cout << "no subtree" << endl;
+					//Values[i] = 0;
+				}
+			}
+
+			FREE_OBJECT(Poly);
+		}
+		else {
+			tree->print_easy(ost);
+		}
 	}
 }
 

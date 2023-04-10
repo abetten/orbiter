@@ -86,7 +86,6 @@ ORBITER_MODULES= \
 		layer1_foundations/data_structures/int_vec.o \
 		layer1_foundations/data_structures/int_vector.o \
 		layer1_foundations/data_structures/lint_vec.o \
-		layer1_foundations/data_structures/nauty_output.o \
 		layer1_foundations/data_structures/page_storage.o \
 		layer1_foundations/data_structures/partitionstack.o \
 		layer1_foundations/data_structures/set_builder_description.o \
@@ -96,6 +95,8 @@ ORBITER_MODULES= \
 		layer1_foundations/data_structures/sorting.o \
 		layer1_foundations/data_structures/spreadsheet.o \
 		layer1_foundations/data_structures/string_tools.o \
+		layer1_foundations/data_structures/symbolic_object_builder_description.o \
+		layer1_foundations/data_structures/symbolic_object_builder.o \
 		layer1_foundations/data_structures/tally_lint.o \
 		layer1_foundations/data_structures/tally_vector_data.o \
 		layer1_foundations/data_structures/tally.o \
@@ -204,14 +205,12 @@ ORBITER_MODULES= \
 		layer1_foundations/graphics/draw_mod_n_description.o \
 		layer1_foundations/graphics/draw_projective_curve_description.o \
 		layer1_foundations/graphics/drawable_set_of_objects.o \
-		layer1_foundations/graphics/EasyBMP.o \
 		layer1_foundations/graphics/graphical_output.o \
 		layer1_foundations/graphics/layered_graph_draw_options.o \
 		layer1_foundations/graphics/mp_graphics.o \
 		layer1_foundations/graphics/parametric_curve_point.o \
 		layer1_foundations/graphics/parametric_curve.o \
 		layer1_foundations/graphics/plot_tools.o \
-		layer1_foundations/graphics/povray_interface.o \
 		layer1_foundations/graphics/povray_job_description.o \
 		layer1_foundations/graphics/scene_element_of_type_edge.o \
 		layer1_foundations/graphics/scene_element_of_type_face.o \
@@ -236,12 +235,16 @@ ORBITER_MODULES= \
 		layer1_foundations/linear_algebra/vector_space.o \
 		layer1_foundations/knowledge_base/finite_field_tables.o \
 		layer1_foundations/knowledge_base/knowledge_base.o \
+		layer1_foundations/l1_interfaces/easy_BMP_interface.o \
+		layer1_foundations/l1_interfaces/EasyBMP.o \
 		layer1_foundations/l1_interfaces/eigen_interface.o \
 		layer1_foundations/l1_interfaces/expression_parser_sajeeb.o \
 		layer1_foundations/l1_interfaces/interface_gap_low.o \
 		layer1_foundations/l1_interfaces/interface_magma_low.o \
 		layer1_foundations/l1_interfaces/latex_interface.o \
 		layer1_foundations/l1_interfaces/nauty_interface.o \
+		layer1_foundations/l1_interfaces/nauty_output.o \
+		layer1_foundations/l1_interfaces/povray_interface.o \
 		layer1_foundations/number_theory/cyclotomic_sets.o \
 		layer1_foundations/number_theory/elliptic_curve.o \
 		layer1_foundations/number_theory/number_theoretic_transform.o \

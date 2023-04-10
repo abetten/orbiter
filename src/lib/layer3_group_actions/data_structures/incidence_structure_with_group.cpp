@@ -125,9 +125,9 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 			Inc->M, partition,
 			verbose_level);
 
-	data_structures::nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
-	NO = NEW_OBJECT(data_structures::nauty_output);
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 	NO->allocate(N, verbose_level);
 
 	Nau.nauty_interface_matrix_int(

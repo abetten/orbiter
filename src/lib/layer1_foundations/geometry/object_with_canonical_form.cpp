@@ -283,7 +283,7 @@ void object_with_canonical_form::print_tex(
 		ost << "\\\\" << endl;
 #if 0
 		object_with_canonical_form::set = NEW_lint(data_sz);
-		Orbiter->Lint_vec.copy(data, object_with_canonical_form::set, data_sz);
+		Lint_vec_copy(data, object_with_canonical_form::set, data_sz);
 		object_with_canonical_form::sz = data_sz;
 		object_with_canonical_form::v = v;
 		object_with_canonical_form::b = b;
@@ -2029,7 +2029,7 @@ void object_with_canonical_form::klein(int verbose_level)
 void object_with_canonical_form::run_nauty(
 		int f_compute_canonical_form,
 		data_structures::bitvector *&Canonical_form,
-		data_structures::nauty_output *&NO,
+		l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2065,7 +2065,7 @@ void object_with_canonical_form::run_nauty(
 
 
 
-	NO = NEW_OBJECT(data_structures::nauty_output);
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 
 
 	//L = Enc->nb_rows * Enc->nb_cols;
@@ -2144,7 +2144,7 @@ void object_with_canonical_form::run_nauty(
 
 
 void object_with_canonical_form::canonical_labeling(
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2225,7 +2225,7 @@ void object_with_canonical_form::canonical_labeling(
 }
 
 void object_with_canonical_form::run_nauty_basic(
-		data_structures::nauty_output *&NO,
+		l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

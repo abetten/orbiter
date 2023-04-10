@@ -1438,7 +1438,7 @@ public:
 
 	std::string label;
 
-	data_structures::nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
 	int f_projective_space;
 	projective_geometry::projective_space_with_action *PA;
@@ -1458,7 +1458,7 @@ public:
 	~object_with_properties();
 	void init(
 			geometry::object_with_canonical_form *OwCF,
-			data_structures::nauty_output *NO,
+			l1_interfaces::nauty_output *NO,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
 			int max_TDO_depth,
@@ -1468,7 +1468,7 @@ public:
 	void lift_generators_to_matrix_group(int verbose_level);
 	void init_object_in_projective_space(
 			geometry::object_with_canonical_form *OwCF,
-			data_structures::nauty_output *NO,
+			l1_interfaces::nauty_output *NO,
 			projective_geometry::projective_space_with_action *PA,
 			std::string &label,
 			int verbose_level);

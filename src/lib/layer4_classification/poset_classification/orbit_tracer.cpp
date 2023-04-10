@@ -129,7 +129,7 @@ void orbit_tracer::recognize_start_over(
 	Lint_vec_copy(Set[lvl + 1], Set[0], size);
 
 	if (f_vv) {
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, Set[0], size);
+		Lint_vec_set_print(cout, Set[0], size);
 		cout << endl;
 	}
 	PC->get_poset()->A->Group_element->element_move(
@@ -203,7 +203,7 @@ void orbit_tracer::recognize_recursion(
 			<< endl;
 		cout << "node=" << O->get_node() << " prev=" << O->get_prev()
 				<< " pt=" << O->get_pt() << endl;
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, Set[lvl], size);
+		Lint_vec_set_print(cout, Set[lvl], size);
 		cout << endl;
 	}
 	if (f_v4) {
@@ -331,8 +331,8 @@ void orbit_tracer::recognize_recursion(
 				"find_extension_from_point" << endl;
 
 		cout << "orbit_tracer::recognize_recursion "
-				"the original set is" << endl;
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, Set[0], size);
+				"Set[0] is" << endl;
+		Lint_vec_set_print(cout, Set[0], size);
 		cout << endl;
 		//if (gen->f_print_function) {
 			//(*gen->print_function)(cout, size, gen->set[0],
@@ -340,7 +340,7 @@ void orbit_tracer::recognize_recursion(
 			//}
 		cout << "orbit_tracer::recognize_recursion "
 				"the current set is" << endl;
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, Set[lvl + 1], size);
+		Lint_vec_set_print(cout, Set[lvl + 1], size);
 		cout << endl;
 		//if (f_print_function) {
 			//(*print_function)(cout, size, set[lvl + 1],
@@ -349,7 +349,7 @@ void orbit_tracer::recognize_recursion(
 		cout << "orbit_tracer::recognize_recursion "
 				"the node corresponds to" << endl;
 		O->store_set_to(PC, lvl - 1, PC->get_Poo()->set3);
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, PC->get_Poo()->set3, lvl);
+		Lint_vec_set_print(cout, PC->get_Poo()->set3, lvl);
 		cout << endl;
 
 		cout << "orbit_tracer::recognize_recursion "

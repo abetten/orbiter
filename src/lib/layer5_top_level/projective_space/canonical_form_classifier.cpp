@@ -1892,7 +1892,7 @@ void canonical_form_classifier::export_canonical_form_data(
 
 		}
 		else {
-			//Orbiter->Lint_vec.zero(Table + i * nb_cols, nb_cols);
+			//Lint_vec_zero(Table + i * nb_cols, nb_cols);
 			//Table[i * nb_cols + 0] = i;
 			S.set_entry_lint(j, 1, 0);
 			S.set_entry_lint(j, 2, 0);

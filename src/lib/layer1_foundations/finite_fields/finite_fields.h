@@ -950,7 +950,7 @@ public:
 	void init(
 			finite_field *F, int verbose_level);
 	void print(std::ostream &ost);
-	int position_of_subfield(int order);
+	int position_of_subfield(int order_of_subfield);
 
 };
 

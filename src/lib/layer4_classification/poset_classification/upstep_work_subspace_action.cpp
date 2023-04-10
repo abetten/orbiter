@@ -65,7 +65,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_subspace_action "
 				"upstep in subspace action for set ";
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
+		Lint_vec_set_print(cout, gen->get_S(), size);
 		cout << " verbose_level=" << verbose_level;
 		cout << " f_indicate_not_canonicals="
 				<< f_indicate_not_canonicals << endl;
@@ -375,7 +375,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		if (f_vv) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::upstep_subspace_action exchanged set: ";
-			orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_set_i(0), size);
+			Lint_vec_set_print(cout, gen->get_set_i(0), size);
 			cout << endl;
 			cout << "upstep_work::upstep_subspace_action "
 					"calling recognize" << endl;
@@ -522,7 +522,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_subspace_action "
 				"upstep orbit length for set ";
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
+		Lint_vec_set_print(cout, gen->get_S(), size);
 		cout << " is " << up_orbit.orbit_len[0] << endl;
 	}
 

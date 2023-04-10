@@ -2139,13 +2139,13 @@ public:
 	void run_nauty(
 			int f_compute_canonical_form,
 			data_structures::bitvector *&Canonical_form,
-			data_structures::nauty_output *&NO,
+			l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 	void canonical_labeling(
-			data_structures::nauty_output *NO,
+			l1_interfaces::nauty_output *NO,
 			int verbose_level);
 	void run_nauty_basic(
-			data_structures::nauty_output *&NO,
+			l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 
 };

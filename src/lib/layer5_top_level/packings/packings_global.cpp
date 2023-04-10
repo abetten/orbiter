@@ -174,7 +174,7 @@ void packings_global::merge_packings(
 				cout << "File " << f << " / " << nb_files
 						<< ", input set " << g << " / "
 						<< table_length << " canonical_labeling = ";
-				Orbiter->Lint_vec.print(cout, canonical_labeling, canonical_labeling_sz);
+				Lint_vec_print(cout, canonical_labeling, canonical_labeling_sz);
 				cout << endl;
 				}
 
@@ -405,7 +405,7 @@ void packings_global::select_packings(
 	s2l = NEW_int(nb_spreads);
 	l2s = NEW_int(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
-		Orbiter->Lint_vec.copy(Spread_tables->spread_table +
+		Lint_vec_copy(Spread_tables->spread_table +
 				i * spread_size, set, spread_size);
 		Sorting.lint_vec_heapsort(set, spread_size);
 		if (!Sorting.search_general(Spread_tables->spread_table,
@@ -414,7 +414,7 @@ void packings_global::select_packings(
 				extra_data, 0 /*verbose_level*/)) {
 			cout << "packings_global::select_packings "
 					"cannot find spread " << i << " = ";
-			Orbiter->Lint_vec.print(cout, set, spread_size);
+			Lint_vec_print(cout, set, spread_size);
 			cout << endl;
 			exit(1);
 		}
@@ -557,7 +557,7 @@ void packings_global::select_packings(
 				cout << "File " << fname
 						<< ", input set " << g << " / "
 						<< table_length << " canonical_labeling = ";
-				Orbiter->Lint_vec.print(cout, canonical_labeling, canonical_labeling_sz);
+				Lint_vec_print(cout, canonical_labeling, canonical_labeling_sz);
 				cout << endl;
 				}
 
@@ -803,7 +803,7 @@ void packings_global::select_packings_self_dual(
 	s2l = NEW_int(nb_spreads);
 	l2s = NEW_int(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
-		Orbiter->Lint_vec.copy(Spread_table_original +
+		Lint_vec_copy(Spread_table_original +
 				i * spread_size, set, spread_size);
 		Sorting.lint_vec_heapsort(set, spread_size);
 		if (!Sorting.search_general(Spread_tables->spread_table,
@@ -812,7 +812,7 @@ void packings_global::select_packings_self_dual(
 				extra_data, 0 /*verbose_level*/)) {
 			cout << "packings_global::select_packings_self_dual "
 					"cannot find spread " << i << " = ";
-			Orbiter->Lint_vec.print(cout, set, spread_size);
+			Lint_vec_print(cout, set, spread_size);
 			cout << endl;
 			exit(1);
 		}
@@ -928,7 +928,7 @@ void packings_global::select_packings_self_dual(
 				cout << "File " << fname
 						<< ", input set " << g << " / "
 						<< table_length << " canonical_labeling = ";
-				Orbiter->Lint_vec.print(cout,
+				Lint_vec_print(cout,
 						canonical_labeling, canonical_labeling_sz);
 				cout << endl;
 				}

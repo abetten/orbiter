@@ -231,6 +231,9 @@ OPEN=echo
 
 TEST_FORMULA="(-a+b*b)*x*x+a*b*x"
 
+VANDERMONDE_4X4_FORMULA="1,x0,x0^2,x0^3,1,x1,x1^2,x1^3,1,x2,x2^2,x2^3,1,x3,x3^2,x3^3"
+
+
 
 
 V7_VANDERMONDE_EXTENDED="\
@@ -1642,9 +1645,39 @@ matrix_example_co_1:
 SECTION_FORMULA_BUILDER:
 
 test_2_8:
+	make symbolic_matrix
+	make symbolic_vector_with_ring
 	make formula_example
 	make formula_evaluate
 	make test_formula
+
+
+
+
+symbolic_matrix:
+	$(ORBITER) -v 3 \
+		-define M -symbolic_object \
+			-matrix 4 \
+			-text $(VANDERMONDE_4X4_FORMULA) \
+		-end
+
+symbolic_vector_with_ring:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 1 \
+			-monomial_ordering_lex \
+			-variables "x0,x1,x2,x3" "x_0,x_1,x_2,x_3" \
+			-end \
+		-define f -symbolic_object \
+			-ring R \
+			-matrix 4 \
+			-text "x0,x1,x2,x3" \
+		-end
+
+
 
 
 
@@ -3472,6 +3505,7 @@ del_Pezzo_F13ab_report:
 	$(OPEN) del_Pezzo_F13b_report.pdf
 
 
+# 274 points, 8 lines
 
 
 del_Pezzo_F13a_points.txt:
@@ -9342,7 +9376,7 @@ CREMONA_MAP_Y3="0"
 
 
 Cremona_map:
-	$(ORBITER) -v 3 \
+	$(ORBITER) -v 6 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define R -polynomial_ring \

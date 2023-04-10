@@ -154,6 +154,7 @@ public:
 	int get_nb_monomials();
 	int get_nb_variables();
 	field_theory::finite_field *get_F();
+	std::string &get_symbol(int i);
 	int get_monomial(int i, int j);
 	std::string &get_monomial_symbol_easy(int i);
 	int *get_monomial_pointer(int i);

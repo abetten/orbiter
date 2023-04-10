@@ -297,7 +297,8 @@ uint32_t algorithms::root_of_tree_uint32_t (uint32_t* S, uint32_t i)
 	return i;
 }
 
-void algorithms::solve_diophant(int *Inc,
+void algorithms::solve_diophant(
+		int *Inc,
 	int nb_rows, int nb_cols, int nb_needed,
 	int f_has_Rhs, int *Rhs,
 	long int *&Solutions, int &nb_sol,

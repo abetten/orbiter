@@ -456,7 +456,7 @@ void blt_set_classify::create_graphs(
 
 
 	Time = NEW_lint(nb_orbits * 2);
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(Time, nb_orbits * 2);
+	Lint_vec_zero(Time, nb_orbits * 2);
 	time_idx = 0;
 
 	nb_of_cases = 0;

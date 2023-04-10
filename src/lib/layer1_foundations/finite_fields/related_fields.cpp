@@ -170,7 +170,7 @@ void related_fields::print(std::ostream &ost)
 	}
 }
 
-int related_fields::position_of_subfield(int order)
+int related_fields::position_of_subfield(int order_of_subfield)
 {
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
@@ -179,7 +179,7 @@ int related_fields::position_of_subfield(int order)
 	int e;
 	int idx;
 
-	NT.factor_prime_power(order, p, e);
+	NT.factor_prime_power(order_of_subfield, p, e);
 	if (p != F->p) {
 		cout << "related_fields::position_of_subfield "
 				"the given order is not the order of a subfield" << endl;

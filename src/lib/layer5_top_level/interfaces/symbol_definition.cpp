@@ -138,6 +138,10 @@ symbol_definition::symbol_definition()
 	f_vector = false;
 	Vector_builder_description = false;
 
+	f_symbolic_object = false;
+	Symbolic_object_builder_description = NULL;
+
+
 	f_combinatorial_objects = false;
 	Data_input_stream_description = false;
 
@@ -879,6 +883,32 @@ void symbol_definition::read_definition(
 			Vector_builder_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-symbolic_object") == 0) {
+		f_symbolic_object = true;
+
+
+		Symbolic_object_builder_description = NEW_OBJECT(data_structures::symbolic_object_builder_description);
+		if (f_v) {
+			cout << "reading -symbolic_object" << endl;
+		}
+		i += Symbolic_object_builder_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-symbolic_object" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-symbolic_object ";
+			Symbolic_object_builder_description->print();
+		}
+	}
+
+
 	else if (ST.stringcmp(argv[i], "-combinatorial_objects") == 0) {
 		f_combinatorial_objects = true;
 
@@ -1397,6 +1427,17 @@ void symbol_definition::perform_definition(int verbose_level)
 					"after definition_of_vector" << endl;
 		}
 	}
+	else if (f_symbolic_object) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_symbolic_object" << endl;
+		}
+		definition_of_symbolic_object(define_label, Symbolic_object_builder_description, verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_symbolic_object" << endl;
+		}
+	}
 	else if (f_combinatorial_objects) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition "
@@ -1636,6 +1677,10 @@ void symbol_definition::print()
 	if (f_vector) {
 		cout << "-vector ";
 		Vector_builder_description->print();
+	}
+	if (f_symbolic_object) {
+		cout << "-symbolic_object ";
+		Symbolic_object_builder_description->print();
 	}
 	if (f_combinatorial_objects) {
 		cout << "-combinatorial_objects ";
@@ -3416,16 +3461,6 @@ void symbol_definition::definition_of_vector(
 				Descr->field_label,
 				verbose_level);
 
-#if 0
-		int idx;
-
-		idx = Sym->Orbiter_top_level_session->find_symbol(Descr->field_label);
-		F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
-		if (f_v) {
-			cout << "symbol_definition::definition_of_vector over a field" << endl;
-		}
-#endif
-
 	}
 	else {
 		if (f_v) {
@@ -3471,6 +3506,57 @@ void symbol_definition::definition_of_vector(
 		cout << "symbol_definition::definition_of_vector done" << endl;
 	}
 }
+
+
+void symbol_definition::definition_of_symbolic_object(
+		std::string &label,
+		data_structures::symbolic_object_builder_description *Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_symbolic_object" << endl;
+	}
+
+
+
+	data_structures::symbolic_object_builder *SB;
+
+	SB = NEW_OBJECT(data_structures::symbolic_object_builder);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_symbolic_object "
+				"before SB->init" << endl;
+	}
+
+	SB->init(Descr, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_symbolic_object "
+				"after SB->init" << endl;
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_symbolic_object(
+			label, SB, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_symbolic_object "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_symbolic_object done" << endl;
+	}
+}
+
 
 void symbol_definition::definition_of_combinatorial_object(int verbose_level)
 {

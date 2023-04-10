@@ -1632,7 +1632,7 @@ void poset_classification::list_whole_orbit(
 				orbit_element_unrank(depth, orbit_idx,
 						rank, set, 0 /* verbose_level */);
 				cout << setw(5) << rank << " : ";
-				orbiter_kernel_system::Orbiter->Lint_vec->set_print(
+				Lint_vec_set_print(
 						cout, set, depth);
 				cout << endl;
 			}

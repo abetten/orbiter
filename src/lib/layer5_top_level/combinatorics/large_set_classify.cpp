@@ -580,7 +580,7 @@ void large_set_classify::process_starter_case(
 		nb_large_sets = nb_solutions;
 		Large_sets = NEW_lint(nb_solutions * sz);
 		for (i = 0; i < nb_solutions; i++) {
-			Orbiter->Lint_vec.copy(starter_set, Large_sets + i * sz, starter_set_sz);
+			Lint_vec_copy(starter_set, Large_sets + i * sz, starter_set_sz);
 			for (j = 0; j < solution_size; j++) {
 #if 0
 				a = Solutions[i * solution_size + j];

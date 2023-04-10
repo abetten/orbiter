@@ -1042,7 +1042,7 @@ void surface_domain::compute_table_E(
 
 
 	Table = NEW_lint(nb_Q * nb_E_types);
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(Table, nb_Q * nb_E_types);
+	Lint_vec_zero(Table, nb_Q * nb_E_types);
 	for (i = 0; i < nb_fields; i++) {
 		q = Q[i];
 		nb_reps = K.cubic_surface_nb_reps(q);
@@ -1053,7 +1053,7 @@ void surface_domain::compute_table_E(
 		}
 	}
 	cout << "Table:" << endl;
-	orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(Table, nb_Q, nb_E_types);
+	Lint_matrix_print(Table, nb_Q, nb_E_types);
 
 	FREE_int(Table_idx);
 	if (f_v) {

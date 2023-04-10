@@ -17,15 +17,19 @@ namespace layer1_foundations {
 namespace data_structures {
 
 
-static void int_vec_partition(int *v,
+static void int_vec_partition(
+		int *v,
 	int (*compare_func)(int a, int b),
 	int left, int right, int *middle);
-static void lint_vec_partition(long int *v,
+static void lint_vec_partition(
+		long int *v,
 	int (*compare_func)(long int a, long int b), int left, int right, int *middle);
-static void partition(void **v, int *perm,
+static void partition(
+		void **v, int *perm,
 	int (*compare_func)(void *a, void *b, void *data), void *data,
 	int left, int right, int *middle);
-static void quicksort(void **v, int *perm,
+static void quicksort(
+		void **v, int *perm,
 	int (*compare_func)(void *a, void *b, void *data), void *data,
 	int left, int right);
 
@@ -169,7 +173,8 @@ void sorting::int_vec_swap_points(
 	list_inv[p2] = idx1;
 }
 
-int sorting::int_vec_is_sorted(int *v, int len)
+int sorting::int_vec_is_sorted(
+		int *v, int len)
 {
 	int i;
 	
@@ -263,7 +268,8 @@ int sorting::lint_vec_sort_and_test_if_contained(
 	return true;
 }
 
-int sorting::int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2)
+int sorting::int_vecs_are_disjoint(
+		int *v1, int len1, int *v2, int len2)
 {
 	int i, j;
 
@@ -289,7 +295,8 @@ int sorting::int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2)
 	return true;
 }
 
-int sorting::int_vecs_find_common_element(int *v1, int len1,
+int sorting::int_vecs_find_common_element(
+		int *v1, int len1,
 		int *v2, int len2, int &idx1, int &idx2)
 {
 	int i, j;
@@ -318,7 +325,8 @@ int sorting::int_vecs_find_common_element(int *v1, int len1,
 	return false;
 }
 
-int sorting::lint_vecs_find_common_element(long int *v1, int len1,
+int sorting::lint_vecs_find_common_element(
+		long int *v1, int len1,
 		long int *v2, int len2, int &idx1, int &idx2)
 {
 	int i, j;
@@ -489,7 +497,8 @@ void sorting::lint_vec_append_and_reallocate_if_necessary(
 		}
 }
 
-int sorting::int_vec_is_zero(int *v, int len)
+int sorting::int_vec_is_zero(
+		int *v, int len)
 {
 	int i;
 
@@ -551,7 +560,8 @@ int sorting::test_if_sets_are_disjoint(
 	return true;
 }
 
-void sorting::test_if_set(int *set, int set_size)
+void sorting::test_if_set(
+		int *set, int set_size)
 {
 	int *S;
 	int i;
@@ -571,7 +581,8 @@ void sorting::test_if_set(int *set, int set_size)
 	FREE_int(S);
 }
 
-int sorting::lint_vec_test_if_set(long int *set, int set_size)
+int sorting::lint_vec_test_if_set(
+		long int *set, int set_size)
 {
 	long int *S;
 	int i;
@@ -636,7 +647,8 @@ int sorting::test_if_set_with_return_value_lint(
 	return true;
 }
 
-void sorting::rearrange_subset(int n, int k,
+void sorting::rearrange_subset(
+		int n, int k,
 	int *set, int *subset, int *rearranged_set,
 	int verbose_level)
 {
@@ -668,7 +680,8 @@ void sorting::rearrange_subset(int n, int k,
 		}
 }
 
-void sorting::rearrange_subset_lint(int n, int k,
+void sorting::rearrange_subset_lint(
+		int n, int k,
 	long int *set, int *subset, long int *rearranged_set,
 	int verbose_level)
 {
@@ -691,7 +704,8 @@ void sorting::rearrange_subset_lint(int n, int k,
 		}
 }
 
-void sorting::rearrange_subset_lint_all(int n, int k,
+void sorting::rearrange_subset_lint_all(
+		int n, int k,
 	long int *set, long int *subset, long int *rearranged_set,
 	int verbose_level)
 {
@@ -714,7 +728,8 @@ void sorting::rearrange_subset_lint_all(int n, int k,
 		}
 }
 
-int sorting::int_vec_search_linear(int *v, int len, int a, int &idx)
+int sorting::int_vec_search_linear(
+		int *v, int len, int a, int &idx)
 {
 	int i;
 	
@@ -741,7 +756,8 @@ int sorting::lint_vec_search_linear(
 	return false;
 }
 
-void sorting::int_vec_intersect(int *v1, int len1,
+void sorting::int_vec_intersect(
+		int *v1, int len1,
 	int *v2, int len2, int *&v3, int &len3)
 {
 	int *V1, *V2;
@@ -770,7 +786,8 @@ void sorting::int_vec_intersect(int *v1, int len1,
 	FREE_int(V2);
 }
 
-void sorting::vec_intersect(long int *v1, int len1,
+void sorting::vec_intersect(
+		long int *v1, int len1,
 	long int *v2, int len2, long int *&v3, int &len3)
 {
 	long int *V1, *V2;
@@ -800,7 +817,8 @@ void sorting::vec_intersect(long int *v1, int len1,
 	FREE_lint(V2);
 }
 
-void sorting::int_vec_intersect_sorted_vectors(int *v1, int len1,
+void sorting::int_vec_intersect_sorted_vectors(
+		int *v1, int len1,
 		int *v2, int len2, int *v3, int &len3)
 {
 	int i, j, a, b;
@@ -829,7 +847,8 @@ void sorting::int_vec_intersect_sorted_vectors(int *v1, int len1,
 		}
 }
 
-void sorting::lint_vec_intersect_sorted_vectors(long int *v1, int len1,
+void sorting::lint_vec_intersect_sorted_vectors(
+		long int *v1, int len1,
 		long int *v2, int len2, long int *v3, int &len3)
 {
 	int i, j, a, b;
@@ -859,7 +878,8 @@ void sorting::lint_vec_intersect_sorted_vectors(long int *v1, int len1,
 }
 
 
-void sorting::int_vec_sorting_permutation(int *v, int len,
+void sorting::int_vec_sorting_permutation(
+		int *v, int len,
 	int *perm, int *perm_inv, int f_increasingly)
 // perm and perm_inv must be allocated to len elements
 {
@@ -886,7 +906,8 @@ void sorting::int_vec_sorting_permutation(int *v, int len,
 	Combi.perm_inverse(perm_inv, perm, len);
 }
 
-void sorting::lint_vec_sorting_permutation(long int *v, int len,
+void sorting::lint_vec_sorting_permutation(
+		long int *v, int len,
 	int *perm, int *perm_inv, int f_increasingly)
 // perm and perm_inv must be allocated to len elements
 {
@@ -924,7 +945,8 @@ void sorting::lint_vec_sorting_permutation(long int *v, int len,
 }
 
 
-void sorting::int_vec_quicksort(int *v,
+void sorting::int_vec_quicksort(
+		int *v,
 	int (*compare_func)(int a, int b), int left, int right)
 {
 	int middle;
@@ -936,7 +958,8 @@ void sorting::int_vec_quicksort(int *v,
 		}
 }
 
-void sorting::lint_vec_quicksort(long int *v,
+void sorting::lint_vec_quicksort(
+		long int *v,
 	int (*compare_func)(long int a, long int b), int left, int right)
 {
 	int middle;
@@ -1144,7 +1167,8 @@ int sorting::int_vec_search_and_remove_if_found(
 }
 
 
-int sorting::int_vec_search(int *v, int len, int a, int &idx)
+int sorting::int_vec_search(
+		int *v, int len, int a, int &idx)
 // This function finds the last occurrence of the element a.
 // If a is not found, it returns in idx the position
 // where it should be inserted if
@@ -1207,7 +1231,8 @@ int sorting::int_vec_search(int *v, int len, int a, int &idx)
 	return f_found;
 }
 
-int sorting::lint_vec_search(long int *v, int len,
+int sorting::lint_vec_search(
+		long int *v, int len,
 		long int a, int &idx, int verbose_level)
 // This function finds the last occurrence of the element a.
 // If a is not found, it returns in idx the position
@@ -1285,7 +1310,8 @@ int sorting::lint_vec_search(long int *v, int len,
 	return f_found;
 }
 
-int sorting::vector_lint_search(std::vector<long int> &v,
+int sorting::vector_lint_search(
+		std::vector<long int> &v,
 		long int a, int &idx, int verbose_level)
 // This function finds the last occurrence of the element a.
 // If a is not found, it returns in idx the position
@@ -1446,7 +1472,8 @@ int sorting::int_vec_search_first_occurrence(
 	return f_found;
 }
 
-int sorting::lint_vec_search_first_occurrence(long int *v,
+int sorting::lint_vec_search_first_occurrence(
+		long int *v,
 		int len, long int a, int &idx,
 		int verbose_level)
 // This function finds the first occurrence of the element a.
@@ -1961,7 +1988,8 @@ void sorting::lint_vec_print_types_naked(std::ostream &ost,
 }
 
 
-void sorting::int_vec_print_types_naked_tex(std::ostream &ost,
+void sorting::int_vec_print_types_naked_tex(
+		std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -2003,7 +2031,8 @@ void sorting::int_vec_print_types_naked_tex(std::ostream &ost,
 		}
 }
 
-void sorting::lint_vec_print_types_naked_tex(std::ostream &ost,
+void sorting::lint_vec_print_types_naked_tex(
+		std::ostream &ost,
 	int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -2132,7 +2161,8 @@ void sorting::lint_vec_print_types_naked_tex_we_are_in_math_mode(
 		}
 }
 
-void sorting::Heapsort(void *v, int len, int entry_size_in_chars,
+void sorting::Heapsort(
+		void *v, int len, int entry_size_in_chars,
 	int (*compare_func)(void *v1, void *v2))
 {
 	int end;
@@ -2148,7 +2178,8 @@ void sorting::Heapsort(void *v, int len, int entry_size_in_chars,
 		}
 }
 	
-void sorting::Heapsort_general(void *data, int len,
+void sorting::Heapsort_general(
+		void *data, int len,
 	int (*compare_func)(void *data,
 			int i, int j, void *extra_data),
 	void (*swap_func)(void *data,
@@ -2169,7 +2200,8 @@ void sorting::Heapsort_general(void *data, int len,
 		}
 }
 	
-void sorting::Heapsort_general_with_log(void *data, int *w, int len,
+void sorting::Heapsort_general_with_log(
+		void *data, int *w, int len,
 	int (*compare_func)(void *data,
 			int i, int j, void *extra_data),
 	void (*swap_func)(void *data,
@@ -2284,7 +2316,8 @@ int sorting::search_general(
 
 
 
-void sorting::int_vec_heapsort(int *v, int len)
+void sorting::int_vec_heapsort(
+		int *v, int len)
 {
 	int end;
 	
@@ -2297,7 +2330,8 @@ void sorting::int_vec_heapsort(int *v, int len)
 	
 }
 
-void sorting::lint_vec_heapsort(long int *v, int len)
+void sorting::lint_vec_heapsort(
+		long int *v, int len)
 {
 	int end;
 
@@ -2340,7 +2374,8 @@ void sorting::lint_vec_heapsort_with_log(
 
 }
 
-void sorting::heapsort_make_heap(int *v, int len)
+void sorting::heapsort_make_heap(
+		int *v, int len)
 {
 	int start;
 	
@@ -2349,7 +2384,8 @@ void sorting::heapsort_make_heap(int *v, int len)
 		}
 }
 
-void sorting::lint_heapsort_make_heap(long int *v, int len)
+void sorting::lint_heapsort_make_heap(
+		long int *v, int len)
 {
 	int start;
 
@@ -2608,7 +2644,8 @@ void sorting::Heapsort_general_sift_down_with_log(
 }
 
 
-void sorting::heapsort_swap(int *v, int i, int j)
+void sorting::heapsort_swap(
+		int *v, int i, int j)
 {
 	int a;
 	
@@ -2617,7 +2654,8 @@ void sorting::heapsort_swap(int *v, int i, int j)
 	v[j] = a;
 }
 
-void sorting::lint_heapsort_swap(long int *v, int i, int j)
+void sorting::lint_heapsort_swap(
+		long int *v, int i, int j)
 {
 	long int a;
 
@@ -2652,7 +2690,8 @@ void sorting::find_points_by_multiplicity(
 	C.get_data_by_multiplicity(pts, nb_pts, multiplicity, 0 /* verbose_level */);
 }
 
-void sorting::int_vec_bubblesort_increasing(int len, int *p)
+void sorting::int_vec_bubblesort_increasing(
+		int len, int *p)
 {
 	int i, j, a;
 	for (i = 0; i < len; i++) {
@@ -2668,7 +2707,8 @@ void sorting::int_vec_bubblesort_increasing(int len, int *p)
 
 
 
-int sorting::integer_vec_compare(int *p, int *q, int len)
+int sorting::integer_vec_compare(
+		int *p, int *q, int len)
 {
 	int i;
 
@@ -3000,7 +3040,8 @@ void sorting::schreier_vector_tree(
 
 }
 
-int sorting::compare_sets(int *set1, int *set2, int sz1, int sz2)
+int sorting::compare_sets(
+		int *set1, int *set2, int sz1, int sz2)
 {
 	int *S1, *S2;
 	int u, ret;
@@ -3169,7 +3210,8 @@ void sorting::d_quicksort(
 		}
 }
 
-void sorting::d_quicksort_array(int len, double *v)
+void sorting::d_quicksort_array(
+		int len, double *v)
 {
 	if (len <= 1)
 		return;
@@ -3239,7 +3281,8 @@ int sorting::test_if_sets_are_disjoint_assuming_sorted_lint(
 	return true;
 }
 
-int sorting::uchar_vec_compare(uchar *p, uchar *q, int len)
+int sorting::uchar_vec_compare(
+		uchar *p, uchar *q, int len)
 {
 	int i;
 
@@ -3267,7 +3310,8 @@ int sorting::test_if_sets_are_disjoint_not_assuming_sorted(
 	return true;
 }
 
-int sorting::int_vec_compare(int *p, int *q, int len)
+int sorting::int_vec_compare(
+		int *p, int *q, int len)
 {
 	int i;
 
@@ -3336,7 +3380,8 @@ void sorting::sorted_vec_get_first_and_length(
 // global functions:
 //##############################################################################
 
-static void int_vec_partition(int *v,
+static void int_vec_partition(
+		int *v,
 	int (*compare_func)(int a, int b), int left, int right, int *middle)
 {
 	int l, r, m, len, m1, res, pivot;
@@ -3387,7 +3432,8 @@ static void int_vec_partition(int *v,
 	*middle = m;
 }
 
-static void lint_vec_partition(long int *v,
+static void lint_vec_partition(
+		long int *v,
 	int (*compare_func)(long int a, long int b), int left, int right, int *middle)
 {
 	int l, r, m;
@@ -3439,7 +3485,8 @@ static void lint_vec_partition(long int *v,
 	*middle = m;
 }
 
-static void partition(void **v, int *perm,
+static void partition(
+		void **v, int *perm,
 	int (*compare_func)(void *a, void *b, void *data), void *data,
 	int left, int right, int *middle)
 {
@@ -3507,7 +3554,8 @@ static void partition(void **v, int *perm,
 	*middle = m;
 }
 
-static void quicksort(void **v, int *perm,
+static void quicksort(
+		void **v, int *perm,
 	int (*compare_func)(void *a, void *b, void *data), void *data,
 	int left, int right)
 {

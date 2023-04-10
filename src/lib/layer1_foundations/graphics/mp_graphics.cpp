@@ -2155,7 +2155,8 @@ void mp_graphics::circle_mp(int x, int y, int rad)
 	}
 }
 
-void mp_graphics::output_circle_text_mp(int x, int y,
+void mp_graphics::output_circle_text_mp(
+		int x, int y,
 		int idx, std::string &s)
 {
 	fp_mp << "circleit.l" << idx << "(btex " << s << " etex);" << endl;
@@ -2166,7 +2167,8 @@ void mp_graphics::output_circle_text_mp(int x, int y,
 	fp_mp << "drawboxed(l" << idx << ");" << endl;
 }
 
-void mp_graphics::polygon_idx_mp(int *Px, int *Py,
+void mp_graphics::polygon_idx_mp(
+		int *Px, int *Py,
 		int *Idx, int n, int f_cycle)
 {
 	int x, y, i;
@@ -2203,7 +2205,8 @@ void mp_graphics::polygon_idx_mp(int *Px, int *Py,
 	fp_mp << ";" << endl;
 }
 
-void mp_graphics::bezier_idx_mp(int *Px, int *Py,
+void mp_graphics::bezier_idx_mp(
+		int *Px, int *Py,
 		int *Idx, int n, int f_cycle)
 {
 	int x, y, i;
@@ -2240,7 +2243,8 @@ void mp_graphics::bezier_idx_mp(int *Px, int *Py,
 	fp_mp << ";" << endl;
 }
 
-void mp_graphics::fill_idx_mp(int *Px, int *Py,
+void mp_graphics::fill_idx_mp(
+		int *Px, int *Py,
 		int *Idx, int n, const char *symbol, int f_cycle)
 {
 	int x, y, i;
@@ -2360,7 +2364,8 @@ void mp_graphics::line_thickness_mp()
 // device specific output commands: tikz
 // #############################################################################
 
-void mp_graphics::header_tikz(std::string &str_date)
+void mp_graphics::header_tikz(
+		std::string &str_date)
 {
 	fp_tikz << "% file: " << fname_tikz << endl;
 	fp_tikz << "% created by Orbiter tikz interface" << endl;
@@ -2415,13 +2420,15 @@ void mp_graphics::footer_tikz()
 	}
 }
 
-void mp_graphics::comment_tikz(std::string &s)
+void mp_graphics::comment_tikz(
+		std::string &s)
 {
 	fp_tikz << "% " << s << endl;
 }
 
 
-void mp_graphics::text_tikz(int x1, int y1, std::string &s)
+void mp_graphics::text_tikz(
+		int x1, int y1, std::string &s)
 {
 	if (txt_overwrite) {
 		fp_tikz << "\\draw ";
@@ -2440,7 +2447,8 @@ void mp_graphics::text_tikz(int x1, int y1, std::string &s)
 }
 
 
-void mp_graphics::circle_tikz(int x, int y, int rad)
+void mp_graphics::circle_tikz(
+		int x, int y, int rad)
 {
 	//cout << "mp_graphics::circle_tikz x=" << x << " y=" << y << " rad=" << rad << endl;
 	if (fill_interior > 0) {
@@ -2462,7 +2470,8 @@ void mp_graphics::circle_tikz(int x, int y, int rad)
 }
 
 
-void mp_graphics::output_circle_text_tikz(int x, int y,
+void mp_graphics::output_circle_text_tikz(
+		int x, int y,
 		int idx, int rad, const char *text)
 {
 
@@ -2481,7 +2490,8 @@ void mp_graphics::output_circle_text_tikz(int x, int y,
 }
 
 
-void mp_graphics::polygon_idx_tikz(int *Px, int *Py,
+void mp_graphics::polygon_idx_tikz(
+		int *Px, int *Py,
 		int *Idx, int n, int f_cycle)
 {
 	int f_need_comma = false;
@@ -2541,7 +2551,8 @@ void mp_graphics::polygon_idx_tikz(int *Px, int *Py,
 	fp_tikz << ";" << endl;
 }
 
-void mp_graphics::bezier_idx_tikz(int *Px, int *Py,
+void mp_graphics::bezier_idx_tikz(
+		int *Px, int *Py,
 		int *Idx, int n, int f_cycle)
 {
 	int f_need_comma = false;
@@ -2602,7 +2613,8 @@ void mp_graphics::bezier_idx_tikz(int *Px, int *Py,
 	fp_tikz << ";" << endl;
 }
 
-void mp_graphics::color_tikz(ofstream &fp, int color)
+void mp_graphics::color_tikz(
+		std::ofstream &fp, int color)
 {
 	if (color == 0)
 		fp << "white";
@@ -2667,7 +2679,8 @@ void mp_graphics::color_tikz(ofstream &fp, int color)
 // darkgray, lightgray, brown, lime, olive, orange, pink,
 // purple, teal, violet and white.
 
-void mp_graphics::fill_idx_tikz(ofstream &fp, int *Px, int *Py,
+void mp_graphics::fill_idx_tikz(
+		std::ofstream &fp, int *Px, int *Py,
 		int *Idx, int n, const char *symbol, int f_cycle)
 {
 	int f_need_comma;
@@ -2732,7 +2745,8 @@ void mp_graphics::fill_idx_tikz(ofstream &fp, int *Px, int *Py,
 }
 
 #if 1
-void mp_graphics::output_xy_tikz(int x, int y)
+void mp_graphics::output_xy_tikz(
+		int x, int y)
 {
 	fp_tikz << "(";
 	output_x_tikz(x);
@@ -2800,7 +2814,8 @@ void mp_graphics::output_y_tikz(int y)
 
 
 
-void mp_graphics::polygon3D(int *Px, int *Py,
+void mp_graphics::polygon3D(
+		int *Px, int *Py,
 		int dim, int x0, int y0, int z0, int x1, int y1, int z1)
 {
 	int idx0, idx1;
@@ -2809,7 +2824,8 @@ void mp_graphics::polygon3D(int *Px, int *Py,
 	polygon2(Px, Py, idx0, idx1);
 }
 
-void mp_graphics::integer_4pts(int *Px, int *Py,
+void mp_graphics::integer_4pts(
+		int *Px, int *Py,
 		int p1, int p2, int p3, int p4,
 		const char *align, int a)
 {
@@ -2821,7 +2837,8 @@ void mp_graphics::integer_4pts(int *Px, int *Py,
 	text_4pts(Px, Py, p1, p2, p3, p4, align, s);
 }
 
-void mp_graphics::text_4pts(int *Px, int *Py,
+void mp_graphics::text_4pts(
+		int *Px, int *Py,
 		int p1, int p2, int p3, int p4,
 		const char *align, std::string &s)
 {
@@ -2947,7 +2964,8 @@ void mp_graphics::draw_graph_with_distinguished_edge(
 	delete Y;
 }
 
-void mp_graphics::draw_graph_on_multiple_circles(int x, int y,
+void mp_graphics::draw_graph_on_multiple_circles(
+		int x, int y,
 		int dx, int dy, int nb_V,
 		int *Edges, int nb_E, int nb_circles)
 {
@@ -3060,7 +3078,8 @@ void mp_graphics::draw_graph_on_2D_grid(
 	delete Y;
 }
 
-void mp_graphics::draw_tournament(int x, int y,
+void mp_graphics::draw_tournament(
+		int x, int y,
 		int dx, int dy, int nb_V, long int *Edges, int nb_E,
 		int radius,
 		int verbose_level)
@@ -3128,7 +3147,8 @@ void mp_graphics::draw_tournament(int x, int y,
 	delete Y;
 }
 
-void mp_graphics::draw_bitmatrix2(int f_dots,
+void mp_graphics::draw_bitmatrix2(
+		int f_dots,
 	int f_partition,
 	int nb_row_parts, int *row_part_first,
 	int nb_col_parts, int *col_part_first,
@@ -3346,7 +3366,8 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 
 
 
-void mp_graphics::draw_density2(int no,
+void mp_graphics::draw_density2(
+		int no,
 	int *outline_value, int *outline_number, int outline_sz,
 	int min_value, int max_value,
 	int offset_x, int f_switch_x,
@@ -3618,7 +3639,8 @@ void mp_graphics::draw_density2(int no,
 
 }
 
-void mp_graphics::draw_density2_multiple_curves(int no,
+void mp_graphics::draw_density2_multiple_curves(
+		int no,
 	int **outline_value, int **outline_number, int *outline_sz, int nb_curves,
 	int min_x, int max_x, int min_y, int max_y,
 	int offset_x, int f_switch_x,
@@ -4210,7 +4232,8 @@ static void projective_plane_make_affine_point(
 		}
 }
 
-void mp_graphics::domino_draw1(int M,
+void mp_graphics::domino_draw1(
+		int M,
 		int i, int j, int dx, int dy, int rad, int f_horizontal)
 {
 	int Px[100], Py[100];
@@ -4222,7 +4245,8 @@ void mp_graphics::domino_draw1(int M,
 }
 
 
-void mp_graphics::domino_draw2(int M,
+void mp_graphics::domino_draw2(
+		int M,
 		int i, int j, int dx, int dy, int rad, int f_horizontal)
 {
 	int Px[100], Py[100];
@@ -4248,7 +4272,8 @@ void mp_graphics::domino_draw2(int M,
 	circle(Px[2], Py[2], rad);
 }
 
-void mp_graphics::domino_draw3(int M,
+void mp_graphics::domino_draw3(
+		int M,
 		int i, int j, int dx, int dy, int rad, int f_horizontal)
 {
 	int Px[100], Py[100];
@@ -4275,7 +4300,8 @@ void mp_graphics::domino_draw3(int M,
 	circle(Px[2], Py[2], rad);
 }
 
-void mp_graphics::domino_draw4(int M,
+void mp_graphics::domino_draw4(
+		int M,
 		int i, int j, int dx, int dy, int rad, int f_horizontal)
 {
 	int Px[100], Py[100];
@@ -4300,7 +4326,8 @@ void mp_graphics::domino_draw4(int M,
 	circle(Px[4], Py[4], rad);
 }
 
-void mp_graphics::domino_draw5(int M,
+void mp_graphics::domino_draw5(
+		int M,
 		int i, int j, int dx, int dy, int rad, int f_horizontal)
 {
 	int Px[100], Py[100];
@@ -4326,7 +4353,8 @@ void mp_graphics::domino_draw5(int M,
 	circle(Px[4], Py[4], rad);
 }
 
-void mp_graphics::domino_draw6(int M,
+void mp_graphics::domino_draw6(
+		int M,
 		int i, int j, int dx, int dy, int rad, int f_horizontal)
 {
 	int Px[100], Py[100];
@@ -4366,7 +4394,8 @@ void mp_graphics::domino_draw6(int M,
 	circle(Px[6], Py[6], rad);
 }
 
-void mp_graphics::domino_draw7(int M,
+void mp_graphics::domino_draw7(
+		int M,
 		int i, int j, int dx, int dy, int rad, int f_horizontal)
 {
 	int Px[100], Py[100];
@@ -4411,7 +4440,8 @@ void mp_graphics::domino_draw7(int M,
 	circle(Px[7], Py[7], rad);
 }
 
-void mp_graphics::domino_draw8(int M,
+void mp_graphics::domino_draw8(
+		int M,
 		int i, int j, int dx, int dy, int rad, int f_horizontal)
 {
 	int Px[100], Py[100];
@@ -4466,7 +4496,8 @@ void mp_graphics::domino_draw8(int M,
 	circle(Px[9], Py[9], rad);
 }
 
-void mp_graphics::domino_draw9(int M,
+void mp_graphics::domino_draw9(
+		int M,
 		int i, int j, int dx, int dy, int rad, int f_horizontal)
 {
 	int Px[100], Py[100];
@@ -4648,26 +4679,28 @@ void mp_graphics::domino_draw_assignment(
 			Px[3] = j * dx;
 			Py[3] = (M - i - 1) * dy;
 
-			if (f_grid)
+			if (f_grid) {
 				polygon5(Px, Py, 0, 1, 2, 3, 0);
+			}
 			if (f_gray) {
 				a = B[i * N + j];
-				if (a < 0)
+				if (a < 0) {
 					a = -a;
+				}
 				sf_interior(100 - 10 * a);
 				sf_color(0);
 				fill_polygon5(Px, Py, 0, 1, 2, 3, 0);
-				}
+			}
 			if (f_numbers) {
 				//Px[4] = j * dx + (dx >> 1);
 				//Py[4] = (M - i) * dy - (dy >> 1);
 				snprintf(str, sizeof(str), "$%d$", B[i * N + j]);
 				s.assign(str);
 				aligned_text(Px[2], Py[2], "br", s);
-				}
-			//cout << "i=" << i << "j=" << j << "p=" << p << endl;
 			}
+			//cout << "i=" << i << "j=" << j << "p=" << p << endl;
 		}
+	}
 
 	sf_interior(100 /* fill_interior */);
 	sf_color(1 /* fill_color */);
@@ -4702,7 +4735,7 @@ void mp_graphics::domino_draw_assignment(
 
 				domino_draw_assignment_East(A[p], A[q], M,
 							i, j, dx, dy, rad);
-				}
+			}
 			else if (matching[p] == 6) {
 				//cout << "South" << endl;
 				Px[0] = j * dx;
@@ -4730,9 +4763,9 @@ void mp_graphics::domino_draw_assignment(
 
 				domino_draw_assignment_South(A[p], A[q], M,
 						i, j, dx, dy, rad);
-				}
 			}
 		}
+	}
 
 	if (f_frame) {
 		sl_udsty(50);
@@ -4745,7 +4778,7 @@ void mp_graphics::domino_draw_assignment(
 		Px[3] = N * dx;
 		Py[3] = M * dy;
 		polygon5(Px, Py, 0, 1, 2, 3, 0);
-		}
+	}
 }
 
 }}}

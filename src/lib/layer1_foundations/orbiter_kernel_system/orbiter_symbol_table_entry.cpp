@@ -655,14 +655,32 @@ void orbiter_symbol_table_entry::init_vector(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "orbiter_symbol_table_entry::init_set" << endl;
+		cout << "orbiter_symbol_table_entry::init_vector" << endl;
 	}
 	orbiter_symbol_table_entry::label.assign(label);
 	type = t_object;
 	object_type = t_vector;
 	ptr = VB;
 	if (f_v) {
-		cout << "orbiter_symbol_table_entry::init_set done" << endl;
+		cout << "orbiter_symbol_table_entry::init_vector done" << endl;
+	}
+}
+
+void orbiter_symbol_table_entry::init_symbolic_object(
+		std::string &label,
+		void *SB, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_symbolic_object" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_symbolic_object;
+	ptr = SB;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_symbolic_object done" << endl;
 	}
 }
 
@@ -836,7 +854,7 @@ void orbiter_symbol_table_entry::print()
 			expression_parser::formula *F;
 
 			F = (expression_parser::formula *) ptr;
-			F->print();
+			F->print(cout);
 		}
 		else if (object_type == t_cubic_surface) {
 			cout << "cubic surface" << endl;

@@ -44,7 +44,7 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 	if (f_v) {
 		cout << "algebraic_geometry_global::analyze_del_Pezzo_surface" << endl;
 		cout << "formula:" << endl;
-		Formula->print();
+		Formula->print(cout);
 	}
 
 	if (!Formula->f_is_homogeneous) {
@@ -490,7 +490,7 @@ void algebraic_geometry_global::cubic_surface_family_G13_generators(
 	geometry::geometry_global Gg;
 	number_theory::number_theory_domain NT;
 
-	m = orbiter_kernel_system::Orbiter->Int_vec->maximum(data, nb_gens * data_size);
+	m = Int_vec_maximum(data, nb_gens * data_size);
 	l = NT.int_log2(m) + 1;
 
 	v = NEW_int(l);
@@ -613,7 +613,7 @@ void algebraic_geometry_global::cubic_surface_family_F13_generators(
 	geometry::geometry_global Gg;
 	number_theory::number_theory_domain NT;
 
-	m = orbiter_kernel_system::Orbiter->Int_vec->maximum(data, nb_gens * data_size);
+	m = Int_vec_maximum(data, nb_gens * data_size);
 	l = NT.int_log2(m) + 1;
 
 	v = NEW_int(l);

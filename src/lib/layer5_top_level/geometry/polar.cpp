@@ -859,7 +859,7 @@ void polar::test_if_in_perp(
 
 	if (f_v) {
 		cout << "polar::test_if_in_perp done for ";
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, S, len);
+		Lint_vec_set_print(cout, S, len);
 		cout << endl;
 		}
 	if (len == 0) {
@@ -893,7 +893,7 @@ void polar::test_if_in_perp(
 	
 	if (f_v) {
 		cout << "polar::test_if_in_perp done for ";
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, S, len);
+		Lint_vec_set_print(cout, S, len);
 		cout << "; # of candidates reduced from " << nb_candidates
 				<< " to " << nb_good_candidates << endl;
 		}

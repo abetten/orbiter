@@ -121,7 +121,7 @@ void int_vector::print(std::ostream &ost)
 
 void int_vector::zero()
 {
-	orbiter_kernel_system::Orbiter->Lint_vec->zero(M, m);
+	Lint_vec_zero(M, m);
 }
 
 int int_vector::search(int a, int &idx)
@@ -227,12 +227,12 @@ uint32_t int_vector::hash()
 
 int int_vector::minimum()
 {
-	return orbiter_kernel_system::Orbiter->Lint_vec->minimum(M, m);
+	return Lint_vec_minimum(M, m);
 }
 
 int int_vector::maximum()
 {
-	return orbiter_kernel_system::Orbiter->Lint_vec->maximum(M, m);
+	return Lint_vec_maximum(M, m);
 }
 
 

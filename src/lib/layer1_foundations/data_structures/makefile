@@ -21,7 +21,6 @@ MODULES = \
 	int_vec.o \
 	int_vector.o \
 	lint_vec.o \
-	nauty_output.o \
 	page_storage.o \
 	partitionstack.o \
 	set_builder_description.o \
@@ -31,6 +30,8 @@ MODULES = \
 	sorting.o \
 	spreadsheet.o \
 	string_tools.o \
+	symbolic_object_builder_description.o \
+	symbolic_object_builder.o \
 	tally_lint.o \
 	tally_vector_data.o \
 	tally.o \

@@ -284,21 +284,21 @@ void poset_orbit_node::install_fusion_node(
 		cout << "comparing ";
 		Lint_vec_print(cout, gen->get_set3(), lvl + 1);
 		cout << " with ";
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_set0(), lvl + 1);
+		Lint_vec_set_print(cout, gen->get_set0(), lvl + 1);
 		cout << endl;
 		if (gen->get_poset()->f_subspace_lattice) {
 			int *v;
 			int i;
 
 			v = NEW_int(gen->get_VS()->dimension);
-			orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_set3(), lvl + 1);
+			Lint_vec_set_print(cout, gen->get_set3(), lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->get_set3()[i]);
 				Int_vec_print(cout, v, gen->get_VS()->dimension);
 				cout << endl;
 				}
-			orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, gen->get_set0(), lvl + 1);
+			Lint_vec_set_print(cout, gen->get_set0(), lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->get_set0()[i]);
@@ -673,7 +673,7 @@ int poset_orbit_node::trace_next_point(
 		cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 			<< " mapping " << the_point << "->" << pt0
 			<< " done, the set becomes ";
-		orbiter_kernel_system::Orbiter->Lint_vec->set_print(cout, next_set, size);
+		Lint_vec_set_print(cout, next_set, size);
 		cout << endl;
 
 		if (gen->get_poset()->f_print_function && f_vv) {

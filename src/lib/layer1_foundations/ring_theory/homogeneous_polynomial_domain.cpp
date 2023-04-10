@@ -325,6 +325,12 @@ field_theory::finite_field *homogeneous_polynomial_domain::get_F()
 	return F;
 }
 
+std::string &homogeneous_polynomial_domain::get_symbol(int i)
+{
+	return symbols[i];
+}
+
+
 int homogeneous_polynomial_domain::get_monomial(int i, int j)
 {
 	if (j > nb_variables) {
@@ -3004,7 +3010,7 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::get_coefficient_vector" << endl;
 		cout << "formula:" << endl;
-		Formula->print();
+		Formula->print(cout);
 	}
 
 

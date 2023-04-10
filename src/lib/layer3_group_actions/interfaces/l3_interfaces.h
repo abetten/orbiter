@@ -299,7 +299,7 @@ public:
 		int verbose_level);
 	// labeling[n]
 	void automorphism_group_as_permutation_group(
-			data_structures::nauty_output *NO,
+			l1_interfaces::nauty_output *NO,
 			actions::action *&A_perm,
 			int verbose_level);
 	void reverse_engineer_linear_group_from_permutation_group(
@@ -307,14 +307,14 @@ public:
 			geometry::projective_space *P,
 			groups::strong_generators *&SG,
 			actions::action *&A_perm,
-			data_structures::nauty_output *NO,
+			l1_interfaces::nauty_output *NO,
 			int verbose_level);
 	groups::strong_generators *set_stabilizer_of_object(
 			geometry::object_with_canonical_form *OwCF,
 			actions::action *A_linear,
 		int f_compute_canonical_form,
 		data_structures::bitvector *&Canonical_form,
-		data_structures::nauty_output *&NO,
+		l1_interfaces::nauty_output *&NO,
 		int verbose_level);
 
 };

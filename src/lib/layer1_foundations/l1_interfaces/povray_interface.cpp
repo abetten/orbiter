@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace graphics {
+namespace l1_interfaces {
 
 
 povray_interface::povray_interface()

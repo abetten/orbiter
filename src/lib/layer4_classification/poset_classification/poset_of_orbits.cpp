@@ -1581,7 +1581,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(
 		ost << "ROW,REP,AGO,OL" << endl;
 		for (i = 0; i < l; i++) {
 			get_node_ij(lvl, i)->store_set_to(PC, lvl - 1, set /*gen->S0*/);
-			//Orbiter->Lint_vec.print(cout, set /*gen->S0*/, lvl);
+			//Lint_vec_print(cout, set /*gen->S0*/, lvl);
 
 			ost << i;
 			{

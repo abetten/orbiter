@@ -101,7 +101,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 	data_structures::bitvector *Adj1;
 	int *parts;
 	int nb_parts;
-	int i, j, k, n1, N, f_on = 0, c, nb_edges;
+	int i, j, k, n1, N, f_on = 0, c; //, nb_edges;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -133,7 +133,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 	Adj1 = NEW_OBJECT(data_structures::bitvector);
 	Adj1->allocate(N);
 
-	nb_edges = 0;
+	//nb_edges = 0;
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
 			f_on = false;
@@ -149,7 +149,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 			if (f_on) {
 				k = Combi.ij2k(i, j, n1);
 				Adj1->m_i(k, 1);
-				nb_edges++;
+				//nb_edges++;
 			}
 		}
 	}
@@ -252,10 +252,10 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 	int *partitions;
 	int i, u, a;
 	layer1_foundations::l1_interfaces::nauty_interface Nau;
-	data_structures::nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(data_structures::nauty_output);
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 
 	NO->N = n;
 
@@ -398,10 +398,10 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph(
 	int *partition;
 	int i;
 	layer1_foundations::l1_interfaces::nauty_interface Nau;
-	data_structures::nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(data_structures::nauty_output);
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 
 	NO->N = n;
 
@@ -485,10 +485,10 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 	//longinteger_object Ago;
 	int i;
 	layer1_foundations::l1_interfaces::nauty_interface Nau;
-	data_structures::nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(data_structures::nauty_output);
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 
 	NO->N = n;
 
@@ -833,7 +833,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 
 		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure_with_partition: "
 				"Base:" << endl;
-		Orbiter->Lint_vec.print(cout, Base_lint, Base_length);
+		Lint_vec_print(cout, Base_lint, Base_length);
 		cout << endl;
 
 		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure_with_partition: "
@@ -1210,7 +1210,7 @@ void nauty_interface_with_group::add_configuration_graph(ofstream &g,
 
 
 void nauty_interface_with_group::automorphism_group_as_permutation_group(
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		actions::action *&A_perm,
 		int verbose_level)
 {
@@ -1254,7 +1254,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		geometry::projective_space *P,
 		groups::strong_generators *&SG,
 		actions::action *&A_perm,
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1499,7 +1499,7 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 		actions::action *A_linear,
 	int f_compute_canonical_form,
 	data_structures::bitvector *&Canonical_form,
-	data_structures::nauty_output *&NO,
+	l1_interfaces::nauty_output *&NO,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

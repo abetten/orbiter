@@ -138,7 +138,7 @@ int cubic_curve::compute_system_in_RREF(
 	if (false) {
 		cout << "cubic_curve::compute_system_in_RREF list of "
 				"covered points by lines:" << endl;
-		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(pt_list, nb_pts, P->Subspaces->k);
+		Lint_matrix_print(pt_list, nb_pts, P->Subspaces->k);
 	}
 	for (i = 0; i < nb_pts; i++) {
 		P->unrank_point(Pts + i * 3, pt_list[i]);

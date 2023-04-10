@@ -137,9 +137,9 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 
 
 	interfaces::nauty_interface_with_group Nau;
-	data_structures::nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
-	NO = NEW_OBJECT(data_structures::nauty_output);
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 	NO->allocate(nb_rows + nb_cols, verbose_level);
 
 

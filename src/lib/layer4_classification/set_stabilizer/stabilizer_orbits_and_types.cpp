@@ -711,7 +711,7 @@ void stabilizer_orbits_and_types::map_the_first_set_and_do_orbit_counting(int cn
 	Sorting.lint_vec_heapsort(reduced_set1, reduced_set_size);
 	if (false) {
 		cout << setw(4) << cnt << " : " << setw(4) << CS->SubSt->interesting_subsets[cnt] << " : ";
-		Orbiter->Lint_vec.print(cout, reduced_set1, reduced_set_size);
+		Lint_vec_print(cout, reduced_set1, reduced_set_size);
 		cout << endl;
 	}
 	if (false) {

@@ -124,7 +124,8 @@ void data_input_stream_description_element::print()
 }
 
 
-void data_input_stream_description_element::init_set_of_points(std::string &a)
+void data_input_stream_description_element::init_set_of_points(
+		std::string &a)
 {
 	input_type = t_data_input_stream_set_of_points;
 
@@ -132,7 +133,8 @@ void data_input_stream_description_element::init_set_of_points(std::string &a)
 
 }
 
-void data_input_stream_description_element::init_set_of_lines(std::string &a)
+void data_input_stream_description_element::init_set_of_lines(
+		std::string &a)
 {
 	input_type = t_data_input_stream_set_of_lines;
 
@@ -150,7 +152,8 @@ void data_input_stream_description_element::init_set_of_points_and_lines(
 
 }
 
-void data_input_stream_description_element::init_packing(std::string &a, int q)
+void data_input_stream_description_element::init_packing(
+		std::string &a, int q)
 {
 	input_type = t_data_input_stream_set_of_packing;
 
@@ -160,7 +163,8 @@ void data_input_stream_description_element::init_packing(std::string &a, int q)
 }
 
 
-void data_input_stream_description_element::init_file_of_points(std::string &a)
+void data_input_stream_description_element::init_file_of_points(
+		std::string &a)
 {
 	input_type = t_data_input_stream_file_of_points;
 
@@ -168,7 +172,8 @@ void data_input_stream_description_element::init_file_of_points(std::string &a)
 
 }
 
-void data_input_stream_description_element::init_file_of_lines(std::string &a)
+void data_input_stream_description_element::init_file_of_lines(
+		std::string &a)
 {
 	input_type = t_data_input_stream_file_of_lines;
 
@@ -194,7 +199,8 @@ void data_input_stream_description_element::init_file_of_packings_through_spread
 	input_data1 = q;
 }
 
-void data_input_stream_description_element::init_file_of_point_set(std::string &a)
+void data_input_stream_description_element::init_file_of_point_set(
+		std::string &a)
 {
 	input_type = t_data_input_stream_file_of_point_set;
 
@@ -202,7 +208,8 @@ void data_input_stream_description_element::init_file_of_point_set(std::string &
 
 }
 
-void data_input_stream_description_element::init_file_of_designs(std::string &a,
+void data_input_stream_description_element::init_file_of_designs(
+		std::string &a,
 			int N_points, int b, int k, int partition_class_size)
 {
 	input_type = t_data_input_stream_file_of_designs;
@@ -215,7 +222,8 @@ void data_input_stream_description_element::init_file_of_designs(std::string &a,
 
 }
 
-void data_input_stream_description_element::init_file_of_incidence_geometries(std::string &a,
+void data_input_stream_description_element::init_file_of_incidence_geometries(
+		std::string &a,
 			int v, int b, int f)
 {
 	input_type = t_data_input_stream_file_of_incidence_geometries;
@@ -240,7 +248,8 @@ void data_input_stream_description_element::init_file_of_incidence_geometries_by
 
 }
 
-void data_input_stream_description_element::init_incidence_geometry(std::string &a,
+void data_input_stream_description_element::init_incidence_geometry(
+		std::string &a,
 			int v, int b, int f)
 {
 	input_type = t_data_input_stream_incidence_geometry;
@@ -252,7 +261,8 @@ void data_input_stream_description_element::init_incidence_geometry(std::string 
 
 }
 
-void data_input_stream_description_element::init_incidence_geometry_by_row_ranks(std::string &a,
+void data_input_stream_description_element::init_incidence_geometry_by_row_ranks(
+		std::string &a,
 			int v, int b, int r)
 {
 	input_type = t_data_input_stream_incidence_geometry_by_row_ranks;
@@ -264,7 +274,8 @@ void data_input_stream_description_element::init_incidence_geometry_by_row_ranks
 
 }
 
-void data_input_stream_description_element::init_from_parallel_search(std::string &fname_mask,
+void data_input_stream_description_element::init_from_parallel_search(
+		std::string &fname_mask,
 		int nb_cases, std::string &cases_fname)
 {
 	input_type = t_data_input_stream_from_parallel_search;

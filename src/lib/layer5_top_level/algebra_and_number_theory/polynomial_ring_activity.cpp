@@ -83,7 +83,7 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 		//ring_theory::homogeneous_polynomial_domain *HPD;
 
 
-		//HPD = orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(Descr->ideal_ring_label);
+		//HPD = Get_ring(Descr->ideal_ring_label);
 
 		int dim_kernel;
 		int nb_monomials;

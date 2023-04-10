@@ -1918,10 +1918,10 @@ void surface_create::create_surface_Cayley_form(
 #if 0
 	if (f_v) {
 		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines arc: ";
-		Orbiter->Lint_vec.print(cout, arc, 6);
+		Lint_vec_print(cout, arc, 6);
 		cout << endl;
 		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines lines: ";
-		Orbiter->Lint_vec.print(cout, lines, 2);
+		Lint_vec_print(cout, lines, 2);
 		cout << endl;
 	}
 #endif

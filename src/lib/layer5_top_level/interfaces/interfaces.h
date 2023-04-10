@@ -1166,6 +1166,10 @@ public:
 	data_structures::vector_builder_description
 		*Vector_builder_description;
 
+	int f_symbolic_object;
+	data_structures::symbolic_object_builder_description
+		*Symbolic_object_builder_description;
+
 	int f_combinatorial_objects;
 	data_structures::data_input_stream_description
 		*Data_input_stream_description;
@@ -1238,6 +1242,10 @@ public:
 	void definition_of_vector(
 			std::string &label,
 			data_structures::vector_builder_description *Descr,
+			int verbose_level);
+	void definition_of_symbolic_object(
+			std::string &label,
+			data_structures::symbolic_object_builder_description *Descr,
 			int verbose_level);
 	void definition_of_combinatorial_object(int verbose_level);
 	void do_geometry_builder(int verbose_level);

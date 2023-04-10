@@ -208,7 +208,8 @@ public:
 
 	formula();
 	~formula();
-	void print();
+	std::string string_representation();
+	void print(std::ostream &ost);
 	void init_formula(
 			std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
@@ -227,8 +228,6 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
 			int verbose_level);
-	void print(
-			std::ostream &ost);
 	void print_easy(
 			field_theory::finite_field *F, std::ostream &ost);
 

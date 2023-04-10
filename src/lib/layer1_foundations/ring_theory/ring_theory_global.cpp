@@ -2656,7 +2656,7 @@ void finite_field::do_ideal(int n,
 
 		cout << "We found " << nb_pts << " points on the generator of the ideal" << endl;
 		cout << "They are : ";
-		Orbiter->Lint_vec.print(cout, Pts, nb_pts);
+		Lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 		HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
 

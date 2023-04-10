@@ -41,7 +41,7 @@ public:
 					std::ostream &fp,
 					int verbose_level);
 	void *extra_data;
-	povray_interface *Pov;
+	l1_interfaces::povray_interface *Pov;
 
 	animate();
 	~animate();
@@ -442,20 +442,6 @@ public:
 			double t_min, double t_max, double boundary,
 			polish::function_polish_description *FP_descr,
 			int verbose_level);
-	void draw_bitmap(draw_bitmap_control *C, int verbose_level);
-	void random_noise_in_bitmap_file(
-			std::string fname_input,
-			std::string fname_output,
-			int probability_numerator,
-			int probability_denominator,
-			int verbose_level);
-	void random_noise_in_bitmap_file_burst(
-			std::string fname_input,
-			std::string fname_output,
-			int probability_numerator,
-			int probability_denominator,
-			int burst_length_max,
-			int verbose_level);
 	void draw_projective_curve(
 			draw_projective_curve_description *Descr,
 			layered_graph_draw_options *Opt, int verbose_level);
@@ -836,13 +822,18 @@ public:
 	void begin_figure_mp(int factor_1000);
 	void end_figure_mp();
 	void circle_mp(int x, int y, int rad);
-	void output_circle_text_mp(int x, int y, int idx, std::string &s);
-	void polygon_idx_mp(int *Px, int *Py,
+	void output_circle_text_mp(
+			int x, int y, int idx, std::string &s);
+	void polygon_idx_mp(
+			int *Px, int *Py,
 			int *Idx, int n, int f_cycle);
-	void bezier_idx_mp(int *Px, int *Py,
+	void bezier_idx_mp(
+			int *Px, int *Py,
 			int *Idx, int n, int f_cycle);
-	void color_tikz(std::ofstream &fp, int color);
-	void fill_idx_mp(int *Px, int *Py, int *Idx, int n, 
+	void color_tikz(
+			std::ofstream &fp, int color);
+	void fill_idx_mp(
+			int *Px, int *Py, int *Idx, int n,
 		const char *symbol, int f_cycle);
 	void output_xy_metapost(int x, int y);
 	void output_x_metapost(int x);
@@ -852,34 +843,47 @@ public:
 	void line_thickness_mp();
 
 	// output commands tikz:
-	void header_tikz(std::string &str_date);
+	void header_tikz(
+			std::string &str_date);
 	void footer_tikz();
-	void comment_tikz(std::string &s);
-	void text_tikz(int x1, int y1, std::string &s);
-	void circle_tikz(int x, int y, int rad);
-	void output_circle_text_tikz(int x, int y, int idx, int rad, 
+	void comment_tikz(
+			std::string &s);
+	void text_tikz(
+			int x1, int y1, std::string &s);
+	void circle_tikz(
+			int x, int y, int rad);
+	void output_circle_text_tikz(
+			int x, int y, int idx, int rad,
 		const char *text);
-	void polygon_idx_tikz(int *Px, int *Py,
+	void polygon_idx_tikz(
+			int *Px, int *Py,
 			int *Idx, int n, int f_cycle);
-	void bezier_idx_tikz(int *Px, int *Py,
+	void bezier_idx_tikz(
+			int *Px, int *Py,
 			int *Idx, int n, int f_cycle);
-	void fill_idx_tikz(std::ofstream &fp,
+	void fill_idx_tikz(
+			std::ofstream &fp,
 		int *Px, int *Py, int *Idx, int n,
 		const char *symbol, int f_cycle);
-	void output_xy_tikz(int x, int y);
+	void output_xy_tikz(
+			int x, int y);
 	void output_x_tikz(int x);
 	void output_y_tikz(int y);
 
-	void polygon3D(int *Px, int *Py,
+	void polygon3D(
+			int *Px, int *Py,
 			int dim, int x0, int y0, int z0, int x1, int y1, int z1);
-	void integer_4pts(int *Px, int *Py,
+	void integer_4pts(
+			int *Px, int *Py,
 			int p1, int p2, int p3, int p4,
 			const char *align, int a);
-	void text_4pts(int *Px, int *Py, int p1, int p2, int p3, int p4,
+	void text_4pts(
+			int *Px, int *Py, int p1, int p2, int p3, int p4,
 		const char *align, std::string &s);
 
 
-	void draw_graph(int x, int y,
+	void draw_graph(
+			int x, int y,
 			int dx, int dy, int nb_V,
 			long int *Edges, int nb_E, int radius,
 			int verbose_level);
@@ -887,7 +891,8 @@ public:
 		int x, int y,
 		int dx, int dy, int nb_V, long int *Edges, int nb_E,
 		int distinguished_edge, int verbose_level);
-	void draw_graph_on_multiple_circles(int x, int y,
+	void draw_graph_on_multiple_circles(
+			int x, int y,
 			int dx, int dy, int nb_V,
 			int *Edges, int nb_E, int nb_circles);
 	void draw_graph_on_2D_grid(
@@ -895,11 +900,13 @@ public:
 			int *Edges, int nb_E, int *coords_2D, int *Base,
 			int f_point_labels,
 			int point_label_offset, int f_directed);
-	void draw_tournament(int x, int y,
+	void draw_tournament(
+			int x, int y,
 			int dx, int dy, int nb_V, long int *Edges, int nb_E,
 			int radius,
 			int verbose_level);
-	void draw_bitmatrix2(int f_dots,
+	void draw_bitmatrix2(
+			int f_dots,
 		int f_partition,
 		int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first,
@@ -909,7 +916,8 @@ public:
 		int m, int n,
 		int f_has_labels, int *labels);
 
-	void draw_density2(int no,
+	void draw_density2(
+			int no,
 		int *outline_value, int *outline_number, int outline_sz,
 		int min_value, int max_value,
 		int offset_x, int f_switch_x,
@@ -918,7 +926,8 @@ public:
 		int f_circle, int circle_at, int circle_rad,
 		int f_mu, int f_sigma, int nb_standard_deviations,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid);
-	void draw_density2_multiple_curves(int no,
+	void draw_density2_multiple_curves(
+			int no,
 		int **outline_value, int **outline_number,
 		int *outline_sz, int nb_curves,
 		int min_x, int max_x, int min_y, int max_y,
@@ -939,23 +948,32 @@ public:
 		int m, int n,
 		int *color_scale, int nb_colors_in_scale,
 		int f_has_labels, int *labels);
-	void domino_draw1(int M,
+	void domino_draw1(
+			int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
-	void domino_draw2(int M,
+	void domino_draw2(
+			int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
-	void domino_draw3(int M,
+	void domino_draw3(
+			int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
-	void domino_draw4(int M,
+	void domino_draw4(
+			int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
-	void domino_draw5(int M,
+	void domino_draw5(
+			int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
-	void domino_draw6(int M,
+	void domino_draw6(
+			int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
-	void domino_draw7(int M,
+	void domino_draw7(
+			int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
-	void domino_draw8(int M,
+	void domino_draw8(
+			int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
-	void domino_draw9(int M,
+	void domino_draw9(
+			int M,
 			int i, int j, int dx, int dy, int rad, int f_horizontal);
 	void domino_draw_assignment_East(
 			int Ap, int Aq, int M,
@@ -988,7 +1006,8 @@ public:
 
 	parametric_curve_point();
 	~parametric_curve_point();
-	void init(double t, int f_is_valid, double *x,
+	void init(
+			double t, int f_is_valid, double *x,
 			int nb_dimensions, int verbose_level);
 };
 
@@ -1004,7 +1023,8 @@ public:
 	int nb_dimensions;
 	double desired_distance;
 	double t0, t1; // parameter interval
-	int (*compute_point_function)(double t,
+	int (*compute_point_function)(
+			double t,
 			double *pt, void *extra_data, int verbose_level);
 	void *extra_data;
 	double boundary;
@@ -1014,10 +1034,12 @@ public:
 
 	parametric_curve();
 	~parametric_curve();
-	void init(int nb_dimensions,
+	void init(
+			int nb_dimensions,
 			double desired_distance,
 			double t0, double t1,
-			int (*compute_point_function)(double t,
+			int (*compute_point_function)(
+					double t,
 					double *pt, void *extra_data, int verbose_level),
 			void *extra_data,
 			double boundary,
@@ -1097,86 +1119,6 @@ public:
 
 
 
-// #############################################################################
-// povray_interface.cpp
-// #############################################################################
-
-//! povray interface for 3D graphics
-
-
-
-class povray_interface {
-public:
-
-
-	std::string color_white_simple;
-	std::string color_white;
-	std::string color_white_very_transparent;
-	std::string color_black;
-	std::string color_pink;
-	std::string color_pink_transparent;
-	std::string color_green;
-	std::string color_gold;
-	std::string color_red;
-	std::string color_blue;
-	std::string color_yellow;
-	std::string color_yellow_transparent;
-	std::string color_scarlet;
-	std::string color_brown;
-	std::string color_orange;
-	std::string color_orange_transparent;
-	std::string color_orange_no_phong;
-	std::string color_chrome;
-	std::string color_gold_dode;
-	std::string color_gold_transparent;
-	std::string color_red_wine_transparent;
-	std::string color_yellow_lemon_transparent;
-
-	double sky[3];
-	double location[3];
-	double look_at[3];
-
-
-	povray_interface();
-	~povray_interface();
-	void beginning(
-			std::ostream &ost,
-			double angle,
-			double *sky,
-			double *location,
-			double *look_at,
-			int f_with_background);
-	void animation_rotate_around_origin_and_1_1_1(
-			std::ostream &ost);
-	void animation_rotate_around_origin_and_given_vector(
-			double *v,
-			std::ostream &ost);
-	void animation_rotate_xyz(
-		double angle_x_deg, double angle_y_deg, double angle_z_deg,
-		std::ostream &ost);
-	void animation_rotate_around_origin_and_given_vector_by_a_given_angle(
-		double *v, double angle_zero_one, std::ostream &ost);
-	void union_start(
-			std::ostream &ost);
-	void union_end(
-			std::ostream &ost,
-			double scale_factor, double clipping_radius);
-	void union_end_box_clipping(
-			std::ostream &ost, double scale_factor,
-			double box_x, double box_y, double box_z);
-	void union_end_no_clipping(
-			std::ostream &ost, double scale_factor);
-	void bottom_plane(
-			std::ostream &ost);
-	void rotate_111(
-			int h, int nb_frames, std::ostream &fp);
-	void rotate_around_z_axis(
-			int h, int nb_frames, std::ostream &fp);
-	void ini(
-			std::ostream &ost,
-			const char *fname_pov, int first_frame,
-		int last_frame);
-};
 
 // #############################################################################
 // povray_job_description.cpp

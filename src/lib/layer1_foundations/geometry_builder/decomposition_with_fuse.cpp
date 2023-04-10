@@ -92,13 +92,15 @@ decomposition_with_fuse::~decomposition_with_fuse()
 
 }
 
-gen_geo_conf *decomposition_with_fuse::get_conf_IJ(int I, int J)
+gen_geo_conf *decomposition_with_fuse::get_conf_IJ(
+		int I, int J)
 {
 	return Conf + I * gg->GB->b_len + J;
 }
 
 
-void decomposition_with_fuse::init(gen_geo *gg, int verbose_level)
+void decomposition_with_fuse::init(
+		gen_geo *gg, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -138,7 +140,8 @@ void decomposition_with_fuse::init(gen_geo *gg, int verbose_level)
 	}
 }
 
-void decomposition_with_fuse::TDO_init(int *v, int *b, int *theTDO, int verbose_level)
+void decomposition_with_fuse::TDO_init(
+		int *v, int *b, int *theTDO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -203,7 +206,8 @@ void decomposition_with_fuse::TDO_init(int *v, int *b, int *theTDO, int verbose_
 }
 
 
-void decomposition_with_fuse::init_tdo_line(int fuse_idx, int tdo_line,
+void decomposition_with_fuse::init_tdo_line(
+		int fuse_idx, int tdo_line,
 		int v, int *b, int *r, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

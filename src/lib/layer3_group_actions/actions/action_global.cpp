@@ -1463,10 +1463,10 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 
 
 	groups::strong_generators *SG;
-	data_structures::nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(data_structures::nauty_output);
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
 
 	if (f_v) {
@@ -2637,7 +2637,7 @@ int action_global::least_image_of_point(
 	Schreier.init_generators(strong_generators, verbose_level - 2);
 	Schreier.compute_point_orbit(pt, 0);
 	len = Schreier.orbit_len[0];
-	image = orbiter_kernel_system::Orbiter->Int_vec->minimum(Schreier.orbit, len);
+	image = Int_vec_minimum(Schreier.orbit, len);
 	pos = Schreier.orbit_inv[image];
 	Schreier.coset_rep(pos, 0 /* verbose_level */);
 	A->Group_element->element_move(Schreier.cosetrep, transporter, 0);

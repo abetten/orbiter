@@ -772,6 +772,26 @@ vector_builder *orbiter_session::get_object_of_type_vector(
 
 }
 
+data_structures::symbolic_object_builder *orbiter_session::get_object_of_type_symbolic_object(
+		std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_object_of_type_symbolic_object cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_symbolic_object) {
+		cout << "orbiter_session::get_object_of_type_symbolic_object object type != t_symbolic_object" << endl;
+		exit(1);
+	}
+	return (data_structures::symbolic_object_builder *) get_object(idx);
+
+
+}
+
+
 void orbiter_session::start_memory_debug()
 {
 	f_memory_debug = true;

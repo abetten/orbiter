@@ -258,6 +258,27 @@ void expression_parser_sajeeb::init_formula(
 	}
 }
 
+string expression_parser_sajeeb::string_representation()
+{
+	int f_v = false; //(verbose_level >= 1);
+
+	if (f_v) {
+		cout << "expression_parser_sajeeb::string_representation" << endl;
+	}
+
+	expression_parser_sajeeb_private_data *PD;
+
+	PD = (expression_parser_sajeeb_private_data *) private_data;
+
+	ir_tree_to_string_visitor to_string_visitor;
+
+
+	dispatcher::visit(PD->ir_tree_root, to_string_visitor);
+	return to_string_visitor.get_string_representation();
+
+}
+
+
 void expression_parser_sajeeb::get_subtrees(
 		ring_theory::homogeneous_polynomial_domain *Poly,
 		int verbose_level)
@@ -472,9 +493,11 @@ void expression_parser_sajeeb::evaluate(
 	i = 0;
 	for (auto& it : PD->evv->monomial_coefficient_table_) {
 		const vector<unsigned int>& vec = it.first;
-		std::cout << "[";
-		for (const auto& itit : vec) std::cout << itit << " ";
-		std::cout << "]: ";
+		if (f_v) {
+			std::cout << "[";
+			for (const auto& itit : vec) std::cout << itit << " ";
+			std::cout << "]: ";
+		}
 
 		auto root_nodes = it.second;
 		int val = 0;
@@ -491,23 +514,27 @@ void expression_parser_sajeeb::evaluate(
 
 		Values[idx] = Poly->get_F()->add(Values[idx], val);
 
-		cout << i << " : " << val << " : ";
-		Int_vec_print(cout, PD->table_of_monomials + i * Poly->nb_variables, Poly->nb_variables);
-		cout << " : " << val << " : " << idx;
-		cout << endl;
+		if (f_v) {
+			cout << i << " : " << val << " : ";
+			Int_vec_print(cout, PD->table_of_monomials + i * Poly->nb_variables, Poly->nb_variables);
+			cout << " : " << val << " : " << idx;
+			cout << endl;
+		}
 		i++;
 	}
 
 
-	cout << "evaluated polynomial:" << endl;
-	for (i = 0; i < Poly->get_nb_monomials(); i++) {
-		cout << Values[i] << " * ";
-		Poly->print_monomial(cout, i);
+	if (f_v) {
+		cout << "evaluated polynomial:" << endl;
+		for (i = 0; i < Poly->get_nb_monomials(); i++) {
+			cout << Values[i] << " * ";
+			Poly->print_monomial(cout, i);
+			cout << endl;
+		}
+		cout << "coefficient vector: ";
+		Int_vec_print(cout, Values, Poly->get_nb_monomials());
 		cout << endl;
 	}
-	cout << "coefficient vector: ";
-	Int_vec_print(cout, Values, Poly->get_nb_monomials());
-	cout << endl;
 
 
 	if (f_v) {
@@ -515,7 +542,66 @@ void expression_parser_sajeeb::evaluate(
 	}
 }
 
+void expression_parser_sajeeb::multiply(
+		expression_parser_sajeeb **terms,
+		int n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply" << endl;
+	}
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply n=" << n << endl;
+	}
+
+	int i;
+
+	shared_ptr<irtree_node> *Ir_tree_root;
+
+	Ir_tree_root = new shared_ptr<irtree_node> [n];
+
+	for (i = 0; i < n; i++) {
+		expression_parser_sajeeb_private_data *PD;
+
+		PD = (expression_parser_sajeeb_private_data *) terms[i]->private_data;
+
+		Ir_tree_root[i] = PD->ir_tree_root;
+	}
+
+	shared_ptr<irtree_node> *Ir_tree_root_copy;
+	deep_copy_visitor deepCopyVisitor;
+
+	Ir_tree_root_copy = new shared_ptr<irtree_node> [n];
+
+#if 0
+
+	// ToDo:
+
+
+	for (i = 0; i < n; i++) {
+
+		Ir_tree_root_copy[i] = dispatcher::visit(Ir_tree_root[i], &deepCopyVisitor);
+
+	}
+
+	//shared_ptr<irtree_node> Ir_tree_root_new(node_type::MULTIPLY_NODE);
+
+	multiply_node Node();
+	for (i = 0; i < n; i++) {
+		Node.add_child(Ir_tree_root_copy[i]);
+		//Node.children.emplace_back(Ir_tree_root_copy[i]);
+	}
+#endif
+
+
+	delete [] Ir_tree_root;
+
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply done" << endl;
+	}
+}
 
 
 

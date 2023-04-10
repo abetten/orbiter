@@ -1939,7 +1939,7 @@ void packing_was::report_reduced_spread_orbits(
 
 		for (j = 0; j < nb_orbits1; j++) {
 			ost << j << " : " << orbit_idx[j] << " : ";
-			Orbiter->Lint_vec.print(ost, spreads_in_reduced_orbits_by_type + j * orbit_length, orbit_length);
+			Lint_vec_print(ost, spreads_in_reduced_orbits_by_type + j * orbit_length, orbit_length);
 			ost << "\\\\" << endl;
 			if (j && (j % 40) == 0) {
 				ost << endl;

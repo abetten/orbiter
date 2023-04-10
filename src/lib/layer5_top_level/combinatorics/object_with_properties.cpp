@@ -56,7 +56,7 @@ object_with_properties::~object_with_properties()
 
 void object_with_properties::init(
 		geometry::object_with_canonical_form *OwCF,
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
 		int max_TDO_depth,
@@ -215,7 +215,7 @@ void object_with_properties::lift_generators_to_matrix_group(int verbose_level)
 
 void object_with_properties::init_object_in_projective_space(
 		geometry::object_with_canonical_form *OwCF,
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 		projective_geometry::projective_space_with_action *PA,
 		std::string &label,
 		int verbose_level)
@@ -560,7 +560,7 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 		geometry_builder::geometry_builder *GB;
 		int f_found;
-		data_structures::nauty_output *NO;
+		l1_interfaces::nauty_output *NO;
 		data_structures::bitvector *Canonical_form;
 
 		GB = (geometry_builder::geometry_builder *) orbiter_kernel_system::Orbiter->get_object(idx);

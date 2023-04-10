@@ -2009,7 +2009,7 @@ void flag_orbit_folding::make_set_smaller(
 
 
 	a = set[Iso->level - 1];
-	m = orbiter_kernel_system::Orbiter->Lint_vec->minimum(set + Iso->level, Iso->size - Iso->level);
+	m = Lint_vec_minimum(set + Iso->level, Iso->size - Iso->level);
 	if (m < a) {
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes

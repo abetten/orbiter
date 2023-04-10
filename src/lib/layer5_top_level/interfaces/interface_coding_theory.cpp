@@ -453,9 +453,9 @@ void interface_coding_theory::worker(int verbose_level)
 
 		cout << "f_random_noise_in_bitmap_file" << endl;
 
-		graphics::graphical_output G;
+		l1_interfaces::easy_BMP_interface BMP;
 
-		G.random_noise_in_bitmap_file(
+		BMP.random_noise_in_bitmap_file(
 				random_noise_in_bitmap_file_input,
 				random_noise_in_bitmap_file_output,
 				random_noise_in_bitmap_file_numerator,
@@ -466,9 +466,9 @@ void interface_coding_theory::worker(int verbose_level)
 
 		cout << "f_random_noise_of_burst_type_in_bitmap_file" << endl;
 
-		graphics::graphical_output G;
+		l1_interfaces::easy_BMP_interface BMP;
 
-		G.random_noise_in_bitmap_file_burst(
+		BMP.random_noise_in_bitmap_file_burst(
 				random_noise_of_burst_type_in_bitmap_file_input,
 				random_noise_of_burst_type_in_bitmap_file_output,
 				random_noise_of_burst_type_in_bitmap_file_numerator,

@@ -365,9 +365,9 @@ void projective_space_with_action::canonical_labeling(
 			nb_rows, nb_cols,
 			0 /* verbose_level */);
 
-	data_structures::nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
-	NO = NEW_OBJECT(data_structures::nauty_output);
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
 
 

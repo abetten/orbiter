@@ -867,7 +867,7 @@ void known_groups::init_permutation_group(
 }
 
 void known_groups::init_permutation_group_from_nauty_output(
-		data_structures::nauty_output *NO,
+		l1_interfaces::nauty_output *NO,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

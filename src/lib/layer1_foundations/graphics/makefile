@@ -12,14 +12,12 @@ MODULES = \
 	draw_mod_n_description.o \
 	draw_projective_curve_description.o \
 	drawable_set_of_objects.o \
-	EasyBMP.o \
 	graphical_output.o \
 	layered_graph_draw_options.o \
 	mp_graphics.o \
 	parametric_curve_point.o \
 	parametric_curve.o \
 	plot_tools.o \
-	povray_interface.o \
 	povray_job_description.o \
 	scene_element_of_type_edge.o \
 	scene_element_of_type_face.o \

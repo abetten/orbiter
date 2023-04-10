@@ -7,12 +7,16 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	easy_BMP_interface.o \
+	EasyBMP.o \
 	eigen_interface.o \
 	expression_parser_sajeeb.o \
 	interface_gap_low.o \
 	interface_magma_low.o \
 	latex_interface.o \
-	nauty_interface.o
+	nauty_interface.o \
+	nauty_output.o \
+	povray_interface.o
 
 
 all : $(MODULES)

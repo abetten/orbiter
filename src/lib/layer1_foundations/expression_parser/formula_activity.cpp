@@ -85,7 +85,7 @@ void formula_activity::perform_activity(int verbose_level)
 
 		field_theory::finite_field *F;
 
-		F = orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(Descr->evaluate_finite_field_label);
+		F = Get_finite_field(Descr->evaluate_finite_field_label);
 
 		expression_parser_domain ED;
 		//int a;
@@ -106,7 +106,7 @@ void formula_activity::perform_activity(int verbose_level)
 
 		field_theory::finite_field *F;
 
-		F = orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(Descr->print_over_Fq_field_label);
+		F = Get_finite_field(Descr->print_over_Fq_field_label);
 
 		f->print_easy(F, cout);
 		cout << endl;
@@ -118,7 +118,7 @@ void formula_activity::perform_activity(int verbose_level)
 
 		field_theory::finite_field *F;
 
-		F = orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(Descr->sweep_field_label);
+		F = Get_finite_field(Descr->sweep_field_label);
 
 		do_sweep(false /* f_affine */,
 				f,
@@ -132,7 +132,7 @@ void formula_activity::perform_activity(int verbose_level)
 
 		field_theory::finite_field *F;
 
-		F = orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(Descr->sweep_affine_field_label);
+		F = Get_finite_field(Descr->sweep_affine_field_label);
 
 		do_sweep(true /* f_affine */,
 				f,

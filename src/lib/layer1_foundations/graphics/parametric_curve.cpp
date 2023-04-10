@@ -37,10 +37,12 @@ parametric_curve::~parametric_curve()
 {
 }
 
-void parametric_curve::init(int nb_dimensions,
+void parametric_curve::init(
+		int nb_dimensions,
 		double desired_distance,
 		double t0, double t1,
-		int (*compute_point_function)(double t, double *pt, void *extra_data, int verbose_level),
+		int (*compute_point_function)(
+				double t, double *pt, void *extra_data, int verbose_level),
 		void *extra_data,
 		double boundary,
 		int N,

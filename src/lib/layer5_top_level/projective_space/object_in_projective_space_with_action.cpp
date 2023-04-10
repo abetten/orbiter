@@ -116,9 +116,9 @@ void object_in_projective_space_with_action::report(
 	}
 
 	interfaces::nauty_interface_with_group Nau;
-	data_structures::nauty_output *NO;
+	l1_interfaces::nauty_output *NO;
 
-	NO = NEW_OBJECT(data_structures::nauty_output);
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 	NO->allocate(nb_r + nb_c, verbose_level);
 
 	SG = Nau.set_stabilizer_of_object(

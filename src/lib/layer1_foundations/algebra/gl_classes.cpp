@@ -1185,7 +1185,7 @@ int gl_classes::identify_partition(
 		Int_vec_print(cout, part, m);
 		cout << endl;
 		cout << "in:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Partitions[m], Nb_part[m], m);
+		Int_matrix_print(Partitions[m], Nb_part[m], m);
 		exit(1);
 	}
 	if (f_v) {
@@ -1479,7 +1479,7 @@ void gl_classes::generators_for_centralizer(
 			for (i = 0; i < nb_gens; i++) {
 				cout << "transformation matrix " << i << " / "
 						<< nb_gens << " is" << endl;
-				orbiter_kernel_system::Orbiter->Int_vec->matrix_print(Gens[i], k, k);
+				Int_matrix_print(Gens[i], k, k);
 			}
 		}
 
