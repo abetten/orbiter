@@ -26,6 +26,9 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_text = false;
 	//std::string text_txt;
 
+	f_field = false;
+	//std::string field_label;
+
 	f_ring = false;
 	//std::string ring_label;
 
@@ -65,6 +68,13 @@ int symbolic_object_builder_description::read_arguments(
 				cout << "-text " << text_txt << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-field") == 0) {
+			f_field = true;
+			field_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-field " << field_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-ring") == 0) {
 			f_ring = true;
 			ring_label.assign(argv[++i]);
@@ -88,7 +98,7 @@ int symbolic_object_builder_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-test") == 0) {
 			f_test = true;
-			test_object1 = ST.strtoi(argv[++i]);
+			test_object1.assign(argv[++i]);
 			if (f_v) {
 				cout << "-test " << test_object1 << endl;
 			}
@@ -116,6 +126,9 @@ void symbolic_object_builder_description::print()
 {
 	if (f_text) {
 		cout << "-text " << text_txt << endl;
+	}
+	if (f_field) {
+		cout << "-field " << field_label << endl;
 	}
 	if (f_ring) {
 		cout << "-ring " << ring_label << endl;

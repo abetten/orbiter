@@ -783,6 +783,16 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_equation "
+				"before tree->init" << endl;
+	}
+	tree->init(F, verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_equation "
+				"after tree->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_equation "
 				"formula " << name_of_formula << " is " << equation_text << endl;
 		cout << "quartic_curve_create::create_quartic_curve_by_equation "
 				"managed variables: " << managed_variables << endl;
@@ -810,7 +820,9 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	}
 #else
 	ST.parse_comma_separated_strings(managed_variables, tree->managed_variables);
-	tree->f_has_managed_variables = true;
+	if (tree->managed_variables.size() > 0) {
+		tree->f_has_managed_variables = true;
+	}
 #endif
 
 	int nb_vars;
@@ -938,46 +950,14 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 				"before evaluate" << endl;
 	}
 
-	const char *p;
-	p = equation_parameters.c_str();
-	char str[1000];
 
 	std::map<std::string, std::string> symbol_table;
-	//vector<string> symbols;
-	//vector<string> values;
 
-	while (true) {
-		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
-			break;
-		}
-		string assignment;
-		int len;
-
-		assignment.assign(str);
-		len = strlen(str);
-
-		std::size_t found;
-
-		found = assignment.find('=');
-		if (found == std::string::npos) {
-			cout << "did not find '=' in variable assignment" << endl;
-			exit(1);
-		}
-		std::string symb = assignment.substr (0, found);
-		std::string val = assignment.substr (found + 1, len - found - 1);
+	ST.parse_value_pairs(
+			symbol_table,
+			equation_parameters, 0 /* verbose_level */);
 
 
-
-		if (f_v) {
-			cout << "quartic_curve_create::create_quartic_curve_by_equation "
-					"adding symbol " << symb << " = " << val << endl;
-		}
-
-		symbol_table[symb] = val;
-		//symbols.push_back(symb);
-		//values.push_back(val);
-
-	}
 
 #if 0
 	cout << "quartic_curve_create::create_quartic_curve_by_equation "
@@ -995,7 +975,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		}
 		if (Subtrees[i]) {
 			//Subtrees[i]->print_expression(cout);
-			a = Subtrees[i]->evaluate(symbol_table, F, 0/*verbose_level*/);
+			a = Subtrees[i]->evaluate(symbol_table, 0/*verbose_level*/);
 			coeffs15[i] = a;
 			if (f_v) {
 				cout << "quartic_curve_create::create_quartic_curve_by_equation "

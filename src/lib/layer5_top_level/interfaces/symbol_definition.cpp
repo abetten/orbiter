@@ -51,12 +51,15 @@ symbol_definition::symbol_definition()
 	f_group_modification = false;
 	Group_modification_description = NULL;
 
+#if 0
 	f_formula = false;
 	Formula = NULL;
 	//std::string label;
 	//std::string label_tex;
 	//std::string managed_variables;
 	//std::string formula_text;
+	//std::string formula_finite_field;
+#endif
 
 	f_collection = false;
 	//std::string list_of_objects;
@@ -381,6 +384,7 @@ void symbol_definition::read_definition(
 		}
 	}
 
+#if 0
 	else if (ST.stringcmp(argv[i], "-formula") == 0) {
 		if (f_v) {
 			cout << "symbol_definition::read_definition -formula" << endl;
@@ -391,6 +395,7 @@ void symbol_definition::read_definition(
 		label_tex.assign(argv[++i]);
 		managed_variables.assign(argv[++i]);
 		formula_text.assign(argv[++i]);
+		formula_finite_field.assign(argv[++i]);
 
 		i++;
 
@@ -412,6 +417,7 @@ void symbol_definition::read_definition(
 		}
 
 	}
+#endif
 
 	else if (ST.stringcmp(argv[i], "-geometric_object") == 0) {
 		f_geometric_object = true;
@@ -1193,7 +1199,7 @@ void symbol_definition::perform_definition(int verbose_level)
 		}
 	}
 
-
+#if 0
 	else if (f_formula) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition "
@@ -1205,6 +1211,7 @@ void symbol_definition::perform_definition(int verbose_level)
 					"after definition_of_formula" << endl;
 		}
 	}
+#endif
 
 	else if (f_geometric_object) {
 		if (f_v) {
@@ -1580,6 +1587,7 @@ void symbol_definition::print()
 		cout << "-modified_group ";
 		Group_modification_description->print();
 	}
+#if 0
 	if (f_formula) {
 		cout << "-formula " << label << " " << label_tex << " " << managed_variables << " " << formula_text;
 		//formula *F;
@@ -1588,6 +1596,7 @@ void symbol_definition::print()
 		//std::string managed_variables;
 		//std::string formula_text;
 	}
+#endif
 	if (f_geometric_object) {
 		cout << "-geometric_object ";
 		Geometric_object_description->print();
@@ -2294,7 +2303,7 @@ void symbol_definition::definition_of_geometric_object(int verbose_level)
 
 
 
-
+#if 0
 void symbol_definition::definition_of_formula(
 		expression_parser::formula *Formula,
 		int verbose_level)
@@ -2322,6 +2331,7 @@ void symbol_definition::definition_of_formula(
 		cout << "symbol_definition::definition_of_formula done" << endl;
 	}
 }
+#endif
 
 void symbol_definition::definition_of_collection(std::string &list_of_objects,
 		int verbose_level)

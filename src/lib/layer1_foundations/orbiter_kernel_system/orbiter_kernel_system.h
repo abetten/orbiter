@@ -1070,9 +1070,11 @@ public:
 	void init_spread_classify(
 			std::string &label,
 			void *p, int verbose_level);
+#if 0
 	void init_formula(
 			std::string &label,
 			void *p, int verbose_level);
+#endif
 	void init_cubic_surface(
 			std::string &label,
 			void *p, int verbose_level);

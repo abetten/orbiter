@@ -50,7 +50,8 @@ spreadsheet::~spreadsheet()
 		}
 }
 
-void spreadsheet::init_set_of_sets(set_of_sets *S, int f_make_heading)
+void spreadsheet::init_set_of_sets(
+		set_of_sets *S, int f_make_heading)
 {
 	int s, i, j, a, h, len, offset = 0;
 	char str[1000];
@@ -106,7 +107,8 @@ void spreadsheet::init_set_of_sets(set_of_sets *S, int f_make_heading)
 		}
 }
 
-void spreadsheet::init_int_matrix(int nb_rows, int nb_cols, int *A)
+void spreadsheet::init_int_matrix(
+		int nb_rows, int nb_cols, int *A)
 {
 	int i, len, a;
 	char str[1000];
@@ -129,7 +131,8 @@ void spreadsheet::init_int_matrix(int nb_rows, int nb_cols, int *A)
 		}
 }
 
-void spreadsheet::init_empty_table(int nb_rows, int nb_cols)
+void spreadsheet::init_empty_table(
+		int nb_rows, int nb_cols)
 {
 	int i;
 	
@@ -146,7 +149,8 @@ void spreadsheet::init_empty_table(int nb_rows, int nb_cols)
 		}
 }
 
-void spreadsheet::fill_entry_with_text(int row_idx,
+void spreadsheet::fill_entry_with_text(
+		int row_idx,
 		int col_idx, const char *text)
 {
 	int l, t;
@@ -162,7 +166,8 @@ void spreadsheet::fill_entry_with_text(int row_idx,
 	strcpy(tokens[t], text);
 }
 
-void spreadsheet::fill_entry_with_text(int row_idx,
+void spreadsheet::fill_entry_with_text(
+		int row_idx,
 		int col_idx, std::string &text)
 {
 	int l, t;
@@ -178,7 +183,8 @@ void spreadsheet::fill_entry_with_text(int row_idx,
 	strcpy(tokens[t], text.c_str());
 }
 
-void spreadsheet::set_entry_lint(int row_idx,
+void spreadsheet::set_entry_lint(
+		int row_idx,
 		int col_idx, long int val)
 {
 	int l, t;
@@ -198,7 +204,8 @@ void spreadsheet::set_entry_lint(int row_idx,
 }
 
 
-void spreadsheet::fill_column_with_text(int col_idx,
+void spreadsheet::fill_column_with_text(
+		int col_idx,
 		std::string *text, const char *heading)
 {
 	int i, l, t;
@@ -223,7 +230,8 @@ void spreadsheet::fill_column_with_text(int col_idx,
 		}
 }
 
-void spreadsheet::fill_column_with_int(int col_idx,
+void spreadsheet::fill_column_with_int(
+		int col_idx,
 		int *data, const char *heading)
 {
 	int i, l, t;
@@ -250,7 +258,8 @@ void spreadsheet::fill_column_with_int(int col_idx,
 		}
 }
 
-void spreadsheet::fill_column_with_lint(int col_idx,
+void spreadsheet::fill_column_with_lint(
+		int col_idx,
 		long int *data, const char *heading)
 {
 	int i, l, t;
@@ -304,7 +313,8 @@ void spreadsheet::fill_column_with_row_index(
 	}
 }
 
-void spreadsheet::add_token(const char *label)
+void spreadsheet::add_token(
+		const char *label)
 {
 	char **tokens2;
 	int i, j, len;
@@ -331,7 +341,8 @@ void spreadsheet::add_token(const char *label)
 	nb_tokens++;
 }
 
-void spreadsheet::save(std::string &fname, int verbose_level)
+void spreadsheet::save(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -348,7 +359,8 @@ void spreadsheet::save(std::string &fname, int verbose_level)
 		}
 }
 
-void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
+void spreadsheet::read_spreadsheet(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 2);
@@ -446,7 +458,8 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 	
 }
 
-void spreadsheet::print_table(std::ostream &ost, int f_enclose_in_parentheses)
+void spreadsheet::print_table(
+		std::ostream &ost, int f_enclose_in_parentheses)
 {
 	int i;
 	
@@ -482,7 +495,8 @@ void spreadsheet::print_table_latex_all_columns(
 	FREE_int(f_column_select);
 }
 
-void spreadsheet::print_table_latex(std::ostream &ost,
+void spreadsheet::print_table_latex(
+		std::ostream &ost,
 		int *f_column_select, int f_enclose_in_parentheses,
 		int nb_lines_per_table)
 {
@@ -525,7 +539,8 @@ void spreadsheet::print_table_latex(std::ostream &ost,
 	}
 }
 
-void spreadsheet::print_table_row(int row,
+void spreadsheet::print_table_row(
+		int row,
 		int f_enclose_in_parentheses, std::ostream &ost)
 {
 	int j, t; //, h;
@@ -575,7 +590,8 @@ void spreadsheet::print_table_row(int row,
 	ost << endl;
 }
 
-void spreadsheet::print_table_row_latex(int row,
+void spreadsheet::print_table_row_latex(
+		int row,
 		int *f_column_select, int f_enclose_in_parentheses,
 		ostream &ost)
 {
@@ -622,7 +638,8 @@ void spreadsheet::print_table_row_latex(int row,
 	ost << "\\\\" << endl;
 }
 
-void spreadsheet::print_table_row_detailed(int row, std::ostream &ost)
+void spreadsheet::print_table_row_detailed(
+		int row, std::ostream &ost)
 {
 	int j, t;
 	
@@ -640,7 +657,8 @@ void spreadsheet::print_table_row_detailed(int row, std::ostream &ost)
 		}
 }
 
-void spreadsheet::print_table_row_with_column_selection(int row,
+void spreadsheet::print_table_row_with_column_selection(
+		int row,
 		int f_enclose_in_parentheses,
 		int *Col_selection, int nb_cols_selected,
 		std::ostream &ost, int verbose_level)
@@ -719,7 +737,8 @@ void spreadsheet::print_table_with_row_selection(
 		}
 }
 
-void spreadsheet::print_table_sorted(std::ostream &ost,
+void spreadsheet::print_table_sorted(
+		std::ostream &ost,
 		const char *sort_by)
 {
 	int i, t, ii;
@@ -851,12 +870,14 @@ void spreadsheet::reallocate_table_add_row()
 	nb_rows++;
 }
 
-int spreadsheet::find_column(std::string &column_label)
+int spreadsheet::find_column(
+		std::string &column_label)
 {
 	return find_by_column(column_label.c_str());
 }
 
-int spreadsheet::find_by_column(const char *join_by)
+int spreadsheet::find_by_column(
+		const char *join_by)
 {
 	int j, t, c; //, h;
 	
@@ -908,7 +929,8 @@ int spreadsheet::find_by_column(const char *join_by)
 	exit(1);
 }
 
-void spreadsheet::tokenize(std::string &fname,
+void spreadsheet::tokenize(
+		std::string &fname,
 	char **&tokens, int &nb_tokens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1091,7 +1113,8 @@ void spreadsheet::tokenize(std::string &fname,
 	FREE_char(str);
 }
 
-void spreadsheet::remove_quotes(int verbose_level)
+void spreadsheet::remove_quotes(
+		int verbose_level)
 {
 	int i, j, h, l, t;
 	
@@ -1116,7 +1139,8 @@ void spreadsheet::remove_quotes(int verbose_level)
 		}
 }
 
-void spreadsheet::remove_rows(const char *drop_column,
+void spreadsheet::remove_rows(
+		const char *drop_column,
 		const char *drop_label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1192,7 +1216,8 @@ void spreadsheet::remove_rows_where_field_is_empty(
 		}
 }
 
-void spreadsheet::find_rows(int verbose_level)
+void spreadsheet::find_rows(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1231,7 +1256,8 @@ void spreadsheet::find_rows(int verbose_level)
 		}
 }
 
-void spreadsheet::get_value_double_or_NA(int i, int j,
+void spreadsheet::get_value_double_or_NA(
+		int i, int j,
 		double &val, int &f_NA)
 {
 	string str;
@@ -1249,7 +1275,8 @@ void spreadsheet::get_value_double_or_NA(int i, int j,
 	}
 }
 
-void spreadsheet::get_string(std::string &str, int i, int j)
+void spreadsheet::get_string(
+		std::string &str, int i, int j)
 {
 	int t; // l
 	//char *str;
@@ -1311,7 +1338,8 @@ double spreadsheet::get_double(int i, int j)
 	return a;
 }
 
-void spreadsheet::join_with(spreadsheet *S2,
+void spreadsheet::join_with(
+		spreadsheet *S2,
 		int by1, int by2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1495,7 +1523,8 @@ void spreadsheet::join_with(spreadsheet *S2,
 		}
 }
 
-void spreadsheet::patch_with(spreadsheet *S2, char *join_by)
+void spreadsheet::patch_with(
+		spreadsheet *S2, char *join_by)
 {
 	int by1;
 	int t0, t1, /*t2,*/ t3;

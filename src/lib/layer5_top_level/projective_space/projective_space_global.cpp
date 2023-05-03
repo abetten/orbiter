@@ -19,6 +19,7 @@ void projective_space_global::analyze_del_Pezzo_surface(
 		std::string &label,
 		std::string &evaluate_text,
 		int verbose_level)
+// ToDo use symbolic object instead
 {
 	int f_v = (verbose_level >= 1);
 
@@ -41,6 +42,11 @@ void projective_space_global::analyze_del_Pezzo_surface(
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}
+
+
+	// ToDo use symbolic object instead
+
+#if 0
 	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
 		cout << "symbol table entry is a collection" << endl;
 
@@ -83,6 +89,7 @@ void projective_space_global::analyze_del_Pezzo_surface(
 		cout << "symbol table entry must be either a formula or a collection" << endl;
 		exit(1);
 	}
+#endif
 
 
 	if (f_v) {

@@ -1505,7 +1505,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 					"before ED.evaluate" << endl;
 		}
 		ED.evaluate(
-				F,
 				Descr->evaluate_formula_label,
 				Descr->evaluate_parameters,
 				verbose_level);

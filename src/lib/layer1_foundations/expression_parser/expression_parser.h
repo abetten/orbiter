@@ -28,7 +28,7 @@ public:
 	expression_parser_domain();
 	~expression_parser_domain();
 	void parse_and_evaluate(
-			field_theory::finite_field *F,
+			field_theory::finite_field *Fq,
 			std::string &name_of_formula,
 			std::string &formula_text,
 			std::string &managed_variables,
@@ -36,21 +36,22 @@ public:
 			std::string &parameters,
 			int verbose_level);
 	void evaluate(
-			field_theory::finite_field *Fq,
 			std::string &formula_label,
 			std::string &parameters,
 			int verbose_level);
+	// ToDo: use symbolic object instead
 	int evaluate_formula(
 			formula *F,
-			field_theory::finite_field *Fq,
 			std::string &parameters,
 			int verbose_level);
+	// creates a homogeneous_polynomial_domain object
+	// if the formula is homogeneous
 	void evaluate_managed_formula(
 			formula *F,
-			field_theory::finite_field *Fq,
 			std::string &parameters,
 			int *&Values, int &nb_monomials,
 			int verbose_level);
+	// creates a homogeneous_polynomial_domain object
 
 };
 
@@ -119,18 +120,16 @@ public:
 	int f_export;
 
 	int f_evaluate;
-	std::string evaluate_finite_field_label;
+	//std::string evaluate_finite_field_label;
 	std::string evaluate_assignment;
 
-	int f_print_over_Fq;
-	std::string print_over_Fq_field_label;
+	int f_print;
+	//std::string print_over_Fq_field_label;
 
 	int f_sweep;
-	std::string sweep_field_label;
 	std::string sweep_variables;
 
 	int f_sweep_affine;
-	std::string sweep_affine_field_label;
 	std::string sweep_affine_variables;
 
 
@@ -168,7 +167,7 @@ public:
 	void perform_activity(int verbose_level);
 	void do_sweep(int f_affine,
 			formula *f,
-			field_theory::finite_field *F, std::string &sweep_variables,
+			std::string &sweep_variables,
 			int verbose_level);
 
 };
@@ -194,6 +193,7 @@ public:
 	std::string name_of_formula_latex;
 	std::string managed_variables;
 	std::string formula_text;
+	field_theory::finite_field *Fq;
 	syntax_tree *tree;
 
 
@@ -209,14 +209,18 @@ public:
 	formula();
 	~formula();
 	std::string string_representation();
+	std::string string_representation_Sajeeb();
+	std::string string_representation_formula();
 	void print(std::ostream &ost);
 	void init_formula(
 			std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
+			field_theory::finite_field *Fq,
 			int verbose_level);
 	void init_formula_Sajeeb(
 			std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
+			field_theory::finite_field *Fq,
 			int verbose_level);
 	int is_homogeneous(
 			int &degree, int verbose_level);
@@ -228,8 +232,10 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
 			int verbose_level);
+	void export_graphviz(
+			std::string &name);
 	void print_easy(
-			field_theory::finite_field *F, std::ostream &ost);
+			std::ostream &ost);
 
 };
 
@@ -282,6 +288,7 @@ public:
 	std::string value_text;
 
 	syntax_tree_node_terminal();
+	void print_to_vector(std::vector<std::string> &rep);
 	void print(std::ostream &ost);
 	void print_easy(std::ostream &ost);
 	void print_expression(std::ostream &ost);
@@ -310,6 +317,10 @@ public:
 	syntax_tree *Tree;
 	int idx;
 
+	int f_has_exponent;
+	int exponent;
+
+
 	int f_terminal;
 	syntax_tree_node_terminal *T;
 
@@ -328,22 +339,44 @@ public:
 	syntax_tree_node();
 	~syntax_tree_node();
 	void null();
+	void add_numerical_factor(
+			int value, int verbose_level);
+	void add_numerical_summand(
+			int value, int verbose_level);
+	void add_factor(
+			std::string &factor, int exponent, int verbose_level);
+	void add_summand(
+			std::string &summand, int verbose_level);
+	void add_empty_plus_node_with_exponent(
+			int exponent, int verbose_level);
+	void add_empty_multiplication_node(
+			int verbose_level);
 	void split_by_monomials(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, int verbose_level);
-	int is_homogeneous(int &degree, int verbose_level);
-	void print(std::ostream &ost);
-	void print_easy(std::ostream &ost);
-	void print_easy_without_monomial(std::ostream &ost);
+	int is_homogeneous(
+			int &degree, int verbose_level);
+	void print_to_vector(std::vector<std::string> &rep);
+	void print(
+			std::ostream &ost);
+	void print_easy(
+			std::ostream &ost);
+	void print_easy_without_monomial(
+			std::ostream &ost);
 	int is_mult();
 	int is_add();
-	int evaluate(std::map<std::string, std::string> &symbol_table,
-			field_theory::finite_field *F, int verbose_level);
-	void print_expression(std::ostream &ost);
+	int evaluate(
+			std::map<std::string, std::string> &symbol_table,
+			int verbose_level);
+	void print_expression(
+			std::ostream &ost);
 	void push_a_minus_sign();
-	void print_without_recursion(std::ostream &ost);
-	void export_graphviz(std::string &name, std::ostream &ost);
-	void export_graphviz_recursion(std::ostream &ost);
+	void print_without_recursion(
+			std::ostream &ost);
+	void export_graphviz(
+			std::string &name, std::ostream &ost);
+	void export_graphviz_recursion(
+			std::ostream &ost);
 };
 
 
@@ -360,12 +393,20 @@ public:
 	int f_has_managed_variables;
 	std::vector<std::string> managed_variables;
 
+	field_theory::finite_field *Fq;
+
 	syntax_tree_node *Root;
 
 	syntax_tree();
+
+	void init(
+			field_theory::finite_field *Fq, int verbose_level);
+	void print_to_vector(std::vector<std::string> &rep);
 	void print(std::ostream &ost);
 	void print_easy(std::ostream &ost);
 	void print_monomial(std::ostream &ost, int *monomial);
+	void export_graphviz(
+			std::string &name, std::ostream &ost);
 	int identify_single_literal(std::string &single_literal);
 	int is_homogeneous(int &degree, int verbose_level);
 	void split_by_monomials(

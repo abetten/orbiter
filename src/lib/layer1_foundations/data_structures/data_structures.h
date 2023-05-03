@@ -682,8 +682,10 @@ public:
 
 	lint_vec();
 	~lint_vec();
-	void apply(long int *from, long int *through, long int *to, int len);
-	void take_away(long int *v, int &len,
+	void apply(
+			long int *from, long int *through, long int *to, int len);
+	void take_away(
+			long int *v, int &len,
 			long int *take_away, int nb_take_away);
 	void zero(long int *v, long int len);
 	void mone(long int *v, long int len);
@@ -750,7 +752,8 @@ public:
 	void *elt_print_data;
 
 
-	void init(int entry_size, int page_length_log,
+	void init(
+			int entry_size, int page_length_log,
 		int verbose_level);
 	void add_elt_print_function(
 		void (* elt_print)(void *p, void *data, std::ostream &ost),
@@ -1580,45 +1583,67 @@ public:
 
 	spreadsheet();
 	~spreadsheet();
-	void init_set_of_sets(set_of_sets *S, int f_make_heading);
-	void init_int_matrix(int nb_rows, int nb_cols, int *A);
-	void init_empty_table(int nb_rows, int nb_cols);
-	void fill_entry_with_text(int row_idx, 
+	void init_set_of_sets(
+			set_of_sets *S, int f_make_heading);
+	void init_int_matrix(
+			int nb_rows, int nb_cols, int *A);
+	void init_empty_table(
+			int nb_rows, int nb_cols);
+	void fill_entry_with_text(
+			int row_idx,
 		int col_idx, const char *text);
-	void fill_entry_with_text(int row_idx,
+	void fill_entry_with_text(
+			int row_idx,
 			int col_idx, std::string &text);
-	void set_entry_lint(int row_idx,
+	void set_entry_lint(
+			int row_idx,
 			int col_idx, long int val);
-	void fill_column_with_text(int col_idx, std::string *text,
+	void fill_column_with_text(
+			int col_idx, std::string *text,
 		const char *heading);
-	void fill_column_with_int(int col_idx, int *data, 
+	void fill_column_with_int(
+			int col_idx, int *data,
 		const char *heading);
-	void fill_column_with_lint(int col_idx,
+	void fill_column_with_lint(
+			int col_idx,
 			long int *data, const char *heading);
-	void fill_column_with_row_index(int col_idx, 
+	void fill_column_with_row_index(
+			int col_idx,
 		const char *heading);
-	void add_token(const char *label);
-	void save(std::string &fname, int verbose_level);
-	void read_spreadsheet(std::string &fname, int verbose_level);
-	void print_table(std::ostream &ost, int f_enclose_in_parentheses);
-	void print_table_latex_all_columns(std::ostream &ost,
+	void add_token(
+			const char *label);
+	void save(
+			std::string &fname, int verbose_level);
+	void read_spreadsheet(
+			std::string &fname, int verbose_level);
+	void print_table(
+			std::ostream &ost, int f_enclose_in_parentheses);
+	void print_table_latex_all_columns(
+			std::ostream &ost,
 		int f_enclose_in_parentheses);
-	void print_table_latex(std::ostream &ost,
+	void print_table_latex(
+			std::ostream &ost,
 			int *f_column_select,
 			int f_enclose_in_parentheses,
 			int nb_lines_per_table);
-	void print_table_row(int row, int f_enclose_in_parentheses, 
+	void print_table_row(
+			int row, int f_enclose_in_parentheses,
 			std::ostream &ost);
-	void print_table_row_latex(int row, int *f_column_select, 
+	void print_table_row_latex(
+			int row, int *f_column_select,
 		int f_enclose_in_parentheses, std::ostream &ost);
-	void print_table_row_detailed(int row, std::ostream &ost);
-	void print_table_row_with_column_selection(int row,
+	void print_table_row_detailed(
+			int row, std::ostream &ost);
+	void print_table_row_with_column_selection(
+			int row,
 			int f_enclose_in_parentheses,
 			int *Col_selection, int nb_cols_selected,
 			std::ostream &ost, int verbose_level);
-	void print_table_with_row_selection(int *f_selected, 
+	void print_table_with_row_selection(
+			int *f_selected,
 			std::ostream &ost);
-	void print_table_sorted(std::ostream &ost, const char *sort_by);
+	void print_table_sorted(
+			std::ostream &ost, const char *sort_by);
 	void add_column_with_constant_value(
 			const char *label, char *value);
 	void add_column_with_int(
@@ -1627,24 +1652,34 @@ public:
 			const char *label, char **Value);
 	void reallocate_table();
 	void reallocate_table_add_row();
-	int find_column(std::string &column_label);
-	int find_by_column(const char *join_by);
-	void tokenize(std::string &fname,
+	int find_column(
+			std::string &column_label);
+	int find_by_column(
+			const char *join_by);
+	void tokenize(
+			std::string &fname,
 		char **&tokens, int &nb_tokens, int verbose_level);
-	void remove_quotes(int verbose_level);
-	void remove_rows(const char *drop_column, const char *drop_label, 
+	void remove_quotes(
+			int verbose_level);
+	void remove_rows(
+			const char *drop_column, const char *drop_label,
 		int verbose_level);
 	void remove_rows_where_field_is_empty(
 			const char *drop_column,
 		int verbose_level);
-	void find_rows(int verbose_level);
-	void get_value_double_or_NA(int i, int j, double &val, int &f_NA);
-	void get_string(std::string &str, int i, int j);
+	void find_rows(
+			int verbose_level);
+	void get_value_double_or_NA(
+			int i, int j, double &val, int &f_NA);
+	void get_string(
+			std::string &str, int i, int j);
 	long int get_lint(int i, int j);
 	double get_double(int i, int j);
-	void join_with(spreadsheet *S2, int by1, int by2, 
+	void join_with(
+			spreadsheet *S2, int by1, int by2,
 		int verbose_level);
-	void patch_with(spreadsheet *S2, char *join_by);
+	void patch_with(
+			spreadsheet *S2, char *join_by);
 
 
 };
@@ -1696,8 +1731,10 @@ public:
 			char *p, const char *ext);
 	void get_fname_base(const char *p, char *fname_base);
 	void get_extension(std::string &p, std::string &ext);
-	void get_extension_if_present(const char *p, char *ext);
-	void get_extension_if_present_and_chop_off(char *p, char *ext);
+	void get_extension_if_present(
+			const char *p, char *ext);
+	void get_extension_if_present_and_chop_off(
+			char *p, char *ext);
 	void string_fix_escape_characters(std::string &str);
 	void remove_specific_character(std::string &str, char c);
 	void create_comma_separated_list(
@@ -1709,6 +1746,7 @@ public:
 	void text_to_three_double(std::string &text, double *d);
 	int strcmp_with_or_without(char *p, char *q);
 	int starts_with_a_number(std::string &str);
+	int compare_string_string(std::string &str1, std::string &str2);
 	int stringcmp(std::string &str, const char *p);
 	int strtoi(std::string &str);
 	int str2int(std::string &str);
@@ -1775,6 +1813,9 @@ public:
 	int f_text;
 	std::string text_txt;
 
+	int f_field;
+	std::string field_label;
+
 	int f_ring;
 	std::string ring_label;
 
@@ -1813,6 +1854,7 @@ public:
 
 	symbolic_object_builder_description *Descr;
 
+	field_theory::finite_field *Fq;
 
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
@@ -1826,12 +1868,21 @@ public:
 
 	symbolic_object_builder();
 	~symbolic_object_builder();
-	void init(symbolic_object_builder_description *Descr,
+	void init(
+			symbolic_object_builder_description *Descr,
 			int verbose_level);
-	void print(std::ostream &ost);
+	void get_string_representation_Sajeeb(std::vector<std::string> &S);
+	void get_string_representation_formula(std::vector<std::string> &S);
+	void print_Sajeeb(std::ostream &ost);
+	void print_formula(std::ostream &ost);
+	void print_matrix(
+			std::vector<std::string> &S, std::ostream &ost);
+	void print_vector(
+			std::vector<std::string> &S, std::ostream &ost);
 	void multiply_terms(
 			expression_parser::formula **terms,
 			int n,
+			int &stage_counter,
 			int verbose_level);
 
 };
@@ -1875,9 +1926,11 @@ public:
 
 	tally_lint();
 	~tally_lint();
-	void init(long int *data, int data_length,
+	void init(
+			long int *data, int data_length,
 		int f_second, int verbose_level);
-	void init_vector_lint(std::vector<long int> &data,
+	void init_vector_lint(
+			std::vector<long int> &data,
 			int f_second, int verbose_level);
 	void sort_and_classify();
 	void sort_and_classify_second();
@@ -1914,7 +1967,8 @@ public:
 	int determine_class_by_value(int value);
 	int get_value_of_class(int class_idx);
 	int get_largest_value();
-	void get_class_by_value(int *&Pts, int &nb_pts, int value,
+	void get_class_by_value(
+			int *&Pts, int &nb_pts, int value,
 		int verbose_level);
 	void get_class_by_value_lint(
 			long int *&Pts, int &nb_pts, int value, int verbose_level);
@@ -1974,9 +2028,11 @@ public:
 
 	tally();
 	~tally();
-	void init(int *data, int data_length,
+	void init(
+			int *data, int data_length,
 		int f_second, int verbose_level);
-	void init_lint(long int *data, int data_length,
+	void init_lint(
+			long int *data, int data_length,
 		int f_second, int verbose_level);
 	void sort_and_classify();
 	void sort_and_classify_second();
@@ -1995,14 +2051,18 @@ public:
 	void print_naked_stringstream(
 			std::stringstream &sstr, int f_backwards);
 	void print_naked(int f_backwards);
-	void print_naked_tex(std::ostream &ost, int f_backwards);
-	void print_types_naked_tex(std::ostream &ost, int f_backwards,
+	void print_naked_tex(
+			std::ostream &ost, int f_backwards);
+	void print_types_naked_tex(
+			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void print_array_tex(std::ostream &ost, int f_backwards);
+	void print_array_tex(
+			std::ostream &ost, int f_backwards);
 	double average();
 	double average_of_non_zero_values();
-	void get_data_by_multiplicity(int *&Pts, int &nb_pts,
+	void get_data_by_multiplicity(
+			int *&Pts, int &nb_pts,
 		int multiplicity, int verbose_level);
 	void get_data_by_multiplicity_as_lint(
 			long int *&Pts, int &nb_pts,
@@ -2010,7 +2070,8 @@ public:
 	int determine_class_by_value(int value);
 	int get_value_of_class(int class_idx);
 	int get_largest_value();
-	void get_class_by_value(int *&Pts, int &nb_pts, int value,
+	void get_class_by_value(
+			int *&Pts, int &nb_pts, int value,
 		int verbose_level);
 	void get_class_by_value_lint(
 			long int *&Pts, int &nb_pts, int value, int verbose_level);

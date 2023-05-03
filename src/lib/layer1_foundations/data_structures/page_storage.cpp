@@ -61,7 +61,8 @@ page_storage::~page_storage()
 	//cout << "page_storage::~page_storage done" << endl;
 }
 
-void page_storage::init(int entry_size,
+void page_storage::init(
+		int entry_size,
 		int page_length_log, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

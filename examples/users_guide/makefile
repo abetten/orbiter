@@ -13790,10 +13790,11 @@ geo_14_3_orderly:
 			-fuse 1 -fname_GEO 15_3 \
 			-output_to_inc_file \
 			-test Test_lines \
+			-special_test_not_orderly \
 		-end
 
 # 245342 geos, 8064, 720, 192^2, 128, 72, 48^6, 32, 30^2, 24^2, 20^2, 18, 16^10, 15^2, 12^11, 10^3, 8^34, 6^59, 5^5, 4^180, 3^69, 2^3709, 1^241240
-# 8 min 11 sec on Mac 
+## 8 min 11 sec on Mac 
 # running out of memory
 
 

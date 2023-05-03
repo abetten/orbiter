@@ -2032,6 +2032,16 @@ int surface_create::create_surface_by_equation(
 	tree = NEW_OBJECT(expression_parser::syntax_tree);
 
 	if (f_v) {
+		cout << "surface_create::create_quartic_curve_by_equation "
+				"before tree->init" << endl;
+	}
+	tree->init(F, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_quartic_curve_by_equation "
+				"after tree->init" << endl;
+	}
+
+	if (f_v) {
 		cout << "surface_create::create_surface_by_equation "
 				"Formula " << name_of_formula
 				<< " is " << equation_text << endl;
@@ -2039,6 +2049,13 @@ int surface_create::create_surface_by_equation(
 				"Managed variables: " << managed_variables << endl;
 	}
 
+
+	ST.parse_comma_separated_strings(managed_variables, tree->managed_variables);
+	if (tree->managed_variables.size() > 0) {
+		tree->f_has_managed_variables = true;
+	}
+
+#if 0
 	const char *p = managed_variables.c_str();
 	char str[1000];
 
@@ -2059,6 +2076,7 @@ int surface_create::create_surface_by_equation(
 		tree->f_has_managed_variables = true;
 
 	}
+#endif
 
 	int nb_vars;
 
@@ -2186,45 +2204,15 @@ int surface_create::create_surface_by_equation(
 				"before evaluate" << endl;
 	}
 
-	p = equation_parameters.c_str();
-	//char str[1000];
 
 	std::map<std::string, std::string> symbol_table;
-	//vector<string> symbols;
-	//vector<string> values;
-
-	while (true) {
-		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
-			break;
-		}
-		string assignment;
-		int len;
-
-		assignment.assign(str);
-		len = strlen(str);
-
-		std::size_t found;
-
-		found = assignment.find('=');
-		if (found == std::string::npos) {
-			cout << "did not find '=' in variable assignment" << endl;
-			exit(1);
-		}
-		std::string symb = assignment.substr(0, found);
-		std::string val = assignment.substr(found + 1, len - found - 1);
 
 
 
-		if (f_v) {
-			cout << "surface_create::create_surface_by_equation "
-					"adding symbol " << symb << " = " << val << endl;
-		}
+	ST.parse_value_pairs(
+			symbol_table,
+			equation_parameters, 0 /* verbose_level */);
 
-		symbol_table[symb] = val;
-		//symbols.push_back(symb);
-		//values.push_back(val);
-
-	}
 
 #if 0
 	cout << "surface_create::create_surface_by_equation symbol table:" << endl;
@@ -2232,6 +2220,7 @@ int surface_create::create_surface_by_equation(
 		cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
 	}
 #endif
+
 	int a;
 
 	for (i = 0; i < nb_monomials; i++) {
@@ -2241,7 +2230,7 @@ int surface_create::create_surface_by_equation(
 		}
 		if (Subtrees[i]) {
 			//Subtrees[i]->print_expression(cout);
-			a = Subtrees[i]->evaluate(symbol_table, F, 0/*verbose_level*/);
+			a = Subtrees[i]->evaluate(symbol_table, 0/*verbose_level*/);
 			coeffs20[i] = a;
 			if (f_v) {
 				cout << "surface_create::create_surface_by_equation "

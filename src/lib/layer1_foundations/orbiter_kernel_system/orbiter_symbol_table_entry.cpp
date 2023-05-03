@@ -239,6 +239,7 @@ void orbiter_symbol_table_entry::init_spread_classify(
 	}
 }
 
+#if 0
 void orbiter_symbol_table_entry::init_formula(
 		std::string &label,
 		void *p, int verbose_level)
@@ -256,6 +257,7 @@ void orbiter_symbol_table_entry::init_formula(
 		cout << "orbiter_symbol_table_entry::init_formula done" << endl;
 	}
 }
+#endif
 
 void orbiter_symbol_table_entry::init_cubic_surface(
 		std::string &label,
@@ -344,27 +346,13 @@ void orbiter_symbol_table_entry::init_collection(
 	object_type = t_collection;
 
 	data_structures::string_tools ST;
-	const char *p = list_of_objects.c_str();
-	char str[1000];
 
 	std::vector<std::string> *the_list;
 	the_list = new std::vector<std::string>;
 
-	while (true) {
-		if (!ST.s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
-			break;
-		}
-		string var;
-
-		var.assign(str);
-		if (f_v) {
-			cout << "adding object " << var << " to the collection" << endl;
-		}
-
-		the_list->push_back(var);
-
-	}
-
+	ST.parse_comma_separated_list(
+			list_of_objects, *the_list,
+			verbose_level);
 
 	ptr = the_list;
 	if (f_v) {
@@ -849,6 +837,7 @@ void orbiter_symbol_table_entry::print()
 		else if (object_type == t_BLT_set_classify) {
 			cout << "classification object for BLT-sets" << endl;
 		}
+#if 0
 		else if (object_type == t_formula) {
 			cout << "formula" << endl;
 			expression_parser::formula *F;
@@ -856,6 +845,7 @@ void orbiter_symbol_table_entry::print()
 			F = (expression_parser::formula *) ptr;
 			F->print(cout);
 		}
+#endif
 		else if (object_type == t_cubic_surface) {
 			cout << "cubic surface" << endl;
 		}

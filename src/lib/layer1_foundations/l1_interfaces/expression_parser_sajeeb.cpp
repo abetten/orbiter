@@ -41,6 +41,70 @@ namespace layer1_foundations {
 namespace l1_interfaces {
 
 
+static void convert_to_orbiter_recursion(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		int &idx,
+		const shared_ptr<irtree_node> current_node,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level);
+static void node_type_as_string(
+		shared_ptr<irtree_node> current_node, std::string &node_type_as_string);
+static void collect_factors(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		int &idx,
+		multiply_node *current_node,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level);
+static void collect_summands(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		int &idx,
+		plus_node *current_node,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level);
+static void collect_unary_negate_node(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		int &idx,
+		const shared_ptr<irtree_node>& child,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level);
+
+
+
+#if 0
+class get_latex_staged_visitor_functor final {
+    int stage_counter = 0;
+    std::ofstream latex_output_stream;
+    std::string directory;
+    ir_tree_latex_visitor_strategy::type tree_type;
+    ir_tree_latex_visitor_strategy::wrapper strategy_wrapper;
+
+public:
+    get_latex_staged_visitor_functor(std::string directory,
+                                     ir_tree_latex_visitor_strategy::type tree_type)
+                                     : directory(directory),
+                                       tree_type(tree_type),
+                                       strategy_wrapper(ir_tree_latex_visitor_strategy::get(tree_type)) {}
+
+    virtual ~get_latex_staged_visitor_functor() {
+        if (latex_output_stream.is_open()) latex_output_stream.close();
+    }
+
+    IRTreeVoidReturnTypeVisitorInterface& operator()() {
+        if (latex_output_stream.is_open()) latex_output_stream.close();
+        latex_output_stream.open(directory + "stage" + std::to_string(stage_counter++) + ".tex");
+
+        strategy_wrapper.set_output_stream(latex_output_stream);
+        return *strategy_wrapper.get_visitor();
+    }
+};
+#endif
+
+
+
 class expression_parser_sajeeb_private_data {
 
 public:
@@ -110,26 +174,14 @@ void expression_parser_sajeeb::init_formula(
 
 	//managed_variables_index_table managed_variables_table;
 
-	const char *p = Formula->managed_variables.c_str();
-	char str[1000];
+	vector<string> vec_managed_variables;
 
-	while (true) {
-		if (!ST.s_scan_token_comma_separated(
-				&p, str, 0 /* verbose_level */)) {
-			break;
-		}
-		string var;
+	ST.parse_comma_separated_list(
+			Formula->managed_variables, vec_managed_variables,
+			verbose_level);
 
-		var.assign(str);
-		if (f_v) {
-			cout << "expression_parser_sajeeb::init_formula "
-					"adding managed variable " << var << endl;
-		}
-
-		PD->managed_variables_table.insert(var);
-
-		//tree->managed_variables.push_back(var);
-		//tree->f_has_managed_variables = true;
+	for (i = 0; i < vec_managed_variables.size(); i++) {
+		PD->managed_variables_table.insert(vec_managed_variables[i]);
 
 	}
 
@@ -152,12 +204,6 @@ void expression_parser_sajeeb::init_formula(
 				"Starting to parse " << Formula->name_of_formula << endl;
 	}
 
-	//shared_ptr<irtree_node> ir_tree_root = generate_abstract_syntax_tree(
-	//		formula_text, managed_variables_table);
-
-    //shared_ptr<irtree_node> ir_tree_root =
-    //		parser::parse_expression(formula_text, managed_variables_table);
-
 
 	PD->ir_tree_root =
     		parser::parse_expression(
@@ -165,7 +211,6 @@ void expression_parser_sajeeb::init_formula(
 
 
 
-	//Parser.parse(tree, formula_text, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "expression_parser_sajeeb::init_formula "
 				"Parsing " << Formula->name_of_formula << " finished" << endl;
@@ -201,7 +246,23 @@ void expression_parser_sajeeb::init_formula(
 	PD->evv = new exponent_vector_visitor;
 
     dispatcher::visit(PD->ir_tree_root, (*PD->evv)(PD->managed_variables_table));
-#if 0
+
+
+
+	{
+		string prefix;
+
+		prefix = Formula->name_of_formula + "_tree.tex";
+		{
+		ofstream ost(prefix);
+
+		dispatcher::visit(PD->ir_tree_root, ir_tree_latex_visitor_simple_tree(ost));
+		}
+
+	}
+
+
+	#if 0
 	unordered_map<string, int> assignemnt = {
 			{"a", 4},
 			{"b", 2},
@@ -510,13 +571,16 @@ void expression_parser_sajeeb::evaluate(
 
 		int idx;
 
-		idx = Poly->index_of_monomial(PD->table_of_monomials + i * Poly->nb_variables);
+		idx = Poly->index_of_monomial(
+				PD->table_of_monomials + i * Poly->nb_variables);
 
 		Values[idx] = Poly->get_F()->add(Values[idx], val);
 
 		if (f_v) {
 			cout << i << " : " << val << " : ";
-			Int_vec_print(cout, PD->table_of_monomials + i * Poly->nb_variables, Poly->nb_variables);
+			Int_vec_print(cout,
+					PD->table_of_monomials + i * Poly->nb_variables,
+					Poly->nb_variables);
 			cout << " : " << val << " : " << idx;
 			cout << endl;
 		}
@@ -545,6 +609,7 @@ void expression_parser_sajeeb::evaluate(
 void expression_parser_sajeeb::multiply(
 		expression_parser_sajeeb **terms,
 		int n,
+		int &stage_counter,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -556,11 +621,15 @@ void expression_parser_sajeeb::multiply(
 		cout << "expression_parser_sajeeb::multiply n=" << n << endl;
 	}
 
+
+#if 1
 	int i;
 
-	shared_ptr<irtree_node> *Ir_tree_root;
+	vector<shared_ptr<irtree_node>> Ir_tree_root(n);
 
-	Ir_tree_root = new shared_ptr<irtree_node> [n];
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply setting Ir_tree_root" << endl;
+	}
 
 	for (i = 0; i < n; i++) {
 		expression_parser_sajeeb_private_data *PD;
@@ -570,37 +639,1263 @@ void expression_parser_sajeeb::multiply(
 		Ir_tree_root[i] = PD->ir_tree_root;
 	}
 
-	shared_ptr<irtree_node> *Ir_tree_root_copy;
-	deep_copy_visitor deepCopyVisitor;
+	vector<shared_ptr<irtree_node>> Ir_tree_root_copy(n);
 
-	Ir_tree_root_copy = new shared_ptr<irtree_node> [n];
-
-#if 0
-
-	// ToDo:
+	//Ir_tree_root_copy = shared_ptr<irtree_node> [n];
 
 
-	for (i = 0; i < n; i++) {
-
-		Ir_tree_root_copy[i] = dispatcher::visit(Ir_tree_root[i], &deepCopyVisitor);
-
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply before deepCopyVisitor" << endl;
 	}
 
-	//shared_ptr<irtree_node> Ir_tree_root_new(node_type::MULTIPLY_NODE);
 
-	multiply_node Node();
 	for (i = 0; i < n; i++) {
-		Node.add_child(Ir_tree_root_copy[i]);
-		//Node.children.emplace_back(Ir_tree_root_copy[i]);
+
+
+		Ir_tree_root_copy[i] = dispatcher::visit(Ir_tree_root[i], deep_copy_visitor());
+	}
+
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply after deepCopyVisitor" << endl;
+	}
+
+
+	{
+		shared_ptr<multiply_node> M = make_shared<multiply_node>();
+
+
+		for (i = 0; i < n; i++) {
+			if (f_v) {
+				cout << "expression_parser_sajeeb::multiply i=" << i << " before M->add_child" << endl;
+			}
+			M->add_child((static_cast<non_terminal_node*> (Ir_tree_root_copy[i].get()))->children.front());
+			//  need to remove the sentinel node
+
+		}
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply before new sentinel_node" << endl;
+		}
+
+		shared_ptr<irtree_node> root = make_shared<sentinel_node>();
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply before add_child" << endl;
+		}
+
+		(static_cast<non_terminal_node *>(root.get()))->add_child(M);
+
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply before latex" << endl;
+		}
+		{
+			string prefix;
+
+			prefix = "./tree" + std::to_string(stage_counter) + ".tex";
+			{
+			ofstream ost(prefix);
+
+			dispatcher::visit(root, ir_tree_latex_visitor_simple_tree(ost));
+			}
+
+			stage_counter++;
+		}
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply after latex" << endl;
+		}
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply before leaving scope" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply after leaving scope" << endl;
+	}
+
+#endif
+
+#if 0
+	{
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply testing tree" << endl;
+		}
+		string a, b, c, d;
+
+		a.assign("a");
+		b.assign("b");
+		c.assign("c");
+		d.assign("d");
+		//variable_node *A = new variable_node(a);
+		//variable_node *B = new variable_node(b);
+		//variable_node *C = new variable_node(c);
+		//variable_node *D = new variable_node(d);
+		//plus_node *P1;
+		//plus_node *P2;
+		shared_ptr<plus_node> P1 = make_shared<plus_node>();
+		shared_ptr<plus_node> P2 = make_shared<plus_node>();
+		shared_ptr<multiply_node> M = make_shared<multiply_node>();
+
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply before P1->add_child" << endl;
+		}
+		//P1 = new plus_node;
+		//P2 = new plus_node;
+		P1->add_child(make_shared<variable_node>(a), make_shared<variable_node>(b));
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply before P2->add_child" << endl;
+		}
+		P2->add_child(make_shared<variable_node>(c), make_shared<variable_node>(d));
+
+		//M = new multiply_node;
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply before M->add_child" << endl;
+		}
+		M->add_child(P1, P2);
+		//M->add_child(P2);
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply before make_shared<sentinel_node>" << endl;
+		}
+		shared_ptr<irtree_node> root = make_shared<sentinel_node>();
+		if (f_v) {
+			cout << "expression_parser_sajeeb::multiply before add_child" << endl;
+		}
+		static_cast<non_terminal_node *>(root.get())->add_child(M);
+
+		//shared_ptr<irtree_node> root;
+
+		//root = std::shared_ptr<irtree_node>(node);
+
+		get_latex_staged_visitor_functor
+			get_latex_staged_visitor("./",
+					ir_tree_latex_visitor_strategy::type::SIMPLE_TREE);
+		dispatcher::visit(root, get_latex_staged_visitor());
+
+
+		deep_copy_visitor deepCopyVisitor;
+		shared_ptr<irtree_node> root_copy = dispatcher::visit(root, deepCopyVisitor);
+
+
+		dispatcher::visit(root_copy, get_latex_staged_visitor());
+
+
+
+	    if (f_v) {
+			cout << "expression_parser_sajeeb::multiply testing tree done, before deleting object" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply testing tree done, after deleting object" << endl;
 	}
 #endif
 
 
-	delete [] Ir_tree_root;
+#if 0
+	ir_tree_to_string_visitor to_string_visitor;
+	dispatcher::visit(M, to_string_visitor);
+	cout << "in:  " << exp << endl;
+	cout << "out: " << to_string_visitor.get_string_representation() << endl;
+#endif
+
+
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply before delete [] Ir_tree_root" << endl;
+	}
+	//delete [] Ir_tree_root;
+	if (f_v) {
+		cout << "expression_parser_sajeeb::multiply after delete [] Ir_tree_root" << endl;
+	}
 
 	if (f_v) {
 		cout << "expression_parser_sajeeb::multiply done" << endl;
 	}
+}
+
+
+void expression_parser_sajeeb::convert_to_orbiter(
+		expression_parser::syntax_tree *&Tree,
+		field_theory::finite_field *F,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "expression_parser_sajeeb::convert_to_orbiter" << endl;
+	}
+
+	expression_parser_sajeeb_private_data *PD;
+
+	PD = (expression_parser_sajeeb_private_data *) private_data;
+
+	shared_ptr<irtree_node> root_node = PD->ir_tree_root;
+
+	if (root_node->type == irtree_node::node_type::SENTINEL_NODE) {
+
+		shared_ptr<irtree_node> current_node;
+
+		current_node = (static_cast<non_terminal_node *>(root_node.get()))->children.front();
+
+		Tree = NEW_OBJECT(expression_parser::syntax_tree);
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter "
+					"before Tree->init" << endl;
+		}
+		Tree->init(F, verbose_level);
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter "
+					"after Tree->init" << endl;
+		}
+
+		Tree->Root = NEW_OBJECT(expression_parser::syntax_tree_node);
+
+		int idx;
+
+		idx = 0;
+
+		Tree->Root->Tree = Tree;
+		Tree->Root->idx = idx;
+
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter "
+					"before convert_to_orbiter_recursion" << endl;
+		}
+		convert_to_orbiter_recursion(
+				this,
+				Tree, idx, current_node, Tree->Root,
+				verbose_level);
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter "
+					"after convert_to_orbiter_recursion" << endl;
+		}
+
+	}
+	else {
+		cout << "expression_parser_sajeeb::convert_to_orbiter "
+				"top level node must be sentinel node" << endl;
+	}
+
+	if (f_v) {
+		cout << "expression_parser_sajeeb::convert_to_orbiter done" << endl;
+	}
+}
+
+static void convert_to_orbiter_recursion(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		int &idx,
+		const shared_ptr<irtree_node> current_node,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "expression_parser_sajeeb::convert_to_orbiter_recursion" << endl;
+	}
+	if (current_node->type == irtree_node::node_type::SENTINEL_NODE) {
+		cout << "convert_to_orbiter_recursion sentinel node is not allowed" << endl;
+		exit(1);
+	}
+	else if (current_node->type == irtree_node::node_type::MULTIPLY_NODE) {
+
+		current_node_copy->type = operation_type_mult;
+
+		current_node_copy->f_has_monomial = false;
+		current_node_copy->f_has_minus = false;
+
+		multiply_node *node = static_cast<multiply_node *>(current_node.get());
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
+					"before collect_factors" << endl;
+		}
+		collect_factors(
+				root, Tree, idx, node, current_node_copy,
+				verbose_level);
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
+					"after collect_factors" << endl;
+		}
+	}
+
+	else if (current_node->type == irtree_node::node_type::PLUS_NODE) {
+
+		current_node_copy->type = operation_type_add;
+
+		current_node_copy->f_has_monomial = false;
+		current_node_copy->f_has_minus = false;
+
+		plus_node *node = static_cast<plus_node *>(current_node.get());
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
+					"before collect_summands" << endl;
+		}
+		collect_summands(
+				root, Tree, idx, node, current_node_copy,
+				verbose_level);
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
+					"after collect_summands" << endl;
+		}
+	}
+	else {
+		string s;
+
+		node_type_as_string(current_node, s);
+		cout << "unknown node type: " << s << endl;
+	}
+
+
+	if (f_v) {
+		cout << "expression_parser_sajeeb::convert_to_orbiter_recursion done" << endl;
+	}
+}
+
+static void node_type_as_string(shared_ptr<irtree_node> current_node, std::string &node_type_as_string)
+{
+	if (current_node->type == irtree_node::node_type::SENTINEL_NODE) {
+		node_type_as_string = "SENTINEL_NODE";
+	}
+	else if (current_node->type == irtree_node::node_type::NUMBER_NODE) {
+		node_type_as_string = "NUMBER_NODE";
+	}
+	else if (current_node->type == irtree_node::node_type::PARAMETER_NODE) {
+		node_type_as_string = "PARAMETER_NODE";
+	}
+	else if (current_node->type == irtree_node::node_type::VARIABLE_NODE) {
+		node_type_as_string = "VARIABLE_NODE";
+	}
+	else if (current_node->type == irtree_node::node_type::UNARY_NEGATE_NODE) {
+		node_type_as_string = "UNARY_NEGATE_NODE";
+	}
+	else if (current_node->type == irtree_node::node_type::EXPONENT_NODE) {
+		node_type_as_string = "EXPONENT_NODE";
+	}
+	else if (current_node->type == irtree_node::node_type::MULTIPLY_NODE) {
+		node_type_as_string = "MULTIPLY_NODE";
+	}
+	else if (current_node->type == irtree_node::node_type::MINUS_NODE) {
+		node_type_as_string = "MINUS_NODE";
+	}
+	else if (current_node->type == irtree_node::node_type::PLUS_NODE) {
+		node_type_as_string = "PLUS_NODE";
+	}
+	else {
+		node_type_as_string = "UNKNOWN";
+	}
+
+}
+
+
+
+static void collect_factors(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		int &idx,
+		multiply_node *current_node,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "collect_factors" << endl;
+	}
+
+	if (f_v) {
+		cout << "collect_factors idx = " << idx << endl;
+	}
+	int idx0;
+
+	idx0 = idx;
+
+	//multiply_node *node = static_cast<multiply_node *>(current_node.get());
+
+	int nb_children = 0;
+	for (const shared_ptr<irtree_node>& child : current_node->children) {
+		nb_children++;
+	}
+
+	current_node_copy->f_terminal = false;
+	int child_counter = 0;
+	for (const shared_ptr<irtree_node>& child : current_node->children) {
+
+		if (child.get()->type == irtree_node::node_type::SENTINEL_NODE) {
+			cout << "collect_factors sentinel node is not allowed" << endl;
+			exit(1);
+		}
+		else if (child.get()->type == irtree_node::node_type::NUMBER_NODE) {
+			if (f_v) {
+				cout << "collect_factors NUMBER_NODE" << endl;
+			}
+			number_node *node = static_cast<number_node *>(child.get());
+			int value;
+
+			value = node->value;
+
+			if (f_v) {
+				cout << "collect_factors before "
+						"current_node_copy->add_numerical_factor value=" << value << endl;
+			}
+			current_node_copy->add_numerical_factor(
+					value, verbose_level);
+			if (f_v) {
+				cout << "collect_factors after "
+						"current_node_copy->add_numerical_factor value=" << value << endl;
+			}
+
+		}
+		else if (child.get()->type == irtree_node::node_type::PARAMETER_NODE) {
+			if (f_v) {
+				cout << "collect_factors PARAMETER_NODE" << endl;
+			}
+
+			parameter_node *node = static_cast<parameter_node *>(child.get());
+
+			std::string factor;
+
+			factor.assign(node->name);
+
+			if (f_v) {
+				cout << "collect_factors before "
+						"current_node_copy->add_factor factor=" << factor << endl;
+			}
+			current_node_copy->add_factor(
+					factor, 1 /* exponent */, verbose_level);
+
+			if (f_v) {
+				cout << "collect_factors after "
+						"current_node_copy->add_factor factor=" << factor << endl;
+			}
+		}
+		else if (child.get()->type == irtree_node::node_type::VARIABLE_NODE) {
+			if (f_v) {
+				cout << "collect_factors VARIABLE_NODE" << endl;
+			}
+
+			variable_node *node = static_cast<variable_node *>(child.get());
+
+			std::string factor;
+
+			factor.assign(node->name);
+
+			if (f_v) {
+				cout << "collect_factors before "
+						"current_node_copy->add_factor factor=" << factor << endl;
+			}
+			current_node_copy->add_factor(
+					factor, 1 /* exponent */, verbose_level);
+
+			if (f_v) {
+				cout << "collect_factors after "
+						"current_node_copy->add_factor factor=" << factor << endl;
+			}
+		}
+		else if (child.get()->type == irtree_node::node_type::UNARY_NEGATE_NODE) {
+			if (f_v) {
+				cout << "collect_factors UNARY_NEGATE_NODE" << endl;
+			}
+
+
+			if (f_v) {
+				cout << "collect_factors UNARY_NEGATE_NODE "
+						"before collect_unary_negate_node" << endl;
+			}
+
+			collect_unary_negate_node(
+					root,
+					Tree,
+					idx,
+					child,
+					current_node_copy,
+					verbose_level);
+
+			if (f_v) {
+				cout << "collect_factors UNARY_NEGATE_NODE "
+						"after collect_unary_negate_node" << endl;
+			}
+
+
+
+		}
+		else if (child.get()->type == irtree_node::node_type::EXPONENT_NODE) {
+			if (f_v) {
+				cout << "collect_factors EXPONENT_NODE" << endl;
+			}
+			exponent_node *node = static_cast<exponent_node *>(child.get());
+
+			shared_ptr<irtree_node> child1;
+			shared_ptr<irtree_node> child2;
+			int cnt;
+
+			list<shared_ptr<irtree_node>>::iterator it;
+			cnt = 0;
+			for (it = node->children.begin(); it != node->children.end(); ++it) {
+				if (cnt == 0) {
+					child1 = *it;
+				}
+				else if (cnt == 1) {
+					child2 = *it;
+				}
+				else {
+					cout << "collect_factors EXPONENT_NODE too many children" << endl;
+					exit(1);
+				}
+				cnt++;
+			}
+
+			if (child1.get()->type == irtree_node::node_type::PARAMETER_NODE &&
+					child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+
+				parameter_node *node1 = static_cast<parameter_node *>(child1.get());
+
+
+				std::string factor;
+
+				factor.assign(node1->name);
+
+				number_node *node2 = static_cast<number_node *>(child2.get());
+				int value;
+
+				value = node2->value;
+
+
+				if (f_v) {
+					cout << "collect_factors before "
+							"current_node_copy->add_factor factor=" << factor << endl;
+				}
+				current_node_copy->add_factor(
+						factor, value /* exponent */, verbose_level);
+
+				if (f_v) {
+					cout << "collect_factors after "
+							"current_node_copy->add_factor factor=" << factor << endl;
+				}
+
+			}
+			else if (child1.get()->type == irtree_node::node_type::VARIABLE_NODE &&
+					child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+
+				variable_node *node1 = static_cast<variable_node *>(child1.get());
+
+
+				std::string factor;
+
+				factor.assign(node1->name);
+
+				number_node *node2 = static_cast<number_node *>(child2.get());
+				int value;
+
+				value = node2->value;
+
+
+				if (f_v) {
+					cout << "collect_factors before "
+							"current_node_copy->add_factor factor=" << factor << endl;
+				}
+				current_node_copy->add_factor(
+						factor, value /* exponent */, verbose_level);
+
+				if (f_v) {
+					cout << "collect_factors after "
+							"current_node_copy->add_factor factor=" << factor << endl;
+				}
+
+			}
+			else if (child1.get()->type == irtree_node::node_type::PLUS_NODE &&
+					child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+
+				plus_node *node1 = static_cast<plus_node *>(child1.get());
+
+
+
+				number_node *node2 = static_cast<number_node *>(child2.get());
+				int exponent;
+
+				exponent = node2->value;
+
+
+				if (f_v) {
+					cout << "collect_factors before "
+							"current_node_copy->add_empty_plus_node_with_exponent" << endl;
+				}
+				current_node_copy->add_empty_plus_node_with_exponent(
+						exponent /* exponent */, verbose_level);
+
+				if (f_v) {
+					cout << "collect_factors after "
+							"current_node_copy->add_empty_plus_node_with_exponent" << endl;
+				}
+
+				if (f_v) {
+					cout << "collect_factors PLUS_NODE before collect_summands" << endl;
+				}
+				collect_summands(root, Tree, idx, node1,
+						current_node_copy->Nodes[current_node_copy->nb_nodes - 1],
+						verbose_level);
+				if (f_v) {
+					cout << "collect_factors PLUS_NODE after collect_summands" << endl;
+				}
+
+
+			}
+			else {
+				cout << " do not know how to handle this node" << endl;
+				string s;
+
+				node_type_as_string(child1, s);
+				cout << "unknown node child1 of type: " << s << endl;
+
+				node_type_as_string(child2, s);
+				cout << "unknown node child2 of type: " << s << endl;
+				exit(1);
+			}
+
+
+		}
+		else if (child.get()->type == irtree_node::node_type::MULTIPLY_NODE) {
+
+			if (f_v) {
+				cout << "collect_factors MULTIPLY_NODE" << endl;
+			}
+			multiply_node *node = static_cast<multiply_node *>(child.get());
+
+
+			if (f_v) {
+				cout << "collect_factors MULTIPLY_NODE before collect_factors" << endl;
+			}
+			collect_factors(root, Tree, idx, node, current_node_copy, verbose_level);
+			if (f_v) {
+				cout << "collect_factors MULTIPLY_NODE after collect_factors" << endl;
+			}
+		}
+		else if (child.get()->type == irtree_node::node_type::MINUS_NODE) {
+			cout << "collect_factors MINUS_NODE" << endl;
+			cout << " do not know how to handle this node" << endl;
+			exit(1);
+		}
+		else if (child.get()->type == irtree_node::node_type::PLUS_NODE) {
+			if (f_v) {
+				cout << "collect_factors PLUS_NODE" << endl;
+			}
+			plus_node *node = static_cast<plus_node *>(child.get());
+
+			if (f_v) {
+				cout << "collect_factors before "
+						"current_node_copy->add_empty_plus_node_with_exponent" << endl;
+			}
+			current_node_copy->add_empty_plus_node_with_exponent(
+					1 /* exponent */, verbose_level);
+
+			if (f_v) {
+				cout << "collect_factors after "
+						"current_node_copy->add_empty_plus_node_with_exponent" << endl;
+			}
+
+
+			if (f_v) {
+				cout << "collect_factors PLUS_NODE before collect_summands" << endl;
+			}
+			collect_summands(root, Tree, idx, node,
+					current_node_copy->Nodes[current_node_copy->nb_nodes - 1],
+					verbose_level);
+			if (f_v) {
+				cout << "collect_factors PLUS_NODE after collect_summands" << endl;
+			}
+		}
+		else {
+			cout << "unknown node type" << endl;
+			cout << " do not know how to handle this node" << endl;
+			string s;
+
+			node_type_as_string(child, s);
+			cout << "unknown node child of type: " << s << endl;
+			exit(1);
+		}
+
+		child_counter++;
+
+	}
+
+	if (f_v) {
+		cout << "collect_factors "
+				"idx = " << idx0 << " finished, new idx = " << idx << endl;
+	}
+}
+
+
+static void collect_summands(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		int &idx,
+		plus_node *current_node,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "collect_summands" << endl;
+	}
+
+	if (f_v) {
+		cout << "collect_summands idx = " << idx << endl;
+	}
+	int idx0;
+
+	idx0 = idx;
+
+
+	int nb_children = 0;
+	for (const shared_ptr<irtree_node>& child : current_node->children) {
+		nb_children++;
+	}
+
+	current_node_copy->f_terminal = false;
+	int child_counter = 0;
+	for (const shared_ptr<irtree_node>& child : current_node->children) {
+
+		if (f_v) {
+			cout << "collect_summands idx = " << idx
+					<< " child_counter=" << child_counter << endl;
+		}
+		if (child.get()->type == irtree_node::node_type::SENTINEL_NODE) {
+			cout << "collect_summands sentinel node is not allowed" << endl;
+			exit(1);
+		}
+		else if (child.get()->type == irtree_node::node_type::NUMBER_NODE) {
+			if (f_v) {
+				cout << "collect_summands NUMBER_NODE" << endl;
+			}
+			number_node *node = static_cast<number_node *>(child.get());
+			int value;
+
+			value = node->value;
+
+			if (f_v) {
+				cout << "collect_summands before "
+						"current_node_copy->add_numerical_summand "
+						"value=" << value << endl;
+			}
+			current_node_copy->add_numerical_summand(
+					value, verbose_level);
+			if (f_v) {
+				cout << "collect_summands after "
+						"current_node_copy->add_numerical_summand "
+						"value=" << value << endl;
+			}
+
+		}
+		else if (child.get()->type == irtree_node::node_type::PARAMETER_NODE) {
+			if (f_v) {
+				cout << "collect_summands PARAMETER_NODE" << endl;
+			}
+
+			parameter_node *node = static_cast<parameter_node *>(child.get());
+
+			std::string summand;
+
+			summand.assign(node->name);
+
+			if (f_v) {
+				cout << "collect_summands before current_node_copy->add_factor summand=" << summand << endl;
+			}
+			current_node_copy->add_summand(
+					summand, verbose_level);
+
+			if (f_v) {
+				cout << "collect_summands after current_node_copy->add_factor summand=" << summand << endl;
+			}
+		}
+		else if (child.get()->type == irtree_node::node_type::VARIABLE_NODE) {
+			if (f_v) {
+				cout << "collect_summands VARIABLE_NODE" << endl;
+			}
+
+			variable_node *node = static_cast<variable_node *>(child.get());
+
+			std::string summand;
+
+			summand.assign(node->name);
+
+			if (f_v) {
+				cout << "collect_summands before current_node_copy->add_summand summand=" << summand << endl;
+			}
+			current_node_copy->add_summand(
+					summand, verbose_level);
+
+			if (f_v) {
+				cout << "collect_summands after current_node_copy->add_summand summand=" << summand << endl;
+			}
+		}
+#if 0
+		else if (child.get()->type == irtree_node::node_type::UNARY_NEGATE_NODE) {
+			if (f_v) {
+				cout << "collect_summands UNARY_NEGATE_NODE" << endl;
+			}
+			unary_negate_node *node = static_cast<unary_negate_node *>(child.get());
+			int value;
+
+			value = Tree->Fq->negate(1);
+
+			if (f_v) {
+				cout << "collect_summands before current_node_copy->add_numerical_factor value=" << value << endl;
+			}
+			current_node_copy->add_numerical_factor(
+					value, verbose_level);
+			if (f_v) {
+				cout << "collect_summands after current_node_copy->add_numerical_factor value=" << value << endl;
+			}
+		}
+		else if (child.get()->type == irtree_node::node_type::EXPONENT_NODE) {
+			if (f_v) {
+				cout << "collect_summands EXPONENT_NODE" << endl;
+			}
+			exponent_node *node = static_cast<exponent_node *>(child.get());
+
+			shared_ptr<irtree_node> child1;
+			shared_ptr<irtree_node> child2;
+			int cnt;
+
+			list<shared_ptr<irtree_node>>::iterator it;
+			cnt = 0;
+			for (it = node->children.begin(); it != node->children.end(); ++it) {
+				if (cnt == 0) {
+					child1 = *it;
+				}
+				else if (cnt == 1) {
+					child2 = *it;
+				}
+				else {
+					cout << "collect_summands EXPONENT_NODE too many children" << endl;
+					exit(1);
+				}
+				cnt++;
+			}
+
+			if (child1.get()->type == irtree_node::node_type::PARAMETER_NODE &&
+					child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+
+				parameter_node *node1 = static_cast<parameter_node *>(child1.get());
+
+
+				std::string factor;
+
+				factor.assign(node1->name);
+
+				number_node *node2 = static_cast<number_node *>(child2.get());
+				int value;
+
+				value = node2->value;
+
+
+				if (f_v) {
+					cout << "collect_summands before current_node_copy->add_factor factor=" << factor << endl;
+				}
+				current_node_copy->add_factor(
+						factor, value /* exponent */, verbose_level);
+
+				if (f_v) {
+					cout << "collect_summands after current_node_copy->add_factor factor=" << factor << endl;
+				}
+
+			}
+			else if (child1.get()->type == irtree_node::node_type::VARIABLE_NODE &&
+					child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+
+				variable_node *node1 = static_cast<variable_node *>(child1.get());
+
+
+				std::string factor;
+
+				factor.assign(node1->name);
+
+				number_node *node2 = static_cast<number_node *>(child2.get());
+				int value;
+
+				value = node2->value;
+
+
+				if (f_v) {
+					cout << "collect_summands before current_node_copy->add_factor factor=" << factor << endl;
+				}
+				current_node_copy->add_factor(
+						factor, value /* exponent */, verbose_level);
+
+				if (f_v) {
+					cout << "collect_summands after current_node_copy->add_factor factor=" << factor << endl;
+				}
+
+			}
+			else if (child1.get()->type == irtree_node::node_type::PLUS_NODE &&
+					child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+
+				plus_node *node1 = static_cast<plus_node *>(child1.get());
+
+
+
+				number_node *node2 = static_cast<number_node *>(child2.get());
+				int exponent;
+
+				exponent = node2->value;
+
+
+				if (f_v) {
+					cout << "collect_summands before current_node_copy->add_plus_node" << endl;
+				}
+				current_node_copy->add_plus_node(
+						exponent /* exponent */, verbose_level);
+
+
+
+				if (f_v) {
+					cout << "collect_summands after current_node_copy->add_plus_node" << endl;
+				}
+
+			}
+			else {
+				cout << " do not know how to handle this node" << endl;
+				exit(1);
+			}
+
+
+		}
+#endif
+		else if (child.get()->type == irtree_node::node_type::MULTIPLY_NODE) {
+
+			if (f_v) {
+				cout << "collect_summands MULTIPLY_NODE" << endl;
+			}
+			multiply_node *node = static_cast<multiply_node *>(child.get());
+
+
+			if (f_v) {
+				cout << "collect_summands before "
+						"current_node_copy->add_empty_multiplication_node" << endl;
+			}
+			current_node_copy->add_empty_multiplication_node(
+					verbose_level);
+
+			if (f_v) {
+				cout << "collect_summands after "
+						"current_node_copy->add_empty_multiplication_node" << endl;
+			}
+
+			expression_parser::syntax_tree_node *artificial_mult_node;
+
+
+			artificial_mult_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
+
+			if (f_v) {
+				cout << "collect_summands MULTIPLY_NODE "
+						"before collect_factors" << endl;
+			}
+			collect_factors(root, Tree, idx, node,
+					artificial_mult_node,
+					verbose_level);
+			if (f_v) {
+				cout << "collect_summands MULTIPLY_NODE "
+						"after collect_factors" << endl;
+			}
+
+		}
+		else if (child.get()->type == irtree_node::node_type::MINUS_NODE) {
+			cout << "collect_summands MINUS_NODE" << endl;
+			cout << " do not know how to handle this node" << endl;
+			exit(1);
+		}
+		else if (child.get()->type == irtree_node::node_type::PLUS_NODE) {
+			if (f_v) {
+				cout << "collect_summands PLUS_NODE" << endl;
+			}
+			plus_node *node = static_cast<plus_node *>(child.get());
+
+
+			if (f_v) {
+				cout << "collect_summands PLUS_NODE "
+						"before collect_summands" << endl;
+			}
+			collect_summands(root, Tree, idx, node, current_node_copy, verbose_level);
+			if (f_v) {
+				cout << "collect_summands PLUS_NODE "
+						"after collect_summands" << endl;
+			}
+		}
+		else if (child.get()->type == irtree_node::node_type::UNARY_NEGATE_NODE) {
+			if (f_v) {
+				cout << "collect_summands UNARY_NEGATE_NODE" << endl;
+			}
+
+
+			if (f_v) {
+				cout << "collect_summands UNARY_NEGATE_NODE "
+						"before collect_unary_negate_node" << endl;
+			}
+
+			collect_unary_negate_node(
+					root,
+					Tree,
+					idx,
+					child,
+					current_node_copy,
+					verbose_level);
+
+			if (f_v) {
+				cout << "collect_summands UNARY_NEGATE_NODE "
+						"after collect_unary_negate_node" << endl;
+			}
+
+
+		}
+		else {
+			cout << "collect_summands do not know how to handle this node" << endl;
+			string s;
+
+			node_type_as_string(child, s);
+			cout << "unknown node child of type: " << s << endl;
+			exit(1);
+		}
+
+		child_counter++;
+
+	}
+
+	if (f_v) {
+		cout << "collect_summands "
+				"idx = " << idx0 << " finished, new idx = " << idx << endl;
+	}
+}
+
+
+static void collect_unary_negate_node(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		int &idx,
+		const shared_ptr<irtree_node>& child,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "collect_unary_negate_node" << endl;
+	}
+
+	if (f_v) {
+		cout << "collect_unary_negate_node idx = " << idx << endl;
+	}
+
+	unary_negate_node *un_node = static_cast<unary_negate_node *>(child.get());
+
+	shared_ptr<irtree_node>& child1 = un_node->children.front();
+
+
+	if (child1.get()->type == irtree_node::node_type::MULTIPLY_NODE) {
+		multiply_node *node = static_cast<multiply_node *>(child1.get());
+
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, MULTIPLY_NODE "
+					"before current_node_copy->add_empty_multiplication_node" << endl;
+		}
+		current_node_copy->add_empty_multiplication_node(
+				verbose_level);
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, MULTIPLY_NODE "
+					"after current_node_copy->add_empty_multiplication_node" << endl;
+		}
+
+		expression_parser::syntax_tree_node *artificial_mult_node;
+
+
+		artificial_mult_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
+
+		int value_minus_one;
+
+		value_minus_one = Tree->Fq->negate(1);
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, MULTIPLY_NODE "
+					"before artificial_mult_node->add_numerical_factor "
+					"value_minus_one=" << value_minus_one << endl;
+		}
+		artificial_mult_node->add_numerical_factor(
+				value_minus_one, verbose_level);
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, MULTIPLY_NODE "
+					"after artificial_mult_node->add_numerical_factor "
+					"value_minus_one=" << value_minus_one << endl;
+		}
+
+
+		if (f_v) {
+			cout << "collect_unary_negate_node "
+					"UNARY_NEGATE_NODE, MULTIPLY_NODE "
+					"before collect_factors" << endl;
+		}
+		collect_factors(root, Tree, idx, node,
+				artificial_mult_node,
+				verbose_level);
+		if (f_v) {
+			cout << "collect_unary_negate_node "
+					"UNARY_NEGATE_NODE, MULTIPLY_NODE "
+					"after collect_factors" << endl;
+		}
+	}
+	else if (child1.get()->type == irtree_node::node_type::PARAMETER_NODE) {
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE child is PARAMETER_NODE" << endl;
+		}
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
+					"before current_node_copy->add_empty_multiplication_node" << endl;
+		}
+		current_node_copy->add_empty_multiplication_node(
+				verbose_level);
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
+					"after current_node_copy->add_empty_multiplication_node" << endl;
+		}
+
+		expression_parser::syntax_tree_node *artificial_mult_node;
+
+
+		artificial_mult_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
+
+
+		int value_minus_one;
+
+		value_minus_one = Tree->Fq->negate(1);
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
+					"before artificial_mult_node->add_numerical_factor "
+					"value_minus_one=" << value_minus_one << endl;
+		}
+		artificial_mult_node->add_numerical_factor(
+				value_minus_one, verbose_level);
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
+					"after artificial_mult_node->add_numerical_factor "
+					"value_minus_one=" << value_minus_one << endl;
+		}
+
+		parameter_node *node = static_cast<parameter_node *>(child1.get());
+
+		std::string parameter_value;
+
+		parameter_value.assign(node->name);
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
+					"before artificial_mult_node->add_factor "
+					"parameter_value=" << parameter_value << endl;
+		}
+
+		artificial_mult_node->add_factor(
+				parameter_value, 1 /* exponent */, verbose_level);
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
+					"after artificial_mult_node->add_factor "
+					"parameter_value=" << parameter_value << endl;
+		}
+
+	}
+	else if (child1.get()->type == irtree_node::node_type::PLUS_NODE) {
+		plus_node *node = static_cast<plus_node *>(child1.get());
+
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
+					"before current_node_copy->add_empty_multiplication_node" << endl;
+		}
+		current_node_copy->add_empty_multiplication_node(
+				verbose_level);
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
+					"after current_node_copy->add_empty_multiplication_node" << endl;
+		}
+
+		expression_parser::syntax_tree_node *artificial_mult_node;
+
+
+		artificial_mult_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
+
+
+		int value_minus_one;
+
+		value_minus_one = Tree->Fq->negate(1);
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
+					"before artificial_mult_node->add_numerical_factor "
+					"value_minus_one=" << value_minus_one << endl;
+		}
+		artificial_mult_node->add_numerical_factor(
+				value_minus_one, verbose_level);
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
+					"after artificial_mult_node->add_numerical_factor "
+					"value_minus_one=" << value_minus_one << endl;
+		}
+
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
+					"before artificial_mult_node->add_empty_plus_node_with_exponent" << endl;
+		}
+		artificial_mult_node->add_empty_plus_node_with_exponent(
+				1, verbose_level);
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
+					"after artificial_mult_node->add_empty_plus_node_with_exponent" << endl;
+		}
+
+		expression_parser::syntax_tree_node *artificial_plus_node;
+
+
+		artificial_plus_node = artificial_mult_node->Nodes[artificial_mult_node->nb_nodes - 1];
+
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
+					"before collect_summands" << endl;
+		}
+		collect_summands(root, Tree, idx, node,
+				artificial_plus_node,
+				verbose_level);
+		if (f_v) {
+			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
+					"after collect_summands" << endl;
+		}
+	}
+	else {
+		cout << "child of unary_negate_node is not of type "
+				"MULTIPLY_NODE or PARAMETER_NODE or PLUS_NODE" << endl;
+
+		string s;
+
+		node_type_as_string(child1, s);
+		cout << "unknown node child1 of type: " << s << endl;
+
+
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "collect_unary_negate_node done" << endl;
+	}
+
 }
 
 

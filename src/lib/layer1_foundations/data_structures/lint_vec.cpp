@@ -29,7 +29,8 @@ lint_vec::~lint_vec()
 }
 
 
-void lint_vec::apply(long int *from, long int *through, long int *to, int len)
+void lint_vec::apply(
+		long int *from, long int *through, long int *to, int len)
 {
 	int i;
 
@@ -38,7 +39,8 @@ void lint_vec::apply(long int *from, long int *through, long int *to, int len)
 	}
 }
 
-void lint_vec::take_away(long int *v, int &len,
+void lint_vec::take_away(
+		long int *v, int &len,
 		long int *take_away, int nb_take_away)
 	// v must be sorted
 {

@@ -615,7 +615,8 @@ syntax_tree_node *expression_parser::Term(int verbose_level, const bool get)
 		nb_minus_signs++;
 	}
 	if (f_v) {
-		std::cout << "expression_parser::Term after Primary, f_single_literal = " << f_single_literal << std::endl;
+		std::cout << "expression_parser::Term "
+				"after Primary, f_single_literal = " << f_single_literal << std::endl;
 	}
 	int f_done;
 	f_done = false;

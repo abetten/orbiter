@@ -28,6 +28,24 @@ syntax_tree_node_terminal::syntax_tree_node_terminal()
 
 }
 
+void syntax_tree_node_terminal::print_to_vector(std::vector<std::string> &rep)
+{
+	string s;
+
+	if (f_int) {
+		s = std::to_string(value_int);
+	}
+	else if (f_double) {
+		s = std::to_string(value_double);
+	}
+	else if (f_text) {
+		s = value_text;
+	}
+	else {
+		cout << "syntax_tree_node_terminal::print_to_vector unknown type" << endl;
+	}
+	rep.push_back(s);
+}
 
 void syntax_tree_node_terminal::print(std::ostream &ost)
 {
@@ -40,6 +58,9 @@ void syntax_tree_node_terminal::print(std::ostream &ost)
 	}
 	else if (f_text) {
 		ost << "text=" << value_text << std::endl;
+	}
+	else {
+		cout << "syntax_tree_node_terminal::print unknown type" << endl;
 	}
 }
 
@@ -55,6 +76,9 @@ void syntax_tree_node_terminal::print_easy(std::ostream &ost)
 	else if (f_text) {
 		ost << value_text;
 	}
+	else {
+		cout << "syntax_tree_node_terminal::print_easy unknown type" << endl;
+	}
 }
 
 
@@ -68,6 +92,9 @@ void syntax_tree_node_terminal::print_expression(std::ostream &ost)
 	}
 	else if (f_text) {
 		ost << value_text;
+	}
+	else {
+		cout << "syntax_tree_node_terminal::print_expression unknown type" << endl;
 	}
 }
 

@@ -188,7 +188,13 @@ int main(int argc, const char** argv) {
 	   dispatcher::visit(ir_tree_root, get_latex_staged_visitor());
 
 
+		string a, b, c, d;
 
+		a.assign("a");
+		b.assign("b");
+		c.assign("c");
+		d.assign("d");
+		variable_node A(a);
 
 		// print string representation of the IR tree
 		ir_tree_to_string_visitor to_string_visitor;

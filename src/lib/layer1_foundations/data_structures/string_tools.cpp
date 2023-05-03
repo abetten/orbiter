@@ -938,7 +938,8 @@ void string_tools::get_extension(std::string &p, std::string &ext)
 }
 
 
-void string_tools::get_extension_if_present(const char *p, char *ext)
+void string_tools::get_extension_if_present(
+		const char *p, char *ext)
 {
 	int i, l = strlen(p);
 
@@ -953,7 +954,8 @@ void string_tools::get_extension_if_present(const char *p, char *ext)
 	}
 }
 
-void string_tools::get_extension_if_present_and_chop_off(char *p, char *ext)
+void string_tools::get_extension_if_present_and_chop_off(
+		char *p, char *ext)
 {
 	int i, l = strlen(p);
 
@@ -1176,6 +1178,12 @@ int string_tools::starts_with_a_number(std::string &str)
 	}
 }
 
+int string_tools::compare_string_string(std::string &str1, std::string &str2)
+{
+	return strcmp(str1.c_str(), str2.c_str());
+}
+
+
 int string_tools::stringcmp(std::string &str, const char *p)
 {
 	return strcmp(str.c_str(), p);
@@ -1222,12 +1230,46 @@ void string_tools::parse_value_pairs(
 		std::string &evaluate_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	const char *p = evaluate_text.c_str();
-	char str[1000];
 
 	if (f_v) {
 		cout << "string_tools::parse_value_pairs" << endl;
 	}
+
+	std::vector<std::string> values;
+
+	parse_comma_separated_list(
+			evaluate_text, values,
+			0 /*verbose_level*/);
+
+
+	int i;
+	std::size_t found;
+
+	for (i = 0; i < values.size(); i++) {
+
+		found = values[i].find('=');
+		if (found == std::string::npos) {
+			cout << "did not find '=' in variable assignment" << endl;
+			exit(1);
+		}
+		std::string symb = values[i].substr (0, found);
+		std::string val = values[i].substr (found + 1, values[i].length() - found - 1);
+
+
+
+		if (f_v) {
+			cout << "adding symbol " << symb << " = " << val << endl;
+		}
+
+		symbol_table[symb] = val;
+
+
+	}
+
+#if 0
+	const char *p = evaluate_text.c_str();
+	char str[1000];
+
 	//std::map<std::string, std::string> symbol_table;
 	//vector<string> symbols;
 	//vector<string> values;
@@ -1263,6 +1305,7 @@ void string_tools::parse_value_pairs(
 		//values.push_back(val);
 
 	}
+#endif
 
 	if (f_v) {
 		cout << "string_tools::parse_value_pairs done" << endl;
@@ -1274,15 +1317,23 @@ void string_tools::parse_value_pairs(
 void string_tools::parse_comma_separated_values(
 		std::vector<std::string> &symbol_table,
 		std::string &evaluate_text, int verbose_level)
+// calls parse_comma_separated_list
 {
 	int f_v = (verbose_level >= 1);
-	const char *p = evaluate_text.c_str();
-	char str[1000];
+
 
 	if (f_v) {
 		cout << "string_tools::parse_comma_separated_values" << endl;
 	}
 
+
+	parse_comma_separated_list(
+			evaluate_text, symbol_table,
+			0 /*verbose_level*/);
+
+#if 0
+	//const char *p = evaluate_text.c_str();
+	//char str[1000];
 	while (true) {
 		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
 			break;
@@ -1299,6 +1350,7 @@ void string_tools::parse_comma_separated_values(
 		symbol_table.push_back(symbol);
 
 	}
+#endif
 
 	if (f_v) {
 		cout << "string_tools::parse_comma_separated_values done" << endl;

@@ -72,7 +72,8 @@ tally_lint::~tally_lint()
 	//cout << "~classify() finished" << endl;
 }
 
-void tally_lint::init(long int *data,
+void tally_lint::init(
+		long int *data,
 		int data_length, int f_second, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -124,7 +125,8 @@ void tally_lint::init(long int *data,
 }
 
 
-void tally_lint::init_vector_lint(std::vector<long int> &data,
+void tally_lint::init_vector_lint(
+		std::vector<long int> &data,
 		int f_second, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

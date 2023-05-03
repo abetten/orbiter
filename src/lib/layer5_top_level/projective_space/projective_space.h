@@ -655,6 +655,7 @@ public:
 			std::string &label,
 			std::string &evaluate_text,
 			int verbose_level);
+	// ToDo use symbolic object instead
 	void analyze_del_Pezzo_surface_formula_given(
 			projective_space_with_action *PA,
 			expression_parser::formula *F,

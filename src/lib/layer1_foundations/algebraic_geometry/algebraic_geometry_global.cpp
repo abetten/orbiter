@@ -271,6 +271,9 @@ void algebraic_geometry_global::map(
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}
+
+	// ToDo: use Symbolic Object instead of formula
+
 	if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
 		cout << "symbol table entry is a collection" << endl;
 
@@ -333,6 +336,7 @@ void algebraic_geometry_global::map(
 
 
 	}
+#if 0
 	else if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
 		cout << "symbol table entry is a formula" << endl;
 
@@ -363,6 +367,7 @@ void algebraic_geometry_global::map(
 
 
 	}
+#endif
 	else {
 		cout << "symbol table entry must be either a formula or a collection" << endl;
 		exit(1);

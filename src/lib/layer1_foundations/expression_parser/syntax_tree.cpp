@@ -22,13 +22,39 @@ syntax_tree::syntax_tree()
 {
 	f_has_managed_variables = false;
 	//std::vector<std::string> managed_variables;
+
+	Fq = NULL;
+
 	Root = NULL;
+}
+
+void syntax_tree::init(
+		field_theory::finite_field *Fq, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::init" << endl;
+	}
+
+	syntax_tree::Fq = Fq;
+
+	if (f_v) {
+		cout << "syntax_tree::init done" << endl;
+	}
+}
+
+void syntax_tree::print_to_vector(std::vector<std::string> &rep)
+{
+	Root->print_to_vector(rep);
+
 }
 
 void syntax_tree::print(std::ostream &ost)
 {
 	Root->print(ost);
 }
+
 
 void syntax_tree::print_easy(std::ostream &ost)
 {
@@ -48,6 +74,15 @@ void syntax_tree::print_monomial(std::ostream &ost, int *monomial)
 		}
 	}
 }
+
+void syntax_tree::export_graphviz(
+		std::string &name, std::ostream &ost)
+{
+
+	Root->export_graphviz(name, ost);
+
+}
+
 
 int syntax_tree::identify_single_literal(std::string &single_literal)
 {

@@ -90,7 +90,8 @@ tally::~tally()
 	//cout << "~classify() finished" << endl;
 }
 
-void tally::init(int *data,
+void tally::init(
+		int *data,
 		int data_length, int f_second, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -176,7 +177,8 @@ void tally::init(int *data,
 	}
 }
 
-void tally::init_lint(long int *data,
+void tally::init_lint(
+		long int *data,
 		int data_length, int f_second, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -335,7 +337,8 @@ void tally::print_first(int f_backwards)
 {
 	data_structures::sorting Sorting;
 
-	Sorting.int_vec_print_types(cout, f_backwards, data_sorted,
+	Sorting.int_vec_print_types(
+			cout, f_backwards, data_sorted,
 		nb_types, type_first, type_len);
 	//cout << endl;
 }
@@ -345,7 +348,8 @@ void tally::print_second(int f_backwards)
 	if (f_second) {
 		data_structures::sorting Sorting;
 
-		Sorting.int_vec_print_types(cout, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types(
+				cout, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//cout << endl;
 	}
@@ -357,7 +361,8 @@ void tally::print_first_tex(int f_backwards)
 	data_structures::sorting Sorting;
 
 	cout << "(";
-	Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(cout, f_backwards, data_sorted,
+	Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(
+			cout, f_backwards, data_sorted,
 		nb_types, type_first, type_len);
 	cout << ")";
 	//cout << endl;
@@ -369,7 +374,8 @@ void tally::print_second_tex(int f_backwards)
 		data_structures::sorting Sorting;
 
 		cout << "(";
-		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(cout, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(
+				cout, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		cout << ")";
 	}
@@ -381,12 +387,14 @@ void tally::print_file(std::ostream &ost, int f_backwards)
 	data_structures::sorting Sorting;
 
 	if (f_second) {
-		Sorting.int_vec_print_types_naked(ost, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_naked(
+				ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		ost << endl;	
 	}
 	else {
-		Sorting.int_vec_print_types_naked(ost, f_backwards, data_sorted,
+		Sorting.int_vec_print_types_naked(
+				ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		ost << endl;	
 	}
@@ -398,14 +406,16 @@ void tally::print_file_tex(std::ostream &ost, int f_backwards)
 
 	if (f_second) {
 		//ost << "(";
-		Sorting.int_vec_print_types_naked_tex(ost, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_naked_tex(
+				ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//ost << ")";
 		//ost << endl;
 	}
 	else {
 		//ost << "$(";
-		Sorting.int_vec_print_types_naked_tex(ost, f_backwards, data_sorted,
+		Sorting.int_vec_print_types_naked_tex(
+				ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//ost << ")$";
 		//ost << endl;
@@ -419,14 +429,16 @@ void tally::print_file_tex_we_are_in_math_mode(
 
 	if (f_second) {
 		//ost << "(";
-		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(ost, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(
+				ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//ost << ")";
 		//ost << endl;
 	}
 	else {
 		//ost << "$(";
-		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(ost, f_backwards, data_sorted,
+		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(
+				ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//ost << ")$";
 		//ost << endl;
@@ -458,26 +470,31 @@ void tally::print_naked(int f_backwards)
 	data_structures::sorting Sorting;
 
 	if (f_second) {
-		Sorting.int_vec_print_types_naked(cout, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_naked(
+				cout, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//cout << endl;	
 	}
 	else {
-		Sorting.int_vec_print_types_naked(cout, f_backwards, data_sorted,
+		Sorting.int_vec_print_types_naked(
+				cout, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//cout << endl;	
 	}
 }
 
-void tally::print_naked_tex(std::ostream &ost, int f_backwards)
+void tally::print_naked_tex(
+		std::ostream &ost, int f_backwards)
 {
 	if (f_second) {
-		print_types_naked_tex(ost, f_backwards, second_data_sorted, 
+		print_types_naked_tex(
+				ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//cout << endl;	
 	}
 	else {
-		print_types_naked_tex(ost, f_backwards, data_sorted, 
+		print_types_naked_tex(
+				ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//cout << endl;	
 	}
@@ -529,7 +546,8 @@ void tally::print_types_naked_tex(
 	}
 }
 
-void tally::print_array_tex(std::ostream &ost, int f_backwards)
+void tally::print_array_tex(
+		std::ostream &ost, int f_backwards)
 {
 	int i, j, f, l, a;
 
@@ -616,7 +634,8 @@ double tally::average_of_non_zero_values()
 }
 
 void tally::get_data_by_multiplicity(
-		int *&Pts, int &nb_pts, int multiplicity, int verbose_level)
+		int *&Pts, int &nb_pts, int multiplicity,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -704,7 +723,8 @@ int tally::get_largest_value()
 }
 
 void tally::get_class_by_value(
-		int *&Pts, int &nb_pts, int value, int verbose_level)
+		int *&Pts, int &nb_pts, int value,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -733,7 +753,8 @@ void tally::get_class_by_value(
 }
 
 void tally::get_class_by_value_lint(
-		long int *&Pts, int &nb_pts, int value, int verbose_level)
+		long int *&Pts, int &nb_pts, int value,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

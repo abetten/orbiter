@@ -83,9 +83,9 @@ void formula_activity::perform_activity(int verbose_level)
 
 		cout << "before evaluate" << endl;
 
-		field_theory::finite_field *F;
+		//field_theory::finite_field *F;
 
-		F = Get_finite_field(Descr->evaluate_finite_field_label);
+		//F = Get_finite_field(Descr->evaluate_finite_field_label);
 
 		expression_parser_domain ED;
 		//int a;
@@ -93,22 +93,21 @@ void formula_activity::perform_activity(int verbose_level)
 		//a = ;
 		ED.evaluate_formula(
 				f,
-				F,
 				Descr->evaluate_assignment,
 				verbose_level);
 
 
 
 	}
-	else if (Descr->f_print_over_Fq) {
+	else if (Descr->f_print) {
 
-		cout << "before f_print_over_Fq" << endl;
+		cout << "before f_print" << endl;
 
-		field_theory::finite_field *F;
+		//field_theory::finite_field *F;
 
-		F = Get_finite_field(Descr->print_over_Fq_field_label);
+		//F = Get_finite_field(Descr->print_over_Fq_field_label);
 
-		f->print_easy(F, cout);
+		f->print_easy(cout);
 		cout << endl;
 
 	}
@@ -116,13 +115,13 @@ void formula_activity::perform_activity(int verbose_level)
 
 		cout << "before f_seep" << endl;
 
-		field_theory::finite_field *F;
+		//field_theory::finite_field *F;
 
-		F = Get_finite_field(Descr->sweep_field_label);
+		//F = Get_finite_field(Descr->sweep_field_label);
 
 		do_sweep(false /* f_affine */,
 				f,
-				F, Descr->sweep_variables,
+				Descr->sweep_variables,
 				verbose_level);
 
 	}
@@ -130,13 +129,13 @@ void formula_activity::perform_activity(int verbose_level)
 
 		cout << "before f_seep_affine" << endl;
 
-		field_theory::finite_field *F;
+		//field_theory::finite_field *F;
 
-		F = Get_finite_field(Descr->sweep_affine_field_label);
+		//F = Get_finite_field(Descr->sweep_affine_field_label);
 
 		do_sweep(true /* f_affine */,
 				f,
-				F, Descr->sweep_affine_variables,
+				Descr->sweep_affine_variables,
 				verbose_level);
 
 	}
@@ -152,7 +151,7 @@ void formula_activity::perform_activity(int verbose_level)
 
 void formula_activity::do_sweep(int f_affine,
 		formula *f,
-		field_theory::finite_field *F, std::string &sweep_variables,
+		std::string &sweep_variables,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -162,7 +161,7 @@ void formula_activity::do_sweep(int f_affine,
 	}
 
 
-	f->print_easy(F, cout);
+	f->print_easy(cout);
 	cout << endl;
 
 	data_structures::string_tools ST;
@@ -182,11 +181,11 @@ void formula_activity::do_sweep(int f_affine,
 	n = symbol_table.size();
 	v = NEW_int(n);
 
-	N = Gg.nb_AG_elements(n, F->q);
+	N = Gg.nb_AG_elements(n, f->Fq->q);
 
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
+	snprintf(str, sizeof(str), "_q%d", f->Fq->q);
 
 	string fname;
 	fname.assign("sweep_");
@@ -214,7 +213,7 @@ void formula_activity::do_sweep(int f_affine,
 	if (f_v) {
 		cout << "before Poly->init" << endl;
 	}
-	Poly->init(F,
+	Poly->init(f->Fq,
 			f->nb_managed_vars /* nb_vars */, degree,
 			t_PART,
 			0 /*verbose_level - 3*/);
@@ -228,12 +227,12 @@ void formula_activity::do_sweep(int f_affine,
 	if (f_affine) {
 		number_theory::number_theory_domain NT;
 
-		N_points = NT.i_power_j(F->q, Poly->nb_variables - 1);
+		N_points = NT.i_power_j(f->Fq->q, Poly->nb_variables - 1);
 	}
 	else {
 		geometry::geometry_global Gg;
 
-		N_points = Gg.nb_PG_elements(Poly->nb_variables - 1, F->q);
+		N_points = Gg.nb_PG_elements(Poly->nb_variables - 1, f->Fq->q);
 	}
 	fun = NEW_int(N_points);
 
@@ -253,7 +252,7 @@ void formula_activity::do_sweep(int f_affine,
 			cout << "sweep is at " << i << " / " << N << endl;
 			string values;
 
-			Gg.AG_element_unrank(F->q, v, 1, n, i);
+			Gg.AG_element_unrank(f->Fq->q, v, 1, n, i);
 
 			if (f_affine) {
 				if (v[0] == 0) {
@@ -277,7 +276,6 @@ void formula_activity::do_sweep(int f_affine,
 
 			ED.evaluate_managed_formula(
 					f,
-					F,
 					values,
 					Values, nb_monomials,
 					verbose_level - 2);

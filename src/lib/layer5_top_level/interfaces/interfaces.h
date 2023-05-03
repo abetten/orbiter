@@ -1068,12 +1068,15 @@ public:
 	apps_algebra::group_modification_description
 		*Group_modification_description;
 
+#if 0
 	int f_formula;
 	expression_parser::formula *Formula;
 	std::string label;
 	std::string label_tex;
 	std::string managed_variables;
 	std::string formula_text;
+	std::string formula_finite_field;
+#endif
 
 	int f_collection;
 	std::string list_of_objects;
@@ -1216,9 +1219,11 @@ public:
 	void definition_of_permutation_group(int verbose_level);
 	void definition_of_modified_group(int verbose_level);
 	void definition_of_geometric_object(int verbose_level);
+#if 0
 	void definition_of_formula(
 			expression_parser::formula *Formula,
 			int verbose_level);
+#endif
 	void definition_of_collection(std::string &list_of_objects,
 			int verbose_level);
 	void definition_of_graph(int verbose_level);

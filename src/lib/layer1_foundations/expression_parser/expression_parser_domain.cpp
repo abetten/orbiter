@@ -28,7 +28,7 @@ expression_parser_domain::~expression_parser_domain()
 }
 
 void expression_parser_domain::parse_and_evaluate(
-		field_theory::finite_field *F,
+		field_theory::finite_field *Fq,
 		std::string &name_of_formula,
 		std::string &formula_text,
 		std::string &managed_variables,
@@ -51,31 +51,26 @@ void expression_parser_domain::parse_and_evaluate(
 
 	if (f_v) {
 		cout << "expression_parser_domain::parse_and_evaluate "
+				"before tree->init" << endl;
+	}
+	tree->init(Fq, verbose_level);
+	if (f_v) {
+		cout << "expression_parser_domain::parse_and_evaluate "
+				"after tree->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "expression_parser_domain::parse_and_evaluate "
 				"Formula " << name_of_formula << " is " << formula_text << endl;
 		cout << "expression_parser_domain::parse_and_evaluate "
 				"Managed variables: " << managed_variables << endl;
 	}
 
-	const char *p = managed_variables.c_str();
-	char str[1000];
+	ST.parse_comma_separated_list(
+			managed_variables, tree->managed_variables,
+			verbose_level);
 
-	while (true) {
-		if (!ST.s_scan_token_comma_separated(
-				&p, str, 0 /* verbose_level */)) {
-			break;
-		}
-		string var;
-
-		var.assign(str);
-		if (f_v) {
-			cout << "expression_parser_domain::parse_and_evaluate "
-					"adding managed variable " << var << endl;
-		}
-
-		tree->managed_variables.push_back(var);
-		tree->f_has_managed_variables = true;
-
-	}
 
 	int nb_vars;
 
@@ -141,7 +136,7 @@ void expression_parser_domain::parse_and_evaluate(
 			cout << "expression_parser_domain::parse_and_evaluate "
 					"before Poly->init" << endl;
 		}
-		Poly->init(F,
+		Poly->init(Fq,
 				nb_vars /* nb_vars */, degree,
 				t_PART,
 				verbose_level - 3);
@@ -181,47 +176,14 @@ void expression_parser_domain::parse_and_evaluate(
 						"before evaluate" << endl;
 			}
 
-			const char *p = parameters.c_str();
-			//char str[1000];
 
 			std::map<std::string, std::string> symbol_table;
-			//vector<string> symbols;
-			//vector<string> values;
 
-			while (true) {
-				if (!ST.s_scan_token_comma_separated(
-						&p, str, 0 /* verbose_level */)) {
-					break;
-				}
-				string assignment;
-				int len;
-
-				assignment.assign(str);
-				len = strlen(str);
-
-				std::size_t found;
-
-				found = assignment.find('=');
-				if (found == std::string::npos) {
-					cout << "expression_parser_domain::parse_and_evaluate "
-							"did not find '=' in variable assignment" << endl;
-					exit(1);
-				}
-				std::string symb = assignment.substr(0, found);
-				std::string val = assignment.substr(found + 1, len - found - 1);
+			ST.parse_value_pairs(
+					symbol_table,
+					parameters, 0 /* verbose_level */);
 
 
-
-				if (f_v) {
-					cout << "expression_parser_domain::parse_and_evaluate "
-							"adding symbol " << symb << " = " << val << endl;
-				}
-
-				symbol_table[symb] = val;
-				//symbols.push_back(symb);
-				//values.push_back(val);
-
-			}
 
 #if 0
 			if (f_v) {
@@ -242,7 +204,7 @@ void expression_parser_domain::parse_and_evaluate(
 				if (Subtrees[i]) {
 					//Subtrees[i]->print_expression(cout);
 					a = Subtrees[i]->evaluate(
-							symbol_table, F, verbose_level);
+							symbol_table, verbose_level);
 					Values[i] = a;
 					cout << a << " * ";
 					Poly->print_monomial(cout, i);
@@ -287,47 +249,15 @@ void expression_parser_domain::parse_and_evaluate(
 						"before evaluate" << endl;
 			}
 
-			const char *p = parameters.c_str();
-			//char str[1000];
 
 			std::map<std::string, std::string> symbol_table;
-			//vector<string> symbols;
-			//vector<string> values;
-
-			while (true) {
-				if (!ST.s_scan_token_comma_separated(
-						&p, str, 0 /* verbose_level */)) {
-					break;
-				}
-				string assignment;
-				int len;
-
-				assignment.assign(str);
-				len = strlen(str);
-
-				std::size_t found;
-
-				found = assignment.find('=');
-				if (found == std::string::npos) {
-					cout << "expression_parser_domain::parse_and_evaluate "
-							"did not find '=' in variable assignment" << endl;
-					exit(1);
-				}
-				std::string symb = assignment.substr (0, found);
-				std::string val = assignment.substr (found + 1, len - found - 1);
 
 
+			ST.parse_value_pairs(
+					symbol_table,
+					parameters, 0 /* verbose_level */);
 
-				if (f_v) {
-					cout << "expression_parser_domain::parse_and_evaluate "
-							"adding symbol " << symb << " = " << val << endl;
-				}
 
-				symbol_table[symb] = val;
-				//symbols.push_back(symb);
-				//values.push_back(val);
-
-			}
 
 #if 0
 			cout << "expression_parser_domain::parse_and_evaluate symbol table:" << endl;
@@ -337,7 +267,7 @@ void expression_parser_domain::parse_and_evaluate(
 #endif
 			int a;
 
-			a = tree->Root->evaluate(symbol_table, F, verbose_level);
+			a = tree->Root->evaluate(symbol_table, verbose_level);
 			if (f_v) {
 				cout << "expression_parser_domain::parse_and_evaluate "
 						"the formula evaluates to " << a << endl;
@@ -354,10 +284,10 @@ void expression_parser_domain::parse_and_evaluate(
 }
 
 void expression_parser_domain::evaluate(
-		field_theory::finite_field *Fq,
 		std::string &formula_label,
 		std::string &parameters,
 		int verbose_level)
+// ToDo: use symbolic object instead
 {
 	int f_v = (verbose_level >= 1);
 
@@ -383,7 +313,9 @@ void expression_parser_domain::evaluate(
 
 
 
+	// ToDo use symbolic object instead
 
+#if 0
 	if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
 		cout << "symbol table entry is a collection" << endl;
 
@@ -408,7 +340,6 @@ void expression_parser_domain::evaluate(
 
 			Values[i] = evaluate_formula(
 					F,
-					Fq,
 					parameters,
 					verbose_level);
 		}
@@ -428,15 +359,16 @@ void expression_parser_domain::evaluate(
 
 		a = evaluate_formula(
 				F,
-				Fq,
 				parameters,
 				verbose_level);
 		cout << "The formula evaluates to " << a << endl;
 	}
 	else {
-		cout << "symbol table entry must be either a formula or a collection" << endl;
+		cout << "symbol table entry must be either "
+				"a formula or a collection" << endl;
 		exit(1);
 	}
+#endif
 
 
 	if (f_v) {
@@ -446,9 +378,10 @@ void expression_parser_domain::evaluate(
 
 int expression_parser_domain::evaluate_formula(
 		formula *F,
-		field_theory::finite_field *Fq,
 		std::string &parameters,
 		int verbose_level)
+// creates a homogeneous_polynomial_domain object
+// if the formula is homogeneous
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -476,7 +409,7 @@ int expression_parser_domain::evaluate_formula(
 			cout << "expression_parser_domain::evaluate_formula "
 					"before Poly->init" << endl;
 		}
-		Poly->init(Fq,
+		Poly->init(F->Fq,
 				F->nb_managed_vars /* nb_vars */, degree,
 				t_PART,
 				verbose_level - 3);
@@ -528,7 +461,7 @@ int expression_parser_domain::evaluate_formula(
 					"Monomial " << i << " : ";
 			if (Subtrees[i]) {
 				//Subtrees[i]->print_expression(cout);
-				a = Subtrees[i]->evaluate(symbol_table, Fq, verbose_level);
+				a = Subtrees[i]->evaluate(symbol_table, verbose_level);
 				Values[i] = a;
 				cout << a << " * ";
 				Poly->print_monomial(cout, i);
@@ -573,7 +506,7 @@ int expression_parser_domain::evaluate_formula(
 
 		int a;
 
-		a = F->tree->Root->evaluate(symbol_table, Fq, verbose_level);
+		a = F->tree->Root->evaluate(symbol_table, verbose_level);
 		cout << "expression_parser_domain::evaluate_formula "
 				"the formula evaluates to " << a << endl;
 
@@ -591,10 +524,10 @@ int expression_parser_domain::evaluate_formula(
 
 void expression_parser_domain::evaluate_managed_formula(
 		formula *F,
-		field_theory::finite_field *Fq,
 		std::string &parameters,
 		int *&Values, int &nb_monomials,
 		int verbose_level)
+// creates a homogeneous_polynomial_domain object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -626,7 +559,7 @@ void expression_parser_domain::evaluate_managed_formula(
 		cout << "expression_parser_domain::evaluate_managed_formula "
 				"before Poly->init" << endl;
 	}
-	Poly->init(Fq,
+	Poly->init(F->tree->Fq,
 			F->nb_managed_vars /* nb_vars */, degree,
 			t_PART,
 			0 /*verbose_level - 3*/);
@@ -681,7 +614,7 @@ void expression_parser_domain::evaluate_managed_formula(
 			continue;
 		}
 
-		a = Subtrees[i]->evaluate(symbol_table, Fq, verbose_level);
+		a = Subtrees[i]->evaluate(symbol_table, verbose_level);
 		Values[i] = a;
 
 		if (f_v) {

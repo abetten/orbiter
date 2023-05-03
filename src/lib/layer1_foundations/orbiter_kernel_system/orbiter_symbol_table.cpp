@@ -136,9 +136,11 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 	else if (t == t_spread_classify) {
 		cout << "t_spread_classify" << endl;
 	}
+#if 0
 	else if (t == t_formula) {
 		cout << "t_formula" << endl;
 	}
+#endif
 	else if (t == t_cubic_surface) {
 		cout << "t_cubic_surface" << endl;
 	}

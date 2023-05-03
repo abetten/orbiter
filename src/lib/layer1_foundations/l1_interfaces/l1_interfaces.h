@@ -88,6 +88,11 @@ public:
 	void multiply(
 			expression_parser_sajeeb **terms,
 			int n,
+			int &stage_counter,
+			int verbose_level);
+	void convert_to_orbiter(
+			expression_parser::syntax_tree *&Tree,
+			field_theory::finite_field *F,
 			int verbose_level);
 
 

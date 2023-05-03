@@ -873,7 +873,7 @@ enum symbol_table_object_type {
 	t_orthogonal_space,
 	t_BLT_set_classify,
 	t_spread_classify,
-	t_formula,
+	//t_formula,
 	t_cubic_surface,
 	t_quartic_curve,
 	t_BLT_set,
