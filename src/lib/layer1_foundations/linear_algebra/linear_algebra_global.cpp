@@ -208,6 +208,7 @@ void linear_algebra_global::do_nullspace(
 		field_theory::finite_field *F,
 		int *M, int m, int n,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
+		int *&Nullspace, int &nullspace_m, int &nullspace_n,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -269,6 +270,12 @@ void linear_algebra_global::do_nullspace(
 		cout << "\\right]" << endl;
 		cout << "$$" << endl;
 	}
+
+	nullspace_m = n - rk;
+	nullspace_n = n;
+
+	Nullspace = NEW_int(nullspace_m * nullspace_n);
+	Int_vec_copy(A + rk * n, Nullspace, nullspace_m * nullspace_n);
 
 	if (f_normalize_from_the_left) {
 		if (f_v) {

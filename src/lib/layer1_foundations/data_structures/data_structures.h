@@ -538,6 +538,8 @@ public:
 	void add3(int *v1, int *v2, int *v3, int *w, int len);
 	void apply(int *from, int *through, int *to, int len);
 	void apply_lint(int *from, long int *through, long int *to, int len);
+	int is_constant(
+			int *v,  int len);
 	int is_constant_on_subset(int *v,
 		int *subset, int sz, int &value);
 	void take_away(int *v, int &len,
@@ -1810,6 +1812,12 @@ int string_tools_compare_strings(void *a, void *b, void *data);
 class symbolic_object_builder_description {
 public:
 
+	int f_label_txt;
+	std::string label_txt;
+
+	int f_label_tex;
+	std::string label_tex;
+
 	int f_text;
 	std::string text_txt;
 
@@ -1825,8 +1833,39 @@ public:
 	int f_matrix;
 	int nb_rows;
 
-	int f_test;
-	std::string test_object1;
+	int f_determinant;
+	std::string determinant_source;
+
+	int f_characteristic_polynomial;
+	std::string characteristic_polynomial_variable;
+	std::string characteristic_polynomial_source;
+
+	int f_substitute;
+	std::string substitute_variables;
+	std::string substitute_target;
+	std::string substitute_source;
+
+
+	int f_simplify;
+	std::string simplify_source;
+
+	int f_right_nullspace;
+	std::string right_nullspace_source;
+
+	int f_minor;
+	std::string minor_source;
+	int minor_i;
+	int minor_j;
+
+	int f_symbolic_nullspace;
+	std::string symbolic_nullspace_source;
+
+	int f_stack_matrices_vertically;
+	int f_stack_matrices_horizontally;
+	int f_stack_matrices_z_shape;
+	std::string stack_matrices_label;
+
+
 
 	symbolic_object_builder_description();
 	~symbolic_object_builder_description();
@@ -1859,26 +1898,38 @@ public:
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
 
-	expression_parser::formula *V;
-	int len;
-
-	int f_matrix;
-	int nb_rows;
-	int nb_cols;
+	expression_parser::formula_vector *Formula_vector;
 
 	symbolic_object_builder();
 	~symbolic_object_builder();
 	void init(
 			symbolic_object_builder_description *Descr,
 			int verbose_level);
-	void get_string_representation_Sajeeb(std::vector<std::string> &S);
-	void get_string_representation_formula(std::vector<std::string> &S);
-	void print_Sajeeb(std::ostream &ost);
-	void print_formula(std::ostream &ost);
-	void print_matrix(
-			std::vector<std::string> &S, std::ostream &ost);
-	void print_vector(
-			std::vector<std::string> &S, std::ostream &ost);
+	void do_determinant(
+			symbolic_object_builder_description *Descr,
+			int verbose_level);
+	void do_characteristic_polynomial(
+			symbolic_object_builder_description *Descr,
+			int verbose_level);
+	void do_substitute(
+			symbolic_object_builder_description *Descr,
+			int verbose_level);
+	void do_simplify(
+			symbolic_object_builder_description *Descr,
+			int verbose_level);
+	void do_right_nullspace(
+			symbolic_object_builder_description *Descr,
+			int verbose_level);
+	void do_minor(
+			symbolic_object_builder_description *Descr,
+			int minor_i, int minor_j,
+			int verbose_level);
+	void do_symbolic_nullspace(
+			symbolic_object_builder_description *Descr,
+			int verbose_level);
+	void do_stack(
+			symbolic_object_builder_description *Descr,
+			int verbose_level);
 	void multiply_terms(
 			expression_parser::formula **terms,
 			int n,

@@ -337,7 +337,7 @@ syntax_tree_node *expression_parser::Primary(int verbose_level,
 			std::cout << "expression_parser::Primary NUMBER " << v << " done" << std::endl;
 		}
 		if (f_v) {
-			N->print(std::cout);
+			N->print_subtree(std::cout);
 		}
 		return N;
 	}
@@ -386,7 +386,7 @@ syntax_tree_node *expression_parser::Primary(int verbose_level,
 			std::cout << "expression_parser::Primary symbol " << word << std::endl;
 		}
 		if (f_v) {
-			N->print(std::cout);
+			N->print_subtree(std::cout);
 		}
 		return N;               // and return new value
 	}
@@ -434,7 +434,7 @@ syntax_tree_node *expression_parser::Primary(int verbose_level,
 		}
 		FREE_OBJECT(N);
 		if (f_v) {
-			N1->print(std::cout);
+			N1->print_subtree(std::cout);
 		}
 		return N1;
 	}

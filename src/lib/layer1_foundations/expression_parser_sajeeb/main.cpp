@@ -91,7 +91,9 @@ int main(int argc, const char** argv) {
 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3^2";
 #endif
 
-    std::string exp = "x^4+y^4+z^4-x^2*y^2";
+    //std::string exp = "x^4+y^4+z^4-x^2*y^2";
+
+    std::string exp = "(x+y)^2";
 
     managed_variables_index_table managed_variables_table;
     for (int i=0; i<3; ++i)

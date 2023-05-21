@@ -28,8 +28,25 @@ syntax_tree_node_terminal::syntax_tree_node_terminal()
 
 }
 
-void syntax_tree_node_terminal::print_to_vector(std::vector<std::string> &rep)
+syntax_tree_node_terminal::~syntax_tree_node_terminal()
 {
+	f_int = false;
+	f_double = false;
+	f_text = false;
+	value_int = 0;
+	value_double = 0.;
+	//value_text;
+
+}
+
+void syntax_tree_node_terminal::print_to_vector(
+		std::vector<std::string> &rep, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node_terminal::print_to_vector" << endl;
+	}
 	string s;
 
 	if (f_int) {
@@ -44,7 +61,13 @@ void syntax_tree_node_terminal::print_to_vector(std::vector<std::string> &rep)
 	else {
 		cout << "syntax_tree_node_terminal::print_to_vector unknown type" << endl;
 	}
+	if (f_v) {
+		cout << "syntax_tree_node_terminal::print_to_vector s = " << s << endl;
+	}
 	rep.push_back(s);
+	if (f_v) {
+		cout << "syntax_tree_node_terminal::print_to_vector done" << endl;
+	}
 }
 
 void syntax_tree_node_terminal::print(std::ostream &ost)

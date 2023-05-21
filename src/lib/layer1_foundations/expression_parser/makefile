@@ -10,6 +10,7 @@ MODULES = \
 	expression_parser.o \
 	formula_activity_description.o \
 	formula_activity.o \
+	formula_vector.o \
 	formula.o \
 	lexer.o \
 	syntax_tree_node_terminal.o \

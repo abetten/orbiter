@@ -35,6 +35,7 @@ public:
 			field_theory::finite_field *F,
 			int *M, int m, int n,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int *&Nullspace, int &nullspace_m, int &nullspace_n,
 			int verbose_level);
 	void do_RREF(
 			field_theory::finite_field *F,

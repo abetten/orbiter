@@ -1284,11 +1284,11 @@ int finite_field::mult_verbose(
 	nb_times_mult++;
 	//cout << "finite_field::mult_verbose i=" << i << " j=" << j << endl;
 	if (i < 0 || i >= q) {
-		cout << "finite_field_by_tables::mult_verbose i = " << i << endl;
+		cout << "finite_field_by_tables::mult_verbose i = " << i << " q=" << q << endl;
 		exit(1);
 	}
 	if (j < 0 || j >= q) {
-		cout << "finite_field_by_tables::mult_verbose j = " << j << endl;
+		cout << "finite_field_by_tables::mult_verbose j = " << j << " q=" << q << endl;
 		exit(1);
 	}
 	if (f_has_table) {
@@ -1302,6 +1302,9 @@ int finite_field::mult_verbose(
 			cout << "finite_field_by_tables::mult_verbose "
 					"!f_has_table && Iwo == NULL" << endl;
 			exit(1);
+		}
+		if (f_v) {
+			cout << "finite_field_by_tables::mult_verbose before Iwo->mult" << endl;
 		}
 		c = Iwo->mult(i, j, verbose_level);
 	}

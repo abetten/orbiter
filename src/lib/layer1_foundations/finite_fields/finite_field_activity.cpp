@@ -266,6 +266,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 		linear_algebra::linear_algebra_global LA;
 		int *v;
 		int m, n;
+		int *Nullspace;
+		int nullspace_m, nullspace_n;
 
 		Get_matrix(Descr->nullspace_input_matrix, v, m, n);
 
@@ -278,6 +280,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				v, m, n,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right,
+				Nullspace, nullspace_m, nullspace_n,
 				verbose_level);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -285,6 +288,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 
 		FREE_int(v);
+		FREE_int(Nullspace);
 
 	}
 	else if (Descr->f_RREF) {

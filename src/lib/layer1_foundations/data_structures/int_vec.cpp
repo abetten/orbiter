@@ -63,6 +63,23 @@ void int_vec::apply_lint(int *from, long int *through, long int *to, int len)
 	}
 }
 
+int int_vec::is_constant(
+		int *v,  int len)
+{
+	int a, i;
+
+	if (len <= 0) {
+		return true;
+	}
+	a = v[0];
+	for (i = 1; i < len; i++) {
+		if (v[i] != a) {
+			return false;
+		}
+	}
+	return true;
+}
+
 
 int int_vec::is_constant_on_subset(int *v,
 	int *subset, int sz, int &value)

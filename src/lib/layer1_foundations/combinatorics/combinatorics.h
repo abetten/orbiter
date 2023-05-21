@@ -479,6 +479,7 @@ public:
 	int is_permutation_lint(long int *perm, long int n);
 	void first_lehmercode(int n, int *v);
 	int next_lehmercode(int n, int *v);
+	int sign_based_on_lehmercode(int n, int *v);
 	void lehmercode_to_permutation(int n, int *code, int *perm);
 	int disjoint_binary_representation(int u, int v);
 	int hall_test(int *A, int n, int kmax, int *memo, int verbose_level);

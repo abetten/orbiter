@@ -1707,6 +1707,22 @@ int combinatorics_domain::next_lehmercode(int n, int *v)
 	return false;
 }
 
+int combinatorics_domain::sign_based_on_lehmercode(int n, int *v)
+{
+	int i, s;
+
+	s = 0;
+	for (i = 0; i < n; i++) {
+		s += v[i];
+	}
+	if (EVEN(s)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 void combinatorics_domain::lehmercode_to_permutation(
 		int n, int *code, int *perm)
 {

@@ -150,7 +150,7 @@ public:
 // #############################################################################
 
 
-//! an activity involving a formula
+//! an activity involving a symbolic expression
 
 class formula_activity {
 public:
@@ -174,12 +174,98 @@ public:
 
 
 // #############################################################################
+// formula_vector.cpp
+// #############################################################################
+
+
+
+//! a vector of symbolic objects which can be used to create matrices and vectors
+
+
+class formula_vector {
+public:
+
+	std::string label_txt;
+	std::string label_tex;
+
+	formula *V;
+	int len;
+
+	int f_matrix;
+	int nb_rows;
+	int nb_cols;
+
+
+	formula_vector();
+	~formula_vector();
+	void init_from_text(
+			std::string &label_txt, std::string &label_tex,
+			std::string &text,
+			field_theory::finite_field *Fq,
+			std::string &managed_variables,
+			int f_matrix, int nb_rows,
+			int verbose_level);
+	void init_and_allocate(
+			std::string &label_txt, std::string &label_tex,
+			int len, int verbose_level);
+	int is_integer_matrix();
+	void get_integer_matrix(int *&M, int verbose_level);
+	void get_string_representation_Sajeeb(std::vector<std::string> &S);
+	void get_string_representation_formula(
+			std::vector<std::string> &S, int verbose_level);
+	void print_Sajeeb(std::ostream &ost);
+	void print_formula(std::ostream &ost, int verbose_level);
+	void print_matrix(
+			std::vector<std::string> &S, std::ostream &ost);
+	void print_vector(
+			std::vector<std::string> &S, std::ostream &ost);
+	void make_A_minus_lambda_Identity(
+			formula_vector *A,
+			field_theory::finite_field *Fq,
+			std::string &variable,
+			int verbose_level);
+	void substitute(formula_vector *Source,
+			formula_vector *Target,
+			std::string &substitution_variables,
+			int verbose_level);
+	void simplify(
+			formula_vector *A,
+			field_theory::finite_field *Fq,
+			int verbose_level);
+	void characteristic_polynomial(
+			formula_vector *A,
+			field_theory::finite_field *Fq,
+			std::string &variable,
+			int verbose_level);
+	void determinant(
+			formula_vector *A,
+			field_theory::finite_field *Fq,
+			int verbose_level);
+	void right_nullspace(
+			formula_vector *A,
+			field_theory::finite_field *Fq,
+			int verbose_level);
+	void minor(
+			formula_vector *A,
+			field_theory::finite_field *Fq,
+			int i, int j,
+			int verbose_level);
+	void symbolic_nullspace(
+			formula_vector *A,
+			field_theory::finite_field *Fq,
+			int verbose_level);
+
+};
+
+
+
+// #############################################################################
 // formula.cpp
 // #############################################################################
 
 
 
-//! front-end to expression
+//! a single symbolic expression represented as a tree, consisting of multiplication nodes, addition nodes, and terminal nodes
 
 
 
@@ -208,13 +294,23 @@ public:
 
 	formula();
 	~formula();
-	std::string string_representation();
+	std::string string_representation(int verbose_level);
 	std::string string_representation_Sajeeb();
-	std::string string_representation_formula();
+	std::string string_representation_formula(int verbose_level);
 	void print(std::ostream &ost);
 	void init_formula(
 			std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
+			field_theory::finite_field *Fq,
+			int verbose_level);
+	void init_formula_from_tree(
+			std::string &label, std::string &label_tex,
+			field_theory::finite_field *Fq,
+			syntax_tree *Tree,
+			int verbose_level);
+	void init_formula_int(
+			std::string &label, std::string &label_tex,
+			int value,
 			field_theory::finite_field *Fq,
 			int verbose_level);
 	void init_formula_Sajeeb(
@@ -236,7 +332,16 @@ public:
 			std::string &name);
 	void print_easy(
 			std::ostream &ost);
-
+	void substitute(
+			std::vector<std::string> &variables,
+			formula **S,
+			formula *output,
+			int verbose_level);
+	void copy_to(
+			formula *output,
+			int verbose_level);
+	void simplify(
+			int verbose_level);
 };
 
 
@@ -288,7 +393,9 @@ public:
 	std::string value_text;
 
 	syntax_tree_node_terminal();
-	void print_to_vector(std::vector<std::string> &rep);
+	~syntax_tree_node_terminal();
+	void print_to_vector(
+			std::vector<std::string> &rep, int verbose_level);
 	void print(std::ostream &ost);
 	void print_easy(std::ostream &ost);
 	void print_expression(std::ostream &ost);
@@ -320,7 +427,6 @@ public:
 	int f_has_exponent;
 	int exponent;
 
-
 	int f_terminal;
 	syntax_tree_node_terminal *T;
 
@@ -343,28 +449,60 @@ public:
 			int value, int verbose_level);
 	void add_numerical_summand(
 			int value, int verbose_level);
+	int text_value_match(std::string &factor);
 	void add_factor(
 			std::string &factor, int exponent, int verbose_level);
 	void add_summand(
 			std::string &summand, int verbose_level);
+	void init_empty_terminal_node_int(
+			syntax_tree *Tree,
+			int value,
+			int verbose_level);
+	void init_empty_terminal_node_text(
+			syntax_tree *Tree,
+			std::string &value_text,
+			int verbose_level);
+	void init_empty_terminal_node_text_with_exponent(
+			syntax_tree *Tree,
+			std::string &value_text,
+			int exponent,
+			int verbose_level);
 	void add_empty_plus_node_with_exponent(
+			syntax_tree *Tree,
 			int exponent, int verbose_level);
+	void init_empty_plus_node_with_exponent(
+			syntax_tree *Tree,
+			int exponent,
+			int verbose_level);
 	void add_empty_multiplication_node(
+			syntax_tree *Tree,
+			int verbose_level);
+	void init_empty_multiplication_node(
+			syntax_tree *Tree,
+			int verbose_level);
+	void add_empty_node(
+			syntax_tree *Tree,
+			int verbose_level);
+	void init_empty_node(
+			syntax_tree *Tree,
 			int verbose_level);
 	void split_by_monomials(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, int verbose_level);
 	int is_homogeneous(
 			int &degree, int verbose_level);
-	void print_to_vector(std::vector<std::string> &rep);
-	void print(
+	void print_subtree_to_vector(
+			std::vector<std::string> &rep, int verbose_level);
+	void print_subtree(
 			std::ostream &ost);
-	void print_easy(
+	void print_subtree_easy(
 			std::ostream &ost);
-	void print_easy_without_monomial(
+	void print_subtree_easy_without_monomial(
 			std::ostream &ost);
-	int is_mult();
-	int is_add();
+	void print_node_type(
+			std::ostream &ost);
+	int is_mult_node();
+	int is_add_node();
 	int evaluate(
 			std::map<std::string, std::string> &symbol_table,
 			int verbose_level);
@@ -377,6 +515,31 @@ public:
 			std::string &name, std::ostream &ost);
 	void export_graphviz_recursion(
 			std::ostream &ost);
+	void copy_to(
+			syntax_tree *Output_tree,
+			syntax_tree_node *Output_node,
+			int verbose_level);
+	void substitute(
+			std::vector<std::string> &variables,
+			formula *Target,
+			formula **Substitutions,
+			syntax_tree *Input_tree,
+			syntax_tree *Output_tree,
+			syntax_tree_node *Output_node,
+			int verbose_level);
+	void simplify(
+			int verbose_level);
+	void simplify_exponents(int verbose_level);
+	void collect_like_terms(int verbose_level);
+	void simplify_constants(int verbose_level);
+	void flatten(
+			int verbose_level);
+	void display_children_by_type();
+	void delete_all_but_one_child(int i, int verbose_level);
+	void delete_one_child(int i, int verbose_level);
+	int is_constant_one(int verbose_level);
+	int is_constant_zero(int verbose_level);
+
 };
 
 
@@ -398,20 +561,53 @@ public:
 	syntax_tree_node *Root;
 
 	syntax_tree();
+	~syntax_tree();
 
 	void init(
 			field_theory::finite_field *Fq, int verbose_level);
-	void print_to_vector(std::vector<std::string> &rep);
+	void init_root_node(int verbose_level);
+	void init_int(
+			field_theory::finite_field *Fq, int value, int verbose_level);
+	void print_to_vector(
+			std::vector<std::string> &rep, int verbose_level);
 	void print(std::ostream &ost);
 	void print_easy(std::ostream &ost);
-	void print_monomial(std::ostream &ost, int *monomial);
+	void print_monomial(
+			std::ostream &ost, int *monomial);
 	void export_graphviz(
 			std::string &name, std::ostream &ost);
-	int identify_single_literal(std::string &single_literal);
-	int is_homogeneous(int &degree, int verbose_level);
+	int identify_single_literal(
+			std::string &single_literal);
+	int is_homogeneous(
+			int &degree, int verbose_level);
 	void split_by_monomials(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int verbose_level);
+	void substitute(
+			std::vector<std::string> &variables,
+			formula *Target,
+			formula **S,
+			syntax_tree *Output_tree,
+			syntax_tree_node *Output_root_node,
+			int verbose_level);
+	void copy_to(
+			syntax_tree *Output_tree,
+			syntax_tree_node *Output_root_node,
+			int verbose_level);
+	void simplify(
+			int verbose_level);
+	void multiply_by_minus_one(
+			field_theory::finite_field *Fq,
+			int verbose_level);
+	void make_determinant(
+			field_theory::finite_field *Fq,
+			formula *V_in,
+			int n,
+			int verbose_level);
+	int compare_nodes(
+			syntax_tree_node *Node1,
+			syntax_tree_node *Node2,
+			int verbose_level);
 
 };
 

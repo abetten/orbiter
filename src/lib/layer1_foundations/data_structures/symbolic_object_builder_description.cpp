@@ -23,6 +23,13 @@ namespace data_structures {
 
 symbolic_object_builder_description::symbolic_object_builder_description()
 {
+	f_label_txt = false;
+	//std::string label_txt;
+
+	f_label_tex = false;
+	//std::string label_tex;
+
+
 	f_text = false;
 	//std::string text_txt;
 
@@ -38,8 +45,37 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_matrix = false;
 	nb_rows = 0;
 
-	f_test = false;
-	//std::string test_object1;
+	f_determinant = false;
+	//std::string determinant_source;
+
+	f_characteristic_polynomial = false;
+	//std::string characteristic_polynomial_variable;
+	//std::string characteristic_polynomial_source;
+
+	f_substitute = false;
+	//std::string substitute_variables;
+	//std::string substitute_target;
+	//std::string substitute_source;
+
+	f_simplify = false;
+	//std::string simplify_source;
+
+	f_right_nullspace = false;
+	//std::string right_nullspace_source;
+
+
+	f_minor = false;
+	//std::string minor_source;
+	minor_i = 0;
+	minor_j = 0;
+
+	f_symbolic_nullspace = false;
+	//std::string symbolic_nullspace_source;
+
+	f_stack_matrices_vertically = false;
+	f_stack_matrices_horizontally = false;
+	f_stack_matrices_z_shape = false;
+	//std::string stack_matrices_label;
 
 }
 
@@ -61,7 +97,21 @@ int symbolic_object_builder_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (ST.stringcmp(argv[i], "-text") == 0) {
+		if (ST.stringcmp(argv[i], "-label_txt") == 0) {
+			f_label_txt = true;
+			label_txt.assign(argv[++i]);
+			if (f_v) {
+				cout << "-label_txt " << label_txt << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-label_tex") == 0) {
+			f_label_tex = true;
+			label_tex.assign(argv[++i]);
+			if (f_v) {
+				cout << "-label_tex " << label_tex << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-text") == 0) {
 			f_text = true;
 			text_txt.assign(argv[++i]);
 			if (f_v) {
@@ -96,11 +146,107 @@ int symbolic_object_builder_description::read_arguments(
 				cout << "-matrix " << nb_rows << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-test") == 0) {
-			f_test = true;
-			test_object1.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-determinant") == 0) {
+			f_determinant = true;
+			determinant_source.assign(argv[++i]);
 			if (f_v) {
-				cout << "-test " << test_object1 << endl;
+				cout << "-determinant "
+						<< " " << determinant_source
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-characteristic_polynomial") == 0) {
+			f_characteristic_polynomial = true;
+			characteristic_polynomial_variable.assign(argv[++i]);
+			characteristic_polynomial_source.assign(argv[++i]);
+			if (f_v) {
+				cout << "-f_characteristic_polynomial "
+						<< " " << characteristic_polynomial_variable
+						<< " " << characteristic_polynomial_source
+						<< endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-substitute") == 0) {
+			f_substitute = true;
+			substitute_variables.assign(argv[++i]);
+			substitute_target.assign(argv[++i]);
+			substitute_source.assign(argv[++i]);
+			if (f_v) {
+				cout << "-substitute "
+						<< " " << substitute_variables
+						<< " " << substitute_target
+						<< " " << substitute_source
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-simplify") == 0) {
+			f_simplify = true;
+			simplify_source.assign(argv[++i]);
+			if (f_v) {
+				cout << "-simplify "
+						<< " " << simplify_source
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-right_nullspace") == 0) {
+			f_right_nullspace = true;
+			right_nullspace_source.assign(argv[++i]);
+			if (f_v) {
+				cout << "-right_nullspace "
+						<< " " << right_nullspace_source
+						<< endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-minor") == 0) {
+			f_minor = true;
+			minor_source.assign(argv[++i]);
+			minor_i = ST.strtoi(argv[++i]);
+			minor_j = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-minor "
+						<< " " << minor_source
+						<< " " << minor_i
+						<< " " << minor_j
+						<< endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-symbolic_nullspace") == 0) {
+			f_symbolic_nullspace = true;
+			symbolic_nullspace_source.assign(argv[++i]);
+			if (f_v) {
+				cout << "-symbolic_nullspace "
+						<< " " << symbolic_nullspace_source
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-stack_matrices_vertically") == 0) {
+			f_stack_matrices_vertically = true;
+			stack_matrices_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-stack_matrices_vertically "
+						<< " " << stack_matrices_label
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-stack_matrices_horizontally") == 0) {
+			f_stack_matrices_horizontally = true;
+			stack_matrices_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-stack_matrices_horizontally "
+						<< " " << stack_matrices_label
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-stack_matrices_z_shape") == 0) {
+			f_stack_matrices_z_shape = true;
+			stack_matrices_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-stack_matrices_z_shape "
+						<< " " << stack_matrices_label
+						<< endl;
 			}
 		}
 
@@ -124,6 +270,12 @@ int symbolic_object_builder_description::read_arguments(
 
 void symbolic_object_builder_description::print()
 {
+	if (f_label_txt) {
+		cout << "-label_txt " << label_txt << endl;
+	}
+	if (f_label_tex) {
+		cout << "-label_tex " << label_tex << endl;
+	}
 	if (f_text) {
 		cout << "-text " << text_txt << endl;
 	}
@@ -139,8 +291,60 @@ void symbolic_object_builder_description::print()
 	if (f_matrix) {
 		cout << "-matrix " << nb_rows << endl;
 	}
-	if (f_test) {
-		cout << "-test " << test_object1 << endl;
+	if (f_determinant) {
+		cout << "-determinant "
+				<< " " << determinant_source
+				<< endl;
+	}
+	if (f_characteristic_polynomial) {
+		cout << "-characteristic_polynomial "
+				<< " " << characteristic_polynomial_variable
+				<< " " << characteristic_polynomial_source
+				<< endl;
+	}
+	if (f_substitute) {
+		cout << "-substitute "
+				<< " " << substitute_variables
+				<< " " << substitute_target
+				<< " " << substitute_source
+				<< endl;
+	}
+	if (f_simplify) {
+		cout << "-simplify "
+				<< " " << simplify_source
+				<< endl;
+	}
+	if (f_right_nullspace) {
+		cout << "-right_nullspace "
+				<< " " << right_nullspace_source
+				<< endl;
+	}
+	if (f_minor) {
+		cout << "-minor "
+				<< " " << minor_source
+				<< " " << minor_i
+				<< " " << minor_j
+				<< endl;
+	}
+	if (f_symbolic_nullspace) {
+		cout << "-symbolic_nullspace "
+				<< " " << symbolic_nullspace_source
+				<< endl;
+	}
+	if (f_stack_matrices_vertically) {
+			cout << "-stack_matrices_vertically "
+					<< " " << stack_matrices_label
+					<< endl;
+	}
+	if (f_stack_matrices_horizontally) {
+			cout << "-stack_matrices_horizontally "
+					<< " " << stack_matrices_label
+					<< endl;
+	}
+	if (f_stack_matrices_z_shape) {
+			cout << "-stack_matrices_z_shape "
+					<< " " << stack_matrices_label
+					<< endl;
 	}
 
 }

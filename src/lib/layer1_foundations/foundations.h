@@ -394,6 +394,7 @@ namespace expression_parser {
 	class expression_parser;
 	class formula_activity_description;
 	class formula_activity;
+	class formula_vector;
 	class formula;
 	class lexer;
 	class syntax_tree_node_terminal;
