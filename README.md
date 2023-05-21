@@ -22,6 +22,7 @@ There are two programmer's guides. Both are very rudimentary:
 
 
 Requirements:
+- C++ 17 compiler
 - bison and flex and the flex library (for Sajeeb's expression parser)
 - Windows users may use Windows subsystem linux to install Orbiter.
 
