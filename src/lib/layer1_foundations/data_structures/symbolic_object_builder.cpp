@@ -60,6 +60,13 @@ void symbolic_object_builder::init(
 		}
 		Fq = Get_finite_field(Descr->field_label);
 	}
+	else if (Descr->f_field_pointer) {
+		if (f_v) {
+			cout << "symbolic_object_builder::init "
+					"field_pointer" << endl;
+		}
+		Fq = Descr->field_pointer;
+	}
 
 	if (Descr->f_ring) {
 		if (f_v) {
@@ -76,11 +83,11 @@ void symbolic_object_builder::init(
 		}
 	}
 
-	if (Descr->f_ring && !Descr->f_field) {
+	if (Descr->f_ring && !Descr->f_field && !Descr->f_field_pointer) {
 		Fq = Ring->get_F();
 	}
 
-	if (!Descr->f_ring && !Descr->f_field) {
+	if (!Descr->f_ring && !Descr->f_field && !Descr->f_field_pointer) {
 		cout << "symbolic_object_builder::init please use either "
 				"-ring <ring> or -field <field> "
 				"to specify the domain of coefficients" << endl;

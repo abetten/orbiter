@@ -8231,22 +8231,26 @@ surface_F_abcd_q7:
 #dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
 
 surface_F_abcd_Eckardt_q31:
-	$(ORBITER) -v 3 \
+	$(ORBITER) -v 10 \
 		-define F -finite_field -q 31 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define F_abcd -cubic_surface -space P \
 			-by_equation "F_abcd" \
 			"\DF_{a,b,c,d}\D" "X0,X1,X2,X3" \
-			$(F_abcd_eqn_no_exponents) \
-			"a=2,b=30,c=30,d=2" \
-			"\Da=2,b=30,c=30,d=2\D" \
+			$(F_abcd_eqn) \
+			"a,b,c,d" \
+			"\D(a,b,c,d)=(2,30,30,2)\D" \
+			"2,30,30,2" \
 		-end \
 		-with F_abcd -do \
 		-cubic_surface_activity \
 			-report \
 		-end
+	pdflatex surface_equation_F_abcd_q31_report.tex
+	open surface_equation_F_abcd_q31_report.pdf
 
 
+# E = 6
 
 
 

@@ -1828,11 +1828,18 @@ public:
 	int f_field;
 	std::string field_label;
 
+	int f_field_pointer;
+	field_theory::finite_field *field_pointer;
+
+
 	int f_ring;
 	std::string ring_label;
 
 	int f_file;
 	std::string file_name;
+
+
+
 
 	int f_matrix;
 	int nb_rows;

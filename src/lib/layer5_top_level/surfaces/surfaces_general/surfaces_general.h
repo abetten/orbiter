@@ -130,6 +130,8 @@ public:
 	int q;
 	field_theory::finite_field *F;
 
+
+
 	int f_semilinear;
 
 	projective_geometry::projective_space_with_action *PA;
@@ -209,6 +211,7 @@ public:
 			std::string &equation_text,
 			std::string &equation_parameters,
 			std::string &equation_parameters_tex,
+			std::string &equation_parameter_values,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
 	void create_surface_by_double_six(
@@ -341,6 +344,7 @@ public:
 	std::string equation_text;
 	std::string equation_parameters;
 	std::string equation_parameters_tex;
+	std::string equation_parameter_values;
 
 
 	int f_by_double_six;

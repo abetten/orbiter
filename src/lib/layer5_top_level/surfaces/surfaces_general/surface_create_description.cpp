@@ -90,6 +90,7 @@ surface_create_description::surface_create_description()
 	//std::string equation_text;
 	//std::string equation_parameters;
 	//std::string equation_parameters_tex;
+	//std::string equation_parameter_values;
 
 
 	f_by_double_six = false;
@@ -231,6 +232,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			equation_text.assign(argv[++i]);
 			equation_parameters.assign(argv[++i]);
 			equation_parameters_tex.assign(argv[++i]);
+			equation_parameter_values.assign(argv[++i]);
 			cout << "-by_equation "
 					<< equation_name_of_formula << " "
 					<< equation_name_of_formula_tex << " "
@@ -238,6 +240,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< equation_text << " "
 					<< equation_parameters << " "
 					<< equation_parameters_tex << " "
+					<< equation_parameter_values << " "
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-by_double_six") == 0) {
@@ -389,6 +392,7 @@ void surface_create_description::print()
 				<< equation_text << " "
 				<< equation_parameters << " "
 				<< equation_parameters_tex << " "
+				<< equation_parameter_values << " "
 				<< endl;
 	}
 	if (f_by_double_six) {

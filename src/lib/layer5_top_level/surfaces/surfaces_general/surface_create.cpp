@@ -574,6 +574,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 				Descr->equation_text,
 				Descr->equation_parameters,
 				Descr->equation_parameters_tex,
+				Descr->equation_parameter_values,
 				Descr->select_double_six_string,
 				verbose_level - 2)) {
 			if (f_v) {
@@ -1989,7 +1990,7 @@ void surface_create::create_surface_Cayley_form(
 }
 
 
-
+#if 0
 int surface_create::create_surface_by_equation(
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
@@ -2032,12 +2033,12 @@ int surface_create::create_surface_by_equation(
 	tree = NEW_OBJECT(expression_parser::syntax_tree);
 
 	if (f_v) {
-		cout << "surface_create::create_quartic_curve_by_equation "
+		cout << "surface_create::create_surface_by_equation "
 				"before tree->init" << endl;
 	}
 	tree->init(F, verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_quartic_curve_by_equation "
+		cout << "surface_create::create_surface_by_equation "
 				"after tree->init" << endl;
 	}
 
@@ -2317,6 +2318,375 @@ int surface_create::create_surface_by_equation(
 		cout << "surface_create::create_surface_by_equation done" << endl;
 	}
 	return true;
+}
+#endif
+
+
+int surface_create::create_surface_by_equation(
+		std::string &name_of_formula,
+		std::string &name_of_formula_tex,
+		std::string &managed_variables,
+		std::string &equation_text,
+		std::string &equation_parameters,
+		std::string &equation_parameters_tex,
+		std::string &equation_parameter_values,
+		std::vector<std::string> &select_double_six_string,
+		int verbose_level)
+// returns false if the equation is zero
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"name_of_formula=" << name_of_formula << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"name_of_formula_tex=" << name_of_formula_tex << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"managed_variables=" << managed_variables << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"equation_text=" << equation_text << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"equation_parameters=" << equation_parameters << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"equation_parameters_tex=" << equation_parameters_tex << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"equation_parameter_values=" << equation_parameter_values << endl;
+	}
+
+
+
+
+
+	data_structures::symbolic_object_builder_description *Descr1;
+
+
+	Descr1 = NEW_OBJECT(data_structures::symbolic_object_builder_description);
+	Descr1->f_field_pointer = true;
+	Descr1->field_pointer = F;
+	Descr1->f_text = true;
+	Descr1->text_txt = equation_text;
+
+
+
+
+	data_structures::symbolic_object_builder *SB1;
+
+	SB1 = NEW_OBJECT(data_structures::symbolic_object_builder);
+
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before SB1->init" << endl;
+	}
+
+	string s1;
+
+	s1 = name_of_formula + "_raw";
+
+	SB1->init(Descr1, s1, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after SB1->init" << endl;
+	}
+
+
+
+	data_structures::symbolic_object_builder_description *Descr2;
+
+
+	Descr2 = NEW_OBJECT(data_structures::symbolic_object_builder_description);
+	Descr2->f_field_pointer = true;
+	Descr2->field_pointer = F;
+	Descr2->f_text = true;
+	Descr2->text_txt = equation_parameter_values;
+
+
+
+	data_structures::symbolic_object_builder *SB2;
+
+	SB2 = NEW_OBJECT(data_structures::symbolic_object_builder);
+
+	string s2;
+
+	s2 = name_of_formula + "_param_values";
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before SB2->init" << endl;
+	}
+
+	SB2->init(Descr2, s2, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after SB2->init" << endl;
+	}
+
+	data_structures::symbolic_object_builder *O_target = SB1;
+	data_structures::symbolic_object_builder *O_source = SB2;
+
+	//O_target = Get_symbol(Descr->substitute_target);
+	//O_source = Get_symbol(Descr->substitute_source);
+
+
+	expression_parser::formula_vector *Formula_vector_after_sub;
+
+
+	Formula_vector_after_sub = NEW_OBJECT(expression_parser::formula_vector);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before Formula_vector_after_sub->substitute" << endl;
+	}
+	Formula_vector_after_sub->substitute(
+			O_source->Formula_vector,
+			O_target->Formula_vector,
+			equation_parameters /*Descr->substitute_variables*/,
+			name_of_formula, name_of_formula_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after Formula_vector_after_sub->substitute" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before Formula_vector_after_sub->V[0].simplify" << endl;
+	}
+	Formula_vector_after_sub->V[0].simplify(verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after Formula_vector_after_sub->V[0].simplify" << endl;
+	}
+
+
+
+	expression_parser::formula_vector *Formula_vector_after_expand;
+
+	Formula_vector_after_expand = NEW_OBJECT(expression_parser::formula_vector);
+
+	int f_write_trees_during_expand = false;
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before Formula_vector->expand" << endl;
+	}
+	Formula_vector_after_expand->expand(
+			Formula_vector_after_sub,
+			F,
+			name_of_formula, name_of_formula_tex,
+			f_write_trees_during_expand,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after Formula_vector->expand" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before Formula_vector_after_expand->V[0].simplify" << endl;
+	}
+	Formula_vector_after_expand->V[0].simplify(verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after Formula_vector_after_expand->V[0].simplify" << endl;
+	}
+
+
+
+	data_structures::int_matrix *I;
+	int *Coeff;
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before collect_monomial_terms" << endl;
+	}
+	Formula_vector_after_expand->V[0].collect_monomial_terms(
+			I, Coeff,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after collect_monomial_terms" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"data collected:" << endl;
+		int i;
+
+		for (i = 0; i < I->m; i++) {
+			cout << Coeff[i] << " : ";
+			Int_vec_print(cout, I->M + i * I->n, I->n);
+			cout << endl;
+		}
+		cout << "variables: ";
+		Formula_vector_after_expand->V[0].tree->print_variables_in_line(cout);
+		cout << endl;
+	}
+
+	if (I->n != 4) {
+		cout << "surface_create::create_surface_by_equation we need 4 variables" << endl;
+		exit(1);
+	}
+
+	int nb_vars, degree;
+
+	nb_vars = 4;
+	degree = 3;
+
+	ring_theory::homogeneous_polynomial_domain *Poly;
+
+	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before Poly->init" << endl;
+	}
+	Poly->init(F,
+			nb_vars /* nb_vars */, degree,
+			t_PART,
+			0/*verbose_level*/);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after Poly->init" << endl;
+	}
+
+	int nb_monomials;
+
+
+	nb_monomials = Poly->get_nb_monomials();
+
+	if (nb_monomials != 20) {
+		cout << "surface_create::create_surface_by_equation "
+				"nb_monomials != 20" << endl;
+		exit(1);
+	}
+
+	int i, index;
+	int coeffs20[20];
+
+	Int_vec_zero(coeffs20, 20);
+
+	for (i = 0; i < I->m; i++) {
+		index = Poly->index_of_monomial(I->M + i * I->n);
+		coeffs20[index] = Coeff[i];
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"coeffs20: ";
+		Int_vec_print(cout, coeffs20, 20);
+		cout << endl;
+	}
+
+
+	//exit(1);
+
+	//equation_parameters
+	//equation_parameter_values
+
+#if 0
+	-define L -symbolic_object \
+		-field F \
+		-text "25,5,5,25" \
+	-end \
+	-define M1 -symbolic_object \
+		-field F \
+		-substitute "a,b,c,d" M L \
+	-end \
+	-define M2 -symbolic_object \
+		-field F \
+		-expand M1 \
+		-write_trees_during_expand \
+	-end
+#endif
+
+
+
+	FREE_OBJECT(Poly);
+
+
+
+
+	if (Int_vec_is_zero(coeffs20, 20)) {
+		return false;
+	}
+
+
+
+	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before create_surface_by_coefficient_vector" << endl;
+	}
+
+	create_surface_by_coefficient_vector(coeffs20,
+			select_double_six_string,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after create_surface_by_coefficient_vector" << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	f_has_group = false;
+
+	char str_q[1000];
+
+	snprintf(str_q, sizeof(str_q), "%d", F->q);
+
+
+	prefix.assign("equation_");
+	prefix.append(name_of_formula);
+	prefix.append("_q");
+	prefix.append(str_q);
+
+	label_txt.assign("equation_");
+	label_txt.append(name_of_formula);
+	label_txt.append("_q");
+	label_txt.append(str_q);
+
+	label_tex.assign(name_of_formula_tex);
+	ST.string_fix_escape_characters(label_tex);
+
+	string my_parameters_tex;
+
+	my_parameters_tex.assign(equation_parameters_tex);
+	ST.string_fix_escape_characters(my_parameters_tex);
+	label_tex.append(" with ");
+	label_tex.append(my_parameters_tex);
+
+	//label_tex.append("\\_q");
+	//label_tex.append(str_q);
+
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation " << endl;
+		cout << "prefix = " << prefix << endl;
+		cout << "label_txt = " << label_txt << endl;
+		cout << "label_tex = " << label_tex << endl;
+	}
+
+	//AL->print(fp);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation done" << endl;
+	}
+	return true;
+
 }
 
 

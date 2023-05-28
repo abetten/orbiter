@@ -36,6 +36,9 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_field = false;
 	//std::string field_label;
 
+	f_field_pointer = false;
+	field_pointer = NULL;
+
 	f_ring = false;
 	//std::string ring_label;
 
@@ -366,6 +369,9 @@ void symbolic_object_builder_description::print()
 	}
 	if (f_field) {
 		cout << "-field " << field_label << endl;
+	}
+	if (f_field_pointer) {
+		cout << "field_pointer is given" << endl;
 	}
 	if (f_ring) {
 		cout << "-ring " << ring_label << endl;
