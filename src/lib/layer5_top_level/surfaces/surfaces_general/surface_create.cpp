@@ -1999,7 +1999,7 @@ int surface_create::create_surface_by_equation(
 		std::string &equation_parameters_tex,
 		std::vector<std::string> &select_double_six_string,
 		int verbose_level)
-// returns false if he equation is zero
+// returns false if the equation is zero
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2054,29 +2054,6 @@ int surface_create::create_surface_by_equation(
 	if (tree->managed_variables.size() > 0) {
 		tree->f_has_managed_variables = true;
 	}
-
-#if 0
-	const char *p = managed_variables.c_str();
-	char str[1000];
-
-	while (true) {
-		if (!ST.s_scan_token_comma_separated(
-				&p, str, 0 /* verbose_level */)) {
-			break;
-		}
-		string var;
-
-		var.assign(str);
-		if (f_v) {
-			cout << "surface_create::create_surface_by_equation "
-					"adding managed variable " << var << endl;
-		}
-
-		tree->managed_variables.push_back(var);
-		tree->f_has_managed_variables = true;
-
-	}
-#endif
 
 	int nb_vars;
 

@@ -13,6 +13,7 @@ MODULES = \
 	formula_vector.o \
 	formula.o \
 	lexer.o \
+	syntax_tree_latex.o \
 	syntax_tree_node_terminal.o \
 	syntax_tree_node.o \
 	syntax_tree.o 

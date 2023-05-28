@@ -400,7 +400,7 @@ namespace expression_parser {
 	class syntax_tree_node_terminal;
 	class syntax_tree_node;
 	class syntax_tree;
-
+	class syntax_tree_latex;
 }
 
 

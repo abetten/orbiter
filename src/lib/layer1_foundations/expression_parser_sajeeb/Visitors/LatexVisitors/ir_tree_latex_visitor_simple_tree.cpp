@@ -106,11 +106,13 @@ void ir_tree_latex_visitor_simple_tree::visit(sentinel_node* op_node) {
 }
 
 void ir_tree_latex_visitor_simple_tree::add_epilogue() {
+
     OUT << "\\documentclass{standalone}" << "\n"
         << "\\usepackage{forest}" << "\n"
         << "\\usetikzlibrary{arrows.meta}" << "\n"
-        << "\\begin{document}" << "\n"
-        << "\\begin{forest}" << "\n"
+        << "\\begin{document}" << "\n";
+
+    OUT << "\\begin{forest}" << "\n"
         << "for tree={" << "\n"
         << "grow'=0, treenode/.style = {align=center, inner sep=2.5pt," << "\n"
         << "    text centered, font=\\sffamily}," << "\n"
@@ -123,6 +125,6 @@ void ir_tree_latex_visitor_simple_tree::add_epilogue() {
 
 void ir_tree_latex_visitor_simple_tree::add_prologue() {
     OUT << "]" << "\n"
-        << "\\end{forest}" << "\n"
-        <<  "\\end{document}" << "\n";
+        << "\\end{forest}" << "\n";
+    OUT <<  "\\end{document}" << "\n";
 }

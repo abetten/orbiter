@@ -1767,6 +1767,189 @@ void string_tools::name_of_BLT_set(
 
 }
 
+void string_tools::make_latex_friendly_vector(
+		std::vector<std::string> &S, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "string_tools::make_latex_friendly_vector" << endl;
+	}
+
+	int i;
+
+	for (i = 0; i < S.size(); i++) {
+		string s, s2;
+
+		s = S[i];
+		make_latex_friendly_string(s, s2, verbose_level);
+		S[i] = s2;
+	}
+	if (f_v) {
+		cout << "string_tools::make_latex_friendly_vector output" << endl;
+		for (i = 0; i < S.size(); i++) {
+			cout << i << " : " << S[i] << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "string_tools::make_latex_friendly_vector done" << endl;
+	}
+
+}
+
+void string_tools::make_latex_friendly_string(
+		std::string &in, std::string &out, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "string_tools::make_latex_friendly_string" << endl;
+	}
+
+	string s;
+	string s2;
+	int len, line, l, j;
+	char c;
+	int f_tab_no_triangle = true;
+	int f_numbers = false;
+	int MAX_LEN = 75;
+
+	s = in;
+	s2 = "";
+	len = 0;
+	line = 0;
+	l = s.length();
+	for (j = 0; j < l; j++) {
+		c = s[j];
+		if (c == '\t') {
+			if (f_tab_no_triangle) {
+				s2 += "\\>";
+			}
+			else {
+				s2 += "$\\triangleright$\\>";
+			}
+			len += 2;
+		}
+		else if (c == ' ') {
+			s2 += "\\ ";
+			len++;
+		}
+		else if (c == '<') {
+			s2 += "{\\textless}";
+			len++;
+		}
+		else if (c == '>') {
+			s2 += "{\\textgreater}";
+			len++;
+		}
+		else if (c == '|') {
+			s2 += "{\\textbar}";
+			len++;
+		}
+		else if (c == '\\') {
+			s2 += "\\symbol{92}";
+			len++;
+		}
+		else if (c == '\'') { /* Akut */
+			s2 += "\\symbol{19}";
+			len++;
+		}
+		else if (c == ',') {
+			s2 += "\\symbol{44}";
+			len++;
+		}
+		else if (c == '!') {
+			s2 += "\\symbol{33}";
+			len++;
+		}
+		else if (c == '\"') {
+			s2 += "\\symbol{34}";
+			len++;
+		}
+		else if (c == '.') {
+			s2 += "\\symbol{46}";
+			len++;
+		}
+		else if (c == '-') {
+			s2 += "\\symbol{45}";
+			len++;
+		}
+		else if (c == '#') {
+			s2 += "\\symbol{35}";
+			len++;
+		}
+		else if (c == '$') {
+			s2 += "\\symbol{36}";
+			len++;
+		}
+		else if (c == '&') {
+			s2 += "\\symbol{38}";
+			len++;
+		}
+		else if (c == '~') {
+			s2 += "\\symbol{126}";
+			len++;
+		}
+		else if (c == '_') {
+			s2 += "\\_";
+			len++;
+		}
+		else if (c == '^') {
+			s2 += "\\symbol{94}";
+			len++;
+		}
+		else if (c == '%') {
+			s2 += "\\symbol{37}";
+			len++;
+		}
+		else if (c == '{') {
+			s2 += "\\symbol{123}";
+			len++;
+		}
+		else if (c == '}') {
+			s2 += "\\symbol{125}";
+			len++;
+		}
+#if 1
+		else if (c == '\n') {
+			s2 += "\\\\\n";
+			len = 0;
+			line++;
+			if (f_numbers) {
+				s2 += std::to_string(line) + "\\>";
+				}
+			}
+#endif
+		else {
+			s2 += c;
+			len++;
+		}
+#if 1
+		if (len > MAX_LEN) {
+			//printf("len=%d", len);
+			s2 += "\\\\\n";
+			len = 0;
+			if (f_numbers) {
+				s2 += "\\>";
+			}
+		}
+#endif
+
+	} // next j
+
+	out = s2;
+	if (f_v) {
+		cout << "string_tools::make_latex_friendly_string  in:" << in << endl;
+		cout << "string_tools::make_latex_friendly_string out:" << out << endl;
+	}
+
+	if (f_v) {
+		cout << "string_tools::make_latex_friendly_string done" << endl;
+	}
+}
+
+
 
 //#############################################################################
 

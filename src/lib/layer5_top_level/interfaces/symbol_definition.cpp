@@ -200,7 +200,8 @@ void symbol_definition::read_definition(
 	}
 	if (ST.stringcmp(argv[i], "-finite_field") == 0) {
 		f_finite_field = true;
-		Finite_field_description = NEW_OBJECT(field_theory::finite_field_description);
+		Finite_field_description =
+				NEW_OBJECT(field_theory::finite_field_description);
 		if (f_v) {
 			cout << "reading -finite_field" << endl;
 		}
@@ -220,7 +221,8 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-polynomial_ring") == 0) {
 		f_polynomial_ring = true;
-		Polynomial_ring_description = NEW_OBJECT(ring_theory::polynomial_ring_description);
+		Polynomial_ring_description =
+				NEW_OBJECT(ring_theory::polynomial_ring_description);
 		if (f_v) {
 			cout << "reading -polynomial_ring" << endl;
 		}
@@ -240,7 +242,8 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-projective_space") == 0) {
 		f_projective_space = true;
-		Projective_space_with_action_description = NEW_OBJECT(projective_geometry::projective_space_with_action_description);
+		Projective_space_with_action_description =
+				NEW_OBJECT(projective_geometry::projective_space_with_action_description);
 		if (f_v) {
 			cout << "reading -projective_space" << endl;
 		}
@@ -260,7 +263,8 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-orthogonal_space") == 0) {
 		f_orthogonal_space = true;
-		Orthogonal_space_with_action_description = NEW_OBJECT(orthogonal_geometry_applications::orthogonal_space_with_action_description);
+		Orthogonal_space_with_action_description =
+				NEW_OBJECT(orthogonal_geometry_applications::orthogonal_space_with_action_description);
 		if (f_v) {
 			cout << "reading -orthogonal_space" << endl;
 		}
@@ -281,7 +285,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-BLT_set_classifier") == 0) {
 		f_BLT_set_classifier = true;
 		BLT_set_classifier_label_orthogonal_geometry.assign(argv[++i]);
-		Blt_set_classify_description = NEW_OBJECT(orthogonal_geometry_applications::blt_set_classify_description);
+		Blt_set_classify_description =
+				NEW_OBJECT(orthogonal_geometry_applications::blt_set_classify_description);
 		if (f_v) {
 			cout << "reading -BLT_set_classifier" << endl;
 		}
@@ -301,7 +306,8 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-spread_classifier") == 0) {
 		f_spread_classifier = true;
-		Spread_classify_description = NEW_OBJECT(spreads::spread_classify_description);
+		Spread_classify_description =
+				NEW_OBJECT(spreads::spread_classify_description);
 		if (f_v) {
 			cout << "reading -spread_classifier" << endl;
 		}
@@ -323,7 +329,8 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-linear_group") == 0) {
 		f_linear_group = true;
-		Linear_group_description = NEW_OBJECT(groups::linear_group_description);
+		Linear_group_description =
+				NEW_OBJECT(groups::linear_group_description);
 		if (f_v) {
 			cout << "reading -linear_group" << endl;
 		}
@@ -344,7 +351,8 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-permutation_group") == 0) {
 		f_permutation_group = true;
-		Permutation_group_description = NEW_OBJECT(groups::permutation_group_description);
+		Permutation_group_description =
+				NEW_OBJECT(groups::permutation_group_description);
 		if (f_v) {
 			cout << "reading -permutation_group" << endl;
 		}
@@ -365,7 +373,8 @@ void symbol_definition::read_definition(
 
 	else if (ST.stringcmp(argv[i], "-modified_group") == 0) {
 		f_group_modification = true;
-		Group_modification_description = NEW_OBJECT(apps_algebra::group_modification_description);
+		Group_modification_description =
+				NEW_OBJECT(apps_algebra::group_modification_description);
 		if (f_v) {
 			cout << "reading -modified_group" << endl;
 		}
@@ -423,7 +432,8 @@ void symbol_definition::read_definition(
 		f_geometric_object = true;
 
 		geometric_object_projective_space_label.assign(argv[++i]);
-		Geometric_object_description = NEW_OBJECT(geometry::geometric_object_description);
+		Geometric_object_description =
+				NEW_OBJECT(geometry::geometric_object_description);
 		if (f_v) {
 			cout << "symbol_definition::read_definition reading -geometric_object" << endl;
 		}
@@ -457,7 +467,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-graph") == 0) {
 
 		f_graph = true;
-		Create_graph_description = NEW_OBJECT(apps_graph_theory::create_graph_description);
+		Create_graph_description =
+				NEW_OBJECT(apps_graph_theory::create_graph_description);
 		if (f_v) {
 			cout << "symbol_definition::read_definition reading -graph" << endl;
 		}
@@ -481,7 +492,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-code") == 0) {
 
 		f_code = true;
-		Create_code_description = NEW_OBJECT(apps_coding_theory::create_code_description);
+		Create_code_description =
+				NEW_OBJECT(apps_coding_theory::create_code_description);
 		if (f_v) {
 			cout << "symbol_definition::read_definition reading -code" << endl;
 		}
@@ -505,7 +517,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-spread") == 0) {
 
 		f_spread = true;
-		Spread_create_description = NEW_OBJECT(spreads::spread_create_description);
+		Spread_create_description =
+				NEW_OBJECT(spreads::spread_create_description);
 		if (f_v) {
 			cout << "reading -spread" << endl;
 		}
@@ -530,7 +543,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-cubic_surface") == 0) {
 
 		f_cubic_surface = true;
-		Surface_Descr = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
+		Surface_Descr =
+				NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
 		if (f_v) {
 			cout << "reading -cubic_surface" << endl;
 		}
@@ -555,7 +569,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-quartic_curve") == 0) {
 
 		f_quartic_curve = true;
-		Quartic_curve_descr = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description);
+		Quartic_curve_descr =
+				NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create_description);
 		if (f_v) {
 			cout << "reading -quartic_curve" << endl;
 		}
@@ -580,7 +595,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-BLT_set") == 0) {
 
 		f_BLT_set = true;
-		BLT_Set_create_description = NEW_OBJECT(orthogonal_geometry_applications::BLT_set_create_description);
+		BLT_Set_create_description =
+				NEW_OBJECT(orthogonal_geometry_applications::BLT_set_create_description);
 		if (f_v) {
 			cout << "reading -BLT_set" << endl;
 		}
@@ -652,7 +668,8 @@ void symbol_definition::read_definition(
 
 		packing_was_label_spread_table.assign(argv[++i]);
 
-		packing_was_descr = NEW_OBJECT(packings::packing_was_description);
+		packing_was_descr =
+				NEW_OBJECT(packings::packing_was_description);
 		if (f_v) {
 			cout << "reading -packing_with_symmetry_assumption" << endl;
 		}
@@ -678,7 +695,8 @@ void symbol_definition::read_definition(
 		packing_with_assumed_symmetry_label.assign(argv[++i]);
 		packing_with_assumed_symmetry_choose_fixed_points_clique_size = ST.strtoi(argv[++i]);
 
-		packing_with_assumed_symmetry_choose_fixed_points_control = NEW_OBJECT(poset_classification::poset_classification_control);
+		packing_with_assumed_symmetry_choose_fixed_points_control =
+				NEW_OBJECT(poset_classification::poset_classification_control);
 		if (f_v) {
 			cout << "reading -packing_with_symmetry_assumption_choose_fixed_points" << endl;
 		}
@@ -706,7 +724,8 @@ void symbol_definition::read_definition(
 
 		packing_long_orbits_choose_fixed_points_label.assign(argv[++i]);
 
-		Packing_long_orbits_description = NEW_OBJECT(packings::packing_long_orbits_description);
+		Packing_long_orbits_description =
+				NEW_OBJECT(packings::packing_long_orbits_description);
 		if (f_v) {
 			cout << "reading -packing_long_orbits" << endl;
 		}
@@ -730,7 +749,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-graph_classification") == 0) {
 		f_graph_classification = true;
 
-		Graph_classify_description = NEW_OBJECT(apps_graph_theory::graph_classify_description);
+		Graph_classify_description =
+				NEW_OBJECT(apps_graph_theory::graph_classify_description);
 		if (f_v) {
 			cout << "reading -graph_classification" << endl;
 		}
@@ -753,7 +773,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		f_diophant = true;
 
-		Diophant_description = NEW_OBJECT(solvers::diophant_description);
+		Diophant_description =
+				NEW_OBJECT(solvers::diophant_description);
 		if (f_v) {
 			cout << "reading -diophant_description" << endl;
 		}
@@ -776,7 +797,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-design") == 0) {
 
 		f_design = true;
-		Design_create_description = NEW_OBJECT(apps_combinatorics::design_create_description);
+		Design_create_description =
+				NEW_OBJECT(apps_combinatorics::design_create_description);
 		if (f_v) {
 			cout << "reading -design" << endl;
 		}
@@ -821,7 +843,8 @@ void symbol_definition::read_definition(
 
 		large_set_was_label_design_table.assign(argv[++i]);
 
-		large_set_was_descr = NEW_OBJECT(apps_combinatorics::large_set_was_description);
+		large_set_was_descr =
+				NEW_OBJECT(apps_combinatorics::large_set_was_description);
 		if (f_v) {
 			cout << "reading -large_set_with_symmetry_assumption" << endl;
 		}
@@ -845,7 +868,8 @@ void symbol_definition::read_definition(
 		f_set = true;
 
 
-		Set_builder_description = NEW_OBJECT(data_structures::set_builder_description);
+		Set_builder_description =
+				NEW_OBJECT(data_structures::set_builder_description);
 		if (f_v) {
 			cout << "reading -set" << endl;
 		}
@@ -869,7 +893,8 @@ void symbol_definition::read_definition(
 		f_vector = true;
 
 
-		Vector_builder_description = NEW_OBJECT(data_structures::vector_builder_description);
+		Vector_builder_description =
+				NEW_OBJECT(data_structures::vector_builder_description);
 		if (f_v) {
 			cout << "reading -vector" << endl;
 		}
@@ -893,7 +918,8 @@ void symbol_definition::read_definition(
 		f_symbolic_object = true;
 
 
-		Symbolic_object_builder_description = NEW_OBJECT(data_structures::symbolic_object_builder_description);
+		Symbolic_object_builder_description =
+				NEW_OBJECT(data_structures::symbolic_object_builder_description);
 		if (f_v) {
 			cout << "reading -symbolic_object" << endl;
 		}
@@ -919,7 +945,8 @@ void symbol_definition::read_definition(
 		f_combinatorial_objects = true;
 
 
-		Data_input_stream_description = NEW_OBJECT(data_structures::data_input_stream_description);
+		Data_input_stream_description =
+				NEW_OBJECT(data_structures::data_input_stream_description);
 		if (f_v) {
 			cout << "reading -combinatorial_objects" << endl;
 		}
@@ -943,7 +970,8 @@ void symbol_definition::read_definition(
 		f_geometry_builder = true;
 
 
-		Geometry_builder_description = NEW_OBJECT(geometry_builder::geometry_builder_description);
+		Geometry_builder_description =
+				NEW_OBJECT(geometry_builder::geometry_builder_description);
 		if (f_v) {
 			cout << "reading -geometry_builder" << endl;
 		}
@@ -967,7 +995,8 @@ void symbol_definition::read_definition(
 		f_vector_ge = true;
 
 
-		Vector_ge_description = NEW_OBJECT(data_structures_groups::vector_ge_description);
+		Vector_ge_description =
+				NEW_OBJECT(data_structures_groups::vector_ge_description);
 		if (f_v) {
 			cout << "reading -vector_ge" << endl;
 		}
@@ -990,7 +1019,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-action_on_forms") == 0) {
 		f_action_on_forms = true;
 
-		Action_on_forms_descr = NEW_OBJECT(apps_algebra::action_on_forms_description);
+		Action_on_forms_descr =
+				NEW_OBJECT(apps_algebra::action_on_forms_description);
 		if (f_v) {
 			cout << "reading -action_on_forms" << endl;
 		}
@@ -1013,7 +1043,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-orbits") == 0) {
 		f_orbits = true;
 
-		Orbits_create_description = NEW_OBJECT(apps_algebra::orbits_create_description);
+		Orbits_create_description =
+				NEW_OBJECT(apps_algebra::orbits_create_description);
 		if (f_v) {
 			cout << "reading -orbits" << endl;
 		}
@@ -1036,7 +1067,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 		f_poset_classification_control = true;
 
-		Poset_classification_control = NEW_OBJECT(poset_classification::poset_classification_control);
+		Poset_classification_control =
+				NEW_OBJECT(poset_classification::poset_classification_control);
 		if (f_v) {
 			cout << "reading -poset_classification_control" << endl;
 		}
@@ -1059,7 +1091,8 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-poset_classification_activity") == 0) {
 		f_poset_classification_activity = true;
 
-		Poset_classification_activity = NEW_OBJECT(poset_classification::poset_classification_activity_description);
+		Poset_classification_activity =
+				NEW_OBJECT(poset_classification::poset_classification_activity_description);
 		if (f_v) {
 			cout << "reading -poset_classification_activity" << endl;
 		}
@@ -3540,7 +3573,7 @@ void symbol_definition::definition_of_symbolic_object(
 				"before SB->init" << endl;
 	}
 
-	SB->init(Descr, verbose_level);
+	SB->init(Descr, define_label, verbose_level);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_symbolic_object "

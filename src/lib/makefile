@@ -110,6 +110,7 @@ ORBITER_MODULES= \
 		layer1_foundations/expression_parser/formula_vector.o \
 		layer1_foundations/expression_parser/formula.o \
 		layer1_foundations/expression_parser/lexer.o \
+		layer1_foundations/expression_parser/syntax_tree_latex.o \
 		layer1_foundations/expression_parser/syntax_tree_node_terminal.o \
 		layer1_foundations/expression_parser/syntax_tree_node.o \
 		layer1_foundations/expression_parser/syntax_tree.o \

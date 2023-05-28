@@ -123,17 +123,9 @@ void syntax_tree_node::add_numerical_factor(
 		}
 		Nodes[0] = NEW_OBJECT(syntax_tree_node);
 
-		Nodes[0]->init_empty_terminal_node_int(
+		Nodes[0]->init_terminal_node_int(
 				Tree, value, verbose_level);
 		nb_nodes++;
-
-#if 0
-		Nodes[0]->Tree = Tree;
-		Nodes[0]->f_terminal = true;
-		Nodes[0]->T = NEW_OBJECT(syntax_tree_node_terminal);
-		Nodes[0]->T->f_int = true;
-		Nodes[0]->T->value_int = value;
-#endif
 
 	}
 
@@ -188,15 +180,8 @@ void syntax_tree_node::add_numerical_summand(
 		}
 		Nodes[0] = NEW_OBJECT(syntax_tree_node);
 
-		Nodes[0]->init_empty_terminal_node_int(
+		Nodes[0]->init_terminal_node_int(
 				Tree, value, verbose_level);
-#if 0
-		Nodes[0]->Tree = Tree;
-		Nodes[0]->f_terminal = true;
-		Nodes[0]->T = NEW_OBJECT(syntax_tree_node_terminal);
-		Nodes[0]->T->f_int = true;
-		Nodes[0]->T->value_int = value;
-#endif
 		nb_nodes++;
 	}
 
@@ -220,6 +205,7 @@ int syntax_tree_node::text_value_match(std::string &factor)
 
 void syntax_tree_node::add_factor(
 		std::string &factor, int exponent, int verbose_level)
+// We assume that the current node is a multiplication node.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -227,12 +213,16 @@ void syntax_tree_node::add_factor(
 		cout << "syntax_tree_node::add_factor" << endl;
 	}
 
+	if (type != operation_type_mult) {
+		cout << "syntax_tree_node::add_factor must be multiplication node" << endl;
+		exit(1);
+	}
+
 	int i;
 	data_structures::string_tools ST;
 
 	for (i = 0; i < nb_nodes; i++) {
-		if (Nodes[i]->text_value_match(factor) /*f_terminal && Nodes[i]->T->f_text &&
-				ST.compare_string_string(Nodes[i]->T->value_text, factor) == 0*/) {
+		if (Nodes[i]->text_value_match(factor)) {
 			if (Nodes[i]->f_has_exponent) {
 				Nodes[i]->exponent += exponent;
 			}
@@ -247,20 +237,12 @@ void syntax_tree_node::add_factor(
 
 		Nodes[nb_nodes] = NEW_OBJECT(syntax_tree_node);
 
-		Nodes[nb_nodes]->init_empty_terminal_node_text_with_exponent(
+		Nodes[nb_nodes]->init_terminal_node_text_with_exponent(
 				Tree, factor, exponent, verbose_level);
-#if 0
-		Nodes[nb_nodes]->f_terminal = true;
-		Nodes[nb_nodes]->Tree = Tree;
-		Nodes[nb_nodes]->T = NEW_OBJECT(syntax_tree_node_terminal);
-		Nodes[nb_nodes]->T->f_text = true;
-		Nodes[nb_nodes]->T->value_text.assign(factor);
-		Nodes[nb_nodes]->f_has_exponent = true;
-		Nodes[nb_nodes]->exponent = exponent;
-#endif
 		nb_nodes++;
 		if (f_v) {
-			cout << "syntax_tree_node::add_factor new nb_nodes = " << nb_nodes << endl;
+			cout << "syntax_tree_node::add_factor "
+					"new nb_nodes = " << nb_nodes << endl;
 		}
 	}
 
@@ -269,7 +251,6 @@ void syntax_tree_node::add_factor(
 	}
 }
 
-#if 1
 void syntax_tree_node::add_summand(
 		std::string &summand, int verbose_level)
 {
@@ -278,43 +259,24 @@ void syntax_tree_node::add_summand(
 	if (f_v) {
 		cout << "syntax_tree_node::add_summand" << endl;
 	}
-
-#if 0
-	int i;
-	data_structures::string_tools ST;
-
-	for (i = 0; i < nb_nodes; i++) {
-		if (Nodes[i]->f_terminal && Nodes[i]->T->f_text &&
-				ST.compare_string_string(Nodes[i]->T->value_text, summand) == 0) {
-			break;
-		}
+	if (type != operation_type_add) {
+		cout << "syntax_tree_node::add_summand must be addition node" << endl;
+		exit(1);
 	}
-	if (i == nb_nodes) {
-#endif
 
-		Nodes[nb_nodes] = NEW_OBJECT(syntax_tree_node);
 
-		Nodes[nb_nodes]->init_empty_terminal_node_text(
-				Tree, summand, verbose_level);
-#if 0
-		Nodes[nb_nodes]->f_terminal = true;
-		Nodes[nb_nodes]->Tree = Tree;
-		Nodes[nb_nodes]->T = NEW_OBJECT(syntax_tree_node_terminal);
-		Nodes[nb_nodes]->T->f_text = true;
-		Nodes[nb_nodes]->T->value_text.assign(summand);
-		Nodes[nb_nodes]->f_has_exponent = false;
-		Nodes[nb_nodes]->exponent = 0;
-#endif
-		nb_nodes++;
-	//}
+	Nodes[nb_nodes] = NEW_OBJECT(syntax_tree_node);
+
+	Nodes[nb_nodes]->init_terminal_node_text(
+			Tree, summand, verbose_level);
+	nb_nodes++;
 
 	if (f_v) {
 		cout << "syntax_tree_node::add_summand done" << endl;
 	}
 }
-#endif
 
-void syntax_tree_node::init_empty_terminal_node_int(
+void syntax_tree_node::init_terminal_node_int(
 		syntax_tree *Tree,
 		int value,
 		int verbose_level)
@@ -322,7 +284,7 @@ void syntax_tree_node::init_empty_terminal_node_int(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "syntax_tree_node::init_empty_terminal_node_int" << endl;
+		cout << "syntax_tree_node::init_terminal_node_int" << endl;
 	}
 
 	syntax_tree_node::Tree = Tree;
@@ -337,12 +299,12 @@ void syntax_tree_node::init_empty_terminal_node_int(
 	f_has_minus = false;
 
 	if (f_v) {
-		cout << "syntax_tree_node::init_empty_terminal_node_int done" << endl;
+		cout << "syntax_tree_node::init_terminal_node_int done" << endl;
 	}
 }
 
 
-void syntax_tree_node::init_empty_terminal_node_text(
+void syntax_tree_node::init_terminal_node_text(
 		syntax_tree *Tree,
 		std::string &value_text,
 		int verbose_level)
@@ -350,7 +312,7 @@ void syntax_tree_node::init_empty_terminal_node_text(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "syntax_tree_node::init_empty_terminal_node_text" << endl;
+		cout << "syntax_tree_node::init_terminal_node_text" << endl;
 	}
 
 	syntax_tree_node::Tree = Tree;
@@ -365,11 +327,11 @@ void syntax_tree_node::init_empty_terminal_node_text(
 	f_has_minus = false;
 
 	if (f_v) {
-		cout << "syntax_tree_node::init_empty_terminal_node_text done" << endl;
+		cout << "syntax_tree_node::init_terminal_node_text done" << endl;
 	}
 }
 
-void syntax_tree_node::init_empty_terminal_node_text_with_exponent(
+void syntax_tree_node::init_terminal_node_text_with_exponent(
 		syntax_tree *Tree,
 		std::string &value_text,
 		int exponent,
@@ -378,7 +340,7 @@ void syntax_tree_node::init_empty_terminal_node_text_with_exponent(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "syntax_tree_node::init_empty_terminal_node_text_with_exponent" << endl;
+		cout << "syntax_tree_node::init_terminal_node_text_with_exponent" << endl;
 	}
 
 	syntax_tree_node::Tree = Tree;
@@ -401,7 +363,7 @@ void syntax_tree_node::init_empty_terminal_node_text_with_exponent(
 	f_has_minus = false;
 
 	if (f_v) {
-		cout << "syntax_tree_node::init_empty_terminal_node_text_with_exponent done" << endl;
+		cout << "syntax_tree_node::init_terminal_node_text_with_exponent done" << endl;
 	}
 }
 
@@ -416,19 +378,9 @@ void syntax_tree_node::add_empty_plus_node_with_exponent(
 		cout << "syntax_tree_node::add_empty_plus_node_with_exponent" << endl;
 	}
 
-	data_structures::string_tools ST;
-
 	Nodes[nb_nodes] = NEW_OBJECT(syntax_tree_node);
 	Nodes[nb_nodes]->init_empty_plus_node_with_exponent(
 			Tree, exponent, verbose_level);
-#if 0
-	Nodes[nb_nodes]->Tree = Tree;
-	Nodes[nb_nodes]->f_terminal = false;
-	Nodes[nb_nodes]->f_has_exponent = true;
-	Nodes[nb_nodes]->exponent = exponent;
-	Nodes[nb_nodes]->type = operation_type_add;
-	Nodes[nb_nodes]->nb_nodes = 0;
-#endif
 	nb_nodes++;
 
 	if (f_v) {
@@ -457,8 +409,6 @@ void syntax_tree_node::init_empty_plus_node_with_exponent(
 		f_has_exponent = false;
 		syntax_tree_node::exponent = 0;
 	}
-	//f_has_exponent = true;
-	//syntax_tree_node::exponent = exponent;
 	type = operation_type_add;
 	nb_nodes = 0;
 	f_has_monomial = false;
@@ -481,19 +431,9 @@ void syntax_tree_node::add_empty_multiplication_node(
 		cout << "syntax_tree_node::add_empty_multiplication_node" << endl;
 	}
 
-	data_structures::string_tools ST;
-
 	Nodes[nb_nodes] = NEW_OBJECT(syntax_tree_node);
 	Nodes[nb_nodes]->init_empty_multiplication_node(
 			Tree, verbose_level);
-#if 0
-	Nodes[nb_nodes]->Tree = Tree;
-	Nodes[nb_nodes]->f_terminal = false;
-	Nodes[nb_nodes]->f_has_exponent = false;
-	Nodes[nb_nodes]->exponent = 0;
-	Nodes[nb_nodes]->type = operation_type_mult;
-	Nodes[nb_nodes]->nb_nodes = 0;
-#endif
 	nb_nodes++;
 
 	if (f_v) {
@@ -535,7 +475,6 @@ void syntax_tree_node::add_empty_node(
 		cout << "syntax_tree_node::add_empty_node" << endl;
 	}
 
-	data_structures::string_tools ST;
 
 	Nodes[nb_nodes] = NEW_OBJECT(syntax_tree_node);
 	Nodes[nb_nodes]->init_empty_node(
@@ -675,7 +614,9 @@ int syntax_tree_node::is_homogeneous(
 }
 
 void syntax_tree_node::print_subtree_to_vector(
-		std::vector<std::string> &rep, int verbose_level)
+		std::vector<std::string> &rep,
+		int f_latex,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -709,19 +650,48 @@ void syntax_tree_node::print_subtree_to_vector(
 
 			}
 
-			s = "(";
+			int f_need_parens;
+
+			if (Nodes[i]->f_terminal) {
+				f_need_parens = false;
+			}
+			else {
+				f_need_parens = true;
+			}
+
+			if (f_need_parens) {
+				s = "(";
+			}
+			else {
+				s = "";
+			}
 			rep.push_back(s);
-			Nodes[i]->print_subtree_to_vector(rep, verbose_level);
-			s = ")";
+			Nodes[i]->print_subtree_to_vector(rep, f_latex, verbose_level);
+			if (f_need_parens) {
+				s = ")";
+			}
+			else {
+				s = "";
+			}
 			rep.push_back(s);
 
 			if (i < nb_nodes - 1) {
 				if (type == operation_type_mult) {
-					s = " * ";
+					if (f_latex) {
+						s = " ";
+					}
+					else {
+						s = " * ";
+					}
 					rep.push_back(s);
 				}
 				else if (type == operation_type_add) {
-					s = " + ";
+					if (f_latex) {
+						s = " + ";
+					}
+					else {
+						s = " + ";
+					}
 					rep.push_back(s);
 				}
 			}
@@ -729,7 +699,13 @@ void syntax_tree_node::print_subtree_to_vector(
 	}
 
 	if (f_has_exponent) {
-		string s = " ^ " + std::to_string(exponent);
+		string s;
+		if (f_latex) {
+			s = "^{" + std::to_string(exponent) + "}";
+		}
+		else {
+			s = " ^ " + std::to_string(exponent);
+		}
 		rep.push_back(s);
 	}
 #if 0
@@ -900,6 +876,223 @@ int syntax_tree_node::is_add_node()
 	}
 }
 
+int syntax_tree_node::is_int_node()
+{
+	if (f_terminal && T->f_int) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+int syntax_tree_node::is_text_node()
+{
+	if (f_terminal && T->f_text) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+int syntax_tree_node::is_monomial()
+{
+
+	if (f_terminal) {
+		return true;
+	}
+	if (type == operation_type_add) {
+		return false;
+	}
+
+	int i;
+
+	for (i = 0; i < nb_nodes; i++) {
+		if (!Nodes[i]->f_terminal) {
+			return false;
+		}
+	}
+	return true;
+}
+
+int syntax_tree_node::is_this_variable(std::string &variable)
+{
+	data_structures::string_tools ST;
+
+	if (!is_text_node()) {
+		return false;
+	}
+	if (ST.compare_string_string(T->value_text, variable) == 0) {
+		return true;
+	}
+	return false;
+}
+
+
+int syntax_tree_node::highest_order_term(std::string &variable, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::highest_order_term" << endl;
+	}
+	int d = 0, i, d1;
+
+	if (f_terminal) {
+		d = exponent_of_variable(variable, verbose_level);
+	}
+	else {
+		if (type == operation_type_add) {
+			if (f_v) {
+				cout << "syntax_tree_node::highest_order_term add node, "
+						"nb_nodes = " << nb_nodes << endl;
+			}
+			for (i = 0; i < nb_nodes; i++) {
+				if (f_v) {
+					cout << "syntax_tree_node::highest_order_term "
+							"child " << i << " / " << nb_nodes << endl;
+				}
+				d1 = Nodes[i]->exponent_of_variable(
+						variable, verbose_level);
+				if (f_v) {
+					cout << "syntax_tree_node::highest_order_term "
+							"child " << i << " / " << nb_nodes << " d1=" << d1 << endl;
+				}
+				if (d1 > d) {
+					d = d1;
+				}
+			}
+		}
+		else {
+			cout << "syntax_tree_node::highest_order_term "
+					"multiplication node is not allowed" << endl;
+			exit(1);
+		}
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::highest_order_term done d=" << d << endl;
+	}
+	return d;
+}
+
+int syntax_tree_node::exponent_of_variable(
+		std::string &variable, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::exponent_of_variable" << endl;
+	}
+
+	int exp = 0;
+
+	if (f_terminal) {
+		if (is_this_variable(variable)) {
+			exp = get_exponent();
+		}
+		else {
+			exp = 0;
+		}
+	}
+	else {
+		if (type == operation_type_add) {
+			cout << "syntax_tree_node::exponent_of_variable "
+					"cannot be add node" << endl;
+			exit(1);
+		}
+
+		int i, e;
+
+		exp = 0;
+
+		for (i = 0; i < nb_nodes; i++) {
+			if (f_v) {
+				cout << "syntax_tree_node::exponent_of_variable" << endl;
+			}
+			e = Nodes[i]->exponent_of_variable(
+					variable, 0 /* verbose_level */);
+			if (f_v) {
+				cout << "syntax_tree_node::exponent_of_variable "
+						"child " << i << " has degree " << e << endl;
+			}
+			exp += e;
+		}
+
+		exp *= get_exponent();
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::exponent_of_variable "
+				"done, exp = " << exp << endl;
+	}
+	return exp;
+}
+
+int syntax_tree_node::exponent_of_variable_destructive(
+		std::string &variable)
+{
+
+	int exp = 0;
+
+	if (f_terminal) {
+		if (is_this_variable(variable)) {
+			exp = get_exponent();
+			T->f_int = true;
+			T->f_text = false;
+			T->value_int = 1;
+			return exp;
+		}
+		else {
+			return 0;
+		}
+	}
+	if (type == operation_type_add) {
+		cout << "syntax_tree_node::exponent_of_variable_destructive "
+				"cannot be add node" << endl;
+		exit(1);
+	}
+
+	int i, e;
+
+	exp = 0;
+
+	for (i = 0; i < nb_nodes; i++) {
+		e = Nodes[i]->exponent_of_variable(
+				variable, 0 /* verbose_level */);
+		if (e) {
+
+			if (nb_nodes > 1) {
+				delete_one_child(i, 0 /*verbose_level*/);
+				i--;
+			}
+			else {
+				if (!Nodes[i]->f_terminal) {
+					cout << "syntax_tree_node::exponent_of_variable_destructive "
+							"!Nodes[i]->f_terminal" << endl;
+					exit(1);
+				}
+				Nodes[i]->f_terminal = true;
+				Nodes[i]->T->f_int = true;
+				Nodes[i]->T->value_int = 1;
+			}
+		}
+		exp += e;
+	}
+
+	exp *= get_exponent();
+	return exp;
+}
+
+
+int syntax_tree_node::get_exponent()
+{
+	if (f_has_exponent) {
+		return exponent;
+	}
+	else {
+		return 1;
+	}
+}
 
 int syntax_tree_node::evaluate(
 		std::map<std::string, std::string> &symbol_table,
@@ -1165,28 +1358,32 @@ void syntax_tree_node::copy_to(
 
 	if (f_terminal) {
 		if (f_v) {
-			cout << "syntax_tree_node::copy_to terminal node" << endl;
+			cout << "syntax_tree_node::copy_to "
+					"terminal node" << endl;
 		}
 		Output_node->f_terminal = true;
 		Output_node->T = NEW_OBJECT(syntax_tree_node_terminal);
 
 		if (T->f_int) {
 			if (f_v) {
-				cout << "syntax_tree_node::copy_to terminal node int" << endl;
+				cout << "syntax_tree_node::copy_to "
+						"terminal node int" << endl;
 			}
 			Output_node->T->f_int = true;
 			Output_node->T->value_int = T->value_int;
 		}
 		else if (T->f_double) {
 			if (f_v) {
-				cout << "syntax_tree_node::copy_to terminal node double" << endl;
+				cout << "syntax_tree_node::copy_to "
+						"terminal node double" << endl;
 			}
 			Output_node->T->f_double = true;
 			Output_node->T->value_double = T->value_double;
 		}
 		else if (T->f_text) {
 			if (f_v) {
-				cout << "syntax_tree_node::copy_to terminal node text" << endl;
+				cout << "syntax_tree_node::copy_to "
+						"terminal node text" << endl;
 			}
 			Output_node->T->f_text = true;
 			Output_node->T->value_text = T->value_text;
@@ -1199,24 +1396,28 @@ void syntax_tree_node::copy_to(
 
 		if (type == operation_type_mult) {
 			if (f_v) {
-				cout << "syntax_tree_node::copy_to multiplication node" << endl;
+				cout << "syntax_tree_node::copy_to "
+						"multiplication node" << endl;
 			}
 			Output_node->type = operation_type_mult;
 		}
 		else if (type == operation_type_add) {
 			if (f_v) {
-				cout << "syntax_tree_node::copy_to addition node" << endl;
+				cout << "syntax_tree_node::copy_to "
+						"addition node" << endl;
 			}
 			Output_node->type = operation_type_add;
 		}
 		else if (type == operation_type_nothing) {
 			if (f_v) {
-				cout << "syntax_tree_node::copy_to nothing node" << endl;
+				cout << "syntax_tree_node::copy_to "
+						"nothing node" << endl;
 			}
 			Output_node->type = operation_type_nothing;
 		}
 		else {
-			cout << "syntax_tree_node::copy_to unknown operation" << endl;
+			cout << "syntax_tree_node::copy_to "
+					"unknown operation" << endl;
 			exit(1);
 		}
 
@@ -1238,15 +1439,6 @@ void syntax_tree_node::copy_to(
 					verbose_level);
 
 			Output_node2->Tree = Output_tree;
-			//Output_node2->idx;
-
-			Output_node2->f_has_exponent = Nodes[i]->f_has_exponent;
-			Output_node2->exponent = Nodes[i]->exponent;
-
-			Output_node2->f_has_monomial = Nodes[i]->f_has_monomial;
-			Output_node2->monomial = Nodes[i]->monomial; // ToDo
-
-			Output_node2->f_has_minus = Nodes[i]->f_has_minus;
 
 
 			Output_node->Nodes[i] = Output_node2;
@@ -1345,31 +1537,37 @@ void syntax_tree_node::substitute(
 	else {
 		int i;
 		if (f_v) {
-			cout << "syntax_tree_node::substitute not a terminal node" << endl;
+			cout << "syntax_tree_node::substitute "
+					"not a terminal node" << endl;
 		}
 
 
 		if (type == operation_type_mult) {
 			if (f_v) {
-				cout << "syntax_tree_node::substitute multiplication node" << endl;
+				cout << "syntax_tree_node::substitute "
+						"multiplication node" << endl;
 			}
 			Output_node->type = operation_type_mult;
 		}
 		else if (type == operation_type_add) {
 			if (f_v) {
-				cout << "syntax_tree_node::substitute addition node" << endl;
+				cout << "syntax_tree_node::substitute "
+						"addition node" << endl;
 			}
 			Output_node->type = operation_type_add;
 		}
 		else if (type == operation_type_nothing) {
 			if (f_v) {
-				cout << "syntax_tree_node::substitute nothing node" << endl;
+				cout << "syntax_tree_node::substitute "
+						"nothing node" << endl;
 			}
-			cout << "syntax_tree_node::substitute operation_type_nothing is not allowed" << endl;
+			cout << "syntax_tree_node::substitute "
+					"operation_type_nothing is not allowed" << endl;
 			exit(1);
 		}
 		else {
-			cout << "syntax_tree_node::substitute unknown operation" << endl;
+			cout << "syntax_tree_node::substitute "
+					"unknown operation" << endl;
 			exit(1);
 		}
 
@@ -1512,12 +1710,14 @@ void syntax_tree_node::simplify(
 		for (i = 0; i < nb_nodes; i++) {
 			if (f_v) {
 				cout << "syntax_tree_node::simplify "
-						"child " << i << " / " << nb_nodes << " before simplify" << endl;
+						"child " << i << " / " << nb_nodes
+						<< " before simplify" << endl;
 			}
 			Nodes[i]->simplify(verbose_level);
 			if (f_v) {
 				cout << "syntax_tree_node::simplify "
-						"child " << i << " / " << nb_nodes << " after simplify" << endl;
+						"child " << i << " / " << nb_nodes
+						<< " after simplify" << endl;
 			}
 		}
 
@@ -1532,10 +1732,8 @@ void syntax_tree_node::simplify(
 						"nb_children = " << nb_nodes << endl;
 			}
 			for (i = 0; i < nb_nodes - 1; i++) {
-				if (Nodes[i]->f_terminal
-						&& Nodes[i]->T->f_int
-						&& Nodes[i + 1]->f_terminal
-						&& Nodes[i + 1]->T->f_int) {
+				if (Nodes[i]->is_int_node()
+						&& Nodes[i + 1]->is_int_node()) {
 
 
 					if (f_v) {
@@ -1555,7 +1753,8 @@ void syntax_tree_node::simplify(
 						if (f_v) {
 							cout << "syntax_tree_node::simplify "
 									"node[" << i << "] "
-											"raising to the power of " << exp << endl;
+											"raising to the power of "
+									<< exp << endl;
 						}
 						val = Tree->Fq->power(val1, exp);
 						Nodes[i]->T->value_int = val;
@@ -1564,7 +1763,8 @@ void syntax_tree_node::simplify(
 						if (f_v) {
 							cout << "syntax_tree_node::simplify "
 									"terminal " << val1
-									<< " to the power of " << exp << " = " << val << endl;
+									<< " to the power of "
+									<< exp << " = " << val << endl;
 						}
 						val1 = val;
 					}
@@ -1578,7 +1778,8 @@ void syntax_tree_node::simplify(
 						if (f_v) {
 							cout << "syntax_tree_node::simplify "
 									"node[" << i + 1 << "] raising "
-											"to the power of " << exp << endl;
+											"to the power of "
+									<< exp << endl;
 						}
 						val = Tree->Fq->power(val2, exp);
 						Nodes[i + 1]->T->value_int = val;
@@ -1587,7 +1788,8 @@ void syntax_tree_node::simplify(
 						if (f_v) {
 							cout << "syntax_tree_node::simplify "
 									"terminal " << val2 << " to the "
-											"power of " << exp << " = " << val << endl;
+											"power of " << exp
+											<< " = " << val << endl;
 						}
 						val2 = val;
 					}
@@ -1596,7 +1798,8 @@ void syntax_tree_node::simplify(
 					val3 = Tree->Fq->mult(val1, val2);
 					if (f_v) {
 						cout << "syntax_tree_node::simplify "
-								<< val1 << " * " << val2 << " = " << val3 << endl;
+								<< val1 << " * " << val2
+								<< " = " << val3 << endl;
 					}
 					Nodes[i]->T->value_int = val3;
 					delete_one_child(i + 1, verbose_level);
@@ -1616,16 +1819,15 @@ void syntax_tree_node::simplify(
 						"nb_children = " << nb_nodes << endl;
 			}
 			for (i = 0; i < nb_nodes - 1; i++) {
-				if (Nodes[i]->f_terminal
-						&& Nodes[i]->T->f_int
-						&& Nodes[i + 1]->f_terminal
-						&& Nodes[i + 1]->T->f_int) {
+				if (Nodes[i]->is_int_node()
+						&& Nodes[i + 1]->is_int_node()) {
 
 
 					if (f_v) {
 						cout << "syntax_tree_node::simplify "
 								"combining children " << i
-								<< " and " << i + 1 << " using addition" << endl;
+								<< " and " << i + 1
+								<< " using addition" << endl;
 					}
 
 					int val1, val2, val3;
@@ -1639,7 +1841,8 @@ void syntax_tree_node::simplify(
 						if (f_v) {
 							cout << "syntax_tree_node::simplify "
 									"node[" << i << "] "
-											"raising to the power of " << exp << endl;
+											"raising to the power of "
+									<< exp << endl;
 						}
 						val = Tree->Fq->power(val1, exp);
 						Nodes[i]->T->value_int = val;
@@ -1648,7 +1851,8 @@ void syntax_tree_node::simplify(
 						if (f_v) {
 							cout << "syntax_tree_node::simplify "
 									"terminal " << val1
-									<< " to the power of " << exp << " = " << val << endl;
+									<< " to the power of " << exp
+									<< " = " << val << endl;
 						}
 						val1 = val;
 					}
@@ -1672,7 +1876,8 @@ void syntax_tree_node::simplify(
 						if (f_v) {
 							cout << "syntax_tree_node::simplify "
 									"terminal " << val2
-									<< " to the power of " << exp << " = " << val << endl;
+									<< " to the power of " << exp
+									<< " = " << val << endl;
 						}
 						val2 = val;
 					}
@@ -1716,7 +1921,8 @@ void syntax_tree_node::simplify(
 				if (f_v) {
 					cout << "syntax_tree_node::simplify "
 							"terminal " << val << " to the "
-									"power of " << exp << " = " << val1 << endl;
+									"power of " << exp << " = "
+									<< val1 << endl;
 				}
 				val = val1;
 			}
@@ -1743,6 +1949,396 @@ void syntax_tree_node::simplify(
 	}
 }
 
+void syntax_tree_node::expand_in_place(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::expand_in_place" << endl;
+	}
+
+	if (f_terminal) {
+		if (f_v) {
+			cout << "syntax_tree_node::expand_in_place "
+					"terminal node" << endl;
+		}
+		if (T->f_int) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"terminal node of type int" << endl;
+			}
+			int val1, val2;
+			val1 = T->value_int;
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"terminal node of type int "
+						"val1=" << val1 << endl;
+			}
+			if (f_has_exponent) {
+				int exp = exponent;
+				if (f_v) {
+					cout << "syntax_tree_node::expand_in_place "
+							"exponent=" << exp << endl;
+				}
+
+				if (Tree == NULL) {
+					cout << "syntax_tree_node::expand_in_place "
+							"Tree == NULL" << endl;
+					exit(1);
+				}
+				if (Tree->Fq == NULL) {
+					cout << "syntax_tree_node::expand_in_place "
+							"Tree->Fq == NULL" << endl;
+					exit(1);
+				}
+				if (f_v) {
+					cout << "syntax_tree_node::expand_in_place "
+							"before Tree->Fq->power_verbose" << endl;
+				}
+				val2 = Tree->Fq->power_verbose(val1, exp, verbose_level);
+				if (f_v) {
+					cout << "syntax_tree_node::expand_in_place "
+							"after Tree->Fq->power_verbose" << endl;
+				}
+				T->value_int = val2;
+				f_has_exponent = false;
+				exponent = 0;
+				if (f_v) {
+					cout << "syntax_tree_node::expand_in_place "
+							"terminal node of type int to "
+							"the power of " << exp << " = " << val2 << endl;
+				}
+			}
+		}
+
+	}
+	else {
+		int i;
+
+		if (type == operation_type_mult) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"simplifying multiplication node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+		}
+		else if (type == operation_type_add) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"simplifying addition node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+		}
+
+
+		if (f_v) {
+			display_children_by_type();
+		}
+
+		if (type == operation_type_mult) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"multiplication node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+			for (i = 0; i < nb_nodes; i++) {
+
+				if (f_v) {
+					cout << "syntax_tree_node::expand_in_place "
+							"multiplication node, "
+							"child " << i << " / " << nb_nodes << endl;
+				}
+
+				if (Nodes[i]->is_add_node() &&
+						Nodes[i]->get_exponent() == 1) {
+
+
+					if (f_v) {
+						cout << "syntax_tree_node::expand_in_place "
+								"child " << i << " is addition node "
+										"with exponent 1" << endl;
+					}
+
+					syntax_tree_node *mult_node;
+					syntax_tree_node *add_node;
+					int nb_a, nb_m, j, u;
+
+					mult_node = this;
+					add_node = Nodes[i];
+					nb_m = mult_node->nb_nodes;
+					nb_a = add_node->nb_nodes;
+
+					syntax_tree_node *fresh_add_node;
+
+					fresh_add_node = NEW_OBJECT(syntax_tree_node);
+
+					fresh_add_node->init_empty_plus_node_with_exponent(
+								Tree,
+								1 /* exponent */, verbose_level);
+
+					for (j = 0; j < nb_a; j++) {
+
+						syntax_tree_node *fresh_mult_node;
+
+						fresh_mult_node = NEW_OBJECT(syntax_tree_node);
+
+						fresh_mult_node->init_empty_multiplication_node(Tree,
+								verbose_level);
+
+						for (u = 0; u < nb_m; u++) {
+
+
+							syntax_tree_node *fresh_node;
+
+							fresh_node = NEW_OBJECT(syntax_tree_node);
+
+							if (u == i) {
+
+
+								// copy the j-th child of add_node:
+
+								add_node->Nodes[j]->copy_to(
+											Tree /* Output_tree */,
+											fresh_node,
+											verbose_level);
+
+							}
+							else {
+
+
+								// copy the u-th child of mult_node:
+
+								mult_node->Nodes[u]->copy_to(
+											Tree /* Output_tree */,
+											fresh_node,
+											verbose_level);
+
+							}
+
+							fresh_mult_node->Nodes[fresh_mult_node->nb_nodes++] = fresh_node;
+
+						}
+
+						fresh_add_node->Nodes[fresh_add_node->nb_nodes++] = fresh_mult_node;
+
+					}
+
+					for (u = 0; u < nb_m; u++) {
+
+						if (u == i) {
+							continue;
+						}
+
+						FREE_OBJECT(mult_node->Nodes[u]);
+						mult_node->Nodes[u]= NULL;
+
+					}
+					mult_node->nb_nodes = 0;
+					FREE_OBJECT(add_node);
+
+					mult_node->type = operation_type_add;
+					for (u = 0; u < fresh_add_node->nb_nodes; u++) {
+						mult_node->Nodes[u] = fresh_add_node->Nodes[u];
+						fresh_add_node->Nodes[u] = NULL;
+					}
+					mult_node->nb_nodes = fresh_add_node->nb_nodes;
+					fresh_add_node->nb_nodes = 0;
+
+					FREE_OBJECT(fresh_add_node);
+
+				}
+			}
+		}
+		else if (type == operation_type_add) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"addition node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+
+		}
+
+		for (i = 0; i < nb_nodes; i++) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"child " << i << " / " << nb_nodes
+						<< " before expand_in_place" << endl;
+			}
+			Nodes[i]->expand_in_place(verbose_level);
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"child " << i << " / " << nb_nodes
+						<< " after expand_in_place" << endl;
+			}
+		}
+
+
+	}
+
+
+	if (f_v) {
+		cout << "syntax_tree_node::expand_in_place done" << endl;
+	}
+}
+
+void syntax_tree_node::expand_in_place_handle_exponents(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::expand_in_place_handle_exponents" << endl;
+	}
+
+	if (f_terminal) {
+		if (f_v) {
+			cout << "syntax_tree_node::expand_in_place_handle_exponents "
+					"terminal node" << endl;
+		}
+		if (T->f_int) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place_handle_exponents "
+						"terminal node of type int" << endl;
+			}
+		}
+	}
+	else {
+		if (type == operation_type_mult) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place_handle_exponents "
+						"simplifying multiplication node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+		}
+		else if (type == operation_type_add) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place_handle_exponents "
+						"simplifying addition node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+		}
+
+
+		if (f_v) {
+			display_children_by_type();
+		}
+
+		if (type == operation_type_add && get_exponent() != 1) {
+
+			int exp;
+
+			exp = get_exponent();
+
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place_handle_exponents "
+						"expanding addition node, "
+						"exp = " << exp
+						<< " nb_nodes = " << nb_nodes
+						<< endl;
+			}
+
+			if (exp < 0) {
+				cout << "syntax_tree_node::expand_in_place_handle_exponents "
+						"expanding addition node, "
+						"exponent = " << exp << " cannot be negative" << endl;
+				exit(1);
+			}
+
+			syntax_tree_node *fresh_mult_node;
+
+			fresh_mult_node = NEW_OBJECT(syntax_tree_node);
+
+			fresh_mult_node->init_empty_multiplication_node(
+						Tree,
+						verbose_level);
+
+			int i;
+
+			// remove the exponent before copying to avoid infinite recursion:
+
+			f_has_exponent = false;
+			exponent = 0;
+
+			for (i = 0; i < exp; i++) {
+
+				syntax_tree_node *fresh_node;
+
+				fresh_node = NEW_OBJECT(syntax_tree_node);
+
+				if (f_v) {
+					cout << "syntax_tree_node::expand_in_place_handle_exponents "
+							"expanding addition node, "
+							"exp = " << exp
+							<< " nb_nodes = " << nb_nodes
+							<< " copying " << i << " times"
+							<< endl;
+				}
+
+				copy_to(
+							Tree /* Output_tree */,
+							fresh_node,
+							verbose_level);
+
+				fresh_mult_node->Nodes[fresh_mult_node->nb_nodes++] = fresh_node;
+
+			}
+
+
+			for (i = 0; i < nb_nodes; i++) {
+
+				FREE_OBJECT(Nodes[i]);
+				Nodes[i] = NULL;
+
+			}
+			nb_nodes = 0;
+
+			for (i = 0; i < fresh_mult_node->nb_nodes; i++) {
+				Nodes[i] = fresh_mult_node->Nodes[i];
+				fresh_mult_node->Nodes[i] = NULL;
+			}
+			nb_nodes = fresh_mult_node->nb_nodes;
+			fresh_mult_node->nb_nodes = 0;
+
+			type = operation_type_mult;
+
+			FREE_OBJECT(fresh_mult_node);
+
+		}
+#if 1
+		int i;
+
+		for (i = 0; i < nb_nodes; i++) {
+
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place_handle_exponents "
+						"multiplication node, "
+						"child " << i << " / " << nb_nodes << endl;
+			}
+
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place_handle_exponents "
+						"multiplication node, "
+						"child " << i << " / " << nb_nodes
+						<< " before expand_in_place_handle_exponents" << endl;
+			}
+			Nodes[i]->expand_in_place_handle_exponents(verbose_level);
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place_handle_exponents "
+						"multiplication node, "
+						"child " << i << " / " << nb_nodes
+						<< " after expand_in_place_handle_exponents" << endl;
+			}
+		}
+#endif
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::expand_in_place_handle_exponents done" << endl;
+	}
+}
+
+
+
 void syntax_tree_node::simplify_exponents(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1764,11 +2360,13 @@ void syntax_tree_node::simplify_exponents(int verbose_level)
 				val1 = T->value_int;
 
 				if (Tree == NULL) {
-					cout << "syntax_tree_node::simplify_exponents Tree == NULL" << endl;
+					cout << "syntax_tree_node::simplify_exponents "
+							"Tree == NULL" << endl;
 					exit(1);
 				}
 				if (Tree->Fq == NULL) {
-					cout << "syntax_tree_node::simplify_exponents Tree->Fq == NULL" << endl;
+					cout << "syntax_tree_node::simplify_exponents "
+							"Tree->Fq == NULL" << endl;
 					exit(1);
 				}
 				if (f_v) {
@@ -1795,7 +2393,8 @@ void syntax_tree_node::simplify_exponents(int verbose_level)
 					exponent = 0;
 					if (f_v) {
 						cout << "syntax_tree_node::simplify_exponents "
-								"eliminating exponent of 1 of literal terminal node" << endl;
+								"eliminating exponent of 1 of "
+								"literal terminal node" << endl;
 					}
 				}
 			}
@@ -1843,12 +2442,13 @@ void syntax_tree_node::simplify_exponents(int verbose_level)
 
 }
 
-void syntax_tree_node::collect_like_terms(int verbose_level)
+void syntax_tree_node::sort_terms(int verbose_level)
+// called from formula::simplify
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "syntax_tree_node::collect_like_terms" << endl;
+		cout << "syntax_tree_node::sort_terms" << endl;
 	}
 
 	if (f_terminal) {
@@ -1857,7 +2457,7 @@ void syntax_tree_node::collect_like_terms(int verbose_level)
 
 		if (type == operation_type_mult) {
 			if (f_v) {
-				cout << "syntax_tree_node::collect_like_terms "
+				cout << "syntax_tree_node::sort_terms "
 						"multiplication node, "
 						"nb_children = " << nb_nodes << endl;
 			}
@@ -1873,13 +2473,52 @@ void syntax_tree_node::collect_like_terms(int verbose_level)
 			int i;
 
 			for (i = 0; i < nb_nodes; i++) {
-				Nodes[i]->collect_like_terms(verbose_level);
+				Nodes[i]->sort_terms(verbose_level);
+			}
+			for (i = 0; i < nb_nodes - 1; i++) {
+
+				if (syntax_tree_node_compare_func(Nodes,
+						i, i + 1, this) == 0) {
+
+
+					if (Nodes[i]->is_int_node() &&
+							Nodes[i + 1]->is_int_node()) {
+						if (!Nodes[i]->f_has_exponent && !Nodes[i + 1]->f_has_exponent) {
+							int val1, val2, val3;
+
+							val1 = Nodes[i]->T->value_int;
+							val2 = Nodes[i + 1]->T->value_int;
+							val3 = Tree->Fq->mult(val1, val2);
+							Nodes[i]->T->value_int = val3;
+							delete_one_child(i + 1, verbose_level);
+							i--;
+						}
+					}
+					else if (Nodes[i]->is_text_node() &&
+								Nodes[i + 1]->is_text_node()) {
+						int exp1, exp2, exp3;
+
+						exp1 = Nodes[i]->get_exponent();
+						exp2 = Nodes[i + 1]->get_exponent();
+						exp3 = exp1 + exp2;
+						if (exp3 != 1) {
+							Nodes[i]->f_has_exponent = true;
+							Nodes[i]->exponent = exp3;
+						}
+						else {
+							Nodes[i]->f_has_exponent = false;
+							Nodes[i]->exponent = 0;
+						}
+						delete_one_child(i + 1, verbose_level);
+						i--;
+					}
+				}
 			}
 
 		}
 		else if (type == operation_type_add) {
 			if (f_v) {
-				cout << "syntax_tree_node::collect_like_terms "
+				cout << "syntax_tree_node::sort_terms "
 						"addition node, "
 						"nb_children = " << nb_nodes << endl;
 			}
@@ -1893,8 +2532,173 @@ void syntax_tree_node::collect_like_terms(int verbose_level)
 			int i;
 
 			for (i = 0; i < nb_nodes; i++) {
+				Nodes[i]->sort_terms(verbose_level);
+			}
+		}
+	}
+
+
+	if (f_v) {
+		cout << "syntax_tree_node::sort_terms done" << endl;
+	}
+}
+
+
+
+void syntax_tree_node::collect_like_terms(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_like_terms" << endl;
+	}
+
+	if (f_terminal) {
+		cout << "syntax_tree_node::collect_like_terms "
+				"cannot be a terminal node" << endl;
+		exit(1);
+	}
+	else {
+
+		if (type == operation_type_mult) {
+			if (f_v) {
+				cout << "syntax_tree_node::collect_like_terms "
+						"multiplication node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+
+			int i;
+
+			for (i = 0; i < nb_nodes; i++) {
 				Nodes[i]->collect_like_terms(verbose_level);
 			}
+
+		}
+		else if (type == operation_type_add) {
+			if (f_v) {
+				cout << "syntax_tree_node::collect_like_terms "
+						"addition node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+
+
+			int i;
+			data_structures::int_matrix *I;
+			int *Coeff;
+			int N;
+
+			N = Tree->variables.size();
+
+
+			if (f_v) {
+				cout << "syntax_tree_node::collect_like_terms "
+						"before collect_terms_and_coefficients" << endl;
+			}
+			collect_terms_and_coefficients(
+					I, Coeff,
+					verbose_level);
+			if (f_v) {
+				cout << "syntax_tree_node::collect_like_terms "
+						"after collect_terms_and_coefficients" << endl;
+			}
+
+
+
+
+			if (f_v) {
+				cout << "syntax_tree_node::collect_like_terms "
+						"data collected:" << endl;
+				for (i = 0; i < nb_nodes; i++) {
+					cout << Coeff[i] << " : ";
+					Int_vec_print(cout, I->M + i * N, N);
+					cout << endl;
+				}
+			}
+
+
+			I->sort_rows(verbose_level);
+
+			if (f_v) {
+				cout << "syntax_tree_node::collect_like_terms "
+						"after sorting:" << endl;
+				for (i = 0; i < nb_nodes; i++) {
+					cout << setw(3) << Coeff[i] << " : ";
+					cout << setw(4) << I->perm_inv[i] << " : ";
+					Int_vec_print(cout, I->M + i * N, N);
+					cout << endl;
+				}
+			}
+
+			int Nb_nodes;
+
+			Nb_nodes = nb_nodes;
+
+			for (i = 0; i < Nb_nodes; i++) {
+
+				FREE_OBJECT(Nodes[i]);
+				Nodes[i] = NULL;
+			}
+			nb_nodes = 0;
+
+			int j, u, v, exp;
+			int coeff;
+			data_structures::sorting Sorting;
+
+			for (i = 0; i < Nb_nodes; i++) {
+
+				for (j = i + 1; j < Nb_nodes; j++) {
+					if (Sorting.integer_vec_compare(
+							I->M + i * N, I->M + j * N, N)) {
+						break;
+					}
+				}
+				syntax_tree_node *node;
+
+				node = NEW_OBJECT(syntax_tree_node);
+
+				coeff = Coeff[I->perm_inv[i]];
+				for (u = i + 1; u < j; u++) {
+					coeff = Tree->Fq->add(coeff, Coeff[I->perm_inv[u]]);
+				}
+
+				if (coeff) {
+
+					if (f_v) {
+						cout << "syntax_tree_node::collect_like_terms "
+								"adding term ";
+						Int_vec_print(cout, I->M + i * N, N);
+						cout << " with coeff " << coeff << endl;
+					}
+					node->init_empty_multiplication_node(
+							Tree,
+							0 /*verbose_level*/);
+
+					if (coeff != 1) {
+						node->add_numerical_factor(
+								coeff, 0 /*verbose_level*/);
+					}
+
+					for (v = 0; v < N; v++) {
+						exp = I->M[i * N + v];
+						if (exp) {
+							node->add_factor(
+									Tree->variables[v], exp,
+									0 /*verbose_level*/);
+						}
+					}
+
+					Nodes[nb_nodes++] = node;
+				}
+				i = j - 1;
+
+			}
+			if (f_v) {
+				cout << "syntax_tree_node::collect_like_terms "
+						"reduced from " << Nb_nodes << " to "
+						<< nb_nodes << " terms" << endl;
+			}
+			FREE_OBJECT(I);
+
 		}
 	}
 
@@ -1904,8 +2708,188 @@ void syntax_tree_node::collect_like_terms(int verbose_level)
 	}
 }
 
+void syntax_tree_node::collect_monomial_terms(
+		data_structures::int_matrix *&I, int *&Coeff,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_monomial_terms" << endl;
+	}
+
+	if (f_terminal) {
+		cout << "syntax_tree_node::collect_monomial_terms "
+				"cannot be a terminal node" << endl;
+		exit(1);
+	}
+	else {
+
+		if (type == operation_type_mult) {
+
+			cout << "syntax_tree_node::collect_monomial_terms "
+					"cannot be a multiplication node" << endl;
+			exit(1);
+
+		}
+		else if (type == operation_type_add) {
+			if (f_v) {
+				cout << "syntax_tree_node::collect_monomial_terms "
+						"addition node, "
+						"nb_children = " << nb_nodes << endl;
+			}
 
 
+			int i;
+			int N;
+
+			N = Tree->variables.size();
+
+
+			if (f_v) {
+				cout << "syntax_tree_node::collect_monomial_terms "
+						"before collect_terms_and_coefficients" << endl;
+			}
+			collect_terms_and_coefficients(
+					I, Coeff,
+					verbose_level);
+			if (f_v) {
+				cout << "syntax_tree_node::collect_monomial_terms "
+						"after collect_terms_and_coefficients" << endl;
+			}
+
+		}
+		else {
+			cout << "syntax_tree_node::collect_monomial_terms "
+					"unknoen node type" << endl;
+			exit(1);
+
+		}
+
+	}
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_monomial_terms done" << endl;
+	}
+}
+
+
+void syntax_tree_node::collect_terms_and_coefficients(
+		data_structures::int_matrix *&I, int *&Coeff,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_terms_and_coefficients" << endl;
+	}
+
+	int i;
+	int index;
+	int exp;
+	int N;
+	int *monomial_exponents;
+
+
+
+	N = Tree->variables.size();
+
+	Coeff = NEW_int(nb_nodes);
+	I = NEW_OBJECT(data_structures::int_matrix);
+	I->allocate(nb_nodes, N);
+
+	monomial_exponents = NEW_int(N);
+
+	for (i = 0; i < nb_nodes; i++) {
+
+		if (f_v) {
+			cout << "syntax_tree_node::collect_terms_and_coefficients "
+					"addition node, collecting "
+					"child " << i << " / " << nb_nodes << endl;
+		}
+
+		Int_vec_zero(monomial_exponents, N);
+
+		syntax_tree_node *node;
+
+		node = Nodes[i];
+
+		int coeff = 1;
+
+		if (node->f_terminal && node->T->f_text) {
+
+			index = node->terminal_node_get_variable_index();
+			exp = node->get_exponent();
+			monomial_exponents[index] = exp;
+
+		}
+		else if (node->f_terminal && node->T->f_int) {
+
+			coeff = node->T->value_int;
+
+		}
+		else if (node->type == operation_type_mult) {
+
+			int j;
+
+			for (j = 0; j < node->nb_nodes; j++) {
+
+				if (node->Nodes[j]->f_terminal) {
+					if (node->Nodes[j]->T->f_int) {
+						if (coeff != 1) {
+							cout << "syntax_tree_node::collect_terms_and_coefficients "
+									"we cannot have more than "
+									"one coefficient" << endl;
+							exit(1);
+						}
+						coeff = node->Nodes[j]->T->value_int;
+					}
+					else {
+						index = node->Nodes[j]->terminal_node_get_variable_index();
+						exp = node->Nodes[j]->get_exponent();
+						monomial_exponents[index] += exp;
+
+					}
+				}
+
+
+			}
+
+		}
+		else if (node->type == operation_type_add) {
+			cout << "syntax_tree_node::collect_terms_and_coefficients "
+					"cannot have add node as a child "
+					"of an add node" << endl;
+			exit(1);
+		}
+		else {
+			cout << "syntax_tree_node::collect_terms_and_coefficients "
+					"unknown node type" << endl;
+			exit(1);
+
+		}
+
+		Int_vec_copy(monomial_exponents, I->M + i * N, N);
+
+		Coeff[i] = coeff;
+
+	}
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_terms_and_coefficients "
+				"data collected:" << endl;
+		for (i = 0; i < nb_nodes; i++) {
+			cout << Coeff[i] << " : ";
+			Int_vec_print(cout, I->M + i * N, N);
+			cout << endl;
+		}
+	}
+	FREE_int(monomial_exponents);
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_terms_and_coefficients done" << endl;
+	}
+}
 
 void syntax_tree_node::simplify_constants(int verbose_level)
 {
@@ -2022,6 +3006,9 @@ void syntax_tree_node::flatten(
 						"nb_children = " << nb_nodes << endl;
 			}
 			for (i = 0; i < nb_nodes; i++) {
+
+				Nodes[i]->flatten(verbose_level);
+
 				if (Nodes[i]->is_mult_node() || Nodes[i]->nb_nodes == 1) {
 
 
@@ -2030,77 +3017,8 @@ void syntax_tree_node::flatten(
 								"folding children of " << i << endl;
 					}
 
-					if (Nodes[i]->f_has_exponent) {
+					flatten_at(i, verbose_level);
 
-						syntax_tree_node *old_node;
-
-						old_node = Nodes[i];
-
-						int exp;
-
-						exp = old_node->exponent;
-
-						int nb_n;
-
-						nb_n = old_node->nb_nodes;
-
-						int j;
-
-
-						// Make space for the children's nodes.
-						//
-						// Move up by nb_n  - 1 because the old node is deleted:
-
-						for (j = nb_nodes - 1; j > i; j--) {
-							Nodes[j + nb_n - 1] = Nodes[j];
-						}
-						nb_nodes += nb_n - 1;
-						for (j = 0; j < nb_n; j++) {
-							Nodes[i + j] = old_node->Nodes[j];
-							old_node->Nodes[j] = NULL;
-							if (Nodes[i + j]->f_has_exponent) {
-								Nodes[i + j]->exponent *= exp;
-							}
-							else {
-								Nodes[i + j]->f_has_exponent = true;
-								Nodes[i + j]->exponent = exp;
-							}
-						}
-						old_node->nb_nodes = 0;
-						FREE_OBJECT(old_node);
-
-					}
-					else {
-
-						syntax_tree_node *old_node;
-
-						old_node = Nodes[i];
-
-
-						int nb_n;
-
-						nb_n = old_node->nb_nodes;
-
-						int j;
-
-
-
-						for (j = nb_nodes - 1; j > i; j--) {
-							Nodes[j + nb_n - 1] = Nodes[j];
-						}
-						nb_nodes += nb_n - 1;
-						for (j = 0; j < nb_n; j++) {
-							Nodes[i + j] = old_node->Nodes[j];
-							old_node->Nodes[j] = NULL;
-						}
-						old_node->nb_nodes = 0;
-						FREE_OBJECT(old_node);
-
-					}
-					if (f_v) {
-						cout << "syntax_tree_node::flatten i=" << i <<
-								" nb_nodes=" << nb_nodes << endl;
-					}
 					i--; // do the present child again, because it has changed
 
 				} // if (Nodes[i]->is_mult_node())
@@ -2114,14 +3032,23 @@ void syntax_tree_node::flatten(
 						"nb_children = " << nb_nodes << endl;
 			}
 			for (i = 0; i < nb_nodes; i++) {
-				if (f_v) {
-					cout << "syntax_tree_node::flatten "
-							"child " << i << " / " << nb_nodes << " before flatten" << endl;
-				}
+
 				Nodes[i]->flatten(verbose_level);
-				if (f_v) {
-					cout << "syntax_tree_node::flatten "
-							"child " << i << " / " << nb_nodes << " after flatten" << endl;
+
+				if (Nodes[i]->is_add_node() || Nodes[i]->nb_nodes == 1) {
+					if (f_v) {
+						cout << "syntax_tree_node::flatten "
+								"child " << i << " / " << nb_nodes
+								<< " before flatten_at" << endl;
+					}
+					flatten_at(i, verbose_level);
+					i--;
+					//Nodes[i]->flatten(verbose_level);
+					if (f_v) {
+						cout << "syntax_tree_node::flatten "
+								"child " << i << " / " << nb_nodes
+								<< " after flatten_at" << endl;
+					}
 				}
 			}
 
@@ -2152,7 +3079,8 @@ void syntax_tree_node::flatten(
 				if (f_v) {
 					cout << "syntax_tree_node::flatten "
 							"terminal " << val << " to the "
-									"power of " << exp << " = " << val1 << endl;
+									"power of " << exp
+									<< " = " << val1 << endl;
 				}
 				val = val1;
 			}
@@ -2176,6 +3104,89 @@ void syntax_tree_node::flatten(
 
 	if (f_v) {
 		cout << "syntax_tree_node::flatten done" << endl;
+	}
+}
+
+void syntax_tree_node::flatten_at(int i, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_at "
+				"folding children of " << i << endl;
+	}
+
+	if (Nodes[i]->f_has_exponent) {
+
+		syntax_tree_node *old_node;
+
+		old_node = Nodes[i];
+
+		int exp;
+
+		exp = old_node->exponent;
+
+		int nb_n;
+
+		nb_n = old_node->nb_nodes;
+
+		int j;
+
+
+		// Make space for the children's nodes.
+		//
+		// Move up by nb_n  - 1 because the old node is deleted:
+
+		for (j = nb_nodes - 1; j > i; j--) {
+			Nodes[j + nb_n - 1] = Nodes[j];
+		}
+		nb_nodes += nb_n - 1;
+		for (j = 0; j < nb_n; j++) {
+			Nodes[i + j] = old_node->Nodes[j];
+			old_node->Nodes[j] = NULL;
+			if (Nodes[i + j]->f_has_exponent) {
+				Nodes[i + j]->exponent *= exp;
+			}
+			else {
+				Nodes[i + j]->f_has_exponent = true;
+				Nodes[i + j]->exponent = exp;
+			}
+		}
+		old_node->nb_nodes = 0;
+		FREE_OBJECT(old_node);
+
+	}
+	else {
+
+		syntax_tree_node *old_node;
+
+		old_node = Nodes[i];
+
+
+		int nb_n;
+
+		nb_n = old_node->nb_nodes;
+
+		int j;
+
+
+
+		for (j = nb_nodes - 1; j > i; j--) {
+			Nodes[j + nb_n - 1] = Nodes[j];
+		}
+		nb_nodes += nb_n - 1;
+		for (j = 0; j < nb_n; j++) {
+			Nodes[i + j] = old_node->Nodes[j];
+			old_node->Nodes[j] = NULL;
+		}
+		old_node->nb_nodes = 0;
+		FREE_OBJECT(old_node);
+
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_at i=" << i <<
+				" nb_nodes=" << nb_nodes << " done" << endl;
 	}
 }
 
@@ -2209,7 +3220,8 @@ void syntax_tree_node::display_children_by_type()
 
 }
 
-void syntax_tree_node::delete_all_but_one_child(int i, int verbose_level)
+void syntax_tree_node::delete_all_but_one_child(
+		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2238,7 +3250,8 @@ void syntax_tree_node::delete_all_but_one_child(int i, int verbose_level)
 	}
 }
 
-void syntax_tree_node::delete_one_child(int i, int verbose_level)
+void syntax_tree_node::delete_one_child(
+		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2314,15 +3327,18 @@ int syntax_tree_node::is_constant_zero(int verbose_level)
 			}
 			else {
 				if (f_v) {
-					cout << "syntax_tree_node::is_constant_zero returns false. "
-							"f_terminal, f_int are true but value is not zero " << endl;
+					cout << "syntax_tree_node::is_constant_zero "
+							"returns false. "
+							"f_terminal, f_int are true "
+							"but value is not zero " << endl;
 				}
 				return false;
 			}
 		}
 		else {
 			if (f_v) {
-				cout << "syntax_tree_node::is_constant_zero returns false. "
+				cout << "syntax_tree_node::is_constant_zero "
+						"returns false. "
 						"f_terminal is true but f_int is not " << endl;
 			}
 			return false;
@@ -2330,7 +3346,8 @@ int syntax_tree_node::is_constant_zero(int verbose_level)
 	}
 	else {
 		if (f_v) {
-			cout << "syntax_tree_node::is_constant_zero returns false. "
+			cout << "syntax_tree_node::is_constant_zero "
+					"returns false. "
 					"f_terminal is false. Node type is ";
 			print_node_type(cout);
 			cout << endl;
@@ -2338,6 +3355,69 @@ int syntax_tree_node::is_constant_zero(int verbose_level)
 		return false;
 	}
 }
+
+
+
+void syntax_tree_node::collect_variables(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_variables" << endl;
+	}
+	if (f_terminal) {
+		if (T->f_text) {
+
+			if (Tree->find_variable(
+					T->value_text,
+					verbose_level) == -1) {
+
+				Tree->add_variable(T->value_text);
+
+			}
+		}
+	}
+	else {
+		int i;
+
+		for (i = 0; i < nb_nodes; i++) {
+			Nodes[i]->collect_variables(verbose_level);
+		}
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::collect_variables done" << endl;
+	}
+}
+
+
+int syntax_tree_node::terminal_node_get_variable_index()
+{
+	if (f_terminal) {
+		if (T->f_text) {
+
+			int idx;
+
+			idx = Tree->find_variable(
+					T->value_text,
+					0 /*verbose_level*/);
+
+			if (idx == -1) {
+				cout << "syntax_tree_node::terminal_node_get_variable_index "
+						"variable not found" << endl;
+				exit(1);
+			}
+			return idx;
+		}
+		cout << "syntax_tree_node::terminal_node_get_variable_index "
+				"node must be text node" << endl;
+		exit(1);
+	}
+	cout << "syntax_tree_node::terminal_node_get_variable_index "
+			"node must be terminal node" << endl;
+	exit(1);
+}
+
+
 
 
 
@@ -2358,7 +3438,7 @@ static int syntax_tree_node_compare_func(void *data,
 static void syntax_tree_node_swap_func(void *data,
 		int i, int j, void *extra_data)
 {
-	int verbose_level = 0;
+	//int verbose_level = 0;
 
 	syntax_tree_node *node = (syntax_tree_node *)extra_data;
 

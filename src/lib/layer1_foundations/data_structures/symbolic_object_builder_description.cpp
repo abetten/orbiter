@@ -60,6 +60,9 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_simplify = false;
 	//std::string simplify_source;
 
+	f_expand = false;
+	//std::string expand_source;
+
 	f_right_nullspace = false;
 	//std::string right_nullspace_source;
 
@@ -76,6 +79,25 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_stack_matrices_horizontally = false;
 	f_stack_matrices_z_shape = false;
 	//std::string stack_matrices_label;
+
+	f_multiply_2x2_from_the_left = false;
+	//std::string multiply_2x2_from_the_left_source;
+	//std::string multiply_2x2_from_the_left_A2;
+	multiply_2x2_from_the_left_i = 0;
+	multiply_2x2_from_the_left_j = 0;
+
+	f_matrix_entry = false;
+	//std::string matrix_entry_source;
+	matrix_entry_i = 0;
+	matrix_entry_j = 0;
+
+	f_collect = false;
+	//std::string collect_source;
+	//std::string collect_by;
+
+	f_do_not_simplify = false;
+
+	f_write_trees_during_expand = false;
 
 }
 
@@ -189,6 +211,15 @@ int symbolic_object_builder_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-expand") == 0) {
+			f_expand = true;
+			expand_source.assign(argv[++i]);
+			if (f_v) {
+				cout << "-expand "
+						<< " " << expand_source
+						<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-right_nullspace") == 0) {
 			f_right_nullspace = true;
 			right_nullspace_source.assign(argv[++i]);
@@ -249,6 +280,60 @@ int symbolic_object_builder_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-multiply_2x2_from_the_left") == 0) {
+			f_multiply_2x2_from_the_left = true;
+			multiply_2x2_from_the_left_source.assign(argv[++i]);
+			multiply_2x2_from_the_left_A2.assign(argv[++i]);
+			multiply_2x2_from_the_left_i = ST.strtoi(argv[++i]);
+			multiply_2x2_from_the_left_j = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-multiply_2x2_from_the_left "
+						<< " " << multiply_2x2_from_the_left_source
+						<< " " << multiply_2x2_from_the_left_A2
+						<< " " << multiply_2x2_from_the_left_i
+						<< " " << multiply_2x2_from_the_left_j
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-matrix_entry") == 0) {
+			f_matrix_entry = true;
+			matrix_entry_source.assign(argv[++i]);
+			matrix_entry_i = ST.strtoi(argv[++i]);
+			matrix_entry_j = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-matrix_entry "
+						<< " " << matrix_entry_source
+						<< " " << matrix_entry_i
+						<< " " << matrix_entry_j
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-collect") == 0) {
+			f_collect = true;
+			collect_source.assign(argv[++i]);
+			collect_by.assign(argv[++i]);
+			if (f_v) {
+				cout << "-collect "
+						<< " " << collect_source
+						<< " " << collect_by
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-do_not_simplify") == 0) {
+			f_do_not_simplify = true;
+			if (f_v) {
+				cout << "-do_not_simplify "
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-write_trees_during_expand") == 0) {
+			f_write_trees_during_expand = true;
+			if (f_v) {
+				cout << "-write_trees_during_expand "
+						<< endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -314,6 +399,11 @@ void symbolic_object_builder_description::print()
 				<< " " << simplify_source
 				<< endl;
 	}
+	if (f_expand) {
+		cout << "-expand "
+				<< " " << expand_source
+				<< endl;
+	}
 	if (f_right_nullspace) {
 		cout << "-right_nullspace "
 				<< " " << right_nullspace_source
@@ -344,6 +434,35 @@ void symbolic_object_builder_description::print()
 	if (f_stack_matrices_z_shape) {
 			cout << "-stack_matrices_z_shape "
 					<< " " << stack_matrices_label
+					<< endl;
+	}
+	if (f_multiply_2x2_from_the_left) {
+		cout << "-multiply_2x2_from_the_left "
+				<< " " << multiply_2x2_from_the_left_source
+				<< " " << multiply_2x2_from_the_left_A2
+				<< " " << multiply_2x2_from_the_left_i
+				<< " " << multiply_2x2_from_the_left_j
+				<< endl;
+	}
+	if (f_matrix_entry) {
+		cout << "-matrix_entry "
+				<< " " << matrix_entry_source
+				<< " " << matrix_entry_i
+				<< " " << matrix_entry_j
+				<< endl;
+	}
+	if (f_collect) {
+		cout << "-collect "
+				<< " " << collect_source
+				<< " " << collect_by
+				<< endl;
+	}
+	if (f_do_not_simplify) {
+		cout << "-do_not_simplify "
+				<< endl;
+	}
+	if (f_write_trees_during_expand) {
+			cout << "-write_trees_during_expand "
 					<< endl;
 	}
 

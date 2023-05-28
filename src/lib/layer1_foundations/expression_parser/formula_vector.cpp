@@ -46,7 +46,8 @@ formula_vector::~formula_vector()
 }
 
 void formula_vector::init_from_text(
-		std::string &label_txt, std::string &label_tex,
+		std::string &label_txt,
+		std::string &label_tex,
 		std::string &text,
 		field_theory::finite_field *Fq,
 		std::string &managed_variables,
@@ -58,6 +59,9 @@ void formula_vector::init_from_text(
 	if (f_v) {
 		cout << "formula_vector::init_from_text" << endl;
 	}
+
+	formula_vector::label_txt = label_txt;
+	formula_vector::label_tex = label_tex;
 
 	data_structures::string_tools ST;
 	std::vector<std::string> input;
@@ -90,17 +94,18 @@ void formula_vector::init_from_text(
 	int i;
 	for (i = 0; i < len; i++) {
 
-		string label_txt;
-		string label_tex;
-		label_txt = label_txt + "_V" + std::to_string(i);
-		label_tex = label_tex + "V" + std::to_string(i);
+		string element_label_txt;
+		string element_label_tex;
+		element_label_txt = label_txt + "_V" + std::to_string(i);
+		element_label_tex = label_tex + "V" + std::to_string(i);
 
 		if (f_v) {
 			cout << "formula_vector::init_from_text "
 					"before V[i].init_formula_Sajeeb" << endl;
 		}
 		if (f_v) {
-			cout << "formula_vector::init_from_text " << i << " / " << len << " input = " << input[i] << endl;
+			cout << "formula_vector::init_from_text "
+					<< i << " / " << len << " input = " << input[i] << endl;
 		}
 
 		if (f_v) {
@@ -109,7 +114,7 @@ void formula_vector::init_from_text(
 		}
 
 		V[i].init_formula_Sajeeb(
-				label_txt, label_tex,
+				element_label_txt, element_label_tex,
 				managed_variables, input[i],
 				Fq,
 				verbose_level - 2);
@@ -121,7 +126,7 @@ void formula_vector::init_from_text(
 
 		string s;
 
-		s = V[i].string_representation_formula(verbose_level);
+		s = V[i].string_representation_formula(false, verbose_level);
 
 		if (f_v) {
 			cout << "formula_vector::init_from_text "
@@ -175,7 +180,12 @@ void formula_vector::init_and_allocate(
 	V = NEW_OBJECTS(formula, len);
 	formula_vector::len = len;
 
+	int i;
 
+	for (i = 0; i < len; i++) {
+		V[i].name_of_formula = label_txt + "_" + std::to_string(i);
+		V[i].name_of_formula_latex = label_tex + "_{" + std::to_string(i) + "}";
+	}
 
 	if (f_v) {
 		cout << "formula_vector::init_and_allocate done" << endl;
@@ -292,11 +302,13 @@ void formula_vector::get_string_representation_formula(
 				string s;
 
 				if (f_v) {
-					cout << "formula_vector::get_string_representation_formula i=" << i << " j=" << j << endl;
+					cout << "formula_vector::get_string_representation_formula "
+							"i=" << i << " j=" << j << endl;
 				}
-				s = V[i * nb_cols + j].string_representation_formula(verbose_level);
+				s = V[i * nb_cols + j].string_representation_formula(false, verbose_level);
 				if (f_v) {
-					cout << "formula_vector::get_string_representation_formula s=" << s << endl;
+					cout << "formula_vector::get_string_representation_formula "
+							"s=" << s << endl;
 				}
 				S.push_back(s);
 			}
@@ -307,11 +319,12 @@ void formula_vector::get_string_representation_formula(
 		for (i = 0; i < len; i++) {
 			string s;
 
-			s = V[i].string_representation_formula(verbose_level);
+			s = V[i].string_representation_formula(false, verbose_level);
 			S.push_back(s);
 		}
 	}
 }
+
 
 void formula_vector::print_Sajeeb(std::ostream &ost)
 {
@@ -342,15 +355,26 @@ void formula_vector::print_Sajeeb(std::ostream &ost)
 void formula_vector::print_formula(std::ostream &ost, int verbose_level)
 {
 
+	data_structures::string_tools String;
+
 	if (f_matrix) {
 		ost << "symbolic matrix of size "
 				<< nb_rows << " x " << nb_cols << endl;
 		vector<string> S;
 
 		//get_string_representation_Sajeeb(S);
-		get_string_representation_formula(S, verbose_level);
+		get_string_representation_formula(S, 0 /*verbose_level*/);
 
 		print_matrix(S, ost);
+		ost << endl;
+
+		String.make_latex_friendly_vector(
+					S, 0 /*verbose_level*/);
+
+		ost << "latex friendly matrix:" << endl;
+		print_matrix(S, ost);
+		ost << endl;
+
 	}
 	else {
 		ost << "symbolic vector of size "
@@ -358,9 +382,21 @@ void formula_vector::print_formula(std::ostream &ost, int verbose_level)
 		vector<string> S;
 
 		//get_string_representation_Sajeeb(S);
-		get_string_representation_formula(S, verbose_level);
+		get_string_representation_formula(S, 0 /*verbose_level*/);
 
 		print_vector(S, ost);
+
+		ost << endl;
+
+
+		String.make_latex_friendly_vector(
+					S, 0 /*verbose_level*/);
+
+		ost << "latex friendly vector of length " << len << ":" << endl;
+		print_vector_latex(S, ost);
+
+		ost << endl;
+
 	}
 }
 
@@ -391,6 +427,8 @@ void formula_vector::print_matrix(
 		ost << endl;
 	}
 
+	print_variables(ost);
+
 }
 
 void formula_vector::print_vector(
@@ -407,16 +445,90 @@ void formula_vector::print_vector(
 	}
 
 	for (i = 0; i < len; i++) {
-		ost << setw(3) << i << " : " << setw(W) << S[i];
-		ost << endl;
+		ost << setw(3) << i << " : " << S[i] << endl;
 	}
 
+	print_variables(ost);
+
+}
+
+void formula_vector::print_vector_latex(
+		std::vector<std::string> &S, std::ostream &ost)
+{
+	int i;
+	int W;
+	int l;
+
+	W = 0;
+	for (i = 0; i < len; i++) {
+		l = S[i].length();
+		W = MAXIMUM(W, l);
+	}
+
+	ost << "{\\tt" << endl;
+	for (i = 0; i < len; i++) {
+		ost << setw(3) << i << " : \\\\" << endl;
+		ost << S[i];
+		ost << "\\\\" << endl;
+	}
+	ost << "}" << endl;
+
+	print_variables(ost);
+
+}
+
+
+void formula_vector::print_latex(std::ostream &ost)
+{
+	int i;
+	vector<string> v;
+
+	for (i = 0; i < len; i++) {
+		string s;
+
+		s = V[i].string_representation_formula(true, 0 /*verbose_level*/);
+		v.push_back(s);
+	}
+	if (f_matrix) {
+		int j;
+
+		ost << "$$" << endl;
+		ost << "\\begin{array}{*{" << nb_cols << "}c}" << endl;
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < nb_cols; j++) {
+				ost << v[i * nb_cols + j];
+				if (j < nb_cols - 1) {
+					ost << "  & ";
+					}
+				}
+			ost << "\\\\" << endl;
+			}
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+
+	}
+	else {
+
+		ost << "$$" << endl;
+		ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
+		for (i = 0; i < len; i++) {
+			ost << v[i];
+			ost << "\\\\" << endl;
+			}
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+
+	}
+
+	print_variables(ost);
 }
 
 void formula_vector::make_A_minus_lambda_Identity(
 		formula_vector *A,
 		field_theory::finite_field *Fq,
 		std::string &variable,
+		std::string &label_txt,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -454,9 +566,6 @@ void formula_vector::make_A_minus_lambda_Identity(
 	minus_one = Fq->negate(1);
 
 	n2 = n * n;
-
-	string label_txt = A->label_txt + "minuslambdaId";
-	string label_tex = A->label_tex + "minuslambdaId";
 
 	init_and_allocate(
 			label_txt,
@@ -522,7 +631,7 @@ void formula_vector::make_A_minus_lambda_Identity(
 
 				mult_node->add_empty_node(Tree, verbose_level);
 				lambda_node = mult_node->Nodes[mult_node->nb_nodes - 1];
-				lambda_node->init_empty_terminal_node_text(
+				lambda_node->init_terminal_node_text(
 							Tree,
 							variable,
 							verbose_level);
@@ -536,6 +645,7 @@ void formula_vector::make_A_minus_lambda_Identity(
 		}
 	}
 
+	collect_variables(verbose_level);
 
 	if (f_v) {
 		cout << "formula_vector::make_A_minus_lambda_Identity done" << endl;
@@ -543,9 +653,12 @@ void formula_vector::make_A_minus_lambda_Identity(
 }
 
 
-void formula_vector::substitute(formula_vector *Source,
+void formula_vector::substitute(
+		formula_vector *Source,
 		formula_vector *Target,
 		std::string &substitution_variables,
+		std::string &label_txt,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -570,16 +683,11 @@ void formula_vector::substitute(formula_vector *Source,
 	}
 	int t, s, i;
 	int nb, len;
-	std::string label_txt;
-	std::string label_tex;
 
 
 	nb = Source->len / N;
 
 	len = nb * Target->len;
-
-	label_txt = Source->label_txt + "_sub";
-	label_tex = Source->label_tex + "Sub";
 
 	init_and_allocate(
 			label_txt,
@@ -630,6 +738,8 @@ void formula_vector::substitute(formula_vector *Source,
 
 	FREE_pvoid((void **) S);
 
+	collect_variables(verbose_level);
+
 	if (f_v) {
 		cout << "formula_vector::substitute done" << endl;
 	}
@@ -639,6 +749,8 @@ void formula_vector::substitute(formula_vector *Source,
 void formula_vector::simplify(
 		formula_vector *A,
 		field_theory::finite_field *Fq,
+		std::string &label_txt,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -647,8 +759,8 @@ void formula_vector::simplify(
 		cout << "formula_vector::simplify" << endl;
 	}
 	init_and_allocate(
-			A->label_txt,
-			A->label_tex,
+			label_txt,
+			label_tex,
 			A->len, verbose_level);
 
 
@@ -677,7 +789,7 @@ void formula_vector::simplify(
 		if (f_v) {
 			cout << "formula_vector::simplify "
 					"-simplify " << i << " / " << A->len
-					<< " before simplify" << endl;
+					<< " before V[i].simplify" << endl;
 		}
 
 		V[i].simplify(verbose_level - 2);
@@ -685,7 +797,7 @@ void formula_vector::simplify(
 		if (f_v) {
 			cout << "formula_vector::simplify "
 					"-simplify " << i << " / " << A->len
-					<< " after simplify" << endl;
+					<< " after V[i].simplify" << endl;
 		}
 
 		if (f_v) {
@@ -695,12 +807,86 @@ void formula_vector::simplify(
 		}
 	}
 
+	collect_variables(verbose_level);
+
+}
+
+void formula_vector::expand(
+		formula_vector *A,
+		field_theory::finite_field *Fq,
+		std::string &label_txt,
+		std::string &label_tex,
+		int f_write_trees,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_vector::expand" << endl;
+	}
+	init_and_allocate(
+			label_txt,
+			label_tex,
+			A->len, verbose_level);
+
+
+	f_matrix = A->f_matrix;
+	nb_rows = A->nb_rows;
+	nb_cols = A->nb_cols;
+
+	int i;
+
+	for (i = 0; i < A->len; i++) {
+		if (f_v) {
+			cout << "formula_vector::expand "
+					"-simplify " << i << " / " << A->len
+					<< " before copy_to" << endl;
+		}
+
+		A->V[i].copy_to(
+				&V[i], verbose_level - 2);
+
+		if (f_v) {
+			cout << "formula_vector::expand "
+					"-simplify " << i << " / " << A->len
+					<< " after copy_to" << endl;
+		}
+
+		if (f_v) {
+			cout << "formula_vector::expand "
+					"-simplify " << i << " / " << A->len
+					<< " before V[i].expand_in_place" << endl;
+		}
+
+		V[i].expand_in_place(f_write_trees, verbose_level - 2);
+
+		if (f_v) {
+			cout << "formula_vector::expand "
+					"-simplify " << i << " / " << A->len
+					<< " after V[i].expand_in_place" << endl;
+		}
+
+		if (f_v) {
+			cout << "formula_vector::expand "
+					"-simplify " << i << " / " << A->len
+					<< " done" << endl;
+		}
+	}
+
+	collect_variables(verbose_level);
+
+	if (f_v) {
+		cout << "formula_vector::expand done" << endl;
+	}
+
 }
 
 void formula_vector::characteristic_polynomial(
 		formula_vector *A,
 		field_theory::finite_field *Fq,
 		std::string &variable,
+		std::string &label_txt,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -718,6 +904,8 @@ void formula_vector::characteristic_polynomial(
 			A,
 			Fq,
 			variable,
+			label_txt,
+			label_tex,
 			verbose_level);
 	if (f_v) {
 		cout << "formula_vector::characteristic_polynomial "
@@ -760,11 +948,6 @@ void formula_vector::characteristic_polynomial(
 
 
 
-	std::string label_txt;
-	std::string label_tex;
-
-	label_txt = A->label_txt + "_charpoly";
-	label_tex = A->label_tex + "Charpoly";
 
 	init_and_allocate(
 			label_txt,
@@ -781,6 +964,8 @@ void formula_vector::characteristic_polynomial(
 	nb_rows = 0;
 	nb_cols = 0;
 
+	collect_variables(verbose_level);
+
 	if (f_v) {
 		cout << "formula_vector::characteristic_polynomial done" << endl;
 	}
@@ -789,6 +974,8 @@ void formula_vector::characteristic_polynomial(
 void formula_vector::determinant(
 		formula_vector *A,
 		field_theory::finite_field *Fq,
+		std::string &label_txt,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -850,24 +1037,20 @@ void formula_vector::determinant(
 
 
 
-	std::string label;
-	std::string label_tex;
-
-	label = A->label_txt + "_det";
-	label_tex = A->label_tex + "det";
-
 	init_and_allocate(
-			label,
+			label_txt,
 			label_tex,
 			1 /*len*/, verbose_level);
 
 	V[0].init_formula_from_tree(
-				label, label_tex,
+				label_txt, label_tex,
 				Fq,
 				Tree,
 				verbose_level);
 
 	f_matrix = false;
+
+	collect_variables(verbose_level);
 
 	if (f_v) {
 		cout << "formula_vector::determinant done" << endl;
@@ -877,6 +1060,8 @@ void formula_vector::determinant(
 void formula_vector::right_nullspace(
 		formula_vector *A,
 		field_theory::finite_field *Fq,
+		std::string &label_txt,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -942,25 +1127,20 @@ void formula_vector::right_nullspace(
 
 
 	init_and_allocate(
-			A->label_txt,
-			A->label_tex,
+			label_txt,
+			label_tex,
 			nullspace_m * nullspace_n, verbose_level);
 
 	int i;
 
 	for (i = 0; i < len; i++) {
-		std::string label;
-		std::string label_tex;
-
-		label = A->label_txt + "_Nullspace_" + std::to_string(i);
-		label_tex = A->label_tex + "Nullspace" + std::to_string(i);
 
 		int value;
 
 		value = Nullspace[i];
 
 		V[i].init_formula_int(
-				label, label_tex,
+				label_txt, label_tex,
 				value,
 				Fq,
 				verbose_level);
@@ -973,6 +1153,8 @@ void formula_vector::right_nullspace(
 	FREE_int(M);
 	FREE_int(Nullspace);
 
+	collect_variables(verbose_level);
+
 	if (f_v) {
 		cout << "formula_vector::right_nullspace done" << endl;
 	}
@@ -984,6 +1166,8 @@ void formula_vector::minor(
 		formula_vector *A,
 		field_theory::finite_field *Fq,
 		int i, int j,
+		std::string &label_txt,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1008,13 +1192,14 @@ void formula_vector::minor(
 		cout << "formula_vector::minor "
 				"we found a matrix of size " << m << " x " << n << endl;
 	}
+	if (m != n) {
+		cout << "formula_vector::minor the input matrix must be square" << endl;
+		exit(1);
+	}
 
 	int u, v;
 	int c, d;
 
-
-	string label_txt = A->label_txt + "minor_" + std::to_string(i) + "_" + std::to_string(j);
-	string label_tex = A->label_tex + "minor" + std::to_string(i) + std::to_string(j);
 
 	formula_vector *M;
 
@@ -1027,13 +1212,13 @@ void formula_vector::minor(
 	M->init_and_allocate(
 			label_txt,
 			label_tex,
-			(m - 1) * (n - 1), verbose_level);
+			(n - 1) * (n - 1), verbose_level);
 
 	M->f_matrix = true;
-	M->nb_rows = m - 1;
+	M->nb_rows = n - 1;
 	M->nb_cols = n - 1;
 
-	for (u = 0, c = 0; u < m; u++, c++) {
+	for (u = 0, c = 0; u < n; u++, c++) {
 
 		if (u == i) {
 			c--;
@@ -1049,7 +1234,9 @@ void formula_vector::minor(
 			// copy the matrix entry (u,v) to (c,d):
 
 			if (f_v) {
-				cout << "formula_vector::minor copying (" << u << "," << v << ") to (" << c << "," << d << ")" << endl;
+				cout << "formula_vector::minor copying "
+						"(" << u << "," << v << ") to "
+						"(" << c << "," << d << ")" << endl;
 			}
 
 			A->V[u * n + v].copy_to(
@@ -1074,6 +1261,8 @@ void formula_vector::minor(
 	Det->determinant(
 			M,
 			Fq,
+			label_txt,
+			label_tex,
 			verbose_level);
 
 	if (f_v) {
@@ -1105,6 +1294,8 @@ void formula_vector::minor(
 	simplify(
 			Det,
 			Fq,
+			label_txt,
+			label_tex,
 			verbose_level);
 	if (f_v) {
 		cout << "formula_vector::minor "
@@ -1112,6 +1303,8 @@ void formula_vector::minor(
 	}
 
 	FREE_OBJECT(Det);
+
+	collect_variables(verbose_level);
 
 
 	if (f_v) {
@@ -1122,6 +1315,8 @@ void formula_vector::minor(
 void formula_vector::symbolic_nullspace(
 		formula_vector *A,
 		field_theory::finite_field *Fq,
+		std::string &label_txt,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1152,9 +1347,6 @@ void formula_vector::symbolic_nullspace(
 		exit(1);
 	}
 
-	string label_txt = A->label_txt + "perp";
-	string label_tex = A->label_tex + "perp";
-
 	init_and_allocate(
 			label_txt,
 			label_tex,
@@ -1165,13 +1357,13 @@ void formula_vector::symbolic_nullspace(
 	nb_cols = n;
 
 
-	formula_vector *B;
+	formula_vector *B; // a temporary object
 	int i, j;
 
 	B = NEW_OBJECT(formula_vector);
 
 	B->init_and_allocate(
-				A->label_txt, A->label_tex,
+				label_txt, label_tex,
 				n * n, verbose_level);
 	B->f_matrix = true;
 	B->nb_rows = n;
@@ -1188,6 +1380,10 @@ void formula_vector::symbolic_nullspace(
 		cout << "formula_vector::symbolic_nullspace "
 				"after copy matrix" << endl;
 	}
+
+	// fill the last row of B with ones:
+	// The value of the entry does not matter since
+	// we will do minors w.r.t. the last row of B:
 
 	i = n - 1;
 	for (j = 0; j < n; j++) {
@@ -1213,9 +1409,11 @@ void formula_vector::symbolic_nullspace(
 		}
 	}
 
+	// compute the minors w.r.t. the entries in the last row of B:
+
 	for (j = 0; j < n; j++) {
 
-		formula_vector *T;
+		formula_vector *T; // temporary object to compute the minor
 
 		T = NEW_OBJECT(formula_vector);
 
@@ -1223,7 +1421,11 @@ void formula_vector::symbolic_nullspace(
 				B,
 				Fq,
 				i, j,
+				label_txt,
+				label_tex,
 				verbose_level);
+
+		// copy the partial result into the output vector:
 
 		T->V[0].copy_to(
 				&V[j],
@@ -1235,12 +1437,208 @@ void formula_vector::symbolic_nullspace(
 
 	FREE_OBJECT(B);
 
+	collect_variables(verbose_level);
 
 	if (f_v) {
 		cout << "formula_vector::symbolic_nullspace done" << endl;
 	}
 }
 
+
+void formula_vector::multiply_2by2_from_the_left(
+		formula_vector *M,
+		formula_vector *A2,
+		int i, int j,
+		field_theory::finite_field *Fq,
+		std::string &label_txt,
+		std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_vector::multiply_2by2_from_the_left" << endl;
+	}
+
+
+	if (!M->f_matrix) {
+		cout << "formula_vector::multiply_2by2_from_the_left "
+				"the object M is not of type matrix" << endl;
+		exit(1);
+	}
+
+	int m, n;
+
+	m = M->nb_rows;
+	n = M->nb_cols;
+
+	if (f_v) {
+		cout << "formula_vector::multiply_2by2_from_the_left "
+				"we found a matrix of size " << m << " x " << n << endl;
+	}
+
+
+	init_and_allocate(
+			label_txt,
+			label_tex,
+			m * n, verbose_level);
+
+	f_matrix = true;
+	nb_rows = m;
+	nb_cols = n;
+
+
+	if (!A2->f_matrix) {
+		cout << "formula_vector::multiply_2by2_from_the_left "
+				"the object A2 is not of type matrix" << endl;
+		exit(1);
+	}
+	if (A2->nb_rows != 2) {
+		cout << "formula_vector::multiply_2by2_from_the_left "
+				"the object A2 is not 2 x 2" << endl;
+		exit(1);
+	}
+	if (A2->nb_cols != 2) {
+		cout << "formula_vector::multiply_2by2_from_the_left "
+				"the object A2 is not 2 x 2" << endl;
+		exit(1);
+	}
+
+	int u, v;
+
+	for (u = 0; u < m; u++) {
+		if (u == i) {
+			if (f_v) {
+				cout << "u == i == " << i << endl;
+			}
+			// row i is a linear combination of row i and row j:
+			for (v = 0; v < n; v++) {
+				if (f_v) {
+					cout << "u == i == " << i << " v=" << v << endl;
+				}
+				V[u * n + v].make_linear_combination(
+						&A2->V[0 * 2 + 0],
+						&M->V[i * n + v],
+						&A2->V[0 * 2 + 1],
+						&M->V[j * n + v],
+						verbose_level);
+				if (f_v) {
+					V[u * n + v].print_easy(cout);
+					cout << endl;
+				}
+			}
+		}
+		else if (u == j) {
+			if (f_v) {
+				cout << "u == j == " << j << endl;
+			}
+			// row j is a linear combination of row i and row j:
+			for (v = 0; v < n; v++) {
+				if (f_v) {
+					cout << "u == j == " << j << " v=" << v << endl;
+				}
+				V[u * n + v].make_linear_combination(
+						&A2->V[1 * 2 + 0],
+						&M->V[i * n + v],
+						&A2->V[1 * 2 + 1],
+						&M->V[j * n + v],
+						verbose_level);
+				if (f_v) {
+					V[u * n + v].print_easy(cout);
+					cout << endl;
+				}
+			}
+		}
+		else {
+			// row u is an unmodified copy of row u:
+			for (v = 0; v < n; v++) {
+				M->V[u * n + v].copy_to(&V[u * n + v], verbose_level - 3);
+			}
+		}
+	}
+
+	collect_variables(verbose_level);
+
+	if (f_v) {
+		cout << "formula_vector::multiply_2by2_from_the_left" << endl;
+	}
+
+}
+
+void formula_vector::latex_tree(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_vector::latex_tree" << endl;
+	}
+	int i;
+
+	if (len > 1) {
+		for (i = 0; i < len; i++) {
+			string s;
+
+			s = label_txt + "_" + std::to_string(i);
+			V[i].latex_tree(s, verbose_level);
+		}
+	}
+	else if (len == 1) {
+		string s;
+		string s2;
+		data_structures::string_tools String;
+
+		s = label_txt;
+		s2 = "M_split";
+
+		if (String.compare_string_string(s, s2) == 0) {
+			//V[0].latex(s, verbose_level);
+			V[0].latex_tree_split(
+					s, 0 /* split_level */, 10 /* split_mod */,
+					verbose_level);
+		}
+		else {
+			V[0].latex_tree(s, verbose_level);
+		}
+
+	}
+	if (f_v) {
+		cout << "formula_vector::latex_tree done" << endl;
+	}
+}
+
+void formula_vector::collect_variables(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_vector::collect_variables" << endl;
+	}
+	int i;
+
+	for (i = 0; i < len; i++) {
+		V[i].collect_variables(verbose_level);
+	}
+
+
+	print_variables(cout);
+
+	if (f_v) {
+		cout << "formula_vector::collect_variables done" << endl;
+	}
+
+}
+
+void formula_vector::print_variables(std::ostream &ost)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		cout << i << " : ";
+		V[i].tree->print_variables_in_line(ost);
+		cout << endl;
+	}
+
+}
 
 
 }}}

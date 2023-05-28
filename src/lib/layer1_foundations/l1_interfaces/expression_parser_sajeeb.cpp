@@ -49,6 +49,12 @@ static void convert_to_orbiter_recursion(
 		int verbose_level);
 static void node_type_as_string(
 		shared_ptr<irtree_node> current_node, std::string &node_type_as_string);
+static void handle_unary_negate_node(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		unary_negate_node *node,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level);
 static void handle_exponent_node(
 		expression_parser_sajeeb *root,
 		expression_parser::syntax_tree *Tree,
@@ -58,25 +64,23 @@ static void handle_exponent_node(
 static void collect_factors(
 		expression_parser_sajeeb *root,
 		expression_parser::syntax_tree *Tree,
-		//int &idx,
 		non_terminal_node *current_node,
 		expression_parser::syntax_tree_node *current_node_copy,
 		int verbose_level);
 static void collect_summands(
 		expression_parser_sajeeb *root,
 		expression_parser::syntax_tree *Tree,
-		//int &idx,
 		plus_node *current_node,
 		expression_parser::syntax_tree_node *current_node_copy,
 		int verbose_level);
+#if 0
 static void collect_unary_negate_node(
 		expression_parser_sajeeb *root,
 		expression_parser::syntax_tree *Tree,
-		//int &idx,
 		const shared_ptr<irtree_node>& child,
 		expression_parser::syntax_tree_node *current_node_copy,
 		int verbose_level);
-
+#endif
 
 
 #if 0
@@ -135,6 +139,7 @@ expression_parser_sajeeb::~expression_parser_sajeeb()
 {
 }
 
+static int stage_counter = 0;
 
 void expression_parser_sajeeb::init_formula(
 		expression_parser::formula *Formula,
@@ -221,6 +226,18 @@ void expression_parser_sajeeb::init_formula(
 				"Parsing " << Formula->name_of_formula << " finished" << endl;
 	}
 
+	{
+		string prefix;
+
+		prefix = "./sajeeb_tree" + std::to_string(stage_counter) + ".tex";
+		{
+		ofstream ost(prefix);
+
+		dispatcher::visit(PD->ir_tree_root, ir_tree_latex_visitor_simple_tree(ost));
+		}
+
+		stage_counter++;
+	}
 
 	if (f_v) {
 		cout << "expression_parser_sajeeb::init_formula "
@@ -809,11 +826,13 @@ void expression_parser_sajeeb::multiply(
 
 
 	if (f_v) {
-		cout << "expression_parser_sajeeb::multiply before delete [] Ir_tree_root" << endl;
+		cout << "expression_parser_sajeeb::multiply "
+				"before delete [] Ir_tree_root" << endl;
 	}
 	//delete [] Ir_tree_root;
 	if (f_v) {
-		cout << "expression_parser_sajeeb::multiply after delete [] Ir_tree_root" << endl;
+		cout << "expression_parser_sajeeb::multiply "
+				"after delete [] Ir_tree_root" << endl;
 	}
 
 	if (f_v) {
@@ -972,15 +991,15 @@ static void convert_to_orbiter_recursion(
 
 		if (f_v) {
 			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
-					"before current_node_copy->init_empty_terminal_node_int" << endl;
+					"before current_node_copy->init_terminal_node_int" << endl;
 		}
-		current_node_copy->init_empty_terminal_node_int(
+		current_node_copy->init_terminal_node_int(
 				Tree,
 				value,
 				verbose_level);
 		if (f_v) {
 			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
-					"before current_node_copy->init_empty_terminal_node_int" << endl;
+					"before current_node_copy->init_terminal_node_int" << endl;
 		}
 
 	}
@@ -1002,16 +1021,16 @@ static void convert_to_orbiter_recursion(
 
 		if (f_v) {
 			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
-					"before current_node_copy->init_empty_terminal_node_text" << endl;
+					"before current_node_copy->init_terminal_node_text" << endl;
 		}
-		current_node_copy->init_empty_terminal_node_text(
+		current_node_copy->init_terminal_node_text(
 				Tree,
 				name,
 				verbose_level);
 
 		if (f_v) {
 			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
-					"before current_node_copy->init_empty_terminal_node_text" << endl;
+					"before current_node_copy->init_terminal_node_text" << endl;
 		}
 
 	}
@@ -1021,70 +1040,21 @@ static void convert_to_orbiter_recursion(
 			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE" << endl;
 		}
 
-		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE "
-					"before current_node_copy->init_empty_multiplication_node" << endl;
-		}
-		current_node_copy->init_empty_multiplication_node(
-				Tree,
-				verbose_level);
-
-		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE "
-					"after current_node_copy->init_empty_multiplication_node" << endl;
-		}
-
 		unary_negate_node *node = static_cast<unary_negate_node *>(current_node.get());
 
-		int value_minus_one;
-
-		value_minus_one = Tree->Fq->negate(1);
-
 		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE "
-					"before current_node_copy->add_numerical_factor "
-					"value_minus_one=" << value_minus_one << endl;
-		}
-		current_node_copy->add_numerical_factor(
-				value_minus_one, verbose_level);
-		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE "
-					"after current_node_copy->add_numerical_factor "
-					"value_minus_one=" << value_minus_one << endl;
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE before handle_unary_negate_node" << endl;
 		}
 
-
-		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE "
-					"before current_node_copy->add_empty_node" << endl;
-		}
-		current_node_copy->add_empty_node(Tree,
-				verbose_level);
-		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE "
-					"after current_node_copy->add_empty_node" << endl;
-		}
-
-
-		shared_ptr<irtree_node> sub_node;
-
-		sub_node = (static_cast<non_terminal_node *>(current_node.get()))->children.front();
-
-		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE "
-					"before convert_to_orbiter_recursion" << endl;
-		}
-
-		convert_to_orbiter_recursion(
+		handle_unary_negate_node(
 				root,
 				Tree,
-				sub_node,
-				current_node_copy->Nodes[current_node_copy->nb_nodes - 1],
+				node,
+				current_node_copy,
 				verbose_level);
 
 		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE "
-					"after convert_to_orbiter_recursion" << endl;
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion UNARY_NEGATE_NODE after handle_unary_negate_node" << endl;
 		}
 
 
@@ -1124,7 +1094,8 @@ static void convert_to_orbiter_recursion(
 		cout << "unknown node type: " << s << endl;
 
 		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion unknown node type " << s << endl;
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
+					"unknown node type " << s << endl;
 		}
 
 		exit(1);
@@ -1173,6 +1144,89 @@ static void node_type_as_string(shared_ptr<irtree_node> current_node, std::strin
 
 }
 
+static void handle_unary_negate_node(
+		expression_parser_sajeeb *root,
+		expression_parser::syntax_tree *Tree,
+		unary_negate_node *node,
+		expression_parser::syntax_tree_node *current_node_copy,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "handle_unary_negate_node" << endl;
+	}
+
+	if (f_v) {
+		cout << "handle_unary_negate_node "
+				"before current_node_copy->init_empty_multiplication_node" << endl;
+	}
+	current_node_copy->init_empty_multiplication_node(
+			Tree,
+			verbose_level);
+
+	if (f_v) {
+		cout << "handle_unary_negate_node "
+				"after current_node_copy->init_empty_multiplication_node" << endl;
+	}
+
+
+	int value_minus_one;
+
+	value_minus_one = Tree->Fq->negate(1);
+
+	if (f_v) {
+		cout << "handle_unary_negate_node "
+				"before current_node_copy->add_numerical_factor "
+				"value_minus_one=" << value_minus_one << endl;
+	}
+	current_node_copy->add_numerical_factor(
+			value_minus_one, verbose_level);
+	if (f_v) {
+		cout << "handle_unary_negate_node "
+				"after current_node_copy->add_numerical_factor "
+				"value_minus_one=" << value_minus_one << endl;
+	}
+
+
+	if (f_v) {
+		cout << "handle_unary_negate_node "
+				"before current_node_copy->add_empty_node" << endl;
+	}
+	current_node_copy->add_empty_node(Tree,
+			verbose_level);
+	if (f_v) {
+		cout << "handle_unary_negate_node "
+				"after current_node_copy->add_empty_node" << endl;
+	}
+
+
+	shared_ptr<irtree_node> sub_node;
+
+	sub_node = node->children.front();
+
+	if (f_v) {
+		cout << "handle_unary_negate_node "
+				"before convert_to_orbiter_recursion" << endl;
+	}
+
+	convert_to_orbiter_recursion(
+			root,
+			Tree,
+			sub_node,
+			current_node_copy->Nodes[current_node_copy->nb_nodes - 1],
+			verbose_level);
+
+	if (f_v) {
+		cout << "handle_unary_negate_node "
+				"after convert_to_orbiter_recursion" << endl;
+	}
+
+	if (f_v) {
+		cout << "handle_unary_negate_node done" << endl;
+	}
+}
+
 static void handle_exponent_node(
 		expression_parser_sajeeb *root,
 		expression_parser::syntax_tree *Tree,
@@ -1206,6 +1260,16 @@ static void handle_exponent_node(
 		cnt++;
 	}
 
+	string t1, t2;
+
+
+	node_type_as_string(child1, t1);
+	node_type_as_string(child2, t2);
+
+	if (f_v) {
+		cout << "handle_exponent_node type1=" << t1 << " type2=" << t2 << endl;
+	}
+
 	if (child1.get()->type == irtree_node::node_type::PARAMETER_NODE &&
 			child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
 
@@ -1228,33 +1292,16 @@ static void handle_exponent_node(
 
 		if (f_v) {
 			cout << "handle_exponent_node before "
-					"current_node_copy->init_empty_terminal_node_text_with_exponent "
+					"current_node_copy->init_terminal_node_text_with_exponent "
 					"factor=" << factor << " exponent=" << exp << endl;
 		}
-		current_node_copy->init_empty_terminal_node_text_with_exponent(
+		current_node_copy->init_terminal_node_text_with_exponent(
 						Tree, factor, exp /* exponent */, verbose_level);
 		if (f_v) {
 			cout << "handle_exponent_node after "
-					"current_node_copy->init_empty_terminal_node_text_with_exponent "
+					"current_node_copy->init_terminal_node_text_with_exponent "
 					"factor=" << factor << " exponent=" << exp << endl;
 		}
-
-#if 0
-		if (f_v) {
-			cout << "handle_exponent_node before "
-					"current_node_copy->add_factor factor=" << factor << endl;
-		}
-
-
-		current_node_copy->add_factor(
-				factor, value /* exponent */, verbose_level);
-
-		if (f_v) {
-			cout << "handle_exponent_node after "
-					"current_node_copy->add_factor factor=" << factor << endl;
-			cout << "collect_factors nb_nodes=" << current_node_copy->nb_nodes << endl;
-		}
-#endif
 
 	}
 	else if (child1.get()->type == irtree_node::node_type::VARIABLE_NODE &&
@@ -1279,31 +1326,17 @@ static void handle_exponent_node(
 
 		if (f_v) {
 			cout << "handle_exponent_node before "
-					"current_node_copy->init_empty_terminal_node_text_with_exponent "
+					"current_node_copy->init_terminal_node_text_with_exponent "
 					"factor=" << factor << " exponent=" << exp << endl;
 		}
-		current_node_copy->init_empty_terminal_node_text_with_exponent(
+		current_node_copy->init_terminal_node_text_with_exponent(
 						Tree, factor, exp /* exponent */, verbose_level);
 		if (f_v) {
 			cout << "handle_exponent_node after "
-					"current_node_copy->init_empty_terminal_node_text_with_exponent "
+					"current_node_copy->init_terminal_node_text_with_exponent "
 					"factor=" << factor << " exponent=" << exp << endl;
 		}
 
-#if 0
-		if (f_v) {
-			cout << "handle_exponent_node before "
-					"current_node_copy->add_factor factor=" << factor << endl;
-		}
-		current_node_copy->add_factor(
-				factor, value /* exponent */, verbose_level);
-
-		if (f_v) {
-			cout << "handle_exponent_node after "
-					"current_node_copy->add_factor factor=" << factor << endl;
-			cout << "collect_factors nb_nodes=" << current_node_copy->nb_nodes << endl;
-		}
-#endif
 
 	}
 	else if (child1.get()->type == irtree_node::node_type::PLUS_NODE &&
@@ -1509,41 +1542,35 @@ static void collect_factors(
 			}
 
 
-			int value_minus_one;
-
-			value_minus_one = Tree->Fq->negate(1);
+			unary_negate_node *node = static_cast<unary_negate_node *>(child.get());
 
 			if (f_v) {
-				cout << "collect_factors UNARY_NEGATE_NODE "
-						"before current_node_copy->add_numerical_factor "
-						"value_minus_one=" << value_minus_one << endl;
+				cout << "collect_factors UNARY_NEGATE_NODE before "
+						"current_node_copy->add_empty_node" << endl;
 			}
-			current_node_copy->add_numerical_factor(
-					value_minus_one, verbose_level);
-			if (f_v) {
-				cout << "collect_factors UNARY_NEGATE_NODE "
-						"after current_node_copy->add_numerical_factor "
-						"value_minus_one=" << value_minus_one << endl;
-			}
-
-			non_terminal_node *child_node = static_cast<non_terminal_node *>(child.get());
+			current_node_copy->add_empty_node(
+					Tree, verbose_level);
 
 			if (f_v) {
-				cout << "collect_factors UNARY_NEGATE_NODE "
-						"before collect_factors" << endl;
+				cout << "collect_factors UNARY_NEGATE_NODE after "
+						"current_node_copy->add_empty_node" << endl;
+				cout << "collect_factors nb_nodes=" << current_node_copy->nb_nodes << endl;
 			}
-			collect_factors(
+
+			if (f_v) {
+				cout << "collect_factors UNARY_NEGATE_NODE before handle_unary_negate_node" << endl;
+			}
+
+			handle_unary_negate_node(
 					root,
 					Tree,
-					child_node,
-					current_node_copy,
+					node,
+					current_node_copy->Nodes[current_node_copy->nb_nodes - 1],
 					verbose_level);
+
 			if (f_v) {
-				cout << "collect_factors UNARY_NEGATE_NODE "
-						"after collect_factors" << endl;
+				cout << "collect_factors UNARY_NEGATE_NODE after handle_unary_negate_node" << endl;
 			}
-
-
 
 		}
 		else if (child.get()->type == irtree_node::node_type::EXPONENT_NODE) {
@@ -1663,6 +1690,7 @@ static void collect_summands(
 		plus_node *current_node,
 		expression_parser::syntax_tree_node *current_node_copy,
 		int verbose_level)
+// current_node_copy is addition node
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1825,23 +1853,43 @@ static void collect_summands(
 				cout << "collect_summands UNARY_NEGATE_NODE" << endl;
 			}
 
+			unary_negate_node *node = static_cast<unary_negate_node *>(child.get());
 
 			if (f_v) {
 				cout << "collect_summands UNARY_NEGATE_NODE "
-						"before collect_unary_negate_node" << endl;
+						"before current_node_copy->add_empty_node" << endl;
+			}
+			current_node_copy->add_empty_node(Tree,
+					verbose_level);
+			if (f_v) {
+				cout << "collect_summands UNARY_NEGATE_NODE "
+						"after current_node_copy->add_empty_node" << endl;
 			}
 
-			collect_unary_negate_node(
+
+			expression_parser::syntax_tree_node *fresh_node;
+
+			fresh_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
+
+
+			if (f_v) {
+				cout << "collect_summands UNARY_NEGATE_NODE "
+						"before handle_unary_negate_node" << endl;
+			}
+
+			handle_unary_negate_node(
 					root,
 					Tree,
-					child,
-					current_node_copy,
+					node,
+					fresh_node,
 					verbose_level);
 
 			if (f_v) {
 				cout << "collect_summands UNARY_NEGATE_NODE "
-						"after collect_unary_negate_node" << endl;
+						"after handle_unary_negate_node" << endl;
 			}
+
+
 
 
 		}
@@ -1863,253 +1911,6 @@ static void collect_summands(
 	}
 }
 
-
-static void collect_unary_negate_node(
-		expression_parser_sajeeb *root,
-		expression_parser::syntax_tree *Tree,
-		const shared_ptr<irtree_node>& child,
-		expression_parser::syntax_tree_node *current_node_copy,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "collect_unary_negate_node" << endl;
-	}
-
-	unary_negate_node *un_node = static_cast<unary_negate_node *>(child.get());
-
-	shared_ptr<irtree_node>& child1 = un_node->children.front();
-
-
-	if (child1.get()->type == irtree_node::node_type::MULTIPLY_NODE) {
-		multiply_node *node = static_cast<multiply_node *>(child1.get());
-
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, MULTIPLY_NODE "
-					"before current_node_copy->add_empty_multiplication_node" << endl;
-		}
-		current_node_copy->add_empty_multiplication_node(Tree,
-				verbose_level);
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, MULTIPLY_NODE "
-					"after current_node_copy->add_empty_multiplication_node" << endl;
-		}
-
-		expression_parser::syntax_tree_node *artificial_mult_node;
-
-
-		artificial_mult_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
-
-		int value_minus_one;
-
-		value_minus_one = Tree->Fq->negate(1);
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, MULTIPLY_NODE "
-					"before artificial_mult_node->add_numerical_factor "
-					"value_minus_one=" << value_minus_one << endl;
-		}
-		artificial_mult_node->add_numerical_factor(
-				value_minus_one, verbose_level);
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, MULTIPLY_NODE "
-					"after artificial_mult_node->add_numerical_factor "
-					"value_minus_one=" << value_minus_one << endl;
-		}
-
-
-		if (f_v) {
-			cout << "collect_unary_negate_node "
-					"UNARY_NEGATE_NODE, MULTIPLY_NODE "
-					"before collect_factors" << endl;
-		}
-		collect_factors(root, Tree, node,
-				artificial_mult_node,
-				verbose_level);
-		if (f_v) {
-			cout << "collect_unary_negate_node "
-					"UNARY_NEGATE_NODE, MULTIPLY_NODE "
-					"after collect_factors" << endl;
-		}
-	}
-	else if (child1.get()->type == irtree_node::node_type::PARAMETER_NODE) {
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE child is PARAMETER_NODE" << endl;
-		}
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
-					"before current_node_copy->add_empty_multiplication_node" << endl;
-		}
-		current_node_copy->add_empty_multiplication_node(Tree,
-				verbose_level);
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
-					"after current_node_copy->add_empty_multiplication_node" << endl;
-		}
-
-		expression_parser::syntax_tree_node *artificial_mult_node;
-
-
-		artificial_mult_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
-
-
-		int value_minus_one;
-
-		value_minus_one = Tree->Fq->negate(1);
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
-					"before artificial_mult_node->add_numerical_factor "
-					"value_minus_one=" << value_minus_one << endl;
-		}
-		artificial_mult_node->add_numerical_factor(
-				value_minus_one, verbose_level);
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
-					"after artificial_mult_node->add_numerical_factor "
-					"value_minus_one=" << value_minus_one << endl;
-		}
-
-		parameter_node *node = static_cast<parameter_node *>(child1.get());
-
-		std::string parameter_value;
-
-		parameter_value.assign(node->name);
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
-					"before artificial_mult_node->add_factor "
-					"parameter_value=" << parameter_value << endl;
-		}
-
-		artificial_mult_node->add_factor(
-				parameter_value, 1 /* exponent */, verbose_level);
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PARAMETER_NODE "
-					"after artificial_mult_node->add_factor "
-					"parameter_value=" << parameter_value << endl;
-		}
-
-	}
-	else if (child1.get()->type == irtree_node::node_type::PLUS_NODE) {
-		plus_node *node = static_cast<plus_node *>(child1.get());
-
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
-					"before current_node_copy->add_empty_multiplication_node" << endl;
-		}
-		current_node_copy->add_empty_multiplication_node(Tree,
-				verbose_level);
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
-					"after current_node_copy->add_empty_multiplication_node" << endl;
-		}
-
-		expression_parser::syntax_tree_node *artificial_mult_node;
-
-
-		artificial_mult_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
-
-
-		int value_minus_one;
-
-		value_minus_one = Tree->Fq->negate(1);
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
-					"before artificial_mult_node->add_numerical_factor "
-					"value_minus_one=" << value_minus_one << endl;
-		}
-		artificial_mult_node->add_numerical_factor(
-				value_minus_one, verbose_level);
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
-					"after artificial_mult_node->add_numerical_factor "
-					"value_minus_one=" << value_minus_one << endl;
-		}
-
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
-					"before artificial_mult_node->add_empty_plus_node_with_exponent" << endl;
-		}
-		artificial_mult_node->add_empty_plus_node_with_exponent(
-				Tree, 1, verbose_level);
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
-					"after artificial_mult_node->add_empty_plus_node_with_exponent" << endl;
-		}
-
-		expression_parser::syntax_tree_node *artificial_plus_node;
-
-
-		artificial_plus_node = artificial_mult_node->Nodes[artificial_mult_node->nb_nodes - 1];
-
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
-					"before collect_summands" << endl;
-		}
-		collect_summands(root, Tree, node,
-				artificial_plus_node,
-				verbose_level);
-		if (f_v) {
-			cout << "collect_unary_negate_node UNARY_NEGATE_NODE, PLUS_NODE "
-					"after collect_summands" << endl;
-		}
-	}
-	else if (child1.get()->type == irtree_node::node_type::NUMBER_NODE) {
-		if (f_v) {
-			cout << "collect_unary_negate_node NUMBER_NODE" << endl;
-		}
-		number_node *node = static_cast<number_node *>(child1.get());
-		int value;
-
-		value = node->value;
-
-		current_node_copy->type = operation_type_nothing;
-
-		current_node_copy->f_has_monomial = false;
-		current_node_copy->f_has_minus = false;
-
-		if (f_v) {
-			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
-					"NUMBER_NODE value = " << value << endl;
-		}
-
-		current_node_copy->f_terminal = true;
-		current_node_copy->T = NEW_OBJECT(expression_parser::syntax_tree_node_terminal);
-
-		current_node_copy->T->f_int = true;
-		current_node_copy->T->value_int = Tree->Fq->negate(value);
-
-	}
-	else {
-		cout << "child of unary_negate_node is not of type "
-				"MULTIPLY_NODE or PARAMETER_NODE or PLUS_NODE or NUMBER_NODE" << endl;
-
-		string s;
-
-		node_type_as_string(child1, s);
-		cout << "unknown node child1 of type: " << s << endl;
-
-
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "collect_unary_negate_node done" << endl;
-	}
-
-}
 
 
 

@@ -1793,6 +1793,10 @@ public:
 			std::string &label_txt,
 			std::string &label_tex,
 			int q, int ocn, int f_embedded, int verbose_level);
+	void make_latex_friendly_vector(
+			std::vector<std::string> &S, int verbose_level);
+	void make_latex_friendly_string(
+			std::string &in, std::string &out, int verbose_level);
 
 
 };
@@ -1849,6 +1853,9 @@ public:
 	int f_simplify;
 	std::string simplify_source;
 
+	int f_expand;
+	std::string expand_source;
+
 	int f_right_nullspace;
 	std::string right_nullspace_source;
 
@@ -1865,7 +1872,24 @@ public:
 	int f_stack_matrices_z_shape;
 	std::string stack_matrices_label;
 
+	int f_multiply_2x2_from_the_left;
+	std::string multiply_2x2_from_the_left_source;
+	std::string multiply_2x2_from_the_left_A2;
+	int multiply_2x2_from_the_left_i;
+	int multiply_2x2_from_the_left_j;
 
+	int f_matrix_entry;
+	std::string matrix_entry_source;
+	int matrix_entry_i;
+	int matrix_entry_j;
+
+	int f_collect;
+	std::string collect_source;
+	std::string collect_by;
+
+	int f_do_not_simplify;
+
+	int f_write_trees_during_expand;
 
 	symbolic_object_builder_description();
 	~symbolic_object_builder_description();
@@ -1904,31 +1928,55 @@ public:
 	~symbolic_object_builder();
 	void init(
 			symbolic_object_builder_description *Descr,
+			std::string &label,
 			int verbose_level);
 	void do_determinant(
 			symbolic_object_builder_description *Descr,
+			std::string &label,
 			int verbose_level);
 	void do_characteristic_polynomial(
 			symbolic_object_builder_description *Descr,
+			std::string &label,
 			int verbose_level);
 	void do_substitute(
 			symbolic_object_builder_description *Descr,
+			std::string &label,
 			int verbose_level);
 	void do_simplify(
 			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_expand(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
 			int verbose_level);
 	void do_right_nullspace(
 			symbolic_object_builder_description *Descr,
+			std::string &label,
 			int verbose_level);
 	void do_minor(
 			symbolic_object_builder_description *Descr,
 			int minor_i, int minor_j,
+			std::string &label,
 			int verbose_level);
 	void do_symbolic_nullspace(
 			symbolic_object_builder_description *Descr,
+			std::string &label,
 			int verbose_level);
 	void do_stack(
 			symbolic_object_builder_description *Descr,
+			int verbose_level);
+	void do_multiply_2x2_from_the_left(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_matrix_entry(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_collect(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
 			int verbose_level);
 	void multiply_terms(
 			expression_parser::formula **terms,

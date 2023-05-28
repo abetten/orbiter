@@ -179,7 +179,7 @@ public:
 
 
 
-//! a vector of symbolic objects which can be used to create matrices and vectors
+//! matrices and vectors of symbolic objects
 
 
 class formula_vector {
@@ -219,41 +219,78 @@ public:
 			std::vector<std::string> &S, std::ostream &ost);
 	void print_vector(
 			std::vector<std::string> &S, std::ostream &ost);
+	void print_vector_latex(
+			std::vector<std::string> &S, std::ostream &ost);
+	void print_latex(std::ostream &ost);
 	void make_A_minus_lambda_Identity(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
 			std::string &variable,
+			std::string &label_txt,
+			std::string &label_tex,
 			int verbose_level);
 	void substitute(formula_vector *Source,
 			formula_vector *Target,
 			std::string &substitution_variables,
+			std::string &label_txt,
+			std::string &label_tex,
 			int verbose_level);
 	void simplify(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
+			std::string &label_txt,
+			std::string &label_tex,
+			int verbose_level);
+	void expand(
+			formula_vector *A,
+			field_theory::finite_field *Fq,
+			std::string &label_txt,
+			std::string &label_tex,
+			int f_write_trees,
 			int verbose_level);
 	void characteristic_polynomial(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
 			std::string &variable,
+			std::string &label_txt,
+			std::string &label_tex,
 			int verbose_level);
 	void determinant(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
+			std::string &label_txt,
+			std::string &label_tex,
 			int verbose_level);
 	void right_nullspace(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
+			std::string &label_txt,
+			std::string &label_tex,
 			int verbose_level);
 	void minor(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
 			int i, int j,
+			std::string &label_txt,
+			std::string &label_tex,
 			int verbose_level);
 	void symbolic_nullspace(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
+			std::string &label_txt,
+			std::string &label_tex,
 			int verbose_level);
+	void multiply_2by2_from_the_left(
+			formula_vector *M,
+			formula_vector *A2,
+			int i, int j,
+			field_theory::finite_field *Fq,
+			std::string &label_txt,
+			std::string &label_tex,
+			int verbose_level);
+	void latex_tree(int verbose_level);
+	void collect_variables(int verbose_level);
+	void print_variables(std::ostream &ost);
 
 };
 
@@ -294,10 +331,14 @@ public:
 
 	formula();
 	~formula();
-	std::string string_representation(int verbose_level);
+	std::string string_representation(int f_latex, int verbose_level);
 	std::string string_representation_Sajeeb();
-	std::string string_representation_formula(int verbose_level);
+	std::string string_representation_formula(int f_latex, int verbose_level);
 	void print(std::ostream &ost);
+	void init_empty_formula(
+			std::string &label, std::string &label_tex,
+			field_theory::finite_field *Fq,
+			int verbose_level);
 	void init_formula(
 			std::string &label, std::string &label_tex,
 			std::string &managed_variables, std::string &formula_text,
@@ -340,8 +381,28 @@ public:
 	void copy_to(
 			formula *output,
 			int verbose_level);
+	void make_linear_combination(
+			formula *input_1a,
+			formula *input_1b,
+			formula *input_2a,
+			formula *input_2b,
+			int verbose_level);
 	void simplify(
 			int verbose_level);
+	void expand_in_place(int f_write_trees,
+			int verbose_level);
+	int highest_order_term(
+			std::string &variable, int verbose_level);
+	void latex_tree(
+			std::string &label, int verbose_level);
+	void latex_tree_split(
+			std::string &label, int split_level, int split_mod,
+			int verbose_level);
+	void collect_variables(int verbose_level);
+	void collect_monomial_terms(
+			data_structures::int_matrix *&I, int *&Coeff,
+			int verbose_level);
+
 };
 
 
@@ -454,15 +515,15 @@ public:
 			std::string &factor, int exponent, int verbose_level);
 	void add_summand(
 			std::string &summand, int verbose_level);
-	void init_empty_terminal_node_int(
+	void init_terminal_node_int(
 			syntax_tree *Tree,
 			int value,
 			int verbose_level);
-	void init_empty_terminal_node_text(
+	void init_terminal_node_text(
 			syntax_tree *Tree,
 			std::string &value_text,
 			int verbose_level);
-	void init_empty_terminal_node_text_with_exponent(
+	void init_terminal_node_text_with_exponent(
 			syntax_tree *Tree,
 			std::string &value_text,
 			int exponent,
@@ -492,7 +553,9 @@ public:
 	int is_homogeneous(
 			int &degree, int verbose_level);
 	void print_subtree_to_vector(
-			std::vector<std::string> &rep, int verbose_level);
+			std::vector<std::string> &rep,
+			int f_latex,
+			int verbose_level);
 	void print_subtree(
 			std::ostream &ost);
 	void print_subtree_easy(
@@ -503,6 +566,14 @@ public:
 			std::ostream &ost);
 	int is_mult_node();
 	int is_add_node();
+	int is_int_node();
+	int is_text_node();
+	int is_monomial();
+	int is_this_variable(std::string &variable);
+	int highest_order_term(std::string &variable, int verbose_level);
+	int exponent_of_variable(std::string &variable, int verbose_level);
+	int exponent_of_variable_destructive(std::string &variable);
+	int get_exponent();
 	int evaluate(
 			std::map<std::string, std::string> &symbol_table,
 			int verbose_level);
@@ -529,16 +600,30 @@ public:
 			int verbose_level);
 	void simplify(
 			int verbose_level);
+	void expand_in_place(
+			int verbose_level);
+	void expand_in_place_handle_exponents(
+			int verbose_level);
 	void simplify_exponents(int verbose_level);
+	void sort_terms(int verbose_level);
 	void collect_like_terms(int verbose_level);
+	void collect_monomial_terms(
+			data_structures::int_matrix *&I, int *&Coeff,
+			int verbose_level);
+	void collect_terms_and_coefficients(
+			data_structures::int_matrix *&I, int *&Coeff,
+			int verbose_level);
 	void simplify_constants(int verbose_level);
 	void flatten(
 			int verbose_level);
+	void flatten_at(int i, int verbose_level);
 	void display_children_by_type();
 	void delete_all_but_one_child(int i, int verbose_level);
 	void delete_one_child(int i, int verbose_level);
 	int is_constant_one(int verbose_level);
 	int is_constant_zero(int verbose_level);
+	void collect_variables(int verbose_level);
+	int terminal_node_get_variable_index();
 
 };
 
@@ -560,16 +645,21 @@ public:
 
 	syntax_tree_node *Root;
 
+	std::vector<std::string> variables;
+
 	syntax_tree();
 	~syntax_tree();
 
 	void init(
-			field_theory::finite_field *Fq, int verbose_level);
+			field_theory::finite_field *Fq,
+			int verbose_level);
 	void init_root_node(int verbose_level);
 	void init_int(
-			field_theory::finite_field *Fq, int value, int verbose_level);
+			field_theory::finite_field *Fq, int value,
+			int verbose_level);
 	void print_to_vector(
-			std::vector<std::string> &rep, int verbose_level);
+			std::vector<std::string> &rep, int f_latex,
+			int verbose_level);
 	void print(std::ostream &ost);
 	void print_easy(std::ostream &ost);
 	void print_monomial(
@@ -586,7 +676,7 @@ public:
 	void substitute(
 			std::vector<std::string> &variables,
 			formula *Target,
-			formula **S,
+			formula **Substitutions,
 			syntax_tree *Output_tree,
 			syntax_tree_node *Output_root_node,
 			int verbose_level);
@@ -596,6 +686,10 @@ public:
 			int verbose_level);
 	void simplify(
 			int verbose_level);
+	void expand_in_place(
+			int verbose_level);
+	int highest_order_term(
+			std::string &variable, int verbose_level);
 	void multiply_by_minus_one(
 			field_theory::finite_field *Fq,
 			int verbose_level);
@@ -608,11 +702,59 @@ public:
 			syntax_tree_node *Node1,
 			syntax_tree_node *Node2,
 			int verbose_level);
+	void make_linear_combination(
+			syntax_tree_node *Node1a,
+			syntax_tree_node *Node1b,
+			syntax_tree_node *Node2a,
+			syntax_tree_node *Node2b,
+			int verbose_level);
+	// Creates Output_node = Node1a * Node1b + Node2a * Node2b
+	// All input nodes are copied.
+	void latex_tree(
+			std::string &name, int verbose_level);
+	void latex_tree_split(
+			std::string &name, int split_level, int split_mod,
+			int verbose_level);
+	void collect_variables(
+			int verbose_level);
+	void print_variables(std::ostream &ost,
+			int verbose_level);
+	void print_variables_in_line(std::ostream &ost);
+	int find_variable(
+			std::string var,
+			int verbose_level);
+	void add_variable(std::string &var);
 
 };
 
 
 
+class syntax_tree_latex {
+public:
+    std::ostream* output_stream;
+    std::string indentation;
+    std::string delimiter;
+    int f_split;
+    int split_level;
+    int split_r;
+    int split_mod;
+
+    void latex_tree(
+    		std::string &name, syntax_tree_node *Root,
+			int verbose_level);
+    void latex_tree_split(
+    		std::string &name, syntax_tree_node *Root,
+			int split_level, int split_mod,
+			int verbose_level);
+    void add_prologue();
+    void add_epilogue();
+    void add_indentation();
+    void remove_indentation();
+    void latex_tree_recursion(
+    		syntax_tree_node *node, int depth,
+			int verbose_level);
+
+};
 
 
 

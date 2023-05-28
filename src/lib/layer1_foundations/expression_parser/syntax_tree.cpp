@@ -36,7 +36,8 @@ syntax_tree::~syntax_tree()
 }
 
 void syntax_tree::init(
-		field_theory::finite_field *Fq, int verbose_level)
+		field_theory::finite_field *Fq,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -68,7 +69,8 @@ void syntax_tree::init_root_node(int verbose_level)
 }
 
 void syntax_tree::init_int(
-		field_theory::finite_field *Fq, int value, int verbose_level)
+		field_theory::finite_field *Fq, int value,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -81,8 +83,7 @@ void syntax_tree::init_int(
 	init_root_node(verbose_level);
 
 
-	//Root = NEW_OBJECT(syntax_tree_node);
-	Root->init_empty_terminal_node_int(
+	Root->init_terminal_node_int(
 			this,
 			value,
 			verbose_level);
@@ -94,7 +95,8 @@ void syntax_tree::init_int(
 
 
 void syntax_tree::print_to_vector(
-		std::vector<std::string> &rep, int verbose_level)
+		std::vector<std::string> &rep, int f_latex,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -102,7 +104,7 @@ void syntax_tree::print_to_vector(
 		cout << "syntax_tree::print_to_vector "
 				"before Root->print_subtree_to_vector" << endl;
 	}
-	Root->print_subtree_to_vector(rep, verbose_level);
+	Root->print_subtree_to_vector(rep, f_latex, verbose_level);
 	if (f_v) {
 		cout << "syntax_tree::print_to_vector "
 				"after Root->print_subtree_to_vector" << endl;
@@ -233,7 +235,7 @@ void syntax_tree::split_by_monomials(
 void syntax_tree::substitute(
 		std::vector<std::string> &variables,
 		formula *Target,
-		formula **S,
+		formula **Substitutions,
 		syntax_tree *Output_tree,
 		syntax_tree_node *Output_root_node,
 		int verbose_level)
@@ -246,14 +248,15 @@ void syntax_tree::substitute(
 
 
 	if (f_v) {
-		cout << "syntax_tree::substitute before Root->substitute" << endl;
+		cout << "syntax_tree::substitute "
+				"before Root->substitute" << endl;
 	}
 
 
 	Root->substitute(
 			variables,
 			Target,
-			S,
+			Substitutions,
 			this,
 			Output_tree,
 			Output_root_node,
@@ -261,7 +264,8 @@ void syntax_tree::substitute(
 
 
 	if (f_v) {
-		cout << "syntax_tree::substitute after Root->substitute" << endl;
+		cout << "syntax_tree::substitute "
+				"after Root->substitute" << endl;
 		cout << "syntax_tree::substitute Output_root_node=";
 		Output_root_node->print_subtree_easy(cout);
 		cout << endl;
@@ -319,6 +323,7 @@ void syntax_tree::simplify(
 		cout << "syntax_tree::simplify "
 				"before Root->simplify" << endl;
 	}
+
 	Root->simplify(
 			verbose_level);
 
@@ -332,6 +337,74 @@ void syntax_tree::simplify(
 	}
 }
 
+
+void syntax_tree::expand_in_place(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::expand_in_place" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "syntax_tree::expand_in_place "
+				"before Root->expand_in_place_handle_exponents" << endl;
+	}
+
+	Root->expand_in_place_handle_exponents(
+			verbose_level);
+
+	if (f_v) {
+		cout << "syntax_tree::expand_in_place "
+				"after Root->expand_in_place_handle_exponents" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "syntax_tree::expand_in_place "
+				"before Root->expand_in_place" << endl;
+	}
+
+	Root->expand_in_place(
+			verbose_level);
+
+	if (f_v) {
+		cout << "syntax_tree::expand_in_place "
+				"after Root->expand_in_place" << endl;
+	}
+
+	if (f_v) {
+		cout << "syntax_tree::expand_in_place done" << endl;
+	}
+}
+
+int syntax_tree::highest_order_term(
+		std::string &variable, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::highest_order_term" << endl;
+	}
+
+	int d;
+
+	if (f_v) {
+		cout << "syntax_tree::highest_order_term before Root->highest_order_term" << endl;
+	}
+	d = Root->highest_order_term(variable, verbose_level);
+	if (f_v) {
+		cout << "syntax_tree::highest_order_term after Root->highest_order_term" << endl;
+	}
+
+	if (f_v) {
+		cout << "syntax_tree::highest_order_term done" << endl;
+	}
+	return d;
+}
 
 void syntax_tree::multiply_by_minus_one(
 		field_theory::finite_field *Fq,
@@ -351,7 +424,8 @@ void syntax_tree::multiply_by_minus_one(
 
 	mult_node = NEW_OBJECT(syntax_tree_node);
 
-	mult_node->init_empty_multiplication_node(this, verbose_level);
+	mult_node->init_empty_multiplication_node(
+			this, verbose_level);
 
 	mult_node->add_numerical_factor(
 				minus_one, verbose_level);
@@ -563,6 +637,197 @@ int syntax_tree::compare_nodes(
 	return ret;
 }
 
+void syntax_tree::make_linear_combination(
+		syntax_tree_node *Node1a,
+		syntax_tree_node *Node1b,
+		syntax_tree_node *Node2a,
+		syntax_tree_node *Node2b,
+		int verbose_level)
+// Creates Root = Node1a * Node1b + Node2a * Node2b
+// All input nodes are copied.
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::make_linear_combination" << endl;
+	}
+
+	syntax_tree_node *add_node;
+	syntax_tree_node *mult_node1;
+	syntax_tree_node *mult_node2;
+
+
+	add_node = NEW_OBJECT(syntax_tree_node);
+
+	add_node->init_empty_plus_node_with_exponent(
+			this, 1 /* exponent */, verbose_level);
+
+
+	mult_node1 = NEW_OBJECT(syntax_tree_node);
+	mult_node2 = NEW_OBJECT(syntax_tree_node);
+
+
+	mult_node1->init_empty_multiplication_node(this, verbose_level);
+	mult_node2->init_empty_multiplication_node(this, verbose_level);
+
+
+	add_node->Nodes[add_node->nb_nodes++] = mult_node1;
+	add_node->Nodes[add_node->nb_nodes++] = mult_node2;
+
+
+	syntax_tree_node *Node1a_copy;
+	syntax_tree_node *Node1b_copy;
+	syntax_tree_node *Node2a_copy;
+	syntax_tree_node *Node2b_copy;
+
+	Node1a_copy = NEW_OBJECT(syntax_tree_node);
+	Node1b_copy = NEW_OBJECT(syntax_tree_node);
+	Node2a_copy = NEW_OBJECT(syntax_tree_node);
+	Node2b_copy = NEW_OBJECT(syntax_tree_node);
+
+	Node1a->copy_to(this, Node1a_copy, verbose_level);
+	Node1b->copy_to(this, Node1b_copy, verbose_level);
+	Node2a->copy_to(this, Node2a_copy, verbose_level);
+	Node2b->copy_to(this, Node2b_copy, verbose_level);
+
+	mult_node1->Nodes[mult_node1->nb_nodes++] = Node1a_copy;
+	mult_node1->Nodes[mult_node1->nb_nodes++] = Node1b_copy;
+
+	mult_node2->Nodes[mult_node2->nb_nodes++] = Node2a_copy;
+	mult_node2->Nodes[mult_node2->nb_nodes++] = Node2b_copy;
+
+
+	Root = add_node;
+
+
+	if (f_v) {
+		cout << "syntax_tree::make_linear_combination done" << endl;
+	}
+
+}
+
+
+
+
+void syntax_tree::latex_tree(
+		std::string &name, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::latex_tree" << endl;
+	}
+
+	syntax_tree_latex L;
+
+	L.latex_tree(name, Root, verbose_level);
+
+	if (f_v) {
+		cout << "syntax_tree::latex_tree done" << endl;
+	}
+}
+
+void syntax_tree::latex_tree_split(
+		std::string &name, int split_level, int split_mod,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::latex_tree_split" << endl;
+	}
+
+	syntax_tree_latex L;
+
+	L.latex_tree_split(name, Root,
+			split_level, split_mod,
+			verbose_level);
+
+	if (f_v) {
+		cout << "syntax_tree::latex_tree_split done" << endl;
+	}
+}
+
+void syntax_tree::collect_variables(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::collect_variables" << endl;
+	}
+
+	Root->collect_variables(verbose_level);
+
+
+	if (f_v) {
+		cout << "syntax_tree::collect_variables the variables are:" << endl;
+		print_variables(cout, verbose_level);
+	}
+
+
+
+	if (f_v) {
+		cout << "syntax_tree::collect_variables done" << endl;
+	}
+}
+
+void syntax_tree::print_variables(std::ostream &ost,
+		int verbose_level)
+{
+	int i;
+
+	for (i = 0; i < variables.size(); i++) {
+		ost << i << " : " << variables[i] << endl;
+	}
+}
+
+void syntax_tree::print_variables_in_line(std::ostream &ost)
+{
+	int i;
+
+	for (i = 0; i < variables.size(); i++) {
+		ost << variables[i];
+		if (i < variables.size() - 1) {
+			ost << ",";
+		}
+	}
+}
+
+int syntax_tree::find_variable(
+		std::string var,
+		int verbose_level)
+{
+	data_structures::string_tools String;
+
+
+	int i, cmp;
+
+	for (i = 0; i < variables.size(); i++) {
+		cmp = String.compare_string_string(variables[i], var);
+		if (cmp == 0) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void syntax_tree::add_variable(std::string &var)
+{
+	data_structures::string_tools String;
+	int cmp;
+	std::vector<std::string>::iterator it;
+
+
+	for (it = variables.begin(); it < variables.end(); it++) {
+		cmp = String.compare_string_string(*it, var);
+		if (cmp > 0) {
+			variables.insert(it, var);
+			return;
+		}
+	}
+	variables.push_back(var);
+}
 
 
 }}}

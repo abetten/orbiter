@@ -40,12 +40,13 @@ symbolic_object_builder::~symbolic_object_builder()
 
 void symbolic_object_builder::init(
 		symbolic_object_builder_description *Descr,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "symbolic_object_builder::init" << endl;
+		cout << "symbolic_object_builder::init label=" << label << endl;
 	}
 
 	symbolic_object_builder::Descr = Descr;
@@ -99,7 +100,7 @@ void symbolic_object_builder::init(
 					"before Formula_vector->init_from_text" << endl;
 		}
 		Formula_vector->init_from_text(
-				Descr->label_txt,
+				label /*Descr->label_txt*/,
 				Descr->label_tex,
 				Descr->text_txt,
 				Fq,
@@ -121,6 +122,7 @@ void symbolic_object_builder::init(
 
 		do_determinant(
 				Descr,
+				label,
 				verbose_level);
 
 
@@ -135,6 +137,7 @@ void symbolic_object_builder::init(
 
 		do_characteristic_polynomial(
 				Descr,
+				label,
 				verbose_level);
 
 
@@ -151,6 +154,7 @@ void symbolic_object_builder::init(
 
 		do_substitute(
 					Descr,
+					label,
 					verbose_level);
 
 
@@ -166,10 +170,29 @@ void symbolic_object_builder::init(
 
 		do_simplify(
 					Descr,
+					label,
 					verbose_level);
 
 		if (f_v) {
 			cout << "symbolic_object_builder::init -simplify finished" << endl;
+		}
+
+	}
+	else if (Descr->f_expand) {
+		if (f_v) {
+			cout << "symbolic_object_builder::init -expand"
+					<< " " << Descr->expand_source
+					<< endl;
+		}
+
+
+		do_expand(
+					Descr,
+					label,
+					verbose_level);
+
+		if (f_v) {
+			cout << "symbolic_object_builder::init -expand finished" << endl;
 		}
 
 	}
@@ -182,6 +205,7 @@ void symbolic_object_builder::init(
 
 		do_right_nullspace(
 					Descr,
+					label,
 					verbose_level);
 
 	}
@@ -197,6 +221,7 @@ void symbolic_object_builder::init(
 		do_minor(
 					Descr,
 					Descr->minor_i, Descr->minor_j,
+					label,
 					verbose_level);
 
 	}
@@ -210,6 +235,7 @@ void symbolic_object_builder::init(
 
 		do_symbolic_nullspace(
 					Descr,
+					label,
 					verbose_level);
 
 	}
@@ -224,9 +250,9 @@ void symbolic_object_builder::init(
 					verbose_level);
 
 	}
-	if (Descr->f_stack_matrices_horizontally) {
+	else if (Descr->f_stack_matrices_horizontally) {
 		if (f_v) {
-			cout << "symbolic_object_builder::init -f_stack_matrices_horizontally"
+			cout << "symbolic_object_builder::init -stack_matrices_horizontally"
 					<< " " << Descr->stack_matrices_label
 					<< endl;
 		}
@@ -234,9 +260,9 @@ void symbolic_object_builder::init(
 					Descr,
 					verbose_level);
 	}
-	if (Descr->f_stack_matrices_z_shape) {
+	else if (Descr->f_stack_matrices_z_shape) {
 		if (f_v) {
-			cout << "symbolic_object_builder::init -f_stack_matrices_z_shape"
+			cout << "symbolic_object_builder::init -stack_matrices_z_shape"
 					<< " " << Descr->stack_matrices_label
 					<< endl;
 		}
@@ -244,6 +270,47 @@ void symbolic_object_builder::init(
 					Descr,
 					verbose_level);
 	}
+
+	else if (Descr->f_multiply_2x2_from_the_left) {
+		if (f_v) {
+			cout << "symbolic_object_builder::init -multiply_2x2_from_the_left"
+					<< " " << Descr->multiply_2x2_from_the_left_source
+					<< " " << Descr->multiply_2x2_from_the_left_A2
+					<< " " << Descr->multiply_2x2_from_the_left_i
+					<< " " << Descr->multiply_2x2_from_the_left_j
+					<< endl;
+		}
+		do_multiply_2x2_from_the_left(
+					Descr,
+					label,
+					verbose_level);
+	}
+
+	else if (Descr->f_matrix_entry) {
+		if (f_v) {
+			cout << "symbolic_object_builder::init -matrix_entry"
+					<< " " << Descr->matrix_entry_source
+					<< endl;
+		}
+		do_matrix_entry(
+					Descr,
+					label,
+					verbose_level);
+	}
+
+	else if (Descr->f_collect) {
+		if (f_v) {
+			cout << "symbolic_object_builder::init -collect"
+					<< " " << Descr->collect_source
+					<< " " << Descr->collect_by
+					<< endl;
+		}
+		do_collect(
+					Descr,
+					label,
+					verbose_level);
+	}
+
 
 	if (Descr->f_file) {
 		if (f_v) {
@@ -258,21 +325,38 @@ void symbolic_object_builder::init(
 		cout << "symbolic_object_builder::init "
 				"before simplifying the formula vector" << endl;
 	}
-	expression_parser::formula_vector *old;
 
-	old = Formula_vector;
+	if (!Descr->f_do_not_simplify) {
+		expression_parser::formula_vector *old;
 
-	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+		old = Formula_vector;
 
-	Formula_vector->simplify(
-			old,
-			Fq,
-			verbose_level);
+		Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
 
-	FREE_OBJECT(old);
-	if (f_v) {
-		cout << "symbolic_object_builder::init "
-				"after simplifying the formula vector" << endl;
+		if (f_v) {
+			cout << "symbolic_object_builder::init "
+					"before Formula_vector->simplify label=" << label << endl;
+		}
+
+		Formula_vector->simplify(
+				old,
+				Fq,
+				label,
+				label,
+				verbose_level);
+
+		FREE_OBJECT(old);
+		if (f_v) {
+			cout << "symbolic_object_builder::init "
+					"after simplifying the formula vector" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "symbolic_object_builder::init "
+					"skipping simplification because of -do_not_simplify" << endl;
+
+		}
 	}
 
 	if (f_v) {
@@ -287,8 +371,13 @@ void symbolic_object_builder::init(
 
 
 		cout << "final tree:" << endl;
-		Formula_vector->print_formula(cout, 0 /*verbose_level*/);
+		Formula_vector->print_formula(cout, verbose_level);
 
+		Formula_vector->print_latex(cout);
+
+		//latex_split(std::string &name, int split_level, int split_mod, int verbose_level)
+
+		Formula_vector->latex_tree(verbose_level);
 	}
 
 
@@ -299,6 +388,7 @@ void symbolic_object_builder::init(
 
 void symbolic_object_builder::do_determinant(
 		symbolic_object_builder_description *Descr,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -321,6 +411,7 @@ void symbolic_object_builder::do_determinant(
 	Formula_vector->determinant(
 			O1->Formula_vector,
 			Fq,
+			label, label,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_determinant "
@@ -338,6 +429,7 @@ void symbolic_object_builder::do_determinant(
 
 void symbolic_object_builder::do_characteristic_polynomial(
 		symbolic_object_builder_description *Descr,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -385,6 +477,7 @@ void symbolic_object_builder::do_characteristic_polynomial(
 			O1->Formula_vector,
 			Fq,
 			variable,
+			label, label,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_characteristic_polynomial "
@@ -401,6 +494,7 @@ void symbolic_object_builder::do_characteristic_polynomial(
 
 void symbolic_object_builder::do_substitute(
 		symbolic_object_builder_description *Descr,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -422,9 +516,11 @@ void symbolic_object_builder::do_substitute(
 		cout << "symbolic_object_builder::do_substitute "
 				"before Formula_vector->substitute" << endl;
 	}
-	Formula_vector->substitute(O_source->Formula_vector,
+	Formula_vector->substitute(
+			O_source->Formula_vector,
 			O_target->Formula_vector,
 			Descr->substitute_variables,
+			label, label,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_substitute "
@@ -441,6 +537,7 @@ void symbolic_object_builder::do_substitute(
 
 void symbolic_object_builder::do_simplify(
 		symbolic_object_builder_description *Descr,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -463,6 +560,7 @@ void symbolic_object_builder::do_simplify(
 	Formula_vector->simplify(
 			O_source->Formula_vector,
 			Fq,
+			label, label,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_simplify "
@@ -477,8 +575,51 @@ void symbolic_object_builder::do_simplify(
 
 }
 
+void symbolic_object_builder::do_expand(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_expand" << endl;
+	}
+
+	data_structures::symbolic_object_builder *O_source;
+
+	O_source = Get_symbol(Descr->expand_source);
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_expand "
+				"before Formula_vector->expand" << endl;
+	}
+	Formula_vector->expand(
+			O_source->Formula_vector,
+			Fq,
+			label, label,
+			Descr->f_write_trees_during_expand,
+			verbose_level);
+	if (f_v) {
+		cout << "symbolic_object_builder::do_expand "
+				"after Formula_vector->expand" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_expand done" << endl;
+	}
+
+}
+
+
 void symbolic_object_builder::do_right_nullspace(
 		symbolic_object_builder_description *Descr,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -502,6 +643,7 @@ void symbolic_object_builder::do_right_nullspace(
 	Formula_vector->right_nullspace(
 			O_source->Formula_vector,
 			Fq,
+			label, label,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_right_nullspace "
@@ -518,6 +660,7 @@ void symbolic_object_builder::do_right_nullspace(
 void symbolic_object_builder::do_minor(
 		symbolic_object_builder_description *Descr,
 		int minor_i, int minor_j,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -542,6 +685,7 @@ void symbolic_object_builder::do_minor(
 			O_source->Formula_vector,
 			Fq,
 			minor_i, minor_j,
+			label, label,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_minor "
@@ -557,6 +701,7 @@ void symbolic_object_builder::do_minor(
 
 void symbolic_object_builder::do_symbolic_nullspace(
 		symbolic_object_builder_description *Descr,
+		std::string &label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -580,6 +725,7 @@ void symbolic_object_builder::do_symbolic_nullspace(
 	Formula_vector->symbolic_nullspace(
 			O_source->Formula_vector,
 			Fq,
+			label, label,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_symbolic_nullspace "
@@ -734,6 +880,217 @@ void symbolic_object_builder::do_stack(
 	}
 }
 
+void symbolic_object_builder::do_multiply_2x2_from_the_left(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left" << endl;
+	}
+
+
+	data_structures::symbolic_object_builder *O_source;
+	data_structures::symbolic_object_builder *O_A2;
+
+	O_source = Get_symbol(Descr->multiply_2x2_from_the_left_source);
+	O_A2 = Get_symbol(Descr->multiply_2x2_from_the_left_A2);
+
+	int i, j;
+
+	i = Descr->multiply_2x2_from_the_left_i;
+	j = Descr->multiply_2x2_from_the_left_j;
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+	int len;
+
+	if (!O_source->Formula_vector->f_matrix) {
+		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left "
+				"input M must be a matrix" << endl;
+		exit(1);
+	}
+	if (!O_A2->Formula_vector->f_matrix) {
+		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left "
+				"input A2 must be a matrix" << endl;
+		exit(1);
+	}
+
+	len = O_source->Formula_vector->nb_rows * O_source->Formula_vector->nb_cols;
+
+	Formula_vector->init_and_allocate(
+				label, label,
+				len, verbose_level);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left "
+				"before Formula_vector->multiply_2by2_from_the_left" << endl;
+	}
+	Formula_vector->multiply_2by2_from_the_left(
+			O_source->Formula_vector,
+			O_A2->Formula_vector,
+			i, j,
+			O_source->Fq,
+			label, label,
+			verbose_level);
+	if (f_v) {
+		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left "
+				"after Formula_vector->multiply_2by2_from_the_left" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left done" << endl;
+	}
+}
+
+void symbolic_object_builder::do_matrix_entry(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_matrix_entry" << endl;
+	}
+
+	data_structures::symbolic_object_builder *O_source;
+
+	O_source = Get_symbol(Descr->matrix_entry_source);
+
+	int i, j;
+
+	i = Descr->matrix_entry_i;
+	j = Descr->matrix_entry_j;
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+	int len;
+
+	if (!O_source->Formula_vector->f_matrix) {
+		cout << "symbolic_object_builder::do_matrix_entry "
+				"input M must be a matrix" << endl;
+		exit(1);
+	}
+	int m, n;
+
+	m = O_source->Formula_vector->nb_rows;
+	n = O_source->Formula_vector->nb_cols;
+
+	len = 1;
+
+	Formula_vector->init_and_allocate(
+				label, label,
+				len, verbose_level);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_matrix_entry "
+				"before O_source->Formula_vector->V[i * n + j].copy_to" << endl;
+	}
+	O_source->Formula_vector->V[i * n + j].copy_to(
+			&Formula_vector->V[0],
+			verbose_level);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_matrix_entry "
+				"after O_source->Formula_vector->V[i * n + j].copy_to" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_matrix_entry done" << endl;
+	}
+}
+
+
+void symbolic_object_builder::do_collect(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect" << endl;
+	}
+
+	data_structures::symbolic_object_builder *O_source;
+
+	O_source = Get_symbol(Descr->collect_source);
+
+	if (O_source->Formula_vector->len != 1) {
+		cout << "symbolic_object_builder::do_collect "
+				"input must be a singleton" << endl;
+		exit(1);
+	}
+
+
+
+	int d;
+
+	string variable;
+
+	variable = Descr->collect_by;
+
+	d = O_source->Formula_vector->V[0].highest_order_term(
+			variable, verbose_level);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect highest_order_term = " << d << endl;
+	}
+
+	int len = d + 1;
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+
+	Formula_vector->init_and_allocate(
+				label, label,
+				len, verbose_level);
+
+	int i, j, j1;
+
+	for (i = 0; i < len; i++) {
+		Formula_vector->V[i].init_empty_formula(
+				label, label /*label_tex*/, Fq, verbose_level);
+	}
+
+
+	if (O_source->Formula_vector->V[0].tree->Root->type != operation_type_add) {
+		cout << "symbolic_object_builder::do_collect "
+				"root node must be addition node" << endl;
+		exit(1);
+	}
+	for (i = 0; i < O_source->Formula_vector->V[0].tree->Root->nb_nodes; i++) {
+
+		j = O_source->Formula_vector->V[0].tree->Root->Nodes[i]->exponent_of_variable(
+				variable, verbose_level);
+
+
+		expression_parser::syntax_tree_node *Output_node;
+
+		Output_node = NEW_OBJECT(expression_parser::syntax_tree_node);
+
+		O_source->Formula_vector->V[0].tree->Root->Nodes[i]->copy_to(
+				Formula_vector->V[j].tree,
+				Output_node,
+				verbose_level);
+
+		j1 = Output_node->exponent_of_variable_destructive(variable);
+
+
+		Formula_vector->V[j].tree->Root->Nodes[Formula_vector->V[j].tree->Root->nb_nodes++] = Output_node;
+
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect done" << endl;
+	}
+}
 
 
 void symbolic_object_builder::multiply_terms(
