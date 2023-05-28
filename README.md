@@ -51,9 +51,11 @@ Statistics (as of May 2023):
 
 Common Problems during Installation:
 If you get an error message like this:
+
 parser.yacc:4.1-5: invalid directive: `%code'
 parser.yacc:4.7-14: syntax error, unexpected identifier
-it means you have an old version of bison / flax. Please update your bison and flex software.
+
+it means you have an old version of bison / flex. Please update your bison and flex software.
 On Macintosh, use brew. On Linux, user your package manager.
 
 Anton Betten
