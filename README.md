@@ -23,11 +23,12 @@ There are two programmer's guides. Both are very rudimentary:
 
 Requirements:
 - C++ 17 compiler
-- bison and flex and the flex library (for Sajeeb's expression parser)
+- bison 3.8.2 or higher
+- flex 2.6.2 or higher 
 - Windows users may use Windows subsystem linux to install Orbiter.
 
 Please see the README in src/lib/layer1_foundations/expression_parser_sajeeb for 
-hints regarding the installation of flex and bison.
+additional hints regarding the installation of flex and bison.
 
 Orbiter offers latex interfaces to the following external software packages:
 - latex, tikz, metapost
@@ -48,6 +49,13 @@ Statistics (as of January 2023):
 - Total number of classes is 552.
 - Total number of lines of code is about 980 thousand (excluding the external software packages)
 
+Common Problems:
+If you get an error message like this:
+parser.yacc:4.1-5: invalid directive: `%code'
+parser.yacc:4.7-14: syntax error, unexpected identifier
+it means you have an old versionh of bison / flax. Please update your bison and flex software.
+On Macintosh, use brew. On Linux, user your package manager.
+
 Anton Betten
-January 30, 2023
+May 28, 2023
 
