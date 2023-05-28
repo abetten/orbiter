@@ -44,16 +44,16 @@ Orbiter includes the following software packages (at the source code level)
 - EasyBMP
 - DISCRETA (legacy code)
 
-Statistics (as of January 2023):
-- Total number of namespaces is 57
-- Total number of classes is 552.
-- Total number of lines of code is about 980 thousand (excluding the external software packages)
+Statistics (as of May 2023):
+- Total number of namespaces is 58
+- Total number of classes is 584.
+- Total number of lines of code is about 1 million and 13K (excluding the external software packages)
 
-Common Problems:
+Common Problems during Installation:
 If you get an error message like this:
 parser.yacc:4.1-5: invalid directive: `%code'
 parser.yacc:4.7-14: syntax error, unexpected identifier
-it means you have an old versionh of bison / flax. Please update your bison and flex software.
+it means you have an old version of bison / flax. Please update your bison and flex software.
 On Macintosh, use brew. On Linux, user your package manager.
 
 Anton Betten
