@@ -836,7 +836,7 @@ namespace solvers {
 #define Get_ring(label) orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(label)
 #define Get_finite_field(label) orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(label)
 #define Get_symbol(label) orbiter_kernel_system::Orbiter->get_object_of_type_symbolic_object(label)
-
+#define Find_symbol(label) orbiter_kernel_system::Orbiter->find_object_of_type_symbolic_object(label)
 
 
 

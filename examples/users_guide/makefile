@@ -231,9 +231,10 @@ OPEN=echo
 
 TEST_FORMULA="(-a+b*b)*x*x+a*b*x"
 
-VANDERMONDE_4X4_FORMULA="1,x0,x0^2,x0^3,1,x1,x1^2,x1^3,1,x2,x2^2,x2^3,1,x3,x3^2,x3^3"
+VANDERMONDE_4X4_FORMULA="1,x0,x0^2,x0^3,1,x1,x1^2,x1^3,\
+1,x2,x2^2,x2^3,1,x3,x3^2,x3^3"
 
-
+ECKARDT_SURFACE_EQN="a*X3^3-a*b^2*(X0^2+X1^2+X2^2)*X3+b^3*(a^2+1)*X0*X1*X2"
 
 
 V7_VANDERMONDE_EXTENDED="\
@@ -559,6 +560,9 @@ CRC16_CCITT="1,16,1,12,1,5,1,0"
 CRC32_ETHERNET="1,32,1,26,1,23,1,22,1,16,1,12,1,11,1,10,1,8,1,7,\
 1,5,1,4,1,2,1,1,1,0"
 
+CRC32_ETHERNET_POLY="X^32+X^26+X^23+X^22+X^16+\
+X^12+X^11+X^10+X^8+X^7+X^5+X^4+X^2+X^1+1"
+
 CRC32_CASTAGNOLI="1,32,1,28,1,27,1,26,1,25,1,23,1,22,1,20,1,19,1,\
 18,1,14,1,13,1,11,1,10,1,9,1,8,1,6,1,0"
 
@@ -786,6 +790,7 @@ POLY_Q256_DEG30_DENSE="1,26,210,24,138,148,\
 
 
 
+# Section 11.1:
 
 # created in the combinatorics section:
 ELEMENTARY_SYMMETRIC_8_1="x0 + x1 + x2 + x3 + x4 + x5 + x6 + x7"
@@ -1138,6 +1143,10 @@ TEST_RHS="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
 
 
 
+# Section 11.7: Design Theory - Delandtsheer Doyen
+
+
+
 PP4= -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -search_control -W -end -problem_label PP4
 
 PP4_GROUP1=-subgroup "1,1,1,1, " "21" -group_label "cyclic21"
@@ -1182,7 +1191,7 @@ DELANDTSHEER_DOYEN_PROBLEM_3_7_GROUP1=-subgroup \
 DELANDTSHEER_DOYEN_PROBLEM_3_7_MASK1= -mask_label "mask1" -depth 5
 
 
-
+# unused:
 
 PENTTILA_WILLIAMS_PRINCE_REG_PACKING_0="444,43313,154402,46682,108254,\
 75363,27729,32139,5244,60442,142811,111115,94209,120678,89533,13798,\
@@ -1212,6 +1221,93 @@ PG_3_5_PACKING_0_WITH_AGO3_FIXP444="444,5001,12957,18194,23485,26817,\
 137711,144777,148059,150175"
 
 
+# Spreads, section 12.1
+
+SPREAD_SET_27_RAO_RAO="\
+0,0,0,0,0,0,0,0,0, \
+1,1,0,2,1,1,0,0,2, \
+1,0,1,1,2,2,0,1,0, \
+1,2,2,1,2,0,2,2,2, \
+0,0,2,2,2,0,1,2,0, \
+1,1,2,0,2,1,2,1,0, \
+0,1,0,1,0,1,0,2,1, \
+2,0,2,0,0,2,1,1,0, \
+2,2,2,0,1,1,0,1,2, \
+2,0,0,1,0,2,1,2,1, \
+0,2,2,2,2,2,2,0,2, \
+2,1,2,0,2,0,2,0,1, \
+0,1,2,2,0,1,0,1,1, \
+1,0,0,0,1,0,0,0,1, \
+2,1,0,1,2,1,0,2,0, \
+0,2,0,0,2,2,1,1,2, \
+0,0,1,0,1,2,2,2,1, \
+2,0,1,2,2,1,1,0,1, \
+0,1,1,1,1,0,1,2,2, \
+2,2,0,2,0,0,0,2,2, \
+2,1,1,1,1,2,2,1,2, \
+2,2,1,2,1,0,2,0,0, \
+1,2,0,2,0,2,1,0,0, \
+1,2,1,1,0,0,1,1,1, \
+0,2,1,1,1,1,2,2,0, \
+1,1,1,0,0,1,1,0,2, \
+1,0,2,2,1,2,2,1,1 \
+"
+
+SPREAD_S27_RAO_RAO="\
+0, 33879, 5418, 13103, 30556, 22107, 27225, 4045, 24924, 31961, \
+3196, 30100, 28081, 25862, 1339, 6696, 8242, 11747, 14000, 14705, \
+9784, 17843, 20772, 9271, 19413, 18678, 16109, 23924"
+
+
+
+
+
+SPREADS_27_ISO_0="\
+0, 33879, 1339, 2678, 3994, 7671, 10180, 5862, 9524, 6852, 22243, \
+12745, 24295, 11062, 13615, 23894, 15056, 29367, 16429, 31521, 17726, \
+31103, 18887, 26333, 19566, 28400, 21531, 27228"
+
+SPREADS_27_ISO_1="\
+0, 33879, 1339, 2678, 3994, 7671, 10182, 5761, 6796, 9327, 15339, \
+31914, 24415, 12713, 22748, 11666, 13353, 23555, 30103, 16395, 17827, \
+30790, 18254, 26422, 20046, 28112, 20900, 26801"
+
+SPREADS_27_ISO_2="\
+0, 33879, 1339, 2678, 3994, 7671, 10182, 5817, 6796, 9276, 23891, \
+15368, 11666, 22124, 12713, 24415, 13353, 29619, 15910, 31914, 17030, \
+30931, 19213, 26422, 19905, 28112, 21217, 27545"
+
+SPREADS_27_ISO_3="\
+0, 33879, 1339, 2678, 3994, 7671, 10625, 6590, 9476, 5576, 24688, \
+23043, 10996, 22124, 12723, 13522, 15421, 29894, 16532, 32442, 17997, \
+31015, 18311, 26109, 19807, 28113, 21220, 27195"
+
+SPREADS_27_ISO_4="\
+0, 33879, 1339, 2678, 3994, 7674, 7051, 10666, 9327, 5419, 19806, \
+21332, 22124, 13353, 24415, 12401, 11062, 23717, 15056, 29660, 16395, \
+31950, 17873, 31153, 19212, 26221, 28515, 26708"
+
+SPREADS_27_ISO_5="\
+0, 33879, 1339, 2678, 3994, 7988, 5333, 6672, 10666, 9327, 11062, \
+22124, 13353, 15056, 16395, 17347, 31055, 27061, 24415, 12401, 23076, \
+30103, 32394, 19041, 26109, 20380, 28400, 21332"
+
+SPREADS_27_ISO_6="\
+0, 33879, 1339, 2679, 3992, 7672, 31140, 6913, 13513, 23167, 5653, \
+10607, 9131, 11225, 22548, 13074, 24645, 15124, 29345, 16226, 31506, \
+17684, 18732, 26116, 19458, 28361, 21571, 27680"
+
+
+
+
+
+
+
+# Section 12.4 BLT-sets
+
+BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73"
+
+BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,9,8,7,10,6,10,8,8,9,5,6,8,5"
 
 
 
@@ -1260,44 +1356,6 @@ EDGE_CURVE_Q23_AS_POINTS="4, 25, 26, 47, 48, 71, 92, 95, 114, 119, \
 
 DESARGUES_PATH_LEX_LEAST="10 10 3\n0\n1 0\n2 0 15\n3 0 15 26\n4 0 15 26 46\n5 0 15 26 46 56\n6 0 15 26 46 56 72\n7 0 15 26 46 56 72 80\n8 0 15 26 46 56 72 80 93\n9 0 15 26 46 56 72 80 93 106\n10 0 15 26 46 56 72 80 93 106 119\n-1\n"
 
-
-
-
-
-SPREADS_27_ISO_0="\
-0, 33879, 1339, 2678, 3994, 7671, 10180, 5862, 9524, 6852, 22243, \
-12745, 24295, 11062, 13615, 23894, 15056, 29367, 16429, 31521, 17726, \
-31103, 18887, 26333, 19566, 28400, 21531, 27228"
-
-SPREADS_27_ISO_1="\
-0, 33879, 1339, 2678, 3994, 7671, 10182, 5761, 6796, 9327, 15339, \
-31914, 24415, 12713, 22748, 11666, 13353, 23555, 30103, 16395, 17827, \
-30790, 18254, 26422, 20046, 28112, 20900, 26801"
-
-SPREADS_27_ISO_2="\
-0, 33879, 1339, 2678, 3994, 7671, 10182, 5817, 6796, 9276, 23891, \
-15368, 11666, 22124, 12713, 24415, 13353, 29619, 15910, 31914, 17030, \
-30931, 19213, 26422, 19905, 28112, 21217, 27545"
-
-SPREADS_27_ISO_3="\
-0, 33879, 1339, 2678, 3994, 7671, 10625, 6590, 9476, 5576, 24688, \
-23043, 10996, 22124, 12723, 13522, 15421, 29894, 16532, 32442, 17997, \
-31015, 18311, 26109, 19807, 28113, 21220, 27195"
-
-SPREADS_27_ISO_4="\
-0, 33879, 1339, 2678, 3994, 7674, 7051, 10666, 9327, 5419, 19806, \
-21332, 22124, 13353, 24415, 12401, 11062, 23717, 15056, 29660, 16395, \
-31950, 17873, 31153, 19212, 26221, 28515, 26708"
-
-SPREADS_27_ISO_5="\
-0, 33879, 1339, 2678, 3994, 7988, 5333, 6672, 10666, 9327, 11062, \
-22124, 13353, 15056, 16395, 17347, 31055, 27061, 24415, 12401, 23076, \
-30103, 32394, 19041, 26109, 20380, 28400, 21332"
-
-SPREADS_27_ISO_6="\
-0, 33879, 1339, 2679, 3992, 7672, 31140, 6913, 13513, 23167, 5653, \
-10607, 9131, 11225, 22548, 13074, 24645, 15124, 29345, 16226, 31506, \
-17684, 18732, 26116, 19458, 28361, 21571, 27680"
 
 
 
@@ -1639,92 +1697,602 @@ matrix_example_co_1:
 			-compact $(CONWAY_GEN1) -end \
 		-print_symbols
 
+
 ###############################################################################
-# Section 2.8: Formula Builder
+# Section 2.8: Symbolic Algebra
 
 SECTION_FORMULA_BUILDER:
 
 test_2_8:
-	make symbolic_matrix
-	make symbolic_vector_with_ring
-	make formula_example
-	make formula_evaluate
-	make test_formula
+	make symbolic_poly
+	make symbolic_CRC32
+	make symbolic_test_4_expand
+	make symbolic_test_4_expand_draw
+	make symbolic_test_5_expand
+	make symbolic_objects_building_on_earlier_objects
+	make symbolic_objects_self_referential_1
+	make symbolic_objects_self_referential_2
+	make symbolic_matrix1
+	make symbolic_matrix_3x3
+	make symbolic_determinant_2x2
+	make symbolic_determinant_3x3
+	make symbolic_determinant_vandermonde
+	make symbolic_characteristic_polynomial_2x2
+	make symbolic_characteristic_polynomial_2x2_draw
+	make symbolic_characteristic_polynomial_3x3
+	make symbolic_object1
+	make symbolic_object1_expand
+	make symbolic_object1_draw
+	make symbolic_Eckardt_surface
+	make symbolic_Eckardt_surface_q13_a3_b1
+	make symbolic_Fabcd
+	make symbolic_Fabcd_q31_E18
+	make symbolic_Fabcd_q31_E18_with_implicit_substitution
+	make symbolic_Fabcd_q31_E18_with_implicit_substitution_do_not_simplify
+	make symbolic_matrix_minor
+	make symbolic_matrix_nullspace_1
+	make symbolic_matrix_nullspace_2
+	make symbolic_Clebsch
+	make Clebsch_map_up_Fabcd
 
 
 
 
-symbolic_matrix:
+
+symbolic_poly:
 	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
 		-define M -symbolic_object \
+			-field F \
+			-text "X^2+X+1"\
+		-end \
+
+
+
+symbolic_CRC32:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(CRC32_ETHERNET_POLY) \
+		-end \
+
+
+symbolic_test_4_expand:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 1 \
+			-text "(a+b)^2" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-expand M \
+			-write_trees_during_expand \
+		-end
+
+symbolic_test_4_expand_draw:
+	pdflatex M.tex
+	open M.pdf
+	pdflatex M1.tex
+	open M1.pdf
+	pdflatex M1_0.tex
+	open M1_0.pdf
+	pdflatex M1_0_e.tex
+	open M1_0_e.pdf
+	pdflatex M1_0_ef.tex
+	open M1_0_ef.pdf
+	pdflatex M1_0_efs.tex
+	open M1_0_efs.pdf
+	pdflatex M1_0_efsx.tex
+	open M1_0_efsx.pdf
+	pdflatex M1_0_efsxs.tex
+	open M1_0_efsxs.pdf
+	pdflatex M1_0_efsxsf.tex
+	open M1_0_efsxsf.pdf
+	pdflatex M1_0_efsxsfs.tex
+	open M1_0_efsxsfs.pdf
+	pdflatex M1_0_efsxsfsc.tex
+	open M1_0_efsxsfsc.pdf
+	pdflatex M1_0_efsxsfscs.tex
+	open M1_0_efsxsfscs.pdf
+	pdflatex M1_0_efsxsfscsc.tex
+	open M1_0_efsxsfscsc.pdf
+
+
+symbolic_test_5_expand:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 1 \
+			-text "(a+b)^3" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-expand M \
+		-end
+	pdflatex M1.tex
+	open M1.pdf
+
+
+
+symbolic_objects_building_on_earlier_objects:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define a -symbolic_object \
+			-field F \
+			-text "x+y"\
+		-end \
+		-define b -symbolic_object \
+			-field F \
+			-text "a+z"\
+		-end \
+
+
+symbolic_objects_self_referential_1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define x -symbolic_object \
+			-field F \
+			-text "x"\
+		-end \
+
+symbolic_objects_self_referential_2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define x -symbolic_object \
+			-field F \
+			-text "x"\
+		-end \
+		-define a -symbolic_object \
+			-field F \
+			-text "x+a"\
+		-end \
+
+
+symbolic_matrix1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
 			-matrix 4 \
 			-text $(VANDERMONDE_4X4_FORMULA) \
 		-end
 
-symbolic_vector_with_ring:
+symbolic_matrix_3x3:
 	$(ORBITER) -v 3 \
-		-define F -finite_field -q 2 -end \
-		-define R -polynomial_ring \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
 			-field F \
-			-number_of_variables 4 \
-			-homogeneous_of_degree 1 \
-			-monomial_ordering_lex \
-			-variables "x0,x1,x2,x3" "x_0,x_1,x_2,x_3" \
-			-end \
-		-define f -symbolic_object \
-			-ring R \
+			-matrix 3 \
+			-text "a,b,c,d,e,f,g,h,i" \
+		-end
+
+
+symbolic_determinant_2x2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 2 \
+			-text "a,b,c,d" \
+		-end \
+		-define det -symbolic_object \
+			-field F \
+			-determinant M \
+		-end \
+		-define det1 -symbolic_object \
+			-field F \
+			-expand det \
+		-end
+	pdflatex det1.tex
+	open det1.pdf
+
+
+symbolic_determinant_3x3:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "a,b,c,d,e,f,g,h,i" \
+		-end \
+		-define det -symbolic_object \
+			-field F \
+			-determinant M \
+		-end \
+		-define det1 -symbolic_object \
+			-field F \
+			-expand det \
+		-end
+	pdflatex det1.tex
+	open det1.pdf
+
+
+symbolic_determinant_vandermonde:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
 			-matrix 4 \
-			-text "x0,x1,x2,x3" \
+			-text $(VANDERMONDE_4X4_FORMULA) \
+		-end \
+		-define det -symbolic_object \
+			-field F \
+			-determinant M \
+		-end \
+		-define det1 -symbolic_object \
+			-field F \
+			-expand det \
+		-end
+
+
+symbolic_characteristic_polynomial_2x2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 2 \
+			-text "a,b,c,d" \
+		-end \
+		-define p -symbolic_object \
+			-field F \
+			-characteristic_polynomial lambda M \
+		-end \
+		-define p1 -symbolic_object \
+			-field F \
+			-expand p \
+			-write_trees_during_expand \
+		-end \
+		-define coeffs -symbolic_object \
+			-field F \
+			-collect p1 lambda \
+		-end
+
+symbolic_characteristic_polynomial_2x2_draw:
+	pdflatex p1.tex
+	open p1.pdf
+	pdflatex p1_0.tex
+	open p1_0.pdf
+	pdflatex p1_0_e.tex
+	open p1_0_e.pdf
+	pdflatex p1_0_ef.tex
+	open p1_0_ef.pdf
+	pdflatex p1_0_efs.tex
+	open p1_0_efs.pdf
+	pdflatex p1_0_efsx.tex
+	open p1_0_efsx.pdf
+	pdflatex p1_0_efsxs.tex
+	open p1_0_efsxs.pdf
+	pdflatex p1_0_efsxsf.tex
+	open p1_0_efsxsf.pdf
+	pdflatex p1_0_efsxsfs.tex
+	open p1_0_efsxsfs.pdf
+	pdflatex p1_0_efsxsfsc.tex
+	open p1_0_efsxsfsc.pdf
+	pdflatex p1_0_efsxsfscs.tex
+	open p1_0_efsxsfscs.pdf
+	pdflatex p1_0_efsxsfscsc.tex
+	open p1_0_efsxsfscsc.pdf
+
+symbolic_characteristic_polynomial_3x3:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "a,b,c,d,e,f,g,h,i" \
+		-end \
+		-define p -symbolic_object \
+			-field F \
+			-characteristic_polynomial lambda M \
+		-end \
+		-define p1 -symbolic_object \
+			-field F \
+			-expand p \
+		-end \
+		-define coeffs -symbolic_object \
+			-field F \
+			-collect p1 lambda \
+		-end
+	#pdflatex p1.tex
+	#open p1.pdf
+
+
+
+symbolic_object1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "a+2*b^2*(x-y)+3*-(2*c^4+3*d-(a*b*c)^2)^3" \
+		-end
+
+
+symbolic_object1_expand:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "a+2*b^2*(x-y)+3*-(2*c^4+3*d-(a*b*c)^2)^3" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-expand M \
+		-end
+	pdflatex M1.tex
+	open M1.pdf
+
+
+
+symbolic_object1_draw:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "a+2*b^2*(x-y)+3*-(2*c^4+3*d-(a*b*c)^2)^3" \
+		-end
+	pdflatex sajeeb_tree0.tex
+	open sajeeb_tree0.pdf
+	pdflatex M.tex
+	open M.pdf
+
+
+
+
+
+symbolic_Eckardt_surface:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(ECKARDT_SURFACE_EQN) \
+		-end
+
+
+
+symbolic_Eckardt_surface_q13_a3_b1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(ECKARDT_SURFACE_EQN) \
+		-end \
+		-define L -symbolic_object \
+			-field F \
+			-text "3,1" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-substitute "a,b" M L \
+		-end \
+		-define M2 -symbolic_object \
+			-field F \
+			-expand M1 \
+			-write_trees_during_expand \
+		-end
+	pdflatex M2.tex
+	open M2.pdf
+
+
+symbolic_Fabcd:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(F_abcd_eqn) \
+		-end
+
+
+# q=31
+#E=18 (a,b,c,d) = (25,5,5,25)
+#E=10 (a,b,c,d) = (14,13,13,14)
+#E=9 (a,b,c,d) = (5,3,12,5)
+#E=6 (a,b,c,d) = (2,30,30,2)
+#E=4 (a,b,c,d) = (4,2,2,4)
+#E=3 (a,b,c,d) = (6,2,3,6)
+#E=2 (a,b,c,d) = (2,3,3,2)
+#E=1 (a,b,c,d) = (2,3,5,2)
+#E=0 (a,b,c,d) = (2,5,9,7)
+
+
+symbolic_Fabcd_q31_E18:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 31 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(F_abcd_eqn) \
+		-end \
+		-define L -symbolic_object \
+			-field F \
+			-text "25,5,5,25" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-substitute "a,b,c,d" M L \
+		-end \
+		-define M2 -symbolic_object \
+			-field F \
+			-expand M1 \
+			-write_trees_during_expand \
+		-end
+	pdflatex M2.tex
+	open M2.pdf
+
+
+#(13 X1 X2 X3) + (22 X1 X2^{2}) + (22 X1^{2} X3) + (22 X1^{2} X2) + (9 X0 X2^{2}) + (9 X0^{2} X2) + (22 X1 X3^{2})\\
+
+
+
+symbolic_Fabcd_q31_E18_with_implicit_substitution:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 31 -end \
+		-define a -symbolic_object \
+			-field F \
+			-text "25" \
+		-end \
+		-define b -symbolic_object \
+			-field F \
+			-text "5" \
+		-end \
+		-define c -symbolic_object \
+			-field F \
+			-text "5" \
+		-end \
+		-define d -symbolic_object \
+			-field F \
+			-text "25" \
+		-end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(F_abcd_eqn) \
+		-end \
+		-define M2 -symbolic_object \
+			-field F \
+			-expand M \
+		-end
+	pdflatex M2.tex
+	open M2.pdf
+
+
+
+symbolic_Fabcd_q31_E18_with_implicit_substitution_do_not_simplify:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 31 -end \
+		-define a -symbolic_object \
+			-field F \
+			-text "25" \
+		-end \
+		-define b -symbolic_object \
+			-field F \
+			-text "5" \
+		-end \
+		-define c -symbolic_object \
+			-field F \
+			-text "5" \
+		-end \
+		-define d -symbolic_object \
+			-field F \
+			-text "25" \
+		-end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(F_abcd_eqn) \
+			-do_not_simplify \
 		-end
 
 
 
 
-
-formula_example:
+symbolic_matrix_minor:
 	$(ORBITER) -v 3 \
-		-define f -formula \
-			"test_formula" "test\_formula" "" \
-			$(TEST_FORMULA)
-	dot -Tpng test_formula.gv >test_formula.png
-	$(OPEN) test_formula.png
+		-define F -finite_field -q 13 -end \
+		-define A -symbolic_object \
+			-field F \
+			-matrix 4 \
+			-text "1,0,0,0,0,0,0,1,x0,x1,x2,x3,a,b,c,d" \
+		-end \
+		-define M -symbolic_object \
+			-field F \
+			-minor A 3 1  \
+		-end \
 
-formula_evaluate:
+
+symbolic_matrix_nullspace_1:
 	$(ORBITER) -v 3 \
-		-define F -finite_field -q 5 -end \
-		-define f -formula \
-			"test_formula" "test\_formula" "" \
-			$(TEST_FORMULA) \
-		-with F -do -finite_field_activity \
-			-evaluate f "a=2,b=3,x=4" -end
+		-define F -finite_field -q 13 -end \
+		-define A1 -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "1,0,0,0,0,0,0,1,y0,y1,y2,0" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-symbolic_nullspace A1 \
+		-end \
 
-# should evaluate to 1, since (-2+3*3)*4*4+2*3*4=2+4=6=1 mod 5
-# but: problem with the leading minus sign
-
-
-
-
-
-test_formula:
-	$(ORBITER) -v 3 -define F -finite_field -q 11 -end \
-		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_2_1) \
-		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_2_2) \
-		-define E -collection "e1,e2" \
-		-with F -do -finite_field_activity \
-			-evaluate E3 "x0=2,x1=3,x2=4" -end
-
-#"x0 + x1 + x2"
-# evaluates to 9
+#0, ((12) * (y2)), (y1), 0
 
 
-#BCH_63_4_evaluate_elementary_symmetric_functions_1:
-#	$(ORBITER) -v 3 -define F -finite_field -q 64 -end \
-#		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_3_1) \
-#		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_3_2) \
-#		-define e3 -formula "e3" "e3" "" $(ELEMENTARY_SYMMETRIC_3_3) \
-#		-define E3 -collection "e1,e2,e3" \
-#		-with F -do -finite_field_activity \
-#			-evaluate E3 "x0=8,x1=62,x2=15" -end
+symbolic_matrix_nullspace_2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define A2 -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "0,1,0,0,0,0,-1,1,y0,y1,y2,0" \
+		-end \
+		-define M2 -symbolic_object \
+			-field F \
+			-symbolic_nullspace A2 \
+		-end \
+
+
+#(y2), 0, (12) * (y0), ((12) * (y0))
+
+symbolic_Clebsch:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define A1 -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "1,0,0,0,0,0,0,1,y0,y1,y2,0" \
+		-end \
+		-define A2 -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "0,1,0,0,0,0,-1,1,y0,y1,y2,0" \
+		-end \
+		-define A3 -symbolic_object \
+			-field F \
+			-matrix 2 \
+			-text "0,0,1,0,0,0,0,1" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-symbolic_nullspace A1 \
+		-end \
+		-define M2 -symbolic_object \
+			-field F \
+			-symbolic_nullspace A2 \
+		-end \
+		-define L -symbolic_object \
+			-field F \
+			-stack_matrices_vertically M1,M2,A3 \
+		-end \
+
+
+
+
+
+Clebsch_map_up_Fabcd:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(F_abcd_eqn) \
+		-end \
+		-define L -symbolic_object \
+			-field F \
+			-text "y0+t*y0,t*y1,t*y2,y2" \
+		-end \
+		-define C1 -symbolic_object \
+			-field F \
+			-substitute "X0,X1,X2,X3" M L \
+		-end \
+		-define M -symbolic_object \
+			-field F \
+			-expand C1 \
+			-write_trees_during_expand \
+		-end \
+		-define coeff_t -symbolic_object \
+			-field F \
+			-collect M t \
+		-end
+
+
 
 
 
@@ -8219,16 +8787,6 @@ F_alpha_beta_gamma_delta:
 	dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
 
 
-surface_F_abcd_q7:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 7 -end \
-		-with F -do \
-		-finite_field_activity \
-		-parse_and_evaluate "Fabcd" "X0,X1,X2,X3" \
-			$(F_abcd_eqn_no_exponents) "a=4,b=2,c=2,d=4" \
-		-end
-
-#dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
 
 surface_F_abcd_Eckardt_q31:
 	$(ORBITER) -v 10 \
@@ -8247,7 +8805,7 @@ surface_F_abcd_Eckardt_q31:
 			-report \
 		-end
 	pdflatex surface_equation_F_abcd_q31_report.tex
-	open surface_equation_F_abcd_q31_report.pdf
+	$(OPEN) surface_equation_F_abcd_q31_report.pdf
 
 
 # E = 6
@@ -14633,35 +15191,6 @@ create_spread_25_7:
 			-end
 
 
-SPREAD_SET_27_RAO_RAO="\
-0,0,0,0,0,0,0,0,0, \
-1,1,0,2,1,1,0,0,2, \
-1,0,1,1,2,2,0,1,0, \
-1,2,2,1,2,0,2,2,2, \
-0,0,2,2,2,0,1,2,0, \
-1,1,2,0,2,1,2,1,0, \
-0,1,0,1,0,1,0,2,1, \
-2,0,2,0,0,2,1,1,0, \
-2,2,2,0,1,1,0,1,2, \
-2,0,0,1,0,2,1,2,1, \
-0,2,2,2,2,2,2,0,2, \
-2,1,2,0,2,0,2,0,1, \
-0,1,2,2,0,1,0,1,1, \
-1,0,0,0,1,0,0,0,1, \
-2,1,0,1,2,1,0,2,0, \
-0,2,0,0,2,2,1,1,2, \
-0,0,1,0,1,2,2,2,1, \
-2,0,1,2,2,1,1,0,1, \
-0,1,1,1,1,0,1,2,2, \
-2,2,0,2,0,0,0,2,2, \
-2,1,1,1,1,2,2,1,2, \
-2,2,1,2,1,0,2,0,0, \
-1,2,0,2,0,2,1,0,0, \
-1,2,1,1,0,0,1,1,1, \
-0,2,1,1,1,1,2,2,0, \
-1,1,1,0,0,1,1,0,2, \
-1,0,2,2,1,2,2,1,1 \
-"
 
 create_spread_Rao_Rao_27:
 	$(ORBITER) -v 3 \
@@ -14671,11 +15200,6 @@ create_spread_Rao_Rao_27:
 		-define S -spread -kernel_field F \
 			-group G -k 3 -spread_set "Rao_Rao" "Rao\_Rao" SS \
 			-end
-
-SPREAD_S27_RAO_RAO="\
-0, 33879, 5418, 13103, 30556, 22107, 27225, 4045, 24924, 31961, \
-3196, 30100, 28081, 25862, 1339, 6696, 8242, 11747, 14000, 14705, \
-9784, 17843, 20772, 9271, 19413, 18678, 16109, 23924"
 
 
 desarguesian_spread_in_PG_3_2:
@@ -15675,6 +16199,7 @@ test_12_4:
 	make BLT_5_1
 	make BLT_5_1_export_gap
 	make BLT_5_Linear
+	make BLT_9_0
 	make BLT_9_Kantor1
 	make BLT_11_0
 	make BLT_11_Fisher
@@ -15682,6 +16207,7 @@ test_12_4:
 	make BLT_11_FTWKB
 	make BLT_13_Kantor2
 	make BLT_67_4
+	make BLT_67_4_export_gap
 	make BLT_9_deep_search
 	make BLT_11_deep_search
 	make BLT_13_deep_search
@@ -16064,9 +16590,6 @@ BLT_13_isomorph_testing:
 
 
 
-BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73"
-
-BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,9,8,7,10,6,10,8,8,9,5,6,8,5"
 
 blt_set_export_gap_all: 
 	$(ORBITER) -v 3 \
@@ -16089,56 +16612,6 @@ blt_set_export_gap_all:
 			-end_loop j \
 		-end_loop_over i \
 		-print_symbols
-
-
-
-BLT_49_classify_starter:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 49 -end \
-		-define O -orthogonal_space 0 5 F -end \
-		-define C -BLT_set_classifier O -starter_size 5 -end \
-		-with C -do -BLT_set_classify_activity \
-			-compute_starter \
-				-problem_label BLT_q49 \
-				-W -depth 5 \
-			-end \
-		-end \
-		-with C -do -BLT_set_classify_activity \
-			-create_graphs \
-		-end
-
-
-NB_CASES_BLT_Q49=14542
-
-BLT_49_cliques:
-	$(ORBITER) -v 2 \
-		-loop L 0 $(NB_CASES_BLT_Q49) 1 \
-			-define G -graph \
-				-load BLT_q49_graph_5_%L.bin \
-			-end \
-			-with G -do \
-			-graph_theoretic_activity \
-				-find_cliques -rainbow -target_size 50 -end \
-			-end \
-		-end_loop L
-
-
-BLT_SLICE_COMMAND_Q49="$(ORBITER) -v 2 \
-		-loop L %i $(NB_CASES_Q49) 128 \
-			-define G -graph \
-				-load BLT_q49_graph_5_%L.bin \
-			-end \
-			-with G -do \
-			-graph_theoretic_activity \
-				-find_cliques -rainbow -target_size 50 -end \
-			-end \
-		-end_loop L >log_%i"
-
-BLT_49_cliques_sliced_128:
-	$(ORBITER) -v 2 \
-		-loop i 1 128 1\
-			-system $(BLT_SLICE_COMMAND_Q49) \
-		-end_loop i
 
 
 

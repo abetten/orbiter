@@ -133,6 +133,7 @@ public:
 	std::string equation_text;
 	std::string equation_parameters;
 	std::string equation_parameters_tex;
+	std::string equation_parameter_values;
 
 	int f_from_cubic_surface;
 	std::string from_cubic_surface_label;
@@ -244,6 +245,7 @@ public:
 			std::string &equation_text,
 			std::string &equation_parameters,
 			std::string &equation_parameters_tex,
+			std::string &equation_parameter_values,
 			int verbose_level);
 	void create_quartic_curve_from_cubic_surface(
 			std::string &cubic_surface_label,

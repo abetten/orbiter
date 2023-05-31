@@ -2357,6 +2357,7 @@ int surface_create::create_surface_by_equation(
 
 
 
+	// create a symbolic object containing the general formula:
 
 	data_structures::symbolic_object_builder_description *Descr1;
 
@@ -2394,6 +2395,9 @@ int surface_create::create_surface_by_equation(
 
 
 
+	// create a second symbolic object containing the specific values
+	// to be substituted.
+
 	data_structures::symbolic_object_builder_description *Descr2;
 
 
@@ -2426,6 +2430,10 @@ int surface_create::create_surface_by_equation(
 				"after SB2->init" << endl;
 	}
 
+
+	// Perform the substitution.
+	// Create temporary object Formula_vector_after_sub
+
 	data_structures::symbolic_object_builder *O_target = SB1;
 	data_structures::symbolic_object_builder *O_source = SB2;
 
@@ -2454,6 +2462,8 @@ int surface_create::create_surface_by_equation(
 	}
 
 
+	// Perform simplification
+
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation "
 				"before Formula_vector_after_sub->V[0].simplify" << endl;
@@ -2464,6 +2474,8 @@ int surface_create::create_surface_by_equation(
 				"after Formula_vector_after_sub->V[0].simplify" << endl;
 	}
 
+	// Perform expansion.
+	// The result will be in the temporary object Formula_vector_after_expand
 
 
 	expression_parser::formula_vector *Formula_vector_after_expand;
@@ -2487,6 +2499,9 @@ int surface_create::create_surface_by_equation(
 				"after Formula_vector->expand" << endl;
 	}
 
+	// Perform simplification
+
+
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation "
@@ -2498,6 +2513,8 @@ int surface_create::create_surface_by_equation(
 				"after Formula_vector_after_expand->V[0].simplify" << endl;
 	}
 
+
+	// collect the coefficients of the monomials:
 
 
 	data_structures::int_matrix *I;
@@ -2531,9 +2548,14 @@ int surface_create::create_surface_by_equation(
 	}
 
 	if (I->n != 4) {
-		cout << "surface_create::create_surface_by_equation we need 4 variables" << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"we need exactly 4 variables" << endl;
 		exit(1);
 	}
+
+
+	// create the polynomial ring:
+
 
 	int nb_vars, degree;
 
@@ -2567,6 +2589,10 @@ int surface_create::create_surface_by_equation(
 				"nb_monomials != 20" << endl;
 		exit(1);
 	}
+
+
+	// build the equation of the cubic surface from the table of coefficients
+	// and monomials:
 
 	int i, index;
 	int coeffs20[20];
@@ -2612,6 +2638,7 @@ int surface_create::create_surface_by_equation(
 	FREE_OBJECT(Poly);
 
 
+	// build a surface_object and compute properties of the surface:
 
 
 	if (Int_vec_is_zero(coeffs20, 20)) {
@@ -2667,8 +2694,6 @@ int surface_create::create_surface_by_equation(
 	label_tex.append(" with ");
 	label_tex.append(my_parameters_tex);
 
-	//label_tex.append("\\_q");
-	//label_tex.append(str_q);
 
 
 
@@ -2678,8 +2703,6 @@ int surface_create::create_surface_by_equation(
 		cout << "label_txt = " << label_txt << endl;
 		cout << "label_tex = " << label_tex << endl;
 	}
-
-	//AL->print(fp);
 
 
 	if (f_v) {

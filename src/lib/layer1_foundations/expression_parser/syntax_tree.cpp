@@ -619,6 +619,19 @@ int syntax_tree::compare_nodes(
 
 				ret = ST.compare_string_string(Node1->T->value_text, Node2->T->value_text);
 
+				if (ret == 0) {
+					int e1, e2;
+
+					e1 = Node1->get_exponent();
+					e2 = Node2->get_exponent();
+					if (e1 > e2) {
+						return 1;
+					}
+					else if (e1 < e2) {
+						return -1;
+					}
+					ret = 0;
+				}
 				return ret;
 			}
 		}

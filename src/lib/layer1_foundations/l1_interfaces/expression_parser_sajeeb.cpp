@@ -1026,7 +1026,38 @@ static void convert_to_orbiter_recursion(
 		current_node_copy->init_terminal_node_text(
 				Tree,
 				name,
-				verbose_level);
+				verbose_level);  // ToDo
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
+					"before current_node_copy->init_terminal_node_text" << endl;
+		}
+
+	}
+	else if (current_node->type == irtree_node::node_type::VARIABLE_NODE) {
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion VARIABLE_NODE" << endl;
+		}
+
+
+		variable_node *node = static_cast<variable_node *>(current_node.get());
+
+		string name = node->name;
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
+					"VARIABLE_NODE name = " << name << endl;
+		}
+
+		if (f_v) {
+			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
+					"before current_node_copy->init_terminal_node_text" << endl;
+		}
+		current_node_copy->init_terminal_node_text(
+				Tree,
+				name,
+				verbose_level);  // ToDo
 
 		if (f_v) {
 			cout << "expression_parser_sajeeb::convert_to_orbiter_recursion "
@@ -1296,7 +1327,7 @@ static void handle_exponent_node(
 					"factor=" << factor << " exponent=" << exp << endl;
 		}
 		current_node_copy->init_terminal_node_text_with_exponent(
-						Tree, factor, exp /* exponent */, verbose_level);
+						Tree, factor, exp /* exponent */, verbose_level);  // ToDo
 		if (f_v) {
 			cout << "handle_exponent_node after "
 					"current_node_copy->init_terminal_node_text_with_exponent "
@@ -1330,7 +1361,7 @@ static void handle_exponent_node(
 					"factor=" << factor << " exponent=" << exp << endl;
 		}
 		current_node_copy->init_terminal_node_text_with_exponent(
-						Tree, factor, exp /* exponent */, verbose_level);
+						Tree, factor, exp /* exponent */, verbose_level);  // ToDo
 		if (f_v) {
 			cout << "handle_exponent_node after "
 					"current_node_copy->init_terminal_node_text_with_exponent "
@@ -1504,7 +1535,7 @@ static void collect_factors(
 						"current_node_copy->add_factor factor=" << factor << endl;
 			}
 			current_node_copy->add_factor(
-					factor, 1 /* exponent */, verbose_level);
+					factor, 1 /* exponent */, verbose_level); // ToDo
 
 			if (f_v) {
 				cout << "collect_factors after "
@@ -1528,7 +1559,7 @@ static void collect_factors(
 						"current_node_copy->add_factor factor=" << factor << endl;
 			}
 			current_node_copy->add_factor(
-					factor, 1 /* exponent */, verbose_level);
+					factor, 1 /* exponent */, verbose_level); // ToDo
 
 			if (f_v) {
 				cout << "collect_factors after "
@@ -1557,6 +1588,10 @@ static void collect_factors(
 				cout << "collect_factors nb_nodes=" << current_node_copy->nb_nodes << endl;
 			}
 
+			expression_parser::syntax_tree_node *fresh_node;
+
+			fresh_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
+
 			if (f_v) {
 				cout << "collect_factors UNARY_NEGATE_NODE before handle_unary_negate_node" << endl;
 			}
@@ -1565,7 +1600,7 @@ static void collect_factors(
 					root,
 					Tree,
 					node,
-					current_node_copy->Nodes[current_node_copy->nb_nodes - 1],
+					fresh_node,
 					verbose_level);
 
 			if (f_v) {
@@ -1653,11 +1688,16 @@ static void collect_factors(
 			}
 
 
+			expression_parser::syntax_tree_node *fresh_node;
+
+			fresh_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
+
+
 			if (f_v) {
 				cout << "collect_factors PLUS_NODE before collect_summands" << endl;
 			}
 			collect_summands(root, Tree, node,
-					current_node_copy->Nodes[current_node_copy->nb_nodes - 1],
+					fresh_node,
 					verbose_level);
 			if (f_v) {
 				cout << "collect_factors PLUS_NODE after collect_summands" << endl;
@@ -1751,11 +1791,11 @@ static void collect_summands(
 
 			if (f_v) {
 				cout << "collect_summands "
-						"before current_node_copy->add_factor "
+						"before current_node_copy->add_summand "
 						"summand=" << summand << endl;
 			}
 			current_node_copy->add_summand(
-					summand, verbose_level);
+					summand, verbose_level); // ToDo
 
 			if (f_v) {
 				cout << "collect_summands "
@@ -1780,7 +1820,7 @@ static void collect_summands(
 						"summand=" << summand << endl;
 			}
 			current_node_copy->add_summand(
-					summand, verbose_level);
+					summand, verbose_level); // ToDo
 
 			if (f_v) {
 				cout << "collect_summands "
@@ -1893,6 +1933,47 @@ static void collect_summands(
 
 
 		}
+
+		else if (child.get()->type == irtree_node::node_type::EXPONENT_NODE) {
+			if (f_v) {
+				cout << "collect_summands EXPONENT_NODE" << endl;
+			}
+			exponent_node *node = static_cast<exponent_node *>(child.get());
+
+
+			if (f_v) {
+				cout << "collect_summands EXPONENT_NODE "
+						"before current_node_copy->add_empty_node" << endl;
+			}
+			current_node_copy->add_empty_node(Tree,
+					verbose_level);
+			if (f_v) {
+				cout << "collect_summands EXPONENT_NODE "
+						"after current_node_copy->add_empty_node" << endl;
+			}
+
+
+			expression_parser::syntax_tree_node *fresh_node;
+
+			fresh_node = current_node_copy->Nodes[current_node_copy->nb_nodes - 1];
+
+			if (f_v) {
+				cout << "collect_summands EXPONENT_NODE "
+						"before handle_exponent_node" << endl;
+			}
+			handle_exponent_node(
+					root,
+					Tree,
+					node,
+					fresh_node,
+					verbose_level);
+			if (f_v) {
+				cout << "collect_summands EXPONENT_NODE "
+						"after handle_exponent_node" << endl;
+			}
+
+		}
+
 		else {
 			cout << "collect_summands do not know how to handle this node" << endl;
 			string s;

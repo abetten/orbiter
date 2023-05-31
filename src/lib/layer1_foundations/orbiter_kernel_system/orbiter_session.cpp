@@ -792,6 +792,26 @@ data_structures::symbolic_object_builder *orbiter_session::get_object_of_type_sy
 }
 
 
+int orbiter_session::find_object_of_type_symbolic_object(
+		std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		return -1;
+	}
+	if (get_object_type(idx) != t_symbolic_object) {
+		return -1;
+	}
+	return idx;
+
+
+}
+
+
+
+
 void orbiter_session::start_memory_debug()
 {
 	f_memory_debug = true;

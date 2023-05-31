@@ -305,6 +305,18 @@ void symbolic_object_builder::init(
 					verbose_level);
 	}
 
+	else if (Descr->f_vector_entry) {
+		if (f_v) {
+			cout << "symbolic_object_builder::init -vector_entry"
+					<< " " << Descr->vector_entry_source
+					<< endl;
+		}
+		do_vector_entry(
+					Descr,
+					label,
+					verbose_level);
+	}
+
 	else if (Descr->f_collect) {
 		if (f_v) {
 			cout << "symbolic_object_builder::init -collect"
@@ -528,7 +540,7 @@ void symbolic_object_builder::do_substitute(
 			O_target->Formula_vector,
 			Descr->substitute_variables,
 			label, label,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_substitute "
 				"after Formula_vector->substitute" << endl;
@@ -982,9 +994,9 @@ void symbolic_object_builder::do_matrix_entry(
 				"input M must be a matrix" << endl;
 		exit(1);
 	}
-	int m, n;
+	int n;
 
-	m = O_source->Formula_vector->nb_rows;
+	//m = O_source->Formula_vector->nb_rows;
 	n = O_source->Formula_vector->nb_cols;
 
 	len = 1;
@@ -1010,6 +1022,63 @@ void symbolic_object_builder::do_matrix_entry(
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_matrix_entry done" << endl;
+	}
+}
+
+
+void symbolic_object_builder::do_vector_entry(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_vector_entry" << endl;
+	}
+
+	data_structures::symbolic_object_builder *O_source;
+
+	O_source = Get_symbol(Descr->vector_entry_source);
+
+	int i;
+
+	i = Descr->vector_entry_i;
+
+	if (i >= O_source->Formula_vector->len) {
+		cout << "symbolic_object_builder::do_vector_entry out of range" << endl;
+		cout << "i=" << i << endl;
+		cout << "O_source->Formula_vector->len=" << O_source->Formula_vector->len << endl;
+		exit(1);
+	}
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+	int len;
+
+	len = 1;
+
+	Formula_vector->init_and_allocate(
+				label, label,
+				len, verbose_level);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_vector_entry "
+				"before O_source->Formula_vector->V[i].copy_to" << endl;
+	}
+	O_source->Formula_vector->V[i].copy_to(
+			&Formula_vector->V[0],
+			verbose_level);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_vector_entry "
+				"after O_source->Formula_vector->V[i].copy_to" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_vector_entry done" << endl;
 	}
 }
 
@@ -1044,7 +1113,7 @@ void symbolic_object_builder::do_collect(
 	variable = Descr->collect_by;
 
 	d = O_source->Formula_vector->V[0].highest_order_term(
-			variable, verbose_level);
+			variable, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_collect highest_order_term = " << d << endl;
@@ -1057,13 +1126,13 @@ void symbolic_object_builder::do_collect(
 
 	Formula_vector->init_and_allocate(
 				label, label,
-				len, verbose_level);
+				len, 0 /*verbose_level*/);
 
 	int i, j, j1;
 
 	for (i = 0; i < len; i++) {
 		Formula_vector->V[i].init_empty_formula(
-				label, label /*label_tex*/, Fq, verbose_level);
+				label, label /*label_tex*/, Fq, 0 /*verbose_level*/);
 	}
 
 
@@ -1074,8 +1143,12 @@ void symbolic_object_builder::do_collect(
 	}
 	for (i = 0; i < O_source->Formula_vector->V[0].tree->Root->nb_nodes; i++) {
 
+		if (f_v) {
+			cout << "symbolic_object_builder::do_collect node " << i << " / " << O_source->Formula_vector->V[0].tree->Root->nb_nodes << endl;
+		}
+
 		j = O_source->Formula_vector->V[0].tree->Root->Nodes[i]->exponent_of_variable(
-				variable, verbose_level);
+				variable, 0 /*verbose_level*/);
 
 
 		expression_parser::syntax_tree_node *Output_node;
@@ -1085,7 +1158,7 @@ void symbolic_object_builder::do_collect(
 		O_source->Formula_vector->V[0].tree->Root->Nodes[i]->copy_to(
 				Formula_vector->V[j].tree,
 				Output_node,
-				verbose_level);
+				0 /*verbose_level*/);
 
 		j1 = Output_node->exponent_of_variable_destructive(variable);
 

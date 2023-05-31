@@ -493,6 +493,7 @@ void formula_vector::print_latex(std::ostream &ost)
 		int j;
 
 		ost << "$$" << endl;
+		ost << "\\left[" << endl;
 		ost << "\\begin{array}{*{" << nb_cols << "}c}" << endl;
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
@@ -504,20 +505,36 @@ void formula_vector::print_latex(std::ostream &ost)
 			ost << "\\\\" << endl;
 			}
 		ost << "\\end{array}" << endl;
+		ost << "\\right]" << endl;
 		ost << "$$" << endl;
 
 	}
 	else {
 
-		ost << "$$" << endl;
-		ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
-		for (i = 0; i < len; i++) {
-			ost << v[i];
-			ost << "\\\\" << endl;
-			}
-		ost << "\\end{array}" << endl;
-		ost << "$$" << endl;
-
+		if (len > 1) {
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
+			for (i = 0; i < len; i++) {
+				ost << v[i];
+				ost << "\\\\" << endl;
+				}
+			ost << "\\end{array}" << endl;
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+		}
+		else {
+			ost << "$$" << endl;
+			//ost << "\\left[" << endl;
+			ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
+			for (i = 0; i < len; i++) {
+				ost << v[i];
+				ost << "\\\\" << endl;
+				}
+			ost << "\\end{array}" << endl;
+			//ost << "\\right]" << endl;
+			ost << "$$" << endl;
+		}
 	}
 
 	print_variables(ost);
@@ -671,7 +688,7 @@ void formula_vector::substitute(
 
 	ST.parse_comma_separated_list(
 			substitution_variables, variables,
-			verbose_level);
+			verbose_level - 2);
 
 	int N;
 	N = variables.size();
@@ -692,7 +709,7 @@ void formula_vector::substitute(
 	init_and_allocate(
 			label_txt,
 			label_tex,
-			len, verbose_level);
+			len, verbose_level - 2);
 
 	f_matrix = true;
 	nb_rows = nb;

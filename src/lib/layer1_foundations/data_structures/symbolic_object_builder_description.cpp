@@ -94,6 +94,11 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	matrix_entry_i = 0;
 	matrix_entry_j = 0;
 
+	f_vector_entry = false;
+	//std::string vector_entry_source;
+	vector_entry_i = 0;
+
+
 	f_collect = false;
 	//std::string collect_source;
 	//std::string collect_by;
@@ -311,6 +316,18 @@ int symbolic_object_builder_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-vector_entry") == 0) {
+			f_vector_entry = true;
+			vector_entry_source.assign(argv[++i]);
+			vector_entry_i = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-vector_entry "
+						<< " " << vector_entry_source
+						<< " " << vector_entry_i
+						<< endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-collect") == 0) {
 			f_collect = true;
 			collect_source.assign(argv[++i]);
@@ -455,6 +472,12 @@ void symbolic_object_builder_description::print()
 				<< " " << matrix_entry_source
 				<< " " << matrix_entry_i
 				<< " " << matrix_entry_j
+				<< endl;
+	}
+	if (f_vector_entry) {
+		cout << "-vector_entry "
+				<< " " << vector_entry_source
+				<< " " << vector_entry_i
 				<< endl;
 	}
 	if (f_collect) {

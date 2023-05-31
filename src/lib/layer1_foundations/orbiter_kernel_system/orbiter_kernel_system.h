@@ -1001,6 +1001,8 @@ public:
 			std::string &label);
 	data_structures::symbolic_object_builder *get_object_of_type_symbolic_object(
 			std::string &label);
+	int find_object_of_type_symbolic_object(
+			std::string &label);
 	void start_memory_debug();
 	void stop_memory_debug();
 

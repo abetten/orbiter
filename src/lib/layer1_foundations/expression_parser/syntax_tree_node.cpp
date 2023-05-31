@@ -91,6 +91,7 @@ void syntax_tree_node::add_numerical_factor(
 		cout << "syntax_tree_node::add_numerical_factor" << endl;
 	}
 
+#if 0
 	int i;
 
 	for (i = 0; i < nb_nodes; i++) {
@@ -128,6 +129,17 @@ void syntax_tree_node::add_numerical_factor(
 		nb_nodes++;
 
 	}
+#else
+	syntax_tree_node *node;
+
+	node = NEW_OBJECT(syntax_tree_node);
+
+	node->init_terminal_node_int(
+			Tree, value, verbose_level);
+
+	Nodes[nb_nodes++] = node;
+
+#endif
 
 	if (f_v) {
 		cout << "syntax_tree_node::add_numerical_factor done" << endl;
@@ -142,7 +154,7 @@ void syntax_tree_node::add_numerical_summand(
 	if (f_v) {
 		cout << "syntax_tree_node::add_numerical_summand" << endl;
 	}
-
+#if 0
 	int i;
 
 	for (i = 0; i < nb_nodes; i++) {
@@ -184,6 +196,17 @@ void syntax_tree_node::add_numerical_summand(
 				Tree, value, verbose_level);
 		nb_nodes++;
 	}
+#else
+	syntax_tree_node *node;
+
+	node = NEW_OBJECT(syntax_tree_node);
+
+	node->init_terminal_node_int(
+			Tree, value, verbose_level);
+
+	Nodes[nb_nodes++] = node;
+
+#endif
 
 	if (f_v) {
 		cout << "syntax_tree_node::add_numerical_summand done" << endl;
@@ -202,6 +225,10 @@ int syntax_tree_node::text_value_match(std::string &factor)
 		return false;
 	}
 }
+
+
+// entrance point 4 -> init_terminal_node_text_with_exponent
+
 
 void syntax_tree_node::add_factor(
 		std::string &factor, int exponent, int verbose_level)
@@ -250,6 +277,10 @@ void syntax_tree_node::add_factor(
 		cout << "syntax_tree_node::add_factor done" << endl;
 	}
 }
+
+
+// entrance point 3 -> init_terminal_node_text
+
 
 void syntax_tree_node::add_summand(
 		std::string &summand, int verbose_level)
@@ -304,6 +335,9 @@ void syntax_tree_node::init_terminal_node_int(
 }
 
 
+// entrance point 1 -> init_terminal_node_text_with_exponent
+
+
 void syntax_tree_node::init_terminal_node_text(
 		syntax_tree *Tree,
 		std::string &value_text,
@@ -315,6 +349,7 @@ void syntax_tree_node::init_terminal_node_text(
 		cout << "syntax_tree_node::init_terminal_node_text" << endl;
 	}
 
+#if 0
 	syntax_tree_node::Tree = Tree;
 	f_terminal = true;
 	f_has_exponent = false;
@@ -325,16 +360,23 @@ void syntax_tree_node::init_terminal_node_text(
 	nb_nodes = 0;
 	f_has_monomial = false;
 	f_has_minus = false;
+#else
+	init_terminal_node_text_with_exponent(Tree, value_text, 1 /* exponent */, verbose_level);
+#endif
 
 	if (f_v) {
 		cout << "syntax_tree_node::init_terminal_node_text done" << endl;
 	}
 }
 
+
+// entrance point 2
+
+
 void syntax_tree_node::init_terminal_node_text_with_exponent(
 		syntax_tree *Tree,
 		std::string &value_text,
-		int exponent,
+		int exp,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -343,24 +385,88 @@ void syntax_tree_node::init_terminal_node_text_with_exponent(
 		cout << "syntax_tree_node::init_terminal_node_text_with_exponent" << endl;
 	}
 
-	syntax_tree_node::Tree = Tree;
-	f_terminal = true;
+	if (Find_symbol(value_text) == -1) {
+		if (f_v) {
+			cout << "syntax_tree_node::init_terminal_node_text_with_exponent "
+					"the object does not exist: name = " << value_text << endl;
+		}
+		syntax_tree_node::Tree = Tree;
+		f_terminal = true;
 
-	if (exponent != 1) {
-		f_has_exponent = true;
-		syntax_tree_node::exponent = exponent;
+		if (exp != 1) {
+			f_has_exponent = true;
+			syntax_tree_node::exponent = exp;
+		}
+		else {
+			f_has_exponent = false;
+			syntax_tree_node::exponent = 0;
+		}
+		T = NEW_OBJECT(syntax_tree_node_terminal);
+		T->f_text = true;
+		T->value_text.assign(value_text);
+		type = operation_type_nothing;
+		nb_nodes = 0;
+		f_has_monomial = false;
+		f_has_minus = false;
 	}
 	else {
-		f_has_exponent = false;
-		syntax_tree_node::exponent = 0;
+		if (f_v) {
+			cout << "syntax_tree_node::init_terminal_node_text_with_exponent "
+					"the object exists: name = " << value_text << endl;
+		}
+
+		data_structures::symbolic_object_builder *Builder;
+
+		Builder = Get_symbol(value_text);
+
+		formula_vector *Formula_vector;
+
+		Formula_vector = Builder->Formula_vector;
+
+		if (Formula_vector->len > 1) {
+			cout << "syntax_tree_node::init_terminal_node_text_with_exponent "
+					"the object exists: name = " << value_text
+					<< " but it is not of scalar type" << endl;
+			exit(1);
+		}
+
+		formula *V;
+
+		V = &Formula_vector->V[0];
+
+		syntax_tree *tree;
+
+		tree = V->tree;
+
+
+		if (f_v) {
+			cout << "syntax_tree_node::init_terminal_node_text_with_exponent "
+					"before tree->copy_to" << endl;
+		}
+
+		tree->copy_to(
+				Tree,
+				this,
+				verbose_level);
+
+		if (f_v) {
+			cout << "syntax_tree_node::init_terminal_node_text_with_exponent "
+					"after tree->copy_to" << endl;
+			//print_subtree_easy(cout);
+			//cout << endl;
+		}
+
+		if (exp != 1) {
+			if (f_has_exponent) {
+				exponent *= exp;
+			}
+			else {
+				f_has_exponent = true;
+				exponent = exp;
+			}
+		}
+
 	}
-	T = NEW_OBJECT(syntax_tree_node_terminal);
-	T->f_text = true;
-	T->value_text.assign(value_text);
-	type = operation_type_nothing;
-	nb_nodes = 0;
-	f_has_monomial = false;
-	f_has_minus = false;
 
 	if (f_v) {
 		cout << "syntax_tree_node::init_terminal_node_text_with_exponent done" << endl;
@@ -3360,7 +3466,7 @@ int syntax_tree_node::is_constant_zero(int verbose_level)
 
 void syntax_tree_node::collect_variables(int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	int f_v = false;//(verbose_level >= 1);
 
 	if (f_v) {
 		cout << "syntax_tree_node::collect_variables" << endl;

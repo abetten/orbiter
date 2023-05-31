@@ -1890,6 +1890,10 @@ public:
 	int matrix_entry_i;
 	int matrix_entry_j;
 
+	int f_vector_entry;
+	std::string vector_entry_source;
+	int vector_entry_i;
+
 	int f_collect;
 	std::string collect_source;
 	std::string collect_by;
@@ -1978,6 +1982,10 @@ public:
 			std::string &label,
 			int verbose_level);
 	void do_matrix_entry(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_vector_entry(
 			symbolic_object_builder_description *Descr,
 			std::string &label,
 			int verbose_level);

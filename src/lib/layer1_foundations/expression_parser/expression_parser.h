@@ -526,7 +526,7 @@ public:
 	void init_terminal_node_text_with_exponent(
 			syntax_tree *Tree,
 			std::string &value_text,
-			int exponent,
+			int exp,
 			int verbose_level);
 	void add_empty_plus_node_with_exponent(
 			syntax_tree *Tree,
