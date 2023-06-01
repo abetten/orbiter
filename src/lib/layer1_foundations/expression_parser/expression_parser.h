@@ -35,6 +35,7 @@ public:
 			int f_evaluate,
 			std::string &parameters,
 			int verbose_level);
+	// uses the old parser
 	void evaluate(
 			std::string &formula_label,
 			std::string &parameters,
@@ -188,6 +189,9 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
+	int f_has_managed_variables;
+	std::string managed_variables_text;
+
 	formula *V;
 	int len;
 
@@ -202,11 +206,14 @@ public:
 			std::string &label_txt, std::string &label_tex,
 			std::string &text,
 			field_theory::finite_field *Fq,
-			std::string &managed_variables,
+			int f_managed_variables,
+			std::string &managed_variables_text,
 			int f_matrix, int nb_rows,
 			int verbose_level);
 	void init_and_allocate(
 			std::string &label_txt, std::string &label_tex,
+			int f_has_managed_variables,
+			std::string managed_variables_text,
 			int len, int verbose_level);
 	int is_integer_matrix();
 	void get_integer_matrix(int *&M, int verbose_level);
@@ -221,19 +228,22 @@ public:
 			std::vector<std::string> &S, std::ostream &ost);
 	void print_vector_latex(
 			std::vector<std::string> &S, std::ostream &ost);
-	void print_latex(std::ostream &ost);
+	void print_latex(std::ostream &ost, std::string &label);
 	void make_A_minus_lambda_Identity(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
 			std::string &variable,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_managed_variables,
+			std::string &managed_variables_text,
 			int verbose_level);
 	void substitute(formula_vector *Source,
 			formula_vector *Target,
 			std::string &substitution_variables,
 			std::string &label_txt,
 			std::string &label_tex,
+			std::string &managed_variables,
 			int verbose_level);
 	void simplify(
 			formula_vector *A,
@@ -246,6 +256,7 @@ public:
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			std::string &managed_variables,
 			int f_write_trees,
 			int verbose_level);
 	void characteristic_polynomial(
@@ -254,18 +265,21 @@ public:
 			std::string &variable,
 			std::string &label_txt,
 			std::string &label_tex,
+			std::string &managed_variables_text,
 			int verbose_level);
 	void determinant(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			std::string &managed_variables_text,
 			int verbose_level);
 	void right_nullspace(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			std::string &managed_variables,
 			int verbose_level);
 	void minor(
 			formula_vector *A,
@@ -273,12 +287,14 @@ public:
 			int i, int j,
 			std::string &label_txt,
 			std::string &label_tex,
+			std::string &managed_variables_text,
 			int verbose_level);
 	void symbolic_nullspace(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			std::string &managed_variables,
 			int verbose_level);
 	void multiply_2by2_from_the_left(
 			formula_vector *M,
@@ -287,6 +303,7 @@ public:
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			std::string &managed_variables_text,
 			int verbose_level);
 	void latex_tree(int verbose_level);
 	void collect_variables(int verbose_level);
@@ -335,8 +352,9 @@ public:
 	std::string string_representation_Sajeeb();
 	std::string string_representation_formula(int f_latex, int verbose_level);
 	void print(std::ostream &ost);
-	void init_empty_formula(
+	void init_empty_plus_node(
 			std::string &label, std::string &label_tex,
+			std::string &managed_variables_text,
 			field_theory::finite_field *Fq,
 			int verbose_level);
 	void init_formula(
@@ -344,6 +362,7 @@ public:
 			std::string &managed_variables, std::string &formula_text,
 			field_theory::finite_field *Fq,
 			int verbose_level);
+	// using the old parser
 	void init_formula_from_tree(
 			std::string &label, std::string &label_tex,
 			field_theory::finite_field *Fq,
@@ -353,10 +372,13 @@ public:
 			std::string &label, std::string &label_tex,
 			int value,
 			field_theory::finite_field *Fq,
+			std::string &managed_variables,
 			int verbose_level);
 	void init_formula_Sajeeb(
 			std::string &label, std::string &label_tex,
-			std::string &managed_variables, std::string &formula_text,
+			int f_managed_variables,
+			std::string &managed_variables,
+			std::string &formula_text,
 			field_theory::finite_field *Fq,
 			int verbose_level);
 	int is_homogeneous(
@@ -375,6 +397,7 @@ public:
 			std::ostream &ost);
 	void substitute(
 			std::vector<std::string> &variables,
+			std::string &managed_variables_text,
 			formula **S,
 			formula *output,
 			int verbose_level);
@@ -386,6 +409,10 @@ public:
 			formula *input_1b,
 			formula *input_2a,
 			formula *input_2b,
+			field_theory::finite_field *Fq,
+			std::string &label_txt,
+			std::string &label_tex,
+			std::string &managed_variables_text,
 			int verbose_level);
 	void simplify(
 			int verbose_level);
@@ -474,7 +501,7 @@ public:
 // syntax_tree_node.cpp
 // #############################################################################
 
-#define MAX_NODES_SYNTAX_TREE 1000
+//#define MAX_NODES_SYNTAX_TREE 1000
 
 
 //! interior node in a syntax tree
@@ -496,7 +523,9 @@ public:
 
 	// ! if we are not a terminal node, we can have any number of nodes
 	int nb_nodes;
-	syntax_tree_node *Nodes[MAX_NODES_SYNTAX_TREE];
+	int nb_nodes_allocated;
+	syntax_tree_node **Nodes;
+	//syntax_tree_node *Nodes[MAX_NODES_SYNTAX_TREE];
 
 	int f_has_monomial; // only for multiplication nodes
 	int *monomial;
@@ -624,6 +653,12 @@ public:
 	int is_constant_zero(int verbose_level);
 	void collect_variables(int verbose_level);
 	int terminal_node_get_variable_index();
+	void count_nodes(
+			int &nb_add, int &nb_mult, int &nb_int, int &nb_text, int &max_degree);
+	void reallocate(int nb_nodes_needed, int verbose_level);
+	void append_node(syntax_tree_node *child, int verbose_level);
+	void insert_nodes_at(int idx, int nb_to_insert, int verbose_level);
+	int needs_to_be_expanded();
 
 };
 
@@ -639,6 +674,7 @@ public:
 class syntax_tree {
 public:
 	int f_has_managed_variables;
+	std::string managed_variables_text;
 	std::vector<std::string> managed_variables;
 
 	field_theory::finite_field *Fq;
@@ -652,6 +688,7 @@ public:
 
 	void init(
 			field_theory::finite_field *Fq,
+			int f_managed_variables, std::string &managed_variables_text,
 			int verbose_level);
 	void init_root_node(int verbose_level);
 	void init_int(
@@ -660,6 +697,9 @@ public:
 	void print_to_vector(
 			std::vector<std::string> &rep, int f_latex,
 			int verbose_level);
+	void count_nodes(
+			int &nb_add, int &nb_mult, int &nb_int, int &nb_text, int &max_degree);
+	int nb_nodes_total();
 	void print(std::ostream &ost);
 	void print_easy(std::ostream &ost);
 	void print_monomial(
@@ -721,9 +761,15 @@ public:
 			int verbose_level);
 	void print_variables_in_line(std::ostream &ost);
 	int find_variable(
-			std::string var,
+			std::string &var,
+			int verbose_level);
+	int find_managed_variable(
+			std::string &var,
 			int verbose_level);
 	void add_variable(std::string &var);
+	int get_number_of_variables();
+	std::string &get_variable_name(int index);
+	int needs_to_be_expanded();
 
 };
 

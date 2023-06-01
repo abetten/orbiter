@@ -35,6 +35,7 @@ void expression_parser_domain::parse_and_evaluate(
 		int f_evaluate,
 		std::string &parameters,
 		int verbose_level)
+// uses the old parser
 {
 	int f_v = (verbose_level >= 1);
 
@@ -53,7 +54,7 @@ void expression_parser_domain::parse_and_evaluate(
 		cout << "expression_parser_domain::parse_and_evaluate "
 				"before tree->init" << endl;
 	}
-	tree->init(Fq, verbose_level);
+	tree->init(Fq, true, managed_variables, verbose_level);
 	if (f_v) {
 		cout << "expression_parser_domain::parse_and_evaluate "
 				"after tree->init" << endl;

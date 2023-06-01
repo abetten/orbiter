@@ -885,7 +885,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-set ";
+			cout << "-set " << endl;
 			Set_builder_description->print();
 		}
 	}
@@ -910,7 +910,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-vector ";
+			cout << "-vector " << endl;
 			Vector_builder_description->print();
 		}
 	}
@@ -935,7 +935,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-symbolic_object ";
+			cout << "-symbolic_object " << endl;
 			Symbolic_object_builder_description->print();
 		}
 	}
@@ -962,7 +962,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-combinatorial_objects ";
+			cout << "-combinatorial_objects " << endl;
 			Data_input_stream_description->print();
 		}
 	}
@@ -987,7 +987,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-geometry_builder ";
+			cout << "-geometry_builder " << endl;
 			Geometry_builder_description->print();
 		}
 	}
@@ -1012,7 +1012,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-vector_ge ";
+			cout << "-vector_ge " << endl;
 			Vector_ge_description->print();
 		}
 	}
@@ -1036,7 +1036,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-action_on_forms ";
+			cout << "-action_on_forms " << endl;
 			Action_on_forms_descr->print();
 		}
 	}
@@ -1060,7 +1060,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-orbits ";
+			cout << "-orbits " << endl;
 			Orbits_create_description->print();
 		}
 	}
@@ -1084,7 +1084,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-poset_classification_control ";
+			cout << "-poset_classification_control " << endl;
 			Poset_classification_control->print();
 		}
 	}
@@ -1108,7 +1108,7 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-poset_classification_activity ";
+			cout << "-poset_classification_activity " << endl;
 			Poset_classification_activity->print();
 		}
 	}

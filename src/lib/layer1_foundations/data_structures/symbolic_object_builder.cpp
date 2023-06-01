@@ -50,7 +50,7 @@ void symbolic_object_builder::init(
 	}
 
 	symbolic_object_builder::Descr = Descr;
-	string managed_variables;
+	//string managed_variables;
 
 
 	if (Descr->f_field) {
@@ -74,6 +74,7 @@ void symbolic_object_builder::init(
 					"-ring " << Descr->ring_label << endl;
 		}
 		Ring = Get_ring(Descr->ring_label);
+#if 0
 		int i;
 		for (i = 0; i < Ring->nb_variables; i++) {
 			managed_variables += Ring->get_symbol(i);
@@ -81,6 +82,7 @@ void symbolic_object_builder::init(
 				managed_variables += ",";
 			}
 		}
+#endif
 	}
 
 	if (Descr->f_ring && !Descr->f_field && !Descr->f_field_pointer) {
@@ -97,7 +99,11 @@ void symbolic_object_builder::init(
 	if (Descr->f_text) {
 		if (f_v) {
 			cout << "symbolic_object_builder::init "
-					"-text" << Descr->text_txt << endl;
+					"-text " << Descr->text_txt << endl;
+			if (Descr->f_managed_variables) {
+				cout << "symbolic_object_builder::init "
+						"-managed_variables " << Descr->managed_variables << endl;
+			}
 		}
 
 
@@ -111,7 +117,8 @@ void symbolic_object_builder::init(
 				Descr->label_tex,
 				Descr->text_txt,
 				Fq,
-				managed_variables,
+				Descr->f_managed_variables,
+				Descr->managed_variables,
 				Descr->f_matrix, Descr->nb_rows,
 				verbose_level);
 		if (f_v) {
@@ -392,7 +399,7 @@ void symbolic_object_builder::init(
 		cout << "final tree:" << endl;
 		Formula_vector->print_formula(cout, verbose_level);
 
-		Formula_vector->print_latex(cout);
+		Formula_vector->print_latex(cout, label);
 
 		//latex_split(std::string &name, int split_level, int split_mod, int verbose_level)
 
@@ -431,6 +438,7 @@ void symbolic_object_builder::do_determinant(
 			O1->Formula_vector,
 			Fq,
 			label, label,
+			Descr->managed_variables,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_determinant "
@@ -497,6 +505,7 @@ void symbolic_object_builder::do_characteristic_polynomial(
 			Fq,
 			variable,
 			label, label,
+			Descr->managed_variables,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_characteristic_polynomial "
@@ -540,6 +549,7 @@ void symbolic_object_builder::do_substitute(
 			O_target->Formula_vector,
 			Descr->substitute_variables,
 			label, label,
+			Descr->managed_variables,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_substitute "
@@ -620,6 +630,7 @@ void symbolic_object_builder::do_expand(
 			O_source->Formula_vector,
 			Fq,
 			label, label,
+			Descr->managed_variables,
 			Descr->f_write_trees_during_expand,
 			verbose_level);
 	if (f_v) {
@@ -663,6 +674,7 @@ void symbolic_object_builder::do_right_nullspace(
 			O_source->Formula_vector,
 			Fq,
 			label, label,
+			Descr->managed_variables,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_right_nullspace "
@@ -705,6 +717,7 @@ void symbolic_object_builder::do_minor(
 			Fq,
 			minor_i, minor_j,
 			label, label,
+			Descr->managed_variables,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_minor "
@@ -745,6 +758,7 @@ void symbolic_object_builder::do_symbolic_nullspace(
 			O_source->Formula_vector,
 			Fq,
 			label, label,
+			Descr->managed_variables,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_symbolic_nullspace "
@@ -845,6 +859,8 @@ void symbolic_object_builder::do_stack(
 
 		Formula_vector->init_and_allocate(
 					label_txt, label_tex,
+					true,
+					Descr->managed_variables,
 					len, verbose_level);
 
 		n = 0;
@@ -941,6 +957,8 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 
 	Formula_vector->init_and_allocate(
 				label, label,
+				true,
+				Descr->managed_variables,
 				len, verbose_level);
 
 	if (f_v) {
@@ -953,6 +971,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 			i, j,
 			O_source->Fq,
 			label, label,
+			Descr->managed_variables,
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left "
@@ -1003,6 +1022,8 @@ void symbolic_object_builder::do_matrix_entry(
 
 	Formula_vector->init_and_allocate(
 				label, label,
+				true,
+				Descr->managed_variables,
 				len, verbose_level);
 
 	if (f_v) {
@@ -1060,6 +1081,8 @@ void symbolic_object_builder::do_vector_entry(
 
 	Formula_vector->init_and_allocate(
 				label, label,
+				true,
+				Descr->managed_variables,
 				len, verbose_level);
 
 	if (f_v) {
@@ -1116,7 +1139,8 @@ void symbolic_object_builder::do_collect(
 			variable, 0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "symbolic_object_builder::do_collect highest_order_term = " << d << endl;
+		cout << "symbolic_object_builder::do_collect "
+				"highest_order_term = " << d << endl;
 	}
 
 	int len = d + 1;
@@ -1126,13 +1150,21 @@ void symbolic_object_builder::do_collect(
 
 	Formula_vector->init_and_allocate(
 				label, label,
+				true,
+				Descr->managed_variables,
 				len, 0 /*verbose_level*/);
 
 	int i, j, j1;
 
 	for (i = 0; i < len; i++) {
-		Formula_vector->V[i].init_empty_formula(
-				label, label /*label_tex*/, Fq, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "symbolic_object_builder::do_collect "
+					"init_empty_plus_node " << i << endl;
+		}
+		Formula_vector->V[i].init_empty_plus_node(
+				label, label /*label_tex*/,
+				Descr->managed_variables,
+				Fq, 0 /*verbose_level*/);
 	}
 
 
@@ -1143,12 +1175,15 @@ void symbolic_object_builder::do_collect(
 	}
 	for (i = 0; i < O_source->Formula_vector->V[0].tree->Root->nb_nodes; i++) {
 
-		if (f_v) {
-			cout << "symbolic_object_builder::do_collect node " << i << " / " << O_source->Formula_vector->V[0].tree->Root->nb_nodes << endl;
-		}
-
 		j = O_source->Formula_vector->V[0].tree->Root->Nodes[i]->exponent_of_variable(
 				variable, 0 /*verbose_level*/);
+
+		if (f_v) {
+			cout << "symbolic_object_builder::do_collect "
+					"node " << i << " / " << O_source->Formula_vector->V[0].tree->Root->nb_nodes
+					<< " has degree " << j << " in " << variable
+					<< endl;
+		}
 
 
 		expression_parser::syntax_tree_node *Output_node;
@@ -1163,8 +1198,19 @@ void symbolic_object_builder::do_collect(
 		j1 = Output_node->exponent_of_variable_destructive(variable);
 
 
-		Formula_vector->V[j].tree->Root->Nodes[Formula_vector->V[j].tree->Root->nb_nodes++] = Output_node;
+		Formula_vector->V[j].tree->Root->append_node(Output_node, 0 /* verbose_level */);
+		//Formula_vector->V[j].tree->Root->Nodes[Formula_vector->V[j].tree->Root->nb_nodes++] = Output_node;
 
+	}
+
+	if (f_v) {
+		for (i = 0; i < len; i++) {
+			cout << "symbolic_object_builder::do_collect "
+					"node " << i << " / " << len
+					<< " has " << Formula_vector->V[i].tree->Root->nb_nodes << " terms"
+					<< endl;
+
+		}
 	}
 
 	if (f_v) {

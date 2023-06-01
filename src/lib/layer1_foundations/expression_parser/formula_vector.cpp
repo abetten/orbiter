@@ -27,6 +27,9 @@ formula_vector::formula_vector()
 	//std::string label_txt;
 	//std::string label_tex;
 
+	f_has_managed_variables = false;
+	//std::string managed_variables_text;
+
 	V = NULL;
 	len = 0;
 
@@ -50,7 +53,8 @@ void formula_vector::init_from_text(
 		std::string &label_tex,
 		std::string &text,
 		field_theory::finite_field *Fq,
-		std::string &managed_variables,
+		int f_managed_variables,
+		std::string &managed_variables_text,
 		int f_matrix, int nb_rows,
 		int verbose_level)
 {
@@ -62,6 +66,16 @@ void formula_vector::init_from_text(
 
 	formula_vector::label_txt = label_txt;
 	formula_vector::label_tex = label_tex;
+
+	if (f_managed_variables) {
+		f_has_managed_variables = true;
+		formula_vector::managed_variables_text = managed_variables_text;
+		cout << "formula_vector::init_from_text managed_variables_text = " << managed_variables_text << endl;
+	}
+	else {
+		f_has_managed_variables = false;
+		cout << "formula_vector::init_from_text no managed variables" << endl;
+	}
 
 	data_structures::string_tools ST;
 	std::vector<std::string> input;
@@ -84,6 +98,8 @@ void formula_vector::init_from_text(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			f_managed_variables,
+			managed_variables_text,
 			input.size(), verbose_level);
 
 	if (f_v) {
@@ -115,7 +131,9 @@ void formula_vector::init_from_text(
 
 		V[i].init_formula_Sajeeb(
 				element_label_txt, element_label_tex,
-				managed_variables, input[i],
+				f_managed_variables,
+				managed_variables_text,
+				input[i],
 				Fq,
 				verbose_level - 2);
 
@@ -133,7 +151,7 @@ void formula_vector::init_from_text(
 					"formula " << i << " / " << len << " is: " << s << endl;
 		}
 
-
+#if 0
 		if (f_v) {
 			cout << "formula_vector::init_from_text "
 					"before V[i].export_graphviz" << endl;
@@ -146,6 +164,7 @@ void formula_vector::init_from_text(
 			cout << "formula_vector::init_from_text "
 					"after V[i].export_graphviz" << endl;
 		}
+#endif
 
 	}
 
@@ -167,6 +186,8 @@ void formula_vector::init_from_text(
 
 void formula_vector::init_and_allocate(
 		std::string &label_txt, std::string &label_tex,
+		int f_has_managed_variables,
+		std::string managed_variables_text,
 		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -176,6 +197,10 @@ void formula_vector::init_and_allocate(
 	}
 	formula_vector::label_txt = label_txt;
 	formula_vector::label_tex = label_tex;
+
+	formula_vector::f_has_managed_variables = f_has_managed_variables;
+	formula_vector::managed_variables_text = managed_variables_text;
+
 
 	V = NEW_OBJECTS(formula, len);
 	formula_vector::len = len;
@@ -375,6 +400,24 @@ void formula_vector::print_formula(std::ostream &ost, int verbose_level)
 		print_matrix(S, ost);
 		ost << endl;
 
+		ost << "number of nodes:";
+		int i, j, nb;
+		vector<string> S2;
+
+
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < nb_cols; j++) {
+				nb = V[i * nb_cols + j].tree->nb_nodes_total();
+				string s;
+
+				s = std::to_string(nb);
+				S2.push_back(s);
+			}
+		}
+
+		print_matrix(S2, ost);
+		ost << endl;
+
 	}
 	else {
 		ost << "symbolic vector of size "
@@ -397,7 +440,91 @@ void formula_vector::print_formula(std::ostream &ost, int verbose_level)
 
 		ost << endl;
 
+		int h;
+		for (h = 0; h < len; h++) {
+
+			cout << "entry " << h << " / " << len << ":" << endl;
+			data_structures::int_matrix *I;
+			int *Coeff;
+
+			V[h].collect_monomial_terms(
+					I, Coeff,
+					verbose_level);
+
+			if (I == NULL) {
+
+				cout << "nothing" << endl;
+			}
+			else {
+
+				int i;
+
+				for (i = 0; i < I->m; i++) {
+					cout << Coeff[i] << " : ";
+					Int_vec_print(cout, I->M + i * I->n, I->n);
+					cout << endl;
+				}
+
+				FREE_OBJECT(I);
+				FREE_int(Coeff);
+			}
+
+			cout << endl;
+
+		}
+
 	}
+
+
+	ost << "number of nodes:" << endl;
+	int i, nb;
+	vector<string> S2;
+
+
+	for (i = 0; i < len; i++) {
+
+
+		nb = V[i].tree->nb_nodes_total();
+
+
+		string s;
+
+		s = std::to_string(nb);
+		S2.push_back(s);
+	}
+
+	print_vector(S2, ost);
+	ost << endl;
+
+	ost << "number of nodes in detail:" << endl;
+	vector<string> S3;
+
+
+	for (i = 0; i < len; i++) {
+
+
+		nb = V[i].tree->nb_nodes_total();
+
+		int nb_add, nb_mult, nb_int, nb_text, max_degree;
+
+		V[i].tree->count_nodes(
+				nb_add, nb_mult, nb_int, nb_text,
+				max_degree);
+
+		string s;
+
+		s = std::to_string(nb) + "=" +
+				std::to_string(nb_add) + "," +
+				std::to_string(nb_mult) + ";" +
+				std::to_string(nb_int) + "," +
+				std::to_string(nb_text) + ";" +
+				std::to_string(max_degree);
+		S3.push_back(s);
+	}
+
+	print_vector(S3, ost);
+	ost << endl;
+
 }
 
 
@@ -478,7 +605,7 @@ void formula_vector::print_vector_latex(
 }
 
 
-void formula_vector::print_latex(std::ostream &ost)
+void formula_vector::print_latex(std::ostream &ost, std::string &label)
 {
 	int i;
 	vector<string> v;
@@ -493,6 +620,7 @@ void formula_vector::print_latex(std::ostream &ost)
 		int j;
 
 		ost << "$$" << endl;
+		ost << label << " = " << endl;
 		ost << "\\left[" << endl;
 		ost << "\\begin{array}{*{" << nb_cols << "}c}" << endl;
 		for (i = 0; i < nb_rows; i++) {
@@ -513,6 +641,7 @@ void formula_vector::print_latex(std::ostream &ost)
 
 		if (len > 1) {
 			ost << "$$" << endl;
+			ost << label << " = " << endl;
 			ost << "\\left[" << endl;
 			ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
 			for (i = 0; i < len; i++) {
@@ -526,6 +655,7 @@ void formula_vector::print_latex(std::ostream &ost)
 		else {
 			ost << "$$" << endl;
 			//ost << "\\left[" << endl;
+			ost << label << " = " << endl;
 			ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
 			for (i = 0; i < len; i++) {
 				ost << v[i];
@@ -546,6 +676,8 @@ void formula_vector::make_A_minus_lambda_Identity(
 		std::string &variable,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_managed_variables,
+		std::string &managed_variables_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -587,6 +719,8 @@ void formula_vector::make_A_minus_lambda_Identity(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			f_managed_variables,
+			managed_variables_text,
 			n2, verbose_level);
 
 
@@ -676,6 +810,7 @@ void formula_vector::substitute(
 		std::string &substitution_variables,
 		std::string &label_txt,
 		std::string &label_tex,
+		std::string &managed_variables,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -709,6 +844,8 @@ void formula_vector::substitute(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			true,
+			managed_variables,
 			len, verbose_level - 2);
 
 	f_matrix = true;
@@ -748,7 +885,9 @@ void formula_vector::substitute(
 
 			Out = V + s * Target->len + t;
 
-			T->substitute(variables, S, Out, verbose_level - 2);
+			T->substitute(
+					variables, managed_variables,
+					S, Out, verbose_level - 2);
 
 		}
 	}
@@ -778,6 +917,8 @@ void formula_vector::simplify(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			true,
+			A->managed_variables_text,
 			A->len, verbose_level);
 
 
@@ -833,6 +974,7 @@ void formula_vector::expand(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		std::string &managed_variables,
 		int f_write_trees,
 		int verbose_level)
 {
@@ -844,6 +986,8 @@ void formula_vector::expand(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			true,
+			managed_variables,
 			A->len, verbose_level);
 
 
@@ -875,7 +1019,7 @@ void formula_vector::expand(
 					<< " before V[i].expand_in_place" << endl;
 		}
 
-		V[i].expand_in_place(f_write_trees, verbose_level - 2);
+		V[i].expand_in_place(f_write_trees, verbose_level);
 
 		if (f_v) {
 			cout << "formula_vector::expand "
@@ -904,6 +1048,7 @@ void formula_vector::characteristic_polynomial(
 		std::string &variable,
 		std::string &label_txt,
 		std::string &label_tex,
+		std::string &managed_variables_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -923,6 +1068,8 @@ void formula_vector::characteristic_polynomial(
 			variable,
 			label_txt,
 			label_tex,
+			true,
+			managed_variables_text,
 			verbose_level);
 	if (f_v) {
 		cout << "formula_vector::characteristic_polynomial "
@@ -943,7 +1090,7 @@ void formula_vector::characteristic_polynomial(
 		cout << "formula_vector::characteristic_polynomial "
 				"before Tree->init" << endl;
 	}
-	Tree->init(Fq, verbose_level);
+	Tree->init(Fq, f_has_managed_variables, managed_variables_text, verbose_level);
 	if (f_v) {
 		cout << "formula_vector::characteristic_polynomial "
 				"after Tree->init" << endl;
@@ -969,6 +1116,8 @@ void formula_vector::characteristic_polynomial(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			true,
+			managed_variables_text,
 			1, verbose_level);
 
 	V[0].init_formula_from_tree(
@@ -993,6 +1142,7 @@ void formula_vector::determinant(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		std::string &managed_variables_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1032,7 +1182,7 @@ void formula_vector::determinant(
 		cout << "formula_vector::determinant "
 				"before Tree->init" << endl;
 	}
-	Tree->init(Fq, verbose_level);
+	Tree->init(Fq, true, managed_variables_text, verbose_level);
 	if (f_v) {
 		cout << "formula_vector::determinant "
 				"after Tree->init" << endl;
@@ -1057,6 +1207,8 @@ void formula_vector::determinant(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			true,
+			managed_variables_text,
 			1 /*len*/, verbose_level);
 
 	V[0].init_formula_from_tree(
@@ -1079,6 +1231,7 @@ void formula_vector::right_nullspace(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		std::string &managed_variables,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1146,6 +1299,8 @@ void formula_vector::right_nullspace(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			true,
+			managed_variables_text,
 			nullspace_m * nullspace_n, verbose_level);
 
 	int i;
@@ -1160,6 +1315,7 @@ void formula_vector::right_nullspace(
 				label_txt, label_tex,
 				value,
 				Fq,
+				managed_variables,
 				verbose_level);
 	}
 
@@ -1185,6 +1341,7 @@ void formula_vector::minor(
 		int i, int j,
 		std::string &label_txt,
 		std::string &label_tex,
+		std::string &managed_variables_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1229,6 +1386,8 @@ void formula_vector::minor(
 	M->init_and_allocate(
 			label_txt,
 			label_tex,
+			true,
+			managed_variables_text,
 			(n - 1) * (n - 1), verbose_level);
 
 	M->f_matrix = true;
@@ -1280,6 +1439,7 @@ void formula_vector::minor(
 			Fq,
 			label_txt,
 			label_tex,
+			managed_variables_text,
 			verbose_level);
 
 	if (f_v) {
@@ -1334,6 +1494,7 @@ void formula_vector::symbolic_nullspace(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		std::string &managed_variables,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1367,6 +1528,8 @@ void formula_vector::symbolic_nullspace(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			true,
+			managed_variables_text,
 			n, verbose_level);
 
 	f_matrix = true;
@@ -1381,6 +1544,8 @@ void formula_vector::symbolic_nullspace(
 
 	B->init_and_allocate(
 				label_txt, label_tex,
+				true,
+				managed_variables_text,
 				n * n, verbose_level);
 	B->f_matrix = true;
 	B->nb_rows = n;
@@ -1419,6 +1584,7 @@ void formula_vector::symbolic_nullspace(
 				label_txt, label_tex,
 				1,
 				Fq,
+				managed_variables,
 				verbose_level);
 		if (f_v) {
 			cout << "formula_vector::symbolic_nullspace "
@@ -1440,6 +1606,7 @@ void formula_vector::symbolic_nullspace(
 				i, j,
 				label_txt,
 				label_tex,
+				managed_variables_text,
 				verbose_level);
 
 		// copy the partial result into the output vector:
@@ -1469,6 +1636,7 @@ void formula_vector::multiply_2by2_from_the_left(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		std::string &managed_variables_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1498,6 +1666,8 @@ void formula_vector::multiply_2by2_from_the_left(
 	init_and_allocate(
 			label_txt,
 			label_tex,
+			true,
+			managed_variables_text,
 			m * n, verbose_level);
 
 	f_matrix = true;
@@ -1538,6 +1708,10 @@ void formula_vector::multiply_2by2_from_the_left(
 						&M->V[i * n + v],
 						&A2->V[0 * 2 + 1],
 						&M->V[j * n + v],
+						Fq,
+						label_txt,
+						label_tex,
+						managed_variables_text,
 						verbose_level);
 				if (f_v) {
 					V[u * n + v].print_easy(cout);
@@ -1559,6 +1733,10 @@ void formula_vector::multiply_2by2_from_the_left(
 						&M->V[i * n + v],
 						&A2->V[1 * 2 + 1],
 						&M->V[j * n + v],
+						Fq,
+						label_txt,
+						label_tex,
+						managed_variables_text,
 						verbose_level);
 				if (f_v) {
 					V[u * n + v].print_easy(cout);
@@ -1633,7 +1811,13 @@ void formula_vector::collect_variables(int verbose_level)
 	int i;
 
 	for (i = 0; i < len; i++) {
+		if (f_v) {
+			cout << "formula_vector::collect_variables i=" << i << endl;
+		}
 		V[i].collect_variables(verbose_level);
+		if (f_v) {
+			cout << "formula_vector::collect_variables i=" << i << " done" << endl;
+		}
 	}
 
 

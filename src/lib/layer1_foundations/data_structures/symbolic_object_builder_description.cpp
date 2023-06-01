@@ -29,6 +29,8 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_label_tex = false;
 	//std::string label_tex;
 
+	f_managed_variables = false;
+	//std::string managed_variables;
 
 	f_text = false;
 	//std::string text_txt;
@@ -139,6 +141,13 @@ int symbolic_object_builder_description::read_arguments(
 			label_tex.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_tex " << label_tex << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-managed_variables") == 0) {
+			f_managed_variables = true;
+			managed_variables.assign(argv[++i]);
+			if (f_v) {
+				cout << "-managed_variables " << managed_variables << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-text") == 0) {
@@ -380,6 +389,9 @@ void symbolic_object_builder_description::print()
 	}
 	if (f_label_tex) {
 		cout << "-label_tex " << label_tex << endl;
+	}
+	if (f_managed_variables) {
+		cout << "-managed_variables " << managed_variables << endl;
 	}
 	if (f_text) {
 		cout << "-text " << text_txt << endl;

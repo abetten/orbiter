@@ -844,6 +844,7 @@ void expression_parser_sajeeb::multiply(
 void expression_parser_sajeeb::convert_to_orbiter(
 		expression_parser::syntax_tree *&Tree,
 		field_theory::finite_field *F,
+		std::string &managed_variables,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -870,7 +871,7 @@ void expression_parser_sajeeb::convert_to_orbiter(
 			cout << "expression_parser_sajeeb::convert_to_orbiter "
 					"before Tree->init" << endl;
 		}
-		Tree->init(F, verbose_level);
+		Tree->init(F, true, managed_variables, verbose_level);
 		if (f_v) {
 			cout << "expression_parser_sajeeb::convert_to_orbiter "
 					"after Tree->init" << endl;

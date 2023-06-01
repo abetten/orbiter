@@ -21,11 +21,15 @@ namespace expression_parser {
 syntax_tree::syntax_tree()
 {
 	f_has_managed_variables = false;
+	//std::string managed_variables_text
 	//std::vector<std::string> managed_variables;
 
 	Fq = NULL;
 
 	Root = NULL;
+
+	//std::vector<std::string> variables;
+
 }
 
 syntax_tree::~syntax_tree()
@@ -37,6 +41,7 @@ syntax_tree::~syntax_tree()
 
 void syntax_tree::init(
 		field_theory::finite_field *Fq,
+		int f_managed_variables, std::string &managed_variables_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -46,6 +51,25 @@ void syntax_tree::init(
 	}
 
 	syntax_tree::Fq = Fq;
+
+	if (f_managed_variables) {
+
+		f_has_managed_variables = true;
+
+
+		syntax_tree::managed_variables_text.assign(managed_variables_text);
+		data_structures::string_tools ST;
+
+
+		ST.parse_comma_separated_list(
+				managed_variables_text, managed_variables,
+				verbose_level);
+
+	}
+	else {
+		f_has_managed_variables = false;
+
+	}
 
 	if (f_v) {
 		cout << "syntax_tree::init done" << endl;
@@ -110,6 +134,29 @@ void syntax_tree::print_to_vector(
 				"after Root->print_subtree_to_vector" << endl;
 	}
 
+}
+
+void syntax_tree::count_nodes(
+		int &nb_add, int &nb_mult, int &nb_int, int &nb_text,
+		int &max_degree)
+{
+	nb_add = 0;
+	nb_mult = 0;
+	nb_int = 0;
+	nb_text = 0;
+	max_degree = 0;
+	Root->count_nodes(nb_add, nb_mult, nb_int, nb_text, max_degree);
+}
+
+int syntax_tree::nb_nodes_total()
+{
+	int nb_add, nb_mult, nb_int, nb_text, max_degree, nb_total;
+
+	count_nodes(nb_add, nb_mult, nb_int, nb_text, max_degree);
+
+	nb_total = nb_add + nb_mult + nb_int + nb_text;
+
+	return nb_total;
 }
 
 void syntax_tree::print(std::ostream &ost)
@@ -430,8 +477,9 @@ void syntax_tree::multiply_by_minus_one(
 	mult_node->add_numerical_factor(
 				minus_one, verbose_level);
 
-	mult_node->Nodes[mult_node->nb_nodes] = Root;
-	mult_node->nb_nodes++;
+	mult_node->append_node(Root, 0 /* verbose_level */);
+	//Nodes[mult_node->nb_nodes] = Root;
+	//mult_node->nb_nodes++;
 
 	Root = mult_node;
 
@@ -500,8 +548,14 @@ void syntax_tree::make_determinant(
 
 	add_node = NEW_OBJECT(syntax_tree_node);
 
+	if (f_v) {
+		cout << "syntax_tree::make_determinant before add_node->init_empty_plus_node_with_exponent" << endl;
+	}
 	add_node->init_empty_plus_node_with_exponent(
 			this, 1 /* exponent */, verbose_level);
+	if (f_v) {
+		cout << "syntax_tree::make_determinant after add_node->init_empty_plus_node_with_exponent" << endl;
+	}
 
 	Root = add_node;
 
@@ -535,11 +589,33 @@ void syntax_tree::make_determinant(
 
 		mult_node = NEW_OBJECT(syntax_tree_node);
 
+		if (f_v) {
+			cout << "syntax_tree::make_determinant "
+					"a = " << a << " / " << N
+					<< " before mult_node->init_empty_multiplication_node" << endl;
+		}
+
 		mult_node->init_empty_multiplication_node(this, verbose_level);
 
+		if (f_v) {
+			cout << "syntax_tree::make_determinant "
+					"a = " << a << " / " << N
+					<< " after mult_node->init_empty_multiplication_node" << endl;
+		}
+
 		if (sgn == -1) {
+			if (f_v) {
+				cout << "syntax_tree::make_determinant "
+						"a = " << a << " / " << N
+						<< " before mult_node->add_numerical_factor" << endl;
+			}
 			mult_node->add_numerical_factor(
 					minus_one, verbose_level);
+			if (f_v) {
+				cout << "syntax_tree::make_determinant "
+						"a = " << a << " / " << N
+						<< " after mult_node->add_numerical_factor" << endl;
+			}
 		}
 
 		int i;
@@ -557,14 +633,16 @@ void syntax_tree::make_determinant(
 					this,
 					node, verbose_level);
 
-			mult_node->Nodes[mult_node->nb_nodes++] = node;
+			mult_node->append_node(node, verbose_level);
+			//Nodes[mult_node->nb_nodes++] = node;
 
 		}
 
 
 		// add another summand to the addition:
 
-		add_node->Nodes[add_node->nb_nodes++] = mult_node;
+		add_node->append_node(mult_node, verbose_level);
+		//add_node->Nodes[add_node->nb_nodes++] = mult_node;
 
 
 	}
@@ -684,8 +762,10 @@ void syntax_tree::make_linear_combination(
 	mult_node2->init_empty_multiplication_node(this, verbose_level);
 
 
-	add_node->Nodes[add_node->nb_nodes++] = mult_node1;
-	add_node->Nodes[add_node->nb_nodes++] = mult_node2;
+	add_node->append_node(mult_node1, 0 /*verbose_level*/);
+	add_node->append_node(mult_node2, 0 /*verbose_level*/);
+	//add_node->Nodes[add_node->nb_nodes++] = mult_node1;
+	//add_node->Nodes[add_node->nb_nodes++] = mult_node2;
 
 
 	syntax_tree_node *Node1a_copy;
@@ -703,11 +783,15 @@ void syntax_tree::make_linear_combination(
 	Node2a->copy_to(this, Node2a_copy, verbose_level);
 	Node2b->copy_to(this, Node2b_copy, verbose_level);
 
-	mult_node1->Nodes[mult_node1->nb_nodes++] = Node1a_copy;
-	mult_node1->Nodes[mult_node1->nb_nodes++] = Node1b_copy;
+	mult_node1->append_node(Node1a_copy, 0 /*verbose_level*/);
+	mult_node1->append_node(Node1b_copy, 0 /*verbose_level*/);
+	//mult_node1->Nodes[mult_node1->nb_nodes++] = Node1a_copy;
+	//mult_node1->Nodes[mult_node1->nb_nodes++] = Node1b_copy;
 
-	mult_node2->Nodes[mult_node2->nb_nodes++] = Node2a_copy;
-	mult_node2->Nodes[mult_node2->nb_nodes++] = Node2b_copy;
+	mult_node2->append_node(Node2a_copy, 0 /*verbose_level*/);
+	mult_node2->append_node(Node2b_copy, 0 /*verbose_level*/);
+	//mult_node2->Nodes[mult_node2->nb_nodes++] = Node2a_copy;
+	//mult_node2->Nodes[mult_node2->nb_nodes++] = Node2b_copy;
 
 
 	Root = add_node;
@@ -790,8 +874,14 @@ void syntax_tree::print_variables(std::ostream &ost,
 {
 	int i;
 
+	if (f_has_managed_variables) {
+		for (i = 0; i < managed_variables.size(); i++) {
+			ost << i << " : " << managed_variables[i] << endl;
+		}
+	}
+	ost << "-" << endl;
 	for (i = 0; i < variables.size(); i++) {
-		ost << i << " : " << variables[i] << endl;
+		ost << managed_variables.size() + i << " : " << variables[i] << endl;
 	}
 }
 
@@ -799,6 +889,15 @@ void syntax_tree::print_variables_in_line(std::ostream &ost)
 {
 	int i;
 
+	if (f_has_managed_variables) {
+		for (i = 0; i < managed_variables.size(); i++) {
+			ost << managed_variables[i];
+			if (i < managed_variables.size() - 1) {
+				ost << ",";
+			}
+		}
+		ost << ";";
+	}
 	for (i = 0; i < variables.size(); i++) {
 		ost << variables[i];
 		if (i < variables.size() - 1) {
@@ -808,16 +907,46 @@ void syntax_tree::print_variables_in_line(std::ostream &ost)
 }
 
 int syntax_tree::find_variable(
-		std::string var,
+		std::string &var,
 		int verbose_level)
 {
 	data_structures::string_tools String;
 
 
+	int i, cmp, idx;
+
+	idx = find_managed_variable(var,
+			0 /* verbose_level */);
+
+	if (idx >= 0) {
+		return idx;
+	}
+	else {
+		for (i = 0; i < variables.size(); i++) {
+			cmp = String.compare_string_string(variables[i], var);
+			if (cmp == 0) {
+				return managed_variables.size() + i;
+			}
+		}
+	}
+	return -1;
+}
+
+int syntax_tree::find_managed_variable(
+		std::string &var,
+		int verbose_level)
+{
+	data_structures::string_tools String;
+
+
+	if (!f_has_managed_variables) {
+		return -1;
+	}
+
 	int i, cmp;
 
-	for (i = 0; i < variables.size(); i++) {
-		cmp = String.compare_string_string(variables[i], var);
+	for (i = 0; i < managed_variables.size(); i++) {
+		cmp = String.compare_string_string(managed_variables[i], var);
 		if (cmp == 0) {
 			return i;
 		}
@@ -830,16 +959,50 @@ void syntax_tree::add_variable(std::string &var)
 	data_structures::string_tools String;
 	int cmp;
 	std::vector<std::string>::iterator it;
+	int idx;
 
-
-	for (it = variables.begin(); it < variables.end(); it++) {
-		cmp = String.compare_string_string(*it, var);
-		if (cmp > 0) {
-			variables.insert(it, var);
-			return;
-		}
+	idx = find_managed_variable(var,
+			0 /* verbose_level */);
+	if (idx >= 0) {
+		return;
 	}
-	variables.push_back(var);
+	else {
+		for (it = variables.begin(); it < variables.end(); it++) {
+			cmp = String.compare_string_string(*it, var);
+			if (cmp > 0) {
+				variables.insert(it, var);
+				return;
+			}
+		}
+		variables.push_back(var);
+	}
+}
+
+int syntax_tree::get_number_of_variables()
+{
+	int nb = 0;
+
+	if (f_has_managed_variables) {
+		nb += managed_variables.size();
+	}
+	nb += variables.size();
+	return nb;
+
+}
+
+std::string &syntax_tree::get_variable_name(int index)
+{
+	if (index < managed_variables.size()) {
+		return managed_variables[index];
+	}
+	index -= managed_variables.size();
+	return variables[index];
+}
+
+
+int syntax_tree::needs_to_be_expanded()
+{
+	return Root->needs_to_be_expanded();
 }
 
 

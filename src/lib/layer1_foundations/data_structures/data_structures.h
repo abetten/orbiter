@@ -1822,6 +1822,9 @@ public:
 	int f_label_tex;
 	std::string label_tex;
 
+	int f_managed_variables;
+	std::string managed_variables;
+
 	int f_text;
 	std::string text_txt;
 

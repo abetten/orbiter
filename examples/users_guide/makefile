@@ -1709,6 +1709,10 @@ test_2_8:
 	make symbolic_test_4_expand
 	make symbolic_test_4_expand_draw
 	make symbolic_test_5_expand
+	make test_expand_1
+	make test_expand_2
+	make test_expand_3
+	make test_expand_4
 	make symbolic_objects_building_on_earlier_objects
 	make symbolic_objects_self_referential_1
 	make symbolic_objects_self_referential_2
@@ -1723,6 +1727,7 @@ test_2_8:
 	make symbolic_object1
 	make symbolic_object1_expand
 	make symbolic_object1_draw
+	make symbolic_object1_evaluate
 	make symbolic_Eckardt_surface
 	make symbolic_Eckardt_surface_q13_a3_b1
 	make symbolic_Fabcd
@@ -1816,6 +1821,82 @@ symbolic_test_5_expand:
 	pdflatex M1.tex
 	open M1.pdf
 
+
+
+test_expand_1:
+	$(ORBITER) -v 3 \
+		-define Fq -finite_field -q 31 -end \
+		-define f -symbolic_object \
+			-field Fq \
+			-text "a*(x+y)" \
+		-end \
+		-define fe -symbolic_object \
+			-field Fq \
+			-expand f \
+			-write_trees_during_expand \
+		-end
+	pdflatex fe_0_efsxsfscsc.tex
+	open fe_0_efsxsfscsc.pdf
+
+test_expand_2:
+	$(ORBITER) -v 3 \
+		-define Fq -finite_field -q 31 -end \
+		-define f -symbolic_object \
+			-field Fq \
+			-text "a*(-(x-y))" \
+		-end \
+		-define fe -symbolic_object \
+			-field Fq \
+			-expand f \
+			-write_trees_during_expand \
+		-end
+	pdflatex fe_0_efsxsfscsc.tex
+	open fe_0_efsxsfscsc.pdf
+
+test_expand_3:
+	$(ORBITER) -v 3 \
+		-define Fq -finite_field -q 31 -end \
+		-define f -symbolic_object \
+			-field Fq \
+			-text "a*(-(x-y)+(x+y))" \
+		-end \
+		-define fe -symbolic_object \
+			-field Fq \
+			-expand f \
+			-write_trees_during_expand \
+		-end
+	pdflatex fe_0_efs.tex
+	open fe_0_efs.pdf
+	pdflatex fe_0_efsx.tex
+	open fe_0_efsx.pdf
+	pdflatex fe_0_efsxsf.tex
+	open fe_0_efsxsf.pdf
+	pdflatex fe_0_efsxsfs.tex
+	open fe_0_efsxsfs.pdf
+	pdflatex fe_0_efsxsfsc.tex
+	open fe_0_efsxsfsc.pdf
+	pdflatex fe_0_efsxsfscsefsx.tex
+	open fe_0_efsxsfscsefsx.pdf
+	pdflatex fe_0_efsxsfscsefsxsf.tex
+	open fe_0_efsxsfscsefsxsf.pdf
+	pdflatex fe_0_efsxsfscsefsxsfscsc.tex
+	open fe_0_efsxsfscsefsxsfscsc.pdf
+
+
+test_expand_4:
+	$(ORBITER) -v 3 \
+		-define Fq -finite_field -q 31 -end \
+		-define f -symbolic_object \
+			-field Fq \
+			-text "x*(a+(x*(a+(x*(a+x*(a+x*(a+x*(a+x))))))))" \
+		-end \
+		-define fe -symbolic_object \
+			-field Fq \
+			-expand f \
+			-write_trees_during_expand \
+		-end
+	pdflatex fe_0_efsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsc.tex
+	open fe_0_efsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsc.pdf
 
 
 symbolic_objects_building_on_earlier_objects:
@@ -2041,6 +2122,24 @@ symbolic_object1_draw:
 
 
 
+symbolic_object1_evaluate:
+	$(ORBITER) -v 3 \
+		-define Fq -finite_field -q 13 -end \
+		-define f -symbolic_object \
+			-field Fq \
+			-text "a+2*b^2*(x-y)+3*-(2*c^4+3*d-(a*b*c)^2)^3" \
+		-end \
+		-define assignment -symbolic_object \
+			-field Fq \
+			-text "1,2,3,4,5,6" \
+		-end \
+		-define eval -symbolic_object \
+			-field Fq \
+			-substitute "a,b,c,d,x,y" f assignment \
+		-end \
+
+
+
 
 
 symbolic_Eckardt_surface:
@@ -2048,6 +2147,7 @@ symbolic_Eckardt_surface:
 		-define F -finite_field -q 13 -end \
 		-define M -symbolic_object \
 			-field F \
+			-managed_variables "X0,X1,X2,X3" \
 			-text $(ECKARDT_SURFACE_EQN) \
 		-end
 
@@ -2058,6 +2158,7 @@ symbolic_Eckardt_surface_q13_a3_b1:
 		-define F -finite_field -q 13 -end \
 		-define M -symbolic_object \
 			-field F \
+			-managed_variables "X0,X1,X2,X3" \
 			-text $(ECKARDT_SURFACE_EQN) \
 		-end \
 		-define L -symbolic_object \
@@ -2082,7 +2183,24 @@ symbolic_Fabcd:
 		-define F -finite_field -q 13 -end \
 		-define M -symbolic_object \
 			-field F \
+			-managed_variables "X0,X1,X2,X3" \
 			-text $(F_abcd_eqn) \
+		-end
+
+
+symbolic_Fabcd_expand:
+	$(ORBITER) -v 3 \
+		-define Fq -finite_field -q 13 -end \
+		-define Fabcd -symbolic_object \
+			-field Fq \
+			-managed_variables "X0,X1,X2,X3" \
+			-text $(F_abcd_eqn) \
+		-end \
+		-define Fabcd_e -symbolic_object \
+			-field Fq \
+			-managed_variables "X0,X1,X2,X3" \
+			-expand Fabcd \
+			-write_trees_during_expand \
 		-end
 
 
@@ -2103,6 +2221,7 @@ symbolic_Fabcd_q31_E18:
 		-define F -finite_field -q 31 -end \
 		-define M -symbolic_object \
 			-field F \
+			-managed_variables "X0,X1,X2,X3" \
 			-text $(F_abcd_eqn) \
 		-end \
 		-define L -symbolic_object \
@@ -2147,6 +2266,7 @@ symbolic_Fabcd_q31_E18_with_implicit_substitution:
 		-end \
 		-define M -symbolic_object \
 			-field F \
+			-managed_variables "X0,X1,X2,X3" \
 			-text $(F_abcd_eqn) \
 		-end \
 		-define M2 -symbolic_object \
@@ -2179,6 +2299,7 @@ symbolic_Fabcd_q31_E18_with_implicit_substitution_do_not_simplify:
 		-end \
 		-define M -symbolic_object \
 			-field F \
+			-managed_variables "X0,X1,X2,X3" \
 			-text $(F_abcd_eqn) \
 			-do_not_simplify \
 		-end
@@ -2272,6 +2393,7 @@ Clebsch_map_up_Fabcd:
 		-define F -finite_field -q 13 -end \
 		-define M -symbolic_object \
 			-field F \
+			-managed_variables "X0,X1,X2,X3" \
 			-text $(F_abcd_eqn) \
 		-end \
 		-define L -symbolic_object \
@@ -2280,15 +2402,18 @@ Clebsch_map_up_Fabcd:
 		-end \
 		-define C1 -symbolic_object \
 			-field F \
+			-managed_variables "y0,y1,y2" \
 			-substitute "X0,X1,X2,X3" M L \
 		-end \
 		-define M -symbolic_object \
 			-field F \
 			-expand C1 \
+			-managed_variables "y0,y1,y2" \
 			-write_trees_during_expand \
 		-end \
 		-define coeff_t -symbolic_object \
 			-field F \
+			-managed_variables "y0,y1,y2" \
 			-collect M t \
 		-end
 

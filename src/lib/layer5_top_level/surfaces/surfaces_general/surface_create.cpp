@@ -2455,6 +2455,7 @@ int surface_create::create_surface_by_equation(
 			O_target->Formula_vector,
 			equation_parameters /*Descr->substitute_variables*/,
 			name_of_formula, name_of_formula_tex,
+			managed_variables,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation "
@@ -2492,6 +2493,7 @@ int surface_create::create_surface_by_equation(
 			Formula_vector_after_sub,
 			F,
 			name_of_formula, name_of_formula_tex,
+			managed_variables,
 			f_write_trees_during_expand,
 			verbose_level);
 	if (f_v) {
