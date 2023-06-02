@@ -933,9 +933,10 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 	ost << endl;
 	ost << "int main(int argc, char **argv)" << endl;
 	ost << "{" << endl;
-	ost << "\torbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;" << endl;
-	ost << "\torbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;" << endl;
-	ost << "\torbiter::layer5_applications::user_interface::The_Orbiter_top_level_session->Orbiter_session = new orbiter::layer1_foundations::orbiter_kernel_system::orbiter_session;" << endl;
+	//ost << "\torbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;" << endl;
+	//ost << "\torbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;" << endl;
+	//ost << "\torbiter::layer5_applications::user_interface::The_Orbiter_top_level_session->Orbiter_session = new orbiter::layer1_foundations::orbiter_kernel_system::orbiter_session;" << endl;
+	ost << "\torbiter::layer5_applications::user_interface::orbiter_top_level_session Orbiter;" << endl;
 	ost << "\torbiter::layer1_foundations::field_theory::finite_field *F;" << endl;
 	ost << "\torbiter::layer1_foundations::orbiter_kernel_system::os_interface Os;" << endl;
 	ost << "\tint q = " << q << ";" << endl;
@@ -943,7 +944,7 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 	ost << "\tint i;" << endl;
 	ost << "\t" << endl;
 	ost << "\tF = NEW_OBJECT(orbiter::layer1_foundations::field_theory::finite_field);" << endl;
-	ost << "\tF->finite_field_init_small_order(q, false /*f_without_tables*/, 0 /*verbose_level*/);" << endl;
+	ost << "\tF->finite_field_init_small_order(q, false /*f_without_tables*/, false /* f_compute_related_fields */, 0 /*verbose_level*/);" << endl;
 	ost << "\t" << endl;
 	ost << "\tint *input;" << endl;
 	ost << "\tint *output;" << endl;

@@ -41,6 +41,7 @@ void blt_set_domain_with_action::init(
 		actions::action *A,
 		geometry::projective_space *P,
 		layer1_foundations::orthogonal_geometry::orthogonal *O,
+		int f_create_extension_fields,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -59,24 +60,32 @@ void blt_set_domain_with_action::init(
 		cout << "blt_set_domain_with_action::init "
 				"before Blt_set_domain->init_blt_set_domain" << endl;
 	}
-	Blt_set_domain->init_blt_set_domain(O, P, verbose_level);
+	Blt_set_domain->init_blt_set_domain(O, P, f_create_extension_fields, verbose_level);
 	if (f_v) {
 		cout << "blt_set_domain_with_action::init "
 				"after Blt_set_domain->init" << endl;
 	}
 
 
+	if (f_create_extension_fields) {
+		PF = NEW_OBJECT(combinatorics::polynomial_function_domain);
 
-	PF = NEW_OBJECT(combinatorics::polynomial_function_domain);
-
-	if (f_v) {
-		cout << "blt_set_domain_with_action::init "
-				"before PF->init" << endl;
+		if (f_v) {
+			cout << "blt_set_domain_with_action::init "
+					"before PF->init" << endl;
+		}
+		PF->init(Blt_set_domain->F, 1 /*n*/, verbose_level);
+		if (f_v) {
+			cout << "blt_set_domain_with_action::init "
+					"after PF->init" << endl;
+		}
 	}
-	PF->init(Blt_set_domain->F, 1 /*n*/, verbose_level);
-	if (f_v) {
-		cout << "blt_set_domain_with_action::init "
-				"after PF->init" << endl;
+	else {
+		if (f_v) {
+			cout << "blt_set_domain_with_action::init "
+					"not setting up polynomial_function_domain" << endl;
+		}
+
 	}
 
 

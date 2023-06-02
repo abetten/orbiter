@@ -1458,7 +1458,7 @@ void crc_codes::crc_general_file_based(
 	ifstream ist(fname_in, ios::binary);
 
 	{
-		ofstream ost(fname_out, ios::binary);
+		ofstream ost(fname_out);
 
 
 		for (cnt = 0; cnt < nb_blocks; cnt++) {
@@ -1470,10 +1470,10 @@ void crc_codes::crc_general_file_based(
 				L = information_length;
 			}
 
-			// read information_length bytes
-			// (or less, in case we reached the end of he file)
+			// read a block of information:
 
 			ist.read((char *) buffer, L);
+
 
 			// create 2 byte = 16 bit check and add to the block:
 
@@ -1527,6 +1527,153 @@ void crc_codes::crc_general_file_based(
 	}
 
 }
+
+
+void crc_codes::split_binary_file_to_ascii_polynomials_256(
+		std::string &fname_in, std::string &fname_out,
+		int block_length, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "crc_codes::split_binary_file_to_ascii_polynomials_256 "
+				"fname_in=" << fname_in << endl;
+		cout << "crc_codes::split_binary_file_to_ascii_polynomials_256 "
+				"fname_out=" << fname_out << endl;
+		cout << "crc_codes::split_binary_file_to_ascii_polynomials_256 "
+				"block_length=" << block_length << endl;
+	}
+
+
+	data_structures::string_tools ST;
+
+	orbiter_kernel_system::file_io Fio;
+
+	long int N, L, nb_blocks, cnt;
+	uint8_t *buffer;
+
+	N = Fio.file_size(fname_in);
+
+	if (f_v) {
+		cout << "crc_codes::split_binary_file_to_ascii_polynomials_256 "
+				"input file size = " << N << endl;
+	}
+
+	nb_blocks = (N + block_length - 1) / block_length;
+	if (f_v) {
+		cout << "crc_codes::split_binary_file_to_ascii_polynomials_256 "
+				"nb_blocks = " << nb_blocks << endl;
+	}
+
+	buffer = (uint8_t *) NEW_char(block_length);
+
+
+	ifstream ist(fname_in, ios::binary);
+
+	{
+		ofstream ost(fname_out, ios::binary);
+
+		int line_pos;
+
+		ost << "# polynomially encoded data in makefile format" << endl;
+		ost << "BLOCK_LENGTH=" << block_length << endl;
+		ost << "SYMBOL_SET_SIZE=" << 256 << endl;
+		ost << "DATA_SIZE=" << N << endl;
+		ost << "NB_BLOCKS=" << nb_blocks << endl;
+		ost << "DATA" << "=";
+		ost << "\"";
+
+		line_pos = 6;
+		for (cnt = 0; cnt < nb_blocks; cnt++) {
+
+			if ((cnt + 1) * block_length > N) {
+				L = N - cnt * block_length;
+			}
+			else {
+				L = block_length;
+			}
+
+			// read information_length bytes
+			// (or less, in case we reached the end of he file)
+
+			ist.read((char *) buffer, L);
+
+			//ost << "POLY_" << cnt << "=";
+
+			int i;
+			int f_first = true;
+
+			for (i = 0; i < L; i++) {
+				int a = buffer[i];
+				if (a) {
+					if (f_first) {
+						f_first = false;
+					}
+					else {
+						ost << "+";
+					}
+					//ost << a;
+
+					{
+						std::stringstream ss;
+						string s;
+
+						ss << a;
+						s = ss.str();
+
+						ost << s;
+						line_pos += s.length();
+					}
+
+					if (i) {
+						ost << "*x";
+						line_pos += 2;
+						if (i > 1) {
+							ost << "^";
+							line_pos += 2;
+							{
+								std::stringstream ss;
+								string s;
+
+								ss << i;
+								s = ss.str();
+
+								ost << s;
+								line_pos += s.length();
+							}
+						}
+					}
+				}
+				if (line_pos > 75) {
+					ost << "\\" << endl;
+					line_pos = 0;
+				}
+			}
+			if (cnt < nb_blocks - 1) {
+				ost << ",\\";
+				ost << endl;
+				line_pos = 0;
+			}
+
+
+		} // next block
+		ost << "\"";
+		ost << endl;
+		ost << "#END" << endl;
+
+	}
+	cout << "Written file " << fname_out << " of size "
+			<< Fio.file_size(fname_out) << endl;
+
+
+
+	if (f_v) {
+		cout << "crc_codes::split_binary_file_to_ascii_polynomials_256 done" << endl;
+	}
+
+}
+
+
 
 enum CRC_type crc_codes::detect_type_of_CRC(std::string &crc_type, int verbose_level)
 {

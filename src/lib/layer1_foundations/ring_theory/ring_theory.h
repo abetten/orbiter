@@ -977,7 +977,10 @@ public:
 	void rank_longinteger(
 			unipoly_object p, longinteger_object &rank);
 	int degree(unipoly_object p);
+	void print_object_latex(unipoly_object p, std::ostream &ost);
 	void print_object(unipoly_object p, std::ostream &ost);
+	void print_object_sstr_latex(
+			unipoly_object p, std::stringstream &ost);
 	void print_object_sstr(
 			unipoly_object p, std::stringstream &ost);
 	void print_object_tight(

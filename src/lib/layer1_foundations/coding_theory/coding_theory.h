@@ -323,6 +323,9 @@ public:
 			std::string &fname_in, std::string &fname_out,
 			CRC_type type,
 			int block_length, int verbose_level);
+	void split_binary_file_to_ascii_polynomials_256(
+			std::string &fname_in, std::string &fname_out,
+			int block_length, int verbose_level);
 	enum CRC_type detect_type_of_CRC(std::string &crc_type, int verbose_level);
 	int get_check_size_in_bytes(enum CRC_type type);
 #if 0

@@ -715,6 +715,38 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	else if (Descr->f_crc_encode_as_polynomials) {
+		cout << "-crc_encode_as_polynomials "
+				<< " " << Descr->crc_encode_as_polynomials_fname_in
+				<< " " << Descr->crc_encode_as_polynomials_fname_out
+				<< " " << Descr->crc_encode_as_polynomials_block_length
+				<< " " << Descr->crc_encode_as_polynomials_symbol_size
+				<< endl;
+
+		coding_theory::crc_codes Crc_codes;
+
+
+		if (Descr->crc_encode_as_polynomials_symbol_size == 256) {
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"before Crc_codes.split_binary_file_to_ascii_polynomials_256" << endl;
+			}
+			Crc_codes.split_binary_file_to_ascii_polynomials_256(
+					Descr->crc_encode_as_polynomials_fname_in,
+					Descr->crc_encode_as_polynomials_fname_out,
+					Descr->crc_encode_as_polynomials_block_length,
+					verbose_level - 1);
+			if (f_v) {
+				cout << "coding_theoretic_activity::perform_activity "
+						"after Crc_codes.split_binary_file_to_ascii_polynomials_256" << endl;
+			}
+		}
+		else {
+			cout << "I do not have an encoder with symbol size " << Descr->crc_encode_as_polynomials_symbol_size << endl;
+			exit(1);
+		}
+
+	}
 
 #if 0
 	else if (Descr->f_crc_new_file_based) {

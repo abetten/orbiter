@@ -147,6 +147,12 @@ public:
 	std::string crc_encode_file_based_crc_type;
 	int crc_encode_file_based_block_length;
 
+	int f_crc_encode_as_polynomials;
+	std::string crc_encode_as_polynomials_fname_in;
+	std::string crc_encode_as_polynomials_fname_out;
+	int crc_encode_as_polynomials_block_length;
+	int crc_encode_as_polynomials_symbol_size;
+
 	int f_find_CRC_polynomials;
 	int find_CRC_polynomials_nb_errors;
 	int find_CRC_polynomials_information_bits;

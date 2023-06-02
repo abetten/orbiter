@@ -33,6 +33,8 @@ orthogonal_space_with_action_description::orthogonal_space_with_action_descripti
 
 	f_without_group = false;
 
+	f_create_extension_fields = false;
+
 }
 
 
@@ -87,6 +89,12 @@ int orthogonal_space_with_action_description::read_arguments(
 				cout << "-without_group "<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-create_extension_fields") == 0) {
+			f_create_extension_fields = true;
+			if (f_v) {
+				cout << "-create_extension_fields "<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -122,6 +130,9 @@ void orthogonal_space_with_action_description::print()
 	}
 	if (f_without_group) {
 		cout << "without group" << endl;
+	}
+	if (f_create_extension_fields) {
+		cout << "-create_extension_fields "<< endl;
 	}
 }
 

@@ -100,6 +100,7 @@ blt_set_domain::~blt_set_domain()
 void blt_set_domain::init_blt_set_domain(
 		orthogonal *O,
 		geometry::projective_space *P4,
+		int f_create_extension_fields,
 	int verbose_level)
 // creates a grassmann G43.
 {
@@ -179,14 +180,24 @@ void blt_set_domain::init_blt_set_domain(
 				"after G43->init" << endl;
 	}
 
-	if (f_v) {
-		cout << "blt_set_domain::init_blt_set_domain "
-				"before create_extension_fields" << endl;
+	if (f_create_extension_fields) {
+
+		if (f_v) {
+			cout << "blt_set_domain::init_blt_set_domain "
+					"before create_extension_fields" << endl;
+		}
+		create_extension_fields(verbose_level);
+		if (f_v) {
+			cout << "blt_set_domain::init_blt_set_domain "
+					"after create_extension_fields" << endl;
+		}
 	}
-	create_extension_fields(verbose_level);
-	if (f_v) {
-		cout << "blt_set_domain::init_blt_set_domain "
-				"after create_extension_fields" << endl;
+	else {
+		if (f_v) {
+			cout << "blt_set_domain::init_blt_set_domain "
+					"we are not creating any extension fields" << endl;
+		}
+
 	}
 
 

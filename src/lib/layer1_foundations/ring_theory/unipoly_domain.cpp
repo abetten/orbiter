@@ -524,73 +524,24 @@ int unipoly_domain::degree(unipoly_object p)
 	return i;
 }
 
+void unipoly_domain::print_object_latex(unipoly_object p, std::ostream &ost)
+{
+	std::stringstream s;
+
+	print_object_sstr_latex(p, s);
+	ost << s.str();
+}
+
 
 void unipoly_domain::print_object(unipoly_object p, std::ostream &ost)
 {
-#if 0
-	int i, k;
-	int f_prev = false;
-	string x, y;
-	int f_nothing_printed_at_all = true;
-	int *rep = (int *) p;
-	int d = rep[0]; // degree
-	int *coeff = rep + 1;
-	
-	x.assign(variable_name);
-	if (f_print_sub) {
-		y.assign("_");
-	}
-	else {
-		y.assign("^");
-	}
-	// ost << "(";
-	for (i = d; i >= 0; i--) {
-		k = coeff[i];
-		if (k == 0) {
-			continue;
-		}
-		f_nothing_printed_at_all = false;
-		if (f_prev) {
-			ost << " + ";
-		}
-		if (k != 1 || (i == 0 /*&& !unip_f_use_variable_name*/)) {
-			//l = F->log_alpha(k);
-			//ost << "\\alpha^{" << l << "}";
-			ost << k;
-		}
-		if (i == 0) {
-			//ost << x;
-			//ost << y;
-			//ost << "0";
-		}
-		else if (i == 1) {
-			ost << x;
-			if (f_print_sub) {
-				ost << y;
-				ost << "1";
-			}
-		}
-		else if (i > 1) {
-			ost << x;
-			ost << y;
-			ost << "{" << i << "}";
-		}
-		f_prev = true;
-	}
-	if (f_nothing_printed_at_all) {
-		ost << "0";
-	}
-	// ost << ")";
-	//return ost;
-#else
 	std::stringstream s;
 
 	print_object_sstr(p, s);
 	ost << s.str();
-#endif
 }
 
-void unipoly_domain::print_object_sstr(
+void unipoly_domain::print_object_sstr_latex(
 		unipoly_object p, std::stringstream &ost)
 {
 	int i, k;
@@ -648,6 +599,69 @@ void unipoly_domain::print_object_sstr(
 	// ost << ")";
 	//return ost;
 }
+
+void unipoly_domain::print_object_sstr(
+		unipoly_object p, std::stringstream &ost)
+{
+	int i, k;
+	int f_prev = false;
+	string x, y;
+	int f_nothing_printed_at_all = true;
+	int *rep = (int *) p;
+	int d = rep[0]; // degree
+	int *coeff = rep + 1;
+
+	x.assign(variable_name);
+	if (f_print_sub) {
+		y.assign("_");
+	}
+	else {
+		y.assign("^");
+	}
+	// ost << "(";
+	for (i = d; i >= 0; i--) {
+		k = coeff[i];
+		if (k == 0) {
+			continue;
+		}
+		f_nothing_printed_at_all = false;
+		if (f_prev) {
+			ost << "+";
+		}
+		if (k != 1 || (i == 0 /*&& !unip_f_use_variable_name*/)) {
+			//l = F->log_alpha(k);
+			//ost << "\\alpha^{" << l << "}";
+			ost << k;
+			if (i) {
+				ost << "*";
+			}
+		}
+		if (i == 0) {
+			//ost << x;
+			//ost << y;
+			//ost << "0";
+		}
+		else if (i == 1) {
+			ost << x;
+			if (f_print_sub) {
+				ost << y;
+				ost << "1";
+			}
+		}
+		else if (i > 1) {
+			ost << x;
+			ost << y;
+			ost << i;
+		}
+		f_prev = true;
+	}
+	if (f_nothing_printed_at_all) {
+		ost << "0";
+	}
+	// ost << ")";
+	//return ost;
+}
+
 
 void unipoly_domain::print_object_tight(
 		unipoly_object p, std::ostream &ost)

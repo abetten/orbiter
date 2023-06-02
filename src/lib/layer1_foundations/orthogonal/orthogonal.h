@@ -77,6 +77,7 @@ public:
 	void init_blt_set_domain(
 			orthogonal *O,
 			geometry::projective_space *P4,
+			int f_create_extension_fields,
 		int verbose_level);
 	// creates a grassmann G43.
 	void create_extension_fields(

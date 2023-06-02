@@ -115,6 +115,13 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	//std::string crc_encode_file_based_crc_type;
 	crc_encode_file_based_block_length = 0;
 
+	f_crc_encode_as_polynomials = false;
+	//std::string crc_encode_as_polynomials_fname_in;
+	//std::string crc_encode_as_polynomials_fname_out;
+	crc_encode_as_polynomials_block_length = 0;
+	crc_encode_as_polynomials_symbol_size = 0;
+
+
 	f_find_CRC_polynomials = false;
 	find_CRC_polynomials_nb_errors = 0;
 	find_CRC_polynomials_information_bits = 0;
@@ -393,6 +400,20 @@ int coding_theoretic_activity_description::read_arguments(
 						<< crc_encode_file_based_block_length << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-crc_encode_as_polynomials") == 0) {
+			f_crc_encode_as_polynomials = true;
+			crc_encode_as_polynomials_fname_in.assign(argv[++i]);
+			crc_encode_as_polynomials_fname_out.assign(argv[++i]);
+			crc_encode_as_polynomials_block_length = ST.strtoi(argv[++i]);
+			crc_encode_as_polynomials_symbol_size = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-crc_encode_as_polynomials "
+						<< crc_encode_as_polynomials_fname_in << " "
+						<< crc_encode_as_polynomials_fname_out << " "
+						<< crc_encode_as_polynomials_block_length << " "
+						<< crc_encode_as_polynomials_symbol_size << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-find_CRC_polynomials") == 0) {
 			f_find_CRC_polynomials = true;
@@ -586,6 +607,13 @@ void coding_theoretic_activity_description::print()
 				<< crc_encode_file_based_fname_out << " "
 				<< crc_encode_file_based_crc_type << " "
 				<< crc_encode_file_based_block_length << endl;
+	}
+	if (f_crc_encode_as_polynomials) {
+		cout << "-crc_encode_as_polynomials "
+				<< crc_encode_as_polynomials_fname_in << " "
+				<< crc_encode_as_polynomials_fname_out << " "
+				<< crc_encode_as_polynomials_block_length << " "
+				<< crc_encode_as_polynomials_symbol_size << endl;
 	}
 	if (f_find_CRC_polynomials) {
 		cout << "-find_CRC_polynomials "

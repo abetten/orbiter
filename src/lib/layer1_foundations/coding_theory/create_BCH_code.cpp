@@ -110,7 +110,12 @@ void create_BCH_code::init(
 		Nth->FX->mult(*P, Nth->min_poly_beta_Fq[j], Q, verbose_level);
 		if (f_v) {
 			cout << "create_BCH_code::init Q=";
+			Nth->FX->print_object_latex(Q, cout);
+			cout << endl;
+			cout << "create_BCH_code::init BCH_POLYNOMIAL_F" << F->q << "=";
+			cout << "\"";
 			Nth->FX->print_object(Q, cout);
+			cout << "\"";
 			cout << endl;
 		}
 		Nth->FX->assign(Q, *P, 0 /* verbose_level */);

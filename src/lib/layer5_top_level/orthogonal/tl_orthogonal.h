@@ -387,6 +387,7 @@ public:
 			actions::action *A,
 			geometry::projective_space *P,
 			layer1_foundations::orthogonal_geometry::orthogonal *O,
+			int f_create_extension_fields,
 			int verbose_level);
 
 };
@@ -642,6 +643,8 @@ public:
 	int f_label_tex;
 	std::string label_tex;
 	int f_without_group;
+
+	int f_create_extension_fields; // n == 5, BLT-sets
 
 	orthogonal_space_with_action_description();
 	~orthogonal_space_with_action_description();
