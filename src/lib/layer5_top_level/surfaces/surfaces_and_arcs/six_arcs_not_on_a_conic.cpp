@@ -253,7 +253,7 @@ void six_arcs_not_on_a_conic::report_latex(
 	}
 
 	ring_theory::longinteger_object ol, Ol;
-	Ol.create(0, __FILE__, __LINE__);
+	Ol.create(0);
 	for (h = 0; h < nb_arcs_not_on_conic; h++) {
 		data_structures_groups::set_and_stabilizer *R;
 

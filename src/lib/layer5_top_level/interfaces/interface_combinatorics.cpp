@@ -1254,7 +1254,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 	Combi.make_partitions(n, Parts, cnt);
 
 
-	S.create(0, __FILE__, __LINE__);
+	S.create(0);
 
 	cout << "The conjugacy classes in Sym_" << n << " are:" << endl;
 	for (i = 0; i < cnt; i++) {
@@ -1305,7 +1305,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n_file(int n, int verbose
 	Combi.make_partitions(n, Parts, cnt);
 
 
-	S.create(0, __FILE__, __LINE__);
+	S.create(0);
 
 	string fname;
 	char str[1000];

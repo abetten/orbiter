@@ -119,7 +119,7 @@ void minimum_polynomial::compute_subfield_polynomial(
 		{
 			ring_theory::unipoly_object elt;
 
-			Fq.create_object_by_rank(elt, jj, __FILE__, __LINE__, 0 /*verbose_level*/);
+			Fq.create_object_by_rank(elt, jj, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << i << " : " << j << " : " << jj << " : ";
 				Fq.print_object(elt, cout);
@@ -204,7 +204,7 @@ void minimum_polynomial::compute_subfield_polynomial(
 		ring_theory::unipoly_object elt;
 
 		FX.create_object_by_rank(
-				elt, min_poly_rank, __FILE__, __LINE__, verbose_level);
+				elt, min_poly_rank, verbose_level);
 		cout << "minimum_polynomial::compute_subfield_polynomial "
 				"subfield of order " << NT.i_power_j(F->p, e1)
 				<< " : " << min_poly_rank << " = ";

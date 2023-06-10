@@ -261,10 +261,13 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 
 	if (f_vv) {
 		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
-				"before NO->allocate" << endl;
+				"before NO->nauty_output_allocate" << endl;
 	}
 
-	NO->allocate(n, verbose_level - 2);
+	NO->nauty_output_allocate(n,
+			0,
+			n,
+			verbose_level - 2);
 
 
 	partitions = NEW_int(n);
@@ -407,10 +410,13 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph(
 
 	if (f_vv) {
 		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
-				"before NO->allocate" << endl;
+				"before NO->nauty_output_allocate" << endl;
 	}
 
-	NO->allocate(n, verbose_level - 2);
+	NO->nauty_output_allocate(n,
+			0,
+			n,
+			verbose_level - 2);
 
 
 	partition = NEW_int(n);
@@ -494,14 +500,17 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 
 	if (f_vv) {
 		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
-				"before NO->allocate" << endl;
+				"before NO->nauty_output_allocate" << endl;
 	}
 
-	NO->allocate(n, verbose_level - 2);
+	NO->nauty_output_allocate(n,
+			0,
+			n,
+			verbose_level - 2);
 
 	if (f_vv) {
 		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
-				"after NO->allocate" << endl;
+				"after NO->nauty_output_allocate" << endl;
 	}
 
 	partition = NEW_int(n);

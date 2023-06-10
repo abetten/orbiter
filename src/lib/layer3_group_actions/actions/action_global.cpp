@@ -1467,7 +1467,18 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "action_global::set_stabilizer_in_projective_space "
+				"before NO->nauty_output_allocate" << endl;
+	}
+	NO->nauty_output_allocate(nb_rows + nb_cols,
+			0,
+			nb_rows + nb_cols,
+			0 /* verbose_level */);
+	if (f_v) {
+		cout << "action_global::set_stabilizer_in_projective_space "
+				"after NO->nauty_output_allocate" << endl;
+	}
 
 	if (f_v) {
 		cout << "action_global::set_stabilizer_in_projective_space "
@@ -3015,7 +3026,8 @@ void action_global::induce(
 		cout << endl;
 
 		cout << "action_global::induce "
-				"new_action->Stabilizer_chain->A = " << new_action->Stabilizer_chain->get_A()->label << endl;
+				"new_action->Stabilizer_chain->A = "
+				<< new_action->Stabilizer_chain->get_A()->label << endl;
 
 		cout << "action_global::induce old_G->A = ";
 		old_G->A->print_info();
@@ -3506,7 +3518,6 @@ void action_global::make_canonical(
 void action_global::make_element_which_moves_a_line_in_PG3q(
 		action *A,
 		geometry::projective_space_of_dimension_three *P3,
-		//geometry::grassmann *Gr,
 		long int line_rk, int *Elt,
 		int verbose_level)
 {
@@ -3780,7 +3791,15 @@ void action_global::init_base_projective(
 	}
 
 	A->Stabilizer_chain = NEW_OBJECT(actions::stabilizer_chain_base_data);
+	if (f_vv) {
+		cout << "action_global::init_base_projective "
+				"before A->Stabilizer_chain->allocate_base_data" << endl;
+	}
 	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
+	if (f_vv) {
+		cout << "action_global::init_base_projective "
+				"after A->Stabilizer_chain->allocate_base_data" << endl;
+	}
 	//A->Stabilizer_chain->base_len = base_len;
 	//A->allocate_base_data(A->base_len);
 	if (f_vv) {

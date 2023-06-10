@@ -45,6 +45,9 @@ object_with_canonical_form::object_with_canonical_form()
 	design_k = 0;
 	design_sz = 0;
 	SoS = NULL;
+
+	f_extended_incma = false;
+
 	C = NULL;
 }
 
@@ -963,14 +966,19 @@ void object_with_canonical_form::encoding_size_point_set(
 	}
 
 	int nb_rows0, nb_cols0;
+	//int f_extended_incma = false;
 
 	nb_rows0 = P->Subspaces->N_points;
 	nb_cols0 = P->Subspaces->N_lines;
 
-	nb_rows0 += P->Subspaces->N_lines;
-	nb_cols0 += P->Subspaces->Nb_subspaces[2];
+	if (f_extended_incma) {
+		// space for the lines vs planes incidence matrix:
+		nb_rows0 += P->Subspaces->N_lines;
+		nb_cols0 += P->Subspaces->Nb_subspaces[2];
+	}
 
 
+	// for the decoration:
 	nb_rows = nb_rows0 + 1;
 	if (f_v) {
 		cout << "object_with_canonical_form::encoding_size_point_set "
@@ -1171,6 +1179,7 @@ void object_with_canonical_form::encode_point_set(
 	}
 	int i, j;
 	int f_vvv = false; // (verbose_level >= 3);
+	//int f_extended_incma = false;
 	
 
 	C = NEW_OBJECT(data_structures::tally);
@@ -1201,7 +1210,7 @@ void object_with_canonical_form::encode_point_set(
 	nb_rows0 = P->Subspaces->N_points;
 	nb_cols0 = P->Subspaces->N_lines;
 
-	if (P->Subspaces->n >= 3) {
+	if (P->Subspaces->n >= 3 && f_extended_incma) {
 		nb_rows0 += P->Subspaces->N_lines;
 		nb_cols0 += P->Subspaces->Nb_subspaces[2];
 	}
@@ -1216,7 +1225,7 @@ void object_with_canonical_form::encode_point_set(
 
 	//Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
 
-	if (P->Subspaces->n >= 3) {
+	if (P->Subspaces->n >= 3 && f_extended_incma) {
 		Enc->extended_incidence_matrix_projective_space_top_left(P, verbose_level);
 	}
 	else {
@@ -1575,7 +1584,8 @@ void object_with_canonical_form::encode_incidence_geometry(
 	for (i = 0; i < sz; i++) {
 		a = set[i];
 		if (a >= nb_rows * nb_cols) {
-			cout << "object_with_canonical_form::encode_incidence_geometry a >= nb_rows* nb_cols" << endl;
+			cout << "object_with_canonical_form::encode_incidence_geometry "
+					"a >= nb_rows* nb_cols" << endl;
 			cout << "nb_rows = " << nb_rows << endl;
 			cout << "nb_cols = " << nb_cols << endl;
 			cout << "a = " << a << endl;
@@ -1665,14 +1675,16 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 	if (type == t_PTS) {
 		
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PTS split1" << endl;
+			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
+					"t_PTS split1" << endl;
 		}
 		Stack->subset_contiguous(
 				Inc->nb_points() + P->Subspaces->N_lines,
 				Enc->nb_cols - P->Subspaces->N_lines);
 		Stack->split_cell(0);
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PTS split2" << endl;
+			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
+					"t_PTS split2" << endl;
 		}
 		if (Enc->nb_rows - Inc->nb_points()) {
 			Stack->subset_contiguous(
@@ -1686,7 +1698,8 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 	else if (type == t_LNS) {
 		
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_LNS" << endl;
+			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
+					"t_LNS" << endl;
 		}
 		Stack->subset_contiguous(P->Subspaces->N_points, 1);
 		Stack->split_cell(0);
@@ -1700,7 +1713,8 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 	else if (type == t_PNL) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PNL" << endl;
+			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
+					"t_PNL" << endl;
 		}
 		Stack->subset_contiguous(P->Subspaces->N_points, 1);
 		Stack->split_cell(0);
@@ -1714,9 +1728,12 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 	else if (type == t_PAC) {
 		
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_PAC" << endl;
+			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
+					"t_PAC" << endl;
 		}
-		Stack->subset_contiguous(P->Subspaces->N_points, Enc->nb_rows - P->Subspaces->N_points);
+		Stack->subset_contiguous(
+				P->Subspaces->N_points,
+				Enc->nb_rows - P->Subspaces->N_points);
 		Stack->split_cell(0);
 		Stack->subset_contiguous(
 				Inc->nb_points() + P->Subspaces->N_lines,
@@ -1727,7 +1744,8 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 	else if (type == t_INC) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_INC" << endl;
+			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
+					"t_INC" << endl;
 		}
 		Stack->subset_contiguous(v, b);
 		Stack->split_cell(0);
@@ -1736,7 +1754,8 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 	else if (type == t_LS) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition t_LS" << endl;
+			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
+					"t_LS" << endl;
 		}
 		Stack->subset_contiguous(v, Enc->nb_rows - v);
 		Stack->split_cell(0);
@@ -2072,10 +2091,14 @@ void object_with_canonical_form::run_nauty(
 
 	if (verbose_level > 5) {
 		cout << "object_with_canonical_form::run_nauty "
-				"before NO->allocate" << endl;
+				"before NO->nauty_output_allocate" << endl;
 	}
 
-	NO->allocate(Enc->canonical_labeling_len, verbose_level - 2);
+	NO->nauty_output_allocate(
+			Enc->canonical_labeling_len,
+			Enc->invariant_set_start,
+			Enc->invariant_set_size,
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty "

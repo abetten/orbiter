@@ -1336,7 +1336,7 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 	int i;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object go1, ol, Ol;
-	Ol.create(0, __FILE__, __LINE__);
+	Ol.create(0);
 
 	vector<string> References;
 	int *Ago;

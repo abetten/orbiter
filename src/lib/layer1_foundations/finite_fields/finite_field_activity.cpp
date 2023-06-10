@@ -660,7 +660,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		ring_theory::unipoly_object m;
 		ring_theory::longinteger_object rk;
 
-		FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
+		FX.create_object_by_rank(m, 0, verbose_level);
 
 		FX.get_a_primitive_polynomial(
 				m, Descr->get_primitive_polynomial_degree,
@@ -705,7 +705,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 			ring_theory::longinteger_object rk;
 
 			FX.create_object_by_rank(
-					m, 0, __FILE__, __LINE__, verbose_level);
+					m, 0, verbose_level);
 
 			FX.get_a_primitive_polynomial(
 					m, d, verbose_level);
@@ -1128,6 +1128,31 @@ void finite_field_activity::perform_activity(int verbose_level)
 			cout << "finite_field_activity::perform_activity "
 					"after R.polynomial_division_with_report" << endl;
 		}
+	}
+
+	else if (Descr->f_assemble_monopoly) {
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity "
+					"f_assemble_monopoly" << endl;
+		}
+		ring_theory::ring_theory_global R;
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity "
+					"before R.polynomial_division_with_report" << endl;
+		}
+		R.assemble_monopoly(
+				F,
+				Descr->assemble_monopoly_length,
+				Descr->assemble_monopoly_coefficient_vector,
+				Descr->assemble_monopoly_exponent_vector,
+				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity "
+					"after R.f_assemble_monopoly" << endl;
+		}
+
 	}
 
 

@@ -476,11 +476,11 @@ int coding_theory_domain::gilbert_varshamov_lower_bound_for_d(
 	if (f_v) {
 		cout << "coding_theory_domain::gilbert_varshamov_lower_bound_for_d" << endl;
 	}
-	qnmk.create(q, __FILE__, __LINE__);
-	qm1.create(q - 1, __FILE__, __LINE__);
+	qnmk.create(q);
+	qm1.create(q - 1);
 	D.power_int(qnmk, n - k);
-	qm1_power.create(1, __FILE__, __LINE__);
-	S.create(0, __FILE__, __LINE__);
+	qm1_power.create(1);
+	S.create(0);
 	//cout << "gilbert_varshamov_lower_bound_for_d: q=" << q << " n=" << n << " k=" << k << " " << q << "^" << n - k << " = " << qnmk << endl;
 	for (i = 0; ; i++) {
 		Combi.binomial(b, n - 1, i, false);
@@ -531,11 +531,11 @@ int coding_theory_domain::hamming_bound_for_d(
 	if (f_v) {
 		cout << "coding_theory_domain::hamming_bound_for_d" << endl;
 	}
-	qnmk.create(q, __FILE__, __LINE__);
-	qm1.create(q - 1, __FILE__, __LINE__);
+	qnmk.create(q);
+	qm1.create(q - 1);
 	D.power_int(qnmk, n - k);
-	qm1_power.create(1, __FILE__, __LINE__);
-	B.create(0, __FILE__, __LINE__);
+	qm1_power.create(1);
+	B.create(0);
 	if (f_vv) {
 		cout << "coding_theory_domain::hamming_bound_for_d: "
 			"q=" << q << " n=" << n << " k=" << k << " "
@@ -582,22 +582,22 @@ int coding_theory_domain::plotkin_bound_for_d(
 
 	// d \le \frac{n q^{k-1}}{q^k-1}
 
-	qkm1.create(q, __FILE__, __LINE__);
+	qkm1.create(q);
 	D.power_int(qkm1, k - 1);
-	a.create(n, __FILE__, __LINE__);
+	a.create(n);
 	D.mult(a, qkm1, b);
 		// now b = n q^{k-1}
 
-	a.create(q - 1, __FILE__, __LINE__);
+	a.create(q - 1);
 	D.mult(b, a, c);
 		// now c = n q^{k-1} (q - 1)
 
 
-	a.create(q, __FILE__, __LINE__);
+	a.create(q);
 	D.mult(a, qkm1, qk);
 		// now qk = q^k
 
-	a.create(-1, __FILE__, __LINE__);
+	a.create(-1);
 	D.add(qk, a, b);
 		// now b = 2^k - 1
 
@@ -650,11 +650,11 @@ int coding_theory_domain::griesmer_bound_for_n(
 	if (f_v) {
 		cout << "coding_theory_domain::griesmer_bound_for_n" << endl;
 	}
-	one.create(1, __FILE__, __LINE__);
-	d1.create(d, __FILE__, __LINE__);
-	qq.create(q, __FILE__, __LINE__);
-	qi.create(1, __FILE__, __LINE__);
-	S.create(0, __FILE__, __LINE__);
+	one.create(1);
+	d1.create(d);
+	qq.create(q);
+	qi.create(1);
+	S.create(0);
 	if (f_vv) {
 		cout << "coding_theory_domain::griesmer_bound_for_n q=" << q
 				<< " d=" << d << " k=" << k << endl;
@@ -1144,7 +1144,7 @@ void coding_theory_domain::code_weight_enumerator(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
-	int N, h, wt, i;
+	long int N, N100, h, wt, i;
 	int *msg;
 	int *word;
 	int t0, t1, dt;
@@ -1158,18 +1158,25 @@ void coding_theory_domain::code_weight_enumerator(
 	}
 	N = Gg.nb_AG_elements(k, F->q);
 	if (f_v) {
-		cout << N << " messages" << endl;
+		cout << "Number of codewords = " << N << endl;
 	}
+
+	N100 = N / 100;
+	if (f_v) {
+		cout << "1% = " << N100 << endl;
+	}
+
+
 	msg = NEW_int(k);
 	word = NEW_int(n);
 
 	Int_vec_zero(weight_enumerator, n + 1);
 
 	for (h = 0; h < N; h++) {
-		if ((h % ONE_MILLION) == 0) {
+		if ((h % N100) == 0 || (h % ONE_MILLION) == 0) {
 			t1 = Os.os_ticks();
 			dt = t1 - t0;
-			cout << setw(10) << h << " / " << setw(10) << N << " : ";
+			cout << setw(10) << h << " / " << setw(10) << N << " = " << h / N100 << "% : ";
 			Os.time_check_delta(cout, dt);
 			cout << endl;
 			if (f_vv) {
@@ -1219,7 +1226,7 @@ void coding_theory_domain::code_weight_enumerator_fast(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int N, h, wt, i;
+	long int N, h, wt, i;
 	int *msg;
 	int *word;
 	int t0, t1, dt;
@@ -1307,7 +1314,7 @@ void coding_theory_domain::code_projective_weights(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 1);
-	int N, h, wt, i;
+	long int N, h, wt, i;
 	int *msg;
 	int *word;
 	int t0, t1, dt;
@@ -1378,7 +1385,7 @@ void coding_theory_domain::determine_weight_enumerator()
 	ring_theory::longinteger_object *M, *A1, *A2, qk;
 	int i;
 
-	qk.create(q, __FILE__, __LINE__);
+	qk.create(q);
 	D.power_int(qk, k);
 	cout << q << "^" << k << " = " << qk << endl;
 
@@ -1389,12 +1396,12 @@ void coding_theory_domain::determine_weight_enumerator()
 	A1 = NEW_OBJECTS(ring_theory::longinteger_object, n + 1);
 	A2 = NEW_OBJECTS(ring_theory::longinteger_object, n + 1);
 	for (i = 0; i <= n; i++) {
-		A1[i].create(0, __FILE__, __LINE__);
+		A1[i].create(0);
 	}
-	A1[0].create(1, __FILE__, __LINE__);
-	A1[8].create(78, __FILE__, __LINE__);
-	A1[12].create(48, __FILE__, __LINE__);
-	A1[16].create(1, __FILE__, __LINE__);
+	A1[0].create(1);
+	A1[8].create(78);
+	A1[12].create(48);
+	A1[16].create(1);
 	D.matrix_print_tex(cout, A1, n + 1, 1);
 
 	D.matrix_product(M, A1, A2, n + 1, n + 1, 1);
@@ -1420,7 +1427,7 @@ void coding_theory_domain::do_weight_enumerator(
 	int *A;
 	int *base_cols;
 	int *weight_enumerator;
-	int rk, i;
+	long int rk, i;
 	l1_interfaces::latex_interface Li;
 
 	if (f_v) {

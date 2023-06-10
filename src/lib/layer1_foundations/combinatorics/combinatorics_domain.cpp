@@ -2321,15 +2321,15 @@ void combinatorics_domain::binomial(
 				"n=" << n << " k=" << k << endl;
 	}
 	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
+		a.create(0);
 		return;
 	}
 	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 	if (n < TABLE_BINOMIALS_MAX) {
@@ -2342,7 +2342,7 @@ void combinatorics_domain::binomial(
 	else {
 		binomial(b, n, k - 1, verbose_level);
 	}
-	c.create(n - k + 1, __FILE__, __LINE__);
+	c.create(n - k + 1);
 	D.mult(b, c, d);
 	D.integral_division_by_int(d, k, a, r);
 	if (r != 0) {
@@ -2363,15 +2363,15 @@ void combinatorics_domain::binomial_with_table(
 	ring_theory::longinteger_domain D;
 
 	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
+		a.create(0);
 		return;
 	}
 	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 
@@ -2389,7 +2389,7 @@ void combinatorics_domain::binomial_with_table(
 		}
 		for ( ; i <= n; i++) {
 			for (j = 0; j <= i; j++) {
-				tab_binomials2[i * (n + 1) + j].create(0, __FILE__, __LINE__);
+				tab_binomials2[i * (n + 1) + j].create(0);
 			}
 		}
 		if (tab_binomials) {
@@ -2417,7 +2417,7 @@ void combinatorics_domain::binomial_with_table(
 		//b.print(cout);
 		//cout << endl;
 
-		c.create(n - k + 1, __FILE__, __LINE__);
+		c.create(n - k + 1);
 		D.mult(b, c, d);
 		D.integral_division_by_int(d, k, a, r);
 		if (r != 0) {
@@ -2446,7 +2446,7 @@ void combinatorics_domain::size_of_conjugacy_class_in_sym_n(
 	D.factorial(b, n);
 	for (i = 1; i <= n; i++) {
 		ai = part[i - 1];
-		c.create(1, __FILE__, __LINE__);
+		c.create(1);
 		for (j = 0; j < ai; j++) {
 			D.mult_integer_in_place(c, i);
 		}
@@ -2471,15 +2471,15 @@ void combinatorics_domain::q_binomial_with_table(ring_theory::longinteger_object
 	//cout << "q_binomial_with_table n=" << n
 	// << " k=" << k << " q=" << q << endl;
 	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
+		a.create(0);
 		return;
 	}
 	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 
@@ -2512,7 +2512,7 @@ void combinatorics_domain::q_binomial_with_table(ring_theory::longinteger_object
 		}
 		for ( ; i <= n; i++) {
 			for (j = 0; j <= i; j++) {
-				tab_q_binomials2[i * (n + 1) + j].create(0, __FILE__, __LINE__);
+				tab_q_binomials2[i * (n + 1) + j].create(0);
 			}
 		}
 		if (tab_q_binomials) {
@@ -2559,15 +2559,15 @@ void combinatorics_domain::q_binomial(
 				"n=" << n << " k=" << k << " q=" << q << endl;
 	}
 	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
+		a.create(0);
 		return;
 	}
 	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 	//cout << "longinteger_domain::q_binomial
@@ -2598,15 +2598,15 @@ void combinatorics_domain::q_binomial_no_table(
 			"n=" << n << " k=" << k << " q=" << q << endl;
 	}
 	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
+		a.create(0);
 		return;
 	}
 	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
+		a.create(1);
 		return;
 	}
 	q_binomial_no_table(b, n - 1, k - 1, q, verbose_level);
@@ -2660,7 +2660,7 @@ void combinatorics_domain::krawtchouk_with_table(ring_theory::longinteger_object
 		for (i = 0; i < kx; i++) {
 			for (j = 0; j < kx; j++) {
 				tab_krawtchouk_entry_computed2[i * kx + j] = false;
-				tab_krawtchouk2[i * kx + j].create(0, __FILE__, __LINE__);
+				tab_krawtchouk2[i * kx + j].create(0);
 			}
 		}
 		for (i = 0; i < tab_krawtchouk_size; i++) {
@@ -2708,7 +2708,7 @@ void combinatorics_domain::krawtchouk_with_table(ring_theory::longinteger_object
 		if (x == 0) {
 			binomial(n_choose_k, n, k, false);
 			if (q != 1) {
-				b.create(q - 1, __FILE__, __LINE__);
+				b.create(q - 1);
 				D.power_int(b, k);
 				D.mult(n_choose_k, b, a);
 			}
@@ -2717,12 +2717,12 @@ void combinatorics_domain::krawtchouk_with_table(ring_theory::longinteger_object
 			}
 		}
 		else if (k == 0) {
-			a.create(1, __FILE__, __LINE__);
+			a.create(1);
 		}
 		else {
 			krawtchouk_with_table(b, n, q, k, x - 1);
 			//cout << "K_" << k << "(" << x - 1 << ")=" << b << endl;
-			c.create(-q + 1, __FILE__, __LINE__);
+			c.create(-q + 1);
 			krawtchouk_with_table(d, n, q, k - 1, x);
 			//cout << "K_" << k - 1<< "(" << x << ")=" << d << endl;
 			D.mult(c, d, e);
@@ -2731,7 +2731,7 @@ void combinatorics_domain::krawtchouk_with_table(ring_theory::longinteger_object
 			D.add(b, e, c);
 			//cout << " c=";
 			//c.print(cout);
-			d.create(-1, __FILE__, __LINE__);
+			d.create(-1);
 			krawtchouk_with_table(e, n, q, k - 1, x - 1);
 			//cout << "K_" << k - 1<< "(" << x - 1 << ")=" << e << endl;
 			D.mult(d, e, f);

@@ -144,13 +144,20 @@ void nth_roots::init(
 	K.get_primitive_polynomial(field_poly,
 			F->p, field_degree, 0);
 
+	if (f_v) {
+		cout << "nth_roots::init picking primitive polynomial "
+				"of degree " << field_degree << " : " << field_poly
+				<< " over the prime field" << endl;
+	}
+
 	FpX->create_object_by_rank_string(Min_poly,
 			field_poly,
 			verbose_level - 2);
 
 
 	if (f_v) {
-		cout << "nth_roots::init creating unipoly_domain FQ modulo M" << endl;
+		cout << "nth_roots::init "
+				"creating unipoly_domain FQ modulo M" << endl;
 	}
 
 	FQ = NEW_OBJECT(ring_theory::unipoly_domain);
@@ -160,17 +167,28 @@ void nth_roots::init(
 		// Fq = Fp[X] modulo factor polynomial M
 
 	if (f_v) {
-		cout << "nth_roots::init extension field created" << endl;
+		cout << "nth_roots::init "
+				"created extension field" << endl;
+		cout << "nth_roots::init "
+				"The polynomial used to create the extension field is : " << endl;
+		FpX->print_object_latex(Min_poly, cout);
+		cout << endl;
+		cout << "nth_roots::init "
+				"The polynomial used to create the extension field is : " << endl;
+		FpX->print_object(Min_poly, cout);
+		cout << endl;
 	}
 
 	ring_theory::ring_theory_global R;
 
 	if (f_v) {
-		cout << "nth_roots::init before R.compute_nth_roots_as_polynomials" << endl;
+		cout << "nth_roots::init "
+				"before R.compute_nth_roots_as_polynomials" << endl;
 	}
 	R.compute_nth_roots_as_polynomials(F, FpX, FQ, Beta, n, n, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "nth_roots::init after R.compute_nth_roots_as_polynomials" << endl;
+		cout << "nth_roots::init "
+				"after R.compute_nth_roots_as_polynomials" << endl;
 	}
 
 
@@ -550,7 +568,7 @@ void nth_roots::compute_subfield(
 	if (f_v) {
 		ring_theory::unipoly_object elt;
 
-		FpX->create_object_by_rank(elt, a, __FILE__, __LINE__, verbose_level);
+		FpX->create_object_by_rank(elt, a, verbose_level);
 		cout << "nth_roots::compute_subfield "
 				"subfield of order "
 				<< NT.i_power_j(p, subfield_degree)
@@ -693,6 +711,42 @@ void nth_roots::report(
 	//ost << "\\end{figure}" << endl;
 
 	ost << "\\clearpage" << endl;
+
+
+}
+
+void nth_roots::print_irreducible_polynomials_as_makefile_variables(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	coding_theory::cyclic_codes Cyclic_codes;
+	l1_interfaces::latex_interface Li;
+
+	if (f_v) {
+		cout << "nth_roots::print_irreducible_polynomials_as_makefile_variables" << endl;
+	}
+
+	int rk, a;
+
+	for (i = 0; i < Cyc->S->nb_sets; i++) {
+
+		a = Cyc->S->Sets[i][0];
+
+		ost << "IRRED_POLY_Q" << F->q << "_N" << n << "_A" << a << "=";
+		ost << "\"";
+
+
+		FX->print_object(min_poly_beta_Fq[i], ost);
+
+
+		ost << "\"";
+		ost << endl;
+
+	}
+	if (f_v) {
+		cout << "nth_roots::print_irreducible_polynomials_as_makefile_variables done" << endl;
+	}
 
 
 }

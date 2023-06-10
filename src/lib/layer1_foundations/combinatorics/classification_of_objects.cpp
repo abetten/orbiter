@@ -91,7 +91,8 @@ void classification_of_objects::perform_classification(
 
 
 	if (f_v) {
-		cout << "classification_of_objects::perform_classification f_projective_space=" << f_projective_space << endl;
+		cout << "classification_of_objects::perform_classification "
+				"f_projective_space=" << f_projective_space << endl;
 	}
 
 	classification_of_objects::f_projective_space = f_projective_space;
@@ -208,7 +209,8 @@ void classification_of_objects::classify_objects_using_nauty(
 		}
 
 		if (!F_reject[input_idx]) {
-			OWCF_transversal[nb_orbits] = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
+			OWCF_transversal[nb_orbits] =
+					(geometry::object_with_canonical_form *) IS->Objects[input_idx];
 			NO_transversal[nb_orbits] = NO;
 			nb_orbits++;
 		}
@@ -239,7 +241,8 @@ void classification_of_objects::classify_objects_using_nauty(
 		iso_idx++;
 	}
 	if (iso_idx != nb_orbits) {
-		cout << "classification_of_objects::classify_objects_using_nauty iso_idx != nb_orbits" << endl;
+		cout << "classification_of_objects::classify_objects_using_nauty "
+				"iso_idx != nb_orbits" << endl;
 		exit(1);
 	}
 
@@ -391,7 +394,7 @@ void classification_of_objects::process_any_object(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_objects::process_any_object" << endl;
+		cout << "classification_of_objects::process_any_object, verbose_level = " << verbose_level << endl;
 	}
 	if (f_v) {
 		cout << "classification_of_objects::process_any_object "
@@ -1097,12 +1100,12 @@ static void print_summary_table_entry(int *Table,
 				cout << "print_summary_table_entry getting extra_data OiPA=" << endl;
 				OiPA->print();
 			}
-			go.create(OiPA->ago, __FILE__, __LINE__);
+			go.create(OiPA->ago);
 			//OiPA->Aut_gens->group_order(go);
 			go.print_to_string(str);
 #else
 			ring_theory::longinteger_object go;
-			go.create(PC->Ago_transversal[i], __FILE__, __LINE__);
+			go.create(PC->Ago_transversal[i]);
 			//OiPA->Aut_gens->group_order(go);
 			go.print_to_string(output);
 #endif

@@ -922,7 +922,7 @@ void action::group_order(ring_theory::longinteger_object &go)
 	
 	if (Stabilizer_chain == NULL) {
 		cout << "action::group_order Stabilizer_chain == NULL" << endl;
-		go.create(0, __FILE__, __LINE__);
+		go.create(0);
 	}
 	else {
 		Stabilizer_chain->group_order(go);

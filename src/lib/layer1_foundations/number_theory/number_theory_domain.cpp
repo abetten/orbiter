@@ -166,9 +166,9 @@ long int number_theory_domain::power_mod(long int a, long int n, long int p)
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object A, N, M;
 	
-	A.create(a, __FILE__, __LINE__);
-	N.create(n, __FILE__, __LINE__);
-	M.create(p, __FILE__, __LINE__);
+	A.create(a);
+	N.create(n);
+	M.create(p);
 	D.power_longint_mod(A, N, M, 0 /* verbose_level */);
 	return A.as_lint();
 }
@@ -179,8 +179,8 @@ long int number_theory_domain::inverse_mod(long int a, long int p)
 	ring_theory::longinteger_object A, B, U, V, G;
 	long int u;
 	
-	A.create(a, __FILE__, __LINE__);
-	B.create(p, __FILE__, __LINE__);
+	A.create(a);
+	B.create(p);
 	D.extended_gcd(A,B, G, U, V, 0 /* verbose_level */);
 	if (!G.is_one() && !G.is_mone()) {
 		cout << "number_theory_domain::inverse_mod a and p are not coprime" << endl;
@@ -201,9 +201,9 @@ long int number_theory_domain::mult_mod(long int a, long int b, long int p)
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object A, B, C, P;
 	
-	A.create(a, __FILE__, __LINE__);
-	B.create(b, __FILE__, __LINE__);
-	P.create(p, __FILE__, __LINE__);
+	A.create(a);
+	B.create(b);
+	P.create(p);
 	D.mult_mod(A, B, C, P, 0 /* verbose_level */);
 	return C.as_int();
 }
@@ -214,9 +214,9 @@ long int number_theory_domain::add_mod(long int a, long int b, long int p)
 	ring_theory::longinteger_object A, B, C, P, Q;
 	long int r;
 	
-	A.create(a, __FILE__, __LINE__);
-	B.create(b, __FILE__, __LINE__);
-	P.create(p, __FILE__, __LINE__);
+	A.create(a);
+	B.create(b);
+	P.create(p);
 	D.add(A, B, C);
 	D.integral_division_by_lint(C, p, Q, r);
 	return r;
@@ -228,8 +228,8 @@ long int number_theory_domain::ab_over_c(long int a, long int b, long int c)
 	ring_theory::longinteger_object A, B, C, AB, Q;
 	long int r;
 
-	A.create(a, __FILE__, __LINE__);
-	B.create(b, __FILE__, __LINE__);
+	A.create(a);
+	B.create(b);
 	D.mult(A, B, AB);
 	D.integral_division_by_lint(AB, c, Q, r);
 	return Q.as_lint();
@@ -291,8 +291,8 @@ void number_theory_domain::extended_gcd_int(int m, int n, int &g, int &u, int &v
 	ring_theory::longinteger_object M, N, G, U, V;
 
 
-	M.create(m, __FILE__, __LINE__);
-	N.create(n, __FILE__, __LINE__);
+	M.create(m);
+	N.create(n);
 	D.extended_gcd(M, N, G, U, V, 0);
 	g = G.as_int();
 	u = U.as_int();
@@ -306,8 +306,8 @@ void number_theory_domain::extended_gcd_lint(long int m, long int n,
 	ring_theory::longinteger_object M, N, G, U, V;
 
 
-	M.create(m, __FILE__, __LINE__);
-	N.create(n, __FILE__, __LINE__);
+	M.create(m);
+	N.create(n);
 	D.extended_gcd(M, N, G, U, V, 0);
 	g = G.as_lint();
 	u = U.as_lint();
@@ -373,10 +373,10 @@ int number_theory_domain::i_power_j_safe(int i, int j)
 	ring_theory::longinteger_object a, b, c;
 	int res;
 
-	a.create(i, __FILE__, __LINE__);
+	a.create(i);
 	D.power_int(a, j);
 	res = a.as_int();
-	b.create(res, __FILE__, __LINE__);
+	b.create(res);
 	b.negate();
 	D.add(a, b, c);
 	if (!c.is_zero()) {
@@ -401,7 +401,7 @@ long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_lev
 		cout << "number_theory_domain::i_power_j_lint_safe "
 				"i=" << i << " j=" << j << endl;
 	}
-	a.create(i, __FILE__, __LINE__);
+	a.create(i);
 	D.power_int(a, j);
 	if (f_v) {
 		cout << "number_theory_domain::i_power_j_lint_safe "
@@ -412,7 +412,7 @@ long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_lev
 		cout << "number_theory_domain::i_power_j_lint_safe "
 				"as_lint=" << res << endl;
 	}
-	b.create(res, __FILE__, __LINE__);
+	b.create(res);
 	if (f_v) {
 		cout << "number_theory_domain::i_power_j_lint_safe "
 				"b=" << b << endl;
@@ -2524,18 +2524,18 @@ int number_theory_domain::eulers_totient_function(
 	if (f_v) {
 		cout << "number_theory_domain::eulers_totient_function" << endl;
 	}
-	N.create(n, __FILE__, __LINE__);
+	N.create(n);
 	D.factor(N, nb_primes, primes, exponents, verbose_level);
-	R.create(1, __FILE__, __LINE__);
+	R.create(1);
 	for (i = 0; i < nb_primes; i++) {
 		p = primes[i];
 		e = exponents[i];
-		A.create(p, __FILE__, __LINE__);
+		A.create(p);
 		D.power_int(A, e);
 		if (f_v) {
 			cout << "p^e=" << A << endl;
 		}
-		B.create(p, __FILE__, __LINE__);
+		B.create(p);
 		D.power_int(B, e - 1);
 		if (f_v) {
 			cout << "p^{e-1}=" << A << endl;
@@ -2591,9 +2591,9 @@ void number_theory_domain::do_jacobi(
 
 	ring_theory::longinteger_object A, B;
 
-	A.create(jacobi_top, __FILE__, __LINE__);
+	A.create(jacobi_top);
 
-	B.create(jacobi_bottom, __FILE__, __LINE__);
+	B.create(jacobi_bottom);
 
 	D.jacobi(A, B, verbose_level);
 

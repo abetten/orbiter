@@ -1222,19 +1222,29 @@ void latex_interface::int_vec_print_as_matrix(
 		std::ostream &ost,
 	int *v, int len, int width, int f_tex)
 {
-	int *w;
-	int i;
 
-	w = NEW_int(len + width - 1);
-	Int_vec_copy(v, w, len);
-	for (i = 0; i < width - 1; i++) {
-		w[len + i] = 0;
-		}
+	if (len < width) {
 
-	print_integer_matrix_with_standard_labels(ost,
-		w, (len + width - 1) / width, width, f_tex);
+		print_integer_matrix_with_standard_labels(ost,
+			v, 1, len, f_tex);
 
-	FREE_int(w);
+	}
+	else {
+		int *w;
+		int i;
+
+		w = NEW_int(len + width - 1);
+		Int_vec_copy(v, w, len);
+		for (i = 0; i < width - 1; i++) {
+			w[len + i] = 0;
+			}
+
+		print_integer_matrix_with_standard_labels(ost,
+			w, (len + width - 1) / width, width, f_tex);
+
+		FREE_int(w);
+
+	}
 }
 
 void latex_interface::lint_vec_print_as_matrix(

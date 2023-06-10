@@ -228,6 +228,8 @@ void known_groups::init_projective_group(
 		cout << "f_basis=" << f_basis << endl;
 	}
 
+
+
 	M = NEW_OBJECT(algebra::matrix_group);
 
 
@@ -256,7 +258,7 @@ void known_groups::init_projective_group(
 		cout << "known_groups::init_projective_group "
 				"before AG.init_base" << endl;
 	}
-	AG.init_base(A, M, 0 /*verbose_level - 1*/);
+	AG.init_base(A, M, verbose_level - 1);
 	if (f_v) {
 		cout << "known_groups::init_projective_group "
 				"after AG.init_base" << endl;
@@ -779,17 +781,21 @@ void known_groups::init_permutation_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	groups::permutation_representation_domain *P;
-	char str[1000];
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_group, "
-				"degree=" << degree << endl;
+				"degree=" << degree
+				<< " verbose_level=" << verbose_level << endl;
 	}
-	snprintf(str, sizeof(str), "Perm%d", degree);
 
 
-	A->label.assign(str);
-	A->label_tex.assign(str);
+	if (degree > 20000) {
+		cout << "known_groups::init_permutation_group the degree is too large" << endl;
+		cout << "known_groups::init_permutation_group degree = " << degree << endl;
+		exit(1);
+	}
+	A->label = "Perm_" + std::to_string(degree);
+	A->label_tex = "Perm\\_" + std::to_string(degree);
 
 	P = NEW_OBJECT(groups::permutation_representation_domain);
 	A->type_G = perm_group_t;
@@ -876,20 +882,92 @@ void known_groups::init_permutation_group_from_nauty_output(
 		cout << "known_groups::init_permutation_group_from_nauty_output" << endl;
 	}
 
-	if (f_v) {
-		cout << "known_groups::init_permutation_group_from_nauty_output "
-				"before init_permutation_group_from_generators" << endl;
+
+	if (NO->invariant_set_size != NO->N) {
+		if (f_v) {
+			cout << "known_groups::init_permutation_group_from_nauty_output"
+					"using invariant set" << endl;
+		}
+
+		// restrict the permutation action to the invariant set:
+		// The idea is that the invariant set is small
+		// and hence it is easier to establish the permutation group
+		// on it.
+
+		int i;
+		long int b;
+
+		for (i = 0; i < NO->Base_length; i++) {
+			b = NO->Base_lint[i];
+			if (b >= NO->invariant_set_start + NO->invariant_set_size) {
+				cout << "known_groups::init_permutation_group_from_nauty_output"
+					"using invariant set base point is out of range" << endl;
+				exit(1);
+			}
+		}
+
+		int *gens;
+		long int *fresh_base;
+		int j;
+		int image;
+
+		fresh_base = NEW_lint(NO->Base_length);
+		for (i = 0; i < NO->Base_length; i++) {
+			b = NO->Base_lint[i] - NO->invariant_set_start;
+			if (b >= NO->invariant_set_size) {
+				cout << "known_groups::init_permutation_group_from_nauty_output the base does not beling to the invariant set" << endl;
+				exit(1);
+			}
+			fresh_base[i] = b;
+		}
+
+		gens = NEW_int(NO->Aut_counter * NO->invariant_set_size);
+		for (i = 0; i < NO->Aut_counter; i++) {
+			for (j = 0; j < NO->invariant_set_size; j++) {
+				image = NO->Aut[i * NO->N + NO->invariant_set_start + j];
+				image -= NO->invariant_set_start;
+				if (image >= NO->invariant_set_size) {
+					cout << "known_groups::init_permutation_group_from_nauty_output the set if not invariant" << endl;
+					exit(1);
+				}
+				gens[i * NO->invariant_set_size + j] = image;
+			}
+		}
+		if (f_v) {
+			cout << "known_groups::init_permutation_group_from_nauty_output "
+					"before init_permutation_group_from_generators" << endl;
+		}
+		init_permutation_group_from_generators(
+				NO->invariant_set_size,
+			true, *NO->Ago,
+			NO->Aut_counter, gens,
+			NO->Base_length, fresh_base,
+			false /* f_no_base */,
+			verbose_level - 2);
+		if (f_v) {
+			cout << "known_groups::init_permutation_group_from_nauty_output "
+					"after init_permutation_group_from_generators" << endl;
+		}
+		FREE_lint(fresh_base);
+		FREE_int(gens);
+
 	}
-	init_permutation_group_from_generators(
-			NO->N,
-		true, *NO->Ago,
-		NO->Aut_counter, NO->Aut,
-		NO->Base_length, NO->Base_lint,
-		false /* f_no_base */,
-		verbose_level - 2);
-	if (f_v) {
-		cout << "known_groups::init_permutation_group_from_nauty_output "
-				"after init_permutation_group_from_generators" << endl;
+	else {
+		if (f_v) {
+			cout << "known_groups::init_permutation_group_from_nauty_output "
+					"before init_permutation_group_from_generators" << endl;
+		}
+		init_permutation_group_from_generators(
+				NO->N,
+			true, *NO->Ago,
+			NO->Aut_counter, NO->Aut,
+			NO->Base_length, NO->Base_lint,
+			false /* f_no_base */,
+			verbose_level - 2);
+		if (f_v) {
+			cout << "known_groups::init_permutation_group_from_nauty_output "
+					"after init_permutation_group_from_generators" << endl;
+		}
 	}
 
 	if (f_v) {
@@ -910,7 +988,6 @@ void known_groups::init_permutation_group_from_generators(
 	int f_vv = (verbose_level >= 2);
 	int i;
 	combinatorics::combinatorics_domain Combi;
-	char str[1000];
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_group_from_generators "
@@ -925,11 +1002,9 @@ void known_groups::init_permutation_group_from_generators(
 					"no target group order is given" << endl;
 		}
 	}
-	snprintf(str, sizeof(str), "Perm%d", degree);
 
-
-	A->label.assign(str);
-	A->label_tex.assign(str);
+	A->label = "Perm_" + std::to_string(degree);
+	A->label_tex = "Perm\\_" + std::to_string(degree);
 
 	if (f_vv) {
 		cout << "known_groups::init_permutation_group_from_generators "
@@ -944,13 +1019,15 @@ void known_groups::init_permutation_group_from_generators(
 			}
 			cout << endl;
 		}
+
+
 	}
 
 	if (f_vv) {
 		cout << "known_groups::init_permutation_group_from_generators "
 				"calling init_permutation_group" << endl;
 	}
-	init_permutation_group(degree, f_no_base, verbose_level - 10);
+	init_permutation_group(degree, f_no_base, verbose_level - 2);
 	if (f_vv) {
 		cout << "known_groups::init_permutation_group_from_generators "
 				"after init_permutation_group" << endl;
@@ -1228,7 +1305,7 @@ void known_groups::init_cyclic_group(
 	}
 
 	//D.factorial(go, degree);
-	go.create(degree, __FILE__, __LINE__);
+	go.create(degree);
 
 	A->make_element_size = degree;
 	nb_gens = 1;
@@ -1294,7 +1371,7 @@ void known_groups::init_identity_group(
 		cout << "known_groups::init_identity_group f_no_base=" << f_no_base << endl;
 	}
 	//D.factorial(go, degree);
-	go.create(1, __FILE__, __LINE__);
+	go.create(1);
 
 	A->make_element_size = degree;
 	nb_gens = 1;

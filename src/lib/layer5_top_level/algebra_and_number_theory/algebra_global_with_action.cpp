@@ -506,7 +506,8 @@ void algebra_global_with_action::create_subgroups(
 				S->element_unrank_lint(rk0, Elt0);
 				S->element_unrank_lint(rk1, Elt1);
 				S->element_unrank_lint(rk2, Elt2);
-				cout << h << " : " << SO[h] << " : " << SOL[h] << " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1 << endl;
+				cout << h << " : " << SO[h] << " : " << SOL[h]
+					<< " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1 << endl;
 				ost << "The subgroup consists of the following three "
 						"non-identity elements:\\\\" << endl;
 				ost << "$$" << endl;
@@ -625,11 +626,13 @@ void algebra_global_with_action::compute_orbit_of_set(
 	OS = NEW_OBJECT(orbits_schreier::orbit_of_sets);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::compute_orbit_of_set before OS->init" << endl;
+		cout << "algebra_global_with_action::compute_orbit_of_set "
+				"before OS->init" << endl;
 	}
 	OS->init(A1, A2, the_set, set_size, gens, verbose_level - 2);
 	if (f_v) {
-		cout << "algebra_global_with_action::compute_orbit_of_set after OS->init" << endl;
+		cout << "algebra_global_with_action::compute_orbit_of_set "
+				"after OS->init" << endl;
 	}
 
 	if (f_v) {
@@ -1516,7 +1519,7 @@ void algebra_global_with_action::group_table(
 
 
 
-			U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
+			U.create_object_by_rank(char_poly, 0, verbose_level);
 
 			U.characteristic_polynomial(Elt,
 					d, char_poly, verbose_level - 2);

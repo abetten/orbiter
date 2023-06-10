@@ -1903,10 +1903,10 @@ void cryptography_domain::do_RSA_encrypt_text(
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object A, M;
 
-	M.create(RSA_m, __FILE__, __LINE__);
+	M.create(RSA_m);
 
 	for (i = 0; i < nb_blocks; i++) {
-		A.create(Data[i], __FILE__, __LINE__);
+		A.create(Data[i]);
 		D.power_int_mod(
 				A, RSA_d, M);
 		cout << A;
@@ -1944,16 +1944,16 @@ void cryptography_domain::do_RSA(
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object A, M;
 
-	M.create(RSA_m, __FILE__, __LINE__);
+	M.create(RSA_m);
 	for (i = 0; i < data_sz; i++) {
-		A.create(data[i], __FILE__, __LINE__);
+		A.create(data[i]);
 		D.power_int_mod(A, RSA_d, M);
 		if (f_v) {
 			cout << i << " : " << data[i] << " : " << A << endl;
 		}
 	}
 	for (i = 0; i < data_sz; i++) {
-		A.create(data[i], __FILE__, __LINE__);
+		A.create(data[i]);
 		D.power_int_mod(A, RSA_d, M);
 		if (f_v) {
 			cout << A;
@@ -1971,7 +1971,7 @@ void cryptography_domain::do_RSA(
 	char str[1000];
 
 	for (i = 0; i < data_sz; i++) {
-		A.create(data[i], __FILE__, __LINE__);
+		A.create(data[i]);
 		D.power_int_mod(A, RSA_d, M);
 		//cout << A;
 		a = A.as_lint();
@@ -2304,9 +2304,9 @@ void cryptography_domain::do_solovay_strassen(
 
 	ring_theory::longinteger_object P, A;
 
-	P.create(p, __FILE__, __LINE__);
+	P.create(p);
 
-	A.create(a, __FILE__, __LINE__);
+	A.create(a);
 
 	//D.jacobi(A, B, verbose_level);
 
@@ -2370,7 +2370,7 @@ void cryptography_domain::do_miller_rabin(
 
 	ring_theory::longinteger_object P, A;
 
-	P.create(p, __FILE__, __LINE__);
+	P.create(p);
 
 	int i;
 
@@ -2445,7 +2445,7 @@ void cryptography_domain::do_fermat_test(
 	ring_theory::longinteger_object P;
 
 
-	P.create(p, __FILE__, __LINE__);
+	P.create(p);
 
 	if (fermat_test_iterated_with_latex_key(f,
 			P, nb_times,
@@ -2867,7 +2867,7 @@ void cryptography_domain::quadratic_sieve(int n,
 					"dividing out small factor " << small_factor << endl;
 		}
 		small_factors.push_back(small_factor);
-		P.create(small_factor, __FILE__, __LINE__);
+		P.create(small_factor);
 		D.integral_division_exact(M, P, Q);
 		Q.assign_to(M);
 		if (f_v) {
@@ -3046,8 +3046,8 @@ void cryptography_domain::reduce_primes(
 		D.integral_division_by_int(M,
 				p, Q, r);
 
-		R.create(r, __FILE__, __LINE__);
-		P.create(p, __FILE__, __LINE__);
+		R.create(r);
+		P.create(p);
 
 		s = D.jacobi(R, P, 0 /* verbose_level */);
 		//s = Legendre(r, p, 0);
@@ -3390,8 +3390,8 @@ void cryptography_domain::do_extended_gcd(
 
 		ring_theory::longinteger_object A, B, G, U, V;
 
-	A.create(a, __FILE__, __LINE__);
-	B.create(b, __FILE__, __LINE__);
+	A.create(a);
+	B.create(b);
 
 	cout << "before D.extended_gcd" << endl;
 	D.extended_gcd(A, B,
@@ -3467,7 +3467,7 @@ void cryptography_domain::calc_roots(
 		if (f_v) {
 			cout << "cryptography_domain::calc_roots i=" << i << " / " << l << " p=" << p << endl;
 		}
-		P.create(p, __FILE__, __LINE__);
+		P.create(p);
 
 		if (f_v) {
 			cout << "cryptography_domain::calc_roots before remainder_mod_int" << endl;
@@ -3490,7 +3490,7 @@ void cryptography_domain::calc_roots(
 		//a = (sqrtMmodp << 1) % p;
 
 		// b = (sqrtMmodp * sqrtMmodp) % p;
-		l1.create(sqrtMmodp, __FILE__, __LINE__);
+		l1.create(sqrtMmodp);
 		D.mult_mod(l1, l1, l2, P, 0 /* verbose_level */);
 		b = l2.as_int();
 
@@ -3505,7 +3505,7 @@ void cryptography_domain::calc_roots(
 		// use the quadratic formula to compute the roots:
 		// sqrtMmodp = a / 2.
 
-		l1.create(sqrtMmodp, __FILE__, __LINE__);
+		l1.create(sqrtMmodp);
 		D.mult_mod(l1, l1, l2, P, 0 /* verbose_level */);
 		c2 = l2.as_int();
 		c2 -= b;
@@ -3650,7 +3650,7 @@ int cryptography_domain::quadratic_sieve(
 	if (f_v) {
 		cout << "cryptography_domain::quadratic_sieve" << endl;
 	}
-	zero.create(0, __FILE__, __LINE__);
+	zero.create(0);
 	l = primes.size();
 	j = X.size();
 	if (f_v) {
@@ -3659,9 +3659,10 @@ int cryptography_domain::quadratic_sieve(
 		cout << "searching for " << ll << " numbers" << endl;
 	}
 	for (x = from; x < to; x++) {
-		if (x == 0)
+		if (x == 0) {
 			continue;
-		a.create(x, __FILE__, __LINE__);
+		}
+		a.create(x);
 		D.add(a, sqrtM, c);
 		D.mult(c, a, d);
 		d.assign_to(a);
@@ -3733,7 +3734,7 @@ int cryptography_domain::factor_over_factor_base(
 	int i, l, n, p;
 
 	x.assign_to(y);
-	z1.create(1, __FILE__, __LINE__);
+	z1.create(1);
 	l = primes.size();
 	//factor_idx.m_l(0);
 	//factor_exp.m_l(0);
@@ -3768,7 +3769,7 @@ int cryptography_domain::factor_over_factor_base2(
 	int i, l, n, nn, p;
 
 	x.assign_to(y);
-	z1.create(1, __FILE__, __LINE__);
+	z1.create(1);
 	l = primes.size();
 	for (i = 0; i < l; i++) {
 		if (D.compare(x, z1) <= 0) {
@@ -3807,7 +3808,7 @@ void cryptography_domain::find_probable_prime_above(
 	if (f_v) {
 		cout << "cryptography_domain::find_probable_prime_above" << endl;
 	}
-	one.create(1, __FILE__, __LINE__);
+	one.create(1);
 	while (true) {
 		if (f_vv) {
 			cout << "considering " << a << endl;
@@ -3879,8 +3880,8 @@ int cryptography_domain::solovay_strassen_is_prime_single_test(
 	if (f_v) {
 		cout << "cryptography_domain::solovay_strassen_is_prime_single_test" << endl;
 	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
+	one.create(1);
+	m_one.create(-1);
 	D.add(n, m_one, n_minus_one);
 	D.random_number_less_than_n(n_minus_one, a);
 	D.add(a, one, b);
@@ -3910,8 +3911,8 @@ int cryptography_domain::fermat_test_iterated_with_latex_key(
 	if (f_v) {
 		cout << "cryptography_domain::fermat_test_iterated_with_latex_key" << endl;
 	}
-	one.create(1, __FILE__, __LINE__);
-	minus_two.create(-2, __FILE__, __LINE__);
+	one.create(1);
+	minus_two.create(-2);
 
 	D.add(P, minus_two, n_minus_two);
 
@@ -3969,8 +3970,8 @@ int cryptography_domain::fermat_test_with_latex_key(
 	if (f_v) {
 		cout << "cryptography_domain::fermat_test_with_latex_key" << endl;
 	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
+	one.create(1);
+	m_one.create(-1);
 	D.add(n, m_one, n_minus_one);
 	if (f_vv) {
 		cout << "cryptography_domain::fermat_test_with_latex_key "
@@ -4015,8 +4016,8 @@ int cryptography_domain::solovay_strassen_test(
 	if (f_v) {
 		cout << "cryptography_domain::solovay_strassen_test" << endl;
 	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
+	one.create(1);
+	m_one.create(-1);
 	D.add(n, m_one, n_minus_one);
 	if (f_vv) {
 		cout << "cryptography_domain::solovay_strassen_test "
@@ -4093,8 +4094,8 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(
 	if (f_v) {
 		cout << "cryptography_domain::solovay_strassen_test_with_latex_key" << endl;
 	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
+	one.create(1);
+	m_one.create(-1);
 	D.add(n, m_one, n_minus_one);
 	if (f_vv) {
 		cout << "cryptography_domain::solovay_strassen_test_with_latex_key "
@@ -4191,9 +4192,9 @@ int cryptography_domain::solovay_strassen_test_iterated_with_latex_key(
 	ost << "We will do " << nb_times << " Solovay-Strassen "
 			"tests for $" << P << "$:\\\\" << endl;
 
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
-	m_two.create(-2, __FILE__, __LINE__);
+	one.create(1);
+	m_one.create(-1);
+	m_two.create(-2);
 	D.add(P, m_one, P_minus_one);
 	D.add(P, m_two, P_minus_two);
 
@@ -4255,8 +4256,8 @@ int cryptography_domain::miller_rabin_test(
 		cout << "cryptography_domain::miller_rabin_test "
 				"for " << n << endl;
 	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
+	one.create(1);
+	m_one.create(-1);
 	D.add(n, m_one, n_minus_one);
 
 #if 1
@@ -4339,8 +4340,8 @@ int cryptography_domain::miller_rabin_test_with_latex_key(
 				"for " << n << " iteration=" << iteration << endl;
 	}
 	ost << "Miller-Rabin pseudoprime test for $n=" << n << "$\\\\" << endl;
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
+	one.create(1);
+	m_one.create(-1);
 	D.add(n, m_one, n_minus_one);
 
 
@@ -4350,7 +4351,7 @@ int cryptography_domain::miller_rabin_test_with_latex_key(
 			number_theory::number_theory_domain NT;
 
 			small_prime = NT.get_prime_from_table(iteration);
-			a.create(small_prime, __FILE__, __LINE__);
+			a.create(small_prime);
 		}
 		else {
 			// choose a random integer a with 1 <= a <= n - 1
@@ -4520,7 +4521,7 @@ void cryptography_domain::get_k_bit_random_pseudoprime(
 			"trying to get a " << k << " bit, " << kk
 			<< " decimals random pseudoprime" << endl;
 	}
-	a.create(10, __FILE__, __LINE__);
+	a.create(10);
 	D.power_int(a, kk);
 	D.random_number_less_than_n(a, b);
 	if (f_v) {
@@ -4558,7 +4559,7 @@ void cryptography_domain::RSA_setup(
 			<< " nb_tests_solovay_strassen=" << nb_tests_solovay_strassen
 			<< " f_miller_rabin_test=" << f_miller_rabin_test << endl;
 	}
-	m1.create(-1, __FILE__, __LINE__);
+	m1.create(-1);
 	get_k_bit_random_pseudoprime(p, half_bits,
 		nb_tests_solovay_strassen,
 		f_miller_rabin_test, verbose_level - 2);

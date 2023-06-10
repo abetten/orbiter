@@ -163,8 +163,8 @@ void linear_algebra_global::compute_normal_basis(
 		cout << endl;
 	}
 
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
+	FX.create_object_by_rank(g, 0, 0 /* verbose_level */);
+	FX.create_object_by_rank(minpol, 0, 0 /* verbose_level */);
 
 	int *Frobenius;
 	int *Normal_basis;

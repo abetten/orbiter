@@ -69,8 +69,8 @@ void create_RS_code::init(
 	ring_theory::unipoly_object Q, M;
 
 	P = NEW_OBJECT(ring_theory::unipoly_object);
-	FX->create_object_by_rank(*P, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
-	FX->create_object_by_rank(Q, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
+	FX->create_object_by_rank(*P, 1, 0 /*verbose_level*/);
+	FX->create_object_by_rank(Q, 1, 0 /*verbose_level*/);
 
 	for (i = 1; i < d; i++) {
 

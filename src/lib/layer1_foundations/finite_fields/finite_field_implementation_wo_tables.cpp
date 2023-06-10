@@ -199,7 +199,7 @@ void finite_field_implementation_wo_tables::init_extension_field(int verbose_lev
 				"before Fq->create_object_by_rank" << endl;
 	}
 	Fq->create_object_by_rank(Alpha, F->alpha,
-			__FILE__, __LINE__, 0 /*verbose_level - 2*/);
+			0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::init_extension_field "
 				"after Fq->create_object_by_rank" << endl;
@@ -224,9 +224,9 @@ int finite_field_implementation_wo_tables::mult(int i, int j, int verbose_level)
 		ring_theory::unipoly_object a, b, c;
 
 		Fq->create_object_by_rank(a, i,
-				__FILE__, __LINE__, 0 /*verbose_level - 2*/);
+				0 /*verbose_level - 2*/);
 		Fq->create_object_by_rank(b, j,
-				__FILE__, __LINE__, 0 /*verbose_level - 2*/);
+				0 /*verbose_level - 2*/);
 		Fq->create_object_of_degree_no_test(c, factor_polynomial_degree);
 
 		if (f_v) {
@@ -297,7 +297,7 @@ int finite_field_implementation_wo_tables::inverse(int i, int verbose_level)
 		ring_theory::unipoly_object a, u, v, g;
 
 		Fq->create_object_by_rank(a, i,
-				__FILE__, __LINE__, 0 /*verbose_level - 2*/);
+				0 /*verbose_level - 2*/);
 		Fq->create_object_of_degree_no_test(u, factor_polynomial_degree);
 		Fq->create_object_of_degree_no_test(v, factor_polynomial_degree);
 		Fq->create_object_of_degree_no_test(g, factor_polynomial_degree);

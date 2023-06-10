@@ -242,6 +242,8 @@ public:
 
 	int f_show_TDA;
 
+	int f_export_labels;
+
 	int f_export_group_orbiter;
 	int f_export_group_GAP;
 
@@ -749,7 +751,13 @@ public:
 	int nb_rows;
 	int nb_cols;
 	int *partition;
+
 	int canonical_labeling_len; // = nb_rows + nb_cols
+
+	// the permutation representation
+	// will be on invariant set:
+	int invariant_set_start;
+	int invariant_set_size;
 
 	encoded_combinatorial_object();
 	~encoded_combinatorial_object();
@@ -795,6 +803,10 @@ public:
 	void latex_TDA(
 			std::ostream &ost,
 			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
+			int verbose_level);
+	void compute_labels(
+			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
+			int *&point_labels, int *&block_labels,
 			int verbose_level);
 	void latex_TDA_with_labels(
 			std::ostream &ost,

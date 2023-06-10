@@ -128,7 +128,18 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	l1_interfaces::nauty_output *NO;
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-	NO->allocate(N, verbose_level);
+	if (f_v) {
+		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
+				"before NO->nauty_output_allocate" << endl;
+	}
+	NO->nauty_output_allocate(N,
+			0,
+			N,
+			verbose_level);
+	if (f_v) {
+		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
+				"after NO->nauty_output_allocate" << endl;
+	}
 
 	Nau.nauty_interface_matrix_int(
 		&Enc,

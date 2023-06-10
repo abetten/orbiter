@@ -105,6 +105,16 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	//std::string collect_source;
 	//std::string collect_by;
 
+	f_encode_CRC = false;
+	encode_CRC_block_length = 0;
+	//std::string encode_CRC_data_polynomial;
+	//std::string encode_CRC_check_polynomial;
+
+	f_decode_CRC = false;
+	decode_CRC_block_length = false;
+	//std::string decode_CRC_data_polynomial;
+	//std::string decode_CRC_check_polynomial;
+
 	f_do_not_simplify = false;
 
 	f_write_trees_during_expand = false;
@@ -348,6 +358,35 @@ int symbolic_object_builder_description::read_arguments(
 						<< endl;
 			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-encode_CRC") == 0) {
+			f_encode_CRC = true;
+			encode_CRC_block_length = ST.strtoi(argv[++i]);
+			encode_CRC_data_polynomial.assign(argv[++i]);
+			encode_CRC_check_polynomial.assign(argv[++i]);
+			if (f_v) {
+				cout << "-encode_CRC "
+						<< " " << encode_CRC_block_length
+						<< " " << encode_CRC_data_polynomial
+						<< " " << encode_CRC_check_polynomial
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-decode_CRC") == 0) {
+			f_decode_CRC = true;
+			decode_CRC_block_length = ST.strtoi(argv[++i]);
+			decode_CRC_data_polynomial.assign(argv[++i]);
+			decode_CRC_check_polynomial.assign(argv[++i]);
+			if (f_v) {
+				cout << "-decode_CRC "
+						<< " " << decode_CRC_block_length
+						<< " " << decode_CRC_data_polynomial
+						<< " " << decode_CRC_check_polynomial
+						<< endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-do_not_simplify") == 0) {
 			f_do_not_simplify = true;
 			if (f_v) {
@@ -496,6 +535,20 @@ void symbolic_object_builder_description::print()
 		cout << "-collect "
 				<< " " << collect_source
 				<< " " << collect_by
+				<< endl;
+	}
+	if (f_encode_CRC) {
+		cout << "-encode_CRC "
+				<< " " << encode_CRC_block_length
+				<< " " << encode_CRC_data_polynomial
+				<< " " << encode_CRC_check_polynomial
+				<< endl;
+	}
+	if (f_decode_CRC) {
+		cout << "-decode_CRC "
+				<< " " << decode_CRC_block_length
+				<< " " << decode_CRC_data_polynomial
+				<< " " << decode_CRC_check_polynomial
 				<< endl;
 	}
 	if (f_do_not_simplify) {

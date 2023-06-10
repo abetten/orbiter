@@ -803,9 +803,11 @@ public:
 		// elt must point to nb * A->elt_size_in_int 
 		// int's that are 
 		// group elements in int format
-	void init_generators_recycle_images(int nb,
-			int *elt, int **old_images,
-			int idx_generator_to_delete, int verbose_level);
+	void init_generators_recycle_images(
+			int nb, int *elt,
+			int **old_images,
+			int idx_generator_to_delete,
+			int verbose_level);
 	void init_generators_recycle_images(int nb,
 			int *elt, int **old_images, int verbose_level);
 	void init_generators_by_hdl(int nb_gen, int *gen_hdl, 
@@ -944,7 +946,8 @@ public:
 			int pt, int &orbit_idx, int &orbit_pos,
 			int verbose_level);
 	void get_orbit_decomposition_scheme_of_graph(
-		int *Adj, int n, int *&Decomp_scheme, int verbose_level);
+		int *Adj, int n, int *&Decomp_scheme,
+		int verbose_level);
 	void create_point_list_sorted(
 			int *&point_list, int &point_list_length);
 	void shallow_tree_generators(int orbit_idx,

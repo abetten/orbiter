@@ -283,6 +283,93 @@ void syntax_tree_node::init_terminal_node_int(
 	}
 }
 
+void syntax_tree_node::init_monopoly(
+		syntax_tree *Tree,
+		std::string &variable,
+		int *coeffs, int nb_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::init_monopoly" << endl;
+	}
+
+	init_empty_plus_node_with_exponent(
+				Tree,
+				1 /* exponent */,
+				verbose_level);
+
+	int i, c;
+
+	for (i = 0; i < nb_coeffs; i++) {
+		c = coeffs[i];
+		if (c == 0) {
+			continue;
+		}
+		if (i == 0) {
+			syntax_tree_node *fresh_node;
+
+			fresh_node = NEW_OBJECT(syntax_tree_node);
+			fresh_node->init_terminal_node_int(
+					Tree,
+					c,
+					0 /* verbose_level */);
+			append_node(fresh_node, verbose_level);
+		}
+		else {
+
+			if (c == 1) {
+				syntax_tree_node *fresh_node;
+
+				fresh_node = NEW_OBJECT(syntax_tree_node);
+				fresh_node->init_terminal_node_text_with_exponent(
+						Tree,
+						variable,
+						i /* exp */,
+						verbose_level);
+
+				append_node(fresh_node, verbose_level);
+
+			}
+			else {
+				syntax_tree_node *mult_node;
+
+				mult_node = NEW_OBJECT(syntax_tree_node);
+				mult_node->init_empty_multiplication_node(
+						Tree,
+						0 /* verbose_level */);
+
+
+				syntax_tree_node *fresh_node1;
+				syntax_tree_node *fresh_node2;
+
+				fresh_node1 = NEW_OBJECT(syntax_tree_node);
+				fresh_node1->init_terminal_node_int(
+						Tree, c, verbose_level);
+				mult_node->append_node(fresh_node1, verbose_level);
+
+
+				fresh_node2 = NEW_OBJECT(syntax_tree_node);
+				fresh_node2->init_terminal_node_text_with_exponent(
+						Tree,
+						variable,
+						i /* exp */,
+						verbose_level);
+				mult_node->append_node(fresh_node2, verbose_level);
+
+				append_node(mult_node, verbose_level);
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "syntax_tree_node::init_monopoly done" << endl;
+	}
+}
+
+
+
 
 // entrance point 1 -> init_terminal_node_text_with_exponent
 
@@ -1063,6 +1150,162 @@ int syntax_tree_node::highest_order_term(std::string &variable, int verbose_leve
 		cout << "syntax_tree_node::highest_order_term done d=" << d << endl;
 	}
 	return d;
+}
+
+void syntax_tree_node::get_monopoly(std::string &variable,
+		std::vector<int> &Coeff, std::vector<int> &Exp,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::get_monopoly" << endl;
+	}
+	int d, i;
+
+	int coeff, exp;
+
+	if (f_terminal) {
+		coeff = 1;
+		exp = exponent_of_variable(variable, verbose_level);
+		Coeff.push_back(coeff);
+		Exp.push_back(exp);
+	}
+	else {
+		if (type == operation_type_add) {
+			if (f_v) {
+				cout << "syntax_tree_node::get_monopoly add node, "
+						"nb_nodes = " << nb_nodes << endl;
+			}
+			for (i = 0; i < nb_nodes; i++) {
+				if (f_v) {
+					cout << "syntax_tree_node::get_monopoly "
+							"child " << i << " / " << nb_nodes << endl;
+				}
+				Nodes[i]->get_exponent_and_coefficient_of_variable(
+						variable, coeff, exp, verbose_level);
+				Coeff.push_back(coeff);
+				Exp.push_back(exp);
+			}
+		}
+		else {
+			cout << "syntax_tree_node::get_monopoly "
+					"multiplication node is not allowed" << endl;
+			exit(1);
+		}
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::get_monopoly done" << endl;
+	}
+}
+
+
+void syntax_tree_node::get_exponent_and_coefficient_of_variable(
+		std::string &variable, int &coeff, int &exp, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable" << endl;
+	}
+
+
+	if (f_terminal) {
+		if (f_v) {
+			cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable terminal node" << endl;
+		}
+		if (is_this_variable(variable)) {
+			exp = get_exponent();
+			coeff = 1;
+		}
+		else {
+			if (is_int_node()) {
+				exp = 0;
+				coeff = T->value_int;
+
+				if (f_has_exponent) {
+					coeff = Tree->Fq->power(coeff, get_exponent());
+				}
+			}
+			else {
+				cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+						"unkown node type" << endl;
+				exit(1);
+			}
+		}
+	}
+	else {
+		if (type == operation_type_add) {
+			cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+					"cannot be add node" << endl;
+			exit(1);
+		}
+
+		int i;
+
+		coeff = -1;
+		exp = -1;
+
+		for (i = 0; i < nb_nodes; i++) {
+			if (f_v) {
+				cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable child " << i << " / " << nb_nodes << endl;
+			}
+
+			if (Nodes[i]->f_terminal) {
+				if (f_v) {
+					cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable child " << i << " / " << nb_nodes << " is terminal node" << endl;
+				}
+				if (Nodes[i]->is_int_node()) {
+					if (f_v) {
+						cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable child " << i << " / " << nb_nodes << " is int node" << endl;
+					}
+					if (coeff != -1) {
+						cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+								"malformed, cannot have multiple int nodes" << endl;
+						exit(1);
+					}
+					coeff = Nodes[i]->T->value_int;
+					if (Nodes[i]->f_has_exponent) {
+						coeff = Tree->Fq->power(coeff, Nodes[i]->get_exponent());
+					}
+
+				}
+				else if (Nodes[i]->is_this_variable(variable)) {
+					if (exp != -1) {
+						cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+								"malformed, cannot have multiple int nodes" << endl;
+						exit(1);
+					}
+					exp = Nodes[i]->get_exponent();
+				}
+				else {
+					cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+							"malformed, cannot have multiple int nodes" << endl;
+					exit(1);
+				}
+			}
+			else {
+				cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+						"malformed, cannot have multiple int nodes" << endl;
+				exit(1);
+			}
+		}
+		if (coeff == -1 && exp != -1) {
+			coeff = 1;
+		}
+		if (exp == -1 && coeff != -1) {
+			exp = 0;
+		}
+		if (f_has_exponent) {
+			coeff = Tree->Fq->power(coeff, get_exponent());
+			exp *= get_exponent();
+		}
+
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+				"done, coeff = " << coeff << " exp = " << exp << endl;
+	}
 }
 
 int syntax_tree_node::exponent_of_variable(
@@ -2804,6 +3047,10 @@ void syntax_tree_node::collect_like_terms(int verbose_level)
 							0 /*verbose_level*/);
 
 					if (coeff != 1) {
+						node->add_numerical_factor(
+								coeff, 0 /*verbose_level*/);
+					}
+					else if (Int_vec_is_zero(I->M + i * N, N)) {
 						node->add_numerical_factor(
 								coeff, 0 /*verbose_level*/);
 					}

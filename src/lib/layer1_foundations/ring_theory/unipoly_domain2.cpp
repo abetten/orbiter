@@ -109,9 +109,9 @@ void unipoly_domain::mult_easy_with_report(
 		cout << "unipoly_domain::mult_easy_with_report rk_b=" << rk_b << endl;
 	}
 	create_object_by_rank(a, rk_a,
-				__FILE__, __LINE__, verbose_level);
+				verbose_level);
 	create_object_by_rank(b, rk_b,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "unipoly_domain::mult_easy_with_report after create_object_by_rank" << endl;
@@ -239,14 +239,13 @@ void unipoly_domain::division_with_remainder_from_file_with_report(
 
 	create_object_from_csv_file(
 			a, input_fname,
-			__FILE__, __LINE__,
 			verbose_level);
 	create_object_by_rank(b, rk_b,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 	create_object_by_rank(q, 0,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 	create_object_by_rank(r, 0,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 
 
 	int da, db;
@@ -306,14 +305,13 @@ void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 
 	create_object_from_csv_file(
 			a, input_fname,
-			__FILE__, __LINE__,
 			verbose_level);
 	create_object_by_rank(b, rk_b,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 	create_object_by_rank(q, 0,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 	create_object_by_rank(r, 0,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 
 
 	int da, db;
@@ -347,14 +345,13 @@ void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 
 		create_object_from_csv_file(
 				a, input_fname,
-				__FILE__, __LINE__,
 				verbose_level);
 		create_object_by_rank(b, rk_b,
-					__FILE__, __LINE__, 0 /* verbose_level */);
+					0 /* verbose_level */);
 		create_object_by_rank(q, 0,
-					__FILE__, __LINE__, 0 /* verbose_level */);
+					0 /* verbose_level */);
 		create_object_by_rank(r, 0,
-					__FILE__, __LINE__, 0 /* verbose_level */);
+					0 /* verbose_level */);
 
 		int *aa = (int *) a;
 		int *A = aa + 1;
@@ -409,6 +406,100 @@ void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 
 }
 
+void unipoly_domain::division_with_remainder_based_on_tables_with_report(
+		int *coeff_a, int len_a,
+		int *coeff_b, int len_b,
+		int *&coeff_q, int &len_q,
+		int *&coeff_r, int &len_r,
+		std::ostream &ost, int f_report, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "unipoly_domain::division_with_remainder_based_on_tables_with_report" << endl;
+	}
+
+	unipoly_object a;
+	unipoly_object b;
+	unipoly_object q;
+	unipoly_object r;
+	data_structures::algorithms Algo;
+
+
+	create_object_from_table_of_coefficients(
+		a, coeff_a, len_a,
+		verbose_level);
+
+	create_object_from_table_of_coefficients(
+		b, coeff_b, len_b,
+		verbose_level);
+
+	create_object_by_rank(q, 0,
+				0 /* verbose_level */);
+	create_object_by_rank(r, 0,
+				0 /* verbose_level */);
+
+	int da, db;
+	int i;
+
+	da = degree(a);
+	db = degree(b);
+
+
+	if (f_report) {
+		ost << "\\begin{verbatim}" << endl;
+		Algo.print_repeated_character(ost, ' ', db + 1 + 3);
+		Int_vec_print(ost, coeff_a, len_a);
+		ost << " / ";
+		Int_vec_print(ost, coeff_b, len_b);
+		ost << " = ";
+		ost << endl;
+	}
+
+
+	division_with_remainder_with_report(a, b, q, r, f_report, ost, verbose_level);
+
+
+	if (degree(r) >= degree(b)) {
+		cout << "unipoly_domain::division_with_remainder_based_on_tables_with_report "
+				"degree(r) >= degree(b)" << endl;
+		cout << "degree(b) = " << degree(b) << endl;
+		cout << "degree(r) = " << degree(r) << endl;
+		for (i = 0; i < degree(r); i++) {
+			cout << i << " : " << s_i(r, i) << endl;
+		}
+		exit(1);
+	}
+	len_q = degree(q) + 1;
+	len_r = degree(r) + 1;
+	coeff_q = NEW_int(len_q);
+	coeff_r = NEW_int(degree(b));
+	for (i = 0; i < len_q; i++) {
+		coeff_q[i] = s_i(q, i);
+	}
+	for (i = 0; i < len_r; i++) {
+		coeff_r[i] = s_i(r, i);
+	}
+	for (; i < degree(b); i++) {
+		coeff_r[i] = 0;
+	}
+
+
+
+	if (f_report) {
+		Algo.print_repeated_character(ost, ' ', db + 1 + 3);
+		Algo.print_repeated_character(ost, ' ', da - i - 2);
+		ost << "= ";
+		Int_vec_print(cout, coeff_r, len_r);
+		ost << endl;
+		ost << "\\end{verbatim}" << endl;
+	}
+
+	if (f_v) {
+		cout << "unipoly_domain::division_with_remainder_based_on_tables_with_report done" << endl;
+	}
+}
 
 void unipoly_domain::division_with_remainder_numerically_with_report(
 		long int rk_a, long int rk_b,
@@ -429,13 +520,13 @@ void unipoly_domain::division_with_remainder_numerically_with_report(
 	data_structures::algorithms Algo;
 
 	create_object_by_rank(a, rk_a,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 	create_object_by_rank(b, rk_b,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 	create_object_by_rank(q, 0,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 	create_object_by_rank(r, 0,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				0 /* verbose_level */);
 
 	int da, db;
 	int i;
@@ -586,6 +677,8 @@ void unipoly_domain::division_with_remainder_with_report(
 			print_coeffs_top_down_assuming_one_character_per_digit(q, ost);
 		}
 
+		// start over, we do the computation twice:
+
 		assign(a, r, 0 /*verbose_level*/);
 
 
@@ -649,9 +742,17 @@ void unipoly_domain::division_with_remainder_with_report(
 		//cout << "q="; print_object(q, cout); cout << endl;
 		//cout << "r="; print_object(r, cout); cout << endl;
 
+#if 0
 		while (i > 0 && R[i] == 0) {
 			i--;
 		}
+#endif
+		// rr is invalid because r has bee  overwritten by the assignment of a to r!
+		// So, need to reset rr:
+
+
+		rr = (int *) r;
+
 		rr[0] = i;
 		if (rr[0] < 0) {
 			rr[0] = 0;

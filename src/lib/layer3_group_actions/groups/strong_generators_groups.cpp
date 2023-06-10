@@ -978,7 +978,7 @@ void strong_generators::generators_for_the_singer_cycle(
 		ring_theory::unipoly_object m;
 		ring_theory::longinteger_object rk;
 
-		FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
+		FX.create_object_by_rank(m, 0, verbose_level);
 
 		if (f_v) {
 			cout << "strong_generators::generators_for_the_singer_cycle "
@@ -1161,7 +1161,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		ring_theory::unipoly_object m;
 		ring_theory::longinteger_object rk;
 
-		FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
+		FX.create_object_by_rank(m, 0, verbose_level);
 
 		if (f_v) {
 			cout << "search_for_primitive_polynomial_of_given_degree "
@@ -1484,7 +1484,7 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 	n = M->n;
 
 	SG1->group_order(go1);
-	Q.create(q - 1, __FILE__, __LINE__);
+	Q.create(q - 1);
 	D.mult(go1, Q, go);
 
 	if (f_v) {
@@ -1885,7 +1885,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	}
 	b.create_i_power_j(q, n);
 	D.mult(aa, b, bb);
-	c.create(q - 1, __FILE__, __LINE__);
+	c.create(q - 1);
 	D.mult(bb, c, target_go);
 	if (f_v) {
 		cout << "strong_generators::generators_for_translation_plane_in_andre_model "
@@ -1990,7 +1990,7 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 	ring_theory::longinteger_object go_linear, a, two, target_go;
 	ring_theory::longinteger_domain D;
 
-	two.create(1, __FILE__, __LINE__);
+	two.create(1);
 	A_PGL_k_q->group_order(go_linear);
 	D.mult(go_linear, go_linear, a);
 	D.mult(a, two, target_go);
@@ -2086,10 +2086,10 @@ void strong_generators::regulus_stabilizer(
 	A_PGL_k_q->group_order(go);
 	D.mult(go, go, a);
 	if (Mtx->f_semilinear) {
-		b.create(F->e, __FILE__, __LINE__);
+		b.create(F->e);
 	}
 	else {
-		b.create(1, __FILE__, __LINE__);
+		b.create(1);
 	}
 	D.mult(a, b, target_go);
 	if (f_v) {
@@ -2528,7 +2528,7 @@ void strong_generators::generators_for_the_identity_subgroup(
 	}
 	ring_theory::longinteger_object target_go;
 
-	target_go.create(1, __FILE__, __LINE__);
+	target_go.create(1);
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_identity_subgroup "
@@ -2723,19 +2723,19 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	ring_theory::longinteger_domain D;
 
 
-	target_go.create(1, __FILE__, __LINE__);
-	a.create((q - 1) * 6, __FILE__, __LINE__);
-	b.create(q + 1, __FILE__, __LINE__);
-	c.create(q, __FILE__, __LINE__);
-	d.create(q - 1, __FILE__, __LINE__);
-	e.create(NT.i_power_j(q, 4), __FILE__, __LINE__);
+	target_go.create(1);
+	a.create((q - 1) * 6);
+	b.create(q + 1);
+	c.create(q);
+	d.create(q - 1);
+	e.create(NT.i_power_j(q, 4));
 	D.mult_in_place(target_go, a);
 	D.mult_in_place(target_go, b);
 	D.mult_in_place(target_go, c);
 	D.mult_in_place(target_go, d);
 	D.mult_in_place(target_go, e);
 	if (Mtx->f_semilinear) {
-		f.create(Mtx->GFq->e, __FILE__, __LINE__);
+		f.create(Mtx->GFq->e);
 		D.mult_in_place(target_go, f);
 	}
 	
@@ -2830,15 +2830,15 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	ring_theory::longinteger_domain D;
 
 
-	target_go.create(1, __FILE__, __LINE__);
-	a.create(NT.i_power_j(q, 3), __FILE__, __LINE__);
-	b.create(NT.i_power_j(q - 1, 3), __FILE__, __LINE__);
-	c.create(6, __FILE__, __LINE__);
+	target_go.create(1);
+	a.create(NT.i_power_j(q, 3));
+	b.create(NT.i_power_j(q - 1, 3));
+	c.create(6);
 	D.mult_in_place(target_go, a);
 	D.mult_in_place(target_go, b);
 	D.mult_in_place(target_go, c);
 	if (Mtx->f_semilinear) {
-		f.create(Mtx->GFq->e, __FILE__, __LINE__);
+		f.create(Mtx->GFq->e);
 		D.mult_in_place(target_go, f);
 	}
 	
@@ -3201,7 +3201,7 @@ strong_generators::stabilizer_of_Eckardt_surface(
 
 	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	nice_gens->init(A, verbose_level - 2);
-	target_go.create(group_order, __FILE__, __LINE__);
+	target_go.create(group_order);
 
 
 	nice_gens->allocate(nb_gens, verbose_level - 2);
@@ -3273,7 +3273,7 @@ void strong_generators::stabilizer_of_G13_surface(
 
 	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	nice_gens->init(A, verbose_level - 2);
-	target_go.create(group_order, __FILE__, __LINE__);
+	target_go.create(group_order);
 
 
 	nice_gens->allocate(nb_gens, verbose_level - 2);
@@ -3344,7 +3344,7 @@ void strong_generators::stabilizer_of_F13_surface(
 
 	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	nice_gens->init(A, verbose_level - 2);
-	target_go.create(group_order, __FILE__, __LINE__);
+	target_go.create(group_order);
 
 
 	nice_gens->allocate(nb_gens, verbose_level - 2);
@@ -3573,7 +3573,7 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
-	target_go.create(NT.i_power_j(F->q - 1, 2), __FILE__, __LINE__);
+	target_go.create(NT.i_power_j(F->q - 1, 2));
 
 	int *data;
 	int nb_gens = 2;
@@ -3672,8 +3672,7 @@ void strong_generators::Janko1(
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	target_go.create(
-			11 * (11 * 11 * 11 - 1) * (11 + 1),
-			__FILE__, __LINE__);
+			11 * (11 * 11 * 11 - 1) * (11 + 1));
 
 	int *data;
 	int nb_gens = 2;
@@ -3802,7 +3801,7 @@ void strong_generators::Hall_reflection(
 	ring_theory::longinteger_object target_go;
 
 
-	target_go.create(2, __FILE__, __LINE__);
+	target_go.create(2);
 
 
 	if (f_v) {

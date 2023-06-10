@@ -301,6 +301,8 @@ class interface_coding_theory {
 	long int crc_test_N;
 	int crc_test_k;
 
+
+
 public:
 	interface_coding_theory();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);

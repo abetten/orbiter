@@ -927,7 +927,7 @@ void ring_theory_global::sift_polynomials(
 		idx = rk - rk0;
 
 		D.create_object_by_rank(p, rk,
-				__FILE__, __LINE__, 0 /* verbose_level*/);
+				0 /* verbose_level*/);
 		if (f_v) {
 			cout << "rk=" << rk << " poly=";
 			D.print_object(p, cout);
@@ -941,8 +941,8 @@ void ring_theory_global::sift_polynomials(
 
 
 		f = D.degree(p);
-		Q.create(F->q, __FILE__, __LINE__);
-		m1.create(-1, __FILE__, __LINE__);
+		Q.create(F->q);
+		m1.create(-1);
 		ZZ.power_int(Q, f);
 		ZZ.add(Q, m1, Qm1);
 		if (f_v) {
@@ -984,7 +984,7 @@ void ring_theory_global::sift_polynomials(
 	for (idx = 0; idx < len; idx++) {
 		rk = Table[idx * 3 + 0];
 		D.create_object_by_rank(p, rk,
-				__FILE__, __LINE__, 0 /* verbose_level*/);
+				0 /* verbose_level*/);
 		f_is_irred = Table[idx * 3 + 1];
 		f_is_primitive = Table[idx * 3 + 2];
 		if (f_v) {
@@ -1022,12 +1022,8 @@ void ring_theory_global::mult_polynomials(
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		snprintf(str, 1000, "polynomial_mult_%ld_%ld.tex", rk0, rk1);
-		fname.assign(str);
-		snprintf(str, 1000, "Polynomial Mult");
-		title.assign(str);
+		fname = "polynomial_mult_" + std::to_string(rk0) + "_" + std::to_string(rk1);
+		title = "Polynomial Mult";
 
 
 
@@ -1078,6 +1074,129 @@ void ring_theory_global::mult_polynomials(
 }
 
 
+
+void ring_theory_global::polynomial_division_coefficient_table_with_report(
+		field_theory::finite_field *F,
+		int *coeff_table0, int coeff_table0_len,
+		int *coeff_table1, int coeff_table1_len,
+		int *&coeff_table_q, int &coeff_table_q_len,
+		int *&coeff_table_r, int &coeff_table_r_len,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::polynomial_division_coefficient_table_with_report" << endl;
+	}
+	unipoly_domain D(F);
+
+	{
+
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		fname = "polynomial_division.tex";
+		title = "Polynomial Division";
+
+
+
+
+		{
+			ofstream ost(fname);
+			l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "ring_theory_global::polynomial_division_coefficient_table_with_report "
+						"before division_with_remainder_numerically_with_report" << endl;
+			}
+
+
+			ost << "{\\scriptsize" << endl;
+			ost << "data:" << endl;
+			ost << "$$" << endl;
+			L.int_vec_print_as_matrix(
+					ost,
+					coeff_table0, coeff_table0_len, 20, true /*f_tex*/);
+			ost << "$$" << endl;
+			ost << "}" << endl;
+
+
+			ost << "CRC:" << endl;
+			ost << "$$" << endl;
+			L.int_vec_print_as_matrix(
+					ost,
+					coeff_table1, coeff_table1_len, 10, true /*f_tex*/);
+			ost << "$$" << endl;
+
+			int f_report = false;
+
+			D.division_with_remainder_based_on_tables_with_report(
+					coeff_table0, coeff_table0_len,
+					coeff_table1, coeff_table1_len,
+					coeff_table_q, coeff_table_q_len,
+					coeff_table_r, coeff_table_r_len,
+					ost, f_report, verbose_level);
+
+			ost << "{\\scriptsize" << endl;
+			ost << "Quotient:" << endl;
+			ost << "$$" << endl;
+			L.int_vec_print_as_matrix(
+					ost,
+					coeff_table_q, coeff_table_q_len, 20, true /*f_tex*/);
+			ost << "$$" << endl;
+			ost << "}" << endl;
+
+			ost << "Remainder:" << endl;
+			ost << "$$" << endl;
+			L.int_vec_print_as_matrix(
+					ost,
+					coeff_table_r, coeff_table_r_len, 20, true /*f_tex*/);
+			ost << "$$" << endl;
+
+
+			//ost << "$" << rk0 << " / " << rk1 << " = " << rk2
+			//		<< "$ Remainder $" << rk3 << "$\\\\" << endl;
+
+
+			if (f_v) {
+				cout << "ring_theory_global::polynomial_division_coefficient_table_with_report "
+						"after division_with_remainder_numerically_with_report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "ring_theory_global::polynomial_division_coefficient_table_with_report "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::polynomial_division_coefficient_table_with_report done" << endl;
+	}
+
+}
+
+
 void ring_theory_global::polynomial_division_with_report(
 		field_theory::finite_field *F,
 		long int rk0, long int rk1, int verbose_level)
@@ -1098,12 +1217,8 @@ void ring_theory_global::polynomial_division_with_report(
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		snprintf(str, 1000, "polynomial_division_%ld_%ld.tex", rk0, rk1);
-		fname.assign(str);
-		snprintf(str, 1000, "Polynomial Division");
-		title.assign(str);
+		fname = "polynomial_division_" + std::to_string(rk0) + "_" + std::to_string(rk1);
+		title = "Polynomial Division";
 
 
 
@@ -1131,8 +1246,10 @@ void ring_theory_global::polynomial_division_with_report(
 			//report(ost, verbose_level);
 
 			long int rk2, rk3;
-			D.division_with_remainder_numerically_with_report(rk0, rk1, rk2, rk3, ost, verbose_level);
-			ost << "$" << rk0 << " / " << rk1 << " = " << rk2 << "$ Remainder $" << rk3 << "$\\\\" << endl;
+			D.division_with_remainder_numerically_with_report(
+					rk0, rk1, rk2, rk3, ost, verbose_level);
+			ost << "$" << rk0 << " / " << rk1 << " = " << rk2 << "$ "
+					"Remainder $" << rk3 << "$\\\\" << endl;
 
 
 			if (f_v) {
@@ -1146,7 +1263,8 @@ void ring_theory_global::polynomial_division_with_report(
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		cout << "ring_theory_global::polynomial_division_with_report written file " << fname << " of size "
+		cout << "ring_theory_global::polynomial_division_with_report "
+				"written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
 
@@ -1155,6 +1273,77 @@ void ring_theory_global::polynomial_division_with_report(
 	}
 
 }
+
+
+void ring_theory_global::assemble_monopoly(
+		field_theory::finite_field *F,
+		int length,
+		std::string &coefficient_vector_text,
+		std::string &exponent_vector_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::assemble_monopoly" << endl;
+	}
+
+	int *A;
+	int *V;
+	int A_sz;
+	int V_sz;
+
+	Get_int_vector_from_label(coefficient_vector_text,
+			A, A_sz, verbose_level);
+	Get_int_vector_from_label(exponent_vector_text,
+			V, V_sz, verbose_level);
+
+	if (A_sz != V_sz) {
+		cout << "ring_theory_global::assemble_monopoly A_sz != V_sz" << endl;
+		exit(1);
+	}
+
+	int h, a, v;
+	int *poly;
+
+	poly = NEW_int(length);
+	Int_vec_zero(poly, length);
+	for (h = 0; h < A_sz; h++) {
+		a = A[h];
+		v = V[h];
+		poly[a] = v;
+	}
+	int coeff;
+	int f_first;
+
+	f_first = true;
+
+	for (h = 0; h < length; h++) {
+		coeff = poly[h];
+		if (coeff) {
+			if (!f_first) {
+				cout << "+";
+			}
+			f_first = false;
+			cout << coeff;
+			if (h) {
+				cout << "*X";
+				if (h > 1) {
+					cout << "^" << h;
+				}
+			}
+		}
+	}
+	cout << endl;
+
+	FREE_int(poly);
+
+	if (f_v) {
+		cout << "ring_theory_global::assemble_monopoly done" << endl;
+	}
+}
+
+
 
 void ring_theory_global::polynomial_division_from_file_with_report(
 		field_theory::finite_field *F,
@@ -1173,13 +1362,8 @@ void ring_theory_global::polynomial_division_from_file_with_report(
 		string title;
 		string extra_praeamble;
 
-
-		char str[1000];
-
-		snprintf(str, 1000, "polynomial_division_file_%ld.tex", rk1);
-		fname.assign(str);
-		snprintf(str, 1000, "Polynomial Division");
-		title.assign(str);
+		fname = "polynomial_division_" + input_file + "_" + std::to_string(rk1);
+		title = "Polynomial Division";
 
 
 
@@ -1225,7 +1409,8 @@ void ring_theory_global::polynomial_division_from_file_with_report(
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		cout << "ring_theory_global::polynomial_division_from_file_with_report written file " << fname << " of size "
+		cout << "ring_theory_global::polynomial_division_from_file_with_report "
+				"written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
 
@@ -1256,12 +1441,9 @@ void ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with
 		string extra_praeamble;
 
 
-		char str[1000];
+		fname = "polynomial_division_all_errors_k" + std::to_string(k) + "_" + std::to_string(rk1);
+		title = "Polynomial Division";
 
-		snprintf(str, 1000, "polynomial_division_file_all_%d_error_patterns_%ld.tex", k, rk1);
-		fname.assign(str);
-		snprintf(str, 1000, "Polynomial Division");
-		title.assign(str);
 
 
 
@@ -1351,7 +1533,8 @@ void ring_theory_global::create_irreducible_polynomial(
 		cout << "ring_theory_global::create_irreducible_polynomial n=" << n << endl;
 	}
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial before allocating min_poly etc" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"before allocating min_poly etc" << endl;
 	}
 
 	int degree = cylotomic_set_size;
@@ -1367,48 +1550,55 @@ void ring_theory_global::create_irreducible_polynomial(
 
 	// create the polynomial linear_factor = X - a:
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial creating linear_factor = X-a" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"creating linear_factor = X-a" << endl;
 	}
 	for (i = 0; i < 2; i++) {
 		if (i == 1) {
-			Fq->create_object_by_rank(linear_factor[i], 1, __FILE__, __LINE__, verbose_level);
+			Fq->create_object_by_rank(linear_factor[i], 1, verbose_level);
 		}
 		else {
-			Fq->create_object_by_rank(linear_factor[i], 0, __FILE__, __LINE__, verbose_level);
+			Fq->create_object_by_rank(linear_factor[i], 0, verbose_level);
 		}
 	}
 	for (i = 0; i <= degree; i++) {
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial creating generator[" << i << "]" << endl;
+			cout << "ring_theory_global::create_irreducible_polynomial "
+					"creating generator[" << i << "]" << endl;
 		}
-		Fq->create_object_by_rank(min_poly[i], 0, __FILE__, __LINE__, verbose_level);
-		Fq->create_object_by_rank(tmp[i], 0, __FILE__, __LINE__, verbose_level);
+		Fq->create_object_by_rank(min_poly[i], 0, verbose_level);
+		Fq->create_object_by_rank(tmp[i], 0, verbose_level);
 	}
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial creating generator[0]" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"creating generator[0]" << endl;
 	}
-	Fq->create_object_by_rank(min_poly[0], 1, __FILE__, __LINE__, verbose_level);
+	Fq->create_object_by_rank(min_poly[0], 1, verbose_level);
 
 	// now coeffs has degree 1
 	// and generator has degree 0
 
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial coeffs:" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"coeffs:" << endl;
 		Cyclic_codes.print_polynomial(*Fq, 1, linear_factor);
 		cout << endl;
-		cout << "ring_theory_global::create_irreducible_polynomial generator:" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"generator:" << endl;
 		Cyclic_codes.print_polynomial(*Fq, 0, min_poly);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial creating Pc" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"creating Pc" << endl;
 	}
-	Fq->create_object_by_rank(Pc, 0, __FILE__, __LINE__, verbose_level);
+	Fq->create_object_by_rank(Pc, 0, verbose_level);
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial creating Pd" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"creating Pd" << endl;
 	}
-	Fq->create_object_by_rank(Pd, 0, __FILE__, __LINE__, verbose_level);
+	Fq->create_object_by_rank(Pd, 0, verbose_level);
 
 	r = 0;
 	for (h = 0; h < cylotomic_set_size; h++) {
@@ -1417,18 +1607,22 @@ void ring_theory_global::create_irreducible_polynomial(
 			cout << "h=" << h << ", i=" << i << endl;
 		}
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial working on root " << i << endl;
+			cout << "ring_theory_global::create_irreducible_polynomial "
+					"working on root " << i << endl;
 		}
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial before Fq.assign beta" << endl;
+			cout << "ring_theory_global::create_irreducible_polynomial "
+					"before Fq.assign beta" << endl;
 		}
 		Fq->assign(Beta[i], linear_factor[0], verbose_level);
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial before Fq.negate" << endl;
+			cout << "ring_theory_global::create_irreducible_polynomial "
+					"before Fq.negate" << endl;
 		}
 		Fq->negate(linear_factor[0]);
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial root: " << i << " : ";
+			cout << "ring_theory_global::create_irreducible_polynomial "
+					"root: " << i << " : ";
 			Fq->print_object(linear_factor[0], cout);
 			//cout << " : ";
 			//print_polynomial(Fq, 2, coeffs);
@@ -1437,7 +1631,8 @@ void ring_theory_global::create_irreducible_polynomial(
 
 
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial before Fq.assign(min_poly[j], tmp[j])" << endl;
+			cout << "ring_theory_global::create_irreducible_polynomial "
+					"before Fq.assign(min_poly[j], tmp[j])" << endl;
 		}
 		for (j = 0; j <= r; j++) {
 			Fq->assign(min_poly[j], tmp[j], verbose_level);
@@ -1448,7 +1643,8 @@ void ring_theory_global::create_irreducible_polynomial(
 		//cout << endl;
 
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial before Fq.assign(tmp[j], min_poly[j + 1])" << endl;
+			cout << "ring_theory_global::create_irreducible_polynomial "
+					"before Fq.assign(tmp[j], min_poly[j + 1])" << endl;
 		}
 
 		for (j = 0; j <= r; j++) {
@@ -1456,7 +1652,7 @@ void ring_theory_global::create_irreducible_polynomial(
 		}
 
 		Fq->delete_object(min_poly[0]);
-		Fq->create_object_by_rank(min_poly[0], 0, __FILE__, __LINE__, verbose_level);
+		Fq->create_object_by_rank(min_poly[0], 0, verbose_level);
 
 		//cout << "generator after shifting up:" << endl;
 		//print_polynomial(Fq, r + 1, generator);
@@ -1464,7 +1660,8 @@ void ring_theory_global::create_irreducible_polynomial(
 
 		for (j = 0; j <= r; j++) {
 			if (f_v) {
-				cout << "ring_theory_global::create_irreducible_polynomial j=" << j << endl;
+				cout << "ring_theory_global::create_irreducible_polynomial "
+						"j=" << j << endl;
 			}
 			if (f_v) {
 				cout << "ring_theory_global::create_irreducible_polynomial "
@@ -1477,17 +1674,20 @@ void ring_theory_global::create_irreducible_polynomial(
 			}
 			Fq->add(Pc, min_poly[j], Pd);
 			if (f_v) {
-				cout << "ring_theory_global::create_irreducible_polynomial before "
+				cout << "ring_theory_global::create_irreducible_polynomial "
+						"before "
 						"Fq.assign" << endl;
 			}
 			Fq->assign(Pd, min_poly[j], verbose_level);
 		}
 		r++;
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial r=" << r << endl;
+			cout << "ring_theory_global::create_irreducible_polynomial "
+					"r=" << r << endl;
 		}
 		if (f_v) {
-			cout << "ring_theory_global::create_irreducible_polynomial current polynomial: ";
+			cout << "ring_theory_global::create_irreducible_polynomial "
+					"current polynomial: ";
 			Cyclic_codes.print_polynomial(*Fq, r, min_poly);
 			cout << endl;
 		}
@@ -1495,18 +1695,21 @@ void ring_theory_global::create_irreducible_polynomial(
 	}
 
 	if (r != degree) {
-		cout << "ring_theory_global::create_irreducible_polynomial r != degree" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"r != degree" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial The minimum polynomial is: ";
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"The minimum polynomial is: ";
 		Cyclic_codes.print_polynomial(*Fq, r, min_poly);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "ring_theory_global::create_irreducible_polynomial done" << endl;
+		cout << "ring_theory_global::create_irreducible_polynomial "
+				"done" << endl;
 	}
 
 }
@@ -1543,7 +1746,8 @@ void ring_theory_global::compute_nth_roots_as_polynomials(
 
 	m = NT.order_mod_p(F->q, n1);
 	if (f_v) {
-		cout << "ring_theory_global::make_cyclic_code order of q mod n is m=" << m << endl;
+		cout << "ring_theory_global::make_cyclic_code "
+				"order of q mod n is m=" << m << endl;
 	}
 	D.create_qnm1(Qm1, F->q, m);
 
@@ -1551,19 +1755,22 @@ void ring_theory_global::compute_nth_roots_as_polynomials(
 	// GF(q)=GF(p^e) has n-th roots of unity
 	D.integral_division_by_int(Qm1, n2, Index, r);
 	if (f_v) {
-		cout << "ring_theory_global::make_cyclic_code Index = " << Index << endl;
+		cout << "ring_theory_global::make_cyclic_code "
+				"Index = " << Index << endl;
 	}
 
 	int subgroup_index;
 
 	subgroup_index = Index.as_int();
 	if (f_v) {
-		cout << "ring_theory_global::make_cyclic_code subgroup_index = " << subgroup_index << endl;
+		cout << "ring_theory_global::make_cyclic_code "
+				"subgroup_index = " << subgroup_index << endl;
 	}
 
 	//b = (q - 1) / n;
 	if (r != 0) {
-		cout << "ring_theory_global::make_cyclic_code n does not divide q^m-1" << endl;
+		cout << "ring_theory_global::make_cyclic_code "
+				"n does not divide q^m-1" << endl;
 		exit(1);
 	}
 
@@ -1587,13 +1794,13 @@ void ring_theory_global::compute_nth_roots_as_polynomials(
 	Beta = new unipoly_object[n2];
 
 	for (i = 0; i < n2; i++) {
-		Fq->create_object_by_rank(Beta[i], 0, __FILE__, __LINE__, verbose_level);
+		Fq->create_object_by_rank(Beta[i], 0, verbose_level);
 
 	}
 
-	//Fq->create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
-	Fq->create_object_by_rank(beta, F->p, __FILE__, __LINE__, verbose_level); // the element alpha
-	//Fq->create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	//Fq->create_object_by_rank(c, 0, verbose_level);
+	Fq->create_object_by_rank(beta, F->p, verbose_level); // the element alpha
+	//Fq->create_object_by_rank(beta_i, 1, verbose_level);
 	if (subgroup_index != 1) {
 		//Fq.power_int(beta, b);
 		if (f_v) {
@@ -1602,7 +1809,8 @@ void ring_theory_global::compute_nth_roots_as_polynomials(
 			cout << endl;
 		}
 		if (f_v) {
-			cout << "ring_theory_global::compute_nth_roots_as_polynomials before Fq->power_int" << endl;
+			cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+					"before Fq->power_int" << endl;
 		}
 		Fq->power_int(beta, subgroup_index, verbose_level - 1);
 		if (f_v) {
@@ -1613,31 +1821,37 @@ void ring_theory_global::compute_nth_roots_as_polynomials(
 	}
 	else {
 		if (f_v) {
-			cout << "ring_theory_global::compute_nth_roots_as_polynomials subgroup_index is one" << endl;
+			cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+					"subgroup_index is one" << endl;
 		}
 	}
 
 
 	for (i = 0; i < n2; i++) {
 		if (f_v) {
-			cout << "ring_theory_global::compute_nth_roots_as_polynomials i=" << i << endl;
+			cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+					"i=" << i << endl;
 		}
 		if (f_v) {
-			cout << "ring_theory_global::compute_nth_roots_as_polynomials working on root " << i << endl;
+			cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+					"working on root " << i << endl;
 		}
 		if (f_v) {
-			cout << "ring_theory_global::compute_nth_roots_as_polynomials before Fq.assign beta" << endl;
+			cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+					"before Fq.assign beta" << endl;
 		}
 		Fq->assign(beta, Beta[i], verbose_level);
 		if (f_v) {
-			cout << "ring_theory_global::compute_nth_roots_as_polynomials before Fq.power_int" << endl;
+			cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+					"before Fq.power_int" << endl;
 		}
 		Fq->power_int(Beta[i], i, verbose_level);
 	}
 
 
 	if (f_v) {
-		cout << "ring_theory_global::compute_nth_roots_as_polynomials done" << endl;
+		cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+				"done" << endl;
 	}
 
 }
@@ -1659,11 +1873,11 @@ void ring_theory_global::compute_powers(
 	Beta = new unipoly_object[n];
 
 	for (i = 0; i < n; i++) {
-		Fq->create_object_by_rank(Beta[i], 0, __FILE__, __LINE__, verbose_level);
+		Fq->create_object_by_rank(Beta[i], 0, verbose_level);
 
 	}
 
-	Fq->create_object_by_rank(beta, F->p, __FILE__, __LINE__, verbose_level); // the element alpha
+	Fq->create_object_by_rank(beta, F->p, verbose_level); // the element alpha
 
 	if (start_idx != 1) {
 
@@ -1673,7 +1887,8 @@ void ring_theory_global::compute_powers(
 			cout << endl;
 		}
 		if (f_v) {
-			cout << "ring_theory_global::compute_powers before Fq->power_int" << endl;
+			cout << "ring_theory_global::compute_powers "
+					"before Fq->power_int" << endl;
 		}
 		Fq->power_int(beta, start_idx, verbose_level - 1);
 		if (f_v) {
@@ -1684,24 +1899,29 @@ void ring_theory_global::compute_powers(
 	}
 	else {
 		if (f_v) {
-			cout << "ring_theory_global::compute_powers subgroup_index is one" << endl;
+			cout << "ring_theory_global::compute_powers "
+					"subgroup_index is one" << endl;
 		}
 	}
 
 
 	for (i = 0; i < n; i++) {
 		if (f_v) {
-			cout << "ring_theory_global::compute_powers i=" << i << endl;
+			cout << "ring_theory_global::compute_powers "
+					"i=" << i << endl;
 		}
 		if (f_v) {
-			cout << "ring_theory_global::compute_powers working on root " << i << endl;
+			cout << "ring_theory_global::compute_powers "
+					"working on root " << i << endl;
 		}
 		if (f_v) {
-			cout << "ring_theory_global::compute_powers before Fq.assign beta" << endl;
+			cout << "ring_theory_global::compute_powers "
+					"before Fq.assign beta" << endl;
 		}
 		Fq->assign(beta, Beta[i], verbose_level);
 		if (f_v) {
-			cout << "ring_theory_global::compute_powers before Fq.power_int" << endl;
+			cout << "ring_theory_global::compute_powers "
+					"before Fq.power_int" << endl;
 		}
 		Fq->power_int(Beta[i], i, verbose_level);
 	}
@@ -1778,8 +1998,8 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 		cout << endl;
 	}
 
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
+	FX.create_object_by_rank(g, 0, 0 /* verbose_level */);
+	FX.create_object_by_rank(minpol, 0, 0 /* verbose_level */);
 
 	int *Frobenius;
 	int *Normal_basis;
@@ -1943,8 +2163,8 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 		cout << endl;
 	}
 
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
+	FX.create_object_by_rank(g, 0, 0 /* verbose_level */);
+	FX.create_object_by_rank(minpol, 0, 0 /* verbose_level */);
 
 	int *Frobenius;
 	//int *F2;
@@ -2250,7 +2470,7 @@ char *ring_theory_global::search_for_primitive_polynomial_of_given_degree(
 	unipoly_object m;
 	longinteger_object rk;
 
-	FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(m, 0, verbose_level);
 
 	if (f_v) {
 		cout << "search_for_primitive_polynomial_of_given_degree "
@@ -2322,7 +2542,7 @@ void ring_theory_global::search_for_primitive_polynomials(
 			unipoly_object m;
 			longinteger_object rk;
 
-			FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
+			FX.create_object_by_rank(m, 0, verbose_level);
 
 			for (d = n_min; d <= n_max; d++) {
 				if (f_v) {
@@ -2475,8 +2695,8 @@ void ring_theory_global::factor_cyclotomic(
 	for (c = 0; c < n; c++) {
 		if (NT.gcd_lint(c, n) != 1)
 			continue;
-		C.create(c, __FILE__, __LINE__);
-		N.create(n, __FILE__, __LINE__);
+		C.create(c);
+		N.create(n);
 		D.extended_gcd(C, N, G, U, V, false);
 		cv = U.as_int();
 		ccv= c * cv;

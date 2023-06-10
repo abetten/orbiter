@@ -421,7 +421,7 @@ void recoordinatize::stabilizer_of_first_three(
 
 
 	
-	six.create(6, __FILE__, __LINE__);
+	six.create(6);
 	D.mult(target_go, six, target_go2);
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "

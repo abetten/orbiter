@@ -895,7 +895,7 @@ long int finite_field::compute_subfield_polynomial(
 		{
 			ring_theory::unipoly_object elt;
 		
-			Fq.create_object_by_rank(elt, jj, __FILE__, __LINE__, 0 /*verbose_level*/);
+			Fq.create_object_by_rank(elt, jj, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << i << " : " << j << " : " << jj << " : ";
 				Fq.print_object(elt, cout);
@@ -1002,7 +1002,7 @@ long int finite_field::compute_subfield_polynomial(
 	if (f_v) {
 		ring_theory::unipoly_object elt;
 		
-		FX.create_object_by_rank(elt, a, __FILE__, __LINE__, verbose_level);
+		FX.create_object_by_rank(elt, a, verbose_level);
 		cout << "finite_field::compute_subfield_polynomial "
 				"subfield of order " << NT.i_power_j(p, e1)
 				<< " : " << a << " = ";
@@ -1056,7 +1056,7 @@ void finite_field::compute_subfields(
 				ring_theory::unipoly_object elt;
 				
 				FX.create_object_by_rank(elt,
-						poly, __FILE__, __LINE__, verbose_level);
+						poly, verbose_level);
 				cout << "subfield of order " << NT.i_power_j(p, e1)
 						<< " : " << poly << " = ";
 				Fq.print_object(elt, cout);
@@ -1166,9 +1166,9 @@ int finite_field::compute_order_of_element(
 		ring_theory::unipoly_domain Fq(&GFp, m, verbose_level - 1);
 		ring_theory::unipoly_object a, c, Alpha;
 
-		Fq.create_object_by_rank(Alpha, elt, __FILE__, __LINE__, verbose_level);
-		Fq.create_object_by_rank(a, elt, __FILE__, __LINE__, verbose_level);
-		Fq.create_object_by_rank(c, 1, __FILE__, __LINE__, verbose_level);
+		Fq.create_object_by_rank(Alpha, elt, verbose_level);
+		Fq.create_object_by_rank(a, elt, verbose_level);
+		Fq.create_object_by_rank(c, 1, verbose_level);
 
 		for (i = 1; i < q; i++) {
 

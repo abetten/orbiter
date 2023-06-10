@@ -235,6 +235,11 @@ public:
 	long int polynomial_division_r0;
 	long int polynomial_division_r1;
 
+	int f_assemble_monopoly;
+	int assemble_monopoly_length;
+	std::string assemble_monopoly_coefficient_vector;
+	std::string assemble_monopoly_exponent_vector;
+
 
 
 	int f_transversal;
@@ -257,7 +262,6 @@ public:
 	int f_unrank_point_in_PG;
 	int unrank_point_in_PG_n;
 	std::string unrank_point_in_PG_text;
-
 
 
 
@@ -912,6 +916,8 @@ public:
 			int subfield_degree,
 			int *&field_basis, int verbose_level);
 	void report(
+			std::ostream &ost, int verbose_level);
+	void print_irreducible_polynomials_as_makefile_variables(
 			std::ostream &ost, int verbose_level);
 
 };

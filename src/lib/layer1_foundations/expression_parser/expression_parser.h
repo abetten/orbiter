@@ -374,6 +374,13 @@ public:
 			field_theory::finite_field *Fq,
 			std::string &managed_variables,
 			int verbose_level);
+	void init_formula_monopoly(
+			std::string &label, std::string &label_tex,
+			field_theory::finite_field *Fq,
+			std::string &managed_variables,
+			std::string &variable,
+			int *coeffs, int nb_coeffs,
+			int verbose_level);
 	void init_formula_Sajeeb(
 			std::string &label, std::string &label_tex,
 			int f_managed_variables,
@@ -420,6 +427,8 @@ public:
 			int verbose_level);
 	int highest_order_term(
 			std::string &variable, int verbose_level);
+	void get_monopoly(
+			std::string &variable, int *&coeff, int &nb_coeff, int verbose_level);
 	void latex_tree(
 			std::string &label, int verbose_level);
 	void latex_tree_split(
@@ -548,6 +557,11 @@ public:
 			syntax_tree *Tree,
 			int value,
 			int verbose_level);
+	void init_monopoly(
+			syntax_tree *Tree,
+			std::string &variable,
+			int *coeffs, int nb_coeffs,
+			int verbose_level);
 	void init_terminal_node_text(
 			syntax_tree *Tree,
 			std::string &value_text,
@@ -600,6 +614,11 @@ public:
 	int is_monomial();
 	int is_this_variable(std::string &variable);
 	int highest_order_term(std::string &variable, int verbose_level);
+	void get_monopoly(std::string &variable,
+			std::vector<int> &Coeff, std::vector<int> &Exp,
+			int verbose_level);
+	void get_exponent_and_coefficient_of_variable(
+			std::string &variable, int &coeff, int &exp, int verbose_level);
 	int exponent_of_variable(std::string &variable, int verbose_level);
 	int exponent_of_variable_destructive(std::string &variable);
 	int get_exponent();
@@ -694,6 +713,11 @@ public:
 	void init_int(
 			field_theory::finite_field *Fq, int value,
 			int verbose_level);
+	void init_monopoly(
+			field_theory::finite_field *Fq,
+			std::string &variable,
+			int *coeffs, int nb_coeffs,
+			int verbose_level);
 	void print_to_vector(
 			std::vector<std::string> &rep, int f_latex,
 			int verbose_level);
@@ -730,6 +754,8 @@ public:
 			int verbose_level);
 	int highest_order_term(
 			std::string &variable, int verbose_level);
+	void get_monopoly(
+			std::string &variable, int *&coeff, int &nb_coeff, int verbose_level);
 	void multiply_by_minus_one(
 			field_theory::finite_field *Fq,
 			int verbose_level);

@@ -466,6 +466,7 @@ void crc_codes::test_charlie(long int Nb_test, int k, int verbose_level)
 #endif
 
 
+
 void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -479,33 +480,32 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 	long int nb_undetected = 0;
 	unsigned char c;
 	long int t0, t1, dt;
-	int *A;
-	int *V;
 
+	int *f_used; // [Crc->Len_total]
+	int *A; // [k]
+	int *V; // [k]
+
+	f_used = NEW_int(Crc->Len_total);
 	A = NEW_int(k);
 	V = NEW_int(k);
+
+	Int_vec_zero(f_used, Crc->Len_total);
 	t0 = Os.os_ticks();
 
 	for (i = 0; i < Nb_test; i++) {
+
 		char_vec_zero(Crc->Data, Crc->Len_total);
 
 
 		for (j = 0; j < k; j++) {
-			int f_repeat;
 
 			while (true) {
 				a = Crc->Len_check + Os.random_integer(Crc->Len_info);
-
-				f_repeat = false;
-				for (h = 0; h < j; h++) {
-					if (A[h] == a) {
-						f_repeat = true;
-					}
-				}
-				if (!f_repeat) {
+				if (!f_used[a]) {
 					break;
 				}
 			}
+			f_used[a] = true;
 			A[j] = a;
 			v = 1 + Os.random_integer(255);
 			V[j] = v;
@@ -524,7 +524,46 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 			cout << ",";
 			Int_vec_print_fully(cout, V, k);
 			cout << endl;
+			cout << "undetected error " << nb_undetected << " : polynomial: ";
+			int *poly;
+
+			poly = NEW_int(Crc->Len_total);
+			Int_vec_zero(poly, Crc->Len_total);
+			for (h = 0; h < k; h++) {
+				a = A[h];
+				v = V[h];
+				poly[a] = v;
+			}
+			int coeff;
+			int f_first;
+
+			f_first = true;
+
+			for (h = 0; h < Crc->Len_total; h++) {
+				coeff = poly[h];
+				if (coeff) {
+					if (!f_first) {
+						cout << "+";
+					}
+					f_first = false;
+					cout << "coeff";
+					if (h) {
+						cout << "*X";
+						if (h > 1) {
+							cout << "^h";
+						}
+					}
+				}
+			}
+			cout << endl;
+
+			FREE_int(poly);
+
 			nb_undetected++;
+		}
+		for (j = 0; j < k; j++) {
+			a = A[j];
+			f_used[a] = false;
 		}
 	}
 	t1 = Os.os_ticks();
@@ -1575,7 +1614,7 @@ void crc_codes::split_binary_file_to_ascii_polynomials_256(
 
 		int line_pos;
 
-		ost << "# polynomially encoded data in makefile format" << endl;
+		ost << "# encoded binary data from file to polynomial data in makefile format" << endl;
 		ost << "BLOCK_LENGTH=" << block_length << endl;
 		ost << "SYMBOL_SET_SIZE=" << 256 << endl;
 		ost << "DATA_SIZE=" << N << endl;

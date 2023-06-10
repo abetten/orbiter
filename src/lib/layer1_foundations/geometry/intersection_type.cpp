@@ -172,7 +172,7 @@ void intersection_type::plane_intersection_type_slow(
 		if (nb >= threshold) {
 			Pts_on_plane[l] = pts_on_plane;
 			nb_pts_on_plane[l] = nb;
-			R[l].create(rk, __FILE__, __LINE__);
+			R[l].create(rk);
 			l++;
 		}
 		else {

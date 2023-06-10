@@ -245,7 +245,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	ring_theory::longinteger_object n_go;
 	int f_no_base = false;
 
-	n_go.create(N_go, __FILE__, __LINE__);
+	n_go.create(N_go);
 	N->Known_groups->init_permutation_group_from_generators(
 			H->group_order /* degree */,
 		true, n_go,

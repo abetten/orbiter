@@ -133,7 +133,7 @@ void boolean_function_domain::init(field_theory::finite_field *F2,
 	near_bent = 1 << ((n + 1) >> 1);
 	//NN = 1 << Q;
 	NN = NEW_OBJECT(ring_theory::longinteger_object);
-	NN->create(2, __FILE__, __LINE__);
+	NN->create(2);
 	D.power_int(*NN, Q - 1);
 	N = Gg.nb_PG_elements(n, 2);
 	if (f_v) {

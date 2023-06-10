@@ -863,7 +863,7 @@ void finite_field_io::report_subfields(
 				ring_theory::unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
 				ring_theory::unipoly_object elt;
 
-				FX.create_object_by_rank(elt, poly, __FILE__, __LINE__, verbose_level);
+				FX.create_object_by_rank(elt, poly, verbose_level);
 				ost << "\\bbF_{" << NT.i_power_j(F->p, h) << "} & ";
 				Fq.print_object(elt, ost);
 				ost << " & " << poly;

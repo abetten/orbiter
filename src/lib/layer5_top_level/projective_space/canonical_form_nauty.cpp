@@ -140,7 +140,10 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 	l1_interfaces::nauty_output *NO;
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-	NO->allocate(nb_rows + nb_cols, verbose_level);
+	NO->nauty_output_allocate(nb_rows + nb_cols,
+			0,
+			nb_rows + nb_cols,
+			verbose_level);
 
 
 	if (f_v) {

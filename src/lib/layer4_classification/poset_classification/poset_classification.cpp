@@ -696,7 +696,7 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 	
 	count_automorphism_group_orders(lvl, nb_agos, agos,
 			multiplicities, false);
-	S.create(0, __FILE__, __LINE__);
+	S.create(0);
 	N = 0;
 	for (j = 0; j < nb_agos; j++) {
 		N += multiplicities[j];
@@ -1550,7 +1550,7 @@ void poset_classification::list_whole_orbit(
 
 	orbit_length(orbit_idx, depth, Len);
 	len = orbit_length_as_int(orbit_idx, depth);
-	L.create(len, __FILE__, __LINE__);
+	L.create(len);
 	
 	get_stabilizer_order(depth, orbit_idx, go);
 
@@ -1661,7 +1661,7 @@ void poset_classification::get_whole_orbit(
 	}
 	poset_classification::orbit_length(orbit_idx, depth, Len);
 	orbit_length = orbit_length_as_int(orbit_idx, depth);
-	L.create(orbit_length, __FILE__, __LINE__);
+	L.create(orbit_length);
 
 	if (f_v) {
 		cout << "poset_classification::get_whole_orbit "

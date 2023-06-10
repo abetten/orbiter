@@ -110,6 +110,9 @@ public:
 	int f_export_checkma;
 	std::string export_checkma_fname;
 
+	int f_export_checkma_as_projective_set;
+	std::string export_checkma_as_projective_set_fname;
+
 	int f_make_diagram;
 
 	int f_boolean_function_of_code;
@@ -147,11 +150,11 @@ public:
 	std::string crc_encode_file_based_crc_type;
 	int crc_encode_file_based_block_length;
 
-	int f_crc_encode_as_polynomials;
-	std::string crc_encode_as_polynomials_fname_in;
-	std::string crc_encode_as_polynomials_fname_out;
-	int crc_encode_as_polynomials_block_length;
-	int crc_encode_as_polynomials_symbol_size;
+	int f_convert_data_to_polynomials;
+	std::string convert_data_to_polynomials_fname_in;
+	std::string convert_data_to_polynomials_fname_out;
+	int convert_data_to_polynomials_block_length;
+	int convert_data_to_polynomials_symbol_size;
 
 	int f_find_CRC_polynomials;
 	int find_CRC_polynomials_nb_errors;
@@ -414,6 +417,8 @@ public:
 	void export_genma(
 			std::string &fname, int verbose_level);
 	void export_checkma(
+			std::string &fname, int verbose_level);
+	void export_checkma_as_projective_set(
 			std::string &fname, int verbose_level);
 	void weight_enumerator(int verbose_level);
 	void fixed_code(

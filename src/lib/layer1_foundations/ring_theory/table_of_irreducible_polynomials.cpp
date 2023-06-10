@@ -362,10 +362,10 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 		cout << "table_of_irreducible_polynomials::factorize_polynomial "
 				"degree_bound = " << degree_bound << " q = " << q << endl;
 	}
-	U.create_object_by_rank(Poly, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	U.create_object_by_rank(P, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	U.create_object_by_rank(Q, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	U.create_object_by_rank(R, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	U.create_object_by_rank(Poly, 0, 0 /*verbose_level*/);
+	U.create_object_by_rank(P, 0, 0 /*verbose_level*/);
+	U.create_object_by_rank(Q, 0, 0 /*verbose_level*/);
+	U.create_object_by_rank(R, 0, 0 /*verbose_level*/);
 	U.assign(poly, Poly, verbose_level);
 
 	if (f_v) {

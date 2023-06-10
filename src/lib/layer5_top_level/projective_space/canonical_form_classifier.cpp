@@ -1118,7 +1118,7 @@ void canonical_form_classifier::generate_source_code(
 			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
 
 
-			ago.create(Goi[idx], __FILE__, __LINE__);
+			ago.create(Goi[idx]);
 
 			f << "\t\"";
 
@@ -1550,7 +1550,7 @@ void canonical_form_classifier::report2(std::ostream &ost, int verbose_level)
 			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
 
 
-			ago.create(Goi[idx], __FILE__, __LINE__);
+			ago.create(Goi[idx]);
 
 			ost << "Stabilizer order: ";
 

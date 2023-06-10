@@ -2041,7 +2041,7 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 					"after gens->init_from_permutation_representation" << endl;
 			}
 
-			Class_size.create(class_size[i], __FILE__, __LINE__);
+			Class_size.create(class_size[i]);
 
 			D.integral_division_exact(go, Class_size, centralizer_order);
 
@@ -2356,7 +2356,7 @@ void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
 				"after gens->init_from_permutation_representation" << endl;
 		}
 
-		Class_size.create(class_size[i], __FILE__, __LINE__);
+		Class_size.create(class_size[i]);
 
 		D.integral_division_exact(go, Class_size, centralizer_order);
 

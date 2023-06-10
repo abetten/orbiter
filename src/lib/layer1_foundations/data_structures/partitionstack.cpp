@@ -1490,7 +1490,7 @@ void partitionstack::print_decomposition_tex(std::ostream &ost,
 		c = row_classes[i];
 		f = startCell[c];
 		l = cellSize[c];
-		ost << "${\\cal V}_" << i << " = \\{";
+		ost << "V" << i << " of size " << l << " contains ";
 		for (j = 0; j < l; j++) {
 			a = pointList[f + j];
 			ost << a;
@@ -1501,13 +1501,13 @@ void partitionstack::print_decomposition_tex(std::ostream &ost,
 				ost << "\\\\" << endl;
 			}
 		}
-		ost << "\\}$ of size " << l << "\\\\" << endl;
+		ost << "\\\\" << endl;
 	}
 	for (i = 0; i < nb_col_classes; i++) {
 		c = col_classes[i];
 		f = startCell[c];
 		l = cellSize[c];
-		ost << "${\\cal B}_" << i << " = \\{";
+		ost << "B" << i << " of size " << l << " contains ";
 		for (j = 0; j < l; j++) {
 			a = pointList[f + j] - first_column_element;
 			ost << a;
@@ -1518,7 +1518,7 @@ void partitionstack::print_decomposition_tex(std::ostream &ost,
 				ost << "\\\\" << endl;
 			}
 		}
-		ost << "\\}$ of size " << l << "\\\\" << endl;
+		ost << "\\\\" << endl;
 	}
 }
 

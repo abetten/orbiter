@@ -141,7 +141,7 @@ int sims::transitive_extension_tolerant(
 		cout << "f_tolerant=" << f_tolerant << endl;
 		}
 	group_order(go);
-	ol.create(orbit_len, __FILE__, __LINE__);
+	ol.create(orbit_len);
 	D.mult(go, ol, ego);
 	if (f_v) {
 		cout << "sims::transitive_extension_tolerant "
@@ -259,7 +259,7 @@ void sims::transitive_extension_using_coset_representatives(
 				"representatives computing transitive extension" << endl;
 		}
 	group_order(go);
-	ol.create(orbit_len, __FILE__, __LINE__);
+	ol.create(orbit_len);
 	D.mult(go, ol, ego);
 	if (f_v) {
 		cout << "sims::transitive_extension_using_coset_"
@@ -352,7 +352,7 @@ void sims::transitive_extension_using_generators(
 				"computing transitive extension" << endl;
 		}
 	group_order(go);
-	ol.create(subgroup_index, __FILE__, __LINE__);
+	ol.create(subgroup_index);
 	D.mult(go, ol, ego);
 	if (f_v) {
 		cout << "sims::transitive_extension_using_generators "
@@ -955,7 +955,7 @@ int sims::test_if_in_set_stabilizer(
 		}
 	ret = true;
 	for (i = 0; i < goi; i++) {
-		a.create(i, __FILE__, __LINE__);
+		a.create(i);
 		element_unrank(a, Elt1);
 		if (A->Group_element->check_if_in_set_stabilizer(Elt1,
 				size, set, verbose_level)) {
@@ -998,11 +998,11 @@ int sims::test_if_subgroup(
 		}
 	ret = true;
 	for (i = 0; i < goi; i++) {
-		a.create(i, __FILE__, __LINE__);
+		a.create(i);
 		old_G->element_unrank(a, Elt1);
 		if (strip(Elt1, Elt2, drop_out_level, image,
 				verbose_level - 3)) {
-			a.create(i, __FILE__, __LINE__);
+			a.create(i);
 			old_G->element_unrank(a, Elt1);
 			element_rank(b, Elt1);
 			if (f_vv) {

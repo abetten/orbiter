@@ -92,8 +92,8 @@ void create_BCH_code::init(
 	ring_theory::unipoly_object Q;
 
 	P = NEW_OBJECT(ring_theory::unipoly_object);
-	Nth->FX->create_object_by_rank(*P, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
-	Nth->FX->create_object_by_rank(Q, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
+	Nth->FX->create_object_by_rank(*P, 1, 0 /*verbose_level*/);
+	Nth->FX->create_object_by_rank(Q, 1, 0 /*verbose_level*/);
 
 	for (i = 0; i < nb_sel; i++) {
 
@@ -126,6 +126,11 @@ void create_BCH_code::init(
 	generator_polynomial = NEW_int(degree + 1);
 	for (i = 0; i <= degree; i++) {
 		generator_polynomial[i] = Nth->FX->s_i(*P, i);
+	}
+	if (f_v) {
+		cout << "create_BCH_code::init polynomial=";
+		Int_vec_print(cout, generator_polynomial, degree + 1);
+		cout << endl;
 	}
 
 	Cyclic_codes.generator_matrix_cyclic_code(n,

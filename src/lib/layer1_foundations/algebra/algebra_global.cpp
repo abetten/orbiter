@@ -51,7 +51,7 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 				cout << "#subprimitive " << r3 << endl;
 				l = (phi_g * (q - 1)) / g;
 				cout << "l=" << l << endl;
-				A.create(l, __FILE__, __LINE__);
+				A.create(l);
 				D.mult(r2, A, B);
 				cout << "#subprimitive from R_c(d,q)=" << B << endl;
 				cmp = D.compare_unsigned(r3, B);
@@ -98,9 +98,9 @@ void algebra_global::formula_subprimitive(int d, int q,
 	if (f_v) {
 		cout << "algebra_global::formula_subprimitive d=" << d << " q=" << q << endl;
 	}
-	Theta.create(q, __FILE__, __LINE__);
-	M1.create(-1, __FILE__, __LINE__);
-	Qm1.create(q-1, __FILE__, __LINE__);
+	Theta.create(q);
+	M1.create(-1);
+	Qm1.create(q - 1);
 	D.power_int(Theta, d);
 	D.add(Theta, M1, A);
 	if (f_v) {
@@ -121,7 +121,7 @@ void algebra_global::formula_subprimitive(int d, int q,
 		NT.print_factorization(nb_primes, primes, exponents);
 		cout << endl;
 	}
-	R.create(1, __FILE__, __LINE__);
+	R.create(1);
 	for (i = 0; i < nb_primes; i++) {
 		p = primes[i];
 		e = exponents[i];
@@ -129,12 +129,12 @@ void algebra_global::formula_subprimitive(int d, int q,
 			cout << "p=" << p << " e=" << e << endl;
 		}
 		//r = r * (i_power_j(p, e) - i_power_j(p, e - 1));
-		A.create(p, __FILE__, __LINE__);
+		A.create(p);
 		D.power_int(A, e);
 		if (f_v) {
 			cout << "p^e=" << A << endl;
 		}
-		B.create(p, __FILE__, __LINE__);
+		B.create(p);
 		D.power_int(B, e - 1);
 		if (f_v) {
 			cout << "p^{e-1}=" << A << endl;
@@ -186,9 +186,9 @@ void algebra_global::formula(int d, int q,
 	if (f_v) {
 		cout << "algebra_global::formula d=" << d << " q=" << q << endl;
 	}
-	Theta.create(q, __FILE__, __LINE__);
-	M1.create(-1, __FILE__, __LINE__);
-	Qm1.create(q - 1, __FILE__, __LINE__);
+	Theta.create(q);
+	M1.create(-1);
+	Qm1.create(q - 1);
 	D.power_int(Theta, d);
 	D.add(Theta, M1, A);
 	if (f_v) {
@@ -210,7 +210,7 @@ void algebra_global::formula(int d, int q,
 		NT.print_factorization(nb_primes, primes, exponents);
 		cout << endl;
 	}
-	R.create(1, __FILE__, __LINE__);
+	R.create(1);
 	for (i = 0; i < nb_primes; i++) {
 		p = primes[i];
 		e = exponents[i];
@@ -218,17 +218,17 @@ void algebra_global::formula(int d, int q,
 			cout << "p=" << p << " e=" << e << endl;
 		}
 		if (((q - 1) % p) == 0) {
-			A.create(p, __FILE__, __LINE__);
+			A.create(p);
 			D.power_int(A, e);
 			D.mult(R, A, B);
 			B.assign_to(R);
 		}
 		else {
 			//r = r * (i_power_j(p, e) - i_power_j(p, e - 1));
-			A.create(p, __FILE__, __LINE__);
+			A.create(p);
 			D.power_int(A, e);
 			cout << "p^e=" << A << endl;
-			B.create(p, __FILE__, __LINE__);
+			B.create(p);
 			D.power_int(B, e - 1);
 			cout << "p^{e-1}=" << A << endl;
 			B.negate();
@@ -448,16 +448,16 @@ void algebra_global::test_unipoly(field_theory::finite_field *F)
 
 	ring_theory::unipoly_domain FX(F);
 
-	FX.create_object_by_rank(m, 7, __FILE__, __LINE__, 0);
-	FX.create_object_by_rank(a, 5, __FILE__, __LINE__, 0);
-	FX.create_object_by_rank(b, 55, __FILE__, __LINE__, 0);
+	FX.create_object_by_rank(m, 7, 0);
+	FX.create_object_by_rank(a, 5, 0);
+	FX.create_object_by_rank(b, 55, 0);
 	FX.print_object(a, cout); cout << endl;
 	FX.print_object(b, cout); cout << endl;
 
 	ring_theory::unipoly_domain Fq(F, m, verbose_level);
-	Fq.create_object_by_rank(c, 2, __FILE__, __LINE__, 0);
+	Fq.create_object_by_rank(c, 2, 0);
 	for (i = 0; i < 4; i++) {
-		Fq.create_object_by_rank(elts[i], i, __FILE__, __LINE__, 0);
+		Fq.create_object_by_rank(elts[i], i, 0);
 		cout << "elt_" << i << " = ";
 		Fq.print_object(elts[i], cout); cout << endl;
 	}
@@ -485,7 +485,7 @@ void algebra_global::test_unipoly2(field_theory::finite_field *F)
 
 	ring_theory::unipoly_object a;
 
-	FX.create_object_by_rank(a, 0, __FILE__, __LINE__, 0);
+	FX.create_object_by_rank(a, 0, 0);
 	for (i = 1; i < F->q; i++) {
 		FX.minimum_polynomial(a, i, F->p, true);
 		//cout << "minpoly_" << i << " = ";
@@ -525,7 +525,7 @@ void algebra_global::test_longinteger()
 
 	D.multiply_up(a, x, 4, verbose_level);
 	cout << "a=" << a << endl;
-	b.create(2, __FILE__, __LINE__);
+	b.create(2);
 	while (!a.is_zero()) {
 		D.integral_division(a, b, q, r, verbose_level);
 		//cout << a << " = " << q << " * " << b << " + " << r << endl;
@@ -602,8 +602,8 @@ void algebra_global::test_longinteger5()
 	ring_theory::longinteger_object a, b, u, v, g;
 	int verbose_level = 2;
 
-	a.create(9548, __FILE__, __LINE__);
-	b.create(254774, __FILE__, __LINE__);
+	a.create(9548);
+	b.create(254774);
 	D.extended_gcd(a, b, g, u, v, verbose_level);
 
 	g.print(cout);
@@ -625,8 +625,8 @@ void algebra_global::test_longinteger6()
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object a, b;
 
-	a.create(7411, __FILE__, __LINE__);
-	b.create(9283, __FILE__, __LINE__);
+	a.create(7411);
+	b.create(9283);
 	D.jacobi(a, b, verbose_level);
 
 
@@ -639,7 +639,7 @@ void algebra_global::test_longinteger7()
 	int i, j;
 	int mult[15];
 
-	a.create(15, __FILE__, __LINE__);
+	a.create(15);
 	for (i = 0; i < 15; i++) {
 		mult[i] = 0;
 	}
@@ -663,8 +663,8 @@ void algebra_global::test_longinteger8()
 	int nb_solovay_strassen_tests = 100;
 	int f_miller_rabin_test = true;
 
-	one.create(1, __FILE__, __LINE__);
-	a.create(197659, __FILE__, __LINE__);
+	one.create(1);
+	a.create(197659);
 	Crypto.find_probable_prime_above(a, nb_solovay_strassen_tests,
 		f_miller_rabin_test, verbose_level);
 }
@@ -1262,7 +1262,7 @@ void algebra_global::gl_random_matrix(
 
 
 
-		U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
+		U.create_object_by_rank(char_poly, 0, verbose_level);
 
 		U.characteristic_polynomial(M, k, char_poly, verbose_level - 2);
 
@@ -2366,6 +2366,10 @@ void algebra_global::create_Nth_roots_and_write_report(
 
 
 			Nth->report(ost, verbose_level);
+
+			ost << "\\begin{verbatim}" << endl;
+			Nth->print_irreducible_polynomials_as_makefile_variables(ost, verbose_level);
+			ost << "\\end{verbatim}" << endl;
 
 			L.foot(ost);
 

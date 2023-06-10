@@ -375,9 +375,9 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(
 		ring_theory::unipoly_domain Fq(&GFp, m, 0 /*verbose_level - 1*/);
 		ring_theory::unipoly_object a, c, Alpha;
 
-		Fq.create_object_by_rank(Alpha, F->alpha, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
-		Fq.create_object_by_rank(a, 1, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
-		Fq.create_object_by_rank(c, 1, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
+		Fq.create_object_by_rank(Alpha, F->alpha, 0 /*verbose_level - 2*/);
+		Fq.create_object_by_rank(a, 1, 0 /*verbose_level - 2*/);
+		Fq.create_object_by_rank(c, 1, 0 /*verbose_level - 2*/);
 
 		if (f_v) {
 			cout << "finite_field_implementation_by_tables::create_alpha_table_extension_field "
@@ -819,7 +819,7 @@ void finite_field_implementation_by_tables::print_tables_extension_field(std::st
 			<< setw(4) << b << " : "
 			<< setw(4) << c << " : "
 			<< setw(4) << l << " : ";
-		Fq.create_object_by_rank(elt, i, __FILE__, __LINE__, verbose_level);
+		Fq.create_object_by_rank(elt, i, verbose_level);
 		Fq.print_object(elt, cout);
 		cout << endl;
 		Fq.delete_object(elt);

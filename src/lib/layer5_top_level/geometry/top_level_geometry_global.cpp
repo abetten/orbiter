@@ -314,7 +314,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	ring_theory::longinteger_object full_group_order;
 	order = PA->A->Group_element->element_order(Elt);
 
-	full_group_order.create(order, __FILE__, __LINE__);
+	full_group_order.create(order);
 
 	//P3 = P;
 

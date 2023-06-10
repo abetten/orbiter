@@ -1956,6 +1956,8 @@ class object_with_canonical_form {
 public:
 	projective_space *P;
 
+
+
 	object_with_canonical_form_type type;
 		// t_PTS = a multiset of points
 		// t_LNS = a set of lines 
@@ -1994,7 +1996,9 @@ public:
 		data_structures::set_of_sets *SoS;
 		// SoS is used by t_PAC
 
-	data_structures::tally *C;
+		int f_extended_incma;
+
+		data_structures::tally *C;
 		// used to determine multiplicities in the set of points
 
 	object_with_canonical_form();
@@ -2895,6 +2899,8 @@ public:
 		int verbose_level);
 
 	void export_incidence_matrix_to_csv(int verbose_level);
+	void export_restricted_incidence_matrix_to_csv(
+			std::string &rows, std::string &cols, int verbose_level);
 	void make_fname_incidence_matrix_csv(std::string &fname);
 	void compute_decomposition(
 			data_structures::partitionstack *S1,

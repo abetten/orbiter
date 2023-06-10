@@ -75,6 +75,9 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_export_checkma = false;
 	//std::string export_checkma_fname;
 
+	f_export_checkma_as_projective_set = false;
+	//std::string export_checkma_as_projective_set_fname;
+
 	f_make_diagram = false;
 
 	f_boolean_function_of_code = false;
@@ -115,11 +118,11 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	//std::string crc_encode_file_based_crc_type;
 	crc_encode_file_based_block_length = 0;
 
-	f_crc_encode_as_polynomials = false;
-	//std::string crc_encode_as_polynomials_fname_in;
-	//std::string crc_encode_as_polynomials_fname_out;
-	crc_encode_as_polynomials_block_length = 0;
-	crc_encode_as_polynomials_symbol_size = 0;
+	f_convert_data_to_polynomials = false;
+	//std::string convert_data_to_polynomials_fname_in;
+	//std::string convert_data_to_polynomials_fname_out;
+	convert_data_to_polynomials_block_length = 0;
+	convert_data_to_polynomials_symbol_size = 0;
 
 
 	f_find_CRC_polynomials = false;
@@ -305,6 +308,15 @@ int coding_theoretic_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_checkma_as_projective_set") == 0) {
+			f_export_checkma_as_projective_set = true;
+			export_checkma_as_projective_set_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_checkma_as_projective_set "
+					<< " " << export_checkma_as_projective_set_fname
+					<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-make_diagram") == 0) {
 			f_make_diagram = true;
 			if (f_v) {
@@ -400,18 +412,18 @@ int coding_theoretic_activity_description::read_arguments(
 						<< crc_encode_file_based_block_length << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-crc_encode_as_polynomials") == 0) {
-			f_crc_encode_as_polynomials = true;
-			crc_encode_as_polynomials_fname_in.assign(argv[++i]);
-			crc_encode_as_polynomials_fname_out.assign(argv[++i]);
-			crc_encode_as_polynomials_block_length = ST.strtoi(argv[++i]);
-			crc_encode_as_polynomials_symbol_size = ST.strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-convert_data_to_polynomials") == 0) {
+			f_convert_data_to_polynomials = true;
+			convert_data_to_polynomials_fname_in.assign(argv[++i]);
+			convert_data_to_polynomials_fname_out.assign(argv[++i]);
+			convert_data_to_polynomials_block_length = ST.strtoi(argv[++i]);
+			convert_data_to_polynomials_symbol_size = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-crc_encode_as_polynomials "
-						<< crc_encode_as_polynomials_fname_in << " "
-						<< crc_encode_as_polynomials_fname_out << " "
-						<< crc_encode_as_polynomials_block_length << " "
-						<< crc_encode_as_polynomials_symbol_size << endl;
+				cout << "-convert_data_to_polynomials "
+						<< convert_data_to_polynomials_fname_in << " "
+						<< convert_data_to_polynomials_fname_out << " "
+						<< convert_data_to_polynomials_block_length << " "
+						<< convert_data_to_polynomials_symbol_size << endl;
 			}
 		}
 
@@ -560,6 +572,11 @@ void coding_theoretic_activity_description::print()
 				<< " " << export_checkma_fname
 				<< endl;
 	}
+	if (f_export_checkma_as_projective_set) {
+		cout << "-export_checkma_as_projective_set "
+			<< " " << export_checkma_as_projective_set_fname
+			<< endl;
+	}
 	if (f_make_diagram) {
 		cout << "-make_diagram " << endl;
 	}
@@ -608,12 +625,12 @@ void coding_theoretic_activity_description::print()
 				<< crc_encode_file_based_crc_type << " "
 				<< crc_encode_file_based_block_length << endl;
 	}
-	if (f_crc_encode_as_polynomials) {
-		cout << "-crc_encode_as_polynomials "
-				<< crc_encode_as_polynomials_fname_in << " "
-				<< crc_encode_as_polynomials_fname_out << " "
-				<< crc_encode_as_polynomials_block_length << " "
-				<< crc_encode_as_polynomials_symbol_size << endl;
+	if (f_convert_data_to_polynomials) {
+		cout << "-convert_data_to_polynomials "
+				<< convert_data_to_polynomials_fname_in << " "
+				<< convert_data_to_polynomials_fname_out << " "
+				<< convert_data_to_polynomials_block_length << " "
+				<< convert_data_to_polynomials_symbol_size << endl;
 	}
 	if (f_find_CRC_polynomials) {
 		cout << "-find_CRC_polynomials "

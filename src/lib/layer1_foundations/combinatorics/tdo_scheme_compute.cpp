@@ -116,6 +116,10 @@ void tdo_scheme_compute::print_schemes(std::ostream &ost)
 	ost << "$$" << endl;
 
 
+	Decomp->Stack->print_decomposition_tex(ost,
+		Decomp->row_classes, Decomp->nb_row_classes,
+		Decomp->col_classes, Decomp->nb_col_classes);
+
 }
 
 

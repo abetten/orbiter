@@ -305,7 +305,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(
 
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object ol, Ol;
-	Ol.create(0, __FILE__, __LINE__);
+	Ol.create(0);
 
 	ost << "The group of type 1 has " 
 		<< l 
@@ -368,7 +368,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(
 
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object ol, Ol;
-	Ol.create(0, __FILE__, __LINE__);
+	Ol.create(0);
 
 	ost << "The group of type 2 has " 
 		<< l 

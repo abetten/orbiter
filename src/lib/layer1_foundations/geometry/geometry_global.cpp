@@ -157,8 +157,8 @@ void geometry_global::AG_element_rank_longinteger(
 		cout << "geometry_global::AG_element_rank_longinteger len <= 0" << endl;
 		exit(1);
 	}
-	a.create(0, __FILE__, __LINE__);
-	Q.create(q, __FILE__, __LINE__);
+	a.create(0);
+	Q.create(q);
 	for (i = len - 1; i >= 0; i--) {
 		a.add_int(v[i * stride]);
 		//cout << "AG_element_rank_longinteger

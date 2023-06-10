@@ -245,14 +245,16 @@ void unipoly_domain::create_object_of_degree_with_coefficients(
 
 void unipoly_domain::create_object_by_rank(
 	unipoly_object &p, long int rk,
-	const char *file, int line, int verbose_level)
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
-		cout << "unipoly_domain::create_object_by_rank rk=" << rk << endl;
-		cout << "unipoly_domain::create_object_by_rank f_factorring=" << f_factorring << endl;
+		cout << "unipoly_domain::create_object_by_rank "
+				"rk=" << rk << endl;
+		cout << "unipoly_domain::create_object_by_rank "
+				"f_factorring=" << f_factorring << endl;
 	}
 
 	int len = NT.lint_logq(rk, F->q);
@@ -271,7 +273,7 @@ void unipoly_domain::create_object_by_rank(
 			cout << ")" << endl;
 		}
 		len = factor_degree;
-		int *rep = NEW_int_with_tracking(len + 1, file, line);
+		int *rep = NEW_int(len + 1);
 		rep[0] = len - 1;
 		int *coeff = rep + 1;
 		int i = 0;
@@ -284,7 +286,7 @@ void unipoly_domain::create_object_by_rank(
 		p = (void *) rep;
 	}
 	else {
-		int *rep = NEW_int_with_tracking(len + 1, file, line);
+		int *rep = NEW_int(len + 1);
 		rep[0] = len - 1;
 		int *coeff = rep + 1;
 		int i = 0;
@@ -302,9 +304,37 @@ void unipoly_domain::create_object_by_rank(
 	}
 }
 
+void unipoly_domain::create_object_from_table_of_coefficients(
+	unipoly_object &p, int *coeff_table, int coeff_table_len,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory::number_theory_domain NT;
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "unipoly_domain::create_object_from_table_of_coefficients" << endl;
+	}
+	if (f_factorring) {
+		cout << "unipoly_domain::create_object_from_table_of_coefficients "
+					"it should not be a factorring" << endl;
+		exit(1);
+	}
+
+
+	int *rep = NEW_int(coeff_table_len + 1);
+	rep[0] = coeff_table_len - 1;
+	int *coeff = rep + 1;
+	int i = 0;
+
+	for (i = 0; i < coeff_table_len; i++) {
+		coeff[i] = coeff_table[i];
+	}
+	p = (void *) rep;
+}
+
 void unipoly_domain::create_object_from_csv_file(
 	unipoly_object &p, std::string &fname,
-	const char *file, int line,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -325,7 +355,7 @@ void unipoly_domain::create_object_from_csv_file(
 	len = m * n;
 
 
-	int *rep = NEW_int_with_tracking(len + 1, file, line);
+	int *rep = NEW_int(len + 1);
 	rep[0] = len - 1;
 	int *coeff = rep + 1;
 	int i = 0;
@@ -341,7 +371,6 @@ void unipoly_domain::create_object_from_csv_file(
 void unipoly_domain::create_object_by_rank_longinteger(
 	unipoly_object &p,
 	longinteger_object &rank,
-	const char *file, int line,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -353,15 +382,18 @@ void unipoly_domain::create_object_by_rank_longinteger(
 	//cout << "len = " << len << endl;
 	
 	if (f_v) {
-		cout << "unipoly_domain::create_object_by_rank_longinteger rank=" << rank << endl;
+		cout << "unipoly_domain::create_object_by_rank_longinteger "
+				"rank=" << rank << endl;
 	}
 	if (f_factorring) {
 		if (len > factor_degree) {
-			cout << "unipoly_domain::create_object_by_rank_longinteger len > factor_degree" << endl;
+			cout << "unipoly_domain::create_object_by_rank_longinteger "
+					"len > factor_degree" << endl;
 			exit(1);
 		}
 		if (f_v) {
-			cout << "unipoly_domain::create_object_by_rank_longinteger modulo - (";
+			cout << "unipoly_domain::create_object_by_rank_longinteger "
+					"modulo - (";
 			Int_vec_print(cout,
 					factor_coeffs,
 					factor_degree + 1);
@@ -369,7 +401,7 @@ void unipoly_domain::create_object_by_rank_longinteger(
 		}
 		len = factor_degree;
 	}
-	int *rep = NEW_int_with_tracking(len + 1, file, line);
+	int *rep = NEW_int(len + 1);
 	rep[0] = len - 1;
 	int *coeff = rep + 1;
 	int i = 0;
@@ -402,7 +434,7 @@ void unipoly_domain::create_object_by_rank_string(
 	
 	rank.create_from_base_10_string(rk);
 	
-	create_object_by_rank_longinteger(p, rank, __FILE__, __LINE__, verbose_level);
+	create_object_by_rank_longinteger(p, rank, verbose_level);
 	if (f_v) {
 		cout << "unipoly_domain::create_object_by_rank_string ";
 		print_object(p, cout);
@@ -496,11 +528,11 @@ void unipoly_domain::rank_longinteger(
 	longinteger_object q, rk, rk1, c;
 	longinteger_domain D;
 	
-	rk.create(0, __FILE__, __LINE__);
-	q.create(F->q, __FILE__, __LINE__);
+	rk.create(0);
+	q.create(F->q);
 	for (i = d; i >= 0; i--) {
 		D.mult(rk, q, rk1);
-		c.create(coeff[i], __FILE__, __LINE__);
+		c.create(coeff[i]);
 		D.add(rk1, c, rk);
 		//rk *= F->q;
 		//rk += coeff[i];
@@ -1200,12 +1232,12 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 			factor_polynomial_degree * factor_polynomial_degree);
 	Frob[0] = 1; // the first column of Frob is (1,0,...,0)
 	
-	create_object_by_rank(a, F->q, __FILE__, __LINE__, 0 /*verbose_level*/); // the polynomial X
-	create_object_by_rank(b, 1, __FILE__, __LINE__, 0 /*verbose_level*/); // the polynomial 1
-	create_object_by_rank(c, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(m_mod, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(Q, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(R, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(a, F->q, 0 /*verbose_level*/); // the polynomial X
+	create_object_by_rank(b, 1, 0 /*verbose_level*/); // the polynomial 1
+	create_object_by_rank(c, 0, 0 /*verbose_level*/);
+	create_object_by_rank(m_mod, 0, 0 /*verbose_level*/);
+	create_object_by_rank(Q, 0, 0 /*verbose_level*/);
+	create_object_by_rank(R, 0, 0 /*verbose_level*/);
 	
 	assign(factor_polynomial, m_mod, 0 /*verbose_level */);
 	negate(m_mod);
@@ -1342,7 +1374,7 @@ void unipoly_domain::exact_division(
 
 	unipoly_object r;
 
-	create_object_by_rank(r, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(r, 0, 0 /*verbose_level*/);
 
 	division_with_remainder(a, b, q, r, verbose_level - 1);
 	
@@ -1525,10 +1557,10 @@ void unipoly_domain::greatest_common_divisor(
 
 	unipoly_object M, N, Q, R;
 	
-	create_object_by_rank(M, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(N, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(Q, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(R, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(M, 0, 0 /*verbose_level*/);
+	create_object_by_rank(N, 0, 0 /*verbose_level*/);
+	create_object_by_rank(Q, 0, 0 /*verbose_level*/);
+	create_object_by_rank(R, 0, 0 /*verbose_level*/);
 
 	assign(m, M, 0 /*verbose_level*/);
 	assign(n, N, 0 /*verbose_level*/);
@@ -1627,17 +1659,17 @@ void unipoly_domain::extended_gcd(
 	unipoly_object M, N, Q, R;
 	unipoly_object u1, u2, u3, v1, v2, v3, tmp;
 	
-	create_object_by_rank(M, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(N, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(Q, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(R, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(u1, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(u2, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(u3, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(v1, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(v2, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(v3, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(tmp, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(M, 0, 0 /*verbose_level*/);
+	create_object_by_rank(N, 0, 0 /*verbose_level*/);
+	create_object_by_rank(Q, 0, 0 /*verbose_level*/);
+	create_object_by_rank(R, 0, 0 /*verbose_level*/);
+	create_object_by_rank(u1, 1, 0 /*verbose_level*/);
+	create_object_by_rank(u2, 0, 0 /*verbose_level*/);
+	create_object_by_rank(u3, 0, 0 /*verbose_level*/);
+	create_object_by_rank(v1, 0, 0 /*verbose_level*/);
+	create_object_by_rank(v2, 1, 0 /*verbose_level*/);
+	create_object_by_rank(v3, 0, 0 /*verbose_level*/);
+	create_object_by_rank(tmp, 0, 0 /*verbose_level*/);
 	
 	assign(m, M, 0 /*verbose_level*/);
 	assign(n, N, 0 /*verbose_level*/);
@@ -1718,11 +1750,11 @@ int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 	if (f_v) {
 		cout << "unipoly::is_squarefree" << endl;
 	}
-	create_object_by_rank(a, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(b, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(u, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(v, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(a, 0, 0 /*verbose_level*/);
+	create_object_by_rank(b, 0, 0 /*verbose_level*/);
+	create_object_by_rank(u, 0, 0 /*verbose_level*/);
+	create_object_by_rank(v, 0, 0 /*verbose_level*/);
+	create_object_by_rank(g, 0, 0 /*verbose_level*/);
 	
 	assign(p, a, 0 /*verbose_level*/);
 	if (f_v) {
@@ -1788,13 +1820,13 @@ void unipoly_domain::compute_normal_basis(int d,
 	b = NEW_int(deg);
 	A = NEW_int((deg + 1) * deg);
 
-	create_object_by_rank(mue, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(lambda, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(GCD, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(Q, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(R, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(R1, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(R2, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(mue, 0, 0 /*verbose_level*/);
+	create_object_by_rank(lambda, 0, 0 /*verbose_level*/);
+	create_object_by_rank(GCD, 0, 0 /*verbose_level*/);
+	create_object_by_rank(Q, 0, 0 /*verbose_level*/);
+	create_object_by_rank(R, 0, 0 /*verbose_level*/);
+	create_object_by_rank(R1, 0, 0 /*verbose_level*/);
+	create_object_by_rank(R2, 0, 0 /*verbose_level*/);
 
 	i = 0;
 	if (f_v) {
@@ -2394,9 +2426,9 @@ void unipoly_domain::take_away_all_factors_from_b(
 
 	unipoly_object G, A, Q;
 
-	create_object_by_rank(G, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(A, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(Q, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(G, 0, 0 /*verbose_level*/);
+	create_object_by_rank(A, 0, 0 /*verbose_level*/);
+	create_object_by_rank(Q, 0, 0 /*verbose_level*/);
 
 	assign(a, A, verbose_level);
 
@@ -2579,7 +2611,7 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 		unipoly_object a;
 		
 		Fq.create_object_by_rank(a, F->q,
-				__FILE__, __LINE__, 0 /*verbose_level*/); // the polynomial X
+				0 /*verbose_level*/); // the polynomial X
 		Fq.power_longinteger(a, qm1_over_p, 0 /*verbose_level - 1*/);
 		
 		if (f_v) {
@@ -2648,8 +2680,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 			" over GF(" << F->q << ")" << endl;
 	}
 	p = F->q;
-	q.create(p, __FILE__, __LINE__);
-	m1.create(-1, __FILE__, __LINE__);
+	q.create(p);
+	m1.create(-1);
 	D.power_int(q, f);
 	D.add(q, m1, qm1);
 	if (f_vv) {
@@ -2725,8 +2757,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 		delete_object(x);
 	}
 
-	low.create(F->q, __FILE__, __LINE__);
-	one.create(1, __FILE__, __LINE__);
+	low.create(F->q);
+	one.create(1);
 	D.power_int(low, f);
 
 	D.mult(low, low, high); // only monic polynomials 
@@ -2736,7 +2768,7 @@ void unipoly_domain::get_a_primitive_polynomial(
 	while (true) {
 		
 		create_object_by_rank_longinteger(x, current,
-				__FILE__, __LINE__, 0 /*verbose_level*/);
+				0 /*verbose_level*/);
 		
 		if (f_v) {
 			cout << "candidate " << current << " : ";
@@ -2814,8 +2846,8 @@ void unipoly_domain::get_an_irreducible_polynomial(
 			"of degree " << f <<
 			" over GF(" << F->q << ")" << endl;
 	}
-	low.create(F->q, __FILE__, __LINE__);
-	one.create(1, __FILE__, __LINE__);
+	low.create(F->q);
+	one.create(1);
 	D.power_int(low, f);
 
 	D.mult(low, low, high); // only monic polynomials 
@@ -2825,7 +2857,7 @@ void unipoly_domain::get_an_irreducible_polynomial(
 	while (true) {
 		
 		create_object_by_rank_longinteger(x,
-				current, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
+				current, 0 /*verbose_level - 2*/);
 		
 		if (f_vv) {
 			cout << "unipoly::get_an_irreducible_polynomial "
@@ -2878,9 +2910,9 @@ void unipoly_domain::power_int(unipoly_object &a,
 	//cout << "power_int a=";
 	//print_object(a, cout);
 	//cout << " n=" << n << endl;
-	create_object_by_rank(b, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(c, 1, __FILE__, __LINE__, 0 /*verbose_level*/); // c = 1
-	create_object_by_rank(d, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(b, 0, 0 /*verbose_level*/);
+	create_object_by_rank(c, 1, 0 /*verbose_level*/); // c = 1
+	create_object_by_rank(d, 0, 0 /*verbose_level*/);
 	assign(a, b, verbose_level);
 	while (n) {
 		if (f_vv) {
@@ -2968,9 +3000,9 @@ void unipoly_domain::power_longinteger(
 	//cout << "power_int() a=";
 	//print_object(a, cout);
 	//cout << " n=" << n << endl;
-	create_object_by_rank(b, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(c, 1, __FILE__, __LINE__, 0 /*verbose_level*/); // c = 1
-	create_object_by_rank(d, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(b, 0, 0 /*verbose_level*/);
+	create_object_by_rank(c, 1, 0 /*verbose_level*/); // c = 1
+	create_object_by_rank(d, 0, 0 /*verbose_level*/);
 	n.assign_to(m);
 	assign(a, b, 0 /*verbose_level*/);
 	while (!m.is_zero()) {
@@ -3015,9 +3047,9 @@ void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
 	//cout << "power_mod a=";
 	//print_object(a, cout);
 	//cout << " n=" << n << endl;
-	create_object_by_rank(b, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(c, 1, __FILE__, __LINE__, 0 /*verbose_level*/); // c = 1
-	create_object_by_rank(d, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(b, 0, 0 /*verbose_level*/);
+	create_object_by_rank(c, 1, 0 /*verbose_level*/); // c = 1
+	create_object_by_rank(d, 0, 0 /*verbose_level*/);
 
 	assign(a, b, verbose_level);
 
@@ -3138,9 +3170,9 @@ void unipoly_domain::minimum_polynomial(
 		cout << "unipoly_domain::minimum_polynomial "
 				"m_alpha = " << m_alpha << endl;
 	}
-	create_object_by_rank(u, q + m_alpha, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(v, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(w, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(u, q + m_alpha, 0 /*verbose_level*/);
+	create_object_by_rank(v, 0, 0 /*verbose_level*/);
+	create_object_by_rank(w, 0, 0 /*verbose_level*/);
 	if (f_vv) {
 		cout << "unipoly_domain::minimum_polynomial X - alpha = ";
 		print_object(u, cout);
@@ -3234,19 +3266,19 @@ int unipoly_domain::minimum_polynomial_factorring(
 	for (i = 0; i <= factor_degree; i++) {
 		if (i == 1) {
 			create_object_by_rank(coeffs[i], 1,
-					__FILE__, __LINE__, 0 /*verbose_level*/);
+					0 /*verbose_level*/);
 		}
 		else {
 			create_object_by_rank(coeffs[i], 0,
-					__FILE__, __LINE__, 0 /*verbose_level*/);
+					0 /*verbose_level*/);
 		}
 	}
 	create_object_by_rank(b, alpha,
-			__FILE__, __LINE__, 0 /*verbose_level*/);
+			0 /*verbose_level*/);
 	create_object_by_rank(c, 0,
-			__FILE__, __LINE__, 0 /*verbose_level*/);
+			0 /*verbose_level*/);
 	create_object_by_rank(d, 0,
-			__FILE__, __LINE__, 0 /*verbose_level*/);
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "unipoly_domain::minimum_polynomial_factorring "
 				"minimum polynomial of ";
@@ -3388,21 +3420,21 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	for (i = 0; i <= factor_degree; i++) {
 		if (i == 1) {
 			create_object_by_rank(coeffs[i], 1,
-					__FILE__, __LINE__, 0 /*verbose_level*/);
+					0 /*verbose_level*/);
 		}
 		else {
 			create_object_by_rank(coeffs[i], 0,
-					__FILE__, __LINE__, 0 /*verbose_level*/);
+					0 /*verbose_level*/);
 		}
 	}
 
 	// b = alpha (constant polynomial)
 	create_object_by_rank_longinteger(b, alpha,
-			__FILE__, __LINE__, 0 /*verbose_level*/);
+			0 /*verbose_level*/);
 
 	// c and d are needed later:
-	create_object_by_rank(c, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(d, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(c, 0, 0 /*verbose_level*/);
+	create_object_by_rank(d, 0, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "unipoly_domain::minimum_polynomial_factorring_longinteger "
@@ -3513,8 +3545,8 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	
 	longinteger_object rk, r, p_object, rk1;
 	
-	rk.create(0, __FILE__, __LINE__);
-	p_object.create(p, __FILE__, __LINE__);
+	rk.create(0);
+	p_object.create(p);
 	for (j = i; j >= 0; j--) {
 		rank_longinteger(coeffs[j], r);
 		D.mult(rk, p_object, rk1);
@@ -3566,15 +3598,15 @@ void unipoly_domain::minimum_polynomial_extension_field(
 	sigma = NEW_OBJECTS(unipoly_object, deg + 2);
 	for (i = 0; i < deg + 2; i++) {
 		if (i == 0) {
-			create_object_by_rank(sigma[i], 1, __FILE__, __LINE__, 0 /*verbose_level*/);
+			create_object_by_rank(sigma[i], 1, 0 /*verbose_level*/);
 		}
 		else {
-			create_object_by_rank(sigma[i], 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+			create_object_by_rank(sigma[i], 0, 0 /*verbose_level*/);
 		}
 	}
-	create_object_by_rank(h, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(h2, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(mm, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(h, 0, 0 /*verbose_level*/);
+	create_object_by_rank(h2, 0, 0 /*verbose_level*/);
+	create_object_by_rank(mm, 0, 0 /*verbose_level*/);
 
 	assign(m, mm, 0 /*verbose_level*/);
 	negate(mm);
@@ -3835,17 +3867,17 @@ void unipoly_domain::determinant(
 	}
 	if (k == 0) {
 		delete_object(p);
-		create_object_by_rank(p, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
+		create_object_by_rank(p, 1, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "unipoly_domain::determinant done" << endl;
 		}
 		return;
 	}
 	delete_object(p);
-	create_object_by_rank(p, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(p1, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(p2, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
-	create_object_by_rank(p3, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+	create_object_by_rank(p, 0, 0 /*verbose_level*/);
+	create_object_by_rank(p1, 0, 0 /*verbose_level*/);
+	create_object_by_rank(p2, 0, 0 /*verbose_level*/);
+	create_object_by_rank(p3, 0, 0 /*verbose_level*/);
 	
 	for (i = 0; i < k; i++) {
 		unipoly_object *N;

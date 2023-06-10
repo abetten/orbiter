@@ -720,9 +720,9 @@ void group_generators_domain::order_PO_plus(
 	geometry::geometry_global Gg;
 
 
-	Two.create(2, __FILE__, __LINE__);
-	minusone.create(-1, __FILE__, __LINE__);
-	Q.create(q, __FILE__, __LINE__);
+	Two.create(2);
+	minusone.create(-1);
+	Q.create(q);
 	D.power_int(Q, m * (m - 1));
 	if (f_v) {
 		cout << "group_generators_domain::order_PO_plus " << q << "^(" << m << "*"
@@ -730,9 +730,9 @@ void group_generators_domain::order_PO_plus(
 	}
 	// now Q = q^{m(m-1)}
 
-	O.create(1, __FILE__, __LINE__);
+	O.create(1);
 	for (i = 1; i <= m - 1; i++) {
-		R.create(q, __FILE__, __LINE__);
+		R.create(q);
 		D.power_int(R, 2 * i);
 		D.add(R, minusone, S);
 		if (f_v) {
@@ -744,7 +744,7 @@ void group_generators_domain::order_PO_plus(
 	}
 	// now O = \prod_{i=1}^{m-1} (q^{2i}-1)
 
-	R.create(q, __FILE__, __LINE__);
+	R.create(q);
 	D.power_int(R, m);
 	D.add(R, minusone, S);
 	if (f_v) {
@@ -783,10 +783,10 @@ void group_generators_domain::order_PO_minus(
 	geometry::geometry_global Gg;
 
 
-	Two.create(2, __FILE__, __LINE__);
-	plusone.create(1, __FILE__, __LINE__);
-	minusone.create(-1, __FILE__, __LINE__);
-	Q.create(q, __FILE__, __LINE__);
+	Two.create(2);
+	plusone.create(1);
+	minusone.create(-1);
+	Q.create(q);
 	D.power_int(Q, m * (m + 1));
 	if (f_v) {
 		cout << "group_generators_domain::order_PO_minus " << q << "^(" << m << "*"
@@ -794,9 +794,9 @@ void group_generators_domain::order_PO_minus(
 	}
 	// now Q = q^{m(m+1)}
 
-	O.create(1, __FILE__, __LINE__);
+	O.create(1);
 	for (i = 1; i <= m; i++) {
-		R.create(q, __FILE__, __LINE__);
+		R.create(q);
 		D.power_int(R, 2 * i);
 		D.add(R, minusone, S);
 		if (f_v) {
@@ -808,7 +808,7 @@ void group_generators_domain::order_PO_minus(
 	}
 	// now O = \prod_{i=1}^{m} (q^{2i}-1)
 
-	R.create(q, __FILE__, __LINE__);
+	R.create(q);
 	D.power_int(R, m + 1);
 	D.add(R, plusone, S);
 	if (f_v) {
@@ -848,8 +848,8 @@ void group_generators_domain::order_PO_parabolic(
 	geometry::geometry_global Gg;
 
 
-	minusone.create(-1, __FILE__, __LINE__);
-	Q.create(q, __FILE__, __LINE__);
+	minusone.create(-1);
+	Q.create(q);
 	D.power_int(Q, m * m);
 	if (f_v) {
 		cout << "group_generators_domain::order_PO_parabolic " << q << "^(" << m
@@ -857,9 +857,9 @@ void group_generators_domain::order_PO_parabolic(
 	}
 	// now Q = q^{m^2}
 
-	O.create(1, __FILE__, __LINE__);
+	O.create(1);
 	for (i = 1; i <= m; i++) {
-		R.create(q, __FILE__, __LINE__);
+		R.create(q);
 		D.power_int(R, 2 * i);
 		D.add(R, minusone, S);
 		if (f_v) {
@@ -898,15 +898,15 @@ void group_generators_domain::order_Pomega_plus(
 	if (f_v) {
 		cout << "group_generators_domain::order_Pomega_plus" << endl;
 	}
-	minusone.create(-1, __FILE__, __LINE__);
-	Q.create(q, __FILE__, __LINE__);
+	minusone.create(-1);
+	Q.create(q);
 	D.power_int(Q, m * (m - 1));
 	if (f_v) {
 		cout << q << "^(" << m << "*" << m - 1 << ") = " << Q << endl;
 	}
-	O.create(1, __FILE__, __LINE__);
+	O.create(1);
 	for (i = 1; i <= m - 1; i++) {
-		R.create(q, __FILE__, __LINE__);
+		R.create(q);
 		D.power_int(R, 2 * i);
 		D.add(R, minusone, S);
 		if (f_v) {
@@ -916,7 +916,7 @@ void group_generators_domain::order_Pomega_plus(
 		T.assign_to(O);
 	}
 
-	R.create(q, __FILE__, __LINE__);
+	R.create(q);
 	D.power_int(R, m);
 	D.add(R, minusone, S);
 	if (f_v) {
@@ -961,16 +961,16 @@ void group_generators_domain::order_Pomega_minus(
 	if (f_v) {
 		cout << "group_generators_domain::order_Pomega_minus m=" << m << " q=" << q << endl;
 	}
-	minusone.create(-1, __FILE__, __LINE__);
-	plusone.create(1, __FILE__, __LINE__);
-	Q.create(q, __FILE__, __LINE__);
+	minusone.create(-1);
+	plusone.create(1);
+	Q.create(q);
 	D.power_int(Q, m * (m - 1));
 	if (f_v) {
 		cout << q << "^(" << m << "*" << m - 1 << ") = " << Q << endl;
 	}
-	O.create(1, __FILE__, __LINE__);
+	O.create(1);
 	for (i = 1; i <= m - 1; i++) {
-		R.create(q, __FILE__, __LINE__);
+		R.create(q);
 		D.power_int(R, 2 * i);
 		D.add(R, minusone, S);
 		if (f_v) {
@@ -980,7 +980,7 @@ void group_generators_domain::order_Pomega_minus(
 		T.assign_to(O);
 	}
 
-	R.create(q, __FILE__, __LINE__);
+	R.create(q);
 	D.power_int(R, m);
 	D.add(R, plusone, S);
 	if (f_v) {
@@ -1028,15 +1028,15 @@ void group_generators_domain::order_Pomega_parabolic(
 	geometry::geometry_global Gg;
 
 
-	minusone.create(-1, __FILE__, __LINE__);
-	Q.create(q, __FILE__, __LINE__);
+	minusone.create(-1);
+	Q.create(q);
 	D.power_int(Q, m * m);
 	if (f_v) {
 		cout << q << "^(" << m << "^2) = " << Q << endl;
 	}
-	O.create(1, __FILE__, __LINE__);
+	O.create(1);
 	for (i = 1; i <= m; i++) {
-		R.create(q, __FILE__, __LINE__);
+		R.create(q);
 		D.power_int(R, 2 * i);
 		D.add(R, minusone, S);
 		if (f_v) {

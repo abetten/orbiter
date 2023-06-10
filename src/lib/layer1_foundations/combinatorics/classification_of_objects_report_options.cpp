@@ -32,6 +32,8 @@ classification_of_objects_report_options::classification_of_objects_report_optio
 
 	f_show_TDA = false;
 
+	f_export_labels = false;
+
 	f_export_group_orbiter = false;
 	f_export_group_GAP = false;
 
@@ -81,6 +83,10 @@ int classification_of_objects_report_options::read_arguments(
 		else if (ST.stringcmp(argv[i], "-show_TDA") == 0) {
 			f_show_TDA = true;
 			cout << "-show_TDA" << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-export_labels") == 0) {
+			f_export_labels = true;
+			cout << "-export_labels" << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-dont_show_TDA") == 0) {
 			f_show_TDA = false;
@@ -145,6 +151,9 @@ void classification_of_objects_report_options::print()
 	}
 	if (f_show_TDA) {
 		cout << "-show_TDA " << endl;
+	}
+	if (f_export_labels) {
+		cout << "-export_labels" << endl;
 	}
 	if (f_export_group_orbiter) {
 		cout << "-export_group_orbiter " << endl;

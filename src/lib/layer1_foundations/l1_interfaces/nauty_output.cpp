@@ -20,6 +20,9 @@ namespace l1_interfaces {
 nauty_output::nauty_output()
 {
 	N = 0;
+	invariant_set_start = 0;
+	invariant_set_size = 0;
+
 	Aut = NULL;
 	Aut_counter = 0;
 	Base = NULL;
@@ -66,14 +69,19 @@ nauty_output::~nauty_output()
 	//cout << "nauty_output::~nauty_output done" << endl;
 }
 
-void nauty_output::allocate(int N, int verbose_level)
+void nauty_output::nauty_output_allocate(
+		int N,
+		int invariant_set_start, int invariant_set_size,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "nauty_output::allocate" << endl;
+		cout << "nauty_output::nauty_output_allocate" << endl;
 	}
 	nauty_output::N = N;
+	nauty_output::invariant_set_start = invariant_set_start;
+	nauty_output::invariant_set_size = invariant_set_size;
 
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
@@ -93,6 +101,8 @@ void nauty_output::print()
 {
 		cout << "nauty_output::print" << endl;
 		cout << "N=" << N << endl;
+		cout << "invariant_set_start=" << invariant_set_start << endl;
+		cout << "invariant_set_size=" << invariant_set_size << endl;
 }
 
 void nauty_output::print_stats()

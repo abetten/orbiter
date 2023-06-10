@@ -175,7 +175,7 @@ void singer_cycle::init(int n,
 
 	number_theory::number_theory_domain NT;
 
-	target_go.create((NT.i_power_j(q, n) - 1) / (q - 1), __FILE__, __LINE__);
+	target_go.create((NT.i_power_j(q, n) - 1) / (q - 1));
 
 	SG = NEW_OBJECT(groups::strong_generators);
 	SG->init_from_data_with_target_go(A,

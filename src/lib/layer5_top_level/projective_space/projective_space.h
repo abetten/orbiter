@@ -391,6 +391,10 @@ public:
 
 	int f_export_point_line_incidence_matrix;
 
+	int f_export_restricted_point_line_incidence_matrix;
+	std::string export_restricted_point_line_incidence_matrix_rows;
+	std::string export_restricted_point_line_incidence_matrix_cols;
+
 	int f_export_cubic_surface_line_vs_line_incidence_matrix;
 
 	int f_export_cubic_surface_line_tritangent_plane_incidence_matrix;

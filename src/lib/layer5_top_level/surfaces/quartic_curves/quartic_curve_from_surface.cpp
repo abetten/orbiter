@@ -715,7 +715,10 @@ void quartic_curve_from_surface::compute_stabilizer(
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 
-	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
+	NO->nauty_output_allocate(nb_rows + nb_cols,
+			0,
+			nb_rows + nb_cols,
+			0 /* verbose_level */);
 
 
 	SG_pt_stab = Nau.set_stabilizer_of_object(

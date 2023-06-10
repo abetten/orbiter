@@ -1901,6 +1901,17 @@ public:
 	std::string collect_source;
 	std::string collect_by;
 
+	int f_encode_CRC;
+	int encode_CRC_block_length;
+	std::string encode_CRC_data_polynomial;
+	std::string encode_CRC_check_polynomial;
+
+	int f_decode_CRC;
+	int decode_CRC_block_length;
+	std::string decode_CRC_data_polynomial;
+	std::string decode_CRC_check_polynomial;
+
+
 	int f_do_not_simplify;
 
 	int f_write_trees_during_expand;
@@ -1993,6 +2004,14 @@ public:
 			std::string &label,
 			int verbose_level);
 	void do_collect(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_CRC_encode(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_CRC_decode(
 			symbolic_object_builder_description *Descr,
 			std::string &label,
 			int verbose_level);

@@ -1157,7 +1157,7 @@ void substructure_classification::load_strong_generators_database(int cur_level,
 	if (nb_strong_generators == 0) {
 		gens.init(gen->get_A(), verbose_level - 2);
 		gens.allocate(0, verbose_level - 2);
-		go.create(1, __FILE__, __LINE__);
+		go.create(1);
 		goto finish;
 	}
 	tl = NEW_int(gen->get_A()->base_len());

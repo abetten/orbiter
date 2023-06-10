@@ -777,8 +777,8 @@ void arc_in_projective_space::create_Payne_hyperoval(
 		exit(1);
 	}
 	exponent = P->Subspaces->q - 1;
-	a.create(6, __FILE__, __LINE__);
-	b.create(exponent, __FILE__, __LINE__);
+	a.create(6);
+	b.create(exponent);
 
 	D.extended_gcd(a, b, g, u, u2, 0 /* verbose_level */);
 	one_sixth = u.as_int();
@@ -789,7 +789,7 @@ void arc_in_projective_space::create_Payne_hyperoval(
 		cout << "one_sixth = " << one_sixth << endl;
 	}
 
-	a.create(2, __FILE__, __LINE__);
+	a.create(2);
 	D.extended_gcd(a, b, g, u, u2, 0 /* verbose_level */);
 	one_half = u.as_int();
 	while (one_half < 0) {

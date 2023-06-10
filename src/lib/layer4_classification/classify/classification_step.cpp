@@ -495,7 +495,7 @@ void classification_step::print_latex(std::ostream &ost,
 	int i;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object go1, ol, Ol;
-	Ol.create(0, __FILE__, __LINE__);
+	Ol.create(0);
 
 	ost << "The orbits are:" << endl;
 	ost << "\\begin{enumerate}[(1)]" << endl;

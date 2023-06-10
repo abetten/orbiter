@@ -337,6 +337,34 @@ void symbolic_object_builder::init(
 					verbose_level);
 	}
 
+	else if (Descr->f_encode_CRC) {
+		if (f_v) {
+			cout << "symbolic_object_builder::init -encode_CRC"
+					<< " " << Descr->encode_CRC_block_length
+					<< " " << Descr->encode_CRC_data_polynomial
+					<< " " << Descr->encode_CRC_check_polynomial
+					<< endl;
+		}
+		do_CRC_encode(
+					Descr,
+					label,
+					verbose_level);
+	}
+
+	else if (Descr->f_decode_CRC) {
+		if (f_v) {
+			cout << "symbolic_object_builder::init -decode_CRC"
+					<< " " << Descr->decode_CRC_block_length
+					<< " " << Descr->decode_CRC_data_polynomial
+					<< " " << Descr->decode_CRC_check_polynomial
+					<< endl;
+		}
+		do_CRC_decode(
+					Descr,
+					label,
+					verbose_level);
+	}
+
 
 	if (Descr->f_file) {
 		if (f_v) {
@@ -1154,7 +1182,7 @@ void symbolic_object_builder::do_collect(
 				Descr->managed_variables,
 				len, 0 /*verbose_level*/);
 
-	int i, j, j1;
+	int i, j;//, j1;
 
 	for (i = 0; i < len; i++) {
 		if (f_v) {
@@ -1195,7 +1223,7 @@ void symbolic_object_builder::do_collect(
 				Output_node,
 				0 /*verbose_level*/);
 
-		j1 = Output_node->exponent_of_variable_destructive(variable);
+		//j1 = Output_node->exponent_of_variable_destructive(variable);
 
 
 		Formula_vector->V[j].tree->Root->append_node(Output_node, 0 /* verbose_level */);
@@ -1215,6 +1243,454 @@ void symbolic_object_builder::do_collect(
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_collect done" << endl;
+	}
+}
+
+
+
+
+void symbolic_object_builder::do_CRC_encode(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_CRC_encode"
+				<< " " << Descr->encode_CRC_block_length
+				<< " " << Descr->encode_CRC_data_polynomial
+				<< " " << Descr->encode_CRC_check_polynomial
+				<< endl;
+	}
+	data_structures::symbolic_object_builder *O_data;
+	data_structures::symbolic_object_builder *O_check;
+
+	O_data = Get_symbol(Descr->encode_CRC_data_polynomial);
+
+	O_check = Get_symbol(Descr->encode_CRC_check_polynomial);
+
+
+	int nb_blocks;
+
+	nb_blocks = O_data->Formula_vector->len;
+
+
+	if (O_check->Formula_vector->len != 1) {
+		cout << "symbolic_object_builder::do_CRC_encode "
+				"check polynomial cannot be a vector" << endl;
+		exit(1);
+	}
+
+	std::string variable1;
+
+	if (O_check->Formula_vector->V[0].tree->variables.size() != 1) {
+		cout << "symbolic_object_builder::do_CRC_encode "
+				"check polynomial must have exactly one variable" << endl;
+		exit(1);
+	}
+
+	variable1 = O_check->Formula_vector->V[0].tree->variables[0];
+	if (f_v) {
+		cout << "symbolic_object_builder::do_CRC_encode "
+				"variable from the CRC polynomial = " << variable1 << endl;
+	}
+
+	int *CRC_poly;
+	int CRC_poly_nb_coeff;
+	int CRC_poly_degree;
+
+	O_check->Formula_vector->V[0].get_monopoly(
+			variable1, CRC_poly, CRC_poly_nb_coeff, verbose_level);
+
+	if (CRC_poly_nb_coeff < 1) {
+		cout << "symbolic_object_builder::do_CRC_encode "
+				"CRC_poly_nb_coeff < 1" << endl;
+		exit(1);
+	}
+
+	CRC_poly_degree = CRC_poly_nb_coeff - 1;
+
+	if (CRC_poly[CRC_poly_degree] != 1) {
+		cout << "symbolic_object_builder::do_CRC_encode "
+				"CRC_poly is not monic" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_CRC_encode check poly: ";
+		Int_vec_print(cout, CRC_poly, CRC_poly_nb_coeff);
+		cout << endl;
+	}
+
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+
+	Formula_vector->init_and_allocate(
+				label, label,
+				true,
+				Descr->managed_variables,
+				nb_blocks, 0 /*verbose_level*/);
+
+	int cnt;
+
+	for (cnt = 0; cnt < nb_blocks; cnt++) {
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_encode "
+					"block " << cnt << " / " << nb_blocks << endl;
+		}
+		int *Data_poly;
+		int Data_poly_nb_coeff;
+		//int Data_poly_degree;
+		std::string variable2;
+
+		variable2 = O_data->Formula_vector->V[cnt].tree->variables[0];
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_encode "
+					"variable from the data polynomial is " << variable2 << endl;
+		}
+
+		O_data->Formula_vector->V[cnt].get_monopoly(
+				variable2, Data_poly, Data_poly_nb_coeff, verbose_level);
+
+
+		if (Data_poly_nb_coeff < 1) {
+			cout << "symbolic_object_builder::do_CRC_encode "
+					"Data_poly_nb_coeff < 1" << endl;
+			exit(1);
+		}
+
+		//Data_poly_degree = Data_poly_nb_coeff - 1;
+
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_encode block " << cnt << " / "
+					<< nb_blocks << " data polynomial read, "
+							"nb_coeff = " << Data_poly_nb_coeff << endl;
+		}
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_encode block " << cnt << " / "
+					<< nb_blocks << " data polynomial = ";
+			Int_vec_print(cout, Data_poly, Data_poly_nb_coeff);
+			cout << endl;
+			int h;
+			for (h = 0; h < Data_poly_nb_coeff; h++) {
+				cout << h << " : " << Data_poly[h] << endl;
+			}
+		}
+
+		if (Data_poly_nb_coeff > Descr->encode_CRC_block_length) {
+			cout << "symbolic_object_builder::do_CRC_encode "
+					"data polynomial is too big" << endl;
+			exit(1);
+		}
+
+		int N;
+		int *Data;
+		ring_theory::ring_theory_global RG;
+
+		N = Descr->encode_CRC_block_length + CRC_poly_degree;
+
+		Data = NEW_int(N);
+
+		Int_vec_zero(Data, N);
+
+		Int_vec_copy(Data_poly, Data + CRC_poly_degree, Data_poly_nb_coeff);
+
+
+		int *coeff_table_q;
+		int coeff_table_q_len;
+		int *coeff_table_r;
+		int coeff_table_r_len;
+
+		RG.polynomial_division_coefficient_table_with_report(
+				Fq,
+				Data, Data_poly_nb_coeff + CRC_poly_degree,
+				CRC_poly, CRC_poly_nb_coeff,
+				coeff_table_q, coeff_table_q_len,
+				coeff_table_r, coeff_table_r_len,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_encode block " << cnt << " / "
+					<< nb_blocks << " remainder polynomial = ";
+			Int_vec_print(cout, coeff_table_r, coeff_table_r_len);
+			cout << endl;
+			cout << "symbolic_object_builder::do_CRC_encode block " << cnt << " / "
+					<< nb_blocks << " quotient polynomial = ";
+			Int_vec_print(cout, coeff_table_q, coeff_table_q_len);
+			cout << endl;
+		}
+
+
+		// copy the information into the upper part of Data:
+
+		Int_vec_zero(Data, N);
+
+		Int_vec_copy(Data_poly, Data + CRC_poly_degree, Data_poly_nb_coeff);
+
+		// copy the negative of the remainder in the lower part to make a codeword:
+		int h;
+
+		for (h = 0; h < coeff_table_r_len; h++) {
+			Data[h] = Fq->negate(coeff_table_r[h]);
+		}
+
+
+		string label;
+		string managed_variables;
+
+
+		label = "block" + std::to_string(cnt) + "_encoded";
+
+		Formula_vector->V[cnt].init_formula_monopoly(
+				label, label,
+				Fq,
+				managed_variables,
+				variable2,
+				Data, N,
+				verbose_level);
+
+		FREE_int(coeff_table_q);
+		FREE_int(coeff_table_r);
+		FREE_int(Data_poly);
+		FREE_int(Data);
+
+	}
+	FREE_int(CRC_poly);
+
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_CRC_encode done" << endl;
+	}
+}
+
+
+
+void symbolic_object_builder::do_CRC_decode(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_CRC_decode"
+				<< " " << Descr->decode_CRC_block_length
+				<< " " << Descr->decode_CRC_data_polynomial
+				<< " " << Descr->decode_CRC_check_polynomial
+				<< endl;
+	}
+	data_structures::symbolic_object_builder *O_data;
+	data_structures::symbolic_object_builder *O_check;
+
+	O_data = Get_symbol(Descr->decode_CRC_data_polynomial);
+
+	O_check = Get_symbol(Descr->decode_CRC_check_polynomial);
+
+
+	int nb_blocks;
+
+	nb_blocks = O_data->Formula_vector->len;
+
+
+	if (O_check->Formula_vector->len != 1) {
+		cout << "symbolic_object_builder::do_CRC_decode "
+				"check polynomial cannot be a vector" << endl;
+		exit(1);
+	}
+
+	std::string variable1;
+
+	if (O_check->Formula_vector->V[0].tree->variables.size() != 1) {
+		cout << "symbolic_object_builder::do_CRC_decode "
+				"check polynomial must have exactly one variable" << endl;
+		exit(1);
+	}
+
+	variable1 = O_check->Formula_vector->V[0].tree->variables[0];
+	if (f_v) {
+		cout << "symbolic_object_builder::do_CRC_decode "
+				"variable from the CRC polynomial = " << variable1 << endl;
+	}
+
+	int *CRC_poly;
+	int CRC_poly_nb_coeff;
+	int CRC_poly_degree;
+
+	O_check->Formula_vector->V[0].get_monopoly(
+			variable1, CRC_poly, CRC_poly_nb_coeff, verbose_level);
+
+	if (CRC_poly_nb_coeff < 1) {
+		cout << "symbolic_object_builder::do_CRC_decode "
+				"CRC_poly_nb_coeff < 1" << endl;
+		exit(1);
+	}
+
+	CRC_poly_degree = CRC_poly_nb_coeff - 1;
+
+	if (CRC_poly[CRC_poly_degree] != 1) {
+		cout << "symbolic_object_builder::do_CRC_decode "
+				"CRC_poly is not monic" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_CRC_decode check poly: ";
+		Int_vec_print(cout, CRC_poly, CRC_poly_nb_coeff);
+		cout << endl;
+	}
+
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+
+	Formula_vector->init_and_allocate(
+				label, label,
+				true,
+				Descr->managed_variables,
+				nb_blocks, 0 /*verbose_level*/);
+
+	int cnt;
+
+	for (cnt = 0; cnt < nb_blocks; cnt++) {
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_decode "
+					"block " << cnt << " / " << nb_blocks << endl;
+		}
+		int *Data_poly;
+		int Data_poly_nb_coeff;
+		//int Data_poly_degree;
+		std::string variable2;
+
+		variable2 = O_data->Formula_vector->V[cnt].tree->variables[0];
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_decode "
+					"variable from the data polynomial is " << variable2 << endl;
+		}
+
+		O_data->Formula_vector->V[cnt].get_monopoly(
+				variable2, Data_poly, Data_poly_nb_coeff, verbose_level);
+
+
+		if (Data_poly_nb_coeff < 1) {
+			cout << "symbolic_object_builder::do_CRC_decode "
+					"Data_poly_nb_coeff < 1" << endl;
+			exit(1);
+		}
+
+		//Data_poly_degree = Data_poly_nb_coeff - 1;
+
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_decode block " << cnt << " / "
+					<< nb_blocks << " data polynomial read, "
+							"nb_coeff = " << Data_poly_nb_coeff << endl;
+		}
+		if (false) {
+			cout << "symbolic_object_builder::do_CRC_decode block " << cnt << " / "
+					<< nb_blocks << " data polynomial = ";
+			Int_vec_print(cout, Data_poly, Data_poly_nb_coeff);
+			cout << endl;
+			int h;
+			for (h = 0; h < Data_poly_nb_coeff; h++) {
+				cout << h << " : " << Data_poly[h] << endl;
+			}
+		}
+
+		if (Data_poly_nb_coeff > Descr->decode_CRC_block_length) {
+			cout << "symbolic_object_builder::do_CRC_decode "
+					"data polynomial is too big" << endl;
+			exit(1);
+		}
+
+		int N;
+		int *Data;
+		ring_theory::ring_theory_global RG;
+
+		N = Descr->decode_CRC_block_length;
+		//N = Descr->decode_CRC_block_length + CRC_poly_degree;
+
+		Data = NEW_int(N);
+
+		Int_vec_zero(Data, N);
+
+		Int_vec_copy(Data_poly, Data, Data_poly_nb_coeff);
+
+
+		int *coeff_table_q;
+		int coeff_table_q_len;
+		int *coeff_table_r;
+		int coeff_table_r_len;
+
+		RG.polynomial_division_coefficient_table_with_report(
+				Fq,
+				Data, Data_poly_nb_coeff,
+				CRC_poly, CRC_poly_nb_coeff,
+				coeff_table_q, coeff_table_q_len,
+				coeff_table_r, coeff_table_r_len,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_decode block " << cnt << " / "
+					<< nb_blocks << " remainder polynomial = ";
+			Int_vec_print(cout, coeff_table_r, coeff_table_r_len);
+			cout << endl;
+			cout << "symbolic_object_builder::do_CRC_decode block " << cnt << " / "
+					<< nb_blocks << " quotient polynomial = ";
+			Int_vec_print(cout, coeff_table_q, coeff_table_q_len);
+			cout << endl;
+		}
+
+
+
+		if (Int_vec_is_zero(coeff_table_r, coeff_table_r_len)) {
+			if (f_v) {
+				cout << "symbolic_object_builder::do_CRC_decode block " << cnt << " / "
+						<< nb_blocks << " block is OK, because remainder is zero" << endl;
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "symbolic_object_builder::do_CRC_decode block " << cnt << " / "
+						<< nb_blocks << " block is not OK, because remainder is nonzero" << endl;
+			}
+		}
+		// copy the remainder polynomial into data, padded with zeros:
+
+		Int_vec_zero(Data, N);
+
+		Int_vec_copy(coeff_table_r, Data, coeff_table_r_len);
+
+
+		string label;
+		string managed_variables;
+
+
+		label = "block" + std::to_string(cnt) + "_decoded";
+
+		Formula_vector->V[cnt].init_formula_monopoly(
+				label, label,
+				Fq,
+				managed_variables,
+				variable2,
+				Data, coeff_table_r_len,
+				verbose_level);
+
+		FREE_int(coeff_table_q);
+		FREE_int(coeff_table_r);
+		FREE_int(Data_poly);
+		FREE_int(Data);
+
+	}
+	FREE_int(CRC_poly);
+
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_CRC_decode done" << endl;
 	}
 }
 

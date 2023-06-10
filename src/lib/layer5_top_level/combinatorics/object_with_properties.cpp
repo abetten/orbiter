@@ -447,6 +447,46 @@ void object_with_properties::latex_report(std::ostream &ost,
 					"after Sch->print_TDA" << endl;
 		}
 	}
+	if (Report_options->f_export_labels) {
+
+		combinatorics::encoded_combinatorial_object *Enc;
+
+		OwCF->encode_incma(Enc, verbose_level);
+
+		//latex_TDA(ost, Enc, verbose_level);
+		//ost << "\\\\" << endl;
+
+		int *point_labels;
+		int *block_labels;
+
+		Enc->compute_labels(
+				Sch->nb_orbits, Sch->orbit_first, Sch->orbit_len, Sch->orbit,
+				point_labels, block_labels,
+				verbose_level);
+
+		orbiter_kernel_system::file_io Fio;
+
+		string fname;
+
+		fname = "point_labels.csv";
+		Fio.int_matrix_write_csv(fname, point_labels, Enc->nb_rows, 1);
+
+		cout << "object_with_properties::latex_report "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+
+		fname = "block_labels.csv";
+		Fio.int_matrix_write_csv(fname, block_labels, Enc->nb_cols, 1);
+
+		cout << "object_with_properties::latex_report "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+
+		FREE_int(point_labels);
+		FREE_int(block_labels);
+
+		FREE_OBJECT(Enc);
+	}
 
 	ost << "Canonical labeling:\\\\" << endl;
 	combinatorics::encoded_combinatorial_object *Enc;

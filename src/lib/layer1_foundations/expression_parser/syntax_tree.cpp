@@ -117,6 +117,36 @@ void syntax_tree::init_int(
 	}
 }
 
+void syntax_tree::init_monopoly(
+		field_theory::finite_field *Fq,
+		std::string &variable,
+		int *coeffs, int nb_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::init_monopoly" << endl;
+	}
+
+	syntax_tree::Fq = Fq;
+
+	init_root_node(verbose_level);
+
+
+	Root->init_monopoly(
+			this,
+			variable,
+			coeffs, nb_coeffs,
+			verbose_level);
+
+	if (f_v) {
+		cout << "syntax_tree::init_monopoly done" << endl;
+	}
+}
+
+
+
 
 void syntax_tree::print_to_vector(
 		std::vector<std::string> &rep, int f_latex,
@@ -336,6 +366,10 @@ void syntax_tree::copy_to(
 		cout << "syntax_tree::copy_to" << endl;
 	}
 
+	if (Root == NULL) {
+		cout << "syntax_tree::copy_to Root == NULL" << endl;
+		exit(1);
+	}
 
 	if (f_v) {
 		cout << "syntax_tree::copy_to "
@@ -451,6 +485,56 @@ int syntax_tree::highest_order_term(
 		cout << "syntax_tree::highest_order_term done" << endl;
 	}
 	return d;
+}
+
+void syntax_tree::get_monopoly(
+		std::string &variable, int *&coeff, int &nb_coeff, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::get_monopoly" << endl;
+	}
+
+	std::vector<int> Coeff;
+	std::vector<int> Exp;
+
+	if (f_v) {
+		cout << "syntax_tree::get_monopoly before Root->get_monopoly" << endl;
+	}
+	Root->get_monopoly(variable,
+			Coeff, Exp,
+			verbose_level);
+	if (f_v) {
+		cout << "syntax_tree::get_monopoly after Root->get_monopoly" << endl;
+	}
+
+	int i, d, c, e;
+
+	d = -1;
+	for (i = 0; i < Coeff.size(); i++) {
+		d = MAXIMUM(d, Exp[i]);
+	}
+	nb_coeff = d + 1;
+
+	coeff = NEW_int(nb_coeff);
+	Int_vec_zero(coeff, nb_coeff);
+
+	for (i = 0; i < Coeff.size(); i++) {
+		c = Coeff[i];
+		e = Exp[i];
+		coeff[e] = c;
+	}
+	if (f_v) {
+		cout << "syntax_tree::get_monopoly found a monopoly of degree " << d << " : ";
+		Int_vec_print(cout, coeff, nb_coeff);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "syntax_tree::get_monopoly" << endl;
+	}
 }
 
 void syntax_tree::multiply_by_minus_one(

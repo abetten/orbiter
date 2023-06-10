@@ -238,7 +238,7 @@ void projective_space_with_action::init_group(
 		f_semilinear,
 		false /* f_special */,
 		nice_gens,
-		0 /* verbose_level*/);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
 				"after A->Known_groups->init_linear_group" << endl;
@@ -368,7 +368,10 @@ void projective_space_with_action::canonical_labeling(
 	l1_interfaces::nauty_output *NO;
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
+	NO->nauty_output_allocate(nb_rows + nb_cols,
+			0,
+			nb_rows + nb_cols,
+			0 /* verbose_level */);
 
 
 	OiP->canonical_labeling(NO, verbose_level);
@@ -529,7 +532,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	ring_theory::longinteger_object full_group_order;
 	order = A->Group_element->element_order(Elt);
 
-	full_group_order.create(order, __FILE__, __LINE__);
+	full_group_order.create(order);
 
 	//P3 = P;
 

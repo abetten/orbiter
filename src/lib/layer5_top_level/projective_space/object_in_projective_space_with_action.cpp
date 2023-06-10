@@ -119,7 +119,10 @@ void object_in_projective_space_with_action::report(
 	l1_interfaces::nauty_output *NO;
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-	NO->allocate(nb_r + nb_c, verbose_level);
+	NO->nauty_output_allocate(nb_r + nb_c,
+			0,
+			nb_r + nb_c,
+			verbose_level);
 
 	SG = Nau.set_stabilizer_of_object(
 			OwCF,

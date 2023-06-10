@@ -359,7 +359,7 @@ void gl_classes::centralizer_order_Kung_basic(
 	if (f_v) {
 		cout << "gl_classes::centralizer_order_Kung_basic" << endl;
 	}
-	co.create(1, __FILE__, __LINE__);
+	co.create(1);
 
 	for (a = 0; a < nb_irreds; a++) {
 
@@ -382,7 +382,7 @@ void gl_classes::centralizer_order_Kung_basic(
 			part = Partitions[m] + p * m;
 			
 			// here comes Kung's formula: 
-			co1.create(1, __FILE__, __LINE__);
+			co1.create(1);
 			for (i = 1; i <= m; i++) {
 				b = part[i - 1];
 				if (b == 0) {
@@ -394,7 +394,7 @@ void gl_classes::centralizer_order_Kung_basic(
 					aa = NT.i_power_j(q, d * mue_i);
 					bb = NT.i_power_j(q, d * (mue_i - j));
 					cc = aa - bb;
-					e.create(cc, __FILE__, __LINE__);
+					e.create(cc);
 					D.mult(e, co1, f);
 					f.assign_to(co1);
 				}
@@ -424,7 +424,7 @@ void gl_classes::centralizer_order_Kung(
 	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 
-	co.create(1, __FILE__, __LINE__);
+	co.create(1);
 	for (a = Table_of_polynomials->nb_irred - 1; a >= 0; a--) {
 
 		// loop over all polynomials:
@@ -442,7 +442,7 @@ void gl_classes::centralizer_order_Kung(
 			part = Partitions[m] + p * m;
 			
 			// here comes Kung's formula: 
-			co1.create(1, __FILE__, __LINE__);
+			co1.create(1);
 			for (i = 1; i <= m; i++) {
 				b = part[i - 1];
 				if (b == 0) {
@@ -453,7 +453,7 @@ void gl_classes::centralizer_order_Kung(
 					aa = NT.i_power_j(q, d * mue_i);
 					bb = NT.i_power_j(q, d * (mue_i - j));
 					cc = aa - bb;
-					e.create(cc, __FILE__, __LINE__);
+					e.create(cc);
 					D.mult(e, co1, f);
 					f.assign_to(co1);
 				}
@@ -501,11 +501,11 @@ void gl_classes::make_classes(
 
 
 
-	go.create(1, __FILE__, __LINE__);
+	go.create(1);
 	a = NT.i_power_j(q, k);
 	for (i = 0; i < k; i++) {
 		b = a - NT.i_power_j_lint(q, i);
-		f.create(b, __FILE__, __LINE__);
+		f.create(b);
 		D.mult(go, f, g);
 		g.assign_to(go);
 	}
@@ -515,7 +515,7 @@ void gl_classes::make_classes(
 				<< go << endl;
 	}
 
-	sum.create(0, __FILE__, __LINE__);
+	sum.create(0);
 
 
 
@@ -612,7 +612,7 @@ loop1:
 
 	R = NEW_OBJECTS(gl_class_rep, nb_classes);
 
-	sum.create(0, __FILE__, __LINE__);
+	sum.create(0);
 
 
 	cnt = 0;
@@ -751,7 +751,7 @@ void gl_classes::identify_matrix(
 
 
 		U.create_object_by_rank(
-				char_poly, 0, __FILE__, __LINE__, verbose_level);
+				char_poly, 0, verbose_level);
 
 		U.characteristic_polynomial(
 				Mtx, k, char_poly, verbose_level - 2);
@@ -989,7 +989,7 @@ void gl_classes::compute_generalized_kernels_for_each_block(
 	
 	M2 = NEW_int(k * k);
 
-	U.create_object_by_rank(P, 0, __FILE__, __LINE__, verbose_level);
+	U.create_object_by_rank(P, 0, verbose_level);
 	b0 = 0;
 	for (h = 0; h < nb_irreds; h++) {
 		if (f_vv) {
@@ -1413,7 +1413,7 @@ void gl_classes::generators_for_centralizer(
 
 
 
-		U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
+		U.create_object_by_rank(char_poly, 0, verbose_level);
 
 		U.characteristic_polynomial(Mtx, k, char_poly, verbose_level - 2);
 
@@ -2073,11 +2073,11 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	}
 
 
-	go.create(1, __FILE__, __LINE__);
+	go.create(1);
 	a = NT.i_power_j(q, k);
 	for (i = 0; i < k; i++) {
 		b = a - NT.i_power_j(q, i);
-		f.create(b, __FILE__, __LINE__);
+		f.create(b);
 		D.mult(go, f, g);
 		g.assign_to(go);
 	}

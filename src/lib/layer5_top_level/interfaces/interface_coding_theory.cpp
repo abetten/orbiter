@@ -451,7 +451,7 @@ void interface_coding_theory::worker(int verbose_level)
 	}
 	else if (f_random_noise_in_bitmap_file) {
 
-		cout << "f_random_noise_in_bitmap_file" << endl;
+		cout << "-random_noise_in_bitmap_file" << endl;
 
 		l1_interfaces::easy_BMP_interface BMP;
 
@@ -464,7 +464,7 @@ void interface_coding_theory::worker(int verbose_level)
 	}
 	else if (f_random_noise_of_burst_type_in_bitmap_file) {
 
-		cout << "f_random_noise_of_burst_type_in_bitmap_file" << endl;
+		cout << "-random_noise_of_burst_type_in_bitmap_file" << endl;
 
 		l1_interfaces::easy_BMP_interface BMP;
 
@@ -479,7 +479,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 	else if (f_crc_test) {
 
-		cout << "f_crc_test" << endl;
+		cout << "-crc_test" << endl;
 
 		coding_theory::crc_object CRC_object;
 

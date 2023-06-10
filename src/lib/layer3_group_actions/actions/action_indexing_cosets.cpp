@@ -165,7 +165,7 @@ void action::coset_unrank(groups::sims *G,
 	rank0 = 0;
 	for (k = 0; k < nb_U_orbits_on_subset; k++) {
 		len = U_orb.orbit_len[k];
-		b.create(len, __FILE__, __LINE__);
+		b.create(len);
 		D.mult(G0_order, b, c);
 		D.integral_division(c, U_order, d, rem, 0);
 		if (!rem.is_zero()) {
@@ -436,7 +436,7 @@ long int action::coset_rank(
 		}
 	for (kk = 0; kk < k; kk++) {
 		len = U_orb.orbit_len[kk];
-		b.create(len, __FILE__, __LINE__);
+		b.create(len);
 		D.mult(G0_order, b, c);
 		D.integral_division(c, U_order, d, rem, 0);
 		if (!rem.is_zero()) {
@@ -450,7 +450,7 @@ long int action::coset_rank(
 		cout << "after going through the previous double cosets, rank=" << rank << endl;
 		}
 	len = U_orb.orbit_len[k];
-	b.create(len, __FILE__, __LINE__);
+	b.create(len);
 	D.mult(G0_order, b, c);
 	D.integral_division(c, U_order, d, rem, 0);
 	if (!rem.is_zero()) {

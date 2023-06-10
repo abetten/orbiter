@@ -222,6 +222,11 @@ finite_field_activity_description::finite_field_activity_description()
 	polynomial_division_r0 = 0;
 	polynomial_division_r1 = 0;
 
+	f_assemble_monopoly = false;
+	assemble_monopoly_length = 0;
+	//std::string assemble_monopoly_coefficient_vector;
+	//std::string assemble_monopoly_exponent_vector;
+
 
 
 	f_transversal = false;
@@ -798,6 +803,18 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-assemble_monopoly") == 0) {
+			f_assemble_monopoly = true;
+			assemble_monopoly_length = ST.strtolint(argv[++i]);
+			assemble_monopoly_coefficient_vector.assign(argv[++i]);
+			assemble_monopoly_exponent_vector.assign(argv[++i]);
+			if (f_v) {
+				cout << "-assemble_monopoly "
+						<< " " << assemble_monopoly_length
+						<< " " << assemble_monopoly_coefficient_vector
+						<< " " << assemble_monopoly_exponent_vector << endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-transversal") == 0) {
@@ -846,7 +863,6 @@ int finite_field_activity_description::read_arguments(
 				cout << "-unrank_point_in_PG " << unrank_point_in_PG_n << " " << unrank_point_in_PG_text << endl;
 			}
 		}
-
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -1141,6 +1157,12 @@ void finite_field_activity_description::print()
 				<< " " << polynomial_division_r0
 				<< " " << polynomial_division_r1
 				<< endl;
+	}
+	if (f_assemble_monopoly) {
+		cout << "-assemble_monopoly "
+				<< " " << assemble_monopoly_length
+				<< " " << assemble_monopoly_coefficient_vector
+				<< " " << assemble_monopoly_exponent_vector << endl;
 	}
 
 

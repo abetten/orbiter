@@ -105,13 +105,9 @@ void create_code::init(
 			cout << "create_code::init after create_checkma_from_genma" << endl;
 		}
 
-		char str[1000];
+		label_txt = "by_genma_n" + std::to_string(n) + "_k" + std::to_string(k);
 
-		snprintf(str, sizeof(str), "by_genma_n%d_k%d", n, k);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "by\\_genma\\_n%d\\_k%d", n, k);
-		label_tex.assign(str);
+		label_tex = "by\\_genma\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
 
 
 		if (f_v) {
@@ -176,13 +172,9 @@ void create_code::init(
 					"after create_checkma_from_genma" << endl;
 		}
 
-		char str[1000];
+		label_txt = "by_basis_n" + std::to_string(n) + "_k" + std::to_string(k);
 
-		snprintf(str, sizeof(str), "by_basis_n%d_k%d", n, k);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "by\\_basis\\_n%d\\_k%d", n, k);
-		label_tex.assign(str);
+		label_tex = "by\\_basis\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
 
 
 		if (f_v) {
@@ -245,13 +237,9 @@ void create_code::init(
 
 		create_genma_from_checkma(verbose_level);
 
-		char str[1000];
+		label_txt = "proj_set_n" + std::to_string(n) + "_k" + std::to_string(k);
 
-		snprintf(str, sizeof(str), "proj_set_n%d_k%d", n, k);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "proj\\_set\\_n%d\\_k%d", n, k);
-		label_tex.assign(str);
+		label_tex = "proj\\_set\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
 
 
 		FREE_int(Col);
@@ -402,13 +390,9 @@ void create_code::init(
 		}
 
 
-		char str[1000];
+		label_txt = "RM_n" + std::to_string(m);
 
-		snprintf(str, sizeof(str), "RM_%d", m);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "RM\\_%d", m);
-		label_tex.assign(str);
+		label_txt = "RM\\_n" + std::to_string(m);
 
 
 
@@ -454,13 +438,10 @@ void create_code::init(
 		}
 
 
-		char str[1000];
+		label_txt = "BCH_n" + std::to_string(n) + "_d" + std::to_string(d);
 
-		snprintf(str, sizeof(str), "BCH_n%d_d%d", n, d);
-		label_txt.assign(str);
+		label_tex = "BCH\\_n" + std::to_string(n) + "\\_d" + std::to_string(d);
 
-		snprintf(str, sizeof(str), "BCH\\_n%d\\_d%d", n, d);
-		label_tex.assign(str);
 
 
 
@@ -505,13 +486,9 @@ void create_code::init(
 		}
 
 
-		char str[1000];
+		label_txt = "RS_n" + std::to_string(n) + "_d" + std::to_string(d);
 
-		snprintf(str, sizeof(str), "RS_n%d_d%d", n, d);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "RS\\_n%d\\_d%d", n, d);
-		label_tex.assign(str);
+		label_tex = "RS\\_n" + std::to_string(n) + "\\_d" + std::to_string(d);
 
 
 		if (f_v) {
@@ -553,13 +530,9 @@ void create_code::init(
 
 		nmk = n - k;
 
-		char str[1000];
+		label_txt = "GV_n" + std::to_string(n) + "_k" + std::to_string(k) + "_d" + std::to_string(d);
 
-		snprintf(str, sizeof(str), "GV_n%d_k%d_d%d", n, k, d);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "GV\\_n%d\\_k%d\\_d%d", n, k, d);
-		label_tex.assign(str);
+		label_tex = "GV\\_n" + std::to_string(n) + "\\_k" + std::to_string(k) + "\\_d" + std::to_string(d);
 
 		if (f_v) {
 			cout << "create_code::init f_Gilbert_Varshamov done" << endl;
@@ -639,13 +612,9 @@ void create_code::init(
 			cout << "create_code::init after create_checkma_from_genma" << endl;
 		}
 
-		char str[1000];
+		label_txt = "long_code_n" + std::to_string(n) + "_k" + std::to_string(k);
 
-		snprintf(str, sizeof(str), "long_code_n%d_k%d", n, k);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "long\\_code\\_n%d\\_k%d", n, k);
-		label_tex.assign(str);
+		label_tex = "long\\_code\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
 
 
 		if (f_v) {
@@ -692,13 +661,9 @@ void create_code::init(
 
 		create_genma_from_checkma(verbose_level);
 
-		char str[1000];
+		label_txt = "ttpA_n" + std::to_string(n) + "_k" + std::to_string(k);
 
-		snprintf(str, sizeof(str), "ttpA_n%d_k%d", n, k);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "ttpA\\_n%d\\_k%d", n, k);
-		label_tex.assign(str);
+		label_tex = "ttpA\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
 
 
 
@@ -1255,6 +1220,52 @@ void create_code::export_checkma(
 	}
 
 }
+
+void create_code::export_checkma_as_projective_set(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::export_checkma_as_projective_set" << endl;
+	}
+
+	if (!f_has_check_matrix) {
+		cout << "create_code::export_checkma_as_projective_set "
+				"check matrix is not available" << endl;
+		exit(1);
+	}
+
+
+	long int *Rk;
+	int *v;
+	int i, j, a;
+
+	Rk = NEW_lint(n);
+	v = NEW_int(nmk);
+	for (j = 0; j < n; j++) {
+		for (i = 0; i < nmk; i++) {
+			a = checkma[i * n + j];
+			v[i] = a;
+		}
+		F->Projective_space_basic->PG_element_rank_modified(
+				v, 1, nmk, Rk[j]);
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	Fio.lint_matrix_write_csv(fname, Rk, n, 1);
+
+	if (f_v) {
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "create_code::export_checkma_as_projective_set done" << endl;
+	}
+
+}
+
 
 void create_code::weight_enumerator(int verbose_level)
 {

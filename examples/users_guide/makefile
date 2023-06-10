@@ -1,16 +1,21 @@
 
-#MY_PATH=../orbiter
-MY_PATH=~/DEV.23/orbiter
-#MY_PATH=/s/hipft-logger/b/nobackup/abetten/orbiter
-#MY_PATH=/scratch/betten/COMPILE/orbiter
+#ORBITER_PATH=../orbiter
+
+ORBITER_PATH=~/DEV.23/orbiter
+
+#ORBITER_PATH=/s/hipft-logger/b/nobackup/abetten/orbiter
+#ORBITER_PATH=/scratch/betten/COMPILE/orbiter
 
 
 # uncomment exactly one of the following two lines.
 # uncomment the first if you want to run orbiter through docker.
 # uncomment the second if you have an installed copy of orbiter and you want to run it directly 
 #ORBITER_PATH=docker run -it --volume ${PWD}:/mnt -w /mnt abetten/orbiter 
-ORBITER_PATH=$(MY_PATH)/src/apps/orbiter/
-ORBITER=$(ORBITER_PATH)orbiter.out
+
+ORBITER_EXE_PATH=$(ORBITER_PATH)/src/apps/orbiter/
+
+ORBITER=$(ORBITER_EXE_PATH)orbiter.out
+
 SANDBOX=$(MY_PATH)/src/apps/sandbox/sandbox.out
 
 ###############################################################################
@@ -18,7 +23,7 @@ SANDBOX=$(MY_PATH)/src/apps/sandbox/sandbox.out
 # compile automatically generated code
 ###############################################################################
 
-SRC=$(MY_PATH)/src
+SRC=$(ORBITER_PATH)/src
 MY_CPP = g++
 MY_CC = gcc
 CPPFLAGS = -Wall -I../../DEV.23/orbiter/src/lib -std=c++14
@@ -39,8 +44,8 @@ OPEN=echo
 # End of configuration part
 ###############################################################################
 
-GINAC_PATH=$(MY_PATH)/src/apps/ginac
-SANDBOX_PATH=$(MY_PATH)/src/apps/sandbox
+GINAC_PATH=$(ORBITER_PATH)/src/apps/ginac
+SANDBOX_PATH=$(ORBITER_PATH)/src/apps/sandbox
 
 update:
 	cd $(ORBITER_PATH); make clean;
@@ -552,12 +557,16 @@ PGOM_6_2_CLASS_2A_CENTRALIZER_GENS="\
 # points off:
 #15,16,17,18,19,20,21,22,24,25,28,29,32,33,36,37,40,41,43,44,45,46,49,50,55,56,57,58,63,64,65,66,71,72,73,74,77,78,83,84
 
-HIRSCHFELD_SURFACE_POINTS_OFF="15,16,17,18,19,20,21,22,24,25,28,29,32,33,36,37,40,41,43,44,45,46,49,50,55,56,57,58,63,64,65,66,71,72,73,74,77,78,83,84"
+HIRSCHFELD_SURFACE_POINTS_OFF="15,16,17,18,19,20,21,22,24,\
+25,28,29,32,33,36,37,40,41,43,44,45,46,49,50,55,56,57,58,\
+63,64,65,66,71,72,73,74,77,78,83,84"
 
 #Hesse planes:
 #7,8,11,13,14,16,17,19,28,29,32,34,35,37,38,40,42,43,44,45,47,48,52,54,56,57,60,61,63,64,65,66,68,69,73,75,77,78,81,82
 
-HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,29,32,34,35,37,38,40,42,43,44,45,47,48,52,54,56,57,60,61,63,64,65,66,68,69,73,75,77,78,81,82"
+HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,\
+29,32,34,35,37,38,40,42,43,44,45,47,48,52,54,56,57,60,61,\
+63,64,65,66,68,69,73,75,77,78,81,82"
 
 
 # Section 7.2
@@ -730,6 +739,21 @@ HAMMING_CODE_GENERATOR="\
 0,0,0,1,1,1,1"
 
 
+GOLAY23_CODE_GENERATOR="\
+1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,1,0,0,1,0,\
+0,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,1,1,0,0,1,\
+0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,1,1,\
+0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,1,1,1,1,\
+0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,1,0,1,0,1,1,1,0,\
+0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,1,0,1,1,1,0,0,\
+0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,1,1,1,0,1,0,1,\
+0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,0,1,1,0,1,0,0,\
+0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,1,1,0,1,0,1,0,\
+0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,1,1,0,0,1,\
+0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,1,1,1,\
+0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1"
+
+
 
 # Section 10.3
 
@@ -783,14 +807,33 @@ M24_ELEMENT_2B="0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,
 # centralizer order = 7680
 # element has 63 fixed points in PG(11,2)
 
-M24_2A_PERM="10, 1, 21, 4, 3, 5, 22, 13, 11, 9, 0, 8, 16, 7, 23, 15, 12, 17, 18, 19, 20, 2, 6, 14"
+M24_2A_PERM="10, 1, 21, 4, 3, 5, 22, 13, 11, 9, 0, 8, \
+16, 7, 23, 15, 12, 17, 18, 19, 20, 2, 6, 14"
 
 
-M24_2B_PERM="2, 5, 0, 8, 11, 1, 16, 14, 3, 19, 21, 4, 22, 23, 7, 20, 6, 18, 17, 9, 15, 10, 12, 13"
+M24_2B_PERM="2, 5, 0, 8, 11, 1, 16, 14, 3, 19, 21, 4, \
+22, 23, 7, 20, 6, 18, 17, 9, 15, 10, 12, 13"
 
-GOLAY24_2A_FIX_SUBCODE="1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1"
+GOLAY24_2A_FIX_SUBCODE="1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, \
+0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, \
+0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, \
+0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, \
+0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, \
+0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, \
+0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, \
+0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, \
+0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, \
+0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, \
+1, 1, 0, 0, 0, 1, 1, 0, 0, 1"
 
-GOLAY24_2B_FIX_SUBCODE="1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1"
+GOLAY24_2B_FIX_SUBCODE="1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, \
+0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, \
+0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, \
+0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, \
+0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, \
+1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, \
+0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, \
+0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1"
 
 
 
@@ -932,7 +975,28 @@ CODE_BCH_F8_N63_K9_D43_GENMA="\
 0,0,0,0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,\
 0,0,0,0,0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1"
 
+# created in the combinatorics section, not needed any longer
+ELEMENTARY_SYMMETRIC_8_1="x0 + x1 + x2 + x3 + x4 + x5 + x6 + x7"
 
+ELEMENTARY_SYMMETRIC_8_2="x0*x1 + x0*x2 + x0*x3 + x0*x4 + x0*x5 + x0*x6 + x0*x7 + x1*x2 + x1*x3 + x1*x4 + x1*x5 + x1*x6 + x1*x7 + x2*x3 + x2*x4 + x2*x5 + x2*x6 + x2*x7 + x3*x4 + x3*x5 + x3*x6 + x3*x7 + x4*x5 + x4*x6 + x4*x7 + x5*x6 + x5*x7 + x6*x7"
+
+ELEMENTARY_SYMMETRIC_8_3="x0*x1*x2 + x0*x1*x3 + x0*x1*x4 + x0*x1*x5 + x0*x1*x6 + x0*x1*x7 + x0*x2*x3 + x0*x2*x4 + x0*x2*x5 + x0*x2*x6 + x0*x2*x7 + x0*x3*x4 + x0*x3*x5 + x0*x3*x6 + x0*x3*x7 + x0*x4*x5 + x0*x4*x6 + x0*x4*x7 + x0*x5*x6 + x0*x5*x7 + x0*x6*x7 + x1*x2*x3 + x1*x2*x4 + x1*x2*x5 + x1*x2*x6 + x1*x2*x7 + x1*x3*x4 + x1*x3*x5 + x1*x3*x6 + x1*x3*x7 + x1*x4*x5 + x1*x4*x6 + x1*x4*x7 + x1*x5*x6 + x1*x5*x7 + x1*x6*x7 + x2*x3*x4 + x2*x3*x5 + x2*x3*x6 + x2*x3*x7 + x2*x4*x5 + x2*x4*x6 + x2*x4*x7 + x2*x5*x6 + x2*x5*x7 + x2*x6*x7 + x3*x4*x5 + x3*x4*x6 + x3*x4*x7 + x3*x5*x6 + x3*x5*x7 + x3*x6*x7 + x4*x5*x6 + x4*x5*x7 + x4*x6*x7 + x5*x6*x7"
+
+ELEMENTARY_SYMMETRIC_8_4="x0*x1*x2*x3 + x0*x1*x2*x4 + x0*x1*x2*x5 + x0*x1*x2*x6 + x0*x1*x2*x7 + x0*x1*x3*x4 + x0*x1*x3*x5 + x0*x1*x3*x6 + x0*x1*x3*x7 + x0*x1*x4*x5 + x0*x1*x4*x6 + x0*x1*x4*x7 + x0*x1*x5*x6 + x0*x1*x5*x7 + x0*x1*x6*x7 + x0*x2*x3*x4 + x0*x2*x3*x5 + x0*x2*x3*x6 + x0*x2*x3*x7 + x0*x2*x4*x5 + x0*x2*x4*x6 + x0*x2*x4*x7 + x0*x2*x5*x6 + x0*x2*x5*x7 + x0*x2*x6*x7 + x0*x3*x4*x5 + x0*x3*x4*x6 + x0*x3*x4*x7 + x0*x3*x5*x6 + x0*x3*x5*x7 + x0*x3*x6*x7 + x0*x4*x5*x6 + x0*x4*x5*x7 + x0*x4*x6*x7 + x0*x5*x6*x7 + x1*x2*x3*x4 + x1*x2*x3*x5 + x1*x2*x3*x6 + x1*x2*x3*x7 + x1*x2*x4*x5 + x1*x2*x4*x6 + x1*x2*x4*x7 + x1*x2*x5*x6 + x1*x2*x5*x7 + x1*x2*x6*x7 + x1*x3*x4*x5 + x1*x3*x4*x6 + x1*x3*x4*x7 + x1*x3*x5*x6 + x1*x3*x5*x7 + x1*x3*x6*x7 + x1*x4*x5*x6 + x1*x4*x5*x7 + x1*x4*x6*x7 + x1*x5*x6*x7 + x2*x3*x4*x5 + x2*x3*x4*x6 + x2*x3*x4*x7 + x2*x3*x5*x6 + x2*x3*x5*x7 + x2*x3*x6*x7 + x2*x4*x5*x6 + x2*x4*x5*x7 + x2*x4*x6*x7 + x2*x5*x6*x7 + x3*x4*x5*x6 + x3*x4*x5*x7 + x3*x4*x6*x7 + x3*x5*x6*x7 + x4*x5*x6*x7"
+
+ELEMENTARY_SYMMETRIC_8_5="x0*x1*x2*x3*x4 + x0*x1*x2*x3*x5 + x0*x1*x2*x3*x6 + x0*x1*x2*x3*x7 + x0*x1*x2*x4*x5 + x0*x1*x2*x4*x6 + x0*x1*x2*x4*x7 + x0*x1*x2*x5*x6 + x0*x1*x2*x5*x7 + x0*x1*x2*x6*x7 + x0*x1*x3*x4*x5 + x0*x1*x3*x4*x6 + x0*x1*x3*x4*x7 + x0*x1*x3*x5*x6 + x0*x1*x3*x5*x7 + x0*x1*x3*x6*x7 + x0*x1*x4*x5*x6 + x0*x1*x4*x5*x7 + x0*x1*x4*x6*x7 + x0*x1*x5*x6*x7 + x0*x2*x3*x4*x5 + x0*x2*x3*x4*x6 + x0*x2*x3*x4*x7 + x0*x2*x3*x5*x6 + x0*x2*x3*x5*x7 + x0*x2*x3*x6*x7 + x0*x2*x4*x5*x6 + x0*x2*x4*x5*x7 + x0*x2*x4*x6*x7 + x0*x2*x5*x6*x7 + x0*x3*x4*x5*x6 + x0*x3*x4*x5*x7 + x0*x3*x4*x6*x7 + x0*x3*x5*x6*x7 + x0*x4*x5*x6*x7 + x1*x2*x3*x4*x5 + x1*x2*x3*x4*x6 + x1*x2*x3*x4*x7 + x1*x2*x3*x5*x6 + x1*x2*x3*x5*x7 + x1*x2*x3*x6*x7 + x1*x2*x4*x5*x6 + x1*x2*x4*x5*x7 + x1*x2*x4*x6*x7 + x1*x2*x5*x6*x7 + x1*x3*x4*x5*x6 + x1*x3*x4*x5*x7 + x1*x3*x4*x6*x7 + x1*x3*x5*x6*x7 + x1*x4*x5*x6*x7 + x2*x3*x4*x5*x6 + x2*x3*x4*x5*x7 + x2*x3*x4*x6*x7 + x2*x3*x5*x6*x7 + x2*x4*x5*x6*x7 + x3*x4*x5*x6*x7"
+
+ELEMENTARY_SYMMETRIC_8_6="x0*x1*x2*x3*x4*x5 + x0*x1*x2*x3*x4*x6 + x0*x1*x2*x3*x4*x7 + x0*x1*x2*x3*x5*x6 + x0*x1*x2*x3*x5*x7 + x0*x1*x2*x3*x6*x7 + x0*x1*x2*x4*x5*x6 + x0*x1*x2*x4*x5*x7 + x0*x1*x2*x4*x6*x7 + x0*x1*x2*x5*x6*x7 + x0*x1*x3*x4*x5*x6 + x0*x1*x3*x4*x5*x7 + x0*x1*x3*x4*x6*x7 + x0*x1*x3*x5*x6*x7 + x0*x1*x4*x5*x6*x7 + x0*x2*x3*x4*x5*x6 + x0*x2*x3*x4*x5*x7 + x0*x2*x3*x4*x6*x7 + x0*x2*x3*x5*x6*x7 + x0*x2*x4*x5*x6*x7 + x0*x3*x4*x5*x6*x7 + x1*x2*x3*x4*x5*x6 + x1*x2*x3*x4*x5*x7 + x1*x2*x3*x4*x6*x7 + x1*x2*x3*x5*x6*x7 + x1*x2*x4*x5*x6*x7 + x1*x3*x4*x5*x6*x7 + x2*x3*x4*x5*x6*x7"
+
+ELEMENTARY_SYMMETRIC_8_7="x0*x1*x2*x3*x4*x5*x6 + x0*x1*x2*x3*x4*x5*x7 + x0*x1*x2*x3*x4*x6*x7 + x0*x1*x2*x3*x5*x6*x7 + x0*x1*x2*x4*x5*x6*x7 + x0*x1*x3*x4*x5*x6*x7 + x0*x2*x3*x4*x5*x6*x7 + x1*x2*x3*x4*x5*x6*x7"
+
+ELEMENTARY_SYMMETRIC_8_8="x0*x1*x2*x3*x4*x5*x6*x7"
+
+
+BCH_21_15_GENERATOR_MATRIX="1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1"
+
+
+BCH_21_6_GENERATOR_MATRIX=" 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1 "
 
 # Section 10.7
 
@@ -1084,7 +1148,22 @@ TEST_RHS="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
 
 AG_2_3_BLOCKS="0,13,22,27,35,41,47,53,55,59,71,76"
 
-LARGE_SET_AG_2_3_NEIGHBOR_SET="129,130,133,134,136,139,141,142,153,154,156,160,165,166,178,179,183,184,185,190,192,194,197,203,204,206,218,221,222,225,227,231,248,251,252,255,256,259,261,262,272,277,279,283,285,287,299,301,303,305,306,309,313,315,319,320,323,325,341,342,343,344,345,349,368,371,375,378,381,383,392,393,397,402,403,405,416,419,421,422,425,426,429,430,440,443,447,449,453,454,464,467,468,473,474,479,490,493,494,497,500,503,513,517,518,520,523,527,536,539,541,542,544,547,548,551,563,566,567,571,572,573,585,589,590,593,595,596,600,601,603,611,614,615,625,629,631,635,637,638,657,659,661,667,668,671,681,683,686,689,691,693,705,706,709,710,712,715,717,718,720,723,724,729,733,735,747,748,750,752,754,757,777,780,781,784,790,791,802,804,807,808,811,814,824,827,828,831,832,835,837,838"
+LARGE_SET_AG_2_3_NEIGHBOR_SET="129,130,133,134,136,\
+139,141,142,153,154,156,160,165,166,178,179,183,184,\
+185,190,192,194,197,203,204,206,218,221,222,225,227,\
+231,248,251,252,255,256,259,261,262,272,277,279,283,\
+285,287,299,301,303,305,306,309,313,315,319,320,323,\
+325,341,342,343,344,345,349,368,371,375,378,381,383,\
+392,393,397,402,403,405,416,419,421,422,425,426,429,\
+430,440,443,447,449,453,454,464,467,468,473,474,479,\
+490,493,494,497,500,503,513,517,518,520,523,527,536,\
+539,541,542,544,547,548,551,563,566,567,571,572,573,\
+585,589,590,593,595,596,600,601,603,611,614,615,625,\
+629,631,635,637,638,657,659,661,667,668,671,681,683,\
+686,689,691,693,705,706,709,710,712,715,717,718,720,\
+723,724,729,733,735,747,748,750,752,754,757,777,780,\
+781,784,790,791,802,804,807,808,811,814,824,827,828,\
+831,832,835,837,838"
 
 
 
@@ -1092,7 +1171,7 @@ LARGE_SET_AG_2_3_NEIGHBOR_SET="129,130,133,134,136,139,141,142,153,154,156,160,1
 
 
 
-PP4= -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -search_control -W -end -problem_label PP4
+PP4=" -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -search_control -W -end -problem_label PP4"
 
 PP4_GROUP1=-subgroup "1,1,1,1, " "21" -group_label "cyclic21"
 
@@ -1224,12 +1303,50 @@ SPREADS_27_ISO_6="\
 # Section 12.3 Packings
 
 
+
+
+
+
+# nice generators, from Michael Epstein:
+
+PGL_4_5_SUBGROUP_3B_ME=-PGL 4 5 \
+	-subgroup_by_generators "3B" 3 1 \
+	"1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2"
+
+PGL_4_5_SUBGROUP_3B_ME_NORMALIZER=-PGL 4 5 \
+	-subgroup_by_generators "normalizer_3B" "5760" 8 \
+	"1,0,0,0,0,4,0,0,0,0,1,0,0,0,0,1, \
+	1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,4, \
+	1,0,0,0,0,4,0,0,0,0,4,0,0,0,0,4, \
+	1,0,0,0,0,1,0,0,0,0,3,0,0,0,0,3, \
+	1,0,0,0,0,3,0,0,0,0,1,0,0,0,0,1, \
+	1,0,0,0,0,1,0,0,0,0,2,4,0,0,2,3, \
+	1,0,0,0,4,4,0,0,0,0,1,0,0,0,0,1, \
+	0,1,0,0,1,0,0,0,0,0,4,0,0,0,0,4," 
+
+PGL_4_5_SUBGROUP_31_ME=-PGL 4 5 \
+	-subgroup_by_generators "31" 31 1 \
+	"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3"
+
+PGL_4_5_SUBGROUP_31_ME_NORMALIZER=-PGL 4 5 \
+	-subgroup_by_generators "normalizer_31" "372" 4 \
+	"1,0,0,0,0,4,0,0,0,0,4,0,0,0,0,4, \
+	1,0,0,0,0,3,0,0,0,0,3,0,0,0,0,3, \
+	1,0,0,0,0,4,0,0,0,0,2,1,0,3,2,4, \
+	1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,3," 
+
+
+
+
+
 # Section 12.4 BLT-Sets
 
 
-BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73"
+BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,\
+29,31,37,41,43,47,49,53,59,61,67,71,73"
 
-BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,9,8,7,10,6,10,8,8,9,5,6,8,5"
+BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,\
+9,8,7,10,6,10,8,8,9,5,6,8,5"
 
 
 
@@ -1265,7 +1382,13 @@ HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, \
 
 
 
-HIRSCHFELD_STAB_GENERATORS="1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1, 1,0,0,0,0,2,0,0,0,0,2,0,0,0,0,1,0, 1,0,0,0,0,3,0,0,0,0,3,0,1,0,0,1,0, 1,0,0,0,0,1,0,0,1,1,1,0,0,1,0,1,1, 1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0, 0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0"
+HIRSCHFELD_STAB_GENERATORS="\
+1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1, \
+1,0,0,0,0,2,0,0,0,0,2,0,0,0,0,1,0, \
+1,0,0,0,0,3,0,0,0,0,3,0,1,0,0,1,0, \
+1,0,0,0,0,1,0,0,1,1,1,0,0,1,0,1,1, \
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0, \
+0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0"
 
 
 SUZUKI_8_GENERATORS="\
@@ -1304,6 +1427,18 @@ FILE_24_3_TFC_INC="24 24 72\
 \n-1 3"
 
 
+# Section 15.5 
+
+# consider the binary code with generator matrix:
+# 1 0 1
+# 0 1 1
+
+CODE_N3_K2_Q2_GENMA="1,0,1, 0,1,1"
+
+CODE_N6_K3_Q2_GENMA="\
+111100\
+110010\
+101001"
 
 
 
@@ -1389,9 +1524,13 @@ COLOR_TURQUOISE=\
 
 MONKEY_SADDLE_CUBIC="1,0,0,0,-3,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0"
 
-ECKARDT_CUBIC_DEFORM1_LEX="0, 10, 0, -8, 10, 25, 2, 0, -20, -8, -20, -10, -24, 10, -2, 12, 0, -8, 8, 16" 
+ECKARDT_CUBIC_DEFORM1_LEX="0, 10, 0, -8, 10, \
+25, 2, 0, -20, -8, -20, -10, -24, 10, -2, 12, \
+0, -8, 8, 16" 
 
-ECKARDT_CUBIC_DEFORM2_LEX="0, -5, 0, -5, -5, 10, -1, 0, 10, 4, 10, 5, 3, -5, 1, -6, 0, -5, -4, 1"
+ECKARDT_CUBIC_DEFORM2_LEX="0, -5, 0, -5, -5, \
+10, -1, 0, 10, 4, 10, 5, 3, -5, 1, -6, 0, -5, \
+-4, 1"
 
 KUMMER_QUARTIC_LEX_35="-2,0,0,0,2,0,0,2,0,2,0,0,\
 0,0,0,0,0,0,0,0,-2,0,0,2,0,2,0,0,0,0,-2,0,2,0,-2"
@@ -1474,109 +1613,109 @@ T33=0.
 
 
 CLEBSCH_CUBICS=\
-				push b push b mult push d push c push m mult add mult \
-				push b push c push d push d push m mult mult add mult \
-				push a push d push d push m add mult mult add add \
-				push a push c push m mult add mult \
-				store c001 \
-				push b push d mult \
-				push b push 1 push m push c mult add mult \
-				push d push a push 1 push m mult add mult add \
-				push m push a mult add push c add \
-				push c push m push a mult add \
-				mult mult \
-				store c002 \
-				push b \
-				push d push c push a push m mult add mult \
-				push c push a push m push 1 mult add mult add mult \
-				push a push d mult push c push 1 push m mult add mult \
-				push m mult add \
-				push a push c push m mult add mult \
-				store c011 \
-				push b push b push c mult mult \
-				push 1 push d push m mult add mult \
-				push a push b mult push c push d push d push m mult mult add mult \
-				push m mult add \
-				push a push d mult push c push d push m mult add mult add \
-				push a push c push m mult add mult \
-				store c012 \
-				push m \
-				push b push d push m mult add push c mult \
-				push d push b push 1 push m mult add mult push m mult add push a mult \
-				push b push c mult push d push 1 push m mult add mult add mult \
-				push b push d push m mult add mult \
-				store d001 \
-				push m \
-				push d push c push m mult add push a push a mult mult \
-				push c push c mult push d push m mult add push a mult add \
-				push m push b push c mult mult push c push 1 push m mult add mult add mult \
-				push b push d push m mult add mult \
-				store d011 \
-				push m \
-				push c push d mult push d push m mult add push a push a mult mult \
-				push c push c mult push d push m mult add push a push b push m mult mult mult add \
-				push b push d push c push m mult add mult push c push m mult mult add \
-				push b push d push m mult add mult mult \
-				store d012 \
-				push d push 1 push m mult add push a mult push m push b mult push 1 add push c mult add \
-				push b add push m push d mult add \
-				push a push c mult mult \
-				push b push d push m mult add mult \
-				store d112 \
-				push m \
-				push b push d push m mult add push c mult push d push b push 1 push m mult add mult \
-				push m mult add push a mult push b push c mult push d push 1 push m mult add mult add \
-				push b push d push m mult add mult mult \
-				store m002 \
-				push m \
-				push d push c push m mult add push a push a mult mult \
-				push c push c mult push d push m mult add push a mult add \
-				push b push c push m mult mult push c push 1 push m mult add mult add \
-				push b push d push m mult add mult mult \
-				store m012 \
-				push m\
-				push c push d mult push d push m mult add push a push a mult mult \
-				push m push c push c mult push d push m mult add push a push b mult mult mult add \
-				push m push b push d push c push m mult add push c mult mult mult add \
-				push b push d push m mult add mult mult \
-				store m022 \
-				push d push 1 push m mult add push a mult \
-				push m push b mult push 1 add push c mult add \
-				push b add push m push d mult add \
-				push a push c mult mult \
-				push b push d push m mult add mult \
-				store m122 \
-				push m push a mult push c add push d mult push c push a push 1 push m mult add mult add \
-				push b mult \
-				push m push a push d mult mult push c push 1 push m mult add mult add \
-				push b push d push m mult add mult \
-				store n002 \
-				push m \
-				push c push d push m mult add push b mult push m push d push c push 1 push m mult add mult mult add \
-				push a mult \
-				push b push c mult push d push 1 push m mult add mult add mult \
-				push a push b push c push m mult push d push m mult add add add mult \
-				store n012 \
-				push c push d push m mult add push b mult \
-				push m push d push c push 1 push m mult add mult mult add \
-				push a mult \
-				push b push c mult push d push 1 push m mult add mult add \
-				push a push d mult push m push b push c mult mult add mult \
-				store n022 \
-				push m \
-				push c push d push m mult add push b mult \
-				push m push d push c push 1 push m mult add mult mult add \
-				push a mult \
-				push b push c mult push d push 1 push m mult add mult add \
-				push m push a mult push c add mult mult \
-				store n112 \
-				push m \
-				push c push d push m mult add push b mult \
-				push m push d push c push 1 push m mult add mult mult add \
-				push a mult \
-				push b push c mult push d push 1 push m mult add mult add \
-				push a push d mult push m push b push c mult mult add mult mult \
-				store n122 
+	push b push b mult push d push c push m mult add mult \
+	push b push c push d push d push m mult mult add mult \
+	push a push d push d push m add mult mult add add \
+	push a push c push m mult add mult \
+	store c001 \
+	push b push d mult \
+	push b push 1 push m push c mult add mult \
+	push d push a push 1 push m mult add mult add \
+	push m push a mult add push c add \
+	push c push m push a mult add \
+	mult mult \
+	store c002 \
+	push b \
+	push d push c push a push m mult add mult \
+	push c push a push m push 1 mult add mult add mult \
+	push a push d mult push c push 1 push m mult add mult \
+	push m mult add \
+	push a push c push m mult add mult \
+	store c011 \
+	push b push b push c mult mult \
+	push 1 push d push m mult add mult \
+	push a push b mult push c push d push d push m mult mult add mult \
+	push m mult add \
+	push a push d mult push c push d push m mult add mult add \
+	push a push c push m mult add mult \
+	store c012 \
+	push m \
+	push b push d push m mult add push c mult \
+	push d push b push 1 push m mult add mult push m mult add push a mult \
+	push b push c mult push d push 1 push m mult add mult add mult \
+	push b push d push m mult add mult \
+	store d001 \
+	push m \
+	push d push c push m mult add push a push a mult mult \
+	push c push c mult push d push m mult add push a mult add \
+	push m push b push c mult mult push c push 1 push m mult add mult add mult \
+	push b push d push m mult add mult \
+	store d011 \
+	push m \
+	push c push d mult push d push m mult add push a push a mult mult \
+	push c push c mult push d push m mult add push a push b push m mult mult mult add \
+	push b push d push c push m mult add mult push c push m mult mult add \
+	push b push d push m mult add mult mult \
+	store d012 \
+	push d push 1 push m mult add push a mult push m push b mult push 1 add push c mult add \
+	push b add push m push d mult add \
+	push a push c mult mult \
+	push b push d push m mult add mult \
+	store d112 \
+	push m \
+	push b push d push m mult add push c mult push d push b push 1 push m mult add mult \
+	push m mult add push a mult push b push c mult push d push 1 push m mult add mult add \
+	push b push d push m mult add mult mult \
+	store m002 \
+	push m \
+	push d push c push m mult add push a push a mult mult \
+	push c push c mult push d push m mult add push a mult add \
+	push b push c push m mult mult push c push 1 push m mult add mult add \
+	push b push d push m mult add mult mult \
+	store m012 \
+	push m\
+	push c push d mult push d push m mult add push a push a mult mult \
+	push m push c push c mult push d push m mult add push a push b mult mult mult add \
+	push m push b push d push c push m mult add push c mult mult mult add \
+	push b push d push m mult add mult mult \
+	store m022 \
+	push d push 1 push m mult add push a mult \
+	push m push b mult push 1 add push c mult add \
+	push b add push m push d mult add \
+	push a push c mult mult \
+	push b push d push m mult add mult \
+	store m122 \
+	push m push a mult push c add push d mult push c push a push 1 push m mult add mult add \
+	push b mult \
+	push m push a push d mult mult push c push 1 push m mult add mult add \
+	push b push d push m mult add mult \
+	store n002 \
+	push m \
+	push c push d push m mult add push b mult push m push d push c push 1 push m mult add mult mult add \
+	push a mult \
+	push b push c mult push d push 1 push m mult add mult add mult \
+	push a push b push c push m mult push d push m mult add add add mult \
+	store n012 \
+	push c push d push m mult add push b mult \
+	push m push d push c push 1 push m mult add mult mult add \
+	push a mult \
+	push b push c mult push d push 1 push m mult add mult add \
+	push a push d mult push m push b push c mult mult add mult \
+	store n022 \
+	push m \
+	push c push d push m mult add push b mult \
+	push m push d push c push 1 push m mult add mult mult add \
+	push a mult \
+	push b push c mult push d push 1 push m mult add mult add \
+	push m push a mult push c add mult mult \
+	store n112 \
+	push m \
+	push c push d push m mult add push b mult \
+	push m push d push c push 1 push m mult add mult mult add \
+	push a mult \
+	push b push c mult push d push 1 push m mult add mult add \
+	push a push d mult push m push b push c mult mult add mult mult \
+	store n122 
 
 
 ###############################################################################
@@ -5880,7 +6019,7 @@ surface_q13_Eckardt:
 
 surface_q13_Eckardt_on_tritangent_planes:
 	$(ORBITER) -v 2 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-draw_options -embedded -end \
 		-define F -finite_field -q 13 -end \
 		-define gens -vector -field F \
@@ -5924,7 +6063,7 @@ surface_q13_Eckardt_on_tritangent_planes:
 
 Hirschfeld_stab_projectivity_group:
 	$(ORBITER) -v 4 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define G -linear_group -PGGL 4 4 \
 			-subgroup_by_generators "Hirschfeld_Stab" \
 			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
@@ -6434,7 +6573,7 @@ PGGL_2_4_export_magma:
 
 Hirschfeld_stab_export_magma:
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 4 \
 			-compute_related_fields \
 		-end \
@@ -6517,7 +6656,7 @@ PGL_8_2_classes:
 
 Hirschfeld_stab_classes:
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define G -linear_group -PGGL 4 4 \
 			-subgroup_by_generators "Hirschfeld_Stab" \
 			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
@@ -6527,7 +6666,7 @@ Hirschfeld_stab_classes:
 			-classes \
 		-end
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define G -linear_group -PGGL 4 4 \
 			-subgroup_by_generators "Hirschfeld_Stab" \
 			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
@@ -6727,7 +6866,7 @@ PGOm_6_2_classes:
 
 PGOm_6_2_Class_2A:
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGOm 6 F -end \
 		-with G -do \
@@ -6741,7 +6880,7 @@ PGOm_6_2_Class_2A:
 
 PGOm_6_2_Class_2A_print:
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define PGOm_6_2_Class2A -vector \
 			-file $(FILE_NAME_PGOM_6_2_CLASS_2A) -end \
 		-define F -finite_field -q 2 -end \
@@ -6761,7 +6900,7 @@ PGOm_6_2_Class_2A_print:
 
 PGOm_6_2_Class_2A_centralizer:
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGOm 6 F -end \
 		-with G -do \
@@ -6805,7 +6944,7 @@ test_5_8:
 
 Hirschfeld_stab_export_gap:
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define G -linear_group -PGGL 4 4 \
 			-subgroup_by_generators "Hirschfeld_Stab" \
 			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
@@ -7079,7 +7218,7 @@ T4r1_orbits_draw:
 
 T4r1_orbits_4:
 	$(ORBITER) -v 4 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label T4r1 -W \
 			-draw_options -end \
@@ -7146,7 +7285,7 @@ test_6_2:
 
 poset_of_4subsets:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label poset_4 \
 			-W -depth 4 \
@@ -7177,7 +7316,7 @@ poset_of_4subsets_draw:
 
 poset_of_5subsets:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label poset_5 \
 			-W -depth 5 \
@@ -7210,7 +7349,7 @@ poset_of_5subsets_draw:
 
 Symmetric_4_on_pairs_poset:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label Sym4_on2 \
 			-W -depth 6 \
@@ -7233,7 +7372,7 @@ Symmetric_4_on_pairs_poset:
 
 V_3_2_trivial:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label V_3_2_trivial \
 			-W -depth 3 \
@@ -7256,7 +7395,7 @@ V_3_2_trivial:
 
 V_4_2_trivial:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label V_4_2_trivial \
 			-W -depth 3 \
@@ -7302,7 +7441,7 @@ test_6_3:
 
 PG_2_2_subsets:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_3_2 \
 			-depth 7 \
@@ -7336,7 +7475,7 @@ PG_2_2_subsets:
 
 PG_3_2_subsets:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_4_2 \
 			-depth 15 \
@@ -7358,7 +7497,7 @@ PG_3_2_subsets:
 
 PGL_3_2_singer:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_3_2_singer_1 \
 			-W -depth 7 \
@@ -7381,7 +7520,7 @@ PGL_3_2_singer:
 
 PGL_3_2_on_lines:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_3_2_lines \
 			-W -depth 7 \
@@ -7404,7 +7543,7 @@ PGL_3_2_on_lines:
 
 PGL_2_5_on_subsets:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_2_5 \
 			-W -depth 6 \
@@ -7422,7 +7561,7 @@ PGL_2_5_on_subsets:
 
 PGL_2_7_on_subsets:
 	$(ORBITER) -v 10 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_2_7 \
 			-W -depth 8 \
@@ -7440,7 +7579,7 @@ PGL_2_7_on_subsets:
 
 PGGL_2_8_on_subsets:
 	$(ORBITER) -v 10 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_8 \
 			-W -depth 9 \
@@ -7459,7 +7598,7 @@ PGGL_2_8_on_subsets:
 
 PGGL_2_9_on_subsets:
 	$(ORBITER) -v 10 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_9 \
 			-W -depth 10 \
@@ -7478,7 +7617,7 @@ PGGL_2_9_on_subsets:
 
 PGL_2_11_on_subsets:
 	$(ORBITER) -v 10 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_2_11 \
 			-W -depth 12 \
@@ -7498,7 +7637,7 @@ PGL_2_11_on_subsets:
 
 PGGL_2_16_on_subsets:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_16 \
 			-W -depth 10 \
@@ -7517,7 +7656,7 @@ PGGL_2_16_on_subsets:
 
 PGGL_2_32_on_subsets:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_32 \
 			-W -depth 8 \
@@ -7536,7 +7675,7 @@ PGGL_2_32_on_subsets:
 
 PG_3_4_subsets:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_4_4 \
 			-depth 5 \
@@ -7558,7 +7697,7 @@ PG_3_4_subsets:
 
 PGGL_2_9_orbits:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_9 -W -depth 5 \
 			-draw_options -radius 200 -end \
@@ -7579,7 +7718,7 @@ PGGL_2_9_orbits:
 
 PGO_5_2_on_subsets:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGO_5_2 \
 			-depth 15 \
@@ -7621,7 +7760,7 @@ test_6_4:
 
 subspaces_Op_4_2:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-draw_options -radius 200 -end \
 			-problem_label Op_4_2 -W -depth 4 \
@@ -7641,7 +7780,7 @@ subspaces_Op_4_2:
 
 PGL_4_2_on_subspaces:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_4_2 \
 			-W -depth 4 \
@@ -7662,7 +7801,7 @@ PGL_4_2_on_subspaces:
 
 PGL_4_2_singer_on_subspaces:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-draw_options -end \
 			-problem_label PGL_4_2_singer \
@@ -7684,7 +7823,7 @@ PGL_4_2_singer_on_subspaces:
 
 PGL_8_2_singer_on_subspaces:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-draw_options -radius 150 -end \
 			-problem_label PGL_8_2_singer \
@@ -7704,7 +7843,7 @@ PGL_8_2_singer_on_subspaces:
 
 Op_6_2_orbits_on_subspaces:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-draw_options -radius 200 -end \
 			-problem_label Op_6_2 -W \
@@ -7719,7 +7858,7 @@ Op_6_2_orbits_on_subspaces:
 
 Op_6_3_orbits_on_subspaces:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-draw_options -radius 200 -end \
 			-problem_label Op_6_3 -W \
@@ -7736,7 +7875,7 @@ Op_6_3_orbits_on_subspaces:
 
 Op_6_11_orbits_on_subspaces:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-draw_options -radius 200 -end \
 			-problem_label Op_6_11 -W \
@@ -7753,7 +7892,7 @@ Op_6_11_orbits_on_subspaces:
 
 Op_8_2_orbits_on_subspaces:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-draw_options -radius 200 -end \
 			-problem_label Op_8_2 -W -depth 8 \
@@ -7766,7 +7905,7 @@ Op_8_2_orbits_on_subspaces:
 
 PGO_7_2_on_subspaces:
 	$(ORBITER) -v 6 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-draw_options -radius 200 -end \
 			-problem_label O_7_2 \
@@ -7795,7 +7934,7 @@ test_6_5:
 
 C6_on_partition:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label C6 \
 			-depth 2 \
@@ -7886,7 +8025,7 @@ hyperoval_4_classify:
 
 hyperoval_8_classify:
 	$(ORBITER) -v 4 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define Control -poset_classification_control \
@@ -7914,7 +8053,7 @@ hyperoval_8_classify:
 
 hyperoval_16_classify:
 	$(ORBITER) -v 4 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define Control -poset_classification_control \
@@ -8137,7 +8276,7 @@ test_6_7:
 
 cubic_curves_PG_2_4:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 3 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define Control -poset_classification_control \
@@ -9083,7 +9222,7 @@ PG_2_13_rank_lines:
 
 PG_2_13_orbits_on_lines:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label PGL_3_13 \
 			-depth 4 \
@@ -9152,7 +9291,7 @@ quartic_curves_19_report:
 
 
 quartic_curve_q9_1:
-	$(ORBITER_PATH)orbiter.out -v 3 \
+	$(ORBITER) -v 3 \
 		-define F -finite_field -q 9 -end \
 		-define P2 -projective_space -n 2 -field F -end \
 		-define P3 -projective_space -n 3 -field F -end \
@@ -9178,7 +9317,7 @@ quartic_curve_q9_1:
 
 
 quartic_curves_q7:
-	$(ORBITER_PATH)orbiter.out -v 3 \
+	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
@@ -9194,7 +9333,7 @@ quartic_curves_q7:
 		-print_symbols
 
 quartic_curves_q13:
-	$(ORBITER_PATH)orbiter.out -v 3 \
+	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
@@ -9210,7 +9349,7 @@ quartic_curves_q13:
 		-print_symbols
 
 quartic_curves_q13_combine:
-	$(ORBITER_PATH)orbiter.out -v 3 \
+	$(ORBITER) -v 3 \
 		-csv_file_concatenate_from_mask $(NB_CUBIC_SURFACES_Q13) \
 			surface_catalogue_q13_iso%ld_quartics.csv \
 			quartics_q13.csv
@@ -9247,7 +9386,7 @@ quartic_curves_q13_classify:
 
 
 quartic_curves_q19:
-	$(ORBITER_PATH)orbiter.out -v 3 \
+	$(ORBITER) -v 3 \
 		-define F -finite_field -q 19 -end \
 		-define P -projective_space -n 3 -field F -end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
@@ -9264,7 +9403,7 @@ quartic_curves_q19:
 
 
 quartic_curves_q19_combine:
-	$(ORBITER_PATH)orbiter.out -v 3 \
+	$(ORBITER) -v 3 \
 		-csv_file_concatenate_from_mask $(NB_CUBIC_SURFACES_Q19) \
 			surface_catalogue_q19_iso%ld_quartics.csv \
 			quartics_q19.csv
@@ -10198,7 +10337,7 @@ random_k_subsets_PG_2_11:
 
 line_type_in_PG_2_11:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 11 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define C -combinatorial_objects \
@@ -11925,6 +12064,8 @@ CRC_F256_roots_771:
 
 
 # alfa:
+# 255 = 3 * 5 * 17
+# 771 = 3 * 257
 
 CRC_F256_BCH_code_d2:
 	$(ORBITER) -v 2 \
@@ -12089,6 +12230,138 @@ F256_BCH_code_d16_error:
 
 
 
+# delta:
+# 15 = 3 * 5
+# 51 = 3 * 17
+
+F_256:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	pdflatex GF_256.tex
+	$(OPEN) GF_256.pdf
+
+
+# subfield F16: X^4+X+1
+
+
+# F16: X^4 + X3 + 1 not compatible with F_256 and x mapsto x^17
+
+CRC_F_16:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	pdflatex GF_16_poly19.tex
+	open GF_16_poly19.pdf
+
+nth_roots_256:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -end \
+		-with F -do -finite_field_activity \
+			-nth_roots 51 \
+		-end
+	pdflatex Nth_roots_q2_n51.tex
+	$(OPEN) Nth_roots_q2_n51.pdf
+
+
+CRC_F16_roots_51:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-with F -do -finite_field_activity \
+			-nth_roots 51 \
+		-end
+	pdflatex Nth_roots_q16_n51.tex
+	open Nth_roots_q16_n51.pdf
+
+CRC_F16_BCH_code_d3:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define C -code -field F \
+			-BCH 51 3 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma BCH_q16_n51_d3.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_checkma BCH_q16_n51_d3_check.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_checkma_as_projective_set BCH_q16_n51_d3_check_ranks.csv \
+		-end
+	#pdflatex BCH_codes_q256_n771_d2.tex
+	#$(OPEN) BCH_codes_q256_n771_d2.pdf
+
+#BCH_q16_n51_d3_check.csv
+#BCH_q16_n51_d3_check_ranks.csv
+
+CRC_F16_BCH_code_d3_mindist_dual:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define v -vector -file BCH_q16_n51_d3_check.csv \
+			-field F -format 4 -file BCH_q16_n51_d3_check.csv -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
+		-end
+
+CRC_F16_BCH_code_d3_dual_weight_enumerator:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define v -vector -file BCH_q16_n51_d3_check.csv \
+			-field F -format 4 -file BCH_q16_n51_d3_check.csv -end \
+		-define C -code -field F \
+			-generator_matrix v \
+			-end \
+		-with C -do \
+		-coding_theoretic_activity \
+			-weight_enumerator \
+		-end
+
+#weight enumerator:
+#( 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3060, 0, 18360, 0, 25755, 0, 18360, 0 )
+#1y^{51} + 3060x^{44}y^7 + 18360x^{46}y^5 + 25755x^{48}y^3 + 18360x^{50}y
+# 1 + 3060 + 18360 + 25755 + 18360 = 65536 = 2^16 = 16^4
+
+
+CRC_F16_BCH_code_d3_projective_set:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define v -vector -file BCH_q16_n51_d3_check_ranks.csv \
+			-file BCH_q16_n51_d3_check_ranks.csv -end \
+
+CRC_BCH_Q16_N51_D3_PROJECTIVE_SET="1900, 2703, 2347, 1653, 232, 3681, 752, 511, 3916, 1222, 632, 2014, 3951, 4006, 2198, 3258, 2804, 3771, 3120, 2132, 3754, 2640, 1995, 943, 3319, 1748, 36, 546, 1198, 4296, 4013, 2118, 2234, 3034, 2441, 4085, 4326, 318, 1180, 2488, 4229, 765, 1470, 2306, 666, 3454, 1763, 0, 1, 2, 3 "
+
+
+
+CRC_F16_BCH_code_d3_macwilliams:
+	$(ORBITER) -v 2 \
+		-make_macwilliams_system 51 4 16
+
+
+
+CRC_POLY_DELTA_DENSE="1, 2, 13, 5, 1"
+#create_BCH_code::init Q=X^{4} + 5X^{3} + 13X^{2} + 2X + 1
+#create_BCH_code::init BCH_POLYNOMIAL_F16="X^4+5*X^3+13*X^2+2*X+1"
+
+CRC_F16_BCH_write_code_for_division_Delta:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define A -vector -field F -sparse 52 "1,51,1,0" -end \
+		-define B -vector -field F -dense $(CRC_POLY_DELTA_DENSE) -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-write_code_for_division \
+			delta A B \
+		-end
+	g++ crc_delta.cpp -o crc_delta.out
+	./crc_delta.out
+
+#g++ crc_delta.cpp -o crc_delta.out
+#./crc_delta.out
+#0,0,0,0,0,
+
+
+
 
 crc_encode_16:
 	$(ORBITER) -v 3 \
@@ -12207,7 +12480,27 @@ crc_test_bravo_10M_3:
 		-crc_test "bravo" $(TEN_MILLION) 3
 
 #crc_codes::test_crc_object Nb_test = 10000000 k = 3 nb_undetected=0, time=0:27
+#23754:crc_codes::test_crc_object Nb_test = 10000000 k = 552 nb_undetected=1, time=11:54
+#12596,0,( 737, 417, 171, 634, 158, 30, 480, 688, 94, 739, 147, 694, 724, 741, 51, 411, 753, 622, 592, 667, 25, 709, 55, 450, 255, 744, 28, 718, 82, 740, 372, 144, 435, 505, 478, 233, 325, 231, 27, 518, 492, 350, 621, 468, 297, 141, 735, 338, 227, 434, 54, 180, 390, 245, 301, 617, 423, 408, 521, 42, 697, 719, 668, 618, 107, 746, 441, 376, 705, 353, 368, 254, 393, 291, 762, 188, 506, 580, 419, 525, 500, 652, 433, 130, 52, 212, 511, 191, 182, 100, 676, 706, 248, 268, 365, 626, 303, 5, 490, 524, 237, 210, 326, 619, 485, 767, 432, 721, 391, 650, 88, 627, 177, 700, 354, 682, 38, 360, 70, 636, 609, 766, 203, 7, 369, 584, 475, 84, 87, 251, 680, 479, 256, 121, 473, 604, 614, 265, 585, 40, 458, 551, 163, 661, 358, 610, 349, 748, 371, 310, 31, 136, 153, 649, 662, 547, 120, 324, 162, 671, 62, 725, 603, 645, 670, 554, 364, 127, 312, 708, 386, 286, 532, 58, 658, 366, 74, 442, 699, 707, 164, 102, 593, 657, 293, 638, 370, 716, 454, 126, 204, 232, 637, 409, 491, 666, 402, 209, 639, 560, 578, 467, 24, 629, 93, 453, 352, 425, 406, 37, 684, 189, 648, 186, 345, 691, 673, 193, 264, 247, 714, 267, 540, 215, 134, 729, 588, 295, 294, 241, 577, 398, 722, 46, 214, 60, 640, 770, 477, 106, 97, 381, 280, 675, 418, 29, 385, 269, 151, 665, 109, 514, 305, 377, 95, 544, 570, 552, 128, 152, 599, 397, 415, 149, 451, 738, 743, 302, 140, 273, 103, 284, 396, 726, 327, 221, 288, 200, 344, 285, 112, 542, 22, 313, 263, 218, 61, 157, 362, 559, 507, 243, 664, 206, 550, 242, 244, 230, 145, 761, 413, 679, 392, 447, 17, 330, 156, 279, 752, 487, 731, 651, 388, 535, 154, 502, 108, 452, 363, 240, 569, 564, 713, 704, 495, 589, 83, 15, 483, 261, 537, 595, 219, 573, 516, 252, 199, 337, 616, 339, 486, 555, 653, 728, 137, 216, 56, 211, 734, 449, 44, 26, 348, 426, 91, 139, 238, 539, 444, 754, 672, 695, 543, 659, 601, 654, 742, 300, 69, 115, 756, 122, 582, 374, 236, 656, 533, 755, 512, 594, 404, 65, 611, 316, 703, 361, 318, 80, 92, 12, 720, 378, 763, 228, 429, 623, 608, 712, 33, 612, 185, 747, 11, 620, 78, 234, 202, 165, 498, 173, 160, 494, 768, 75, 306, 482, 641, 53, 222, 379, 460, 258, 567, 50, 531, 548, 207, 424, 320, 383, 124, 757, 249, 10, 405, 575, 597, 587, 341, 328, 336, 513, 317, 172, 681, 169, 187, 430, 351, 523, 81, 553, 389, 496, 689, 461, 607, 359, 436, 105, 229, 8, 101, 176, 663, 43, 701, 356, 630, 562, 678, 272, 224, 387, 271, 311, 456, 530, 401, 278, 239, 520, 529, 287, 343, 59, 367, 342, 21, 503, 420, 466, 322, 146, 504, 563, 196, 545, 558, 161, 394, 257, 49, 99, 598, 6, 77, 143, 68, 118, 133, 690, 410, 235, 536, 48, 205, 270, 445, 283, 198, 660, 90, 47, 57, 727, 41, 463, 76, 581, 576, 192, 250, 686, 509, 34, 175, 246, 400, 168, 111, 334, 403, 517, 677, 373, 497, 431, 470, 501, 174, 225 ),( 100, 202, 178, 171, 102, 243, 43, 238, 132, 200, 126, 107, 61, 252, 150, 5, 18, 51, 161, 248, 230, 166, 207, 48, 138, 132, 221, 248, 228, 42, 126, 117, 253, 85, 133, 165, 56, 125, 224, 92, 223, 129, 108, 179, 197, 224, 163, 241, 196, 207, 53, 73, 183, 98, 172, 7, 65, 90, 35, 15, 59, 219, 95, 41, 93, 52, 51, 19, 205, 78, 66, 6, 218, 47, 109, 228, 45, 134, 141, 173, 225, 93, 194, 5, 164, 100, 199, 10, 118, 30, 163, 110, 152, 247, 212, 214, 146, 104, 164, 7, 117, 87, 129, 159, 235, 129, 233, 224, 72, 250, 167, 128, 208, 220, 150, 195, 40, 168, 73, 21, 98, 185, 128, 27, 30, 74, 251, 134, 186, 40, 109, 138, 181, 202, 137, 86, 72, 230, 117, 18, 123, 180, 10, 23, 122, 47, 241, 16, 193, 71, 189, 203, 212, 68, 241, 143, 191, 62, 228, 255, 82, 12, 178, 134, 161, 178, 251, 119, 66, 209, 33, 32, 17, 124, 47, 96, 191, 20, 10, 4, 82, 36, 65, 36, 164, 113, 230, 30, 33, 176, 75, 54, 130, 25, 171, 227, 1, 41, 182, 164, 87, 232, 210, 74, 161, 84, 24, 187, 106, 106, 52, 153, 247, 152, 252, 245, 182, 253, 213, 203, 45, 168, 193, 190, 42, 105, 201, 1, 211, 224, 153, 189, 89, 187, 59, 238, 53, 95, 105, 103, 24, 2, 62, 250, 57, 70, 68, 110, 45, 45, 226, 254, 194, 103, 186, 140, 209, 1, 37, 87, 15, 200, 26, 22, 216, 251, 175, 137, 33, 228, 132, 152, 86, 179, 106, 68, 69, 49, 202, 146, 67, 168, 130, 223, 55, 234, 177, 88, 146, 195, 100, 176, 210, 177, 61, 161, 1, 58, 5, 191, 30, 49, 183, 83, 125, 13, 170, 211, 93, 110, 219, 93, 246, 120, 169, 97, 206, 86, 241, 208, 195, 199, 53, 31, 133, 253, 181, 247, 192, 209, 19, 159, 175, 39, 247, 154, 12, 225, 43, 231, 198, 83, 125, 33, 175, 79, 242, 224, 150, 251, 213, 125, 155, 230, 61, 109, 32, 239, 227, 40, 8, 133, 186, 118, 232, 157, 218, 41, 24, 168, 32, 205, 172, 216, 36, 94, 179, 37, 212, 13, 35, 171, 16, 171, 39, 69, 241, 165, 62, 91, 136, 4, 227, 168, 53, 6, 226, 251, 58, 251, 38, 234, 245, 255, 168, 119, 169, 47, 179, 223, 28, 32, 17, 185, 49, 44, 196, 122, 89, 116, 157, 223, 252, 204, 40, 119, 89, 8, 7, 178, 235, 52, 12, 51, 217, 60, 104, 100, 59, 111, 14, 244, 49, 223, 225, 245, 187, 61, 242, 174, 29, 145, 172, 177, 131, 188, 157, 76, 104, 244, 94, 39, 96, 246, 131, 77, 255, 70, 211, 201, 166, 105, 68, 129, 4, 80, 20, 89, 58, 222, 159, 208, 82, 255, 245, 121, 210, 149, 202, 105, 212, 42, 35, 188, 3, 121, 23, 139, 50, 24, 224, 20, 140, 119, 55, 118, 53, 155, 19, 70, 138, 178, 202, 153, 78, 44, 90, 109, 32, 253, 64, 130, 238, 243, 87, 12, 204, 63, 116, 163, 82, 25, 14, 31, 197, 193, 203, 235, 79, 86, 118, 118, 88, 190, 26, 55, 179, 156, 153, 89, 227, 221 )
+#crc_codes::test_crc_object Nb_test = 10000000 k = 552 nb_undetected=1, time=11:54
+#crc_codes::test_crc_object done
+#interface_coding_theory::worker done
 
+ERROR_POLY_BRAVO_COEFF="737, 417, 171, 634, 158, 30, 480, 688, 94, 739, 147, 694, 724, 741, 51, 411, 753, 622, 592, 667, 25, 709, 55, 450, 255, 744, 28, 718, 82, 740, 372, 144, 435, 505, 478, 233, 325, 231, 27, 518, 492, 350, 621, 468, 297, 141, 735, 338, 227, 434, 54, 180, 390, 245, 301, 617, 423, 408, 521, 42, 697, 719, 668, 618, 107, 746, 441, 376, 705, 353, 368, 254, 393, 291, 762, 188, 506, 580, 419, 525, 500, 652, 433, 130, 52, 212, 511, 191, 182, 100, 676, 706, 248, 268, 365, 626, 303, 5, 490, 524, 237, 210, 326, 619, 485, 767, 432, 721, 391, 650, 88, 627, 177, 700, 354, 682, 38, 360, 70, 636, 609, 766, 203, 7, 369, 584, 475, 84, 87, 251, 680, 479, 256, 121, 473, 604, 614, 265, 585, 40, 458, 551, 163, 661, 358, 610, 349, 748, 371, 310, 31, 136, 153, 649, 662, 547, 120, 324, 162, 671, 62, 725, 603, 645, 670, 554, 364, 127, 312, 708, 386, 286, 532, 58, 658, 366, 74, 442, 699, 707, 164, 102, 593, 657, 293, 638, 370, 716, 454, 126, 204, 232, 637, 409, 491, 666, 402, 209, 639, 560, 578, 467, 24, 629, 93, 453, 352, 425, 406, 37, 684, 189, 648, 186, 345, 691, 673, 193, 264, 247, 714, 267, 540, 215, 134, 729, 588, 295, 294, 241, 577, 398, 722, 46, 214, 60, 640, 770, 477, 106, 97, 381, 280, 675, 418, 29, 385, 269, 151, 665, 109, 514, 305, 377, 95, 544, 570, 552, 128, 152, 599, 397, 415, 149, 451, 738, 743, 302, 140, 273, 103, 284, 396, 726, 327, 221, 288, 200, 344, 285, 112, 542, 22, 313, 263, 218, 61, 157, 362, 559, 507, 243, 664, 206, 550, 242, 244, 230, 145, 761, 413, 679, 392, 447, 17, 330, 156, 279, 752, 487, 731, 651, 388, 535, 154, 502, 108, 452, 363, 240, 569, 564, 713, 704, 495, 589, 83, 15, 483, 261, 537, 595, 219, 573, 516, 252, 199, 337, 616, 339, 486, 555, 653, 728, 137, 216, 56, 211, 734, 449, 44, 26, 348, 426, 91, 139, 238, 539, 444, 754, 672, 695, 543, 659, 601, 654, 742, 300, 69, 115, 756, 122, 582, 374, 236, 656, 533, 755, 512, 594, 404, 65, 611, 316, 703, 361, 318, 80, 92, 12, 720, 378, 763, 228, 429, 623, 608, 712, 33, 612, 185, 747, 11, 620, 78, 234, 202, 165, 498, 173, 160, 494, 768, 75, 306, 482, 641, 53, 222, 379, 460, 258, 567, 50, 531, 548, 207, 424, 320, 383, 124, 757, 249, 10, 405, 575, 597, 587, 341, 328, 336, 513, 317, 172, 681, 169, 187, 430, 351, 523, 81, 553, 389, 496, 689, 461, 607, 359, 436, 105, 229, 8, 101, 176, 663, 43, 701, 356, 630, 562, 678, 272, 224, 387, 271, 311, 456, 530, 401, 278, 239, 520, 529, 287, 343, 59, 367, 342, 21, 503, 420, 466, 322, 146, 504, 563, 196, 545, 558, 161, 394, 257, 49, 99, 598, 6, 77, 143, 68, 118, 133, 690, 410, 235, 536, 48, 205, 270, 445, 283, 198, 660, 90, 47, 57, 727, 41, 463, 76, 581, 576, 192, 250, 686, 509, 34, 175, 246, 400, 168, 111, 334, 403, 517, 677, 373, 497, 431, 470, 501, 174, 225"
+
+ERROR_POLY_BRAVO_PLACE="100, 202, 178, 171, 102, 243, 43, 238, 132, 200, 126, 107, 61, 252, 150, 5, 18, 51, 161, 248, 230, 166, 207, 48, 138, 132, 221, 248, 228, 42, 126, 117, 253, 85, 133, 165, 56, 125, 224, 92, 223, 129, 108, 179, 197, 224, 163, 241, 196, 207, 53, 73, 183, 98, 172, 7, 65, 90, 35, 15, 59, 219, 95, 41, 93, 52, 51, 19, 205, 78, 66, 6, 218, 47, 109, 228, 45, 134, 141, 173, 225, 93, 194, 5, 164, 100, 199, 10, 118, 30, 163, 110, 152, 247, 212, 214, 146, 104, 164, 7, 117, 87, 129, 159, 235, 129, 233, 224, 72, 250, 167, 128, 208, 220, 150, 195, 40, 168, 73, 21, 98, 185, 128, 27, 30, 74, 251, 134, 186, 40, 109, 138, 181, 202, 137, 86, 72, 230, 117, 18, 123, 180, 10, 23, 122, 47, 241, 16, 193, 71, 189, 203, 212, 68, 241, 143, 191, 62, 228, 255, 82, 12, 178, 134, 161, 178, 251, 119, 66, 209, 33, 32, 17, 124, 47, 96, 191, 20, 10, 4, 82, 36, 65, 36, 164, 113, 230, 30, 33, 176, 75, 54, 130, 25, 171, 227, 1, 41, 182, 164, 87, 232, 210, 74, 161, 84, 24, 187, 106, 106, 52, 153, 247, 152, 252, 245, 182, 253, 213, 203, 45, 168, 193, 190, 42, 105, 201, 1, 211, 224, 153, 189, 89, 187, 59, 238, 53, 95, 105, 103, 24, 2, 62, 250, 57, 70, 68, 110, 45, 45, 226, 254, 194, 103, 186, 140, 209, 1, 37, 87, 15, 200, 26, 22, 216, 251, 175, 137, 33, 228, 132, 152, 86, 179, 106, 68, 69, 49, 202, 146, 67, 168, 130, 223, 55, 234, 177, 88, 146, 195, 100, 176, 210, 177, 61, 161, 1, 58, 5, 191, 30, 49, 183, 83, 125, 13, 170, 211, 93, 110, 219, 93, 246, 120, 169, 97, 206, 86, 241, 208, 195, 199, 53, 31, 133, 253, 181, 247, 192, 209, 19, 159, 175, 39, 247, 154, 12, 225, 43, 231, 198, 83, 125, 33, 175, 79, 242, 224, 150, 251, 213, 125, 155, 230, 61, 109, 32, 239, 227, 40, 8, 133, 186, 118, 232, 157, 218, 41, 24, 168, 32, 205, 172, 216, 36, 94, 179, 37, 212, 13, 35, 171, 16, 171, 39, 69, 241, 165, 62, 91, 136, 4, 227, 168, 53, 6, 226, 251, 58, 251, 38, 234, 245, 255, 168, 119, 169, 47, 179, 223, 28, 32, 17, 185, 49, 44, 196, 122, 89, 116, 157, 223, 252, 204, 40, 119, 89, 8, 7, 178, 235, 52, 12, 51, 217, 60, 104, 100, 59, 111, 14, 244, 49, 223, 225, 245, 187, 61, 242, 174, 29, 145, 172, 177, 131, 188, 157, 76, 104, 244, 94, 39, 96, 246, 131, 77, 255, 70, 211, 201, 166, 105, 68, 129, 4, 80, 20, 89, 58, 222, 159, 208, 82, 255, 245, 121, 210, 149, 202, 105, 212, 42, 35, 188, 3, 121, 23, 139, 50, 24, 224, 20, 140, 119, 55, 118, 53, 155, 19, 70, 138, 178, 202, 153, 78, 44, 90, 109, 32, 253, 64, 130, 238, 243, 87, 12, 204, 63, 116, 163, 82, 25, 14, 31, 197, 193, 203, 235, 79, 86, 118, 118, 88, 190, 26, 55, 179, 156, 153, 89, 227, 221"
+
+error_polynomial_bravo_552:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -end \
+		-define Coeff -vector -dense $(ERROR_POLY_BRAVO_COEFF) -end \
+		-define Place -vector -dense $(ERROR_POLY_BRAVO_PLACE) -end \
+		-with F -do -finite_field_activity \
+			-assemble_monopoly 771 Coeff Place \
+		-end
+
+
+CRC_ERROR_POLY_BRAVO="104*X^5+118*X^6+27*X^7+39*X^8+51*X^10+245*X^11+91*X^12+247*X^15+125*X^17+202*X^21+130*X^22+210*X^24+230*X^25+125*X^26+224*X^27+221*X^28+70*X^29+243*X^30+189*X^31+58*X^33+193*X^34+106*X^37+40*X^38+18*X^40+204*X^41+15*X^42+77*X^43+213*X^44+187*X^46+243*X^47+44*X^48+140*X^49+204*X^50+150*X^51+164*X^52+122*X^53+53*X^54+207*X^55+242*X^56+87*X^57+124*X^58+121*X^59+238*X^60+177*X^61+82*X^62+171*X^65+19*X^68+24*X^69+73*X^70+191*X^74+185*X^75+116*X^76+53*X^77+168*X^78+165*X^80+29*X^81+228*X^82+181*X^83+134*X^84+186*X^87+167*X^88+238*X^90+61*X^91+62*X^92+161*X^93+132*X^94+186*X^95+24*X^97+119*X^99+30*X^100+96*X^101+36*X^102+132*X^103+244*X^105+103*X^106+93*X^107+206*X^108+226*X^109+118*X^111+67*X^112+168*X^115+70*X^118+191*X^120+202*X^121+205*X^122+235*X^124+176*X^126+119*X^127+37*X^128+5*X^130+138*X^133+42*X^134+203*X^136+175*X^137+109*X^139+33*X^140+224*X^141+155*X^143+117*X^144+5*X^145+188*X^146+126*X^147+22*X^149+45*X^151+87*X^152+212*X^153+169*X^154+170*X^156+88*X^157+102*X^158+28*X^160+24*X^161+228*X^162+10*X^163+82*X^164+47*X^165+86*X^168+245*X^169+178*X^171+223*X^172+223*X^173+227*X^174+203*X^175+246*X^176+208*X^177+73*X^180+118*X^182+38*X^185+152*X^186+187*X^187+228*X^188+153*X^189+10*X^191+25*X^192+253*X^193+23*X^196+64*X^198+12*X^199+49*X^200+169*X^202+128*X^203+75*X^204+90*X^205+177*X^206+89*X^207+41*X^209+87*X^210+224*X^211+100*X^212+59*X^214+190*X^215+79*X^216+234*X^218+175*X^219+68*X^221+89*X^222+68*X^224+221*X^225+196*X^227+168*X^228+94*X^229+58*X^230+125*X^231+54*X^232+165*X^233+119*X^234+153*X^235+36*X^236+117*X^237+32*X^238+159*X^239+208*X^240+224*X^241+161*X^242+176*X^243+1*X^244+98*X^245+235*X^246+203*X^247+152*X^248+12*X^249+14*X^250+40*X^251+154*X^252+6*X^254+138*X^255+181*X^256+20*X^257+223*X^258+209*X^261+55*X^263+213*X^264+230*X^265+168*X^267+247*X^268+110*X^269+109*X^270+4*X^271+105*X^272+228*X^273+222*X^278+211*X^279+62*X^280+253*X^283+152*X^284+146*X^285+32*X^286+255*X^287+69*X^288+47*X^291+164*X^293+211*X^294+1*X^295+197*X^297+41*X^300+172*X^301+137*X^302+146*X^303+194*X^305+49*X^306+71*X^310+80*X^311+66*X^312+223*X^313+171*X^316+49*X^317+241*X^318+7*X^320+35*X^322+62*X^324+56*X^325+129*X^326+106*X^327+111*X^328+13*X^330+118*X^334+14*X^336+225*X^337+241*X^338+231*X^339+59*X^341+149*X^342+245*X^343+202*X^344+252*X^345+155*X^348+241*X^349+129*X^350+242*X^351+24*X^352+78*X^353+150*X^354+70*X^356+122*X^358+76*X^359+168*X^360+69*X^361+146*X^362+241*X^363+251*X^364+212*X^365+96*X^366+210*X^367+66*X^368+30*X^369+230*X^370+193*X^371+126*X^372+55*X^373+216*X^374+19*X^376+103*X^377+4*X^378+116*X^379+2*X^381+178*X^383+68*X^385+33*X^386+129*X^387+246*X^388+172*X^389+183*X^390+72*X^391+183*X^392+218*X^393+224*X^394+86*X^396+200*X^397+189*X^398+79*X^400+58*X^401+1*X^402+88*X^403+35*X^404+217*X^405+106*X^406+90*X^408+25*X^409+202*X^410+5*X^411+30*X^413+26*X^415+202*X^417+57*X^418+141*X^419+212*X^420+65*X^423+8*X^424+187*X^425+230*X^426+53*X^429+61*X^430+156*X^431+233*X^432+194*X^433+207*X^434+253*X^435+104*X^436+51*X^441+20*X^442+227*X^444+32*X^445+83*X^447+251*X^449+48*X^450+216*X^451+86*X^452+84*X^453+33*X^454+20*X^456+123*X^458+157*X^460+188*X^461+63*X^463+42*X^466+232*X^467+179*X^468+153*X^470+137*X^473+251*X^475+105*X^477+133*X^478+138*X^479+43*X^480+44*X^482+192*X^483+235*X^485+198*X^486+110*X^487+164*X^490+171*X^491+223*X^492+32*X^494+133*X^495+177*X^496+179*X^497+179*X^498+225*X^500+89*X^501+97*X^502+105*X^503+3*X^504+85*X^505+45*X^506+100*X^507+197*X^509+199*X^511+212*X^512+244*X^513+254*X^514+247*X^516+190*X^517+92*X^518+208*X^520+35*X^521+174*X^523+7*X^524+173*X^525+82*X^529+89*X^530+40*X^531+17*X^532+179*X^533+120*X^535+78*X^536+19*X^537+239*X^539+193*X^540+168*X^542+186*X^543+140*X^544+139*X^545+143*X^547+119*X^548+61*X^550+180*X^551+1*X^552+145*X^553+178*X^554+83*X^555+50*X^558+195*X^559+164*X^560+201*X^562+121*X^563+199*X^564+252*X^567+195*X^569+209*X^570+39*X^573+60*X^575+82*X^576+153*X^577+87*X^578+134*X^580+163*X^581+172*X^582+74*X^584+117*X^585+100*X^587+201*X^588+253*X^589+161*X^592+65*X^593+13*X^594+159*X^595+104*X^597+55*X^598+15*X^599+232*X^601+178*X^603+86*X^604+157*X^607+226*X^608+98*X^609+47*X^610+16*X^611+251*X^612+72*X^614+43*X^616+7*X^617+41*X^618+159*X^619+255*X^620+108*X^621+51*X^622+6*X^623+214*X^626+128*X^627+74*X^629+211*X^630+171*X^634+21*X^636+130*X^637+113*X^638+182*X^639+53*X^640+196*X^641+134*X^645+247*X^648+68*X^649+250*X^650+93*X^651+93*X^652+125*X^653+157*X^654+94*X^656+36*X^657+47*X^658+118*X^659+130*X^660+23*X^661+241*X^662+131*X^663+210*X^664+45*X^665+227*X^666+248*X^667+95*X^668+161*X^670+255*X^671+8*X^672+182*X^673+250*X^675+163*X^676+26*X^677+166*X^678+49*X^679+109*X^680+225*X^681+195*X^682+52*X^684+31*X^686+238*X^688+131*X^689+178*X^690+245*X^691+107*X^694+133*X^695+59*X^697+10*X^699+220*X^700+255*X^701+39*X^703+31*X^704+205*X^705+110*X^706+4*X^707+209*X^708+166*X^709+251*X^712+53*X^713+45*X^714+30*X^716+248*X^718+219*X^719+136*X^720+224*X^721+89*X^722+61*X^724+12*X^725+179*X^726+12*X^727+33*X^728+105*X^729+219*X^731+150*X^734+163*X^735+100*X^737+251*X^738+200*X^739+42*X^740+252*X^741+218*X^742+175*X^743+132*X^744+52*X^746+234*X^747+16*X^748+93*X^752+18*X^753+40*X^754+37*X^755+32*X^756+52*X^757+191*X^761+109*X^762+227*X^763+185*X^766+129*X^767+17*X^768+95*X^770"
 
 crc_test_crc32_10M_3:
 	$(ORBITER) -v 3 \
@@ -12543,8 +12836,6 @@ test_10_6:
 	make F2_BCH_code_n21
 	make F7_RS_code_n6
 	make F_64_again
-	make BCH_255_5_evaluate_elementary_symmetric_functions_1
-	make BCH_255_5_evaluate_elementary_symmetric_functions_2
 	make BCH_15_5
 	make draw_mod_31
 	make PR127
@@ -12555,9 +12846,6 @@ test_10_6:
 	make draw_mod_255_cyclotomic_1_and_3
 	make draw_mod_63_4_cyclotomic_3_6
 	make BCH_F_64
-	make BCH_elementary_symmetric_functions_3
-	make BCH_63_4_evaluate_elementary_symmetric_functions_1
-	make BCH_63_4_evaluate_elementary_symmetric_functions_2
 	make BCH_21_poly_mult_mod_F4
 	make BCH_21_poly_division_a
 	make BCH_21_poly_division_b
@@ -12711,34 +12999,6 @@ F_64_again:
 	$(OPEN) GF_64.pdf
 
 
-BCH_255_5_evaluate_elementary_symmetric_functions_1:
-	$(ORBITER) -v 3 -define F -finite_field -q 256 -end \
-		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_8_1) \
-		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_8_2) \
-		-define e3 -formula "e3" "e3" "" $(ELEMENTARY_SYMMETRIC_8_3) \
-		-define e4 -formula "e4" "e4" "" $(ELEMENTARY_SYMMETRIC_8_4) \
-		-define e5 -formula "e5" "e5" "" $(ELEMENTARY_SYMMETRIC_8_5) \
-		-define e6 -formula "e6" "e6" "" $(ELEMENTARY_SYMMETRIC_8_6) \
-		-define e7 -formula "e7" "e7" "" $(ELEMENTARY_SYMMETRIC_8_7) \
-		-define e8 -formula "e8" "e8" "" $(ELEMENTARY_SYMMETRIC_8_8) \
-		-define E8 -collection "e1,e2,e3,e4,e5,e6,e7,e8" \
-		-with F -do -finite_field_activity \
-			-evaluate E8 "x0=2,x1=4,x2=16,x3=29,x4=76,x5=157,x6=95,x7=133" -end
-
-BCH_255_5_evaluate_elementary_symmetric_functions_2:
-	$(ORBITER) -v 3 -define F -finite_field -q 256 -end \
-		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_8_1) \
-		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_8_2) \
-		-define e3 -formula "e3" "e3" "" $(ELEMENTARY_SYMMETRIC_8_3) \
-		-define e4 -formula "e4" "e4" "" $(ELEMENTARY_SYMMETRIC_8_4) \
-		-define e5 -formula "e5" "e5" "" $(ELEMENTARY_SYMMETRIC_8_5) \
-		-define e6 -formula "e6" "e6" "" $(ELEMENTARY_SYMMETRIC_8_6) \
-		-define e7 -formula "e7" "e7" "" $(ELEMENTARY_SYMMETRIC_8_7) \
-		-define e8 -formula "e8" "e8" "" $(ELEMENTARY_SYMMETRIC_8_8) \
-		-define E8 -collection "e1,e2,e3,e4,e5,e6,e7,e8" \
-		-with F -do -finite_field_activity \
-			-evaluate E8 "x0=8,x1=64,x2=205,x3=143,x4=70,x5=217,x6=130,x7=23" -end
-
 
 BCH_15_5:
 	$(ORBITER) \
@@ -12849,45 +13109,6 @@ BCH_F_64:
 		-end
 	pdflatex GF_64.tex
 
-
-BCH_elementary_symmetric_functions_3:
-	$(ORBITER) -make_elementary_symmetric_functions 3 3
-
-
-BCH_63_4_evaluate_elementary_symmetric_functions_1:
-	$(ORBITER) -v 3 -define F -finite_field -q 64 -end \
-		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_3_1) \
-		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_3_2) \
-		-define e3 -formula "e3" "e3" "" $(ELEMENTARY_SYMMETRIC_3_3) \
-		-define E3 -collection "e1,e2,e3" \
-		-with F -do -finite_field_activity \
-			-evaluate E3 "x0=8,x1=62,x2=15" -end
-
-
-#The values of the formulae are:
-#0 : 57
-#1 : 0
-#2 : 1
-
-
-# poly: 1,0,2,1
-
-BCH_63_4_evaluate_elementary_symmetric_functions_2:
-	$(ORBITER) -v 3 -define F -finite_field -q 64 -end \
-		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_3_1) \
-		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_3_2) \
-		-define e3 -formula "e3" "e3" "" $(ELEMENTARY_SYMMETRIC_3_3) \
-		-define E3 -collection "e1,e2,e3" \
-		-with F -do -finite_field_activity \
-			-evaluate E3 "x0=33,x1=45,x2=52" -end
-
-#The values of the formulae are:
-#0 : 56
-#1 : 0
-#2 : 1
-
-
-# poly: 1,0,3,1
 
 
 
@@ -13102,7 +13323,6 @@ test_10_7:
 	make RS_7_3_weight_enumerator
 	make RS_7_3_field_reduction
 	make RS_7_3_reduced_weight_enumerator
-	make Reed_solomon_F8_work
 
 
 
@@ -13243,10 +13463,6 @@ RS_7_3_reduced_weight_enumerator:
 
 
 
-Reed_solomon_F8_work:
-	$(ORBITER) -v 3 -define F -finite_field -q 8 -end \
-		-with F -do -finite_field_activity \
-		-parse_and_evaluate "test" "" "(t-a)*(t-a*a)" "a=2" -end
 
 ###############################################################################
 # Section 10.8: Coding Theory - Twisted tensor product codes
@@ -13427,7 +13643,7 @@ test_10_10:
 
 codes_8_4_4:
 	$(ORBITER) -v 6 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label codes_8_4_4 \
 			-draw_options \
@@ -13520,7 +13736,7 @@ codes_d4:
 
 codes_24_12_8:
 	$(ORBITER) -v 6 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label codes_24_12_8 \
 			-draw_options -embedded -radius 250 \
@@ -13550,7 +13766,7 @@ codes_24_12_8_draw:
 
 glynn_arc:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label glynn_arc \
 			-draw_options -embedded -radius 250 \
@@ -13571,7 +13787,7 @@ glynn_arc:
 
 five_points_in_general:
 	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label five_points_in_general \
 			-draw_options \
@@ -13593,7 +13809,7 @@ five_points_in_general:
 
 codes_q13_12_4:
 	$(ORBITER) -v 6 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label codes_q13 \
 		-end \
@@ -13951,7 +14167,7 @@ test_11_4:
 	make geo_15_4
 	make geo_16_4_g4
 	make geo_16
-	make 40_4_g4.inc
+	make geo_40_4_g4
 	make geo_63_3_g6
 	make geo_LSQ6.inc
 
@@ -14363,6 +14579,7 @@ geo_15_3_g4:
 			-output_to_inc_file \
 			-girth 4 \
 			-search_tree \
+			-special_test_not_orderly \
 			-test Test_lines \
 		-end
 	$(ORBITER) -v 2 \
@@ -14406,6 +14623,7 @@ geo_18_3_g4:
 			-output_to_inc_file \
 			-girth 4 \
 			-search_tree \
+			-special_test_not_orderly \
 			-test Test_lines \
 		-end
 
@@ -14420,6 +14638,7 @@ geo_19_3_g4:
 			-fuse 1 -fname_GEO 19_3_g4 \
 			-output_to_inc_file \
 			-girth 4 \
+			-special_test_not_orderly \
 			-test Test_lines \
 		-end
 
@@ -14433,6 +14652,7 @@ geo_20_3_g4:
 			-fuse 1 -fname_GEO 20_3_g4 \
 			-output_to_inc_file \
 			-girth 4 \
+			-special_test_not_orderly \
 			-test Test_lines \
 		-end
 
@@ -14446,6 +14666,7 @@ geo_21_3_g4:
 			-fuse 1 -fname_GEO 21_3_g4 \
 			-output_to_inc_file \
 			-girth 4 \
+			-special_test_not_orderly \
 			-test Test_lines \
 		-end
 
@@ -14458,6 +14679,7 @@ geo_15_4:
 			-fuse 1 -fname_GEO 15_4 \
 			-output_to_inc_file \
 			-search_tree \
+			-special_test_not_orderly \
 			-test Test_lines \
 		-end
 	$(ORBITER) -v 2 \
@@ -14482,6 +14704,7 @@ geo_16_4_g4:
 			-V 16 -B 16 -TDO 4 \
 			-fuse 1 -fname_GEO 16_4_g4 \
 			-output_to_inc_file \
+			-special_test_not_orderly \
 			-girth 4 \
 			-test Test_lines \
 		-end
@@ -14495,6 +14718,7 @@ geo_15_6:
 		-define Geo -geometry_builder \
 			-V 15 -B 15 -TDO 6 -fuse 1 \
 			-fname_GEO 15_6 \
+			-special_test_not_orderly \
 			-output_to_inc_file \
 			-test Test_lines \
 			-output_to_sage_file \
@@ -14509,12 +14733,13 @@ geo_16:
 		-define Geo -geometry_builder \
 			-V 16 -B 20 -TDO 5 \
 			-fuse 1 -fname_GEO geo_16 \
+			-special_test_not_orderly \
 			-output_to_inc_file \
 			-test Test_lines \
 		-end
 
 
-40_4_g4.inc:
+geo_40_4_g4:
 	$(ORBITER) -v 5 \
 		-define Test_lines -set -loop 0 41 1 -end \
 		-define Geo -geometry_builder \
@@ -14594,7 +14819,7 @@ test_11_5:
 	make KM_cyclic_7
 	make KM_PGGL_2_32
 	#make KM_PGGL_2_32_solve
-	make KM_PSL_3_5
+	#make KM_PSL_3_5
 
 
 
@@ -14647,7 +14872,7 @@ wreath_product_designs_n8_k6_inc.txt:
 
 KM_cyclic_7:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define gens -vector -dense "1,2,3,4,5,6,0" -end \
 		-define G -permutation_group -symmetric_group 7 \
 			-subgroup_by_generators "C7" 7 1 gens \
@@ -14684,7 +14909,7 @@ KM_cyclic_7:
 
 KM_PGGL_2_32:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label KM_PGGL_2_32 \
 			-W -depth 8 \
@@ -14728,7 +14953,7 @@ KM_PGGL_2_32_solve:
 
 KM_PSL_3_5:
 	$(ORBITER) -v 3 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Control -poset_classification_control \
 			-problem_label KM_PSL_3_5 \
 			-W -depth 10 \
@@ -17198,7 +17423,7 @@ test_13_3:
 
 graph_classify_5:
 	$(ORBITER) -v 2 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define GC -graph_classification \
 			-n 5 \
 			-poset_classification_control \
@@ -17316,7 +17541,7 @@ Symmetric_5_inversion_graph_recognize:
 				"Symmetric5_inversion_graphs.csv" \
 		-end
 	$(ORBITER) -v 2 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define GC -graph_classification \
 			-n 5 \
 			-poset_classification_control \
@@ -17754,6 +17979,7 @@ Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
 				-export_flag_orbits \
 				-show_TDO \
 				-show_TDA \
+				-export_labels \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
 			-end \
@@ -17767,7 +17993,7 @@ Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
 
 Hirschfeld_stab_group:
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define G -linear_group -PGGL 4 4 \
 			-subgroup_by_generators "Hirschfeld_Stab" \
 			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
@@ -17781,7 +18007,7 @@ Hirschfeld_stab_group:
 
 Hirschfeld_stab_subgroup:
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define G -linear_group -PGGL 4 4 \
 			-subgroup_by_generators "Hirschfeld_Stab" \
 			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
@@ -17799,7 +18025,7 @@ Hirschfeld_stab_subgroup:
 
 Hirschfeld_stab_orbits:
 	$(ORBITER) -v 9 \
-		-orbiter_path $(ORBITER_PATH) \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define G -linear_group -PGGL 4 4 \
 			-subgroup_by_generators "Hirschfeld_Stab" \
 			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
@@ -18098,6 +18324,39 @@ quartic_curve_25_0_0_canonical:
 		-end
 	pdflatex quartic_25_0_0_classification.tex
 	$(OPEN) quartic_25_0_0_classification.pdf
+
+
+
+CRC_BCH_Q16_N51_D3_canonical: 
+	$(ORBITER) -v 12 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define C -combinatorial_objects \
+			-set_of_points $(CRC_BCH_Q16_N51_D3_PROJECTIVE_SET) \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix BCH_Q16_N51 \
+				-label BCH_Q16_N51 \
+				-save_ago \
+				-max_TDO_depth 4 \
+			-end \
+			-report \
+				-prefix BCH_Q16_N51 \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group_GAP \
+			-end \
+		-end
+	pdflatex BCH_Q16_N51_classification.tex
+	open BCH_Q16_N51_classification.pdf
+
+
+# stabilizer of order 408 is generated by:
+#1,0,0,0,0,0,1,0,1,5,9,3,12,10,8,10,1, 0,1,0,0,0,0,1,0,0,0,0,1,1,2,13,5,0,
+
 
 
 
@@ -19032,7 +19291,7 @@ JK_graph_sts_13:
 		-graph_theoretic_activity -save -end \
 		-with Gamma -do \
 		-graph_theoretic_activity -automorphism_group -end
-	make ORBITER_PATH=$(ORBITER_PATH) -f sts-13_group.makefile sts-13
+	make ORBITER_PATH=$(ORBITER_EXE_PATH) -f sts-13_group.makefile sts-13
 
 
 
@@ -19227,33 +19486,10 @@ SECTION_GRAPHICAL_OUTPUT:
 
 
 test_16_1:
-	make PG_2_4_cyclic_incma
 	make PGL_6_2_Wedge_4_2_detached_report.tex
 	make schreier_tree_graphical_output
 	make Queens_graph
 
-
-
-# ToDo: -cheat_sheet_for_decomposition_by_element_PG not recognized
-
-PG_2_4_cyclic_incma:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do -projective_space_activity \
-			-cheat_sheet_for_decomposition_by_element_PG \
-			1 "0,1,0, 0,0,1, 2,1,1, 0" "PG_2_4_singer" \
-		-end
-	$(ORBITER) -v 4 \
-		-list_arguments \
-		-define R -vector -repeat 1 21 -end \
-		-define C -vector -repeat 1 21 -end \
-		-draw_matrix \
-		-input_csv_file PG_2_4_singer_incma_cyclic.csv \
-		-box_width 40 -bit_depth 24 \
-		-partition 3 R C \
-		-end
-	$(OPEN) PG_2_4_singer_incma_cyclic_draw.bmp
 
 
 
@@ -19270,8 +19506,6 @@ PGL_6_2_Wedge_4_2_detached_report.tex:
 	pdflatex PGL_6_2_Wedge_4_2_detached_report.tex
 	$(OPEN) PGL_6_2_Wedge_4_2_detached_report.pdf
 
-
-# ToDo -draw_tree is not working
 
 schreier_tree_graphical_output:
 	$(ORBITER) -v 4 \
@@ -19292,12 +19526,6 @@ schreier_tree_graphical_output:
 			-draw_tree 6 \
 		-end
 	
-	#pdflatex poly_orbits_d3_n3_q2_orbit_6_tree.tex
-	#$(OPEN) poly_orbits_d3_n3_q2_orbit_6_tree.pdf
-	#pdflatex poly_orbits_d3_n3_q2.tex
-	#$(OPEN) poly_orbits_d3_n3_q2.pdf
-
-
 
 Queens_graph:
 	$(ORBITER) -v 2 \
@@ -19417,6 +19645,7 @@ math261_test:
 
 
 plane1:
+	cp $(ORBITER_PATH)/examples/users_guide/coordinate_grid.csv .
 	$(ORBITER) -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
 		-output_mask plane1_%d_%03d.pov \
@@ -19461,6 +19690,7 @@ plane1:
 
 
 plane2:
+	cp $(ORBITER_PATH)/examples/users_guide/coordinate_grid.csv .
 	$(ORBITER) -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
 		-output_mask plane2_%d_%03d.pov \
@@ -19500,6 +19730,7 @@ plane2:
 
 
 analytic_geo_1:
+	cp $(ORBITER_PATH)/examples/users_guide/coordinate_grid.csv .
 	$(ORBITER) -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
 		-output_mask analytic_geo_1_%d_%03d.pov \
@@ -19761,6 +19992,7 @@ Clebsch:
 
 
 endrass8:
+	cp $(ORBITER_PATH)/examples/users_guide/coordinate_grid.csv .
 	$(ORBITER) -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
 		-output_mask endrass_octic_%d_%03d.pov \
@@ -20278,6 +20510,7 @@ lissajous:
 #function_lissajous_N2000_points.csv
 
 lissajous_plot:
+	cp $(ORBITER_PATH)/examples/users_guide/coordinate_grid.csv .
 	$(ORBITER) -v 2 -povray \
 		-round 0 -nb_frames_default 1 \
 		-output_mask lissajous_%d_%03d.pov \
@@ -20328,6 +20561,7 @@ lissajous_3d:
 		-code_end \
 
 lissajous_3d_plot:
+	cp $(ORBITER_PATH)/examples/users_guide/coordinate_grid.csv .
 	$(ORBITER) -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
 		-output_mask lissajous_3d_%d_%03d.pov \

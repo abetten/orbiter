@@ -1095,7 +1095,9 @@ void combinatorial_object_activity::report_object(
 		cout << "combinatorial_object_activity::report_object "
 				"before OwCF->print_tex_detailed" << endl;
 	}
-	OwCF->print_tex_detailed(fp, Report_options->f_show_incidence_matrices, verbose_level);
+	OwCF->print_tex_detailed(fp,
+			Report_options->f_show_incidence_matrices,
+			verbose_level);
 	if (f_v) {
 		cout << "combinatorial_object_activity::report_object "
 				"after OwCF->print_tex_detailed" << endl;
@@ -1118,7 +1120,8 @@ void combinatorial_object_activity::report_object(
 			cout << "combinatorial_object_activity::report_object "
 					"before OwP[object_idx].latex_report" << endl;
 		}
-		OwP[object_idx].latex_report(fp, Report_options, verbose_level);
+		OwP[object_idx].latex_report(fp,
+				Report_options, verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::report_object "
 					"after OwP[object_idx].latex_report" << endl;

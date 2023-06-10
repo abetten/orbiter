@@ -1352,9 +1352,9 @@ void poset_classification::make_spreadsheet_of_level_info(
 	Text_binomial = new string [nb_rows];
 
 	Nb_orbits = 0;
-	orbit_length_total.create(0, __FILE__, __LINE__);
-	schreier_vector_length_total.create(0, __FILE__, __LINE__);
-	a_total.create(0, __FILE__, __LINE__);
+	orbit_length_total.create(0);
+	schreier_vector_length_total.create(0);
+	a_total.create(0);
 	
 	for (level = 0; level <= max_depth; level++) {
 
@@ -1372,8 +1372,8 @@ void poset_classification::make_spreadsheet_of_level_info(
 		snprintf(str, 1000, "%d", nb_orbits);
 		Text_nb_orbits[level].assign(str);
 
-		orbit_length_sum.create(0, __FILE__, __LINE__);
-		schreier_vector_length_sum.create(0, __FILE__, __LINE__);
+		orbit_length_sum.create(0);
+		schreier_vector_length_sum.create(0);
 
 		for (i = 0; i < nb_orbits; i++) {
 			
@@ -1404,7 +1404,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 			if (schreier_vector_length_int <= 0) {
 				schreier_vector_length_int = 1;
 				}
-			schreier_vector_length.create(schreier_vector_length_int, __FILE__, __LINE__);
+			schreier_vector_length.create(schreier_vector_length_int);
 
 			if (schreier_vector_length_int >= 0) {
 				D.add_in_place(schreier_vector_length_sum,

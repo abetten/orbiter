@@ -66,7 +66,7 @@ void poset_orbit_node::get_stabilizer_order(
 		go.create_product(PC->get_poset()->A->base_len(), tl);
 	}
 	else {
-		go.create(1, __FILE__, __LINE__);
+		go.create(1);
 	}
 }
 #endif
@@ -83,7 +83,7 @@ long int poset_orbit_node::get_stabilizer_order_lint(
 		go.create_product(PC->get_poset()->A->base_len(), tl);
 	}
 	else {
-		go.create(1, __FILE__, __LINE__);
+		go.create(1);
 	}
 	return go.as_lint();
 }

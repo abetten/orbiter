@@ -24,7 +24,8 @@ using namespace std;
 // 100000 is too big for Linux under gcc, but OK for Macintosh with LLVM
 
 
-#define MAXN 70000
+#define MAXN 75000
+//#define MAXN 70000
 //#define MAXN 22000
 
 

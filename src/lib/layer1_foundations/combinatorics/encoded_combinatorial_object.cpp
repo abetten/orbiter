@@ -28,6 +28,9 @@ encoded_combinatorial_object::encoded_combinatorial_object()
 	nb_cols = 0;
 	partition = NULL;
 	canonical_labeling_len = 0;
+
+	invariant_set_start = 0;
+	invariant_set_size = 0;
 }
 
 encoded_combinatorial_object::~encoded_combinatorial_object()
@@ -78,6 +81,17 @@ void encoded_combinatorial_object::init(
 	encoded_combinatorial_object::nb_cols = nb_cols;
 	L = nb_rows * nb_cols;
 	canonical_labeling_len = nb_rows + nb_cols;
+
+
+	// ToDo:
+
+	// action on the whole thing:
+	//invariant_set_start = 0;
+	//invariant_set_size = nb_rows + nb_cols;
+
+	// action on rows only:
+	invariant_set_start = 0;
+	invariant_set_size = nb_rows;
 
 	Incma = NEW_int(L);
 	Int_vec_zero(Incma, L);
@@ -268,6 +282,8 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 	nb_rows0 = P->Subspaces->N_points + P->Subspaces->N_lines;
 	nb_cols0 = P->Subspaces->N_lines + P->Subspaces->Nb_subspaces[2]; // number of lines and planes
 
+	// point / line incidence matrix:
+
 	for (i = 0; i < P->Subspaces->N_points; i++) {
 		for (j = 0; j < P->Subspaces->N_lines; j++) {
 			if (P->Subspaces->is_incident(i, j)) {
@@ -275,13 +291,16 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 			}
 		}
 	}
+
+	// identity matrix in the lower part:
 	for (j = 0; j < P->Subspaces->N_lines; j++) {
 		set_incidence_ij(P->Subspaces->N_points + j, j);
 	}
 
 
 	if (f_v) {
-		cout << "encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left computing points on lines" << endl;
+		cout << "encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left "
+				"computing points on lines" << endl;
 	}
 
 	long int *Pts_on_line;
@@ -295,7 +314,8 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 	}
 
 	if (f_v) {
-		cout << "encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left computing planes through lines" << endl;
+		cout << "encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left "
+				"computing planes through lines" << endl;
 	}
 
 	std::vector<std::vector<long int>> Plane_ranks;
@@ -496,7 +516,8 @@ void encoded_combinatorial_object::latex_incma(
 	}
 
 	if (f_v) {
-		cout << "encoded_combinatorial_object::latex_incma before L.incma_latex" << endl;
+		cout << "encoded_combinatorial_object::latex_incma "
+				"before L.incma_latex" << endl;
 	}
 	L.incma_latex(ost,
 		nb_rows /*v */,
@@ -505,7 +526,8 @@ void encoded_combinatorial_object::latex_incma(
 		Incma,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "encoded_combinatorial_object::latex_incma after L.incma_latex" << endl;
+		cout << "encoded_combinatorial_object::latex_incma "
+				"after L.incma_latex" << endl;
 	}
 
 
@@ -610,6 +632,34 @@ void encoded_combinatorial_object::latex_TDA(
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_TDA done" << endl;
 	}
+}
+
+void encoded_combinatorial_object::compute_labels(
+		int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
+		int *&point_labels, int *&block_labels,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::compute_labels" << endl;
+	}
+
+	point_labels = NEW_int(nb_rows);
+	block_labels = NEW_int(nb_cols);
+
+	int i, j;
+
+	for (i = 0; i < nb_rows; i++) {
+		point_labels[i] = orbit[i];
+	}
+	for (j = 0; j < nb_cols; j++) {
+		block_labels[j] = orbit[nb_rows + j] - nb_rows;
+	}
+	if (f_v) {
+		cout << "encoded_combinatorial_object::compute_labels done" << endl;
+	}
+
 }
 
 
@@ -908,7 +958,8 @@ void encoded_combinatorial_object::apply_canonical_labeling_and_get_flags(
 		}
 	}
 	if (nb_flags_counted != nb_flags) {
-		cout << "encoded_combinatorial_object::apply_canonical_labeling_and_get_flags nb_flags_counted != nb_flags" << endl;
+		cout << "encoded_combinatorial_object::apply_canonical_labeling_and_get_flags "
+				"nb_flags_counted != nb_flags" << endl;
 		exit(1);
 	}
 }

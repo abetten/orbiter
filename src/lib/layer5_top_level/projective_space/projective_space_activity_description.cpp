@@ -24,6 +24,11 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_export_point_line_incidence_matrix = false;
 
+	f_export_restricted_point_line_incidence_matrix = false;
+	//std::string export_restricted_point_line_incidence_matrix_rows;
+	//std::string export_restricted_point_line_incidence_matrix_cols;
+
+
 	f_export_cubic_surface_line_vs_line_incidence_matrix = false;
 
 	f_export_cubic_surface_line_tritangent_plane_incidence_matrix = false;
@@ -266,6 +271,17 @@ int projective_space_activity_description::read_arguments(
 			f_export_point_line_incidence_matrix = true;
 			if (f_v) {
 				cout << "-export_point_line_incidence_matrix " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_restricted_point_line_incidence_matrix") == 0) {
+			f_export_restricted_point_line_incidence_matrix = true;
+			export_restricted_point_line_incidence_matrix_rows.assign(argv[++i]);
+			export_restricted_point_line_incidence_matrix_cols.assign(argv[++i]);
+			if (f_v) {
+				cout << "-export_restricted_point_line_incidence_matrix "
+						<< " " << export_restricted_point_line_incidence_matrix_rows
+						<< " " << export_restricted_point_line_incidence_matrix_cols
+						<< endl;
 			}
 		}
 
@@ -1018,6 +1034,12 @@ void projective_space_activity_description::print()
 {
 	if (f_export_point_line_incidence_matrix) {
 		cout << "-export_point_line_incidence_matrix " << endl;
+	}
+	if (f_export_restricted_point_line_incidence_matrix) {
+			cout << "-export_restricted_point_line_incidence_matrix "
+					<< " " << export_restricted_point_line_incidence_matrix_rows
+					<< " " << export_restricted_point_line_incidence_matrix_cols
+					<< endl;
 	}
 	if (f_export_cubic_surface_line_vs_line_incidence_matrix) {
 		cout << "-export_cubic_surface_line_vs_line_incidence_matrix " << endl;

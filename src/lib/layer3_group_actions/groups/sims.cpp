@@ -1351,7 +1351,7 @@ void sims::element_rank(
 		l = orbit_len[i];
 		
 		if (i > 0) {
-			b.create(l, __FILE__, __LINE__);
+			b.create(l);
 			D.mult(a, b, c);
 			c.assign_to(a);
 		}
@@ -1375,7 +1375,7 @@ void sims::element_rank(
 			A->Group_element->element_print(eltrk1, cout);
 			exit(1);
 		}
-		b.create(j, __FILE__, __LINE__);
+		b.create(j);
 		D.add(a, b, c);
 		c.assign_to(a);
 		
@@ -1470,7 +1470,7 @@ void sims::test_element_rank_unrank()
 	group_order(go);
 	goi = go.as_int();
 	for (i = 0; i < goi; i++) {
-		a.create(i, __FILE__, __LINE__);
+		a.create(i);
 		element_unrank(a, elt);
 		cout << i << " : " << endl;
 		A->Group_element->element_print(elt, cout);

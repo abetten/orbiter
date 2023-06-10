@@ -215,9 +215,9 @@ void cyclic_codes::make_cyclic_code(
 				"extension field created" << endl;
 	}
 
-	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
-	Fq.create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the element alpha
-	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(c, 0, verbose_level);
+	Fq.create_object_by_rank(beta, p, verbose_level); // the element alpha
+	Fq.create_object_by_rank(beta_i, 1, verbose_level);
 	if (!Index.is_one()) {
 		//Fq.power_int(beta, b);
 		if (f_v) {
@@ -260,10 +260,10 @@ void cyclic_codes::make_cyclic_code(
 	}
 	for (i = 0; i < 2; i++) {
 		if (i == 1) {
-			Fq.create_object_by_rank(coeffs[i], 1, __FILE__, __LINE__, verbose_level);
+			Fq.create_object_by_rank(coeffs[i], 1, verbose_level);
 		}
 		else {
-			Fq.create_object_by_rank(coeffs[i], 0, __FILE__, __LINE__, verbose_level);
+			Fq.create_object_by_rank(coeffs[i], 0, verbose_level);
 		}
 	}
 	for (i = 0; i <= degree; i++) {
@@ -271,14 +271,14 @@ void cyclic_codes::make_cyclic_code(
 			cout << "cyclic_codes::make_cyclic_code "
 					"creating generator[" << i << "]" << endl;
 		}
-		Fq.create_object_by_rank(generator[i], 0, __FILE__, __LINE__, verbose_level);
-		Fq.create_object_by_rank(tmp[i], 0, __FILE__, __LINE__, verbose_level);
+		Fq.create_object_by_rank(generator[i], 0, verbose_level);
+		Fq.create_object_by_rank(tmp[i], 0, verbose_level);
 	}
 	if (f_v) {
 		cout << "cyclic_codes::make_cyclic_code "
 				"creating generator[0]" << endl;
 	}
-	Fq.create_object_by_rank(generator[0], 1, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(generator[0], 1, verbose_level);
 
 	// now coeffs has degree 1
 	// and generator has degree 0
@@ -295,11 +295,11 @@ void cyclic_codes::make_cyclic_code(
 	if (f_v) {
 		cout << "cyclic_codes::make_cyclic_code creating Pc" << endl;
 	}
-	Fq.create_object_by_rank(Pc, 0, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(Pc, 0, verbose_level);
 	if (f_v) {
 		cout << "cyclic_codes::make_cyclic_code creating Pd" << endl;
 	}
-	Fq.create_object_by_rank(Pd, 0, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(Pd, 0, verbose_level);
 
 	r = 0;
 	for (i = 0; i < n; i++) {
@@ -355,7 +355,7 @@ void cyclic_codes::make_cyclic_code(
 			Fq.assign(tmp[j], generator[j + 1], verbose_level);
 			}
 		Fq.delete_object(generator[0]);
-		Fq.create_object_by_rank(generator[0], 0, __FILE__, __LINE__, verbose_level);
+		Fq.create_object_by_rank(generator[0], 0, verbose_level);
 
 		//cout << "generator after shifting up:" << endl;
 		//print_polynomial(Fq, r + 1, generator);
@@ -589,9 +589,9 @@ void cyclic_codes::field_reduction(
 
 	beta_rk_table = NEW_OBJECTS(ring_theory::longinteger_object, q);
 
-	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
-	Fq.create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the element alpha
-	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(c, 0, verbose_level);
+	Fq.create_object_by_rank(beta, p, verbose_level); // the element alpha
+	Fq.create_object_by_rank(beta_i, 1, verbose_level);
 	if (f_v) {
 		cout << "\\alpha = ";
 		Fq.print_object(beta, cout);
@@ -731,8 +731,8 @@ void cyclic_codes::BCH_generator_polynomial(
 
 
 	e = NT.order_mod_p(p, n);
-	q.create(p, __FILE__, __LINE__);
-	m1.create(-1, __FILE__, __LINE__);
+	q.create(p);
+	m1.create(-1);
 	D.power_int(q, e);
 	D.add(q, m1, qm1);
 	// q = i_power_j(p, e);
@@ -764,9 +764,9 @@ void cyclic_codes::BCH_generator_polynomial(
 	FX.create_object_by_rank_string(m, field_poly, verbose_level - 2);
 	FX.create_object_by_rank_string(M, field_poly, verbose_level - 2);
 
-	FX.create_object_by_rank(g, 1, __FILE__, __LINE__, verbose_level);
-	FX.create_object_by_rank(h1, 0, __FILE__, __LINE__, verbose_level);
-	FX.create_object_by_rank(h2, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(g, 1, verbose_level);
+	FX.create_object_by_rank(h1, 0, verbose_level);
+	FX.create_object_by_rank(h2, 0, verbose_level);
 
 	if (f_vv) {
 		cout << "choosing the following irreducible "
@@ -779,9 +779,9 @@ void cyclic_codes::BCH_generator_polynomial(
 	if (f_vvv) {
 		cout << "extension field created" << endl;
 	}
-	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
-	Fq.create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the primitive element alpha
-	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(c, 0, verbose_level);
+	Fq.create_object_by_rank(beta, p, verbose_level); // the primitive element alpha
+	Fq.create_object_by_rank(beta_i, 1, verbose_level);
 	if (!b.is_one()) {
 		//Fq.power_int(beta, b, 0 /* verbose_level */);
 		if (f_vvv) {
@@ -883,7 +883,7 @@ void cyclic_codes::BCH_generator_polynomial(
 		i0 = i;
 		do {
 			chosen[i] = true;
-			Fq.create_object_by_rank_longinteger(c, bi, __FILE__, __LINE__, verbose_level);
+			Fq.create_object_by_rank_longinteger(c, bi, verbose_level);
 			if (f_vvv) {
 				cout << bi << " = ";
 				Fq.print_object(c, cout);
@@ -914,7 +914,7 @@ void cyclic_codes::BCH_generator_polynomial(
 	}
 
 	// compute the bose_distance:
-	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(beta_i, 1, verbose_level);
 	for (i = 1; ; i++) {
 		Fq.mult(beta, beta_i, c, verbose_level - 1);
 		FX.assign(c, beta_i, verbose_level);
@@ -952,7 +952,7 @@ void cyclic_codes::BCH_generator_polynomial(
 		// minimum_polynomial(h1, ai, p, f_vv);
 		Fq.minimum_polynomial_factorring_longinteger(
 				beta_rk_table[transversal[i]], rk, p, f_vv);
-		FX.create_object_by_rank_longinteger(h1, rk, __FILE__, __LINE__, verbose_level - 2);
+		FX.create_object_by_rank_longinteger(h1, rk, verbose_level - 2);
 		if (f_vv) {
 			cout << "minimal polynomial of \\beta^" << transversal[i] << " is ";
 			FX.print_object(h1, cout);

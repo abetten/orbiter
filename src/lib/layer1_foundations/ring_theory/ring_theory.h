@@ -546,7 +546,7 @@ public:
 	char &sign() { return sgn; };
 	int &len() { return l; };
 	char *&rep() { return r; };
-	void create(long int i, const char *file, int line);
+	void create(long int i);
 	void create_product(int nb_factors, int *factors);
 	void create_power(int a, int e);
 		// creates a^e
@@ -810,9 +810,22 @@ public:
 	void mult_polynomials(
 			field_theory::finite_field *F,
 			long int rk0, long int rk1, int verbose_level);
+	void polynomial_division_coefficient_table_with_report(
+			field_theory::finite_field *F,
+			int *coeff_table0, int coeff_table0_len,
+			int *coeff_table1, int coeff_table1_len,
+			int *&coeff_table_q, int &coeff_table_q_len,
+			int *&coeff_table_r, int &coeff_table_r_len,
+			int verbose_level);
 	void polynomial_division_with_report(
 			field_theory::finite_field *F,
 			long int rk0, long int rk1, int verbose_level);
+	void assemble_monopoly(
+			field_theory::finite_field *F,
+			int length,
+			std::string &coefficient_vector_text,
+			std::string &exponent_vector_text,
+			int verbose_level);
 	void polynomial_division_from_file_with_report(
 			field_theory::finite_field *F,
 			std::string &input_file, long int rk1, int verbose_level);
@@ -955,15 +968,16 @@ public:
 		int d, int *coeff);
 	void create_object_by_rank(
 			unipoly_object &p, long int rk,
-			const char *file, int line, int verbose_level);
+			int verbose_level);
+	void create_object_from_table_of_coefficients(
+		unipoly_object &p, int *coeff_table, int coeff_table_len,
+		int verbose_level);
 	void create_object_from_csv_file(
 		unipoly_object &p, std::string &fname,
-		const char *file, int line,
 		int verbose_level);
 	void create_object_by_rank_longinteger(
 			unipoly_object &p,
 		longinteger_object &rank,
-		const char *file, int line,
 		int verbose_level);
 	void create_object_by_rank_string(
 		unipoly_object &p, std::string &rk, int verbose_level);
@@ -1147,6 +1161,12 @@ public:
 			std::string &input_fname, long int rk_b, int k,
 			long int *&rk_q, long int *&rk_r, int &n, int &N,
 			std::ostream &ost, int verbose_level);
+	void division_with_remainder_based_on_tables_with_report(
+			int *coeff_a, int len_a,
+			int *coeff_b, int len_b,
+			int *&coeff_q, int &len_q,
+			int *&coeff_r, int &len_r,
+			std::ostream &ost, int f_report, int verbose_level);
 	void division_with_remainder_numerically_with_report(
 			long int rk_a, long int rk_b,
 			long int &rk_q, long int &rk_r,

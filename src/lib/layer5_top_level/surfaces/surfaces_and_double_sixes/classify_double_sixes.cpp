@@ -742,7 +742,7 @@ void classify_double_sixes::print_five_plus_ones(std::ostream &ost)
 
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object ol, Ol;
-	Ol.create(0, __FILE__, __LINE__);
+	Ol.create(0);
 
 	ost << "The group has " 
 		<< l 

@@ -1898,6 +1898,58 @@ void projective_space_subspaces::export_incidence_matrix_to_csv(int verbose_leve
 	}
 }
 
+void projective_space_subspaces::export_restricted_incidence_matrix_to_csv(
+		std::string &rows, std::string &cols, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_subspaces::export_restricted_incidence_matrix_to_csv" << endl;
+	}
+
+	int *Rows;
+	int nb_rows;
+	int *Cols;
+	int nb_cols;
+
+	Get_int_vector_from_label(rows, Rows, nb_rows, verbose_level);
+	Get_int_vector_from_label(cols, Cols, nb_cols, verbose_level);
+
+
+	int i, j, k, ii, jj;
+	int *T;
+	orbiter_kernel_system::file_io Fio;
+
+	T = NEW_int(nb_rows * nb_cols);
+	for (i = 0; i < nb_rows; i++) {
+		ii = Rows[i];
+		for (j = 0; j < nb_cols; j++) {
+			jj = Cols[j];
+			if (is_incident(ii, jj)) {
+				k = 1;
+			}
+			else {
+				k = 0;
+			}
+			T[i * nb_cols + j] = k;
+		}
+	}
+	string fname;
+
+	make_fname_incidence_matrix_csv(fname);
+
+	Fio.int_matrix_write_csv(fname, T, nb_rows, nb_cols);
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	FREE_int(T);
+	if (f_v) {
+		cout << "projective_space_subspaces::export_restricted_incidence_matrix_to_csv done" << endl;
+	}
+}
+
 void projective_space_subspaces::make_fname_incidence_matrix_csv(std::string &fname)
 {
 	char str[1000];

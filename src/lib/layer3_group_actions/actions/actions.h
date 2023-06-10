@@ -731,7 +731,6 @@ public:
 	void make_element_which_moves_a_line_in_PG3q(
 			action *A,
 			geometry::projective_space_of_dimension_three *P3,
-			//geometry::grassmann *Gr,
 			long int line_rk, int *Elt,
 			int verbose_level);
 	void orthogonal_group_random_generator(
@@ -1256,14 +1255,6 @@ public:
 			int partition_class_size,
 			int verbose_level);
 
-#if 0
-	/** Create the induced action on lines in PG(n-1,q)
-	 * using an action_on_grassmannian object */
-	void init_action_on_lines(
-			action *A, field_theory::finite_field *F,
-		int n, int verbose_level);
-#endif
-
 	action *induced_action_by_representation_on_conic(
 		int f_induce_action, groups::sims *old_G,
 		int verbose_level);
@@ -1288,24 +1279,9 @@ public:
 			induced_actions::action_on_spread_set *AS,
 		int f_induce_action, groups::sims *old_G,
 		int verbose_level);
-#if 0
-	void induced_action_on_orthogonal(
-			action *A_old,
-			induced_actions::action_on_orthogonal *AO,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-#endif
 
 	action *induced_action_on_wedge_product(
 			int verbose_level);
-#if 0
-	void induced_action_by_subfield_structure(
-			action *A_old,
-			induced_actions::action_by_subfield_structure
-				*SubfieldStructure,
-		int f_induce_action, groups::sims *old_G,
-		int verbose_level);
-#endif
 	action *induced_action_on_determinant(
 			groups::sims *old_G, int verbose_level);
 	action *induced_action_on_Galois_group(
@@ -1317,12 +1293,6 @@ public:
 			groups::sims *Base_group, int f_ownership,
 			int f_basis, groups::sims *old_G,
 			int verbose_level);
-#if 0
-	void induced_action_by_conjugation(
-			groups::sims *old_G,
-			groups::sims *Base_group, int f_ownership,
-		int f_basis, int verbose_level);
-#endif
 	action *induced_action_by_right_multiplication(
 		int f_basis, groups::sims *old_G,
 		groups::sims *Base_group, int f_ownership, int verbose_level);
@@ -1369,13 +1339,6 @@ public:
 		int verbose_level);
 	action *induced_action_on_pairs(
 		int verbose_level);
-#if 0
-	void induced_action_on_pairs(
-			action &old_action, groups::sims *old_G,
-		int verbose_level);
-	action *create_induced_action_on_ordered_pairs(
-			int verbose_level);
-#endif
 	action *induced_action_on_ordered_pairs(
 			groups::sims *old_G,
 		int verbose_level);
@@ -1385,26 +1348,11 @@ public:
 	action *induced_action_on_orbits(
 			groups::schreier *Sch, int f_play_it_safe,
 		int verbose_level);
-#if 0
-	void induced_action_on_flags(
-			action *old_action,
-		int *type, int type_len,
-		int verbose_level);
-	void induced_action_on_bricks(
-			action &old_action,
-		combinatorics::brick_domain *B, int f_linear_action,
-		int verbose_level);
-#endif
 	action *induced_action_on_andre(
 			action *An,
 		action *An1,
 		geometry::andre_construction *Andre,
 		int verbose_level);
-#if 0
-	void setup_product_action(
-			action *A1, action *A2,
-		int f_use_projections, int verbose_level);
-#endif
 	action *induced_action_on_homogeneous_polynomials(
 		ring_theory::homogeneous_polynomial_domain *HPD,
 		int f_induce_action, groups::sims *old_G,
@@ -1419,16 +1367,6 @@ public:
 		groups::sims *old_Sims,
 		int verbose_level);
 
-#if 0
-	void induced_action_recycle_sims(
-			action &old_action,
-		int verbose_level);
-	void induced_action_override_sims(
-			action &old_action,
-			groups::sims *old_G,
-		int verbose_level);
-#endif
-
 };
 
 
@@ -1441,6 +1379,7 @@ public:
 
 #define STABILIZER_CHAIN_DATA_MAX_DEGREE 1L << 29
 
+// 2^29 = 536870912
 
 //! base and transversals in a stabilizer chain for a permutation group
 
@@ -1465,10 +1404,10 @@ private:
 	/** the length of the orbit of $G^{(i)}$ on $b_i$ */
 	int *transversal_length;
 
-	/** the orbit of  b_i */
+	/** the orbit of b_i as a permutation of the points of the set we act on */
 	long int **orbit;
 
-	/** the inverse orbit of  b_i */
+	/** the inverse orbit permutation associated with the orbit of b_i */
 	long int **orbit_inv;
 
 	int *path;

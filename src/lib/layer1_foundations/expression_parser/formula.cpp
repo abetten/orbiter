@@ -343,6 +343,64 @@ void formula::init_formula_int(
 	}
 }
 
+void formula::init_formula_monopoly(
+		std::string &label, std::string &label_tex,
+		field_theory::finite_field *Fq,
+		std::string &managed_variables,
+		std::string &variable,
+		int *coeffs, int nb_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::init_formula_monopoly" << endl;
+	}
+
+	name_of_formula.assign(label);
+	name_of_formula_latex.assign(label_tex);
+	formula::managed_variables.assign(managed_variables);
+	//formula::formula_text.assign(formula_text);
+
+	formula::Fq = Fq;
+
+	data_structures::string_tools ST;
+
+	tree = NEW_OBJECT(syntax_tree);
+	if (f_v) {
+		cout << "formula::init_formula_monopoly "
+				"before tree->init" << endl;
+	}
+	tree->init(Fq, true /* f_has_managed_variables */, managed_variables, verbose_level);
+	if (f_v) {
+		cout << "formula::init_formula_monopoly "
+				"after tree->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "expression_parser_domain::init_formula_monopoly "
+				"before tree->init_int" << endl;
+	}
+	tree->init_monopoly(Fq, variable,
+			coeffs, nb_coeffs, verbose_level);
+	if (f_v) {
+		cout << "expression_parser_domain::init_formula_monopoly "
+				"after tree->init_int" << endl;
+		cout << "vector" << endl;
+		Int_vec_print(cout, coeffs, nb_coeffs);
+		cout << endl;
+		cout << "encoded to" << endl;
+		print_easy(cout);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "formula::init_formula_monopoly done" << endl;
+	}
+}
+
+
 void formula::init_formula_Sajeeb(
 		std::string &label, std::string &label_tex,
 		int f_managed_variables,
@@ -1334,6 +1392,20 @@ int formula::highest_order_term(
 
 	return d;
 
+}
+
+void formula::get_monopoly(
+		std::string &variable, int *&coeff, int &nb_coeff, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::get_monopoly" << endl;
+	}
+	tree->get_monopoly(variable, coeff, nb_coeff, verbose_level);
+	if (f_v) {
+		cout << "formula::get_monopoly done" << endl;
+	}
 }
 
 

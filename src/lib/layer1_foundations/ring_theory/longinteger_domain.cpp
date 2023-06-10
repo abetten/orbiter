@@ -260,7 +260,7 @@ void longinteger_domain::add_int_in_place(
 	longinteger_object C;
 	longinteger_object B;
 
-	B.create(b, __FILE__, __LINE__);
+	B.create(b);
 	add(a, B, C);
 	C.assign_to(a);
 }
@@ -275,7 +275,7 @@ void longinteger_domain::mult(
 	int f_v = false;
 	
 	if (a.is_zero() || b.is_zero()) {
-		c.create(0, __FILE__, __LINE__);
+		c.create(0);
 		return;
 	}
 	if ((a.sign() && !b.sign()) || (!a.sign() && b.sign())) {
@@ -352,7 +352,7 @@ void longinteger_domain::mult_integer_in_place(
 {
 	longinteger_object B, C;
 	
-	B.create(b, __FILE__, __LINE__);
+	B.create(b);
 	mult(a, B, C);
 	C.assign_to(a);
 }
@@ -389,7 +389,7 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 				"a=" << a << " b=" << b << " m=" << m << endl;
 	}
 	if (a.is_zero() || b.is_zero()) {
-		c.create(0, __FILE__, __LINE__);
+		c.create(0);
 		return;
 	}
 	if (compare_unsigned(a, m) >= 0) {
@@ -542,7 +542,7 @@ void longinteger_domain::multiply_up(
 		if (x[i] == 1) {
 			continue;
 		}
-		b.create(x[i], __FILE__, __LINE__);
+		b.create(x[i]);
 		if (f_v) {
 			cout << "longinteger_domain::multiply_up "
 					"i=" << i << " x[i]=" << x[i]
@@ -587,7 +587,7 @@ void longinteger_domain::multiply_up_lint(
 		if (x[i] == 1) {
 			continue;
 		}
-		b.create(x[i], __FILE__, __LINE__);
+		b.create(x[i]);
 		if (f_v) {
 			cout << "longinteger_domain::multiply_up_lint "
 					"i=" << i << " x[i]=" << x[i]
@@ -674,7 +674,7 @@ void longinteger_domain::integral_division(
 	}
 	
 	for (i = 0; i < 10; i++) {
-		c.create(i, __FILE__, __LINE__);
+		c.create(i);
 		mult(b, c, table[i]);
 	}
 	q.freeself();
@@ -734,7 +734,7 @@ void longinteger_domain::integral_division_by_int(
 	longinteger_object B, R;
 	int verbose_level = 0;
 
-	B.create(b, __FILE__, __LINE__);
+	B.create(b);
 	integral_division(a, B, q, R, verbose_level);
 	r = R.as_int();
 }
@@ -746,7 +746,7 @@ void longinteger_domain::integral_division_by_lint(
 	longinteger_object B, R;
 	int verbose_level = 0;
 
-	B.create(b, __FILE__, __LINE__);
+	B.create(b);
 	integral_division(a, B, q, R, verbose_level);
 	r = R.as_lint();
 }
@@ -810,8 +810,8 @@ void longinteger_domain::extended_gcd(
 	}
 	if (a.is_zero()) {
 		b.assign_to(g);
-		u.create(0, __FILE__, __LINE__);
-		v.create(1, __FILE__, __LINE__);
+		u.create(0);
+		v.create(1);
 		if (g.sign()) {
 			g.negate();
 			u.negate();
@@ -821,8 +821,8 @@ void longinteger_domain::extended_gcd(
 	}
 	if (b.is_zero()) {
 		a.assign_to(g);
-		u.create(1, __FILE__, __LINE__);
-		v.create(0, __FILE__, __LINE__);
+		u.create(1);
+		v.create(0);
 		if (g.sign()) {
 			g.negate();
 			u.negate();
@@ -863,10 +863,10 @@ void longinteger_domain::extended_gcd(
 	// now a > 0, b > 0 and a >= b
 	a.assign_to(rm1);
 	b.assign_to(r);
-	sm1.create(1, __FILE__, __LINE__);
-	tm1.create(0, __FILE__, __LINE__);
-	s.create(0, __FILE__, __LINE__);
-	t.create(1, __FILE__, __LINE__);
+	sm1.create(1);
+	tm1.create(0);
+	s.create(0);
+	t.create(1);
 	while (true) {
 		integral_division(rm1, r, q, rp1, verbose_level - 1);
 		if (rp1.is_zero()) {
@@ -1054,7 +1054,7 @@ void longinteger_domain::square_root(
 	longinteger_object a2;
 
 	if (a.is_zero()) {
-		sqrt_a.create(0, __FILE__, __LINE__);
+		sqrt_a.create(0);
 		return;
 	}
 	if (a.sign()) {
@@ -1143,11 +1143,11 @@ int longinteger_domain::square_root_mod(
 		cout << "p=" << p << endl;
 		exit(1);
 	}
-	Two.create(2, __FILE__, __LINE__);
-	Four.create(4, __FILE__, __LINE__);
-	A.create(a, __FILE__, __LINE__);
-	P.create(p, __FILE__, __LINE__);
-	mOne.create(p - 1, __FILE__, __LINE__);
+	Two.create(2);
+	Four.create(4);
+	A.create(a);
+	P.create(p);
+	mOne.create(p - 1);
 	if (f_v) {
 		cout << "longinteger_domain::square_root_mod A=" << A << endl;
 		cout << "longinteger_domain::square_root_mod P=" << P << endl;
@@ -1240,7 +1240,7 @@ int longinteger_domain::square_root_mod(
 	if (f_v) {
 		cout << "n=" << n << " p=" << p << " Legendre(n,p)=" << r<< endl;
 	}
-	N.create(n, __FILE__, __LINE__);
+	N.create(n);
 	if (f_v) {
 		cout << "longinteger_domain::square_root_mod N=" << N << endl;
 	}
@@ -1394,7 +1394,7 @@ void longinteger_domain::create_q_to_the_n(
 		longinteger_object &a, int q, int n)
 // create (q^n - 1)
 {
-	a.create(q, __FILE__, __LINE__);
+	a.create(q);
 	power_int(a, n);
 }
 
@@ -1405,9 +1405,9 @@ void longinteger_domain::create_qnm1(
 {
 	longinteger_object b, c;
 	
-	b.create(q, __FILE__, __LINE__);
+	b.create(q);
 	power_int(b, n);
-	c.create(-1, __FILE__, __LINE__);
+	c.create(-1);
 	add(b, c, a);
 }
 
@@ -1416,8 +1416,8 @@ void longinteger_domain::create_Mersenne(longinteger_object &M, int n)
 {
 	longinteger_object a, b;
 
-	a.create(2, __FILE__, __LINE__);
-	b.create(-1, __FILE__, __LINE__);
+	a.create(2);
+	b.create(-1);
 	power_int(a, n);
 	add(a, b, M);
 	// cout << "Mersenne number M_" << n << "=" << a << endl;
@@ -1429,8 +1429,8 @@ void longinteger_domain::create_Fermat(longinteger_object &F, int n)
 	longinteger_object a, b;
 	int l;
 
-	a.create(2, __FILE__, __LINE__);
-	b.create(1, __FILE__, __LINE__);
+	a.create(2);
+	b.create(1);
 	l = 1 << n;
 	// cout << "l=" << l << endl;
 	power_int(a, l);
@@ -1461,7 +1461,7 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
 
 	v = NEW_int(len);
 
-	S.create(0, __FILE__, __LINE__);
+	S.create(0);
 
 	N = NT.i_power_j(2, len);
 	if (f_v) {
@@ -1517,7 +1517,7 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
 	if (f_v) {
 		cout << endl;
 	}
-	B.create(n, __FILE__, __LINE__);
+	B.create(n);
 
 	if (f_v) {
 		cout << "S=" << S << endl;
@@ -1642,7 +1642,7 @@ long int longinteger_domain::smallest_primedivisor(
 		if (r == 0) {
 			return p;
 		}
-		pp.create(p, __FILE__, __LINE__);
+		pp.create(p);
 		if (compare(q, pp) < 0) {
 			break;
 		}
@@ -1686,7 +1686,7 @@ void longinteger_domain::factor_into_longintegers(
 	if (p == 0) {
 		p = n.as_lint();
 	}
-	pp.create(p, __FILE__, __LINE__);
+	pp.create(p);
 	primes = NEW_OBJECTS(longinteger_object, 1);
 	exponents = NEW_int(1);
 	nb_primes = 1;
@@ -1712,7 +1712,7 @@ void longinteger_domain::factor_into_longintegers(
 		}
 		if (p == last_prime) {
 			exponents[nb_primes - 1]++;
-			pp.create(p, __FILE__, __LINE__);
+			pp.create(p);
 		}
 		else {
 			longinteger_object *pr = NEW_OBJECTS(
@@ -1727,7 +1727,7 @@ void longinteger_domain::factor_into_longintegers(
 			primes = pr;
 			exponents = ex;
 			if (p) {
-				pp.create(p, __FILE__, __LINE__);
+				pp.create(p);
 			}
 			else {
 				n.assign_to(pp);
@@ -1863,7 +1863,7 @@ int longinteger_domain::jacobi(
 	m.assign_to(m1);
 	r1 = 1;
 	
-	minus_one.create(-1, __FILE__, __LINE__);
+	minus_one.create(-1);
 	extended_gcd(a1, m1, g, u, v, verbose_level - 2);
 	if (!g.is_one_or_minus_one()) {
 		return 0;
@@ -1990,7 +1990,7 @@ void longinteger_domain::matrix_product(
 	
 	for (i = 0; i < Am; i++) {
 		for (j = 0; j < Bn; j++) {
-			c.create(0, __FILE__, __LINE__);
+			c.create(0);
 			for (k = 0; k < An; k++) {
 				mult(A[i * An + k], B[k * Bn + j], a);
 				add(a, c, b);
@@ -2165,7 +2165,7 @@ void longinteger_domain::square_root_floor(
 		exit(1);
 	}
 	if (a.is_zero()) {
-		x.create(0, __FILE__, __LINE__);
+		x.create(0);
 		return;
 	}
 
@@ -2230,15 +2230,15 @@ void longinteger_domain::Chinese_Remainders(
 	longinteger_object q, r1r, c, e;
 	int i;
 
-	r1.create(Remainders[0], __FILE__, __LINE__);
-	m1.create(Moduli[0], __FILE__, __LINE__);
-	x.create(Remainders[0], __FILE__, __LINE__);
+	r1.create(Remainders[0]);
+	m1.create(Moduli[0]);
+	x.create(Remainders[0]);
 
 
 	for (i = 1; i < Remainders.size(); i++) {
 
-		r2.create(Remainders[i], __FILE__, __LINE__);
-		m2.create(Moduli[i], __FILE__, __LINE__);
+		r2.create(Remainders[i]);
+		m2.create(Moduli[i]);
 
 
 		integral_division(
@@ -2250,7 +2250,8 @@ void longinteger_domain::Chinese_Remainders(
 				// c = a - b, assuming a > b
 
 		if (f_v) {
-			cout << "longinteger_domain::Chinese_Remainders i=" << i << " -r1 mod m2=" << mr1 << endl;
+			cout << "longinteger_domain::Chinese_Remainders "
+					"i=" << i << " -r1 mod m2=" << mr1 << endl;
 		}
 
 		//mr1 = int_negate(r1, m2);

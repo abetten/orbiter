@@ -49,6 +49,22 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 	}
 
+	else if (Descr->f_export_restricted_point_line_incidence_matrix) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->export_incidence_matrix_to_csv" << endl;
+		}
+		PA->P->Subspaces->export_restricted_incidence_matrix_to_csv(
+				Descr->export_restricted_point_line_incidence_matrix_rows,
+				Descr->export_restricted_point_line_incidence_matrix_cols,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->export_incidence_matrix_to_csv" << endl;
+		}
+	}
+
 	else if (Descr->f_export_cubic_surface_line_vs_line_incidence_matrix) {
 
 		string prefix;
