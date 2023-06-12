@@ -748,9 +748,7 @@ void subfield_structure::create_adelaide_hyperoval(
 
 	Adelaide_hyperoval(Pts, nb_pts, verbose_level);
 
-	char str[1000];
-	snprintf(str, sizeof(str), "adelaide_hyperoval_q%d.txt", q);
-	fname.assign(str);
+	fname = "adelaide_hyperoval_q" + std::to_string(q) + ".txt";
 
 
 	if (f_v) {

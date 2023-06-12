@@ -143,7 +143,8 @@ void linear_group::linear_group_import_group_of_plane(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "linear_group::linear_group_import_group_of_plane import_group_of_plane_label=" << description->import_group_of_plane_label << endl;
+		cout << "linear_group::linear_group_import_group_of_plane "
+				"import_group_of_plane_label=" << description->import_group_of_plane_label << endl;
 	}
 
 	int idx;
@@ -698,13 +699,10 @@ void linear_group::init_PGL2q_OnConic(int verbose_level)
 				"created action of PGL2_on conic:" << endl;
 		A2->print_info();
 	}
-	char str1[1000];
-	char str2[1000];
 
-	snprintf(str1, sizeof(str1), "_OnConic_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm OnConic}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_OnConic_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex += "\\_OnConic\\_" + std::to_string(n) + "\\_" + std::to_string(q);
+
 	if (f_v) {
 		cout << "linear_group::init_PGL2q_OnConic "
 				"created group " << label << endl;
@@ -774,13 +772,10 @@ void linear_group::init_wedge_action(int verbose_level)
 				"created wedge action:" << endl;
 		A2->print_info();
 	}
-	char str1[1000];
-	char str2[1000];
 
-	snprintf(str1, sizeof(str1), "_Wedge_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm Wedge}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_Wedge_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex += "\\_Wedge\\_" + std::to_string(n) + "\\_" + std::to_string(q);
+
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
 				"created group " << label << endl;
@@ -866,13 +861,10 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 				"created detached wedge action:" << endl;
 		A2->print_info();
 	}
-	char str1[1000];
-	char str2[1000];
 
-	snprintf(str1, sizeof(str1), "_Wedge_%d_%d_detached", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm WedgeDetached}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_Wedge_" + std::to_string(n) + "_" + std::to_string(q) + "_detached";
+	label_tex += "{\\rm WedgeDetached}(" + std::to_string(n) + "," + std::to_string(q) + ")";
+
 	if (f_v) {
 		cout << "linear_group::init_wedge_action_detached "
 				"created group " << label << endl;
@@ -900,13 +892,8 @@ void linear_group::init_monomial_group(int verbose_level)
 	A2 = A_linear;
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_Monomial_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm Monomial}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_Monomial_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex += "{\\rm Monomial}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 
 	if (f_v) {
 		cout << "linear_group::init_monomial_group "
@@ -934,13 +921,8 @@ void linear_group::init_diagonal_group(int verbose_level)
 	
 	A2 = A_linear;
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_Diagonal_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm Diagonal}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_Diagonal_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex += "{\\rm Diagonal}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 
 	if (f_v) {
 		cout << "linear_group::init_diagonal_group "
@@ -971,13 +953,8 @@ void linear_group::init_singer_group(int singer_power, int verbose_level)
 
 	A2 = A_linear;
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_Singer_%d_%d_%d", n, q, singer_power);
-	snprintf(str2, sizeof(str2), "{\\rm Singer}(%d,%d,%d)", n, q, singer_power);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_Singer_" + std::to_string(n) + "_" + std::to_string(q) + "_" + std::to_string(singer_power);
+	label_tex += "{\\rm Singer}(" + std::to_string(n) + "," + std::to_string(q) + "," + std::to_string(singer_power) + ")";
 
 	if (f_v) {
 		cout << "linear_group::init_singer_group "
@@ -1009,13 +986,9 @@ void linear_group::init_singer_group_and_frobenius(
 
 	A2 = A_linear;
 
-	char str1[1000];
-	char str2[1000];
+	label += "_Singer_and_Frob" + std::to_string(n) + "_" + std::to_string(q) + "_" + std::to_string(singer_power);
+	label_tex += "{\\rm SingerFrob}(" + std::to_string(n) + "," + std::to_string(q) + "," + std::to_string(singer_power) + ")";
 
-	snprintf(str1, sizeof(str1), "_Singer_and_Frob%d_%d_%d", n, q, singer_power);
-	snprintf(str2, sizeof(str2), "{\\rm SingerFrob}(%d,%d,%d)", n, q, singer_power);
-	label.append(str1);
-	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_singer_group_and_frobenius "
@@ -1043,14 +1016,8 @@ void linear_group::init_null_polarity_group(int verbose_level)
 	
 	A2 = A_linear;
 
-
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_NullPolarity_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm NullPolarity}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_NullPolarity_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex += "{\\rm NullPolarity}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 
 	if (f_v) {
 		cout << "linear_group::init_null_polarity_group "
@@ -1080,13 +1047,8 @@ void linear_group::init_borel_subgroup_upper(int verbose_level)
 	A2 = A_linear;
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_BorelUpper_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm BorelUpper}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_BorelUpper_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex += "{\\rm BorelUpper}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 
 	if (f_v) {
 		cout << "linear_group::init_borel_subgroup_upper "
@@ -1114,13 +1076,8 @@ void linear_group::init_identity_subgroup(int verbose_level)
 	
 	A2 = A_linear;
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_Identity_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm Identity}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_Identity_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex += "{\\rm Identity}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 
 	if (f_v) {
 		cout << "linear_group::init_identity_subgroup "
@@ -1159,13 +1116,9 @@ void linear_group::init_symplectic_group(int verbose_level)
 	A2 = A_linear;
 
 
-	char str1[1000];
-	char str2[1000];
+	label += "_Sp_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex += "{\\rm Sp}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 
-	snprintf(str1, sizeof(str1), "_Sp_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm Sp}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
 
 
 	if (f_v) {
@@ -1201,13 +1154,9 @@ void linear_group::init_subfield_structure_action(int s, int verbose_level)
 
 	A2 = A_linear;
 
-	char str1[1000];
-	char str2[1000];
 
-	snprintf(str1, sizeof(str1), "_Subfield_%d_%d_%d", n, q, s);
-	snprintf(str2, sizeof(str2), "{\\rm SubfieldAction}(%d,%d,%d)", n, q, s);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_Subfield_" + std::to_string(n) + "_" + std::to_string(q) + "_" + std::to_string(s);
+	label_tex += "{\\rm SubfieldAction}(" + std::to_string(n) + "," + std::to_string(q)  + "," + std::to_string(s) + ")";
 
 	if (f_v) {
 		cout << "linear_group::init_subfield_structure_action "
@@ -1244,28 +1193,19 @@ void linear_group::init_orthogonal_group(int epsilon, int verbose_level)
 	
 	A2 = A_linear;
 
-	char str1[1000];
-	char str2[1000];
-
 	if (EVEN(n)) {
 		if (epsilon == 1) {
-			snprintf(str1, sizeof(str1), "_Orthogonal_plus_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm O}^+(%d,%d)", n, q);
-			label.append(str1);
-			label_tex.append(str2);
+			label += "_Orthogonal_plus_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex += "{\\rm O}^+(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			snprintf(str1, sizeof(str1), "_Orthogonal_minus_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm O}^-(%d,%d)", n, q);
-			label.append(str1);
-			label_tex.append(str2);
+			label += "_Orthogonal_minus_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex += "{\\rm O}^-(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 	}
 	else {
-		snprintf(str1, sizeof(str1), "_Orthogonal_%d_%d", n, q);
-		snprintf(str2, sizeof(str2), "{\\rm O}(%d,%d)", n, q);
-		label.append(str1);
-		label_tex.append(str2);
+		label += "_Orthogonal_" + std::to_string(n) + "_" + std::to_string(q);
+		label_tex += "{\\rm O}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 	}
 	if (f_v) {
 		cout << "linear_group::init_orthogonal_group "
@@ -1310,13 +1250,8 @@ void linear_group::init_subgroup_from_file(
 	A2 = A_linear;
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_SubgroupFile_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "{\\rm SubgroupFile}(%d,%d)", n, q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_SubgroupFile_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex += "{\\rm SubgroupFile}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 
 
 	if (f_v) {
@@ -1437,13 +1372,8 @@ void linear_group::init_subgroup_Janko1(int verbose_level)
 	A2 = A_linear;
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_Subgroup_Janko1");
-	snprintf(str2, sizeof(str2), "{\\rm Subgroup Janko1}");
-	label.append(str1);
-	label_tex.append(str2);
+	label + "_Subgroup_Janko1";
+	label_tex += "{\\rm Subgroup Janko1}";
 
 	if (f_v) {
 		cout << "linear_group::init_subgroup_Janko1 "
@@ -1618,8 +1548,6 @@ void linear_group::report(
 				//int f_sideways = false;
 				int *labels;
 
-				char str[1000];
-
 				int i;
 
 				labels = NEW_int(2 * n);
@@ -1638,9 +1566,7 @@ void linear_group::report(
 					}
 				}
 
-				fname2.assign(label);
-				snprintf(str, sizeof(str), "_group_table_order_%ld", n);
-				fname2.append(str);
+				fname2 = label + "_group_table_order_" + std::to_string(n);
 
 				{
 					graphics::mp_graphics G;

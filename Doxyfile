@@ -877,20 +877,22 @@ RECURSIVE              = YES
 
 EXCLUDE                = \
 				src/apps/ginac \
+				src/apps/Jeffrey_Leons_partition_backtrack \
+				src/apps/mckay \
 				src/lib/layer1_foundations/BitSet \
+				src/lib/layer1_foundations/CUDA \
 				src/lib/layer1_foundations/Eigen_interface/Eigen \
+				src/lib/layer1_foundations/expression_parser_sajeeb \
 				src/lib/layer1_foundations/graph_theory_nauty \
 				src/lib/layer1_foundations/graph_theory/Clique \
-				src/lib/layer1_foundations/CUDA \
-				src/lib/layer1_foundations/graphics/EasyBMP.h \
-				src/lib/layer1_foundations/graphics/EasyBMP.cpp \
-				src/lib/layer1_foundations/graphics/EasyBMP_BMP.h \
-				src/lib/layer1_foundations/graphics/EasyBMP_DataStructures.h \
-				src/lib/layer1_foundations/graphics/EasyBMP_VariousBMPutilities.h \
-				src/lib/layer1_foundations/io_and_os/chrono.h \
-				src/lib/layer1_foundations/knowledge_base/DATA \
-				src/lib/layer1_foundations/expression_parser_sajeeb \
 				src/lib/layer1_foundations/Jeffrey_Leon_partition_backtrack \
+				src/lib/layer1_foundations/knowledge_base/DATA \
+				src/lib/layer1_foundations/l1_interfaces/EasyBMP.h \
+				src/lib/layer1_foundations/l1_interfaces/EasyBMP.cpp \
+				src/lib/layer1_foundations/l1_interfaces/EasyBMP_BMP.h \
+				src/lib/layer1_foundations/l1_interfaces/EasyBMP_DataStructures.h \
+				src/lib/layer1_foundations/l1_interfaces/EasyBMP_VariousBMPutilities.h \
+				src/lib/layer1_foundations/orbiter_kernel_system/chrono.h \
 				src/lib/layer3_group_actions/groups/linalg.h \
 				src/lib/layer3_group_actions/groups/linalg.cpp \
 				src/lib/layer3_group_actions/groups/shallow_schreier_ai.cpp \

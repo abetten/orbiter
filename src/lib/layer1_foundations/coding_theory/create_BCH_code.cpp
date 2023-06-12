@@ -168,16 +168,9 @@ void create_BCH_code::do_report(
 		string extra_praeamble;
 
 
-		char str[1000];
 
-		snprintf(str, 1000, "BCH_codes_q%d_n%d_d%d.tex",
-				F->q,
-				n,
-				d
-				);
-		fname.assign(str);
-		snprintf(str, 1000, "BCH codes");
-		title.assign(str);
+		fname = "BCH_codes_q" + std::to_string(F->q) + "_n" + std::to_string(n) + "_d" + std::to_string(d) + ".tex";
+		title = "BCH codes";
 
 
 

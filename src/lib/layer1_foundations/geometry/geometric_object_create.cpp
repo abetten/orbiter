@@ -752,17 +752,10 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 	cout << endl;
 #endif
 
-	char str[1000];
-	char str2[1000];
-
-	snprintf(str, sizeof(str), "_q%d", P->Subspaces->q);
-	snprintf(str2, sizeof(str2), "\\_q%d", P->Subspaces->q);
 
 
-	label_txt.assign("ovoid");
-	label_txt.append(str);
-	label_tex.assign("ovoid");
-	label_tex.append(str2);
+	label_txt = "ovoid_q" + std::to_string(P->Subspaces->q);
+	label_tex = "ovoid\\_q" + std::to_string(P->Subspaces->q);
 
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -859,17 +852,8 @@ void geometric_object_create::create_ovoid_ST(
 		}
 	}
 
-	char str[1000];
-	char str2[1000];
-
-	snprintf(str, sizeof(str), "_q%d", P->Subspaces->q);
-	snprintf(str2, sizeof(str2), "\\_q%d", P->Subspaces->q);
-
-
-	label_txt.assign("ovoid_ST");
-	label_txt.append(str);
-	label_tex.assign("ovoid\\_ST");
-	label_tex.append(str2);
+	label_txt = "ovoid_ST_q" + std::to_string(P->Subspaces->q);
+	label_tex = "ovoid\\_ST\\_q" + std::to_string(P->Subspaces->q);
 
 	if (f_v) {
 		cout << "geometric_object_create::create_ovoid_ST done" << endl;
@@ -937,13 +921,9 @@ void geometric_object_create::create_cuspidal_cubic(
 	cout << endl;
 #endif
 
-	char str[1000];
-	char str2[1000];
-	snprintf(str, sizeof(str), "cuspidal_cubic_%d", P->Subspaces->q);
-	snprintf(str2, sizeof(str2), "cuspidal\\_cubic\\_%d", P->Subspaces->q);
-	label_txt.assign(str);
-	label_tex.assign(str2);
-	//write_set_to_file(fname, L, N, verbose_level);
+	label_txt = "cuspidal_cubic_" + std::to_string(P->Subspaces->q);
+	label_tex = "cuspidal\\_cubic\\_" + std::to_string(P->Subspaces->q);
+
 
 
 #if 0
@@ -1057,12 +1037,8 @@ void geometric_object_create::create_twisted_cubic(
 	cout << endl;
 #endif
 
-	char str[1000];
-	char str2[1000];
-	snprintf(str, sizeof(str), "twisted_cubic_%d", P->Subspaces->q);
-	snprintf(str2, sizeof(str2), "twisted\\_cubic\\_%d", P->Subspaces->q);
-	label_txt.assign(str);
-	label_tex.assign(str2);
+	label_txt = "twisted_cubic_" + std::to_string(P->Subspaces->q);
+	label_tex = "twisted\\_cubic\\_" + std::to_string(P->Subspaces->q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 	FREE_int(v);
@@ -1130,14 +1106,10 @@ void geometric_object_create::create_elliptic_curve(
 	cout << endl;
 #endif
 
-	char str[1000];
-	char str2[1000];
-	snprintf(str, sizeof(str), "elliptic_curve_b%d_c%d_q%d",
-			elliptic_curve_b, elliptic_curve_c, P->Subspaces->q);
-	snprintf(str2, sizeof(str2), "elliptic\\_curve\\_b%d\\_c%d\\_q%d",
-			elliptic_curve_b, elliptic_curve_c, P->Subspaces->q);
-	label_txt.assign(str);
-	label_tex.assign(str2);
+
+	label_txt = "elliptic_curve_b" + std::to_string(elliptic_curve_b) + "_c" + std::to_string(elliptic_curve_c) + "_q" + std::to_string(P->Subspaces->q);
+	label_tex = "elliptic\\_curve\\_b" + std::to_string(elliptic_curve_b) + "\\_c" + std::to_string(elliptic_curve_c) + "\\_q" + std::to_string(P->Subspaces->q);
+
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
@@ -1192,12 +1164,8 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq(
 	}
 
 
-	char str[1000];
-	char str2[1000];
-	snprintf(str, sizeof(str), "unital_XXq_YZq_ZYq_Q%d", P->Subspaces->q);
-	snprintf(str2, sizeof(str2), "unital\\_XXq\\_YZq\\_ZYq\\_Q%d", P->Subspaces->q);
-	label_txt.assign(str);
-	label_tex.assign(str2);
+	label_txt = "unital_XXq_YZq_ZYq_Q" + std::to_string(P->Subspaces->q);
+	label_tex = "unital\\_XXq\\_YZq\\_ZYq\\_Q" + std::to_string(P->Subspaces->q);
 
 	FREE_int(v);
 	if (f_v) {
@@ -1226,12 +1194,8 @@ void geometric_object_create::create_whole_space(
 		Pts[i] = i;
 	}
 
-	char str[1000];
-	char str2[1000];
-	snprintf(str, sizeof(str), "whole_space_PG_%d_%d", P->Subspaces->n, P->Subspaces->q);
-	snprintf(str2, sizeof(str2), "whole\\_space\\_PG\\_%d\\_%d", P->Subspaces->n, P->Subspaces->q);
-	label_txt.assign(str);
-	label_tex.assign(str2);
+	label_txt = "whole_space_PG_" + std::to_string(P->Subspaces->n) + "_" + std::to_string(P->Subspaces->q);
+	label_tex = "whole\\_space\\_PG\\_" + std::to_string(P->Subspaces->n) + "\\_" + std::to_string(P->Subspaces->q);
 
 	if (f_v) {
 		cout << "geometric_object_create::create_whole_space done" << endl;
@@ -1274,12 +1238,8 @@ void geometric_object_create::create_hyperplane(
 		}
 	}
 
-	char str[1000];
-	char str2[1000];
-	snprintf(str, sizeof(str), "hyperplane_PG_%d_%d_pt%d", P->Subspaces->n, P->Subspaces->q, pt);
-	snprintf(str2, sizeof(str2), "hyperplane\\_PG\\_%d\\_%d\\_pt%d", P->Subspaces->n, P->Subspaces->q, pt);
-	label_txt.assign(str);
-	label_tex.assign(str2);
+	label_txt = "hyperplane_PG_" + std::to_string(P->Subspaces->n) + "_" + std::to_string(P->Subspaces->q) + "_pt" + std::to_string(pt);
+	label_tex = "hyperplane\\_PG\\_" + std::to_string(P->Subspaces->n) + "\\_" + std::to_string(P->Subspaces->q) + "\\_pt" + std::to_string(pt);
 
 	FREE_int(v1);
 	FREE_int(v2);
@@ -1363,18 +1323,8 @@ void geometric_object_create::create_Baer_substructure(
 
 
 
-	char str[1000];
-
-	//write_set_to_file(fname, S, sz, verbose_level);
-
-
-	snprintf(str, sizeof(str), "PG_%d_%d", P->Subspaces->n, P->Subspaces->F->q);
-	label_txt.assign("Baer_substructure_");
-	label_txt.append(str);
-
-	snprintf(str, sizeof(str), "PG(%d,%d)", P->Subspaces->n, P->Subspaces->F->q);
-	label_tex.assign("Baer\\_substructure\\_");
-	label_tex.append(str);
+	label_txt = "Baer_substructure_" + std::to_string(P->Subspaces->n) + "_" + std::to_string(P->Subspaces->q);
+	label_tex = "Baer\\_substructure\\_" + std::to_string(P->Subspaces->n) + "\\_" + std::to_string(P->Subspaces->q);
 
 	FREE_int(v);
 	//FREE_int(S);

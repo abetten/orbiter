@@ -2793,9 +2793,6 @@ void combinatorics_domain::do_tdo_print(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int cnt;
-	//char str[1000];
-	//char ext[1000];
-	//char fname_out[1000];
 	int f_widor = false;
 	int f_doit = false;
 
@@ -2805,31 +2802,13 @@ void combinatorics_domain::do_tdo_print(
 
 	cout << "opening file " << fname << " for reading" << endl;
 	ifstream f(fname);
-	//ofstream *g = NULL;
 
-	//ofstream *texfile;
-
-
-#if 0
-	strcpy(str, fname);
-	get_extension_if_present(str, ext);
-	chop_off_extension_if_present(str, ext);
-#endif
 
 
 	geo_parameter GP;
 	tdo_scheme_synthetic G;
 
 
-	//Vector vm, VM, VM_mult;
-	//discreta_base mu;
-
-#if 0
-	if (f_intersection) {
-		VM.m_l(0);
-		VM_mult.m_l(0);
-		}
-#endif
 
 	for (cnt = 0; ; cnt++) {
 		if (f.eof()) {
@@ -2853,20 +2832,6 @@ void combinatorics_domain::do_tdo_print(
 			//}
 
 		f_doit = true;
-#if 0
-		if (f_range) {
-			if (cnt < range_first || cnt >= range_first + range_len)
-				f_doit = false;
-			}
-		if (f_select) {
-			if (strcmp(GP.label, select_label))
-				continue;
-			}
-		if (f_nt) {
-			if (GP.row_level == GP.col_level)
-				continue;
-			}
-#endif
 
 		if (!f_doit) {
 			continue;
@@ -2893,188 +2858,8 @@ void combinatorics_domain::do_tdo_print(
 			GP.print_scheme_tex(cout, G, ROW_SCHEME);
 			GP.print_scheme_tex(cout, G, COL_SCHEME);
 			}
-#if 0
-		if (f_texfile) {
-			if (f_ROW) {
-				GP.print_scheme_tex(*texfile, G, ROW_SCHEME);
-				}
-			if (f_COL) {
-				GP.print_scheme_tex(*texfile, G, COL_SCHEME);
-				}
-			}
-		if (f_Tex) {
-			char fname[1000];
-
-			snprintf(fname, sizeof(fname), "%s.tex", GP.label);
-			ofstream f(fname);
-
-			GP.print_scheme_tex(f, G, ROW);
-			GP.print_scheme_tex(f, G, COL);
-			}
-		if (f_intersection) {
-			Vector V, M;
-			intersection_of_columns(GP, G,
-				intersection_j1, intersection_j2, V, M, verbose_level - 1);
-			vm.m_l(2);
-			vm.s_i(0).swap(V);
-			vm.s_i(1).swap(M);
-			cout << "vm:" << vm << endl;
-			int idx;
-			mu.m_i_i(1);
-			if (VM.search(vm, &idx)) {
-				VM_mult.m_ii(idx, VM_mult.s_ii(idx) + 1);
-				}
-			else {
-				cout << "inserting at position " << idx << endl;
-				VM.insert_element(idx, vm);
-				VM_mult.insert_element(idx, mu);
-				}
-			}
-		if (f_w) {
-			GP.write_mode_stack(*g, GP.label);
-			nb_written++;
-			}
-#endif
 		}
 
-#if 0
-	if (f_w) {
-		*g << "-1 " << nb_written << endl;
-		delete g;
-
-		}
-
-	if (f_texfile) {
-		delete texfile;
-		}
-
-	if (f_intersection) {
-		int cl, c, l, j, L;
-		cout << "the intersection types are:" << endl;
-		for (i = 0; i < VM.s_l(); i++) {
-			//cout << setw(5) << VM_mult.s_ii(i) << " x " << VM.s_i(i) << endl;
-			cout << "intersection type " << i + 1 << ":" << endl;
-			Vector &V = VM.s_i(i).as_vector().s_i(0).as_vector();
-			Vector &M = VM.s_i(i).as_vector().s_i(1).as_vector();
-			//cout << "V=" << V << endl;
-			//cout << "M=" << M << endl;
-			cl = V.s_l();
-			for (c = 0; c < cl; c++) {
-				Vector &Vc = V.s_i(c).as_vector();
-				Vector &Mc = M.s_i(c).as_vector();
-				//cout << c << " : " << Vc << "," << Mc << endl;
-				l = Vc.s_l();
-				for (j = 0; j < l; j++) {
-					Vector &the_type = Vc.s_i(j).as_vector();
-					int mult = Mc.s_ii(j);
-					cout << setw(5) << mult << " x " << the_type << endl;
-					}
-				cout << "--------------------------" << endl;
-				}
-			cout << "appears " << setw(5) << VM_mult.s_ii(i) << " times" << endl;
-
-			classify *C;
-			classify *C_pencil;
-			int f_second = false;
-			int *pencil_data;
-			int pencil_data_size = 0;
-			int pos, b, hh;
-
-			C = new classify[cl];
-			C_pencil = new classify;
-
-			for (c = 0; c < cl; c++) {
-				Vector &Vc = V.s_i(c).as_vector();
-				Vector &Mc = M.s_i(c).as_vector();
-				//cout << c << " : " << Vc << "," << Mc << endl;
-				l = Vc.s_l();
-				L = 0;
-				for (j = 0; j < l; j++) {
-					Vector &the_type = Vc.s_i(j).as_vector();
-					int mult = Mc.s_ii(j);
-					if (the_type.s_ii(1) == 1 && the_type.s_ii(0)) {
-						pencil_data_size += mult;
-						}
-					}
-				}
-			//cout << "pencil_data_size=" << pencil_data_size << endl;
-			pencil_data = new int[pencil_data_size];
-			pos = 0;
-
-			for (c = 0; c < cl; c++) {
-				Vector &Vc = V.s_i(c).as_vector();
-				Vector &Mc = M.s_i(c).as_vector();
-				//cout << c << " : " << Vc << "," << Mc << endl;
-				l = Vc.s_l();
-				L = 0;
-				for (j = 0; j < l; j++) {
-					Vector &the_type = Vc.s_i(j).as_vector();
-					int mult = Mc.s_ii(j);
-					if (the_type.s_ii(1) == 1 && the_type.s_ii(0)) {
-						b = the_type.s_ii(0);
-						for (hh = 0; hh < mult; hh++) {
-							pencil_data[pos++] = b;
-							}
-						}
-					}
-				}
-			//cout << "pencil_data: ";
-			//int_vec_print(cout, pencil_data, pencil_data_size);
-			//cout << endl;
-			C_pencil->init(pencil_data, pencil_data_size, false /*f_second */, verbose_level - 2);
-			delete [] pencil_data;
-
-			for (c = 0; c < cl; c++) {
-				Vector &Vc = V.s_i(c).as_vector();
-				Vector &Mc = M.s_i(c).as_vector();
-				//cout << c << " : " << Vc << "," << Mc << endl;
-				l = Vc.s_l();
-				L = 0;
-				for (j = 0; j < l; j++) {
-					Vector &the_type = Vc.s_i(j).as_vector();
-					if (the_type.s_ii(1))
-						continue;
-					int mult = Mc.s_ii(j);
-					L += mult;
-					}
-				int *data;
-				int k, h, a;
-
-				data = new int[L];
-				k = 0;
-				for (j = 0; j < l; j++) {
-					Vector &the_type = Vc.s_i(j).as_vector();
-					int mult = Mc.s_ii(j);
-					if (the_type.s_ii(1))
-						continue;
-					a = the_type.s_ii(0);
-					for (h = 0; h < mult; h++) {
-						data[k++] = a;
-						}
-					}
-				//cout << "data: ";
-				//int_vec_print(cout, data, L);
-				//cout << endl;
-				C[c].init(data, L, f_second, verbose_level - 2);
-				delete [] data;
-				}
-
-			cout << "Intersection type " << i + 1 << ": pencil type: (";
-			C_pencil->print_naked(false /*f_backwards*/);
-			cout << ") ";
-			cout << "intersection type: (";
-			for (c = 0; c < cl; c++) {
-				C[c].print_naked(false /*f_backwards*/);
-				if (c < cl - 1)
-					cout << " | ";
-				}
-			cout << ") appears " << VM_mult.s_ii(i) << " times" << endl;
-			//C_pencil->print();
-			delete [] C;
-			delete C_pencil;
-			}
-		}
-#endif
 
 	if (f_v) {
 		cout << "combinatorics_domain::do_tdo_print done" << endl;
@@ -3137,11 +2922,9 @@ void combinatorics_domain::Dedekind_numbers(
 		cout << "combinatorics_domain::Dedekind_numbers" << endl;
 	}
 	{
-		char str[1000];
 		string fname;
 
-		snprintf(str, 1000, "Dedekind_%d_%d_%d_%d.csv", n_min, n_max, q_min, q_max);
-		fname.assign(str);
+		fname = "Dedekind_" + std::to_string(n_min) + "_" + std::to_string(n_max) + "_" + std::to_string(q_min) + "_" + std::to_string(q_max) + ".csv";
 
 
 		{
@@ -3248,11 +3031,9 @@ void combinatorics_domain::convert_stack_to_tdo(
 				GP.write(g, GP.label);
 			}
 			else {
-				char str[1000];
 				string s;
 
-				snprintf(str, sizeof(str), "%d", i);
-				s.assign(str);
+				s = std::to_string(i);
 				GP.write(g, s);
 			}
 
@@ -3283,7 +3064,7 @@ void combinatorics_domain::do_parameters_maximal_arc(
 	int m = 2, n = 2;
 	int v[2], b[2], aij[4];
 	int Q;
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
@@ -3299,7 +3080,7 @@ void combinatorics_domain::do_parameters_maximal_arc(
 	aij[1] = 0;
 	aij[2] = q - q / r + 1;
 	aij[3] = q / r;
-	snprintf(fname, 1000, "max_arc_q%d_r%d.stack", q, r);
+	fname = "max_arc_q" + std::to_string(q) + "_r" + std::to_string(r) + ".stack";
 
 	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
 }
@@ -3310,7 +3091,7 @@ void combinatorics_domain::do_parameters_arc(
 	int f_v = (verbose_level >= 1);
 	int m = 2, n = 1;
 	int v[2], b[1], aij[2];
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
@@ -3322,7 +3103,7 @@ void combinatorics_domain::do_parameters_arc(
 	b[0] = q * q + q + 1;
 	aij[0] = q + 1;
 	aij[1] = q + 1;
-	snprintf(fname, 1000, "arc_q%d_s%d_r%d.stack", q, s, r);
+	fname = "arc_q" + std::to_string(q) + "_s" + std::to_string(s) + "_r" + std::to_string(r) + ".stack";
 
 	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
 }
@@ -3380,10 +3161,10 @@ void combinatorics_domain::do_make_tree_of_all_k_subsets(
 	int *set;
 	int N;
 	int h, i;
-	char fname[1000];
+	string fname;
 
 
-	snprintf(fname, 1000, "all_k_subsets_n%d_k%d.tree", n, k);
+	fname = "all_k_subsets_n" + std::to_string(n) + "_k" + std::to_string(k) + ".tree";
 	set = NEW_int(k);
 	N = Combi.int_n_choose_k(n, k);
 

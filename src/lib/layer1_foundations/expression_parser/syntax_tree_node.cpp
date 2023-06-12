@@ -2167,6 +2167,29 @@ void syntax_tree_node::simplify(
 					}
 				}
 			}
+			for (i = 0; i < nb_nodes - 1; i++) {
+				if (Nodes[i]->is_text_node()
+						&& Nodes[i + 1]->is_text_node()) {
+					if (Nodes[i]->text_value_match(Nodes[i + 1]->T->value_text)) {
+						int exp1, exp2, exp3;
+
+						exp1 = Nodes[i]->get_exponent();
+						exp2 = Nodes[i + 1]->get_exponent();
+						exp3 = exp1 + exp2;
+						Nodes[i]->f_has_exponent = true;
+						Nodes[i]->exponent = exp3;
+
+						delete_one_child(i + 1, verbose_level);
+
+						i--;
+						if (f_v) {
+							cout << "syntax_tree_node::simplify "
+									"nb_nodes=" << nb_nodes << endl;
+						}
+
+					}
+				}
+			}
 		}
 		else if (type == operation_type_add) {
 			if (f_v) {
@@ -2924,9 +2947,11 @@ void syntax_tree_node::collect_like_terms(int verbose_level)
 	}
 
 	if (f_terminal) {
-		cout << "syntax_tree_node::collect_like_terms "
-				"cannot be a terminal node" << endl;
-		exit(1);
+		if (f_v) {
+			cout << "syntax_tree_node::collect_like_terms "
+					"cannot be a terminal node" << endl;
+		}
+		// do nothing
 	}
 	else {
 
@@ -2951,131 +2976,15 @@ void syntax_tree_node::collect_like_terms(int verbose_level)
 						"nb_children = " << nb_nodes << endl;
 			}
 
-
-			int i;
-			data_structures::int_matrix *I;
-			int *Coeff;
-			int N;
-
-			N = Tree->get_number_of_variables();
-
-
 			if (f_v) {
 				cout << "syntax_tree_node::collect_like_terms "
-						"before collect_terms_and_coefficients" << endl;
+						"before collect_like_terms_addition" << endl;
 			}
-			collect_terms_and_coefficients(
-					I, Coeff,
-					0 /*verbose_level*/);
+			collect_like_terms_addition(verbose_level);
 			if (f_v) {
 				cout << "syntax_tree_node::collect_like_terms "
-						"after collect_terms_and_coefficients" << endl;
+						"after collect_like_terms_addition" << endl;
 			}
-
-
-
-
-			if (f_v) {
-				cout << "syntax_tree_node::collect_like_terms "
-						"data collected:" << endl;
-				for (i = 0; i < nb_nodes; i++) {
-					cout << setw(3) << i << " / " << nb_nodes << " : ";
-					cout << Coeff[i] << " : ";
-					Int_vec_print(cout, I->M + i * N, N);
-					cout << endl;
-				}
-			}
-
-
-			I->sort_rows(verbose_level);
-
-			if (f_v) {
-				cout << "syntax_tree_node::collect_like_terms "
-						"after sorting:" << endl;
-				for (i = 0; i < nb_nodes; i++) {
-					cout << setw(3) << i << " / " << nb_nodes << " : ";
-					cout << setw(3) << Coeff[i] << " : ";
-					cout << setw(4) << I->perm_inv[i] << " : ";
-					Int_vec_print(cout, I->M + i * N, N);
-					cout << endl;
-				}
-			}
-
-			int Nb_nodes;
-
-			Nb_nodes = nb_nodes;
-
-			for (i = 0; i < Nb_nodes; i++) {
-
-				FREE_OBJECT(Nodes[i]);
-				Nodes[i] = NULL;
-			}
-			nb_nodes = 0;
-
-			int j, u, v, exp;
-			int coeff;
-			data_structures::sorting Sorting;
-
-			for (i = 0; i < Nb_nodes; i++) {
-
-				for (j = i + 1; j < Nb_nodes; j++) {
-					if (Sorting.integer_vec_compare(
-							I->M + i * N, I->M + j * N, N)) {
-						break;
-					}
-				}
-				syntax_tree_node *node;
-
-				node = NEW_OBJECT(syntax_tree_node);
-
-				coeff = Coeff[I->perm_inv[i]];
-				for (u = i + 1; u < j; u++) {
-					coeff = Tree->Fq->add(coeff, Coeff[I->perm_inv[u]]);
-				}
-
-				if (coeff) {
-
-					if (f_v) {
-						cout << "syntax_tree_node::collect_like_terms "
-								"adding term ";
-						cout << setw(3) << nb_nodes << " : ";
-						Int_vec_print(cout, I->M + i * N, N);
-						cout << " with coeff " << coeff << endl;
-					}
-					node->init_empty_multiplication_node(
-							Tree,
-							0 /*verbose_level*/);
-
-					if (coeff != 1) {
-						node->add_numerical_factor(
-								coeff, 0 /*verbose_level*/);
-					}
-					else if (Int_vec_is_zero(I->M + i * N, N)) {
-						node->add_numerical_factor(
-								coeff, 0 /*verbose_level*/);
-					}
-
-					for (v = 0; v < N; v++) {
-						exp = I->M[i * N + v];
-						if (exp) {
-							node->add_factor(
-									Tree->get_variable_name(v), exp,
-									0 /*verbose_level*/);
-						}
-					}
-
-					append_node(node, 0 /* verbose_level */);
-					//Nodes[nb_nodes++] = node;
-				}
-				i = j - 1;
-
-			}
-			if (f_v) {
-				cout << "syntax_tree_node::collect_like_terms "
-						"reduced from " << Nb_nodes << " to "
-						<< nb_nodes << " terms" << endl;
-			}
-			FREE_OBJECT(I);
 
 		}
 	}
@@ -3084,6 +2993,148 @@ void syntax_tree_node::collect_like_terms(int verbose_level)
 	if (f_v) {
 		cout << "syntax_tree_node::collect_like_terms done" << endl;
 	}
+}
+
+void syntax_tree_node::collect_like_terms_addition(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_like_terms_addition" << endl;
+	}
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_like_terms_addition "
+				"nb_children = " << nb_nodes << endl;
+	}
+
+	int i;
+	data_structures::int_matrix *I;
+	int *Coeff;
+	int N;
+
+	N = Tree->get_number_of_variables();
+
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_like_terms_addition "
+				"before collect_terms_and_coefficients" << endl;
+	}
+	collect_terms_and_coefficients(
+			I, Coeff,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "syntax_tree_node::collect_like_terms_addition "
+				"after collect_terms_and_coefficients" << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_like_terms_addition "
+				"data collected:" << endl;
+		for (i = 0; i < nb_nodes; i++) {
+			cout << setw(3) << i << " / " << nb_nodes << " : ";
+			cout << Coeff[i] << " : ";
+			Int_vec_print(cout, I->M + i * N, N);
+			cout << endl;
+		}
+	}
+
+
+	I->sort_rows(verbose_level);
+
+	if (f_v) {
+		cout << "syntax_tree_node::collect_like_terms_addition "
+				"after sorting:" << endl;
+		for (i = 0; i < nb_nodes; i++) {
+			cout << setw(3) << i << " / " << nb_nodes << " : ";
+			cout << setw(3) << Coeff[i] << " : ";
+			cout << setw(4) << I->perm_inv[i] << " : ";
+			Int_vec_print(cout, I->M + i * N, N);
+			cout << endl;
+		}
+	}
+
+	int Nb_nodes;
+
+	Nb_nodes = nb_nodes;
+
+	for (i = 0; i < Nb_nodes; i++) {
+
+		FREE_OBJECT(Nodes[i]);
+		Nodes[i] = NULL;
+	}
+	nb_nodes = 0;
+
+	int j, u, v, exp;
+	int coeff;
+	data_structures::sorting Sorting;
+
+	for (i = 0; i < Nb_nodes; i++) {
+
+		for (j = i + 1; j < Nb_nodes; j++) {
+			if (Sorting.integer_vec_compare(
+					I->M + i * N, I->M + j * N, N)) {
+				break;
+			}
+		}
+		syntax_tree_node *node;
+
+		node = NEW_OBJECT(syntax_tree_node);
+
+		coeff = Coeff[I->perm_inv[i]];
+		for (u = i + 1; u < j; u++) {
+			coeff = Tree->Fq->add(coeff, Coeff[I->perm_inv[u]]);
+		}
+
+		if (coeff) {
+
+			if (f_v) {
+				cout << "syntax_tree_node::collect_like_terms_addition "
+						"adding term ";
+				cout << setw(3) << nb_nodes << " : ";
+				Int_vec_print(cout, I->M + i * N, N);
+				cout << " with coeff " << coeff << endl;
+			}
+			node->init_empty_multiplication_node(
+					Tree,
+					0 /*verbose_level*/);
+
+			if (coeff != 1) {
+				node->add_numerical_factor(
+						coeff, 0 /*verbose_level*/);
+			}
+			else if (Int_vec_is_zero(I->M + i * N, N)) {
+				node->add_numerical_factor(
+						coeff, 0 /*verbose_level*/);
+			}
+
+			for (v = 0; v < N; v++) {
+				exp = I->M[i * N + v];
+				if (exp) {
+					node->add_factor(
+							Tree->get_variable_name(v), exp,
+							0 /*verbose_level*/);
+				}
+			}
+
+			append_node(node, 0 /* verbose_level */);
+			//Nodes[nb_nodes++] = node;
+		}
+		i = j - 1;
+
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::collect_like_terms_addition "
+				"reduced from " << Nb_nodes << " to "
+				<< nb_nodes << " terms" << endl;
+	}
+	FREE_OBJECT(I);
+
+
 }
 
 void syntax_tree_node::collect_monomial_terms(

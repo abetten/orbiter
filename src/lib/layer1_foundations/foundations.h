@@ -554,7 +554,7 @@ namespace knowledge_base {
 
 
 
-//! interface to magma and gap
+//! interface to external software such as latex, magma, gap, nauty, povray, as well as to Sajeeb's expression parser
 
 namespace l1_interfaces {
 

@@ -762,10 +762,8 @@ void crc_codes::crc32_remainders(
 
 	orbiter_kernel_system::file_io Fio;
 	string fname;
-	char str[1000];
 
-	snprintf(str, sizeof(str), "crc32_remainders_M%d.csv", message_length);
-	fname.assign(str);
+	fname = "crc32_remainders_M" + std::to_string(message_length) + ".csv";
 
 	Fio.int_matrix_write_csv(fname, Table, message_length_in_bits, 32);
 
@@ -2146,19 +2144,23 @@ void crc_codes::extract_block(
 	}
 
 	if (!Crc_options_description->f_input) {
-		cout << "crc_codes::extract_block please use -input <fname>" << endl;
+		cout << "crc_codes::extract_block "
+				"please use -input <fname>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_output) {
-		cout << "crc_codes::extract_block please use -output <fname>" << endl;
+		cout << "crc_codes::extract_block "
+				"please use -output <fname>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_block_length) {
-		cout << "crc_codes::extract_block please use -block_length <block_length>" << endl;
+		cout << "crc_codes::extract_block "
+				"please use -block_length <block_length>" << endl;
 		exit(1);
 	}
 	if (!Crc_options_description->f_selected_block) {
-		cout << "crc_codes::extract_block please use -selected_block <selected_block>" << endl;
+		cout << "crc_codes::extract_block "
+				"please use -selected_block <selected_block>" << endl;
 		exit(1);
 	}
 	int block_length;

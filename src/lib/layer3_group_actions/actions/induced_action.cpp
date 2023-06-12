@@ -60,16 +60,8 @@ action *induced_action::induced_action_on_interior_direct_product(
 
 
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_interior_direct_product_%ld_%d", A_old->degree, nb_rows);
-	snprintf(str2, 1000, " {\\rm OnIntDirectProduct}_{%ld,%d}", A_old->degree, nb_rows);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_on_interior_direct_product_" + std::to_string(A_old->degree) + "_" + std::to_string(nb_rows);
+	A->label_tex = A_old->label_tex + " {\\rm OnIntDirectProduct}_{" + std::to_string(A_old->degree) + "," + std::to_string(nb_rows) + "}";
 
 
 
@@ -139,17 +131,8 @@ action *induced_action::induced_action_on_set_partitions(
 	A = NEW_OBJECT(action);
 
 
-
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_set_partitions_%ld_%d", A_old->degree, partition_class_size);
-	snprintf(str2, 1000, " {\\rm OnSetPart}_{%ld,%d}", A_old->degree, partition_class_size);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_on_set_partitions_" + std::to_string(A_old->degree) + "_" + std::to_string(partition_class_size);
+	A->label_tex = A_old->label_tex + " {\\rm OnSetPart}_{" + std::to_string(A_old->degree) + "," + std::to_string(partition_class_size) + "}";
 
 
 
@@ -301,15 +284,9 @@ action *induced_action::induced_action_by_representation_on_conic(
 	induced_actions::action_by_representation *Rep;
 
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_OnConic");
-	snprintf(str2, 1000, " {\\rm OnConic}");
+	A->label = A_old->label + "_OnConic";
+	A->label_tex = A_old->label_tex + " {\\rm OnConic}";
 
-	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
 
 
 
@@ -398,15 +375,10 @@ action *induced_action::induced_action_on_cosets(
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_Cosets_%d", A_on_cosets->dimension_of_subspace);
-	snprintf(str2, 1000, " {\\rm OnCosets}_{%d}", A_on_cosets->dimension_of_subspace);
 
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_Cosets_" + std::to_string(A_on_cosets->dimension_of_subspace);
+	A->label_tex = A_old->label_tex + " {\\rm OnCosets}_{" + std::to_string(A_on_cosets->dimension_of_subspace) + "}";
+
 
 
 	if (f_v) {
@@ -481,15 +453,9 @@ action *induced_action::induced_action_on_factor_space(
 	}
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_Factor_%d_%d", AF->VS->dimension, AF->factor_space_len);
-	snprintf(str2, 1000, " {\\rm OnFactor}_{%d,%d}", AF->VS->dimension, AF->factor_space_len);
 
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_Factor_" + std::to_string(AF->VS->dimension) + "_" + std::to_string(AF->factor_space_len);
+	A->label_tex = A_old->label_tex + " {\\rm OnFactor}_{" + std::to_string(AF->VS->dimension) + "," + std::to_string(AF->factor_space_len) + "}";
 
 
 	if (f_v) {
@@ -563,16 +529,9 @@ action *induced_action::induced_action_on_grassmannian(int k, int verbose_level)
 	}
 	A = NEW_OBJECT(action);
 
+	A->label = A_old->label + "_Gr_" + std::to_string(k);
+	A->label_tex = A_old->label_tex + " {\\rm OnGr}_{" + std::to_string(k) + "}";
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_Gr_%d", k);
-	snprintf(str2, 1000, " {\\rm OnGr}_{%d}", k);
-
-	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
 
 
 	if (f_v) {
@@ -655,15 +614,8 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 	}
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_Gr_%d_%d", AG->n, AG->k);
-	snprintf(str2, 1000, " {\\rm OnGr}_{%d,%d}", AG->n, AG->k);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_Gr_" + std::to_string(AG->n) + "_" + std::to_string(AG->k);
+	A->label_tex = A_old->label + " {\\rm OnGr}_{" + std::to_string(AG->n) + "," + std::to_string(AG->k) + "}";
 
 
 	if (f_v) {
@@ -778,15 +730,8 @@ action *induced_action::induced_action_on_spread_set(
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_SpreadSet_%d_%d", AS->k, AS->q);
-	snprintf(str2, 1000, " {\\rm OnSpreadSet %d,%d}", AS->k, AS->q);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_SpreadSet_" + std::to_string(AS->k) + "_" + std::to_string(AS->q);
+	A->label_tex = A_old->label_tex + " {\\rm OnSpreadSet}_{" + std::to_string(AS->k) + "," + std::to_string(AS->q) + "}";
 
 
 
@@ -1152,10 +1097,8 @@ action *induced_action::induced_action_on_Galois_group(
 	}
 
 
-	A->label.assign(A_old->label);
-	A->label.append("_gal");
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(" {\\rm OnGal}");
+	A->label = A_old->label + "_gal";
+	A->label_tex = A_old->label_tex + " {\\rm OnGal}";
 
 	if (f_v) {
 		cout << "the old_action " << A_old->label
@@ -1247,10 +1190,8 @@ action *induced_action::induced_action_on_determinant(
 				"old group order = " << go1 << endl;
 	}
 
-	A->label.assign(A_old->label);
-	A->label.append("_det");
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(" {\\rm OnDet}");
+	A->label = A_old->label + "_det";
+	A->label_tex = A_old->label_tex + " {\\rm OnDet}";
 
 
 	if (f_v) {
@@ -1348,10 +1289,8 @@ action *induced_action::induced_action_on_sign(
 	A = NEW_OBJECT(action);
 
 
-	A->label.assign(A_old->label);
-	A->label.append("_OnSign");
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(" {\\rm OnSign}");
+	A->label = A_old->label + "_OnSign";
+	A->label_tex = A_old->label_tex + " {\\rm OnSign}";
 
 
 	if (f_v) {
@@ -1438,16 +1377,8 @@ action *induced_action::create_induced_action_by_conjugation(
 
 
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_C%ld", goi);
-	snprintf(str2, 1000, " {\\rm ByConj%ld}", goi);
-
-	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
-
+	A->label = A_old->label + "_Conj" + std::to_string(goi);
+	A->label_tex = A_old->label_tex + " {\\rm ByConj " + std::to_string(goi) + "}";
 
 
 	A->f_has_subaction = true;

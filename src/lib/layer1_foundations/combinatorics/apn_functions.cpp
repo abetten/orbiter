@@ -96,12 +96,10 @@ void apn_functions::search_APN(
 	cout << "nb_times = " << nb_times << endl;
 
 	string fname;
-	char str[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, sizeof(str), "APN_functions_q%d.csv", F->q);
+	fname = "APN_functions_q" + std::to_string(F->q) + ".csv";
 
-	fname.assign(str);
 	Fio.vector_matrix_write_csv(fname, Solutions);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -359,12 +357,10 @@ void apn_functions::search_APN_old(
 	FREE_int(f);
 
 	string fname;
-	char str[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, sizeof(str), "APN_functions_q%d.csv", F->q);
+	fname = "APN_functions_q" + std::to_string(F->q) + ".csv";
 
-	fname.assign(str);
 	Fio.vector_matrix_write_csv(fname, Solutions);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;

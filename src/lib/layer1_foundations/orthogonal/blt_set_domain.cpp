@@ -124,10 +124,8 @@ void blt_set_domain::init_blt_set_domain(
 
 	max_degree = 1 * (q - 1);
 
-	char str[1000];
 
-	snprintf(str, sizeof(str), "BLT_q%d", q);
-	prefix.assign(str);
+	prefix = "BLT_q" + std::to_string(q);
 
 
 	target_size = q + 1;
@@ -1297,13 +1295,10 @@ int blt_set_domain::create_graph(
 	CG = NEW_OBJECT(graph_theory::colored_graph);
 
 	{
-		char str[1000];
 		string label, label_tex;
 
-		snprintf(str, sizeof(str), "BLT_%d", case_number);
-		label.assign(str);
-		snprintf(str, sizeof(str), "BLT\\_%d", case_number);
-		label_tex.assign(str);
+		label = "BLT_" + std::to_string(case_number);
+		label_tex = "BLT\\_" + std::to_string(case_number);
 
 		CG->init(
 				nb_candidates /* nb_points */,
@@ -1320,13 +1315,9 @@ int blt_set_domain::create_graph(
 
 	{
 
-		char str[1000];
 		std::string fname;
 
-		snprintf(str, sizeof(str), "_graph_%d_%d",
-				starter_size, case_number);
-		fname.assign(prefix);
-		fname.append(str);
+		fname = prefix + "_graph_" + std::to_string(starter_size) + "_" + std::to_string(case_number);
 		CG->init_user_data(
 				Starter_set, starter_size, verbose_level - 2);
 		CG->fname_base.assign(fname);

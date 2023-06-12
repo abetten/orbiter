@@ -446,41 +446,25 @@ void finite_field_io::int_vec_print_elements_exponential(
 void finite_field_io::make_fname_addition_table_csv(
 		std::string &fname)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "GF_q%d", F->q);
-	fname.assign(str);
-	fname.append("_table_add.csv");
+	fname = "GF_q" + std::to_string(F->q) + "_table_add.csv";
 }
 
 void finite_field_io::make_fname_multiplication_table_csv(
 		std::string &fname)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "GF_q%d", F->q);
-	fname.assign(str);
-	fname.append("_table_mul.csv");
+	fname = "GF_q" + std::to_string(F->q) + "_table_mul.csv";
 }
 
 void finite_field_io::make_fname_addition_table_reordered_csv(
 		std::string &fname)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "GF_q%d", F->q);
-	fname.assign(str);
-	fname.append("_table_add_r.csv");
+	fname = "GF_q" + std::to_string(F->q) + "_table_add_r.csv";
 }
 
 void finite_field_io::make_fname_multiplication_table_reordered_csv(
 		std::string &fname)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "GF_q%d", F->q);
-	fname.assign(str);
-	fname.append("_table_mul_r.csv");
+	fname = "GF_q" + std::to_string(F->q) + "_table_mul_r.csv";
 }
 
 void finite_field_io::addition_table_save_csv(
@@ -923,12 +907,10 @@ void finite_field_io::report_subfields_detailed(
 
 		poly_numeric = M->min_poly_rank;
 
-		char str[1000];
-
-		snprintf(str, sizeof(str), "%ld", poly_numeric);
 		string poly_text;
 
-		poly_text.assign(str);
+		poly_text = std::to_string(poly_numeric);
+
 		Fq->init_override_polynomial_small_order(q0, poly_text,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,

@@ -3762,13 +3762,13 @@ void file_io::read_ascii_set_of_sets_constant_size(
 }
 
 void file_io::write_decomposition_stack(
-		char *fname, int m, int n,
+		std::string &fname, int m, int n,
 		int *v, int *b, int *aij, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "file_io::write_widor" << endl;
+		cout << "file_io::write_decomposition_stack" << endl;
 	}
 	{
 		ofstream f(fname);

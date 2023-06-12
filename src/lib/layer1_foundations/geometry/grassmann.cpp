@@ -1572,7 +1572,8 @@ void grassmann::make_spread_set_from_spread(
 	int h, h1, k2;
 
 	if (f_v) {
-		cout << "grassmann::make_spread_set_from_spread, spread_sz = " << spread_sz << endl;
+		cout << "grassmann::make_spread_set_from_spread, "
+				"spread_sz = " << spread_sz << endl;
 	}
 
 	sz = spread_sz - 1;
@@ -1583,7 +1584,8 @@ void grassmann::make_spread_set_from_spread(
 
 	for (h = 0; h < spread_sz; h++) {
 		if (f_v) {
-			cout << "grassmann::make_spread_set_from_spread, h = " << h << " / " << spread_sz << endl;
+			cout << "grassmann::make_spread_set_from_spread, "
+					"h = " << h << " / " << spread_sz << endl;
 		}
 
 		if (h == 1) {
@@ -1972,12 +1974,9 @@ void grassmann::create_latex_report(
 		string extra_praeamble;
 
 
-		char str[1000];
 
-		snprintf(str, 1000, "Gr_%d_%d_%d.tex", n, k, F->q);
-		fname.assign(str);
-		snprintf(str, 1000, "Cheat Sheet ${\\rm Gr}_{%d,%d,%d}$", n, k, F->q);
-		title.assign(str);
+		fname = "Gr_" + std::to_string(n) + "_" + std::to_string(k) + "_" + std::to_string(F->q) + ".tex";
+		title = "Cheat Sheet ${\\rm Gr}_{" + std::to_string(n) + "," + std::to_string(k) + "," + std::to_string(F->q) + "}$";
 
 
 

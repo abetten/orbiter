@@ -306,7 +306,8 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 				"after Surf->init_surface_domain" << endl;
 	}
 
-	Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
+	Surf_A = NEW_OBJECT(
+			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
 
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "

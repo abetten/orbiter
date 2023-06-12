@@ -63,12 +63,9 @@ void projective_space_reporting::create_latex_report(
 		string extra_praeamble;
 
 
-		char str[1000];
 
-		snprintf(str, 1000, "PG_%d_%d.tex", P->Subspaces->n, P->Subspaces->F->q);
-		fname.assign(str);
-		snprintf(str, 1000, "Cheat Sheet PG($%d,%d$)", P->Subspaces->n, P->Subspaces->F->q);
-		title.assign(str);
+		fname = "PG_" + std::to_string(P->Subspaces->n) + "_" + std::to_string(P->Subspaces->q) + ".tex";
+		title = "Cheat Sheet PG($" + std::to_string(P->Subspaces->n) + "," + std::to_string(P->Subspaces->q) + "$)";
 
 
 
@@ -173,7 +170,6 @@ void projective_space_reporting::report(
 
 		if (P->Subspaces->N_points < 1000) {
 			string fname_base;
-			char str[1000];
 			long int *set;
 			int i;
 
@@ -181,8 +177,7 @@ void projective_space_reporting::report(
 			for (i = 0; i < P->Subspaces->N_points; i++) {
 				set[i] = i;
 			}
-			snprintf(str, sizeof(str), "plane_of_order_%d", P->Subspaces->q);
-			fname_base.assign(str);
+			fname_base = "plane_of_order_" + std::to_string(P->Subspaces->q);
 
 			graphics::plot_tools Pt;
 

@@ -194,11 +194,7 @@ void minimum_polynomial::compute_subfield_polynomial(
 
 	min_poly_rank = Gg.AG_element_rank(F->p, K, 1, e1 + 1);
 
-	char str[1000];
-
-	snprintf(str, sizeof(str), "%ld", min_poly_rank);
-
-	min_poly_rank_as_string.assign(str);
+	min_poly_rank_as_string = std::to_string(min_poly_rank);
 
 	if (f_v) {
 		ring_theory::unipoly_object elt;

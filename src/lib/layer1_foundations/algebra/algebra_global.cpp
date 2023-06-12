@@ -788,11 +788,9 @@ void algebra_global::order_of_q_mod_n(
 		cout << "algebra_global::order_of_q_mod_n" << endl;
 	}
 	{
-		char str[1000];
 		string fname;
 
-		snprintf(str, 1000, "order_of_q_mod_n_q%d_%d_%d.csv", q, n_min, n_max);
-		fname.assign(str);
+		fname = "order_of_q_mod_n_q" + std::to_string(q) + "_" + std::to_string(n_min) + "_" + std::to_string(n_max) + ".csv";
 
 
 		{
@@ -864,11 +862,9 @@ void algebra_global::power_function_mod_n(
 		cout << "algebra_global::power_function_mod_n" << endl;
 	}
 	{
-		char str[1000];
 		string fname;
 
-		snprintf(str, 1000, "power_function_k%d_n%d.csv", k, n);
-		fname.assign(str);
+		fname = "power_function_k" + std::to_string(k) + "_n" + std::to_string(n) + ".csv";
 
 
 		{
@@ -981,19 +977,16 @@ void algebra_global::do_trace(
 	Int_vec_print_fully(cout, T1, nb_T1);
 	cout << endl;
 
-	char str[1000];
 	string fname_csv;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, 1000, "F_q%d_trace.csv", F->q);
-	fname_csv.assign(str);
+	fname_csv = "F_q" + std::to_string(F->q) + "_trace.csv";
 	Fio.int_matrix_write_csv(fname_csv, T, 1, F->q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 
-	snprintf(str, 1000, "F_q%d_trace_0.csv", F->q);
-	fname_csv.assign(str);
+	fname_csv = "F_q" + std::to_string(F->q) + "_trace_0.csv";
 
 	string label;
 	label.assign("Trace_0");
@@ -1001,8 +994,7 @@ void algebra_global::do_trace(
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
-	snprintf(str, 1000, "F_q%d_trace_1.csv", F->q);
-	fname_csv.assign(str);
+	fname_csv = "F_q" + std::to_string(F->q) + "_trace_1.csv";
 	label.assign("Trace_1");
 	Fio.int_vec_write_csv(T1, nb_T1, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
@@ -1053,20 +1045,17 @@ void algebra_global::do_norm(
 	cout << endl;
 
 
-	char str[1000];
 	string fname_csv;
 	orbiter_kernel_system::file_io Fio;
 	string label;
 
-	snprintf(str, 1000, "F_q%d_norm_0.csv", F->q);
-	fname_csv.assign(str);
+	fname_csv = "F_q" + std::to_string(F->q) + "_norm_0.csv";
 	label.assign("Norm_0");
 	Fio.int_vec_write_csv(T0, nb_T0, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
-	snprintf(str, 1000, "F_q%d_norm_1.csv", F->q);
-	fname_csv.assign(str);
+	fname_csv = "F_q" + std::to_string(F->q) + "_norm_1.csv";
 	label.assign("Norm_1");
 	Fio.int_vec_write_csv(T1, nb_T1, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
@@ -1606,10 +1595,7 @@ void algebra_global::apply_power_function(
 	fname_csv_out.assign(fname_csv_in);
 	ST.chop_off_extension(fname_csv_out);
 
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_power_%ld.csv", d);
-	fname_csv_out.append(str);
+	fname_csv_out += "_power_" + std::to_string(d) + ".csv";
 
 	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
@@ -1694,19 +1680,16 @@ void algebra_global::Walsh_matrix(
 			}
 		}
 	}
-	char str[1000];
 	string fname_csv;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, 1000, "Walsh_pm_%d.csv", n);
-	fname_csv.assign(str);
+	fname_csv = "Walsh_pm_" + std::to_string(n) + ".csv";
 	Fio.int_matrix_write_csv(fname_csv, W, Q, Q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 
-	snprintf(str, 1000, "Walsh_01_%d.csv", n);
-	fname_csv.assign(str);
+	fname_csv = "Walsh_01_" + std::to_string(n) + ".csv";
 	Fio.int_matrix_write_csv(fname_csv, W01, Q, Q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
@@ -1755,19 +1738,16 @@ void algebra_global::Vandermonde_matrix(
 				"after invert_matrix" << endl;
 	}
 
-	char str[1000];
 	string fname_csv;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, 1000, "Vandermonde_q%d.csv", q);
-	fname_csv.assign(str);
+	fname_csv = "Vandermonde_q" + std::to_string(q) + ".csv";
 	Fio.int_matrix_write_csv(fname_csv, W, q, q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 
-	snprintf(str, 1000, "Vandermonde_q%d_inv.csv", q);
-	fname_csv.assign(str);
+	fname_csv = "Vandermonde_q" + std::to_string(q) + "_inv.csv";
 	Fio.int_matrix_write_csv(fname_csv, W_inv, q, q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
@@ -2335,12 +2315,8 @@ void algebra_global::create_Nth_roots_and_write_report(
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		snprintf(str, 1000, "Nth_roots_q%d_n%d.tex", F->q, n);
-		fname.assign(str);
-		snprintf(str, 1000, "Nth roots");
-		title.assign(str);
+		fname = "Nth_roots_q" + std::to_string(F->q) + "_n" + std::to_string(n) + ".tex";
+		title = "Nth roots";
 
 
 

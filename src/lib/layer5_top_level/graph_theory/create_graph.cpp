@@ -362,11 +362,9 @@ void create_graph::init(
 			Adj[j * N + i] = 1;
 		}
 		FREE_int(Idx);
-		char str[1000];
-		snprintf(str, sizeof(str), "graph_v%d_e%d", description->n, sz);
-		label.assign(str);
-		snprintf(str, sizeof(str), "Graph\\_%d\\_%d", description->n, sz);
-		label_tex.assign(str);
+
+		label = "graph_v" + std::to_string(description->n) + "_e" + std::to_string(sz);
+		label_tex = "Graph\\_v" + std::to_string(description->n) + "\\_e" + std::to_string(sz);
 	}
 	else if (description->f_edges_as_pairs) {
 		int h, i, j;
@@ -388,11 +386,10 @@ void create_graph::init(
 			Adj[j * N + i] = 1;
 		}
 		FREE_int(Idx);
-		char str[1000];
-		snprintf(str, sizeof(str), "graph_v%d_e%d", description->n, sz2);
-		label.assign(str);
-		snprintf(str, sizeof(str), "Graph\\_%d\\_%d", description->n, sz2);
-		label_tex.assign(str);
+
+		label = "graph_v" + std::to_string(description->n) + "_e" + std::to_string(sz2);
+		label_tex = "Graph\\_v" + std::to_string(description->n) + "\\_e" + std::to_string(sz2);
+
 	}
 	else if (description->f_cycle) {
 
@@ -612,11 +609,8 @@ void create_graph::init(
 		}
 
 
-
-		snprintf(str, sizeof(str), "non_attacking_queens_graph_%d", n);
-		label.assign(str);
-		snprintf(str, sizeof(str), "non\\_attacking\\_queens\\_graph\\_%d", n);
-		label_tex.assign(str);
+		label = "non_attacking_queens_graph_" + std::to_string(n);
+		label_tex = "non\\_attacking\\_queens\\_graph\\_" + std::to_string(n);
 
 	}
 	else if (description->f_disjoint_sets_graph) {
@@ -836,11 +830,8 @@ void create_graph::create_cycle(
 				"after GT.make_cycle_graph" << endl;
 	}
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Cycle_%d", n);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Cycle\\_%d", n);
-	label_tex.assign(str);
+	label = "Cycle_" + std::to_string(n);
+	label_tex = "Cycle\\_" + std::to_string(n);
 
 
 	if (f_v) {
@@ -876,11 +867,8 @@ void create_graph::create_inversion_graph(
 				"after GT.make_inversion_graph" << endl;
 	}
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Inversion_%d", n);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Inversion\\_%d", n);
-	label_tex.assign(str);
+	label = "Inversion_" + std::to_string(n);
+	label_tex = "Inversion\\_" + std::to_string(n);
 
 
 	FREE_int(perm);
@@ -916,11 +904,8 @@ void create_graph::create_Hamming(
 				"after GT.make_Hamming_graph" << endl;
 	}
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Hamming_%d_%d", n, q);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Hamming\\_%d\\_%d", n, q);
-	label_tex.assign(str);
+	label = "Hamming_" + std::to_string(n) + "_" + std::to_string(q);
+	label_tex = "Hamming\\_" + std::to_string(n) + "\\_" + std::to_string(q);
 
 
 	if (f_v) {
@@ -952,11 +937,8 @@ void create_graph::create_Johnson(
 				"after GT.make_Johnson_graph" << endl;
 	}
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Johnson_%d_%d_%d", n, k, s);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Johnson\\_%d\\_%d\\_%d", n, k, s);
-	label_tex.assign(str);
+	label = "Johnson_" + std::to_string(n) + "_" + std::to_string(k) + "_" + std::to_string(s);
+	label_tex = "Johnson\\_" + std::to_string(n) + "\\_" + std::to_string(k) + "\\_" + std::to_string(s);
 
 
 	if (f_v) {
@@ -990,11 +972,8 @@ void create_graph::create_Paley(
 				"after GT.make_Paley_graph" << endl;
 	}
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Paley_%d", Fq->q);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Paley\\_%d", Fq->q);
-	label_tex.assign(str);
+	label = "Paley_" + std::to_string(Fq->q);
+	label_tex = "Paley\\_" + std::to_string(Fq->q);
 
 
 	if (f_v) {
@@ -1089,12 +1068,8 @@ void create_graph::create_Sarnak(
 	}
 
 
-
-	char str[1000];
-	snprintf(str, sizeof(str), "Sarnak_%d_%d", p, q);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Sarnak\\_%d\\_%d", p, q);
-	label_tex.assign(str);
+	label = "Sarnak_" + std::to_string(p) + "_" + std::to_string(q);
+	label_tex = "Sarnak\\_" + std::to_string(p) + "\\_" + std::to_string(q);
 
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
@@ -1130,12 +1105,8 @@ void create_graph::create_Schlaefli(
 				"after GT.make_Schlaefli_graph" << endl;
 	}
 
-	char str[1000];
-
-	snprintf(str, sizeof(str), "Schlaefli_%d", F->q);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Schlaefli\\_%d", F->q);
-	label_tex.assign(str);
+	label = "Schlaefli_" + std::to_string(F->q);
+	label_tex = "Schlaefli\\_" + std::to_string(F->q);
 
 
 	if (f_v) {
@@ -1305,11 +1276,8 @@ void create_graph::create_Shrikhande(
 
 	//N = goi;
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Shrikhande");
-	label.assign(str);
-	snprintf(str, sizeof(str), "Shrikhande");
-	label_tex.assign(str);
+	label = "Shrikhande";
+	label_tex = "Shrikhande";
 
 
 	FREE_int(v);
@@ -1347,11 +1315,8 @@ void create_graph::create_Winnie_Li(
 	}
 
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Winnie_Li_%d_%d", Fq->q, index);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Winnie_Li\\_%d\\_%d", Fq->q, index);
-	label_tex.assign(str);
+	label = "Winnie_Li_" + std::to_string(Fq->q) + "_" + std::to_string(index);
+	label_tex = "Winnie\\_Li\\_" + std::to_string(Fq->q) + "\\_" + std::to_string(index);
 
 
 
@@ -1389,11 +1354,8 @@ void create_graph::create_Grassmann(
 	}
 
 
-	char str[1000];
-	snprintf(str, sizeof(str), "Grassmann_%d_%d_%d_%d", n, k, F->q, r);
-	label.assign(str);
-	snprintf(str, sizeof(str), "Grassmann\\_%d\\_%d\\_%d\\_%d", n, k, F->q, r);
-	label_tex.assign(str);
+	label = "Grassmann_" + std::to_string(n) + "_" + std::to_string(k) + " " + std::to_string(F->q) + "_" + std::to_string(r);
+	label_tex = "Grassmann\\_" + std::to_string(n) + "\\_" + std::to_string(k) + "\\_" + std::to_string(F->q) + "\\_" + std::to_string(r);
 
 
 	if (f_v) {

@@ -53,7 +53,7 @@ orbits_create_description::orbits_create_description()
 	f_override_generators = false;
 	//std::string override_generators_label;
 
-	#if 0
+#if 0
 	f_draw_tree = false;
 	draw_tree_idx = 0;
 

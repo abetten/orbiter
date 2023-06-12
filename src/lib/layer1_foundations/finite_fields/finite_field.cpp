@@ -230,12 +230,9 @@ void finite_field::finite_field_init(
 				"after finite_field_init_small_order" << endl;
 	}
 
-	char str[1000];
+	label = "GF_" + q_text;
 
-	snprintf(str, sizeof(str), "GF_%s", q_text.c_str());
-	label.assign(str);
-	snprintf(str, sizeof(str), "{\\mathbb F}_{%s}", q_text.c_str());
-	label_tex.assign(str);
+	label_tex = "{\\mathbb F}_{" + q_text + "}";
 
 
 	if (f_v) {
@@ -409,12 +406,9 @@ void finite_field::finite_field_init_small_order(int q,
 		}
 	}
 
-	char str[1000];
+	label = "GF_" + std::to_string(q);
 
-	snprintf(str, sizeof(str), "GF_%d", q);
-	label.assign(str);
-	snprintf(str, sizeof(str), "{\\mathbb F}_{%d}", q);
-	label_tex.assign(str);
+	label_tex = "{\\mathbb F}_{" + std::to_string(q) + "}";
 
 
 
@@ -647,23 +641,11 @@ void finite_field::init_override_polynomial_small_order(
 		}
 	}
 
-#if 0
-	l = my_poly.length();
-	polynomial = NEW_char(l + 1);
-	strcpy(polynomial, my_poly.c_str());
-#endif
 
-	char str[1000];
 
-	snprintf(str, sizeof(str), "GF_%d", q);
-	label.assign(str);
-	label.append("_poly");
-	label.append(override_poly);
+	label = "GF_" + std::to_string(q) + "_poly" + override_poly;
 
-	snprintf(str, sizeof(str), "{\\mathbb F}_{%d,", q);
-	label_tex.assign(str);
-	label_tex.append(override_poly);
-	label_tex.append("}");
+	label_tex = "{\\mathbb F}_{" + std::to_string(q) + "," + override_poly + "}";
 
 
 	if (f_v) {

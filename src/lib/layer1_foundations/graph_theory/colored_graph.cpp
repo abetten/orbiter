@@ -1083,7 +1083,6 @@ void colored_graph::draw_on_circle_2(
 		G.circle(Px[i], Py[i], rad2);
 	}
 	if (!Draw_options->f_nodes_empty) {
-		char str[1000];
 		string s;
 		for (i = 0; i < n; i++) {
 
@@ -1092,14 +1091,12 @@ void colored_graph::draw_on_circle_2(
 
 			if (nb_colors_per_vertex == 1) {
 
-				snprintf(str, 1000, "$%d_{%d}$", i, point_color[i]);
-				s.assign(str);
+				s = "$" + std::to_string(i) + "_{" + std::to_string(point_color[i]) + "}$";
 
 			}
 			else {
 
-				snprintf(str, 1000, "%d", i);
-				s.assign(str);
+				s = std::to_string(i);
 
 			}
 

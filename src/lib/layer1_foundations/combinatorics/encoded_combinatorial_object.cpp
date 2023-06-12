@@ -740,18 +740,12 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 	block_labels = new string [b];
 
 	for (i = 0; i < v; i++) {
-		char str[1000];
-
-		snprintf(str, sizeof(str), "%d", orbit[i]);
-		point_labels[i].assign(str);
+		point_labels[i] = std::to_string(orbit[i]);
 	}
 
 
 	for (j = 0; j < b; j++) {
-		char str[1000];
-
-		snprintf(str, sizeof(str), "%d", orbit[nb_rows + j]);
-		block_labels[j].assign(str);
+		point_labels[i] = std::to_string(orbit[nb_rows + j]);
 	}
 
 	graphics::draw_incidence_structure_description *Descr;

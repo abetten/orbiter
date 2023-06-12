@@ -1748,7 +1748,7 @@ void projective_space_subspaces::line_intersection_type_collected(
 		Grass_lines->unrank_lint(rk, 0 /* verbose_level */);
 		cnt = 0;
 
-		// find which points in the set lie on the line:
+		// count the number of points in the set that lie on the line:
 		for (h = 0; h < set_size; h++) {
 
 			Int_vec_copy(Grass_lines->M, M, 2 * d);
@@ -1952,11 +1952,8 @@ void projective_space_subspaces::export_restricted_incidence_matrix_to_csv(
 
 void projective_space_subspaces::make_fname_incidence_matrix_csv(std::string &fname)
 {
-	char str[1000];
 
-	snprintf(str, sizeof(str), "PG_n%d_q%d", n, q);
-	fname.assign(str);
-	fname.append("_incidence_matrix.csv");
+	fname = "PG_n" + std::to_string(n) + "_q" + std::to_string(q) + "_incidence_matrix.csv";
 }
 
 

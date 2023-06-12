@@ -139,16 +139,8 @@ void create_RS_code::do_report(
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		snprintf(str, 1000, "RS_codes_q%d_n%d_d%d.tex",
-				F->q,
-				n,
-				d
-				);
-		fname.assign(str);
-		snprintf(str, 1000, "RS codes");
-		title.assign(str);
+		fname = "RS_codes_q" + std::to_string(F->q) + "_n" + std::to_string(n) + "_d" + std::to_string(d);
+		title = "RS codes";
 
 
 

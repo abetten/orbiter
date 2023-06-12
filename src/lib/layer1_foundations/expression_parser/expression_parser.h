@@ -655,6 +655,8 @@ public:
 	void simplify_exponents(int verbose_level);
 	void sort_terms(int verbose_level);
 	void collect_like_terms(int verbose_level);
+	void collect_like_terms_addition(
+			int verbose_level);
 	void collect_monomial_terms(
 			data_structures::int_matrix *&I, int *&Coeff,
 			int verbose_level);

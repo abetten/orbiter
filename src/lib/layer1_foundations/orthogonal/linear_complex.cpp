@@ -236,15 +236,13 @@ void linear_complex::make_spreadsheet_of_neighbors(
 	data_structures::spreadsheet *&Sp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char str[1000];
 	string fname_csv;
 
 	if (f_v) {
 		cout << "linear_complex::make_spreadsheet_of_neighbors" << endl;
 	}
 
-	snprintf(str, sizeof(str), "neighbors_%d.csv", Surf->F->q);
-	fname_csv.assign(str);
+	fname_csv = "neighbors_" + std::to_string(Surf->F->q) + ".csv";
 
 
 	Surf->make_spreadsheet_of_lines_in_three_kinds(Sp,

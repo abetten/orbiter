@@ -60,12 +60,10 @@ void coding_theory_domain::make_mac_williams_equations(
 		string extra_praeamble;
 
 
-		char str[1000];
+		fname = "MacWilliams_n" + std::to_string(n) + "_k" + std::to_string(k) + "_q" + std::to_string(q) + ".tex";
 
-		snprintf(str, 1000, "MacWilliams_n%d_k%d_q%d.tex", n, k, q);
-		fname.assign(str);
-		snprintf(str, 1000, "MacWilliams System for a $[%d,%d]_{%d}$ code", n, k, q);
-		title.assign(str);
+		title = "MacWilliams System for a $[" + std::to_string(n) + "," + std::to_string(k) + "]_{" + std::to_string(q) + "}$ code";
+
 
 
 		{
@@ -169,13 +167,8 @@ void coding_theory_domain::make_table_of_bounds(
 	}
 	orbiter_kernel_system::file_io Fio;
 	std::string fname;
-	char str[1000];
 
-	snprintf(str, sizeof(str), "_n%d_q%d", n_max, q);
-
-	fname.assign("table_of_bounds");
-	fname.append(str);
-	fname.append(".csv");
+	fname= "table_of_bounds_n" + std::to_string(n_max) + "_q" + std::to_string(q) + ".csv";
 
 	string *headers;
 
@@ -227,7 +220,8 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 	N_points = Gg.nb_PG_elements(nmk - 1, F->q);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code N_points = " << N_points << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"N_points = " << N_points << endl;
 	}
 
 	f_forbidden = NEW_int(N_points);
@@ -264,12 +258,14 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 			verbose_level);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"parity check matrix:" << endl;
 		Int_matrix_print(M, nmk, n);
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"parity check matrix:" << endl;
 		Int_vec_print_fully(cout, M, nmk * n);
 		cout << endl;
 	}
@@ -277,13 +273,15 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 	F->Linear_algebra->RREF_and_kernel(n, nmk, M, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"generator matrix:" << endl;
 		Int_matrix_print(M + nmk * n, k, n);
 	}
 
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"generator matrix:" << endl;
 		Int_vec_print_fully(cout, M + nmk * n, k * n);
 		cout << endl;
 	}
@@ -315,7 +313,8 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code level = " << level << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"level = " << level << endl;
 		cout << "coding_theory_domain::make_gilbert_varshamov_code set = ";
 		Lint_vec_print(cout, set, level);
 		cout << endl;
@@ -815,11 +814,10 @@ void coding_theory_domain::make_Hamming_space_distance_matrix(
 	}
 
 	string fname;
-	char str[1000];
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, sizeof(str), "Hamming_n%d_q%d.csv", n, F->q);
-	fname.assign(str);
+
+	fname = "Hamming_n" + std::to_string(n) + "_q" + std::to_string(F->q) + ".csv";
 
 	Fio.int_matrix_write_csv(fname, Table, height, width);
 
@@ -1071,7 +1069,7 @@ void coding_theory_domain::code_projective_weight_enumerator(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
-	int N, h, wt, i;
+	long int N, h, wt, i;
 	int *msg;
 	int *word;
 	int t0, t1, dt;
@@ -1872,12 +1870,9 @@ void coding_theory_domain::do_linear_code_through_columns_of_generator_matrix(
 		string extra_praeamble;
 
 
-		char str[1000];
 
-		snprintf(str, 1000, "code_n%d_k%d_q%d.tex", n, k, F->q);
-		fname.assign(str);
-		snprintf(str, 1000, "Linear $[%d,%d]$ code over GF($%d$)", n, k, F->q);
-		title.assign(str);
+		fname = "code_n" + std::to_string(n) + "_k" + std::to_string(k) + "_q" + std::to_string(F->q) + ".tex";
+		title = "Linear $[" + std::to_string(n) + "," + std::to_string(k) + "]$ code over GF($" + std::to_string(F->q) + "$)";
 
 
 
@@ -2150,12 +2145,10 @@ void coding_theory_domain::do_sylvester_hadamard(
 	}
 
 	{
-		char str[1000];
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		snprintf(str, sizeof(str), "Sylvester_Hadamard_code_%d.csv", n);
-		fname.assign(str);
+		fname = "Sylvester_Hadamard_code_" + std::to_string(n) + ".csv";
 		Fio.int_matrix_write_csv(fname, M1, 2 * sz, sz);
 		if (f_v) {
 			cout << "coding_theory_domain::do_sylvester_hadamard written file "
@@ -2174,12 +2167,10 @@ void coding_theory_domain::do_sylvester_hadamard(
 	}
 
 	{
-		char str[1000];
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		snprintf(str, sizeof(str), "Sylvester_Hadamard_code_ranks_%d.csv", n);
-		fname.assign(str);
+		fname = "Sylvester_Hadamard_code_ranks_" + std::to_string(n) + ".csv";
 		Fio.lint_matrix_write_csv(fname, set, 2 * sz, 1);
 
 		if (f_v) {
@@ -2984,12 +2975,9 @@ void coding_theory_domain::field_reduction(
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		snprintf(str, 1000, "field_reduction_Q%d_q%d_%d_%d.tex", FQ->q, Fq->q, m, n);
-		fname.assign(str);
-		snprintf(str, 1000, "Field Reduction");
-		title.assign(str);
+		fname = "field_reduction_Q" + std::to_string(FQ->q) + "_q" + std::to_string(Fq->q)
+				+ "_" + std::to_string(m) + "_" + std::to_string(n) + ".tex";
+		title = "Field Reduction";
 
 
 

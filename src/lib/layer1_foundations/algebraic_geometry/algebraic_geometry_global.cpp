@@ -178,14 +178,9 @@ void algebraic_geometry_global::report_grassmannian(
 	string extra_praeamble;
 
 
-	char str[1000];
 
-	snprintf(str, 1000, "Gr_%d_%d_%d.tex",
-			P->Subspaces->n + 1, k, P->Subspaces->F->q);
-	fname.assign(str);
-	snprintf(str, 1000, "Cheat Sheet Gr($%d,%d,%d$)",
-			P->Subspaces->n + 1, k, P->Subspaces->F->q);
-	title.assign(str);
+	fname = "Gr_" + std::to_string(P->Subspaces->n + 1) + "_" + std::to_string(k) + "_" + std::to_string(P->Subspaces->F->q) + ".tex";
+	title = "Cheat Sheet Gr($" + std::to_string(P->Subspaces->n + 1) + "," + std::to_string(k) + "," + std::to_string(P->Subspaces->F->q) + "$)";
 
 
 

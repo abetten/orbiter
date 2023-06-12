@@ -334,7 +334,7 @@ public:
 			int *&Sets, int &nb_sets, int &set_size,
 			int verbose_level);
 	void write_decomposition_stack(
-			char *fname, int m, int n,
+			std::string &fname, int m, int n,
 			int *v, int *b, int *aij, int verbose_level);
 	void create_file(
 			create_file_description *Descr, int verbose_level);

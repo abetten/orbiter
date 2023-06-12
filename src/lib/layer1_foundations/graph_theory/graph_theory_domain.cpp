@@ -127,7 +127,7 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 	int i, c;
 	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
 	std::string fname;
-	char fname_tmp[2000];
+	char fname_tmp[1000];
 
 	if (f_v) {
 		cout << "colored_graph_all_cliques_list_of_cases" << endl;
@@ -152,7 +152,7 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 				cout << "colored_graph_all_cliques_list_of_cases case " << i
 						<< " / " << nb_cases << " which is " << c << endl;
 			}
-			snprintf(fname_tmp, 2000, fname_template.c_str(), c);
+			snprintf(fname_tmp, 1000, fname_template.c_str(), c);
 			if (f_prefix) {
 				fname.assign(prefix);
 				fname.append(fname_tmp);
@@ -1613,14 +1613,10 @@ void graph_theory_domain::eigenvalues(
 		string fname;
 
 		string title, author, extra_praeamble;
-		char str[1000];
 
-		snprintf(str, 1000, "Eigenvalues of %s", CG->label_tex.c_str());
-		title.assign(str);
+		title = "Eigenvalues of " + CG->label_tex;
 
-
-		fname.assign(CG->label);
-		fname.append("_eigenvalues.tex");
+		fname = CG->label + "_eigenvalues.tex";
 
 		{
 			ofstream ost(fname);

@@ -128,17 +128,9 @@ void table_of_blt_sets::init(
 		string label_txt;
 		string label_tex;
 
-		char str[1000];
 
-		snprintf(str, sizeof(str), "_q%d_iso%d", Space->P->Subspaces->F->q, h);
-
-		label_txt.assign("BLT_set_");
-		label_txt.append(str);
-
-		snprintf(str, sizeof(str), "-q%d-iso%d", Space->P->Subspaces->F->q, h);
-
-		label_tex.assign("BLT_set_");
-		label_tex.append(str);
+		label_txt = "BLT_set_" + std::to_string(Space->P->Subspaces->F->q) + "_iso" + std::to_string(h);
+		label_tex = "BLT\\_set\\_" + std::to_string(Space->P->Subspaces->F->q) + "\\_iso" + std::to_string(h);
 
 
 
@@ -240,10 +232,7 @@ void table_of_blt_sets::do_export(
 		int j;
 
 		for (j = 0; j < nb_cols; j++) {
-			char str[1000];
-
-			snprintf(str, sizeof(str), "%ld", Row[j]);
-			Table[h * nb_cols + j].assign(str);
+			Table[h * nb_cols + j] = std::to_string(Row[j]);
 		}
 
 
@@ -286,14 +275,9 @@ void table_of_blt_sets::export_csv(
 	}
 
 	orbiter_kernel_system::file_io Fio;
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d", Space->O->F->q);
 
 	string fname;
-	fname.assign("table_of_blt_sets");
-	fname.append(str);
-	fname.append(".csv");
+	fname = "table_of_blt_sets_q" + std::to_string(Space->O->F->q) + ".csv";
 
 	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
 

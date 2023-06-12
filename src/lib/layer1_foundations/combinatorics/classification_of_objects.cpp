@@ -1073,9 +1073,7 @@ static void print_summary_table_entry(int *Table,
 	else {
 		//cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
 		if (j == -1) {
-			char str[1000];
-			snprintf(str, sizeof(str), "%d", i);
-			output.assign(str);
+			output = std::to_string(i);
 		}
 		else if (j == 2) {
 

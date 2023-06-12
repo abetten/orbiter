@@ -801,16 +801,12 @@ void latex_interface::incma_latex_with_labels(
 
 	int i, j;
 
-	char str[1000];
-
 
 	for (i = 0; i < v; i++) {
-		snprintf(str, sizeof(str), "%d", row_labels_int[i]);
-		point_labels[i].assign(str);
+		point_labels[i] = std::to_string(row_labels_int[i]);
 	}
 	for (j = 0; j < b; j++) {
-		snprintf(str, sizeof(str), "%d", col_labels_int[j]);
-		block_labels[j].assign(str);
+		block_labels[j] = std::to_string(col_labels_int[j]);
 	}
 
 	if (f_v) {

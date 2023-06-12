@@ -719,17 +719,14 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 	{
 		string title, author, extra_praeamble;
-		char str[1000];
 
-		snprintf(str, 1000, "Decomposition of PG($%d,%d$)", n, F->q);
-		title.assign(str);
+		title = "Decomposition of PG($" + std::to_string(n) + "," + std::to_string(F->q) + "$)";
 
 
 
 		string fname_tex;
 
-		fname_tex.assign(fname_base);
-		fname_tex.append(".tex");
+		fname_tex = fname_base + ".tex";
 
 		{
 			ofstream ost(fname_tex);
@@ -846,10 +843,8 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 	{
 		string title, author, extra_praeamble;
 
-		char str[1000];
 
-		snprintf(str, 1000, "Decomposition of PG($%d,%d$)", n, F->q);
-		title.assign(str);
+		title = "Decomposition of PG($" + std::to_string(n) + "," + std::to_string(F->q) + "$)";
 
 
 
@@ -1181,14 +1176,10 @@ void projective_space_with_action::table_of_quartic_curves(
 	}
 
 	orbiter_kernel_system::file_io Fio;
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d", q);
-
 	string fname;
-	fname.assign("quartic_curves");
-	fname.append(str);
-	fname.append("_info.csv");
+
+	fname = "quartic_curves_q" + std::to_string(q) + "_info.csv";
+
 
 	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
 
@@ -1329,13 +1320,10 @@ void projective_space_with_action::cheat_sheet(
 
 		string fname, title, author, extra_praeamble;
 
-		char str[1000];
+		fname = "PG_" + std::to_string(n) + "_" + std::to_string(F->q) + ".tex";
+		title = "Cheat Sheet ${\\rm PG}(" + std::to_string(n) + "," + std::to_string(F->q) + ")$";
 
-		snprintf(str, 1000, "PG_%d_%d.tex", n, F->q);
-		fname.assign(str);
 
-		snprintf(str, 1000, "Cheat Sheet ${\\rm PG}(%d,%d)$", n, F->q);
-		title.assign(str);
 
 
 
@@ -1567,14 +1555,12 @@ void projective_space_with_action::report_fixed_objects(
 
 	{
 		ofstream fp(fname_latex);
-		char str[1000];
 		string title, author, extra_praeamble;
 
 		l1_interfaces::latex_interface L;
 
-		snprintf(str, sizeof(str), "Fixed Objects");
-		title.assign(str);
-		author.assign("");
+		title = "Fixed Objects";
+		author = "";
 
 		L.head(fp,
 			false /* f_book */, true /* f_title */,

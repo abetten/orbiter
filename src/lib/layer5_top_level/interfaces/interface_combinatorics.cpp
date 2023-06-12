@@ -848,14 +848,8 @@ void interface_combinatorics::worker(int verbose_level)
 
 		combinatorics::combinatorics_domain Combi;
 		string fname;
-		char str[1000];
 
-		fname.assign("random_k_subsets_");
-		snprintf(str, sizeof(str), "n%d_k%d_nb%d.csv",
-				create_random_k_subsets_n,
-				create_random_k_subsets_k,
-				create_random_k_subsets_nb);
-		fname.append(str);
+		fname = "random_k_subsets_n" + std::to_string(create_random_k_subsets_n)+ "_k" + std::to_string(create_random_k_subsets_k)+ "_nb" + std::to_string(create_random_k_subsets_nb)+ ".csv";
 
 		Combi.create_random_k_subsets(create_random_k_subsets_n,
 				create_random_k_subsets_k,
@@ -1308,12 +1302,8 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n_file(int n, int verbose
 	S.create(0);
 
 	string fname;
-	char str[1000];
 
-	snprintf(str, sizeof(str), "classes_Sym_%d", n);
-
-	fname.assign(str);
-	fname.append(".csv");
+	fname = "classes_Sym_" + std::to_string(n) + ".csv";
 
 	{
 		ofstream fp(fname);
