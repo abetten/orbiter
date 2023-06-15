@@ -503,7 +503,6 @@ void translation_plane_via_andre_model::classify_arcs(
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
-	//char fname_base[1000];
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_arcs" << endl;
@@ -904,13 +903,10 @@ void translation_plane_via_andre_model::create_latex_report(int verbose_level)
 	}
 
 	{
-		char str[1000];
 		string fname, title, author, extra_praeamble;
 
-		snprintf(str, 1000, "%s_report.tex", label_txt.c_str());
-		fname.assign(str);
-		snprintf(str, 1000, "Translation plane %s", label_tex.c_str());
-		title.assign(str);
+		fname = label_txt + "_report.tex";
+		title = "Translation plane " + label_tex;
 
 
 
@@ -1222,7 +1218,6 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 					"f_Fano" << endl;
 		}
 
-		char prefix[1000];
 		int nb_subplanes;
 
 		snprintf(prefix, sizeof(prefix), "Fano_TP_%s_", Spread->label_txt.c_str());
@@ -1254,7 +1249,6 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(
 					"f_arcs" << endl;
 		}
 
-		char prefix[1000];
 		int nb;
 
 		int target_depth;

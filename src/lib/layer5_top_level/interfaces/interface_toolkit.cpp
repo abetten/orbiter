@@ -622,7 +622,8 @@ void interface_toolkit::read_arguments(int argc,
 		for (++i; i < argc - 1; i++) {
 			if (ST.stringcmp(argv[i], "-end_loop") == 0
 					&& ST.stringcmp(argv[i + 1], loop_variable.c_str()) == 0) {
-				cout << "found -end_loop " << loop_variable << " at i=" << i << " argc=" << argc << endl;
+				cout << "found -end_loop " << loop_variable
+						<< " at i=" << i << " argc=" << argc << endl;
 				loop_end_idx = i + 1;
 				break;
 			}
@@ -1022,7 +1023,8 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_sort_each_row(csv_file_sort_each_row_fname, verbose_level);
+		Fio.do_csv_file_sort_each_row(
+				csv_file_sort_each_row_fname, verbose_level);
 
 	}
 	else if (f_csv_file_join) {
@@ -1548,33 +1550,16 @@ void interface_toolkit::worker(int verbose_level)
 					<< serialize_file_names_fname << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
-		std::string *Lines;
-		int nb_lines;
-		int i;
-		char str[1000];
-		char cmd[1000];
 
-		Fio.read_file_as_array_of_strings(
+
+		int nb_files;
+
+		Fio.serialize_file_names(
 				serialize_file_names_fname,
-			Lines,
-			nb_lines,
+				serialize_file_names_output_mask,
+			nb_files,
 			verbose_level);
 
-		if (f_v) {
-			cout << "interface_toolkit::worker "
-					"serialize_file_names_output_mask = "
-					<< serialize_file_names_output_mask << endl;
-		}
-
-		for (i = 0; i < nb_lines; i++) {
-			cout << "i=" << i << " / " << nb_lines << " fname=" << Lines[i] << endl;
-			snprintf(str, sizeof(str), serialize_file_names_output_mask.c_str(), i);
-			cout << "i=" << i << " / " << nb_lines << " output=" << str << endl;
-			snprintf(cmd, sizeof(cmd), "mv %s %s", Lines[i].c_str(), str);
-			cout << "executing : " << cmd << endl;
-			system(cmd);
-
-		}
 
 
 	}

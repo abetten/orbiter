@@ -296,11 +296,8 @@ public:
 			int da, int *A, int db, int *B);
 
 	// crc_codes.cpp:
-	uint16_t crc16(const uint8_t *data, size_t size);
+	//uint16_t crc16(const uint8_t *data, size_t size);
 	uint32_t crc32(const uint8_t *s, size_t n);
-	void divide_alfa(const unsigned char *in771, unsigned char *out3);
-	void divide_bravo(const unsigned char *in771, unsigned char *out4);
-	void divide_charlie(const unsigned char *in771, unsigned char *out12);
 	void crc32_test(int block_length, int verbose_level);
 	void test_crc_object(crc_object *Crc, long int Nb_test, int k, int verbose_level);
 	void char_vec_zero(unsigned char *p, int len);
@@ -314,6 +311,7 @@ public:
 	void introduce_errors(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
+#if 0
 	void crc_encode_file_based(
 			std::string &fname_in,
 			std::string &fname_out,
@@ -323,6 +321,7 @@ public:
 			std::string &fname_in, std::string &fname_out,
 			CRC_type type,
 			int block_length, int verbose_level);
+#endif
 	void split_binary_file_to_ascii_polynomials_256(
 			std::string &fname_in, std::string &fname_out,
 			int block_length, int verbose_level);
@@ -366,7 +365,10 @@ enum crc_object_type {
 	t_crc_alfa,
 	t_crc_bravo,
 	t_crc_charlie,
+	t_crc_Echo,
 	t_crc_crc32,
+	t_crc_crc16,
+
 };
 
 //! a specific CRC code
@@ -380,19 +382,35 @@ public:
 	int Len_total;
 	int Len_check;
 	int Len_info; // = Len_total - Len_check;
-	unsigned char *Data;
-	unsigned char *Check;
+
+	int symbol_set_size_log;
+	int symbol_set_size;
+	int code_length_in_bits; // = Len_total * symbol_set_size_log
+
+	unsigned char *Data; // [Len_total]
+	unsigned char *Check; // [Len_check]
+
+	data_structures::bitvector *Bitvector;
 
 	crc_object();
 	~crc_object();
-	void init(std::string &type, int verbose_level);
+	void init(std::string &type, int block_length, int verbose_level);
+	// block_length is needed for crc32
+	void encode_as_bitvector();
+	void print();
 	void divide(const unsigned char *in, unsigned char *out);
-	void divide_alfa(const unsigned char *in771, unsigned char *out3);
+	void crc_encode_file_based(
+			std::string &fname_in,
+			std::string &fname_out,
+			int verbose_level);
+	void divide_alfa(const unsigned char *in771, unsigned char *out2);
 	void divide_bravo(const unsigned char *in771, unsigned char *out4);
 	void divide_charlie(const unsigned char *in771, unsigned char *out12);
-	void divide_crc32(const uint8_t *s, size_t n, unsigned char *out);
+	void divide_Echo(const unsigned char *in51, unsigned char *out8);
+	void divide_crc32(const uint8_t *s, size_t n, unsigned char *out4);
 		// polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
 		// + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1
+	void divide_crc16(const uint8_t *data, size_t size, unsigned char *out2);
 
 };
 

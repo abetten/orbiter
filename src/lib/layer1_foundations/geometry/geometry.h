@@ -1897,6 +1897,41 @@ public:
 // #############################################################################
 
 //! the Knarr construction of a GQ from a BLT-set
+/*! The Knarr construction of a GQ(q^2,q) from a BLT set of lines in W(3,q):
+ *
+ * let P = (1,0,0,0,0,0) in W(5,q)
+ *
+ * Let B be a BLT-set of lines in W(3,q),
+ * lifted into P^\perp in W(5,q)
+ *
+ * type i) points:
+ * the q^5 points in W(5,q) \setminus P^\perp
+ * type ii) points:
+ * lines in the BLT-planes, not containing the point P
+ * there are (q+1)*q^2 of them (q^2 for each BLT-plane)
+ * type iii) points:
+ * The unique point P=(1,0,0,0,0,0)
+ *
+ * For a total of q^5 + q^3 + q^2 + 1 = (q^2 + 1)(q^3 + 1) points
+ *
+ * type a) lines:
+ * t.i. planes \pi, not containing P,
+ * with \pi \cap P^\perp a line of a BLT-plane (such that the line avoids P),
+ * i.e. a point of type ii).
+ * There are (q+1)*q^3 such planes
+ *
+ * type b) lines:
+ * the q+1 elements of the BLT set,
+ * lifted to become t.i. planes containing P in W(5,q)
+ *
+ * For a total of
+ * q^4 + q^3 + q + 1 = (q + 1)*(q^3 + 1) lines
+ *
+ * This is the required number for a GQ(q^2,q).
+ * Recall that a GQ(s,t) has
+ * (s+1)(st+1) points and
+ * (t+1)(st+1) lines.
+ */
 
 
 
@@ -3338,8 +3373,6 @@ public:
 	projective_space *P3;
 	orthogonal_geometry::orthogonal *Q4;
 	field_theory::finite_field *F;
-
-	//int *Basis; // [2 * 4]
 
 	int nb_lines;
 		// number of absolute lines of W(3,q)

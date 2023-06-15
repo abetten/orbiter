@@ -676,14 +676,8 @@ void orthogonal::create_latex_report(int verbose_level)
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		snprintf(str, 1000, "O_%d_%d_%d.tex",
-				Quadratic_form->epsilon, Quadratic_form->n, F->q);
-		fname.assign(str);
-		snprintf(str, 1000, "Orthogonal Space  ${\\rm O}(%d,%d,%d)$",
-				Quadratic_form->epsilon, Quadratic_form->n, F->q);
-		title.assign(str);
+		fname = "O_" + std::to_string(Quadratic_form->epsilon) + "_" + std::to_string(Quadratic_form->n) + "_" + std::to_string(F->q) + ".tex";
+		title = "Orthogonal Space  ${\\rm O}(" + std::to_string(Quadratic_form->epsilon) + "," + std::to_string(Quadratic_form->n) + "," + std::to_string(F->q) + ")$";
 
 
 		{

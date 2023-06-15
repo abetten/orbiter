@@ -759,14 +759,6 @@ void coding_theory_domain::make_Hamming_space_distance_matrix(
 		width = height = Gg.nb_AG_elements(n, F->q);
 	}
 
-#if 0
-	int N;
-	N = width;
-	if (f_graph) {
-		Adj = NEW_int(N * N);
-		int_vec_zero(Adj, N * N);
-	}
-#endif
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_Hamming_space_distance_matrix width=" << width << endl;
@@ -802,11 +794,6 @@ void coding_theory_domain::make_Hamming_space_distance_matrix(
 				}
 			}
 
-#if 0
-			if (f_graph && d == 1) {
-				Adj[i * N + j] = 1;
-			}
-#endif
 
 			Table[i * width + j] = d;
 
@@ -1808,14 +1795,20 @@ void coding_theory_domain::matrix_from_projective_set(
 	int *v;
 
 	v = NEW_int(k);
+
 	for (j = 0; j < n; j++) {
 
 		F->Projective_space_basic->PG_element_unrank_modified(
 				v, 1, k, columns_set_of_size_n[j]);
+
+		// fill column j:
+
 		for (i = 0; i < k; i++) {
 			genma[i * n + j] = v[i];
 		}
+
 	}
+
 	FREE_int(v);
 
 	if (f_v) {

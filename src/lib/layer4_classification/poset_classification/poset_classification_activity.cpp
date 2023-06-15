@@ -198,11 +198,9 @@ void poset_classification_activity::perform_work(
 			data_structures::spreadsheet *Sp;
 			PC->make_spreadsheet_of_level_info(Sp, actual_size, verbose_level);
 			string fname_csv;
-			char str[1000];
 
-			fname_csv.assign(PC->get_problem_label_with_path());
-			snprintf(str, sizeof(str), "_levels_%d.csv", actual_size);
-			fname_csv.append(str);
+			fname_csv = PC->get_problem_label_with_path() + "_levels_" + std::to_string(actual_size) + ".csv";
+
 			Sp->save(fname_csv, verbose_level);
 			FREE_OBJECT(Sp);
 		}
@@ -222,11 +220,8 @@ void poset_classification_activity::perform_work(
 			data_structures::spreadsheet *Sp;
 			PC->make_spreadsheet_of_orbit_reps(Sp, actual_size);
 			string fname_csv;
-			char str[1000];
 
-			fname_csv.assign(PC->get_problem_label_with_path());
-			snprintf(str, sizeof(str), "_orbits_at_level_%d.csv", actual_size);
-			fname_csv.append(str);
+			fname_csv = PC->get_problem_label_with_path() + "_orbits_at_level_" + std::to_string(actual_size) + ".csv";
 			Sp->save(fname_csv, verbose_level);
 			FREE_OBJECT(Sp);
 		}
@@ -404,12 +399,11 @@ void poset_classification_activity::compute_Kramer_Mesner_matrix(
 	int i;
 
 	string fname;
-	char str[1000];
 
-	fname.assign(PC->get_problem_label());
-	snprintf(str, sizeof(str), "_KM_%d_%d.csv", t, k);
-	fname.append(str);
+	fname = PC->get_problem_label() + "_KM_" + std::to_string(t) + "_" + std::to_string(k) + ".csv";
+
 	Fio.lint_matrix_write_csv(fname, Mtk, nb_r, nb_c);
+
 	//Mtk.print(cout);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;

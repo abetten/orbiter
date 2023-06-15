@@ -385,7 +385,6 @@ void layered_graph::draw_with_options(
 		int x, y, x2, y2;
 		int Px[10], Py[10];
 		int threshold = 50000;
-		char text[1000];
 		int xoffset = 3 * O->rad / 2;
 		int yoffset = 0;
 		int own_id;
@@ -548,9 +547,8 @@ void layered_graph::draw_with_options(
 						if (O->f_label_edges) {
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
-							snprintf(text, sizeof(text), "%d", edge_label);
 							string s;
-							s.assign(text);
+							s = std::to_string(edge_label);
 							G.aligned_text_with_offset(Px[2], Py[2],
 									xoffset, yoffset, "", s);
 							edge_label++;
@@ -572,9 +570,8 @@ void layered_graph::draw_with_options(
 						if (O->f_label_edges) {
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
-							snprintf(text, sizeof(text), "%d", edge_label);
 							string s;
-							s.assign(text);
+							s = std::to_string(edge_label);
 							G.aligned_text_with_offset(Px[2], Py[2],
 									xoffset, yoffset, "", s);
 							edge_label++;
@@ -622,9 +619,8 @@ void layered_graph::draw_with_options(
 						if (O->f_label_edges) {
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
-							snprintf(text, sizeof(text), "%d", edge_label);
 							string s;
-							s.assign(text);
+							s = std::to_string(edge_label);
 							G.aligned_text_with_offset(
 									Px[2], Py[2],
 									xoffset, yoffset, "", s);
@@ -653,9 +649,8 @@ void layered_graph::draw_with_options(
 						if (O->f_label_edges) {
 							Px[2] = (Px[0] + Px[1]) >> 1;
 							Py[2] = (Py[0] + Py[1]) >> 1;
-							snprintf(text, sizeof(text), "%d", edge_label);
 							string s;
-							s.assign(text);
+							s = std::to_string(edge_label);
 							G.aligned_text_with_offset(
 									Px[2], Py[2],
 									xoffset, yoffset, "", s);
@@ -860,9 +855,8 @@ void layered_graph::draw_with_options(
 				Px[0] = 0;
 				Py[0] = y;
 				//G.nice_circle(Px[0], Py[0], rad * 4);
-				snprintf(str, 1000, "%d", i);
 				string s;
-				s.assign(text);
+				s = std::to_string(i);
 				G.aligned_text(Px[0], Py[0], "", s);
 			}
 		}

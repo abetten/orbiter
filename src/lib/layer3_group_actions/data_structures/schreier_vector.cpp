@@ -1147,14 +1147,11 @@ void schreier_vector::export_tree_as_layered_graph(
 		}
 	}
 	for (j = 0; j < len; j++) {
-		char text[1000];
-
-		snprintf(text, sizeof(text), "%ld", orbit_elts[j]);
 		l = orbit_depth[j];
 
 		string text2;
 
-		text2.assign(text);
+		text2 = std::to_string(orbit_elts[j]);
 
 		LG->add_text(l, horizontal_position[j],
 				text2, 0/*verbose_level*/);

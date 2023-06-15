@@ -25,7 +25,6 @@ W3q::W3q()
 	P3 = NULL;
 	Q4 = NULL;
 	F = NULL;
-	//Basis = NULL;
 
 	nb_lines = 0;
 	Lines = NULL;
@@ -44,11 +43,6 @@ W3q::~W3q()
 	if (Q4) {
 		FREE_OBJECT(Q4);
 	}
-#if 0
-	if (Basis) {
-		FREE_int(Basis);
-	}
-#endif
 	if (Lines) {
 		FREE_int(Lines);
 	}
@@ -63,7 +57,7 @@ W3q::~W3q()
 void W3q::init(
 		field_theory::finite_field *F, int verbose_level)
 // allocates a projective_space PG(3,q)
-// and an orthogonal object O^+(4,q)
+// and an orthogonal space Q(4,q)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 2);

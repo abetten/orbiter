@@ -333,13 +333,8 @@ void linear_algebra_global::do_nullspace(
 		string title;
 		string extra_praeamble;
 
-
-		char str[1000];
-
-		snprintf(str, 1000, "nullspace_%d_%d.tex", m, n);
-		fname.assign(str);
-		snprintf(str, 1000, "Nullspace");
-		title.assign(str);
+		fname = "nullspace_" + std::to_string(m) + "_" + std::to_string(n) + ".tex";
+		title = "Nullspace";
 
 
 
@@ -543,13 +538,8 @@ void linear_algebra_global::RREF_demo(
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		snprintf(str, 1000, "RREF_example_q%d_%d_%d.tex", F->q, m, n);
-		fname.assign(str);
-		snprintf(str, 1000, "RREF example $q=%d$", F->q);
-		title.assign(str);
-
+		fname = "RREF_example_q" + std::to_string(F->q) + "_" + std::to_string(m) + "_" + std::to_string(n) + ".tex";
+		title = "RREF example $q=" + std::to_string(F->q) + "$";
 
 
 		{

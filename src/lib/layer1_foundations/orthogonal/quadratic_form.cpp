@@ -84,32 +84,27 @@ void quadratic_form::init(
 	q = F->q;
 	m = Gg.Witt_index(epsilon, n - 1);
 
-	char str[1000];
-
 	if (epsilon == 1) {
-		snprintf(str, sizeof(str), "Op_%d_%d", n, q);
+		label_txt = "Op_" + std::to_string(n) + "_" + std::to_string(q);
 	}
 	else if (epsilon == -1) {
-		snprintf(str, sizeof(str), "Om_%d_%d", n, q);
+		label_txt = "Om_" + std::to_string(n) + "_" + std::to_string(q);
 	}
 	else if (epsilon == 0) {
-		snprintf(str, sizeof(str), "O_%d_%d", n, q);
+		label_txt = "O_" + std::to_string(n) + "_" + std::to_string(q);
 	}
 
-	label_txt.assign(str);
 
 	if (epsilon == 1) {
-		snprintf(str, sizeof(str), "O^+(%d,%d)", n, q);
+		label_tex = "O^+(" + std::to_string(n) + "," + std::to_string(q) + ")";
 	}
 	else if (epsilon == -1) {
-		snprintf(str, sizeof(str), "O^-(%d,%d)", n, q);
+		label_tex = "O^-(" + std::to_string(n) + "," + std::to_string(q) + ")";
 	}
 	else if (epsilon == 0) {
-		snprintf(str, sizeof(str), "O(%d,%d)", n, q);
+		label_tex = "O(" + std::to_string(n) + "," + std::to_string(q) + ")";
 	}
 
-
-	label_tex.assign(str);
 
 	if (f_v) {
 		cout << "quadratic_form::init: epsilon=" << epsilon

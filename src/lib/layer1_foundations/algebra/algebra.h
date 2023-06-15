@@ -151,8 +151,7 @@ public:
 	int period_of_sequence(int *v, int l);
 	void subexponent(
 			int q, int Q, int h, int f, int j, int k, int &s, int &c);
-	const char *plus_minus_string(int epsilon);
-	const char *plus_minus_letter(int epsilon);
+	std::string plus_minus_string(int epsilon);
 	void display_all_PHG_elements(int n, int q);
 	void test_unipoly(field_theory::finite_field *F);
 	void test_unipoly2(field_theory::finite_field *F);

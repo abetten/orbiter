@@ -1186,6 +1186,33 @@ void int_vec::transpose(int *M, int m, int n, int *Mt)
 	}
 }
 
+void int_vec::print_as_polynomial_in_algebraic_notation(
+		std::ostream &ost, int *coeff_vector, int len)
+{
+	int coeff;
+	int f_first;
+	int h;
+
+	f_first = true;
+
+	for (h = 0; h < len; h++) {
+		coeff = coeff_vector[h];
+		if (coeff) {
+			if (!f_first) {
+				ost << "+";
+			}
+			f_first = false;
+			ost << coeff;
+			if (h) {
+				ost << "*X";
+				if (h > 1) {
+					ost << "^" << h;
+				}
+			}
+		}
+	}
+
+}
 
 }}}
 

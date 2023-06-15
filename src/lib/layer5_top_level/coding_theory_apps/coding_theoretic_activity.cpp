@@ -723,21 +723,31 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				<< " " << Descr->crc_encode_file_based_block_length
 				<< endl;
 
-		coding_theory::crc_codes Crc_codes;
+
+		coding_theory::crc_object CRC;
+
+		CRC.init(
+				Descr->crc_encode_file_based_crc_type,
+				Descr->crc_encode_file_based_block_length,
+				verbose_level);
+
+
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
-					"before Crc_codes.crc_encode_file_based" << endl;
+					"before CRC.crc_encode_file_based" << endl;
 		}
-		Crc_codes.crc_encode_file_based(
+
+		CRC.crc_encode_file_based(
 				Descr->crc_encode_file_based_fname_in,
 				Descr->crc_encode_file_based_fname_out,
-				Descr->crc_encode_file_based_crc_type,
-				Descr->crc_encode_file_based_block_length,
+				//Descr->crc_encode_file_based_crc_type,
+				//Descr->crc_encode_file_based_block_length,
 				verbose_level - 1);
+
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
-					"after Crc_codes.crc_encode_file_based" << endl;
+					"after CRC.crc_encode_file_based" << endl;
 		}
 
 	}

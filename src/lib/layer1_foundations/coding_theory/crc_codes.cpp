@@ -35,7 +35,7 @@ crc_codes::~crc_codes()
 
 }
 
-
+#if 0
 #define CRC16 0x8005
 
 uint16_t crc_codes::crc16(const uint8_t *data, size_t size)
@@ -85,6 +85,7 @@ uint16_t crc_codes::crc16(const uint8_t *data, size_t size)
 
     return crc;
 }
+#endif
 
 uint32_t crc_codes::crc32(const uint8_t *s, size_t n)
 // polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
@@ -156,315 +157,6 @@ void crc_codes::crc32_test(int block_length, int verbose_level)
 	}
 }
 
-#if 0
-void crc_codes::test_alfa(long int Nb_test, int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "crc_codes::test_alfa" << endl;
-	}
-
-	orbiter_kernel_system::os_interface Os;
-	int Len_info = 771 - 3;
-	int Len_check = 3;
-	int Len_total = 771;
-	unsigned char *Data;
-	unsigned char *Check;
-	long int i, j, h, a, v;
-	long int nb_undetected = 0;
-	unsigned char c;
-	int *A;
-	int *V;
-
-	Data = (unsigned char *) NEW_char(Len_total);
-	Check = (unsigned char *) NEW_char(3);
-	A = NEW_int(k);
-	V = NEW_int(k);
-
-	for (i = 0; i < Nb_test; i++) {
-		char_vec_zero(Data, Len_total);
-
-
-		for (j = 0; j < k; j++) {
-			int f_repeat;
-
-			while (true) {
-				a = Len_check + Os.random_integer(Len_info);
-
-				f_repeat = false;
-				for (h = 0; h < j; h++) {
-					if (A[h] == a) {
-						f_repeat = true;
-					}
-				}
-				if (!f_repeat) {
-					break;
-				}
-			}
-			A[j] = a;
-			v = 1 + Os.random_integer(255);
-			V[j] = v;
-			c = (unsigned char) v;
-			Data[a] = c;
-		}
-		divide_alfa(Data /* in771 */, Check /*out3*/);
-		for (j = 0; j < Len_check; j++) {
-			if (Check[j]) {
-				break;
-			}
-		}
-		if (j == Len_check) {
-			cout << i << "," << nb_undetected << ",";
-			Int_vec_print(cout, A, k);
-			cout << ",";
-			Int_vec_print(cout, V, k);
-			cout << endl;
-			nb_undetected++;
-		}
-	}
-	if (f_v) {
-		cout << "crc_codes::test_alfa "
-				"Nb_test = " << Nb_test
-				<< " k = " << k
-				<< " nb_undetected=" << nb_undetected << endl;
-	}
-
-
-}
-
-
-void crc_codes::test_bravo(long int Nb_test, int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "crc_codes::test_bravo" << endl;
-	}
-
-	orbiter_kernel_system::os_interface Os;
-	int Len_total = 771;
-	int Len_check = 4;
-	int Len_info = Len_total - Len_check;
-	unsigned char *Data;
-	unsigned char *Check;
-	long int i, j, h, a, v;
-	long int nb_undetected = 0;
-	unsigned char c;
-	int *A;
-	int *V;
-
-	Data = (unsigned char *) NEW_char(Len_total);
-	Check = (unsigned char *) NEW_char(Len_check);
-	A = NEW_int(k);
-	V = NEW_int(k);
-
-	for (i = 0; i < Nb_test; i++) {
-		char_vec_zero(Data, Len_total);
-
-
-		for (j = 0; j < k; j++) {
-			int f_repeat;
-
-			while (true) {
-				a = Len_check + Os.random_integer(Len_info);
-
-				f_repeat = false;
-				for (h = 0; h < j; h++) {
-					if (A[h] == a) {
-						f_repeat = true;
-					}
-				}
-				if (!f_repeat) {
-					break;
-				}
-			}
-			A[j] = a;
-			v = 1 + Os.random_integer(255);
-			V[j] = v;
-			c = (unsigned char) v;
-			Data[a] = c;
-		}
-		divide_bravo(Data /* in771 */, Check /*out4*/);
-		for (j = 0; j < Len_check; j++) {
-			if (Check[j]) {
-				break;
-			}
-		}
-		if (j == Len_check) {
-			nb_undetected++;
-			Int_vec_print(cout, A, k);
-			cout << ",";
-			Int_vec_print(cout, V, k);
-			cout << endl;
-		}
-	}
-	if (f_v) {
-		cout << "crc_codes::test_bravo "
-				"Nb_test = " << Nb_test
-				<< " k = " << k
-				<< " nb_undetected=" << nb_undetected << endl;
-	}
-
-
-}
-
-
-
-
-void crc_codes::test_crc32(long int Nb_test, int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "crc_codes::test_crc32" << endl;
-	}
-
-	orbiter_kernel_system::os_interface Os;
-	int Len_total = 771;
-	int Len_check = 4;
-	int Len_info = Len_total - Len_check;
-	unsigned char *Data;
-	unsigned char *Check;
-	long int i, j, h, a, v;
-	long int nb_undetected = 0;
-	unsigned char c;
-	int *A;
-	int *V;
-
-	Data = (unsigned char *) NEW_char(Len_total);
-	Check = (unsigned char *) NEW_char(Len_check);
-	A = NEW_int(k);
-	V = NEW_int(k);
-
-	for (i = 0; i < Nb_test; i++) {
-		char_vec_zero(Data, Len_total);
-
-
-		for (j = 0; j < k; j++) {
-			int f_repeat;
-
-			while (true) {
-				a = Len_check + Os.random_integer(Len_info);
-
-				f_repeat = false;
-				for (h = 0; h < j; h++) {
-					if (A[h] == a) {
-						f_repeat = true;
-					}
-				}
-				if (!f_repeat) {
-					break;
-				}
-			}
-			A[j] = a;
-			v = 1 + Os.random_integer(255);
-			V[j] = v;
-			c = (unsigned char) v;
-			Data[a] = c;
-		}
-
-		uint32_t crc;
-
-		crc = crc32(Data + Len_check, Len_info);
-
-		if (crc == 0) {
-			cout << i << "," << nb_undetected << ",";
-			Int_vec_print(cout, A, k);
-			cout << ",";
-			Int_vec_print(cout, V, k);
-			cout << endl;
-			nb_undetected++;
-		}
-	}
-	if (f_v) {
-		cout << "crc_codes::test_crc32 "
-				"Nb_test = " << Nb_test
-				<< " k = " << k
-				<< " nb_undetected=" << nb_undetected << endl;
-	}
-
-
-}
-
-
-void crc_codes::test_charlie(long int Nb_test, int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "crc_codes::test_charlie" << endl;
-	}
-
-	orbiter_kernel_system::os_interface Os;
-	int Len_total = 771;
-	int Len_check = 12;
-	int Len_info = Len_total - Len_check;
-	unsigned char *Data;
-	unsigned char *Check;
-	long int i, j, h, a, v;
-	long int nb_undetected = 0;
-	unsigned char c;
-	int *A;
-	int *V;
-
-	Data = (unsigned char *) NEW_char(Len_total);
-	Check = (unsigned char *) NEW_char(Len_check);
-	A = NEW_int(k);
-	V = NEW_int(k);
-
-	for (i = 0; i < Nb_test; i++) {
-		char_vec_zero(Data, Len_total);
-
-
-		for (j = 0; j < k; j++) {
-			int f_repeat;
-
-			while (true) {
-				a = Len_check + Os.random_integer(Len_info);
-
-				f_repeat = false;
-				for (h = 0; h < j; h++) {
-					if (A[h] == a) {
-						f_repeat = true;
-					}
-				}
-				if (!f_repeat) {
-					break;
-				}
-			}
-			A[j] = a;
-			v = 1 + Os.random_integer(255);
-			V[j] = v;
-			c = (unsigned char) v;
-			Data[a] = c;
-		}
-		divide_charlie(Data /* in771 */, Check /*out12*/);
-		for (j = 0; j < Len_check; j++) {
-			if (Check[j]) {
-				break;
-			}
-		}
-		if (j == Len_check) {
-			cout << i << "," << nb_undetected << ",";
-			Int_vec_print(cout, A, k);
-			cout << ",";
-			Int_vec_print(cout, V, k);
-			cout << endl;
-			nb_undetected++;
-		}
-	}
-	if (f_v) {
-		cout << "crc_codes::test_charlie "
-				"Nb_test = " << Nb_test
-				<< " k = " << k
-				<< " nb_undetected=" << nb_undetected << endl;
-	}
-
-
-}
-#endif
-
 
 
 void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int verbose_level)
@@ -473,13 +165,22 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 
 	if (f_v) {
 		cout << "crc_codes::test_crc_object" << endl;
+
+		Crc->print();
+
+		cout << "Crc->Bitvector->get_allocated_length()="
+				<< Crc->Bitvector->get_allocated_length() << endl;
 	}
 
 	orbiter_kernel_system::os_interface Os;
-	long int i, j, h, a, v;
+	long int i;
+	int j, h;
+	int a, v;
 	long int nb_undetected = 0;
+	long int nb_undetected_crc32 = 0;
 	unsigned char c;
 	long int t0, t1, dt;
+	int symbol_set_size_m1 = Crc->symbol_set_size - 1;
 
 	int *f_used; // [Crc->Len_total]
 	int *A; // [k]
@@ -494,37 +195,71 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 
 	for (i = 0; i < Nb_test; i++) {
 
+#if 0
+		if ((i % 1000) == 0) {
+
+			Os.seed_random_generator_with_system_time();
+
+		}
+#endif
+
 		char_vec_zero(Crc->Data, Crc->Len_total);
 
 
 		for (j = 0; j < k; j++) {
 
 			while (true) {
-				a = Crc->Len_check + Os.random_integer(Crc->Len_info);
+				a = Os.random_integer(Crc->Len_total);
 				if (!f_used[a]) {
 					break;
 				}
 			}
 			f_used[a] = true;
 			A[j] = a;
-			v = 1 + Os.random_integer(255);
+			v = 1 + Os.random_integer(symbol_set_size_m1);
 			V[j] = v;
 			c = (unsigned char) v;
 			Crc->Data[a] = c;
 		}
-		Crc->divide(Crc->Data /* in771 */, Crc->Check /*out12*/);
+
+
+		Crc->divide(Crc->Data, Crc->Check);
+
+		if (false /*(i % ONE_MILLION) == 0*/) {
+			cout << "i=" << i << " : ";
+			for (j = 0; j < Crc->Len_total; j++) {
+				cout << (int) Crc->Data[j];
+				if (j < Crc->Len_total - 1) {
+					cout << ",";
+				}
+			}
+			cout << " : ";
+			for (j = 0; j < Crc->Len_check; j++) {
+				cout << (int) Crc->Check[j];
+				if (j < Crc->Len_check - 1) {
+					cout << ",";
+				}
+			}
+			cout << endl;
+		}
+
+		// test if the check is all zero:
 		for (j = 0; j < Crc->Len_check; j++) {
 			if (Crc->Check[j]) {
 				break;
 			}
 		}
+
+
+		// yes, it is:
 		if (j == Crc->Len_check) {
 			cout << i << "," << nb_undetected << ",";
+			cout << endl;
+			cout << "undetected error " << nb_undetected << " : i=" << i << " : ";
 			Int_vec_print_fully(cout, A, k);
 			cout << ",";
 			Int_vec_print_fully(cout, V, k);
-			cout << endl;
-			cout << "undetected error " << nb_undetected << " : polynomial: ";
+			cout << "polynomial: ";
 			int *poly;
 
 			poly = NEW_int(Crc->Len_total);
@@ -534,6 +269,11 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 				v = V[h];
 				poly[a] = v;
 			}
+
+			orbiter_kernel_system::Orbiter->Int_vec->print_as_polynomial_in_algebraic_notation(
+					cout, poly, Crc->Len_total);
+
+#if 0
 			int coeff;
 			int f_first;
 
@@ -546,21 +286,47 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 						cout << "+";
 					}
 					f_first = false;
-					cout << "coeff";
+					cout << coeff;
 					if (h) {
 						cout << "*X";
 						if (h > 1) {
-							cout << "^h";
+							cout << "^" << h;
 						}
 					}
 				}
 			}
+#endif
 			cout << endl;
 
 			FREE_int(poly);
 
 			nb_undetected++;
+
+			Os.seed_random_generator_with_system_time();
+
 		}
+
+
+
+		// compare with crc32:
+		uint32_t checksum_crc32;
+		unsigned char *out4 = (unsigned char *) &checksum_crc32;
+
+		Crc->encode_as_bitvector();
+
+		Crc->divide_crc32(Crc->Bitvector->get_data(), Crc->Bitvector->get_allocated_length(), out4);
+
+		if (checksum_crc32 == 0) {
+			cout << i << "," << nb_undetected_crc32 << ",";
+			Int_vec_print_fully(cout, A, k);
+			cout << ",";
+			Int_vec_print_fully(cout, V, k);
+			cout << " : ";
+			cout << "CRC32 - undetected error " << nb_undetected_crc32 << endl;
+			cout << endl;
+		}
+
+
 		for (j = 0; j < k; j++) {
 			a = A[j];
 			f_used[a] = false;
@@ -573,7 +339,9 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 		cout << "crc_codes::test_crc_object "
 				"Nb_test = " << Nb_test
 				<< " k = " << k
-				<< " nb_undetected=" << nb_undetected << ", time=";
+				<< " nb_undetected=" << nb_undetected
+				<< " nb_undetected_crc32=" << nb_undetected_crc32
+				<< ", time=";
 		Os.time_check_delta(cout, dt);
 		cout << endl;
 	}
@@ -1414,7 +1182,7 @@ void crc_codes::introduce_errors(
 	}
 
 }
-
+#if 0
 void crc_codes::crc_encode_file_based(
 		std::string &fname_in,
 		std::string &fname_out,
@@ -1564,7 +1332,7 @@ void crc_codes::crc_general_file_based(
 	}
 
 }
-
+#endif
 
 void crc_codes::split_binary_file_to_ascii_polynomials_256(
 		std::string &fname_in, std::string &fname_out,
@@ -1968,12 +1736,13 @@ void crc_codes::check_errors(
 
 			f_faulty = false;
 
+#if 0
 			if (type == t_CRC_16) {
 				uint16_t crc;
 				char *p_crc;
 				p_crc = (char *) &crc;
 
-				crc = crc16((uint8_t *) buffer, L);
+				crc16((uint8_t *) buffer, L, p_crc);
 				for (i = 0; i < nb_check_bytes; i++) {
 					if (p_crc[i] != check_bytes[i]) {
 						break;
@@ -2003,7 +1772,7 @@ void crc_codes::check_errors(
 
 			}
 
-
+#endif
 
 
 

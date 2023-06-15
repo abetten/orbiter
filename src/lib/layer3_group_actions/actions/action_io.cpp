@@ -440,10 +440,7 @@ void action::read_orbit_rep_and_candidates_from_files(
 		//longinteger_object stab_go;
 
 		string fname1;
-		char str[1000];
-		snprintf(str, sizeof(str), "_lvl_%d", level);
-		fname1.assign(prefix);
-		fname1.append(str);
+		fname1 = prefix + "_lvl_" + std::to_string(level);
 
 		if (f_v) {
 			cout << "action::read_orbit_rep_and_candidates_from_files "
@@ -504,9 +501,7 @@ void action::read_orbit_rep_and_candidates_from_files(
 					"before generator_read_candidates_of_orbit" << endl;
 		}
 		string fname2;
-		fname2.assign(prefix);
-		snprintf(str, sizeof(str), "_lvl_%d_candidates.bin", level_of_candidates_file);
-		fname2.append(str);
+		fname2 = prefix + "_lvl_" + std::to_string(level_of_candidates_file) + "_candidates.bin";
 
 
 		if (f_v) {

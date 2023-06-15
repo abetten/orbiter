@@ -5810,6 +5810,53 @@ void file_io::read_file_as_array_of_strings(
 	}
 }
 
+void file_io::serialize_file_names(
+	std::string &fname_list_of_file,
+	std::string &output_mask,
+	int &nb_files,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::serialize_file_names "
+				<< fname_list_of_file << " to " << output_mask << endl;
+	}
+
+
+	std::string *Lines;
+	int i;
+	char str[1000];
+	char cmd[1000];
+
+	read_file_as_array_of_strings(
+			fname_list_of_file,
+		Lines,
+		nb_files,
+		verbose_level);
+
+	if (f_v) {
+		cout << "interface_toolkit::worker "
+				"serialize_file_names_output_mask = "
+				<< output_mask << endl;
+	}
+
+	for (i = 0; i < nb_files; i++) {
+		cout << "i=" << i << " / " << nb_files << " fname=" << Lines[i] << endl;
+		snprintf(str, sizeof(str), output_mask.c_str(), i);
+		cout << "i=" << i << " / " << nb_files << " output=" << str << endl;
+		snprintf(cmd, sizeof(cmd), "mv %s %s", Lines[i].c_str(), str);
+		cout << "executing : " << cmd << endl;
+		system(cmd);
+
+	}
+
+	if (f_v) {
+		cout << "file_io::serialize_file_names done" << endl;
+	}
+}
+
+
 
 }}}
 

@@ -94,12 +94,8 @@ void projective_space::projective_space_init(
 		cout << "f_init_incidence_structure="
 				<< f_init_incidence_structure << endl;
 	}
-	char str[1000];
-
-	snprintf(str, sizeof(str), "PG_%d_%d", n, F->q);
-	label_txt.assign(str);
-	snprintf(str, sizeof(str), "PG(%d,%d)", n, F->q);
-	label_tex.assign(str);
+	label_txt = "PG_" + std::to_string(n) + "_" + std::to_string(F->q);
+	label_tex = "PG(" + std::to_string(n) + "," + std::to_string(F->q) + ")";
 
 
 

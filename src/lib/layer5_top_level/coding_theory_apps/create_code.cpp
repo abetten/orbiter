@@ -1079,7 +1079,7 @@ void create_code::export_codewords_by_weight(
 
 	int *Wt;
 	int *word;
-	int h, i, w;
+	long int h, i, w;
 
 	word = NEW_int(n);
 	Wt = NEW_int(N);

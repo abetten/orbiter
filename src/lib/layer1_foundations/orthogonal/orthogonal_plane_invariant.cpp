@@ -387,7 +387,6 @@ void orthogonal_plane_invariant::init(
 
 #if 0
 	{
-		char fname[1000];
 
 		snprintf(fname, 1000, "plane_invariant_%d_%d.txt", q, k);
 

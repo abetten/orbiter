@@ -3151,6 +3151,9 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 	int *Sol_weights;
 	int j;
 	vector<int> res;
+	string label;
+
+	label = "weights";
 
 	D.init_partition_problem_with_bounds(
 			weights, bounds, nb_weights, target_value,
@@ -3161,7 +3164,7 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 		cout << "colored_graph::all_cliques_weighted_with_two_colors "
 				"before D.solve_mckay" << endl;
 	}
-	D.solve_mckay("weights", INT_MAX /* maxresults */,
+	D.solve_mckay(label, INT_MAX /* maxresults */,
 			nb_backtrack_nodes, nb_sol, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "colored_graph::all_cliques_weighted_with_two_colors "

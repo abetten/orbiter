@@ -167,11 +167,7 @@ void poset_classification::prepare_fname_data_file(
 		std::string &fname,
 		std::string &fname_base, int depth_completed)
 {
-	char str[1000];
-
-	fname.assign(fname_base);
-	snprintf(str, sizeof(str),  "_%d.data", depth_completed);
-	fname.append(str);
+	fname = fname_base + "_" + std::to_string(depth_completed) + ".data";
 }
 
 void poset_classification::print_representatives_at_level(int lvl)
@@ -704,12 +700,8 @@ void poset_classification::housekeeping(
 #if 1
 
 		string fname_reps_csv;
-		char str[1000];
 
-		fname_reps_csv.assign(problem_label_with_path);
-		snprintf(str, sizeof(str), "_reps_lvl_%d", i);
-		fname_reps_csv.append(str);
-		fname_reps_csv.append(".csv");
+		fname_reps_csv = problem_label_with_path + "_reps_lvl_" + std::to_string(i) + ".csv";
 
 		Poo->save_representatives_at_level_to_csv(
 				fname_reps_csv, i, verbose_level);
@@ -911,11 +903,7 @@ void poset_classification::create_fname_sv_level_file_binary(
 		std::string &fname,
 		std::string &fname_base, int level)
 {
-	char str[1000];
-
-	fname.assign(fname_base);
-	snprintf(str, sizeof(str), "_lvl_%d_sv.data", level);
-	fname.append(str);
+	fname = fname_base + "_lvl_" + std::to_string(level) + "_sv.data";
 
 }
 
@@ -1001,13 +989,10 @@ void poset_classification::read_level_file_binary(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	char str[1000];
 	int nb_group_elements;
 	orbiter_kernel_system::file_io Fio;
 	
-	fname.assign(fname_base);
-	snprintf(str, sizeof(str), "_lvl_%d.data", level);
-	fname.append(str);
+	fname = fname_base + "_lvl_" + std::to_string(level) + ".data";
 	
 	if (f_v) {
 		cout << "poset_classification::read_level_file_binary "
@@ -1036,13 +1021,10 @@ void poset_classification::write_level_file_binary(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	char str[1000];
 	int nb_group_elements;
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(fname_base);
-	snprintf(str, sizeof(str), "_lvl_%d.data", level);
-	fname.append(str);
+	fname = fname_base + "_lvl_" + std::to_string(level) + ".data";
 	
 	if (f_v) {
 		cout << "poset_classification::write_level_file_binary "
@@ -1089,11 +1071,8 @@ void poset_classification::make_fname_lvl_file_candidates(
 		std::string &fname,
 		std::string &fname_base, int lvl)
 {
-	char str[1000];
 
-	fname.assign(fname_base);
-	snprintf(str, sizeof(str), "_lvl_%d_candidates.txt", lvl);
-	fname.append(str);
+	fname = fname_base + "_lvl_" + std::to_string(lvl) + "_candidates.txt";
 
 }
 
@@ -1101,11 +1080,7 @@ void poset_classification::make_fname_lvl_file(
 		std::string &fname,
 		std::string &fname_base, int lvl)
 {
-	char str[1000];
-
-	fname.assign(fname_base);
-	snprintf(str, sizeof(str), "_lvl_%d", lvl);
-	fname.append(str);
+	fname = fname_base + "_lvl_" + std::to_string(lvl);
 
 }
 
@@ -1113,11 +1088,7 @@ void poset_classification::make_fname_lvl_reps_file(
 		std::string &fname,
 		std::string &fname_base, int lvl)
 {
-	char str[1000];
-
-	fname.assign(fname_base);
-	snprintf(str, sizeof(str), "_lvl_%d_reps", lvl);
-	fname.append(str);
+	fname = fname_base + "_lvl_" + std::to_string(lvl) + "_reps";
 
 }
 

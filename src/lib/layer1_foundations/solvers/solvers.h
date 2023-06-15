@@ -226,7 +226,7 @@ public:
 		// [m] he current values of the RHS 
 		// (=RHS - what is chosen on the left
 	diophant_equation_type *type;
-	char **eqn_label; // [m] a label for each equation / inequality
+	std::string *eqn_label; // [m] a label for each equation / inequality
 
 	int f_has_var_labels;
 	int *var_labels; // [n]
@@ -283,7 +283,7 @@ public:
 	int &Gij(int i, int j);
 	int &RHSi(int i);
 	int &RHS_low_i(int i);
-	void init_eqn_label(int i, char *label);
+	void init_eqn_label(int i, std::string &label);
 	void print();
 	void print_tight();
 	void print_dense();
@@ -330,11 +330,12 @@ public:
 	int j_fst(int j, int verbose_level);
 	int j_nxt(int j, int verbose_level);
 	void solve_mckay(
-			const char *label, int maxresults,
+			std::string &label,
+			int maxresults,
 		long int &nb_backtrack_nodes, int &nb_sol,
 		int verbose_level);
 	void solve_mckay_override_minrhs_in_inequalities(
-			const char *label,
+			std::string &label,
 		int maxresults, long int &nb_backtrack_nodes,
 		int minrhs, int &nb_sol, int verbose_level);
 	void latex_it();
@@ -380,11 +381,9 @@ public:
 			int verbose_level);
 	void multiply_A_x_to_RHS1();
 	void write_xml(
-			std::ostream &ost, const char *label);
+			std::ostream &ost, std::string &label);
 	void read_xml(
-			std::ifstream &f, char *label, int verbose_level);
-		// label will be set to the label that is in the file
-		// therefore, label must point to sufficient memory
+			std::ifstream &f, std::string &label, int verbose_level);
 	void append_equation();
 	void delete_equation(int I);
 	void write_gurobi_binary_variables(const char *fname);
@@ -648,7 +647,8 @@ namespace mckay {
 	class tMCKAY {
 	public:
 		tMCKAY();
-		void Init(diophant *lgs, const char *label, 
+		void Init(diophant *lgs,
+				std::string &label,
 			int aEqnAnz, int aVarAnz);
 		void possolve(std::vector<int> &lo, std::vector<int> &hi,
 				std::vector<equation> &eqn,
@@ -659,7 +659,7 @@ namespace mckay {
 		long int nb_calls_to_solve;
 		int first_moved;
 		int second_moved;
-		const char *problem_label;
+		std::string problem_label;
 
 	protected:
 		bool subtract(int eqn1, equation &e1, int l1, int lors1, 

@@ -90,7 +90,6 @@ void graph_classify::init(
 
 	int N;
 	int target_depth;
-	//char prefix[1000];
 	combinatorics::combinatorics_domain Combi;
 	
 
@@ -819,13 +818,9 @@ void graph_classify::draw_graphs(int level,
 
 
 		string fname_full;
-		char str[1000];
 
-		fname_full.assign(gen->get_problem_label_with_path());
+		fname_full = gen->get_problem_label_with_path() + "_rep_" + std::to_string(level) + "_" + std::to_string(h) + ".mp";
 
-		snprintf(str, sizeof(str), "_rep_%d_%d.mp", level, h);
-
-		fname_full.append(str);
 
 #if 1
 		int x_min = 0, x_max = draw_options->xin;
@@ -888,13 +883,8 @@ void graph_classify::draw_graphs(int level,
 	}
 
 	string fname_list;
-	char str[1000];
 
-	fname_list.assign(gen->get_problem_label_with_path());
-
-	snprintf(str, sizeof(str), "_level_%d_reps", level);
-	fname_list.append(str);
-	fname_list.append(".tex");
+	fname_list = gen->get_problem_label_with_path() + "_level_" + std::to_string(level) + "_reps.tex";
 
 
 	{
@@ -911,17 +901,11 @@ void graph_classify::draw_graphs(int level,
 
 			string fname_full;
 			string cmd;
-			char str[1000];
 
-			fname_full.assign(gen->get_problem_label_with_path());
+			fname_full = gen->get_problem_label_with_path() + "_rep_" + std::to_string(level) + "_" + std::to_string(h);
 
-			snprintf(str, sizeof(str), "_rep_%d_%d", level, h);
 
-			fname_full.append(str);
-
-			cmd.assign("pdflatex ");
-			cmd.append(fname_full);
-			cmd.append(".tex");
+			cmd = "pdflatex " + fname_full + ".tex";
 
 			fp << "\\input " << fname_full << ".tex" << endl;
 

@@ -983,12 +983,9 @@ void hermitian::create_latex_report(int verbose_level)
 		string extra_praeamble;
 
 
-		char str[1000];
 
-		snprintf(str, 1000, "H_%d_%d.tex", k - 1, Q);
-		fname.assign(str);
-		snprintf(str, 1000, "Hermitian Variety  ${\\rm H}(%d,%d)$", k - 1, Q);
-		title.assign(str);
+		fname = "H_" + std::to_string(k - 1) + "_" + std::to_string(Q) + ".tex";
+		title = "Hermitian Variety  ${\\rm H}(" + std::to_string(k - 1) + "," + std::to_string(Q) + ")$";
 
 
 

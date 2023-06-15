@@ -4351,18 +4351,11 @@ void geometry_global::create_orthogonal(
 	cout << endl;
 #endif
 
-	char str[1000];
 
 	algebra::algebra_global AG;
 
-	snprintf(str, sizeof(str), "Q%s_%d_%d.txt",
-			AG.plus_minus_letter(epsilon), n, F->q);
-	label_txt.assign(str);
-
-	snprintf(str, sizeof(str), "Q%s\\_%d\\_%d.txt",
-			AG.plus_minus_letter(epsilon), n, F->q);
-	label_tex.assign(str);
-	//write_set_to_file(fname, L, N, verbose_level);
+	label_txt = "Q" + AG.plus_minus_string(epsilon) + "_" + std::to_string(n) + "_" + std::to_string(F->q);
+	label_tex = "Q" + AG.plus_minus_string(epsilon) + "\\_" + std::to_string(n) + "\\_" + std::to_string(F->q);
 
 
 	FREE_OBJECT(Quadratic_form);
@@ -4422,14 +4415,9 @@ void geometry_global::create_hermitian(
 	cout << endl;
 #endif
 
-	char str[1000];
 
-	snprintf(str, sizeof(str), "H_%d_%d.txt", n, F->q);
-	label_txt.assign(str);
-
-	snprintf(str, sizeof(str), "H\\_%d\\_%d.txt", n, F->q);
-	label_tex.assign(str);
-	//write_set_to_file(fname, L, N, verbose_level);
+	label_txt = "H_" + std::to_string(n) + "_" + std::to_string(F->q);
+	label_tex = "H\\_" + std::to_string(n) + "\\_" + std::to_string(F->q);
 
 
 	FREE_int(v);

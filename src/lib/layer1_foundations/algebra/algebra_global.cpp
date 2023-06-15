@@ -380,7 +380,7 @@ void algebra_global::subexponent(
 #endif
 }
 
-
+#if 0
 const char *algebra_global::plus_minus_string(int epsilon)
 {
 	if (epsilon == 1) {
@@ -395,20 +395,26 @@ const char *algebra_global::plus_minus_string(int epsilon)
 	cout << "algebra_global::plus_minus_string epsilon=" << epsilon << endl;
 	exit(1);
 }
+#endif
 
-const char *algebra_global::plus_minus_letter(int epsilon)
+std::string algebra_global::plus_minus_string(int epsilon)
 {
+	string s;
+
 	if (epsilon == 1) {
-		return "p";
+		s = "p";
 	}
-	if (epsilon == -1) {
-		return "m";
+	else if (epsilon == -1) {
+		s = "m";
 	}
-	if (epsilon == 0) {
-		return "";
+	else if (epsilon == 0) {
+		s = "";
 	}
-	cout << "algebra_global::plus_minus_letter epsilon=" << epsilon << endl;
-	exit(1);
+	else {
+		cout << "algebra_global::plus_minus_letter unrecognized, epsilon=" << epsilon << endl;
+		exit(1);
+	}
+	return s;
 }
 
 

@@ -70,7 +70,6 @@ diophant::~diophant()
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
-	int i;
 
 	if (f_v) {
 		cout << "diophant::~diophant" << endl;
@@ -115,12 +114,8 @@ diophant::~diophant()
 		cout << "diophant::~diophant before eqn_label" << endl;
 	}
 	if (eqn_label) {
-		for (i = 0; i < m; i++) {
-			if (eqn_label[i]) {
-				FREE_char(eqn_label[i]);
-			}
-		}
-		FREE_pchar(eqn_label);
+		delete [] eqn_label;
+		eqn_label = NULL;
 	}
 	if (X) {
 		FREE_int(X);
@@ -160,7 +155,7 @@ void diophant::open(int m, int n, int verbose_level)
 	RHS_low = NEW_int(m);
 	RHS1 = NEW_int(m);
 	type = NEW_OBJECTS(diophant_equation_type, m);
-	eqn_label = NEW_pchar(m);
+	eqn_label = new string[m];
 	X = NEW_int(n);
 	Y = NEW_int(m);
 	
@@ -170,10 +165,6 @@ void diophant::open(int m, int n, int verbose_level)
 	label[0] = 0;
 	diophant::m = m;
 	diophant::n = n;
-	for (i = 0; i < m; i++) {
-		type[i] = t_EQ;
-		eqn_label[i] = NULL;
-	}
 	f_has_sum = false;
 	//f_x_max = false;
 	f_max_time = false;
@@ -551,23 +542,15 @@ int &diophant::RHS_low_i(int i)
 	return RHS_low[i];
 }
 
-void diophant::init_eqn_label(int i, char *label)
+void diophant::init_eqn_label(int i, std::string &label)
 {
-	int l;
-	
 	if (i >= m) {
 		cout << "diophant::init_eqn_label i >= m" << endl;
 		cout << "label: " << label << endl;
 		cout << "i=" << i << endl;
 		exit(1);
 	}
-	if (eqn_label[i]) {
-		FREE_char(eqn_label[i]);
-		eqn_label[i] = NULL;
-	}
-	l = strlen(label) + 1;
-	eqn_label[i] = NEW_char(l);
-	strcpy(eqn_label[i], label);
+	eqn_label[i] = label;
 }
 
 void diophant::print()
@@ -700,9 +683,7 @@ void diophant::print_eqn(int i, int f_with_gcd)
 		cout << " ZOR " << setw(3) << RHSi(i);
 	}
 	cout << " ";
-	if (eqn_label[i]) {
-		cout << eqn_label[i];
-	}
+	cout << eqn_label[i];
 	cout << endl;
 }
 
@@ -735,9 +716,7 @@ void diophant::print_eqn_compressed(int i)
 		cout << " ZOR ";
 	}
 	cout << setw(3) << RHSi(i) << " ";
-	if (eqn_label[i]) {
-		cout << eqn_label[i];
-	}
+	cout << eqn_label[i];
 	cout << endl;
 }
 
@@ -761,9 +740,7 @@ void diophant::print_eqn_dense(int i)
 		cout << " ZOR " << setw(3) << RHSi(i);
 	}
 	cout << " ";
-	if (eqn_label[i]) {
-		cout << eqn_label[i];
-	}
+	cout << eqn_label[i];
 	cout << endl;
 }
 
@@ -851,7 +828,12 @@ int diophant::solve_first_mckay(
 	if (f_once) {
 		maxresults = 1;
 	}
-	solve_mckay("", maxresults, nb_backtrack_nodes, nb_sol, verbose_level - 2);
+
+	string label;
+
+	solve_mckay(
+			label, maxresults, nb_backtrack_nodes, nb_sol,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "diophant::solve_first_mckay found " << _resultanz
 			<< " solutions, using " << nb_backtrack_nodes
@@ -899,7 +881,6 @@ void diophant::draw_solutions(std::string &fname_base, int verbose_level)
 		std::string fname_base2;
 
 		fname_base2.assign(fname_base);
-		char str[1000];
 		
 		snprintf(str, sizeof(str), "_sol_%d", i);
 		fname_base2.append(str);
@@ -937,7 +918,7 @@ void diophant::write_solutions(std::string &fname, int verbose_level)
 	}
 
 	{
-		ofstream fp(fname.c_str());
+		ofstream fp(fname);
 
 		fp << _resultanz << " " << n << endl;
 		for (i = 0; i < _resultanz; i++) {
@@ -990,7 +971,8 @@ void diophant::read_solutions_from_file(std::string &fname_sol,
 	}
 	if (f_v) {
 		cout << "diophant::read_solutions_from_file reading file "
-				<< fname_sol << " of size " << Fio.file_size(fname_sol) << endl;
+				<< fname_sol << " of size "
+				<< Fio.file_size(fname_sol) << endl;
 	}
 	if (Fio.file_size(fname_sol) <= 0) {
 		cout << "diophant::read_solutions_from_file file "
@@ -999,7 +981,7 @@ void diophant::read_solutions_from_file(std::string &fname_sol,
 	}
 
 	{
-		ifstream fp(fname_sol.c_str());
+		ifstream fp(fname_sol);
 		int N, s, h;
 
 		fp >> N >> s;
@@ -1416,7 +1398,7 @@ int diophant::solve_all_mckay(
 		cout << "diophant::solve_all_mckay before solve_mckay, "
 				"verbose_level=" << verbose_level << endl;
 	}
-	solve_mckay(label.c_str(), maxresults,
+	solve_mckay(label, maxresults,
 			nb_backtrack_nodes, nb_sol,
 			verbose_level - 2);
 	if (f_v) {
@@ -1434,7 +1416,7 @@ int diophant::solve_once_mckay(int verbose_level)
 	long int nb_backtrack_nodes;
 	int nb_sol;
 
-	solve_mckay(label.c_str(), maxresults,
+	solve_mckay(label, maxresults,
 			nb_backtrack_nodes, nb_sol, verbose_level - 2);
 	if (f_v) {
 		cout << "diophant::solve_once_mckay found " << _resultanz
@@ -1559,12 +1541,12 @@ int diophant::solve_first_betten(int verbose_level)
 	nb_steps_betten = 0;
 	if (m <= 0) {
 		if (f_v) {
-			cout << "diophant::solve_first_betten(): m <= 0" << endl;
+			cout << "diophant::solve_first_betten: m <= 0" << endl;
 		}
 		return true;
 		}
 	if (n == 0) {
-		//cout << "diophant::solve_first_betten(): n == 0" << endl;
+		//cout << "diophant::solve_first_betten: n == 0" << endl;
 		for (i = 0; i < m; i++) {
 			if (type[i] == t_EQ) {
 				if (RHS[i]) {
@@ -1864,19 +1846,10 @@ int diophant::j_fst(int j, int verbose_level)
 		b = RHS1[i] / a;
 		if (b < x[j]) {
 			if (f_vv) {
-				char *label;
-				
-				if (eqn_label[i]) {
-					label = eqn_label[i];
-				}
-				else {
-					label = NEW_char(1);
-					label[0] = 0;
-				}
 				cout << "diophant::j_fst j=" << j << " reducing x[j] "
 					"from " << x[j] << " to " << b
 					<< " because of equation " << i << " = "
-					<< label << endl;
+					<< eqn_label[i] << endl;
 				cout << "RHS1[i]=" << RHS1[i] << endl;
 				cout << "a=" << a << endl;
 			}
@@ -1961,16 +1934,8 @@ int diophant::j_fst(int j, int verbose_level)
 			g = G[i * n + j];
 			if (g == 0 && RHS1[i] != 0) {
 				if (f_vv) {
-					char *label;
-				
-					if (eqn_label[i]) {
-						label = eqn_label[i];
-					}
-					else {
-						label = (char *) "";
-					}
 					cout << "diophant::j_fst g == 0 && RHS1[i] != 0 in "
-							"eqn i=" << i << " = " << label << endl;
+							"eqn i=" << i << " = " << eqn_label[i] << endl;
 					cout << "g=" << g << endl;
 					cout << "i=" << i << endl;
 					cout << "j=" << j << " != n - 1" << endl;
@@ -1989,16 +1954,8 @@ int diophant::j_fst(int j, int verbose_level)
 			}
 			if ((RHS1[i] % g) != 0) {
 				if (f_vv) {
-					char *label;
-				
-					if (eqn_label[i]) {
-						label = eqn_label[i];
-					}
-					else {
-						label = (char *) "";
-					}
 					cout << "diophant::j_fst (RHS1[i] % g) != 0 in "
-							"equation i=" << i << " = " << label << endl;
+							"equation i=" << i << " = " << eqn_label[i] << endl;
 					cout << "g=" << g << endl;
 					cout << "i=" << i << endl;
 					cout << "j=" << j << " != n - 1" << endl;
@@ -2019,16 +1976,8 @@ int diophant::j_fst(int j, int verbose_level)
 		// was not OK
 		if (x[j] == 0) {
 			if (f_vv) {
-				char *label;
-				
-				if (eqn_label[i]) {
-					label = eqn_label[i];
-				}
-				else {
-					label = (char *) "";
-				}
 				cout << "diophant::j_fst no solution b/c gcd test "
-						"failed in equation " << i << " = " << label << endl;
+						"failed in equation " << i << " = " << eqn_label[i] << endl;
 				cout << "j=" << j << endl;
 				cout << "x[j]=" << x[j] << endl;
 				cout << "RHS1[i]=" << RHS1[i] << endl;
@@ -2043,7 +1992,7 @@ int diophant::j_fst(int j, int verbose_level)
 			RHS1[ii] += A[ii * n + j];
 		}
 		if (f_vv) {
-			cout << "diophant::j_fst() decrementing to: x[" << j
+			cout << "diophant::j_fst decrementing to: x[" << j
 					<< "] = " << x[j] << endl;
 		}
 	}
@@ -2077,7 +2026,7 @@ int diophant::j_nxt(int j, int verbose_level)
 	while (x[j] > 0) {
 		x[j]--;
 		if (f_vv) {
-			cout << "diophant::j_nxt() decrementing to: x[" << j
+			cout << "diophant::j_nxt decrementing to: x[" << j
 					<< "] = " << x[j] << endl;
 		}
 		sum1++;
@@ -2111,16 +2060,8 @@ int diophant::j_nxt(int j, int verbose_level)
 			return true;
 		}
 		if (f_vv) {
-			char *label;
-				
-			if (eqn_label[i]) {
-				label = eqn_label[i];
-			}
-			else {
-				label = (char *) "";
-			}
 			cout << "diophant::j_nxt() gcd restriction failed in "
-					"eqn " << i << " = " << label << endl;
+					"eqn " << i << " = " << eqn_label[i] << endl;
 		}
 	}
 	if (f_vv) {
@@ -2132,7 +2073,8 @@ int diophant::j_nxt(int j, int verbose_level)
 }
 
 void diophant::solve_mckay(
-		const char *label, int maxresults,
+		std::string &label,
+		int maxresults,
 	long int &nb_backtrack_nodes, int &nb_sol,
 	int verbose_level)
 {
@@ -2150,7 +2092,7 @@ void diophant::solve_mckay(
 }
 
 void diophant::solve_mckay_override_minrhs_in_inequalities(
-	const char *label,
+	std::string &label,
 	int maxresults, long int &nb_backtrack_nodes,
 	int minrhs, int &nb_sol, int verbose_level)
 {
@@ -2381,9 +2323,7 @@ void diophant::latex_it(std::ostream &ost)
 		else if (type[i] == t_ZOR) {
 			ost << "  ZOR   " << setw(2) << RHS[i] << " & ";
 		}
-		if (eqn_label[i]) {
-			ost << eqn_label[i];
-		}
+		ost << eqn_label[i];
 		ost << "\\\\" << endl;
 	}
 	ost << "\\hline" << endl;
@@ -2891,9 +2831,6 @@ void diophant::save_in_general_format(
 	fname_coeff.assign(fname);
 	fname_RHS.assign(fname);
 	fname_x_bounds.assign(fname);
-	//strcpy(fname_coeff, fname);
-	//strcpy(fname_RHS, fname);
-	//strcpy(fname_x_bounds, fname);
 
 	ST.replace_extension_with(fname_coeff, "_coeff_matrix.csv");
 	ST.replace_extension_with(fname_RHS, "_RHS.csv");
@@ -2901,7 +2838,8 @@ void diophant::save_in_general_format(
 
 	Fio.int_matrix_write_csv(fname_coeff, A, m, n);
 	if (f_v) {
-		cout << "diophant::save_in_general_format written file " << fname_coeff << " of size "
+		cout << "diophant::save_in_general_format "
+				"written file " << fname_coeff << " of size "
 				<< Fio.file_size(fname_coeff) << endl;
 	}
 
@@ -2930,7 +2868,8 @@ void diophant::save_in_general_format(
 	}
 	Fio.int_matrix_write_csv(fname_RHS, RHS_coded, m, 3);
 	if (f_v) {
-		cout << "diophant::save_in_general_format written file " << fname_RHS << " of size "
+		cout << "diophant::save_in_general_format "
+				"written file " << fname_RHS << " of size "
 				<< Fio.file_size(fname_RHS) << endl;
 	}
 	FREE_int(RHS_coded);
@@ -2945,7 +2884,8 @@ void diophant::save_in_general_format(
 	Fio.int_matrix_write_csv(fname_x_bounds, X_bounds, n, 2);
 	FREE_int(X_bounds);
 	if (f_v) {
-		cout << "diophant::save_in_general_format written file " << fname_x_bounds << " of size "
+		cout << "diophant::save_in_general_format "
+				"written file " << fname_x_bounds << " of size "
 				<< Fio.file_size(fname_x_bounds) << endl;
 	}
 
@@ -3298,15 +3238,11 @@ void diophant::eliminate_zero_rows(
 				RHS[mm] = RHS[i];
 				RHS_low[mm] = RHS_low[i];
 				type[mm] = type[i];
-				eqn_label[mm] = eqn_label[i];
+				eqn_label[mm].assign(eqn_label[i]);
 			}
 			mm++;
 		}
 		else {
-			if (eqn_label[i]) {
-				FREE_char(eqn_label[i]);
-				eqn_label[i] = NULL;
-			}
 		}
 	}
 	if (f_v) {
@@ -3355,9 +3291,7 @@ void diophant::project(
 		if (!f_zo) {
 			D->type[i] = t_LE;
 		}
-		if (eqn_label[i]) {
-			D->init_eqn_label(i, eqn_label[i]);
-		}
+		D->init_eqn_label(i, eqn_label[i]);
 	}
 	//D->f_x_max = f_x_max;
 	//if (f_x_max) {
@@ -3391,7 +3325,8 @@ void diophant::split_by_equation(
 	a = count_non_zero_coefficients_in_row(eqn_idx);
 	project_to_single_equation(D, eqn_idx, verbose_level);
 	if (f_v) {
-		cout << "equation " << eqn_idx << " has " << a << " nonzero coefficients:" << endl;
+		cout << "equation " << eqn_idx << " has " << a
+				<< " nonzero coefficients:" << endl;
 		D->print_dense();
 	}
 	D->solve_all_mckay(nb_backtrack_nodes, max_results, 0 /* verbose_level */);
@@ -3433,7 +3368,8 @@ void diophant::split_by_equation(
 		}
 		cout << "solving case " << solve_case_idx << endl;
 		solve_all_mckay(nb_backtrack_nodes, INT_MAX, 0 /*verbose_level */);
-		cout << "solved case " << solve_case_idx << " with " << _resultanz << " solutions" << endl;
+		cout << "solved case " << solve_case_idx
+				<< " with " << _resultanz << " solutions" << endl;
 
 	}
 	FREE_int(Sol);
@@ -3467,7 +3403,8 @@ void diophant::split_by_two_equations(
 	D->solve_all_mckay(nb_backtrack_nodes, max_results, 0 /* verbose_level */);
 	N = D->_resultanz;
 	if (f_v) {
-		cout << "equations (" << eqn1_idx << ", " << eqn2_idx << ") have " << N << " solutions." << endl;
+		cout << "equations (" << eqn1_idx << ", " << eqn2_idx << ") "
+				"have " << N << " solutions." << endl;
 		D->print_dense();
 	}
 
@@ -3581,7 +3518,8 @@ void diophant::project_to_single_equation_and_solve(
 	}
 }
 
-void diophant::project_to_single_equation(diophant *D, int eqn_idx,
+void diophant::project_to_single_equation(
+		diophant *D, int eqn_idx,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3617,7 +3555,8 @@ void diophant::project_to_single_equation(diophant *D, int eqn_idx,
 	}
 }
 
-void diophant::project_to_two_equations(diophant *D, int eqn1_idx, int eqn2_idx,
+void diophant::project_to_two_equations(
+		diophant *D, int eqn1_idx, int eqn2_idx,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3670,10 +3609,10 @@ void diophant::multiply_A_x_to_RHS1()
 	}
 }
 
-void diophant::write_xml(std::ostream &ost, const char *label)
+void diophant::write_xml(std::ostream &ost, std::string &label)
 {
 	int i, j;
-	char *lbl;
+	string equation_label;
 	
 	ost << "<DIOPHANT label=\"" << label << "\" num_eqns=" << m
 			<< " num_vars=" << n << " f_has_sum=" << f_has_sum
@@ -3682,12 +3621,7 @@ void diophant::write_xml(std::ostream &ost, const char *label)
 		for (j = 0;j < n; j++) {
 			ost << setw(4) << Aij(i, j) << " ";
 		}
-		if (eqn_label[i]) {
-			lbl = eqn_label[i];
-		}
-		else {
-			lbl = (char *) "";
-		}
+		equation_label.assign(eqn_label[i]);
 		if (type[i] == t_EQ) {
 			ost << setw(2) << 0 << " " << setw(4) << RHS[i];
 		}
@@ -3700,7 +3634,7 @@ void diophant::write_xml(std::ostream &ost, const char *label)
 		else if (type[i] == t_ZOR) {
 			ost << setw(2) << 3 << " " << setw(4) << RHS[i];
 		}
-		ost << " \"" << lbl << "\"" << endl;
+		ost << " \"" << equation_label << "\"" << endl;
 	}
 	for (j = 0; j < n; j++) {
 		ost << setw(4) << x_min[j] << " " << setw(4) << x_max[j] << endl;
@@ -3710,21 +3644,20 @@ void diophant::write_xml(std::ostream &ost, const char *label)
 }
 
 
-void diophant::read_xml(ifstream &f, char *label, int verbose_level)
+void diophant::read_xml(ifstream &f, std::string &label, int verbose_level)
 {
 #ifdef SYSTEMUNIX
 	int f_v = (verbose_level >= 1);
 	string str, mapkey, mapval;
 	bool brk;
 	int eqpos, l, M = 0, N = 0, F_has_sum = 0, Sum = 0, i, j, a;
-	char tmp[1000], c;
+	char c;
 	data_structures::string_tools ST;
 
 
 	if (f_v) {
 		cout << "diophant::read_xml" << endl;
 	}
-	label[0] = 0;
 	f.ignore(INT_MAX, '<');
 	f >> str;
 	brk = false;
@@ -3743,34 +3676,34 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 			mapkey = str.substr(0, eqpos);
 			mapval = str.substr(eqpos + 1, str.size() - eqpos - 1);
 			if (mapkey == "label") {
-				l = (int) mapval.size();
-				for (i = 1; i < l; i++) {
-					label[i - 1] = mapval[i];
-				}
-				label[l - 2] = 0;
+				label.assign(mapval);
 			}
 			else if (mapkey == "num_eqns") {
 				M = ST.str2int(mapval);
 				if (f_v) {
-					cout << "diophant::read_xml num_eqns = " << M << endl;
+					cout << "diophant::read_xml "
+							"num_eqns = " << M << endl;
 				}
 			}
 			else if (mapkey == "num_vars") {
 				N = ST.str2int(mapval);
 				if (f_v) {
-					cout << "diophant::read_xml num_vars = " << N << endl;
+					cout << "diophant::read_xml "
+							"num_vars = " << N << endl;
 				}
 			}
 			else if (mapkey == "f_has_sum") {
 				F_has_sum = ST.str2int(mapval);
 				if (f_v) {
-					cout << "diophant::read_xml F_has_sum = " << F_has_sum << endl;
+					cout << "diophant::read_xml "
+							"F_has_sum = " << F_has_sum << endl;
 				}
 			}
 			else if (mapkey == "sum") {
 				Sum = ST.str2int(mapval);
 				if (f_v) {
-					cout << "diophant::read_xml Sum = " << Sum << endl;
+					cout << "diophant::read_xml "
+							"Sum = " << Sum << endl;
 				}
 			}
 		}
@@ -3814,6 +3747,7 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 				break;
 			}
 		}
+		char tmp[1000];
 		l = 0;
 		while (true) {
 			f >> c;
@@ -3824,11 +3758,7 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 			l++;
 		}
 		tmp[l] = 0;
-		eqn_label[i] = NEW_char(l + 1);
-		for (j = 0; j < l; j++) {
-			eqn_label[i][j] = tmp[j];
-		}
-		eqn_label[i][l] = 0;
+		eqn_label[i].assign(tmp);
 	}
 	if (f_v) {
 		cout << "diophant::read_xml reading x_max[]" << endl;
@@ -3855,7 +3785,6 @@ void diophant::append_equation()
 {
 	int *AA, *R_low, *R, *R1, *Y1;
 	diophant_equation_type *type1;
-	char **L;
 	int m1 = m + 1;
 	int i, j;
 
@@ -3864,7 +3793,6 @@ void diophant::append_equation()
 	R = NEW_int(m1);
 	R1 = NEW_int(m1);
 	type1 = NEW_OBJECTS(diophant_equation_type, m1);
-	L = NEW_pchar(m1);
 	Y1 = NEW_int(m1);
 	
 	for (i = 0; i < m; i++) {
@@ -3876,7 +3804,6 @@ void diophant::append_equation()
 		R[i] = RHS[i];
 		R1[i] = RHS1[i];
 		type1[i] = type[i];
-		L[i] = eqn_label[i];
 	}
 
 	FREE_int(A);
@@ -3884,7 +3811,6 @@ void diophant::append_equation()
 	FREE_int(RHS);
 	FREE_int(RHS1);
 	FREE_OBJECTS(type);
-	FREE_pchar(eqn_label);
 	FREE_int(Y);
 
 	A = AA;
@@ -3892,7 +3818,6 @@ void diophant::append_equation()
 	RHS = R;
 	RHS1 = R1;
 	type = type1;
-	eqn_label = L;
 	Y = Y1;
 
 	Int_vec_zero(A + m * n, n);
@@ -3900,7 +3825,6 @@ void diophant::append_equation()
 	RHS[m] = 0;
 	RHS1[m] = 0;
 	type[m] = t_EQ;
-	eqn_label[m] = NULL;
 
 	m++;
 	
@@ -3910,13 +3834,8 @@ void diophant::delete_equation(int I)
 {
 	int i, j;
 	
-	if (eqn_label[I]) {
-		FREE_char(eqn_label[I]);
-		eqn_label[I] = NULL;
-	}
 	for (i = I; i < m - 1; i++) {
-		eqn_label[i] = eqn_label[i + 1];
-		eqn_label[i + 1] = NULL;
+		eqn_label[i].assign(eqn_label[i + 1]);
 		type[i] = type[i + 1];
 		RHS_low[i] = RHS_low[i + 1];
 		RHS[i] = RHS[i + 1];
@@ -4093,7 +4012,8 @@ void diophant::draw_partitioned(
 
 	C.init(T, m, false, 0);
 	if (f_v) {
-		cout << "diophant::draw_partitioned we found " << C.nb_types
+		cout << "diophant::draw_partitioned "
+				"we found " << C.nb_types
 				<< " classes according to type[]" << endl;
 	}
 	
@@ -4233,14 +4153,16 @@ int diophant::test_solution(int *sol, int len, int verbose_level)
 	for (i = 0; i < m; i++) {
 		if (type[i] == t_EQ) {
 			if (Y[i] != RHS[i]) {
-				cout << "diophant::test_solution t_EQ and Y[i] != RHS[i]" << endl;
+				cout << "diophant::test_solution "
+						"t_EQ and Y[i] != RHS[i]" << endl;
 				ret = false;
 				break;
 			}
 		}
 		else if (type[i] == t_LE) {
 			if (Y[i] > RHS[i]) {
-				cout << "diophant::test_solution t_LE and Y[i] > RHS[i]" << endl;
+				cout << "diophant::test_solution "
+						"t_LE and Y[i] > RHS[i]" << endl;
 				ret = false;
 				break;
 			}
@@ -4248,12 +4170,14 @@ int diophant::test_solution(int *sol, int len, int verbose_level)
 		}
 		else if (type[i] == t_INT) {
 			if (Y[i] > RHS[i]) {
-				cout << "diophant::test_solution t_INT and Y[i] > RHS[i]" << endl;
+				cout << "diophant::test_solution "
+						"t_INT and Y[i] > RHS[i]" << endl;
 				ret = false;
 				break;
 			}
 			if (Y[i] < RHS_low[i]) {
-				cout << "diophant::test_solution t_INT and Y[i] < RHS_low[i]" << endl;
+				cout << "diophant::test_solution "
+						"t_INT and Y[i] < RHS_low[i]" << endl;
 				ret = false;
 				break;
 			}
@@ -4429,7 +4353,8 @@ void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&A
 #endif
 	L = (n * (n - 1)) >> 1;
 	if (f_v) {
-		cout << "diophant::make_clique_graph_adjacency_matrix L=" << L << endl;
+		cout << "diophant::make_clique_graph_adjacency_matrix "
+				"L=" << L << endl;
 	}
 
 
@@ -4443,14 +4368,17 @@ void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&A
 	}
 #else
 	if (f_v) {
-		cout << "diophant::make_clique_graph_adjacency_matrix before Adj->allocate" << endl;
+		cout << "diophant::make_clique_graph_adjacency_matrix "
+				"before Adj->allocate" << endl;
 	}
 	Adj->allocate(L);
 	if (f_v) {
-		cout << "diophant::make_clique_graph_adjacency_matrix after Adj->allocate" << endl;
+		cout << "diophant::make_clique_graph_adjacency_matrix "
+				"after Adj->allocate" << endl;
 	}
 	if (f_v) {
-		cout << "diophant::make_clique_graph_adjacency_matrix setting array to one" << endl;
+		cout << "diophant::make_clique_graph_adjacency_matrix "
+				"setting array to one" << endl;
 	}
 	for (i = 0; i < L; i++) {
 		Adj->m_i(i, 1);
@@ -4458,7 +4386,8 @@ void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&A
 #endif
 	for (i = 0; i < m; i++) {
 		if (false) {
-			cout << "diophant::make_clique_graph_adjacency_matrix i=" << i << endl;
+			cout << "diophant::make_clique_graph_adjacency_matrix "
+					"i=" << i << endl;
 		}
 		for (j1 = 0; j1 < n; j1++) {
 			if (Aij(i, j1) == 0) {
@@ -4567,13 +4496,17 @@ int diophant::solve_first_mckay_once_option(
 
 	//verbose_level = 4;
 	if (f_v) {
-		cout << "diophant::solve_first_mckay calling solve_mckay" << endl;
+		cout << "diophant::solve_first_mckay calling "
+				"solve_mckay" << endl;
 	}
 	if (f_once) {
 		maxresults = 1;
 	}
 
-	solve_mckay("",
+
+	string label;
+
+	solve_mckay(label,
 			maxresults, nb_backtrack_nodes, nb_sol,
 			verbose_level - 2);
 
@@ -4617,7 +4550,8 @@ static void diophant_callback_solution_found(int *sol, int len,
 		f_v = true;
 	}
 	if (f_v) {
-		cout << "diophant_callback_solution_found recording solution "
+		cout << "diophant_callback_solution_found "
+				"recording solution "
 				<< nb_sol << " len = " << len << " : ";
 		Int_vec_print(cout, sol, len);
 		cout << endl;
@@ -4633,15 +4567,15 @@ static void diophant_callback_solution_found(int *sol, int len,
 	}
 
 	if (!D->test_solution(sol, len, 0 /* verbose_level */)) {
-		cout << "diophant_callback_solution_found the solution "
-				"is not a solution" << endl;
+		cout << "diophant_callback_solution_found "
+				"the solution fails the test" << endl;
 		exit(1);
 		//return;
 	}
 	else {
 		if (f_v) {
-			cout << "diophant_callback_solution_found D->test_solution "
-					"returns true" << endl;
+			cout << "diophant_callback_solution_found "
+					"the solution passes the test" << endl;
 		}
 	}
 

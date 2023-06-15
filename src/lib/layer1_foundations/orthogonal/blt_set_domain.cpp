@@ -1581,14 +1581,14 @@ void blt_set_domain::cubic_lift(
 	FREE_int(outcome);
 
 
-	char str[1000];
 	string fname_csv;
 	orbiter_kernel_system::file_io Fio;
 
 
-	snprintf(str, 1000, "ABC_q%d.csv", Q3);
-	fname_csv.assign(str);
+	fname_csv = "ABC_q" + std::to_string(Q3) + ".csv";
+
 	Fio.int_matrix_write_csv(fname_csv, ABC2, Q3, 3);
+
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 

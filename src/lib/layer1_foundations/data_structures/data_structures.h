@@ -623,6 +623,8 @@ public:
 	void create_string_with_quotes(
 			std::string &str, int *v, int len);
 	void transpose(int *M, int m, int n, int *Mt);
+	void print_as_polynomial_in_algebraic_notation(
+			std::ostream &ost, int *coeff_vector, int len);
 
 };
 

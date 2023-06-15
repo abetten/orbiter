@@ -27,7 +27,6 @@ void poset_classification_activity::generate_source_code(
 	int f_vv = (verbose_level >= 2);
 	string my_prefix;
 	string fname;
-	char str[1000];
 	int iso_type;
 	long int *rep;
 	int i, j;
@@ -40,9 +39,7 @@ void poset_classification_activity::generate_source_code(
 		cout << "poset_classification_activity::generate_source_code" << endl;
 	}
 
-	my_prefix.assign(PC->get_control()->problem_label);
-	snprintf(str, sizeof(str), "_level_%d", level);
-	my_prefix.append(str);
+	my_prefix = PC->get_control()->problem_label + "_level_" + std::to_string(level);
 
 	fname.assign(my_prefix);
 	fname.append(".cpp");
@@ -200,7 +197,6 @@ void poset_classification_activity::generate_history(int level, int verbose_leve
 	int f_vv = (verbose_level >= 2);
 	string my_prefix;
 	string fname;
-	char str[1000];
 	int iso_type;
 	long int *rep;
 	int i, j;
@@ -214,9 +210,7 @@ void poset_classification_activity::generate_history(int level, int verbose_leve
 		cout << "poset_classification_activity::generate_history" << endl;
 	}
 
-	my_prefix.assign(PC->get_control()->problem_label);
-	snprintf(str, sizeof(str), "_history_level_%d", level);
-	my_prefix.append(str);
+	my_prefix = PC->get_control()->problem_label + "_history_level_" + std::to_string(level);
 
 	fname.assign(my_prefix);
 	fname.append(".cpp");

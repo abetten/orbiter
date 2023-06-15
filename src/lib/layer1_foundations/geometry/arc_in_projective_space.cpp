@@ -2101,8 +2101,6 @@ void arc_in_projective_space::create_hyperoval(
 	int i, d;
 	int *v;
 	data_structures::sorting Sorting;
-	char str[1000];
-	char str2[1000];
 
 	d = n + 1;
 
@@ -2114,52 +2112,38 @@ void arc_in_projective_space::create_hyperoval(
 	v = NEW_int(d);
 	Pts = NEW_lint(P->Subspaces->N_points);
 
-	snprintf(str, sizeof(str), "_q%d", P->Subspaces->F->q);
-	snprintf(str2, sizeof(str2), "\\_q%d", P->Subspaces->F->q);
 
 	if (f_translation) {
 		P->Arc_in_projective_space->create_translation_hyperoval(Pts, nb_pts,
 				translation_exponent, verbose_level - 0);
-		label_txt.assign("hyperoval_translation");
-		label_txt.append(str);
-		label_tex.assign("hyperoval\\_translation");
-		label_tex.append(str2);
+		label_txt = "hyperoval_translation_q" + std::to_string(P->Subspaces->F->q);
+		label_tex = "hyperoval\\_translation\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else if (f_Segre) {
 		P->Arc_in_projective_space->create_Segre_hyperoval(Pts, nb_pts, verbose_level - 2);
-		label_txt.assign("hyperoval_Segre");
-		label_txt.append(str);
-		label_tex.assign("hyperoval\\_Segre");
-		label_tex.append(str2);
+		label_txt = "hyperoval_Segre_q" + std::to_string(P->Subspaces->F->q);
+		label_tex = "hyperoval\\_Segre\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else if (f_Payne) {
 		P->Arc_in_projective_space->create_Payne_hyperoval(Pts, nb_pts, verbose_level - 2);
-		label_txt.assign("hyperoval_Payne");
-		label_txt.append(str);
-		label_tex.assign("hyperoval\\_Payne");
-		label_tex.append(str2);
+		label_txt = "hyperoval_Payne_q" + std::to_string(P->Subspaces->F->q);
+		label_tex = "hyperoval\\_Payne\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else if (f_Cherowitzo) {
 		P->Arc_in_projective_space->create_Cherowitzo_hyperoval(Pts, nb_pts, verbose_level - 2);
-		label_txt.assign("hyperoval_Cherowitzo");
-		label_txt.append(str);
-		label_tex.assign("hyperoval\\_Cherowitzo");
-		label_tex.append(str2);
+		label_txt = "hyperoval_Cherowitzo_q" + std::to_string(P->Subspaces->F->q);
+		label_tex = "hyperoval\\_Cherowitzo\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else if (f_OKeefe_Penttila) {
 		P->Arc_in_projective_space->create_OKeefe_Penttila_hyperoval_32(Pts, nb_pts,
 				verbose_level - 2);
-		label_txt.assign("hyperoval_OKeefe_Penttila");
-		label_txt.append(str);
-		label_tex.assign("hyperoval\\_OKeefe\\_Penttila");
-		label_tex.append(str2);
+		label_txt = "hyperoval_OKeefe_Penttila_q" + std::to_string(P->Subspaces->F->q);
+		label_tex = "hyperoval\\_OKeefe\\_Penttila\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else {
 		P->Arc_in_projective_space->create_regular_hyperoval(Pts, nb_pts, verbose_level - 2);
-		label_txt.assign("hyperoval_regular");
-		label_txt.append(str);
-		label_tex.assign("hyperoval\\_regular");
-		label_tex.append(str2);
+		label_txt = "hyperoval_regular_q" + std::to_string(P->Subspaces->F->q);
+		label_tex = "hyperoval\\_regular\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 
 	if (f_v) {
@@ -2194,32 +2178,25 @@ void arc_in_projective_space::create_subiaco_oval(
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
-	char str[1000];
-	char str2[1000];
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_subiaco_oval" << endl;
 	}
 
-	snprintf(str, sizeof(str), "_q%d", P->Subspaces->F->q);
-	snprintf(str2, sizeof(str2), "\\_q%d", P->Subspaces->F->q);
 	{
 		arc_basic A;
 
 		A.init(P->Subspaces->F, verbose_level - 1);
 		A.Subiaco_oval(Pts, nb_pts, f_short, verbose_level);
 	}
+
 	if (f_short) {
-		label_txt.assign("oval_subiaco_short");
-		label_txt.append(str);
-		label_tex.assign("oval\\_subiaco\\_short");
-		label_tex.append(str2);
+		label_txt = "oval_subiaco_short_q" + std::to_string(P->Subspaces->F->q);
+		label_tex = "oval\\_subiaco\\_short\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else {
-		label_txt.assign("oval_subiaco_long");
-		label_txt.append(str);
-		label_tex.assign("oval\\_subiaco\\_long");
-		label_tex.append(str);
+		label_txt = "oval_subiaco_long_q" + std::to_string(P->Subspaces->F->q);
+		label_tex = "oval\\_subiaco\\_long\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 
 
@@ -2260,8 +2237,6 @@ void arc_in_projective_space::create_subiaco_hyperoval(
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
-	char str[1000];
-	char str2[1000];
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_subiaco_hyperoval" << endl;
@@ -2274,13 +2249,8 @@ void arc_in_projective_space::create_subiaco_hyperoval(
 		A.Subiaco_hyperoval(Pts, nb_pts, verbose_level);
 	}
 
-	snprintf(str, sizeof(str), "_q%d", P->Subspaces->F->q);
-	snprintf(str2, sizeof(str2), "\\_q%d", P->Subspaces->F->q);
-
-	label_txt.assign("subiaco_hyperoval");
-	label_txt.append(str);
-	label_tex.assign("subiaco\\_hyperoval");
-	label_tex.append(str2);
+	label_txt = "subiaco_hyperoval_q" + std::to_string(P->Subspaces->F->q);
+	label_tex = "subiaco\\_hyperoval\\_q" + std::to_string(P->Subspaces->F->q);
 
 
 	if (f_v) {
@@ -2332,12 +2302,8 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 
 	create_Maruta_Hamada_arc2(Pts, nb_pts, verbose_level);
 
-	char str[1000];
-	char str2[1000];
-	snprintf(str, sizeof(str), "Maruta_Hamada_arc2_q%d", P->Subspaces->q);
-	snprintf(str2, sizeof(str2), "Maruta\\_Hamada\\_arc2\\_q%d", P->Subspaces->q);
-	label_txt.assign(str);
-	label_tex.assign(str);
+	label_tex = "Maruta_Hamada_arc2_q" + std::to_string(P->Subspaces->q);
+	label_tex = "Maruta\\_Hamada\\_arc2\\_q" + std::to_string(P->Subspaces->q);
 
 	//FREE_int(Pts);
 	if (f_v) {

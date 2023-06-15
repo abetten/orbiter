@@ -60,9 +60,7 @@ void ring_theory_global::write_code_for_division(
 
 	string fname_code;
 
-	fname_code.assign("crc_");
-	fname_code.append(label_code);
-	fname_code.append(".cpp");
+	fname_code = "crc_" + label_code + ".cpp";
 
 	{
 
@@ -77,7 +75,6 @@ void ring_theory_global::write_code_for_division(
 		string label_of_parameters;
 		string name_of_function;
 		string name_of_array_of_polynomials;
-		char str2[1024];
 
 
 
@@ -142,9 +139,8 @@ void ring_theory_global::write_code_for_division(
 		name_of_function.append(label_code);
 
 
-		snprintf(str2, sizeof(str2), "q%d_n%d_r%d", F->q, da, db);
 
-		label_of_parameters.assign(str2);
+		label_of_parameters = "q" + std::to_string(F->q) + "_n" + std::to_string(da) + "_r" + std::to_string(db);
 
 
 
@@ -197,11 +193,13 @@ void ring_theory_global::write_code_for_division(
 			cout << "ring_theory_global::write_code_for_division" << endl;
 		}
 		if (da != FX.degree(poly_A)) {
-			cout << "ring_theory_global::write_code_for_division da != FX.degree(poly_A)" << endl;
+			cout << "ring_theory_global::write_code_for_division "
+					"da != FX.degree(poly_A)" << endl;
 			exit(1);
 		}
 		if (db != FX.degree(poly_B)) {
-			cout << "ring_theory_global::write_code_for_division db != FX.degree(poly_B)" << endl;
+			cout << "ring_theory_global::write_code_for_division "
+					"db != FX.degree(poly_B)" << endl;
 			exit(1);
 		}
 
@@ -249,7 +247,7 @@ void ring_theory_global::write_code_for_division(
 
 
 		ost << "\tint i;" << endl;
-		ost << "\tfor (i = 0; i <= " << db << "; i++) {" << endl;
+		ost << "\tfor (i = 0; i < " << db << "; i++) {" << endl;
 		ost << "\t\tcout << (int) R[i] << \",\";" << endl;
 		ost << "\t}" << endl;
 		ost << "\tcout << endl;" << endl;
@@ -341,7 +339,7 @@ void ring_theory_global::write_code_for_division(
 
 		ost << endl;
 
-		ost << "\tfor (i = " << db << "; i >= 0; i--) {" << endl;
+		ost << "\tfor (i = " << db - 1 << "; i >= 0; i--) {" << endl;
 		ost << "\t\tout[i] = R[i];" << endl;
 		ost << "\t}" << endl;
 
@@ -2332,12 +2330,8 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		snprintf(str, 1000, "Irred_q%d_d%d.tex", F->q, deg);
-		fname.assign(str);
-		snprintf(str, 1000, "Irreducible Polynomials of Degree %d over F%d", deg, F->q);
-		title.assign(str);
+		fname = "Irred_q" + std::to_string(F->q) + "_d" + std::to_string(deg) + ".tex";
+		title = "Irreducible Polynomials of Degree " + std::to_string(deg) + " over F" + std::to_string(F->q);
 
 
 		{

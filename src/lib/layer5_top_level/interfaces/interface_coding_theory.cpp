@@ -59,6 +59,7 @@ interface_coding_theory::interface_coding_theory()
 
 	f_crc_test = false;
 	//std::string crc_test_type;
+	crc_test_block_length = 0;
 	crc_test_N = 0;
 	crc_test_k = 0;
 
@@ -95,7 +96,7 @@ void interface_coding_theory::print_help(int argc,
 		cout << "-random_noise_of_burst_type_in_bitmap_file <fname_in> <fname_out> <numerator> <denominator> <burst_length>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-crc_test") == 0) {
-		cout << "-crc_test <type> <N> <k>" << endl;
+		cout << "-crc_test <type> <crc_test_block_length> <N> <k>" << endl;
 	}
 }
 
@@ -294,11 +295,13 @@ void interface_coding_theory::read_arguments(int argc,
 	else if (ST.stringcmp(argv[i], "-crc_test") == 0) {
 		f_crc_test = true;
 		crc_test_type.assign(argv[++i]);
+		crc_test_block_length = ST.strtoi(argv[++i]);
 		crc_test_N = ST.strtoi(argv[++i]);
 		crc_test_k = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-crc_test "
 					<< " " << crc_test_type
+					<< " " << crc_test_block_length
 					<< " " << crc_test_N
 				<< " " << crc_test_k
 				<< endl;
@@ -355,6 +358,7 @@ void interface_coding_theory::print()
 	if (f_crc_test) {
 		cout << "-crc_test "
 				<< " " << crc_test_type
+				<< " " << crc_test_block_length
 				<< " " << crc_test_N
 			<< " " << crc_test_k
 			<< endl;
@@ -483,7 +487,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 		coding_theory::crc_object CRC_object;
 
-		CRC_object.init(crc_test_type, verbose_level);
+		CRC_object.init(crc_test_type, crc_test_block_length, verbose_level);
 
 		coding_theory::crc_codes CRC;
 

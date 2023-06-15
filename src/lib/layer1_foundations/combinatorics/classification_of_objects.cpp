@@ -1110,8 +1110,6 @@ static void print_summary_table_entry(int *Table,
 		}
 		else if (j == 3) {
 
-			char str[1000];
-
 			int *Input_objects;
 			int nb_input_objects;
 			if (f_v) {
@@ -1126,7 +1124,8 @@ static void print_summary_table_entry(int *Table,
 
 			output.assign("");
 			for (h = 0; h < nb_input_objects; h++) {
-				snprintf(str, sizeof(str), "%d", Input_objects[h]);
+				string str;
+				str = std::to_string(Input_objects[h]);
 				output.append(str);
 				if (h < nb_input_objects - 1) {
 					output.append(", ");
@@ -1140,8 +1139,9 @@ static void print_summary_table_entry(int *Table,
 			FREE_int(Input_objects);
 		}
 		else {
-			char str[1000];
-			snprintf(str, sizeof(str), "%d", val);
+			string str;
+
+			str = std::to_string(val);
 			output.assign(str);
 		}
 	}

@@ -20,7 +20,7 @@ mckay::tMCKAY::tMCKAY() {
 	nb_calls_to_solve = 0;
 	first_moved = 0;
 	second_moved = 0;
-	problem_label = NULL;
+	problem_label.assign("");
 
 	_eqnanz = 0;
 	_varanz = 0;
@@ -39,7 +39,8 @@ mckay::tMCKAY::tMCKAY() {
 };
 
 void mckay::tMCKAY::Init(diophant *lgs,
-		const char *label, int aEqnAnz, int aVarAnz)
+		std::string &label,
+		int aEqnAnz, int aVarAnz)
 {
 	orbiter_kernel_system::os_interface Os;
 

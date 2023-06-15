@@ -190,7 +190,11 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 	if (f_vv) {
 		cout << "after projection:" << endl;
 		D.print();
-		D.write_xml(cout, "projected");
+
+		string label;
+
+		label = "projected";
+		D.write_xml(cout, label);
 	}
 	D.nb_steps_betten = 0;
 	//nb_sol = D.solve_once_mckay(verbose_level);
@@ -237,10 +241,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		if (f_vv) {
 			cout << "RHS1" << endl;
 			for (i = 0; i < D.m; i++) {
-				cout << "equation ";
-				if (D.eqn_label[i])
-					cout << D.eqn_label[i];
-				cout << " : " << D.RHS1[i] << endl;
+				cout << "equation " << D.eqn_label[i] << " : " << D.RHS1[i] << endl;
 			}
 		}
 

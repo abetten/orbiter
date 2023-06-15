@@ -434,6 +434,11 @@ public:
 		std::string *&Lines,
 		int &nb_lines,
 		int verbose_level);
+	void serialize_file_names(
+		std::string &fname_list_of_file,
+		std::string &output_mask,
+		int &nb_files,
+		int verbose_level);
 
 };
 

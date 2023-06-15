@@ -298,6 +298,7 @@ class interface_coding_theory {
 
 	int f_crc_test;
 	std::string crc_test_type;
+	long int crc_test_block_length;
 	long int crc_test_N;
 	int crc_test_k;
 
