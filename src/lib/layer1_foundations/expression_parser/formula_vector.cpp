@@ -1335,7 +1335,7 @@ void formula_vector::right_nullspace(
 }
 
 
-void formula_vector::minor(
+void formula_vector::matrix_minor(
 		formula_vector *A,
 		field_theory::finite_field *Fq,
 		int i, int j,
@@ -1347,12 +1347,12 @@ void formula_vector::minor(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "formula_vector::minor" << endl;
+		cout << "formula_vector::matrix_minor" << endl;
 	}
 
 
 	if (!A->f_matrix) {
-		cout << "formula_vector::minor "
+		cout << "formula_vector::matrix_minor "
 				"the object is not of type matrix" << endl;
 		exit(1);
 	}
@@ -1363,11 +1363,11 @@ void formula_vector::minor(
 	n = A->nb_cols;
 
 	if (f_v) {
-		cout << "formula_vector::minor "
+		cout << "formula_vector::matrix_minor "
 				"we found a matrix of size " << m << " x " << n << endl;
 	}
 	if (m != n) {
-		cout << "formula_vector::minor the input matrix must be square" << endl;
+		cout << "formula_vector::matrix_minor the input matrix must be square" << endl;
 		exit(1);
 	}
 
@@ -1378,7 +1378,7 @@ void formula_vector::minor(
 	formula_vector *M;
 
 	if (f_v) {
-		cout << "formula_vector::minor before computing temporary matrix" << endl;
+		cout << "formula_vector::matrix_minor before computing temporary matrix" << endl;
 	}
 
 	M = NEW_OBJECT(formula_vector);
@@ -1410,7 +1410,7 @@ void formula_vector::minor(
 			// copy the matrix entry (u,v) to (c,d):
 
 			if (f_v) {
-				cout << "formula_vector::minor copying "
+				cout << "formula_vector::matrix_minor copying "
 						"(" << u << "," << v << ") to "
 						"(" << c << "," << d << ")" << endl;
 			}
@@ -1422,12 +1422,12 @@ void formula_vector::minor(
 		}
 	}
 	if (f_v) {
-		cout << "formula_vector::minor after computing temporary matrix" << endl;
+		cout << "formula_vector::matrix_minor after computing temporary matrix" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "formula_vector::minor before determinant" << endl;
+		cout << "formula_vector::matrix_minor before determinant" << endl;
 	}
 
 	formula_vector *Det;
@@ -1443,7 +1443,7 @@ void formula_vector::minor(
 			verbose_level);
 
 	if (f_v) {
-		cout << "formula_vector::minor after determinant" << endl;
+		cout << "formula_vector::matrix_minor after determinant" << endl;
 	}
 
 	FREE_OBJECT(M);
@@ -1451,7 +1451,7 @@ void formula_vector::minor(
 
 	if (ODD(i + j)) {
 		if (f_v) {
-			cout << "formula_vector::minor before multiplying by -1" << endl;
+			cout << "formula_vector::matrix_minor before multiplying by -1" << endl;
 		}
 
 		Det->V[0].tree->multiply_by_minus_one(
@@ -1459,13 +1459,13 @@ void formula_vector::minor(
 				verbose_level);
 
 		if (f_v) {
-			cout << "formula_vector::minor after multiplying by -1" << endl;
+			cout << "formula_vector::matrix_minor after multiplying by -1" << endl;
 		}
 	}
 
 
 	if (f_v) {
-		cout << "formula_vector::minor "
+		cout << "formula_vector::matrix_minor "
 				"before simplify" << endl;
 	}
 	simplify(
@@ -1475,7 +1475,7 @@ void formula_vector::minor(
 			label_tex,
 			verbose_level);
 	if (f_v) {
-		cout << "formula_vector::minor "
+		cout << "formula_vector::matrix_minor "
 				"after simplify" << endl;
 	}
 
@@ -1485,7 +1485,7 @@ void formula_vector::minor(
 
 
 	if (f_v) {
-		cout << "formula_vector::minor done" << endl;
+		cout << "formula_vector::matrix_minor done" << endl;
 	}
 }
 
@@ -1600,7 +1600,7 @@ void formula_vector::symbolic_nullspace(
 
 		T = NEW_OBJECT(formula_vector);
 
-		T->minor(
+		T->matrix_minor(
 				B,
 				Fq,
 				i, j,

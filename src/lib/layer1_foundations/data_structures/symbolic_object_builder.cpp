@@ -738,9 +738,9 @@ void symbolic_object_builder::do_minor(
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_minor "
-				"before Formula_vector->minor" << endl;
+				"before Formula_vector->matrix_minor" << endl;
 	}
-	Formula_vector->minor(
+	Formula_vector->matrix_minor(
 			O_source->Formula_vector,
 			Fq,
 			minor_i, minor_j,
@@ -749,7 +749,7 @@ void symbolic_object_builder::do_minor(
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_minor "
-				"after Formula_vector->minor" << endl;
+				"after Formula_vector->matrix_minor" << endl;
 	}
 
 

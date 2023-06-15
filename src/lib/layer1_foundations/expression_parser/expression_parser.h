@@ -281,7 +281,7 @@ public:
 			std::string &label_tex,
 			std::string &managed_variables,
 			int verbose_level);
-	void minor(
+	void matrix_minor(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
 			int i, int j,
