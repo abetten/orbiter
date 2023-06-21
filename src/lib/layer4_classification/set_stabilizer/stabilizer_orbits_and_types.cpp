@@ -414,12 +414,9 @@ void stabilizer_orbits_and_types::save_interesting_subsets_reduced(
 	//long int *interesting_subsets_reduced;
 
 	string fname;
-	char str[1000];
 
-	snprintf(str, sizeof(str), "_stage_%d.csv", stage);
+	fname = CS->SubSt->fname_case_out + "_stage_" + std::to_string(stage) + ".csv";
 
-	fname.assign(CS->SubSt->fname_case_out);
-	fname.append(str);
 	orbiter_kernel_system::file_io Fio;
 
 	string label;

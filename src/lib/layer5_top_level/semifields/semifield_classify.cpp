@@ -755,11 +755,9 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 				<< " orbits at depth " << depth << endl;
 	}
 
-	char str[1000];
 	string fname;
 
-	snprintf(str, sizeof(str), "semifield_list_order%d.csv", order);
-	fname.assign(str);
+	fname = "semifield_list_order" + std::to_string(order) + ".csv";
 	{
 		long int *set;
 		long int *Table;
@@ -1420,40 +1418,29 @@ void semifield_classify::candidates_classify_by_first_column(
 void semifield_classify::make_fname_candidates_at_level_two_orbit(
 		std::string &fname, int orbit)
 {
-	fname.assign(level_two_prefix);
-	char str[1000];
-	snprintf(str, sizeof(str), "L2_orbit%d_cand_int8.bin", orbit);
-	fname.append(str);
+	fname = level_two_prefix + "L2_orbit" + std::to_string(orbit) + "_cand_int8.bin";
 
 }
 
 void semifield_classify::make_fname_candidates_at_level_two_orbit_txt(
 		std::string &fname, int orbit)
 {
-	fname.assign(level_two_prefix);
-	char str[1000];
-	snprintf(str, sizeof(str), "L2_orbit%d_cand.txt", orbit);
-	fname.append(str);
+	fname = level_two_prefix + "L2_orbit" + std::to_string(orbit) + "_cand.txt";
 
 }
 
 void semifield_classify::make_fname_candidates_at_level_three_orbit(
 		std::string &fname, int orbit)
 {
-	fname.assign(level_three_prefix);
-	char str[1000];
-	snprintf(str, sizeof(str), "L3_orbit%d_cand_int8", orbit);
-	fname.append(str);
+	fname = level_three_prefix + "L3_orbit" + std::to_string(orbit) + "_cand_int8";
 
 }
 
 void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
 	std::string &fname, int orbit, int h)
 {
-	fname.assign(level_two_prefix);
-	char str[1000];
-	snprintf(str, sizeof(str), "L2_orbit%d_type%d_cand_int8.bin", orbit, h);
-	fname.append(str);
+	fname = level_two_prefix + "L2_orbit" + std::to_string(orbit)
+			+ "_type" + std::to_string(h) + "_cand_int8.bin";
 }
 
 

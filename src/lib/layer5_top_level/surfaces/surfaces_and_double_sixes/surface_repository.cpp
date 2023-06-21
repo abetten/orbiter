@@ -180,9 +180,8 @@ void surface_repository::generate_source_code(int verbose_level)
 	if (f_v) {
 		cout << "surface_repository::generate_source_code" << endl;
 	}
-	fname_base.assign(Wedge->fname_base);
-	fname.assign(Wedge->fname_base);
-	fname.append(".cpp");
+	fname_base = Wedge->fname_base;
+	fname = Wedge->fname_base + ".cpp";
 
 	{
 		ofstream f(fname);

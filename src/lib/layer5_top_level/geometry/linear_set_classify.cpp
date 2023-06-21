@@ -773,14 +773,11 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int depth_completed;
 	string fname;
-	char str[1000];
 
 	if (f_v) {
 		cout << "linear_set_classify::read_data_file" << endl;
 	}
-	fname.assign(Gen->get_problem_label_with_path());
-	snprintf(str, sizeof(str), "_%d.data", depth);
-	fname.append(str);
+	fname = Gen->get_problem_label_with_path() + "_" + std::to_string(depth) + ".data";
 
 	Gen->read_data_file(depth_completed, fname, 0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -902,46 +899,6 @@ void linear_set_classify::classify_secondary(int argc, const char **argv,
 	cout << "nb_allowed=" << nb_allowed << endl;
 
 
-#if 0
-	int *candidates;
-	int nb_candidates;
-	int a;
-	char fname_candidates[1000];
-
-	Gen->make_fname_candidates_file_default(fname_candidates, level);
-
-	cout << "reading file " << fname_candidates << endl;
-
-	generator_read_candidates_of_orbit(fname_candidates, orbit_at_level,
-		candidates, nb_candidates, verbose_level);
-
-	int *good_candidates;
-	int nb_good_candidates;
-
-	good_candidates = NEW_int(nb_candidates);
-	nb_good_candidates = 0;
-	for (i = 0; i < nb_candidates; i++) {
-		a = candidates[i];
-		if (is_allowed[a]) {
-			good_candidates[nb_good_candidates++] = a;
-			}
-		}
-	cout << "Out of " << nb_candidates << " candidates, "
-			<< nb_good_candidates << " survive" << endl;
-
-	int *good_candidates;
-	int nb_good_candidates;
-
-	good_candidates = NEW_int(nb_candidates);
-	nb_good_candidates = 0;
-	for (i = 0; i < nb_candidates; i++) {
-		a = candidates[i];
-		if (is_allowed[a]) {
-			good_candidates[nb_good_candidates++] = a;
-			}
-		}
-
-#endif
 
 	long int *candidates;
 	int nb_candidates;

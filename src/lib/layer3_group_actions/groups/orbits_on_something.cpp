@@ -386,18 +386,12 @@ void orbits_on_something::stabilizer_of(
 
 	string fname_stab;
 	string label_stab;
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_stab_orb_%d", orbit_idx);
 
 
 
-	fname_stab.assign(prefix);
-	fname_stab.append(str);
-	fname_stab.append(".makefile");
+	fname_stab = prefix + "_stab_orb_" + std::to_string(orbit_idx) + ".makefile";
 
-	label_stab.assign(prefix);
-	label_stab.append(str);
+	label_stab = prefix + "_stab_orb_" + std::to_string(orbit_idx);
 
 	Stab->report_group(label_stab, verbose_level);
 
@@ -2315,12 +2309,7 @@ void orbits_on_something::export_something_worker(
 
 	if (ST.stringcmp(what, "orbit") == 0) {
 
-		char str[1000];
-
-		snprintf(str, sizeof(str), "_orbit_%d.csv", data1);
-
-		fname.assign(fname_base);
-		fname.append(str);
+		fname = fname_base + "_orbit_" + std::to_string(data1) + ".csv";
 
 		int orbit_idx = data1;
 		std::vector<int> Orb;

@@ -120,12 +120,8 @@ void orbits_on_polynomials::init(
 	Elt3 = NEW_int(A->elt_size_in_int);
 
 
-	char str[1000];
-
-	snprintf(str, sizeof(str), "poly_orbits_d%d_n%d_q%d", degree_of_poly, n - 1, F->q);
-	fname_base.assign(str);
-	fname_csv.assign(fname_base);
-	fname_csv.append(".csv");
+	fname_base =  "poly_orbits_d" + std::to_string(degree_of_poly) + "_n" + std::to_string(n - 1) + "_q" + std::to_string(F->q);
+	fname_csv = fname_base + ".csv";
 
 
 	//Sch = new schreier;
@@ -291,13 +287,10 @@ void orbits_on_polynomials::report(int verbose_level)
 	cout << "orbit reps:" << endl;
 
 	string title, author, extra_praeamble;
-	char str[1000];
 
-	snprintf(str, sizeof(str), "poly_orbits_d%d_n%d_q%d.tex", degree_of_poly, n - 1, F->q);
-	fname_report.assign(str);
+	fname_report = "poly_orbits_d" + std::to_string(degree_of_poly)+ "_n" + std::to_string(n - 1)+ "_q" + std::to_string(F->q) + ".tex";
 
-	snprintf(str, sizeof(str), "Varieties of degree %d in PG(%d,%d)", degree_of_poly, n - 1, F->q);
-	title.assign(str);
+	title = "Varieties of degree " + std::to_string(degree_of_poly)+ " in PG(" + std::to_string(n - 1)+ "," + std::to_string(F->q) + ")";
 
 	author.assign("Orbiter");
 
@@ -633,11 +626,13 @@ void orbits_on_polynomials::export_something(
 	fname_base.append(LG->label);
 
 	if (f_v) {
-		cout << "orbits_on_polynomials::export_something before export_something_worker" << endl;
+		cout << "orbits_on_polynomials::export_something "
+				"before export_something_worker" << endl;
 	}
 	export_something_worker(fname_base, what, data1, fname, verbose_level);
 	if (f_v) {
-		cout << "orbits_on_polynomials::export_something after export_something_worker" << endl;
+		cout << "orbits_on_polynomials::export_something "
+				"after export_something_worker" << endl;
 	}
 
 	if (f_v) {
@@ -664,12 +659,8 @@ void orbits_on_polynomials::export_something_worker(
 
 	if (ST.stringcmp(what, "orbit") == 0) {
 
-		char str[1000];
 
-		snprintf(str, sizeof(str), "_orbit_%d.csv", data1);
-
-		fname.assign(fname_base);
-		fname.append(str);
+		fname = fname_base + "_orbit_" + std::to_string(data1) + ".csv";
 
 		int orbit_idx = data1;
 		std::vector<int> Orb;
@@ -695,7 +686,8 @@ void orbits_on_polynomials::export_something_worker(
 				<< Fio.file_size(fname) << endl;
 	}
 	else {
-		cout << "orbits_on_polynomials::export_something_worker unrecognized export target: " << what << endl;
+		cout << "orbits_on_polynomials::export_something_worker "
+				"unrecognized export target: " << what << endl;
 	}
 
 	if (f_v) {

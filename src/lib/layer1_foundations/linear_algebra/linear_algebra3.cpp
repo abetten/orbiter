@@ -19,104 +19,6 @@ namespace linear_algebra {
 
 
 
-#if 0
-void linear_algebra::Gram_matrix(int epsilon, int k,
-	int form_c1, int form_c2, int form_c3,
-	int *&Gram, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int d = k + 1;
-	int n, i, j, u, offset = 0;
-	geometry::geometry_global Gg;
-
-	if (f_v) {
-		cout << "linear_algebra::Gram_matrix" << endl;
-	}
-	Gram = NEW_int(d * d);
-	Int_vec_zero(Gram, d * d);
-	n = Gg.Witt_index(epsilon, k);
-	if (epsilon == 0) {
-		Gram[0 * d + 0] = F->add(form_c1, form_c1);
-		offset = 1;
-	}
-	else if (epsilon == 1) {
-	}
-	else if (epsilon == -1) {
-		Gram[(d - 2) * d + d - 2] = F->add(form_c1, form_c1);
-		Gram[(d - 2) * d + d - 1] = form_c2;
-		Gram[(d - 1) * d + d - 2] = form_c2;
-		Gram[(d - 1) * d + d - 1] = F->add(form_c3, form_c3);
-	}
-	for (i = 0; i < n; i++) {
-		j = 2 * i;
-		u = offset + j;
-		Gram[u * d + u + 1] = 1;
-			// X_u * Y_{u+1}
-		Gram[(u + 1) * d + u] = 1;
-			// X_{u+1} * Y_u
-	}
-	if (f_v) {
-		cout << "linear_algebra::Gram_matrix done" << endl;
-	}
-}
-#endif
-
-#if 0
-int linear_algebra::evaluate_quadratic_form(int *v, int stride,
-	int epsilon, int k, int form_c1, int form_c2, int form_c3)
-{
-	int n, a, b, c = 0, d, x, x1, x2;
-	geometry::geometry_global Gg;
-
-	n = Gg.Witt_index(epsilon, k);
-	if (epsilon == 0) {
-		a = evaluate_hyperbolic_quadratic_form(v + stride, stride, n);
-		x = v[0];
-		b = F->product3(form_c1, x, x);
-		c = F->add(a, b);
-		}
-	else if (epsilon == 1) {
-		c = evaluate_hyperbolic_quadratic_form(v, stride, n);
-		}
-	else if (epsilon == -1) {
-		a = evaluate_hyperbolic_quadratic_form(v, stride, n);
-		x1 = v[2 * n * stride];
-		x2 = v[(2 * n + 1) * stride];
-		b = F->product3(form_c1, x1, x1);
-		c = F->product3(form_c2, x1, x2);
-		d = F->product3(form_c3, x2, x2);
-		c = F->add4(a, b, c, d);
-		}
-	return c;
-}
-
-
-int linear_algebra::evaluate_hyperbolic_quadratic_form(
-		int *v, int stride, int n)
-{
-	int alpha = 0, beta, u;
-
-	for (u = 0; u < n; u++) {
-		beta = F->mult(v[2 * u * stride], v[(2 * u + 1) * stride]);
-		alpha = F->add(alpha, beta);
-		}
-	return alpha;
-}
-
-int linear_algebra::evaluate_hyperbolic_bilinear_form(
-		int *u, int *v, int n)
-{
-	int alpha = 0, beta1, beta2, i;
-
-	for (i = 0; i < n; i++) {
-		beta1 = F->mult(u[2 * i], v[2 * i + 1]);
-		beta2 = F->mult(u[2 * i + 1], v[2 * i]);
-		alpha = F->add(alpha, beta1);
-		alpha = F->add(alpha, beta2);
-		}
-	return alpha;
-}
-#endif
 
 
 int linear_algebra::evaluate_conic_form(
@@ -234,7 +136,8 @@ int linear_algebra::Pluecker_43(int *x4, int *y4)
 int linear_algebra::Pluecker_ij(
 		int i, int j, int *x4, int *y4)
 {
-	return F->add(F->mult(x4[i], y4[j]), F->negate(F->mult(x4[j], y4[i])));
+	return F->add(F->mult(x4[i], y4[j]),
+			F->negate(F->mult(x4[j], y4[i])));
 }
 
 
@@ -290,7 +193,8 @@ int linear_algebra::evaluate_quadratic_form_x0x3mx1x2(
 {
 	int a;
 
-	a = F->add(F->mult(x[0], x[3]), F->negate(F->mult(x[1], x[2])));
+	a = F->add(F->mult(x[0], x[3]),
+			F->negate(F->mult(x[1], x[2])));
 	return a;
 }
 
@@ -352,12 +256,17 @@ void linear_algebra::find_secant_points_wrt_x0x3mx1x2(
 	b7 = Basis_line[7];
 	a = F->add(F->mult(b4, b7), F->negate(F->mult(b5, b6)));
 	c = F->add(F->mult(b0, b3), F->negate(F->mult(b1, b2)));
-	b = F->add4(F->mult(b0, b7), F->mult(b3, b4), F->negate(F->mult(b1, b6)), F->negate(F->mult(b2, b5)));
+	b = F->add4(F->mult(b0, b7),
+			F->mult(b3, b4),
+			F->negate(F->mult(b1, b6)),
+			F->negate(F->mult(b2, b5)));
 	if (f_v) {
-		cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 a=" << a << " b=" << b << " c=" << c << endl;
+		cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+				"a=" << a << " b=" << b << " c=" << c << endl;
 	}
 	if (a == 0) {
-		cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 a == 0" << endl;
+		cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+				"a == 0" << endl;
 		exit(1);
 	}
 	av = F->inverse(a);
@@ -365,11 +274,13 @@ void linear_algebra::find_secant_points_wrt_x0x3mx1x2(
 		if (b == 0) {
 			cav = F->mult(c, av);
 			if (f_v) {
-				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 cav=" << cav << endl;
+				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+						"cav=" << cav << endl;
 			}
 			r = F->frobenius_power(cav, F->e - 1);
 			if (f_v) {
-				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 r=" << r << endl;
+				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+						"r=" << r << endl;
 			}
 			Pts4[nb_pts * 2 + 0] = 1;
 			Pts4[nb_pts * 2 + 1] = r;
@@ -379,33 +290,39 @@ void linear_algebra::find_secant_points_wrt_x0x3mx1x2(
 			bv = F->inverse(b);
 			acbv2 = F->mult4(a, c, bv, bv);
 			if (f_v) {
-				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 acbv2=" << acbv2 << endl;
+				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+						"acbv2=" << acbv2 << endl;
 			}
 			t = F->absolute_trace(acbv2);
 			if (f_v) {
-				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 t=" << t << endl;
+				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+						"t=" << t << endl;
 			}
 			if (t == 0) {
 				int Y2[2];
 				int nb_sol;
 
 				if (f_v) {
-					cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 before solve_y2py" << endl;
+					cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+							"before solve_y2py" << endl;
 				}
 				solve_y2py(acbv2, Y2, nb_sol);
 				if (f_v) {
-					cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 after solve_y2py nb_sol= " << nb_sol << endl;
+					cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+							"after solve_y2py nb_sol= " << nb_sol << endl;
 					Int_vec_print(cout, Y2, nb_sol);
 					cout << endl;
 				}
 				if (nb_sol + nb_pts > 2) {
-					cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 nb_sol + nb_pts > 2" << endl;
+					cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+							"nb_sol + nb_pts > 2" << endl;
 					exit(1);
 				}
 				for (i = 0; i < nb_sol; i++) {
 					r = F->mult3(b, Y2[i], av);
 					if (f_v) {
-						cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 solution " << i << " r=" << r << endl;
+						cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+								"solution " << i << " r=" << r << endl;
 					}
 					Pts4[nb_pts * 2 + 0] = 1;
 					Pts4[nb_pts * 2 + 1] = r;
@@ -415,14 +332,16 @@ void linear_algebra::find_secant_points_wrt_x0x3mx1x2(
 			else {
 				// no solution
 				if (f_v) {
-					cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 no solution" << endl;
+					cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+							"no solution" << endl;
 				}
 				nb_pts = 0;
 			}
 		}
 	}
 	else {
-		cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 odd characteristic not yet implemented" << endl;
+		cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
+				"odd characteristic not yet implemented" << endl;
 		exit(1);
 	}
 

@@ -214,13 +214,15 @@ void six_arcs_not_on_a_conic::recognize(
 		cout << "six_arcs_not_on_a_conic::recognize" << endl;
 	}
 
-	Gen->gen->get_Orbit_tracer()->identify(arc6, 6,
+	Gen->gen->get_Orbit_tracer()->identify(
+			arc6, 6,
 		transporter,
 		orbit_at_level,
 		0 /*verbose_level */);
 
 
-	if (!Sorting.int_vec_search(Not_on_conic_idx,
+	if (!Sorting.int_vec_search(
+			Not_on_conic_idx,
 		nb_arcs_not_on_conic, orbit_at_level,
 		orbit_not_on_conic_idx)) {
 		cout << "six_arcs_not_on_a_conic::recognize could not find orbit" << endl;
@@ -243,13 +245,13 @@ void six_arcs_not_on_a_conic::report_latex(
 	ring_theory::longinteger_object go;
 	ring_theory::longinteger_domain D;
 	{
-	PA->A->Strong_gens->group_order(go);
+		PA->A->Strong_gens->group_order(go);
 
-	ost << "The order of the group $" << PA->A->label_tex << "$ is ";
-	go.print_not_scientific(ost);
-	ost << endl;
+		ost << "The order of the group $" << PA->A->label_tex << "$ is ";
+		go.print_not_scientific(ost);
+		ost << endl;
 
-	ost << "\\bigskip" << endl << endl;
+		ost << "\\bigskip" << endl << endl;
 	}
 
 	ring_theory::longinteger_object ol, Ol;

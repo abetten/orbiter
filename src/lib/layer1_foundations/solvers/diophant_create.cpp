@@ -83,13 +83,13 @@ void diophant_create::init(
 				D,
 				verbose_level);
 
-		char str[1000];
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		snprintf(str, sizeof(str), "max_arc_%d_%d_%d.diophant", F->q,
-				Descr->maximal_arc_sz, Descr->maximal_arc_d);
-		fname.assign(str);
+		fname = "max_arc_" + std::to_string(F->q) + "_"
+				+ std::to_string(Descr->maximal_arc_sz) + "_"
+				+ std::to_string(Descr->maximal_arc_d) + ".diophant";
+
 		D->save_in_general_format(fname, verbose_level);
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;

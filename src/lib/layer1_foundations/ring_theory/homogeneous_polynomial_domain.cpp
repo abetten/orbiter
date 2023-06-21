@@ -1056,9 +1056,15 @@ void homogeneous_polynomial_domain::print_monomial_relaxed(
 
 		s.append(symbols[j]);
 
+#if 0
 		for (i = 1; i < a; i++) {
 			s.append("*");
 			s.append(symbols[j]);
+		}
+#endif
+		if (a > 1) {
+			s.append("^");
+			s += std::to_string(a);
 		}
 	}
 }
@@ -2822,6 +2828,13 @@ void homogeneous_polynomial_domain::create_projective_variety(
 		cout << "homogeneous_polynomial_domain::create_projective_variety coeff:";
 		Int_vec_print(cout, coeff, get_nb_monomials());
 		cout << endl;
+		print_equation_tex(cout, coeff);
+		cout << endl;
+
+		print_equation_relaxed(cout, coeff);
+		cout << endl;
+
+
 	}
 
 	Pts = NEW_lint(N_points);
@@ -2835,14 +2848,17 @@ void homogeneous_polynomial_domain::create_projective_variety(
 	int i;
 
 	enumerate_points(coeff, Points, verbose_level);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::create_projective_variety "
+				"after HPD->enumerate_points, nb_pts = " << Points.size() << endl;
+	}
+
+
 	nb_pts = Points.size();
 	Pts = NEW_lint(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		Pts[i] = Points[i];
-	}
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::create_projective_variety "
-				"after HPD->enumerate_points, nb_pts = " << nb_pts << endl;
 	}
 
 	F->Io->display_table_of_projective_points(

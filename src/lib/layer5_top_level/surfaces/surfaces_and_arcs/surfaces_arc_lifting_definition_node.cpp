@@ -108,26 +108,26 @@ void surfaces_arc_lifting_definition_node::tally_f2(
 	}
 }
 
-void surfaces_arc_lifting_definition_node::report(int verbose_level)
+void surfaces_arc_lifting_definition_node::report(
+		int verbose_level)
 {
-	char fname_base[1000];
 	l1_interfaces::latex_interface L;
 
-	snprintf(fname_base, sizeof(fname_base), "clebsch_maps_surface_%d", orbit_idx);
+	string fname_base;
 
-	char str[1000];
+	fname_base = "clebsch_maps_surface_" + std::to_string(orbit_idx);
+
 	string title, author, extra_praeamble;
 
 	string fname_report;
 
-	fname_report.assign(fname_base);
-	fname_report.append(".tex");
-	snprintf(str, 1000, "Clebsch maps of surface %d", orbit_idx);
-	title.assign(str);
+	fname_report = fname_base + ".tex";
+
+	title = "Clebsch maps of surface " + std::to_string(orbit_idx);
 
 
 	{
-		ofstream fp(fname_report.c_str());
+		ofstream fp(fname_report);
 		L.head(fp,
 			false /* f_book */,
 			true /* f_title */,
@@ -147,11 +147,13 @@ void surfaces_arc_lifting_definition_node::report(int verbose_level)
 	}
 	orbiter_kernel_system::file_io Fio;
 
-	cout << "Written file " << fname_report << " of size " << Fio.file_size(fname_report.c_str()) << endl;
+	cout << "Written file " << fname_report << " of size "
+			<< Fio.file_size(fname_report) << endl;
 
 }
 
-void surfaces_arc_lifting_definition_node::report2(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting_definition_node::report2(
+		std::ostream &ost, int verbose_level)
 {
 	report_Clebsch_maps(ost, verbose_level);
 
@@ -160,7 +162,8 @@ void surfaces_arc_lifting_definition_node::report2(std::ostream &ost, int verbos
 	}
 }
 
-void surfaces_arc_lifting_definition_node::report_cosets(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting_definition_node::report_cosets(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -173,7 +176,8 @@ void surfaces_arc_lifting_definition_node::report_cosets(std::ostream &ost, int 
 
 		ost << endl << "\\bigskip" << endl << endl;
 		//ost << "\\item" << endl;
-		ost << "Aut coset " << i << " / " << nb_coset_reps << ": relative order is "
+		ost << "Aut coset " << i << " / " << nb_coset_reps
+				<< ": relative order is "
 				<< relative_order_table[i] << "\\\\" << endl;
 		ost << "$$" << endl;
 		Lift->A4->Group_element->element_print_latex(coset_reps->ith(i), ost);
@@ -192,7 +196,8 @@ void surfaces_arc_lifting_definition_node::report_cosets(std::ostream &ost, int 
 	}
 }
 
-void surfaces_arc_lifting_definition_node::report_cosets_detailed(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting_definition_node::report_cosets_detailed(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -245,7 +250,8 @@ void surfaces_arc_lifting_definition_node::report_cosets_detailed(std::ostream &
 	}
 }
 
-void surfaces_arc_lifting_definition_node::report_cosets_HDS(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting_definition_node::report_cosets_HDS(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int coset;
@@ -286,7 +292,8 @@ void surfaces_arc_lifting_definition_node::report_cosets_HDS(std::ostream &ost, 
 }
 
 
-void surfaces_arc_lifting_definition_node::report_HDS_top(std::ostream &ost)
+void surfaces_arc_lifting_definition_node::report_HDS_top(
+		std::ostream &ost)
 {
 	int t = T[0]->The_case.tritangent_plane_idx;
 
@@ -302,7 +309,8 @@ void surfaces_arc_lifting_definition_node::report_HDS_top(std::ostream &ost)
 	ost << "\\hline" << endl;
 }
 
-void surfaces_arc_lifting_definition_node::report_HDS_bottom(std::ostream &ost)
+void surfaces_arc_lifting_definition_node::report_HDS_bottom(
+		std::ostream &ost)
 {
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
@@ -311,7 +319,8 @@ void surfaces_arc_lifting_definition_node::report_HDS_bottom(std::ostream &ost)
 }
 
 
-void surfaces_arc_lifting_definition_node::report_cosets_T3(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting_definition_node::report_cosets_T3(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int coset;
@@ -350,7 +359,8 @@ void surfaces_arc_lifting_definition_node::report_cosets_T3(std::ostream &ost, i
 	}
 }
 
-void surfaces_arc_lifting_definition_node::report_T3_top(std::ostream &ost)
+void surfaces_arc_lifting_definition_node::report_T3_top(
+		std::ostream &ost)
 {
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
@@ -360,7 +370,8 @@ void surfaces_arc_lifting_definition_node::report_T3_top(std::ostream &ost)
 	ost << "\\hline" << endl;
 }
 
-void surfaces_arc_lifting_definition_node::report_T3_bottom(std::ostream &ost)
+void surfaces_arc_lifting_definition_node::report_T3_bottom(
+		std::ostream &ost)
 {
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
@@ -370,7 +381,8 @@ void surfaces_arc_lifting_definition_node::report_T3_bottom(std::ostream &ost)
 
 
 
-void surfaces_arc_lifting_definition_node::report_tally_F2(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting_definition_node::report_tally_F2(
+		std::ostream &ost, int verbose_level)
 {
 	if (f_has_F2) {
 		ost << "Tally of flag orbits: ";
@@ -379,7 +391,8 @@ void surfaces_arc_lifting_definition_node::report_tally_F2(std::ostream &ost, in
 	}
 }
 
-void surfaces_arc_lifting_definition_node::report_Clebsch_maps(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting_definition_node::report_Clebsch_maps(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

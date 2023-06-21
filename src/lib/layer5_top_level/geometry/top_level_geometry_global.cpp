@@ -479,12 +479,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 				FREE_int(v);
 				FREE_int(w);
 
-				fname.assign(fname_base);
-				fname.append("_incma_subgroup");
-				char str[1000];
-
-				snprintf(str, sizeof(str), "_index_%d.csv", p);
-				fname.append(str);
+				fname = fname_base + "_incma_subgroup_index_" + std::to_string(p) + ".csv";
 
 				PA->P->Subspaces->make_incidence_matrix(Orb1_subgroup, Orb2_subgroup, Inc, verbose_level);
 

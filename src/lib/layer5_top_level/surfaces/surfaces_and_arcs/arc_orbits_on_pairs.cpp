@@ -98,7 +98,7 @@ void arc_orbits_on_pairs::init(
 	std::string label_of_set;
 
 
-	label_of_set.assign("on_6arc");
+	label_of_set= "on_6arc";
 
 
 	if (f_v) {

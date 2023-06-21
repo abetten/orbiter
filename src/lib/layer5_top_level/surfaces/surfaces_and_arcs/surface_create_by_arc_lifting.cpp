@@ -67,15 +67,11 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 	surface_idx = SCA->nb_surfaces;
 
-	char str[1000];
 
-	snprintf(str, 1000, "%d / %d", arc_idx, SCA->Six_arcs->nb_arcs_not_on_conic);
+	arc_label = std::to_string(arc_idx) + " / " + std::to_string(SCA->Six_arcs->nb_arcs_not_on_conic);
 
-	arc_label.assign(str);
 
-	snprintf(str, 1000, "Arc%d", arc_idx);
-
-	arc_label_short.assign(str);
+	arc_label_short = "Arc" + std::to_string(arc_idx);
 
 
 	if (f_v) {
@@ -117,12 +113,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	string magma_fname;
 	orbiter_kernel_system::file_io Fio;
 
-	magma_fname.assign("surface_q");
-	snprintf(str, sizeof(str), "%d", SCA->Surf_A->PA->F->q);
-	magma_fname.append(str);
-	magma_fname.append("_iso");
-	snprintf(str, sizeof(str), "%d", SCA->nb_surfaces);
-	magma_fname.append("_group.magma");
+	magma_fname = "surface_q" + std::to_string(SCA->Surf_A->PA->F->q) + "_iso" + std::to_string(SCA->nb_surfaces) + "_group.magma";
 
 	AL->Trihedral_pair->Aut_gens->export_permutation_group_to_magma(
 			magma_fname, AL->Trihedral_pair->Aut_gens->A, verbose_level - 2);
@@ -407,15 +398,8 @@ void surface_create_by_arc_lifting::report(std::ostream &ost,
 	}
 
 	string fname_mask;
-	char str[1000];
 
-	fname_mask.assign("orbit_half_double_sixes_q");
-	snprintf(str, sizeof(str), "%d", SCA->Surf_A->PA->F->q);
-	fname_mask.append(str);
-	fname_mask.append("_iso_");
-	snprintf(str, sizeof(str), "%d", SCA->nb_surfaces);
-	fname_mask.append(str);
-	fname_mask.append("_%d");
+	fname_mask = "orbit_half_double_sixes_q" + std::to_string(SCA->Surf_A->PA->F->q) + "_iso_" + std::to_string(SCA->nb_surfaces) + "_%d";
 
 	SOA->print_automorphism_group(ost,
 		true /* f_print_orbits */,

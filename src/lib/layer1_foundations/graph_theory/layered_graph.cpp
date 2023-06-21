@@ -766,9 +766,7 @@ void layered_graph::draw_with_options(
 					}
 
 					if (L[i].Nodes[j].radius_factor >= 1.) {
-						char str[1000];
-						snprintf(str, sizeof(str), "{\\scriptsize %d}", L[i].Nodes[j].data1);
-						label.assign(str);
+						label = "{\\scriptsize " + std::to_string(L[i].Nodes[j].data1) + "}";
 					}
 					else {
 						label.assign("");
@@ -1369,7 +1367,7 @@ void layered_graph::make_subset_lattice(
 			Combi.unrank_k_subset(r, set1, n, k);
 			add_node_data1(k, r, set1[k - 1], 0/*verbose_level*/);
 
-			char text[1000];
+			string text;
 			int a, j, j0;
 			if (f_depth_first) {
 				cout << "k=" << k << " r=" << r << " set=";
@@ -1391,7 +1389,7 @@ void layered_graph::make_subset_lattice(
 						}
 					}
 				a += k;
-				snprintf(text, sizeof(text), "%d", a);
+				text = std::to_string(a);
 				}
 			else if (f_breadth_first) {
 				a = 0;
@@ -1399,21 +1397,19 @@ void layered_graph::make_subset_lattice(
 					a += Nb[i];
 					}
 				a += r;
-				snprintf(text, sizeof(text), "%d", a);
+				text = std::to_string(a);
 				}
 			else {
 				if (k) {
-					snprintf(text, sizeof(text), "%d", set1[k - 1]);
+					text = std::to_string(set1[k - 1]);
 					}
 				else {
-					text[0] = 0;
+					text = "";
 					}
 				}
 
-			string text2;
 
-			text2.assign(text);
-			add_text(k, r, text2, 0/*verbose_level*/);
+			add_text(k, r, text, 0/*verbose_level*/);
 			}
 		}
 
@@ -1493,15 +1489,12 @@ void layered_graph::init_poset_from_file(
 			for (n1 = 0; n1 < Nb[l1]; n1++) {
 				fp >> a;
 
-				char text[1000];
+				string text;
 
-				snprintf(text, sizeof(text), "%d", a);
+				text = std::to_string(a);
 
-				string text2;
 
-				text2.assign(text);
-
-				add_text(l1, n1, text2, 0/*verbose_level*/);
+				add_text(l1, n1, text, 0/*verbose_level*/);
 			}
 		}
 

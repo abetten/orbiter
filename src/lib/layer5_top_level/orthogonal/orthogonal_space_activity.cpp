@@ -405,11 +405,13 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		if (nb_pts >= 2) {
 
 			if (f_v) {
-				cout << "orthogonal_space_activity::perform_activity before OA->O->perp_of_k_points" << endl;
+				cout << "orthogonal_space_activity::perform_activity "
+						"before OA->O->perp_of_k_points" << endl;
 			}
 			OA->O->perp_of_k_points(pts, nb_pts, Perp, sz, verbose_level);
 			if (f_v) {
-				cout << "orthogonal_space_activity::perform_activity after OA->O->perp_of_k_points" << endl;
+				cout << "orthogonal_space_activity::perform_activity "
+						"after OA->O->perp_of_k_points" << endl;
 			}
 
 		}
@@ -419,11 +421,13 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 			Perp = NEW_lint(OA->O->Hyperbolic_pair->alpha * (OA->O->Quadratic_form->q + 1));
 
 			if (f_v) {
-				cout << "orthogonal_space_activity::perform_activity before OA->O->perp" << endl;
+				cout << "orthogonal_space_activity::perform_activity "
+						"before OA->O->perp" << endl;
 			}
 			OA->O->perp(pts[0], Perp, sz, verbose_level);
 			if (f_v) {
-				cout << "orthogonal_space_activity::perform_activity after OA->O->perp" << endl;
+				cout << "orthogonal_space_activity::perform_activity "
+						"after OA->O->perp" << endl;
 			}
 
 		}
@@ -440,15 +444,11 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 
 		orbiter_kernel_system::file_io Fio;
-		char str[1000];
-
-		snprintf(str, sizeof(str), "_q%d", OA->O->F->q);
 
 		string fname;
-		fname.assign("perp_of_");
-		fname.append(Descr->perp_text);
-		fname.append(str);
-		fname.append(".csv");
+
+
+		fname = "perp_of_" + Descr->perp_text + "_q" + std::to_string(OA->O->F->q) + ".csv";
 
 		Fio.lint_matrix_write_csv(fname, Perp, sz, 1);
 

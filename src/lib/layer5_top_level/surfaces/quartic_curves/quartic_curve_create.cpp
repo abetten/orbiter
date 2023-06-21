@@ -563,19 +563,11 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(
 
 
 
-	char str_q[1000];
 
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	prefix = "by_coefficients_q" + std::to_string(F->q);
+	label_txt = "by_coefficients_q" + std::to_string(F->q);
+	label_tex = "by\\_coefficients\\_q" + std::to_string(F->q);
 
-
-	prefix.assign("by_coefficients_q");
-	prefix.append(str_q);
-
-	label_txt.assign("by_coefficients_q");
-	label_txt.append(str_q);
-
-	label_tex.assign("by\\_coefficients\\_q");
-	label_tex.append(str_q);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficients done" << endl;
@@ -727,28 +719,12 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 	}
 
 
-	char str_q[1000];
-	char str_a[1000];
-
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_a, sizeof(str_a), "%d", iso);
 
 
+	prefix = "catalogue_q" + std::to_string(q) + "_iso" + std::to_string(iso);
+	label_txt = "catalogue_q" + std::to_string(q) + "_iso" + std::to_string(iso);
+	label_tex = "catalogue\\_q" + std::to_string(q) + "\\_iso" + std::to_string(iso);
 
-	prefix.assign("catalogue_q");
-	prefix.append(str_q);
-	prefix.append("_iso");
-	prefix.append(str_a);
-
-	label_txt.assign("catalogue_q");
-	label_txt.append(str_q);
-	label_txt.append("_iso");
-	label_txt.append(str_a);
-
-	label_tex.assign("catalogue\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_iso");
-	label_tex.append(str_a);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue done" << endl;
 	}
@@ -1308,20 +1284,9 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 	f_has_group = false;
 
-	char str_q[1000];
 
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-
-
-	prefix.assign("equation_");
-	prefix.append(name_of_formula);
-	prefix.append("_q");
-	prefix.append(str_q);
-
-	label_txt.assign("equation_");
-	label_txt.append(name_of_formula);
-	label_txt.append("_q");
-	label_txt.append(str_q);
+	prefix = "equation_" + name_of_formula + "_q" + std::to_string(F->q);
+	label_txt = "equation_" + name_of_formula + "_q" + std::to_string(F->q);
 
 	label_tex.assign(name_of_formula_tex);
 	ST.string_fix_escape_characters(label_tex);
@@ -1330,8 +1295,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 	my_parameters_tex.assign(equation_parameters_tex);
 	ST.string_fix_escape_characters(my_parameters_tex);
-	label_tex.append(" with ");
-	label_tex.append(my_parameters_tex);
+	label_tex += " with " + my_parameters_tex;
 
 
 
@@ -1531,17 +1495,10 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 				"after QOA->init" << endl;
 	}
 
-	char str[1000];
 
-	snprintf(str, sizeof(str), "pt_orb_%d", pt_orbit_idx);
+	prefix = "surface_" + prefix + "pt_orb_" + std::to_string(pt_orbit_idx);
 
-
-	prefix.assign("surface_");
-	prefix.append(prefix);
-	prefix.append(str);
-
-	label_txt.assign(prefix);
-	label_tex.assign("curve from surface");
+	label_txt = prefix = "curve from surface";
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface done" << endl;
@@ -1849,7 +1806,6 @@ void quartic_curve_create::compute_group(
 	int i;
 	long int a;
 	actions::action *A;
-	char str[1000];
 	A = PA->A;
 
 	projective_space_object_classifier_description *Descr;

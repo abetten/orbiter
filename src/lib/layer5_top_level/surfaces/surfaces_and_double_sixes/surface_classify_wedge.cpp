@@ -144,11 +144,7 @@ void surface_classify_wedge::init(
 	surface_classify_wedge::Surf = Surf_A->Surf;
 	q = F->q;
 
-	fname_base.assign("surface_");
-	char str[1000];
-
-	snprintf(str, sizeof(str), "%d", q);
-	fname_base.append(str);
+	fname_base = "surface_q" + std::to_string(q);
 
 	
 	

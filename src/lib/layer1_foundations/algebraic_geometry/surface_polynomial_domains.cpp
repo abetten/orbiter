@@ -450,7 +450,6 @@ void surface_polynomial_domains::label_variables_4(
 {
 	int f_v = (verbose_level >= 1);
 	//int i, l;
-	//char label[1000];
 
 	if (f_v) {
 		cout << "surface_polynomial_domains::label_variables_4" << endl;

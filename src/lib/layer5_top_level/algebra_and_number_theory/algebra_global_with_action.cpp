@@ -463,14 +463,11 @@ void algebra_global_with_action::create_subgroups(
 
 
 	{
-		char str[1000];
 		string fname;
 		string title, author, extra_praeamble;
 
-		snprintf(str, 1000, "subgroups_of_order_4.tex");
-		fname.assign(str);
-		snprintf(str, 1000, "Subgroups of order 4");
-		title.assign(str);
+		fname = "subgroups_of_order_4.tex";
+		title = "Subgroups of order 4";
 
 
 		{
@@ -809,10 +806,8 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 	int i, order;
 	long int a;
 
-	char str[1000];
 
-	snprintf(str, sizeof(str), "_classes_based_on_normal_forms_%d_%d.tex", d, F->q);
-	fname_output.append("_classes_normal_form.tex");
+	fname_output += "_classes_based_on_normal_forms_" + std::to_string(d) + "_" + std::to_string(F->q) + ".tex";
 
 	C.init(d, F, verbose_level);
 
@@ -1051,9 +1046,9 @@ void algebra_global_with_action::classes_GL(
 		}
 
 
-	char fname[1000];
+	string fname;
 
-	snprintf(fname, sizeof(fname), "Class_reps_GL_%d_%d.tex", d, F->q);
+	fname = "Class_reps_GL_" + std::to_string(d) + "_" + std::to_string(F->q) + ".tex";
 	{
 		ofstream fp(fname);
 		l1_interfaces::latex_interface L;
@@ -3470,12 +3465,9 @@ void algebra_global_with_action::permutation_representation_of_element(
 
 	{
 		string fname, title, author, extra_praeamble;
-		char str[1000];
 
-		fname.assign(prefix);
-		fname.append("_permutation.tex");
-		snprintf(str, 1000, "Permutation representation of element");
-		title.assign(str);
+		fname = prefix + "_permutation.tex";
+		title = "Permutation representation of element";
 
 
 		{
@@ -3584,59 +3576,6 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 	}
 }
 
-#if 0
-void algebra_global_with_action::do_orbits_on_polynomials(
-		groups::linear_group *LG,
-		int degree_of_poly,
-		int f_recognize, std::string &recognize_text,
-		int f_draw_tree, int draw_tree_idx,
-		graphics::layered_graph_draw_options *Opt,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::do_orbits_on_polynomials" << endl;
-	}
-
-	orbits_on_polynomials *O;
-
-	O = NEW_OBJECT(orbits_on_polynomials);
-
-	O->init(LG,
-			degree_of_poly,
-			f_recognize, recognize_text,
-			verbose_level);
-
-	if (f_draw_tree) {
-
-		string fname;
-		char str[1000];
-
-
-		snprintf(str, sizeof(str), "_orbit_%d_tree", draw_tree_idx);
-
-		fname.assign(O->fname_base);
-		fname.append(str);
-
-		O->Sch->draw_tree(fname,
-				Opt,
-				draw_tree_idx,
-				false /* f_has_point_labels */, NULL /* long int *point_labels*/,
-				verbose_level);
-	}
-
-	O->report(verbose_level);
-
-	FREE_OBJECT(O);
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::do_orbits_on_polynomials done" << endl;
-	}
-}
-#endif
 
 void algebra_global_with_action::representation_on_polynomials(
 		groups::linear_group *LG,
@@ -3740,12 +3679,10 @@ void algebra_global_with_action::representation_on_polynomials(
 
 	for (i = 0; i < nb_gens; i++) {
 		string fname;
-		char str[1000];
 		orbiter_kernel_system::file_io Fio;
 
-		fname.assign(LG->label);
-		snprintf(str, sizeof(str), "_rep_%d_%d.csv", degree_of_poly, i);
-		fname.append(str);
+		fname = LG->label + "_rep_" + std::to_string(degree_of_poly) + "_" + std::to_string(i) + ".csv";
+
 		Fio.int_matrix_write_csv(fname, M + i * A_on_HPD->dimension * A_on_HPD->dimension,
 				A_on_HPD->dimension, A_on_HPD->dimension);
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;

@@ -452,14 +452,8 @@ void orbits_activity::do_export_levels(int orbit_idx, int verbose_level)
 	if (OC->f_has_Orb) {
 		string fname_tree_mask;
 		string fname;
-		char str[1000];
 
-		fname_tree_mask.assign("orbit_");
-		fname_tree_mask.append(OC->Group->A->label);
-		fname_tree_mask.append("_orbit_");
-		snprintf(str, sizeof(str), "%d", orbit_idx);
-		fname_tree_mask.append(str);
-
+		fname_tree_mask = "orbit_" + OC->Group->A->label + "_orbit_" + std::to_string(orbit_idx);
 		data_structures::set_of_sets *SoS;
 
 		OC->Orb->Sch->get_orbit_by_levels(
@@ -472,15 +466,11 @@ void orbits_activity::do_export_levels(int orbit_idx, int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 
 		for (i = 0; i < SoS->nb_sets; i++) {
-			fname.assign(fname_tree_mask);
-			fname.append("_level_");
-			snprintf(str, sizeof(str), "%d", i);
-			fname.append(str);
-			fname.append(".csv");
+			fname = fname_tree_mask + "_level_" + std::to_string(i) + ".csv";
 
 			string label;
-			snprintf(str, sizeof(str), "lvl%d", i);
-			label.assign(str);
+
+			label = "lvl" + std::to_string(i);
 
 			Fio.lint_vec_write_csv(
 					SoS->Sets[i], SoS->Set_size[i],
@@ -566,12 +556,8 @@ void orbits_activity::do_draw_tree(int verbose_level)
 
 	if (OC->f_has_Orb) {
 		string fname;
-		char str[1000];
 
-		snprintf(str, sizeof(str), "_orbit_%d_tree", Descr->draw_tree_idx);
-
-		fname.assign(OC->Orb->prefix);
-		fname.append(str);
+		fname = OC->Orb->prefix + "_orbit_" + std::to_string(Descr->draw_tree_idx) + "_tree";
 
 		if (f_v) {
 			cout << "orbits_activity::do_draw_tree "
@@ -618,13 +604,9 @@ void orbits_activity::do_draw_tree(int verbose_level)
 	else if (OC->f_has_On_polynomials) {
 
 		string fname;
-		char str[1000];
 
 
-		snprintf(str, sizeof(str), "_orbit_%d_tree", Descr->draw_tree_idx);
-
-		fname.assign(OC->prefix);
-		fname.append(str);
+		fname = OC->prefix + "_orbit_" + std::to_string(Descr->draw_tree_idx) + "_tree";
 
 		OC->On_polynomials->Sch->draw_tree(fname,
 				orbiter_kernel_system::Orbiter->draw_options,
@@ -685,18 +667,12 @@ void orbits_activity::do_stabilizer(int verbose_level)
 
 		string fname_stab;
 		string label_stab;
-		char str[1000];
-
-		snprintf(str, sizeof(str), "_stab_pt_%d", Descr->stabilizer_point);
 
 
 
-		fname_stab.assign(OC->prefix);
-		fname_stab.append(str);
-		fname_stab.append(".makefile");
+		fname_stab = OC->prefix + "_stab_pt_" + std::to_string(Descr->stabilizer_point) + ".makefile";
 
-		label_stab.assign(OC->prefix);
-		label_stab.append(str);
+		label_stab = OC->prefix + "_stab_pt_" + std::to_string(Descr->stabilizer_point);
 
 		Stab->report_group(label_stab, verbose_level);
 

@@ -698,18 +698,14 @@ void surface_classify_wedge::sweep_Cayley(
 	}
 
 	string fname;
-	char str[1000];
 
-	fname.assign("Cayley_q");
-	snprintf(str, sizeof(str), "%d.csv", q);
-	fname.append(str);
+	fname = "Cayley_q" + std::to_string(q) + ".csv";
+
 	orbiter_kernel_system::file_io Fio;
 
 	Fio.int_matrix_write_csv(fname, Table, cnt, 5);
 
-	fname.assign("Cayley_reverse_q");
-	snprintf(str, sizeof(str), "%d.csv", q);
-	fname.append(str);
+	fname = "Cayley_reverse_q" + std::to_string(q) + ".csv";
 
 	Fio.int_matrix_write_csv(fname, Table_reverse, nb_iso, 5);
 
@@ -1058,11 +1054,9 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 		}
 	}
 
-	char str[1000];
 	string fname;
 
-	snprintf(str, sizeof(str), "surface_recognize_abcd_q%d.csv", q);
-	fname.assign(str);
+	fname = "surface_recognize_abcd_q" + std::to_string(q) + ".csv";
 
 	Fio.int_matrix_write_csv(fname, Table, h, 7);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;

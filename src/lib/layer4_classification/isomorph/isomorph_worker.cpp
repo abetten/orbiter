@@ -385,7 +385,6 @@ void isomorph_worker::read_solutions(int verbose_level)
 	}
 	string *fname_array;
 	int nb_files = 1;
-	char str[1000];
 	int *List_of_cases;
 
 
@@ -412,11 +411,8 @@ void isomorph_worker::read_solutions(int verbose_level)
 
 		for (i = 0; i < nb_files; i++) {
 
-			fname.assign(Isomorph_arguments->solution_prefix);
-			fname.append(Isomorph_arguments->base_fname);
-			a = List_of_cases[i];
-			snprintf(str, sizeof(str), "_%d_%d_sol.txt", Iso->level, a);
-			fname.append(str);
+			fname = Isomorph_arguments->solution_prefix + Isomorph_arguments->base_fname
+					+ "_" + std::to_string(Iso->level) + "_" + std::to_string(a) + "_sol.txt";
 
 			fname_array[i] = fname;
 
@@ -428,10 +424,8 @@ void isomorph_worker::read_solutions(int verbose_level)
 
 
 		string fname;
-		fname.assign(Isomorph_arguments->solution_prefix);
-		fname.append(Isomorph_arguments->base_fname);
-		snprintf(str, sizeof(str), "_%d_sol.txt", Iso->level);
-		fname.append(str);
+		fname = Isomorph_arguments->solution_prefix + Isomorph_arguments->base_fname
+				+ "_" + std::to_string(Iso->level) + "_sol.txt";
 
 
 		int i;
@@ -445,10 +439,8 @@ void isomorph_worker::read_solutions(int verbose_level)
 
 			List_of_cases[i] = i;
 
-			fname.assign(Isomorph_arguments->solution_prefix);
-			fname.append(Isomorph_arguments->base_fname);
-			snprintf(str, sizeof(str), "_%d_sol.txt", i);
-			fname.append(str);
+			fname = Isomorph_arguments->solution_prefix + Isomorph_arguments->base_fname
+					+ "_" + std::to_string(i) + "_sol.txt";
 
 			fname_array[i] = fname;
 
@@ -780,14 +772,8 @@ void isomorph_worker::isomorph_report(int verbose_level)
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		fname.assign(Iso->prefix);
-		snprintf(str, 1000, "_isomorphism_types");
-		fname.append(str);
-		fname.append(".tex");
-		snprintf(str, 1000, "Isomorphism Types");
-		title.assign(str);
+		fname = Iso->prefix + "_isomorphism_types.tex";
+		title = "Isomorphism Types";
 
 
 
@@ -849,9 +835,7 @@ void isomorph_worker::export_source_code(int verbose_level)
 		string fname;
 
 
-		fname.assign(Iso->prefix);
-		fname.append("_classification");
-		fname.append(".cpp");
+		fname = Iso->prefix + "_classification.cpp";
 
 
 
@@ -1196,14 +1180,8 @@ void isomorph_worker::recognize(std::string &label, int verbose_level)
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		fname.assign(Iso->prefix);
-		snprintf(str, 1000, "_aut_group");
-		fname.append(str);
-		fname.append(".tex");
-		snprintf(str, 1000, "Automorphism Group");
-		title.assign(str);
+		fname = Iso->prefix + "_aut_group.tex";
+		title = "Automorphism Group";
 
 
 

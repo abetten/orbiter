@@ -99,7 +99,6 @@ void tdo_refinement::main_loop(int verbose_level)
 			"opening file " << Descr->fname_in << " for reading" << endl;
 	}
 	ifstream f(Descr->fname_in);
-	char str[1000];
 	data_structures::string_tools ST;
 
 	fname.assign(Descr->fname_in);
@@ -108,14 +107,12 @@ void tdo_refinement::main_loop(int verbose_level)
 
 	fname_out.assign(fname);
 	if (Descr->f_range) {
-		snprintf(str, sizeof(str), "_r%d_%d", Descr->range_first, Descr->range_len);
-		fname_out.append(str);
+		fname_out += "_r" + std::to_string(Descr->range_first) + "_" + std::to_string(Descr->range_len);
 	}
 	if (Descr->f_select) {
-		fname_out.append("_S");
-		fname_out.append(Descr->select_label);
+		fname_out += "_S" + Descr->select_label;
 	}
-	fname_out.append("r.tdo");
+	fname_out += "r.tdo";
 	{
 
 		if (f_v) {
@@ -697,11 +694,7 @@ int tdo_refinement::do_row_refinement(
 			}
 		}
 
-		char str[1000];
-
-		snprintf(str, sizeof(str), ".%d", t + 1);
-		GP2.label.assign(label_in);
-		GP2.label.append(str);
+		GP2.label = label_in + "." + std::to_string(t + 1);
 
 		GP2.nb_parts = new_nb_parts;
 		GP2.nb_entries = new_nb_entries;
@@ -881,11 +874,7 @@ int tdo_refinement::do_column_refinement(
 			}
 		}
 
-		char str[1000];
-
-		snprintf(str, sizeof(str), ".%d", t + 1);
-		GP2.label.assign(label_in);
-		GP2.label.append(str);
+		GP2.label = label_in + "." + std::to_string(t + 1);
 
 		GP2.nb_parts = new_nb_parts;
 		GP2.nb_entries = new_nb_entries;

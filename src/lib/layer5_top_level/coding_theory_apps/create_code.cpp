@@ -1135,11 +1135,8 @@ void create_code::export_codewords_by_weight(
 
 		orbiter_kernel_system::file_io Fio;
 		string fname;
-		char str[1000];
 
-		fname.assign(fname_base);
-		snprintf(str, sizeof(str), "_of_weight_%d.csv", types[i]);
-		fname.append(str);
+		fname = fname_base + "_of_weight_" + std::to_string(types[i]) + ".csv";
 
 
 		Fio.lint_matrix_write_csv(fname, codewords_of_weight, nb, 1);
@@ -1524,18 +1521,11 @@ void create_code::report(int verbose_level)
 		string extra_praeamble;
 
 
-		char str[1000];
+		fname = label_txt + "_code_n" + std::to_string(n)
+				+ "_k" + std::to_string(k)
+				+ "_q" + std::to_string(F->q) + ".tex";
 
-		snprintf(str, 1000, "_code_n%d_k%d_q%d.tex",
-				n,
-				k,
-				F->q
-				);
-		fname.assign(label_txt);
-		fname.append(str);
-
-		snprintf(str, 1000, "Linear code");
-		title.assign(str);
+		title = "Linear code";
 
 
 

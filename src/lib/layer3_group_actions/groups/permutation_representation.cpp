@@ -69,11 +69,12 @@ void permutation_representation::init(
 // Perms is degree x nb_gens
 {
 	int f_v = (verbose_level >= 1);
-	char str[1000];
 
 	if (f_v) {
-		cout << "permutation_representation::init A_original=" << A_original->label << endl;
-		cout << "permutation_representation::init f_stay_in_the_old_action=" << f_stay_in_the_old_action << endl;
+		cout << "permutation_representation::init "
+				"A_original=" << A_original->label << endl;
+		cout << "permutation_representation::init "
+				"f_stay_in_the_old_action=" << f_stay_in_the_old_action << endl;
 	}
 	permutation_representation::A_original = A_original;
 	permutation_representation::f_stay_in_the_old_action = f_stay_in_the_old_action;
@@ -87,13 +88,9 @@ void permutation_representation::init(
 	elt_size_int = perm_offset + P->elt_size_int;
 	make_element_size = A_original->make_element_size + degree;
 
-	label.assign(A_original->label);
-	snprintf(str, sizeof(str), "_perm_rep_deg%d", degree);
-	label.append(str);
+	label = A_original->label + "_perm_rep_deg" + std::to_string(degree);
 
-	label_tex.assign(A_original->label_tex);
-	snprintf(str, sizeof(str), " degree %d", degree);
-	label_tex.append(str);
+	label_tex = A_original->label_tex + " degree " + std::to_string(degree);
 
 	char_per_elt = A_original->coded_elt_size_in_char + char_per_elt;
 	elt1 = (uchar *) NEW_char(char_per_elt);

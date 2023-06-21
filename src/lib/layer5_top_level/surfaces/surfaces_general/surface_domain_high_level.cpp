@@ -526,15 +526,15 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 				"after Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
 
-	if (f_v) {
-		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
-				"before Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
-	}
 
 	cubic_surfaces_and_arcs::surface_classify_using_arc *Surf_arc;
 
 	Surf_arc = NEW_OBJECT(cubic_surfaces_and_arcs::surface_classify_using_arc);
 
+	if (f_v) {
+		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"before Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+	}
 
 	Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs(
 			Control_six_arcs_label,
@@ -728,7 +728,9 @@ void surface_domain_high_level::do_six_arcs(
 
 		geometry::geometry_global Gg;
 
-		E = Gg.compute_eckardt_point_info(PA->Surf_A->Surf->P2, Arc6, 0/*verbose_level*/);
+		E = Gg.compute_eckardt_point_info(
+				PA->Surf_A->Surf->P2, Arc6,
+				0/*verbose_level*/);
 
 
 		Nb_E[h] = E->nb_E;
@@ -919,7 +921,6 @@ void surface_domain_high_level::do_cubic_surface_properties(
 					"orbit_idx = " << orbit_idx << " / " << nb_orbits << endl;
 		}
 		int coeff20[20];
-		char str[1000];
 
 
 		Orbit[orbit_idx] = M[orbit_idx * n + 0];
@@ -940,11 +941,9 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		//Descr->f_q = true;
 		//Descr->q = F->q;
 		Descr->f_by_coefficients = true;
-		snprintf(str, sizeof(str), "%d,0", coeff20[0]);
-		Descr->coefficients_text.assign(str);
+		Descr->coefficients_text = std::to_string(coeff20[0]) + ",0";
 		for (i = 1; i < 20; i++) {
-			snprintf(str, sizeof(str), ",%d,%d", coeff20[i], i);
-			Descr->coefficients_text.append(str);
+			Descr->coefficients_text += "," + std::to_string(coeff20[i]) + "," + std::to_string(i);
 		}
 		cout << "Descr->coefficients_text = " << Descr->coefficients_text << endl;
 
@@ -1160,7 +1159,9 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
 				"before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, PA, true /* f_recoordinatize */, 0 /*verbose_level*/);
+	Surf_A->init(
+			Surf, PA, true /* f_recoordinatize */,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
 				"after Surf_A->init" << endl;
@@ -1174,7 +1175,9 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 	{
 		long int *M;
 
-		Fio.lint_matrix_read_csv(fname_csv, M, nb_orbits, n, verbose_level);
+		Fio.lint_matrix_read_csv(
+				fname_csv, M, nb_orbits, n,
+				verbose_level);
 
 		if (n != 10) {
 			cout << "surface_domain_high_level::do_cubic_surface_properties_analyze n != 10" << endl;
@@ -1221,9 +1224,10 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 		string fname_report;
 		data_structures::string_tools ST;
 
-		fname_report.assign(fname_csv);
+		fname_report = fname_csv;
 		ST.chop_off_extension(fname_report);
 		fname_report.append("_report.tex");
+
 		l1_interfaces::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
 
@@ -1475,7 +1479,8 @@ void surface_domain_high_level::report_surfaces_by_lines(
 
 		Data_L = new struct cubic_surface_data_set [nb_L];
 
-		ost << "The number of surfaces with exactly " << a << " lines is " << nb_L << ": \\\\" << endl;
+		ost << "The number of surfaces with exactly " << a
+				<< " lines is " << nb_L << ": \\\\" << endl;
 
 		for (j = 0; j < l; j++) {
 			idx = T.sorting_perm_inv[f + j];
@@ -1537,7 +1542,8 @@ void surface_domain_high_level::do_create_surface_reports(
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_create_surface_reports" << endl;
-		cout << "surface_domain_high_level::do_create_surface_reports verbose_level=" << verbose_level << endl;
+		cout << "surface_domain_high_level::do_create_surface_reports "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 	knowledge_base::knowledge_base K;
@@ -1566,7 +1572,8 @@ void surface_domain_high_level::do_create_surface_reports(
 		nb_total = K.cubic_surface_nb_reps(q);
 
 		if (f_v) {
-			cout << "surface_domain_high_level::do_create_surface_reports considering q=" << q << " with " << nb_total << " surfaces" << endl;
+			cout << "surface_domain_high_level::do_create_surface_reports "
+					"considering q=" << q << " with " << nb_total << " surfaces" << endl;
 		}
 
 
@@ -1574,11 +1581,11 @@ void surface_domain_high_level::do_create_surface_reports(
 
 			string cmd;
 			string fname;
-			char str[1000];
-			char str_ocn[1000];
 
 			if (f_v) {
-				cout << "surface_domain_high_level::do_create_surface_reports considering q=" << q << " ocn=" << ocn << " / " << nb_total << endl;
+				cout << "surface_domain_high_level::do_create_surface_reports "
+						"considering q=" << q
+						<< " ocn=" << ocn << " / " << nb_total << endl;
 			}
 
 			make_fname_surface_report_tex(fname, q, ocn);
@@ -1600,29 +1607,24 @@ void surface_domain_high_level::do_create_surface_reports(
 #endif
 
 
-				snprintf(str, sizeof(str), "%d ", q);
-				snprintf(str_ocn, sizeof(str_ocn), "%d ", ocn);
 
-			cmd.assign(orbiter_kernel_system::Orbiter->orbiter_path);
-			cmd.append("/orbiter.out -v 3 ");
-			cmd.append("-define F -finite_field -q ");
-			cmd.append(str);
-			cmd.append("-end ");
-			cmd.append("-define P -projective_space 3 F -end ");
-			cmd.append("-with P -do ");
-			cmd.append("-projective_space_activity ");
-			cmd.append("-define_surface S -q ");
-			cmd.append(str);
-			cmd.append("-catalogue ");
-			cmd.append(str_ocn);
-			cmd.append("-end ");
-			cmd.append("-end ");
-			cmd.append("-with S -do ");
-			cmd.append("-cubic_surface_activity ");
-			cmd.append("-report ");
-			cmd.append("-report_with_group ");
-			//cmd.append("-all_quartic_curves ");
-			cmd.append("-end >log_surface");
+			cmd = orbiter_kernel_system::Orbiter->orbiter_path
+					+ "/orbiter.out -v 3 "
+					+ "-define F -finite_field -q " + std::to_string(q) + " "
+					+ "-end "
+					+ "-define P -projective_space 3 F -end "
+					+ "-with P -do "
+					+ "-projective_space_activity "
+					+ "-define_surface S -q " + std::to_string(q) + " "
+					+ "-catalogue " + std::to_string(ocn) + " "
+					+ "-end "
+					+ "-end "
+					+ "-with S -do "
+					+ "-cubic_surface_activity "
+					+ "-report "
+					+ "-report_with_group "
+					// + "-all_quartic_curves "
+					+ "-end >log_surface";
 
 			if (f_v) {
 				cout << "executing command: " << cmd << endl;
@@ -1633,9 +1635,7 @@ void surface_domain_high_level::do_create_surface_reports(
 
 			make_fname_surface_report_tex(fname_report_tex, q, ocn);
 
-			cmd.assign("pdflatex ");
-			cmd.append(fname_report_tex);
-			cmd.append(" >log_pdflatex");
+			cmd = "pdflatex " + fname_report_tex + " >log_pdflatex";
 
 			if (f_v) {
 				cout << "executing command: " << cmd << endl;
@@ -1660,7 +1660,8 @@ void surface_domain_high_level::do_create_surface_atlas(
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_create_surface_atlas" << endl;
-		cout << "surface_domain_high_level::do_create_surface_atlas verbose_level=" << verbose_level << endl;
+		cout << "surface_domain_high_level::do_create_surface_atlas "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 	knowledge_base::knowledge_base K;
@@ -1767,7 +1768,8 @@ void surface_domain_high_level::do_create_surface_atlas(
 					"before Surf_A->init_with_linear_group" << endl;
 		}
 		T[cur].Surf_A->init(
-				T[cur].Surf, T[cur].PA, true /* f_recoordinatize */,
+				T[cur].Surf, T[cur].PA,
+				true /* f_recoordinatize */,
 				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "surface_domain_high_level::do_create_surface_atlas "
@@ -1823,16 +1825,15 @@ void surface_domain_high_level::do_create_surface_atlas(
 	{
 		string fname_report;
 
-		fname_report.assign("surface");
-		fname_report.append("_atlas.tex");
+		fname_report = "surface_atlas.tex";
 
 		{
 			ofstream ost(fname_report);
 
 			string title, author, extra_praeamble;
 
-			title.assign("ATLAS of Cubic Surfaces");
-			author.assign("Anton Betten and Fatma Karaoglu");
+			title = "ATLAS of Cubic Surfaces";
+			author = "Anton Betten and Fatma Karaoglu";
 
 			l1_interfaces::latex_interface L;
 
@@ -1981,7 +1982,8 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_create_surface_atlas_q_e" << endl;
-		cout << "surface_domain_high_level::do_create_surface_atlas q=" << T->q << " " << nb_e << endl;
+		cout << "surface_domain_high_level::do_create_surface_atlas_q_e "
+				"q=" << T->q << " " << nb_e << endl;
 	}
 
 	knowledge_base::knowledge_base K;
@@ -1995,12 +1997,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 
 
 	{
-		char str[1000];
-
-		snprintf(str, sizeof(str), "_q%d_e%d", T->q, nb_e);
-		fname_report_tex.assign("surface_atlas");
-		fname_report_tex.append(str);
-		fname_report_tex.append(".tex");
+		fname_report_tex = "surface_atlas_q" + std::to_string(T->q) + "_e" + std::to_string(nb_e) + ".tex";
 
 		{
 			ofstream ost(fname_report_tex);
@@ -2008,9 +2005,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 
 			string title, author, extra_praeamble;
 
-			title.assign("ATLAS of Cubic Surfaces");
-			snprintf(str, sizeof(str), ", q=%d, \\#E=%d", T->q, nb_e);
-			title.append(str);
+			title = "ATLAS of Cubic Surfaces, q=" + std::to_string(T->q) + ", \\#E=" + std::to_string(nb_e);
 
 			author.assign("Anton Betten and Fatma Karaoglu");
 
@@ -2095,16 +2090,15 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 	{
 		string fname_report;
 
-		fname_report.assign("dickson_surfaces");
-		fname_report.append(".tex");
+		fname_report = "dickson_surfaces.tex";
 
 		{
 			ofstream ost(fname_report);
 
 			string title, author, extra_praeamble;
 
-			title.assign("ATLAS of Dickson Surfaces");
-			author.assign("Fatma Karaoglu");
+			title = "ATLAS of Dickson Surfaces";
+			author = "Fatma Karaoglu";
 
 			l1_interfaces::latex_interface L;
 
@@ -2153,37 +2147,27 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 
 					for (j = 0; j < nb_of_fields; j++) {
 
-						string fname_base;
 						string fname_tex;
 						string fname_pdf;
 						string fname_surface_report;
 
 
-						char str[1000];
-
-
-						snprintf(str, sizeof(str), "Orb%d_q%d", c, field_orders[j]);
-						fname_base.assign(str);
-						fname_tex.assign(fname_base);
-						fname_tex.append(".tex");
-						fname_pdf.assign(fname_base);
-						fname_pdf.append(".pdf");
-						fname_surface_report.assign(fname_base);
-						fname_surface_report.append(".pdf");
+						fname_tex = "Orb" + std::to_string(c) + "_q" + std::to_string(field_orders[j]) + ".tex";
+						fname_pdf = "Orb" + std::to_string(c) + "_q" + std::to_string(field_orders[j]) + ".pdf";
+						fname_surface_report = "Orb" + std::to_string(c) + "_q" + std::to_string(field_orders[j]) + ".pdf";
 
 
 						ost << " & " << endl;
-						ost << "%%tth: \\begin{html} <a href=\"" << fname_surface_report << "\"> " << fname_surface_report << " </a> \\end{html}" << endl;
+						ost << "%%tth: \\begin{html} <a href=\"" << fname_surface_report << "\"> "
+								<< fname_surface_report << " </a> \\end{html}" << endl;
 
 
-						if (Fio.file_size(fname_tex.c_str()) > 0) {
+						if (Fio.file_size(fname_tex) > 0) {
 
-							if (Fio.file_size(fname_pdf.c_str()) <= 0) {
+							if (Fio.file_size(fname_pdf) <= 0) {
 								string cmd;
 
-								cmd.assign("pdflatex ");
-								cmd.append(fname_tex);
-								cmd.append(" ");
+								cmd = "pdflatex " + fname_tex + " ";
 								system(cmd.c_str());
 							}
 						}
@@ -2222,23 +2206,13 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 void surface_domain_high_level::make_fname_surface_report_tex(
 		std::string &fname, int q, int ocn)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d_iso%d_with_group", q, ocn);
-	fname.assign("surface_catalogue");
-	fname.append(str);
-	fname.append(".tex");
+	fname = "surface_catalogue_q" + std::to_string(q) + "_iso" + std::to_string(ocn) + "_with_group.tex";
 }
 
 void surface_domain_high_level::make_fname_surface_report_pdf(
 		std::string &fname, int q, int ocn)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d_iso%d_with_group", q, ocn);
-	fname.assign("surface_catalogue");
-	fname.append(str);
-	fname.append(".pdf");
+	fname = "surface_catalogue_q" + std::to_string(q) + "_iso" + std::to_string(ocn) + "_with_group.pdf";
 }
 
 

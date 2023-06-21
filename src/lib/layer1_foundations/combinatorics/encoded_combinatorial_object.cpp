@@ -86,12 +86,12 @@ void encoded_combinatorial_object::init(
 	// ToDo:
 
 	// action on the whole thing:
-	//invariant_set_start = 0;
-	//invariant_set_size = nb_rows + nb_cols;
+	invariant_set_start = 0;
+	invariant_set_size = nb_rows + nb_cols;
 
 	// action on rows only:
-	invariant_set_start = 0;
-	invariant_set_size = nb_rows;
+	//invariant_set_start = 0;
+	//invariant_set_size = nb_rows;
 
 	Incma = NEW_int(L);
 	Int_vec_zero(Incma, L);

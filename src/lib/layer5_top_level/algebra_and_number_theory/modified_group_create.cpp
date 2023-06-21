@@ -400,14 +400,8 @@ void modified_group_create::create_action_on_k_subspaces(
 	}
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_OnGr_%d", description->on_k_subspaces_k);
-	snprintf(str2, sizeof(str2), " {\\rm Gr}_{%d,%d}(%d)",
-			n, description->on_k_subspaces_k, Fq->q);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_OnGr_" + std::to_string(n) + "_" + std::to_string(description->on_k_subspaces_k) + "_" + std::to_string(Fq->q);
+	label_tex += " {\\rm Gr}_{" + std::to_string(n) + "," + std::to_string(description->on_k_subspaces_k) + "}(" + std::to_string(Fq->q) + ")";
 
 
 
@@ -485,15 +479,8 @@ void modified_group_create::create_action_on_k_subsets(
 	}
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_OnSubsets_%d", description->on_k_subsets_k);
-	snprintf(str2, sizeof(str2), " {\\rm OnSubsets}_{%d}",
-			description->on_k_subsets_k);
-	label.append(str1);
-	label_tex.append(str2);
-
+	label += "_OnSubsets_" + std::to_string(description->on_k_subsets_k);
+	label_tex += " {\\rm OnSubsets}_{" + std::to_string(description->on_k_subsets_k) + "}";
 
 
 	if (f_v) {
@@ -567,13 +554,8 @@ void modified_group_create::create_action_on_wedge_product(
 	}
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_OnWedge");
-	snprintf(str2, sizeof(str2), " {\\rm OnWedge}");
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_OnWedge";
+	label_tex += " {\\rm OnWedge}";
 
 
 
@@ -675,13 +657,8 @@ void modified_group_create::create_special_subgroup(
 	}
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_SpecialSub");
-	snprintf(str2, sizeof(str2), " {\\rm SpecialSub}");
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_SpecialSub";
+	label_tex += " {\\rm SpecialSub}";
 
 
 
@@ -772,13 +749,8 @@ void modified_group_create::create_point_stabilizer_subgroup(
 	}
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_Stab%d", Descr->point_stabilizer_index);
-	snprintf(str2, sizeof(str2), " {\\rm Stab %d}", Descr->point_stabilizer_index);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_Stab" + std::to_string(Descr->point_stabilizer_index);
+	label_tex += " {\\rm Stab " + std::to_string(Descr->point_stabilizer_index) + "}";
 
 
 
@@ -848,13 +820,8 @@ void modified_group_create::create_projectivity_subgroup(
 	}
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_ProjectivitySubgroup");
-	snprintf(str2, sizeof(str2), " {\\rm\\_ProjectivitySubgroup}");
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_ProjectivitySubgroup";
+	label_tex += " {\\rm\\_ProjectivitySubgroup}";
 
 
 
@@ -954,13 +921,8 @@ void modified_group_create::create_subfield_subgroup(
 	}
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_SubfieldOfIndex%d", Descr->subfield_subgroup_index);
-	snprintf(str2, sizeof(str2), " {\\rm SubfieldOfIndex %d}", Descr->subfield_subgroup_index);
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_SubfieldOfIndex" + std::to_string(Descr->subfield_subgroup_index);
+	label_tex +=" {\\rm SubfieldOfIndex " + std::to_string(Descr->subfield_subgroup_index) + "}";
 
 
 
@@ -1054,13 +1016,8 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 	}
 
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "_ByRightMult");
-	snprintf(str2, sizeof(str2), " {\\rm ByRightMult}");
-	label.append(str1);
-	label_tex.append(str2);
+	label += "_ByRightMult";
+	label_tex += " {\\rm ByRightMult}";
 
 
 

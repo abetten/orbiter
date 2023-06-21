@@ -74,8 +74,7 @@ void quartic_curve_object_with_action::export_something(
 
 	if (ST.stringcmp(what, "points") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_points.csv");
+		fname = fname_base + "_points.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.lint_matrix_write_csv(fname, QO->Pts, 1, QO->nb_pts);
@@ -86,8 +85,7 @@ void quartic_curve_object_with_action::export_something(
 	}
 	else if (ST.stringcmp(what, "equation") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_equation.csv");
+		fname = fname_base + "_equation.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.int_matrix_write_csv(fname, QO->eqn15, 1, 15);
@@ -98,8 +96,7 @@ void quartic_curve_object_with_action::export_something(
 	}
 	else if (ST.stringcmp(what, "bitangents") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_bitangents.csv");
+		fname = fname_base + "_bitangents.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.lint_matrix_write_csv(fname, QO->bitangents28, 1, 28);
@@ -110,8 +107,7 @@ void quartic_curve_object_with_action::export_something(
 	}
 	else if (ST.stringcmp(what, "Kovalevski_points") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_Kovalevski_points.csv");
+		fname = fname_base + "_Kovalevski_points.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.lint_matrix_write_csv(fname, QO->QP->Kovalevski_points, 1, QO->QP->nb_Kovalevski);
@@ -122,8 +118,7 @@ void quartic_curve_object_with_action::export_something(
 	}
 	else if (ST.stringcmp(what, "singular_points") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_singular_points.csv");
+		fname = fname_base + "_singular_points.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.lint_matrix_write_csv(fname, QO->QP->singular_pts, 1, QO->QP->nb_singular_pts);

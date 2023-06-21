@@ -1377,20 +1377,20 @@ void buekenhout_metz::write_unital_to_file()
 void buekenhout_metz::get_name(
 		std::string &name)
 {
-	char str[1000];
 
 	if (f_Uab) {
-		snprintf(str, sizeof(str), "U_%d_%d_%d", parameter_a, parameter_b, q);
+		name = "U_" + std::to_string(parameter_a) + "_"
+				+ std::to_string(parameter_b) + "_"
+				+ std::to_string(q);
 	}
 	else {
 		if (f_classical) {
-			snprintf(str, sizeof(str), "H%d", q);
+			name = "H" + std::to_string(q);
 		}
 		else {
-			snprintf(str, sizeof(str), "BM%d", q);
+			name = "BM" + std::to_string(q);
 		}
 	}
-	name.assign(str);
 }
 
 #if 0

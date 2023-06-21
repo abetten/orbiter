@@ -112,12 +112,9 @@ void magma_interface::centralizer_of_element(
 
 	{
 		string fname, title, author, extra_praeamble;
-		char str[1000];
 
-		fname.assign(prefix);
-		fname.append("_centralizer.tex");
-		snprintf(str, 1000, "Centralizer of element %s", label.c_str());
-		title.assign(str);
+		fname = prefix + "_centralizer.tex";
+		title = "Centralizer of element " + label;
 
 
 		{
@@ -263,12 +260,9 @@ void magma_interface::normalizer_of_cyclic_subgroup(
 	{
 
 		string fname, title, author, extra_praeamble;
-		char str[1000];
 
-		fname.assign(prefix);
-		fname.append(".tex");
-		snprintf(str, 1000, "Normalizer of cyclic subgroup %s", label.c_str());
-		title.assign(str);
+		fname = prefix + ".tex";
+		title = "Normalizer of cyclic subgroup " + label;
 
 
 		{
@@ -341,15 +335,12 @@ void magma_interface::find_subgroups(
 {
 	int f_v = (verbose_level >= 1);
 	string prefix;
-	char str[1000];
 
 	if (f_v) {
 		cout << "magma_interface::find_subgroups label=" << label
 				<< " subgroup_order=" << subgroup_order << endl;
 	}
-	prefix.assign(label);
-	snprintf(str, sizeof(str), "_find_subgroup_of_order_%d", subgroup_order);
-	prefix.append(str);
+	prefix = label + "_find_subgroup_of_order_" + std::to_string(subgroup_order);
 
 
 
@@ -2104,10 +2095,8 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 				fp << "Representing element is" << endl;
 
 				string label;
-				char str[1000];
 
-				snprintf(str, sizeof(str), "c_{%d} = ", i);
-				label.assign(str);
+				label = "c_{" + std::to_string(i) + "} = ";
 
 				A->Group_element->element_print_latex_with_extras(Elt, label, fp);
 

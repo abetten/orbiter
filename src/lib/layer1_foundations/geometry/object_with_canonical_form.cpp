@@ -2077,9 +2077,9 @@ void object_with_canonical_form::run_nauty(
 		cout << "object_with_canonical_form::run_nauty "
 				"after encode_incma" << endl;
 	}
-	if (verbose_level > 5) {
+	if (verbose_level > 2) {
 		cout << "object_with_canonical_form::run_nauty Incma:" << endl;
-		//int_matrix_print_tight(Incma, nb_rows, nb_cols);
+		Enc->print_incma();
 	}
 
 

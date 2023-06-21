@@ -556,10 +556,8 @@ void canonical_form_classifier::main_loop(int verbose_level)
 			}
 
 
-			snprintf(str, sizeof(str), "_cnt%d", counter);
 
-			fname_case_out.assign(Descr->fname_base_out);
-			fname_case_out.append(str);
+			fname_case_out = Descr->fname_base_out + "_cnt" + std::to_string(counter);
 
 			quartic_curve_object *Qco;
 

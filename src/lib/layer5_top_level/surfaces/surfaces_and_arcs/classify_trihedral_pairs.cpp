@@ -735,7 +735,8 @@ void classify_trihedral_pairs::identify_three_planes(
 		c4 = base_cols[rk + 1];
 
 		Int_vec_copy(M1, M2, 8);
-		F->Linear_algebra->rank_of_rectangular_matrix_memory_given(M2, 2, 4, M3,
+		F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
+				M2, 2, 4, M3,
 				base_cols2,
 				false /* f_complete */,
 				0 /* verbose_level */);
@@ -749,16 +750,21 @@ void classify_trihedral_pairs::identify_three_planes(
 		d = M1[c2];
 		e = M1[4 + c2];
 		f = M1[8 + c2];
-		det = F->add(F->mult(a, e), F->negate(F->mult(b, d)));
+		det = F->add(
+				F->mult(a, e), F->negate(F->mult(b, d)));
 		det_inv = F->inverse(det);
-		lambda = F->mult(F->add(F->mult(e, c),
+		lambda = F->mult(
+				F->add(F->mult(e, c),
 				F->negate(F->mult(b, f))), det_inv);
-		mu = F->mult(F->add(F->mult(a, f),
+		mu = F->mult(
+				F->add(F->mult(a, f),
 				F->negate(F->mult(d, c))), det_inv);
 
 		Int_vec_copy(M1, M2, 8);
-		F->Linear_algebra->scalar_multiply_vector_in_place(lambda, M2, 4);
-		F->Linear_algebra->scalar_multiply_vector_in_place(mu, M2 + 4, 4);
+		F->Linear_algebra->scalar_multiply_vector_in_place(
+				lambda, M2, 4);
+		F->Linear_algebra->scalar_multiply_vector_in_place(
+				mu, M2 + 4, 4);
 		Int_vec_zero(M2 + 8, 8);
 		M2[2 * 4 + c3] = 1;
 		M2[3 * 4 + c4] = 1;
@@ -780,9 +786,11 @@ void classify_trihedral_pairs::identify_three_planes(
 				"M2=" << endl;
 		Int_matrix_print(M2, 4, 4);
 	}
-	F->Linear_algebra->matrix_inverse(M2, M3, 4, 0 /* verbose_level */);
+	F->Linear_algebra->matrix_inverse(
+			M2, M3, 4, 0 /* verbose_level */);
 	M3[16] = 0; // if semilinear
-	A->Group_element->make_element(transporter, M3, 0 /* verbose_level */);
+	A->Group_element->make_element(
+			transporter, M3, 0 /* verbose_level */);
 	
 	if (f_v) {
 		cout << "classify_trihedral_pairs::identify_three_planes "
@@ -866,7 +874,8 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 		cout << "classify_trihedral_pairs::downstep" << endl;
 	}
 	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
-	Flag_orbits->init(A, A, 2 /* nb_primary_orbits_lower */, 
+	Flag_orbits->init(
+			A, A, 2 /* nb_primary_orbits_lower */,
 		3 /* pt_representation_sz */,
 		nb_orbits_ordered_total /* nb_flag_orbits */,
 		1 /* upper_bound_for_number_of_traces */, // ToDo
@@ -994,7 +1003,8 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 	ring_theory::longinteger_object go;
 	A->group_order(go);
 
-	Trihedral_pairs->init(A, A, nb_orbits_ordered_total,
+	Trihedral_pairs->init(
+			A, A, nb_orbits_ordered_total,
 			6, go, verbose_level);
 
 
@@ -1029,7 +1039,8 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 			Lint_vec_print(cout, planes1, 3);
 			cout << endl;
 		}
-		identify_three_planes(planes1[0], planes1[1], planes1[2],
+		identify_three_planes(
+				planes1[0], planes1[1], planes1[2],
 				type, Elt1 /* int *transporter */, 0 /*verbose_level*/);
 
 		if (f_v) {
@@ -1038,7 +1049,8 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 		}
 
 		Lint_vec_copy(Planes + po * 3, planes2, 3);
-		A->Group_element->map_a_set_and_reorder(planes2, planes3, 3,
+		A->Group_element->map_a_set_and_reorder(
+				planes2, planes3, 3,
 				Elt1, 0 /* verbose_level */);
 		if (type == 1) {
 			orb = orbits_on_trihedra_type1->trace_set(
@@ -1157,7 +1169,8 @@ void classify_trihedral_pairs::print_trihedral_pairs(
 {
 	string title;
 
-	title.assign("Classification of Double Triplets");
+	title = "Classification of Double Triplets";
+
 	Trihedral_pairs->print_latex(ost, 
 		title, f_with_stabilizers,
 		false, NULL, NULL);
@@ -1250,8 +1263,10 @@ void classify_trihedral_pairs::identify_trihedral_pair(
 		cout << "classify_trihedral_pairs::identify_trihedral_pair "
 				"identifying the first trihedron" << endl;
 	}
-	identify_three_planes(planes6[0], planes6[1], planes6[2],
-			type, Elt1 /* int *transporter */, 0 /*verbose_level*/);
+	identify_three_planes(
+			planes6[0], planes6[1], planes6[2],
+			type, Elt1 /* int *transporter */,
+			0 /*verbose_level*/);
 
 	if (f_vv) {
 		cout << "Elt1=" << endl;
@@ -1322,7 +1337,8 @@ void classify_trihedral_pairs::identify_trihedral_pair(
 // global functions:
 // #############################################################################
 
-static void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
+static void classify_trihedral_pairs_early_test_function_type1(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1346,7 +1362,8 @@ static void classify_trihedral_pairs_early_test_function_type1(long int *S, int 
 	}
 }
 
-static void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
+static void classify_trihedral_pairs_early_test_function_type2(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

@@ -205,7 +205,7 @@ void packing_classify::compute_and_save_klein_invariants(
 	string fname;
 	
 	klein_invariants_fname(fname, prefix, iso_cnt);
-	v.save_file(fname.c_str());
+	v.save_file(fname);
 
 #if 0
 	delete [] R;
@@ -718,7 +718,7 @@ void packing_classify::report_klein_invariants(
 				cout << "packing::report loading "
 						"file " << fname_klein << endl;
 				}
-			V.load_file(fname_klein.c_str());
+			V.load_file(fname_klein);
 			inv->Inv[orbit].init_klein_invariants(
 					V, verbose_level - 1);
 			// free, so that we don't use that much memory:

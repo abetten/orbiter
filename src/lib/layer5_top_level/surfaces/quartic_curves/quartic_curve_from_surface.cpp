@@ -454,7 +454,6 @@ void quartic_curve_from_surface::quartic(
 	if (f_TDO) {
 		geometry::geometry_global GG;
 		string fname_base;
-		char str[1000];
 
 		snprintf(str, sizeof(str), "_orb%d", pt_orbit);
 		fname_base.assign(surface_prefix);
@@ -1045,12 +1044,8 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 		geometry::geometry_global GG;
 		string fname_base;
-		char str[1000];
 
-		snprintf(str, sizeof(str), "_orb%d", pt_orbit);
-		fname_base.assign(label);
-		fname_base.append(str);
-		fname_base.append("_quartic");
+		fname_base = label + "_orb" + std::to_string(pt_orbit) + "_quartic";
 
 		if (f_v) {
 			cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve "
@@ -1076,24 +1071,14 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 
 
-		//string fname_base;
-		//char str[1000];
 
 		string fname_row_scheme;
 		string fname_col_scheme;
 
 
-		//snprintf(str, sizeof(str), "_orb%d", pt_orbit);
-		//fname_base.assign(surface_prefix);
-		//fname_base.append(str);
-		//fname_base.append("_quartic");
 
-
-
-		fname_row_scheme.assign(fname_base);
-		fname_row_scheme.append("_row_scheme.tex");
-		fname_col_scheme.assign(fname_base);
-		fname_col_scheme.append("_col_scheme.tex");
+		fname_row_scheme = fname_base + "_row_scheme.tex";
+		fname_col_scheme = fname_base + "_col_scheme.tex";
 
 
 		ost << endl << endl;

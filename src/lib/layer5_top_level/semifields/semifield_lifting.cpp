@@ -3056,57 +3056,41 @@ void semifield_lifting::read_stabilizers(int verbose_level)
 void semifield_lifting::make_file_name_schreier(std::string &fname,
 		int level, int orbit_idx)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "L%d_orbit%d_schreier.csv", level, orbit_idx);
 	if (f_prefix) {
-		fname.assign(prefix);
-		fname.append(str);
+		fname = prefix + "L" + std::to_string(level) + "_orbit" + std::to_string(orbit_idx) + "_schreier.csv";
 	}
 	else {
-		fname.assign(str);
+		fname = "L" + std::to_string(level) + "_orbit" + std::to_string(orbit_idx) + "_schreier.csv";
 	}
 }
 
 void semifield_lifting::create_fname_level_info_file(std::string &fname)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "L%d_info.csv", cur_level);
 	if (f_prefix) {
-		fname.assign(prefix);
-		fname.append(str);
+		fname = prefix + "L" + std::to_string(cur_level) + "_info.csv";
 	}
 	else {
-		fname.assign(str);
+		fname = "L" + std::to_string(cur_level) + "_info.csv";
 	}
 }
 
 void semifield_lifting::make_fname_flag_orbits(std::string &fname)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "L%d_flag_orbits.bin", cur_level);
 	if (f_prefix) {
-		fname.assign(prefix);
-		fname.append(str);
+		fname = prefix + "L" + std::to_string(cur_level) + "_flag_orbits.bin";
 	}
 	else {
-		fname.assign(str);
+		fname = "L" + std::to_string(cur_level) + "_flag_orbits.bin";
 	}
 }
 
 void semifield_lifting::make_fname_stabilizers(std::string &fname)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "L%d_flag_stabilizers.bin", cur_level);
 	if (f_prefix) {
-		fname.assign(prefix);
-		fname.append(str);
+		fname = prefix + "L" + std::to_string(cur_level) + "_flag_stabilizers.bin";
 	}
 	else {
-		fname.assign(str);
+		fname = "L" + std::to_string(cur_level) + "_flag_stabilizers.bin";
 	}
 }
 
@@ -3115,15 +3099,11 @@ void semifield_lifting::make_fname_deep_search_slice_solutions(
 		int f_out_path, std::string &out_path,
 		int orbit_r, int orbit_m)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "deep_slice%d_%d_sol.txt", orbit_r, orbit_m);
 	if (f_out_path) {
-		fname.assign(out_path);
-		fname.append(str);
+		fname = prefix + "deep_slice" + std::to_string(orbit_r) + "_" + std::to_string(orbit_m) + "_sol.txt";
 	}
 	else {
-		fname.assign(str);
+		fname = "deep_slice" + std::to_string(orbit_r) + "_" + std::to_string(orbit_m) + "_sol.txt";
 	}
 }
 
@@ -3132,15 +3112,11 @@ void semifield_lifting::make_fname_deep_search_slice_success(
 		int f_out_path, std::string &out_path,
 		int orbit_r, int orbit_m)
 {
-	char str[1000];
-
-	snprintf(str, sizeof(str), "deep_slice%d_%d_suc.txt", orbit_r, orbit_m);
 	if (f_out_path) {
-		fname.assign(out_path);
-		fname.append(str);
+		fname = prefix + "deep_slice" + std::to_string(orbit_r) + "_" + std::to_string(orbit_m) + "_suc.txt";
 	}
 	else {
-		fname.assign(str);
+		fname = "deep_slice" + std::to_string(orbit_r) + "_" + std::to_string(orbit_m) + "_suc.txt";
 	}
 }
 

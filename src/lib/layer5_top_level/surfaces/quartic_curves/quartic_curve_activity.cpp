@@ -295,14 +295,11 @@ void quartic_curve_activity::do_report(
 		string fname_report;
 
 		if (QC->Descr->f_label_txt) {
-			fname_report.assign(QC->label_txt);
-			fname_report.append(".tex");
+			fname_report = QC->label_txt + ".tex";
 
 		}
 		else {
-			fname_report.assign("quartic_curve_");
-			fname_report.append(QC->label_txt);
-			fname_report.append("_report.tex");
+			fname_report = "quartic_curve_" + QC->label_txt + "_report.tex";
 		}
 
 		{
@@ -312,7 +309,7 @@ void quartic_curve_activity::do_report(
 			char str[1000];
 			string title, author, extra_praeamble;
 
-			snprintf(str, 1000, "%s over GF(%d)", QC->label_tex.c_str(), F->q);
+			title = QC->label_tex + " over GF(" + std::to_string(F->q) + ")";
 			title.assign(str);
 
 

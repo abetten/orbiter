@@ -289,13 +289,8 @@ void permutation_representation_domain::init_with_base(int degree,
 	
 	A.allocate_element_data();
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "Sym%d", degree);
-	snprintf(str2, sizeof(str2), "{\\rm Sym}_{%d}", degree);
-	A.label.assign(str1);
-	A.label_tex.assign(str2);
+	A.label = "Sym" + std::to_string(degree);
+	A.label_tex = "{\\rm Sym}_{" + std::to_string(degree) + "}";
 
 	if (f_vv) {
 		cout << "permutation_representation_domain::init finished" << endl;

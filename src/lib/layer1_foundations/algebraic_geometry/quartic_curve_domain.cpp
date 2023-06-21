@@ -229,7 +229,8 @@ long int quartic_curve_domain::rank_point(int *v)
 }
 
 
-void quartic_curve_domain::unrank_line_in_dual_coordinates(int *v, long int rk)
+void quartic_curve_domain::unrank_line_in_dual_coordinates(
+		int *v, long int rk)
 {
 	int basis[9];
 	//int r;
@@ -339,7 +340,8 @@ void quartic_curve_domain::compute_points_on_lines(
 
 
 
-void quartic_curve_domain::multiply_conic_times_conic(int *six_coeff_a,
+void quartic_curve_domain::multiply_conic_times_conic(
+		int *six_coeff_a,
 	int *six_coeff_b, int *fifteen_coeff,
 	int verbose_level)
 {
@@ -384,7 +386,8 @@ void quartic_curve_domain::multiply_conic_times_conic(int *six_coeff_a,
 	}
 }
 
-void quartic_curve_domain::multiply_conic_times_line(int *six_coeff,
+void quartic_curve_domain::multiply_conic_times_line(
+		int *six_coeff,
 	int *three_coeff, int *ten_coeff,
 	int verbose_level)
 {
@@ -429,7 +432,8 @@ void quartic_curve_domain::multiply_conic_times_line(int *six_coeff,
 	}
 }
 
-void quartic_curve_domain::multiply_line_times_line(int *line1,
+void quartic_curve_domain::multiply_line_times_line(
+		int *line1,
 	int *line2, int *six_coeff,
 	int verbose_level)
 {
@@ -474,7 +478,8 @@ void quartic_curve_domain::multiply_line_times_line(int *line1,
 	}
 }
 
-void quartic_curve_domain::multiply_three_lines(int *line1, int *line2, int *line3,
+void quartic_curve_domain::multiply_three_lines(
+		int *line1, int *line2, int *line3,
 	int *ten_coeff,
 	int verbose_level)
 {
@@ -496,7 +501,8 @@ void quartic_curve_domain::multiply_three_lines(int *line1, int *line2, int *lin
 }
 
 
-void quartic_curve_domain::multiply_four_lines(int *line1, int *line2, int *line3, int *line4,
+void quartic_curve_domain::multiply_four_lines(
+		int *line1, int *line2, int *line3, int *line4,
 	int *fifteen_coeff,
 	int verbose_level)
 {
@@ -521,7 +527,8 @@ void quartic_curve_domain::multiply_four_lines(int *line1, int *line2, int *line
 
 
 
-void quartic_curve_domain::assemble_cubic_surface(int *f1, int *f2, int *f3, int *eqn20,
+void quartic_curve_domain::assemble_cubic_surface(
+		int *f1, int *f2, int *f3, int *eqn20,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -605,7 +612,8 @@ void quartic_curve_domain::assemble_cubic_surface(int *f1, int *f2, int *f3, int
 	}
 }
 
-void quartic_curve_domain::create_surface(quartic_curve_object *Q,
+void quartic_curve_domain::create_surface(
+		quartic_curve_object *Q,
 		int *eqn20, int verbose_level)
 // Given a quartic Q in X1,X2,X3, compute an associated cubic surface
 // whose projection from (1,0,0,0) gives back the quartic Q.
@@ -847,7 +855,8 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q,
 	}
 }
 
-void quartic_curve_domain::compute_gradient(int *equation15, int *&gradient, int verbose_level)
+void quartic_curve_domain::compute_gradient(
+		int *equation15, int *&gradient, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

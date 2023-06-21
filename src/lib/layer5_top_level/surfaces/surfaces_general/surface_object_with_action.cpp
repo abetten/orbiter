@@ -1053,7 +1053,7 @@ void surface_object_with_action::init_orbits_on_axes(int verbose_level)
 	std::string label_of_set;
 
 
-	label_of_set.assign("axes");
+	label_of_set = "axes";
 
 	if (f_v) {
 		cout << "creating action on axes:" << endl;
@@ -1157,7 +1157,7 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 	std::string label_of_set;
 
 
-	label_of_set.assign("pts_not_on_lines");
+	label_of_set = "pts_not_on_lines";
 
 	if (f_v) {
 		cout << "creating action on points not on lines:" << endl;
@@ -1259,8 +1259,7 @@ void surface_object_with_action::print_automorphism_group(
 
 		string my_fname_mask;
 
-		my_fname_mask.assign(fname_mask);
-		my_fname_mask.append("_Eckardt_points");
+		my_fname_mask = fname_mask + "_Eckardt_points";
 
 		Orbits_on_Eckardt_points->make_orbit_trees(ost,
 				my_fname_mask, Opt,
@@ -1291,8 +1290,7 @@ void surface_object_with_action::print_automorphism_group(
 
 		string my_fname_mask;
 
-		my_fname_mask.assign(fname_mask);
-		my_fname_mask.append("_on_lines");
+		my_fname_mask = fname_mask + "_on_lines";
 
 		Orbits_on_lines->make_orbit_trees(ost,
 				my_fname_mask, Opt,
@@ -1336,8 +1334,7 @@ void surface_object_with_action::print_automorphism_group(
 
 			string my_fname_mask;
 
-			my_fname_mask.assign(fname_mask);
-			my_fname_mask.append("_single_sixes");
+			my_fname_mask = fname_mask + "_single_sixes";
 
 			Orbits_on_single_sixes->make_orbit_trees(ost,
 					my_fname_mask, Opt,
@@ -1365,8 +1362,7 @@ void surface_object_with_action::print_automorphism_group(
 
 			string my_fname_mask;
 
-			my_fname_mask.assign(fname_mask);
-			my_fname_mask.append("_tritangent_planes");
+			my_fname_mask = fname_mask + "_tritangent_planes";
 
 			Orbits_on_tritangent_planes->make_orbit_trees(ost,
 					my_fname_mask, Opt,
@@ -1379,8 +1375,7 @@ void surface_object_with_action::print_automorphism_group(
 
 			string my_fname_mask;
 
-			my_fname_mask.assign(fname_mask);
-			my_fname_mask.append("_Hesse_planes");
+			my_fname_mask = fname_mask + "_Hesse_planes";
 
 			Orbits_on_Hesse_planes->make_orbit_trees(ost,
 					my_fname_mask, Opt,
@@ -1559,7 +1554,9 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 
 	go = Aut_gens->group_order_as_lint();
 	if (go < 50) {
+
 		l1_interfaces::latex_interface L;
+
 		int *Table;
 		Aut_gens->create_group_table(Table, go, verbose_level - 1);
 		L.print_integer_matrix_tex_block_by_block(ost,
@@ -1588,6 +1585,18 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 	else {
 		cout << "permutation degree is too large, "
 				"skipping export to magma and GAP" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->Surf->Schlaefli->print_Steiner_and_Eckardt" << endl;
+	}
+
+	SO->Surf->Schlaefli->print_Steiner_and_Eckardt(ost);
+
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet "
+				"after SO->Surf->Schlaefli->print_Steiner_and_Eckardt" << endl;
 	}
 
 
@@ -1673,19 +1682,19 @@ void surface_object_with_action::print_automorphism_group_generators(
 
 		string label_group;
 
-		label_group.assign("label_txt_proj_grp");
+		label_group = "label_txt_proj_grp";
 		projectivity_group_gens->export_group_and_copy_to_latex(label_group,
 				ost,
 				projectivity_group_gens->A,
 				verbose_level - 2);
 
-		label_group.assign("label_txt_proj_grp_on_lines");
+		label_group = "label_txt_proj_grp_on_lines";
 		projectivity_group_gens->export_group_and_copy_to_latex(label_group,
 				ost,
 				A_on_the_lines,
 				verbose_level - 2);
 
-		label_group.assign("label_txt_proj_grp_on_tritangent_planes");
+		label_group = "label_txt_proj_grp_on_tritangent_planes";
 		projectivity_group_gens->export_group_and_copy_to_latex(label_group,
 				ost,
 				A_on_tritangent_planes,
@@ -1719,12 +1728,9 @@ void surface_object_with_action::print_automorphism_group_generators(
 			}
 
 			string label_group;
-			char str[1000];
 
 
-			label_group.assign("label_txt_proj_grp_syl_");
-			snprintf(str, sizeof(str), "%d", Syl->primes[idx]);
-			label_group.append(str);
+			label_group = "label_txt_proj_grp_syl_" + std::to_string(Syl->primes[idx]);
 
 			if (f_v) {
 				cout << "surface_object_with_action::print_automorphism_group_generators "
@@ -1743,10 +1749,7 @@ void surface_object_with_action::print_automorphism_group_generators(
 					projectivity_group_gens->A,
 					verbose_level - 2);
 
-			label_group.assign("label_txt_proj_grp_syl_");
-			snprintf(str, sizeof(str), "%d", Syl->primes[idx]);
-			label_group.append(str);
-			label_group.append("_on_lines");
+			label_group = "label_txt_proj_grp_syl_" + std::to_string(Syl->primes[idx]) + "_on_lines";
 
 			if (f_v) {
 				cout << "surface_object_with_action::print_automorphism_group_generators "
@@ -1791,20 +1794,14 @@ void surface_object_with_action::investigate_surface_and_write_report(
 	string label_tex;
 
 
-	fname.assign("surface_");
-	fname.append(SC->prefix);
-	fname.append("_with_group.tex");
+	fname = "surface_" + SC->prefix + "_with_group.tex";
 
 
-	label.assign("surface_");
-	label.append(SC->label_txt);
+	label = "surface_" + SC->label_txt;
 
-	label_tex.assign("surface_");
-	label_tex.append(SC->label_tex);
+	label_tex = "surface_" + SC->label_tex;
 
-	fname_mask.assign("surface_");
-	fname_mask.append(SC->prefix);
-	fname_mask.append("_orbit_%d");
+	fname_mask = "surface_" + SC->prefix + "_orbit_%d";
 
 	{
 		ofstream fp(fname);
@@ -2722,7 +2719,8 @@ void surface_object_with_action::print_action_on_surface(
 
 		L.foot(ost);
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname
+			<< " of size " << Fio.file_size(fname) << endl;
 
 
 	FREE_int(Elt);
@@ -2745,7 +2743,8 @@ void surface_object_with_action::print_double_sixes(std::ostream &ost)
 
 	for (idx = 0; idx < 36; idx++) {
 
-		ost << "$D_{" << idx << "} = " << SO->Surf->Schlaefli->Double_six_label_tex[idx] << endl;
+		ost << "$D_{" << idx << "} = "
+				<< SO->Surf->Schlaefli->Double_six_label_tex[idx] << endl;
 
 		ost << " = " << endl;
 

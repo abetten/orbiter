@@ -51,15 +51,20 @@ void substructure_classifier::classify_substructures(
 
 
 	if (f_v) {
-		cout << "substructure_classifier::classify_substructures, substructure_size=" << substructure_size << endl;
-		cout << "substructure_classifier::classify_substructures, fname_base_out=" << fname_base_out << endl;
-		cout << "substructure_classifier::classify_substructures, action A=";
+		cout << "substructure_classifier::classify_substructures, "
+				"substructure_size=" << substructure_size << endl;
+		cout << "substructure_classifier::classify_substructures, "
+				"fname_base_out=" << fname_base_out << endl;
+		cout << "substructure_classifier::classify_substructures, "
+				"action A=";
 		A->print_info();
 		cout << endl;
-		cout << "substructure_classifier::classify_substructures, action A2=";
+		cout << "substructure_classifier::classify_substructures, "
+				"action A2=";
 		A2->print_info();
 		cout << endl;
-		cout << "substructure_classifier::classify_substructures generators:" << endl;
+		cout << "substructure_classifier::classify_substructures "
+				"generators:" << endl;
 		gens->print_generators_tex(cout);
 	}
 
@@ -78,7 +83,8 @@ void substructure_classifier::classify_substructures(
 
 
 	if (f_v) {
-		cout << "substructure_classifier::classify_substructures control=" << endl;
+		cout << "substructure_classifier::classify_substructures "
+				"control=" << endl;
 		Control->print();
 	}
 
@@ -102,7 +108,8 @@ void substructure_classifier::classify_substructures(
 
 	nb_orbits = PC->nb_orbits_at_level(substructure_size);
 
-	cout << "We found " << nb_orbits << " orbits at level " << substructure_size << ":" << endl;
+	cout << "We found " << nb_orbits << " orbits "
+			"at level " << substructure_size << ":" << endl;
 
 	int j;
 
@@ -171,7 +178,8 @@ void substructure_classifier::set_stabilizer_in_any_space(
 		cout << "substructure_classifier::set_stabilizer_in_any_space "
 				"after SubC->classify_substructures" << endl;
 		cout << "substructure_classifier::set_stabilizer_in_any_space "
-				"We found " << nb_orbits << " orbits at level " << intermediate_subset_size << ":" << endl;
+				"We found " << nb_orbits
+				<< " orbits at level " << intermediate_subset_size << ":" << endl;
 	}
 
 
@@ -229,8 +237,10 @@ void substructure_classifier::set_stabilizer_in_any_space(
 		S.read_spreadsheet(fname, verbose_level);
 
 		if (f_v) {
-			cout << "substructure_classifier::set_stabilizer_in_any_space S.nb_rows = " << S.nb_rows << endl;
-			cout << "substructure_classifier::set_stabilizer_in_any_space S.nb_cols = " << S.nb_cols << endl;
+			cout << "substructure_classifier::set_stabilizer_in_any_space "
+					"S.nb_rows = " << S.nb_rows << endl;
+			cout << "substructure_classifier::set_stabilizer_in_any_space "
+					"S.nb_cols = " << S.nb_cols << endl;
 		}
 
 		int col_idx;
@@ -248,13 +258,15 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 			if (f_v) {
 				cout << "#############################################################################" << endl;
-				cout << "cnt = " << cnt << " / " << nb << " row = " << row << " / " << S.nb_rows - 1 << endl;
+				cout << "cnt = " << cnt << " / " << nb
+						<< " row = " << row << " / " << S.nb_rows - 1 << endl;
 			}
 
 			j = col_idx;
 			t = S.Table[(row + 1) * S.nb_cols + j];
 			if (S.tokens[t] == NULL) {
-				cout << "substructure_classifier::set_stabilizer_in_any_space token[t] == NULL" << endl;
+				cout << "substructure_classifier::set_stabilizer_in_any_space "
+						"token[t] == NULL" << endl;
 			}
 			pts_txt.assign(S.tokens[t]);
 
@@ -277,11 +289,8 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 
 			std::string fname;
-			char str[1000];
 
-			snprintf(str, sizeof(str), "_cnt%d", counter);
-			fname.assign(fname_out);
-			fname.append(str);
+			fname = fname_out + "_cnt" + std::to_string(counter);
 
 
 			if (f_v) {
@@ -335,7 +344,8 @@ void substructure_classifier::set_stabilizer_of_set(
 	SubSt = NEW_OBJECT(substructure_stats_and_selection);
 
 	if (f_v) {
-		cout << "substructure_classifier::set_stabilizer_of_set before SubSt->init" << endl;
+		cout << "substructure_classifier::set_stabilizer_of_set "
+				"before SubSt->init" << endl;
 	}
 	SubSt->init(
 			fname_out,
@@ -344,7 +354,8 @@ void substructure_classifier::set_stabilizer_of_set(
 			nb_pts,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "substructure_classifier::set_stabilizer_of_set after SubSt->init" << endl;
+		cout << "substructure_classifier::set_stabilizer_of_set "
+				"after SubSt->init" << endl;
 	}
 	if (f_v) {
 		cout << "substructure_classifier::set_stabilizer_of_set" << endl;
@@ -359,7 +370,8 @@ void substructure_classifier::set_stabilizer_of_set(
 	groups::strong_generators *Gens_stabilizer_original_set;
 
 	if (f_v) {
-		cout << "substructure_classifier::set_stabilizer before handle_orbit" << endl;
+		cout << "substructure_classifier::set_stabilizer "
+				"before handle_orbit" << endl;
 	}
 
 	transporter_to_canonical_form = NEW_int(A->elt_size_in_int);
@@ -372,7 +384,8 @@ void substructure_classifier::set_stabilizer_of_set(
 			verbose_level - 2);
 
 	if (f_v) {
-		cout << "substructure_classifier::set_stabilizer after handle_orbit" << endl;
+		cout << "substructure_classifier::set_stabilizer "
+				"after handle_orbit" << endl;
 		cout << "canonical point set: ";
 		Lint_vec_print(cout, canonical_pts, nb_pts);
 		ring_theory::longinteger_object go;
@@ -391,17 +404,20 @@ void substructure_classifier::set_stabilizer_of_set(
 	Gens_stabilizer_canonical_form = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
-		cout << "substructure_classifier::set_stabilizer before init_generators_for_the_conjugate_group_avGa" << endl;
+		cout << "substructure_classifier::set_stabilizer "
+				"before init_generators_for_the_conjugate_group_avGa" << endl;
 	}
 	Gens_stabilizer_canonical_form->init_generators_for_the_conjugate_group_avGa(
 			Gens_stabilizer_original_set, transporter_to_canonical_form,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "substructure_classifier::set_stabilizer after init_generators_for_the_conjugate_group_avGa" << endl;
+		cout << "substructure_classifier::set_stabilizer "
+				"after init_generators_for_the_conjugate_group_avGa" << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classifier::set_stabilizer after handle_orbit" << endl;
+		cout << "substructure_classifier::set_stabilizer "
+				"after handle_orbit" << endl;
 		cout << "canonical point set: ";
 		Lint_vec_print(cout, canonical_pts, nb_pts);
 		ring_theory::longinteger_object go;
@@ -440,7 +456,8 @@ void substructure_classifier::handle_orbit(
 
 	//overall_backtrack_nodes = 0;
 	if (f_v) {
-		cout << "substructure_classifier::handle_orbit calling compute_stabilizer_function" << endl;
+		cout << "substructure_classifier::handle_orbit "
+				"calling compute_stabilizer_function" << endl;
 	}
 
 	compute_stabilizer *CS;
@@ -448,7 +465,8 @@ void substructure_classifier::handle_orbit(
 	CS = NEW_OBJECT(compute_stabilizer);
 
 	if (f_v) {
-		cout << "substructure_classifier::handle_orbit before CS->init" << endl;
+		cout << "substructure_classifier::handle_orbit "
+				"before CS->init" << endl;
 	}
 	CS->init(SubSt,
 			//SubSt->Pts, SubSt->nb_pts,
@@ -462,16 +480,20 @@ void substructure_classifier::handle_orbit(
 	}
 
 
-	SubSt->SubC->A->Group_element->element_move(CS->T1, transporter_to_canonical_form, 0);
+	SubSt->SubC->A->Group_element->element_move(
+			CS->T1, transporter_to_canonical_form, 0);
 
 	Gens_stabilizer_original_set = NEW_OBJECT(groups::strong_generators);
 
 	Gens_stabilizer_original_set->init_from_sims(CS->Stab, verbose_level);
 
 	if (f_v) {
-		cout << "substructure_classifier::handle_orbit done with compute_stabilizer" << endl;
-		cout << "substructure_classifier::handle_orbit backtrack_nodes_first_time = " << CS->backtrack_nodes_first_time << endl;
-		cout << "substructure_classifier::handle_orbit backtrack_nodes_total_in_loop = " << CS->backtrack_nodes_total_in_loop << endl;
+		cout << "substructure_classifier::handle_orbit "
+				"done with compute_stabilizer" << endl;
+		cout << "substructure_classifier::handle_orbit "
+				"backtrack_nodes_first_time = " << CS->backtrack_nodes_first_time << endl;
+		cout << "substructure_classifier::handle_orbit "
+				"backtrack_nodes_total_in_loop = " << CS->backtrack_nodes_total_in_loop << endl;
 	}
 
 

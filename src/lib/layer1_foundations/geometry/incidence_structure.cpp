@@ -2963,19 +2963,13 @@ void incidence_structure::do_tdo_high_level(
 
 		for (i = 0; i < nb_row_classes; i++) {
 			string fname;
-			fname.assign(label);
-			char str[1000];
-			snprintf(str, sizeof(str),  "_TDO_point_class_%d.txt", i);
-			fname.append(str);
+			fname = label + "_TDO_point_class_" + std::to_string(i) + ".txt";
 			S.write_cell_to_file_points_or_lines(
 					row_classes[i], fname, verbose_level - 1);
 		}
 		for (i = 0; i < nb_col_classes; i++) {
 			string fname;
-			fname.assign(label);
-			char str[1000];
-			snprintf(str, sizeof(str), "_TDO_line_class_%d.txt", i);
-			fname.append(str);
+			fname = label + "_TDO_line_class_" + std::to_string(i) + ".txt";
 			S.write_cell_to_file_points_or_lines(
 					col_classes[i], fname, verbose_level - 1);
 		}
@@ -3147,23 +3141,13 @@ void incidence_structure::compute_tdo_stepwise(
 		}
 		if (f_write_tdo_files) {
 
-			char str[1000];
+			fname = label + "_tdo_step_" + std::to_string(step) + ".tex";
 
-			snprintf(str, sizeof(str), "_tdo_step_%d.tex", step);
-			fname.assign(label);
-			fname.append(str);
+			fname_pic = label + "_tdo_step_" + std::to_string(step) + "_pic.tex";
 
-			snprintf(str, sizeof(str), "_tdo_step_%d_pic.tex", step);
-			fname_pic.assign(label);
-			fname_pic.append(str);
+			fname_scheme = label + "_tdo_step_" + std::to_string(step) + "_scheme.tex";
 
-			snprintf(str, sizeof(str), "_tdo_step_%d_scheme.tex", step);
-			fname_scheme.assign(label);
-			fname_scheme.append(str);
-
-			snprintf(str, sizeof(str), "_tdo_step_%d_extra.tex", step);
-			fname_extra.assign(label);
-			fname_extra.append(str);
+			fname_extra = label + "_tdo_step_" + std::to_string(step) + "_extra.tex";
 
 			{
 				ofstream fp(fname);

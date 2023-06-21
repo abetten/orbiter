@@ -889,7 +889,8 @@ void web_of_cubic_curves::find_point_not_on_six_curves(
 	}
 }
 
-void web_of_cubic_curves::print_lines(std::ostream &ost)
+void web_of_cubic_curves::print_lines(
+		std::ostream &ost)
 {
 	int i, a;
 	int v[8];
@@ -908,7 +909,8 @@ void web_of_cubic_curves::print_lines(std::ostream &ost)
 	}
 }
 
-void web_of_cubic_curves::print_trihedral_plane_equations(std::ostream &ost)
+void web_of_cubic_curves::print_trihedral_plane_equations(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i;
@@ -1092,7 +1094,8 @@ void web_of_cubic_curves::print_surface_equations_on_line(
 	}
 }
 
-void web_of_cubic_curves::print_dual_point_ranks(std::ostream &ost)
+void web_of_cubic_curves::print_dual_point_ranks(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 
@@ -1111,7 +1114,8 @@ void web_of_cubic_curves::print_Eckardt_point_data(
 	E->print_conics(ost, verbose_level);
 }
 
-void web_of_cubic_curves::report_basics(std::ostream &ost, int verbose_level)
+void web_of_cubic_curves::report_basics(
+		std::ostream &ost, int verbose_level)
 {
 	Surf->print_basics(ost);
 #if 0
@@ -1122,7 +1126,8 @@ void web_of_cubic_curves::report_basics(std::ostream &ost, int verbose_level)
 
 }
 
-void web_of_cubic_curves::report(std::ostream &ost, int verbose_level)
+void web_of_cubic_curves::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1169,7 +1174,8 @@ void web_of_cubic_curves::report(std::ostream &ost, int verbose_level)
 
 }
 
-void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, std::ostream &ost)
+void web_of_cubic_curves::print_web_of_cubic_curves(
+		long int *arc6, std::ostream &ost)
 {
 	combinatorics::combinatorics_domain Combi;
 	l1_interfaces::latex_interface L;
@@ -1203,7 +1209,6 @@ void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, std::ostream
 	row_len[0] = 15;
 	col_fst[0] = 0;
 	col_len[0] = 10;
-	char str[1000];
 	int i, j, k, l, m, n, h, ij, kl, mn;
 
 	Surf->P2->Arc_in_projective_space->compute_bisecants_and_conics(arc6,
@@ -1211,11 +1216,13 @@ void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, std::ostream
 
 	for (h = 0; h < 45; h++) {
 		ost << "$";
-		snprintf(str, 1000, "W_{%s}=\\Phi\\big(\\pi_{%d}\\big) "
-				"= \\Phi\\big(\\pi_{%s}\\big)",
-				Surf->Schlaefli->Eckard_point_label[h].c_str(), h,
-				Surf->Schlaefli->Eckard_point_label[h].c_str());
-		ost << str;
+
+		string label;
+
+		label = "W_{" + Surf->Schlaefli->Eckard_point_label[h] + "}"
+				"=\\Phi\\big(\\pi_{" + std::to_string(h) + "}\\big) "
+				"= \\Phi\\big(\\pi_{" + Surf->Schlaefli->Eckard_point_label[h] + "}\\big)";
+		ost << label;
 		ost << " = ";
 		if (h < 30) {
 			Combi.ordered_pair_unrank(h, i, j, 6);

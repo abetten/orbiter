@@ -121,11 +121,11 @@ void surface_classify_wedge::generate_history(int verbose_level)
 
 int surface_classify_wedge::test_if_surfaces_have_been_computed_already()
 {
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 	int ret;
 
-	snprintf(fname, sizeof(fname), "Surfaces_q%d.data", q);
+	fname = "Surfaces_q" + std::to_string(q) + ".data";
 	if (Fio.file_size(fname) > 0) {
 		//ret = true;
 		ret = false; // !!! ToDo don't use data file
@@ -143,10 +143,10 @@ void surface_classify_wedge::write_surfaces(int verbose_level)
 	if (f_v) {
 		cout << "surface_classify_wedge::write_surfaces" << endl;
 	}
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(fname, sizeof(fname), "Surfaces_q%d.data", q);
+	fname = "Surfaces_q" + std::to_string(q) + ".data";
 	{
 
 		ofstream fp(fname);
@@ -173,10 +173,10 @@ void surface_classify_wedge::read_surfaces(int verbose_level)
 	if (f_v) {
 		cout << "surface_classify_wedge::read_surfaces" << endl;
 	}
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(fname, sizeof(fname), "Surfaces_q%d.data", q);
+	fname = "Surfaces_q" + std::to_string(q) + ".data";
 	cout << "Reading file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 	{
@@ -209,11 +209,11 @@ void surface_classify_wedge::read_surfaces(int verbose_level)
 
 int surface_classify_wedge::test_if_double_sixes_have_been_computed_already()
 {
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 	int ret;
 
-	snprintf(fname, sizeof(fname), "Double_sixes_q%d.data", q);
+	fname = "Double_sixes_q" + std::to_string(q) + ".data";
 	if (Fio.file_size(fname) > 0) {
 		//ret = true;
 		ret = false; // !!! ToDo
@@ -231,22 +231,22 @@ void surface_classify_wedge::write_double_sixes(int verbose_level)
 	if (f_v) {
 		cout << "surface_classify_wedge::write_double_sixes" << endl;
 	}
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(fname, sizeof(fname), "Double_sixes_q%d.data", q);
+	fname = "Double_sixes_q" + std::to_string(q) + ".data";
 	{
 
-	ofstream fp(fname);
+		ofstream fp(fname);
 
-	if (f_v) {
-		cout << "surface_classify before "
-				"SCW->Classify_double_sixes->write_file" << endl;
+		if (f_v) {
+			cout << "surface_classify before "
+					"SCW->Classify_double_sixes->write_file" << endl;
 		}
-	Classify_double_sixes->write_file(fp, verbose_level - 1);
-	if (f_v) {
-		cout << "surface_classify after "
-				"SCW->Classify_double_sixes->write_file" << endl;
+		Classify_double_sixes->write_file(fp, verbose_level - 1);
+		if (f_v) {
+			cout << "surface_classify after "
+					"SCW->Classify_double_sixes->write_file" << endl;
 		}
 	}
 	cout << "Written file " << fname << " of size "
@@ -263,10 +263,10 @@ void surface_classify_wedge::read_double_sixes(int verbose_level)
 	if (f_v) {
 		cout << "surface_classify_wedge::read_double_sixes" << endl;
 	}
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(fname, sizeof(fname), "Double_sixes_q%d.data", q);
+	fname = "Double_sixes_q" + std::to_string(q) + ".data";
 	if (f_v) {
 		cout << "Reading file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -302,21 +302,17 @@ void surface_classify_wedge::create_report(
 	if (f_v) {
 		cout << "surface_classify_wedge::create_report" << endl;
 	}
-	char str[1000];
 	string fname, title, author, extra_praeamble;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, 1000, "Cubic Surfaces with 27 Lines over GF(%d) ", q);
-	title.assign(str);
+	title = "Cubic Surfaces with 27 Lines over GF(" + std::to_string(q) + ") ";
 
-	strcpy(str, "Orbiter");
-	author.assign(str);
+	author = "Orbiter";
 
-	snprintf(str, 1000, "Surfaces_q%d.tex", q);
-	fname.assign(str);
+	fname = "Surfaces_q" + std::to_string(q) + ".tex";
 
 
-		{
+	{
 		ofstream fp(fname);
 		l1_interfaces::latex_interface L;
 
@@ -343,7 +339,7 @@ void surface_classify_wedge::create_report(
 
 
 		L.foot(fp);
-		}
+	}
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 }
@@ -448,7 +444,7 @@ void surface_classify_wedge::report(
 	{
 		string title;
 
-		title.assign("Surfaces");
+		title = "Surfaces";
 		Surfaces->print_latex(ost, title, true,
 				false, NULL, NULL);
 	}
@@ -477,15 +473,12 @@ void surface_classify_wedge::latex_surfaces(
 		int f_with_stabilizers, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char str[1000];
 	string title;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::latex_surfaces" << endl;
 	}
-	snprintf(str, sizeof(str),
-			"Cubic Surfaces with 27 Lines in $\\PG(3,%d)$", q);
-	title.assign(str);
+	title = "Cubic Surfaces with 27 Lines in $\\PG(3," + std::to_string(q) + ")$";
 
 
 	ost << "\\subsection*{The Group $\\PGGL(4," << q << ")$}" << endl;
@@ -561,13 +554,10 @@ void surface_classify_wedge::create_report_double_sixes(
 	}
 
 
-	char str[1000];
 	string fname, title, author, extra_praeamble;
 
-	snprintf(str, 1000, "Cheat Sheet on Double Sixes over GF(%d) ", q);
-	title.assign(str);
-	snprintf(str, 1000, "Double_sixes_q%d.tex", q);
-	fname.assign(str);
+	title = "Cheat Sheet on Double Sixes over GF(" + std::to_string(q) + ") ";
+	fname = "Double_sixes_q" + std::to_string(q) + ".tex";
 
 	{
 		ofstream fp(fname);
@@ -599,7 +589,7 @@ void surface_classify_wedge::create_report_double_sixes(
 		{
 			string title;
 
-			title.assign("Double Sixes");
+			title = "Double Sixes";
 			if (f_v) {
 				cout << "surface_classify_wedge::create_report_double_sixes "
 						"before Classify_double_sixes->Double_sixes->print_latex" << endl;

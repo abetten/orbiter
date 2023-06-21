@@ -75,19 +75,16 @@ void save_trace_record(
 		M[i * w + 9] = T[i].f2;
 		}
 
-	char str[1000];
-
-	snprintf(str, sizeof(str), "trace_record_%03d_f%05d_po%d_so%d.csv",
-			iso, f, po, so);
-
 
 	if (f_trace_record_prefix) {
-		fname.assign(trace_record_prefix);
-		fname.append(str);
+		fname = trace_record_prefix;
 	}
-	else {
-		fname.assign(str);
-	}
+
+	fname += "trace_record_" + std::to_string(iso)
+				+ "_f" + std::to_string(f)
+				+ "_po" + std::to_string(po) + "_so"
+				+ std::to_string(so) + ".csv";
+
 	Fio.lint_matrix_write_csv_with_labels(fname, M, N, w, column_label);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }

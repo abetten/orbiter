@@ -830,17 +830,17 @@ void arc_generator::report(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "arc_generator::report" << endl;
 	}
 	if (Descr->target_size == PA->q + 2) {
-		snprintf(fname, sizeof(fname), "hyperovals_%d.tex", PA->q);
+		fname = "hyperovals_" + std::to_string(PA->q) + ".tex";
 	}
 	else {
-		snprintf(fname, sizeof(fname), "arcs_%d_%d.tex", PA->q, Descr->target_size);
+		fname = "arcs_" + std::to_string(PA->q) + "_" + std::to_string(Descr->target_size) + ".tex";
 	}
 
 	{
@@ -848,10 +848,9 @@ void arc_generator::report(
 		int f_book = true;
 		int f_title = true;
 		string title, author, extra_praeamble;
-		char str[1000];
 
 
-		author.assign("Orbiter");
+		author = "Orbiter";
 		int f_toc = true;
 		int f_landscape = false;
 		int f_12pt = false;
@@ -860,14 +859,12 @@ void arc_generator::report(
 		l1_interfaces::latex_interface L;
 
 		if (Descr->target_size == PA->q + 2) {
-			snprintf(str, sizeof(str), "Hyperovals over ${\\mathbb F}_{%d}$", PA->q);
-			title.assign(str);
-			}
+			title = "Hyperovals over ${\\mathbb F}_{" + std::to_string(PA->q) + "}$";
+		}
 		else {
-			snprintf(str, sizeof(str), "Arcs over  ${\\mathbb F}_{%d}$ "
-					"of size $%d$", PA->q, Descr->target_size);
-			title.assign(str);
-			}
+			title = "Arcs over  ${\\mathbb F}_{" + std::to_string(PA->q) + "}$ "
+					"of size $" + std::to_string(Descr->target_size) + "$";
+		}
 		cout << "Writing file " << fname << " with "
 				<< Iso.Folding->Reps->count << " arcs:" << endl;
 		L.head(f, f_book, f_title,
@@ -1176,23 +1173,19 @@ void arc_generator::report_do_the_work(
 	}
 
 
-	char prefix[1000];
-	char label_of_structure_plural[1000];
-	string prefix_str;
-	string label_of_structure_plural_str;
+	string prefix;
+	string label_of_structure_plural;
 
-	snprintf(prefix, sizeof(prefix), "arcs_%d_%d", PA->q, Descr->target_size);
-	snprintf(label_of_structure_plural, sizeof(label_of_structure_plural), "Arcs");
+	prefix = "arcs_" + std::to_string(PA->q) + "_" + std::to_string(Descr->target_size);
+	label_of_structure_plural = "Arcs";
 
-	prefix_str.assign(prefix);
-	label_of_structure_plural_str.assign(label_of_structure_plural_str);
 
 	isomorph::isomorph_global IG;
 
 	IG.init(Iso.A_base, Iso.A, Iso.Sub->gen, verbose_level);
 
 	IG.report_data_in_source_code_inside_tex(Iso,
-		prefix_str, label_of_structure_plural_str, ost,
+		prefix, label_of_structure_plural, ost,
 		verbose_level);
 
 

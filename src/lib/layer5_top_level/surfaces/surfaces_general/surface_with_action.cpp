@@ -1135,7 +1135,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	for (rk = 0; rk < nb_subsets; rk++) {
 
 		if (f_vv) {
-			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal subset " << rk << " / " << nb_subsets << endl;
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+					"subset " << rk << " / " << nb_subsets << endl;
 		}
 		// Determine a subset a_{i1},a_{i2},a_{i3},a_{i4};a_{i5}
 		Combi.unrank_k_subset(rk, subset, 5, 4);
@@ -1531,12 +1532,8 @@ void surface_with_action::sweep_4_15_lines(
 	string sweep_fname_csv;
 
 	sweep_fname_csv.assign(sweep_fname);
-	char str[1000];
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
-	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
-	sweep_fname_csv.append(str);
-	sweep_fname_csv.append("_sweep4_15_data.csv");
+	sweep_fname_csv = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep4_15_data.csv";
 
 
 	{
@@ -1604,8 +1601,10 @@ void surface_with_action::sweep_4_15_lines(
 						}
 #endif
 
-						cout << "alpha=" << alpha << " beta=" << beta
-								<< " delta=" << delta << " gamma=" << gamma << endl;
+						cout << "alpha=" << alpha
+								<< " beta=" << beta
+								<< " delta=" << delta
+								<< " gamma=" << gamma << endl;
 
 #if 0
 						if (delta == F->mult(F->mult(alpha, beta),F->inverse(F->add(alpha,F->negate(1))))) {
@@ -1624,13 +1623,11 @@ void surface_with_action::sweep_4_15_lines(
 
 
 
-						char str[1000];
 
-						snprintf(str, sizeof(str), "alpha=%d,beta=%d,gamma=%d,delta=%d",
-								alpha, beta, gamma, delta);
-
-
-						Surface_Descr->equation_parameters.assign(str);
+						Surface_Descr->equation_parameters = "alpha=" + std::to_string(alpha)
+								+ ",beta=" + std::to_string(beta)
+								+ ",gamma=" + std::to_string(gamma)
+								+ ",delta=" + std::to_string(delta);
 
 						//int f_by_equation;
 						//std::string equation_name_of_formula;
@@ -1786,21 +1783,15 @@ void surface_with_action::sweep_4_15_lines(
 		}
 	}
 	std::string fname;
-	//char str[1000];
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_sweep.csv");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep.csv";
 
 	Fio.lint_matrix_write_csv(fname, T, N, 13);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
 
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_points.txt");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_points.txt";
 
 
 	{
@@ -1854,12 +1845,8 @@ void surface_with_action::sweep_F_beta_9_lines(
 	string sweep_fname_csv;
 
 	sweep_fname_csv.assign(sweep_fname);
-	char str[1000];
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
-	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
-	sweep_fname_csv.append(str);
-	sweep_fname_csv.append("_sweep_F_beta_9_lines_data.csv");
+	sweep_fname_csv = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_F_beta_9_lines_data.csv";
 
 
 	{
@@ -1897,12 +1884,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 
 
-			char str[1000];
-
-			snprintf(str, sizeof(str), "a=%d,b=%d,c=%d,d=%d", a, b, c, d);
-
-
-			Surface_Descr->equation_parameters.assign(str);
+			Surface_Descr->equation_parameters = "a=" + std::to_string(a) + ",b=" + std::to_string(b) + ",c=" + std::to_string(c) + ",d=" + std::to_string(d);
 
 
 			surface_create *SC;
@@ -2035,19 +2017,14 @@ void surface_with_action::sweep_F_beta_9_lines(
 	}
 	std::string fname;
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_sweep_F_beta_9_lines.csv");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_F_beta_9_lines.csv";
 
 	Fio.lint_matrix_write_csv(fname, T, N, nb_cols);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
 
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_points.txt");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_points.txt";
 
 
 	{
@@ -2101,12 +2078,8 @@ void surface_with_action::sweep_6_9_lines(
 	string sweep_fname_csv;
 
 	sweep_fname_csv.assign(sweep_fname);
-	char str[1000];
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
-	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
-	sweep_fname_csv.append(str);
-	sweep_fname_csv.append("_sweep_6_9_lines_data.csv");
+	sweep_fname_csv = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_6_9_lines_data.csv";
 
 
 	{
@@ -2236,14 +2209,11 @@ void surface_with_action::sweep_6_9_lines(
 
 
 
-								char str[1000];
 
-								snprintf(str, sizeof(str),
-										"a=%d,b=%d,c=%d,d=%d,f=%d,g=%d",
-										a, b, c, d, f, g);
-
-
-								Surface_Descr->equation_parameters.assign(str);
+								Surface_Descr->equation_parameters =
+										"a=" + std::to_string(a) + ",b=" + std::to_string(b)
+										+ ",c=" + std::to_string(c) + ",d=" + std::to_string(d)
+										+ ",f=" + std::to_string(f) + ",g=" + std::to_string(g);
 
 
 								surface_create *SC;
@@ -2390,19 +2360,14 @@ void surface_with_action::sweep_6_9_lines(
 	}
 	std::string fname;
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_sweep_6_9_lines.csv");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_6_9_lines.csv";
 
 	Fio.lint_matrix_write_csv(fname, T, N, nb_cols);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
 
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_points.txt");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_points.txt";
 
 
 	{
@@ -2545,12 +2510,11 @@ void surface_with_action::sweep_4_27(
 					}
 
 
-					char str[1000];
+					Surface_Descr->equation_parameters =
+							"a=" + std::to_string(a) + ",b=" + std::to_string(b)
+							+ ",c=" + std::to_string(c) + ",d=" + std::to_string(d);
 
-					snprintf(str, sizeof(str), "a=%d,b=%d,c=%d,d=%d", a, b, c, d);
 
-
-					Surface_Descr->equation_parameters.assign(str);
 
 					//int f_by_equation;
 					//std::string equation_name_of_formula;
@@ -2641,21 +2605,15 @@ void surface_with_action::sweep_4_27(
 	}
 	orbiter_kernel_system::file_io Fio;
 	std::string fname;
-	char str[1000];
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_sweep_4_27.csv");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_4_27.csv";
 
 	Fio.lint_matrix_write_csv(fname, T, N, 16);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
 
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_points.txt");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_points.txt";
 
 
 	{
@@ -2709,12 +2667,8 @@ void surface_with_action::sweep_4_L9_E4(
 	string sweep_fname_csv;
 
 	sweep_fname_csv.assign(sweep_fname);
-	char str[1000];
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
-	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
-	sweep_fname_csv.append(str);
-	sweep_fname_csv.append("_sweep4_L9_E4_data.csv");
+	sweep_fname_csv = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep4_L9_E4_data.csv";
 
 
 	{
@@ -2748,14 +2702,11 @@ void surface_with_action::sweep_4_L9_E4(
 
 
 
-						char str[1000];
+						Surface_Descr->equation_parameters = "alpha=" + std::to_string(alpha)
+								+ ",beta=" + std::to_string(beta)
+								+ ",delta=" + std::to_string(delta)
+								+ ",lambda=" + std::to_string(lambda);
 
-						snprintf(str, sizeof(str),
-								"alpha=%d,beta=%d,delta=%d,lambda=%d",
-								alpha, beta, delta, lambda);
-
-
-						Surface_Descr->equation_parameters.assign(str);
 
 						surface_create *SC;
 						SC = NEW_OBJECT(surface_create);
@@ -2774,8 +2725,10 @@ void surface_with_action::sweep_4_L9_E4(
 						}
 
 
-
-						cout << str << " : the number of lines is "
+						cout << "alpha=" << alpha << " beta=" << beta
+								<< " delta=" << delta
+								<< " lambda=" << lambda
+								<< " : the number of lines is "
 								<< SC->SO->nb_lines << endl;
 
 						SC->SOA->print_everything(cout, verbose_level);
@@ -2891,21 +2844,15 @@ void surface_with_action::sweep_4_L9_E4(
 		}
 	}
 	std::string fname;
-	//char str[1000];
 
-	snprintf(str, sizeof(str), "_q%d", F->q);
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_sweep.csv");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep.csv";
 
 	Fio.lint_matrix_write_csv(fname, T, N, 13);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
 
-	fname.assign(Surface_Descr->equation_name_of_formula);
-	fname.append(str);
-	fname.append("_points.txt");
+	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_points.txt";
 
 
 	{

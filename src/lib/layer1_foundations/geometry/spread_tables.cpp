@@ -124,12 +124,7 @@ void spread_tables::init(projective_space *P,
 	}
 
 
-	prefix.assign(path_to_spread_tables);
-
-	char str[1000];
-	snprintf(str, sizeof(str), "spread_%d", NT.i_power_j(q, 2));
-
-	prefix.append(str);
+	prefix = path_to_spread_tables + "spread_" + std::to_string(NT.i_power_j(q, 2));
 
 	if (f_v) {
 		cout << "spread_tables::init prefix=" << spread_tables::prefix << endl;
@@ -262,12 +257,7 @@ void spread_tables::init_reduced(
 	d = 4; // = 4
 
 
-	prefix.assign(path_to_spread_tables);
-
-	char str[1000];
-	snprintf(str, sizeof(str), "reduced_spread_%d", NT.i_power_j(q, 2));
-
-	prefix.append(str);
+	prefix = path_to_spread_tables + "reduced_spread_" + std::to_string(NT.i_power_j(q, 2));
 
 	create_file_names(verbose_level);
 

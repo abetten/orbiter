@@ -2159,6 +2159,80 @@ void surface_object::export_something(std::string &what,
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
+	else if (ST.stringcmp(what, "trihedral_pairs") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_trihedral_pairs.csv");
+
+
+		Fio.lint_matrix_write_csv(fname,
+				Surf->Schlaefli->Trihedral_to_Eckardt,
+				120,
+				6);
+
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	else if (ST.stringcmp(what, "trihedral_pairs_last10") == 0) {
+
+		fname.assign(fname_base);
+		fname.append("_trihedral_pairs_last10.csv");
+
+
+		int i, j, k, a;
+
+		int *blocks;
+
+		blocks = NEW_int(20 * 3);
+		for (i = 0; i < 10; i++) {
+			for (j = 0; j < 2; j++) {
+				for (k = 0; k < 3; k++) {
+					a = Surf->Schlaefli->Trihedral_to_Eckardt[(110 + i) * 6 + j * 3 + k];
+					blocks[(i * 2 + j) * 3 + k] = a - 30;
+				}
+			}
+		}
+
+		cout << "surface_object::export_something "
+				"Blocks: " << endl;
+		Int_matrix_print(blocks, 20, 3);
+
+		data_structures::sorting Sorting;
+
+		for (i = 0; i < 20; i++) {
+			Sorting.int_vec_heapsort(
+					blocks + i * 3, 3);
+		}
+
+		cout << "surface_object::export_something "
+				"Blocks after sorting: " << endl;
+		Int_matrix_print(blocks, 20, 3);
+
+		combinatorics::combinatorics_domain Combi;
+
+		int *Rk;
+
+		Rk = NEW_int(20);
+		for (i = 0; i < 20; i++) {
+			Rk[i] = Combi.rank_k_subset(blocks + i * 3, 15, 3);
+		}
+
+		cout << "surface_object::export_something "
+				"Ranks: ";
+		Int_vec_print(cout, Rk, 20);
+		cout << endl;
+
+#if 0
+		Fio.lint_matrix_write_csv(fname,
+				Surf->Schlaefli->Trihedral_to_Eckardt,
+				120,
+				6);
+#endif
+		cout << "surface_object::export_something "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 	else if (ST.stringcmp(what, "Hesse_planes") == 0) {
 
 		fname.assign(fname_base);

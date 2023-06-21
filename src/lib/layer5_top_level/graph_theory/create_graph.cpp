@@ -589,7 +589,6 @@ void create_graph::init(
 	}
 	else if (description->f_non_attacking_queens_graph) {
 
-		char str[1000];
 
 		graph_theory::graph_theory_domain GT;
 
@@ -1485,8 +1484,6 @@ void create_graph::make_orbital_graph(
 	N = nb_points;
 	Adj = M;
 
-	char str[1000];
-
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph "
 				"AG->A->label = " << AG->A->label << endl;
@@ -1494,14 +1491,8 @@ void create_graph::make_orbital_graph(
 				"AG->A->label_tex = " << AG->A->label_tex << endl;
 	}
 
-	snprintf(str, sizeof(str), "_Orbital_%d", orbit_idx);
-	label.assign("Group_");
-	label.append(AG->A->label);
-	label.append(str);
-	snprintf(str, sizeof(str), "Orbital\\_%d", orbit_idx);
-	label_tex.assign("Group\\_");
-	label_tex.append(AG->A->label_tex);
-	label_tex.append(str);
+	label = "Group_" + AG->A->label + "Orbital_" + std::to_string(orbit_idx);
+	label_tex = "Group\\_" + AG->A->label_tex + "Orbital\\_" + std::to_string(orbit_idx);
 
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph done" << endl;

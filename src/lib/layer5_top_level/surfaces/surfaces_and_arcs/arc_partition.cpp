@@ -99,7 +99,7 @@ void arc_partition::init(
 	std::string label_of_set;
 
 
-	label_of_set.assign("remaining4");
+	label_of_set = "remaining4";
 
 
 	if (f_v) {

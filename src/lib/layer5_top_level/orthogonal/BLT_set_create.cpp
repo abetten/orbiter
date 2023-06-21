@@ -81,8 +81,8 @@ void BLT_set_create::init(
 					"family_name=" << Descr->family_name << endl;
 		}
 
-		char str[1000];
-		char str_q[1000];
+		string str;
+		string str_q;
 		f_has_group = false;
 		orthogonal_geometry::orthogonal_global OG;
 
@@ -118,8 +118,8 @@ void BLT_set_create::init(
 							FQ, OA->Descr->F, verbose_level);
 
 			FREE_OBJECT(FQ);
-			snprintf(str, sizeof(str), "Linear");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "Linear";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 
 		}
 
@@ -147,8 +147,8 @@ void BLT_set_create::init(
 							FQ, OA->Descr->F, verbose_level);
 
 			FREE_OBJECT(FQ);
-			snprintf(str, sizeof(str), "Fisher");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "Fisher";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 
 		}
 
@@ -176,8 +176,8 @@ void BLT_set_create::init(
 							FQ, OA->Descr->F, verbose_level);
 
 			FREE_OBJECT(FQ);
-			snprintf(str, sizeof(str), "Mondello");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "Mondello";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 
 		}
 
@@ -195,8 +195,8 @@ void BLT_set_create::init(
 			// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
 
-			snprintf(str, sizeof(str), "FTWKB");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "FTWKB";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 
 		}
 		else if (ST.stringcmp(Descr->family_name, "Kantor1") == 0) {
@@ -212,8 +212,8 @@ void BLT_set_create::init(
 			// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
 
-			snprintf(str, sizeof(str), "Kantor1");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "Kantor1";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "Kantor2") == 0) {
 			if (f_v) {
@@ -228,8 +228,8 @@ void BLT_set_create::init(
 			// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
 
-			snprintf(str, sizeof(str), "Kantor2");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "Kantor2";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_72") == 0) {
 			if (f_v) {
@@ -240,8 +240,8 @@ void BLT_set_create::init(
 
 			OG.create_LP_37_72_BLT_set(OA->O, set, verbose_level);
 
-			snprintf(str, sizeof(str), "LP_ago72");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "LP_ago72";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_4a") == 0) {
 			if (f_v) {
@@ -252,8 +252,8 @@ void BLT_set_create::init(
 
 			OG.create_LP_37_4a_BLT_set(OA->O, set, verbose_level);
 
-			snprintf(str, sizeof(str), "LP_ago4a");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "LP_ago4a";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_37_4b") == 0) {
 			if (f_v) {
@@ -264,8 +264,8 @@ void BLT_set_create::init(
 
 			OG.create_LP_37_4b_BLT_set(OA->O, set, verbose_level);
 
-			snprintf(str, sizeof(str), "LP_ago4b");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "LP_ago4b";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 		}
 		else if (ST.stringcmp(Descr->family_name, "LP_71") == 0) {
 			if (f_v) {
@@ -276,8 +276,8 @@ void BLT_set_create::init(
 
 			OG.create_Law_71_BLT_set(OA->O, set, verbose_level);
 
-			snprintf(str, sizeof(str), "LP");
-			snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
+			str = "LP";
+			str_q = "q" + std::to_string(OA->Descr->F->q);
 		}
 		else {
 			cout << "BLT_set_create::init family name is not recognized" << endl;
@@ -286,13 +286,9 @@ void BLT_set_create::init(
 
 		prefix.assign(str);
 
-		label_txt.assign(prefix);
-		label_txt.append("_");
-		label_txt.append(str_q);
+		label_txt = prefix + "_" + str_q;
 
-		label_tex.assign(prefix);
-		label_tex.append("\\_");
-		label_tex.append(str_q);
+		label_tex = prefix + "\\_" + str_q;
 
 	}
 	else if (Descr->f_flock) {
@@ -334,18 +330,14 @@ void BLT_set_create::init(
 					"after create_BLT_set_from_flock" << endl;
 		}
 
-		char str_q[1000];
 
-		snprintf(str_q, sizeof(str_q), "q%d", OA->Descr->F->q);
-		prefix.assign(Descr->flock_label);
+		string str_q;
 
-		label_txt.assign(prefix);
-		label_txt.append("_");
-		label_txt.append(str_q);
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+		prefix = Descr->flock_label;
 
-		label_tex.assign(prefix);
-		label_tex.append("\\_");
-		label_tex.append(str_q);
+		label_txt = prefix + "_" + str_q;
+		label_tex = prefix + "\\_" + str_q;
 
 	}
 
@@ -418,19 +410,6 @@ void BLT_set_create::init(
 		}
 
 
-#if 0
-		Sg = NEW_OBJECT(groups::strong_generators);
-
-		if (f_v) {
-			cout << "BLT_set_create::init before "
-					"Sg->BLT_set_from_catalogue_stabilizer" << endl;
-		}
-
-		Sg->BLT_set_from_catalogue_stabilizer(
-				OA->A,
-				OA->Descr->F, Descr->iso,
-				verbose_level);
-#else
 
 		ring_theory::longinteger_object target_go;
 
@@ -455,29 +434,22 @@ void BLT_set_create::init(
 					"after generators_to_strong_generators" << endl;
 		}
 
-#endif
+
 		f_has_group = true;
 
-		char str_q[1000];
-		char str_iso[1000];
+		string str_q;
 
-		snprintf(str_q, sizeof(str_q), "%d", OA->Descr->F->q);
-		snprintf(str_iso, sizeof(str_iso), "%d", Descr->iso);
+		str_q = "q" + std::to_string(OA->Descr->F->q);
 
-		prefix.assign("catalogue_q");
-		prefix.append(str_q);
-		prefix.append("_iso");
-		prefix.append(str_iso);
+		string str_iso;
 
-		label_txt.assign("catalogue_q");
-		label_txt.append(str_q);
-		label_txt.append("_iso");
-		label_txt.append(str_iso);
+		str_iso = "iso" + std::to_string(Descr->iso);
 
-		label_tex.assign("catalogue\\_q");
-		label_tex.append(str_q);
-		label_tex.append("\\_iso");
-		label_tex.append(str_iso);
+
+		prefix = "catalogue_q" + str_q + "_iso" + str_iso;
+
+		label_txt = "catalogue_q" + str_q + "_iso" + str_iso;
+		label_tex = "catalogue\\_q" + str_q + "\\_iso" + str_iso;
 
 		if (f_v) {
 			cout << "BLT_set_create::init after "
@@ -551,9 +523,7 @@ void BLT_set_create::report(int verbose_level)
 
 	string fname;
 
-	fname.assign("BLT_");
-	fname.append(label_txt);
-	fname.append(".tex");
+	fname = "BLT_" + label_txt + ".tex";
 	ofstream ost(fname);
 
 	report2(ost, verbose_level);
@@ -574,9 +544,8 @@ void BLT_set_create::export_gap(int verbose_level)
 
 	string fname;
 
-	fname.assign("BLT_");
-	fname.append(label_txt);
-	fname.append(".gap");
+	fname = "BLT_" + label_txt + ".gap";
+
 	ofstream ost(fname);
 
 	//report2(ost, verbose_level);
@@ -667,14 +636,13 @@ void BLT_set_create::create_flock(int point_idx, int verbose_level)
 				"after Flock->init" << endl;
 	}
 
-	char str[1000];
+	string str;
 	string fname_csv;
 	orbiter_kernel_system::file_io Fio;
 
 
-	snprintf(str, 1000, "_flock_pt%d.csv", point_idx);
-	fname_csv.assign(BA->label_txt);
-	fname_csv.append(str);
+	str = "_flock_pt" + std::to_string(point_idx) + ".csv";
+	fname_csv = BA->label_txt + str;
 
 	Fio.int_matrix_write_csv(fname_csv, Flock->Table_of_ABC->M, Flock->q, 3);
 	cout << "written file " << fname_csv << " of size "
@@ -841,7 +809,7 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 
 	int f_book = false;
 	int f_title = true;
-	char str[1000];
+	string str;
 
 	string title, author, extra_praeamble;
 
@@ -852,8 +820,8 @@ void BLT_set_create::report2(std::ostream &ost, int verbose_level)
 	int f_pagenumbers = true;
 	l1_interfaces::latex_interface L;
 
-	snprintf(str, sizeof(str), "BLT-set %s", label_tex.c_str());
-	title.assign(str);
+	str = "BLT-set " + label_tex;
+	title = str;
 	author.assign("Orbiter");
 
 	L.head(ost, f_book, f_title,

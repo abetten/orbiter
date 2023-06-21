@@ -183,75 +183,11 @@ void object_in_projective_space_with_action::report(
 
 
 
-#if 0
-	if (OiP->type == t_PTS) {
-		//long int *set;
-		//int sz;
-
-		OiP->print_tex(fp);
-
-
-		cout << "printing generators in restricted action:" << endl;
-		action *A_restricted;
-
-		A_restricted = SG->A->restricted_action(OiP->set, OiP->sz,
-				verbose_level);
-		SG->print_with_given_action(
-				fp, A_restricted);
-		FREE_OBJECT(A_restricted);
-	}
-#endif
-
 
 	fp << "Stabilizer:\\\\" << endl;
 	SG->print_generators_tex(fp);
 
 
-#if 0
-	//fp << "Stabilizer, all elements:\\\\" << endl;
-	//SG->print_elements_ost(fp);
-	//SG->print_elements_with_special_orthogonal_action_ost(fp);
-
-	{
-		action *A_conj;
-		sims *Base_group;
-
-		Base_group = SG->create_sims(verbose_level);
-
-		A_conj = PA->A->create_induced_action_by_conjugation(
-			Base_group, false /* f_ownership */,
-			verbose_level);
-
-		fp << "Generators in conjugation action on the group itself:\\\\" << endl;
-		SG->print_with_given_action(fp, A_conj);
-
-		fp << "Elements in conjugation action on the group itself:\\\\" << endl;
-		SG->print_elements_with_given_action(fp, A_conj);
-
-		string fname_gap;
-		char str[1000];
-
-		fname_gap.assign("class_");
-
-		snprintf(str, sizeof(str), "%d", i);
-
-		fname_gap.append(str);
-		fname_gap.append(".gap");
-
-		SG->export_permutation_group_to_GAP(fname_gap.c_str(), verbose_level);
-		schreier *Sch;
-
-		Sch = SG->orbits_on_points_schreier(A_conj, verbose_level);
-
-		fp << "Orbits on itself by conjugation:\\\\" << endl;
-		Sch->print_and_list_orbits_tex(fp);
-
-
-		FREE_OBJECT(Sch);
-		FREE_OBJECT(A_conj);
-		FREE_OBJECT(Base_group);
-	}
-#endif
 
 
 	combinatorics::encoded_combinatorial_object *Enc;
@@ -370,37 +306,6 @@ void object_in_projective_space_with_action::report(
 
 
 	//OwCF->klein(verbose_level);
-
-#if 0
-	sims *Stab;
-	int *Elt;
-	int nb_trials;
-	int max_trials = 100;
-
-	Stab = SG->create_sims(verbose_level);
-	Elt = NEW_int(PA->A->elt_size_in_int);
-
-	for (h = 0; h < fixed_structure_order_list_sz; h++) {
-		if (Stab->find_element_of_given_order_int(Elt,
-				fixed_structure_order_list[h], nb_trials, max_trials,
-				verbose_level)) {
-			fp << "We found an element of order "
-					<< fixed_structure_order_list[h] << ", which is:" << endl;
-			fp << "$$" << endl;
-			PA->A->element_print_latex(Elt, fp);
-			fp << "$$" << endl;
-			PA->report_fixed_points_lines_and_planes(
-				Elt, fp,
-				verbose_level);
-		}
-		else {
-			fp << "We could not find an element of order "
-				<< fixed_structure_order_list[h] << "\\\\" << endl;
-		}
-	}
-
-	FREE_int(Elt);
-#endif
 
 	FREE_OBJECT(SG);
 

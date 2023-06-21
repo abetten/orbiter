@@ -100,15 +100,6 @@ void recoordinatize::init(
 
 	recoordinatize::Three_skew_subspaces = Three_skew_subspaces;
 
-#if 0
-	recoordinatize::SD = SD;
-
-	recoordinatize::Grass = SD->Grass;
-	recoordinatize::F = SD->F;
-	recoordinatize::q = F->q;
-	recoordinatize::k = SD->k;
-	recoordinatize::n = SD->n;
-#endif
 
 	recoordinatize::A = A;
 	recoordinatize::A2 = A2;
@@ -121,23 +112,6 @@ void recoordinatize::init(
 		= check_function_incremental_data;
 	//recoordinatize::fname_live_points.assign(fname_live_points);
 
-#if 0
-	if (f_v) {
-		cout << "recoordinatize::init n=" << n << " k=" << k << " fname_live_points=" << fname_live_points << endl;
-	}
-#endif
-	
-
-#if 0
-	M = NEW_int((3 * k) * n);
-	M1 = NEW_int((3 * k) * n);
-	AA = NEW_int(n * n);
-	AAv = NEW_int(n * n);
-	TT = NEW_int(k * k);
-	TTv = NEW_int(k * k);
-	B = NEW_int(n * n);
-	N = NEW_int((3 * k) * n);
-#endif
 
 	transform = NEW_int(Three_skew_subspaces->n * Three_skew_subspaces->n + 1);
 
@@ -174,94 +148,6 @@ void recoordinatize::do_recoordinatize(
 				"after Three_skew_subspaces->do_recoordinatize" << endl;
 	}
 
-#if 0
-	Grass->unrank_lint_here(M, i1, 0 /*verbose_level - 4*/);
-	Grass->unrank_lint_here(M + k * n, i2, 0 /*verbose_level - 4*/);
-	Grass->unrank_lint_here(M + 2 * k * n, i3, 0 /*verbose_level - 4*/);
-	if (f_vv) {
-		cout << "M:" << endl;
-		Int_vec_print_integer_matrix_width(cout, M, 3 * k, n, n, F->log10_of_q + 1);
-	}
-	Int_vec_copy(M, AA, n * n);
-	F->Linear_algebra->matrix_inverse(AA, AAv, n, 0 /*verbose_level - 1*/);
-	if (f_vv) {
-		cout << "AAv:" << endl;
-		Int_vec_print_integer_matrix_width(cout, AAv, n, n, n, F->log10_of_q + 1);
-	}
-	F->Linear_algebra->mult_matrix_matrix(M, AAv, N, 3 * k, n, n,
-			0 /* verbose_level */);
-	if (f_vv) {
-		cout << "N:" << endl;
-		Int_vec_print_integer_matrix_width(cout, N, 3 * k, n, n, F->log10_of_q + 1);
-	}
-
-	for (i = 0; i < k; i++) {
-		for (j = 0; j < k; j++) {
-			TT[i * k + j] = N[2 * k * n + i * n + j];
-		}
-	}
-	if (f_vv) {
-		cout << "TT:" << endl;
-		Int_vec_print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
-	}
-	F->Linear_algebra->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
-	if (f_vv) {
-		cout << "TTv:" << endl;
-		Int_vec_print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
-	}
-
-	Int_vec_zero(B, n * n);
-	for (i = 0; i < k; i++) {
-		for (j = 0; j < k; j++) {
-			B[i * n + j] = TTv[i * k + j];
-		}
-	}
-	for (i = 0; i < k; i++) {
-		for (j = 0; j < k; j++) {
-			TT[i * k + j] = N[2 * k * n + i * n + k + j];
-		}
-	}
-	if (f_vv) {
-		cout << "TT:" << endl;
-		Int_vec_print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
-	}
-	F->Linear_algebra->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
-	if (f_vv) {
-		cout << "TTv:" << endl;
-		Int_vec_print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
-	}
-	for (i = 0; i < k; i++) {
-		for (j = 0; j < k; j++) {
-			B[(k + i) * n + k + j] = TTv[i * k + j];
-		}
-	}
-	if (f_vv) {
-		cout << "B:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
-				B, n, n, n, F->log10_of_q + 1);
-	}
-
-	
-	F->Linear_algebra->mult_matrix_matrix(AAv, B, C, n, n, n, 0 /* verbose_level */);
-	if (f_vv) {
-		cout << "C:" << endl;
-		Int_vec_print_integer_matrix_width(cout, C, n, n, n, F->log10_of_q + 1);
-	}
-	
-	F->Linear_algebra->mult_matrix_matrix(M, C, M1, 3 * k, n, n, 0 /* verbose_level */);
-	if (f_vv) {
-		cout << "M1:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
-				M1, 3 * k, n, n, F->log10_of_q + 1);
-	}
-	j1 = Grass->rank_lint_here(M1, 0 /*verbose_level - 4*/);
-	j2 = Grass->rank_lint_here(M1 + k * n, 0 /*verbose_level - 4*/);
-	j3 = Grass->rank_lint_here(M1 + 2 * k * n, 0 /*verbose_level - 4*/);
-	if (f_v) {
-		cout << "j1=" << j1 << " j2=" << j2 << " j3=" << j3 << endl;
-	}
-	
-#endif
 
 	// put a zero, just in case we are in a semilinear group:
 
@@ -481,44 +367,6 @@ void recoordinatize::compute_live_points(int verbose_level)
 	}
 
 
-	//string fname;
-
-
-#if 0
-	int f_path_select = true;
-	int select_value;
-	int len;
-
-
-	len = i_power_j(Fq->q, Mtx->n) - 1;
-	for (select_value = 1; select_value < len;  select_value++) {
-		if (f_path_select) {
-			snprintf(fname, sizeof(fname), "live_points_%d.txt", select_value);
-			}
-		else {
-			snprintf(fname, sizeof(fname), "live_points.txt");
-			}	
-		if (file_size(fname) > 1) {
-			cout << "reading live points from file "
-					<< fname << endl;
-			read_set_from_file(fname,
-					live_points, nb_live_points, verbose_level);
-			cout << "reading live points from file "
-					<< fname << " done" << endl;
-			return;
-			}
-
-
-
-	
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"checking all " << gos * Fq->q
-					<< " elements in GL(" << k << "," << q << ")" << endl;
-			cout << "order of PGL(" << k << "," << q << ")=" << gos << endl;
-			}
-
-#endif
 
 
 	// we wish to run through the elements of GL(k,q).
@@ -533,46 +381,6 @@ void recoordinatize::compute_live_points(int verbose_level)
 #endif
 
 
-#if 0
-	file_io Fio;
-
-	if (Fio.file_size(fname_live_points) > 1) {
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"reading live points from file " << fname_live_points << endl;
-		}
-		Fio.read_set_from_file(fname_live_points,
-				live_points, nb_live_points, verbose_level);
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"we found " << nb_live_points << " live points" << endl;
-		}
-		return;
-	}
-	else {
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"before compute_live_points_low_level" << endl;
-		}
-		compute_live_points_low_level(
-				live_points, nb_live_points, verbose_level - 1);
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"after compute_live_points_low_level" << endl;
-		}
-
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"before Fio.write_set_to_file" << endl;
-		}
-		Fio.write_set_to_file(fname_live_points,
-				live_points, nb_live_points, verbose_level);
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"written file " << fname_live_points << endl;
-		}
-	}
-#else
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points "
 				"before compute_live_points_low_level" << endl;
@@ -583,42 +391,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 		cout << "recoordinatize::compute_live_points "
 				"after compute_live_points_low_level" << endl;
 	}
-#endif
 
-#if 0
-
-	snprintf(fname, sizeof(fname), "live_points.txt");
-	if (file_size(fname) > 1) {
-		cout << "reading live points from file " << fname << endl;
-		read_set_from_file(fname, live_points, nb_live_points, verbose_level);
-		cout << "reading live points from file " << fname << " done" << endl;
-		return;
-		}
-	else {
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"before Mtx->matrices_without_eigenvector_one" << endl;
-			}
-		Mtx->matrices_without_eigenvector_one(
-			A0_linear->Sims, live_points, nb_live_points,
-			false /* f_path_select */, 0 /*select_value*/, verbose_level);
-
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"after Mtx->matrices_without_eigenvector_one" << endl;
-			}
-
-		int_vec_heapsort(live_points, nb_live_points);
-
-		write_set_to_file(fname,
-				live_points, nb_live_points, verbose_level);
-		if (f_v) {
-			cout << "recoordinatize::compute_live_points "
-					"written file " << fname << endl;
-			}
-		}
-
-#endif
 
 
 #if 0

@@ -1597,14 +1597,14 @@ void discreta_base::load_ascii(istream & f)
 	unpack(M, f_v, debug_depth);
 }
 
-void discreta_base::save_file(const char *fname)
+void discreta_base::save_file(std::string &fname)
 // writes in ASCII text format (uuencoded like) into the file.
 {
 	ofstream f(fname);
 	save_ascii(f);
 }
  
-void discreta_base::load_file(const char *fname)
+void discreta_base::load_file(std::string &fname)
 // read in ASCII text format (uuencoded like) from the file.
 {
 	ifstream f(fname);

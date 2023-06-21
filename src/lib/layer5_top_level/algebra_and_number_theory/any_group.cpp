@@ -564,12 +564,9 @@ void any_group::normalizer(int verbose_level)
 
 	{
 		string fname, title, author, extra_praeamble;
-		char str[1000];
 
-		fname.assign(fname_magma_prefix);
-		fname.append(".tex");
-		snprintf(str, 1000, "Normalizer of subgroup %s", label_tex.c_str());
-		title.assign(str);
+		fname = fname_magma_prefix + ".tex";
+		title = "Normalizer of subgroup " + label_tex;
 
 
 		{
@@ -782,16 +779,11 @@ void any_group::do_find_subgroups(
 
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(A->label);
-	fname.append("_report.tex");
+	fname = A->label + "_report.tex";
 
 
-	char str[1000];
 
-	snprintf(str, sizeof(str), "Subgroups of order $%d$ in $", order_of_subgroup);
-	title.assign(str);
-	title.append(A->label_tex);
-	title.append("$");
+	title = "Subgroups of order $" + std::to_string(order_of_subgroup) + "$ in $" + A->label_tex + "$";
 
 
 	{
@@ -1864,11 +1856,8 @@ void any_group::orbit_of(
 	}
 
 	string fname_tree_mask;
-	char str[1000];
 
-	fname_tree_mask.assign(label);
-	snprintf(str, sizeof(str), "_orbit_of_point_%d.layered_graph", point_idx);
-	fname_tree_mask.append(str);
+	fname_tree_mask = label + "_orbit_of_point_" + std::to_string(point_idx) + ".layered_graph";
 
 
 	Sch->export_tree_as_layered_graph(orbit_idx,

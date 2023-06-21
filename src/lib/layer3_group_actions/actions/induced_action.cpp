@@ -805,92 +805,6 @@ action *induced_action::induced_action_on_spread_set(
 	return A;
 }
 
-#if 0
-void induced_action::induced_action_on_orthogonal(action *A_old,
-		induced_actions::action_on_orthogonal *AO,
-	int f_induce_action, groups::sims *old_G,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A;
-
-	if (f_v) {
-		cout << "induced_action::induced_action_on_orthogonal "
-				"f_induce_action=" << f_induce_action << endl;
-	}
-	A = A_old;
-
-	char str1[1000];
-	char str2[1000];
-
-	if (AO->f_on_points) {
-		snprintf(str1, 1000, "_Opts_%d_%d_%d", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
-		snprintf(str2, 1000, " {\\rm OnOpts %d,%d,%d}", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
-	}
-	else if (AO->f_on_lines) {
-		snprintf(str1, 1000, "_Olines_%d_%d_%d", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
-		snprintf(str2, 1000, " {\\rm OnOlines %d,%d,%d}", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
-	}
-	else if (AO->f_on_points_and_lines) {
-		snprintf(str1, 1000, "_Optslines_%d_%d_%d", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
-		snprintf(str2, 1000, " {\\rm OnOptslines %d,%d,%d}", AO->O->Quadratic_form->epsilon, AO->O->Quadratic_form->n, AO->O->Quadratic_form->q);
-	}
-
-
-
-	label.assign(A->label);
-	label_tex.assign(A->label_tex);
-	label.append(str1);
-	label_tex.append(str2);
-
-
-
-	if (f_v) {
-		cout << "the old_action " << A->label
-				<< " has base_length = " << A->base_len()
-			<< " and degree " << A->degree << endl;
-	}
-	f_has_subaction = true;
-	subaction = A;
-	if (!A->f_is_linear) {
-		cout << "induced_action::induced_action_on_orthogonal "
-				"action not of linear type" << endl;
-		exit(1);
-	}
-	type_G = action_on_orthogonal_t;
-	G.AO = AO;
-	f_allocated = true;
-	make_element_size = A->make_element_size;
-	low_level_point_size = AO->low_level_point_size;
-
-	f_has_strong_generators = false;
-
-	degree = AO->degree;
-	//base_len = 0;
-	ptr = NEW_OBJECT(action_pointer_table);
-	ptr->init_function_pointers_induced_action();
-
-
-
-	elt_size_in_int = A->elt_size_in_int;
-	coded_elt_size_in_char = A->coded_elt_size_in_char;
-
-	allocate_element_data();
-
-	if (f_induce_action) {
-		induced_action_override_sims(*A, old_G, 0/*verbose_level - 2*/);
-	}
-
-	if (f_v) {
-		cout << "induced_action::induced_action_on_orthogonal "
-				"finished, created action " << label << endl;
-		cout << "degree=" << degree << endl;
-		cout << "make_element_size=" << make_element_size << endl;
-		cout << "low_level_point_size=" << low_level_point_size << endl;
-		print_info();
-	}
-}
-#endif
 
 
 action *induced_action::induced_action_on_wedge_product(int verbose_level)
@@ -991,85 +905,6 @@ action *induced_action::induced_action_on_wedge_product(int verbose_level)
 	return A;
 }
 
-#if 0
-void induced_action::induced_action_by_subfield_structure(
-		action *A_old,
-		induced_actions::action_by_subfield_structure
-			*SubfieldStructure,
-	int f_induce_action, groups::sims *old_G,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A;
-
-	if (f_v) {
-		cout << "induced_action::induced_action_by_subfield_structure "
-				"f_induce_action=" << f_induce_action << endl;
-		}
-	A = A_old;
-
-
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_subfield_%d", SubfieldStructure->q);
-	snprintf(str2, 1000, " {\\rm OnSubfield F%d}", SubfieldStructure->q);
-
-	label.assign(A->label);
-	label_tex.assign(A->label_tex);
-	label.append(str1);
-	label_tex.append(str2);
-
-
-	if (f_v) {
-		cout << "the old_action " << A->label
-				<< " has base_length = " << A->base_len()
-			<< " and degree " << A->degree << endl;
-		}
-	f_has_subaction = true;
-	subaction = A;
-	if (A->type_G != matrix_group_t) {
-		cout << "induced_action::induced_action_by_subfield_structure "
-				"action not of matrix group type" << endl;
-		exit(1);
-		}
-	//M = A->G.matrix_grp;
-	type_G = action_by_subfield_structure_t;
-	G.SubfieldStructure = SubfieldStructure;
-	f_allocated = true;
-	make_element_size = A->make_element_size;
-	low_level_point_size = SubfieldStructure->low_level_point_size;
-
-	f_has_strong_generators = false;
-
-	degree = SubfieldStructure->degree;
-	//base_len = 0;
-	ptr = NEW_OBJECT(action_pointer_table);
-	ptr->init_function_pointers_induced_action();
-	f_is_linear = true;
-	dimension = SubfieldStructure->m;
-
-
-
-	elt_size_in_int = A->elt_size_in_int;
-	coded_elt_size_in_char = A->coded_elt_size_in_char;
-
-	allocate_element_data();
-
-	if (f_induce_action) {
-		induced_action_override_sims(*A,
-				old_G, 0/*verbose_level - 2*/);
-		}
-
-	if (f_v) {
-		cout << "induced_action::induced_action_by_subfield_structure "
-				"finished, created action " << label << endl;
-		cout << "degree=" << A->degree << endl;
-		cout << "make_element_size=" << A->make_element_size << endl;
-		cout << "low_level_point_size=" << A->low_level_point_size << endl;
-		print_info();
-		}
-}
-#endif
 
 action *induced_action::induced_action_on_Galois_group(
 		groups::sims *old_G, int verbose_level)
@@ -1434,85 +1269,6 @@ action *induced_action::create_induced_action_by_conjugation(
 	return A;
 }
 
-#if 0
-void induced_action::induced_action_by_conjugation(
-		groups::sims *old_G,
-		groups::sims *Base_group, int f_ownership,
-	int f_basis, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	induced_actions::action_by_conjugation *ABC;
-	ring_theory::longinteger_object go;
-	long int goi;
-	action *A;
-
-	A = Base_group->A;
-	if (f_v) {
-		cout << "induced_action::induced_action_by_conjugation" << endl;
-		cout << "the old_action " << A->label
-				<< " has base_length = " << A->base_len()
-			<< " and degree " << A->degree << endl;
-	}
-	Base_group->group_order(go);
-	goi = go.as_lint();
-	if (f_v) {
-		cout << "we are acting on a group of order " << goi << endl;
-	}
-
-
-
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_C%ld", goi);
-	snprintf(str2, 1000, " {\\rm ByConj%ld}", goi);
-
-	label.assign(A->label);
-	label_tex.assign(A->label_tex);
-	label.append(str1);
-	label_tex.append(str2);
-
-
-
-	f_has_subaction = true;
-	subaction = A;
-	ABC = NEW_OBJECT(induced_actions::action_by_conjugation);
-	ABC->init(Base_group, f_ownership, verbose_level);
-	type_G = action_by_conjugation_t;
-	G.ABC = ABC;
-	f_allocated = true;
-	make_element_size = A->make_element_size;
-
-	f_has_strong_generators = false;
-
-	degree = goi;
-	//base_len = 0;
-	ptr = NEW_OBJECT(action_pointer_table);
-	ptr->init_function_pointers_induced_action();
-
-	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
-	//allocate_base_data(0);
-
-
-	elt_size_in_int = A->elt_size_in_int;
-	coded_elt_size_in_char = A->coded_elt_size_in_char;
-
-	allocate_element_data();
-
-	if (f_basis) {
-		if (f_v) {
-			cout << "induced_action::induced_action_by_conjugation "
-					"calling induced_action_override_sims" << endl;
-		}
-		induced_action_override_sims(*A, old_G, verbose_level - 2);
-	}
-	if (f_v) {
-		cout << "induced_action::induced_action_by_conjugation "
-				"finished, created action " << label << endl;
-		print_info();
-	}
-}
-#endif
 
 action *induced_action::induced_action_by_right_multiplication(
 	int f_basis, groups::sims *old_G,
@@ -1537,15 +1293,8 @@ action *induced_action::induced_action_by_right_multiplication(
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_R%d", goi);
-	snprintf(str2, 1000, " {\\rm RightMult%d}", goi);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_E" + std::to_string(goi);
+	A->label_tex = A_old->label_tex + " {\\rm RightMult" + std::to_string(goi) + "}";
 
 
 	if (f_v) {
@@ -1655,15 +1404,8 @@ action *induced_action::induced_action_on_sets(
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_S%d", set_size);
-	snprintf(str2, 1000, " {\\rm S%d}", set_size);
-
-	A->label.assign(A_old->label);
-	A->label_tex.assign(A_old->label_tex);
-	A->label.append(str1);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_S" + std::to_string(set_size);
+	A->label_tex = A_old->label_tex + " {\\rm S" + std::to_string(set_size) + "}";
 
 
 	A->f_has_subaction = true;
@@ -1778,15 +1520,8 @@ action *induced_action::induced_action_on_subgroups(
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_subgroups%d_%d", nb_subgroups, group_order);
-	snprintf(str2, 1000, " {\\rm OnSubgroups%d,%d}", nb_subgroups, group_order);
-
-	A->label.assign(old_action->label);
-	A->label.append(str1);
-	A->label_tex.assign(old_action->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_on_subgroups" + std::to_string(nb_subgroups) + "," + std::to_string(group_order);
+	A->label_tex = A_old->label_tex + " {\\rm OnSubgroups" + std::to_string(nb_subgroups) + "," + std::to_string(group_order) + "}";
 
 	A->f_has_subaction = true;
 	A->subaction = old_action;
@@ -1858,15 +1593,8 @@ action *induced_action::induced_action_by_restriction_on_orbit_with_schreier_vec
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_res_sv%d", pt);
-	snprintf(str2, 1000, " {\\rm res sv%d}", pt);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_res_sv" + std::to_string(pt);
+	A->label_tex = A_old->label_tex + " {\\rm res sv" + std::to_string(pt) + "}";
 
 	A->f_has_subaction = true;
 	A->subaction = A_old;
@@ -2173,81 +1901,6 @@ action *induced_action::induced_action_on_pairs(
 }
 
 
-#if 0
-void induced_action::induced_action_on_pairs(
-	action &old_action, groups::sims *old_G,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "induced_action::induced_action_on_pairs" << endl;
-		cout << "the old_action " << old_action.label
-			<< " has base_length = " << old_action.base_len()
-			<< " and degree " << old_action.degree << endl;
-	}
-
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_pairs");
-	snprintf(str2, 1000, " {\\rm OnPairs}");
-
-	label.assign(old_action.label);
-	label_tex.assign(old_action.label_tex);
-	label.append(str1);
-	label_tex.append(str2);
-
-
-	f_has_subaction = true;
-	subaction = &old_action;
-	type_G = action_on_pairs_t;
-	f_allocated = false;
-
-	f_has_strong_generators = false;
-
-	degree = Combi.int_n_choose_k(old_action.degree, 2);
-	//base_len = 0;
-	ptr = NEW_OBJECT(action_pointer_table);
-	ptr->init_function_pointers_induced_action();
-	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
-	//allocate_base_data(0);
-
-
-	elt_size_in_int = old_action.elt_size_in_int;
-	coded_elt_size_in_char = old_action.coded_elt_size_in_char;
-
-	allocate_element_data();
-
-	induced_action_override_sims(old_action,
-			old_G, verbose_level - 2);
-	if (f_v) {
-		cout << "induced_action::induced_action_on_pairs "
-				"finished, created action " << label << endl;
-		print_info();
-	}
-}
-
-action *action::create_induced_action_on_ordered_pairs(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A;
-
-	if (f_v) {
-		cout << "induced_action::create_induced_action_on_ordered_pairs" << endl;
-	}
-	A = NEW_OBJECT(action);
-	A->induced_action_on_ordered_pairs(
-			NULL, 0 /* verbose_level*/);
-	if (f_v) {
-		cout << "induced_action::create_induced_action_on_ordered_pairs done" << endl;
-	}
-	return A;
-}
-#endif
-
 
 action *induced_action::induced_action_on_ordered_pairs(
 	groups::sims *old_G,
@@ -2336,15 +1989,8 @@ action *induced_action::induced_action_on_k_subsets(
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_%d_subsets",k);
-	snprintf(str2, 1000, "^{[%d]}", k);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_on_" + std::to_string(k) + "_subsets";
+	A->label_tex = A_old->label_tex + " ^{[" + std::to_string(k) + "]}";
 
 	On_k_subsets = NEW_OBJECT(induced_actions::action_on_k_subsets);
 	On_k_subsets->init(A_old, k, verbose_level);
@@ -2399,15 +2045,8 @@ action *induced_action::induced_action_on_orbits(
 
 	A = NEW_OBJECT(action);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_orbits_%d", Sch->nb_orbits);
-	snprintf(str2, 1000, " {\\rm OnOrbits}_{%d}", Sch->nb_orbits);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_on_orbits_" + std::to_string(Sch->nb_orbits);
+	A->label_tex = A_old->label_tex + " {\\rm OnOrbits}_{" + std::to_string(Sch->nb_orbits) + "}";
 
 
 	On_orbits = NEW_OBJECT(induced_actions::action_on_orbits);
@@ -2445,130 +2084,6 @@ action *induced_action::induced_action_on_orbits(
 	return A;
 }
 
-#if 0
-void induced_action::induced_action_on_flags(
-		action *old_action,
-	int *type, int type_len,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	induced_actions::action_on_flags *On_flags;
-
-	if (f_v) {
-		cout << "induced_action::induced_action_on_flags" << endl;
-		cout << "the old_action " << old_action->label
-			<< " has base_length = " << old_action->base_len()
-			<< " and degree " << old_action->degree << endl;
-	}
-
-
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_flags");
-	snprintf(str2, 1000, " {\\rm OnFlags}");
-
-	label.assign(old_action->label);
-	label_tex.assign(old_action->label_tex);
-	label.append(str1);
-	label_tex.append(str2);
-
-
-	On_flags = NEW_OBJECT(induced_actions::action_on_flags);
-	On_flags->init(old_action, type,
-			type_len, verbose_level);
-
-
-	f_has_subaction = true;
-	subaction = old_action;
-	type_G = action_on_flags_t;
-	G.OnFlags = On_flags;
-	f_allocated = true;
-
-
-	f_has_strong_generators = false;
-
-	degree = On_flags->degree;
-	//base_len = 0;
-	ptr = NEW_OBJECT(action_pointer_table);
-	ptr->init_function_pointers_induced_action();
-	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
-	//allocate_base_data(0);
-
-
-	elt_size_in_int = old_action->elt_size_in_int;
-	coded_elt_size_in_char = old_action->coded_elt_size_in_char;
-
-	allocate_element_data();
-
-	if (f_v) {
-		cout << "induced_action::induced_action_on_flags "
-				"finished, created action " << label << endl;
-		print_info();
-	}
-}
-
-void induced_action::induced_action_on_bricks(
-		action &old_action,
-		combinatorics::brick_domain *B, int f_linear_action,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	induced_actions::action_on_bricks *On_bricks;
-
-	if (f_v) {
-		cout << "induced_action::induced_action_on_bricks" << endl;
-		cout << "the old_action " << old_action.label
-			<< " has base_length = " << old_action.base_len()
-			<< " and degree " << old_action.degree << endl;
-	}
-
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_bricks");
-	snprintf(str2, 1000, " {\\rm OnBricks}");
-
-	label.assign(old_action.label);
-	label_tex.assign(old_action.label_tex);
-	label.append(str1);
-	label_tex.append(str2);
-
-
-	On_bricks = NEW_OBJECT(induced_actions::action_on_bricks);
-	On_bricks->init(&old_action, B, f_linear_action, verbose_level);
-
-
-	f_has_subaction = true;
-	subaction = &old_action;
-	type_G = action_on_bricks_t;
-	G.OnBricks = On_bricks;
-	f_allocated = true;
-
-
-	f_has_strong_generators = false;
-
-	degree = B->nb_bricks;
-	//base_len = 0;
-	ptr = NEW_OBJECT(action_pointer_table);
-	ptr->init_function_pointers_induced_action();
-	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
-	//allocate_base_data(0);
-
-
-	elt_size_in_int = old_action.elt_size_in_int;
-	coded_elt_size_in_char = old_action.coded_elt_size_in_char;
-
-	allocate_element_data();
-
-	//induced_action_override_sims(old_action, old_G, verbose_level - 2);
-	if (f_v) {
-		cout << "induced_action::induced_action_on_bricks finished, "
-				"created action " << label << endl;
-		print_info();
-	}
-}
-#endif
 
 action *induced_action::induced_action_on_andre(
 		action *An,
@@ -2631,95 +2146,6 @@ action *induced_action::induced_action_on_andre(
 	return A;
 }
 
-#if 0
-void induced_action::setup_product_action(
-		action *A1, action *A2,
-	int f_use_projections, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	induced_actions::product_action *PA;
-	int i;
-
-	if (f_v) {
-		cout << "induced_action::setup_product_action" << endl;
-	}
-
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_product_action");
-	snprintf(str2, 1000, " {\\rm ProductAction}");
-
-	label.assign(A1->label);
-	label_tex.assign(A1->label_tex);
-	label.assign("_");
-	label_tex.assign(",");
-	label.assign(A2->label);
-	label_tex.assign(A2->label_tex);
-	label.append(str1);
-	label_tex.append(str2);
-
-
-	PA = NEW_OBJECT(induced_actions::product_action);
-	PA->init(A1, A2, f_use_projections, verbose_level);
-	f_has_subaction = true;
-	subaction = NULL;
-	type_G = product_action_t;
-	G.product_action_data = PA;
-	f_allocated = true;
-
-	f_has_strong_generators = false;
-
-	degree = PA->degree;
-
-	//base_len = 0;
-
-	ptr = NEW_OBJECT(action_pointer_table);
-	ptr->init_function_pointers_induced_action();
-
-	//Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	//Stabilizer_chain->allocate_base_data(this, 0);
-	//allocate_base_data(0);
-
-
-	elt_size_in_int = PA->elt_size_in_int;
-	coded_elt_size_in_char = PA->coded_elt_size_in_char;
-
-	make_element_size = A1->make_element_size + A2->make_element_size;
-
-	allocate_element_data();
-
-	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
-	set_base_len(A1->base_len() + A2->base_len());
-	if (f_use_projections) {
-		for (i = 0; i < A1->base_len(); i++) {
-			base_i(i) = A1->base_i(i);
-		}
-		for (i = 0; i < A2->base_len(); i++) {
-			base_i(A1->base_len() + i) = A1->degree + A2->base_i(i);
-		}
-	}
-	else {
-		for (i = 0; i < A1->base_len(); i++) {
-			base_i(i) = A1->base_i(i) * A2->degree;
-		}
-		for (i = 0; i < A2->base_len(); i++) {
-			base_i(A1->base_len() + i) = A2->base_i(i);
-		}
-	}
-
-	if (f_vv) {
-		cout << "make_element_size=" << make_element_size << endl;
-		cout << "base_len=" << base_len() << endl;
-	}
-	if (f_v) {
-		cout << "induced_action::setup_product_action finished" << endl;
-		print_info();
-	}
-}
-#endif
-
 
 action *induced_action::induced_action_on_homogeneous_polynomials(
 	ring_theory::homogeneous_polynomial_domain *HPD,
@@ -2739,17 +2165,8 @@ action *induced_action::induced_action_on_homogeneous_polynomials(
 
 	OnHP = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_homog_poly_%d_%d",
-			HPD->nb_variables, HPD->degree);
-	snprintf(str2, 1000, " {\\rm OnHomPoly}_{%d,%d}",
-			HPD->nb_variables, HPD->degree);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_on_homog_poly_" + std::to_string(HPD->nb_variables) + "_" + std::to_string(HPD->degree);
+	A->label_tex = A_old->label_tex + " {\\rm OnHomPoly}_{" + std::to_string(HPD->nb_variables) + "," + std::to_string(HPD->degree) + "}";
 
 
 	if (f_v) {
@@ -2846,17 +2263,8 @@ action *induced_action::induced_action_on_homogeneous_polynomials_given_by_equat
 
 	OnHP = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 
-	char str1[1000];
-	char str2[1000];
-	snprintf(str1, 1000, "_on_homog_poly_%d_%d_eqn%d",
-			HPD->nb_variables, HPD->degree, nb_equations);
-	snprintf(str2, 1000, " {\\rm OnHomPolyEqn}_{%d,%d%d}",
-			HPD->nb_variables, HPD->degree, nb_equations);
-
-	A->label.assign(A_old->label);
-	A->label.append(str1);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(str2);
+	A->label = A_old->label + "_on_homog_poly_" + std::to_string(HPD->nb_variables) + "_" + std::to_string(HPD->degree) + "_eqn" + std::to_string(nb_equations);
+	A->label_tex = A_old->label_tex + " {\\rm OnHomPolyEqn}_{" + std::to_string(HPD->nb_variables) + "," + std::to_string(HPD->degree)  + "," + std::to_string(nb_equations) + "}";
 
 
 	if (f_v) {

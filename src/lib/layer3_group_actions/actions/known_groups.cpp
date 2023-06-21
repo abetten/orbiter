@@ -1206,14 +1206,9 @@ void known_groups::init_affine_group(
 	FREE_int(gens);
 	FREE_lint(given_base);
 
-	char str1[1000];
-	char str2[1000];
 
-	snprintf(str1, sizeof(str1), "AGL_%d_%d", n, q);
-	snprintf(str2, sizeof(str2), "AGL(%d,%d)", n, q);
-
-	A->label.assign(str1);
-	A->label_tex.assign(str2);
+	A->label = "AGL_" + std::to_string(n) + "_" + std::to_string(q);
+	A->label_tex = "AGL(" + std::to_string(n) + "," + std::to_string(n) + ")";
 
 	if (f_v) {
 		cout << "known_groups::init_affine_group done" << endl;
@@ -1274,14 +1269,9 @@ void known_groups::init_symmetric_group(
 	FREE_int(gens);
 	FREE_lint(given_base);
 
-	char str1[1000];
-	char str2[1000];
 
-	snprintf(str1, sizeof(str1), "Sym_%d", degree);
-	snprintf(str2, sizeof(str2), "Sym(%d)", degree);
-
-	A->label.assign(str1);
-	A->label_tex.assign(str2);
+	A->label = "Sym_" + std::to_string(degree);
+	A->label_tex = "Sym(" + std::to_string(degree) + ")";
 
 	if (f_v) {
 		cout << "known_groups::init_symmetric_group done" << endl;
@@ -1342,14 +1332,8 @@ void known_groups::init_cyclic_group(
 	FREE_int(gens);
 	FREE_lint(given_base);
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "C_%d", degree);
-	snprintf(str2, sizeof(str2), "C(%d)", degree);
-
-	A->label.assign(str1);
-	A->label_tex.assign(str2);
+	A->label = "C_" + std::to_string(degree);
+	A->label_tex = "C(" + std::to_string(degree) + ")";
 
 	if (f_v) {
 		cout << "known_groups::init_cyclic_group done" << endl;
@@ -1408,14 +1392,8 @@ void known_groups::init_identity_group(
 	FREE_int(gens);
 	FREE_lint(given_base);
 
-	char str1[1000];
-	char str2[1000];
-
-	snprintf(str1, sizeof(str1), "Id_%d", degree);
-	snprintf(str2, sizeof(str2), "Id(%d)", degree);
-
-	A->label.assign(str1);
-	A->label_tex.assign(str2);
+	A->label = "Id_" + std::to_string(degree);
+	A->label_tex = "Id(" + std::to_string(degree) + ")";
 
 
 	if (f_v) {
@@ -1843,8 +1821,6 @@ void known_groups::init_permutation_representation(
 {
 	int f_v = (verbose_level >= 1);
 	groups::permutation_representation *P;
-	char str1[2000];
-	char str2[2000];
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_representation" << endl;
@@ -1909,14 +1885,10 @@ void known_groups::init_permutation_representation(
 		Int_vec_copy(W->the_transversal_length,
 				A->get_transversal_length(), A->base_len());
 
-		snprintf(str1, sizeof(str1), "_induced%d_prev", degree);
-		snprintf(str2, sizeof(str2), " induced%d prev", degree);
 
-		A->label.assign(P->label);
-		A->label.assign(P->label_tex);
+		A->label = P->label + "_induced" + std::to_string(degree) + "_prev";
+		A->label_tex = P->label_tex + "\\_induced" + std::to_string(degree) + "\\_prev";
 
-		A->label.append(str1);
-		A->label_tex.append(str2);
 	}
 	else {
 		A->f_is_linear = false;
@@ -1924,15 +1896,8 @@ void known_groups::init_permutation_representation(
 		A->low_level_point_size = 0;
 		A->degree = degree;
 
-		snprintf(str1, sizeof(str1), "_induced%d", degree);
-		snprintf(str2, sizeof(str2), " induced%d", degree);
-
-		A->label.assign(P->label);
-		A->label_tex.assign(P->label_tex);
-
-
-		A->label.append(str1);
-		A->label_tex.append(str2);
+		A->label = P->label + "_induced" + std::to_string(degree);
+		A->label_tex = P->label_tex + "\\_induced" + std::to_string(degree);
 
 	}
 
@@ -2096,46 +2061,6 @@ void known_groups::init_orthogonal_group_with_O(
 			O->Quadratic_form->epsilon, O->Quadratic_form->n, q,
 			f_semilinear, verbose_level - 1);
 
-#if 0
-	char str1[1000];
-	char str2[1000];
-
-	if (f_semilinear) {
-		if (O->Quadratic_form->epsilon == 1) {
-			snprintf(str1, sizeof(str1), "PGGOp_%d_%d", O->Quadratic_form->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^+(%d,%d)", O->Quadratic_form->n, q);
-		}
-		else if (O->Quadratic_form->epsilon == -1) {
-			snprintf(str1, sizeof(str1), "PGGOm_%d_%d", O->Quadratic_form->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^-(%d,%d)", O->Quadratic_form->n, q);
-		}
-		else {
-			snprintf(str1, sizeof(str1), "PGGO_%d_%d", O->Quadratic_form->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}(%d,%d)", O->Quadratic_form->n, q);
-		}
-	}
-	else {
-		if (O->Quadratic_form->epsilon == 1) {
-			snprintf(str1, sizeof(str1), "PGOp_%d_%d", O->Quadratic_form->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGO}^+(%d,%d)", O->Quadratic_form->n, q);
-		}
-		else if (O->Quadratic_form->epsilon == -1) {
-			snprintf(str1, sizeof(str1), "PGOm_%d_%d", O->Quadratic_form->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGO}^-(%d,%d)", O->Quadratic_form->n, q);
-		}
-		else {
-			snprintf(str1, sizeof(str1), "PGO_%d_%d", O->Quadratic_form->n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGO}(%d,%d)", O->Quadratic_form->n, q);
-		}
-	}
-
-	//algebra_global AG;
-
-
-
-	A->label.assign(str1);
-	A->label_tex.assign(str2);
-#endif
 
 	if (f_basis) {
 		ring_theory::longinteger_object target_go;

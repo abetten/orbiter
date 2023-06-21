@@ -31,7 +31,6 @@ void spread_classify::print_isomorphism_type(
 	int f_v = (verbose_level >= 1);
 	string fname;
 	string fname_klein;
-	char str[1000];
 
 
 
@@ -40,15 +39,10 @@ void spread_classify::print_isomorphism_type(
 		cout << "spread_classify::print_isomorphism_type" << endl;
 	}
 
-	fname.assign(Iso->prefix);
-	snprintf(str, sizeof(str), "_%d.tex", iso_cnt);
-	fname.append(str);
+	fname = Iso->prefix + "_" + std::to_string(iso_cnt) + ".tex";
 
 
-
-	fname_klein.assign(Iso->prefix);
-	snprintf(str, sizeof(str), "_%d_klein.tex", iso_cnt);
-	fname_klein.append(str);
+	fname_klein = Iso->prefix + "_" + std::to_string(iso_cnt) + "_klein.tex";
 
 	
 	int save_longinteger_f_print_scientific = orbiter_kernel_system::Orbiter->longinteger_f_print_scientific;
@@ -310,9 +304,9 @@ void spread_classify::save_klein_invariants(
 		}
 	}
 
-	char fname[1000];
+	string fname;
 	
-	snprintf(fname, sizeof(fname), "%s%d_klein_invariant.bin", prefix, iso_cnt);
+	fname = prefix + std::to_string(iso_cnt) + "_klein_invariant.bin";
 	v.save_file(fname);
 
 	delete [] R;
@@ -417,7 +411,6 @@ void spread_classify::klein(
 		cout << "we will draw an incidence picture" << endl;
 		
 		string fname_pic;
-		char str[1000];
 		geometry::incidence_structure *I;
 		data_structures::partitionstack *Stack;
 		
@@ -429,9 +422,7 @@ void spread_classify::klein(
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
 
-		fname_pic.assign(Iso->prefix);
-		snprintf(str, sizeof(str), "_%d_planes.tex", iso_cnt);
-		fname_pic.append(str);
+		fname_pic = Iso->prefix + "_" + std::to_string(iso_cnt) + "_planes.tex";
 
 		{
 			ofstream fp_pic(fname_pic);
@@ -460,18 +451,12 @@ void spread_classify::klein(
 
 		I->compute_TDO_safe(*Stack, depth, verbose_level + 2);
 		
-		char str[1000];
 		string fname_row_scheme;
 		string fname_col_scheme;
 
 
-		fname_row_scheme.assign(Iso->prefix);
-		snprintf(str, sizeof(str), "_%d_planes_row_scheme.tex", iso_cnt);
-		fname_row_scheme.append(str);
-
-		fname_col_scheme.assign(Iso->prefix);
-		snprintf(str, sizeof(str), "_%d_planes_col_scheme.tex", iso_cnt);
-		fname_col_scheme.append(str);
+		fname_row_scheme = Iso->prefix + "_" + std::to_string(iso_cnt) + "_planes_row_scheme.tex";
+		fname_col_scheme = Iso->prefix + "_" + std::to_string(iso_cnt) + "_planes_col_scheme.tex";
 
 		{
 			ofstream fp_row_scheme(fname_row_scheme);
@@ -541,41 +526,39 @@ void spread_classify::report2(
 		isomorph::isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 
 	if (f_v) {
 		cout << "spread_classify::report2" << endl;
 	}
-	snprintf(fname, sizeof(fname), "report_Spreads_q%d_k%d.tex", SD->q, SD->k);
+	fname = "report_Spreads_q" + std::to_string(SD->q) + "_k" + std::to_string(SD->k) + ".tex";
 
 	{
-	ofstream f(fname);
-	int f_book = true;
-	int f_title = true;
-	char str[1000];
-	string title, author, extra_praeamble;
+		ofstream f(fname);
+		int f_book = true;
+		int f_title = true;
+		string title, author, extra_praeamble;
 
-	int f_toc = true;
-	int f_landscape = false;
-	int f_12pt = false;
-	int f_enlarged_page = true;
-	int f_pagenumbers = true;
-	l1_interfaces::latex_interface L;
+		int f_toc = true;
+		int f_landscape = false;
+		int f_12pt = false;
+		int f_enlarged_page = true;
+		int f_pagenumbers = true;
+		l1_interfaces::latex_interface L;
 
-	snprintf(str, sizeof(str), "$%d$-Spreads of PG($%d,%d$)", SD->k - 1, 2 * SD->k - 1, SD->q);
-	title.assign(str);
-	author.assign("Orbiter");
+		title = "$" + std::to_string(SD->k - 1) + "$-Spreads of PG($" + std::to_string(2 * SD->k - 1) + "," + std::to_string(SD->q) + "$)";
+		author = "Orbiter";
 
-	cout << "Writing file " << fname << " with "
-			<< Iso.Folding->Reps->count << " spreads:" << endl;
-	L.head(f, f_book, f_title,
-		title, author, 
-		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers, 
-		extra_praeamble /* extra_praeamble */);
+		cout << "Writing file " << fname << " with "
+				<< Iso.Folding->Reps->count << " spreads:" << endl;
+		L.head(f, f_book, f_title,
+			title, author,
+			f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers,
+			extra_praeamble /* extra_praeamble */);
 
-	report3(Iso, f, verbose_level);
+		report3(Iso, f, verbose_level);
 
-	L.foot(f);
+		L.foot(f);
 
 	}
 	orbiter_kernel_system::file_io Fio;
@@ -1065,7 +1048,7 @@ void spread_classify::all_cooperstein_thas_quotients(
 {
 	int f_v = (verbose_level >= 1);
 	int h;
-	char fname[1000];
+	string fname;
 	int cnt = 0;
 
 	if (f_v) {
@@ -1076,7 +1059,7 @@ void spread_classify::all_cooperstein_thas_quotients(
 	//Iso.setup_and_open_solution_database(verbose_level - 1);
 
 
-	snprintf(fname, sizeof(fname), "quotients_q%d.txt", SD->order);
+	fname = "quotients_q" + std::to_string(SD->order) + ".txt";
 	{
 		ofstream f(fname);
 
@@ -1289,13 +1272,11 @@ void spread_classify::cooperstein_thas_quotients(
 
 
 
-		char str[1000];
-		snprintf(str, sizeof(str), "quotient_q%d_iso%d_nb%d_orbit_length%d.txt",
-				NT.i_power_j(SD->q, k), h, u, orbit_length);
+		string fname = "quotient_q"
+				+ std::to_string(NT.i_power_j(SD->q, k)) + "_iso" + std::to_string(h)
+				+ "_nb" + std::to_string(u)
+				+ "_orbit_length" + std::to_string(orbit_length) + ".txt";
 
-		string fname;
-
-		fname.assign(str);
 		Fio.write_set_to_file(fname, data2, order, 0 /* verbose_level*/);
 		cnt++;
 

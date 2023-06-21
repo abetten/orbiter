@@ -3367,11 +3367,11 @@ void file_io::read_incidence_by_row_ranks_file(
 	}
 
 	file_io Fio;
-	int sz;
+	int file_sz;
 
-	sz = Fio.file_size(inc_file_name);
+	file_sz = Fio.file_size(inc_file_name);
 
-	buf = NEW_char(sz);
+	buf = NEW_char(file_sz);
 
 	{
 		ifstream f(inc_file_name);
@@ -3379,7 +3379,7 @@ void file_io::read_incidence_by_row_ranks_file(
 		if (f.eof()) {
 			exit(1);
 		}
-		f.getline(buf, sz, '\n');
+		f.getline(buf, file_sz, '\n');
 		if (strlen(buf) == 0) {
 			exit(1);
 		}
@@ -3392,18 +3392,20 @@ void file_io::read_incidence_by_row_ranks_file(
 		X = NEW_int(m);
 		int *Row;
 		combinatorics::combinatorics_domain Combi;
-		int sz;
 
-		Row = NEW_int(m);
+		Row = NEW_int(n);
 		cnt = 0;
 		while (true) {
 			if (f.eof()) {
 				break;
 			}
-			f.getline(buf, sz, '\n');
+			f.getline(buf, file_sz, '\n');
 			if (strlen(buf) == 0) {
 				continue;
 			}
+
+
+			cout << "read line: " << buf << endl;
 
 			// check for comment line:
 			if (buf[0] == '#') {
@@ -3414,7 +3416,7 @@ void file_io::read_incidence_by_row_ranks_file(
 
 			ST.s_scan_int(&p_buf, &a);
 			if (f_vv) {
-				//cout << cnt << " : " << a << " ";
+				cout << cnt << " : " << a << " ";
 			}
 			if (a == -1) {
 				cout << "file_io::read_incidence_file: "
@@ -3422,11 +3424,15 @@ void file_io::read_incidence_by_row_ranks_file(
 					<< cnt << " solutions" << endl;
 				break;
 			}
-			sz = a;
 
-			//cout << "reading " << nb_inc << " incidences" << endl;
-			for (h = 0; h < sz; h++) {
-				ST.s_scan_int(&p_buf, &a);
+			cout << "reading row consisting of " << m << " entries" << endl;
+			for (h = 0; h < m; h++) {
+				if (h == 0) {
+					;
+				}
+				else {
+					ST.s_scan_int(&p_buf, &a);
+				}
 				X[h] = a;
 				//M[a] = 1;
 			}
@@ -3435,12 +3441,23 @@ void file_io::read_incidence_by_row_ranks_file(
 			vector<int> v;
 			int u;
 
-			for (h = 0; h < sz; h++) {
+			for (h = 0; h < m; h++) {
 				Combi.unrank_k_subset(X[h], Row, n, r);
+				cout << "row " << h << " / " << m << " : " << X[h] << " : ";
+				Int_vec_print(cout, Row, r);
+				cout << endl;
 				for (u = 0; u < r; u++) {
 					v.push_back(h * n + Row[u]);
 				}
 			}
+			cout << "geo " << cnt << " has " << v.size() << " incidences: ";
+			for (h = 0; h < v.size(); h++) {
+				cout << v[h];
+				if (h < v.size() - 1) {
+					cout << ",";
+				}
+			}
+			cout << endl;
 			Geos.push_back(v);
 			cnt++;
 		}

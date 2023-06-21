@@ -826,7 +826,6 @@ void sims::report(
 	ost << "$$" << endl;
 
 	string fname_base;
-	char str[1000];
 
 	int orbit_idx;
 
@@ -839,10 +838,7 @@ void sims::report(
 
 		if (orbit_len[orbit_idx] < 1000) {
 
-			snprintf(str, sizeof(str), "_sims_%d", orbit_idx);
-
-			fname_base.assign(prefix);
-			fname_base.append(str);
+			fname_base = prefix + "_sims_" + std::to_string(orbit_idx);
 
 			graph_theory::layered_graph *LG;
 			if (f_v) {

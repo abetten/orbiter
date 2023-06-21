@@ -501,12 +501,8 @@ void desarguesian_spread::create_latex_report(
 		string extra_praeamble;
 
 
-		char str[1000];
-
-		snprintf(str, 1000, "Desarguesian_Spread_%d_%d.tex", n - 1, q);
-		fname.assign(str);
-		snprintf(str, 1000, "Desarguesian Spread in  ${\\rm PG}(%d,%d)$", n - 1, q);
-		title.assign(str);
+		fname = "Desarguesian_Spread_" + std::to_string(n - 1) + "_" + std::to_string(q) + ".tex";
+		title = "Desarguesian Spread in  ${\\rm PG}(" + std::to_string(n - 1) + "," + std::to_string(q) + ")$";
 
 
 

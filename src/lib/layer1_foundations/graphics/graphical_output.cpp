@@ -253,15 +253,13 @@ void graphical_output::do_domino_portrait(int D, int s,
 	//print_assignment(hd);
 
 
-	fname.assign(photo_label);
+	fname = photo_label + "_solution_" + std::to_string(0);
 
-	char str[1000];
-	snprintf(str, sizeof(str), "_solution_%d", 0 /* hd */);
-	fname.append(str);
 
 
 	if (f_v) {
-		cout << "graphical_output::do_domino_portrait calling draw_domino" << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"calling draw_domino_matrix" << endl;
 	}
 
 	int cost;
@@ -274,28 +272,34 @@ void graphical_output::do_domino_portrait(int D, int s,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "graphical_output::do_domino_portrait after draw_domino" << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"after draw_domino_matrix" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "graphical_output::do_domino_portrait calling prepare_latex" << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"calling prepare_latex" << endl;
 	}
 	Domino_Assignment->prepare_latex(photo_label, verbose_level);
 	if (f_v) {
-		cout << "graphical_output::do_domino_portrait after prepare_latex" << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"after prepare_latex" << endl;
 	}
 
 	if (f_v) {
-		cout << "graphical_output::do_domino_portrait nb_changes=" << Domino_Assignment->nb_changes << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"nb_changes=" << Domino_Assignment->nb_changes << endl;
 	}
 	if (f_v) {
-		cout << "graphical_output::do_domino_portrait before classify_changes_by_type" << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"before classify_changes_by_type" << endl;
 	}
 
 	Domino_Assignment->classify_changes_by_type(verbose_level);
 	if (f_v) {
-		cout << "graphical_output::do_domino_portrait after classify_changes_by_type" << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"after classify_changes_by_type" << endl;
 	}
 
 	int *Cost;
@@ -309,12 +313,15 @@ void graphical_output::do_domino_portrait(int D, int s,
 	fname_cost.append("_cost.csv");
 
 	if (f_v) {
-		cout << "graphical_output::do_domino_portrait before get_cost_function" << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"before get_cost_function" << endl;
 	}
 	Domino_Assignment->get_cost_function(Cost, len, verbose_level);
 	if (f_v) {
-		cout << "graphical_output::do_domino_portrait after get_cost_function" << endl;
-		cout << "graphical_output::do_domino_portrait after get_cost_function len=" << len << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"after get_cost_function" << endl;
+		cout << "graphical_output::do_domino_portrait "
+				"after get_cost_function len=" << len << endl;
 	}
 
 	string label;
@@ -323,7 +330,8 @@ void graphical_output::do_domino_portrait(int D, int s,
 	Fio.int_vec_write_csv(Cost, len, fname_cost, label);
 
 	if (f_v) {
-		cout << "Written file " << fname_cost << " of size " << Fio.file_size(fname_cost) << endl;
+		cout << "Written file " << fname_cost
+				<< " of size " << Fio.file_size(fname_cost) << endl;
 	}
 
 
@@ -332,7 +340,8 @@ void graphical_output::do_domino_portrait(int D, int s,
 	}
 }
 
-void graphical_output::do_create_points_on_quartic(double desired_distance, int verbose_level)
+void graphical_output::do_create_points_on_quartic(
+		double desired_distance, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -511,11 +520,12 @@ void graphical_output::do_create_points_on_parabola(
 			nb++;
 		}
 		orbiter_kernel_system::file_io Fio;
-		char str[1000];
 		string fname;
 
-		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_points.csv", N, a, b, c);
-		fname.assign(str);
+		fname = "parabola_N" + std::to_string(N) + "_"
+				+ std::to_string(a) + "_"
+				+ std::to_string(b) + "_"
+				+ std::to_string(c) + "_points.csv";
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 2);
 
@@ -542,10 +552,12 @@ void graphical_output::do_create_points_on_parabola(
 			nb++;
 		}
 		orbiter_kernel_system::file_io Fio;
-		char str[1000];
+
 		string fname;
-		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_center.csv", N, a, b, c);
-		fname.assign(str);
+		fname = "parabola_N" + std::to_string(N) + "_"
+				+ std::to_string(a) + "_"
+				+ std::to_string(b) + "_"
+				+ std::to_string(c) + "_projection_from_center.csv";
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
 
@@ -581,10 +593,11 @@ void graphical_output::do_create_points_on_parabola(
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		char str[1000];
 		string fname;
-		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_sphere.csv", N, a, b, c);
-		fname.assign(str);
+		fname = "parabola_N" + std::to_string(N) + "_"
+				+ std::to_string(a) + "_"
+				+ std::to_string(b) + "_"
+				+ std::to_string(c) + "_projection_from_sphere.csv";
 
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
@@ -618,10 +631,11 @@ void graphical_output::do_create_points_on_parabola(
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		char str[1000];
 		string fname;
-		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_points_projected.csv", N, a, b, c);
-		fname.assign(str);
+		fname = "parabola_N" + std::to_string(N) + "_"
+				+ std::to_string(a) + "_"
+				+ std::to_string(b) + "_"
+				+ std::to_string(c) + "_points_projected.csv";
 
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 3);
@@ -709,10 +723,8 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		char str[1000];
 		string fname;
-		snprintf(str, 1000, "function_%s_N%d_points.csv", curve_label.c_str(), N);
-		fname.assign(str);
+		fname = "function_" + curve_label + "_N" + std::to_string(N) + "_points.csv";
 
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, nb_dimensions);
@@ -752,10 +764,8 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		char str[1000];
 		string fname;
-		snprintf(str, 1000, "function_%s_N%d_points_plus.csv", curve_label.c_str(), N);
-		fname.assign(str);
+		fname = "function_" + curve_label + "_N" + std::to_string(N) + "_points_plus.csv";
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, n);
 
@@ -888,11 +898,9 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 				}
 			mp_graphics G;
 
-			char str[1000];
-			string fname;
 
-			snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, i);
-			fname.assign(str);
+			string fname;
+			fname = Descr->fname + "_" + std::to_string(Descr->number) + "_" + std::to_string(i);
 
 			G.init(fname, Opt, verbose_level);
 			//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
@@ -918,11 +926,9 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			for (i = 0; i < 4; i++, frame++) {
 				mp_graphics G;
 
-				char str[1000];
 				string fname;
+				fname = Descr->fname + "_" + std::to_string(Descr->number) + "_" + std::to_string(i);
 
-				snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
-				fname.assign(str);
 
 				G.init(fname, Opt, verbose_level);
 				//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
@@ -945,11 +951,9 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			}
 			mp_graphics G;
 
-			char str[1000];
 			string fname;
+			fname = Descr->fname + "_" + std::to_string(Descr->number) + "_" + std::to_string(i);
 
-			snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
-			fname.assign(str);
 
 			G.init(fname, Opt, verbose_level);
 			//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
@@ -973,11 +977,8 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			}
 			mp_graphics G;
 
-			char str[1000];
 			string fname;
-
-			snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
-			fname.assign(str);
+			fname = Descr->fname + "_" + std::to_string(Descr->number) + "_" + std::to_string(i);
 
 			G.init(fname, Opt, verbose_level);
 			//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
@@ -1000,11 +1001,8 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			}
 			mp_graphics G;
 
-			char str[1000];
 			string fname;
-
-			snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
-			fname.assign(str);
+			fname = Descr->fname + "_" + std::to_string(Descr->number) + "_" + std::to_string(i);
 
 			G.init(fname, Opt, verbose_level);
 			//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
@@ -1027,11 +1025,8 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			for (i = 0; i <= 7; i++, frame++) {
 				mp_graphics G;
 
-				char str[1000];
 				string fname;
-
-				snprintf(str, sizeof(str), "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
-				fname.assign(str);
+				fname = Descr->fname + "_" + std::to_string(Descr->number) + "_" + std::to_string(i);
 
 				G.init(fname, Opt, verbose_level);
 				//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
@@ -1105,7 +1100,8 @@ void graphical_output::draw_projective(mp_graphics &G,
 	orbiter_kernel_system::numerics Num;
 
 
-	cout << "draw_projective number=" << number << " animate_step=" << animate_step << " animate_nb_of_steps=" << animate_nb_of_steps << endl;
+	cout << "draw_projective number=" << number
+			<< " animate_step=" << animate_step << " animate_nb_of_steps=" << animate_nb_of_steps << endl;
 
 	if (number == 1 || number == 3) {
 		x_min = -10;

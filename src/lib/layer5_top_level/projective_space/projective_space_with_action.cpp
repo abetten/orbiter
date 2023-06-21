@@ -405,7 +405,8 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	}
 
 	if (P->Subspaces->n < 3) {
-		cout << "projective_space_with_action::report_fixed_points_lines_and_planes P->Subspaces->n < 3" << endl;
+		cout << "projective_space_with_action::report_fixed_points_lines_and_planes "
+				"P->Subspaces->n < 3" << endl;
 		exit(1);
 	}
 	geometry::projective_space *P3;
@@ -589,7 +590,8 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 		groups::schreier *Sch;
 
 
-		A2 = A->Induced_action->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
+		A2 = A->Induced_action->induced_action_on_grassmannian(
+				3, 0 /* verbose_level*/);
 
 		Sch = NEW_OBJECT(groups::schreier);
 		AcGl.all_point_orbits_from_single_generator(A2,
@@ -625,7 +627,6 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 #if 0
 	int i;
 	long int a;
-	char str[1000];
 
 	projective_space_object_classifier_description *Descr;
 	classification_of_objects *Classifier;
@@ -639,7 +640,7 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
-		snprintf(str, sizeof(str), "%ld", a);
+		str += std::to_string(a);
 		Descr->Data->input_string[Descr->Data->nb_inputs].append(str);
 		if (i < set_sz - 1) {
 			Descr->Data->input_string[Descr->Data->nb_inputs].append(",");
@@ -707,8 +708,8 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 
 	if (f_v) {
-		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG verbose_level="
-				<< verbose_level << endl;
+		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 
@@ -745,7 +746,8 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 
 			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG f_decomposition_by_element" << endl;
+				cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG "
+						"f_decomposition_by_element" << endl;
 			}
 
 			int *Elt;
@@ -827,11 +829,6 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup "
 				"after H_LG->linear_group_init" << endl;
 	}
-
-
-	//actions::action *A;
-
-	//A = H_LG->A2;
 
 
 	string fname;
@@ -1026,7 +1023,8 @@ void projective_space_with_action::canonical_form_of_code(
 	COAD.Canonical_form_PG_Descr = Canonical_form_codes_Descr;
 
 	COAD.f_report = true;
-	COAD.Classification_of_objects_report_options = NEW_OBJECT(combinatorics::classification_of_objects_report_options);
+	COAD.Classification_of_objects_report_options =
+			NEW_OBJECT(combinatorics::classification_of_objects_report_options);
 	COAD.Classification_of_objects_report_options->f_prefix = true;
 	COAD.Classification_of_objects_report_options->prefix.assign(COAD.Canonical_form_PG_Descr->label);
 	COAD.Classification_of_objects_report_options->f_export_flag_orbits = true;
@@ -1344,7 +1342,8 @@ void projective_space_with_action::cheat_sheet(
 
 
 			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG before A->report" << endl;
+				cout << "projective_space_with_action::do_cheat_sheet_PG "
+						"before A->report" << endl;
 			}
 
 			A->report(ost, A->f_has_sims, A->Sims,
@@ -1353,17 +1352,23 @@ void projective_space_with_action::cheat_sheet(
 					verbose_level);
 
 			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG after PA->A->report" << endl;
+				cout << "projective_space_with_action::do_cheat_sheet_PG "
+						"after A->report" << endl;
 			}
 
 			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG before PA->P->report" << endl;
+				cout << "projective_space_with_action::do_cheat_sheet_PG "
+						"before P->Reporting->report" << endl;
 			}
 
 
 
 			P->Reporting->report(ost, O, verbose_level);
 
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG "
+						"after P->Reporting->report" << endl;
+			}
 
 			if (n == 3) {
 
@@ -1383,12 +1388,6 @@ void projective_space_with_action::cheat_sheet(
 
 			}
 
-
-
-
-			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG after PP->report" << endl;
-			}
 
 
 			L.foot(ost);
@@ -1529,9 +1528,6 @@ void projective_space_with_action::report_fixed_objects(
 		std::string &fname_latex, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int i, j, cnt;
-	//int v[4];
-	//file_io Fio;
 
 	if (f_v) {
 		cout << "projective_space_with_action::report_fixed_objects" << endl;
@@ -1609,174 +1605,6 @@ void projective_space_with_action::report_fixed_objects(
 // globals:
 // #############################################################################
 
-
-#if 0
-
-void OiPA_encode(void *extra_data,
-		long int *&encoding, int &encoding_sz, void *global_data)
-{
-	//cout << "OiPA_encode" << endl;
-	object_in_projective_space_with_action *OiPA;
-	object_with_canonical_form *OwCF;
-
-	OiPA = (object_in_projective_space_with_action *) extra_data;
-	OwCF = OiPA->OwCF;
-	//OiP->print(cout);
-	OwCF->encode_object(encoding, encoding_sz, 1 /* verbose_level*/);
-	//cout << "OiPA_encode done" << endl;
-
-}
-
-void OiPA_group_order(void *extra_data,
-		longinteger_object &go, void *global_data)
-{
-	//cout << "OiPA_group_order" << endl;
-	object_in_projective_space_with_action *OiPA;
-	//object_in_projective_space *OiP;
-
-	OiPA = (object_in_projective_space_with_action *) extra_data;
-	//OiP = OiPA->OiP;
-	go.create(OiPA->ago, __FILE__, __LINE__);
-	//OiPA->Aut_gens->group_order(go);
-	//cout << "OiPA_group_order done" << endl;
-
-}
-#endif
-
-
-
-#if 0
-void compute_ago_distribution(
-	classify_bitvectors *CB, tally *&C_ago, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "compute_ago_distribution" << endl;
-	}
-	long int *Ago;
-	int i;
-
-	Ago = NEW_lint(CB->nb_types);
-	for (i = 0; i < CB->nb_types; i++) {
-		object_in_projective_space_with_action *OiPA;
-
-		OiPA = (object_in_projective_space_with_action *)
-				CB->Type_extra_data[i];
-		Ago[i] = OiPA->ago; //OiPA->Aut_gens->group_order_as_lint();
-	}
-	C_ago = NEW_OBJECT(tally);
-	C_ago->init_lint(Ago, CB->nb_types, false, 0);
-	FREE_lint(Ago);
-	if (f_v) {
-		cout << "compute_ago_distribution done" << endl;
-	}
-}
-
-void compute_ago_distribution_permuted(
-	classify_bitvectors *CB, tally *&C_ago, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "compute_ago_distribution_permuted" << endl;
-	}
-	long int *Ago;
-	int i;
-
-	Ago = NEW_lint(CB->nb_types);
-	for (i = 0; i < CB->nb_types; i++) {
-		object_in_projective_space_with_action *OiPA;
-
-		OiPA = (object_in_projective_space_with_action *)
-				CB->Type_extra_data[CB->perm[i]];
-		Ago[i] = OiPA->ago; //OiPA->Aut_gens->group_order_as_lint();
-	}
-	C_ago = NEW_OBJECT(tally);
-	C_ago->init_lint(Ago, CB->nb_types, false, 0);
-	FREE_lint(Ago);
-	if (f_v) {
-		cout << "compute_ago_distribution_permuted done" << endl;
-	}
-}
-
-void compute_and_print_ago_distribution(std::ostream &ost,
-	classify_bitvectors *CB, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "compute_and_print_ago_distribution" << endl;
-	}
-	tally *C_ago;
-	compute_ago_distribution(CB, C_ago, verbose_level);
-	ost << "ago distribution: " << endl;
-	ost << "$$" << endl;
-	C_ago->print_naked_tex(ost, true /* f_backwards */);
-	ost << endl;
-	ost << "$$" << endl;
-	FREE_OBJECT(C_ago);
-}
-
-void compute_and_print_ago_distribution_with_classes(std::ostream &ost,
-	classify_bitvectors *CB, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-	latex_interface L;
-
-	if (f_v) {
-		cout << "compute_and_print_ago_distribution_with_classes" << endl;
-	}
-	tally *C_ago;
-	compute_ago_distribution_permuted(CB, C_ago, verbose_level);
-	ost << "Ago distribution: " << endl;
-	ost << "$$" << endl;
-	C_ago->print_naked_tex(ost, true /* f_backwards */);
-	ost << endl;
-	ost << "$$" << endl;
-	set_of_sets *SoS;
-	int *types;
-	int nb_types;
-
-	SoS = C_ago->get_set_partition_and_types(types,
-			nb_types, verbose_level);
-
-
-	// go backwards to show large group orders first:
-	for (i = SoS->nb_sets - 1; i >= 0; i--) {
-		ost << "Group order $" << types[i]
-			<< "$ appears for the following $" << SoS->Set_size[i]
-			<< "$ classes: $" << endl;
-		L.lint_set_print_tex(ost, SoS->Sets[i], SoS->Set_size[i]);
-		ost << "$\\\\" << endl;
-		//int_vec_print_as_matrix(ost, SoS->Sets[i],
-		//SoS->Set_size[i], 10 /* width */, true /* f_tex */);
-		//ost << "$$" << endl;
-
-	}
-
-	FREE_int(types);
-	FREE_OBJECT(SoS);
-	FREE_OBJECT(C_ago);
-}
-#endif
-
-#if 0
-static int table_of_sets_compare_func(void *data, int i,
-		void *search_object,
-		void *extra_data)
-{
-	long int *Data = (long int *) data;
-	long int *p = (long int *) extra_data;
-	long int len = p[0];
-	int ret;
-	data_structures::sorting Sorting;
-
-	ret = Sorting.lint_vec_compare(Data + i * len, (long int *) search_object, len);
-	return ret;
-}
-#endif
 
 
 

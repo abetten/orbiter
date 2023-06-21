@@ -251,12 +251,10 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 			string fname_out;
 
-			fname_out.assign(Descr->split_input_fname);
+			fname_out = Descr->split_input_fname;
 			ST.chop_off_extension(fname_out);
 
-			char str[1000];
-			snprintf(str, sizeof(str), "_case_%03d.bin", c);
-			fname_out.append(str);
+			fname_out += "_case_" + std::to_string(c) + ".bin";
 
 
 			Subgraph->save(fname_out, verbose_level - 2);
@@ -298,9 +296,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			fname_out.assign(CG->label);
 			//ST.chop_off_extension(fname_out);
 
-			char str[1000];
-			snprintf(str, sizeof(str), "_case_%03d.bin", c);
-			fname_out.append(str);
+			fname_out += "_case_" + std::to_string(c) + ".bin";
 
 
 			Subgraph->save(fname_out, verbose_level - 2);

@@ -828,35 +828,9 @@ void surface_create::create_Eckardt_surface(
 	f_has_group = true;
 	f_has_nice_gens = true;
 
-	char str_q[1000];
-	char str_a[1000];
-	char str_b[1000];
-
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_a, sizeof(str_a), "%d", a);
-	snprintf(str_b, sizeof(str_b), "%d", b);
-
-
-	prefix.assign("family_Eckardt_q");
-	prefix.append(str_q);
-	prefix.append("_a");
-	prefix.append(str_a);
-	prefix.append("_b");
-	prefix.append(str_b);
-
-	label_txt.assign("family_Eckardt_q");
-	label_txt.append(str_q);
-	label_txt.append("_a");
-	label_txt.append(str_a);
-	label_txt.append("_b");
-	label_txt.append(str_b);
-
-	label_tex.assign("family\\_Eckardt\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_a");
-	label_tex.append(str_a);
-	label_tex.append("\\_b");
-	label_tex.append(str_b);
+	prefix = "family_Eckardt_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_b" + std::to_string(b);
+	label_txt = "family_Eckardt_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_b" + std::to_string(b);
+	label_tex = "family\\_Eckardt\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a) + "\\_b" + std::to_string(b);
 
 	if (f_v) {
 		cout << "surface_create::create_Eckardt_surface done" << endl;
@@ -912,28 +886,11 @@ void surface_create::create_surface_G13(
 	f_has_group = true;
 	f_has_nice_gens = true;
 
-	char str_q[1000];
-	char str_a[1000];
-
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_a, sizeof(str_a), "%d", a);
 
 
-
-	prefix.assign("family_G13_q");
-	prefix.append(str_q);
-	prefix.append("_a");
-	prefix.append(str_a);
-
-	label_txt.assign("family_G13_q");
-	label_txt.append(str_q);
-	label_txt.append("_a");
-	label_txt.append(str_a);
-
-	label_tex.assign("family\\_G13\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_a");
-	label_tex.append(str_a);
+	prefix = "family_G13_q" + std::to_string(F->q) + "_a" + std::to_string(a);
+	label_txt = "family_G13_q" + std::to_string(F->q) + "_a" + std::to_string(a);
+	label_tex = "family\\_G13\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_G13 done" << endl;
@@ -986,28 +943,10 @@ void surface_create::create_surface_F13(
 	f_has_group = true;
 	f_has_nice_gens = true;
 
-	char str_q[1000];
-	char str_a[1000];
+	prefix = "family_F13_q" + std::to_string(F->q) + "_a" + std::to_string(a);
+	label_txt = "family_F13_q" + std::to_string(F->q) + "_a" + std::to_string(a);
+	label_tex = "family\\_F13\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a);
 
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_a, sizeof(str_a), "%d", a);
-
-
-
-	prefix.assign("family_F13_q");
-	prefix.append(str_q);
-	prefix.append("_a");
-	prefix.append(str_a);
-
-	label_txt.assign("family_F13_q");
-	label_txt.append(str_q);
-	label_txt.append("_a");
-	label_txt.append(str_a);
-
-	label_tex.assign("family\\_F13\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_a");
-	label_tex.append(str_a);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_F13 done" << endl;
@@ -1064,27 +1003,12 @@ void surface_create::create_surface_bes(
 	f_has_group = false;
 	f_has_nice_gens = true;
 
-	char str_q[1000];
-	char str[1000];
-	char str2[1000];
 
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str, sizeof(str), "_a%d_c%d", a, c);
-	snprintf(str2, sizeof(str2), "\\_a%d\\_c%d", a, c);
+	prefix = "family_bes_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_c" + std::to_string(c);
+	label_txt = "family_bes_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_c" + std::to_string(c);
+	label_tex = "family\\_bes\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a) + "\\_c" + std::to_string(c);
 
 
-
-	prefix.assign("family_bes_q");
-	prefix.append(str_q);
-	prefix.append(str);
-
-	label_txt.assign("family_bes_q");
-	label_txt.append(str_q);
-	label_txt.append(str);
-
-	label_tex.assign("family\\_bes\\_q");
-	label_tex.append(str_q);
-	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_bes done" << endl;
@@ -1144,27 +1068,9 @@ void surface_create::create_surface_general_abcd(
 	f_has_group = false;
 	f_has_nice_gens = true;
 
-	char str_q[1000];
-	char str[1000];
-	char str2[1000];
-
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str, sizeof(str), "_a%d_b%d_c%d_d%d", a, b, c, d);
-	snprintf(str2, sizeof(str2), "\\_a%d\\_b%d\\_c%d\\_d%d", a, b, c, d);
-
-
-
-	prefix.assign("family_general_abcd_q");
-	prefix.append(str_q);
-	prefix.append(str);
-
-	label_txt.assign("family_general_abcd_q");
-	label_txt.append(str_q);
-	label_txt.append(str);
-
-	label_tex.assign("family\\_general\\_abcd\\_q");
-	label_tex.append(str_q);
-	label_tex.append(str2);
+	prefix = "family_general_abcd_q" + std::to_string(F->q) + "_a" + std::to_string(F->q) + "_b" + std::to_string(b) + "_c" + std::to_string(c) + "_d" + std::to_string(F->q);
+	label_txt = "family_general_abcd_q" + std::to_string(F->q) + "_a" + std::to_string(F->q) + "_b" + std::to_string(b) + "_c" + std::to_string(c) + "_d" + std::to_string(F->q);
+	label_tex = "family\\_general\\_abcd\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(F->q) + "\\_b" + std::to_string(b) + "\\_c" + std::to_string(c) + "\\_d" + std::to_string(F->q);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_general_abcd done" << endl;
@@ -1240,19 +1146,9 @@ void surface_create::create_surface_by_coefficients(
 
 
 
-	char str_q[1000];
-
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-
-
-	prefix.assign("by_coefficients_q");
-	prefix.append(str_q);
-
-	label_txt.assign("by_coefficients_q");
-	label_txt.append(str_q);
-
-	label_tex.assign("by\\_coefficients\\_q");
-	label_tex.append(str_q);
+	prefix = "by_coefficients_q" + std::to_string(F->q);
+	label_txt = "by_coefficients_q" + std::to_string(F->q);
+	label_tex = "by\\_coefficients\\_q" + std::to_string(F->q);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_coefficients done" << endl;
@@ -1444,20 +1340,10 @@ void surface_create::create_surface_by_rank(
 			verbose_level);
 
 
+	prefix = "by_rank_q" + std::to_string(F->q);
+	label_txt = "by_rank_q" + std::to_string(F->q);
+	label_tex = "by\\_rank\\_q" + std::to_string(F->q);
 
-	char str_q[1000];
-
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-
-
-	prefix.assign("by_rank_q");
-	prefix.append(str_q);
-
-	label_txt.assign("by_rank_q");
-	label_txt.append(str_q);
-
-	label_tex.assign("by\\_rank\\_q");
-	label_tex.append(str_q);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_rank done" << endl;
@@ -1599,28 +1485,12 @@ void surface_create::create_surface_from_catalogue(
 				"after Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
 	}
 
-	char str_q[1000];
-	char str_a[1000];
-
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_a, sizeof(str_a), "%d", iso);
 
 
+	prefix = "catalogue_q" + std::to_string(F->q) + "_iso" + std::to_string(iso);
+	label_txt = "catalogue_q" + std::to_string(F->q) + "_iso" + std::to_string(iso);
+	label_tex = "catalogue\\_q" + std::to_string(F->q) + "\\_iso" + std::to_string(iso);
 
-	prefix.assign("catalogue_q");
-	prefix.append(str_q);
-	prefix.append("_iso");
-	prefix.append(str_a);
-
-	label_txt.assign("catalogue_q");
-	label_txt.append(str_q);
-	label_txt.append("_iso");
-	label_txt.append(str_a);
-
-	label_tex.assign("catalogue\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_iso");
-	label_tex.append(str_a);
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue done" << endl;
 	}
@@ -1718,35 +1588,9 @@ void surface_create::create_surface_by_arc_lifting(
 	f_has_group = true;
 
 
-	char str_q[1000];
-	char str_a[1000];
-
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_a, sizeof(str_a),
-			"%ld_%ld_%ld_%ld_%ld_%ld",
-			arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
-
-
-	prefix.assign("arc_lifting_trihedral_q");
-	prefix.append(str_q);
-	prefix.append("_arc");
-	prefix.append(str_a);
-
-	label_txt.assign("arc_lifting_trihedral_q");
-	label_txt.append(str_q);
-	label_txt.append("_arc");
-	label_txt.append(str_a);
-
-	snprintf(str_a, sizeof(str_a),
-			"\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld",
-			arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
-
-	label_tex.assign("arc\\_lifting\\_trihedral\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_arc");
-	label_tex.append(str_a);
-
-	//AL->print(fp);
+	prefix = "arc_lifting_trihedral_q" + std::to_string(F->q) + "_arc_" + std::to_string(arc[0]) + "_" + std::to_string(arc[1]) + "_" + std::to_string(arc[2]) + "_" + std::to_string(arc[3]) + "_" + std::to_string(arc[4]) + "_" + std::to_string(arc[5]);
+	label_txt = "arc_lifting_trihedral_q" + std::to_string(F->q) + "_arc_" + std::to_string(arc[0]) + "_" + std::to_string(arc[1]) + "_" + std::to_string(arc[2]) + "_" + std::to_string(arc[3]) + "_" + std::to_string(arc[4]) + "_" + std::to_string(arc[5]);
+	label_tex = "arc\\_lifting\\_trihedral\\_q" + std::to_string(F->q) + "\\_arc\\_" + std::to_string(arc[0]) + "\\_" + std::to_string(arc[1]) + "\\_" + std::to_string(arc[2]) + "\\_" + std::to_string(arc[3]) + "\\_" + std::to_string(arc[4]) + "\\_" + std::to_string(arc[5]);
 
 
 	FREE_OBJECT(AL);
@@ -1850,43 +1694,9 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 
 	f_has_group = false;
 
-	char str_q[1000];
-	char str_lines[1000];
-	char str_a[1000];
-
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_lines, sizeof(str_lines), "%ld_%ld", line1, line2);
-	snprintf(str_a, sizeof(str_a), "%ld_%ld_%ld_%ld_%ld_%ld",
-			arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
-
-
-	prefix.assign("arc_lifting_with_two_lines_q");
-	prefix.append(str_q);
-	prefix.append("_lines");
-	prefix.append(str_lines);
-	prefix.append("_arc");
-	prefix.append(str_a);
-
-	label_txt.assign("arc_lifting_with_two_lines_q");
-	label_txt.append(str_q);
-	label_txt.append("_lines");
-	label_txt.append(str_lines);
-	label_txt.append("_arc");
-	label_txt.append(str_a);
-
-	snprintf(str_lines, sizeof(str_lines), "\\_%ld\\_%ld", line1, line2);
-	snprintf(str_a, sizeof(str_a), "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld",
-			arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
-
-	label_tex.assign("arc\\_lifting\\_with\\_two\\_lines\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_lines");
-	label_tex.append(str_lines);
-	label_tex.append("\\_arc");
-	label_tex.append(str_a);
-
-
-
+	prefix = "arc_lifting_with_two_lines_q" + std::to_string(F->q) + "_lines_" + std::to_string(line1) + "_" + std::to_string(line2) + "_arc_" + std::to_string(arc[0]) + "_" + std::to_string(arc[1]) + "_" + std::to_string(arc[2]) + "_" + std::to_string(arc[3]) + "_" + std::to_string(arc[4]) + "_" + std::to_string(arc[5]);
+	label_txt = "arc_lifting_with_two_lines_q" + std::to_string(F->q) + "_lines_" + std::to_string(line1) + "_" + std::to_string(line2) + "_arc_" + std::to_string(arc[0]) + "_" + std::to_string(arc[1]) + "_" + std::to_string(arc[2]) + "_" + std::to_string(arc[3]) + "_" + std::to_string(arc[4]) + "_" + std::to_string(arc[5]);
+	label_tex = "arc\\_lifting\\_with\\_two\\_lines\\_q" + std::to_string(F->q) + "\\_lines\\_" + std::to_string(line1) + "\\_" + std::to_string(line2) + "\\_arc\\_" + std::to_string(arc[0]) + "\\_" + std::to_string(arc[1]) + "\\_" + std::to_string(arc[2]) + "\\_" + std::to_string(arc[3]) + "\\_" + std::to_string(arc[4]) + "\\_" + std::to_string(arc[5]);
 
 	//AL->print(fp);
 
@@ -1953,31 +1763,19 @@ void surface_create::create_surface_Cayley_form(
 
 	f_has_group = false;
 
-	char str_q[1000];
-	char str_parameters[1000];
+	string str_parameters;
 
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
-	snprintf(str_parameters, sizeof(str_parameters),
-			"klmn_%d_%d_%d_%d", k, l, m, n);
+	str_parameters = "klmn_" + std::to_string(k) + "_" + std::to_string(l) + "_" + std::to_string(m) + "_" + std::to_string(n);
 
 
-	prefix.assign("Cayley_q");
-	prefix.append(str_q);
-	prefix.append("_");
-	prefix.append(str_parameters);
+	prefix = "Cayley_q" + std::to_string(F->q) + "_" + str_parameters;
 
-	label_txt.assign("Cayley_q");
-	label_txt.append(str_q);
-	label_txt.append("_");
-	label_txt.append(str_parameters);
+	label_txt = "Cayley_q" + std::to_string(F->q) + "_" + str_parameters;
 
-	snprintf(str_parameters, sizeof(str_parameters),
-			"klmn\\_%d\\_%d\\_%d\\_%d", k, l, m, n);
 
-	label_tex.assign("Cayley\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_");
-	label_tex.append(str_parameters);
+	str_parameters = "klmn\\_" + std::to_string(k) + "\\_" + std::to_string(l) + "\\_" + std::to_string(m) + "\\_" + std::to_string(n);
+
+	label_tex = "Cayley\\_q" + std::to_string(F->q) + "\\_" + str_parameters;
 
 
 
@@ -2274,7 +2072,6 @@ int surface_create::create_surface_by_equation(
 
 	f_has_group = false;
 
-	char str_q[1000];
 
 	snprintf(str_q, sizeof(str_q), "%d", F->q);
 
@@ -2671,27 +2468,17 @@ int surface_create::create_surface_by_equation(
 
 	f_has_group = false;
 
-	char str_q[1000];
 
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	prefix = "equation_" + name_of_formula + "_q" + std::to_string(F->q);
+	label_txt = "equation_" + name_of_formula + "_q" + std::to_string(F->q);
 
 
-	prefix.assign("equation_");
-	prefix.append(name_of_formula);
-	prefix.append("_q");
-	prefix.append(str_q);
-
-	label_txt.assign("equation_");
-	label_txt.append(name_of_formula);
-	label_txt.append("_q");
-	label_txt.append(str_q);
-
-	label_tex.assign(name_of_formula_tex);
+	label_tex = name_of_formula_tex;
 	ST.string_fix_escape_characters(label_tex);
 
 	string my_parameters_tex;
 
-	my_parameters_tex.assign(equation_parameters_tex);
+	my_parameters_tex = equation_parameters_tex;
 	ST.string_fix_escape_characters(my_parameters_tex);
 	label_tex.append(" with ");
 	label_tex.append(my_parameters_tex);
@@ -2836,25 +2623,11 @@ void surface_create::create_surface_by_double_six(
 
 	f_has_group = false;
 
-	char str_q[1000];
 
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	prefix = "DoubleSix_q" + std::to_string(F->q) + "_" + by_double_six_label;
 
-
-	prefix.assign("DoubleSix_q");
-	prefix.append(str_q);
-	prefix.append("_");
-	prefix.append(by_double_six_label);
-
-	label_txt.assign("DoubleSix_q");
-	label_txt.append(str_q);
-	label_txt.append("_");
-	label_txt.append(by_double_six_label);
-
-	label_tex.assign("DoubleSix\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_");
-	label_tex.append(by_double_six_label_tex);
+	label_txt = "DoubleSix_q" + std::to_string(F->q) + "_" + by_double_six_label;
+	label_tex = "DoubleSix\\_q" + std::to_string(F->q) + "\\_" + by_double_six_label;
 
 
 
@@ -2998,25 +2771,12 @@ void surface_create::create_surface_by_skew_hexagon(
 
 	f_has_group = false;
 
-	char str_q[1000];
 
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	prefix = "SkewHexagon_q" + std::to_string(F->q) + "_" + given_label;
 
+	label_txt = "SkewHexagon_q" + std::to_string(F->q) + "_" + given_label;
 
-	prefix.assign("SkewHexagon_q");
-	prefix.append(str_q);
-	prefix.append("_");
-	prefix.append(given_label);
-
-	label_txt.assign("SkewHexagon_q");
-	label_txt.append(str_q);
-	label_txt.append("_");
-	label_txt.append(given_label);
-
-	label_tex.assign("SkewHexagon\\_q");
-	label_tex.append(str_q);
-	label_tex.append("\\_");
-	label_tex.append(given_label_tex);
+	label_tex = "SkewHexagon\\_q" + std::to_string(F->q) + "\\_" + given_label_tex;
 
 
 
@@ -3199,18 +2959,11 @@ void surface_create::create_surface_at_random(
 
 
 
-	char str_q[1000];
 
-	snprintf(str_q, sizeof(str_q), "%d", F->q);
+	prefix = "random_q" + std::to_string(F->q);
 
-
-	prefix.assign("random");
-	prefix.append("_q");
-	prefix.append(str_q);
-
-	label_txt.assign("random");
-	label_txt.append("_q");
-	label_txt.append(str_q);
+	label_txt = "random_q" + std::to_string(F->q);
+	label_tex = "random\\_q" + std::to_string(F->q);
 
 
 
@@ -3502,7 +3255,6 @@ void surface_create::compute_group(
 	int i;
 	long int a;
 	actions::action *A;
-	char str[1000];
 
 	A = Surf_A->A;
 
@@ -3656,8 +3408,7 @@ void surface_create::export_something_with_group_element(
 
 	string fname_base;
 
-	fname_base.assign("surface_");
-	fname_base.append(label_txt);
+	fname_base = "surface_" + label_txt;
 
 
 
@@ -3668,8 +3419,7 @@ void surface_create::export_something_with_group_element(
 
 	if (ST.stringcmp(what, "action_on_tritangent_planes") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_on_tri.csv");
+		fname = fname_base + "_on_tri.csv";
 
 		{
 			ofstream ost(fname);
@@ -3715,8 +3465,7 @@ void surface_create::export_something_with_group_element(
 
 	else if (ST.stringcmp(what, "action_on_double_sixes") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_on_double_sixes.csv");
+		fname = fname_base + "_on_double_sixes.csv";
 
 		{
 			ofstream ost(fname);
@@ -3765,8 +3514,7 @@ void surface_create::export_something_with_group_element(
 
 	else if (ST.stringcmp(what, "action_on_lines") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_on_lines.csv");
+		fname = fname_base + "_on_lines.csv";
 
 		{
 			ofstream ost(fname);
@@ -3962,13 +3710,11 @@ void surface_create::export_gap(int verbose_level)
 
 	string fname_base;
 
-	fname_base.assign("surface_");
-	fname_base.append(label_txt);
+	fname_base = "surface_" + label_txt;
 
 	string fname;
 
-	fname.assign(fname_base);
-	fname.append(".gap");
+	fname = fname_base + ".gap";
 	{
 		ofstream ost(fname);
 
@@ -4028,25 +3774,20 @@ void surface_create::do_report(int verbose_level)
 		string fname_report;
 
 		if (Descr->f_label_txt) {
-			fname_report.assign(label_txt);
-			fname_report.append(".tex");
+			fname_report = label_txt + ".tex";
 
 		}
 		else {
-			fname_report.assign("surface_");
-			fname_report.append(label_txt);
-			fname_report.append("_report.tex");
+			fname_report = "surface_" + label_txt + "_report.tex";
 		}
 
 		{
 			ofstream ost(fname_report);
 
 
-			char str[1000];
 			string title, author, extra_praeamble;
 
-			snprintf(str, 1000, "%s over GF(%d)", label_tex.c_str(), F->q);
-			title.assign(str);
+			title = label_tex + " over GF(" + std::to_string(F->q) + ")";
 
 
 			l1_interfaces::latex_interface L;
@@ -4104,21 +3845,19 @@ void surface_create::do_report2(
 
 
 
-	char str[1000];
 	string summary_file_name;
 	string col_postfix;
 
 	if (Descr->f_label_txt) {
-		summary_file_name.assign(Descr->label_txt);
+		summary_file_name = Descr->label_txt;
 	}
 	else {
-		summary_file_name.assign(label_txt);
+		summary_file_name = label_txt;
 	}
-	summary_file_name.append("_summary.csv");
+	summary_file_name += "_summary.csv";
 
 
-	snprintf(str, sizeof(str), "-Q%d", F->q);
-	col_postfix.assign(str);
+	col_postfix = "-Q" + std::to_string(F->q);
 
 	if (f_v) {
 		cout << "surface_create::do_report2 "
@@ -4174,8 +3913,7 @@ void surface_create::do_report2(
 		}
 
 
-		fname_mask.assign("surface_");
-		fname_mask.append(label_txt);
+		fname_mask = "surface_" + label_txt;
 
 		SOA->cheat_sheet(ost,
 				label_txt,

@@ -860,7 +860,7 @@ public:
 
 
 
-//! a quartic curve with bitangents and equation
+//! a quartic curve with bitangents and equation. There is another class of the same name in layer1_foundations::algebraic_geometry
 
 
 

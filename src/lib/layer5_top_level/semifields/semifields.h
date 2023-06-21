@@ -117,8 +117,8 @@ public:
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void read_data(int verbose_level);
-	void create_fname_for_classification(char *fname);
-	void create_fname_for_flag_orbits(char *fname);
+	void create_fname_for_classification(std::string &fname);
+	void create_fname_for_flag_orbits(std::string &fname);
 	void classify_semifields(int verbose_level);
 	void load_classification(int verbose_level);
 	void load_flag_orbits(int verbose_level);

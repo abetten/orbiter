@@ -219,10 +219,8 @@ void table_of_surfaces::do_export(
 		int j;
 
 		for (j = 0; j <= 18; j++) {
-			char str[1000];
 
-			snprintf(str, sizeof(str), "%ld", Row[j]);
-			Table[h * nb_cols + j].assign(str);
+			Table[h * nb_cols + j] = std::to_string(Row[j]);
 		}
 
 
@@ -299,14 +297,9 @@ void table_of_surfaces::export_csv(
 	}
 
 	orbiter_kernel_system::file_io Fio;
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d", PA->F->q);
 
 	string fname;
-	fname.assign("table_of_cubic_surfaces");
-	fname.append(str);
-	fname.append("_info.csv");
+	fname = "table_of_cubic_surfaces_q" + std::to_string(PA->F->q) + "_info.csv";
 
 	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
 
@@ -353,14 +346,10 @@ void table_of_surfaces::export_sql(
 	}
 
 	orbiter_kernel_system::file_io Fio;
-	char str[1000];
-
-	snprintf(str, sizeof(str), "_q%d", PA->F->q);
 
 	string fname;
-	fname.assign("table_of_cubic_surfaces");
-	fname.append(str);
-	fname.append("_data.sql");
+	fname = "table_of_cubic_surfaces_q" + std::to_string(PA->F->q) + "_data.sql";
+
 
 	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
 

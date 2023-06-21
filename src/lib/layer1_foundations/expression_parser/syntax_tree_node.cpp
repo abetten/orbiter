@@ -1373,6 +1373,8 @@ int syntax_tree_node::exponent_of_variable_destructive(
 			T->f_int = true;
 			T->f_text = false;
 			T->value_int = 1;
+			f_has_exponent = false;
+			exponent = 0;
 			return exp;
 		}
 		else {

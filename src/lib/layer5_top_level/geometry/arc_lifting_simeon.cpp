@@ -405,11 +405,11 @@ void arc_lifting_simeon::do_covering_problem(
 
 	covering_number = NEW_int(h);
 
-	char fname[1000];
+	string fname;
 
-	snprintf(fname, sizeof(fname),
-			"arc_lifting_simeon_q%d_n%d_d%d_k%d_solutions.txt",
-			q, n, d, k);
+	fname = "arc_lifting_simeon_q" + std::to_string(q) + "_n"
+			+ std::to_string(n) + "_d" + std::to_string(d) + "_k" + std::to_string(k)
+			+ "_solutions.txt";
 	{
 	ofstream fp(fname);
 

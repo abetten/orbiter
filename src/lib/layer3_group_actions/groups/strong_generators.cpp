@@ -1431,14 +1431,12 @@ void strong_generators::print_generators_in_latex_individually(
 	for (i = 0; i < gens->len; i++) {
 
 		string label;
-		char str[1000];
 
-		snprintf(str, sizeof(str), "g_{%d} = ", i + 1);
-		label.assign(str);
+		label = "g_{" + std::to_string(i + 1) + "} = ";
 
 		//A->element_print_latex_with_extras(gens->ith(i), label, ost);
 
-		ost << "$" << str << "$ ";
+		ost << "$" << label << "$ ";
 
 		//A->element_print_latex_not_in_math_mode(gens->ith(i), ost);
 
@@ -3038,150 +3036,6 @@ void strong_generators::read_file(
 }
 
 
-#if 0
-void strong_generators::generators_for_shallow_schreier_tree(
-		char *label, vector_ge *chosen_gens, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *AR;
-	sims *S;
-	int go;
-	double avg;
-	double log_go;
-	int cnt = 0;
-	int i;
-	
-	go = group_order_as_int();
-	log_go = log(go);
-	if (f_v) {
-		cout << "strong_generators::generators_for_shallow_"
-				"schreier_tree group of order " << go << endl;
-		cout << "log_go = " << log_go << endl;
-		}
-	S = create_sims(verbose_level - 2);
-	if (f_v) {
-		cout << "strong_generators::generators_for_shallow_"
-				"schreier_tree created sims" << endl;
-		}
-	AR = new_action_by_right_multiplication(S,
-			true /* f_transfer_ownership */, verbose_level - 2);
-	if (f_v) {
-		cout << "strong_generators::generators_for_shallow_"
-				"schreier_tree created action by right "
-				"multiplication" << endl;
-		}
-
-	chosen_gens->init(A);
-	chosen_gens->allocate(gens->len);
-	for (i = 0; i < gens->len; i++) {
-		A->element_move(gens->ith(i), chosen_gens->ith(i), 0);
-		}
-
-	while (true) {
-
-		schreier *Sch;
-
-		Sch = NEW_OBJECT(schreier);
-		Sch->init(AR);
-		Sch->initialize_tables();
-		Sch->init_generators(*chosen_gens);
-		if (f_v) {
-			cout << "strong_generators::generators_for_shallow_"
-					"schreier_tree before computing all orbits" << endl;
-			}
-		Sch->compute_all_point_orbits(verbose_level - 2);
-		if (f_v) {
-			cout << "strong_generators::generators_for_shallow_"
-					"schreier_tree after computing all orbits" << endl;
-			}
-		if (Sch->nb_orbits > 1) {
-			cout << "strong_generators::generators_for_shallow_"
-					"schreier_tree Sch->nb_orbits > 1" << endl;
-			exit(1);
-			}
-		char label1[1000];
-		int xmax = 1000000;
-		int ymax = 1000000;
-		int f_circletext = true;
-		int rad = 3000;
-
-		snprintf(label1, sizeof(label1), "%s_%d", label, cnt);
-		Sch->draw_tree(label1, 0 /* orbit_no */,
-			xmax, ymax, f_circletext, rad,
-			true /* f_embedded */, false /* f_sideways */, 
-			0.3 /* scale */, 1. /* line_width */, 
-			false, NULL, 
-			0 /* verbose_level */);
-
-		
-		int *Depth;
-		int avgi, f, /*l,*/ idx;
-
-		Depth = NEW_int(Sch->A->degree);
-		for (i = 0; i < Sch->A->degree; i++) {
-			Depth[i] = Sch->depth_in_tree(i);
-			}
-		tally Cl;
-
-		Cl.init(Depth, Sch->A->degree, false, 0);
-		if (f_v) {
-			cout << "distribution of depth in tree is: ";
-			Cl.print(true);
-			cout << endl;
-			}
-		avg = Cl.average();
-		if (f_v) {
-			cout << "average = " << avg << endl;
-			cout << "log_go = " << log_go << endl;
-			}
-
-		if (avg < log_go) {
-			if (f_v) {
-				cout << "strong_generators::generators_for_shallow_"
-					"schreier_tree average < log_go, we are done" << endl;
-				}
-			break;
-			}
-
-		avgi = (int) avg;
-		if (f_v) {
-			cout << "average as int = " << avgi << endl;
-			}
-		f = 0;
-		for (i = 0; i < Cl.nb_types; i++) {
-			f = Cl.type_first[i];
-			//l = Cl.type_len[i];
-			if (Cl.data_sorted[f] == avgi) {
-				break;
-				}
-			}
-		if (i == Cl.nb_types) {
-			cout << "strong_generators::generators_for_shallow_"
-				"schreier_tree cannot find element of depth "
-				<< avgi << endl;
-			exit(1);
-			}
-		idx = Cl.sorting_perm_inv[f];
-		if (f_v) {
-			cout << "strong_generators::generators_for_shallow_"
-					"schreier_tree idx = " << idx << endl;
-			}
-		Sch->coset_rep(idx);
-		chosen_gens->append(Sch->cosetrep);
-		
-
-		FREE_int(Depth);
-		FREE_OBJECT(Sch);
-		cnt++;
-		}
-
-		
-	if (f_v) {
-		cout << "strong_generators::generators_for_shallow_"
-				"schreier_tree done" << endl;
-		}
-}
-#endif
 
 void strong_generators::compute_ascii_coding(
 		std::string &ascii_coding, int verbose_level)
@@ -4164,12 +4018,9 @@ void strong_generators::report_group(
 	fname.append("_report.tex");
 
 	{
-		char str[1000];
 		string title, author, extra_praeamble;
 
-		snprintf(str, 1000, "Group");
-		title.assign(str);
-
+		title = "Group";
 
 
 		{

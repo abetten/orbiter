@@ -1304,7 +1304,7 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 
 	if (f_v) {
 		cout << "surface_object_properties::report_properties_simple "
-				"done" << endl;
+				"after print_line_intersection_graph" << endl;
 	}
 
 
@@ -1313,6 +1313,24 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 				"before print_all_points_on_surface" << endl;
 	}
 	print_all_points_on_surface(ost);
+
+
+	if (f_v) {
+		cout << "surface_object_properties::report_properties_simple "
+				"before SO->Surf->Schlaefli->print_Steiner_and_Eckardt" << endl;
+	}
+
+	SO->Surf->Schlaefli->print_Steiner_and_Eckardt(ost);
+
+	if (f_v) {
+		cout << "surface_object_properties::report_properties_simple "
+				"after SO->Surf->Schlaefli->print_Steiner_and_Eckardt" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_properties::report_properties_simple "
+				"done" << endl;
+	}
 
 }
 
@@ -1696,6 +1714,12 @@ void surface_object_properties::print_equation(std::ostream &ost)
 	SO->F->Projective_space_basic->PG_element_rank_modified_lint(
 			SO->eqn, 1, 20, rk);
 	ost << "The point rank of the equation over GF$(" << SO->F->q << ")$ is " << rk << "\\\\" << endl;
+
+	ost << "\\begin{verbatim}" << endl;
+	SO->Surf->PolynomialDomains->Poly3_4->print_equation_relaxed(ost, SO->eqn);
+	ost << endl;
+	ost << "\\end{verbatim}" << endl;
+
 
 	//ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
 

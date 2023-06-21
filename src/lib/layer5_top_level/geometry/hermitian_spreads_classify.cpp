@@ -342,14 +342,14 @@ void hermitian_spreads_classify::init2(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int depth;
-	char prefix[1000];
+	string prefix;
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::init2" << endl;
 		}
 	//depth = order + 1;
 
-	snprintf(prefix, sizeof(prefix), "HS_%d_%d", n, Q);
+	prefix = "HS_" + std::to_string(n) + "_" + std::to_string(Q);
 
 	Poset->init_subset_lattice(A, A2r,
 			sg,

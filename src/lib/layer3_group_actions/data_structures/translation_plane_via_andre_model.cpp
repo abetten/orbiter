@@ -927,11 +927,13 @@ void translation_plane_via_andre_model::create_latex_report(int verbose_level)
 
 
 			if (f_v) {
-				cout << "translation_plane_via_andre_model::create_latex_report before report" << endl;
+				cout << "translation_plane_via_andre_model::create_latex_report "
+						"before report" << endl;
 			}
 			report(ost, verbose_level);
 			if (f_v) {
-				cout << "translation_plane_via_andre_model::create_latex_report after report" << endl;
+				cout << "translation_plane_via_andre_model::create_latex_report "
+						"after report" << endl;
 			}
 
 

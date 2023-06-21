@@ -421,7 +421,8 @@ public:
 			std::ostream &ost, int *coeffs);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
-	void unrank_line_in_dual_coordinates(int *v, long int rk);
+	void unrank_line_in_dual_coordinates(
+			int *v, long int rk);
 	void print_lines_tex(
 			std::ostream &ost, long int *Lines, int nb_lines);
 	void compute_points_on_lines(
@@ -430,24 +431,31 @@ public:
 			data_structures::set_of_sets *&pts_on_lines,
 			int *&f_is_on_line,
 			int verbose_level);
-	void multiply_conic_times_conic(int *six_coeff_a,
+	void multiply_conic_times_conic(
+			int *six_coeff_a,
 		int *six_coeff_b, int *fifteen_coeff,
 		int verbose_level);
-	void multiply_conic_times_line(int *six_coeff,
+	void multiply_conic_times_line(
+			int *six_coeff,
 		int *three_coeff, int *ten_coeff,
 		int verbose_level);
-	void multiply_line_times_line(int *line1,
+	void multiply_line_times_line(
+			int *line1,
 		int *line2, int *six_coeff,
 		int verbose_level);
-	void multiply_three_lines(int *line1, int *line2, int *line3,
+	void multiply_three_lines(
+			int *line1, int *line2, int *line3,
 		int *ten_coeff,
 		int verbose_level);
-	void multiply_four_lines(int *line1, int *line2, int *line3, int *line4,
+	void multiply_four_lines(
+			int *line1, int *line2, int *line3, int *line4,
 		int *fifteen_coeff,
 		int verbose_level);
-	void assemble_cubic_surface(int *f1, int *f2, int *f3, int *eqn20,
+	void assemble_cubic_surface(
+			int *f1, int *f2, int *f3, int *eqn20,
 		int verbose_level);
-	void create_surface(quartic_curve_object *Q, int *eqn20, int verbose_level);
+	void create_surface(
+			quartic_curve_object *Q, int *eqn20, int verbose_level);
 	// Given a quartic Q in X1,X2,X3, compute an associated cubic surface
 	// whose projection from (1,0,0,0) gives back the quartic Q.
 	// Pick 4 bitangents L0,L1,L2,L3 so that the 8 points of tangency lie on a conic C.
@@ -458,7 +466,8 @@ public:
 	// Here 1, lambda, mu are the coefficients of a linear dependency between
 	// Q (the quartic), C^2, L0*L1*L2*L3, so
 	// Q + lambda * C^2 + mu * L0*L1*L2*L3 = 0.
-	void compute_gradient(int *equation15, int *&gradient, int verbose_level);
+	void compute_gradient(
+			int *equation15, int *&gradient, int verbose_level);
 
 };
 
@@ -518,8 +527,10 @@ public:
 
 	quartic_curve_object_properties();
 	~quartic_curve_object_properties();
-	void init(quartic_curve_object *QO, int verbose_level);
-	void create_summary_file(std::string &fname,
+	void init(
+			quartic_curve_object *QO, int verbose_level);
+	void create_summary_file(
+			std::string &fname,
 			std::string &surface_label,
 			std::string &col_postfix,
 			int verbose_level);
@@ -536,10 +547,13 @@ public:
 			long int *Lines, int nb_lines,
 			data_structures::set_of_sets *SoS);
 	//void print_bitangents_with_points_on_them(std::ostream &ost);
-	void points_on_curve_on_lines(int verbose_level);
-	void report_bitangent_line_type(std::ostream &ost);
+	void points_on_curve_on_lines(
+			int verbose_level);
+	void report_bitangent_line_type(
+			std::ostream &ost);
 	void compute_gradient(int verbose_level);
-	void compute_singular_points_and_tangent_lines(int verbose_level);
+	void compute_singular_points_and_tangent_lines(
+			int verbose_level);
 	// a singular point is a point where all partials vanish
 	// We compute the set of singular points into Pts[nb_pts]
 
@@ -1763,7 +1777,8 @@ public:
 			long int *arc6, int verbose_level);
 	void compute_web_of_cubic_curves(
 			long int *arc6, int verbose_level);
-	void rank_of_foursubsets(int *&rk, int &N, int verbose_level);
+	void rank_of_foursubsets(
+			int *&rk, int &N, int verbose_level);
 	void create_web_and_equations_based_on_four_tritangent_planes(
 			long int *arc6, int *base_curves4,
 			int verbose_level);
@@ -1783,20 +1798,26 @@ public:
 	void find_point_not_on_six_curves(
 			int &pt, int &f_point_was_found,
 		int verbose_level);
-	void print_lines(std::ostream &ost);
-	void print_trihedral_plane_equations(std::ostream &ost);
+	void print_lines(
+			std::ostream &ost);
+	void print_trihedral_plane_equations(
+			std::ostream &ost);
 	void print_the_six_plane_equations(
 		int *The_six_plane_equations,
 		long int *plane6, std::ostream &ost);
 	void print_surface_equations_on_line(
 		int *The_surface_equations,
 		int lambda, int lambda_rk, std::ostream &ost);
-	void print_dual_point_ranks(std::ostream &ost);
+	void print_dual_point_ranks(
+			std::ostream &ost);
 	void print_Eckardt_point_data(
 			std::ostream &ost, int verbose_level);
-	void report_basics(std::ostream &ost, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
-	void print_web_of_cubic_curves(long int *arc6, std::ostream &ost);
+	void report_basics(
+			std::ostream &ost, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void print_web_of_cubic_curves(
+			long int *arc6, std::ostream &ost);
 
 };
 

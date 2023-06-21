@@ -855,56 +855,6 @@ int diophant::solve_first_mckay(
 	return true;
 }
 
-#if 0
-void diophant::draw_solutions(std::string &fname_base, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-	vector<int> res;
-	int *solution;
-	int solution_sz;
-
-	if (f_v) {
-		cout << "diophant::draw_solutions" << endl;
-	}
-	solution = NEW_int(n);
-
-	for (i = 0; i < _resultanz; i++) {
-		res = _results.front();
-		solution_sz = 0;
-		for (j = 0; j < n; j++) {
-			if (res[j]) {
-				solution[solution_sz++] = j;
-			}
-		}
-		
-		std::string fname_base2;
-
-		fname_base2.assign(fname_base);
-		
-		snprintf(str, sizeof(str), "_sol_%d", i);
-		fname_base2.append(str);
-		
-#if 0
-		int xmax_in = ONE_MILLION;
-		int ymax_in = ONE_MILLION;
-		int xmax_out = ONE_MILLION;
-		int ymax_out = ONE_MILLION;
-#endif
-
-		draw_partitioned(fname_base2,
-				//xmax_in, ymax_in, xmax_out, ymax_out,
-			true /*f_solution*/, solution, solution_sz, 
-			verbose_level);
-		_results.pop_front();
-	}
-
-	FREE_int(solution);
-	if (f_v) {
-		cout << "diophant::draw_solutions done" << endl;
-	}
-}
-#endif
 
 void diophant::write_solutions(std::string &fname, int verbose_level)
 {

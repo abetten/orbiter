@@ -2025,13 +2025,9 @@ void action_global::apply_based_on_text(
 		string extra_praeamble;
 
 
-		char str[1000];
+		fname = A->label + "_apply.tex";
 
-		fname.assign(A->label);
-		fname.append("_apply.tex");
-
-		snprintf(str, 1000, "Application of Group Element in $%s$", A->label_tex.c_str());
-		title.assign(str);
+		title = "Application of Group Element in $" + A->label_tex + " $";
 
 
 
@@ -2147,13 +2143,9 @@ void action_global::multiply_based_on_text(
 		string extra_praeamble;
 
 
-		char str[1000];
+		fname = A->label + "_mult.tex";
 
-		fname.assign(A->label);
-		fname.append("_mult.tex");
-
-		snprintf(str, 1000, "Multiplication of Group Elements in $%s$", A->label_tex.c_str());
-		title.assign(str);
+		title = "Multiplication of Group Elements in $" + A->label_tex + "$";
 
 		{
 			ofstream ost(fname);
@@ -2253,13 +2245,9 @@ void action_global::inverse_based_on_text(
 		string extra_praeamble;
 
 
-		char str[1000];
+		fname = A->label + "_inv.tex";
 
-		fname.assign(A->label);
-		fname.append("_inv.tex");
-
-		snprintf(str, 1000, "Inverse of Group Element in $%s$", A->label_tex.c_str());
-		title.assign(str);
+		title = "Inverse of Group Element in $" + A->label_tex + "$";
 
 
 		{
@@ -2358,13 +2346,9 @@ void action_global::consecutive_powers_based_on_text(
 		string extra_praeamble;
 
 
-		char str[1000];
+		fname = A->label + "_all_powers.tex";
 
-		fname.assign(A->label);
-		fname.append("_all_powers.tex");
-
-		snprintf(str, 1000, "Consecutive Powers of Group Element in $%s$", A->label_tex.c_str());
-		title.assign(str);
+		title = "Consecutive Powers of Group Element in $" + A->label_tex + "$";
 
 
 
@@ -2520,13 +2504,9 @@ void action_global::raise_to_the_power_based_on_text(
 		string extra_praeamble;
 
 
-		char str[1000];
+		fname = A->label + "_power.tex";
 
-		fname.assign(A->label);
-		fname.append("_power.tex");
-
-		snprintf(str, 1000, "Power of Group Element in $%s$", A->label_tex.c_str());
-		title.assign(str);
+		title = "Power of Group Element in $" + A->label_tex + "$";
 
 
 		{

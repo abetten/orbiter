@@ -133,18 +133,18 @@ void surfaces_arc_lifting::init(
 	surfaces_arc_lifting::F = Surf_A->PA->F;
 	q = F->q;
 
-	fname_base.assign("surfaces_arc_lifting_");
-	char str[1000];
-	snprintf(str, sizeof(str), "%d", q);
-	fname_base.append(str);
+	fname_base = "surfaces_arc_lifting_" + std::to_string(q);
 
 	A4 = Surf_A->PA->A;
 	if (f_v) {
-		cout << "surfaces_arc_lifting::init A4 = " << A4->label << endl;
-		cout << "surfaces_arc_lifting::init A4 = " << A4->label_tex << endl;
+		cout << "surfaces_arc_lifting::init "
+				"A4 = " << A4->label << endl;
+		cout << "surfaces_arc_lifting::init "
+				"A4 = " << A4->label_tex << endl;
 	}
 	if (f_test_nb_Eckardt_points) {
-		cout << "f_test_nb_Eckardt_points is on, testing for " << nb_E << " Eckardt points" << endl;
+		cout << "f_test_nb_Eckardt_points is on, "
+				"testing for " << nb_E << " Eckardt points" << endl;
 	}
 
 	f_semilinear = A4->is_semilinear_matrix_group();
@@ -264,7 +264,8 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 			arc_idx++) {
 
 		if (f_v) {
-			cout << "surfaces_arc_lifting::downstep arc " << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic << endl;
+			cout << "surfaces_arc_lifting::downstep "
+					"arc " << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic << endl;
 		}
 		if (f_v) {
 			cout << "surfaces_arc_lifting::downstep "
@@ -784,21 +785,19 @@ void surfaces_arc_lifting::report(
 		cout << "surfaces_arc_lifting::report" << endl;
 	}
 	std::string fname_arc_lifting;
-	char str[1000];
 	string title, author, extra_praeamble;
 
 
-	fname_arc_lifting.assign(fname_base);
-	fname_arc_lifting.append(".tex");
-	snprintf(str, 1000, "Arc lifting over GF(%d) ", q);
-	title.assign(str);
+	fname_arc_lifting = fname_base + ".tex";
+	title = "Arc lifting over GF(" + std::to_string(q) + ") ";
 
 	poset_classification::poset_classification_control *Control;
 
 	Control = Get_object_of_type_poset_classification_control(Control_six_arcs_label);
 
 	if (!Control->f_draw_options) {
-		cout << "surfaces_arc_lifting::report please use -draw_option in poset_classification_control" << endl;
+		cout << "surfaces_arc_lifting::report please use "
+				"-draw_option in poset_classification_control" << endl;
 		exit(1);
 	}
 
@@ -819,7 +818,8 @@ void surfaces_arc_lifting::report(
 
 
 		if (f_v) {
-			cout << "surfaces_arc_lifting::report before report2" << endl;
+			cout << "surfaces_arc_lifting::report "
+					"before report2" << endl;
 		}
 
 
@@ -827,7 +827,8 @@ void surfaces_arc_lifting::report(
 
 
 		if (f_v) {
-			cout << "surfaces_arc_lifting::report after report2" << endl;
+			cout << "surfaces_arc_lifting::report "
+					"after report2" << endl;
 		}
 
 
@@ -860,13 +861,11 @@ void surfaces_arc_lifting::report2(std::ostream &ost,
 
 	//ost << "\\section{Cubic Surfaces over the field $\\mathbb F}_{" << q << "}$}" << endl << endl;
 
-	char str[1000];
-	snprintf(str, sizeof(str), "\\section{The Classification of Cubic Surfaces with 27 Lines "
-			"over the field ${\\mathbb F}_{%d}$}", q);
-
 	string title;
 
-	title.assign(str);
+	title = "\\section{The Classification of Cubic Surfaces with 27 Lines "
+			"over the field ${\\mathbb F}_{" + std::to_string(q) + "}$}";
+
 
 	//classification_step *Surfaces;
 
@@ -1496,19 +1495,19 @@ void surfaces_arc_lifting::report_surfaces_in_detail(std::ostream &ost, int verb
 
 		if (f_v) {
 			cout << "orbit " << i << " / " << Surfaces->nb_orbits << ":" << endl;
-			}
+		}
 
 		Surfaces->Orbit[i].gens->group_order(go1);
 
 		if (f_v) {
 			cout << "stab order " << go1 << endl;
-			}
+		}
 
 		Dom.integral_division_exact(Surfaces->go, go1, ol);
 
 		if (f_v) {
 			cout << "orbit length " << ol << endl;
-			}
+		}
 
 		//ost << "\\item" << endl;
 		ost << "Surface $" << i << " / " << Surfaces->nb_orbits << "$ \\\\" << endl;
@@ -1530,7 +1529,7 @@ void surfaces_arc_lifting::report_surfaces_in_detail(std::ostream &ost, int verb
 		if (f_print_stabilizer_gens) {
 			//ost << "Strong generators are:" << endl;
 			Surfaces->Orbit[i].gens->print_generators_tex(ost);
-			}
+		}
 
 
 

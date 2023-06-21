@@ -305,7 +305,8 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 
 			std::vector<std::vector<int> > Geos;
 
-			Fio.read_incidence_by_row_ranks_file(Geos, m, n, r, Descr->Input[input_idx].input_string, verbose_level);
+			Fio.read_incidence_by_row_ranks_file(
+					Geos, m, n, r, Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
 				cout << "input incidence geometries from file "
 						"the file contains " << Geos.size() << "incidence geometries" << endl;

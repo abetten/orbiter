@@ -895,15 +895,14 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	ring_theory::longinteger_object go;
 	ring_theory::longinteger_object len;
 	string fname_csv;
-	char str[1000];
 
 
 	if (f_v) {
 		cout << "classify_double_sixes::make_spreadsheet_"
 				"of_fiveplusone_configurations" << endl;
 	}
-	snprintf(str, sizeof(str), "fiveplusone19_%d.csv", Five_p1->q);
-	fname_csv.assign(str);
+
+	fname_csv = "fiveplusone19_" + std::to_string(Five_p1->q) + ".csv";
 
 	k = 5;
 

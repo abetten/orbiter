@@ -394,11 +394,8 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 
 			string label;
-			char str[1000];
 
-			snprintf(str, sizeof(str), "alpha=%d beta=%d", alpha, beta);
-
-			label.assign(str);
+			label = "alpha=" + std::to_string(alpha) + " beta=" + std::to_string(beta);
 
 			if (f_v) {
 				cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
@@ -651,13 +648,10 @@ void projective_space_global::do_classify_cubic_curves(
 				"creating cheat sheet" << endl;
 	}
 	string fname, title, author, extra_praeamble;
-	char str[1000];
 
-	snprintf(str, 1000, "Cubic Curves in PG$(2,%d)$", PA->F->q);
-	title.assign(str);
-	author.assign("");
-	snprintf(str, 1000, "Cubic_curves_q%d.tex", PA->F->q);
-	fname.assign(str);
+	title = "Cubic Curves in PG$(2," + std::to_string(PA->F->q) + ")$";
+	author = "";
+	fname = "Cubic_curves_q" + std::to_string(PA->F->q) + ".tex";
 
 	{
 		ofstream fp(fname);

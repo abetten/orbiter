@@ -946,8 +946,7 @@ void geometric_object_create::create_cuspidal_cubic(
 
 	string fname2;
 
-	snprintf(str, sizeof(str), "cuspidal_cubic_%d_subsets_%d.txt", q, k);
-	fname2.assign(str);
+	fname2 = "cuspidal_cubic_" + std::to_string(q) + "_subsets_" + std::to_string(k) + ".txt";
 
 	{
 

@@ -364,14 +364,14 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	}
 }
 
-void semifield_classify_with_substructure::create_fname_for_classification(char *fname)
+void semifield_classify_with_substructure::create_fname_for_classification(std::string &fname)
 {
-	snprintf(fname, sizeof(fname), "semifields_%d_classification.bin", Sub->SC->order);
+	fname = "semifields_" + std::to_string(Sub->SC->order) + "_classification.bin";
 }
 
-void semifield_classify_with_substructure::create_fname_for_flag_orbits(char *fname)
+void semifield_classify_with_substructure::create_fname_for_flag_orbits(std::string &fname)
 {
-	snprintf(fname, sizeof(fname), "semifields_%d_flag_orbits.bin", Sub->SC->order);
+	fname = "semifields_" + std::to_string(Sub->SC->order) + "_flag_orbits.bin";
 }
 
 void semifield_classify_with_substructure::classify_semifields(int verbose_level)
@@ -388,7 +388,8 @@ void semifield_classify_with_substructure::classify_semifields(int verbose_level
 	Sub->do_classify(verbose_level);
 
 	{
-		char fname[1000];
+		string fname;
+
 		create_fname_for_classification(fname);
 		{
 			ofstream fp(fname, ios::binary);
@@ -399,7 +400,8 @@ void semifield_classify_with_substructure::classify_semifields(int verbose_level
 	}
 
 	{
-		char fname[1000];
+		string fname;
+
 		create_fname_for_flag_orbits(fname);
 		{
 			ofstream fp(fname, ios::binary);
@@ -431,7 +433,8 @@ void semifield_classify_with_substructure::load_classification(int verbose_level
 
 
 	{
-		char fname[1000];
+		string fname;
+
 		create_fname_for_classification(fname);
 		{
 			ifstream fp(fname, ios::binary);
@@ -463,7 +466,8 @@ void semifield_classify_with_substructure::load_flag_orbits(int verbose_level)
 
 
 	{
-		char fname[1000];
+		string fname;
+
 		create_fname_for_flag_orbits(fname);
 		{
 			ifstream fp(fname, ios::binary);
@@ -644,19 +648,15 @@ void semifield_classify_with_substructure::latex_report(
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::latex_report" << endl;
 	}
-	char str[1000];
 	string author, fname, extra_praeamble;
-
-	snprintf(str, sizeof(str), "Isotopy classes of semifields of order %d", Descr->order);
-
 	string title;
-	title.assign(str);
 
-	snprintf(str, sizeof(str), "Orbiter");
-	author.assign(str);
+	title = "Isotopy classes of semifields of order " + std::to_string(Descr->order);
 
-	snprintf(str, sizeof(str), "Semifields_%d.tex", Descr->order);
-	fname.assign(str);
+
+	author = "Orbiter";
+
+	fname = "Semifields_" + std::to_string(Descr->order) + ".tex";
 
 	if (f_v) {
 		cout << "writing latex file " << fname << endl;
@@ -795,11 +795,9 @@ void semifield_classify_with_substructure::latex_report(
 		fp << "\\end{enumerate}" << endl;
 
 		{
-		char str[1000];
 		string fname;
 
-		snprintf(str, sizeof(str), "Semifields_%d_2structure.tex", Descr->order);
-		fname.assign(str);
+		fname = "Semifields_" + std::to_string(Descr->order) + "_2structure.tex";
 		Fio.int_matrix_write_csv(fname, PO2, Semifields->nb_orbits, Sub->N2);
 		}
 		FREE_int(Po2);
@@ -827,9 +825,8 @@ void semifield_classify_with_substructure::generate_source_code(
 		cout << "semifield_classify_with_substructure::generate_source_code" << endl;
 	}
 	string fname_base;
-	char str[1000];
-	snprintf(str, sizeof(str), "semifields_%d", Descr->order);
-	fname_base.assign(str);
+
+	fname_base = "semifields_" + std::to_string(Descr->order);
 
 	if (f_v) {
 		cout << "before Semifields->generate_source_code " << fname_base << endl;

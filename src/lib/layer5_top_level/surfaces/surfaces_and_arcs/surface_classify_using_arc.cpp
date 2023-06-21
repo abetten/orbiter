@@ -235,19 +235,13 @@ void surface_classify_using_arc::report(
 	//Surf = Surf_A->Surf;
 
 	string fname_arc_lifting;
-	char str[1000];
 
-	snprintf(str, sizeof(str), "%d", F->q);
-	fname_arc_lifting.assign("arc_lifting_q");
-	fname_arc_lifting.append(str);
-	fname_arc_lifting.append(".tex");
+	fname_arc_lifting = "arc_lifting_q" + std::to_string(F->q) + ".tex";
 
 	{
-		char str[1000];
 		string title, author, extra_praeamble;
 
-		snprintf(str, 1000, "Arc lifting over GF(%d) ", F->q);
-		title.assign(str);
+		title = "Arc lifting over GF(" + std::to_string(F->q) + ") ";
 
 
 
@@ -346,7 +340,6 @@ void surface_classify_using_arc::report2(std::ostream &ost,
 	}
 
 #if 0
-	char fname_base[1000];
 	snprintf(fname_base, 1000, "arcs_q%d", F->q);
 
 	if (F->q < 20) {
@@ -505,14 +498,13 @@ void surface_classify_using_arc::report_decomposition_matrix(std::ostream &ost, 
 	//fp << "$$" << endl;
 
 	orbiter_kernel_system::file_io Fio;
-	char str[1000];
 	string fname_decomposition;
 
-	snprintf(str, sizeof(str), "surfaces_q%d_decomposition_matrix.csv", Surf_A->PA->F->q);
-	fname_decomposition.assign(str);
+	fname_decomposition = "surfaces_q" + std::to_string(Surf_A->PA->F->q) + "_decomposition_matrix.csv";
 
 	Fio.int_matrix_write_csv(fname_decomposition, Decomp,
 			Six_arcs->nb_arcs_not_on_conic, nb_surfaces);
+
 	cout << "Written file " << fname_decomposition << " of size "
 			<< Fio.file_size(fname_decomposition) << endl;
 

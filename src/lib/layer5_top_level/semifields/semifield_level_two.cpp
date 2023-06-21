@@ -1870,16 +1870,7 @@ void semifield_level_two::find_all_candidates_at_level_two(
 
 				SC->make_fname_candidates_at_level_two_orbit_by_type(
 						fname, orbit, h);
-#if 0
-				if (SC->f_level_two_prefix) {
-					snprintf(fname, sizeof(fname), "%sC2_orbit%d_type%d_int8.bin",
-							SC->level_two_prefix, orbit, h);
-				}
-				else {
-					snprintf(fname, sizeof(fname), "C2_orbit%d_type%d_int8.bin",
-							orbit, h);
-				}
-#endif
+
 				Fio.write_set_to_file_as_int8(fname,
 					Set[h], Set_sz[h],
 					verbose_level);
@@ -2057,15 +2048,7 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 
 		SC->make_fname_candidates_at_level_two_orbit_by_type(
 				fname, orbit, h);
-#if 0
-		if (SC->f_level_two_prefix) {
-			snprintf(fname, sizeof(fname), "%sC2_orbit%d_type%d_int8.bin",
-					SC->level_two_prefix, orbit, h);
-		}
-		else {
-			snprintf(fname, sizeof(fname), "C2_orbit%d_type%d_int8.bin", orbit, h);
-		}
-#endif
+
 		cout << "Reading file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 		if (Fio.file_size(fname) <= 0) {

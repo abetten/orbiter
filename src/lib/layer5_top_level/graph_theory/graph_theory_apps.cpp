@@ -64,10 +64,8 @@ void graph_theory_apps::automorphism_group(
 
 	{
 		string title, author, extra_praeamble;
-		char str[1000];
 
-		snprintf(str, 1000, "Automorphism group of %s", CG->label_tex.c_str());
-		title.assign(str);
+		title = "Automorphism group of " + CG->label_tex;
 
 
 		{

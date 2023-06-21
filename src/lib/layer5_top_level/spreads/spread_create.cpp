@@ -189,14 +189,9 @@ void spread_create::init(spread_create_description *Descr,
 
 		f_has_group = true;
 
-		char str[1000];
-
-		snprintf(str, sizeof(str), "catalogue_q%d_k%d_%d", q, k, Descr->iso);
-		prefix.assign(str);
-		snprintf(str, sizeof(str), "catalogue_q%d_k%d_%d", q, k, Descr->iso);
-		label_txt.assign(str);
-		snprintf(str, sizeof(str), "catalogue\\_q%d\\_k%d\\_%d", q, k, Descr->iso);
-		label_tex.assign(str);
+		prefix = "catalogue_q" + std::to_string(q) + "_k" + std::to_string(k) + "_" + std::to_string(Descr->iso);
+		label_txt = "catalogue_q" + std::to_string(q) + "_k" + std::to_string(k) + "_" + std::to_string(Descr->iso);
+		label_tex = "catalogue\\_q" + std::to_string(q) + "\\_k" + std::to_string(k) + "\\_" + std::to_string(Descr->iso);
 	}
 
 	else if (Descr->f_spread_set) {
@@ -222,14 +217,16 @@ void spread_create::init(spread_create_description *Descr,
 		}
 
 		if (f_v) {
-			cout << "spread_create::init before Grass->make_spread_from_spread_set" << endl;
+			cout << "spread_create::init "
+					"before Grass->make_spread_from_spread_set" << endl;
 		}
 		Grass->make_spread_from_spread_set(
 				spread_set_matrices, spread_set_matrices_sz / k2,
 				set, sz,
 				verbose_level);
 		if (f_v) {
-			cout << "spread_create::init after Grass->make_spread_from_spread_set, sz = " << sz << endl;
+			cout << "spread_create::init "
+					"after Grass->make_spread_from_spread_set, sz = " << sz << endl;
 		}
 		prefix.assign(Descr->spread_set_label);
 		label_txt.assign(Descr->spread_set_label);
@@ -282,7 +279,10 @@ void spread_create::init(spread_create_description *Descr,
 						<< Descr->transform_text.size() << ":" << endl;
 			}
 
-			Int_vec_scan(Descr->transform_text[h], transformation_coeffs, transformation_coeffs_sz);
+			Int_vec_scan(
+					Descr->transform_text[h],
+					transformation_coeffs,
+					transformation_coeffs_sz);
 
 			if (transformation_coeffs_sz != G->A_base->make_element_size) {
 				cout << "spread_create::init "

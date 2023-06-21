@@ -405,8 +405,6 @@ void blt_set_classify::create_graphs(
 	//f_memory_debug = true;
 
 
-	char str1[1000];
-	char str2[1000];
 	string fname;
 	string fname_list_of_cases;
 	string fname_time;
@@ -419,25 +417,17 @@ void blt_set_classify::create_graphs(
 	int time_idx;
 	orbiter_kernel_system::file_io Fio;
 
+	string str;
 
 
+	fname = Blt_set_domain->prefix + "_lvl_" + std::to_string(starter_size);
 
-	snprintf(str1, sizeof(str1), "_lvl_%d", starter_size);
-	fname.assign(Blt_set_domain->prefix);
-	fname.append(str1);
+	str = "_" + std::to_string(starter_size) + "_" + std::to_string(orbit_at_level_r) + "_" + std::to_string(orbit_at_level_m);
 
-	fname_list_of_cases.assign(Blt_set_domain->prefix);
-	fname_list_of_cases.append("_list_of_cases");
-	snprintf(str2, sizeof(str2), "_%d_%d_%d",
-			starter_size, orbit_at_level_r, orbit_at_level_m);
-	fname_list_of_cases.append(str2);
-	fname_list_of_cases.append(".csv");
+	fname_list_of_cases = Blt_set_domain->prefix + "_list_of_cases" + str + ".csv";
 
 
-	fname_time.assign(Blt_set_domain->prefix);
-	fname_time.append("_time");
-	fname_time.append(str2);
-	fname_time.append(".csv");
+	fname_time = Blt_set_domain->prefix + "_time" + str + ".csv";
 
 
 	if (f_v) {
@@ -596,7 +586,6 @@ void blt_set_classify::create_graphs_list_of_cases(
 				"f_lexorder_test=" << f_lexorder_test << endl;
 	}
 
-	char str[1000];
 	string fname;
 	string fname_list_of_cases;
 	int orbit;
@@ -607,15 +596,10 @@ void blt_set_classify::create_graphs_list_of_cases(
 	orbiter_kernel_system::file_io Fio;
 
 
-	snprintf(str, sizeof(str), "_lvl_%d", starter_size);
-	fname.assign(Blt_set_domain->prefix);
-	fname.append(str);
+	fname = Blt_set_domain->prefix + "_lvl_" + std::to_string(starter_size);
 
 
-	snprintf(str, sizeof(str), "_list_of_cases.txt");
-	fname_list_of_cases.assign(Blt_set_domain->prefix);
-	fname_list_of_cases.append(case_label);
-	fname_list_of_cases.append(str);
+	fname_list_of_cases = Blt_set_domain->prefix + "_list_of_cases_" + case_label + "_lvl_" + std::to_string(starter_size);
 
 
 	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);
@@ -1086,235 +1070,6 @@ void blt_set_classify::report(
 
 }
 
-#if 0
-void blt_set_classify::subset_orbits(isomorph &Iso, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	char fname[1000];
-
-	if (f_v) {
-		cout << "blt_set_classify::subset_orbits" << endl;
-		cout << "A->elt_size_in_int=" << A->elt_size_in_int << endl;
-	}
-	snprintf(fname, sizeof(fname), "report_BLT_%d_subset_orbits.tex", q);
-
-
-	Iso.load_table_of_solutions(verbose_level);
-
-	Iso.depth_completed = Iso.level /*- 2*/;
-
-	Iso.gen->recreate_schreier_vectors_up_to_level(
-			Iso.level - 1,
-			verbose_level);
-
-	int i;
-
-	if (f_v) {
-		for (i = 0; i <= Iso.level + 1; i++) {
-			cout << "gen->first_poset_orbit_node_at_level[" << i
-					<< "]=" << Iso.gen->first_poset_orbit_node_at_level[i]
-					<< endl;
-		}
-		cout << "Iso.depth_completed=" << Iso.depth_completed << endl;
-	}
-	Iso.iso_test_init2(verbose_level);
-
-
-	{
-	ofstream f(fname);
-	int f_book = false;
-	int f_title = true;
-	char title[1000];
-	const char *author = "Orbiter";
-	int f_toc = true;
-	int f_landscape = false;
-	int f_12pt = false;
-	int f_enlarged_page = true;
-	int f_pagenumbers = true;
-
-	snprintf(title, sizeof(title), sizeof(snprintf(str_a, sizeof(str_a), ), "BLT-sets of Q$(4,%d)$", q);
-	cout << "Writing file " << fname << " with "
-			<< Iso.Reps->count << " BLT-sets:" << endl;
-	latex_head(f, f_book, f_title,
-		title, author,
-		f_toc,
-		f_landscape,
-		f_12pt,
-		f_enlarged_page,
-		f_pagenumbers,
-		NULL /* extra_praeamble */);
-
-	f << "\\section{Summary}" << endl << endl;
-	f << "There are " << Iso.Reps->count << " BLT-sets." << endl << endl;
-
-
-	Iso.setup_and_open_solution_database(verbose_level - 1);
-
-
-
-	int h, rep, first, id;
-	longinteger_object go;
-	int data[1000];
-	//int data2[1000];
-
-	for (h = 0; h < Iso.Reps->count; h++) {
-		rep = Iso.Reps->rep[h];
-		first = Iso.orbit_fst[rep];
-		//c = Iso.starter_number[first];
-		id = Iso.orbit_perm[first];
-		Iso.load_solution(id, data);
-
-
-
-		f << "\\section{Isomorphism Type " << h << "}" << endl;
-		f << "\\bigskip" << endl;
-
-		int_vec_print(cout, data, Iso.size);
-		cout << endl;
-
-		sims *Stab;
-
-		Stab = Iso.Reps->stab[h];
-
-		if (f_v) {
-			cout << "blt_set_classify::subset_orbits computing induced "
-					"action on the set (in data)" << endl;
-			}
-		Iso.induced_action_on_set(Stab, data, 0 /*verbose_level*/);
-
-		cout << "data after induced_action_on_set:" << endl;
-		int_vec_print(cout, data, Iso.size);
-		cout << endl;
-
-		longinteger_object go1;
-
-		Iso.AA->group_order(go1);
-		cout << "action " << Iso.AA->label << " computed, group "
-				"order is " << go1 << endl;
-
-		f << "Order of the group that is induced on the object is ";
-		f << "$";
-		go1.print_not_scientific(f);
-		f << "$\\\\" << endl;
-
-		{
-		int *orbit_reps;
-		int nb_orbits;
-		//vector_ge SG;
-		//int *tl;
-		strong_generators *Strong_gens;
-
-		Strong_gens = NEW_OBJECT(strong_generators);
-		Strong_gens->init_from_sims(Iso.AA->Sims, 0);
-		//tl = NEW_int(Iso.AA->base_len);
-		//Iso.AA->Sims->extract_strong_generators_in_order(
-		// SG, tl, verbose_level);
-
-
-		poset *Poset;
-
-		Poset = NEW_OBJECT(poset);
-		Poset->init_subset_lattice(Iso.AA, Iso.AA, Strong_gens,
-				verbose_level);
-
-		Poset->orbits_on_k_sets(
-			Iso.level, orbit_reps, nb_orbits, verbose_level);
-
-		FREE_OBJECT(Poset);
-
-		cout << "Orbit reps: nb_orbits=" << nb_orbits << endl;
-		int_matrix_print(orbit_reps, nb_orbits, Iso.level);
-
-		f << "Number of orbits on $" << Iso.level
-				<< "$-sets is " << nb_orbits << ".\\\\" << endl;
-
-		int *rearranged_set;
-		int *transporter;
-		int u;
-		int case_nb;
-		int f_implicit_fusion = false;
-		int cnt_special_orbits;
-		int f_vv = false;
-		int idx;
-
-		rearranged_set = NEW_int(Iso.size);
-		transporter = NEW_int(A->elt_size_in_int);
-
-		cnt_special_orbits = 0;
-		for (u = 0; u < nb_orbits; u++) {
-			cout << "orbit " << u << ":" << endl;
-			int_vec_print(cout,
-					orbit_reps + u * Iso.level, Iso.level);
-			cout << endl;
-
-
-
-			rearrange_subset(Iso.size, Iso.level, data,
-				orbit_reps + u * Iso.level, rearranged_set,
-				0/*verbose_level - 3*/);
-
-
-			//int_vec_print(cout, rearranged_set, Iso.size);
-			//cout << endl;
-			int f_failure_to_find_point, f_found;
-
-			A->element_one(transporter, 0);
-			case_nb = Iso.trace_set(rearranged_set, transporter,
-				f_implicit_fusion, f_failure_to_find_point,
-				0 /*verbose_level - 2*/);
-
-
-			f_found = Iso.find_extension_easy_new(
-					rearranged_set, case_nb, idx,
-					0 /* verbose_level */);
-#if 0
-			f_found = Iso.identify_solution_relaxed(prefix, transporter,
-				f_implicit_fusion, orbit_no0,
-				f_failure_to_find_point, 3 /*verbose_level*/);
-#endif
-
-			cout << "case_nb=" << case_nb << endl;
-			if (f_failure_to_find_point) {
-				cout << "blt_set_classify::subset_orbits "
-						"f_failure_to_find_point" << endl;
-				exit(1);
-				}
-			if (!f_found) {
-				if (f_vv) {
-					cout << "blt_set_classify::subset_orbits not found" << endl;
-					}
-				continue;
-				}
-			cnt_special_orbits++;
-			} // next u
-
-		f << "Number of special orbits on $" << Iso.level
-				<< "$-sets is " << cnt_special_orbits << ".\\\\" << endl;
-
-		FREE_int(rearranged_set);
-		FREE_int(transporter);
-		FREE_int(orbit_reps);
-		//FREE_int(tl);
-		FREE_OBJECT(Strong_gens);
-		}
-
-		}
-
-	Iso.close_solution_database(verbose_level - 1);
-
-
-
-	latex_foot(f);
-	//FREE_int(Rk_of_span);
-	}
-
-	cout << "Written file " << fname << " of size "
-			<< file_size(fname) << endl;
-	if (f_v) {
-		cout << "blt_set::subset_orbits done" << endl;
-		}
-}
-#endif
 
 void blt_set_classify::report2(
 		std::ostream &ost,
@@ -1329,7 +1084,6 @@ void blt_set_classify::report2(
 
 	int f_book = false;
 	int f_title = true;
-	char str[1000];
 	string title, author, extra_praeamble;
 
 	int f_toc = false;
@@ -1339,8 +1093,7 @@ void blt_set_classify::report2(
 	int f_pagenumbers = true;
 	l1_interfaces::latex_interface L;
 
-	snprintf(str, sizeof(str), "BLT-sets of ${\\cal Q}(4,%d)$", q);
-	title.assign(str);
+	title = "BLT-sets of ${\\cal Q}(4," + std::to_string(q) + ")$";
 
 	author.assign("Orbiter");
 
@@ -1542,17 +1295,9 @@ void blt_set_classify::report2(
 		string label_tex;
 		blt_set_with_action *BA;
 
-		char str[1000];
 
-		snprintf(str, sizeof(str), "_q%d_iso%d", q, h);
-
-		label_txt.assign("BLT_set_");
-		label_txt.append(str);
-
-		snprintf(str, sizeof(str), "-q%d-iso%d", q, h);
-
-		label_tex.assign("BLT_set_");
-		label_tex.append(str);
+		label_txt = "BLT_set_q" + std::to_string(q) + "_iso" + std::to_string(h);
+		label_tex = "BLT\\_set\\_q" + std::to_string(q) + "\\_iso" + std::to_string(h);
 
 
 		BA = NEW_OBJECT(blt_set_with_action);
@@ -1601,46 +1346,6 @@ static void blt_set_classify_print(
 	Gen->Blt_set_domain->print(ost, S, len);
 }
 
-#if 0
-static void blt_set_classify_lifting_prepare_function_new(
-	exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates,
-	groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	blt_set_classify *B = (blt_set_classify *) EC->user_data;
-
-	if (f_v) {
-		cout << "blt_set_classify_lifting_prepare_function_new "
-				"nb_candidates=" << nb_candidates << endl;
-	}
-
-	B->lifting_prepare_function_new(EC, starter_case,
-		candidates, nb_candidates, Strong_gens,
-		Dio, col_labels, f_ruled_out,
-		verbose_level);
-
-
-	if (f_v) {
-		cout << "blt_set_classify_lifting_prepare_function_new "
-				"after lifting_prepare_function_new" << endl;
-	}
-
-	if (f_v) {
-		cout << "blt_set_classify_lifting_prepare_function_new "
-				"nb_rows=" << Dio->m << " nb_cols=" << Dio->n << endl;
-	}
-
-	if (f_v) {
-		cout << "blt_set_classify_lifting_prepare_function_new "
-				"done" << endl;
-	}
-}
-#endif
-
 
 static void blt_set_classify_early_test_func_callback(
 		long int *S, int len,
@@ -1665,14 +1370,6 @@ static void blt_set_classify_early_test_func_callback(
 	}
 }
 
-#if 0
-static void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level)
-{
-	blt_set_classify *Gen = (blt_set_classify *) data;
-
-	Gen->report_from_iso(*Iso, verbose_level);
-}
-#endif
 
 
 }}}

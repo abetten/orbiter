@@ -1266,46 +1266,6 @@ void string_tools::parse_value_pairs(
 
 	}
 
-#if 0
-	const char *p = evaluate_text.c_str();
-	char str[1000];
-
-	//std::map<std::string, std::string> symbol_table;
-	//vector<string> symbols;
-	//vector<string> values;
-
-	while (true) {
-		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
-			break;
-		}
-		string assignment;
-		int len;
-
-		assignment.assign(str);
-		len = strlen(str);
-
-		std::size_t found;
-
-		found = assignment.find('=');
-		if (found == std::string::npos) {
-			cout << "did not find '=' in variable assignment" << endl;
-			exit(1);
-		}
-		std::string symb = assignment.substr (0, found);
-		std::string val = assignment.substr (found + 1, len - found - 1);
-
-
-
-		if (f_v) {
-			cout << "adding symbol " << symb << " = " << val << endl;
-		}
-
-		symbol_table[symb] = val;
-		//symbols.push_back(symb);
-		//values.push_back(val);
-
-	}
-#endif
 
 	if (f_v) {
 		cout << "string_tools::parse_value_pairs done" << endl;
@@ -1331,26 +1291,6 @@ void string_tools::parse_comma_separated_values(
 			evaluate_text, symbol_table,
 			0 /*verbose_level*/);
 
-#if 0
-	//const char *p = evaluate_text.c_str();
-	//char str[1000];
-	while (true) {
-		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
-			break;
-		}
-		string symbol;
-
-
-		symbol.assign(str);
-
-		if (f_v) {
-			cout << "adding symbol " << symbol << endl;
-		}
-
-		symbol_table.push_back(symbol);
-
-	}
-#endif
 
 	if (f_v) {
 		cout << "string_tools::parse_comma_separated_values done" << endl;
@@ -1529,31 +1469,29 @@ void string_tools::name_of_group_projective(
 	if (f_v) {
 		cout << "string_tools::name_of_group_projective" << endl;
 	}
-	char str1[1000];
-	char str2[1000];
 
 	if (f_special) {
 		if (f_semilinear) {
-			snprintf(str1, sizeof(str1), "PSSL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Sigma {\\rm L}(%d,%d)", n, q);
+			label_txt = "PSSL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm P}\\Sigma {\\rm L}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			snprintf(str1, sizeof(str1), "PSL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PSL}(%d,%d)", n, q);
+			label_txt = "PSL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm PSL}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
+
 	}
 	else {
 		if (f_semilinear) {
-			snprintf(str1, sizeof(str1), "PGGL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma {\\rm L}(%d,%d)", n, q);
+			label_txt = "PGGL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm P}\\Gamma {\\rm L}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			snprintf(str1, sizeof(str1), "PGL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGL}(%d,%d)", n, q);
+			label_txt = "PGL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm PGL}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 	}
-	label_txt.assign(str1);
-	label_tex.assign(str2);
+
 	if (f_v) {
 		cout << "string_tools::name_of_group_projective done" << endl;
 	}
@@ -1572,31 +1510,27 @@ void string_tools::name_of_group_affine(
 		cout << "string_tools::name_of_group_affine" << endl;
 	}
 
-	char str1[1000];
-	char str2[1000];
-
 	if (f_special) {
 		if (f_semilinear) {
-			snprintf(str1, sizeof(str1), "ASSL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm A}\\Sigma {\\rm L}(%d,%d)", n, q);
+			label_txt = "ASSL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm A}\\Sigma {\\rm L}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			snprintf(str1, sizeof(str1), "ASL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm ASL}(%d,%d)", n, q);
+			label_txt = "ASL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm ASL}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
+
 	}
 	else {
 		if (f_semilinear) {
-			snprintf(str1, sizeof(str1), "AGGL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm A}\\Gamma {\\rm L}(%d,%d)", n, q);
+			label_txt = "AGGL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm A}\\Gamma {\\rm L}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			snprintf(str1, sizeof(str1), "AGL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm AGL}(%d,%d)", n, q);
+			label_txt = "GL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm AGL}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 	}
-	label_txt.assign(str1);
-	label_tex.assign(str2);
 	if (f_v) {
 		cout << "string_tools::name_of_group_affine done" << endl;
 	}
@@ -1615,32 +1549,28 @@ void string_tools::name_of_group_general_linear(
 		cout << "string_tools::name_of_group_general_linear" << endl;
 	}
 
-	char str1[1000];
-	char str2[1000];
-
 	if (f_special) {
 		if (f_semilinear) {
-			snprintf(str1, sizeof(str1), "SSL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "\\Sigma {\\rm L}(%d,%d)", n, q);
+			label_txt = "SSL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "\\Sigma {\\rm L}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			snprintf(str1, sizeof(str1), "SL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm SL}(%d,%d)", n, q);
+			label_txt = "SL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm SL}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 
 	}
 	else {
 		if (f_semilinear) {
-			snprintf(str1, sizeof(str1), "GGL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "\\Gamma {\\rm L}(%d,%d)", n, q);
+			label_txt = "GGL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "\\Gamma {\\rm L}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			snprintf(str1, sizeof(str1), "GL_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm GL}(%d,%d)", n, q);
+			label_txt = "GL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm GL}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 	}
-	label_txt.assign(str1);
-	label_tex.assign(str2);
+
 	if (f_v) {
 		cout << "string_tools::name_of_group_general_linear done" << endl;
 	}
@@ -1658,39 +1588,34 @@ void string_tools::name_of_orthogonal_group(
 		cout << "string_tools::name_of_orthogonal_group" << endl;
 	}
 
-	char str1[1000];
-	char str2[1000];
-
 	if (f_semilinear) {
 		if (epsilon == 1) {
-			snprintf(str1, sizeof(str1), "PGGOp_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^+(%d,%d)", n, q);
+			label_txt = "PGGOp_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm P}\\Gamma{\\rm O}^+(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else if (epsilon == -1) {
-			snprintf(str1, sizeof(str1), "PGGOm_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}^-(%d,%d)", n, q);
+			label_txt = "PGGOm_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm P}\\Gamma{\\rm O}^-(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			snprintf(str1, sizeof(str1), "PGGO_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm P}\\Gamma{\\rm O}(%d,%d)", n, q);
+			label_txt = "PGGO_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm P}\\Gamma{\\rm O}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 	}
 	else {
 		if (epsilon == 1) {
-			snprintf(str1, sizeof(str1), "PGOp_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGO}^+(%d,%d)", n, q);
+			label_txt = "PGOp_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm PGO}^+(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else if (epsilon == -1) {
-			snprintf(str1, sizeof(str1), "PGOm_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGO}^-(%d,%d)", n, q);
+			label_txt = "PGOm_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm PGO}^-(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			snprintf(str1, sizeof(str1), "PGO_%d_%d", n, q);
-			snprintf(str2, sizeof(str2), "{\\rm PGO}(%d,%d)", n, q);
+			label_txt = "PGO_" + std::to_string(n) + "_" + std::to_string(q);
+			label_tex = "{\\rm PGO}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 	}
-	label_txt.assign(str1);
-	label_tex.assign(str2);
 
 	if (f_v) {
 		cout << "string_tools::name_of_orthogonal_group done" << endl;
@@ -1709,25 +1634,21 @@ void string_tools::name_of_orthogonal_space(
 		cout << "string_tools::name_of_orthogonal_space" << endl;
 	}
 
-	char str[1000];
-
-	snprintf(str, sizeof(str), "O_%d_%d_%d", epsilon, n, q);
-	label_txt.assign(str);
+	label_txt = "O_"+ std::to_string(epsilon) + "_"+ std::to_string(n) + "_"+ std::to_string(q);
 
 	if (epsilon == 1) {
-		snprintf(str, sizeof(str), "O^+(%d,%d)", n, q);
+		label_tex = "O^+("+ std::to_string(n) + ","+ std::to_string(q) + ")";
 	}
 	else if (epsilon == 0) {
-		snprintf(str, sizeof(str), "O(%d,%d)", n, q);
+		label_tex = "O("+ std::to_string(n) + ","+ std::to_string(q) + ")";
 	}
 	else if (epsilon == -1) {
-		snprintf(str, sizeof(str), "O^-(%d,%d)", n, q);
+		label_tex = "O^-("+ std::to_string(n) + ","+ std::to_string(q) + ")";
 	}
 	else {
 		cout << "string_tools::name_of_orthogonal_space illegal value of epsilon" << endl;
 		exit(1);
 	}
-	label_tex.assign(str);
 
 
 }
@@ -1744,25 +1665,15 @@ void string_tools::name_of_BLT_set(
 		cout << "string_tools::name_of_BLT_set" << endl;
 	}
 
-	char str[1000];
-
 	if (f_embedded) {
-		snprintf(str, sizeof(str), "%d_%d_embedded", q, ocn);
-		label_txt.assign("BLT_");
-		label_txt.append(str);
+		label_txt = "BLT_"+ std::to_string(q) + "_"+ std::to_string(ocn) + "_embedded";
 
-		snprintf(str, sizeof(str), "%d\\_%d\\_embedded", q, ocn);
-		label_tex.assign("BLT\\_");
-		label_tex.append(str);
+		label_tex = "BLT_"+ std::to_string(q) + "\\_"+ std::to_string(ocn) + "\\_embedded";
 	}
 	else {
-		snprintf(str, sizeof(str), "%d_%d", q, ocn);
-		label_txt.assign("BLT_");
-		label_txt.append(str);
+		label_txt = "BLT_"+ std::to_string(q) + "_"+ std::to_string(ocn);
 
-		snprintf(str, sizeof(str), "%d\\_%d", q, ocn);
-		label_tex.assign("BLT\\_");
-		label_tex.append(str);
+		label_tex = "BLT\\_"+ std::to_string(q) + "\\_"+ std::to_string(ocn);
 	}
 
 }

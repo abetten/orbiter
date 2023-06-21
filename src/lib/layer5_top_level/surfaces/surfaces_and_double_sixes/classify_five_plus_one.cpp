@@ -252,10 +252,8 @@ void classify_five_plus_one::classify_partial_ovoids(int verbose_level)
 		{
 			data_structures::spreadsheet *Sp;
 			Five_plus_one->make_spreadsheet_of_orbit_reps(Sp, 5);
-			char str[1000];
 			string fname_csv;
-			snprintf(str, sizeof(str), "fiveplusone_%d.csv", q);
-			fname_csv.assign(str);
+			fname_csv = "fiveplusone_" + std::to_string(q) + ".csv";
 			Sp->save(fname_csv, verbose_level);
 			FREE_OBJECT(Sp);
 		}

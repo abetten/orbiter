@@ -117,16 +117,11 @@ void design_create::init(
 			v = q * q + q + 1;
 			b = v;
 
-			char str[1000];
 
-			snprintf(str, sizeof(str), "PG_2_q%d", q);
-			prefix.assign(str);
+			prefix = "PG_2_q" + std::to_string(q);
+			label_txt = "PG_2_q" + std::to_string(q);
+			label_tex = "PG\\_2\\_q" + std::to_string(q);
 
-			snprintf(str, sizeof(str), "PG_2_%d", q);
-			label_txt.assign(str);
-
-			snprintf(str, sizeof(str), "PG\\_2\\_%d", q);
-			label_tex.assign(str);
 		}
 		else {
 			cout << "design_create::init family name is not recognized" << endl;
@@ -178,16 +173,10 @@ void design_create::init(
 		v = degree;
 		b = sz;
 
-		char str[1000];
+		prefix = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
+		label_txt = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
+		label_tex = "blocks\\_v" + std::to_string(degree) + "\\_k" + std::to_string(k);
 
-		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
-		prefix.assign(str);
-
-		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "blocks\\_v%d\\_k%d", degree, k);
-		label_tex.assign(str);
 
 		A = NEW_OBJECT(actions::action);
 
@@ -233,16 +222,10 @@ void design_create::init(
 		v = degree;
 		b = sz;
 
-		char str[1000];
 
-		snprintf(str, sizeof(str), "sets_v%d", degree);
-		prefix.assign(str);
-
-		snprintf(str, sizeof(str), "sets_v%d", degree);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "sets\\_v%d", degree);
-		label_tex.assign(str);
+		prefix = "sets_v" + std::to_string(degree);
+		label_txt = "sets_v" + std::to_string(degree);
+		label_tex = "sets\\_v" + std::to_string(degree);
 
 		A = NEW_OBJECT(actions::action);
 
@@ -301,16 +284,9 @@ void design_create::init(
 		v = degree;
 		b = sz;
 
-		char str[1000];
-
-		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
-		prefix.assign(str);
-
-		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "blocks\\_v%d\\_k%d", degree, k);
-		label_tex.assign(str);
+		prefix = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
+		label_txt = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
+		label_tex = "blocks\\_v" + std::to_string(degree) + "\\_k" + std::to_string(k);
 
 
 		A = NEW_OBJECT(actions::action);
@@ -369,16 +345,9 @@ void design_create::init(
 		v = degree;
 		b = sz;
 
-		char str[1000];
-
-		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
-		prefix.assign(str);
-
-		snprintf(str, sizeof(str), "blocks_v%d_k%d", degree, k);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "blocks\\_v%d\\_k%d", degree, k);
-		label_tex.assign(str);
+		prefix = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
+		label_txt = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
+		label_tex = "blocks\\_v" + std::to_string(degree) + "\\_k" + std::to_string(k);
 
 
 		A = NEW_OBJECT(actions::action);
@@ -450,16 +419,9 @@ void design_create::init(
 		v = degree;
 		b = sz;
 
-		char str[1000];
-
-		snprintf(str, sizeof(str), "wreath_product_designs_n%d_k%d", n, k);
-		prefix.assign(str);
-
-		snprintf(str, sizeof(str), "wreath_product_designs_n%d_k%d", n, k);
-		label_txt.assign(str);
-
-		snprintf(str, sizeof(str), "wreath\\_product\\_designs\\_n%d\\_k%d", n, k);
-		label_tex.assign(str);
+		prefix = "wreath_product_designs_n" + std::to_string(n) + "_k" + std::to_string(k);
+		label_txt = "wreath_product_designs_n" + std::to_string(n) + "_k" + std::to_string(k);
+		label_tex = "wreath\\_product\\_designs\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
 
 		A = NEW_OBJECT(actions::action);
 

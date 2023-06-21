@@ -110,7 +110,8 @@ quartic_curve_object_properties::~quartic_curve_object_properties()
 	}
 }
 
-void quartic_curve_object_properties::init(quartic_curve_object *QO, int verbose_level)
+void quartic_curve_object_properties::init(
+		quartic_curve_object *QO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -151,7 +152,8 @@ void quartic_curve_object_properties::init(quartic_curve_object *QO, int verbose
 }
 
 
-void quartic_curve_object_properties::create_summary_file(std::string &fname,
+void quartic_curve_object_properties::create_summary_file(
+		std::string &fname,
 		std::string &surface_label,
 		std::string &col_postfix,
 		int verbose_level)
@@ -755,7 +757,8 @@ void quartic_curve_object_properties::print_bitangents_with_points_on_them(std::
 }
 #endif
 
-void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level)
+void quartic_curve_object_properties::points_on_curve_on_lines(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -773,14 +776,16 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 
 	Pts_off = NEW_lint(QO->Dom->P->Subspaces->N_points);
 
-	Combi.set_complement_lint(QO->Pts, QO->nb_pts, Pts_off /*complement*/,
+	Combi.set_complement_lint(
+			QO->Pts, QO->nb_pts, Pts_off /*complement*/,
 			nb_pts_off, QO->Dom->P->Subspaces->N_points);
 
 	if (f_v) {
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines before "
 				"Surf->compute_points_on_lines" << endl;
 	}
-	QO->Dom->compute_points_on_lines(QO->Pts, QO->nb_pts,
+	QO->Dom->compute_points_on_lines(
+			QO->Pts, QO->nb_pts,
 		QO->bitangents28, 28,
 		pts_on_lines,
 		f_is_on_line,
@@ -867,7 +872,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
 				"before Surf->compute_points_on_lines for complement" << endl;
 	}
-	QO->Dom->compute_points_on_lines(Pts_off, nb_pts_off,
+	QO->Dom->compute_points_on_lines(
+			Pts_off, nb_pts_off,
 		QO->bitangents28, 28,
 		pts_off_on_lines,
 		f_is_on_line2,
@@ -893,7 +899,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	}
 
 	Point_off_type = NEW_OBJECT(data_structures::tally);
-	Point_off_type->init_lint(lines_on_points_off->Set_size,
+	Point_off_type->init_lint(
+			lines_on_points_off->Set_size,
 			lines_on_points_off->nb_sets, false, 0);
 	if (f_v) {
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
@@ -936,7 +943,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	}
 }
 
-void quartic_curve_object_properties::report_bitangent_line_type(std::ostream &ost)
+void quartic_curve_object_properties::report_bitangent_line_type(
+		std::ostream &ost)
 {
 	if (QO->f_has_bitangents) {
 		l1_interfaces::latex_interface L;
@@ -1016,7 +1024,8 @@ void quartic_curve_object_properties::compute_gradient(int verbose_level)
 
 
 
-void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(int verbose_level)
+void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
+		int verbose_level)
 // a singular point is a point where all partials vanish
 // We compute the set of singular points into Pts[nb_pts]
 {

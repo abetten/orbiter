@@ -270,16 +270,13 @@ void spread_table_activity::report_spreads(
 	}
 
 	{
-		char str[1000];
 		string fname;
 		string title, author, extra_praeamble;
 
-		snprintf(str, 1000, "Spreads");
-		title.assign(str);
+		title = "Spreads";
 
 
-		snprintf(str, sizeof(str), "Spreads");
-		fname.assign(str);
+		fname = "Spreads";
 
 
 
@@ -288,10 +285,9 @@ void spread_table_activity::report_spreads(
 
 		for (i = 0; i < nb; i++) {
 			idx = spread_idx[i];
-			snprintf(str, sizeof(str), "_%d", idx);
-			fname.append(str);
+			fname += "_" + std::to_string(idx);
 		}
-		fname.append(".tex");
+		fname += ".tex";
 
 		{
 			ofstream ost(fname);

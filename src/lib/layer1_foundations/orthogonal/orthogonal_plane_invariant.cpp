@@ -388,7 +388,8 @@ void orthogonal_plane_invariant::init(
 #if 0
 	{
 
-		snprintf(fname, 1000, "plane_invariant_%d_%d.txt", q, k);
+		string fname;
+		fname = "plane_invariant_" + std::to_string(q) + "_" + std::to_string(k) + ".txt";
 
 		ofstream fp(fname);
 		fp << nb_planes << endl;

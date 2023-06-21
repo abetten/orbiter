@@ -1223,7 +1223,16 @@ void symbolic_object_builder::do_collect(
 				Output_node,
 				0 /*verbose_level*/);
 
-		//j1 = Output_node->exponent_of_variable_destructive(variable);
+		int j1;
+
+		// destroy the appearances of the variable in the term:
+
+		j1 = Output_node->exponent_of_variable_destructive(variable);
+
+		if (j1 != j) {
+			cout << "symbolic_object_builder::do_collect j1 != j" << endl;
+			exit(1);
+		}
 
 
 		Formula_vector->V[j].tree->Root->append_node(Output_node, 0 /* verbose_level */);
