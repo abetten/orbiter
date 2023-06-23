@@ -1352,13 +1352,10 @@ void poset_of_orbits::write_lvl_file_with_candidates(
 {
 	int f_v = (verbose_level >= 1);
 	string fname1;
-	char str[1000];
 	orbiter_kernel_system::file_io Fio;
 	orbiter_kernel_system::os_interface Os;
 
-	fname1.assign(fname_base);
-	snprintf(str, sizeof(str), "_lvl_%d_candidates.txt", lvl);
-	fname1.append(str);
+	fname1 = fname_base + "_lvl_" + std::to_string(lvl) + "_candidates.txt";
 	{
 		ofstream f(fname1);
 		int cur;

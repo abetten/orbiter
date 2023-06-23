@@ -502,7 +502,8 @@ public:
 	void matrix_print_tex(std::ostream &ost,
 			longinteger_object *A,
 		int Am, int An);
-	void power_mod(char *aa, char *bb, char *nn,
+	void power_mod(
+			char *aa, char *bb, char *nn,
 		longinteger_object &result, int verbose_level);
 	void factorial(longinteger_object &result, int n);
 	void group_order_PGL(longinteger_object &result,

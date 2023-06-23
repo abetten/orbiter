@@ -21,7 +21,7 @@ namespace layer1_foundations {
 namespace coding_theory {
 
 
-static void CRC_BCH256_771_divide(const char *in, char *out);
+//static void CRC_BCH256_771_divide(const char *in, char *out);
 
 
 
@@ -270,32 +270,9 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 				poly[a] = v;
 			}
 
-			orbiter_kernel_system::Orbiter->Int_vec->print_as_polynomial_in_algebraic_notation(
+			Int_vec_print_as_polynomial_in_algebraic_notation(
 					cout, poly, Crc->Len_total);
 
-#if 0
-			int coeff;
-			int f_first;
-
-			f_first = true;
-
-			for (h = 0; h < Crc->Len_total; h++) {
-				coeff = poly[h];
-				if (coeff) {
-					if (!f_first) {
-						cout << "+";
-					}
-					f_first = false;
-					cout << coeff;
-					if (h) {
-						cout << "*X";
-						if (h > 1) {
-							cout << "^" << h;
-						}
-					}
-				}
-			}
-#endif
 			cout << endl;
 
 			FREE_int(poly);
@@ -364,6 +341,7 @@ void crc_codes::char_vec_zero(unsigned char *p, int len)
 	}
 }
 
+#if 0
 void crc_codes::crc256_test_k_subsets(
 		int message_length, int R, int k, int verbose_level)
 {
@@ -491,6 +469,9 @@ void crc_codes::crc256_test_k_subsets(
 		cout << "crc_codes::crc256_test_k_subsets" << endl;
 	}
 }
+#endif
+
+#if 0
 
 void crc_codes::crc32_remainders(
 		int message_length, int verbose_level)
@@ -543,7 +524,6 @@ void crc_codes::crc32_remainders(
 	}
 
 }
-
 
 void crc_codes::crc32_remainders_compute(
 		int message_length,
@@ -687,7 +667,9 @@ void crc_codes::crc32_remainders_compute(
 		cout << "crc_codes::crc32_remainders_compute" << endl;
 	}
 }
+#endif
 
+#if 0
 // the size of the array B is  255 x 31
 static const unsigned char B[] = {
   1, 26,210, 24,138,148,160, 58,108,199, 95, 56,  9,205,194,193,  3,248,110,150, 24,169,192,212,112,144, 97,109,174,253,  1,
@@ -973,6 +955,7 @@ static void CRC_BCH256_771_divide(const char *in, char *out)
 	}
 }
 
+#endif
 
 
 void crc_codes::introduce_errors(
@@ -1866,7 +1849,8 @@ void crc_codes::check_errors(
 	cout << "nb_error_undetected = " << nb_error_undetected << endl;
 
 	if (nb_error_undetected) {
-		cout << "Input file " << Crc_options_description->input_fname << " nb_error_undetected = " << nb_error_undetected << endl;
+		cout << "Input file " << Crc_options_description->input_fname
+				<< " nb_error_undetected = " << nb_error_undetected << endl;
 		//while (1) {
 		//}
 	}
@@ -1890,7 +1874,8 @@ void crc_codes::check_errors(
 
 		ost.write(recovered_data, recovered_data_size);
 	}
-	cout << "Written file " << fname_recovered << " of size " << Fio.file_size(fname_recovered) << endl;
+	cout << "Written file " << fname_recovered << " of size "
+			<< Fio.file_size(fname_recovered) << endl;
 
 	FREE_lint(Error_pattern);
 	FREE_lint(Error_undetected);
@@ -1991,8 +1976,12 @@ void crc_codes::extract_block(
 	int nb_error = 0;
 	int m;
 
-	cout << "Reading file " << fname_error_log << " of size " << Fio.file_size(fname_error_log) << endl;
-	Fio.lint_matrix_read_csv(fname_error_log, Error_pattern, nb_error, m, verbose_level);
+	cout << "Reading file " << fname_error_log
+			<< " of size " << Fio.file_size(fname_error_log) << endl;
+
+	Fio.lint_matrix_read_csv(
+			fname_error_log, Error_pattern, nb_error, m,
+			verbose_level);
 	if (m != 3) {
 		cout << "m != 3" << endl;
 		exit(1);
@@ -2276,19 +2265,15 @@ void crc_codes::CRC_encode_text(
 		string fname_base;
 		string fname_out;
 		data_structures::string_tools String;
-		char str[1000];
 
-
-		fname_base.assign(fname);
+		fname_base = fname;
 		String.chop_off_extension(fname_base);
 
-		snprintf(str, sizeof(str), "_word%d", I);
-		fname_base.append(str);
+		fname_base += "_word" + std::to_string(I);
 
 
 
-		fname_out.assign(fname_base);
-		fname_out.append("_information.csv");
+		fname_out = fname_base + "_information.csv";
 
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
@@ -2306,8 +2291,7 @@ void crc_codes::CRC_encode_text(
 		}
 
 
-		fname_out.assign(fname_base);
-		fname_out.append("_col_parity.csv");
+		fname_out = fname_base + "_col_parity.csv";
 
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
@@ -2325,8 +2309,7 @@ void crc_codes::CRC_encode_text(
 			row_parity[i] = a;
 		}
 
-		fname_out.assign(fname_base);
-		fname_out.append("_row_parity.csv");
+		fname_out = fname_base + "_row_parity.csv";
 
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
@@ -2339,8 +2322,7 @@ void crc_codes::CRC_encode_text(
 		Int_vec_copy(col_parity, information_and_parity + nb_rows * nb_cols + nb_rows, nb_cols);
 
 
-		fname_out.assign(fname_base);
-		fname_out.append("_IP.csv");
+		fname_out = fname_base + "_IP.csv";
 
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
@@ -2358,8 +2340,7 @@ void crc_codes::CRC_encode_text(
 			information_and_parity_Fq[i] = a;
 		}
 
-		fname_out.assign(fname_base);
-		fname_out.append("_IPq.csv");
+		fname_out = fname_base + "_IPq.csv";
 
 		Fio.int_matrix_write_csv(fname_out, information_and_parity_Fq, 1, IPq);
 		cout << "Written file " << fname_out << " of size "
@@ -2395,8 +2376,7 @@ void crc_codes::CRC_encode_text(
 			codeword_Fq[i] = a;
 		}
 
-		fname_out.assign(fname_base);
-		fname_out.append("_codeword_Fq.csv");
+		fname_out = fname_base + "_codeword_Fq.csv";
 
 		Fio.int_matrix_write_csv(fname_out, codeword_Fq, 1, IPq + degree);
 		cout << "Written file " << fname_out << " of size "

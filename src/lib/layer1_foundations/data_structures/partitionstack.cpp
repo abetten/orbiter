@@ -147,7 +147,8 @@ void partitionstack::allocate_with_two_classes(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "partitionstack::allocate_with_two_classes n=" << n << " v=" << v << " b=" << b << endl;
+		cout << "partitionstack::allocate_with_two_classes "
+				"n=" << n << " v=" << v << " b=" << b << endl;
 	}
 
 	allocate(v + b, 0 /* verbose_level */);
@@ -957,7 +958,7 @@ void partitionstack::split_multiple_cells(int *set,
 	int i, a, pos_a, c;
 
 	if (f_v) {
-		cout << "split_multiple_cells() for subset { ";
+		cout << "partitionstack::split_multiple_cells for subset { ";
 		for (i = 0; i < set_size; i++) {
 			cout << set[i] << " ";
 		}
@@ -999,19 +1000,24 @@ void partitionstack::split_multiple_cells(int *set,
 			}
 		}
 		if (f_vv) {
-			cout << "splitting set of size " << set2_sz << " which is ";
+			cout << "partitionstack::split_multiple_cells "
+					"splitting set of size " << set2_sz << " which is ";
 			Int_vec_print(cout, set2, set2_sz);
 			cout << " from class " << c << endl;
 		}
 		split_cell_front_or_back(set2, set2_sz, f_front, verbose_level - 2);
 		if (f_vv) {
-			cout << "after split:" << endl;
+			cout << "partitionstack::split_multiple_cells "
+					"after split:" << endl;
 			print_classes_points_and_lines(cout);
 		}
 	}
 	FREE_int(f_done);
 	FREE_int(cell_nb);
 	FREE_int(set2);
+	if (f_v) {
+		cout << "partitionstack::split_multiple_cells done" << endl;
+	}
 }
 
 void partitionstack::split_line_cell_front_or_back(
@@ -1040,7 +1046,8 @@ void partitionstack::split_cell_front_or_back(
 	int a, b, c, f, l, j, pos_a, new_pos, i;
 
 	if (f_v) {
-		cout << "split_cell_front_or_back for subset { ";
+		cout << "partitionstack::split_cell_front_or_back "
+				"for subset { ";
 		for (i = 0; i < set_size; i++) {
 			cout << set[i] << " ";
 		}
@@ -1058,7 +1065,8 @@ void partitionstack::split_cell_front_or_back(
 	f = startCell[c];
 	l = cellSize[c];
 	if (f_vv) {
-		cout << "split_cell_front_or_back c=" << c << " f=" << f
+		cout << "partitionstack::split_cell_front_or_back "
+				"c=" << c << " f=" << f
 			<< " l=" << l << endl;
 	}
 	if (set_size == l) {
@@ -1066,7 +1074,7 @@ void partitionstack::split_cell_front_or_back(
 		return;
 	}
 	else if (set_size > l) {
-		cout << "split_cell_front_or_back "
+		cout << "partitionstack::split_cell_front_or_back "
 				"subset_size > cellSize" << endl;
 		cout << "split_cell_front_or_back for subset { ";
 		for (i = 0; i < set_size; i++) {
@@ -1087,7 +1095,8 @@ void partitionstack::split_cell_front_or_back(
 			new_pos = f + l - 1 - j;
 		}
 		if (false /*f_vv*/) {
-			cout << "split_cell_front_or_back: a=" << a
+			cout << "partitionstack::split_cell_front_or_back "
+					"a=" << a
 				<< " pos_a=" << pos_a << " new_pos="
 				<< new_pos << endl;
 		}
@@ -1125,7 +1134,7 @@ void partitionstack::split_cell_front_or_back(
 	parent[ht] = c;
 	ht++;
 	if (f_v) {
-		cout << "split_cell_front_or_back() done" << endl;
+		cout << "partitionstack::split_cell_front_or_back done" << endl;
 	}
 }
 
@@ -1151,7 +1160,8 @@ void partitionstack::join_cell()
 	f1 = startCell[p];
 	l1 = cellSize[p];
 	if (f1 + l1 != f2) {
-		cout << "partitionstack::join_cell f1 + l1 != f2" << endl;
+		cout << "partitionstack::join_cell "
+				"f1 + l1 != f2" << endl;
 		cout << "cell = " << p << endl;
 		print(cout);
 		cout << endl;
@@ -1206,7 +1216,8 @@ int partitionstack::is_row_class(int c)
 	int first_column_element = startCell[1];
 
 	if (c >= ht) {
-		cout << "partitionstack::is_row_class c >= ht, fatal" << endl;
+		cout << "partitionstack::is_row_class "
+				"c >= ht, fatal" << endl;
 		exit(1);
 	}
 	if (pointList[startCell[c]] >= first_column_element) {
@@ -1220,7 +1231,8 @@ int partitionstack::is_row_class(int c)
 int partitionstack::is_col_class(int c)
 {
 	if (c >= ht) {
-		cout << "partitionstack::is_col_class c >= ht, fatal" << endl;
+		cout << "partitionstack::is_col_class "
+				"c >= ht, fatal" << endl;
 		exit(1);
 	}
 	if (is_row_class(c)) {
@@ -1339,10 +1351,10 @@ void partitionstack::initial_matrix_decomposition(int nbrows, int nbcols,
 	int i, l;
 
 	if (f_v) {
-		cout << "partitionstack::initial_matrix_decomposition "
-				"before: " << endl;
-		print(cout);
-		cout << endl;
+		cout << "partitionstack::initial_matrix_decomposition" << endl;
+		//cout << "before: " << endl;
+		//print(cout);
+		//cout << endl;
 	}
 
 	// split rows and columns
@@ -1364,10 +1376,10 @@ void partitionstack::initial_matrix_decomposition(int nbrows, int nbcols,
 	}
 
 	if (f_v) {
-		cout << "partitionstack::initial_matrix_decomposition "
-				"after" << endl;
-		print(cout);
-		cout << endl;
+		cout << "partitionstack::initial_matrix_decomposition done" << endl;
+		//cout << "after" << endl;
+		//print(cout);
+		//cout << endl;
 	}
 }
 
@@ -1378,12 +1390,13 @@ int partitionstack::is_descendant_of(int cell,
 	int c;
 
 	if (f_v) {
-		cout << "is_descendant_of: cell=" << cell << endl;
+		cout << "partitionstack::is_descendant_of "
+				"cell=" << cell << endl;
 	}
 	c = cell;
 	if (cell == ancestor_cell) {
 		if (f_v) {
-			cout << "is_descendant_of: "
+			cout << "partitionstack::is_descendant_of "
 					"cell == ancestor_cell, so yes" << endl;
 		}
 		return true;
@@ -1391,18 +1404,20 @@ int partitionstack::is_descendant_of(int cell,
 	while (parent[c] != c) {
 		c = parent[c];
 		if (f_v) {
-			cout << "is_descendant_of: c=" << c << endl;
+			cout << "partitionstack::is_descendant_of "
+					"c=" << c << endl;
 		}
 		if (c == ancestor_cell) {
 			if (f_v) {
-				cout << "is_descendant_of: "
+				cout << "partitionstack::is_descendant_of "
 						"c == ancestor_cell, so yes" << endl;
 			}
 			return true;
 		}
 	}
 	if (f_v) {
-		cout << "is_descendant_of: parent[c] == c, so no" << endl;
+		cout << "partitionstack::is_descendant_of "
+				"parent[c] == c, so no" << endl;
 	}
 	return false;
 }
@@ -1414,13 +1429,14 @@ int partitionstack::is_descendant_of_at_level(int cell,
 	int c;
 
 	if (f_v) {
-		cout << "is_descendant_of_at_level: cell=" << cell
+		cout << "partitionstack::is_descendant_of_at_level "
+				"cell=" << cell
 				<< " ancestor_cell = " << ancestor_cell
 				<< " level = " << level << endl;
 	}
 	if (cell == ancestor_cell) {
 		if (f_v) {
-			cout << "is_descendant_of_at_level: "
+			cout << "partitionstack::is_descendant_of_at_level "
 					"cell == ancestor_cell, so yes" << endl;
 		}
 		return true;
@@ -1428,7 +1444,7 @@ int partitionstack::is_descendant_of_at_level(int cell,
 	c = cell;
 	if (c < level) {
 		if (f_v) {
-			cout << "is_descendant_of_at_level: "
+			cout << "partitionstack::is_descendant_of_at_level "
 					"c < level, so no" << endl;
 		}
 		return false;
@@ -1436,25 +1452,26 @@ int partitionstack::is_descendant_of_at_level(int cell,
 	while (parent[c] != c) {
 		c = parent[c];
 		if (f_v) {
-			cout << "is_descendant_of_at_level: c=" << c << endl;
+			cout << "partitionstack::is_descendant_of_at_level "
+					"c=" << c << endl;
 		}
 		if (c == ancestor_cell) {
 			if (f_v) {
-				cout << "is_descendant_of_at_level: "
+				cout << "partitionstack::is_descendant_of_at_level "
 						"c == ancestor_cell, so yes" << endl;
 			}
 			return true;
 		}
 		if (c < level) {
 			if (f_v) {
-				cout << "is_descendant_of_at_level: "
+				cout << "partitionstack::is_descendant_of_at_level "
 						"c < level, so no" << endl;
 			}
 			return false;
 		}
 	}
 	if (f_v) {
-		cout << "is_descendant_of_at_level: "
+		cout << "partitionstack::is_descendant_of_at_level "
 				"parent[c] == c, so no" << endl;
 	}
 	return false;
@@ -1576,7 +1593,8 @@ void partitionstack::print_decomposition_scheme(std::ostream &ost,
 	ost << endl;
 }
 
-void partitionstack::print_decomposition_scheme_tex(std::ostream &ost,
+void partitionstack::print_decomposition_scheme_tex(
+		std::ostream &ost,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
 	int *scheme)
@@ -1706,7 +1724,7 @@ void partitionstack::print_row_tactical_decomposition_scheme_tex(
 }
 
 void partitionstack::print_column_tactical_decomposition_scheme_tex(
-	ostream &ost, int f_enter_math_mode, 
+	std::ostream &ost, int f_enter_math_mode,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
 	int *col_scheme, int f_print_subscripts)
@@ -1749,7 +1767,7 @@ void partitionstack::print_column_tactical_decomposition_scheme_tex(
 }
 
 void partitionstack::print_non_tactical_decomposition_scheme_tex(
-	ostream &ost, int f_enter_math_mode, 
+	std::ostream &ost, int f_enter_math_mode,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
 	int f_print_subscripts)
@@ -1961,9 +1979,11 @@ void partitionstack::radix_sort(
 {
 	int ma, mi, i, lo, mask;
 	int f_v = (verbose_level >= 1);
+	algorithms Algo;
 
 	if (f_v) {
-		cout << "radix sort radix = " << radix
+		cout << "partitionstack::radix_sort "
+				"radix = " << radix
 				<< ", left = " << left << ", right = " << right << endl;
 	}
 	if (radix == length) {
@@ -1978,7 +1998,8 @@ void partitionstack::radix_sort(
 		mi = MINIMUM(mi, C[pointList[i] * length + radix]);
 	}
 	if (f_v) {
-		cout << "radix sort radix=" << radix
+		cout << "partitionstack::radix_sort "
+				"radix=" << radix
 				<< ", minimum is " << mi
 				<< " maximum is " << ma << endl;
 	}
@@ -1986,13 +2007,14 @@ void partitionstack::radix_sort(
 		radix_sort(left, right, C, length, radix + 1, verbose_level);
 		return;
 	}
-	lo = my_log2(ma);
+	lo = Algo.binary_logarithm(ma);
 	if (f_v) {
 		cout << "log2 = " << lo << endl;
 	}
 	mask = (1 << (lo - 1));
 	if (f_v) {
-		cout << "mask = " << mask << endl;
+		cout << "partitionstack::radix_sort "
+				"mask = " << mask << endl;
 	}
 	radix_sort_bits(left, right, C, length, radix, mask, verbose_level);
 }
@@ -2006,7 +2028,8 @@ void partitionstack::radix_sort_bits(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "partitionstack::radix_sort_bits mask = " << mask
+		cout << "partitionstack::radix_sort_bits "
+				"mask = " << mask
 				<< " left=" << left << " right=" << right << endl;
 	}
 	if (left >= right) {
@@ -2047,21 +2070,24 @@ void partitionstack::radix_sort_bits(
 	mask >>= 1;
 	if (r == left - 1) {
 		if (f_v) {
-			cout << "radix_sort_bits no splitting, all bits 0" << endl;
+			cout << "partitionstack::radix_sort_bits "
+					"no splitting, all bits 0" << endl;
 		}
 		radix_sort_bits(left, right, C,
 				length, radix, mask, verbose_level);
 	}
 	else if (l == right + 1) {
 		if (f_v) {
-			cout << "radix_sort_bits no splitting, all bits 1" << endl;
+			cout << "partitionstack::radix_sort_bits "
+					"no splitting, all bits 1" << endl;
 		}
 		radix_sort_bits(left, right, C,
 				length, radix, mask, verbose_level);
 	}
 	else {
 		if (f_v) {
-			cout << "radix_sort_bits splitting "
+			cout << "partitionstack::radix_sort_bits "
+					"splitting "
 					"l=" << l << " r=" << r << endl;
 		}
 		// we are splitting off the points in the interval [l..right]
@@ -2089,16 +2115,6 @@ void partitionstack::swap_ij(int *perm, int *perm_inv, int i, int j)
 	perm_inv[perm[j]] = j;
 }
 
-int partitionstack::my_log2(int m)
-{
-	int i = 0;
-
-	while (m) {
-		i++;
-		m >>= 1;
-	}
-	return i;
-}
 
 void partitionstack::split_by_orbit_partition(
 		int nb_orbits,

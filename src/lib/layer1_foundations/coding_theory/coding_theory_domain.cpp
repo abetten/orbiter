@@ -2188,732 +2188,6 @@ void coding_theory_domain::do_sylvester_hadamard(
 
 }
 
-#if 0
-void coding_theory_domain::investigate_code(long int *Words,
-		int nb_words, int n, int f_embellish, int verbose_level)
-// creates a combinatorics::boolean_function_domain object
-{
-	int f_v = (verbose_level >= 1);
-	int nb_rows, nb_cols;
-	int *v;
-	int *M;
-	int *M1;
-	int *M2;
-	int N;
-	//int D, d;
-	int h, i, j;
-	orbiter_kernel_system::file_io Fio;
-
-	if (f_v) {
-		cout << "coding_theory_domain::investigate_code" << endl;
-		cout << "n=" << n << endl;
-		cout << "set:" << endl;
-		Lint_vec_print(cout, Words, nb_words);
-		cout << endl;
-	}
-
-	dimensions(n, nb_rows, nb_cols);
-
-	if (f_v) {
-		cout << "coding_theory_domain::investigate_code" << endl;
-		cout << "nb_rows=" << nb_rows << endl;
-		cout << "nb_cols=" << nb_cols << endl;
-	}
-
-	v = NEW_int(n);
-	M1 = NEW_int(nb_rows * nb_cols);
-	M2 = NEW_int(nb_rows * nb_cols);
-	M = NEW_int(nb_rows * nb_cols);
-
-
-	Int_vec_zero(M1, nb_rows * nb_cols);
-	Int_vec_zero(M2, nb_rows * nb_cols);
-
-
-	N = 1 << n;
-
-	cout << "N=" << N << endl;
-
-	cout << "placing codewords" << endl;
-	for (h = 0; h < N; h++) {
-		place_binary(h, i, j);
-		M1[i * nb_cols + j] = h;
-		//M2[i * nb_cols + j] = 1;
-		}
-	cout << "placing position values done" << endl;
-
-
-#if 0
-	colored_graph *C;
-
-	C = new colored_graph;
-
-	C->init_adjacency_no_colors(int nb_points, int *Adj, int verbose_level);
-#endif
-
-
-	char fname[1000];
-
-	snprintf(fname, sizeof(fname), "code_%d_%d.tex", n, nb_words);
-
-	{
-		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
-
-		L.head_easy(fp);
-		fp << "$$" << endl;
-		L.print_integer_matrix_tex(fp, M1, nb_rows, nb_cols);
-		fp << "$$" << endl;
-
-
-
-		cout << "placing codewords" << endl;
-		Int_vec_zero(M, nb_rows * nb_cols);
-		for (h = 0; h < nb_words; h++) {
-			convert_to_binary(n, Words[h], v);
-			cout << "codeword " << h + 1 << " = " << setw(5) << Words[h];
-			cout << " : ";
-			print_binary(n, v);
-			cout << endl;
-			place_binary(Words[h], i, j);
-			M[i * nb_cols + j] = h + 1;
-			M2[i * nb_cols + j] = 1;
-			if (f_embellish) {
-				embellish(M, nb_rows, nb_cols, i, j, h + 1, 3);
-				}
-			}
-		//int_matrix_print(M, nb_rows, nb_cols);
-		cout << "placing codewords done" << endl;
-
-		fp << "$$" << endl;
-		L.print_integer_matrix_tex(fp, M, nb_rows, nb_cols);
-		fp << "$$" << endl;
-
-
-		L.foot(fp);
-	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	cout << "M2:" << endl;
-	Int_matrix_print(M2, nb_rows, nb_cols);
-
-	{
-		char str[1000];
-		string fname;
-		orbiter_kernel_system::file_io Fio;
-
-		snprintf(str, sizeof(str), "code_matrix_%d_%d.csv", nb_rows, nb_cols);
-		fname.assign(str);
-		Fio.int_matrix_write_csv(fname, M2, nb_rows, nb_cols);
-
-	}
-
-
-#if 0
-	{
-	colored_graph *CG;
-
-	CG = NEW_OBJECT(colored_graph);
-
-	cout << "before create_Levi_graph_from_incidence_matrix" << endl;
-	CG->create_Levi_graph_from_incidence_matrix(M, nb_rows, nb_cols,
-		false /* f_point_labels */, NULL /* *point_labels */,
-		verbose_level);
-
-	cout << "after create_Levi_graph_from_incidence_matrix" << endl;
-
-	char fname[1000];
-
-
-	snprintf(fname, sizeof(fname), "code_%d_%d_Levi_%d_%d.bin",
-		n, nb_words, nb_rows, nb_cols);
-	CG->save(fname, verbose_level);
-	delete CG;
-	}
-#endif
-
-
-	combinatorics::boolean_function_domain *BF;
-	int *coeff;
-	int *f;
-	int *g;
-
-	BF = NEW_OBJECT(combinatorics::boolean_function_domain);
-
-
-	cout << "before BF->init, n=" << n << endl;
-	BF->init(n, 0 /*verbose_level*/);
-
-	cout << "BF->Poly[n].get_nb_monomials()=" << BF->Poly[n].get_nb_monomials() << endl;
-	coeff = NEW_int(BF->Poly[n].get_nb_monomials());
-	f = NEW_int(N);
-	g = NEW_int(N);
-
-	Int_vec_zero(f, N);
-	for (h = 0; h < nb_words; h++) {
-		f[Words[h]] = 1;
-	}
-
-	cout << "computing the polynomial representation: " << endl;
-
-
-	BF->compute_polynomial_representation(
-			f /* func */, coeff, 0 /*verbose_level*/);
-	//BF->search_for_bent_functions(verbose_level);
-
-
-
-	cout << "The representation as polynomial is: ";
-
-	cout << " : ";
-	BF->Poly[BF->n].print_equation(cout, coeff);
-	cout << " : ";
-	//evaluate_projectively(poly, f_proj);
-	BF->evaluate(coeff, g);
-	//int_vec_print(cout, g, BF->Q);
-	cout << endl;
-
-
-	for (h = 0; h < BF->Q; h++) {
-		if (f[h] != g[h]) {
-			cout << "f[h] != g[h], h = " << h << ", an error has occured" << endl;
-		}
-	}
-
-
-	FREE_OBJECT(BF);
-	FREE_OBJECT(coeff);
-	FREE_OBJECT(f);
-	FREE_OBJECT(g);
-
-
-#if 0
-	D = INT_MAX;
-	for (i = 0; i < nb_words; i++) {
-		for (j = i + 1; j < nb_words; j++) {
-			d = distance(n, Words[i], Words[j]);
-			//cout << "The distance between word " << i << " and word " << j << " is " << d << endl;
-			D = MINIMUM(D, d);
-			}
-		}
-
-	cout << "minimum distance d = " << D << endl;
-	cout << "attained for:" << endl;
-	for (i = 0; i < nb_words; i++) {
-		for (j = i + 1; j < nb_words; j++) {
-			if (distance(n, Words[i], Words[j]) == D) {
-				cout << i << ", " << j << endl;
-				}
-			}
-		}
-#endif
-
-}
-#endif
-
-#if 0
-void coding_theory_domain::do_long_code(
-		int n,
-		std::vector<std::string> &long_code_generators_text,
-		int f_nearest_codeword,
-		std::string &nearest_codeword_text,
-		int verbose_level)
-// creates a combinatorics::boolean_function_domain object
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "coding_theory_domain::do_long_code" << endl;
-	}
-
-	int i, j;
-	int *genma;
-	int k;
-
-	k = long_code_generators_text.size();
-	genma = NEW_int(k * n);
-	Int_vec_zero(genma, k * n);
-	for (i = 0; i < k; i++) {
-		long int *set;
-		int sz;
-
-
-		Get_lint_vector_from_label(
-				long_code_generators_text[i], set, sz, verbose_level);
-
-		for (j = 0; j < sz; j++) {
-			genma[i * n + set[j]] = 1;
-		}
-		FREE_lint(set);
-	}
-
-	cout << "genma:" << endl;
-	Int_matrix_print(genma, k, n);
-
-	{
-		char str[1000];
-		string fname;
-		orbiter_kernel_system::file_io Fio;
-
-		snprintf(str, sizeof(str), "long_code_genma_n%d_k%d.csv", n, k);
-		fname.assign(str);
-		Fio.int_matrix_write_csv(fname, genma, k, n);
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-
-	int sz;
-	int *message;
-	int *code_word;
-	int *M;
-	int nb_rows, nb_cols;
-	int h, r, c;
-	geometry::geometry_global Gg;
-	int *Wt;
-	int wt;
-	//int N;
-
-	//N = 1 << n;
-	dimensions_N(n, nb_rows, nb_cols);
-
-	if (f_v) {
-		cout << "n=" << n << endl;
-		cout << "nb_rows=" << nb_rows << endl;
-		cout << "nb_cols=" << nb_cols << endl;
-	}
-
-	sz = 1 << k;
-	message = NEW_int(k);
-	code_word = NEW_int(n);
-	M = NEW_int(nb_rows * nb_cols);
-
-	field_theory::finite_field *F;
-
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init(2, false /* f_without_tables */, 0);
-
-	Wt = NEW_int(sz);
-	Int_vec_zero(Wt, sz);
-
-	for (i = 0; i < sz; i++) {
-		Gg.AG_element_unrank(2, message, 1, k, i);
-		F->Linear_algebra->mult_matrix_matrix(message, genma,
-				code_word, 1, k, n, 0 /* verbose_level*/);
-
-		Int_vec_zero(M, nb_rows * nb_cols);
-		wt = 0;
-		for (h = 0; h < n; h++) {
-			if (code_word[h]) {
-				wt++;
-			}
-		}
-		Wt[i] = wt;
-		for (h = 0; h < n; h++) {
-			if (code_word[h]) {
-				place_binary(h, r, c);
-				M[r * nb_cols + c] = 1;
-			}
-		}
-		{
-			char str[1000];
-			string fname;
-			orbiter_kernel_system::file_io Fio;
-
-			snprintf(str, sizeof(str), "long_code_genma_n%d_k%d_codeword_%d.csv", n, k, i);
-			fname.assign(str);
-			Fio.int_matrix_write_csv(fname, M, nb_rows, nb_cols);
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-	}
-
-	{
-		cout << "Weight distribution:";
-		data_structures::tally C;
-
-		C.init(Wt, sz, false, 0);
-		C.print_first(false /* f_backwards */);
-		cout << endl;
-
-		cout << "i : weight of the i-th codeword" << endl;
-		for (i = 0; i < sz; i++) {
-			cout << i << " : " << Wt[i] << endl;
-		}
-	}
-
-
-	combinatorics::boolean_function_domain *BF;
-	int *f;
-	int *g;
-	int ln;
-
-	BF = NEW_OBJECT(combinatorics::boolean_function_domain);
-
-
-	ln = log2(n);
-
-	cout << "before BF->init, ln=" << ln << endl;
-	BF->init(F, ln, 0 /*verbose_level*/);
-
-	f = NEW_int(n);
-	g = NEW_int(n);
-
-
-	if (f_nearest_codeword) {
-
-		cout << "nearest codeword" << endl;
-
-		long int *nearest_codeword_set;
-		int nearest_codeword_sz;
-		int *word;
-
-
-		Lint_vec_scan(nearest_codeword_text,
-				nearest_codeword_set, nearest_codeword_sz);
-
-
-		word = NEW_int(n);
-		Int_vec_zero(word, n);
-		for (j = 0; j < nearest_codeword_sz; j++) {
-			word[nearest_codeword_set[j]] = 1;
-		}
-		for (h = 0; h < n; h++) {
-			if (word[h]) {
-				f[h] = -1;
-			}
-			else {
-				f[h] = 1;
-			}
-		}
-
-		BF->apply_Walsh_transform(f, g);
-		Int_vec_zero(M, nb_rows * nb_cols);
-		for (h = 0; h < n; h++) {
-			place_binary(h, r, c);
-			M[r * nb_cols + c] = g[h];
-		}
-		{
-			char str[1000];
-			string fname;
-			orbiter_kernel_system::file_io Fio;
-
-			snprintf(str, sizeof(str), "long_code_genma_n%d_k%d_nearest_codeword_fourier.csv", n, k);
-			fname.assign(str);
-			Fio.int_matrix_write_csv(fname, M, nb_rows, nb_cols);
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-		Int_vec_zero(M, nb_rows * nb_cols);
-		for (h = 0; h < n; h++) {
-			if (word[h]) {
-				place_binary(h, r, c);
-				M[r * nb_cols + c] = 1;
-			}
-		}
-		{
-			char str[1000];
-			string fname;
-			orbiter_kernel_system::file_io Fio;
-
-			snprintf(str, sizeof(str), "long_code_genma_n%d_k%d_nearest_codeword.csv", n, k);
-			fname.assign(str);
-			Fio.int_matrix_write_csv(fname, M, nb_rows, nb_cols);
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-		int d;
-		int *D;
-
-		D = NEW_int(sz);
-		for (i = 0; i < sz; i++) {
-			Gg.AG_element_unrank(2, message, 1, k, i);
-			F->Linear_algebra->mult_matrix_matrix(message, genma,
-					code_word, 1, k, n, 0 /* verbose_level*/);
-
-			d = 0;
-			for (h = 0; h < n; h++) {
-				if (word[h] != code_word[h]) {
-					d++;
-				}
-			D[i] = d;
-			}
-		}
-		{
-			cout << "distance distribution:";
-			data_structures::tally C;
-
-			C.init(D, sz, false, 0);
-			C.print_first(false /* f_backwards */);
-			cout << endl;
-
-			cout << "i : distance from the i-th codeword" << endl;
-			for (i = 0; i < sz; i++) {
-				cout << i << " : " << D[i] << endl;
-			}
-		}
-		FREE_int(D);
-
-
-	}
-	else {
-		cout << "no nearest codeword option" << endl;
-	}
-
-	FREE_int(message);
-	FREE_int(code_word);
-	FREE_int(M);
-	FREE_OBJECT(F);
-
-
-}
-#endif
-
-#if 0
-void coding_theory_domain::embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a, int rad)
-{
-	int i, j, u, v;
-
-#if 0
-	int ij[] = {
-		-1, -1,
-		-1, 0,
-		-1, 1,
-		0, -1,
-		0, 1,
-		1, -1,
-		1, 0,
-		1, 1,
-		-2,-2,
-		-2,-1,
-		-2,0,
-		-2,1,
-		-2,2,
-		-2,-2,
-		-2,2,
-		-1,-2,
-		-1,2,
-		0,-2,
-		0,2,
-		1,-2,
-		1,2,
-		2,-2,
-		2,-1,
-		2,0,
-		2,1,
-		2,2,s
-		};
-#endif
-	for (u = -rad; u <= rad; u++) {
-		for (v = -rad; v <= rad; v++) {
-			i = i0 + u;
-			j = j0 + v;
-			place_entry(M, nb_rows, nb_cols, i, j, a);
-			}
-		}
-#if 0
-	for (h = 0; h < 8 + 18; h++) {
-		i = i0 + ij[h * 2 + 0];
-		j = j0 + ij[h * 2 + 1];
-		place_entry(M, nb_rows, nb_cols, i, j, a);
-		}
-#endif
-}
-
-void coding_theory_domain::place_entry(int *M, int nb_rows, int nb_cols, int i, int j, int a)
-{
-	if (i < 0) {
-		return;
-	}
-	if (j < 0) {
-		return;
-	}
-	if (i >= nb_rows) {
-		return;
-	}
-	if (j >= nb_cols) {
-		return;
-	}
-	M[i * nb_cols + j] = a;
-}
-#endif
-
-#if 0
-void coding_theory_domain::do_it(int n, int r, int a, int c, int seed, int verbose_level)
-{
-	int N;
-	int i, j, h, s;
-	int nb_rows, nb_cols;
-	int *v;
-	int *W;
-	l1_interfaces::latex_interface L;
-
-	N = 1 << n;
-
-	cout << "N=" << N << endl;
-
-	for (h = 0; h < N; h++) {
-		place_binary(h, i, j);
-		cout << h << " : (" << i << "," << j << ")" << endl;
-	}
-
-	dimensions(n, nb_rows, nb_cols);
-	int *M;
-	int D, d;
-
-	v = NEW_int(n);
-	W = NEW_int(r);
-	M = NEW_int(nb_rows * nb_cols);
-	Int_vec_zero(M, nb_rows * nb_cols);
-
-	s = seed;
-	for (h = 0; h < r; h++) {
-		W[h] = s;
-		convert_to_binary(n, s, v);
-		cout << "s = " << setw(5) << s;
-		cout << " : ";
-		print_binary(n, v);
-		cout << endl;
-		place_binary(s, i, j);
-		M[i * nb_cols + j] = 1;
-		s = (a * s + c) % N;
-	}
-
-	Int_matrix_print(M, nb_rows, nb_cols);
-
-	L.print_integer_matrix_tex(cout, M, nb_rows, nb_cols);
-
-	D = INT_MAX;
-	for (i = 0; i < r; i++) {
-		for (j = i + 1; j < r; j++) {
-			d = distance(n, W[i], W[j]);
-			cout << "The distance between word " << i << " and word " << j << " is " << d << endl;
-			D = MINIMUM(D, d);
-		}
-	}
-
-	cout << "minimum distance d = " << D << endl;
-	cout << "attained for:" << endl;
-	for (i = 0; i < r; i++) {
-		for (j = i + 1; j < r; j++) {
-			if (distance(n, W[i], W[j]) == D) {
-				cout << i << ", " << j << endl;
-			}
-		}
-	}
-}
-#endif
-
-#if 0
-void coding_theory_domain::dimensions(int n, int &nb_rows, int &nb_cols)
-{
-	int i, j;
-
-	place_binary((1 << n) - 1, i, j);
-	nb_rows = i + 1;
-	nb_cols = j + 1;
-}
-
-void coding_theory_domain::dimensions_N(int N, int &nb_rows, int &nb_cols)
-{
-	int i, j;
-	long int a, b;
-	number_theory::number_theory_domain NT;
-
-	a = NT.int_log2(N);
-	b = 1 << a;
-	place_binary(b - 1, i, j);
-	nb_rows = i + 1;
-	nb_cols = j + 1;
-}
-
-void coding_theory_domain::print_binary(int n, int *v)
-{
-	int c;
-
-	for (c = n - 1; c >= 0; c--) {
-		cout << v[c];
-	}
-}
-
-void coding_theory_domain::convert_to_binary(int n, long int h, int *v)
-{
-	int c;
-
-	for (c = 0; c < n; c++) {
-		if (h % 2) {
-			v[c] = 1;
-		}
-		else {
-			v[c] = 0;
-		}
-		h >>= 1;
-	}
-}
-
-int coding_theory_domain::distance(int n, int a, int b)
-{
-	int c, d = 0;
-
-	for (c = 0; c < n; c++) {
-		if (a % 2 != b % 2) {
-			d++;
-		}
-		a >>= 1;
-		b >>= 1;
-	}
-	return d;
-}
-
-void coding_theory_domain::place_binary(long int h, int &i, int &j)
-{
-	int o[2];
-	int c;
-
-	o[0] = 1;
-	o[1] = 0;
-	i = 0;
-	j = 0;
-	for (c = 0; h; c++) {
-		if (h % 2) {
-			i += o[0];
-			j += o[1];
-		}
-		h >>= 1;
-		if (c % 2) {
-			o[0] = o[1] << 1;
-			o[1] = 0;
-		}
-		else {
-			o[1] = o[0];
-			o[0] = 0;
-		}
-	}
-}
-
-void coding_theory_domain::place_binary(int *v, int n, int &i, int &j)
-{
-	int o[2];
-	int c;
-
-	o[0] = 1;
-	o[1] = 0;
-	i = 0;
-	j = 0;
-	for (c = 0; c < n; c++) {
-		if (v[c]) {
-			i += o[0];
-			j += o[1];
-		}
-		if (c % 2) {
-			o[0] = o[1] << 1;
-			o[1] = 0;
-		}
-		else {
-			o[1] = o[0];
-			o[0] = 0;
-		}
-	}
-}
-#endif
-
 
 
 void coding_theory_domain::field_reduction(
@@ -3384,6 +2658,271 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 		cout << "coding_theory_domain::polynomial_representation_of_boolean_function done" << endl;
 	}
 }
+
+
+void coding_theory_domain::crc_encode_file_based(
+		std::string &fname_in,
+		std::string &fname_out,
+		crc_object *Crc_object,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_encode_file_based "
+				"fname_in=" << fname_in << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+
+	long int N, L, nb_blocks, cnt;
+
+	N = Fio.file_size(fname_in);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_encode_file_based "
+				"input file size = " << N << endl;
+	}
+
+	nb_blocks = Crc_object->get_nb_blocks(N);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_encode_file_based "
+				"nb_blocks = " << nb_blocks << endl;
+	}
+
+
+	ifstream ist(fname_in, ios::binary);
+
+	{
+		ofstream ost(fname_out);
+
+
+		for (cnt = 0; cnt < nb_blocks; cnt++) {
+
+
+			N = Crc_object->get_this_block_size(N, cnt);
+
+
+			int i;
+
+			for (i = 0; i < Crc_object->Len_check; i++) {
+				Crc_object->Data[i] = 0;
+			}
+
+			// read one block of information:
+
+			ist.read((char *) Crc_object->Data + Crc_object->Len_check, L);
+
+			// fill up with zeros:
+			for (i = L; i < Crc_object->Len_info; i++) {
+				Crc_object->Data[Crc_object->Len_check + i] = 0;
+			}
+
+
+			Crc_object->divide(Crc_object->Data, Crc_object->Check);
+
+			for (i = 0; i < Crc_object->Len_check; i++) {
+				Crc_object->Data[i] = Crc_object->Check[i];
+			}
+
+
+
+			// write information_length + check_size_in_byte bytes to file:
+			// (or less in case we have reached the end of the input file):
+
+			ost.write((char *)Crc_object->Data, L + Crc_object->Len_check);
+
+
+		}
+
+	}
+
+	cout << "Written file " << fname_out << " of size "
+			<< Fio.file_size(fname_out) << endl;
+
+	cout << "nb_blocks = " << nb_blocks << endl;
+
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_encode_file_based done" << endl;
+	}
+
+}
+
+
+
+
+void coding_theory_domain::crc_simulate_errors(
+		std::string &fname_in,
+		crc_object *Crc_object1,
+		crc_object *Crc_object2,
+		int error_pattern_weight,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_simulate_errors "
+				"fname_in=" << fname_in << endl;
+	}
+
+
+	if (Crc_object1->Len_info != Crc_object2->Len_info) {
+		cout << "CRC codes must have the same Len_info" << endl;
+		exit(1);
+	}
+	if (Crc_object1->Len_check != Crc_object2->Len_check) {
+		cout << "CRC codes must have the same Len_check" << endl;
+		exit(1);
+	}
+	if (Crc_object1->symbol_set_size_log != Crc_object2->symbol_set_size_log) {
+		cout << "CRC codes must have the same symbol_set_size_log" << endl;
+		exit(1);
+	}
+	if (Crc_object1->symbol_set_size != Crc_object2->symbol_set_size) {
+		cout << "CRC codes must have the same symbol_set_size" << endl;
+		exit(1);
+	}
+
+	data_structures::algorithms Algo;
+
+
+	orbiter_kernel_system::file_io Fio;
+
+	long int N, L, nb_blocks, cnt;
+
+	N = Fio.file_size(fname_in);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_simulate_errors "
+				"input file size = " << N << endl;
+	}
+
+	nb_blocks = Crc_object1->get_nb_blocks(N);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_simulate_errors "
+				"nb_blocks = " << nb_blocks << endl;
+	}
+
+
+	//unsigned char *Error;
+	unsigned char *Data0;
+	unsigned char *Data1;
+	unsigned char *Data2;
+	unsigned char *Check1a;
+	unsigned char *Check2a;
+	unsigned char *Check1b;
+	unsigned char *Check2b;
+
+	//Error = (unsigned char *) NEW_char(Crc_object1->Len_total);
+	Data0 = (unsigned char *) NEW_char(Crc_object1->Len_total);
+	Data1 = (unsigned char *) NEW_char(Crc_object1->Len_total);
+	Data2 = (unsigned char *) NEW_char(Crc_object1->Len_total);
+	Check1a = (unsigned char *) NEW_char(Crc_object1->Len_check);
+	Check2a = (unsigned char *) NEW_char(Crc_object1->Len_check);
+	Check1b = (unsigned char *) NEW_char(Crc_object1->Len_check);
+	Check2b = (unsigned char *) NEW_char(Crc_object1->Len_check);
+
+
+	error_pattern *Error;
+
+
+	Error = NEW_OBJECT(error_pattern);
+
+	Error->init(Crc_object1, error_pattern_weight, verbose_level);
+
+
+	long int nb1 = 0;
+	long int nb2 = 0;
+
+	ifstream ist(fname_in, ios::binary);
+
+	{
+
+		for (cnt = 0; cnt < nb_blocks; cnt++) {
+
+
+			N = Crc_object1->get_this_block_size(N, cnt);
+
+
+			Algo.uchar_zero(Data0, Crc_object1->Len_total);
+			Algo.uchar_zero(Data1, Crc_object1->Len_total);
+			Algo.uchar_zero(Data2, Crc_object1->Len_total);
+
+			int i;
+
+
+			// read one block of information:
+
+			ist.read((char *) Data0 + Crc_object1->Len_check, L);
+
+			Algo.uchar_move(Data0, Data1, Crc_object1->Len_total);
+			Algo.uchar_move(Data0, Data2, Crc_object1->Len_total);
+
+
+
+			Crc_object1->divide(Data1, Check1a);
+			Crc_object2->divide(Data2, Check2a);
+
+			Algo.uchar_move(Data0, Data1, Crc_object1->Len_total);
+			Algo.uchar_move(Data0, Data2, Crc_object1->Len_total);
+
+#if 0
+			for (i = 0; i < Crc_object1->Len_check; i++) {
+				Data1[i] = Check1[i];
+			}
+
+			for (i = 0; i < Crc_object1->Len_check; i++) {
+				Data2[i] = Check2[i];
+			}
+#endif
+
+			Error->create_error_pattern(verbose_level);
+
+			Algo.uchar_xor(Data0, Error->Error, Data1, Crc_object1->Len_total);
+			Algo.uchar_xor(Data0, Error->Error, Data2, Crc_object1->Len_total);
+
+			Crc_object1->divide(Data1, Check1b);
+			Crc_object2->divide(Data2, Check2b);
+
+			if (Algo.uchar_compare(Check1a, Check1b, Crc_object1->Len_total) == 0) {
+				nb1++;
+				cout << "undetected error code 1 : " << nb1 << " in block " << cnt << " / " << nb_blocks << endl;
+			}
+			if (Algo.uchar_compare(Check2a, Check2b, Crc_object1->Len_total) == 0) {
+				nb2++;
+				cout << "undetected error code 2 : " << nb2 << " in block " << cnt << " / " << nb_blocks << endl;
+			}
+
+		}
+
+	}
+
+	cout << "nb_blocks = " << nb_blocks << endl;
+
+	cout << "number of undetected errors code 1 = " << nb1 << endl;
+	cout << "number of undetected errors code 2 = " << nb2 << endl;
+
+
+	FREE_char((char *) Data1);
+	FREE_char((char *) Data2);
+	FREE_char((char *) Check1a);
+	FREE_char((char *) Check2a);
+	FREE_char((char *) Check1b);
+	FREE_char((char *) Check2b);
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_simulate_errors done" << endl;
+	}
+
+}
+
+
 
 }}}
 

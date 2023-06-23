@@ -150,6 +150,14 @@ public:
 	std::string crc_encode_file_based_crc_type;
 	int crc_encode_file_based_block_length;
 
+	int f_crc_compare;
+	std::string crc_compare_fname_in;
+	std::string crc_compare_crc1_type;
+	std::string crc_compare_crc2_type;
+	int crc_compare_block_length;
+	int crc_compare_error_weight;
+
+
 	int f_convert_data_to_polynomials;
 	std::string convert_data_to_polynomials_fname_in;
 	std::string convert_data_to_polynomials_fname_out;

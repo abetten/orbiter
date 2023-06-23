@@ -4104,7 +4104,6 @@ void scene::read_obj_file(std::string &fname, int verbose_level)
 	double x1, y1, z1;
 	double sx = 0, sy = 0, sz = 0;
 	int line_nb = -1;
-	char str[1000];
 	int a, l, h;
 	int *w;
 	int nb_points0;
@@ -4191,6 +4190,10 @@ void scene::read_obj_file(std::string &fname, int verbose_level)
 				p_buf = buf + 2;
 				vector<int> v;
 				while (strlen(p_buf)) {
+
+					char str[1000]; // ToDo
+
+
 					ST.s_scan_token_arbitrary(&p_buf, str);
 					//cout << "read token: " << str << endl;
 					if (strlen(str) == 0) {

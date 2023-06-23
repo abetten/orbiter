@@ -234,6 +234,17 @@ public:
 			int nb_words, int n,
 			int verbose_level);
 	// creates a combinatorics::boolean_function_domain object
+	void crc_encode_file_based(
+			std::string &fname_in,
+			std::string &fname_out,
+			crc_object *Crc_object,
+			int verbose_level);
+	void crc_simulate_errors(
+			std::string &fname_in,
+			crc_object *Crc_object1,
+			crc_object *Crc_object2,
+			int error_pattern_weight,
+			int verbose_level);
 
 	// mindist.cpp:
 	int mindist(
@@ -301,13 +312,17 @@ public:
 	void crc32_test(int block_length, int verbose_level);
 	void test_crc_object(crc_object *Crc, long int Nb_test, int k, int verbose_level);
 	void char_vec_zero(unsigned char *p, int len);
+#if 0
 	void crc256_test_k_subsets(
 			int message_length, int R, int k, int verbose_level);
+#endif
+#if 0
 	void crc32_remainders(
 			int message_length, int verbose_level);
 	void crc32_remainders_compute(
 			int message_length, int R,
 			uint32_t *&Crc, int verbose_level);
+#endif
 	void introduce_errors(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
@@ -327,20 +342,6 @@ public:
 			int block_length, int verbose_level);
 	enum CRC_type detect_type_of_CRC(std::string &crc_type, int verbose_level);
 	int get_check_size_in_bytes(enum CRC_type type);
-#if 0
-	void crc16_file_based(
-			std::string &fname_in,
-			std::string &fname_out,
-			int block_length, int verbose_level);
-	void crc32_file_based(
-			std::string &fname_in,
-			std::string &fname_out,
-			int block_length, int verbose_level);
-	void crc771_file_based(
-			std::string &fname_in,
-			std::string &fname_out,
-			int verbose_level);
-#endif
 	void check_errors(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
@@ -398,11 +399,9 @@ public:
 	// block_length is needed for crc32
 	void encode_as_bitvector();
 	void print();
+	long int get_nb_blocks(long int N);
+	long int get_this_block_size(long int N, long int cnt);
 	void divide(const unsigned char *in, unsigned char *out);
-	void crc_encode_file_based(
-			std::string &fname_in,
-			std::string &fname_out,
-			int verbose_level);
 	void divide_alfa(const unsigned char *in771, unsigned char *out2);
 	void divide_bravo(const unsigned char *in771, unsigned char *out4);
 	void divide_charlie(const unsigned char *in771, unsigned char *out12);
@@ -603,6 +602,37 @@ public:
 			int n,
 			std::string &poly_coeffs,
 			int verbose_level);
+
+
+};
+
+
+// #############################################################################
+// error_pattern.cpp:
+// #############################################################################
+
+//! to create an error pattern for testing a code
+
+
+class error_pattern {
+
+public:
+
+	crc_object *Crc_object;
+
+	int k;
+	int *f_used; // [Crc->Len_total]
+	int *A; // [k]
+	int *V; // [k]
+	unsigned char *Error;
+
+	error_pattern();
+	~error_pattern();
+	void init(crc_object *Crc_object,
+			int k, int verbose_level);
+	void create_error_pattern(
+			int verbose_level);
+
 
 
 };

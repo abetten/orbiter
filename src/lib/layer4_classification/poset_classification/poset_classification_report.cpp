@@ -640,7 +640,8 @@ void poset_classification::report_orbit(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::report_orbit level = " << level << " orbit_at_level = " << orbit_at_level << endl;
+		cout << "poset_classification::report_orbit "
+				"level = " << level << " orbit_at_level = " << orbit_at_level << endl;
 	}
 	int nb_orbits;
 	int nb_gens;
@@ -648,13 +649,11 @@ void poset_classification::report_orbit(
 	poset_orbit_node *O;
 	ring_theory::longinteger_object stab_order, orbit_length;
 	string s;
-	char str2[1000];
 	long int *rep = NULL;
 	data_structures_groups::schreier_vector *Schreier_vector;
 	l1_interfaces::latex_interface L;
 	long int so;
 
-	str2[0] = 0;
 	rep = NEW_lint(depth + 1);
 
 

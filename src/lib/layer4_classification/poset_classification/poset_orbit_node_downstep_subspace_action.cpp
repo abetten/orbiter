@@ -691,7 +691,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		Schreier.print_tables(cout, false/* f_with_cosetrep*/);
 
 		int h;
-		char fname[1000];
+		string fname;
 		int xmax = 2000000;
 		int ymax = 1000000;
 		int f_circletext = true;
@@ -704,7 +704,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		long int *point_labels = NULL;
 
 		for (h = 0; h < Schreier.nb_orbits; h++) {
-			snprintf(fname, 1000, "node_%d_tree_%d", node, h);
+			fname = "node_" + std::to_string(node) + "_tree_" + std::to_string(h);
 			cout << "before Schreier.draw_tree fname = " << fname << endl;
 			Schreier.draw_tree(fname, h /* orbit_no */,
 				xmax, ymax, f_circletext, rad,

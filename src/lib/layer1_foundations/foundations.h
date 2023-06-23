@@ -305,6 +305,7 @@ namespace coding_theory {
 	class crc_options_description;
 	class create_BCH_code;
 	class create_RS_code;
+	class error_pattern;
 	class error_repository;
 	class ttp_codes;
 
@@ -749,6 +750,8 @@ namespace solvers {
 #define FREE_OBJECTS(p) delete [] p
 #endif
 
+
+#define Int_vec_print_as_polynomial_in_algebraic_notation(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_as_polynomial_in_algebraic_notation(A, B, C)
 
 #define Int_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print(A, B, C)
 #define Lint_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print(A, B, C)

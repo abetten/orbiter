@@ -96,13 +96,9 @@ void plot_tools::draw_density(
 			}
 		}
 
-	char str[1000];
 
-	fname_full.assign(prefix);
+	fname_full = prefix  + "_" + std::to_string(no) + ".mp";
 
-	snprintf(str, sizeof(str), "_%d.mp", no);
-
-	fname_full.append(str);
 	
 	{
 
@@ -225,13 +221,9 @@ void plot_tools::draw_density_multiple_curves(
 			}
 		}
 
-	char str[1000];
 
-	fname_full.assign(prefix);
+	fname_full = prefix + "_" + std::to_string(no) + ".mp";
 
-	snprintf(str, sizeof(str), "_%d.mp", no);
-
-	fname_full.append(str);
 	
 
 	{
@@ -519,7 +511,6 @@ void plot_tools::draw_mod_n_work(
 	double start_angle = 0;
 	orbiter_kernel_system::numerics Num;
 	int f_do_it = false;
-	char str[1000];
 
 
 	int n = Descr->n;
@@ -627,8 +618,11 @@ void plot_tools::draw_mod_n_work(
 	}
 
 	for (i = 0; i < n; i++) {
+
+		string str;
+
 		if (O->f_nodes_empty) {
-			str[0] = 0;
+			str = "";
 		}
 		else {
 
@@ -638,7 +632,7 @@ void plot_tools::draw_mod_n_work(
 			else {
 				j = i;
 			}
-			snprintf(str, sizeof(str), "%d", j);
+			str = std::to_string(j);
 		}
 
 		if (Descr->f_mod_s) {
@@ -900,13 +894,11 @@ void plot_tools::draw_point_set_in_plane(
 		P->unrank_point(Table + i * 3, Pts[i]);
 	}
 	if (f_point_labels) {
-		char str[1000];
 		std::string *Labels;
 
 		Labels = new std::string[nb_pts];
 		for (i = 0; i < nb_pts; i++) {
-			snprintf(str, 1000, "%ld", Pts[i]);
-			Labels[i].assign(str);
+			Labels[i] = std::to_string(Pts[i]);
 		}
 		if (f_v) {
 			cout << "plot_tools::draw_point_set_in_plane "

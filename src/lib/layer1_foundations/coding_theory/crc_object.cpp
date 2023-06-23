@@ -182,6 +182,30 @@ void crc_object::print()
 }
 
 
+long int crc_object::get_nb_blocks(long int N)
+{
+	long int nb_blocks;
+
+	nb_blocks = (N + Len_info - 1) / Len_info;
+
+	return nb_blocks;
+}
+
+long int crc_object::get_this_block_size(long int N, long int cnt)
+{
+	long int L;
+
+	if ((cnt + 1) * Len_info > N) {
+		L = N - cnt * Len_info;
+	}
+	else {
+		L = Len_info;
+	}
+	return L;
+
+}
+
+
 void crc_object::divide(const unsigned char *in, unsigned char *out)
 {
 	if (Crc_object_type == t_crc_alfa) {
@@ -208,102 +232,6 @@ void crc_object::divide(const unsigned char *in, unsigned char *out)
 	}
 
 }
-
-
-void crc_object::crc_encode_file_based(
-		std::string &fname_in,
-		std::string &fname_out,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "crc_object::crc_encode_file_based "
-				"fname_in=" << fname_in << endl;
-	}
-
-
-	orbiter_kernel_system::file_io Fio;
-
-	long int N, L, nb_blocks, cnt;
-
-	N = Fio.file_size(fname_in);
-
-	if (f_v) {
-		cout << "crc_object::crc_encode_file_based "
-				"input file size = " << N << endl;
-	}
-
-	nb_blocks = (N + Len_info - 1) / Len_info;
-	if (f_v) {
-		cout << "crc_object::crc_encode_file_based "
-				"nb_blocks = " << nb_blocks << endl;
-	}
-
-
-	ifstream ist(fname_in, ios::binary);
-
-	{
-		ofstream ost(fname_out);
-
-
-		for (cnt = 0; cnt < nb_blocks; cnt++) {
-
-			if ((cnt + 1) * Len_info > N) {
-				L = N - cnt * Len_info;
-			}
-			else {
-				L = Len_info;
-			}
-
-
-			int i;
-
-			for (i = 0; i < Len_check; i++) {
-				Data[i] = 0;
-			}
-
-			// read a block of information:
-
-			ist.read((char *) Data + Len_check, L);
-
-			// fill up with zeros:
-			for (i = L; i < Len_info; i++) {
-				Data[Len_check + i] = 0;
-			}
-
-
-			divide(Data, Check);
-
-			for (i = 0; i < Len_check; i++) {
-				Data[i] = Check[i];
-			}
-
-
-
-			// write information_length + check_size_in_byte bytes to file:
-			// (or less in case we have reached the end of the input file):
-
-			ost.write((char *)Data, L + Len_check);
-
-
-		}
-
-	}
-
-	cout << "Written file " << fname_out << " of size "
-			<< Fio.file_size(fname_out) << endl;
-
-	cout << "nb_blocks = " << nb_blocks << endl;
-
-
-
-	if (f_v) {
-		cout << "crc_object::crc_encode_file_based done" << endl;
-	}
-
-}
-
 
 
 

@@ -16,6 +16,7 @@ MODULES = \
 		create_BCH_code.o \
 		create_RS_code.o \
 		cyclic_codes.o \
+		error_pattern.o \
 		error_repository.o \
 		mindist.o \
 		ttp_codes.o 

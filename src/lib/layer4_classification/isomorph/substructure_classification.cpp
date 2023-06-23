@@ -615,93 +615,102 @@ void substructure_classification::init_DB_level(
 	int f_compress = true;
 	int f_duplicatekeys = true;
 	int i;
-	char str[1000];
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level level=" << level << endl;
+		cout << "substructure_classification::init_DB_level "
+				"level=" << level << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level Iso->prefix=" << Iso->prefix << endl;
+		cout << "substructure_classification::init_DB_level "
+				"Iso->prefix=" << Iso->prefix << endl;
 	}
-	fname_db_level.assign(Iso->prefix);
-	snprintf(str, sizeof(str), "starter_lvl_%d.db", level);
-	fname_db_level.append(str);
+	fname_db_level = Iso->prefix + "starter_lvl_" + std::to_string(level) + ".db";
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level fname_db_level=" << fname_db_level << endl;
+		cout << "substructure_classification::init_DB_level "
+				"fname_db_level=" << fname_db_level << endl;
 	}
 
-	fname_db_level_idx1.assign(Iso->prefix);
-	snprintf(str, sizeof(str), "starter_lvl_%d_a.idx", level);
-	fname_db_level_idx1.append(str);
+	fname_db_level_idx1 = Iso->prefix + "starter_lvl_" + std::to_string(level) + "_a.idx";
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level fname_db_level_idx1=" << fname_db_level_idx1 << endl;
+		cout << "substructure_classification::init_DB_level "
+				"fname_db_level_idx1=" << fname_db_level_idx1 << endl;
 	}
 
-	fname_db_level_idx2.assign(Iso->prefix);
-	snprintf(str, sizeof(str), "starter_lvl_%d_b.idx", level);
-	fname_db_level_idx2.append(str);
+	fname_db_level_idx2 = Iso->prefix + "starter_lvl_" + std::to_string(level) + "_b.idx";
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level fname_db_level_idx2=" << fname_db_level_idx2 << endl;
+		cout << "substructure_classification::init_DB_level "
+				"fname_db_level_idx2=" << fname_db_level_idx2 << endl;
 	}
 
-	fname_db_level_ge.assign(Iso->prefix);
-	snprintf(str, sizeof(str), "starter_lvl_%d_ge.bin", level);
-	fname_db_level_ge.append(str);
+	fname_db_level_ge = Iso->prefix + "starter_lvl_" + std::to_string(level) + "_ge.bin";
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level fname_db_level_ge=" << fname_db_level_ge << endl;
+		cout << "substructure_classification::init_DB_level "
+				"fname_db_level_ge=" << fname_db_level_ge << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level before D.init" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"before D.init" << endl;
 	}
 	D.init(fname_db_level.c_str(), layer2_discreta::typed_objects::VECTOR, f_compress);
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level after D.init" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"after D.init" << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level before B1.init" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"before B1.init" << endl;
 	}
-	B1.init(fname_db_level_idx1.c_str(), f_duplicatekeys, 0 /* btree_idx */);
+	B1.init(fname_db_level_idx1.c_str(),
+			f_duplicatekeys, 0 /* btree_idx */);
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level after B1.init" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"after B1.init" << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level before B1.add_key_int4" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"before B1.add_key_int4" << endl;
 	}
 	B1.add_key_int4(0, 0);
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level after B1.add_key_int4" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"after B1.add_key_int4" << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level before D.btree_access" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"before D.btree_access" << endl;
 	}
 	D.btree_access().append(B1);
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level after D.btree_access" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"after D.btree_access" << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level before B2.init" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"before B2.init" << endl;
 	}
 	B2.init(fname_db_level_idx2.c_str(), f_duplicatekeys, 1 /* btree_idx */);
 		// 2 up to 2+level-1 are the values of the starter (of size level)
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level after B2.init" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"after B2.init" << endl;
 	}
 	for (i = 0; i < level; i++) {
 		B2.add_key_int4(2 + i, 0);
 	}
 	D.btree_access().append(B2);
 	if (f_v) {
-		cout << "substructure_classification::init_DB_level level=" << level << " done" << endl;
+		cout << "substructure_classification::init_DB_level "
+				"level=" << level << " done" << endl;
 	}
 }
 
@@ -740,19 +749,23 @@ void substructure_classification::create_level_database(int level, int verbose_l
 	//elt = NEW_char(gen->A->coded_elt_size_in_char);
 
 	if (f_v) {
-		cout << "substructure_classification::create_level_database before init_DB_level" << endl;
+		cout << "substructure_classification::create_level_database "
+				"before init_DB_level" << endl;
 	}
 	init_DB_level(D, level, verbose_level - 1);
 	if (f_v) {
-		cout << "substructure_classification::create_level_database after init_DB_level" << endl;
+		cout << "substructure_classification::create_level_database "
+				"after init_DB_level" << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classification::create_level_database before D.create" << endl;
+		cout << "substructure_classification::create_level_database "
+				"before D.create" << endl;
 	}
 	D.create(0/*verbose_level - 1*/);
 	if (f_v) {
-		cout << "substructure_classification::create_level_database after D.create" << endl;
+		cout << "substructure_classification::create_level_database "
+				"after D.create" << endl;
 	}
 	//fp = fopen(fname_db_level_ge, "wb");
 	{
@@ -846,7 +859,9 @@ void substructure_classification::create_level_database(int level, int verbose_l
 					//gen->get_A()->element_retrieve(O->get_E(j)->get_data(), gen->get_Elt1(), false);
 
 
-					gen->get_A2()->map_a_set_based_on_hdl(set1, set2, level + 1, gen->get_A(), O->get_E(j)->get_data(), 0);
+					gen->get_A2()->map_a_set_based_on_hdl(
+							set1, set2, level + 1, gen->get_A(),
+							O->get_E(j)->get_data(), 0);
 					Sorting.lint_vec_heapsort(set2, level + 1);
 
 					if (f_vv /*f_vv && (i % print_mod) == 0*/) {
@@ -858,7 +873,8 @@ void substructure_classification::create_level_database(int level, int verbose_l
 					}
 
 
-					J = gen->find_poset_orbit_node_for_set(level + 1,
+					J = gen->find_poset_orbit_node_for_set(
+							level + 1,
 							set2, false /* f_tolerant */, 0);
 					v.m_ii(idx++, J);
 				}
@@ -914,39 +930,48 @@ void substructure_classification::create_level_database(int level, int verbose_l
 			O->get_strong_generators_handle(gen_hdl, verbose_level);
 
 			if (f_v) {
-				cout << "substructure_classification::create_level_database before writing generators, gen_hdl.size()=" << gen_hdl.size() << endl;
+				cout << "substructure_classification::create_level_database "
+						"before writing generators, gen_hdl.size()=" << gen_hdl.size() << endl;
 			}
 
 			for (j = 0; j < gen_hdl.size(); j++) {
 				if (f_v) {
-					cout << "substructure_classification::create_level_database j=" << j << " / " << gen_hdl.size()
+					cout << "substructure_classification::create_level_database "
+							"j=" << j << " / " << gen_hdl.size()
 							<< " gen_hdl[j]=" << gen_hdl[j] << endl;
 				}
 				if (f_v) {
-					cout << "substructure_classification::create_level_database before element_retrieve" << endl;
+					cout << "substructure_classification::create_level_database "
+							"before element_retrieve" << endl;
 				}
 				gen->get_A()->Group_element->element_retrieve(
 						gen_hdl[j], Iso->Folding->Elt1,
 						0/*verbose_level*/);
 				if (f_v) {
-					cout << "substructure_classification::create_level_database before element_write_file_fp" << endl;
+					cout << "substructure_classification::create_level_database "
+							"before element_write_file_fp" << endl;
 				}
-				gen->get_A()->Group_element->element_write_file_fp(Iso->Folding->Elt1, fp,
+				gen->get_A()->Group_element->element_write_file_fp(
+						Iso->Folding->Elt1, fp,
 						0/* verbose_level*/);
 				cnt++;
 			}
 
 
 			if (f_v) {
-				cout << "substructure_classification::create_level_database before writing fusion elements, O->get_nb_of_extensions()=" << O->get_nb_of_extensions() << endl;
+				cout << "substructure_classification::create_level_database "
+						"before writing fusion elements, "
+						"O->get_nb_of_extensions()=" << O->get_nb_of_extensions() << endl;
 			}
 
 			for (j = 0; j < O->get_nb_of_extensions(); j++) {
 				if (O->get_E(j)->get_type() == EXTENSION_TYPE_EXTENSION) {
 					continue;
 				}
-				gen->get_A()->Group_element->element_retrieve(O->get_E(j)->get_data(), Iso->Folding->Elt1, false);
-				gen->get_A()->Group_element->element_write_file_fp(Iso->Folding->Elt1, fp,
+				gen->get_A()->Group_element->element_retrieve(
+						O->get_E(j)->get_data(), Iso->Folding->Elt1, false);
+				gen->get_A()->Group_element->element_write_file_fp(
+						Iso->Folding->Elt1, fp,
 						0/* verbose_level*/);
 				cnt++;
 			}

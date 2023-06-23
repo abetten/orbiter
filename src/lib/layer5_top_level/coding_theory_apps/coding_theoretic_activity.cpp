@@ -679,6 +679,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				<< Descr->crc256_test_message_length
 				<< endl;
 
+#if 0
 		coding_theory::crc_codes Crc_codes;
 
 		if (f_v) {
@@ -694,6 +695,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			cout << "coding_theoretic_activity::perform_activity "
 					"after Crc_codes.crc256_test_k_subsets" << endl;
 		}
+#endif
 
 	}
 	else if (Descr->f_crc32_remainders) {
@@ -701,6 +703,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				<< Descr->crc32_remainders_message_length
 				<< endl;
 
+#if 0
 		coding_theory::crc_codes Crc_codes;
 
 		if (f_v) {
@@ -714,19 +717,25 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 			cout << "coding_theoretic_activity::perform_activity "
 					"after Crc_codes.crc32_remainders" << endl;
 		}
+#endif
 
 	}
 	else if (Descr->f_crc_encode_file_based) {
 		cout << "-crc_encode_file_based " << Descr->crc_encode_file_based_fname_in
-				<< " " << Descr->crc_encode_file_based_block_length
+				<< " " << Descr->crc_encode_file_based_fname_out
 				<< " " << Descr->crc_encode_file_based_crc_type
 				<< " " << Descr->crc_encode_file_based_block_length
 				<< endl;
 
 
-		coding_theory::crc_object CRC;
+		coding_theory::coding_theory_domain Codes;
 
-		CRC.init(
+		coding_theory::crc_object *CRC;
+
+
+		CRC = NEW_OBJECT(coding_theory::crc_object);
+
+		CRC->init(
 				Descr->crc_encode_file_based_crc_type,
 				Descr->crc_encode_file_based_block_length,
 				verbose_level);
@@ -735,22 +744,77 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
-					"before CRC.crc_encode_file_based" << endl;
+					"before Codes.crc_encode_file_based" << endl;
 		}
 
-		CRC.crc_encode_file_based(
+		Codes.crc_encode_file_based(
 				Descr->crc_encode_file_based_fname_in,
 				Descr->crc_encode_file_based_fname_out,
-				//Descr->crc_encode_file_based_crc_type,
-				//Descr->crc_encode_file_based_block_length,
+				CRC,
 				verbose_level - 1);
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
-					"after CRC.crc_encode_file_based" << endl;
+					"after Codes.crc_encode_file_based" << endl;
 		}
 
+		FREE_OBJECT(CRC);
+
 	}
+	else if (Descr->f_crc_compare) {
+		cout << "-crc_compare"
+				<< " " << Descr->crc_compare_fname_in
+				<< " " << Descr->crc_compare_crc1_type
+				<< " " << Descr->crc_compare_crc2_type
+				<< " " << Descr->crc_compare_block_length
+				<< " " << Descr->crc_compare_error_weight
+				<< endl;
+
+
+		coding_theory::coding_theory_domain Codes;
+
+		coding_theory::crc_object *CRC1;
+		coding_theory::crc_object *CRC2;
+
+
+		CRC1 = NEW_OBJECT(coding_theory::crc_object);
+		CRC2 = NEW_OBJECT(coding_theory::crc_object);
+
+		CRC1->init(
+				Descr->crc_compare_crc1_type,
+				Descr->crc_compare_block_length,
+				verbose_level);
+		CRC2->init(
+				Descr->crc_compare_crc2_type,
+				Descr->crc_compare_block_length,
+				verbose_level);
+
+
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before Codes.crc_simulate_errors" << endl;
+		}
+
+		Codes.crc_simulate_errors(
+				Descr->crc_compare_fname_in,
+				CRC1,
+				CRC2,
+				Descr->crc_compare_error_weight,
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after Codes.crc_simulate_errors" << endl;
+		}
+
+		FREE_OBJECT(CRC1);
+		FREE_OBJECT(CRC2);
+
+	}
+
+
+
 	else if (Descr->f_convert_data_to_polynomials) {
 		cout << "-convert_data_to_polynomials "
 				<< " " << Descr->convert_data_to_polynomials_fname_in

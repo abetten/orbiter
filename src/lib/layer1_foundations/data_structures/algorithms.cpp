@@ -104,6 +104,40 @@ void algorithms::uchar_move(unsigned char *p, unsigned char *q, int len)
 	}
 }
 
+void algorithms::uchar_zero(unsigned char *p, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		*p++ = 0;
+	}
+}
+
+void algorithms::uchar_xor(unsigned char *in1, unsigned char *in2, unsigned char *out, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		out[i] = in1[i] ^ in2[i];
+	}
+}
+
+int algorithms::uchar_compare(unsigned char *in1, unsigned char *in2, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (in1[i] < in2[i]) {
+			return -1;
+		}
+		else if (in1[i] > in2[i]) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
 void algorithms::int_swap(int& x, int& y)
 {
 	int z;
@@ -824,6 +858,17 @@ void algorithms::matrix_rowspan_over_R(
 	if (f_v) {
 		cout << "algorithms::matrix_rowspan_over_R done" << endl;
 	}
+}
+
+int algorithms::binary_logarithm(int m)
+{
+	int i = 0;
+
+	while (m) {
+		i++;
+		m >>= 1;
+	}
+	return i;
 }
 
 

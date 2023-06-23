@@ -74,7 +74,7 @@ void exact_cover::init_basic(
 
 	if (f_v) {
 		cout << "exact_cover::init_basic" << endl;
-		}
+	}
 
 	if (f_vv) {
 		cout << "exact_cover::init_basic input_prefix=" << input_prefix << endl;
@@ -84,7 +84,7 @@ void exact_cover::init_basic(
 		cout << "exact_cover::init_basic target_size=" << target_size << endl;
 		cout << "exact_cover::init_basic starter_size=" << starter_size << endl;
 		cout << "exact_cover::init_basic f_lex=" << f_lex << endl;
-		}
+	}
 	exact_cover::user_data = user_data;
 	exact_cover::A_base = A_base;
 	exact_cover::A_on_blocks = A_on_blocks;
@@ -99,51 +99,40 @@ void exact_cover::init_basic(
 	exact_cover::base_fname.assign(base_fname);
 
 	string fname;
-	char str[1000];
 
-	fname.assign(input_prefix);
-	fname.append(base_fname);
-	snprintf(str, sizeof(str), "_lvl_%d", starter_size);
-	fname.append(str);
+	fname = input_prefix + base_fname + "_lvl_" + std::to_string(starter_size);
 
 	if (f_v) {
 		cout << "exact_cover::init_basic counting number "
 				"of orbits from file " << fname << endl;
-		}
+	}
 	if (Fio.file_size(fname) <= 0) {
 		cout << "exact_cover::init_basic the file " << fname
 				<< " does not exist" << endl;
 		exit(1);
-		}
+	}
 	starter_nb_cases = Fio.count_number_of_orbits_in_file(fname,
 			verbose_level + 2);
 	if (f_v) {
 		cout << "exact_cover::init_basic starter_nb_cases = "
 				<< starter_nb_cases << endl;
-		}
+	}
 
-	fname_solutions.assign(solution_prefix);
-	fname_solutions.append(base_fname);
+	fname_solutions = solution_prefix + base_fname + "_depth_" + std::to_string(starter_size) + "_solutions.txt";
 
-	snprintf(str, sizeof(str), "_depth_%d_solutions.txt", starter_size);
-	fname_solutions.append(str);
-
-	fname_statistics.assign(solution_prefix);
-	fname_statistics.append(base_fname);
-	snprintf(str, sizeof(str), "_depth_%d_statistics.csv", starter_size);
-	fname_statistics.append(str);
+	fname_statistics = solution_prefix + base_fname + "_depth_" + std::to_string(starter_size) + "_statistics.csv";
 
 	if (f_vv) {
 		cout << "exact_cover::init_basic fname_solutions = "
 				<< fname_solutions << endl;
 		cout << "exact_cover::init_basic fname_statistics = "
 				<< fname_statistics << endl;
-		}
+	}
 	starter = NEW_lint(starter_size + 1);
 
 	if (f_v) {
 		cout << "exact_cover::init_basic done" << endl;
-		}
+	}
 }
 
 void exact_cover::init_early_test_func(
@@ -158,7 +147,7 @@ void exact_cover::init_early_test_func(
 
 	if (f_v) {
 		cout << "exact_cover::init_early_test_func" << endl;
-		}
+	}
 	exact_cover::early_test_func = early_test_func;
 	exact_cover::early_test_func_data = early_test_func_data;
 }
@@ -176,7 +165,7 @@ void exact_cover::init_prepare_function_new(
 
 	if (f_v) {
 		cout << "exact_cover::init_prepare_function_new" << endl;
-		}
+	}
 	exact_cover::prepare_function_new = prepare_function_new;
 }
 
@@ -188,29 +177,22 @@ void exact_cover::set_split(int split_r, int split_m, int verbose_level)
 	exact_cover::split_r = split_r;
 	exact_cover::split_m = split_m;
 
-	char str[1000];
+
+	fname_solutions = solution_prefix + base_fname
+			+ "_depth_" + std::to_string(starter_size) + "_split_"
+			+ std::to_string(split_r) + "_" + std::to_string(split_m) + "_solutions.txt";
 
 
-	fname_solutions.assign(solution_prefix);
-	fname_solutions.append(base_fname);
-
-
-	snprintf(str, sizeof(str), "_depth_%d_split_%d_%d_solutions.txt", starter_size, split_r, split_m);
-	fname_solutions.append(str);
-
-
-	fname_statistics.assign(solution_prefix);
-	fname_statistics.append(base_fname);
-
-	snprintf(str, sizeof(str), "_depth_%d_split_%d_%d_statistics.csv", starter_size, split_r, split_m);
-	fname_statistics.append(str);
+	fname_statistics = solution_prefix + base_fname
+			+ "_depth_" + std::to_string(starter_size) + "_split_"
+			+ std::to_string(split_r) + "_" + std::to_string(split_m) + "_statistics.csv";
 
 	if (f_v) {
 		cout << "exact_cover::set_split fname_solutions = "
 				<< fname_solutions << endl;
 		cout << "exact_cover::set_split fname_statistics = "
 				<< fname_statistics << endl;
-		}
+	}
 }
 
 void exact_cover::set_single_case(int single_case, int verbose_level)
@@ -220,21 +202,14 @@ void exact_cover::set_single_case(int single_case, int verbose_level)
 	exact_cover::f_single_case = true;
 	exact_cover::single_case = single_case;
 
-	char str[1000];
-
-	fname_solutions.assign(solution_prefix);
-	fname_solutions.append(base_fname);
-
-
-	snprintf(str, sizeof(str), "_depth_%d_case_%d_solutions.txt", starter_size, single_case);
-	fname_solutions.append(str);
+	fname_solutions = solution_prefix + base_fname
+			+ "_depth_" + std::to_string(starter_size) + "_case_"
+			+ std::to_string(single_case) + "_solutions.txt";
 
 
-	fname_statistics.assign(solution_prefix);
-	fname_statistics.append(base_fname);
-
-	snprintf(str, sizeof(str), "_depth_%d_case_%d_statistics.csv", starter_size, single_case);
-	fname_statistics.append(str);
+	fname_statistics = solution_prefix + base_fname
+			+ "_depth_" + std::to_string(starter_size) + "_case_"
+			+ std::to_string(single_case) + "_statistics.csv";
 
 	if (f_v) {
 		cout << "exact_cover::set_single_case fname_solutions = "
@@ -395,24 +370,17 @@ void exact_cover::compute_liftings_new(
 		nb_sol = 0;
 
 		long int *Solutions = NULL;
-		//char fname1[1000];
-
 
 		
 		string fname_system2;
 		string fname_tree2;
-		char str[1000];
 
 		if (f_draw_system) {
-			snprintf(str, sizeof(str), "_%d", the_starter_case);
-			fname_system2.assign(fname_system);
-			fname_system2.append(str);
-			}
+			fname_system2 = fname_system + "_" + std::to_string(the_starter_case);
+		}
 		if (f_write_tree) {
-			snprintf(str, sizeof(str), "_%d", the_starter_case);
-			fname_tree2.assign(fname_tree);
-			fname_tree2.append(str);
-			}
+			fname_tree2 = fname_tree + "_" + std::to_string(the_starter_case);
+		}
 		compute_liftings_single_case_new(the_starter_case, 
 			f_solve, f_save, f_read_instead, 
 			nb_col, 
@@ -733,26 +701,19 @@ void exact_cover::compute_liftings_single_case_new(
 				}
 			}
 
-		char str[1000];
 		string fname;
 		string fname_Levi;
 		string fname_sol;
 
-		fname.assign(output_prefix);
-		snprintf(str, sizeof(str), "system_%d.txt", starter_case);
-		fname.assign(str);
+		fname = output_prefix + "system_" + std::to_string(starter_case) + ".txt";
 
 
 
-		fname_Levi.assign(output_prefix);
-		snprintf(str, sizeof(str), "system_%d_Levi_graph.bin", starter_case);
-		fname_Levi.assign(str);
+		fname_Levi = output_prefix + "system_" + std::to_string(starter_case) + "_Levi_graph.bin";
 
 
 
-		fname_sol.assign(output_prefix);
-		snprintf(str, sizeof(str), "system_%d.sol", starter_case);
-		fname_sol.assign(str);
+		fname_sol = output_prefix + "system_" + std::to_string(starter_case) + ".sol";
 
 
 		if (f_save) {
@@ -816,12 +777,8 @@ void exact_cover::compute_liftings_single_case_new(
 				}
 			else if (f_read_instead) {
 				string fname_sol;
-				char str[1000];
 				
-
-				snprintf(str, sizeof(str), "system_%d.solutions", starter_case);
-				fname_sol.assign(solution_prefix);
-				fname_sol.append(str);
+				fname_sol = solution_prefix + "system_" + std::to_string(starter_case) + ".solutions";
 
 				if (f_v) {
 					cout << "exact_cover::compute_liftings_single_case_new "

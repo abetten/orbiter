@@ -1603,11 +1603,8 @@ void poset_classification::list_whole_orbit(
 
 	if (f_save_stab) {
 		string fname;
-		char str[1000];
 
-		fname.assign(problem_label_with_path);
-		snprintf(str, sizeof(str), "_stab_%d_%d.bin", depth, orbit_idx);
-		fname.append(str);
+		fname = problem_label_with_path + "_stab_" + std::to_string(depth) + "_" + std::to_string(orbit_idx) + ".bin";
 
 		cout << "saving stabilizer poset_classifications "
 				"to file " << fname << endl;

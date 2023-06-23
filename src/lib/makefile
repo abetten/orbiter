@@ -49,6 +49,7 @@ ORBITER_MODULES= \
 		layer1_foundations/coding_theory/create_BCH_code.o \
 		layer1_foundations/coding_theory/create_RS_code.o \
 		layer1_foundations/coding_theory/cyclic_codes.o \
+		layer1_foundations/coding_theory/error_pattern.o \
 		layer1_foundations/coding_theory/error_repository.o \
 		layer1_foundations/coding_theory/mindist.o \
 		layer1_foundations/coding_theory/ttp_codes.o \

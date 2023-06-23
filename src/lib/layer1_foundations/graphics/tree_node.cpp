@@ -487,7 +487,6 @@ void tree_node::draw_vertices(
 	int dy = dx;
 	int x, y, i;
 	int Px[3], Py[3];
-	char str[1000];
 	int *v;
 	
 #if DONT_DRAW_ROOT_NODE
@@ -540,7 +539,6 @@ void tree_node::draw_vertices(
 		f_show = false;
 	}
 
-	string s;
 
 	if (f_show) {
 		if (Opt->f_nodes) {
@@ -558,16 +556,18 @@ void tree_node::draw_vertices(
 				G.nice_circle(x, y, Opt->rad);
 			}
 			else {
-				snprintf(str, sizeof(str), "%d", value);
-				s.assign(str);
+				string s;
+
+				s = std::to_string(value);
 				G.aligned_text(x, y, "", s);
 			}
 			//snprintf(str, 1000, "%d", color);
 			//G.aligned_text(Px[1], Py[1], "tl", str);
 		}
 		else {
-			snprintf(str, sizeof(str), "%d", value);
-			s.assign(str);
+			string s;
+
+			s = std::to_string(value);
 			G.aligned_text(x, y, "", s);
 		}
 
@@ -612,10 +612,12 @@ void tree_node::draw_vertices(
 			y0 -= dy;
 		
 
-			snprintf(str, 1000, "L%d", T->leaf_count);
+			string s;
+
+			s = "L" + std::to_string(T->leaf_count);
+
 
 			T->leaf_count++;
-			s.assign(str);
 			G.aligned_text(x0, y0, "", s);
 		
 			}
@@ -625,22 +627,6 @@ void tree_node::draw_vertices(
 		children[i]->draw_vertices(G, Tree_draw_options, Opt, true, x, y, max_depth, T, verbose_level);
 		}
 
-#if 0
-	if (f_value) {
-		snprintf(str, 1000, "%d", value);
-		}
-	else {
-		snprintf(str, 1000, " ");
-		}
-
-	if (!Opt->f_nodes_empty) {
-		//G.circle_text(x, y, str);
-		G.aligned_text(x, y, "", str);
-		}
-	else {
-		//G.aligned_text(x, y, 1, "tl", str);
-		}
-#endif
 
 	if (f_v) {
 		cout << "tree_node::draw_vertices done" << endl;
@@ -655,8 +641,6 @@ void tree_node::draw_sideways(
 	int x, y, i;
 	int xx, yy;
 	int Px[3], Py[3];
-	char str[1000];
-	string s;
 	//int rad = 50;
 	
 #if DONT_DRAW_ROOT_NODE
@@ -704,11 +688,14 @@ void tree_node::draw_sideways(
 	for (i = 0; i < nb_children; i++) {
 		children[i]->draw_sideways(G, f_circletext, f_i, true, xx, yy, max_depth, f_edge_labels);
 		}
+
+	string s;
+
 	if (f_value) {
-		snprintf(str, 1000, "%d", value);
+		s = std::to_string(value);
 		}
 	else {
-		snprintf(str, 1000, " ");
+		s = " ";
 		}
 	if (f_circletext) {
 #if 0
@@ -720,15 +707,13 @@ void tree_node::draw_sideways(
 		G.sf_color(1); // 1 = black, 0 = white
 		G.circle(xx, yy, rad);
 #endif
-		s.assign(str);
 		G.aligned_text(Px[1], Py[1], "" /*"tl"*/, s);
 		}
 	else {
 		//G.aligned_text(xx, yy, 1, "tl", str);
 		}
 	if (f_i && f_circletext && f_has_color) {
-		snprintf(str, 1000, "%d", color);
-		s.assign(str);
+		s = std::to_string(color);
 		G.aligned_text(Px[1], Py[1], "tl", s);
 		}
 }

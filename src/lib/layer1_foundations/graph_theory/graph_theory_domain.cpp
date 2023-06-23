@@ -38,8 +38,7 @@ void graph_theory_domain::colored_graph_draw(
 
 	CG.load(fname_graph, verbose_level - 1);
 
-	fname_draw.assign(CG.fname_base);
-	fname_draw.append("_graph");
+	fname_draw = CG.fname_base + "_graph";
 
 	if (f_v) {
 		cout << "graph_theory_domain::colored_graph_draw before CG.draw_partitioned" << endl;
@@ -74,15 +73,12 @@ void graph_theory_domain::colored_graph_all_cliques(
 	}
 	CG.load(fname, verbose_level - 1);
 	if (f_output_fname) {
-		fname_sol.assign(output_fname);
-		fname_success.assign(output_fname);
-		fname_success.append(".success");
+		fname_sol = output_fname;
+		fname_success = output_fname + ".success";
 	}
 	else {
-		fname_sol.assign(CG.fname_base);
-		fname_sol.append("_sol.txt");
-		fname_success.assign(CG.fname_base);
-		fname_success.append("_sol.success");
+		fname_sol = CG.fname_base + "_sol.txt";
+		fname_success = CG.fname_base + "_sol.success";
 	}
 
 	//CG.print();
@@ -133,8 +129,8 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 		cout << "colored_graph_all_cliques_list_of_cases" << endl;
 	}
 	{
-		ofstream fp(fname_sol.c_str());
-		ofstream fp_stats(fname_stats.c_str());
+		ofstream fp(fname_sol);
+		ofstream fp_stats(fname_stats);
 
 		fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,"
 				"decision_steps,dt" << endl;
@@ -206,8 +202,7 @@ void graph_theory_domain::save_as_colored_graph_easy(
 	if (f_v) {
 		cout << "save_as_colored_graph_easy" << endl;
 	}
-	fname.assign(fname_base);
-	fname.append(".colored_graph");
+	fname = fname_base + ".colored_graph";
 
 	colored_graph *CG;
 
@@ -314,7 +309,8 @@ void graph_theory_domain::load_colored_graph(
 	}
 
 	if (Fio.file_size(fname) <= 0) {
-		cout << "graph_theory_domain::load_colored_graph the file " << fname << " does not exist or is empty" << endl;
+		cout << "graph_theory_domain::load_colored_graph "
+				"the file " << fname << " does not exist or is empty" << endl;
 		exit(1);
 	}
 
@@ -327,7 +323,8 @@ void graph_theory_domain::load_colored_graph(
 
 
 			if (f_v) {
-				cout << "graph_theory_domain::load_colored_graph detected new file format" << endl;
+				cout << "graph_theory_domain::load_colored_graph "
+						"new file format detected" << endl;
 			}
 
 			// new file format
@@ -342,18 +339,20 @@ void graph_theory_domain::load_colored_graph(
 
 			fp.read((char *) &b, sizeof(int));
 			if (f_v) {
-				cout << "graph_theory_domain::load_colored_graph version=" << b << endl;
+				cout << "graph_theory_domain::load_colored_graph "
+						"version=" << b << endl;
 			}
 
 			fp.read((char *) &nb_vertices, sizeof(int));
 			fp.read((char *) &nb_colors, sizeof(int));
 			fp.read((char *) &nb_colors_per_vertex, sizeof(int));
 			if (f_v) {
-				cout << "graph_theory_domain::load_colored_graph nb_vertices=" << nb_vertices
+				cout << "graph_theory_domain::load_colored_graph "
+						"nb_vertices=" << nb_vertices
 						<< " nb_colors=" << nb_colors
 						<< " nb_colors_per_vertex=" << nb_colors_per_vertex
 					<< endl;
-				}
+			}
 
 
 			L = ((long int) nb_vertices * (long int) (nb_vertices - 1)) >> 1;
@@ -363,19 +362,19 @@ void graph_theory_domain::load_colored_graph(
 			if (f_v) {
 				cout << "graph_theory_domain::load_colored_graph bitvector_length="
 						<< bitvector_length << endl;
-				}
+			}
 #endif
 
 			fp.read((char *) &user_data_size, sizeof(int));
 			if (f_v) {
 				cout << "graph_theory_domain::load_colored_graph user_data_size="
 						<< user_data_size << endl;
-				}
+			}
 			user_data = NEW_lint(user_data_size);
 
 			for (i = 0; i < user_data_size; i++) {
 				fp.read((char *) &user_data[i], sizeof(long int));
-				}
+			}
 
 			vertex_labels = NEW_lint(nb_vertices);
 			vertex_colors = NEW_int(nb_vertices * nb_colors_per_vertex);
@@ -392,12 +391,13 @@ void graph_theory_domain::load_colored_graph(
 						cout << "j=" << j << endl;
 						cout << "nb_colors=" << nb_colors << endl;
 						exit(1);
-						}
+					}
 				}
 				Sorting.int_vec_heapsort(vertex_colors + i * nb_colors_per_vertex, nb_colors_per_vertex);
 				for (j = 1; j < nb_colors_per_vertex; j++) {
 					if (vertex_colors[i * nb_colors_per_vertex + j - 1] == vertex_colors[i * nb_colors_per_vertex + j]) {
-						cout << "graph_theory_domain::load_colored_graph repeated color for vertex " << i << " : " << endl;
+						cout << "graph_theory_domain::load_colored_graph "
+								"repeated color for vertex " << i << " : " << endl;
 						Int_vec_print(cout, vertex_colors + i * nb_colors_per_vertex, nb_colors_per_vertex);
 						cout << endl;
 						exit(1);
@@ -408,22 +408,25 @@ void graph_theory_domain::load_colored_graph(
 		else {
 
 			if (f_v) {
-				cout << "graph_theory_domain::load_colored_graph detected old file format in file " << fname << endl;
+				cout << "graph_theory_domain::load_colored_graph "
+						"old file format detected in file " << fname << endl;
 			}
 			// old file format is still supported:
 
 			//cout << "graph_theory_domain::load_colored_graph old file format no longer supported" << endl;
 			//exit(1);
-			cout << "graph_theory_domain::load_colored_graph old file format detected, using compatibility mode" << endl;
+			cout << "graph_theory_domain::load_colored_graph "
+					"old file format detected, using compatibility mode" << endl;
 			nb_vertices = a;
 			fp.read((char *) &nb_colors, sizeof(int));
 			nb_colors_per_vertex = 1;
 			if (f_v) {
-				cout << "graph_theory_domain::load_colored_graph nb_vertices=" << nb_vertices
+				cout << "graph_theory_domain::load_colored_graph "
+						"nb_vertices=" << nb_vertices
 						<< " nb_colors=" << nb_colors
 						<< " nb_colors_per_vertex=" << nb_colors_per_vertex
 					<< endl;
-				}
+			}
 
 
 			L = ((long int) nb_vertices * (long int) (nb_vertices - 1)) >> 1;
@@ -433,20 +436,20 @@ void graph_theory_domain::load_colored_graph(
 			if (f_v) {
 				cout << "graph_theory_domain::load_colored_graph bitvector_length="
 						<< bitvector_length << endl;
-				}
+			}
 #endif
 
 			fp.read((char *) &user_data_size, sizeof(int));
 			if (f_v) {
-				cout << "graph_theory_domain::load_colored_graph user_data_size="
-						<< user_data_size << endl;
-				}
+				cout << "graph_theory_domain::load_colored_graph "
+						"user_data_size = " << user_data_size << endl;
+			}
 			user_data = NEW_lint(user_data_size);
 
 			for (i = 0; i < user_data_size; i++) {
 				fp.read((char *) &a, sizeof(int));
 				user_data[i] = a;
-				}
+			}
 
 			vertex_labels = NEW_lint(nb_vertices);
 			vertex_colors = NEW_int(nb_vertices * nb_colors_per_vertex);
@@ -464,14 +467,15 @@ void graph_theory_domain::load_colored_graph(
 						cout << "j=" << j << endl;
 						cout << "nb_colors=" << nb_colors << endl;
 						exit(1);
-						}
+					}
 				}
 			}
 		}
 
 		if (f_v) {
-			cout << "graph_theory_domain::load_colored_graph before allocating bitvector_adjacency" << endl;
-			}
+			cout << "graph_theory_domain::load_colored_graph "
+					"before allocating bitvector_adjacency" << endl;
+		}
 		Bitvec = NEW_OBJECT(data_structures::bitvector);
 		Bitvec->allocate(L);
 		//bitvector_adjacency = NEW_uchar(bitvector_length);
@@ -769,7 +773,7 @@ void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
 				for (mu = 1; mu <= k; mu++) {
 					if (k * (k - lambda - 1) != mu * (v - k - 1)) {
 						continue;
-						}
+					}
 					top = (v - 1) * (mu - lambda) - 2 * k;
 					top2 = top * top;
 					bottom = (mu - lambda) * (mu - lambda) + 4 * (k - mu);
@@ -778,9 +782,9 @@ void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
 							<< " lambda=" << lambda << " mu=" << mu
 							<< " top=" << top << " bottom=" << bottom << endl;
 					if (top2 % bottom) {
-						cout << "is ruled out by integrality condition" << endl;
+						cout << "is ruled out by the integrality condition" << endl;
 						continue;
-						}
+					}
 
 					int nb;
 					int *primes, *exponents;
@@ -788,40 +792,40 @@ void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
 					for (i = 0; i < nb; i++) {
 						if (ODD(exponents[i])) {
 							break;
-							}
 						}
+					}
 					if (i < nb) {
 						cout << "bottom is not a square" << endl;
 						continue;
-						}
+					}
 					for (i = 0; i < nb; i++) {
 						exponents[i] >>= 1;
-						}
+					}
 					b = 1;
 					for (i = 0; i < nb; i++) {
 						b *= NT.i_power_j(primes[i], exponents[i]);
-						}
+					}
 					cout << "b=" << b << endl;
 					tb = top / b;
 					cout << "tb=" << tb << endl;
 					if (ODD(v - 1 + tb)) {
-						cout << "is ruled out by integrality condition (2)" << endl;
+						cout << "is ruled out by the integrality condition (2)" << endl;
 						continue;
-						}
+					}
 					if (ODD(v - 1 - tb)) {
-						cout << "is ruled out by integrality condition (3)" << endl;
+						cout << "is ruled out by the integrality condition (3)" << endl;
 						continue;
-						}
+					}
 					f = (v - 1 + tb) >> 1;
 					g = (v - 1 - tb) >> 1;
 					if (ODD(lambda - mu + b)) {
 						cout << "r is not integral, skip" << endl;
 						continue;
-						}
+					}
 					if (ODD(lambda - mu - b)) {
 						cout << "r is not integral, skip" << endl;
 						continue;
-						}
+					}
 					r = (lambda - mu + b) >> 1;
 					s = (lambda - mu - b) >> 1;
 					cout << "f=" << f << " g=" << g << " r=" << r << " s=" << s << endl;
@@ -834,17 +838,17 @@ void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
 					R2 = (k + s) * (r + 1) * (r + 1);
 
 					if (L1 > R1) {
-						cout << "is ruled out by Krein condition (1)" << endl;
+						cout << "is ruled out by the Krein condition (1)" << endl;
 						continue;
-						}
+					}
 					if (L2 > R2) {
-						cout << "is ruled out by Krein condition (2)" << endl;
+						cout << "is ruled out by the Krein condition (2)" << endl;
 						continue;
-						}
 					}
 				}
 			}
 		}
+	}
 
 	if (f_v) {
 		cout << "graph_theory_domain::list_parameters_of_SRG done" << endl;
@@ -1075,8 +1079,6 @@ void graph_theory_domain::make_Schlaefli_graph(
 	geometry::grassmann *Gr;
 	int n = 4;
 	int k = 2;
-
-
 
 	Gr = NEW_OBJECT(geometry::grassmann);
 	Gr->init(n, k, F, verbose_level);
@@ -1422,7 +1424,8 @@ void graph_theory_domain::compute_adjacency_matrix(
 
 
 	if (f_v) {
-		cout << "graph_theory_domain::compute_adjacency_matrix making a graph" << endl;
+		cout << "graph_theory_domain::compute_adjacency_matrix "
+				"making a graph" << endl;
 	}
 
 	{
@@ -1442,12 +1445,12 @@ void graph_theory_domain::compute_adjacency_matrix(
 				prefix_for_graph, prefix_for_graph,
 				verbose_level);
 
-		fname.assign(prefix_for_graph);
-		fname.append("_disjointness.colored_graph");
+		fname = prefix_for_graph + "_disjointness.colored_graph";
 
 		CG->save(fname, verbose_level);
 
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 
 		FREE_int(color);
 		FREE_OBJECT(CG);

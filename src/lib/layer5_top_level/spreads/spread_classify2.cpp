@@ -922,7 +922,7 @@ void spread_classify::report3(
 
 			std::string label_of_set;
 
-			label_of_set.assign("spread");
+			label_of_set = "spread";
 
 
 			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
@@ -974,7 +974,7 @@ void spread_classify::report3(
 
 			std::string label_of_set;
 
-			label_of_set.assign("spread");
+			label_of_set = "spread";
 
 			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
@@ -1012,24 +1012,20 @@ void spread_classify::report3(
 
 	//Iso.close_solution_database(verbose_level - 1);
 
-	char prefix[1000];
-	char label_of_structure_plural[1000];
-	string prefix_str;
-	string label_of_structure_plural_str;
+	string prefix;
+	string label_of_structure_plural;
 
-	snprintf(prefix, sizeof(prefix), "Spreads_%d_%d", SD->q, SD->k);
-	snprintf(label_of_structure_plural, sizeof(label_of_structure_plural), "Spreads");
+	prefix = "Spreads_" + std::to_string(SD->q) + "_" + std::to_string(SD->k);
+	label_of_structure_plural = "Spreads";
 
 
-	prefix_str.assign(prefix);
-	label_of_structure_plural_str.assign(label_of_structure_plural_str);
 
 	isomorph::isomorph_global IG;
 
 	IG.init(Iso.A_base, Iso.A, Iso.Sub->gen, verbose_level);
 
 	IG.report_data_in_source_code_inside_tex(Iso,
-		prefix_str, label_of_structure_plural_str, ost, verbose_level);
+		prefix, label_of_structure_plural, ost, verbose_level);
 
 
 

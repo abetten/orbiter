@@ -559,7 +559,6 @@ int tdo_refinement::do_row_refinement(
 {
 	int r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
 	int *type_index;
-	//char label_out[1000];
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 6);
 	int f_vvv = (verbose_level >= 7);
@@ -742,7 +741,6 @@ int tdo_refinement::do_column_refinement(
 {
 	int r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
 	int *type_index;
-	//char label_out[1000];
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 6);
 	int f_vvv = (verbose_level >= 7);

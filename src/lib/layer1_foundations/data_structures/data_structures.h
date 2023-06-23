@@ -36,6 +36,9 @@ public:
 	int hashing_fixed_width(int hash0, int a, int bit_length);
 	void uchar_print_bitwise(std::ostream &ost, unsigned char u);
 	void uchar_move(unsigned char *p, unsigned char *q, int len);
+	void uchar_zero(unsigned char *p, int len);
+	void uchar_xor(unsigned char *in1, unsigned char *in2, unsigned char *out, int len);
+	int uchar_compare(unsigned char *in1, unsigned char *in2, int len);
 	void int_swap(int& x, int& y);
 	void lint_swap(long int & x, long int & y);
 	void print_pointer_hex(std::ostream &ost, void *p);
@@ -57,7 +60,7 @@ public:
 		int f_DLX,
 		int verbose_level);
 	// allocates Solutions[nb_sol * nb_needed]
-	uint32_t SuperFastHash (const char * data, int len);
+	uint32_t SuperFastHash(const char * data, int len);
 	uint32_t SuperFastHash_uint(const unsigned int * p, int sz);
 	void union_of_sets(
 			std::string &fname_set_of_sets,
@@ -71,6 +74,7 @@ public:
 			std::string &label1, std::string &label2, int verbose_level);
 	void matrix_rowspan_over_R(
 			std::string &label, int verbose_level);
+	int binary_logarithm(int m);
 
 };
 
@@ -961,7 +965,6 @@ class partitionstack {
 		int *C, int length, int radix, int mask,
 		int verbose_level);
 	void swap_ij(int *perm, int *perm_inv, int i, int j);
-	int my_log2(int m);
 	void split_by_orbit_partition(
 			int nb_orbits,
 		int *orbit_first, int *orbit_len, int *orbit,

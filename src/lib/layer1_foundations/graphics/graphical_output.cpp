@@ -1836,15 +1836,6 @@ void graphical_output::animate_povray(
 
 
 
-
-
-
-
-	//char fname_makefile[1000];
-
-
-	//sprintf(fname_makefile, "makefile_animation");
-
 	{
 		ofstream fpm(A->fname_makefile);
 
