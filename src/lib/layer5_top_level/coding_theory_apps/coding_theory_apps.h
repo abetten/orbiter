@@ -153,9 +153,11 @@ public:
 	int f_crc_compare;
 	std::string crc_compare_fname_in;
 	std::string crc_compare_crc1_type;
+	int crc_compare_block_length1;
 	std::string crc_compare_crc2_type;
-	int crc_compare_block_length;
+	int crc_compare_block_length2;
 	int crc_compare_error_weight;
+	int crc_compare_nb_tests_per_block;
 
 
 	int f_convert_data_to_polynomials;

@@ -251,7 +251,6 @@ void vector_builder::init(
 		for (i = Descr->loop_start; i < Descr->loop_upper_bound;
 				i += Descr->loop_increment) {
 
-
 			v[cnt++] = i;
 
 		}

@@ -32,7 +32,8 @@ data_input_stream::~data_input_stream()
 {
 }
 
-void data_input_stream::init(data_input_stream_description *Descr, int verbose_level)
+void data_input_stream::init(
+		data_input_stream_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -45,17 +46,20 @@ void data_input_stream::init(data_input_stream_description *Descr, int verbose_l
 	nb_objects_to_test = count_number_of_objects_to_test(verbose_level);
 
 	if (f_v) {
-		cout << "data_input_stream::init nb_objects_to_test=" << nb_objects_to_test << endl;
+		cout << "data_input_stream::init "
+				"nb_objects_to_test=" << nb_objects_to_test << endl;
 	}
 
 	if (f_v) {
-		cout << "data_input_stream::init before read_objects" << endl;
+		cout << "data_input_stream::init "
+				"before read_objects" << endl;
 	}
 
 	read_objects(verbose_level);
 
 	if (f_v) {
-		cout << "data_input_stream::init after read_objects" << endl;
+		cout << "data_input_stream::init "
+				"after read_objects" << endl;
 	}
 
 	if (f_v) {

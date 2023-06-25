@@ -26,27 +26,46 @@ crc_object::crc_object()
 {
 	Crc_object_type = t_crc_unknown;
 
-	Len_total = 0;
-	Len_check = 0;
-	Len_info = 0;
+	Len_total_in_symbols = 0;
+	Len_total_in_bits = 0;
+	Len_total_in_bytes = 0;
+
+	Len_check_in_symbols = 0;
+	Len_check_in_bits = 0;
+	Len_check_in_bytes = 0;
+
+	Len_info_in_symbols = 0;
+	Len_info_in_bits = 0;
+	Len_info_in_bytes = 0;
+
+
+	block_length_in_bytes = 0;
+	info_length_in_bytes = 0;
+
 	symbol_set_size_log = 0;
 	symbol_set_size = 0;
-	code_length_in_bits = 0;
 
-	Data = NULL;
-	Check = NULL;
+	Data = NULL; // [Len_total]
+	Check = NULL; // [Len_check]
 
 	Bitvector = NULL;
 }
 
 crc_object::~crc_object()
 {
+	if (Data) {
+		FREE_char((char *) Data);
+	}
+	if (Check) {
+		FREE_char((char *) Check);
+	}
 	if (Bitvector) {
 		FREE_OBJECT(Bitvector);
 	}
 }
 
-void crc_object::init(std::string &type, int block_length, int verbose_level)
+void crc_object::init(std::string &type,
+		int block_length, int verbose_level)
 // block_length is needed for crc32
 {
 	int f_v = (verbose_level >= 1);
@@ -62,8 +81,8 @@ void crc_object::init(std::string &type, int block_length, int verbose_level)
 	if (strcmp(type.c_str(), "alfa") == 0) {
 
 		Crc_object_type = t_crc_alfa;
-		Len_total = 771;
-		Len_check = 3;
+		Len_total_in_symbols = 771;
+		Len_check_in_symbols = 3;
 		symbol_set_size_log = 8;
 		symbol_set_size = 256;
 
@@ -71,8 +90,8 @@ void crc_object::init(std::string &type, int block_length, int verbose_level)
 	else if (strcmp(type.c_str(), "bravo") == 0) {
 
 		Crc_object_type = t_crc_bravo;
-		Len_total = 771;
-		Len_check = 4;
+		Len_total_in_symbols = 771;
+		Len_check_in_symbols = 4;
 		symbol_set_size_log = 8;
 		symbol_set_size = 256;
 
@@ -80,35 +99,46 @@ void crc_object::init(std::string &type, int block_length, int verbose_level)
 	else if (strcmp(type.c_str(), "crc32") == 0) {
 
 		Crc_object_type = t_crc_crc32;
-		Len_total = block_length;
-		Len_check = 4;
-		symbol_set_size_log = 8;
-		symbol_set_size = 256;
+		block_length_in_bytes = block_length;
+		Len_total_in_symbols = block_length_in_bytes * 8;
+		Len_check_in_symbols = 32;
+		symbol_set_size_log = 1;
+		symbol_set_size = 2;
 
 	}
 	else if (strcmp(type.c_str(), "crc16") == 0) {
 
 		Crc_object_type = t_crc_crc16;
-		Len_total = block_length;
-		Len_check = 2;
-		symbol_set_size_log = 8;
-		symbol_set_size = 256;
+		block_length_in_bytes = block_length;
+		Len_total_in_symbols = block_length_in_bytes * 8;
+		Len_check_in_symbols = 16;
+		symbol_set_size_log = 1;
+		symbol_set_size = 2;
 
 	}
 	else if (strcmp(type.c_str(), "charlie") == 0) {
 
 		Crc_object_type = t_crc_charlie;
-		Len_total = 771;
-		Len_check = 12;
+		Len_total_in_symbols = 771;
+		Len_check_in_symbols = 12;
 		symbol_set_size_log = 8;
 		symbol_set_size = 256;
+
+	}
+	else if (strcmp(type.c_str(), "Delta") == 0) {
+
+		Crc_object_type = t_crc_Delta;
+		Len_total_in_symbols = 51;
+		Len_check_in_symbols = 4;
+		symbol_set_size_log = 4;
+		symbol_set_size = 16;
 
 	}
 	else if (strcmp(type.c_str(), "Echo") == 0) {
 
 		Crc_object_type = t_crc_Echo;
-		Len_total = 51;
-		Len_check = 8;
+		Len_total_in_symbols = 51;
+		Len_check_in_symbols = 8;
 		symbol_set_size_log = 4;
 		symbol_set_size = 16;
 
@@ -118,15 +148,24 @@ void crc_object::init(std::string &type, int block_length, int verbose_level)
 		exit(1);
 	}
 
-	Len_info = Len_total - Len_check;
+	Len_total_in_bits = Len_total_in_symbols * symbol_set_size_log;
+	Len_total_in_bytes = (Len_total_in_bits + 7) / 8;
 
-	code_length_in_bits = Len_total * symbol_set_size_log;
+	Len_check_in_bits = Len_check_in_symbols * symbol_set_size_log;
+	Len_check_in_bytes = (Len_check_in_bits + 7) / 8;
 
-	Data = (unsigned char *) NEW_char(Len_total);
-	Check = (unsigned char *) NEW_char(Len_check);
+	Len_info_in_bits = Len_total_in_bits - Len_check_in_bits;
+	Len_info_in_bytes = Len_total_in_bytes - Len_check_in_bytes;
+	Len_info_in_symbols = Len_total_in_symbols - Len_check_in_symbols;
+
+	block_length_in_bytes = Len_total_in_bits / 8;
+	info_length_in_bytes = block_length_in_bytes  - Len_check_in_bytes;
+
+	Data = (unsigned char *) NEW_char(Len_total_in_bytes);
+	Check = (unsigned char *) NEW_char(Len_check_in_bytes);
 
 	Bitvector = NEW_OBJECT(data_structures::bitvector);
-	Bitvector->allocate(code_length_in_bits);
+	Bitvector->allocate(Len_total_in_bits);
 
 
 	if (f_v) {
@@ -134,6 +173,7 @@ void crc_object::init(std::string &type, int block_length, int verbose_level)
 	}
 }
 
+#if 0
 void crc_object::encode_as_bitvector()
 {
 	Bitvector->zero();
@@ -142,9 +182,9 @@ void crc_object::encode_as_bitvector()
 	unsigned char c;
 
 	t = 0;
-	for (u = 0; u < Len_total; u++) {
+	for (u = 0; u < block_length_in_bytes; u++) {
 		c = Data[u];
-		for (v = 0; v < symbol_set_size_log; v++, t++) {
+		for (v = 0; v < 8; v++, t++) {
 			b = c % 2;
 			c >>= 1;
 			if (b) {
@@ -153,6 +193,7 @@ void crc_object::encode_as_bitvector()
 		}
 	}
 }
+#endif
 
 void crc_object::print()
 {
@@ -171,14 +212,29 @@ void crc_object::print()
 	else if (Crc_object_type == t_crc_crc16) {
 		cout << "type = crc16" << endl;
 	}
+	else if (Crc_object_type == t_crc_Delta) {
+		cout << "type = Delta" << endl;
+	}
 	else if (Crc_object_type == t_crc_Echo) {
 		cout << "type = Echo" << endl;
 	}
-	cout << "Len_total = " << Len_total << endl;
-	cout << "Len_check = " << Len_check << endl;
+	cout << "Len_total_in_symbols = " << Len_total_in_symbols << endl;
+	cout << "Len_total_in_bits = " << Len_total_in_bits << endl;
+	cout << "Len_total_in_bytes = " << Len_total_in_bytes << endl;
+
+	cout << "Len_check_in_symbols = " << Len_check_in_symbols << endl;
+	cout << "Len_check_in_bits = " << Len_check_in_bits << endl;
+	cout << "Len_check_in_bytes = " << Len_check_in_bytes << endl;
+
+	cout << "Len_info_in_symbols = " << Len_info_in_symbols << endl;
+	cout << "Len_info_in_bits = " << Len_info_in_bits << endl;
+	cout << "Len_info_in_bytes = " << Len_info_in_bytes << endl;
+
+	cout << "block_length_in_bytes = " << block_length_in_bytes << endl;
+	cout << "info_length_in_bytes = " << info_length_in_bytes << endl;
+
 	cout << "symbol_set_size_log = " << symbol_set_size_log << endl;
 	cout << "symbol_set_size = " << symbol_set_size << endl;
-	cout << "code_length_in_bits = " << code_length_in_bits << endl;
 }
 
 
@@ -186,7 +242,7 @@ long int crc_object::get_nb_blocks(long int N)
 {
 	long int nb_blocks;
 
-	nb_blocks = (N + Len_info - 1) / Len_info;
+	nb_blocks = (N + info_length_in_bytes - 1) / info_length_in_bytes;
 
 	return nb_blocks;
 }
@@ -195,11 +251,11 @@ long int crc_object::get_this_block_size(long int N, long int cnt)
 {
 	long int L;
 
-	if ((cnt + 1) * Len_info > N) {
-		L = N - cnt * Len_info;
+	if ((cnt + 1) * info_length_in_bytes > N) {
+		L = N - cnt * info_length_in_bytes;
 	}
 	else {
-		L = Len_info;
+		L = info_length_in_bytes;
 	}
 	return L;
 
@@ -218,10 +274,13 @@ void crc_object::divide(const unsigned char *in, unsigned char *out)
 		divide_charlie(in, out);
 	}
 	else if (Crc_object_type == t_crc_crc32) {
-		divide_crc32(in, Len_info, out);
+		divide_crc32(in + Len_check_in_bytes, info_length_in_bytes, out);
 	}
 	else if (Crc_object_type == t_crc_crc16) {
-		divide_crc16(in, Len_info, out);
+		divide_crc16(in + Len_check_in_bytes, info_length_in_bytes, out);
+	}
+	else if (Crc_object_type == t_crc_Delta) {
+		divide_Delta(in, out);
 	}
 	else if (Crc_object_type == t_crc_Echo) {
 		divide_Echo(in, out);
@@ -232,6 +291,103 @@ void crc_object::divide(const unsigned char *in, unsigned char *out)
 	}
 
 }
+
+void crc_object::expand(const unsigned char *in, unsigned char *out)
+{
+	data_structures::algorithms Algo;
+
+	if (Crc_object_type == t_crc_alfa) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_bravo) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_charlie) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_crc32) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_crc16) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_Delta) {
+		Algo.uchar_expand_4(in, out, Len_total_in_symbols);
+	}
+	else if (Crc_object_type == t_crc_Echo) {
+		Algo.uchar_expand_4(in, out, Len_total_in_symbols);
+	}
+	else {
+		cout << "crc_object::expand Crc_object_type is unrecognized" << endl;
+		exit(1);
+	}
+
+}
+
+void crc_object::compress(const unsigned char *in, unsigned char *out)
+{
+	data_structures::algorithms Algo;
+
+	if (Crc_object_type == t_crc_alfa) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_bravo) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_charlie) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_crc32) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_crc16) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_Delta) {
+		Algo.uchar_compress_4(in, out, Len_total_in_symbols);
+	}
+	else if (Crc_object_type == t_crc_Echo) {
+		Algo.uchar_compress_4(in, out, Len_total_in_symbols);
+	}
+	else {
+		cout << "crc_object::compress Crc_object_type is unrecognized" << endl;
+		exit(1);
+	}
+
+}
+
+void crc_object::compress_check(const unsigned char *in, unsigned char *out)
+{
+	data_structures::algorithms Algo;
+
+	if (Crc_object_type == t_crc_alfa) {
+		Algo.uchar_move(in, out, Len_check_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_bravo) {
+		Algo.uchar_move(in, out, Len_check_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_charlie) {
+		Algo.uchar_move(in, out, Len_check_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_crc32) {
+		Algo.uchar_move(in, out, Len_check_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_crc16) {
+		Algo.uchar_move(in, out, Len_check_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_Delta) {
+		Algo.uchar_compress_4(in, out, Len_check_in_symbols);
+	}
+	else if (Crc_object_type == t_crc_Echo) {
+		Algo.uchar_compress_4(in, out, Len_check_in_symbols);
+	}
+	else {
+		cout << "crc_object::compress_check Crc_object_type is unrecognized" << endl;
+		exit(1);
+	}
+
+}
+
 
 
 
@@ -1103,6 +1259,57 @@ void crc_object::divide_charlie(const unsigned char *in771, unsigned char *out12
 		out12[i] = R[i];
 	}
 }
+
+
+
+// crc code parameters: q16_n51_r4
+// the size of the array crc_poly_table_delta is  15 x 5
+const unsigned char crc_poly_table_Delta[] = {
+ 1, 2,13, 5, 1,
+ 2, 4, 9,10, 2,
+ 3, 6, 4,15, 3,
+ 4, 8, 1, 7, 4,
+ 5,10,12, 2, 5,
+ 6,12, 8,13, 6,
+ 7,14, 5, 8, 7,
+ 8, 3, 2,14, 8,
+ 9, 1,15,11, 9,
+10, 7,11, 4,10,
+11, 5, 6, 1,11,
+12,11, 3, 9,12,
+13, 9,14,12,13,
+14,15,10, 3,14,
+15,13, 7, 6,15,
+};
+
+void crc_object::divide_Delta(const unsigned char *in51, unsigned char *out4)
+{
+	unsigned char R[51];
+	int i, j, ii, jj;
+	int x;
+	for (i = 0; i < 51; i++) {
+		R[i] = in51[i];
+	}
+
+	for (i = 51, j = 47; i >= 4; i--, j--) {
+		x = R[i];
+		if (x == 0) {
+			continue;
+		}
+		//cout << "i=" << i << " x=" << x << endl;
+		x--;
+		for (ii = i, jj = 4; jj >= 0; ii--, jj--) {
+			R[ii] ^= crc_poly_table_Delta[x * 5 + jj];
+		}
+	}
+
+	for (i = 3; i >= 0; i--) {
+		out4[i] = R[i];
+	}
+}
+
+
+
 
 // crc code parameters: q16_n51_r8
 // the size of the array crc_poly_table_Echo is  15 x 9

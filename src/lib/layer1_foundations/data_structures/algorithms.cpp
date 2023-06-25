@@ -95,12 +95,66 @@ void algorithms::uchar_print_bitwise(std::ostream &ost, unsigned char u)
 	}
 }
 
-void algorithms::uchar_move(unsigned char *p, unsigned char *q, int len)
+void algorithms::uchar_move(const unsigned char *p, unsigned char *q, int len)
 {
 	int i;
 
 	for (i = 0; i < len; i++) {
 		*q++ = *p++;
+	}
+}
+
+void algorithms::uchar_expand_4(const unsigned char *p, unsigned char *q, int len)
+{
+	int i;
+	uchar a, b;
+
+	for (i = 0; i < len; i++) {
+
+		a = p[i >> 1];
+		if (i % 2) {
+			b = a & 15;
+		}
+		else {
+			b = (a & 240) >> 4;
+		}
+		q[i] = b;
+	}
+}
+
+void algorithms::uchar_compress_4(const unsigned char *p, unsigned char *q, int len)
+{
+	int i, i_half;
+	int f_v = false;
+	uchar a, b;
+
+	for (i = 0; i < len; i++) {
+
+		i_half = i >> 1;
+		a = p[i];
+		if (a >= 16) {
+			cout << "algorithms::uchar_compress_4 a >= 16" << endl;
+			exit(1);
+		}
+		if (i % 2) {
+			b = a & 15;
+			if (f_v) {
+				cout << "algorithms::uchar_compress_4 "
+						"i=" << i << " i_half=" << i_half
+						<< " a=" << (int) a
+						<< " b=" << (int) b
+						<< " q[i_half]=" << (int) q[i_half] << endl;
+			}
+			q[i_half] ^= b;
+			if (f_v) {
+				cout << "algorithms::uchar_compress_4 "
+						"q[i_half]=" << (int) q[i_half] << endl;
+			}
+		}
+		else {
+			b = a << 4;
+			q[i_half] = b;
+		}
 	}
 }
 
@@ -186,6 +240,30 @@ void algorithms::print_uint32_hex(std::ostream &ost, uint32_t val)
 		high = a / 16;
 		print_hex_digit(ost, high);
 		print_hex_digit(ost, low);
+	}
+}
+
+void algorithms::print_hex(std::ostream &ost, unsigned char *p, int len)
+{
+	int i, j, h, a, low, high;
+	int nb_rows;
+
+	nb_rows = (len + 15) / 16;
+
+	for (i = 0; i < nb_rows; i++) {
+		print_uint32_hex(ost, i * 16);
+		for (h = 0; h < 2; h++) {
+			ost << " ";
+			for (j = 0; j < 8; j++) {
+				a = (int) p[i * 16 + h * 8 + j];
+				low = a % 16;
+				high = a / 16;
+				ost << " ";
+				print_hex_digit(ost, high);
+				print_hex_digit(ost, low);
+			}
+		}
+		cout << endl;
 	}
 }
 

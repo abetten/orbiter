@@ -150,6 +150,9 @@ interface_toolkit::interface_toolkit()
 	//std::string serialize_file_names_fname;
 	//std::string serialize_file_names_output_mask;
 
+	f_save_4_bit_data_file = false;
+	//std::string save_4_bit_data_file_fname;
+	//std::string save_4_bit_data_file_vector_data;
 
 }
 
@@ -244,6 +247,9 @@ void interface_toolkit::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-serialize_file_names") == 0) {
 		cout << "-serialize_file_names <fname> <fname> <mask>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-save_4_bit_data_file") == 0) {
+		cout << "-save_4_bit_data_file <fname> <vector>" << endl;
+	}
 }
 
 int interface_toolkit::recognize_keyword(int argc,
@@ -337,6 +343,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-serialize_file_names") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-save_4_bit_data_file") == 0) {
 		return true;
 	}
 	return false;
@@ -768,7 +777,16 @@ void interface_toolkit::read_arguments(int argc,
 					<< " " << serialize_file_names_output_mask << endl;
 		}
 	}
-
+	else if (ST.stringcmp(argv[i], "-save_4_bit_data_file") == 0) {
+		f_save_4_bit_data_file = true;
+		save_4_bit_data_file_fname.assign(argv[++i]);
+		save_4_bit_data_file_vector_data.assign(argv[++i]);
+		if (f_v) {
+			cout << "-save_4_bit_data_file "
+					<< save_4_bit_data_file_fname
+					<< " " << save_4_bit_data_file_vector_data << endl;
+		}
+	}
 
 	if (f_v) {
 			cout << "interface_toolkit::read_arguments done" << endl;
@@ -928,6 +946,11 @@ void interface_toolkit::print()
 		cout << "-serialize_file_names "
 				<< serialize_file_names_fname
 				<< " " << serialize_file_names_output_mask << endl;
+	}
+	if (f_save_4_bit_data_file) {
+			cout << "-save_4_bit_data_file "
+					<< save_4_bit_data_file_fname
+					<< " " << save_4_bit_data_file_vector_data << endl;
 	}
 }
 
@@ -1563,7 +1586,61 @@ void interface_toolkit::worker(int verbose_level)
 
 
 	}
+	else if (f_save_4_bit_data_file) {
 
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"-save_4_bit_data_file "
+					<< save_4_bit_data_file_fname
+					<< " " << save_4_bit_data_file_vector_data << endl;
+		}
+
+		long int *Data;
+		int sz;
+
+		Get_lint_vector_from_label(
+				save_4_bit_data_file_vector_data,
+				Data, sz, 0 /* verbose_level */);
+
+		data_structures::algorithms Algo;
+
+		unsigned char *data_long;
+		unsigned char *data;
+
+		data_long = (unsigned char *) NEW_char(sz);
+		data = (unsigned char *) NEW_char(sz);
+
+		int i, sz1;
+
+		for (i = 0; i < sz; i++) {
+			data_long[i] = (unsigned char) Data[i];
+		}
+
+		for (i = 0; i < sz; i++) {
+			cout << i << " : " << (int) data_long[i] << endl;
+		}
+
+		Algo.uchar_compress_4(data_long, data, sz);
+
+		sz1 = (sz + 1) / 2;
+
+		for (i = 0; i < sz; i++) {
+			cout << i << " : " << (int) data[i] << endl;
+		}
+
+
+		orbiter_kernel_system::file_io Fio;
+
+		{
+			ofstream ost(save_4_bit_data_file_fname, ios::binary);
+
+			ost.write((char *)data, sz1);
+		}
+
+		cout << "Written file " << save_4_bit_data_file_fname << " of size "
+				<< Fio.file_size(save_4_bit_data_file_fname) << endl;
+
+	}
 
 	if (f_v) {
 		cout << "interface_toolkit::worker done" << endl;

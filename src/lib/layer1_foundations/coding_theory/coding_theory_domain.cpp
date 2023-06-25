@@ -2692,47 +2692,58 @@ void coding_theory_domain::crc_encode_file_based(
 				"nb_blocks = " << nb_blocks << endl;
 	}
 
+	data_structures::algorithms Algo;
+
+	unsigned char *Data0;
+	unsigned char *Data1;
+	unsigned char *Check1;
+	unsigned char *Check1c;
+
+	Data0 = (unsigned char *) NEW_char(Crc_object->Len_total_in_symbols);
+	Data1 = (unsigned char *) NEW_char(Crc_object->Len_total_in_symbols);
+	Check1 = (unsigned char *) NEW_char(Crc_object->Len_check_in_symbols);
+	Check1c = (unsigned char *) NEW_char(Crc_object->Len_check_in_bytes);
+
+
 
 	ifstream ist(fname_in, ios::binary);
 
 	{
-		ofstream ost(fname_out);
+		ofstream ost(fname_out, ios::binary);
 
 
 		for (cnt = 0; cnt < nb_blocks; cnt++) {
 
 
-			N = Crc_object->get_this_block_size(N, cnt);
+			L = Crc_object->get_this_block_size(N, cnt);
 
 
-			int i;
+			Algo.uchar_zero(Data0, Crc_object->Len_total_in_symbols);
+			Algo.uchar_zero(Data1, Crc_object->Len_total_in_symbols);
 
-			for (i = 0; i < Crc_object->Len_check; i++) {
-				Crc_object->Data[i] = 0;
-			}
 
 			// read one block of information:
 
-			ist.read((char *) Crc_object->Data + Crc_object->Len_check, L);
+			ist.read((char *) Data0 + Crc_object->Len_check_in_bytes, L);
 
-			// fill up with zeros:
-			for (i = L; i < Crc_object->Len_info; i++) {
-				Crc_object->Data[Crc_object->Len_check + i] = 0;
-			}
+			//Algo.uchar_move(Data0, Data1, Crc_object1->Len_total_in_bytes);
+			//Algo.uchar_move(Data0, Data2, Crc_object1->Len_total_in_bytes);
+
+			Crc_object->expand(Data0, Data1);
 
 
-			Crc_object->divide(Crc_object->Data, Crc_object->Check);
+			Crc_object->divide(Data1, Check1);
 
-			for (i = 0; i < Crc_object->Len_check; i++) {
-				Crc_object->Data[i] = Crc_object->Check[i];
-			}
+			Crc_object->compress_check(Check1, Check1c);
 
 
 
-			// write information_length + check_size_in_byte bytes to file:
-			// (or less in case we have reached the end of the input file):
 
-			ost.write((char *)Crc_object->Data, L + Crc_object->Len_check);
+
+			// write information + check to file:
+
+			ost.write((char *)Data0 + Crc_object->Len_check_in_bytes, L);
+			ost.write((char *)Check1c, Crc_object->Len_check_in_bytes);
 
 
 		}
@@ -2744,6 +2755,11 @@ void coding_theory_domain::crc_encode_file_based(
 
 	cout << "nb_blocks = " << nb_blocks << endl;
 
+
+	FREE_char((char *) Data0);
+	FREE_char((char *) Data1);
+	FREE_char((char *) Check1);
+	FREE_char((char *) Check1c);
 
 
 	if (f_v) {
@@ -2760,24 +2776,31 @@ void coding_theory_domain::crc_simulate_errors(
 		crc_object *Crc_object1,
 		crc_object *Crc_object2,
 		int error_pattern_weight,
+		int nb_tests_per_block,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "coding_theory_domain::crc_simulate_errors "
-				"fname_in=" << fname_in << endl;
+				" fname_in=" << fname_in
+				<< " error_pattern_weight=" << error_pattern_weight
+				<< " nb_tests_per_block=" << nb_tests_per_block
+				<< endl;
 	}
 
 
-	if (Crc_object1->Len_info != Crc_object2->Len_info) {
-		cout << "CRC codes must have the same Len_info" << endl;
+	if (Crc_object1->info_length_in_bytes != Crc_object2->info_length_in_bytes) {
+		cout << "CRC codes must have the same info_length_in_bytes" << endl;
+		cout << "first code has " << Crc_object1->info_length_in_bytes << endl;
+		cout << "second code has " << Crc_object2->info_length_in_bytes << endl;
 		exit(1);
 	}
-	if (Crc_object1->Len_check != Crc_object2->Len_check) {
-		cout << "CRC codes must have the same Len_check" << endl;
+	if (Crc_object1->Len_check_in_bytes != Crc_object2->Len_check_in_bytes) {
+		cout << "CRC codes must have the same Len_check_in_bytes" << endl;
 		exit(1);
 	}
+#if 0
 	if (Crc_object1->symbol_set_size_log != Crc_object2->symbol_set_size_log) {
 		cout << "CRC codes must have the same symbol_set_size_log" << endl;
 		exit(1);
@@ -2786,6 +2809,7 @@ void coding_theory_domain::crc_simulate_errors(
 		cout << "CRC codes must have the same symbol_set_size" << endl;
 		exit(1);
 	}
+#endif
 
 	data_structures::algorithms Algo;
 
@@ -2811,21 +2835,26 @@ void coding_theory_domain::crc_simulate_errors(
 
 	//unsigned char *Error;
 	unsigned char *Data0;
+	unsigned char *Data0e;
 	unsigned char *Data1;
 	unsigned char *Data2;
+	unsigned char *Check1;
+	unsigned char *Check2;
 	unsigned char *Check1a;
 	unsigned char *Check2a;
 	unsigned char *Check1b;
 	unsigned char *Check2b;
 
-	//Error = (unsigned char *) NEW_char(Crc_object1->Len_total);
-	Data0 = (unsigned char *) NEW_char(Crc_object1->Len_total);
-	Data1 = (unsigned char *) NEW_char(Crc_object1->Len_total);
-	Data2 = (unsigned char *) NEW_char(Crc_object1->Len_total);
-	Check1a = (unsigned char *) NEW_char(Crc_object1->Len_check);
-	Check2a = (unsigned char *) NEW_char(Crc_object1->Len_check);
-	Check1b = (unsigned char *) NEW_char(Crc_object1->Len_check);
-	Check2b = (unsigned char *) NEW_char(Crc_object1->Len_check);
+	Data0 = (unsigned char *) NEW_char(Crc_object1->Len_total_in_symbols);
+	Data0e = (unsigned char *) NEW_char(Crc_object1->Len_total_in_symbols);
+	Data1 = (unsigned char *) NEW_char(Crc_object1->Len_total_in_symbols);
+	Data2 = (unsigned char *) NEW_char(Crc_object1->Len_total_in_symbols);
+	Check1 = (unsigned char *) NEW_char(Crc_object1->Len_check_in_symbols);
+	Check2 = (unsigned char *) NEW_char(Crc_object1->Len_check_in_symbols);
+	Check1a = (unsigned char *) NEW_char(Crc_object1->Len_check_in_bytes);
+	Check2a = (unsigned char *) NEW_char(Crc_object1->Len_check_in_bytes);
+	Check1b = (unsigned char *) NEW_char(Crc_object1->Len_check_in_bytes);
+	Check2b = (unsigned char *) NEW_char(Crc_object1->Len_check_in_bytes);
 
 
 	error_pattern *Error;
@@ -2838,6 +2867,10 @@ void coding_theory_domain::crc_simulate_errors(
 
 	long int nb1 = 0;
 	long int nb2 = 0;
+	long int nb_error_pattern_zero = 0;
+	int nb_blocks_100;
+
+	nb_blocks_100 = (nb_blocks / 100) + 1;
 
 	ifstream ist(fname_in, ios::binary);
 
@@ -2846,70 +2879,109 @@ void coding_theory_domain::crc_simulate_errors(
 		for (cnt = 0; cnt < nb_blocks; cnt++) {
 
 
-			N = Crc_object1->get_this_block_size(N, cnt);
+			if ((cnt % nb_blocks_100) == 0) {
+				if (f_v) {
+					cout << "coding_theory_domain::crc_simulate_errors "
+							"block " << cnt << " / " << nb_blocks << " = "
+							<< ((double)cnt / (double) nb_blocks_100) << " percent "
+									"nb undetected errors =  " << nb1 << "," << nb2 << endl;
+				}
+			}
+
+			L = Crc_object1->get_this_block_size(N, cnt);
 
 
-			Algo.uchar_zero(Data0, Crc_object1->Len_total);
-			Algo.uchar_zero(Data1, Crc_object1->Len_total);
-			Algo.uchar_zero(Data2, Crc_object1->Len_total);
-
-			int i;
+			Algo.uchar_zero(Data0, Crc_object1->Len_total_in_symbols);
+			Algo.uchar_zero(Data1, Crc_object1->Len_total_in_symbols);
+			Algo.uchar_zero(Data2, Crc_object1->Len_total_in_symbols);
 
 
 			// read one block of information:
 
-			ist.read((char *) Data0 + Crc_object1->Len_check, L);
+			ist.read((char *) Data0 + Crc_object1->Len_check_in_bytes, L);
 
-			Algo.uchar_move(Data0, Data1, Crc_object1->Len_total);
-			Algo.uchar_move(Data0, Data2, Crc_object1->Len_total);
+			//Algo.uchar_move(Data0, Data1, Crc_object1->Len_total_in_bytes);
+			//Algo.uchar_move(Data0, Data2, Crc_object1->Len_total_in_bytes);
+
+			Crc_object1->expand(Data0, Data1);
+			Crc_object2->expand(Data0, Data2);
+
+
+			Crc_object1->divide(Data1, Check1);
+			Crc_object2->divide(Data2, Check2);
+
+			Crc_object1->compress_check(Check1, Check1a);
+			Crc_object2->compress_check(Check2, Check2a);
 
 
 
-			Crc_object1->divide(Data1, Check1a);
-			Crc_object2->divide(Data2, Check2a);
+			int e;
 
-			Algo.uchar_move(Data0, Data1, Crc_object1->Len_total);
-			Algo.uchar_move(Data0, Data2, Crc_object1->Len_total);
+			for (e = 0; e < nb_tests_per_block; e++) {
 
-#if 0
-			for (i = 0; i < Crc_object1->Len_check; i++) {
-				Data1[i] = Check1[i];
-			}
+				Error->create_error_pattern(0 /*verbose_level*/);
 
-			for (i = 0; i < Crc_object1->Len_check; i++) {
-				Data2[i] = Check2[i];
-			}
-#endif
+				int i;
 
-			Error->create_error_pattern(verbose_level);
+				for (i = 0; i < Crc_object1->Len_total_in_bytes; i++) {
+					if (Error->Error[i]) {
+						break;
+					}
+				}
 
-			Algo.uchar_xor(Data0, Error->Error, Data1, Crc_object1->Len_total);
-			Algo.uchar_xor(Data0, Error->Error, Data2, Crc_object1->Len_total);
+				if (i == Crc_object1->Len_total_in_bytes) {
 
-			Crc_object1->divide(Data1, Check1b);
-			Crc_object2->divide(Data2, Check2b);
+					// don't do anything at all, the error pattern is zero;
 
-			if (Algo.uchar_compare(Check1a, Check1b, Crc_object1->Len_total) == 0) {
-				nb1++;
-				cout << "undetected error code 1 : " << nb1 << " in block " << cnt << " / " << nb_blocks << endl;
-			}
-			if (Algo.uchar_compare(Check2a, Check2b, Crc_object1->Len_total) == 0) {
-				nb2++;
-				cout << "undetected error code 2 : " << nb2 << " in block " << cnt << " / " << nb_blocks << endl;
-			}
+					nb_error_pattern_zero++;
+				}
+				else {
 
+					//Algo.print_hex(cout, Error->Error, Crc_object1->Len_total_in_bytes);
+
+					Algo.uchar_xor(Data0, Error->Error, Data0e, Crc_object1->Len_total_in_bytes);
+
+					Crc_object1->expand(Data0e, Data1);
+					Crc_object2->expand(Data0e, Data2);
+
+					Crc_object1->divide(Data1, Check1);
+					Crc_object2->divide(Data2, Check2);
+
+					Crc_object1->compress_check(Check1, Check1b);
+					Crc_object2->compress_check(Check2, Check2b);
+
+					if (Algo.uchar_compare(Check1a, Check1b, Crc_object1->Len_check_in_bytes) == 0) {
+						nb1++;
+						cout << "undetected error code 1 : " << nb1
+								<< " in block " << cnt << " / " << nb_blocks << endl;
+						Algo.print_hex(cout, Error->Error, Crc_object1->Len_total_in_bytes);
+					}
+					if (Algo.uchar_compare(Check2a, Check2b, Crc_object1->Len_check_in_bytes) == 0) {
+						nb2++;
+						cout << "undetected error code 2 : " << nb2
+								<< " in block " << cnt << " / " << nb_blocks << endl;
+						Algo.print_hex(cout, Error->Error, Crc_object1->Len_total_in_bytes);
+					}
+				}
+			} // next e
 		}
 
 	}
 
 	cout << "nb_blocks = " << nb_blocks << endl;
 
+	cout << "nb_error_pattern_zero = " << nb_error_pattern_zero << endl;
+
 	cout << "number of undetected errors code 1 = " << nb1 << endl;
 	cout << "number of undetected errors code 2 = " << nb2 << endl;
 
 
+	FREE_char((char *) Data0);
+	FREE_char((char *) Data0e);
 	FREE_char((char *) Data1);
 	FREE_char((char *) Data2);
+	FREE_char((char *) Check1);
+	FREE_char((char *) Check2);
 	FREE_char((char *) Check1a);
 	FREE_char((char *) Check2a);
 	FREE_char((char *) Check1b);

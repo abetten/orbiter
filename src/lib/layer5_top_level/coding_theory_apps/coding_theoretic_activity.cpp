@@ -740,6 +740,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				Descr->crc_encode_file_based_block_length,
 				verbose_level);
 
+		cout << "CRC code info:" << endl;
+		CRC->print();
+
 
 
 		if (f_v) {
@@ -765,8 +768,9 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 		cout << "-crc_compare"
 				<< " " << Descr->crc_compare_fname_in
 				<< " " << Descr->crc_compare_crc1_type
+				<< " " << Descr->crc_compare_block_length1
 				<< " " << Descr->crc_compare_crc2_type
-				<< " " << Descr->crc_compare_block_length
+				<< " " << Descr->crc_compare_block_length2
 				<< " " << Descr->crc_compare_error_weight
 				<< endl;
 
@@ -782,13 +786,17 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 		CRC1->init(
 				Descr->crc_compare_crc1_type,
-				Descr->crc_compare_block_length,
+				Descr->crc_compare_block_length1,
 				verbose_level);
 		CRC2->init(
 				Descr->crc_compare_crc2_type,
-				Descr->crc_compare_block_length,
+				Descr->crc_compare_block_length2,
 				verbose_level);
 
+		cout << "CRC1 code info:" << endl;
+		CRC1->print();
+		cout << "CRC2 code info:" << endl;
+		CRC2->print();
 
 
 		if (f_v) {
@@ -801,6 +809,7 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 				CRC1,
 				CRC2,
 				Descr->crc_compare_error_weight,
+				Descr->crc_compare_nb_tests_per_block,
 				verbose_level - 1);
 
 		if (f_v) {

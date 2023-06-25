@@ -180,7 +180,8 @@ int classify_bitvectors::compare_at(uchar *data, int idx)
 {
 	int ret;
 
-	ret = compare_func_for_bitvectors((void **) Type_data[idx], data, (void *) this);
+	ret = compare_func_for_bitvectors(
+			(void **) Type_data[idx], data, (void *) this);
 	return ret;
 }
 

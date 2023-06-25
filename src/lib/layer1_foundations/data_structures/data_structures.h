@@ -35,7 +35,9 @@ public:
 	int hashing(int hash0, int a);
 	int hashing_fixed_width(int hash0, int a, int bit_length);
 	void uchar_print_bitwise(std::ostream &ost, unsigned char u);
-	void uchar_move(unsigned char *p, unsigned char *q, int len);
+	void uchar_move(const unsigned char *p, unsigned char *q, int len);
+	void uchar_expand_4(const unsigned char *p, unsigned char *q, int len);
+	void uchar_compress_4(const unsigned char *p, unsigned char *q, int len);
 	void uchar_zero(unsigned char *p, int len);
 	void uchar_xor(unsigned char *in1, unsigned char *in2, unsigned char *out, int len);
 	int uchar_compare(unsigned char *in1, unsigned char *in2, int len);
@@ -43,6 +45,7 @@ public:
 	void lint_swap(long int & x, long int & y);
 	void print_pointer_hex(std::ostream &ost, void *p);
 	void print_uint32_hex(std::ostream &ost, uint32_t val);
+	void print_hex(std::ostream &ost, unsigned char *p, int len);
 	void print_uint32_binary(std::ostream &ost, uint32_t val);
 	void print_hex_digit(std::ostream &ost, int digit);
 	void print_bits(std::ostream &ost, char *data, int data_size);
@@ -1096,28 +1099,39 @@ public:
 	set_of_sets();
 	~set_of_sets();
 	set_of_sets *copy();
-	void init_simple(int underlying_set_size, 
+	void init_simple(
+			int underlying_set_size,
 		int nb_sets, int verbose_level);
-	void init_from_adjacency_matrix(int n, int *Adj, 
+	void init_from_adjacency_matrix(
+			int n, int *Adj,
 		int verbose_level);
-	void init(int underlying_set_size, int nb_sets, 
+	void init(
+			int underlying_set_size, int nb_sets,
 		long int **Pts, long int *Sz, int verbose_level);
-	void init_with_Sz_in_int(int underlying_set_size,
+	void init_with_Sz_in_int(
+			int underlying_set_size,
 			int nb_sets, long int **Pts, int *Sz,
 			int verbose_level);
-	void init_basic(int underlying_set_size, 
+	void init_basic(
+			int underlying_set_size,
 		int nb_sets, long int *Sz, int verbose_level);
-	void init_basic_with_Sz_in_int(int underlying_set_size,
+	void init_basic_with_Sz_in_int(
+			int underlying_set_size,
 			int nb_sets, int *Sz, int verbose_level);
-	void init_basic_constant_size(int underlying_set_size, 
+	void init_basic_constant_size(
+			int underlying_set_size,
 		int nb_sets, int constant_size, int verbose_level);
-	void init_from_file(int &underlying_set_size,
+	void init_from_file(
+			int &underlying_set_size,
 			std::string &fname, int verbose_level);
-	void init_from_csv_file(int underlying_set_size, 
+	void init_from_csv_file(
+			int underlying_set_size,
 			std::string &fname, int verbose_level);
-	void init_from_orbiter_file(int underlying_set_size, 
+	void init_from_orbiter_file(
+			int underlying_set_size,
 			std::string &fname, int verbose_level);
-	void init_set(int idx_of_set, int *set, int sz, 
+	void init_set(
+			int idx_of_set, int *set, int sz,
 		int verbose_level);
 		// Stores a copy of the given set.
 	void init_cycle_structure(

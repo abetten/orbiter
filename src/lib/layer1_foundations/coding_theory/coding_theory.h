@@ -244,6 +244,7 @@ public:
 			crc_object *Crc_object1,
 			crc_object *Crc_object2,
 			int error_pattern_weight,
+			int nb_tests_per_block,
 			int verbose_level);
 
 	// mindist.cpp:
@@ -366,6 +367,7 @@ enum crc_object_type {
 	t_crc_alfa,
 	t_crc_bravo,
 	t_crc_charlie,
+	t_crc_Delta,
 	t_crc_Echo,
 	t_crc_crc32,
 	t_crc_crc16,
@@ -380,13 +382,24 @@ public:
 
 	crc_object_type Crc_object_type;
 
-	int Len_total;
-	int Len_check;
-	int Len_info; // = Len_total - Len_check;
+	int Len_total_in_symbols;
+	int Len_total_in_bits;
+	int Len_total_in_bytes;
+
+	int Len_check_in_symbols;
+	int Len_check_in_bits;
+	int Len_check_in_bytes;
+
+	int Len_info_in_symbols;
+	int Len_info_in_bits;
+	int Len_info_in_bytes;
+
+	int block_length_in_bytes;
+	int info_length_in_bytes;
 
 	int symbol_set_size_log;
 	int symbol_set_size;
-	int code_length_in_bits; // = Len_total * symbol_set_size_log
+	//int code_length_in_bits; // = Len_total * symbol_set_size_log
 
 	unsigned char *Data; // [Len_total]
 	unsigned char *Check; // [Len_check]
@@ -397,14 +410,18 @@ public:
 	~crc_object();
 	void init(std::string &type, int block_length, int verbose_level);
 	// block_length is needed for crc32
-	void encode_as_bitvector();
+	//void encode_as_bitvector();
 	void print();
 	long int get_nb_blocks(long int N);
 	long int get_this_block_size(long int N, long int cnt);
+	void expand(const unsigned char *in, unsigned char *out);
+	void compress(const unsigned char *in, unsigned char *out);
+	void compress_check(const unsigned char *in, unsigned char *out);
 	void divide(const unsigned char *in, unsigned char *out);
 	void divide_alfa(const unsigned char *in771, unsigned char *out2);
 	void divide_bravo(const unsigned char *in771, unsigned char *out4);
 	void divide_charlie(const unsigned char *in771, unsigned char *out12);
+	void divide_Delta(const unsigned char *in51, unsigned char *out4);
 	void divide_Echo(const unsigned char *in51, unsigned char *out8);
 	void divide_crc32(const uint8_t *s, size_t n, unsigned char *out4);
 		// polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11

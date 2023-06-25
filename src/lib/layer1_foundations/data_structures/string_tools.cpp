@@ -283,7 +283,8 @@ int string_tools::s_scan_str(char **s, char *str)
 }
 
 int string_tools::s_scan_token_comma_separated(
-		const char **s, char *str, int verbose_level)
+		const char **s, char *str,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char c;

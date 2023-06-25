@@ -159,7 +159,8 @@ void crc_codes::crc32_test(int block_length, int verbose_level)
 
 
 
-void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int verbose_level)
+void crc_codes::test_crc_object(crc_object *Crc,
+		long int Nb_test, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -186,11 +187,11 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 	int *A; // [k]
 	int *V; // [k]
 
-	f_used = NEW_int(Crc->Len_total);
+	f_used = NEW_int(Crc->Len_total_in_bytes);
 	A = NEW_int(k);
 	V = NEW_int(k);
 
-	Int_vec_zero(f_used, Crc->Len_total);
+	Int_vec_zero(f_used, Crc->Len_total_in_bytes);
 	t0 = Os.os_ticks();
 
 	for (i = 0; i < Nb_test; i++) {
@@ -203,13 +204,13 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 		}
 #endif
 
-		char_vec_zero(Crc->Data, Crc->Len_total);
+		char_vec_zero(Crc->Data, Crc->Len_total_in_bytes);
 
 
 		for (j = 0; j < k; j++) {
 
 			while (true) {
-				a = Os.random_integer(Crc->Len_total);
+				a = Os.random_integer(Crc->Len_total_in_bytes);
 				if (!f_used[a]) {
 					break;
 				}
@@ -227,16 +228,16 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 
 		if (false /*(i % ONE_MILLION) == 0*/) {
 			cout << "i=" << i << " : ";
-			for (j = 0; j < Crc->Len_total; j++) {
+			for (j = 0; j < Crc->Len_total_in_bytes; j++) {
 				cout << (int) Crc->Data[j];
-				if (j < Crc->Len_total - 1) {
+				if (j < Crc->Len_total_in_bytes - 1) {
 					cout << ",";
 				}
 			}
 			cout << " : ";
-			for (j = 0; j < Crc->Len_check; j++) {
+			for (j = 0; j < Crc->Len_check_in_bytes; j++) {
 				cout << (int) Crc->Check[j];
-				if (j < Crc->Len_check - 1) {
+				if (j < Crc->Len_check_in_bytes - 1) {
 					cout << ",";
 				}
 			}
@@ -244,7 +245,7 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 		}
 
 		// test if the check is all zero:
-		for (j = 0; j < Crc->Len_check; j++) {
+		for (j = 0; j < Crc->Len_check_in_bytes; j++) {
 			if (Crc->Check[j]) {
 				break;
 			}
@@ -252,7 +253,7 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 
 
 		// yes, it is:
-		if (j == Crc->Len_check) {
+		if (j == Crc->Len_check_in_bytes) {
 			cout << i << "," << nb_undetected << ",";
 			cout << endl;
 			cout << "undetected error " << nb_undetected << " : i=" << i << " : ";
@@ -262,8 +263,8 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 			cout << "polynomial: ";
 			int *poly;
 
-			poly = NEW_int(Crc->Len_total);
-			Int_vec_zero(poly, Crc->Len_total);
+			poly = NEW_int(Crc->Len_total_in_bytes);
+			Int_vec_zero(poly, Crc->Len_total_in_bytes);
 			for (h = 0; h < k; h++) {
 				a = A[h];
 				v = V[h];
@@ -271,7 +272,7 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 			}
 
 			Int_vec_print_as_polynomial_in_algebraic_notation(
-					cout, poly, Crc->Len_total);
+					cout, poly, Crc->Len_total_in_bytes);
 
 			cout << endl;
 
@@ -289,7 +290,7 @@ void crc_codes::test_crc_object(crc_object *Crc, long int Nb_test, int k, int ve
 		uint32_t checksum_crc32;
 		unsigned char *out4 = (unsigned char *) &checksum_crc32;
 
-		Crc->encode_as_bitvector();
+		//Crc->encode_as_bitvector();
 
 		Crc->divide_crc32(Crc->Bitvector->get_data(), Crc->Bitvector->get_allocated_length(), out4);
 

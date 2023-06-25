@@ -52,10 +52,10 @@ void error_pattern::init(crc_object *Crc_object,
 	error_pattern::Crc_object = Crc_object;
 	error_pattern::k = k;
 
-	f_used = NEW_int(Crc_object->Len_total);
+	f_used = NEW_int(Crc_object->Len_total_in_bytes);
 	A = NEW_int(k);
 	V = NEW_int(k);
-	Error = (unsigned char *) NEW_char(Crc_object->Len_total);
+	Error = (unsigned char *) NEW_char(Crc_object->Len_total_in_bytes);
 }
 
 
@@ -71,9 +71,9 @@ void error_pattern::create_error_pattern(
 	orbiter_kernel_system::os_interface Os;
 	data_structures::algorithms Algo;
 
-	Algo.uchar_zero(Error, Crc_object->Len_total);
+	Algo.uchar_zero(Error, Crc_object->Len_total_in_bytes);
 
-	Int_vec_zero(f_used, Crc_object->Len_total);
+	Int_vec_zero(f_used, Crc_object->Len_total_in_bytes);
 
 	int j, a, v;
 	unsigned char c;
@@ -81,7 +81,7 @@ void error_pattern::create_error_pattern(
 	for (j = 0; j < k; j++) {
 
 		while (true) {
-			a = Os.random_integer(Crc_object->Len_total);
+			a = Crc_object->Len_check_in_bytes + Os.random_integer(Crc_object->info_length_in_bytes);
 			if (!f_used[a]) {
 				break;
 			}

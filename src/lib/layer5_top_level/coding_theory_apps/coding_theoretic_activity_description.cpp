@@ -121,9 +121,11 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_crc_compare = false;
 	//std::string crc_compare_fname_in;
 	//std::string crc_compare_crc1_type;
+	crc_compare_block_length1 = 0;
 	//std::string crc_compare_crc2_type;
-	crc_compare_block_length = 0;
+	crc_compare_block_length2 = 0;
 	crc_compare_error_weight = 0;
+	crc_compare_nb_tests_per_block = 0;
 
 	f_convert_data_to_polynomials = false;
 	//std::string convert_data_to_polynomials_fname_in;
@@ -423,16 +425,20 @@ int coding_theoretic_activity_description::read_arguments(
 			f_crc_compare = true;
 			crc_compare_fname_in.assign(argv[++i]);
 			crc_compare_crc1_type.assign(argv[++i]);
+			crc_compare_block_length1 = ST.strtoi(argv[++i]);
 			crc_compare_crc2_type.assign(argv[++i]);
-			crc_compare_block_length = ST.strtoi(argv[++i]);
+			crc_compare_block_length2 = ST.strtoi(argv[++i]);
 			crc_compare_error_weight = ST.strtoi(argv[++i]);
+			crc_compare_nb_tests_per_block = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-crc_compare "
 						<< crc_compare_fname_in << " "
 						<< crc_compare_crc1_type << " "
+						<< crc_compare_block_length1 << " "
 						<< crc_compare_crc2_type << " "
-						<< crc_compare_block_length << " "
+						<< crc_compare_block_length2 << " "
 						<< crc_compare_error_weight << " "
+						<< crc_compare_nb_tests_per_block << " "
 						<< endl;
 			}
 		}
@@ -654,9 +660,11 @@ void coding_theoretic_activity_description::print()
 		cout << "-crc_compare "
 				<< crc_compare_fname_in << " "
 				<< crc_compare_crc1_type << " "
+				<< crc_compare_block_length1 << " "
 				<< crc_compare_crc2_type << " "
-				<< crc_compare_block_length << " "
+				<< crc_compare_block_length2 << " "
 				<< crc_compare_error_weight << " "
+				<< crc_compare_nb_tests_per_block << " "
 				<< endl;
 	}
 	if (f_convert_data_to_polynomials) {

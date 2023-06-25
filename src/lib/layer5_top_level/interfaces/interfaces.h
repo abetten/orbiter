@@ -880,6 +880,10 @@ class interface_toolkit {
 	std::string serialize_file_names_fname;
 	std::string serialize_file_names_output_mask;
 
+	int f_save_4_bit_data_file;
+	std::string save_4_bit_data_file_fname;
+	std::string save_4_bit_data_file_vector_data;
+
 public:
 
 
