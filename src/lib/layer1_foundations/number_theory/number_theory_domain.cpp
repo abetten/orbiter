@@ -526,10 +526,10 @@ void number_theory_domain::do_eulerfunction_interval(
 		T[i * 4 + 2] = Table[i][2];
 		T[i * 4 + 3] = Table[i][3];
 	}
-	snprintf(str, sizeof(str), "table_eulerfunction_%ld_%ld.csv", n_min, n_max);
+
 	string fname;
 
-	fname.assign(str);
+	fname = "table_eulerfunction_" + std::to_string(n_min) + "_" + std::to_string(n_max) + ".csv";
 
 	string *Headers;
 
@@ -996,7 +996,8 @@ void number_theory_domain::factor_prime_power(int q, int &p, int &e)
 		}
 }
 
-long int number_theory_domain::primitive_root_randomized(long int p, int verbose_level)
+long int number_theory_domain::primitive_root_randomized(
+		long int p, int verbose_level)
 // Computes a primitive element for $\bbZ_p$, i.~e. an integer $k$
 // with $2 \le k \le p - 1$ s. th. the order of $k$ mod $p$ is $p-1$.
 {
@@ -1061,7 +1062,8 @@ long int number_theory_domain::primitive_root_randomized(long int p, int verbose
 	return a;
 }
 
-long int number_theory_domain::primitive_root(long int p, int verbose_level)
+long int number_theory_domain::primitive_root(
+		long int p, int verbose_level)
 // Computes a primitive element for $\bbZ_p$, i.~e. an integer $k$ 
 // with $2 \le k \le p - 1$ s.~th. the order of $k$ mod $p$ is $p-1$.
 {
@@ -1088,13 +1090,15 @@ long int number_theory_domain::primitive_root(long int p, int verbose_level)
 	exit(1);
 }
 
-int number_theory_domain::Legendre(long int a, long int p, int verbose_level)
+int number_theory_domain::Legendre(
+		long int a, long int p, int verbose_level)
 // Computes the Legendre symbol $\left( \frac{a}{p} \right)$.
 {
 	return Jacobi(a, p, verbose_level);
 }
 
-int number_theory_domain::Jacobi(long int a, long int m, int verbose_level)
+int number_theory_domain::Jacobi(
+		long int a, long int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
 	int f_v = (verbose_level >= 1);
@@ -1178,7 +1182,8 @@ int number_theory_domain::Jacobi(long int a, long int m, int verbose_level)
 	exit(1);
 }
 
-int number_theory_domain::Jacobi_with_key_in_latex(std::ostream &ost,
+int number_theory_domain::Jacobi_with_key_in_latex(
+		std::ostream &ost,
 		long int a, long int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
@@ -1409,7 +1414,8 @@ int number_theory_domain::Jacobi_with_key_in_latex(std::ostream &ost,
 	exit(1);
 }
 
-int number_theory_domain::Legendre_with_key_in_latex(std::ostream &ost,
+int number_theory_domain::Legendre_with_key_in_latex(
+		std::ostream &ost,
 		long int a, long int m, int verbose_level)
 //Computes the Legendre symbol $\left( \frac{a}{m} \right)$.
 {
@@ -2564,12 +2570,9 @@ void number_theory_domain::do_jacobi(
 	string extra_praeamble;
 
 
-	char str[1000];
 
-	snprintf(str, 1000, "jacobi_%ld_%ld.tex", jacobi_top, jacobi_bottom);
-	fname.assign(str);
-	snprintf(str, 1000, "Jacobi %ld over %ld", jacobi_top, jacobi_bottom);
-	title.assign(str);
+	fname = "jacobi_" + std::to_string(jacobi_top) + "_" + std::to_string(jacobi_bottom) + ".tex";
+	title = "Jacobi " + std::to_string(jacobi_top) + " over " + std::to_string(jacobi_bottom);
 
 	{
 	ofstream f(fname);

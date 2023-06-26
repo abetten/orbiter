@@ -702,7 +702,8 @@ void set_of_sets::print_table()
 	cout << "end set of sets" << endl;
 }
 
-void set_of_sets::print_table_tex(std::ostream &ost)
+void set_of_sets::print_table_tex(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i;
@@ -716,7 +717,8 @@ void set_of_sets::print_table_tex(std::ostream &ost)
 	//cout << "end set of sets" << endl;
 }
 
-void set_of_sets::print_table_latex_simple(std::ostream &ost)
+void set_of_sets::print_table_latex_simple(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i;
@@ -753,7 +755,8 @@ void set_of_sets::print_table_latex_simple_with_selection(
 }
 
 
-void set_of_sets::dualize(set_of_sets *&S, int verbose_level)
+void set_of_sets::dualize(
+		set_of_sets *&S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, j;
@@ -778,7 +781,8 @@ void set_of_sets::dualize(set_of_sets *&S, int verbose_level)
 	}
 }
 
-void set_of_sets::remove_sets_of_given_size(int k,
+void set_of_sets::remove_sets_of_given_size(
+		int k,
 		set_of_sets &S, int *&Idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1175,7 +1179,8 @@ void set_of_sets::compute_tdo_decomposition(
 	}
 }
 
-int set_of_sets::is_member(int i, int a, int verbose_level)
+int set_of_sets::is_member(
+		int i, int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret, idx;
@@ -1191,7 +1196,8 @@ int set_of_sets::is_member(int i, int a, int verbose_level)
 	return ret;
 }
 
-void set_of_sets::sort_all(int verbose_level)
+void set_of_sets::sort_all(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1378,7 +1384,8 @@ int set_of_sets::largest_set_size()
 	return s;
 }
 
-void set_of_sets::save_csv(std::string &fname,
+void set_of_sets::save_csv(
+		std::string &fname,
 		int f_make_heading, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1400,7 +1407,8 @@ void set_of_sets::save_csv(std::string &fname,
 	}
 }
 
-void set_of_sets::save_constant_size_csv(std::string &fname,
+void set_of_sets::save_constant_size_csv(
+		std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1413,7 +1421,8 @@ void set_of_sets::save_constant_size_csv(std::string &fname,
 		cout << "set_of_sets::save_constant_size_csv" << endl;
 	}
 	if (!has_constant_size_property()) {
-		cout << "set_of_sets::save_constant_size_csv !has_constant_size_property()" << endl;
+		cout << "set_of_sets::save_constant_size_csv "
+				"!has_constant_size_property" << endl;
 		exit(1);
 	}
 	nb_cols = Set_size[0];
@@ -1545,7 +1554,8 @@ void set_of_sets::compute_orbits(
 	}
 }
 
-int set_of_sets::number_of_eckardt_points(int verbose_level)
+int set_of_sets::number_of_eckardt_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *E;

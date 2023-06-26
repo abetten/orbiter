@@ -1496,7 +1496,8 @@ int partitionstack::cellSizeAtLevel(int cell, int level)
 }
 
 
-void partitionstack::print_decomposition_tex(std::ostream &ost,
+void partitionstack::print_decomposition_tex(
+		std::ostream &ost,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes)
 {
@@ -1539,7 +1540,8 @@ void partitionstack::print_decomposition_tex(std::ostream &ost,
 	}
 }
 
-void partitionstack::print_decomposition_scheme(std::ostream &ost,
+void partitionstack::print_decomposition_scheme(
+		std::ostream &ost,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
 	int *scheme, int marker1, int marker2)

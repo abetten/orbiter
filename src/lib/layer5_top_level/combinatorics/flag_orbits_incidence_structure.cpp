@@ -51,7 +51,8 @@ flag_orbits_incidence_structure::~flag_orbits_incidence_structure()
 	}
 }
 
-void flag_orbits_incidence_structure::init(object_with_properties *OwP,
+void flag_orbits_incidence_structure::init(
+		object_with_properties *OwP,
 		int f_anti_flags, actions::action *A_perm,
 		groups::strong_generators *SG, int verbose_level)
 {

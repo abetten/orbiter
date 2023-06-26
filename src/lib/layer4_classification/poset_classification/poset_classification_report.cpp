@@ -554,15 +554,18 @@ void poset_classification::report_poset_of_orbits(
 	draw_poset_fname_poset(fname_poset, depth);
 	draw_poset_fname_base_poset_lvl(fname_out_base, depth);
 	if (f_v) {
-		cout << "poset_classification::report_poset_of_orbits fname_base=" << fname_base << endl;
+		cout << "poset_classification::report_poset_of_orbits "
+				"fname_base=" << fname_base << endl;
 	}
 	if (f_v) {
-		cout << "poset_classification::report_poset_of_orbits fname_poset=" << fname_poset << endl;
+		cout << "poset_classification::report_poset_of_orbits "
+				"fname_poset=" << fname_poset << endl;
 	}
 
 	fname_out_base.append("_draw");
 	if (f_v) {
-		cout << "poset_classification::report_poset_of_orbits fname_out_base=" << fname_out_base << endl;
+		cout << "poset_classification::report_poset_of_orbits "
+				"fname_out_base=" << fname_out_base << endl;
 	}
 
 	string cmd;
@@ -580,10 +583,7 @@ void poset_classification::report_poset_of_orbits(
 
 	}
 
-	cmd.append("/orbiter.out -v 3 -draw_layered_graph ");
-	cmd.append(fname_poset);
-
-	char str[1000];
+	cmd += "/orbiter.out -v 3 -draw_layered_graph " + fname_poset + " ";
 
 	if (!Control->f_draw_options) {
 		cout << "poset_classification::report_poset_of_orbits "
@@ -591,34 +591,27 @@ void poset_classification::report_poset_of_orbits(
 		exit(1);
 	}
 
-	snprintf(str, sizeof(str), " -xin %d -yin %d -xout %d -yout %d -radius %d",
-			Control->draw_options->xin,
-			Control->draw_options->yin,
-			Control->draw_options->xout,
-			Control->draw_options->yout,
-			Control->draw_options->rad);
-	cmd.append(str);
+	cmd += " -xin " + std::to_string(Control->draw_options->xin)
+			+ " -yin " + std::to_string(Control->draw_options->yin)
+			+ " -xout " + std::to_string(Control->draw_options->xout)
+			+ " -yout " + std::to_string(Control->draw_options->yout)
+			+ " -radius " + std::to_string(Control->draw_options->rad) + " ";
 
 	if (Control->draw_options->f_y_stretch) {
-		snprintf(str, sizeof(str), " -y_stretch %lf ", Control->draw_options->y_stretch);
-		cmd.append(str);
+		cmd += " -y_stretch " + std::to_string(Control->draw_options->y_stretch) + " ";
 	}
 
 	if (Control->draw_options->f_line_width) {
-		snprintf(str, sizeof(str), " -line_width %lf ", Control->draw_options->line_width);
-		cmd.append(str);
+		cmd += " -line_width " + std::to_string(Control->draw_options->line_width) + " ";
 	}
 	if (Control->draw_options->f_spanning_tree) {
-		snprintf(str, sizeof(str), " -spanning_tree ");
-		cmd.append(str);
+		cmd += " -spanning_tree ";
 	}
 
 	cout << "poset_classification::report_poset_of_orbits executing command: " << cmd << endl;
 	system(cmd.c_str());
 
-	cmd.assign("mpost -tex=latex ");
-	cmd.append(fname_out_base);
-	cmd.append(".mp");
+	cmd = "mpost -tex=latex " + fname_out_base + ".mp";
 	cout << "executing: " << cmd << endl;
 	system(cmd.c_str());
 
@@ -641,7 +634,8 @@ void poset_classification::report_orbit(
 
 	if (f_v) {
 		cout << "poset_classification::report_orbit "
-				"level = " << level << " orbit_at_level = " << orbit_at_level << endl;
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level << endl;
 	}
 	int nb_orbits;
 	int nb_gens;

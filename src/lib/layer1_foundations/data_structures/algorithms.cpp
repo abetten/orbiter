@@ -491,8 +491,8 @@ void algorithms::solve_diophant(
 
 uint32_t algorithms::SuperFastHash (const char * data, int len)
 {
-uint32_t hash = len, tmp;
-int rem;
+	uint32_t hash = len, tmp;
+	int rem;
 
     if (len <= 0 || data == 0) return 0;
 

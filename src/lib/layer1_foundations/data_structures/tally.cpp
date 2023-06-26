@@ -826,12 +826,8 @@ void tally::save_classes_individually(std::string &fname)
 
 
 		string fname2;
-		char str[10000];
 
-		fname2.assign(fname);
-		snprintf(str, sizeof(str), "%d", t);
-		fname2.append(str);
-		fname2.append(".csv");
+		fname2 = fname + std::to_string(t) + ".csv";
 
 		string label;
 

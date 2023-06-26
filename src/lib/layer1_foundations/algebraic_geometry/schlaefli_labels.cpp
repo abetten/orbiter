@@ -118,22 +118,24 @@ void schlaefli_labels::init(int verbose_level)
 
 	Line_label = new std::string[28];
 	Line_label_tex = new std::string[28];
-	char str[1000];
 	int a, b, c;
 
 	for (i = 0; i < 27; i++) {
+
+		string str;
+
 		if (i < 6) {
-			snprintf(str, 1000, "a_%d", i + 1);
+			str = "a_" + std::to_string(i + 1);
 		}
 		else if (i < 12) {
-			snprintf(str, 1000, "b_%d", i - 6 + 1);
+			str = "b_" + std::to_string(i - 6 + 1);
 		}
 		else {
 			h = i - 12;
 			c = Sets2[h * 2 + 0];
 			a = Sets[c * 2 + 0] + 1;
 			b = Sets[c * 2 + 1] - 6 + 1;
-			snprintf(str, 1000, "c_{%d%d}", a, b);
+			str = "c_{" + std::to_string(a) + std::to_string(b) + "}";
 		}
 		if (f_v) {
 			cout << "creating label " << str
@@ -144,18 +146,21 @@ void schlaefli_labels::init(int verbose_level)
 	Line_label[27].assign("d");
 
 	for (i = 0; i < 27; i++) {
+
+		string str;
+
 		if (i < 6) {
-			snprintf(str, 1000, "a_{%d}", i + 1);
+			str = "a_{" + std::to_string(i + 1) + "}";
 		}
 		else if (i < 12) {
-			snprintf(str, 1000, "b_{%d}", i - 6 + 1);
+			str = "b_{" + std::to_string(i - 6 + 1) + "}";
 		}
 		else {
 			h = i - 12;
 			c = Sets2[h * 2 + 0];
 			a = Sets[c * 2 + 0] + 1;
 			b = Sets[c * 2 + 1] - 6 + 1;
-			snprintf(str, 1000, "c_{%d%d}", a, b);
+			str = "c_{" + std::to_string(a) + std::to_string(b) + "}";
 		}
 		if (f_v) {
 			cout << "creating label " << str

@@ -100,10 +100,7 @@ void packing_classify::klein_invariants_fname(
 		std::string &fname,
 		std::string &prefix, int iso_cnt)
 {
-	fname.assign(prefix);
-	char str[1000];
-	snprintf(str, sizeof(str), "%d_klein_invariant.bin", iso_cnt);
-	fname.append(str);
+	fname = prefix + std::to_string(iso_cnt) + "_klein_invariant.bin";
 }
 
 void packing_classify::compute_and_save_klein_invariants(
@@ -230,14 +227,14 @@ void packing_classify::report(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	char fname[1000];
+	string fname;
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_classify::report" << endl;
 	}
 
-	snprintf(fname, sizeof(fname), "packing_report_q%d.tex", (int)q);
+	fname = "packing_report_q" + std::to_string(q) + ".tex";
 
 	{
 		ofstream f(fname);
@@ -343,7 +340,6 @@ void packing_classify::report_title_page(
 	int f_book = true;
 	int f_title = true;
 	string title, author, extra_praeamble;
-	char str[1000];
 
 	int f_toc = true;
 	int f_landscape = false;
@@ -352,9 +348,8 @@ void packing_classify::report_title_page(
 	int f_pagenumbers = true;
 	l1_interfaces::latex_interface L;
 
-	snprintf(str, sizeof(str), "The Packings of PG$(%d,%d)$", (int)3, (int)q);
-	title.assign(str);
-	author.assign("Orbiter");
+	title = "The Packings of PG$(3," + std::to_string(q) + ")$";
+	author = "Orbiter";
 
 	L.head(ost, f_book, f_title,
 		title, author, 
@@ -835,10 +830,10 @@ void packing_classify::report_stabilizer_in_action_gap(
 	groups::sims *Stab;
 	ring_theory::longinteger_object go;
 	int i;
-	char fname[1000];
+	string fname;
 
 
-	snprintf(fname, sizeof(fname), "group_%d.g", orbit);
+	fname = "group_" + std::to_string(orbit) + ".g";
 	{
 		ofstream fp(fname);
 

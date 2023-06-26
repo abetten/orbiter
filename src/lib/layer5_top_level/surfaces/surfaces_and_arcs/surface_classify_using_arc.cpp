@@ -340,7 +340,7 @@ void surface_classify_using_arc::report2(std::ostream &ost,
 	}
 
 #if 0
-	snprintf(fname_base, 1000, "arcs_q%d", F->q);
+	fname_base = "arcs_q" + std::to_string(F->q);
 
 	if (F->q < 20) {
 		cout << "before Gen->gen->draw_poset_full" << endl;

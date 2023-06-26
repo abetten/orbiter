@@ -264,7 +264,7 @@ public:
 			int verbose_level);
 
 	void Hill_cap56(
-		char *fname, int &nb_Pts, long int *&Pts,
+			std::string &fname, int &nb_Pts, long int *&Pts,
 		int verbose_level);
 	void append_orbit_and_adjust_size(
 			groups::schreier *Orb,
@@ -726,13 +726,17 @@ public:
 	void init(
 			apps_combinatorics::design_create_description *Descr,
 			int verbose_level);
-	void create_design_PG_2_q(field_theory::finite_field *F,
+	void create_design_PG_2_q(
+			field_theory::finite_field *F,
 			long int *&set, int &sz, int &k, int verbose_level);
-	void unrank_block_in_PG_2_q(int *block,
+	void unrank_block_in_PG_2_q(
+			int *block,
 			int rk, int verbose_level);
-	int rank_block_in_PG_2_q(int *block,
+	int rank_block_in_PG_2_q(
+			int *block,
 			int verbose_level);
-	int get_nb_colors_as_two_design(int verbose_level);
+	int get_nb_colors_as_two_design(
+			int verbose_level);
 	int get_color_as_two_design_assume_sorted(
 			long int *design, int verbose_level);
 	void compute_incidence_matrix(int verbose_level);
@@ -895,7 +899,8 @@ public:
 	void do_n2q3(int verbose_level);
 	void check_overgroups_of_order_nine(int verbose_level);
 	void create_minimal_overgroups(int verbose_level);
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
@@ -933,7 +938,8 @@ public:
 
 	flag_orbits_incidence_structure();
 	~flag_orbits_incidence_structure();
-	void init(object_with_properties *OwP,
+	void init(
+			object_with_properties *OwP,
 			int f_anti_flags, actions::action *A_perm,
 			groups::strong_generators *SG, int verbose_level);
 	int find_flag(int i, int j);
@@ -971,12 +977,15 @@ public:
 	void init(int n,
 			int f_draw, int verbose_level,
 			int verbose_level_clique);
-	int clique_test(long int *set, int sz);
-	void early_test_func(long int *S, int len,
+	int clique_test(
+			long int *set, int sz);
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int dot_product(int a, int b, int n);
+	int dot_product(
+			int a, int b, int n);
 };
 
 
@@ -1071,15 +1080,18 @@ public:
 
 	hall_system_classify();
 	~hall_system_classify();
-	void init(int argc, const char **argv,
+	void init(
+			int argc, const char **argv,
 			int n, int depth,
 			int verbose_level);
 	void orbits_on_triples(int verbose_level);
-	void print(std::ostream &ost, long int *S, int len);
+	void print(
+			std::ostream &ost, long int *S, int len);
 	void unrank_triple(long int *T, int rk);
 	void unrank_triple_pair(
 			long int *T1, long int *T2, int rk);
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);

@@ -481,7 +481,8 @@ void design_create::init(
 	}
 }
 
-void design_create::create_design_PG_2_q(field_theory::finite_field *F,
+void design_create::create_design_PG_2_q(
+		field_theory::finite_field *F,
 		long int *&set, int &sz, int &k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -562,7 +563,8 @@ void design_create::create_design_PG_2_q(field_theory::finite_field *F,
 	}
 }
 
-void design_create::unrank_block_in_PG_2_q(int *block,
+void design_create::unrank_block_in_PG_2_q(
+		int *block,
 		int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -584,7 +586,8 @@ void design_create::unrank_block_in_PG_2_q(int *block,
 	}
 }
 
-int design_create::rank_block_in_PG_2_q(int *block,
+int design_create::rank_block_in_PG_2_q(
+		int *block,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -604,7 +607,8 @@ int design_create::rank_block_in_PG_2_q(int *block,
 	return rk;
 }
 
-int design_create::get_nb_colors_as_two_design(int verbose_level)
+int design_create::get_nb_colors_as_two_design(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	combinatorics::combinatorics_domain Combi;

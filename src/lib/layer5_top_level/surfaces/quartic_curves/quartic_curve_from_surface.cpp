@@ -455,10 +455,7 @@ void quartic_curve_from_surface::quartic(
 		geometry::geometry_global GG;
 		string fname_base;
 
-		snprintf(str, sizeof(str), "_orb%d", pt_orbit);
-		fname_base.assign(surface_prefix);
-		fname_base.append(str);
-		fname_base.append("_quartic");
+		fname_base = surface_prefix + "_orb" + std::to_string(pt_orbit) + "_quartic";
 
 		if (f_v) {
 			cout << "quartic_curve_from_surface::quartic "

@@ -438,12 +438,6 @@ void spread_classify::init(
 		if (f_v) {
 			cout << "spread_classify::init before recoordinatize::init" << endl;
 		}
-		//char str[1000];
-		//string fname_live_points;
-
-		//snprintf(str, sizeof(str), "live_points_q%d", q);
-		//fname_live_points.assign(str);
-
 
 		geometry::three_skew_subspaces *Three_skew_subspaces;
 
@@ -1113,11 +1107,9 @@ void spread_classify::lifting_prepare_function_new(
 
 	CG = NEW_OBJECT(graph_theory::colored_graph);
 
-	char str[1000];
 	string label, label_tex;
-	snprintf(str, sizeof(str), "graph_%d", starter_case);
-	label.assign(str);
-	label_tex.assign(str);
+	label = "graph_" + std::to_string(starter_case);
+	label_tex = label;
 
 	if (f_v) {
 		cout << "spread_classify::lifting_prepare_function_new "

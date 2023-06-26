@@ -19,8 +19,10 @@ namespace layer1_foundations {
 namespace number_theory {
 
 
-static void ntt4_forward(int *input, int *output, field_theory::finite_field *F);
-static void ntt4_backward(int *input, int *output, field_theory::finite_field *F);
+static void ntt4_forward(
+		int *input, int *output, field_theory::finite_field *F);
+static void ntt4_backward(
+		int *input, int *output, field_theory::finite_field *F);
 
 
 number_theoretic_transform::number_theoretic_transform()
@@ -65,7 +67,8 @@ number_theoretic_transform::~number_theoretic_transform()
 {
 }
 
-void number_theoretic_transform::init(field_theory::finite_field *F,
+void number_theoretic_transform::init(
+		field_theory::finite_field *F,
 		int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -80,22 +83,16 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 
 	if (f_v) {
 		cout << "number_theoretic_transform::init" << endl;
-		cout << "number_theoretic_transform::init k = " << k << " q=" << q << endl;
+		cout << "number_theoretic_transform::init "
+				"k = " << k << " q=" << q << endl;
 	}
 
 	number_theoretic_transform::k = k;
 	number_theoretic_transform::q = q;
 	number_theoretic_transform::F = F;
 
-	fname_code.assign("NTT_");
-	char str[1000];
+	fname_code = "NTT_k" + std::to_string(k) + "_q" + std::to_string(q) + ".cpp";
 
-	snprintf(str, sizeof(str), "k%d_q%d.cpp", k, q);
-	fname_code.append(str);
-
-
-	//F = NEW_OBJECT(finite_field);
-	//F->finite_field_init(q, false /* f_without_tables */, 0 /* verbose_level */);
 
 
 	minus_one = F->negate(1);
@@ -126,15 +123,15 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 	Tmp1 = NEW_int(N[k] * N[k]);
 	Tmp2 = NEW_int(N[k] * N[k]);
 
-	F->Linear_algebra->make_Fourier_matrices(omega, k, N, A, Av, Omega, verbose_level);
+	F->Linear_algebra->make_Fourier_matrices(
+			omega, k, N, A, Av, Omega, verbose_level);
 
 	for (h = k; h >= 1; h--) {
-		char str[1000];
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		snprintf(str, sizeof(str), "Fourier_q%d_N%d.csv", q, N[h]);
-		fname.assign(str);
+		fname = "Fourier_q" + std::to_string(q) + "_N" + std::to_string(N[h]) + ".csv";
+
 		Fio.int_matrix_write_csv(fname, A[h], N[h], N[h]);
 	}
 
@@ -214,7 +211,8 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 	nb_m10 = F->nb_times_mult_called();
 	nb_a10 = F->nb_times_add_called();
 
-	F->Linear_algebra->mult_vector_from_the_right(A[k], X, Y, N[k], N[k]);
+	F->Linear_algebra->mult_vector_from_the_right(
+			A[k], X, Y, N[k], N[k]);
 
 	nb_m11 = F->nb_times_mult_called();
 	nb_a11 = F->nb_times_add_called();
@@ -241,8 +239,10 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 	}
 
 
-	F->Linear_algebra->mult_vector_from_the_right(A[k - 1], X1, Y1, N[k - 1], N[k - 1]);
-	F->Linear_algebra->mult_vector_from_the_right(A[k - 1], X2, Y2, N[k - 1], N[k - 1]);
+	F->Linear_algebra->mult_vector_from_the_right(
+			A[k - 1], X1, Y1, N[k - 1], N[k - 1]);
+	F->Linear_algebra->mult_vector_from_the_right(
+			A[k - 1], X2, Y2, N[k - 1], N[k - 1]);
 
 	gamma = 1;
 	minus_gamma = minus_one;
@@ -341,22 +341,15 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 	string fname_Tv;
 	string fname_P;
 
-	snprintf(str, sizeof(str), "ntt_F_k%d.csv", k);
-	fname_F.assign(str);
-	snprintf(str, sizeof(str), "ntt_Fv_k%d.csv", k);
-	fname_Fv.assign(str);
-	snprintf(str, sizeof(str), "ntt_G_k%d.csv", k);
-	fname_G.assign(str);
-	snprintf(str, sizeof(str), "ntt_D_k%d.csv", k);
-	fname_D.assign(str);
-	snprintf(str, sizeof(str), "ntt_Dv_k%d.csv", k);
-	fname_Dv.assign(str);
-	snprintf(str, sizeof(str), "ntt_T_k%d.csv", k);
-	fname_T.assign(str);
-	snprintf(str, sizeof(str), "ntt_Tv_k%d.csv", k);
-	fname_Tv.assign(str);
-	snprintf(str, sizeof(str), "ntt_P_k%d.csv", k);
-	fname_P.assign(str);
+	fname_F = "ntt_F_k" + std::to_string(k) + ".csv";
+	fname_Fv = "ntt_Fv_k" + std::to_string(k) + ".csv";
+	fname_G = "ntt_G_k" + std::to_string(k) + ".csv";
+	fname_D = "ntt_D_k" + std::to_string(k) + ".csv";
+	fname_Dv = "ntt_Dv_k" + std::to_string(k) + ".csv";
+	fname_T = "ntt_T_k" + std::to_string(k) + ".csv";
+	fname_Tv = "ntt_Tv_k" + std::to_string(k) + ".csv";
+	fname_P = "ntt_P_k" + std::to_string(k) + ".csv";
+
 	Fio.int_matrix_write_csv(fname_F, A[k], N[k], N[k]);
 	Fio.int_matrix_write_csv(fname_Fv, Av[k], N[k], N[k]);
 	Fio.int_matrix_write_csv(fname_G, Gr[k - 1], N[k], N[k]);
@@ -378,13 +371,17 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 
 
 
-	F->Linear_algebra->mult_matrix_matrix(Gr[k - 1], Dr[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
-	F->Linear_algebra->mult_matrix_matrix(Tmp1, Tr[k - 1], Tmp2, N[k], N[k], N[k], 0 /* verbose_level*/);
-	F->Linear_algebra->mult_matrix_matrix(Tmp2, Pr[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(
+			Gr[k - 1], Dr[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(
+			Tmp1, Tr[k - 1], Tmp2, N[k], N[k], N[k], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(
+			Tmp2, Pr[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
 
 	for (i = 0; i < N[k] * N[k]; i++) {
 		 if (A[k][i] != Tmp1[i]) {
-			 cout << "matrix product differs from the Fourier matrix, problem in component " << i << endl;
+			 cout << "matrix product differs from "
+					 "the Fourier matrix, problem in component " << i << endl;
 			 exit(1);
 		 }
 	}
@@ -392,13 +389,15 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 
 
 	if (f_v) {
-		cout << "number_theoretic_transform::init before make_level(k - 2)" << endl;
+		cout << "number_theoretic_transform::init "
+				"before make_level(k - 2)" << endl;
 	}
 
 	make_level(k - 2, verbose_level);
 
 	if (f_v) {
-		cout << "number_theoretic_transform::init before make_level(k - 3)" << endl;
+		cout << "number_theoretic_transform::init "
+				"before make_level(k - 3)" << endl;
 	}
 
 	make_level(k - 3, verbose_level);
@@ -421,10 +420,10 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 	Int_matrix_print(the_P, N[k], N[k]);
 	cout << endl;
 
-	snprintf(str, sizeof(str), "ntt_the_P_k%d.csv", k);
-	fname_P.assign(str);
+	fname_P = "ntt_the_P_k" + std::to_string(k) + ".csv";
 	Fio.int_matrix_write_csv(fname_P, the_P, N[k], N[k]);
-	cout << "Written file " << fname_P << " of size " << Fio.file_size(fname_P) << endl;
+	cout << "Written file " << fname_P
+			<< " of size " << Fio.file_size(fname_P) << endl;
 
 
 	bit_reversal = NEW_int(N[k]);
@@ -449,7 +448,8 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 	Stack[5] = D[k - 3];
 
 
-	multiply_matrix_stack(F, Stack, 6, N[k], the_L, verbose_level);
+	multiply_matrix_stack(
+			F, Stack, 6, N[k], the_L, verbose_level);
 
 	cout << "the_L:" << endl;
 	Int_matrix_print(the_L, N[k], N[k]);
@@ -457,10 +457,10 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 
 	string fname_L;
 
-	snprintf(str, sizeof(str), "ntt_L_k%d.csv", k);
-	fname_L.assign(str);
+	fname_L = "ntt_L_k" + std::to_string(k) + ".csv";
 	Fio.int_matrix_write_csv(fname_L, the_L, N[k], N[k]);
-	cout << "Written file " << fname_L << " of size " << Fio.file_size(fname_L) << endl;
+	cout << "Written file " << fname_L
+			<< " of size " << Fio.file_size(fname_L) << endl;
 
 
 	write_code(fname_code, verbose_level);
@@ -480,7 +480,8 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 
 	for (i = 0; i < N[3] * N[3]; i++) {
 		 if (A[3][i] != the_L[i]) {
-			 cout << "matrix product differs from the Fourier matrix, problem in component " << i << endl;
+			 cout << "matrix product differs from the Fourier matrix, "
+					 "problem in component " << i << endl;
 			 exit(1);
 		 }
 	}
@@ -491,7 +492,8 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 	Stack[1] = Av[k];
 
 
-	multiply_matrix_stack(F, Stack, 2, N[k], the_L, verbose_level);
+	multiply_matrix_stack(
+			F, Stack, 2, N[k], the_L, verbose_level);
 
 	cout << "A*Av=" << endl;
 	Int_matrix_print(the_L, N[k], N[k]);
@@ -499,10 +501,10 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 
 	string fname_AAv;
 
-	snprintf(str, sizeof(str), "ntt_AAv_k%d.csv", k);
-	fname_AAv.assign(str);
+	fname_AAv = "ntt_AAv_k" + std::to_string(k) + ".csv";
 	Fio.int_matrix_write_csv(fname_AAv, the_L, N[k], N[k]);
-	cout << "Written file " << fname_AAv << " of size " << Fio.file_size(fname_AAv) << endl;
+	cout << "Written file " << fname_AAv
+			<< " of size " << Fio.file_size(fname_AAv) << endl;
 
 
 
@@ -577,7 +579,8 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 
 	cout << "negatively wrapped convolution:" << endl;
 
-	Hom->multiply_mod_negatively_wrapped(poly_A, poly_B, poly_C, 0/*verbose_level*/);
+	Hom->multiply_mod_negatively_wrapped(
+			poly_A, poly_B, poly_C, 0/*verbose_level*/);
 
 	cout << "poly_C:" << endl;
 	Int_matrix_print(poly_C, 1, N[k]);
@@ -614,7 +617,8 @@ void number_theoretic_transform::init(field_theory::finite_field *F,
 }
 
 
-void number_theoretic_transform::write_code(std::string &fname_code,
+void number_theoretic_transform::write_code(
+		std::string &fname_code,
 		int verbose_level)
 {
 	int f_v = (verbose_level = 1);
@@ -631,19 +635,25 @@ void number_theoretic_transform::write_code(std::string &fname_code,
 		int nb_mult = 0;
 		write_code_header(ost, fname_code, verbose_level);
 
-		write_code2(ost, true /* f_forward */, nb_add, nb_negate, nb_mult, verbose_level);
+		write_code2(
+				ost, true /* f_forward */,
+				nb_add, nb_negate, nb_mult, verbose_level);
 		nb_add = 0;
 		nb_negate = 0;
 		nb_mult = 0;
-		write_code2(ost, false /* f_forward */, nb_add, nb_negate, nb_mult, verbose_level);
+		write_code2(
+				ost, false /* f_forward */,
+				nb_add, nb_negate, nb_mult, verbose_level);
 
 	}
-	cout << "Written file " << fname_code << " of size " << Fio.file_size(fname_code) << endl;
+	cout << "Written file " << fname_code
+			<< " of size " << Fio.file_size(fname_code) << endl;
 
 
 }
 
-void number_theoretic_transform::write_code2(std::ostream &ost,
+void number_theoretic_transform::write_code2(
+		std::ostream &ost,
 		int f_forward,
 		int &nb_add, int &nb_negate, int &nb_mult,
 		int verbose_level)
@@ -658,10 +668,14 @@ void number_theoretic_transform::write_code2(std::ostream &ost,
 
 
 	if (f_forward) {
-		ost << "void ntt" << k << "_forward(int *input, int *output, orbiter::layer1_foundations::field_theory::finite_field *F)" << endl;
+		ost << "void ntt" << k << "_forward("
+				"int *input, int *output, "
+				"orbiter::layer1_foundations::field_theory::finite_field *F)" << endl;
 	}
 	else {
-		ost << "void ntt" << k << "_backward(int *input, int *output, orbiter::layer1_foundations::field_theory::finite_field *F)" << endl;
+		ost << "void ntt" << k << "_backward("
+				"int *input, int *output, "
+				"orbiter::layer1_foundations::field_theory::finite_field *F)" << endl;
 	}
 	ost << "{" << endl;
 	ost << "\tint t0[" << N[k] << "];" << endl;
@@ -692,8 +706,10 @@ void number_theoretic_transform::write_code2(std::ostream &ost,
 			cout << "d != -1" << endl;
 			exit(1);
 		}
-		ost << "\tt0[" << i << "] = F->add(input[" << bit_reversal[i] << "], input[" << bit_reversal[i + 1] << "]);" << endl;
-		ost << "\tt0[" << i + 1 << "] = F->add(input[" << bit_reversal[i] << "], F->negate(input[" << bit_reversal[i + 1] << "]));" << endl;
+		ost << "\tt0[" << i << "] = F->add(input[" << bit_reversal[i] << "], "
+				"input[" << bit_reversal[i + 1] << "]);" << endl;
+		ost << "\tt0[" << i + 1 << "] = F->add(input[" << bit_reversal[i] << "], "
+				"F->negate(input[" << bit_reversal[i + 1] << "]));" << endl;
 		nb_add += 2;
 		nb_negate++;
 	}
@@ -909,7 +925,8 @@ void number_theoretic_transform::write_code2(std::ostream &ost,
 }
 
 
-void number_theoretic_transform::write_code_header(std::ostream &ost, std::string &fname_code, int verbose_level)
+void number_theoretic_transform::write_code_header(
+		std::ostream &ost, std::string &fname_code, int verbose_level)
 {
 	string str;
 	orbiter_kernel_system::os_interface Os;
@@ -972,7 +989,8 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 
 }
 
-void number_theoretic_transform::make_level(int s, int verbose_level)
+void number_theoretic_transform::make_level(
+		int s, int verbose_level)
 {
 	int f_v = (verbose_level = 1);
 	int i;
@@ -1020,26 +1038,6 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 	Int_matrix_print(Pr[s], N[s + 1], N[s + 1]);
 	cout << endl;
 
-#if 0
-	char fname_F[1000];
-	char fname_Fv[1000];
-	char fname_G[1000];
-	char fname_D[1000];
-	char fname_Dv[1000];
-	char fname_T[1000];
-	char fname_Tv[1000];
-	char fname_P[1000];
-
-	snprintf(fname_F, 1000, "ntt_F_k%d.csv", s + 1);
-	snprintf(fname_Fv, 1000, "ntt_Fv_k%d.csv", s + 1);
-	snprintf(fname_G, 1000, "ntt_Gr_k%d.csv", s + 1);
-	snprintf(fname_D, 1000, "ntt_Dr_k%d.csv", s + 1);
-	snprintf(fname_Dv, 1000, "ntt_Dvr_k%d.csv", s + 1);
-	snprintf(fname_T, 1000, "ntt_Tr_k%d.csv", s + 1);
-	snprintf(fname_Tv, 1000, "ntt_Tvr_k%d.csv", s + 1);
-	snprintf(fname_P, 1000, "ntt_Pr_k%d.csv", s + 1);
-#else
-	char str[1000];
 	string fname_F;
 	string fname_Fv;
 	string fname_G;
@@ -1049,23 +1047,16 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 	string fname_Tv;
 	string fname_P;
 
-	snprintf(str, sizeof(str), "ntt_F_k%d.csv", s + 1);
-	fname_F.assign(str);
-	snprintf(str, sizeof(str), "ntt_Fv_k%d.csv", s + 1);
-	fname_Fv.assign(str);
-	snprintf(str, sizeof(str), "ntt_Gr_k%d.csv", s + 1);
-	fname_G.assign(str);
-	snprintf(str, sizeof(str), "ntt_Dr_k%d.csv", s + 1);
-	fname_D.assign(str);
-	snprintf(str, sizeof(str), "ntt_Dvr_k%d.csv", s + 1);
-	fname_Dv.assign(str);
-	snprintf(str, sizeof(str), "ntt_Tr_k%d.csv", s + 1);
-	fname_T.assign(str);
-	snprintf(str, sizeof(str), "ntt_Tvr_k%d.csv", s + 1);
-	fname_Tv.assign(str);
-	snprintf(str, sizeof(str), "ntt_Pr_k%d.csv", s + 1);
-	fname_P.assign(str);
-#endif
+	fname_F = "ntt_F_k" + std::to_string(s + 1) + ".csv";
+	fname_Fv = "ntt_Fv_k" + std::to_string(s + 1) + ".csv";
+	fname_G = "ntt_Gr_k" + std::to_string(s + 1) + ".csv";
+	fname_D = "ntt_Dr_k" + std::to_string(s + 1) + ".csv";
+	fname_Dv = "ntt_Dvr_k" + std::to_string(s + 1) + ".csv";
+	fname_T = "ntt_Tr_k" + std::to_string(s + 1) + ".csv";
+	fname_Tv = "ntt_Tvr_k" + std::to_string(s + 1) + ".csv";
+	fname_P = "ntt_Pr_k" + std::to_string(s + 1) + ".csv";
+
+
 	Fio.int_matrix_write_csv(fname_F, A[s + 1], N[s + 1], N[s + 1]);
 	Fio.int_matrix_write_csv(fname_Fv, Av[s + 1], N[s + 1], N[s + 1]);
 	Fio.int_matrix_write_csv(fname_G, Gr[s], N[s + 1], N[s + 1]);
@@ -1085,13 +1076,20 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 	cout << "Written file " << fname_P << " of size " << Fio.file_size(fname_P) << endl;
 
 
-	F->Linear_algebra->mult_matrix_matrix(Gr[s], Dr[s], Tmp1, N[s + 1], N[s + 1], N[s + 1], 0 /* verbose_level*/);
-	F->Linear_algebra->mult_matrix_matrix(Tmp1, Tr[s], Tmp2, N[s + 1], N[s + 1], N[s + 1], 0 /* verbose_level*/);
-	F->Linear_algebra->mult_matrix_matrix(Tmp2, Pr[s], Tmp1, N[s + 1], N[s + 1], N[s + 1], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(
+			Gr[s], Dr[s], Tmp1, N[s + 1], N[s + 1], N[s + 1],
+			0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(
+			Tmp1, Tr[s], Tmp2, N[s + 1], N[s + 1], N[s + 1],
+			0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(
+			Tmp2, Pr[s], Tmp1, N[s + 1], N[s + 1], N[s + 1],
+			0 /* verbose_level*/);
 
 	for (i = 0; i < N[s + 1] * N[s + 1]; i++) {
 		 if (A[s + 1][i] != Tmp1[i]) {
-			 cout << "matrix product differs from the Fourier matrix, problem in component " << i << endl;
+			 cout << "matrix product differs from the Fourier matrix, "
+					 "problem in component " << i << endl;
 			 exit(1);
 		 }
 	}
@@ -1122,28 +1120,13 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 	Int_matrix_print(P[s], N[k], N[k]);
 	cout << endl;
 
-	//snprintf(fname_F, 1000, "ntt_F_k%d.csv", k - 1);
-#if 0
-	snprintf(fname_G, 1000, "ntt_G_k%d.csv", s + 1);
-	snprintf(fname_D, 1000, "ntt_D_k%d.csv", s + 1);
-	snprintf(fname_Dv, 1000, "ntt_Dv_k%d.csv", s + 1);
-	snprintf(fname_T, 1000, "ntt_T_k%d.csv", s + 1);
-	snprintf(fname_Tv, 1000, "ntt_Tv_k%d.csv", s + 1);
-	snprintf(fname_P, 1000, "ntt_P_k%d.csv", s + 1);
-#else
-	snprintf(str, sizeof(str), "ntt_G_k%d.csv", s + 1);
-	fname_G.assign(str);
-	snprintf(str, sizeof(str), "ntt_D_k%d.csv", s + 1);
-	fname_D.assign(str);
-	snprintf(str, sizeof(str), "ntt_Dv_k%d.csv", s + 1);
-	fname_Dv.assign(str);
-	snprintf(str, sizeof(str), "ntt_T_k%d.csv", s + 1);
-	fname_T.assign(str);
-	snprintf(str, sizeof(str), "ntt_Tv_k%d.csv", s + 1);
-	fname_Tv.assign(str);
-	snprintf(str, sizeof(str), "ntt_P_k%d.csv", s + 1);
-	fname_P.assign(str);
-#endif
+	fname_G = "ntt_G_k" + std::to_string(s + 1) + ".csv";
+	fname_D = "ntt_D_k" + std::to_string(s + 1) + ".csv";
+	fname_Dv = "ntt_Dv_k" + std::to_string(s + 1) + ".csv";
+	fname_T = "ntt_T_k" + std::to_string(s + 1) + ".csv";
+	fname_Tv = "ntt_Tv_k" + std::to_string(s + 1) + ".csv";
+	fname_P = "ntt_P_k" + std::to_string(s + 1) + ".csv";
+
 	//Fio.int_matrix_write_csv(fname_F, A[k - 1], N[k - 1], N[k - 1]);
 	Fio.int_matrix_write_csv(fname_G, G[s], N[k], N[k]);
 	Fio.int_matrix_write_csv(fname_D, D[s], N[k], N[k]);
@@ -1165,7 +1148,8 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 }
 
 
-void number_theoretic_transform::paste(int **Xr, int **X, int s, int verbose_level)
+void number_theoretic_transform::paste(
+		int **Xr, int **X, int s, int verbose_level)
 {
 	int f_v = (verbose_level = 1);
 	int i, j, i0, t, h, a;
@@ -1204,7 +1188,8 @@ void number_theoretic_transform::paste(int **Xr, int **X, int s, int verbose_lev
 	}
 }
 
-void number_theoretic_transform::make_G_matrix(int s, int verbose_level)
+void number_theoretic_transform::make_G_matrix(
+		int s, int verbose_level)
 {
 	int f_v = (verbose_level = 1);
 	int i;
@@ -1228,7 +1213,8 @@ void number_theoretic_transform::make_G_matrix(int s, int verbose_level)
 }
 
 
-void number_theoretic_transform::make_D_matrix(int s, int verbose_level)
+void number_theoretic_transform::make_D_matrix(
+		int s, int verbose_level)
 {
 	int f_v = (verbose_level = 1);
 	int i, gamma, omega;
@@ -1277,7 +1263,8 @@ void number_theoretic_transform::make_D_matrix(int s, int verbose_level)
 	}
 }
 
-void number_theoretic_transform::make_T_matrix(int s, int verbose_level)
+void number_theoretic_transform::make_T_matrix(
+		int s, int verbose_level)
 {
 	int f_v = (verbose_level = 1);
 
@@ -1290,7 +1277,8 @@ void number_theoretic_transform::make_T_matrix(int s, int verbose_level)
 
 	Tr[s] = NEW_int(N[s + 1] * N[s + 1]);
 	Int_vec_zero(Tr[s], N[s + 1] * N[s + 1]);
-	F->Linear_algebra->Kronecker_product_square_but_arbitrary(A[s], Id2,
+	F->Linear_algebra->Kronecker_product_square_but_arbitrary(
+			A[s], Id2,
 			N[s], 2, Tr[s], sz, 0 /*verbose_level */);
 	if (sz != N[s + 1]) {
 		cout << "sz != N[s + 1]" << endl;
@@ -1299,7 +1287,8 @@ void number_theoretic_transform::make_T_matrix(int s, int verbose_level)
 
 	Tvr[s] = NEW_int(N[s + 1] * N[s + 1]);
 	Int_vec_zero(Tvr[s], N[s + 1] * N[s + 1]);
-	F->Linear_algebra->Kronecker_product_square_but_arbitrary(Av[s], Id2,
+	F->Linear_algebra->Kronecker_product_square_but_arbitrary(
+			Av[s], Id2,
 			N[s], 2, Tvr[s], sz, 0 /*verbose_level */);
 	if (sz != N[s + 1]) {
 		cout << "sz != N[s + 1]" << endl;
@@ -1313,7 +1302,8 @@ void number_theoretic_transform::make_T_matrix(int s, int verbose_level)
 }
 
 
-void number_theoretic_transform::make_P_matrix(int s, int verbose_level)
+void number_theoretic_transform::make_P_matrix(
+		int s, int verbose_level)
 {
 	int f_v = (verbose_level = 1);
 	int i;
@@ -1347,9 +1337,11 @@ void number_theoretic_transform::multiply_matrix_stack(
 		Int_vec_copy(S[0], Result, sz * sz);
 	}
 	else {
-		F->Linear_algebra->mult_matrix_matrix(S[0], S[1], Tmp1, sz, sz, sz, 0 /* verbose_level*/);
+		F->Linear_algebra->mult_matrix_matrix(
+				S[0], S[1], Tmp1, sz, sz, sz, 0 /* verbose_level*/);
 		for (i = 2; i < nb; i++) {
-			F->Linear_algebra->mult_matrix_matrix(Tmp1, S[i], Tmp2, sz, sz, sz, 0 /* verbose_level*/);
+			F->Linear_algebra->mult_matrix_matrix(
+					Tmp1, S[i], Tmp2, sz, sz, sz, 0 /* verbose_level*/);
 			Int_vec_copy(Tmp2, Tmp1, sz * sz);
 		}
 		Int_vec_copy(Tmp1, Result, sz * sz);
@@ -1360,7 +1352,8 @@ void number_theoretic_transform::multiply_matrix_stack(
 }
 
 
-static void ntt4_forward(int *input, int *output, field_theory::finite_field *F)
+static void ntt4_forward(
+		int *input, int *output, field_theory::finite_field *F)
 {
 	int t0[16];
 	int t1[16];
@@ -1486,7 +1479,8 @@ static void ntt4_forward(int *input, int *output, field_theory::finite_field *F)
 // nb_negate = 32
 // nb_mult = 17
 
-static void ntt4_backward(int *input, int *output, field_theory::finite_field *F)
+static void ntt4_backward(
+		int *input, int *output, field_theory::finite_field *F)
 {
 	int t0[16];
 	int t1[16];

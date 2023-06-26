@@ -312,12 +312,9 @@ void object_with_properties::latex_report(std::ostream &ost,
 		std::string label_tex;
 
 
-		fname.assign(label);
-		fname.append("_aut.makefile");
-		label_txt.assign(label);
-		label_txt.append("_aut");
-		label_tex.assign(label);
-		label_tex.append("\\_aut");
+		fname = label + "_aut.makefile";
+		label_txt = label + "_aut";
+		label_tex = label + "\\_aut";
 
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
@@ -345,8 +342,7 @@ void object_with_properties::latex_report(std::ostream &ost,
 		//std::string label_tex;
 
 
-		fname.assign(label);
-		fname.append("_aut.gap");
+		fname = label + "_aut.gap";
 #if 0
 		label_txt.assign(label);
 		label_txt.append("_aut");
@@ -543,22 +539,18 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 		int i, j, a;
 
-		char str[1000];
-
 		for (i = 0; i < v; i++) {
 
 			a = NO->canonical_labeling[i];
 			if (Sch->orbit_number(a) == canonical_orbit) {
-				snprintf(str, sizeof(str), "*%d", a);
+				point_labels[i] = "*" + std::to_string(a);
 			}
 			else {
-				snprintf(str, sizeof(str), "%d", a);
+				point_labels[i] = std::to_string(a);
 			}
-			point_labels[i].assign(str);
 		}
 		for (j = 0; j < b; j++) {
-			snprintf(str, sizeof(str), "%d", NO->canonical_labeling[v + j]);
-			block_labels[j].assign(str);
+			block_labels[j] = std::to_string(NO->canonical_labeling[v + j]);
 		}
 
 		Enc->latex_canonical_form_with_labels(ost, NO,
@@ -603,11 +595,13 @@ void object_with_properties::latex_report(std::ostream &ost,
 		l1_interfaces::nauty_output *NO;
 		data_structures::bitvector *Canonical_form;
 
-		GB = (geometry_builder::geometry_builder *) orbiter_kernel_system::Orbiter->get_object(idx);
+		GB = (geometry_builder::geometry_builder *)
+				orbiter_kernel_system::Orbiter->get_object(idx);
 
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report before find_object, "
+			cout << "object_with_properties::latex_report "
+					"before find_object, "
 					"OwCF->v=" << OwCF->v << endl;
 		}
 
@@ -619,7 +613,8 @@ void object_with_properties::latex_report(std::ostream &ost,
 				verbose_level);
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report after find_object" << endl;
+			cout << "object_with_properties::latex_report "
+					"after find_object" << endl;
 		}
 
 		// if f_found is true, B[idx] agrees with the given object
@@ -631,19 +626,23 @@ void object_with_properties::latex_report(std::ostream &ost,
 			exit(1);
 		}
 
-		geometry::object_with_canonical_form *OwCF2 = (geometry::object_with_canonical_form *)
+		geometry::object_with_canonical_form *OwCF2 =
+				(geometry::object_with_canonical_form *)
 				GB->gg->inc->iso_type_at_line[OwCF->v - 1]->Canonical_forms->Objects[idx];
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report before FREE_OBJECT(NO)" << endl;
+			cout << "object_with_properties::latex_report "
+					"before FREE_OBJECT(NO)" << endl;
 		}
 		FREE_OBJECT(NO);
 		if (f_v) {
-			cout << "object_with_properties::latex_report after FREE_OBJECT(NO)" << endl;
+			cout << "object_with_properties::latex_report "
+					"after FREE_OBJECT(NO)" << endl;
 		}
 		FREE_OBJECT(Canonical_form);
 		if (f_v) {
-			cout << "object_with_properties::latex_report after FREE_OBJECT(Canonical_form)" << endl;
+			cout << "object_with_properties::latex_report "
+					"after FREE_OBJECT(Canonical_form)" << endl;
 		}
 
 		ost << "Is isomorphic to object " << idx << " in the list:\\\\" << endl;
@@ -661,7 +660,8 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 }
 
-void object_with_properties::compute_TDO(int max_TDO_depth, int verbose_level)
+void object_with_properties::compute_TDO(
+		int max_TDO_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -764,21 +764,21 @@ void object_with_properties::export_TDA_with_flag_orbits(
 			}
 		}
 
-		fname.assign(label);
-		fname.append("_TDA.csv");
+		fname = label + "_TDA.csv";
 
 		Fio.int_matrix_write_csv(fname, Inc_TDA, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			cout << "Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
 		}
 
 
-		fname.assign(label);
-		fname.append("_TDA_flag_orbits.csv");
+		fname = label + "_TDA_flag_orbits.csv";
 
 		Fio.int_matrix_write_csv(fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			cout << "Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
 		}
 
 		FREE_int(Inc_TDA);
@@ -814,12 +814,13 @@ void object_with_properties::export_TDA_with_flag_orbits(
 		}
 
 
-		fname.assign(label);
-		fname.append("_TDA.csv");
+		fname = label + "_TDA.csv";
 
-		Fio.int_matrix_write_csv(fname, Inc2, Enc->nb_rows, Enc->nb_cols);
+		Fio.int_matrix_write_csv(
+				fname, Inc2, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			cout << "Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
 		}
 		FREE_int(Inc2);
 
@@ -847,13 +848,17 @@ void object_with_properties::export_INP_with_flag_orbits(
 	combinatorics::encoded_combinatorial_object *Enc;
 
 	if (f_v) {
-		cout << "object_with_properties::export_INP_with_flag_orbits before OwCF->encode_incma" << endl;
+		cout << "object_with_properties::export_INP_with_flag_orbits "
+				"before OwCF->encode_incma" << endl;
 	}
 	OwCF->encode_incma(Enc, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "object_with_properties::export_INP_with_flag_orbits after OwCF->encode_incma" << endl;
-		cout << "object_with_properties::export_INP_with_flag_orbits Enc->nb_rows = " << Enc->nb_rows << endl;
-		cout << "object_with_properties::export_INP_with_flag_orbits Enc->nb_cols = " << Enc->nb_cols << endl;
+		cout << "object_with_properties::export_INP_with_flag_orbits "
+				"after OwCF->encode_incma" << endl;
+		cout << "object_with_properties::export_INP_with_flag_orbits "
+				"Enc->nb_rows = " << Enc->nb_rows << endl;
+		cout << "object_with_properties::export_INP_with_flag_orbits "
+				"Enc->nb_cols = " << Enc->nb_cols << endl;
 		//Enc->print_incma();
 	}
 
@@ -868,7 +873,8 @@ void object_with_properties::export_INP_with_flag_orbits(
 	if (Flags->f_flag_orbits_have_been_computed) {
 
 		if (f_v) {
-			cout << "object_with_properties::export_INP_with_flag_orbits f_flag_orbits_have_been_computed" << endl;
+			cout << "object_with_properties::export_INP_with_flag_orbits "
+					"f_flag_orbits_have_been_computed" << endl;
 		}
 
 		int *Inc_flag_orbits;
@@ -899,16 +905,14 @@ void object_with_properties::export_INP_with_flag_orbits(
 			}
 		}
 
-		fname.assign(label);
-		fname.append("_INP.csv");
+		fname = label + "_INP.csv";
 
 		Fio.int_matrix_write_csv(fname, Inc, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
 
-		fname.assign(label);
-		fname.append("_INP_flag_orbits.csv");
+		fname = label + "_INP_flag_orbits.csv";
 
 		Fio.int_matrix_write_csv(fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
@@ -922,7 +926,8 @@ void object_with_properties::export_INP_with_flag_orbits(
 	else {
 
 		if (f_v) {
-			cout << "object_with_properties::export_INP_with_flag_orbits flag_orbits have nor been computed" << endl;
+			cout << "object_with_properties::export_INP_with_flag_orbits "
+					"flag_orbits have not been computed" << endl;
 		}
 
 		int *Inc2;
@@ -945,12 +950,13 @@ void object_with_properties::export_INP_with_flag_orbits(
 
 		}
 
-		fname.assign(label);
-		fname.append("_INP.csv");
+		fname = label + "_INP.csv";
 
-		Fio.int_matrix_write_csv(fname, Inc2, Enc->nb_rows, Enc->nb_cols);
+		Fio.int_matrix_write_csv(
+				fname, Inc2, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			cout << "Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
 		}
 		FREE_int(Inc2);
 	}

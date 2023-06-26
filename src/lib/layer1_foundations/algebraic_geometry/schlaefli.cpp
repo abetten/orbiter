@@ -438,7 +438,6 @@ void schlaefli::make_trihedral_pairs(int verbose_level)
 	int complement[6];
 	int subset_complement[6];
 	int size_complement;
-	char label[1000];
 	combinatorics::combinatorics_domain Combi;
 	l1_interfaces::latex_interface L;
 
@@ -456,12 +455,16 @@ void schlaefli::make_trihedral_pairs(int verbose_level)
 		Combi.unrank_k_subset(h, subset, 6, 3);
 		Combi.set_complement(subset, 3, complement,
 			size_complement, 6);
-		snprintf(label, 1000, "%d%d%d;%d%d%d",
-				subset[0] + 1, subset[1] + 1, subset[2] + 1,
-				complement[0] + 1, complement[1] + 1, complement[2] + 1);
 
 		make_Tijk(Trihedral_pairs + idx * 9, subset[0], subset[1], subset[2]);
-		Trihedral_pair_labels[idx].assign(label);
+		Trihedral_pair_labels[idx] =
+				std::to_string(subset[0] + 1)
+				+ std::to_string(subset[1] + 1)
+				+ std::to_string(subset[2] + 1)
+				+ ";"
+				+ std::to_string(complement[0] + 1)
+				+ std::to_string(complement[1] + 1)
+				+ std::to_string(complement[2] + 1);
 	}
 
 	// the second type (90 of them, (6 choose 2) times (4 choose 2)):
@@ -478,36 +481,40 @@ void schlaefli::make_trihedral_pairs(int verbose_level)
 				subset[second_subset[1]],
 				subset[complement[0]],
 				subset[complement[1]]);
-			snprintf(label, 1000, "%d%d;%d%d;%d%d",
-				subset[second_subset[0]] + 1,
-				subset[second_subset[1]] + 1,
-				subset[complement[0]] + 1,
-				subset[complement[1]] + 1,
-				subset_complement[0] + 1,
-				subset_complement[1] + 1);
-			Trihedral_pair_labels[idx].assign(label);
+			Trihedral_pair_labels[idx] =
+					std::to_string(subset[second_subset[0]] + 1)
+					+ std::to_string(subset[second_subset[1]] + 1)
+					+ ";" + std::to_string(subset[complement[0]] + 1)
+					+ std::to_string(subset[complement[1]] + 1)
+					+ ";" + std::to_string(subset_complement[0] + 1)
+					+ std::to_string(subset_complement[1] + 1);
 		}
 	}
 
 	// the third type (10 of them, (6 choose 3) divide by 2):
 	for (h = 0; h < 10; h++, idx++) {
+
 		Combi.unrank_k_subset(h, subset + 1, 5, 2);
+
 		subset[0] = 0;
 		subset[1]++;
 		subset[2]++;
+
 		Combi.set_complement(subset, 3, complement,
 			size_complement, 6);
+
 		make_Tdefght(Trihedral_pairs + idx * 9,
 			subset[0], subset[1], subset[2],
 			complement[0], complement[1], complement[2]);
-		snprintf(label, 1000, "%d%d%d,%d%d%d",
-			subset[0] + 1,
-			subset[1] + 1,
-			subset[2] + 1,
-			complement[0] + 1,
-			complement[1] + 1,
-			complement[2] + 1);
-		Trihedral_pair_labels[idx].assign(label);
+
+		Trihedral_pair_labels[idx] =
+				std::to_string(subset[0] + 1)
+				+ std::to_string(subset[1] + 1)
+				+ std::to_string(subset[2] + 1)
+				+ ","
+				+ std::to_string(complement[0] + 1)
+				+ std::to_string(complement[1] + 1)
+				+ std::to_string(complement[2] + 1);
 	}
 
 	if (idx != 120) {
@@ -1172,11 +1179,10 @@ void schlaefli::init_double_sixes(int verbose_level)
 	}
 
 	Double_six_label_tex = new string [36];
-	char str[1000];
 
 	for (i = 0; i < 36; i++) {
 		if (i < 1) {
-			snprintf(str, 1000, "{\\cal D}");
+			Double_six_label_tex[i] = "{\\cal D}";
 		}
 		else if (i < 1 + 15) {
 			ij = i - 1;
@@ -1185,7 +1191,10 @@ void schlaefli::init_double_sixes(int verbose_level)
 			set[1] = b;
 			Combi.set_complement(set, 2 /* subset_size */, set + 2,
 				size_complement, 6 /* universal_set_size */);
-			snprintf(str, 1000, "{\\cal D}_{%d%d}", a + 1, b + 1);
+			Double_six_label_tex[i] =
+					"{\\cal D}_{"
+					+ std::to_string(a + 1)
+					+ std::to_string(b + 1) + "}";
 		}
 		else {
 			v = i - 16;
@@ -1195,13 +1204,16 @@ void schlaefli::init_double_sixes(int verbose_level)
 			a = set[0];
 			b = set[1];
 			c = set[2];
-			snprintf(str, 1000, "{\\cal D}_{%d%d%d}", a + 1, b + 1, c + 1);
+			Double_six_label_tex[i] =
+					"{\\cal D}_{"
+					+ std::to_string(a + 1)
+					+ std::to_string(b + 1)
+					+ std::to_string(c + 1) + "}";
 		}
 		if (f_v) {
-			cout << "creating label " << str
+			cout << "creating label " << Double_six_label_tex[i]
 				<< " for Double six " << i << endl;
 		}
-		Double_six_label_tex[i].assign(str);
 	}
 
 	if (f_v) {
@@ -1260,12 +1272,13 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 		}
 	}
 	Half_double_six_label_tex = new string [72];
-	char str[1000];
 
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
+			string str;
+
 			if (i < 1) {
-				snprintf(str, 1000, "D");
+				str = "D";
 			}
 			else if (i < 1 + 15) {
 				ij = i - 1;
@@ -1275,7 +1288,7 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 				Combi.set_complement(set, 2 /* subset_size */,
 					set + 2, size_complement,
 					6 /* universal_set_size */);
-				snprintf(str, 1000, "D_{%d%d}", a + 1, b + 1);
+				str = "D_{" + std::to_string(a + 1) + std::to_string(b + 1) + "}";
 			}
 			else {
 				v = i - 16;
@@ -1286,26 +1299,25 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 				a = set[0];
 				b = set[1];
 				c = set[2];
-				snprintf(str, 1000, "D_{%d%d%d}",
-					a + 1, b + 1, c + 1);
+				str = "D_{"
+						+ std::to_string(a + 1)
+						+ std::to_string(b + 1)
+						+ std::to_string(c + 1) + "}";
 			}
 
-			string s;
-
-			s.assign(str);
 
 			if (j == 0) {
-				s.append("^\\top");
+				str += "^\\top";
 			}
 			else {
-				s.append("^\\bot");
+				str += "^\\bot";
 			}
 			if (f_v) {
 				cout << "creating label " << str
 					<< " for half double six "
 					<< 2 * i + j << endl;
 			}
-			Half_double_six_label_tex[2 * i + j].assign(s);
+			Half_double_six_label_tex[2 * i + j] = str;
 		}
 	}
 

@@ -316,20 +316,15 @@ void singer_cycle::init_lines(int verbose_level)
 			line_orbit[h] = a;
 			line_orbit_inv[a] = h;
 
-			char str[1000];
-			snprintf(str, sizeof(str), "A%d", j);
-			str[0] += i;
+			line_orbit_label[h] = "A" + std::to_string(j);
 			if (f_v) {
-				cout << "label " << j << " is " << str << endl;
+				cout << "label " << j << " is " << line_orbit_label[h] << endl;
 			}
-			line_orbit_label[h].assign(str);
 
-			snprintf(str, sizeof(str), "A_{%d}", j);
-			str[0] += i;
+			line_orbit_label_tex[h] = "A_{" + std::to_string(j) + "}";
 			if (f_v) {
-				cout << "label " << j << " in tex is " << str << endl;
+				cout << "label " << j << " in tex is " << line_orbit_label_tex[h] << endl;
 			}
-			line_orbit_label_tex[h].assign(str);
 
 			b = A2->Group_element->element_image_of(a, nice_gens->ith(0), 0);
 			a = b;

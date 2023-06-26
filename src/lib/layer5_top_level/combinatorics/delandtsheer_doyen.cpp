@@ -461,17 +461,13 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 	cout << "target_depth=" << target_depth << endl;
 
 	orbiter_kernel_system::orbiter_data_file *ODF;
-	char str[1000];
 	string fname;
 	int level = Descr->depth;
 
-	fname.assign("design_");
-	fname.append(Descr->group_label);
-	fname.append("_");
-	fname.append(Descr->mask_label);
-	snprintf(str, sizeof(str), "_%d_%d_lvl_%d",
-			Descr->q1, Descr->q2, level);
-	fname.append(str);
+	fname = "design_" + Descr->group_label + "_" + Descr->mask_label
+			+ "_" + std::to_string(Descr->q1)
+			+ "_" + std::to_string(Descr->q2)
+			+ "_lvl_" + std::to_string(level);
 
 	ODF = NEW_OBJECT(orbiter_kernel_system::orbiter_data_file);
 	ODF->load(fname, verbose_level);
@@ -607,7 +603,8 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 			subset = NEW_int(target_depth);
 			nCk = Combi.int_n_choose_k(nb_live_points, target_depth);
 
-			cout << "nb_live_points = " << nb_live_points << " target_depth = " << target_depth << " nCk = " << nCk << endl;
+			cout << "nb_live_points = " << nb_live_points
+					<< " target_depth = " << target_depth << " nCk = " << nCk << endl;
 			for (l = 0; l < nCk; l++) {
 
 				Combi.unrank_k_subset(l, subset, nb_live_points, target_depth);
@@ -661,19 +658,14 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 
 	if (Descr->f_subgroup) {
 
-		label.assign("design_");
-		label.append(Descr->group_label);
-		label.append("_");
-		label.append(Descr->mask_label);
+		label + "design_" + Descr->group_label + "_" + Descr->mask_label;
 	}
 	else {
 
-		label.assign("design_no_group_");
+		label = "design_no_group_";
 	}
-	char str[1000];
 
-	snprintf(str, sizeof(str), "_%d_%d", Descr->q1, Descr->q2);
-	label.append(str);
+	label += "_" + std::to_string(Descr->q1) + "_" + std::to_string(Descr->q2);
 
 
 	Descr->Search_control->problem_label = label;

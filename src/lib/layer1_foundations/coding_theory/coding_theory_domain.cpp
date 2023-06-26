@@ -2833,7 +2833,6 @@ void coding_theory_domain::crc_simulate_errors(
 	}
 
 
-	//unsigned char *Error;
 	unsigned char *Data0;
 	unsigned char *Data0e;
 	unsigned char *Data1;
@@ -2924,7 +2923,7 @@ void coding_theory_domain::crc_simulate_errors(
 				int i;
 
 				for (i = 0; i < Crc_object1->Len_total_in_bytes; i++) {
-					if (Error->Error[i]) {
+					if (Error->Error_in_bytes[i]) {
 						break;
 					}
 				}
@@ -2939,7 +2938,7 @@ void coding_theory_domain::crc_simulate_errors(
 
 					//Algo.print_hex(cout, Error->Error, Crc_object1->Len_total_in_bytes);
 
-					Algo.uchar_xor(Data0, Error->Error, Data0e, Crc_object1->Len_total_in_bytes);
+					Algo.uchar_xor(Data0, Error->Error_in_bytes, Data0e, Crc_object1->Len_total_in_bytes);
 
 					Crc_object1->expand(Data0e, Data1);
 					Crc_object2->expand(Data0e, Data2);
@@ -2954,13 +2953,13 @@ void coding_theory_domain::crc_simulate_errors(
 						nb1++;
 						cout << "undetected error code 1 : " << nb1
 								<< " in block " << cnt << " / " << nb_blocks << endl;
-						Algo.print_hex(cout, Error->Error, Crc_object1->Len_total_in_bytes);
+						Algo.print_hex(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
 					}
 					if (Algo.uchar_compare(Check2a, Check2b, Crc_object1->Len_check_in_bytes) == 0) {
 						nb2++;
 						cout << "undetected error code 2 : " << nb2
 								<< " in block " << cnt << " / " << nb_blocks << endl;
-						Algo.print_hex(cout, Error->Error, Crc_object1->Len_total_in_bytes);
+						Algo.print_hex(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
 					}
 				}
 			} // next e

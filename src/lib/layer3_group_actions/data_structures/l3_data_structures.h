@@ -453,19 +453,24 @@ public:
 			int verbose_level);
 	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_as_lint();
-	void init_everything(actions::action *A,
+	void init_everything(
+			actions::action *A,
 			actions::action *A2,
 			long int *Set, int set_sz,
 			groups::strong_generators *gens,
 			int verbose_level);
-	void allocate_data(int sz, int verbose_level);
+	void allocate_data(
+			int sz, int verbose_level);
 	set_and_stabilizer *create_copy(int verbose_level);
-	void init_data(long int *data, int sz, int verbose_level);
-	void init_stab_from_data(int *data_gens, 
+	void init_data(
+			long int *data, int sz, int verbose_level);
+	void init_stab_from_data(
+			int *data_gens,
 		int data_gens_size, int nb_gens,
 		std::string &ascii_target_go,
 		int verbose_level);
-	void init_stab_from_file(const char *fname_gens, 
+	void init_stab_from_file(
+			std::string &fname_gens,
 		int verbose_level);
 	void print_set_tex(std::ostream &ost);
 	void print_set_tex_for_inline_text(std::ostream &ost);

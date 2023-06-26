@@ -2024,11 +2024,10 @@ int sims::identify_group(char *path_t144,
 		cout << "sims::identify_group written file "
 				<< fname << " of size " << file_size(fname) << endl;
 		}
-	char cmd[2000];
+	string cmd;
 
-	snprintf(cmd, sizeof(cmd), "%s/t144.out -discreta_home %s "
-			"group_generators.txt >log.tmp",
-			path_t144, discreta_home);
+	cmd = path_t144 + "/t144.out -discreta_home " + discreta_home + " "
+			"group_generators.txt >log.tmp";
 
 	if (f_v) {
 		cout << "sims::identify_group calling '"

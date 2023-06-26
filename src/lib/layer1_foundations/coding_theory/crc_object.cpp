@@ -116,6 +116,16 @@ void crc_object::init(std::string &type,
 		symbol_set_size = 2;
 
 	}
+	else if (strcmp(type.c_str(), "SuperFastHash32") == 0) {
+
+		Crc_object_type = t_crc_SuperFastHash32;
+		block_length_in_bytes = block_length;
+		Len_total_in_symbols = block_length_in_bytes * 8;
+		Len_check_in_symbols = 32;
+		symbol_set_size_log = 1;
+		symbol_set_size = 2;
+
+	}
 	else if (strcmp(type.c_str(), "charlie") == 0) {
 
 		Crc_object_type = t_crc_charlie;
@@ -212,6 +222,9 @@ void crc_object::print()
 	else if (Crc_object_type == t_crc_crc16) {
 		cout << "type = crc16" << endl;
 	}
+	else if (Crc_object_type == t_crc_SuperFastHash32) {
+		cout << "type = SuperFastHash32" << endl;
+	}
 	else if (Crc_object_type == t_crc_Delta) {
 		cout << "type = Delta" << endl;
 	}
@@ -279,6 +292,9 @@ void crc_object::divide(const unsigned char *in, unsigned char *out)
 	else if (Crc_object_type == t_crc_crc16) {
 		divide_crc16(in + Len_check_in_bytes, info_length_in_bytes, out);
 	}
+	else if (Crc_object_type == t_crc_SuperFastHash32) {
+		SuperFastHash32(in + Len_check_in_bytes, info_length_in_bytes, out);
+	}
 	else if (Crc_object_type == t_crc_Delta) {
 		divide_Delta(in, out);
 	}
@@ -309,6 +325,9 @@ void crc_object::expand(const unsigned char *in, unsigned char *out)
 		Algo.uchar_move(in, out, Len_total_in_bytes);
 	}
 	else if (Crc_object_type == t_crc_crc16) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_SuperFastHash32) {
 		Algo.uchar_move(in, out, Len_total_in_bytes);
 	}
 	else if (Crc_object_type == t_crc_Delta) {
@@ -343,6 +362,9 @@ void crc_object::compress(const unsigned char *in, unsigned char *out)
 	else if (Crc_object_type == t_crc_crc16) {
 		Algo.uchar_move(in, out, Len_total_in_bytes);
 	}
+	else if (Crc_object_type == t_crc_SuperFastHash32) {
+		Algo.uchar_move(in, out, Len_total_in_bytes);
+	}
 	else if (Crc_object_type == t_crc_Delta) {
 		Algo.uchar_compress_4(in, out, Len_total_in_symbols);
 	}
@@ -373,6 +395,9 @@ void crc_object::compress_check(const unsigned char *in, unsigned char *out)
 		Algo.uchar_move(in, out, Len_check_in_bytes);
 	}
 	else if (Crc_object_type == t_crc_crc16) {
+		Algo.uchar_move(in, out, Len_check_in_bytes);
+	}
+	else if (Crc_object_type == t_crc_SuperFastHash32) {
 		Algo.uchar_move(in, out, Len_check_in_bytes);
 	}
 	else if (Crc_object_type == t_crc_Delta) {
@@ -1389,6 +1414,21 @@ void crc_object::divide_crc32(const uint8_t *s, size_t n, unsigned char *out4)
 	out4[3] = p[3];
 }
 
+void crc_object::SuperFastHash32(const unsigned char * data, int len, unsigned char *out4)
+{
+
+	data_structures::algorithms Algo;
+	uint32_t h;
+
+
+	h = Algo.SuperFastHash((const char *) data, len);
+	unsigned char *p_crc = (unsigned char *) &h;
+	out4[0] = p_crc[0];
+	out4[1] = p_crc[1];
+	out4[2] = p_crc[2];
+	out4[3] = p_crc[3];
+}
+
 #define CRC16 0x8005
 
 void crc_object::divide_crc16(const uint8_t *data, size_t size, unsigned char *out2)
@@ -1436,9 +1476,9 @@ void crc_object::divide_crc16(const uint8_t *data, size_t size, unsigned char *o
         if (i & out) crc |= j;
     }
 
-    unsigned char *p_crc = (unsigned char *) &crc;
-    out2[0] = p_crc[0];
-    out2[1] = p_crc[1];
+	unsigned char *p_crc = (unsigned char *) &crc;
+	out2[0] = p_crc[0];
+	out2[1] = p_crc[1];
 
     //return crc;
 }

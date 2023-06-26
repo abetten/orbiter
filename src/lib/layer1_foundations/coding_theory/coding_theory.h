@@ -371,6 +371,7 @@ enum crc_object_type {
 	t_crc_Echo,
 	t_crc_crc32,
 	t_crc_crc16,
+	t_crc_SuperFastHash32,
 
 };
 
@@ -426,6 +427,7 @@ public:
 	void divide_crc32(const uint8_t *s, size_t n, unsigned char *out4);
 		// polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
 		// + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1
+	void SuperFastHash32(const unsigned char * data, int len, unsigned char *out4);
 	void divide_crc16(const uint8_t *data, size_t size, unsigned char *out2);
 
 };
@@ -641,7 +643,8 @@ public:
 	int *f_used; // [Crc->Len_total]
 	int *A; // [k]
 	int *V; // [k]
-	unsigned char *Error;
+	unsigned char *Error_in_symbols;
+	unsigned char *Error_in_bytes;
 
 	error_pattern();
 	~error_pattern();

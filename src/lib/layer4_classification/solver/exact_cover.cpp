@@ -515,8 +515,16 @@ void exact_cover::compute_liftings_new(
 	cout << "nb_deleted_solutions=" << nb_deleted_solutions << endl;
 	
 	int *Vec[6];
-	const char *column_labels[6] = {"Case_nb", "Nb_sol", "Nb_backtrack",
-			"Nb_col", "Dt", "Dt_in_sec" };
+	string *column_labels;
+
+	column_labels = new string[6];
+	column_labels[0] = "Case_nb";
+	column_labels[1] = "Nb_sol";
+	column_labels[2] = "Nb_backtrack";
+	column_labels[3] = "Nb_col";
+	column_labels[4] = "Dt";
+	column_labels[5] = "Dt_in_sec";
+
 	Vec[0] = Case_nb;
 	Vec[1] = Nb_sol;
 	Vec[2] = Nb_backtrack;
@@ -532,7 +540,7 @@ void exact_cover::compute_liftings_new(
 			<< Fio.file_size(fname_statistics) << endl;
 	
 
-	
+	delete [] column_labels;
 	FREE_int(Case_nb);
 	FREE_int(Nb_col);
 	FREE_int(Nb_sol);
@@ -588,9 +596,7 @@ void exact_cover::compute_liftings_single_case_new(
 		}
 
 
-	prefix.assign(input_prefix);
-	prefix.append(base_fname);
-	//snprintf(str, 2000, "%s%s", input_prefix, base_fname);
+	prefix = input_prefix + base_fname;
 
 	data_structures_groups::orbit_rep *R;
 	R = NEW_OBJECT(data_structures_groups::orbit_rep);

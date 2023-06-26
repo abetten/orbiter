@@ -171,10 +171,10 @@ public:
 			std::string &label1, std::string &label2, std::string &label3);
 	void int_vec_array_write_csv(
 			int nb_vecs, int **Vec, int len,
-			std::string &fname, const char **column_label);
+			std::string &fname, std::string *column_label);
 	void lint_vec_array_write_csv(
 			int nb_vecs, long int **Vec, int len,
-			std::string &fname, const char **column_label);
+			std::string &fname, std::string *column_label);
 	void int_matrix_write_csv(
 			std::string &fname, int *M, int m, int n);
 	void lint_matrix_write_csv(

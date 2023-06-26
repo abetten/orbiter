@@ -748,7 +748,8 @@ void combinatorial_object_activity::do_save(
 
 	Fio.lint_matrix_write_csv(fname_out, Sets, N, sz);
 
-	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+	cout << "Written file " << fname_out
+			<< " of size " << Fio.file_size(fname_out) << endl;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::do_save done" << endl;
@@ -785,11 +786,8 @@ void combinatorial_object_activity::post_process_classification(
 		}
 
 		std::string label;
-		char str[1000];
 
-		snprintf(str, sizeof(str), "_object%d", iso_type);
-		label.assign(prefix);
-		label.append(str);
+		label = prefix + "_object" + std::to_string(iso_type);
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::post_process_classification "
@@ -871,8 +869,7 @@ void combinatorial_object_activity::latex_report(
 
 	string fname;
 
-	fname.assign(Report_options->prefix);
-	fname.append("_classification.tex");
+	fname = Report_options->prefix + "_classification.tex";
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::classification_report "
@@ -1149,8 +1146,7 @@ void combinatorial_object_activity::draw_incidence_matrices(
 
 	string fname;
 
-	fname.assign(prefix);
-	fname.append("_incma.tex");
+	fname = prefix + "_incma.tex";
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::draw_incidence_matrices "
@@ -1279,8 +1275,7 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 
 	string fname;
 
-	fname.assign(prefix);
-	fname.append("_unpacked.txt");
+	fname = prefix + "_unpacked.txt";
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::unpack_from_restricted_action "
@@ -1382,8 +1377,7 @@ void combinatorial_object_activity::line_covering_type(
 
 	string fname;
 
-	fname.assign(prefix);
-	fname.append("_line_covering_type.txt");
+	fname = prefix + "_line_covering_type.txt";
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::line_covering_type before latex_report" << endl;
@@ -1468,8 +1462,7 @@ void combinatorial_object_activity::line_type(
 
 	string fname;
 
-	fname.assign(prefix);
-	fname.append("_line_type.txt");
+	fname = prefix + "_line_type.txt";
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::line_type before latex_report" << endl;
@@ -1526,12 +1519,9 @@ void combinatorial_object_activity::line_type(
 			}
 
 			std::string fname_line_type;
-			char str[1000];
 
-			snprintf(str, sizeof(str), "_line_type_set_partition_%d.csv", i);
 
-			fname_line_type.assign(prefix);
-			fname_line_type.append(str);
+			fname_line_type = prefix + "_line_type_set_partition_" + std::to_string(i) + ".csv";
 
 			T.save_classes_individually(fname_line_type);
 			if (true) {

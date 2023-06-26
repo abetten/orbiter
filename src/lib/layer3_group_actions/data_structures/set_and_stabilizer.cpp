@@ -30,13 +30,13 @@ set_and_stabilizer::~set_and_stabilizer()
 {
 	if (data) {
 		FREE_lint(data);
-		}
+	}
 	if (Strong_gens) {
 		FREE_OBJECT(Strong_gens);
-		}
+	}
 	if (Stab) {
 		FREE_OBJECT(Stab);
-		}
+	}
 }
 
 void set_and_stabilizer::init(actions::action *A,
@@ -47,12 +47,12 @@ void set_and_stabilizer::init(actions::action *A,
 
 	if (f_v) {
 		cout << "set_and_stabilizer::init" << endl;
-		}
+	}
 	set_and_stabilizer::A = A;
 	set_and_stabilizer::A2 = A2;
 	if (f_v) {
 		cout << "set_and_stabilizer::init done" << endl;
-		}
+	}
 }
 
 void set_and_stabilizer::group_order(ring_theory::longinteger_object &go)
@@ -86,7 +86,7 @@ void set_and_stabilizer::init_everything(
 
 	if (f_v) {
 		cout << "set_and_stabilizer::init_everything" << endl;
-		}
+	}
 	set_and_stabilizer::A = A;
 	set_and_stabilizer::A2 = A2;
 	set_and_stabilizer::data = Set;
@@ -96,7 +96,7 @@ void set_and_stabilizer::init_everything(
 	Stab = Strong_gens->create_sims(verbose_level);
 	if (f_v) {
 		cout << "set_and_stabilizer::init_everything done" << endl;
-		}
+	}
 }
 
 set_and_stabilizer *set_and_stabilizer::create_copy(int verbose_level)
@@ -106,7 +106,7 @@ set_and_stabilizer *set_and_stabilizer::create_copy(int verbose_level)
 
 	if (f_v) {
 		cout << "set_and_stabilizer::create_copy" << endl;
-		}
+	}
 
 	SaS = NEW_OBJECT(set_and_stabilizer);
 	SaS->A = A;
@@ -122,40 +122,43 @@ set_and_stabilizer *set_and_stabilizer::create_copy(int verbose_level)
 	
 	if (f_v) {
 		cout << "set_and_stabilizer::create_copy done" << endl;
-		}
+	}
 	return SaS;
 }
 
-void set_and_stabilizer::allocate_data(int sz, int verbose_level)
+void set_and_stabilizer::allocate_data(
+		int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "set_and_stabilizer::allocate_data" << endl;
-		}
+	}
 	set_and_stabilizer::sz = sz;
 	set_and_stabilizer::data = NEW_lint(sz);
 	if (f_v) {
 		cout << "set_and_stabilizer::allocate_data done" << endl;
-		}
+	}
 }
 
-void set_and_stabilizer::init_data(long int *data, int sz, int verbose_level)
+void set_and_stabilizer::init_data(
+		long int *data, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "set_and_stabilizer::init_data" << endl;
-		}
+	}
 	set_and_stabilizer::sz = sz;
 	set_and_stabilizer::data = NEW_lint(sz);
 	Lint_vec_copy(data, set_and_stabilizer::data, sz);
 	if (f_v) {
 		cout << "set_and_stabilizer::init_data done" << endl;
-		}
+	}
 }
 
-void set_and_stabilizer::init_stab_from_data(int *data_gens, 
+void set_and_stabilizer::init_stab_from_data(
+		int *data_gens,
 	int data_gens_size, int nb_gens,
 	std::string &ascii_target_go,
 	int verbose_level)
@@ -165,7 +168,7 @@ void set_and_stabilizer::init_stab_from_data(int *data_gens,
 
 	if (f_v) {
 		cout << "set_and_stabilizer::init_stab_from_data" << endl;
-		}
+	}
 	vector_ge *gens;
 
 	gens = NEW_OBJECT(vector_ge);
@@ -175,77 +178,9 @@ void set_and_stabilizer::init_stab_from_data(int *data_gens,
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->Group_element->make_element(gens->ith(i), data_gens + i * data_gens_size, 0);
-		}
-
-	A->generators_to_strong_generators(
-		true /* f_target_go */, target_go, 
-		gens, Strong_gens, 
-		0 /*verbose_level*/);
-
-	if (false) {
-		cout << "strong generators are:" << endl;
-		Strong_gens->print_generators(cout);
-		}
-	
-	Stab = Strong_gens->create_sims(verbose_level);
-
-	FREE_OBJECT(gens);
-	
-	if (f_v) {
-		cout << "set_and_stabilizer::init_stab_from_data done" << endl;
-		}
-}
-
-void set_and_stabilizer::init_stab_from_file(
-	const char *fname_gens,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-	vector_ge *gens;
-	orbiter_kernel_system::file_io Fio;
-
-	if (f_v) {
-		cout << "set_and_stabilizer::init_stab_from_file" << endl;
-		}
-
-	if (Fio.file_size(fname_gens) <= 0) {
-		cout << "set_and_stabilizer::init_stab_from_file "
-				"the file " << fname_gens
-				<< " does not exist or is empty" << endl;
-		exit(1);
-		}
-
-	{
-	ifstream f(fname_gens);
-	int nb_gens;
-	int *data;
-	char target_go_ascii[1000];
-
-	f >> nb_gens;
-	f >> target_go_ascii;
-
-
-	target_go.create_from_base_10_string(target_go_ascii);
-
-
-	data = NEW_int(A->make_element_size);
-
-
-	gens = NEW_OBJECT(vector_ge);
-	gens->init(A, verbose_level - 2);
-
-
-	gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		for (j = 0; j < A->make_element_size; j++) {
-			f >> data[j];
-			}
-		A->Group_element->make_element(gens->ith(i), data, 0);
-		}
-
-	FREE_int(data);
+		A->Group_element->make_element(
+				gens->ith(i),
+				data_gens + i * data_gens_size, 0);
 	}
 
 	A->generators_to_strong_generators(
@@ -256,7 +191,77 @@ void set_and_stabilizer::init_stab_from_file(
 	if (false) {
 		cout << "strong generators are:" << endl;
 		Strong_gens->print_generators(cout);
+	}
+	
+	Stab = Strong_gens->create_sims(verbose_level);
+
+	FREE_OBJECT(gens);
+	
+	if (f_v) {
+		cout << "set_and_stabilizer::init_stab_from_data done" << endl;
+	}
+}
+
+void set_and_stabilizer::init_stab_from_file(
+	std::string &fname_gens,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	vector_ge *gens;
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "set_and_stabilizer::init_stab_from_file" << endl;
+	}
+
+	if (Fio.file_size(fname_gens) <= 0) {
+		cout << "set_and_stabilizer::init_stab_from_file "
+				"the file " << fname_gens
+				<< " does not exist or is empty" << endl;
+		exit(1);
+	}
+
+	{
+		ifstream f(fname_gens);
+		int nb_gens;
+		int *data;
+		char target_go_ascii[1000];
+
+		f >> nb_gens;
+		f >> target_go_ascii;
+
+
+		target_go.create_from_base_10_string(target_go_ascii);
+
+
+		data = NEW_int(A->make_element_size);
+
+
+		gens = NEW_OBJECT(vector_ge);
+		gens->init(A, verbose_level - 2);
+
+
+		gens->allocate(nb_gens, verbose_level - 2);
+		for (i = 0; i < nb_gens; i++) {
+			for (j = 0; j < A->make_element_size; j++) {
+				f >> data[j];
+			}
+			A->Group_element->make_element(gens->ith(i), data, 0);
 		}
+
+		FREE_int(data);
+	}
+
+	A->generators_to_strong_generators(
+		true /* f_target_go */, target_go, 
+		gens, Strong_gens, 
+		0 /*verbose_level*/);
+
+	if (false) {
+		cout << "strong generators are:" << endl;
+		Strong_gens->print_generators(cout);
+	}
 	
 	Stab = Strong_gens->create_sims(verbose_level);
 
@@ -264,7 +269,7 @@ void set_and_stabilizer::init_stab_from_file(
 	
 	if (f_v) {
 		cout << "set_and_stabilizer::init_stab_from_file done" << endl;
-		}
+	}
 }
 
 void set_and_stabilizer::print_set_tex(std::ostream &ost)
@@ -303,11 +308,11 @@ void set_and_stabilizer::apply_to_self(
 
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self Elt=" << endl;
 		A->Group_element->element_print_quick(Elt, cout);
-		}
+	}
 
 	data2 = NEW_lint(sz);
 	A2->Group_element->map_a_set(data, data2, sz, Elt, 0 /* verbose_level */);
@@ -316,27 +321,27 @@ void set_and_stabilizer::apply_to_self(
 				"mapping the set under action " << A2->label << ":" << endl;
 		for (i = 0; i < sz; i++) {
 			cout << i << " : " << data[i] << " : " << data2[i] << endl;
-			}
 		}
+	}
 
 	gens = NEW_OBJECT(vector_ge);
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self "
 				"before conjugating generators" << endl;
-		}
+	}
 	gens->init_conjugate_svas_of(Strong_gens->gens, Elt,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self "
 				"before testing the new generators" << endl;
-		}
+	}
 	for (i = 0; i < Strong_gens->gens->len; i++) {
 		if (!A2->Group_element->check_if_in_set_stabilizer(
 				gens->ith(i), sz, data2, 0 /*verbose_level*/)) {
 			cout << "set_and_stabilizer::apply_to_self "
 					"conjugate element does not stabilize the set" << endl;
-			}
 		}
+	}
 	A->generators_to_strong_generators(
 		true /* f_target_go */, target_go, 
 		gens, sg, 
@@ -348,11 +353,11 @@ void set_and_stabilizer::apply_to_self(
 	if (Stab) {
 		FREE_OBJECT(Stab);
 		Stab = Strong_gens->create_sims(verbose_level);
-		}
+	}
 	FREE_lint(data2);
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self done" << endl;
-		}
+	}
 }
 
 void set_and_stabilizer::apply_to_self_inverse(
@@ -363,7 +368,7 @@ void set_and_stabilizer::apply_to_self_inverse(
 
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self_inverse" << endl;
-		}
+	}
 	Elt1 = NEW_int(A->elt_size_in_int);
 
 	A->Group_element->element_invert(Elt, Elt1, 0);
@@ -372,7 +377,7 @@ void set_and_stabilizer::apply_to_self_inverse(
 	FREE_int(Elt1);
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self_inverse done" << endl;
-		}
+	}
 }
 
 void set_and_stabilizer::apply_to_self_element_raw(
@@ -383,7 +388,7 @@ void set_and_stabilizer::apply_to_self_element_raw(
 
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self_element_raw" << endl;
-		}
+	}
 
 	Elt = NEW_int(A->elt_size_in_int);
 	A->Group_element->make_element(Elt, Elt_data, 0);
@@ -391,7 +396,7 @@ void set_and_stabilizer::apply_to_self_element_raw(
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self_element_raw done" << endl;
-		}
+	}
 }
 
 void set_and_stabilizer::apply_to_self_inverse_element_raw(
@@ -403,7 +408,7 @@ void set_and_stabilizer::apply_to_self_inverse_element_raw(
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self_"
 				"inverse_element_raw" << endl;
-		}
+	}
 
 	Elt = NEW_int(A->elt_size_in_int);
 	A->Group_element->make_element(Elt, Elt_data, 0);
@@ -412,7 +417,7 @@ void set_and_stabilizer::apply_to_self_inverse_element_raw(
 	if (f_v) {
 		cout << "set_and_stabilizer::apply_to_self_"
 				"inverse_element_raw done" << endl;
-		}
+	}
 }
 
 
@@ -425,26 +430,26 @@ void set_and_stabilizer::rearrange_by_orbits(
 
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits" << endl;
-		}
+	}
 	
 	actions::action *A_on_set;
 	std::string label_of_set;
 
-	label_of_set.assign("rearrange_by_orbits");
+	label_of_set = "rearrange_by_orbits";
 
 
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
 				"creating restricted action on the set "
 				"of lines" << endl;
-		}
+	}
 	A_on_set = A2->Induced_action->restricted_action(
 			data, sz, label_of_set, verbose_level);
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
 				"creating restricted action on the set of "
 				"lines done" << endl;
-		}
+	}
 
 	groups::schreier *Orb;
 	long int *data2;
@@ -453,7 +458,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
 				"computing orbits on set:" << endl;
-		}
+	}
 	Orb = Strong_gens->orbits_on_points_schreier(
 			A_on_set, verbose_level);
 
@@ -484,7 +489,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 #if 1
 			if (l != c) {
 				continue;
-				}
+			}
 #endif
 			orbit_length[d] = l;
 			for (j = 0; j < l; j++) {
@@ -492,13 +497,13 @@ void set_and_stabilizer::rearrange_by_orbits(
 				b = data[a];
 				orbit[cur] = a;
 				data2[cur++] = b;
-				}
+			}
 			if (d < Orb->nb_orbits - 1) {
 				orbit_first[d + 1] = orbit_first[d] + l;
-				}
-			d++;
 			}
+			d++;
 		}
+	}
 	Lint_vec_copy(data2, data, sz);
 
 	FREE_OBJECT(Orb);
@@ -506,7 +511,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits done" << endl;
-		}
+	}
 }
 
 actions::action *set_and_stabilizer::create_restricted_action_on_the_set(
@@ -517,22 +522,23 @@ actions::action *set_and_stabilizer::create_restricted_action_on_the_set(
 	if (f_v) {
 		cout << "set_and_stabilizer::create_restricted_"
 				"action_on_the_set" << endl;
-		}
+	}
 	
 	actions::action *A_on_set;
 	std::string label_of_set;
 
 
 
-	label_of_set.assign("on_set");
+	label_of_set = "on_set";
 
 			
 	if (f_v) {
 		cout << "set_and_stabilizer::create_restricted_"
 				"action_on_the_set creating restricted "
 				"action on the set" << endl;
-		}
-	A_on_set = A2->Induced_action->restricted_action(data, sz, label_of_set, verbose_level);
+	}
+	A_on_set = A2->Induced_action->restricted_action(
+			data, sz, label_of_set, verbose_level);
 	
 	Strong_gens->print_with_given_action(cout, A_on_set);
 	
@@ -540,7 +546,7 @@ actions::action *set_and_stabilizer::create_restricted_action_on_the_set(
 		cout << "set_and_stabilizer::create_restricted_"
 				"action_on_the_set creating restricted "
 				"action on the set done" << endl;
-		}
+	}
 
 	return A_on_set;
 }
@@ -553,17 +559,17 @@ void set_and_stabilizer::print_restricted_action_on_the_set(
 	if (f_v) {
 		cout << "set_and_stabilizer::print_restricted_"
 				"action_on_the_set" << endl;
-		}
+	}
 	
 	actions::action *A_on_set;
 	std::string label_of_set;
 
-	label_of_set.assign("on_set");
+	label_of_set = "on_set";
 			
 	if (f_v) {
 		cout << "set_and_stabilizer::print_restricted_action_"
 				"on_the_set creating restricted action on the set" << endl;
-		}
+	}
 	A_on_set = A2->Induced_action->restricted_action(
 			data, sz, label_of_set, verbose_level);
 	
@@ -573,7 +579,7 @@ void set_and_stabilizer::print_restricted_action_on_the_set(
 		cout << "set_and_stabilizer::print_restricted_action_"
 				"on_the_set creating restricted action "
 				"on the set done" << endl;
-		}
+	}
 
 	FREE_OBJECT(A_on_set);
 }
@@ -584,11 +590,11 @@ void set_and_stabilizer::test_if_group_acts(int verbose_level)
 
 	if (f_v) {
 		cout << "set_and_stabilizer::test_if_group_acts" << endl;
-		}
+	}
 	
 	if (f_v) {
 		cout << "set_and_stabilizer::test_if_group_acts done" << endl;
-		}
+	}
 }
 
 int set_and_stabilizer::find(long int pt)
@@ -601,7 +607,7 @@ int set_and_stabilizer::find(long int pt)
 			sz, pt, idx, 0)) {
 		cout << "set_and_stabilizer::find" << endl;
 		exit(1);
-		}
+	}
 	return idx;
 }
 

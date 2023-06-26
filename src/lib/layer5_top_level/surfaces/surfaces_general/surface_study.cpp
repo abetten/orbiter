@@ -51,16 +51,8 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 	knowledge_base::knowledge_base K;
 
 
-	char str_q[1000];
-	char str_nb[1000];
 
-	snprintf(str_q, sizeof(str_q), "%d", q);
-	snprintf(str_nb, sizeof(str_nb), "%d", nb);
-
-	prefix.assign("surface_q");
-	prefix.append(str_q);
-	prefix.append("_nb");
-	prefix.append(str_nb);
+	prefix = "surface_q" + std::to_string(q) + "_nb" + std::to_string(nb);
 
 
 
@@ -69,11 +61,11 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 
 	if (f_v) {
 		cout << "surface_study::init initializing surface" << endl;
-		}
+	}
 	Surf->init_surface_domain(F, verbose_level);
 	if (f_v) {
 		cout << "surface_study::init initializing surface done" << endl;
-		}
+	}
 
 	nb_lines_PG_3 = Surf->Gr->nCkq->as_int();
 	cout << "surface_study::init nb_lines_PG_3 = " << nb_lines_PG_3 << endl;
@@ -82,10 +74,10 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 
 	if (NT.is_prime(q)) {
 		f_semilinear = false;
-		}
+	}
 	else {
 		f_semilinear = true;
-		}
+	}
 
 	cout << "creating linear group" << endl;
 	data_structures_groups::vector_ge *nice_gens;
@@ -116,8 +108,10 @@ void surface_study::init(field_theory::finite_field *F, int nb, int verbose_leve
 		// rep is the vector of 20 coefficients
 
 	//six = cubic_surface_single_six(q, nb);
-	K.cubic_surface_stab_gens(q, nb,
-			data, nb_gens, data_size, stab_order);
+	K.cubic_surface_stab_gens(
+			q, nb,
+			data, nb_gens, data_size,
+			stab_order);
 
 	Lines = K.cubic_surface_Lines(q, nb);
 
@@ -522,11 +516,8 @@ void surface_study::study_group(int verbose_level)
 		//int_matrix_print(Table, n, n);
 
 		string fname_out;
-		char str[1000];
 
-		fname_out.assign(prefix);
-		snprintf(str, sizeof(str), "_table_%d_%d.csv", q, nb);
-		fname_out.append(str);
+		fname_out = prefix + "_table_" + std::to_string(q) + "_" + std::to_string(nb) + ".csv";
 
 		Fio.int_matrix_write_csv(fname_out, Table, n, n);
 		cout << "Written file " << fname_out
@@ -868,12 +859,12 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	actions::action *A_triangle;
 	actions::action *A_on_double_pts;
 	int *Elt;
-	char fname_stab[1000];
+	string fname_stab;
 
 	std::string label_of_set;
 
 
-	label_of_set.assign("triangle");
+	label_of_set = "triangle";
 
 	A_triangle = A->Induced_action->restricted_action(
 			triangle, nb_pts_triangle, label_of_set,
@@ -883,7 +874,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	Triangle->init_data(triangle, nb_pts_triangle,
 			0 /* verbose_level */);
 
-	snprintf(fname_stab, sizeof(fname_stab), "PGL_4_%d_Grassmann_4_2_%d_stab_gens_3_2.txt", q, q);
+	fname_stab = "PGL_4_" + std::to_string(q) + "_Grassmann_4_2_" + std::to_string(q) + "_stab_gens_3_2.txt";
 	Triangle->init_stab_from_file(fname_stab, 0 /* verbose_level */);
 	Triangle->Strong_gens->test_if_set_is_invariant_under_given_action(
 			A, triangle, nb_pts_triangle,
@@ -1261,7 +1252,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		//set_and_stabilizer *Eckardt_stab;
 		action *A_on_pts_on_three_lines;
 		//int *Elt;
-		char fname_stab[1000];
+		string fname_stab
 
 		A_on_pts_on_three_lines = A->restricted_action(
 				pts_on_three_lines, nb_pts_on_three_lines,
@@ -1272,7 +1263,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 				pts_on_three_lines, nb_pts_on_three_lines,
 				0 /* verbose_level */);
 
-		snprintf(fname_stab, sizeof(fname_stab), "PGL_4_%d_stab_gens_4_1.txt", q);
+		fname_stab = "PGL_4_" + std::to_string(q) + "_stab_gens_4_1.txt";
 		cout << "Reading group from file " << fname_stab << endl;
 		Three_lines->init_stab_from_file(fname_stab, verbose_level);
 		Three_lines->Strong_gens->test_if_set_is_invariant_under_given_action(
@@ -1645,23 +1636,21 @@ static void matrix_entry_print(long int *p,
 {
 	algebraic_geometry::surface_domain *Surf;
 	Surf = (algebraic_geometry::surface_domain *) data;
-	char str[1000];
 
 	if (i == -1) {
-		strcpy(str, Surf->Schlaefli->Labels->Line_label_tex[val].c_str());
-		}
+		output = Surf->Schlaefli->Labels->Line_label_tex[val];
+	}
 	else if (j == -1) {
-		strcpy(str, Surf->Schlaefli->Labels->Line_label_tex[val].c_str());
-		}
+		output = Surf->Schlaefli->Labels->Line_label_tex[val];
+	}
 	else {
 		if (val == -1) {
-			strcpy(str, ".");
-			}
-		else {
-			snprintf(str, sizeof(str), "%d", val);
-			}
+			output = ".";
 		}
-	output.assign(str);
+		else {
+			output = std::to_string(val);
+		}
+	}
 }
 
 

@@ -440,14 +440,22 @@ class data_structures_global {
 public:
 	data_structures_global();
 	~data_structures_global();
-	void bitvector_m_ii(uchar *bitvec, long int i, int a);
-	void bitvector_set_bit(uchar *bitvec, long int i);
-	int bitvector_s_i(uchar *bitvec, long int i);
-	uint32_t int_vec_hash(int *data, int len);
-	uint64_t lint_vec_hash(long int *data, int len);
-	uint32_t char_vec_hash(char *data, int len);
-	int int_vec_hash_after_sorting(int *data, int len);
-	long int lint_vec_hash_after_sorting(long int *data, int len);
+	void bitvector_m_ii(
+			uchar *bitvec, long int i, int a);
+	void bitvector_set_bit(
+			uchar *bitvec, long int i);
+	int bitvector_s_i(
+			uchar *bitvec, long int i);
+	uint32_t int_vec_hash(
+			int *data, int len);
+	uint64_t lint_vec_hash(
+			long int *data, int len);
+	uint32_t char_vec_hash(
+			char *data, int len);
+	int int_vec_hash_after_sorting(
+			int *data, int len);
+	long int lint_vec_hash_after_sorting(
+			long int *data, int len);
 
 };
 
@@ -470,8 +478,10 @@ class fancy_set {
 
 	fancy_set();
 	~fancy_set();
-	void init(int n, int verbose_level);
-	void init_with_set(int n, int k, int *subset, int verbose_level);
+	void init(
+			int n, int verbose_level);
+	void init_with_set(
+			int n, int k, int *subset, int verbose_level);
 	void print();
 	void println();
 	void swap(int pos, int a);
@@ -541,15 +551,21 @@ public:
 
 	int_vec();
 	~int_vec();
-	void add(int *v1, int *v2, int *w, int len);
-	void add3(int *v1, int *v2, int *v3, int *w, int len);
-	void apply(int *from, int *through, int *to, int len);
-	void apply_lint(int *from, long int *through, long int *to, int len);
+	void add(
+			int *v1, int *v2, int *w, int len);
+	void add3(
+			int *v1, int *v2, int *v3, int *w, int len);
+	void apply(
+			int *from, int *through, int *to, int len);
+	void apply_lint(
+			int *from, long int *through, long int *to, int len);
 	int is_constant(
 			int *v,  int len);
-	int is_constant_on_subset(int *v,
+	int is_constant_on_subset(
+			int *v,
 		int *subset, int sz, int &value);
-	void take_away(int *v, int &len,
+	void take_away(
+			int *v, int &len,
 			int *take_away, int nb_take_away);
 		// v must be sorted
 	int count_number_of_nonzero_entries(int *v, int len);
@@ -913,14 +929,17 @@ class partitionstack {
 			int level, int verbose_level);
 	int cellSizeAtLevel(int cell, int level);
 
-	void print_decomposition_tex(std::ostream &ost,
+	void print_decomposition_tex(
+			std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes);
-	void print_decomposition_scheme(std::ostream &ost,
+	void print_decomposition_scheme(
+			std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int *scheme, int marker1, int marker2);
-	void print_decomposition_scheme_tex(std::ostream &ost,
+	void print_decomposition_scheme_tex(
+			std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int *scheme);
@@ -1141,11 +1160,14 @@ public:
 	void add_element(int i, long int a);
 	void print();
 	void print_table();
-	void print_table_tex(std::ostream &ost);
-	void print_table_latex_simple(std::ostream &ost);
+	void print_table_tex(
+			std::ostream &ost);
+	void print_table_latex_simple(
+			std::ostream &ost);
 	void print_table_latex_simple_with_selection(
 			std::ostream &ost, int *Selection, int nb_sel);
-	void dualize(set_of_sets *&S, int verbose_level);
+	void dualize(
+			set_of_sets *&S, int verbose_level);
 	void remove_sets_of_given_size(int k, 
 		set_of_sets &S, int *&Idx, 
 		int verbose_level);
@@ -1155,24 +1177,31 @@ public:
 		int *&intersection_type, int &highest_intersection_number, 
 		int *&intersection_matrix, int &nb_big_sets, 
 		int verbose_level);
-	void compute_incidence_matrix(int *&Inc, int &m, int &n, 
+	void compute_incidence_matrix(
+			int *&Inc, int &m, int &n,
 		int verbose_level);
-	void compute_and_print_tdo_row_scheme(std::ostream &file,
+	void compute_and_print_tdo_row_scheme(
+			std::ostream &file,
 		int verbose_level);
-	void compute_and_print_tdo_col_scheme(std::ostream &file,
+	void compute_and_print_tdo_col_scheme(
+			std::ostream &file,
 		int verbose_level);
 	void init_decomposition(
 			geometry::decomposition *&D, int verbose_level);
 	void compute_tdo_decomposition(
 			geometry::decomposition &D,
 		int verbose_level);
-	int is_member(int i, int a, int verbose_level);
-	void sort_all(int verbose_level);
-	void all_pairwise_intersections(set_of_sets *&Intersections, 
+	int is_member(
+			int i, int a, int verbose_level);
+	void sort_all(
+			int verbose_level);
+	void all_pairwise_intersections(
+			set_of_sets *&Intersections,
 		int verbose_level);
 	void pairwise_intersection_matrix(
 			int *&M, int verbose_level);
-	void all_triple_intersections(set_of_sets *&Intersections, 
+	void all_triple_intersections(
+			set_of_sets *&Intersections,
 		int verbose_level);
 	int has_constant_size_property();
 	int get_constant_size();
@@ -1185,7 +1214,8 @@ public:
 		int &common_elt);
 	void sort();
 	void sort_big(int verbose_level);
-	void compute_orbits(int &nb_orbits,
+	void compute_orbits(
+			int &nb_orbits,
 			int *&orbit, int *&orbit_inv,
 		int *&orbit_first, int *&orbit_len, 
 		void (*compute_image_function)(set_of_sets *S, 
@@ -1194,7 +1224,8 @@ public:
 		void *compute_image_data, 
 		int nb_gens, 
 		int verbose_level);
-	int number_of_eckardt_points(int verbose_level);
+	int number_of_eckardt_points(
+			int verbose_level);
 	void get_eckardt_points(
 			int *&E, int &nb_E, int verbose_level);
 	void evaluate_function_and_store(

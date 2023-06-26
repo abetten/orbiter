@@ -190,16 +190,11 @@ void spread_activity::report(int verbose_level)
 	}
 
 	string fname;
-
-	fname.assign(Spread_create->label_txt);
-	fname.append("_report.tex");
-
-	char str[1000];
 	string title, author, extra_praeamble;
 
-	snprintf(str, 1000, "Translation plane %s",
-			Spread_create->label_tex.c_str());
-	title.assign(str);
+	fname = Spread_create->label_txt + "_report.tex";
+
+	title = "Translation plane " + Spread_create->label_tex;
 
 
 	{

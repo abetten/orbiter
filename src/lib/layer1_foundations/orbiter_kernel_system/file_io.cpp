@@ -1264,7 +1264,7 @@ void file_io::int_vecs3_write_csv(
 
 void file_io::int_vec_array_write_csv(
 		int nb_vecs, int **Vec, int len,
-		std::string &fname, const char **column_label)
+		std::string &fname, std::string *column_label)
 {
 	int i, j;
 
@@ -1295,7 +1295,7 @@ void file_io::int_vec_array_write_csv(
 
 void file_io::lint_vec_array_write_csv(
 		int nb_vecs, long int **Vec, int len,
-		std::string &fname, const char **column_label)
+		std::string &fname, std::string *column_label)
 {
 	int i, j;
 

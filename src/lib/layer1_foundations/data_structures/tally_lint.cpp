@@ -753,19 +753,16 @@ void tally_lint::save_classes_individually(std::string &fname)
 
 
 		string fname2;
-		char str[10000];
 
-		fname2.assign(fname);
-		snprintf(str, sizeof(str), "%ld", t);
-		fname2.append(str);
-		fname2.append(".csv");
+		fname2 = fname + std::to_string(t) + ".csv";
 
 
 		string label;
 
 		label.assign("case");
 		Fio.int_vec_write_csv(sorting_perm_inv + type_first[i], l, fname2, label);
-		cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
+		cout << "Written file " << fname2 << " of size "
+				<< Fio.file_size(fname2) << endl;
 	}
 }
 

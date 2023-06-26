@@ -36,7 +36,7 @@ void hadamard_classify::init(int n,
 	if (n > (int)sizeof(int) * 8) {
 		cout << "n > sizeof(uint) * 8" << endl;
 		exit(1);
-		}
+	}
 
 	hadamard_classify::n = n;
 
@@ -47,7 +47,7 @@ void hadamard_classify::init(int n,
 	if (f_v) {
 		cout << "n =" << n << endl;
 		cout << "N =" << N << endl;
-		}
+	}
 
 	N2 = (N * (N - 1)) >> 1;
 
@@ -60,15 +60,15 @@ void hadamard_classify::init(int n,
 			for (j = 0; j < n; j++) {
 				if (v[j]) {
 					cout << "+";
-					}
+				}
 				else {
 					cout << "-";
-					}
 				}
+			}
 			//int_vec_print(cout, v, n);
 			cout << endl;
-			}
 		}
+	}
 
 	Bitvec = NEW_OBJECT(data_structures::bitvector);
 	Bitvec->allocate(N2);
@@ -79,7 +79,7 @@ void hadamard_classify::init(int n,
 	if (f_v) {
 		cout << "after allocating adjacency bitvector" << endl;
 		cout << "computing adjacency matrix:" << endl;
-		}
+	}
 	k = 0;
 	cnt = 0;
 	for (i = 0; i < N; i++) {
@@ -89,21 +89,21 @@ void hadamard_classify::init(int n,
 
 			if (false) {
 				cout << "dotproduct i=" << i << " j=" << j << " is " << d << endl;
-				}
+			}
 
 			if (d == 0) {
 				Bitvec->m_i(k, 1);
 				cnt++;
-				}
+			}
 			else {
 				Bitvec->m_i(k, 0);
-				}
+			}
 			k++;
 			if ((k & ((1 << 13) - 1)) == 0) {
 				cout << "i=" << i << " j=" << j << " k=" << k << " / " << N2 << endl;
-				}
 			}
 		}
+	}
 	cout << "We have " << cnt << " edges in the graph" << endl;
 
 
@@ -118,17 +118,17 @@ void hadamard_classify::init(int n,
 			d = dot_product(i, j, n);
 			if (bitvector_s_i(bitvector_adjacency, k)) {
 				cnt1++;
-				}
+			}
 			if (bitvector_s_i(bitvector_adjacency, k) && d) {
 				cout << "something is wrong in entry i=" << i << " j=" << j << endl;
 				cout << "dotproduct i=" << i << " j=" << j << " is " << d << endl;
 				cout << "bitvector_s_i(bitvector_adjacency, k)="
 						<< bitvector_s_i(bitvector_adjacency, k) << endl;
 				exit(1);
-				}
-			k++;
 			}
+			k++;
 		}
+	}
 	cout << "We found " << cnt1 << " edges in the graph" << endl;
 
 	if (cnt1 != cnt) {
@@ -136,17 +136,14 @@ void hadamard_classify::init(int n,
 		cout << "cnt=" << cnt << endl;
 		cout << "cnt1=" << cnt1 << endl;
 		exit(1);
-		}
+	}
 #endif
 
-	char str[1000];
 
 	string label, label_tex;
 
-	snprintf(str, sizeof(str), "Hadamard_graph_%d", n);
-	label.assign(str);;
-	snprintf(str, sizeof(str), "Hadamard\\_graph\\_%d", n);
-	label_tex.assign(str);
+	label = "Hadamard_graph_" + std::to_string(n);
+	label_tex = "Hadamard\\_graph\\_" + std::to_string(n);
 
 
 	{
@@ -162,8 +159,7 @@ void hadamard_classify::init(int n,
 
 		CG->init(N, 1, 1, color, Bitvec, false, label, label_tex, verbose_level);
 
-		fname.assign(label);
-		fname.append(".colored_graph");
+		fname = label + ".colored_graph";
 
 		CG->save(fname, verbose_level);
 
@@ -179,7 +175,7 @@ void hadamard_classify::init(int n,
 
 	if (f_v) {
 		cout << "initializing colored graph" << endl;
-		}
+	}
 
 	int *color;
 
@@ -190,88 +186,84 @@ void hadamard_classify::init(int n,
 
 	if (f_v) {
 		cout << "initializing colored graph done" << endl;
-		}
+	}
 
 	string fname_graph;
 
-	snprintf(str, sizeof(str), "Hadamard_graph_%d.magma", n);
-	fname_graph.assign(label);
-	fname_graph.append(".magma");
+	fname_graph = "Hadamard_graph_" + std::to_string(n) + ".magma";
 
 	CG->export_to_magma(fname_graph, 1);
 
 	{
-	int *color_graph;
+		int *color_graph;
 
-	color_graph = NEW_int(N * N);
-	Int_vec_zero(color_graph, N * N);
-	k = 0;
-	cnt1 = 0;
-	for (i = 0; i < N; i++) {
-		for (j = i + 1; j < N; j++) {
-			if (Bitvec->s_i(k)) {
-				cnt1++;
-				color_graph[i * N + j] = 2;
-				color_graph[j * N + i] = 2;
+		color_graph = NEW_int(N * N);
+		Int_vec_zero(color_graph, N * N);
+		k = 0;
+		cnt1 = 0;
+		for (i = 0; i < N; i++) {
+			for (j = i + 1; j < N; j++) {
+				if (Bitvec->s_i(k)) {
+					cnt1++;
+					color_graph[i * N + j] = 2;
+					color_graph[j * N + i] = 2;
 				}
-			else {
-				color_graph[i * N + j] = 1;
-				color_graph[j * N + i] = 1;
+				else {
+					color_graph[i * N + j] = 1;
+					color_graph[j * N + i] = 1;
 				}
-			k++;
+				k++;
 			}
 		}
-	cout << "We found " << cnt1 << " edges in the graph" << endl;
+		cout << "We found " << cnt1 << " edges in the graph" << endl;
 
-	if (cnt1 != cnt) {
-		cout << "cnt1 != cnt, something is wrong" << endl;
-		cout << "cnt=" << cnt << endl;
-		cout << "cnt1=" << cnt1 << endl;
-		exit(1);
+		if (cnt1 != cnt) {
+			cout << "cnt1 != cnt, something is wrong" << endl;
+			cout << "cnt=" << cnt << endl;
+			cout << "cnt1=" << cnt1 << endl;
+			exit(1);
 		}
 
-	cout << "color graph:" << endl;
-	if (N < 30) {
-		Int_matrix_print(color_graph, N, N);
+		cout << "color graph:" << endl;
+		if (N < 30) {
+			Int_matrix_print(color_graph, N, N);
 		}
-	else {
-		cout << "Too big to print" << endl;
+		else {
+			cout << "Too big to print" << endl;
 		}
 
-#if 0
-	int *Pijk;
-	int *colors;
-	int nb_colors;
+	#if 0
+		int *Pijk;
+		int *colors;
+		int nb_colors;
 
-	is_association_scheme(color_graph, N, Pijk,
-		colors, nb_colors, verbose_level);
+		is_association_scheme(color_graph, N, Pijk,
+			colors, nb_colors, verbose_level);
 
-	cout << "number of colors = " << nb_colors << endl;
-	cout << "colors: ";
-	int_vec_print(cout, colors, nb_colors);
-	cout << endl;
-	cout << "Pijk:" << endl;
-	for (i = 0; i < nb_colors; i++) {
-		cout << "i=" << i << ":" << endl;
-		int_matrix_print(Pijk + i * nb_colors * nb_colors, nb_colors, nb_colors);
+		cout << "number of colors = " << nb_colors << endl;
+		cout << "colors: ";
+		int_vec_print(cout, colors, nb_colors);
+		cout << endl;
+		cout << "Pijk:" << endl;
+		for (i = 0; i < nb_colors; i++) {
+			cout << "i=" << i << ":" << endl;
+			int_matrix_print(Pijk + i * nb_colors * nb_colors, nb_colors, nb_colors);
 		}
-	FREE_int(Pijk);
-	FREE_int(colors);
-#endif
+		FREE_int(Pijk);
+		FREE_int(colors);
+	#endif
 
-	FREE_int(color_graph);
+		FREE_int(color_graph);
 	}
 
 	if (f_draw) {
 		if (f_v) {
 			cout << "drawing adjacency matrix" << endl;
-			}
+		}
 
-		char str[1000];
 		string fname_base;
 
-		snprintf(str, sizeof(str), "Hadamard_graph_%d", n);
-		fname_base.assign(str);
+		fname_base = "Hadamard_graph_" + std::to_string(n);
 
 
 		CG->draw(fname_base,
@@ -280,14 +272,14 @@ void hadamard_classify::init(int n,
 
 		if (f_v) {
 			cout << "drawing adjacency matrix done" << endl;
-			}
 		}
+	}
 
 
 	if (f_v) {
 		cout << "computing automorphism group of "
 				"uncolored graph:" << endl;
-		}
+	}
 
 	interfaces::nauty_interface_with_group Nauty;
 
@@ -306,21 +298,18 @@ void hadamard_classify::init(int n,
 	string fname_group;
 
 
-	fname_group.assign("Hadamard_group_");
-	snprintf(str, sizeof(str), "%d", n);
-	fname_group.append(str);
-	fname_group.append(".magma");
+	fname_group = "Hadamard_group_" + std::to_string(n) + ".magma";
 
 	A->Strong_gens->export_permutation_group_to_magma(
 			fname_group, A, 1 /* verbose_level */);
 
-	char prefix[1000];
-	snprintf(prefix, sizeof(prefix), "./had_%d", n);
+	string prefix;
+	prefix = "./had_" + std::to_string(n);
 
 	if (f_v) {
 		cout << "Starting the clique finder, "
 				"target_depth = " << n << " prefix=" << prefix << endl;
-		}
+	}
 
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
@@ -370,48 +359,49 @@ void hadamard_classify::init(int n,
 
 		if (clique_test(set, n)) {
 			cout << "is a clique" << endl;
-			}
+		}
 		else {
 			cout << "is not a clique, this should not happen" << endl;
 			exit(1);
-			}
+		}
 
 		for (j = 0; j < n; j++) {
 			a = set[j];
 			for (i = 0; i < n; i++) {
 				if (a % 2) {
 					H[i * n + j] = 1;
-					}
+				}
 				else {
 					H[i * n + j] = -1;
-					}
-				a >>= 1;
 				}
+				a >>= 1;
 			}
+		}
 		cout << "The Hadamard matrix " << h << " is:" << endl;
 		Int_matrix_print(H, n, n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
 				a = H[i * n + j];
 				Ht[j * n + i] = a;
-				}
 			}
+		}
 
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
 				c = 0;
 				for (k = 0; k < n; k++) {
 					c += H[i * n + k] * Ht[k * n + j];
-					}
-				M[i * n + j] = c;
 				}
+				M[i * n + j] = c;
 			}
+		}
 		cout << "The matrix H * H^t is:" << endl;
 		Int_matrix_print(M, n, n);
-		}
+	}
 }
 
-int hadamard_classify::clique_test(long int *set, int sz)
+int hadamard_classify::clique_test(
+		long int *set, int sz)
 {
 	long int i, j, a, b, idx;
 	combinatorics::combinatorics_domain Combi;
@@ -423,17 +413,18 @@ int hadamard_classify::clique_test(long int *set, int sz)
 			idx = Combi.ij2k_lint(a, b, N);
 			if (Bitvec->s_i(idx)) {
 				//cout << "pair (" << i << "," << j << ") vertices " << a << " and " << b << " are adjacent" << endl;
-				}
+			}
 			else {
 				//cout << "pair (" << i << "," << j << ") vertices " << a << " and " << b << " are NOT adjacent" << endl;
 				return false;
-				}
 			}
 		}
+	}
 	return true;
 }
 
-void hadamard_classify::early_test_func(long int *S, int len,
+void hadamard_classify::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -449,12 +440,12 @@ void hadamard_classify::early_test_func(long int *S, int len,
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
 		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
-		}
+	}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
 		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
-		}
+	}
 
 	pt = S[len - 1];
 
@@ -464,13 +455,14 @@ void hadamard_classify::early_test_func(long int *S, int len,
 
 		if (CG->is_adjacent(pt, a)) {
 			good_candidates[nb_good_candidates++] = a;
-			}
-		} // next j
+		}
+	} // next j
 
 }
 
 
-int hadamard_classify::dot_product(int a, int b, int n)
+int hadamard_classify::dot_product(
+		int a, int b, int n)
 {
 	int i, c, aa, bb;
 
@@ -480,13 +472,13 @@ int hadamard_classify::dot_product(int a, int b, int n)
 		bb = b % 2;
 		if (aa == bb) {
 			c++;
-			}
+		}
 		else {
 			c--;
-			}
+		}
 		a >>= 1;
 		b >>= 1;
-		}
+	}
 	return c;
 }
 
@@ -499,17 +491,17 @@ void hadamard_classify_early_test_function(long int *S, int len,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "early_test_function for set ";
+		cout << "hadamard_classify_early_test_function for set ";
 		Lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 	H->early_test_func(S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
-		verbose_level - 2);
+	verbose_level - 2);
 	if (f_v) {
-		cout << "early_test_function done" << endl;
-		}
+		cout << "hadamard_classify_early_test_function done" << endl;
+	}
 }
 
 

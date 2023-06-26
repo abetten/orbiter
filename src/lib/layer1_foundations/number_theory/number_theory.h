@@ -180,22 +180,32 @@ public:
 
 	number_theoretic_transform();
 	~number_theoretic_transform();
-	void init(field_theory::finite_field *F,
+	void init(
+			field_theory::finite_field *F,
 			int k, int q, int verbose_level);
-	void write_code(std::string &fname_code,
+	void write_code(
+			std::string &fname_code,
 			int verbose_level);
-	void write_code2(std::ostream &ost,
+	void write_code2(
+			std::ostream &ost,
 			int f_forward,
 			int &nb_add, int &nb_negate, int &nb_mult,
 			int verbose_level);
-	void write_code_header(std::ostream &ost,
+	void write_code_header(
+			std::ostream &ost,
 			std::string &fname_code, int verbose_level);
-	void make_level(int s, int verbose_level);
-	void paste(int **Xr, int **X, int s, int verbose_level);
-	void make_G_matrix(int s, int verbose_level);
-	void make_D_matrix(int s, int verbose_level);
-	void make_T_matrix(int s, int verbose_level);
-	void make_P_matrix(int s, int verbose_level);
+	void make_level(
+			int s, int verbose_level);
+	void paste(
+			int **Xr, int **X, int s, int verbose_level);
+	void make_G_matrix(
+			int s, int verbose_level);
+	void make_D_matrix(
+			int s, int verbose_level);
+	void make_T_matrix(
+			int s, int verbose_level);
+	void make_P_matrix(
+			int s, int verbose_level);
 	void multiply_matrix_stack(
 			field_theory::finite_field *F, int **S,
 			int nb, int sz, int *Result, int verbose_level);
@@ -260,13 +270,19 @@ public:
 			std::vector<long int> &primes,
 			std::vector<int> &exponents);
 	void factor_prime_power(int q, int &p, int &e);
-	long int primitive_root_randomized(long int p, int verbose_level);
-	long int primitive_root(long int p, int verbose_level);
-	int Legendre(long int a, long int p, int verbose_level);
-	int Jacobi(long int a, long int m, int verbose_level);
-	int Jacobi_with_key_in_latex(std::ostream &ost,
+	long int primitive_root_randomized(
+			long int p, int verbose_level);
+	long int primitive_root(
+			long int p, int verbose_level);
+	int Legendre(
+			long int a, long int p, int verbose_level);
+	int Jacobi(
 			long int a, long int m, int verbose_level);
-	int Legendre_with_key_in_latex(std::ostream &ost,
+	int Jacobi_with_key_in_latex(
+			std::ostream &ost,
+			long int a, long int m, int verbose_level);
+	int Legendre_with_key_in_latex(
+			std::ostream &ost,
 			long int a, long int m, int verbose_level);
 	//Computes the Legendre symbol $\left( \frac{a}{m} \right)$.
 	int ny2(long int x, long int &x1);

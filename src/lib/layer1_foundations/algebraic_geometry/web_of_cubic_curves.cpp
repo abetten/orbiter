@@ -1315,26 +1315,18 @@ static void Web_of_cubic_curves_entry_print(int *p,
 {
 	web_of_cubic_curves *Web = (web_of_cubic_curves *) data;
 
+	output = "";
+
 	if (i == -1) {
 		Web->Surf->PolynomialDomains->Poly3->print_monomial_latex(output, j);
 	}
 	else if (j == -1) {
-		char str[1000];
 
-		snprintf(str, sizeof(str), "\\pi_{%d}", i);
-		output.append(str);
-		output.append(" = \\pi_{");
-		output.append(Web->Surf->Schlaefli->Eckard_point_label[i]);
-		output.append("}");
-		//snprintf(output, 1000, "\\pi_{%d} = \\pi_{%s}", i,
-		//		Web->Surf->Schlaefli->Eckard_point_label[i].c_str());
+		output += "\\pi_{" + std::to_string(i) + "}";
+		output += " = \\pi_{" + Web->Surf->Schlaefli->Eckard_point_label[i] + "}";
 	}
 	else {
-		char str[1000];
-
-		snprintf(str, sizeof(str), "%d", i);
-		output.append(str);
-		//snprintf(output, 1000, "%d", val);
+		output += std::to_string(i);
 	}
 }
 

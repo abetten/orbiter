@@ -32,7 +32,8 @@ fancy_set::~fancy_set()
 		}
 }
 
-void fancy_set::init(int n, int verbose_level)
+void fancy_set::init(
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -50,7 +51,8 @@ void fancy_set::init(int n, int verbose_level)
 		}
 }
 
-void fancy_set::init_with_set(int n, int k, int *subset, int verbose_level)
+void fancy_set::init_with_set(
+		int n, int k, int *subset, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

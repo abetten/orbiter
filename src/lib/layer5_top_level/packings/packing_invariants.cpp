@@ -295,10 +295,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
 
-		fname_incidence_pic.assign(prefix_tex);
-		char str[1000];
-		snprintf(str, sizeof(str), "%d_packing_planes.tex", iso_cnt);
-		fname_incidence_pic.append(str);
+		fname_incidence_pic = prefix_tex + std::to_string(iso_cnt) + "_packing_planes.tex";
 		{
 			ofstream fp_pic(fname_incidence_pic);
 
@@ -345,23 +342,20 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		I->compute_TDO_safe(*Stack, depth, verbose_level - 2);
 		
 
-		fname_row_scheme.assign(prefix_tex);
-		char str[1000];
-		snprintf(str, sizeof(str), "%d_packing_planes_row_scheme.tex", iso_cnt);
-		fname_row_scheme.append(str);
-
-		fname_col_scheme.assign(prefix_tex);
-		//char str[1000];
-		snprintf(str, sizeof(str), "%d_packing_planes_row_scheme.tex", iso_cnt);
-		fname_col_scheme.append(str);
+		fname_row_scheme = prefix_tex + std::to_string(iso_cnt)
+				+ "_packing_planes_row_scheme.tex";
+		fname_col_scheme = prefix_tex + std::to_string(iso_cnt)
+				+ "_packing_planes_col_scheme.tex";
 
 
 		{
 			ofstream fp_row_scheme(fname_row_scheme);
 			ofstream fp_col_scheme(fname_col_scheme);
+
 			I->get_and_print_row_tactical_decomposition_scheme_tex(
 				fp_row_scheme, false /* f_enter_math */,
 				true /* f_print_subscripts */, *Stack);
+
 			I->get_and_print_column_tactical_decomposition_scheme_tex(
 				fp_col_scheme, false /* f_enter_math */,
 				true /* f_print_subscripts */, *Stack);

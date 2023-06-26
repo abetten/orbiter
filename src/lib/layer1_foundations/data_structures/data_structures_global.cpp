@@ -26,7 +26,8 @@ data_structures_global::~data_structures_global()
 	//null();
 }
 
-void data_structures_global::bitvector_m_ii(uchar *bitvec, long int i, int a)
+void data_structures_global::bitvector_m_ii(
+		uchar *bitvec, long int i, int a)
 {
 	long int ii, bit;
 	uchar mask;
@@ -44,7 +45,8 @@ void data_structures_global::bitvector_m_ii(uchar *bitvec, long int i, int a)
 	}
 }
 
-void data_structures_global::bitvector_set_bit(uchar *bitvec, long int i)
+void data_structures_global::bitvector_set_bit(
+		uchar *bitvec, long int i)
 {
 	long int ii, bit;
 	uchar mask;
@@ -56,7 +58,8 @@ void data_structures_global::bitvector_set_bit(uchar *bitvec, long int i)
 	x |= mask;
 }
 
-int data_structures_global::bitvector_s_i(uchar *bitvec, long int i)
+int data_structures_global::bitvector_s_i(
+		uchar *bitvec, long int i)
 // returns 0 or 1
 {
 	long int ii, bit;
@@ -76,7 +79,8 @@ int data_structures_global::bitvector_s_i(uchar *bitvec, long int i)
 
 
 
-uint32_t data_structures_global::int_vec_hash(int *data, int len)
+uint32_t data_structures_global::int_vec_hash(
+		int *data, int len)
 {
 	uint32_t h;
 	algorithms Algo;
@@ -85,7 +89,8 @@ uint32_t data_structures_global::int_vec_hash(int *data, int len)
 	return h;
 }
 
-uint64_t data_structures_global::lint_vec_hash(long int *data, int len)
+uint64_t data_structures_global::lint_vec_hash(
+		long int *data, int len)
 {
 	uint32_t h1, h2;
 	uint64_t h;
@@ -102,7 +107,8 @@ uint64_t data_structures_global::lint_vec_hash(long int *data, int len)
 	return h;
 }
 
-uint32_t data_structures_global::char_vec_hash(char *data, int len)
+uint32_t data_structures_global::char_vec_hash(
+		char *data, int len)
 {
 	uint32_t h;
 	algorithms Algo;
@@ -111,7 +117,8 @@ uint32_t data_structures_global::char_vec_hash(char *data, int len)
 	return h;
 }
 
-int data_structures_global::int_vec_hash_after_sorting(int *data, int len)
+int data_structures_global::int_vec_hash_after_sorting(
+		int *data, int len)
 {
 	int *data2;
 	int i, h;
@@ -127,7 +134,8 @@ int data_structures_global::int_vec_hash_after_sorting(int *data, int len)
 	return h;
 }
 
-long int data_structures_global::lint_vec_hash_after_sorting(long int *data, int len)
+long int data_structures_global::lint_vec_hash_after_sorting(
+		long int *data, int len)
 {
 	long int *data2;
 	int i;

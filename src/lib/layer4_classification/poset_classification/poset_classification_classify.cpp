@@ -461,11 +461,8 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			data_structures::spreadsheet *Sp;
 			make_spreadsheet_of_level_info(Sp, actual_size, verbose_level);
 			string fname_csv;
-			char str[1000];
 
-			fname_csv.assign(problem_label_with_path);
-			snprintf(str, sizeof(str), "_levels_%d.csv", actual_size);
-			fname_csv.append(str);
+			fname_csv = problem_label_with_path + "_levels_" + std::to_string(actual_size) + ".csv";
 			Sp->save(fname_csv, verbose_level);
 			FREE_OBJECT(Sp);
 		}
@@ -483,11 +480,8 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			data_structures::spreadsheet *Sp;
 			make_spreadsheet_of_orbit_reps(Sp, actual_size);
 			string fname_csv;
-			char str[1000];
 
-			fname_csv.assign(problem_label_with_path);
-			snprintf(str, sizeof(str), "_orbits_at_level_%d.csv", actual_size);
-			fname_csv.append(str);
+			fname_csv = problem_label_with_path + "_orbits_at_level_" + std::to_string(actual_size) + ".csv";
 			Sp->save(fname_csv, verbose_level);
 			FREE_OBJECT(Sp);
 		}

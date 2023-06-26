@@ -513,15 +513,13 @@ void lint_vec::print_to_str_naked(std::string &s, long int *data, int len)
 {
 	int i;
 	long int a;
-	char str[1000];
 
 	s.assign("");
 	for (i = 0; i < len; i++) {
 		a = data[i];
-		snprintf(str, sizeof(str), "%ld", a);
-		s.append(str);
+		s += std::to_string(a);
 		if (i < len - 1) {
-			s.append(", ");
+			s += ", ";
 		}
 	}
 }

@@ -771,12 +771,10 @@ void spread_lifting::create_dummy_graph(int verbose_level)
 
 	CG = NEW_OBJECT(graph_theory::colored_graph);
 
-	char str[1000];
 	string label, label_tex;
-	snprintf(str, sizeof(str), "_graph_%d", R->orbit_at_level);
-	label.assign(S->prefix);
-	label.append(str);
-	label_tex.assign(str);
+
+	label = S->prefix + "_graph_" + std::to_string(R->orbit_at_level);
+	label_tex = label;
 
 	if (f_v) {
 		cout << "spread_lifting::create_dummy_graph "

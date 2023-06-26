@@ -744,10 +744,7 @@ void surface_domain::make_table_of_surfaces2(
 
 	headers[0].assign("Q");
 	for (j = 0; j < nb_E_types; j++) {
-		char str[1000];
-
-		snprintf(str, sizeof(str), "E%d", E[j]);
-		headers[1 + j].assign(str);
+		headers[1 + j] = "E" + std::to_string(E[j]);
 	}
 	if (f_v) {
 		cout << "surface_domain::make_table_of_surfaces2 "

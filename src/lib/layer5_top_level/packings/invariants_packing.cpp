@@ -367,19 +367,18 @@ void invariants_packing::make_table(
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < Classify->nb_types; i++) {
-		char str[1000];
 
 		if (f_only_self_dual) {
-			snprintf(str, sizeof(str), "ids_of_self_dual_type_%d.csv", i);
+			fname = "ids_of_self_dual_type_" + std::to_string(i) + ".csv";
 		}
 		else if (f_only_not_self_dual) {
-			snprintf(str, sizeof(str), "ids_of_not_self_dual_type_%d.csv", i);
+			fname = "ids_of_not_self_dual_type_" + std::to_string(i) + ".csv";
 		}
 		else {
-			snprintf(str, sizeof(str), "ids_of_all_type_%d.csv", i);
+			fname = "ids_of_all_type_" + std::to_string(i) + ".csv";
 		}
-		fname.assign(str);
-		Int_vec_print(ost, Classify->Reps + i * P->Spread_table_with_selection->nb_iso_types_of_spreads,
+		Int_vec_print(ost,
+				Classify->Reps + i * P->Spread_table_with_selection->nb_iso_types_of_spreads,
 				P->Spread_table_with_selection->nb_iso_types_of_spreads);
 		ost << " & ";
 		// ost << Frequency[i] << " & ";

@@ -819,12 +819,12 @@ void cryptography_domain::make_2D_plot(
 		y = orbit[h + 1];
 		M[x * m + y] = 1;
 	}
-	char str[1000];
 	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, 1000, "orbit_cnt%d_m%d_a%d_c%d.csv", cnt, m, a, c);
-	fname.assign(str);
+	fname = "orbit_cnt" + std::to_string(cnt) + "_m" + std::to_string(m)
+			+ "_a" + std::to_string(a) + "_c" + std::to_string(c) + ".csv";
+
 	Fio.int_matrix_write_csv(fname, M, m, m);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -2275,12 +2275,9 @@ void cryptography_domain::do_solovay_strassen(
 	string extra_praeamble;
 
 
-	char str[1000];
 
-	snprintf(str, 1000, "solovay_strassen_%d_%d.tex", p, a);
-	fname.assign(str);
-	snprintf(str, 1000, "Solovay Strassen %d with base %d", p, a);
-	title.assign(str);
+	fname = "solovay_strassen_" + std::to_string(p) + "_" + std::to_string(a) + ".tex";
+	title = "Solovay Strassen " + std::to_string(p) + " with base " + std::to_string(a);
 
 
 
@@ -2342,56 +2339,52 @@ void cryptography_domain::do_miller_rabin(
 	string extra_praeamble;
 
 
-	char str[1000];
-
-	snprintf(str, 1000, "miller_rabin_%d.tex", p);
-	fname.assign(str);
-	snprintf(str, 1000, "Miller Rabin %d", p);
-	title.assign(str);
+	fname = "miller_rabin_" + std::to_string(p) + ".tex";
+	title = "Miller Rabin " + std::to_string(p);
 
 
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
 
-	l1_interfaces::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
-	L.head(f, false /* f_book*/, true /* f_title */,
-		title, author, false /* f_toc */, false /* f_landscape */,
-			true /* f_12pt */,
-			true /* f_enlarged_page */,
-			true /* f_pagenumbers */,
-			extra_praeamble /* extra_praeamble */);
+		L.head(f, false /* f_book*/, true /* f_title */,
+			title, author, false /* f_toc */, false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
+				extra_praeamble /* extra_praeamble */);
 
 
-	//longinteger_domain D;
+		//longinteger_domain D;
 
-	ring_theory::longinteger_object P, A;
+		ring_theory::longinteger_object P, A;
 
-	P.create(p);
+		P.create(p);
 
-	int i;
+		int i;
 
-	for (i = 0; i < nb_times; i++) {
+		for (i = 0; i < nb_times; i++) {
 
-		f << "Miller Rabin test no " << i << ":\\\\" << endl;
-		if (!miller_rabin_test_with_latex_key(f,
-			P, i,
-			verbose_level)) {
-			break;
+			f << "Miller Rabin test no " << i << ":\\\\" << endl;
+			if (!miller_rabin_test_with_latex_key(f,
+				P, i,
+				verbose_level)) {
+				break;
+			}
+
+		}
+		if (i == nb_times) {
+			f << "Miller Rabin: The number is probably prime. Miller Rabin is inconclusive.\\\\" << endl;
+		}
+		else {
+			f << "Miller Rabin: The number is not prime.\\\\" << endl;
 		}
 
-	}
-	if (i == nb_times) {
-		f << "Miller Rabin: The number is probably prime. Miller Rabin is inconclusive.\\\\" << endl;
-	}
-	else {
-		f << "Miller Rabin: The number is not prime.\\\\" << endl;
-	}
-
-	L.foot(f);
+		L.foot(f);
 	}
 
 	orbiter_kernel_system::file_io Fio;
@@ -2418,45 +2411,41 @@ void cryptography_domain::do_fermat_test(
 	string extra_praeamble;
 
 
-	char str[1000];
-
-	snprintf(str, 1000, "fermat_%d.tex", p);
-	fname.assign(str);
-	snprintf(str, 1000, "Fermat test %d", p);
-	title.assign(str);
+	fname = "fermat_" + std::to_string(p) + ".tex";
+	title = "Fermat test " + std::to_string(p);
 
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
 
-	l1_interfaces::latex_interface L;
+		l1_interfaces::latex_interface L;
 
 
-	L.head(f, false /* f_book*/, true /* f_title */,
-		title, author, false /* f_toc */, false /* f_landscape */,
-			true /* f_12pt */,
-			true /* f_enlarged_page */,
-			true /* f_pagenumbers */,
-			extra_praeamble /* extra_praeamble */);
+		L.head(f, false /* f_book*/, true /* f_title */,
+			title, author, false /* f_toc */, false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
+				extra_praeamble /* extra_praeamble */);
 
 
-	//longinteger_domain D;
-	ring_theory::longinteger_object P;
+		//longinteger_domain D;
+		ring_theory::longinteger_object P;
 
 
-	P.create(p);
+		P.create(p);
 
-	if (fermat_test_iterated_with_latex_key(f,
-			P, nb_times,
-			verbose_level)) {
-		f << "Fermat: The number $" << P << "$ is not prime.\\\\" << endl;
-	}
-	else {
-		f << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
-	}
+		if (fermat_test_iterated_with_latex_key(f,
+				P, nb_times,
+				verbose_level)) {
+			f << "Fermat: The number $" << P << "$ is not prime.\\\\" << endl;
+		}
+		else {
+			f << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
+		}
 
-	L.foot(f);
+		L.foot(f);
 	}
 
 	orbiter_kernel_system::file_io Fio;
@@ -2488,12 +2477,8 @@ void cryptography_domain::do_find_pseudoprime(
 	string extra_praeamble;
 
 
-	char str[1000];
-
-	snprintf(str, 1000, "pseudoprime_%d.tex", nb_digits);
-	fname.assign(str);
-	snprintf(str, 1000, "Pseudoprime %d", nb_digits);
-	title.assign(str);
+	fname = "pseudoprime_" + std::to_string(nb_digits) + ".tex";
+	title = "Pseudoprime " + std::to_string(nb_digits);
 
 
 
@@ -2625,12 +2610,8 @@ void cryptography_domain::do_find_strong_pseudoprime(
 	string extra_praeamble;
 
 
-	char str[1000];
-
-	snprintf(str, 1000, "strong_pseudoprime_%d.tex", nb_digits);
-	fname.assign(str);
-	snprintf(str, 1000, "Strong Pseudoprime %d", nb_digits);
-	title.assign(str);
+	fname = "strong_pseudoprime_" + std::to_string(nb_digits) + ".tex";
+	title = "Strong Pseudoprime " + std::to_string(nb_digits);
 
 
 	{
@@ -2736,13 +2717,8 @@ void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 	string title;
 	string extra_praeamble;
 
-
-	char str[1000];
-
-	snprintf(str, 1000, "miller_rabin_%s.tex", number_text.c_str());
-	fname.assign(str);
-	snprintf(str, 1000, "Miller Rabin %s", number_text.c_str());
-	title.assign(str);
+	fname = "miller_rabin_" + number_text + ".tex";
+	title = "Miller Rabin " + number_text;
 
 
 	{
@@ -3279,8 +3255,9 @@ void cryptography_domain::do_smallest_primitive_root_interval(
 		T[2 * i + 0] = Table[i].first;
 		T[2 * i + 1] = Table[i].second;
 	}
-	snprintf(str, sizeof(str), "primitive_element_table_%ld_%ld.csv", p_min, p_max);
 	string fname;
+
+	fname = "primitive_element_table_" + std::to_string(p_min) + "_" + std::to_string(p_max) + ".csv";
 
 	fname.assign(str);
 	Fio.lint_matrix_write_csv(fname, T, Table.size(), 2);
@@ -3314,7 +3291,8 @@ void cryptography_domain::do_number_of_primitive_roots_interval(
 
 	t0 = Os.os_ticks();
 	if (f_v) {
-		cout << "cryptography_domain::do_number_of_primitive_roots_interval p_min=" << p_min << " p_max=" << p_max << endl;
+		cout << "cryptography_domain::do_number_of_primitive_roots_interval "
+				"p_min=" << p_min << " p_max=" << p_max << endl;
 	}
 
 	std::vector<std::pair<long int, long int>> Table;
@@ -3341,8 +3319,8 @@ void cryptography_domain::do_number_of_primitive_roots_interval(
 		T[2 * i + 0] = Table[i].first;
 		T[2 * i + 1] = Table[i].second;
 	}
-	snprintf(str, sizeof(str), "table_number_of_pe_%ld_%ld.csv", p_min, p_max);
 	string fname;
+	fname = "table_number_of_pe_" + std::to_string(p_min) + "_" + std::to_string(p_max) + ".csv";
 
 	fname.assign(str);
 	Fio.lint_matrix_write_csv(fname, T, Table.size(), 2);

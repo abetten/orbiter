@@ -14,7 +14,8 @@ namespace orbiter {
 namespace layer5_applications {
 namespace packings {
 
-static void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,
+static void packing_was_fixpoints_early_test_function_fp_cliques(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -132,7 +133,8 @@ void packing_was_fixpoints::setup_file_names(int clique_size, int verbose_level)
 
 
 	if (f_v) {
-		cout << "packing_was_fixpoints::setup_file_names fname_fixp_graph=" << fname_fixp_graph << endl;
+		cout << "packing_was_fixpoints::setup_file_names "
+				"fname_fixp_graph=" << fname_fixp_graph << endl;
 	}
 
 
@@ -141,17 +143,14 @@ void packing_was_fixpoints::setup_file_names(int clique_size, int verbose_level)
 
 
 	if (f_v) {
-		cout << "packing_was_fixpoints::setup_file_names fname_fixp_graph_cliques=" << fname_fixp_graph_cliques << endl;
+		cout << "packing_was_fixpoints::setup_file_names "
+				"fname_fixp_graph_cliques=" << fname_fixp_graph_cliques << endl;
 	}
 
 
-	char str[1000];
 
-
-
-	fname_fixpoint_cliques_orbiter.assign(PW->Descr->N_label);
-	snprintf(str, sizeof(str), "_fixp_cliques_lvl_%d", clique_size);
-	fname_fixpoint_cliques_orbiter.append(str);
+	fname_fixpoint_cliques_orbiter = PW->Descr->N_label
+			+ "_fixp_cliques_lvl_" + std::to_string(clique_size);
 
 
 	if (f_v) {
@@ -621,15 +620,11 @@ void packing_was_fixpoints::report(int verbose_level)
 
 	{
 	string fname, title, author, extra_praeamble;
-	char str[1000];
 	//int f_with_stabilizers = true;
 
-	snprintf(str, sizeof(str), "Packings in PG(3,%d) ", PW->P->q);
-	title.assign(str);
-	snprintf(str, sizeof(str), "Orbiter");
-	author.assign(str);
-	snprintf(str, sizeof(str), "Packings_was_fixp_q%d.tex", PW->P->q);
-	fname.assign(str);
+	title = "Packings in PG(3," + std::to_string(PW->P->q) + ") ";
+	author = "Orbiter";
+	fname = "Packings_was_fixp_q" + std::to_string(PW->P->q) + ".tex";
 
 		{
 		ofstream fp(fname);
@@ -671,22 +666,26 @@ void packing_was_fixpoints::report(int verbose_level)
 		PW->H_gens->print_generators_tex(fp);
 
 		if (f_v) {
-			cout << "packing_was_fixpoints::report before PW->report2" << endl;
+			cout << "packing_was_fixpoints::report "
+					"before PW->report2" << endl;
 		}
 		PW->report2(fp, verbose_level);
 		if (f_v) {
-			cout << "packing_was_fixpoints::report after PW->report2" << endl;
+			cout << "packing_was_fixpoints::report "
+					"after PW->report2" << endl;
 		}
 
 		fp << "\\section{Cliques on the fixpoint graph}" << endl;
 
 		if (fixpoints_idx >= 0) {
 			if (f_v) {
-				cout << "packing_was_fixpoints::report before report2" << endl;
+				cout << "packing_was_fixpoints::report "
+						"before report2" << endl;
 			}
 			report2(fp, /*L,*/ verbose_level);
 			if (f_v) {
-				cout << "packing_was_fixpoints::report after report2" << endl;
+				cout << "packing_was_fixpoints::report "
+						"after report2" << endl;
 			}
 		}
 
@@ -734,12 +733,14 @@ void packing_was_fixpoints::report2(
 
 	int idx;
 
-	ost << "The fixed points are the orbits of type " << fixpoints_idx << "\\\\" << endl;
+	ost << "The fixed points are the orbits of "
+			"type " << fixpoints_idx << "\\\\" << endl;
 
 	for (idx = 0; idx < nb_cliques; idx++) {
 
 		if (f_v) {
-			cout << "packing_was_fixpoints::report2 idx = " << idx << " / " << nb_cliques << endl;
+			cout << "packing_was_fixpoints::report2 "
+					"idx = " << idx << " / " << nb_cliques << endl;
 		}
 		long int *Orbit_numbers;
 		groups::strong_generators *Stab_gens;
@@ -747,11 +748,13 @@ void packing_was_fixpoints::report2(
 		Orbit_numbers = clique_by_index(idx);
 
 		if (f_v) {
-			cout << "packing_was_fixpoints::report2 idx = " << idx << " / " << nb_cliques << " before get_stabilizer" << endl;
+			cout << "packing_was_fixpoints::report2 "
+					"idx = " << idx << " / " << nb_cliques << " before get_stabilizer" << endl;
 		}
 		Stab_gens = get_stabilizer(idx);
 		if (f_v) {
-			cout << "packing_was_fixpoints::report2 idx = " << idx << " / " << nb_cliques << " after get_stabilizer" << endl;
+			cout << "packing_was_fixpoints::report2 "
+					"idx = " << idx << " / " << nb_cliques << " after get_stabilizer" << endl;
 		}
 
 		ost << "Clique " << idx << ":\\\\" << endl;
@@ -799,23 +802,28 @@ long int packing_was_fixpoints::fixpoint_to_reduced_spread(int a, int verbose_le
 	long int set[1];
 
 	if (f_v) {
-		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread a=" << a << endl;
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread "
+				"a=" << a << endl;
 	}
 	//a = fixpoint_clique[i];
 	b = PW->reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[fixpoints_idx][a];
 	if (f_v) {
-		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread b=" << b << endl;
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread "
+				"b=" << b << endl;
 	}
 
 	if (b >= PW->reduced_spread_orbits_under_H->Sch->nb_orbits) {
-		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread b >= PW->reduced_spread_orbits_under_H->Sch->nb_orbits" << endl;
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread "
+				"b >= PW->reduced_spread_orbits_under_H->Sch->nb_orbits" << endl;
 		exit(1);
 	}
 	if (PW->reduced_spread_orbits_under_H->Sch->orbit_len[b] != 1) {
-		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread PW->reduced_spread_orbits_under_H->Sch->orbit_len[b] != 1" << endl;
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread "
+				"PW->reduced_spread_orbits_under_H->Sch->orbit_len[b] != 1" << endl;
 		exit(1);
 	}
-	PW->reduced_spread_orbits_under_H->Sch->get_orbit(b /* orbit_idx */, set, len,
+	PW->reduced_spread_orbits_under_H->Sch->get_orbit(
+			b /* orbit_idx */, set, len,
 			0 /*verbose_level */);
 	if (len != 1) {
 		cout << "packing_was_fixpoints::init len != 1, len = " << len << endl;
@@ -833,7 +841,8 @@ long int packing_was_fixpoints::fixpoint_to_reduced_spread(int a, int verbose_le
 // global functions:
 // #############################################################################
 
-static void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,
+static void packing_was_fixpoints_early_test_function_fp_cliques(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

@@ -527,12 +527,12 @@ void homogeneous_polynomial_domain::make_monomials(
 		}
 	}
 
-	char str[1000];
 
 	symbols.clear();
 	for (i = 0; i < nb_variables; i++) {
 
 		string s;
+		char str[1000];
 
 		
 		if (f_has_variables) {
@@ -559,6 +559,7 @@ void homogeneous_polynomial_domain::make_monomials(
 	for (i = 0; i < nb_variables; i++) {
 
 		string s;
+		char str[1000];
 
 		
 		if (f_has_variables) {
@@ -587,7 +588,7 @@ void homogeneous_polynomial_domain::make_monomials(
 	string label;
 
 
-	label.assign("");
+	label = "";
 	monomial_symbols.clear();
 	for (i = 0; i < nb_monomials; i++) {
 		f_first = true;
@@ -595,15 +596,14 @@ void homogeneous_polynomial_domain::make_monomials(
 			a = Monomials[i * nb_variables + j];
 			if (a) {
 				if (!f_first) {
-					label.append("*");
+					label += "*";
 				}
 				else {
 					f_first = false;
 				}
-				label.append(symbols[j]);
+				label += symbols[j];
 				if (a > 1) {
-					snprintf(str, sizeof(str), "^%d", a);
-					label.append(str);
+					label += "^" + std::to_string(a);
 				}
 			}
 		}
@@ -611,7 +611,7 @@ void homogeneous_polynomial_domain::make_monomials(
 
 	}
 
-	label.assign("");
+	label = "";
 
 	monomial_symbols_latex.clear();
 	for (i = 0; i < nb_monomials; i++) {
@@ -621,12 +621,11 @@ void homogeneous_polynomial_domain::make_monomials(
 				label.append(symbols_latex[j]);
 				if (a > 1) {
 					if (a >= 10) {
-						snprintf(str, sizeof(str), "^{%d}", a);
+						label += "^{" + std::to_string(a) + "}";
 					}
 					else {
-						snprintf(str, sizeof(str), "^%d", a);
+						label += "^" + std::to_string(a);
 					}
-					label.append(str);
 				}
 			}
 		}
@@ -651,16 +650,13 @@ void homogeneous_polynomial_domain::make_monomials(
 		}
 	}
 
-	label.assign("");
+	label = "";
 	monomial_symbols_easy.clear();
 	for (i = 0; i < nb_monomials; i++) {
-		str[0] = 'X';
-		str[1] = 0;
-		label.append(str);
+		label += "X";
 		for (j = 0; j < degree; j++) {
 			a = Variables[i * degree + j];
-			snprintf(str, sizeof(str), "%d", a);
-			label.append(str);
+			label += std::to_string(a);
 		}
 		monomial_symbols_easy.push_back(label);
 
@@ -1023,16 +1019,12 @@ void homogeneous_polynomial_domain::print_monomial_latex(
 		}
 		s.append(symbols_latex[j]);
 
-		char str[1000];
-
-
 		if (a >= 10) {
-			snprintf(str, sizeof(str), "^{%d}", a);
+			s += "^{" + std::to_string(a) + "}";
 		}
 		else if (a > 1) {
-			snprintf(str, sizeof(str), "^%d", a);
+			s += "^" + std::to_string(a);
 		}
-		s.append(str);
 	}
 }
 
@@ -2636,12 +2628,8 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 
 
 		string fname2;
-		char str[10000];
 
-		fname2.assign(number_of_conditions_satisfied_fname);
-		snprintf(str, sizeof(str), "%d", t);
-		fname2.append(str);
-		fname2.append(".csv");
+		fname2 = number_of_conditions_satisfied_fname + std::to_string(t) + ".csv";
 
 
 

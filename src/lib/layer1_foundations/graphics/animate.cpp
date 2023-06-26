@@ -24,7 +24,7 @@ animate::animate()
 	Povray_job_description = NULL;
 	S = NULL;
 	//output_mask;
-	fname_makefile[0] = 0;
+	//fname_makefile;
 	nb_frames = 30;
 	Opt = NULL;
 	fpm = NULL;
@@ -60,7 +60,7 @@ void animate::init(
 	animate::Opt = Povray_job_description->Video_draw_options;
 	animate::extra_data = extra_data;
 	Pov = NEW_OBJECT(l1_interfaces::povray_interface);
-	snprintf(fname_makefile, sizeof(fname_makefile), "makefile_animation");
+	fname_makefile = "makefile_animation";
 
 
 	if (f_v) {
@@ -127,13 +127,13 @@ void animate::animate_one_round(
 				camera_location[j] = Opt->camera_location[i * 3 + j];
 				camera_look_at[j] = Opt->camera_look_at[i * 3 + j];
 			}
-			}
 		}
+	}
 	for (i = 0; i < Opt->cnt_nb_frames; i++) {
 		if (Opt->nb_frames_round[i] == round) {
 			nb_frames_this_round = Opt->nb_frames_value[i];
-			}
 		}
+	}
 	for (i = 0; i < Opt->nb_zoom; i++) {
 		if (Opt->zoom_round[i] == round) {
 			f_has_zoom = true;
@@ -145,8 +145,8 @@ void animate::animate_one_round(
 					(double) nb_frames_this_round;
 			zoom_clipping_increment = (double)(zoom_clipping_end - zoom_clipping_start) /
 					(double) nb_frames_this_round;
-			}
 		}
+	}
 	for (i = 0; i < Opt->nb_zoom_sequence; i++) {
 		if (Opt->zoom_sequence_round[i] == round) {
 			f_has_zoom_sequence = true;
@@ -288,38 +288,39 @@ void animate::animate_one_round(
 
 			N.vec_scalar_multiple(pan_z, 1./szz, 3);
 
-			}
 		}
+	}
 	int f_with_background = true;
 	for (i = 0; i < Opt->nb_no_background; i++) {
 		if (Opt->no_background_round[i] == round) {
 			f_with_background = false;
-			}
 		}
+	}
 
 
 	for (h = 0; h < nb_frames_this_round; h++) {
 
-		char fname_pov[1000];
-		char fname_png[1000];
-		string povray_opts;
 		char str[1000];
+		string fname_pov;
+		string fname_png;
+		string povray_opts;
 		data_structures::string_tools ST;
 
 
-		povray_opts[0] = 0;
+		povray_opts = "";
 		if (Opt->f_W) {
-			snprintf(str, sizeof(str), "-W%d ", Opt->W);
-			povray_opts.append(str);
-			}
+			povray_opts += "-W" + std::to_string(Opt->W) + " ";
+		}
 		if (Opt->f_H) {
-			snprintf(str, sizeof(str), "-H%d ", Opt->H);
-			povray_opts.append(str);
-			}
+			povray_opts += "-H" + std::to_string(Opt->H) + " ";
+		}
 		// for instance -W1920 -H1200  for larger pictures
-		snprintf(fname_pov, sizeof(fname_pov), output_mask.c_str(), round, h);
-		snprintf(fname_png, sizeof(fname_png), output_mask.c_str(), round, h);
+		snprintf(str, sizeof(str), output_mask.c_str(), round, h);
+		fname_pov = str;
+
+		snprintf(str, sizeof(str), output_mask.c_str(), round, h);
 		ST.replace_extension_with(fname_png, ".png");
+		fname_png = str;
 
 		cout << "round " << round << ", frame " << h << " / "
 				<< nb_frames_this_round << " in " << fname_pov << endl;
@@ -327,172 +328,172 @@ void animate::animate_one_round(
 				<< " " << fname_pov << endl;
 
 		{
-		ofstream fp(fname_pov);
+			ofstream fp(fname_pov);
 
 
-		if (Opt->f_clipping_radius) {
-			clipping_radius = Opt->clipping_radius;
-		}
-		else {
-			clipping_radius = 2.7; // default
-		}
-		for (i = 0; i < Opt->nb_clipping; i++) {
-			if (Opt->clipping_round[i] == round) {
-				clipping_radius = Opt->clipping_value[i];
-				}
-			}
-
-		if (f_has_zoom) {
-			angle = ((double)zoom_start + (double) h * zoom_increment);
-			clipping_radius = zoom_clipping_start + (double) h * zoom_clipping_increment;
-		}
-		else {
-			if (f_has_zoom_sequence) {
-				angle = 0;
-				for (j = 0; j < zoom_sequence_l; j++) {
-					if (h >= zoom_sequence_fst[j] &&
-						h < zoom_sequence_fst[j] + zoom_sequence_len[j]) {
-						angle = zoom_sequence_value[j] +
-							(h - zoom_sequence_fst[j]) *
-							(zoom_sequence_value[j + 1] - zoom_sequence_value[j])
-							/ zoom_sequence_len[j];
-						break;
-					}
-				}
-				if (j == zoom_sequence_l) {
-					cout << "cound not find frame " << h << " in zoom sequence" << endl;
-					exit(1);
-				}
-				if (zoom_sequence_fst[zoom_sequence_l] != nb_frames_this_round) {
-					cout << "zoom_sequence the frames dont add up" << endl;
-					cout << "have=" << zoom_sequence_fst[zoom_sequence_l] << endl;
-					cout << "should have " << nb_frames_this_round << endl;
-					exit(1);
-				}
-
+			if (Opt->f_clipping_radius) {
+				clipping_radius = Opt->clipping_radius;
 			}
 			else {
-				angle = Opt->default_angle;
+				clipping_radius = 2.7; // default
 			}
-		}
-		cout << "frame " << h << " / " << nb_frames_this_round
-				<< ", angle " << angle << endl;
-
-		if (f_has_pan) {
-			double pan_a[3];
-			double sky[3];
-			double location[3];
-			double direction_of_view[3];
-			double beta;
-			//char sky_string[1000];
-			//char location_string[1000];
-			//char look_at_string[1000];
-
-			if (pan_f_reverse) {
-				beta = pan_alpha - pan_delta *
-						(double) (nb_frames_this_round - 1 - h);
-			}
-			else {
-				beta = pan_alpha - pan_delta * (double) h;
-			}
-			cout << "h=" << h << " / " << nb_frames_this_round
-					<< " beta=" << beta << endl;
-
-			N.vec_linear_combination(
-					cos(beta) * suu, pan_v,
-					sin(beta) * szz, pan_z,
-					pan_a, 3);
-			cout << "pan_a: ";
-			N.vec_print(pan_a, 3);
-			cout << endl;
-			cout << "pan_u: ";
-			N.vec_print(pan_u, 3);
-			cout << endl;
-
-
-			N.vec_linear_combination3(
-					cos(beta) * suu, pan_v,
-					sin(beta) * szz, pan_z,
-					1., pan_center,
-					location, 3);
-
-			//sprintf(location_string, "<%lf,%lf,%lf>",
-			//		location[0], location[1], location[2]);
-			//cout << "location_string=" << location_string << endl;
-
-
-
-			N.vec_linear_combination(
-					-1., location,
-					1., pan_center,
-					direction_of_view, 3);
-
-			N.cross_product(direction_of_view, pan_normal_uv, sky);
-			//sprintf(sky_string, "<%lf,%lf,%lf>",
-			//		sky[0], sky[1], sky[2]);
-			//cout << "sky_string=" << sky_string << endl;
-
-			//sprintf(look_at_string, "<%lf,%lf,%lf>",
-			//		pan_center[0], pan_center[1], pan_center[2]);
-			//cout << "look_at_string=" << look_at_string << endl;
-
-
-			Pov->beginning(fp,
-					angle,
-					sky,
-					location,
-					pan_center /* look_at*/,
-					//sky_string,
-					//location_string,
-					//look_at_string,
-					f_with_background);
-
-		}
-		else {
-			if (f_has_camera) {
-				Pov->beginning(fp,
-						angle,
-						camera_sky,
-						camera_location,
-						camera_look_at,
-						f_with_background);
-			}
-			else {
-				Pov->beginning(fp,
-						angle,
-						Opt->sky,
-						Opt->location,
-						Opt->look_at,
-						f_with_background);
-			}
-		}
-
-
-		if (draw_frame_callback == NULL) {
-			cout << "draw_frame_callback == NULL" << endl;
-			exit(1);
-		}
-		(*draw_frame_callback)(this, h /* frame */,
-							nb_frames_this_round, round,
-							clipping_radius,
-							fp,
-							verbose_level);
-
-
-
-		if (Opt->f_omit_bottom_plane) {
-			}
-		else {
-			int f_has_bottom_plane = true;
-			for (i = 0; i < Opt->nb_no_bottom_plane; i++) {
-				if (Opt->no_bottom_plane_round[i] == round) {
-					f_has_bottom_plane = false;
+			for (i = 0; i < Opt->nb_clipping; i++) {
+				if (Opt->clipping_round[i] == round) {
+					clipping_radius = Opt->clipping_value[i];
 					}
 				}
 
-			if (f_has_bottom_plane) {
-				Pov->bottom_plane(fp);
+			if (f_has_zoom) {
+				angle = ((double)zoom_start + (double) h * zoom_increment);
+				clipping_radius = zoom_clipping_start + (double) h * zoom_clipping_increment;
 			}
+			else {
+				if (f_has_zoom_sequence) {
+					angle = 0;
+					for (j = 0; j < zoom_sequence_l; j++) {
+						if (h >= zoom_sequence_fst[j] &&
+							h < zoom_sequence_fst[j] + zoom_sequence_len[j]) {
+							angle = zoom_sequence_value[j] +
+								(h - zoom_sequence_fst[j]) *
+								(zoom_sequence_value[j + 1] - zoom_sequence_value[j])
+								/ zoom_sequence_len[j];
+							break;
+						}
+					}
+					if (j == zoom_sequence_l) {
+						cout << "cound not find frame " << h << " in zoom sequence" << endl;
+						exit(1);
+					}
+					if (zoom_sequence_fst[zoom_sequence_l] != nb_frames_this_round) {
+						cout << "zoom_sequence the frames dont add up" << endl;
+						cout << "have=" << zoom_sequence_fst[zoom_sequence_l] << endl;
+						cout << "should have " << nb_frames_this_round << endl;
+						exit(1);
+					}
+
+				}
+				else {
+					angle = Opt->default_angle;
+				}
+			}
+			cout << "frame " << h << " / " << nb_frames_this_round
+					<< ", angle " << angle << endl;
+
+			if (f_has_pan) {
+				double pan_a[3];
+				double sky[3];
+				double location[3];
+				double direction_of_view[3];
+				double beta;
+				//char sky_string[1000];
+				//char location_string[1000];
+				//char look_at_string[1000];
+
+				if (pan_f_reverse) {
+					beta = pan_alpha - pan_delta *
+							(double) (nb_frames_this_round - 1 - h);
+				}
+				else {
+					beta = pan_alpha - pan_delta * (double) h;
+				}
+				cout << "h=" << h << " / " << nb_frames_this_round
+						<< " beta=" << beta << endl;
+
+				N.vec_linear_combination(
+						cos(beta) * suu, pan_v,
+						sin(beta) * szz, pan_z,
+						pan_a, 3);
+				cout << "pan_a: ";
+				N.vec_print(pan_a, 3);
+				cout << endl;
+				cout << "pan_u: ";
+				N.vec_print(pan_u, 3);
+				cout << endl;
+
+
+				N.vec_linear_combination3(
+						cos(beta) * suu, pan_v,
+						sin(beta) * szz, pan_z,
+						1., pan_center,
+						location, 3);
+
+				//sprintf(location_string, "<%lf,%lf,%lf>",
+				//		location[0], location[1], location[2]);
+				//cout << "location_string=" << location_string << endl;
+
+
+
+				N.vec_linear_combination(
+						-1., location,
+						1., pan_center,
+						direction_of_view, 3);
+
+				N.cross_product(direction_of_view, pan_normal_uv, sky);
+				//sprintf(sky_string, "<%lf,%lf,%lf>",
+				//		sky[0], sky[1], sky[2]);
+				//cout << "sky_string=" << sky_string << endl;
+
+				//sprintf(look_at_string, "<%lf,%lf,%lf>",
+				//		pan_center[0], pan_center[1], pan_center[2]);
+				//cout << "look_at_string=" << look_at_string << endl;
+
+
+				Pov->beginning(fp,
+						angle,
+						sky,
+						location,
+						pan_center /* look_at*/,
+						//sky_string,
+						//location_string,
+						//look_at_string,
+						f_with_background);
+
+			}
+			else {
+				if (f_has_camera) {
+					Pov->beginning(fp,
+							angle,
+							camera_sky,
+							camera_location,
+							camera_look_at,
+							f_with_background);
+				}
+				else {
+					Pov->beginning(fp,
+							angle,
+							Opt->sky,
+							Opt->location,
+							Opt->look_at,
+							f_with_background);
+				}
+			}
+
+
+			if (draw_frame_callback == NULL) {
+				cout << "draw_frame_callback == NULL" << endl;
+				exit(1);
+			}
+			(*draw_frame_callback)(this, h /* frame */,
+								nb_frames_this_round, round,
+								clipping_radius,
+								fp,
+								verbose_level);
+
+
+
+			if (Opt->f_omit_bottom_plane) {
+				}
+			else {
+				int f_has_bottom_plane = true;
+				for (i = 0; i < Opt->nb_no_bottom_plane; i++) {
+					if (Opt->no_bottom_plane_round[i] == round) {
+						f_has_bottom_plane = false;
+					}
+				}
+
+				if (f_has_bottom_plane) {
+					Pov->bottom_plane(fp);
+				}
 			}
 		}
 		orbiter_kernel_system::file_io Fio;
@@ -503,30 +504,27 @@ void animate::animate_one_round(
 
 		for (i = 0; i < Opt->nb_picture; i++) {
 			if (Opt->picture_round[i] == round) {
-				char cmd[5000];
+				string cmd;
 				double scale;
 
 				scale = Opt->picture_scale[i];
 				if (Opt->f_has_global_picture_scale) {
 					scale *= Opt->global_picture_scale;
-					}
+				}
 				scale *= 100.;
-				snprintf(cmd, 5000, "composite \\( %s "
-						"-resize %lf%% \\)  %s    %s   tmp.png",
-					Opt->picture_fname[i].c_str(),
-					scale, //Opt->picture_scale[i] * 100.,
-					Opt->picture_options[i].c_str(),
-					fname_png);
+				cmd += "composite \\( " + Opt->picture_fname[i] + " "
+						"-resize " + std::to_string(scale) + "%% \\)  "
+						+ Opt->picture_options[i]+ "    " + fname_png + "   tmp.png";
 				//cout << "system: " << cmd << endl;
 				//system(cmd);
 				*fpm << "\t" << cmd << endl;
 
-				snprintf(cmd, sizeof(cmd), "mv tmp.png %s", fname_png);
+				cmd = "mv tmp.png " + fname_png;
 				//cout << "system: " << cmd << endl;
 				//system(cmd);
 				*fpm << "\t" << cmd << endl;
-				}
 			}
+		}
 		for (i = 0; i < Opt->nb_round_text; i++) {
 
 			if (Opt->round_text_round[i] == round) {
@@ -535,7 +533,7 @@ void animate::animate_one_round(
 				strcpy(str, Opt->round_text_text[i].c_str());
 				if ((int) strlen(str) > h) {
 					str[h] = 0;
-					}
+				}
 
 				data_structures::string_tools ST;
 
@@ -546,45 +544,43 @@ void animate::animate_one_round(
 
 					if (Opt->f_has_font_size) {
 						font_size = Opt->font_size;
-						}
+					}
 					if (Opt->f_has_stroke_width) {
 						stroke_width = Opt->stroke_width;
-						}
-
-					char cmd[10000];
-
-					snprintf(cmd, 10000, "convert -background none  -fill white "
-							"-stroke black -strokewidth %d -font "
-							"Courier-10-Pitch-Bold  -pointsize %d   "
-							"label:'%s'   overlay.png",
-							stroke_width, font_size, str);
-					//cout << "system: " << cmd << endl;
-					//system(cmd);
-					*fpm << "\t" << cmd << endl;
-
-
-					snprintf(cmd, 10000, "composite -gravity center overlay.png  "
-							" %s   tmp.png", fname_png);
-					//cout << "system: " << cmd << endl;
-					//system(cmd);
-					*fpm << "\t" << cmd << endl;
-
-					snprintf(cmd, 10000, "mv tmp.png %s", fname_png);
-					//cout << "system: " << cmd << endl;
-					//system(cmd);
-					*fpm << "\t" << cmd << endl;
 					}
+
+					string cmd;
+
+					cmd = "convert -background none  -fill white "
+							"-stroke black -strokewidth " + std::to_string(stroke_width) + " -font "
+							"Courier-10-Pitch-Bold  -pointsize " + std::to_string(font_size) + "   "
+							"label:'" + str + "'   overlay.png",
+					//cout << "system: " << cmd << endl;
+					//system(cmd);
+					*fpm << "\t" << cmd << endl;
+
+
+					cmd = "composite -gravity center overlay.png  "
+							" " + fname_png + " tmp.png";
+					//cout << "system: " << cmd << endl;
+					//system(cmd);
+					*fpm << "\t" << cmd << endl;
+
+					cmd = "mv tmp.png " + fname_png;
+					//cout << "system: " << cmd << endl;
+					//system(cmd);
+					*fpm << "\t" << cmd << endl;
 				}
-			} // end round text
+			}
+		} // end round text
 
 		for (i = 0; i < Opt->nb_label; i++) {
 
 			if (Opt->label_round[i] == round) {
 				string label;
 				string cmd;
-				char str[1000];
 
-				label.assign(Opt->label_text[i]);
+				label = Opt->label_text[i];
 
 				if (h >= Opt->label_start[i]
 					&& h < Opt->label_start[i] + Opt->label_sustain[i]) {
@@ -593,36 +589,31 @@ void animate::animate_one_round(
 
 					if (Opt->f_has_font_size) {
 						font_size = Opt->font_size;
-						}
+					}
 					if (Opt->f_has_stroke_width) {
 						stroke_width = Opt->stroke_width;
-						}
-					snprintf(str, 1000, "convert -background none  -fill white "
-							"-stroke black -strokewidth %d -font "
-							"Courier-10-Pitch-Bold  -pointsize %d   "
-							"label:'%s'   overlay.png",
-							stroke_width, font_size, label.c_str());
-					cmd.assign(str);
-					//cout << "system: " << cmd << endl;
-					//system(cmd);
-					*fpm << "\t" << cmd << endl;
-
-
-					snprintf(str, 1000, "composite %s overlay.png   %s   tmp.png",
-							Opt->label_gravity[i].c_str(), fname_png);
-					cmd.assign(str);
-					//cout << "system: " << cmd << endl;
-					//system(cmd);
-					*fpm << "\t" << cmd << endl;
-
-					snprintf(str, 1000, "mv tmp.png %s", fname_png);
-					cmd.assign(str);
-					//cout << "system: " << cmd << endl;
-					//system(cmd);
-					*fpm << "\t" << cmd << endl;
 					}
+					cmd = "convert -background none  -fill white "
+							"-stroke black -strokewidth " + std::to_string(stroke_width) + " -font "
+							"Courier-10-Pitch-Bold  -pointsize " + std::to_string(font_size) + "   "
+							"label:'" + label + "'   overlay.png";
+					//cout << "system: " << cmd << endl;
+					//system(cmd);
+					*fpm << "\t" << cmd << endl;
+
+
+					cmd = "composite " + Opt->label_gravity[i] + " overlay.png   " + fname_png + "   tmp.png";
+					//cout << "system: " << cmd << endl;
+					//system(cmd);
+					*fpm << "\t" << cmd << endl;
+
+					cmd = "mv tmp.png " + fname_png;
+					//cout << "system: " << cmd << endl;
+					//system(cmd);
+					*fpm << "\t" << cmd << endl;
 				}
-			} // end label
+			}
+		} // end label
 
 
 		for (i = 0; i < Opt->nb_latex_label; i++) {
@@ -658,12 +649,8 @@ void animate::animate_one_round(
 						string fname_tex;
 						string fname_pdf;
 
-						fname_tex.assign(Opt->latex_fname_base[i]);
-						fname_tex.append(".tex");
-						fname_pdf.assign(Opt->latex_fname_base[i]);
-						fname_pdf.append(".pdf");
-						//snprintf(fname_tex, 2000, "%s.tex", Opt->latex_fname_base[i]);
-						//snprintf(fname_pdf, 2000, "%s.pdf", Opt->latex_fname_base[i]);
+						fname_tex = Opt->latex_fname_base[i] + ".tex";
+						fname_pdf = Opt->latex_fname_base[i] + ".pdf";
 
 						cout << "begin latex source:" << endl;
 						cout << Opt->latex_label_text[i] << endl;
@@ -680,61 +667,46 @@ void animate::animate_one_round(
 
 						}
 
-						cmd.assign("pdflatex ");
-						cmd.append(fname_tex);
+						cmd = "pdflatex " + fname_tex;
 
-						//snprintf(cmd, 10000, "pdflatex %s", fname_tex);
 						//cout << "system: " << cmd << endl;
 						system(cmd.c_str());
 						//fpm << "\t" << cmd << endl;
 
 						Opt->latex_f_label_has_been_prepared[i] = true;
-						}
+					}
 					else {
 
 						string cmd;
 						string fname_pdf;
 						string fname_label_png;
 
-						fname_pdf.assign(Opt->latex_fname_base[i]);
-						fname_pdf.append(".pdf");
-						fname_label_png.assign("label.png");
+						fname_pdf = Opt->latex_fname_base[i] + ".pdf";
+						fname_label_png = "label.png";
 
-						cmd.assign("convert -trim ");
-						cmd.append(fname_pdf);
-						cmd.append(" ");
-						cmd.append(fname_label_png);
-						//cout << "system: " << cmd << endl;
-						//system(cmd.c_str());
+						cmd = "convert -trim " + fname_pdf + " " + fname_label_png;
 						*fpm << "\t" << cmd << endl;
 
 
-						cmd.assign("composite ");
-						cmd.append(Opt->latex_label_gravity[i]);
-						cmd.append(" ");
-						cmd.append(fname_label_png);
-						cmd.append(" ");
-						cmd.append(fname_png);
-						cmd.append(" tmp.png");
+						cmd = "composite " + Opt->latex_label_gravity[i] + " " + fname_label_png + " " + fname_png + " tmp.png";
 						//cout << "system: " << cmd << endl;
 						//system(cmd);
 						*fpm << "\t" << cmd << endl;
 
-						cmd.assign("mv tmp.png ");
-						cmd.append(fname_png);
+						cmd = "mv tmp.png " + fname_png;
 						//cout << "system: " << cmd << endl;
 						//system(cmd);
 						*fpm << "\t" << cmd << endl;
-						}
+					}
 
 					//Opt->latex_file_count++;
-					}
 				}
-			} // end label
+			}
+		} // end label
 
 
 
-		}
+	}
 
 
 }
@@ -764,7 +736,8 @@ void animate::draw_single_surface(int surface_idx, std::ostream &fp)
 	S->draw_cubic_with_selection(s, 1, Pov->color_white, fp);
 }
 
-void animate::draw_single_surface_with_color(int surface_idx, std::string &color, std::ostream &fp)
+void animate::draw_single_surface_with_color(
+		int surface_idx, std::string &color, std::ostream &fp)
 {
 	int s[1];
 
@@ -781,7 +754,8 @@ void animate::draw_Hilbert_point(int point_idx, double rad,
 	S->draw_points_with_selection(s, 1, rad, options, fp);
 }
 
-void animate::draw_Hilbert_line(int line_idx, std::string &color, std::ostream &fp)
+void animate::draw_Hilbert_line(
+		int line_idx, std::string &color, std::ostream &fp)
 {
 	int s[1];
 
@@ -791,7 +765,8 @@ void animate::draw_Hilbert_line(int line_idx, std::string &color, std::ostream &
 		fp);
 }
 
-void animate::draw_Hilbert_plane(int plane_idx, std::string &color, std::ostream &fp)
+void animate::draw_Hilbert_plane(
+		int plane_idx, std::string &color, std::ostream &fp)
 {
 	int s[1];
 
@@ -799,31 +774,36 @@ void animate::draw_Hilbert_plane(int plane_idx, std::string &color, std::ostream
 	S->draw_planes_with_selection(s, sizeof(s) / sizeof(int), color, fp);
 }
 
-void animate::draw_Hilbert_red_line(int idx_one_based, std::ostream &fp)
+void animate::draw_Hilbert_red_line(
+		int idx_one_based, std::ostream &fp)
 {
 	int s[] = {12, 13, 14, 15, 16, 17};
 	S->draw_edges_with_selection(s + idx_one_based - 1, 1, Pov->color_red, fp);
 }
 
-void animate::draw_Hilbert_blue_line(int idx_one_based, std::ostream &fp)
+void animate::draw_Hilbert_blue_line(
+		int idx_one_based, std::ostream &fp)
 {
 	int s[] = {18, 19, 20, 21, 22, 23};
 	S->draw_edges_with_selection(s + idx_one_based - 1, 1, Pov->color_blue, fp);
 }
 
-void animate::draw_Hilbert_red_lines(std::ostream &fp)
+void animate::draw_Hilbert_red_lines(
+		std::ostream &fp)
 {
 	int s[] = {12, 13, 14, 15, 16, 17};
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
 }
 
-void animate::draw_Hilbert_blue_lines(std::ostream &fp)
+void animate::draw_Hilbert_blue_lines(
+		std::ostream &fp)
 {
 	int s[] = {18, 19, 20, 21, 22, 23};
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
 }
 
-void animate::draw_Hilbert_cube_extended_edges(std::ostream &fp)
+void animate::draw_Hilbert_cube_extended_edges(
+		std::ostream &fp)
 {
 	int s[] = {30,31,32,33,34,35,36,37,38,39,40,41};
 
@@ -832,13 +812,15 @@ void animate::draw_Hilbert_cube_extended_edges(std::ostream &fp)
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 }
 
-void animate::draw_Hilbert_cube_faces(std::ostream &fp)
+void animate::draw_Hilbert_cube_faces(
+		std::ostream &fp)
 {
 	int s[] = {0,1,2,3,4,5};
 	S->draw_faces_with_selection(s, sizeof(s) / sizeof(int), 0.01, Pov->color_pink, fp);
 }
 
-void animate::draw_Hilbert_cube_boxed(std::ostream &fp)
+void animate::draw_Hilbert_cube_boxed(
+		std::ostream &fp)
 {
 	int s[] = {0,1,2,3,4,5,6,7,8,9,10,11};
 
@@ -847,7 +829,8 @@ void animate::draw_Hilbert_cube_boxed(std::ostream &fp)
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 }
 
-void animate::draw_Hilbert_tetrahedron_boxed(std::ostream &fp)
+void animate::draw_Hilbert_tetrahedron_boxed(
+		std::ostream &fp)
 {
 	int s[] = {24,25,26,27,28,29};
 
@@ -856,7 +839,8 @@ void animate::draw_Hilbert_tetrahedron_boxed(std::ostream &fp)
 	S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 }
 
-void animate::draw_Hilbert_tetrahedron_faces(std::ostream &fp)
+void animate::draw_Hilbert_tetrahedron_faces(
+		std::ostream &fp)
 {
 	int s[] = {6,7,8,9};
 	S->draw_faces_with_selection(s, sizeof(s) / sizeof(int), 0.01, Pov->color_orange, fp);
@@ -926,7 +910,7 @@ void animate::draw_frame_Hilbert(
 	if (round == 0) {
 		draw_Hilbert_cube_boxed(fp);
 		draw_Hilbert_cube_faces(fp);
-		}
+	}
 
 	if (round == 1) {
 		draw_Hilbert_cube_boxed(fp);
@@ -934,117 +918,117 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_cube_extended_edges(fp);
 		draw_Hilbert_red_lines(fp);
 		draw_Hilbert_blue_lines(fp);
-		}
+	}
 
 	if (round == 2) {
 		//draw_Hilbert_cube_boxed(S, fp);
 		draw_Hilbert_red_lines(fp);
 		draw_Hilbert_blue_lines(fp);
 		draw_single_surface(0, fp);
-		}
+	}
 	if (round == 3) {
 		//{
 		//int s[] = {12 /*, 13, 14, 15, 16, 17*/};
 		//S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), color_red, fp);
 		//}
 		{
-		int s[] = {/*18,*/ 19, 20, 21 /*, 22, 23*/};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
+			int s[] = {/*18,*/ 19, 20, 21 /*, 22, 23*/};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
 		}
-		}
+	}
 	if (round == 4) {
 		//{
 		//int s[] = {12 /*, 13, 14, 15, 16, 17*/};
 		//S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), color_red, fp);
 		//}
 		{
-		int s[] = {/*18,*/ 19, 20, 21 /*, 22, 23*/};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
+			int s[] = {/*18,*/ 19, 20, 21 /*, 22, 23*/};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
 		}
 		draw_single_quadric(0, Pov->color_yellow_transparent, fp);
-		}
+	}
 	if (round == 5) {
 		{
-		int s[] = {12 /*, 13, 14, 15, 16, 17*/};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
+			int s[] = {12 /*, 13, 14, 15, 16, 17*/};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
 		}
 		{
-		int s[] = {/*18,*/ 19, 20, 21, 22 /*, 23*/};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
+			int s[] = {/*18,*/ 19, 20, 21, 22 /*, 23*/};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
 		}
 		draw_single_quadric(0, Pov->color_yellow_transparent, fp);
-		}
+	}
 	if (round == 6) {
 		{
-		int s[] = {12 /*, 13, 14, 15, 16*/, 17};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
+			int s[] = {12 /*, 13, 14, 15, 16*/, 17};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
 		}
 		{
-		int s[] = {/*18,*/ 19, 20, 21, 22 /*, 23*/};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
+			int s[] = {/*18,*/ 19, 20, 21, 22 /*, 23*/};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
 		}
 		draw_single_quadric(0, Pov->color_yellow_transparent, fp);
-		}
+	}
 	if (round == 7) {
 		{
-		int s[] = {12 /*, 13, 14, 15, 16*/, 17};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
+			int s[] = {12 /*, 13, 14, 15, 16*/, 17};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
 		}
 		{
-		int s[] = {/*18,*/ 19, 20, 21, 22 /*, 23*/};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
+			int s[] = {/*18,*/ 19, 20, 21, 22 /*, 23*/};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
 		}
-		}
+	}
 	if (round == 8) {
 		draw_Hilbert_red_lines(fp);
 		draw_Hilbert_blue_lines(fp);
-		}
+	}
 	if (round == 9 || round == 11 || round == 12) {
 		draw_single_surface(0, fp);
-		}
+	}
 	if (round == 10) {
-		}
+	}
 	if (round == 13) {
 		draw_Hilbert_cube_boxed(fp);
 		draw_Hilbert_tetrahedron_boxed(fp);
 		draw_Hilbert_tetrahedron_faces(fp);
-		}
+	}
 	if (round == 14) {
 		if (h < (nb_frames >> 1)) {
 			draw_Hilbert_cube_boxed(fp);
 			draw_Hilbert_tetrahedron_boxed(fp);
 			draw_Hilbert_tetrahedron_faces(fp);
 			draw_Hilbert_cube_extended_edges(fp);
-			}
+		}
 		else {
 			draw_Hilbert_cube_boxed(fp);
 			draw_Hilbert_cube_faces(fp);
 			draw_Hilbert_cube_extended_edges(fp);
-			}
 		}
+	}
 	if (round == 15) {
 		draw_Hilbert_cube_boxed(fp);
 		draw_Hilbert_cube_faces(fp);
 		draw_Hilbert_cube_extended_edges(fp);
 		draw_Hilbert_red_lines(fp);
 		draw_Hilbert_blue_lines(fp);
-		}
+	}
 	if (round == 16) {
 		{
-		int s[] = {12 /*, 13, 14, 15, 16, 17*/};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
+			int s[] = {12 /*, 13, 14, 15, 16, 17*/};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
 		}
 		{
-		int s[] = {/*18,*/ 19, 20, 21, 22, 23};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
+			int s[] = {/*18,*/ 19, 20, 21, 22, 23};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_blue, fp);
 		}
-		}
+	}
 	if (round == 17) {
 		draw_Hilbert_red_lines(fp);
 		draw_Hilbert_blue_lines(fp);
 		draw_Hilbert_tetrahedron_boxed(fp);
 		draw_Hilbert_tetrahedron_faces(fp);
-		}
+	}
 	if (round == 18) {
 
 #if 0
@@ -1066,11 +1050,11 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_line(12 + 0, Pov->color_yellow, fp); // c12
 		draw_Hilbert_line(12 + 9, Pov->color_yellow, fp);
 		draw_Hilbert_line(12 + 14, Pov->color_yellow, fp);
-		}
+	}
 	if (round == 19) {
 		draw_single_surface(0, fp);
 		draw_Hilbert_plane(2, Pov->color_orange, fp); // Z=0
-		}
+	}
 	if (round == 20) {
 		int nb_frames_half, nb1, j;
 
@@ -1085,16 +1069,16 @@ void animate::draw_frame_Hilbert(
 
 			if (j < 6) {
 				draw_Hilbert_red_line(1 + j, fp); // a{j+1}
-				}
-
 			}
+
+		}
 		else {
 			draw_Hilbert_cube_boxed(fp);
 			//draw_Hilbert_cube_faces(Anim, fp);
 			draw_Hilbert_cube_extended_edges(fp);
 			draw_Hilbert_red_lines(fp);
-			}
 		}
+	}
 	if (round == 21) {
 		int nb_frames_half, nb1, j;
 
@@ -1109,16 +1093,16 @@ void animate::draw_frame_Hilbert(
 
 			if (j < 6) {
 				draw_Hilbert_blue_line(1 + j, fp); // b{j+1}
-				}
-
 			}
+
+		}
 		else {
 			draw_Hilbert_cube_boxed(fp);
 			//draw_Hilbert_cube_faces(Anim, fp);
 			draw_Hilbert_cube_extended_edges(fp);
 			draw_Hilbert_blue_lines(fp);
-			}
 		}
+	}
 	if (round == 22) {
 
 
@@ -1141,9 +1125,9 @@ void animate::draw_frame_Hilbert(
 
 			if (j < 6) {
 				draw_Hilbert_point(24 + j, 0.15, Pov->color_chrome, fp);
-				}
-
 			}
+
+		}
 		else {
 			draw_Hilbert_point(24, 0.15, Pov->color_chrome, fp);
 			draw_Hilbert_point(25, 0.15, Pov->color_chrome, fp);
@@ -1151,8 +1135,8 @@ void animate::draw_frame_Hilbert(
 			draw_Hilbert_point(27, 0.15, Pov->color_chrome, fp);
 			draw_Hilbert_point(28, 0.15, Pov->color_chrome, fp);
 			draw_Hilbert_point(29, 0.15, Pov->color_chrome, fp);
-			}
 		}
+	}
 	if (round == 23) {
 
 
@@ -1174,45 +1158,45 @@ void animate::draw_frame_Hilbert(
 		for (i = 0; i < 15; i++) {
 			if (i == 2 || i == 7 || i == 11) {
 				continue;
-				}
-			draw_Hilbert_line(12 + i, Pov->color_yellow, fp);
 			}
+			draw_Hilbert_line(12 + i, Pov->color_yellow, fp);
 		}
+	}
 	if (round == 25) {
 		draw_Hilbert_red_lines(fp);
 		draw_Hilbert_blue_lines(fp);
 		for (i = 0; i < 15; i++) {
 			if (i == 2 || i == 7 || i == 11) {
 				continue;
-				}
-			draw_Hilbert_line(12 + i, Pov->color_yellow, fp);
 			}
+			draw_Hilbert_line(12 + i, Pov->color_yellow, fp);
 		}
+	}
 	if (round == 26) {
 		draw_Hilbert_red_lines(fp);
 		draw_Hilbert_blue_lines(fp);
 		for (i = 0; i < 15; i++) {
 			if (i == 2 || i == 7 || i == 11) {
 				continue;
-				}
-			draw_Hilbert_line(12 + i, Pov->color_yellow, fp);
 			}
-		draw_single_surface(0, fp);
+			draw_Hilbert_line(12 + i, Pov->color_yellow, fp);
 		}
+		draw_single_surface(0, fp);
+	}
 
 	if (round == 27) {
-		}
+	}
 	if (round == 28) {
-		}
+	}
 	if (round == 29) {
 		draw_Hilbert_cube_boxed(fp);
 		draw_Hilbert_red_line(1, fp); // a{j+1}
 		draw_Hilbert_blue_line(1, fp); // b{j+1}
-		}
+	}
 	if (round == 30) {
-		}
+	}
 	if (round == 31) {
-		}
+	}
 	if (round == 32) {
 		//draw_Hilbert_red_lines(S, fp);
 		//draw_Hilbert_blue_lines(S, fp);
@@ -1227,24 +1211,24 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_point(27, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(28, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(29, 0.15, Pov->color_chrome, fp);
-		}
+	}
 	if (round == 33) {
-		}
+	}
 	if (round == 34) {
-		}
+	}
 	if (round == 35) {
-		}
+	}
 	if (round == 36) {
-		}
+	}
 	if (round == 37) {
-		}
+	}
 	if (round == 38) {
-		}
+	}
 	if (round == 39) {
 		draw_single_surface(1, fp);
-		}
+	}
 	if (round == 40) {
-		}
+	}
 	if (round == 41) {
 		// Cayley's nodal surface:
 		int idx0 = 27;
@@ -1255,7 +1239,7 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_line(idx0 + 3, Pov->color_red, fp);
 		draw_Hilbert_line(idx0 + 4, Pov->color_red, fp);
 		draw_Hilbert_line(idx0 + 5, Pov->color_red, fp);
-		}
+	}
 	if (round == 42) {
 		// Cayley's nodal surface:
 		int idx0 = 27;
@@ -1266,12 +1250,12 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_line(idx0 + 3, Pov->color_red, fp);
 		draw_Hilbert_line(idx0 + 4, Pov->color_red, fp);
 		draw_Hilbert_line(idx0 + 5, Pov->color_red, fp);
-		}
+	}
 
 	if (round == 43) {
 		// Clebsch surface:
 		draw_single_surface(2, fp);
-		}
+	}
 	if (round == 44) {
 		// Clebsch surface with lines
 		//S->line_radius = 0.04;
@@ -1284,21 +1268,21 @@ void animate::draw_frame_Hilbert(
 			12 + 38,12 + 39,12 + 40,12 + 41,12 + 42,12 + 43,
 			12 + 44,12 + 45,12 + 46,12 + 47};
 		S->draw_lines_with_selection(yellow, 15, Pov->color_yellow, fp);
-		}
+	}
 	if (round == 45) {
 		draw_single_surface(3, fp); // Fermat
-		}
+	}
 	if (round == 46) {
 		draw_single_surface(3, fp); // Fermat's surface
 		int red[3] = {60,61,62};
 		S->draw_lines_with_selection(red, 3, Pov->color_red, fp);
-		}
+	}
 	if (round == 47) {
-		}
+	}
 	if (round == 48) {
 		// Cayleys ruled surface, also due to Chasles
 		draw_single_surface(6, fp);
-		}
+	}
 	if (round == 49) {
 		// Cayleys ruled surface, also due to Chasles
 		S->line_radius = 0.04;
@@ -1310,7 +1294,7 @@ void animate::draw_frame_Hilbert(
 		idx = NEW_int(nb_lines_actual);
 		for (i = 0; i < nb_lines_actual; i++) {
 			idx[i] = nb_lines0 + i;
-			}
+		}
 
 
 		int nb_frames_half, nb1, nb2;
@@ -1321,13 +1305,13 @@ void animate::draw_frame_Hilbert(
 		if (h < nb1 * nb_lines_actual) {
 			nb2 = h / nb1;
 			S->draw_lines_with_selection(idx, nb2, Pov->color_brown, fp);
-			}
+		}
 		else {
 			S->draw_lines_with_selection(idx,
 					nb_lines_actual, Pov->color_brown, fp);
-			}
-		FREE_int(idx);
 		}
+		FREE_int(idx);
+	}
 	if (round == 50) {
 		// Cayleys ruled surface, also due to Chasles
 		S->line_radius = 0.04;
@@ -1339,10 +1323,10 @@ void animate::draw_frame_Hilbert(
 		idx = NEW_int(nb_lines_actual);
 		for (i = 0; i < nb_lines_actual; i++) {
 			idx[i] = nb_lines0 + i;
-			}
+		}
 		S->draw_lines_with_selection(idx, nb_lines_actual, Pov->color_brown, fp);
 		FREE_int(idx);
-		}
+	}
 	if (round == 51) {
 		// Cayleys ruled surface, also due to Chasles
 		S->line_radius = 0.04;
@@ -1354,12 +1338,12 @@ void animate::draw_frame_Hilbert(
 		idx = NEW_int(nb_lines_actual);
 		for (i = 0; i < nb_lines_actual; i++) {
 			idx[i] = nb_lines0 + i;
-			}
+		}
 		S->draw_lines_with_selection(idx, nb_lines_actual, Pov->color_brown, fp);
 		draw_Hilbert_plane(2, Pov->color_orange, fp); // Z=0
 		draw_Hilbert_point(38, 0.25, Pov->color_chrome, fp);
 		FREE_int(idx);
-		}
+	}
 	if (round == 52) {
 		// Cayleys ruled surface, also due to Chasles
 		S->line_radius = 0.04;
@@ -1371,15 +1355,15 @@ void animate::draw_frame_Hilbert(
 		idx = NEW_int(nb_lines_actual);
 		for (i = 0; i < nb_lines_actual; i++) {
 			idx[i] = nb_lines0 + i;
-			}
+		}
 		S->draw_lines_with_selection(idx, nb_lines_actual, Pov->color_brown, fp);
 		draw_Hilbert_plane(2, Pov->color_orange, fp); // Z=0
 		draw_Hilbert_point(38, 0.25, Pov->color_chrome, fp);
 		FREE_int(idx);
-		}
+	}
 	if (round == 53) {
 		draw_single_surface(0, fp);
-		}
+	}
 	if (round == 54) {
 		// Cayleys ruled surface, also due to Chasles
 		S->line_radius = 0.04;
@@ -1392,13 +1376,13 @@ void animate::draw_frame_Hilbert(
 		idx = NEW_int(nb_lines_actual);
 		for (i = 0; i < nb_lines_actual; i++) {
 			idx[i] = nb_lines0 + i;
-			}
+		}
 		S->draw_lines_with_selection(idx, nb_lines_actual, Pov->color_brown, fp);
 		draw_Hilbert_plane(2, Pov->color_orange, fp); // Z=0
 		draw_Hilbert_point(38, 0.25, Pov->color_chrome, fp);
 		S->draw_line_with_selection(nb_lines1, Pov->color_yellow, fp);
 		FREE_int(idx);
-		}
+	}
 	if (round == 55) {
 		// Cayleys ruled surface, also due to Chasles
 		S->line_radius = 0.04;
@@ -1411,13 +1395,13 @@ void animate::draw_frame_Hilbert(
 		idx = NEW_int(nb_lines_actual);
 		for (i = 0; i < nb_lines_actual; i++) {
 			idx[i] = nb_lines0 + i;
-			}
+		}
 		S->draw_lines_with_selection(idx, nb_lines_actual, Pov->color_brown, fp);
 		draw_Hilbert_plane(2, Pov->color_orange, fp); // Z=0
 		draw_Hilbert_point(38, 0.25, Pov->color_chrome, fp);
 		S->draw_line_with_selection(nb_lines1, Pov->color_yellow, fp);
 		FREE_int(idx);
-		}
+	}
 	if (round == 56) {
 		S->line_radius = 0.04;
 		//draw_Hilbert_cube_boxed(S, fp);
@@ -1438,7 +1422,7 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_point(27, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(28, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(29, 0.15, Pov->color_chrome, fp);
-		}
+	}
 	if (round == 57) {
 		S->line_radius = 0.04;
 		//draw_Hilbert_cube_boxed(S, fp);
@@ -1459,7 +1443,7 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_point(27, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(28, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(29, 0.15, Pov->color_chrome, fp);
-		}
+	}
 	if (round == 58) {
 		S->line_radius = 0.04;
 		//draw_Hilbert_cube_boxed(Anim, fp);
@@ -1480,7 +1464,7 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_point(27, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(28, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(29, 0.15, Pov->color_chrome, fp);
-		}
+	}
 	if (round == 59) {
 		S->line_radius = 0.04;
 		//draw_Hilbert_cube_boxed(S, fp);
@@ -1501,30 +1485,30 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_point(27, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(28, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(29, 0.15, Pov->color_chrome, fp);
-		}
+	}
 	if (round == 60) {
 		draw_single_surface(7, fp); // from arc_lifting
-		}
+	}
 	if (round == 61) {
 		draw_single_surface(7, fp); // from arc_lifting
-		}
+	}
 	if (round == 62) {
 		draw_single_surface(7, fp); // from arc_lifting
-		}
+	}
 	if (round == 63) {
 		draw_single_surface(8, fp); // from arc_lifting
-		}
+	}
 	if (round == 64) {
 		draw_single_surface(8, fp); // from arc_lifting
-		}
+	}
 	if (round == 65) {
 		draw_single_surface(8, fp); // from arc_lifting
-		}
+	}
 	if (round == 66) {
 		draw_single_surface(0, fp); // Hilbert surface
 		draw_Hilbert_plane(6, Pov->color_orange, fp); // F1
 		draw_Hilbert_plane(7, Pov->color_orange, fp); // F2
-		}
+	}
 	if (round == 67) {
 		draw_single_surface(0, fp); // Hilbert surface
 		draw_Hilbert_plane(6, Pov->color_orange, fp); // F1
@@ -1534,23 +1518,23 @@ void animate::draw_frame_Hilbert(
 		S->line_radius = 0.04;
 
 		{
-		int s[] = {12, 13 /*, 14, 15, 16, 17*/};
-		S->draw_edges_with_selection(s, 2, Pov->color_red, fp); // a1, a2
+			int s[] = {12, 13 /*, 14, 15, 16, 17*/};
+			S->draw_edges_with_selection(s, 2, Pov->color_red, fp); // a1, a2
 		}
 		{
-		int s[] = {/*18, 19, 20,*/ 21, 22 /*, 23*/};
-		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b4, b5
+			int s[] = {/*18, 19, 20,*/ 21, 22 /*, 23*/};
+			S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b4, b5
 		}
 		draw_Hilbert_line(12 + 3, Pov->color_yellow, fp); // c15
 		draw_Hilbert_line(12 + 6, Pov->color_yellow, fp); // c24
 
-		}
+	}
 	if (round == 68) {
 		draw_single_surface(0, fp); // Hilbert surface
 		draw_Hilbert_plane(9, Pov->color_yellow_lemon_transparent, fp); // G1
 		draw_Hilbert_plane(10, Pov->color_yellow_lemon_transparent, fp); // G2
 		draw_Hilbert_plane(11, Pov->color_yellow_lemon_transparent, fp); // G2
-		}
+	}
 	if (round == 69) {
 		draw_single_surface(0, fp); // Hilbert surface
 		draw_Hilbert_plane(9, Pov->color_yellow_lemon_transparent, fp); // G1
@@ -1559,17 +1543,17 @@ void animate::draw_frame_Hilbert(
 
 		S->line_radius = 0.04;
 		{
-		int s[] = {12, 13 /*, 14, 15, 16, 17*/};
-		S->draw_edges_with_selection(s, 2, Pov->color_red, fp); // a1, a2
+			int s[] = {12, 13 /*, 14, 15, 16, 17*/};
+			S->draw_edges_with_selection(s, 2, Pov->color_red, fp); // a1, a2
 		}
 		{
-		int s[] = {/*18, 19, 20,*/ 21, 22 /*, 23*/};
-		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b4, b5
+			int s[] = {/*18, 19, 20,*/ 21, 22 /*, 23*/};
+			S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b4, b5
 		}
 		draw_Hilbert_line(12 + 3, Pov->color_yellow, fp); // c15
 		draw_Hilbert_line(12 + 6, Pov->color_yellow, fp); // c24
 
-		}
+	}
 	if (round == 70) {
 		draw_single_surface(0, fp); // Hilbert surface
 		draw_Hilbert_plane(6, Pov->color_orange, fp); // F1
@@ -1580,17 +1564,17 @@ void animate::draw_frame_Hilbert(
 
 		S->line_radius = 0.04;
 		{
-		int s[] = {12, 13 /*, 14, 15, 16, 17*/};
-		S->draw_edges_with_selection(s, 2, Pov->color_red, fp); // a1, a2
+			int s[] = {12, 13 /*, 14, 15, 16, 17*/};
+			S->draw_edges_with_selection(s, 2, Pov->color_red, fp); // a1, a2
 		}
 		{
-		int s[] = {/*18, 19, 20,*/ 21, 22 /*, 23*/};
-		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b4, b5
+			int s[] = {/*18, 19, 20,*/ 21, 22 /*, 23*/};
+			S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b4, b5
 		}
 		draw_Hilbert_line(12 + 3, Pov->color_yellow, fp); // c15
 		draw_Hilbert_line(12 + 6, Pov->color_yellow, fp); // c24
 
-		}
+	}
 	if (round == 71) {
 		//draw_surface(S, 0, fp); // Hilbert surface
 		draw_Hilbert_plane(6, Pov->color_orange, fp); // F1
@@ -1601,17 +1585,17 @@ void animate::draw_frame_Hilbert(
 
 		S->line_radius = 0.04;
 		{
-		int s[] = {12, 13 /*, 14, 15, 16, 17*/};
-		S->draw_edges_with_selection(s, 2, Pov->color_red, fp); // a1, a2
+			int s[] = {12, 13 /*, 14, 15, 16, 17*/};
+			S->draw_edges_with_selection(s, 2, Pov->color_red, fp); // a1, a2
 		}
 		{
-		int s[] = {/*18, 19, 20,*/ 21, 22 /*, 23*/};
-		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b4, b5
+			int s[] = {/*18, 19, 20,*/ 21, 22 /*, 23*/};
+			S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b4, b5
 		}
 		draw_Hilbert_line(12 + 3, Pov->color_yellow, fp); // c15
 		draw_Hilbert_line(12 + 6, Pov->color_yellow, fp); // c24
 
-		}
+	}
 
 	if (round == 72) {
 		draw_single_surface(0, fp); // Hilbert surface
@@ -1626,26 +1610,26 @@ void animate::draw_frame_Hilbert(
 		// avoid drawing the plane at infinity:
 		if (quo != 37) {
 			draw_Hilbert_plane(12 + quo, Pov->color_orange, fp); // tritangent plane quo
-			}
+		}
 
 		draw_Hilbert_red_lines(fp);
 		draw_Hilbert_blue_lines(fp);
 		for (i = 0; i < 15; i++) {
 			if (i == 2 || i == 7 || i == 11) {
 				continue;
-				}
-			draw_Hilbert_line(12 + i, Pov->color_yellow, fp);
 			}
-
+			draw_Hilbert_line(12 + i, Pov->color_yellow, fp);
 		}
+
+	}
 	if (round == 73) {
 		//S->line_radius = 0.04;
 		//draw_Hilbert_cube_boxed(S, fp);
 		draw_Hilbert_red_lines(fp);
 		//draw_Hilbert_blue_lines(S, fp);
 		{
-		int s[] = {18, /* 19, 20, 21, 22,*/ 23};
-		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
+			int s[] = {18, /* 19, 20, 21, 22,*/ 23};
+			S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
 		}
 		draw_Hilbert_plane(12 + 43, Pov->color_orange, fp); // pi_{16,24,35}
 		draw_Hilbert_line(12 + 4, Pov->color_yellow, fp); // c16
@@ -1658,7 +1642,7 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_point(34, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(36, 0.15, Pov->color_chrome, fp);
 		draw_Hilbert_point(37, 0.15, Pov->color_chrome, fp);
-		}
+	}
 	if (round == 74) {
 		//S->line_radius = 0.04;
 		draw_single_surface(0, fp); // Hilbert surface
@@ -1668,15 +1652,15 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_line(12 + 6, Pov->color_yellow, fp); // c24
 		draw_Hilbert_line(12 + 10, Pov->color_yellow, fp); // c35
 
-		}
+	}
 	if (round == 75) {
 		//S->line_radius = 0.04;
 		//draw_Hilbert_cube_boxed(S, fp);
 		draw_Hilbert_red_lines(fp);
 		//draw_Hilbert_blue_lines(S, fp);
 		{
-		int s[] = {18, /* 19, 20, 21, 22,*/ 23};
-		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
+			int s[] = {18, /* 19, 20, 21, 22,*/ 23};
+			S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
 		}
 		draw_Hilbert_plane(12 + 43, Pov->color_orange, fp); // pi_{16,24,35}
 		draw_Hilbert_line(12 + 4, Pov->color_yellow, fp); // c16
@@ -1689,12 +1673,12 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_point(34, 0.075, Pov->color_chrome, fp);
 		draw_Hilbert_point(36, 0.075, Pov->color_chrome, fp);
 		draw_Hilbert_point(37, 0.075, Pov->color_chrome, fp);
-		}
+	}
 	if (round == 76) {
 		//S->line_radius = 0.04;
 		draw_frame_Hilbert_round_76(Opt, h, nb_frames, round,
 			fp, verbose_level);
-		}
+	}
 	if (round == 77) {
 
 		//S->line_radius = 0.04;
@@ -1703,8 +1687,8 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_red_lines(fp);
 		//draw_Hilbert_blue_lines(S, fp);
 		{
-		int s[] = {18, /* 19, 20, 21, 22,*/ 23};
-		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
+			int s[] = {18, /* 19, 20, 21, 22,*/ 23};
+			S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
 		}
 		draw_Hilbert_plane(12 + 43, Pov->color_orange, fp); // pi_{16,24,35}
 		draw_Hilbert_line(12 + 4, Pov->color_yellow, fp); // c16
@@ -1742,7 +1726,7 @@ void animate::draw_frame_Hilbert(
 			CS->draw_lines_up_original(n - 1, 1, Pov->color_gold, fp);
 			}
 #endif
-		}
+	}
 
 	if (round == 78) {
 
@@ -1752,8 +1736,8 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_red_lines(fp);
 		//draw_Hilbert_blue_lines(S, fp);
 		{
-		int s[] = {18, /* 19, 20, 21, 22,*/ 23};
-		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
+			int s[] = {18, /* 19, 20, 21, 22,*/ 23};
+			S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
 		}
 		draw_Hilbert_plane(12 + 43, Pov->color_orange, fp); // pi_{16,24,35}
 		draw_Hilbert_line(12 + 4, Pov->color_yellow, fp); // c16
@@ -1786,12 +1770,12 @@ void animate::draw_frame_Hilbert(
 		CS->draw_points_down_original(0, CS->nb_steps, 0.05, Pov->color_scarlet, fp);
 		CS->draw_points_up(0, nb, 0.05, Pov->color_black, fp);
 #endif
-		}
+	}
 	if (round == 79) {
 		//S->line_radius = 0.04;
 		draw_frame_Hilbert_round_76(Opt, h, nb_frames, round,
 			fp, verbose_level);
-		}
+	}
 	if (round == 80) {
 		// for Tarun
 		//S->line_radius = 0.04;
@@ -1845,7 +1829,7 @@ void animate::draw_frame_Hilbert(
 		//S->line_radius = 0.04;
 		draw_frame_Hilbert_round_76(Opt, h, nb_frames, round,
 			fp, verbose_level);
-		}
+	}
 	if (round == 82) {
 		//S->line_radius = 0.04;
 		draw_Hilbert_red_lines(fp);
@@ -1880,8 +1864,8 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_red_lines(fp);
 		//draw_Hilbert_blue_lines(S, fp);
 		{
-		int s[] = {18, /* 19, 20, 21, 22,*/ 23};
-		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
+			int s[] = {18, /* 19, 20, 21, 22,*/ 23};
+			S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
 		}
 
 		//draw_surface(S, 0, fp);
@@ -1891,7 +1875,7 @@ void animate::draw_frame_Hilbert(
 		draw_Hilbert_point(34, 0.12, Pov->color_chrome, fp);
 		draw_Hilbert_point(36, 0.12, Pov->color_chrome, fp);
 		draw_Hilbert_point(37, 0.12, Pov->color_chrome, fp);
-		}
+	}
 	if (round == 84) {
 
 		//S->line_radius = 0.04;
@@ -1900,7 +1884,7 @@ void animate::draw_frame_Hilbert(
 
 		draw_single_surface(0, fp);
 
-		}
+	}
 
 	if (round == 85) {
 
@@ -1910,13 +1894,13 @@ void animate::draw_frame_Hilbert(
 
 		draw_single_surface(0, fp);
 
-		}
+	}
 
 	if (round == 86) {
 
 		draw_surface_13_1(fp);
 
-		}
+	}
 	if (round == 87) {
 
 		//S->line_radius = 0.04;
@@ -1939,7 +1923,7 @@ void animate::draw_frame_Hilbert(
 		FREE_int(selection);
 
 
-		}
+	}
 	if (round == 88) {
 		{
 			// red lines:
@@ -1964,23 +1948,23 @@ void animate::draw_frame_Hilbert(
 		}
 	if (round == 89) {
 		{
-			// red lines:
-		int s[] = {12/*, 13, 14, 15, 16, 17*/};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
+				// red lines:
+			int s[] = {12/*, 13, 14, 15, 16, 17*/};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_red, fp);
 		}
 
 		{
-			// axes:
-		int s[] = {42,43,44};
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
+				// axes:
+			int s[] = {42,43,44};
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 		}
 
 		draw_Hilbert_cube_boxed(fp);
 
 		{
-			// blue lines
-		//int s[] = {18, 19, 20, 21, 22, 23};
-		//S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), color_blue, fp);
+				// blue lines
+			//int s[] = {18, 19, 20, 21, 22, 23};
+			//S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), color_blue, fp);
 		}
 		//draw_Hilbert_red_lines(S, fp);
 		//draw_Hilbert_blue_lines(S, fp);
@@ -2307,8 +2291,8 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	draw_Hilbert_red_lines(fp);
 	//draw_Hilbert_blue_lines(S, fp);
 	{
-	int s[] = {18, /* 19, 20, 21, 22,*/ 23};
-	S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
+		int s[] = {18, /* 19, 20, 21, 22,*/ 23};
+		S->draw_edges_with_selection(s, 2, Pov->color_blue, fp); // b1, b6
 	}
 	draw_Hilbert_plane(12 + 43, Pov->color_orange, fp); // pi_{16,24,35}
 	draw_Hilbert_line(12 + 4, Pov->color_yellow, fp); // c16
@@ -2686,16 +2670,16 @@ void animate::draw_frame_triangulation_of_cube(
 		//draw_Hilbert_cube_faces(S, fp);
 
 		{
-		int s[] = {6,7,8,9};
-		S->draw_faces_with_selection(s, sizeof(s) / sizeof(int), 0.01, Pov->color_pink, fp);
+			int s[] = {6,7,8,9};
+			S->draw_faces_with_selection(s, sizeof(s) / sizeof(int), 0.01, Pov->color_pink, fp);
 		}
 
 		{
-		int s[] = {12,13,14,15,16,17};
+			int s[] = {12,13,14,15,16,17};
 
-		orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.5);
+			orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.5);
 
-		S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
+			S->draw_edges_with_selection(s, sizeof(s) / sizeof(int), Pov->color_black, fp);
 		}
 
 	}
@@ -2729,8 +2713,8 @@ void animate::draw_frame_twisted_cubic(
 	for (i = 0; i < Opt->nb_clipping; i++) {
 		if (Opt->clipping_round[i] == round) {
 			//my_clipping_radius = Opt->clipping_value[i];
-			}
 		}
+	}
 
 
 	if (round == 0) {
@@ -2747,16 +2731,16 @@ void animate::draw_frame_twisted_cubic(
 			S->draw_edges_with_selection(s, 12, Pov->color_black, fp);
 		}
 		{
-		int *s;
+			int *s;
 
-		s = NEW_int(h);
-		for (i = 1; i < h; i++) {
-			s[i - 1] = 12 + i - 1;
-		}
-		orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.75);
+			s = NEW_int(h);
+			for (i = 1; i < h; i++) {
+				s[i - 1] = 12 + i - 1;
+			}
+			orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.75);
 
-		S->draw_edges_with_selection(s, h - 1, Pov->color_red, fp);
-		FREE_int(s);
+			S->draw_edges_with_selection(s, h - 1, Pov->color_red, fp);
+			FREE_int(s);
 		}
 
 	}
@@ -2774,16 +2758,16 @@ void animate::draw_frame_twisted_cubic(
 			S->draw_edges_with_selection(s, 12, Pov->color_black, fp);
 		}
 		{
-		int *s;
+			int *s;
 
-		s = NEW_int(nb_frames);
-		for (i = 1; i < nb_frames; i++) {
-			s[i - 1] = 12 + i - 1;
-		}
-		orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.75);
+			s = NEW_int(nb_frames);
+			for (i = 1; i < nb_frames; i++) {
+				s[i - 1] = 12 + i - 1;
+			}
+			orbiter_kernel_system::override_double line_radius(&S->line_radius, S->line_radius * 0.75);
 
-		S->draw_edges_with_selection(s, nb_frames - 1, Pov->color_red, fp);
-		FREE_int(s);
+			S->draw_edges_with_selection(s, nb_frames - 1, Pov->color_red, fp);
+			FREE_int(s);
 		}
 
 	}
@@ -2816,40 +2800,40 @@ void animate::draw_frame_five_plus_one(
 	int line0 = 0;
 
 	{
-	int s[2];
-	s[0] = plane0 + 0;
-	s[1] = plane0 + 1;
-	S->draw_planes_with_selection(s, 2, Pov->color_orange, fp);
+		int s[2];
+		s[0] = plane0 + 0;
+		s[1] = plane0 + 1;
+		S->draw_planes_with_selection(s, 2, Pov->color_orange, fp);
 	}
 
 	{
-	int s[1];
-	s[0] = line0 + 0;
-	S->draw_lines_with_selection(s, 1,
-			Pov->color_yellow, fp);
+		int s[1];
+		s[0] = line0 + 0;
+		S->draw_lines_with_selection(s, 1,
+				Pov->color_yellow, fp);
 	}
 	{
-	int s[1];
-	s[0] = line0 + 1;
-	S->draw_lines_with_selection(s, 1,
-			Pov->color_red, fp);
+		int s[1];
+		s[0] = line0 + 1;
+		S->draw_lines_with_selection(s, 1,
+				Pov->color_red, fp);
 	}
 	{
-	int s[1];
-	s[0] = line0 + 2;
-	S->draw_lines_with_selection(s, 1,
-			Pov->color_blue, fp);
+		int s[1];
+		s[0] = line0 + 2;
+		S->draw_lines_with_selection(s, 1,
+				Pov->color_blue, fp);
 	}
 	{
-	int s[1];
-	s[0] = line0 + 3;
-	S->draw_lines_with_selection(s, sizeof(s) / sizeof(int),
-			Pov->color_black, fp);
+		int s[1];
+		s[0] = line0 + 3;
+		S->draw_lines_with_selection(s, sizeof(s) / sizeof(int),
+				Pov->color_black, fp);
 	}
 	{
-	int s[] = {0};
-	S->draw_cubic_with_selection(s, sizeof(s) / sizeof(int),
-			Pov->color_white, fp);
+		int s[] = {0};
+		S->draw_cubic_with_selection(s, sizeof(s) / sizeof(int),
+				Pov->color_white, fp);
 	}
 
 
@@ -2894,7 +2878,7 @@ void animate::draw_frame_windy(
 
 	for (i = 0; i < 3; i++) {
 		u[i] = x * b1[i] + y * b2[i];
-		}
+	}
 	u[3] = 1.;
 
 	double A[16];
@@ -2939,29 +2923,29 @@ void animate::draw_frame_windy(
 	cout << "Transformed scene:" << endl;
 	S1->print();
 	{
-	int s[] = {0};
-	S1->draw_cubic_with_selection(s, sizeof(s) / sizeof(int), Pov->color_white, fp);
+		int s[] = {0};
+		S1->draw_cubic_with_selection(s, sizeof(s) / sizeof(int), Pov->color_white, fp);
 	}
 	{
-	int s[] = {1,7,11}; // bottom plane lines: c14, c25, c36
-	S1->draw_lines_cij_with_selection(s, sizeof(s) / sizeof(int), fp);
+		int s[] = {1,7,11}; // bottom plane lines: c14, c25, c36
+		S1->draw_lines_cij_with_selection(s, sizeof(s) / sizeof(int), fp);
 	}
 	{
-	int s[] = {0,3}; // a1 and a4
-	S1->draw_lines_ai_with_selection(s, sizeof(s) / sizeof(int), fp);
+		int s[] = {0,3}; // a1 and a4
+		S1->draw_lines_ai_with_selection(s, sizeof(s) / sizeof(int), fp);
 	}
 	{
-	int s[] = {2}; // bottom plane
-	S1->draw_planes_with_selection(s, sizeof(s) / sizeof(int), Pov->color_orange, fp);
+		int s[] = {2}; // bottom plane
+		S1->draw_planes_with_selection(s, sizeof(s) / sizeof(int), Pov->color_orange, fp);
 	}
 
 	{
-	int s[] = {1}; // a2
-	S1->draw_lines_ai_with_selection(s, sizeof(s) / sizeof(int), fp);
+		int s[] = {1}; // a2
+		S1->draw_lines_ai_with_selection(s, sizeof(s) / sizeof(int), fp);
 	}
 	{
-	int s[] = {2,4,5}; // b3, b5, b6
-	S1->draw_lines_bj_with_selection(s, sizeof(s) / sizeof(int), fp);
+		int s[] = {2,4,5}; // b3, b5, b6
+		S1->draw_lines_bj_with_selection(s, sizeof(s) / sizeof(int), fp);
 	}
 
 	{
@@ -3075,7 +3059,7 @@ void animate::draw_text(
 
 	if (f_v) {
 		cout << "animate::draw_text" << endl;
-		}
+	}
 
 	x = S->point_coords(idx_point, 0);
 	y = S->point_coords(idx_point, 1);
@@ -3083,30 +3067,30 @@ void animate::draw_text(
 
 	if (f_v) {
 		cout << "x,y,z=" << x << ", " << y << " , " << z << endl;
-		}
+	}
 
 	for (i = 0; i < 3; i++) {
 		view[i] = Pov->look_at[i] - Pov->location[i];
-		}
+	}
 	for (i = 0; i < 3; i++) {
 		up[i] = Pov->sky[i];
-		}
+	}
 
 
 	if (f_v) {
 		cout << "view_x,view_y,view_z=" << view[0] << ", "
 				<< view[1] << " , " << view[2] << endl;
-		}
+	}
 	if (f_v) {
 		cout << "up_x,up_y,up_z=" << up[0] << ", " << up[1]
 				<< " , " << up[2] << endl;
-		}
+	}
 	u[0] = view[1] * up[2] - view[2] * up[1];
 	u[1] = -1 *(view[0] * up[2] - up[0] * view[2]);
 	u[2] = view[0] * up[1] - up[0] * view[1];
 	if (f_v) {
 		cout << "u=" << u[0] << ", " << u[1] << " , " << u[2] << endl;
-		}
+	}
 	P1[0] = x;
 	P1[1] = y;
 	P1[2] = z;
@@ -3144,7 +3128,7 @@ void animate::draw_text(
 		cout << "view normalized: ";
 		N.vec_print(view, 3);
 		cout << endl;
-		}
+	}
 
 	offset[0] = off_x * u[0] + off_y * up[0] + off_z * view[0];
 	offset[1] = off_x * u[1] + off_y * up[1] + off_z * view[1];
@@ -3154,7 +3138,7 @@ void animate::draw_text(
 		cout << "offset: ";
 		N.vec_print(offset, 3);
 		cout << endl;
-		}
+	}
 
 	ost << "\ttext {" << endl;
 		ost << "\t\tttf \"timrom.ttf\", \"" << text << "\", "
@@ -3185,7 +3169,7 @@ void animate::draw_text(
 		//translate <0,0,0>
 	if (f_v) {
 		cout << "animate::draw_text done" << endl;
-		}
+	}
 }
 
 void animate::draw_text_with_selection(
@@ -3221,7 +3205,7 @@ void animate::draw_text_with_selection(
 				options,
 				idx_point,
 				ost, verbose_level);
-		}
+	}
 	ost << endl;
 	//ost << "		" << group_options << "" << endl;
 	//ost << "	}" << endl;

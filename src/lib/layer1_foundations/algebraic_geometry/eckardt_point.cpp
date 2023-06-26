@@ -112,22 +112,19 @@ void eckardt_point::latex_to_str_without_E(std::string &s)
 {
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;
-	char str[1000];
 
-	s.assign("");
+	s = "";
 	if (len == 3) {
 		for (t = 0; t < 3; t++) {
 			Combi.k2ij(index[t], i, j, 6);
-			snprintf(str, sizeof(str), "%d%d", i + 1, j + 1);
-			s.append(str);
+			s += std::to_string(i + 1) + std::to_string(j + 1);
 			if (t < 2) {
-				s.append(",");
+				s += ",";
 			}
 		}
 	}
 	else if (len == 2) {
-		snprintf(str, sizeof(str), "%d%d", index[0] + 1, index[1] + 1);
-		s.assign(str);
+		s += std::to_string(index[0] + 1) + std::to_string(index[1] + 1);
 	}
 	else {
 		cout << "eckardt_point::latex_to_str_without_E len is illegal" << endl;

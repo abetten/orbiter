@@ -57,7 +57,8 @@ void tree_node::init(
 	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "tree_node::init depth=" << depth << " value=" << value << endl;
+		cout << "tree_node::init "
+				"depth=" << depth << " value=" << value << endl;
 		}
 	tree_node::depth = depth;
 	tree_node::parent = parent;
@@ -141,7 +142,8 @@ int tree_node::find_node(
 		}
 		else {
 			for (i = 0; i < nb_children; i++) {
-				if (children[i]->find_node(DFS_rk, path + 1, sz - 1, verbose_level)) {
+				if (children[i]->find_node(
+						DFS_rk, path + 1, sz - 1, verbose_level)) {
 					return true;
 				}
 			}
@@ -175,7 +177,8 @@ int tree_node::find_node_and_path(
 		}
 		else {
 			for (i = 0; i < nb_children; i++) {
-				if (children[i]->find_node_and_path(Rk, path + 1, sz - 1, verbose_level)) {
+				if (children[i]->find_node_and_path(
+						Rk, path + 1, sz - 1, verbose_level)) {
 					return true;
 				}
 			}
@@ -404,7 +407,8 @@ void tree_node::draw_edges(
 		x = placement_x;
 		y = placement_y;
 		for (i = 0; i < nb_children; i++) {
-			children[i]->draw_edges(G, rad, f_circletext, true, x, y, max_depth, f_edge_labels,
+			children[i]->draw_edges(
+					G, rad, f_circletext, true, x, y, max_depth, f_edge_labels,
 				f_has_draw_vertex_callback, draw_vertex_callback, T);
 			}
 		return;
@@ -463,7 +467,8 @@ void tree_node::draw_edges(
 	
 
 	for (i = 0; i < nb_children; i++) {
-		children[i]->draw_edges(G, Tree_draw_options, Opt, true, x, y, max_depth, T, verbose_level);
+		children[i]->draw_edges(
+				G, Tree_draw_options, Opt, true, x, y, max_depth, T, verbose_level);
 	}
 
 	if (f_v) {
@@ -494,7 +499,8 @@ void tree_node::draw_vertices(
 		x = placement_x;
 		y = placement_y;
 		for (i = 0; i < nb_children; i++) {
-			children[i]->draw_vertices(G, rad, f_circletext, f_i, true, x, y, max_depth, f_edge_labels, 
+			children[i]->draw_vertices(
+					G, rad, f_circletext, f_i, true, x, y, max_depth, f_edge_labels,
 				f_has_draw_vertex_callback, draw_vertex_callback, T);
 			}
 		return;
@@ -561,8 +567,6 @@ void tree_node::draw_vertices(
 				s = std::to_string(value);
 				G.aligned_text(x, y, "", s);
 			}
-			//snprintf(str, 1000, "%d", color);
-			//G.aligned_text(Px[1], Py[1], "tl", str);
 		}
 		else {
 			string s;
@@ -575,7 +579,8 @@ void tree_node::draw_vertices(
 
 		if (Tree_draw_options->f_has_draw_vertex_callback) {
 			cout << "calling draw_vertex_callback" << endl;
-			(*Tree_draw_options->draw_vertex_callback)(T, &G, v, depth, this, x, y, dx, dy);
+			(*Tree_draw_options->draw_vertex_callback)(
+					T, &G, v, depth, this, x, y, dx, dy);
 		}
 
 	}
@@ -624,7 +629,8 @@ void tree_node::draw_vertices(
 		}
 
 	for (i = 0; i < nb_children; i++) {
-		children[i]->draw_vertices(G, Tree_draw_options, Opt, true, x, y, max_depth, T, verbose_level);
+		children[i]->draw_vertices(
+				G, Tree_draw_options, Opt, true, x, y, max_depth, T, verbose_level);
 		}
 
 
@@ -686,7 +692,8 @@ void tree_node::draw_sideways(
 		}
 	
 	for (i = 0; i < nb_children; i++) {
-		children[i]->draw_sideways(G, f_circletext, f_i, true, xx, yy, max_depth, f_edge_labels);
+		children[i]->draw_sideways(
+				G, f_circletext, f_i, true, xx, yy, max_depth, f_edge_labels);
 		}
 
 	string s;

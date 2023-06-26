@@ -867,12 +867,12 @@ void poset_classification::housekeeping_no_data_file(
 
 	if (Control->f_W || (Control->f_w && i == sz)) {
 #if 0
-		char fname_base2[1000];
+		string fname_base2;
 		
-		snprintf(fname_base2, sizeof(fname_base2), "%sa", fname_base);
+		fname_base2 = fname_base + "a";
 		write_level_file_binary(i, fname_base2, 1/*verbose_level*/);
 		if (i) {		
-			snprintf(fname_base2, sizeof(fname_base2), "%sb", fname_base);
+			fname_base2 = fname_base + "b";
 			write_level_file_binary(i - 1, fname_base2, 1/*verbose_level*/);
 			write_sv_level_file_binary(i - 1, 
 				fname_base, false, 0, 0, 1/*verbose_level*/);
@@ -1009,7 +1009,8 @@ void poset_classification::read_level_file_binary(
 	{
 		ifstream fp(fname, ios::binary);
 
-		Poo->read_level_file_binary2(level, fp,
+		Poo->read_level_file_binary2(
+				level, fp,
 				nb_group_elements, verbose_level);
 	}
 
@@ -1213,7 +1214,6 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 	ring_theory::longinteger_object stab_order, orbit_length;
 	int schreier_vector_length;
 	long int *rep;
-	char str[1000];
 	poset_orbit_node *O;
 
 	Nb_orbits = 0;
@@ -1234,11 +1234,9 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 		first = Poo->first_node_at_level(level);
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
-			snprintf(str, 1000,  "%d", level);
-			Text_level[first + i].assign(str);
+			Text_level[first + i] = std::to_string(level);
 
-			snprintf(str, 1000, "%d", i);
-			Text_node[first + i].assign(str);
+			Text_node[first + i] = std::to_string(i);
 
 			get_set_by_level(level, i, rep);
 			Lint_vec_print_to_str(Text_orbit_reps[first + i], rep, level);
@@ -1256,8 +1254,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 			else {
 				schreier_vector_length = 0;
 			}
-			snprintf(str, 1000, "%d", schreier_vector_length);
-			Text_schreier_vector_length[first + i].assign(str);
+			Text_schreier_vector_length[first + i] = std::to_string(schreier_vector_length);
 			}
 		}
 	Sp = NEW_OBJECT(data_structures::spreadsheet);
@@ -1307,7 +1304,6 @@ void poset_classification::make_spreadsheet_of_level_info(
 	ring_theory::longinteger_object schreier_vector_length,
 		schreier_vector_length_sum, schreier_vector_length_total;
 	int *rep;
-	char str[1000];
 	poset_orbit_node *O;
 
 	if (f_v) {
@@ -1337,11 +1333,9 @@ void poset_classification::make_spreadsheet_of_level_info(
 		nb_orbits = nb_orbits_at_level(level);
 
 
-		snprintf(str, 1000, "%d", level);
-		Text_label[level].assign(str);
+		Text_label[level] = std::to_string(level);
 
-		snprintf(str, 1000, "%d", nb_orbits);
-		Text_nb_orbits[level].assign(str);
+		Text_nb_orbits[level] = std::to_string(nb_orbits);
 
 		orbit_length_sum.create(0);
 		schreier_vector_length_sum.create(0);
@@ -1403,10 +1397,9 @@ void poset_classification::make_spreadsheet_of_level_info(
 	}
 
 	level = max_depth + 1;
-	Text_label[level].assign("total");
+	Text_label[level] = "total";
 
-	snprintf(str, 1000, "%d", Nb_orbits);
-	Text_nb_orbits[level].assign(str);
+	Text_nb_orbits[level] = std::to_string(Nb_orbits);
 
 	orbit_length_total.print_to_string(Text_orbit_length_sum[level]);
 
@@ -1450,27 +1443,21 @@ void poset_classification::create_schreier_tree_fname_mask_base(
 		std::string &fname_mask)
 {
 
-	fname_mask.assign(problem_label_with_path);
-	//fname_mask.append(Control->schreier_tree_prefix);
-	fname_mask.append("schreier_tree_node_%d_%d");
+	fname_mask = problem_label_with_path + "schreier_tree_node_%d_%d";
 }
 
 void poset_classification::create_schreier_tree_fname_mask_base_tex(
 		std::string &fname_mask)
 {
 
-	fname_mask.assign(problem_label_with_path);
-	//fname_mask.append(Control->schreier_tree_prefix);
-	fname_mask.append("schreier_tree_node_%d.tex");
+	fname_mask = problem_label_with_path + "schreier_tree_node_%d.tex";
 }
 
 void poset_classification::create_shallow_schreier_tree_fname_mask_base(
 		std::string &fname_mask)
 {
 
-	fname_mask.assign(problem_label_with_path);
-	//fname_mask.append(Control->schreier_tree_prefix);
-	fname_mask.append("shallow_schreier_tree_node_%d_%d");
+	fname_mask = problem_label_with_path + "shallow_schreier_tree_node_%d_%d";
 
 }
 
@@ -1478,14 +1465,7 @@ void poset_classification::create_shallow_schreier_tree_fname_mask(
 		std::string &fname, int node)
 {
 
-	char str[1000];
-
-	snprintf(str, sizeof(str), "%d", node);
-	fname.assign(problem_label_with_path);
-	//fname.append(Control->schreier_tree_prefix);
-	fname.append("shallow_schreier_tree_node_");
-	fname.append(str);
-	fname.append("_%d");
+	fname = problem_label_with_path + "shallow_schreier_tree_node_" + std::to_string(node) + "_%d";
 
 }
 
@@ -1493,17 +1473,7 @@ void poset_classification::make_fname_candidates_file_default(
 		std::string &fname, int level)
 {
 
-	fname.assign(problem_label_with_path);
-	fname.append("_lvl_");
-
-	char str[1000];
-
-	snprintf(str, sizeof(str), "%d", level);
-	fname.append(str);
-	fname.append("_candidates.bin");
-
-	//snprintf(fname2000, 2000, "%s_lvl_%d_candidates.bin",
-	//		problem_label_with_path.c_str(), level);
+	fname = problem_label_with_path + "_lvl_" + std::to_string(level) + "_candidates.bin";
 }
 
 void poset_classification::wedge_product_export_magma(
@@ -1540,9 +1510,9 @@ void poset_classification::wedge_product_export_magma(
 		cout << "fst=" << fst << " len=" << len << endl;
 	}
 	poset_orbit_node *O;
-	char fname[1000];
+	string fname;
 
-	snprintf(fname, 1000, "Wedge_n%d_q%d_d%d.magma", n, q, level);
+	fname = "Wedge_n" + std::to_string(n) + "_q" + std::to_string(q) + "_d" + std::to_string(level) + ".magma";
 
 	{
 		ofstream f(fname);
@@ -1732,15 +1702,11 @@ void poset_classification::write_reps_csv(int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname_reps_csv;
-	char str[1000];
 
 	if (f_v) {
 		cout << "poset_classification::write_reps_csv" << endl;
 	}
-	fname_reps_csv.assign(problem_label_with_path);
-	snprintf(str, sizeof(str), "_reps_lvl_%d", lvl);
-	fname_reps_csv.append(str);
-	fname_reps_csv.append(".csv");
+	fname_reps_csv = problem_label_with_path + "_reps_lvl_" + std::to_string(lvl) + ".csv";
 
 	Poo->save_representatives_at_level_to_csv(fname_reps_csv, lvl, verbose_level);
 

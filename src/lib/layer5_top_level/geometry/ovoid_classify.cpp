@@ -17,11 +17,13 @@ namespace layer5_applications {
 namespace apps_geometry {
 
 
-static void ovoid_classify_early_test_func_callback(long int *S, int len,
+static void ovoid_classify_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-static void callback_ovoid_print_set(std::ostream &ost, int len, long int *S, void *data);
+static void callback_ovoid_print_set(
+		std::ostream &ost, int len, long int *S, void *data);
 
 
 
@@ -759,14 +761,13 @@ void ovoid_classify::create_graph(
 		nb_colors_used = nb_colors;
 	}
 
-	char str[1000];
-
-	snprintf(str, sizeof(str), "graph_ovoid_%d_%d_%d",
-			LG->F->q, starter_size, orbit_idx);
-
 	string label, label_tex;
-	label.assign(str);
-	label_tex.assign(str);
+
+	label = "graph_ovoid_" + std::to_string(LG->F->q)
+			+ "_" + std::to_string(starter_size)
+			+ "_" + std::to_string(orbit_idx);
+	label_tex = label;
+
 
 	CG = NEW_OBJECT(graph_theory::colored_graph);
 
@@ -861,7 +862,8 @@ void ovoid_classify::compute_coloring(
 }
 
 
-static void ovoid_classify_early_test_func_callback(long int *S, int len,
+static void ovoid_classify_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -883,7 +885,8 @@ static void ovoid_classify_early_test_func_callback(long int *S, int len,
 		}
 }
 
-static void callback_ovoid_print_set(std::ostream &ost, int len, long int *S, void *data)
+static void callback_ovoid_print_set(
+		std::ostream &ost, int len, long int *S, void *data)
 {
 	ovoid_classify *Gen = (ovoid_classify *) data;
 

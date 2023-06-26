@@ -226,9 +226,9 @@ void polar::init2(int depth, int verbose_level)
 	Control->depth = depth;
 
 
-	char label[1000];
+	string label;
 
-	snprintf(label, sizeof(label), "polar_%d_%d_%d_%d", epsilon, n, k, q); // ToDo
+	label = "polar_" + std::to_string(epsilon) + "_" + std::to_string(n) + "_" + std::to_string(k) + "_" + std::to_string(q);
 
 
 
@@ -620,7 +620,7 @@ void polar::dual_polar_graph(
 	Inc = NEW_int(index_int * nb_e);
 	for (i = 0; i < index_int * nb_e; i++) {
 		Inc[i] = 0;
-		}
+	}
 	
 	e = 0;
 	for (c1 = 0; c1 < index_int; c1++) {
@@ -629,37 +629,37 @@ void polar::dual_polar_graph(
 				Inc[c1 * nb_e + e] = 1;
 				Inc[c2 * nb_e + e] = 1;
 				e++;
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		cout << "Incidence matrix:" << index_int
 				<< " x " << nb_e << endl;
 		Int_vec_print_integer_matrix_width(cout, Inc,
 				index_int, nb_e, nb_e, 1);
-		}
-
-	{
-	char fname[1000];
-
-	snprintf(fname, sizeof(fname), "dual_polar_graph_O_%d_%d_%d.inc", epsilon, n, q);
-	{
-	ofstream f(fname);
-	f << index_int << " " << nb_e << " " << 2 * nb_e << endl;
-	for (i = 0; i < index_int * nb_e; i++) {
-		if (Inc[i]) {
-			f << i << " ";
-			}
-		}
-	f << endl;
-	f << -1 << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	{
+		string fname;
 
-	if (f_v) {
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
+		fname = "dual_polar_graph_O_" + std::to_string(epsilon) + "_" + std::to_string(n) + "_" + std::to_string(q) + ".inc";
+		{
+			ofstream f(fname);
+			f << index_int << " " << nb_e << " " << 2 * nb_e << endl;
+			for (i = 0; i < index_int * nb_e; i++) {
+				if (Inc[i]) {
+					f << i << " ";
+					}
+				}
+			f << endl;
+			f << -1 << endl;
+		}
+
+		orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
 		}
 	}
 

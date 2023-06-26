@@ -392,15 +392,12 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 	l1_interfaces::latex_interface L;
 
 	string fname, title, author, extra_praeamble;
-	char str[1000];
 	//int f_with_stabilizers = true;
 
-	snprintf(str, 1000, "Wreath product $%s$", W->label_tex.c_str());
-	title.assign(str);
+	title = "Wreath product $" + W->label_tex + "$";
 
-	author.assign("Orbiter");
-	snprintf(str, 1000, "WreathProduct_q%d_n%d.tex", W->q, W->nb_factors);
-	fname.assign(str);
+	author = "Orbiter";
+	fname = "WreathProduct_q" + std::to_string(W->q) + "_n" + std::to_string(W->nb_factors) + ".tex";
 
 	{
 		ofstream fp(fname);

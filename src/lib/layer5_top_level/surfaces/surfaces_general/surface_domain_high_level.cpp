@@ -1032,38 +1032,26 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	string fname_data;
 	data_structures::string_tools ST;
 
-	fname_data.assign(fname_csv);
+	fname_data = fname_csv;
 	ST.chop_off_extension(fname_data);
 
-	char str[1000];
-	snprintf(str, sizeof(str), "_F%d.csv", F->q);
-	fname_data.append(str);
+	fname_data += "_F" + std::to_string(F->q) + ".csv";
+
 
 	long int *Vec[10];
-	char str_A[1000];
-	char str_P[1000];
-	char str_L[1000];
-	char str_E[1000];
-	char str_S[1000];
-	char str_D[1000];
-	snprintf(str_A, sizeof(str_A), "Ago-%d", F->q);
-	snprintf(str_P, sizeof(str_P), "Nb_P-%d", F->q);
-	snprintf(str_L, sizeof(str_L), "Nb_L-%d", F->q);
-	snprintf(str_E, sizeof(str_E), "Nb_E-%d", F->q);
-	snprintf(str_S, sizeof(str_S), "Nb_S-%d", F->q);
-	snprintf(str_D, sizeof(str_D), "Nb_D-%d", F->q);
-	const char *column_label[] = {
-			"Orbit_idx",
-			"Rep",
-			"StabOrder",
-			"OrbitLength",
-			str_A,
-			str_P,
-			str_L,
-			str_E,
-			str_S,
-			str_D,
-	};
+	string *column_label;
+
+	column_label = new string[10];
+	column_label[0] = "Orbit_idx";
+	column_label[1] = "Rep";
+	column_label[2] = "StabOrder";
+	column_label[3] = "OrbitLength";
+	column_label[4] = "Ago-" + std::to_string(F->q);
+	column_label[5] = "Nb_P-" + std::to_string(F->q);
+	column_label[6] = "Nb_L-" + std::to_string(F->q);
+	column_label[7] = "Nb_E-" + std::to_string(F->q);
+	column_label[8] = "Nb_S-" + std::to_string(F->q);
+	column_label[9] = "Nb_D-" + std::to_string(F->q);
 
 	Vec[0] = Orbit;
 	Vec[1] = Rep;

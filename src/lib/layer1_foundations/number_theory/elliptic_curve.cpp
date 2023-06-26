@@ -523,24 +523,6 @@ void elliptic_curve::draw_grid2(
 			G.fill_polygon5(Px, Py, 0, 1, 2, 3, 4);
 		}
 
-#if 0
-
-		if (nb < 30) {
-			if (f_v) {
-				cout << "drawing point labels" << endl;
-				}
-			// drawing point labels:
-			for (i = 0; i < nb; i++) {
-				char str[1000];
-				snprintf(str, sizeof(str), "%d", i);
-				x1 = T[3 * i + 0];
-				x2 = T[3 * i + 1];
-				x3 = T[3 * i + 2];
-				get_ab(q, x1, x2, x3, a, b);
-				G.aligned_text(Px[a * Q + b], Py[a * Q + b], "", str);
-				}
-			}
-#endif
 
 	}
 	else {

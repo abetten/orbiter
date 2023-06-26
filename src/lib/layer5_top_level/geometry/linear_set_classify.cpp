@@ -960,10 +960,11 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	Control2->depth = secondary_depth;
 
 
-	char label[1000]; // ToDo
+	string label;
 
-	snprintf(label, sizeof(label), "subspaces_%d_%d_%d_secondary_%d_%d", n, q, s,
-		secondary_level, secondary_orbit_at_level);
+	label = "subspaces_" + std::to_string(n) + "_" + std::to_string(q) + "_" + std::to_string(s)
+			+ "_secondary_" + std::to_string(secondary_level)
+			+ "_" + std::to_string(secondary_orbit_at_level);
 
 
 	if (f_v) {
@@ -1339,11 +1340,11 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	Control_stab->depth = level;
 
 
-	char label[1000];
+	string label;
 
-	snprintf(label, sizeof(label),
-			"subspaces_%d_%d_%d_stabilizer_%d_%d", n, q, s,
-		level, orbit_at_level);
+	label = "subspaces_" + std::to_string(n) + "_" + std::to_string(q) + "_" + std::to_string(s)
+			+ "_stabilizer_" + std::to_string(level)
+			+ "_" + std::to_string(orbit_at_level);
 
 
 	if (f_v) {

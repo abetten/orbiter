@@ -17,8 +17,10 @@ namespace layer5_applications {
 namespace apps_combinatorics {
 
 
-static void hall_system_print_set(std::ostream &ost, int len, long int *S, void *data);
-static void hall_system_early_test_function(long int *S, int len,
+static void hall_system_print_set(
+		std::ostream &ost, int len, long int *S, void *data);
+static void hall_system_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -150,7 +152,8 @@ void hall_system_classify::init(
 	pair_covering = NEW_int(nb_pairs2);
 
 	if (f_v) {
-		cout << "hall_system_classify::init before computing triples" << endl;
+		cout << "hall_system_classify::init "
+				"before computing triples" << endl;
 	}
 	for (i = 0; i < N; i++) {
 		if (f_v) {
@@ -186,12 +189,12 @@ void hall_system_classify::init(
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"after A->init_permutation_group" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"creating Strong_gens_Hall_reflection" << endl;
-		}
+	}
 
 	int degree; // nb_pairs * 2
 
@@ -226,7 +229,8 @@ void hall_system_classify::init(
 		cout << "hall_system_classify::init "
 				"before A->Induced_action->induced_action_on_sets" << endl;
 	}
-	A_on_triples = A->Induced_action->induced_action_on_sets(S /*sims *old_G*/,
+	A_on_triples = A->Induced_action->induced_action_on_sets(
+			S /*sims *old_G*/,
 			N /* nb_sets*/, 3 /* set_size */, triples,
 			false /* f_induce_action*/, verbose_level - 1);
 	if (f_v) {
@@ -250,7 +254,8 @@ void hall_system_classify::init(
 		cout << "hall_system_classify::init "
 				"before Poset->init_subset_lattice" << endl;
 	}
-	Poset->init_subset_lattice(A, A_on_orbits,
+	Poset->init_subset_lattice(
+			A, A_on_orbits,
 			Strong_gens_normalizer,
 			verbose_level);
 	if (f_v) {
@@ -271,11 +276,14 @@ void hall_system_classify::init(
 	PC = NEW_OBJECT(poset_classification::poset_classification);
 	//PC->read_arguments(argc, argv, 0);
 	if (f_v) {
-		cout << "hall_system_classify::init before PC->initialize_and_allocate_root_node" << endl;
+		cout << "hall_system_classify::init "
+				"before PC->initialize_and_allocate_root_node" << endl;
 	}
-	PC->initialize_and_allocate_root_node(Control, Poset, depth, verbose_level - 3);
+	PC->initialize_and_allocate_root_node(
+			Control, Poset, depth, verbose_level - 3);
 	if (f_v) {
-		cout << "hall_system_classify::init after PC->initialize_and_allocate_root_node" << endl;
+		cout << "hall_system_classify::init "
+				"after PC->initialize_and_allocate_root_node" << endl;
 	}
 
 
@@ -394,7 +402,8 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 
 
 
-void hall_system_classify::print(std::ostream &ost, long int *S, int len)
+void hall_system_classify::print(
+		std::ostream &ost, long int *S, int len)
 {
 	int i;
 	int orb, f, l, j, t, a;
@@ -469,7 +478,8 @@ void hall_system_classify::unrank_triple_pair(
 	}
 }
 
-void hall_system_classify::early_test_func(long int *S, int len,
+void hall_system_classify::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -615,7 +625,8 @@ void hall_system_classify::early_test_func(long int *S, int len,
 
 
 
-static void hall_system_print_set(std::ostream &ost, int len, long int *S, void *data)
+static void hall_system_print_set(
+		std::ostream &ost, int len, long int *S, void *data)
 {
 	hall_system_classify *H = (hall_system_classify *) data;
 
@@ -624,7 +635,8 @@ static void hall_system_print_set(std::ostream &ost, int len, long int *S, void 
 }
 
 
-static void hall_system_early_test_function(long int *S, int len,
+static void hall_system_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

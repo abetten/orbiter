@@ -31,7 +31,7 @@ public:
 	povray_job_description *Povray_job_description;
 	scene *S;
 	std::string output_mask;
-	char fname_makefile[1000];
+	std::string fname_makefile;
 	int nb_frames;
 	video_draw_options *Opt;
 	std::ofstream *fpm;

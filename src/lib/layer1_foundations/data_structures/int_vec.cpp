@@ -27,7 +27,8 @@ int_vec::~int_vec()
 
 }
 
-void int_vec::add(int *v1, int *v2, int *w, int len)
+void int_vec::add(
+		int *v1, int *v2, int *w, int len)
 {
 	int i;
 
@@ -36,7 +37,8 @@ void int_vec::add(int *v1, int *v2, int *w, int len)
 	}
 }
 
-void int_vec::add3(int *v1, int *v2, int *v3, int *w, int len)
+void int_vec::add3(
+		int *v1, int *v2, int *v3, int *w, int len)
 {
 	int i;
 
@@ -45,7 +47,8 @@ void int_vec::add3(int *v1, int *v2, int *v3, int *w, int len)
 	}
 }
 
-void int_vec::apply(int *from, int *through, int *to, int len)
+void int_vec::apply(
+		int *from, int *through, int *to, int len)
 {
 	int i;
 
@@ -54,7 +57,8 @@ void int_vec::apply(int *from, int *through, int *to, int len)
 	}
 }
 
-void int_vec::apply_lint(int *from, long int *through, long int *to, int len)
+void int_vec::apply_lint(
+		int *from, long int *through, long int *to, int len)
 {
 	int i;
 
@@ -81,7 +85,8 @@ int int_vec::is_constant(
 }
 
 
-int int_vec::is_constant_on_subset(int *v,
+int int_vec::is_constant_on_subset(
+		int *v,
 	int *subset, int sz, int &value)
 {
 	int a, i;
@@ -104,7 +109,8 @@ int int_vec::is_constant_on_subset(int *v,
 	return true;
 }
 
-void int_vec::take_away(int *v, int &len,
+void int_vec::take_away(
+		int *v, int &len,
 		int *take_away, int nb_take_away)
 	// v must be sorted
 {
@@ -827,15 +833,13 @@ void int_vec::print_to_str(std::string &s, int *data, int len)
 void int_vec::print_to_str_naked(std::string &s, int *data, int len)
 {
 	int i, a;
-	char str[1000];
 
 	s.assign("");
 	for (i = 0; i < len; i++) {
 		a = data[i];
-		snprintf(str, sizeof(str), "%d", a);
-		s.append(str);
+		s += std::to_string(a);
 		if (i < len - 1) {
-			s.append(", ");
+			s += ", ";
 		}
 	}
 }
