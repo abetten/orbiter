@@ -380,22 +380,6 @@ void algebra_global::subexponent(
 #endif
 }
 
-#if 0
-const char *algebra_global::plus_minus_string(int epsilon)
-{
-	if (epsilon == 1) {
-		return "+";
-	}
-	if (epsilon == -1) {
-		return "-";
-	}
-	if (epsilon == 0) {
-		return "";
-	}
-	cout << "algebra_global::plus_minus_string epsilon=" << epsilon << endl;
-	exit(1);
-}
-#endif
 
 std::string algebra_global::plus_minus_string(int epsilon)
 {
@@ -675,7 +659,8 @@ void algebra_global::test_longinteger8()
 		f_miller_rabin_test, verbose_level);
 }
 
-void algebra_global::longinteger_collect_setup(int &nb_agos,
+void algebra_global::longinteger_collect_setup(
+		int &nb_agos,
 		ring_theory::longinteger_object *&agos, int *&multiplicities)
 {
 	nb_agos = 0;
@@ -683,7 +668,8 @@ void algebra_global::longinteger_collect_setup(int &nb_agos,
 	multiplicities = NULL;
 }
 
-void algebra_global::longinteger_collect_free(int &nb_agos,
+void algebra_global::longinteger_collect_free(
+		int &nb_agos,
 		ring_theory::longinteger_object *&agos, int *&multiplicities)
 {
 	if (nb_agos) {
@@ -692,7 +678,8 @@ void algebra_global::longinteger_collect_free(int &nb_agos,
 	}
 }
 
-void algebra_global::longinteger_collect_add(int &nb_agos,
+void algebra_global::longinteger_collect_add(
+		int &nb_agos,
 		ring_theory::longinteger_object *&agos, int *&multiplicities,
 		ring_theory::longinteger_object &ago)
 {
@@ -755,7 +742,8 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 	}
 }
 
-void algebra_global::longinteger_collect_print(std::ostream &ost,
+void algebra_global::longinteger_collect_print(
+		std::ostream &ost,
 		int &nb_agos,
 		ring_theory::longinteger_object *&agos,
 		int *&multiplicities)
@@ -1087,12 +1075,9 @@ void algebra_global::do_cheat_sheet_GF(
 	string title;
 	string extra_praeamble;
 
-	fname.assign(F->label);
-	fname.append(".tex");
+	fname = F->label + ".tex";
 
-	title.assign("Cheat Sheet $");
-	title.append(F->label_tex);
-	title.append("$");
+	title = "Cheat Sheet $" + F->label_tex + "$";
 
 
 
@@ -1185,10 +1170,9 @@ void algebra_global::do_cheat_sheet_ring(
 	string title;
 	string extra_praeamble;
 
-	fname.assign("cheat_sheet_ring");
-	fname.append(".tex");
+	fname = "cheat_sheet_ring.tex";
 
-	title.assign("Cheat Sheet Ring");
+	title = "Cheat Sheet Ring";
 	//title.append(F->label_tex);
 	//title.append("$");
 
@@ -1306,9 +1290,9 @@ void algebra_global::apply_Walsh_Hadamard_transform(
 	string fname_csv_out;
 	data_structures::string_tools ST;
 
-	fname_csv_out.assign(fname_csv_in);
+	fname_csv_out = fname_csv_in;
 	ST.chop_off_extension(fname_csv_out);
-	fname_csv_out.append("_transformed.csv");
+	fname_csv_out += "_transformed.csv";
 
 	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
@@ -1562,11 +1546,12 @@ void algebra_global::apply_trace_function(
 	string fname_csv_out;
 	data_structures::string_tools ST;
 
-	fname_csv_out.assign(fname_csv_in);
+	fname_csv_out = fname_csv_in;
 	ST.chop_off_extension(fname_csv_out);
-	fname_csv_out.append("_trace.csv");
+	fname_csv_out += "_trace.csv";
 
-	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	Fio.int_matrix_read_csv(
+			fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
 	for (i = 0; i < len; i++) {
 		M[i] = F->absolute_trace(M[i]);
@@ -1603,7 +1588,8 @@ void algebra_global::apply_power_function(
 
 	fname_csv_out += "_power_" + std::to_string(d) + ".csv";
 
-	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	Fio.int_matrix_read_csv(
+			fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
 	for (i = 0; i < len; i++) {
 		M[i] = F->power(M[i], d);

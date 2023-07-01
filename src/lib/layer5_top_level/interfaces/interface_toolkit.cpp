@@ -50,6 +50,13 @@ interface_toolkit::interface_toolkit()
 	f_csv_file_sort_each_row = false;
 	//std::string csv_file_sort_each_row_fname;
 
+	f_csv_file_sort_rows = false;
+	//std::string csv_file_sort_rows_fname;
+
+	f_csv_file_sort_rows_and_remove_duplicates = false;
+	//std::string csv_file_sort_rows_and_remove_duplicates_fname;
+
+
 	f_csv_file_join = false;
 	//csv_file_join_fname
 	//csv_file_join_identifier
@@ -154,6 +161,14 @@ interface_toolkit::interface_toolkit()
 	//std::string save_4_bit_data_file_fname;
 	//std::string save_4_bit_data_file_vector_data;
 
+
+	f_gnuplot = false;
+	//std::string gnuplot_file_fname;
+	//std::string gnuplot_title;
+	//std::string gnuplot_label_x;
+	//std::string gnuplot_label_y;
+
+
 }
 
 
@@ -182,6 +197,12 @@ void interface_toolkit::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
 		cout << "-csv_file_sort_each_row <string : input file>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_sort_rows") == 0) {
+		cout << "-csv_file_sort_rows <string : input file>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_sort_rows_and_remove_duplicates") == 0) {
+		cout << "-csv_file_sort_rows_and_remove_duplicates <string : input file>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_join") == 0) {
 		cout << "-cvs_file_join <int : number of files> <string : input file1> <string : column label1> ..." << endl;
@@ -250,6 +271,9 @@ void interface_toolkit::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-save_4_bit_data_file") == 0) {
 		cout << "-save_4_bit_data_file <fname> <vector>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-gnuplot") == 0) {
+		cout << "-gnuplot <fname> <title> <label_x> <label_y> " << endl;
+	}
 }
 
 int interface_toolkit::recognize_keyword(int argc,
@@ -279,6 +303,12 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_sort_rows") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_sort_rows_and_remove_duplicates") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_join") == 0) {
@@ -346,6 +376,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-save_4_bit_data_file") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-gnuplot") == 0) {
 		return true;
 	}
 	return false;
@@ -444,6 +477,24 @@ void interface_toolkit::read_arguments(int argc,
 		if (f_v) {
 			cout << "-csv_file_sort_each_row "
 				<< csv_file_sort_each_row_fname
+				<< endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_sort_rows") == 0) {
+		f_csv_file_sort_rows = true;
+		csv_file_sort_rows_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_sort_rows "
+				<< csv_file_sort_rows_fname
+				<< endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_sort_rows_and_remove_duplicates") == 0) {
+		f_csv_file_sort_rows_and_remove_duplicates = true;
+		csv_file_sort_rows_and_remove_duplicates_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_sort_rows_and_remove_duplicates "
+				<< csv_file_sort_rows_and_remove_duplicates_fname
 				<< endl;
 		}
 	}
@@ -787,6 +838,22 @@ void interface_toolkit::read_arguments(int argc,
 					<< " " << save_4_bit_data_file_vector_data << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-gnuplot") == 0) {
+		f_gnuplot = true;
+		gnuplot_file_fname.assign(argv[++i]);
+		gnuplot_title.assign(argv[++i]);
+		gnuplot_label_x.assign(argv[++i]);
+		gnuplot_label_y.assign(argv[++i]);
+		if (f_v) {
+			cout << "-gnuplot "
+					<< " " << gnuplot_file_fname
+					<< " " << gnuplot_title
+					<< " " << gnuplot_label_x
+					<< " " << gnuplot_label_y
+					<< endl;
+		}
+	}
+
 
 	if (f_v) {
 			cout << "interface_toolkit::read_arguments done" << endl;
@@ -827,6 +894,16 @@ void interface_toolkit::print()
 	if (f_csv_file_sort_each_row) {
 		cout << "-csv_file_sort_each_row "
 				<< csv_file_sort_each_row_fname
+				<< endl;
+	}
+	if (f_csv_file_sort_rows) {
+		cout << "-csv_file_sort_rows "
+				<< csv_file_sort_rows_fname
+				<< endl;
+	}
+	if (f_csv_file_sort_rows_and_remove_duplicates) {
+		cout << "-csv_file_sort_rows_and_remove_duplicates "
+				<< csv_file_sort_rows_and_remove_duplicates_fname
 				<< endl;
 	}
 	if (f_csv_file_join) {
@@ -952,6 +1029,14 @@ void interface_toolkit::print()
 					<< save_4_bit_data_file_fname
 					<< " " << save_4_bit_data_file_vector_data << endl;
 	}
+	if (f_gnuplot) {
+			cout << "-gnuplot "
+					<< " " << gnuplot_file_fname
+					<< " " << gnuplot_title
+					<< " " << gnuplot_label_x
+					<< " " << gnuplot_label_y
+					<< endl;
+	}
 }
 
 void interface_toolkit::worker(int verbose_level)
@@ -1050,6 +1135,31 @@ void interface_toolkit::worker(int verbose_level)
 				csv_file_sort_each_row_fname, verbose_level);
 
 	}
+	else if (f_csv_file_sort_rows) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_csv_file_sort_rows" << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.csv_file_sort_rows(
+				csv_file_sort_rows_fname, verbose_level);
+
+	}
+	else if (f_csv_file_sort_rows_and_remove_duplicates) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_csv_file_sort_rows_and_remove_duplicates" << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.csv_file_sort_rows_and_remove_duplicates(
+				csv_file_sort_rows_and_remove_duplicates_fname, verbose_level);
+
+	}
+
 	else if (f_csv_file_join) {
 
 		if (f_v) {
@@ -1616,17 +1726,34 @@ void interface_toolkit::worker(int verbose_level)
 			data_long[i] = (unsigned char) Data[i];
 		}
 
-		for (i = 0; i < sz; i++) {
-			cout << i << " : " << (int) data_long[i] << endl;
+		if (f_v) {
+			cout << "interface_toolkit::worker sz = " << sz << endl;
+			for (i = 0; i < sz; i++) {
+				cout << i << " : " << (int) data_long[i] << endl;
+			}
+		}
+
+
+
+		if (f_v) {
+			cout << "interface_toolkit::worker before compress" << endl;
 		}
 
 		Algo.uchar_compress_4(data_long, data, sz);
 
+		if (f_v) {
+			cout << "interface_toolkit::worker after compress" << endl;
+		}
+
 		sz1 = (sz + 1) / 2;
 
-		for (i = 0; i < sz; i++) {
-			cout << i << " : " << (int) data[i] << endl;
+		if (f_v) {
+			cout << "interface_toolkit::worker sz1 = " << sz1 << endl;
+			for (i = 0; i < sz; i++) {
+				cout << i << " : " << (int) data[i] << endl;
+			}
 		}
+
 
 
 		orbiter_kernel_system::file_io Fio;
@@ -1641,6 +1768,29 @@ void interface_toolkit::worker(int verbose_level)
 				<< Fio.file_size(save_4_bit_data_file_fname) << endl;
 
 	}
+	else if (f_gnuplot) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"-gnuplot "
+					<< " " << gnuplot_file_fname
+					<< " " << gnuplot_title
+					<< " " << gnuplot_label_x
+					<< " " << gnuplot_label_y
+					<< endl;
+		}
+
+		l1_interfaces::gnuplot_interface(gnuplot_file_fname,
+				gnuplot_title,
+				gnuplot_label_x,
+				gnuplot_label_y,
+				verbose_level);
+
+	}
+
+
+
+
 
 	if (f_v) {
 		cout << "interface_toolkit::worker done" << endl;

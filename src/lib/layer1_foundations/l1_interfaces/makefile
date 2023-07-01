@@ -11,6 +11,7 @@ MODULES = \
 	EasyBMP.o \
 	eigen_interface.o \
 	expression_parser_sajeeb.o \
+	gnuplot_interface.o \
 	interface_gap_low.o \
 	interface_magma_low.o \
 	latex_interface.o \

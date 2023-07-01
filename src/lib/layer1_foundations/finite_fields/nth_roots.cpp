@@ -89,6 +89,9 @@ void nth_roots::init(
 	D.create_qnm1(*Qm1, F->q, m);
 
 	field_degree = F->e * m;
+	if (f_v) {
+		cout << "nth_roots::init field_degree = " << field_degree << endl;
+	}
 
 	// q = i_power_j(p, e);
 	// GF(q)=GF(p^e) has n-th roots of unity
@@ -141,8 +144,25 @@ void nth_roots::init(
 	knowledge_base::knowledge_base K;
 	string field_poly;
 
-	K.get_primitive_polynomial(field_poly,
+
+	if (field_degree == F->e) {
+		field_poly = F->my_poly;
+		if (f_v) {
+			cout << "nth_roots::init after field_poly = F->my_poly, "
+					"field_poly = " << field_poly << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "nth_roots::init before K.get_primitive_polynomial" << endl;
+		}
+		K.get_primitive_polynomial(field_poly,
 			F->p, field_degree, 0);
+		if (f_v) {
+			cout << "nth_roots::init after K.get_primitive_polynomial, "
+					"field_poly = " << field_poly << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "nth_roots::init picking primitive polynomial "
@@ -271,7 +291,8 @@ void nth_roots::init(
 
 			cout << " : ";
 
-			Cyclic_codes.print_polynomial_tight(cout, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
+			Cyclic_codes.print_polynomial_tight(
+					cout, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
 
 
 			cout << endl;
@@ -403,7 +424,8 @@ void nth_roots::compute_subfield(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "nth_roots::compute_subfield subfield_degree=" << subfield_degree << endl;
+		cout << "nth_roots::compute_subfield "
+				"subfield_degree=" << subfield_degree << endl;
 	}
 	int *M; // [e * (subfield_degree + 1)]
 	int *K; // [e]
@@ -421,10 +443,12 @@ void nth_roots::compute_subfield(
 	if (f_v) {
 		cout << "nth_roots::compute_subfield p=" << p << endl;
 		cout << "nth_roots::compute_subfield e=" << e << endl;
-		cout << "nth_roots::compute_subfield subfield_degree=" << subfield_degree << endl;
+		cout << "nth_roots::compute_subfield "
+				"subfield_degree=" << subfield_degree << endl;
 	}
 	M = NEW_int(e * (subfield_degree + 1));
-	// The j-th column of M is the coefficients of beta[j] (a vector of length e)
+	// The j-th column of M contains the
+	// coefficients of beta[j] (a vector of length e)
 	// j=0,..,subfield_degree
 	// The columns are linearly dependent.
 	// A linear dependency between the column vectors will be used to create
@@ -438,14 +462,16 @@ void nth_roots::compute_subfield(
 	subgroup_index = (Cyc->qm - 1) / (q1 - 1);
 	if (f_v) {
 		cout << "nth_roots::compute_subfield "
-				"subfield " << p << "^" << subfield_degree << " : subgroup_index = "
+				"subfield " << p << "^" << subfield_degree
+				<< " : subgroup_index = "
 			<< subgroup_index << endl;
 	}
 
 	ring_theory::unipoly_object *Beta;
 
 	if (f_v) {
-		cout << "nth_roots::compute_subfield before F->compute_powers" << endl;
+		cout << "nth_roots::compute_subfield "
+				"before F->compute_powers" << endl;
 	}
 	R.compute_powers(F, FQ,
 			n, subgroup_index,
@@ -510,7 +536,8 @@ void nth_roots::compute_subfield(
 			e, subfield_degree + 1, subfield_degree + 1, Fp->log10_of_q);
 	}
 	if (f_v) {
-		cout << "nth_roots::compute_subfield before Fp->Linear_algebra->Gauss_simple" << endl;
+		cout << "nth_roots::compute_subfield "
+				"before Fp->Linear_algebra->Gauss_simple" << endl;
 	}
 	rk = Fp->Linear_algebra->Gauss_simple(
 			M,
@@ -519,19 +546,22 @@ void nth_roots::compute_subfield(
 			base_cols,
 			verbose_level);
 	if (f_v) {
-		cout << "nth_roots::compute_subfield after Gauss=" << endl;
+		cout << "nth_roots::compute_subfield "
+				"after Gauss=" << endl;
 		Int_vec_print_integer_matrix_width(cout, M,
 			e, subfield_degree + 1, subfield_degree + 1, Fp->log10_of_q);
 		cout << "rk=" << rk << endl;
 	}
 	if (rk != subfield_degree) {
-		cout << "nth_roots::compute_subfield fatal: rk != subfield_degree" << endl;
+		cout << "nth_roots::compute_subfield "
+				"fatal: rk != subfield_degree" << endl;
 		cout << "rk=" << rk << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "nth_roots::compute_subfield before Fp->Linear_algebra->matrix_get_kernel" << endl;
+		cout << "nth_roots::compute_subfield "
+				"before Fp->Linear_algebra->matrix_get_kernel" << endl;
 	}
 	Fp->Linear_algebra->matrix_get_kernel(M,
 			e, subfield_degree + 1, base_cols, rk,
@@ -539,15 +569,19 @@ void nth_roots::compute_subfield(
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "nth_roots::compute_subfield kernel_m=" << kernel_m << endl;
-		cout << "nth_roots::compute_subfield kernel_n=" << kernel_n << endl;
+		cout << "nth_roots::compute_subfield "
+				"kernel_m=" << kernel_m << endl;
+		cout << "nth_roots::compute_subfield "
+				"kernel_n=" << kernel_n << endl;
 	}
 	if (kernel_n != 1) {
-		cout << "nth_roots::compute_subfield kernel_n != 1" << endl;
+		cout << "nth_roots::compute_subfield "
+				"kernel_n != 1" << endl;
 		exit(1);
 	}
 	if (K[subfield_degree] == 0) {
-		cout << "nth_roots::compute_subfield K[e1] == 0" << endl;
+		cout << "nth_roots::compute_subfield "
+				"K[e1] == 0" << endl;
 		exit(1);
 	}
 	if (K[subfield_degree] != 1) {
@@ -558,7 +592,8 @@ void nth_roots::compute_subfield(
 	}
 
 	if (f_v) {
-		cout << "nth_roots::compute_subfield the relation is " << endl;
+		cout << "nth_roots::compute_subfield "
+				"the relation is " << endl;
 		Int_vec_print(cout, K, subfield_degree + 1);
 		cout << endl;
 	}
@@ -628,7 +663,8 @@ void nth_roots::report(
 
 	//cout << "nth_roots::init the (q-1)-th roots are:" << endl;
 	//ost << "\\begin{align*}" << endl;
-	ost << "\\noindent Let $\\gamma$ be a primitive $" << F->q - 1 << "$-th root in GF$(" << *Qm << ")$, " << endl;
+	ost << "\\noindent Let $\\gamma$ be a primitive "
+			"$" << F->q - 1 << "$-th root in GF$(" << *Qm << ")$, " << endl;
 	ost << "so $\\gamma=\\alpha^{" << *Subfield_Index << "}.$ \\\\" << endl;
 	for (i = 0; i < F->q - 1; i++) {
 		ost << "$\\gamma^{" << i << "} = ";
@@ -641,14 +677,16 @@ void nth_roots::report(
 	//ost << "\\clearpage" << endl;
 	ost << "\\bigskip" << endl << endl;
 
-	ost << "\\noindent The $q$-cyclotomic set for $q=" << F->q << "$ are:" << endl << endl;
+	ost << "\\noindent The $q$-cyclotomic set for "
+			"$q=" << F->q << "$ are:" << endl << endl;
 
 
 	Cyc->print_latex(ost);
 
 	ost << "\\bigskip" << endl << endl;
 
-	ost << "Subfield basis, a basis for GF$(" << F->q << ")$ inside GF$(" << *Qm << ")$:" << endl;
+	ost << "Subfield basis, a basis for GF$(" << F->q << ")$ "
+			"inside GF$(" << *Qm << ")$:" << endl;
 
 	ost << "$$" << endl;
 	ost << "\\left[" << endl;
@@ -687,7 +725,8 @@ void nth_roots::report(
 		ost << " & ";
 
 		ost << "$";
-		Cyclic_codes.print_polynomial_tight(ost, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
+		Cyclic_codes.print_polynomial_tight(
+				ost, *FQ, Cyc->S->Set_size[i], min_poly_beta_FQ[i]);
 		ost << "$";
 
 		ost << " & ";

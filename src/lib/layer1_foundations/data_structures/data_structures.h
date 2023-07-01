@@ -78,6 +78,7 @@ public:
 	void matrix_rowspan_over_R(
 			std::string &label, int verbose_level);
 	int binary_logarithm(int m);
+	char make_single_hex_digit(int c);
 
 };
 
@@ -532,6 +533,7 @@ public:
 	int &s_n();
 	void print();
 	void sort_rows(int verbose_level);
+	void remove_duplicates(int verbose_level);
 	void check_that_entries_are_distinct(int verbose_level);
 	int search(int *entry, int &idx, int verbose_level);
 	void write_csv(std::string &fname, int verbose_level);

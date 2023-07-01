@@ -159,6 +159,14 @@ public:
 	int crc_compare_error_weight;
 	int crc_compare_nb_tests_per_block;
 
+	int f_crc_compare_read_output_file;
+	std::string crc_compare_read_output_file_fname_in;
+	int crc_compare_read_output_file_nb_lines;
+	std::string crc_compare_read_output_file_crc1_type;
+	int crc_compare_read_output_file_block_length1;
+	std::string crc_compare_read_output_file_crc2_type;
+	int crc_compare_read_output_file_block_length2;
+
 
 	int f_convert_data_to_polynomials;
 	std::string convert_data_to_polynomials_fname_in;

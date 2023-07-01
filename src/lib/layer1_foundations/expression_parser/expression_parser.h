@@ -650,6 +650,8 @@ public:
 			int verbose_level);
 	void expand_in_place(
 			int verbose_level);
+	void expand_in_place_handle_multiplication_node(
+			int verbose_level);
 	void expand_in_place_handle_exponents(
 			int verbose_level);
 	void simplify_exponents(int verbose_level);

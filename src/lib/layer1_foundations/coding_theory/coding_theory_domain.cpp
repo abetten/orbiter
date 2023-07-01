@@ -2993,6 +2993,87 @@ void coding_theory_domain::crc_simulate_errors(
 
 }
 
+void coding_theory_domain::read_error_pattern_from_output_file(
+		std::string &fname_in,
+		int nb_lines,
+		crc_object *Crc_object1,
+		crc_object *Crc_object2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::read_error_pattern_from_output_file "
+				" fname_in=" << fname_in
+				<< endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	std::vector<std::vector<int> > Error1;
+	std::vector<std::vector<int> > Error2;
+
+	Fio.read_error_pattern_from_output_file(
+			fname_in,
+			nb_lines,
+			Error1,
+			Error2,
+			verbose_level);
+
+
+	cout << "Number of errors in code 1 = " << Error1.size() << endl;
+	cout << "Number of errors in code 2 = " << Error2.size() << endl;
+
+	int h;
+
+	for (h = 0; h < 2; h++) {
+
+		std::vector<std::vector<int> > *Error;
+
+		if (h == 0) {
+			Error = &Error1;
+		}
+		else {
+			Error = &Error2;
+		}
+		int *E;
+		int m, n;
+		int i, j;
+
+		m = (*Error).size();
+		if (m == 0) {
+			continue;
+		}
+		n = (*Error)[0].size();
+
+		E = NEW_int(m * n);
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				E[i * n + j] = (*Error)[i][j];
+			}
+		}
+		orbiter_kernel_system::file_io Fio;
+		data_structures::string_tools ST;
+		string fname;
+
+		fname = fname_in;
+		ST.chop_off_extension_and_path(fname);
+
+		fname += "_error_" + std::to_string(h + 1) + ".csv";
+
+		Fio.int_matrix_write_csv(fname, E, m, n);
+
+		cout << "written file "
+			<< fname << " of size " << Fio.file_size(fname) << endl;
+
+	}
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::read_error_pattern_from_output_file "
+				"done" << endl;
+	}
+
+}
 
 
 }}}

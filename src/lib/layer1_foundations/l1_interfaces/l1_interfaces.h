@@ -48,7 +48,7 @@ public:
 };
 
 // #############################################################################
-// Eigen_interface.cpp:
+// eigen_interface.cpp:
 // #############################################################################
 
 //! interface to Eigen:
@@ -98,6 +98,20 @@ public:
 
 
 };
+
+
+
+// #############################################################################
+// gnuplot_interface.cpp:
+// #############################################################################
+
+//! interface to gnuplot:
+
+void gnuplot_interface(std::string &data_file_csv,
+		std::string &title,
+		std::string &label_x,
+		std::string &label_y,
+		int verbose_level);
 
 
 

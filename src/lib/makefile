@@ -242,6 +242,7 @@ ORBITER_MODULES= \
 		layer1_foundations/l1_interfaces/EasyBMP.o \
 		layer1_foundations/l1_interfaces/eigen_interface.o \
 		layer1_foundations/l1_interfaces/expression_parser_sajeeb.o \
+		layer1_foundations/l1_interfaces/gnuplot_interface.o \
 		layer1_foundations/l1_interfaces/interface_gap_low.o \
 		layer1_foundations/l1_interfaces/interface_magma_low.o \
 		layer1_foundations/l1_interfaces/latex_interface.o \

@@ -1107,7 +1107,7 @@ void formula::expand_in_place(int f_write_trees,
 		cout << "formula::expand_in_place" << endl;
 	}
 
-	int verbose_level_down = 0;
+	int verbose_level_down = verbose_level - 2;
 
 	std::string label;
 	std::string extension;

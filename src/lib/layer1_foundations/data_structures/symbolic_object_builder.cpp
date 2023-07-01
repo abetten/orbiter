@@ -1380,7 +1380,7 @@ void symbolic_object_builder::do_CRC_encode(
 		if (f_v) {
 			cout << "symbolic_object_builder::do_CRC_encode block " << cnt << " / "
 					<< nb_blocks << " data polynomial = ";
-			Int_vec_print(cout, Data_poly, Data_poly_nb_coeff);
+			Int_vec_print_fully(cout, Data_poly, Data_poly_nb_coeff);
 			cout << endl;
 			int h;
 			for (h = 0; h < Data_poly_nb_coeff; h++) {
@@ -1398,7 +1398,14 @@ void symbolic_object_builder::do_CRC_encode(
 		int *Data;
 		ring_theory::ring_theory_global RG;
 
-		N = Descr->encode_CRC_block_length + CRC_poly_degree;
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_encode block " << cnt << " / "
+					<< nb_blocks << " CRC_poly_degree = " << CRC_poly_degree << endl;
+			cout << "symbolic_object_builder::do_CRC_encode block " << cnt << " / "
+				<< nb_blocks << " encode_CRC_block_length = " << Descr->encode_CRC_block_length << endl;
+		}
+
+		N = Descr->encode_CRC_block_length;
 
 		Data = NEW_int(N);
 
@@ -1407,12 +1414,30 @@ void symbolic_object_builder::do_CRC_encode(
 		Int_vec_copy(Data_poly, Data + CRC_poly_degree, Data_poly_nb_coeff);
 
 
+		if (f_v) {
+			cout << "symbolic_object_builder::do_CRC_encode block " << cnt << " / "
+					<< nb_blocks << " after shifting up, = ";
+			Int_vec_print_fully(cout, Data, N);
+			cout << endl;
+			int h;
+			for (h = 0; h < N; h++) {
+				cout << h << " : " << Data[h] << endl;
+			}
+		}
+
+
+
 		int *coeff_table_q;
 		int coeff_table_q_len;
 		int *coeff_table_r;
 		int coeff_table_r_len;
 
+		string prefix;
+
+		prefix = "encoding_block_" + std::to_string(cnt);
+
 		RG.polynomial_division_coefficient_table_with_report(
+				prefix,
 				Fq,
 				Data, Data_poly_nb_coeff + CRC_poly_degree,
 				CRC_poly, CRC_poly_nb_coeff,
@@ -1633,7 +1658,12 @@ void symbolic_object_builder::do_CRC_decode(
 		int *coeff_table_r;
 		int coeff_table_r_len;
 
+		string prefix;
+
+		prefix = "decoding_block_" + std::to_string(cnt);
+
 		RG.polynomial_division_coefficient_table_with_report(
+				prefix,
 				Fq,
 				Data, Data_poly_nb_coeff,
 				CRC_poly, CRC_poly_nb_coeff,

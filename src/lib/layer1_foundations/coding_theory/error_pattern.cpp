@@ -88,7 +88,7 @@ void error_pattern::create_error_pattern(
 
 		while (true) {
 			a = Crc_object->Len_check_in_symbols +
-					Os.random_integer(Crc_object->info_length_in_bytes);
+					Os.random_integer(Crc_object->info_length_in_symbols);
 			if (!f_used[a]) {
 				break;
 			}

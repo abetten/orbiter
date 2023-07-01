@@ -246,6 +246,13 @@ public:
 			int error_pattern_weight,
 			int nb_tests_per_block,
 			int verbose_level);
+	void read_error_pattern_from_output_file(
+			std::string &fname_in,
+			int nb_lines,
+			crc_object *Crc_object1,
+			crc_object *Crc_object2,
+			int verbose_level);
+
 
 	// mindist.cpp:
 	int mindist(
@@ -369,6 +376,7 @@ enum crc_object_type {
 	t_crc_charlie,
 	t_crc_Delta,
 	t_crc_Echo,
+	t_crc_Foxtrot,
 	t_crc_crc32,
 	t_crc_crc16,
 	t_crc_SuperFastHash32,
@@ -397,7 +405,9 @@ public:
 
 	int block_length_in_bytes;
 	int info_length_in_bytes;
+	int info_length_in_symbols;
 
+	int number_of_symbols_per_byte;
 	int symbol_set_size_log;
 	int symbol_set_size;
 	//int code_length_in_bits; // = Len_total * symbol_set_size_log
@@ -424,6 +434,7 @@ public:
 	void divide_charlie(const unsigned char *in771, unsigned char *out12);
 	void divide_Delta(const unsigned char *in51, unsigned char *out4);
 	void divide_Echo(const unsigned char *in51, unsigned char *out8);
+	void divide_Foxtrot(const unsigned char *in15, unsigned char *out4);
 	void divide_crc32(const uint8_t *s, size_t n, unsigned char *out4);
 		// polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
 		// + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1

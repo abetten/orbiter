@@ -949,6 +949,17 @@ int algorithms::binary_logarithm(int m)
 	return i;
 }
 
+char algorithms::make_single_hex_digit(int c)
+{
+	if (c < 10) {
+		return '0' + c;
+	}
+	else {
+		return 'a' + c - 10;
+	}
+}
+
+
 
 }}}
 

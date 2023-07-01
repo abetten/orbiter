@@ -812,6 +812,7 @@ public:
 			field_theory::finite_field *F,
 			long int rk0, long int rk1, int verbose_level);
 	void polynomial_division_coefficient_table_with_report(
+			std::string &prefix,
 			field_theory::finite_field *F,
 			int *coeff_table0, int coeff_table0_len,
 			int *coeff_table1, int coeff_table1_len,
@@ -1149,6 +1150,8 @@ public:
 			unipoly_object &c);
 	void print_coeffs_top_down_assuming_one_character_per_digit(
 			unipoly_object a, std::ostream &ost);
+	void print_coeffs_top_down_assuming_one_character_per_digit_multiplied(
+			unipoly_object a, int c, std::ostream &ost);
 	void print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(
 			unipoly_object a, int m, std::ostream &ost);
 	void mult_easy_with_report(

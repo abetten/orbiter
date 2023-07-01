@@ -1074,6 +1074,7 @@ void ring_theory_global::mult_polynomials(
 
 
 void ring_theory_global::polynomial_division_coefficient_table_with_report(
+		std::string &prefix,
 		field_theory::finite_field *F,
 		int *coeff_table0, int coeff_table0_len,
 		int *coeff_table1, int coeff_table1_len,
@@ -1097,7 +1098,7 @@ void ring_theory_global::polynomial_division_coefficient_table_with_report(
 		string extra_praeamble;
 
 
-		fname = "polynomial_division.tex";
+		fname = prefix + "_polynomial_division.tex";
 		title = "Polynomial Division";
 
 
@@ -1142,7 +1143,7 @@ void ring_theory_global::polynomial_division_coefficient_table_with_report(
 					coeff_table1, coeff_table1_len, 10, true /*f_tex*/);
 			ost << "$$" << endl;
 
-			int f_report = false;
+			int f_report = true;
 
 			D.division_with_remainder_based_on_tables_with_report(
 					coeff_table0, coeff_table0_len,

@@ -66,8 +66,26 @@ void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit(
 	int *A = ra + 1;
 	int i;
 
+	data_structures::algorithms Algo;
+
 	for (i = m; i >= 0; i--) {
-		ost << A[i];
+		ost << Algo.make_single_hex_digit(A[i]);
+		//ost << A[i];
+	}
+}
+
+void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit_multiplied(
+		unipoly_object a, int c, std::ostream &ost)
+{
+	int *ra = (int *) a;
+	int m = ra[0]; // degree of a
+	int *A = ra + 1;
+	int i;
+	data_structures::algorithms Algo;
+
+	for (i = m; i >= 0; i--) {
+		ost << Algo.make_single_hex_digit(F->mult(A[i], c));
+		//ost << A[i];
 	}
 }
 
@@ -79,13 +97,16 @@ void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit_with
 	int *A = ra + 1;
 	int i;
 	int d = ra[0];
+	data_structures::algorithms Algo;
+
 
 	for (i = m; i >= 0; i--) {
 		if (i > d) {
 			ost << "0";
 		}
 		else {
-			ost << A[i];
+			ost << Algo.make_single_hex_digit(A[i]);
+			//ost << A[i];
 		}
 	}
 }
@@ -114,7 +135,8 @@ void unipoly_domain::mult_easy_with_report(
 				0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "unipoly_domain::mult_easy_with_report after create_object_by_rank" << endl;
+		cout << "unipoly_domain::mult_easy_with_report "
+				"after create_object_by_rank" << endl;
 	}
 
 	int *ra = (int *) a;
@@ -126,7 +148,8 @@ void unipoly_domain::mult_easy_with_report(
 	int *rc; // = (int *) c;
 	//FREE_int(rc);
 	if (f_v) {
-		cout << "unipoly_domain::mult_easy_with_report before NEW_int, mn=" << mn << endl;
+		cout << "unipoly_domain::mult_easy_with_report "
+				"before NEW_int, mn=" << mn << endl;
 	}
 	rc = NEW_int(mn + 2);
 		// +1 since the number of coeffs is one more than the degree,
@@ -148,7 +171,8 @@ void unipoly_domain::mult_easy_with_report(
 	ost << "\\begin{verbatim}" << endl;
 	ost << setw(m + 1) << rk_a << " x " << setw(n + 1) << rk_b << " = " << endl;
 	if (f_v) {
-		cout << "unipoly_domain::mult_easy_with_report before print_coeffs_top_down_assuming_one_character_per_digit" << endl;
+		cout << "unipoly_domain::mult_easy_with_report "
+				"before print_coeffs_top_down_assuming_one_character_per_digit" << endl;
 	}
 	print_coeffs_top_down_assuming_one_character_per_digit(a, ost);
 	ost << " x ";
@@ -698,6 +722,11 @@ void unipoly_domain::division_with_remainder_with_report(
 				continue;
 			}
 
+			c = F->mult(x, pivot_inv);
+			Q[j] = c;
+			c = F->negate(c);
+			//cout << "i=" << i << " c=" << c << endl;
+
 			if (f_report) {
 				if (i == da) {
 					print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(b, db, ost);
@@ -712,7 +741,7 @@ void unipoly_domain::division_with_remainder_with_report(
 				ost << endl;
 				Algo.print_repeated_character(ost, ' ', db + 1 + 3);
 				Algo.print_repeated_character(ost, ' ', da - i);
-				print_coeffs_top_down_assuming_one_character_per_digit(b, ost);
+				print_coeffs_top_down_assuming_one_character_per_digit_multiplied(b, c, ost);
 				ost << endl;
 				Algo.print_repeated_character(ost, ' ', db + 1 + 3);
 				Algo.print_repeated_character(ost, ' ', da - i);
@@ -720,10 +749,6 @@ void unipoly_domain::division_with_remainder_with_report(
 				ost << endl;
 			}
 
-			c = F->mult(x, pivot_inv);
-			Q[j] = c;
-			c = F->negate(c);
-			//cout << "i=" << i << " c=" << c << endl;
 			for (ii = i, jj = db; jj >= 0; ii--, jj--) {
 				d = B[jj];
 				d = F->mult(c, d);

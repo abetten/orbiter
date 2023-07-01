@@ -823,6 +823,63 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 
+	else if (Descr->f_crc_compare_read_output_file) {
+		cout << "-crc_compare"
+				<< " " << Descr->crc_compare_read_output_file_fname_in
+				<< " " << Descr->crc_compare_read_output_file_crc1_type
+				<< " " << Descr->crc_compare_read_output_file_block_length1
+				<< " " << Descr->crc_compare_read_output_file_crc2_type
+				<< " " << Descr->crc_compare_read_output_file_block_length2
+				<< endl;
+
+
+		coding_theory::coding_theory_domain Codes;
+
+		coding_theory::crc_object *CRC1;
+		coding_theory::crc_object *CRC2;
+
+
+		CRC1 = NEW_OBJECT(coding_theory::crc_object);
+		CRC2 = NEW_OBJECT(coding_theory::crc_object);
+
+		CRC1->init(
+				Descr->crc_compare_read_output_file_crc1_type,
+				Descr->crc_compare_read_output_file_block_length1,
+				verbose_level);
+		CRC2->init(
+				Descr->crc_compare_read_output_file_crc2_type,
+				Descr->crc_compare_read_output_file_block_length2,
+				verbose_level);
+
+		cout << "CRC1 code info:" << endl;
+		CRC1->print();
+		cout << "CRC2 code info:" << endl;
+		CRC2->print();
+
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before Codes.read_error_pattern_from_output_file" << endl;
+		}
+
+		Codes.read_error_pattern_from_output_file(
+				Descr->crc_compare_read_output_file_fname_in,
+				Descr->crc_compare_read_output_file_nb_lines,
+				CRC1,
+				CRC2,
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after Codes.read_error_pattern_from_output_file" << endl;
+		}
+
+		FREE_OBJECT(CRC1);
+		FREE_OBJECT(CRC2);
+
+	}
+
+
 
 	else if (Descr->f_convert_data_to_polynomials) {
 		cout << "-convert_data_to_polynomials "

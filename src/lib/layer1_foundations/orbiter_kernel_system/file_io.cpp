@@ -1015,8 +1015,9 @@ void file_io::read_solutions_from_file_size_is_known(
 			<< solution_size << endl;
 	}
 
-	if (file_size(fname.c_str()) < 0) {
-		cout << "file_io::read_solutions_from_file_size_is_known the file " << fname << " does not exist" << endl;
+	if (file_size(fname) < 0) {
+		cout << "file_io::read_solutions_from_file_size_is_known "
+				"the file " << fname << " does not exist" << endl;
 		return;
 	}
 
@@ -5870,6 +5871,196 @@ void file_io::serialize_file_names(
 
 	if (f_v) {
 		cout << "file_io::serialize_file_names done" << endl;
+	}
+}
+
+void file_io::read_error_pattern_from_output_file(
+		std::string &fname,
+		int nb_lines,
+		std::vector<std::vector<int> > &Error1,
+		std::vector<std::vector<int> > &Error2,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *buf;
+	data_structures::string_tools ST;
+	int h, i, j, l, idx;
+	char c;
+	int a;
+	long int N;
+
+	if (f_v) {
+		cout << "file_io::read_error_pattern_from_output_file" << endl;
+		cout << "file_io::read_error_pattern_from_output_file trying to read file "
+			<< fname << " of size " << file_size(fname) << endl;
+	}
+
+	N = file_size(fname);
+	if (N < 0) {
+		cout << "file_io::read_error_pattern_from_output_file "
+				"the file " << fname << " does not exist" << endl;
+		return;
+	}
+
+	buf = NEW_char(N + 1);
+
+	{
+		ifstream f(fname);
+
+		while (!f.eof()) {
+			f.getline(buf, N + 1, '\n');
+			//cout << "buf='" << buf << "' nb=" << nb << endl;
+			if (strncmp(buf, "undetected error code", 21) == 0) {
+
+
+				sscanf(buf + 21, "%d", &idx);
+
+
+				vector<int> error;
+				for (l = 0; l < nb_lines; l++) {
+					f.getline(buf, N + 1, '\n');
+					for (h = 0; h < 2; h++) {
+						for (i = 0; i < 8; i++) {
+							for (j = 0; j < 2; j++) {
+								c = buf[12 + h * 25 + i * 3 + j];
+								if (c >= '0' && c <= '9') {
+									a = (int) (c - '0');
+								}
+								else {
+									a = 10 + (int) (c - 'a');
+								}
+								error.push_back(a);
+							}
+						}
+
+					}
+				}
+				if (idx == 1) {
+					Error1.push_back(error);
+				}
+				else {
+					Error2.push_back(error);
+				}
+
+			}
+
+		}
+	}
+	FREE_char(buf);
+	if (f_v) {
+		cout << "file_io::read_error_pattern_from_output_file done" << endl;
+	}
+}
+
+void file_io::csv_file_sort_rows(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::csv_file_sort_rows fname = "<< fname << endl;
+	}
+
+	int *M;
+	int m, n;
+
+
+	int_matrix_read_csv(
+				fname, M,
+			m, n, verbose_level);
+
+	data_structures::int_matrix *I;
+
+	I = NEW_OBJECT(data_structures::int_matrix);
+	I->allocate(m, n);
+
+	int i, j, a;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = M[i * n + j];
+			I->M[i * n + j] = a;
+		}
+	}
+
+
+	I->sort_rows(verbose_level);
+
+	string fname2;
+	data_structures::string_tools ST;
+
+	fname2 = fname;
+
+	ST.chop_off_extension_and_path(fname2);
+
+	fname2 += "_sorted.csv";
+
+	int_matrix_write_csv(fname2, I->M, m, n);
+
+	cout << "written file "
+		<< fname << " of size " << file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "file_io::csv_file_sort_rows done" << endl;
+	}
+}
+
+void file_io::csv_file_sort_rows_and_remove_duplicates(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::csv_file_sort_rows_and_remove_duplicates fname = "<< fname << endl;
+	}
+
+	int *M;
+	int m, n;
+
+
+	int_matrix_read_csv(
+				fname, M,
+			m, n, verbose_level);
+
+	data_structures::int_matrix *I;
+
+	I = NEW_OBJECT(data_structures::int_matrix);
+	I->allocate(m, n);
+
+	int i, j, a;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = M[i * n + j];
+			I->M[i * n + j] = a;
+		}
+	}
+
+
+	I->sort_rows(verbose_level);
+
+	I->remove_duplicates(verbose_level);
+
+	string fname2;
+	data_structures::string_tools ST;
+
+	fname2 = fname;
+
+	ST.chop_off_extension_and_path(fname2);
+
+	fname2 += "_sorted.csv";
+
+	int_matrix_write_csv(fname2, I->M, I->m, n);
+
+	cout << "written file "
+		<< fname << " of size " << file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "file_io::csv_file_sort_rows_and_remove_duplicates done" << endl;
 	}
 }
 

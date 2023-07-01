@@ -777,6 +777,11 @@ class interface_toolkit {
 	int f_csv_file_sort_each_row;
 	std::string csv_file_sort_each_row_fname;
 
+	int f_csv_file_sort_rows;
+	std::string csv_file_sort_rows_fname;
+
+	int f_csv_file_sort_rows_and_remove_duplicates;
+	std::string csv_file_sort_rows_and_remove_duplicates_fname;
 
 	int f_csv_file_join;
 	std::vector<std::string> csv_file_join_fname;
@@ -883,6 +888,13 @@ class interface_toolkit {
 	int f_save_4_bit_data_file;
 	std::string save_4_bit_data_file_fname;
 	std::string save_4_bit_data_file_vector_data;
+
+	int f_gnuplot;
+	std::string gnuplot_file_fname;
+	std::string gnuplot_title;
+	std::string gnuplot_label_x;
+	std::string gnuplot_label_y;
+
 
 public:
 

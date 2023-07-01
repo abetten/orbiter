@@ -439,6 +439,18 @@ public:
 		std::string &output_mask,
 		int &nb_files,
 		int verbose_level);
+	void read_error_pattern_from_output_file(
+			std::string &fname,
+			int nb_lines,
+			std::vector<std::vector<int> > &Error1,
+			std::vector<std::vector<int> > &Error2,
+		int verbose_level);
+	void csv_file_sort_rows(
+			std::string &fname,
+			int verbose_level);
+	void csv_file_sort_rows_and_remove_duplicates(
+			std::string &fname,
+			int verbose_level);
 
 };
 

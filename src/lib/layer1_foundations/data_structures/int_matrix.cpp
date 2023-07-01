@@ -116,6 +116,8 @@ void int_matrix::sort_rows(int verbose_level)
 			int_matrix_swap_rows,
 		this);
 
+
+#if 0
 	orbiter_kernel_system::file_io Fio;
 
 	string fname;
@@ -123,7 +125,7 @@ void int_matrix::sort_rows(int verbose_level)
 	fname.assign("int_matrix_sorted.csv");
 	Fio.int_matrix_write_csv(fname, M, m, n);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
+#endif
 
 	if (f_v) {
 		cout << "int_matrix::sort_rows after Sorting.Heapsort_general" << endl;
@@ -134,6 +136,39 @@ void int_matrix::sort_rows(int verbose_level)
 
 	if (f_v) {
 		cout << "int_matrix::sort_rows done" << endl;
+	}
+}
+
+void int_matrix::remove_duplicates(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	data_structures::sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "int_matrix::remove_duplicates" << endl;
+	}
+	int i, j;
+
+	if (m) {
+		i = 1;
+		for (j = 1; j < m; j++) {
+			if (int_matrix_compare_rows(
+					M, i - 1, j, this) == 0) {
+				if (f_v) {
+					cout << "entry " << i - 1 << " and " << j << " are the same" << endl;
+				}
+			}
+			else {
+				Int_vec_copy(M + j * n, M + i * n, n);
+				i++;
+			}
+		}
+		m = i;
+	}
+
+	if (f_v) {
+		cout << "int_matrix::remove_duplicates done" << endl;
 	}
 }
 
