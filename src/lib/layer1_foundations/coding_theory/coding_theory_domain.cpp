@@ -3387,7 +3387,7 @@ void coding_theory_domain::crc_weight_enumerator_bottom_up(
 
 		N = Error->number_of_bit_error_patters(wt, verbose_level);
 
-		N100 = N / 100;
+		N100 = (N / 100) + 1;
 
 		long int counter = 0;
 
