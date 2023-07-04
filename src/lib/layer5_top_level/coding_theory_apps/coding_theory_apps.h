@@ -178,6 +178,11 @@ public:
 	int simulate_Hamming_errors_max_weight;
 
 
+	int f_weight_enumerator_bottom_up;
+	std::string weight_enumerator_bottom_up_crc_type;
+	int weight_enumerator_bottom_up_block_length;
+	int weight_enumerator_bottom_up_max_weight;
+
 
 	int f_convert_data_to_polynomials;
 	std::string convert_data_to_polynomials_fname_in;

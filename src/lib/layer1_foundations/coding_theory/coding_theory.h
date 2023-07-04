@@ -253,6 +253,10 @@ public:
 			crc_object *Crc_object2,
 			int error_pattern_max_weight,
 			int verbose_level);
+	void crc_weight_enumerator_bottom_up(
+			crc_object *Crc_object,
+			int error_pattern_max_weight,
+			int verbose_level);
 	void read_error_pattern_from_output_file(
 			std::string &fname_in,
 			int nb_lines,

@@ -3144,7 +3144,6 @@ void coding_theory_domain::crc_simulate_Hamming_errors(
 			int wt;
 			long int N, N100;
 			combinatorics::combinatorics_domain Combi;
-			data_structures::algorithms Algo;
 			data_structures::data_structures_global DataStructures;
 
 			for (wt = error_pattern_max_weight; wt <= error_pattern_max_weight; wt++) {
@@ -3178,7 +3177,7 @@ void coding_theory_domain::crc_simulate_Hamming_errors(
 					if ((counter % N100) == 0) {
 						if (f_v) {
 							cout << "coding_theory_domain::crc_simulate_errors "
-									"counter " << counter << " / " << nb_blocks << " = "
+									"counter " << counter << " / " << N << " = "
 									<< ((double)counter / (double) N100) << " percent "
 											"nb undetected errors =  " << nb1 << "," << nb2 << endl;
 						}
@@ -3322,6 +3321,222 @@ void coding_theory_domain::crc_simulate_Hamming_errors(
 		cout << "coding_theory_domain::crc_simulate_Hamming_errors done" << endl;
 	}
 
+}
+
+
+void coding_theory_domain::crc_weight_enumerator_bottom_up(
+		crc_object *Crc_object,
+		int error_pattern_max_weight,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_weight_enumerator_bottom_up "
+				<< " error_pattern_max_weight=" << error_pattern_max_weight
+				<< endl;
+	}
+
+
+
+	unsigned char *Data0;
+	unsigned char *Data0e;
+	unsigned char *Data1;
+	unsigned char *Check1;
+	unsigned char *Check1b;
+
+	Data0 = (unsigned char *) NEW_char(Crc_object->Len_total_in_symbols);
+	Data0e = (unsigned char *) NEW_char(Crc_object->Len_total_in_symbols);
+	Data1 = (unsigned char *) NEW_char(Crc_object->Len_total_in_symbols);
+	Check1 = (unsigned char *) NEW_char(Crc_object->Len_check_in_symbols);
+	Check1b = (unsigned char *) NEW_char(Crc_object->Len_check_in_bytes);
+
+
+	error_pattern *Error;
+
+
+	Error = NEW_OBJECT(error_pattern);
+
+	Error->init(Crc_object, error_pattern_max_weight + 1, verbose_level);
+
+
+	int f_show = false;
+	long int nb1;
+	long int nb_error_pattern_zero;
+	int wt;
+	long int N, N100;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::algorithms Algo;
+	data_structures::data_structures_global DataStructures;
+	long int *Weight_enumerator;
+
+
+	Weight_enumerator = NEW_lint(error_pattern_max_weight + 1);
+	Lint_vec_zero(Weight_enumerator, error_pattern_max_weight + 1);
+	Weight_enumerator[0] = 1;
+
+	Algo.uchar_zero(Data0, Crc_object->Len_total_in_symbols);
+	Algo.uchar_zero(Data1, Crc_object->Len_total_in_symbols);
+
+	for (wt = 1; wt <= error_pattern_max_weight; wt++) {
+
+
+		cout << "wt = " << wt << endl;
+		nb1 = 0;
+		nb_error_pattern_zero = 0;
+
+		N = Error->number_of_bit_error_patters(wt, verbose_level);
+
+		N100 = N / 100;
+
+		long int counter = 0;
+
+		Error->first_bit_error_pattern_of_given_weight(
+				Combi,
+				Algo,
+				DataStructures,
+				wt,
+				0 /*verbose_level */);
+
+
+
+
+		while (true) {
+
+
+
+			if ((counter % N100) == 0) {
+				if (f_v) {
+					cout << "coding_theory_domain::crc_simulate_errors "
+							" wt = " << wt << " counter " << counter << " / " << N << " = "
+							<< ((double)counter / (double) N100) << " percent "
+									"nb undetected errors =  " << nb1 << endl;
+				}
+			}
+
+
+			int i;
+
+			for (i = 0; i < Crc_object->Len_total_in_bytes; i++) {
+				if (Error->Error_in_bytes[i]) {
+					break;
+				}
+			}
+
+			if (i == Crc_object->Len_total_in_bytes) {
+
+				// don't do anything at all, the error pattern is zero;
+
+				nb_error_pattern_zero++;
+			}
+			else {
+
+				//Algo.print_hex(cout, Error->Error, Crc_object1->Len_total_in_bytes);
+
+				if (f_show) {
+					cout << "Error_in_bytes:" << endl;
+					Algo.print_hex(cout, Error->Error_in_bytes, Crc_object->Len_total_in_bytes);
+					Algo.print_binary(cout, Error->Error_in_bytes, Crc_object->Len_total_in_bytes);
+
+					cout << "before adding error in bytes: len = " << Crc_object->Len_total_in_bytes << endl;
+					Algo.print_hex(cout, Data0, Crc_object->Len_total_in_bytes);
+					Algo.print_binary(cout, Data0, Crc_object->Len_total_in_bytes);
+				}
+
+				Algo.uchar_xor(
+						Data0,
+						Error->Error_in_bytes,
+						Data0e,
+						Crc_object->Len_total_in_bytes);
+
+
+				if (f_show) {
+					cout << "after adding error in bytes: len = " << Crc_object->Len_total_in_bytes << endl;
+					Algo.print_hex(cout, Data0e, Crc_object->Len_total_in_bytes);
+					Algo.print_binary(cout, Data0e, Crc_object->Len_total_in_bytes);
+				}
+
+
+				Crc_object->expand(Data0e, Data1);
+
+				if (f_show) {
+					cout << "after expand: len = " << Crc_object->Len_total_in_symbols << endl;
+					Algo.print_hex(cout, Data1, Crc_object->Len_total_in_symbols);
+					Algo.print_binary(cout, Data1, Crc_object->Len_total_in_symbols);
+				}
+
+				Crc_object->divide(Data1, Check1);
+
+				if (f_show) {
+					cout << "Check1:" << endl;
+					Algo.print_hex(cout, Check1, Crc_object->Len_check_in_symbols);
+					Algo.print_binary(cout, Check1, Crc_object->Len_check_in_symbols);
+				}
+
+
+				Crc_object->compress_check(Check1, Check1b);
+
+				if (f_show) {
+					cout << "Check1b compressed:" << endl;
+					Algo.print_hex(cout, Check1b, Crc_object->Len_check_in_bytes);
+					Algo.print_binary(cout, Check1b, Crc_object->Len_check_in_bytes);
+				}
+
+
+				if (Algo.uchar_is_zero(Check1b, Crc_object->Len_check_in_bytes)) {
+					nb1++;
+					if (f_show) {
+						cout << "wt = " << wt << " undetected error : " << nb1
+								<< " counter " << counter << " / " << N << " = "
+								<< ((double)counter / (double) N100) << " % " << endl;
+						Algo.print_hex(cout, Error->Error_in_bytes, Crc_object->Len_total_in_bytes);
+						Algo.print_binary(cout, Error->Error_in_bytes, Crc_object->Len_total_in_bytes);
+					}
+				}
+			}
+
+
+			if (!Error->next_bit_error_pattern_of_given_weight(
+					Combi,
+					Algo,
+					DataStructures,
+					wt,
+					0 /*verbose_level */)) {
+				break;
+			}
+			counter++;
+
+		}
+
+		cout << "nb_error_pattern_zero = " << nb_error_pattern_zero << endl;
+
+		cout << "wt = " << wt << " N = " << N << ", # undetected errors = " << nb1 << endl;
+
+		Weight_enumerator[wt] = nb1;
+
+		orbiter_kernel_system::file_io Fio;
+		string fname;
+
+		fname = "weight_enumerator.csv";
+
+		Fio.lint_matrix_write_csv(fname, Weight_enumerator, wt + 1, 1);
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	} // next wt
+
+	FREE_char((char *) Data0);
+	FREE_char((char *) Data0e);
+	FREE_char((char *) Data1);
+	FREE_char((char *) Check1);
+	FREE_char((char *) Check1b);
+
+	FREE_OBJECT(Error);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_weight_enumerator_bottom_up done" << endl;
+	}
 }
 
 void coding_theory_domain::read_error_pattern_from_output_file(

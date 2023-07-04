@@ -39,7 +39,8 @@ algorithms::~algorithms()
 //#define HASH_PRIME ((int) 1 << 30 - 1)
 #define HASH_PRIME 174962718
 
-int algorithms::hashing(int hash0, int a)
+int algorithms::hashing(
+		int hash0, int a)
 {
 	int h = hash0; // a1 = a;
 
@@ -55,7 +56,8 @@ int algorithms::hashing(int hash0, int a)
 	return h;
 }
 
-int algorithms::hashing_fixed_width(int hash0, int a, int bit_length)
+int algorithms::hashing_fixed_width(
+		int hash0, int a, int bit_length)
 {
 	int h = hash0;
 	int a1 = a;
@@ -195,6 +197,19 @@ int algorithms::uchar_compare(
 		}
 	}
 	return 0;
+}
+
+int algorithms::uchar_is_zero(
+		unsigned char *in, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (in[i]) {
+			return false;
+		}
+	}
+	return true;
 }
 
 

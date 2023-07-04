@@ -147,6 +147,10 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	simulate_Hamming_errors_max_weight = 0;
 
 
+	f_weight_enumerator_bottom_up = false;
+	//std::string weight_enumerator_bottom_up_crc_type;
+	weight_enumerator_bottom_up_block_length = 0;
+	weight_enumerator_bottom_up_max_weight = 0;
 
 
 
@@ -509,6 +513,20 @@ int coding_theoretic_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-weight_enumerator_bottom_up") == 0) {
+			f_weight_enumerator_bottom_up = true;
+			weight_enumerator_bottom_up_crc_type.assign(argv[++i]);
+			weight_enumerator_bottom_up_block_length = ST.strtoi(argv[++i]);
+			weight_enumerator_bottom_up_max_weight = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-weight_enumerator_bottom_up "
+						<< weight_enumerator_bottom_up_crc_type << " "
+						<< weight_enumerator_bottom_up_block_length << " "
+						<< weight_enumerator_bottom_up_max_weight << " "
+						<< endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-convert_data_to_polynomials") == 0) {
 			f_convert_data_to_polynomials = true;
 			convert_data_to_polynomials_fname_in.assign(argv[++i]);
@@ -753,6 +771,14 @@ void coding_theoretic_activity_description::print()
 					<< simulate_Hamming_errors_crc2_type << " "
 					<< simulate_Hamming_errors_block_length2 << " "
 					<< simulate_Hamming_errors_max_weight << " "
+					<< endl;
+	}
+
+	if (f_weight_enumerator_bottom_up) {
+			cout << "-weight_enumerator_bottom_up "
+					<< weight_enumerator_bottom_up_crc_type << " "
+					<< weight_enumerator_bottom_up_block_length << " "
+					<< weight_enumerator_bottom_up_max_weight << " "
 					<< endl;
 	}
 

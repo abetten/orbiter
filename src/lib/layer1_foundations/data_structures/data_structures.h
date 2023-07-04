@@ -32,15 +32,26 @@ public:
 
 	algorithms();
 	~algorithms();
-	int hashing(int hash0, int a);
-	int hashing_fixed_width(int hash0, int a, int bit_length);
-	void uchar_print_bitwise(std::ostream &ost, unsigned char u);
-	void uchar_move(const unsigned char *p, unsigned char *q, int len);
-	void uchar_expand_4(const unsigned char *p, unsigned char *q, int len);
-	void uchar_compress_4(const unsigned char *p, unsigned char *q, int len);
-	void uchar_zero(unsigned char *p, int len);
-	void uchar_xor(unsigned char *in1, unsigned char *in2, unsigned char *out, int len);
-	int uchar_compare(unsigned char *in1, unsigned char *in2, int len);
+	int hashing(
+			int hash0, int a);
+	int hashing_fixed_width(
+			int hash0, int a, int bit_length);
+	void uchar_print_bitwise(
+			std::ostream &ost, unsigned char u);
+	void uchar_move(
+			const unsigned char *p, unsigned char *q, int len);
+	void uchar_expand_4(
+			const unsigned char *p, unsigned char *q, int len);
+	void uchar_compress_4(
+			const unsigned char *p, unsigned char *q, int len);
+	void uchar_zero(
+			unsigned char *p, int len);
+	void uchar_xor(
+			unsigned char *in1, unsigned char *in2, unsigned char *out, int len);
+	int uchar_compare(
+			unsigned char *in1, unsigned char *in2, int len);
+	int uchar_is_zero(
+			unsigned char *in, int len);
 	void int_swap(int& x, int& y);
 	void lint_swap(long int & x, long int & y);
 	void print_pointer_hex(std::ostream &ost, void *p);
