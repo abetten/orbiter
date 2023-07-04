@@ -93,20 +93,6 @@ void orbiter_top_level_session::handle_everything(
 		for (j = 0; j < argc; j++) {
 			cout << j << " : " << Argv[j] << endl;
 		}
-#if 0
-		string cmd;
-
-		cmd.assign(Session.orbiter_path);
-		cmd.append("orbiter.out");
-		for (j = 1; j < argc; j++) {
-			cmd.append(" \"");
-			cmd.append(argv[j]);
-			cmd.append("\" ");
-		}
-		cout << "system: " << cmd << endl;
-		system(cmd.c_str());
-		exit(1);
-#endif
 	}
 
 

@@ -128,20 +128,16 @@ void representatives::init(
 	if (f_v) {
 		cout << "representatives::init before creating fnames" << endl;
 	}
-	fname_rep.assign(prefix);
-	fname_rep.append("_classification_reps.txt");
+	fname_rep = prefix + "_classification_reps.txt";
 
 
-	fname_stabgens.assign(prefix);
-	fname_stabgens.append("_classification_stabgens.bin");
+	fname_stabgens = prefix + "_classification_stabgens.bin";
 
 
-	fname_fusion.assign(prefix);
-	fname_fusion.append("_classification_fusion.txt");
+	fname_fusion = prefix + "_classification_fusion.txt";
 
 
-	fname_fusion_ge.assign(prefix);
-	fname_fusion_ge.append("_classification_fusion_ge.bin");
+	fname_fusion_ge = prefix + "_classification_fusion_ge.bin";
 
 	if (f_v) {
 		cout << "representatives::init done" << endl;

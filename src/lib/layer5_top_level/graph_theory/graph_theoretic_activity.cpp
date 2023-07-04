@@ -325,19 +325,16 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		string fname_base, fname_out, fname_subset;
 
-		fname_base.assign(CG->label);
+		fname_base = CG->label;
 
-		fname_base.append("_");
-		fname_base.append(Descr->split_by_clique_label);
+		fname_base = "_" + Descr->split_by_clique_label;
 
-		fname_out.assign(fname_base);
-		fname_out.append(".graph");
+		fname_out = fname_base + ".graph";
 
 
 		Subgraph->save(fname_out, verbose_level - 2);
 
-		fname_subset.assign(fname_base);
-		fname_subset.append("_subset.txt");
+		fname_subset = fname_base + "_subset.txt";
 
 		vertex_subset->save(fname_subset, verbose_level);
 
@@ -350,8 +347,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 		string fname;
 
-		fname.assign(CG->label);
-		fname.append(".colored_graph");
+		fname = CG->label + ".colored_graph";
 
 		cout << "before save fname_graph=" << fname << endl;
 		CG->save(fname, verbose_level);
@@ -434,8 +430,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		string fname;
 
-		fname.assign(CG->label);
-		fname.append("_draw.mp");
+		fname = CG->label + "_draw.mp";
 
 		CG->draw_on_circle(
 				fname,

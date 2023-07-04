@@ -2816,8 +2816,7 @@ void schlaefli::write_lines_vs_line(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(prefix);
-	fname.append("_lines_vs_lines_incma.csv");
+	fname = prefix + "_lines_vs_lines_incma.csv";
 
 	Fio.int_matrix_write_csv(fname, adjacency_matrix_of_lines,
 			27, 27);
@@ -2840,14 +2839,12 @@ void schlaefli::write_lines_vs_tritangent_planes(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(prefix);
-	fname.append("_lines_tritplanes_incma.csv");
+	fname = prefix + "_lines_tritplanes_incma.csv";
 
 	Fio.int_matrix_write_csv(fname, incidence_lines_vs_tritangent_planes,
 			27, 45);
 
-	fname.assign(prefix);
-	fname.append("_lines_tritplanes.csv");
+	fname = prefix + "_lines_tritplanes.csv";
 
 	Fio.lint_matrix_write_csv(fname, Lines_in_tritangent_planes,
 			45, 3);
@@ -2869,14 +2866,12 @@ void schlaefli::write_double_sixes(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(prefix);
-	fname.append("_single_sixes_char_vec.csv");
+	fname = prefix + "_single_sixes_char_vec.csv";
 
 	Fio.int_matrix_write_csv(fname, Half_double_six_characteristic_vector,
 			72, 27);
 
-	fname.assign(prefix);
-	fname.append("_double_sixes_char_vec.csv");
+	fname = prefix + "_double_sixes_char_vec.csv";
 
 	Fio.int_matrix_write_csv(fname, Double_six_characteristic_vector,
 			36, 27);

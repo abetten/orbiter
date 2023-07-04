@@ -103,11 +103,10 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 	string fname_out;
 	data_structures::string_tools ST;
 
-	fname_out.assign(fname);
+	fname_out = fname;
 	ST.chop_off_extension(fname_out);
-	fname_out.append("_draw");
+	fname_out += "_draw";
 
-	//fname_out.append(".mp");
 
 	if (Opt->f_paths_in_between) {
 
@@ -141,8 +140,7 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 
 	string fname_full;
 
-	fname_full.assign(fname_out);
-	fname_full.append(".mp");
+	fname_full = fname_out + ".mp";
 
 	LG->draw_with_options(fname_out, Opt, verbose_level - 10);
 
@@ -308,9 +306,9 @@ void graphical_output::do_domino_portrait(int D, int s,
 	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools String;
 
-	fname_cost.assign(photo_label);
+	fname_cost = photo_label;
 	String.chop_off_extension(fname_cost);
-	fname_cost.append("_cost.csv");
+	fname_cost += "_cost.csv";
 
 	if (f_v) {
 		cout << "graphical_output::do_domino_portrait "
@@ -326,7 +324,7 @@ void graphical_output::do_domino_portrait(int D, int s,
 
 	string label;
 
-	label.assign("Cost");
+	label = "Cost";
 	Fio.int_vec_write_csv(Cost, len, fname_cost, label);
 
 	if (f_v) {
@@ -1765,9 +1763,9 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 
 	data_structures::string_tools ST;
 
-	fname2.assign(Tree_draw_options->file_name);
+	fname2 = Tree_draw_options->file_name;
 	ST.chop_off_extension(fname2);
-	fname2.append("_draw");
+	fname2 += "_draw";
 
 	if (f_v) {
 		cout << "graphical_output::tree_draw before T.draw" << endl;

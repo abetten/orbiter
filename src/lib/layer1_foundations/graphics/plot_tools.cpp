@@ -363,8 +363,7 @@ void plot_tools::projective_plane_draw_grid(
 	}
 
 
-	fname_full.assign(fname);
-	fname_full.append("_draw.mp");
+	fname_full = fname + "_draw.mp";
 
 
 	{
@@ -438,8 +437,7 @@ void plot_tools::draw_mod_n(
 		exit(1);
 	}
 
-	fname_full.assign(Descr->fname);
-	fname_full.append("_draw.mp");
+	fname_full = Descr->fname + "_draw.mp";
 
 
 	{

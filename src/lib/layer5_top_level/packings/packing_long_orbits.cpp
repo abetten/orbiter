@@ -197,8 +197,7 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 
 		std::string fname_packings;
 
-		fname_packings.assign(PWF->PW->Descr->H_label);
-		fname_packings.append("_packings.csv");
+		fname_packings = PWF->PW->Descr->H_label + "_packings.csv";
 
 
 
@@ -206,7 +205,8 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 			cout << "packing_long_orbits::init "
 					"before save_packings_by_case" << endl;
 		}
-		save_packings_by_case(fname_packings, Packings_by_case, verbose_level);
+		save_packings_by_case(fname_packings,
+				Packings_by_case, verbose_level);
 		if (f_v) {
 			cout << "packing_long_orbits::init "
 					"after save_packings_by_case" << endl;
@@ -364,8 +364,7 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	std::string fname_packings;
 
 
-	fname_packings.assign(PWF->PW->Descr->H_label);
-	fname_packings.append("_packings.csv");
+	fname_packings = PWF->PW->Descr->H_label + "_packings.csv";
 
 
 

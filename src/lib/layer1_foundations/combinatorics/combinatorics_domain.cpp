@@ -2993,10 +2993,9 @@ void combinatorics_domain::convert_stack_to_tdo(
 	if (f_v) {
 		cout << "combinatorics_domain::convert_stack_to_tdo" << endl;
 	}
-	fname.assign(stack_fname);
+	fname = stack_fname;
 	ST.chop_off_extension(fname);
-	fname_out.assign(fname);
-	fname_out.append(".tdo");
+	fname_out = fname + ".tdo";
 
 	if (f_v) {
 		cout << "reading stack file " << stack_fname << endl;
@@ -3052,7 +3051,8 @@ void combinatorics_domain::convert_stack_to_tdo(
 	}
 	if (f_v) {
 		orbiter_kernel_system::file_io Fio;
-		cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "written file " << fname_out
+				<< " of size " << Fio.file_size(fname_out) << endl;
 		cout << "combinatorics_domain::convert_stack_to_tdo done" << endl;
 	}
 }
@@ -3068,7 +3068,8 @@ void combinatorics_domain::do_parameters_maximal_arc(
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "combinatorics_domain::do_parameters_maximal_arc q=" << q << " r=" << r << endl;
+		cout << "combinatorics_domain::do_parameters_maximal_arc "
+				"q=" << q << " r=" << r << endl;
 	}
 
 	Q = q * q;
@@ -3082,7 +3083,8 @@ void combinatorics_domain::do_parameters_maximal_arc(
 	aij[3] = q / r;
 	fname = "max_arc_q" + std::to_string(q) + "_r" + std::to_string(r) + ".stack";
 
-	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
+	Fio.write_decomposition_stack(
+			fname, m, n, v, b, aij, verbose_level - 1);
 }
 
 void combinatorics_domain::do_parameters_arc(
@@ -3095,7 +3097,8 @@ void combinatorics_domain::do_parameters_arc(
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "combinatorics_domain::do_parameters_maximal_arc q=" << q << " s=" << s << " r=" << r << endl;
+		cout << "combinatorics_domain::do_parameters_maximal_arc "
+				"q=" << q << " s=" << s << " r=" << r << endl;
 	}
 
 	v[0] = s;
@@ -3105,7 +3108,8 @@ void combinatorics_domain::do_parameters_arc(
 	aij[1] = q + 1;
 	fname = "arc_q" + std::to_string(q) + "_s" + std::to_string(s) + "_r" + std::to_string(r) + ".stack";
 
-	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
+	Fio.write_decomposition_stack(
+			fname, m, n, v, b, aij, verbose_level - 1);
 }
 
 void combinatorics_domain::do_read_poset_file(

@@ -673,10 +673,7 @@ void algebra_global_with_action::compute_orbit_of_set(
 		cout << "after OS->make_table_of_coset_reps" << endl;
 	}
 
-	fname.assign(label_set);
-	fname.append("_orbit_under_");
-	fname.append(label_group);
-	fname.append("_transporter.csv");
+	fname = label_set + "_orbit_under_" + label_group + "_transporter.csv";
 
 	Coset_reps->write_to_csv_file_coded(fname, verbose_level);
 
@@ -705,10 +702,7 @@ void algebra_global_with_action::compute_orbit_of_set(
 	// write as csv file:
 
 
-	fname.assign(label_set);
-	fname.append("_orbit_under_");
-	fname.append(label_group);
-	fname.append(".csv");
+	fname = label_set + "_orbit_under_" + label_group + ".csv";
 
 	if (f_v) {
 		cout << "Writing orbit to file " << fname << endl;
@@ -726,10 +720,7 @@ void algebra_global_with_action::compute_orbit_of_set(
 	// write as txt file:
 
 
-	fname.assign(label_set);
-	fname.append("_orbit_under_");
-	fname.append(label_group);
-	fname.append(".txt");
+	fname = label_set + "_orbit_under_" + label_group + ".txt";
 
 	if (f_v) {
 		cout << "Writing table to file " << fname << endl;
@@ -3440,9 +3431,7 @@ void algebra_global_with_action::permutation_representation_of_element(
 				"element_description=" << element_description << endl;
 	}
 
-	prefix.assign(A->label);
-	prefix.append("_elt");
-	//prefix.append(label);
+	prefix = A->label + "_elt";
 
 	Elt = NEW_int(A->elt_size_in_int);
 

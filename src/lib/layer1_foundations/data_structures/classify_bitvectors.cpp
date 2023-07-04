@@ -316,10 +316,8 @@ void classify_bitvectors::save(
 		cout << "classify_bitvectors::save" << endl;
 	}
 
-	fname_txt.assign(prefix);
-	fname_txt.append("_iso.txt");
-	fname_csv.assign(prefix);
-	fname_csv.append("_iso.csv");
+	fname_txt = prefix + "_iso.txt";
+	fname_csv = prefix + "_iso.csv";
 	
 
 	if (perm == NULL) {

@@ -822,6 +822,67 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_simulate_Hamming_errors) {
+		cout << "-crc_compare"
+				<< " " << Descr->simulate_Hamming_errors_fname_in
+				<< " " << Descr->simulate_Hamming_errors_block_number
+				<< " " << Descr->simulate_Hamming_errors_crc1_type
+				<< " " << Descr->simulate_Hamming_errors_block_length1
+				<< " " << Descr->simulate_Hamming_errors_crc2_type
+				<< " " << Descr->simulate_Hamming_errors_block_length2
+				<< " " << Descr->simulate_Hamming_errors_max_weight
+				<< endl;
+
+
+		coding_theory::coding_theory_domain Codes;
+
+		coding_theory::crc_object *CRC1;
+		coding_theory::crc_object *CRC2;
+
+
+		CRC1 = NEW_OBJECT(coding_theory::crc_object);
+		CRC2 = NEW_OBJECT(coding_theory::crc_object);
+
+		CRC1->init(
+				Descr->simulate_Hamming_errors_crc1_type,
+				Descr->simulate_Hamming_errors_block_length1,
+				verbose_level);
+		CRC2->init(
+				Descr->simulate_Hamming_errors_crc2_type,
+				Descr->simulate_Hamming_errors_block_length2,
+				verbose_level);
+
+		cout << "CRC1 code info:" << endl;
+		CRC1->print();
+		cout << "CRC2 code info:" << endl;
+		CRC2->print();
+
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before Codes.crc_simulate_Hamming_errors" << endl;
+		}
+
+		Codes.crc_simulate_Hamming_errors(
+				Descr->simulate_Hamming_errors_fname_in,
+				Descr->simulate_Hamming_errors_block_number,
+				CRC1,
+				CRC2,
+				Descr->simulate_Hamming_errors_max_weight,
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after Codes.crc_simulate_Hamming_errors" << endl;
+		}
+
+		FREE_OBJECT(CRC1);
+		FREE_OBJECT(CRC2);
+
+	}
+
+
+
 
 	else if (Descr->f_crc_compare_read_output_file) {
 		cout << "-crc_compare"

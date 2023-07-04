@@ -1066,8 +1066,7 @@ void interface_toolkit::worker(int verbose_level)
 		int m, n;
 		string fname;
 
-		fname.assign(save_matrix_csv_label);
-		fname.append("_matrix.csv");
+		fname = save_matrix_csv_label + "_matrix.csv";
 
 		Get_matrix(save_matrix_csv_label, v, m, n);
 		Fio.int_matrix_write_csv(fname, v, m, n);
@@ -1369,10 +1368,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		string cmd;
 
-		cmd.assign("mv ");
-		cmd.append(mv_a);
-		cmd.append(" ");
-		cmd.append(mv_b);
+		cmd = "mv " + mv_a + " " + mv_b;
 		cout << "executing " << cmd << endl;
 		system(cmd.c_str());
 	}
@@ -1383,7 +1379,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		string cmd;
 
-		cmd.assign(system_command);
+		cmd = system_command;
 		cout << "executing " << cmd << endl;
 		system(cmd.c_str());
 	}
@@ -1404,16 +1400,13 @@ void interface_toolkit::worker(int verbose_level)
 			argv2 = new string[argc2];
 			for (j = loop_start_idx, s = 0; j < loop_end_idx; j++, s++) {
 
-				char str[1000];
 				string arg;
 				string value_h;
 				string variable;
 
 				arg.assign(loop_argv[j]);
-				snprintf(str, sizeof(str), "%d", h);
-				value_h.assign(str);
-				variable.assign("%");
-				variable.append(loop_variable);
+				value_h = std::to_string(h);
+				variable = "%" + loop_variable;
 
 				while (arg.find(variable) != std::string::npos) {
 					arg.replace(arg.find(variable), variable.length(), value_h);
@@ -1461,18 +1454,15 @@ void interface_toolkit::worker(int verbose_level)
 			argv2 = new string[argc2];
 			for (j = loop_over_start_idx, s = 0; j < loop_over_end_idx; j++, s++) {
 
-				char str[1000];
 				string arg;
 				string token;
 				string value;
 
 				arg.assign(loop_over_argv[j]);
 
-				snprintf(str, sizeof(str), "%d", h);
-				value.assign(str);
+				value = std::to_string(h);
 
-				token.assign("%");
-				token.append(loop_over_variable);
+				token = "%" + loop_over_variable;
 
 				size_t pos, pos1, pos2;
 				int f_square_bracket;
@@ -1509,14 +1499,12 @@ void interface_toolkit::worker(int verbose_level)
 							cout << "object size = " << sz_v << endl;
 							exit(1);
 						}
-						snprintf(str, sizeof(str), "%ld", v[h]);
-						value.assign(str);
+						value = std::to_string(v[h]);
 
 						arg.replace(pos, pos2 - pos + 1, value);
 					}
 					else {
-						snprintf(str, sizeof(str), "%d", h);
-						value.assign(str);
+						value = std::to_string(h);
 
 						arg.replace(pos, token.length(), value);
 
@@ -1569,9 +1557,10 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		string fname;
 
-		fname.assign(plot_function_fname);
+		fname = plot_function_fname;
 		ST.chop_off_extension(fname);
-		fname.append("_graph.csv");
+		fname += "_graph.csv";
+
 		Fio.int_matrix_write_csv(fname, M, m1, m1);
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;

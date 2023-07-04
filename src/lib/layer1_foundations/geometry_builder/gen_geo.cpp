@@ -210,8 +210,7 @@ void gen_geo::main2(int verbose_level)
 
 		string fname;
 
-		fname.assign(inc_file_name);
-		fname.append(".inc");
+		fname = inc_file_name + ".inc";
 
 		if (f_v) {
 			cout << "gen_geo::main2 before it->write_inc_file" << endl;
@@ -233,8 +232,7 @@ void gen_geo::main2(int verbose_level)
 		cout << "gen_geo::main2 f_output_to_sage_file" << endl;
 		string fname;
 
-		fname.assign(inc_file_name);
-		fname.append(".sage");
+		fname = inc_file_name + ".sage";
 		it->write_sage_file(fname, verbose_level);
 
 		orbiter_kernel_system::file_io Fio;
@@ -249,8 +247,7 @@ void gen_geo::main2(int verbose_level)
 		if (GB->Descr->f_output_to_blocks_latex_file) {
 			string fname;
 
-			fname.assign(inc_file_name);
-			fname.append(".blocks_long");
+			fname = inc_file_name + ".blocks_long";
 			it->write_blocks_file_long(fname, verbose_level);
 
 			orbiter_kernel_system::file_io Fio;
@@ -268,8 +265,7 @@ void gen_geo::main2(int verbose_level)
 			if (GB->Descr->f_output_to_blocks_file) {
 				string fname;
 
-				fname.assign(inc_file_name);
-				fname.append(".blocks");
+				fname = inc_file_name + ".blocks";
 				it->write_blocks_file(fname, verbose_level);
 
 				orbiter_kernel_system::file_io Fio;
@@ -284,8 +280,7 @@ void gen_geo::main2(int verbose_level)
 		it = inc->iso_type_no_vhbars;
 		{
 			string fname;
-			fname.assign(inc_file_name);
-			fname.append("_resolved.inc");
+			fname = inc_file_name + "_resolved.inc";
 			it->write_inc_file(fname, verbose_level);
 		}
 	}
@@ -486,8 +481,7 @@ void gen_geo::setup_output_files(int verbose_level)
 
 
 	if (GB->Descr->f_search_tree) {
-		fname_search_tree.assign(inc_file_name);
-		fname_search_tree.append("_tree.txt");
+		fname_search_tree = inc_file_name + "_tree.txt";
 
 		if (f_v) {
 			cout << "gen_geo::setup_output_files, opening file " << fname_search_tree << endl;
@@ -501,8 +495,7 @@ void gen_geo::setup_output_files(int verbose_level)
 	}
 
 	if (GB->Descr->f_search_tree_flags) {
-		fname_search_tree_flags.assign(inc_file_name);
-		fname_search_tree_flags.append("_tree_flags.txt");
+		fname_search_tree_flags = inc_file_name + "_tree_flags.txt";
 
 		if (f_v) {
 			cout << "gen_geo::setup_output_files, opening file " << fname_search_tree << endl;

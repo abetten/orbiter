@@ -153,9 +153,7 @@ void orbits_create::init(
 			string fname_tree_mask;
 			int orbit_idx;
 
-			fname_tree_mask.assign("orbit_");
-			fname_tree_mask.append(Group->A->label);
-			fname_tree_mask.append("_%d.layered_graph");
+			fname_tree_mask = "orbit_" + Group->A->label + "_%d.layered_graph";
 
 			for (orbit_idx = 0; orbit_idx < Orb->Sch->nb_orbits; orbit_idx++) {
 

@@ -758,8 +758,8 @@ void create_code::dual_code(int verbose_level)
 
 
 
-	label_txt.append("_dual");
-	label_tex.append("\\_dual");
+	label_txt += "_dual";
+	label_tex += "\\_dual";
 
 
 	if (f_v) {
@@ -1248,6 +1248,13 @@ void create_code::export_checkma_as_projective_set(
 		F->Projective_space_basic->PG_element_rank_modified(
 				v, 1, nmk, Rk[j]);
 	}
+
+	if (f_v) {
+		cout << "create_code::export_checkma_as_projective_set Rk = ";
+		Lint_vec_print_fully(cout, Rk, n);
+		cout << endl;
+	}
+
 	orbiter_kernel_system::file_io Fio;
 
 	Fio.lint_matrix_write_csv(fname, Rk, n, 1);

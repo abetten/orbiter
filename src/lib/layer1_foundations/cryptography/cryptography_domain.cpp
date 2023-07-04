@@ -1321,10 +1321,10 @@ void cryptography_domain::do_EC_points(
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		fname.assign(label);
-		fname.append("_points_xy.csv");
+		fname = label + "_points_xy.csv";
 		Fio.int_matrix_write_csv(fname, M, F->q, F->q);
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 
 		FREE_int(M);
 	}
@@ -1354,10 +1354,10 @@ void cryptography_domain::do_EC_points(
 		string fname;
 		orbiter_kernel_system::file_io Fio;
 
-		fname.assign(label);
-		fname.append("_points_xy_affine_pts.csv");
+		fname = label + "_points_xy_affine_pts.csv";
 		Fio.int_matrix_write_csv(fname, M, cnt, 2);
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 
 		FREE_int(M);
 	}

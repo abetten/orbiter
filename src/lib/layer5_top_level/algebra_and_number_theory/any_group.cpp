@@ -238,8 +238,7 @@ void any_group::export_group_table(int verbose_level)
 	orbiter_kernel_system::file_io Fio;
 
 
-	fname.assign(label);
-	fname.append("_group_table.csv");
+	fname = label + "_group_table.csv";
 
 	Fio.int_matrix_write_csv(fname, Table, n, n);
 	if (f_v) {
@@ -271,8 +270,7 @@ void any_group::do_export_orbiter(
 	if (f_v) {
 		cout << "any_group::do_export_orbiter label=" << label << endl;
 	}
-	fname.assign(label);
-	fname.append(".makefile");
+	fname = label + ".makefile";
 	{
 		ofstream fp(fname);
 
@@ -320,8 +318,7 @@ void any_group::do_export_gap(int verbose_level)
 	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(label);
-	fname.append("_generators.gap");
+	fname = label + "_generators.gap";
 	{
 		ofstream ost(fname);
 
@@ -389,8 +386,7 @@ void any_group::do_export_magma(int verbose_level)
 	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(label);
-	fname.append("_generators.magma");
+	fname = label + "_generators.magma";
 	{
 		ofstream fp(fname);
 		groups::strong_generators *SG;
@@ -423,8 +419,7 @@ void any_group::do_canonical_image_GAP(
 	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(label);
-	fname.append("_canonical_image.gap");
+	fname = label + "_canonical_image.gap";
 	{
 		ofstream ost(fname);
 		groups::strong_generators *SG;
@@ -516,8 +511,7 @@ void any_group::normalizer(int verbose_level)
 
 
 
-	fname_magma_prefix.assign(label);
-	fname_magma_prefix.append("_normalizer");
+	fname_magma_prefix = label + "_normalizer";
 
 
 	H = Subgroup_gens->create_sims(verbose_level);
@@ -898,8 +892,7 @@ void any_group::print_elements_tex(int f_with_permutation,
 
 	string fname;
 
-	fname.assign(label);
-	fname.append("_elements.tex");
+	fname = label + "_elements.tex";
 
 
 	{
@@ -921,8 +914,7 @@ void any_group::print_elements_tex(int f_with_permutation,
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 
-	fname.assign(label);
-	fname.append("_elements_tree.txt");
+	fname = label + "_elements_tree.txt";
 
 
 	{
@@ -940,7 +932,8 @@ void any_group::print_elements_tex(int f_with_permutation,
 
 		//L.foot(fp);
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname
+			<< " of size " << Fio.file_size(fname) << endl;
 
 
 	FREE_int(Elt);
@@ -985,8 +978,7 @@ void any_group::order_of_products_of_elements_by_rank(
 
 	string fname;
 
-	fname.assign(label);
-	fname.append("_elements.tex");
+	fname = label + "_elements.tex";
 
 
 	{
@@ -1302,8 +1294,7 @@ void any_group::random_element(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(elt_label);
-	fname.append(".csv");
+	fname = elt_label + ".csv";
 
 	Fio.int_matrix_write_csv(fname, data, 1, A->make_element_size);
 
@@ -1589,10 +1580,7 @@ void any_group::conjugacy_class_of(
 	}
 	string fname;
 
-	fname.assign(LG->label);
-	fname.append("_class_of_");
-	fname.append(label);
-	fname.append(".csv");
+	fname = LG->label + "_class_of_" + label + ".csv";
 
 	Fio.int_matrix_write_csv(fname, M, Orbit.size(), A->make_element_size);
 
@@ -1731,9 +1719,9 @@ void any_group::orbits_on_set_system_from_file(
 	string fname;
 	data_structures::string_tools ST;
 
-	fname.assign(fname_csv);
+	fname = fname_csv;
 	ST.chop_off_extension(fname);
-	fname.append("_orbit_reps.txt");
+	fname += "_orbit_reps.txt";
 
 	{
 		ofstream ost(fname);
@@ -1925,8 +1913,7 @@ void any_group::orbit_of(
 				"computing shallow Schreier tree done." << endl;
 	}
 
-	fname_tree_mask.assign(label);
-	fname_tree_mask.append("_%d_shallow.layered_graph");
+	fname_tree_mask = label + "_%d_shallow.layered_graph";
 
 	shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
 			fname_tree_mask,
@@ -2034,13 +2021,9 @@ void any_group::create_latex_report_for_permutation_group(
 		string author;
 		string extra_praeamble;
 
-		fname.assign(label);
-		fname.append("_report.tex");
-		title.assign("The group $");
-		title.append(label_tex);
-		title.append("$");
-
-		author.assign("");
+		fname = label + "_report.tex";
+		title = "The group $" + label_tex + "$";
+		author = "";
 
 
 		{
@@ -2136,13 +2119,9 @@ void any_group::create_latex_report_for_modified_group(
 		string author;
 		string extra_praeamble;
 
-		fname.assign(label);
-		fname.append("_report.tex");
-		title.assign("The group $");
-		title.append(label_tex);
-		title.append("$");
-
-		author.assign("");
+		fname = label + "_report.tex";
+		title = "The group $" + label_tex + "$";
+		author = "";
 
 
 		{
@@ -2342,8 +2321,7 @@ void any_group::report_coset_reps(
 
 	string fname;
 
-	fname.assign(label);
-	fname.append("_coset_reps.tex");
+	fname = label + "_coset_reps.tex";
 
 
 	{
@@ -2405,8 +2383,7 @@ void any_group::print_given_elements_tex(
 
 	string fname;
 
-	fname.assign(label_of_elements);
-	fname.append("_elements.tex");
+	fname = label_of_elements + "_elements.tex";
 
 
 	{
@@ -2485,8 +2462,7 @@ void any_group::process_given_elements(
 
 	string fname;
 
-	fname.assign(label_of_elements);
-	fname.append("_processing.tex");
+	fname = label_of_elements + "_processing.tex";
 
 
 	{
@@ -2569,8 +2545,7 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 	string fname;
 
-	fname.assign(label_of_elements);
-	fname.append("_wedge_4to6.csv");
+	fname = label_of_elements + "_wedge_4to6.csv";
 
 	if (A->type_G != action_on_wedge_product_t) {
 		cout << "any_group::apply_isomorphism_wedge_product_4to6 "
@@ -2664,8 +2639,7 @@ void any_group::order_of_products_of_pairs(
 
 	string fname;
 
-	fname.assign(label_of_elements);
-	fname.append("_order_of_products_of_pairs.csv");
+	fname = label_of_elements + "_order_of_products_of_pairs.csv";
 
 
 	{
@@ -2754,8 +2728,7 @@ void any_group::conjugate(
 
 	string fname;
 
-	fname.assign(label_of_elements);
-	fname.append("_conjugate.csv");
+	fname = label_of_elements + "_conjugate.csv";
 
 
 	{

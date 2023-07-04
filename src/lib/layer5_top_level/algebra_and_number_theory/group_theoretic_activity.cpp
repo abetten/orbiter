@@ -886,8 +886,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 		std::string fname_coset_reps;
 
-		fname_coset_reps.assign(AG->label);
-		fname_coset_reps.append("_coset_reps.csv");
+		fname_coset_reps = AG->label + "_coset_reps.csv";
 
 		coset_reps->save_csv(fname_coset_reps, verbose_level);
 

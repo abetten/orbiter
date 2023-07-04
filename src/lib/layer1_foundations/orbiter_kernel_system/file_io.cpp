@@ -296,10 +296,7 @@ void file_io::read_candidates_for_one_orbit_from_file(
 	}
 	string fname2;
 
-	char str[1000];
-	fname2.assign(prefix);
-	snprintf(str, sizeof(str), "_lvl_%d_candidates.bin", level_of_candidates_file);
-	fname2.append(str);
+	fname2 = prefix + "_lvl_" + std::to_string(level_of_candidates_file);
 
 	poset_classification_read_candidates_of_orbit(
 		fname2, orbit_idx,
@@ -354,16 +351,13 @@ int file_io::find_orbit_index_in_data_file(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	char str[1000];
 	int orbit_idx;
 
 	if (f_v) {
 		cout << "file_io::find_orbit_index_in_data_file" << endl;
 	}
 
-	fname.assign(prefix);
-	snprintf(str, sizeof(str), "_lvl_%d", level_of_candidates_file);
-	fname.append(str);
+	fname = prefix + "_lvl_" + std::to_string(level_of_candidates_file);
 
 	if (file_size(fname) <= 0) {
 		cout << "find_orbit_index_in_data_file file "
@@ -4277,11 +4271,9 @@ void file_io::do_csv_file_select_rows(
 
 	string fname_out;
 
-	fname_out.assign(fname);
+	fname_out = fname;
 	ST.chop_off_extension(fname_out);
-	fname_out.append("_select");
-	//fname_out.append(rows_text);
-	fname_out.append(".csv");
+	fname_out += "_select.csv";
 
 	{
 		ofstream ost(fname_out);
@@ -4328,12 +4320,10 @@ void file_io::do_csv_file_split_rows_modulo(
 	for (I = 0; I < split_modulo; I++) {
 
 		string fname_out;
-		char str[1000];
 
-		fname_out.assign(fname);
+		fname_out = fname;
 		ST.chop_off_extension(fname_out);
-		snprintf(str, sizeof(str), "_split_%d_mod_%d.csv", I, split_modulo);
-		fname_out.append(str);
+		fname_out += "_split_" + std::to_string(I) + "_mod_" + std::to_string(split_modulo) + ".csv";
 
 		{
 			ofstream ost(fname_out);
@@ -4389,9 +4379,9 @@ void file_io::do_csv_file_select_cols(
 
 	string fname_out;
 
-	fname_out.assign(fname);
+	fname_out = fname;
 	ST.chop_off_extension(fname_out);
-	fname_out.append("_select.csv");
+	fname_out += "_select.csv";
 
 	{
 		ofstream ost(fname_out);
@@ -4408,9 +4398,9 @@ void file_io::do_csv_file_select_cols(
 	cout << "Written file " << fname_out
 			<< " of size " << file_size(fname_out) << endl;
 
-	fname_out.assign(fname);
+	fname_out = fname;
 	ST.chop_off_extension(fname_out);
-	fname_out.append("_special.csv");
+	fname_out += "_special.csv";
 
 	{
 		ofstream ost(fname_out);
@@ -4471,9 +4461,9 @@ void file_io::do_csv_file_select_rows_and_cols(
 
 	string fname_out;
 
-	fname_out.assign(fname);
+	fname_out = fname;
 	ST.chop_off_extension(fname_out);
-	fname_out.append("_select.csv");
+	fname_out += "_select.csv";
 
 	{
 		ofstream ost(fname_out);
@@ -4532,10 +4522,9 @@ void file_io::do_csv_file_extract_column_to_txt(
 	identifier_column = S->find_column(col_label);
 
 
-	fname.assign(csv_fname);
+	fname = csv_fname;
 	ST.replace_extension_with(fname, "_");
-	fname.append(col_label);
-	fname.append(".txt");
+	fname += col_label + ".txt";
 
 
 
@@ -4592,7 +4581,7 @@ void file_io::do_csv_file_sort_each_row(
 	for (i = 0; i < m; i++) {
 		Sorting.int_vec_heapsort(M + i * n, n);
 	}
-	fname.assign(csv_fname);
+	fname = csv_fname;
 	ST.replace_extension_with(fname, "_sorted.csv");
 
 	int_matrix_write_csv(fname, M, m, n);
@@ -4691,9 +4680,9 @@ void file_io::do_csv_file_join(
 	string save_fname;
 	data_structures::string_tools ST;
 
-	save_fname.assign(csv_file_join_fname[0]);
+	save_fname = csv_file_join_fname[0];
 	ST.chop_off_extension(save_fname);
-	save_fname.append("_joined.csv");
+	save_fname += "_joined.csv";
 
 	{
 		ofstream f(save_fname);
@@ -4876,9 +4865,9 @@ void file_io::do_csv_file_latex(
 	string fname_out;
 	data_structures::string_tools ST;
 
-	fname_out.assign(fname);
+	fname_out = fname;
 	ST.chop_off_extension(fname_out);
-	fname_out.append(".tex");
+	fname_out += ".tex";
 
 	{
 		ofstream ost(fname_out);
@@ -5425,9 +5414,9 @@ void file_io::grade_statistic_from_csv(
 	data_structures::string_tools ST;
 
 
-	fname_summary.assign(fname_csv);
+	fname_summary = fname_csv;
 	ST.chop_off_extension(fname_summary);
-	fname_summary.append("_summary.csv");
+	fname_summary += "_summary.csv";
 
 	int_matrix_write_csv(fname_summary, T, 10, 3);
 
@@ -5436,73 +5425,6 @@ void file_io::grade_statistic_from_csv(
 	}
 
 
-#if 0
-	string author;
-	string title;
-	string extra_praeamble;
-
-
-	char str[1000];
-
-	snprintf(str, 1000, "File");
-	title.assign(str);
-	snprintf(str, 1000, "Orbiter");
-	author.assign(str);
-
-
-
-
-	string fname_out;
-	data_structures::string_tools ST;
-
-	fname_out.assign(fname_csv);
-	ST.chop_off_extension(fname_out);
-	fname_out.append(".tex");
-
-	{
-		ofstream ost(fname_out);
-		latex_interface L;
-
-		//S.print_table_latex_all_columns(ost, false /* f_enclose_in_parentheses */);
-
-		int *f_column_select;
-		int j;
-
-		f_column_select = NEW_int(S.nb_cols);
-		for (j = 0; j < S.nb_cols; j++) {
-			f_column_select[j] = true;
-		}
-		f_column_select[0] = false;
-
-
-		if (f_produce_latex_header) {
-			//L.head_easy(ost);
-			L.head(ost,
-				false /* f_book */,
-				true /* f_title */,
-				title, author,
-				false /*f_toc */,
-				false /* f_landscape */,
-				false /* f_12pt */,
-				false /* f_enlarged_page */,
-				true /* f_pagenumbers */,
-				extra_praeamble /* extras_for_preamble */);
-		}
-
-		S.print_table_latex(ost,
-				f_column_select,
-				false /* f_enclose_in_parentheses */,
-				nb_lines_per_table);
-
-		FREE_int(f_column_select);
-
-		if (f_produce_latex_header) {
-			L.foot(ost);
-		}
-
-	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
-#endif
 
 
 	if (f_v) {
@@ -5669,13 +5591,12 @@ void file_io::split_by_values(
 		Int_vec_zero(M2, len);
 		a = T.data_sorted[T.type_first[t]];
 		string fname;
-		char str[1000];
 		data_structures::string_tools ST;
 
-		fname.assign(fname_in);
+		fname = fname_in;
 		ST.chop_off_extension(fname);
-		snprintf(str, sizeof(str), "_value%d.csv", a);
-		fname.append(str);
+		fname += "_value" + std::to_string(a) + ".csv";
+
 		for (h = 0; h < len; h++) {
 			if (M[h] == a) {
 				M2[h] = 1;

@@ -171,35 +171,26 @@ void quartic_curve_object_properties::create_summary_file(
 	string col_lab_nb_axes;
 
 
-	col_lab_surface_label.assign("Surface");
+	col_lab_surface_label = "Surface";
 
 
-	col_lab_nb_lines.assign("#L");
-	col_lab_nb_lines.append(col_postfix);
+	col_lab_nb_lines = "#L" + col_postfix;
 
-	col_lab_nb_points.assign("#P");
-	col_lab_nb_points.append(col_postfix);
+	col_lab_nb_points = "#P" + col_postfix;
 
-	col_lab_nb_singular_points.assign("#S");
-	col_lab_nb_singular_points.append(col_postfix);
+	col_lab_nb_singular_points = "#S" + col_postfix;
 
-	col_lab_nb_Eckardt_points.assign("#E");
-	col_lab_nb_Eckardt_points.append(col_postfix);
+	col_lab_nb_Eckardt_points = "#E" + col_postfix;
 
-	col_lab_nb_double_points.assign("#D");
-	col_lab_nb_double_points.append(col_postfix);
+	col_lab_nb_double_points = "#D" + col_postfix;
 
-	col_lab_nb_Single_points.assign("#U");
-	col_lab_nb_Single_points.append(col_postfix);
+	col_lab_nb_Single_points = "#U" + col_postfix;
 
-	col_lab_nb_pts_not_on_lines.assign("#OFF");
-	col_lab_nb_pts_not_on_lines.append(col_postfix);
+	col_lab_nb_pts_not_on_lines = "#OFF" + col_postfix;
 
-	col_lab_nb_Hesse_planes.assign("#H");
-	col_lab_nb_Hesse_planes.append(col_postfix);
+	col_lab_nb_Hesse_planes = "#H" + col_postfix;
 
-	col_lab_nb_axes.assign("#AX");
-	col_lab_nb_axes.append(col_postfix);
+	col_lab_nb_axes = "#AX" + col_postfix;
 
 #if 0
 	SO->nb_lines;

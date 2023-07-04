@@ -729,9 +729,7 @@ void surface_domain::make_table_of_surfaces2(
 	//file_io Fio;
 	std::string fname;
 
-	fname.assign("table_of_cubic_surfaces_");
-	fname.append(prefix);
-	fname.append(".csv");
+	fname = "table_of_cubic_surfaces_" + prefix + ".csv";
 
 	if (f_v) {
 		cout << "surface_domain::make_table_of_surfaces2 "

@@ -39,8 +39,7 @@ void graph_theory_apps::automorphism_group(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(CG->label);
-	fname.append(".colored_graph");
+	fname = CG->label + ".colored_graph";
 
 
 	interfaces::nauty_interface_with_group Nauty;
@@ -58,8 +57,7 @@ void graph_theory_apps::automorphism_group(
 
 	string fname_report;
 
-	fname_report.assign(CG->label);
-	fname_report.append("_report.tex");
+	fname_report = CG->label + "_report.tex";
 
 
 	{
@@ -109,8 +107,7 @@ void graph_theory_apps::automorphism_group(
 
 	string fname_group;
 
-	fname_group.assign(CG->label);
-	fname_group.append("_group.makefile");
+	fname_group = CG->label + "_group.makefile";
 
 	if (f_v) {
 		cout << "graph_theory_apps::automorphism_group "

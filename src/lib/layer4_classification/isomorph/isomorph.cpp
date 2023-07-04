@@ -99,14 +99,12 @@ void isomorph::init(std::string &prefix,
 	isomorph::level = level;
 
 
-	isomorph::prefix.assign(prefix);
+	isomorph::prefix = prefix;
 
-	prefix_invariants.assign(prefix);
-	prefix_invariants.append("INVARIANTS/");
+	prefix_invariants = prefix + "INVARIANTS/";
 
 
-	prefix_tex.assign(prefix);
-	prefix_tex.append("TEX/");
+	prefix_tex = prefix + "TEX/";
 
 
 	isomorph::A_base = A_base;

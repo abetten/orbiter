@@ -1367,8 +1367,10 @@ void buekenhout_metz::write_unital_to_file()
 	orbiter_kernel_system::file_io Fio;
 	
 	get_name(fname_unital);
-	fname_unital.append(".txt");
+	fname_unital += ".txt";
+
 	Fio.write_set_to_file(fname_unital, U, sz, 0 /* verbose_level */);
+
 	cout << "written file " << fname_unital << " of size "
 			<< Fio.file_size(fname_unital) << endl;
 }

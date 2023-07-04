@@ -222,8 +222,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		string fname_map;
 		orbiter_kernel_system::file_io Fio;
 
-		fname_map.assign(Descr->map_formula_label);
-		fname_map.append("_map.csv");
+		fname_map = Descr->map_formula_label + "_map.csv";
 
 
 		Fio.lint_matrix_write_csv(fname_map, Image_pts, N_points, 1);

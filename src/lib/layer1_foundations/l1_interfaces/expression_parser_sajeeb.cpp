@@ -318,8 +318,7 @@ void expression_parser_sajeeb::init_formula(
 	}
 
 	std::string fname;
-	fname.assign(name_of_formula);
-	fname.append(".gv");
+	fname = ame_of_formula + ".gv";
 
 	{
 		std::ofstream ost(fname);

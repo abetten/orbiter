@@ -722,11 +722,11 @@ void domino_assignment::draw_domino_matrix2(std::string &fname,
 	Draw_options->scale = 0.2;
 	Draw_options->line_width = 0.75;
 
-	fname_full.assign(fname);
-	fname_full.append(".mp");
+	fname_full = fname + ".mp";
 
 	if (f_v) {
-		cout << "domino_assignment::draw_domino_matrix2 fname=" << fname_full << endl;
+		cout << "domino_assignment::draw_domino_matrix2 "
+				"fname=" << fname_full << endl;
 	}
 	{
 		//int f_embedded = false;
@@ -798,12 +798,9 @@ void domino_assignment::read_photo(std::string &photo_fname, int verbose_level)
 		R = new int[M * N];
 		G = new int[M * N];
 		B = new int[M * N];
-		fname_R.assign(photo_fname);
-		fname_G.assign(photo_fname);
-		fname_B.assign(photo_fname);
-		fname_R.append(".r");
-		fname_G.append(".g");
-		fname_B.append(".b");
+		fname_R = photo_fname + ".r";
+		fname_G = photo_fname + ".g";
+		fname_B = photo_fname + ".b";
 
 		if (Fio.file_size(fname_R) <= 0) {
 			cout << "cannot find input file " << fname_R << endl;
@@ -853,8 +850,7 @@ void domino_assignment::read_photo(std::string &photo_fname, int verbose_level)
 
 		string fname_m;
 
-		fname_m.assign(photo_fname);
-		fname_m.append("_m.csv");
+		fname_m = photo_fname + "_m.csv";
 
 		Fio.int_matrix_write_csv(fname_m, mphoto, M, N);
 		if (f_v) {
@@ -868,8 +864,7 @@ void domino_assignment::read_photo(std::string &photo_fname, int verbose_level)
 		int *pixel;
 
 		pixel = new int[M * N];
-		fname.assign(photo_fname);
-		fname.append(".txt");
+		fname = photo_fname + ".txt";
 		{
 			ifstream fp(fname);
 			fp >> n >> m;
@@ -2244,10 +2239,8 @@ void domino_assignment::prepare_latex(std::string &photo_label, int verbose_leve
 #endif
 
 
-	tex_file_name.assign(photo_label);
-	pdf_file_name.assign(photo_label);
-	tex_file_name.append(".tex");
-	pdf_file_name.append(".pdf");
+	tex_file_name = photo_label + ".tex";
+	pdf_file_name = photo_label + ".pdf";
 
 	{
 		ofstream f(tex_file_name);
@@ -2311,12 +2304,9 @@ void domino_assignment::prepare_latex(std::string &photo_label, int verbose_leve
 	string cmd1;
 	string cmd3;
 
-	cmd1.assign("pdflatex ");
-	cmd1.append(tex_file_name);
+	cmd1 = "pdflatex " + tex_file_name;
 
-	cmd3.assign("open ");
-	cmd3.append(pdf_file_name);
-	cmd3.append(" &");
+	cmd3 = "open " + pdf_file_name + " &";
 
 
 	system(cmd1.c_str());

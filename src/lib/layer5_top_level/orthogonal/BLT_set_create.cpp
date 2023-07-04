@@ -755,8 +755,7 @@ void BLT_set_create::export_set_in_PG(int verbose_level)
 	orbiter_kernel_system::file_io Fio;
 
 
-	fname_csv.assign(label_txt);
-	fname_csv.append("_in_PG.csv");
+	fname_csv = label_txt + "_in_PG.csv";
 
 	Fio.lint_matrix_write_csv(fname_csv, Pts, sz, 1);
 	cout << "written file " << fname_csv << " of size "

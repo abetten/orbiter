@@ -50,8 +50,7 @@ void poset_classification::report(
 
 
 	string fname_report;
-	fname_report.assign(problem_label);
-	fname_report.append("_poset.tex");
+	fname_report = problem_label + "_poset.tex";
 	l1_interfaces::latex_interface L;
 	orbiter_kernel_system::file_io Fio;
 
@@ -562,7 +561,7 @@ void poset_classification::report_poset_of_orbits(
 				"fname_poset=" << fname_poset << endl;
 	}
 
-	fname_out_base.append("_draw");
+	fname_out_base += "_draw";
 	if (f_v) {
 		cout << "poset_classification::report_poset_of_orbits "
 				"fname_out_base=" << fname_out_base << endl;

@@ -63,6 +63,96 @@ void error_pattern::init(crc_object *Crc_object,
 	Error_in_bytes = (unsigned char *) NEW_char(Crc_object->Len_total_in_bytes);
 }
 
+long int error_pattern::number_of_bit_error_patters(
+		int wt,
+		int verbose_level)
+// binomial(Len_total_in_bits, wt)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "error_pattern::number_of_bit_error_patters" << endl;
+	}
+
+	combinatorics::combinatorics_domain Combi;
+	ring_theory::longinteger_object N;
+	long int nb;
+
+	Combi.binomial(
+			N,
+			Crc_object->Len_total_in_bits, wt, 0 /*verbose_level */);
+
+	nb = N.as_lint();
+
+	if (f_v) {
+		cout << "error_pattern::number_of_bit_error_patters: n = Crc_object->Len_total_in_bits = " << Crc_object->Len_total_in_bits << endl;
+		cout << "error_pattern::number_of_bit_error_patters: k = wt = " << wt << endl;
+		cout << "error_pattern::number_of_bit_error_patters: n_choose_k = " << N << endl;
+		cout << "error_pattern::number_of_bit_error_patters: n_choose_k lint = " << nb << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "error_pattern::number_of_bit_error_patters done" << endl;
+	}
+	return nb;
+}
+
+void error_pattern::first_bit_error_pattern_of_given_weight(
+		combinatorics::combinatorics_domain &Combi,
+		data_structures::algorithms &Algo,
+		data_structures::data_structures_global &DataStructures,
+		int wt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "error_pattern::first_bit_error_pattern_of_given_weight" << endl;
+	}
+	Combi.first_k_subset(A, Crc_object->Len_total_in_bits, wt);
+	Algo.uchar_zero(Error_in_bytes, Crc_object->Len_total_in_bytes);
+
+	int i, bit_pos;
+
+	for (i = 0; i < wt; i++) {
+		bit_pos = A[i];
+		DataStructures.bitvector_set_bit_reversed(Error_in_bytes, bit_pos);
+	}
+}
+
+int error_pattern::next_bit_error_pattern_of_given_weight(
+		combinatorics::combinatorics_domain &Combi,
+		data_structures::algorithms &Algo,
+		data_structures::data_structures_global &DataStructures,
+		int wt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "error_pattern::first_bit_error_pattern_of_given_weight" << endl;
+	}
+	if (!Combi.next_k_subset(A, Crc_object->Len_total_in_bits, wt)) {
+		return false;
+	}
+	else {
+		Algo.uchar_zero(Error_in_bytes, Crc_object->Len_total_in_bytes);
+
+		int i, bit_pos;
+		data_structures::data_structures_global DataStructures;
+
+		for (i = 0; i < wt; i++) {
+			bit_pos = A[i];
+			DataStructures.bitvector_set_bit_reversed(Error_in_bytes, bit_pos);
+		}
+
+		return true;
+	}
+}
+
+
 
 void error_pattern::create_error_pattern(
 		int verbose_level)

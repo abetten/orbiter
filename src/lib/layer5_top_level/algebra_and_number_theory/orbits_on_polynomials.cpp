@@ -216,12 +216,11 @@ void orbits_on_polynomials::init(
 		orbiter_kernel_system::file_io Fio;
 		std::string fname;
 
-		fname.assign(fname_base);
-		fname.append("_recognition.csv");
+		fname = fname_base + "_recognition.csv";
 
 		string label;
 
-		label.assign("Idx");
+		label = "Idx";
 		Fio.int_vec_write_csv(Idx, len, fname, label);
 
 		FREE_lint(Rank);
@@ -622,8 +621,7 @@ void orbits_on_polynomials::export_something(
 
 	string fname_base;
 
-	fname_base.assign("orbits_");
-	fname_base.append(LG->label);
+	fname_base = "orbits_" + LG->label;
 
 	if (f_v) {
 		cout << "orbits_on_polynomials::export_something "

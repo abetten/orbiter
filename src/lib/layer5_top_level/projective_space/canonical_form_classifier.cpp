@@ -725,8 +725,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 	if (f_v) {
 		cout << "canonical_form_classifier::write_canonical_forms_csv" << endl;
 	}
-	fname.assign(fname_base);
-	fname.append("_canonical_form.csv");
+	fname = fname_base + "_canonical_form.csv";
 
 
 	//nb_orbits = Classification_of_quartic_curves->nb_types;
@@ -742,7 +741,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 
 	{
-		ofstream ost(fname.c_str());
+		ofstream ost(fname);
 
 		ost << "ROW,CNT,PO,SO,SourceRow,Eqn,Pts,Bitangents,"
 				"Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago" << endl;
@@ -1026,8 +1025,7 @@ void canonical_form_classifier::generate_source_code(
 	}
 #endif
 
-	fname.assign(fname_base);
-	fname.append(".cpp");
+	fname = fname_base + ".cpp";
 
 
 	nb_orbits = Classification_of_quartic_curves->nb_types;
@@ -1038,7 +1036,7 @@ void canonical_form_classifier::generate_source_code(
 	A_on_lines = Descr->PA->A_on_lines;
 
 	{
-		ofstream f(fname.c_str());
+		ofstream f(fname);
 
 		f << "static int " << fname_base << "_nb_reps = "
 				<< nb_orbits << ";" << endl;
@@ -1363,8 +1361,8 @@ void canonical_form_classifier::report(
 	}
 
 
-	fname.assign(label);
-	fname.append("_orbits.tex");
+	fname = label;
+	fname += "_orbits.tex";
 
 
 
@@ -1393,8 +1391,7 @@ void canonical_form_classifier::report(
 	{
 		string fname_data;
 
-		fname_data.assign(label);
-		fname_data.append("_canonical_form_data.csv");
+		fname_data = label + "_canonical_form_data.csv";
 
 
 		if (f_v) {

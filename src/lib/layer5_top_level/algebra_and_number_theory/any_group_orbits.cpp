@@ -342,10 +342,7 @@ void any_group::do_conjugacy_class_of_element(
 	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(elt_label);
-	fname.append("_orbit_under_");
-	fname.append(LG->label);
-	fname.append("_elements_coded.csv");
+	fname = elt_label + "_orbit_under_" + LG->label + "_elements_coded.csv";
 
 	if (f_v) {
 		cout << "Writing table to file " << fname << endl;

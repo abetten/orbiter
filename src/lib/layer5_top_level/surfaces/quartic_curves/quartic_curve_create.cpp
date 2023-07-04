@@ -1097,8 +1097,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	}
 
 	std::string fname;
-	fname.assign(name_of_formula);
-	fname.append(".gv");
+	fname = name_of_formula + ".gv";
 
 	{
 		std::ofstream ost(fname);
@@ -1821,9 +1820,9 @@ void quartic_curve_create::compute_group(
 	for (i = 0; i < QO->nb_pts; i++) {
 		a = QO->Pts[i];
 		snprintf(str, sizeof(str), "%ld", a);
-		Descr->Data->input_string[Descr->Data->nb_inputs].append(str);
+		Descr->Data->input_string[Descr->Data->nb_inputs] += str;
 		if (i < QO->nb_pts - 1) {
-			Descr->Data->input_string[Descr->Data->nb_inputs].append(",");
+			Descr->Data->input_string[Descr->Data->nb_inputs] += ",";
 		}
 	}
 	Descr->Data->input_string2[Descr->Data->nb_inputs].assign("");
@@ -2158,8 +2157,7 @@ void quartic_curve_create::export_something(
 
 	string fname_base;
 
-	fname_base.assign("quartic_curve_");
-	fname_base.append(label_txt);
+	fname_base = "quartic_curve_" + label_txt;
 
 	if (f_v) {
 		cout << "quartic_curve_create::export_something "

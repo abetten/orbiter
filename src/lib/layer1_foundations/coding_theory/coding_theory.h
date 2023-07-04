@@ -246,6 +246,13 @@ public:
 			int error_pattern_weight,
 			int nb_tests_per_block,
 			int verbose_level);
+	void crc_simulate_Hamming_errors(
+			std::string &fname_in,
+			int block_number,
+			crc_object *Crc_object1,
+			crc_object *Crc_object2,
+			int error_pattern_max_weight,
+			int verbose_level);
 	void read_error_pattern_from_output_file(
 			std::string &fname_in,
 			int nb_lines,
@@ -391,9 +398,9 @@ public:
 
 	crc_object_type Crc_object_type;
 
-	int Len_total_in_symbols;
-	int Len_total_in_bits;
-	int Len_total_in_bytes;
+	int Len_total_in_symbols; // code length, often called n
+	int Len_total_in_bits; // = Len_total_in_symbols * symbol_set_size_log;
+	int Len_total_in_bytes; // = (Len_total_in_bits + 7) / 8;
 
 	int Len_check_in_symbols;
 	int Len_check_in_bits;
@@ -403,7 +410,7 @@ public:
 	int Len_info_in_bits;
 	int Len_info_in_bytes;
 
-	int block_length_in_bytes;
+	int block_length_in_bytes; // = Len_total_in_bits / 8;
 	int info_length_in_bytes;
 	int info_length_in_symbols;
 
@@ -412,8 +419,8 @@ public:
 	int symbol_set_size;
 	//int code_length_in_bits; // = Len_total * symbol_set_size_log
 
-	unsigned char *Data; // [Len_total]
-	unsigned char *Check; // [Len_check]
+	unsigned char *Data; // [Len_total_in_bytes]
+	unsigned char *Check; // [Len_total_in_bytes]
 
 	data_structures::bitvector *Bitvector;
 
@@ -661,6 +668,21 @@ public:
 	~error_pattern();
 	void init(crc_object *Crc_object,
 			int k, int verbose_level);
+	long int number_of_bit_error_patters(
+			int wt,
+			int verbose_level);
+	void first_bit_error_pattern_of_given_weight(
+			combinatorics::combinatorics_domain &Combi,
+			data_structures::algorithms &Algo,
+			data_structures::data_structures_global &DataStructures,
+			int wt,
+			int verbose_level);
+	int next_bit_error_pattern_of_given_weight(
+			combinatorics::combinatorics_domain &Combi,
+			data_structures::algorithms &Algo,
+			data_structures::data_structures_global &DataStructures,
+			int wt,
+			int verbose_level);
 	void create_error_pattern(
 			int verbose_level);
 

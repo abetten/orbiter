@@ -168,6 +168,17 @@ public:
 	int crc_compare_read_output_file_block_length2;
 
 
+	int f_simulate_Hamming_errors;
+	std::string simulate_Hamming_errors_fname_in;
+	int simulate_Hamming_errors_block_number;
+	std::string simulate_Hamming_errors_crc1_type;
+	int simulate_Hamming_errors_block_length1;
+	std::string simulate_Hamming_errors_crc2_type;
+	int simulate_Hamming_errors_block_length2;
+	int simulate_Hamming_errors_max_weight;
+
+
+
 	int f_convert_data_to_polynomials;
 	std::string convert_data_to_polynomials_fname_in;
 	std::string convert_data_to_polynomials_fname_out;

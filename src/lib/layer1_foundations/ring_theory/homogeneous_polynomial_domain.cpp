@@ -618,7 +618,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		for (j = 0; j < nb_variables; j++) {
 			a = Monomials[i * nb_variables + j];
 			if (a) {
-				label.append(symbols_latex[j]);
+				label += symbols_latex[j];
 				if (a > 1) {
 					if (a >= 10) {
 						label += "^{" + std::to_string(a) + "}";
@@ -1017,7 +1017,7 @@ void homogeneous_polynomial_domain::print_monomial_latex(
 		if (a == 0) {
 			continue;
 		}
-		s.append(symbols_latex[j]);
+		s += symbols_latex[j];
 
 		if (a >= 10) {
 			s += "^{" + std::to_string(a) + "}";
@@ -1031,7 +1031,7 @@ void homogeneous_polynomial_domain::print_monomial_latex(
 void homogeneous_polynomial_domain::print_monomial_relaxed(
 		std::string &s, int *mon)
 {
-	int i, j, a;
+	int j, a;
 	int f_first = true;
 
 	for (j = 0; j < nb_variables; j++) {
@@ -1043,20 +1043,13 @@ void homogeneous_polynomial_domain::print_monomial_relaxed(
 			f_first = false;
 		}
 		else {
-			s.append("*");
+			s += "*";
 		}
 
-		s.append(symbols[j]);
+		s += symbols[j];
 
-#if 0
-		for (i = 1; i < a; i++) {
-			s.append("*");
-			s.append(symbols[j]);
-		}
-#endif
 		if (a > 1) {
-			s.append("^");
-			s += std::to_string(a);
+			s += "^" + std::to_string(a);
 		}
 	}
 }
@@ -2567,9 +2560,8 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 	v = NEW_int(get_nb_variables());
 
 
-	label_txt.assign(variety_label_txt);
-	label_tex.assign(variety_label_tex);
-	//fname.append(".txt");
+	label_txt = variety_label_txt;
+	label_tex = variety_label_tex;
 
 
 
@@ -2798,8 +2790,7 @@ void homogeneous_polynomial_domain::create_projective_variety(
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 
 
-	label_txt.assign(variety_label);
-	label_tex.append(variety_label_tex);
+	label_txt = variety_label + variety_label_tex;
 
 	int *coeff;
 	int sz;

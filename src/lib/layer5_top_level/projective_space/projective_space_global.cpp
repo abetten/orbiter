@@ -937,15 +937,13 @@ void projective_space_global::make_relation(
 	string fname_csv;
 	string fname_inc;
 
-	fname_csv.assign("relation");
-	fname_inc.assign("relation");
+	fname_csv = "relation.csv";
+	fname_inc = "relation.inc";
 
-	fname_csv.append(".csv");
 	Fio.int_matrix_write_csv(fname_csv, M, nb_pts, nb_lines);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
-	fname_inc.append(".inc");
 	Fio.write_incidence_matrix_to_file(fname_inc,
 		M, nb_pts, nb_lines, 0 /*verbose_level*/);
 	cout << "written file " << fname_inc << " of size "

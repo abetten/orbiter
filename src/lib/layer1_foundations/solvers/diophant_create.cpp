@@ -423,8 +423,7 @@ void diophant_create::init(
 
 	D->label.assign(Descr->label);
 
-	fname.assign(Descr->label);
-	fname.append(".diophant");
+	fname = Descr->label + ".diophant";
 
 	D->save_in_general_format(fname, verbose_level);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;

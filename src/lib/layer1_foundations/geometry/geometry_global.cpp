@@ -401,9 +401,8 @@ void geometry_global::create_Buekenhout_Metz(
 
 	string name;
 
-	fname.assign("unital_");
 	BM->get_name(name);
-	fname.append(name);
+	fname = "unital_" + name;
 
 	FREE_OBJECT(BM);
 	if (f_v) {
@@ -1886,10 +1885,8 @@ void geometry_global::create_decomposition_of_projective_plane(
 		string fname_col_scheme;
 
 
-		fname_row_scheme.assign(fname_base);
-		fname_row_scheme.append("_row_scheme.tex");
-		fname_col_scheme.assign(fname_base);
-		fname_col_scheme.append("_col_scheme.tex");
+		fname_row_scheme = fname_base + "_row_scheme.tex";
+		fname_col_scheme = fname_base + "_col_scheme.tex";
 		{
 			ofstream fp_row_scheme(fname_row_scheme);
 			ofstream fp_col_scheme(fname_col_scheme);
@@ -3473,10 +3470,9 @@ void geometry_global::make_restricted_incidence_matrix(
 	string fname_csv;
 	string fname_inc;
 
-	fname_csv.assign(file_name);
-	fname_inc.assign(file_name);
+	fname_csv = file_name + ".csv";
+	fname_inc = file_name + ".inc";
 
-	fname_csv.append(".csv");
 	Fio.int_matrix_write_csv(fname_csv, M, nb_row_objects, nb_col_objects);
 
 	if (f_v) {
@@ -3484,7 +3480,6 @@ void geometry_global::make_restricted_incidence_matrix(
 				<< Fio.file_size(fname_csv) << endl;
 	}
 
-	fname_inc.append(".inc");
 	Fio.write_incidence_matrix_to_file(fname_inc,
 		M, nb_row_objects, nb_col_objects, 0 /*verbose_level*/);
 
@@ -3572,7 +3567,7 @@ void geometry_global::plane_intersection_type(
 
 	fname.assign(input);
 	ST.chop_off_extension(fname);
-	fname.append("_highest_weight_objects.csv");
+	fname += "_highest_weight_objects.csv";
 
 	Int_type->M->write_csv(fname, verbose_level);
 
@@ -3679,7 +3674,7 @@ void geometry_global::plane_intersection_type_of_klein_image(
 
 	fname.assign(input);
 	ST.chop_off_extension(fname);
-	fname.append("_highest_weight_objects.csv");
+	fname += "_highest_weight_objects.csv";
 
 	Int_type->M->write_csv(fname, verbose_level);
 

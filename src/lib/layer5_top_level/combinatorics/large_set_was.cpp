@@ -341,8 +341,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 
 		Orbits_under_N = NEW_lint(Sch->nb_orbits * 2);
 
-		fname_out.assign(Descr->prefix);
-		fname_out.append("_N_orbit_reps.csv");
+		fname_out = Descr->prefix + "_N_orbit_reps.csv";
 
 		for (i = 0; i < Sch->nb_orbits; i++) {
 			l = Sch->orbit_len[i];

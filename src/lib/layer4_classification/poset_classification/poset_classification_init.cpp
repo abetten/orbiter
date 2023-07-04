@@ -134,9 +134,8 @@ void poset_classification::init_internal(
 	poset_classification::Poset = Poset;
 	poset_classification::sz = sz;
 
-	problem_label.assign(Control->problem_label);
-	problem_label_with_path.assign(Control->path);
-	problem_label_with_path.append(Control->problem_label);
+	problem_label = Control->problem_label;
+	problem_label_with_path = Control->path + Control->problem_label;
 	//Control->init_labels(problem_label, problem_label_with_path);
 
 	if (f_v) {

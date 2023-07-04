@@ -159,7 +159,8 @@ int module::clean_column(
 		}
 
 		if (f_vv) {
-			cout << "module::clean_column i=" << i << " j=" << j << " current matrix before cleaning:" << endl;
+			cout << "module::clean_column i=" << i
+					<< " j=" << j << " current matrix before cleaning:" << endl;
 			cout << "M=" << endl;
 			M->print();
 		}
@@ -238,7 +239,8 @@ int module::clean_column(
 		}
 
 		if (f_vv) {
-			cout << "module::clean_column i=" << i << " j=" << j << " cleaned" << endl;
+			cout << "module::clean_column i=" << i
+					<< " j=" << j << " cleaned" << endl;
 			cout << "M=" << endl;
 			M->print();
 		}
@@ -311,7 +313,8 @@ int module::clean_row(
 		}
 
 		if (f_vv) {
-			cout << "module::clean_row i=" << i << " j=" << j << " current matrix before cleaning:" << endl;
+			cout << "module::clean_row i=" << i
+					<< " j=" << j << " current matrix before cleaning:" << endl;
 			cout << "M=" << endl;
 			M->print();
 		}

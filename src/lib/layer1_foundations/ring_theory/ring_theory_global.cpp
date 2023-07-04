@@ -134,9 +134,7 @@ void ring_theory_global::write_code_for_division(
 			}
 
 
-		name_of_function.assign("divide");
-		name_of_function.append("_");
-		name_of_function.append(label_code);
+		name_of_function = "divide_" + label_code;
 
 
 
@@ -144,8 +142,7 @@ void ring_theory_global::write_code_for_division(
 
 
 
-		name_of_array_of_polynomials.assign("crc_poly_table_");
-		name_of_array_of_polynomials.append(label_code);
+		name_of_array_of_polynomials = "crc_poly_table_" + label_code;
 
 
 

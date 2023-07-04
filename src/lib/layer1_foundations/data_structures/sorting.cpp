@@ -3024,8 +3024,7 @@ void sorting::schreier_vector_tree(
 
 	string fname;
 
-	fname.assign(fname_base);
-	fname.append(".layered_graph");
+	fname = fname_base + ".layered_graph";
 
 
 

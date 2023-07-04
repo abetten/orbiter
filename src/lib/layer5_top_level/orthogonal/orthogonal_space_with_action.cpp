@@ -228,8 +228,7 @@ void orthogonal_space_with_action::report(
 
 	{
 		string fname_report;
-		fname_report.assign(O->label_txt);
-		fname_report.append("_report.tex");
+		fname_report = O->label_txt + "_report.tex";
 		l1_interfaces::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
 

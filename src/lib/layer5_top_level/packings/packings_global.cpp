@@ -1419,7 +1419,7 @@ void packings_global::select_packings_self_dual(
 	else {
 		snprintf(str, sizeof(str), "_self_dual.csv");
 	}
-	fname_self_dual.append(str);
+	fname_self_dual += str;
 	cout << "saving self_dual_cases to file " << fname_self_dual << endl;
 	Fio.int_vec_write_csv(self_dual_cases, nb_self_dual_cases,
 			fname_self_dual, "self_dual_idx");

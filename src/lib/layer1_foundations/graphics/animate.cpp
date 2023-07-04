@@ -638,7 +638,7 @@ void animate::animate_one_round(
 
 						ST.chop_off_extension(Opt->latex_fname_base[i]);
 						snprintf(str, sizeof(str), "_%04d", i);
-						Opt->latex_fname_base[i].append(str);
+						Opt->latex_fname_base[i] += str;
 
 						//sprintf(Opt->latex_fname_base[i] +
 						//	strlen(Opt->latex_fname_base[i]), "_%04d", i);

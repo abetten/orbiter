@@ -3724,8 +3724,7 @@ void strong_generators::export_group_to_GAP_and_copy_to_latex(
 	}
 	string export_fname;
 
-	export_fname.assign(label_txt);
-	export_fname.append("_group.gap");
+	export_fname = label_txt + "_group.gap";
 
 	export_permutation_group_to_GAP(
 			export_fname, A2, verbose_level - 2);
@@ -3909,8 +3908,7 @@ void strong_generators::export_to_orbiter_as_bsgs(
 
 		string fname_generators;
 
-		fname_generators.assign(label);
-		fname_generators.append("_gens.csv");
+		fname_generators = label + "_gens.csv";
 
 
 #if 0
@@ -4014,8 +4012,7 @@ void strong_generators::report_group(
 
 	string fname;
 
-	fname.assign(prefix);
-	fname.append("_report.tex");
+	fname = prefix + "_report.tex";
 
 	{
 		string title, author, extra_praeamble;

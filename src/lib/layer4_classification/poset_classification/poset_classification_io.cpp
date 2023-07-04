@@ -707,8 +707,7 @@ void poset_classification::housekeeping(
 				fname_reps_csv, i, verbose_level);
 
 
-		my_fname_base.assign(problem_label_with_path);
-		my_fname_base.append("a");
+		my_fname_base = problem_label_with_path + "a";
 		if (f_v) {
 			cout << "poset_classification_housekeeping "
 					"my_fname_base=" << my_fname_base << endl;
@@ -722,22 +721,23 @@ void poset_classification::housekeeping(
 					"after write_level_file_binary" << endl;
 		}
 		if (i) {		
-			my_fname_base.assign(problem_label_with_path);
-			my_fname_base.append("b");
+			my_fname_base = problem_label_with_path + "b";
 			if (f_v) {
 				cout << "poset_classification_housekeeping "
 						"my_fname_base=" << my_fname_base << endl;
 				cout << "poset_classification_housekeeping "
 						"before write_level_file_binary" << endl;
 			}
-			write_level_file_binary(i - 1, my_fname_base, 0/*verbose_level*/);
+			write_level_file_binary(
+					i - 1, my_fname_base, 0/*verbose_level*/);
 			if (f_v) {
 				cout << "poset_classification_housekeeping "
 						"my_fname_base=" << my_fname_base << endl;
 				cout << "poset_classification_housekeeping "
 						"before write_sv_level_file_binary" << endl;
 			}
-			write_sv_level_file_binary(i - 1, my_fname_base, 
+			write_sv_level_file_binary(
+					i - 1, my_fname_base,
 				false, 0, 0, 0 /*verbose_level*/);
 		}
 #endif
@@ -745,7 +745,8 @@ void poset_classification::housekeeping(
 			cout << "poset_classification_housekeeping "
 					"before write_lvl_file" << endl;
 		}
-		Poo->write_lvl_file(problem_label_with_path, i, t0,
+		Poo->write_lvl_file(
+				problem_label_with_path, i, t0,
 				false /* f_with_strong_generators */,
 				false /* f_long_version */, 0);
 		if (f_v) {

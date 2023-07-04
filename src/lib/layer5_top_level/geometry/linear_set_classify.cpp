@@ -788,8 +788,7 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 	string prefix;
 
 
-	prefix.assign(Gen->get_problem_label_with_path());
-	prefix.append("b");
+	prefix = Gen->get_problem_label_with_path() + "b";
 	for (level = 0; level < depth; level++) {
 		if (f_v) {
 			cout << "linear_set_classify::read_data_file before "

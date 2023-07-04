@@ -92,7 +92,7 @@ std::string formula::string_representation_formula(int f_latex, int verbose_leve
 				"after tree->print_to_vector" << endl;
 	}
 	for (i = 0; i < rep.size(); i++) {
-		s.append(rep[i]);
+		s += rep[i];
 	}
 	if (f_v) {
 		cout << "formula::string_representation_formula done" << endl;
@@ -249,8 +249,7 @@ void formula::init_formula(
 	}
 
 	std::string fname;
-	fname.assign(name_of_formula);
-	fname.append(".gv");
+	fname = name_of_formula + ".gv";
 
 	{
 		std::ofstream ost(fname);

@@ -456,8 +456,7 @@ void design_activity::do_export_inc(
 
 	string fname;
 
-	fname.assign(DC->label_txt);
-	fname.append("_inc.txt");
+	fname = DC->label_txt + "_inc.txt";
 
 	if (f_v) {
 		cout << "design_activity::do_export_inc fname=" << fname << endl;
@@ -528,8 +527,7 @@ void design_activity::do_intersection_matrix(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(DC->label_txt);
-	fname.append("_AAt.csv");
+	fname = DC->label_txt + "_AAt.csv";
 
 	if (f_v) {
 		cout << "design_activity::do_intersection_matrix fname=" << fname << endl;
@@ -566,8 +564,7 @@ void design_activity::do_export_blocks(
 
 	string fname;
 
-	fname.assign(DC->label_txt);
-	fname.append("_blocks_coded.csv");
+	fname = DC->label_txt + "_blocks_coded.csv";
 
 	combinatorics::combinatorics_domain Combi;
 
@@ -585,8 +582,7 @@ void design_activity::do_export_blocks(
 
 
 
-	fname.assign(DC->label_txt);
-	fname.append("_blocks.csv");
+	fname = DC->label_txt + "_blocks.csv";
 
 	int *Blocks;
 
@@ -642,8 +638,7 @@ void design_activity::do_row_sums(
 
 	string fname;
 
-	fname.assign(DC->label_txt);
-	fname.append("_inc.txt");
+	fname = DC->label_txt + "_inc.txt";
 
 	combinatorics::combinatorics_domain Combi;
 
@@ -692,8 +687,7 @@ void design_activity::do_tactical_decomposition(
 
 	string fname;
 
-	fname.assign(DC->label_txt);
-	fname.append("_inc.txt");
+	fname = DC->label_txt + "_inc.txt";
 
 	combinatorics::combinatorics_domain Combi;
 

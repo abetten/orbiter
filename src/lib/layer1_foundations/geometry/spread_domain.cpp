@@ -1292,9 +1292,9 @@ void spread_domain::czerwinski_oakden(
 		fp << endl;
 
 
-		fname2.assign("Czerwinski_Oakden_");
-		fname2.append(label[h]);
-		fname2.append(".txt");
+		fname2 = "Czerwinski_Oakden_";
+		fname2 += label[h];
+		fname2 += ".txt";
 
 		Fio.write_set_to_file(fname2, data, sz, 0/*verbose_level*/);
 		cout << "Written file " << fname2 << " of size "
@@ -1797,8 +1797,7 @@ void spread_domain::HMO(
 
 	string fname2;
 
-	fname2.assign("HMO_");
-	fname2.append(fname);
+	fname2 = "HMO_" + fname;
 
 	Fio.write_set_to_file(fname2, Data2, Sz, verbose_level);
 	if (f_v) {

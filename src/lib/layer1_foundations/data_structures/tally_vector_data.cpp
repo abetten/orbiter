@@ -284,10 +284,11 @@ void tally_vector_data::save_classes_individually(
 
 	label.assign("case");
 
-	fname2.assign(fname);
-	fname2.append("_all_in_one.csv");
+	fname2 = fname + "_all_in_one.csv";
+
 	Fio.int_vec_write_csv(
 			sorting_perm_inv, data_length, fname2, label);
+
 	cout << "Written file " << fname2 << " of size "
 			<< Fio.file_size(fname2) << endl;
 
@@ -311,6 +312,7 @@ void tally_vector_data::get_transversal(
 	nb_types = tally_vector_data::nb_types;
 	transversal = NEW_int(nb_types);
 	frequency = NEW_int(nb_types);
+
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
 		l = Frequency[i];

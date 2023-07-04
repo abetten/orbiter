@@ -561,9 +561,7 @@ void interface_algebra::worker(int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 		string fname;
 
-		fname.assign(smith_normal_form_matrix);
-		fname.append("_SNF");
-		fname.append("_M_original.csv");
+		fname = smith_normal_form_matrix + "_SNF_M_original.csv";
 
 		M->write_csv(fname, verbose_level);
 
@@ -596,9 +594,7 @@ void interface_algebra::worker(int verbose_level)
 
 
 
-		fname.assign(smith_normal_form_matrix);
-		fname.append("_SNF");
-		fname.append(".csv");
+		fname = smith_normal_form_matrix + "_SNF.csv";
 
 		M->write_csv(fname, verbose_level);
 
@@ -615,9 +611,7 @@ void interface_algebra::worker(int verbose_level)
 
 		// write P and Pv:
 
-		fname.assign(smith_normal_form_matrix);
-		fname.append("_SNF_P");
-		fname.append(".csv");
+		fname = smith_normal_form_matrix + "_SNF_P.csv";
 
 		P->write_csv(fname, verbose_level);
 
@@ -630,9 +624,7 @@ void interface_algebra::worker(int verbose_level)
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
 
-		fname.assign(smith_normal_form_matrix);
-		fname.append("_SNF_Pv");
-		fname.append(".csv");
+		fname = smith_normal_form_matrix + "_SNF_Pv.csv";
 
 		Pv->write_csv(fname, verbose_level);
 
@@ -650,9 +642,7 @@ void interface_algebra::worker(int verbose_level)
 
 		// write Q and Qv:
 
-		fname.assign(smith_normal_form_matrix);
-		fname.append("_SNF_Q");
-		fname.append(".csv");
+		fname = smith_normal_form_matrix + "_SNF_Q.csv";
 
 		Q->write_csv(fname, verbose_level);
 
@@ -665,9 +655,7 @@ void interface_algebra::worker(int verbose_level)
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
 
-		fname.assign(smith_normal_form_matrix);
-		fname.append("_SNF_Qv");
-		fname.append(".csv");
+		fname = smith_normal_form_matrix + "_SNF_Qv.csv";
 
 		Qv->write_csv(fname, verbose_level);
 

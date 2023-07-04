@@ -819,11 +819,9 @@ action *induced_action::induced_action_on_wedge_product(int verbose_level)
 	A = NEW_OBJECT(action);
 
 
-	A->label.assign(A_old->label);
-	A->label.append("_Wedge");
+	A->label = A_old->label + "_Wedge";
 
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(" {\\rm OnWedge}");
+	A->label_tex = A_old->label_tex + " {\\rm OnWedge}";
 
 
 	if (f_v) {
@@ -1708,12 +1706,8 @@ action *induced_action::restricted_action(
 		}
 	A = NEW_OBJECT(action);
 
-	A->label.assign(A_old->label);
-	A->label.append("_res_");
-	A->label.append(label_of_set);
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(" {\\rm res}");
-	A->label_tex.append(label_of_set);
+	A->label = A_old->label + "_res_" + label_of_set;
+	A->label_tex = A_old->label_tex + " {\\rm res}" + label_of_set;
 
 
 	A->f_has_subaction = true;
@@ -1801,12 +1795,8 @@ action *induced_action::induced_action_by_restriction(
 
 
 
-	A->label.assign(old_action->label);
-	A->label.append("_res_");
-	A->label.append(label_of_set);
-	A->label_tex.assign(old_action->label_tex);
-	A->label_tex.append(" {\\rm res}");
-	A->label_tex.append(label_of_set);
+	A->label = old_action->label + "_res_" + label_of_set;
+	A->label_tex = old_action->label_tex + " {\\rm res}" + label_of_set;
 
 
 	A->f_has_subaction = true;
@@ -1888,10 +1878,8 @@ action *induced_action::induced_action_on_pairs(
 				"after induced_action_on_k_subsets" << endl;
 	}
 
-	A->label.assign(A_old->label);
-	A->label.append("_on_pairs");
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(" {\\rm OnPairs}");
+	A->label = A_old->label + "_on_pairs";
+	A->label_tex = A_old->label_tex + " {\\rm OnPairs}";
 
 
 	if (f_v) {
@@ -1920,10 +1908,8 @@ action *induced_action::induced_action_on_ordered_pairs(
 	A = NEW_OBJECT(action);
 
 
-	A->label.assign(A_old->label);
-	A->label.append("_on_ordered_pairs");
-	A->label_tex.assign(A_old->label_tex);
-	A->label_tex.append(" {\\rm OnOrderedPairs}");
+	A->label = A_old->label + "_on_ordered_pairs";
+	A->label_tex = A_old->label_tex + " {\\rm OnOrderedPairs}";
 
 
 	A->f_has_subaction = true;
@@ -2106,10 +2092,8 @@ action *induced_action::induced_action_on_andre(
 
 	A = NEW_OBJECT(action);
 
-	A->label.assign(An1->label);
-	A->label.append("_on_andre");
-	A->label_tex.assign(An1->label_tex);
-	A->label_tex.append(" {\\rm OnAndre}");
+	A->label = An1->label + "_on_andre";
+	A->label_tex = An1->label_tex + " {\\rm OnAndre}";
 
 	On_andre = NEW_OBJECT(induced_actions::action_on_andre);
 	On_andre->init(An, An1, Andre, verbose_level);
@@ -2427,10 +2411,8 @@ action *induced_action::base_change(
 		cout << "induced_action::base_change after AG.induce" << endl;
 	}
 
-	new_action->label.assign(old_action->label);
-	new_action->label.append("_base_change");
-	new_action->label_tex.assign(old_action->label_tex);
-	new_action->label_tex.append(" {\\rm BaseChange}");
+	new_action->label = old_action->label + "_base_change";
+	new_action->label_tex = old_action->label_tex + " {\\rm BaseChange}";
 
 
 

@@ -644,8 +644,7 @@ void finite_field_implementation_by_tables::print_add_mult_tables_in_C(std::stri
 
 	string fname;
 
-	fname.assign(fname_base);
-	fname.append(".cpp");
+	fname = fname_base + ".cpp";
 
 	{
 		ofstream ost(fname);

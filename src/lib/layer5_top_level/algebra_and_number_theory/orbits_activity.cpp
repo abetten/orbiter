@@ -414,9 +414,7 @@ void orbits_activity::do_export_trees(int verbose_level)
 		string fname_tree_mask;
 		int orbit_idx;
 
-		fname_tree_mask.assign("orbit_");
-		fname_tree_mask.append(OC->Group->A->label);
-		fname_tree_mask.append("_%d.layered_graph");
+		fname_tree_mask = "orbit_" + OC->Group->A->label + "_%d.layered_graph";
 
 		for (orbit_idx = 0; orbit_idx < OC->Orb->Sch->nb_orbits; orbit_idx++) {
 
@@ -590,8 +588,7 @@ void orbits_activity::do_draw_tree(int verbose_level)
 
 		string fname_full;
 
-		fname_full.assign(fname);
-		fname_full.append("_orbit_elements.csv");
+		fname_full = fname + "_orbit_elements.csv";
 
 
 		Fio.vector_write_csv(fname_full, Orb);

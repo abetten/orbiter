@@ -128,8 +128,7 @@ void packing_was_fixpoints::setup_file_names(int clique_size, int verbose_level)
 	}
 
 
-	fname_fixp_graph.assign(PW->Descr->H_label);
-	fname_fixp_graph.append("_fixp_graph.bin");
+	fname_fixp_graph = PW->Descr->H_label + "_fixp_graph.bin";
 
 
 	if (f_v) {
@@ -138,8 +137,7 @@ void packing_was_fixpoints::setup_file_names(int clique_size, int verbose_level)
 	}
 
 
-	fname_fixp_graph_cliques.assign(PW->Descr->N_label);
-	fname_fixp_graph_cliques.append("_fixp_cliques.csv");
+	fname_fixp_graph_cliques = PW->Descr->N_label + "_fixp_cliques.csv";
 
 
 	if (f_v) {
@@ -262,9 +260,9 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	fixpoint_graph = NEW_OBJECT(graph_theory::colored_graph);
 	fixpoint_graph->load(fname_fixp_graph, verbose_level);
 
-	my_prefix.assign(fname_fixp_graph);
+	my_prefix = fname_fixp_graph;
 	ST.chop_off_extension(my_prefix);
-	my_prefix.append("_cliques");
+	my_prefix += "_cliques";
 
 	if (Fio.file_size(fname_fixp_graph_cliques) > 0) {
 		if (f_v) {
@@ -324,9 +322,9 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 
 	T = Fixp_cliques->get_ago_distribution(Ago, verbose_level);
 
-	my_prefix.assign(fname_fixp_graph);
+	my_prefix = fname_fixp_graph;
 	ST.chop_off_extension(my_prefix);
-	my_prefix.append("_cliques_by_ago_");
+	my_prefix += "_cliques_by_ago_";
 
 
 	if (PW->Descr->f_fixp_clique_types_save_individually) {
@@ -368,9 +366,9 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	C.print();
 
 
-	my_prefix.assign(fname_fixp_graph);
+	my_prefix = fname_fixp_graph;
 	ST.chop_off_extension(my_prefix);
-	my_prefix.append("_cliques_by_type_");
+	my_prefix += "_cliques_by_type_";
 
 
 	if (PW->Descr->f_fixp_clique_types_save_individually) {

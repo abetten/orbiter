@@ -142,7 +142,8 @@ void projective_space_with_action::init(
 			cout << "projective_space_with_action::init "
 					"after Dom->init" << endl;
 		}
-		QCDA = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_domain_with_action);
+		QCDA = NEW_OBJECT(applications_in_algebraic_geometry::
+				quartic_curves::quartic_curve_domain_with_action);
 		if (f_v) {
 			cout << "projective_space_with_action::init "
 					"before QCDA->init" << endl;
@@ -191,7 +192,8 @@ void projective_space_with_action::init(
 					"after Surf->init_surface_domain" << endl;
 		}
 
-		Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action);
+		Surf_A = NEW_OBJECT(applications_in_algebraic_geometry::
+				cubic_surfaces_in_general::surface_with_action);
 
 		if (f_v) {
 			cout << "projective_space_with_action::init before Surf_A->init" << endl;
@@ -321,7 +323,8 @@ void projective_space_with_action::canonical_form(
 
 
 	if (f_v) {
-		cout << "projective_space_with_action::canonical_form before OC->do_the_work" << endl;
+		cout << "projective_space_with_action::canonical_form "
+				"before OC->do_the_work" << endl;
 	}
 	OC->do_the_work(
 			Canonical_form_PG_Descr,
@@ -330,7 +333,8 @@ void projective_space_with_action::canonical_form(
 			IS,
 			verbose_level);
 	if (f_v) {
-		cout << "projective_space_with_action::canonical_form after OC->do_the_work" << endl;
+		cout << "projective_space_with_action::canonical_form "
+				"after OC->do_the_work" << endl;
 	}
 
 	FREE_OBJECT(OC);
@@ -430,7 +434,8 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 
 	cnt = 0;
 	for (i = 0; i < P3->Subspaces->N_points; i++) {
-		j = A->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
+		j = A->Group_element->element_image_of(
+				i, Elt, 0 /* verbose_level */);
 		if (j == i) {
 			cnt++;
 		}
@@ -438,7 +443,8 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 
 	ost << "There are " << cnt << " fixed points, they are: \\\\" << endl;
 	for (i = 0; i < P3->Subspaces->N_points; i++) {
-		j = A->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
+		j = A->Group_element->element_image_of(
+				i, Elt, 0 /* verbose_level */);
 		F->Projective_space_basic->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
@@ -453,11 +459,13 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	{
 		actions::action *A2;
 
-		A2 = A->Induced_action->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
+		A2 = A->Induced_action->induced_action_on_grassmannian(
+				2, 0 /* verbose_level*/);
 	
 		cnt = 0;
 		for (i = 0; i < A2->degree; i++) {
-			j = A2->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
+			j = A2->Group_element->element_image_of(
+					i, Elt, 0 /* verbose_level */);
 			if (j == i) {
 				cnt++;
 				}
@@ -466,7 +474,8 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		ost << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
 		cnt = 0;
 		for (i = 0; i < A2->degree; i++) {
-			j = A2->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
+			j = A2->Group_element->element_image_of(
+					i, Elt, 0 /* verbose_level */);
 			if (j == i) {
 				ost << i << " : $\\left[";
 				A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
@@ -483,11 +492,13 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 	{
 		actions::action *A2;
 
-		A2 = A->Induced_action->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
+		A2 = A->Induced_action->induced_action_on_grassmannian(
+				3, 0 /* verbose_level*/);
 	
 		cnt = 0;
 		for (i = 0; i < A2->degree; i++) {
-			j = A2->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
+			j = A2->Group_element->element_image_of(
+					i, Elt, 0 /* verbose_level */);
 			if (j == i) {
 				cnt++;
 			}
@@ -496,7 +507,8 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		ost << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
 		cnt = 0;
 		for (i = 0; i < A2->degree; i++) {
-			j = A2->Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
+			j = A2->Group_element->element_image_of(
+					i, Elt, 0 /* verbose_level */);
 			if (j == i) {
 				ost << i << " : $\\left[";
 				A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
@@ -524,7 +536,8 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	}
 
 	if (P->Subspaces->n < 3) {
-		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes P->Subspaces->n < 3" << endl;
+		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes "
+				"P->Subspaces->n < 3" << endl;
 		exit(1);
 	}
 	//projective_space *P3;
@@ -641,12 +654,12 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
 		str += std::to_string(a);
-		Descr->Data->input_string[Descr->Data->nb_inputs].append(str);
+		Descr->Data->input_string[Descr->Data->nb_inputs] += str;
 		if (i < set_sz - 1) {
-			Descr->Data->input_string[Descr->Data->nb_inputs].append(",");
+			Descr->Data->input_string[Descr->Data->nb_inputs] += ",";
 		}
 	}
-	Descr->Data->input_string2[Descr->Data->nb_inputs].assign("");
+	Descr->Data->input_string2[Descr->Data->nb_inputs] = "";
 	Descr->Data->nb_inputs++;
 
 	if (f_v) {
@@ -833,8 +846,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 	string fname;
 
-	fname.assign(H_LG->label);
-	fname.append("_decomp.tex");
+	fname = H_LG->label + "_decomp.tex";
 
 
 	{

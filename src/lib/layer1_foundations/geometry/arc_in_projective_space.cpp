@@ -1807,8 +1807,7 @@ void arc_in_projective_space::arc_lifting1(
 
 		string fname_system;
 
-		fname_system.assign(arc_label);
-		fname_system.append(".diophant");
+		fname_system = arc_label + ".diophant";
 		cout << "perform_job_for_one_set saving the system "
 				"to file " << fname_system << endl;
 		D->save_in_general_format(fname_system, 0 /* verbose_level */);
@@ -1833,8 +1832,7 @@ void arc_in_projective_space::arc_lifting1(
 	}
 	string fname_solutions;
 
-	fname_solutions.assign(arc_label);
-	fname_solutions.append(".solutions");
+	fname_solutions = arc_label + ".solutions";
 
 	{
 		ofstream fp(fname_solutions);
@@ -1912,8 +1910,7 @@ void arc_in_projective_space::arc_lifting2(
 	if (f_save_system) {
 		string fname_system;
 
-		fname_system.assign(arc_label);
-		fname_system.append(".diophant");
+		fname_system = arc_label + ".diophant";
 
 		cout << "perform_job_for_one_set saving the system "
 				"to file " << fname_system << endl;
@@ -1938,8 +1935,7 @@ void arc_in_projective_space::arc_lifting2(
 	}
 	string fname_solutions;
 
-	fname_solutions.assign(arc_label);
-	fname_solutions.append(".solutions");
+	fname_solutions = arc_label + ".solutions";
 
 	{
 		ofstream fp(fname_solutions);
@@ -2032,8 +2028,7 @@ void arc_in_projective_space::arc_lifting3(
 	if (f_save_system) {
 		string fname_system;
 
-		fname_system.assign(arc_label);
-		fname_system.append(".diophant");
+		fname_system = arc_label + ".diophant";
 
 		cout << "arc_in_projective_space::perform_activity saving the system "
 				"to file " << fname_system << endl;
@@ -2059,8 +2054,7 @@ void arc_in_projective_space::arc_lifting3(
 	}
 	string fname_solutions;
 
-	fname_solutions.assign(arc_label);
-	fname_solutions.append(".solutions");
+	fname_solutions = arc_label + ".solutions";
 
 	{
 		ofstream fp(fname_solutions);

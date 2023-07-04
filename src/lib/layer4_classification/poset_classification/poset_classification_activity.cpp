@@ -274,8 +274,7 @@ void poset_classification_activity::perform_work(
 			string fname_prefix;
 
 
-			fname_prefix.assign(PC->get_problem_label_with_path());
-			fname_prefix.append("_flag_orbits");
+			fname_prefix = PC->get_problem_label_with_path() + "_flag_orbits";
 
 			if (f_v) {
 				cout << "poset_classification_activity::perform_work "

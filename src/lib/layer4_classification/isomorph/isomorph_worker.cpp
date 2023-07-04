@@ -688,8 +688,7 @@ void isomorph_worker::isomorph_testing(int verbose_level)
 
 	string fname;
 
-	fname.assign(Isomorph_arguments->prefix_iso);
-	fname.append("orbits.txt");
+	fname = Isomorph_arguments->prefix_iso + "orbits.txt";
 
 	{
 		ofstream fp(fname);

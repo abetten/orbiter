@@ -593,8 +593,7 @@ void poset_orbit_node::save_schreier_forest(
 					fname, node);
 
 
-			fname_mask_full.assign(fname);
-			fname_mask_full.append(".layered_graph");
+			fname_mask_full = fname + ".layered_graph";
 
 			Schreier->export_tree_as_layered_graph(orbit_no,
 					fname_mask_full,
@@ -652,8 +651,7 @@ void poset_orbit_node::save_shallow_schreier_forest(
 					fname, node);
 
 
-			fname_mask_full.assign(fname);
-			fname_mask_full.append(".layered_graph");
+			fname_mask_full = fname + ".layered_graph";
 
 			Schreier_vector->export_tree_as_layered_graph(
 					orbit_no, orbit_reps[orbit_no],

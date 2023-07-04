@@ -102,10 +102,8 @@ void eckardt_point::latex_to_string(std::string &s)
 {
 	string s1;
 	
-	s.assign("E_{");
 	latex_to_str_without_E(s1);
-	s.append(s1);
-	s.append("}");
+	s = "E_{" + s1 + "}";
 }
 
 void eckardt_point::latex_to_str_without_E(std::string &s)

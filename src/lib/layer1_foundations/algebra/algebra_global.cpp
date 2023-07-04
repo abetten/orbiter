@@ -1173,8 +1173,6 @@ void algebra_global::do_cheat_sheet_ring(
 	fname = "cheat_sheet_ring.tex";
 
 	title = "Cheat Sheet Ring";
-	//title.append(F->label_tex);
-	//title.append("$");
 
 
 
@@ -1384,7 +1382,7 @@ void algebra_global::algebraic_normal_form(
 
 	fname_csv_out.assign(fname_csv_in);
 	ST.chop_off_extension(fname_csv_out);
-	fname_csv_out.append("_alg_normal_form.csv");
+	fname_csv_out += "_alg_normal_form.csv";
 
 	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
@@ -1475,7 +1473,7 @@ void algebra_global::algebraic_normal_form_of_boolean_function(
 
 	fname_csv_out.assign(fname_csv_in);
 	ST.chop_off_extension(fname_csv_out);
-	fname_csv_out.append("_alg_normal_form.csv");
+	fname_csv_out += "_alg_normal_form.csv";
 
 	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
@@ -1516,7 +1514,8 @@ void algebra_global::algebraic_normal_form_of_boolean_function(
 
 
 
-	Fio.int_matrix_write_csv(fname_csv_out, coeff, 1, nb_coeff);
+	Fio.int_matrix_write_csv(
+			fname_csv_out, coeff, 1, nb_coeff);
 	cout << "written file " << fname_csv_out << " of size "
 			<< Fio.file_size(fname_csv_out) << endl;
 

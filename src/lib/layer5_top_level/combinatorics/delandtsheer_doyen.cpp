@@ -777,8 +777,7 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(Descr->problem_label);
-	fname.append("_pair_covering.csv");
+	fname = Descr->problem_label + "_pair_covering.csv";
 	Fio.int_matrix_write_csv(fname, Covered_orbits, nb_k_orbits, k2);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -1331,8 +1330,7 @@ void delandtsheer_doyen::write_pair_orbit_file(int verbose_level)
 		cout << "delandtsheer_doyen::write_pair_orbit_file" << endl;
 	}
 
-	fname.assign(Descr->group_label);
-	fname.append(".2orbits");
+	fname = Descr->group_label + ".2orbits";
 
 	cout << "writing pair-orbit file " << fname << endl;
 	{

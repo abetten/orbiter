@@ -251,8 +251,7 @@ void points_and_lines::write_points_to_txt_file(std::string &label, int verbose_
 		cout << "points_and_lines::write_points_to_txt_file" << endl;
 	}
 	string fname;
-	fname.assign(label);
-	fname.append("_points.txt");
+	fname = label + "_points.txt";
 
 	orbiter_kernel_system::file_io Fio;
 

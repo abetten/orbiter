@@ -47,9 +47,7 @@ void magma_interface::centralizer_of_element(
 				<< " element_description=" << element_description << endl;
 	}
 
-	prefix.assign(A->label);
-	prefix.append("_elt_");
-	prefix.append(label);
+	prefix = A->label + "_elt_" + label;
 
 	Elt = NEW_int(A->elt_size_in_int);
 
@@ -181,10 +179,7 @@ void magma_interface::normalizer_of_cyclic_subgroup(
 				<< " element_description=" << element_description << endl;
 	}
 
-	prefix.assign("normalizer_of_");
-	prefix.append(label);
-	prefix.append("_in_");
-	prefix.append(A->label);
+	prefix = "normalizer_of_" + label + "_in_" + A->label;
 
 	Elt = NEW_int(A->elt_size_in_int);
 
@@ -672,8 +667,7 @@ void magma_interface::export_group_to_magma_and_copy_to_latex(
 	}
 	string export_fname;
 
-	export_fname.assign(label_txt);
-	export_fname.append("_group.magma");
+	export_fname = label_txt + "_group.magma";
 
 	export_permutation_group_to_magma(
 			export_fname, A2, SG, verbose_level - 2);
@@ -727,10 +721,8 @@ void magma_interface::normalizer_using_MAGMA(
 		cout << "magma_interface::normalizer_using_MAGMA" << endl;
 	}
 
-	fname_magma.assign(fname_magma_prefix);
-	fname_magma.append(".magma");
-	fname_output.assign(fname_magma_prefix);
-	fname_output.append(".txt");
+	fname_magma = fname_magma_prefix + ".magma";
+	fname_output = fname_magma_prefix + ".txt";
 
 	int n;
 
@@ -864,10 +856,8 @@ void magma_interface::conjugacy_classes_using_MAGMA(
 		cout << "magma_interface::conjugacy_classes_using_MAGMA" << endl;
 		}
 
-	fname_magma.assign(prefix);
-	fname_magma.append("conjugacy_classes.magma");
-	fname_output.assign(prefix);
-	fname_output.append("conjugacy_classes.txt");
+	fname_magma = prefix + "conjugacy_classes.magma";
+	fname_output = prefix + "conjugacy_classes.txt";
 
 	int n;
 
@@ -992,10 +982,8 @@ void magma_interface::conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
 		std::string &fname_magma,
 		std::string &fname_output)
 {
-	fname_magma.assign(prefix);
-	fname_magma.append("_classes.magma");
-	fname_output.assign(prefix);
-	fname_output.append("_classes_out.txt");
+	fname_magma = prefix + "_classes.magma";
+	fname_output = prefix + "_classes_out.txt";
 }
 
 void magma_interface::conjugacy_classes_and_normalizers_using_MAGMA(
@@ -1293,10 +1281,8 @@ void magma_interface::centralizer_using_MAGMA(
 		cout << "magma_interface::centralizer_using_MAGMA" << endl;
 	}
 
-	fname_magma.assign(prefix);
-	fname_magma.append("_centralizer.magma");
-	fname_output.assign(prefix);
-	fname_output.append("_centralizer.txt");
+	fname_magma = prefix + "_centralizer.magma";
+	fname_output = prefix + "_centralizer.txt";
 
 
 	if (Fio.file_size(fname_output) > 0) {
@@ -1474,11 +1460,9 @@ void magma_interface::find_subgroups_using_MAGMA(
 	if (f_v) {
 		cout << "magma_interface::find_subgroups_using_MAGMA" << endl;
 	}
-	fname_magma.assign(prefix);
-	fname_magma.append("_subgroup.magma");
+	fname_magma = prefix + "_subgroup.magma";
 
-	fname_output.assign(prefix);
-	fname_output.append("_subgroup.txt");
+	fname_output = prefix + "_subgroup.txt";
 
 
 	if (Fio.file_size(fname_output) > 0) {
@@ -1784,11 +1768,9 @@ void magma_interface::conjugacy_classes_and_normalizers(
 		cout << "magma_interface::conjugacy_classes_and_normalizers" << endl;
 	}
 
-	prefix.assign(label);
-	fname_magma.assign(label);
-	fname_magma.append("_classes.magma");
-	fname_output.assign(label);
-	fname_output.append("_classes_out.txt");
+	prefix = label;
+	fname_magma = label + "_classes.magma";
+	fname_output = label + "_classes_out.txt";
 
 
 	if (Fio.file_size(fname_output) <= 0) {
@@ -1849,11 +1831,9 @@ void magma_interface::report_conjugacy_classes_and_normalizers(
 		cout << "magma_interface::conjugacy_classes_and_normalizers" << endl;
 	}
 
-	prefix.assign(A->label);
-	fname1.assign(A->label);
-	fname1.append("_classes.magma");
-	fname2.assign(A->label);
-	fname2.append("_classes_out.txt");
+	prefix = A->label;
+	fname1 = A->label + "_classes.magma";
+	fname2 = A->label + "_classes_out.txt";
 
 
 	if (Fio.file_size(fname2) > 0) {
@@ -1945,7 +1925,7 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 	string fname_data;
 	data_structures::string_tools ST;
 
-	fname_latex.assign(fname);
+	fname_latex = fname;
 
 	ST.replace_extension_with(fname_latex, ".tex");
 
@@ -1955,12 +1935,9 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 		string title, author, extra_praeamble;
 		l1_interfaces::latex_interface L;
 
-		title.assign("Conjugacy classes of ");
-		title.append("$");
-		title.append(label_latex);
-		title.append("$");
+		title = "Conjugacy classes of $" + label_latex + "$";
 
-		author.assign("computed by Orbiter and MAGMA");
+		author = "computed by Orbiter and MAGMA";
 
 		L.head(fp,
 			false /* f_book */, true /* f_title */,
@@ -2521,19 +2498,18 @@ void magma_interface::write_as_magma_permutation_group(
 #endif
 	string fname;
 
-	fname.assign(fname_base);
-	fname.append(".magma");
+	fname = fname_base + ".magma";
 	{
-	ofstream fp(fname);
+		ofstream fp(fname);
 
-	fp << "G := PermutationGroup< " << n << " | " << endl;
-	for (i = 0; i < l; i++) {
-		Combi.perm_print_counting_from_one(fp, Table + i * n, n);
-		if (i < l - 1) {
-			fp << ", " << endl;
+		fp << "G := PermutationGroup< " << n << " | " << endl;
+		for (i = 0; i < l; i++) {
+			Combi.perm_print_counting_from_one(fp, Table + i * n, n);
+			if (i < l - 1) {
+				fp << ", " << endl;
+				}
 			}
-		}
-	fp << " >;" << endl;
+		fp << " >;" << endl;
 	}
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -2628,9 +2604,7 @@ void magma_interface::run_magma_file(
 	int f_v = (verbose_level >= 1);
 	string cmd;
 
-	cmd.assign(orbiter_kernel_system::Orbiter->magma_path);
-	cmd.append("magma ");
-	cmd.append(fname);
+	cmd = orbiter_kernel_system::Orbiter->magma_path + "magma " + fname;
 
 	if (f_v) {
 		cout << "executing: " << cmd << endl;
@@ -2650,10 +2624,8 @@ void magma_interface::normalizer_in_Sym_n(
 	combinatorics::combinatorics_domain Combi;
 	orbiter_kernel_system::file_io Fio;
 
-	fname_magma.assign(fname_base);
-	fname_magma.append(".magma");
-	fname_output.assign(fname_base);
-	fname_output.append(".txt");
+	fname_magma = fname_base + ".magma";
+	fname_output = fname_base + ".txt";
 
 
 	{
@@ -2748,8 +2720,7 @@ void magma_interface::write_permutation_group(std::string &fname_base,
 	combinatorics::combinatorics_domain Combi;
 	file_io Fio;
 
-	fname.assign(fname_base);
-	fname.append(".magma");
+	fname = fname_base + ".magma";
 	{
 		ofstream fp(fname);
 
@@ -2781,10 +2752,8 @@ void magma_interface::orbit_of_matrix_group_on_vector(
 	combinatorics::combinatorics_domain Combi;
 	file_io Fio;
 
-	fname_magma.assign(fname_base);
-	fname_magma.append(".magma");
-	fname_output.assign(fname_base);
-	fname_output.append(".txt");
+	fname_magma = fname_base + ".magma";
+	fname_output = fname_base + ".txt";
 
 	{
 		ofstream fp(fname_magma);
@@ -2864,10 +2833,8 @@ void magma_interface::orbit_of_matrix_group_on_subspaces(
 	combinatorics::combinatorics_domain Combi;
 	file_io Fio;
 
-	fname_magma.assign(fname_base);
-	fname_magma.append(".magma");
-	fname_output.assign(fname_base);
-	fname_output.append(".txt");
+	fname_magma = fname_base + ".magma";
+	fname_output = fname_base + ".txt";
 
 	{
 		ofstream fp(fname_magma);

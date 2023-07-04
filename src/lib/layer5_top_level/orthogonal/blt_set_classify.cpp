@@ -483,8 +483,7 @@ void blt_set_classify::create_graphs(
 
 			string fname;
 
-			fname.assign(CG->fname_base);
-			fname.append(".bin");
+			fname = CG->fname_base + ".bin";
 			CG->save(fname, verbose_level - 2);
 			
 			nb_vertices = CG->nb_points;
@@ -528,7 +527,8 @@ void blt_set_classify::create_graphs(
 				"writing file "
 				<< fname_time << endl;
 	}
-	Fio.lint_matrix_write_csv(fname_time, Time, time_idx, 2);
+	Fio.lint_matrix_write_csv(
+			fname_time, Time, time_idx, 2);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs "
 				"Written file "
@@ -536,7 +536,8 @@ void blt_set_classify::create_graphs(
 				<< Fio.file_size(fname_time) << endl;
 	}
 
-	Fio.lint_matrix_write_csv(fname_list_of_cases,
+	Fio.lint_matrix_write_csv(
+			fname_list_of_cases,
 			list_of_cases, nb_of_cases, 1);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs "
@@ -640,9 +641,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 
 			string fname;
 
-			fname.assign(Blt_set_domain->prefix);
-			fname.append(CG->fname_base);
-			fname.append(".bin");
+			fname = Blt_set_domain->prefix + CG->fname_base + ".bin";
 
 			CG->save(fname, verbose_level - 2);
 			
@@ -734,7 +733,8 @@ int blt_set_classify::create_graph(
 
 	R = NEW_OBJECT(data_structures_groups::orbit_rep);
 	if (f_v) {
-		cout << "blt_set_classify::create_graph before R->init_from_file" << endl;
+		cout << "blt_set_classify::create_graph "
+				"before R->init_from_file" << endl;
 	}
 
 	R->init_from_file(
@@ -744,7 +744,8 @@ int blt_set_classify::create_graph(
 		this /* early_test_func_callback_data */, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "blt_set_classify::create_graph after R->init_from_file" << endl;
+		cout << "blt_set_classify::create_graph "
+				"after R->init_from_file" << endl;
 	}
 	nb = q + 1 - starter_size;
 
@@ -1046,8 +1047,7 @@ void blt_set_classify::report(
 		cout << "blt_set_classify::report" << endl;
 	}
 
-	fname.assign(Blt_set_domain->prefix);
-	fname.append("_report.tex");
+	fname = Blt_set_domain->prefix + "_report.tex";
 
 	{
 		ofstream ost(fname);

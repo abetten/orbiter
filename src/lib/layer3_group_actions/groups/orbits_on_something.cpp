@@ -79,16 +79,14 @@ void orbits_on_something::init(
 	orbits_on_something::f_load_save = f_load_save;
 	orbits_on_something::prefix.assign(prefix);
 
-	fname.assign(prefix);
-	fname.append("_orbits.bin");
+	fname = prefix + "_orbits.bin";
 
-	fname_csv.assign(prefix);
-	fname_csv.append("_orbits.csv");
+	fname_csv = prefix + "_orbits.csv";
 
 
 
 
-	if (f_load_save && Fio.file_size(fname.c_str()) > 0) {
+	if (f_load_save && Fio.file_size(fname) > 0) {
 
 
 		if (f_v) {
@@ -203,11 +201,9 @@ void orbits_on_something::init_from_vector_ge(
 	orbits_on_something::f_load_save = f_load_save;
 	orbits_on_something::prefix.assign(prefix);
 
-	fname.assign(prefix);
-	fname.append("_orbits.bin");
+	fname = prefix + "_orbits.bin";
 
-	fname_csv.assign(prefix);
-	fname_csv.append("_orbits.csv");
+	fname_csv = prefix + "_orbits.csv";
 
 
 
@@ -1991,13 +1987,12 @@ void orbits_on_something::create_latex_report(int verbose_level)
 	if (f_v) {
 		cout << "orbits_on_something::create_latex_report" << endl;
 	}
-	fname_tex.assign(prefix);
-	fname_tex.append("_orbits_report.tex");
+	fname_tex = prefix + "_orbits_report.tex";
 
 	{
 		string title, author, extra_praeamble;
 
-		title.assign("Orbits");
+		title = "Orbits";
 
 
 		{
@@ -2274,8 +2269,7 @@ void orbits_on_something::export_something(std::string &what, int data1,
 
 	string fname_base;
 
-	fname_base.assign("orbits_");
-	fname_base.append(prefix);
+	fname_base = "orbits_" + prefix;
 
 	if (f_v) {
 		cout << "orbits_on_something::export_something before export_something_worker" << endl;

@@ -212,8 +212,7 @@ void classification_step::generate_source_code(
 	if (f_v) {
 		cout << "classification_step::generate_source_code" << endl;
 	}
-	fname.assign(fname_base);
-	fname.append(".cpp");
+	fname = fname_base + ".cpp";
 
 	prefix.assign(fname_base);
 

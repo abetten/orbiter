@@ -334,8 +334,7 @@ void layered_graph::draw_with_options(
 	int edge_label = 1;
 	orbiter_kernel_system::file_io Fio;
 	
-	fname_full.assign(fname);
-	fname_full.append(".mp");
+	fname_full = fname + ".mp";
 
 	if (f_v) {
 		cout << "layered_graph::draw_with_options "

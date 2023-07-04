@@ -59,8 +59,7 @@ void formula_activity::perform_activity(int verbose_level)
 	if (Descr->f_export) {
 
 		std::string fname;
-		fname.assign(f->name_of_formula);
-		fname.append(".gv");
+		fname = f->name_of_formula + ".gv";
 
 		{
 			std::ofstream ost(fname);
@@ -175,7 +174,6 @@ void formula_activity::do_sweep(int f_affine,
 	geometry::geometry_global Gg;
 	int n, N;
 	int *v;
-	char str[1000];
 
 
 	n = symbol_table.size();
@@ -185,13 +183,8 @@ void formula_activity::do_sweep(int f_affine,
 
 	orbiter_kernel_system::file_io Fio;
 
-	snprintf(str, sizeof(str), "_q%d", f->Fq->q);
-
 	string fname;
-	fname.assign("sweep_");
-	fname.append(f->name_of_formula);
-	fname.append(str);
-	fname.append(".csv");
+	fname = "sweep_" + f->name_of_formula + "_q" + std::to_string(f->Fq->q) + ".csv";
 
 	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
 
@@ -262,12 +255,9 @@ void formula_activity::do_sweep(int f_affine,
 
 			values.assign("");
 			for (j = 0; j < n; j++) {
-				values.append(symbol_table[j]);
-				values.append("=");
-				snprintf(str, sizeof(str), "%d", v[j]);
-				values.append(str);
+				values += symbol_table[j] + "=" + std::to_string(v[j]);
 				if (j < n - 1) {
-					values.append(",");
+					values += ",";
 				}
 			}
 

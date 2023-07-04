@@ -1405,8 +1405,7 @@ continuation_point:
 void clique_finder::open_tree_file(std::string &fname_base)
 {
 	f_write_tree = true;
-	fname_tree.assign(fname_base);
-	fname_tree.append(".tree");
+	fname_tree = fname_base + ".tree";
 	//clique_finder::f_decision_nodes_only = Control->f_decision_nodes_only;
 	fp_tree = new ofstream;
 	fp_tree->open(fname_tree);

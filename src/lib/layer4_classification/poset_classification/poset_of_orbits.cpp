@@ -608,8 +608,7 @@ void poset_of_orbits::make_tabe_of_nodes(int verbose_level)
 	get_table_of_nodes(Table,
 		nb_rows, nb_cols, 0 /*verbose_level*/);
 
-	fname.assign(PC->get_problem_label_with_path());
-	fname.append("_table_of_orbits.csv");
+	fname = PC->get_problem_label_with_path() + "_table_of_orbits.csv";
 
 	Fio.lint_matrix_write_csv(fname, Table, nb_rows, nb_cols);
 

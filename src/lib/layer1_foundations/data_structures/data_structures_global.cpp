@@ -27,7 +27,7 @@ data_structures_global::~data_structures_global()
 }
 
 void data_structures_global::bitvector_m_ii(
-		uchar *bitvec, long int i, int a)
+		unsigned char *bitvec, long int i, int a)
 {
 	long int ii, bit;
 	uchar mask;
@@ -46,7 +46,7 @@ void data_structures_global::bitvector_m_ii(
 }
 
 void data_structures_global::bitvector_set_bit(
-		uchar *bitvec, long int i)
+		unsigned char *bitvec, long int i)
 {
 	long int ii, bit;
 	uchar mask;
@@ -58,8 +58,23 @@ void data_structures_global::bitvector_set_bit(
 	x |= mask;
 }
 
+void data_structures_global::bitvector_set_bit_reversed(
+		unsigned char *bitvec, long int i)
+{
+	long int ii, bit;
+	uchar mask;
+
+	ii = i >> 3;
+	bit = i & 7;
+	bit = 7 - bit;
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitvec[ii];
+	x |= mask;
+}
+
+
 int data_structures_global::bitvector_s_i(
-		uchar *bitvec, long int i)
+		unsigned char *bitvec, long int i)
 // returns 0 or 1
 {
 	long int ii, bit;

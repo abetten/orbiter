@@ -130,8 +130,7 @@ void design_tables::create_table(int verbose_level)
 	}
 
 
-	fname_design_table.assign(label);
-	fname_design_table.append("_design_table.csv");
+	fname_design_table = label + "_design_table.csv";
 
 	orbits_schreier::orbit_of_sets *SetOrb;
 
@@ -241,8 +240,7 @@ void design_tables::create_action(
 
 	string fname_group;
 
-	fname_group.assign(label);
-	fname_group.append("_on_design_table.makefile");
+	fname_group = label + "_on_design_table.makefile";
 
 	if (f_v) {
 		cout << "design_tables::create_action "
@@ -369,8 +367,7 @@ void design_tables::init_from_file(
 	design_tables::Strong_generators = Strong_generators;
 
 
-	fname_design_table.assign(label);
-	fname_design_table.append("_design_table.csv");
+	fname_design_table = label + "_design_table.csv";
 
 
 	if (f_v) {
@@ -401,8 +398,7 @@ int design_tables::test_if_table_exists(
 	}
 
 
-	fname_design_table.assign(label);
-	fname_design_table.append("_design_table.csv");
+	fname_design_table = label + "_design_table.csv";
 
 	orbiter_kernel_system::file_io Fio;
 

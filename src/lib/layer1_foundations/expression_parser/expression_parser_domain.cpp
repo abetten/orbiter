@@ -104,8 +104,7 @@ void expression_parser_domain::parse_and_evaluate(
 	}
 
 	std::string fname;
-	fname.assign(name_of_formula);
-	fname.append(".gv");
+	fname = name_of_formula + ".gv";
 
 	{
 		std::ofstream ost(fname);

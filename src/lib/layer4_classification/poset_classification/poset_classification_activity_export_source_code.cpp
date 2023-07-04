@@ -41,8 +41,7 @@ void poset_classification_activity::generate_source_code(
 
 	my_prefix = PC->get_control()->problem_label + "_level_" + std::to_string(level);
 
-	fname.assign(my_prefix);
-	fname.append(".cpp");
+	fname = my_prefix + ".cpp";
 
 	set = NEW_lint(level);
 	nb_iso = PC->nb_orbits_at_level(level);
@@ -212,8 +211,7 @@ void poset_classification_activity::generate_history(int level, int verbose_leve
 
 	my_prefix = PC->get_control()->problem_label + "_history_level_" + std::to_string(level);
 
-	fname.assign(my_prefix);
-	fname.append(".cpp");
+	fname = my_prefix + ".cpp";
 
 
 

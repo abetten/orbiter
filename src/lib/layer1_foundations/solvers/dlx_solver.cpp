@@ -401,8 +401,7 @@ void dlx_solver::open_solution_file(int verbose_level)
 {
 	if (Descr->f_write_solutions) {
 
-		solutions_fname.assign(Descr->label_txt);
-		solutions_fname.append("_solutions.txt");
+		solutions_fname = Descr->label_txt + "_solutions.txt";
 
 		fp_sol = new ofstream;
 		fp_sol->open(solutions_fname);
@@ -427,8 +426,7 @@ void dlx_solver::open_tree_file(int verbose_level)
 {
 	if (Descr->f_write_tree) {
 
-		tree_fname.assign(Descr->label_txt);
-		tree_fname.append("_tree.txt");
+		tree_fname = Descr->label_txt + "_tree.txt";
 
 
 		write_tree_cnt = 0;

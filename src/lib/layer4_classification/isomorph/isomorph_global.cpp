@@ -490,8 +490,7 @@ void isomorph_global::identify(
 			}
 
 
-			fname_transporter.assign("transporter_");
-			fname_transporter.append(fname[i]);
+			fname_transporter = "transporter_" + fname[i];
 	
 	
 			if (f_v) {

@@ -198,10 +198,8 @@ void linear_group::linear_group_import_group_of_plane(int verbose_level)
 	Mtx = A_linear->G.matrix_grp;
 	vector_space_dimension = n;
 
-	label.assign("group_of_plane_");
-	label.append(TP->label_txt);
-	label_tex.assign("group of plane ");
-	label_tex.append(TP->label_tex);
+	label = "group_of_plane_" + TP->label_txt;
+	label_tex = "group of plane " + TP->label_tex;
 
 	A2 = TP->OnAndre;
 	if (TP->OnAndre->degree == 0) {
@@ -1319,17 +1317,11 @@ void linear_group::init_subgroup_by_generators(
 
 
 
-	label.append("_Subgroup_");
-	label.append(subgroup_label);
-	label.append("_");
-	label.append(subgroup_order_text);
+	label += "_Subgroup_" + subgroup_label + "_" + subgroup_order_text;
 
-
-	label_tex.append("{\\rm Subgroup ");
-	label_tex.append(str.str());
-	label_tex.append(" order ");
-	label_tex.append(subgroup_order_text);
-	label_tex.append("}");
+	label_tex += "{\\rm Subgroup ";
+	label_tex += str.str();
+	label_tex += " order " + subgroup_order_text + "}";
 
 	if (f_v) {
 		cout << "linear_group::init_subgroup_by_generators "
@@ -1516,8 +1508,7 @@ void linear_group::report(
 			cout << "linear_group::report The group table is:" << endl;
 			Int_matrix_print(Table, n, n);
 
-			fname_group_table.assign(label);
-			fname_group_table.append("_group_table.csv");
+			fname_group_table = label + "_group_table.csv";
 			Fio.int_matrix_write_csv(fname_group_table, Table, n, n);
 			cout << "Written file " << fname_group_table << " of size " << Fio.file_size(fname_group_table) << endl;
 
@@ -1675,13 +1666,9 @@ void linear_group::create_latex_report(
 		string title;
 		string author, extra_praeamble;
 
-		fname.assign(label);
-		fname.append("_report.tex");
-		title.assign("The group $");
-		title.append(label_tex);
-		title.append("$");
-
-		author.assign("");
+		fname = label + "_report.tex";
+		title = "The group $" + label_tex + "$";
+		author = "";
 
 
 		{

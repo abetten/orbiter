@@ -162,8 +162,7 @@ void flag_orbit_folding::init(
 	handle_automorphism_Elt1 = NEW_int(Iso->A->elt_size_in_int);
 	apply_isomorphism_tree_tmp_Elt = NEW_int(Iso->A->elt_size_in_int);
 
-	event_out_fname.assign(Iso->prefix);
-	event_out_fname.append("_event.txt");
+	event_out_fname = Iso->prefix + "_event.txt";
 
 
 
@@ -3616,8 +3615,7 @@ void flag_orbit_folding::write_classification_matrix(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(Iso->prefix);
-	fname.append("_flag_orbit_links.csv");
+	fname = Iso->prefix + "_flag_orbit_links.csv";
 
 
 	Fio.int_matrix_write_csv(fname, Link, Iso->Lifting->nb_flag_orbits, 2);
@@ -3738,9 +3736,7 @@ void flag_orbit_folding::write_classification_graph(int verbose_level)
 
 	string fname;
 
-	fname.assign(Iso->prefix);
-	fname.append("_classification_graph");
-	fname.append(".layered_graph");
+	fname = Iso->prefix + "_classification_graph.layered_graph";
 
 	LG->write_file(fname, 0 /*verbose_level*/);
 	if (f_v) {
@@ -3791,9 +3787,7 @@ void flag_orbit_folding::decomposition_matrix(int verbose_level)
 
 	string fname;
 
-	fname.assign(Iso->prefix);
-	fname.append("_decomposition_matrix");
-	fname.append(".csv");
+	fname = Iso->prefix + "_decomposition_matrix.csv";
 
 	Fio.int_matrix_write_csv(fname, M, m, n);
 

@@ -524,8 +524,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			string fname_prefix;
 
 
-			fname_prefix.assign(problem_label_with_path);
-			fname_prefix.append("_flag_orbits");
+			fname_prefix = problem_label_with_path + "_flag_orbits";
 
 			if (f_v) {
 				cout << "poset_classification::post_processing before make_flag_orbits_on_relations" << endl;

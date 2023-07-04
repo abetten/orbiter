@@ -84,8 +84,7 @@ void create_graph::init(
 		data_structures::string_tools String;
 		String.chop_off_extension(label);
 
-		label_tex.assign("File\\_");
-		label_tex.append(label);
+		label_tex = "File\\_" + label;
 
 	}
 
@@ -207,8 +206,7 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"number of vertices = " << N << endl;
 		}
-		label.assign("Cayley_graph_");
-		label.append(G->A->label);
+		label = "Cayley_graph_" + G->A->label;
 		if (f_v) {
 			cout << "create_graph::init label = " << label << endl;
 		}
@@ -216,8 +214,7 @@ void create_graph::init(
 		data_structures::string_tools String;
 		String.chop_off_extension(label);
 
-		label_tex.assign("Cayley\\_graph\\_");
-		label_tex.append(G->A->label_tex);
+		label_tex = "Cayley\\_graph\\_" + G->A->label_tex;
 
 	}
 
@@ -236,14 +233,13 @@ void create_graph::init(
 		N = n;
 		Adj = M;
 
-		label.assign(description->fname);
+		label = description->fname;
 
 		data_structures::string_tools String;
 		String.chop_off_extension(label);
 
 
-		label_tex.assign("File\\_");
-		label_tex.append(label);
+		label_tex = "File\\_" + label;
 	}
 
 	else if (description->f_load_adjacency_matrix_from_csv_and_select_value) {
@@ -277,14 +273,13 @@ void create_graph::init(
 		}
 		Adj = M;
 
-		label.assign(description->fname);
+		label = description->fname;
 
 		data_structures::string_tools String;
 		String.chop_off_extension(label);
 
 
-		label_tex.assign("File\\_");
-		label_tex.append(label);
+		label_tex = "File\\_" + label;
 	}
 
 	else if (description->f_load_dimacs) {
@@ -331,14 +326,13 @@ void create_graph::init(
 			Adj[j * nb_V + i] = 1;
 		}
 
-		label.assign(description->fname);
+		label = description->fname;
 
 		data_structures::string_tools String;
 		String.chop_off_extension_and_path(label);
 
 
-		label_tex.assign("File\\_");
-		label_tex.append(label);
+		label_tex = "File\\_" + label;
 	}
 	else if (description->f_edge_list) {
 
@@ -632,17 +626,17 @@ void create_graph::init(
 		string L;
 		data_structures::string_tools String;
 
-		L.assign(description->disjoint_sets_graph_fname);
+		L = description->disjoint_sets_graph_fname;
 		String.chop_off_extension(L);
-		L.append("_disjoint_sets");
+		L += "_disjoint_sets";
 
-		label.assign(L);
+		label = L;
 
-		L.assign(description->disjoint_sets_graph_fname);
+		L = description->disjoint_sets_graph_fname;
 		String.chop_off_extension(L);
-		L.append("\\_disjoint\\_sets");
+		L += "\\_disjoint\\_sets";
 
-		label_tex.assign(L);
+		label_tex = L;
 	}
 	else if (description->f_orbital_graph) {
 
@@ -755,8 +749,8 @@ void create_graph::init(
 
 		f_has_CG = true;
 
-		label.append(description->subset_label);
-		label_tex.append(description->subset_label_tex);
+		label += description->subset_label;
+		label_tex += description->subset_label_tex;
 
 		FREE_int(subset);
 		if (f_v) {
@@ -796,8 +790,8 @@ void create_graph::init(
 		description->Modifications[i].apply(CG, verbose_level);
 	}
 
-	CG->label.assign(label);
-	CG->label_tex.assign(label_tex);
+	CG->label = label;
+	CG->label_tex = label_tex;
 
 
 	if (f_v) {
@@ -1400,13 +1394,9 @@ void create_graph::create_coll_orthogonal(
 	}
 
 
-	label.assign(OA->O->label_txt);
-	label.append("_coll_");
-	label.append(set_of_points_label);
+	label = OA->O->label_txt + "_coll_" + set_of_points_label;
 
-	label_tex.assign(OA->O->label_tex);
-	label_tex.append("\\_coll\\_");
-	label_tex.append(set_of_points_label);
+	label_tex = OA->O->label_tex + "\\_coll\\_" + set_of_points_label;
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal done" << endl;
@@ -1530,8 +1520,8 @@ void create_graph::make_collinearity_graph(
 		}
 	}
 
-	label.assign("collinearity_graph");
-	label_tex.assign("collinearity\\_graph");
+	label = "collinearity_graph";
+	label_tex = "collinearity\\_graph";
 
 	if (f_v) {
 		cout << "create_graph::make_collinearity_graph done" << endl;
@@ -1592,8 +1582,8 @@ void create_graph::make_chain_graph(
 		}
 	}
 
-	label.assign("chain_graph");
-	label_tex.assign("chain\\_graph");
+	label = "chain_graph";
+	label_tex = "chain\\_graph";
 
 	if (f_v) {
 		cout << "create_graph::make_chain_graph done" << endl;

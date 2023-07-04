@@ -241,7 +241,6 @@ void cayley_graph_search::init_group2(int verbose_level)
 
 
 	fname_base = "Ferdinand" + std::to_string(level) + "_" + std::to_string(group);
-	//fname_base.append("Ferdinand");
 
 	Aut = NEW_OBJECT(actions::action);
 

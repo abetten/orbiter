@@ -235,8 +235,7 @@ void tree::draw(
 	}
 	string fname_full;
 	
-	fname_full.assign(fname);
-	fname_full.append(".mp");
+	fname_full = fname + ".mp";
 
 #if 0
 	if (f_edge_labels) {

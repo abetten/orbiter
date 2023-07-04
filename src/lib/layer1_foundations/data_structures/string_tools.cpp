@@ -706,8 +706,7 @@ void string_tools::convert_arguments(
 			int h;
 			string variable;
 
-			variable.assign("%");
-			variable.append(variable_name);
+			variable = "%" + variable_name;
 
 			for (loop_var = loop_from; loop_var < loop_upper_bound; loop_var += loop_increment) {
 				for (h = index_of_repeat_start; h < index_of_repeat_end; h++) {
@@ -798,7 +797,7 @@ void string_tools::replace_extension_with(std::string &p, const char *new_ext)
 	if (i == -1) {
 		q = p;
 	}
-	q.append(new_ext);
+	q += new_ext;
 	p = q;
 }
 
@@ -1022,15 +1021,11 @@ void string_tools::create_comma_separated_list(
 		std::string &output,
 		long int *input, int input_sz)
 {
-	char str[1000];
 	int i;
 
-	snprintf(str, sizeof(str), "%ld", input[0]);
-	output.assign(str);
+	output = std::to_string(input[0]);
 	for (i = 1; i < input_sz; i++) {
-		output.append(",");
-		snprintf(str, sizeof(str), "%ld", input[i]);
-		output.append(str);
+		output += "," + std::to_string(input[i]);
 	}
 
 }

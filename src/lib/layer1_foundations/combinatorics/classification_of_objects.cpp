@@ -705,8 +705,7 @@ void classification_of_objects::save(
 	if (f_v) {
 		cout << "classification_of_objects::save" << endl;
 	}
-	fname.assign(output_prefix);
-	fname.append("_classified.cvs");
+	fname = output_prefix + "_classified.cvs";
 
 
 #if 0
@@ -1122,16 +1121,14 @@ static void print_summary_table_entry(int *Table,
 			}
 			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
-			output.assign("");
+			output = "";
 			for (h = 0; h < nb_input_objects; h++) {
-				string str;
-				str = std::to_string(Input_objects[h]);
-				output.append(str);
+				output += std::to_string(Input_objects[h]);
 				if (h < nb_input_objects - 1) {
-					output.append(", ");
+					output += ", ";
 				}
 				if (h == 10) {
-					output.append("\\ldots");
+					output += "\\ldots";
 					break;
 				}
 			}

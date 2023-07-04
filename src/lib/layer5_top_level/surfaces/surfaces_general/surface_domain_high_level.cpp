@@ -1214,7 +1214,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 		fname_report = fname_csv;
 		ST.chop_off_extension(fname_report);
-		fname_report.append("_report.tex");
+		fname_report += "_report.tex";
 
 		l1_interfaces::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
@@ -1887,9 +1887,9 @@ void surface_domain_high_level::do_create_surface_atlas(
 
 						data_structures::string_tools ST;
 
-						fname_report_html.assign(fname_report_tex);
+						fname_report_html = fname_report_tex;
 						ST.chop_off_extension(fname_report_html);
-						fname_report_html.append(".html");
+						fname_report_html += ".html";
 
 
 						ost << " & ";
@@ -1898,8 +1898,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 
 						string cmd;
 
-						cmd.assign("~/bin/tth ");
-						cmd.append(fname_report_tex);
+						cmd = "~/bin/tth " + fname_report_tex;
 						system(cmd.c_str());
 					}
 					else {

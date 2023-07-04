@@ -2907,10 +2907,11 @@ void wreath_product::orbits_restricted(
 	string fname;
 	data_structures::string_tools ST;
 
-	fname.assign(orbits_restricted_fname);
+	fname = orbits_restricted_fname;
 	ST.chop_off_extension(fname);
 
-	fname.append("_restricted_action.txt");
+	fname += "_restricted_action.txt";
+
 	Fio.lint_matrix_write_csv(fname, Perms, set_m, SG->gens->len);
 
 	if (f_v) {
@@ -2984,10 +2985,11 @@ void wreath_product::orbits_restricted_compute(
 	int *Perms;
 	int perms_m, perms_n;
 
-	fname.assign(orbits_restricted_fname);
+	fname = orbits_restricted_fname;
 	ST.chop_off_extension(fname);
 
-	fname.append("_restricted_action.txt");
+	fname += "_restricted_action.txt";
+
 	Fio.int_matrix_read_csv(fname, Perms, perms_m, perms_n, verbose_level - 2);
 	if (perms_n != SG->gens->len) {
 		cout << "perms_n != SG->gens->len" << endl;

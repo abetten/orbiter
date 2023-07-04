@@ -528,24 +528,15 @@ void packing_was::init_H(int verbose_level)
 		cout << "packing_was::init_H after H_gens->create_sims" << endl;
 	}
 
-	prefix_point_orbits_under_H.assign(Descr->H_label);
-	prefix_point_orbits_under_H.append("_point_orbits");
-	prefix_point_orbits_under_N.assign(Descr->N_label);
-	prefix_point_orbits_under_N.append("_point_orbits");
-	prefix_line_orbits_under_H.assign(Descr->H_label);
-	prefix_line_orbits_under_H.append("_line_orbits");
-	prefix_line_orbits_under_N.assign(Descr->N_label);
-	prefix_line_orbits_under_N.append("_line_orbits");
-	prefix_spread_types.assign(Descr->H_label);
-	prefix_spread_types.append("_spread_types");
-	prefix_spread_orbits.assign(Descr->H_label);
-	prefix_spread_orbits.append("_spread_orbits");
-	fname_good_orbits.assign(Descr->H_label);
-	fname_good_orbits.append("_good_orbits");
-	prefix_spread_types_reduced.assign(Descr->H_label);
-	prefix_spread_types_reduced.append("_spread_types_reduced");
-	prefix_reduced_spread_orbits.assign(Descr->H_label);
-	prefix_reduced_spread_orbits.append("_reduced_spread_orbits");
+	prefix_point_orbits_under_H = Descr->H_label + "_point_orbits";
+	prefix_point_orbits_under_N = Descr->N_label + "_point_orbits";
+	prefix_line_orbits_under_H = Descr->H_label + "_line_orbits";
+	prefix_line_orbits_under_N = Descr->N_label + "_line_orbits";
+	prefix_spread_types = Descr->H_label + "_spread_types";
+	prefix_spread_orbits = Descr->H_label + "_spread_orbits";
+	fname_good_orbits = Descr->H_label + "_good_orbits";
+	prefix_spread_types_reduced = Descr->H_label + "_spread_types_reduced";
+	prefix_reduced_spread_orbits = Descr->H_label + "_reduced_spread_orbits";
 
 
 	if (f_v) {
@@ -1269,8 +1260,7 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 
 	Type_idx = NEW_int(nb_orbit_lengths);
 
-	fname.assign(H_LG->label);
-	fname.append("_spread_orbits_graph.bin");
+	fname = H_LG->label + "_spread_orbits_graph.bin";
 	if (f_v) {
 		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file "
 				"before "
@@ -2070,11 +2060,11 @@ void packing_was::report_reduced_spread_orbits(
 	else {
 		fname_reduced_orbits.assign("");
 	}
-	fname_reduced_orbits.append(H_LG->label);
+	fname_reduced_orbits += H_LG->label;
 	if (Descr->f_problem_label) {
-		fname_reduced_orbits.append(Descr->problem_label);
+		fname_reduced_orbits += Descr->problem_label;
 	}
-	fname_reduced_orbits.append("_reduced_orbits.csv");
+	fname_reduced_orbits += "_reduced_orbits.csv";
 
 	file_io Fio;
 
@@ -2082,7 +2072,8 @@ void packing_was::report_reduced_spread_orbits(
 				spreads_in_reduced_orbits_with_original_labels,
 				nb_spreads, orbit_length);
 
-	cout << "Written file " << fname_reduced_orbits << " of size " << Fio.file_size(fname_reduced_orbits) << endl;
+	cout << "Written file " << fname_reduced_orbits
+			<< " of size " << Fio.file_size(fname_reduced_orbits) << endl;
 
 
 

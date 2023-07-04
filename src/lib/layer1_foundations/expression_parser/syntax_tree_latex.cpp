@@ -146,7 +146,7 @@ void syntax_tree_latex::add_epilogue()
 
 void syntax_tree_latex::add_indentation()
 {
-	indentation.append(delimiter);
+	indentation += delimiter;
 }
 
 void syntax_tree_latex::remove_indentation()

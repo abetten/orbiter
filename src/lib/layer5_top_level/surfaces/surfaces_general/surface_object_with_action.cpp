@@ -1348,8 +1348,7 @@ void surface_object_with_action::print_automorphism_group(
 
 			string my_fname_mask;
 
-			my_fname_mask.assign(fname_mask);
-			my_fname_mask.append("_double_sixes");
+			my_fname_mask = fname_mask + "_double_sixes";
 
 			Orbits_on_double_sixes->make_orbit_trees(ost,
 					my_fname_mask, Opt,
@@ -2615,8 +2614,7 @@ void surface_object_with_action::print_action_on_surface(
 
 	string fname;
 
-	fname.assign(label_of_elements);
-	fname.append("_action_on_surface.tex");
+	fname = label_of_elements + "_action_on_surface.tex";
 
 
 	{

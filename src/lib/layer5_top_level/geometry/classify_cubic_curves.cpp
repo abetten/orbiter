@@ -1586,7 +1586,9 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 
 
 	for (i = 0; i < Curves->nb_orbits; i++) {
-		string ref("");
+		string ref;
+
+		ref = "";
 		References.push_back(ref);
 	}
 
@@ -1632,65 +1634,55 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 	for (e = 0; e < F->q; e++) {
 		if (Iso_type1[e] != -1) {
 			string ref;
-			char str[1000];
 			ref = References[Iso_type1[e]];
-			if (strlen(ref.c_str())) {
-				ref.append(",");
+			if (ref.length()) {
+				ref += ",";
 			}
-			snprintf(str, sizeof(str), "F1_{%d}", e);
-			ref.append(str);
+			ref += "F1_{" + std::to_string(e) + "}";
 			References[Iso_type1[e]] = ref;
 		}
 	}
 	for (e = 0; e < F->q; e++) {
 		if (Iso_type2[e] != -1) {
 			string ref;
-			char str[1000];
 			ref = References[Iso_type2[e]];
-			if (strlen(ref.c_str())) {
-				ref.append(",");
+			if (ref.length()) {
+				ref += ",";
 			}
-			snprintf(str, sizeof(str), "F2_{%d}", e);
-			ref.append(str);
+			ref += "F2_{" + std::to_string(e) + "}";
 			References[Iso_type2[e]] = ref;
 		}
 	}
 	for (e = 0; e < F->q; e++) {
 		if (Iso_type3[e] != -1) {
 			string ref;
-			char str[1000];
 			ref = References[Iso_type3[e]];
-			if (strlen(ref.c_str())) {
-				ref.append(",");
+			if (ref.length()) {
+				ref += ",";
 			}
-			snprintf(str, sizeof(str), "F3_{%d}", e);
-			ref.append(str);
+			ref += "F3_{" + std::to_string(e) + "}";
 			References[Iso_type3[e]] = ref;
 		}
 	}
 	for (e = 0; e < F->q; e++) {
 		if (Iso_typeE[e] != -1) {
 			string ref;
-			char str[1000];
 			ref = References[Iso_typeE[e]];
-			if (strlen(ref.c_str())) {
-				ref.append(",");
+			if (ref.length()) {
+				ref += ",";
 			}
-			snprintf(str, sizeof(str), "E_{%d}", e);
-			ref.append(str);
+			ref += "E_{" + std::to_string(e) + "}";
 			References[Iso_typeE[e]] = ref;
 		}
 	}
 	for (e = 0; e < F->q; e++) {
 		if (Iso_typeH[e] != -1) {
 			string ref;
-			char str[1000];
 			ref = References[Iso_typeH[e]];
-			if (strlen(ref.c_str())) {
-				ref.append(",");
+			if (ref.length()) {
+				ref += ",";
 			}
-			snprintf(str, sizeof(str), "H_{%d}", e);
-			ref.append(str);
+			ref += "H_{" + std::to_string(e) + "}";
 			References[Iso_typeH[e]] = ref;
 		}
 	}
@@ -1703,13 +1695,11 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 				continue;
 			}
 			string ref;
-			char str[1000];
 			ref = References[iso];
-			if (strlen(ref.c_str())) {
-				ref.append(",");
+			if (ref.length()) {
+				ref += ",";
 			}
-			snprintf(str, sizeof(str), "G_{%d,%d}", c,d);
-			ref.append(str);
+			ref += "G_{" + std::to_string(c) + "," + std::to_string(d) + "}";
 			References[iso] = ref;
 		}
 	}

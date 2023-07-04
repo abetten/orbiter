@@ -2029,13 +2029,15 @@ void coding_theory_domain::do_polynomial(
 
 #if 0
 	if (f_v) {
-		cout << "coding_theory_domain::do_polynomial before investigate_code" << endl;
+		cout << "coding_theory_domain::do_polynomial "
+				"before investigate_code" << endl;
 	}
 	investigate_code(Fq, set, set_sz, n,
 			f_embellish, embellish_radius,
 			verbose_level);
 	if (f_v) {
-		cout << "coding_theory_domain::do_polynomial after investigate_code" << endl;
+		cout << "coding_theory_domain::do_polynomial "
+				"after investigate_code" << endl;
 	}
 #endif
 
@@ -2218,7 +2220,6 @@ void coding_theory_domain::field_reduction(
 		Sub->print_embedding();
 	}
 
-	//Orbiter->Int_vec.scan(genma_text, M, sz);
 	Get_int_vector_from_label(genma_text, M, sz, verbose_level);
 
 	if (sz != m * n) {
@@ -2289,8 +2290,7 @@ void coding_theory_domain::field_reduction(
 
 		string fname_csv;
 
-		fname_csv.assign(label);
-		fname_csv.append(".csv");
+		fname_csv = label + ".csv";
 
 		Fio.int_matrix_write_csv(fname_csv, M2, m * Sub->s, Sub->s * n);
 	}
@@ -2404,7 +2404,8 @@ void coding_theory_domain::encode_text_5bits(std::string &text,
 
 	//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
 	Fio.lint_matrix_write_csv(fname, encoding, 1, len);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname
+			<< " of size " << Fio.file_size(fname) << endl;
 	if (f_v) {
 		cout << "coding_theory_domain::encode_text_5bits done" << endl;
 	}
@@ -2582,7 +2583,8 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 	BF->init(F, n, 0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "BF->Poly[n].get_nb_monomials()=" << BF->Poly[n].get_nb_monomials() << endl;
+		cout << "BF->Poly[n].get_nb_monomials()="
+				<< BF->Poly[n].get_nb_monomials() << endl;
 	}
 	coeff = NEW_int(BF->Poly[n].get_nb_monomials());
 
@@ -2622,7 +2624,8 @@ void coding_theory_domain::polynomial_representation_of_boolean_function(
 
 	for (h = 0; h < BF->Q; h++) {
 		if (f[h] != g[h]) {
-			cout << "f[h] != g[h], h = " << h << ", an error has occurred" << endl;
+			cout << "f[h] != g[h], h = " << h
+					<< ", an error has occurred" << endl;
 		}
 	}
 
@@ -2800,16 +2803,6 @@ void coding_theory_domain::crc_simulate_errors(
 		cout << "CRC codes must have the same Len_check_in_bytes" << endl;
 		exit(1);
 	}
-#if 0
-	if (Crc_object1->symbol_set_size_log != Crc_object2->symbol_set_size_log) {
-		cout << "CRC codes must have the same symbol_set_size_log" << endl;
-		exit(1);
-	}
-	if (Crc_object1->symbol_set_size != Crc_object2->symbol_set_size) {
-		cout << "CRC codes must have the same symbol_set_size" << endl;
-		exit(1);
-	}
-#endif
 
 	data_structures::algorithms Algo;
 
@@ -2954,12 +2947,14 @@ void coding_theory_domain::crc_simulate_errors(
 						cout << "undetected error code 1 : " << nb1
 								<< " in block " << cnt << " / " << nb_blocks << endl;
 						Algo.print_hex(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
+						Algo.print_binary(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
 					}
 					if (Algo.uchar_compare(Check2a, Check2b, Crc_object1->Len_check_in_bytes) == 0) {
 						nb2++;
 						cout << "undetected error code 2 : " << nb2
 								<< " in block " << cnt << " / " << nb_blocks << endl;
 						Algo.print_hex(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
+						Algo.print_binary(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
 					}
 				}
 			} // next e
@@ -2989,6 +2984,342 @@ void coding_theory_domain::crc_simulate_errors(
 
 	if (f_v) {
 		cout << "coding_theory_domain::crc_simulate_errors done" << endl;
+	}
+
+}
+
+void coding_theory_domain::crc_simulate_Hamming_errors(
+		std::string &fname_in,
+		int block_number,
+		crc_object *Crc_object1,
+		crc_object *Crc_object2,
+		int error_pattern_max_weight,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_simulate_Hamming_errors "
+				" fname_in=" << fname_in
+				<< " error_pattern_max_weight=" << error_pattern_max_weight
+				<< " block_number=" << block_number
+				<< endl;
+	}
+
+
+	if (Crc_object1->info_length_in_bytes != Crc_object2->info_length_in_bytes) {
+		cout << "CRC codes must have the same info_length_in_bytes" << endl;
+		cout << "first code has " << Crc_object1->info_length_in_bytes << endl;
+		cout << "second code has " << Crc_object2->info_length_in_bytes << endl;
+		exit(1);
+	}
+	if (Crc_object1->Len_check_in_bytes != Crc_object2->Len_check_in_bytes) {
+		cout << "CRC codes must have the same Len_check_in_bytes" << endl;
+		exit(1);
+	}
+
+	data_structures::algorithms Algo;
+
+
+	orbiter_kernel_system::file_io Fio;
+
+	long int N, L, nb_blocks, cnt;
+
+	N = Fio.file_size(fname_in);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_simulate_Hamming_errors "
+				"input file size = " << N << endl;
+	}
+
+	nb_blocks = Crc_object1->get_nb_blocks(N);
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_simulate_Hamming_errors "
+				"nb_blocks = " << nb_blocks << endl;
+	}
+
+
+	unsigned char *Data0;
+	unsigned char *Data0e;
+	unsigned char *Data1;
+	unsigned char *Data2;
+	unsigned char *Check1;
+	unsigned char *Check2;
+	unsigned char *Check1a;
+	unsigned char *Check2a;
+	unsigned char *Check1b;
+	unsigned char *Check2b;
+
+	Data0 = (unsigned char *) NEW_char(Crc_object1->Len_total_in_symbols);
+	Data0e = (unsigned char *) NEW_char(Crc_object1->Len_total_in_symbols);
+	Data1 = (unsigned char *) NEW_char(Crc_object1->Len_total_in_symbols);
+	Data2 = (unsigned char *) NEW_char(Crc_object1->Len_total_in_symbols);
+	Check1 = (unsigned char *) NEW_char(Crc_object1->Len_check_in_symbols);
+	Check2 = (unsigned char *) NEW_char(Crc_object1->Len_check_in_symbols);
+	Check1a = (unsigned char *) NEW_char(Crc_object1->Len_check_in_bytes);
+	Check2a = (unsigned char *) NEW_char(Crc_object1->Len_check_in_bytes);
+	Check1b = (unsigned char *) NEW_char(Crc_object1->Len_check_in_bytes);
+	Check2b = (unsigned char *) NEW_char(Crc_object1->Len_check_in_bytes);
+
+
+	error_pattern *Error;
+
+
+	Error = NEW_OBJECT(error_pattern);
+
+	Error->init(Crc_object1, error_pattern_max_weight + 1, verbose_level);
+
+
+	long int nb1 = 0;
+	long int nb2 = 0;
+	long int nb_error_pattern_zero = 0;
+	int f_show = false;
+
+
+	ifstream ist(fname_in, ios::binary);
+
+	{
+
+		for (cnt = 0; cnt < nb_blocks; cnt++) {
+
+
+			if (cnt != block_number) {
+				continue;
+			}
+
+
+			L = Crc_object1->get_this_block_size(N, cnt);
+
+
+			Algo.uchar_zero(Data0, Crc_object1->Len_total_in_symbols);
+			Algo.uchar_zero(Data1, Crc_object1->Len_total_in_symbols);
+			Algo.uchar_zero(Data2, Crc_object1->Len_total_in_symbols);
+
+
+			// read one block of information:
+
+			ist.read((char *) Data0 + Crc_object1->Len_check_in_bytes, L);
+
+			//Algo.uchar_move(Data0, Data1, Crc_object1->Len_total_in_bytes);
+			//Algo.uchar_move(Data0, Data2, Crc_object1->Len_total_in_bytes);
+
+			if (f_show) {
+				cout << "Data0 in bytes: len = " << Crc_object1->Len_total_in_bytes << endl;
+				Algo.print_hex(cout, Data0, Crc_object1->Len_total_in_bytes);
+				Algo.print_binary(cout, Data0, Crc_object1->Len_total_in_bytes);
+			}
+
+			Crc_object1->expand(Data0, Data1);
+
+			if (f_show) {
+				cout << "after expand Data1:" << endl;
+				Algo.print_hex(cout, Data1, Crc_object1->Len_total_in_symbols);
+				Algo.print_binary(cout, Data1, Crc_object1->Len_total_in_symbols);
+			}
+
+			Crc_object2->expand(Data0, Data2);
+
+
+			Crc_object1->divide(Data1, Check1);
+			Crc_object2->divide(Data2, Check2);
+
+			if (f_show) {
+				cout << "Check1:" << endl;
+				Algo.print_hex(cout, Check1, Crc_object1->Len_check_in_symbols);
+				Algo.print_binary(cout, Check1, Crc_object1->Len_check_in_symbols);
+			}
+
+
+			Crc_object1->compress_check(Check1, Check1a);
+			Crc_object2->compress_check(Check2, Check2a);
+
+			if (f_show) {
+				cout << "Check1 compressed:" << endl;
+				Algo.print_hex(cout, Check1a, Crc_object1->Len_check_in_bytes);
+				Algo.print_binary(cout, Check1a, Crc_object1->Len_check_in_bytes);
+			}
+
+
+			int wt;
+			long int N, N100;
+			combinatorics::combinatorics_domain Combi;
+			data_structures::algorithms Algo;
+			data_structures::data_structures_global DataStructures;
+
+			for (wt = error_pattern_max_weight; wt <= error_pattern_max_weight; wt++) {
+
+
+				cout << "wt = " << wt << endl;
+				nb1 = 0;
+				nb2 = 0;
+				nb_error_pattern_zero = 0;
+
+				N = Error->number_of_bit_error_patters(wt, verbose_level);
+
+				N100 = N / 100;
+
+				long int counter = 0;
+
+				Error->first_bit_error_pattern_of_given_weight(
+						Combi,
+						Algo,
+						DataStructures,
+						wt,
+						0 /*verbose_level */);
+
+
+
+
+				while (true) {
+
+
+
+					if ((counter % N100) == 0) {
+						if (f_v) {
+							cout << "coding_theory_domain::crc_simulate_errors "
+									"counter " << counter << " / " << nb_blocks << " = "
+									<< ((double)counter / (double) N100) << " percent "
+											"nb undetected errors =  " << nb1 << "," << nb2 << endl;
+						}
+					}
+
+#if 0
+					if (counter != 1394203) {
+						 goto go_to_next;
+					}
+#endif
+
+					int i;
+
+					for (i = 0; i < Crc_object1->Len_total_in_bytes; i++) {
+						if (Error->Error_in_bytes[i]) {
+							break;
+						}
+					}
+
+					if (i == Crc_object1->Len_total_in_bytes) {
+
+						// don't do anything at all, the error pattern is zero;
+
+						nb_error_pattern_zero++;
+					}
+					else {
+
+						//Algo.print_hex(cout, Error->Error, Crc_object1->Len_total_in_bytes);
+
+						if (f_show) {
+							cout << "Error_in_bytes:" << endl;
+							Algo.print_hex(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
+							Algo.print_binary(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
+
+							cout << "before adding error in bytes: len = " << Crc_object1->Len_total_in_bytes << endl;
+							Algo.print_hex(cout, Data0, Crc_object1->Len_total_in_bytes);
+							Algo.print_binary(cout, Data0, Crc_object1->Len_total_in_bytes);
+						}
+
+						Algo.uchar_xor(Data0, Error->Error_in_bytes, Data0e, Crc_object1->Len_total_in_bytes);
+
+
+						if (f_show) {
+							cout << "after adding error in bytes: len = " << Crc_object1->Len_total_in_bytes << endl;
+							Algo.print_hex(cout, Data0e, Crc_object1->Len_total_in_bytes);
+							Algo.print_binary(cout, Data0e, Crc_object1->Len_total_in_bytes);
+						}
+
+
+						Crc_object1->expand(Data0e, Data1);
+						Crc_object2->expand(Data0e, Data2);
+
+						if (f_show) {
+							cout << "after expand: len = " << Crc_object1->Len_total_in_symbols << endl;
+							Algo.print_hex(cout, Data1, Crc_object1->Len_total_in_symbols);
+							Algo.print_binary(cout, Data1, Crc_object1->Len_total_in_symbols);
+						}
+
+						Crc_object1->divide(Data1, Check1);
+						Crc_object2->divide(Data2, Check2);
+
+						if (f_show) {
+							cout << "Check1:" << endl;
+							Algo.print_hex(cout, Check1, Crc_object1->Len_check_in_symbols);
+							Algo.print_binary(cout, Check1, Crc_object1->Len_check_in_symbols);
+						}
+
+
+						Crc_object1->compress_check(Check1, Check1b);
+						Crc_object2->compress_check(Check2, Check2b);
+
+						if (f_show) {
+							cout << "Check1b compressed:" << endl;
+							Algo.print_hex(cout, Check1b, Crc_object1->Len_check_in_bytes);
+							Algo.print_binary(cout, Check1b, Crc_object1->Len_check_in_bytes);
+						}
+
+
+						if (Algo.uchar_compare(Check1a, Check1b, Crc_object1->Len_check_in_bytes) == 0) {
+							nb1++;
+							if (f_show) {
+								cout << "wt = " << wt << " undetected error code 1 : " << nb1
+										<< " counter " << counter << " / " << N << " = "
+										<< ((double)counter / (double) N100) << " % " << endl;
+								Algo.print_hex(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
+								Algo.print_binary(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
+							}
+						}
+						if (Algo.uchar_compare(Check2a, Check2b, Crc_object1->Len_check_in_bytes) == 0) {
+							nb2++;
+							if (f_show) {
+								cout << "wt = " << wt << " undetected error code 2 : " << nb2
+										<< " counter " << counter << " / " << N << " = "
+										<< ((double)counter / (double) N100) << " % " << endl;
+								//Algo.print_hex(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
+								//Algo.print_binary(cout, Error->Error_in_bytes, Crc_object1->Len_total_in_bytes);
+							}
+						}
+					}
+
+
+//go_to_next:
+					if (!Error->next_bit_error_pattern_of_given_weight(
+							Combi,
+							Algo,
+							DataStructures,
+							wt,
+							0 /*verbose_level */)) {
+						break;
+					}
+					counter++;
+
+				}
+
+				cout << "nb_error_pattern_zero = " << nb_error_pattern_zero << endl;
+
+				cout << "wt = " << wt << " N = " << N << ", # undetected errors = " << nb1 << ", " << nb2 << endl;
+
+
+			} // next wt
+		}
+
+	}
+
+	cout << "nb_blocks = " << nb_blocks << endl;
+
+
+	FREE_char((char *) Data0);
+	FREE_char((char *) Data0e);
+	FREE_char((char *) Data1);
+	FREE_char((char *) Data2);
+	FREE_char((char *) Check1);
+	FREE_char((char *) Check2);
+	FREE_char((char *) Check1a);
+	FREE_char((char *) Check2a);
+	FREE_char((char *) Check1b);
+	FREE_char((char *) Check2b);
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::crc_simulate_Hamming_errors done" << endl;
 	}
 
 }

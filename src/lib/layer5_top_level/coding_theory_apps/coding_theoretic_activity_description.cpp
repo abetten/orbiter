@@ -137,6 +137,18 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	crc_compare_read_output_file_block_length2 = 0;
 
 
+	f_simulate_Hamming_errors = false;
+	//std::string simulate_Hamming_errors_fname_in;
+	simulate_Hamming_errors_block_number = 0;
+	//std::string simulate_Hamming_errors_crc1_type;
+	simulate_Hamming_errors_block_length1 = false;
+	//std::string simulate_Hamming_errors_crc2_type;
+	simulate_Hamming_errors_block_length2 = 0;
+	simulate_Hamming_errors_max_weight = 0;
+
+
+
+
 
 	f_convert_data_to_polynomials = false;
 	//std::string convert_data_to_polynomials_fname_in;
@@ -453,6 +465,7 @@ int coding_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+
 		else if (ST.stringcmp(argv[i], "-crc_compare_read_output_file") == 0) {
 			f_crc_compare_read_output_file = true;
 			crc_compare_read_output_file_fname_in.assign(argv[++i]);
@@ -473,6 +486,28 @@ int coding_theoretic_activity_description::read_arguments(
 			}
 		}
 
+
+		else if (ST.stringcmp(argv[i], "-simulate_Hamming_errors") == 0) {
+			f_simulate_Hamming_errors = true;
+			simulate_Hamming_errors_fname_in.assign(argv[++i]);
+			simulate_Hamming_errors_block_number = ST.strtoi(argv[++i]);
+			simulate_Hamming_errors_crc1_type.assign(argv[++i]);
+			simulate_Hamming_errors_block_length1 = ST.strtoi(argv[++i]);
+			simulate_Hamming_errors_crc2_type.assign(argv[++i]);
+			simulate_Hamming_errors_block_length2 = ST.strtoi(argv[++i]);
+			simulate_Hamming_errors_max_weight = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-simulate_Hamming_errors "
+						<< simulate_Hamming_errors_fname_in << " "
+						<< simulate_Hamming_errors_block_number << " "
+						<< simulate_Hamming_errors_crc1_type << " "
+						<< simulate_Hamming_errors_block_length1 << " "
+						<< simulate_Hamming_errors_crc2_type << " "
+						<< simulate_Hamming_errors_block_length2 << " "
+						<< simulate_Hamming_errors_max_weight << " "
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-convert_data_to_polynomials") == 0) {
 			f_convert_data_to_polynomials = true;
@@ -708,6 +743,19 @@ void coding_theoretic_activity_description::print()
 					<< crc_compare_read_output_file_block_length2 << " "
 					<< endl;
 	}
+
+	if (f_simulate_Hamming_errors) {
+			cout << "-simulate_Hamming_errors "
+					<< simulate_Hamming_errors_fname_in << " "
+					<< simulate_Hamming_errors_block_number << " "
+					<< simulate_Hamming_errors_crc1_type << " "
+					<< simulate_Hamming_errors_block_length1 << " "
+					<< simulate_Hamming_errors_crc2_type << " "
+					<< simulate_Hamming_errors_block_length2 << " "
+					<< simulate_Hamming_errors_max_weight << " "
+					<< endl;
+	}
+
 	if (f_convert_data_to_polynomials) {
 		cout << "-convert_data_to_polynomials "
 				<< convert_data_to_polynomials_fname_in << " "

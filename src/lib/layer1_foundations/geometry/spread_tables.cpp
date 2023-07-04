@@ -161,28 +161,22 @@ void spread_tables::init(projective_space *P,
 
 void spread_tables::create_file_names(int verbose_level)
 {
-	fname_dual_line_idx.assign(prefix);
-	fname_dual_line_idx.append("_dual_line_idx.csv");
+	fname_dual_line_idx = prefix + "_dual_line_idx.csv";
 
-	fname_self_dual_lines.assign(prefix);
-	fname_self_dual_lines.append("_self_dual_line_idx.csv");
+	fname_self_dual_lines = prefix + "_self_dual_line_idx.csv";
 
-	fname_spreads.assign(prefix);
-	fname_spreads.append("_spreads.csv");
+	fname_spreads = prefix + "_spreads.csv";
 
-	fname_isomorphism_type_of_spreads.assign(prefix);
-	fname_isomorphism_type_of_spreads.append("_spreads_iso.csv");
+	fname_isomorphism_type_of_spreads = prefix + "_spreads_iso.csv";
 
-	fname_dual_spread.assign(prefix);
-	fname_dual_spread.append("_dual_spread_idx.csv");
+	fname_dual_spread = prefix + "_dual_spread_idx.csv";
 
-	fname_self_dual_spreads.assign(prefix);
-	fname_self_dual_spreads.append("_self_dual_spreads.csv");
+	fname_self_dual_spreads = prefix + "_self_dual_spreads.csv";
 
-	fname_schreier_table.assign(prefix);
-	fname_schreier_table.append("_schreier_table.csv");
+	fname_schreier_table = prefix + "_schreier_table.csv";
 
 }
+
 void spread_tables::init_spread_table(int nb_spreads,
 		long int *spread_table, int *spread_iso_type,
 		int verbose_level)
@@ -719,8 +713,7 @@ void spread_tables::compute_adjacency_matrix(
 				label, label_tex,
 				verbose_level);
 
-		fname.assign(prefix);
-		fname.append("_disjoint_spreads.colored_graph");
+		fname = prefix + "_disjoint_spreads.colored_graph";
 
 		CG->save(fname, verbose_level);
 

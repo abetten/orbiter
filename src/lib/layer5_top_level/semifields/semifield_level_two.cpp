@@ -2343,8 +2343,7 @@ void semifield_level_two::report(
 
 void semifield_level_two::create_fname_level_info_file(std::string &fname)
 {
-	fname.assign(SC->level_two_prefix);
-	fname.append("Level_2_info.csv");
+	fname = SC->level_two_prefix + "Level_2_info.csv";
 }
 
 

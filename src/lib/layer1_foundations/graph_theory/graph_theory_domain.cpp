@@ -150,11 +150,10 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 			}
 			snprintf(fname_tmp, 1000, fname_template.c_str(), c);
 			if (f_prefix) {
-				fname.assign(prefix);
-				fname.append(fname_tmp);
+				fname = prefix + fname_tmp;
 			}
 			else {
-				fname.assign(fname_tmp);
+				fname = fname_tmp;
 			}
 			CG->load(fname, verbose_level - 2);
 

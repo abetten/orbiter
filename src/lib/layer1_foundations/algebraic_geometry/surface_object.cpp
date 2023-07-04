@@ -2015,8 +2015,7 @@ void surface_object::export_something(std::string &what,
 
 	if (ST.stringcmp(what, "points") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_points.csv");
+		fname = fname_base + "_points.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.lint_matrix_write_csv(fname, Pts, 1, nb_pts);
@@ -2027,8 +2026,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "points_off") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_points_off.csv");
+		fname = fname_base + "_points_off.csv";
 
 		long int *Pts_off;
 		int nb_pts_off;
@@ -2050,8 +2048,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "Eckardt_points") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_Eckardt_points.csv");
+		fname = fname_base + "_Eckardt_points.csv";
 
 		Fio.lint_matrix_write_csv(fname, SOP->Eckardt_points, 1, SOP->nb_Eckardt_points);
 
@@ -2061,8 +2058,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "double_points") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_double_points.csv");
+		fname = fname_base + "_double_points.csv";
 
 		Fio.lint_matrix_write_csv(fname, SOP->Double_points, 1, SOP->nb_Double_points);
 
@@ -2072,8 +2068,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "single_points") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_single_points.csv");
+		fname = fname_base + "_single_points.csv";
 
 		Fio.lint_matrix_write_csv(fname, SOP->Single_points, 1, SOP->nb_Single_points);
 
@@ -2083,8 +2078,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "zero_points") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_zero_points.csv");
+		fname = fname_base + "_zero_points.csv";
 
 		Fio.lint_matrix_write_csv(fname, SOP->Pts_not_on_lines, 1, SOP->nb_pts_not_on_lines);
 
@@ -2094,8 +2088,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "singular_points") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_singular_points.csv");
+		fname = fname_base + "_singular_points.csv";
 
 		Fio.lint_matrix_write_csv(fname, SOP->singular_pts, 1, SOP->nb_singular_pts);
 
@@ -2106,8 +2099,7 @@ void surface_object::export_something(std::string &what,
 
 	else if (ST.stringcmp(what, "lines") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_lines.csv");
+		fname = fname_base + "_lines.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.lint_matrix_write_csv(fname, Lines, nb_lines, 1);
@@ -2119,8 +2111,7 @@ void surface_object::export_something(std::string &what,
 
 	else if (ST.stringcmp(what, "lines_in_Pluecker_coordinates") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_lines_Pluecker.csv");
+		fname = fname_base + "_lines_Pluecker.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.int_matrix_write_csv(fname, SOP->Pluecker_coordinates, nb_lines, 6);
@@ -2135,8 +2126,7 @@ void surface_object::export_something(std::string &what,
 
 	else if (ST.stringcmp(what, "axes") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_axes.csv");
+		fname = fname_base + "_axes.csv";
 
 		Fio.lint_matrix_write_csv(fname, SOP->Axes_line_rank, 1, SOP->nb_axes);
 
@@ -2147,8 +2137,7 @@ void surface_object::export_something(std::string &what,
 
 	else if (ST.stringcmp(what, "tritangent_planes") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_tritangent_planes.csv");
+		fname = fname_base + "_tritangent_planes.csv";
 
 		Fio.lint_matrix_write_csv(fname,
 				SOP->SmoothProperties->Tritangent_plane_rk,
@@ -2161,8 +2150,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "trihedral_pairs") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_trihedral_pairs.csv");
+		fname = fname_base + "_trihedral_pairs.csv";
 
 
 		Fio.lint_matrix_write_csv(fname,
@@ -2176,8 +2164,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "trihedral_pairs_last10") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_trihedral_pairs_last10.csv");
+		fname = fname_base + "_trihedral_pairs_last10.csv";
 
 
 		int i, j, k, a;
@@ -2235,8 +2222,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "Hesse_planes") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_Hesse_planes.csv");
+		fname = fname_base + "_Hesse_planes.csv";
 
 		Fio.lint_matrix_write_csv(fname, SOP->Hesse_planes, 1, SOP->nb_Hesse_planes);
 
@@ -2246,8 +2232,7 @@ void surface_object::export_something(std::string &what,
 	}
 	else if (ST.stringcmp(what, "roots") == 0) {
 
-		fname.assign(fname_base);
-		fname.append("_roots.csv");
+		fname = fname_base + "_roots.csv";
 
 		if (nb_lines != 27) {
 			cout << "surface must have 27 lines to be able to export roots" << endl;

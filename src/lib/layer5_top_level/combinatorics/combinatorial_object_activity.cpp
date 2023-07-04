@@ -282,8 +282,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(int verbos
 		orbiter_kernel_system::file_io Fio;
 		string fname;
 
-		fname.assign(GOC->label_txt);
-		fname.append(".txt");
+		fname = GOC->label_txt + ".txt";
 
 		if (f_v) {
 			cout << "We will write to the file " << fname << endl;

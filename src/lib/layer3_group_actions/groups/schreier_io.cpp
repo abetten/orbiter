@@ -1711,8 +1711,7 @@ void schreier::draw_tree2(std::string &fname,
 		cout << "schreier::draw_tree2" << endl;
 	}
 
-	fname_full.assign(fname);
-	fname_full.append(".mp");
+	fname_full = fname + ".mp";
 
 	if (f_v) {
 		cout << "schreier::draw_tree2 before creating G" << endl;

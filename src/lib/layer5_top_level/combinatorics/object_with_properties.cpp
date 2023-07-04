@@ -338,17 +338,9 @@ void object_with_properties::latex_report(std::ostream &ost,
 		}
 
 		std::string fname;
-		//std::string label_txt;
-		//std::string label_tex;
 
 
 		fname = label + "_aut.gap";
-#if 0
-		label_txt.assign(label);
-		label_txt.append("_aut");
-		label_tex.assign(label);
-		label_tex.append("\\_aut");
-#endif
 
 		if (f_v) {
 			cout << "object_with_properties::latex_report "

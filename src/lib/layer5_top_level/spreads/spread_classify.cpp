@@ -1129,9 +1129,7 @@ void spread_classify::lifting_prepare_function_new(
 	string fname_clique_graph;
 	orbiter_kernel_system::file_io Fio;
 
-	fname_clique_graph.assign(E->output_prefix);
-	fname_clique_graph.append(str);
-	fname_clique_graph.append(".graph");
+	fname_clique_graph = E->output_prefix + str + ".graph";
 
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {

@@ -127,8 +127,7 @@ void large_set_classify::init(design_create *DC,
 	}
 
 
-	problem_label.assign("LS_");
-	problem_label.append(DC->label_txt);
+	problem_label = "LS_" + DC->label_txt;
 
 
 	if (DC->k == 4) {
@@ -521,8 +520,7 @@ void large_set_classify::process_starter_case(
 	std::string fname;
 	int f_has_user_data = false;
 
-	fname.assign(prefix);
-	fname.append(group_label);
+	fname = prefix + group_label;
 
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "

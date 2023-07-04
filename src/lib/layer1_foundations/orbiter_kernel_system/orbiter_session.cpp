@@ -363,32 +363,28 @@ void orbiter_session::fork(
 
 		string cmd;
 
-		cmd.assign(orbiter_path);
-		cmd.append("orbiter.out");
+		cmd = orbiter_path + "orbiter.out";
 		for (j = fork_argument_idx + 6; j < argc; j++) {
-			cmd.append(" \"");
+			cmd += " \"";
 			for (h = 0; h < places.size(); h++) {
 				if (places[h] == j) {
 					break;
 				}
 			}
 			if (h < places.size()) {
-				char str[1000];
-
-				snprintf(str, sizeof(str), "%d", case_number);
-				cmd.append(str);
+				cmd += std::to_string(case_number);
 			}
 			else {
-				cmd.append(argv[j]);
+				cmd += argv[j];
 			}
-			cmd.append("\" ");
+			cmd += "\" ";
 		}
 		char str[1000];
 
 		snprintf(str, sizeof(str), fork_logfile_mask.c_str(), case_number);
-		cmd.append(" >");
-		cmd.append(str);
-		cmd.append(" &");
+		cmd += " >";
+		cmd += str;
+		cmd += " &";
 		cout << "system: " << cmd << endl;
 		system(cmd.c_str());
 	}

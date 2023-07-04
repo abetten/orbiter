@@ -707,9 +707,7 @@ void spread_lifting::create_graph(
 	string fname_clique_graph;
 	orbiter_kernel_system::file_io Fio;
 
-	fname_clique_graph.assign(output_prefix);
-	fname_clique_graph.append(label);
-	fname_clique_graph.append(".bin");
+	fname_clique_graph = output_prefix + label + ".bin";
 
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {
@@ -798,9 +796,7 @@ void spread_lifting::create_dummy_graph(int verbose_level)
 	string fname_clique_graph;
 	orbiter_kernel_system::file_io Fio;
 
-	fname_clique_graph.assign(output_prefix);
-	fname_clique_graph.append(label);
-	fname_clique_graph.append(".bin");
+	fname_clique_graph = output_prefix + label + ".bin";
 
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {

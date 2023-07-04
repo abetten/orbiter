@@ -136,11 +136,9 @@ void translation_plane_via_andre_model::init(
 	translation_plane_via_andre_model::An = An; //Spread->A;
 	translation_plane_via_andre_model::Andre = Andre;
 
-	translation_plane_via_andre_model::label_txt.assign("plane_");
-	translation_plane_via_andre_model::label_txt.append(label_txt);
+	translation_plane_via_andre_model::label_txt = "plane_" + label_txt;
 
-	translation_plane_via_andre_model::label_tex.assign("plane\\_");
-	translation_plane_via_andre_model::label_tex.append(label_tex);
+	translation_plane_via_andre_model::label_tex = "plane\\_" + label_tex;
 
 	//translation_plane_via_andre_model::F = Andre->F;
 	if (f_v) {
@@ -231,8 +229,7 @@ void translation_plane_via_andre_model::init(
 	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(label_txt);
-	fname.append("_incma.csv");
+	fname = label_txt + "_incma.csv";
 	Fio.int_matrix_write_csv(fname, Incma, N, N);
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
@@ -995,8 +992,7 @@ void translation_plane_via_andre_model::export_incma(int verbose_level)
 	string fname;
 	orbiter_kernel_system::file_io Fio;
 
-	fname.assign(label_txt);
-	fname.append("_incma.csv");
+	fname = label_txt + "_incma.csv";
 	Fio.int_matrix_write_csv(fname, Incma, N, N);
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "

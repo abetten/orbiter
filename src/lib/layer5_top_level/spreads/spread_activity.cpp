@@ -304,10 +304,8 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 		groups::orbits_on_something *O2;
 		string prefix1, prefix2;
 
-		prefix1.assign(Spread_create->label_txt);
-		prefix1.append("_on_gr");
-		prefix2.assign(Spread_create->label_txt);
-		prefix2.append("_on_spread");
+		prefix1 = Spread_create->label_txt + "_on_gr";
+		prefix2 = Spread_create->label_txt + "_on_spread";
 
 		O1 = NEW_OBJECT(groups::orbits_on_something);
 

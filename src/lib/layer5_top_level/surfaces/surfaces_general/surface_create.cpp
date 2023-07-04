@@ -2151,8 +2151,7 @@ int surface_create::create_surface_by_equation(
 
 	my_parameters_tex = equation_parameters_tex;
 	ST.string_fix_escape_characters(my_parameters_tex);
-	label_tex.append(" with ");
-	label_tex.append(my_parameters_tex);
+	label_tex += " with " + my_parameters_tex;
 
 
 
@@ -2942,12 +2941,12 @@ void surface_create::compute_group(
 	for (i = 0; i < SO->nb_pts; i++) {
 		a = SO->Pts[i];
 		snprintf(str, sizeof(str), "%ld", a);
-		Descr->Data->input_string[Descr->Data->nb_inputs].append(str);
+		Descr->Data->input_string[Descr->Data->nb_inputs] += str;
 		if (i < SO->nb_pts - 1) {
-			Descr->Data->input_string[Descr->Data->nb_inputs].append(",");
+			Descr->Data->input_string[Descr->Data->nb_inputs] += ",";
 		}
 	}
-	Descr->Data->input_string2[Descr->Data->nb_inputs].assign("");
+	Descr->Data->input_string2[Descr->Data->nb_inputs] = "";
 	Descr->Data->nb_inputs++;
 
 	if (f_v) {
@@ -3043,8 +3042,7 @@ void surface_create::export_something(
 
 	string fname_base;
 
-	fname_base.assign("surface_");
-	fname_base.append(label_txt);
+	fname_base = "surface_" + label_txt;
 
 	if (f_v) {
 		cout << "surface_create::export_something "
@@ -3778,29 +3776,19 @@ void surface_create::all_quartic_curves(int verbose_level)
 	string surface_label_tex;
 
 
-	surface_prefix.assign("surface_");
-	surface_prefix.append(label_txt);
+	surface_prefix = "surface_" + label_txt;
 
-	surface_label.assign("surface_");
-	surface_label.append(label_txt);
-	surface_label.append("_quartics");
+	surface_label = "surface_" + label_txt + "_quartics";
 
 
-	fname_tex.assign(surface_label);
-	fname_tex.append(".tex");
+	fname_tex = surface_label + ".tex";
 
 
 
-	//fname_quartics.assign(label);
-	//fname_quartics.append(".csv");
 
+	surface_label_tex = "surface_" + label_tex;
 
-	surface_label_tex.assign("surface_");
-	surface_label_tex.append(label_tex);
-
-	fname_mask.assign("surface_");
-	fname_mask.append(prefix);
-	fname_mask.append("_orbit_%d");
+	fname_mask = "surface_" + prefix + "_orbit_%d";
 
 	if (f_v) {
 		cout << "surface_create::all_quartic_curves "
@@ -3859,13 +3847,10 @@ void surface_create::export_all_quartic_curves(int verbose_level)
 	string surface_label;
 
 
-	surface_label.assign("surface_");
-	surface_label.append(label_txt);
-	surface_label.append("_quartics");
+	surface_label = "surface_" + label_txt + "_quartics";
 
 
-	fname_curves.assign(surface_label);
-	fname_curves.append(".csv");
+	fname_curves = surface_label + ".csv";
 
 
 	if (f_v) {

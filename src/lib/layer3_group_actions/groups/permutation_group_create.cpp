@@ -158,32 +158,10 @@ void permutation_group_create::permutation_group_init(
 		long int *given_base;
 		int given_base_length;
 
-#if 0
-		int *gens;
-		int *gens_i;
-		int sz;
-		int h;
-
-		gens = NEW_int(Descr->bsgs_nb_generators * Descr->degree);
-		for (h = 0; h < Descr->bsgs_nb_generators; h++) {
-
-			Orbiter->Int_vec.scan(Descr->bsgs_generators[h], gens_i, sz);
-			if (sz != Descr->degree) {
-				cout << "permutation_group_create::permutation_group_init generator "
-						<< h << " does not have the right length" << endl;
-				exit(1);
-			}
-			Orbiter->Int_vec.copy(gens_i, gens + h * Descr->degree, Descr->degree);
-
-			FREE_int(gens_i);
-
-		}
-#else
 		int *gens;
 		int sz;
 
 		Get_int_vector_from_label(Descr->bsgs_generators, gens, sz, verbose_level);
-#endif
 
 		int f_no_base = false;
 
@@ -241,7 +219,8 @@ void permutation_group_create::permutation_group_init(
 
 	if (!f_OK) {
 		if (f_v) {
-			cout << "permutation_group_create::permutation_group_init !f_OK, A2 = A_initial" << endl;
+			cout << "permutation_group_create::permutation_group_init "
+					"!f_OK, A2 = A_initial" << endl;
 		}
 		A2 = A_initial;
 		f_has_strong_generators = true;
@@ -321,17 +300,10 @@ void permutation_group_create::init_subgroup_by_generators(
 
 
 
-	label.append("_Subgroup_");
-	label.append(subgroup_label);
-	label.append("_");
-	label.append(subgroup_order_text);
+	label += "_Subgroup_" + subgroup_label + "_" + subgroup_order_text;
 
 
-	label_tex.append("{\\rm Subgroup ");
-	label_tex.append(str.str());
-	label_tex.append(" order ");
-	label_tex.append(subgroup_order_text);
-	label_tex.append("}");
+	label_tex += "{\\rm Subgroup " + str.str() + " order " + subgroup_order_text + "}";
 
 	if (f_v) {
 		cout << "permutation_group_create::init_subgroup_by_generators "

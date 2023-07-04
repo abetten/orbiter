@@ -335,7 +335,7 @@ void os_interface::get_string_from_command_line(std::string &p, int argc, std::s
 				i++;
 				break;
 			}
-			p.append(argv[i]);
+			p += argv[i];
 			i++;
 		}
 	}

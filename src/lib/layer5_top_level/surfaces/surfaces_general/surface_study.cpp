@@ -366,11 +366,9 @@ void surface_study::study_intersection_points(int verbose_level)
 	string fname_intersection_pts;
 	string fname_intersection_pts_tex;
 
-	fname_intersection_pts.assign(prefix);
-	fname_intersection_pts.append("_intersection_points0.csv");
+	fname_intersection_pts = prefix + "_intersection_points0.csv";
 
-	fname_intersection_pts_tex.assign(prefix);
-	fname_intersection_pts_tex.append("_intersection_points0.tex");
+	fname_intersection_pts_tex = prefix + "_intersection_points0.tex";
 
 
 	Fio.lint_matrix_write_csv(fname_intersection_pts,
@@ -711,11 +709,9 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 		string fname_intersection_pts_tex;
 
 
-		fname_intersection_pts.append(prefix);
-		fname_intersection_pts.append("_intersection_points.csv");
+		fname_intersection_pts = prefix + "_intersection_points.csv";
 
-		fname_intersection_pts_tex.append(prefix);
-		fname_intersection_pts_tex.append("_intersection_points.tex");
+		fname_intersection_pts_tex = prefix + "_intersection_points.tex";
 
 		Fio.lint_matrix_write_csv(fname_intersection_pts,
 				Intersection_pt, SaS->sz, SaS->sz);

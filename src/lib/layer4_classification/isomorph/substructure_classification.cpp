@@ -123,10 +123,8 @@ void substructure_classification::read_data_files_for_starter(int level,
 		cout << "level=" << level << endl;
 	}
 
-	fname_base_a.assign(prefix);
-	fname_base_a.append("a");
-	fname_base_b.assign(prefix);
-	fname_base_b.append("b");
+	fname_base_a = prefix + "a";
+	fname_base_b = prefix + "b";
 
 	if (gen->has_base_case()) {
 		i0 = gen->get_Base_case()->size;

@@ -3040,8 +3040,7 @@ void incidence_structure::compute_tdo(
 	}
 
 	if (f_write_tdo_files) {
-		fname.assign(label);
-		fname.append("_tdo_scheme.tex");
+		fname = label + "_tdo_scheme.tex";
 		{
 			ofstream fp(fname);
 
@@ -3055,8 +3054,7 @@ void incidence_structure::compute_tdo(
 					<< Fio.file_size(fname) << endl;
 		}
 
-		fname.assign(label);
-		fname.append("_tdo.tex");
+		fname = label + "_tdo.tex";
 		{
 			ofstream fp(fname);
 
@@ -3258,14 +3256,11 @@ void incidence_structure::compute_tdo_stepwise(
 	}
 
 	if (f_write_tdo_files) {
-		fname.assign(label);
-		fname.append("_tdo.tex");
+		fname = label + "_tdo.tex";
 
-		fname_pic.assign(label);
-		fname_pic.append("_tdo_pic.tex");
+		fname_pic = label + "_tdo_pic.tex";
 
-		fname_scheme.assign(label);
-		fname_scheme.append("_tdo_scheme.tex");
+		fname_scheme = label + "_tdo_scheme.tex";
 
 		{
 			ofstream fp(fname);

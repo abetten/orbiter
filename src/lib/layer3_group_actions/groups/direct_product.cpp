@@ -127,13 +127,8 @@ void direct_product::init(
 	q1 = F1->q;
 	q2 = F2->q;
 
-	label.assign(M1->label);
-	label.append("_");
-	label.append(M2->label);
-	label.append("_product");
-	label_tex.assign(M1->label_tex);
-	label_tex.append(" \\times ");
-	label_tex.append(M2->label_tex);
+	label = M1->label + "_" + M2->label + "_product";
+	label_tex = M1->label_tex + " \\times " + M2->label_tex;
 
 	degree_of_matrix_group1 = M1->degree;
 	dimension_of_matrix_group1 = M1->n;

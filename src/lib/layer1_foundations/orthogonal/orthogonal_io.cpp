@@ -803,8 +803,7 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 
 void orthogonal::make_fname_incidence_matrix_csv(std::string &fname)
 {
-	fname.assign(Quadratic_form->label_txt);
-	fname.append("_incidence_matrix.csv");
+	fname = Quadratic_form->label_txt + "_incidence_matrix.csv";
 }
 
 
@@ -821,8 +820,9 @@ void orthogonal::report_point_set(
 
 	{
 		string fname_report;
-		fname_report.assign(label_txt);
-		fname_report.append("_set_report.tex");
+
+		fname_report = label_txt + "_set_report.tex";
+
 		l1_interfaces::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
 
@@ -874,8 +874,9 @@ void orthogonal::report_line_set(
 
 	{
 		string fname_report;
-		fname_report.assign(label_txt);
-		fname_report.append("_set_of_lines_report.tex");
+
+		fname_report = label_txt+ "_set_of_lines_report.tex";
+
 		l1_interfaces::latex_interface L;
 		orbiter_kernel_system::file_io Fio;
 

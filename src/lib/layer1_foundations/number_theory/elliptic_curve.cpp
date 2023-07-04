@@ -373,8 +373,7 @@ void elliptic_curve::draw_grid(
 	if (f_v) {
 		cout << "draw_grid" << endl;
 	}
-	fname_full.assign(fname);
-	fname_full.append(".mp");
+	fname_full = fname + ".mp";
 
 	{
 

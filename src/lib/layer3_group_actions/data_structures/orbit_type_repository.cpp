@@ -245,14 +245,13 @@ void orbit_type_repository::create_latex_report(
 	if (f_v) {
 		cout << "orbit_type_repository::create_latex_report" << endl;
 	}
-	fname_tex.assign(prefix);
-	fname_tex.append("_orbit_types_report.tex");
+	fname_tex = prefix + "_orbit_types_report.tex";
 
 	{
 
 		string title, author, extra_praeamble;
 
-		title.assign("Orbits");
+		title = "Orbits";
 
 
 		{

@@ -79,7 +79,8 @@ int algorithms::hashing_fixed_width(int hash0, int a, int bit_length)
 	return h;
 }
 
-void algorithms::uchar_print_bitwise(std::ostream &ost, unsigned char u)
+void algorithms::uchar_print_bitwise(
+		std::ostream &ost, unsigned char u)
 {
 	uchar mask;
 	int i;
@@ -95,7 +96,8 @@ void algorithms::uchar_print_bitwise(std::ostream &ost, unsigned char u)
 	}
 }
 
-void algorithms::uchar_move(const unsigned char *p, unsigned char *q, int len)
+void algorithms::uchar_move(
+		const unsigned char *p, unsigned char *q, int len)
 {
 	int i;
 
@@ -104,7 +106,8 @@ void algorithms::uchar_move(const unsigned char *p, unsigned char *q, int len)
 	}
 }
 
-void algorithms::uchar_expand_4(const unsigned char *p, unsigned char *q, int len)
+void algorithms::uchar_expand_4(
+		const unsigned char *p, unsigned char *q, int len)
 {
 	int i;
 	uchar a, b;
@@ -122,7 +125,8 @@ void algorithms::uchar_expand_4(const unsigned char *p, unsigned char *q, int le
 	}
 }
 
-void algorithms::uchar_compress_4(const unsigned char *p, unsigned char *q, int len)
+void algorithms::uchar_compress_4(
+		const unsigned char *p, unsigned char *q, int len)
 {
 	int i, i_half;
 	int f_v = false;
@@ -167,7 +171,8 @@ void algorithms::uchar_zero(unsigned char *p, int len)
 	}
 }
 
-void algorithms::uchar_xor(unsigned char *in1, unsigned char *in2, unsigned char *out, int len)
+void algorithms::uchar_xor(
+		unsigned char *in1, unsigned char *in2, unsigned char *out, int len)
 {
 	int i;
 
@@ -176,7 +181,8 @@ void algorithms::uchar_xor(unsigned char *in1, unsigned char *in2, unsigned char
 	}
 }
 
-int algorithms::uchar_compare(unsigned char *in1, unsigned char *in2, int len)
+int algorithms::uchar_compare(
+		unsigned char *in1, unsigned char *in2, int len)
 {
 	int i;
 
@@ -248,7 +254,7 @@ void algorithms::print_hex(std::ostream &ost, unsigned char *p, int len)
 	int i, j, h, a, low, high;
 	int nb_rows;
 
-	nb_rows = (len + 15) / 16;
+	nb_rows = (len + 15) / 16; // 16 per row
 
 	for (i = 0; i < nb_rows; i++) {
 		print_uint32_hex(ost, i * 16);
@@ -266,6 +272,34 @@ void algorithms::print_hex(std::ostream &ost, unsigned char *p, int len)
 		cout << endl;
 	}
 }
+
+void algorithms::print_binary(std::ostream &ost, unsigned char *p, int len)
+{
+	int i, j, h, a, low;
+	int nb_rows;
+	int bits[8];
+
+	nb_rows = (len + 3) / 4; // 4 per row
+
+	for (i = 0; i < nb_rows; i++) {
+		ost << setw(10) << (i * 4) << " ";
+		//print_uint32_hex(ost, i * 4);
+		for (h = 0; h < 4; h++) {
+			ost << " ";
+			a = (int) p[i * 4 + h];
+			for (j = 0; j < 8; j++) {
+				low = a % 2;
+				a >>= 1;
+				bits[j] = low;
+			}
+			for (j = 7; j >= 0; j--) {
+				ost << bits[j];
+			}
+		}
+		cout << endl;
+	}
+}
+
 
 
 void algorithms::print_uint32_binary(std::ostream &ost, uint32_t val)
@@ -425,12 +459,14 @@ void algorithms::solve_diophant(
 	int t0 = Os.os_ticks();
 
 	if (f_v) {
-		cout << "algorithms::solve_diophant nb_rows=" << nb_rows << " nb_cols="
-			<< nb_cols << " f_has_Rhs=" << f_has_Rhs
+		cout << "algorithms::solve_diophant "
+				"nb_rows=" << nb_rows
+				<< " nb_cols=" << nb_cols
+				<< " f_has_Rhs=" << f_has_Rhs
 			<< " verbose_level=" << verbose_level << endl;
 		cout << "f_DLX=" << f_DLX << endl;
 		//int_matrix_print(Inc, nb_rows, nb_cols);
-		}
+	}
 	Dio = NEW_OBJECT(solvers::diophant);
 
 	if (f_has_Rhs) {
@@ -603,7 +639,8 @@ void algorithms::union_of_sets(
 	long int *M;
 	int m, n;
 
-	Fio.lint_matrix_read_csv(fname_set_of_sets, M, m, n, verbose_level);
+	Fio.lint_matrix_read_csv(
+			fname_set_of_sets, M, m, n, verbose_level);
 
 	if (f_v) {
 		cout << "algorithms::union_of_sets "
@@ -624,7 +661,8 @@ void algorithms::union_of_sets(
 
 	if (f_v) {
 		cout << "algorithms::union_of_sets "
-				"the file " << fname_input << " contains " << nb_solutions << " solutions" << endl;
+				"the file " << fname_input
+				<< " contains " << nb_solutions << " solutions" << endl;
 	}
 
 
@@ -717,8 +755,7 @@ void algorithms::dot_product_of_columns(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(label);
-	fname.append("_dot_products_columns.csv");
+	fname = label + "_dot_products_columns.csv";
 
 	Fio.int_matrix_write_csv(fname, Dot_products,
 			n, n);
@@ -729,7 +766,8 @@ void algorithms::dot_product_of_columns(
 	}
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 
@@ -771,8 +809,7 @@ void algorithms::dot_product_of_rows(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(label);
-	fname.append("_dot_products_rows.csv");
+	fname = label + "_dot_products_rows.csv";
 
 	Fio.int_matrix_write_csv(fname, Dot_products,
 			m, m);
@@ -783,7 +820,8 @@ void algorithms::dot_product_of_rows(
 	}
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 
@@ -808,17 +846,20 @@ void algorithms::matrix_multiply_over_Z(
 	int m2, n2;
 
 	if (f_v) {
-		cout << "algorithms::matrix_multiply_over_Z get matrix " << label1 << endl;
+		cout << "algorithms::matrix_multiply_over_Z get "
+				"matrix " << label1 << endl;
 	}
 	Get_matrix(label1, A1, m1, n1);
 
 	if (f_v) {
-		cout << "algorithms::matrix_multiply_over_Z get matrix " << label2 << endl;
+		cout << "algorithms::matrix_multiply_over_Z get "
+				"matrix " << label2 << endl;
 	}
 	Get_matrix(label2, A2, m2, n2);
 
 	if (n1 != m2) {
-		cout << "algorithms::matrix_multiply_over_Z n1 != m2, cannot multiply" << endl;
+		cout << "algorithms::matrix_multiply_over_Z "
+				"n1 != m2, cannot multiply" << endl;
 		exit(1);
 	}
 	int *A3;
@@ -838,10 +879,7 @@ void algorithms::matrix_multiply_over_Z(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(label1);
-	fname.append("_times_");
-	fname.append(label2);
-	fname.append(".csv");
+	fname = label1 + "_times_" + label2 + ".csv";
 
 	Fio.int_matrix_write_csv(fname, A3,
 			m3, n3);
@@ -852,7 +890,8 @@ void algorithms::matrix_multiply_over_Z(
 	}
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 
@@ -910,9 +949,7 @@ void algorithms::matrix_rowspan_over_R(
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
-	fname.assign(label);
-	fname.append("_rref");
-	fname.append(".csv");
+	fname = label + "_rref" + ".csv";
 
 	Fio.double_matrix_write_csv(
 			fname, D, r, n);
@@ -926,7 +963,8 @@ void algorithms::matrix_rowspan_over_R(
 	}
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 

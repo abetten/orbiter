@@ -985,8 +985,7 @@ void colored_graph::draw_on_circle(
 	string fname_full;
 	orbiter_kernel_system::file_io Fio;
 	
-	fname_full.assign(fname);
-	fname_full.append(".mp");
+	fname_full = fname + ".mp";
 
 	{
 		graphics::mp_graphics G;
@@ -2430,9 +2429,9 @@ void colored_graph::all_cliques(
 	}
 	else {
 
-		fname_sol.assign(graph_label);
+		fname_sol = graph_label;
 		ST.chop_off_extension(fname_sol);
-		fname_sol.append("_sol");
+		fname_sol += "_sol";
 		//ST.replace_extension_with(fname_sol, "_sol.txt");
 	}
 	if (f_v) {
@@ -2449,11 +2448,8 @@ void colored_graph::all_cliques(
 		string fname_sol_txt;
 
 
-		fname_sol_csv.assign(fname_sol);
-		fname_sol_txt.assign(fname_sol);
-
-		fname_sol_csv.append(".csv");
-		fname_sol_txt.append(".txt");
+		fname_sol_csv = fname_sol + ".csv";
+		fname_sol_txt = fname_sol + ".txt";
 
 		ofstream fp(fname_sol_txt);
 		ofstream fp_csv(fname_sol_csv);

@@ -117,46 +117,29 @@ void substructure_lifting_data::init(isomorph *Iso, int verbose_level)
 
 	substructure_lifting_data::Iso = Iso;
 
-	fname_flag_orbits.assign(Iso->prefix);
-	fname_flag_orbits.append("_flag_orbits.csv");
+	fname_flag_orbits = Iso->prefix + "_flag_orbits.csv";
 
-	fname_stab_orbits.assign(Iso->prefix);
-	fname_stab_orbits.append("_stab_orbits.csv");
+	fname_stab_orbits = Iso->prefix + "_stab_orbits.csv";
 
 
-	fname_case_len.assign(Iso->prefix);
-	fname_case_len.append("_case_len.txt");
+	fname_case_len = Iso->prefix + "_case_len.txt";
 
 
-	fname_statistics.assign(Iso->prefix);
-	fname_statistics.append("_statistics.txt");
+	fname_statistics = Iso->prefix + "_statistics.txt";
 
 
-	fname_hash_and_datref.assign(Iso->prefix);
-	fname_hash_and_datref.append("_hash_and_datref.csv");
+	fname_hash_and_datref = Iso->prefix + "_hash_and_datref.csv";
 
 
 
-	fname_db1.assign(Iso->prefix);
-	fname_db1.append("_solutions.db");
+	fname_db1 = Iso->prefix + "_solutions.db";
+	fname_db2 = Iso->prefix + "_solutions_a.idx";
+	fname_db3 = Iso->prefix + "_solutions_b.idx";
+	fname_db4 = Iso->prefix + "_solutions_c.idx";
+	fname_db5 = Iso->prefix + "_solutions_d.idx";
 
 
-	fname_db2.assign(Iso->prefix);
-	fname_db2.append("_solutions_a.idx");
-
-
-	fname_db3.assign(Iso->prefix);
-	fname_db3.append("_solutions_b.idx");
-
-	fname_db4.assign(Iso->prefix);
-	fname_db4.append("_solutions_c.idx");
-
-	fname_db5.assign(Iso->prefix);
-	fname_db5.append("_solutions_d.idx");
-
-
-	fname_orbits_of_stabilizer_csv.assign(Iso->prefix);
-	fname_orbits_of_stabilizer_csv.append("_orbits_of_stabilizer.csv");
+	fname_orbits_of_stabilizer_csv = Iso->prefix + "_orbits_of_stabilizer.csv";
 
 
 
@@ -1905,9 +1888,9 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 		data_structures::string_tools ST;
 
 #if 0
-		fname_summary.assign(fname[i]);
+		fname_summary = fname[i];
 		ST.chop_off_extension_if_present(fname_summary, ".txt");
-		fname_summary.append("_summary.csv");
+		fname_summary += "_summary.csv";
 
 		Fio.count_number_of_solutions_in_file_by_case(fname[i],
 			nb_solutions, case_nb, nb_cases,

@@ -120,11 +120,9 @@ void del_pezzo_surface_of_degree_two_object::create_latex_report(std::string &la
 		string title;
 		string extra_praeamble;
 
-		fname.assign(label);
-		fname.append("_report.tex");
+		fname = label + "_report.tex";
 
-		title.assign("Del Pezzo Surface ");
-		title.append(label_tex);
+		title = "Del Pezzo Surface " + label_tex;
 
 
 

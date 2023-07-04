@@ -46,6 +46,7 @@ public:
 	void print_pointer_hex(std::ostream &ost, void *p);
 	void print_uint32_hex(std::ostream &ost, uint32_t val);
 	void print_hex(std::ostream &ost, unsigned char *p, int len);
+	void print_binary(std::ostream &ost, unsigned char *p, int len);
 	void print_uint32_binary(std::ostream &ost, uint32_t val);
 	void print_hex_digit(std::ostream &ost, int digit);
 	void print_bits(std::ostream &ost, char *data, int data_size);
@@ -442,11 +443,13 @@ public:
 	data_structures_global();
 	~data_structures_global();
 	void bitvector_m_ii(
-			uchar *bitvec, long int i, int a);
+			unsigned char *bitvec, long int i, int a);
 	void bitvector_set_bit(
-			uchar *bitvec, long int i);
+			unsigned char *bitvec, long int i);
+	void bitvector_set_bit_reversed(
+			unsigned char *bitvec, long int i);
 	int bitvector_s_i(
-			uchar *bitvec, long int i);
+			unsigned char *bitvec, long int i);
 	uint32_t int_vec_hash(
 			int *data, int len);
 	uint64_t lint_vec_hash(

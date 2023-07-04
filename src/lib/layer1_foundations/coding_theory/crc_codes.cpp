@@ -993,7 +993,7 @@ void crc_codes::introduce_errors(
 #if 1
 	fname_error.assign(Crc_options_description->output_fname);
 	ST.chop_off_extension(fname_error);
-	fname_error.append("_pattern.csv");
+	fname_error += "_pattern.csv";
 #endif
 
 	int block_length;
@@ -1611,17 +1611,17 @@ void crc_codes::check_errors(
 	//int information_length = block_length - 4;
 
 
-	fname_coded.assign(Crc_options_description->input_fname);
-	fname_recovered.assign(Crc_options_description->output_fname);
-	fname_error_log.assign(Crc_options_description->error_log_fname);
+	fname_coded = Crc_options_description->input_fname;
+	fname_recovered = Crc_options_description->output_fname;
+	fname_error_log = Crc_options_description->error_log_fname;
 
-	fname_error_detected.assign(Crc_options_description->input_fname);
+	fname_error_detected = Crc_options_description->input_fname;
 	ST.chop_off_extension(fname_error_detected);
-	fname_error_detected.append("_err_detected.csv");
+	fname_error_detected += "_err_detected.csv";
 
-	fname_error_undetected.assign(Crc_options_description->input_fname);
+	fname_error_undetected = Crc_options_description->input_fname;
 	ST.chop_off_extension(fname_error_undetected);
-	fname_error_undetected.append("_err_undetected.csv");
+	fname_error_undetected += "_err_undetected.csv";
 
 	orbiter_kernel_system::file_io Fio;
 
@@ -1943,17 +1943,17 @@ void crc_codes::extract_block(
 	//int information_length = block_length - 4;
 
 
-	fname_coded.assign(Crc_options_description->input_fname);
-	fname_out.assign(Crc_options_description->output_fname);
-	fname_error_log.assign(Crc_options_description->error_log_fname);
+	fname_coded = Crc_options_description->input_fname;
+	fname_out = Crc_options_description->output_fname;
+	fname_error_log = Crc_options_description->error_log_fname;
 
-	fname_error_detected.assign(Crc_options_description->input_fname);
+	fname_error_detected = Crc_options_description->input_fname;
 	ST.chop_off_extension(fname_error_detected);
-	fname_error_detected.append("_err_detected.csv");
+	fname_error_detected += "_err_detected.csv";
 
-	fname_error_undetected.assign(Crc_options_description->input_fname);
+	fname_error_undetected = Crc_options_description->input_fname;
 	ST.chop_off_extension(fname_error_undetected);
-	fname_error_undetected.append("_err_undetected.csv");
+	fname_error_undetected += "_err_undetected.csv";
 
 	orbiter_kernel_system::file_io Fio;
 

@@ -126,8 +126,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 		orbiter_kernel_system::file_io Fio;
 		string fname;
 
-		fname.assign(fname_base);
-		fname.append("_incma_transitive.csv");
+		fname = fname_base + "_incma_transitive.csv";
 
 		PA->P->Subspaces->make_incidence_matrix(Orb1, Orb2, Inc, verbose_level);
 
@@ -436,8 +435,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 		orbiter_kernel_system::file_io Fio;
 		string fname;
 
-		fname.assign(fname_base);
-		fname.append("_incma_cyclic.csv");
+		fname = fname_base + "_incma_cyclic.csv";
 
 		PA->P->Subspaces->make_incidence_matrix(Orb1, Orb2, Inc, verbose_level);
 
