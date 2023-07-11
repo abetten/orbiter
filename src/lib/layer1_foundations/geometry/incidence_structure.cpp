@@ -2395,16 +2395,14 @@ void incidence_structure::get_and_print_column_tactical_decomposition_scheme_tex
 	int f_v = false;
 	
 	if (f_v) {
-		cout << "incidence_structure::get_and_print_column_"
-				"tactical_decomposition_scheme_tex computing "
-				"column scheme" << endl;
+		cout << "incidence_structure::get_and_print_column_tactical_decomposition_scheme_tex "
+				"computing column scheme" << endl;
 	}
 	PStack.allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
 		verbose_level);
 	
-	//row_scheme = NEW_int(nb_row_classes * nb_col_classes);
 	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
 
 	get_col_decomposition_scheme(PStack, 
@@ -2423,7 +2421,6 @@ void incidence_structure::get_and_print_column_tactical_decomposition_scheme_tex
 	FREE_int(row_class_inv);
 	FREE_int(col_classes);
 	FREE_int(col_class_inv);
-	//FREE_int(row_scheme);
 	FREE_int(col_scheme);
 }
 

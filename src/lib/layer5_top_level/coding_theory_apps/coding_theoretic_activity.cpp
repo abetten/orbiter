@@ -910,9 +910,12 @@ void coding_theoretic_activity::perform_activity(int verbose_level)
 					"before Codes.crc_weight_enumerator_bottom_up" << endl;
 		}
 
+		int f_collect_words = true;
+
 		Codes.crc_weight_enumerator_bottom_up(
 				CRC1,
 				Descr->weight_enumerator_bottom_up_max_weight,
+				f_collect_words,
 				verbose_level - 1);
 
 		if (f_v) {

@@ -2814,19 +2814,19 @@ void combinatorics_domain::do_tdo_print(
 		if (f.eof()) {
 			cout << "eof reached" << endl;
 			break;
-			}
+		}
 		if (f_widor) {
 			if (!GP.input(f)) {
 				//cout << "GP.input returns false" << endl;
 				break;
-				}
 			}
+		}
 		else {
 			if (!GP.input_mode_stack(f, verbose_level - 1)) {
 				//cout << "GP.input_mode_stack returns false" << endl;
 				break;
-				}
 			}
+		}
 		//if (f_v) {
 			//cout << "read decomposition " << cnt << endl;
 			//}
@@ -2835,30 +2835,32 @@ void combinatorics_domain::do_tdo_print(
 
 		if (!f_doit) {
 			continue;
-			}
+		}
 		//cout << "before convert_single_to_stack" << endl;
 		//GP.convert_single_to_stack();
 		//cout << "after convert_single_to_stack" << endl;
 		//GP.write(g, label);
 		if (f_vv) {
-			cout << "before init_tdo_scheme" << endl;
-			}
+			cout << "combinatorics_domain::do_tdo_print "
+					"before init_tdo_scheme" << endl;
+		}
 		GP.init_tdo_scheme(G, verbose_level - 1);
 		if (f_vv) {
-			cout << "after init_tdo_scheme" << endl;
-			}
+			cout << "combinatorics_domain::do_tdo_print "
+					"after init_tdo_scheme" << endl;
+		}
 		GP.print_schemes(G);
 
 #if 0
 		if (f_C) {
 			GP.print_C_source();
-			}
+		}
 #endif
 		if (true /* f_tex */) {
 			GP.print_scheme_tex(cout, G, ROW_SCHEME);
 			GP.print_scheme_tex(cout, G, COL_SCHEME);
-			}
 		}
+	}
 
 
 	if (f_v) {
@@ -3308,6 +3310,32 @@ void combinatorics_domain::compute_incidence_matrix(
 	}
 }
 
+void combinatorics_domain::compute_incidence_matrix_from_blocks(
+		int v, int b, int k, int *Blocks,
+		int *&M, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_incidence_matrix" << endl;
+	}
+	int i, j, h;
+
+	M = NEW_int(v * b);
+	Int_vec_zero(M, v * b);
+	for (j = 0; j < b; j++) {
+		for (h = 0; h < k; h++) {
+			i = Blocks[j * k + h];
+			M[i * b + j] = 1;
+		}
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_incidence_matrix done" << endl;
+	}
+}
+
+
 void combinatorics_domain::compute_incidence_matrix_from_sets(
 		int v, int b, long int *Sets_coded,
 		int *&M,
@@ -3331,7 +3359,8 @@ void combinatorics_domain::compute_incidence_matrix_from_sets(
 	for (j = 0; j < b; j++) {
 		Gg.AG_element_unrank(2, word, 1, v, Sets_coded[j]);
 		if (f_v) {
-			cout << "combinatorics_domain::compute_incidence_matrix j=" << j << " coded set = " << Sets_coded[j];
+			cout << "combinatorics_domain::compute_incidence_matrix "
+					"j=" << j << " coded set = " << Sets_coded[j];
 			Int_vec_print(cout, word, v);
 			cout << endl;
 		}
@@ -3374,6 +3403,12 @@ void combinatorics_domain::compute_blocks_from_coding(
 	Int_vec_zero(Blocks, b * k);
 	for (j = 0; j < b; j++) {
 		unrank_k_subset(Blocks_coded[j], Blocks + j * k, v, k);
+		if (f_v) {
+			cout << "block " << j << " : ";
+			Int_vec_print(cout, Blocks + j * k, k);
+			cout << endl;
+		}
+
 	}
 
 	if (f_v) {

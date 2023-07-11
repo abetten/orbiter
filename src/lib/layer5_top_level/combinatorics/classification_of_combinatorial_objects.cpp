@@ -1,0 +1,408 @@
+/*
+ * classification_of_combinatorial_objects.cpp
+ *
+ *  Created on: Jul 9, 2023
+ *      Author: betten
+ */
+
+
+
+
+#include "orbiter.h"
+
+using namespace std;
+
+namespace orbiter {
+namespace layer5_applications {
+namespace apps_combinatorics {
+
+
+
+
+classification_of_combinatorial_objects::classification_of_combinatorial_objects()
+{
+	//std::string prefix;
+
+	CO = NULL;
+
+	OwP = NULL; // [CO->nb_orbits]
+
+	f_projective_space = false;
+	PA = NULL;
+
+}
+
+classification_of_combinatorial_objects::~classification_of_combinatorial_objects()
+{
+}
+
+
+void classification_of_combinatorial_objects::init_after_nauty(
+		std::string &prefix,
+		combinatorics::classification_of_objects *CO,
+		int f_projective_space,
+		projective_geometry::projective_space_with_action *PA,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::init_after_nauty" << endl;
+	}
+
+	classification_of_combinatorial_objects::prefix = prefix;
+	classification_of_combinatorial_objects::CO = CO;
+	classification_of_combinatorial_objects::f_projective_space = f_projective_space;
+	classification_of_combinatorial_objects::PA = PA;
+
+	OwP = NEW_OBJECTS(object_with_properties, CO->nb_orbits);
+
+	int iso_type;
+
+
+	for (iso_type = 0; iso_type < CO->nb_orbits; iso_type++) {
+
+		if (f_v) {
+			cout << "classification_of_combinatorial_objects::init_after_nauty "
+					"iso_type = " << iso_type << " / " << CO->nb_orbits << endl;
+			cout << "NO=" << endl;
+			//CO->NO_transversal[iso_type]->print();
+		}
+
+		std::string label;
+
+		label = prefix + "_object" + std::to_string(iso_type);
+
+		if (f_v) {
+			cout << "classification_of_combinatorial_objects::init_after_nauty "
+					"before OwP[iso_type].init" << endl;
+		}
+		OwP[iso_type].init(
+				CO->OWCF_transversal[iso_type],
+				CO->NO_transversal[iso_type],
+				f_projective_space, PA,
+				CO->Descr->max_TDO_depth,
+				label,
+				verbose_level);
+		if (f_v) {
+			cout << "classification_of_combinatorial_objects::init_after_nauty "
+					"after OwP[iso_type].init" << endl;
+		}
+
+
+	}
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::init_after_nauty done" << endl;
+	}
+}
+
+
+void classification_of_combinatorial_objects::classification_report(
+		combinatorics::classification_of_objects_report_options
+					*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::classification_report" << endl;
+	}
+
+
+	if (CO->Descr->f_classification_prefix == false) {
+		cout << "please use option -classification_prefix <prefix> to set the "
+				"prefix for the output file" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::classification_report "
+				"before latex_report" << endl;
+	}
+	latex_report(Report_options,
+			verbose_level);
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::classification_report "
+				"after latex_report" << endl;
+	}
+
+}
+
+void classification_of_combinatorial_objects::latex_report(
+		combinatorics::classification_of_objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+	l1_interfaces::latex_interface L;
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::latex_report" << endl;
+	}
+
+
+
+	string fname;
+
+	fname = Report_options->prefix + "_classification.tex";
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::classification_report "
+				"before latex_report" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::latex_report, "
+				"CB->nb_types=" << CO->CB->nb_types << endl;
+	}
+	{
+		ofstream ost(fname);
+		l1_interfaces::latex_interface L;
+
+		L.head_easy(ost);
+
+
+		CO->report_summary_of_orbits(ost, verbose_level);
+
+
+		ost << "Ago : ";
+		CO->T_Ago->print_file_tex(ost, false /* f_backwards*/);
+		ost << "\\\\" << endl;
+
+		if (f_v) {
+			cout << "classification_of_combinatorial_objects::latex_report before loop" << endl;
+		}
+
+		report_all_isomorphism_types(
+				ost, Report_options,
+				verbose_level);
+
+		L.foot(ost);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	//FREE_int(perm);
+	//FREE_int(v);
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::latex_report done" << endl;
+	}
+}
+
+void classification_of_combinatorial_objects::report_all_isomorphism_types(
+		std::ostream &ost,
+		combinatorics::classification_of_objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::report_all_isomorphism_types" << endl;
+	}
+	int i;
+
+	l1_interfaces::latex_interface L;
+
+	for (i = 0; i < CO->CB->nb_types; i++) {
+
+		ost << "\\section*{Isomorphism type " << i << " / " << CO->CB->nb_types << "}" << endl;
+		ost << "Isomorphism type " << i << " / " << CO->CB->nb_types
+			//<<  " stored at " << j
+			<< " is original object "
+			<< CO->CB->Type_rep[i] << " and appears "
+			<< CO->CB->Type_mult[i] << " times: \\\\" << endl;
+
+		{
+			data_structures::sorting Sorting;
+			int *Input_objects;
+			int nb_input_objects;
+			CO->CB->C_type_of->get_class_by_value(Input_objects,
+					nb_input_objects, i, 0 /*verbose_level */);
+			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
+
+			ost << "This isomorphism type appears " << nb_input_objects
+					<< " times, namely for the following "
+					<< nb_input_objects << " input objects: " << endl;
+			if (nb_input_objects < 10) {
+				ost << "$" << endl;
+				L.int_set_print_tex(
+						ost, Input_objects, nb_input_objects);
+				ost << "$\\\\" << endl;
+			}
+			else {
+				ost << "Too big to print. \\\\" << endl;
+#if 0
+				fp << "$$" << endl;
+				L.int_vec_print_as_matrix(fp, Input_objects,
+					nb_input_objects, 10 /* width */, true /* f_tex */);
+				fp << "$$" << endl;
+#endif
+			}
+
+			FREE_int(Input_objects);
+		}
+
+		if (f_v) {
+			cout << "classification_of_combinatorial_objects::report_all_isomorphism_types "
+					"before report_isomorphism_type" << endl;
+		}
+		report_isomorphism_type(
+				ost, Report_options, i, verbose_level);
+		if (f_v) {
+			cout << "classification_of_combinatorial_objects::report_all_isomorphism_types "
+					"after report_isomorphism_type" << endl;
+		}
+
+
+	} // next i
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::report_all_isomorphism_types done" << endl;
+	}
+
+}
+
+
+void classification_of_combinatorial_objects::report_isomorphism_type(
+		std::ostream &ost,
+		combinatorics::classification_of_objects_report_options
+			*Report_options,
+		int i, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::report_isomorphism_type "
+				"i=" << i << endl;
+	}
+	int j;
+	l1_interfaces::latex_interface L;
+
+	//j = CB->perm[i];
+	//j = CB->Type_rep[i];
+	j = i;
+
+	cout << "###################################################"
+			"#############################" << endl;
+	cout << "Orbit " << i << " / " << CO->CB->nb_types
+			<< " is canonical form no " << j
+			<< ", original object no " << CO->CB->Type_rep[i]
+			<< ", frequency " << CO->CB->Type_mult[i]
+			<< " : " << endl;
+
+
+	{
+		int *Input_objects;
+		int nb_input_objects;
+		CO->CB->C_type_of->get_class_by_value(Input_objects,
+			nb_input_objects, j, 0 /*verbose_level */);
+
+		cout << "This isomorphism type appears " << nb_input_objects
+				<< " times, namely for the following "
+						"input objects:" << endl;
+		if (nb_input_objects < 10) {
+			L.int_vec_print_as_matrix(cout, Input_objects,
+					nb_input_objects, 10 /* width */,
+					false /* f_tex */);
+		}
+		else {
+			cout << "too many to print" << endl;
+		}
+
+		FREE_int(Input_objects);
+	}
+
+
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::report_isomorphism_type "
+				"i=" << i << " before report_object" << endl;
+	}
+	report_object(ost,
+			Report_options,
+			i /* object_idx */,
+			verbose_level);
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::report_isomorphism_type "
+				"i=" << i << " after report_object" << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::report_isomorphism_type "
+				"i=" << i << " done" << endl;
+	}
+}
+
+void classification_of_combinatorial_objects::report_object(
+		std::ostream &ost,
+		combinatorics::classification_of_objects_report_options
+			*Report_options,
+		int object_idx,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::report_object "
+				"object_idx=" << object_idx << endl;
+	}
+
+
+	geometry::object_with_canonical_form *OwCF = CO->OWCF_transversal[object_idx];
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::report_object "
+				"before OwCF->print_tex_detailed" << endl;
+	}
+	OwCF->print_tex_detailed(ost,
+			Report_options->f_show_incidence_matrices,
+			verbose_level);
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::report_object "
+				"after OwCF->print_tex_detailed" << endl;
+	}
+
+	if (false /*CO->f_projective_space*/) {
+
+#if 0
+		object_in_projective_space_with_action *OiPA;
+
+		OiPA = (object_in_projective_space_with_action *)
+				CB->Type_extra_data[object_idx];
+
+		OiPA->report(fp, PA, max_TDO_depth, verbose_level);
+#endif
+
+	}
+	else {
+		if (f_v) {
+			cout << "classification_of_combinatorial_objects::report_object "
+					"before OwP[object_idx].latex_report" << endl;
+		}
+		OwP[object_idx].latex_report(ost,
+				Report_options, verbose_level);
+		if (f_v) {
+			cout << "classification_of_combinatorial_objects::report_object "
+					"after OwP[object_idx].latex_report" << endl;
+		}
+	}
+
+
+
+}
+
+
+}}}
+
+

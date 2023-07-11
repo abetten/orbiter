@@ -331,16 +331,17 @@ public:
 		int verbose_level);
 	// returns f_found, which is true if the object is already in the list
 	void report_summary_of_orbits(
-			std::ostream &fp, int verbose_level);
+			std::ostream &ost, int verbose_level);
 	void report_all_isomorphism_types(
-			std::ostream &fp, int max_TDO_depth,
+			std::ostream &ost, int max_TDO_depth,
 			int f_show_incma,
 			int verbose_level);
 	void report_isomorphism_type(
-			std::ostream &fp, int i, int max_TDO_depth,
+			std::ostream &ost, int i, int max_TDO_depth,
 			int f_show_incma,
 			int verbose_level);
-	void report_object(std::ostream &fp,
+	void report_object(
+			std::ostream &ost,
 			geometry::object_with_canonical_form *OwCF,
 			int object_idx,
 			int max_TDO_depth,
@@ -556,6 +557,9 @@ public:
 	void compute_incidence_matrix(
 			int v, int b, int k, long int *Blocks_coded,
 			int *&M, int verbose_level);
+	void compute_incidence_matrix_from_blocks(
+			int v, int b, int k, int *Blocks,
+			int *&M, int verbose_level);
 	void compute_incidence_matrix_from_sets(
 			int v, int b, long int *Sets_coded,
 			int *&M,
@@ -741,7 +745,7 @@ public:
 class encoded_combinatorial_object {
 
 private:
-	int *Incma;
+	int *Incma; // [nb_rows * nb_cols]
 
 public:
 	int nb_rows0;
@@ -764,6 +768,12 @@ public:
 	void init_everything(
 			int nb_rows, int nb_cols,
 			int *Incma, int *partition,
+			int verbose_level);
+	void init_with_matrix(
+			int nb_rows, int nb_cols, int *incma,
+			int verbose_level);
+	void init_row_and_col_partition(
+			int *V, int nb_V, int *B, int nb_B,
 			int verbose_level);
 	void init(
 			int nb_rows, int nb_cols,

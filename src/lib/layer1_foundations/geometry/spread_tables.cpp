@@ -19,7 +19,8 @@ namespace layer1_foundations {
 namespace geometry {
 
 
-static int spread_table_compare_func(void *a, void *b, void *data);
+static int spread_table_compare_func(
+		void *a, void *b, void *data);
 
 
 spread_tables::spread_tables()
@@ -89,7 +90,8 @@ spread_tables::~spread_tables()
 	}
 }
 
-void spread_tables::init(projective_space *P,
+void spread_tables::init(
+		projective_space *P,
 		int f_load,
 		int nb_iso_types_of_spreads,
 		std::string &path_to_spread_tables,
@@ -177,7 +179,8 @@ void spread_tables::create_file_names(int verbose_level)
 
 }
 
-void spread_tables::init_spread_table(int nb_spreads,
+void spread_tables::init_spread_table(
+		int nb_spreads,
 		long int *spread_table, int *spread_iso_type,
 		int verbose_level)
 {
@@ -194,7 +197,8 @@ void spread_tables::init_spread_table(int nb_spreads,
 	}
 }
 
-void spread_tables::init_tables(int nb_spreads,
+void spread_tables::init_tables(
+		int nb_spreads,
 		long int *spread_table, int *spread_iso_type,
 		long int *dual_spread_idx,
 		long int *self_dual_spreads, int nb_self_dual_spreads,
@@ -216,7 +220,8 @@ void spread_tables::init_tables(int nb_spreads,
 	}
 }
 
-void spread_tables::init_schreier_table(int *schreier_table,
+void spread_tables::init_schreier_table(
+		int *schreier_table,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -349,7 +354,8 @@ long int *spread_tables::get_spread(int spread_idx)
 	return spread_table + spread_idx * spread_size;
 }
 
-void spread_tables::find_spreads_containing_two_lines(std::vector<int> &v,
+void spread_tables::find_spreads_containing_two_lines(
+		std::vector<int> &v,
 		int line1, int line2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -390,7 +396,8 @@ void spread_tables::find_spreads_containing_two_lines(std::vector<int> &v,
 	}
 }
 
-void spread_tables::classify_self_dual_spreads(int *&type,
+void spread_tables::classify_self_dual_spreads(
+		int *&type,
 		data_structures::set_of_sets *&SoS,
 		int verbose_level)
 {
@@ -742,7 +749,8 @@ int spread_tables::test_if_spreads_are_disjoint(int a, int b)
 	return ret;
 }
 
-void spread_tables::compute_dual_spreads(long int **Sets,
+void spread_tables::compute_dual_spreads(
+		long int **Sets,
 		long int *&Dual_spread_idx,
 		long int *&self_dual_spread_idx,
 		int &nb_self_dual_spreads,
@@ -897,7 +905,9 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
 		for (j = i + 1; j < len; j++) {
 			b = set[j];
 			if (!test_if_spreads_are_disjoint(a, b)) {
-				cout << "elements i=" << i << " j=" << j << " corresponding to spreads " << a << " and " << b << " are not line disjoint" << endl;
+				cout << "elements i=" << i << " j=" << j
+						<< " corresponding to spreads " << a << " and " << b
+						<< " are not line disjoint" << endl;
 				exit(1);
 			}
 		}
@@ -1022,7 +1032,8 @@ void spread_tables::compute_iso_type_invariant(
 	}
 }
 
-void spread_tables::report_one_spread(std::ostream &ost, int a)
+void spread_tables::report_one_spread(
+		std::ostream &ost, int a)
 {
 	long int *p;
 	long int b;
@@ -1042,7 +1053,8 @@ void spread_tables::report_one_spread(std::ostream &ost, int a)
 }
 
 
-static int spread_table_compare_func(void *a, void *b, void *data)
+static int spread_table_compare_func(
+		void *a, void *b, void *data)
 // used in spread_table
 {
 	int *A = (int *)a;

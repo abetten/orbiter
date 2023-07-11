@@ -80,6 +80,7 @@ namespace apps_combinatorics {
 
 	// combinatorics
 	class boolean_function_classify;
+	class classification_of_combinatorial_objects;
 	class combinatorial_object_activity_description;
 	class combinatorial_object_activity;
 	class combinatorics_global;
@@ -91,7 +92,6 @@ namespace apps_combinatorics {
 	class design_create;
 	class design_tables;
 	class difference_set_in_heisenberg_group;
-	class flag_orbits_incidence_structure;
 	class hadamard_classify;
 	class hall_system_classify;
 	class large_set_activity_description;

@@ -34,8 +34,10 @@ object_with_properties::object_with_properties()
 
 	TDO = NULL;
 
-	Flags = NULL;
-	Anti_Flags = NULL;
+	GA_on_CO = NULL;
+
+	//Flags = NULL;
+	//Anti_Flags = NULL;
 
 }
 
@@ -45,12 +47,17 @@ object_with_properties::~object_with_properties()
 	if (TDO) {
 		FREE_OBJECT(TDO);
 	}
+	if (GA_on_CO) {
+		FREE_OBJECT(GA_on_CO);
+	}
+#if 0
 	if (Flags) {
 		FREE_OBJECT(Flags);
 	}
 	if (Anti_Flags) {
 		FREE_OBJECT(Anti_Flags);
 	}
+#endif
 }
 
 
@@ -114,6 +121,27 @@ void object_with_properties::init(
 		}
 	}
 
+
+	GA_on_CO = NEW_OBJECT(data_structures_groups::group_action_on_combinatorial_object);
+
+
+	if (f_v) {
+		cout << "object_with_properties::init "
+				"before GA_on_CO->init" << endl;
+	}
+	GA_on_CO->init(
+			label,
+			label,
+			OwCF,
+			A_perm,
+			verbose_level);
+	if (f_v) {
+		cout << "object_with_properties::init "
+				"after GA_on_CO->init" << endl;
+	}
+
+
+#if 0
 	if (f_v) {
 		cout << "object_with_properties::init "
 				"before compute_flag_orbits" << endl;
@@ -123,6 +151,7 @@ void object_with_properties::init(
 		cout << "object_with_properties::init "
 				"after compute_flag_orbits" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "object_with_properties::init "
@@ -139,43 +168,9 @@ void object_with_properties::init(
 	}
 }
 
-void object_with_properties::compute_flag_orbits(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "object_with_properties::compute_flag_orbits" << endl;
-	}
-
-	Flags = NEW_OBJECT(flag_orbits_incidence_structure);
-	Anti_Flags = NEW_OBJECT(flag_orbits_incidence_structure);
-
-	if (f_v) {
-		cout << "object_with_properties::compute_flag_orbits "
-				"before Flags->init" << endl;
-	}
-	Flags->init(this, false, A_perm, A_perm->Strong_gens, verbose_level - 2);
-	if (f_v) {
-		cout << "object_with_properties::compute_flag_orbits "
-				"after Flags->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "object_with_properties::compute_flag_orbits "
-				"before Anti_Flags->init" << endl;
-	}
-	Anti_Flags->init(this, true, A_perm, A_perm->Strong_gens, verbose_level - 2);
-	if (f_v) {
-		cout << "object_with_properties::compute_flag_orbits "
-				"after Anti_Flags->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "object_with_properties::compute_flag_orbits done" << endl;
-	}
-}
-
-void object_with_properties::lift_generators_to_matrix_group(int verbose_level)
+void object_with_properties::lift_generators_to_matrix_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -259,7 +254,8 @@ void object_with_properties::init_object_in_projective_space(
 
 }
 
-void object_with_properties::latex_report(std::ostream &ost,
+void object_with_properties::latex_report(
+		std::ostream &ost,
 		combinatorics::classification_of_objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -358,7 +354,7 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 
 
-
+#if 1
 	groups::schreier *Sch;
 
 
@@ -372,6 +368,7 @@ void object_with_properties::latex_report(std::ostream &ost,
 		cout << "object_with_properties::latex_report "
 				"after orbits_on_points_schreier" << endl;
 	}
+#endif
 
 
 	if (Report_options->f_export_flag_orbits) {
@@ -383,26 +380,26 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
-					"before export_INP_with_flag_orbits" << endl;
+					"before GA_on_CO->export_INP_with_flag_orbits" << endl;
 		}
-		export_INP_with_flag_orbits(ost,
-				Sch,
+		GA_on_CO->export_INP_with_flag_orbits(ost,
+				//Sch,
 				verbose_level);
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
-					"after export_INP_with_flag_orbits" << endl;
+					"after GA_on_CO->export_INP_with_flag_orbits" << endl;
 		}
 
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
-					"before export_TDA_with_flag_orbits" << endl;
+					"before GA_on_CO->export_TDA_with_flag_orbits" << endl;
 		}
-		export_TDA_with_flag_orbits(ost,
-				Sch,
+		GA_on_CO->export_TDA_with_flag_orbits(ost,
+				//Sch,
 				verbose_level);
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
-					"after export_TDA_with_flag_orbits" << endl;
+					"after GA_on_CO->export_TDA_with_flag_orbits" << endl;
 		}
 	}
 
@@ -412,12 +409,12 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
-					"before Sch->print_TDA" << endl;
+					"before Sch->print_TDO" << endl;
 		}
 		print_TDO(ost, Report_options);
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
-					"after Sch->print_TDA" << endl;
+					"after Sch->print_TDO" << endl;
 		}
 	}
 
@@ -556,11 +553,9 @@ void object_with_properties::latex_report(std::ostream &ost,
 		FREE_OBJECT(Enc);
 	}
 
-	ost << "Flag orbits:\\\\" << endl;
-	Flags->report(ost, verbose_level);
+	GA_on_CO->report_flag_orbits(
+			ost, verbose_level);
 
-	ost << "Anti-Flag orbits:\\\\" << endl;
-	Anti_Flags->report(ost, verbose_level);
 
 
 	if (Report_options->f_lex_least) {
@@ -690,6 +685,7 @@ void object_with_properties::print_TDO(
 
 }
 
+#if 0
 void object_with_properties::export_TDA_with_flag_orbits(
 		std::ostream &ost,
 		groups::schreier *Sch,
@@ -713,6 +709,65 @@ void object_with_properties::export_TDA_with_flag_orbits(
 				"after OwCF->encode_incma" << endl;
 	}
 
+
+
+	{
+		if (f_v) {
+			cout << "object_with_properties::export_TDA_with_flag_orbits Enc->nb_rows = " << Enc->nb_rows << endl;
+			cout << "object_with_properties::export_TDA_with_flag_orbits Enc->nb_cols = " << Enc->nb_cols << endl;
+		}
+
+		actions::action *A_on_points;
+		actions::action *A_on_lines;
+
+		long int *points;
+		long int *lines;
+
+		points = NEW_lint(Enc->nb_rows);
+		lines = NEW_lint(Enc->nb_cols);
+
+		int i;
+
+		for (i = 0; i < Enc->nb_rows; i++) {
+			points[i] = i;
+		}
+		for (i = 0; i < Enc->nb_cols; i++) {
+			lines[i] = Enc->nb_rows + i;
+		}
+
+		std::string label1, label2;
+
+		label1 = "points";
+		label2 = "lines";
+
+
+		A_on_points = A_perm->Induced_action->restricted_action(
+				points, Enc->nb_rows,
+				label1,
+				verbose_level);
+
+		A_on_lines = A_perm->Induced_action->restricted_action(
+				lines, Enc->nb_cols,
+				label2,
+				verbose_level);
+
+		actions::action_global Action_global;
+
+		Action_global.report_TDA_combinatorial_object(
+				ost,
+				Enc,
+				A_on_points, A_on_lines,
+				A_perm->Strong_gens, 25 /* size_limit_for_printing */,
+				verbose_level);
+
+
+		FREE_lint(points);
+		FREE_lint(lines);
+		FREE_OBJECT(A_on_points);
+		FREE_OBJECT(A_on_lines);
+	}
+
+#if 0
 	orbiter_kernel_system::file_io Fio;
 	string fname;
 
@@ -819,12 +874,15 @@ void object_with_properties::export_TDA_with_flag_orbits(
 	}
 
 	FREE_OBJECT(Enc);
+#endif
 
 	if (f_v) {
 		cout << "object_with_properties::export_TDA_with_flag_orbits done" << endl;
 	}
 }
+#endif
 
+#if 0
 void object_with_properties::export_INP_with_flag_orbits(
 		std::ostream &ost,
 		groups::schreier *Sch,
@@ -960,6 +1018,7 @@ void object_with_properties::export_INP_with_flag_orbits(
 		cout << "object_with_properties::export_INP_with_flag_orbits done" << endl;
 	}
 }
+#endif
 
 
 }}}

@@ -256,6 +256,7 @@ public:
 	void crc_weight_enumerator_bottom_up(
 			crc_object *Crc_object,
 			int error_pattern_max_weight,
+			int f_collect_words,
 			int verbose_level);
 	void read_error_pattern_from_output_file(
 			std::string &fname_in,
@@ -399,6 +400,9 @@ enum crc_object_type {
 
 class crc_object {
 public:
+
+	std::string label_txt;
+	std::string label_tex;
 
 	crc_object_type Crc_object_type;
 

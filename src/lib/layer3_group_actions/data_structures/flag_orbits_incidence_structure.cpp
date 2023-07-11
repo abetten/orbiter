@@ -15,14 +15,14 @@
 using namespace std;
 
 namespace orbiter {
-namespace layer5_applications {
-namespace apps_combinatorics {
+namespace layer3_group_actions {
+namespace data_structures_groups {
 
 
 
 flag_orbits_incidence_structure::flag_orbits_incidence_structure()
 {
-	OwP = NULL;
+	OwCF = NULL;
 	nb_rows = 0;
 	nb_cols = 0;
 	f_flag_orbits_have_been_computed = false;
@@ -35,7 +35,7 @@ flag_orbits_incidence_structure::flag_orbits_incidence_structure()
 
 flag_orbits_incidence_structure::~flag_orbits_incidence_structure()
 {
-	OwP = NULL;
+	OwCF = NULL;
 
 	if (Flags) {
 		FREE_int(Flags);
@@ -52,7 +52,7 @@ flag_orbits_incidence_structure::~flag_orbits_incidence_structure()
 }
 
 void flag_orbits_incidence_structure::init(
-		object_with_properties *OwP,
+		geometry::object_with_canonical_form *OwCF,
 		int f_anti_flags, actions::action *A_perm,
 		groups::strong_generators *SG, int verbose_level)
 {
@@ -62,7 +62,7 @@ void flag_orbits_incidence_structure::init(
 		cout << "flag_orbits_incidence_structure::init" << endl;
 	}
 
-	flag_orbits_incidence_structure::OwP = OwP;
+	flag_orbits_incidence_structure::OwCF = OwCF;
 
 	combinatorics::encoded_combinatorial_object *Enc;
 
@@ -71,7 +71,7 @@ void flag_orbits_incidence_structure::init(
 		cout << "flag_orbits_incidence_structure::init "
 				"before encode_incma" << endl;
 	}
-	OwP->OwCF->encode_incma(Enc, verbose_level - 2);
+	OwCF->encode_incma(Enc, verbose_level - 2);
 
 	nb_rows = Enc->nb_rows;
 	nb_cols = Enc->nb_cols;
@@ -165,7 +165,8 @@ int flag_orbits_incidence_structure::find_flag(int i, int j)
 	return idx;
 }
 
-void flag_orbits_incidence_structure::report(std::ostream &ost, int verbose_level)
+void flag_orbits_incidence_structure::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -179,7 +180,15 @@ void flag_orbits_incidence_structure::report(std::ostream &ost, int verbose_leve
 	}
 
 	//Orb->report(ost, verbose_level);
+	if (f_v) {
+		cout << "flag_orbits_incidence_structure::report "
+				"before Orb->report_quick" << endl;
+	}
 	Orb->report_quick(ost, verbose_level);
+	if (f_v) {
+		cout << "flag_orbits_incidence_structure::report "
+				"after Orb->report_quick" << endl;
+	}
 
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::report done" << endl;

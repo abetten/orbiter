@@ -41,7 +41,8 @@ namespace actions {
 
 namespace data_structures_groups {
 
-	// data_structures
+	class flag_orbits_incidence_structure;
+	class group_action_on_combinatorial_object;
 	class group_container;
 	class incidence_structure_with_group;
 	class orbit_rep;

@@ -348,6 +348,8 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/known_groups.o \
 		layer3_group_actions/actions/induced_action.o \
 		layer3_group_actions/actions/stabilizer_chain_base_data.o \
+		layer3_group_actions/data_structures/flag_orbits_incidence_structure.o \
+		layer3_group_actions/data_structures/group_action_on_combinatorial_object.o \
 		layer3_group_actions/data_structures/group_container.o \
 		layer3_group_actions/data_structures/incidence_structure_with_group.o \
 		layer3_group_actions/data_structures/orbit_rep.o \
@@ -496,6 +498,7 @@ ORBITER_MODULES= \
 		layer5_top_level/coding_theory_apps/create_code_description.o \
 		layer5_top_level/coding_theory_apps/create_code.o \
 		layer5_top_level/combinatorics/boolean_function_classify.o \
+		layer5_top_level/combinatorics/classification_of_combinatorial_objects.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity_description.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity.o \
 		layer5_top_level/combinatorics/combinatorics_global.o \
@@ -507,7 +510,6 @@ ORBITER_MODULES= \
 		layer5_top_level/combinatorics/design_create.o \
 		layer5_top_level/combinatorics/design_tables.o \
 		layer5_top_level/combinatorics/difference_set_in_heisenberg_group.o \
-		layer5_top_level/combinatorics/flag_orbits_incidence_structure.o \
 		layer5_top_level/combinatorics/hadamard_classify.o \
 		layer5_top_level/combinatorics/hall_system_classify.o \
 		layer5_top_level/combinatorics/large_set_activity_description.o \

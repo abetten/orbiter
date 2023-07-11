@@ -63,6 +63,70 @@ void encoded_combinatorial_object::init_everything(
 
 }
 
+void encoded_combinatorial_object::init_with_matrix(
+		int nb_rows, int nb_cols, int *incma,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_with_matrix" << endl;
+		cout << "encoded_combinatorial_object::init_with_matrix "
+				"nb_rows=" << nb_rows << " nb_cols=" << nb_cols << endl;
+	}
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_with_matrix "
+				"before init" << endl;
+	}
+	init(
+			nb_rows, nb_cols,
+			verbose_level);
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_with_matrix "
+				"after init" << endl;
+	}
+
+	Int_vec_copy(incma, Incma, nb_rows * nb_cols);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_with_matrix done" << endl;
+	}
+}
+
+void encoded_combinatorial_object::init_row_and_col_partition(
+		int *V, int nb_V, int *B, int nb_B,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_row_and_col_partition" << endl;
+
+	}
+	int i0, j0, h, a;
+
+	i0 = 0;
+	for (h = 0; h < nb_V; h++) {
+		a = V[h];
+		i0 += a;
+		partition[i0 - 1] = 0;
+	}
+
+	j0 = nb_rows;
+	for (h = 0; h < nb_B; h++) {
+		a = B[h];
+		j0 += a;
+		partition[j0 - 1] = 0;
+	}
+
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_row_and_col_partition done" << endl;
+
+	}
+}
+
 
 void encoded_combinatorial_object::init(
 		int nb_rows, int nb_cols,
@@ -458,9 +522,9 @@ void encoded_combinatorial_object::latex_set_system_by_rows(
 				B[sz++] = j;
 			}
 		}
-			rk = Combi.rank_k_subset(B, nb_cols, sz);
-			L.int_set_print_tex(ost, B, sz);
-			ost << " = " << rk;
+		rk = Combi.rank_k_subset(B, nb_cols, sz);
+		L.int_set_print_tex(ost, B, sz);
+		ost << " = " << rk;
 		ost << "\\\\" << endl;
 	}
 

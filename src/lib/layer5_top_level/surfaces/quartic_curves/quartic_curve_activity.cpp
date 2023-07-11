@@ -306,11 +306,9 @@ void quartic_curve_activity::do_report(
 			ofstream ost(fname_report);
 
 
-			char str[1000];
 			string title, author, extra_praeamble;
 
 			title = QC->label_tex + " over GF(" + std::to_string(F->q) + ")";
-			title.assign(str);
 
 
 			l1_interfaces::latex_interface L;

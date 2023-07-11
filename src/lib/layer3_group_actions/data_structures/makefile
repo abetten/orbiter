@@ -6,6 +6,8 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	flag_orbits_incidence_structure.o \
+	group_action_on_combinatorial_object.o \
 	group_container.o \
 	incidence_structure_with_group.o \
 	orbit_rep.o \

@@ -90,6 +90,9 @@ void crc_object::init(std::string &type,
 		symbol_set_size_log = 8;
 		symbol_set_size = 256;
 
+		label_txt = "Alfa";
+		label_tex = "Alfa";
+
 	}
 	else if (ST.stringcmp(type, "bravo") == 0) {
 
@@ -98,6 +101,9 @@ void crc_object::init(std::string &type,
 		Len_check_in_symbols = 4;
 		symbol_set_size_log = 8;
 		symbol_set_size = 256;
+
+		label_txt = "Bravo";
+		label_tex = "Bravo";
 
 	}
 	else if (ST.stringcmp(type, "charlie") == 0) {
@@ -108,6 +114,9 @@ void crc_object::init(std::string &type,
 		symbol_set_size_log = 8;
 		symbol_set_size = 256;
 
+		label_txt = "Charlie";
+		label_tex = "Charlie";
+
 	}
 	else if (ST.stringcmp(type, "Delta") == 0) {
 
@@ -116,6 +125,9 @@ void crc_object::init(std::string &type,
 		Len_check_in_symbols = 4;
 		symbol_set_size_log = 4;
 		symbol_set_size = 16;
+
+		label_txt = "Delta";
+		label_tex = "Delta";
 
 	}
 	else if (ST.stringcmp(type, "Echo") == 0) {
@@ -126,6 +138,9 @@ void crc_object::init(std::string &type,
 		symbol_set_size_log = 4;
 		symbol_set_size = 16;
 
+		label_txt = "Echo";
+		label_tex = "Echo";
+
 	}
 	else if (ST.stringcmp(type, "Foxtrot") == 0) {
 
@@ -134,6 +149,9 @@ void crc_object::init(std::string &type,
 		Len_check_in_symbols = 4;
 		symbol_set_size_log = 4;
 		symbol_set_size = 16;
+
+		label_txt = "Foxtrot";
+		label_tex = "Foxtrot";
 
 	}
 	else if (ST.stringcmp(type, "crc32") == 0) {
@@ -145,6 +163,9 @@ void crc_object::init(std::string &type,
 		symbol_set_size_log = 1;
 		symbol_set_size = 2;
 
+		label_txt = "crc32";
+		label_tex = "crc32";
+
 	}
 	else if (ST.stringcmp(type, "crc16") == 0) {
 
@@ -155,6 +176,9 @@ void crc_object::init(std::string &type,
 		symbol_set_size_log = 1;
 		symbol_set_size = 2;
 
+		label_txt = "crc16";
+		label_tex = "crc16";
+
 	}
 	else if (ST.stringcmp(type, "SuperFastHash32") == 0) {
 
@@ -164,6 +188,9 @@ void crc_object::init(std::string &type,
 		Len_check_in_symbols = 32;
 		symbol_set_size_log = 1;
 		symbol_set_size = 2;
+
+		label_txt = "SuperFastHash32";
+		label_tex = "SuperFastHash32";
 
 	}
 	else {

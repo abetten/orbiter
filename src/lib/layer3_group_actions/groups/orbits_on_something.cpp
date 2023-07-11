@@ -602,12 +602,14 @@ void orbits_on_something::compute_compact_type(
 
 }
 
-void orbits_on_something::report_orbit_lengths(std::ostream &ost)
+void orbits_on_something::report_orbit_lengths(
+		std::ostream &ost)
 {
 	Sch->print_orbit_lengths_tex(ost);
 }
 
-void orbits_on_something::print_orbits_based_on_filtered_orbits(std::ostream &ost,
+void orbits_on_something::print_orbits_based_on_filtered_orbits(
+		std::ostream &ost,
 		data_structures::set_of_sets *Filtered_orbits)
 {
 	int i, j;
@@ -845,7 +847,8 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 	}
 }
 
-void orbits_on_something::print_orbits_of_a_certain_length(int orbit_length)
+void orbits_on_something::print_orbits_of_a_certain_length(
+		int orbit_length)
 {
 	int i, type_idx;
 	long int *orbit;
@@ -898,13 +901,15 @@ int orbits_on_something::test_pair_of_orbits_of_a_equal_length(
 	a = Classify_orbits_by_length->Set_partition->Sets[type_idx][idx1];
 	Sch->get_orbit(a, Orbit1, l, 0 /* verbose_level*/);
 	if (l != orbit_length) {
-		cout << "orbits_on_something::test_pair_of_orbits_of_a_equal_length l != orbit_length" << endl;
+		cout << "orbits_on_something::test_pair_of_orbits_of_a_equal_length "
+				"l != orbit_length" << endl;
 		exit(1);
 	}
 	b = Classify_orbits_by_length->Set_partition->Sets[type_idx][idx2];
 	Sch->get_orbit(b, Orbit2, l, 0 /* verbose_level*/);
 	if (l != orbit_length) {
-		cout << "orbits_on_something::test_pair_of_orbits_of_a_equal_length l != orbit_length" << endl;
+		cout << "orbits_on_something::test_pair_of_orbits_of_a_equal_length "
+				"l != orbit_length" << endl;
 		exit(1);
 	}
 	if ((*test_function)(Orbit1, orbit_length, Orbit2, orbit_length, test_function_data)) {
@@ -916,7 +921,8 @@ int orbits_on_something::test_pair_of_orbits_of_a_equal_length(
 	return ret;
 }
 
-void orbits_on_something::report_orbits_of_type(std::ostream &ost, int type_idx)
+void orbits_on_something::report_orbits_of_type(
+		std::ostream &ost, int type_idx)
 {
 
 	int nb_points;
@@ -2034,7 +2040,8 @@ void orbits_on_something::create_latex_report(int verbose_level)
 	}
 }
 
-void orbits_on_something::report(std::ostream &ost, int verbose_level)
+void orbits_on_something::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2092,7 +2099,8 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 
 		j_max = MINIMUM(nb_orbits, 100);
 		if (j_max < nb_orbits) {
-			cout << "orbits_on_something::report step 2, cutting off at " << j_max << " because the number of orbits is too large: " << nb_orbits << endl;
+			cout << "orbits_on_something::report step 2, "
+					"cutting off at " << j_max << " because the number of orbits is too large: " << nb_orbits << endl;
 		}
 
 		for (j = 0; j < j_max; j++) {
@@ -2207,7 +2215,8 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	}
 }
 
-void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
+void orbits_on_something::report_quick(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2216,13 +2225,29 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 	}
 
 
-	ring_theory::longinteger_object go;
+#if 0
+	if (f_has_SG) {
+		ring_theory::longinteger_object go;
 
 
 
-	SG->group_order(go);
+		if (f_v) {
+			cout << "orbits_on_something::report_quick before SG->group_order" << endl;
+		}
+
+		SG->group_order(go);
+
+		if (f_v) {
+			cout << "orbits_on_something::report_quick after SG->group_order" << endl;
+		}
+	}
+#endif
 
 	int i;
+
+	if (f_v) {
+		cout << "orbits_on_something::report_quick computing Table" << endl;
+	}
 
 	long int *Table;
 
@@ -2234,7 +2259,6 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 		ost << Orbits_classified_length[i] << " : "
 				<< Orbits_classified->Set_size[i] << "\\\\" << endl;
 	}
-
 #endif
 
 	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
@@ -2242,11 +2266,22 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 		Table[2 * i + 1] = Classify_orbits_by_length->Set_partition->Set_size[i];
 	}
 
+	if (f_v) {
+		cout << "orbits_on_something::report_quick Table has been computed" << endl;
+	}
+
+
 	l1_interfaces::latex_interface L;
 
 	ost << "$$" << endl;
+	if (f_v) {
+		cout << "orbits_on_something::report_quick before L.print_lint_matrix_tex" << endl;
+	}
 	L.print_lint_matrix_tex(ost,
 			Table, Classify_orbits_by_length->Set_partition->nb_sets, 2);
+	if (f_v) {
+		cout << "orbits_on_something::report_quick after L.print_lint_matrix_tex" << endl;
+	}
 	ost << "$$" << endl;
 
 	FREE_lint(Table);
@@ -2256,7 +2291,8 @@ void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
 }
 
 
-void orbits_on_something::export_something(std::string &what, int data1,
+void orbits_on_something::export_something(
+		std::string &what, int data1,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

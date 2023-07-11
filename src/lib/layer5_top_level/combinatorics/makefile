@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	boolean_function_classify.o \
+	classification_of_combinatorial_objects.o \
 	combinatorial_object_activity_description.o \
 	combinatorial_object_activity.o \
 	combinatorics_global.o \
@@ -18,7 +19,6 @@ MODULES = \
 	design_create.o \
 	design_tables.o \
 	difference_set_in_heisenberg_group.o \
-	flag_orbits_incidence_structure.o \
 	hadamard_classify.o \
 	hall_system_classify.o \
 	large_set_activity_description.o \

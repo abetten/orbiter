@@ -2229,6 +2229,9 @@ void coding_theory_domain::field_reduction(
 
 	M2 = NEW_int(Sub->s * m * Sub->s * n);
 
+	// field reduction of the m by n matrix.
+	// The output will have size (s * m) x (s * n).
+
 	for (i = 0; i < m; i++) {
 		Sub->field_reduction(M + i * n, n, M2 + (i * Sub->s) * Sub->s * n,
 				verbose_level);
@@ -3327,6 +3330,7 @@ void coding_theory_domain::crc_simulate_Hamming_errors(
 void coding_theory_domain::crc_weight_enumerator_bottom_up(
 		crc_object *Crc_object,
 		int error_pattern_max_weight,
+		int f_collect_words,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3379,6 +3383,9 @@ void coding_theory_domain::crc_weight_enumerator_bottom_up(
 	Algo.uchar_zero(Data1, Crc_object->Len_total_in_symbols);
 
 	for (wt = 1; wt <= error_pattern_max_weight; wt++) {
+
+
+		vector<long int> Words;
 
 
 		cout << "wt = " << wt << endl;
@@ -3492,6 +3499,10 @@ void coding_theory_domain::crc_weight_enumerator_bottom_up(
 						Algo.print_hex(cout, Error->Error_in_bytes, Crc_object->Len_total_in_bytes);
 						Algo.print_binary(cout, Error->Error_in_bytes, Crc_object->Len_total_in_bytes);
 					}
+
+					if (f_collect_words) {
+						Words.push_back(counter);
+					}
 				}
 			}
 
@@ -3517,12 +3528,33 @@ void coding_theory_domain::crc_weight_enumerator_bottom_up(
 		orbiter_kernel_system::file_io Fio;
 		string fname;
 
-		fname = "weight_enumerator.csv";
+		fname = Crc_object->label_txt + "_weight_enumerator.csv";
 
 		Fio.lint_matrix_write_csv(fname, Weight_enumerator, wt + 1, 1);
 
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
+		if (f_collect_words) {
+			long int *Long_words;
+			long int i, a;
+
+			Long_words = NEW_lint(Words.size());
+			for (i = 0; i < Words.size(); i++) {
+				a = Words[i];
+				Long_words[i] = a;
+			}
+
+			string fname;
+
+			fname = Crc_object->label_txt + "_words_of_weight_" + std::to_string(wt) + ".csv";
+
+			Fio.lint_matrix_write_csv(fname, Long_words, Words.size(), 1);
+
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+			FREE_lint(Long_words);
+
+		}
 
 	} // next wt
 

@@ -347,6 +347,18 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 
 
 
+		classification_of_combinatorial_objects *C;
+
+		C = NEW_OBJECT(classification_of_combinatorial_objects);
+
+		C->init_after_nauty(
+				CO->Descr->label,
+				CO,
+				true /* f_projective_space */, PA,
+				verbose_level);
+
+
+#if 0
 		object_with_properties *OwP;
 
 		if (f_v) {
@@ -363,22 +375,24 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 			cout << "combinatorial_object_activity::perform_activity_input_stream "
 					"after post_process_classification" << endl;
 		}
+#endif
 
 		if (Descr->f_report) {
 			if (f_v) {
 				cout << "combinatorial_object_activity::perform_activity_input_stream "
 						"before classification_report" << endl;
 			}
-			classification_report(
-					CO,
-					OwP, verbose_level);
+			C->classification_report(
+					Descr->Classification_of_objects_report_options,
+					verbose_level);
 			if (f_v) {
 				cout << "combinatorial_object_activity::perform_activity_input_stream "
 						"after classification_report" << endl;
 			}
 		}
 
-		FREE_OBJECTS(OwP);
+		//FREE_OBJECTS(OwP);
+		FREE_OBJECT(C);
 		FREE_OBJECT(CO);
 
 
@@ -412,6 +426,17 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 		}
 
 
+		classification_of_combinatorial_objects *C;
+
+		C = NEW_OBJECT(classification_of_combinatorial_objects);
+
+		C->init_after_nauty(
+				CO->Descr->label,
+				CO,
+				false /* f_projective_space */, NULL,
+				verbose_level);
+
+#if 0
 		object_with_properties *OwP;
 
 		if (f_v) {
@@ -429,23 +454,28 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 					"after post_process_classification" << endl;
 		}
 
+
+		FREE_OBJECTS(OwP);
+#endif
+
+
 		if (Descr->f_report) {
 			if (f_v) {
 				cout << "combinatorial_object_activity::perform_activity_input_stream "
 						"before classification_report" << endl;
 			}
-			classification_report(
-					CO,
-					OwP, verbose_level);
+			C->classification_report(
+					Descr->Classification_of_objects_report_options,
+					verbose_level);
 			if (f_v) {
 				cout << "combinatorial_object_activity::perform_activity_input_stream "
 						"after classification_report" << endl;
 			}
 		}
 
-		FREE_OBJECTS(OwP);
-		FREE_OBJECT(CO);
 
+		FREE_OBJECTS(C);
+		FREE_OBJECT(CO);
 
 
 	}
@@ -469,7 +499,8 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 
 		int idx;
 
-		idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->test_distinguishing_property_graph);
+		idx = orbiter_kernel_system::Orbiter->find_symbol(
+				Descr->test_distinguishing_property_graph);
 
 		symbol_table_object_type t;
 
@@ -592,8 +623,10 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 
 		Get_lint_vector_from_label(
 				Descr->extract_subset_set,
-				extract_idx_set, extract_size, 0 /* verbose_level */);
-		do_save(Descr->extract_subset_fname,
+				extract_idx_set, extract_size,
+				0 /* verbose_level */);
+		do_save(
+				Descr->extract_subset_fname,
 				true /* f_extract */, extract_idx_set, extract_size,
 				verbose_level);
 
@@ -732,7 +765,8 @@ void combinatorial_object_activity::do_save(
 		FREE_lint(Sets);
 		Sets = Sets2;
 		if (f_v) {
-			cout << "number of sets is reduced from " << N << " to " << extract_size << endl;
+			cout << "number of sets is reduced from "
+					<< N << " to " << extract_size << endl;
 		}
 		N = extract_size;
 	}
@@ -755,6 +789,7 @@ void combinatorial_object_activity::do_save(
 	}
 }
 
+#if 0
 void combinatorial_object_activity::post_process_classification(
 		combinatorics::classification_of_objects *CO,
 		object_with_properties *&OwP,
@@ -811,7 +846,9 @@ void combinatorial_object_activity::post_process_classification(
 		cout << "combinatorial_object_activity::post_process_classification done" << endl;
 	}
 }
+#endif
 
+#if 0
 void combinatorial_object_activity::classification_report(
 		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
@@ -882,28 +919,28 @@ void combinatorial_object_activity::latex_report(
 				"CB->nb_types=" << CO->CB->nb_types << endl;
 	}
 	{
-		ofstream fp(fname);
+		ofstream ost(fname);
 		l1_interfaces::latex_interface L;
 
-		L.head_easy(fp);
+		L.head_easy(ost);
 
 
-		CO->report_summary_of_orbits(fp, verbose_level);
+		CO->report_summary_of_orbits(ost, verbose_level);
 
 
-		fp << "Ago : ";
-		CO->T_Ago->print_file_tex(fp, false /* f_backwards*/);
-		fp << "\\\\" << endl;
+		ost << "Ago : ";
+		CO->T_Ago->print_file_tex(ost, false /* f_backwards*/);
+		ost << "\\\\" << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::latex_report before loop" << endl;
 		}
 
-
-		report_all_isomorphism_types(fp, Report_options, CO, OwP,
+		report_all_isomorphism_types(
+				ost, Report_options, CO, OwP,
 				verbose_level);
 
-		L.foot(fp);
+		L.foot(ost);
 	}
 
 	if (f_v) {
@@ -918,7 +955,7 @@ void combinatorial_object_activity::latex_report(
 }
 
 void combinatorial_object_activity::report_all_isomorphism_types(
-		std::ostream &fp,
+		std::ostream &ost,
 		combinatorics::classification_of_objects_report_options
 			*Report_options,
 		combinatorics::classification_of_objects *CO,
@@ -936,8 +973,8 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 
 	for (i = 0; i < CO->CB->nb_types; i++) {
 
-		fp << "\\section*{Isomorphism type " << i << " / " << CO->CB->nb_types << "}" << endl;
-		fp << "Isomorphism type " << i << " / " << CO->CB->nb_types
+		ost << "\\section*{Isomorphism type " << i << " / " << CO->CB->nb_types << "}" << endl;
+		ost << "Isomorphism type " << i << " / " << CO->CB->nb_types
 			//<<  " stored at " << j
 			<< " is original object "
 			<< CO->CB->Type_rep[i] << " and appears "
@@ -951,16 +988,17 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 					nb_input_objects, i, 0 /*verbose_level */);
 			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
-			fp << "This isomorphism type appears " << nb_input_objects
+			ost << "This isomorphism type appears " << nb_input_objects
 					<< " times, namely for the following "
 					<< nb_input_objects << " input objects: " << endl;
 			if (nb_input_objects < 10) {
-				fp << "$" << endl;
-				L.int_set_print_tex(fp, Input_objects, nb_input_objects);
-				fp << "$\\\\" << endl;
+				ost << "$" << endl;
+				L.int_set_print_tex(
+						ost, Input_objects, nb_input_objects);
+				ost << "$\\\\" << endl;
 			}
 			else {
-				fp << "Too big to print. \\\\" << endl;
+				ost << "Too big to print. \\\\" << endl;
 #if 0
 				fp << "$$" << endl;
 				L.int_vec_print_as_matrix(fp, Input_objects,
@@ -976,7 +1014,8 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 			cout << "combinatorial_object_activity::report_all_isomorphism_types "
 					"before report_isomorphism_type" << endl;
 		}
-		report_isomorphism_type(fp, Report_options, CO, OwP, i, verbose_level);
+		report_isomorphism_type(
+				ost, Report_options, CO, OwP, i, verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::report_all_isomorphism_types "
 					"after report_isomorphism_type" << endl;
@@ -992,7 +1031,7 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 
 
 void combinatorial_object_activity::report_isomorphism_type(
-		std::ostream &fp,
+		std::ostream &ost,
 		combinatorics::classification_of_objects_report_options
 			*Report_options,
 		combinatorics::classification_of_objects *CO,
@@ -1048,7 +1087,7 @@ void combinatorial_object_activity::report_isomorphism_type(
 		cout << "combinatorial_object_activity::report_isomorphism_type "
 				"i=" << i << " before report_object" << endl;
 	}
-	report_object(fp,
+	report_object(ost,
 			Report_options,
 			CO,
 			OwP,
@@ -1069,7 +1108,7 @@ void combinatorial_object_activity::report_isomorphism_type(
 }
 
 void combinatorial_object_activity::report_object(
-		std::ostream &fp,
+		std::ostream &ost,
 		combinatorics::classification_of_objects_report_options
 			*Report_options,
 		combinatorics::classification_of_objects *CO,
@@ -1091,7 +1130,7 @@ void combinatorial_object_activity::report_object(
 		cout << "combinatorial_object_activity::report_object "
 				"before OwCF->print_tex_detailed" << endl;
 	}
-	OwCF->print_tex_detailed(fp,
+	OwCF->print_tex_detailed(ost,
 			Report_options->f_show_incidence_matrices,
 			verbose_level);
 	if (f_v) {
@@ -1116,7 +1155,7 @@ void combinatorial_object_activity::report_object(
 			cout << "combinatorial_object_activity::report_object "
 					"before OwP[object_idx].latex_report" << endl;
 		}
-		OwP[object_idx].latex_report(fp,
+		OwP[object_idx].latex_report(ost,
 				Report_options, verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::report_object "
@@ -1127,6 +1166,7 @@ void combinatorial_object_activity::report_object(
 
 
 }
+#endif
 
 void combinatorial_object_activity::draw_incidence_matrices(
 		std::string &prefix,

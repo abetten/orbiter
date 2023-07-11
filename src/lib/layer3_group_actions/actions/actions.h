@@ -756,6 +756,24 @@ public:
 			int *Elt,
 			int *input, int *output,
 			int verbose_level);
+	void report_TDA_projective_space(
+			std::ostream &ost,
+			geometry::projective_space *P,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
+			int verbose_level);
+	void report_TDA_combinatorial_object(
+			std::ostream &ost,
+			combinatorics::encoded_combinatorial_object *Enc,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
+			int verbose_level);
+	void report_TDA(
+			std::ostream &ost,
+			geometry::incidence_structure *Inc,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
+			int verbose_level);
 
 };
 

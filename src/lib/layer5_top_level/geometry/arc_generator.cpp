@@ -26,18 +26,8 @@ static void arc_generator_early_test_function(
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-#if 0
-static void arc_generator_lifting_prepare_function_new(
-	exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out,
-	int verbose_level);
-#endif
 static void arc_generator_print_arc(
 		std::ostream &ost, int len, long int *S, void *data);
-//static void arc_generator_print_point(long int pt, void *data);
-//static void arc_generator_report(isomorph *Iso, void *data, int verbose_level);
 
 
 
@@ -76,11 +66,13 @@ arc_generator::~arc_generator()
 	}
 	if (gen) {
 		if (f_v) {
-			cout << "arc_generator::~arc_generator before FREE_OBJECT(gen)" << endl;
+			cout << "arc_generator::~arc_generator "
+					"before FREE_OBJECT(gen)" << endl;
 		}
 		FREE_OBJECT(gen);
 		if (f_v) {
-			cout << "arc_generator::~arc_generator after FREE_OBJECT(gen)" << endl;
+			cout << "arc_generator::~arc_generator "
+					"after FREE_OBJECT(gen)" << endl;
 		}
 	}
 	
@@ -105,11 +97,13 @@ void arc_generator::main(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "arc_generator::main before compute_starter" << endl;
+		cout << "arc_generator::main "
+				"before compute_starter" << endl;
 	}
 	compute_starter(verbose_level);
 	if (f_v) {
-		cout << "arc_generator::main after compute_starter" << endl;
+		cout << "arc_generator::main "
+				"after compute_starter" << endl;
 	}
 
 	if (f_v) {
@@ -146,13 +140,15 @@ void arc_generator::init(
 		// q * q + q + 1 for planes (n=3)
 
 	if (f_v) {
-		cout << "arc_generator::init nb_points_total = " << nb_points_total << endl;
+		cout << "arc_generator::init "
+				"nb_points_total = " << nb_points_total << endl;
 	}
 
 	if (Descr->f_affine) {
 		nb_affine_lines = Gg.nb_affine_lines(PA->n, PA->q);
 		if (f_v) {
-			cout << "arc_generator::init nb_affine_lines = " << nb_affine_lines << endl;
+			cout << "arc_generator::init "
+					"nb_affine_lines = " << nb_affine_lines << endl;
 		}
 	}
 
@@ -162,14 +158,17 @@ void arc_generator::init(
 	if (Descr->f_has_forbidden_point_set) {
 		int i, a;
 
-		Int_vec_scan(Descr->forbidden_point_set_string, forbidden_points, nb_forbidden_points);
+		Int_vec_scan(
+				Descr->forbidden_point_set_string,
+				forbidden_points, nb_forbidden_points);
 
 		f_is_forbidden = NEW_int(PA->P->Subspaces->N_points);
 		Int_vec_zero(f_is_forbidden, PA->P->Subspaces->N_points);
 		for (i = 0; i < nb_forbidden_points; i++) {
 			a = forbidden_points[i];
 			f_is_forbidden[a] = true;
-			cout << "arc_generator::init point " << a << " is forbidden" << endl;
+			cout << "arc_generator::init "
+					"point " << a << " is forbidden" << endl;
 		}
 	}
 	if (PA->P->Subspaces->Implementation->Lines_on_point == NULL) {
@@ -186,7 +185,8 @@ void arc_generator::init(
 
 
 	if (!Descr->f_control) {
-		cout << "arc_generator::init please use -control <label>" << endl;
+		cout << "arc_generator::init "
+				"please use -control <label>" << endl;
 		exit(1);
 	}
 
@@ -194,18 +194,21 @@ void arc_generator::init(
 	Control = Get_object_of_type_poset_classification_control(Descr->control_label);
 
 	if (f_v) {
-		cout << "arc_generator::init Control=" << endl;
+		cout << "arc_generator::init "
+				"Control=" << endl;
 		Control->print();
 	}
 
 	if (f_v) {
-		cout << "arc_generator::init before prepare_generator" << endl;
+		cout << "arc_generator::init "
+				"before prepare_generator" << endl;
 	}
 
 	prepare_generator(verbose_level - 2);
 
 	if (f_v) {
-		cout << "arc_generator::init after prepare_generator" << endl;
+		cout << "arc_generator::init "
+				"after prepare_generator" << endl;
 	}
 
 
@@ -228,7 +231,9 @@ void arc_generator::prepare_generator(int verbose_level)
 
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
-	Poset->init_subset_lattice(PA->A, PA->A, SG /* A->Strong_gens*/, verbose_level);
+	Poset->init_subset_lattice(
+			PA->A, PA->A, SG /* A->Strong_gens*/,
+			verbose_level);
 
 	Poset->f_print_function = false;
 	Poset->print_function = arc_generator_print_arc;
@@ -374,7 +379,8 @@ int arc_generator::test_nb_Eckardt_points(
 	if (f_v) {
 		cout << "arc_generator::test_nb_Eckardt_points" << endl;
 	}
-	ret = Gg.test_nb_Eckardt_points(PA->PA2->P, S, len, pt, nb_E, verbose_level);
+	ret = Gg.test_nb_Eckardt_points(
+			PA->PA2->P, S, len, pt, nb_E, verbose_level);
 	if (f_v) {
 		cout << "arc_generator::test_nb_Eckardt_points done" << endl;
 	}
@@ -484,7 +490,8 @@ void arc_generator::print(int len, long int *S)
 
 	data_structures::tally C;
 
-	C.init(line_type, PA->P->Subspaces->N_lines, false, 0);
+	C.init(
+			line_type, PA->P->Subspaces->N_lines, false, 0);
 	C.print_naked(true);
 	cout << endl;
 
@@ -585,7 +592,8 @@ long int arc_generator::point_rank(int *v)
 	return rk;
 }
 
-void arc_generator::compute_line_type(long int *set, int len, int verbose_level)
+void arc_generator::compute_line_type(
+		long int *set, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -840,7 +848,8 @@ void arc_generator::report(
 		fname = "hyperovals_" + std::to_string(PA->q) + ".tex";
 	}
 	else {
-		fname = "arcs_" + std::to_string(PA->q) + "_" + std::to_string(Descr->target_size) + ".tex";
+		fname = "arcs_" + std::to_string(PA->q)
+				+ "_" + std::to_string(Descr->target_size) + ".tex";
 	}
 
 	{
@@ -1167,7 +1176,8 @@ void arc_generator::report_do_the_work(
 		report_stabilizer(Iso, ost, h /* orbit */, 0 /* verbose_level */);
 
 
-		report_decompositions(Iso, ost, h /* orbit */,
+		report_decompositions(
+				Iso, ost, h /* orbit */,
 			data, verbose_level);
 
 	}
@@ -1176,7 +1186,8 @@ void arc_generator::report_do_the_work(
 	string prefix;
 	string label_of_structure_plural;
 
-	prefix = "arcs_" + std::to_string(PA->q) + "_" + std::to_string(Descr->target_size);
+	prefix = "arcs_" + std::to_string(PA->q)
+			+ "_" + std::to_string(Descr->target_size);
 	label_of_structure_plural = "Arcs";
 
 
@@ -1217,9 +1228,9 @@ void arc_generator::report_decompositions(
 	Stab = Iso.Folding->Reps->stab[orbit];
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
 
-	apps_algebra::algebra_global_with_action Algebra;
+	actions::action_global Action_global;
 	
-	Algebra.report_tactical_decomposition_by_automorphism_group(
+	Action_global.report_TDA_projective_space(
 			ost, PA->P,
 			PA->A /* A_on_points */, PA->A_on_lines,
 			gens, 25 /* size_limit_for_printing */,
@@ -1272,7 +1283,8 @@ static void arc_generator_early_test_function(
 		good_candidates, nb_good_candidates, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "arc_generator_early_test_function nb_candidates=" << nb_candidates
+		cout << "arc_generator_early_test_function "
+				"nb_candidates=" << nb_candidates
 				<< " nb_good_candidates=" << nb_good_candidates << endl;
 	}
 	if (f_v)  {
@@ -1280,39 +1292,6 @@ static void arc_generator_early_test_function(
 	}
 }
 
-#if 0
-static void arc_generator_lifting_prepare_function_new(
-	exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates,
-	groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	arc_generator *Gen = (arc_generator *) EC->user_data;
-
-	if (f_v) {
-		cout << "arc_generator_lifting_prepare_function_new "
-				"nb_candidates=" << nb_candidates << endl;
-	}
-
-	Gen->lifting_prepare_function_new(EC, starter_case, 
-		candidates, nb_candidates, Strong_gens, 
-		Dio, col_labels, f_ruled_out, 
-		verbose_level - 1);
-
-
-	if (f_v) {
-		cout << "arc_generator_lifting_prepare_function_new "
-				"nb_rows=" << Dio->m << " nb_cols=" << Dio->n << endl;
-	}
-
-	if (f_v) {
-		cout << "arc_generator_lifting_prepare_function_new done" << endl;
-	}
-}
-#endif
 
 
 static void arc_generator_print_arc(
@@ -1324,25 +1303,6 @@ static void arc_generator_print_arc(
 	Gen->print_set_in_affine_plane(len, S);
 }
 
-#if 0
-static void arc_generator_print_point(long int pt, void *data)
-{
-	arc_generator *Gen = (arc_generator *) data;
-	int v[3];
-	
-	Gen->PA->F->PG_element_unrank_modified(
-			v, 1 /* stride */, 3 /* len */, pt);
-	cout << "(" << v[0] << "," << v[1] << "," << v[2] << ")" << endl;
-}
-
-static void arc_generator_report(
-		isomorph *Iso, void *data, int verbose_level)
-{
-	arc_generator *Gen = (arc_generator *) data;
-	
-	Gen->report(*Iso, verbose_level);
-}
-#endif
 
 
 }}}

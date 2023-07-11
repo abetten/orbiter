@@ -2835,6 +2835,12 @@ void syntax_tree_node::expand_in_place_handle_exponents(
 			}
 			nb_nodes = 0;
 
+			// make space:
+
+			if (fresh_mult_node->nb_nodes > nb_nodes_allocated) {
+				reallocate(fresh_mult_node->nb_nodes, verbose_level);
+			}
+
 			for (i = 0; i < fresh_mult_node->nb_nodes; i++) {
 				Nodes[i] = fresh_mult_node->Nodes[i];
 				fresh_mult_node->Nodes[i] = NULL;

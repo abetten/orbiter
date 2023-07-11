@@ -1362,6 +1362,23 @@ void formula_vector::matrix_minor(
 	m = A->nb_rows;
 	n = A->nb_cols;
 
+	if (i >= m) {
+		cout << "row index out of range." << endl;
+		exit(1);
+	}
+	if (i < 0) {
+		cout << "row index out of range." << endl;
+		exit(1);
+	}
+	if (j >= n) {
+		cout << "column index out of range." << endl;
+		exit(1);
+	}
+	if (j < 0) {
+		cout << "column index out of range." << endl;
+		exit(1);
+	}
+
 	if (f_v) {
 		cout << "formula_vector::matrix_minor "
 				"we found a matrix of size " << m << " x " << n << endl;

@@ -128,7 +128,8 @@ geometric_object_description::~geometric_object_description()
 }
 
 
-int geometric_object_description::read_arguments(int argc, std::string *argv,
+int geometric_object_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;

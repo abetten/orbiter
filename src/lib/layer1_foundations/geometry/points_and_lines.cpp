@@ -243,7 +243,8 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 
 }
 
-void points_and_lines::write_points_to_txt_file(std::string &label, int verbose_level)
+void points_and_lines::write_points_to_txt_file(
+		std::string &label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

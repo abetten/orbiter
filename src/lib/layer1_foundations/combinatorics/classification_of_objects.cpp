@@ -249,7 +249,8 @@ void classification_of_objects::classify_objects_using_nauty(
 	if (f_v) {
 		cout << "input object : ago : f_reject" << endl;
 		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
-			cout << setw(3) << input_idx << " : " << setw(5) << Ago[input_idx] << " : " << F_reject[input_idx] << endl;
+			cout << setw(3) << input_idx << " : " << setw(5)
+					<< Ago[input_idx] << " : " << F_reject[input_idx] << endl;
 		}
 	}
 
@@ -261,7 +262,8 @@ void classification_of_objects::classify_objects_using_nauty(
 			if (F_reject[input_idx]) {
 				continue;
 			}
-			cout << setw(3) << cnt << " : " << setw(3) << input_idx << " : " << setw(5) << Ago[input_idx] << endl;
+			cout << setw(3) << cnt << " : " << setw(3) << input_idx
+					<< " : " << setw(5) << Ago[input_idx] << endl;
 			cnt++;
 		}
 	}
@@ -346,7 +348,8 @@ void classification_of_objects::save_automorphism_group_order(int verbose_level)
 	label.assign("Ago");
 	Fio.lint_vec_write_csv(Ago_transversal, nb_orbits, ago_fname, label);
 	if (f_v) {
-		cout << "Written file " << ago_fname << " of size " << Fio.file_size(ago_fname) << endl;
+		cout << "Written file " << ago_fname
+				<< " of size " << Fio.file_size(ago_fname) << endl;
 	}
 	if (f_v) {
 		cout << "classification_of_objects::save_automorphism_group_order done" << endl;
@@ -394,7 +397,8 @@ void classification_of_objects::process_any_object(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_objects::process_any_object, verbose_level = " << verbose_level << endl;
+		cout << "classification_of_objects::process_any_object, "
+				"verbose_level = " << verbose_level << endl;
 	}
 	if (f_v) {
 		cout << "classification_of_objects::process_any_object "
@@ -787,7 +791,7 @@ void classification_of_objects::save(
 
 
 void classification_of_objects::report_summary_of_orbits(
-		std::ostream &fp, int verbose_level)
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -833,12 +837,14 @@ void classification_of_objects::report_summary_of_orbits(
 
 	for (i = 0; i < CB->nb_types; i++) {
 		if (f_v) {
-			cout << "classification_of_objects::latex_report, i=" << i << endl;
+			cout << "classification_of_objects::latex_report, "
+					"i=" << i << endl;
 		}
 		//j = CB->perm[i];
 		j = i;
 		if (f_v) {
-			cout << "classification_of_objects::latex_report, i=" << i << " j=" << j << endl;
+			cout << "classification_of_objects::latex_report, "
+					"i=" << i << " j=" << j << endl;
 		}
 		Table[i * width + 0] = CB->Type_rep[j];
 		Table[i * width + 1] = CB->Type_mult[j];
@@ -847,13 +853,14 @@ void classification_of_objects::report_summary_of_orbits(
 	}
 
 	if (f_v) {
-		cout << "classification_of_objects::latex_report before Summary of Orbits" << endl;
+		cout << "classification_of_objects::latex_report "
+				"before Summary of Orbits" << endl;
 	}
 
-	fp << "\\section*{Summary of Orbits}" << endl;
+	ost << "\\section*{Summary of Orbits}" << endl;
 
-	fp << "$$" << endl;
-	L.int_matrix_print_with_labels_and_partition(fp,
+	ost << "$$" << endl;
+	L.int_matrix_print_with_labels_and_partition(ost,
 			Table, CB->nb_types, 4,
 		row_labels, col_labels,
 		row_part_first, row_part_len, nb_row_parts,
@@ -861,10 +868,11 @@ void classification_of_objects::report_summary_of_orbits(
 		print_summary_table_entry,
 		this /*void *data*/,
 		true /* f_tex */);
-	fp << "$$" << endl;
+	ost << "$$" << endl;
 
 	if (f_v) {
-		cout << "classification_of_objects::latex_report after Summary of Orbits" << endl;
+		cout << "classification_of_objects::latex_report "
+				"after Summary of Orbits" << endl;
 	}
 
 	FREE_int(Table);
@@ -876,7 +884,7 @@ void classification_of_objects::report_summary_of_orbits(
 }
 
 void classification_of_objects::report_all_isomorphism_types(
-		std::ostream &fp, int max_TDO_depth,
+		std::ostream &ost, int max_TDO_depth,
 		int f_show_incma,
 		int verbose_level)
 {
@@ -891,8 +899,8 @@ void classification_of_objects::report_all_isomorphism_types(
 
 	for (i = 0; i < CB->nb_types; i++) {
 
-		fp << "\\section*{Isomorphism type " << i << " / " << CB->nb_types << "}" << endl;
-		fp << "Isomorphism type " << i << " / " << CB->nb_types
+		ost << "\\section*{Isomorphism type " << i << " / " << CB->nb_types << "}" << endl;
+		ost << "Isomorphism type " << i << " / " << CB->nb_types
 			//<<  " stored at " << j
 			<< " is original object "
 			<< CB->Type_rep[i] << " and appears "
@@ -906,16 +914,16 @@ void classification_of_objects::report_all_isomorphism_types(
 					nb_input_objects, i, 0 /*verbose_level */);
 			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
-			fp << "This isomorphism type appears " << nb_input_objects
+			ost << "This isomorphism type appears " << nb_input_objects
 					<< " times, namely for the following "
 					<< nb_input_objects << " input objects: " << endl;
 			if (nb_input_objects < 10) {
-				fp << "$" << endl;
-				L.int_set_print_tex(fp, Input_objects, nb_input_objects);
-				fp << "$\\\\" << endl;
+				ost << "$" << endl;
+				L.int_set_print_tex(ost, Input_objects, nb_input_objects);
+				ost << "$\\\\" << endl;
 			}
 			else {
-				fp << "Too big to print. \\\\" << endl;
+				ost << "Too big to print. \\\\" << endl;
 #if 0
 				fp << "$$" << endl;
 				L.int_vec_print_as_matrix(fp, Input_objects,
@@ -928,11 +936,15 @@ void classification_of_objects::report_all_isomorphism_types(
 		}
 
 		if (f_v) {
-			cout << "classification_of_objects::latex_report before report_isomorphism_type" << endl;
+			cout << "classification_of_objects::latex_report "
+					"before report_isomorphism_type" << endl;
 		}
-		report_isomorphism_type(fp, i, max_TDO_depth, f_show_incma, verbose_level);
+		report_isomorphism_type(
+				ost, i, max_TDO_depth, f_show_incma,
+				verbose_level);
 		if (f_v) {
-			cout << "classification_of_objects::latex_report after report_isomorphism_type" << endl;
+			cout << "classification_of_objects::latex_report "
+					"after report_isomorphism_type" << endl;
 		}
 
 
@@ -945,7 +957,7 @@ void classification_of_objects::report_all_isomorphism_types(
 
 
 void classification_of_objects::report_isomorphism_type(
-		std::ostream &fp, int i, int max_TDO_depth,
+		std::ostream &ost, int i, int max_TDO_depth,
 		int f_show_incma,
 		int verbose_level)
 {
@@ -996,7 +1008,7 @@ void classification_of_objects::report_isomorphism_type(
 	OwCF = OWCF_transversal[i];
 
 
-	report_object(fp,
+	report_object(ost,
 			OwCF,
 			i /* object_idx */,
 			max_TDO_depth,
@@ -1012,7 +1024,8 @@ void classification_of_objects::report_isomorphism_type(
 }
 
 
-void classification_of_objects::report_object(std::ostream &fp,
+void classification_of_objects::report_object(
+		std::ostream &ost,
 		geometry::object_with_canonical_form *OwCF,
 		int object_idx,
 		int max_TDO_depth,
@@ -1025,7 +1038,7 @@ void classification_of_objects::report_object(std::ostream &fp,
 		cout << "classification_of_objects::report_object" << endl;
 	}
 
-	OwCF->print_tex_detailed(fp, f_show_incma, verbose_level);
+	OwCF->print_tex_detailed(ost, f_show_incma, verbose_level);
 
 }
 

@@ -283,12 +283,6 @@ public:
 	void young_symmetrizer(
 			int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
-	void report_tactical_decomposition_by_automorphism_group(
-			std::ostream &ost,
-			geometry::projective_space *P,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
 	void linear_codes_with_bounded_minimum_distance(
 			poset_classification::poset_classification_control *Control,
 			groups::linear_group *LG,

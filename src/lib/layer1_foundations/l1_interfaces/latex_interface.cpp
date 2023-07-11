@@ -96,14 +96,16 @@ void latex_interface::head(
 {
 	if (f_12pt) {
 		ost << "\\documentclass[12pt]{";
-		}
+	}
 	else {
 		ost << "\\documentclass{";
-		}
-	if (f_book)
+	}
+	if (f_book) {
 		ost << "book";
-	else
+	}
+	else {
 		ost << "article";
+	}
 	ost << "}" << endl;
 	ost << "% a4paper" << endl;
 	ost << endl;
@@ -159,68 +161,68 @@ void latex_interface::head(
 		ost << "%\\topmargin 0.0in" << endl;
 		ost << "\\textheight 25cm" << endl;
 #endif
-		}
+	}
 
 	if (extras_for_preamble.length()) {
 		ost << extras_for_preamble << endl;
-		}
+	}
 	ost << endl;
 	ost << endl;
 	ost << endl;
-	ost << "%\\parindent=0pt\n";
+	ost << "%\\parindent=0pt" << endl;
 	ost << endl;
-	//ost << "\\renewcommand{\\baselinestretch}{1.5}\n";
+	//ost << "\\renewcommand{\\baselinestretch}{1.5}" << endl;
 	ost << endl;
 
 
 #if 0
 	if (f_enlarged_page) {
-		ost << "\\hoffset -2cm\n";
-		ost << "\\voffset -1cm\n";
-		ost << "\\topmargin 0.0cm\n";
+		ost << "\\hoffset -2cm" << endl;
+		ost << "\\voffset -1cm" << endl;
+		ost << "\\topmargin 0.0cm" << endl;
 		if (f_landscape) {
-			ost << "\\textheight=18cm\n";
-			ost << "\\textwidth=23cm\n";
-			}
-		else {
-			ost << "\\textheight=23cm\n";
-			ost << "\\textwidth=18cm\n";
-			}
+			ost << "\\textheight=18cm" << endl;
+			ost << "\\textwidth=23cm" << endl;
 		}
+		else {
+			ost << "\\textheight=23cm" << endl;
+			ost << "\\textwidth=18cm" << endl;
+		}
+	}
 	else {
-		ost << "\\hoffset -0.7cm\n";
-		ost << "%\\voffset 0cm\n";
+		ost << "\\hoffset -0.7cm" << endl;
+		ost << "%\\voffset 0cm" << endl;
 		ost << endl;
-		ost << "%\\oddsidemargin=15pt\n";
+		ost << "%\\oddsidemargin=15pt" << endl;
 		ost << endl;
-		ost << "%\\oddsidemargin 0pt\n";
-		ost << "%\\evensidemargin 0pt\n";
-		ost << "%\\topmargin 0pt\n";
+		ost << "%\\oddsidemargin 0pt" << endl;
+		ost << "%\\evensidemargin 0pt" << endl;
+		ost << "%\\topmargin 0pt" << endl;
 		ost << endl;
 #if 1
 		if (f_landscape) {
-			ost << "\\textwidth = 20cm\n";
-			ost << "\\textheight= 17cm\n";
-			}
+			ost << "\\textwidth = 20cm" << endl;
+			ost << "\\textheight= 17cm" << endl;
+		}
 		else {
-			ost << "\\textwidth = 17cm\n";
-			ost << "\\textheight= 21cm\n";
-			}
+			ost << "\\textwidth = 17cm" << endl;
+			ost << "\\textheight= 21cm" << endl;
+		}
 		ost << endl;
 #endif
-		}
+	}
 #endif
 
 
-	ost << "%\\topmargin=0pt\n";
-	ost << "%\\headsep=18pt\n";
-	ost << "%\\footskip=45pt\n";
-	ost << "%\\mathsurround=1pt\n";
-	ost << "%\\evensidemargin=0pt\n";
-	ost << "%\\oddsidemargin=15pt\n";
+	ost << "%\\topmargin=0pt" << endl;
+	ost << "%\\headsep=18pt" << endl;
+	ost << "%\\footskip=45pt" << endl;
+	ost << "%\\mathsurround=1pt" << endl;
+	ost << "%\\evensidemargin=0pt" << endl;
+	ost << "%\\oddsidemargin=15pt" << endl;
 	ost << endl;
 
-	ost << "%\\setlength{\\textheight}{\\baselineskip*41+\\topskip}\n";
+	ost << "%\\setlength{\\textheight}{\\baselineskip*41+\\topskip}" << endl;
 	ost << endl;
 
 
@@ -234,292 +236,292 @@ void latex_interface::head(
 	ost << "\\def\\B{\\rule[-1.2ex]{0pt}{0pt}}}" << endl;
 
 	ost << "\\newcommand{\\ans}[1]{\\\\{\\bf ANSWER}: {#1}}" << endl;
-	ost << "\\newcommand{\\Aut}{{\\rm Aut}}\n";
-	ost << "\\newcommand{\\Sym}{{\\rm Sym}}\n";
-	ost << "\\newcommand{\\sFix}{{\\cal Fix}}\n";
-	ost << "\\newcommand{\\sOrbits}{{\\cal Orbits}}\n";
-	//ost << "\\newcommand{\\sFix}{{\\mathscr Fix}}\n";
-	//ost << "\\newcommand{\\sOrbits}{{\\mathscr Orbits}}\n";
-	ost << "\\newcommand{\\Stab}{{\\rm Stab}}\n";
-	ost << "\\newcommand{\\Fix}{{\\rm Fix}}\n";
-	ost << "\\newcommand{\\fix}{{\\rm fix}}\n";
-	ost << "\\newcommand{\\Orbits}{{\\rm Orbits}}\n";
-	ost << "\\newcommand{\\PG}{{\\rm PG}}\n";
-	ost << "\\newcommand{\\AG}{{\\rm AG}}\n";
-	ost << "\\newcommand{\\SQS}{{\\rm SQS}}\n";
-	ost << "\\newcommand{\\STS}{{\\rm STS}}\n";
-	//ost << "\\newcommand{\\Sp}{{\\rm Sp}}\n";
-	ost << "\\newcommand{\\PSL}{{\\rm PSL}}\n";
-	ost << "\\newcommand{\\PGL}{{\\rm PGL}}\n";
-	ost << "\\newcommand{\\PSSL}{{\\rm P\\Sigma L}}\n";
-	ost << "\\newcommand{\\PGGL}{{\\rm P\\Gamma L}}\n";
-	ost << "\\newcommand{\\SL}{{\\rm SL}}\n";
-	ost << "\\newcommand{\\GL}{{\\rm GL}}\n";
-	ost << "\\newcommand{\\SSL}{{\\rm \\Sigma L}}\n";
-	ost << "\\newcommand{\\GGL}{{\\rm \\Gamma L}}\n";
-	ost << "\\newcommand{\\ASL}{{\\rm ASL}}\n";
-	ost << "\\newcommand{\\AGL}{{\\rm AGL}}\n";
-	ost << "\\newcommand{\\ASSL}{{\\rm A\\Sigma L}}\n";
-	ost << "\\newcommand{\\AGGL}{{\\rm A\\Gamma L}}\n";
-	ost << "\\newcommand{\\PSU}{{\\rm PSU}}\n";
-	ost << "\\newcommand{\\HS}{{\\rm HS}}\n";
-	ost << "\\newcommand{\\Hol}{{\\rm Hol}}\n";
-	ost << "\\newcommand{\\SO}{{\\rm SO}}\n";
-	ost << "\\newcommand{\\ASO}{{\\rm ASO}}\n";
+	ost << "\\newcommand{\\Aut}{{\\rm Aut}}" << endl;
+	ost << "\\newcommand{\\Sym}{{\\rm Sym}}" << endl;
+	ost << "\\newcommand{\\sFix}{{\\cal Fix}}" << endl;
+	ost << "\\newcommand{\\sOrbits}{{\\cal Orbits}}" << endl;
+	//ost << "\\newcommand{\\sFix}{{\\mathscr Fix}}" << endl;
+	//ost << "\\newcommand{\\sOrbits}{{\\mathscr Orbits}}" << endl;
+	ost << "\\newcommand{\\Stab}{{\\rm Stab}}" << endl;
+	ost << "\\newcommand{\\Fix}{{\\rm Fix}}" << endl;
+	ost << "\\newcommand{\\fix}{{\\rm fix}}" << endl;
+	ost << "\\newcommand{\\Orbits}{{\\rm Orbits}}" << endl;
+	ost << "\\newcommand{\\PG}{{\\rm PG}}" << endl;
+	ost << "\\newcommand{\\AG}{{\\rm AG}}" << endl;
+	ost << "\\newcommand{\\SQS}{{\\rm SQS}}" << endl;
+	ost << "\\newcommand{\\STS}{{\\rm STS}}" << endl;
+	//ost << "\\newcommand{\\Sp}{{\\rm Sp}}" << endl;
+	ost << "\\newcommand{\\PSL}{{\\rm PSL}}" << endl;
+	ost << "\\newcommand{\\PGL}{{\\rm PGL}}" << endl;
+	ost << "\\newcommand{\\PSSL}{{\\rm P\\Sigma L}}" << endl;
+	ost << "\\newcommand{\\PGGL}{{\\rm P\\Gamma L}}" << endl;
+	ost << "\\newcommand{\\SL}{{\\rm SL}}" << endl;
+	ost << "\\newcommand{\\GL}{{\\rm GL}}" << endl;
+	ost << "\\newcommand{\\SSL}{{\\rm \\Sigma L}}" << endl;
+	ost << "\\newcommand{\\GGL}{{\\rm \\Gamma L}}" << endl;
+	ost << "\\newcommand{\\ASL}{{\\rm ASL}}" << endl;
+	ost << "\\newcommand{\\AGL}{{\\rm AGL}}" << endl;
+	ost << "\\newcommand{\\ASSL}{{\\rm A\\Sigma L}}" << endl;
+	ost << "\\newcommand{\\AGGL}{{\\rm A\\Gamma L}}" << endl;
+	ost << "\\newcommand{\\PSU}{{\\rm PSU}}" << endl;
+	ost << "\\newcommand{\\HS}{{\\rm HS}}" << endl;
+	ost << "\\newcommand{\\Hol}{{\\rm Hol}}" << endl;
+	ost << "\\newcommand{\\SO}{{\\rm SO}}" << endl;
+	ost << "\\newcommand{\\ASO}{{\\rm ASO}}" << endl;
 
-	ost << "\\newcommand{\\la}{\\langle}\n";
-	ost << "\\newcommand{\\ra}{\\rangle}\n";
+	ost << "\\newcommand{\\la}{\\langle}" << endl;
+	ost << "\\newcommand{\\ra}{\\rangle}" << endl;
 
 
-	ost << "\\newcommand{\\cA}{{\\cal A}}\n";
-	ost << "\\newcommand{\\cB}{{\\cal B}}\n";
-	ost << "\\newcommand{\\cC}{{\\cal C}}\n";
-	ost << "\\newcommand{\\cD}{{\\cal D}}\n";
-	ost << "\\newcommand{\\cE}{{\\cal E}}\n";
-	ost << "\\newcommand{\\cF}{{\\cal F}}\n";
-	ost << "\\newcommand{\\cG}{{\\cal G}}\n";
-	ost << "\\newcommand{\\cH}{{\\cal H}}\n";
-	ost << "\\newcommand{\\cI}{{\\cal I}}\n";
-	ost << "\\newcommand{\\cJ}{{\\cal J}}\n";
-	ost << "\\newcommand{\\cK}{{\\cal K}}\n";
-	ost << "\\newcommand{\\cL}{{\\cal L}}\n";
-	ost << "\\newcommand{\\cM}{{\\cal M}}\n";
-	ost << "\\newcommand{\\cN}{{\\cal N}}\n";
-	ost << "\\newcommand{\\cO}{{\\cal O}}\n";
-	ost << "\\newcommand{\\cP}{{\\cal P}}\n";
-	ost << "\\newcommand{\\cQ}{{\\cal Q}}\n";
-	ost << "\\newcommand{\\cR}{{\\cal R}}\n";
-	ost << "\\newcommand{\\cS}{{\\cal S}}\n";
-	ost << "\\newcommand{\\cT}{{\\cal T}}\n";
-	ost << "\\newcommand{\\cU}{{\\cal U}}\n";
-	ost << "\\newcommand{\\cV}{{\\cal V}}\n";
-	ost << "\\newcommand{\\cW}{{\\cal W}}\n";
-	ost << "\\newcommand{\\cX}{{\\cal X}}\n";
-	ost << "\\newcommand{\\cY}{{\\cal Y}}\n";
-	ost << "\\newcommand{\\cZ}{{\\cal Z}}\n";
+	ost << "\\newcommand{\\cA}{{\\cal A}}" << endl;
+	ost << "\\newcommand{\\cB}{{\\cal B}}" << endl;
+	ost << "\\newcommand{\\cC}{{\\cal C}}" << endl;
+	ost << "\\newcommand{\\cD}{{\\cal D}}" << endl;
+	ost << "\\newcommand{\\cE}{{\\cal E}}" << endl;
+	ost << "\\newcommand{\\cF}{{\\cal F}}" << endl;
+	ost << "\\newcommand{\\cG}{{\\cal G}}" << endl;
+	ost << "\\newcommand{\\cH}{{\\cal H}}" << endl;
+	ost << "\\newcommand{\\cI}{{\\cal I}}" << endl;
+	ost << "\\newcommand{\\cJ}{{\\cal J}}" << endl;
+	ost << "\\newcommand{\\cK}{{\\cal K}}" << endl;
+	ost << "\\newcommand{\\cL}{{\\cal L}}" << endl;
+	ost << "\\newcommand{\\cM}{{\\cal M}}" << endl;
+	ost << "\\newcommand{\\cN}{{\\cal N}}" << endl;
+	ost << "\\newcommand{\\cO}{{\\cal O}}" << endl;
+	ost << "\\newcommand{\\cP}{{\\cal P}}" << endl;
+	ost << "\\newcommand{\\cQ}{{\\cal Q}}" << endl;
+	ost << "\\newcommand{\\cR}{{\\cal R}}" << endl;
+	ost << "\\newcommand{\\cS}{{\\cal S}}" << endl;
+	ost << "\\newcommand{\\cT}{{\\cal T}}" << endl;
+	ost << "\\newcommand{\\cU}{{\\cal U}}" << endl;
+	ost << "\\newcommand{\\cV}{{\\cal V}}" << endl;
+	ost << "\\newcommand{\\cW}{{\\cal W}}" << endl;
+	ost << "\\newcommand{\\cX}{{\\cal X}}" << endl;
+	ost << "\\newcommand{\\cY}{{\\cal Y}}" << endl;
+	ost << "\\newcommand{\\cZ}{{\\cal Z}}" << endl;
 
-	ost << "\\newcommand{\\rmA}{{\\rm A}}\n";
-	ost << "\\newcommand{\\rmB}{{\\rm B}}\n";
-	ost << "\\newcommand{\\rmC}{{\\rm C}}\n";
-	ost << "\\newcommand{\\rmD}{{\\rm D}}\n";
-	ost << "\\newcommand{\\rmE}{{\\rm E}}\n";
-	ost << "\\newcommand{\\rmF}{{\\rm F}}\n";
-	ost << "\\newcommand{\\rmG}{{\\rm G}}\n";
-	ost << "\\newcommand{\\rmH}{{\\rm H}}\n";
-	ost << "\\newcommand{\\rmI}{{\\rm I}}\n";
-	ost << "\\newcommand{\\rmJ}{{\\rm J}}\n";
-	ost << "\\newcommand{\\rmK}{{\\rm K}}\n";
-	ost << "\\newcommand{\\rmL}{{\\rm L}}\n";
-	ost << "\\newcommand{\\rmM}{{\\rm M}}\n";
-	ost << "\\newcommand{\\rmN}{{\\rm N}}\n";
-	ost << "\\newcommand{\\rmO}{{\\rm O}}\n";
-	ost << "\\newcommand{\\rmP}{{\\rm P}}\n";
-	ost << "\\newcommand{\\rmQ}{{\\rm Q}}\n";
-	ost << "\\newcommand{\\rmR}{{\\rm R}}\n";
-	ost << "\\newcommand{\\rmS}{{\\rm S}}\n";
-	ost << "\\newcommand{\\rmT}{{\\rm T}}\n";
-	ost << "\\newcommand{\\rmU}{{\\rm U}}\n";
-	ost << "\\newcommand{\\rmV}{{\\rm V}}\n";
-	ost << "\\newcommand{\\rmW}{{\\rm W}}\n";
-	ost << "\\newcommand{\\rmX}{{\\rm X}}\n";
-	ost << "\\newcommand{\\rmY}{{\\rm Y}}\n";
-	ost << "\\newcommand{\\rmZ}{{\\rm Z}}\n";
+	ost << "\\newcommand{\\rmA}{{\\rm A}}" << endl;
+	ost << "\\newcommand{\\rmB}{{\\rm B}}" << endl;
+	ost << "\\newcommand{\\rmC}{{\\rm C}}" << endl;
+	ost << "\\newcommand{\\rmD}{{\\rm D}}" << endl;
+	ost << "\\newcommand{\\rmE}{{\\rm E}}" << endl;
+	ost << "\\newcommand{\\rmF}{{\\rm F}}" << endl;
+	ost << "\\newcommand{\\rmG}{{\\rm G}}" << endl;
+	ost << "\\newcommand{\\rmH}{{\\rm H}}" << endl;
+	ost << "\\newcommand{\\rmI}{{\\rm I}}" << endl;
+	ost << "\\newcommand{\\rmJ}{{\\rm J}}" << endl;
+	ost << "\\newcommand{\\rmK}{{\\rm K}}" << endl;
+	ost << "\\newcommand{\\rmL}{{\\rm L}}" << endl;
+	ost << "\\newcommand{\\rmM}{{\\rm M}}" << endl;
+	ost << "\\newcommand{\\rmN}{{\\rm N}}" << endl;
+	ost << "\\newcommand{\\rmO}{{\\rm O}}" << endl;
+	ost << "\\newcommand{\\rmP}{{\\rm P}}" << endl;
+	ost << "\\newcommand{\\rmQ}{{\\rm Q}}" << endl;
+	ost << "\\newcommand{\\rmR}{{\\rm R}}" << endl;
+	ost << "\\newcommand{\\rmS}{{\\rm S}}" << endl;
+	ost << "\\newcommand{\\rmT}{{\\rm T}}" << endl;
+	ost << "\\newcommand{\\rmU}{{\\rm U}}" << endl;
+	ost << "\\newcommand{\\rmV}{{\\rm V}}" << endl;
+	ost << "\\newcommand{\\rmW}{{\\rm W}}" << endl;
+	ost << "\\newcommand{\\rmX}{{\\rm X}}" << endl;
+	ost << "\\newcommand{\\rmY}{{\\rm Y}}" << endl;
+	ost << "\\newcommand{\\rmZ}{{\\rm Z}}" << endl;
 
-	ost << "\\newcommand{\\bA}{{\\bf A}}\n";
-	ost << "\\newcommand{\\bB}{{\\bf B}}\n";
-	ost << "\\newcommand{\\bC}{{\\bf C}}\n";
-	ost << "\\newcommand{\\bD}{{\\bf D}}\n";
-	ost << "\\newcommand{\\bE}{{\\bf E}}\n";
-	ost << "\\newcommand{\\bF}{{\\bf F}}\n";
-	ost << "\\newcommand{\\bG}{{\\bf G}}\n";
-	ost << "\\newcommand{\\bH}{{\\bf H}}\n";
-	ost << "\\newcommand{\\bI}{{\\bf I}}\n";
-	ost << "\\newcommand{\\bJ}{{\\bf J}}\n";
-	ost << "\\newcommand{\\bK}{{\\bf K}}\n";
-	ost << "\\newcommand{\\bL}{{\\bf L}}\n";
-	ost << "\\newcommand{\\bM}{{\\bf M}}\n";
-	ost << "\\newcommand{\\bN}{{\\bf N}}\n";
-	ost << "\\newcommand{\\bO}{{\\bf O}}\n";
-	ost << "\\newcommand{\\bP}{{\\bf P}}\n";
-	ost << "\\newcommand{\\bQ}{{\\bf Q}}\n";
-	ost << "\\newcommand{\\bR}{{\\bf R}}\n";
-	ost << "\\newcommand{\\bS}{{\\bf S}}\n";
-	ost << "\\newcommand{\\bT}{{\\bf T}}\n";
-	ost << "\\newcommand{\\bU}{{\\bf U}}\n";
-	ost << "\\newcommand{\\bV}{{\\bf V}}\n";
-	ost << "\\newcommand{\\bW}{{\\bf W}}\n";
-	ost << "\\newcommand{\\bX}{{\\bf X}}\n";
-	ost << "\\newcommand{\\bY}{{\\bf Y}}\n";
-	ost << "\\newcommand{\\bZ}{{\\bf Z}}\n";
+	ost << "\\newcommand{\\bA}{{\\bf A}}" << endl;
+	ost << "\\newcommand{\\bB}{{\\bf B}}" << endl;
+	ost << "\\newcommand{\\bC}{{\\bf C}}" << endl;
+	ost << "\\newcommand{\\bD}{{\\bf D}}" << endl;
+	ost << "\\newcommand{\\bE}{{\\bf E}}" << endl;
+	ost << "\\newcommand{\\bF}{{\\bf F}}" << endl;
+	ost << "\\newcommand{\\bG}{{\\bf G}}" << endl;
+	ost << "\\newcommand{\\bH}{{\\bf H}}" << endl;
+	ost << "\\newcommand{\\bI}{{\\bf I}}" << endl;
+	ost << "\\newcommand{\\bJ}{{\\bf J}}" << endl;
+	ost << "\\newcommand{\\bK}{{\\bf K}}" << endl;
+	ost << "\\newcommand{\\bL}{{\\bf L}}" << endl;
+	ost << "\\newcommand{\\bM}{{\\bf M}}" << endl;
+	ost << "\\newcommand{\\bN}{{\\bf N}}" << endl;
+	ost << "\\newcommand{\\bO}{{\\bf O}}" << endl;
+	ost << "\\newcommand{\\bP}{{\\bf P}}" << endl;
+	ost << "\\newcommand{\\bQ}{{\\bf Q}}" << endl;
+	ost << "\\newcommand{\\bR}{{\\bf R}}" << endl;
+	ost << "\\newcommand{\\bS}{{\\bf S}}" << endl;
+	ost << "\\newcommand{\\bT}{{\\bf T}}" << endl;
+	ost << "\\newcommand{\\bU}{{\\bf U}}" << endl;
+	ost << "\\newcommand{\\bV}{{\\bf V}}" << endl;
+	ost << "\\newcommand{\\bW}{{\\bf W}}" << endl;
+	ost << "\\newcommand{\\bX}{{\\bf X}}" << endl;
+	ost << "\\newcommand{\\bY}{{\\bf Y}}" << endl;
+	ost << "\\newcommand{\\bZ}{{\\bf Z}}" << endl;
 
 #if 0
-	ost << "\\newcommand{\\sA}{{\\mathscr A}}\n";
-	ost << "\\newcommand{\\sB}{{\\mathscr B}}\n";
-	ost << "\\newcommand{\\sC}{{\\mathscr C}}\n";
-	ost << "\\newcommand{\\sD}{{\\mathscr D}}\n";
-	ost << "\\newcommand{\\sE}{{\\mathscr E}}\n";
-	ost << "\\newcommand{\\sF}{{\\mathscr F}}\n";
-	ost << "\\newcommand{\\sG}{{\\mathscr G}}\n";
-	ost << "\\newcommand{\\sH}{{\\mathscr H}}\n";
-	ost << "\\newcommand{\\sI}{{\\mathscr I}}\n";
-	ost << "\\newcommand{\\sJ}{{\\mathscr J}}\n";
-	ost << "\\newcommand{\\sK}{{\\mathscr K}}\n";
-	ost << "\\newcommand{\\sL}{{\\mathscr L}}\n";
-	ost << "\\newcommand{\\sM}{{\\mathscr M}}\n";
-	ost << "\\newcommand{\\sN}{{\\mathscr N}}\n";
-	ost << "\\newcommand{\\sO}{{\\mathscr O}}\n";
-	ost << "\\newcommand{\\sP}{{\\mathscr P}}\n";
-	ost << "\\newcommand{\\sQ}{{\\mathscr Q}}\n";
-	ost << "\\newcommand{\\sR}{{\\mathscr R}}\n";
-	ost << "\\newcommand{\\sS}{{\\mathscr S}}\n";
-	ost << "\\newcommand{\\sT}{{\\mathscr T}}\n";
-	ost << "\\newcommand{\\sU}{{\\mathscr U}}\n";
-	ost << "\\newcommand{\\sV}{{\\mathscr V}}\n";
-	ost << "\\newcommand{\\sW}{{\\mathscr W}}\n";
-	ost << "\\newcommand{\\sX}{{\\mathscr X}}\n";
-	ost << "\\newcommand{\\sY}{{\\mathscr Y}}\n";
-	ost << "\\newcommand{\\sZ}{{\\mathscr Z}}\n";
+	ost << "\\newcommand{\\sA}{{\\mathscr A}}" << endl;
+	ost << "\\newcommand{\\sB}{{\\mathscr B}}" << endl;
+	ost << "\\newcommand{\\sC}{{\\mathscr C}}" << endl;
+	ost << "\\newcommand{\\sD}{{\\mathscr D}}" << endl;
+	ost << "\\newcommand{\\sE}{{\\mathscr E}}" << endl;
+	ost << "\\newcommand{\\sF}{{\\mathscr F}}" << endl;
+	ost << "\\newcommand{\\sG}{{\\mathscr G}}" << endl;
+	ost << "\\newcommand{\\sH}{{\\mathscr H}}" << endl;
+	ost << "\\newcommand{\\sI}{{\\mathscr I}}" << endl;
+	ost << "\\newcommand{\\sJ}{{\\mathscr J}}" << endl;
+	ost << "\\newcommand{\\sK}{{\\mathscr K}}" << endl;
+	ost << "\\newcommand{\\sL}{{\\mathscr L}}" << endl;
+	ost << "\\newcommand{\\sM}{{\\mathscr M}}" << endl;
+	ost << "\\newcommand{\\sN}{{\\mathscr N}}" << endl;
+	ost << "\\newcommand{\\sO}{{\\mathscr O}}" << endl;
+	ost << "\\newcommand{\\sP}{{\\mathscr P}}" << endl;
+	ost << "\\newcommand{\\sQ}{{\\mathscr Q}}" << endl;
+	ost << "\\newcommand{\\sR}{{\\mathscr R}}" << endl;
+	ost << "\\newcommand{\\sS}{{\\mathscr S}}" << endl;
+	ost << "\\newcommand{\\sT}{{\\mathscr T}}" << endl;
+	ost << "\\newcommand{\\sU}{{\\mathscr U}}" << endl;
+	ost << "\\newcommand{\\sV}{{\\mathscr V}}" << endl;
+	ost << "\\newcommand{\\sW}{{\\mathscr W}}" << endl;
+	ost << "\\newcommand{\\sX}{{\\mathscr X}}" << endl;
+	ost << "\\newcommand{\\sY}{{\\mathscr Y}}" << endl;
+	ost << "\\newcommand{\\sZ}{{\\mathscr Z}}" << endl;
 #else
-	ost << "\\newcommand{\\sA}{{\\cal A}}\n";
-	ost << "\\newcommand{\\sB}{{\\cal B}}\n";
-	ost << "\\newcommand{\\sC}{{\\cal C}}\n";
-	ost << "\\newcommand{\\sD}{{\\cal D}}\n";
-	ost << "\\newcommand{\\sE}{{\\cal E}}\n";
-	ost << "\\newcommand{\\sF}{{\\cal F}}\n";
-	ost << "\\newcommand{\\sG}{{\\cal G}}\n";
-	ost << "\\newcommand{\\sH}{{\\cal H}}\n";
-	ost << "\\newcommand{\\sI}{{\\cal I}}\n";
-	ost << "\\newcommand{\\sJ}{{\\cal J}}\n";
-	ost << "\\newcommand{\\sK}{{\\cal K}}\n";
-	ost << "\\newcommand{\\sL}{{\\cal L}}\n";
-	ost << "\\newcommand{\\sM}{{\\cal M}}\n";
-	ost << "\\newcommand{\\sN}{{\\cal N}}\n";
-	ost << "\\newcommand{\\sO}{{\\cal O}}\n";
-	ost << "\\newcommand{\\sP}{{\\cal P}}\n";
-	ost << "\\newcommand{\\sQ}{{\\cal Q}}\n";
-	ost << "\\newcommand{\\sR}{{\\cal R}}\n";
-	ost << "\\newcommand{\\sS}{{\\cal S}}\n";
-	ost << "\\newcommand{\\sT}{{\\cal T}}\n";
-	ost << "\\newcommand{\\sU}{{\\cal U}}\n";
-	ost << "\\newcommand{\\sV}{{\\cal V}}\n";
-	ost << "\\newcommand{\\sW}{{\\cal W}}\n";
-	ost << "\\newcommand{\\sX}{{\\cal X}}\n";
-	ost << "\\newcommand{\\sY}{{\\cal Y}}\n";
-	ost << "\\newcommand{\\sZ}{{\\cal Z}}\n";
+	ost << "\\newcommand{\\sA}{{\\cal A}}" << endl;
+	ost << "\\newcommand{\\sB}{{\\cal B}}" << endl;
+	ost << "\\newcommand{\\sC}{{\\cal C}}" << endl;
+	ost << "\\newcommand{\\sD}{{\\cal D}}" << endl;
+	ost << "\\newcommand{\\sE}{{\\cal E}}" << endl;
+	ost << "\\newcommand{\\sF}{{\\cal F}}" << endl;
+	ost << "\\newcommand{\\sG}{{\\cal G}}" << endl;
+	ost << "\\newcommand{\\sH}{{\\cal H}}" << endl;
+	ost << "\\newcommand{\\sI}{{\\cal I}}" << endl;
+	ost << "\\newcommand{\\sJ}{{\\cal J}}" << endl;
+	ost << "\\newcommand{\\sK}{{\\cal K}}" << endl;
+	ost << "\\newcommand{\\sL}{{\\cal L}}" << endl;
+	ost << "\\newcommand{\\sM}{{\\cal M}}" << endl;
+	ost << "\\newcommand{\\sN}{{\\cal N}}" << endl;
+	ost << "\\newcommand{\\sO}{{\\cal O}}" << endl;
+	ost << "\\newcommand{\\sP}{{\\cal P}}" << endl;
+	ost << "\\newcommand{\\sQ}{{\\cal Q}}" << endl;
+	ost << "\\newcommand{\\sR}{{\\cal R}}" << endl;
+	ost << "\\newcommand{\\sS}{{\\cal S}}" << endl;
+	ost << "\\newcommand{\\sT}{{\\cal T}}" << endl;
+	ost << "\\newcommand{\\sU}{{\\cal U}}" << endl;
+	ost << "\\newcommand{\\sV}{{\\cal V}}" << endl;
+	ost << "\\newcommand{\\sW}{{\\cal W}}" << endl;
+	ost << "\\newcommand{\\sX}{{\\cal X}}" << endl;
+	ost << "\\newcommand{\\sY}{{\\cal Y}}" << endl;
+	ost << "\\newcommand{\\sZ}{{\\cal Z}}" << endl;
 #endif
 
-	ost << "\\newcommand{\\frakA}{{\\mathfrak A}}\n";
-	ost << "\\newcommand{\\frakB}{{\\mathfrak B}}\n";
-	ost << "\\newcommand{\\frakC}{{\\mathfrak C}}\n";
-	ost << "\\newcommand{\\frakD}{{\\mathfrak D}}\n";
-	ost << "\\newcommand{\\frakE}{{\\mathfrak E}}\n";
-	ost << "\\newcommand{\\frakF}{{\\mathfrak F}}\n";
-	ost << "\\newcommand{\\frakG}{{\\mathfrak G}}\n";
-	ost << "\\newcommand{\\frakH}{{\\mathfrak H}}\n";
-	ost << "\\newcommand{\\frakI}{{\\mathfrak I}}\n";
-	ost << "\\newcommand{\\frakJ}{{\\mathfrak J}}\n";
-	ost << "\\newcommand{\\frakK}{{\\mathfrak K}}\n";
-	ost << "\\newcommand{\\frakL}{{\\mathfrak L}}\n";
-	ost << "\\newcommand{\\frakM}{{\\mathfrak M}}\n";
-	ost << "\\newcommand{\\frakN}{{\\mathfrak N}}\n";
-	ost << "\\newcommand{\\frakO}{{\\mathfrak O}}\n";
-	ost << "\\newcommand{\\frakP}{{\\mathfrak P}}\n";
-	ost << "\\newcommand{\\frakQ}{{\\mathfrak Q}}\n";
-	ost << "\\newcommand{\\frakR}{{\\mathfrak R}}\n";
-	ost << "\\newcommand{\\frakS}{{\\mathfrak S}}\n";
-	ost << "\\newcommand{\\frakT}{{\\mathfrak T}}\n";
-	ost << "\\newcommand{\\frakU}{{\\mathfrak U}}\n";
-	ost << "\\newcommand{\\frakV}{{\\mathfrak V}}\n";
-	ost << "\\newcommand{\\frakW}{{\\mathfrak W}}\n";
-	ost << "\\newcommand{\\frakX}{{\\mathfrak X}}\n";
-	ost << "\\newcommand{\\frakY}{{\\mathfrak Y}}\n";
-	ost << "\\newcommand{\\frakZ}{{\\mathfrak Z}}\n";
+	ost << "\\newcommand{\\frakA}{{\\mathfrak A}}" << endl;
+	ost << "\\newcommand{\\frakB}{{\\mathfrak B}}" << endl;
+	ost << "\\newcommand{\\frakC}{{\\mathfrak C}}" << endl;
+	ost << "\\newcommand{\\frakD}{{\\mathfrak D}}" << endl;
+	ost << "\\newcommand{\\frakE}{{\\mathfrak E}}" << endl;
+	ost << "\\newcommand{\\frakF}{{\\mathfrak F}}" << endl;
+	ost << "\\newcommand{\\frakG}{{\\mathfrak G}}" << endl;
+	ost << "\\newcommand{\\frakH}{{\\mathfrak H}}" << endl;
+	ost << "\\newcommand{\\frakI}{{\\mathfrak I}}" << endl;
+	ost << "\\newcommand{\\frakJ}{{\\mathfrak J}}" << endl;
+	ost << "\\newcommand{\\frakK}{{\\mathfrak K}}" << endl;
+	ost << "\\newcommand{\\frakL}{{\\mathfrak L}}" << endl;
+	ost << "\\newcommand{\\frakM}{{\\mathfrak M}}" << endl;
+	ost << "\\newcommand{\\frakN}{{\\mathfrak N}}" << endl;
+	ost << "\\newcommand{\\frakO}{{\\mathfrak O}}" << endl;
+	ost << "\\newcommand{\\frakP}{{\\mathfrak P}}" << endl;
+	ost << "\\newcommand{\\frakQ}{{\\mathfrak Q}}" << endl;
+	ost << "\\newcommand{\\frakR}{{\\mathfrak R}}" << endl;
+	ost << "\\newcommand{\\frakS}{{\\mathfrak S}}" << endl;
+	ost << "\\newcommand{\\frakT}{{\\mathfrak T}}" << endl;
+	ost << "\\newcommand{\\frakU}{{\\mathfrak U}}" << endl;
+	ost << "\\newcommand{\\frakV}{{\\mathfrak V}}" << endl;
+	ost << "\\newcommand{\\frakW}{{\\mathfrak W}}" << endl;
+	ost << "\\newcommand{\\frakX}{{\\mathfrak X}}" << endl;
+	ost << "\\newcommand{\\frakY}{{\\mathfrak Y}}" << endl;
+	ost << "\\newcommand{\\frakZ}{{\\mathfrak Z}}" << endl;
 
-	ost << "\\newcommand{\\fraka}{{\\mathfrak a}}\n";
-	ost << "\\newcommand{\\frakb}{{\\mathfrak b}}\n";
-	ost << "\\newcommand{\\frakc}{{\\mathfrak c}}\n";
-	ost << "\\newcommand{\\frakd}{{\\mathfrak d}}\n";
-	ost << "\\newcommand{\\frake}{{\\mathfrak e}}\n";
-	ost << "\\newcommand{\\frakf}{{\\mathfrak f}}\n";
-	ost << "\\newcommand{\\frakg}{{\\mathfrak g}}\n";
-	ost << "\\newcommand{\\frakh}{{\\mathfrak h}}\n";
-	ost << "\\newcommand{\\fraki}{{\\mathfrak i}}\n";
-	ost << "\\newcommand{\\frakj}{{\\mathfrak j}}\n";
-	ost << "\\newcommand{\\frakk}{{\\mathfrak k}}\n";
-	ost << "\\newcommand{\\frakl}{{\\mathfrak l}}\n";
-	ost << "\\newcommand{\\frakm}{{\\mathfrak m}}\n";
-	ost << "\\newcommand{\\frakn}{{\\mathfrak n}}\n";
-	ost << "\\newcommand{\\frako}{{\\mathfrak o}}\n";
-	ost << "\\newcommand{\\frakp}{{\\mathfrak p}}\n";
-	ost << "\\newcommand{\\frakq}{{\\mathfrak q}}\n";
-	ost << "\\newcommand{\\frakr}{{\\mathfrak r}}\n";
-	ost << "\\newcommand{\\fraks}{{\\mathfrak s}}\n";
-	ost << "\\newcommand{\\frakt}{{\\mathfrak t}}\n";
-	ost << "\\newcommand{\\fraku}{{\\mathfrak u}}\n";
-	ost << "\\newcommand{\\frakv}{{\\mathfrak v}}\n";
-	ost << "\\newcommand{\\frakw}{{\\mathfrak w}}\n";
-	ost << "\\newcommand{\\frakx}{{\\mathfrak x}}\n";
-	ost << "\\newcommand{\\fraky}{{\\mathfrak y}}\n";
-	ost << "\\newcommand{\\frakz}{{\\mathfrak z}}\n";
+	ost << "\\newcommand{\\fraka}{{\\mathfrak a}}" << endl;
+	ost << "\\newcommand{\\frakb}{{\\mathfrak b}}" << endl;
+	ost << "\\newcommand{\\frakc}{{\\mathfrak c}}" << endl;
+	ost << "\\newcommand{\\frakd}{{\\mathfrak d}}" << endl;
+	ost << "\\newcommand{\\frake}{{\\mathfrak e}}" << endl;
+	ost << "\\newcommand{\\frakf}{{\\mathfrak f}}" << endl;
+	ost << "\\newcommand{\\frakg}{{\\mathfrak g}}" << endl;
+	ost << "\\newcommand{\\frakh}{{\\mathfrak h}}" << endl;
+	ost << "\\newcommand{\\fraki}{{\\mathfrak i}}" << endl;
+	ost << "\\newcommand{\\frakj}{{\\mathfrak j}}" << endl;
+	ost << "\\newcommand{\\frakk}{{\\mathfrak k}}" << endl;
+	ost << "\\newcommand{\\frakl}{{\\mathfrak l}}" << endl;
+	ost << "\\newcommand{\\frakm}{{\\mathfrak m}}" << endl;
+	ost << "\\newcommand{\\frakn}{{\\mathfrak n}}" << endl;
+	ost << "\\newcommand{\\frako}{{\\mathfrak o}}" << endl;
+	ost << "\\newcommand{\\frakp}{{\\mathfrak p}}" << endl;
+	ost << "\\newcommand{\\frakq}{{\\mathfrak q}}" << endl;
+	ost << "\\newcommand{\\frakr}{{\\mathfrak r}}" << endl;
+	ost << "\\newcommand{\\fraks}{{\\mathfrak s}}" << endl;
+	ost << "\\newcommand{\\frakt}{{\\mathfrak t}}" << endl;
+	ost << "\\newcommand{\\fraku}{{\\mathfrak u}}" << endl;
+	ost << "\\newcommand{\\frakv}{{\\mathfrak v}}" << endl;
+	ost << "\\newcommand{\\frakw}{{\\mathfrak w}}" << endl;
+	ost << "\\newcommand{\\frakx}{{\\mathfrak x}}" << endl;
+	ost << "\\newcommand{\\fraky}{{\\mathfrak y}}" << endl;
+	ost << "\\newcommand{\\frakz}{{\\mathfrak z}}" << endl;
 
 
-	ost << "\\newcommand{\\Tetra}{{\\mathfrak Tetra}}\n";
-	ost << "\\newcommand{\\Cube}{{\\mathfrak Cube}}\n";
-	ost << "\\newcommand{\\Octa}{{\\mathfrak Octa}}\n";
-	ost << "\\newcommand{\\Dode}{{\\mathfrak Dode}}\n";
-	ost << "\\newcommand{\\Ico}{{\\mathfrak Ico}}\n";
+	ost << "\\newcommand{\\Tetra}{{\\mathfrak Tetra}}" << endl;
+	ost << "\\newcommand{\\Cube}{{\\mathfrak Cube}}" << endl;
+	ost << "\\newcommand{\\Octa}{{\\mathfrak Octa}}" << endl;
+	ost << "\\newcommand{\\Dode}{{\\mathfrak Dode}}" << endl;
+	ost << "\\newcommand{\\Ico}{{\\mathfrak Ico}}" << endl;
 
-	ost << "\\newcommand{\\bbF}{{\\mathbb F}}\n";
-	ost << "\\newcommand{\\bbQ}{{\\mathbb Q}}\n";
-	ost << "\\newcommand{\\bbC}{{\\mathbb C}}\n";
-	ost << "\\newcommand{\\bbR}{{\\mathbb R}}\n";
+	ost << "\\newcommand{\\bbF}{{\\mathbb F}}" << endl;
+	ost << "\\newcommand{\\bbQ}{{\\mathbb Q}}" << endl;
+	ost << "\\newcommand{\\bbC}{{\\mathbb C}}" << endl;
+	ost << "\\newcommand{\\bbR}{{\\mathbb R}}" << endl;
 
 	ost << endl;
 	ost << endl;
 	ost << endl;
-	ost << "%\\makeindex\n";
+	ost << "%\\makeindex" << endl;
 	ost << endl;
-	ost << "\\begin{document} \n";
+	ost << "\\begin{document} " << endl;
 	ost << "\\setTBstruts" << endl;
 	ost << endl;
-	ost << "\\bibliographystyle{plain}\n";
+	ost << "\\bibliographystyle{plain}" << endl;
 	if (!f_pagenumbers) {
-		ost << "\\pagestyle{empty}\n";
-		}
-	ost << "%\\large\n";
+		ost << "\\pagestyle{empty}" << endl;
+	}
+	ost << "%\\large" << endl;
 	ost << endl;
-	ost << "{\\allowdisplaybreaks%\n";
-	ost << endl;
-	ost << endl;
+	ost << "{\\allowdisplaybreaks%" << endl;
 	ost << endl;
 	ost << endl;
-	ost << "%\\makeindex\n";
 	ost << endl;
-	ost << "%\\renewcommand{\\labelenumi}{(\\roman{enumi})}\n";
+	ost << endl;
+	ost << "%\\makeindex" << endl;
+	ost << endl;
+	ost << "%\\renewcommand{\\labelenumi}{(\\roman{enumi})}" << endl;
 	ost << endl;
 
 	if (f_title) {
-		ost << "\\title{" << title << "}\n";
-		ost << "\\author{" << author << "}%end author\n";
-		ost << "%\\date{}\n";
-		ost << "\\maketitle%\n";
-		}
-	ost << "%\\pagenumbering{roman}\n";
-	ost << "%\\thispagestyle{empty}\n";
+		ost << "\\title{" << title << "}" << endl;
+		ost << "\\author{" << author << "}%end author" << endl;
+		ost << "%\\date{}" << endl;
+		ost << "\\maketitle%" << endl;
+	}
+	ost << "%\\pagenumbering{roman}" << endl;
+	ost << "%\\thispagestyle{empty}" << endl;
 	if (f_toc) {
-		ost << "\\tableofcontents\n";
-		}
-	ost << "%\\input et.tex%\n";
-	ost << "%\\thispagestyle{empty}%\\phantom{page2}%\\clearpage%\n";
-	ost << "%\\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}%\n";
-	ost << "%\\tableofcontents\n";
-	ost << "%\\listofsymbols\n";
+		ost << "\\tableofcontents" << endl;
+	}
+	ost << "%\\input et.tex%" << endl;
+	ost << "%\\thispagestyle{empty}%\\phantom{page2}%\\clearpage%" << endl;
+	ost << "%\\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}%" << endl;
+	ost << "%\\tableofcontents" << endl;
+	ost << "%\\listofsymbols" << endl;
 	if (f_toc){
-		ost << "\\clearpage\n";
+		ost << "\\clearpage" << endl;
 		ost << endl;
-		}
-	ost << "%\\pagenumbering{arabic}\n";
-	ost << "%\\pagenumbering{roman}\n";
+	}
+	ost << "%\\pagenumbering{arabic}" << endl;
+	ost << "%\\pagenumbering{roman}" << endl;
 	ost << endl;
 	ost << endl;
 	ost << endl;
@@ -530,27 +532,27 @@ void latex_interface::foot(std::ostream& ost)
 {
 	ost << endl;
 	ost << endl;
-	ost << "%\\bibliographystyle{gerplain}% wird oben eingestellt\n";
-	ost << "%\\addcontentsline{toc}{section}{References}\n";
-	ost << "%\\bibliography{../MY_BIBLIOGRAPHY/anton}\n";
-	ost << "% ACHTUNG: nicht vergessen:\n";
-	ost << "% die Zeile\n";
-	ost << "%\\addcontentsline{toc}{chapter}{Literaturverzeichnis}\n";
-	ost << "% muss per Hand in d.bbl eingefuegt werden !\n";
-	ost << "% nach \\begin{thebibliography}{100}\n";
+	ost << "%\\bibliographystyle{gerplain}% wird oben eingestellt" << endl;
+	ost << "%\\addcontentsline{toc}{section}{References}" << endl;
+	ost << "%\\bibliography{../MY_BIBLIOGRAPHY/anton}" << endl;
+	ost << "% ACHTUNG: nicht vergessen:" << endl;
+	ost << "% die Zeile" << endl;
+	ost << "%\\addcontentsline{toc}{chapter}{Literaturverzeichnis}" << endl;
+	ost << "% muss per Hand in d.bbl eingefuegt werden !" << endl;
+	ost << "% nach \\begin{thebibliography}{100}" << endl;
 	ost << endl;
-	ost << "%\\begin{theindex}\n";
+	ost << "%\\begin{theindex}" << endl;
 	ost << endl;
-	ost << "%\\clearpage\n";
-	ost << "%\\addcontentsline{toc}{chapter}{Index}\n";
-	ost << "%\\input{apd.ind}\n";
+	ost << "%\\clearpage" << endl;
+	ost << "%\\addcontentsline{toc}{chapter}{Index}" << endl;
+	ost << "%\\input{apd.ind}" << endl;
 	ost << endl;
-	ost << "%\\printindex\n";
-	ost << "%\\end{theindex}\n";
+	ost << "%\\printindex" << endl;
+	ost << "%\\end{theindex}" << endl;
 	ost << endl;
-	ost << "}% allowdisplaybreaks\n";
+	ost << "}% allowdisplaybreaks" << endl;
 	ost << endl;
-	ost << "\\end{document}\n";
+	ost << "\\end{document}" << endl;
 	ost << endl;
 	ost << endl;
 }
@@ -559,7 +561,6 @@ void latex_interface::foot(std::ostream& ost)
 
 
 // two functions from DISCRETA1:
-// adapted to use std::ostream instead of FILE pointer
 
 void latex_interface::incma_latex_with_text_labels(
 		std::ostream &fp,
@@ -597,11 +598,13 @@ void latex_interface::incma_latex_with_text_labels(
 
 #if 0
 	if (!Descr->f_width) {
-		cout << "latex_interface::incma_latex_with_text_labels please give -width <width>" << endl;
+		cout << "latex_interface::incma_latex_with_text_labels "
+				"please give -width <width>" << endl;
 		exit(1);
 	}
 	if (!Descr->f_width_10) {
-		cout << "latex_interface::incma_latex_with_text_labels please give -width_10 <width_10>" << endl;
+		cout << "latex_interface::incma_latex_with_text_labels "
+				"please give -width_10 <width_10>" << endl;
 		exit(1);
 	}
 #endif
@@ -615,50 +618,56 @@ void latex_interface::incma_latex_with_text_labels(
 	h1 = h;
 	if (f_labelling_points) {
 		w1 += 2 * Descr->width;
-		}
+	}
 	if (f_labelling_blocks) {
 		h1 += 2 * Descr->width;
-		}
+	}
 	fp << "\\begin{picture}(" << w1 << "," << h1 << ")" << endl;
 
 	// the grid:
+
+	// thick vertical lines according to the partition:
+
 	fp << "\\linethickness{" << tdo_line_width << "}" << endl;
 	k = 0;
 	for (i = -1; i < B; i++) {
 		if (i >= 0) {
 			a = Bj[i];
 			k += a;
-			}
+		}
 		if (Descr->f_outline_thin) {
 			if (i == -1 || i == B - 1) {
 				continue;
-				}
 			}
+		}
 		fp << "\\put(" << k * Descr->width << ",0){\\line(0,1){"
 				<< h << "}}" << endl;
-		}
+	}
 	if (k != b) {
 		cout << "incma_latex_picture: k != b" << endl;
 		exit(1);
-		}
+	}
+
+	// thick horizontal lines according to the partition:
+
 	k = 0;
 	for (i = -1; i < V; i++) {
 		if (i >= 0) {
 			a = Vi[i];
 			k += a;
-			}
+		}
 		if (Descr->f_outline_thin) {
 			if (i == -1 || i == V - 1) {
 				continue;
-				}
 			}
+		}
 		fp << "\\put(0," << h - k * Descr->width << "){\\line(1,0){"
 				<< w << "}}" << endl;
-		}
+	}
 	if (k != v) {
 		cout << "incma_latex_picture: k != v" << endl;
 		exit(1);
-		}
+	}
 
 	// labeling of points:
 	if (f_labelling_points) {
@@ -666,14 +675,14 @@ void latex_interface::incma_latex_with_text_labels(
 			fp << "\\put(0," << h - i * Descr->width - width_5
 				<< "){\\makebox(0,0)[r]{"
 				<< point_labels[i] << "$\\,$}}" << endl;
-			}
 		}
+	}
 	else {
 		for (i = 0; i < v; i++) {
 			fp << "\\put(0," << h - i * Descr->width - width_5
 				<< "){\\makebox(0,0)[r]{}}" << endl;
-			}
 		}
+	}
 
 	// labeling of blocks:
 	if (f_labelling_blocks) {
@@ -681,14 +690,14 @@ void latex_interface::incma_latex_with_text_labels(
 			fp << "\\put(" << i * Descr->width + width_5 << "," << h + width_5
 				<< "){\\makebox(0,0)[b]{"
 				<< block_labels[i] << "}}" << endl;
-			}
 		}
+	}
 	else {
 		for (i = 0; i < b; i++) {
 			fp << "\\put(" << i * Descr->width + width_5 << "," << h + width_5
 				<< "){\\makebox(0,0)[b]{}}" << endl;
-			}
 		}
+	}
 
 	// the grid:
 	fp << "\\linethickness{" << line_width << "}" << endl;
@@ -709,7 +718,6 @@ void latex_interface::incma_latex_with_text_labels(
 			if (incma[i * b + j] == 0) {
 				continue;
 			}
-			// printf("%d ", j);
 			x0 = j * Descr->width;
 			x1 = (j + 1) * Descr->width;
 			X0 = x0 + Descr->width_10;
@@ -726,9 +734,8 @@ void latex_interface::incma_latex_with_text_labels(
 			fp << "\\put(" << X1 << "," << Y1 << "){\\line(0,1){"
 					<< width_8 << "}}" << endl;
 
-			}
-		// printf("\n");
 		}
+	}
 
 	fp << "\\end{picture}" << endl;
 	if (f_v) {
@@ -739,7 +746,8 @@ void latex_interface::incma_latex_with_text_labels(
 
 
 
-void latex_interface::incma_latex(std::ostream &fp,
+void latex_interface::incma_latex(
+		std::ostream &fp,
 	int v, int b,
 	int V, int B, int *Vi, int *Bj,
 	int *incma,
@@ -756,7 +764,8 @@ void latex_interface::incma_latex(std::ostream &fp,
 	Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
 
 	if (f_v) {
-		cout << "latex_interface::incma_latex before incma_latex_with_text_labels" << endl;
+		cout << "latex_interface::incma_latex "
+				"before incma_latex_with_text_labels" << endl;
 	}
 	incma_latex_with_text_labels(fp,
 			Descr,
@@ -765,7 +774,8 @@ void latex_interface::incma_latex(std::ostream &fp,
 		false /* f_labelling_blocks */, NULL,
 		verbose_level);
 	if (f_v) {
-		cout << "latex_interface::incma_latex after incma_latex_with_text_labels" << endl;
+		cout << "latex_interface::incma_latex "
+				"after incma_latex_with_text_labels" << endl;
 	}
 
 	if (f_v) {
@@ -810,7 +820,8 @@ void latex_interface::incma_latex_with_labels(
 	}
 
 	if (f_v) {
-		cout << "latex_interface::incma_latex before incma_latex_with_text_labels" << endl;
+		cout << "latex_interface::incma_latex "
+				"before incma_latex_with_text_labels" << endl;
 	}
 	incma_latex_with_text_labels(fp,
 			Descr,
@@ -819,7 +830,8 @@ void latex_interface::incma_latex_with_labels(
 		true /* f_labelling_blocks */, block_labels,
 		verbose_level);
 	if (f_v) {
-		cout << "latex_interface::incma_latex after incma_latex_with_text_labels" << endl;
+		cout << "latex_interface::incma_latex "
+				"after incma_latex_with_text_labels" << endl;
 	}
 
 	delete [] point_labels;
@@ -842,9 +854,9 @@ void latex_interface::print_01_matrix_tex(
 		cout << "\t\"";
 		for (j = 0; j < n; j++) {
 			ost << p[i * n + j];
-			}
-		ost << "\"" << endl;
 		}
+		ost << "\"" << endl;
+	}
 }
 
 void latex_interface::print_integer_matrix_tex(
@@ -859,10 +871,10 @@ void latex_interface::print_integer_matrix_tex(
 			ost << p[i * n + j];
 			if (j < n - 1) {
 				ost << "  & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 }
 
@@ -878,10 +890,10 @@ void latex_interface::print_lint_matrix_tex(
 			ost << p[i * n + j];
 			if (j < n - 1) {
 				ost << "  & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 }
 
@@ -897,10 +909,10 @@ void latex_interface::print_longinteger_matrix_tex(
 			ost << p[i * n + j];
 			if (j < n - 1) {
 				ost << "  & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 }
 
@@ -913,43 +925,43 @@ void latex_interface::print_integer_matrix_with_labels(
 
 	if (f_tex) {
 		ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
-		}
+	}
 
 	for (j = 0; j < n; j++) {
 		if (f_tex) {
 			ost << " & ";
-			}
+		}
 		else {
 			ost << " ";
-			}
-		ost << col_labels[j];
 		}
+		ost << col_labels[j];
+	}
 	if (f_tex) {
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	for (i = 0; i < m; i++) {
 		ost << row_labels[i];
 		for (j = 0; j < n; j++) {
 			if (f_tex) {
 				ost << " & ";
-				}
+			}
 			else {
 				ost << " ";
-				}
-			ost << p[i * n + j];
 			}
+			ost << p[i * n + j];
+		}
 		if (f_tex) {
 			ost << "\\\\";
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 	if (f_tex) {
 		ost << "\\end{array}" << endl;
-		}
+	}
 }
 
 void latex_interface::print_lint_matrix_with_labels(std::ostream &ost,
@@ -960,50 +972,51 @@ void latex_interface::print_lint_matrix_with_labels(std::ostream &ost,
 
 	if (f_tex) {
 		ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
-		}
+	}
 
 	for (j = 0; j < n; j++) {
 		if (f_tex) {
 			ost << " & ";
-			}
+		}
 		else {
 			ost << " ";
-			}
-		ost << col_labels[j];
 		}
+		ost << col_labels[j];
+	}
 	if (f_tex) {
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	for (i = 0; i < m; i++) {
 		ost << row_labels[i];
 		for (j = 0; j < n; j++) {
 			if (f_tex) {
 				ost << " & ";
-				}
+			}
 			else {
 				ost << " ";
-				}
-			ost << p[i * n + j];
 			}
+			ost << p[i * n + j];
+		}
 		if (f_tex) {
 			ost << "\\\\";
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 	if (f_tex) {
 		ost << "\\end{array}" << endl;
-		}
+	}
 }
 
 void latex_interface::print_integer_matrix_with_standard_labels(
 		std::ostream &ost,
 	int *p, int m, int n, int f_tex)
 {
-	print_integer_matrix_with_standard_labels_and_offset(ost,
+	print_integer_matrix_with_standard_labels_and_offset(
+			ost,
 		p, m, n, 0, 0, f_tex);
 
 }
@@ -1012,7 +1025,8 @@ void latex_interface::print_lint_matrix_with_standard_labels(
 		std::ostream &ost,
 	long int *p, int m, int n, int f_tex)
 {
-	print_lint_matrix_with_standard_labels_and_offset(ost,
+	print_lint_matrix_with_standard_labels_and_offset(
+			ost,
 		p, m, n, 0, 0, f_tex);
 
 }
@@ -1038,11 +1052,11 @@ void latex_interface::print_lint_matrix_with_standard_labels_and_offset(
 	if (f_tex) {
 		print_lint_matrix_with_standard_labels_and_offset_tex(
 			ost, p, m, n, m_offset, n_offset);
-		}
+	}
 	else {
 		print_lint_matrix_with_standard_labels_and_offset_text(
 			ost, p, m, n, m_offset, n_offset);
-		}
+	}
 }
 
 void latex_interface::print_integer_matrix_with_standard_labels_and_offset_text(
@@ -1055,18 +1069,18 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset_text(
 
 	for (j = 0; j < w; j++) {
 		ost << " ";
-		}
+	}
 	for (j = 0; j < n; j++) {
 		ost << " " << setw(w) << n_offset + j;
-		}
+	}
 	ost << endl;
 	for (i = 0; i < m; i++) {
 		ost << setw(w) << m_offset + i;
 		for (j = 0; j < n; j++) {
 			ost << " " << setw(w) << p[i * n + j];
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 }
 
 void latex_interface::print_lint_matrix_with_standard_labels_and_offset_text(
@@ -1079,18 +1093,18 @@ void latex_interface::print_lint_matrix_with_standard_labels_and_offset_text(
 
 	for (j = 0; j < w; j++) {
 		ost << " ";
-		}
+	}
 	for (j = 0; j < n; j++) {
 		ost << " " << setw(w) << n_offset + j;
-		}
+	}
 	ost << endl;
 	for (i = 0; i < m; i++) {
 		ost << setw(w) << m_offset + i;
 		for (j = 0; j < n; j++) {
 			ost << " " << setw(w) << p[i * n + j];
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 }
 
 void latex_interface::print_integer_matrix_with_standard_labels_and_offset_tex(
@@ -1103,17 +1117,17 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset_tex(
 
 	for (j = 0; j < n; j++) {
 		ost << " & " << n_offset + j;
-		}
+	}
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < m; i++) {
 		ost << m_offset + i;
 		for (j = 0; j < n; j++) {
 			ost << " & " << p[i * n + j];
-			}
+		}
 		ost << "\\\\";
 		ost << endl;
-		}
+	}
 	ost << "\\end{array}" << endl;
 }
 
@@ -1127,17 +1141,17 @@ void latex_interface::print_lint_matrix_with_standard_labels_and_offset_tex(
 
 	for (j = 0; j < n; j++) {
 		ost << " & " << n_offset + j;
-		}
+	}
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < m; i++) {
 		ost << m_offset + i;
 		for (j = 0; j < n; j++) {
 			ost << " & " << p[i * n + j];
-			}
+		}
 		ost << "\\\\";
 		ost << endl;
-		}
+	}
 	ost << "\\end{array}" << endl;
 }
 
@@ -1157,18 +1171,18 @@ void latex_interface::print_integer_matrix_tex_block_by_block(
 			w = block_width;
 			if ((J + 1) * block_width > n) {
 				w = n - J * block_width;
-				}
+			}
 			v = block_width;
 			if ((I + 1) * block_width > m) {
 				v = m - I * block_width;
-				}
+			}
 			for (i = 0; i < v; i++) {
 				for (j = 0; j < w; j++) {
 					M[i * w + j] =
 							p[(I * block_width + i) * n +
 							  J * block_width + j];
-					}
 				}
+			}
 			cout << "print_integer_matrix_tex_block_by_block I="
 				<< I << " J=" << J << " v=" << v
 				<< " w=" << w << " M=" << endl;
@@ -1183,20 +1197,20 @@ void latex_interface::print_integer_matrix_tex_block_by_block(
 			for (i = 0; i < block_width; i++) {
 				if (I * block_width + i > m) {
 					continue;
-					}
+				}
 				for (j = 0; j < w; j++) {
 					ost << p[i * n + J * block_width + j];
 					if (j < w - 1) {
 						ost << "  & ";
-						}
 					}
-				ost << "\\\\" << endl;
 				}
+				ost << "\\\\" << endl;
+			}
 			ost << "\\end{array}" << endl;
 #endif
 			ost << "$$" << endl;
-			} // next J
-		} // next I
+		} // next J
+	} // next I
 	FREE_int(M);
 }
 
@@ -1209,9 +1223,9 @@ void latex_interface::print_big_integer_matrix_tex(
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			ost << p[i * n + j];
-			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 }
 
 void latex_interface::int_vec_print_as_matrix(
@@ -1233,7 +1247,7 @@ void latex_interface::int_vec_print_as_matrix(
 		Int_vec_copy(v, w, len);
 		for (i = 0; i < width - 1; i++) {
 			w[len + i] = 0;
-			}
+		}
 
 		print_integer_matrix_with_standard_labels(ost,
 			w, (len + width - 1) / width, width, f_tex);
@@ -1254,7 +1268,7 @@ void latex_interface::lint_vec_print_as_matrix(
 	Lint_vec_copy(v, w, len);
 	for (i = 0; i < width - 1; i++) {
 		w[len + i] = 0;
-		}
+	}
 
 	print_lint_matrix_with_standard_labels(ost,
 		w, (len + width - 1) / width, width, f_tex);
@@ -1282,35 +1296,35 @@ void latex_interface::int_matrix_print_with_labels_and_partition(
 		ost << "\\begin{array}{r|";
 		for (J = 0; J < nb_col_parts; J++) {
 			ost << "*{" << col_part_len[J] << "}{r}|";
-			}
-		ost << "}" << endl;
 		}
+		ost << "}" << endl;
+	}
 
 	for (j = 0; j < n; j++) {
 		if (f_tex) {
 			ost << " & ";
-			}
+		}
 		else {
 			ost << " ";
-			}
+		}
 		output.assign("");
 		if (process_function_or_NULL) {
 			(*process_function_or_NULL)(
 				p, m, n, -1, j,
 				col_labels[j], output, data);
 			ost << output;
-			}
+		}
 		else {
 			ost << col_labels[j];
-			}
 		}
+	}
 	if (f_tex) {
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	for (I = 0; I < nb_row_parts; I++) {
 		for (u = 0; u < row_part_len[I]; u++) {
 			i = row_part_first[I] + u;
@@ -1321,45 +1335,45 @@ void latex_interface::int_matrix_print_with_labels_and_partition(
 					p, m, n, i, -1,
 					row_labels[i], output, data);
 				ost << output;
-				}
+			}
 			else {
 				ost << row_labels[i];
-				}
+			}
 
 			for (J = 0; J < nb_col_parts; J++) {
 				for (v = 0; v < col_part_len[J]; v++) {
 					j = col_part_first[J] + v;
 					if (f_tex) {
 						ost << " & ";
-						}
+					}
 					else {
 						ost << " ";
-						}
+					}
 					output.assign("");
 					if (process_function_or_NULL) {
 						(*process_function_or_NULL)(
 						p, m, n, i, j, p[i * n + j],
 						output, data);
 						ost << output;
-						}
+					}
 					else {
 						ost << p[i * n + j];
-						}
 					}
 				}
+			}
 			if (f_tex) {
 				ost << "\\\\";
-				}
-			ost << endl;
 			}
+			ost << endl;
+		}
 		if (f_tex) {
 			ost << "\\hline";
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 	if (f_tex) {
 		ost << "\\end{array}" << endl;
-		}
+	}
 }
 
 void latex_interface::lint_matrix_print_with_labels_and_partition(
@@ -1380,35 +1394,35 @@ void latex_interface::lint_matrix_print_with_labels_and_partition(
 		ost << "\\begin{array}{r|";
 		for (J = 0; J < nb_col_parts; J++) {
 			ost << "*{" << col_part_len[J] << "}{r}|";
-			}
-		ost << "}" << endl;
 		}
+		ost << "}" << endl;
+	}
 
 	for (j = 0; j < n; j++) {
 		if (f_tex) {
 			ost << " & ";
-			}
+		}
 		else {
 			ost << " ";
-			}
+		}
 		output.assign("");
 		if (process_function_or_NULL) {
 			(*process_function_or_NULL)(
 				p, m, n, -1, j,
 				col_labels[j], output, data);
 			ost << output;
-			}
+		}
 		else {
 			ost << col_labels[j];
-			}
 		}
+	}
 	if (f_tex) {
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
-		}
+	}
 	else {
 		ost << endl;
-		}
+	}
 	for (I = 0; I < nb_row_parts; I++) {
 		for (u = 0; u < row_part_len[I]; u++) {
 			i = row_part_first[I] + u;
@@ -1419,45 +1433,45 @@ void latex_interface::lint_matrix_print_with_labels_and_partition(
 					p, m, n, i, -1,
 					row_labels[i], output, data);
 				ost << output;
-				}
+			}
 			else {
 				ost << row_labels[i];
-				}
+			}
 
 			for (J = 0; J < nb_col_parts; J++) {
 				for (v = 0; v < col_part_len[J]; v++) {
 					j = col_part_first[J] + v;
 					if (f_tex) {
 						ost << " & ";
-						}
+					}
 					else {
 						ost << " ";
-						}
+					}
 					output.assign("");
 					if (process_function_or_NULL) {
 						(*process_function_or_NULL)(
 						p, m, n, i, j, p[i * n + j],
 						output, data);
 						ost << output;
-						}
+					}
 					else {
 						ost << p[i * n + j];
-						}
 					}
 				}
+			}
 			if (f_tex) {
 				ost << "\\\\";
-				}
-			ost << endl;
 			}
+			ost << endl;
+		}
 		if (f_tex) {
 			ost << "\\hline";
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 	if (f_tex) {
 		ost << "\\end{array}" << endl;
-		}
+	}
 }
 
 void latex_interface::int_matrix_print_tex(
@@ -1471,10 +1485,10 @@ void latex_interface::int_matrix_print_tex(
 			ost << p[i * n + j];
 			if (j < n - 1) {
 				ost << " & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 }
 
@@ -1489,10 +1503,10 @@ void latex_interface::lint_matrix_print_tex(
 			ost << p[i * n + j];
 			if (j < n - 1) {
 				ost << " & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 }
 
@@ -1525,9 +1539,10 @@ void latex_interface::int_set_print_tex(
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
 		ost << v[i];
-		if (i < len - 1)
+		if (i < len - 1) {
 			ost << ", ";
 		}
+	}
 	ost << " \\}";
 }
 
@@ -1539,9 +1554,10 @@ void latex_interface::lint_set_print_tex(
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
 		ost << v[i];
-		if (i < len - 1)
+		if (i < len - 1) {
 			ost << ", ";
 		}
+	}
 	ost << " \\}";
 }
 
@@ -1553,9 +1569,10 @@ void latex_interface::lint_set_print_tex_text_mode(
 	ost << "$\\{$ ";
 	for (i = 0; i < len; i++) {
 		ost << v[i];
-		if (i < len - 1)
+		if (i < len - 1) {
 			ost << ", ";
 		}
+	}
 	ost << " $\\}$";
 }
 
@@ -1600,9 +1617,10 @@ void latex_interface::int_set_print_masked_tex(
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
 		ost << mask_begin << v[i] << mask_end;
-		if (i < len - 1)
+		if (i < len - 1) {
 			ost << ", ";
 		}
+	}
 	ost << " \\}";
 }
 
@@ -1618,9 +1636,10 @@ void latex_interface::lint_set_print_masked_tex(
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
 		ost << mask_begin << v[i] << mask_end;
-		if (i < len - 1)
+		if (i < len - 1) {
 			ost << ", ";
 		}
+	}
 	ost << " \\}";
 }
 
@@ -1634,9 +1653,10 @@ void latex_interface::int_set_print_tex_for_inline_text(
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
 		ost << v[i];
-		if (i < len - 1)
+		if (i < len - 1) {
 			ost << ",$ $";
 		}
+	}
 	ost << " \\}";
 }
 
@@ -1649,9 +1669,10 @@ void latex_interface::lint_set_print_tex_for_inline_text(
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
 		ost << v[i];
-		if (i < len - 1)
+		if (i < len - 1) {
 			ost << ",$ $";
 		}
+	}
 	ost << " \\}";
 }
 
@@ -1738,7 +1759,7 @@ void latex_interface::latexable_string(
 			len++;
 		}
 		else if (c == '\n') {
-			str << "\\\\[" << line_skip << "pt]\n";
+			str << "\\\\[" << line_skip << "pt];" << endl;
 			len = 0;
 			}
 		else {
@@ -1746,7 +1767,7 @@ void latex_interface::latexable_string(
 			len++;
 		}
 		if (len > max_len) {
-			str << "\n";
+			str << endl;
 			len = 0;
 		}
 		q++;
@@ -1764,26 +1785,26 @@ void latex_interface::print_row_tactical_decomposition_scheme_tex(
 	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
 	if (f_enter_math_mode) {
 		ost << "$$" << endl;
-		}
+	}
 	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
 	ost << "\\rightarrow ";
 	for (j = 0; j < nb_col_classes; j++) {
 		ost << " & ";
 		ost << setw(6) << col_class_size[j];
-		}
+	}
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < nb_row_classes; i++) {
 		ost << setw(6) << row_class_size[i];
 		for (j = 0; j < nb_col_classes; j++) {
 			ost << " & " << setw(12) << row_scheme[i * nb_col_classes + j];
-			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 	if (f_enter_math_mode) {
 		ost << "$$" << endl;
-		}
+	}
 	ost << "%}" << endl;
 }
 
@@ -1798,26 +1819,26 @@ void latex_interface::print_column_tactical_decomposition_scheme_tex(
 	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
 	if (f_enter_math_mode) {
 		ost << "$$" << endl;
-		}
+	}
 	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
 	ost << "\\downarrow ";
 	for (j = 0; j < nb_col_classes; j++) {
 		ost << " & ";
 		ost << setw(6) << col_class_size[j];
-		}
+	}
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < nb_row_classes; i++) {
 		ost << setw(6) << row_class_size[i];
 		for (j = 0; j < nb_col_classes; j++) {
 			ost << " & " << setw(12) << col_scheme[i * nb_col_classes + j];
-			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 	if (f_enter_math_mode) {
 		ost << "$$" << endl;
-		}
+	}
 	ost << "%}" << endl;
 }
 

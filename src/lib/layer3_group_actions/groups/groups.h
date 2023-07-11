@@ -378,8 +378,10 @@ public:
 			long int *&compact_type,
 			long int *&row_labels, long int *&col_labels,
 			int &m, int &n);
-	void report_orbit_lengths(std::ostream &ost);
-	void print_orbits_based_on_filtered_orbits(std::ostream &ost,
+	void report_orbit_lengths(
+			std::ostream &ost);
+	void print_orbits_based_on_filtered_orbits(
+			std::ostream &ost,
 			data_structures::set_of_sets *Filtered_orbits);
 	void classify_orbits_by_length(int verbose_level);
 	void report_classified_orbit_lengths(std::ostream &ost);
@@ -398,7 +400,8 @@ public:
 		int (*test_function)(long int *orbit, int orbit_length, void *data),
 		void *test_function_data,
 		int verbose_level);
-	void print_orbits_of_a_certain_length(int orbit_length);
+	void print_orbits_of_a_certain_length(
+			int orbit_length);
 	int test_pair_of_orbits_of_a_equal_length(
 			int orbit_length,
 			int type_idx,
@@ -410,7 +413,8 @@ public:
 					long int *orbit2, int orbit_length2, void *data),
 			void *test_function_data,
 			int verbose_level);
-	void report_orbits_of_type(std::ostream &ost, int type_idx);
+	void report_orbits_of_type(
+			std::ostream &ost, int type_idx);
 	void create_graph_on_orbits_of_a_certain_length_after_filtering(
 			graph_theory::colored_graph *&CG,
 		std::string &fname,
@@ -483,9 +487,12 @@ public:
 	void get_orbit_number_and_position(long int a,
 			int &orbit_idx, int &orbit_pos, int verbose_level);
 	void create_latex_report(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
-	void report_quick(std::ostream &ost, int verbose_level);
-	void export_something(std::string &what, int data1,
+	void report(
+			std::ostream &ost, int verbose_level);
+	void report_quick(
+			std::ostream &ost, int verbose_level);
+	void export_something(
+			std::string &what, int data1,
 			std::string &fname, int verbose_level);
 	void export_something_worker(
 			std::string &fname_base,

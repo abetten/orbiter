@@ -167,7 +167,6 @@ void design_create::init(
 
 
 		Get_lint_vector_from_label(Descr->list_of_blocks_coded_label, set, sz, 0 /* verbose_level */);
-		//Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
 
 		f_has_set = true;
 		v = degree;
@@ -688,6 +687,63 @@ void design_create::compute_incidence_matrix(int verbose_level)
 					nb_inc++;
 				}
 			}
+
+		}
+		else if (Descr->f_list_of_blocks_coded) {
+
+			int h;
+			int *Blocks;
+
+			if (f_v) {
+				cout << "design_create::compute_incidence_matrix "
+						"before Combi.compute_blocks_from_coding" << endl;
+			}
+			Combi.compute_blocks_from_coding(
+					v, b, Descr->list_of_blocks_coded_k, set,
+					Blocks, verbose_level);
+			if (f_v) {
+				cout << "design_create::compute_incidence_matrix "
+						"after Combi.compute_blocks_from_coding" << endl;
+			}
+#if 0
+			Combi.compute_incidence_matrix_from_sets(
+						v, b, set,
+						incma,
+						verbose_level);
+#endif
+
+			if (f_v) {
+				cout << "design_create::compute_incidence_matrix Blocks:" << endl;
+				cout << "v = " << v << endl;
+				cout << "b = " << b << endl;
+				cout << "k = " << Descr->list_of_blocks_coded_k << endl;
+				Int_matrix_print(Blocks, b, Descr->list_of_blocks_coded_k);
+			}
+
+			if (f_v) {
+				cout << "design_create::compute_incidence_matrix "
+						"before Combi.compute_incidence_matrix_from_blocks" << endl;
+			}
+			Combi.compute_incidence_matrix_from_blocks(
+					v, b, Descr->list_of_blocks_coded_k, Blocks,
+					incma, verbose_level);
+			if (f_v) {
+				cout << "design_create::compute_incidence_matrix "
+						"after Combi.compute_incidence_matrix_from_blocks" << endl;
+			}
+
+			nb_inc = 0;
+			for (h = 0; h < v * b; h++) {
+				if (incma[h]) {
+					nb_inc++;
+				}
+			}
+			if (f_v) {
+				cout << "design_create::compute_incidence_matrix "
+						"nb_inc = " << nb_inc << endl;
+			}
+
+			FREE_int(Blocks);
 
 		}
 		else {

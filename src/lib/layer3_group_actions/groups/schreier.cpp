@@ -3236,7 +3236,7 @@ void schreier::create_point_list_sorted(
 		ff += l;
 	}
 	if (ff != point_list_length) {
-		cout << "schreier::get_schreier_vector_compact "
+		cout << "schreier::create_point_list_sorted "
 				"ff != point_list_length" << endl;
 		exit(1);
 	}

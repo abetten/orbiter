@@ -792,7 +792,8 @@ public:
 
 	geometric_object_description();
 	~geometric_object_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -1317,7 +1318,8 @@ public:
 	grassmann_embedded();
 	~grassmann_embedded();
 	void init(
-			int big_n, int n, grassmann *G, int *M, int verbose_level);
+			int big_n, int n, grassmann *G,
+			int *M, int verbose_level);
 		// M is n x big_n
 	void unrank_embedded_lint(
 			int *subspace_basis_with_embedding,
@@ -2379,7 +2381,8 @@ public:
 	void print_all_points(std::ostream &ost);
 	void print_all_lines(std::ostream &ost);
 	void print_lines_tex(std::ostream &ost);
-	void write_points_to_txt_file(std::string &label, int verbose_level);
+	void write_points_to_txt_file(
+			std::string &label, int verbose_level);
 
 
 };
@@ -3234,21 +3237,25 @@ public:
 
 	spread_tables();
 	~spread_tables();
-	void init(projective_space *P,
+	void init(
+			projective_space *P,
 			int f_load,
 			int nb_iso_types_of_spreads,
 			std::string &path_to_spread_tables,
 			int verbose_level);
 	void create_file_names(int verbose_level);
-	void init_spread_table(int nb_spreads,
+	void init_spread_table(
+			int nb_spreads,
 			long int *spread_table, int *spread_iso_type,
 			int verbose_level);
-	void init_tables(int nb_spreads,
+	void init_tables(
+			int nb_spreads,
 			long int *spread_table, int *spread_iso_type,
 			long int *dual_spread_idx,
 			long int *self_dual_spreads, int nb_self_dual_spreads,
 			int verbose_level);
-	void init_schreier_table(int *schreier_table,
+	void init_schreier_table(
+			int *schreier_table,
 			int verbose_level);
 	void init_reduced(
 			int nb_select, int *select,
@@ -3256,10 +3263,12 @@ public:
 			std::string &path_to_spread_tables,
 			int verbose_level);
 	long int *get_spread(int spread_idx);
-	void find_spreads_containing_two_lines(std::vector<int> &v,
+	void find_spreads_containing_two_lines(
+			std::vector<int> &v,
 			int line1, int line2, int verbose_level);
 
-	void classify_self_dual_spreads(int *&type,
+	void classify_self_dual_spreads(
+			int *&type,
 			data_structures::set_of_sets *&SoS,
 			int verbose_level);
 	int files_exist(int verbose_level);
@@ -3269,7 +3278,8 @@ public:
 			data_structures::bitvector *&Bitvec,
 			int verbose_level);
 	int test_if_spreads_are_disjoint(int a, int b);
-	void compute_dual_spreads(long int **Sets,
+	void compute_dual_spreads(
+			long int **Sets,
 			long int *&Dual_spread_idx,
 			long int *&self_dual_spread_idx,
 			int &nb_self_dual_spreads,
@@ -3297,7 +3307,8 @@ public:
 			int *Partial_packings, int nb_pp, int sz,
 			int *&Iso_type_invariant,
 			int verbose_level);
-	void report_one_spread(std::ostream &ost, int a);
+	void report_one_spread(
+			std::ostream &ost, int a);
 
 };
 

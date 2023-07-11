@@ -16,6 +16,128 @@ namespace layer3_group_actions {
 namespace data_structures_groups {
 
 
+// #############################################################################
+// flag_orbits_incidence_structure.cpp
+// #############################################################################
+
+//! classification of flag orbits of an incidence structure
+
+
+
+
+class flag_orbits_incidence_structure {
+
+public:
+
+
+	geometry::object_with_canonical_form *OwCF;
+
+	//object_with_properties *OwP;
+
+	int nb_rows;
+	int nb_cols;
+
+	int f_flag_orbits_have_been_computed;
+	int nb_flags;
+	int *Flags; // [nb_flags]
+	long int *Flag_table; // [nb_flags * 2]
+
+	actions::action *A_on_flags;
+
+	groups::orbits_on_something *Orb;
+
+	flag_orbits_incidence_structure();
+	~flag_orbits_incidence_structure();
+	void init(
+			geometry::object_with_canonical_form *OwCF,
+			int f_anti_flags, actions::action *A_perm,
+			groups::strong_generators *SG, int verbose_level);
+	int find_flag(int i, int j);
+	void report(std::ostream &ost, int verbose_level);
+
+};
+
+
+
+
+
+
+// #############################################################################
+// group_action_on_combinatorial_object.cpp
+// #############################################################################
+
+
+//! a group that action on a combinatorial object with a row action and a column action
+
+
+
+
+class group_action_on_combinatorial_object {
+
+public:
+
+	geometry::object_with_canonical_form *OwCF;
+
+	std::string label_txt;
+	std::string label_tex;
+
+	combinatorics::encoded_combinatorial_object *Enc;
+
+	//groups::schreier *Sch;
+	actions::action *A_perm;
+
+	groups::strong_generators *gens;
+
+	actions::action *A_on_points;
+	actions::action *A_on_lines;
+
+	long int *points;
+	long int *lines;
+
+	geometry::incidence_structure *Inc;
+	data_structures::partitionstack *S;
+
+	groups::schreier *Sch_points;
+	groups::schreier *Sch_lines;
+
+	data_structures::set_of_sets *SoS_points;
+	data_structures::set_of_sets *SoS_lines;
+
+	int *row_classes, *row_class_inv, nb_row_classes;
+	int *col_classes, *col_class_inv, nb_col_classes;
+
+	int *row_scheme;
+	int *col_scheme;
+
+
+	flag_orbits_incidence_structure *Flags;
+	flag_orbits_incidence_structure *Anti_Flags;
+
+
+	group_action_on_combinatorial_object();
+	~group_action_on_combinatorial_object();
+	void init(
+			std::string &label_txt,
+			std::string &label_tex,
+			geometry::object_with_canonical_form *OwCF,
+			//groups::schreier *Sch,
+			actions::action *A_perm,
+			int verbose_level);
+	void compute_flag_orbits(int verbose_level);
+	void report_flag_orbits(
+			std::ostream &ost, int verbose_level);
+	void export_TDA_with_flag_orbits(
+			std::ostream &ost,
+			//groups::schreier *Sch,
+			int verbose_level);
+	// TDA = tactical decomposition by automorphism group
+	void export_INP_with_flag_orbits(
+			std::ostream &ost,
+			//groups::schreier *Sch,
+			int verbose_level);
+	// INP = input geometry
+
+};
 
 
 // #############################################################################

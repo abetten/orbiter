@@ -53,6 +53,65 @@ public:
 
 
 
+// #############################################################################
+// classification_of_combinatorial_objects.cpp
+// #############################################################################
+
+
+//! classification of combinatorial objects
+
+
+class classification_of_combinatorial_objects {
+
+public:
+
+
+	std::string prefix;
+
+	combinatorics::classification_of_objects *CO;
+
+	object_with_properties *OwP;
+
+	int f_projective_space;
+	projective_geometry::projective_space_with_action *PA;
+
+
+	classification_of_combinatorial_objects();
+	~classification_of_combinatorial_objects();
+	void init_after_nauty(
+			std::string &prefix,
+			combinatorics::classification_of_objects *CO,
+			int f_projective_space,
+			projective_geometry::projective_space_with_action *PA,
+			int verbose_level);
+	void classification_report(
+			combinatorics::classification_of_objects_report_options
+						*Report_options,
+			int verbose_level);
+	void latex_report(
+			combinatorics::classification_of_objects_report_options
+				*Report_options,
+			int verbose_level);
+	void report_all_isomorphism_types(
+			std::ostream &ost,
+			combinatorics::classification_of_objects_report_options
+				*Report_options,
+			int verbose_level);
+	void report_isomorphism_type(
+			std::ostream &ost,
+			combinatorics::classification_of_objects_report_options
+				*Report_options,
+			int i, int verbose_level);
+	void report_object(
+			std::ostream &ost,
+			combinatorics::classification_of_objects_report_options
+				*Report_options,
+			int object_idx,
+			int verbose_level);
+
+
+};
+
 
 
 
@@ -172,6 +231,7 @@ public:
 			int f_extract,
 			long int *extract_idx_set, int extract_size,
 			int verbose_level);
+#if 0
 	void post_process_classification(
 			combinatorics::classification_of_objects *CO,
 			object_with_properties *&OwP,
@@ -189,27 +249,28 @@ public:
 			object_with_properties *OwP,
 			int verbose_level);
 	void report_all_isomorphism_types(
-			std::ostream &fp,
+			std::ostream &ost,
 			combinatorics::classification_of_objects_report_options
 				*Report_options,
 			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int verbose_level);
 	void report_isomorphism_type(
-			std::ostream &fp,
+			std::ostream &ost,
 			combinatorics::classification_of_objects_report_options
 				*Report_options,
 			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int i, int verbose_level);
 	void report_object(
-			std::ostream &fp,
+			std::ostream &ost,
 			combinatorics::classification_of_objects_report_options
 				*Report_options,
 			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int object_idx,
 			int verbose_level);
+#endif
 	void draw_incidence_matrices(
 			std::string &prefix,
 			data_structures::data_input_stream *IS,
@@ -909,46 +970,6 @@ public:
 
 
 
-// #############################################################################
-// flag_orbits_incidence_structure.cpp
-// #############################################################################
-
-//! classification of flag orbits of an incidence structure
-
-
-
-
-class flag_orbits_incidence_structure {
-
-public:
-
-	object_with_properties *OwP;
-
-	int nb_rows;
-	int nb_cols;
-
-	int f_flag_orbits_have_been_computed;
-	int nb_flags;
-	int *Flags; // [nb_flags]
-	long int *Flag_table; // [nb_flags * 2]
-
-	actions::action *A_on_flags;
-
-	groups::orbits_on_something *Orb;
-
-	flag_orbits_incidence_structure();
-	~flag_orbits_incidence_structure();
-	void init(
-			object_with_properties *OwP,
-			int f_anti_flags, actions::action *A_perm,
-			groups::strong_generators *SG, int verbose_level);
-	int find_flag(int i, int j);
-	void report(std::ostream &ost, int verbose_level);
-
-};
-
-
-
 
 // #############################################################################
 // hadamard_classify.cpp
@@ -1461,10 +1482,13 @@ public:
 
 	combinatorics::tdo_scheme_compute *TDO;
 
+	data_structures_groups::group_action_on_combinatorial_object *GA_on_CO;
+#if 0
 	flag_orbits_incidence_structure *Flags;
 		// if !f_projective_space
 	flag_orbits_incidence_structure *Anti_Flags;
 		// if !f_projective_space
+#endif
 
 	object_with_properties();
 	~object_with_properties();
@@ -1476,7 +1500,6 @@ public:
 			int max_TDO_depth,
 			std::string &label,
 			int verbose_level);
-	void compute_flag_orbits(int verbose_level);
 	void lift_generators_to_matrix_group(int verbose_level);
 	void init_object_in_projective_space(
 			geometry::object_with_canonical_form *OwCF,
@@ -1484,7 +1507,8 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			std::string &label,
 			int verbose_level);
-	void latex_report(std::ostream &ost,
+	void latex_report(
+			std::ostream &ost,
 			combinatorics::classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
@@ -1493,6 +1517,7 @@ public:
 			std::ostream &ost,
 			combinatorics::classification_of_objects_report_options
 				*Report_options);
+#if 0
 	void export_TDA_with_flag_orbits(
 			std::ostream &ost,
 			groups::schreier *Sch,
@@ -1501,6 +1526,7 @@ public:
 			std::ostream &ost,
 			groups::schreier *Sch,
 			int verbose_level);
+#endif
 
 };
 
