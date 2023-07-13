@@ -429,6 +429,22 @@ void symbolic_object_builder::init(
 
 		Formula_vector->print_latex(cout, label);
 
+
+		string fname;
+
+		fname = label + ".tex";
+
+		{
+			l1_interfaces::latex_interface L;
+			ofstream ost(fname);
+
+			L.head_easy(ost);
+
+			Formula_vector->print_latex(ost, label);
+
+			L.foot(ost);
+		}
+
 		//latex_split(std::string &name, int split_level, int split_mod, int verbose_level)
 
 		Formula_vector->latex_tree(verbose_level);
@@ -1236,7 +1252,6 @@ void symbolic_object_builder::do_collect(
 
 
 		Formula_vector->V[j].tree->Root->append_node(Output_node, 0 /* verbose_level */);
-		//Formula_vector->V[j].tree->Root->Nodes[Formula_vector->V[j].tree->Root->nb_nodes++] = Output_node;
 
 	}
 

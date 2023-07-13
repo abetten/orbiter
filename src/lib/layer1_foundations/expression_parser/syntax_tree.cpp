@@ -862,10 +862,10 @@ void syntax_tree::make_linear_combination(
 	Node2a_copy = NEW_OBJECT(syntax_tree_node);
 	Node2b_copy = NEW_OBJECT(syntax_tree_node);
 
-	Node1a->copy_to(this, Node1a_copy, verbose_level);
-	Node1b->copy_to(this, Node1b_copy, verbose_level);
-	Node2a->copy_to(this, Node2a_copy, verbose_level);
-	Node2b->copy_to(this, Node2b_copy, verbose_level);
+	Node1a->copy_to(this, Node1a_copy, 0 /*verbose_level*/);
+	Node1b->copy_to(this, Node1b_copy, 0 /*verbose_level*/);
+	Node2a->copy_to(this, Node2a_copy, 0 /*verbose_level*/);
+	Node2b->copy_to(this, Node2b_copy, 0 /*verbose_level*/);
 
 	mult_node1->append_node(Node1a_copy, 0 /*verbose_level*/);
 	mult_node1->append_node(Node1b_copy, 0 /*verbose_level*/);
@@ -879,6 +879,12 @@ void syntax_tree::make_linear_combination(
 
 
 	Root = add_node;
+	if (f_v) {
+		cout << "syntax_tree::make_linear_combination" << endl;
+		cout << "syntax_tree::make_linear_combination Root=";
+		Root->print_subtree_easy(cout);
+		cout << endl;
+	}
 
 
 	if (f_v) {

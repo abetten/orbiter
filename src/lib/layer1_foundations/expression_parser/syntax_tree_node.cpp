@@ -3295,6 +3295,22 @@ void syntax_tree_node::collect_like_terms_addition(
 				"reduced from " << Nb_nodes << " to "
 				<< nb_nodes << " terms" << endl;
 	}
+	if (nb_nodes == 0) {
+		cout << "syntax_tree_node::collect_like_terms_addition "
+				"reduced from " << Nb_nodes << " to "
+				<< nb_nodes << " terms" << endl;
+		cout << "syntax_tree_node::collect_like_terms_addition "
+				"adding a zero term:" << endl;
+		syntax_tree_node *node;
+
+		node = NEW_OBJECT(syntax_tree_node);
+		node->init_terminal_node_int(
+				Tree,
+				0 /* value */,
+				verbose_level);
+		append_node(node, 0 /* verbose_level */);
+
+	}
 	FREE_OBJECT(I);
 
 

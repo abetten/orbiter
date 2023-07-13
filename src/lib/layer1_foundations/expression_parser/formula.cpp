@@ -928,6 +928,28 @@ void formula::make_linear_combination(
 		cout << "formula::make_linear_combination" << endl;
 	}
 
+	if (f_v) {
+		cout << "formula::make_linear_combination "
+				"input_1a = " << endl;
+		input_1a->tree->Root->print_subtree_easy(cout);
+		cout << endl;
+		cout << "formula::make_linear_combination "
+				"input_1b = " << endl;
+		input_1b->tree->Root->print_subtree_easy(cout);
+		cout << endl;
+
+		cout << "formula::make_linear_combination "
+				"input_2a = " << endl;
+		input_2a->tree->Root->print_subtree_easy(cout);
+		cout << endl;
+		cout << "formula::make_linear_combination "
+				"input_2b = " << endl;
+		input_2b->tree->Root->print_subtree_easy(cout);
+		cout << endl;
+
+	}
+
+
 	name_of_formula = label_txt;
 	name_of_formula_latex = label_tex;
 	managed_variables = managed_variables_text;

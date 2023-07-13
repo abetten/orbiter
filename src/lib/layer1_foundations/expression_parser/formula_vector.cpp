@@ -956,6 +956,9 @@ void formula_vector::simplify(
 			cout << "formula_vector::simplify "
 					"-simplify " << i << " / " << A->len
 					<< " after V[i].simplify" << endl;
+			cout << "formula_vector::simplify ";
+			V[i].tree->Root->print_subtree_easy(cout);
+			cout << endl;
 		}
 
 		if (f_v) {
@@ -1713,12 +1716,12 @@ void formula_vector::multiply_2by2_from_the_left(
 	for (u = 0; u < m; u++) {
 		if (u == i) {
 			if (f_v) {
-				cout << "u == i == " << i << endl;
+				cout << "formula_vector::multiply_2by2_from_the_left u = " << u << endl;
 			}
 			// row i is a linear combination of row i and row j:
 			for (v = 0; v < n; v++) {
 				if (f_v) {
-					cout << "u == i == " << i << " v=" << v << endl;
+					cout << "formula_vector::multiply_2by2_from_the_left u = " << u << " v=" << v << endl;
 				}
 				V[u * n + v].make_linear_combination(
 						&A2->V[0 * 2 + 0],
@@ -1731,6 +1734,7 @@ void formula_vector::multiply_2by2_from_the_left(
 						managed_variables_text,
 						verbose_level);
 				if (f_v) {
+					cout << "formula_vector::multiply_2by2_from_the_left u = " << u << " v=" << v << endl;
 					V[u * n + v].print_easy(cout);
 					cout << endl;
 				}
@@ -1738,12 +1742,12 @@ void formula_vector::multiply_2by2_from_the_left(
 		}
 		else if (u == j) {
 			if (f_v) {
-				cout << "u == j == " << j << endl;
+				cout << "formula_vector::multiply_2by2_from_the_left u = " << u << endl;
 			}
 			// row j is a linear combination of row i and row j:
 			for (v = 0; v < n; v++) {
 				if (f_v) {
-					cout << "u == j == " << j << " v=" << v << endl;
+					cout << "formula_vector::multiply_2by2_from_the_left u = " << u << " v=" << v << endl;
 				}
 				V[u * n + v].make_linear_combination(
 						&A2->V[1 * 2 + 0],
@@ -1756,6 +1760,7 @@ void formula_vector::multiply_2by2_from_the_left(
 						managed_variables_text,
 						verbose_level);
 				if (f_v) {
+					cout << "formula_vector::multiply_2by2_from_the_left u = " << u << " v=" << v << endl;
 					V[u * n + v].print_easy(cout);
 					cout << endl;
 				}
