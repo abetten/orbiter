@@ -636,7 +636,7 @@ void syntax_tree::make_determinant(
 		cout << "syntax_tree::make_determinant before add_node->init_empty_plus_node_with_exponent" << endl;
 	}
 	add_node->init_empty_plus_node_with_exponent(
-			this, 1 /* exponent */, verbose_level);
+			this, 1 /* exponent */, verbose_level - 2);
 	if (f_v) {
 		cout << "syntax_tree::make_determinant after add_node->init_empty_plus_node_with_exponent" << endl;
 	}
@@ -679,7 +679,7 @@ void syntax_tree::make_determinant(
 					<< " before mult_node->init_empty_multiplication_node" << endl;
 		}
 
-		mult_node->init_empty_multiplication_node(this, verbose_level);
+		mult_node->init_empty_multiplication_node(this, 0 /*verbose_level*/);
 
 		if (f_v) {
 			cout << "syntax_tree::make_determinant "
@@ -694,7 +694,7 @@ void syntax_tree::make_determinant(
 						<< " before mult_node->add_numerical_factor" << endl;
 			}
 			mult_node->add_numerical_factor(
-					minus_one, verbose_level);
+					minus_one, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "syntax_tree::make_determinant "
 						"a = " << a << " / " << N
@@ -715,9 +715,9 @@ void syntax_tree::make_determinant(
 
 			V_in[i * n + perm[i]].tree->Root->copy_to(
 					this,
-					node, verbose_level);
+					node, verbose_level - 2);
 
-			mult_node->append_node(node, verbose_level);
+			mult_node->append_node(node, verbose_level - 2);
 			//Nodes[mult_node->nb_nodes++] = node;
 
 		}
@@ -725,7 +725,7 @@ void syntax_tree::make_determinant(
 
 		// add another summand to the addition:
 
-		add_node->append_node(mult_node, verbose_level);
+		add_node->append_node(mult_node, verbose_level - 2);
 		//add_node->Nodes[add_node->nb_nodes++] = mult_node;
 
 

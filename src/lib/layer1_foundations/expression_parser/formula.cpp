@@ -148,7 +148,7 @@ void formula::init_empty_plus_node(
 		cout << "expression_parser_domain::init_empty_plus_node "
 				"before tree->init" << endl;
 	}
-	tree->init(Fq, true, managed_variables, verbose_level);
+	tree->init(Fq, true, managed_variables, verbose_level - 1);
 	if (f_v) {
 		cout << "expression_parser_domain::init_empty_plus_node "
 				"after tree->init" << endl;
@@ -157,7 +157,7 @@ void formula::init_empty_plus_node(
 	tree->Root = NEW_OBJECT(syntax_tree_node);
 
 	tree->Root->init_empty_plus_node_with_exponent(
-			tree, 1 /*exponent*/, verbose_level);
+			tree, 1 /*exponent*/, verbose_level - 1);
 
 
 	if (f_v) {
@@ -196,7 +196,7 @@ void formula::init_formula(
 		cout << "expression_parser_domain::init_formula "
 				"before tree->init" << endl;
 	}
-	tree->init(Fq, true /* f_has_managed_variables */, managed_variables, verbose_level);
+	tree->init(Fq, true /* f_has_managed_variables */, managed_variables, verbose_level - 1);
 	if (f_v) {
 		cout << "expression_parser_domain::init_formula "
 				"after tree->init" << endl;
@@ -216,7 +216,7 @@ void formula::init_formula(
 
 	ST.parse_comma_separated_list(
 			managed_variables, tree->managed_variables,
-			verbose_level);
+			verbose_level - 1);
 	tree->f_has_managed_variables = true;
 
 
@@ -330,7 +330,7 @@ void formula::init_formula_int(
 		cout << "expression_parser_domain::init_formula_int "
 				"before tree->init_int" << endl;
 	}
-	tree->init_int(Fq, value, verbose_level);
+	tree->init_int(Fq, value, verbose_level - 1);
 	if (f_v) {
 		cout << "expression_parser_domain::init_formula_int "
 				"after tree->init_int" << endl;
@@ -370,7 +370,7 @@ void formula::init_formula_monopoly(
 		cout << "formula::init_formula_monopoly "
 				"before tree->init" << endl;
 	}
-	tree->init(Fq, true /* f_has_managed_variables */, managed_variables, verbose_level);
+	tree->init(Fq, true /* f_has_managed_variables */, managed_variables, verbose_level - 1);
 	if (f_v) {
 		cout << "formula::init_formula_monopoly "
 				"after tree->init" << endl;
@@ -381,7 +381,7 @@ void formula::init_formula_monopoly(
 				"before tree->init_int" << endl;
 	}
 	tree->init_monopoly(Fq, variable,
-			coeffs, nb_coeffs, verbose_level);
+			coeffs, nb_coeffs, verbose_level - 1);
 	if (f_v) {
 		cout << "expression_parser_domain::init_formula_monopoly "
 				"after tree->init_int" << endl;
@@ -539,7 +539,7 @@ void formula::get_subtrees(
 		}
 		Expression_parser_sajeeb->get_subtrees(
 				Poly,
-				verbose_level);
+				verbose_level - 1);
 		if (f_v) {
 			cout << "formula::get_subtrees "
 					"after Expression_parser_sajeeb->get_subtrees" << endl;
@@ -566,7 +566,7 @@ void formula::get_subtrees(
 
 		nb_monomials = Poly->get_nb_monomials();
 
-		tree->split_by_monomials(Poly, Subtrees, verbose_level);
+		tree->split_by_monomials(Poly, Subtrees, verbose_level - 1);
 	}
 
 
@@ -593,7 +593,7 @@ void formula::evaluate(
 	std::map<std::string, std::string> symbol_table;
 
 	ST.parse_value_pairs(symbol_table,
-				evaluate_text, verbose_level);
+				evaluate_text, verbose_level - 1);
 
 
 #if 0
@@ -623,7 +623,7 @@ void formula::evaluate(
 				Poly,
 				symbol_table,
 				Values,
-				verbose_level);
+				verbose_level - 1);
 
 
 		if (f_v) {
@@ -779,14 +779,14 @@ void formula::substitute(
 	output->tree->init(
 			Fq,
 			true, managed_variables_text,
-			verbose_level);
+			verbose_level - 1);
 
 
 	if (f_v) {
 		cout << "formula::substitute "
 				"before output->tree->init_root_node" << endl;
 	}
-	output->tree->init_root_node(verbose_level);
+	output->tree->init_root_node(verbose_level - 1);
 	if (f_v) {
 		cout << "formula::substitute "
 				"after output->tree->init_root_node" << endl;
@@ -802,7 +802,7 @@ void formula::substitute(
 			S,
 			output->tree,
 			output->tree->Root,
-			verbose_level);
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "formula::substitute after tree->substitute" << endl;
@@ -863,14 +863,14 @@ void formula::copy_to(
 	output->tree->init(
 			Fq,
 			true, managed_variables,
-			verbose_level);
+			verbose_level - 1);
 
 
 	if (f_v) {
 		cout << "formula::copy_to "
 				"before output->tree->init_root_node" << endl;
 	}
-	output->tree->init_root_node(verbose_level);
+	output->tree->init_root_node(verbose_level - 1);
 	if (f_v) {
 		cout << "formula::copy_to "
 				"after output->tree->init_root_node" << endl;
@@ -960,14 +960,14 @@ void formula::make_linear_combination(
 	tree->init(
 			Fq,
 			true, managed_variables_text,
-			verbose_level);
+			verbose_level - 1);
 
 
 	if (f_v) {
 		cout << "formula::make_linear_combination "
 				"before tree->init_root_node" << endl;
 	}
-	tree->init_root_node(verbose_level);
+	tree->init_root_node(verbose_level - 1);
 	if (f_v) {
 		cout << "formula::make_linear_combination "
 				"after tree->init_root_node" << endl;
@@ -1373,7 +1373,7 @@ void formula::expand_in_place(int f_write_trees,
 				"before tree->Root->collect_like_terms" << endl;
 	}
 
-	tree->Root->collect_like_terms(verbose_level);
+	tree->Root->collect_like_terms(verbose_level_down);
 
 	if (f_v) {
 		cout << "formula::expand_in_place "
@@ -1423,7 +1423,7 @@ void formula::get_monopoly(
 	if (f_v) {
 		cout << "formula::get_monopoly" << endl;
 	}
-	tree->get_monopoly(variable, coeff, nb_coeff, verbose_level);
+	tree->get_monopoly(variable, coeff, nb_coeff, verbose_level - 1);
 	if (f_v) {
 		cout << "formula::get_monopoly done" << endl;
 	}

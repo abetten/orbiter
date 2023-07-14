@@ -120,7 +120,7 @@ void symbolic_object_builder::init(
 				Descr->f_managed_variables,
 				Descr->managed_variables,
 				Descr->f_matrix, Descr->nb_rows,
-				verbose_level);
+				verbose_level - 1);
 		if (f_v) {
 			cout << "symbolic_object_builder::init "
 					"after Formula_vector->init_from_text" << endl;
@@ -137,7 +137,7 @@ void symbolic_object_builder::init(
 		do_determinant(
 				Descr,
 				label,
-				verbose_level);
+				verbose_level - 1);
 
 
 	}
@@ -152,7 +152,7 @@ void symbolic_object_builder::init(
 		do_characteristic_polynomial(
 				Descr,
 				label,
-				verbose_level);
+				verbose_level - 1);
 
 
 	}
@@ -169,7 +169,7 @@ void symbolic_object_builder::init(
 		do_substitute(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 
 
 	}
@@ -185,7 +185,7 @@ void symbolic_object_builder::init(
 		do_simplify(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 
 		if (f_v) {
 			cout << "symbolic_object_builder::init -simplify finished" << endl;
@@ -203,7 +203,7 @@ void symbolic_object_builder::init(
 		do_expand(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 
 		if (f_v) {
 			cout << "symbolic_object_builder::init -expand finished" << endl;
@@ -220,7 +220,7 @@ void symbolic_object_builder::init(
 		do_right_nullspace(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 
 	}
 	else if (Descr->f_minor) {
@@ -236,7 +236,7 @@ void symbolic_object_builder::init(
 					Descr,
 					Descr->minor_i, Descr->minor_j,
 					label,
-					verbose_level);
+					verbose_level - 1);
 
 	}
 
@@ -250,7 +250,7 @@ void symbolic_object_builder::init(
 		do_symbolic_nullspace(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 
 	}
 	else if (Descr->f_stack_matrices_vertically) {
@@ -261,7 +261,7 @@ void symbolic_object_builder::init(
 		}
 		do_stack(
 					Descr,
-					verbose_level);
+					verbose_level - 1);
 
 	}
 	else if (Descr->f_stack_matrices_horizontally) {
@@ -272,7 +272,7 @@ void symbolic_object_builder::init(
 		}
 		do_stack(
 					Descr,
-					verbose_level);
+					verbose_level - 1);
 	}
 	else if (Descr->f_stack_matrices_z_shape) {
 		if (f_v) {
@@ -282,7 +282,7 @@ void symbolic_object_builder::init(
 		}
 		do_stack(
 					Descr,
-					verbose_level);
+					verbose_level - 1);
 	}
 
 	else if (Descr->f_multiply_2x2_from_the_left) {
@@ -297,7 +297,7 @@ void symbolic_object_builder::init(
 		do_multiply_2x2_from_the_left(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 	}
 
 	else if (Descr->f_matrix_entry) {
@@ -309,7 +309,7 @@ void symbolic_object_builder::init(
 		do_matrix_entry(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 	}
 
 	else if (Descr->f_vector_entry) {
@@ -321,7 +321,7 @@ void symbolic_object_builder::init(
 		do_vector_entry(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 	}
 
 	else if (Descr->f_collect) {
@@ -334,7 +334,7 @@ void symbolic_object_builder::init(
 		do_collect(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 	}
 
 	else if (Descr->f_encode_CRC) {
@@ -348,7 +348,7 @@ void symbolic_object_builder::init(
 		do_CRC_encode(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 	}
 
 	else if (Descr->f_decode_CRC) {
@@ -362,7 +362,7 @@ void symbolic_object_builder::init(
 		do_CRC_decode(
 					Descr,
 					label,
-					verbose_level);
+					verbose_level - 1);
 	}
 
 
@@ -397,7 +397,7 @@ void symbolic_object_builder::init(
 				Fq,
 				label,
 				label,
-				verbose_level);
+				verbose_level - 2);
 
 		FREE_OBJECT(old);
 		if (f_v) {
@@ -483,7 +483,7 @@ void symbolic_object_builder::do_determinant(
 			Fq,
 			label, label,
 			Descr->managed_variables,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_determinant "
 				"after Formula_vector->determinant" << endl;
@@ -550,7 +550,7 @@ void symbolic_object_builder::do_characteristic_polynomial(
 			variable,
 			label, label,
 			Descr->managed_variables,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_characteristic_polynomial "
 				"after Formula_vector->characteristic_polynomial" << endl;
@@ -594,7 +594,7 @@ void symbolic_object_builder::do_substitute(
 			Descr->substitute_variables,
 			label, label,
 			Descr->managed_variables,
-			verbose_level - 2);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_substitute "
 				"after Formula_vector->substitute" << endl;
@@ -634,7 +634,7 @@ void symbolic_object_builder::do_simplify(
 			O_source->Formula_vector,
 			Fq,
 			label, label,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_simplify "
 				"after Formula_vector->simplify" << endl;
@@ -676,7 +676,7 @@ void symbolic_object_builder::do_expand(
 			label, label,
 			Descr->managed_variables,
 			Descr->f_write_trees_during_expand,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_expand "
 				"after Formula_vector->expand" << endl;
@@ -719,7 +719,7 @@ void symbolic_object_builder::do_right_nullspace(
 			Fq,
 			label, label,
 			Descr->managed_variables,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_right_nullspace "
 				"after Formula_vector->right_nullspace" << endl;
@@ -762,7 +762,7 @@ void symbolic_object_builder::do_minor(
 			minor_i, minor_j,
 			label, label,
 			Descr->managed_variables,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_minor "
 				"after Formula_vector->matrix_minor" << endl;
@@ -803,7 +803,7 @@ void symbolic_object_builder::do_symbolic_nullspace(
 			Fq,
 			label, label,
 			Descr->managed_variables,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_symbolic_nullspace "
 				"after Formula_vector->symbolic_nullspace" << endl;
@@ -835,7 +835,7 @@ void symbolic_object_builder::do_stack(
 
 	ST.parse_comma_separated_list(
 			Descr->stack_matrices_label, variables,
-			verbose_level);
+			verbose_level - 1);
 
 	int i;
 	int *Nb_rows;
@@ -905,7 +905,7 @@ void symbolic_object_builder::do_stack(
 					label_txt, label_tex,
 					true,
 					Descr->managed_variables,
-					len, verbose_level);
+					len, verbose_level - 1);
 
 		n = 0;
 
@@ -922,7 +922,7 @@ void symbolic_object_builder::do_stack(
 
 			for (j = 0; j < O_source->Formula_vector->len; j++) {
 				O_source->Formula_vector->V[j].copy_to(
-						&Formula_vector->V[n * nb_c + j], verbose_level);
+						&Formula_vector->V[n * nb_c + j], verbose_level - 1);
 			}
 
 			n += Nb_rows[i];
@@ -1005,7 +1005,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 				label, label,
 				true,
 				Descr->managed_variables,
-				len, verbose_level);
+				len, verbose_level - 1);
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left "
@@ -1018,7 +1018,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 			O_source->Fq,
 			label, label,
 			Descr->managed_variables,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left "
 				"after Formula_vector_tmp->multiply_2by2_from_the_left" << endl;
@@ -1038,7 +1038,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 			label, label,
 			Descr->managed_variables,
 			Descr->f_write_trees_during_expand,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_expand "
 				"after Formula_vector->expand" << endl;
@@ -1090,7 +1090,7 @@ void symbolic_object_builder::do_matrix_entry(
 				label, label,
 				true,
 				Descr->managed_variables,
-				len, verbose_level);
+				len, verbose_level - 1);
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_matrix_entry "
@@ -1098,7 +1098,7 @@ void symbolic_object_builder::do_matrix_entry(
 	}
 	O_source->Formula_vector->V[i * n + j].copy_to(
 			&Formula_vector->V[0],
-			verbose_level);
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_matrix_entry "
@@ -1149,7 +1149,7 @@ void symbolic_object_builder::do_vector_entry(
 				label, label,
 				true,
 				Descr->managed_variables,
-				len, verbose_level);
+				len, verbose_level - 1);
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_vector_entry "
@@ -1157,7 +1157,7 @@ void symbolic_object_builder::do_vector_entry(
 	}
 	O_source->Formula_vector->V[i].copy_to(
 			&Formula_vector->V[0],
-			verbose_level);
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_vector_entry "
@@ -1375,7 +1375,7 @@ void symbolic_object_builder::do_CRC_encode(
 	int CRC_poly_degree;
 
 	O_check->Formula_vector->V[0].get_monopoly(
-			variable1, CRC_poly, CRC_poly_nb_coeff, verbose_level);
+			variable1, CRC_poly, CRC_poly_nb_coeff, verbose_level - 1);
 
 	if (CRC_poly_nb_coeff < 1) {
 		cout << "symbolic_object_builder::do_CRC_encode "
@@ -1426,7 +1426,7 @@ void symbolic_object_builder::do_CRC_encode(
 		}
 
 		O_data->Formula_vector->V[cnt].get_monopoly(
-				variable2, Data_poly, Data_poly_nb_coeff, verbose_level);
+				variable2, Data_poly, Data_poly_nb_coeff, verbose_level - 1);
 
 
 		if (Data_poly_nb_coeff < 1) {
@@ -1508,7 +1508,7 @@ void symbolic_object_builder::do_CRC_encode(
 				CRC_poly, CRC_poly_nb_coeff,
 				coeff_table_q, coeff_table_q_len,
 				coeff_table_r, coeff_table_r_len,
-				verbose_level);
+				verbose_level - 1);
 
 
 		if (f_v) {
@@ -1549,7 +1549,7 @@ void symbolic_object_builder::do_CRC_encode(
 				managed_variables,
 				variable2,
 				Data, N,
-				verbose_level);
+				verbose_level - 1);
 
 		FREE_int(coeff_table_q);
 		FREE_int(coeff_table_r);
@@ -1671,7 +1671,7 @@ void symbolic_object_builder::do_CRC_decode(
 		}
 
 		O_data->Formula_vector->V[cnt].get_monopoly(
-				variable2, Data_poly, Data_poly_nb_coeff, verbose_level);
+				variable2, Data_poly, Data_poly_nb_coeff, verbose_level - 1);
 
 
 		if (Data_poly_nb_coeff < 1) {
@@ -1734,7 +1734,7 @@ void symbolic_object_builder::do_CRC_decode(
 				CRC_poly, CRC_poly_nb_coeff,
 				coeff_table_q, coeff_table_q_len,
 				coeff_table_r, coeff_table_r_len,
-				verbose_level);
+				verbose_level - 1);
 
 
 		if (f_v) {
@@ -1781,7 +1781,7 @@ void symbolic_object_builder::do_CRC_decode(
 				managed_variables,
 				variable2,
 				Data, coeff_table_r_len,
-				verbose_level);
+				verbose_level - 1);
 
 		FREE_int(coeff_table_q);
 		FREE_int(coeff_table_r);
@@ -1836,7 +1836,7 @@ void symbolic_object_builder::multiply_terms(
 			(l1_interfaces::expression_parser_sajeeb **) Terms,
 			n,
 			stage_counter,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbolic_object_builder::multiply_terms "
 				"after E.multiply" << endl;
