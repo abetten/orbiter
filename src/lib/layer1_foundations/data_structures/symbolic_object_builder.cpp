@@ -982,7 +982,9 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 	i = Descr->multiply_2x2_from_the_left_i;
 	j = Descr->multiply_2x2_from_the_left_j;
 
-	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+	expression_parser::formula_vector *Formula_vector_tmp;
+
+	Formula_vector_tmp = NEW_OBJECT(expression_parser::formula_vector);
 
 	int len;
 
@@ -999,7 +1001,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 
 	len = O_source->Formula_vector->nb_rows * O_source->Formula_vector->nb_cols;
 
-	Formula_vector->init_and_allocate(
+	Formula_vector_tmp->init_and_allocate(
 				label, label,
 				true,
 				Descr->managed_variables,
@@ -1007,9 +1009,9 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left "
-				"before Formula_vector->multiply_2by2_from_the_left" << endl;
+				"before Formula_vector_tmp->multiply_2by2_from_the_left" << endl;
 	}
-	Formula_vector->multiply_2by2_from_the_left(
+	Formula_vector_tmp->multiply_2by2_from_the_left(
 			O_source->Formula_vector,
 			O_A2->Formula_vector,
 			i, j,
@@ -1019,7 +1021,27 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 			verbose_level);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_multiply_2x2_from_the_left "
-				"after Formula_vector->multiply_2by2_from_the_left" << endl;
+				"after Formula_vector_tmp->multiply_2by2_from_the_left" << endl;
+	}
+
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_expand "
+				"before Formula_vector->expand" << endl;
+	}
+	Formula_vector->expand(
+			Formula_vector_tmp,
+			Fq,
+			label, label,
+			Descr->managed_variables,
+			Descr->f_write_trees_during_expand,
+			verbose_level);
+	if (f_v) {
+		cout << "symbolic_object_builder::do_expand "
+				"after Formula_vector->expand" << endl;
 	}
 
 
@@ -1214,27 +1236,17 @@ void symbolic_object_builder::do_collect(
 
 	if (O_source->Formula_vector->V[0].tree->Root->type != operation_type_add) {
 		cout << "symbolic_object_builder::do_collect "
-				"root node must be addition node" << endl;
-		exit(1);
-	}
-	for (i = 0; i < O_source->Formula_vector->V[0].tree->Root->nb_nodes; i++) {
+				"root is not an addition node" << endl;
+		//exit(1);
 
-		j = O_source->Formula_vector->V[0].tree->Root->Nodes[i]->exponent_of_variable(
+		j = O_source->Formula_vector->V[0].tree->Root->exponent_of_variable(
 				variable, 0 /*verbose_level*/);
-
-		if (f_v) {
-			cout << "symbolic_object_builder::do_collect "
-					"node " << i << " / " << O_source->Formula_vector->V[0].tree->Root->nb_nodes
-					<< " has degree " << j << " in " << variable
-					<< endl;
-		}
-
 
 		expression_parser::syntax_tree_node *Output_node;
 
 		Output_node = NEW_OBJECT(expression_parser::syntax_tree_node);
 
-		O_source->Formula_vector->V[0].tree->Root->Nodes[i]->copy_to(
+		O_source->Formula_vector->V[0].tree->Root->copy_to(
 				Formula_vector->V[j].tree,
 				Output_node,
 				0 /*verbose_level*/);
@@ -1250,9 +1262,47 @@ void symbolic_object_builder::do_collect(
 			exit(1);
 		}
 
-
 		Formula_vector->V[j].tree->Root->append_node(Output_node, 0 /* verbose_level */);
 
+	}
+	else {
+		for (i = 0; i < O_source->Formula_vector->V[0].tree->Root->nb_nodes; i++) {
+
+			j = O_source->Formula_vector->V[0].tree->Root->Nodes[i]->exponent_of_variable(
+					variable, 0 /*verbose_level*/);
+
+			if (f_v) {
+				cout << "symbolic_object_builder::do_collect "
+						"node " << i << " / " << O_source->Formula_vector->V[0].tree->Root->nb_nodes
+						<< " has degree " << j << " in " << variable
+						<< endl;
+			}
+
+
+			expression_parser::syntax_tree_node *Output_node;
+
+			Output_node = NEW_OBJECT(expression_parser::syntax_tree_node);
+
+			O_source->Formula_vector->V[0].tree->Root->Nodes[i]->copy_to(
+					Formula_vector->V[j].tree,
+					Output_node,
+					0 /*verbose_level*/);
+
+			int j1;
+
+			// destroy the appearances of the variable in the term:
+
+			j1 = Output_node->exponent_of_variable_destructive(variable);
+
+			if (j1 != j) {
+				cout << "symbolic_object_builder::do_collect j1 != j" << endl;
+				exit(1);
+			}
+
+
+			Formula_vector->V[j].tree->Root->append_node(Output_node, 0 /* verbose_level */);
+
+		}
 	}
 
 	if (f_v) {

@@ -3147,6 +3147,10 @@ void syntax_tree_node::collect_like_terms(int verbose_level)
 			if (f_v) {
 				cout << "syntax_tree_node::collect_like_terms "
 						"after collect_like_terms_addition" << endl;
+				cout << "syntax_tree_node::collect_like_terms "
+						"subtree: " << endl;
+				print_subtree_easy(cout);
+				cout << endl;
 			}
 
 		}
