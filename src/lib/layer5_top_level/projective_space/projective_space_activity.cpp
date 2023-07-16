@@ -184,14 +184,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 	else if (Descr->f_map) {
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity before G.map" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"f_map" << endl;
 		}
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity n=" << PA->P->Subspaces->n << endl;
+			cout << "projective_space_activity::perform_activity "
+					"n=" << PA->P->Subspaces->n << endl;
 		}
 
 		long int *Image_pts;
-		int N_points;
+		long int N_points;
 
 		algebraic_geometry::algebraic_geometry_global AGG;
 
@@ -214,7 +216,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity permutation:" << endl;
+			cout << "projective_space_activity::perform_activity Image_pts:" << endl;
 			Lint_vec_print(cout, Image_pts, N_points);
 			cout << endl;
 		}

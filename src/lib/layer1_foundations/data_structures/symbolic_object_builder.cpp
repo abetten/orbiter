@@ -448,6 +448,7 @@ void symbolic_object_builder::init(
 		//latex_split(std::string &name, int split_level, int split_mod, int verbose_level)
 
 		Formula_vector->latex_tree(verbose_level);
+		Formula_vector->export_tree(verbose_level);
 	}
 
 

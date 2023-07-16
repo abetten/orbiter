@@ -235,7 +235,7 @@ void algebraic_geometry_global::map(
 		std::string &formula_label,
 		std::string &evaluate_text,
 		long int *&Image_pts,
-		int &N_points,
+		long int &N_points,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -254,125 +254,128 @@ void algebraic_geometry_global::map(
 
 	Ring = Get_ring(ring_label);
 
-	idx = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol(formula_label);
 
-	if (idx < 0) {
-		cout << "could not find symbol " << formula_label << endl;
+	data_structures::symbolic_object_builder *Object;
+
+	Object = Get_symbol(formula_label);
+
+
+	if (Ring->get_nb_variables() != P->Subspaces->n + 1) {
+		cout << "algebraic_geometry_global::map number of variables is wrong" << endl;
 		exit(1);
 	}
-	orbiter_kernel_system::Orbiter->Orbiter_symbol_table->get_object(idx);
-
-	if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
-		cout << "symbol table entry must be of type t_object" << endl;
-		exit(1);
+	if (f_v) {
+		cout << "algebraic_geometry_global::map before evaluate_regular_map" << endl;
+	}
+	evaluate_regular_map(
+			Ring,
+			P,
+			Object,
+			evaluate_text,
+			Image_pts, N_points,
+			verbose_level);
+	if (f_v) {
+		cout << "algebraic_geometry_global::map after evaluate_regular_map" << endl;
 	}
 
-	// ToDo: use Symbolic Object instead of formula
-
-	if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
-		cout << "symbol table entry is a collection" << endl;
-
-		vector<string> *List;
-
-		List = (vector<string> *) orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].ptr;
-		int i;
-
-		int *coefficient_vector; // [List->size() * Ring->get_nb_monomials()]
-
-		coefficient_vector = NEW_int(List->size() * Ring->get_nb_monomials());
-
-		for (i = 0; i < List->size(); i++) {
-			int idx1;
-
-			idx1 = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol((*List)[i]);
-			if (idx1 < 0) {
-				cout << "could not find symbol " << (*List)[i] << endl;
-				exit(1);
-			}
-			expression_parser::formula *Formula;
-			Formula = (expression_parser::formula *)
-					orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx1].ptr;
-
-			if (f_v) {
-				cout << "projective_space_global::map i=" << i << " / " << List->size()
-						<< " before Ring->get_coefficient_vector" << endl;
-			}
-			Ring->get_coefficient_vector(Formula,
-					evaluate_text,
-					coefficient_vector + i * Ring->get_nb_monomials(),
-					verbose_level);
-			if (f_v) {
-				cout << "projective_space_global::map i=" << i << " / " << List->size()
-						<< " after Ring->get_coefficient_vector" << endl;
-			}
-		}
-
-		if (f_v) {
-			cout << "projective_space_global::map coefficient_vector:" << endl;
-			Int_matrix_print(coefficient_vector, List->size(), Ring->get_nb_monomials());
-		}
 
 
 
-		Ring->evaluate_regular_map(
-				coefficient_vector,
-				List->size(),
-				P,
-				Image_pts, N_points,
-				verbose_level);
-
-
-		if (f_v) {
-			cout << "projective_space_global::map permutation:" << endl;
-			Lint_vec_print(cout, Image_pts, N_points);
-			cout << endl;
-		}
-
-
-
-	}
-#if 0
-	else if (orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
-		cout << "symbol table entry is a formula" << endl;
-
-		expression_parser::formula *Formula;
-		Formula = (expression_parser::formula *)
-				orbiter_kernel_system::Orbiter->Orbiter_symbol_table->Table[idx].ptr;
-
-		int *coefficient_vector; // [Ring->get_nb_monomials()]
-
-		coefficient_vector = NEW_int(Ring->get_nb_monomials());
-
-		Ring->get_coefficient_vector(Formula,
-				evaluate_text,
-				coefficient_vector,
-				verbose_level);
-
-
-		Ring->evaluate_regular_map(
-				coefficient_vector,
-				1,
-				P,
-				Image_pts, N_points,
-				verbose_level);
-
-
-		FREE_int(coefficient_vector);
-
-
-
-	}
-#endif
-	else {
-		cout << "symbol table entry must be either a formula or a collection" << endl;
-		exit(1);
-	}
 
 
 	if (f_v) {
 		cout << "algebraic_geometry_global::map done" << endl;
 	}
 }
+
+void algebraic_geometry_global::evaluate_regular_map(
+		ring_theory::homogeneous_polynomial_domain *Ring,
+		geometry::projective_space *P,
+		data_structures::symbolic_object_builder *Object,
+		std::string &evaluate_text,
+		long int *&Image_pts, long int &N_points_input,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::evaluate_regular_map" << endl;
+	}
+
+	int *v;
+	int *w;
+	int h;
+	long int i, j;
+	int f_vv = false;
+
+	N_points_input = P->Subspaces->N_points;
+
+
+	int len;
+
+	len = Object->Formula_vector->len;
+
+	Image_pts = NEW_lint(N_points_input);
+
+	v = NEW_int(P->Subspaces->n + 1);
+	w = NEW_int(len);
+
+
+	data_structures::string_tools ST;
+	std::map<std::string, std::string> symbol_table;
+
+	ST.parse_value_pairs(symbol_table,
+				evaluate_text, verbose_level - 1);
+
+	for (i = 0; i < N_points_input; i++) {
+
+		P->unrank_point(v, i);
+
+		if (f_vv) {
+			cout << "algebraic_geometry_global::evaluate_regular_map point " << i << " is ";
+			Int_vec_print(cout, v, P->Subspaces->n + 1);
+			cout << endl;
+		}
+
+		for (h = 0; h < P->Subspaces->n + 1; h++) {
+			symbol_table[Ring->get_symbol(h)] = std::to_string(v[h]);
+
+		}
+
+		for (h = 0; h < len; h++) {
+
+			w[h] = Object->Formula_vector->V[h].tree->evaluate(
+					symbol_table,
+					verbose_level - 2);
+
+		}
+
+
+		if (!Int_vec_is_zero(w, len)) {
+			P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
+					w, 1 /* stride */, len, j);
+		}
+		else {
+			j = -1;
+		}
+
+		if (f_vv) {
+			cout << "algebraic_geometry_global::evaluate_regular_map maps to ";
+			Int_vec_print(cout, w, len);
+			cout << " = " << j << endl;
+		}
+
+		Image_pts[i] = j;
+	}
+	FREE_int(v);
+	FREE_int(w);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::evaluate_regular_map done" << endl;
+	}
+}
+
+
 
 void algebraic_geometry_global::cubic_surface_family_24_generators(
 		field_theory::finite_field *F,

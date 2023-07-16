@@ -43,7 +43,14 @@ public:
 			std::string &formula_label,
 			std::string &evaluate_text,
 			long int *&Image_pts,
-			int &N_points,
+			long int &N_points,
+			int verbose_level);
+	void evaluate_regular_map(
+			ring_theory::homogeneous_polynomial_domain *Ring,
+			geometry::projective_space *P,
+			data_structures::symbolic_object_builder *Object,
+			std::string &evaluate_text,
+			long int *&Image_pts, long int &N_points_output,
 			int verbose_level);
 	void cubic_surface_family_24_generators(
 			field_theory::finite_field *F,

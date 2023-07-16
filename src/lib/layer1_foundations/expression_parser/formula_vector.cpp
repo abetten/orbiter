@@ -1823,6 +1823,32 @@ void formula_vector::latex_tree(int verbose_level)
 	}
 }
 
+void formula_vector::export_tree(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_vector::export_tree" << endl;
+	}
+	int i;
+
+	if (len > 1) {
+		for (i = 0; i < len; i++) {
+			string s;
+
+			s = label_txt + "_" + std::to_string(i);
+			V[i].latex_tree(s, verbose_level);
+		}
+	}
+	else if (len == 1) {
+		V[0].export_tree(label_txt, verbose_level);
+
+	}
+	if (f_v) {
+		cout << "formula_vector::export_tree done" << endl;
+	}
+}
+
 void formula_vector::collect_variables(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

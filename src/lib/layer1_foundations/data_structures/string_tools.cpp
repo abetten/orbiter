@@ -1044,39 +1044,41 @@ void string_tools::parse_comma_separated_list(
 
 	s.assign(input_text);
 
-	while (true) {
+	if (input_text.length() > 0) {
+		while (true) {
 
-		std::size_t found;
-		int len;
+			std::size_t found;
+			int len;
 
-		len = s.length();
+			len = s.length();
 
-		found = s.find(',');
-		if (found == std::string::npos) {
-			if (f_v) {
-				cout << "string_tools::parse_comma_separated_list "
-						"adding symbol " << s << endl;
+			found = s.find(',');
+			if (found == std::string::npos) {
+				if (f_v) {
+					cout << "string_tools::parse_comma_separated_list "
+							"adding symbol " << s << endl;
+				}
+
+				output.push_back(s);
+				break;
 			}
-
-			output.push_back(s);
-			break;
-		}
-		else {
-			std::string symb = s.substr (0, found);
-			std::string rest = s.substr (found + 1, len - found - 1);
+			else {
+				std::string symb = s.substr (0, found);
+				std::string rest = s.substr (found + 1, len - found - 1);
 
 
 
-			if (f_v) {
-				cout << "string_tools::parse_comma_separated_list "
-						"adding symbol " << symb << endl;
+				if (f_v) {
+					cout << "string_tools::parse_comma_separated_list "
+							"adding symbol " << symb << endl;
+				}
+
+				output.push_back(symb);
+
+
+				s = rest;
+
 			}
-
-			output.push_back(symb);
-
-
-			s = rest;
-
 		}
 	}
 

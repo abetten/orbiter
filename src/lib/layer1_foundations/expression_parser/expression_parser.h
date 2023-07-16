@@ -306,6 +306,7 @@ public:
 			std::string &managed_variables_text,
 			int verbose_level);
 	void latex_tree(int verbose_level);
+	void export_tree(int verbose_level);
 	void collect_variables(int verbose_level);
 	void print_variables(std::ostream &ost);
 
@@ -394,6 +395,10 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int &nb_monomials,
 			int verbose_level);
+	void evaluate_with_symbol_table(
+			std::map<std::string, std::string> &symbol_table,
+			int *Values,
+			int verbose_level);
 	void evaluate(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
@@ -430,6 +435,8 @@ public:
 	void get_monopoly(
 			std::string &variable, int *&coeff, int &nb_coeff, int verbose_level);
 	void latex_tree(
+			std::string &label, int verbose_level);
+	void export_tree(
 			std::string &label, int verbose_level);
 	void latex_tree_split(
 			std::string &label, int split_level, int split_mod,
@@ -612,15 +619,20 @@ public:
 	int is_int_node();
 	int is_text_node();
 	int is_monomial();
-	int is_this_variable(std::string &variable);
-	int highest_order_term(std::string &variable, int verbose_level);
-	void get_monopoly(std::string &variable,
+	int is_this_variable(
+			std::string &variable);
+	int highest_order_term(
+			std::string &variable, int verbose_level);
+	void get_monopoly(
+			std::string &variable,
 			std::vector<int> &Coeff, std::vector<int> &Exp,
 			int verbose_level);
 	void get_exponent_and_coefficient_of_variable(
 			std::string &variable, int &coeff, int &exp, int verbose_level);
-	int exponent_of_variable(std::string &variable, int verbose_level);
-	int exponent_of_variable_destructive(std::string &variable);
+	int exponent_of_variable(
+			std::string &variable, int verbose_level);
+	int exponent_of_variable_destructive(
+			std::string &variable);
 	int get_exponent();
 	int evaluate(
 			std::map<std::string, std::string> &symbol_table,
@@ -677,11 +689,29 @@ public:
 	void collect_variables(int verbose_level);
 	int terminal_node_get_variable_index();
 	void count_nodes(
-			int &nb_add, int &nb_mult, int &nb_int, int &nb_text, int &max_degree);
-	void reallocate(int nb_nodes_needed, int verbose_level);
-	void append_node(syntax_tree_node *child, int verbose_level);
-	void insert_nodes_at(int idx, int nb_to_insert, int verbose_level);
+			int &nb_add, int &nb_mult, int &nb_int,
+			int &nb_text, int &max_degree);
+	void reallocate(
+			int nb_nodes_needed, int verbose_level);
+	void append_node(
+			syntax_tree_node *child, int verbose_level);
+	void insert_nodes_at(
+			int idx, int nb_to_insert, int verbose_level);
 	int needs_to_be_expanded();
+	void make_determinant(
+			syntax_tree *Output_tree,
+			field_theory::finite_field *Fq,
+			formula *V_in,
+			int n,
+			int verbose_level);
+	void make_linear_combination(
+			syntax_tree *Output_tree,
+			syntax_tree_node *Node1a,
+			syntax_tree_node *Node1b,
+			syntax_tree_node *Node2a,
+			syntax_tree_node *Node2b,
+			int verbose_level);
+	// we assume that the node is an empty plus node
 
 };
 
@@ -726,7 +756,8 @@ public:
 			std::vector<std::string> &rep, int f_latex,
 			int verbose_level);
 	void count_nodes(
-			int &nb_add, int &nb_mult, int &nb_int, int &nb_text, int &max_degree);
+			int &nb_add, int &nb_mult, int &nb_int,
+			int &nb_text, int &max_degree);
 	int nb_nodes_total();
 	void print(std::ostream &ost);
 	void print_easy(std::ostream &ost);
@@ -757,9 +788,11 @@ public:
 	void expand_in_place(
 			int verbose_level);
 	int highest_order_term(
-			std::string &variable, int verbose_level);
+			std::string &variable,
+			int verbose_level);
 	void get_monopoly(
-			std::string &variable, int *&coeff, int &nb_coeff, int verbose_level);
+			std::string &variable, int *&coeff, int &nb_coeff,
+			int verbose_level);
 	void multiply_by_minus_one(
 			field_theory::finite_field *Fq,
 			int verbose_level);
@@ -782,14 +815,18 @@ public:
 	// All input nodes are copied.
 	void latex_tree(
 			std::string &name, int verbose_level);
+	void export_tree(
+			std::string &name, int verbose_level);
 	void latex_tree_split(
 			std::string &name, int split_level, int split_mod,
 			int verbose_level);
 	void collect_variables(
 			int verbose_level);
-	void print_variables(std::ostream &ost,
+	void print_variables(
+			std::ostream &ost,
 			int verbose_level);
-	void print_variables_in_line(std::ostream &ost);
+	void print_variables_in_line(
+			std::ostream &ost);
 	int find_variable(
 			std::string &var,
 			int verbose_level);
@@ -800,6 +837,9 @@ public:
 	int get_number_of_variables();
 	std::string &get_variable_name(int index);
 	int needs_to_be_expanded();
+	long int evaluate(
+			std::map<std::string, std::string> &symbol_table,
+			int verbose_level);
 
 };
 
@@ -807,27 +847,34 @@ public:
 
 class syntax_tree_latex {
 public:
-    std::ostream* output_stream;
-    std::string indentation;
-    std::string delimiter;
-    int f_split;
-    int split_level;
-    int split_r;
-    int split_mod;
+	std::ostream* output_stream;
+	std::string indentation;
+	std::string delimiter;
+	int f_split;
+	int split_level;
+	int split_r;
+	int split_mod;
 
-    void latex_tree(
-    		std::string &name, syntax_tree_node *Root,
+	void latex_tree(
+			std::string &name, syntax_tree_node *Root,
 			int verbose_level);
-    void latex_tree_split(
+	void export_tree(
     		std::string &name, syntax_tree_node *Root,
+    		int verbose_level);
+	void latex_tree_split(
+			std::string &name, syntax_tree_node *Root,
 			int split_level, int split_mod,
 			int verbose_level);
-    void add_prologue();
-    void add_epilogue();
-    void add_indentation();
-    void remove_indentation();
-    void latex_tree_recursion(
-    		syntax_tree_node *node, int depth,
+	void add_prologue();
+	void add_epilogue();
+	void add_indentation();
+	void remove_indentation();
+	void latex_tree_recursion(
+			syntax_tree_node *node, int depth,
+			int verbose_level);
+	void export_tree_recursion(
+			syntax_tree_node *node, int depth,
+			std::vector<int> &path,
 			int verbose_level);
 
 };

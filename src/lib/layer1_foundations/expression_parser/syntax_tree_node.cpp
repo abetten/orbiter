@@ -1092,7 +1092,8 @@ int syntax_tree_node::is_monomial()
 	return true;
 }
 
-int syntax_tree_node::is_this_variable(std::string &variable)
+int syntax_tree_node::is_this_variable(
+		std::string &variable)
 {
 	data_structures::string_tools ST;
 
@@ -1106,7 +1107,8 @@ int syntax_tree_node::is_this_variable(std::string &variable)
 }
 
 
-int syntax_tree_node::highest_order_term(std::string &variable, int verbose_level)
+int syntax_tree_node::highest_order_term(
+		std::string &variable, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1133,7 +1135,8 @@ int syntax_tree_node::highest_order_term(std::string &variable, int verbose_leve
 						variable, verbose_level - 2);
 				if (f_v) {
 					cout << "syntax_tree_node::highest_order_term "
-							"child " << i << " / " << nb_nodes << " d1=" << d1 << endl;
+							"child " << i << " / " << nb_nodes
+							<< " d1=" << d1 << endl;
 				}
 				if (d1 > d) {
 					d = d1;
@@ -1152,7 +1155,8 @@ int syntax_tree_node::highest_order_term(std::string &variable, int verbose_leve
 	return d;
 }
 
-void syntax_tree_node::get_monopoly(std::string &variable,
+void syntax_tree_node::get_monopoly(
+		std::string &variable,
 		std::vector<int> &Coeff, std::vector<int> &Exp,
 		int verbose_level)
 {
@@ -1212,7 +1216,8 @@ void syntax_tree_node::get_exponent_and_coefficient_of_variable(
 
 	if (f_terminal) {
 		if (f_v) {
-			cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable terminal node" << endl;
+			cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+					"terminal node" << endl;
 		}
 		if (is_this_variable(variable)) {
 			exp = get_exponent();
@@ -1248,16 +1253,19 @@ void syntax_tree_node::get_exponent_and_coefficient_of_variable(
 
 		for (i = 0; i < nb_nodes; i++) {
 			if (f_v) {
-				cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable child " << i << " / " << nb_nodes << endl;
+				cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+						"child " << i << " / " << nb_nodes << endl;
 			}
 
 			if (Nodes[i]->f_terminal) {
 				if (f_v) {
-					cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable child " << i << " / " << nb_nodes << " is terminal node" << endl;
+					cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+							"child " << i << " / " << nb_nodes << " is terminal node" << endl;
 				}
 				if (Nodes[i]->is_int_node()) {
 					if (f_v) {
-						cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable child " << i << " / " << nb_nodes << " is int node" << endl;
+						cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
+								"child " << i << " / " << nb_nodes << " is int node" << endl;
 					}
 					if (coeff != -1) {
 						cout << "syntax_tree_node::get_exponent_and_coefficient_of_variable "
@@ -3990,7 +3998,8 @@ int syntax_tree_node::terminal_node_get_variable_index()
 
 
 void syntax_tree_node::count_nodes(
-		int &nb_add, int &nb_mult, int &nb_int, int &nb_text, int &max_degree)
+		int &nb_add, int &nb_mult, int &nb_int,
+		int &nb_text, int &max_degree)
 {
 	if (f_terminal) {
 		if (T->f_int) {
@@ -4016,7 +4025,8 @@ void syntax_tree_node::count_nodes(
 	}
 }
 
-void syntax_tree_node::reallocate(int nb_nodes_needed, int verbose_level)
+void syntax_tree_node::reallocate(
+		int nb_nodes_needed, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4071,7 +4081,8 @@ void syntax_tree_node::reallocate(int nb_nodes_needed, int verbose_level)
 }
 
 
-void syntax_tree_node::append_node(syntax_tree_node *child, int verbose_level)
+void syntax_tree_node::append_node(
+		syntax_tree_node *child, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4091,7 +4102,8 @@ void syntax_tree_node::append_node(syntax_tree_node *child, int verbose_level)
 
 }
 
-void syntax_tree_node::insert_nodes_at(int idx, int nb_to_insert, int verbose_level)
+void syntax_tree_node::insert_nodes_at(
+		int idx, int nb_to_insert, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4147,6 +4159,217 @@ int syntax_tree_node::needs_to_be_expanded()
 	return false;
 }
 
+void syntax_tree_node::make_determinant(
+		syntax_tree *Output_tree,
+		field_theory::finite_field *Fq,
+		formula *V_in,
+		int n,
+		int verbose_level)
+// we assume that the node is an empty plus node
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::make_determinant" << endl;
+	}
+
+	// For creating the set of permutations of n:
+	combinatorics::combinatorics_domain Combi;
+	long int a, N; // N = n factorial as long int
+	int sgn;
+	int *lehmer_code; // [n]
+	int *perm; // [n]
+
+	// For computing the number n factorial:
+	ring_theory::longinteger_domain Long;
+	ring_theory::longinteger_object result;
+
+
+	lehmer_code = NEW_int(n);
+	perm = NEW_int(n);
+
+	Long.factorial(result, n);
+	N = result.as_lint();
+
+	if (f_v) {
+		cout << "syntax_tree_node::make_determinant "
+				"N = " << N << endl;
+	}
+
+
+	// We will use the determinantal formula
+	// as the sum over all permutations
+	// with a sign.
+	// For this, we need the field element minus one:
+
+	int minus_one;
+
+	minus_one = Fq->negate(1);
+		// minus one is the additive inverse of one.
+		// In Orbiter, it is NOT represented as -1.
+		// The representation depends on whether q is a prime or not.
+
+
+
+	for (a = 0; a < N; a++) {
+
+		// create the permutations in the order determined by the Lehmercode:
+
+		if (a == 0) {
+			Combi.first_lehmercode(n, lehmer_code);
+		}
+		else {
+			Combi.next_lehmercode(n, lehmer_code);
+		}
+		Combi.lehmercode_to_permutation(
+				n, lehmer_code, perm);
+
+
+		if (f_v) {
+			cout << "syntax_tree_node::make_determinant "
+					"a = " << a << " / " << N
+					<< " perm=";
+			Int_vec_print(cout, perm, n);
+			cout << endl;
+		}
+
+		sgn = Combi.perm_signum(perm, n);
+			// sgn is either +1 or -1.
+
+
+		syntax_tree_node *mult_node;
+
+		mult_node = NEW_OBJECT(syntax_tree_node);
+
+		if (f_v) {
+			cout << "syntax_tree_node::make_determinant "
+					"a = " << a << " / " << N
+					<< " before mult_node->init_empty_multiplication_node" << endl;
+		}
+
+		mult_node->init_empty_multiplication_node(
+				Output_tree, 0 /*verbose_level*/);
+
+		if (f_v) {
+			cout << "syntax_tree_node::make_determinant "
+					"a = " << a << " / " << N
+					<< " after mult_node->init_empty_multiplication_node" << endl;
+		}
+
+		if (sgn == -1) {
+			if (f_v) {
+				cout << "syntax_tree_node::make_determinant "
+						"a = " << a << " / " << N
+						<< " before mult_node->add_numerical_factor" << endl;
+			}
+			mult_node->add_numerical_factor(
+					minus_one, 0 /*verbose_level*/);
+			if (f_v) {
+				cout << "syntax_tree_node::make_determinant "
+						"a = " << a << " / " << N
+						<< " after mult_node->add_numerical_factor" << endl;
+			}
+		}
+
+		int i;
+		for (i = 0; i < n; i++) {
+
+
+			syntax_tree_node *node;
+
+			node = NEW_OBJECT(syntax_tree_node);
+
+			// Get the entry (i, pi(i)) from the input matrix
+			// and add it as a factor:
+
+			V_in[i * n + perm[i]].tree->Root->copy_to(
+					Output_tree,
+					node, verbose_level - 2);
+
+			mult_node->append_node(node, verbose_level - 2);
+
+		}
+
+
+		// add another summand to the addition:
+
+		append_node(mult_node, verbose_level - 2);
+
+
+	}
+
+	FREE_int(perm);
+	FREE_int(lehmer_code);
+
+	if (f_v) {
+		cout << "syntax_tree_node::make_determinant done" << endl;
+	}
+}
+
+void syntax_tree_node::make_linear_combination(
+		syntax_tree *Output_tree,
+		syntax_tree_node *Node1a,
+		syntax_tree_node *Node1b,
+		syntax_tree_node *Node2a,
+		syntax_tree_node *Node2b,
+		int verbose_level)
+// we assume that the node is an empty plus node
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::make_linear_combination" << endl;
+	}
+
+
+	syntax_tree_node *mult_node1;
+	syntax_tree_node *mult_node2;
+
+	mult_node1 = NEW_OBJECT(syntax_tree_node);
+	mult_node2 = NEW_OBJECT(syntax_tree_node);
+
+
+	mult_node1->init_empty_multiplication_node(Output_tree, verbose_level);
+	mult_node2->init_empty_multiplication_node(Output_tree, verbose_level);
+
+
+	append_node(mult_node1, 0 /*verbose_level*/);
+	append_node(mult_node2, 0 /*verbose_level*/);
+
+
+	syntax_tree_node *Node1a_copy;
+	syntax_tree_node *Node1b_copy;
+	syntax_tree_node *Node2a_copy;
+	syntax_tree_node *Node2b_copy;
+
+	Node1a_copy = NEW_OBJECT(syntax_tree_node);
+	Node1b_copy = NEW_OBJECT(syntax_tree_node);
+	Node2a_copy = NEW_OBJECT(syntax_tree_node);
+	Node2b_copy = NEW_OBJECT(syntax_tree_node);
+
+	Node1a->copy_to(Output_tree, Node1a_copy, 0 /*verbose_level*/);
+	Node1b->copy_to(Output_tree, Node1b_copy, 0 /*verbose_level*/);
+	Node2a->copy_to(Output_tree, Node2a_copy, 0 /*verbose_level*/);
+	Node2b->copy_to(Output_tree, Node2b_copy, 0 /*verbose_level*/);
+
+	mult_node1->append_node(Node1a_copy, 0 /*verbose_level*/);
+	mult_node1->append_node(Node1b_copy, 0 /*verbose_level*/);
+
+	mult_node2->append_node(Node2a_copy, 0 /*verbose_level*/);
+	mult_node2->append_node(Node2b_copy, 0 /*verbose_level*/);
+
+
+	if (f_v) {
+		cout << "syntax_tree_node::make_linear_combination" << endl;
+		cout << "syntax_tree_node::make_linear_combination Root=";
+		print_subtree_easy(cout);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::make_linear_combination done" << endl;
+	}
+
+}
 
 static int syntax_tree_node_compare_func(void *data,
 		int i, int j, void *extra_data)

@@ -64,6 +64,41 @@ void syntax_tree_latex::latex_tree(
 
 }
 
+void syntax_tree_latex::export_tree(
+		std::string &name, syntax_tree_node *Root,
+		int verbose_level)
+{
+
+	string fname_tree;
+
+	fname_tree = name + ".tree";
+	f_split = false;
+	split_level = 0;
+	split_r = 0;
+	split_mod = 1;
+	indentation = "";
+	delimiter = " ";
+
+
+
+
+	{
+		output_stream = new std::ofstream(fname_tree);
+
+
+		std::vector<int> path;
+
+
+		export_tree_recursion(Root, 0, path, verbose_level);
+		*output_stream << -1 << endl;
+
+		delete output_stream;
+		output_stream = NULL;
+	}
+
+}
+
+
 void syntax_tree_latex::latex_tree_split(
 		std::string &name, syntax_tree_node *Root,
 		int split_level, int split_mod,
@@ -242,6 +277,70 @@ void syntax_tree_latex::latex_tree_recursion(
 }
 
 
+void syntax_tree_latex::export_tree_recursion(
+		syntax_tree_node *node, int depth,
+		std::vector<int> &path,
+		int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_latex::latex_tree_recursion" << endl;
+	}
+
+	int i;
+	*output_stream << path.size() + 1 << " ";
+	for (i = 0; i < path.size(); i++) {
+		*output_stream << path[i] << " ";
+	}
+	*output_stream << node->idx << " ";
+	if (node->f_terminal) {
+		*output_stream << "$t$";
+	}
+	else {
+		if (node->type == operation_type_mult) {
+			*output_stream << "$+$";
+
+		}
+		else if (node->type == operation_type_add) {
+			*output_stream << "$-$";
+		}
+	}
+	*output_stream << endl;
+
+	if (node->f_terminal) {
+
+	}
+	else {
+		int i;
+
+		if (node->type == operation_type_mult) {
+			for (i = 0; i < node->nb_nodes; i++) {
+				path.push_back(node->idx);
+
+				export_tree_recursion(node->Nodes[i], depth + 1, path, verbose_level);
+
+				path.pop_back();
+
+			}
+		}
+		else if (node->type == operation_type_add) {
+			for (i = 0; i < node->nb_nodes; i++) {
+				path.push_back(node->idx);
+
+				export_tree_recursion(node->Nodes[i], depth + 1, path, verbose_level);
+
+				path.pop_back();
+
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "syntax_tree_latex::latex_tree_recursion done" << endl;
+	}
+}
 
 
 }}}

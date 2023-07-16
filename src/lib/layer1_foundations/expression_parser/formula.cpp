@@ -577,6 +577,28 @@ void formula::get_subtrees(
 	}
 }
 
+void formula::evaluate_with_symbol_table(
+		std::map<std::string, std::string> &symbol_table,
+		int *Values,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::evaluate_with_symbol_table" << endl;
+	}
+	long int a;
+
+	a = tree->evaluate(
+			symbol_table, verbose_level - 1);
+
+
+	if (f_v) {
+		cout << "formula::evaluate_with_symbol_table done" << endl;
+	}
+
+}
+
 void formula::evaluate(
 		ring_theory::homogeneous_polynomial_domain *Poly,
 		syntax_tree_node **Subtrees,
@@ -1434,6 +1456,13 @@ void formula::latex_tree(
 		std::string &label, int verbose_level)
 {
 	tree->latex_tree(label, 0 /*verbose_level*/);
+
+}
+
+void formula::export_tree(
+		std::string &label, int verbose_level)
+{
+	tree->export_tree(label, 0 /*verbose_level*/);
 
 }
 
