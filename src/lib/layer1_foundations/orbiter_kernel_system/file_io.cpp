@@ -3601,12 +3601,12 @@ long int file_io::file_size(
 }
 
 void file_io::delete_file(
-		const char *fname)
+		std::string &fname)
 {
-	char str[1000];
+	string cmd;
 
-	snprintf(str, sizeof(str), "rm %s", fname);
-	system(str);
+	cmd = "rm " + fname;
+	system(cmd.c_str());
 }
 
 void file_io::fwrite_int4(FILE *fp, int a)
@@ -3635,6 +3635,7 @@ void file_io::fread_uchars(FILE *fp, uchar *p, int len)
 	fread(p, 1 /* size */, len /* items */, fp);
 }
 
+#if 0
 void file_io::read_numbers_from_file(
 		std::string &fname,
 	int *&the_set, int &set_size, int verbose_level)
@@ -3684,6 +3685,7 @@ void file_io::read_numbers_from_file(
 		cout << endl;
 	}
 }
+#endif
 
 void file_io::read_ascii_set_of_sets_constant_size(
 		std::string &fname_ascii,
@@ -4625,15 +4627,15 @@ void file_io::do_csv_file_join(
 		if (i == 0) {
 			cout << "The first table is:" << endl;
 			S[0].print_table(cout, false);
-			}
+		}
 #endif
 		if (false) {
 			cout << "The " << i << "th table is:" << endl;
 			S[i].print_table(cout, false);
-			}
-
-
 		}
+
+
+	}
 
 #if 0
 	cout << "adding " << nb_with << " -with entries" << endl;
@@ -4644,26 +4646,29 @@ void file_io::do_csv_file_join(
 
 	for (i = 0; i < nb_files; i++) {
 		identifier_column[i] = S[i].find_by_column(csv_file_join_identifier[i].c_str());
-		cout << "Table " << csv_file_join_fname[i] << ", identifier " << identifier_column[i] << endl;
-		}
+		cout << "Table " << csv_file_join_fname[i]
+			<< ", identifier " << identifier_column[i] << endl;
+	}
 
 #if 0
 	for (i = 0; i < nb_files; i++) {
 		by_column[i] = S[i].find_by_column(join_by);
 		cout << "File " << fname[i] << " by_column[" << i << "]=" << by_column[i] << endl;
-		}
+	}
 #endif
 
 	cout << "joining " << nb_files << " files" << endl;
 	for (i = 1; i < nb_files; i++) {
-		cout << "Joining table " << 0 << " = " << csv_file_join_fname[0] << " with table " << i << " = " << csv_file_join_fname[i] << endl;
+		cout << "Joining table " << 0 << " = " << csv_file_join_fname[0]
+			<< " with table " << i << " = " << csv_file_join_fname[i] << endl;
 		S[0].join_with(S + i, identifier_column[0], identifier_column[i], verbose_level - 2);
-		cout << "joining " << csv_file_join_fname[0] << " with table " << csv_file_join_fname[i] << " done" << endl;
+		cout << "joining " << csv_file_join_fname[0]
+			<< " with table " << csv_file_join_fname[i] << " done" << endl;
 #if 0
 		cout << "After join, the table is:" << endl;
 		S[0].print_table(cout, false);
 #endif
-		}
+	}
 
 
 
@@ -4673,7 +4678,7 @@ void file_io::do_csv_file_join(
 #if 0
 	if (f_drop) {
 		S[0].remove_rows(drop_column, drop_label, verbose_level);
-		}
+	}
 #endif
 
 
@@ -4852,12 +4857,8 @@ void file_io::do_csv_file_latex(
 	string extra_praeamble;
 
 
-	char str[1000];
-
-	snprintf(str, 1000, "File");
-	title.assign(str);
-	snprintf(str, 1000, "Orbiter");
-	author.assign(str);
+	title = "File";
+	author = "Orbiter";
 
 
 
@@ -4920,9 +4921,64 @@ void file_io::do_csv_file_latex(
 	}
 }
 
+void file_io::read_csv_file_and_tally(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::read_csv_file_and_tally" << endl;
+	}
+
+	long int *M;
+	int m, n;
+
+	lint_matrix_read_csv(fname, M, m, n, verbose_level);
+
+	cout << "The matrix has size " << m << " x " << n << endl;
+
+	data_structures::tally T;
+
+	T.init_lint(M, m * n, true, 0);
+	cout << "tally:" << endl;
+	T.print(true);
+	cout << endl;
+
+
+	data_structures::set_of_sets *SoS;
+	int *types;
+	int nb_types;
+	int i;
+
+	SoS = T.get_set_partition_and_types(
+			types, nb_types, verbose_level);
+
+	cout << "fibers:" << endl;
+	for (i = 0; i < nb_types; i++) {
+		cout << i << " : " << types[i] << " : ";
+		Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+		cout << endl;
+	}
+
+	//cout << "set partition:" << endl;
+	//SoS->print_table();
+
+	FREE_lint(M);
+
+	if (f_v) {
+		cout << "file_io::read_csv_file_and_tally done" << endl;
+	}
+}
+
 void file_io::read_solutions_and_tally(
 		std::string &fname, int sz, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::read_solutions_and_tally" << endl;
+	}
+
 	int nb_solutions;
 	int solution_size = sz;
 	long int *Sol;
@@ -4969,6 +5025,10 @@ void file_io::read_solutions_and_tally(
 
 
 	FREE_lint(Sol);
+	if (f_v) {
+		cout << "file_io::read_solutions_and_tally done" << endl;
+	}
+
 
 }
 

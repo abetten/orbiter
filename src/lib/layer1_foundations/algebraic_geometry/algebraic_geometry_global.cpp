@@ -263,11 +263,13 @@ void algebraic_geometry_global::map(
 
 
 	if (Ring->get_nb_variables() != P->Subspaces->n + 1) {
-		cout << "algebraic_geometry_global::map number of variables is wrong" << endl;
+		cout << "algebraic_geometry_global::map "
+				"number of variables is wrong" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "algebraic_geometry_global::map before evaluate_regular_map" << endl;
+		cout << "algebraic_geometry_global::map "
+				"before evaluate_regular_map" << endl;
 	}
 	evaluate_regular_map(
 			Ring,
@@ -277,7 +279,8 @@ void algebraic_geometry_global::map(
 			Image_pts, N_points,
 			verbose_level);
 	if (f_v) {
-		cout << "algebraic_geometry_global::map after evaluate_regular_map" << endl;
+		cout << "algebraic_geometry_global::map "
+				"after evaluate_regular_map" << endl;
 	}
 
 
@@ -370,6 +373,7 @@ void algebraic_geometry_global::evaluate_regular_map(
 
 		Image_pts[i] = j;
 	}
+
 	FREE_int(v);
 	FREE_int(w);
 

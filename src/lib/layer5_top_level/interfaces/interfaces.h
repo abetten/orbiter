@@ -757,6 +757,9 @@ class interface_toolkit {
 	int f_save_matrix_csv;
 	std::string save_matrix_csv_label;
 
+	int f_csv_file_tally;
+	std::string csv_file_tally_fname;
+
 	int f_csv_file_select_rows;
 	std::string csv_file_select_rows_fname;
 	std::string csv_file_select_rows_text;

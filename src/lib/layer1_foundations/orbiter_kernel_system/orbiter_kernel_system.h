@@ -319,16 +319,18 @@ public:
 	long int file_size(
 			const char *name);
 	void delete_file(
-			const char *fname);
+			std::string &fname);
 
 	void fwrite_int4(FILE *fp, int a);
 	int_4 fread_int4(FILE *fp);
 	void fwrite_uchars(FILE *fp, uchar *p, int len);
 	void fread_uchars(FILE *fp, uchar *p, int len);
 
+#if 0
 	void read_numbers_from_file(
 			std::string &fname,
 		int *&the_set, int &set_size, int verbose_level);
+#endif
 	void read_ascii_set_of_sets_constant_size(
 			std::string &fname_ascii,
 			int *&Sets, int &nb_sets, int &set_size,
@@ -383,6 +385,8 @@ public:
 			int f_produce_latex_header,
 			int nb_lines_per_table,
 			int verbose_level);
+	void read_csv_file_and_tally(
+			std::string &fname, int verbose_level);
 	void read_solutions_and_tally(
 			std::string &fname, int sz, int verbose_level);
 	void save_fibration(

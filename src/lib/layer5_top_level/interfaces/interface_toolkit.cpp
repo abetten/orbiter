@@ -29,6 +29,8 @@ interface_toolkit::interface_toolkit()
 	f_save_matrix_csv = false;
 	//std::string save_matrix_csv_label;
 
+	f_csv_file_tally = false;
+	//std::string csv_file_tally_fname;
 
 	f_csv_file_select_rows = false;
 	//std::string csv_file_select_rows_fname;
@@ -183,6 +185,9 @@ void interface_toolkit::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-save_matrix_csv") == 0) {
 		cout << "-save_matrix_csv <string : label>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-csv_file_tally") == 0) {
+		cout << "-csv_file_tally <string : label>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		cout << "-cvs_file_select_rows <string : csv_file_name> <string : list of rows>" << endl;
 	}
@@ -288,6 +293,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-save_matrix_csv") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_tally") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
@@ -426,6 +434,13 @@ void interface_toolkit::read_arguments(int argc,
 		save_matrix_csv_label.assign(argv[++i]);
 		if (f_v) {
 			cout << "-save_matrix_csv " << save_matrix_csv_label << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_tally") == 0) {
+		f_csv_file_tally = true;
+		csv_file_tally_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_tally " << csv_file_tally_fname << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
@@ -871,6 +886,9 @@ void interface_toolkit::print()
 	if (f_save_matrix_csv) {
 		cout << "-save_csv " << save_matrix_csv_label << endl;
 	}
+	if (f_csv_file_tally) {
+		cout << "-csv_file_tally " << csv_file_tally_fname << endl;
+	}
 	if (f_csv_file_select_rows) {
 		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
@@ -1074,6 +1092,23 @@ void interface_toolkit::worker(int verbose_level)
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 	}
+	else if (f_csv_file_tally) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker -csv_file_tally" << endl;
+		}
+
+		cout << "-csv_file_tally " << csv_file_tally_fname << endl;
+
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.read_csv_file_and_tally(
+				csv_file_tally_fname, verbose_level);
+
+	}
+
+
+
 	else if (f_csv_file_select_rows) {
 
 		if (f_v) {
