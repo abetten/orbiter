@@ -84,15 +84,20 @@ public:
 				*Descr,
 			surface_classify_wedge *SCW,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 	void report(
 			poset_classification::poset_classification_report_options
 				*report_options,
 			int verbose_level);
-	void do_surface_identify_Eckardt(int verbose_level);
-	void do_surface_identify_F13(int verbose_level);
-	void do_surface_identify_Bes(int verbose_level);
-	void do_surface_identify_general_abcd(int verbose_level);
+	void do_surface_identify_Eckardt(
+			int verbose_level);
+	void do_surface_identify_F13(
+			int verbose_level);
+	void do_surface_identify_Bes(
+			int verbose_level);
+	void do_surface_identify_general_abcd(
+			int verbose_level);
 	void do_surface_isomorphism_testing(
 			cubic_surfaces_in_general::surface_create_description
 				*surface_descr_isomorph1,
@@ -103,7 +108,8 @@ public:
 			cubic_surfaces_in_general::surface_create_description
 				*surface_descr,
 			int verbose_level);
-	void do_write_source_code(int verbose_level);
+	void do_write_source_code(
+			int verbose_level);
 	void do_sweep_Cayley(
 			int verbose_level);
 

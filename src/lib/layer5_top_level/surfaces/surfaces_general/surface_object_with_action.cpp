@@ -148,7 +148,8 @@ surface_object_with_action::~surface_object_with_action()
 
 void surface_object_with_action::init_equation(
 	surface_with_action *Surf_A, int *eqn,
-	groups::strong_generators *Aut_gens, int verbose_level)
+	groups::strong_generators *Aut_gens,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -330,8 +331,10 @@ void surface_object_with_action::init_with_surface_object(
 
 
 void surface_object_with_action::init_surface_object(
-	surface_with_action *Surf_A, algebraic_geometry::surface_object *SO,
-	groups::strong_generators *Aut_gens, int verbose_level)
+	surface_with_action *Surf_A,
+	algebraic_geometry::surface_object *SO,
+	groups::strong_generators *Aut_gens,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1393,7 +1396,8 @@ void surface_object_with_action::print_automorphism_group(
 
 }
 
-void surface_object_with_action::cheat_sheet_basic(std::ostream &ost, int verbose_level)
+void surface_object_with_action::cheat_sheet_basic(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -2238,7 +2242,8 @@ void surface_object_with_action::export_all_quartic_curves(
 	}
 }
 
-void surface_object_with_action::print_full_del_Pezzo(std::ostream &ost, int verbose_level)
+void surface_object_with_action::print_full_del_Pezzo(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, f, P_idx, P_idx_local;
@@ -2310,7 +2315,8 @@ void surface_object_with_action::print_full_del_Pezzo(std::ostream &ost, int ver
 	}
 }
 
-void surface_object_with_action::print_everything(std::ostream &ost, int verbose_level)
+void surface_object_with_action::print_everything(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2436,7 +2442,8 @@ void surface_object_with_action::print_everything(std::ostream &ost, int verbose
 }
 
 
-void surface_object_with_action::print_summary(std::ostream &ost)
+void surface_object_with_action::print_summary(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{Summary}" << endl;
 

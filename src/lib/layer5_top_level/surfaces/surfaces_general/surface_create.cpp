@@ -258,7 +258,8 @@ int surface_create::init_with_data(
 	return true;
 }
 
-int surface_create::init(surface_create_description *Descr,
+int surface_create::init(
+		surface_create_description *Descr,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -568,6 +569,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 		}
 
 		if (!create_surface_by_equation(
+				Descr->equation_ring_label,
 				Descr->equation_name_of_formula,
 				Descr->equation_name_of_formula_tex,
 				Descr->equation_managed_variables,
@@ -578,7 +580,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 				Descr->select_double_six_string,
 				verbose_level - 2)) {
 			if (f_v) {
-				cout << "surface_create::init2 "
+				cout << "surface_create::create_surface_from_description "
 						"cannot create surface" << endl;
 			}
 			return false;
@@ -588,6 +590,30 @@ int surface_create::create_surface_from_description(int verbose_level)
 					"after create_surface_by_equation" << endl;
 		}
 	}
+	else if (Descr->f_by_symbolic_object) {
+
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"before create_surface_by_equation" << endl;
+		}
+
+		if (!create_surface_by_symbolic_object(
+				Descr->by_symbolic_object_ring_label,
+				Descr->by_symbolic_object_name_of_formula,
+				Descr->select_double_six_string,
+				verbose_level - 2)) {
+			if (f_v) {
+				cout << "surface_create::create_surface_from_description "
+						"cannot create surface" << endl;
+			}
+			return false;
+		}
+		if (f_v) {
+			cout << "surface_create::create_surface_from_description "
+					"after create_surface_by_equation" << endl;
+		}
+	}
+
 
 	else if (Descr->f_by_double_six) {
 
@@ -1135,8 +1161,9 @@ void surface_create::create_surface_by_coefficients(
 		cout << "surface_create::create_surface_by_coefficients "
 				"before create_surface_by_coefficient_vector" << endl;
 	}
-	create_surface_by_coefficient_vector(coeffs20,
+	Surf->create_surface_by_coefficient_vector(coeffs20,
 			select_double_six_string,
+			SO,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_create::create_surface_by_coefficients "
@@ -1152,146 +1179,6 @@ void surface_create::create_surface_by_coefficients(
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_coefficients done" << endl;
-	}
-
-}
-
-void surface_create::create_surface_by_coefficient_vector(
-		int *coeffs20,
-		std::vector<std::string> &select_double_six_string,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficient_vector" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficient_vector "
-				"surface is given by the coefficients" << endl;
-	}
-
-
-
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficient_vector "
-				"before SO->init_equation" << endl;
-	}
-	SO->init_equation(Surf, coeffs20, verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficient_vector "
-				"after SO->init_equation" << endl;
-	}
-
-#if 0
-	// compute the group of the surface:
-	projective_space_with_action *PA;
-
-	PA = NEW_OBJECT(projective_space_with_action);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::create_surface_by_coefficient_vector before PA->init" << endl;
-	}
-	PA->init(
-		F, 3 /*n*/, f_semilinear,
-		true /* f_init_incidence_structure */,
-		verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::create_surface_by_coefficient_vector after PA->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficient_vector "
-				"before SC->compute_group" << endl;
-	}
-	compute_group(PA, verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficient_vector "
-				"after SC->compute_group" << endl;
-	}
-
-	FREE_OBJECT(PA);
-#endif
-
-
-
-
-	int nb_select_double_six;
-
-	nb_select_double_six = select_double_six_string.size();
-
-	if (nb_select_double_six) {
-		int i;
-
-		for (i = 0; i < nb_select_double_six; i++) {
-			int *select_double_six;
-			int sz;
-			long int New_lines[27];
-
-			if (f_v) {
-				cout << "surface_create::create_surface_by_coefficient_vector "
-						"selecting double six " << i << " / "
-						<< nb_select_double_six << endl;
-			}
-
-			data_structures::string_tools ST;
-
-			ST.read_string_of_schlaefli_labels(select_double_six_string[i],
-					select_double_six, sz, verbose_level);
-
-
-			//Orbiter->Int_vec.scan(select_double_six_string[i], select_double_six, sz);
-			if (sz != 12) {
-				cout << "surface_create::create_surface_by_coefficient_vector "
-						"f_select_double_six double six must consist of 12 numbers" << endl;
-				exit(1);
-			}
-
-			if (f_v) {
-				cout << "surface_create::create_surface_by_coefficient_vector "
-						"select_double_six = ";
-				Int_vec_print(cout, select_double_six, 12);
-				cout << endl;
-			}
-
-
-			if (f_v) {
-				cout << "surface_create::create_surface_by_coefficient_vector "
-						"before "
-						"Surf->rearrange_lines_according_to_a_given_double_six" << endl;
-			}
-			Surf->rearrange_lines_according_to_a_given_double_six(
-					SO->Lines, select_double_six, New_lines, 0 /* verbose_level */);
-
-			Lint_vec_copy(New_lines, SO->Lines, 27);
-			FREE_int(select_double_six);
-
-
-		}
-
-
-		if (f_v) {
-			cout << "surface_create::create_surface_by_coefficient_vector "
-					"before compute_properties" << endl;
-		}
-		SO->compute_properties(verbose_level - 2);
-		if (f_v) {
-			cout << "surface_create::create_surface_by_coefficient_vector "
-					"after compute_properties" << endl;
-		}
-
-
-	}
-
-
-
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficient_vector done" << endl;
 	}
 
 }
@@ -1335,8 +1222,9 @@ void surface_create::create_surface_by_rank(
 				coeffs20, 1, 20, rank);
 	}
 
-	create_surface_by_coefficient_vector(coeffs20,
+	Surf->create_surface_by_coefficient_vector(coeffs20,
 			select_double_six_string,
+			SO,
 			verbose_level);
 
 
@@ -1363,110 +1251,22 @@ void surface_create::create_surface_from_catalogue(
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue" << endl;
 	}
-	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue "
-				"surface from catalogue" << endl;
-	}
 
-	int nb_select_double_six;
-
-	nb_select_double_six = select_double_six_string.size();
-	long int *p_lines;
-	long int Lines27[27];
-	int nb_iso;
-	//int nb_E = 0;
-	knowledge_base::knowledge_base K;
-
-	nb_iso = K.cubic_surface_nb_reps(q);
-	if (Descr->iso >= nb_iso) {
-		cout << "surface_create::create_surface_from_catalogue "
-				"iso >= nb_iso, "
-				"this cubic surface does not exist" << endl;
-		exit(1);
-	}
-	p_lines = K.cubic_surface_Lines(q, iso);
-	Lint_vec_copy(p_lines, Lines27, 27);
-	//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue "
-				"before Surf->rearrange_lines_according_to_double_six" << endl;
+				"before Surf->create_surface_from_catalogue" << endl;
 	}
-	Surf->rearrange_lines_according_to_double_six(
-			Lines27, 0 /* verbose_level */);
+	Surf->create_surface_from_catalogue(
+			iso,
+			select_double_six_string,
+			SO,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue "
-				"after Surf->rearrange_lines_according_to_double_six" << endl;
+				"after Surf->create_surface_from_catalogue" << endl;
 	}
 
-	if (nb_select_double_six) {
-		int i;
-
-		for (i = 0; i < nb_select_double_six; i++) {
-			int *select_double_six;
-			int sz;
-			long int New_lines[27];
-
-			if (f_v) {
-				cout << "surface_create::create_surface_from_catalogue "
-						"selecting double six " << i << " / " << nb_select_double_six << endl;
-			}
-			Int_vec_scan(select_double_six_string[i], select_double_six, sz);
-			if (sz != 12) {
-				cout << "surface_create::create_surface_from_catalogue "
-						"f_select_double_six double six must consist of 12 numbers" << endl;
-				exit(1);
-			}
-
-			if (f_v) {
-				cout << "surface_create::create_surface_from_catalogue "
-						"select_double_six = ";
-				Int_vec_print(cout, select_double_six, 12);
-				cout << endl;
-			}
-
-
-			if (f_v) {
-				cout << "surface_create::create_surface_from_catalogue "
-						"before Surf->rearrange_lines_according_to_a_given_double_six" << endl;
-			}
-			Surf->rearrange_lines_according_to_a_given_double_six(
-					Lines27, select_double_six, New_lines,
-					0 /* verbose_level */);
-
-			Lint_vec_copy(New_lines, Lines27, 27);
-			FREE_int(select_double_six);
-		}
-	}
-
-	int coeffs20[20];
-
-	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue "
-				"before Surf->build_cubic_surface_from_lines" << endl;
-	}
-	Surf->build_cubic_surface_from_lines(
-			27, Lines27, coeffs20,
-			0 /* verbose_level */);
-	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue "
-				"after Surf->build_cubic_surface_from_lines" << endl;
-	}
-
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
-
-	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue "
-				"before SO->init_with_27_lines" << endl;
-	}
-	SO->init_with_27_lines(Surf,
-		Lines27, coeffs20,
-		false /* f_find_double_six_and_rearrange_lines */,
-		verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_surface_from_catalogue "
-				"after SO->init_with_27_lines" << endl;
-	}
 
 
 	Sg = NEW_OBJECT(groups::strong_generators);
@@ -1791,6 +1591,7 @@ void surface_create::create_surface_Cayley_form(
 
 
 int surface_create::create_surface_by_equation(
+		std::string &ring_label,
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
 		std::string &managed_variables,
@@ -1806,333 +1607,40 @@ int surface_create::create_surface_by_equation(
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation" << endl;
-		cout << "surface_create::create_surface_by_equation "
-				"name_of_formula=" << name_of_formula << endl;
-		cout << "surface_create::create_surface_by_equation "
-				"name_of_formula_tex=" << name_of_formula_tex << endl;
-		cout << "surface_create::create_surface_by_equation "
-				"managed_variables=" << managed_variables << endl;
-		cout << "surface_create::create_surface_by_equation "
-				"equation_text=" << equation_text << endl;
-		cout << "surface_create::create_surface_by_equation "
-				"equation_parameters=" << equation_parameters << endl;
-		cout << "surface_create::create_surface_by_equation "
-				"equation_parameters_tex=" << equation_parameters_tex << endl;
-		cout << "surface_create::create_surface_by_equation "
-				"equation_parameter_values=" << equation_parameter_values << endl;
 	}
 
-
-
-
-	// create a symbolic object containing the general formula:
-
-	data_structures::symbolic_object_builder_description *Descr1;
-
-
-	Descr1 = NEW_OBJECT(data_structures::symbolic_object_builder_description);
-	Descr1->f_field_pointer = true;
-	Descr1->field_pointer = F;
-	Descr1->f_text = true;
-	Descr1->text_txt = equation_text;
-
-
-
-
-	data_structures::symbolic_object_builder *SB1;
-
-	SB1 = NEW_OBJECT(data_structures::symbolic_object_builder);
-
-
+	int ret;
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation "
-				"before SB1->init" << endl;
+				"before Surf->create_surface_by_equation" << endl;
 	}
 
-	string s1;
+	ring_theory::homogeneous_polynomial_domain *Ring;
 
-	s1 = name_of_formula + "_raw";
-
-	SB1->init(Descr1, s1, verbose_level);
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"after SB1->init" << endl;
-	}
+	Ring = Get_ring(ring_label);
 
 
-
-	// create a second symbolic object containing the specific values
-	// to be substituted.
-
-	data_structures::symbolic_object_builder_description *Descr2;
-
-
-	Descr2 = NEW_OBJECT(data_structures::symbolic_object_builder_description);
-	Descr2->f_field_pointer = true;
-	Descr2->field_pointer = F;
-	Descr2->f_text = true;
-	Descr2->text_txt = equation_parameter_values;
-
-
-
-	data_structures::symbolic_object_builder *SB2;
-
-	SB2 = NEW_OBJECT(data_structures::symbolic_object_builder);
-
-	string s2;
-
-	s2 = name_of_formula + "_param_values";
-
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"before SB2->init" << endl;
-	}
-
-	SB2->init(Descr2, s2, verbose_level);
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"after SB2->init" << endl;
-	}
-
-
-	// Perform the substitution.
-	// Create temporary object Formula_vector_after_sub
-
-	data_structures::symbolic_object_builder *O_target = SB1;
-	data_structures::symbolic_object_builder *O_source = SB2;
-
-	//O_target = Get_symbol(Descr->substitute_target);
-	//O_source = Get_symbol(Descr->substitute_source);
-
-
-	expression_parser::formula_vector *Formula_vector_after_sub;
-
-
-	Formula_vector_after_sub = NEW_OBJECT(expression_parser::formula_vector);
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"before Formula_vector_after_sub->substitute" << endl;
-	}
-	Formula_vector_after_sub->substitute(
-			O_source->Formula_vector,
-			O_target->Formula_vector,
-			equation_parameters /*Descr->substitute_variables*/,
-			name_of_formula, name_of_formula_tex,
+	ret = Surf->create_surface_by_equation(
+			Ring,
+			name_of_formula,
+			name_of_formula_tex,
 			managed_variables,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"after Formula_vector_after_sub->substitute" << endl;
-	}
-
-
-	// Perform simplification
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"before Formula_vector_after_sub->V[0].simplify" << endl;
-	}
-	Formula_vector_after_sub->V[0].simplify(verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"after Formula_vector_after_sub->V[0].simplify" << endl;
-	}
-
-	// Perform expansion.
-	// The result will be in the temporary object Formula_vector_after_expand
-
-
-	expression_parser::formula_vector *Formula_vector_after_expand;
-
-	Formula_vector_after_expand = NEW_OBJECT(expression_parser::formula_vector);
-
-	int f_write_trees_during_expand = false;
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"before Formula_vector->expand" << endl;
-	}
-	Formula_vector_after_expand->expand(
-			Formula_vector_after_sub,
-			F,
-			name_of_formula, name_of_formula_tex,
-			managed_variables,
-			f_write_trees_during_expand,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"after Formula_vector->expand" << endl;
-	}
-
-	// Perform simplification
-
-
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"before Formula_vector_after_expand->V[0].simplify" << endl;
-	}
-	Formula_vector_after_expand->V[0].simplify(verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"after Formula_vector_after_expand->V[0].simplify" << endl;
-	}
-
-
-	// collect the coefficients of the monomials:
-
-
-	data_structures::int_matrix *I;
-	int *Coeff;
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"before collect_monomial_terms" << endl;
-	}
-	Formula_vector_after_expand->V[0].collect_monomial_terms(
-			I, Coeff,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"after collect_monomial_terms" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"data collected:" << endl;
-		int i;
-
-		for (i = 0; i < I->m; i++) {
-			cout << Coeff[i] << " : ";
-			Int_vec_print(cout, I->M + i * I->n, I->n);
-			cout << endl;
-		}
-		cout << "variables: ";
-		Formula_vector_after_expand->V[0].tree->print_variables_in_line(cout);
-		cout << endl;
-	}
-
-	if (I->n != 4) {
-		cout << "surface_create::create_surface_by_equation "
-				"we need exactly 4 variables" << endl;
-		exit(1);
-	}
-
-
-	// create the polynomial ring:
-
-
-	int nb_vars, degree;
-
-	nb_vars = 4;
-	degree = 3;
-
-	ring_theory::homogeneous_polynomial_domain *Poly;
-
-	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"before Poly->init" << endl;
-	}
-	Poly->init(F,
-			nb_vars /* nb_vars */, degree,
-			t_PART,
-			0/*verbose_level*/);
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"after Poly->init" << endl;
-	}
-
-	int nb_monomials;
-
-
-	nb_monomials = Poly->get_nb_monomials();
-
-	if (nb_monomials != 20) {
-		cout << "surface_create::create_surface_by_equation "
-				"nb_monomials != 20" << endl;
-		exit(1);
-	}
-
-
-	// build the equation of the cubic surface from the table of coefficients
-	// and monomials:
-
-	int i, index;
-	int coeffs20[20];
-
-	Int_vec_zero(coeffs20, 20);
-
-	for (i = 0; i < I->m; i++) {
-		index = Poly->index_of_monomial(I->M + i * I->n);
-		coeffs20[index] = Coeff[i];
-	}
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"coeffs20: ";
-		Int_vec_print(cout, coeffs20, 20);
-		cout << endl;
-	}
-
-
-	//exit(1);
-
-	//equation_parameters
-	//equation_parameter_values
-
-#if 0
-	-define L -symbolic_object \
-		-field F \
-		-text "25,5,5,25" \
-	-end \
-	-define M1 -symbolic_object \
-		-field F \
-		-substitute "a,b,c,d" M L \
-	-end \
-	-define M2 -symbolic_object \
-		-field F \
-		-expand M1 \
-		-write_trees_during_expand \
-	-end
-#endif
-
-
-
-	FREE_OBJECT(Poly);
-
-
-	// build a surface_object and compute properties of the surface:
-
-
-	if (Int_vec_is_zero(coeffs20, 20)) {
-		return false;
-	}
-
-
-
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
-
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"before create_surface_by_coefficient_vector" << endl;
-	}
-
-	create_surface_by_coefficient_vector(coeffs20,
+			equation_text,
+			equation_parameters,
+			equation_parameters_tex,
+			equation_parameter_values,
 			select_double_six_string,
-			verbose_level);
-
+			SO,
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation "
-				"after create_surface_by_coefficient_vector" << endl;
+				"after Surf->create_surface_by_equation" << endl;
+	}
+
+	if (!ret) {
+		return false;
 	}
 
 	data_structures::string_tools ST;
@@ -2172,6 +1680,80 @@ int surface_create::create_surface_by_equation(
 }
 
 
+
+int surface_create::create_surface_by_symbolic_object(
+		std::string &ring_label,
+		std::string &name_of_formula,
+		std::vector<std::string> &select_double_six_string,
+		int verbose_level)
+// returns false if the equation is zero
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_symbolic_object" << endl;
+	}
+
+	int ret;
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_symbolic_object "
+				"before Surf->create_surface_by_equation" << endl;
+	}
+
+	ring_theory::homogeneous_polynomial_domain *Ring;
+
+	Ring = Get_ring(ring_label);
+
+
+	ret = Surf->create_surface_by_symbolic_object(
+			Ring,
+			name_of_formula,
+			select_double_six_string,
+			SO,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_symbolic_object "
+				"after Surf->create_surface_by_equation" << endl;
+	}
+
+	if (!ret) {
+		return false;
+	}
+
+	data_structures::string_tools ST;
+
+	f_has_group = false;
+
+
+	prefix = "equation_" + name_of_formula + "_q" + std::to_string(F->q);
+	label_txt = "equation_" + name_of_formula + "_q" + std::to_string(F->q);
+
+
+	label_tex = name_of_formula;
+	ST.string_fix_escape_characters(label_tex);
+	ST.remove_specific_character(label_tex, '_');
+
+
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_symbolic_object " << endl;
+		cout << "prefix = " << prefix << endl;
+		cout << "label_txt = " << label_txt << endl;
+		cout << "label_tex = " << label_tex << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_symbolic_object done" << endl;
+	}
+	return true;
+
+}
+
+
 void surface_create::create_surface_by_double_six(
 		std::string &by_double_six_label,
 		std::string &by_double_six_label_tex,
@@ -2186,8 +1768,7 @@ void surface_create::create_surface_by_double_six(
 				"double_six=" << by_double_six_text << endl;
 	}
 
-	int coeffs20[20];
-	long int Lines27[27];
+
 	long int *double_six;
 	int sz;
 
@@ -2197,98 +1778,20 @@ void surface_create::create_surface_by_double_six(
 				"need exactly 12 input lines" << endl;
 		exit(1);
 	}
-	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six "
-				"double_six=";
-		Lint_vec_print(cout, double_six, 12);
-		cout << endl;
-	}
-
-
-	if (!Surf->test_double_six_property(double_six, 0 /* verbose_level*/)) {
-		cout << "The double six is wrong" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six "
-				"passes the double six property test" << endl;
-	}
 
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_double_six "
-				"before Surf->build_cubic_surface_from_lines" << endl;
+				"before Surf->build_surface_from_double_six" << endl;
 	}
-
-	Surf->build_cubic_surface_from_lines(
-		12, double_six,
-		coeffs20, 0/* verbose_level*/);
-
+	Surf->build_surface_from_double_six(
+			double_six,
+			SO,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "surface_create::create_surface_by_double_six "
-				"after Surf->build_cubic_surface_from_lines" << endl;
+				"after Surf->build_surface_from_double_six" << endl;
 	}
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six "
-				"coeffs20:" << endl;
-		Int_vec_print(cout, coeffs20, 20);
-		cout << endl;
-
-		Surf->PolynomialDomains->Poly3_4->print_equation(cout, coeffs20);
-		cout << endl;
-	}
-
-
-	Lint_vec_copy(double_six, Lines27, 12);
-
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six "
-				"before Surf->create_the_fifteen_other_lines" << endl;
-	}
-	Surf->create_the_fifteen_other_lines(Lines27,
-			Lines27 + 12, verbose_level);
-	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six "
-				"after Surf->create_the_fifteen_other_lines" << endl;
-	}
-
-
-
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
-
-#if 0
-	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six "
-				"before SO->init_equation_points_and_lines_only" << endl;
-	}
-
-	SO->init_equation_points_and_lines_only(Surf, coeffs20, verbose_level);
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six "
-				"after SO->init_equation_points_and_lines_only" << endl;
-	}
-#else
-	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six "
-				"before SO->init_with_27_lines" << endl;
-	}
-
-	SO->init_with_27_lines(Surf,
-		Lines27, coeffs20,
-		false /* f_find_double_six_and_rearrange_lines */,
-		verbose_level);
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_double_six "
-				"after SO->init_with_27_lines" << endl;
-	}
-
-
-#endif
 
 
 	f_has_group = false;
@@ -2617,8 +2120,10 @@ void surface_create::create_surface_at_random(
 				"before create_surface_by_coefficient_vector" << endl;
 	}
 
-	create_surface_by_coefficient_vector(eqn20,
+	Surf->create_surface_by_coefficient_vector(
+			eqn20,
 			select_double_six_string,
+			SO,
 			verbose_level);
 
 

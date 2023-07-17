@@ -50,7 +50,8 @@ formula::~formula()
 	}
 }
 
-std::string formula::string_representation(int f_latex, int verbose_level)
+std::string formula::string_representation(
+		int f_latex, int verbose_level)
 {
 	std::string s;
 
@@ -71,7 +72,8 @@ std::string formula::string_representation_Sajeeb()
 	return s;
 }
 
-std::string formula::string_representation_formula(int f_latex, int verbose_level)
+std::string formula::string_representation_formula(
+		int f_latex, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1438,7 +1440,8 @@ int formula::highest_order_term(
 }
 
 void formula::get_monopoly(
-		std::string &variable, int *&coeff, int &nb_coeff, int verbose_level)
+		std::string &variable, int *&coeff, int &nb_coeff,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1524,6 +1527,104 @@ void formula::collect_monomial_terms(
 		cout << "formula::collect_monomial_terms done" << endl;
 	}
 }
+
+void formula::collect_coefficients_of_equation(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		int *&coeffs, int &nb_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::collect_coefficients_of_equation" << endl;
+	}
+
+	data_structures::int_matrix *I;
+
+	int *Coeff;
+	int nb_vars;
+
+	nb_vars = tree->managed_variables.size();
+	if (f_v) {
+		cout << "formula::collect_coefficients_of_equation "
+				"nb_vars = " << nb_vars << endl;
+	}
+
+	if (nb_vars != Poly->get_nb_variables()) {
+		cout << "formula::collect_coefficients_of_equation "
+				"nb_vars != Poly->get_nb_variables()" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "formula::collect_coefficients_of_equation "
+				"before collect_monomial_terms" << endl;
+	}
+	collect_monomial_terms(
+			I, Coeff,
+			verbose_level);
+	if (f_v) {
+		cout << "formula::collect_coefficients_of_equation "
+				"after collect_monomial_terms" << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::collect_coefficients_of_equation "
+				"data collected:" << endl;
+		int i;
+
+		for (i = 0; i < I->m; i++) {
+			cout << Coeff[i] << " : ";
+			Int_vec_print(cout, I->M + i * I->n, I->n);
+			cout << endl;
+		}
+		cout << "variables: ";
+		tree->print_variables_in_line(cout);
+		cout << endl;
+	}
+
+	if (I->n != nb_vars) {
+		cout << "formula::collect_coefficients_of_equation "
+				"I->n != nb_vars" << endl;
+		exit(1);
+	}
+
+
+
+
+
+	nb_coeffs = Poly->get_nb_monomials();
+
+
+	// build the equation from the table of coefficients
+	// and monomials:
+
+	int i, index;
+
+	coeffs = NEW_int(nb_coeffs);
+
+	Int_vec_zero(coeffs, nb_coeffs);
+
+	for (i = 0; i < I->m; i++) {
+		index = Poly->index_of_monomial(I->M + i * I->n);
+		coeffs[index] = Coeff[i];
+	}
+
+	if (f_v) {
+		cout << "formula::collect_coefficients_of_equation "
+				"coeffs: ";
+		Int_vec_print(cout, coeffs, nb_coeffs);
+		cout << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "formula::collect_coefficients_of_equation done" << endl;
+	}
+}
+
 
 
 }}}

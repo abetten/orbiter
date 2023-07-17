@@ -159,7 +159,8 @@ public:
 			surface_create_description *Descr,
 		surface_with_action *Surf_A,
 		int verbose_level);
-	int init(surface_create_description *Descr,
+	int init(
+			surface_create_description *Descr,
 		int verbose_level);
 	int create_surface_from_description(
 			int verbose_level);
@@ -182,10 +183,6 @@ public:
 			std::string &coefficients_text,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
-	void create_surface_by_coefficient_vector(
-			int *coeffs20,
-			std::vector<std::string> &select_double_six_string,
-			int verbose_level);
 	void create_surface_by_rank(
 			std::string &rank_text, int defining_q,
 			std::vector<std::string> &select_double_six_string,
@@ -205,6 +202,7 @@ public:
 			int k, int l, int m, int n,
 			int verbose_level);
 	int create_surface_by_equation(
+			std::string &ring_label,
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
 			std::string &managed_variables,
@@ -214,6 +212,12 @@ public:
 			std::string &equation_parameter_values,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
+	int create_surface_by_symbolic_object(
+			std::string &ring_label,
+			std::string &name_of_formula,
+			std::vector<std::string> &select_double_six_string,
+			int verbose_level);
+	// returns false if the equation is zero
 	void create_surface_by_double_six(
 			std::string &by_double_six_label,
 			std::string &by_double_six_label_tex,
@@ -338,6 +342,7 @@ public:
 
 
 	int f_by_equation;
+	std::string equation_ring_label;
 	std::string equation_name_of_formula;
 	std::string equation_name_of_formula_tex;
 	std::string equation_managed_variables;
@@ -346,6 +351,9 @@ public:
 	std::string equation_parameters_tex;
 	std::string equation_parameter_values;
 
+	int f_by_symbolic_object;
+	std::string by_symbolic_object_ring_label;
+	std::string by_symbolic_object_name_of_formula;
 
 	int f_by_double_six;
 	std::string by_double_six_label;
@@ -391,33 +399,6 @@ public:
 
 	surface_domain_high_level();
 	~surface_domain_high_level();
-
-	void do_sweep_4_15_lines(
-			projective_geometry::projective_space_with_action *PA,
-			surface_create_description *Surface_Descr,
-			std::string &sweep_fname,
-			int verbose_level);
-	void do_sweep_F_beta_9_lines(
-			projective_geometry::projective_space_with_action *PA,
-			surface_create_description *Surface_Descr,
-			std::string &sweep_fname,
-			int verbose_level);
-	void do_sweep_6_9_lines(
-			projective_geometry::projective_space_with_action *PA,
-			surface_create_description *Surface_Descr,
-			std::string &sweep_fname,
-			int verbose_level);
-	void do_sweep_4_27(
-			projective_geometry::projective_space_with_action *PA,
-			surface_create_description *Surface_Descr,
-			std::string &sweep_fname,
-			int verbose_level);
-	void do_sweep_4_L9_E4(
-			projective_geometry::projective_space_with_action *PA,
-			surface_create_description *Surface_Descr,
-			std::string &sweep_fname,
-			int verbose_level);
-
 
 	void classify_surfaces_with_double_sixes(
 			projective_geometry::projective_space_with_action *PA,
@@ -545,24 +526,30 @@ public:
 
 	surface_object_with_action();
 	~surface_object_with_action();
-	void init_equation(surface_with_action *Surf_A, int *eqn,
-			groups::strong_generators *Aut_gens, int verbose_level);
-	void init_with_group(surface_with_action *Surf_A,
+	void init_equation(
+			surface_with_action *Surf_A, int *eqn,
+			groups::strong_generators *Aut_gens,
+			int verbose_level);
+	void init_with_group(
+			surface_with_action *Surf_A,
 		long int *Lines, int nb_lines, int *eqn,
 		groups::strong_generators *Aut_gens,
 		int f_find_double_six_and_rearrange_lines,
 		int f_has_nice_gens,
 		data_structures_groups::vector_ge *nice_gens,
 		int verbose_level);
-	void init_with_surface_object(surface_with_action *Surf_A,
+	void init_with_surface_object(
+			surface_with_action *Surf_A,
 			algebraic_geometry::surface_object *SO,
 			groups::strong_generators *Aut_gens,
 			int f_has_nice_gens,
 			data_structures_groups::vector_ge *nice_gens,
 			int verbose_level);
-	void init_surface_object(surface_with_action *Surf_A,
+	void init_surface_object(
+			surface_with_action *Surf_A,
 			algebraic_geometry::surface_object *SO,
-			groups::strong_generators *Aut_gens, int verbose_level);
+			groups::strong_generators *Aut_gens,
+			int verbose_level);
 	void compute_projectivity_group(int verbose_level);
 	void compute_orbits_of_automorphism_group(int verbose_level);
 	void init_orbits_on_points(int verbose_level);
@@ -589,7 +576,8 @@ public:
 		int f_print_orbits, std::string &fname_mask,
 		graphics::layered_graph_draw_options *Opt,
 		int verbose_level);
-	void cheat_sheet_basic(std::ostream &ost, int verbose_level);
+	void cheat_sheet_basic(
+			std::ostream &ost, int verbose_level);
 	void cheat_sheet(std::ostream &ost,
 			std::string &label_txt,
 			std::string &label_tex,
@@ -622,9 +610,12 @@ public:
 	void export_all_quartic_curves(
 			std::ostream &ost_quartics_csv,
 			int verbose_level);
-	void print_full_del_Pezzo(std::ostream &ost, int verbose_level);
-	void print_everything(std::ostream &ost, int verbose_level);
-	void print_summary(std::ostream &ost);
+	void print_full_del_Pezzo(
+			std::ostream &ost, int verbose_level);
+	void print_everything(
+			std::ostream &ost, int verbose_level);
+	void print_summary(
+			std::ostream &ost);
 	void print_action_on_surface(
 			std::string &label_of_elements,
 			int *element_data, int nb_elements,
@@ -688,7 +679,8 @@ public:
 	int nb_Eckardt_pts;
 
 
-	void init(field_theory::finite_field *F, int nb, int verbose_level);
+	void init(
+			field_theory::finite_field *F, int nb, int verbose_level);
 	void study_intersection_points(int verbose_level);
 	void study_line_orbits(int verbose_level);
 	void study_group(int verbose_level);
@@ -759,17 +751,6 @@ public:
 		int *Polarity36,
 		std::vector<std::vector<long int> > &Double_sixes,
 		int verbose_level);
-#if 0
-	void create_regulus_and_opposite_regulus(
-		long int *three_skew_lines, long int *&regulus,
-		long int *&opp_regulus, int &regulus_sz,
-		int verbose_level);
-#endif
-#if 0
-	int create_double_six_from_five_lines_with_a_common_transversal(
-		long int *five_lines, long int transversal_line,
-		long int *double_six, int verbose_level);
-#endif
 	void report_basics(std::ostream &ost);
 	void report_double_triplets(std::ostream &ost);
 	void report_double_triplets_detailed(std::ostream &ost);

@@ -179,8 +179,10 @@ void algebraic_geometry_global::report_grassmannian(
 
 
 
-	fname = "Gr_" + std::to_string(P->Subspaces->n + 1) + "_" + std::to_string(k) + "_" + std::to_string(P->Subspaces->F->q) + ".tex";
-	title = "Cheat Sheet Gr($" + std::to_string(P->Subspaces->n + 1) + "," + std::to_string(k) + "," + std::to_string(P->Subspaces->F->q) + "$)";
+	fname = "Gr_" + std::to_string(P->Subspaces->n + 1) + "_"
+			+ std::to_string(k) + "_" + std::to_string(P->Subspaces->F->q) + ".tex";
+	title = "Cheat Sheet Gr($" + std::to_string(P->Subspaces->n + 1)
+			+ "," + std::to_string(k) + "," + std::to_string(P->Subspaces->F->q) + "$)";
 
 
 
@@ -332,7 +334,8 @@ void algebraic_geometry_global::evaluate_regular_map(
 		P->unrank_point(v, i);
 
 		if (f_vv) {
-			cout << "algebraic_geometry_global::evaluate_regular_map point " << i << " is ";
+			cout << "algebraic_geometry_global::evaluate_regular_map "
+					"point " << i << " is ";
 			Int_vec_print(cout, v, P->Subspaces->n + 1);
 			cout << endl;
 		}

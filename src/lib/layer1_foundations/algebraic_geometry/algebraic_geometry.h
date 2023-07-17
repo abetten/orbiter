@@ -1117,6 +1117,40 @@ public:
 		long int *Lines_klein, int nb_lines);
 	int build_surface_from_double_six_and_count_Eckardt_points(
 			long int *double_six, int verbose_level);
+	void build_surface_from_double_six(
+			long int *double_six,
+			algebraic_geometry::surface_object *&SO,
+			int verbose_level);
+	int create_surface_by_equation(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &name_of_formula,
+			std::string &name_of_formula_tex,
+			std::string &managed_variables,
+			std::string &equation_text,
+			std::string &equation_parameters,
+			std::string &equation_parameters_tex,
+			std::string &equation_parameter_values,
+			std::vector<std::string> &select_double_six_string,
+			algebraic_geometry::surface_object *&SO,
+			int verbose_level);
+	// returns false if the equation is zero
+	int create_surface_by_symbolic_object(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &name_of_formula,
+			std::vector<std::string> &select_double_six_string,
+			algebraic_geometry::surface_object *&SO,
+			int verbose_level);
+	// returns false if the equation is zero
+	void create_surface_by_coefficient_vector(
+			int *coeffs20,
+			std::vector<std::string> &select_double_six_string,
+			algebraic_geometry::surface_object *&SO,
+			int verbose_level);
+	void create_surface_from_catalogue(
+			int iso,
+			std::vector<std::string> &select_double_six_string,
+			algebraic_geometry::surface_object *&SO,
+			int verbose_level);
 
 
 	// surface_domain2.cpp:

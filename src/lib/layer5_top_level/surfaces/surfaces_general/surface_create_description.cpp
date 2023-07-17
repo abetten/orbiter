@@ -84,6 +84,7 @@ surface_create_description::surface_create_description()
 
 
 	f_by_equation = false;
+	//std::string equation_ring_label;
 	//std::string equation_name_of_formula;
 	//std::string equation_name_of_formula_tex;
 	//std::string equation_managed_variables;
@@ -91,6 +92,11 @@ surface_create_description::surface_create_description()
 	//std::string equation_parameters;
 	//std::string equation_parameters_tex;
 	//std::string equation_parameter_values;
+
+
+	f_by_symbolic_object = false;
+	//std::string by_symbolic_object_ring_label;
+	//std::string by_symbolic_object_name_of_formula;
 
 
 	f_by_double_six = false;
@@ -226,6 +232,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 		}
 		else if (ST.stringcmp(argv[i], "-by_equation") == 0) {
 			f_by_equation = true;
+			equation_ring_label.assign(argv[++i]);
 			equation_name_of_formula.assign(argv[++i]);
 			equation_name_of_formula_tex.assign(argv[++i]);
 			equation_managed_variables.assign(argv[++i]);
@@ -234,6 +241,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			equation_parameters_tex.assign(argv[++i]);
 			equation_parameter_values.assign(argv[++i]);
 			cout << "-by_equation "
+					<< equation_ring_label << " "
 					<< equation_name_of_formula << " "
 					<< equation_name_of_formula_tex << " "
 					<< equation_managed_variables << " "
@@ -241,6 +249,15 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< equation_parameters << " "
 					<< equation_parameters_tex << " "
 					<< equation_parameter_values << " "
+					<< endl;
+		}
+		else if (ST.stringcmp(argv[i], "-by_symbolic_object") == 0) {
+			f_by_symbolic_object = true;
+			by_symbolic_object_ring_label.assign(argv[++i]);
+			by_symbolic_object_name_of_formula.assign(argv[++i]);
+			cout << "-by_equation "
+					<< by_symbolic_object_ring_label << " "
+					<< by_symbolic_object_name_of_formula << " "
 					<< endl;
 		}
 		else if (ST.stringcmp(argv[i], "-by_double_six") == 0) {
@@ -386,6 +403,7 @@ void surface_create_description::print()
 	}
 	if (f_by_equation) {
 		cout << "-by_equation "
+				<< equation_ring_label << " "
 				<< equation_name_of_formula << " "
 				<< equation_name_of_formula_tex << " "
 				<< equation_managed_variables << " "
@@ -393,6 +411,12 @@ void surface_create_description::print()
 				<< equation_parameters << " "
 				<< equation_parameters_tex << " "
 				<< equation_parameter_values << " "
+				<< endl;
+	}
+	if (f_by_symbolic_object) {
+		cout << "-by_equation "
+				<< by_symbolic_object_ring_label << " "
+				<< by_symbolic_object_name_of_formula << " "
 				<< endl;
 	}
 	if (f_by_double_six) {

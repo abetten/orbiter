@@ -34,7 +34,8 @@ static void matrix_entry_print(long int *p,
 
 
 
-void surface_study::init(field_theory::finite_field *F, int nb, int verbose_level)
+void surface_study::init(
+		field_theory::finite_field *F, int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

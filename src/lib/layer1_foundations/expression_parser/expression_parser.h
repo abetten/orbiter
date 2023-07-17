@@ -349,9 +349,11 @@ public:
 
 	formula();
 	~formula();
-	std::string string_representation(int f_latex, int verbose_level);
+	std::string string_representation(
+			int f_latex, int verbose_level);
 	std::string string_representation_Sajeeb();
-	std::string string_representation_formula(int f_latex, int verbose_level);
+	std::string string_representation_formula(
+			int f_latex, int verbose_level);
 	void print(std::ostream &ost);
 	void init_empty_plus_node(
 			std::string &label, std::string &label_tex,
@@ -401,7 +403,8 @@ public:
 			int verbose_level);
 	void evaluate(
 			ring_theory::homogeneous_polynomial_domain *Poly,
-			syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
+			syntax_tree_node **Subtrees,
+			std::string &evaluate_text, int *Values,
 			int verbose_level);
 	void export_graphviz(
 			std::string &name);
@@ -433,7 +436,8 @@ public:
 	int highest_order_term(
 			std::string &variable, int verbose_level);
 	void get_monopoly(
-			std::string &variable, int *&coeff, int &nb_coeff, int verbose_level);
+			std::string &variable, int *&coeff, int &nb_coeff,
+			int verbose_level);
 	void latex_tree(
 			std::string &label, int verbose_level);
 	void export_tree(
@@ -444,6 +448,10 @@ public:
 	void collect_variables(int verbose_level);
 	void collect_monomial_terms(
 			data_structures::int_matrix *&I, int *&Coeff,
+			int verbose_level);
+	void collect_coefficients_of_equation(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			int *&coeffs, int &nb_coeffs,
 			int verbose_level);
 
 };

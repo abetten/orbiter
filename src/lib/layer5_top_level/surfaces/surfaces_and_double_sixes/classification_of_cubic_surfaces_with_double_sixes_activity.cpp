@@ -47,7 +47,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::init(
 	}
 }
 
-void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity(int verbose_level)
+void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -109,13 +110,17 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 	int f_with_stabilizers = true;
 
 	if (f_v) {
-		cout << "surface_domain_high_level::report "
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::report "
 				"before SCW->create_report" << endl;
 		cout << "SCW->Surf->n = " << SCW->Surf->n << endl;
 	}
-	SCW->create_report(f_with_stabilizers, orbiter_kernel_system::Orbiter->draw_options, report_options, verbose_level - 1);
+	SCW->create_report(
+			f_with_stabilizers,
+			orbiter_kernel_system::Orbiter->draw_options,
+			report_options,
+			verbose_level - 1);
 	if (f_v) {
-		cout << "surface_domain_high_level::report "
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::report "
 				"after SCW->create_report" << endl;
 	}
 	if (f_v) {
@@ -123,7 +128,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 	}
 }
 
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt(int verbose_level)
+void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -148,7 +154,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_ide
 	}
 }
 
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_F13(int verbose_level)
+void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_F13(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -172,7 +179,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_ide
 	}
 }
 
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Bes(int verbose_level)
+void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Bes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -196,7 +204,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_ide
 	}
 }
 
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_general_abcd(int verbose_level)
+void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_general_abcd(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
