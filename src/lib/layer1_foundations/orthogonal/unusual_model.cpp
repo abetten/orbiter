@@ -73,7 +73,8 @@ void unusual_model::setup2(
 	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
-		cout << "unusual_model::setup2 f_sum_of_squares=" << f_sum_of_squares << endl;
+		cout << "unusual_model::setup2 "
+				"f_sum_of_squares=" << f_sum_of_squares << endl;
 	}
 	unusual_model::FQ = FQ;
 	unusual_model::Fq = Fq;
@@ -706,13 +707,15 @@ void unusual_model::create_Mondello_BLT_set(
 
 int unusual_model::N2(int a)
 {
-	return Quadratic_form_list_coding->SubS->retract(FQ->N2(a), 0 /* verbose_level */);
+	return Quadratic_form_list_coding->SubS->retract(
+			FQ->N2(a), 0 /* verbose_level */);
 	
 }
 
 int unusual_model::T2(int a)
 {
-	return Quadratic_form_list_coding->SubS->retract(FQ->T2(a), 0 /* verbose_level */);
+	return Quadratic_form_list_coding->SubS->retract(
+			FQ->T2(a), 0 /* verbose_level */);
 	
 }
 

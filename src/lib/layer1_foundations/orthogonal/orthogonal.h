@@ -184,7 +184,8 @@ public:
 			blt_set_domain *D, long int *the_set,
 		int verbose_level);
 	void compute(int verbose_level);
-	void latex(std::ostream &ost, int verbose_level);
+	void latex(
+			std::ostream &ost, int verbose_level);
 };
 
 
@@ -532,7 +533,8 @@ public:
 		int verbose_level);
 	long int parabolic_line_type_given_point_types(
 			long int pt1, long int pt2,
-			long int pt1_type, long int pt2_type, int verbose_level);
+			long int pt1_type, long int pt2_type,
+			int verbose_level);
 	int parabolic_decide_P11_odd(
 			long int pt1, long int pt2);
 	int parabolic_decide_P22_even(
@@ -846,7 +848,8 @@ public:
 
 	orthogonal_group();
 	~orthogonal_group();
-	void init(orthogonal *O, int verbose_level);
+	void init(
+			orthogonal *O, int verbose_level);
 
 	long int find_root(
 			long int rk2, int verbose_level);
@@ -859,15 +862,18 @@ public:
 		long int rk_from, long int rk_to,
 		long int root, int m,
 		int verbose_level);
-	void Siegel_Transformation(int *T,
+	void Siegel_Transformation(
+			int *T,
 		long int rk_from, long int rk_to, long int root,
 		int verbose_level);
 		// root is not perp to from and to.
-	void Siegel_Transformation2(int *T,
+	void Siegel_Transformation2(
+			int *T,
 		long int rk_from, long int rk_to, long int root,
 		int *B, int *Bv, int *w, int *z, int *x,
 		int verbose_level);
-	void Siegel_Transformation3(int *T,
+	void Siegel_Transformation3(
+			int *T,
 		int *from, int *to, int *root,
 		int *B, int *Bv, int *w, int *z, int *x,
 		int verbose_level);
@@ -892,9 +898,11 @@ public:
 		int verbose_level);
 		// Makes an n x n matrix only.
 		// Does not put a semilinear component.
-	void make_orthogonal_reflection(int *M, int *z,
+	void make_orthogonal_reflection(
+			int *M, int *z,
 		int verbose_level);
-	void make_Siegel_Transformation(int *M, int *v, int *u,
+	void make_Siegel_Transformation(
+			int *M, int *v, int *u,
 		int n, int *Gram, int verbose_level);
 		// if u is singular and v \in \la u \ra^\perp, then
 		// \pho_{u,v}(x) :=

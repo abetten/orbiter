@@ -401,7 +401,8 @@ void poset_classification_activity::compute_Kramer_Mesner_matrix(
 
 	fname = PC->get_problem_label() + "_KM_" + std::to_string(t) + "_" + std::to_string(k) + ".csv";
 
-	Fio.lint_matrix_write_csv(fname, Mtk, nb_r, nb_c);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, Mtk, nb_r, nb_c);
 
 	//Mtk.print(cout);
 	cout << "Written file " << fname << " of size "

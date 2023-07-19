@@ -240,7 +240,8 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	int *List_of_cases;
 	int m, n, idx;
 
-	Fio.int_matrix_read_csv(Descr->list_of_cases_from_file_fname,
+	Fio.Csv_file_support->int_matrix_read_csv(
+			Descr->list_of_cases_from_file_fname,
 			List_of_cases, m, n, verbose_level);
 
 #if 0
@@ -352,7 +353,8 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 
 	string label;
 	label.assign("nb packings before iso");
-	Fio.int_vec_write_csv(Nb, m, fname_out, label);
+	Fio.Csv_file_support->int_vec_write_csv(
+			Nb, m, fname_out, label);
 
 	if (f_v) {
 		cout << "written file " << fname_out << " of size "
@@ -429,7 +431,8 @@ void packing_long_orbits::save_packings_by_case(
 		//exit(1);
 	}
 
-	Fio.int_matrix_write_csv(fname_packings,
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_packings,
 			The_Packings, h, PWF->PW->P->size_of_packing);
 	cout << "written file " << fname_packings << " of size "
 			<< Fio.file_size(fname_packings.c_str()) << endl;
@@ -785,7 +788,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			Solutions, solution_size,
 			verbose_level);
 #else
-		Fio.lint_matrix_read_csv(
+		Fio.Csv_file_support->lint_matrix_read_csv(
 				fname_solutions,
 				Solutions, nb_solutions, solution_size,
 				verbose_level);

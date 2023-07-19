@@ -1226,7 +1226,8 @@ void surface_with_action::sweep_4_15_lines(
 
 	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep.csv";
 
-	Fio.lint_matrix_write_csv(fname, T, N, 13);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, T, N, 13);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
@@ -1459,7 +1460,8 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_F_beta_9_lines.csv";
 
-	Fio.lint_matrix_write_csv(fname, T, N, nb_cols);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, T, N, nb_cols);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
@@ -1802,7 +1804,8 @@ void surface_with_action::sweep_6_9_lines(
 
 	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_6_9_lines.csv";
 
-	Fio.lint_matrix_write_csv(fname, T, N, nb_cols);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, T, N, nb_cols);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
@@ -2048,7 +2051,8 @@ void surface_with_action::sweep_4_27(
 
 	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_4_27.csv";
 
-	Fio.lint_matrix_write_csv(fname, T, N, 16);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, T, N, 16);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
@@ -2287,7 +2291,8 @@ void surface_with_action::sweep_4_L9_E4(
 
 	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep.csv";
 
-	Fio.lint_matrix_write_csv(fname, T, N, 13);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, T, N, 13);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 

@@ -115,15 +115,12 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_crc_encode_file_based = false;
 	//std::string crc_encode_file_based_fname_in;
 	//std::string crc_encode_file_based_fname_out;
-	//std::string crc_encode_file_based_crc_type;
-	crc_encode_file_based_block_length = 0;
+	//std::string crc_encode_file_based_crc_code;
 
 	f_crc_compare = false;
 	//std::string crc_compare_fname_in;
-	//std::string crc_compare_crc1_type;
-	crc_compare_block_length1 = 0;
-	//std::string crc_compare_crc2_type;
-	crc_compare_block_length2 = 0;
+	//std::string crc_compare_code1;
+	//std::string crc_compare_code2;
 	crc_compare_error_weight = 0;
 	crc_compare_nb_tests_per_block = 0;
 
@@ -131,25 +128,20 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_crc_compare_read_output_file = false;
 	//std::string crc_compare_read_output_file_fname_in;
 	crc_compare_read_output_file_nb_lines = 0;
-	//std::string crc_compare_read_output_file_crc1_type;
-	crc_compare_read_output_file_block_length1 = 0;
-	//std::string crc_compare_read_output_file_crc2_type;
-	crc_compare_read_output_file_block_length2 = 0;
+	//std::string crc_compare_read_output_file_crc_code1;
+	//std::string crc_compare_read_output_file_crc_code2;
 
 
-	f_simulate_Hamming_errors = false;
-	//std::string simulate_Hamming_errors_fname_in;
-	simulate_Hamming_errors_block_number = 0;
-	//std::string simulate_Hamming_errors_crc1_type;
-	simulate_Hamming_errors_block_length1 = false;
-	//std::string simulate_Hamming_errors_crc2_type;
-	simulate_Hamming_errors_block_length2 = 0;
-	simulate_Hamming_errors_max_weight = 0;
+	f_all_errors_of_a_given_weight = false;
+	//std::string all_errors_of_a_given_weight_fname_in;
+	all_errors_of_a_given_weight_block_number = 0;
+	//std::string all_errors_of_a_given_weight_crc_code1;
+	//std::string all_errors_of_a_given_weight_crc_code2;
+	all_errors_of_a_given_weight_max_weight = 0;
 
 
 	f_weight_enumerator_bottom_up = false;
-	//std::string weight_enumerator_bottom_up_crc_type;
-	weight_enumerator_bottom_up_block_length = 0;
+	//std::string weight_enumerator_bottom_up_crc_code;
 	weight_enumerator_bottom_up_max_weight = 0;
 
 
@@ -438,32 +430,27 @@ int coding_theoretic_activity_description::read_arguments(
 			f_crc_encode_file_based = true;
 			crc_encode_file_based_fname_in.assign(argv[++i]);
 			crc_encode_file_based_fname_out.assign(argv[++i]);
-			crc_encode_file_based_crc_type.assign(argv[++i]);
-			crc_encode_file_based_block_length = ST.strtoi(argv[++i]);
+			crc_encode_file_based_crc_code.assign(argv[++i]);
 			if (f_v) {
 				cout << "-crc_encode_file_based "
 						<< crc_encode_file_based_fname_in << " "
 						<< crc_encode_file_based_fname_out << " "
-						<< crc_encode_file_based_crc_type << " "
-						<< crc_encode_file_based_block_length << endl;
+						<< crc_encode_file_based_crc_code << " "
+						<< endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-crc_compare") == 0) {
 			f_crc_compare = true;
 			crc_compare_fname_in.assign(argv[++i]);
-			crc_compare_crc1_type.assign(argv[++i]);
-			crc_compare_block_length1 = ST.strtoi(argv[++i]);
-			crc_compare_crc2_type.assign(argv[++i]);
-			crc_compare_block_length2 = ST.strtoi(argv[++i]);
+			crc_compare_code1.assign(argv[++i]);
+			crc_compare_code2.assign(argv[++i]);
 			crc_compare_error_weight = ST.strtoi(argv[++i]);
 			crc_compare_nb_tests_per_block = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-crc_compare "
 						<< crc_compare_fname_in << " "
-						<< crc_compare_crc1_type << " "
-						<< crc_compare_block_length1 << " "
-						<< crc_compare_crc2_type << " "
-						<< crc_compare_block_length2 << " "
+						<< crc_compare_code1 << " "
+						<< crc_compare_code2 << " "
 						<< crc_compare_error_weight << " "
 						<< crc_compare_nb_tests_per_block << " "
 						<< endl;
@@ -474,54 +461,44 @@ int coding_theoretic_activity_description::read_arguments(
 			f_crc_compare_read_output_file = true;
 			crc_compare_read_output_file_fname_in.assign(argv[++i]);
 			crc_compare_read_output_file_nb_lines = ST.strtoi(argv[++i]);
-			crc_compare_read_output_file_crc1_type.assign(argv[++i]);
-			crc_compare_read_output_file_block_length1 = ST.strtoi(argv[++i]);
-			crc_compare_read_output_file_crc2_type.assign(argv[++i]);
-			crc_compare_read_output_file_block_length2 = ST.strtoi(argv[++i]);
+			crc_compare_read_output_file_crc_code1.assign(argv[++i]);
+			crc_compare_read_output_file_crc_code2.assign(argv[++i]);
 			if (f_v) {
 				cout << "-crc_compare_read_output_file "
 						<< crc_compare_read_output_file_fname_in << " "
 						<< crc_compare_read_output_file_nb_lines << " "
-						<< crc_compare_read_output_file_crc1_type << " "
-						<< crc_compare_read_output_file_block_length1 << " "
-						<< crc_compare_read_output_file_crc2_type << " "
-						<< crc_compare_read_output_file_block_length2 << " "
+						<< crc_compare_read_output_file_crc_code1 << " "
+						<< crc_compare_read_output_file_crc_code2 << " "
 						<< endl;
 			}
 		}
 
 
-		else if (ST.stringcmp(argv[i], "-simulate_Hamming_errors") == 0) {
-			f_simulate_Hamming_errors = true;
-			simulate_Hamming_errors_fname_in.assign(argv[++i]);
-			simulate_Hamming_errors_block_number = ST.strtoi(argv[++i]);
-			simulate_Hamming_errors_crc1_type.assign(argv[++i]);
-			simulate_Hamming_errors_block_length1 = ST.strtoi(argv[++i]);
-			simulate_Hamming_errors_crc2_type.assign(argv[++i]);
-			simulate_Hamming_errors_block_length2 = ST.strtoi(argv[++i]);
-			simulate_Hamming_errors_max_weight = ST.strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-all_errors_of_a_given_weight") == 0) {
+			f_all_errors_of_a_given_weight = true;
+			all_errors_of_a_given_weight_fname_in.assign(argv[++i]);
+			all_errors_of_a_given_weight_block_number = ST.strtoi(argv[++i]);
+			all_errors_of_a_given_weight_crc_code1.assign(argv[++i]);
+			all_errors_of_a_given_weight_crc_code2.assign(argv[++i]);
+			all_errors_of_a_given_weight_max_weight = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-simulate_Hamming_errors "
-						<< simulate_Hamming_errors_fname_in << " "
-						<< simulate_Hamming_errors_block_number << " "
-						<< simulate_Hamming_errors_crc1_type << " "
-						<< simulate_Hamming_errors_block_length1 << " "
-						<< simulate_Hamming_errors_crc2_type << " "
-						<< simulate_Hamming_errors_block_length2 << " "
-						<< simulate_Hamming_errors_max_weight << " "
+				cout << "-all_errors_of_a_given_weight "
+						<< all_errors_of_a_given_weight_fname_in << " "
+						<< all_errors_of_a_given_weight_block_number << " "
+						<< all_errors_of_a_given_weight_crc_code1 << " "
+						<< all_errors_of_a_given_weight_crc_code2 << " "
+						<< all_errors_of_a_given_weight_max_weight << " "
 						<< endl;
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-weight_enumerator_bottom_up") == 0) {
 			f_weight_enumerator_bottom_up = true;
-			weight_enumerator_bottom_up_crc_type.assign(argv[++i]);
-			weight_enumerator_bottom_up_block_length = ST.strtoi(argv[++i]);
+			weight_enumerator_bottom_up_crc_code.assign(argv[++i]);
 			weight_enumerator_bottom_up_max_weight = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-weight_enumerator_bottom_up "
-						<< weight_enumerator_bottom_up_crc_type << " "
-						<< weight_enumerator_bottom_up_block_length << " "
+						<< weight_enumerator_bottom_up_crc_code << " "
 						<< weight_enumerator_bottom_up_max_weight << " "
 						<< endl;
 			}
@@ -737,49 +714,42 @@ void coding_theoretic_activity_description::print()
 		cout << "-crc_encode_file_based "
 				<< crc_encode_file_based_fname_in << " "
 				<< crc_encode_file_based_fname_out << " "
-				<< crc_encode_file_based_crc_type << " "
-				<< crc_encode_file_based_block_length << endl;
+				<< crc_encode_file_based_crc_code << " "
+				<< endl;
 	}
 	if (f_crc_compare) {
 		cout << "-crc_compare "
 				<< crc_compare_fname_in << " "
-				<< crc_compare_crc1_type << " "
-				<< crc_compare_block_length1 << " "
-				<< crc_compare_crc2_type << " "
-				<< crc_compare_block_length2 << " "
+				<< crc_compare_code1 << " "
+				<< crc_compare_code2 << " "
 				<< crc_compare_error_weight << " "
 				<< crc_compare_nb_tests_per_block << " "
 				<< endl;
 	}
 	if (f_crc_compare_read_output_file) {
-			cout << "-crc_compare_read_output_file "
-					<< crc_compare_read_output_file_fname_in << " "
-					<< crc_compare_read_output_file_nb_lines << " "
-					<< crc_compare_read_output_file_crc1_type << " "
-					<< crc_compare_read_output_file_block_length1 << " "
-					<< crc_compare_read_output_file_crc2_type << " "
-					<< crc_compare_read_output_file_block_length2 << " "
-					<< endl;
+		cout << "-crc_compare_read_output_file "
+				<< crc_compare_read_output_file_fname_in << " "
+				<< crc_compare_read_output_file_nb_lines << " "
+				<< crc_compare_read_output_file_crc_code1 << " "
+				<< crc_compare_read_output_file_crc_code2 << " "
+				<< endl;
 	}
 
-	if (f_simulate_Hamming_errors) {
-			cout << "-simulate_Hamming_errors "
-					<< simulate_Hamming_errors_fname_in << " "
-					<< simulate_Hamming_errors_block_number << " "
-					<< simulate_Hamming_errors_crc1_type << " "
-					<< simulate_Hamming_errors_block_length1 << " "
-					<< simulate_Hamming_errors_crc2_type << " "
-					<< simulate_Hamming_errors_block_length2 << " "
-					<< simulate_Hamming_errors_max_weight << " "
-					<< endl;
+	if (f_all_errors_of_a_given_weight) {
+		cout << "-all_errors_of_a_given_weight "
+				<< all_errors_of_a_given_weight_fname_in << " "
+				<< all_errors_of_a_given_weight_block_number << " "
+				<< all_errors_of_a_given_weight_crc_code1 << " "
+				<< all_errors_of_a_given_weight_crc_code2 << " "
+				<< all_errors_of_a_given_weight_max_weight << " "
+				<< endl;
 	}
 
 	if (f_weight_enumerator_bottom_up) {
-			cout << "-weight_enumerator_bottom_up "
-					<< weight_enumerator_bottom_up_crc_type << " "
-					<< weight_enumerator_bottom_up_block_length << " "
-					<< weight_enumerator_bottom_up_max_weight << " "
-					<< endl;
+		cout << "-weight_enumerator_bottom_up "
+				<< weight_enumerator_bottom_up_crc_code << " "
+				<< weight_enumerator_bottom_up_max_weight << " "
+				<< endl;
 	}
 
 	if (f_convert_data_to_polynomials) {

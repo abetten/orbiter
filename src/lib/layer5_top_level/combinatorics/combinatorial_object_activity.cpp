@@ -779,7 +779,8 @@ void combinatorial_object_activity::do_save(
 
 	fname_out.assign(save_as_fname);
 
-	Fio.lint_matrix_write_csv(fname_out, Sets, N, sz);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_out, Sets, N, sz);
 
 	cout << "Written file " << fname_out
 			<< " of size " << Fio.file_size(fname_out) << endl;

@@ -463,7 +463,8 @@ void orbiter_session::get_vector_from_label(
 
 void orbiter_session::get_int_vector_from_label(
 		std::string &label,
-		int *&v, int &sz, int verbose_level)
+		int *&v, int &sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -513,7 +514,8 @@ void orbiter_session::get_int_vector_from_label(
 
 void orbiter_session::get_lint_vector_from_label(
 		std::string &label,
-		long int *&v, int &sz, int verbose_level)
+		long int *&v, int &sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -786,6 +788,27 @@ data_structures::symbolic_object_builder *orbiter_session::get_object_of_type_sy
 
 
 }
+
+
+coding_theory::crc_object *orbiter_session::get_object_of_type_crc_code(
+		std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_object_of_type_crc_code cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_crc_code) {
+		cout << "orbiter_session::get_object_of_type_crc_code object type != t_crc_code" << endl;
+		exit(1);
+	}
+	return (coding_theory::crc_object *) get_object(idx);
+
+
+}
+
 
 
 int orbiter_session::find_object_of_type_symbolic_object(

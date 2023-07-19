@@ -234,7 +234,8 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		data_structures::string_tools ST;
 
 
-		Fio.lint_matrix_read_csv(Descr->split_by_file, Split, m, n, verbose_level - 2);
+		Fio.Csv_file_support->lint_matrix_read_csv(
+				Descr->split_by_file, Split, m, n, verbose_level - 2);
 		cout << "We found " << m << " cases for splitting" << endl;
 		for (c = 0; c < m; c++) {
 

@@ -450,7 +450,8 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 		fname = "perp_of_" + Descr->perp_text + "_q" + std::to_string(OA->O->F->q) + ".csv";
 
-		Fio.lint_matrix_write_csv(fname, Perp, sz, 1);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, Perp, sz, 1);
 
 
 

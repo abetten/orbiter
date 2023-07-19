@@ -502,7 +502,8 @@ void surface_classify_using_arc::report_decomposition_matrix(std::ostream &ost, 
 
 	fname_decomposition = "surfaces_q" + std::to_string(Surf_A->PA->F->q) + "_decomposition_matrix.csv";
 
-	Fio.int_matrix_write_csv(fname_decomposition, Decomp,
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_decomposition, Decomp,
 			Six_arcs->nb_arcs_not_on_conic, nb_surfaces);
 
 	cout << "Written file " << fname_decomposition << " of size "

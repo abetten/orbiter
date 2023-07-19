@@ -1145,7 +1145,8 @@ public:
 	void reduce_modulo_p(unipoly_object a, int p);
 
 	//unipoly_domain2.cpp:
-	void mult_easy(unipoly_object a,
+	void mult_easy(
+			unipoly_object a,
 			unipoly_object b,
 			unipoly_object &c);
 	void print_coeffs_top_down_assuming_one_character_per_digit(

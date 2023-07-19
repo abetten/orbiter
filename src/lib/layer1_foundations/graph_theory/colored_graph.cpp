@@ -2107,7 +2107,8 @@ void colored_graph::export_to_csv(
 	}
 
 
-	Fio.int_matrix_write_csv(fname, M, nb_points, nb_points);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, nb_points, nb_points);
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;

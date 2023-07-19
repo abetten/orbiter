@@ -521,7 +521,8 @@ long int hyperbolic_pair::rank_line_L1(
 				<< " p2=" << p2 << " index=" << index << endl;
 	}
 	if (index >= l1) {
-		cout << "hyperbolic_pair::rank_line_L1 error in rank_line_L1 index too large" << endl;
+		cout << "hyperbolic_pair::rank_line_L1 "
+				"error in rank_line_L1 index too large" << endl;
 		cout << "index=" << index << endl;
 		cout << "l1=" << l1 << endl;
 		cout << "P4_index=" << P4_index << endl;
@@ -565,7 +566,8 @@ void hyperbolic_pair::unrank_line_L2(
 	v3[n - 2] = 1 + P3_field_element;
 	v3[n - 1] = 0;
 	if (f_vv) {
-		cout << "hyperbolic_pair::unrank_line_L2 before rank_Sbar  v3=" << endl;
+		cout << "hyperbolic_pair::unrank_line_L2 "
+				"before rank_Sbar  v3=" << endl;
 		Int_vec_print(cout, v3, n);
 		cout << endl;
 	}
@@ -618,7 +620,8 @@ void hyperbolic_pair::unrank_line_L2(
 		}
 	}
 	if (f_vvv) {
-		cout << "hyperbolic_pair::unrank_line_L2 partner of 10...10 created:" << endl;
+		cout << "hyperbolic_pair::unrank_line_L2 "
+				"partner of 10...10 created:" << endl;
 		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 	}
@@ -627,7 +630,8 @@ void hyperbolic_pair::unrank_line_L2(
 			root = find_root_hyperbolic(P3_point, m - 1,
 					verbose_level - 1);
 
-			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(O->T1,
+			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(
+					O->T1,
 				0, P3_point, root, m - 1,
 				verbose_level - 1);
 		}
@@ -636,7 +640,8 @@ void hyperbolic_pair::unrank_line_L2(
 			O->T1[1] = O->T1[2] = 1;
 		}
 		if (f_vvv) {
-			cout << "hyperbolic_pair::unrank_line_L2 the Siegel map is" << endl;
+			cout << "hyperbolic_pair::unrank_line_L2 "
+					"the Siegel map is" << endl;
 			Int_vec_print_integer_matrix(cout, O->T1, n - 2, n - 2);
 		}
 		F->Linear_algebra->mult_matrix_matrix(v1, O->T1, v2, 1, n - 2, n - 2,
@@ -648,24 +653,29 @@ void hyperbolic_pair::unrank_line_L2(
 		}
 	}
 	if (f_vvv) {
-		cout << "hyperbolic_pair::unrank_line_L2 maps to v2=" << endl;
+		cout << "hyperbolic_pair::unrank_line_L2 "
+				"maps to v2=" << endl;
 		Int_vec_print(cout, v2, n - 2);
 		cout << endl;
 	}
-	c = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m - 1);
+	c = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(
+			v3, v2, 1, m - 1);
 	if (f_vvv) {
 		cout << "c=" << c << endl;
 	}
 	v2[n - 2] = 0;
 	v2[n - 1] = F->mult(F->negate(c),F->inverse(v3[n - 2]));
 	if (f_vv) {
-		cout << "hyperbolic_pair::unrank_line_L2 before rank_Sbar v2=" << endl;
+		cout << "hyperbolic_pair::unrank_line_L2 "
+				"before rank_Sbar v2=" << endl;
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
-	e = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
+	e = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(
+			v3, v2, 1, m);
 	if (e) {
-		cout << "hyperbolic_pair::unrank_line_L2 error, not orthogonal" << endl;
+		cout << "hyperbolic_pair::unrank_line_L2 "
+				"error, not orthogonal" << endl;
 		exit(1);
 	}
 	p2 = rank_Sbar(v2, 1, m);
@@ -673,7 +683,8 @@ void hyperbolic_pair::unrank_line_L2(
 		cout << "p2=" << p2 << endl;
 	}
 	if (f_v) {
-		cout << "hyperbolic_pair::unrank_line_L2 index=" << index
+		cout << "hyperbolic_pair::unrank_line_L2 "
+				"index=" << index
 				<< " p1=" << p1 << " p2=" << p2 << endl;
 	}
 }
@@ -691,7 +702,8 @@ long int hyperbolic_pair::rank_line_L2(
 	long int index;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L2 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"p1=" << p1 << " p2=" << p2 << endl;
 	}
 	unrank_Sbar(v2, 1, m, p2);
 	unrank_Sbar(v3, 1, m, p1);
@@ -701,7 +713,8 @@ long int hyperbolic_pair::rank_line_L2(
 		cout << endl;
 	}
 	if (v3[n - 1]) {
-		cout << "hyperbolic_pair::rank_line_L2 v3[n - 1]" << endl;
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"v3[n - 1]" << endl;
 		exit(1);
 	}
 	for (i = n - 3; i >= 0; i--) {
@@ -721,7 +734,8 @@ long int hyperbolic_pair::rank_line_L2(
 		}
 	}
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L2 after scaling, v3=:" << endl;
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"after scaling, v3=:" << endl;
 		Int_vec_print(cout, v3, n);
 		cout << endl;
 	}
@@ -729,16 +743,20 @@ long int hyperbolic_pair::rank_line_L2(
 	P3_point = rank_Sbar(v3, 1, m - 1);
 	P3_index = P3_point * (q - 1) + P3_field_element;
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L2 P3_point=" << P3_point
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"P3_point=" << P3_point
 				<< " P3_field_element=" << P3_field_element << endl;
-		cout << "hyperbolic_pair::rank_line_L2 P3_index=" << P3_index << endl;
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"P3_index=" << P3_index << endl;
 	}
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L2 p2 = " << p2 << " : v2=:" << endl;
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"p2 = " << p2 << " : v2=:" << endl;
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
-	c = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m - 1);
+	c = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(
+			v3, v2, 1, m - 1);
 
 
 	if (P3_point) {
@@ -746,7 +764,8 @@ long int hyperbolic_pair::rank_line_L2(
 			root = find_root_hyperbolic(P3_point, m - 1,
 					verbose_level - 1);
 
-			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(O->T1,
+			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(
+					O->T1,
 				0, P3_point, root, m - 1,
 				verbose_level - 1);
 		}
@@ -754,8 +773,10 @@ long int hyperbolic_pair::rank_line_L2(
 			O->T1[0] = O->T1[3] = 0;
 			O->T1[1] = O->T1[2] = 1;
 		}
-		F->Linear_algebra->invert_matrix(O->T1, O->T2, n - 2, 0 /* verbose_level */);
-		F->Linear_algebra->mult_matrix_matrix(v2, O->T2, v1, 1, n - 2, n - 2,
+		F->Linear_algebra->invert_matrix(
+				O->T1, O->T2, n - 2, 0 /* verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(
+				v2, O->T2, v1, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 	}
 	else {
@@ -764,7 +785,8 @@ long int hyperbolic_pair::rank_line_L2(
 		}
 	}
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L2 maps back to v1=:" << endl;
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"maps back to v1=:" << endl;
 		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 	}
@@ -776,15 +798,18 @@ long int hyperbolic_pair::rank_line_L2(
 	if (i == n - 2) {
 		// case 1
 		if (f_vvv) {
-			cout << "hyperbolic_pair::rank_line_L2 case 1" << endl;
+			cout << "hyperbolic_pair::rank_line_L2 "
+					"case 1" << endl;
 		}
 		if (v1[0]) {
-			cout << "hyperbolic_pair::rank_line_L2, case 1 v1[0]" << endl;
+			cout << "hyperbolic_pair::rank_line_L2 "
+					"case 1 v1[0]" << endl;
 			exit(1);
 		}
 		c = v1[1];
 		if (c == 0) {
-			cout << "hyperbolic_pair::rank_line_L2, case 1 v1[1] == 0" << endl;
+			cout << "hyperbolic_pair::rank_line_L2 "
+					"case 1 v1[1] == 0" << endl;
 			exit(1);
 		}
 		if (c != F->negate(1)) {
@@ -794,27 +819,29 @@ long int hyperbolic_pair::rank_line_L2(
 			}
 		}
 		if (f_vvv) {
-			cout << "hyperbolic_pair::rank_line_L2 after scaling v1=:" << endl;
+			cout << "hyperbolic_pair::rank_line_L2 "
+					"after scaling v1=:" << endl;
 			Int_vec_print(cout, v1, n);
 			cout << endl;
 		}
 		P3_sub_index = 0;
 	}
 	else {
-		alpha = O->Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(v1 + 2, 1, m - 2);
+		alpha = O->Quadratic_form->evaluate_hyperbolic_quadratic_form_with_m(
+				v1 + 2, 1, m - 2);
 		if (alpha == 0) {
 			// case 2
 			if (f_vvv) {
 				cout << "hyperbolic_pair::rank_line_L2 case 2" << endl;
 			}
 			if (v1[0]) {
-				cout << "hyperbolic_pair::rank_line_L2, case 1 "
+				cout << "hyperbolic_pair::rank_line_L2 case 1 "
 						"v1[0]" << endl;
 				exit(1);
 			}
 			c = v1[1];
 			if (c == 0) {
-				cout << "hyperbolic_pair::rank_line_L2, case 1 "
+				cout << "hyperbolic_pair::rank_line_L2 case 1 "
 						"v1[1] == 0" << endl;
 				exit(1);
 			}
@@ -825,7 +852,8 @@ long int hyperbolic_pair::rank_line_L2(
 				}
 			}
 			if (f_vvv) {
-				cout << "hyperbolic_pair::rank_line_L2 after scaling v1=:" << endl;
+				cout << "hyperbolic_pair::rank_line_L2 "
+						"after scaling v1=:" << endl;
 				Int_vec_print(cout, v1, n);
 				cout << endl;
 			}
@@ -876,7 +904,8 @@ long int hyperbolic_pair::rank_line_L2(
 				}
 			}
 			if (f_vvv) {
-				cout << "hyperbolic_pair::rank_line_L2 after scaling v1=:" << endl;
+				cout << "hyperbolic_pair::rank_line_L2 "
+						"after scaling v1=:" << endl;
 				Int_vec_print(cout, v1, n);
 				cout << endl;
 			}
@@ -898,18 +927,21 @@ long int hyperbolic_pair::rank_line_L2(
 		}
 	}
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L2 p1=" << p1 << " p2=" << p2
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"p1=" << p1 << " p2=" << p2
 				<< " P3_sub_index=" << P3_sub_index << endl;
 	}
 
 	index = P3_index * a32 + P3_sub_index;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L2 p1=" << p1 << " p2=" << p2
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"p1=" << p1 << " p2=" << p2
 				<< " index=" << index << endl;
 	}
 	if (index >= l2) {
-		cout << "hyperbolic_pair::rank_line_L2 index too large" << endl;
+		cout << "hyperbolic_pair::rank_line_L2 "
+				"index too large" << endl;
 	}
 	return index;
 }
@@ -933,10 +965,12 @@ void hyperbolic_pair::unrank_line_L3(
 		cout << "hyperbolic_pair::unrank_line_L3 index=" << index << endl;
 	}
 	if (index >= l3) {
-		cout << "hyperbolic_pair::unrank_line_L3 index too large" << endl;
+		cout << "hyperbolic_pair::unrank_line_L3 "
+				"index too large" << endl;
 	}
 	if (f_vv) {
-		cout << "hyperbolic_pair::unrank_line_L3 P4_index=" << P4_index
+		cout << "hyperbolic_pair::unrank_line_L3 "
+				"P4_index=" << P4_index
 				<< " P4_sub_index=" << P4_sub_index << endl;
 		cout << "P4_line_index=" << P4_line_index
 				<< " P4_field_element=" << P4_field_element << endl;
@@ -952,7 +986,8 @@ void hyperbolic_pair::unrank_line_L3(
 	v1[1] = 0;
 	unrank_Sbar(v1 + 2, 1, m - 2, P4_line_index);
 	if (f_vvv) {
-		cout << "hyperbolic_pair::unrank_line_L3 after unrank_Sbar" << endl;
+		cout << "hyperbolic_pair::unrank_line_L3 "
+				"after unrank_Sbar" << endl;
 		Int_vec_print(cout, v1, n - 2);
 		cout << endl;
 	}
@@ -962,7 +997,8 @@ void hyperbolic_pair::unrank_line_L3(
 			root = find_root_hyperbolic(
 					P4_index, m - 1, verbose_level - 1);
 
-			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(O->T1,
+			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(
+					O->T1,
 				0, P4_index, root, m - 1,
 				verbose_level - 1);
 		}
@@ -970,7 +1006,8 @@ void hyperbolic_pair::unrank_line_L3(
 			O->T1[0] = O->T1[3] = 0;
 			O->T1[1] = O->T1[2] = 1;
 		}
-		F->Linear_algebra->mult_matrix_matrix(v1, O->T1, v2, 1, n - 2, n - 2,
+		F->Linear_algebra->mult_matrix_matrix(
+				v1, O->T1, v2, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 	}
 	else {
@@ -981,21 +1018,26 @@ void hyperbolic_pair::unrank_line_L3(
 	v2[n - 2] = 0;
 	v2[n - 1] = P4_field_element;
 	if (f_vv) {
-		cout << "hyperbolic_pair::unrank_line_L3 before rank_Sbar" << endl;
+		cout << "hyperbolic_pair::unrank_line_L3 "
+				"before rank_Sbar" << endl;
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
-	e = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
+	e = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(
+			v3, v2, 1, m);
 	if (e) {
-		cout << "hyperbolic_pair::unrank_line_L3 error, not orthogonal" << endl;
+		cout << "hyperbolic_pair::unrank_line_L3 "
+				"error, not orthogonal" << endl;
 		exit(1);
 	}
 	p2 = rank_Sbar(v2, 1, m);
 	if (f_vv) {
-		cout << "hyperbolic_pair::unrank_line_L3 p2=" << p2 << endl;
+		cout << "hyperbolic_pair::unrank_line_L3 "
+				"p2=" << p2 << endl;
 	}
 	if (f_v) {
-		cout << "hyperbolic_pair::unrank_line_L3 index=" << index
+		cout << "hyperbolic_pair::unrank_line_L3 "
+				"index=" << index
 				<< " p1=" << p1 << " p2=" << p2 << endl;
 	}
 }
@@ -1013,30 +1055,35 @@ long int hyperbolic_pair::rank_line_L3(
 	long int a, b;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L3 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"p1=" << p1 << " p2=" << p2 << endl;
 	}
 	unrank_Sbar(v3, 1, m, p1);
 	unrank_Sbar(v2, 1, m, p2);
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L3 p1=" << p1 << " v3=" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"p1=" << p1 << " v3=" << endl;
 		Int_vec_print(cout, v3, n);
 		cout << endl;
 	}
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L3 p2=" << p2 << " v2=" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"p2=" << p2 << " v2=" << endl;
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
 	P4_index = p1;
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L3 P4_index=" << P4_index << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"P4_index=" << P4_index << endl;
 	}
 	if (P4_index) {
 		if (m > 2) {
 			root = find_root_hyperbolic(
 					P4_index, m - 1, verbose_level - 1);
 
-			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(O->T1,
+			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(
+					O->T1,
 				0, P4_index, root, m - 1,
 				verbose_level - 1);
 		}
@@ -1044,8 +1091,10 @@ long int hyperbolic_pair::rank_line_L3(
 			O->T1[0] = O->T1[3] = 0;
 			O->T1[1] = O->T1[2] = 1;
 		}
-		F->Linear_algebra->invert_matrix(O->T1, O->T2, n - 2, 0 /* verbose_level */);
-		F->Linear_algebra->mult_matrix_matrix(v2, O->T2, v1, 1, n - 2, n - 2,
+		F->Linear_algebra->invert_matrix(
+				O->T1, O->T2, n - 2, 0 /* verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(
+				v2, O->T2, v1, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 		v1[n - 2] = v2[n - 2];
 		v1[n - 1] = v2[n - 1];
@@ -1056,23 +1105,27 @@ long int hyperbolic_pair::rank_line_L3(
 		}
 	}
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L3 maps back to" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"maps back to" << endl;
 		Int_vec_print(cout, v1, n);
 		cout << endl;
 	}
 	v1[0] = 0;
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L3 after setting v1[0] = 0, v1=" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"after setting v1[0] = 0, v1=" << endl;
 		Int_vec_print(cout, v1, n);
 		cout << endl;
 	}
 	if (v1[0] || v1[1]) {
-		cout << "hyperbolic_pair::rank_line_L3 rank_line_L3 v1[0] || v1[1]" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"rank_line_L3 v1[0] || v1[1]" << endl;
 		exit(1);
 	}
 	P4_line_index = rank_Sbar(v1 + 2, 1, m - 2);
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L3 P4_line_index=" << P4_line_index << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"P4_line_index=" << P4_line_index << endl;
 	}
 	for (i = n - 3; i >= 0; i--) {
 		if (v1[i]) {
@@ -1080,7 +1133,8 @@ long int hyperbolic_pair::rank_line_L3(
 		}
 	}
 	if (i < 0) {
-		cout << "hyperbolic_pair::rank_line_L3 i < 0" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"i < 0" << endl;
 		exit(1);
 	}
 	a = v1[i];
@@ -1091,34 +1145,41 @@ long int hyperbolic_pair::rank_line_L3(
 		}
 	}
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L3 after scaling, v1=:" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"after scaling, v1=:" << endl;
 		Int_vec_print(cout, v1, n);
 		cout << endl;
 	}
 	if (v1[n - 2]) {
-		cout << "hyperbolic_pair::rank_line_L3 v1[n - 2]" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"v1[n - 2]" << endl;
 		exit(1);
 	}
 	if (v1[n - 1] == 0) {
-		cout << "hyperbolic_pair::rank_line_L3 v1[n - 1] == 0" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"v1[n - 1] == 0" << endl;
 		exit(1);
 	}
 	P4_field_element = v1[n - 1] - 1;
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L3 P4_field_element=" << P4_field_element << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"P4_field_element=" << P4_field_element << endl;
 	}
 	P4_sub_index = P4_line_index * (q - 1) + P4_field_element;
 	if (f_vvv) {
-		cout << "hyperbolic_pair::rank_line_L3 P4_sub_index=" << P4_sub_index << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"P4_sub_index=" << P4_sub_index << endl;
 	}
 	index = (long int) P4_index * a43 + P4_sub_index;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L3 p1=" << p1 << " p2=" << p2
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"p1=" << p1 << " p2=" << p2
 				<< " index=" << index << endl;
 	}
 	if (index >= l3) {
-		cout << "hyperbolic_pair::rank_line_L3 index too large" << endl;
+		cout << "hyperbolic_pair::rank_line_L3 "
+				"index too large" << endl;
 	}
 	return index;
 }
@@ -1139,13 +1200,16 @@ void hyperbolic_pair::unrank_line_L4(
 	P4_field_element = P4_sub_index % (q - 1);
 	P4_field_element++;
 	if (f_v) {
-		cout << "hyperbolic_pair::unrank_line_L4 index=" << index << endl;
+		cout << "hyperbolic_pair::unrank_line_L4 "
+				"index=" << index << endl;
 	}
 	if (index >= l4) {
-		cout << "error in unrank_line_L4 index too large" << endl;
+		cout << "error in unrank_line_L4 "
+				"index too large" << endl;
 	}
 	if (f_vv) {
-		cout << "hyperbolic_pair::unrank_line_L4 P4_index=" << P4_index
+		cout << "hyperbolic_pair::unrank_line_L4 "
+				"P4_index=" << P4_index
 				<< " P4_sub_index=" << P4_sub_index << endl;
 		cout << "P4_line_index=" << P4_line_index
 				<< " P4_field_element=" << P4_field_element << endl;
@@ -1169,7 +1233,8 @@ void hyperbolic_pair::unrank_line_L4(
 			root = find_root_hyperbolic(
 					P4_index, m - 1, verbose_level - 1);
 
-			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(O->T1,
+			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(
+					O->T1,
 				0, P4_index, root, m - 1,
 				verbose_level - 1);
 		}
@@ -1177,7 +1242,8 @@ void hyperbolic_pair::unrank_line_L4(
 			O->T1[0] = O->T1[3] = 0;
 			O->T1[1] = O->T1[2] = 1;
 		}
-		F->Linear_algebra->mult_matrix_matrix(v1, O->T1, v2, 1, n - 2, n - 2,
+		F->Linear_algebra->mult_matrix_matrix(
+				v1, O->T1, v2, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 	}
 	else {
@@ -1192,7 +1258,8 @@ void hyperbolic_pair::unrank_line_L4(
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
-	e = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(v3, v2, 1, m);
+	e = O->Quadratic_form->evaluate_hyperbolic_bilinear_form(
+			v3, v2, 1, m);
 	if (e) {
 		cout << "error, not orthogonal" << endl;
 		exit(1);
@@ -1202,7 +1269,8 @@ void hyperbolic_pair::unrank_line_L4(
 		cout << "p2=" << p2 << endl;
 	}
 	if (f_v) {
-		cout << "hyperbolic_pair::unrank_line_L4 index=" << index
+		cout << "hyperbolic_pair::unrank_line_L4 "
+				"index=" << index
 				<< " p1=" << p1 << " p2=" << p2 << endl;
 	}
 }
@@ -1220,7 +1288,8 @@ long int hyperbolic_pair::rank_line_L4(
 	long int a, b;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L4 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "hyperbolic_pair::rank_line_L4 "
+				"p1=" << p1 << " p2=" << p2 << endl;
 	}
 	unrank_Sbar(v3, 1, m, p1);
 	unrank_Sbar(v2, 1, m, p2);
@@ -1240,16 +1309,20 @@ long int hyperbolic_pair::rank_line_L4(
 	}
 	if (P3_index) {
 		if (m > 2) {
-			root = find_root_hyperbolic(P3_index, m - 1, verbose_level - 1);
-			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(O->T1,
+			root = find_root_hyperbolic(
+					P3_index, m - 1, verbose_level - 1);
+			O->Orthogonal_group->Siegel_map_between_singular_points_hyperbolic(
+					O->T1,
 				0, P3_index, root, m - 1, verbose_level - 1);
 		}
 		else {
 			O->T1[0] = O->T1[3] = 0;
 			O->T1[1] = O->T1[2] = 1;
 		}
-		F->Linear_algebra->invert_matrix(O->T1, O->T2, n - 2, 0 /* verbose_level */);
-		F->Linear_algebra->mult_matrix_matrix(v2, O->T2, v1, 1, n - 2, n - 2,
+		F->Linear_algebra->invert_matrix(
+				O->T1, O->T2, n - 2, 0 /* verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(
+				v2, O->T2, v1, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 		v1[n - 2] = v2[n - 2];
 		v1[n - 1] = v2[n - 1];
@@ -1300,11 +1373,13 @@ long int hyperbolic_pair::rank_line_L4(
 		cout << endl;
 	}
 	if (v1[n - 2] == 0) {
-		cout << "orthogonal::rank_line_L4 v1[n - 2] == 0" << endl;
+		cout << "orthogonal::rank_line_L4 "
+				"v1[n - 2] == 0" << endl;
 		exit(1);
 	}
 	if (v1[n - 1]) {
-		cout << "orthogonal::rank_line_L4 v1[n - 1]" << endl;
+		cout << "orthogonal::rank_line_L4 "
+				"v1[n - 1]" << endl;
 		exit(1);
 	}
 	P3_field_element = v1[n - 2] - 1;
@@ -1318,11 +1393,13 @@ long int hyperbolic_pair::rank_line_L4(
 	index = P3_index * a44 + P3_sub_index;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L4 p1=" << p1 << " p2=" << p2
+		cout << "hyperbolic_pair::rank_line_L4 "
+				"p1=" << p1 << " p2=" << p2
 				<< " index=" << index << endl;
 	}
 	if (index >= l4) {
-		cout << "hyperbolic_pair::rank_line_L4 index too large" << endl;
+		cout << "hyperbolic_pair::rank_line_L4 "
+				"index too large" << endl;
 	}
 	return index;
 }
@@ -1336,13 +1413,15 @@ void hyperbolic_pair::unrank_line_L5(
 	//int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
-		cout << "hyperbolic_pair::unrank_line_L5 index=" << index << endl;
+		cout << "hyperbolic_pair::unrank_line_L5 "
+				"index=" << index << endl;
 	}
 	if (index >= l5) {
-		cout << "hyperbolic_pair::unrank_line_L5 index "
-				"too large, l5=" << l5 << endl;
+		cout << "hyperbolic_pair::unrank_line_L5 "
+				"index too large, l5=" << l5 << endl;
 	}
-	O->subspace->Hyperbolic_pair->unrank_line(p1, p2, index, verbose_level);
+	O->subspace->Hyperbolic_pair->unrank_line(
+			p1, p2, index, verbose_level);
 	if (f_v) {
 		cout << "hyperbolic_pair::unrank_line_L5 index=" << index
 				<< " p1=" << p1 << " p2=" << p2 << endl;
@@ -1357,15 +1436,18 @@ long int hyperbolic_pair::rank_line_L5(
 	long int index;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L5 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "hyperbolic_pair::rank_line_L5 "
+				"p1=" << p1 << " p2=" << p2 << endl;
 	}
-	index = O->subspace->Hyperbolic_pair->rank_line(p1, p2, verbose_level);
+	index = O->subspace->Hyperbolic_pair->rank_line(
+			p1, p2, verbose_level);
 	if (f_v) {
 		cout << "rank_line_L5 p1=" << p1 << " p2=" << p2
 				<< " index=" << index << endl;
 	}
 	if (index >= l5) {
-		cout << "hyperbolic_pair::rank_line_L5 index too large" << endl;
+		cout << "hyperbolic_pair::rank_line_L5 "
+				"index too large" << endl;
 	}
 	return index;
 }
@@ -1379,15 +1461,19 @@ void hyperbolic_pair::unrank_line_L6(
 	//int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
-		cout << "hyperbolic_pair::unrank_line_L6 index=" << index << endl;
+		cout << "hyperbolic_pair::unrank_line_L6 "
+				"index=" << index << endl;
 	}
 	if (index >= l6) {
-		cout << "hyperbolic_pair::unrank_line_L6 index too large" << endl;
+		cout << "hyperbolic_pair::unrank_line_L6 "
+				"index too large" << endl;
 	}
 	p1 = index;
-	p2 = type_and_index_to_point_rk(5, 0, verbose_level);
+	p2 = type_and_index_to_point_rk(
+			5, 0, verbose_level);
 	if (f_v) {
-		cout << "hyperbolic_pair::unrank_line_L6 index=" << index
+		cout << "hyperbolic_pair::unrank_line_L6 "
+				"index=" << index
 				<< " p1=" << p1 << " p2=" << p2 << endl;
 	}
 }
@@ -1400,15 +1486,18 @@ long int hyperbolic_pair::rank_line_L6(
 	long int index;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L6 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "hyperbolic_pair::rank_line_L6 "
+				"p1=" << p1 << " p2=" << p2 << endl;
 	}
 	index = p1;
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L6 p1=" << p1 << " p2=" << p2
+		cout << "hyperbolic_pair::rank_line_L6 "
+				"p1=" << p1 << " p2=" << p2
 				<< " index=" << index << endl;
 	}
 	if (index >= l6) {
-		cout << "hyperbolic_pair::rank_line_L6 index too large" << endl;
+		cout << "hyperbolic_pair::rank_line_L6 "
+				"index too large" << endl;
 	}
 	return index;
 }
@@ -1422,15 +1511,19 @@ void hyperbolic_pair::unrank_line_L7(
 	//int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
-		cout << "hyperbolic_pair::unrank_line_L7 index=" << index << endl;
+		cout << "hyperbolic_pair::unrank_line_L7 "
+				"index=" << index << endl;
 	}
 	if (index >= l7) {
-		cout << "hyperbolic_pair::unrank_line_L7 index too large" << endl;
+		cout << "hyperbolic_pair::unrank_line_L7 "
+				"index too large" << endl;
 	}
 	p1 = index;
-	p2 = type_and_index_to_point_rk(6, 0, verbose_level);
+	p2 = type_and_index_to_point_rk(
+			6, 0, verbose_level);
 	if (f_v) {
-		cout << "hyperbolic_pair::unrank_line_L7 index=" << index
+		cout << "hyperbolic_pair::unrank_line_L7 "
+				"index=" << index
 				<< " p1=" << p1 << " p2=" << p2 << endl;
 	}
 }
@@ -1443,15 +1536,18 @@ long int hyperbolic_pair::rank_line_L7(
 	long int index;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L7 p1=" << p1 << " p2=" << p2 << endl;
+		cout << "hyperbolic_pair::rank_line_L7 "
+				"p1=" << p1 << " p2=" << p2 << endl;
 	}
 	index = p1;
 	if (f_v) {
-		cout << "hyperbolic_pair::rank_line_L7 p1=" << p1 << " p2=" << p2
+		cout << "hyperbolic_pair::rank_line_L7 "
+				"p1=" << p1 << " p2=" << p2
 				<< " index=" << index << endl;
 	}
 	if (index >= l7) {
-		cout << "hyperbolic_pair::rank_line_L7 index too large" << endl;
+		cout << "hyperbolic_pair::rank_line_L7 "
+				"index too large" << endl;
 	}
 	return index;
 }

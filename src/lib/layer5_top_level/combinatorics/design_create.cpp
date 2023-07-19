@@ -269,7 +269,8 @@ void design_create::init(
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.lint_matrix_read_csv(Descr->list_of_blocks_coded_from_file_fname,
+		Fio.Csv_file_support->lint_matrix_read_csv(
+				Descr->list_of_blocks_coded_from_file_fname,
 				set, m, n, verbose_level);
 
 
@@ -334,7 +335,7 @@ void design_create::init(
 		int m, k;
 		int *blocks;
 
-		Fio.int_matrix_read_csv(
+		Fio.Csv_file_support->int_matrix_read_csv(
 				Descr->list_of_blocks_from_file_fname,
 				blocks, m, k, verbose_level);
 

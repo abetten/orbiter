@@ -93,7 +93,8 @@ orthogonal_group::~orthogonal_group()
 	}
 }
 
-void orthogonal_group::init(orthogonal *O, int verbose_level)
+void orthogonal_group::init(
+		orthogonal *O, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -226,7 +227,8 @@ void orthogonal_group::Siegel_map_between_singular_points_hyperbolic(
 	}
 }
 
-void orthogonal_group::Siegel_Transformation(int *T,
+void orthogonal_group::Siegel_Transformation(
+		int *T,
 	long int rk_from, long int rk_to, long int root,
 	int verbose_level)
 // root is not perp to from and to.
@@ -258,7 +260,8 @@ void orthogonal_group::Siegel_Transformation(int *T,
 	}
 }
 
-void orthogonal_group::Siegel_Transformation2(int *T,
+void orthogonal_group::Siegel_Transformation2(
+		int *T,
 	long int rk_from, long int rk_to, long int root,
 	int *B, int *Bv, int *w, int *z, int *x,
 	int verbose_level)
@@ -317,7 +320,8 @@ void orthogonal_group::Siegel_Transformation2(int *T,
 	}
 }
 
-void orthogonal_group::Siegel_Transformation3(int *T,
+void orthogonal_group::Siegel_Transformation3(
+		int *T,
 	int *from, int *to, int *root,
 	int *B, int *Bv, int *w, int *z, int *x,
 	int verbose_level)
@@ -384,39 +388,46 @@ void orthogonal_group::Siegel_Transformation3(int *T,
 
 	if (f_vv) {
 		cout << "before perp, the matrix B is:" << endl;
-		Int_vec_print_integer_matrix(cout, B, O->Quadratic_form->n, O->Quadratic_form->n);
+		Int_vec_print_integer_matrix(cout,
+				B, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	O->F->Linear_algebra->perp(
-			O->Quadratic_form->n, 2, B, O->Quadratic_form->Gram_matrix, 0 /* verbose_level */);
+			O->Quadratic_form->n, 2, B, O->Quadratic_form->Gram_matrix,
+			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix B is:" << endl;
-		Int_vec_print_integer_matrix(cout, B, O->Quadratic_form->n, O->Quadratic_form->n);
+		Int_vec_print_integer_matrix(cout,
+				B, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	O->F->Linear_algebra->invert_matrix(
 			B, Bv, O->Quadratic_form->n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix Bv is:" << endl;
-		Int_vec_print_integer_matrix(cout, B, O->Quadratic_form->n, O->Quadratic_form->n);
+		Int_vec_print_integer_matrix(cout,
+				B, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	O->F->Linear_algebra->mult_matrix_matrix(
 			w, Bv, z, 1, O->Quadratic_form->n, O->Quadratic_form->n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z is:" << endl;
-		Int_vec_print_integer_matrix(cout, z, 1, O->Quadratic_form->n);
+		Int_vec_print_integer_matrix(cout,
+				z, 1, O->Quadratic_form->n);
 	}
 	z[0] = 0;
 	z[1] = 0;
 	if (f_vv) {
 		cout << "the coefficient vector z is:" << endl;
-		Int_vec_print_integer_matrix(cout, z, 1, O->Quadratic_form->n);
+		Int_vec_print_integer_matrix(cout,
+				z, 1, O->Quadratic_form->n);
 	}
 	O->F->Linear_algebra->mult_matrix_matrix(
 			z, B, x, 1, O->Quadratic_form->n, O->Quadratic_form->n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x is:" << endl;
-		Int_vec_print_integer_matrix(cout, x, 1, O->Quadratic_form->n);
+		Int_vec_print_integer_matrix(cout,
+				x, 1, O->Quadratic_form->n);
 	}
 	minus_one = O->F->negate(1);
 	for (i = 0; i < O->Quadratic_form->n; i++) {
@@ -424,12 +435,17 @@ void orthogonal_group::Siegel_Transformation3(int *T,
 	}
 	if (f_vv) {
 		cout << "the vector -x is:" << endl;
-		Int_vec_print_integer_matrix(cout, x, 1, O->Quadratic_form->n);
+		Int_vec_print_integer_matrix(cout,
+				x, 1, O->Quadratic_form->n);
 	}
-	make_Siegel_Transformation(T, x, B, O->Quadratic_form->n, O->Quadratic_form->Gram_matrix, false);
+	make_Siegel_Transformation(
+			T, x, B,
+			O->Quadratic_form->n, O->Quadratic_form->Gram_matrix,
+			false);
 	if (f_vv) {
 		cout << "the Siegel transformation is:" << endl;
-		Int_vec_print_integer_matrix(cout, T, O->Quadratic_form->n, O->Quadratic_form->n);
+		Int_vec_print_integer_matrix(cout,
+				T, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	if (f_v) {
 		cout << "orthogonal_group::Siegel_Transformation3 done" << endl;
@@ -483,7 +499,8 @@ void orthogonal_group::random_generator_for_orthogonal_group(
 			cout << "orthogonal_group::random_generator_for_orthogonal_group "
 					"choosing Siegel_transformation" << endl;
 		}
-		create_random_Siegel_transformation(Mtx, verbose_level /*- 2 */);
+		create_random_Siegel_transformation(
+				Mtx, verbose_level /*- 2 */);
 		if (f_action_is_semilinear) {
 			Mtx[O->Quadratic_form->n * O->Quadratic_form->n] = 0;
 		}
@@ -494,7 +511,8 @@ void orthogonal_group::random_generator_for_orthogonal_group(
 					"choosing orthogonal reflection" << endl;
 		}
 
-		create_random_orthogonal_reflection(Mtx, verbose_level - 2);
+		create_random_orthogonal_reflection(
+				Mtx, verbose_level - 2);
 		if (f_action_is_semilinear) {
 			Mtx[O->Quadratic_form->n * O->Quadratic_form->n] = 0;
 		}
@@ -504,7 +522,8 @@ void orthogonal_group::random_generator_for_orthogonal_group(
 			cout << "orthogonal_group::random_generator_for_orthogonal_group "
 					"choosing similarity" << endl;
 		}
-		create_random_similarity(Mtx, verbose_level - 2);
+		create_random_similarity(
+				Mtx, verbose_level - 2);
 		if (f_action_is_semilinear) {
 			Mtx[O->Quadratic_form->n * O->Quadratic_form->n] = 0;
 		}
@@ -514,7 +533,8 @@ void orthogonal_group::random_generator_for_orthogonal_group(
 			cout << "orthogonal_group::random_generator_for_orthogonal_group "
 					"choosing random similarity" << endl;
 		}
-		create_random_semisimilarity(Mtx, verbose_level - 2);
+		create_random_semisimilarity(
+				Mtx, verbose_level - 2);
 	}
 	if (f_v) {
 		cout << "orthogonal_group::random_generator_for_orthogonal_group "
@@ -564,7 +584,8 @@ void orthogonal_group::create_random_Siegel_transformation(
 		cout << "orthogonal_group::create_random_Siegel_transformation "
 				"rk_u=" << rk_u << endl;
 	}
-	O->Hyperbolic_pair->unrank_point(u, 1, rk_u, 0 /* verbose_level*/);
+	O->Hyperbolic_pair->unrank_point(
+			u, 1, rk_u, 0 /* verbose_level*/);
 	//Q_epsilon_unrank(*F, u, 1 /*stride*/, epsilon, d - 1,
 	// form_c1, form_c2, form_c3, rk_u);
 
@@ -613,8 +634,6 @@ void orthogonal_group::create_random_Siegel_transformation(
 				"before O->Quadratic_form->Siegel_Transformation" << endl;
 	}
 	O->Quadratic_form->Siegel_Transformation(
-			//O->Quadratic_form->epsilon, d - 1,
-			//O->Quadratic_form->form_c1, O->Quadratic_form->form_c2, O->Quadratic_form->form_c3,
 			Mtx, v, u, verbose_level - 2);
 	if (f_v) {
 		cout << "orthogonal_group::create_random_Siegel_transformation "
@@ -902,7 +921,8 @@ void orthogonal_group::create_random_orthogonal_reflection(
 					"before transform_form_matrix" << endl;
 		}
 
-		O->F->Linear_algebra->transform_form_matrix(Mtx,
+		O->F->Linear_algebra->transform_form_matrix(
+				Mtx,
 				O->Quadratic_form->Gram_matrix, new_Gram, d,
 				0 /* verbose_level */);
 
@@ -911,18 +931,21 @@ void orthogonal_group::create_random_orthogonal_reflection(
 					"after transform_form_matrix" << endl;
 		}
 
-		if (Sorting.int_vec_compare(O->Quadratic_form->Gram_matrix,
+		if (Sorting.int_vec_compare(
+				O->Quadratic_form->Gram_matrix,
 				new_Gram, d * d) != 0) {
 
 			cout << "create_random_orthogonal_reflection "
 					"The Gram matrix is not preserved" << endl;
 
 			cout << "Gram matrix:" << endl;
-			Int_vec_print_integer_matrix_width(cout, O->Quadratic_form->Gram_matrix,
+			Int_vec_print_integer_matrix_width(
+					cout, O->Quadratic_form->Gram_matrix,
 					d, d, d, O->F->log10_of_q);
 
 			cout << "transformed Gram matrix:" << endl;
-			Int_vec_print_integer_matrix_width(cout, new_Gram,
+			Int_vec_print_integer_matrix_width(
+					cout, new_Gram,
 					d, d, d, O->F->log10_of_q);
 			exit(1);
 
@@ -954,7 +977,8 @@ void orthogonal_group::make_orthogonal_reflection(
 	Qzv = O->F->negate(Qzv);
 
 	O->F->Linear_algebra->mult_vector_from_the_right(
-			O->Quadratic_form->Gram_matrix, z, ST_w, O->Quadratic_form->n, O->Quadratic_form->n);
+			O->Quadratic_form->Gram_matrix, z, ST_w,
+			O->Quadratic_form->n, O->Quadratic_form->n);
 
 	for (i = 0; i < O->Quadratic_form->n; i++) {
 		for (j = 0; j < O->Quadratic_form->n; j++) {
@@ -971,14 +995,16 @@ void orthogonal_group::make_orthogonal_reflection(
 
 	if (f_vv) {
 		cout << "orthogonal_group::make_orthogonal_reflection created:" << endl;
-		Int_vec_print_integer_matrix(cout, M, O->Quadratic_form->n, O->Quadratic_form->n);
+		Int_vec_print_integer_matrix(
+				cout, M, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	if (f_v) {
 		cout << "orthogonal_group::make_orthogonal_reflection done" << endl;
 	}
 }
 
-void orthogonal_group::make_Siegel_Transformation(int *M, int *v, int *u,
+void orthogonal_group::make_Siegel_Transformation(
+		int *M, int *v, int *u,
 	int n, int *Gram, int verbose_level)
 // if u is singular and v \in \la u \ra^\perp, then
 // \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
@@ -1122,8 +1148,10 @@ void orthogonal_group::Siegel_move_backward_by_index(
 		return;
 	}
 
-	O->Hyperbolic_pair->unrank_point(Sv1, 1, rk1, verbose_level - 1);
-	O->Hyperbolic_pair->unrank_point(Sv2, 1, rk2, verbose_level - 1);
+	O->Hyperbolic_pair->unrank_point(
+			Sv1, 1, rk1, verbose_level - 1);
+	O->Hyperbolic_pair->unrank_point(
+			Sv2, 1, rk2, verbose_level - 1);
 
 	if (f_vv) {
 		cout << "orthogonal_group::Siegel_move_backward_by_index" << endl;
@@ -1297,7 +1325,8 @@ void orthogonal_group::Siegel_move_backward(
 			0 /* verbose_level */);
 
 	O->F->Linear_algebra->mult_matrix_matrix(
-			v3, O->T2, v4, 1, O->Quadratic_form->n - 2, O->Quadratic_form->n - 2,
+			v3, O->T2, v4, 1,
+			O->Quadratic_form->n - 2, O->Quadratic_form->n - 2,
 			0 /* verbose_level */);
 
 	v4[O->Quadratic_form->n - 2] = v3[O->Quadratic_form->n - 2];
@@ -1340,8 +1369,10 @@ void orthogonal_group::move_points_by_ranks_in_place(
 				verbose_level - 1);
 	}
 
-	move_points(pt_from, pt_to,
-		nb, input_coords, output_coords, verbose_level);
+	move_points(
+			pt_from, pt_to,
+		nb, input_coords, output_coords,
+		verbose_level);
 
 	for (i = 0; i < nb; i++) {
 		ranks[i] = O->Hyperbolic_pair->rank_point(
@@ -1380,8 +1411,10 @@ void orthogonal_group::move_points_by_ranks(
 				0 /*verbose_level - 1*/);
 	}
 
-	move_points(pt_from, pt_to,
-		nb, input_coords, output_coords, verbose_level);
+	move_points(
+			pt_from, pt_to,
+		nb, input_coords, output_coords,
+		verbose_level);
 
 	for (i = 0; i < nb; i++) {
 		output_ranks[i] = O->Hyperbolic_pair->rank_point(
@@ -1423,7 +1456,8 @@ void orthogonal_group::move_points(
 	if (pt_from != 0) {
 
 		tmp_coords = NEW_int(O->Quadratic_form->n * nb);
-		root = find_root(pt_from, verbose_level - 2);
+		root = find_root(
+				pt_from, verbose_level - 2);
 
 		Siegel_Transformation(T,
 				pt_from /* from */,
@@ -1431,7 +1465,8 @@ void orthogonal_group::move_points(
 				root /* root */,
 				verbose_level - 2);
 
-		O->F->Linear_algebra->mult_matrix_matrix(input_coords,
+		O->F->Linear_algebra->mult_matrix_matrix(
+				input_coords,
 				T, tmp_coords, nb, O->Quadratic_form->n, O->Quadratic_form->n,
 				0 /* verbose_level */);
 		input_coords2 = tmp_coords;
@@ -1444,7 +1479,8 @@ void orthogonal_group::move_points(
 		cout << "orthogonal_group::move_points "
 				"before find_root" << endl;
 	}
-	root = find_root(pt_to, verbose_level - 2);
+	root = find_root(
+			pt_to, verbose_level - 2);
 	if (f_v) {
 		cout << "orthogonal_group::move_points "
 				"after find_root" << endl;
@@ -1487,7 +1523,8 @@ void orthogonal_group::move_points(
 }
 
 
-void orthogonal_group::test_Siegel(int index, int verbose_level)
+void orthogonal_group::test_Siegel(
+		int index, int verbose_level)
 {
 	int rk1, rk2, rk1_subspace, rk2_subspace, root, j, rk3, cnt, u, t2;
 
@@ -1495,7 +1532,8 @@ void orthogonal_group::test_Siegel(int index, int verbose_level)
 			5, 0, verbose_level);
 	cout << 0 << " : " << rk1 << " : ";
 	O->Hyperbolic_pair->unrank_point(
-			O->Hyperbolic_pair->v1, 1, rk1, verbose_level - 1);
+			O->Hyperbolic_pair->v1, 1, rk1,
+			verbose_level - 1);
 	Int_vec_print(cout, O->Hyperbolic_pair->v1, O->Quadratic_form->n);
 	cout << endl;
 
@@ -1503,28 +1541,35 @@ void orthogonal_group::test_Siegel(int index, int verbose_level)
 			5, index, verbose_level);
 	cout << index << " : " << rk2 << " : ";
 	O->Hyperbolic_pair->unrank_point(
-			O->Hyperbolic_pair->v2, 1, rk2, verbose_level - 1);
+			O->Hyperbolic_pair->v2, 1, rk2,
+			verbose_level - 1);
 	Int_vec_print(cout, O->Hyperbolic_pair->v2, O->Quadratic_form->n);
 	cout << endl;
 
 	rk1_subspace = O->subspace->Hyperbolic_pair->rank_point(
-			O->Hyperbolic_pair->v1, 1, verbose_level - 1);
+			O->Hyperbolic_pair->v1, 1,
+			verbose_level - 1);
 	rk2_subspace = O->subspace->Hyperbolic_pair->rank_point(
-			O->Hyperbolic_pair->v2, 1, verbose_level - 1);
+			O->Hyperbolic_pair->v2, 1,
+			verbose_level - 1);
 	cout << "rk1_subspace=" << rk1_subspace << endl;
 	cout << "rk2_subspace=" << rk2_subspace << endl;
 
 	root = O->subspace->Hyperbolic_pair->find_root_parabolic(
-			rk2_subspace, verbose_level);
+			rk2_subspace,
+			verbose_level);
 	O->subspace->Orthogonal_group->Siegel_Transformation(O->T1,
-			rk1_subspace, rk2_subspace, root, verbose_level);
+			rk1_subspace, rk2_subspace, root,
+			verbose_level);
 
 	cout << "Siegel map takes 1st point to" << endl;
 	O->F->Linear_algebra->mult_matrix_matrix(
 			O->Hyperbolic_pair->v1, O->T1,
-			O->Hyperbolic_pair->v3, 1, O->Quadratic_form->n - 2, O->Quadratic_form->n - 2,
+			O->Hyperbolic_pair->v3, 1,
+			O->Quadratic_form->n - 2, O->Quadratic_form->n - 2,
 			0 /* verbose_level */);
-	Int_vec_print(cout, O->Hyperbolic_pair->v3, O->Quadratic_form->n - 2);
+	Int_vec_print(
+			cout, O->Hyperbolic_pair->v3, O->Quadratic_form->n - 2);
 	cout << endl;
 
 	cnt = 0;
@@ -1540,7 +1585,8 @@ void orthogonal_group::test_Siegel(int index, int verbose_level)
 		//rk3 = type_and_index_to_point_rk(t2, j);
 		//unrank_point(v3, 1, rk3);
 		rk3 = O->Hyperbolic_pair->rank_point(
-				O->Hyperbolic_pair->v3, 1, verbose_level - 1);
+				O->Hyperbolic_pair->v3, 1,
+				verbose_level - 1);
 
 		u = O->Quadratic_form->evaluate_bilinear_form(
 				O->Hyperbolic_pair->v1, O->Hyperbolic_pair->v3, 1);
@@ -1556,13 +1602,16 @@ void orthogonal_group::test_Siegel(int index, int verbose_level)
 		Int_vec_print(cout, O->Hyperbolic_pair->v3, O->Quadratic_form->n);
 		cout << " to ";
 		O->F->Linear_algebra->mult_matrix_matrix(
-				O->Hyperbolic_pair->v3, O->T1, O->Hyperbolic_pair->v_tmp, 1, O->Quadratic_form->n - 2, O->Quadratic_form->n - 2,
+				O->Hyperbolic_pair->v3, O->T1,
+				O->Hyperbolic_pair->v_tmp, 1,
+				O->Quadratic_form->n - 2, O->Quadratic_form->n - 2,
 				0 /* verbose_level */);
 
 
 		O->Hyperbolic_pair->v_tmp[O->Quadratic_form->n - 2] = O->Hyperbolic_pair->v3[O->Quadratic_form->n - 2];
 		O->Hyperbolic_pair->v_tmp[O->Quadratic_form->n - 1] = O->Hyperbolic_pair->v3[O->Quadratic_form->n - 1];
-		Int_vec_print(cout, O->Hyperbolic_pair->v_tmp, O->Quadratic_form->n);
+		Int_vec_print(
+				cout, O->Hyperbolic_pair->v_tmp, O->Quadratic_form->n);
 
 
 		//cout << "find_minimal_point_on_line " << endl;

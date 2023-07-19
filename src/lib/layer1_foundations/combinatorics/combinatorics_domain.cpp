@@ -3216,7 +3216,8 @@ void combinatorics_domain::create_random_permutation(int deg,
 		string label;
 
 		label.assign("perm");
-		Fio.int_vec_write_csv(P, deg, fname_csv, label);
+		Fio.Csv_file_support->int_vec_write_csv(
+				P, deg, fname_csv, label);
 
 		FREE_int(P);
 	}
@@ -3265,7 +3266,8 @@ void combinatorics_domain::create_random_k_subsets(int n, int k, int nb,
 			unrank_k_subset(rk, T + i * k, n, k);
 		}
 
-		Fio.int_matrix_write_csv(fname_csv, T, nb, k);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_csv, T, nb, k);
 
 		if (f_v) {
 			cout << "combinatorics_domain::create_random_k_subsets written file "

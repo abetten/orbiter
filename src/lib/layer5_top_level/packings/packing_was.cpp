@@ -814,7 +814,8 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 		int *M;
 		int m, n, i;
 
-		Fio.int_matrix_read_csv(fname_good_orbits, M, m, n,
+		Fio.Csv_file_support->int_matrix_read_csv(
+				fname_good_orbits, M, m, n,
 				0 /* verbose_level */);
 
 		nb_good_orbits = m;
@@ -876,7 +877,8 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 		Vec[1] = Good_orbit_len;
 
 
-		Fio.lint_vec_array_write_csv(2 /* nb_vecs */, Vec,
+		Fio.Csv_file_support->lint_vec_array_write_csv(
+				2 /* nb_vecs */, Vec,
 				nb_good_orbits, fname_good_orbits, Col_labels);
 		cout << "Written file " << fname_good_orbits
 				<< " of size " << Fio.file_size(fname_good_orbits) << endl;
@@ -966,7 +968,7 @@ void packing_was::reduce_spreads(int verbose_level)
 		cout << "packing_was::reduce_spreads "
 				"fname_original_idx = " << fname_reduced_spread_original_idx << endl;
 	}
-	Fio.int_matrix_write_csv(
+	Fio.Csv_file_support->int_matrix_write_csv(
 			fname_reduced_spread_original_idx,
 			good_spreads, nb_good_spreads, 1);
 
@@ -1894,7 +1896,7 @@ void packing_was::export_reduced_spread_orbits_csv(
 				+ std::to_string(orbit_length) + ".csv";
 
 
-		Fio.lint_matrix_write_csv(
+		Fio.Csv_file_support->lint_matrix_write_csv(
 				fname,
 				spreads_in_reduced_orbits_by_type,
 				nb_orbits, orbit_length);

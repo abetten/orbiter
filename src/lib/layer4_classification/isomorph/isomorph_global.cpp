@@ -213,7 +213,8 @@ void isomorph_global::read_statistic_files(
 		string fname_collected;
 
 		fname_collected.assign("stats_collected.csv");
-		Fio.int_matrix_write_csv_with_labels(fname_collected,
+		Fio.Csv_file_support->int_matrix_write_csv_with_labels(
+				fname_collected,
 				Stats_short, Nb_cases, 6, Column_label);
 	
 		cout << "Written file " << fname_collected << " of size "
@@ -1265,7 +1266,7 @@ static void callback_compute_down_orbits_worker(
 		string fname;
 
 		fname.assign("Nb_down_orbits.csv");
-		Fio.int_matrix_write_csv(
+		Fio.Csv_file_support->int_matrix_write_csv(
 				fname, Nb_orbits, Iso->Folding->Reps->count, 2);
 	}
 
@@ -1291,7 +1292,7 @@ static void callback_compute_down_orbits_worker(
 		string fname;
 
 		fname.assign("Down_identify.csv");
-		Fio.int_matrix_write_csv(
+		Fio.Csv_file_support->int_matrix_write_csv(
 				fname, Down_identify, nb_special_orbits, 3);
 	}
 

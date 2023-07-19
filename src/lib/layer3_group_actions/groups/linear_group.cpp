@@ -1509,8 +1509,10 @@ void linear_group::report(
 			Int_matrix_print(Table, n, n);
 
 			fname_group_table = label + "_group_table.csv";
-			Fio.int_matrix_write_csv(fname_group_table, Table, n, n);
-			cout << "Written file " << fname_group_table << " of size " << Fio.file_size(fname_group_table) << endl;
+			Fio.Csv_file_support->int_matrix_write_csv(
+					fname_group_table, Table, n, n);
+			cout << "Written file " << fname_group_table << " of size "
+					<< Fio.file_size(fname_group_table) << endl;
 
 			{
 				l1_interfaces::latex_interface L;
@@ -1525,7 +1527,8 @@ void linear_group::report(
 				int f_override_action = false;
 				actions::action *A_special = NULL;
 
-				H->print_all_group_elements_tex(ost, f_with_permutation, f_override_action, A_special);
+				H->print_all_group_elements_tex(ost,
+						f_with_permutation, f_override_action, A_special);
 
 			}
 

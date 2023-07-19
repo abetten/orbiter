@@ -527,7 +527,7 @@ void blt_set_classify::create_graphs(
 				"writing file "
 				<< fname_time << endl;
 	}
-	Fio.lint_matrix_write_csv(
+	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname_time, Time, time_idx, 2);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs "
@@ -536,7 +536,7 @@ void blt_set_classify::create_graphs(
 				<< Fio.file_size(fname_time) << endl;
 	}
 
-	Fio.lint_matrix_write_csv(
+	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname_list_of_cases,
 			list_of_cases, nb_of_cases, 1);
 	if (f_v) {

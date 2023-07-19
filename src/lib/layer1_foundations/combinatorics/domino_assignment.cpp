@@ -852,9 +852,11 @@ void domino_assignment::read_photo(std::string &photo_fname, int verbose_level)
 
 		fname_m = photo_fname + "_m.csv";
 
-		Fio.int_matrix_write_csv(fname_m, mphoto, M, N);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_m, mphoto, M, N);
 		if (f_v) {
-			cout << "Written file " << fname_m << " of size " << Fio.file_size(fname_m) << endl;
+			cout << "Written file " << fname_m << " of size "
+					<< Fio.file_size(fname_m) << endl;
 		}
 	}
 

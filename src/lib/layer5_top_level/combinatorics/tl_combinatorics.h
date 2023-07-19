@@ -844,7 +844,7 @@ public:
 			int verbose_level);
 	void extract_solutions_by_index(
 			int nb_sol, int Index_width, int *Index,
-			std::string &ouput_fname_csv,
+			std::string &output_fname_csv,
 			int verbose_level);
 	void make_reduced_design_table(
 			long int *set, int set_sz,

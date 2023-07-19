@@ -316,7 +316,8 @@ void set_of_sets::init_from_csv_file(
 	int m, n;
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.lint_matrix_read_csv(fname, Data, m, n, verbose_level);
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname, Data, m, n, verbose_level);
 
 	if (f_v) {
 		cout << "set_of_sets::init_from_csv_file "
@@ -1432,7 +1433,8 @@ void set_of_sets::save_constant_size_csv(
 			M[i * nb_cols + j] = Sets[i][j];
 		}
 	}
-	Fio.lint_matrix_write_csv(fname, M, nb_sets, nb_cols);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, M, nb_sets, nb_cols);
 	FREE_lint(M);
 	if (f_v) {
 		cout << "set_of_sets::save_constant_size_csv done" << endl;

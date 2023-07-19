@@ -1322,7 +1322,8 @@ void projective_space_plane::determine_nonconical_six_subsets(
 		std::string fname;
 
 		fname.assign("set_system.csv");
-		Fio.int_matrix_write_csv(fname, System, nb_idx, 6);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, System, nb_idx, 6);
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 

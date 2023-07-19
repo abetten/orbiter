@@ -1,5 +1,5 @@
 /*
- * error_pattern.cpp
+ * error_pattern_generator.cpp
  *
  *  Created on: Jun 22, 2023
  *      Author: betten
@@ -19,7 +19,7 @@ namespace layer1_foundations {
 namespace coding_theory {
 
 
-error_pattern::error_pattern()
+error_pattern_generator::error_pattern_generator()
 {
 	Crc_object = NULL;
 	k = 0;
@@ -30,7 +30,7 @@ error_pattern::error_pattern()
 	Error_in_bytes = NULL;
 }
 
-error_pattern::~error_pattern()
+error_pattern_generator::~error_pattern_generator()
 {
 	k = 0;
 	if (f_used) {
@@ -50,11 +50,11 @@ error_pattern::~error_pattern()
 	}
 }
 
-void error_pattern::init(crc_object *Crc_object,
+void error_pattern_generator::init(crc_object *Crc_object,
 		int k, int verbose_level)
 {
-	error_pattern::Crc_object = Crc_object;
-	error_pattern::k = k;
+	error_pattern_generator::Crc_object = Crc_object;
+	error_pattern_generator::k = k;
 
 	f_used = NEW_int(Crc_object->Len_total_in_symbols);
 	A = NEW_int(k);
@@ -63,7 +63,7 @@ void error_pattern::init(crc_object *Crc_object,
 	Error_in_bytes = (unsigned char *) NEW_char(Crc_object->Len_total_in_bytes);
 }
 
-long int error_pattern::number_of_bit_error_patters(
+long int error_pattern_generator::number_of_bit_error_patters(
 		int wt,
 		int verbose_level)
 // binomial(Len_total_in_bits, wt)
@@ -71,7 +71,7 @@ long int error_pattern::number_of_bit_error_patters(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "error_pattern::number_of_bit_error_patters" << endl;
+		cout << "error_pattern_generator::number_of_bit_error_patters" << endl;
 	}
 
 	combinatorics::combinatorics_domain Combi;
@@ -85,21 +85,25 @@ long int error_pattern::number_of_bit_error_patters(
 	nb = N.as_lint();
 
 	if (f_v) {
-		cout << "error_pattern::number_of_bit_error_patters: n = Crc_object->Len_total_in_bits = " << Crc_object->Len_total_in_bits << endl;
-		cout << "error_pattern::number_of_bit_error_patters: k = wt = " << wt << endl;
-		cout << "error_pattern::number_of_bit_error_patters: n_choose_k = " << N << endl;
-		cout << "error_pattern::number_of_bit_error_patters: n_choose_k lint = " << nb << endl;
+		cout << "error_pattern::number_of_bit_error_patters: "
+				"n = Crc_object->Len_total_in_bits = " << Crc_object->Len_total_in_bits << endl;
+		cout << "error_pattern::number_of_bit_error_patters: "
+				"k = wt = " << wt << endl;
+		cout << "error_pattern::number_of_bit_error_patters: "
+				"n_choose_k = " << N << endl;
+		cout << "error_pattern::number_of_bit_error_patters: "
+				"n_choose_k lint = " << nb << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "error_pattern::number_of_bit_error_patters done" << endl;
+		cout << "error_pattern_generator::number_of_bit_error_patters done" << endl;
 	}
 	return nb;
 }
 
-void error_pattern::first_bit_error_pattern_of_given_weight(
+void error_pattern_generator::first_bit_error_pattern_of_given_weight(
 		combinatorics::combinatorics_domain &Combi,
 		data_structures::algorithms &Algo,
 		data_structures::data_structures_global &DataStructures,
@@ -109,7 +113,7 @@ void error_pattern::first_bit_error_pattern_of_given_weight(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "error_pattern::first_bit_error_pattern_of_given_weight" << endl;
+		cout << "error_pattern_generator::first_bit_error_pattern_of_given_weight" << endl;
 	}
 	Combi.first_k_subset(A, Crc_object->Len_total_in_bits, wt);
 	Algo.uchar_zero(Error_in_bytes, Crc_object->Len_total_in_bytes);
@@ -122,7 +126,7 @@ void error_pattern::first_bit_error_pattern_of_given_weight(
 	}
 }
 
-int error_pattern::next_bit_error_pattern_of_given_weight(
+int error_pattern_generator::next_bit_error_pattern_of_given_weight(
 		combinatorics::combinatorics_domain &Combi,
 		data_structures::algorithms &Algo,
 		data_structures::data_structures_global &DataStructures,
@@ -132,7 +136,7 @@ int error_pattern::next_bit_error_pattern_of_given_weight(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "error_pattern::first_bit_error_pattern_of_given_weight" << endl;
+		cout << "error_pattern_generator::first_bit_error_pattern_of_given_weight" << endl;
 	}
 	if (!Combi.next_k_subset(A, Crc_object->Len_total_in_bits, wt)) {
 		return false;
@@ -154,13 +158,13 @@ int error_pattern::next_bit_error_pattern_of_given_weight(
 
 
 
-void error_pattern::create_error_pattern(
+void error_pattern_generator::create_error_pattern(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "error_pattern::create_error_pattern" << endl;
+		cout << "error_pattern_generator::create_error_pattern" << endl;
 	}
 
 	orbiter_kernel_system::os_interface Os;

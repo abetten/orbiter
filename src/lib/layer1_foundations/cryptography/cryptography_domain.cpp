@@ -825,7 +825,8 @@ void cryptography_domain::make_2D_plot(
 	fname = "orbit_cnt" + std::to_string(cnt) + "_m" + std::to_string(m)
 			+ "_a" + std::to_string(a) + "_c" + std::to_string(c) + ".csv";
 
-	Fio.int_matrix_write_csv(fname, M, m, m);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, m, m);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -887,7 +888,8 @@ void cryptography_domain::do_random(
 	string label;
 
 	label.assign("R");
-	Fio.int_vec_write_csv(R, random_nb, fname_csv, label);
+	Fio.Csv_file_support->int_vec_write_csv(
+			R, random_nb, fname_csv, label);
 
 	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
 
@@ -1322,7 +1324,8 @@ void cryptography_domain::do_EC_points(
 		orbiter_kernel_system::file_io Fio;
 
 		fname = label + "_points_xy.csv";
-		Fio.int_matrix_write_csv(fname, M, F->q, F->q);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, M, F->q, F->q);
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 
@@ -1355,7 +1358,8 @@ void cryptography_domain::do_EC_points(
 		orbiter_kernel_system::file_io Fio;
 
 		fname = label + "_points_xy_affine_pts.csv";
-		Fio.int_matrix_write_csv(fname, M, cnt, 2);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, M, cnt, 2);
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 
@@ -3260,7 +3264,8 @@ void cryptography_domain::do_smallest_primitive_root_interval(
 	fname = "primitive_element_table_" + std::to_string(p_min) + "_" + std::to_string(p_max) + ".csv";
 
 	fname.assign(str);
-	Fio.lint_matrix_write_csv(fname, T, Table.size(), 2);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, T, Table.size(), 2);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -3323,7 +3328,8 @@ void cryptography_domain::do_number_of_primitive_roots_interval(
 	fname = "table_number_of_pe_" + std::to_string(p_min) + "_" + std::to_string(p_max) + ".csv";
 
 	fname.assign(str);
-	Fio.lint_matrix_write_csv(fname, T, Table.size(), 2);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, T, Table.size(), 2);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 

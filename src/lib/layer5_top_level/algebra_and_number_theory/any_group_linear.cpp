@@ -190,7 +190,8 @@ void any_group::isomorphism_Klein_quadric(
 
 	int *M;
 	int m, n;
-	Fio.int_matrix_read_csv(fname, M, m, n, verbose_level);
+	Fio.Csv_file_support->int_matrix_read_csv(
+			fname, M, m, n, verbose_level);
 
 	cout << "Read a set of size " << m << endl;
 

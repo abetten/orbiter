@@ -296,12 +296,13 @@ class interface_coding_theory {
 	int random_noise_of_burst_type_in_bitmap_file_denominator;
 	int random_noise_of_burst_type_in_bitmap_file_burst_length;
 
+#if 0
 	int f_crc_test;
 	std::string crc_test_type;
 	long int crc_test_block_length;
 	long int crc_test_N;
 	int crc_test_k;
-
+#endif
 
 
 public:
@@ -1223,6 +1224,9 @@ public:
 	poset_classification::poset_classification_activity_description
 		*Poset_classification_activity;
 
+	int f_crc_code;
+	coding_theory::crc_code_description *Crc_code_description;
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -1285,6 +1289,7 @@ public:
 	void definition_of_orbits(int verbose_level);
 	void definition_of_poset_classification_control(int verbose_level);
 	void definition_of_poset_classification_activity(int verbose_level);
+	void definition_of_crc_code(int verbose_level);
 
 
 };

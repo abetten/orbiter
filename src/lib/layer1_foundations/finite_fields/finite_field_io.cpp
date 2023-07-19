@@ -485,7 +485,8 @@ void finite_field_io::addition_table_save_csv(
 	std::string fname;
 
 	make_fname_addition_table_csv(fname);
-	Fio.int_matrix_write_csv(fname, M, F->q, F->q);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, F->q, F->q);
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
@@ -510,9 +511,11 @@ void finite_field_io::multiplication_table_save_csv(
 	std::string fname;
 
 	make_fname_multiplication_table_csv(fname);
-	Fio.int_matrix_write_csv(fname, M, F->q, F->q);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, F->q, F->q);
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 	}
 	FREE_int(M);
 }
@@ -530,7 +533,8 @@ void finite_field_io::addition_table_reordered_save_csv(
 	}
 	else {
 
-		cout << "finite_field_io::addition_table_reordered_save_csv !f_has_table, skipping" << endl;
+		cout << "finite_field_io::addition_table_reordered_save_csv "
+				"!f_has_table, skipping" << endl;
 	}
 
 

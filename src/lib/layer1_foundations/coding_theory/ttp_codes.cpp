@@ -197,7 +197,8 @@ void ttp_codes::twisted_tensor_product_codes(
 	if (f_v) {
 		cout << "ttp_codes::twisted_tensor_product_codes "
 				"H_subfield:" << endl;
-		Int_vec_print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Int_vec_print_integer_matrix_width(
+				cout, H_subfield, m, n, n, 2);
 		Fq->Io->latex_matrix(cout,
 				f_elements_exponential,
 				symbol_for_print_subfield,
@@ -329,7 +330,8 @@ void ttp_codes::create_matrix_M(
 		//exponents[7] = q2 + q + 1;
 	}
 	else {
-		cout << "ttp_codes::create_matrix_M please specify the construction using option -A or -B" << endl;
+		cout << "ttp_codes::create_matrix_M "
+				"please specify the construction using option -A or -B" << endl;
 		exit(1);
 	}
 
@@ -1025,9 +1027,11 @@ void ttp_codes::do_tensor(
 	int r;
 	int beta, beta_q;
 	int f_elements_exponential = true;
-	std::string symbol_for_print("\\alpha");
-	std::string symbol_for_print_subfield("\\omega");
+	std::string symbol_for_print;
+	std::string symbol_for_print_subfield;
 
+	symbol_for_print = "\\alpha";
+	symbol_for_print_subfield = "\\omega";
 	coding_theory::coding_theory_domain Codes;
 
 

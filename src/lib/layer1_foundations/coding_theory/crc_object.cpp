@@ -24,6 +24,9 @@ namespace coding_theory {
 
 crc_object::crc_object()
 {
+
+	Descr = NULL;
+
 	Crc_object_type = t_crc_unknown;
 
 	Len_total_in_symbols = 0;
@@ -66,15 +69,20 @@ crc_object::~crc_object()
 	}
 }
 
-void crc_object::init(std::string &type,
-		int block_length, int verbose_level)
+void crc_object::init(crc_code_description *Descr, int verbose_level)
 // block_length is needed for crc32
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "crc_object::init" << endl;
-		cout << "crc_object::init block_length = " << block_length << endl;
+	}
+
+
+	crc_object::Descr = Descr;
+
+	if (Descr->f_block_length) {
+		cout << "crc_object::init block_length = " << Descr->block_length << endl;
 	}
 
 
@@ -82,7 +90,7 @@ void crc_object::init(std::string &type,
 
 
 
-	if (ST.stringcmp(type, "alfa") == 0) {
+	if (ST.stringcmp(Descr->type, "alfa") == 0) {
 
 		Crc_object_type = t_crc_alfa;
 		Len_total_in_symbols = 771;
@@ -94,7 +102,7 @@ void crc_object::init(std::string &type,
 		label_tex = "Alfa";
 
 	}
-	else if (ST.stringcmp(type, "bravo") == 0) {
+	else if (ST.stringcmp(Descr->type, "bravo") == 0) {
 
 		Crc_object_type = t_crc_bravo;
 		Len_total_in_symbols = 771;
@@ -106,7 +114,7 @@ void crc_object::init(std::string &type,
 		label_tex = "Bravo";
 
 	}
-	else if (ST.stringcmp(type, "charlie") == 0) {
+	else if (ST.stringcmp(Descr->type, "charlie") == 0) {
 
 		Crc_object_type = t_crc_charlie;
 		Len_total_in_symbols = 771;
@@ -118,7 +126,7 @@ void crc_object::init(std::string &type,
 		label_tex = "Charlie";
 
 	}
-	else if (ST.stringcmp(type, "Delta") == 0) {
+	else if (ST.stringcmp(Descr->type, "Delta") == 0) {
 
 		Crc_object_type = t_crc_Delta;
 		Len_total_in_symbols = 51;
@@ -130,7 +138,7 @@ void crc_object::init(std::string &type,
 		label_tex = "Delta";
 
 	}
-	else if (ST.stringcmp(type, "Echo") == 0) {
+	else if (ST.stringcmp(Descr->type, "Echo") == 0) {
 
 		Crc_object_type = t_crc_Echo;
 		Len_total_in_symbols = 51;
@@ -142,7 +150,7 @@ void crc_object::init(std::string &type,
 		label_tex = "Echo";
 
 	}
-	else if (ST.stringcmp(type, "Foxtrot") == 0) {
+	else if (ST.stringcmp(Descr->type, "Foxtrot") == 0) {
 
 		Crc_object_type = t_crc_Foxtrot;
 		Len_total_in_symbols = 15;
@@ -154,10 +162,10 @@ void crc_object::init(std::string &type,
 		label_tex = "Foxtrot";
 
 	}
-	else if (ST.stringcmp(type, "crc32") == 0) {
+	else if (ST.stringcmp(Descr->type, "crc32") == 0) {
 
 		Crc_object_type = t_crc_crc32;
-		block_length_in_bytes = block_length;
+		block_length_in_bytes = Descr->block_length;
 		Len_total_in_symbols = block_length_in_bytes * 8;
 		Len_check_in_symbols = 32;
 		symbol_set_size_log = 1;
@@ -167,10 +175,10 @@ void crc_object::init(std::string &type,
 		label_tex = "crc32";
 
 	}
-	else if (ST.stringcmp(type, "crc16") == 0) {
+	else if (ST.stringcmp(Descr->type, "crc16") == 0) {
 
 		Crc_object_type = t_crc_crc16;
-		block_length_in_bytes = block_length;
+		block_length_in_bytes = Descr->block_length;
 		Len_total_in_symbols = block_length_in_bytes * 8;
 		Len_check_in_symbols = 16;
 		symbol_set_size_log = 1;
@@ -180,10 +188,10 @@ void crc_object::init(std::string &type,
 		label_tex = "crc16";
 
 	}
-	else if (ST.stringcmp(type, "SuperFastHash32") == 0) {
+	else if (ST.stringcmp(Descr->type, "SuperFastHash32") == 0) {
 
 		Crc_object_type = t_crc_SuperFastHash32;
-		block_length_in_bytes = block_length;
+		block_length_in_bytes = Descr->block_length;
 		Len_total_in_symbols = block_length_in_bytes * 8;
 		Len_check_in_symbols = 32;
 		symbol_set_size_log = 1;
@@ -195,7 +203,7 @@ void crc_object::init(std::string &type,
 	}
 	else {
 		cout << "crc_object::init "
-				"the crc type is unrecognized: " << type << endl;
+				"the crc type is unrecognized: " << Descr->type << endl;
 		exit(1);
 	}
 

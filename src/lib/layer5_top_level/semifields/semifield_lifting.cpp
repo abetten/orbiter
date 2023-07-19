@@ -2858,7 +2858,8 @@ void semifield_lifting::read_level_info_file(int verbose_level)
 		exit(1);
 		}
 
-	Fio.lint_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname, M, m, n, 0 /* verbose_level */);
 		// Row,Po,So,Mo,Go,Pt
 
 	nb_orbits = m;

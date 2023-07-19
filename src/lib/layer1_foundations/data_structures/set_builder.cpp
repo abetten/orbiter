@@ -160,7 +160,8 @@ void set_builder::init(set_builder_description *Descr,
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.lint_matrix_read_csv(Descr->file_name, set, m, n, verbose_level);
+		Fio.Csv_file_support->lint_matrix_read_csv(
+				Descr->file_name, set, m, n, verbose_level);
 		if (f_v) {
 			cout << "set_builder::init read a csv file of size " << m << " x " << n << endl;
 		}
@@ -169,7 +170,8 @@ void set_builder::init(set_builder_description *Descr,
 	}
 	else if (Descr->f_file_orbiter_format) {
 		if (f_v) {
-			cout << "set_builder::init -file_orbiter_format " << Descr->file_orbiter_format_name << endl;
+			cout << "set_builder::init -file_orbiter_format "
+					<< Descr->file_orbiter_format_name << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 

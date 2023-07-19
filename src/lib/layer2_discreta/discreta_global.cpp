@@ -67,7 +67,8 @@ void the_end(int t0)
 
 		mem_usage = Os.os_memory_usage();
 		fname.assign("memory_usage.csv");
-		Fio.int_matrix_write_csv(fname, &mem_usage, 1, 1);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, &mem_usage, 1, 1);
 	}
 	if (f_v) {
 		 cout << "the_end done" << endl;

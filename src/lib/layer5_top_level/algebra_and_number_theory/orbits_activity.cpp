@@ -470,7 +470,7 @@ void orbits_activity::do_export_levels(int orbit_idx, int verbose_level)
 
 			label = "lvl" + std::to_string(i);
 
-			Fio.lint_vec_write_csv(
+			Fio.Csv_file_support->lint_vec_write_csv(
 					SoS->Sets[i], SoS->Set_size[i],
 					fname, label);
 
@@ -591,7 +591,8 @@ void orbits_activity::do_draw_tree(int verbose_level)
 		fname_full = fname + "_orbit_elements.csv";
 
 
-		Fio.vector_write_csv(fname_full, Orb);
+		Fio.Csv_file_support->vector_write_csv(
+				fname_full, Orb);
 		if (f_v) {
 			cout << "Written file " << fname_full << " of size "
 					<< Fio.file_size(fname_full) << endl;

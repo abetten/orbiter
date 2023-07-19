@@ -228,7 +228,7 @@ void create_graph::init(
 		int *M;
 		int m, n;
 
-		Fio.int_matrix_read_csv_no_border(
+		Fio.Csv_file_support->int_matrix_read_csv_no_border(
 				description->fname, M, m, n, verbose_level);
 		N = n;
 		Adj = M;
@@ -253,7 +253,7 @@ void create_graph::init(
 		int m, n;
 		int i;
 
-		Fio.int_matrix_read_csv(
+		Fio.Csv_file_support->int_matrix_read_csv(
 				description->load_adjacency_matrix_from_csv_and_select_value_fname,
 				M, m, n, verbose_level);
 

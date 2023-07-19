@@ -110,10 +110,12 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 		int m2, n2;
 		int len1, len2;
 
-		Fio.int_matrix_read_csv(Descr->compare_files_of_packings_fname1, M1,
+		Fio.Csv_file_support->int_matrix_read_csv(
+				Descr->compare_files_of_packings_fname1, M1,
 				m1, n1, verbose_level);
 
-		Fio.int_matrix_read_csv(Descr->compare_files_of_packings_fname2, M2,
+		Fio.Csv_file_support->int_matrix_read_csv(
+				Descr->compare_files_of_packings_fname2, M2,
 				m2, n2, verbose_level);
 
 

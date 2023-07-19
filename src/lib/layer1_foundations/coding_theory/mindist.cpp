@@ -56,9 +56,9 @@ int coding_theory_domain::mindist(
 		int n, int k, int q, int *G,
 	int verbose_level, int idx_zero, int idx_one,
 	int *add_table, int *mult_table)
-//Main routine for the code minimum distance computation.
-//The tables are only needed if $q = p^f$ with $f > 1$. 
-//In the GF(p) case, just pass a NULL pointer. 
+// Main routine for the code minimum distance computation.
+// The tables are only needed if $q = p^f$ with $f > 1$.
+// In the GF(p) case, just pass a NULL pointer.
 {
 	MINDIST MD;
 	int i, j, a, d;

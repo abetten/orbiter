@@ -408,7 +408,8 @@ void code_diagram::save_distance(int verbose_level)
 
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname, Distance, nb_rows, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Distance, nb_rows, nb_cols);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
@@ -423,7 +424,8 @@ void code_diagram::save_distance_H(int verbose_level)
 	fname = label + "_distance_H_" + std::to_string(n) + "_" + std::to_string(nb_words) + ".csv";
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname, Distance_H, nb_rows, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Distance_H, nb_rows, nb_cols);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
@@ -436,7 +438,8 @@ void code_diagram::save_diagram(int verbose_level)
 
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname, Index_of_codeword, nb_rows, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Index_of_codeword, nb_rows, nb_cols);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
@@ -451,7 +454,8 @@ void code_diagram::save_char_func(int verbose_level)
 
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname, Characteristic_function, nb_rows, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Characteristic_function, nb_rows, nb_cols);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }

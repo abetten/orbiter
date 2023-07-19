@@ -346,7 +346,8 @@ void classification_of_objects::save_automorphism_group_order(int verbose_level)
 	string label;
 
 	label.assign("Ago");
-	Fio.lint_vec_write_csv(Ago_transversal, nb_orbits, ago_fname, label);
+	Fio.Csv_file_support->lint_vec_write_csv(
+			Ago_transversal, nb_orbits, ago_fname, label);
 	if (f_v) {
 		cout << "Written file " << ago_fname
 				<< " of size " << Fio.file_size(ago_fname) << endl;
@@ -379,7 +380,8 @@ void classification_of_objects::save_transversal(int verbose_level)
 
 	label.assign("Transversal");
 
-	Fio.int_vec_write_csv(Idx_transversal, nb_orbits, fname, label);
+	Fio.Csv_file_support->int_vec_write_csv(
+			Idx_transversal, nb_orbits, fname, label);
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}

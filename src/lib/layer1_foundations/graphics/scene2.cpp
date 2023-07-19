@@ -479,7 +479,8 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 
 		fname.assign(argv[++i]);
-		Fio.double_matrix_read_csv(fname, M,
+		Fio.Csv_file_support->double_matrix_read_csv(
+				fname, M,
 				m, n, verbose_level);
 		cout << "The file " << fname << " contains " << m
 				<< " point coordinates, each with " << n << " coordinates" << endl;
@@ -512,7 +513,8 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 
 		fname.assign(argv[++i]);
-		Fio.double_matrix_read_csv(fname, M,
+		Fio.Csv_file_support->double_matrix_read_csv(
+				fname, M,
 				m, n, verbose_level);
 		cout << "The file " << fname << " contains " << m
 				<< " point coordinates, each with " << n << " coordinates" << endl;
@@ -535,7 +537,8 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 
 		fname.assign(argv[++i]);
-		Fio.double_matrix_read_csv(fname, M,
+		Fio.Csv_file_support->double_matrix_read_csv(
+				fname, M,
 				m, n, verbose_level);
 		cout << "The file " << fname << " contains " << m
 				<< " point coordinates, each with " << n << " coordinates" << endl;

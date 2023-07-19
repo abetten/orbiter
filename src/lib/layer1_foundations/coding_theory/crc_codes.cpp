@@ -1153,7 +1153,8 @@ void crc_codes::introduce_errors(
 	cout << "Written file " << Crc_options_description->output_fname
 			<< " of size " << Fio.file_size(Crc_options_description->output_fname) << endl;
 
-	Fio.lint_matrix_write_csv(fname_error, Ep, nb_errors, 3);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_error, Ep, nb_errors, 3);
 	cout << "Written file " << fname_error << " of size "
 			<< Fio.file_size(fname_error) << endl;
 
@@ -1660,7 +1661,8 @@ void crc_codes::check_errors(
 	cout << "Reading file " << fname_error_log << " of size "
 			<< Fio.file_size(fname_error_log) << endl;
 
-	Fio.lint_matrix_read_csv(fname_error_log,
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname_error_log,
 			Error_pattern, nb_error, m,
 			verbose_level);
 	if (m != 3) {
@@ -1858,12 +1860,14 @@ void crc_codes::check_errors(
 
 #if 1
 	cout << "Writing Faulty_blocks" << endl;
-	Fio.lint_matrix_write_csv(fname_error_detected, Faulty_blocks, nb_error_detected, 3);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_error_detected, Faulty_blocks, nb_error_detected, 3);
 	cout << "Written file " << fname_error_detected << " of size "
 			<< Fio.file_size(fname_error_detected) << endl;
 
 	cout << "Writing Error_undetected" << endl;
-	Fio.lint_matrix_write_csv(fname_error_undetected, Error_undetected, nb_error_undetected, 3);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_error_undetected, Error_undetected, nb_error_undetected, 3);
 	cout << "Written file " << fname_error_undetected << " of size "
 			<< Fio.file_size(fname_error_undetected) << endl;
 #endif
@@ -1980,7 +1984,7 @@ void crc_codes::extract_block(
 	cout << "Reading file " << fname_error_log
 			<< " of size " << Fio.file_size(fname_error_log) << endl;
 
-	Fio.lint_matrix_read_csv(
+	Fio.Csv_file_support->lint_matrix_read_csv(
 			fname_error_log, Error_pattern, nb_error, m,
 			verbose_level);
 	if (m != 3) {
@@ -2278,7 +2282,8 @@ void crc_codes::CRC_encode_text(
 
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
-		Fio.int_matrix_write_csv(fname_out, information, nb_rows, nb_cols);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_out, information, nb_rows, nb_cols);
 		cout << "Written file " << fname_out << " of size "
 				<< Fio.file_size(fname_out) << endl;
 
@@ -2296,7 +2301,8 @@ void crc_codes::CRC_encode_text(
 
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
-		Fio.int_matrix_write_csv(fname_out, col_parity, 1, nb_cols);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_out, col_parity, 1, nb_cols);
 		cout << "Written file " << fname_out << " of size "
 				<< Fio.file_size(fname_out) << endl;
 
@@ -2314,7 +2320,8 @@ void crc_codes::CRC_encode_text(
 
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
-		Fio.int_matrix_write_csv(fname_out, row_parity, 1, nb_rows);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_out, row_parity, 1, nb_rows);
 		cout << "Written file " << fname_out << " of size "
 				<< Fio.file_size(fname_out) << endl;
 
@@ -2327,7 +2334,8 @@ void crc_codes::CRC_encode_text(
 
 
 		//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
-		Fio.int_matrix_write_csv(fname_out,
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_out,
 				information_and_parity, 1, nb_rows * nb_cols + nb_rows + nb_cols);
 		cout << "Written file " << fname_out << " of size "
 				<< Fio.file_size(fname_out) << endl;
@@ -2343,7 +2351,8 @@ void crc_codes::CRC_encode_text(
 
 		fname_out = fname_base + "_IPq.csv";
 
-		Fio.int_matrix_write_csv(fname_out, information_and_parity_Fq, 1, IPq);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_out, information_and_parity_Fq, 1, IPq);
 		cout << "Written file " << fname_out << " of size "
 				<< Fio.file_size(fname_out) << endl;
 
@@ -2379,7 +2388,8 @@ void crc_codes::CRC_encode_text(
 
 		fname_out = fname_base + "_codeword_Fq.csv";
 
-		Fio.int_matrix_write_csv(fname_out, codeword_Fq, 1, IPq + degree);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_out, codeword_Fq, 1, IPq + degree);
 		cout << "Written file " << fname_out << " of size "
 				<< Fio.file_size(fname_out) << endl;
 

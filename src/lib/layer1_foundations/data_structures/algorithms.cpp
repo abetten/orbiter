@@ -654,7 +654,7 @@ void algorithms::union_of_sets(
 	long int *M;
 	int m, n;
 
-	Fio.lint_matrix_read_csv(
+	Fio.Csv_file_support->lint_matrix_read_csv(
 			fname_set_of_sets, M, m, n, verbose_level);
 
 	if (f_v) {
@@ -722,7 +722,8 @@ void algorithms::union_of_sets(
 	}
 
 
-	Fio.lint_matrix_write_csv(fname_output, S, cnt, sz);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_output, S, cnt, sz);
 	if (f_v) {
 		cout << "algorithms::union_of_sets "
 				"written file " << fname_output
@@ -772,7 +773,8 @@ void algorithms::dot_product_of_columns(
 
 	fname = label + "_dot_products_columns.csv";
 
-	Fio.int_matrix_write_csv(fname, Dot_products,
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Dot_products,
 			n, n);
 
 	if (f_v) {
@@ -826,7 +828,8 @@ void algorithms::dot_product_of_rows(
 
 	fname = label + "_dot_products_rows.csv";
 
-	Fio.int_matrix_write_csv(fname, Dot_products,
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Dot_products,
 			m, m);
 
 	if (f_v) {
@@ -896,7 +899,8 @@ void algorithms::matrix_multiply_over_Z(
 
 	fname = label1 + "_times_" + label2 + ".csv";
 
-	Fio.int_matrix_write_csv(fname, A3,
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, A3,
 			m3, n3);
 
 	if (f_v) {
@@ -966,7 +970,7 @@ void algorithms::matrix_rowspan_over_R(
 
 	fname = label + "_rref" + ".csv";
 
-	Fio.double_matrix_write_csv(
+	Fio.Csv_file_support->double_matrix_write_csv(
 			fname, D, r, n);
 
 	if (f_v) {

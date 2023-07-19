@@ -74,7 +74,8 @@ void blt_set_invariants::init(
 	for (i = 0; i < set_size; i++) {
 
 		D->O->Hyperbolic_pair->unrank_point(
-				v5, 1, the_set[i], 0 /* verbose_level */);
+				v5, 1, the_set[i],
+				0 /* verbose_level */);
 
 		the_set_in_PG[i] = D->P->rank_point(v5);
 	}
@@ -173,7 +174,8 @@ void blt_set_invariants::compute(int verbose_level)
 	}
 }
 
-void blt_set_invariants::latex(std::ostream &ost, int verbose_level)
+void blt_set_invariants::latex(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;

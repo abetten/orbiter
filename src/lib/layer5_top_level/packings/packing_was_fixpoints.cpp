@@ -269,7 +269,8 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 			cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
 					"The file " << fname_fixp_graph_cliques << " exists" << endl;
 		}
-		Fio.lint_matrix_read_csv(fname_fixp_graph_cliques,
+		Fio.Csv_file_support->lint_matrix_read_csv(
+				fname_fixp_graph_cliques,
 				Cliques, nb_cliques, clique_size, verbose_level);
 		if (f_v) {
 			cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
@@ -452,7 +453,8 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 		}
 	}
 
-	Fio.lint_matrix_write_csv(fname_fixp_graph_cliques,
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_fixp_graph_cliques,
 			Cliques, nb_cliques, clique_size);
 
 	if (f_v) {

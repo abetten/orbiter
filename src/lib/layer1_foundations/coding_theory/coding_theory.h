@@ -182,7 +182,7 @@ public:
 			int f_normalize_from_the_left,
 			int f_normalize_from_the_right,
 			int verbose_level);
-	void do_minimum_distance(
+	void do_minimum_distance_Brouwer_Zimmermann(
 			field_theory::finite_field *F,
 			int *M, int m, int n,
 			int verbose_level);
@@ -234,6 +234,9 @@ public:
 			int nb_words, int n,
 			int verbose_level);
 	// creates a combinatorics::boolean_function_domain object
+
+
+	// coding_theory_domain_crc.cpp
 	void crc_encode_file_based(
 			std::string &fname_in,
 			std::string &fname_out,
@@ -246,7 +249,7 @@ public:
 			int error_pattern_weight,
 			int nb_tests_per_block,
 			int verbose_level);
-	void crc_simulate_Hamming_errors(
+	void crc_all_errors_of_a_given_weight(
 			std::string &fname_in,
 			int block_number,
 			crc_object *Crc_object1,
@@ -276,6 +279,35 @@ public:
 	//In the GF(p) case, just pass a NULL pointer.
 
 };
+
+
+// #############################################################################
+// crc_code_description.cpp:
+// #############################################################################
+
+//! a description of a CRC code
+
+
+class crc_code_description {
+public:
+
+	int f_type;
+	std::string type;
+
+	int f_block_length;
+	int block_length;
+
+	crc_code_description();
+	~crc_code_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
 
 // #############################################################################
 // crc_codes.cpp:
@@ -401,6 +433,8 @@ enum crc_object_type {
 class crc_object {
 public:
 
+	crc_code_description *Descr;
+
 	std::string label_txt;
 	std::string label_tex;
 
@@ -434,7 +468,7 @@ public:
 
 	crc_object();
 	~crc_object();
-	void init(std::string &type, int block_length, int verbose_level);
+	void init(crc_code_description *Descr, int verbose_level);
 	// block_length is needed for crc32
 	//void encode_as_bitvector();
 	void print();
@@ -653,13 +687,13 @@ public:
 
 
 // #############################################################################
-// error_pattern.cpp:
+// error_pattern_generator.cpp:
 // #############################################################################
 
 //! to create an error pattern for testing a code
 
 
-class error_pattern {
+class error_pattern_generator {
 
 public:
 
@@ -672,8 +706,8 @@ public:
 	unsigned char *Error_in_symbols;
 	unsigned char *Error_in_bytes;
 
-	error_pattern();
-	~error_pattern();
+	error_pattern_generator();
+	~error_pattern_generator();
 	void init(crc_object *Crc_object,
 			int k, int verbose_level);
 	long int number_of_bit_error_patters(

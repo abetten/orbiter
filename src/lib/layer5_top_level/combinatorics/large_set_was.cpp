@@ -349,7 +349,8 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 			Orbits_under_N[2 * i + 0] = a;
 			Orbits_under_N[2 * i + 1] = l;
 		}
-		Fio.lint_matrix_write_csv(fname_out, Orbits_under_N, Sch->nb_orbits, 2);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname_out, Orbits_under_N, Sch->nb_orbits, 2);
 
 		FREE_lint(Orbits_under_N);
 	}
@@ -705,7 +706,8 @@ void large_set_was::read_solution_file(
 		ST.replace_extension_with(fname_out, "_packings_design_indices.csv");
 
 
-		Fio.lint_matrix_write_csv(fname_out, Large_sets, nb_solutions, sz);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname_out, Large_sets, nb_solutions, sz);
 	}
 	Sz = sz * LS->design_size;
 
@@ -738,7 +740,8 @@ void large_set_was::read_solution_file(
 		fname_out.assign(solution_file_name);
 		ST.replace_extension_with(fname_out, "_packings_explicit.csv");
 
-		Fio.lint_matrix_write_csv(fname_out, Packings_explicit, nb_solutions, Sz);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname_out, Packings_explicit, nb_solutions, Sz);
 	}
 	FREE_lint(Large_sets);
 	FREE_lint(Packings_explicit);

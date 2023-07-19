@@ -644,7 +644,8 @@ void BLT_set_create::create_flock(int point_idx, int verbose_level)
 	str = "_flock_pt" + std::to_string(point_idx) + ".csv";
 	fname_csv = BA->label_txt + str;
 
-	Fio.int_matrix_write_csv(fname_csv, Flock->Table_of_ABC->M, Flock->q, 3);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_csv, Flock->Table_of_ABC->M, Flock->q, 3);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
@@ -757,7 +758,8 @@ void BLT_set_create::export_set_in_PG(int verbose_level)
 
 	fname_csv = label_txt + "_in_PG.csv";
 
-	Fio.lint_matrix_write_csv(fname_csv, Pts, sz, 1);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_csv, Pts, sz, 1);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 

@@ -833,7 +833,8 @@ void tally::save_classes_individually(std::string &fname)
 
 		label.assign("case");
 
-		Fio.int_vec_write_csv(sorting_perm_inv + type_first[i], l, fname2, label);
+		Fio.Csv_file_support->int_vec_write_csv(
+				sorting_perm_inv + type_first[i], l, fname2, label);
 		cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
 	}
 }

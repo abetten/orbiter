@@ -18,7 +18,8 @@ namespace layer5_applications {
 namespace apps_combinatorics {
 
 
-static void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
+static void delandtsheer_doyen_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -778,7 +779,8 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	string fname;
 
 	fname = Descr->problem_label + "_pair_covering.csv";
-	Fio.int_matrix_write_csv(fname, Covered_orbits, nb_k_orbits, k2);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Covered_orbits, nb_k_orbits, k2);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 

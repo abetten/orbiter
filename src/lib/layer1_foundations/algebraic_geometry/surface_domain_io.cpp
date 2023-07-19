@@ -597,7 +597,7 @@ void surface_domain::make_table_of_surfaces_detailed(
 	headers[3].assign("AUT");
 
 
-	Fio.lint_matrix_write_csv_override_headers(
+	Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
 			fname, headers, Big_table, nb_reps_total, 4);
 
 	FREE_lint(Big_table);
@@ -750,7 +750,7 @@ void surface_domain::make_table_of_surfaces2(
 	}
 
 
-	Fio.lint_matrix_write_csv_override_headers(
+	Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
 			fname, headers, Table2, nb_Q, nb_cols);
 
 	if (f_v) {

@@ -966,7 +966,8 @@ void orbit_of_equations::save_csv(
 				Data + i * nb_monomials,
 				nb_monomials);
 	}
-	Fio.int_matrix_write_csv(fname, Data, used_length, nb_monomials);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Data, used_length, nb_monomials);
 }
 
 

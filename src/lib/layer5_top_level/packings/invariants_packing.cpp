@@ -314,12 +314,14 @@ void invariants_packing::compute_dual_packings(
 	fname.assign("Dual_idx.csv");
 	label1.assign("dual_idx");
 	label2.assign("f_self_dual");
-	Fio.int_vecs_write_csv(Dual_idx, f_self_dual,
+	Fio.Csv_file_support->int_vecs_write_csv(
+			Dual_idx, f_self_dual,
 		Iso->Folding->Reps->count, fname, label1, label2);
 
 	fname.assign("Dual_spread_idx.csv");
 	label.assign("dual_spread_idx");
-	Fio.lint_vec_write_csv(P->Spread_table_with_selection->Spread_tables->dual_spread_idx,
+	Fio.Csv_file_support->lint_vec_write_csv(
+			P->Spread_table_with_selection->Spread_tables->dual_spread_idx,
 		P->Spread_table_with_selection->Spread_tables->nb_spreads,
 		fname, label);
 	
@@ -419,7 +421,8 @@ void invariants_packing::make_table(
 		label1.assign("ID");
 		label2.assign("ago");
 
-		Fio.int_vecs_write_csv(set, ago, nb, fname, label1, label2);
+		Fio.Csv_file_support->int_vecs_write_csv(
+				set, ago, nb, fname, label1, label2);
 
 		data_structures::tally C;
 

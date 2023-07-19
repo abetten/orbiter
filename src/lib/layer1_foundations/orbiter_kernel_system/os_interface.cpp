@@ -242,7 +242,8 @@ void os_interface::time_check_delta(std::ostream &ost, int dt)
 	}
 }
 
-void os_interface::print_elapsed_time(std::ostream &ost, int d, int h, int m, int s)
+void os_interface::print_elapsed_time(
+		std::ostream &ost, int d, int h, int m, int s)
 {
 	if (d > 0) {
 		ost << d << "-" << h << ":" << m << ":" << s;
@@ -322,7 +323,8 @@ int os_interface::os_seconds_past_1970()
 	return a;
 }
 
-void os_interface::get_string_from_command_line(std::string &p, int argc, std::string *argv,
+void os_interface::get_string_from_command_line(
+		std::string &p, int argc, std::string *argv,
 		int &i, int verbose_level)
 {
 	data_structures::string_tools ST;

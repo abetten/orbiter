@@ -453,7 +453,8 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 
 	{
 		int *M;
-		Fio.int_matrix_read_csv(fname_group_elements_coded,
+		Fio.Csv_file_support->int_matrix_read_csv(
+				fname_group_elements_coded,
 				M, m, n, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "read a set of size " << m << endl;
@@ -486,7 +487,8 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 	Transporter->init(S->A, 0);
 	{
 		int *M;
-		Fio.int_matrix_read_csv(fname_transporter,
+		Fio.Csv_file_support->int_matrix_read_csv(
+				fname_transporter,
 				M, m, n, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "read a set of size " << m << endl;
@@ -500,7 +502,8 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 				cout << endl;
 			}
 
-			LG->A_linear->Group_element->make_element(Transporter->ith(i), M + i * n, 0 /* verbose_level */);
+			LG->A_linear->Group_element->make_element(
+					Transporter->ith(i), M + i * n, 0 /* verbose_level */);
 			if (false) {
 				cout << "computing rank of " << endl;
 				LG->A_linear->Group_element->element_print_latex(Elt, cout);

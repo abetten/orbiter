@@ -85,7 +85,8 @@ void save_trace_record(
 				+ "_po" + std::to_string(po) + "_so"
 				+ std::to_string(so) + ".csv";
 
-	Fio.lint_matrix_write_csv_with_labels(fname, M, N, w, column_label);
+	Fio.Csv_file_support->lint_matrix_write_csv_with_labels(
+			fname, M, N, w, column_label);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 

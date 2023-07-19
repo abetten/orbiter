@@ -39,7 +39,8 @@ void easy_BMP_interface::draw_bitmap(
 
 	if (C->f_input_csv_file) {
 
-		Fio.int_matrix_read_csv(C->input_csv_file_name,
+		Fio.Csv_file_support->int_matrix_read_csv(
+				C->input_csv_file_name,
 				C->M, C->m, C->n,
 				verbose_level);
 
@@ -49,7 +50,8 @@ void easy_BMP_interface::draw_bitmap(
 			int m, n;
 
 
-			Fio.int_matrix_read_csv(C->secondary_input_csv_file_name,
+			Fio.Csv_file_support->int_matrix_read_csv(
+					C->secondary_input_csv_file_name,
 					C->M2, m, n,
 					verbose_level);
 			if (m != C->m) {

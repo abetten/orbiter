@@ -706,7 +706,8 @@ void vector_ge::write_to_csv_file_coded(
 	}
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname, Table, len, A->make_element_size);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Table, len, A->make_element_size);
 	if (f_v) {
 		cout << "vector_ge::write_to_csv_file_coded written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;

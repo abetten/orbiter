@@ -23,16 +23,22 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace orbiter_kernel_system {
 
-#define MY_OWN_BUFSIZE 1000000
+
+
+
 
 file_io::file_io()
 {
-
+	Csv_file_support = NEW_OBJECT(csv_file_support);
+	Csv_file_support->init(this);
 }
 
 file_io::~file_io()
 {
-
+	if (Csv_file_support) {
+		FREE_OBJECT(Csv_file_support);
+		Csv_file_support = NULL;
+	}
 }
 
 void file_io::concatenate_files(
@@ -44,8 +50,6 @@ void file_io::concatenate_files(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
-	char *buf;
 	int h, cnt;
 
 	if (f_v) {
@@ -54,31 +58,44 @@ void file_io::concatenate_files(
 	}
 
 	//missing_idx = NEW_int(N);
-	buf = NEW_char(MY_OWN_BUFSIZE);
 	cnt_total = 0;
 	{
 		ofstream fp_out(fname_out);
 		for (h = 0; h < N; h++) {
+
+			char fname[1000];
+
 			snprintf(fname, sizeof(fname), fname_in_mask.c_str(), h);
-			if (file_size(fname) < 0) {
-				cout << "concatenate_files input file does not exist: " << fname << " skipping" << endl;
+
+
+			long int sz;
+
+			sz = file_size(fname);
+			if (sz < 0) {
+				cout << "concatenate_files input file does not exist: "
+						<< fname << " skipping" << endl;
 				//missing_idx[nb_missing++] = h;
 				missing_idx.push_back(h);
 			}
 			else {
+
+				char *buf;
+
+				buf = NEW_char(sz + 1);
+
 				ifstream fp(fname);
 
 				cnt = 0;
 				while (true) {
 					if (fp.eof()) {
-						cout << "Encountered End-of-file without having seem EOF "
+						cout << "Encountered End-of-file without having seen EOF "
 								"marker, perhaps the file is corrupt. "
 								"I was trying to read the file " << fname << endl;
 						missing_idx.push_back(h);
 						break;
 					}
 
-					fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+					fp.getline(buf, sz, '\n');
 					cout << "Read: " << buf << endl;
 					if (strncmp(buf, EOF_marker.c_str(), strlen(EOF_marker.c_str())) == 0) {
 						break;
@@ -94,16 +111,22 @@ void file_io::concatenate_files(
 					cnt++;
 				}
 				cnt_total += cnt;
+				FREE_char(buf);
 			}
 		} // next h
 		fp_out << EOF_marker << " " << cnt_total << endl;
 	}
 	cout << "Written file " << fname_out << " of size "
 		<< file_size(fname_out) << endl;
-	FREE_char(buf);
-	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
+	cout << "There are " << missing_idx.size()
+			<< " missing files, they are:" << endl;
+
 	for (h = 0; h < (int) missing_idx.size(); h++) {
+
+		char fname[1000];
+
 		snprintf(fname, sizeof(fname), fname_in_mask.c_str(), missing_idx[h]);
+
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}
 
@@ -121,8 +144,6 @@ void file_io::concatenate_files_into(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
-	char *buf;
 	int h, cnt;
 
 	if (f_v) {
@@ -131,35 +152,43 @@ void file_io::concatenate_files_into(
 	}
 
 	//missing_idx = NEW_int(N);
-	buf = NEW_char(MY_OWN_BUFSIZE);
 	cnt_total = 0;
 	{
 		//ofstream fp_out(fname_out);
 		for (h = 0; h < N; h++) {
+
+			char fname[1000];
+
 			snprintf(fname, sizeof(fname), fname_in_mask.c_str(), h);
 
 			fp_out << "# start of file " << fname << endl;
 
-			if (file_size(fname) < 0) {
+			long int sz;
+			char *buf;
+
+			sz = file_size(fname);
+			if (sz < 0) {
 				cout << "file_io::concatenate_files_into "
-						"input file does not exist: " << fname << " skipping" << endl;
+						"input file does not exist: "
+						<< fname << " skipping" << endl;
 				//missing_idx[nb_missing++] = h;
 				missing_idx.push_back(h);
 			}
 			else {
+				buf = NEW_char(sz + 1);
 				ifstream fp(fname);
 
 				cnt = 0;
 				while (true) {
 					if (fp.eof()) {
-						cout << "Encountered End-of-file without having seem EOF "
+						cout << "Encountered End-of-file without having seen EOF "
 								"marker, perhaps the file is corrupt. "
 								"I was trying to read the file " << fname << endl;
 						missing_idx.push_back(h);
 						break;
 					}
 
-					fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+					fp.getline(buf, sz, '\n');
 					//cout << "Read: " << buf << endl;
 					if (strncmp(buf, EOF_marker.c_str(), strlen(EOF_marker.c_str())) == 0) {
 						break;
@@ -175,15 +204,21 @@ void file_io::concatenate_files_into(
 					cnt++;
 				}
 				cnt_total += cnt;
+				FREE_char(buf);
 			}
 			fp_out << "# end of file " << fname << endl;
 		} // next h
 		//fp_out << EOF_marker << " " << cnt_total << endl;
 	}
-	FREE_char(buf);
-	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
+	cout << "There are " << missing_idx.size()
+			<< " missing files, they are:" << endl;
+
 	for (h = 0; h < (int) missing_idx.size(); h++) {
+
+		char fname[1000];
+
 		snprintf(fname, sizeof(fname), fname_in_mask.c_str(), missing_idx[h]);
+
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}
 
@@ -359,7 +394,10 @@ int file_io::find_orbit_index_in_data_file(
 
 	fname = prefix + "_lvl_" + std::to_string(level_of_candidates_file);
 
-	if (file_size(fname) <= 0) {
+	long int sz;
+
+	sz = file_size(fname);
+	if (sz <= 0) {
 		cout << "find_orbit_index_in_data_file file "
 				<< fname << " does not exist" << endl;
 		exit(1);
@@ -368,14 +406,15 @@ int file_io::find_orbit_index_in_data_file(
 	data_structures::string_tools ST;
 	int a, i, cnt;
 	long int *S;
-	char buf[MY_OWN_BUFSIZE];
+	char *buf;
 	int len, str_len;
 	char *p_buf;
 
+	buf = NEW_char(sz + 1);
 	S = NEW_lint(level_of_candidates_file);
 
 	cnt = 0;
-	f.getline(buf, MY_OWN_BUFSIZE, '\n'); // skip the first line
+	f.getline(buf, sz, '\n'); // skip the first line
 
 	orbit_idx = 0;
 
@@ -383,7 +422,7 @@ int file_io::find_orbit_index_in_data_file(
 		if (f.eof()) {
 			break;
 		}
-		f.getline(buf, MY_OWN_BUFSIZE, '\n');
+		f.getline(buf, sz, '\n');
 		//cout << "Read line " << cnt << "='" << buf << "'" << endl;
 		str_len = strlen(buf);
 		if (str_len == 0) {
@@ -428,6 +467,7 @@ int file_io::find_orbit_index_in_data_file(
 		}
 	}
 	FREE_lint(S);
+	FREE_char(buf);
 	if (f_v) {
 		cout << "file_io::find_orbit_index_in_data_file done" << endl;
 	}
@@ -464,7 +504,7 @@ void file_io::write_exact_cover_problem_to_file(
 		<< fname << " of size " << file_size(fname) << endl;
 }
 
-#define BUFSIZE_READ_SOLUTION_FILE ONE_MILLION
+//#define BUFSIZE_READ_SOLUTION_FILE ONE_MILLION
 
 void file_io::read_solution_file(
 		std::string &fname,
@@ -487,7 +527,11 @@ void file_io::read_solution_file(
 		cout << "file_io::read_solution_file reading file " << fname
 			<< " of size " << file_size(fname) << endl;
 	}
-	if (file_size(fname) <= 0) {
+
+	long int sz;
+
+	sz = file_size(fname);
+	if (sz <= 0) {
 		cout << "file_io::read_solution_file "
 				"There is something wrong with the file "
 			<< fname << endl;
@@ -495,14 +539,14 @@ void file_io::read_solution_file(
 	}
 	char *buf;
 	char *p_buf;
-	buf = NEW_char(BUFSIZE_READ_SOLUTION_FILE);
+	buf = NEW_char(sz + 1);
 	nb_sol = 0;
 	nb_max = 0;
 	{
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, BUFSIZE_READ_SOLUTION_FILE, '\n');
+			f.getline(buf, sz, '\n');
 			p_buf = buf;
 			if (strlen(buf)) {
 				if (buf[0] == '#') {
@@ -557,7 +601,7 @@ void file_io::read_solution_file(
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, BUFSIZE_READ_SOLUTION_FILE, '\n');
+			f.getline(buf, sz, '\n');
 			p_buf = buf;
 			if (strlen(buf)) {
 				for (j = 0; j < nb_cols; j++) {
@@ -602,15 +646,18 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 			<< file_size(fname) << endl;
 	}
 
+	long int sz;
 	nb_solutions = 0;
-	if (file_size(fname) < 0) {
+
+	sz = file_size(fname);
+	if (sz < 0) {
 		cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size file "
 			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
 	}
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	buf = NEW_char(sz + 1);
 
 
 
@@ -627,7 +674,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 						"eof, break" << endl;
 				break;
 			}
-			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
 				cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
@@ -685,15 +732,19 @@ void file_io::count_number_of_solutions_in_file(
 			<< file_size(fname) << endl;
 	}
 
+	long int sz;
+
 	nb_solutions = 0;
-	if (file_size(fname) < 0) {
+
+	sz = file_size(fname);
+	if (sz < 0) {
 		cout << "count_number_of_solutions_in_file file "
 			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
 	}
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	buf = NEW_char(sz + 1);
 
 
 
@@ -708,7 +759,7 @@ void file_io::count_number_of_solutions_in_file(
 						"eof, break" << endl;
 				break;
 			}
-			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
 				cout << "count_number_of_solutions_in_file "
@@ -755,14 +806,18 @@ void file_io::count_number_of_solutions_in_file_by_case(
 	nb_solutions = NEW_int(N);
 	case_nb = NEW_int(N);
 	nb_cases = 0;
-	if (file_size(fname) < 0) {
+
+	long int sz;
+
+	sz = file_size(fname);
+	if (sz < 0) {
 		cout << "count_number_of_solutions_in_file_by_case file "
 			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
 	}
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	buf = NEW_char(sz + 1);
 
 
 
@@ -778,7 +833,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 						"eof, break" << endl;
 				break;
 			}
-			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
 				cout << "count_number_of_solutions_in_file_by_case "
@@ -793,6 +848,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 						"read start case " << the_case << endl;
 			}
 			else if (strncmp(buf, "# end case", 10) == 0) {
+
 				if (nb_cases == N) {
 					int *nb_solutions1;
 					int *case_nb1;
@@ -809,6 +865,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 					case_nb = case_nb1;
 					N += 1000;
 				}
+
 				nb_solutions[nb_cases] = the_case_count;
 				case_nb[nb_cases] = the_case;
 				nb_cases++;
@@ -825,6 +882,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 		}
 	}
 	FREE_char(buf);
+
 	if (f_v) {
 		cout << "count_number_of_solutions_in_file_by_case "
 			<< fname << endl;
@@ -868,14 +926,23 @@ void file_io::read_solutions_from_file_and_get_solution_size(
 	char *p_buf;
 	int i, nb_sol;
 	long int a;
+	long int sz;
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	sz = file_size(fname);
+	if (sz < 0) {
+		cout << "read_solutions_from_file_and_get_solution_size file "
+			<< fname <<  " does not exist" << endl;
+		exit(1);
+		//return;
+	}
+
+	buf = NEW_char(sz + 1);
 	nb_sol = 0;
 	{
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, MY_OWN_BUFSIZE, '\n');
+			f.getline(buf, sz, '\n');
 			if (strlen(buf) && buf[0] == '#') {
 				continue;
 			}
@@ -931,12 +998,16 @@ void file_io::read_solutions_from_file(
 			<< solution_size << endl;
 	}
 
-	if (file_size(fname) < 0) {
-		cout << "file_io::read_solutions_from_file the file " << fname << " does not exist" << endl;
+	long int sz;
+
+	sz = file_size(fname);
+	if (sz < 0) {
+		cout << "file_io::read_solutions_from_file "
+				"the file " << fname << " does not exist" << endl;
 		return;
 	}
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	buf = NEW_char(sz + 1);
 
 	count_number_of_solutions_in_file(fname,
 		nb_solutions,
@@ -955,7 +1026,7 @@ void file_io::read_solutions_from_file(
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, MY_OWN_BUFSIZE, '\n');
+			f.getline(buf, sz, '\n');
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
 			ST.s_scan_lint(&p_buf, &a);
@@ -1009,13 +1080,16 @@ void file_io::read_solutions_from_file_size_is_known(
 			<< solution_size << endl;
 	}
 
-	if (file_size(fname) < 0) {
+	long int sz;
+
+	sz = file_size(fname);
+	if (sz < 0) {
 		cout << "file_io::read_solutions_from_file_size_is_known "
 				"the file " << fname << " does not exist" << endl;
 		return;
 	}
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	buf = NEW_char(sz + 1);
 
 	one_solution.resize(solution_size);
 
@@ -1023,7 +1097,7 @@ void file_io::read_solutions_from_file_size_is_known(
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, MY_OWN_BUFSIZE, '\n');
+			f.getline(buf, sz, '\n');
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
 			ST.s_scan_lint(&p_buf, &a);
@@ -1070,11 +1144,14 @@ void file_io::read_solutions_from_file_by_case(
 			<< solution_size << endl;
 	}
 
-	if (file_size(fname) < 0) {
+	long int sz;
+
+	sz = file_size(fname);
+	if (sz < 0) {
 		return;
 	}
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	buf = NEW_char(sz + 1);
 
 	Solutions = NEW_plint(nb_cases);
 
@@ -1089,7 +1166,7 @@ void file_io::read_solutions_from_file_by_case(
 			if (fp.eof()) {
 				break;
 			}
-			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
 				cout << "read_solutions_from_file_by_case "
@@ -1155,7 +1232,6 @@ void file_io::read_solutions_from_file_by_case(
 void file_io::copy_file_to_ostream(
 		std::ostream &ost, std::string &fname)
 {
-	//char buf[MY_OWN_BUFSIZE];
 
 	{
 		ifstream fp(fname);
@@ -1188,755 +1264,12 @@ void file_io::copy_file_to_ostream(
 
 }
 
-void file_io::int_vec_write_csv(
-		int *v, int len,
-	std::string &fname, std::string &label)
-{
-	int i;
-
-	{
-		ofstream f(fname);
-
-		f << "Case," << label << endl;
-		for (i = 0; i < len; i++) {
-			f << i << "," << v[i] << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::lint_vec_write_csv(
-		long int *v, int len,
-		std::string &fname, std::string &label)
-{
-	int i;
-
-	{
-		ofstream f(fname);
-
-		f << "Case," << label << endl;
-		for (i = 0; i < len; i++) {
-			f << i << "," << v[i] << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::int_vecs_write_csv(
-		int *v1, int *v2, int len,
-		std::string &fname, std::string &label1, std::string &label2)
-{
-	int i;
-
-	{
-		ofstream f(fname);
-
-		f << "Case," << label1 << "," << label2 << endl;
-		for (i = 0; i < len; i++) {
-			f << i << "," << v1[i] << "," << v2[i] << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::int_vecs3_write_csv(
-		int *v1, int *v2, int *v3, int len,
-		std::string &fname,
-	std::string &label1, std::string &label2, std::string &label3)
-{
-	int i;
-
-	{
-		ofstream f(fname);
-
-		f << "Case," << label1 << "," << label2 << "," << label3 << endl;
-		for (i = 0; i < len; i++) {
-			f << i << "," << v1[i] << "," << v2[i] << "," << v3[i] << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::int_vec_array_write_csv(
-		int nb_vecs, int **Vec, int len,
-		std::string &fname, std::string *column_label)
-{
-	int i, j;
-
-	cout << "int_vec_array_write_csv nb_vecs=" << nb_vecs << endl;
-	cout << "column labels:" << endl;
-	for (j = 0; j < nb_vecs; j++) {
-		cout << j << " : " << column_label[j] << endl;
-		}
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < nb_vecs; j++) {
-			f << "," << column_label[j];
-		}
-		f << endl;
-		for (i = 0; i < len; i++) {
-			f << i;
-			for (j = 0; j < nb_vecs; j++) {
-				f << "," << Vec[j][i];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::lint_vec_array_write_csv(
-		int nb_vecs, long int **Vec, int len,
-		std::string &fname, std::string *column_label)
-{
-	int i, j;
-
-	cout << "lint_vec_array_write_csv nb_vecs=" << nb_vecs << endl;
-	cout << "column labels:" << endl;
-	for (j = 0; j < nb_vecs; j++) {
-		cout << j << " : " << column_label[j] << endl;
-	}
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < nb_vecs; j++) {
-			f << "," << column_label[j];
-		}
-		f << endl;
-		for (i = 0; i < len; i++) {
-			f << i;
-			for (j = 0; j < nb_vecs; j++) {
-				f << "," << Vec[j][i];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::int_matrix_write_csv(
-		std::string &fname, int *M, int m, int n)
-{
-	int i, j;
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < n; j++) {
-			f << ",C" << j;
-		}
-		f << endl;
-		for (i = 0; i < m; i++) {
-			f << i;
-			for (j = 0; j < n; j++) {
-				f << "," << M[i * n + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::lint_matrix_write_csv(
-		std::string &fname, long int *M, int m, int n)
-{
-	int i, j;
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < n; j++) {
-			f << ",C" << j;
-		}
-		f << endl;
-		for (i = 0; i < m; i++) {
-			f << i;
-			for (j = 0; j < n; j++) {
-				f << "," << M[i * n + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::lint_matrix_write_csv_override_headers(
-		std::string &fname,
-		std::string *headers, long int *M, int m, int n)
-{
-	int i, j;
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < n; j++) {
-			f << "," << headers[j];
-		}
-		f << endl;
-		for (i = 0; i < m; i++) {
-			f << i;
-			for (j = 0; j < n; j++) {
-				f << "," << M[i * n + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::vector_write_csv(
-		std::string &fname,
-		std::vector<int > &V)
-{
-	int i, j;
-	int m, n;
-
-	m = V.size();
-	n = 1;
-
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < n; j++) {
-			f << ",C" << j;
-		}
-		f << endl;
-		for (i = 0; i < m; i++) {
-			f << i;
-			f << "," << V[i];
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-
-void file_io::vector_matrix_write_csv(
-		std::string &fname,
-		std::vector<std::vector<int> > &V)
-{
-	int i, j;
-	int m, n;
-
-	m = V.size();
-	n = V[0].size();
-	for (i = 0; i < m; i++) {
-		if (V[i].size() != n) {
-			cout << "file_io::int_matrix_write_csv the vectors are of differing lengths" << endl;
-			exit(1);
-		}
-	}
-
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < n; j++) {
-			f << ",C" << j;
-		}
-		f << endl;
-		for (i = 0; i < m; i++) {
-			f << i;
-			for (j = 0; j < n; j++) {
-				f << "," << V[i][j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-
-
-void file_io::double_matrix_write_csv(
-		std::string &fname, double *M, int m, int n)
-{
-	int i, j;
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < n; j++) {
-			f << ",C" << j;
-		}
-		f << endl;
-		for (i = 0; i < m; i++) {
-			f << i;
-			for (j = 0; j < n; j++) {
-				f << "," << M[i * n + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::int_matrix_write_csv_with_labels(
-		std::string &fname,
-	int *M, int m, int n, const char **column_label)
-{
-	int i, j;
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < n; j++) {
-			f << "," << column_label[j];
-		}
-		f << endl;
-		for (i = 0; i < m; i++) {
-			f << i;
-			for (j = 0; j < n; j++) {
-				f << "," << M[i * n + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::lint_matrix_write_csv_with_labels(
-		std::string &fname,
-	long int *M, int m, int n, const char **column_label)
-{
-	int i, j;
-
-	{
-		ofstream f(fname);
-
-		f << "Row";
-		for (j = 0; j < n; j++) {
-			f << "," << column_label[j];
-		}
-		f << endl;
-		for (i = 0; i < m; i++) {
-			f << i;
-			for (j = 0; j < n; j++) {
-				f << "," << M[i * n + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-}
-
-void file_io::int_matrix_read_csv(
-		std::string &fname,
-	int *&M, int &m, int &n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-	long int a;
-
-	if (f_v) {
-		cout << "file_io::int_matrix_read_csv "
-				"reading file " << fname << endl;
-	}
-	if (file_size(fname) <= 0) {
-		cout << "int_matrix_read_csv file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << file_size(fname) << endl;
-		exit(1);
-	}
-	{
-		data_structures::spreadsheet S;
-
-		if (f_v) {
-			cout << "file_io::int_matrix_read_csv "
-					"before S.read_spreadsheet" << endl;
-		}
-		S.read_spreadsheet(fname, 0 /* verbose_level - 1*/);
-		if (f_v) {
-			cout << "file_io::int_matrix_read_csv "
-					"after S.read_spreadsheet" << endl;
-		}
-
-		m = S.nb_rows - 1;
-		n = S.nb_cols - 1;
-		if (f_v) {
-			cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
-		}
-		M = NEW_int(m * n);
-		for (i = 0; i < m; i++) {
-			for (j = 0; j < n; j++) {
-
-				a = S.get_lint(i + 1, j + 1);
-				M[i * n + j] = a;
-			}
-		}
-	}
-	if (f_v) {
-		cout << "int_matrix_read_csv done" << endl;
-	}
-}
-
-void file_io::int_matrix_read_csv_no_border(
-		std::string &fname,
-	int *&M, int &m, int &n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, a;
-
-	if (f_v) {
-		cout << "file_io::int_matrix_read_csv_no_border "
-				"reading file " << fname << endl;
-	}
-	if (file_size(fname) <= 0) {
-		cout << "file_io::int_matrix_read_csv_no_border "
-				"file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << file_size(fname) << endl;
-		exit(1);
-	}
-	{
-		data_structures::spreadsheet S;
-
-		if (f_v) {
-			cout << "file_io::int_matrix_read_csv_no_border "
-					"before S.read_spreadsheet" << endl;
-		}
-		S.read_spreadsheet(fname, verbose_level - 1);
-		if (f_v) {
-			cout << "file_io::int_matrix_read_csv_no_border "
-					"after S.read_spreadsheet" << endl;
-		}
-
-		m = S.nb_rows;
-		n = S.nb_cols;
-		if (f_v) {
-			cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
-		}
-		M = NEW_int(m * n);
-		for (i = 0; i < m; i++) {
-			for (j = 0; j < n; j++) {
-				a = S.get_lint(i, j);
-				M[i * n + j] = a;
-			}
-		}
-	}
-	if (f_v) {
-		cout << "file_io::int_matrix_read_csv_no_border done" << endl;
-	}
-}
-
-void file_io::lint_matrix_read_csv_no_border(
-		std::string &fname,
-	long int *&M, int &m, int &n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-
-	if (f_v) {
-		cout << "file_io::lint_matrix_read_csv_no_border "
-				"reading file " << fname << endl;
-	}
-	if (file_size(fname) <= 0) {
-		cout << "file_io::int_matrix_read_csv_no_border "
-				"file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << file_size(fname) << endl;
-		exit(1);
-	}
-	{
-		data_structures::spreadsheet S;
-
-		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_no_border "
-					"before S.read_spreadsheet" << endl;
-		}
-		S.read_spreadsheet(fname, verbose_level - 1);
-		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_no_border "
-					"after S.read_spreadsheet" << endl;
-		}
-
-		m = S.nb_rows;
-		n = S.nb_cols;
-		if (f_v) {
-			cout << "The spreadsheet has "
-					<< S.nb_cols << " columns" << endl;
-		}
-		M = NEW_lint(m * n);
-
-		long int a;
-
-		for (i = 0; i < m; i++) {
-			for (j = 0; j < n; j++) {
-				a = S.get_lint(i, j);
-				M[i * n + j] = a;
-			}
-		}
-	}
-	if (f_v) {
-		cout << "file_io::lint_matrix_read_csv_no_border done" << endl;
-	}
-}
-
-void file_io::int_matrix_read_csv_data_column(
-		std::string &fname,
-	int *&M, int &m, int &n, int col_idx, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, a;
-
-	if (f_v) {
-		cout << "file_io::int_matrix_read_csv_data_column "
-				"reading file " << fname << " column=" << col_idx << endl;
-	}
-	if (file_size(fname) <= 0) {
-		cout << "file_io::int_matrix_read_csv_data_column "
-				"file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << file_size(fname) << endl;
-		exit(1);
-	}
-	{
-		data_structures::spreadsheet S;
-
-		if (f_v) {
-			cout << "file_io::int_matrix_read_csv_data_column "
-					"before S.read_spreadsheet" << endl;
-		}
-		S.read_spreadsheet(fname, verbose_level - 1);
-		if (f_v) {
-			cout << "file_io::int_matrix_read_csv_data_column "
-					"after S.read_spreadsheet" << endl;
-		}
-		{
-			int *v;
-			int sz;
-			string str, str2;
-			data_structures::string_tools ST;
-
-			S.get_string(str, 1, col_idx);
-
-			cout << "file_io::int_matrix_read_csv_data_column "
-					"read " << str << endl;
-
-			ST.drop_quotes(str, str2);
-			Int_vec_scan(str2, v, sz);
-
-			FREE_int(v);
-			n = sz;
-		}
-		m = S.nb_rows - 1;
-		if (f_v) {
-			cout << "The spreadsheet has " << m << " rows" << endl;
-			cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
-		}
-		M = NEW_int(m * n);
-		for (i = 0; i < m; i++) {
-			string str, str2;
-			int *v;
-			int sz;
-			data_structures::string_tools ST;
-
-			S.get_string(str, i + 1, col_idx);
-			cout << "file_io::int_matrix_read_csv_data_column "
-					"row " << i << " read " << str << endl;
-			ST.drop_quotes(str, str2);
-			Int_vec_scan(str2, v, sz);
-
-			if (sz != n) {
-				cout << "sz != n" << endl;
-				cout << "sz=" << sz << endl;
-				cout << "n=" << n << endl;
-				exit(1);
-			}
-			for (j = 0; j < sz; j++) {
-				a = v[j];
-				M[i * n + j] = a;
-			}
-			FREE_int(v);
-		}
-	}
-	if (f_v) {
-		cout << "file_io::int_matrix_read_csv_data_column done" << endl;
-	}
-}
-
-
-void file_io::lint_matrix_read_csv_data_column(
-		std::string &fname,
-	long int *&M, int &m, int &n, int col_idx, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-
-	if (f_v) {
-		cout << "file_io::lint_matrix_read_csv_data_column "
-				"reading file " << fname << " column=" << col_idx << endl;
-	}
-	if (file_size(fname) <= 0) {
-		cout << "file_io::lint_matrix_read_csv_data_column "
-				"file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << file_size(fname) << endl;
-		exit(1);
-	}
-	{
-		data_structures::spreadsheet S;
-
-		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_data_column "
-					"before S.read_spreadsheet" << endl;
-		}
-		S.read_spreadsheet(fname, verbose_level - 1);
-		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_data_column "
-					"after S.read_spreadsheet" << endl;
-		}
-		{
-			long int *v;
-			int sz;
-			string str, str2;
-			data_structures::string_tools ST;
-
-			S.get_string(str, 1, col_idx);
-
-			cout << "file_io::lint_matrix_read_csv_data_column "
-					"read " << str << endl;
-
-			ST.drop_quotes(str, str2);
-			Lint_vec_scan(str2, v, sz);
-
-			FREE_lint(v);
-			n = sz;
-		}
-		m = S.nb_rows - 1;
-		if (f_v) {
-			cout << "file_io::lint_matrix_read_csv_data_column "
-					"The spreadsheet has " << m << " rows" << endl;
-			cout << "file_io::lint_matrix_read_csv_data_column "
-					"The spreadsheet has " << S.nb_cols << " columns" << endl;
-		}
-		M = NEW_lint(m * n);
-		for (i = 0; i < m; i++) {
-			string str, str2;
-			long int *v;
-			int sz;
-			data_structures::string_tools ST;
-
-			S.get_string(str, i + 1, col_idx);
-			cout << "file_io::lint_matrix_read_csv_data_column "
-					"row " << i << " read " << str << endl;
-			ST.drop_quotes(str, str2);
-			Lint_vec_scan(str2, v, sz);
-
-			long int a;
-			if (sz != n) {
-				cout << "sz != n" << endl;
-				cout << "sz=" << sz << endl;
-				cout << "n=" << n << endl;
-				exit(1);
-			}
-			for (j = 0; j < sz; j++) {
-				a = v[j];
-				M[i * n + j] = a;
-			}
-			FREE_lint(v);
-		}
-	}
-	if (f_v) {
-		cout << "file_io::lint_matrix_read_csv_data_column done" << endl;
-	}
-}
-
-
-void file_io::lint_matrix_read_csv(
-		std::string &fname,
-	long int *&M, int &m, int &n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-	long int a;
-
-	if (f_v) {
-		cout << "lint_matrix_read_csv "
-				"reading file " << fname << endl;
-	}
-	if (file_size(fname) <= 0) {
-		cout << "int_matrix_read_csv file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << file_size(fname) << endl;
-		exit(1);
-	}
-	{
-		data_structures::spreadsheet S;
-
-		S.read_spreadsheet(fname, verbose_level - 1);
-
-		m = S.nb_rows - 1;
-		n = S.nb_cols - 1;
-		M = NEW_lint(m * n);
-		for (i = 0; i < m; i++) {
-			for (j = 0; j < n; j++) {
-				a = S.get_lint(i + 1, j + 1);
-				M[i * n + j] = a;
-			}
-		}
-	}
-	if (f_v) {
-		cout << "lint_matrix_read_csv done" << endl;
-	}
-
-}
-
-void file_io::double_matrix_read_csv(
-		std::string &fname,
-	double *&M, int &m, int &n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-
-	if (f_v) {
-		cout << "double_matrix_read_csv reading file "
-			<< fname << endl;
-	}
-	if (file_size(fname) <= 0) {
-		cout << "double_matrix_read_csv file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << file_size(fname) << endl;
-		exit(1);
-	}
-	{
-		data_structures::spreadsheet S;
-		double d;
-
-		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
-
-		m = S.nb_rows - 1;
-		n = S.nb_cols - 1;
-		M = new double [m * n];
-		for (i = 0; i < m; i++) {
-			for (j = 0; j < n; j++) {
-				d = S.get_double(i + 1, j + 1);
-				M[i * n + j] = d;
-			}
-		}
-	}
-	if (f_v) {
-		cout << "double_matrix_read_csv done" << endl;
-	}
-}
 
 
 void file_io::read_column_and_parse(
 		std::string &fname, std::string &col_label,
-		data_structures::set_of_sets *&SoS, int verbose_level)
+		data_structures::set_of_sets *&SoS,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2088,12 +1421,15 @@ void file_io::read_dimacs_graph_format(
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, b;
+	long int sz;
 
 	if (f_v) {
 		cout << "file_io::read_dimacs_graph_format "
 				"fname = " << fname << endl;
 	}
-	if (file_size(fname) <= 0) {
+
+	sz = file_size(fname);
+	if (sz <= 0) {
 		cout << "file_io::read_dimacs_graph_format The file "
 			<< fname << " does not exist" << endl;
 		exit(1);
@@ -2102,12 +1438,12 @@ void file_io::read_dimacs_graph_format(
 	char *buf;
 	int nb_E;
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	buf = NEW_char(sz + 1);
 
 	{
 		ifstream f(fname);
 
-		f.getline(buf, MY_OWN_BUFSIZE, '\n');
+		f.getline(buf, sz, '\n');
 		sscanf(buf, "p edge %d %d", &nb_V, &nb_E);
 		if (f_v) {
 			cout << "file_io::read_dimacs_graph_format a graph on "
@@ -2116,7 +1452,7 @@ void file_io::read_dimacs_graph_format(
 
 		for (i = 0; i < nb_E; i++) {
 
-			f.getline(buf, MY_OWN_BUFSIZE, '\n');
+			f.getline(buf, sz, '\n');
 
 			sscanf(buf, "e %d %d", &a, &b);
 
@@ -2134,6 +1470,10 @@ void file_io::read_dimacs_graph_format(
 		cout << "file_io::read_dimacs_graph_format done" << endl;
 	}
 }
+
+// ToDo please eliminate this:
+
+#define MY_OWN_BUFSIZE 1000000
 
 
 void file_io::parse_sets(
@@ -2177,7 +1517,8 @@ void file_io::parse_sets(
 			casenumber = h;
 		}
 
-		parse_line(p_buf, Set_sizes[h], Sets[h],
+		parse_line(
+				p_buf, Set_sizes[h], Sets[h],
 			ago_ascii, aut_ascii);
 
 		Casenumbers[h] = casenumber;
@@ -2205,7 +1546,8 @@ void file_io::parse_sets(
 	FREE_char(aut_ascii);
 }
 
-void file_io::parse_line(char *line, int &len,
+void file_io::parse_line(
+		char *line, int &len,
 	long int *&set, char *ago_ascii, char *aut_ascii)
 {
 	int i;
@@ -2237,6 +1579,7 @@ int file_io::count_number_of_orbits_in_file(
 	char *buf, *p_buf;
 	int nb_sol, len;
 	int ret;
+	long int sz;
 	data_structures::string_tools ST;
 
 	if (f_v) {
@@ -2246,13 +1589,14 @@ int file_io::count_number_of_orbits_in_file(
 			<< fname << " of size " << file_size(fname) << endl;
 	}
 
-	if (file_size(fname) < 0) {
+	sz = file_size(fname);
+	if (sz < 0) {
 		cout << "count_number_of_orbits_in_file "
 				"file size is -1" << endl;
 		return -1;
 	}
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	buf = NEW_char(sz + 1);
 
 
 
@@ -2268,7 +1612,7 @@ int file_io::count_number_of_orbits_in_file(
 
 			//cout << "count_number_of_orbits_in_file "
 			//"reading line, nb_sol = " << nb_sol << endl;
-			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 			if (strlen(buf) == 0) {
 				cout << "count_number_of_orbits_in_file "
 						"reading an empty line" << endl;
@@ -2313,6 +1657,7 @@ int file_io::count_number_of_lines_in_file(
 	int f_v = (verbose_level >= 1);
 	char *buf;
 	int nb_lines;
+	long int sz;
 
 	if (f_v) {
 		cout << "count_number_of_lines_in_file " << fname << endl;
@@ -2320,12 +1665,13 @@ int file_io::count_number_of_lines_in_file(
 			<< file_size(fname) << endl;
 	}
 
-	if (file_size(fname) < 0) {
+	sz = file_size(fname);
+	if (sz < 0) {
 		cout << "count_number_of_lines_in_file file size is -1" << endl;
 		return 0;
 	}
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+	buf = NEW_char(sz + 1);
 
 
 
@@ -2341,7 +1687,7 @@ int file_io::count_number_of_lines_in_file(
 
 			//cout << "count_number_of_lines_in_file "
 			// "reading line, nb_sol = " << nb_sol << endl;
-			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 			nb_lines++;
 		}
 	}
@@ -2350,25 +1696,30 @@ int file_io::count_number_of_lines_in_file(
 	return nb_lines;
 }
 
-int file_io::try_to_read_file(std::string &fname,
-	int &nb_cases, char **&data, int verbose_level)
+int file_io::try_to_read_file(
+		std::string &fname,
+	int &nb_cases, char **&data,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int n1;
 	char *buf, *p_buf;
 	int nb_sol, len, a;
+	long int sz;
 	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "try_to_read_file trying to read file " << fname
 			<< " of size " << file_size(fname) << endl;
 	}
-	buf = NEW_char(MY_OWN_BUFSIZE);
 
 
-	if (file_size(fname.c_str()) <= 0) {
+	sz = file_size(fname);
+	if (sz <= 0) {
 		goto return_false;
 	}
+
+	buf = NEW_char(sz + 1);
 
 	{
 		ifstream fp(fname);
@@ -2377,7 +1728,7 @@ int file_io::try_to_read_file(std::string &fname,
 		if (fp.eof()) {
 			goto return_false;
 		}
-		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+		fp.getline(buf, sz, '\n');
 		if (strlen(buf) == 0) {
 			goto return_false;
 		}
@@ -2394,7 +1745,7 @@ int file_io::try_to_read_file(std::string &fname,
 			if (fp.eof()) {
 				break;
 			}
-			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 			if (strlen(buf) == 0) {
 				goto return_false;
 			}
@@ -2425,7 +1776,7 @@ int file_io::try_to_read_file(std::string &fname,
 		if (fp.eof()) {
 			goto return_false;
 		}
-		fp.getline(buf, MY_BUFSIZE, '\n');
+		fp.getline(buf, sz, '\n');
 		if (strlen(buf) == 0) {
 			goto return_false;
 		}
@@ -2441,7 +1792,7 @@ int file_io::try_to_read_file(std::string &fname,
 			if (fp.eof()) {
 				break;
 			}
-			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 			len = strlen(buf);
 			if (len == 0) {
 				goto return_false;
@@ -2525,7 +1876,8 @@ void file_io::read_and_parse_data_file(
 	int *Casenumbers;
 	int i;
 
-	parse_sets(nb_cases, data, false /*f_casenumbers */,
+	parse_sets(
+			nb_cases, data, false /*f_casenumbers */,
 		set_sizes, sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
 		0/*verbose_level - 2*/);
@@ -2557,7 +1909,8 @@ void file_io::parse_sets_and_check_sizes_easy(
 	int *set_sizes;
 	int i;
 
-	parse_sets(nb_cases, data, false /*f_casenumbers */,
+	parse_sets(
+			nb_cases, data, false /*f_casenumbers */,
 		set_sizes, sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
 		0/*verbose_level - 2*/);
@@ -2647,7 +2000,8 @@ void file_io::read_and_parse_data_file_fancy(
 		cout << "file_io::read_and_parse_data_file_fancy "
 				"before try_to_read_file" << endl;
 	}
-	if (try_to_read_file(fname, nb_cases, data, verbose_level - 1)) {
+	if (try_to_read_file(
+			fname, nb_cases, data, verbose_level - 1)) {
 		if (f_vv) {
 			cout << "file_io::read_and_parse_data_file_fancy "
 					"file read containing "
@@ -2675,7 +2029,8 @@ void file_io::read_and_parse_data_file_fancy(
 		cout << "file_io::read_and_parse_data_file_fancy "
 				"parsing sets" << endl;
 	}
-	parse_sets(nb_cases, data, f_casenumbers,
+	parse_sets(
+			nb_cases, data, f_casenumbers,
 		Set_sizes, Sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
 		verbose_level - 2);
@@ -2704,7 +2059,8 @@ void file_io::read_set_from_file(
 	int i, a;
 
 	if (f_v) {
-		cout << "file_io::read_set_from_file opening file " << fname
+		cout << "file_io::read_set_from_file "
+				"opening file " << fname
 			<< " of size " << file_size(fname)
 			<< " for reading" << endl;
 	}
@@ -2714,20 +2070,23 @@ void file_io::read_set_from_file(
 
 	if (set_size == -1) {
 		if (f_v) {
-			cout << "file_io::read_set_from_file the file is empty, "
+			cout << "file_io::read_set_from_file "
+					"the file is empty, "
 					"set_size cannot be determined" << endl;
 		}
 		set_size = 0;
 	}
 	else {
 		if (f_v) {
-			cout << "file_io::read_set_from_file allocating set of size "
+			cout << "file_io::read_set_from_file "
+					"allocating set of size "
 				<< set_size << endl;
 		}
 		the_set = NEW_lint(set_size);
 
 		if (f_v) {
-			cout << "file_io::read_set_from_file reading set of size "
+			cout << "file_io::read_set_from_file "
+					"reading set of size "
 				<< set_size << endl;
 		}
 		for (i = 0; i < set_size; i++) {
@@ -2741,11 +2100,13 @@ void file_io::read_set_from_file(
 			the_set[i] = a;
 		}
 		if (f_v) {
-			cout << "file_io::read_set_from_file read a set of size " << set_size
+			cout << "file_io::read_set_from_file "
+					"read a set of size " << set_size
 				<< " from file " << fname << endl;
 		}
 		if (f_vv) {
-			cout << "file_io::read_set_from_file the set is:" << endl;
+			cout << "file_io::read_set_from_file "
+					"the set is:" << endl;
 			Lint_vec_print(cout, the_set, set_size);
 			cout << endl;
 		}
@@ -2965,7 +2326,7 @@ void file_io::write_set_to_file_as_int4(
 	int b;
 
 	if (f_v) {
-		cout << "write_set_to_file_as_int4 opening file "
+		cout << "file_io::write_set_to_file_as_int4 opening file "
 			<< fname << " for writing" << endl;
 	}
 	{
@@ -2976,7 +2337,7 @@ void file_io::write_set_to_file_as_int4(
 		f.write((char *) &a, sizeof(int_4));
 		b = a;
 		if (b != set_size) {
-			cout << "write_set_to_file_as_int4 "
+			cout << "file_io::write_set_to_file_as_int4 "
 					"data loss regarding set_size" << endl;
 			cout << "set_size=" << set_size << endl;
 			cout << "a=" << a << endl;
@@ -2988,7 +2349,7 @@ void file_io::write_set_to_file_as_int4(
 			f.write((char *) &a, sizeof(int_4));
 			b = a;
 			if (b != the_set[i]) {
-				cout << "write_set_to_file_as_int4 data loss" << endl;
+				cout << "file_io::write_set_to_file_as_int4 data loss" << endl;
 				cout << "i=" << i << endl;
 				cout << "the_set[i]=" << the_set[i] << endl;
 				cout << "a=" << a << endl;
@@ -3012,7 +2373,7 @@ void file_io::write_set_to_file_as_int8(
 	int_8 a, b;
 
 	if (f_v) {
-		cout << "write_set_to_file_as_int8 opening file "
+		cout << "file_io::write_set_to_file_as_int8 opening file "
 			<< fname << " for writing" << endl;
 	}
 	{
@@ -3023,7 +2384,7 @@ void file_io::write_set_to_file_as_int8(
 		f.write((char *) &a, sizeof(int_8));
 		b = a;
 		if (b != set_size) {
-			cout << "write_set_to_file_as_int8 "
+			cout << "file_io::write_set_to_file_as_int8 "
 					"data loss regarding set_size" << endl;
 			cout << "set_size=" << set_size << endl;
 			cout << "a=" << a << endl;
@@ -3035,7 +2396,7 @@ void file_io::write_set_to_file_as_int8(
 			f.write((char *) &a, sizeof(int_8));
 			b = a;
 			if (b != the_set[i]) {
-				cout << "write_set_to_file_as_int8 data loss" << endl;
+				cout << "file_io::write_set_to_file_as_int8 data loss" << endl;
 				cout << "i=" << i << endl;
 				cout << "the_set[i]=" << the_set[i] << endl;
 				cout << "a=" << a << endl;
@@ -3059,7 +2420,7 @@ void file_io::read_k_th_set_from_file(
 	int i, a, h;
 
 	if (f_v) {
-		cout << "read_k_th_set_from_file opening file "
+		cout << "file_io::read_k_th_set_from_file opening file "
 			<< fname << " of size " << file_size(fname)
 			<< " for reading" << endl;
 	}
@@ -3072,7 +2433,7 @@ void file_io::read_k_th_set_from_file(
 		for (i = 0; i < set_size; i++) {
 			f >> a;
 			if (f_v) {
-				cout << "read_k_th_set_from_file: h="
+				cout << "file_io::read_k_th_set_from_file: h="
 					<< h << " the " << i
 					<< "-th number is " << a << endl;
 			}
@@ -3101,7 +2462,8 @@ void file_io::write_incidence_matrix_to_file(
 	int i, nb_inc;
 
 	if (f_v) {
-		cout << "write_incidence_matrix_to_file opening file "
+		cout << "file_io::write_incidence_matrix_to_file "
+				"opening file "
 			<< fname << " for writing" << endl;
 	}
 	{
@@ -3130,8 +2492,6 @@ void file_io::write_incidence_matrix_to_file(
 	}
 }
 
-//#define READ_INCIDENCE_BUFSIZE 1000000
-
 void file_io::read_incidence_matrix_from_inc_file(
 		int *&M, int &m, int &n,
 		std::string &inc_file_name, int inc_file_idx,
@@ -3148,7 +2508,7 @@ void file_io::read_incidence_matrix_from_inc_file(
 
 
 	if (f_v) {
-		cout << "read_incidence_matrix_from_inc_file "
+		cout << "file_io::read_incidence_matrix_from_inc_file "
 			<< inc_file_name << " no " << inc_file_idx << endl;
 	}
 
@@ -3198,7 +2558,7 @@ void file_io::read_incidence_matrix_from_inc_file(
 				//cout << cnt << " : " << a << " ";
 			}
 			if (a == -1) {
-				cout << "\nread_incidence_matrix_from_inc_file: "
+				cout << "\nfile_io::read_incidence_matrix_from_inc_file: "
 						"found a complete file with "
 					<< cnt << " solutions" << endl;
 				break;
@@ -3226,7 +2586,7 @@ void file_io::read_incidence_matrix_from_inc_file(
 					M[X[h]] = 1;
 				}
 				if (f_vv) {
-					cout << "read_incidence_matrix_from_inc_file: "
+					cout << "file_io::read_incidence_matrix_from_inc_file: "
 							"found the following incidence matrix:" << endl;
 					Int_vec_print_integer_matrix_width(cout,
 						M, m, n, n, 1);
@@ -3420,7 +2780,8 @@ void file_io::read_incidence_by_row_ranks_file(
 				break;
 			}
 
-			cout << "reading row consisting of " << m << " entries" << endl;
+			cout << "reading row consisting of "
+					<< m << " entries" << endl;
 			for (h = 0; h < m; h++) {
 				if (h == 0) {
 					;
@@ -3465,7 +2826,8 @@ void file_io::read_incidence_by_row_ranks_file(
 
 
 int file_io::inc_file_get_number_of_geometries(
-	char *inc_file_name, int verbose_level)
+	std::string &inc_file_name, int verbose_level)
+// this function is not used
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3479,7 +2841,7 @@ int file_io::inc_file_get_number_of_geometries(
 
 
 	if (f_v) {
-		cout << "inc_file_get_number_of_geometries "
+		cout << "file_io::inc_file_get_number_of_geometries "
 			<< inc_file_name << endl;
 	}
 
@@ -3529,7 +2891,7 @@ int file_io::inc_file_get_number_of_geometries(
 				//cout << cnt << " : " << a << " ";
 			}
 			if (a == -1) {
-				cout << "\nread_incidence_matrix_from_inc_file: "
+				cout << "\nfile_io::read_incidence_matrix_from_inc_file: "
 						"found a complete file with " << cnt
 						<< " solutions" << endl;
 				break;
@@ -3625,71 +2987,21 @@ int_4 file_io::fread_int4(FILE *fp)
 	return I;
 }
 
-void file_io::fwrite_uchars(FILE *fp, uchar *p, int len)
+void file_io::fwrite_uchars(FILE *fp, unsigned char *p, int len)
 {
 	fwrite(p, 1 /* size */, len /* items */, fp);
 }
 
-void file_io::fread_uchars(FILE *fp, uchar *p, int len)
+void file_io::fread_uchars(FILE *fp, unsigned char *p, int len)
 {
 	fread(p, 1 /* size */, len /* items */, fp);
 }
 
-#if 0
-void file_io::read_numbers_from_file(
-		std::string &fname,
-	int *&the_set, int &set_size, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i, a;
-	double d;
-
-	if (f_v) {
-		cout << "read_numbers_from_file opening file " << fname
-				<< " of size " << file_size(fname) << " for reading" << endl;
-	}
-	ifstream f(fname);
-
-	set_size = 1000;
-	the_set = NEW_int(set_size);
-
-	for (i = 0; true; i++) {
-		if (f.eof()) {
-			break;
-		}
-		f >> d;
-		a = (int) d;
-		if (f_vv) {
-			cout << "read_set_from_file: the " << i
-					<< "-th number is " << d << " which becomes "
-					<< a << endl;
-		}
-		if (a == -1) {
-			break;
-		}
-		the_set[i] = a;
-		if (i >= set_size) {
-			cout << "i >= set_size" << endl;
-			exit(1);
-		}
-	}
-	set_size = i;
-	if (f_v) {
-		cout << "read a set of size " << set_size
-				<< " from file " << fname << endl;
-	}
-	if (f_vv) {
-		cout << "the set is:" << endl;
-		Int_vec_print(cout, the_set, set_size);
-		cout << endl;
-	}
-}
-#endif
 
 void file_io::read_ascii_set_of_sets_constant_size(
 		std::string &fname_ascii,
-		int *&Sets, int &nb_sets, int &set_size, int verbose_level)
+		int *&Sets, int &nb_sets, int &set_size,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	if (f_v) {
@@ -3744,7 +3056,8 @@ void file_io::read_ascii_set_of_sets_constant_size(
 				fp >> Sets[nb_sets * set_size + i];
 			}
 
-			Sorting.int_vec_heapsort(Sets + nb_sets * set_size, set_size);
+			Sorting.int_vec_heapsort(
+					Sets + nb_sets * set_size, set_size);
 
 			if (f_v) {
 				cout << "file_io::read_ascii_set_of_sets_constant_size "
@@ -3789,7 +3102,8 @@ void file_io::write_decomposition_stack(
 		int i, j;
 
 
-		f << "<HTDO type=pt ptanz=" << m << " btanz=" << n << " fuse=simple>" << endl;
+		f << "<HTDO type=pt ptanz=" << m
+				<< " btanz=" << n << " fuse=simple>" << endl;
 		f << "        ";
 		for (j = 0; j < n; j++) {
 			f << setw(8) << b[j] << " ";
@@ -3812,7 +3126,8 @@ void file_io::write_decomposition_stack(
 
 	if (f_v) {
 		cout << "file_io::write_decomposition_stack done" << endl;
-		cout << "written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "written file " << fname
+				<< " of size " << file_size(fname) << endl;
 	}
 }
 
@@ -3920,7 +3235,8 @@ void file_io::create_file(
 		int row;
 
 		S = NEW_OBJECT(data_structures::spreadsheet);
-		S->read_spreadsheet(Descr->read_cases_fname, 0 /*verbose_level*/);
+		S->read_spreadsheet(
+				Descr->read_cases_fname, 0 /*verbose_level*/);
 
 		cout << "Read spreadsheet with " << S->nb_rows << " rows" << endl;
 
@@ -4182,7 +3498,8 @@ void file_io::create_files_list_of_cases(
 
 				for (j = 0; j < Descr->nb_final_lines; j++) {
 					snprintf(str, sizeof(str),
-							Descr->final_lines[j].c_str(), i, i, i, i, i, i, i, i);
+							Descr->final_lines[j].c_str(),
+							i, i, i, i, i, i, i, i);
 					fix_escape_characters(str);
 					fp << str << endl;
 				} // next j
@@ -4205,9 +3522,11 @@ void file_io::create_files_list_of_cases(
 	int N1 = 128;
 
 	for (h = 0; h < Descr->N / N1; h++) {
+
 		snprintf(fname_submit_piecewise,
 				sizeof(fname_submit_piecewise),
 				mask_submit_script_piecewise, h * N1);
+
 		{
 			ofstream fp_submit_script(fname_submit_piecewise);
 
@@ -4226,10 +3545,12 @@ void file_io::create_files_list_of_cases(
 				}
 			}
 		}
+
 		cout << "Written file " << fname_submit_piecewise << " of size "
 			<< Fio.file_size(fname_submit_piecewise) << endl;
 		snprintf(cmd, sizeof(cmd), "chmod +x %s", fname_submit_piecewise);
 		system(cmd);
+
 	}
 	if (f_v) {
 		cout << "file_io::create_files_list_of_cases done" << endl;
@@ -4244,730 +3565,6 @@ int file_io::number_of_vertices_in_colored_graph(
 	CG.load(fname, verbose_level);
 
 	return CG.nb_points;
-}
-
-void file_io::do_csv_file_select_rows(
-		std::string &fname,
-		std::string &rows_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_select_rows" << endl;
-	}
-	int *Rows;
-	int nb_rows;
-	data_structures::string_tools ST;
-
-	Int_vec_scan(rows_text, Rows, nb_rows);
-
-	data_structures::spreadsheet S;
-
-	S.read_spreadsheet(fname, verbose_level);
-
-
-	int i;
-
-
-
-	string fname_out;
-
-	fname_out = fname;
-	ST.chop_off_extension(fname_out);
-	fname_out += "_select.csv";
-
-	{
-		ofstream ost(fname_out);
-		//ost << "Row,";
-		S.print_table_row(0, false, ost);
-		for (i = 0; i < nb_rows; i++) {
-			//ost << i << ",";
-			S.print_table_row(Rows[i] + 1, false, ost);
-			}
-		ost << "END" << endl;
-	}
-	cout << "Written file " << fname_out
-			<< " of size " << file_size(fname_out) << endl;
-
-	FREE_int(Rows);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_select_rows done" << endl;
-	}
-}
-
-void file_io::do_csv_file_split_rows_modulo(
-		std::string &fname,
-		int split_modulo,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_split_rows_modulo" << endl;
-	}
-	data_structures::string_tools ST;
-	data_structures::spreadsheet S;
-
-	S.read_spreadsheet(fname, verbose_level);
-
-
-	int i, I;
-
-
-
-
-
-	for (I = 0; I < split_modulo; I++) {
-
-		string fname_out;
-
-		fname_out = fname;
-		ST.chop_off_extension(fname_out);
-		fname_out += "_split_" + std::to_string(I) + "_mod_" + std::to_string(split_modulo) + ".csv";
-
-		{
-			ofstream ost(fname_out);
-			S.print_table_row(0, false, ost);
-			for (i = 0; i < S.nb_rows - 1; i++) {
-				if ((i % split_modulo) != I) {
-					continue;
-				}
-				//ost << i << ",";
-				S.print_table_row(i + 1, false, ost);
-				}
-			ost << "END" << endl;
-		}
-		cout << "Written file " << fname_out
-				<< " of size " << file_size(fname_out) << endl;
-	}
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_split_rows_modulo done" << endl;
-	}
-}
-
-void file_io::do_csv_file_select_cols(
-		std::string &fname,
-		std::string &cols_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_select_cols" << endl;
-	}
-	int *Cols;
-	int nb_cols;
-	data_structures::string_tools ST;
-
-	Int_vec_scan(cols_text, Cols, nb_cols);
-
-	data_structures::spreadsheet S;
-
-	S.read_spreadsheet(fname, verbose_level);
-
-
-	int i;
-	int nb_rows;
-
-	nb_rows = S.nb_rows;
-	if (f_v) {
-		cout << "file_io::do_csv_file_select_cols "
-				"nb_rows=" << nb_rows << endl;
-	}
-
-
-	string fname_out;
-
-	fname_out = fname;
-	ST.chop_off_extension(fname_out);
-	fname_out += "_select.csv";
-
-	{
-		ofstream ost(fname_out);
-		ost << "Row,";
-		S.print_table_row_with_column_selection(
-				0, false, Cols, nb_cols, ost, verbose_level);
-		for (i = 0; i < nb_rows - 1; i++) {
-			ost << i << ",";
-			S.print_table_row_with_column_selection(i + 1, false,
-					Cols, nb_cols, ost, verbose_level);
-			}
-		ost << "END" << endl;
-	}
-	cout << "Written file " << fname_out
-			<< " of size " << file_size(fname_out) << endl;
-
-	fname_out = fname;
-	ST.chop_off_extension(fname_out);
-	fname_out += "_special.csv";
-
-	{
-		ofstream ost(fname_out);
-		//ost << "Row,";
-		//S.print_table_row_with_column_selection(0, false, Cols, nb_cols, ost);
-		for (i = 0; i < nb_rows - 1; i++) {
-			ost << "Orb" << i << "=";
-			S.print_table_row_with_column_selection(i + 1, false,
-					Cols, nb_cols, ost, verbose_level);
-			}
-		ost << "END" << endl;
-	}
-	cout << "Written file " << fname_out
-			<< " of size " << file_size(fname_out) << endl;
-
-	FREE_int(Cols);
-	if (f_v) {
-		cout << "file_io::do_csv_file_select_cols done" << endl;
-	}
-}
-
-
-
-void file_io::do_csv_file_select_rows_and_cols(
-		std::string &fname,
-		std::string &rows_text, std::string &cols_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_select_rows_and_cols" << endl;
-	}
-	int *Rows;
-	int nb_rows;
-	int *Cols;
-	int nb_cols;
-	data_structures::string_tools ST;
-
-	Int_vec_scan(rows_text, Rows, nb_rows);
-	cout << "Rows: ";
-	Int_vec_print(cout, Rows, nb_rows);
-	cout << endl;
-
-	Int_vec_scan(cols_text, Cols, nb_cols);
-	cout << "Cols: ";
-	Int_vec_print(cout, Cols, nb_cols);
-	cout << endl;
-
-	data_structures::spreadsheet S;
-
-	S.read_spreadsheet(fname, verbose_level);
-
-
-	int i;
-
-
-
-	string fname_out;
-
-	fname_out = fname;
-	ST.chop_off_extension(fname_out);
-	fname_out += "_select.csv";
-
-	{
-		ofstream ost(fname_out);
-
-
-
-
-		ost << "Row,";
-		S.print_table_row_with_column_selection(
-				0, false, Cols, nb_cols, ost, verbose_level);
-
-		for (i = 0; i < nb_rows; i++) {
-
-
-			S.print_table_row(Rows[i] + 1, false, cout);
-			cout << endl;
-
-			ost << i << ",";
-			S.print_table_row_with_column_selection(Rows[i] + 1, false,
-					Cols, nb_cols, ost, verbose_level);
-			}
-		ost << "END" << endl;
-	}
-	cout << "Written file " << fname_out
-			<< " of size " << file_size(fname_out) << endl;
-
-
-	FREE_int(Rows);
-	FREE_int(Cols);
-	if (f_v) {
-		cout << "file_io::do_csv_file_select_rows done" << endl;
-	}
-}
-
-void file_io::do_csv_file_extract_column_to_txt(
-		std::string &csv_fname, std::string &col_label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_extract_column_to_txt" << endl;
-	}
-	string fname;
-	data_structures::string_tools ST;
-
-	data_structures::spreadsheet *S;
-	int identifier_column;
-
-	S = NEW_OBJECT(data_structures::spreadsheet);
-
-	S->read_spreadsheet(csv_fname, 0 /*verbose_level*/);
-	cout << "Table " << csv_fname << " has been read" << endl;
-
-
-	identifier_column = S->find_column(col_label);
-
-
-	fname = csv_fname;
-	ST.replace_extension_with(fname, "_");
-	fname += col_label + ".txt";
-
-
-
-
-	{
-		ofstream ost(fname);
-
-		int i, j;
-
-		for (i = 1; i < S->nb_rows; i++) {
-			string entry;
-			long int *v;
-			int sz;
-
-			S->get_string(entry, i, identifier_column);
-			Lint_vec_scan(entry, v, sz);
-			ost << sz;
-			for (j = 0; j < sz; j++) {
-				ost << " " << v[j];
-			}
-			ost << endl;
-			FREE_lint(v);
-		}
-		ost << -1 << endl;
-	}
-	if (f_v) {
-		cout << "Written file " << fname
-				<< " of size " << file_size(fname) << endl;
-	}
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_extract_column_to_txt done" << endl;
-	}
-}
-
-
-
-void file_io::do_csv_file_sort_each_row(
-		std::string &csv_fname, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_sort_each_row" << endl;
-	}
-	int *M;
-	int m, n;
-	data_structures::sorting Sorting;
-	int i;
-	string fname;
-	data_structures::string_tools ST;
-
-	int_matrix_read_csv(csv_fname, M, m, n, verbose_level);
-	for (i = 0; i < m; i++) {
-		Sorting.int_vec_heapsort(M + i * n, n);
-	}
-	fname = csv_fname;
-	ST.replace_extension_with(fname, "_sorted.csv");
-
-	int_matrix_write_csv(fname, M, m, n);
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
-	}
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_sort_each_row done" << endl;
-	}
-}
-
-void file_io::do_csv_file_join(
-		std::vector<std::string> &csv_file_join_fname,
-		std::vector<std::string> &csv_file_join_identifier,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_join" << endl;
-	}
-
-	int nb_files;
-	int i;
-
-	nb_files = csv_file_join_fname.size();
-
-	data_structures::spreadsheet *S;
-	int *identifier_column;
-
-	S = new data_structures::spreadsheet[nb_files];
-	identifier_column = NEW_int(nb_files);
-
-	for (i = 0; i < nb_files; i++) {
-		cout << "Reading table " << csv_file_join_fname[i] << endl;
-		S[i].read_spreadsheet(csv_file_join_fname[i], 0 /*verbose_level*/);
-		cout << "Table " << csv_file_join_fname[i] << " has been read" << endl;
-#if 0
-		if (i == 0) {
-			cout << "The first table is:" << endl;
-			S[0].print_table(cout, false);
-		}
-#endif
-		if (false) {
-			cout << "The " << i << "th table is:" << endl;
-			S[i].print_table(cout, false);
-		}
-
-
-	}
-
-#if 0
-	cout << "adding " << nb_with << " -with entries" << endl;
-	for (i = 0; i < nb_with; i++) {
-		S[with_table[i]].add_column_with_constant_value(with_label[i], with_value[i]);
-		}
-#endif
-
-	for (i = 0; i < nb_files; i++) {
-		identifier_column[i] = S[i].find_by_column(csv_file_join_identifier[i].c_str());
-		cout << "Table " << csv_file_join_fname[i]
-			<< ", identifier " << identifier_column[i] << endl;
-	}
-
-#if 0
-	for (i = 0; i < nb_files; i++) {
-		by_column[i] = S[i].find_by_column(join_by);
-		cout << "File " << fname[i] << " by_column[" << i << "]=" << by_column[i] << endl;
-	}
-#endif
-
-	cout << "joining " << nb_files << " files" << endl;
-	for (i = 1; i < nb_files; i++) {
-		cout << "Joining table " << 0 << " = " << csv_file_join_fname[0]
-			<< " with table " << i << " = " << csv_file_join_fname[i] << endl;
-		S[0].join_with(S + i, identifier_column[0], identifier_column[i], verbose_level - 2);
-		cout << "joining " << csv_file_join_fname[0]
-			<< " with table " << csv_file_join_fname[i] << " done" << endl;
-#if 0
-		cout << "After join, the table is:" << endl;
-		S[0].print_table(cout, false);
-#endif
-	}
-
-
-
-
-
-
-#if 0
-	if (f_drop) {
-		S[0].remove_rows(drop_column, drop_label, verbose_level);
-	}
-#endif
-
-
-	string save_fname;
-	data_structures::string_tools ST;
-
-	save_fname = csv_file_join_fname[0];
-	ST.chop_off_extension(save_fname);
-	save_fname += "_joined.csv";
-
-	{
-		ofstream f(save_fname);
-		S[0].print_table(f, false);
-		f << "END" << endl;
-	}
-	cout << "Written file " << save_fname
-			<< " of size " << file_size(save_fname) << endl;
-
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_join done" << endl;
-	}
-}
-
-void file_io::do_csv_file_concatenate(
-		std::vector<std::string> &fname_in, std::string &fname_out,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_concatenate" << endl;
-	}
-
-	int nb_files;
-	int i;
-
-	nb_files = fname_in.size();
-
-	data_structures::spreadsheet *S;
-	//int *identifier_column;
-
-	S = new data_structures::spreadsheet[nb_files];
-	//identifier_column = NEW_int(nb_files);
-
-	for (i = 0; i < nb_files; i++) {
-		cout << "Reading table " << fname_in[i] << endl;
-		S[i].read_spreadsheet(fname_in[i], 0 /*verbose_level*/);
-		cout << "Table " << fname_in[i] << " has been read" << endl;
-
-		if (false) {
-			cout << "The " << i << "-th table is:" << endl;
-			S[i].print_table(cout, false);
-		}
-
-
-	}
-
-	{
-		ofstream ost(fname_out);
-		int j;
-		int f_enclose_in_parentheses = false;
-
-		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
-		for (i = 0; i < nb_files; i++) {
-			//S[i].print_table(ost, false);
-			for (j = 1; j < S[i].nb_rows; j++) {
-				S[i].print_table_row(j, f_enclose_in_parentheses, ost);
-			}
-		}
-		ost << "END" << endl;
-	}
-	cout << "Written file " << fname_out
-			<< " of size " << file_size(fname_out) << endl;
-
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_concatenate done" << endl;
-	}
-}
-
-void file_io::do_csv_file_concatenate_from_mask(
-		std::string &fname_in_mask, int N, std::string &fname_out,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_concatenate_from_mask" << endl;
-	}
-
-	int nb_files;
-	long int i;
-
-	nb_files = N;
-
-	data_structures::spreadsheet *S;
-	//int *identifier_column;
-
-	S = new data_structures::spreadsheet[nb_files];
-	//identifier_column = NEW_int(nb_files);
-
-	for (i = 0; i < nb_files; i++) {
-
-		char str[1000];
-		std::string fname_in;
-
-		snprintf(str, sizeof(str), fname_in_mask.c_str(), i);
-		fname_in.assign(str);
-
-		cout << "Reading table " << fname_in << endl;
-		S[i].read_spreadsheet(fname_in, 0 /*verbose_level*/);
-		cout << "Table " << fname_in << " has been read" << endl;
-
-		if (false) {
-			cout << "The " << i << "-th table is:" << endl;
-			S[i].print_table(cout, false);
-		}
-
-
-	}
-
-	{
-		ofstream ost(fname_out);
-		int j;
-		int cnt = 0;
-		int f_enclose_in_parentheses = false;
-
-		ost << "Line,PO,";
-		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
-		for (i = 0; i < nb_files; i++) {
-			//S[i].print_table(ost, false);
-			for (j = 1; j < S[i].nb_rows; j++) {
-				ost << "\"" << cnt << "\"" << ",";
-				ost << "\"" << i << "\"" << ",";
-				S[i].print_table_row(j, f_enclose_in_parentheses, ost);
-				cnt++;
-			}
-		}
-		ost << "END" << endl;
-	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
-
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_concatenate_from_mask done" << endl;
-	}
-}
-
-
-void file_io::do_csv_file_latex(
-		std::string &fname,
-		int f_produce_latex_header,
-		int nb_lines_per_table,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_latex" << endl;
-	}
-
-	data_structures::spreadsheet S;
-
-	S.read_spreadsheet(fname, verbose_level);
-
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_latex S.nb_rows = " << S.nb_rows << endl;
-		cout << "file_io::do_csv_file_latex S.nb_cols = " << S.nb_cols << endl;
-	}
-
-
-	string author;
-	string title;
-	string extra_praeamble;
-
-
-	title = "File";
-	author = "Orbiter";
-
-
-
-
-	string fname_out;
-	data_structures::string_tools ST;
-
-	fname_out = fname;
-	ST.chop_off_extension(fname_out);
-	fname_out += ".tex";
-
-	{
-		ofstream ost(fname_out);
-		l1_interfaces::latex_interface L;
-
-		//S.print_table_latex_all_columns(ost, false /* f_enclose_in_parentheses */);
-
-		int *f_column_select;
-		int j;
-
-		f_column_select = NEW_int(S.nb_cols);
-		for (j = 0; j < S.nb_cols; j++) {
-			f_column_select[j] = true;
-		}
-		f_column_select[0] = false;
-
-
-		if (f_produce_latex_header) {
-			//L.head_easy(ost);
-			L.head(ost,
-				false /* f_book */,
-				true /* f_title */,
-				title, author,
-				false /*f_toc */,
-				false /* f_landscape */,
-				false /* f_12pt */,
-				false /* f_enlarged_page */,
-				true /* f_pagenumbers */,
-				extra_praeamble /* extras_for_preamble */);
-		}
-
-		S.print_table_latex(ost,
-				f_column_select,
-				false /* f_enclose_in_parentheses */,
-				nb_lines_per_table);
-
-		FREE_int(f_column_select);
-
-		if (f_produce_latex_header) {
-			L.foot(ost);
-		}
-
-	}
-	cout << "Written file " << fname_out
-			<< " of size " << file_size(fname_out) << endl;
-
-
-	if (f_v) {
-		cout << "file_io::do_csv_file_select_rows done" << endl;
-	}
-}
-
-void file_io::read_csv_file_and_tally(
-		std::string &fname, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::read_csv_file_and_tally" << endl;
-	}
-
-	long int *M;
-	int m, n;
-
-	lint_matrix_read_csv(fname, M, m, n, verbose_level);
-
-	cout << "The matrix has size " << m << " x " << n << endl;
-
-	data_structures::tally T;
-
-	T.init_lint(M, m * n, true, 0);
-	cout << "tally:" << endl;
-	T.print(true);
-	cout << endl;
-
-
-	data_structures::set_of_sets *SoS;
-	int *types;
-	int nb_types;
-	int i;
-
-	SoS = T.get_set_partition_and_types(
-			types, nb_types, verbose_level);
-
-	cout << "fibers:" << endl;
-	for (i = 0; i < nb_types; i++) {
-		cout << i << " : " << types[i] << " : ";
-		Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
-		cout << endl;
-	}
-
-	//cout << "set partition:" << endl;
-	//SoS->print_table();
-
-	FREE_lint(M);
-
-	if (f_v) {
-		cout << "file_io::read_csv_file_and_tally done" << endl;
-	}
 }
 
 void file_io::read_solutions_and_tally(
@@ -5041,6 +3638,7 @@ void file_io::save_fibration(
 	if (f_v) {
 		cout << "file_io::save_fibration" << endl;
 	}
+
 	data_structures::string_tools ST;
 	string data_fname1;
 	string data_fname2;
@@ -5062,9 +3660,11 @@ void file_io::save_fibration(
 	File_idx->init_basic_with_Sz_in_int(
 			INT_MAX /* underlying_set_size */,
 				nb_sets, Sz, verbose_level);
+
 	Obj_idx->init_basic_with_Sz_in_int(
 			INT_MAX /* underlying_set_size */,
 				nb_sets, Sz, verbose_level);
+
 	for (i = 0; i < nb_sets; i++) {
 		l = Fibration[i].size();
 		for (j = 0; j < l; j++) {
@@ -5078,6 +3678,7 @@ void file_io::save_fibration(
 
 	data_fname1.assign(fname);
 	ST.replace_extension_with(data_fname1, "1.csv");
+
 	data_fname2.assign(fname);
 	ST.replace_extension_with(data_fname2, "2.csv");
 
@@ -5086,6 +3687,7 @@ void file_io::save_fibration(
 				"before File_idx->save_csv" << endl;
 	}
 	File_idx->save_csv(data_fname1, true, verbose_level);
+
 	if (f_v) {
 		cout << "file_io::save_fibration "
 				"before Obj_idx->save_csv" << endl;
@@ -5146,11 +3748,12 @@ void file_io::save_cumulative_canonical_labeling(
 			M[u * canonical_labeling_len + v] = Cumulative_canonical_labeling[u][v];
 		}
 	}
-	lint_matrix_write_csv(canonical_labeling_fname,
+	Csv_file_support->lint_matrix_write_csv(canonical_labeling_fname,
 			M, Cumulative_canonical_labeling.size(), canonical_labeling_len);
 
 	if (f_v) {
-		cout << "Written file " << canonical_labeling_fname << " of size " << file_size(canonical_labeling_fname) << endl;
+		cout << "Written file " << canonical_labeling_fname
+				<< " of size " << file_size(canonical_labeling_fname) << endl;
 	}
 	FREE_lint(M);
 
@@ -5181,13 +3784,14 @@ void file_io::save_cumulative_ago(
 
 	label.assign("Ago");
 
-	lint_vec_write_csv(M, Cumulative_Ago.size(), ago_fname, label);
+	Csv_file_support->lint_vec_write_csv(M, Cumulative_Ago.size(), ago_fname, label);
 
 	data_structures::tally T;
 
 	T.init_lint(M, Cumulative_Ago.size(), false, 0);
 	if (f_v) {
-		cout << "Written file " << ago_fname << " of size " << file_size(ago_fname) << endl;
+		cout << "Written file " << ago_fname
+				<< " of size " << file_size(ago_fname) << endl;
 	}
 
 	if (f_v) {
@@ -5236,11 +3840,12 @@ void file_io::save_cumulative_data(
 			M[u * data_len + v] = Cumulative_data[u][v];
 		}
 	}
-	lint_matrix_write_csv(data_fname,
+	Csv_file_support->lint_matrix_write_csv(data_fname,
 			M, Cumulative_data.size(), data_len);
 
 	if (f_v) {
-		cout << "Written file " << data_fname << " of size " << file_size(data_fname) << endl;
+		cout << "Written file " << data_fname
+				<< " of size " << file_size(data_fname) << endl;
 	}
 	FREE_lint(M);
 
@@ -5248,7 +3853,8 @@ void file_io::save_cumulative_data(
 
 void file_io::write_characteristic_matrix(
 		std::string &fname,
-		long int *data, int nb_rows, int data_sz, int nb_cols, int verbose_level)
+		long int *data, int nb_rows, int data_sz, int nb_cols,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *T;
@@ -5264,12 +3870,13 @@ void file_io::write_characteristic_matrix(
 		}
 
 	}
-	int_matrix_write_csv(fname, T,
+	Csv_file_support->int_matrix_write_csv(fname, T,
 			nb_rows,
 			nb_cols);
 
 	if (f_v) {
-		cout << "file_io::write_characteristic_matrix Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "file_io::write_characteristic_matrix "
+				"Written file " << fname << " of size " << file_size(fname) << endl;
 	}
 	FREE_int(T);
 
@@ -5286,6 +3893,7 @@ void file_io::extract_from_makefile(
 	int f_v = (verbose_level >= 1);
 	char *buf;
 	int nb_lines;
+	long int sz;
 
 	if (f_v) {
 		cout << "file_io::extract_from_makefile " << fname << endl;
@@ -5293,12 +3901,14 @@ void file_io::extract_from_makefile(
 			<< file_size(fname) << endl;
 	}
 
-	if (file_size(fname) < 0) {
+	sz = file_size(fname);
+	if (sz < 0) {
 		cout << "file_io::extract_from_makefile file size is -1" << endl;
 		exit(1);
 	}
 
-	buf = NEW_char(MY_OWN_BUFSIZE);
+
+	buf = NEW_char(sz + 1);
 
 
 
@@ -5315,7 +3925,7 @@ void file_io::extract_from_makefile(
 
 			//cout << "count_number_of_lines_in_file "
 			// "reading line, nb_sol = " << nb_sol << endl;
-			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 
 			f_found = false;
 
@@ -5323,7 +3933,8 @@ void file_io::extract_from_makefile(
 				f_found = true;
 			}
 			if (f_found && f_tail) {
-				if (strncmp(buf + label.length(), tail.c_str(), tail.length()) != 0) {
+				if (strncmp(buf + label.length(),
+						tail.c_str(), tail.length()) != 0) {
 					f_found = false;
 				}
 			}
@@ -5331,7 +3942,9 @@ void file_io::extract_from_makefile(
 			if (f_found) {
 				f_has_been_found = true;
 				if (f_v) {
-					cout << "file_io::extract_from_makefile found label " << label << " at line " << nb_lines << endl;
+					cout << "file_io::extract_from_makefile "
+							"found label " << label
+							<< " at line " << nb_lines << endl;
 				}
 				string s;
 
@@ -5341,7 +3954,7 @@ void file_io::extract_from_makefile(
 					if (fp.eof()) {
 						break;
 					}
-					fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+					fp.getline(buf, sz, '\n');
 					if (strlen(buf) == 0) {
 						break;
 					}
@@ -5366,131 +3979,6 @@ void file_io::extract_from_makefile(
 	}
 }
 
-
-void file_io::grade_statistic_from_csv(
-		std::string &fname_csv,
-		int f_midterm1, std::string &midterm1_label,
-		int f_midterm2, std::string &midterm2_label,
-		int f_final, std::string &final_label,
-		int f_oracle_grade, std::string &oracle_grade_label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::grade_statistic_from_csv" << endl;
-	}
-
-	data_structures::spreadsheet S;
-
-	S.read_spreadsheet(fname_csv, verbose_level);
-
-
-	if (f_v) {
-		cout << "file_io::grade_statistic_from_csv S.nb_rows = " << S.nb_rows << endl;
-		cout << "file_io::grade_statistic_from_csv S.nb_cols = " << S.nb_cols << endl;
-	}
-
-	int m1_idx, m2_idx, f_idx, o_idx;
-
-	m1_idx = S.find_column(midterm1_label);
-	m2_idx = S.find_column(midterm2_label);
-	f_idx = S.find_column(final_label);
-	o_idx = S.find_column(oracle_grade_label);
-
-	int *M1_score;
-	int *M2_score;
-	int *F_score;
-	std::string *O_grade;
-	int i, j, a;
-
-	M1_score = NEW_int(S.nb_rows);
-	M2_score = NEW_int(S.nb_rows);
-	F_score = NEW_int(S.nb_rows);
-	O_grade = new string[S.nb_rows];
-
-	for (i = 0; i < S.nb_rows - 1; i++) {
-		M1_score[i] = S.get_lint(i + 1, m1_idx);
-		M2_score[i] = S.get_lint(i + 1, m2_idx);
-		F_score[i] = S.get_lint(i + 1, f_idx);
-		S.get_string(O_grade[i], i + 1, o_idx);
-	}
-
-	int m1_count_dec[10];
-	int m2_count_dec[10];
-	int f_count_dec[10];
-
-	Int_vec_zero(m1_count_dec, 10);
-	Int_vec_zero(m2_count_dec, 10);
-	Int_vec_zero(f_count_dec, 10);
-
-	for (i = 0; i < S.nb_rows - 1; i++) {
-		a = M1_score[i];
-		j = a / 10;
-		if (j >= 10) {
-			j = 0;
-		}
-		if (j < 0) {
-			j = 0;
-		}
-		m1_count_dec[j]++;
-	}
-
-	for (i = 0; i < S.nb_rows - 1; i++) {
-		a = M2_score[i];
-		j = a / 10;
-		if (j >= 10) {
-			j = 9;
-		}
-		if (j < 0) {
-			j = 0;
-		}
-		m2_count_dec[j]++;
-	}
-
-	for (i = 0; i < S.nb_rows - 1; i++) {
-		a = F_score[i];
-		j = a / 10;
-		if (j >= 10) {
-			j = 9;
-		}
-		if (j < 0) {
-			j = 0;
-		}
-		f_count_dec[j]++;
-	}
-
-	int *T;
-
-	T = NEW_int(10 * 3);
-	for (i = 0; i < 10; i++) {
-		T[i * 3 + 0] = m1_count_dec[i];
-		T[i * 3 + 1] = m2_count_dec[i];
-		T[i * 3 + 2] = f_count_dec[i];
-	}
-
-	string fname_summary;
-
-	data_structures::string_tools ST;
-
-
-	fname_summary = fname_csv;
-	ST.chop_off_extension(fname_summary);
-	fname_summary += "_summary.csv";
-
-	int_matrix_write_csv(fname_summary, T, 10, 3);
-
-	if (f_v) {
-		cout << "Written file " << fname_summary << " of size " << file_size(fname_summary) << endl;
-	}
-
-
-
-
-	if (f_v) {
-		cout << "file_io::grade_statistic_from_csv done" << endl;
-	}
-}
 
 
 void file_io::count_solutions_in_list_of_files(
@@ -5541,7 +4029,8 @@ void file_io::count_solutions_in_list_of_files(
 			char *p_buf;
 
 			if (f_v) {
-				cout << "reading file " << fname[i] << " the_case = " << the_case << " of size "
+				cout << "reading file " << fname[i]
+					<< " the_case = " << the_case << " of size "
 					<< file_size(fname[i]) << endl;
 			}
 			if (file_size(fname[i]) <= 0) {
@@ -5637,7 +4126,8 @@ void file_io::split_by_values(
 	int *M2;
 	int m, n, len, t, h, a;
 
-	int_matrix_read_csv(fname_in, M, m, n, verbose_level);
+	Csv_file_support->int_matrix_read_csv(
+			fname_in, M, m, n, verbose_level);
 	len = m * n;
 	data_structures::tally T;
 
@@ -5662,9 +4152,10 @@ void file_io::split_by_values(
 				M2[h] = 1;
 			}
 		}
-		int_matrix_write_csv(fname, M2, m, n);
+		Csv_file_support->int_matrix_write_csv(fname, M2, m, n);
 		if (f_v) {
-			cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+			cout << "Written file " << fname
+					<< " of size " << file_size(fname) << endl;
 		}
 	}
 	FREE_int(M2);
@@ -5692,8 +4183,12 @@ void file_io::change_values(
 	int sz_output;
 
 
-	Get_lint_vector_from_label(input_values_label, input_values, sz_input, 0 /* verbose_level */);
-	Get_lint_vector_from_label(output_values_label, output_values, sz_output, 0 /* verbose_level */);
+	Get_lint_vector_from_label(
+			input_values_label,
+			input_values, sz_input, 0 /* verbose_level */);
+	Get_lint_vector_from_label(
+			output_values_label,
+			output_values, sz_output, 0 /* verbose_level */);
 
 	if (sz_input != sz_output) {
 		cout << "file_io::change_values sz_input != sz_output" << endl;
@@ -5704,7 +4199,7 @@ void file_io::change_values(
 	long int *orig_pos;
 	int m, n, len, h, a, b, idx;
 
-	int_matrix_read_csv(fname_in, M, m, n, verbose_level);
+	Csv_file_support->int_matrix_read_csv(fname_in, M, m, n, verbose_level);
 	len = m * n;
 
 	orig_pos = NEW_lint(sz_input);
@@ -5730,7 +4225,7 @@ void file_io::change_values(
 		M[h] = b;
 	}
 
-	int_matrix_write_csv(fname_out, M, m, n);
+	Csv_file_support->int_matrix_write_csv(fname_out, M, m, n);
 	if (f_v) {
 		cout << "Written file " << fname_out
 				<< " of size " << file_size(fname_out) << endl;
@@ -5782,7 +4277,8 @@ void file_io::read_file_as_array_of_strings(
 
 
 	if (f_v) {
-		cout << "file_io::read_file_as_array_of_string nb_lines = " << nb_lines << endl;
+		cout << "file_io::read_file_as_array_of_string "
+				"nb_lines = " << nb_lines << endl;
 	}
 
 	Lines = new string[nb_lines];
@@ -5930,118 +4426,6 @@ void file_io::read_error_pattern_from_output_file(
 	FREE_char(buf);
 	if (f_v) {
 		cout << "file_io::read_error_pattern_from_output_file done" << endl;
-	}
-}
-
-void file_io::csv_file_sort_rows(
-		std::string &fname,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::csv_file_sort_rows fname = "<< fname << endl;
-	}
-
-	int *M;
-	int m, n;
-
-
-	int_matrix_read_csv(
-				fname, M,
-			m, n, verbose_level);
-
-	data_structures::int_matrix *I;
-
-	I = NEW_OBJECT(data_structures::int_matrix);
-	I->allocate(m, n);
-
-	int i, j, a;
-
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			a = M[i * n + j];
-			I->M[i * n + j] = a;
-		}
-	}
-
-
-	I->sort_rows(verbose_level);
-
-	string fname2;
-	data_structures::string_tools ST;
-
-	fname2 = fname;
-
-	ST.chop_off_extension_and_path(fname2);
-
-	fname2 += "_sorted.csv";
-
-	int_matrix_write_csv(fname2, I->M, m, n);
-
-	cout << "written file "
-		<< fname << " of size " << file_size(fname) << endl;
-
-
-	if (f_v) {
-		cout << "file_io::csv_file_sort_rows done" << endl;
-	}
-}
-
-void file_io::csv_file_sort_rows_and_remove_duplicates(
-		std::string &fname,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::csv_file_sort_rows_and_remove_duplicates fname = "<< fname << endl;
-	}
-
-	int *M;
-	int m, n;
-
-
-	int_matrix_read_csv(
-				fname, M,
-			m, n, verbose_level);
-
-	data_structures::int_matrix *I;
-
-	I = NEW_OBJECT(data_structures::int_matrix);
-	I->allocate(m, n);
-
-	int i, j, a;
-
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			a = M[i * n + j];
-			I->M[i * n + j] = a;
-		}
-	}
-
-
-	I->sort_rows(verbose_level);
-
-	I->remove_duplicates(verbose_level);
-
-	string fname2;
-	data_structures::string_tools ST;
-
-	fname2 = fname;
-
-	ST.chop_off_extension_and_path(fname2);
-
-	fname2 += "_sorted.csv";
-
-	int_matrix_write_csv(fname2, I->M, I->m, n);
-
-	cout << "written file "
-		<< fname << " of size " << file_size(fname) << endl;
-
-
-	if (f_v) {
-		cout << "file_io::csv_file_sort_rows_and_remove_duplicates done" << endl;
 	}
 }
 

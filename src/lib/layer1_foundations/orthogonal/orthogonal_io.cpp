@@ -780,14 +780,16 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "orthogonal::export_incidence_matrix_to_csv computing points on line for all lines finished" << endl;
+		cout << "orthogonal::export_incidence_matrix_to_csv "
+				"computing points on line for all lines finished" << endl;
 	}
 
 	string fname;
 
 	make_fname_incidence_matrix_csv(fname);
 
-	Fio.int_matrix_write_csv(fname, T, N_points, N_lines);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, T, N_points, N_lines);
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;

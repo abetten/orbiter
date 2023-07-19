@@ -57,11 +57,13 @@ interface_coding_theory::interface_coding_theory()
 	random_noise_of_burst_type_in_bitmap_file_denominator = 0;
 	random_noise_of_burst_type_in_bitmap_file_burst_length = 0;
 
+#if 0
 	f_crc_test = false;
 	//std::string crc_test_type;
 	crc_test_block_length = 0;
 	crc_test_N = 0;
 	crc_test_k = 0;
+#endif
 
 }
 
@@ -95,9 +97,11 @@ void interface_coding_theory::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-random_noise_of_burst_type_in_bitmap_file") == 0) {
 		cout << "-random_noise_of_burst_type_in_bitmap_file <fname_in> <fname_out> <numerator> <denominator> <burst_length>" << endl;
 	}
+#if 0
 	else if (ST.stringcmp(argv[i], "-crc_test") == 0) {
 		cout << "-crc_test <type> <crc_test_block_length> <N> <k>" << endl;
 	}
+#endif
 }
 
 
@@ -138,9 +142,11 @@ int interface_coding_theory::recognize_keyword(int argc,
 	else if (ST.stringcmp(argv[i], "-random_noise_of_burst_type_in_bitmap_file") == 0) {
 		return true;
 	}
+#if 0
 	else if (ST.stringcmp(argv[i], "-crc_test") == 0) {
 		return true;
 	}
+#endif
 	if (f_v) {
 		cout << "interface_coding_theory::recognize_keyword not recognizing" << endl;
 	}
@@ -292,6 +298,7 @@ void interface_coding_theory::read_arguments(int argc,
 				<< endl;
 		}
 	}
+#if 0
 	else if (ST.stringcmp(argv[i], "-crc_test") == 0) {
 		f_crc_test = true;
 		crc_test_type.assign(argv[++i]);
@@ -307,6 +314,7 @@ void interface_coding_theory::read_arguments(int argc,
 				<< endl;
 		}
 	}
+#endif
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments done" << endl;
@@ -355,6 +363,7 @@ void interface_coding_theory::print()
 			<< " " << random_noise_of_burst_type_in_bitmap_file_burst_length
 			<< endl;
 	}
+#if 0
 	if (f_crc_test) {
 		cout << "-crc_test "
 				<< " " << crc_test_type
@@ -363,6 +372,7 @@ void interface_coding_theory::print()
 			<< " " << crc_test_k
 			<< endl;
 	}
+#endif
 }
 
 
@@ -481,6 +491,7 @@ void interface_coding_theory::worker(int verbose_level)
 				verbose_level);
 	}
 
+#if 0
 	else if (f_crc_test) {
 
 		cout << "-crc_test" << endl;
@@ -493,6 +504,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 		CRC.test_crc_object(&CRC_object, crc_test_N, crc_test_k, verbose_level);
 	}
+#endif
 
 
 

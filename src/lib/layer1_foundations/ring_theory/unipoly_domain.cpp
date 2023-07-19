@@ -351,7 +351,8 @@ void unipoly_domain::create_object_from_csv_file(
 					"f_factorring" << endl;
 		exit(1);
 	}
-	Fio.lint_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname, M, m, n, 0 /* verbose_level */);
 	len = m * n;
 
 

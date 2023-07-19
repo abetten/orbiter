@@ -2365,7 +2365,7 @@ void substructure_lifting_data::write_starter_nb_orbits(int verbose_level)
 	string label;
 
 	label.assign("Stab_orbits");
-	Fio.int_vec_write_csv(
+	Fio.Csv_file_support->int_vec_write_csv(
 			first_flag_orbit_of_starter, Iso->Sub->nb_starter,
 			fname_orbits_of_stabilizer_csv, label);
 
@@ -2400,7 +2400,8 @@ void substructure_lifting_data::read_starter_nb_orbits(int verbose_level)
 				<< Fio.file_size(fname_orbits_of_stabilizer_csv) << endl;
 	}
 
-	Fio.int_matrix_read_csv(fname_orbits_of_stabilizer_csv,
+	Fio.Csv_file_support->int_matrix_read_csv(
+			fname_orbits_of_stabilizer_csv,
 			M, m, n, verbose_level - 1);
 
 	if (m != Iso->Sub->nb_starter) {
@@ -2454,7 +2455,8 @@ void substructure_lifting_data::write_hash_and_datref_file(
 			T[2 * i + 0] = id_to_hash[i];
 			T[2 * i + 1] = id_to_datref[i];
 		}
-		Fio.lint_matrix_write_csv(fname_hash_and_datref, T, N, 2);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname_hash_and_datref, T, N, 2);
 
 
 		data_structures::tally_lint TA;
@@ -2505,7 +2507,8 @@ void substructure_lifting_data::read_hash_and_datref_file(int verbose_level)
 		long int *T;
 		int m, n;
 
-		Fio.lint_matrix_read_csv(fname_hash_and_datref, T, m, n, verbose_level);
+		Fio.Csv_file_support->lint_matrix_read_csv(
+				fname_hash_and_datref, T, m, n, verbose_level);
 
 
 		if (m != N) {
@@ -2605,7 +2608,8 @@ void substructure_lifting_data::write_orbit_data(int verbose_level)
 			T[2 * i + 0] = flag_orbit_solution_first[i];
 			T[2 * i + 1] = flag_orbit_solution_len[i];
 		}
-		Fio.lint_matrix_write_csv(fname_flag_orbits, T, nb_flag_orbits, 2);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname_flag_orbits, T, nb_flag_orbits, 2);
 		FREE_lint(T);
 
 
@@ -2630,7 +2634,8 @@ void substructure_lifting_data::write_orbit_data(int verbose_level)
 			T[4 * i + 2] = schreier_vector[i];
 			T[4 * i + 3] = schreier_prev[i];
 		}
-		Fio.lint_matrix_write_csv(fname_stab_orbits, T, N, 4);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname_stab_orbits, T, N, 4);
 		FREE_lint(T);
 
 
@@ -2696,7 +2701,8 @@ void substructure_lifting_data::read_orbit_data(
 		long int *T;
 		int m, n;
 
-		Fio.lint_matrix_read_csv(fname_flag_orbits, T, m, n, verbose_level);
+		Fio.Csv_file_support->lint_matrix_read_csv(
+				fname_flag_orbits, T, m, n, verbose_level);
 
 		nb_flag_orbits = m;
 
@@ -2727,7 +2733,8 @@ void substructure_lifting_data::read_orbit_data(
 		long int *T;
 		int m, n;
 
-		Fio.lint_matrix_read_csv(fname_stab_orbits, T, m, n, verbose_level);
+		Fio.Csv_file_support->lint_matrix_read_csv(
+				fname_stab_orbits, T, m, n, verbose_level);
 
 		N = m;
 

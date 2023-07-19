@@ -2356,7 +2356,8 @@ void orbits_on_something::export_something_worker(
 
 
 
-		Fio.int_matrix_write_csv(fname, Pts, 1, Orb.size());
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, Pts, 1, Orb.size());
 
 		FREE_int(Pts);
 

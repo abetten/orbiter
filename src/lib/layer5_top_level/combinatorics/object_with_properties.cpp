@@ -454,14 +454,16 @@ void object_with_properties::latex_report(
 		string fname;
 
 		fname = "point_labels.csv";
-		Fio.int_matrix_write_csv(fname, point_labels, Enc->nb_rows, 1);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, point_labels, Enc->nb_rows, 1);
 
 		cout << "object_with_properties::latex_report "
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 
 		fname = "block_labels.csv";
-		Fio.int_matrix_write_csv(fname, block_labels, Enc->nb_cols, 1);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, block_labels, Enc->nb_cols, 1);
 
 		cout << "object_with_properties::latex_report "
 				"Written file " << fname << " of size "

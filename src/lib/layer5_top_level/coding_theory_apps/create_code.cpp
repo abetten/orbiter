@@ -962,7 +962,8 @@ void create_code::export_codewords(
 
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.lint_matrix_write_csv(fname, codewords, N, 1);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, codewords, N, 1);
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "
@@ -1019,7 +1020,8 @@ void create_code::export_codewords_long(
 
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname, codewords, N, n);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, codewords, N, n);
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "
@@ -1139,7 +1141,8 @@ void create_code::export_codewords_by_weight(
 		fname = fname_base + "_of_weight_" + std::to_string(types[i]) + ".csv";
 
 
-		Fio.lint_matrix_write_csv(fname, codewords_of_weight, nb, 1);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, codewords_of_weight, nb, 1);
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -1175,7 +1178,8 @@ void create_code::export_genma(
 
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname, genma, k, n);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, genma, k, n);
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "
@@ -1205,7 +1209,8 @@ void create_code::export_checkma(
 
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname, checkma, nmk, n);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, checkma, nmk, n);
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "
@@ -1257,7 +1262,8 @@ void create_code::export_checkma_as_projective_set(
 
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.lint_matrix_write_csv(fname, Rk, n, 1);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, Rk, n, 1);
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "

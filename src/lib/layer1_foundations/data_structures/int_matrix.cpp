@@ -216,10 +216,12 @@ void int_matrix::write_csv(std::string &fname, int verbose_level)
 	}
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname, M, m, n);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, m, n);
 
 	if (f_v) {
-		cout << "int_matrix::write_csv Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "int_matrix::write_csv Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 }

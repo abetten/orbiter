@@ -1886,7 +1886,8 @@ void projective_space_subspaces::export_incidence_matrix_to_csv(int verbose_leve
 
 	make_fname_incidence_matrix_csv(fname);
 
-	Fio.int_matrix_write_csv(fname, T, N_points, N_lines);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, T, N_points, N_lines);
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -1938,7 +1939,8 @@ void projective_space_subspaces::export_restricted_incidence_matrix_to_csv(
 
 	make_fname_incidence_matrix_csv(fname);
 
-	Fio.int_matrix_write_csv(fname, T, nb_rows, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, T, nb_rows, nb_cols);
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;

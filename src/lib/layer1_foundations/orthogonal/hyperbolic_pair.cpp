@@ -314,7 +314,9 @@ void hyperbolic_pair::init_decomposition(int verbose_level)
 #if 1
 		long int u;
 
-		u = Gg.nb_pts_Qepsilon(O->Quadratic_form->epsilon, 2 * O->Quadratic_form->m - 1, O->Quadratic_form->q);
+		u = Gg.nb_pts_Qepsilon(
+				O->Quadratic_form->epsilon,
+				2 * O->Quadratic_form->m - 1, O->Quadratic_form->q);
 		if (T1_m != u) {
 			cout << "T1_m != nb_pts_Qepsilon" << endl;
 			cout << "T1_m=" << T1_m << endl;
@@ -323,24 +325,29 @@ void hyperbolic_pair::init_decomposition(int verbose_level)
 		}
 #endif
 		if (f_v) {
-			cout << "hyperbolic_pair::init_decomposition before init_hyperbolic" << endl;
+			cout << "hyperbolic_pair::init_decomposition "
+					"before init_hyperbolic" << endl;
 		}
 		init_hyperbolic(verbose_level /*- 3*/);
 		if (f_v) {
-			cout << "hyperbolic_pair::init_decomposition after init_hyperbolic" << endl;
+			cout << "hyperbolic_pair::init_decomposition "
+					"after init_hyperbolic" << endl;
 		}
 	}
 	else if (O->Quadratic_form->epsilon == 0) {
 		if (f_v) {
-			cout << "hyperbolic_pair::init_decomposition before init_parabolic" << endl;
+			cout << "hyperbolic_pair::init_decomposition "
+					"before init_parabolic" << endl;
 		}
 		init_parabolic(verbose_level /*- 3*/);
 		if (f_v) {
-			cout << "hyperbolic_pair::init_decomposition after init_parabolic" << endl;
+			cout << "hyperbolic_pair::init_decomposition "
+					"after init_parabolic" << endl;
 		}
 	}
 	else if (O->Quadratic_form->epsilon == -1) {
-		nb_points = Gg.nb_pts_Qepsilon(O->Quadratic_form->epsilon, O->Quadratic_form->n - 1, O->Quadratic_form->q);
+		nb_points = Gg.nb_pts_Qepsilon(
+				O->Quadratic_form->epsilon, O->Quadratic_form->n - 1, O->Quadratic_form->q);
 		nb_lines = 0;
 		if (f_v) {
 			cout << "nb_points=" << nb_points << endl;
@@ -350,16 +357,19 @@ void hyperbolic_pair::init_decomposition(int verbose_level)
 		//exit(1);
 	}
 	else {
-		cout << "hyperbolic_pair::init_decomposition epsilon = " << O->Quadratic_form->epsilon << " is illegal" << endl;
+		cout << "hyperbolic_pair::init_decomposition "
+				"epsilon = " << O->Quadratic_form->epsilon << " is illegal" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "hyperbolic_pair::init_decomposition Point partition:" << endl;
+		cout << "hyperbolic_pair::init_decomposition "
+				"Point partition:" << endl;
 		for (i = 0; i < nb_point_classes; i++) {
 			cout << P[i] << endl;
 		}
-		cout << "hyperbolic_pair::init_decomposition Line partition:" << endl;
+		cout << "hyperbolic_pair::init_decomposition "
+				"Line partition:" << endl;
 		for (i = 0; i < nb_line_classes; i++) {
 			cout << L[i] << endl;
 		}
@@ -373,8 +383,10 @@ void hyperbolic_pair::init_decomposition(int verbose_level)
 		nb_lines += L[i];
 	}
 	if (f_v) {
-		cout << "hyperbolic_pair::init_decomposition nb_points = " << nb_points << endl;
-		cout << "hyperbolic_pair::init_decomposition nb_lines = " << nb_lines << endl;
+		cout << "hyperbolic_pair::init_decomposition "
+				"nb_points = " << nb_points << endl;
+		cout << "hyperbolic_pair::init_decomposition "
+				"nb_lines = " << nb_lines << endl;
 	}
 	if (f_v) {
 		cout << "hyperbolic_pair::init_decomposition done" << endl;
@@ -390,7 +402,9 @@ void hyperbolic_pair::init_parabolic(int verbose_level)
 	//int a, b, c;
 
 	if (f_v) {
-		cout << "hyperbolic_pair::init_parabolic m=" << O->Quadratic_form->m << " q=" << O->Quadratic_form->q << endl;
+		cout << "hyperbolic_pair::init_parabolic "
+				"m=" << O->Quadratic_form->m
+				<< " q=" << O->Quadratic_form->q << endl;
 	}
 
 	nb_point_classes = 7;
@@ -911,7 +925,8 @@ void hyperbolic_pair::init_hyperbolic(int verbose_level)
 	}
 }
 
-void hyperbolic_pair::fill(long int *M, int i, int j, long int a)
+void hyperbolic_pair::fill(
+		long int *M, int i, int j, long int a)
 {
 	M[(i - 1) * nb_line_classes + j - 1] = a;
 }

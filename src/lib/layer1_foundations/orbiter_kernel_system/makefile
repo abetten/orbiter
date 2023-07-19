@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	create_file_description.o \
+	csv_file_support.o \
 	file_io.o \
 	file_output.o \
 	mem_object_registry_entry.o \

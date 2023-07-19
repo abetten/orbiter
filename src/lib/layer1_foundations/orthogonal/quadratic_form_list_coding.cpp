@@ -155,13 +155,15 @@ void quadratic_form_list_coding::init(
 	SubS = NEW_OBJECT(field_theory::subfield_structure);
 
 	if (f_v) {
-		cout << "quadratic_form_list_coding::init before SubS->init" << endl;
+		cout << "quadratic_form_list_coding::init "
+				"before SubS->init" << endl;
 	}
 	SubS->init(
 			FQ,
 			Fq, verbose_level);
 	if (f_v) {
-		cout << "quadratic_form_list_coding::init after SubS->init" << endl;
+		cout << "quadratic_form_list_coding::init "
+				"after SubS->init" << endl;
 	}
 
 

@@ -539,7 +539,8 @@ void number_theory_domain::do_eulerfunction_interval(
 	Headers[2].assign("NBPF");
 	Headers[3].assign("NBDPF");
 
-	Fio.lint_matrix_write_csv_override_headers(fname, Headers, T, Table.size(), 4);
+	Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
+			fname, Headers, T, Table.size(), 4);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 

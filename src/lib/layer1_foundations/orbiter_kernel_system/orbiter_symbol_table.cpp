@@ -204,6 +204,27 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 	else if (t == t_combinatorial_objects) {
 		cout << "t_combinatorial_objects" << endl;
 	}
+	else if (t == t_geometry_builder) {
+		cout << "t_geometry_builder" << endl;
+	}
+	else if (t == t_vector_ge) {
+		cout << "t_vector_ge" << endl;
+	}
+	else if (t == t_action_on_forms) {
+		cout << "t_action_on_forms" << endl;
+	}
+	else if (t == t_orbits) {
+		cout << "t_orbits" << endl;
+	}
+	else if (t == t_poset_classification_control) {
+		cout << "t_poset_classification_control" << endl;
+	}
+	else if (t == t_poset_classification_activity) {
+		cout << "t_poset_classification_activity" << endl;
+	}
+	else if (t == t_crc_code) {
+		cout << "t_crc_code" << endl;
+	}
 	else {
 		cout << "type is unknown" << endl;
 		exit(1);

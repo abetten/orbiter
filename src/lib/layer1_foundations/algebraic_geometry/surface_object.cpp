@@ -2018,7 +2018,8 @@ void surface_object::export_something(std::string &what,
 		fname = fname_base + "_points.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
-		Fio.lint_matrix_write_csv(fname, Pts, 1, nb_pts);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, Pts, 1, nb_pts);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2038,7 +2039,8 @@ void surface_object::export_something(std::string &what,
 		Lint_vec_complement_to(Pts, Pts_off, Surf->P->Subspaces->N_points, nb_pts);
 
 		//Fio.write_set_to_file(fname, Pts_off, nb_pts_off, 0 /*verbose_level*/);
-		Fio.lint_matrix_write_csv(fname, Pts_off, 1, nb_pts_off);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, Pts_off, 1, nb_pts_off);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2050,7 +2052,8 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_Eckardt_points.csv";
 
-		Fio.lint_matrix_write_csv(fname, SOP->Eckardt_points, 1, SOP->nb_Eckardt_points);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, SOP->Eckardt_points, 1, SOP->nb_Eckardt_points);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2060,7 +2063,8 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_double_points.csv";
 
-		Fio.lint_matrix_write_csv(fname, SOP->Double_points, 1, SOP->nb_Double_points);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, SOP->Double_points, 1, SOP->nb_Double_points);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2070,7 +2074,8 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_single_points.csv";
 
-		Fio.lint_matrix_write_csv(fname, SOP->Single_points, 1, SOP->nb_Single_points);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, SOP->Single_points, 1, SOP->nb_Single_points);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2080,7 +2085,8 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_zero_points.csv";
 
-		Fio.lint_matrix_write_csv(fname, SOP->Pts_not_on_lines, 1, SOP->nb_pts_not_on_lines);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, SOP->Pts_not_on_lines, 1, SOP->nb_pts_not_on_lines);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2090,7 +2096,8 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_singular_points.csv";
 
-		Fio.lint_matrix_write_csv(fname, SOP->singular_pts, 1, SOP->nb_singular_pts);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, SOP->singular_pts, 1, SOP->nb_singular_pts);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2102,7 +2109,8 @@ void surface_object::export_something(std::string &what,
 		fname = fname_base + "_lines.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
-		Fio.lint_matrix_write_csv(fname, Lines, nb_lines, 1);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, Lines, nb_lines, 1);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2114,7 +2122,8 @@ void surface_object::export_something(std::string &what,
 		fname = fname_base + "_lines_Pluecker.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
-		Fio.int_matrix_write_csv(fname, SOP->Pluecker_coordinates, nb_lines, 6);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, SOP->Pluecker_coordinates, nb_lines, 6);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2128,7 +2137,8 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_axes.csv";
 
-		Fio.lint_matrix_write_csv(fname, SOP->Axes_line_rank, 1, SOP->nb_axes);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, SOP->Axes_line_rank, 1, SOP->nb_axes);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2139,7 +2149,8 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_tritangent_planes.csv";
 
-		Fio.lint_matrix_write_csv(fname,
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname,
 				SOP->SmoothProperties->Tritangent_plane_rk,
 				1,
 				SOP->SmoothProperties->nb_tritangent_planes);
@@ -2153,7 +2164,8 @@ void surface_object::export_something(std::string &what,
 		fname = fname_base + "_trihedral_pairs.csv";
 
 
-		Fio.lint_matrix_write_csv(fname,
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname,
 				Surf->Schlaefli->Trihedral_to_Eckardt,
 				120,
 				6);
@@ -2224,7 +2236,8 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_Hesse_planes.csv";
 
-		Fio.lint_matrix_write_csv(fname, SOP->Hesse_planes, 1, SOP->nb_Hesse_planes);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, SOP->Hesse_planes, 1, SOP->nb_Hesse_planes);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2238,7 +2251,8 @@ void surface_object::export_something(std::string &what,
 			cout << "surface must have 27 lines to be able to export roots" << endl;
 			exit(1);
 		}
-		Fio.int_matrix_write_csv(fname, SOP->SmoothProperties->Roots, 72, 6);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, SOP->SmoothProperties->Roots, 72, 6);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "

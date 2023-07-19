@@ -348,7 +348,8 @@ void elliptic_curve::save_incidence_matrix(
 		}
 		M[(q - 1 - y) * q + x] = 1;
 	}
-	Fio.int_matrix_write_csv(fname, M, q, q);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, q, q);
 	if (f_v) {
 		cout << "elliptic_curve::save_incidence_matrix written file "
 				<< fname << " of size " << Fio.file_size(fname) << endl;

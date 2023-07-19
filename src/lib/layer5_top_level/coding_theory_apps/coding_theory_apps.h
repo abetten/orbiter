@@ -147,40 +147,32 @@ public:
 	int f_crc_encode_file_based;
 	std::string crc_encode_file_based_fname_in;
 	std::string crc_encode_file_based_fname_out;
-	std::string crc_encode_file_based_crc_type;
-	int crc_encode_file_based_block_length;
+	std::string crc_encode_file_based_crc_code;
 
 	int f_crc_compare;
 	std::string crc_compare_fname_in;
-	std::string crc_compare_crc1_type;
-	int crc_compare_block_length1;
-	std::string crc_compare_crc2_type;
-	int crc_compare_block_length2;
+	std::string crc_compare_code1;
+	std::string crc_compare_code2;
 	int crc_compare_error_weight;
 	int crc_compare_nb_tests_per_block;
 
 	int f_crc_compare_read_output_file;
 	std::string crc_compare_read_output_file_fname_in;
 	int crc_compare_read_output_file_nb_lines;
-	std::string crc_compare_read_output_file_crc1_type;
-	int crc_compare_read_output_file_block_length1;
-	std::string crc_compare_read_output_file_crc2_type;
-	int crc_compare_read_output_file_block_length2;
+	std::string crc_compare_read_output_file_crc_code1;
+	std::string crc_compare_read_output_file_crc_code2;
 
 
-	int f_simulate_Hamming_errors;
-	std::string simulate_Hamming_errors_fname_in;
-	int simulate_Hamming_errors_block_number;
-	std::string simulate_Hamming_errors_crc1_type;
-	int simulate_Hamming_errors_block_length1;
-	std::string simulate_Hamming_errors_crc2_type;
-	int simulate_Hamming_errors_block_length2;
-	int simulate_Hamming_errors_max_weight;
+	int f_all_errors_of_a_given_weight;
+	std::string all_errors_of_a_given_weight_fname_in;
+	int all_errors_of_a_given_weight_block_number;
+	std::string all_errors_of_a_given_weight_crc_code1;
+	std::string all_errors_of_a_given_weight_crc_code2;
+	int all_errors_of_a_given_weight_max_weight;
 
 
 	int f_weight_enumerator_bottom_up;
-	std::string weight_enumerator_bottom_up_crc_type;
-	int weight_enumerator_bottom_up_block_length;
+	std::string weight_enumerator_bottom_up_crc_code;
 	int weight_enumerator_bottom_up_max_weight;
 
 

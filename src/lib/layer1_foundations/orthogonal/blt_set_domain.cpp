@@ -1158,6 +1158,7 @@ int blt_set_domain::create_graph(
 	long int *lines_on_pt;
 
 	lines_on_pt = NEW_lint(1 /*starter_size*/ * (q + 1));
+
 	O->lines_on_point_by_line_rank(
 			Starter_set[0] /*R->rep[0]*/,
 			lines_on_pt, 0 /* verbose_level */);
@@ -1192,7 +1193,8 @@ int blt_set_domain::create_graph(
 
 	C.init(point_color, nb_candidates, false, 0);
 	if (f_vv) {
-		cout << "blt_set_domain::create_graph Case " << case_number
+		cout << "blt_set_domain::create_graph "
+				"Case " << case_number
 				<< " / " << nb_cases_total /* R->nb_cases*/
 				<< " point colors (1st classification): ";
 		C.print(false /* f_reverse */);
@@ -1204,7 +1206,8 @@ int blt_set_domain::create_graph(
 
 	C2.init(point_color, nb_candidates, true, 0);
 	if (f_vv) {
-		cout << "blt_set_domain::create_graph Case " << case_number
+		cout << "blt_set_domain::create_graph "
+				"Case " << case_number
 				<< " / " << nb_cases_total
 				<< " point colors (2nd classification): ";
 		C2.print(false /* f_reverse */);
@@ -1317,7 +1320,9 @@ int blt_set_domain::create_graph(
 
 		std::string fname;
 
-		fname = prefix + "_graph_" + std::to_string(starter_size) + "_" + std::to_string(case_number);
+		fname = prefix + "_graph_"
+				+ std::to_string(starter_size)
+				+ "_" + std::to_string(case_number);
 		CG->init_user_data(
 				Starter_set, starter_size, verbose_level - 2);
 		CG->fname_base.assign(fname);
@@ -1587,7 +1592,8 @@ void blt_set_domain::cubic_lift(
 
 	fname_csv = "ABC_q" + std::to_string(Q3) + ".csv";
 
-	Fio.int_matrix_write_csv(fname_csv, ABC2, Q3, 3);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_csv, ABC2, Q3, 3);
 
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;

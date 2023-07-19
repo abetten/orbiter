@@ -114,7 +114,8 @@ void graph_classification_activity::perform_activity(int verbose_level)
 		int *Iso_type;
 		int iso_type;
 
-		Fio.int_matrix_read_csv(Descr->recognize_graphs_from_adjacency_matrix_csv_fname,
+		Fio.Csv_file_support->int_matrix_read_csv(
+				Descr->recognize_graphs_from_adjacency_matrix_csv_fname,
 				M, m, n, 0 /*verbose_level*/);
 
 		cout << "read matrix of adjacency matrices" << endl;

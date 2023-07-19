@@ -128,7 +128,7 @@ void vector_builder::init(
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.lint_matrix_read_csv(
+		Fio.Csv_file_support->lint_matrix_read_csv(
 				Descr->file_name, v, m, n, verbose_level);
 		len = m * n;
 		f_has_k = true;
@@ -144,7 +144,7 @@ void vector_builder::init(
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.lint_matrix_read_csv_no_border(
+		Fio.Csv_file_support->lint_matrix_read_csv_no_border(
 				Descr->load_csv_no_border_fname,
 				v, m, n, verbose_level);
 		len = m * n;
@@ -161,7 +161,7 @@ void vector_builder::init(
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
 
-		Fio.lint_matrix_read_csv_data_column(
+		Fio.Csv_file_support->lint_matrix_read_csv_data_column(
 				Descr->load_csv_data_column_fname,
 				v, m, n,
 				Descr->load_csv_data_column_idx,

@@ -77,7 +77,8 @@ void quartic_curve_object_with_action::export_something(
 		fname = fname_base + "_points.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
-		Fio.lint_matrix_write_csv(fname, QO->Pts, 1, QO->nb_pts);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, QO->Pts, 1, QO->nb_pts);
 
 		cout << "quartic_curve_object_with_action::export_something "
 				"Written file " << fname << " of size "
@@ -88,7 +89,8 @@ void quartic_curve_object_with_action::export_something(
 		fname = fname_base + "_equation.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
-		Fio.int_matrix_write_csv(fname, QO->eqn15, 1, 15);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, QO->eqn15, 1, 15);
 
 		cout << "quartic_curve_object_with_action::export_something "
 				"Written file " << fname << " of size "
@@ -99,7 +101,8 @@ void quartic_curve_object_with_action::export_something(
 		fname = fname_base + "_bitangents.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
-		Fio.lint_matrix_write_csv(fname, QO->bitangents28, 1, 28);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, QO->bitangents28, 1, 28);
 
 		cout << "quartic_curve_object_with_action::export_something "
 				"Written file " << fname << " of size "
@@ -110,7 +113,8 @@ void quartic_curve_object_with_action::export_something(
 		fname = fname_base + "_Kovalevski_points.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
-		Fio.lint_matrix_write_csv(fname, QO->QP->Kovalevski_points, 1, QO->QP->nb_Kovalevski);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, QO->QP->Kovalevski_points, 1, QO->QP->nb_Kovalevski);
 
 		cout << "quartic_curve_object_with_action::export_something "
 				"Written file " << fname << " of size "
@@ -121,14 +125,16 @@ void quartic_curve_object_with_action::export_something(
 		fname = fname_base + "_singular_points.csv";
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
-		Fio.lint_matrix_write_csv(fname, QO->QP->singular_pts, 1, QO->QP->nb_singular_pts);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, QO->QP->singular_pts, 1, QO->QP->nb_singular_pts);
 
 		cout << "quartic_curve_object_with_action::export_something "
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
 	else {
-		cout << "quartic_curve_object_with_action::export_something unrecognized export target: " << what << endl;
+		cout << "quartic_curve_object_with_action::export_something "
+				"unrecognized export target: " << what << endl;
 	}
 
 

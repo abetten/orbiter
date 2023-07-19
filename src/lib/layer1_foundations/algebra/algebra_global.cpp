@@ -975,7 +975,7 @@ void algebra_global::do_trace(
 	orbiter_kernel_system::file_io Fio;
 
 	fname_csv = "F_q" + std::to_string(F->q) + "_trace.csv";
-	Fio.int_matrix_write_csv(fname_csv, T, 1, F->q);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_csv, T, 1, F->q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
@@ -984,13 +984,13 @@ void algebra_global::do_trace(
 
 	string label;
 	label.assign("Trace_0");
-	Fio.int_vec_write_csv(T0, nb_T0, fname_csv, label);
+	Fio.Csv_file_support->int_vec_write_csv(T0, nb_T0, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 	fname_csv = "F_q" + std::to_string(F->q) + "_trace_1.csv";
 	label.assign("Trace_1");
-	Fio.int_vec_write_csv(T1, nb_T1, fname_csv, label);
+	Fio.Csv_file_support->int_vec_write_csv(T1, nb_T1, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
@@ -1045,13 +1045,13 @@ void algebra_global::do_norm(
 
 	fname_csv = "F_q" + std::to_string(F->q) + "_norm_0.csv";
 	label.assign("Norm_0");
-	Fio.int_vec_write_csv(T0, nb_T0, fname_csv, label);
+	Fio.Csv_file_support->int_vec_write_csv(T0, nb_T0, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 	fname_csv = "F_q" + std::to_string(F->q) + "_norm_1.csv";
 	label.assign("Norm_1");
-	Fio.int_vec_write_csv(T1, nb_T1, fname_csv, label);
+	Fio.Csv_file_support->int_vec_write_csv(T1, nb_T1, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
 		<< Fio.file_size(fname_csv) << endl;
 
@@ -1292,7 +1292,7 @@ void algebra_global::apply_Walsh_Hadamard_transform(
 	ST.chop_off_extension(fname_csv_out);
 	fname_csv_out += "_transformed.csv";
 
-	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	Fio.Csv_file_support->int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
 	if (len != BF->Q) {
 		cout << "algebra_global::apply_Walsh_Hadamard_transform "
@@ -1324,7 +1324,7 @@ void algebra_global::apply_Walsh_Hadamard_transform(
 		}
 
 	}
-	Fio.int_matrix_write_csv(fname_csv_out, BF->T, m, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_csv_out, BF->T, m, nb_cols);
 	cout << "written file " << fname_csv_out << " of size "
 			<< Fio.file_size(fname_csv_out) << endl;
 
@@ -1475,7 +1475,8 @@ void algebra_global::algebraic_normal_form_of_boolean_function(
 	ST.chop_off_extension(fname_csv_out);
 	fname_csv_out += "_alg_normal_form.csv";
 
-	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	Fio.Csv_file_support->int_matrix_read_csv(
+			fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
 	if (len != BF->Q) {
 		cout << "algebra_global::algebraic_normal_form_of_boolean_function "
@@ -1514,7 +1515,7 @@ void algebra_global::algebraic_normal_form_of_boolean_function(
 
 
 
-	Fio.int_matrix_write_csv(
+	Fio.Csv_file_support->int_matrix_write_csv(
 			fname_csv_out, coeff, 1, nb_coeff);
 	cout << "written file " << fname_csv_out << " of size "
 			<< Fio.file_size(fname_csv_out) << endl;
@@ -1549,13 +1550,13 @@ void algebra_global::apply_trace_function(
 	ST.chop_off_extension(fname_csv_out);
 	fname_csv_out += "_trace.csv";
 
-	Fio.int_matrix_read_csv(
+	Fio.Csv_file_support->int_matrix_read_csv(
 			fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
 	for (i = 0; i < len; i++) {
 		M[i] = F->absolute_trace(M[i]);
 	}
-	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
 
 	FREE_int(M);
 
@@ -1587,13 +1588,13 @@ void algebra_global::apply_power_function(
 
 	fname_csv_out += "_power_" + std::to_string(d) + ".csv";
 
-	Fio.int_matrix_read_csv(
+	Fio.Csv_file_support->int_matrix_read_csv(
 			fname_csv_in, M, m, nb_cols, verbose_level);
 	len = m * nb_cols;
 	for (i = 0; i < len; i++) {
 		M[i] = F->power(M[i], d);
 	}
-	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
 	cout << "written file " << fname_csv_out << " of size "
 			<< Fio.file_size(fname_csv_out) << endl;
 
@@ -1623,7 +1624,7 @@ void algebra_global::identity_function(
 	for (i = 0; i < F->q; i++) {
 		M[i] = i;
 	}
-	Fio.int_matrix_write_csv(fname_csv_out, M, 1, F->q);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_csv_out, M, 1, F->q);
 	cout << "written file " << fname_csv_out << " of size "
 			<< Fio.file_size(fname_csv_out) << endl;
 
@@ -1675,13 +1676,15 @@ void algebra_global::Walsh_matrix(
 	orbiter_kernel_system::file_io Fio;
 
 	fname_csv = "Walsh_pm_" + std::to_string(n) + ".csv";
-	Fio.int_matrix_write_csv(fname_csv, W, Q, Q);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_csv, W, Q, Q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 
 	fname_csv = "Walsh_01_" + std::to_string(n) + ".csv";
-	Fio.int_matrix_write_csv(fname_csv, W01, Q, Q);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_csv, W01, Q, Q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
@@ -1733,13 +1736,15 @@ void algebra_global::Vandermonde_matrix(
 	orbiter_kernel_system::file_io Fio;
 
 	fname_csv = "Vandermonde_q" + std::to_string(q) + ".csv";
-	Fio.int_matrix_write_csv(fname_csv, W, q, q);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_csv, W, q, q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 
 	fname_csv = "Vandermonde_q" + std::to_string(q) + "_inv.csv";
-	Fio.int_matrix_write_csv(fname_csv, W_inv, q, q);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_csv, W_inv, q, q);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 

@@ -698,7 +698,8 @@ void data_input_stream::read_objects(int verbose_level)
 					<< Descr->Input[input_idx].input_string2 << endl;
 			}
 
-			Fio.lint_matrix_read_csv(Descr->Input[input_idx].input_string2,
+			Fio.Csv_file_support->lint_matrix_read_csv(
+					Descr->Input[input_idx].input_string2,
 					Spread_table, nb_spreads, spread_size,
 					0 /* verbose_level */);
 
@@ -724,7 +725,8 @@ void data_input_stream::read_objects(int verbose_level)
 					underlying_set_size,
 					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string
+						<< ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 			int h;

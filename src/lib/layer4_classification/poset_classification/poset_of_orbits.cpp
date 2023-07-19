@@ -610,7 +610,8 @@ void poset_of_orbits::make_tabe_of_nodes(int verbose_level)
 
 	fname = PC->get_problem_label_with_path() + "_table_of_orbits.csv";
 
-	Fio.lint_matrix_write_csv(fname, Table, nb_rows, nb_cols);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, Table, nb_rows, nb_cols);
 
 	if (f_v) {
 		cout << "poset_classification::post_processing written file " << fname

@@ -993,7 +993,8 @@ void translation_plane_via_andre_model::export_incma(int verbose_level)
 	orbiter_kernel_system::file_io Fio;
 
 	fname = label_txt + "_incma.csv";
-	Fio.int_matrix_write_csv(fname, Incma, N, N);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Incma, N, N);
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"written file " << fname << " of size " << Fio.file_size(fname) << endl;

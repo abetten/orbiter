@@ -130,7 +130,8 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 		PA->P->Subspaces->make_incidence_matrix(Orb1, Orb2, Inc, verbose_level);
 
-		Fio.int_matrix_write_csv(fname, Inc, Orb1.size(), Orb2.size());
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, Inc, Orb1.size(), Orb2.size());
 
 		FREE_int(Inc);
 
@@ -439,7 +440,8 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 
 		PA->P->Subspaces->make_incidence_matrix(Orb1, Orb2, Inc, verbose_level);
 
-		Fio.int_matrix_write_csv(fname, Inc, Orb1.size(), Orb2.size());
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, Inc, Orb1.size(), Orb2.size());
 
 		FREE_int(Inc);
 
@@ -479,9 +481,11 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 
 				fname = fname_base + "_incma_subgroup_index_" + std::to_string(p) + ".csv";
 
-				PA->P->Subspaces->make_incidence_matrix(Orb1_subgroup, Orb2_subgroup, Inc, verbose_level);
+				PA->P->Subspaces->make_incidence_matrix(
+						Orb1_subgroup, Orb2_subgroup, Inc, verbose_level);
 
-				Fio.int_matrix_write_csv(fname, Inc, Orb1.size(), Orb2.size());
+				Fio.Csv_file_support->int_matrix_write_csv(
+						fname, Inc, Orb1.size(), Orb2.size());
 				FREE_int(Inc);
 			}
 		}

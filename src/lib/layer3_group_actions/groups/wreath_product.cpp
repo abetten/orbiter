@@ -2711,7 +2711,8 @@ void wreath_product::orbits_restricted(
 	int *restr_length; // [nb_blocks]
 	long int i, j, b, h;
 
-	Fio.lint_matrix_read_csv(orbits_restricted_fname,
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			orbits_restricted_fname,
 			Set, set_m, set_n, verbose_level);
 
 	if (set_n != 1) {
@@ -2912,7 +2913,8 @@ void wreath_product::orbits_restricted(
 
 	fname += "_restricted_action.txt";
 
-	Fio.lint_matrix_write_csv(fname, Perms, set_m, SG->gens->len);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, Perms, set_m, SG->gens->len);
 
 	if (f_v) {
 		cout << "wreath_product::orbits_restricted done" << endl;
@@ -2943,7 +2945,8 @@ void wreath_product::orbits_restricted_compute(
 	int set_m, set_n;
 	int i;
 
-	Fio.lint_matrix_read_csv(orbits_restricted_fname,
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			orbits_restricted_fname,
 			Set, set_m, set_n, verbose_level);
 
 	if (set_n != 1) {
@@ -2990,7 +2993,8 @@ void wreath_product::orbits_restricted_compute(
 
 	fname += "_restricted_action.txt";
 
-	Fio.int_matrix_read_csv(fname, Perms, perms_m, perms_n, verbose_level - 2);
+	Fio.Csv_file_support->int_matrix_read_csv(
+			fname, Perms, perms_m, perms_n, verbose_level - 2);
 	if (perms_n != SG->gens->len) {
 		cout << "perms_n != SG->gens->len" << endl;
 		exit(1);

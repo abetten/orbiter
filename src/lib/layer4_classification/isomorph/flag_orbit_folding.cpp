@@ -3618,7 +3618,8 @@ void flag_orbit_folding::write_classification_matrix(
 	fname = Iso->prefix + "_flag_orbit_links.csv";
 
 
-	Fio.int_matrix_write_csv(fname, Link, Iso->Lifting->nb_flag_orbits, 2);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Link, Iso->Lifting->nb_flag_orbits, 2);
 
 	if (f_v) {
 		cout << "flag_orbit_folding::write_classification_matrix "
@@ -3789,7 +3790,8 @@ void flag_orbit_folding::decomposition_matrix(int verbose_level)
 
 	fname = Iso->prefix + "_decomposition_matrix.csv";
 
-	Fio.int_matrix_write_csv(fname, M, m, n);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, m, n);
 
 	FREE_int(down_link);
 	FREE_int(M);

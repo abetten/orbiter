@@ -461,7 +461,7 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_spreads << endl;
 	}
 
-	Fio.lint_matrix_write_csv(fname_spreads,
+	Fio.Csv_file_support->lint_matrix_write_csv(fname_spreads,
 			spread_table, nb_spreads, spread_size);
 	if (f_v) {
 		cout << "spread_tables::save "
@@ -476,7 +476,7 @@ void spread_tables::save(int verbose_level)
 	string label;
 
 	label.assign("isomorphism_type_of_spread");
-	Fio.int_vec_write_csv(
+	Fio.Csv_file_support->int_vec_write_csv(
 			spread_iso_type, nb_spreads,
 			fname_isomorphism_type_of_spreads,
 			label);
@@ -492,7 +492,7 @@ void spread_tables::save(int verbose_level)
 				<< endl;
 	}
 	label.assign("dual_spread_idx");
-	Fio.lint_vec_write_csv(
+	Fio.Csv_file_support->lint_vec_write_csv(
 			dual_spread_idx, nb_spreads,
 			fname_dual_spread,
 			label);
@@ -508,7 +508,7 @@ void spread_tables::save(int verbose_level)
 				<< endl;
 	}
 	label.assign("self_dual_spreads");
-	Fio.lint_vec_write_csv(
+	Fio.Csv_file_support->lint_vec_write_csv(
 			self_dual_spreads, nb_self_dual_spreads,
 			fname_self_dual_spreads,
 			label);
@@ -526,7 +526,7 @@ void spread_tables::save(int verbose_level)
 					"writing file " << fname_schreier_table << endl;
 		}
 
-		Fio.int_matrix_write_csv(fname_schreier_table,
+		Fio.Csv_file_support->int_matrix_write_csv(fname_schreier_table,
 				schreier_table, nb_spreads, 4);
 		if (f_v) {
 			cout << "spread_tables::save "
@@ -558,7 +558,8 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_spreads << endl;
 	}
 
-	Fio.lint_matrix_read_csv(fname_spreads,
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname_spreads,
 			spread_table, nb_spreads, b,
 			0 /* verbose_level */);
 	if (b != spread_size) {
@@ -575,7 +576,8 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_isomorphism_type_of_spreads
 				<< endl;
 	}
-	Fio.int_matrix_read_csv(fname_isomorphism_type_of_spreads,
+	Fio.Csv_file_support->int_matrix_read_csv(
+			fname_isomorphism_type_of_spreads,
 			spread_iso_type, a, b,
 			0 /* verbose_level */);
 	if (a != nb_spreads) {
@@ -593,7 +595,8 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_dual_spread
 				<< endl;
 	}
-	Fio.lint_matrix_read_csv(fname_dual_spread,
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname_dual_spread,
 			dual_spread_idx, a, b,
 			0 /* verbose_level */);
 	if (a != nb_spreads) {
@@ -611,7 +614,8 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_self_dual_spreads
 				<< endl;
 	}
-	Fio.lint_matrix_read_csv(fname_self_dual_spreads,
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname_self_dual_spreads,
 			self_dual_spreads, nb_self_dual_spreads, b,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -627,7 +631,8 @@ void spread_tables::load(int verbose_level)
 					"reading file " << fname_schreier_table
 					<< endl;
 		}
-		Fio.int_matrix_read_csv(fname_schreier_table,
+		Fio.Csv_file_support->int_matrix_read_csv(
+				fname_schreier_table,
 				schreier_table, a, b,
 				0 /* verbose_level */);
 		if (a != nb_spreads) {

@@ -516,7 +516,8 @@ void schreier::write_orbit_summary(
 	Vec[1] = Stab_order;
 	Vec[2] = Orbit_length;
 
-	Fio.lint_vec_array_write_csv(3 /* nb_vecs */, Vec, nb_orbits,
+	Fio.Csv_file_support->lint_vec_array_write_csv(
+			3 /* nb_vecs */, Vec, nb_orbits,
 			fname, column_label);
 
 	if (f_v) {

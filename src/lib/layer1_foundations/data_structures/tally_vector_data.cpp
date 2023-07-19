@@ -272,7 +272,7 @@ void tally_vector_data::save_classes_individually(
 		string label;
 
 		label.assign("case");
-		Fio.int_vec_write_csv(
+		Fio.Csv_file_support->int_vec_write_csv(
 				sorting_perm_inv + type_first[i],
 				Frequency[i], fname2, label);
 		cout << "Written file " << fname2 << " of size "
@@ -286,7 +286,7 @@ void tally_vector_data::save_classes_individually(
 
 	fname2 = fname + "_all_in_one.csv";
 
-	Fio.int_vec_write_csv(
+	Fio.Csv_file_support->int_vec_write_csv(
 			sorting_perm_inv, data_length, fname2, label);
 
 	cout << "Written file " << fname2 << " of size "

@@ -41,7 +41,9 @@ ORBITER_MODULES= \
 		layer1_foundations/algebraic_geometry/surface_polynomial_domains.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
 		layer1_foundations/coding_theory/code_diagram.o \
+		layer1_foundations/coding_theory/coding_theory_domain_crc.o \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
+		layer1_foundations/coding_theory/crc_code_description.o \
 		layer1_foundations/coding_theory/crc_codes_search.o \
 		layer1_foundations/coding_theory/crc_codes.o \
 		layer1_foundations/coding_theory/crc_object.o \
@@ -49,7 +51,7 @@ ORBITER_MODULES= \
 		layer1_foundations/coding_theory/create_BCH_code.o \
 		layer1_foundations/coding_theory/create_RS_code.o \
 		layer1_foundations/coding_theory/cyclic_codes.o \
-		layer1_foundations/coding_theory/error_pattern.o \
+		layer1_foundations/coding_theory/error_pattern_generator.o \
 		layer1_foundations/coding_theory/error_repository.o \
 		layer1_foundations/coding_theory/mindist.o \
 		layer1_foundations/coding_theory/ttp_codes.o \
@@ -254,6 +256,7 @@ ORBITER_MODULES= \
 		layer1_foundations/number_theory/number_theoretic_transform.o \
 		layer1_foundations/number_theory/number_theory_domain.o \
 		layer1_foundations/orbiter_kernel_system/create_file_description.o \
+		layer1_foundations/orbiter_kernel_system/csv_file_support.o \
 		layer1_foundations/orbiter_kernel_system/file_io.o \
 		layer1_foundations/orbiter_kernel_system/file_output.o \
 		layer1_foundations/orbiter_kernel_system/mem_object_registry_entry.o \

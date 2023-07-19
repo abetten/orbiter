@@ -251,7 +251,8 @@ void spread_table_activity::export_spreads_to_csv(
 			T[i * P->spread_size + j] = spread_elts[j];
 		}
 	}
-	Fio.lint_matrix_write_csv(fname, T, nb, P->spread_size);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, T, nb, P->spread_size);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	if (f_v) {

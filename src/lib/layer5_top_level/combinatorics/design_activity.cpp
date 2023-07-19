@@ -194,7 +194,8 @@ void design_activity::do_extract_solutions_by_index(
 	if (f_csv_format) {
 		int *Sol_idx_1;
 		int i, j;
-		Fio.int_matrix_read_csv(fname_in, Sol_idx_1, nb_sol, sol_width, verbose_level);
+		Fio.Csv_file_support->int_matrix_read_csv(
+				fname_in, Sol_idx_1, nb_sol, sol_width, verbose_level);
 
 		Sol_idx = NEW_int(nb_sol * (prefix_sz + sol_width));
 		for (i = 0; i < nb_sol; i++) {
@@ -536,7 +537,8 @@ void design_activity::do_intersection_matrix(
 	{
 		ofstream ost(fname);
 
-		Fio.int_matrix_write_csv(fname, AAt, DC->v, DC->v);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, AAt, DC->v, DC->v);
 
 	}
 
@@ -574,10 +576,12 @@ void design_activity::do_export_blocks(
 
 
 	orbiter_kernel_system::file_io Fio;
-	Fio.lint_matrix_write_csv(fname, DC->set, 1, b);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, DC->set, 1, b);
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 	}
 
 
@@ -589,32 +593,39 @@ void design_activity::do_export_blocks(
 
 	if (DC->f_has_set) {
 		if (f_v) {
-			cout << "design_activity::do_export_blocks before Combi.compute_blocks_from_coding" << endl;
+			cout << "design_activity::do_export_blocks "
+					"before Combi.compute_blocks_from_coding" << endl;
 		}
 		Combi.compute_blocks_from_coding(v, b, k, DC->set, Blocks, verbose_level);
 		if (f_v) {
-			cout << "design_activity::do_export_blocks after Combi.compute_blocks_from_coding" << endl;
+			cout << "design_activity::do_export_blocks "
+					"after Combi.compute_blocks_from_coding" << endl;
 		}
 	}
 	else if (DC->f_has_incma) {
 		if (f_v) {
-			cout << "design_activity::do_export_blocks before Combi.compute_blocks_from_incma" << endl;
+			cout << "design_activity::do_export_blocks "
+					"before Combi.compute_blocks_from_incma" << endl;
 		}
 		Combi.compute_blocks_from_incma(v, b, k, DC->incma,
 					Blocks, verbose_level);
 		if (f_v) {
-			cout << "design_activity::do_export_blocks after Combi.compute_blocks_from_incma" << endl;
+			cout << "design_activity::do_export_blocks "
+					"after Combi.compute_blocks_from_incma" << endl;
 		}
 	}
 	else {
-		cout << "design_activity::do_export_blocks we neither have a set nor an incma" << endl;
+		cout << "design_activity::do_export_blocks "
+				"we neither have a set nor an incma" << endl;
 		exit(1);
 	}
 
-	Fio.int_matrix_write_csv(fname, Blocks, b, k);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Blocks, b, k);
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 	}
 
 

@@ -709,7 +709,8 @@ void algebra_global_with_action::compute_orbit_of_set(
 	}
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.lint_matrix_write_csv(fname, Table, orbit_length, set_size);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, Table, orbit_length, set_size);
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -3542,7 +3543,8 @@ void algebra_global_with_action::representation_on_polynomials(
 
 		fname = LG->label + "_rep_" + std::to_string(degree_of_poly) + "_" + std::to_string(i) + ".csv";
 
-		Fio.int_matrix_write_csv(fname, M + i * A_on_HPD->dimension * A_on_HPD->dimension,
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, M + i * A_on_HPD->dimension * A_on_HPD->dimension,
 				A_on_HPD->dimension, A_on_HPD->dimension);
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
@@ -3594,7 +3596,8 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 	int *Data;
 	int mtx_m, mtx_n;
 
-	Fio.int_matrix_read_csv(fname, Data, mtx_m, mtx_n, verbose_level - 1);
+	Fio.Csv_file_support->int_matrix_read_csv(
+			fname, Data, mtx_m, mtx_n, verbose_level - 1);
 	if (mtx_m != n) {
 		cout << "mtx_m != n" << endl;
 		exit(1);

@@ -372,7 +372,8 @@ void surface_study::study_intersection_points(int verbose_level)
 	fname_intersection_pts_tex = prefix + "_intersection_points0.tex";
 
 
-	Fio.lint_matrix_write_csv(fname_intersection_pts,
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_intersection_pts,
 			Intersection_pt, SaS->sz, SaS->sz);
 	cout << "Written file " << fname_intersection_pts
 			<< " of size " << Fio.file_size(fname_intersection_pts) << endl;
@@ -518,7 +519,8 @@ void surface_study::study_group(int verbose_level)
 
 		fname_out = prefix + "_table_" + std::to_string(q) + "_" + std::to_string(nb) + ".csv";
 
-		Fio.int_matrix_write_csv(fname_out, Table, n, n);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_out, Table, n, n);
 		cout << "Written file " << fname_out
 				<< " of size " << Fio.file_size(fname_out) << endl;
 
@@ -714,7 +716,8 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 
 		fname_intersection_pts_tex = prefix + "_intersection_points.tex";
 
-		Fio.lint_matrix_write_csv(fname_intersection_pts,
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname_intersection_pts,
 				Intersection_pt, SaS->sz, SaS->sz);
 		cout << "Written file " << fname_intersection_pts
 				<< " of size " << Fio.file_size(fname_intersection_pts)

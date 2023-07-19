@@ -401,7 +401,7 @@ void isomorph_worker::read_solutions(int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 
 
-		Fio.int_matrix_read_csv(
+		Fio.Csv_file_support->int_matrix_read_csv(
 				Isomorph_arguments->list_of_cases_fname,
 				List_of_cases,
 				m, n, verbose_level);

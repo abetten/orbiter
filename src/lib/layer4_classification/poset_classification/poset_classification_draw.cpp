@@ -908,7 +908,8 @@ void poset_classification::make_flag_orbits_on_relations(
 		string label;
 
 		label.assign("Orbit_length");
-		Fio.int_vec_write_csv(Orbit_len[lvl], Nb_orbits[lvl],
+		Fio.Csv_file_support->int_vec_write_csv(
+				Orbit_len[lvl], Nb_orbits[lvl],
 			fname, label);
 
 		cout << "poset_classification::make_flag_orbits_on_relations "
@@ -1124,7 +1125,8 @@ void poset_classification::make_flag_orbits_on_relations(
 
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.int_matrix_write_csv(fname,
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname,
 				F, Nb_elements[lvl], Nb_elements[lvl + 1]);
 		FREE_int(F);
 

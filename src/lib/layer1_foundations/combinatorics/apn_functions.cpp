@@ -100,7 +100,8 @@ void apn_functions::search_APN(
 
 	fname = "APN_functions_q" + std::to_string(F->q) + ".csv";
 
-	Fio.vector_matrix_write_csv(fname, Solutions);
+	Fio.Csv_file_support->vector_matrix_write_csv(
+			fname, Solutions);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	FREE_int(A_matrix);
@@ -361,7 +362,8 @@ void apn_functions::search_APN_old(
 
 	fname = "APN_functions_q" + std::to_string(F->q) + ".csv";
 
-	Fio.vector_matrix_write_csv(fname, Solutions);
+	Fio.Csv_file_support->vector_matrix_write_csv(
+			fname, Solutions);
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 

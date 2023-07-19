@@ -446,7 +446,8 @@ void cyclic_codes::make_cyclic_code(
 	int k = n - degree;
 
 
-	Fio.int_matrix_write_csv(fname_csv, Genma, k, n);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_csv, Genma, k, n);
 	cout << "cyclic_codes::make_cyclic_code "
 			"Written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;

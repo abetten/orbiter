@@ -2786,7 +2786,8 @@ void diophant::save_in_general_format(
 	ST.replace_extension_with(fname_RHS, "_RHS.csv");
 	ST.replace_extension_with(fname_x_bounds, "_x_bounds.csv");
 
-	Fio.int_matrix_write_csv(fname_coeff, A, m, n);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_coeff, A, m, n);
 	if (f_v) {
 		cout << "diophant::save_in_general_format "
 				"written file " << fname_coeff << " of size "
@@ -2816,7 +2817,8 @@ void diophant::save_in_general_format(
 			exit(1);
 		}
 	}
-	Fio.int_matrix_write_csv(fname_RHS, RHS_coded, m, 3);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_RHS, RHS_coded, m, 3);
 	if (f_v) {
 		cout << "diophant::save_in_general_format "
 				"written file " << fname_RHS << " of size "
@@ -2831,7 +2833,8 @@ void diophant::save_in_general_format(
 		X_bounds[2 * j + 1] = x_max[j];
 	}
 
-	Fio.int_matrix_write_csv(fname_x_bounds, X_bounds, n, 2);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_x_bounds, X_bounds, n, 2);
 	FREE_int(X_bounds);
 	if (f_v) {
 		cout << "diophant::save_in_general_format "

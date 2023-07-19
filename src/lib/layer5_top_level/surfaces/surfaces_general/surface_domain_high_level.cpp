@@ -610,7 +610,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	long int *M;
 	int nb_orbits, n;
 
-	Fio.lint_matrix_read_csv(fname_csv, M, nb_orbits, n, verbose_level);
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname_csv, M, nb_orbits, n, verbose_level);
 
 	if (n != 3 + column_offset) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties "
@@ -791,7 +792,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	Vec[8] = Nb_singular_pts;
 	Vec[9] = Nb_Double_points;
 
-	Fio.lint_vec_array_write_csv(10 /* nb_vecs */, Vec, nb_orbits,
+	Fio.Csv_file_support->lint_vec_array_write_csv(
+			10 /* nb_vecs */, Vec, nb_orbits,
 			fname_data, column_label);
 
 	if (f_v) {
@@ -890,7 +892,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 	{
 		long int *M;
 
-		Fio.lint_matrix_read_csv(
+		Fio.Csv_file_support->lint_matrix_read_csv(
 				fname_csv, M, nb_orbits, n,
 				verbose_level);
 

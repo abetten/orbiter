@@ -300,12 +300,13 @@ namespace coding_theory {
 	// coding_theory:
 	class code_diagram;
 	class coding_theory_domain;
+	class crc_code_description;
 	class crc_codes;
 	class crc_object;
 	class crc_options_description;
 	class create_BCH_code;
 	class create_RS_code;
-	class error_pattern;
+	class error_pattern_generator;
 	class error_repository;
 	class ttp_codes;
 
@@ -601,6 +602,7 @@ namespace number_theory {
 namespace orbiter_kernel_system {
 
 	class create_file_description;
+	class csv_file_support;
 	class file_io;
 	class file_output;
 	class mem_object_registry_entry;
@@ -840,6 +842,7 @@ namespace solvers {
 #define Get_finite_field(label) orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(label)
 #define Get_symbol(label) orbiter_kernel_system::Orbiter->get_object_of_type_symbolic_object(label)
 #define Find_symbol(label) orbiter_kernel_system::Orbiter->find_object_of_type_symbolic_object(label)
+#define Get_crc_code(A) orbiter_kernel_system::Orbiter->get_object_of_type_crc_code(A)
 
 
 
@@ -907,6 +910,7 @@ enum symbol_table_object_type {
 	t_orbits,
 	t_poset_classification_control,
 	t_poset_classification_activity,
+	t_crc_code,
 };
 
 

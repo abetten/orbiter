@@ -269,7 +269,7 @@ void design_tables::create_action(
 
 void design_tables::extract_solutions_by_index(
 		int nb_sol, int Index_width, int *Index,
-		std::string &ouput_fname_csv,
+		std::string &output_fname_csv,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -294,11 +294,12 @@ void design_tables::extract_solutions_by_index(
 	}
 
 
-	Fio.lint_matrix_write_csv(ouput_fname_csv, Sol, nb_sol, N);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			output_fname_csv, Sol, nb_sol, N);
 	if (f_v) {
 		cout << "design_tables::extract_solutions_by_index "
 				"Written file "
-				<< ouput_fname_csv << " of size " << Fio.file_size(ouput_fname_csv) << endl;
+				<< output_fname_csv << " of size " << Fio.file_size(output_fname_csv) << endl;
 	}
 
 	if (f_v) {
@@ -432,7 +433,8 @@ void design_tables::save(int verbose_level)
 				"writing file " << fname_design_table << endl;
 	}
 
-	Fio.lint_matrix_write_csv(fname_design_table,
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_design_table,
 			the_table, nb_designs, design_size);
 	if (f_v) {
 		cout << "design_tables::save "
@@ -460,7 +462,8 @@ void design_tables::load(int verbose_level)
 				"reading file " << fname_design_table << endl;
 	}
 
-	Fio.lint_matrix_read_csv(fname_design_table,
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname_design_table,
 			the_table, nb_designs, b,
 			0 /* verbose_level */);
 	if (b != design_size) {

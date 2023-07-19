@@ -132,7 +132,8 @@ void number_theoretic_transform::init(
 
 		fname = "Fourier_q" + std::to_string(q) + "_N" + std::to_string(N[h]) + ".csv";
 
-		Fio.int_matrix_write_csv(fname, A[h], N[h], N[h]);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, A[h], N[h], N[h]);
 	}
 
 
@@ -350,14 +351,14 @@ void number_theoretic_transform::init(
 	fname_Tv = "ntt_Tv_k" + std::to_string(k) + ".csv";
 	fname_P = "ntt_P_k" + std::to_string(k) + ".csv";
 
-	Fio.int_matrix_write_csv(fname_F, A[k], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_Fv, Av[k], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_G, Gr[k - 1], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_D, Dr[k - 1], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_Dv, Dvr[k - 1], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_T, Tr[k - 1], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_Tv, Tvr[k - 1], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_P, Pr[k - 1], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_F, A[k], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_Fv, Av[k], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_G, Gr[k - 1], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_D, Dr[k - 1], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_Dv, Dvr[k - 1], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_T, Tr[k - 1], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_Tv, Tvr[k - 1], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_P, Pr[k - 1], N[k], N[k]);
 
 	cout << "Written file " << fname_F << " of size " << Fio.file_size(fname_F) << endl;
 	cout << "Written file " << fname_Fv << " of size " << Fio.file_size(fname_Fv) << endl;
@@ -421,7 +422,8 @@ void number_theoretic_transform::init(
 	cout << endl;
 
 	fname_P = "ntt_the_P_k" + std::to_string(k) + ".csv";
-	Fio.int_matrix_write_csv(fname_P, the_P, N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_P, the_P, N[k], N[k]);
 	cout << "Written file " << fname_P
 			<< " of size " << Fio.file_size(fname_P) << endl;
 
@@ -458,7 +460,8 @@ void number_theoretic_transform::init(
 	string fname_L;
 
 	fname_L = "ntt_L_k" + std::to_string(k) + ".csv";
-	Fio.int_matrix_write_csv(fname_L, the_L, N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_L, the_L, N[k], N[k]);
 	cout << "Written file " << fname_L
 			<< " of size " << Fio.file_size(fname_L) << endl;
 
@@ -502,7 +505,8 @@ void number_theoretic_transform::init(
 	string fname_AAv;
 
 	fname_AAv = "ntt_AAv_k" + std::to_string(k) + ".csv";
-	Fio.int_matrix_write_csv(fname_AAv, the_L, N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_AAv, the_L, N[k], N[k]);
 	cout << "Written file " << fname_AAv
 			<< " of size " << Fio.file_size(fname_AAv) << endl;
 
@@ -1057,14 +1061,14 @@ void number_theoretic_transform::make_level(
 	fname_P = "ntt_Pr_k" + std::to_string(s + 1) + ".csv";
 
 
-	Fio.int_matrix_write_csv(fname_F, A[s + 1], N[s + 1], N[s + 1]);
-	Fio.int_matrix_write_csv(fname_Fv, Av[s + 1], N[s + 1], N[s + 1]);
-	Fio.int_matrix_write_csv(fname_G, Gr[s], N[s + 1], N[s + 1]);
-	Fio.int_matrix_write_csv(fname_D, Dr[s], N[s + 1], N[s + 1]);
-	Fio.int_matrix_write_csv(fname_Dv, Dvr[s], N[s + 1], N[s + 1]);
-	Fio.int_matrix_write_csv(fname_T, Tr[s], N[s + 1], N[s + 1]);
-	Fio.int_matrix_write_csv(fname_Tv, Tvr[s], N[s + 1], N[s + 1]);
-	Fio.int_matrix_write_csv(fname_P, Pr[s], N[s + 1], N[s + 1]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_F, A[s + 1], N[s + 1], N[s + 1]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_Fv, Av[s + 1], N[s + 1], N[s + 1]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_G, Gr[s], N[s + 1], N[s + 1]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_D, Dr[s], N[s + 1], N[s + 1]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_Dv, Dvr[s], N[s + 1], N[s + 1]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_T, Tr[s], N[s + 1], N[s + 1]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_Tv, Tvr[s], N[s + 1], N[s + 1]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_P, Pr[s], N[s + 1], N[s + 1]);
 
 	cout << "Written file " << fname_F << " of size " << Fio.file_size(fname_F) << endl;
 	cout << "Written file " << fname_Fv << " of size " << Fio.file_size(fname_Fv) << endl;
@@ -1128,12 +1132,12 @@ void number_theoretic_transform::make_level(
 	fname_P = "ntt_P_k" + std::to_string(s + 1) + ".csv";
 
 	//Fio.int_matrix_write_csv(fname_F, A[k - 1], N[k - 1], N[k - 1]);
-	Fio.int_matrix_write_csv(fname_G, G[s], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_D, D[s], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_Dv, Dv[s], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_T, T[s], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_Tv, Tv[s], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_P, P[s], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_G, G[s], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_D, D[s], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_Dv, Dv[s], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_T, T[s], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_Tv, Tv[s], N[k], N[k]);
+	Fio.Csv_file_support->int_matrix_write_csv(fname_P, P[s], N[k], N[k]);
 
 	cout << "Written file " << fname_F << " of size " << Fio.file_size(fname_F) << endl;
 	cout << "Written file " << fname_G << " of size " << Fio.file_size(fname_G) << endl;

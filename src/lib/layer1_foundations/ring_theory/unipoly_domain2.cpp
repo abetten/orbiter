@@ -17,7 +17,8 @@ namespace layer1_foundations {
 namespace ring_theory {
 
 
-void unipoly_domain::mult_easy(unipoly_object a,
+void unipoly_domain::mult_easy(
+		unipoly_object a,
 		unipoly_object b,
 		unipoly_object &c)
 {

@@ -233,7 +233,8 @@ void exact_cover::randomize(
 	
 	f_randomized = true;
 	exact_cover::random_permutation_fname.assign(random_permutation_fname);
-	Fio.int_matrix_read_csv(random_permutation_fname,
+	Fio.Csv_file_support->int_matrix_read_csv(
+			random_permutation_fname,
 			random_permutation, m, n, verbose_level);
 	if (n != 1) {
 		cout << "exact_cover::randomize after int_matrix_read_csv "
@@ -532,7 +533,8 @@ void exact_cover::compute_liftings_new(
 	Vec[4] = Dt;
 	Vec[5] = Dt_in_sec;
 	
-	Fio.int_vec_array_write_csv(6, Vec, nb_cases,
+	Fio.Csv_file_support->int_vec_array_write_csv(
+			6, Vec, nb_cases,
 			fname_statistics, column_labels);
 	//int_vecs_write_csv(Nb_sol, Nb_col, nb_cases,
 	//fname_statistics, "Nb_sol", "Nb_col");

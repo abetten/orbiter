@@ -422,7 +422,7 @@ void stabilizer_orbits_and_types::save_interesting_subsets_reduced(
 	string label;
 
 	label.assign("interesting_subsets_reduced");
-	Fio.lint_vec_write_csv(
+	Fio.Csv_file_support->lint_vec_write_csv(
 			interesting_subsets_reduced,
 			nb_interesting_subsets_reduced,
 			fname, label);

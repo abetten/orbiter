@@ -240,7 +240,8 @@ void any_group::export_group_table(int verbose_level)
 
 	fname = label + "_group_table.csv";
 
-	Fio.int_matrix_write_csv(fname, Table, n, n);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Table, n, n);
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
@@ -1296,7 +1297,8 @@ void any_group::random_element(
 
 	fname = elt_label + ".csv";
 
-	Fio.int_matrix_write_csv(fname, data, 1, A->make_element_size);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, data, 1, A->make_element_size);
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -1582,7 +1584,8 @@ void any_group::conjugacy_class_of(
 
 	fname = LG->label + "_class_of_" + label + ".csv";
 
-	Fio.int_matrix_write_csv(fname, M, Orbit.size(), A->make_element_size);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, Orbit.size(), A->make_element_size);
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -1656,7 +1659,8 @@ void any_group::orbits_on_set_system_from_file(
 	long int *Table;
 	int i, j;
 
-	Fio.int_matrix_read_csv(fname_csv, M,
+	Fio.Csv_file_support->int_matrix_read_csv(
+			fname_csv, M,
 			m, n, verbose_level);
 	if (f_v) {
 		cout << "read a matrix of size " << m << " x " << n << endl;
@@ -2587,7 +2591,8 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 	}
 
-	Fio.int_matrix_write_csv(fname, Output, nb_elements, elt_size_out);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Output, nb_elements, elt_size_out);
 
 	if (f_v) {
 		cout << "any_group::apply_isomorphism_wedge_product_4to6 "
@@ -2666,7 +2671,8 @@ void any_group::order_of_products_of_pairs(
 
 	}
 
-	Fio.int_matrix_write_csv(fname, Order_table, nb_elements, nb_elements);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Order_table, nb_elements, nb_elements);
 
 	if (f_v) {
 		cout << "any_group::order_of_products_of_pairs "
@@ -2758,7 +2764,8 @@ void any_group::conjugate(
 
 	}
 
-	Fio.int_matrix_write_csv(fname, Output_table, nb_elements, A->make_element_size);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Output_table, nb_elements, A->make_element_size);
 
 	if (f_v) {
 		cout << "any_group::conjugate "

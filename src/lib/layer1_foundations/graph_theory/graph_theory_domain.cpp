@@ -1308,7 +1308,8 @@ void graph_theory_domain::make_disjoint_sets_graph(
 	long int *M;
 	int m, n;
 
-	Fio.lint_matrix_read_csv(fname, M, m, n, verbose_level);
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname, M, m, n, verbose_level);
 
 
 	int i, j;

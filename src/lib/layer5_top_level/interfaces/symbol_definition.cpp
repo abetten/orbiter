@@ -166,6 +166,9 @@ symbol_definition::symbol_definition()
 	f_poset_classification_activity = false;
 	Poset_classification_activity = NULL;
 
+	f_crc_code = false;
+	Crc_code_description = NULL;
+
 }
 
 
@@ -1112,6 +1115,31 @@ void symbol_definition::read_definition(
 			Poset_classification_activity->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-crc_code") == 0) {
+
+		f_crc_code = true;
+		Crc_code_description =
+				NEW_OBJECT(coding_theory::crc_code_description);
+		if (f_v) {
+			cout << "symbol_definition::read_definition reading -crc_code" << endl;
+		}
+
+		i += Crc_code_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-crc_code" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-crc_code " << endl;
+			Crc_code_description->print();
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -1571,6 +1599,17 @@ void symbol_definition::perform_definition(int verbose_level)
 					"after definition_of_poset_classification_activityt" << endl;
 		}
 	}
+	else if (f_crc_code) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_crc_code" << endl;
+		}
+		definition_of_crc_code(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_crc_code" << endl;
+		}
+	}
 
 	else {
 		if (f_v) {
@@ -1751,6 +1790,10 @@ void symbol_definition::print()
 	if (f_poset_classification_activity) {
 		cout << "-poset_classification_activity ";
 		Poset_classification_activity->print();
+	}
+	if (f_crc_code) {
+		cout << "-crc_code ";
+		Crc_code_description->print();
 	}
 }
 
@@ -2512,6 +2555,7 @@ void symbol_definition::definition_of_code(int verbose_level)
 		cout << "symbol_definition::definition_of_code done" << endl;
 	}
 }
+
 
 
 void symbol_definition::definition_of_spread(int verbose_level)
@@ -3991,6 +4035,58 @@ void symbol_definition::definition_of_poset_classification_activity(int verbose_
 	}
 }
 
+void symbol_definition::definition_of_crc_code(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_crc_code" << endl;
+	}
+
+	coding_theory::crc_object *Code;
+
+	Code = NEW_OBJECT(coding_theory::crc_object);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_crc_code "
+				"before Code->init" << endl;
+	}
+	Code->init(Crc_code_description, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_crc_code "
+				"after Code->init" << endl;
+	}
+	if (f_v) {
+		cout << "Code->label_txt" << Code->label_txt << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_crc_code "
+				"we have created a code called " << Code->label_txt << endl;
+
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_crc_code(
+			define_label, Code, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_crc_code "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_crc_code done" << endl;
+	}
+}
 
 
 

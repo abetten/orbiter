@@ -3931,7 +3931,8 @@ void incidence_structure::save_as_csv(
 {
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.int_matrix_write_csv(fname_csv, M, nb_rows, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_csv, M, nb_rows, nb_cols);
 }
 
 #if 0

@@ -325,7 +325,8 @@ void graphical_output::do_domino_portrait(int D, int s,
 	string label;
 
 	label = "Cost";
-	Fio.int_vec_write_csv(Cost, len, fname_cost, label);
+	Fio.Csv_file_support->int_vec_write_csv(
+			Cost, len, fname_cost, label);
 
 	if (f_v) {
 		cout << "Written file " << fname_cost
@@ -445,7 +446,8 @@ void graphical_output::do_create_points_on_quartic(
 
 		fname.assign("points.csv");
 
-		Fio.double_matrix_write_csv(fname, Pts, nb, 2);
+		Fio.Csv_file_support->double_matrix_write_csv(
+				fname, Pts, nb, 2);
 
 		cout << "created curve 1 with " << C1.Pts.size() << " many points" << endl;
 		cout << "created curve 2 with " << C2.Pts.size() << " many points" << endl;
@@ -525,7 +527,8 @@ void graphical_output::do_create_points_on_parabola(
 				+ std::to_string(b) + "_"
 				+ std::to_string(c) + "_points.csv";
 
-		Fio.double_matrix_write_csv(fname, Pts, nb, 2);
+		Fio.Csv_file_support->double_matrix_write_csv(
+				fname, Pts, nb, 2);
 
 		cout << "created curve 1 with " << C.Pts.size() << " many points" << endl;
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -557,7 +560,8 @@ void graphical_output::do_create_points_on_parabola(
 				+ std::to_string(b) + "_"
 				+ std::to_string(c) + "_projection_from_center.csv";
 
-		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
+		Fio.Csv_file_support->double_matrix_write_csv(
+				fname, Pts, nb, 6);
 
 		cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -598,7 +602,8 @@ void graphical_output::do_create_points_on_parabola(
 				+ std::to_string(c) + "_projection_from_sphere.csv";
 
 
-		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
+		Fio.Csv_file_support->double_matrix_write_csv(
+				fname, Pts, nb, 6);
 
 		cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -636,7 +641,8 @@ void graphical_output::do_create_points_on_parabola(
 				+ std::to_string(c) + "_points_projected.csv";
 
 
-		Fio.double_matrix_write_csv(fname, Pts, nb, 3);
+		Fio.Csv_file_support->double_matrix_write_csv(
+				fname, Pts, nb, 3);
 
 		cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -725,7 +731,8 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 		fname = "function_" + curve_label + "_N" + std::to_string(N) + "_points.csv";
 
 
-		Fio.double_matrix_write_csv(fname, Pts, nb, nb_dimensions);
+		Fio.Csv_file_support->double_matrix_write_csv(
+				fname, Pts, nb, nb_dimensions);
 
 		cout << "created curve 1 with " << C.Pts.size() << " many points" << endl;
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -765,7 +772,8 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 		string fname;
 		fname = "function_" + curve_label + "_N" + std::to_string(N) + "_points_plus.csv";
 
-		Fio.double_matrix_write_csv(fname, Pts, nb, n);
+		Fio.Csv_file_support->double_matrix_write_csv(
+				fname, Pts, nb, n);
 
 		cout << "created curve 1 with " << C.Pts.size() << " many points" << endl;
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;

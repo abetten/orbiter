@@ -125,7 +125,7 @@ void diophant_create::init(
 			cout << "reading coefficient matrix from file "
 					<< Descr->coefficient_matrix_csv << endl;
 		}
-		Fio.int_matrix_read_csv(
+		Fio.Csv_file_support->int_matrix_read_csv(
 				Descr->problem_of_Steiner_type_covering_matrix_fname,
 				Covering_matrix,
 				nb_rows, nb_cols, verbose_level);
@@ -164,7 +164,7 @@ void diophant_create::init(
 			cout << "reading coefficient matrix from file "
 					<< Descr->coefficient_matrix_csv << endl;
 		}
-		Fio.int_matrix_read_csv(Descr->coefficient_matrix_csv,
+		Fio.Csv_file_support->int_matrix_read_csv(Descr->coefficient_matrix_csv,
 				A,
 				m, n, verbose_level);
 
@@ -236,7 +236,7 @@ void diophant_create::init(
 					"the coefficient matrix first" << endl;
 			exit(1);
 		}
-		Fio.int_matrix_read_csv(Descr->RHS_csv_text,
+		Fio.Csv_file_support->int_matrix_read_csv(Descr->RHS_csv_text,
 				RHS,
 				m, n, verbose_level);
 		if (n != 3) {
@@ -384,7 +384,8 @@ void diophant_create::init(
 					"the coefficient matrix first" << endl;
 			exit(1);
 		}
-		Fio.int_matrix_read_csv(Descr->x_bounds_csv,
+		Fio.Csv_file_support->int_matrix_read_csv(
+				Descr->x_bounds_csv,
 				x_bounds,
 				m1, n1, verbose_level);
 		if (m1 != D->n) {

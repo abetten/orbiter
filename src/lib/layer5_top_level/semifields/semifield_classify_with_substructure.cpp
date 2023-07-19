@@ -244,13 +244,15 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		cout << "sizeof(long int) < 8" << endl;
 		exit(1);
 	}
-	Fio.int_matrix_read_csv(fname_FstLen,
+	Fio.Csv_file_support->int_matrix_read_csv(
+			fname_FstLen,
 		Sub->FstLen, Sub->nb_orbits_at_level_3, mtx_n, verbose_level);
 	Sub->Len = NEW_int(Sub->nb_orbits_at_level_3);
 	for (i = 0; i < Sub->nb_orbits_at_level_3; i++) {
 		Sub->Len[i] = Sub->FstLen[i * 2 + 1];
 	}
-	Fio.lint_matrix_read_csv(fname_Data, Sub->Data,
+	Fio.Csv_file_support->lint_matrix_read_csv(
+			fname_Data, Sub->Data,
 			Sub->nb_solutions, Sub->data_size, verbose_level);
 
 
@@ -574,7 +576,8 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 		long int *Data;
 		int n;
 
-		Fio.lint_matrix_read_csv(Descr->identify_semifields_from_file_fname, Data,
+		Fio.Csv_file_support->lint_matrix_read_csv(
+				Descr->identify_semifields_from_file_fname, Data,
 				identify_semifields_from_file_m, n, verbose_level);
 		if (n != Sub->SC->k) {
 			cout << "n != Sub->SC->k" << endl;
@@ -628,7 +631,8 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 		fname = Descr->identify_semifields_from_file_fname;
 		ST.chop_off_extension(fname);
 		fname += "_identification.csv";
-		Fio.int_matrix_write_csv(fname, identify_semifields_from_file_Po,
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, identify_semifields_from_file_Po,
 				identify_semifields_from_file_m, 6);
 	}
 	if (f_v) {
@@ -798,7 +802,8 @@ void semifield_classify_with_substructure::latex_report(
 		string fname;
 
 		fname = "Semifields_" + std::to_string(Descr->order) + "_2structure.tex";
-		Fio.int_matrix_write_csv(fname, PO2, Semifields->nb_orbits, Sub->N2);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, PO2, Semifields->nb_orbits, Sub->N2);
 		}
 		FREE_int(Po2);
 		FREE_int(PO2);

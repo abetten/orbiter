@@ -456,7 +456,8 @@ void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 
 		fname = label_txt + "_TDA.csv";
 
-		Fio.int_matrix_write_csv(fname, Inc_TDA, Enc->nb_rows, Enc->nb_cols);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, Inc_TDA, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
 			cout << "Written file " << fname
 					<< " of size " << Fio.file_size(fname) << endl;
@@ -465,7 +466,8 @@ void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 
 		fname = label_txt + "_TDA_flag_orbits.csv";
 
-		Fio.int_matrix_write_csv(fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
 			cout << "Written file " << fname
 					<< " of size " << Fio.file_size(fname) << endl;
@@ -506,7 +508,7 @@ void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 
 		fname = label_txt + "_TDA.csv";
 
-		Fio.int_matrix_write_csv(
+		Fio.Csv_file_support->int_matrix_write_csv(
 				fname, Inc2, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
 			cout << "Written file " << fname
@@ -600,14 +602,16 @@ void group_action_on_combinatorial_object::export_INP_with_flag_orbits(
 
 		fname = label_txt + "_INP.csv";
 
-		Fio.int_matrix_write_csv(fname, Inc, Enc->nb_rows, Enc->nb_cols);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, Inc, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
 
 		fname = label_txt + "_INP_flag_orbits.csv";
 
-		Fio.int_matrix_write_csv(fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
@@ -645,7 +649,7 @@ void group_action_on_combinatorial_object::export_INP_with_flag_orbits(
 
 		fname = label_txt + "_INP.csv";
 
-		Fio.int_matrix_write_csv(
+		Fio.Csv_file_support->int_matrix_write_csv(
 				fname, Inc2, Enc->nb_rows, Enc->nb_cols);
 		if (f_v) {
 			cout << "Written file " << fname

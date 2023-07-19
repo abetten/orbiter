@@ -397,7 +397,8 @@ void classify_bitvectors::save(
 		cout << "classify_bitvectors::save writing "
 				"file " << fname_csv << endl;
 	}
-	Fio.lint_matrix_write_csv(fname_csv, Reps, nb_types, sz);
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_csv, Reps, nb_types, sz);
 
 	if (f_v) {
 		cout << "classify_bitvectors::save "

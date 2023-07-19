@@ -3473,7 +3473,8 @@ void geometry_global::make_restricted_incidence_matrix(
 	fname_csv = file_name + ".csv";
 	fname_inc = file_name + ".inc";
 
-	Fio.int_matrix_write_csv(fname_csv, M, nb_row_objects, nb_col_objects);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_csv, M, nb_row_objects, nb_col_objects);
 
 	if (f_v) {
 		cout << "written file " << fname_csv << " of size "

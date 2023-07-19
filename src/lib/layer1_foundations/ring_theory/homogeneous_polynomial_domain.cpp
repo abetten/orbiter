@@ -17,11 +17,14 @@ namespace layer1_foundations {
 namespace ring_theory {
 
 
-static int homogeneous_polynomial_domain_compare_monomial_with(void *data,
+static int homogeneous_polynomial_domain_compare_monomial_with(
+		void *data,
 	int i, void *data2, void *extra_data);
-static int homogeneous_polynomial_domain_compare_monomial(void *data,
+static int homogeneous_polynomial_domain_compare_monomial(
+		void *data,
 	int i, int j, void *extra_data);
-static void homogeneous_polynomial_domain_swap_monomial(void *data,
+static void homogeneous_polynomial_domain_swap_monomial(
+		void *data,
 	int i, int j, void *extra_data);
 
 
@@ -2636,7 +2639,8 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 
 		label.assign("case");
 
-		Fio.lint_vec_write_csv(the_class, l, fname2, label);
+		Fio.Csv_file_support->lint_vec_write_csv(
+				the_class, l, fname2, label);
 
 		cout << "class of type " << t << " contains " << l << " elements:" << endl;
 		F->Io->display_table_of_projective_points(
@@ -2698,7 +2702,8 @@ void homogeneous_polynomial_domain::create_intersection_of_zariski_open_sets(
 
 		int *coeff;
 
-		coeff = read_from_string_coefficient_pairs(Variety_coeffs[h], verbose_level - 2);
+		coeff = read_from_string_coefficient_pairs(
+				Variety_coeffs[h], verbose_level - 2);
 		if (f_v) {
 			cout << "homogeneous_polynomial_domain::create_intersection_of_zariski_open_sets "
 					"h=" << h << " / " << Variety_coeffs.size() << " coeff:";
@@ -2715,7 +2720,8 @@ void homogeneous_polynomial_domain::create_intersection_of_zariski_open_sets(
 
 		vector<long int> Points;
 
-		enumerate_points_zariski_open_set(coeff, Points, verbose_level);
+		enumerate_points_zariski_open_set(
+				coeff, Points, verbose_level);
 
 		FREE_int(coeff);
 
@@ -2877,8 +2883,6 @@ void homogeneous_polynomial_domain::create_ideal(
 				"ideal_point_set_label=" << ideal_point_set_label << endl;
 	}
 
-	//Get_lint_vector_from_label(ideal_point_set_label, Pts, nb_pts, verbose_level);
-
 	Get_lint_vector_from_label(ideal_point_set_label, Pts, nb_pts, verbose_level);
 
 	if (f_v) {
@@ -2930,7 +2934,8 @@ void homogeneous_polynomial_domain::create_projective_curve(
 	int *coeff;
 
 	if (get_nb_variables() != 3) {
-		cout << "homogeneous_polynomial_domain::create_projective_curve number of variables must be 3" << endl;
+		cout << "homogeneous_polynomial_domain::create_projective_curve "
+				"number of variables must be 3" << endl;
 		exit(1);
 	}
 
@@ -3042,7 +3047,8 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
 				"before Formula->get_subtrees" << endl;
 	}
-	Formula->get_subtrees(this, Subtrees, nb_monomials, verbose_level);
+	Formula->get_subtrees(
+			this, Subtrees, nb_monomials, verbose_level);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
 				"after Formula->get_subtrees" << endl;
@@ -3054,7 +3060,8 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 			cout << "homogeneous_polynomial_domain::get_coefficient_vector "
 					"before Formula->evaluate" << endl;
 		}
-		Formula->evaluate(this,
+		Formula->evaluate(
+				this,
 				Subtrees, evaluate_text, Coefficient_vector,
 				verbose_level);
 		if (f_v) {
@@ -3091,7 +3098,8 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 			cout << "homogeneous_polynomial_domain::get_coefficient_vector "
 					"before Formula->evaluate" << endl;
 		}
-		Formula->evaluate(this,
+		Formula->evaluate(
+				this,
 				Subtrees, evaluate_text, Coefficient_vector,
 				verbose_level);
 		if (f_v) {
@@ -3274,52 +3282,6 @@ static void homogeneous_polynomial_domain_swap_monomial(
 	}
 	
 }
-
-#if 0
-
-static void HPD_callback_print_function(
-		stringstream &ost, void *data, void *callback_data)
-{
-	homogeneous_polynomial_domain *HPD =
-			(homogeneous_polynomial_domain *) callback_data;
-
-	int *coeff;
-	int *i_data = (int *) data;
-
-	coeff = NEW_int(HPD->get_nb_monomials());
-	HPD->unrank_coeff_vector(coeff, i_data[0]);
-	//int_vec_print(cout, coeff, HPD->nb_monomials);
-	//cout << " = ";
-	HPD->print_equation_str(ost, coeff);
-	//ost << endl;
-	FREE_int(coeff);
-}
-
-static void HPD_callback_print_function2(
-		stringstream &ost, void *data, void *callback_data)
-{
-	homogeneous_polynomial_domain *HPD =
-			(homogeneous_polynomial_domain *) callback_data;
-
-	int *coeff;
-	int *i_data = (int *) data;
-	//long int *Pts;
-	//int nb_pts;
-	vector<long int> Points;
-
-	//Pts = NEW_lint(HPD->get_P()->N_points);
-	coeff = NEW_int(HPD->get_nb_monomials());
-	HPD->unrank_coeff_vector(coeff, i_data[0]);
-	HPD->enumerate_points(coeff, Points,  0 /*verbose_level*/);
-	ost << Points.size();
-	//int_vec_print(cout, coeff, HPD->nb_monomials);
-	//cout << " = ";
-	//HPD->print_equation_str(ost, coeff);
-	//ost << endl;
-	FREE_int(coeff);
-	//FREE_lint(Pts);
-}
-#endif
 
 
 

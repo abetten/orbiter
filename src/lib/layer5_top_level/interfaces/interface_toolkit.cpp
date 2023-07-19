@@ -1087,7 +1087,8 @@ void interface_toolkit::worker(int verbose_level)
 		fname = save_matrix_csv_label + "_matrix.csv";
 
 		Get_matrix(save_matrix_csv_label, v, m, n);
-		Fio.int_matrix_write_csv(fname, v, m, n);
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, v, m, n);
 
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
@@ -1102,7 +1103,7 @@ void interface_toolkit::worker(int verbose_level)
 
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.read_csv_file_and_tally(
+		Fio.Csv_file_support->read_csv_file_and_tally(
 				csv_file_tally_fname, verbose_level);
 
 	}
@@ -1117,7 +1118,8 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_select_rows(csv_file_select_rows_fname,
+		Fio.Csv_file_support->do_csv_file_select_rows(
+				csv_file_select_rows_fname,
 				csv_file_select_rows_text, verbose_level);
 	}
 	else if (f_csv_file_split_rows_modulo) {
@@ -1128,7 +1130,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_split_rows_modulo(
+		Fio.Csv_file_support->do_csv_file_split_rows_modulo(
 				csv_file_split_rows_modulo_fname,
 				csv_file_split_rows_modulo_n, verbose_level);
 	}
@@ -1140,7 +1142,8 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_select_cols(csv_file_select_cols_fname,
+		Fio.Csv_file_support->do_csv_file_select_cols(
+				csv_file_select_cols_fname,
 				csv_file_select_cols_text, verbose_level);
 	}
 	else if (f_csv_file_select_rows_and_cols) {
@@ -1151,7 +1154,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_select_rows_and_cols(
+		Fio.Csv_file_support->do_csv_file_select_rows_and_cols(
 				csv_file_select_rows_and_cols_fname,
 				csv_file_select_rows_and_cols_R_text,
 				csv_file_select_rows_and_cols_C_text,
@@ -1165,7 +1168,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_sort_each_row(
+		Fio.Csv_file_support->do_csv_file_sort_each_row(
 				csv_file_sort_each_row_fname, verbose_level);
 
 	}
@@ -1177,7 +1180,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.csv_file_sort_rows(
+		Fio.Csv_file_support->csv_file_sort_rows(
 				csv_file_sort_rows_fname, verbose_level);
 
 	}
@@ -1189,7 +1192,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.csv_file_sort_rows_and_remove_duplicates(
+		Fio.Csv_file_support->csv_file_sort_rows_and_remove_duplicates(
 				csv_file_sort_rows_and_remove_duplicates_fname, verbose_level);
 
 	}
@@ -1202,7 +1205,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_join(
+		Fio.Csv_file_support->do_csv_file_join(
 				csv_file_join_fname,
 				csv_file_join_identifier, verbose_level);
 	}
@@ -1214,7 +1217,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_concatenate(
+		Fio.Csv_file_support->do_csv_file_concatenate(
 				csv_file_concatenate_fname_in,
 				csv_file_concatenate_fname_out, verbose_level);
 	}
@@ -1226,7 +1229,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_concatenate_from_mask(
+		Fio.Csv_file_support->do_csv_file_concatenate_from_mask(
 				csv_file_concatenate_from_mask_mask,
 				csv_file_concatenate_from_mask_N,
 				csv_file_concatenate_from_mask_fname_out,
@@ -1240,7 +1243,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.do_csv_file_extract_column_to_txt(
+		Fio.Csv_file_support->do_csv_file_extract_column_to_txt(
 				csv_file_extract_column_to_txt_fname,
 				csv_file_extract_column_to_txt_col_label,
 				verbose_level);
@@ -1255,7 +1258,7 @@ void interface_toolkit::worker(int verbose_level)
 		orbiter_kernel_system::file_io Fio;
 		int nb_lines_per_table = 40;
 
-		Fio.do_csv_file_latex(
+		Fio.Csv_file_support->do_csv_file_latex(
 				csv_file_latex_fname,
 				f_produce_latex_header,
 				nb_lines_per_table,
@@ -1273,7 +1276,7 @@ void interface_toolkit::worker(int verbose_level)
 		int f_final = true;
 		int f_oracle_grade = true;
 
-		Fio.grade_statistic_from_csv(
+		Fio.Csv_file_support->grade_statistic_from_csv(
 				grade_statistic_from_csv_fname,
 				f_midterm1, grade_statistic_from_csv_m1_label,
 				f_midterm2, grade_statistic_from_csv_m2_label,
@@ -1308,14 +1311,14 @@ void interface_toolkit::worker(int verbose_level)
 		int len;
 		int m2;
 
-		Fio.int_matrix_read_csv(
+		Fio.Csv_file_support->int_matrix_read_csv(
 				reformat_fname_in, M, m, n, verbose_level);
 		len = m * n;
 		m2 = (len + reformat_nb_cols - 1) / reformat_nb_cols;
 		M2 = NEW_int(m2 * reformat_nb_cols);
 		Int_vec_zero(M2, m2 * reformat_nb_cols);
 		Int_vec_copy(M, M2, len);
-		Fio.int_matrix_write_csv(
+		Fio.Csv_file_support->int_matrix_write_csv(
 				reformat_fname_out, M2, m2, reformat_nb_cols);
 		cout << "Written file " << reformat_fname_out
 				<< " of size "
@@ -1389,7 +1392,7 @@ void interface_toolkit::worker(int verbose_level)
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		Fio.lint_matrix_write_csv(
+		Fio.Csv_file_support->lint_matrix_write_csv(
 				store_as_csv_file_fname, D,
 				store_as_csv_file_m, store_as_csv_file_n);
 		cout << "Written file " << store_as_csv_file_fname
@@ -1576,7 +1579,7 @@ void interface_toolkit::worker(int verbose_level)
 		int *M;
 		int m1, n1, x, y;
 
-		Fio.int_matrix_read_csv(
+		Fio.Csv_file_support->int_matrix_read_csv(
 				plot_function_fname, T, m1, n1, verbose_level);
 
 
@@ -1596,7 +1599,7 @@ void interface_toolkit::worker(int verbose_level)
 		ST.chop_off_extension(fname);
 		fname += "_graph.csv";
 
-		Fio.int_matrix_write_csv(fname, M, m1, m1);
+		Fio.Csv_file_support->int_matrix_write_csv(fname, M, m1, m1);
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 

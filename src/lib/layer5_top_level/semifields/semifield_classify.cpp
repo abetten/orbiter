@@ -775,7 +775,8 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 			}
 			Lint_vec_copy(set, Table + i * k, k);
 		}
-		Fio.lint_matrix_write_csv(fname, Table, nb_orbits, k);
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, Table, nb_orbits, k);
 
 		FREE_lint(set);
 		FREE_lint(Table);

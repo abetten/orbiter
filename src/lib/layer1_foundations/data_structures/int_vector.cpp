@@ -215,7 +215,8 @@ void int_vector::write_to_csv_file(std::string &fname, std::string &label)
 {
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.lint_vec_write_csv(M, m, fname, label);
+	Fio.Csv_file_support->lint_vec_write_csv(
+			M, m, fname, label);
 }
 
 uint32_t int_vector::hash()
