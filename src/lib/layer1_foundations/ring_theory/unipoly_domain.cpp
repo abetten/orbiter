@@ -45,7 +45,8 @@ unipoly_domain::unipoly_domain(
 }
 
 void unipoly_domain::init_basic(
-		field_theory::finite_field *F, int verbose_level)
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -137,7 +138,8 @@ unipoly_domain::~unipoly_domain()
 	}
 }
 
-void unipoly_domain::init_variable_name(std::string &label)
+void unipoly_domain::init_variable_name(
+		std::string &label)
 {
 	variable_name.assign(label);
 }
@@ -504,7 +506,8 @@ void unipoly_domain::unrank_longinteger(
 	rep[0] = i - 1;
 }
 
-int unipoly_domain::rank(unipoly_object p)
+int unipoly_domain::rank(
+		unipoly_object p)
 {
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
@@ -541,7 +544,8 @@ void unipoly_domain::rank_longinteger(
 	rk.assign_to(rank);
 }
 
-int unipoly_domain::degree(unipoly_object p)
+int unipoly_domain::degree(
+		unipoly_object p)
 {
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
@@ -557,7 +561,8 @@ int unipoly_domain::degree(unipoly_object p)
 	return i;
 }
 
-void unipoly_domain::print_object_latex(unipoly_object p, std::ostream &ost)
+void unipoly_domain::print_object_latex(
+		unipoly_object p, std::ostream &ost)
 {
 	std::stringstream s;
 
@@ -566,7 +571,8 @@ void unipoly_domain::print_object_latex(unipoly_object p, std::ostream &ost)
 }
 
 
-void unipoly_domain::print_object(unipoly_object p, std::ostream &ost)
+void unipoly_domain::print_object(
+		unipoly_object p, std::ostream &ost)
 {
 	std::stringstream s;
 
@@ -965,7 +971,8 @@ void unipoly_domain::make_monic(unipoly_object &a)
 	}
 }
 
-void unipoly_domain::add(unipoly_object a,
+void unipoly_domain::add(
+		unipoly_object a,
 		unipoly_object b,
 		unipoly_object &c)
 {
@@ -1009,7 +1016,8 @@ void unipoly_domain::add(unipoly_object a,
 	c = (void *) rc;
 }
 
-void unipoly_domain::mult(unipoly_object a,
+void unipoly_domain::mult(
+		unipoly_object a,
 		unipoly_object b,
 		unipoly_object &c,
 		int verbose_level)
@@ -1036,7 +1044,8 @@ void unipoly_domain::mult(unipoly_object a,
 	}
 }
 
-void unipoly_domain::mult_mod(unipoly_object a,
+void unipoly_domain::mult_mod(
+		unipoly_object a,
 	unipoly_object b,
 	unipoly_object &c,
 	unipoly_object m,
@@ -1071,7 +1080,8 @@ void unipoly_domain::mult_mod(unipoly_object a,
 	}
 }
 
-void unipoly_domain::mult_mod_negated(unipoly_object a,
+void unipoly_domain::mult_mod_negated(
+		unipoly_object a,
 	unipoly_object b,
 	unipoly_object &c,
 	int factor_polynomial_degree,
@@ -1174,7 +1184,8 @@ void unipoly_domain::mult_mod_negated(unipoly_object a,
 	}
 }
 
-void unipoly_domain::Frobenius_matrix_by_rows(int *&Frob,
+void unipoly_domain::Frobenius_matrix_by_rows(
+		int *&Frob,
 	unipoly_object factor_polynomial, int verbose_level)
 // the j-th row of Frob is x^{j*q} mod m
 {
@@ -1192,7 +1203,8 @@ void unipoly_domain::Frobenius_matrix_by_rows(int *&Frob,
 	}
 }
 
-void unipoly_domain::Frobenius_matrix(int *&Frob,
+void unipoly_domain::Frobenius_matrix(
+		int *&Frob,
 	unipoly_object factor_polynomial, int verbose_level)
 // the j-th column of Frob is x^{j*q} mod m
 
@@ -1249,23 +1261,28 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	}
 	
 	if (f_v) {
-		cout << "unipoly_domain::Frobenius_matrix before power_int" << endl;
+		cout << "unipoly_domain::Frobenius_matrix "
+				"before power_int" << endl;
 	}
 	power_int(a, F->q, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "unipoly_domain::Frobenius_matrix after power_int" << endl;
-		cout << "unipoly_domain::Frobenius_matrix a = x^q = ";
+		cout << "unipoly_domain::Frobenius_matrix "
+				"after power_int" << endl;
+		cout << "unipoly_domain::Frobenius_matrix "
+				"a = x^q = ";
 		print_object(a, cout);
 		cout << endl;
 	}
 	if (f_v) {
-		cout << "unipoly_domain::Frobenius_matrix before division_with_remainder" << endl;
+		cout << "unipoly_domain::Frobenius_matrix "
+				"before division_with_remainder" << endl;
 	}
 	division_with_remainder(a,
 			factor_polynomial,
 			Q, R, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "unipoly_domain::Frobenius_matrix after division_with_remainder" << endl;
+		cout << "unipoly_domain::Frobenius_matrix "
+				"after division_with_remainder" << endl;
 	}
 	assign(R, a, 0 /*verbose_level */);
 	if (f_vv) {
@@ -1276,7 +1293,8 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	}
 	for (j = 1; j < factor_polynomial_degree; j++) {
 		if (f_vvv) {
-			cout << "unipoly_domain::Frobenius_matrix j = " << j << endl;
+			cout << "unipoly_domain::Frobenius_matrix "
+					"j = " << j << endl;
 			cout << "b = ";
 			print_object(b, cout);
 			cout << endl;
@@ -1284,7 +1302,8 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 			print_object(a, cout);
 			cout << endl;
 		}
-		mult_mod_negated(b, a, c,
+		mult_mod_negated(
+				b, a, c,
 				factor_polynomial_degree, ((int *)m_mod) + 1, 0);
 		if (f_vvv) {
 			cout << "c = ";
@@ -1294,7 +1313,8 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 		assign(c, b, 0 /*verbose_level */);
 		// now b = X^{j*q}
 		if (f_vvv) {
-			cout << "unipoly_domain::Frobenius_matrix X^{" << j << "*q}=";
+			cout << "unipoly_domain::Frobenius_matrix "
+					"X^{" << j << "*q}=";
 			print_object(b, cout);
 			cout << endl;
 		}
@@ -1308,7 +1328,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 		}
 	}
 	if (f_vv) {
-		cout << "unipoly_domain::Frobenius_matrix=" << endl;
+		cout << "unipoly_domain::Frobenius_matrix Frob=" << endl;
 		Int_matrix_print(Frob,
 			factor_polynomial_degree, factor_polynomial_degree);
 		cout << endl;
@@ -1324,8 +1344,10 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	}
 }
 
-void unipoly_domain::Berlekamp_matrix(int *&B,
-	unipoly_object factor_polynomial, int verbose_level)
+void unipoly_domain::Berlekamp_matrix(
+		int *&B,
+	unipoly_object factor_polynomial,
+	int verbose_level)
 // subtracts the identity matrix off the Frobenius matrix
 {
 	int f_v = (verbose_level >= 1);
@@ -1337,12 +1359,14 @@ void unipoly_domain::Berlekamp_matrix(int *&B,
 	}
 	factor_polynomial_degree = degree(factor_polynomial);
 	if (f_v) {
-		cout << "unipoly_domain::Berlekamp_matrix before Frobenius_matrix" << endl;
+		cout << "unipoly_domain::Berlekamp_matrix "
+				"before Frobenius_matrix" << endl;
 	}
 	Frobenius_matrix(B, factor_polynomial, verbose_level - 2);
 	if (f_v) {
-		cout << "unipoly_domain::Berlekamp_matrix after Frobenius_matrix" << endl;
-		cout << "Frobenius matros:" << endl;
+		cout << "unipoly_domain::Berlekamp_matrix "
+				"after Frobenius_matrix" << endl;
+		cout << "Frobenius matrix:" << endl;
 		Int_vec_print_integer_matrix(cout, B,
 				factor_polynomial_degree, factor_polynomial_degree);
 	}
@@ -1481,7 +1505,8 @@ done:
 	}
 }
 
-void unipoly_domain::derivative(unipoly_object a, unipoly_object &b)
+void unipoly_domain::derivative(
+		unipoly_object a, unipoly_object &b)
 {
 	int *ra = (int *) a;
 	int *A = ra + 1;
@@ -1502,7 +1527,8 @@ void unipoly_domain::derivative(unipoly_object a, unipoly_object &b)
 	b = rb;
 }
 
-int unipoly_domain::compare_euclidean(unipoly_object m, unipoly_object n)
+int unipoly_domain::compare_euclidean(
+		unipoly_object m, unipoly_object n)
 {
 	int dm = degree(m);
 	int dn = degree(n);
@@ -1532,11 +1558,13 @@ void unipoly_domain::greatest_common_divisor(
 		cout << endl;
 	}
 	if (f_v) {
-		cout << "unipoly::greatest_common_divisor before compare_euclidean" << endl;
+		cout << "unipoly::greatest_common_divisor "
+				"before compare_euclidean" << endl;
 	}
 	c = compare_euclidean(m, n);
 	if (f_v) {
-		cout << "unipoly::greatest_common_divisor compare_euclidean returns " << c << endl;
+		cout << "unipoly::greatest_common_divisor "
+				"compare_euclidean returns " << c << endl;
 	}
 	if (c < 0) {
 		greatest_common_divisor(n, m, g, verbose_level);
@@ -1741,7 +1769,8 @@ void unipoly_domain::extended_gcd(
 	}
 }
 
-int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
+int unipoly_domain::is_squarefree(
+		unipoly_object p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1759,26 +1788,32 @@ int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 	
 	assign(p, a, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "unipoly::is_squarefree before derivative" << endl;
+		cout << "unipoly::is_squarefree "
+				"before derivative" << endl;
 	}
 	derivative(a, b);
 	if (f_v) {
-		cout << "unipoly::is_squarefree after derivative" << endl;
+		cout << "unipoly::is_squarefree "
+				"after derivative" << endl;
 	}
 	if (f_vv) {
-		cout << "unipoly::is_squarefree derivative p' = ";
+		cout << "unipoly::is_squarefree "
+				"derivative p' = ";
 		print_object(b, cout);
 		cout << endl;
 	}
 	if (f_v) {
-		cout << "unipoly::is_squarefree before extended_gcd" << endl;
+		cout << "unipoly::is_squarefree "
+				"before extended_gcd" << endl;
 	}
 	extended_gcd(a, b, u, v, g, verbose_level - 1);
 	if (f_v) {
-		cout << "unipoly::is_squarefree after extended_gcd" << endl;
+		cout << "unipoly::is_squarefree "
+				"after extended_gcd" << endl;
 	}
 	if (f_vv) {
-		cout << "unipoly::is_squarefree gcd(p, p') = ";
+		cout << "unipoly::is_squarefree "
+				"gcd(p, p') = ";
 		print_object(g, cout);
 		cout << endl;
 	}
@@ -1801,7 +1836,8 @@ int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 	}
 }
 
-void unipoly_domain::compute_normal_basis(int d,
+void unipoly_domain::compute_normal_basis(
+		int d,
 	int *Normal_basis, int *Frobenius,
 	int verbose_level)
 {
@@ -1834,7 +1870,8 @@ void unipoly_domain::compute_normal_basis(int d,
 		cout << "unipoly_domain::compute_normal_basis "
 				"before order_ideal_generator" << endl;
 	}
-	order_ideal_generator(d, i, mue, 
+	order_ideal_generator(
+			d, i, mue,
 		A, Frobenius, 
 		verbose_level - 10);
 	if (f_v) {
@@ -1868,7 +1905,8 @@ void unipoly_domain::compute_normal_basis(int d,
 			cout << "unipoly_domain::compute_normal_basis "
 					"before order_ideal_generator" << endl;
 		}
-		order_ideal_generator(d, i, lambda, 
+		order_ideal_generator(
+				d, i, lambda,
 			A, Frobenius, 
 			verbose_level - 10);
 		if (f_v) {
@@ -1895,7 +1933,8 @@ void unipoly_domain::compute_normal_basis(int d,
 			cout << "unipoly_domain::compute_normal_basis "
 				"computing greatest_common_divisor(mue, lambda):" << endl;
 		}
-		greatest_common_divisor(mue, lambda, GCD, verbose_level);
+		greatest_common_divisor(
+				mue, lambda, GCD, verbose_level);
 	
 		if (f_vv) {
 			cout << "unipoly_domain::compute_normal_basis "
@@ -1910,7 +1949,8 @@ void unipoly_domain::compute_normal_basis(int d,
 			Int_vec_zero(b, deg);
 			b[i] = 1;
 			
-			exact_division(lambda, GCD, Q, 0 /* verbose_level - 2 */);
+			exact_division(
+					lambda, GCD, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"Q = lambda / GCD = ";
@@ -1919,7 +1959,8 @@ void unipoly_domain::compute_normal_basis(int d,
 			}
 
 
-			take_away_all_factors_from_b(mue, Q, R, 0 /* verbose_level - 2 */);
+			take_away_all_factors_from_b(
+					mue, Q, R, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"R = take_away_all_factors_from_b(mue, Q) = ";
@@ -1927,7 +1968,8 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << endl;
 			}
 
-			exact_division(mue, R, Q, 0 /* verbose_level - 2 */);
+			exact_division(
+					mue, R, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"Q = mue / R = ";
@@ -1940,7 +1982,8 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << "unipoly_domain::compute_normal_basis "
 						"before module_structure_apply" << endl;
 			}
-			module_structure_apply(v, Frobenius, deg, Q, 0 /* verbose_level */);
+			module_structure_apply(
+					v, Frobenius, deg, Q, 0 /* verbose_level */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"after module_structure_apply" << endl;
@@ -1950,7 +1993,8 @@ void unipoly_domain::compute_normal_basis(int d,
 			// now: Orderideal(v1) = Ideal(r) 
 			// v = v *(mue/R)(Frobenius) = v * Q (Frobenius)
 			
-			exact_division(mue, GCD, Q, 0 /* verbose_level - 2 */);
+			exact_division(
+					mue, GCD, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"Q = mue / GCD = ";
@@ -1958,7 +2002,8 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << endl;
 			}
 
-			take_away_all_factors_from_b(lambda,
+			take_away_all_factors_from_b(
+					lambda,
 					Q, R1, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
@@ -1967,7 +2012,8 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << endl;
 			}
 
-			greatest_common_divisor(R,
+			greatest_common_divisor(
+					R,
 					R1, GCD, 0 /* verbose_level */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
@@ -1976,7 +2022,8 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << endl;
 			}
 
-			exact_division(R1,
+			exact_division(
+					R1,
 					GCD, R2, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
@@ -1988,7 +2035,8 @@ void unipoly_domain::compute_normal_basis(int d,
 			// now: greatest_common_divisor(R, R2) = 1
 			// R * R2 = lcm(mue, lambda) 
 			
-			exact_division(lambda,
+			exact_division(
+					lambda,
 					R2, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
@@ -2001,7 +2049,8 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << "unipoly_domain::compute_normal_basis "
 						"before module_structure_apply" << endl;
 			}
-			module_structure_apply(b,
+			module_structure_apply(
+					b,
 					Frobenius, deg, Q, 0 /* verbose_level */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
@@ -2018,7 +2067,8 @@ void unipoly_domain::compute_normal_basis(int d,
 			// Orderideal(v) = Ideal(R * R2), 
 			// greatest_common_divisor(R, R2) = 1
 			
-			mult(R, R2, mue, 0 /* verbose_level */);
+			mult(
+					R, R2, mue, 0 /* verbose_level */);
 		} // if
 		if (f_v) {
 			cout << "unipoly_domain::compute_normal_basis "
@@ -2039,7 +2089,8 @@ void unipoly_domain::compute_normal_basis(int d,
 		cout << "unipoly_domain::compute_normal_basis "
 			"before span_cyclic_module" << endl;
 	}
-	F->Linear_algebra->span_cyclic_module(Normal_basis,
+	F->Linear_algebra->span_cyclic_module(
+			Normal_basis,
 			v, deg, Frobenius, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "unipoly_domain::compute_normal_basis "
@@ -2161,7 +2212,8 @@ void unipoly_domain::order_ideal_generator(
 	}
 }
 
-void unipoly_domain::matrix_apply(unipoly_object &p,
+void unipoly_domain::matrix_apply(
+		unipoly_object &p,
 		int *Mtx, int n, int verbose_level)
 // The matrix is applied on the left
 {
@@ -2300,7 +2352,8 @@ int unipoly_domain::substitute_scalar_in_polynomial(
 	return m1;
 }
 
-void unipoly_domain::module_structure_apply(int *v,
+void unipoly_domain::module_structure_apply(
+		int *v,
 		int *Mtx, int n, unipoly_object p,
 		int verbose_level)
 // computes the effect of Mtx substituted into p=p(x) applied to the vector v.
@@ -2456,7 +2509,8 @@ void unipoly_domain::take_away_all_factors_from_b(
 	}
 }
 
-int unipoly_domain::is_irreducible(unipoly_object a,
+int unipoly_domain::is_irreducible(
+		unipoly_object a,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2534,7 +2588,8 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 	return ret;
 }
 
-void unipoly_domain::singer_candidate(unipoly_object &m,
+void unipoly_domain::singer_candidate(
+		unipoly_object &m,
 		int p, int d, int b, int a)
 {
 	create_object_of_degree(m, d);
@@ -2545,7 +2600,8 @@ void unipoly_domain::singer_candidate(unipoly_object &m,
 	M[0] = a;
 }
 
-int unipoly_domain::is_primitive(unipoly_object &m, 
+int unipoly_domain::is_primitive(
+		unipoly_object &m,
 	longinteger_object &qm1, 
 	int nb_primes, longinteger_object *primes, 
 	int verbose_level)
@@ -2594,7 +2650,8 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 		}
 
 
-		D.integral_division(qm1, primes[i], qm1_over_p, r, 0);
+		D.integral_division(
+				qm1, primes[i], qm1_over_p, r, 0);
 		if (f_v) {
 			cout << "qm1 / " << primes[i] << " = "
 					<< qm1_over_p << " remainder " << r << endl;
@@ -2611,9 +2668,11 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 		
 		unipoly_object a;
 		
-		Fq.create_object_by_rank(a, F->q,
+		Fq.create_object_by_rank(
+				a, F->q,
 				0 /*verbose_level*/); // the polynomial X
-		Fq.power_longinteger(a, qm1_over_p, 0 /*verbose_level - 1*/);
+		Fq.power_longinteger(
+				a, qm1_over_p, 0 /*verbose_level - 1*/);
 		
 		if (f_v) {
 			cout << "unipoly_domain::is_primitive X^" << qm1_over_p << " mod ";
@@ -2689,7 +2748,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 		cout << "unipoly_domain::get_a_primitive_polynomial "
 				"before factor_into_longintegers " << qm1 << endl;
 	}
-	D.factor_into_longintegers(qm1, nb_primes,
+	D.factor_into_longintegers(
+			qm1, nb_primes,
 			primes, exponents, verbose_level - 2);
 	if (f_vv) {
 		cout << "unipoly_domain::get_a_primitive_polynomial "
@@ -2721,7 +2781,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 			if (f_v) {
 				cout << "IS irreducible" << endl;
 			}
-			if (is_primitive(x, qm1,
+			if (is_primitive(
+					x, qm1,
 					nb_primes, primes, verbose_level - 1)) {
 				if (f_v) {
 					cout << "OK, we found an irreducible "
@@ -2768,7 +2829,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 	
 	while (true) {
 		
-		create_object_by_rank_longinteger(x, current,
+		create_object_by_rank_longinteger(
+				x, current,
 				0 /*verbose_level*/);
 		
 		if (f_v) {
@@ -2776,11 +2838,13 @@ void unipoly_domain::get_a_primitive_polynomial(
 			print_object(x, cout);
 			cout << endl;
 		}
-		if (is_irreducible(x, verbose_level - 1)) {
+		if (is_irreducible(
+				x, verbose_level - 1)) {
 			if (f_v) {
 				cout << "is irreducible" << endl;
 			}
-			if (is_primitive(x, qm1, nb_primes,
+			if (is_primitive(
+					x, qm1, nb_primes,
 					primes, verbose_level - 1)) {
 				if (f_v) {
 					cout << "is irreducible and primitive" << endl;
@@ -2857,7 +2921,8 @@ void unipoly_domain::get_an_irreducible_polynomial(
 	
 	while (true) {
 		
-		create_object_by_rank_longinteger(x,
+		create_object_by_rank_longinteger(
+				x,
 				current, 0 /*verbose_level - 2*/);
 		
 		if (f_vv) {
@@ -2866,7 +2931,8 @@ void unipoly_domain::get_an_irreducible_polynomial(
 			print_object(x, cout);
 			cout << endl;
 		}
-		if (is_irreducible(x, verbose_level - 3)) {
+		if (is_irreducible(
+				x, verbose_level - 3)) {
 			if (f_vv) {
 				cout << "unipoly::get_an_irreducible_polynomial "
 					"candidate " << current << " : ";
@@ -2891,7 +2957,8 @@ void unipoly_domain::get_an_irreducible_polynomial(
 	}
 }
 
-void unipoly_domain::power_int(unipoly_object &a,
+void unipoly_domain::power_int(
+		unipoly_object &a,
 		long int n, int verbose_level)
 // does not mod out by factor polynomial
 {
@@ -3026,7 +3093,8 @@ void unipoly_domain::power_longinteger(
 }
 
 
-void unipoly_domain::power_mod(unipoly_object &a, unipoly_object &m,
+void unipoly_domain::power_mod(
+		unipoly_object &a, unipoly_object &m,
 		long int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3656,7 +3724,8 @@ void unipoly_domain::minimum_polynomial_extension_field(
 					"i = " << i
 					<< " before mult_mod" << endl;
 		}
-		mult_mod_negated(g, sigma[i - 1], sigma[i],
+		mult_mod_negated(
+				g, sigma[i - 1], sigma[i],
 				degree(mm), ((int *)mm) + 1,
 				verbose_level - 2);
 		if (f_vv) {
@@ -3678,7 +3747,9 @@ void unipoly_domain::minimum_polynomial_extension_field(
 						"i = " << i << " j = "
 						<< j << " before mult_mod" << endl;
 			}
-			mult_mod_negated(g, sigma[j - 1], h, degree(mm), ((int *)mm) + 1, 0);
+			mult_mod_negated(
+					g, sigma[j - 1], h,
+					degree(mm), ((int *)mm) + 1, 0);
 			if (f_vv) {
 				cout << "unipoly_domain::minimum_polynomial_extension_field "
 						"i = " << i << " j = "
@@ -3691,7 +3762,8 @@ void unipoly_domain::minimum_polynomial_extension_field(
 						"i = " << i << " j = "
 						<< j << " before add" << endl;
 			}
-			add(sigma[j], h, h2);
+			add(
+					sigma[j], h, h2);
 			if (f_vv) {
 				cout << "unipoly_domain::minimum_polynomial_extension_field "
 						"i = " << i << " j = "
@@ -3704,7 +3776,8 @@ void unipoly_domain::minimum_polynomial_extension_field(
 				cout << "sigma=" << endl;
 				print_vector_of_polynomials(sigma, deg);
 			}
-			assign(h2, sigma[j], 0 /*verbose_level*/);
+			assign(
+					h2, sigma[j], 0 /*verbose_level*/);
 			if (f_vv) {
 				cout << "unipoly_domain::minimum_polynomial_extension_field "
 						"i = " << i << " j = "
@@ -3807,7 +3880,8 @@ void unipoly_domain::characteristic_polynomial(
 		cout << "unipoly_domain::characteristic_polynomial "
 				"before determinant" << endl;
 	}
-	determinant(M, k, char_poly, verbose_level);
+	determinant(
+			M, k, char_poly, verbose_level);
 	if (f_vv) {
 		cout << "unipoly_domain::characteristic_polynomial "
 				"after determinant" << endl;
@@ -3889,7 +3963,8 @@ void unipoly_domain::determinant(
 				N,
 				0 /*verbose_level - 2*/);
 
-		determinant(N, k - 1, p1, verbose_level - 2);
+		determinant(
+				N, k - 1, p1, verbose_level - 2);
 		if (f_v) {
 			cout << "unipoly_domain::determinant "
 					"deletion of row " << i << " leads to determinant ";
@@ -3960,7 +4035,8 @@ void unipoly_domain::deletion_matrix(
 	}
 }
 
-void unipoly_domain::center_lift_coordinates(unipoly_object a, int q)
+void unipoly_domain::center_lift_coordinates(
+		unipoly_object a, int q)
 // For use in NTRU cryptography
 {
 	//int verbose_level = 0;
@@ -3983,7 +4059,8 @@ void unipoly_domain::center_lift_coordinates(unipoly_object a, int q)
 	}
 }
 
-void unipoly_domain::reduce_modulo_p(unipoly_object a, int p)
+void unipoly_domain::reduce_modulo_p(
+		unipoly_object a, int p)
 {
 	//int verbose_level = 0;
 	//int f_v = (verbose_level >= 1);

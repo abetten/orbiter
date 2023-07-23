@@ -420,6 +420,7 @@ namespace field_theory {
 	class finite_field_implementation_wo_tables;
 	class minimum_polynomial;
 	class norm_tables;
+	class normal_basis;
 	class nth_roots;
 	class related_fields;
 	class square_nonsquare;

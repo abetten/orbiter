@@ -31,16 +31,25 @@ public:
 	void compute_normal_basis(
 			field_theory::finite_field *F,
 			int d, int verbose_level);
-	void do_nullspace(
+	void compute_normal_basis_with_given_polynomial(
+			field_theory::finite_field *F,
+			std::string &poly_encoded, int d, int verbose_level);
+	void nullspace(
 			field_theory::finite_field *F,
 			int *M, int m, int n,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int *&Nullspace, int &nullspace_m, int &nullspace_n,
+			int *&A,
+			int &rk_A,
+			int *&base_cols,
+			int verbose_level);
+	void do_nullspace(
+			field_theory::finite_field *F,
+			std::string &input_matrix,
 			int *&Nullspace, int &nullspace_m, int &nullspace_n,
 			int verbose_level);
 	void do_RREF(
 			field_theory::finite_field *F,
-			int *M, int m, int n,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			std::string &input_matrix,
 			int verbose_level);
 	void RREF_demo(
 			field_theory::finite_field *F,

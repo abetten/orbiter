@@ -175,7 +175,28 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 	}
 
+	if (Descr->f_Clebsch_map_up) {
 
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"-Clebsch_map_up" << endl;
+		}
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"before SC->SO->Clebsch_map_up" << endl;
+		}
+		SC->SO->Clebsch_map_up(
+				SC->label_txt,
+				Descr->Clebsch_map_up_line_1_idx,
+				Descr->Clebsch_map_up_line_2_idx,
+				verbose_level);
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"after SC->SO->Clebsch_map_up" << endl;
+		}
+
+	}
 
 
 	if (f_v) {

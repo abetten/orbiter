@@ -138,6 +138,7 @@ ORBITER_MODULES= \
 		layer1_foundations/finite_fields/finite_field.o \
 		layer1_foundations/finite_fields/minimum_polynomial.o \
 		layer1_foundations/finite_fields/norm_tables.o \
+		layer1_foundations/finite_fields/normal_basis.o \
 		layer1_foundations/finite_fields/nth_roots.o \
 		layer1_foundations/finite_fields/related_fields.o \
 		layer1_foundations/finite_fields/square_nonsquare.o \

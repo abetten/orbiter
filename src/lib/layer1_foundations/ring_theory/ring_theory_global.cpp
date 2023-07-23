@@ -30,7 +30,8 @@ ring_theory_global::~ring_theory_global()
 }
 
 void ring_theory_global::Monomial_ordering_type_as_string(
-		monomial_ordering_type Monomial_ordering_type, std::string &s)
+		monomial_ordering_type Monomial_ordering_type,
+		std::string &s)
 {
 	if (Monomial_ordering_type == t_LEX) {
 		s.assign("LEX");
@@ -1343,7 +1344,8 @@ void ring_theory_global::assemble_monopoly(
 
 void ring_theory_global::polynomial_division_from_file_with_report(
 		field_theory::finite_field *F,
-		std::string &input_file, long int rk1, int verbose_level)
+		std::string &input_file, long int rk1,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1962,6 +1964,8 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 
 	//NT.factor_prime_power(F->q, p, e);
 
+
+#if 0
 	if (f_v) {
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 				" q=" << F->q << " p=" << F->p << " e=" << F->e << endl;
@@ -1982,10 +1986,10 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 	unipoly_object m;
 	unipoly_object g;
 	unipoly_object minpol;
-	combinatorics::combinatorics_domain Combi;
 
 
-	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
+	FX.create_object_by_rank_string(
+			m, poly, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
@@ -2011,7 +2015,8 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 				"before FX.Frobenius_matrix" << endl;
 	}
-	FX.Frobenius_matrix(Frobenius, m, verbose_level - 2);
+	FX.Frobenius_matrix(
+			Frobenius, m, verbose_level - 2);
 	if (f_v) {
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 				"Frobenius_matrix = " << endl;
@@ -2023,7 +2028,8 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 				"before compute_normal_basis" << endl;
 	}
-	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 1);
+	FX.compute_normal_basis(
+			d, Normal_basis, Frobenius, verbose_level - 1);
 
 	if (f_v) {
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
@@ -2031,40 +2037,53 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 		Int_matrix_print(Normal_basis, d, d);
 		cout << endl;
 	}
+#else
+
+	field_theory::normal_basis *Nor;
+
+	Nor = NEW_OBJECT(field_theory::normal_basis);
+
+	Nor->init(F, d, verbose_level);
+
+#endif
+
+	combinatorics::combinatorics_domain Combi;
 
 	cnt = 0;
 
-	Combi.int_vec_first_regular_word(v, d, F->q);
+	Combi.int_vec_first_regular_word(Nor->v, d, F->q);
 	while (true) {
 		if (f_vv) {
 			cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
-			Int_vec_print(cout, v, d);
+			Int_vec_print(cout, Nor->v, d);
 			cout << endl;
 		}
 
-		F->Linear_algebra->mult_vector_from_the_right(Normal_basis, v, w, d, d);
+		F->Linear_algebra->mult_vector_from_the_right(
+				Nor->Normal_basis, Nor->v, Nor->w, d, d);
 		if (f_vv) {
 			cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : w = ";
-			Int_vec_print(cout, w, d);
+			Int_vec_print(cout, Nor->w, d);
 			cout << endl;
 		}
 
-		FX.delete_object(g);
-		FX.create_object_of_degree(g, d - 1);
+		Nor->FX->delete_object(Nor->g);
+		Nor->FX->create_object_of_degree(Nor->g, d - 1);
 		for (i = 0; i < d; i++) {
-			((int *) g)[1 + i] = w[i];
+			((int *) Nor->g)[1 + i] = Nor->w[i];
 		}
 
-		FX.minimum_polynomial_extension_field(g, m, minpol, d, Frobenius,
+		Nor->FX->minimum_polynomial_extension_field(
+				Nor->g, Nor->m, Nor->minpol, d, Nor->Frobenius,
 				verbose_level - 3);
 		if (f_vv) {
 			cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
-			Int_vec_print(cout, v, d);
+			Int_vec_print(cout, Nor->v, d);
 			cout << " irreducible polynomial = ";
-			FX.print_object(minpol, cout);
+			Nor->FX->print_object(Nor->minpol, cout);
 			cout << endl;
 		}
 
@@ -2073,7 +2092,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 		std::vector<int> T;
 
 		for (i = 0; i <= d; i++) {
-			T.push_back(((int *)minpol)[1 + i]);
+			T.push_back(((int *)Nor->minpol)[1 + i]);
 		}
 		Table.push_back(T);
 
@@ -2081,7 +2100,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 		cnt++;
 
 
-		if (!Combi.int_vec_next_regular_word(v, d, F->q)) {
+		if (!Combi.int_vec_next_regular_word(Nor->v, d, F->q)) {
 			break;
 		}
 
@@ -2094,6 +2113,8 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 				"of degree " << d << " over " << "F_" << F->q << endl;
 	}
 
+	FREE_OBJECT(Nor);
+#if 0
 	FREE_int(Frobenius);
 	FREE_int(Normal_basis);
 	FREE_int(v);
@@ -2101,7 +2122,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 	FX.delete_object(m);
 	FX.delete_object(g);
 	FX.delete_object(minpol);
-
+#endif
 
 	if (f_v) {
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
@@ -2297,7 +2318,8 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 	int nb;
 	std::vector<std::vector<int>> Table;
 
-	make_all_irreducible_polynomials_of_degree_d(F, deg,
+	make_all_irreducible_polynomials_of_degree_d(
+			F, deg,
 			Table, verbose_level);
 
 	nb = Table.size();
@@ -2351,7 +2373,8 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 
 
 			if (f_v) {
-				cout << "ring_theory_global::do_make_table_of_irreducible_polynomials before report" << endl;
+				cout << "ring_theory_global::do_make_table_of_irreducible_polynomials "
+						"before report" << endl;
 			}
 			//report(ost, verbose_level);
 
@@ -2377,7 +2400,8 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 
 
 			if (f_v) {
-				cout << "ring_theory_global::do_make_table_of_irreducible_polynomials after report" << endl;
+				cout << "ring_theory_global::do_make_table_of_irreducible_polynomials "
+						"after report" << endl;
 			}
 
 

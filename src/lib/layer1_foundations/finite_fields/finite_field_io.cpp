@@ -297,7 +297,8 @@ void finite_field_io::print_element(
 		else {
 			width = F->log10_of_q;
 		}
-		print_element_with_symbol(ost, a, F->f_print_as_exponentials,
+		print_element_with_symbol(
+				ost, a, F->f_print_as_exponentials,
 				width, F->get_symbol_for_print());
 	}
 }
@@ -318,7 +319,8 @@ void finite_field_io::print_element_str(
 		else {
 			width = F->log10_of_q;
 		}
-		print_element_with_symbol_str(ost, a, F->f_print_as_exponentials,
+		print_element_with_symbol_str(
+				ost, a, F->f_print_as_exponentials,
 				width, F->get_symbol_for_print());
 	}
 }
@@ -429,7 +431,8 @@ void finite_field_io::int_vec_print_elements_exponential(
 	ost << "(";
 	for (i = 0; i < len; i++) {
 		if (v[i] >= F->q) {
-			cout << "finite_field_io::int_vec_print_elements_exponential v[i] >= q" << endl;
+			cout << "finite_field_io::int_vec_print_elements_exponential "
+					"v[i] >= q" << endl;
 			cout << "v[i]=" << v[i] << endl;
 			exit(1);
 		}
@@ -554,7 +557,8 @@ void finite_field_io::multiplication_table_reordered_save_csv(
 	}
 	else {
 
-		cout << "finite_field_io::multiplication_table_reordered_save_csv !f_has_table, skipping" << endl;
+		cout << "finite_field_io::multiplication_table_reordered_save_csv "
+				"!f_has_table, skipping" << endl;
 
 	}
 
@@ -683,7 +687,8 @@ void finite_field_io::cheat_sheet(
 		f << "$$" << endl;
 		f << F->my_poly_tex << endl;
 		f << "$$" << endl;
-		f << "The numerical value of the polynomial is " << F->my_poly << "\\\\" << endl;
+		f << "The numerical value of the polynomial "
+				"is " << F->my_poly << "\\\\" << endl;
 	}
 
 	int f_add_mult_table = true;
@@ -697,68 +702,88 @@ void finite_field_io::cheat_sheet(
 			F->get_T()->print_add_mult_tables_in_C(F->label);
 		}
 		else {
-			cout << "finite_field_io::cheat_sheet !f_has_table, skipping" << endl;
+			cout << "finite_field_io::cheat_sheet "
+					"!f_has_table, skipping" << endl;
 		}
 	}
 
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet before cheat_sheet_subfields" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"before cheat_sheet_subfields" << endl;
 	}
 	cheat_sheet_subfields(f, verbose_level);
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet after cheat_sheet_subfields" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"after cheat_sheet_subfields" << endl;
 	}
 
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet before cheat_sheet_table_of_elements" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"before cheat_sheet_table_of_elements" << endl;
 	}
 	cheat_sheet_table_of_elements(f, verbose_level);
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet after cheat_sheet_table_of_elements" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"after cheat_sheet_table_of_elements" << endl;
 	}
 
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet before cheat_sheet_main_table" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"before cheat_sheet_main_table" << endl;
 	}
 	cheat_sheet_main_table(f, verbose_level);
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet after cheat_sheet_main_table" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"after cheat_sheet_main_table" << endl;
 	}
 
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet before cheat_sheet_addition_table" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"before cheat_sheet_addition_table" << endl;
 	}
 	cheat_sheet_addition_table(f, verbose_level);
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet after cheat_sheet_addition_table" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"after cheat_sheet_addition_table" << endl;
 	}
 
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet before cheat_sheet_multiplication_table" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"before cheat_sheet_multiplication_table" << endl;
 	}
 	cheat_sheet_multiplication_table(f, verbose_level);
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet after cheat_sheet_multiplication_table" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"after cheat_sheet_multiplication_table" << endl;
 	}
 
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet before cheat_sheet_power_table true" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"before cheat_sheet_power_table true" << endl;
 	}
-	cheat_sheet_power_table(f, true /* f_with_polynomials */, verbose_level);
+	cheat_sheet_power_table(
+			f, true /* f_with_polynomials */,
+			verbose_level);
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet after cheat_sheet_power_table true" << endl;
-	}
-
-	if (f_v) {
-		cout << "finite_field_io::cheat_sheet before cheat_sheet_power_table false" << endl;
-	}
-	cheat_sheet_power_table(f, false /* f_with_polynomials */, verbose_level);
-	if (f_v) {
-		cout << "finite_field_io::cheat_sheet after cheat_sheet_power_table false" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"after cheat_sheet_power_table true" << endl;
 	}
 
 	if (f_v) {
-		cout << "finite_field_io::cheat_sheet done" << endl;
+		cout << "finite_field_io::cheat_sheet "
+				"before cheat_sheet_power_table false" << endl;
+	}
+	cheat_sheet_power_table(
+			f, false /* f_with_polynomials */,
+			verbose_level);
+	if (f_v) {
+		cout << "finite_field_io::cheat_sheet "
+				"after cheat_sheet_power_table false" << endl;
+	}
+
+	if (f_v) {
+		cout << "finite_field_io::cheat_sheet "
+				"done" << endl;
 	}
 
 }
@@ -820,23 +845,36 @@ void finite_field_io::report_subfields(
 	}
 	ost << "\\subsection*{Subfields}" << endl;
 	ost << "$$" << endl;
-	ost << "\\begin{array}{|r|r|r|}" << endl;
+	ost << "\\begin{array}{|r|r|r|r|r|r|}" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Subfield} & \\mbox{Polynomial} & \\mbox{Numerical Rank} \\\\"
+	ost << "h & \\mbox{Subfield} & \\mbox{Polynomial} & \\mbox{Encoding} & d & \\alpha^d \\\\"
 			<< endl;
 	ost << "\\hline" << endl;
-	for (h = 2; h < F->e; h++) {
+	for (h = 1; h <= F->e; h++) {
 		if ((F->e % h) == 0) {
 
-
 			ost << "\\hline" << endl;
-			long int poly;
 
-			poly = F->compute_subfield_polynomial(
-					NT.i_power_j(F->p, h),
-					//false, cout,
-					verbose_level);
-			{
+			long int q0;
+			long int index_in_multiplicative_group;
+			long int generator;
+
+			q0 = NT.i_power_j(F->p, h);
+			index_in_multiplicative_group = (F->q - 1) / (q0 - 1);
+			generator = F->alpha_power(index_in_multiplicative_group);
+
+			if (h == 1) {
+
+				ost << h << " & ";
+				ost << "\\bbF_{" << q0 << "} & ";
+				ost << " & ";
+				ost << " & " << index_in_multiplicative_group;
+				ost << " & " << generator;
+				ost << "\\\\" << endl;
+
+			}
+			else if (h == F->e) {
+
 				finite_field GFp;
 				GFp.finite_field_init_small_order(F->p,
 						false /* f_without_tables */,
@@ -848,16 +886,56 @@ void finite_field_io::report_subfields(
 
 				FX.create_object_by_rank_string(m, F->my_poly,
 						0/*verbose_level*/);
-				ring_theory::unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
-				ring_theory::unipoly_object elt;
 
-				FX.create_object_by_rank(elt, poly, verbose_level);
-				ost << "\\bbF_{" << NT.i_power_j(F->p, h) << "} & ";
-				Fq.print_object(elt, ost);
-				ost << " & " << poly;
+
+
+				ost << h << " & ";
+				ost << "\\bbF_{" << q0 << "} & ";
+				FX.print_object(m, ost);
+				ost << " & " << F->my_poly;
+				ost << " & " << index_in_multiplicative_group;
+				ost << " & " << generator;
 				ost << "\\\\" << endl;
-				Fq.delete_object(elt);
+
 			}
+			else {
+
+				long int poly;
+				poly = F->compute_subfield_polynomial(
+						q0,
+						//false, cout,
+						verbose_level);
+				{
+					finite_field GFp;
+					GFp.finite_field_init_small_order(F->p,
+							false /* f_without_tables */,
+							false /* f_compute_related_fields */,
+							0);
+
+					ring_theory::unipoly_domain FX(&GFp);
+					ring_theory::unipoly_object m;
+
+					FX.create_object_by_rank_string(m, F->my_poly,
+							0/*verbose_level*/);
+					ring_theory::unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
+					ring_theory::unipoly_object elt;
+
+					FX.create_object_by_rank(elt, poly, verbose_level);
+
+
+
+					ost << h << " & ";
+					ost << "\\bbF_{" << q0 << "} & ";
+					Fq.print_object(elt, ost);
+					ost << " & " << poly;
+					ost << " & " << index_in_multiplicative_group;
+					ost << " & " << generator;
+					ost << "\\\\" << endl;
+					Fq.delete_object(elt);
+				}
+
+			}
+
 
 		}
 	}
@@ -927,7 +1005,7 @@ void finite_field_io::report_subfields_detailed(
 		Sub->init(F /* FQ */, Fq, verbose_level);
 
 
-		ost << "Subfield ${\\mathbb F}_{" << q0 << "}$ "
+		ost << "The subfield ${\\mathbb F}_{" << q0 << "}$, divisor $h=" << h << "$, is "
 				"generated by polynomial " << poly_numeric << ":\\\\" << endl;
 		Sub->report(ost);
 
@@ -1026,7 +1104,8 @@ void finite_field_io::cheat_sheet_multiplication_table(
 }
 
 void finite_field_io::cheat_sheet_power_table(
-		std::ostream &ost, int f_with_polynomials, int verbose_level)
+		std::ostream &ost, int f_with_polynomials,
+		int verbose_level)
 {
 	int *Powers;
 	int i, j, t;
@@ -1044,7 +1123,8 @@ void finite_field_io::cheat_sheet_power_table(
 
 
 	if (F->q > 1024) {
-		ost << "The field is too large. For the sake of space, the cyclic list cannot be generated\\\\" << endl;
+		ost << "The field is too large. For the sake of space, "
+				"the cyclic list cannot be generated\\\\" << endl;
 	}
 	else {
 		ost << "$$" << endl;
@@ -1095,7 +1175,8 @@ void finite_field_io::cheat_sheet_power_table_top(
 	ost << "\\hline" << endl;
 
 
-	ost << "i & " << F->get_symbol_for_print() << "^i & " << F->get_symbol_for_print() << "^i & \\mbox{vector}";
+	ost << "i & " << F->get_symbol_for_print() << "^i & "
+			<< F->get_symbol_for_print() << "^i & \\mbox{vector}";
 	if (f_with_polynomials) {
 		ost << "& \\mbox{reduced rep.}";
 	}
@@ -1123,38 +1204,51 @@ void finite_field_io::cheat_sheet_table_of_elements(
 	//my_symbol.assign("\alpha");
 
 	ost << "\\subsection*{Table of Elements of ${\\mathbb F}_{" << F->q << "}$}" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|r|r|r|}" << endl;
-	ost << "\\hline" << endl;
 
-	geometry::geometry_global Gg;
+	int I, Imax;
 
-	for (i = 0; i < F->q; i++) {
-		Gg.AG_element_unrank(F->p, v, 1, F->e, i);
-		ost << setw(3) << i;
-		ost << " & ";
-		//f_first = true;
+	Imax = (F->q + 24) / 25;
 
+	for (I = 0; I < Imax; I++) {
+		ost << "$$" << endl;
+		ost << "\\begin{array}{|r|r|r|}" << endl;
+		ost << "\\hline" << endl;
 
-		for (j = F->e - 1; j >= 0; j--) {
-			ost << v[j];
+		geometry::geometry_global Gg;
+
+		for (j = 0; j < 25; j++) {
+
+			i = I * 25 + j;
+			if (i >= F->q) {
+				continue;
+			}
+
+			Gg.AG_element_unrank(F->p, v, 1, F->e, i);
+			ost << setw(3) << i;
+			ost << " & ";
+			//f_first = true;
+
+			int h;
+			for (h = F->e - 1; h >= 0; h--) {
+				ost << v[h];
+			}
+			ost << " & ";
+
+			print_element_as_polynomial(ost, v, verbose_level);
+
+			ost << "\\\\" << endl;
+
+	#if 0
+			ost << " & ";
+			print_element_with_symbol(ost, i,
+				true /*f_print_as_exponentials*/,
+				10 /*width*/, my_symbol);
+	#endif
 		}
-		ost << " & ";
-
-		print_element_as_polynomial(ost, v, verbose_level);
-
-		ost << "\\\\" << endl;
-
-#if 0
-		ost << " & ";
-		print_element_with_symbol(ost, i,
-			true /*f_print_as_exponentials*/,
-			10 /*width*/, my_symbol);
-#endif
+		ost << "\\hline" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
 	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
 
 	FREE_int(v);
 
@@ -1202,7 +1296,8 @@ void finite_field_io::cheat_sheet_main_table(
 
 
 	if (!F->f_has_table) {
-		cout << "finite_field_io::cheat_sheet_main_table !f_has_table, skipping" << endl;
+		cout << "finite_field_io::cheat_sheet_main_table "
+				"!f_has_table, skipping" << endl;
 		return;
 	}
 

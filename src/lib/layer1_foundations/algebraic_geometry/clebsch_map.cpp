@@ -53,7 +53,8 @@ clebsch_map::~clebsch_map()
 	}
 }
 
-void clebsch_map::init_half_double_six(surface_object *SO,
+void clebsch_map::init_half_double_six(
+		surface_object *SO,
 		int hds, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -78,7 +79,8 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 		cout << "clebsch_map::init_half_double_six "
 				"before Surf->prepare_clebsch_map" << endl;
 	}
-	Surf->Schlaefli->prepare_clebsch_map(ds, ds_row, line1, line2,
+	Surf->Schlaefli->prepare_clebsch_map(
+			ds, ds_row, line1, line2,
 			transversal, verbose_level);
 	if (f_v) {
 		cout << "clebsch_map::init_half_double_six "
@@ -99,7 +101,8 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	line_idx[0] = line1;
 	line_idx[1] = line2;
 
-	tritangent_plane_idx = Surf->Schlaefli->choose_tritangent_plane_for_Clebsch_map(line1, line2,
+	tritangent_plane_idx = Surf->Schlaefli->choose_tritangent_plane_for_Clebsch_map(
+			line1, line2,
 			transversal, verbose_level);
 
 	plane_rk_global = SO->SOP->SmoothProperties->Tritangent_plane_rk[tritangent_plane_idx];
@@ -112,7 +115,8 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 
 	Surf->P->Subspaces->Grass_planes->unrank_lint_here(
 			Plane, plane_rk_global, 0);
-	F->Linear_algebra->Gauss_simple(Plane, 3, 4, base_cols,
+	F->Linear_algebra->Gauss_simple(
+			Plane, 3, 4, base_cols,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -191,7 +195,8 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	}
 }
 
-void clebsch_map::compute_Clebsch_map_down(int verbose_level)
+void clebsch_map::compute_Clebsch_map_down(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -266,16 +271,19 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (f_v) {
 		cout << "clebsch_map::compute_Clebsch_map_down_worker" << endl;
 	}
-	Surf->P->Subspaces->Grass_planes->unrank_lint_here(Plane, plane_rk_global,
+	Surf->P->Subspaces->Grass_planes->unrank_lint_here(
+			Plane, plane_rk_global,
 			0 /* verbose_level */);
-	r = F->Linear_algebra->Gauss_simple(Plane, 3, 4, base_cols,
+	r = F->Linear_algebra->Gauss_simple(
+			Plane, 3, 4, base_cols,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "Plane rank " << plane_rk_global << " :" << endl;
 		Int_matrix_print(Plane, 3, 4);
 	}
 
-	F->Linear_algebra->RREF_and_kernel(4, 3, Plane, 0 /* verbose_level */);
+	F->Linear_algebra->RREF_and_kernel(
+			4, 3, Plane, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "Plane (3 basis vectors and dual coordinates):" << endl;
@@ -297,7 +305,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		Int_matrix_print(Line_a, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
-		if (F->Linear_algebra->dot_product(4, Line_a + i * 4, Plane + 3 * 4)) {
+		if (F->Linear_algebra->dot_product(
+				4, Line_a + i * 4, Plane + 3 * 4)) {
 			break;
 		}
 	}
@@ -316,7 +325,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		Int_matrix_print(Line_b, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
-		if (F->Linear_algebra->dot_product(4, Line_b + i * 4, Plane + 3 * 4)) {
+		if (F->Linear_algebra->dot_product(
+				4, Line_b + i * 4, Plane + 3 * 4)) {
 			break;
 		}
 	}
@@ -366,7 +376,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		// Compute the first plane in dual coordinates:
 		Int_vec_copy(Line_a, M, 2 * 4);
 		Int_vec_copy(v, M + 2 * 4, 4);
-		F->Linear_algebra->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
+		F->Linear_algebra->RREF_and_kernel(
+				4, 3, M, 0 /* verbose_level */);
 		Int_vec_copy(M + 3 * 4, Dual_planes, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker "
@@ -378,7 +389,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		// Compute the second plane in dual coordinates:
 		Int_vec_copy(Line_b, M, 2 * 4);
 		Int_vec_copy(v, M + 2 * 4, 4);
-		F->Linear_algebra->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
+		F->Linear_algebra->RREF_and_kernel(
+				4, 3, M, 0 /* verbose_level */);
 		Int_vec_copy(M + 3 * 4, Dual_planes + 4, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker "
@@ -398,7 +410,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			cout << endl;
 		}
 
-		r = F->Linear_algebra->RREF_and_kernel(4, 3,
+		r = F->Linear_algebra->RREF_and_kernel(
+				4, 3,
 				Dual_planes, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker "
@@ -426,7 +439,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			Int_vec_print(cout, Dual_planes + 12, 4);
 			cout << endl;
 		}
-		Int_vec_copy(Dual_planes + 12, Image_coeff + h * 4, 4);
+		Int_vec_copy(
+				Dual_planes + 12, Image_coeff + h * 4, 4);
 
 		// compute local coordinates of the image point:
 		F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
@@ -690,7 +704,8 @@ void clebsch_map::clebsch_map_find_arc_and_lines(
 	}
 }
 
-void clebsch_map::report(std::ostream &ost, int verbose_level)
+void clebsch_map::report(
+		std::ostream &ost, int verbose_level)
 {
 	l1_interfaces::latex_interface L;
 
@@ -721,7 +736,8 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 
 
 	ost << "The plane is:" << endl;
-	Surf->P->Subspaces->Grass_planes->print_set_tex(ost, &plane_rk_global, 1, 0 /* verbose_level */);
+	Surf->P->Subspaces->Grass_planes->print_set_tex(
+			ost, &plane_rk_global, 1, 0 /* verbose_level */);
 
 	ost << "Clebsch map for lines $" << line1
 			<< " = " << Surf->Schlaefli->Labels->Line_label_tex[line1] << ", "

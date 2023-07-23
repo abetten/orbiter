@@ -90,6 +90,10 @@ public:
 	int f_normal_basis;
 	int normal_basis_d;
 
+	int f_normal_basis_with_given_polynomial;
+	std::string normal_basis_with_given_polynomial_poly_encoded;
+	int normal_basis_with_given_polynomial_d;
+
 	int f_nth_roots;
 	int nth_roots_n;
 
@@ -112,8 +116,8 @@ public:
 	std::string RREF_input_matrix;
 
 	// the following two options affect nullspace and RREF:
-	int f_normalize_from_the_right;
-	int f_normalize_from_the_left;
+	//int f_normalize_from_the_right;
+	//int f_normalize_from_the_left;
 
 
 	int f_RREF_random_matrix;
@@ -850,6 +854,49 @@ public:
 			int norm, int verbose_level);
 
 };
+
+
+
+// #############################################################################
+// normal_basis.cpp:
+// #############################################################################
+
+//! normal basis of a finite field over the prime field
+
+class normal_basis {
+public:
+
+	field_theory::finite_field *F;
+
+	ring_theory::unipoly_domain *FX;
+
+	std::string poly;
+
+	int d;
+
+	ring_theory::unipoly_object m;
+	ring_theory::unipoly_object g;
+	ring_theory::unipoly_object minpol;
+
+	int *Frobenius; // [d * d]
+	int *Normal_basis; // [d * d]
+	int *v; // [d]
+	int *w; // [d]
+
+	long int *Basis_encoded; // [d]
+
+
+	normal_basis();
+	~normal_basis();
+	void init(
+			finite_field *F, int d, int verbose_level);
+	void init_with_polynomial_coded(
+			finite_field *F, std::string &poly, int d,
+			int verbose_level);
+	void report(std::ostream &ost);
+
+};
+
 
 
 // #############################################################################

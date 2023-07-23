@@ -56,7 +56,8 @@ finite_ring::~finite_ring()
 		}
 }
 
-void finite_ring::init(int q, int verbose_level)
+void finite_ring::init(
+		int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
@@ -203,7 +204,8 @@ int finite_ring::inverse(int i)
 	return inv_table[i];
 }
 
-int finite_ring::Gauss_int(int *A, int f_special,
+int finite_ring::Gauss_int(
+		int *A, int f_special,
 	int f_complete, int *base_cols,
 	int f_P, int *P, int m, int n, int Pn, int verbose_level)
 // returns the rank which is the number of entries in base_cols

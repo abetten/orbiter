@@ -424,6 +424,41 @@ void projective_space_subspaces::create_points_on_line(
 	}
 }
 
+
+void projective_space_subspaces::create_points_on_line_with_line_given(
+	int *line_basis, long int *line, int verbose_level)
+// line_basis[2 * (n + 1)]
+// needs line[k]
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_subspaces::create_points_on_line" << endl;
+	}
+	long int a, b;
+
+	//Grass_lines->unrank_lint(line_rk, 0/*verbose_level - 4*/);
+	for (a = 0; a < k; a++) {
+
+		F->Projective_space_basic->PG_element_unrank_modified(
+				v, 1, 2, a);
+
+		F->Linear_algebra->mult_matrix_matrix(
+				v, line_basis, w, 1, 2, n + 1,
+				0 /* verbose_level */);
+
+		F->Projective_space_basic->PG_element_rank_modified(
+				w, 1, n + 1, b);
+
+		line[a] = b;
+	}
+	if (f_v) {
+		cout << "projective_space_subspaces::create_points_on_line done" << endl;
+	}
+}
+
+
+
 void projective_space_subspaces::create_lines_on_point(
 	long int point_rk,
 	long int *line_pencil, int verbose_level)

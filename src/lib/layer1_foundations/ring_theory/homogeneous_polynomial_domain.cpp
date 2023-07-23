@@ -1899,7 +1899,8 @@ void homogeneous_polynomial_domain::substitute_line(
 		for (rk = 0; rk < my_nb_affine; rk++) {
 
 			A = my_affine;
-			Gg.AG_element_unrank(2 /* q */, my_affine, 1, degree, rk);
+			Gg.AG_element_unrank(
+					2 /* q */, my_affine, 1, degree, rk);
 					// sequence of length degree over the alphabet  0,1.
 
 			wt = 0;
@@ -2103,7 +2104,8 @@ void homogeneous_polynomial_domain::multiply_mod_negatively_wrapped(
 }
 
 
-int homogeneous_polynomial_domain::is_zero(int *coeff)
+int homogeneous_polynomial_domain::is_zero(
+		int *coeff)
 {
 	int i;
 	
@@ -2115,14 +2117,16 @@ int homogeneous_polynomial_domain::is_zero(int *coeff)
 	return true;
 }
 
-void homogeneous_polynomial_domain::unrank_point(int *v, long int rk)
+void homogeneous_polynomial_domain::unrank_point(
+		int *v, long int rk)
 {
 	//P->unrank_point(v, rk);
 	F->Projective_space_basic->PG_element_unrank_modified_lint(
 			v, 1, nb_variables, rk);
 }
 
-long int homogeneous_polynomial_domain::rank_point(int *v)
+long int homogeneous_polynomial_domain::rank_point(
+		int *v)
 {
 	long int rk;
 
@@ -2132,13 +2136,15 @@ long int homogeneous_polynomial_domain::rank_point(int *v)
 	return rk;
 }
 
-void homogeneous_polynomial_domain::unrank_coeff_vector(int *v, long int rk)
+void homogeneous_polynomial_domain::unrank_coeff_vector(
+		int *v, long int rk)
 {
 	F->Projective_space_basic->PG_element_unrank_modified_lint(
 			v, 1, nb_monomials, rk);
 }
 
-long int homogeneous_polynomial_domain::rank_coeff_vector(int *v)
+long int homogeneous_polynomial_domain::rank_coeff_vector(
+		int *v)
 {
 	long int rk;
 
@@ -2221,7 +2227,8 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal "
 				"before vanishing_ideal" << endl;
 	}
-	vanishing_ideal(Pts, nb_pts,
+	vanishing_ideal(
+			Pts, nb_pts,
 			rk, Kernel, verbose_level - 1);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal "
@@ -2310,7 +2317,8 @@ void homogeneous_polynomial_domain::vanishing_ideal(
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"before RREF_and_kernel" << endl;
 	}
-	r = F->Linear_algebra->RREF_and_kernel(nb_monomials,
+	r = F->Linear_algebra->RREF_and_kernel(
+			nb_monomials,
 			nb_pts, System, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
@@ -2319,13 +2327,16 @@ void homogeneous_polynomial_domain::vanishing_ideal(
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system in RREF:" << endl;
-		Int_matrix_print(System, r, nb_monomials);
+		Int_matrix_print(
+				System, r, nb_monomials);
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The kernel:" << endl;
-		Int_matrix_print(System + r * nb_monomials,
+		Int_matrix_print(
+				System + r * nb_monomials,
 				nb_monomials - r, nb_monomials);
 	}
-	Int_vec_copy(System + r * nb_monomials, Kernel,
+	Int_vec_copy(
+			System + r * nb_monomials, Kernel,
 			(nb_monomials - r) * nb_monomials);
 	FREE_int(System);
 	if (f_v) {
@@ -2333,7 +2344,8 @@ void homogeneous_polynomial_domain::vanishing_ideal(
 	}
 }
 
-int homogeneous_polynomial_domain::compare_monomials(int *M1, int *M2)
+int homogeneous_polynomial_domain::compare_monomials(
+		int *M1, int *M2)
 {
 	data_structures::sorting Sorting;
 
@@ -2350,7 +2362,8 @@ int homogeneous_polynomial_domain::compare_monomials(int *M1, int *M2)
 	}
 }
 
-int homogeneous_polynomial_domain::compare_monomials_PART(int *M1, int *M2)
+int homogeneous_polynomial_domain::compare_monomials_PART(
+		int *M1, int *M2)
 {
 	int h, a;
 	int ret = 0;
@@ -2401,7 +2414,8 @@ the_end:
 }
 
 
-void homogeneous_polynomial_domain::print_monomial_ordering_latex(std::ostream &ost)
+void homogeneous_polynomial_domain::print_monomial_ordering_latex(
+		std::ostream &ost)
 {
 	int h, i, l;
 	
@@ -2547,7 +2561,9 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 		cout << "Reading file " << number_of_conditions_satisfied_fname << " of size "
 				<< Fio.file_size(number_of_conditions_satisfied_fname) << endl;
 	}
-	Fio.read_set_from_file(number_of_conditions_satisfied_fname, Pts, nb_pts, verbose_level);
+	Fio.read_set_from_file(
+			number_of_conditions_satisfied_fname, Pts, nb_pts,
+			verbose_level);
 
 	int *Cnt;
 
@@ -2578,7 +2594,8 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 
 		int *coeff;
 
-		coeff = read_from_string_coefficient_pairs(Variety_coeffs[h], verbose_level - 2);
+		coeff = read_from_string_coefficient_pairs(
+				Variety_coeffs[h], verbose_level - 2);
 
 		if (f_v) {
 			cout << "homogeneous_polynomial_domain::number_of_conditions_satisfied "
@@ -3163,7 +3180,8 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 	}
 
 	if (nb_eqns != P->Subspaces->n + 1) {
-		cout << "homogeneous_polynomial_domain::evaluate_regular_map nb_eqns != P->n + 1" << endl;
+		cout << "homogeneous_polynomial_domain::evaluate_regular_map "
+				"nb_eqns != P->n + 1" << endl;
 		exit(1);
 	}
 
@@ -3180,19 +3198,11 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 
 	for (i = 0; i < N_points; i++) {
 
-#if 0
-		if (i == 98 || i == 99) {
-			f_vv = true;
-		}
-		else {
-			f_vv = false;
-		}
-#endif
-
 		P->unrank_point(v, i);
 
 		if (f_vv) {
-			cout << "homogeneous_polynomial_domain::evaluate_regular_map point " << i << " is ";
+			cout << "homogeneous_polynomial_domain::evaluate_regular_map "
+					"point " << i << " is ";
 			Int_vec_print(cout, v, P->Subspaces->n + 1);
 			cout << endl;
 		}

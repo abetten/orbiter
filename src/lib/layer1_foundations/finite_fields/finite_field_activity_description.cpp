@@ -85,6 +85,12 @@ finite_field_activity_description::finite_field_activity_description()
 	f_normal_basis = false;
 	normal_basis_d = 0;
 
+	f_normal_basis_with_given_polynomial = false;
+	//std::string normal_basis_with_given_polynomial_poly_encoded;
+	normal_basis_with_given_polynomial_d = 0;
+
+
+
 	f_nth_roots = false;
 	nth_roots_n = 0;
 
@@ -105,8 +111,8 @@ finite_field_activity_description::finite_field_activity_description()
 	f_RREF = false;
 	//RREF_input_matrix
 
-	f_normalize_from_the_right = false;
-	f_normalize_from_the_left = false;
+	//f_normalize_from_the_right = false;
+	//f_normalize_from_the_left = false;
 
 	f_RREF_random_matrix = false;
 	RREF_random_matrix_m = 0;
@@ -438,6 +444,17 @@ int finite_field_activity_description::read_arguments(
 				cout << "-normal_basis " << normal_basis_d << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-normal_basis_with_given_polynomial") == 0) {
+			f_normal_basis_with_given_polynomial = true;
+			normal_basis_with_given_polynomial_poly_encoded.assign(argv[++i]);
+			normal_basis_with_given_polynomial_d = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-normal_basis_with_given_polynomial "
+						<< " " << normal_basis_with_given_polynomial_poly_encoded
+						<< " " << normal_basis_with_given_polynomial_d << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-nth_roots") == 0) {
 			f_nth_roots = true;
 			nth_roots_n = ST.strtoi(argv[++i]);
@@ -474,6 +491,7 @@ int finite_field_activity_description::read_arguments(
 				cout << "-RREF " << RREF_input_matrix << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-normalize_from_the_right") == 0) {
 			f_normalize_from_the_right = true;
 			if (f_v) {
@@ -486,6 +504,7 @@ int finite_field_activity_description::read_arguments(
 				cout << "-normalize_from_the_left " << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-RREF_random_matrix") == 0) {
 			f_RREF_random_matrix = true;
 			RREF_random_matrix_m = ST.strtolint(argv[++i]);
@@ -965,6 +984,11 @@ void finite_field_activity_description::print()
 	if (f_normal_basis) {
 		cout << "-normal_basis " << normal_basis_d << endl;
 	}
+	if (f_normal_basis_with_given_polynomial) {
+			cout << "-normal_basis_with_given_polynomial "
+					<< " " << normal_basis_with_given_polynomial_poly_encoded
+					<< " " << normal_basis_with_given_polynomial_d << endl;
+	}
 	if (f_nth_roots) {
 		cout << "-nth_roots " << nth_roots_n << endl;
 	}
@@ -986,12 +1010,14 @@ void finite_field_activity_description::print()
 	if (f_nullspace) {
 		cout << "-nullspace " << nullspace_input_matrix << endl;
 	}
+#if 0
 	if (f_normalize_from_the_right) {
 		cout << "-normalize_from_the_right " << endl;
 	}
 	if (f_normalize_from_the_left) {
 		cout << "-normalize_from_the_left " << endl;
 	}
+#endif
 	if (f_RREF_random_matrix) {
 		cout << "-RREF_random_matrix "
 				<< " " << RREF_random_matrix_m

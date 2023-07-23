@@ -46,6 +46,10 @@ public:
 	std::string action_on_module_basis;
 	std::string action_on_module_gens;
 
+	int f_Clebsch_map_up;
+	int Clebsch_map_up_line_1_idx;
+	int Clebsch_map_up_line_2_idx;
+
 	cubic_surface_activity_description();
 	~cubic_surface_activity_description();
 	int read_arguments(

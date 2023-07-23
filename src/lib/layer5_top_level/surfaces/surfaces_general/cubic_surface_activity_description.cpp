@@ -41,6 +41,10 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 	//std::string action_on_module_basis;
 	//std::string action_on_module_gens;
 
+	f_Clebsch_map_up = false;
+	Clebsch_map_up_line_1_idx = -1;
+	Clebsch_map_up_line_2_idx = -1;
+
 }
 
 cubic_surface_activity_description::~cubic_surface_activity_description()
@@ -115,6 +119,17 @@ int cubic_surface_activity_description::read_arguments(
 						<< action_on_module_gens << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-Clebsch_map_up") == 0) {
+			f_Clebsch_map_up = true;
+			Clebsch_map_up_line_1_idx = ST.strtoi(argv[++i]);
+			Clebsch_map_up_line_2_idx = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-Clebsch_map_up "
+						<< Clebsch_map_up_line_1_idx << " "
+						<< Clebsch_map_up_line_2_idx << " "
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -164,6 +179,12 @@ void cubic_surface_activity_description::print()
 		cout << "-action_on_module "
 				<< action_on_module_type << " "
 				<< action_on_module_gens << endl;
+	}
+	if (f_Clebsch_map_up) {
+		cout << "-Clebsch_map_up "
+				<< Clebsch_map_up_line_1_idx << " "
+				<< Clebsch_map_up_line_2_idx << " "
+				<< endl;
 	}
 }
 

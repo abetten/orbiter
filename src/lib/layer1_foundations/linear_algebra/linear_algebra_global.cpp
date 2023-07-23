@@ -112,6 +112,72 @@ void linear_algebra_global::Berlekamp_matrix(
 		cout << "The matrix B has rank " << r << endl;
 	}
 
+
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+		fname = "Berlekamp_matrix_q" + std::to_string(F->q)
+						+ "_d" + std::to_string(da)
+				+ ".tex";
+		title = "Berlekamp Matrix";
+
+
+
+		{
+			ofstream ost(fname);
+			l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "linear_algebra_global::Berlekamp_matrix "
+						"before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			ost << "\\noindent "
+					"Berlekamp matrix: "
+					"$q=" << F->q << "$ "
+					<< endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			L.int_matrix_print_tex(ost, B, da, da);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+
+
+			if (f_v) {
+				cout << "linear_algebra_global::Berlekamp_matrix "
+						"after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "linear_algebra_global::Berlekamp_matrix "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
 	FREE_int(B);
 
 	if (f_v) {
@@ -127,7 +193,6 @@ void linear_algebra_global::compute_normal_basis(
 		int d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "linear_algebra_global::compute_normal_basis "
@@ -136,94 +201,216 @@ void linear_algebra_global::compute_normal_basis(
 	}
 
 
-	ring_theory::unipoly_domain FX(F);
+	field_theory::normal_basis *Nor;
 
-	string poly;
-	knowledge_base::knowledge_base K;
+	Nor = NEW_OBJECT(field_theory::normal_basis);
 
-	K.get_primitive_polynomial(poly, F->q, d, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "linear_algebra_global::compute_normal_basis "
-				"chosen irreducible polynomial is " << poly << endl;
-	}
-
-	ring_theory::unipoly_object m;
-	ring_theory::unipoly_object g;
-	ring_theory::unipoly_object minpol;
-	combinatorics::combinatorics_domain Combi;
+	Nor->init(F, d, verbose_level);
 
 
-	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "linear_algebra_global::compute_normal_basis "
-				"chosen irreducible polynomial m = ";
-		FX.print_object(m, cout);
-		cout << endl;
-	}
-
-	FX.create_object_by_rank(g, 0, 0 /* verbose_level */);
-	FX.create_object_by_rank(minpol, 0, 0 /* verbose_level */);
-
-	int *Frobenius;
-	int *Normal_basis;
-
-	//Frobenius = NEW_int(d * d);
-	Normal_basis = NEW_int(d * d);
-
-	if (f_v) {
-		cout << "linear_algebra_global::compute_normal_basis "
-				"before FX.Frobenius_matrix" << endl;
-	}
-	FX.Frobenius_matrix(Frobenius, m, verbose_level - 2);
-	if (f_v) {
-		cout << "linear_algebra_global::compute_normal_basis "
-				"Frobenius_matrix = " << endl;
-		Int_matrix_print(Frobenius, d, d);
-		cout << endl;
-	}
-
-	if (f_v) {
-		cout << "linear_algebra_global::compute_normal_basis "
-				"before compute_normal_basis" << endl;
-	}
-
-	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 1);
 
 	if (f_v) {
 		cout << "linear_algebra_global::compute_normal_basis "
 				"Normal_basis = " << endl;
-		Int_matrix_print(Normal_basis, d, d);
+		Int_matrix_print(Nor->Normal_basis, d, d);
 		cout << endl;
 	}
+
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+		fname = "normal_basis_q" + std::to_string(F->q)
+						+ "_d" + std::to_string(d)
+				+ ".tex";
+		title = "Normal Basis";
+
+
+
+		{
+			ofstream ost(fname);
+			l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "linear_algebra_global::compute_normal_basis "
+						"before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+
+			Nor->report(ost);
+#if 0
+			ost << "\\noindent "
+					"Normal Basis is in the columns of the following matrix: "
+					"$q=" << F->q << "$ "
+					<< endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			L.int_matrix_print_tex(ost, Nor->Normal_basis, d, d);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+#endif
+
+			if (f_v) {
+				cout << "linear_algebra_global::compute_normal_basis "
+						"after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "linear_algebra_global::compute_normal_basis "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
 
 	if (f_v) {
 		cout << "linear_algebra_global::compute_normal_basis done" << endl;
 	}
 }
 
-
-void linear_algebra_global::do_nullspace(
+void linear_algebra_global::compute_normal_basis_with_given_polynomial(
 		field_theory::finite_field *F,
-		int *M, int m, int n,
-		int f_normalize_from_the_left, int f_normalize_from_the_right,
-		int *&Nullspace, int &nullspace_m, int &nullspace_n,
-		int verbose_level)
+		std::string &poly_encoded, int d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *A;
-	int *base_cols;
-	int rk, i, rk1;
-
-	l1_interfaces::latex_interface Li;
 
 	if (f_v) {
-		cout << "linear_algebra_global::do_nullspace" << endl;
+		cout << "linear_algebra_global::compute_normal_basis_with_given_polynomial "
+				<< " q=" << F->q << endl;
+		cout << "verbose_level=" << verbose_level << endl;
 	}
 
 
-	A = NEW_int(n * n);
+	field_theory::normal_basis *Nor;
+
+	Nor = NEW_OBJECT(field_theory::normal_basis);
+
+	Nor->init_with_polynomial_coded(
+			F, poly_encoded, d,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "linear_algebra_global::compute_normal_basis_with_given_polynomial "
+				"Normal_basis = " << endl;
+		Int_matrix_print(Nor->Normal_basis, d, d);
+		cout << endl;
+	}
+
+
+
+	{
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+		fname = "normal_basis_q" + std::to_string(F->q)
+						+ "_d" + std::to_string(d)
+						+ "_poly" + poly_encoded
+				+ ".tex";
+		title = "Normal Basis";
+
+
+
+		{
+			ofstream ost(fname);
+			l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "linear_algebra_global::compute_normal_basis_with_given_polynomial "
+						"before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			Nor->report(ost);
+#if 0
+			ost << "\\noindent "
+					"Normal Basis is in the columns of the following matrix: "
+					"$q=" << F->q << "$ "
+					"poly=$" << poly_encoded << "$" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			L.int_matrix_print_tex(ost, Nor->Normal_basis, d, d);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+#endif
+
+
+			if (f_v) {
+				cout << "linear_algebra_global::compute_normal_basis_with_given_polynomial "
+						"after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "linear_algebra_global::compute_normal_basis_with_given_polynomial "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "linear_algebra_global::compute_normal_basis_with_given_polynomial done" << endl;
+	}
+}
+
+
+void linear_algebra_global::nullspace(
+		field_theory::finite_field *F,
+		int *M, int m, int n,
+		int *&Nullspace, int &nullspace_m, int &nullspace_n,
+		int *&A,
+		int &rk_A,
+		int *&base_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int *A;
+	//int *base_cols;
+	int i, rk1;
+
+	if (f_v) {
+		cout << "linear_algebra_global::nullspace" << endl;
+	}
+	A = NEW_int(MAXIMUM(m, n) * n);
 	base_cols = NEW_int(n);
 	Int_vec_copy(M, A, m * n);
 
@@ -232,7 +419,7 @@ void linear_algebra_global::do_nullspace(
 				"before Linear_algebra->perp_standard" << endl;
 	}
 
-	rk = F->Linear_algebra->perp_standard(n, m, A, 0 /*verbose_level*/);
+	rk_A = F->Linear_algebra->perp_standard(n, m, A, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace "
@@ -244,39 +431,91 @@ void linear_algebra_global::do_nullspace(
 		cout << "linear_algebra_global::do_nullspace "
 				"after perp_standard:" << endl;
 		Int_matrix_print(A, n, n);
-		cout << "rk=" << rk << endl;
+		cout << "rk=" << rk_A << endl;
 	}
 
-	rk1 = F->Linear_algebra->Gauss_int(A + rk * n,
+	if (f_v) {
+		cout << "linear_algebra_global::nullspace "
+				"before F->Linear_algebra->Gauss_int" << endl;
+	}
+	rk1 = F->Linear_algebra->Gauss_int(A + rk_A * n,
 		false /* f_special */, true /* f_complete */, base_cols,
-		false /* f_P */, NULL /*P*/, n - rk, n, n,
+		false /* f_P */, NULL /*P*/, n - rk_A, n, n,
 		0 /*verbose_level*/);
+	if (f_v) {
+		cout << "linear_algebra_global::nullspace "
+				"after F->Linear_algebra->Gauss_int" << endl;
+	}
 
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace "
 				"after RREF" << endl;
-		Int_matrix_print(A + rk * n, rk1, n);
+		Int_matrix_print(A + rk_A * n, rk1, n);
 		cout << "rank of nullspace = " << rk1 << endl;
 
 		cout << "linear_algebra_global::do_nullspace "
 				"coefficients:" << endl;
-		Int_vec_print_fully(cout, A + rk * n, rk1 * n);
+		Int_vec_print_fully(cout, A + rk_A * n, rk1 * n);
 		cout << endl;
+
+		l1_interfaces::latex_interface Li;
+
 
 		cout << "$$" << endl;
 		cout << "\\left[" << endl;
-		Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
+		Li.int_matrix_print_tex(cout, A + rk_A * n, rk1, n);
 		cout << "\\right]" << endl;
 		cout << "$$" << endl;
 	}
 
-	nullspace_m = n - rk;
+	nullspace_m = n - rk_A;
 	nullspace_n = n;
 
 	Nullspace = NEW_int(nullspace_m * nullspace_n);
-	Int_vec_copy(A + rk * n, Nullspace, nullspace_m * nullspace_n);
 
+	Int_vec_copy(A + rk_A * n, Nullspace, nullspace_m * nullspace_n);
+
+
+	//FREE_int(A);
+	//FREE_int(base_cols);
+	if (f_v) {
+		cout << "linear_algebra_global::nullspace done" << endl;
+	}
+
+}
+
+
+void linear_algebra_global::do_nullspace(
+		field_theory::finite_field *F,
+		std::string &input_matrix,
+		int *&Nullspace, int &nullspace_m, int &nullspace_n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *A;
+	int *base_cols;
+	int rk_A;
+	int *M;
+	int m, n;
+
+	if (f_v) {
+		cout << "linear_algebra_global::do_nullspace" << endl;
+	}
+
+	Get_matrix(input_matrix, M, m, n);
+
+	l1_interfaces::latex_interface Li;
+
+
+	nullspace(
+			F,
+			M, m, n,
+			Nullspace, nullspace_m, nullspace_n,
+			A, rk_A, base_cols,
+			verbose_level);
+
+#if 0
 	if (f_normalize_from_the_left) {
 		if (f_v) {
 			cout << "linear_algebra_global::do_nullspace "
@@ -324,6 +563,7 @@ void linear_algebra_global::do_nullspace(
 			cout << "$$" << endl;
 		}
 	}
+#endif
 
 
 	{
@@ -333,8 +573,8 @@ void linear_algebra_global::do_nullspace(
 		string title;
 		string extra_praeamble;
 
-		fname = "nullspace_" + std::to_string(m) + "_" + std::to_string(n) + ".tex";
-		title = "Nullspace";
+		fname = input_matrix + "_nullspace.tex";
+		title = "Right Nullspace";
 
 
 
@@ -367,19 +607,27 @@ void linear_algebra_global::do_nullspace(
 			ost << "\\right]" << endl;
 			ost << "$$" << endl;
 
+			ost << "The matrix has rank " << rk_A << "\\\\" << endl;
+
 			ost << "RREF:" << endl;
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
-			Li.int_matrix_print_tex(ost, A, rk, n);
+			Li.int_matrix_print_tex(ost, A, rk_A, n);
 			ost << "\\right]" << endl;
 			ost << "$$" << endl;
 
-			ost << "Basis for Perp:" << endl;
+			ost << "Basis for right Nullspace are the rows of the following matrix:" << endl;
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
-			Li.int_matrix_print_tex(ost, A + rk * n, rk1, n);
+			Li.int_matrix_print_tex(ost, Nullspace, nullspace_m, nullspace_n);
 			ost << "\\right]" << endl;
 			ost << "$$" << endl;
+
+			ost << "The Nullspace has dimension " << nullspace_m << "\\\\" << endl;
+			ost << "Basis columns for the Nullspace are ";
+			Int_vec_print(ost, base_cols, nullspace_m);
+			ost << "\\\\" << endl;
+
 
 
 			if (f_v) {
@@ -400,9 +648,10 @@ void linear_algebra_global::do_nullspace(
 
 
 
-
 	FREE_int(A);
 	FREE_int(base_cols);
+
+	FREE_int(M);
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace done" << endl;
@@ -411,20 +660,22 @@ void linear_algebra_global::do_nullspace(
 
 void linear_algebra_global::do_RREF(
 		field_theory::finite_field *F,
-		int *M, int m, int n,
-		int f_normalize_from_the_left, int f_normalize_from_the_right,
+		std::string &input_matrix,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *A;
 	int *base_cols;
 	int rk, i;
+	int *M;
+	int m, n;
 	l1_interfaces::latex_interface Li;
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_RREF" << endl;
 	}
 
+	Get_matrix(input_matrix, M, m, n);
 
 
 	A = NEW_int(n * n);
@@ -460,7 +711,7 @@ void linear_algebra_global::do_RREF(
 	}
 
 
-
+#if 0
 	if (f_normalize_from_the_left) {
 		if (f_v) {
 			cout << "normalizing from the left" << endl;
@@ -492,25 +743,127 @@ void linear_algebra_global::do_RREF(
 			cout << "rk=" << rk << endl;
 		}
 	}
+#endif
 
-	long int *R;
+	long int *Row, *Col;
+	int *B;
+	int j;
 
-	R = NEW_lint(rk);
+	B = NEW_int(rk * n);
+	Int_vec_copy(A, B, rk * n);
+
+	Row = NEW_lint(rk);
+	Col = NEW_lint(n);
 	for (i = 0; i < rk; i++) {
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				A + i * n, 1, n, R[i]);
+				B + i * n, 1, n, Row[i]);
 	}
-	cout << "The orbiter ranks of the basis elements are: ";
-	Lint_vec_print(cout, R, rk);
+	Int_vec_copy(A, B, rk * n);
+	for (j = 0; j < n; j++) {
+		for (i = 0; i < rk; i++) {
+			if (B[i * n + j]) {
+				break;
+			}
+		}
+		if (i < rk) {
+			F->Projective_space_basic->PG_element_rank_modified_lint(
+					B + j, n, rk, Col[j]);
+		}
+		else {
+			Col[j] = -1;
+		}
+	}
+
+	FREE_int(B);
+
+	cout << "The orbiter ranks of the row vectors are: ";
+	Lint_vec_print(cout, Row, rk);
+	cout << endl;
+	cout << "The orbiter ranks of the column vectors are: ";
+	Lint_vec_print(cout, Col, n);
 	cout << endl;
 
 
-	//Int_vec_copy(M, A, m * n);
+	{
 
-	//RREF_demo(F, A, m, n, verbose_level);
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+		fname = input_matrix + "_rref.tex";
+		title = "RREF";
 
 
 
+		{
+			ofstream ost(fname);
+			l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "linear_algebra_global::do_RREF "
+						"before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			ost << "\\noindent Input matrix:" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			Li.int_matrix_print_tex(ost, M, m, n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+
+			ost << "RREF:" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			Li.int_matrix_print_tex(ost, A, rk, n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+
+
+			ost << "The orbiter ranks of the row vectors are: ";
+			Lint_vec_print(ost, Row, rk);
+			ost << "\\\\";
+			ost << endl;
+			ost << "The orbiter ranks of the column vectors are: ";
+			Lint_vec_print(ost, Col, n);
+			ost << "\\\\";
+			ost << endl;
+
+
+
+
+			if (f_v) {
+				cout << "linear_algebra_global::do_RREF "
+						"after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "linear_algebra_global::do_RREF "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+	FREE_int(M);
 	FREE_int(A);
 	FREE_int(base_cols);
 

@@ -221,7 +221,8 @@ void longinteger_domain::add_mod(
 		0 /*verbose_level*/);
 	if (f_v ) {
 		cout << "longinteger_domain::add_mod "
-				"a=" << a << " +  b=" << b << " mod m=" << m << " is " << c << endl;
+				"a=" << a << " +  b=" << b
+				<< " mod m=" << m << " is " << c << endl;
 	}
 
 }
@@ -306,7 +307,8 @@ void longinteger_domain::mult(
 			ai = a.rep()[i];
 			d = ai * bj + carry + c.rep()[i + j];
 			if (d >= 100) {
-				cout << "longinteger:mult error: d >= 100" << endl;
+				cout << "longinteger:mult "
+						"error: d >= 100" << endl;
 				exit(1);
 			}
 			carry = d / 10;
@@ -319,19 +321,22 @@ void longinteger_domain::mult(
 		if (carry) {
 			c.rep()[j + a.len()] = carry;
 			if (f_v) {
-				cout << "c[" << j + a.len() << "]=" << carry << "="
+				cout << "c[" << j + a.len() << "]"
+						"=" << carry << "="
 						<< (char)('0' + carry) << endl;
 			}
 		}
 	}
 	if (f_v) {
-		cout << "longinteger_domain::mult c=";
+		cout << "longinteger_domain::mult "
+				"c=";
 		print_digits(c.rep(), c.len());
 		cout << endl;
 	}
 	c.normalize();
 	if (f_v) {
-		cout << "longinteger_domain::mult after normalize, c=";
+		cout << "longinteger_domain::mult "
+				"after normalize, c=";
 		print_digits(c.rep(), c.len());
 		cout << endl;
 	}
@@ -373,7 +378,8 @@ static int do_division(
 	exit(1);
 }
 
-void longinteger_domain::mult_mod(longinteger_object &a, 
+void longinteger_domain::mult_mod(
+		longinteger_object &a,
 	longinteger_object &b, longinteger_object &c, 
 	longinteger_object &m, int verbose_level)
 {
@@ -753,7 +759,8 @@ void longinteger_domain::integral_division_by_lint(
 
 void longinteger_domain::inverse_mod(
 	longinteger_object &a,
-	longinteger_object &m, longinteger_object &av, int verbose_level)
+	longinteger_object &m, longinteger_object &av,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object g, u, v;
@@ -868,7 +875,8 @@ void longinteger_domain::extended_gcd(
 	s.create(0);
 	t.create(1);
 	while (true) {
-		integral_division(rm1, r, q, rp1, verbose_level - 1);
+		integral_division(
+				rm1, r, q, rp1, verbose_level - 1);
 		if (rp1.is_zero()) {
 			r.assign_to(g);
 			s.assign_to(u);
@@ -1058,7 +1066,8 @@ void longinteger_domain::square_root(
 		return;
 	}
 	if (a.sign()) {
-		cout << "longinteger_domain::square_root a is negative" << endl;
+		cout << "longinteger_domain::square_root "
+				"a is negative" << endl;
 		exit(1);
 	}
 
@@ -1115,7 +1124,8 @@ void longinteger_domain::square_root(
 	}
 	sqrt_a.normalize();
 	if (f_v) {
-		cout << "longinteger_domain::square_root after normalize, sqrt_a=";
+		cout << "longinteger_domain::square_root "
+				"after normalize, sqrt_a=";
 		print_digits(sqrt_a.rep(), sqrt_a.len());
 		cout << endl;
 	}
@@ -1138,7 +1148,8 @@ int longinteger_domain::square_root_mod(
 	}
 	a = a % p;
 	if (NT.Jacobi(a, p, 0 /* verbose_level*/) == -1) {
-		cout << "longinteger_domain::square_root_mod a is not a square modulo p" << endl;
+		cout << "longinteger_domain::square_root_mod "
+				"a is not a square modulo p" << endl;
 		cout << "a=" << a << endl;
 		cout << "p=" << p << endl;
 		exit(1);
@@ -1149,9 +1160,12 @@ int longinteger_domain::square_root_mod(
 	P.create(p);
 	mOne.create(p - 1);
 	if (f_v) {
-		cout << "longinteger_domain::square_root_mod A=" << A << endl;
-		cout << "longinteger_domain::square_root_mod P=" << P << endl;
-		cout << "longinteger_domain::square_root_mod mOne=" << mOne << endl;
+		cout << "longinteger_domain::square_root_mod "
+				"A=" << A << endl;
+		cout << "longinteger_domain::square_root_mod "
+				"P=" << P << endl;
+		cout << "longinteger_domain::square_root_mod "
+				"mOne=" << mOne << endl;
 	}
 	if (p % 4 == 3) {
 		A.assign_to(X);
@@ -1160,29 +1174,34 @@ int longinteger_domain::square_root_mod(
 	}
 	if (p % 8 == 5) {
 		if (f_v) {
-			cout << "longinteger_domain::square_root_mod p % 8 == 5" << endl;
+			cout << "longinteger_domain::square_root_mod "
+					"p % 8 == 5" << endl;
 		}
 		A.assign_to(b);
 		power_int_mod(b, (p - 1) >> 2, P);
 		if (f_v) {
-			cout << "longinteger_domain::square_root_mod a^((p-1)/4)=" << b << endl;
+			cout << "longinteger_domain::square_root_mod "
+					"a^((p-1)/4)=" << b << endl;
 		}
 		// cout << "A = " << A << endl;
 		// cout << "b = A^(p-1)/4=" << b << endl;
 		if (b.is_one()) {
 			if (f_v) {
-				cout << "longinteger_domain::square_root_mod a^((p-1)/4)=1" << endl;
+				cout << "longinteger_domain::square_root_mod "
+						"a^((p-1)/4)=1" << endl;
 			}
 			A.assign_to(X);
 			power_int_mod(X, (p + 3) >> 3, P);
 			if (f_v) {
-				cout << "longinteger_domain::square_root_mod done" << endl;
+				cout << "longinteger_domain::square_root_mod "
+						"done" << endl;
 			}
 			return X.as_int();
 			}
 		if (compare_unsigned(b, mOne) == 0) {
 			if (f_v) {
-				cout << "longinteger_domain::square_root_mod a^((p-1)/4)=1" << endl;
+				cout << "longinteger_domain::square_root_mod "
+						"a^((p-1)/4)=1" << endl;
 			}
 
 			//a2.add_mod(A, A, P);
@@ -1195,18 +1214,21 @@ int longinteger_domain::square_root_mod(
 			power_int_mod(a4, (p - 5) >> 3, P);
 			mult_mod(a2, a4, X, P, 0 /* verbose_level */);
 			if (f_v) {
-				cout << "longinteger_domain::square_root_mod done" << endl;
+				cout << "longinteger_domain::square_root_mod "
+						"done" << endl;
 			}
 			return X.as_int();
 			}
 		else {
-			cout << "longinteger_domain::square_root_mod p % 8 = 5 and power neq +-1" << endl;
+			cout << "longinteger_domain::square_root_mod "
+					"p % 8 = 5 and power neq +-1" << endl;
 			cout << "power = " << b << endl;
 			exit(1);
 		}
 	}
 	if (f_v) {
-		cout << "longinteger_domain::square_root_mod p % 8 == 1" << endl;
+		cout << "longinteger_domain::square_root_mod "
+				"p % 8 == 1" << endl;
 	}
 	// now p % 8 == 1
 	// Tonelli / Shanks algorithm:
@@ -1214,7 +1236,8 @@ int longinteger_domain::square_root_mod(
 	longinteger_object Z, N, Y, B, T, d, AB, Ypower, Bpower, Tmp1;
 
 	if (f_v) {
-		cout << "longinteger_domain::square_root_mod, Tonelli / Shanks:" << endl;
+		cout << "longinteger_domain::square_root_mod "
+				"Tonelli / Shanks:" << endl;
 	}
 	q = p - 1;
 	if (f_v) {
@@ -1238,23 +1261,27 @@ int longinteger_domain::square_root_mod(
 	}
 
 	if (f_v) {
-		cout << "n=" << n << " p=" << p << " Legendre(n,p)=" << r<< endl;
+		cout << "n=" << n << " p=" << p
+				<< " Legendre(n,p)=" << r<< endl;
 	}
 	N.create(n);
 	if (f_v) {
-		cout << "longinteger_domain::square_root_mod N=" << N << endl;
+		cout << "longinteger_domain::square_root_mod "
+				"N=" << N << endl;
 	}
 	N.assign_to(Z);
 	power_int_mod(Z, q, P);
 	Z.assign_to(Y);
 	if (f_v) {
-		cout << "longinteger_domain::square_root_mod Y=N^q=" << Y << endl;
+		cout << "longinteger_domain::square_root_mod "
+				"Y=N^q=" << Y << endl;
 	}
 	r = e;
 	A.assign_to(X);
 	power_int_mod(X, (q - 1) >> 1, P);
 	if (f_v) {
-		cout << "longinteger_domain::square_root_mod X=" << X << endl;
+		cout << "longinteger_domain::square_root_mod "
+				"X=" << X << endl;
 	}
 	mult_mod(X, X, d, P, 0 /* verbose_level */);
 	mult_mod(A, d, B, P, 0 /* verbose_level */);
@@ -1275,11 +1302,13 @@ int longinteger_domain::square_root_mod(
 
 		mult_mod(X, X, X2, P, 0 /* verbose_level */);
 		if (f_v) {
-			cout << "longinteger_domain::square_root_mod X2=" << X2 << endl;
+			cout << "longinteger_domain::square_root_mod "
+					"X2=" << X2 << endl;
 		}
 		mult_mod(A, B, AB, P, 0 /* verbose_level */);
 		if (f_v) {
-			cout << "longinteger_domain::square_root_mod AB=" << AB << endl;
+			cout << "longinteger_domain::square_root_mod "
+					"AB=" << AB << endl;
 			cout << "B=" << B << endl;
 		}
 
@@ -1293,7 +1322,8 @@ int longinteger_domain::square_root_mod(
 		Y.assign_to(Ypower);
 		power_int_mod(Ypower, 1 << (r - 1), P);
 		if (f_v) {
-			cout << "longinteger_domain::square_root_mod Ypower=" << Ypower << endl;
+			cout << "longinteger_domain::square_root_mod "
+					"Ypower=" << Ypower << endl;
 		}
 
 		if (compare_unsigned(Ypower, mOne)) {
@@ -1305,11 +1335,13 @@ int longinteger_domain::square_root_mod(
 
 		B.assign_to(Bpower);
 		if (f_v) {
-			cout << "longinteger_domain::square_root_mod Bpower (before)=" << Bpower << endl;
+			cout << "longinteger_domain::square_root_mod "
+					"Bpower (before)=" << Bpower << endl;
 		}
 		power_int_mod(Bpower, 1 << (r - 1), P);
 		if (f_v) {
-			cout << "longinteger_domain::square_root_mod Bpower=" << Bpower << endl;
+			cout << "longinteger_domain::square_root_mod "
+					"Bpower=" << Bpower << endl;
 		}
 		if (!Bpower.is_one()) {
 			cout << "loop invariant violated: B^{2^{r-1}} != 1" << endl;
@@ -1411,7 +1443,8 @@ void longinteger_domain::create_qnm1(
 	add(b, c, a);
 }
 
-void longinteger_domain::create_Mersenne(longinteger_object &M, int n)
+void longinteger_domain::create_Mersenne(
+		longinteger_object &M, int n)
 // $M_n = 2^n - 1$
 {
 	longinteger_object a, b;
@@ -1423,7 +1456,8 @@ void longinteger_domain::create_Mersenne(longinteger_object &M, int n)
 	// cout << "Mersenne number M_" << n << "=" << a << endl;
 }
 
-void longinteger_domain::create_Fermat(longinteger_object &F, int n)
+void longinteger_domain::create_Fermat(
+		longinteger_object &F, int n)
 // $F_n = 2^{2^n} + 1$
 {
 	longinteger_object a, b;
@@ -1440,7 +1474,8 @@ void longinteger_domain::create_Fermat(longinteger_object &F, int n)
 
 
 
-void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
+void longinteger_domain::Dedekind_number(
+		longinteger_object &Dnq,
 		int n, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1449,7 +1484,8 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
 	longinteger_object A, S, B;
 
 	if (f_v) {
-		cout << "longinteger_domain::Dedekind_number n=" << n << " q=" << q << endl;
+		cout << "longinteger_domain::Dedekind_number "
+				"n=" << n << " q=" << q << endl;
 	}
 	int *primes;
 	int *exponents;
@@ -1487,7 +1523,8 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
 		create_q_to_the_n(A, q, d_prime);
 
 		if (false) {
-			cout << "d=" << d << " d_prime=" << d_prime << " A=" << A << " S=" << S << endl;
+			cout << "d=" << d << " d_prime=" << d_prime
+					<< " A=" << A << " S=" << S << endl;
 		}
 
 		if (ODD(cnt)) {
@@ -1538,7 +1575,8 @@ void longinteger_domain::Dedekind_number(longinteger_object &Dnq,
 
 
 
-int longinteger_domain::is_even(longinteger_object &a)
+int longinteger_domain::is_even(
+		longinteger_object &a)
 {
 	if (((a.rep()[0] % 2)) == 0)
 		return true;
@@ -1546,7 +1584,8 @@ int longinteger_domain::is_even(longinteger_object &a)
 		return false;
 }
 
-int longinteger_domain::is_odd(longinteger_object &a)
+int longinteger_domain::is_odd(
+		longinteger_object &a)
 {
 	if (is_even(a))
 		return false;
@@ -1669,10 +1708,12 @@ void longinteger_domain::factor_into_longintegers(
 	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
-		cout << "longinteger_domain::factor_into_longintegers factoring " << a << endl;
+		cout << "longinteger_domain::factor_into_longintegers "
+				"factoring " << a << endl;
 	}
 	if (a.is_zero()) {
-		cout << "longinteger_domain::factor_into_longintegers a is zero" << endl;
+		cout << "longinteger_domain::factor_into_longintegers "
+				"a is zero" << endl;
 		exit(1);
 	}
 	if (a.is_one()) {
@@ -1857,7 +1898,8 @@ int longinteger_domain::jacobi(
 	int n, rr, r1, t1, t2;
 	
 	if (f_v) {
-		cout << "longinteger_domain::jacobi(" << a << " over " << m << ")" << endl;
+		cout << "longinteger_domain::jacobi "
+				"(" << a << " over " << m << ")" << endl;
 	}
 	a.assign_to(a1);
 	m.assign_to(m1);
@@ -2204,7 +2246,8 @@ void longinteger_domain::square_root_floor(
 
 
 
-void longinteger_domain::print_digits(char *rep, int len)
+void longinteger_domain::print_digits(
+		char *rep, int len)
 {
 	for (int h = 0; h < len; h++) {
 		cout << (char)('0' + rep[h]) << " ";
@@ -2261,7 +2304,8 @@ void longinteger_domain::Chinese_Remainders(
 				m2, m1v, verbose_level);
 
 		if (f_v) {
-			cout << "longinteger_domain::Chinese_Remainders i=" << i << " m1^-1 mod m2=" << m1v << endl;
+			cout << "longinteger_domain::Chinese_Remainders "
+					"i=" << i << " m1^-1 mod m2=" << m1v << endl;
 		}
 		//m1v = inverse_mod(m1, m2);
 
@@ -2273,7 +2317,8 @@ void longinteger_domain::Chinese_Remainders(
 				m2, 0 /* verbose_level*/);
 
 		if (f_v) {
-			cout << "longinteger_domain::Chinese_Remainders i=" << i << " r2-r1=" << c << endl;
+			cout << "longinteger_domain::Chinese_Remainders "
+					"i=" << i << " r2-r1=" << c << endl;
 		}
 
 
@@ -2282,7 +2327,8 @@ void longinteger_domain::Chinese_Remainders(
 				m2, 0 /* verbose_level*/);
 
 		if (f_v) {
-			cout << "longinteger_domain::Chinese_Remainders i=" << i << " m1^-1 * (r2-r1) = " << k << endl;
+			cout << "longinteger_domain::Chinese_Remainders "
+					"i=" << i << " m1^-1 * (r2-r1) = " << k << endl;
 		}
 
 
@@ -2292,14 +2338,16 @@ void longinteger_domain::Chinese_Remainders(
 
 
 		if (f_v) {
-			cout << "longinteger_domain::Chinese_Remainders i=" << i << " k * m1 = " << e << endl;
+			cout << "longinteger_domain::Chinese_Remainders "
+					"i=" << i << " k * m1 = " << e << endl;
 		}
 
 		add_in_place(r1, e);
 
 
 		if (f_v) {
-			cout << "longinteger_domain::Chinese_Remainders i=" << i << " r1 = " << r1 << endl;
+			cout << "longinteger_domain::Chinese_Remainders "
+					"i=" << i << " r1 = " << r1 << endl;
 		}
 
 		r1.assign_to(x);
@@ -2309,7 +2357,8 @@ void longinteger_domain::Chinese_Remainders(
 		mult_in_place(m1, m2);
 
 		if (f_v) {
-			cout << "longinteger_domain::Chinese_Remainders i=" << i << " x=" << x << " m1=" << m1 << endl;
+			cout << "longinteger_domain::Chinese_Remainders "
+					"i=" << i << " x=" << x << " m1=" << m1 << endl;
 		}
 
 

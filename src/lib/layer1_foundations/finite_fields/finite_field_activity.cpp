@@ -235,6 +235,31 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	else if (Descr->f_normal_basis_with_given_polynomial) {
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity "
+					"f_normal_basis_with_given_polynomial" << endl;
+		}
+		linear_algebra::linear_algebra_global LA;
+
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity "
+					"before LA.compute_normal_basis" << endl;
+		}
+		LA.compute_normal_basis_with_given_polynomial(
+				F,
+				Descr->normal_basis_with_given_polynomial_poly_encoded,
+				Descr->normal_basis_with_given_polynomial_d,
+				verbose_level);
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity "
+					"after LA.compute_normal_basis" << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_polynomial_find_roots) {
 
 		if (f_v) {
@@ -264,12 +289,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 					"f_nullspace" << endl;
 		}
 		linear_algebra::linear_algebra_global LA;
-		int *v;
-		int m, n;
 		int *Nullspace;
 		int nullspace_m, nullspace_n;
-
-		Get_matrix(Descr->nullspace_input_matrix, v, m, n);
 
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -277,9 +298,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		LA.do_nullspace(
 				F,
-				v, m, n,
-				Descr->f_normalize_from_the_left,
-				Descr->f_normalize_from_the_right,
+				Descr->nullspace_input_matrix,
 				Nullspace, nullspace_m, nullspace_n,
 				verbose_level);
 		if (f_v) {
@@ -287,7 +306,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 					"after LA.do_nullspace" << endl;
 		}
 
-		FREE_int(v);
 		FREE_int(Nullspace);
 
 	}
@@ -298,10 +316,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 					"f_RREF" << endl;
 		}
 		linear_algebra::linear_algebra_global LA;
-		int *v;
-		int m, n;
-
-		Get_matrix(Descr->RREF_input_matrix, v, m, n);
 
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -309,16 +323,12 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		LA.do_RREF(
 				F,
-				v, m, n,
-				Descr->f_normalize_from_the_left,
-				Descr->f_normalize_from_the_right,
+				Descr->RREF_input_matrix,
 				verbose_level);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
 					"after LA.do_RREF" << endl;
 		}
-
-		FREE_int(v);
 
 	}
 
@@ -380,7 +390,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 		int *func;
 		int len;
 
-		Get_int_vector_from_label(Descr->algebraic_normal_form_input,
+		Get_int_vector_from_label(
+				Descr->algebraic_normal_form_input,
 				func, len, 0 /* verbose_level */);
 
 		if (f_v) {
@@ -1212,8 +1223,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->transversal_line_1_basis,
 				Descr->transversal_line_2_basis,
 				Descr->transversal_point,
-				Descr->f_normalize_from_the_left,
-				Descr->f_normalize_from_the_right,
+				//Descr->f_normalize_from_the_left,
+				//Descr->f_normalize_from_the_right,
 				verbose_level);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -1236,8 +1247,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 				F,
 				Descr->line_1_basis,
 				Descr->line_2_basis,
-				Descr->f_normalize_from_the_left,
-				Descr->f_normalize_from_the_right,
+				//Descr->f_normalize_from_the_left,
+				//Descr->f_normalize_from_the_right,
 				verbose_level);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "

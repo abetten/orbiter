@@ -901,16 +901,16 @@ public:
 			field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
-			int f_normalize_from_the_left,
-			int f_normalize_from_the_right,
+			//int f_normalize_from_the_left,
+			//int f_normalize_from_the_right,
 			int verbose_level);
 	void do_transversal(
 			field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
 			std::string &point,
-			int f_normalize_from_the_left,
-			int f_normalize_from_the_right,
+			//int f_normalize_from_the_left,
+			//int f_normalize_from_the_right,
 			int verbose_level);
 	void do_cheat_sheet_hermitian(
 			field_theory::finite_field *F,
@@ -2826,6 +2826,9 @@ public:
 			long int line_rk, long int *line,
 		int verbose_level);
 		// needs line[k]
+	void create_points_on_line_with_line_given(
+		int *line_basis, long int *line, int verbose_level);
+	// needs line[k]
 	void create_lines_on_point(
 		long int point_rk,
 		long int *line_pencil, int verbose_level);

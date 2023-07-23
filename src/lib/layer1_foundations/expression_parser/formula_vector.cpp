@@ -1276,26 +1276,26 @@ void formula_vector::right_nullspace(
 	}
 
 	linear_algebra::linear_algebra_global LA;
+
 	int *Nullspace;
 	int nullspace_m, nullspace_n;
-
+	int *M2;
+	int rk_M;
+	int *base_cols;
 
 	if (f_v) {
 		cout << "formula_vector::right_nullspace "
-				"before LA.do_nullspace" << endl;
+				"before LA.nullspace" << endl;
 	}
-	LA.do_nullspace(
+	LA.nullspace(
 			Fq,
-			M,
-			A->nb_rows,
-			A->nb_cols,
-			false /* Descr->f_normalize_from_the_left */,
-			false /* Descr->f_normalize_from_the_right */,
+			M, A->nb_rows, A->nb_cols,
 			Nullspace, nullspace_m, nullspace_n,
+			M2, rk_M, base_cols,
 			verbose_level);
 	if (f_v) {
 		cout << "formula_vector::right_nullspace "
-				"after LA.do_nullspace" << endl;
+				"after LA.nullspace" << endl;
 	}
 
 
@@ -1328,6 +1328,8 @@ void formula_vector::right_nullspace(
 
 	FREE_int(M);
 	FREE_int(Nullspace);
+	FREE_int(M2);
+	FREE_int(base_cols);
 
 	collect_variables(verbose_level);
 

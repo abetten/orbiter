@@ -15,6 +15,7 @@ MODULES = \
 	finite_field.o \
 	minimum_polynomial.o \
 	norm_tables.o \
+	normal_basis.o \
 	nth_roots.o \
 	related_fields.o \
 	square_nonsquare.o \

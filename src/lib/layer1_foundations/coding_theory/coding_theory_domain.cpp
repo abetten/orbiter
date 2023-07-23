@@ -172,7 +172,8 @@ void coding_theory_domain::make_table_of_bounds(
 	orbiter_kernel_system::file_io Fio;
 	std::string fname;
 
-	fname= "table_of_bounds_n" + std::to_string(n_max) + "_q" + std::to_string(q) + ".csv";
+	fname= "table_of_bounds_n" + std::to_string(n_max)
+			+ "_q" + std::to_string(q) + ".csv";
 
 	string *headers;
 
@@ -189,7 +190,8 @@ void coding_theory_domain::make_table_of_bounds(
 
 	Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
 			fname, headers, T, N, nb_cols);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname
+			<< " of size " << Fio.file_size(fname) << endl;
 
 	FREE_lint(T);
 	delete [] headers;
@@ -275,7 +277,8 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 		cout << endl;
 	}
 
-	F->Linear_algebra->RREF_and_kernel(n, nmk, M, 0 /* verbose_level */);
+	F->Linear_algebra->RREF_and_kernel(
+			n, nmk, M, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code "
@@ -320,7 +323,8 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 	if (f_v) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code "
 				"level = " << level << endl;
-		cout << "coding_theory_domain::make_gilbert_varshamov_code set = ";
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"set = ";
 		Lint_vec_print(cout, set, level);
 		cout << endl;
 	}
@@ -502,7 +506,8 @@ int coding_theory_domain::gilbert_varshamov_lower_bound_for_d(
 		s.assign_to(qm1_power);
 	}
 	if (f_v) {
-		cout << "coding_theory_domain::gilbert_varshamov_lower_bound_for_d done" << endl;
+		cout << "coding_theory_domain::gilbert_varshamov_lower_bound_for_d "
+				"done" << endl;
 	}
 	return d;
 }
@@ -811,7 +816,8 @@ void coding_theory_domain::make_Hamming_space_distance_matrix(
 	orbiter_kernel_system::file_io Fio;
 
 
-	fname = "Hamming_n" + std::to_string(n) + "_q" + std::to_string(F->q) + ".csv";
+	fname = "Hamming_n" + std::to_string(n)
+			+ "_q" + std::to_string(F->q) + ".csv";
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, Table, height, width);
@@ -2285,7 +2291,9 @@ void coding_theory_domain::field_reduction(
 	// The output will have size (s * m) x (s * n).
 
 	for (i = 0; i < m; i++) {
-		Sub->field_reduction(M + i * n, n, M2 + (i * Sub->s) * Sub->s * n,
+		Sub->field_reduction(
+				M + i * n, n,
+				M2 + (i * Sub->s) * Sub->s * n,
 				verbose_level);
 	}
 
@@ -2298,7 +2306,8 @@ void coding_theory_domain::field_reduction(
 		string extra_praeamble;
 
 
-		fname = "field_reduction_Q" + std::to_string(FQ->q) + "_q" + std::to_string(Fq->q)
+		fname = "field_reduction_Q" + std::to_string(FQ->q)
+				+ "_q" + std::to_string(Fq->q)
 				+ "_" + std::to_string(m) + "_" + std::to_string(n) + ".tex";
 		title = "Field Reduction";
 
@@ -2325,11 +2334,13 @@ void coding_theory_domain::field_reduction(
 
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
-			L.int_matrix_print_tex(ost, M2, m * Sub->s, Sub->s * n);
+			L.int_matrix_print_tex(
+					ost, M2, m * Sub->s, Sub->s * n);
 			ost << "\\right]" << endl;
 			ost << "$$" << endl;
 
-			Int_vec_print_fully(ost, M2, m * Sub->s * Sub->s * n);
+			Int_vec_print_fully(
+					ost, M2, m * Sub->s * Sub->s * n);
 			ost << "\\\\" << endl;
 
 
@@ -2411,7 +2422,8 @@ void coding_theory_domain::field_induction(
 	}
 }
 
-void coding_theory_domain::encode_text_5bits(std::string &text,
+void coding_theory_domain::encode_text_5bits(
+		std::string &text,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2470,7 +2482,8 @@ void coding_theory_domain::encode_text_5bits(std::string &text,
 	}
 }
 
-int coding_theory_domain::Hamming_distance(int *v1, int *v2, int n)
+int coding_theory_domain::Hamming_distance(
+		int *v1, int *v2, int n)
 {
 	int i, d;
 
@@ -2484,7 +2497,8 @@ int coding_theory_domain::Hamming_distance(int *v1, int *v2, int n)
 }
 
 
-int coding_theory_domain::Hamming_distance_binary(int a, int b, int n)
+int coding_theory_domain::Hamming_distance_binary(
+		int a, int b, int n)
 {
 	int i, d, u, v;
 

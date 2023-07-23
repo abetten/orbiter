@@ -12,13 +12,6 @@
 
 using namespace std;
 
-#include <cstdio>
-#include <sys/types.h>
-#ifdef SYSTEMUNIX
-#include <unistd.h>
-#endif
-#include <fcntl.h>
-
 
 
 namespace orbiter {
@@ -285,7 +278,8 @@ void csv_file_support::vector_matrix_write_csv(
 	n = V[0].size();
 	for (i = 0; i < m; i++) {
 		if (V[i].size() != n) {
-			cout << "csv_file_support::int_matrix_write_csv the vectors are of differing lengths" << endl;
+			cout << "csv_file_support::int_matrix_write_csv "
+					"the vectors must have the same length" << endl;
 			exit(1);
 		}
 	}

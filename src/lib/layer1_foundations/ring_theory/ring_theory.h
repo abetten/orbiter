@@ -45,7 +45,8 @@ public:
 
 	finite_ring();
 	~finite_ring();
-	void init(int q, int verbose_level);
+	void init(
+			int q, int verbose_level);
 	int get_e();
 	int get_p();
 	field_theory::finite_field *get_Fp();
@@ -58,7 +59,8 @@ public:
 	int mult(int i, int j);
 	int negate(int i);
 	int inverse(int i);
-	int Gauss_int(int *A, int f_special,
+	int Gauss_int(
+			int *A, int f_special,
 		int f_complete, int *base_cols,
 		int f_P, int *P, int m, int n, int Pn,
 		int verbose_level);
@@ -66,13 +68,17 @@ public:
 		// of entries in base_cols
 		// A is a m x n matrix,
 		// P is a m x Pn matrix (if f_P is true)
-	int PHG_element_normalize(int *v, int stride, int len);
+	int PHG_element_normalize(
+			int *v, int stride, int len);
 	// last unit element made one
-	int PHG_element_normalize_from_front(int *v,
+	int PHG_element_normalize_from_front(
+			int *v,
 		int stride, int len);
 	// first non unit element made one
-	int PHG_element_rank(int *v, int stride, int len);
-	void PHG_element_unrank(int *v, int stride, int len, int rk);
+	int PHG_element_rank(
+			int *v, int stride, int len);
+	void PHG_element_unrank(
+			int *v, int stride, int len, int rk);
 	int nb_PHG_elements(int n);
 };
 
@@ -270,11 +276,16 @@ public:
 	void multiply_mod_negatively_wrapped(
 		int *coeff1, int *coeff2, int *coeff3,
 		int verbose_level);
-	int is_zero(int *coeff);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
-	void unrank_coeff_vector(int *v, long int rk);
-	long int rank_coeff_vector(int *v);
+	int is_zero(
+			int *coeff);
+	void unrank_point(
+			int *v, long int rk);
+	long int rank_point(
+			int *v);
+	void unrank_coeff_vector(
+			int *v, long int rk);
+	long int rank_coeff_vector(
+			int *v);
 	int test_weierstrass_form(
 			int rk,
 		int &a1, int &a2, int &a3, int &a4, int &a6,
@@ -285,9 +296,12 @@ public:
 	void vanishing_ideal(
 			long int *Pts, int nb_pts, int &r, int *Kernel,
 		int verbose_level);
-	int compare_monomials(int *M1, int *M2);
-	int compare_monomials_PART(int *M1, int *M2);
-	void print_monomial_ordering_latex(std::ostream &ost);
+	int compare_monomials(
+			int *M1, int *M2);
+	int compare_monomials_PART(
+			int *M1, int *M2);
+	void print_monomial_ordering_latex(
+			std::ostream &ost);
 	int *read_from_string_coefficient_pairs(
 			std::string &str, int verbose_level);
 	int *read_from_string_coefficient_vector(
@@ -372,7 +386,8 @@ public:
 			longinteger_object &a,
 		longinteger_object &b);
 		// a := a - b, assuming a > b
-	void add(longinteger_object &a,
+	void add(
+			longinteger_object &a,
 		longinteger_object &b, longinteger_object &c);
 	void add_mod(
 			longinteger_object &a,
@@ -387,7 +402,8 @@ public:
 	// a := a - b
 	void add_int_in_place(
 			longinteger_object &a, long int b);
-	void mult(longinteger_object &a,
+	void mult(
+			longinteger_object &a,
 		longinteger_object &b, longinteger_object &c);
 	void mult_in_place(
 			longinteger_object &a, longinteger_object &b);
@@ -454,16 +470,22 @@ public:
 
 	void create_q_to_the_n(
 			longinteger_object &a, int q, int n);
-	void create_qnm1(longinteger_object &a, int q, int n);
-	void create_Mersenne(longinteger_object &M, int n);
+	void create_qnm1(
+			longinteger_object &a, int q, int n);
+	void create_Mersenne(
+			longinteger_object &M, int n);
 	// $M_n = 2^n - 1$
-	void create_Fermat(longinteger_object &F, int n);
+	void create_Fermat(
+			longinteger_object &F, int n);
 	// $F_n = 2^{2^n} + 1$
-	void Dedekind_number(longinteger_object &Dnq,
+	void Dedekind_number(
+			longinteger_object &Dnq,
 			int n, int q, int verbose_level);
 
-	int is_even(longinteger_object &a);
-	int is_odd(longinteger_object &a);
+	int is_even(
+			longinteger_object &a);
+	int is_odd(
+			longinteger_object &a);
 	int remainder_mod_int(
 			longinteger_object &a, int p);
 	int multiplicity_of_p(
@@ -496,22 +518,27 @@ public:
 	void matrix_entries_integral_division_exact(
 			longinteger_object *A,
 		longinteger_object &b, int Am, int An);
-	void matrix_print_GAP(std::ostream &ost,
+	void matrix_print_GAP(
+			std::ostream &ost,
 			longinteger_object *A,
 		int Am, int An);
-	void matrix_print_tex(std::ostream &ost,
+	void matrix_print_tex(
+			std::ostream &ost,
 			longinteger_object *A,
 		int Am, int An);
 	void power_mod(
 			char *aa, char *bb, char *nn,
 		longinteger_object &result, int verbose_level);
-	void factorial(longinteger_object &result, int n);
-	void group_order_PGL(longinteger_object &result,
+	void factorial(
+			longinteger_object &result, int n);
+	void group_order_PGL(
+			longinteger_object &result,
 		int n, int q, int f_semilinear);
 	void square_root_floor(
 			longinteger_object &a,
 			longinteger_object &x, int verbose_level);
-	void print_digits(char *rep, int len);
+	void print_digits(
+			char *rep, int len);
 	void Chinese_Remainders(
 			std::vector<long int> &Remainders,
 			std::vector<long int> &Moduli,
@@ -548,7 +575,8 @@ public:
 	int &len() { return l; };
 	char *&rep() { return r; };
 	void create(long int i);
-	void create_product(int nb_factors, int *factors);
+	void create_product(
+			int nb_factors, int *factors);
 	void create_power(int a, int e);
 		// creates a^e
 	void create_power_minus_one(int a, int e);
@@ -557,19 +585,27 @@ public:
 			int b, int *rep, int len);
 	void create_from_base_10_string(
 			const char *str, int verbose_level);
-	void create_from_base_10_string(const char *str);
-	void create_from_base_10_string(std::string &str);
+	void create_from_base_10_string(
+			const char *str);
+	void create_from_base_10_string(
+			std::string &str);
 	int as_int();
 	long int as_lint();
-	void as_longinteger(longinteger_object &a);
-	void assign_to(longinteger_object &b);
-	void swap_with(longinteger_object &b);
-	std::ostream& print(std::ostream& ost);
-	std::ostream& print_not_scientific(std::ostream& ost);
+	//void as_longinteger(longinteger_object &a);
+	void assign_to(
+			longinteger_object &b);
+	void swap_with(
+			longinteger_object &b);
+	std::ostream& print(
+			std::ostream& ost);
+	std::ostream& print_not_scientific(
+			std::ostream& ost);
 	int log10();
 	int output_width();
-	void print_width(std::ostream& ost, int width);
-	void print_to_string(std::string &s);
+	void print_width(
+			std::ostream& ost, int width);
+	void print_to_string(
+			std::string &s);
 	void normalize();
 	void negate();
 	int is_zero();
@@ -585,7 +621,8 @@ public:
 	int compare_with_int(int a);
 };
 
-std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
+std::ostream& operator<<(
+		std::ostream& ost, longinteger_object& p);
 
 
 
@@ -772,7 +809,8 @@ public:
 	ring_theory_global();
 	~ring_theory_global();
 	void Monomial_ordering_type_as_string(
-			monomial_ordering_type Monomial_ordering_type, std::string &s);
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &s);
 	void write_code_for_division(
 			field_theory::finite_field *F,
 			std::string &label_code,
@@ -830,7 +868,8 @@ public:
 			int verbose_level);
 	void polynomial_division_from_file_with_report(
 			field_theory::finite_field *F,
-			std::string &input_file, long int rk1, int verbose_level);
+			std::string &input_file, long int rk1,
+			int verbose_level);
 	void polynomial_division_from_file_all_k_error_patterns_with_report(
 			field_theory::finite_field *F,
 			std::string &input_file, long int rk1,
@@ -903,11 +942,14 @@ public:
 
 	table_of_irreducible_polynomials();
 	~table_of_irreducible_polynomials();
-	void init(int degree_bound,
+	void init(
+			int degree_bound,
 			field_theory::finite_field *F,
 			int verbose_level);
-	void print(std::ostream &ost);
-	void print_polynomials(std::ostream &ost);
+	void print(
+			std::ostream &ost);
+	void print_polynomials(
+			std::ostream &ost);
 	int select_polynomial_first(
 			int *Select, int verbose_level);
 	int select_polynomial_next(
@@ -947,13 +989,15 @@ public:
 	unipoly_domain(
 			field_theory::finite_field *GFq);
 	void init_basic(
-			field_theory::finite_field *F, int verbose_level);
+			field_theory::finite_field *F,
+			int verbose_level);
 	unipoly_domain(
 			field_theory::finite_field *GFq,
 			unipoly_object m,
 			int verbose_level);
 	~unipoly_domain();
-	void init_variable_name(std::string &label);
+	void init_variable_name(
+			std::string &label);
 	void init_factorring(
 			field_theory::finite_field *F,
 			unipoly_object m,
@@ -989,12 +1033,16 @@ public:
 	void unrank(unipoly_object p, int rk);
 	void unrank_longinteger(
 			unipoly_object p, longinteger_object &rank);
-	int rank(unipoly_object p);
+	int rank(
+			unipoly_object p);
 	void rank_longinteger(
 			unipoly_object p, longinteger_object &rank);
-	int degree(unipoly_object p);
-	void print_object_latex(unipoly_object p, std::ostream &ost);
-	void print_object(unipoly_object p, std::ostream &ost);
+	int degree(
+			unipoly_object p);
+	void print_object_latex(
+			unipoly_object p, std::ostream &ost);
+	void print_object(
+			unipoly_object p, std::ostream &ost);
 	void print_object_sstr_latex(
 			unipoly_object p, std::stringstream &ost);
 	void print_object_sstr(
@@ -1015,43 +1063,53 @@ public:
 	int is_zero(unipoly_object p);
 	void negate(unipoly_object a);
 	void make_monic(unipoly_object &a);
-	void add(unipoly_object a,
+	void add(
+			unipoly_object a,
 			unipoly_object b,
 			unipoly_object &c);
-	void mult(unipoly_object a,
+	void mult(
+			unipoly_object a,
 			unipoly_object b,
 			unipoly_object &c,
 			int verbose_level);
-	void mult_mod(unipoly_object a,
+	void mult_mod(
+			unipoly_object a,
 		unipoly_object b,
 		unipoly_object &c,
 		unipoly_object m,
 		int verbose_level);
-	void mult_mod_negated(unipoly_object a,
+	void mult_mod_negated(
+			unipoly_object a,
 			unipoly_object b,
 			unipoly_object &c,
 		int factor_polynomial_degree,
 		int *factor_polynomial_coefficients_negated,
 		int verbose_level);
-	void Frobenius_matrix_by_rows(int *&Frob,
+	void Frobenius_matrix_by_rows(
+			int *&Frob,
 		unipoly_object factor_polynomial,
 		int verbose_level);
 		// the j-th row of Frob is x^{j*q} mod m
-	void Frobenius_matrix(int *&Frob,
+	void Frobenius_matrix(
+			int *&Frob,
 			unipoly_object factor_polynomial,
 		int verbose_level);
-	void Berlekamp_matrix(int *&B,
+	void Berlekamp_matrix(
+			int *&B,
 			unipoly_object factor_polynomial,
 		int verbose_level);
-	void exact_division(unipoly_object a,
+	void exact_division(
+			unipoly_object a,
 		unipoly_object b, unipoly_object &q,
 		int verbose_level);
 	void division_with_remainder(
 			unipoly_object a, unipoly_object b,
 		unipoly_object &q, unipoly_object &r,
 		int verbose_level);
-	void derivative(unipoly_object a, unipoly_object &b);
-	int compare_euclidean(unipoly_object m, unipoly_object n);
+	void derivative(
+			unipoly_object a, unipoly_object &b);
+	int compare_euclidean(
+			unipoly_object m, unipoly_object n);
 	void greatest_common_divisor(
 			unipoly_object m, unipoly_object n,
 		unipoly_object &g, int verbose_level);
@@ -1059,30 +1117,37 @@ public:
 			unipoly_object m, unipoly_object n,
 		unipoly_object &u, unipoly_object &v,
 		unipoly_object &g, int verbose_level);
-	int is_squarefree(unipoly_object p,
+	int is_squarefree(
+			unipoly_object p,
 			int verbose_level);
 	void compute_normal_basis(int d,
 			int *Normal_basis,
 		int *Frobenius, int verbose_level);
-	void order_ideal_generator(int d,
+	void order_ideal_generator(
+			int d,
 			int idx, unipoly_object &mue,
 		int *A, int *Frobenius,
 		int verbose_level);
 		// Lueneburg~\cite{Lueneburg87a} p. 105.
 		// Frobenius is a matrix of size d x d
 		// A is a matrix of size (d + 1) x d
-	void matrix_apply(unipoly_object &p, int *Mtx, int n,
+	void matrix_apply(
+			unipoly_object &p, int *Mtx, int n,
 		int verbose_level);
 		// The matrix is applied on the left
-	void substitute_matrix_in_polynomial(unipoly_object &p,
+	void substitute_matrix_in_polynomial(
+			unipoly_object &p,
 		int *Mtx_in, int *Mtx_out, int k, int verbose_level);
 		// The matrix is substituted into the polynomial
-	int substitute_scalar_in_polynomial(unipoly_object &p,
+	int substitute_scalar_in_polynomial(
+			unipoly_object &p,
 		int scalar, int verbose_level);
 		// The scalar 'scalar' is substituted into the polynomial
-	void module_structure_apply(int *v, int *Mtx, int n,
+	void module_structure_apply(
+			int *v, int *Mtx, int n,
 		unipoly_object p, int verbose_level);
-	void take_away_all_factors_from_b(unipoly_object a,
+	void take_away_all_factors_from_b(
+			unipoly_object a,
 		unipoly_object b, unipoly_object &a_without_b,
 		int verbose_level);
 		// Computes the polynomial $r$ with
@@ -1095,28 +1160,39 @@ public:
 		//each irreducible polynomial dividing $a/r$ divides $b$.
 		//Lueneburg~\cite{Lueneburg87a}, p. 37.
 		//\end{enumerate}
-	int is_irreducible(unipoly_object a, int verbose_level);
-	void singer_candidate(unipoly_object &m,
+	int is_irreducible(
+			unipoly_object a, int verbose_level);
+	void singer_candidate(
+			unipoly_object &m,
 		int p, int d, int b, int a);
-	int is_primitive(unipoly_object &m,
+	int is_primitive(
+			unipoly_object &m,
 		longinteger_object &qm1,
 		int nb_primes, longinteger_object *primes,
 		int verbose_level);
-	void get_a_primitive_polynomial(unipoly_object &m,
+	void get_a_primitive_polynomial(
+			unipoly_object &m,
 		int f, int verbose_level);
-	void get_an_irreducible_polynomial(unipoly_object &m,
+	void get_an_irreducible_polynomial(
+			unipoly_object &m,
 		int f, int verbose_level);
-	void power_int(unipoly_object &a,
+	void power_int(
+			unipoly_object &a,
 			long int n, int verbose_level);
-	void power_longinteger(unipoly_object &a,
+	void power_longinteger(
+			unipoly_object &a,
 			longinteger_object &n,
 			int verbose_level);
-	void power_mod(unipoly_object &a, unipoly_object &m,
+	void power_mod(
+			unipoly_object &a, unipoly_object &m,
 			long int n, int verbose_level);
-	void power_coefficients(unipoly_object &a, int n);
-	void minimum_polynomial(unipoly_object &a,
+	void power_coefficients(
+			unipoly_object &a, int n);
+	void minimum_polynomial(
+			unipoly_object &a,
 		int alpha, int p, int verbose_level);
-	int minimum_polynomial_factorring(int alpha, int p,
+	int minimum_polynomial_factorring(
+			int alpha, int p,
 		int verbose_level);
 	void minimum_polynomial_factorring_longinteger(
 		longinteger_object &alpha,
@@ -1130,19 +1206,24 @@ public:
 		unipoly_object &minpol, int d, int *Frobenius,
 		int verbose_level);
 		// Lueneburg~\cite{Lueneburg87a}, p. 112.
-	void characteristic_polynomial(int *Mtx, int k,
+	void characteristic_polynomial(
+			int *Mtx, int k,
 		unipoly_object &char_poly, int verbose_level);
 	void print_matrix(
 			unipoly_object *M, int k);
-	void determinant(unipoly_object *M,
+	void determinant(
+			unipoly_object *M,
 			int k, unipoly_object &p,
 		int verbose_level);
-	void deletion_matrix(unipoly_object *M,
+	void deletion_matrix(
+			unipoly_object *M,
 			int k, int delete_row,
 		int delete_column, unipoly_object *&N,
 		int verbose_level);
-	void center_lift_coordinates(unipoly_object a, int q);
-	void reduce_modulo_p(unipoly_object a, int p);
+	void center_lift_coordinates(
+			unipoly_object a, int q);
+	void reduce_modulo_p(
+			unipoly_object a, int p);
 
 	//unipoly_domain2.cpp:
 	void mult_easy(

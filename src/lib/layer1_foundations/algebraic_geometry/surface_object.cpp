@@ -2456,6 +2456,270 @@ void surface_object::print_one_line_tex(std::ostream &ost, int idx)
 
 }
 
+void surface_object::Clebsch_map_up(std::string &fname_base,
+		int line_1_idx, int line_2_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object::Clebsch_map_up" << endl;
+	}
+
+	long int *Image_pts;
+	long int N_points;
+
+	if (f_v) {
+		cout << "surface_object::Clebsch_map_up "
+				"before computing the map" << endl;
+	}
+
+
+
+	int *v;
+	int *w;
+	int h;
+	long int i;
+	int f_vv = false;
+	int len = 4;
+
+	int Line_a[8];
+	int Line_b[8];
+	int M[16];
+	int Dual_planes[16];
+	int Transversal_line[8];
+	long int *point_list;
+	long int *Line_a_point_list;
+	long int *Line_b_point_list;
+
+
+	point_list = NEW_lint(Surf->P->Subspaces->k);
+	Line_a_point_list = NEW_lint(Surf->P->Subspaces->k);
+	Line_b_point_list = NEW_lint(Surf->P->Subspaces->k);
+
+	// get generator matrices for the two skew lines:
+	Surf->Gr->unrank_lint_here(Line_a, Lines[line_1_idx], 0 /*verbose_level*/);
+	Surf->Gr->unrank_lint_here(Line_b, Lines[line_2_idx], 0 /*verbose_level*/);
+
+
+	Surf->P->Subspaces->create_points_on_line_with_line_given(
+			Line_a, Line_a_point_list, verbose_level - 2);
+	Surf->P->Subspaces->create_points_on_line_with_line_given(
+			Line_b, Line_b_point_list, verbose_level - 2);
+
+	data_structures::sorting Sorting;
+
+	Sorting.lint_vec_heapsort(Line_a_point_list, Surf->P->Subspaces->k);
+	Sorting.lint_vec_heapsort(Line_b_point_list, Surf->P->Subspaces->k);
+
+
+
+	N_points = Surf->P->Subspaces->N_points;
+
+
+
+	Image_pts = NEW_lint(N_points);
+
+	v = NEW_int(Surf->P->Subspaces->n + 1);
+	w = NEW_int(len);
+
+
+	for (i = 0; i < N_points; i++) {
+
+		Surf->P->unrank_point(v, i);
+
+		if (f_vv) {
+			cout << "surface_object::Clebsch_map_up "
+					"point " << i << " is ";
+			Int_vec_print(cout, v, Surf->P->Subspaces->n + 1);
+			cout << endl;
+		}
+
+#if 0
+		for (h = 0; h < len; h++) {
+
+			w[h] = Object->Formula_vector->V[h].tree->evaluate(
+					symbol_table,
+					verbose_level - 2);
+
+		}
+#else
+		//Int_vec_zero(Image_coeff + h * 4, 4);
+		if (f_v) {
+			cout << "surface_object::Clebsch_map_up "
+					"pt " << i << " / " << N_points << " is ";
+			Int_vec_print(cout, v, 4);
+			cout << ":" << endl;
+		}
+
+		// make sure the points do not lie on either line_a or line_b
+		// because the map is undefined there:
+		Int_vec_copy(Line_a, M, 2 * 4);
+		Int_vec_copy(v, M + 2 * 4, 4);
+		if (F->Linear_algebra->Gauss_easy(M, 3, 4) == 2) {
+			if (f_vv) {
+				cout << "The point is on line_a" << endl;
+			}
+			Image_pts[i] = -1;
+			continue;
+		}
+		Int_vec_copy(Line_b, M, 2 * 4);
+		Int_vec_copy(v, M + 2 * 4, 4);
+		if (F->Linear_algebra->Gauss_easy(M, 3, 4) == 2) {
+			if (f_vv) {
+				cout << "The point is on line_b" << endl;
+			}
+			Image_pts[i] = -1;
+			continue;
+		}
+
+		// The point is good:
+
+		// Compute the first plane in dual coordinates:
+		Int_vec_copy(Line_a, M, 2 * 4);
+		Int_vec_copy(v, M + 2 * 4, 4);
+		F->Linear_algebra->RREF_and_kernel(
+				4, 3, M, 0 /* verbose_level */);
+		Int_vec_copy(M + 3 * 4, Dual_planes, 4);
+		if (f_vv) {
+			cout << "surface_object::Clebsch_map_up "
+					"First plane in dual coordinates: ";
+			Int_vec_print(cout, M + 3 * 4, 4);
+			cout << endl;
+		}
+
+		// Compute the second plane in dual coordinates:
+		Int_vec_copy(Line_b, M, 2 * 4);
+		Int_vec_copy(v, M + 2 * 4, 4);
+		F->Linear_algebra->RREF_and_kernel(
+				4, 3, M, 0 /* verbose_level */);
+		Int_vec_copy(M + 3 * 4, Dual_planes + 4, 4);
+		if (f_vv) {
+			cout << "surface_object::Clebsch_map_up "
+					"Second plane in dual coordinates: ";
+			Int_vec_print(cout, M + 3 * 4, 4);
+			cout << endl;
+		}
+		if (F->Linear_algebra->RREF_and_kernel(
+				4, 2, Dual_planes, 0 /* verbose_level */) != 2) {
+			Image_pts[i] = -1;
+			continue;
+		}
+		Int_vec_copy(Dual_planes + 2 * 4, Transversal_line, 8);
+
+		Surf->P->Subspaces->create_points_on_line_with_line_given(
+				Transversal_line, point_list, verbose_level - 2);
+
+		Image_pts[i] = -1;
+
+		int cnt;
+
+
+		cnt = 0;
+		for (h = 0; h < Surf->P->Subspaces->k; h++) {
+
+			long int pt;
+			int idx, idx_ab;
+			int f_lies_on_line_a = false;
+			int f_lies_on_line_b = false;
+
+			pt = point_list[h];
+
+			if (!find_point(pt, idx)) {
+				continue;
+			}
+			cnt++;
+
+		}
+
+		if (cnt != 3) {
+			cout << "cnt = " << cnt << ", skipping" << endl;
+			continue;
+		}
+
+		for (h = 0; h < Surf->P->Subspaces->k; h++) {
+
+			long int pt;
+			int idx, idx_ab;
+			int f_lies_on_line_a = false;
+			int f_lies_on_line_b = false;
+
+			pt = point_list[h];
+
+			if (!find_point(pt, idx)) {
+				continue;
+			}
+
+			if (Sorting.lint_vec_search(
+					Line_a_point_list, Surf->P->Subspaces->k,
+					pt, idx_ab, 0 /* verbose_level */)) {
+				f_lies_on_line_a = true;
+			}
+			if (Sorting.lint_vec_search(
+					Line_b_point_list, Surf->P->Subspaces->k,
+					pt, idx_ab, 0 /* verbose_level */)) {
+				f_lies_on_line_b = true;
+			}
+			if (!f_lies_on_line_a && !f_lies_on_line_b) {
+				Image_pts[i] = pt;
+				break;
+			}
+
+		}
+
+		if (Image_pts[i] == -1) {
+			cout << "surface_object::Clebsch_map_up could not find image point" << endl;
+			exit(1);
+		}
+
+#endif
+
+		if (f_vv) {
+			cout << "surface_object::Clebsch_map_up maps to ";
+			Int_vec_print(cout, w, len);
+			cout << " = " << Image_pts[i] << endl;
+		}
+
+	}
+
+	FREE_int(v);
+	FREE_int(w);
+
+	FREE_lint(point_list);
+
+
+	if (f_v) {
+		cout << "surface_object::Clebsch_map_up "
+				"after computing the map" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object::Clebsch_map_up Image_pts:" << endl;
+		Lint_vec_print(cout, Image_pts, N_points);
+		cout << endl;
+	}
+
+	string fname_map;
+	orbiter_kernel_system::file_io Fio;
+
+	fname_map = fname_base + "_Clebsch_map_up.csv";
+
+
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_map, Image_pts, N_points, 1);
+	if (f_v) {
+		cout << "Written file " << fname_map
+				<< " of size " << Fio.file_size(fname_map) << endl;
+	}
+
+	FREE_lint(Image_pts);
+
+
+	if (f_v) {
+		cout << "surface_object::Clebsch_map_up done" << endl;
+	}
+
+}
+
 
 
 

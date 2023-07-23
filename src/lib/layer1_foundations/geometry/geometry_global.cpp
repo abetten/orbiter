@@ -1377,8 +1377,8 @@ void geometry_global::do_intersection_of_two_lines(
 		field_theory::finite_field *F,
 		std::string &line_1_basis,
 		std::string &line_2_basis,
-		int f_normalize_from_the_left,
-		int f_normalize_from_the_right,
+		//int f_normalize_from_the_left,
+		//int f_normalize_from_the_right,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1437,6 +1437,7 @@ void geometry_global::do_intersection_of_two_lines(
 		exit(1);
 	}
 
+#if 0
 	if (f_normalize_from_the_left) {
 		cout << "geometry_global::do_intersection_of_two_lines "
 				"normalizing from the left" << endl;
@@ -1466,6 +1467,7 @@ void geometry_global::do_intersection_of_two_lines(
 		cout << "rk=" << rk << endl;
 
 	}
+#endif
 
 
 	FREE_int(Line1);
@@ -1485,8 +1487,8 @@ void geometry_global::do_transversal(
 		std::string &line_1_basis,
 		std::string &line_2_basis,
 		std::string &point,
-		int f_normalize_from_the_left,
-		int f_normalize_from_the_right,
+		//int f_normalize_from_the_left,
+		//int f_normalize_from_the_right,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1551,6 +1553,8 @@ void geometry_global::do_transversal(
 		cout << "rk= " << rk << endl;
 		exit(1);
 	}
+
+#if 0
 	if (f_normalize_from_the_left) {
 		cout << "geometry_global::do_transversal "
 				"normalizing from the left" << endl;
@@ -1580,6 +1584,7 @@ void geometry_global::do_transversal(
 		cout << "rk=" << rk << endl;
 
 	}
+#endif
 
 
 	FREE_int(Line1);

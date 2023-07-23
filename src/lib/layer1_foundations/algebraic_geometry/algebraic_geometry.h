@@ -160,9 +160,11 @@ public:
 
 	clebsch_map();
 	~clebsch_map();
-	void init_half_double_six(surface_object *SO,
+	void init_half_double_six(
+			surface_object *SO,
 			int hds, int verbose_level);
-	void compute_Clebsch_map_down(int verbose_level);
+	void compute_Clebsch_map_down(
+			int verbose_level);
 	int compute_Clebsch_map_down_worker(
 		long int *Image_rk, int *Image_coeff,
 		int verbose_level);
@@ -175,8 +177,10 @@ public:
 	//   Note Image_rk[i] is -1 if Pts[i] does not have an image.
 	// Image_coeff[nb_pts * 4] (image point in the plane in PG(3,q) coordinates)
 	void clebsch_map_print_fibers();
-	void clebsch_map_find_arc_and_lines(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void clebsch_map_find_arc_and_lines(
+			int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 
 };
 
@@ -1635,6 +1639,8 @@ public:
 			std::ostream &ost, int idx);
 	void print_lines_tex(std::ostream &ost);
 	void print_one_line_tex(std::ostream &ost, int idx);
+	void Clebsch_map_up(std::string &fname_base,
+			int line_1_idx, int line_2_idx, int verbose_level);
 
 
 };

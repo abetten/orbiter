@@ -18,7 +18,8 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace ring_theory {
 
-static void make_linear_irreducible_polynomials(field_theory::finite_field *F, int &nb,
+static void make_linear_irreducible_polynomials(
+		field_theory::finite_field *F, int &nb,
 		int *&table, int verbose_level);
 
 table_of_irreducible_polynomials::table_of_irreducible_polynomials()
@@ -53,7 +54,8 @@ table_of_irreducible_polynomials::~table_of_irreducible_polynomials()
 	}
 }
 
-void table_of_irreducible_polynomials::init(int degree_bound,
+void table_of_irreducible_polynomials::init(
+		int degree_bound,
 		field_theory::finite_field *F,
 		int verbose_level)
 {
@@ -83,7 +85,8 @@ void table_of_irreducible_polynomials::init(int degree_bound,
 		cout << "table_of_irreducible_polynomials::init "
 				"before make_linear_irreducible_polynomials" << endl;
 	}
-	make_linear_irreducible_polynomials(F, Nb_irred[1],
+	make_linear_irreducible_polynomials(
+			F, Nb_irred[1],
 			Tables[1], verbose_level - 2);
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
@@ -108,7 +111,8 @@ void table_of_irreducible_polynomials::init(int degree_bound,
 		vector<vector<int>> T;
 		ring_theory_global R;
 
-		R.make_all_irreducible_polynomials_of_degree_d(F, d,
+		R.make_all_irreducible_polynomials_of_degree_d(
+				F, d,
 				T, verbose_level - 2);
 
 		Nb_irred[d] = T.size();
@@ -151,7 +155,8 @@ void table_of_irreducible_polynomials::init(int degree_bound,
 	}
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
-				"degree_bound = " << degree_bound << " q = " << q << " Degree = ";
+				"degree_bound = " << degree_bound
+				<< " q = " << q << " Degree = ";
 		Int_vec_print(cout, Degree, nb_irred);
 		cout << endl;
 	}
@@ -171,7 +176,8 @@ void table_of_irreducible_polynomials::init(int degree_bound,
 				FX.create_object_of_degree_with_coefficients(
 						poly, d, &Tables[d][i * (d + 1)]);
 
-				if (!is_irreducible(poly, verbose_level)) {
+				if (!is_irreducible(
+						poly, verbose_level)) {
 					cout << "table_of_irreducible_polynomials::init "
 							"polynomial " << i << " among "
 							"the list of polynomials of degree " << d
@@ -187,7 +193,8 @@ void table_of_irreducible_polynomials::init(int degree_bound,
 	}
 }
 
-void table_of_irreducible_polynomials::print(std::ostream &ost)
+void table_of_irreducible_polynomials::print(
+		std::ostream &ost)
 {
 	int d, l, i, j;
 
@@ -209,7 +216,8 @@ void table_of_irreducible_polynomials::print(std::ostream &ost)
 }
 
 
-void table_of_irreducible_polynomials::print_polynomials(std::ostream &ost)
+void table_of_irreducible_polynomials::print_polynomials(
+		std::ostream &ost)
 {
 	int d, i, j;
 
@@ -320,7 +328,8 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 	return false;
 }
 
-int table_of_irreducible_polynomials::is_irreducible(unipoly_object &poly, int verbose_level)
+int table_of_irreducible_polynomials::is_irreducible(
+		unipoly_object &poly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Mult;
@@ -412,7 +421,8 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 			cout << "table_of_irreducible_polynomials::factorize_polynomial "
 					"before U.create_object_of_degree_with_coefficients" << endl;
 		}
-		U.create_object_of_degree_with_coefficients(P, d,
+		U.create_object_of_degree_with_coefficients(
+				P, d,
 				Tables[d] + tt * (d + 1));
 
 		if (f_v) {
@@ -421,7 +431,8 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 			U.print_object(P, cout);
 			cout << endl;
 		}
-		U.division_with_remainder(Poly, P, Q, R, verbose_level - 2);
+		U.division_with_remainder(
+				Poly, P, Q, R, verbose_level - 2);
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::factorize_polynomial "
 					"after U.division_with_remainder" << endl;
@@ -444,7 +455,8 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 				cout << "table_of_irreducible_polynomials::factorize_polynomial "
 						"assigning Q to Poly" << endl;
 			}
-			U.assign(Q, Poly, verbose_level);
+			U.assign(
+					Q, Poly, verbose_level);
 			if (f_v) {
 				cout << "table_of_irreducible_polynomials::factorize_polynomial "
 						"after assigning Q to Poly" << endl;
@@ -493,7 +505,8 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 // global functions:
 //##############################################################################
 
-static void make_linear_irreducible_polynomials(field_theory::finite_field *F, int &nb,
+static void make_linear_irreducible_polynomials(
+		field_theory::finite_field *F, int &nb,
 		int *&table, int verbose_level)
 {
 	int i;

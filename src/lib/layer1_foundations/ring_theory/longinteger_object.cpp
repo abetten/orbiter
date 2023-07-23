@@ -94,7 +94,8 @@ void longinteger_object::create(long int i)
 	}
 }
 
-void longinteger_object::create_product(int nb_factors, int *factors)
+void longinteger_object::create_product(
+		int nb_factors, int *factors)
 {
 	longinteger_domain D;
 	
@@ -179,12 +180,14 @@ void longinteger_object::create_from_base_10_string(
 	x.assign_to(*this);
 }
 
-void longinteger_object::create_from_base_10_string(const char *str)
+void longinteger_object::create_from_base_10_string(
+		const char *str)
 {
 	create_from_base_10_string(str, 0);
 }
 
-void longinteger_object::create_from_base_10_string(std::string &str)
+void longinteger_object::create_from_base_10_string(
+		std::string &str)
 {
 	create_from_base_10_string(str.c_str(), 0);
 }
@@ -218,7 +221,8 @@ long int longinteger_object::as_lint()
 	return x;
 }
 
-void longinteger_object::assign_to(longinteger_object &b)
+void longinteger_object::assign_to(
+		longinteger_object &b)
 {
 	int i;
 	int f_v = false;
@@ -253,7 +257,8 @@ void longinteger_object::assign_to(longinteger_object &b)
 	}
 }
 
-void longinteger_object::swap_with(longinteger_object &b)
+void longinteger_object::swap_with(
+		longinteger_object &b)
 {
 	char s;
 	int length;
@@ -270,7 +275,8 @@ void longinteger_object::swap_with(longinteger_object &b)
 	b.r = rep;
 }
 
-ostream& longinteger_object::print(std::ostream& ost)
+ostream& longinteger_object::print(
+		std::ostream& ost)
 {
 	int i;
 	char c;
@@ -299,7 +305,8 @@ ostream& longinteger_object::print(std::ostream& ost)
 	return ost;
 }
 
-ostream& longinteger_object::print_not_scientific(std::ostream& ost)
+ostream& longinteger_object::print_not_scientific(
+		std::ostream& ost)
 {
 	int i;
 	char c;
@@ -339,7 +346,8 @@ int longinteger_object::output_width()
 	return h;
 }
 
-void longinteger_object::print_width(std::ostream& ost, int width)
+void longinteger_object::print_width(
+		std::ostream& ost, int width)
 {
 	int i, len, w;
 	char c;
@@ -375,7 +383,8 @@ void longinteger_object::print_width(std::ostream& ost, int width)
 	}
 }
 
-void longinteger_object::print_to_string(std::string &s)
+void longinteger_object::print_to_string(
+		std::string &s)
 {
 		
 	if (r == NULL) {
@@ -525,7 +534,8 @@ void longinteger_object::create_i_power_j(int i, int j)
 }
 
 
-ostream& operator<<(std::ostream& ost, longinteger_object& p)
+ostream& operator<<(
+		std::ostream& ost, longinteger_object& p)
 {
 	// cout << "operator<< starting" << endl;
 	p.print(ost);
