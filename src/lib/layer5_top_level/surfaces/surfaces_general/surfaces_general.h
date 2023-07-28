@@ -50,6 +50,12 @@ public:
 	int Clebsch_map_up_line_1_idx;
 	int Clebsch_map_up_line_2_idx;
 
+	int f_Clebsch_map_up_single_point;
+	int Clebsch_map_up_single_point_input_point;
+	int Clebsch_map_up_single_point_line_1_idx;
+	int Clebsch_map_up_single_point_line_2_idx;
+
+
 	cubic_surface_activity_description();
 	~cubic_surface_activity_description();
 	int read_arguments(

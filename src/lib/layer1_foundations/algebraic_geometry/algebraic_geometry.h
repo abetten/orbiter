@@ -1641,6 +1641,9 @@ public:
 	void print_one_line_tex(std::ostream &ost, int idx);
 	void Clebsch_map_up(std::string &fname_base,
 			int line_1_idx, int line_2_idx, int verbose_level);
+	long int Clebsch_map_up_single_point(
+			long int input_point,
+			int line_1_idx, int line_2_idx, int verbose_level);
 
 
 };

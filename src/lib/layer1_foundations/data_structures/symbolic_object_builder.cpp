@@ -50,6 +50,7 @@ void symbolic_object_builder::init(
 	}
 
 	symbolic_object_builder::Descr = Descr;
+	symbolic_object_builder::label = label;
 	//string managed_variables;
 
 
@@ -74,15 +75,6 @@ void symbolic_object_builder::init(
 					"-ring " << Descr->ring_label << endl;
 		}
 		Ring = Get_ring(Descr->ring_label);
-#if 0
-		int i;
-		for (i = 0; i < Ring->nb_variables; i++) {
-			managed_variables += Ring->get_symbol(i);
-			if (i < Ring->nb_variables - 1) {
-				managed_variables += ",";
-			}
-		}
-#endif
 	}
 
 	if (Descr->f_ring && !Descr->f_field && !Descr->f_field_pointer) {
@@ -96,321 +88,16 @@ void symbolic_object_builder::init(
 		exit(1);
 	}
 
-	if (Descr->f_text) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init "
-					"-text " << Descr->text_txt << endl;
-			if (Descr->f_managed_variables) {
-				cout << "symbolic_object_builder::init "
-						"-managed_variables " << Descr->managed_variables << endl;
-			}
-		}
 
-
-		Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
-		if (f_v) {
-			cout << "symbolic_object_builder::init "
-					"before Formula_vector->init_from_text" << endl;
-		}
-		Formula_vector->init_from_text(
-				label /*Descr->label_txt*/,
-				Descr->label_tex,
-				Descr->text_txt,
-				Fq,
-				Descr->f_managed_variables,
-				Descr->managed_variables,
-				Descr->f_matrix, Descr->nb_rows,
-				verbose_level - 1);
-		if (f_v) {
-			cout << "symbolic_object_builder::init "
-					"after Formula_vector->init_from_text" << endl;
-		}
-
-	}
-	else if (Descr->f_determinant) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -determinant"
-					<< " " << Descr->determinant_source
-					<< endl;
-		}
-
-		do_determinant(
-				Descr,
-				label,
-				verbose_level - 1);
-
-
-	}
-	else if (Descr->f_characteristic_polynomial) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -characteristic_polynomial"
-					<< " " << Descr->characteristic_polynomial_variable
-					<< " " << Descr->characteristic_polynomial_source
-					<< endl;
-		}
-
-		do_characteristic_polynomial(
-				Descr,
-				label,
-				verbose_level - 1);
-
-
-	}
-
-	else if (Descr->f_substitute) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -substitute"
-					<< " " << Descr->substitute_variables
-					<< " " << Descr->substitute_target
-					<< " " << Descr->substitute_source
-					<< endl;
-		}
-
-		do_substitute(
-					Descr,
-					label,
-					verbose_level - 1);
-
-
-	}
-
-	else if (Descr->f_simplify) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -simplify"
-					<< " " << Descr->simplify_source
-					<< endl;
-		}
-
-
-		do_simplify(
-					Descr,
-					label,
-					verbose_level - 1);
-
-		if (f_v) {
-			cout << "symbolic_object_builder::init -simplify finished" << endl;
-		}
-
-	}
-	else if (Descr->f_expand) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -expand"
-					<< " " << Descr->expand_source
-					<< endl;
-		}
-
-
-		do_expand(
-					Descr,
-					label,
-					verbose_level - 1);
-
-		if (f_v) {
-			cout << "symbolic_object_builder::init -expand finished" << endl;
-		}
-
-	}
-	else if (Descr->f_right_nullspace) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -right_nullspace"
-					<< " " << Descr->right_nullspace_source
-					<< endl;
-		}
-
-		do_right_nullspace(
-					Descr,
-					label,
-					verbose_level - 1);
-
-	}
-	else if (Descr->f_minor) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -minor"
-					<< " " << Descr->minor_source
-					<< " " << Descr->minor_i
-					<< " " << Descr->minor_j
-					<< endl;
-		}
-
-		do_minor(
-					Descr,
-					Descr->minor_i, Descr->minor_j,
-					label,
-					verbose_level - 1);
-
-	}
-
-	else if (Descr->f_symbolic_nullspace) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -symbolic_nullspace"
-					<< " " << Descr->symbolic_nullspace_source
-					<< endl;
-		}
-
-		do_symbolic_nullspace(
-					Descr,
-					label,
-					verbose_level - 1);
-
-	}
-	else if (Descr->f_stack_matrices_vertically) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -stack_matrices_vertically"
-					<< " " << Descr->stack_matrices_label
-					<< endl;
-		}
-		do_stack(
-					Descr,
-					verbose_level - 1);
-
-	}
-	else if (Descr->f_stack_matrices_horizontally) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -stack_matrices_horizontally"
-					<< " " << Descr->stack_matrices_label
-					<< endl;
-		}
-		do_stack(
-					Descr,
-					verbose_level - 1);
-	}
-	else if (Descr->f_stack_matrices_z_shape) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -stack_matrices_z_shape"
-					<< " " << Descr->stack_matrices_label
-					<< endl;
-		}
-		do_stack(
-					Descr,
-					verbose_level - 1);
-	}
-
-	else if (Descr->f_multiply_2x2_from_the_left) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -multiply_2x2_from_the_left"
-					<< " " << Descr->multiply_2x2_from_the_left_source
-					<< " " << Descr->multiply_2x2_from_the_left_A2
-					<< " " << Descr->multiply_2x2_from_the_left_i
-					<< " " << Descr->multiply_2x2_from_the_left_j
-					<< endl;
-		}
-		do_multiply_2x2_from_the_left(
-					Descr,
-					label,
-					verbose_level - 1);
-	}
-
-	else if (Descr->f_matrix_entry) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -matrix_entry"
-					<< " " << Descr->matrix_entry_source
-					<< endl;
-		}
-		do_matrix_entry(
-					Descr,
-					label,
-					verbose_level - 1);
-	}
-
-	else if (Descr->f_vector_entry) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -vector_entry"
-					<< " " << Descr->vector_entry_source
-					<< endl;
-		}
-		do_vector_entry(
-					Descr,
-					label,
-					verbose_level - 1);
-	}
-
-	else if (Descr->f_collect) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -collect"
-					<< " " << Descr->collect_source
-					<< " " << Descr->collect_by
-					<< endl;
-		}
-		do_collect(
-					Descr,
-					label,
-					verbose_level - 1);
-	}
-
-	else if (Descr->f_encode_CRC) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -encode_CRC"
-					<< " " << Descr->encode_CRC_block_length
-					<< " " << Descr->encode_CRC_data_polynomial
-					<< " " << Descr->encode_CRC_check_polynomial
-					<< endl;
-		}
-		do_CRC_encode(
-					Descr,
-					label,
-					verbose_level - 1);
-	}
-
-	else if (Descr->f_decode_CRC) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init -decode_CRC"
-					<< " " << Descr->decode_CRC_block_length
-					<< " " << Descr->decode_CRC_data_polynomial
-					<< " " << Descr->decode_CRC_check_polynomial
-					<< endl;
-		}
-		do_CRC_decode(
-					Descr,
-					label,
-					verbose_level - 1);
-	}
-
-
-	if (Descr->f_file) {
-		if (f_v) {
-			cout << "symbolic_object_builder::init "
-					"-file" << Descr->file_name << endl;
-		}
-
-
-	}
 
 	if (f_v) {
 		cout << "symbolic_object_builder::init "
-				"before simplifying the formula vector" << endl;
+				"before process_arguments" << endl;
 	}
-
-	if (!Descr->f_do_not_simplify) {
-		expression_parser::formula_vector *old;
-
-		old = Formula_vector;
-
-		Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
-
-		if (f_v) {
-			cout << "symbolic_object_builder::init "
-					"before Formula_vector->simplify label=" << label << endl;
-		}
-
-		Formula_vector->simplify(
-				old,
-				Fq,
-				label,
-				label,
-				verbose_level - 2);
-
-		FREE_OBJECT(old);
-		if (f_v) {
-			cout << "symbolic_object_builder::init "
-					"after simplifying the formula vector" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "symbolic_object_builder::init "
-					"skipping simplification because of -do_not_simplify" << endl;
-
-		}
+	process_arguments(verbose_level - 2);
+	if (f_v) {
+		cout << "symbolic_object_builder::init "
+				"after process_arguments" << endl;
 	}
 
 	if (f_v) {
@@ -456,6 +143,341 @@ void symbolic_object_builder::init(
 		cout << "symbolic_object_builder::init done" << endl;
 	}
 }
+
+
+void symbolic_object_builder::process_arguments(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::process_arguments" << endl;
+	}
+
+
+	if (Descr->f_text) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"-text " << Descr->text_txt << endl;
+			if (Descr->f_managed_variables) {
+				cout << "symbolic_object_builder::process_arguments "
+						"-managed_variables " << Descr->managed_variables << endl;
+			}
+		}
+
+
+		Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"before Formula_vector->init_from_text" << endl;
+		}
+		Formula_vector->init_from_text(
+				label /*Descr->label_txt*/,
+				Descr->label_tex,
+				Descr->text_txt,
+				Fq,
+				Descr->f_managed_variables,
+				Descr->managed_variables,
+				Descr->f_matrix, Descr->nb_rows,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"after Formula_vector->init_from_text" << endl;
+		}
+
+	}
+	else if (Descr->f_determinant) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -determinant"
+					<< " " << Descr->determinant_source
+					<< endl;
+		}
+
+		do_determinant(
+				Descr,
+				label,
+				verbose_level - 1);
+
+
+	}
+	else if (Descr->f_characteristic_polynomial) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -characteristic_polynomial"
+					<< " " << Descr->characteristic_polynomial_variable
+					<< " " << Descr->characteristic_polynomial_source
+					<< endl;
+		}
+
+		do_characteristic_polynomial(
+				Descr,
+				label,
+				verbose_level - 1);
+
+
+	}
+
+	else if (Descr->f_substitute) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -substitute"
+					<< " " << Descr->substitute_variables
+					<< " " << Descr->substitute_target
+					<< " " << Descr->substitute_source
+					<< endl;
+		}
+
+		do_substitute(
+					Descr,
+					label,
+					verbose_level - 1);
+
+
+	}
+
+	else if (Descr->f_simplify) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -simplify"
+					<< " " << Descr->simplify_source
+					<< endl;
+		}
+
+
+		do_simplify(
+					Descr,
+					label,
+					verbose_level - 1);
+
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -simplify finished" << endl;
+		}
+
+	}
+	else if (Descr->f_expand) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -expand"
+					<< " " << Descr->expand_source
+					<< endl;
+		}
+
+
+		do_expand(
+					Descr,
+					label,
+					verbose_level - 1);
+
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -expand finished" << endl;
+		}
+
+	}
+	else if (Descr->f_right_nullspace) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -right_nullspace"
+					<< " " << Descr->right_nullspace_source
+					<< endl;
+		}
+
+		do_right_nullspace(
+					Descr,
+					label,
+					verbose_level - 1);
+
+	}
+	else if (Descr->f_minor) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -minor"
+					<< " " << Descr->minor_source
+					<< " " << Descr->minor_i
+					<< " " << Descr->minor_j
+					<< endl;
+		}
+
+		do_minor(
+					Descr,
+					Descr->minor_i, Descr->minor_j,
+					label,
+					verbose_level - 1);
+
+	}
+
+	else if (Descr->f_symbolic_nullspace) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -symbolic_nullspace"
+					<< " " << Descr->symbolic_nullspace_source
+					<< endl;
+		}
+
+		do_symbolic_nullspace(
+					Descr,
+					label,
+					verbose_level - 1);
+
+	}
+	else if (Descr->f_stack_matrices_vertically) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -stack_matrices_vertically"
+					<< " " << Descr->stack_matrices_label
+					<< endl;
+		}
+		do_stack(
+					Descr,
+					verbose_level - 1);
+
+	}
+	else if (Descr->f_stack_matrices_horizontally) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -stack_matrices_horizontally"
+					<< " " << Descr->stack_matrices_label
+					<< endl;
+		}
+		do_stack(
+					Descr,
+					verbose_level - 1);
+	}
+	else if (Descr->f_stack_matrices_z_shape) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -stack_matrices_z_shape"
+					<< " " << Descr->stack_matrices_label
+					<< endl;
+		}
+		do_stack(
+					Descr,
+					verbose_level - 1);
+	}
+
+	else if (Descr->f_multiply_2x2_from_the_left) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -multiply_2x2_from_the_left"
+					<< " " << Descr->multiply_2x2_from_the_left_source
+					<< " " << Descr->multiply_2x2_from_the_left_A2
+					<< " " << Descr->multiply_2x2_from_the_left_i
+					<< " " << Descr->multiply_2x2_from_the_left_j
+					<< endl;
+		}
+		do_multiply_2x2_from_the_left(
+					Descr,
+					label,
+					verbose_level - 1);
+	}
+
+	else if (Descr->f_matrix_entry) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -matrix_entry"
+					<< " " << Descr->matrix_entry_source
+					<< endl;
+		}
+		do_matrix_entry(
+					Descr,
+					label,
+					verbose_level - 1);
+	}
+
+	else if (Descr->f_vector_entry) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -vector_entry"
+					<< " " << Descr->vector_entry_source
+					<< endl;
+		}
+		do_vector_entry(
+					Descr,
+					label,
+					verbose_level - 1);
+	}
+
+	else if (Descr->f_collect) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -collect"
+					<< " " << Descr->collect_source
+					<< " " << Descr->collect_by
+					<< endl;
+		}
+		do_collect(
+					Descr,
+					label,
+					verbose_level - 1);
+	}
+
+	else if (Descr->f_encode_CRC) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -encode_CRC"
+					<< " " << Descr->encode_CRC_block_length
+					<< " " << Descr->encode_CRC_data_polynomial
+					<< " " << Descr->encode_CRC_check_polynomial
+					<< endl;
+		}
+		do_CRC_encode(
+					Descr,
+					label,
+					verbose_level - 1);
+	}
+
+	else if (Descr->f_decode_CRC) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -decode_CRC"
+					<< " " << Descr->decode_CRC_block_length
+					<< " " << Descr->decode_CRC_data_polynomial
+					<< " " << Descr->decode_CRC_check_polynomial
+					<< endl;
+		}
+		do_CRC_decode(
+					Descr,
+					label,
+					verbose_level - 1);
+	}
+
+
+	if (Descr->f_file) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"-file" << Descr->file_name << endl;
+		}
+
+
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_builder::process_arguments "
+				"before simplifying the formula vector" << endl;
+	}
+
+	if (!Descr->f_do_not_simplify) {
+		expression_parser::formula_vector *old;
+
+		old = Formula_vector;
+
+		Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"before Formula_vector->simplify label=" << label << endl;
+		}
+
+		Formula_vector->simplify(
+				old,
+				Fq,
+				label,
+				label,
+				verbose_level - 2);
+
+		FREE_OBJECT(old);
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"after simplifying the formula vector" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"skipping simplification because of -do_not_simplify" << endl;
+
+		}
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_builder::process_arguments done" << endl;
+	}
+
+}
+
 
 void symbolic_object_builder::do_determinant(
 		symbolic_object_builder_description *Descr,

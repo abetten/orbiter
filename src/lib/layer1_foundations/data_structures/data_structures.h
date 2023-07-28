@@ -1748,6 +1748,9 @@ public:
 		int verbose_level);
 	void patch_with(
 			spreadsheet *S2, char *join_by);
+	void compare_columns(
+			std::string &col1_label, std::string &col2_label,
+			int verbose_level);
 
 
 };
@@ -2007,6 +2010,7 @@ class symbolic_object_builder {
 public:
 
 	symbolic_object_builder_description *Descr;
+	std::string label;
 
 	field_theory::finite_field *Fq;
 
@@ -2020,6 +2024,8 @@ public:
 	void init(
 			symbolic_object_builder_description *Descr,
 			std::string &label,
+			int verbose_level);
+	void process_arguments(
 			int verbose_level);
 	void do_determinant(
 			symbolic_object_builder_description *Descr,

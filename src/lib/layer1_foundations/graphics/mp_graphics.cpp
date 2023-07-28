@@ -2376,7 +2376,8 @@ void mp_graphics::header_tikz(
 			<< " " << user[2] << " " << user[3] << endl;
 	
 	if (Draw_options->f_embedded) {
-		fp_tikz << "\\documentclass[12pt]{article}" << endl;
+		fp_tikz << "\\documentclass{standalone}" << endl;
+		//fp_tikz << "\\documentclass[12pt]{article}" << endl;
 		fp_tikz << "\\usepackage{amsmath, amssymb, amsthm}" << endl;
 		fp_tikz << "\\usepackage{tikz} " << endl;
 		if (Draw_options->f_sideways) {

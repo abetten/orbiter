@@ -70,11 +70,18 @@ void formula_vector::init_from_text(
 	if (f_managed_variables) {
 		f_has_managed_variables = true;
 		formula_vector::managed_variables_text = managed_variables_text;
-		cout << "formula_vector::init_from_text managed_variables_text = " << managed_variables_text << endl;
+		if (f_v) {
+			cout << "formula_vector::init_from_text "
+					"managed_variables_text = "
+					<< managed_variables_text << endl;
+		}
 	}
 	else {
 		f_has_managed_variables = false;
-		cout << "formula_vector::init_from_text no managed variables" << endl;
+		if (f_v) {
+			cout << "formula_vector::init_from_text "
+					"no managed variables" << endl;
+		}
 	}
 
 	data_structures::string_tools ST;
@@ -836,10 +843,19 @@ void formula_vector::substitute(
 	int t, s, i;
 	int nb, len;
 
+	if (f_v) {
+		cout << "formula_vector::substitute N=" << N << endl;
+	}
+
 
 	nb = Source->len / N;
 
+	if (f_v) {
+		cout << "formula_vector::substitute nb=" << nb << endl;
+	}
+
 	len = nb * Target->len;
+
 
 	init_and_allocate(
 			label_txt,
@@ -851,6 +867,13 @@ void formula_vector::substitute(
 	f_matrix = true;
 	nb_rows = nb;
 	nb_cols = Target->len;
+
+	if (f_v) {
+		cout << "formula_vector::substitute len=" << len << endl;
+	}
+	if (f_v) {
+		cout << "formula_vector::substitute Target->len=" << Target->len << endl;
+	}
 
 
 	formula **S;
@@ -864,7 +887,7 @@ void formula_vector::substitute(
 
 		if (f_v) {
 			cout << "formula_vector::substitute "
-					"s=" << s << endl;
+					"s=" << s << " / " << nb << endl;
 		}
 		for (i = 0; i < N; i++) {
 			S[i] = &Source->V[s * N + i];
@@ -874,7 +897,7 @@ void formula_vector::substitute(
 
 			if (f_v) {
 				cout << "formula_vector::substitute "
-						"s=" << s << " t=" << t << endl;
+						"s=" << s << " / " << nb << " t=" << t << " / " << Target->len << endl;
 			}
 
 			formula *T;
@@ -885,9 +908,23 @@ void formula_vector::substitute(
 
 			Out = V + s * Target->len + t;
 
+
+			if (f_v) {
+				cout << "formula_vector::substitute "
+						"s=" << s << " / " << nb << " t=" << t << " / " << Target->len
+						<< " before T->substitute" << endl;
+			}
+
 			T->substitute(
 					variables, managed_variables,
-					S, Out, verbose_level - 2);
+					S, Out, verbose_level);
+
+			if (f_v) {
+				cout << "formula_vector::substitute "
+						"s=" << s << " / " << nb << " t=" << t << " / " << Target->len
+						<< " after T->substitute" << endl;
+			}
+
 
 		}
 	}
@@ -1839,7 +1876,7 @@ void formula_vector::export_tree(int verbose_level)
 			string s;
 
 			s = label_txt + "_" + std::to_string(i);
-			V[i].latex_tree(s, verbose_level);
+			V[i].export_tree(s, verbose_level);
 		}
 	}
 	else if (len == 1) {
@@ -1862,11 +1899,11 @@ void formula_vector::collect_variables(int verbose_level)
 
 	for (i = 0; i < len; i++) {
 		if (f_v) {
-			cout << "formula_vector::collect_variables i=" << i << endl;
+			cout << "formula_vector::collect_variables i=" << i << " / " << len << endl;
 		}
 		V[i].collect_variables(verbose_level);
 		if (f_v) {
-			cout << "formula_vector::collect_variables i=" << i << " done" << endl;
+			cout << "formula_vector::collect_variables i=" << i << " / " << len << " done" << endl;
 		}
 	}
 

@@ -1592,6 +1592,51 @@ void spreadsheet::patch_with(
 
 }
 
+void spreadsheet::compare_columns(
+		std::string &col1_label, std::string &col2_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_csv_file_and_compare_columns" << endl;
+	}
+
+	int idx1, idx2;
+	int i;
+	data_structures::string_tools ST;
+
+	vector<int> Idx;
+
+	idx1 = find_column(col1_label);
+	idx2 = find_column(col2_label);
+
+	for (i = 0; i < nb_rows; i++) {
+		string s1, s2;
+
+		get_string(s1, i, idx1);
+		get_string(s2, i, idx2);
+		if (ST.compare_string_string(s1, s2)) {
+			Idx.push_back(i);
+		}
+	}
+
+	int h, row;
+	int f_enclose_in_parentheses = false;
+
+	for (h = 0; h < Idx.size(); h++) {
+		row = Idx[h];
+		print_table_row(
+					row, f_enclose_in_parentheses,
+					cout);
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::read_csv_file_and_compare_columns done" << endl;
+	}
+}
+
+
 
 
 //

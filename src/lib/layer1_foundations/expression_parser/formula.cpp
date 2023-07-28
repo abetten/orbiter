@@ -420,11 +420,15 @@ void formula::init_formula_Sajeeb(
 	name_of_formula_latex.assign(label_tex);
 
 	if (f_managed_variables) {
-		cout << "formula::init_formula_Sajeeb managed_variables = " << managed_variables << endl;
+		if (f_v) {
+			cout << "formula::init_formula_Sajeeb managed_variables = " << managed_variables << endl;
+		}
 		formula::managed_variables.assign(managed_variables);
 	}
 	else {
-		cout << "formula::init_formula_Sajeeb no managed variables" << endl;
+		if (f_v) {
+			cout << "formula::init_formula_Sajeeb no managed variables" << endl;
+		}
 		formula::managed_variables = "";
 	}
 

@@ -34,6 +34,10 @@ syntax_tree_node::syntax_tree_node()
 
 	orbiter_kernel_system::Orbiter->syntax_tree_node_index++;
 
+	if ((orbiter_kernel_system::Orbiter->syntax_tree_node_index % 10000) == 0) {
+		cout << "Number of algebra nodes = " << orbiter_kernel_system::Orbiter->syntax_tree_node_index << endl;
+	}
+
 	f_terminal = false;
 	T = NULL;
 

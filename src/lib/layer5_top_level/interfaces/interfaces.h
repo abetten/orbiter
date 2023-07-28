@@ -899,6 +899,11 @@ class interface_toolkit {
 	std::string gnuplot_label_x;
 	std::string gnuplot_label_y;
 
+	int f_compare_columns;
+	std::string compare_columns_fname;
+	std::string compare_columns_column1;
+	std::string compare_columns_column2;
+
 
 public:
 

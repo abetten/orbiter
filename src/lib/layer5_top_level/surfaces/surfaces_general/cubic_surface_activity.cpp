@@ -198,6 +198,56 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 	}
 
+	if (Descr->f_Clebsch_map_up_single_point) {
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"-Clebsch_map_up_single_point" << endl;
+		}
+
+		long int image;
+
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"before SC->SO->Clebsch_map_up_single_point" << endl;
+		}
+		image = SC->SO->Clebsch_map_up_single_point(
+				Descr->Clebsch_map_up_single_point_input_point,
+				Descr->Clebsch_map_up_single_point_line_1_idx,
+				Descr->Clebsch_map_up_single_point_line_2_idx,
+				verbose_level);
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"after SC->SO->Clebsch_map_up_single_point" << endl;
+		}
+
+		cout << "Image of " << Descr->Clebsch_map_up_single_point_input_point << " is " << image << endl;
+
+		int *v;
+		int *w;
+
+		v = NEW_int(SC->SO->Surf->P->Subspaces->n + 1);
+		w = NEW_int(SC->SO->Surf->P->Subspaces->n + 1);
+
+
+
+		SC->SO->Surf->P->unrank_point(v, Descr->Clebsch_map_up_single_point_input_point);
+		SC->SO->Surf->P->unrank_point(w, image);
+
+		cout << "input  ";
+		Int_vec_print(cout, v, SC->SO->Surf->P->Subspaces->n + 1);
+		cout << endl;
+		cout << "output ";
+		Int_vec_print(cout, w, SC->SO->Surf->P->Subspaces->n + 1);
+		cout << endl;
+
+
+		FREE_int(v);
+		FREE_int(w);
+
+	}
+
 
 	if (f_v) {
 		cout << "cubic_surface_activity::perform_activity done" << endl;

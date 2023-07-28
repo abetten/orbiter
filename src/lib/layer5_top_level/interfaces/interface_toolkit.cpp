@@ -171,6 +171,11 @@ interface_toolkit::interface_toolkit()
 	//std::string gnuplot_label_y;
 
 
+	f_compare_columns = false;
+	//std::string compare_columns_fname;
+	//std::string compare_columns_column1;
+	//std::string compare_columns_column2;
+
 }
 
 
@@ -278,6 +283,9 @@ void interface_toolkit::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-gnuplot") == 0) {
 		cout << "-gnuplot <fname> <title> <label_x> <label_y> " << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-compare_columns") == 0) {
+		cout << "-compare_columns <col1> <col2> " << endl;
 	}
 }
 
@@ -387,6 +395,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-gnuplot") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-compare_columns") == 0) {
 		return true;
 	}
 	return false;
@@ -868,6 +879,19 @@ void interface_toolkit::read_arguments(int argc,
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-compare_columns") == 0) {
+		f_compare_columns = true;
+		compare_columns_fname.assign(argv[++i]);
+		compare_columns_column1.assign(argv[++i]);
+		compare_columns_column2.assign(argv[++i]);
+		if (f_v) {
+			cout << "-compare_columns "
+					<< " " << compare_columns_fname
+					<< " " << compare_columns_column1
+					<< " " << compare_columns_column2
+					<< endl;
+		}
+	}
 
 
 	if (f_v) {
@@ -1053,6 +1077,13 @@ void interface_toolkit::print()
 					<< " " << gnuplot_title
 					<< " " << gnuplot_label_x
 					<< " " << gnuplot_label_y
+					<< endl;
+	}
+	if (f_compare_columns) {
+			cout << "-compare_columns "
+					<< " " << compare_columns_fname
+					<< " " << compare_columns_column1
+					<< " " << compare_columns_column2
 					<< endl;
 	}
 }
@@ -1815,6 +1846,23 @@ void interface_toolkit::worker(int verbose_level)
 
 	}
 
+	else if (f_compare_columns) {
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"-compare_columns "
+					<< " " << compare_columns_fname
+					<< " " << compare_columns_column1
+					<< " " << compare_columns_column2
+					<< endl;
+		}
+
+		data_structures::spreadsheet S;
+
+		S.read_spreadsheet(compare_columns_fname, 0/*verbose_level - 1*/);
+		S.compare_columns(
+				compare_columns_column1, compare_columns_column2,
+				verbose_level);
+	}
 
 
 

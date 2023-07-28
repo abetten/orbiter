@@ -45,6 +45,11 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 	Clebsch_map_up_line_1_idx = -1;
 	Clebsch_map_up_line_2_idx = -1;
 
+	f_Clebsch_map_up_single_point = false;
+	Clebsch_map_up_single_point_input_point = -1;
+	Clebsch_map_up_single_point_line_1_idx = -1;
+	Clebsch_map_up_single_point_line_2_idx = -1;
+
 }
 
 cubic_surface_activity_description::~cubic_surface_activity_description()
@@ -130,6 +135,20 @@ int cubic_surface_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-Clebsch_map_up_single_point") == 0) {
+			f_Clebsch_map_up_single_point = true;
+			Clebsch_map_up_single_point_input_point = ST.strtoi(argv[++i]);
+			Clebsch_map_up_single_point_line_1_idx = ST.strtoi(argv[++i]);
+			Clebsch_map_up_single_point_line_2_idx = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-Clebsch_map_up_single_point "
+						<< Clebsch_map_up_single_point_input_point << " "
+						<< Clebsch_map_up_single_point_line_1_idx << " "
+						<< Clebsch_map_up_single_point_line_2_idx << " "
+						<< endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -184,6 +203,13 @@ void cubic_surface_activity_description::print()
 		cout << "-Clebsch_map_up "
 				<< Clebsch_map_up_line_1_idx << " "
 				<< Clebsch_map_up_line_2_idx << " "
+				<< endl;
+	}
+	if (f_Clebsch_map_up_single_point) {
+		cout << "-Clebsch_map_up_single_point "
+				<< Clebsch_map_up_single_point_input_point << " "
+				<< Clebsch_map_up_single_point_line_1_idx << " "
+				<< Clebsch_map_up_single_point_line_2_idx << " "
 				<< endl;
 	}
 }
