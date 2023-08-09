@@ -40,7 +40,7 @@ int main()
 
 	A = NEW_OBJECT(actions::action);
 
-	A->init_general_linear_group(2, F,
+	A->Known_groups->init_general_linear_group(2, F,
 			false /*f_semilinear */, true /* f_basis */, false /* f_init_sims */,
 			nice_gens,
 			verbose_level);
@@ -52,7 +52,7 @@ int main()
 
 	ring_theory::longinteger_object target_go;
 
-	target_go.create(8, __FILE__, __LINE__);
+	target_go.create(8);
 
 	Gens->init_from_data_with_target_go(A,
 			gens,
@@ -79,7 +79,7 @@ int main()
 		S->element_unrank_lint(i, Elt1);
 		for (j = 0; j < go; j++) {
 			S->element_unrank_lint(j, Elt2);
-			A->element_mult(Elt1, Elt2, Elt3, 0);
+			A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
 			k = S->element_rank_lint(Elt3);
 			cout << k;
 			if (j < go - 1) {
