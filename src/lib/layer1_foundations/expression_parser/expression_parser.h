@@ -221,7 +221,10 @@ public:
 	void get_string_representation_formula(
 			std::vector<std::string> &S, int verbose_level);
 	void print_Sajeeb(std::ostream &ost);
-	void print_formula(std::ostream &ost, int verbose_level);
+	void print_formula_size(
+			std::ostream &ost, int verbose_level);
+	void print_formula(
+			std::ostream &ost, int verbose_level);
 	void print_matrix(
 			std::vector<std::string> &S, std::ostream &ost);
 	void print_vector(
@@ -525,7 +528,6 @@ public:
 // syntax_tree_node.cpp
 // #############################################################################
 
-//#define MAX_NODES_SYNTAX_TREE 1000
 
 
 //! interior node in a syntax tree
@@ -545,11 +547,10 @@ public:
 	//! multiplication or addition
 	enum syntax_tree_node_operation_type type;
 
-	// ! if we are not a terminal node, we can have any number of nodes
+	//! if we are not a terminal node, we can have any number of nodes
 	int nb_nodes;
 	int nb_nodes_allocated;
 	syntax_tree_node **Nodes;
-	//syntax_tree_node *Nodes[MAX_NODES_SYNTAX_TREE];
 
 	int f_has_monomial; // only for multiplication nodes
 	int *monomial;
@@ -565,7 +566,8 @@ public:
 			int value, int verbose_level);
 	int text_value_match(std::string &factor);
 	void add_factor(
-			std::string &factor, int exponent, int verbose_level);
+			std::string &factor, int exponent,
+			int verbose_level);
 	void add_summand(
 			std::string &summand, int verbose_level);
 	void init_terminal_node_int(
@@ -607,7 +609,8 @@ public:
 			int verbose_level);
 	void split_by_monomials(
 			ring_theory::homogeneous_polynomial_domain *Poly,
-			syntax_tree_node **Subtrees, int verbose_level);
+			syntax_tree_node **Subtrees,
+			int verbose_level);
 	int is_homogeneous(
 			int &degree, int verbose_level);
 	void print_subtree_to_vector(
@@ -617,6 +620,8 @@ public:
 	void print_subtree(
 			std::ostream &ost);
 	void print_subtree_easy(
+			std::ostream &ost);
+	void print_subtree_easy_no_lf(
 			std::ostream &ost);
 	void print_subtree_easy_without_monomial(
 			std::ostream &ost);
@@ -636,7 +641,8 @@ public:
 			std::vector<int> &Coeff, std::vector<int> &Exp,
 			int verbose_level);
 	void get_exponent_and_coefficient_of_variable(
-			std::string &variable, int &coeff, int &exp, int verbose_level);
+			std::string &variable, int &coeff, int &exp,
+			int verbose_level);
 	int exponent_of_variable(
 			std::string &variable, int verbose_level);
 	int exponent_of_variable_destructive(
@@ -688,10 +694,16 @@ public:
 	void simplify_constants(int verbose_level);
 	void flatten(
 			int verbose_level);
-	void flatten_at(int i, int verbose_level);
+	void flatten_with_depth(int depth,
+			int verbose_level);
+	void flatten_post_process(int depth,
+			int verbose_level);
+	void flatten_at(int i, int depth, int verbose_level);
 	void display_children_by_type();
-	void delete_all_but_one_child(int i, int verbose_level);
-	void delete_one_child(int i, int verbose_level);
+	void delete_all_but_one_child(
+			int i, int verbose_level);
+	void delete_one_child(
+			int i, int verbose_level);
 	int is_constant_one(int verbose_level);
 	int is_constant_zero(int verbose_level);
 	void collect_variables(int verbose_level);

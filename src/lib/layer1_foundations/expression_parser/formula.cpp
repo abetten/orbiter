@@ -496,6 +496,10 @@ void formula::init_formula_Sajeeb(
 		cout << "formula::init_formula_Sajeeb "
 				"after Expression_parser_sajeeb->convert_to_orbiter" << endl;
 	}
+	if (f_v) {
+		cout << "formula::init_formula_Sajeeb tree = ";
+		tree->print_easy(cout);
+	}
 
 	// ToDo: what about f_is_homogeneous ?
 
@@ -1049,6 +1053,10 @@ void formula::simplify(
 	if (f_v) {
 		cout << "formula::simplify" << endl;
 	}
+	if (f_v) {
+		cout << "formula::simplify beginning tree = ";
+		tree->print_easy(cout);
+	}
 
 	int verbose_level_down = 0;
 
@@ -1061,6 +1069,10 @@ void formula::simplify(
 	if (f_v) {
 		cout << "formula::simplify after tree->Root->simplify_exponents" << endl;
 	}
+	if (f_v) {
+		cout << "formula::simplify after tree->Root->simplify_exponents tree = ";
+		tree->print_easy(cout);
+	}
 
 	if (f_v) {
 		cout << "formula::simplify before tree->Root->simplify_constants" << endl;
@@ -1070,6 +1082,11 @@ void formula::simplify(
 
 	if (f_v) {
 		cout << "formula::simplify after tree->Root->simplify_constants" << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::simplify after tree->Root->simplify_constants tree = ";
+		tree->print_easy(cout);
 	}
 
 	if (f_v) {
@@ -1081,6 +1098,11 @@ void formula::simplify(
 	if (f_v) {
 		cout << "formula::simplify after tree->simplify" << endl;
 	}
+	if (f_v) {
+		cout << "formula::simplify after tree->simplify tree = ";
+		tree->print_easy(cout);
+	}
+
 
 
 	if (f_v) {
@@ -1091,6 +1113,10 @@ void formula::simplify(
 
 	if (f_v) {
 		cout << "formula::simplify after tree->Root->simplify_constants" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify after tree->Root->simplify_constants tree = ";
+		tree->print_easy(cout);
 	}
 
 
@@ -1103,6 +1129,10 @@ void formula::simplify(
 	if (f_v) {
 		cout << "formula::simplify after tree->Root->flatten" << endl;
 	}
+	if (f_v) {
+		cout << "formula::simplify after tree->Root->flatten tree = ";
+		tree->print_easy(cout);
+	}
 
 	if (f_v) {
 		cout << "formula::simplify before tree->Root->sort_terms" << endl;
@@ -1112,6 +1142,10 @@ void formula::simplify(
 
 	if (f_v) {
 		cout << "formula::simplify after tree->Root->sort_terms" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify after tree->Root->sort_terms tree = ";
+		tree->print_easy(cout);
 	}
 
 	if (f_v) {
@@ -1123,6 +1157,10 @@ void formula::simplify(
 	if (f_v) {
 		cout << "formula::simplify after tree->Root->simplify_constants" << endl;
 	}
+	if (f_v) {
+		cout << "formula::simplify after tree->Root->simplify_constants tree = ";
+		tree->print_easy(cout);
+	}
 
 	if (f_v) {
 		cout << "formula::simplify before tree->simplify" << endl;
@@ -1133,10 +1171,14 @@ void formula::simplify(
 	if (f_v) {
 		cout << "formula::simplify after tree->simplify" << endl;
 	}
+	if (f_v) {
+		cout << "formula::simplify after tree->simplify tree = ";
+		tree->print_easy(cout);
+	}
 
 
-	if (false) {
-		cout << "formula::simplify simplified formula:" << endl;
+	if (f_v) {
+		cout << "formula::simplify at the end formula:" << endl;
 		tree->print_easy(cout);
 		cout << endl;
 	}

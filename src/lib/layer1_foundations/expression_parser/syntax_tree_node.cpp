@@ -34,8 +34,9 @@ syntax_tree_node::syntax_tree_node()
 
 	orbiter_kernel_system::Orbiter->syntax_tree_node_index++;
 
-	if ((orbiter_kernel_system::Orbiter->syntax_tree_node_index % 10000) == 0) {
-		cout << "Number of algebra nodes = " << orbiter_kernel_system::Orbiter->syntax_tree_node_index << endl;
+	if ((orbiter_kernel_system::Orbiter->syntax_tree_node_index % 1000000) == 0) {
+		cout << "Number of algebra nodes = "
+				<< orbiter_kernel_system::Orbiter->syntax_tree_node_index << endl;
 	}
 
 	f_terminal = false;
@@ -174,7 +175,8 @@ int syntax_tree_node::text_value_match(std::string &factor)
 
 
 void syntax_tree_node::add_factor(
-		std::string &factor, int exponent, int verbose_level)
+		std::string &factor, int exponent,
+		int verbose_level)
 // We assume that the current node is a multiplication node.
 {
 	int f_v = (verbose_level >= 1);
@@ -695,7 +697,8 @@ void syntax_tree_node::init_empty_node(
 
 void syntax_tree_node::split_by_monomials(
 		ring_theory::homogeneous_polynomial_domain *Poly,
-		syntax_tree_node **Subtrees, int verbose_level)
+		syntax_tree_node **Subtrees,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -811,8 +814,25 @@ void syntax_tree_node::print_subtree_to_vector(
 		}
 		//ost << "is terminal" << std::endl;
 		T->print_to_vector(rep, verbose_level);
+		if (f_has_exponent) {
+			string s;
+			if (f_latex) {
+				s = "^{" + std::to_string(exponent) + "}";
+			}
+			else {
+				s = " ^ " + std::to_string(exponent);
+			}
+			rep.push_back(s);
+		}
 	}
 	else {
+
+		if (f_has_exponent) {
+			string s;
+			s = "(";
+			rep.push_back(s);
+		}
+
 		//ost << "with " << nb_nodes << " descendants" << std::endl;
 		//ost << "f_has_minus = " << f_has_minus << std::endl;
 		int i;
@@ -876,18 +896,20 @@ void syntax_tree_node::print_subtree_to_vector(
 				}
 			}
 		}
+		if (f_has_exponent) {
+			string s;
+			s = ")";
+			rep.push_back(s);
+			if (f_latex) {
+				s = "^{" + std::to_string(exponent) + "}";
+			}
+			else {
+				s = " ^ " + std::to_string(exponent);
+			}
+			rep.push_back(s);
+		}
 	}
 
-	if (f_has_exponent) {
-		string s;
-		if (f_latex) {
-			s = "^{" + std::to_string(exponent) + "}";
-		}
-		else {
-			s = " ^ " + std::to_string(exponent);
-		}
-		rep.push_back(s);
-	}
 #if 0
 	if (f_has_monomial) {
 		Tree->print_monomial(ost, monomial);
@@ -909,11 +931,22 @@ void syntax_tree_node::print_subtree(
 	if (f_terminal) {
 		ost << "is terminal" << std::endl;
 		T->print(ost);
+		if (f_has_exponent) {
+			cout << " ^ " << exponent << endl;
+		}
+
 	}
 	else {
 		//ost << "with " << nb_nodes << " descendants" << std::endl;
 		//ost << "f_has_minus = " << f_has_minus << std::endl;
 		int i;
+
+
+		if (f_has_exponent) {
+			cout << "(" << endl;
+		}
+
+
 		for (i = 0; i < nb_nodes; i++) {
 			ost << "Node " << idx << ", descendant " << i
 					<< " is node " << Nodes[i]->idx << std::endl;
@@ -925,11 +958,11 @@ void syntax_tree_node::print_subtree(
 					<< " is node " << Nodes[i]->idx << std::endl;
 			Nodes[i]->print_subtree(ost);
 		}
+		if (f_has_exponent) {
+			cout << " ) ^ " << exponent << endl;
+		}
 	}
 
-	if (f_has_exponent) {
-		cout << " ^ " << exponent << endl;
-	}
 
 	if (f_has_monomial) {
 		Tree->print_monomial(ost, monomial);
@@ -941,13 +974,26 @@ void syntax_tree_node::print_subtree(
 void syntax_tree_node::print_subtree_easy(
 		std::ostream &ost)
 {
+
+	print_subtree_easy_no_lf(ost);
+	ost << endl;
+
+}
+
+void syntax_tree_node::print_subtree_easy_no_lf(
+		std::ostream &ost)
+{
+
+	if (f_has_exponent) {
+		cout << " ( ";
+	}
 	print_subtree_easy_without_monomial(ost);
 
 	if (f_has_monomial) {
 		Tree->print_monomial(ost, monomial);
 	}
 	if (f_has_exponent) {
-		cout << " ^ " << exponent << endl;
+		cout << " ) ^ " << exponent << " ";
 	}
 
 }
@@ -972,7 +1018,7 @@ void syntax_tree_node::print_subtree_easy_without_monomial(
 			if (f_has_minus) {
 				ost << "-";
 			}
-			Nodes[0]->print_subtree_easy(ost);
+			Nodes[0]->print_subtree_easy_no_lf(ost);
 
 		}
 		else {
@@ -981,25 +1027,27 @@ void syntax_tree_node::print_subtree_easy_without_monomial(
 					ost << "-";
 				}
 
+				ost << " ( ";
 				for (i = 0; i < nb_nodes; i++) {
-					ost << "(";
-					Nodes[i]->print_subtree_easy(ost);
-					ost << ")";
+					Nodes[i]->print_subtree_easy_no_lf(ost);
 					if (i < nb_nodes - 1) {
 						ost << " * ";
 					}
 				}
+				ost << " ) ";
 			}
 			else if (is_add_node()) {
+				ost << " ( ";
 				for (i = 0; i < nb_nodes; i++) {
-					Nodes[i]->print_subtree_easy(ost);
+					Nodes[i]->print_subtree_easy_no_lf(ost);
 					if (i < nb_nodes - 1) {
 						ost << " + ";
 					}
 				}
+				ost << " ) ";
 			}
 			else {
-				cout << "syntax_tree_node::print_easy_without_monomial "
+				cout << "syntax_tree_node::print_subtree_easy_without_monomial "
 						"unknown operation" << endl;
 				exit(1);
 			}
@@ -1209,7 +1257,8 @@ void syntax_tree_node::get_monopoly(
 
 
 void syntax_tree_node::get_exponent_and_coefficient_of_variable(
-		std::string &variable, int &coeff, int &exp, int verbose_level)
+		std::string &variable, int &coeff, int &exp,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3353,7 +3402,8 @@ void syntax_tree_node::collect_terms_and_coefficients(
 									"one coefficient" << endl;
 							exit(1);
 						}
-						coeff = node->Nodes[j]->T->value_int;
+
+						coeff = Tree->Fq->mult(coeff, node->Nodes[j]->T->value_int);
 					}
 					else {
 						index = node->Nodes[j]->terminal_node_get_variable_index();
@@ -3489,24 +3539,73 @@ void syntax_tree_node::flatten(
 		cout << "syntax_tree_node::flatten verbose_level = " << verbose_level << endl;
 	}
 
+	if (f_v) {
+		cout << "syntax_tree_node::flatten before ";
+
+		print_subtree_easy(cout);
+	}
+
+
+	flatten_with_depth(0 /* depth */,
+			verbose_level);
+
+	if (f_v) {
+		cout << "syntax_tree_node::flatten after  ";
+
+		print_subtree_easy(cout);
+	}
+
+
+	if (f_v) {
+		cout << "syntax_tree_node::flatten done" << endl;
+	}
+}
+
+
+void syntax_tree_node::flatten_with_depth(int depth,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_with_depth verbose_level = " << verbose_level << endl;
+	}
+
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_with_depth before ";
+
+		data_structures::algorithms Algo;
+
+		Algo.print_repeated_character(cout, ' ', depth);
+		print_subtree_easy(cout);
+	}
+
+
 	if (f_terminal) {
 		if (f_v) {
-			cout << "syntax_tree_node::flatten terminal node" << endl;
+			cout << "syntax_tree_node::flatten_with_depth terminal node" << endl;
 		}
 	}
 	else {
 		int i;
 
+		if (nb_nodes == 0) {
+			if (f_v) {
+				cout << "syntax_tree_node::flatten_with_depth nb_nodes == 0" << endl;
+				exit(1);
+			}
+		}
+
 		if (type == operation_type_mult) {
 			if (f_v) {
-				cout << "syntax_tree_node::flatten "
+				cout << "syntax_tree_node::flatten_with_depth "
 						"simplifying multiplication node, "
 						"nb_children = " << nb_nodes << endl;
 			}
 		}
 		else if (type == operation_type_add) {
 			if (f_v) {
-				cout << "syntax_tree_node::flatten "
+				cout << "syntax_tree_node::flatten_with_depth "
 						"simplifying addition node, "
 						"nb_children = " << nb_nodes << endl;
 			}
@@ -3519,151 +3618,235 @@ void syntax_tree_node::flatten(
 
 		if (type == operation_type_mult) {
 			if (f_v) {
-				cout << "syntax_tree_node::flatten "
+				cout << "syntax_tree_node::flatten_with_depth "
 						"simplifying multiplication node, "
 						"nb_children = " << nb_nodes << endl;
 			}
 			for (i = 0; i < nb_nodes; i++) {
 
 				if (f_v) {
-					cout << "syntax_tree_node::flatten "
+					cout << "syntax_tree_node::flatten_with_depth "
 							"simplifying multiplication node, "
 							"child = " << i << " / " << nb_nodes << " before flatten" << endl;
 				}
-				Nodes[i]->flatten(verbose_level - 2);
+				Nodes[i]->flatten_with_depth(depth + 1, verbose_level - 2);
 				if (f_v) {
-					cout << "syntax_tree_node::flatten "
+					cout << "syntax_tree_node::flatten_with_depth "
 							"simplifying multiplication node, "
 							"child = " << i << " / " << nb_nodes << " after flatten" << endl;
 				}
 
-				if (Nodes[i]->is_mult_node() || Nodes[i]->nb_nodes == 1) {
+				if (Nodes[i]->is_mult_node() || (Nodes[i]->is_add_node() && Nodes[i]->nb_nodes == 1)) {
 
 
 					if (f_v) {
-						cout << "syntax_tree_node::flatten "
+						cout << "syntax_tree_node::flatten_with_depth "
+								"simplifying multiplication node, "
 								"folding children of " << i << endl;
 					}
 
-					flatten_at(i, verbose_level - 2);
+					flatten_at(i, depth + 1, verbose_level - 2);
 
 					i--; // do the present child again, because it has changed
 
 				} // if (Nodes[i]->is_mult_node())
+				if (f_v) {
+					cout << "syntax_tree_node::flatten_with_depth after round " << i << " ";
+
+					data_structures::algorithms Algo;
+
+					Algo.print_repeated_character(cout, ' ', depth);
+
+					print_subtree_easy(cout);
+				}
 			} // next i
 
 		} // if (type == operation_type_mult)
 		else if (type == operation_type_add) {
 			if (f_v) {
-				cout << "syntax_tree_node::flatten "
+				cout << "syntax_tree_node::flatten_with_depth "
 						"simplifying addition node, "
 						"nb_children = " << nb_nodes << endl;
 			}
 			for (i = 0; i < nb_nodes; i++) {
 
 				if (f_v) {
-					cout << "syntax_tree_node::flatten "
+					cout << "syntax_tree_node::flatten_with_depth "
 							"simplifying addition node, "
 							"child = " << i << " / " << nb_nodes << " before flatten" << endl;
 				}
-				Nodes[i]->flatten(verbose_level - 2);
+				Nodes[i]->flatten_with_depth(depth + 1, verbose_level - 2);
 				if (f_v) {
-					cout << "syntax_tree_node::flatten "
+					cout << "syntax_tree_node::flatten_with_depth "
 							"simplifying addition node, "
 							"child = " << i << " / " << nb_nodes << " after flatten" << endl;
 				}
 
-				if (Nodes[i]->is_add_node() || Nodes[i]->nb_nodes == 1) {
+				if ((Nodes[i]->is_add_node() && Nodes[i]->get_exponent() == 1)
+						|| (Nodes[i]->is_mult_node() && Nodes[i]->nb_nodes == 1)) {
 					if (f_v) {
-						cout << "syntax_tree_node::flatten "
+						cout << "syntax_tree_node::flatten_with_depth "
 								"simplifying addition node, "
 								"child " << i << " / " << nb_nodes
 								<< " before flatten_at" << endl;
 					}
-					flatten_at(i, verbose_level - 2);
+					flatten_at(i, depth + 1, verbose_level - 2);
 					i--;
-					//Nodes[i]->flatten(verbose_level);
 					if (f_v) {
-						cout << "syntax_tree_node::flatten "
+						cout << "syntax_tree_node::flatten_with_depth "
 								"simplifying addition node, "
 								"child " << i << " / " << nb_nodes
 								<< " after flatten_at" << endl;
 					}
 				}
+				if (f_v) {
+					cout << "syntax_tree_node::flatten_with_depth after round " << i << " ";
+
+					data_structures::algorithms Algo;
+
+					Algo.print_repeated_character(cout, ' ', depth);
+
+					print_subtree_easy(cout);
+				}
 			}
 
 		}
-
-
-		if (nb_nodes == 1
-				&& Nodes[0]->f_terminal
-				&& Nodes[0]->T->f_int) {
-
-			int val;
-
-			val = Nodes[0]->T->value_int;
-
-			if (Nodes[0]->f_has_exponent) {
-				int exp = Nodes[0]->exponent;
-				int val1;
-
-				if (f_v) {
-					cout << "syntax_tree_node::flatten "
-							"node[" << 0 << "] raising to the "
-									"power of " << exp << endl;
-				}
-				val1 = Tree->Fq->power(val, exp);
-				Nodes[0]->T->value_int = val1;
-				Nodes[0]->f_has_exponent = false;
-				Nodes[0]->exponent = 0;
-				if (f_v) {
-					cout << "syntax_tree_node::flatten "
-							"terminal " << val << " to the "
-									"power of " << exp
-									<< " = " << val1 << endl;
-				}
-				val = val1;
-			}
-
-
-			FREE_OBJECT(Nodes[0]);
-			Nodes[0] = NULL;
-			nb_nodes = 0;
-
-
-			// ToDo: repurposing a node
-
-			type = operation_type_nothing;
-			f_terminal = true;
-			T = NEW_OBJECT(syntax_tree_node_terminal);
-			T->f_int = true;
-			T->value_int = val;
-
-		}
-
 	}
 
 
 	if (f_v) {
-		cout << "syntax_tree_node::flatten done" << endl;
+		cout << "syntax_tree_node::flatten_with_depth "
+				"before flatten_post_process ";
+		data_structures::algorithms Algo;
+
+		Algo.print_repeated_character(cout, ' ', depth);
+		print_subtree_easy(cout);
+	}
+	flatten_post_process(depth, verbose_level);
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_with_depth "
+				"after flatten_post_process ";
+		data_structures::algorithms Algo;
+
+		Algo.print_repeated_character(cout, ' ', depth);
+		print_subtree_easy(cout);
+	}
+
+
+
+
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_with_depth done" << endl;
 	}
 }
 
-void syntax_tree_node::flatten_at(int i, int verbose_level)
+void syntax_tree_node::flatten_post_process(int depth,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_post_process verbose_level = " << verbose_level << endl;
+	}
+
+	if (nb_nodes == 1
+			&& Nodes[0]->f_terminal
+			&& Nodes[0]->T->f_int) {
+
+		int val;
+
+		val = Nodes[0]->T->value_int;
+
+		if (Nodes[0]->f_has_exponent) {
+			int exp = Nodes[0]->exponent;
+			int val1;
+
+			if (f_v) {
+				cout << "syntax_tree_node::flatten_with_depth "
+						"node[" << 0 << "] raising to the "
+								"power of " << exp << endl;
+			}
+			val1 = Tree->Fq->power(val, exp);
+			Nodes[0]->T->value_int = val1;
+			Nodes[0]->f_has_exponent = false;
+			Nodes[0]->exponent = 0;
+			if (f_v) {
+				cout << "syntax_tree_node::flatten_with_depth "
+						"terminal " << val << " to the "
+								"power of " << exp
+								<< " = " << val1 << endl;
+			}
+			val = val1;
+		}
+
+
+		FREE_OBJECT(Nodes[0]);
+		Nodes[0] = NULL;
+		nb_nodes = 0;
+
+
+		// ToDo: repurposing a node
+
+		type = operation_type_nothing;
+		f_terminal = true;
+		T = NEW_OBJECT(syntax_tree_node_terminal);
+		T->f_int = true;
+		T->value_int = val;
+
+	}
+
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_post_process done" << endl;
+	}
+}
+
+
+void syntax_tree_node::flatten_at(int i, int depth, int verbose_level)
+// we are assuming the child is a multiplication node
 {
 	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
 		cout << "syntax_tree_node::flatten_at "
-				"folding children of " << i << " / " << nb_nodes << endl;
+				"child " << i << " / " << nb_nodes << endl;
 	}
+
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_at i=" << i << " before ";
+		data_structures::algorithms Algo;
+
+		Algo.print_repeated_character(cout, ' ', depth);
+		Nodes[i]->print_subtree_easy(cout);
+	}
+
+#if 0
+	if (!Nodes[i]->is_mult_node()) {
+		cout << "syntax_tree_node::flatten_at i=" << i << " the sub node is not a multiplication node" << endl;
+		cout << "syntax_tree_node::flatten_at i=" << i << " sub node type: ";
+		Nodes[i]->print_node_type(cout);
+		cout << endl;
+		cout << "syntax_tree_node::flatten_at i=" << i << " subtree: ";
+		Nodes[i]->print_subtree_easy(cout);
+		exit(1);
+	}
+#endif
+
 
 	if (Nodes[i]->f_has_exponent) {
 
 		if (f_v) {
-			cout << "syntax_tree_node::flatten_at "
-					"we have an exponent " << endl;
+			cout << "syntax_tree_node::flatten_at i=" << i <<
+					" we have an exponent " << endl;
+		}
+
+		if (Nodes[i]->is_add_node() && Nodes[i]->nb_nodes > 1) {
+			if (f_v) {
+				cout << "syntax_tree_node::flatten_at i=" << i <<
+						" we have an exponent and Nodes[i]->is_add_node() && Nodes[i]->nb_nodes > 1" << endl;
+				exit(1);
+			}
+
 		}
 		syntax_tree_node *old_node;
 
@@ -3674,16 +3857,16 @@ void syntax_tree_node::flatten_at(int i, int verbose_level)
 		exp = old_node->exponent;
 
 		if (f_v) {
-			cout << "syntax_tree_node::flatten_at "
-					"exp =  " << exp << endl;
+			cout << "syntax_tree_node::flatten_at i=" << i <<
+					" exp =  " << exp << endl;
 		}
 		int nb_n;
 
 		nb_n = old_node->nb_nodes;
 
 		if (f_v) {
-			cout << "syntax_tree_node::flatten_at "
-					"nb_nodes =  " << nb_n << endl;
+			cout << "syntax_tree_node::flatten_at i=" << i <<
+					" nb_nodes =  " << nb_n << endl;
 		}
 		int j;
 
@@ -3695,13 +3878,13 @@ void syntax_tree_node::flatten_at(int i, int verbose_level)
 		// insert nodes:
 
 		if (f_v) {
-			cout << "syntax_tree_node::flatten_at "
-					"before insert_nodes_at i=" << i << " nb_n - 1 = " << nb_n - 1 << endl;
+			cout << "syntax_tree_node::flatten_at i=" << i <<
+					" before insert_nodes_at i=" << i << " nb_n - 1 = " << nb_n - 1 << endl;
 		}
 		insert_nodes_at(i, nb_n - 1, verbose_level - 2);
 		if (f_v) {
 			cout << "syntax_tree_node::flatten_at "
-					"after insert_nodes_at i=" << i << endl;
+					" after insert_nodes_at i=" << i << endl;
 		}
 #if 0
 		for (j = nb_nodes - 1; j > i; j--) {
@@ -3710,8 +3893,8 @@ void syntax_tree_node::flatten_at(int i, int verbose_level)
 		nb_nodes += nb_n - 1;
 #endif
 		if (f_v) {
-			cout << "syntax_tree_node::flatten_at "
-					"after insert_nodes_at nb_n=" << nb_n << endl;
+			cout << "syntax_tree_node::flatten_at i=" << i <<
+					" after insert_nodes_at nb_n=" << nb_n << endl;
 		}
 		for (j = 0; j < nb_n; j++) {
 			Nodes[i + j] = old_node->Nodes[j];
@@ -3731,8 +3914,8 @@ void syntax_tree_node::flatten_at(int i, int verbose_level)
 	else {
 
 		if (f_v) {
-			cout << "syntax_tree_node::flatten_at "
-					"we don't have an exponent " << endl;
+			cout << "syntax_tree_node::flatten_at i=" << i <<
+					" we don't have an exponent " << endl;
 		}
 		syntax_tree_node *old_node;
 
@@ -3765,6 +3948,14 @@ void syntax_tree_node::flatten_at(int i, int verbose_level)
 		FREE_OBJECT(old_node);
 
 	}
+	if (f_v) {
+		cout << "syntax_tree_node::flatten_at i=" << i << " after ";
+		data_structures::algorithms Algo;
+
+		Algo.print_repeated_character(cout, ' ', depth);
+		Nodes[i]->print_subtree_easy(cout);
+	}
+
 	if (f_v) {
 		cout << "syntax_tree_node::flatten_at i=" << i <<
 				" nb_nodes=" << nb_nodes << " done" << endl;
@@ -4058,11 +4249,13 @@ void syntax_tree_node::reallocate(
 	int i;
 
 	nb_nodes_have = nb_nodes_allocated;
-	nb_nodes_allocated = nb_nodes_needed + 2 * (nb_nodes_needed - nb_nodes_have) + 5;
+	nb_nodes_allocated =
+			nb_nodes_needed + 2 * (nb_nodes_needed - nb_nodes_have) + 5;
 
 	if (f_v) {
 		cout << "syntax_tree_node::reallocate "
-				"from " << nb_nodes_have << " to " << nb_nodes_allocated << endl;
+				"from " << nb_nodes_have
+				<< " to " << nb_nodes_allocated << endl;
 	}
 	Fresh_nodes = (syntax_tree_node **) NEW_pvoid(nb_nodes_allocated);
 
@@ -4073,7 +4266,7 @@ void syntax_tree_node::reallocate(
 		Fresh_nodes[i] = NULL;
 	}
 
-	if (Nodes) {
+	if (nb_nodes_have && Nodes) {
 		FREE_pvoid((void **) Nodes);
 	}
 
@@ -4133,6 +4326,7 @@ void syntax_tree_node::insert_nodes_at(
 }
 
 int syntax_tree_node::needs_to_be_expanded()
+// true if there is a multiplication node on top of an addition node
 {
 	if (f_terminal) {
 		return false;

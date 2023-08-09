@@ -384,7 +384,32 @@ void formula_vector::print_Sajeeb(std::ostream &ost)
 	}
 }
 
-void formula_vector::print_formula(std::ostream &ost, int verbose_level)
+void formula_vector::print_formula_size(
+		std::ostream &ost, int verbose_level)
+{
+	int i;
+	long int *Nb;
+	long int total;
+
+
+	Nb = NEW_lint(len);
+
+	total = 0;
+	for (i = 0; i < len; i++) {
+
+
+		Nb[i] = V[i].tree->nb_nodes_total();
+		total += Nb[i];
+	}
+
+	cout << "Number of nodes: ";
+	Lint_vec_print(cout, Nb, len);
+	cout << endl;
+	cout << "total: " << total << endl;
+}
+
+void formula_vector::print_formula(
+		std::ostream &ost, int verbose_level)
 {
 
 	data_structures::string_tools String;
@@ -400,6 +425,8 @@ void formula_vector::print_formula(std::ostream &ost, int verbose_level)
 		print_matrix(S, ost);
 		ost << endl;
 
+
+#if 0
 		String.make_latex_friendly_vector(
 					S, 0 /*verbose_level*/);
 
@@ -424,6 +451,7 @@ void formula_vector::print_formula(std::ostream &ost, int verbose_level)
 
 		print_matrix(S2, ost);
 		ost << endl;
+#endif
 
 	}
 	else {
@@ -438,14 +466,20 @@ void formula_vector::print_formula(std::ostream &ost, int verbose_level)
 
 		ost << endl;
 
-
+#if 0
 		String.make_latex_friendly_vector(
 					S, 0 /*verbose_level*/);
 
 		ost << "latex friendly vector of length " << len << ":" << endl;
-		print_vector_latex(S, ost);
 
-		ost << endl;
+		if (len > 20) {
+			ost << "too large to print" << endl;
+		}
+		else {
+			print_vector_latex(S, ost);
+
+			ost << endl;
+		}
 
 		int h;
 		for (h = 0; h < len; h++) {
@@ -479,6 +513,8 @@ void formula_vector::print_formula(std::ostream &ost, int verbose_level)
 			cout << endl;
 
 		}
+#endif
+
 
 	}
 
@@ -498,6 +534,11 @@ void formula_vector::print_formula(std::ostream &ost, int verbose_level)
 
 		s = std::to_string(nb);
 		S2.push_back(s);
+
+		if (i < len - 1) {
+			s = ",";
+			S2.push_back(s);
+		}
 	}
 
 	print_vector(S2, ost);
@@ -632,13 +673,19 @@ void formula_vector::print_latex(std::ostream &ost, std::string &label)
 		ost << "\\begin{array}{*{" << nb_cols << "}c}" << endl;
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
-				ost << v[i * nb_cols + j];
+
+				if (v[i * nb_cols + j].length() < 100) {
+					ost << v[i * nb_cols + j];
+				}
+				else {
+					ost << "too large to print v[i * nb_cols + j].length() = " << v[i].length();
+				}
 				if (j < nb_cols - 1) {
 					ost << "  & ";
-					}
 				}
-			ost << "\\\\" << endl;
 			}
+			ost << "\\\\" << endl;
+		}
 		ost << "\\end{array}" << endl;
 		ost << "\\right]" << endl;
 		ost << "$$" << endl;
@@ -652,9 +699,14 @@ void formula_vector::print_latex(std::ostream &ost, std::string &label)
 			ost << "\\left[" << endl;
 			ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
 			for (i = 0; i < len; i++) {
-				ost << v[i];
-				ost << "\\\\" << endl;
+				if (v[i].length() < 100) {
+					ost << v[i];
 				}
+				else {
+					ost << "too large to print v[i].length() = " << v[i].length();
+				}
+				ost << "\\\\" << endl;
+			}
 			ost << "\\end{array}" << endl;
 			ost << "\\right]" << endl;
 			ost << "$$" << endl;
@@ -665,7 +717,12 @@ void formula_vector::print_latex(std::ostream &ost, std::string &label)
 			ost << label << " = " << endl;
 			ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
 			for (i = 0; i < len; i++) {
-				ost << v[i];
+				if (v[i].length() < 100) {
+					ost << v[i];
+				}
+				else {
+					ost << "too large to print v[i].length() = " << v[i].length();
+				}
 				ost << "\\\\" << endl;
 				}
 			ost << "\\end{array}" << endl;

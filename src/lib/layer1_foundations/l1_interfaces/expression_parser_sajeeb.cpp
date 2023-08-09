@@ -1740,6 +1740,7 @@ static void collect_summands(
 
 
 	int nb_children = 0;
+
 	for (const shared_ptr<irtree_node>& child : current_node->children) {
 		nb_children++;
 	}
@@ -1984,6 +1985,10 @@ static void collect_summands(
 		}
 
 		child_counter++;
+		if (f_v) {
+			cout << "collect_summands child_counter = " << child_counter << endl;
+		}
+
 
 	}
 

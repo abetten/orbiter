@@ -111,10 +111,17 @@ void symbolic_object_builder::init(
 		//print_Sajeeb(cout);
 
 
-		cout << "final tree:" << endl;
-		Formula_vector->print_formula(cout, verbose_level);
+		cout << "before Formula_vector->print_formula_size" << endl;
+		Formula_vector->print_formula_size(cout, verbose_level);
+		cout << "after Formula_vector->print_formula_size" << endl;
 
+		cout << "before Formula_vector->print_formula" << endl;
+		Formula_vector->print_formula(cout, verbose_level);
+		cout << "after Formula_vector->print_formula" << endl;
+
+		cout << "before Formula_vector->print_latex" << endl;
 		Formula_vector->print_latex(cout, label);
+		cout << "after Formula_vector->print_latex" << endl;
 
 
 		string fname;
@@ -127,15 +134,22 @@ void symbolic_object_builder::init(
 
 			L.head_easy(ost);
 
+			cout << "before Formula_vector->print_latex" << endl;
 			Formula_vector->print_latex(ost, label);
+			cout << "after Formula_vector->print_latex" << endl;
 
 			L.foot(ost);
 		}
 
 		//latex_split(std::string &name, int split_level, int split_mod, int verbose_level)
 
+		cout << "before Formula_vector->latex_tree" << endl;
 		Formula_vector->latex_tree(verbose_level);
+		cout << "after Formula_vector->latex_tree" << endl;
+
+		cout << "before Formula_vector->export_tree" << endl;
 		Formula_vector->export_tree(verbose_level);
+		cout << "after Formula_vector->export_tree" << endl;
 	}
 
 
