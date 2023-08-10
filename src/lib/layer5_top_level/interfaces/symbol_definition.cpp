@@ -1905,6 +1905,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	}
 
 
+#if 0
 	int f_semilinear;
 	number_theory::number_theory_domain NT;
 
@@ -1919,6 +1920,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	if (Projective_space_with_action_description->f_use_projectivity_subgroup) {
 		f_semilinear = false;
 	}
+#endif
 
 	projective_geometry::projective_space_with_action *PA;
 
@@ -1926,16 +1928,19 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space "
-				"before PA->init" << endl;
+				"before PA->init_from_description" << endl;
 	}
+	PA->init_from_description(Projective_space_with_action_description, verbose_level);
+#if 0
 	PA->init(Projective_space_with_action_description->F,
 			Projective_space_with_action_description->n,
 		f_semilinear,
 		true /*f_init_incidence_structure*/,
 		verbose_level - 2);
+#endif
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space "
-				"after PA->init" << endl;
+				"after PA->init_from_description" << endl;
 	}
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
@@ -3735,7 +3740,7 @@ void symbol_definition::load_finite_field_PG(int verbose_level)
 	data_structures::string_tools ST;
 
 
-	if (Projective_space_with_action_description->f_field) {
+	if (Projective_space_with_action_description->f_field_label) {
 		if (f_v) {
 			cout << "symbol_definition::load_finite_field_PG "
 					"using existing finite field "

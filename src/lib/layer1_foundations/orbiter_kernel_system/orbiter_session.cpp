@@ -78,7 +78,8 @@ orbiter_session::orbiter_session()
 	fork_to = 0;
 	fork_step = 0;
 
-	Orbiter_symbol_table = NULL;
+	//Orbiter_symbol_table = NULL;
+	Orbiter_symbol_table = NEW_OBJECT(orbiter_symbol_table);
 
 	nb_times_finite_field_created = 0;
 	nb_times_projective_space_created = 0;
@@ -214,7 +215,7 @@ int orbiter_session::read_arguments(int argc,
 
 	t0 = Os.os_ticks();
 
-	Orbiter_symbol_table = NEW_OBJECT(orbiter_symbol_table);
+
 
 	for (i = i0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-v") == 0) {

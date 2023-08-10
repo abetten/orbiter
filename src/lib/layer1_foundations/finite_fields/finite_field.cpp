@@ -68,15 +68,33 @@ finite_field::finite_field()
 
 finite_field::~finite_field()
 {
+	int verbose_level = 0;
+
+	int f_v = (verbose_level >= 1);
 	//print_call_stats(cout);
 	//cout << "destroying tables" << endl;
 	//cout << "destroying add_table" << endl;
 
+	if (f_v) {
+		cout << "finite_field::~finite_field" << endl;
+	}
 	if (T) {
+		if (f_v) {
+			cout << "finite_field::~finite_field before FREE_OBJECT(T)" << endl;
+		}
 		FREE_OBJECT(T);
+		if (f_v) {
+			cout << "finite_field::~finite_field after FREE_OBJECT(T)" << endl;
+		}
 	}
 	if (Iwo) {
+		if (f_v) {
+			cout << "finite_field::~finite_field before FREE_OBJECT(Iwo)" << endl;
+		}
 		FREE_OBJECT(Iwo);
+		if (f_v) {
+			cout << "finite_field::~finite_field after FREE_OBJECT(Iwo)" << endl;
+		}
 	}
 
 #if 0
@@ -85,13 +103,31 @@ finite_field::~finite_field()
 	}
 #endif
 	if (Io) {
+		if (f_v) {
+			cout << "finite_field::~finite_field before FREE_OBJECT(Io)" << endl;
+		}
 		FREE_OBJECT(Io);
+		if (f_v) {
+			cout << "finite_field::~finite_field after FREE_OBJECT(Io)" << endl;
+		}
 	}
 	if (Linear_algebra) {
+		if (f_v) {
+			cout << "finite_field::~finite_field before FREE_OBJECT(Linear_algebra)" << endl;
+		}
 		FREE_OBJECT(Linear_algebra);
+		if (f_v) {
+			cout << "finite_field::~finite_field after FREE_OBJECT(Linear_algebra)" << endl;
+		}
 	}
 	if (Projective_space_basic) {
+		if (f_v) {
+			cout << "finite_field::~finite_field before FREE_OBJECT(Projective_space_basic)" << endl;
+		}
 		FREE_OBJECT(Projective_space_basic);
+		if (f_v) {
+			cout << "finite_field::~finite_field after FREE_OBJECT(Projective_space_basic)" << endl;
+		}
 	}
 #if 0
 	if (Orthogonal_indexing) {
@@ -99,7 +135,16 @@ finite_field::~finite_field()
 	}
 #endif
 	if (f_related_fields_have_been_computed) {
+		if (f_v) {
+			cout << "finite_field::~finite_field before FREE_OBJECT(Related_fields)" << endl;
+		}
 		FREE_OBJECT(Related_fields);
+		if (f_v) {
+			cout << "finite_field::~finite_field after FREE_OBJECT(Related_fields)" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "finite_field::~finite_field done" << endl;
 	}
 }
 

@@ -35,23 +35,68 @@ related_fields::related_fields()
 
 related_fields::~related_fields()
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "related_fields::~related_fields" << endl;
+	}
 	if (Subfield_order) {
+		if (f_v) {
+			cout << "related_fields::~related_fields before FREE_int(Subfield_order)" << endl;
+		}
 		FREE_int(Subfield_order);
+		if (f_v) {
+			cout << "related_fields::~related_fields after FREE_int(Subfield_order)" << endl;
+		}
 	}
 	if (Subfield_exponent) {
+		if (f_v) {
+			cout << "related_fields::~related_fields before FREE_int(Subfield_exponent)" << endl;
+		}
 		FREE_int(Subfield_exponent);
+		if (f_v) {
+			cout << "related_fields::~related_fields after FREE_int(Subfield_exponent)" << endl;
+		}
 	}
 	if (Subfield_index) {
+		if (f_v) {
+			cout << "related_fields::~related_fields before FREE_int(Subfield_index)" << endl;
+		}
 		FREE_int(Subfield_index);
+		if (f_v) {
+			cout << "related_fields::~related_fields after FREE_int(Subfield_index)" << endl;
+		}
 	}
 	if (Subfield_minimum_polynomial) {
-		FREE_OBJECT(Subfield_minimum_polynomial);
+		if (f_v) {
+			cout << "related_fields::~related_fields before FREE_OBJECTS(Subfield_minimum_polynomial)" << endl;
+		}
+		FREE_OBJECTS(Subfield_minimum_polynomial);
+		if (f_v) {
+			cout << "related_fields::~related_fields after FREE_OBJECTS(Subfield_minimum_polynomial)" << endl;
+		}
 	}
 	if (Subfield) {
+		if (f_v) {
+			cout << "related_fields::~related_fields before FREE_OBJECTS(Subfield)" << endl;
+		}
 		FREE_OBJECTS(Subfield);
+		if (f_v) {
+			cout << "related_fields::~related_fields after FREE_OBJECTS(Subfield)" << endl;
+		}
 	}
 	if (SubS) {
+		if (f_v) {
+			cout << "related_fields::~related_fields before FREE_OBJECTS(SubS)" << endl;
+		}
 		FREE_OBJECTS(SubS);
+		if (f_v) {
+			cout << "related_fields::~related_fields after FREE_OBJECTS(SubS)" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "related_fields::~related_fields done" << endl;
 	}
 }
 

@@ -27,9 +27,10 @@ projective_space_with_action_description::projective_space_with_action_descripti
 	f_q = false;
 	q = 0;
 
-	f_field = false;
-	//field_label;
+	f_field_label = false;
+	//std::string field_label;
 
+	f_field_pointer = false;
 	F = NULL;
 
 	f_use_projectivity_subgroup = false;
@@ -89,7 +90,7 @@ int projective_space_with_action_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-field") == 0) {
-			f_field = true;
+			f_field_label = true;
 			field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-field " << field_label << endl;
@@ -138,7 +139,7 @@ void projective_space_with_action_description::print()
 	if (f_q) {
 		cout << " -q " << q << endl;
 	}
-	if (f_field) {
+	if (f_field_label) {
 		cout << " -field " << field_label << endl;
 	}
 	if (f_use_projectivity_subgroup) {

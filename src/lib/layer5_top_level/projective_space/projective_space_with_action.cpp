@@ -21,6 +21,8 @@ namespace projective_geometry {
 
 projective_space_with_action::projective_space_with_action()
 {
+	Descr = NULL;
+
 	n = 0;
 	d = 0;
 	q = 0;
@@ -76,6 +78,111 @@ projective_space_with_action::~projective_space_with_action()
 	}
 }
 
+void projective_space_with_action::init_from_description(
+		projective_space_with_action_description *Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::init_from_description, "
+				"verbose_level=" << verbose_level << endl;
+	}
+
+	projective_space_with_action::Descr = Descr;
+
+	field_theory::finite_field *F;
+
+	if (Descr->f_field_label) {
+
+		F = Get_finite_field(
+				Descr->field_label);
+	}
+	else if (Descr->f_field_pointer) {
+		F = Descr->F;
+	}
+	else if (Descr->f_q) {
+
+		if (f_v) {
+			cout << "projective_space_with_action::init_from_description "
+					"creating the finite field of order " << q << endl;
+		}
+		F = NEW_OBJECT(field_theory::finite_field);
+		F->finite_field_init_small_order(Descr->q,
+				false /* f_without_tables */,
+				true /* f_compute_related_fields */,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "projective_space_with_action::init_from_description "
+					"the finite field of order " << Descr->q
+					<< " has been created" << endl;
+		}
+
+	}
+	else {
+		cout << "projective_space_with_action::init_from_description, "
+				"I need a field by label or by pointer or by its order" << endl;
+		exit(1);
+	}
+
+
+	Descr->F = F;
+	Descr->q = F->q;
+
+	if (!Descr->f_n) {
+		cout << "projective_space_with_action::init_from_description, "
+				"I need a dimension n" << endl;
+		exit(1);
+	}
+
+
+
+	int f_semilinear = true;
+
+	number_theory::number_theory_domain NT;
+
+	if (f_v) {
+		cout << "projective_space_with_action::init_from_description, "
+				"q=" << Descr->q << endl;
+	}
+
+	if (NT.is_prime(Descr->q)) {
+		f_semilinear = false;
+	}
+	else {
+		f_semilinear = true;
+	}
+
+	if (Descr->f_use_projectivity_subgroup) {
+		f_semilinear = false;
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::init_from_description, "
+				"f_semilinear=" << f_semilinear << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::init_from_description, "
+				"before init" << endl;
+	}
+	init(
+			F,
+			Descr->n, f_semilinear,
+			true /* f_init_incidence_structure */,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::init_from_description, "
+				"after init" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::init_from_description done" << endl;
+	}
+}
+
+
 void projective_space_with_action::init(
 		field_theory::finite_field *F,
 		int n, int f_semilinear,
@@ -87,6 +194,8 @@ void projective_space_with_action::init(
 	if (f_v) {
 		cout << "projective_space_with_action::init, "
 				"verbose_level=" << verbose_level << endl;
+		cout << "projective_space_with_action::init, "
+				"f_semilinear=" << f_semilinear << endl;
 	}
 	projective_space_with_action::f_init_incidence_structure
 		= f_init_incidence_structure;

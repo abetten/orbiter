@@ -721,9 +721,10 @@ public:
 	int f_q;
 	int q;
 
-	int f_field;
+	int f_field_label;
 	std::string field_label;
 
+	int f_field_pointer;
 	field_theory::finite_field *F;
 
 	int f_use_projectivity_subgroup;
@@ -756,6 +757,8 @@ public:
 class projective_space_with_action {
 
 public:
+
+	projective_space_with_action_description *Descr;
 
 	int n; // projective dimension
 	int d; // n + 1
@@ -795,6 +798,9 @@ public:
 
 	projective_space_with_action();
 	~projective_space_with_action();
+	void init_from_description(
+			projective_space_with_action_description *Descr,
+			int verbose_level);
 	void init(
 			field_theory::finite_field *F,
 			int n, int f_semilinear,
