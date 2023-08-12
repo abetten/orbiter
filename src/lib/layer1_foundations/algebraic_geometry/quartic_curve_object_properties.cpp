@@ -444,11 +444,11 @@ void quartic_curve_object_properties::print_general(std::ostream &ost)
 	ost << "\\mbox{Number of axes} & " << nb_axes << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of points on lines} & ";
-	Type_pts_on_lines->print_naked_tex(ost, true);
+	Type_pts_on_lines->print_bare_tex(ost, true);
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of lines on points} & ";
-	Type_lines_on_point->print_naked_tex(ost, true);
+	Type_lines_on_point->print_bare_tex(ost, true);
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 #endif
@@ -459,11 +459,11 @@ void quartic_curve_object_properties::print_general(std::ostream &ost)
 #if 0
 	ost << "Points on lines:" << endl;
 	ost << "$$" << endl;
-	Type_pts_on_lines->print_naked_tex(ost, true);
+	Type_pts_on_lines->print_bare_tex(ost, true);
 	ost << "$$" << endl;
 	ost << "Lines on points:" << endl;
 	ost << "$$" << endl;
-	Type_lines_on_point->print_naked_tex(ost, true);
+	Type_lines_on_point->print_bare_tex(ost, true);
 	ost << "$$" << endl;
 #endif
 }
@@ -800,7 +800,7 @@ void quartic_curve_object_properties::points_on_curve_on_lines(
 
 	if (f_v) {
 		cout << "Line type:" << endl;
-		Bitangent_line_type->print_naked_tex(cout, true);
+		Bitangent_line_type->print_bare_tex(cout, true);
 		cout << endl;
 	}
 
@@ -830,7 +830,7 @@ void quartic_curve_object_properties::points_on_curve_on_lines(
 	if (f_v) {
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
 				"type of lines_on_point:" << endl;
-		Point_type->print_naked_tex(cout, true);
+		Point_type->print_bare_tex(cout, true);
 		cout << endl;
 	}
 
@@ -896,7 +896,7 @@ void quartic_curve_object_properties::points_on_curve_on_lines(
 	if (f_v) {
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines "
 				"type of lines_on_point off:" << endl;
-		Point_off_type->print_naked_tex(cout, true);
+		Point_off_type->print_bare_tex(cout, true);
 		cout << endl;
 	}
 
@@ -945,7 +945,7 @@ void quartic_curve_object_properties::report_bitangent_line_type(
 
 
 		ost << "Line type: $" << endl;
-		Bitangent_line_type->print_naked_tex(ost, true);
+		Bitangent_line_type->print_bare_tex(ost, true);
 		ost << "$\\\\" << endl;
 
 		ost << "$$" << endl;
@@ -954,7 +954,7 @@ void quartic_curve_object_properties::report_bitangent_line_type(
 
 
 		ost << "point types: $" << endl;
-		Point_type->print_naked_tex(ost, true);
+		Point_type->print_bare_tex(ost, true);
 		ost << "$\\\\" << endl;
 
 		ost << "$$" << endl;
@@ -962,7 +962,7 @@ void quartic_curve_object_properties::report_bitangent_line_type(
 		ost << "$$" << endl;
 
 		ost << "point types for points off the curve: $" << endl;
-		Point_off_type->print_naked_tex(ost, true);
+		Point_off_type->print_bare_tex(ost, true);
 		ost << "$\\\\" << endl;
 
 		ost << "$$" << endl;

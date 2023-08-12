@@ -189,7 +189,7 @@ void surface_domain::compute_tritangent_planes_slow(long int *Lines,
 	Plane_type.init(The_plane_type, nb_planes, false, 0);
 	if (f_v) {
 		cout << "surface_domain::compute_tritangent_planes_slow The plane type is: ";
-		Plane_type.print_naked(true);
+		Plane_type.print_bare(true);
 		cout << endl;
 	}
 

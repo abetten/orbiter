@@ -485,7 +485,7 @@ void surface_domain_high_level::do_six_arcs(
 	C.init(Nb_E, nb_orbits, false, 0);
 
 	cout << "nb_E distribution: ";
-	C.print_naked_tex(cout, false);
+	C.print_bare_tex(cout, false);
 	cout << endl;
 
 

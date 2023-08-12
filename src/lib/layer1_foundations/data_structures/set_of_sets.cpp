@@ -878,7 +878,7 @@ void set_of_sets::intersection_matrix(
 
 	if (f_v) {
 		cout << "The intersection type is (";
-		C.print_naked(false /* f_backwards*/);
+		C.print_bare(false /* f_backwards*/);
 		cout << ")" << endl << endl;
 	}
 	f = C.type_first[C.nb_types - 1];

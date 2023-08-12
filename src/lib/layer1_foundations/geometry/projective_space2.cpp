@@ -276,7 +276,7 @@ void projective_space::plane_intersection_invariant(
 
 	if (f_v) {
 		cout << "The plane intersection type is (";
-		C.print_naked(false /*f_backwards*/);
+		C.print_bare(false /*f_backwards*/);
 		cout << ")" << endl << endl;
 	}
 	f = C.type_first[C.nb_types - 1];

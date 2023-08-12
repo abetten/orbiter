@@ -1392,12 +1392,7 @@ long int grassmann::make_special_element_one(
 	Int_vec_zero(M, k * n);
 	make_identity_front(M, verbose_level);
 	make_identity_back(M, verbose_level);
-#if 0
-	for (i = 0; i < k; i++) {
-		M[i * n + i] = 1;
-		M[i * n + k + i] = 1;
-	}
-#endif
+
 	if (f_v3) {
 		cout << "grassmann::make_special_element_one M:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
@@ -1427,12 +1422,6 @@ long int grassmann::make_special_element_infinity(
 	Int_vec_zero(M, k * n);
 
 	make_identity_back(M, verbose_level);
-
-#if 0
-	for (i = 0; i < k; i++) {
-		M[i * n + k + i] = 1;
-	}
-#endif
 
 	if (f_v3) {
 		cout << "grassmann::make_special_element_infinity M:" << endl;
@@ -1823,7 +1812,8 @@ void grassmann::cheat_sheet_subspaces(
 	}
 }
 
-void grassmann::Pluecker_coordinates(int line_rk, int *v6, int verbose_level)
+void grassmann::Pluecker_coordinates(
+		int line_rk, int *v6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1975,8 +1965,14 @@ void grassmann::create_latex_report(
 
 
 
-		fname = "Gr_" + std::to_string(n) + "_" + std::to_string(k) + "_" + std::to_string(F->q) + ".tex";
-		title = "Cheat Sheet ${\\rm Gr}_{" + std::to_string(n) + "," + std::to_string(k) + "," + std::to_string(F->q) + "}$";
+		fname = "Gr_" + std::to_string(n)
+				+ "_" + std::to_string(k)
+				+ "_" + std::to_string(F->q)
+				+ ".tex";
+		title = "Cheat Sheet ${\\rm Gr}_{"
+				+ std::to_string(n) + ","
+				+ std::to_string(k) + ","
+				+ std::to_string(F->q) + "}$";
 
 
 

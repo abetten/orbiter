@@ -683,7 +683,7 @@ void surface_domain::make_table_of_surfaces2(
 
 		C.init(Ago, nb_reps, false, 0);
 		f << q << ", ";
-		C.print_naked_tex(f, true /* f_backwards*/);
+		C.print_bare_tex(f, true /* f_backwards*/);
 		f << endl;
 
 		FREE_int(Ago);
@@ -865,7 +865,7 @@ void surface_domain::make_table_of_surfaces2(
 				C.init(Ago, nb_reps, false, 0);
 				ost << q << " & " << nb_reps << " & ";
 				ost << "$";
-				C.print_naked_tex(ost, true /* f_backwards*/);
+				C.print_bare_tex(ost, true /* f_backwards*/);
 				ost << "$\\\\" << endl;
 
 				FREE_int(Ago);

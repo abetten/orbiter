@@ -2295,7 +2295,7 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 
 	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
 	Classify_orbits_by_length->init(Orb->Sch->orbit_len, Orb->Sch->nb_orbits, false, 0);
-	Classify_orbits_by_length->print_naked_stringstream(orbit_type, true /* f_backwards */);
+	Classify_orbits_by_length->print_bare_stringstream(orbit_type, true /* f_backwards */);
 
 
 	FREE_OBJECT(Classify_orbits_by_length);
@@ -2405,7 +2405,7 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 		exit(1);
 	}
 
-	//Classify_orbits_by_length->print_naked_stringstream(orbit_type, true /* f_backwards */);
+	//Classify_orbits_by_length->print_bare_stringstream(orbit_type, true /* f_backwards */);
 
 
 	FREE_OBJECT(SoS);
@@ -2520,7 +2520,7 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 		exit(1);
 	}
 
-	//Classify_orbits_by_length->print_naked_stringstream(orbit_type, true /* f_backwards */);
+	//Classify_orbits_by_length->print_bare_stringstream(orbit_type, true /* f_backwards */);
 
 
 	FREE_OBJECT(SoS);

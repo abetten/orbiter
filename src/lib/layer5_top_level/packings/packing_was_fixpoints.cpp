@@ -599,7 +599,7 @@ void packing_was_fixpoints::print_packing(
 
 		T.init(Orbit_number + i * PW->P->spread_size, PW->P->spread_size, true, 0);
 		cout << i << " : ";
-		T.print_naked(true /* f_backwards*/);
+		T.print_bare(true /* f_backwards*/);
 		cout << endl;
 	}
 

@@ -474,7 +474,7 @@ void clebsch_map::clebsch_map_print_fibers()
 		C2.init(Clebsch_map, SO->nb_pts, true, 0);
 		cout << "clebsch_map::clebsch_map_print_fibers The fibers "
 				"have the following sizes: ";
-		C2.print_naked(true);
+		C2.print_bare(true);
 		cout << endl;
 
 		int t2, f2, l2, sz;
@@ -536,7 +536,7 @@ void clebsch_map::clebsch_map_find_arc_and_lines(
 		if (f_v) {
 			cout << "clebsch_map::clebsch_map_find_arc_and_lines "
 					"The fibers have the following sizes: ";
-			C2.print_naked(true);
+			C2.print_bare(true);
 			cout << endl;
 		}
 
@@ -683,7 +683,7 @@ void clebsch_map::clebsch_map_find_arc_and_lines(
 
 					C_fiber.init(Fiber_recognize, w, false, 0);
 					cout << "The fiber type is : ";
-					C_fiber.print_naked(true);
+					C_fiber.print_bare(true);
 					cout << endl;
 				}
 				Blown_up_lines[i] = -1;

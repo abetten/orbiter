@@ -712,7 +712,7 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 				data_structures::tally C;
 
 				C.init(Intersection_dimensions[level] + i * D->N, D->N, false, 0);
-				C.print_naked(true);
+				C.print_bare(true);
 			}
 			cout << " : ";
 			Gen->get_stabilizer_order(level, i, go);

@@ -145,7 +145,7 @@ void spread_classify::print_isomorphism_type2(
 	ost << "There are $" << Orb.nb_orbits
 			<< "$ orbits on the set.\\\\" << endl;
 	ost << "The orbit type is $[";
-	C.print_naked_tex(ost, false /*f_backwards*/);
+	C.print_bare_tex(ost, false /*f_backwards*/);
 	ost << "]$\\\\" << endl;
 	ost << "\\bigskip" << endl;
 	
@@ -356,7 +356,7 @@ void spread_classify::klein(
 	}
 	
 	ost << "Plane type of Klein-image is $( ";
-	C.print_naked_tex(ost, false /*f_backwards*/);
+	C.print_bare_tex(ost, false /*f_backwards*/);
 	ost << " )$" << endl << endl;
 	ost << "\\bigskip" << endl << endl;
 
@@ -486,12 +486,12 @@ void spread_classify::klein(
 		
 		ost2 << "There are $" << Orb.nb_orbits << "$ orbits on the set.\\\\" << endl;
 		ost2 << "The orbit type is $[";
-		C0.print_naked_tex(ost2);
+		C0.print_bare_tex(ost2);
 		ost2 << "]$\\\\" << endl;
 		ost2 << "\\bigskip" << endl;
 
 		ost2 << "Plane type of Klein-image is $(";
-		C.print_naked_tex(ost2);
+		C.print_bare_tex(ost2);
 		ost2 << ")$" << endl << endl;
 #endif
 
@@ -639,7 +639,7 @@ void spread_classify::report3(
 	ost << "\\chapter{Invariants}" << endl << endl;
 
 	ost << "Classification by automorphism group order: $";
-	C_ago.print_naked_tex(ost, false /*f_backwards*/);
+	C_ago.print_bare_tex(ost, false /*f_backwards*/);
 	ost << "$" << endl;
 	ost << "\\\\" << endl;
 
@@ -833,7 +833,7 @@ void spread_classify::report3(
 
 		ost << "Orbit lengths: $";
 		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
-		C_ol.print_naked_tex(ost, false /*f_backwards*/);
+		C_ol.print_bare_tex(ost, false /*f_backwards*/);
 		ost << "$ \\\\" << endl;
 
 		ost << "Orbits: $";
@@ -1344,7 +1344,7 @@ void spread_classify::orbit_info_short(
 	//f << "Orbit lengths: ";
 	//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
 	ost << "$";
-	C_ol.print_naked_tex(ost, false /*f_backwards*/);
+	C_ol.print_bare_tex(ost, false /*f_backwards*/);
 	ost << "$";
 	//f << " \\\\" << endl;
 	

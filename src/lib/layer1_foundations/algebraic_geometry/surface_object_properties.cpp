@@ -383,7 +383,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 		pts_on_lines->nb_sets, false, 0);
 	if (f_v) {
 		cout << "points on lines:" << endl;
-		Type_pts_on_lines->print_naked_tex(cout, true);
+		Type_pts_on_lines->print_bare_tex(cout, true);
 		cout << endl;
 	}
 
@@ -399,7 +399,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	if (f_v) {
 		cout << "surface_object::compute_properties "
 				"type of lines_on_point:" << endl;
-		Type_lines_on_point->print_naked_tex(cout, true);
+		Type_lines_on_point->print_bare_tex(cout, true);
 		cout << endl;
 	}
 
@@ -974,7 +974,7 @@ void surface_object_properties::compute_plane_type_by_points(int verbose_level)
 		C_plane_type_by_points->init(plane_type_by_points, nb_planes, false, 0);
 		if (f_v) {
 			cout << "plane types by points: ";
-			C_plane_type_by_points->print_naked(true);
+			C_plane_type_by_points->print_bare(true);
 			cout << endl;
 		}
 	}
@@ -1589,7 +1589,7 @@ void surface_object_properties::print_plane_type_by_points(std::ostream &ost)
 	ost << "\\subsection*{Plane types by points}" << endl;
 		//*fp << "$$" << endl;
 		//*fp << "\\Big(" << endl;
-	C_plane_type_by_points->print_naked_tex(ost, true);
+	C_plane_type_by_points->print_bare_tex(ost, true);
 		//*fp << "\\Big)" << endl;
 	ost << "\\\\" << endl;
 }
@@ -1754,11 +1754,11 @@ void surface_object_properties::print_summary(std::ostream &ost)
 	ost << "\\mbox{Number of axes} & " << nb_axes << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of points on lines} & ";
-	Type_pts_on_lines->print_naked_tex(ost, true);
+	Type_pts_on_lines->print_bare_tex(ost, true);
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of lines on points} & ";
-	Type_lines_on_point->print_naked_tex(ost, true);
+	Type_lines_on_point->print_bare_tex(ost, true);
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
@@ -1766,11 +1766,11 @@ void surface_object_properties::print_summary(std::ostream &ost)
 #if 0
 	ost << "Points on lines:" << endl;
 	ost << "$$" << endl;
-	Type_pts_on_lines->print_naked_tex(ost, true);
+	Type_pts_on_lines->print_bare_tex(ost, true);
 	ost << "$$" << endl;
 	ost << "Lines on points:" << endl;
 	ost << "$$" << endl;
-	Type_lines_on_point->print_naked_tex(ost, true);
+	Type_lines_on_point->print_bare_tex(ost, true);
 	ost << "$$" << endl;
 #endif
 }

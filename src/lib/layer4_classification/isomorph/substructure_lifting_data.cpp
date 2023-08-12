@@ -573,7 +573,7 @@ void substructure_lifting_data::orbits_of_stabilizer(int verbose_level)
 
 				C.init(flag_orbit_solution_len + nb_orbits_prev,
 						nb_flag_orbits - nb_orbits_prev, false, 0);
-				C.print_naked(true /* f_backwards */);
+				C.print_bare(true /* f_backwards */);
 				cout << endl;
 			}
 			else {
@@ -627,7 +627,7 @@ void substructure_lifting_data::orbits_of_stabilizer(int verbose_level)
 		data_structures::tally C;
 
 		C.init(flag_orbit_solution_len, nb_flag_orbits, false, 0);
-		C.print_naked(true /* f_backwards */);
+		C.print_bare(true /* f_backwards */);
 		cout << endl;
 	}
 

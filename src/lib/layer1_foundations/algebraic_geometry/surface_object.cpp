@@ -685,7 +685,7 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 		nb_tritangent_planes, false, 0);
 	if (f_v) {
 		cout << "Type iso of tritangent planes: ";
-		Type_iso_tritangent_planes->print_naked(true);
+		Type_iso_tritangent_planes->print_bare(true);
 		cout << endl;
 	}
 	

@@ -261,7 +261,7 @@ void tally_lint::print_first_tex(int f_backwards)
 	data_structures::sorting Sorting;
 
 	cout << "(";
-	Sorting.lint_vec_print_types_naked_tex_we_are_in_math_mode(cout, f_backwards, data_sorted,
+	Sorting.lint_vec_print_types_bare_tex_we_are_in_math_mode(cout, f_backwards, data_sorted,
 		nb_types, type_first, type_len);
 	cout << ")";
 	//cout << endl;
@@ -273,7 +273,7 @@ void tally_lint::print_second_tex(int f_backwards)
 		data_structures::sorting Sorting;
 
 		cout << "(";
-		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(cout, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_bare_tex_we_are_in_math_mode(cout, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		cout << ")";
 		}
@@ -285,12 +285,12 @@ void tally_lint::print_file(std::ostream &ost, int f_backwards)
 	data_structures::sorting Sorting;
 
 	if (f_second) {
-		Sorting.int_vec_print_types_naked(ost, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_bare(ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		ost << endl;
 		}
 	else {
-		Sorting.lint_vec_print_types_naked(ost, f_backwards, data_sorted,
+		Sorting.lint_vec_print_types_bare(ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		ost << endl;
 		}
@@ -302,14 +302,14 @@ void tally_lint::print_file_tex(std::ostream &ost, int f_backwards)
 
 	if (f_second) {
 		//ost << "(";
-		Sorting.int_vec_print_types_naked_tex(ost, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_bare_tex(ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//ost << ")";
 		//ost << endl;
 		}
 	else {
 		//ost << "$(";
-		Sorting.lint_vec_print_types_naked_tex(ost, f_backwards, data_sorted,
+		Sorting.lint_vec_print_types_bare_tex(ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//ost << ")$";
 		//ost << endl;
@@ -323,33 +323,33 @@ void tally_lint::print_file_tex_we_are_in_math_mode(
 
 	if (f_second) {
 		//ost << "(";
-		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(ost, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_bare_tex_we_are_in_math_mode(ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//ost << ")";
 		//ost << endl;
 		}
 	else {
 		//ost << "$(";
-		Sorting.lint_vec_print_types_naked_tex_we_are_in_math_mode(ost, f_backwards, data_sorted,
+		Sorting.lint_vec_print_types_bare_tex_we_are_in_math_mode(ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//ost << ")$";
 		//ost << endl;
 		}
 }
 
-void tally_lint::print_naked_stringstream(
+void tally_lint::print_bare_stringstream(
 		std::stringstream &sstr, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
 	if (f_second) {
-		Sorting.int_vec_print_types_naked_stringstream(
+		Sorting.int_vec_print_types_bare_stringstream(
 			sstr, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//cout << endl;
 		}
 	else {
-		Sorting.lint_vec_print_types_naked_stringstream(
+		Sorting.lint_vec_print_types_bare_stringstream(
 			sstr, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//cout << endl;
@@ -357,37 +357,37 @@ void tally_lint::print_naked_stringstream(
 
 }
 
-void tally_lint::print_naked(int f_backwards)
+void tally_lint::print_bare(int f_backwards)
 {
 	data_structures::sorting Sorting;
 
 	if (f_second) {
-		Sorting.int_vec_print_types_naked(cout, f_backwards, second_data_sorted,
+		Sorting.int_vec_print_types_bare(cout, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//cout << endl;
 		}
 	else {
-		Sorting.lint_vec_print_types_naked(cout, f_backwards, data_sorted,
+		Sorting.lint_vec_print_types_bare(cout, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//cout << endl;
 		}
 }
 
-void tally_lint::print_naked_tex(std::ostream &ost, int f_backwards)
+void tally_lint::print_bare_tex(std::ostream &ost, int f_backwards)
 {
 	if (f_second) {
-		print_types_naked_tex(ost, f_backwards, second_data_sorted,
+		print_types_bare_tex(ost, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
 		//cout << endl;
 		}
 	else {
-		print_lint_types_naked_tex(ost, f_backwards, data_sorted,
+		print_lint_types_bare_tex(ost, f_backwards, data_sorted,
 			nb_types, type_first, type_len);
 		//cout << endl;
 		}
 }
 
-void tally_lint::print_types_naked_tex(
+void tally_lint::print_types_bare_tex(
 	std::ostream &ost, int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -431,7 +431,7 @@ void tally_lint::print_types_naked_tex(
 		}
 }
 
-void tally_lint::print_lint_types_naked_tex(
+void tally_lint::print_lint_types_bare_tex(
 	std::ostream &ost, int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {

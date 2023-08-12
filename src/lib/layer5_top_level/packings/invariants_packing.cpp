@@ -429,7 +429,7 @@ void invariants_packing::make_table(
 		C.init(ago, nb, false, 0);
 		
 		ost << nb << " & ";
-		C.print_naked_tex(ost, true /*f_backwards*/);
+		C.print_bare_tex(ost, true /*f_backwards*/);
 
 		ost << "\\\\" << endl;
 		FREE_int(set);

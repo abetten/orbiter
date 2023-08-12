@@ -1832,7 +1832,7 @@ void sorting::int_vec_print_types(
 	int nb_types, int *type_first, int *type_len)
 {
 	ost << "( ";
-	int_vec_print_types_naked(ost,
+	int_vec_print_types_bare(ost,
 		f_backwards, the_vec_sorted, nb_types, type_first, type_len);
 	ost << " )";
 }
@@ -1843,12 +1843,12 @@ void sorting::lint_vec_print_types(
 	int nb_types, int *type_first, int *type_len)
 {
 	ost << "( ";
-	lint_vec_print_types_naked(ost,
+	lint_vec_print_types_bare(ost,
 		f_backwards, the_vec_sorted, nb_types, type_first, type_len);
 	ost << " )";
 }
 
-void sorting::int_vec_print_types_naked_stringstream(
+void sorting::int_vec_print_types_bare_stringstream(
 		std::stringstream &sstr,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
@@ -1883,7 +1883,7 @@ void sorting::int_vec_print_types_naked_stringstream(
 		}
 }
 
-void sorting::lint_vec_print_types_naked_stringstream(std::stringstream &sstr,
+void sorting::lint_vec_print_types_bare_stringstream(std::stringstream &sstr,
 	int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1918,7 +1918,7 @@ void sorting::lint_vec_print_types_naked_stringstream(std::stringstream &sstr,
 		}
 }
 
-void sorting::int_vec_print_types_naked(std::ostream &ost,
+void sorting::int_vec_print_types_bare(std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1952,7 +1952,7 @@ void sorting::int_vec_print_types_naked(std::ostream &ost,
 		}
 }
 
-void sorting::lint_vec_print_types_naked(std::ostream &ost,
+void sorting::lint_vec_print_types_bare(std::ostream &ost,
 	int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1988,7 +1988,7 @@ void sorting::lint_vec_print_types_naked(std::ostream &ost,
 }
 
 
-void sorting::int_vec_print_types_naked_tex(
+void sorting::int_vec_print_types_bare_tex(
 		std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
@@ -2031,7 +2031,7 @@ void sorting::int_vec_print_types_naked_tex(
 		}
 }
 
-void sorting::lint_vec_print_types_naked_tex(
+void sorting::lint_vec_print_types_bare_tex(
 		std::ostream &ost,
 	int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
@@ -2074,7 +2074,7 @@ void sorting::lint_vec_print_types_naked_tex(
 		}
 }
 
-void sorting::int_vec_print_types_naked_tex_we_are_in_math_mode(
+void sorting::int_vec_print_types_bare_tex_we_are_in_math_mode(
 		std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
@@ -2117,7 +2117,7 @@ void sorting::int_vec_print_types_naked_tex_we_are_in_math_mode(
 		}
 }
 
-void sorting::lint_vec_print_types_naked_tex_we_are_in_math_mode(
+void sorting::lint_vec_print_types_bare_tex_we_are_in_math_mode(
 		std::ostream &ost,
 	int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)

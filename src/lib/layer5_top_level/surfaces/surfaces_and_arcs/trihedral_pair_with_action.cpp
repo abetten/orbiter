@@ -1427,7 +1427,7 @@ void trihedral_pair_with_action::report_iso_type_as_double_triplets(std::ostream
 
 	ost << "Distribution of isomorphism types:\\\\" << endl;
 	ost << "$$" << endl;
-	Double_triplet_type_distribution->print_naked_tex(ost, false/* f_backwards*/);
+	Double_triplet_type_distribution->print_bare_tex(ost, false/* f_backwards*/);
 	ost << "$$" << endl;
 
 

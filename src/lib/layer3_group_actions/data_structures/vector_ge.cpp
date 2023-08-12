@@ -742,7 +742,7 @@ void vector_ge::save_csv(
 			A->Group_element->element_code_for_make_element(Elt, data);
 
 			stringstream ss;
-			Int_vec_print_str_naked(ss, data, A->make_element_size);
+			Int_vec_print_bare_str(ss, data, A->make_element_size);
 			ost << i << ",\"" << ss.str() << "\"" << endl;
 		}
 		ost << "END" << endl;

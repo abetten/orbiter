@@ -269,7 +269,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	C.init(Sub->Len, Sub->nb_orbits_at_level_3, false, 0);
 	if (f_v) {
 		cout << "classification of Len:" << endl;
-		C.print_naked(true);
+		C.print_bare(true);
 		cout << endl;
 	}
 
@@ -332,7 +332,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		C.init(Non_unique_cases_len, nb_non_unique_cases, false, 0);
 		if (f_v) {
 			cout << "classification of Len amongst the non-unique cases:" << endl;
-			C.print_naked(true);
+			C.print_bare(true);
 			cout << endl;
 		}
 	}
@@ -343,7 +343,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		if (f_v) {
 			cout << "classification of group orders amongst "
 					"the non-unique cases:" << endl;
-			C.print_naked(true);
+			C.print_bare(true);
 			cout << endl;
 		}
 	}
@@ -792,7 +792,7 @@ void semifield_classify_with_substructure::latex_report(
 
 			C.init(Po2, Sub->N2, false, 0);
 			fp << "$";
-			C.print_naked_tex(fp, false /* f_backwards */);
+			C.print_bare_tex(fp, false /* f_backwards */);
 			fp << "$";
 			fp << "\\\\" << endl;
 		}

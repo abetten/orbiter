@@ -1489,7 +1489,7 @@ void combinatorics_domain::perm_print_offset(std::ostream &ost,
 		cout << "cycle type: ";
 		//int_vec_print(cout, orbit_length, nb_orbits);
 		//cout << " = ";
-		C.print_naked(false /* f_backwards*/);
+		C.print_bare(false /* f_backwards*/);
 		
 		FREE_int(orbit_length);
 	}

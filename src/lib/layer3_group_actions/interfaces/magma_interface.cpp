@@ -2209,7 +2209,7 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 			A->Group_element->code_for_make_element(
 						data, Elt);
 			fp << ",\"";
-			Int_vec_print_fully_naked(fp, data, A->make_element_size);
+			Int_vec_print_bare_fully(fp, data, A->make_element_size);
 			fp << "\"";
 
 			FREE_OBJECT(gens);

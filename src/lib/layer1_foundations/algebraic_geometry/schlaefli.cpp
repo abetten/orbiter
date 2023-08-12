@@ -1041,7 +1041,7 @@ void schlaefli::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 
 	C.init(T_idx, nb_T, true, 0);
 	cout << "The trihedral pairs come in these multiplicities: ";
-	C.print_naked(true);
+	C.print_bare(true);
 	cout << endl;
 
 	int t2, f2, l2, sz;

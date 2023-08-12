@@ -405,7 +405,7 @@ void linear_algebra_global::nullspace(
 	int f_v = (verbose_level >= 1);
 	//int *A;
 	//int *base_cols;
-	int i, rk1;
+	int rk1;
 
 	if (f_v) {
 		cout << "linear_algebra_global::nullspace" << endl;

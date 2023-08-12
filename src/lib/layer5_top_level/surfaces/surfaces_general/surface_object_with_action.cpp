@@ -2571,11 +2571,11 @@ void surface_object_with_action::print_summary(
 
 
 	ost << "\\mbox{Type of points on lines} & ";
-	SO->SOP->Type_pts_on_lines->print_naked_tex(ost, true);
+	SO->SOP->Type_pts_on_lines->print_bare_tex(ost, true);
 	ost << " & \\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Type of lines on points} & ";
-	SO->SOP->Type_lines_on_point->print_naked_tex(ost, true);
+	SO->SOP->Type_lines_on_point->print_bare_tex(ost, true);
 	ost << " & \\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
@@ -2583,11 +2583,11 @@ void surface_object_with_action::print_summary(
 #if 0
 	ost << "Points on lines:" << endl;
 	ost << "$$" << endl;
-	Type_pts_on_lines->print_naked_tex(ost, true);
+	Type_pts_on_lines->print_bare_tex(ost, true);
 	ost << "$$" << endl;
 	ost << "Lines on points:" << endl;
 	ost << "$$" << endl;
-	Type_lines_on_point->print_naked_tex(ost, true);
+	Type_lines_on_point->print_bare_tex(ost, true);
 	ost << "$$" << endl;
 #endif
 }

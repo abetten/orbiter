@@ -501,7 +501,7 @@ void int_vec::print_str(std::stringstream &ost, int *v, int len)
 	ost << ")";
 }
 
-void int_vec::print_str_naked(std::stringstream &ost, int *v, int len)
+void int_vec::print_bare_str(std::stringstream &ost, int *v, int len)
 {
 	int i;
 
@@ -564,7 +564,7 @@ void int_vec::print_fully(std::ostream &ost, int *v, int len)
 	ost << " )";
 }
 
-void int_vec::print_fully_naked(std::ostream &ost, int *v, int len)
+void int_vec::print_bare_fully(std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -639,7 +639,7 @@ void int_vec::print_classified_str(stringstream &sstr,
 
 	C.init(v, len, false /*f_second */, 0);
 	//C.print(true /* f_backwards*/);
-	C.print_naked_stringstream(sstr, f_backwards);
+	C.print_bare_stringstream(sstr, f_backwards);
 }
 
 void int_vec::scan(std::string &s, int *&v, int &len)
@@ -822,12 +822,12 @@ void int_vec::print_to_str(std::string &s, int *data, int len)
 	string s1;
 
 
-	print_to_str_naked(s1, data, len);
+	print_to_str_bare(s1, data, len);
 
 	s = "\" " + s1 + "\"";
 }
 
-void int_vec::print_to_str_naked(std::string &s, int *data, int len)
+void int_vec::print_to_str_bare(std::string &s, int *data, int len)
 {
 	int i, a;
 

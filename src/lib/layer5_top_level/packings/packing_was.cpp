@@ -2013,7 +2013,7 @@ void packing_was::report_reduced_spread_orbits(
 	T1.init_lint(spreads_in_reduced_orbits, nb_spreads * orbit_length, false, 0);
 
 	ost << "$$" << endl;
-	T1.print_naked_tex(ost, true /* f_backwards */);
+	T1.print_bare_tex(ost, true /* f_backwards */);
 	ost << "$$" << endl;
 
 #if 0
@@ -2042,7 +2042,7 @@ void packing_was::report_reduced_spread_orbits(
 
 	ost << "Frequencies of lines appearing in spreads appearing in these orbits:\\\\" << endl;
 	ost << "$$" << endl;
-	T2.print_naked_tex(ost, true /* f_backwards */);
+	T2.print_bare_tex(ost, true /* f_backwards */);
 	ost << "$$" << endl;
 
 	long int *spreads_in_reduced_orbits_with_original_labels;

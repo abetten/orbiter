@@ -986,7 +986,7 @@ void projective_space_plane::conic_type_randomized(
 
 					if (f_v) {
 						cout << "The conic intersection type is (";
-						C.print_naked(false /*f_backwards*/);
+						C.print_bare(false /*f_backwards*/);
 						cout << ")" << endl << endl;
 					}
 
@@ -1086,7 +1086,7 @@ void projective_space_plane::conic_intersection_type(
 
 	if (f_v) {
 		cout << "The conic intersection type is (";
-		C.print_naked(false /*f_backwards*/);
+		C.print_bare(false /*f_backwards*/);
 		cout << ")" << endl << endl;
 	}
 
@@ -1596,7 +1596,7 @@ void projective_space_plane::conic_type(
 
 					if (f_v) {
 						cout << "The conic intersection type is (";
-						C.print_naked(false /*f_backwards*/);
+						C.print_bare(false /*f_backwards*/);
 						cout << ")" << endl << endl;
 					}
 

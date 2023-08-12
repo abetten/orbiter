@@ -492,7 +492,7 @@ void arc_generator::print(int len, long int *S)
 
 	C.init(
 			line_type, PA->P->Subspaces->N_lines, false, 0);
-	C.print_naked(true);
+	C.print_bare(true);
 	cout << endl;
 
 	int *Coord;
@@ -671,7 +671,7 @@ void arc_generator::lifting_prepare_function_new(
 	if (f_v) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"line_type:" << endl;
-		C.print_naked(true);
+		C.print_bare(true);
 		cout << endl;
 	}
 
@@ -966,7 +966,7 @@ void arc_generator::report_do_the_work(
 	ost << "\\chapter{Invariants}" << endl << endl;
 
 	ost << "Classification by automorphism group order: ";
-	C_ago.print_naked_tex(ost, false /*f_backwards*/);
+	C_ago.print_bare_tex(ost, false /*f_backwards*/);
 	ost << "\\\\" << endl;
 
 	ost << "\\begin{center}" << endl;
@@ -1143,7 +1143,7 @@ void arc_generator::report_do_the_work(
 
 		ost << "Orbit lengths: ";
 		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
-		C_ol.print_naked_tex(ost, false /*f_backwards*/);
+		C_ol.print_bare_tex(ost, false /*f_backwards*/);
 		ost << " \\\\" << endl;
 	
 		tt = (Descr->target_size + 3) / 4;

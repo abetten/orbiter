@@ -85,7 +85,7 @@ void action::all_elements_save_csv(
 			Group_element->element_code_for_make_element(Elt, data);
 
 			stringstream ss;
-			Int_vec_print_str_naked(ss, data, make_element_size);
+			Int_vec_print_bare_str(ss, data, make_element_size);
 			ost << i << ",\"" << ss.str() << "\"" << endl;
 		}
 		ost << "END" << endl;

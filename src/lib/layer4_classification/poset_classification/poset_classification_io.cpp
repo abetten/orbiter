@@ -119,7 +119,7 @@ void poset_classification::print_orbit_numbers(int depth)
 	cout << "Found " << nb_nodes << " orbits at depth " << depth << endl;
 	for (j = 0; j <= depth; j++) {
 		cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
-		}
+	}
 	cout << "total: " << Poo->first_node_at_level(depth + 1) << endl;
 	//gen->print_statistic_on_callbacks();
 	compute_and_print_automorphism_group_orders(depth, cout);
@@ -142,11 +142,11 @@ void poset_classification::print()
 	cout << "Found " << nb_nodes << " orbits at depth " << depth << endl;
 	for (j = 0; j <= depth; j++) {
 		cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
-		}
+	}
 	cout << "total: " << Poo->first_node_at_level(depth + 1) << endl;
 }
 
-void poset_classification::print_statistic_on_callbacks_naked()
+void poset_classification::print_statistic_on_callbacks_bare()
 {
 	cout << Poset->A->ptr->nb_times_image_of_called - nb_times_image_of_called0 << "/";
 	cout << Poset->A->ptr->nb_times_mult_called - nb_times_mult_called0 << "/";
@@ -158,7 +158,7 @@ void poset_classification::print_statistic_on_callbacks_naked()
 void poset_classification::print_statistic_on_callbacks()
 {
 	cout << "# of calls to image_of/mult/invert/retrieve/store: ";
-	print_statistic_on_callbacks_naked();
+	print_statistic_on_callbacks_bare();
 	cout << endl;
 }
 
@@ -206,7 +206,7 @@ void poset_classification::print_problem_label()
 {
 	if (problem_label[0]) {
 		cout << problem_label << " ";
-		}
+	}
 }
 
 void poset_classification::print_level_info(
@@ -304,10 +304,10 @@ void poset_classification::print_fusion_nodes(int depth)
 					cout << "fusion (" << f + j << "/" << h
 							<< ") -> (" << E->get_data1() << "/"
 							<< E->get_data2() << ")" << endl;
-					}
 				}
 			}
 		}
+	}
 }
 
 

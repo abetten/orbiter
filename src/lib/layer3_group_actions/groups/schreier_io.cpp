@@ -1201,7 +1201,7 @@ void schreier::print_orbit_type(int f_backwards)
 	data_structures::tally C;
 
 	C.init(orbit_len, nb_orbits, false, 0);
-	C.print_naked(f_backwards);
+	C.print_bare(f_backwards);
 }
 
 void schreier::list_all_orbits_tex(std::ostream &ost)

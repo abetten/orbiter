@@ -226,7 +226,7 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 	C.init(point_color, nb_points, false, 0);
 	if (f_v) {
 		cout << "point color distribution: ";
-		C.print_naked(true);
+		C.print_bare(true);
 		cout << endl;
 	}
 
@@ -317,7 +317,7 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 	C.init(point_color, nb_points, false, 0);
 	if (f_v) {
 		cout << "point color distribution: ";
-		C.print_naked(true);
+		C.print_bare(true);
 		cout << endl;
 	}
 
@@ -398,7 +398,7 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 	C.init(point_color, nb_points, false, 0);
 	if (f_v) {
 		cout << "point color distribution: ";
-		C.print_naked(true);
+		C.print_bare(true);
 		cout << endl;
 	}
 

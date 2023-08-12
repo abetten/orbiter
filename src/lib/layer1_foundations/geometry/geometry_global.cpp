@@ -1387,7 +1387,7 @@ void geometry_global::do_intersection_of_two_lines(
 	int *A;
 	int *B;
 	int *C;
-	int len, rk, i;
+	int len, rk;
 
 	if (f_v) {
 		cout << "geometry_global::do_intersection_of_two_lines" << endl;
@@ -1497,7 +1497,7 @@ void geometry_global::do_transversal(
 	int *Pt;
 	int *A;
 	int *B;
-	int len, rk, i;
+	int len, rk;
 
 	if (f_v) {
 		cout << "geometry_global::do_transversal" << endl;
@@ -4246,7 +4246,7 @@ void geometry_global::do_blocking_set_family_3(int n,
 
 
 	cout << "the point types are:" << endl;
-	C.print_naked(false /*f_backwards*/);
+	C.print_bare(false /*f_backwards*/);
 	cout << endl;
 
 #if 0

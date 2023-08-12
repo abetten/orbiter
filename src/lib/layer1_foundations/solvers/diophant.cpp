@@ -4223,7 +4223,7 @@ void diophant::test_solution_file(std::string &solution_file,
 
 		C.init(Y, m, false, 0);
 		cout << "classification: ";
-		C.print_naked(false);
+		C.print_bare(false);
 		cout << endl;
 	}
 	if (f_v) {

@@ -508,7 +508,7 @@ void orbits_on_polynomials::report_detailed_list(
 
 	T1.init(Nb_pts, T->nb_orbits, false, 0);
 	ost << "Distribution of the number of points: $";
-	T1.print_naked_tex(ost, true);
+	T1.print_bare_tex(ost, true);
 	ost << "$\\\\" << endl;
 
 	ost << "\\section{The Varieties of degree $" << degree_of_poly

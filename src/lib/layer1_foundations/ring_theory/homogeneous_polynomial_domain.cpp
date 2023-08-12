@@ -2624,7 +2624,7 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 	T.init(Cnt, nb_pts, false, 0);
 
 	cout << "Number of conditions satisfied:" << endl;
-	T.print_naked(true);
+	T.print_bare(true);
 	cout << endl;
 
 	//T.save_classes_individually(fname);

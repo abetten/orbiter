@@ -530,7 +530,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		Overgroup_orbit_type.init(Sch1->orbit_len,
 				Sch1->nb_orbits, false, 0);
 		cout << "Overgroup orbit type:" << endl;
-		Overgroup_orbit_type.print_naked(true);
+		Overgroup_orbit_type.print_bare(true);
 		cout << endl;
 
 		int *Pairing;
@@ -675,7 +675,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 			data_structures::tally D_type;
 			D_type.init(count, H->group_order, false, 0);
 			cout << "D type:" << endl;
-			D_type.print_naked(true);
+			D_type.print_bare(true);
 			cout << endl;
 			for (i = 0; i < H->group_order; i++) {
 				if (count[i] > 60) {
@@ -793,7 +793,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 
 	Group_orders.init(Group_order, nb_zuppos, false, 0);
 	cout << "We found the following group orders: ";
-	Group_orders.print_naked(true);
+	Group_orders.print_bare(true);
 	cout << endl;
 
 
@@ -898,7 +898,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 
 			Overgroup_orders.init(Overgroup_order, nb_zuppos, false, 0);
 			cout << "We found the following overgroup orders: ";
-			Overgroup_orders.print_naked(true);
+			Overgroup_orders.print_bare(true);
 			cout << endl;
 
 			int *Idx_overgroup;

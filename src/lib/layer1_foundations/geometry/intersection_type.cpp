@@ -212,7 +212,7 @@ void intersection_type::compute_heighest_weight_objects(
 
 	if (f_v) {
 		cout << "The plane intersection type is (";
-		C.print_naked(false /*f_backwards*/);
+		C.print_bare(false /*f_backwards*/);
 		cout << ")" << endl << endl;
 	}
 

@@ -655,7 +655,7 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 	if (f_v) {
 		cout << "orbits_on_something::classify_orbits_by_length "
 				"The distribution of orbit lengths is: ";
-		Classify_orbits_by_length->print_naked(false);
+		Classify_orbits_by_length->print_bare(false);
 		cout << endl;
 	}
 #if 0

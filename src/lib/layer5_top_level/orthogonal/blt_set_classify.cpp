@@ -1256,7 +1256,7 @@ void blt_set_classify::report2(
 
 		f << "Orbit lengths: $";
 		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
-		C_ol.print_naked_tex(f, false /* f_reverse */);
+		C_ol.print_bare_tex(f, false /* f_reverse */);
 		f << "$ \\\\" << endl;
 #endif
 

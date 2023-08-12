@@ -298,7 +298,7 @@ void packing_classify::report_whole(
 	
 	C_ago.init(inv->Ago_int, Iso->Folding->Reps->count, false, 0);
 	ost << "Classification by Ago: ";
-	C_ago.print_naked_tex(ost, true /*f_backwards*/);
+	C_ago.print_bare_tex(ost, true /*f_backwards*/);
 	ost << "\\\\" << endl;
 
 	ost << "\\chapter{Invariants: Types of Packing}" << endl << endl;
@@ -493,7 +493,7 @@ void packing_classify::report_isomorphism_type(
 
 	C_iso.init_lint(spread_iso_type, Iso->size, false, 0);
 	ost << "Classification by isomorphism type of spreads: ";
-	C_iso.print_naked_tex(ost, false /*f_backwards*/);
+	C_iso.print_bare_tex(ost, false /*f_backwards*/);
 	ost << "\\\\" << endl;
 		
 		
@@ -520,7 +520,7 @@ void packing_classify::report_isomorphism_type(
 
 #if 0
 	ost << "Plane type of Klein-image is $($ ";
-	inv->Inv[orbit].C->print_naked_tex(ost, true /*f_backwards*/);
+	inv->Inv[orbit].C->print_bare_tex(ost, true /*f_backwards*/);
 	ost << " $)$" << endl << endl;
 	ost << "\\bigskip" << endl << endl;
 #endif
@@ -578,7 +578,7 @@ void packing_classify::report_isomorphism_type(
 	ost << "There are $" << Orb.nb_orbits
 			<< "$ orbits on the set.\\\\" << endl;
 	ost << "The orbit type is $[$ ";
-	C.print_naked_tex(ost, false /*f_backwards*/);
+	C.print_bare_tex(ost, false /*f_backwards*/);
 	ost << " $]$\\\\" << endl;
 	ost << "\\bigskip" << endl;
 	

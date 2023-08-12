@@ -751,7 +751,7 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 
 	C.init_lint(Intersection_pt, SaS->sz * SaS->sz, false, 0);
 	cout << "classification of points by multiplicity:" << endl;
-	C.print_naked(true);
+	C.print_bare(true);
 	cout << endl;
 
 

@@ -706,7 +706,7 @@ void large_set_classify::process_starter_case(
 
 	C.init(reduced_design_color, nb_reduced, false, 0);
 	cout << "color distribution of reduced designs:" << endl;
-	C.print_naked_tex(cout, false /* f_backwards */);
+	C.print_bare_tex(cout, false /* f_backwards */);
 	cout << endl;
 
 	FREE_int(reduced_design_color);

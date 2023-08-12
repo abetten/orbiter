@@ -130,7 +130,7 @@ void substructure_stats_and_selection::init(
 		Int_vec_print(cout, orbit_frequencies, nb_orbits);
 		cout << endl;
 		cout << "substructure_stats_and_selection::init orbit frequency types=";
-		T->print_naked(false /* f_backwards */);
+		T->print_bare(false /* f_backwards */);
 		cout << endl;
 	}
 

@@ -760,7 +760,7 @@ namespace solvers {
 #define Lint_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print(A, B, C)
 #define Int_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_fully(A, B, C)
 #define Lint_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_fully(A, B, C)
-#define Int_vec_print_fully_naked(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_fully_naked(A, B, C)
+#define Int_vec_print_bare_fully(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_bare_fully(A, B, C)
 
 #define Int_vec_print_integer_matrix(A,B,C,D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
 #define Int_vec_print_integer_matrix_width(A,B,C,D,E,F) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, E, F)
@@ -772,7 +772,7 @@ namespace solvers {
 #define Lint_vec_print_to_str(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_to_str(A, B, C)
 
 
-#define Int_vec_print_str_naked(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_str_naked(A, B, C)
+#define Int_vec_print_bare_str(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_bare_str(A, B, C)
 
 
 #define Int_vec_print_GAP(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_GAP(A, B, C)

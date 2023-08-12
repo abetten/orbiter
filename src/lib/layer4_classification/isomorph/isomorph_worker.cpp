@@ -411,6 +411,7 @@ void isomorph_worker::read_solutions(int verbose_level)
 
 		for (i = 0; i < nb_files; i++) {
 
+			a = List_of_cases[i];
 			fname = Isomorph_arguments->solution_prefix + Isomorph_arguments->base_fname
 					+ "_" + std::to_string(Iso->level) + "_" + std::to_string(a) + "_sol.txt";
 

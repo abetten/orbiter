@@ -528,7 +528,7 @@ void spread_activity::report2(std::ostream &ost, int verbose_level)
 
 				ost << "Plane type: ";
 				ost << "$";
-				T.print_naked_tex(ost, true /* f_backwards */);
+				T.print_bare_tex(ost, true /* f_backwards */);
 				ost << "$";
 				ost << "\\\\" << endl;
 

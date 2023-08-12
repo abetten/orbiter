@@ -614,11 +614,11 @@ public:
 	void print(std::ostream &ost, std::vector<int> &v);
 	void print(std::ostream &ost, int *v, int len);
 	void print_str(std::stringstream &ost, int *v, int len);
-	void print_str_naked(std::stringstream &ost, int *v, int len);
+	void print_bare_str(std::stringstream &ost, int *v, int len);
 	void print_as_table(std::ostream &ost, int *v, int len, int width);
 	void print_fully(std::ostream &ost, std::vector<int> &v);
 	void print_fully(std::ostream &ost, int *v, int len);
-	void print_fully_naked(std::ostream &ost, int *v, int len);
+	void print_bare_fully(std::ostream &ost, int *v, int len);
 	void print_dense(std::ostream &ost, int *v, int len);
 	void print_Cpp(std::ostream &ost, int *v, int len);
 	void print_GAP(std::ostream &ost, int *v, int len);
@@ -628,7 +628,7 @@ public:
 	void scan(std::string &s, int *&v, int &len);
 	void scan_from_stream(std::istream & is, int *&v, int &len);
 	void print_to_str(std::string &s, int *data, int len);
-	void print_to_str_naked(std::string &s, int *data, int len);
+	void print_to_str_bare(std::string &s, int *data, int len);
 	void print(int *v, int len);
 	void print_integer_matrix(std::ostream &ost,
 		int *p, int m, int n);
@@ -753,7 +753,7 @@ public:
 	void scan(std::string &s, long int *&v, int &len);
 	void scan_from_stream(std::istream & is, long int *&v, int &len);
 	void print_to_str(std::string &s, long int *data, int len);
-	void print_to_str_naked(std::string &s, long int *data, int len);
+	void print_to_str_bare(std::string &s, long int *data, int len);
 	void create_string_with_quotes(std::string &str, long int *v, int len);
 
 
@@ -1458,35 +1458,35 @@ public:
 			std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void int_vec_print_types_naked_stringstream(
+	void int_vec_print_types_bare_stringstream(
 			std::stringstream &sstr,
 		int f_backwards, int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void lint_vec_print_types_naked_stringstream(
+	void lint_vec_print_types_bare_stringstream(
 			std::stringstream &sstr,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void int_vec_print_types_naked(
+	void int_vec_print_types_bare(
 			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void lint_vec_print_types_naked(
+	void lint_vec_print_types_bare(
 			std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void int_vec_print_types_naked_tex(
+	void int_vec_print_types_bare_tex(
 			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void lint_vec_print_types_naked_tex(
+	void lint_vec_print_types_bare_tex(
 			std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void int_vec_print_types_naked_tex_we_are_in_math_mode(
+	void int_vec_print_types_bare_tex_we_are_in_math_mode(
 			std::ostream &ost,
 		int f_backwards, int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void lint_vec_print_types_naked_tex_we_are_in_math_mode(
+	void lint_vec_print_types_bare_tex_we_are_in_math_mode(
 			std::ostream &ost,
 		int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
@@ -2154,14 +2154,14 @@ public:
 	void print_file_tex(std::ostream &ost, int f_backwards);
 	void print_file_tex_we_are_in_math_mode(
 			std::ostream &ost, int f_backwards);
-	void print_naked_stringstream(
+	void print_bare_stringstream(
 			std::stringstream &sstr, int f_backwards);
-	void print_naked(int f_backwards);
-	void print_naked_tex(std::ostream &ost, int f_backwards);
-	void print_types_naked_tex(std::ostream &ost, int f_backwards,
+	void print_bare(int f_backwards);
+	void print_bare_tex(std::ostream &ost, int f_backwards);
+	void print_types_bare_tex(std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void print_lint_types_naked_tex(
+	void print_lint_types_bare_tex(
 		std::ostream &ost, int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void print_array_tex(std::ostream &ost, int f_backwards);
@@ -2256,12 +2256,12 @@ public:
 	void print_file_tex(std::ostream &ost, int f_backwards);
 	void print_file_tex_we_are_in_math_mode(
 			std::ostream &ost, int f_backwards);
-	void print_naked_stringstream(
+	void print_bare_stringstream(
 			std::stringstream &sstr, int f_backwards);
-	void print_naked(int f_backwards);
-	void print_naked_tex(
+	void print_bare(int f_backwards);
+	void print_bare_tex(
 			std::ostream &ost, int f_backwards);
-	void print_types_naked_tex(
+	void print_types_bare_tex(
 			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);

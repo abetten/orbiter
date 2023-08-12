@@ -1760,7 +1760,7 @@ void wreath_product::compute_tensor_ranks(
 				nb_types, verbose_level);
 
 		cout << "classification of orbit reps by tensor rank:" << endl;
-		C.print_naked(true);
+		C.print_bare(true);
 		cout << endl;
 		for (int t = 0; t < nb_types; t++) {
 			cout << "working on type " << t << " of value " << types[t] << ":" << endl;
@@ -1781,12 +1781,12 @@ void wreath_product::compute_tensor_ranks(
 
 			C1.init(L, SoS->Set_size[t], false, 0);
 			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;
-			C1.print_naked_tex(cout, true);
+			C1.print_bare_tex(cout, true);
 			cout << endl;
 
 			C2.init(Ago, SoS->Set_size[t], false, 0);
 			cout << "classification of ago for tensor rank " << types[t] << ":" << endl;
-			C2.print_naked_tex(cout, true);
+			C2.print_bare_tex(cout, true);
 			cout << endl;
 
 			FREE_int(L);
@@ -1859,7 +1859,7 @@ void wreath_product::compute_tensor_ranks(
 				nb_types, verbose_level);
 
 		cout << "classification of orbit reps by tensor rank:" << endl;
-		C.print_naked(true);
+		C.print_bare(true);
 		cout << endl;
 		for (int t = 0; t < nb_types; t++) {
 			cout << "working on type " << t << " of value " << types[t] << ":" << endl;
@@ -1880,12 +1880,12 @@ void wreath_product::compute_tensor_ranks(
 
 			C1.init(L, SoS->Set_size[t], false, 0);
 			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;
-			C1.print_naked_tex(cout, true);
+			C1.print_bare_tex(cout, true);
 			cout << endl;
 
 			C2.init(Ago, SoS->Set_size[t], false, 0);
 			cout << "classification of ago for tensor rank " << types[t] << ":" << endl;
-			C2.print_naked_tex(cout, true);
+			C2.print_bare_tex(cout, true);
 			cout << endl;
 
 			FREE_int(L);

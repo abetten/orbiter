@@ -1863,7 +1863,7 @@ void poset_classification::find_interesting_k_subsets(
 
 
 	if (f_v) {
-		C->print_naked(false);
+		C->print_bare(false);
 		cout << endl;
 	}
 

@@ -370,7 +370,7 @@ void action_on_forms::orbits_on_functions(
 	if (f_v) {
 		cout << "action_on_forms::orbits_on_functions "
 				"The distribution of orbit lengths is: ";
-		Classify_orbits_by_length->print_naked(false);
+		Classify_orbits_by_length->print_bare(false);
 		cout << endl;
 	}
 

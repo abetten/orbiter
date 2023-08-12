@@ -542,7 +542,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 
 				C.init_lint(data, orbit_length, true, 0);
 				fp << "$$";
-				C.print_naked_tex(fp, true /* f_backwards */);
+				C.print_bare_tex(fp, true /* f_backwards */);
 				fp << "$$";
 				FREE_lint(data);
 			}

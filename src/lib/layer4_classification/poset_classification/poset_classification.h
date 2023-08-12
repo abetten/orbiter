@@ -979,7 +979,7 @@ public:
 	void print_progress_by_level(int lvl);
 	void print_orbit_numbers(int depth);
 	void print();
-	void print_statistic_on_callbacks_naked();
+	void print_statistic_on_callbacks_bare();
 	void print_statistic_on_callbacks();
 	void prepare_fname_data_file(
 			std::string &fname,

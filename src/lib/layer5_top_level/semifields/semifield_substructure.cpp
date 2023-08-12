@@ -152,7 +152,7 @@ void semifield_substructure::compute_cases(
 				0);
 		if (f_v) {
 			cout << "classification of Len amongst the need orbits cases:" << endl;
-			C.print_naked(true);
+			C.print_bare(true);
 			cout << endl;
 			}
 	}

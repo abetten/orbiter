@@ -500,13 +500,13 @@ void lint_vec::print_to_str(std::string &s, long int *data, int len)
 {
 	string s1;
 
-	print_to_str_naked(s1, data, len);
+	print_to_str_bare(s1, data, len);
 
 	s = "\" " + s1 + "\"";
 
 }
 
-void lint_vec::print_to_str_naked(std::string &s, long int *data, int len)
+void lint_vec::print_to_str_bare(std::string &s, long int *data, int len)
 {
 	int i;
 	long int a;

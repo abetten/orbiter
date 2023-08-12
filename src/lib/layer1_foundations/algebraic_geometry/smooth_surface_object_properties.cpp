@@ -386,7 +386,7 @@ void smooth_surface_object_properties::print_tritangent_planes(std::ostream &ost
 
 	ost << "Type iso of tritangent planes: ";
 	ost << "$$" << endl;
-	Type_iso_tritangent_planes->print_naked_tex(ost, true);
+	Type_iso_tritangent_planes->print_bare_tex(ost, true);
 	ost << endl;
 	ost << "$$" << endl;
 	ost << endl;

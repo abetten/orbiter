@@ -176,12 +176,12 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		cout << "packing_invariants::compute_decomposition: "
 				"plane-intersection type: ";
 		C->print(false /*f_backwards*/);
-		C->print_naked_tex(cout, false /*f_backwards*/);
+		C->print_bare_tex(cout, false /*f_backwards*/);
 	}
 	
 #if 0
 	ost << "Plane type of Klein-image is $($ ";
-	C->print_naked_tex(ost);
+	C->print_bare_tex(ost);
 	ost << " $)$" << endl << endl;
 	ost << "\\bigskip" << endl << endl;
 #endif

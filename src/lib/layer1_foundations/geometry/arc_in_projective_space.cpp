@@ -1000,7 +1000,7 @@ void arc_in_projective_space::arc_lifting_diophant(
 	C.init(line_type, P->Subspaces->N_lines, false, 0);
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting_diophant line_type:";
-		C.print_naked(true);
+		C.print_bare(true);
 		cout << endl;
 		cout << "nb_free_points=" << nb_free_points << endl;
 	}

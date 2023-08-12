@@ -845,7 +845,6 @@ void layered_graph::draw_with_options(
 				G.polygon2(Px, Py, 0, 1);
 			}
 			for (i = 0; i < nb_layers; i++) {
-				char str[1000];
 
 				coordinates(L[i].Nodes[0].id,
 						O->xin, O->yin, O->f_rotated, x, y);

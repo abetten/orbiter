@@ -471,7 +471,6 @@ void number_theory_domain::do_eulerfunction_interval(
 	int t0, t1, dt;
 	orbiter_kernel_system::os_interface Os;
 	orbiter_kernel_system::file_io Fio;
-	char str[1000];
 
 	t0 = Os.os_ticks();
 	if (f_v) {

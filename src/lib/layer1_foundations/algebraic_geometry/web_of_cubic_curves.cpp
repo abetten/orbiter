@@ -216,7 +216,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 		C.init(Rk, N, false, 0 /* verbose_level */);
 		cout << "web_of_cubic_curves::init "
 				"classification of ranks of 4-subsets:" << endl;
-		C.print_naked_tex(cout, true /* f_backwards */);
+		C.print_bare_tex(cout, true /* f_backwards */);
 		cout << endl;
 	}
 

@@ -1490,7 +1490,7 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 		ost << "The line type is $";
 		data_structures::tally C;
 		C.init(type, CCA->CC->P->Subspaces->N_lines, false, 0);
-		C.print_naked_tex(ost, true /* f_backwards*/);
+		C.print_bare_tex(ost, true /* f_backwards*/);
 		ost << ".$ \\\\" << endl;
 
 
@@ -1710,7 +1710,7 @@ void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
 
 	C.init(Ago, Curves->nb_orbits, false, 0);
 	ost << "Distribution: $(";
-	C.print_naked_tex(ost, true /* f_backwards */);
+	C.print_bare_tex(ost, true /* f_backwards */);
 	ost << ")$\\\\" << endl;
 
 
