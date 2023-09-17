@@ -21,6 +21,11 @@ public:
 
 private:
     using node_type = irtree_node::node_type;
+	template <typename T>
+	inline void make_child_nodes(irtree_node* child, T* node) {
+		for (shared_ptr<irtree_node>& grandchild : static_cast<non_terminal_node*>(child)->children) 
+			node->children.push_back(grandchild);
+	}
 };
 
 #endif /* MERGE_NODES_VISITOR */
