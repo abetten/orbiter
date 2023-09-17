@@ -307,7 +307,7 @@ public:
 // gl_class_rep.cpp
 // #############################################################################
 
-//! conjugacy class in GL(n,q) described using rational normal form
+//! description of a conjugacy class in GL(n,q) using the rational normal form
 
 class gl_class_rep {
 
@@ -552,7 +552,7 @@ public:
 // gl_classes.cpp
 // #############################################################################
 
-//! to list all conjugacy classes in GL(n,q)
+//! conjugacy classes in GL(n,q)
 
 class gl_classes {
 public:

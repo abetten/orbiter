@@ -809,7 +809,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 
 
 	for (j = 0; j < b; j++) {
-		point_labels[i] = std::to_string(orbit[nb_rows + j]);
+		block_labels[j] = std::to_string(orbit[nb_rows + j]);
 	}
 
 	graphics::draw_incidence_structure_description *Descr;

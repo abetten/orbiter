@@ -3347,11 +3347,11 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 
 	idx = orbiter_kernel_system::Orbiter->find_symbol(design_table_group);
 
-	symbol_table_object_type t;
+	layer1_foundations::orbiter_kernel_system::symbol_table_object_type t;
 
 	t = orbiter_kernel_system::Orbiter->get_object_type(idx);
 
-	if (t != t_any_group) {
+	if (t != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
 		cout << "object must be of type group, but is ";
 		orbiter_kernel_system::Orbiter->print_type(t);
 		cout << endl;

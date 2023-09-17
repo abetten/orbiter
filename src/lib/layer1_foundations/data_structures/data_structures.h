@@ -1980,6 +1980,13 @@ public:
 	std::string decode_CRC_data_polynomial;
 	std::string decode_CRC_check_polynomial;
 
+	int f_submatrix;
+	std::string submatrix_source;
+	int submatrix_row_first;
+	int submatrix_nb_rows;
+	int submatrix_col_first;
+	int submatrix_nb_cols;
+
 
 	int f_do_not_simplify;
 
@@ -2084,6 +2091,10 @@ public:
 			std::string &label,
 			int verbose_level);
 	void do_CRC_decode(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_submatrix(
 			symbolic_object_builder_description *Descr,
 			std::string &label,
 			int verbose_level);

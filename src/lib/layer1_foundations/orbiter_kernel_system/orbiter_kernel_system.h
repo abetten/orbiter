@@ -1037,7 +1037,7 @@ public:
 			int argc, std::string *argv, int verbose_level);
 
 	void *get_object(int idx);
-	symbol_table_object_type get_object_type(int idx);
+	enum symbol_table_object_type get_object_type(int idx);
 	int find_symbol(std::string &label);
 	void get_vector_from_label(
 			std::string &label, long int *&v, int &sz,
@@ -1087,12 +1087,6 @@ public:
 // #############################################################################
 
 
-enum symbol_table_entry_type {
-	t_nothing,
-	t_intvec,
-	t_object,
-	t_string,
-};
 
 
 
@@ -1252,18 +1246,22 @@ public:
 
 
 
-//! symbol table to store data entries for the orbiter run-time system
+//! symbol table to store Orbiter objects for the Orbiter run-time system
 
 
 class orbiter_symbol_table {
 public:
 	std::vector<orbiter_symbol_table_entry> Table;
 
+	int f_has_free_entry_callback;
+	void (*free_entry_callback)(orbiter_symbol_table_entry *Symb, int verbose_level);
+
 	orbiter_symbol_table();
 	~orbiter_symbol_table();
 	int find_symbol(std::string &str);
 	void add_symbol_table_entry(std::string &str,
 			orbiter_symbol_table_entry *Symb, int verbose_level);
+	void free_table_entry(int idx, int verbose_level);
 	void print_symbol_table();
 	void *get_object(int idx);
 	symbol_table_object_type get_object_type(int idx);

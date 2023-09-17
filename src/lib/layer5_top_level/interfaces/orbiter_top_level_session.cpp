@@ -34,6 +34,10 @@ orbiter_top_level_session::orbiter_top_level_session()
 			"after new orbiter_session" << endl;
 
 	The_Orbiter_top_level_session = this;
+
+	The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->f_has_free_entry_callback = true;
+	The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->free_entry_callback = free_symbol_table_entry_callback;
+
 	//Orbiter_session = NULL;
 }
 
@@ -310,7 +314,7 @@ void *orbiter_top_level_session::get_object(int idx)
 	return Orbiter_session->get_object(idx);
 }
 
-symbol_table_object_type orbiter_top_level_session::get_object_type(int idx)
+layer1_foundations::orbiter_kernel_system::symbol_table_object_type orbiter_top_level_session::get_object_type(int idx)
 {
 	return Orbiter_session->get_object_type(idx);
 }
@@ -362,7 +366,7 @@ apps_algebra::any_group
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_any_group) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
 		cout << "orbiter_top_level_session::get_object_of_type_any_group "
 				"object type != t_any_group" << endl;
 		exit(1);
@@ -382,7 +386,7 @@ projective_geometry::projective_space_with_action
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_projective_space) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_projective_space) {
 		cout << "orbiter_top_level_session::get_object_of_type_projective_space "
 				"object type != t_projective_space" << endl;
 		exit(1);
@@ -402,7 +406,7 @@ poset_classification::poset_classification_control
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_poset_classification_control) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_poset_classification_control) {
 		cout << "orbiter_top_level_session::get_object_of_type_poset_classification_control "
 				"object type != t_poset_classification_control" << endl;
 		exit(1);
@@ -423,7 +427,7 @@ poset_classification::poset_classification_activity_description
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_poset_classification_activity) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_poset_classification_activity) {
 		cout << "orbiter_top_level_session::get_object_of_type_poset_classification_activity "
 				"object type != t_poset_classification_activity" << endl;
 		exit(1);
@@ -453,7 +457,7 @@ void orbiter_top_level_session::get_vector_or_set(std::string &label,
 
 		idx = Orbiter_session->find_symbol(label);
 
-		if (Orbiter_session->get_object_type(idx) == t_vector) {
+		if (Orbiter_session->get_object_type(idx) == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_vector) {
 
 			if (f_v) {
 				cout << "orbiter_top_level_session::get_vector_or_set "
@@ -469,7 +473,7 @@ void orbiter_top_level_session::get_vector_or_set(std::string &label,
 			Lint_vec_copy(VB->v, Pts, nb_pts);
 
 		}
-		else if (Orbiter_session->get_object_type(idx) == t_set) {
+		else if (Orbiter_session->get_object_type(idx) == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_set) {
 
 			if (f_v) {
 				cout << "orbiter_top_level_session::get_vector_or_set "
@@ -514,7 +518,7 @@ apps_algebra::vector_ge_builder
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_vector_ge) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_vector_ge) {
 		cout << "orbiter_top_level_session::get_object_of_type_vector_ge "
 				"object type != t_vector_ge" << endl;
 		cout << "object type = ";
@@ -537,7 +541,7 @@ orthogonal_geometry_applications::orthogonal_space_with_action
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_orthogonal_space) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_orthogonal_space) {
 		cout << "orbiter_top_level_session::get_object_of_type_orthogonal_space_with_action "
 				"object type != t_orthogonal_space" << endl;
 		exit(1);
@@ -583,7 +587,7 @@ spreads::spread_create
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_spread) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_spread) {
 		cout << "orbiter_top_level_session::get_object_of_type_spread "
 				"object type != t_spread" << endl;
 		exit(1);
@@ -605,7 +609,7 @@ applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_cubic_surface) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_cubic_surface) {
 		cout << "orbiter_top_level_session::get_object_of_type_cubic_surface "
 				"object type != t_cubic_surface" << endl;
 		exit(1);
@@ -628,7 +632,7 @@ apps_coding_theory::create_code
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_code) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_code) {
 		cout << "orbiter_top_level_session::get_object_of_type_code "
 				"object type != t_code" << endl;
 		exit(1);
@@ -650,7 +654,7 @@ orthogonal_geometry_applications::orthogonal_space_with_action
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
-	if (get_object_type(idx) != t_orthogonal_space) {
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_orthogonal_space) {
 		cout << "orbiter_top_level_session::get_orthogonal_space "
 				"object type != t_orthogonal_space" << endl;
 		exit(1);
@@ -661,7 +665,240 @@ orthogonal_geometry_applications::orthogonal_space_with_action
 			get_object(idx);
 }
 
+void free_symbol_table_entry_callback(
+		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "free_symbol_table_entry_callback" << endl;
+	}
+
+	orbiter_kernel_system::symbol_table_object_type t;
+
+	t = Symb->object_type;
+
+
+	if (t == orbiter_kernel_system::t_nothing_object) {
+		if (f_v) {
+			cout << "t_nothing_object" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_finite_field) {
+		if (f_v) {
+			cout << "t_finite_field" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_any_group) {
+		if (f_v) {
+			cout << "t_any_group" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_linear_group) {
+		if (f_v) {
+			cout << "t_linear_group" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_permutation_group) {
+		if (f_v) {
+			cout << "t_permutation_group" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_modified_group) {
+		if (f_v) {
+			cout << "t_modified_group" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_projective_space) {
+		if (f_v) {
+			cout << "t_projective_space" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_orthogonal_space) {
+		if (f_v) {
+			cout << "t_orthogonal_space" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_BLT_set_classify) {
+		if (f_v) {
+			cout << "t_BLT_set_classify" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_spread_classify) {
+		if (f_v) {
+			cout << "t_spread_classify" << endl;
+		}
+	}
+#if 0
+	else if (t == orbiter_kernel_system::t_formula) {
+		if (f_v) {
+			cout << "t_formula" << endl;
+		}
+	}
+#endif
+	else if (t == orbiter_kernel_system::t_cubic_surface) {
+		if (f_v) {
+			cout << "t_cubic_surface" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_quartic_curve) {
+		if (f_v) {
+			cout << "t_quartic_curve" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_BLT_set) {
+		if (f_v) {
+			cout << "t_BLT_set" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_classification_of_cubic_surfaces_with_double_sixes) {
+		if (f_v) {
+			cout << "t_classification_of_cubic_surfaces_with_double_sixes" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_collection) {
+		if (f_v) {
+			cout << "t_collection" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_geometric_object) {
+		if (f_v) {
+			cout << "t_geometric_object" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_graph) {
+		if (f_v) {
+			cout << "t_graph" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_code) {
+		if (f_v) {
+			cout << "t_code" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_spread_table) {
+		if (f_v) {
+			cout << "t_spread_table" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_packing_was) {
+		if (f_v) {
+			cout << "t_packing_was" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_packing_was_choose_fixed_points) {
+		if (f_v) {
+			cout << "t_packing_was_choose_fixed_points" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_packing_long_orbits) {
+		if (f_v) {
+			cout << "t_packing_long_orbits" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_graph_classify) {
+		if (f_v) {
+			cout << "t_graph_classify" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_diophant) {
+		if (f_v) {
+			cout << "t_diophant" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_design) {
+		if (f_v) {
+			cout << "t_design" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_design_table) {
+		if (f_v) {
+			cout << "t_design_table" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_large_set_was) {
+		if (f_v) {
+			cout << "t_large_set_was" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_set) {
+		if (f_v) {
+			cout << "t_set" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_vector) {
+		if (f_v) {
+			cout << "t_vector" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_symbolic_object) {
+		if (f_v) {
+			cout << "t_symbolic_object" << endl;
+		}
+
+		data_structures::symbolic_object_builder *SB;
+
+		SB = (data_structures::symbolic_object_builder *) Symb->ptr;
+
+		FREE_OBJECT(SB);
+		Symb->ptr = NULL;
+		Symb->object_type = orbiter_kernel_system::t_nothing_object;
+
+		if (f_v) {
+			cout << "symbolic_object freed" << endl;
+		}
+
+	}
+	else if (t == orbiter_kernel_system::t_combinatorial_objects) {
+		if (f_v) {
+			cout << "t_combinatorial_objects" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_geometry_builder) {
+		if (f_v) {
+			cout << "t_geometry_builder" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_vector_ge) {
+		if (f_v) {
+			cout << "t_vector_ge" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_action_on_forms) {
+		if (f_v) {
+			cout << "t_action_on_forms" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_orbits) {
+		if (f_v) {
+			cout << "t_orbits" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_poset_classification_control) {
+		if (f_v) {
+			cout << "t_poset_classification_control" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_poset_classification_activity) {
+		if (f_v) {
+			cout << "t_poset_classification_activity" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_crc_code) {
+		if (f_v) {
+			cout << "t_crc_code" << endl;
+		}
+	}
+	else {
+		cout << "type is unknown" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "free_symbol_table_entry_callback done" << endl;
+	}
+}
 
 
 }}}

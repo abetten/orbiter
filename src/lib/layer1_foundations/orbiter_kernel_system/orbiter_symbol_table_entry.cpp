@@ -632,7 +632,7 @@ void orbiter_symbol_table_entry::init_set(
 	object_type = t_set;
 	ptr = SB;
 	if (f_v) {
-		cout << "orbiter_symbol_table_entry::init_set done" << endl;
+		cout << "or\\biter_symbol_table_entry::init_set done" << endl;
 	}
 }
 

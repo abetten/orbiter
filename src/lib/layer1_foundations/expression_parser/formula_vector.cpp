@@ -731,7 +731,7 @@ void formula_vector::print_latex(std::ostream &ost, std::string &label)
 		}
 	}
 
-	print_variables(ost);
+	//print_variables(ost);
 }
 
 void formula_vector::make_A_minus_lambda_Identity(

@@ -115,6 +115,13 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	//std::string decode_CRC_data_polynomial;
 	//std::string decode_CRC_check_polynomial;
 
+	f_submatrix = false;
+	//std::string submatrix_source;
+	submatrix_row_first = 0;
+	submatrix_nb_rows = 0;
+	submatrix_col_first = 0;
+	submatrix_nb_cols = 0;
+
 	f_do_not_simplify = false;
 
 	f_write_trees_during_expand = false;
@@ -385,6 +392,24 @@ int symbolic_object_builder_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-submatrix") == 0) {
+			f_submatrix = true;
+			submatrix_source.assign(argv[++i]);
+			submatrix_row_first = ST.strtoi(argv[++i]);
+			submatrix_nb_rows = ST.strtoi(argv[++i]);
+			submatrix_col_first = ST.strtoi(argv[++i]);
+			submatrix_nb_cols = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-submatrix "
+						<< " " << submatrix_source
+						<< " " << submatrix_row_first
+						<< " " << submatrix_nb_rows
+						<< " " << submatrix_col_first
+						<< " " << submatrix_nb_cols
+						<< endl;
+			}
+		}
+
 
 
 		else if (ST.stringcmp(argv[i], "-do_not_simplify") == 0) {
@@ -549,6 +574,15 @@ void symbolic_object_builder_description::print()
 				<< " " << decode_CRC_block_length
 				<< " " << decode_CRC_data_polynomial
 				<< " " << decode_CRC_check_polynomial
+				<< endl;
+	}
+	if (f_submatrix) {
+		cout << "-submatrix "
+				<< " " << submatrix_source
+				<< " " << submatrix_row_first
+				<< " " << submatrix_nb_rows
+				<< " " << submatrix_col_first
+				<< " " << submatrix_nb_cols
 				<< endl;
 	}
 	if (f_do_not_simplify) {

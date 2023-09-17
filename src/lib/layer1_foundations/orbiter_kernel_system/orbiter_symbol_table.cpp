@@ -23,6 +23,9 @@ namespace orbiter_kernel_system {
 orbiter_symbol_table::orbiter_symbol_table()
 {
 	// Table;
+
+	f_has_free_entry_callback = false;
+	free_entry_callback = NULL;
 }
 
 orbiter_symbol_table::~orbiter_symbol_table()
@@ -56,10 +59,28 @@ void orbiter_symbol_table::add_symbol_table_entry(std::string &str,
 	idx = find_symbol(str);
 
 	if (idx >= 0) {
+
+		if (f_v) {
+			cout << "orbiter_symbol_table::add_symbol_table_entry "
+				"overriding symbol " << str << " at position " << idx << endl;
+		}
+
+		if (f_v) {
+			cout << "orbiter_symbol_table::add_symbol_table_entry before free_table_entry" << endl;
+		}
+		free_table_entry(idx, verbose_level - 1);
+		if (f_v) {
+			cout << "orbiter_symbol_table::add_symbol_table_entry after free_table_entry" << endl;
+		}
+		Table[idx] = *Symb;
+
+#if 0
 		cout << "orbiter_symbol_table::add_symbol_table_entry Overriding "
 				"symbol " << str << " in symbol table at position " << idx << endl;
 		Table[idx].freeself();
 		Table[idx] = *Symb;
+#endif
+
 	}
 	else {
 		Table.push_back(*Symb);
@@ -69,6 +90,28 @@ void orbiter_symbol_table::add_symbol_table_entry(std::string &str,
 		cout << "orbiter_symbol_table::add_symbol_table_entry done" << endl;
 	}
 }
+
+void orbiter_symbol_table::free_table_entry(int idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table::free_table_entry idx = " << idx << endl;
+	}
+	if (f_has_free_entry_callback) {
+		if (f_v) {
+			cout << "orbiter_symbol_table::free_table_entry before (*free_entry_callback)()" << endl;
+		}
+		(*free_entry_callback)(&Table[idx], verbose_level - 1);
+		if (f_v) {
+			cout << "orbiter_symbol_table::free_table_entry after (*free_entry_callback)()" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "orbiter_symbol_table::free_table_entry done" << endl;
+	}
+}
+
 
 void orbiter_symbol_table::print_symbol_table()
 {

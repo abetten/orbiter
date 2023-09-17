@@ -479,7 +479,7 @@ void projective_space_global::do_classify_arcs(
 		//linear_group *LG;
 
 		idx = orbiter_kernel_system::Orbiter->find_symbol(Arc_generator_description->override_group_label);
-		if (orbiter_kernel_system::Orbiter->get_object_type(idx) != t_any_group) {
+		if (orbiter_kernel_system::Orbiter->get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
 			cout << "projective_space_global::do_classify_arcs "
 					"The object given must be a group" << endl;
 			exit(1);

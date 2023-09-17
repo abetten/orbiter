@@ -184,6 +184,7 @@ public:
 	latex_interface();
 	~latex_interface();
 	void head_easy(std::ostream& ost);
+	void head_easy_and_enlarged(std::ostream& ost);
 	void head_easy_with_extras_in_the_praeamble(
 			std::ostream& ost, std::string &extras);
 	void head_easy_sideways(std::ostream& ost);

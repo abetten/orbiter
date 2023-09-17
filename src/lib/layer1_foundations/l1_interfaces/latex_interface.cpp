@@ -48,6 +48,25 @@ void latex_interface::head_easy(std::ostream& ost)
 
 }
 
+void latex_interface::head_easy_and_enlarged(std::ostream& ost)
+{
+	std::string dummy;
+
+	dummy.assign("");
+
+	head(ost,
+		false /* f_book */,
+		false /* f_title */,
+		dummy, dummy,
+		false /*f_toc */,
+		false /* f_landscape */,
+		false /* f_12pt */,
+		true /* f_enlarged_page */,
+		true /* f_pagenumbers */,
+		dummy /* extras_for_preamble */);
+
+}
+
 void latex_interface::head_easy_with_extras_in_the_praeamble(
 		std::ostream& ost, std::string &extras)
 {
@@ -152,8 +171,9 @@ void latex_interface::head(
 	ost << "%\\usepackage{times}" << endl;
 	ost << "%\\usepackage{pifont}" << endl;
 	if (f_enlarged_page) {
-		ost << "\\usepackage{fullpage}" << endl;
-		ost << "\\usepackage[top=1in,bottom=0.2in,right=1in,left=1in]{geometry}" << endl; // A Betten 2/7/2021
+		ost << "\\usepackage[a0paper]{geometry}" << endl;
+		//ost << "\\usepackage{fullpage}" << endl;
+		//ost << "\\usepackage[top=1in,bottom=0.2in,right=1in,left=1in]{geometry}" << endl; // A Betten 2/7/2021
 #if 0
 		ost << "%\\voffset=-1.5cm" << endl;
 		ost << "\\hoffset=-2cm" << endl;

@@ -132,7 +132,7 @@ void symbolic_object_builder::init(
 			l1_interfaces::latex_interface L;
 			ofstream ost(fname);
 
-			L.head_easy(ost);
+			L.head_easy_and_enlarged(ost);
 
 			cout << "before Formula_vector->print_latex" << endl;
 			Formula_vector->print_latex(ost, label);
@@ -433,6 +433,23 @@ void symbolic_object_builder::process_arguments(
 					<< endl;
 		}
 		do_CRC_decode(
+					Descr,
+					label,
+					verbose_level - 1);
+	}
+
+
+	else if (Descr->f_submatrix) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -submatrix"
+					<< " " << Descr->submatrix_source
+					<< " " << Descr->submatrix_row_first
+					<< " " << Descr->submatrix_nb_rows
+					<< " " << Descr->submatrix_col_first
+					<< " " << Descr->submatrix_nb_cols
+					<< endl;
+		}
+		do_submatrix(
 					Descr,
 					label,
 					verbose_level - 1);
@@ -1834,6 +1851,92 @@ void symbolic_object_builder::do_CRC_decode(
 		cout << "symbolic_object_builder::do_CRC_decode done" << endl;
 	}
 }
+
+
+void symbolic_object_builder::do_submatrix(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_submatrix"
+				<< " " << Descr->submatrix_source
+				<< " " << Descr->submatrix_row_first
+				<< " " << Descr->submatrix_nb_rows
+				<< " " << Descr->submatrix_col_first
+				<< " " << Descr->submatrix_nb_cols
+				<< endl;
+	}
+	data_structures::symbolic_object_builder *O_source;
+
+	O_source = Get_symbol(Descr->submatrix_source);
+
+	if (!O_source->Formula_vector->f_matrix) {
+		cout << "symbolic_object_builder::do_submatrix we expect the input object to be a matrix" << endl;
+		exit(1);
+	}
+	if (O_source->Formula_vector->nb_rows < Descr->submatrix_row_first + Descr->submatrix_nb_rows) {
+		cout << "symbolic_object_builder::do_submatrix the input matrix does not have sufficiently many rows" << endl;
+		exit(1);
+	}
+	if (O_source->Formula_vector->nb_cols < Descr->submatrix_col_first + Descr->submatrix_nb_cols) {
+		cout << "symbolic_object_builder::do_submatrix the input matrix does not have sufficiently many columns" << endl;
+		exit(1);
+	}
+
+	int N, i, j, i0, j0;
+
+	N = Descr->submatrix_nb_rows * Descr->submatrix_nb_cols;
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+
+	Formula_vector->init_and_allocate(
+				label, label,
+				true,
+				Descr->managed_variables,
+				N, 0 /*verbose_level*/);
+
+
+	Formula_vector->f_matrix = true;
+	Formula_vector->nb_rows = Descr->submatrix_nb_rows;
+	Formula_vector->nb_cols = Descr->submatrix_nb_cols;
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_submatrix "
+				"extracting submatrix" << endl;
+	}
+
+	for (i = 0; i < Descr->submatrix_nb_rows; i++) {
+
+		i0 = Descr->submatrix_row_first + i;
+
+		for (j = 0; j < Descr->submatrix_nb_cols; j++) {
+
+			j0 = Descr->submatrix_col_first + j;
+
+			O_source->Formula_vector->V[i0 * O_source->Formula_vector->nb_cols + j0].copy_to(
+					&Formula_vector->V[i * Descr->submatrix_nb_cols + j],
+					verbose_level - 1);
+
+
+		}
+	}
+	if (f_v) {
+		cout << "symbolic_object_builder::do_submatrix "
+				"extracting submatrix finished" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_submatrix done" << endl;
+	}
+}
+
+
 
 
 void symbolic_object_builder::multiply_terms(

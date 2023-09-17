@@ -999,7 +999,7 @@ public:
 			int argc, std::string *Argv, int &i,
 			std::vector<void * > &program, int verbose_level);
 	void *get_object(int idx);
-	symbol_table_object_type get_object_type(int idx);
+	layer1_foundations::orbiter_kernel_system::symbol_table_object_type get_object_type(int idx);
 	int find_symbol(
 			std::string &label);
 	void find_symbols(
@@ -1042,6 +1042,11 @@ public:
 				std::string &label);
 
 };
+
+
+void free_symbol_table_entry_callback(
+		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
+
 
 
 // #############################################################################

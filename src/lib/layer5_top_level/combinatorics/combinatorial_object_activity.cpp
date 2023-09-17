@@ -392,8 +392,24 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 		}
 
 		//FREE_OBJECTS(OwP);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"before FREE_OBJECT(C)" << endl;
+		}
 		FREE_OBJECT(C);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"after FREE_OBJECT(C)" << endl;
+		}
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"before FREE_OBJECT(CO)" << endl;
+		}
 		FREE_OBJECT(CO);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"after FREE_OBJECT(CO)" << endl;
+		}
 
 
 
@@ -474,8 +490,24 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 		}
 
 
-		FREE_OBJECTS(C);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"before FREE_OBJECT(C)" << endl;
+		}
+		FREE_OBJECT(C);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"after FREE_OBJECT(C)" << endl;
+		}
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"before FREE_OBJECT(CO)" << endl;
+		}
 		FREE_OBJECT(CO);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"after FREE_OBJECT(CO)" << endl;
+		}
 
 
 	}
@@ -502,10 +534,10 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 		idx = orbiter_kernel_system::Orbiter->find_symbol(
 				Descr->test_distinguishing_property_graph);
 
-		symbol_table_object_type t;
+		layer1_foundations::orbiter_kernel_system::symbol_table_object_type t;
 
 		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-		if (t != t_graph) {
+		if (t != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_graph) {
 			cout << "combinatorial_object_activity::perform_activity_input_stream "
 				<< Descr->test_distinguishing_property_graph << " is not of type graph" << endl;
 			exit(1);

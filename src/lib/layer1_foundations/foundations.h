@@ -602,6 +602,60 @@ namespace number_theory {
 
 namespace orbiter_kernel_system {
 
+	enum symbol_table_entry_type {
+		t_nothing,
+		t_intvec,
+		t_object,
+		t_string,
+	};
+
+
+	enum symbol_table_object_type {
+		t_nothing_object,
+		t_finite_field,
+		t_polynomial_ring,
+		t_any_group,
+		t_linear_group,
+		t_permutation_group,
+		t_modified_group,
+		t_projective_space,
+		t_orthogonal_space,
+		t_BLT_set_classify,
+		t_spread_classify,
+		//t_formula,
+		t_cubic_surface,
+		t_quartic_curve,
+		t_BLT_set,
+		t_classification_of_cubic_surfaces_with_double_sixes,
+		t_collection,
+		t_geometric_object,
+		t_graph,
+		t_code,
+		t_spread,
+		t_translation_plane,
+		t_spread_table,
+		t_packing_was,
+		t_packing_was_choose_fixed_points,
+		t_packing_long_orbits,
+		t_graph_classify,
+		t_diophant,
+		t_design,
+		t_design_table,
+		t_large_set_was,
+		t_set,
+		t_vector,
+		t_symbolic_object,
+		t_combinatorial_objects,
+		t_geometry_builder,
+		t_vector_ge,
+		t_action_on_forms,
+		t_orbits,
+		t_poset_classification_control,
+		t_poset_classification_activity,
+		t_crc_code,
+	};
+
+
 	class create_file_description;
 	class csv_file_support;
 	class file_io;
@@ -869,56 +923,10 @@ enum diophant_equation_type {
 	t_ZOR // zero or equal to the given value
 }; 
 
-enum symbol_table_object_type {
-	t_nothing_object,
-	t_finite_field,
-	t_polynomial_ring,
-	t_any_group,
-	t_linear_group,
-	t_permutation_group,
-	t_modified_group,
-	t_projective_space,
-	t_orthogonal_space,
-	t_BLT_set_classify,
-	t_spread_classify,
-	//t_formula,
-	t_cubic_surface,
-	t_quartic_curve,
-	t_BLT_set,
-	t_classification_of_cubic_surfaces_with_double_sixes,
-	t_collection,
-	t_geometric_object,
-	t_graph,
-	t_code,
-	t_spread,
-	t_translation_plane,
-	t_spread_table,
-	t_packing_was,
-	t_packing_was_choose_fixed_points,
-	t_packing_long_orbits,
-	t_graph_classify,
-	t_diophant,
-	t_design,
-	t_design_table,
-	t_large_set_was,
-	t_set,
-	t_vector,
-	t_symbolic_object,
-	t_combinatorial_objects,
-	t_geometry_builder,
-	t_vector_ge,
-	t_action_on_forms,
-	t_orbits,
-	t_poset_classification_control,
-	t_poset_classification_activity,
-	t_crc_code,
-};
-
 
 
 typedef enum monomial_ordering_type monomial_ordering_type;
 typedef enum diophant_equation_type diophant_equation_type;
-typedef enum symbol_table_object_type symbol_table_object_type;
 
 
 enum TokenType

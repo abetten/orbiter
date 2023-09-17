@@ -569,10 +569,10 @@ void object_with_properties::latex_report(
 
 		idx = orbiter_kernel_system::Orbiter->find_symbol(Report_options->lex_least_geometry_builder);
 
-		symbol_table_object_type t;
+		layer1_foundations::orbiter_kernel_system::symbol_table_object_type t;
 
 		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-		if (t != t_geometry_builder) {
+		if (t != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_geometry_builder) {
 			cout << "object_with_properties::latex_report "
 				<< Report_options->lex_least_geometry_builder
 				<< " is not of type geometry_builder" << endl;

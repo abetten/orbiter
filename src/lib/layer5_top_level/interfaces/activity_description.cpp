@@ -1271,11 +1271,11 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 	}
 
 
-	symbol_table_object_type type;
+	layer1_foundations::orbiter_kernel_system::symbol_table_object_type type;
 
 	type = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
 
-	if (type != t_any_group) {
+	if (type != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
 		cout << "activity_description::do_group_theoretic_activity type is not t_any_group" << endl;
 		exit(1);
 	}
@@ -1293,11 +1293,11 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 
 		if (Sym->with_labels.size() >= 2) {
 
-			symbol_table_object_type type;
+			layer1_foundations::orbiter_kernel_system::symbol_table_object_type type;
 
 			type = Sym->Orbiter_top_level_session->get_object_type(Idx[1]);
 
-			if (type != t_any_group) {
+			if (type != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
 				cout << "activity_description::do_group_theoretic_activity secondary type is not t_any_group" << endl;
 				exit(1);
 			}
@@ -1360,11 +1360,11 @@ void activity_description::do_coding_theoretic_activity(int verbose_level)
 
 
 		for (i = 0; i < Sym->with_labels.size(); i++) {
-			symbol_table_object_type type;
+			layer1_foundations::orbiter_kernel_system::symbol_table_object_type type;
 
 			type = Sym->Orbiter_top_level_session->get_object_type(Idx[i]);
 
-			if (type == t_finite_field) {
+			if (type == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_finite_field) {
 
 				if (f_v) {
 					cout << "activity_description::do_coding_theoretic_activity type is t_finite_field" << endl;
@@ -1377,7 +1377,7 @@ void activity_description::do_coding_theoretic_activity(int verbose_level)
 				Activity.init_field(Coding_theoretic_activity_description, F, verbose_level);
 			}
 
-			else if (type == t_code) {
+			else if (type == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_code) {
 
 				if (f_v) {
 					cout << "activity_description::do_coding_theoretic_activity type is t_code" << endl;
@@ -1585,10 +1585,10 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 		exit(1);
 	}
 
-	symbol_table_object_type t;
+	layer1_foundations::orbiter_kernel_system::symbol_table_object_type t;
 
 	t = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
-	if (t == t_geometric_object) {
+	if (t == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_geometric_object) {
 		geometry::geometric_object_create *GOC;
 
 		GOC = (geometry::geometric_object_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
@@ -1609,7 +1609,7 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 
 		}
 	}
-	else if (t == t_combinatorial_objects) {
+	else if (t == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_combinatorial_objects) {
 		data_structures::data_input_stream *IS;
 
 		IS = (data_structures::data_input_stream *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
