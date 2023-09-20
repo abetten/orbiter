@@ -1275,10 +1275,11 @@ void coding_theory_domain::code_weight_enumerator_fast(
 		if (((h % ONE_MILLION) == 0) && h) {
 			t1 = Os.os_ticks();
 			dt = t1 - t0;
-			cout << setw(10) << h << " / " << setw(10) << N << " : ";
-			Os.time_check_delta(cout, dt);
-			cout << endl;
 			if (f_vv) {
+				cout << setw(10) << h << " / " << setw(10) << N << " : ";
+				Os.time_check_delta(cout, dt);
+				cout << endl;
+
 				cout << "so far, the weight enumerator is:" << endl;
 				for (i = 0; i <= n; i++) {
 					if (weight_enumerator[i] == 0) {

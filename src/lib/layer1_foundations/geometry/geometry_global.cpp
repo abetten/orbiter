@@ -3329,7 +3329,8 @@ void geometry_global::find_lines_which_are_contained(
 void geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
 		projective_space *P3,
 		long int line1_from, long int line2_from,
-		long int line1_to, long int line2_to, int verbose_level)
+		long int line1_to, long int line2_to,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3338,7 +3339,8 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
 	}
 
 	if (P3->Subspaces->n != 3) {
-		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer n != 3" << endl;
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer "
+				"n != 3" << endl;
 		exit(1);
 	}
 	int A4[16];
@@ -3350,8 +3352,11 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
 			A4,
 			verbose_level);
 
-	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer A4=" << endl;
-	Int_matrix_print(A4, 4, 4);
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer "
+				"A4=" << endl;
+		Int_matrix_print(A4, 4, 4);
+	}
 
 	if (f_v) {
 		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
@@ -3422,8 +3427,10 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 			A4,
 			verbose_level);
 
-	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
-	Int_matrix_print(A4, 4, 4);
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
+		Int_matrix_print(A4, 4, 4);
+	}
 
 	if (f_v) {
 		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text done" << endl;
@@ -3521,7 +3528,7 @@ void geometry_global::plane_intersection_type(
 
 	if (f_v) {
 		cout << "geometry_global::plane_intersection_type "
-				"before plane_intersection_type_of_klein_image" << endl;
+				"before plane_intersection_type" << endl;
 	}
 
 	geometry::intersection_type *Int_type;
@@ -3533,7 +3540,7 @@ void geometry_global::plane_intersection_type(
 
 	if (f_v) {
 		cout << "geometry_global::plane_intersection_type "
-				"after plane_intersection_type_of_klein_image" << endl;
+				"after plane_intersection_type" << endl;
 	}
 
 	cout << "geometry_global::plane_intersection_type "
@@ -3643,12 +3650,14 @@ void geometry_global::plane_intersection_type_of_klein_image(
 				"after plane_intersection_type_of_klein_image" << endl;
 	}
 
-	cout << "geometry_global::plane_intersection_type_of_klein_image "
-			"intersection numbers: ";
-	Int_vec_print(cout,
-			Int_type->the_intersection_type,
-			Int_type->highest_intersection_number + 1);
-	cout << endl;
+	if (f_v) {
+		cout << "geometry_global::plane_intersection_type_of_klein_image "
+				"intersection numbers: ";
+		Int_vec_print(cout,
+				Int_type->the_intersection_type,
+				Int_type->highest_intersection_number + 1);
+		cout << endl;
+	}
 
 	if (f_v) {
 		cout << "geometry_global::plane_intersection_type_of_klein_image "

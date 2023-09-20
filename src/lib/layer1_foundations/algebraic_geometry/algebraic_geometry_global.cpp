@@ -344,6 +344,7 @@ void algebraic_geometry_global::evaluate_regular_map(
 		}
 
 		for (h = 0; h < P->Subspaces->n + 1; h++) {
+
 			symbol_table[Ring->get_symbol(h)] = std::to_string(v[h]);
 
 		}

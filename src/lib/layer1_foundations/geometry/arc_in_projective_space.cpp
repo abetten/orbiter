@@ -573,7 +573,8 @@ void arc_in_projective_space::create_Cheon_arc(
 		}
 
 		for (i = 0; i < P->Subspaces->r; i++) {
-			pencil[i] = P->Subspaces->Implementation->Lines_on_point[points[h] * P->Subspaces->r + i];
+			pencil[i] =
+					P->Subspaces->Implementation->Lines_on_point[points[h] * P->Subspaces->r + i];
 		}
 
 

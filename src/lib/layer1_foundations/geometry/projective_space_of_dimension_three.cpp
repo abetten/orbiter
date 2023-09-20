@@ -651,7 +651,8 @@ int projective_space_of_dimension_three::test_if_lines_are_skew(
 }
 
 int projective_space_of_dimension_three::five_plus_one_to_double_six(
-	long int *five_lines, long int transversal_line, long int *double_six,
+	long int *five_lines, long int transversal_line,
+	long int *double_six,
 	int verbose_level)
 // a similar function exists in class surface_domain
 // the arguments are almost the same, except that transversal_line is missing.

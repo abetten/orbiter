@@ -102,22 +102,29 @@ void klein_correspondence::init(
 	P3 = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
-		cout << "klein_correspondence::init before P3->projective_space_init" << endl;
+		cout << "klein_correspondence::init "
+				"before P3->projective_space_init" << endl;
 	}
 	P3->projective_space_init(3, F,
 		false /* f_init_incidence_structure */, 
 		verbose_level - 2);
+	if (f_v) {
+		cout << "klein_correspondence::init "
+				"after P3->projective_space_init" << endl;
+	}
 
 	P5 = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
-		cout << "klein_correspondence::init before P5->projective_space_init" << endl;
+		cout << "klein_correspondence::init "
+				"before P5->projective_space_init" << endl;
 	}
 	P5->projective_space_init(5, F,
 		false /* f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "klein_correspondence::after after P5->projective_space_init" << endl;
+		cout << "klein_correspondence::after "
+				"after P5->projective_space_init" << endl;
 	}
 
 	
@@ -373,7 +380,7 @@ void klein_correspondence::plane_intersections(
 
 	if (f_v) {
 		cout << "klein_correspondence::plane_intersections" << endl;
-		}
+	}
 	pts = NEW_lint(nb_lines);
 	
 	P3->Subspaces->Grass_lines->klein_correspondence(P3, //P5,
@@ -395,12 +402,12 @@ void klein_correspondence::plane_intersections(
 			cout << endl; 
 			}
 #endif
-		}
+	}
 	
 	FREE_lint(pts);
 	if (f_v) {
 		cout << "klein_correspondence::plane_intersections done" << endl;
-		}
+	}
 }
 
 long int klein_correspondence::point_on_quadric_embedded_in_P5(
@@ -429,7 +436,8 @@ long int klein_correspondence::line_to_point_on_quadric(
 
 	point_rk = O->Hyperbolic_pair->rank_point(v6, 1, 0 /* verbose_level */);
 	if (false) {
-		cout << "klein_correspondence::line_to_point_on_quadric line_rk=" << line_rk
+		cout << "klein_correspondence::line_to_point_on_quadric "
+				"line_rk=" << line_rk
 				<< " / " << P3->Subspaces->N_lines << " v6 : ";
 		Int_vec_print(cout, v6, 6);
 		cout << " : point_rk=" << point_rk << endl;
@@ -802,7 +810,8 @@ void klein_correspondence::identify_external_lines_and_spreads(
 			a = T->spread_table[i * T->spread_size + j];
 			b = line_to_point_on_quadric(a, 0 /* verbose_level */);
 
-			O->Hyperbolic_pair->unrank_point(basis_elliptic_quadric + j * d, 1, b, 0);
+			O->Hyperbolic_pair->unrank_point(
+					basis_elliptic_quadric + j * d, 1, b, 0);
 		}
 		if (false) {
 			cout << "klein_correspondence::identify_external_lines_and_spreads"
@@ -811,7 +820,8 @@ void klein_correspondence::identify_external_lines_and_spreads(
 			Int_matrix_print(basis_elliptic_quadric,
 					T->spread_size, d);
 		}
-		rk = F->Linear_algebra->Gauss_easy(basis_elliptic_quadric, T->spread_size, d);
+		rk = F->Linear_algebra->Gauss_easy(
+				basis_elliptic_quadric, T->spread_size, d);
 		if (rk != 4) {
 			cout << "klein_correspondence::identify_external_lines_and_spreads "
 					"spread " << i << " the elliptic quadric space "
@@ -819,7 +829,8 @@ void klein_correspondence::identify_external_lines_and_spreads(
 			exit(1);
 		}
 		Int_vec_copy(basis_elliptic_quadric, basis, 4 * d);
-		F->Linear_algebra->perp(d, 4, basis, Form, 0 /* verbose_level */);
+		F->Linear_algebra->perp(
+				d, 4, basis, Form, 0 /* verbose_level */);
 		Int_vec_copy(
 				basis + 4 * d,
 				basis_external_line,

@@ -990,7 +990,8 @@ public:
 	void do_move_two_lines_in_hyperplane_stabilizer(
 			projective_space *P3,
 			long int line1_from, long int line2_from,
-			long int line1_to, long int line2_to, int verbose_level);
+			long int line1_to, long int line2_to,
+			int verbose_level);
 	void do_move_two_lines_in_hyperplane_stabilizer_text(
 			projective_space *P3,
 			std::string &line1_from_text, std::string &line2_from_text,
@@ -2601,7 +2602,8 @@ public:
 	int test_if_lines_are_skew(
 			int line1, int line2, int verbose_level);
 	int five_plus_one_to_double_six(
-		long int *five_lines, long int transversal_line, long int *double_six,
+		long int *five_lines, long int transversal_line,
+		long int *double_six,
 		int verbose_level);
 	// a similar function exists in class surface_domain
 	// the arguments are almost the same, except that transversal_line is missing.
@@ -2814,6 +2816,10 @@ public:
 		int f_init_incidence_structure,
 		int verbose_level);
 	// n is projective dimension
+	void init_grassmann(
+		int verbose_level);
+	void compute_number_of_subspaces(
+		int verbose_level);
 	void init_incidence_structure(int verbose_level);
 	void init_polarity(int verbose_level);
 	// uses Grass_hyperplanes

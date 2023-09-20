@@ -143,17 +143,11 @@ void projective_space_subspaces::init(
 
 	int f_v = (verbose_level >= 1);
 	int i;
-	combinatorics::combinatorics_domain C;
-	ring_theory::longinteger_object a;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::init" << endl;
 	}
 	projective_space_subspaces::P = P;
-	if (f_v) {
-		cout << "projective_space_subspaces::init done" << endl;
-	}
-
 	projective_space_subspaces::n = n;
 	projective_space_subspaces::F = F;
 	projective_space_subspaces::q = F->q;
@@ -170,6 +164,68 @@ void projective_space_subspaces::init(
 	w = NEW_int(n + 1);
 	Mtx = NEW_int(3 * (n + 1));
 	Mtx2 = NEW_int(3 * (n + 1));
+
+
+	if (f_v) {
+		cout << "projective_space_subspaces::init "
+				"before init_grassmann" << endl;
+	}
+	init_grassmann(verbose_level - 2);
+	if (f_v) {
+		cout << "projective_space_subspaces::init "
+				"after init_grassmann" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_subspaces::init "
+				"before compute_number_of_subspaces" << endl;
+	}
+	compute_number_of_subspaces(verbose_level - 2);
+	if (f_v) {
+		cout << "projective_space_subspaces::init "
+				"after compute_number_of_subspaces" << endl;
+	}
+
+
+	if (f_init_incidence_structure) {
+		if (f_v) {
+			cout << "projective_space_subspaces::init "
+					"before init_incidence_structure" << endl;
+		}
+		init_incidence_structure(verbose_level);
+		if (f_v) {
+			cout << "projective_space_subspaces::init "
+					"after init_incidence_structure" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "projective_space_subspaces::init "
+					"we don't initialize "
+					"the incidence structure data" << endl;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_subspaces::init done" << endl;
+	}
+
+}
+
+
+void projective_space_subspaces::init_grassmann(
+	int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+	int i;
+	combinatorics::combinatorics_domain C;
+
+	if (f_v) {
+		cout << "projective_space_subspaces::init_grassmann" << endl;
+	}
 
 	Grass_lines = NEW_OBJECT(grassmann);
 	Grass_lines->init(n + 1, 2, F, verbose_level - 2);
@@ -193,80 +249,110 @@ void projective_space_subspaces::init(
 		Grass_stack[i]->init(n + 1, i, F, verbose_level - 2);
 	}
 
+
+
 	if (f_v) {
-		cout << "projective_space_subspaces::init "
+		cout << "projective_space_subspaces::init_grassmann done" << endl;
+	}
+}
+
+void projective_space_subspaces::compute_number_of_subspaces(
+	int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+	int i;
+	combinatorics::combinatorics_domain C;
+
+	if (f_v) {
+		cout << "projective_space_subspaces::compute_number_of_subspaces" << endl;
+	}
+	if (f_v) {
+		cout << "projective_space_subspaces::compute_number_of_subspaces "
 				"computing number of "
 				"subspaces of each dimension:" << endl;
 	}
 	Nb_subspaces = NEW_lint(n + 1);
-	if (n < 10) {
-		for (i = 0; i <= n; i++) {
-			if (f_v) {
-				cout << "projective_space_subspaces::init "
-						"computing number of "
-						"subspaces of dimension " << i + 1 << endl;
-			}
-			C.q_binomial_no_table(
-				a,
-				n + 1, i + 1, q, 0 /*verbose_level - 2*/);
-			Nb_subspaces[i] = a.as_lint();
-			//Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
-		}
+	//if (n < 10) {
 
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b;
+
+	for (i = 0; i <= n; i++) {
+		if (f_v) {
+			cout << "projective_space_subspaces::compute_number_of_subspaces "
+					"computing number of "
+					"subspaces of dimension " << i + 1 << endl;
+		}
 		C.q_binomial_no_table(
 			a,
-			n, 1, q, 0 /*verbose_level - 2*/);
-		r = a.as_int();
-		//r = generalized_binomial(n, 1, q);
+			n + 1, i + 1, q,
+			0 /*verbose_level - 2*/);
+		Nb_subspaces[i] = a.as_lint();
+		b.create(Nb_subspaces[i]);
+		if (D.compare_unsigned(a, b) != 0) {
+			cout << "projective_space_subspaces::compute_number_of_subspaces "
+					"long integer overflow in number of "
+					"subspaces of dimension i=" << i << endl;
+			exit(1);
+		}
+		//Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
 	}
-	else {
+
+	C.q_binomial_no_table(
+		a,
+		n, 1, q,
+		0 /*verbose_level - 2*/);
+	r = a.as_int();
+	b.create(r);
+	if (D.compare_unsigned(a, b) != 0) {
+		cout << "projective_space_subspaces::compute_number_of_subspaces "
+				"long integer overflow in r" << endl;
+		exit(1);
+	}
+	//r = generalized_binomial(n, 1, q);
+	//}
+	//else {
+#if 0
 		for (i = 0; i <= n; i++) {
 			if (f_v) {
-				cout << "projective_space_subspaces::init "
+				cout << "projective_space_subspaces::compute_number_of_subspaces "
 						"computing number of "
 						"subspaces of dimension " << i + 1 << endl;
 				}
 			Nb_subspaces[i] = 0;
 		}
 		r = 0;
-	}
+#endif
+	//}
+
 	N_points = Nb_subspaces[0]; // generalized_binomial(n + 1, 1, q);
 	if (f_v) {
-		cout << "projective_space_subspaces::init N_points=" << N_points << endl;
+		cout << "projective_space_subspaces::compute_number_of_subspaces "
+				"N_points=" << N_points << endl;
 	}
 	N_lines = Nb_subspaces[1]; // generalized_binomial(n + 1, 2, q);
 	if (f_v) {
-		cout << "projective_space_subspaces::init N_lines=" << N_lines << endl;
+		cout << "projective_space_subspaces::compute_number_of_subspaces "
+				"N_lines=" << N_lines << endl;
 	}
 	if (f_v) {
-		cout << "projective_space_subspaces::init r=" << r << endl;
+		cout << "projective_space_subspaces::compute_number_of_subspaces "
+				"r=" << r << endl;
 	}
 	k = q + 1; // number of points on a line
 	if (f_v) {
-		cout << "projective_space_subspaces::init k=" << k << endl;
+		cout << "projective_space_subspaces::compute_number_of_subspaces "
+				"k=" << k << endl;
 	}
 
-	if (f_init_incidence_structure) {
-		if (f_v) {
-			cout << "projective_space_subspaces::init calling "
-					"init_incidence_structure" << endl;
-		}
-		init_incidence_structure(verbose_level);
-		if (f_v) {
-			cout << "projective_space_subspaces::init "
-					"init_incidence_structure done" << endl;
-		}
+	if (f_v) {
+		cout << "projective_space_subspaces::compute_number_of_subspaces "
+				"done" << endl;
 	}
-	else {
-		if (f_v) {
-			cout << "projective_space_subspaces::init we don't initialize "
-					"the incidence structure data" << endl;
-		}
-	}
-
-
 
 }
+
 
 void projective_space_subspaces::init_incidence_structure(int verbose_level)
 {
