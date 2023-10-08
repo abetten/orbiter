@@ -45,12 +45,27 @@ public:
 			long int *&Image_pts,
 			long int &N_points,
 			int verbose_level);
+	void affine_map(
+			geometry::projective_space *P,
+			std::string &ring_label,
+			std::string &formula_label,
+			std::string &evaluate_text,
+			long int *&Image_pts,
+			long int &N_points,
+			int verbose_level);
 	void evaluate_regular_map(
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			geometry::projective_space *P,
 			data_structures::symbolic_object_builder *Object,
 			std::string &evaluate_text,
 			long int *&Image_pts, long int &N_points_output,
+			int verbose_level);
+	void evaluate_affine_map(
+			ring_theory::homogeneous_polynomial_domain *Ring,
+			geometry::projective_space *P,
+			data_structures::symbolic_object_builder *Object,
+			std::string &evaluate_text,
+			long int *&Image_pts, long int &N_points_input,
 			int verbose_level);
 	void cubic_surface_family_24_generators(
 			field_theory::finite_field *F,
@@ -387,6 +402,64 @@ public:
 
 };
 
+
+// #############################################################################
+// kovalevski_points.cpp
+// #############################################################################
+
+//! Kovalevski points of a quartic curve in PG(2,q)
+
+
+
+
+class kovalevski_points {
+
+public:
+
+	quartic_curve_object *QO;
+
+
+	data_structures::tally *Bitangent_line_type;
+	int line_type_distribution[3];
+
+	data_structures::set_of_sets *lines_on_point;
+	data_structures::tally *Point_type;
+
+	int f_fullness_has_been_established;
+	int f_is_full;
+
+
+	int nb_Kovalevski;
+	int nb_Kovalevski_on;
+	int nb_Kovalevski_off;
+	int *Kovalevski_point_idx;
+	long int *Kovalevski_points;
+
+	long int *Pts_off;
+	int nb_pts_off;
+
+	data_structures::set_of_sets *pts_off_on_lines;
+	int *f_is_on_line2; // [QO->nb_pts]
+
+	data_structures::set_of_sets *lines_on_points_off;
+	data_structures::tally *Point_off_type;
+
+
+	kovalevski_points();
+	~kovalevski_points();
+	void init(quartic_curve_object *QO, int verbose_level);
+	void compute_Kovalevski_points(
+			int verbose_level);
+	void print_general(std::ostream &ost);
+	void print_all_points(std::ostream &ost);
+	void report_bitangent_line_type(
+			std::ostream &ost);
+
+};
+
+
+
+
 // #############################################################################
 // quartic_curve_domain.cpp
 // #############################################################################
@@ -482,12 +555,11 @@ public:
 
 };
 
-
 // #############################################################################
 // quartic_curve_object_properties.cpp
 // #############################################################################
 
-//! properties of a particular quartic curve surface in PG(2,q), as defined by an object of class quartic_curve_object
+//! properties of a quartic curve in PG(2,q)
 
 
 class quartic_curve_object_properties {
@@ -501,28 +573,9 @@ public:
 		// points are stored as indices into Pts[]
 	int *f_is_on_line; // [QO->nb_pts]
 
-	data_structures::tally *Bitangent_line_type;
-	int line_type_distribution[3];
 
-	data_structures::set_of_sets *lines_on_point;
-	data_structures::tally *Point_type;
 
-	int f_fullness_has_been_established;
-	int f_is_full;
-	int nb_Kovalevski;
-	int nb_Kovalevski_on;
-	int nb_Kovalevski_off;
-	int *Kovalevski_point_idx;
-	long int *Kovalevski_points;
-
-	long int *Pts_off;
-	int nb_pts_off;
-
-	data_structures::set_of_sets *pts_off_on_lines;
-	int *f_is_on_line2; // [QO->nb_pts]
-
-	data_structures::set_of_sets *lines_on_points_off;
-	data_structures::tally *Point_off_type;
+	kovalevski_points *Kovalevski;
 
 
 	int *gradient;
@@ -558,10 +611,6 @@ public:
 			long int *Lines, int nb_lines,
 			data_structures::set_of_sets *SoS);
 	//void print_bitangents_with_points_on_them(std::ostream &ost);
-	void points_on_curve_on_lines(
-			int verbose_level);
-	void report_bitangent_line_type(
-			std::ostream &ost);
 	void compute_gradient(int verbose_level);
 	void compute_singular_points_and_tangent_lines(
 			int verbose_level);

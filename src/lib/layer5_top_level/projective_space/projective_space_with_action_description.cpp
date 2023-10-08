@@ -56,17 +56,6 @@ int projective_space_with_action_description::read_arguments(
 	if (f_v) {
 		cout << "projective_space_with_action_description::read_arguments" << endl;
 	}
-#if 0
-	n = ST.strtoi(argv[i++]);
-	if (f_v) {
-		cout << "n = " << n << endl;
-	}
-	input_q.assign(argv[i++]);
-	if (f_v) {
-		cout << "q = " << input_q << endl;
-		cout << "projective_space_with_action_description::read_arguments done" << endl;
-	}
-#endif
 	for (; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-use_projectivity_subgroup") == 0) {

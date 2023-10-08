@@ -333,6 +333,18 @@ public:
 		long int *row_class_size, int nb_row_classes,
 		long int *col_class_size, int nb_col_classes,
 		long int *col_scheme);
+	void report_matrix(
+			std::string &fname,
+			std::string &title,
+			std::string &author,
+			std::string &extra_praeamble,
+		int *M, int nb_rows, int nb_cols);
+	void report_matrix_longinteger(
+			std::string &fname,
+			std::string &title,
+			std::string &author,
+			std::string &extra_praeamble,
+			ring_theory::longinteger_object *M, int nb_rows, int nb_cols, int verbose_level);
 
 };
 

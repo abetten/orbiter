@@ -19,6 +19,7 @@ namespace cubic_surfaces_and_double_sixes {
 
 surface_classify_wedge::surface_classify_wedge()
 {
+	PA = NULL;
 	F = NULL;
 	q = 0;
 
@@ -127,8 +128,9 @@ surface_classify_wedge::~surface_classify_wedge()
 }
 
 void surface_classify_wedge::init(
-		cubic_surfaces_in_general::surface_with_action
-			*Surf_A,
+		projective_geometry::projective_space_with_action *PA,
+		//cubic_surfaces_in_general::surface_with_action
+		//	*Surf_A,
 	poset_classification::poset_classification_control
 		*Control,
 	int verbose_level)
@@ -139,17 +141,18 @@ void surface_classify_wedge::init(
 	if (f_v) {
 		cout << "surface_classify_wedge::init" << endl;
 	}
-	surface_classify_wedge::F = Surf_A->PA->F;
-	surface_classify_wedge::Surf_A = Surf_A;
-	surface_classify_wedge::Surf = Surf_A->Surf;
+	surface_classify_wedge::PA = PA;
+	Surf_A = PA->Surf_A;
+	Surf = Surf_A->Surf;
+	F = PA->F;
 	q = F->q;
 
 	fname_base = "surface_q" + std::to_string(q);
 
 	
 	
-	A = Surf_A->PA->A;
-	A2 = Surf_A->PA->A_on_lines;
+	A = PA->A;
+	A2 = PA->A_on_lines;
 
 
 	
@@ -165,7 +168,7 @@ void surface_classify_wedge::init(
 		cout << "surface_classify_wedge::init "
 				"before Five_p1->init" << endl;
 	}
-	Five_p1->init(Surf_A, Control, verbose_level);
+	Five_p1->init(PA, Control, verbose_level);
 	if (f_v) {
 		cout << "surface_classify_wedge::init "
 				"after Five_p1->init" << endl;
@@ -586,10 +589,18 @@ void surface_classify_wedge::upstep(int verbose_level)
 	ring_theory::longinteger_object go;
 	A->group_order(go);
 
+	if (f_v) {
+		cout << "surface_classify_wedge::upstep "
+				"before Surfaces->init" << endl;
+	}
 	Surfaces->init(
 			A, A2,
 			Flag_orbits->nb_flag_orbits, 27, go,
 			verbose_level - 3);
+	if (f_v) {
+		cout << "surface_classify_wedge::upstep "
+				"after Surfaces->init" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_classify_wedge::upstep "

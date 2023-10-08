@@ -192,11 +192,11 @@ void grassmann::print_set_tex(
 
 		F->Io->print_matrix_latex(ost, Mtx, k, n);
 
-#if 0
 		ost << "\\qquad" << endl;
 
-		F->print_matrix_numerical_latex(ost, Mtx, k, n);
+		F->Io->print_matrix_numerical_latex(ost, Mtx, k, n);
 
+#if 0
 		ost << "\\qquad" << endl;
 
 		F->print_matrix_latex(ost, Mtx + k * n, n - k, n);

@@ -507,6 +507,7 @@ void projective_space_with_action::canonical_labeling(
 	}
 }
 
+#if 0
 void projective_space_with_action::report_fixed_points_lines_and_planes(
 	int *Elt, std::ostream &ost,
 	int verbose_level)
@@ -633,6 +634,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		cout << "projective_space_with_action::report_fixed_points_lines_and_planes done" << endl;
 	}
 }
+#endif
 
 void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	int *Elt, std::ostream &ost,
@@ -691,7 +693,8 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 		actions::action *A2;
 		groups::schreier *Sch;
 
-		A2 = A->Induced_action->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
+		A2 = A->Induced_action->induced_action_on_grassmannian(
+				2, 0 /* verbose_level*/);
 
 		Sch = NEW_OBJECT(groups::schreier);
 		AcGl.all_point_orbits_from_single_generator(A2,
@@ -735,7 +738,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 
 
 
-
+#if 0
 void projective_space_with_action::compute_group_of_set(long int *set, int set_sz,
 		groups::strong_generators *&Sg,
 		int verbose_level)
@@ -816,7 +819,7 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 		cout << "projective_space_with_action::compute_group_of_set done" << endl;
 	}
 }
-
+#endif
 
 
 
@@ -1268,13 +1271,13 @@ void projective_space_with_action::table_of_quartic_curves(
 						&Quartic_curve_descr,
 						verbose_level);
 
-			nb_K[h] = QC[h]->QO->QP->nb_Kovalevski;
+			nb_K[h] = QC[h]->QO->QP->Kovalevski->nb_Kovalevski;
 
 
 			Table[h * nb_cols + 0] = h;
 			Table[h * nb_cols + 1] = nb_K[h];
-			Table[h * nb_cols + 2] = QC[h]->QO->QP->nb_Kovalevski_on;
-			Table[h * nb_cols + 3] = QC[h]->QO->QP->nb_Kovalevski_off;
+			Table[h * nb_cols + 2] = QC[h]->QO->QP->Kovalevski->nb_Kovalevski_on;
+			Table[h * nb_cols + 3] = QC[h]->QO->QP->Kovalevski->nb_Kovalevski_off;
 			Table[h * nb_cols + 4] = QC[h]->QOA->Aut_gens->group_order_as_lint();
 			Table[h * nb_cols + 5] = QC[h]->QO->nb_pts;
 		}
@@ -1327,7 +1330,7 @@ void projective_space_with_action::table_of_quartic_curves(
 				{
 					string str;
 					f << ",";
-					Int_vec_create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
+					Int_vec_create_string_with_quotes(str, QC[i]->QO->QP->Kovalevski->line_type_distribution, 3);
 					f << str;
 				}
 				{

@@ -2339,6 +2339,10 @@ void surface_object_with_action::print_everything(
 				"before print_summary" << endl;
 	}
 	print_summary(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_summary" << endl;
+	}
 
 
 	if (f_v) {
@@ -2346,6 +2350,10 @@ void surface_object_with_action::print_everything(
 				"before print_lines" << endl;
 	}
 	SO->SOP->print_lines(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_lines" << endl;
+	}
 
 
 	if (f_v) {
@@ -2353,6 +2361,10 @@ void surface_object_with_action::print_everything(
 				"before print_points" << endl;
 	}
 	SO->SOP->print_points(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_points" << endl;
+	}
 
 
 	if (f_v) {
@@ -2360,6 +2372,10 @@ void surface_object_with_action::print_everything(
 				"before print_lines_with_points_on_them" << endl;
 	}
 	SO->SOP->print_lines_with_points_on_them(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_lines_with_points_on_them" << endl;
+	}
 
 
 
@@ -2368,12 +2384,20 @@ void surface_object_with_action::print_everything(
 				"before SO->print_line_intersection_graph" << endl;
 	}
 	SO->SOP->print_line_intersection_graph(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after SO->print_line_intersection_graph" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::print_everything "
 				"before print_adjacency_matrix_with_intersection_points" << endl;
 	}
 	SO->SOP->print_adjacency_matrix_with_intersection_points(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_adjacency_matrix_with_intersection_points" << endl;
+	}
 
 
 	if (f_v) {
@@ -2381,12 +2405,43 @@ void surface_object_with_action::print_everything(
 				"before print_neighbor_sets" << endl;
 	}
 	SO->SOP->print_neighbor_sets(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_neighbor_sets" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::print_everything "
 				"before print_tritangent_planes" << endl;
 	}
 	SO->SOP->SmoothProperties->print_tritangent_planes(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_tritangent_planes" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"before SO->SOP->print_Hesse_planes" << endl;
+	}
+	SO->SOP->print_Hesse_planes(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after SO->SOP->print_Hesse_planes" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"before SO->SOP->print_axes" << endl;
+	}
+	SO->SOP->print_axes(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after SO->SOP->print_axes" << endl;
+	}
 
 
 	//SO->print_planes_in_trihedral_pairs(ost);
@@ -2404,6 +2459,10 @@ void surface_object_with_action::print_everything(
 				"before print_double sixes" << endl;
 	}
 	print_double_sixes(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_double sixes" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::print_everything "
@@ -2415,26 +2474,40 @@ void surface_object_with_action::print_everything(
 				"before print_half_double_sixes" << endl;
 	}
 	SO->SOP->print_half_double_sixes(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_half_double_sixes" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::print_everything "
 				"before print_half_double_sixes_numerically" << endl;
 	}
 	SO->SOP->print_half_double_sixes_numerically(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_half_double_sixes_numerically" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::print_everything "
 				"before print_trihedral_pairs" << endl;
 	}
-
 	SO->SOP->print_trihedral_pairs(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_trihedral_pairs" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::print_everything "
 				"before print_trihedral_pairs_numerically" << endl;
 	}
-
 	SO->SOP->print_trihedral_pairs_numerically(ost);
+	if (f_v) {
+		cout << "surface_object_with_action::print_everything "
+				"after print_trihedral_pairs_numerically" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_action::print_everything done" << endl;

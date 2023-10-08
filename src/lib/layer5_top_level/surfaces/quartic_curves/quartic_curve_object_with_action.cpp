@@ -114,7 +114,7 @@ void quartic_curve_object_with_action::export_something(
 
 		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.Csv_file_support->lint_matrix_write_csv(
-				fname, QO->QP->Kovalevski_points, 1, QO->QP->nb_Kovalevski);
+				fname, QO->QP->Kovalevski->Kovalevski_points, 1, QO->QP->Kovalevski->nb_Kovalevski);
 
 		cout << "quartic_curve_object_with_action::export_something "
 				"Written file " << fname << " of size "

@@ -121,6 +121,8 @@ namespace apps_geometry {
 	class cubic_curve_with_action;
 	class hermitian_spread_classify;
 	class linear_set_classify;
+	class mapping_description;
+	class mapping;
 	class ovoid_classify_description;
 	class ovoid_classify;
 	class polar;

@@ -14,6 +14,8 @@ MODULES = \
 	cubic_curve_with_action.o \
 	hermitian_spreads_classify.o \
 	linear_set_classify.o \
+	mapping_description.o \
+	mapping.o \
 	ovoid_classify_description.o \
 	ovoid_classify.o \
 	polar.o \

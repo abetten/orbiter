@@ -1108,10 +1108,18 @@ void algebra_global::do_cheat_sheet_GF(
 
 		F->Io->cheat_sheet_multiplication_table(ost, verbose_level);
 
-		F->Io->cheat_sheet_power_table(ost, true, verbose_level);
+		if (F->e > 1) {
 
-		F->Io->cheat_sheet_power_table(ost, false, verbose_level);
+			F->Io->cheat_sheet_power_table(ost, true, verbose_level);
 
+			F->Io->cheat_sheet_power_table(ost, false, verbose_level);
+
+		}
+		else {
+
+			F->Io->cheat_sheet_power_table(ost, false, verbose_level);
+
+		}
 
 
 

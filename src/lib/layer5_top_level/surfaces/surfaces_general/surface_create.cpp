@@ -770,10 +770,13 @@ void surface_create::override_group(
 	if (sz != Surf_A->A->make_element_size * nb_gens) {
 		cout << "surface_create::override_group "
 				"sz != Surf_A->A->make_element_size * nb_gens" << endl;
+		cout << "sz=" << sz << endl;
+		cout << "nb_gens=" << nb_gens << endl;
+		cout << "make_element_size=" << Surf_A->A->make_element_size << endl;
 		exit(1);
 	}
 
-	data_structures_groups::vector_ge *nice_gens;
+	//data_structures_groups::vector_ge *nice_gens;
 
 	if (f_v) {
 		cout << "surface_create::override_group "
@@ -790,7 +793,7 @@ void surface_create::override_group(
 				"after Sg->init_from_data_with_target_go_ascii" << endl;
 	}
 
-	FREE_OBJECT(nice_gens);
+	//FREE_OBJECT(nice_gens);
 
 
 	f_has_group = true;
@@ -1094,9 +1097,9 @@ void surface_create::create_surface_general_abcd(
 	f_has_group = false;
 	f_has_nice_gens = true;
 
-	prefix = "family_general_abcd_q" + std::to_string(F->q) + "_a" + std::to_string(F->q) + "_b" + std::to_string(b) + "_c" + std::to_string(c) + "_d" + std::to_string(F->q);
-	label_txt = "family_general_abcd_q" + std::to_string(F->q) + "_a" + std::to_string(F->q) + "_b" + std::to_string(b) + "_c" + std::to_string(c) + "_d" + std::to_string(F->q);
-	label_tex = "family\\_general\\_abcd\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(F->q) + "\\_b" + std::to_string(b) + "\\_c" + std::to_string(c) + "\\_d" + std::to_string(F->q);
+	prefix = "family_general_abcd_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_b" + std::to_string(b) + "_c" + std::to_string(c) + "_d" + std::to_string(d);
+	label_txt = "family_general_abcd_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_b" + std::to_string(b) + "_c" + std::to_string(c) + "_d" + std::to_string(d);
+	label_tex = "family\\_general\\_abcd\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a) + "\\_b" + std::to_string(b) + "\\_c" + std::to_string(c) + "\\_d" + std::to_string(d);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_general_abcd done" << endl;

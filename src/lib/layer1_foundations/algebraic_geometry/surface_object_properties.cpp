@@ -728,7 +728,8 @@ void surface_object_properties::compute_gradient(int verbose_level)
 				<< SO->Surf->PolynomialDomains->Poly2_4->get_nb_monomials() << endl;
 	}
 
-	SO->Surf->PolynomialDomains->compute_gradient(SO->eqn, gradient, verbose_level);
+	SO->Surf->PolynomialDomains->compute_gradient(
+			SO->eqn, gradient, verbose_level);
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_gradient done" << endl;
@@ -835,7 +836,8 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 
 	nb_tangent_planes = nb_non_singular_pts;
 
-	Sorting.lint_vec_sort_and_remove_duplicates(tangent_plane_rank_dual, nb_tangent_planes);
+	Sorting.lint_vec_sort_and_remove_duplicates(
+			tangent_plane_rank_dual, nb_tangent_planes);
 
 #if 0
 	string fname_tangents;
@@ -864,7 +866,8 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 
 
 
-	SO->Surf->PolynomialDomains->Poly3_4->vanishing_ideal(tangent_plane_rank_dual, nb_non_singular_pts,
+	SO->Surf->PolynomialDomains->Poly3_4->vanishing_ideal(
+			tangent_plane_rank_dual, nb_non_singular_pts,
 			r, Kernel, 0 /*verbose_level */);
 
 	ns = SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials() - r; // dimension of null space
@@ -1222,6 +1225,16 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 				"before print_lines" << endl;
 	}
 	print_lines(ost);
+
+
+	ost << "\\subsubsection*{All Points of the Surface}" << endl;
+	print_all_points_on_surface(ost);
+
+
+	cout << "surface_object_properties::print_points "
+			"before print_Eckardt_points" << endl;
+	print_Eckardt_points(ost);
+
 
 
 	ost << "\\subsubsection*{Eckardt Points}" << endl;
@@ -1633,7 +1646,7 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 
 
 		for (i = 0; i < SO->nb_lines; i++) {
-			//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
+			//ost << "Line " << i << " is " << v[i] << ":\\\\" << endl;
 			SO->Surf->Gr->unrank_lint(SO->Lines[i], 0 /*verbose_level*/);
 			ost << "$$" << endl;
 			ost << "\\ell_{" << i << "} ";
@@ -1648,7 +1661,7 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 			ost << "$$" << endl;
 			ost << "which contains the point set " << endl;
 			ost << "$$" << endl;
-			ost << "\\{ P_{i} \\mid i \\in ";
+			ost << "\\{ ";
 			L.lint_set_print_tex(ost, pts_on_lines->Sets[i],
 					pts_on_lines->Set_size[i]);
 			ost << "\\}." << endl;
@@ -2344,7 +2357,7 @@ void surface_object_properties::print_all_points_on_surface(std::ostream &ost)
 	//ost << "\\clearpage" << endl;
 	ost << "The surface has " << SO->nb_pts << " points:\\\\" << endl;
 
-	if (SO->nb_pts < 1000) {
+	if (SO->nb_pts < 2000) {
 		//ost << "$$" << endl;
 		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, true /* f_tex */);
 		//ost << "$$" << endl;

@@ -491,7 +491,7 @@ void formula::init_formula_Sajeeb(
 			tree,
 			Fq,
 			managed_variables,
-			verbose_level - 3);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "formula::init_formula_Sajeeb "
 				"after Expression_parser_sajeeb->convert_to_orbiter" << endl;

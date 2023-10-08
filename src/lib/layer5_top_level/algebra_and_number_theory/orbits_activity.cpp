@@ -96,6 +96,18 @@ void orbits_activity::perform_activity(int verbose_level)
 			cout << "orbits_activity::perform_activity after do_export_trees" << endl;
 		}
 	}
+	else if (Descr->f_export_source_code) {
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_export_source_code" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_export_source_code" << endl;
+		}
+		do_export_source_code(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_export_source_code" << endl;
+		}
+	}
 	else if (Descr->f_export_levels) {
 		if (f_v) {
 			cout << "orbits_activity::perform_activity f_export_levels" << endl;
@@ -434,6 +446,67 @@ void orbits_activity::do_export_trees(int verbose_level)
 
 	if (f_v) {
 		cout << "orbits_activity::do_export_trees done" << endl;
+	}
+
+}
+
+
+void orbits_activity::do_export_source_code(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_activity::do_export_source_code" << endl;
+	}
+
+#if 0
+	if (OC->f_has_Orb) {
+		string fname_tree_mask;
+		int orbit_idx;
+
+		fname_tree_mask = "orbit_" + OC->Group->A->label + "_%d.layered_graph";
+
+		for (orbit_idx = 0; orbit_idx < OC->Orb->Sch->nb_orbits; orbit_idx++) {
+
+			cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
+					<< " before Sch->export_tree_as_layered_graph" << endl;
+
+			OC->Orb->Sch->export_tree_as_layered_graph(orbit_idx,
+					fname_tree_mask,
+					verbose_level - 1);
+		}
+
+	}
+#endif
+	if (OC->f_has_classification_by_canonical_form) {
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_classification_by_canonical_form" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code "
+					"before generate_source_code" << endl;
+		}
+
+		OC->Canonical_form_classifier->generate_source_code(
+				OC->Descr->Canonical_form_classifier_description->fname_base_out,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code "
+					"after generate_source_code" << endl;
+		}
+
+
+	}
+	else {
+		cout << "orbits_activity::do_export_source_code no suitable data structure" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "orbits_activity::do_export_source_code done" << endl;
 	}
 
 }

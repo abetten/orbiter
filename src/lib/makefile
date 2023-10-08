@@ -24,6 +24,7 @@ ORBITER_MODULES= \
 		layer1_foundations/algebraic_geometry/del_pezzo_surface_of_degree_two_object.o \
 		layer1_foundations/algebraic_geometry/eckardt_point_info.o \
 		layer1_foundations/algebraic_geometry/eckardt_point.o \
+		layer1_foundations/algebraic_geometry/kovalevski_points.o \
 		layer1_foundations/algebraic_geometry/quartic_curve_domain.o \
 		layer1_foundations/algebraic_geometry/quartic_curve_object_properties.o \
 		layer1_foundations/algebraic_geometry/quartic_curve_object.o \
@@ -114,6 +115,7 @@ ORBITER_MODULES= \
 		layer1_foundations/expression_parser/formula.o \
 		layer1_foundations/expression_parser/lexer.o \
 		layer1_foundations/expression_parser/syntax_tree_latex.o \
+		layer1_foundations/expression_parser/syntax_tree_node_io.o \
 		layer1_foundations/expression_parser/syntax_tree_node_terminal.o \
 		layer1_foundations/expression_parser/syntax_tree_node.o \
 		layer1_foundations/expression_parser/syntax_tree.o \
@@ -535,6 +537,8 @@ ORBITER_MODULES= \
 		layer5_top_level/geometry/cubic_curve_with_action.o \
 		layer5_top_level/geometry/hermitian_spreads_classify.o \
 		layer5_top_level/geometry/linear_set_classify.o \
+		layer5_top_level/geometry/mapping_description.o \
+		layer5_top_level/geometry/mapping.o \
 		layer5_top_level/geometry/ovoid_classify_description.o \
 		layer5_top_level/geometry/ovoid_classify.o \
 		layer5_top_level/geometry/polar.o \

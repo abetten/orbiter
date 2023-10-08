@@ -239,6 +239,64 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 
 	}
+	else if (Descr->f_affine_map) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"f_affine_map" << endl;
+		}
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"n=" << PA->P->Subspaces->n << endl;
+		}
+
+		long int *Image_pts;
+		long int N_points;
+
+		algebraic_geometry::algebraic_geometry_global AGG;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before AGG.affine_map" << endl;
+		}
+
+		AGG.affine_map(
+				PA->P,
+				Descr->affine_map_ring_label,
+				Descr->affine_map_formula_label,
+				Descr->affine_map_parameters,
+				Image_pts, N_points,
+				verbose_level);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after AGG.affine_map" << endl;
+		}
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity Image_pts:" << endl;
+			Lint_vec_print(cout, Image_pts, N_points);
+			cout << endl;
+		}
+
+		string fname_map;
+		orbiter_kernel_system::file_io Fio;
+
+		fname_map = Descr->map_formula_label + "_affine_map.csv";
+
+
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname_map, Image_pts, N_points, 1);
+		if (f_v) {
+			cout << "Written file " << fname_map
+					<< " of size " << Fio.file_size(fname_map) << endl;
+		}
+
+		FREE_lint(Image_pts);
+
+
+
+	}
 	else if (Descr->f_analyze_del_Pezzo_surface) {
 
 		projective_space_global G;
@@ -1041,12 +1099,14 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
 
-		Symb->init_classification_of_cubic_surfaces_with_double_sixes(Descr->classify_surfaces_with_double_sixes_label, SCW, verbose_level);
+		Symb->init_classification_of_cubic_surfaces_with_double_sixes(
+				Descr->classify_surfaces_with_double_sixes_label, SCW, verbose_level);
 		if (f_v) {
 			cout << "before Orbiter->add_symbol_table_entry "
 					<< Descr->classify_surfaces_with_double_sixes_label << endl;
 		}
-		orbiter_kernel_system::Orbiter->add_symbol_table_entry(Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
+		orbiter_kernel_system::Orbiter->add_symbol_table_entry(
+				Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
 
 	}
 

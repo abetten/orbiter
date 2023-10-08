@@ -241,8 +241,8 @@ void quartic_curve_activity::perform_activity(
 
 			QC->QOA->Aut_gens->extract_specific_orbit_on_set_with_given_action_after_restriction_by_length(
 					QC->PA->A,
-					QC->QO->QP->Kovalevski_points,
-					QC->QO->QP->nb_Kovalevski,
+					QC->QO->QP->Kovalevski->Kovalevski_points,
+					QC->QO->QP->Kovalevski->nb_Kovalevski,
 					desired_orbit_length,
 					desired_orbit_idx,
 					extracted_set,
@@ -255,7 +255,7 @@ void quartic_curve_activity::perform_activity(
 
 			for (i = 0; i < desired_orbit_length; i++) {
 				idx = extracted_set[i];
-				extracted_objects[i] = QC->QO->QP->Kovalevski_points[idx];
+				extracted_objects[i] = QC->QO->QP->Kovalevski->Kovalevski_points[idx];
 			}
 
 			cout << "Orbit on Kovalevski points of length "

@@ -1235,6 +1235,9 @@ public:
 	void init_crc_code(
 			std::string &label,
 			void *Code, int verbose_level);
+	void init_mapping(
+			std::string &label,
+			void *Mapping, int verbose_level);
 	void print();
 };
 

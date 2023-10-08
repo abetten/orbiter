@@ -491,7 +491,8 @@ void finite_field_io::addition_table_save_csv(
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, M, F->q, F->q);
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 	FREE_int(M);
 }
@@ -903,7 +904,6 @@ void finite_field_io::report_subfields(
 				long int poly;
 				poly = F->compute_subfield_polynomial(
 						q0,
-						//false, cout,
 						verbose_level);
 				{
 					finite_field GFp;
@@ -993,7 +993,8 @@ void finite_field_io::report_subfields_detailed(
 
 		poly_text = std::to_string(poly_numeric);
 
-		Fq->init_override_polynomial_small_order(q0, poly_text,
+		Fq->init_override_polynomial_small_order(
+				q0, poly_text,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				verbose_level);
@@ -1039,18 +1040,6 @@ void finite_field_io::cheat_sheet_addition_table(
 		f << "$$" << endl;
 		latex_addition_table(f, false /* f_elements_exponential */,
 				F->get_symbol_for_print());
-#if 0
-		const char *symbol_for_print = "\\alpha";
-		if (q >= 10) {
-			f << "$$" << endl;
-			f << "$$" << endl;
-		}
-		else {
-			f << "\\qquad" << endl;
-		}
-		latex_addition_table(f, true /* f_elements_exponential */,
-				symbol_for_print);
-#endif
 		f << "$$" << endl;
 	}
 	else {
@@ -1078,18 +1067,6 @@ void finite_field_io::cheat_sheet_multiplication_table(
 		f << "$$" << endl;
 		latex_multiplication_table(f, false /* f_elements_exponential */,
 				F->get_symbol_for_print());
-#if 0
-		const char *symbol_for_print = "\\alpha";
-		if (q >= 10) {
-			f << "$$" << endl;
-			f << "$$" << endl;
-		}
-		else {
-			f << "\\qquad" << endl;
-		}
-		latex_multiplication_table(f, true /* f_elements_exponential */,
-				symbol_for_print);
-#endif
 		f << "$$" << endl;
 	}
 	else {
@@ -1128,15 +1105,18 @@ void finite_field_io::cheat_sheet_power_table(
 	}
 	else {
 		ost << "$$" << endl;
-		cheat_sheet_power_table_top(ost, f_with_polynomials, verbose_level);
+		cheat_sheet_power_table_top(
+				ost, f_with_polynomials, verbose_level);
 
 		for (i = 0; i < len; i++) {
 
 			if (i && (i % 32) == 0) {
-				cheat_sheet_power_table_bottom(ost, f_with_polynomials, verbose_level);
+				cheat_sheet_power_table_bottom(
+						ost, f_with_polynomials, verbose_level);
 				ost << "$$" << endl;
 				ost << "$$" << endl;
-				cheat_sheet_power_table_top(ost, f_with_polynomials, verbose_level);
+				cheat_sheet_power_table_top(
+						ost, f_with_polynomials, verbose_level);
 			}
 
 			Gg.AG_element_unrank(F->p, v, 1, F->e, Powers[i]);
@@ -1638,7 +1618,8 @@ void finite_field_io::read_from_string_coefficient_vector(
 			if (a < 0 || a >= F->q) {
 				if (F->e > 1) {
 					cout << "finite_field_io::read_from_string_coefficient_vector "
-							"In a field extension, what do you mean by " << a << endl;
+							"In an extension field of order "
+							<< F->q << ", what do you mean by " << a << endl;
 					exit(1);
 				}
 				a = NT.mod(a, F->q);

@@ -609,6 +609,98 @@ public:
 
 
 
+
+// #############################################################################
+// mapping_description.cpp
+// #############################################################################
+
+//! description of a mapping between projective spaces
+
+
+class mapping_description {
+
+public:
+
+	int f_domain;
+	std::string domain_label;
+
+	int f_codomain;
+	std::string codomain_label;
+
+	int f_ring;
+	std::string ring_label;
+
+	int f_formula;
+	std::string formula_label;
+
+	int f_substitute;
+	std::string substitute_text;
+
+	int f_affine;
+
+	int f_object_in_codomain;
+	std::string object_in_codomain_label;
+
+	mapping_description();
+	~mapping_description();
+	int read_arguments(
+			int argc, std::string *argv, int verbose_level);
+	void print();
+
+
+};
+
+
+
+
+// #############################################################################
+// mapping.cpp
+// #############################################################################
+
+//! a mapping between projective spaces
+
+
+class mapping {
+
+public:
+
+	mapping_description *Descr;
+
+	projective_geometry::projective_space_with_action *Domain;
+
+	projective_geometry::projective_space_with_action *Codomain;
+
+
+	ring_theory::homogeneous_polynomial_domain *Ring;
+
+	data_structures::symbolic_object_builder *Formula;
+
+	int object_in_codomain_idx;
+	orbiter_kernel_system::symbol_table_object_type object_in_codomain_type;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create
+		*object_in_codomain_cubic_surface;
+
+	std::string label_txt;
+	std::string label_tex;
+
+	long int *Image_pts;
+	long int N_points_input;
+
+	mapping();
+	~mapping();
+	void init(
+			mapping_description *Descr,
+			int verbose_level);
+	void evaluate_regular_map(
+			int verbose_level);
+
+};
+
+
+
+
+
+
 // #############################################################################
 // ovoid_classify_description.cpp
 // #############################################################################

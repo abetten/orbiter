@@ -1095,6 +1095,8 @@ public:
 
 	int f_export_trees;
 
+	int f_export_source_code;
+
 	int f_export_levels;
 	int export_levels_orbit_idx;
 
@@ -1156,6 +1158,7 @@ public:
 	void do_report(int verbose_level);
 	void do_export(int verbose_level);
 	void do_export_trees(int verbose_level);
+	void do_export_source_code(int verbose_level);
 	void do_export_levels(int orbit_idx, int verbose_level);
 	void do_draw_tree(int verbose_level);
 	void do_stabilizer(int verbose_level);

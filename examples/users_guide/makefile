@@ -1973,6 +1973,7 @@ test_2_8:
 	make symbolic_objects_building_on_earlier_objects
 	make symbolic_objects_self_referential_1
 	make symbolic_objects_self_referential_2
+	make symbolic_test_6
 	make symbolic_matrix1
 	make symbolic_matrix_2x2
 	make symbolic_matrix_3x3
@@ -2121,7 +2122,6 @@ symbolic_test_5_expand:
 		-define F -finite_field -q 13 -end \
 		-define M -symbolic_object \
 			-field F \
-			-matrix 1 \
 			-text "(a+b)^3" \
 		-end \
 		-define M1 -symbolic_object \
@@ -2241,6 +2241,30 @@ symbolic_objects_self_referential_2:
 			-field F \
 			-text "x+a"\
 		-end \
+
+
+symbolic_test_6:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define a -symbolic_object \
+			-field F \
+			-text "x" \
+		-end \
+		-define a -symbolic_object \
+			-field F \
+			-text "a^2" \
+		-end \
+		-define a -symbolic_object \
+			-field F \
+			-text "a^2" \
+		-end \
+		-define a -symbolic_object \
+			-field F \
+			-text "a^2" \
+		-end
+	pdflatex a.tex
+	open a.pdf
+
 
 
 symbolic_matrix1:
@@ -2738,6 +2762,172 @@ Clebsch_map_up_Fabcd:
 			-collect M t \
 		-end
 
+
+
+affine_map_F5_0:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 6 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-x^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+#( 1, 0, 0, 0, 0 )
+
+affine_map_F5_1:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 6 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-1)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+#( 0, 1, 0, 0, 0 )
+
+affine_map_F5_2:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 6 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-2)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+#( 0, 0, 1, 0, 0 )
+
+affine_map_F5_3:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 6 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-3)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+
+#( 0, 0, 0, 1, 0 )
+
+
+
+affine_map_F5_4:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 6 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-4)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+
+#( 0, 0, 0, 0, 1 )
+
+
+
+
+affine_map_F5_map_30412:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 6 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "3*(1-x^4)+4*(1-(x-2)^4)+1*(1-(x-3)^4)+2*(1-(x-4)^4)" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end \
+		-define Yx -symbolic_object \
+			-field F \
+			-expand Y \
+			-end \
 
 
 
@@ -3300,19 +3490,23 @@ RREF:
 			-dense "1,1,1,1,0,1,1,0,0,1" \
 		-end \
 		-with F -do -finite_field_activity \
-		-RREF v -normalize_from_the_right \
+			-RREF v \
 		-end
+	pdflatex v_rref.tex
+	$(OPEN) v_rref.pdf
 
 
 RREF_V7:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 7 -end \
-		-define V -vector -format 7 \
+		-define V7 -vector -format 7 \
 			-dense $(V7_VANDERMONDE_EXTENDED) \
 		-end \
 		-with F -do -finite_field_activity \
-			-RREF V \
+			-RREF V7 \
 		-end
+	pdflatex V7_rref.tex
+	$(OPEN) V7_rref.pdf
 
 
 
@@ -3325,8 +3519,9 @@ nullspace:
 		-with F2 -do \
 		-finite_field_activity \
 			-nullspace v \
-			-normalize_from_the_right \
 		-end
+	pdflatex v_nullspace.tex
+	$(OPEN) v_nullspace.pdf
 
 RREF_RS_6_4_7:
 	$(ORBITER) -v 2 \
@@ -3336,7 +3531,8 @@ RREF_RS_6_4_7:
 		-end \
 		-with F -do \
 		-finite_field_activity -RREF v -end
-
+	pdflatex v_rref.tex
+	$(OPEN) v_rref.pdf
 
 
 ## these are global algebra functions:
@@ -3373,7 +3569,10 @@ SECTION_ADVANCED_TOPICS_IN_FINITE_FIELDS:
 
 test_3_5:
 	make normal_basis_2_3
+	make normal_basis_2_4
+	make normal_basis_2_4_poly19
 	make normal_basis_2_6
+	make normal_basis_2_8
 	make F8_over_F2_field_reduction
 	make F_64_over_F8_field_reduction
 	make F_64_over_F4_field_reduction
@@ -3391,6 +3590,24 @@ normal_basis_2_3:
 		-define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity \
 		-normal_basis 3 -end
+	pdflatex normal_basis_q2_d3.tex
+	$(OPEN) normal_basis_q2_d3.pdf
+
+
+normal_basis_2_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+		-normal_basis 4 -end
+
+
+normal_basis_2_4_poly19:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+		-normal_basis_with_given_polynomial 19 4 -end
+	pdflatex normal_basis_q2_d4_poly19.tex
+	$(OPEN) normal_basis_q2_d4_poly19.pdf
 
 
 normal_basis_2_6:
@@ -3398,6 +3615,16 @@ normal_basis_2_6:
 		-define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity \
 		-normal_basis 6 -end
+
+
+
+normal_basis_2_8:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+		-normal_basis 8 -end
+	pdflatex normal_basis_q2_d8.tex
+	$(OPEN) normal_basis_q2_d8.pdf
 
 
 
@@ -9125,7 +9352,7 @@ surface_F_abcd_Eckardt_q31:
 			-report \
 		-end
 	pdflatex surface_equation_F_abcd_sub_q31_report.tex
-	open surface_equation_F_abcd_sub_q31_report.pdf
+	$(OPEN) surface_equation_F_abcd_sub_q31_report.pdf
 
 
 
@@ -10004,6 +10231,8 @@ Berlekamp_matrix_2_3:
 		-with F -do \
 		-finite_field_activity \
 		-Berlekamp_matrix v -end
+	pdflatex Berlekamp_matrix_q2_d3.tex
+	$(OPEN) Berlekamp_matrix_q2_d3.pdf
 
 # the polynomial X^3+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 2.
 
@@ -11454,7 +11683,6 @@ Hamming_generator:
 
 # basis in binary:
 # 67,37,22,15
-#-normalize_from_the_right \
 
 
 
@@ -11681,6 +11909,8 @@ Hamming_RREF:
 		-finite_field_activity \
 			-RREF v \
 		-end
+	pdflatex rref_m4_n7_q2.tex
+	$(OPEN) rref_m4_n7_q2.pdf
 	#pdflatex RREF_example_q2_4_7.tex
 	#gs -sDEVICE=png16 -dFIXEDMEDIA \
 	#	-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
@@ -11698,7 +11928,6 @@ Hamming_nullspace:
 		-with F2 -do \
 		-finite_field_activity \
 		-nullspace v \
-		-normalize_from_the_right \
 		-end
 	pdflatex nullspace_4_7.tex
 	$(OPEN) nullspace_4_7.pdf
@@ -12334,7 +12563,7 @@ CRC_F_16:
 		-define F -finite_field -q 16 -override_polynomial 19 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 	pdflatex GF_16_poly19.tex
-	open GF_16_poly19.pdf
+	$(OPEN) GF_16_poly19.pdf
 
 nth_roots_256:
 	$(ORBITER) -v 3 \
@@ -12353,7 +12582,7 @@ CRC_F16_roots_51:
 			-nth_roots 51 \
 		-end
 	pdflatex Nth_roots_q16_n51.tex
-	open Nth_roots_q16_n51.pdf
+	$(OPEN) Nth_roots_q16_n51.pdf
 
 CRC_F16_BCH_code_d3:
 	$(ORBITER) -v 2 \
@@ -12948,7 +13177,7 @@ draw_cyclotomic_mod_51_q16:
 			-file cyclotomic_51 \
 		-end
 	pdflatex cyclotomic_51_draw.tex
-	open cyclotomic_51_draw.pdf
+	$(OPEN) cyclotomic_51_draw.pdf
 
 #			-cyclotomic_sets 8 "1,2,4,5,7,10,13" \
 
@@ -13281,7 +13510,6 @@ BCH_21_15_dual:
 			-dense $(BCH_21_15_GENERATOR_MATRIX) -end \
 		-with F -do -finite_field_activity \
 			-nullspace v \
-		-normalize_from_the_right \
 		-end
 
 
@@ -13689,7 +13917,7 @@ code_n15_k6_d6_RREF:
 			-compact $(CODE_GV_N15_K6) \
 		-end \
 		-with F -do -finite_field_activity \
-			-RREF v -normalize_from_the_right \
+			-RREF v \
 		-end
 	#pdflatex RREF_example_q2_6_15.tex
 	#$(OPEN) RREF_example_q2_6_15.pdf
@@ -13701,7 +13929,7 @@ code_n15_k6_d6_check_RREF:
 			-compact $(CODE_GV_N15_K6_CHECK) \
 		-end \
 		-with F -do -finite_field_activity \
-		-RREF v -normalize_from_the_right \
+		-RREF v \
 		-end
 	#pdflatex RREF_example_q2_9_15.tex
 	#$(OPEN) RREF_example_q2_9_15.pdf
@@ -16199,7 +16427,7 @@ RREF_plane_16_2_0_rank_of_incma:
 			-file plane_catalogue_q2_k4_0_incma.csv \
 		-end \
 		-with F -do -finite_field_activity \
-		-RREF v -normalize_from_the_right \
+		-RREF v \
 		-end
 
 # 2-rank is 106, so the plane is Lorimer-Rahilly
@@ -16223,7 +16451,7 @@ create_translation_plane_25_14_rank:
 			-file plane_catalogue_q5_k2_14_incma.csv \
 		-end \
 		-with F -do -finite_field_activity \
-			-RREF v -normalize_from_the_right \
+			-RREF v \
 		-end
 
 
@@ -16253,7 +16481,7 @@ RREF_Rao_Rao_plane_incma_rank:
 			-file plane_Rao_Rao_incma.csv \
 		-end \
 		-with F -do -finite_field_activity \
-			-RREF v -normalize_from_the_right \
+			-RREF v \
 		-end
 
 # 3-rank is 271, so the Rao / Rao plane is Moorhouse IV.
@@ -18442,7 +18670,7 @@ CRC_BCH_Q16_N51_D3_canonical:
 			-end \
 		-end
 	pdflatex BCH_Q16_N51_classification.tex
-	open BCH_Q16_N51_classification.pdf
+	$(OPEN) BCH_Q16_N51_classification.pdf
 
 
 # stabilizer of order 408 is generated by:
@@ -20841,11 +21069,12 @@ misc_select:
 
 misc_join:
 	$(ORBITER) -v 4 \
-		-csv_file_join poly_orbits_d3_n3_q2_select_F2.csv Orbit_idx \
-		-csv_file_join poly_orbits_d3_n3_q2_select_F4.csv Orbit_idx \
-		-csv_file_join poly_orbits_d3_n3_q2_select_F8.csv Orbit_idx \
-		-csv_file_join poly_orbits_d3_n3_q2_select_F16.csv Orbit_idx \
-		-csv_file_join poly_orbits_d3_n3_q2_select_F32.csv Orbit_idx 
+		-csv_file_join 5 \
+			poly_orbits_d3_n3_q2_select_F2.csv Orbit_idx \
+			poly_orbits_d3_n3_q2_select_F4.csv Orbit_idx \
+			poly_orbits_d3_n3_q2_select_F8.csv Orbit_idx \
+			poly_orbits_d3_n3_q2_select_F16.csv Orbit_idx \
+			poly_orbits_d3_n3_q2_select_F32.csv Orbit_idx 
 
 
 table_mod_12:

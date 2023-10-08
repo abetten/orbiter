@@ -21,6 +21,7 @@ namespace cubic_surfaces_and_arcs {
 
 surface_classify_using_arc::surface_classify_using_arc()
 {
+	PA = NULL;
 	Surf_A = NULL;
 
 	//A = NULL;
@@ -76,7 +77,8 @@ surface_classify_using_arc::~surface_classify_using_arc()
 
 void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs(
 		std::string &Control_six_arcs_label,
-		cubic_surfaces_in_general::surface_with_action *Surf_A,
+		projective_geometry::projective_space_with_action *PA,
+		//cubic_surfaces_in_general::surface_with_action *Surf_A,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
 {
@@ -87,12 +89,14 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	number_theory::number_theory_domain NT;
 
 
-	surface_classify_using_arc::Surf_A = Surf_A;
 
 
 	if (f_v) {
 		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
+
+	surface_classify_using_arc::PA = PA;
+	surface_classify_using_arc::Surf_A = PA->Surf_A;
 
 	//F = Surf_A->PA->F;
 	//Surf = Surf_A->Surf;

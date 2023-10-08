@@ -1237,6 +1237,9 @@ public:
 	int f_crc_code;
 	coding_theory::crc_code_description *Crc_code_description;
 
+	int f_mapping;
+	apps_geometry::mapping_description *Mapping_description;
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -1300,6 +1303,7 @@ public:
 	void definition_of_poset_classification_control(int verbose_level);
 	void definition_of_poset_classification_activity(int verbose_level);
 	void definition_of_crc_code(int verbose_level);
+	void definition_of_mapping(int verbose_level);
 
 
 };

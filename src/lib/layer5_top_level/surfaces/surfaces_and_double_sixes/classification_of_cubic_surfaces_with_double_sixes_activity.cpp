@@ -56,36 +56,108 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity" << endl;
 	}
 	if (Descr->f_report) {
-		cout << "f_report" << endl;
+		cout << "-report" << endl;
 		cout << "SCW->Surf->n = " << SCW->Surf->n << endl;
 		report(Descr->report_options, verbose_level);
 	}
 	else if (Descr->f_identify_Eckardt) {
-		do_surface_identify_Eckardt(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"before SCW->identify_Eckardt_and_print_table" << endl;
+		}
+		SCW->identify_Eckardt_and_print_table(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"after SCW->identify_Eckardt_and_print_table" << endl;
+		}
+
 	}
 	else if (Descr->f_identify_F13) {
-		do_surface_identify_F13(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"before SCW->identify_F13_and_print_table" << endl;
+		}
+		SCW->identify_F13_and_print_table(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"after SCW->identify_F13_and_print_table" << endl;
+		}
 	}
 	else if (Descr->f_identify_Bes) {
-		do_surface_identify_Bes(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"before SCW->identify_Bes_and_print_table" << endl;
+		}
+		SCW->identify_Bes_and_print_table(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"after SCW->identify_Bes_and_print_table" << endl;
+		}
 	}
 	else if (Descr->f_identify_general_abcd) {
-		do_surface_identify_general_abcd(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"before SCW->identify_general_abcd_and_print_table" << endl;
+		}
+		SCW->identify_general_abcd_and_print_table(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"after SCW->identify_general_abcd_and_print_table" << endl;
+		}
 	}
 	else if (Descr->f_isomorphism_testing) {
-		do_surface_isomorphism_testing(
-				Descr->isomorphism_testing_surface1,
-				Descr->isomorphism_testing_surface2,
+
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"before SCW->test_isomorphism" << endl;
+		}
+		SCW->test_isomorphism(
+				Descr->isomorphism_testing_surface1_label,
+				Descr->isomorphism_testing_surface2_label,
 				verbose_level);
+
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"after SCW->test_isomorphism" << endl;
+		}
+
+
 	}
 	else if (Descr->f_recognize) {
-		do_recognize(Descr->recognize_surface, verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"before SCW->recognition" << endl;
+		}
+		SCW->recognition(
+				Descr->recognize_surface_label,
+				verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"after SCW->recognition" << endl;
+		}
+
 	}
 	else if (Descr->f_create_source_code) {
-		do_write_source_code(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"before SCW->Surface_repository->generate_source_code" << endl;
+		}
+		SCW->Surface_repository->generate_source_code(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"after SCW->Surface_repository->generate_source_code" << endl;
+		}
 	}
 	else if (Descr->f_sweep_Cayley) {
-		do_sweep_Cayley(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"before SCW->sweep_Cayley" << endl;
+		}
+		SCW->sweep_Cayley(verbose_level);
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"after SCW->sweep_Cayley" << endl;
+		}
 	}
 
 }
@@ -128,213 +200,9 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 	}
 }
 
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt" << endl;
-	}
 
 
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt "
-				"before SCW->identify_Eckardt_and_print_table" << endl;
-	}
-	SCW->identify_Eckardt_and_print_table(verbose_level);
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt "
-				"after SCW->identify_Eckardt_and_print_table" << endl;
-	}
 
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt done" << endl;
-	}
-}
-
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_F13(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_F13" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_F13 "
-				"before SCW->identify_F13_and_print_table" << endl;
-	}
-	SCW->identify_F13_and_print_table(verbose_level);
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_F13 "
-				"after SCW->identify_F13_and_print_table" << endl;
-	}
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_F13 done" << endl;
-	}
-}
-
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Bes(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Bes" << endl;
-	}
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Bes "
-				"before SCW->identify_Bes_and_print_table" << endl;
-	}
-	SCW->identify_Bes_and_print_table(verbose_level);
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Bes "
-				"after SCW->identify_Bes_and_print_table" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Bes done" << endl;
-	}
-}
-
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_general_abcd(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_general_abcd" << endl;
-	}
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_general_abcd "
-				"before SCW->identify_general_abcd_and_print_table" << endl;
-	}
-	SCW->identify_general_abcd_and_print_table(verbose_level);
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_general_abcd "
-				"after SCW->identify_general_abcd_and_print_table" << endl;
-	}
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_general_abcd done" << endl;
-	}
-}
-
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_isomorphism_testing(
-		cubic_surfaces_in_general::surface_create_description
-			*surface_descr_isomorph1,
-		cubic_surfaces_in_general::surface_create_description
-			*surface_descr_isomorph2,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_isomorphism_testing" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_isomorphism_testing "
-				"before SCW->test_isomorphism" << endl;
-	}
-	SCW->test_isomorphism(
-			surface_descr_isomorph1,
-			surface_descr_isomorph2,
-			verbose_level);
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_isomorphism_testing "
-				"after SCW->test_isomorphism" << endl;
-	}
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_isomorphism_testing done" << endl;
-	}
-}
-
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_recognize(
-		cubic_surfaces_in_general::surface_create_description
-			*surface_descr,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_recognize" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_recognize "
-				"before SCW->recognition" << endl;
-	}
-	SCW->recognition(
-			surface_descr,
-			verbose_level);
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_recognize "
-				"after SCW->recognition" << endl;
-	}
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_recognize done" << endl;
-	}
-}
-
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code "
-				"before SCW->Surface_repository->generate_source_code" << endl;
-	}
-	SCW->Surface_repository->generate_source_code(verbose_level);
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code "
-				"after SCW->Surface_repository->generate_source_code" << endl;
-	}
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code done" << endl;
-	}
-}
-
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley "
-				"before SCW->sweep_Cayley" << endl;
-	}
-	SCW->sweep_Cayley(verbose_level);
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley "
-				"after SCW->sweep_Cayley" << endl;
-	}
-	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_sweep_Cayley done" << endl;
-	}
-}
 
 
 

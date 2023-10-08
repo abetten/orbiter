@@ -613,20 +613,6 @@ public:
 			int verbose_level);
 	int is_homogeneous(
 			int &degree, int verbose_level);
-	void print_subtree_to_vector(
-			std::vector<std::string> &rep,
-			int f_latex,
-			int verbose_level);
-	void print_subtree(
-			std::ostream &ost);
-	void print_subtree_easy(
-			std::ostream &ost);
-	void print_subtree_easy_no_lf(
-			std::ostream &ost);
-	void print_subtree_easy_without_monomial(
-			std::ostream &ost);
-	void print_node_type(
-			std::ostream &ost);
 	int is_mult_node();
 	int is_add_node();
 	int is_int_node();
@@ -651,15 +637,7 @@ public:
 	int evaluate(
 			std::map<std::string, std::string> &symbol_table,
 			int verbose_level);
-	void print_expression(
-			std::ostream &ost);
 	void push_a_minus_sign();
-	void print_without_recursion(
-			std::ostream &ost);
-	void export_graphviz(
-			std::string &name, std::ostream &ost);
-	void export_graphviz_recursion(
-			std::ostream &ost);
 	void copy_to(
 			syntax_tree *Output_tree,
 			syntax_tree_node *Output_node,
@@ -699,7 +677,6 @@ public:
 	void flatten_post_process(int depth,
 			int verbose_level);
 	void flatten_at(int i, int depth, int verbose_level);
-	void display_children_by_type();
 	void delete_all_but_one_child(
 			int i, int verbose_level);
 	void delete_one_child(
@@ -732,6 +709,33 @@ public:
 			syntax_tree_node *Node2b,
 			int verbose_level);
 	// we assume that the node is an empty plus node
+
+
+	// syntax_tree_node_io.cpp:
+	void print_subtree_to_vector(
+			std::vector<std::string> &rep,
+			int f_latex,
+			int verbose_level);
+	void print_subtree(
+			std::ostream &ost);
+	void print_subtree_easy(
+			std::ostream &ost);
+	void print_subtree_easy_no_lf(
+			std::ostream &ost);
+	void print_subtree_easy_without_monomial(
+			std::ostream &ost);
+	void print_node_type(
+			std::ostream &ost);
+	void print_expression(
+			std::ostream &ost);
+	void print_without_recursion(
+			std::ostream &ost);
+	void export_graphviz(
+			std::string &name, std::ostream &ost);
+	void export_graphviz_recursion(
+			std::ostream &ost);
+	void display_children_by_type();
+
 
 };
 

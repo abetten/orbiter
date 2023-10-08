@@ -1862,6 +1862,116 @@ void latex_interface::print_column_tactical_decomposition_scheme_tex(
 	ost << "%}" << endl;
 }
 
+void latex_interface::report_matrix(
+		std::string &fname,
+		std::string &title,
+		std::string &author,
+		std::string &extra_praeamble,
+	int *M, int nb_rows, int nb_cols)
+{
+	ofstream ost(fname);
+
+	head(ost,
+			false /* f_book*/,
+			true /* f_title */,
+			title, author,
+			false /* f_toc */,
+			false /* f_landscape */,
+			true /* f_12pt */,
+			true /* f_enlarged_page */,
+			true /* f_pagenumbers */,
+			extra_praeamble /* extra_praeamble */);
+
+
+
+	ost << "$$" << endl;
+	ost << "\\left[" << endl;
+	int_matrix_print_tex(
+			ost, M, nb_rows, nb_cols);
+	ost << "\\right]" << endl;
+	ost << "$$" << endl;
+
+	Int_vec_print_fully(
+			ost, M, nb_rows * nb_cols);
+	ost << "\\\\" << endl;
+
+
+
+	foot(ost);
+
+}
+
+
+void latex_interface::report_matrix_longinteger(
+		std::string &fname,
+		std::string &title,
+		std::string &author,
+		std::string &extra_praeamble,
+		ring_theory::longinteger_object *M, int nb_rows, int nb_cols, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "latex_interface::report_matrix_longinteger" << endl;
+	}
+
+	{
+		ofstream ost(fname);
+
+		head(ost,
+				false /* f_book*/,
+				true /* f_title */,
+				title, author,
+				false /* f_toc */,
+				false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
+				extra_praeamble /* extra_praeamble */);
+
+
+		//int i, j;
+
+		ost << "$$" << endl;
+
+		print_longinteger_matrix_tex(
+				ost,
+				M, nb_rows, nb_cols);
+
+	#if 0
+		ost << "\\begin{array}{*{" << nb_cols << "}{r}}" << endl;
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < nb_cols; j++) {
+				ost << M[i * nb_cols + j];
+				if (j < nb_cols - 1) {
+					ost << " & ";
+				}
+			}
+			ost << "\\\\" << endl;
+		}
+		ost << "\\end{array}" << endl;
+	#endif
+
+		ost << "$$" << endl;
+
+
+		foot(ost);
+	}
+
+	if (f_v) {
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "latex_interface::report_matrix_longinteger "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "latex_interface::report_matrix_longinteger done" << endl;
+	}
+}
+
+
 
 }}}
 

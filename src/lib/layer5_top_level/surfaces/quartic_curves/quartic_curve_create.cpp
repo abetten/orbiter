@@ -1954,6 +1954,10 @@ void quartic_curve_create::report(
 				"before QO->QP->print_points" << endl;
 	}
 	QO->QP->print_points(ost);
+	if (f_v) {
+		cout << "quartic_curve_create::report "
+				"after QO->QP->print_points" << endl;
+	}
 
 
 
@@ -1964,6 +1968,10 @@ void quartic_curve_create::report(
 		}
 		QO->QP->print_lines_with_points_on_them(
 				ost, QO->bitangents28, 28, QO->QP->pts_on_lines);
+		if (f_v) {
+			cout << "quartic_curve_create::report "
+					"after QO->QP->print_lines_with_points_on_them" << endl;
+		}
 	}
 	else {
 		if (f_v) {
@@ -1971,13 +1979,21 @@ void quartic_curve_create::report(
 					"before QO->QP->print_bitangents" << endl;
 		}
 		QO->QP->print_bitangents(ost);
+		if (f_v) {
+			cout << "quartic_curve_create::report "
+					"after QO->QP->print_bitangents" << endl;
+		}
 	}
 
 	if (f_v) {
 		cout << "quartic_curve_create::report "
-				"before QO->QP->report_bitangent_line_type" << endl;
+				"before QO->QP->Kovalevski->report_bitangent_line_type" << endl;
 	}
-	QO->QP->report_bitangent_line_type(ost);
+	QO->QP->Kovalevski->report_bitangent_line_type(ost);
+	if (f_v) {
+		cout << "quartic_curve_create::report "
+				"after QO->QP->Kovalevski->report_bitangent_line_type" << endl;
+	}
 
 	if (f_v) {
 		cout << "quartic_curve_create::report "
@@ -2049,30 +2065,8 @@ void quartic_curve_create::print_general(
 	ost << "\\mbox{Number of points} & " << QO->nb_pts << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	if (QO->QP->f_fullness_has_been_established) {
-		if (QO->QP->f_is_full) {
-			ost << "\\mbox{Fullness} &  \\mbox{is full}\\\\" << endl;
-			ost << "\\hline" << endl;
-		}
-		else {
-			ost << "\\mbox{Fullness} &  \\mbox{not full}\\\\" << endl;
-			ost << "\\hline" << endl;
-		}
-	}
-	ost << "\\mbox{Number of Kovalevski points} & "
-			<< QO->QP->nb_Kovalevski << "\\\\" << endl;
-	ost << "\\hline" << endl;
+	QO->QP->Kovalevski->print_general(ost);
 
-
-	ost << "\\mbox{Bitangent line type $(a_0,a_1,a_2)$} & ";
-	ost << "(";
-	ost << QO->QP->line_type_distribution[0];
-	ost << "," << endl;
-	ost << QO->QP->line_type_distribution[1];
-	ost << "," << endl;
-	ost << QO->QP->line_type_distribution[2];
-	ost << ")";
-	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Number of singular points} & "
 			<< QO->QP->nb_singular_pts << "\\\\" << endl;
@@ -2127,7 +2121,7 @@ void quartic_curve_create::print_general(
 			std::stringstream orbit_type_on_Kovelevski;
 
 			QOA->Aut_gens->orbits_on_set_with_given_action_after_restriction(
-					PA->A, QO->QP->Kovalevski_points, QO->QP->nb_Kovalevski,
+					PA->A, QO->QP->Kovalevski->Kovalevski_points, QO->QP->Kovalevski->nb_Kovalevski,
 					orbit_type_on_Kovelevski,
 					0 /*verbose_level */);
 

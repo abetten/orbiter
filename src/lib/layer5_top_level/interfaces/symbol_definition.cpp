@@ -169,6 +169,9 @@ symbol_definition::symbol_definition()
 	f_crc_code = false;
 	Crc_code_description = NULL;
 
+	f_mapping = false;
+	Mapping_description = NULL;
+
 }
 
 
@@ -1140,6 +1143,31 @@ void symbol_definition::read_definition(
 			Crc_code_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-mapping") == 0) {
+
+		f_mapping = true;
+		Mapping_description =
+				NEW_OBJECT(apps_geometry::mapping_description);
+		if (f_v) {
+			cout << "symbol_definition::read_definition reading -mapping" << endl;
+		}
+
+		i += Mapping_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-mapping" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-mapping " << endl;
+			Mapping_description->print();
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -1610,6 +1638,17 @@ void symbol_definition::perform_definition(int verbose_level)
 					"after definition_of_crc_code" << endl;
 		}
 	}
+	else if (f_mapping) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_mapping" << endl;
+		}
+		definition_of_mapping(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_mapping" << endl;
+		}
+	}
 
 	else {
 		if (f_v) {
@@ -1794,6 +1833,10 @@ void symbol_definition::print()
 	if (f_crc_code) {
 		cout << "-crc_code ";
 		Crc_code_description->print();
+	}
+	if (f_mapping) {
+		cout << "-mapping ";
+		Mapping_description->print();
 	}
 }
 
@@ -4093,6 +4136,59 @@ void symbol_definition::definition_of_crc_code(int verbose_level)
 	}
 }
 
+
+void symbol_definition::definition_of_mapping(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_mapping" << endl;
+	}
+
+	apps_geometry::mapping *Mapping;
+
+	Mapping = NEW_OBJECT(apps_geometry::mapping);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_mapping "
+				"before Mapping->init" << endl;
+	}
+	Mapping->init(Mapping_description, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_mapping "
+				"after Mapping->init" << endl;
+	}
+	if (f_v) {
+		cout << "Mapping->label_txt" << Mapping->label_txt << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_mapping "
+				"we have created a mapping called " << Mapping->label_txt << endl;
+
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_mapping(
+			define_label, Mapping, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_mapping "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_mapping done" << endl;
+	}
+}
 
 
 

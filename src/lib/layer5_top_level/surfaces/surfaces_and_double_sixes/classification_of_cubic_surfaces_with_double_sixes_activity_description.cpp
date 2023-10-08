@@ -33,11 +33,11 @@ classification_of_cubic_surfaces_with_double_sixes_activity_description::classif
 	f_identify_general_abcd = false;
 
 	f_isomorphism_testing = false;
-	isomorphism_testing_surface1 = NULL;
-	isomorphism_testing_surface2 = NULL;
+	//std::string isomorphism_testing_surface1_label;
+	//std::string isomorphism_testing_surface2_label;
 
 	f_recognize = false;
-	recognize_surface = NULL;
+	//std::string recognize_surface_label;
 
 	f_create_source_code = false;
 
@@ -62,7 +62,8 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 	}
 	for (i = 0; i < argc; i++) {
 
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments, next argument is " << argv[i] << endl;
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments, "
+				"next argument is " << argv[i] << endl;
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
@@ -112,57 +113,33 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 		}
 		else if (ST.stringcmp(argv[i], "-isomorphism_testing") == 0) {
 			f_isomorphism_testing = true;
+			isomorphism_testing_surface1_label.assign(argv[++i]);
+			isomorphism_testing_surface2_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-isomorphism_testing" << endl;
-				cout << "-isomorphism_testing reading description of first surface" << endl;
-			}
-			isomorphism_testing_surface1 = NEW_OBJECT(cubic_surfaces_in_general::surface_create_description);
-			i += isomorphism_testing_surface1->
-					read_arguments(argc - (i + 1), argv + i + 1,
-					verbose_level);
-			if (f_v) {
-				cout << "-isomorphism_testing after reading description of first surface" << endl;
-				cout << "the current argument is " << argv[i] << endl;
-				cout << "-isomorphism_testing reading description of second surface" << endl;
-			}
-			isomorphism_testing_surface2 = NEW_OBJECT(cubic_surfaces_in_general::surface_create_description);
-			i += isomorphism_testing_surface2->
-					read_arguments(argc - (i + 1), argv + i + 1,
-					verbose_level);
-			if (f_v) {
-				cout << "done with -isomorphism_testing" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-isomorphism_testing " << endl;
+				cout << "-isomorphism_testing "
+						<< isomorphism_testing_surface1_label << " "
+						<< isomorphism_testing_surface2_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
 			f_recognize = true;
+			recognize_surface_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-recognize reading description of surface" << endl;
-			}
-			recognize_surface = NEW_OBJECT(cubic_surfaces_in_general::surface_create_description);
-			i += recognize_surface->
-					read_arguments(argc - (i + 1), argv + i + 1,
-					verbose_level);
-			if (f_v) {
-				cout << "done with -surface_recognize" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-recognize " << endl;
+				cout << "-recognize "
+						<< recognize_surface_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-create_source_code") == 0) {
 			f_create_source_code = true;
+			if (f_v) {
+				cout << "-create_source_code " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-sweep_Cayley") == 0) {
 			f_sweep_Cayley = true;
+			if (f_v) {
+				cout << "-sweep_Cayley " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -207,10 +184,13 @@ void classification_of_cubic_surfaces_with_double_sixes_activity_description::pr
 		cout << "-identify_general_abcd " << endl;
 	}
 	if (f_isomorphism_testing) {
-		cout << "-isomorphism_testing " << endl;
+		cout << "-isomorphism_testing "
+				<< isomorphism_testing_surface1_label << " "
+				<< isomorphism_testing_surface2_label << endl;
 	}
 	if (f_recognize) {
-		cout << "-recognize " << endl;
+		cout << "-recognize "
+				<< recognize_surface_label << endl;
 	}
 	if (f_create_source_code) {
 		cout << "-create_source_code " << endl;

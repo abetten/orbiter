@@ -267,14 +267,23 @@ void surface_domain::print_one_line_tex(
 	ost << " = " << endl;
 	//print_integer_matrix_width(cout,
 	// Gr->M, k, n, n, F->log10_of_q + 1);
+
+#if 1
 	Gr->latex_matrix(ost, Gr->M);
+
+
 	//print_integer_matrix_tex(ost, Gr->M, 2, 4);
 	//ost << "\\right]_{" << Lines[i] << "}" << endl;
 	ost << "_{" << Lines[idx] << "}" << endl;
 	ost << "=" << endl;
+#endif
+
+
 	ost << "\\left[" << endl;
 	L.print_integer_matrix_tex(ost, Gr->M, 2, 4);
-	ost << "\\right]_{" << Lines[idx] << "}" << endl;
+	ost << "\\right]";
+	//ost << "_{" << Lines[idx] << "}";
+	ost << endl;
 
 	int v6[6];
 
@@ -287,7 +296,8 @@ void surface_domain::print_one_line_tex(
 	ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 			<< v6[2] << "," << v6[3] << "," << v6[4]
 			<< "," << v6[5] << " ";
-	ost << ")_{" << klein_rk << "}";
+	ost << ")";
+	ost << "_{" << klein_rk << "}";
 	ost << "$$" << endl;
 }
 

@@ -394,7 +394,7 @@ void interface_coding_theory::worker(int verbose_level)
 		k = make_macwilliams_system_k;
 		q = make_macwilliams_system_q;
 
-		Coding.do_make_macwilliams_system(
+		Coding.report_macwilliams_system(
 				q,
 				n,
 				k,

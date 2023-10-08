@@ -61,7 +61,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 				"before SCW->init" << endl;
 	}
 
-	SCW->init(PA->Surf_A,
+	SCW->init(PA,
 			Control,
 			verbose_level - 1);
 
@@ -277,7 +277,8 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 
 	Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs(
 			Control_six_arcs_label,
-			PA->Surf_A,
+			PA,
+			//PA->Surf_A,
 			f_test_nb_Eckardt_points, nb_E,
 			verbose_level);
 
@@ -565,8 +566,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	int i;
 	field_theory::finite_field *F0;
 	field_theory::finite_field *F;
-	algebraic_geometry::surface_domain *Surf;
-	surface_with_action *Surf_A;
+	//algebraic_geometry::surface_domain *Surf;
+	//surface_with_action *Surf_A;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 	orbiter_kernel_system::file_io Fio;
@@ -582,7 +583,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 
 	F = PA->P->Subspaces->F;
 
-
+#if 0
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init_surface_domain(F, 0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -601,7 +602,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		cout << "surface_domain_high_level::do_cubic_surface_properties "
 				"after Surf_A->init" << endl;
 	}
-
+#endif
 
 
 
@@ -806,8 +807,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	FREE_lint(M);
 	//FREE_OBJECT(PA);
 	FREE_OBJECT(F0);
-	FREE_OBJECT(Surf);
-	FREE_OBJECT(Surf_A);
+	//FREE_OBJECT(Surf);
+	//FREE_OBJECT(Surf_A);
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties done" << endl;
@@ -846,8 +847,8 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 	field_theory::finite_field *F0;
 	field_theory::finite_field *F;
-	algebraic_geometry::surface_domain *Surf;
-	surface_with_action *Surf_A;
+	//algebraic_geometry::surface_domain *Surf;
+	//surface_with_action *Surf_A;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 	orbiter_kernel_system::file_io Fio;
@@ -862,7 +863,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 	F = PA->P->Subspaces->F;
 
-
+#if 0
 	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
 	Surf->init_surface_domain(F, 0 /* verbose_level - 1 */);
 	if (f_v) {
@@ -883,6 +884,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
 				"after Surf_A->init" << endl;
 	}
+#endif
 
 
 	int nb_orbits, n;
@@ -1019,8 +1021,8 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 	//FREE_OBJECT(PA);
 	FREE_OBJECT(F0);
-	FREE_OBJECT(Surf_A);
-	FREE_OBJECT(Surf);
+	//FREE_OBJECT(Surf_A);
+	//FREE_OBJECT(Surf);
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze done" << endl;
@@ -1308,18 +1310,13 @@ void surface_domain_high_level::do_create_surface_reports(
 			make_fname_surface_report_tex(fname, q, ocn);
 
 #if 0
-			$(ORBITER_PATH)orbiter.out -v 3 \
-				-define F -finite_field -q 4 -end \
-				-define P -projective_space 3 F -end \
-				-with P -do \
-				-projective_space_activity \
-					-define_surface S -q 4 -catalogue 0 -end \
-				-end \
+			$(ORBITER) -v 3 \
+				-define F -finite_field -q 11 -end \
+				-define P -projective_space -n 3 -field F -v 0 -end \
+				-define S -cubic_surface -space P -catalogue 1 -end \
 				-with S -do \
 				-cubic_surface_activity \
 					-report \
-					-report_with_group \
-					-all_quartic_curves \
 				-end
 #endif
 
@@ -1329,18 +1326,13 @@ void surface_domain_high_level::do_create_surface_reports(
 					+ "/orbiter.out -v 3 "
 					+ "-define F -finite_field -q " + std::to_string(q) + " "
 					+ "-end "
-					+ "-define P -projective_space 3 F -end "
-					+ "-with P -do "
-					+ "-projective_space_activity "
-					+ "-define_surface S -q " + std::to_string(q) + " "
+					+ "-define P -projective_space -n 3 -field F -end "
+					+ "-define S -cubic_surface -space P "
 					+ "-catalogue " + std::to_string(ocn) + " "
-					+ "-end "
 					+ "-end "
 					+ "-with S -do "
 					+ "-cubic_surface_activity "
 					+ "-report "
-					+ "-report_with_group "
-					// + "-all_quartic_curves "
 					+ "-end >log_surface";
 
 			if (f_v) {

@@ -944,7 +944,8 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 				{
 					string str;
-					Int_vec_create_string_with_quotes(str,
+					Int_vec_create_string_with_quotes(
+							str,
 							gens->tl, A->base_len());
 					ost << str;
 				}
@@ -959,7 +960,8 @@ void canonical_form_classifier::write_canonical_forms_csv(
 				{
 					string str;
 
-					gens->get_gens_data_as_string_with_quotes(str,
+					gens->get_gens_data_as_string_with_quotes(
+							str,
 							0 /*verbose_level*/);
 					ost << str;
 				}
@@ -1065,7 +1067,8 @@ void canonical_form_classifier::generate_source_code(
 
 			int idx;
 
-			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+			idx = Classification_of_quartic_curves->sorting_perm_inv[
+						Classification_of_quartic_curves->type_first[orbit_index]];
 
 
 			//canonical_form_substructure *CFS = Variety_table[idx];
@@ -1111,7 +1114,8 @@ void canonical_form_classifier::generate_source_code(
 
 			int idx;
 
-			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+			idx = Classification_of_quartic_curves->sorting_perm_inv[
+					Classification_of_quartic_curves->type_first[orbit_index]];
 
 
 			ago.create(Goi[idx]);
@@ -1148,7 +1152,8 @@ void canonical_form_classifier::generate_source_code(
 
 			int idx;
 
-			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+			idx = Classification_of_quartic_curves->sorting_perm_inv[
+					Classification_of_quartic_curves->type_first[orbit_index]];
 
 			//canonical_form_substructure *CFS = Variety_table[idx];
 
@@ -1163,7 +1168,8 @@ void canonical_form_classifier::generate_source_code(
 					bitangents_canonical[j] =
 							A_on_lines->Group_element->element_image_of(
 									bitangents_orig[j],
-							Variety_table[idx]->transporter_to_canonical_form, 0 /* verbose_level */);
+							Variety_table[idx]->transporter_to_canonical_form,
+							0 /* verbose_level */);
 				}
 
 
@@ -1211,7 +1217,8 @@ void canonical_form_classifier::generate_source_code(
 
 				int idx;
 
-				idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+				idx = Classification_of_quartic_curves->sorting_perm_inv[
+						Classification_of_quartic_curves->type_first[orbit_index]];
 
 				//canonical_form_substructure *CFS = CFS_table[idx];
 				//gens = CFS->Gens_stabilizer_canonical_form;
@@ -1225,7 +1232,8 @@ void canonical_form_classifier::generate_source_code(
 						fst += stab_gens_len[orbit_index];
 					}
 					else {
-						cout << "canonical_form_classifier::generate_source_code gens not available" << endl;
+						cout << "canonical_form_classifier::generate_source_code "
+								"gens not available" << endl;
 						stab_gens_first[orbit_index] = fst;
 						stab_gens_len[orbit_index] = 0;
 						fst += stab_gens_len[orbit_index];
@@ -1300,7 +1308,8 @@ void canonical_form_classifier::generate_source_code(
 
 					int idx;
 
-					idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+					idx = Classification_of_quartic_curves->sorting_perm_inv[
+							Classification_of_quartic_curves->type_first[orbit_index]];
 
 					//canonical_form_substructure *CFS = CFS_table[idx];
 					//gens = CFS->Gens_stabilizer_canonical_form;
@@ -1309,11 +1318,13 @@ void canonical_form_classifier::generate_source_code(
 
 
 						if (gens) {
-							A->Group_element->element_print_for_make_element(gens->gens->ith(j), f);
+							A->Group_element->element_print_for_make_element(
+									gens->gens->ith(j), f);
 							f << endl;
 						}
 						else {
-							cout << "canonical_form_classifier::generate_source_code gens are not available" << endl;
+							cout << "canonical_form_classifier::generate_source_code "
+									"gens are not available" << endl;
 						}
 					}
 					else {
@@ -1398,7 +1409,8 @@ void canonical_form_classifier::report(
 			cout << "canonical_form_classifier::report "
 					"before export_canonical_form_data" << endl;
 		}
-		export_canonical_form_data(fname_data, verbose_level);
+		export_canonical_form_data(
+				fname_data, verbose_level);
 		if (f_v) {
 			cout << "canonical_form_classifier::report "
 					"after export_canonical_form_data" << endl;
@@ -1415,7 +1427,8 @@ void canonical_form_classifier::report(
 
 }
 
-void canonical_form_classifier::report2(std::ostream &ost, int verbose_level)
+void canonical_form_classifier::report2(
+		std::ostream &ost, int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
@@ -1462,7 +1475,8 @@ void canonical_form_classifier::report2(std::ostream &ost, int verbose_level)
 		for (orbit_index = 0;
 				orbit_index < nb_orbits;
 				orbit_index++) {
-			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+			idx = Classification_of_quartic_curves->sorting_perm_inv[
+					Classification_of_quartic_curves->type_first[orbit_index]];
 
 
 			Ago.push_back(Goi[idx]);
@@ -1503,7 +1517,8 @@ void canonical_form_classifier::report2(std::ostream &ost, int verbose_level)
 			ost << "Isomorphism class " << orbit_index << " / " << nb_orbits << ":\\\\" << endl;
 
 
-			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+			idx = Classification_of_quartic_curves->sorting_perm_inv[
+					Classification_of_quartic_curves->type_first[orbit_index]];
 
 			//canonical_form_substructure *CFS = CFS_table[idx];
 
@@ -1542,7 +1557,8 @@ void canonical_form_classifier::report2(std::ostream &ost, int verbose_level)
 
 			//int idx;
 
-			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+			idx = Classification_of_quartic_curves->sorting_perm_inv[
+					Classification_of_quartic_curves->type_first[orbit_index]];
 
 
 			ago.create(Goi[idx]);
@@ -1905,7 +1921,8 @@ void canonical_form_classifier::export_canonical_form_data(
 
 	}
 	if (f_v) {
-		cout << "canonical_form_classifier::export_canonical_form_data finished collecting Table" << endl;
+		cout << "canonical_form_classifier::export_canonical_form_data "
+				"finished collecting Table" << endl;
 	}
 
 #if 1

@@ -27,6 +27,8 @@ static void callback_partial_ovoid_test_early(
 
 classify_five_plus_one::classify_five_plus_one()
 {
+	PA = NULL;
+
 	q = 0;
 	F = NULL;
 	A = NULL;
@@ -78,8 +80,9 @@ classify_five_plus_one::~classify_five_plus_one()
 
 
 void classify_five_plus_one::init(
-		cubic_surfaces_in_general::surface_with_action
-			*Surf_A,
+		projective_geometry::projective_space_with_action *PA,
+		//cubic_surfaces_in_general::surface_with_action
+		//	*Surf_A,
 	poset_classification::poset_classification_control
 		*Control,
 	int verbose_level)
@@ -89,7 +92,8 @@ void classify_five_plus_one::init(
 	if (f_v) {
 		cout << "classify_five_plus_one::init" << endl;
 		}
-	classify_five_plus_one::Surf_A = Surf_A;
+	classify_five_plus_one::PA = PA;
+	Surf_A = PA->Surf_A;
 	F = Surf_A->PA->F;
 	q = F->q;
 	Surf = Surf_A->Surf;

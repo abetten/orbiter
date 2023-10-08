@@ -96,6 +96,7 @@ namespace actions {
  *
  *
  */
+
 class action {
 public:
 
@@ -197,10 +198,10 @@ public:
 
 	
 
-	/** a fancy label for the group */
+	/** a label for the group */
 	std::string label;
 
-	/** a fancy label for the group for latex */
+	/** a label for the group for latex */
 	std::string label_tex;
 
 
@@ -689,23 +690,6 @@ public:
 			groups::schreier &Schreier,
 			int *Elt,
 			int verbose_level);
-#if 0
-	void compute_set_orbit(
-			actions::action *A,
-			data_structures_groups::vector_ge &gens,
-		int size, long int *set,
-		int &nb_sets, long int **&Sets, int **&Transporter,
-		int verbose_level);
-	void delete_set_orbit(
-			actions::action *A,
-			int nb_sets, long int **Sets, int **Transporter);
-	void compute_minimal_set(
-			actions::action *A,
-			data_structures_groups::vector_ge &gens,
-			int size, long int *set,
-		long int *minimal_set, int *transporter,
-		int verbose_level);
-#endif
 	void induce(
 			action *old_action,
 			action *new_action,

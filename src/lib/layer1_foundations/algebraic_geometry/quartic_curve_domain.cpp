@@ -655,7 +655,8 @@ void quartic_curve_domain::create_surface(
 	int M1[3 * 15];
 	int M2[15 * 3];
 
-	Q->QP->Bitangent_line_type->get_class_by_value(Bitangents, nb_bitangents, 2 /*value */,
+	Q->QP->Kovalevski->Bitangent_line_type->get_class_by_value(
+			Bitangents, nb_bitangents, 2 /*value */,
 			verbose_level);
 
 	if (nb_bitangents < 4) {

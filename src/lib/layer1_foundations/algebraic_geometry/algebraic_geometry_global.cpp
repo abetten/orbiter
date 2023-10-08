@@ -251,7 +251,6 @@ void algebraic_geometry_global::map(
 
 
 
-	int idx;
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
 	Ring = Get_ring(ring_label);
@@ -293,6 +292,67 @@ void algebraic_geometry_global::map(
 	}
 }
 
+void algebraic_geometry_global::affine_map(
+		geometry::projective_space *P,
+		std::string &ring_label,
+		std::string &formula_label,
+		std::string &evaluate_text,
+		long int *&Image_pts,
+		long int &N_points,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::affine_map" << endl;
+	}
+	if (f_v) {
+		cout << "algebraic_geometry_global::affine_map n = " << P->Subspaces->n << endl;
+	}
+
+
+
+	ring_theory::homogeneous_polynomial_domain *Ring;
+
+	Ring = Get_ring(ring_label);
+
+
+	data_structures::symbolic_object_builder *Object;
+
+	Object = Get_symbol(formula_label);
+
+
+	if (Ring->get_nb_variables() != P->Subspaces->n + 1) {
+		cout << "algebraic_geometry_global::affine_map "
+				"number of variables is wrong" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "algebraic_geometry_global::affine_map "
+				"before evaluate_regular_map" << endl;
+	}
+	evaluate_affine_map(
+			Ring,
+			P,
+			Object,
+			evaluate_text,
+			Image_pts, N_points,
+			verbose_level);
+	if (f_v) {
+		cout << "algebraic_geometry_global::affine_map "
+				"after evaluate_regular_map" << endl;
+	}
+
+
+
+
+
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::affine_map done" << endl;
+	}
+}
+
 void algebraic_geometry_global::evaluate_regular_map(
 		ring_theory::homogeneous_polynomial_domain *Ring,
 		geometry::projective_space *P,
@@ -302,6 +362,7 @@ void algebraic_geometry_global::evaluate_regular_map(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "algebraic_geometry_global::evaluate_regular_map" << endl;
@@ -309,21 +370,32 @@ void algebraic_geometry_global::evaluate_regular_map(
 
 	int *v;
 	int *w;
+	int *w2;
 	int h;
 	long int i, j;
-	int f_vv = false;
 
 	N_points_input = P->Subspaces->N_points;
 
+	if (f_v) {
+		cout << "algebraic_geometry_global::evaluate_regular_map "
+				"N_points_input = " << N_points_input << endl;
+	}
 
 	int len;
 
 	len = Object->Formula_vector->len;
 
+	if (f_v) {
+		cout << "algebraic_geometry_global::evaluate_regular_map "
+				"len = " << len << endl;
+	}
+
+
 	Image_pts = NEW_lint(N_points_input);
 
 	v = NEW_int(P->Subspaces->n + 1);
 	w = NEW_int(len);
+	w2 = NEW_int(len);
 
 
 	data_structures::string_tools ST;
@@ -336,9 +408,9 @@ void algebraic_geometry_global::evaluate_regular_map(
 
 		P->unrank_point(v, i);
 
-		if (f_vv) {
+		if (f_v) {
 			cout << "algebraic_geometry_global::evaluate_regular_map "
-					"point " << i << " is ";
+					"point " << i << " / " << N_points_input << " is ";
 			Int_vec_print(cout, v, P->Subspaces->n + 1);
 			cout << endl;
 		}
@@ -353,9 +425,12 @@ void algebraic_geometry_global::evaluate_regular_map(
 
 			w[h] = Object->Formula_vector->V[h].tree->evaluate(
 					symbol_table,
-					verbose_level - 2);
+					0 /*verbose_level*/);
 
 		}
+
+		Int_vec_copy(w, w2, len);
+
 
 
 		if (!Int_vec_is_zero(w, len)) {
@@ -366,20 +441,138 @@ void algebraic_geometry_global::evaluate_regular_map(
 			j = -1;
 		}
 
-		if (f_vv) {
-			cout << "algebraic_geometry_global::evaluate_regular_map maps to ";
-			Int_vec_print(cout, w, len);
-			cout << " = " << j << endl;
+		if (f_v) {
+			cout << "algebraic_geometry_global::evaluate_regular_map "
+					"point " << i << " / " << N_points_input << " is ";
+			Int_vec_print(cout, v, P->Subspaces->n + 1);
+			cout << " maps to ";
+			Int_vec_print(cout, w2, len);
+			cout << " image rank = " << j;
+			cout << endl;
 		}
+
 
 		Image_pts[i] = j;
 	}
 
 	FREE_int(v);
 	FREE_int(w);
+	FREE_int(w2);
 
 	if (f_v) {
 		cout << "algebraic_geometry_global::evaluate_regular_map done" << endl;
+	}
+}
+
+
+void algebraic_geometry_global::evaluate_affine_map(
+		ring_theory::homogeneous_polynomial_domain *Ring,
+		geometry::projective_space *P,
+		data_structures::symbolic_object_builder *Object,
+		std::string &evaluate_text,
+		long int *&Image_pts, long int &N_points_input,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::evaluate_affine_map" << endl;
+	}
+
+	int h;
+	long int i, j;
+	int k;
+	int *input;
+	int *output;
+
+	k = P->Subspaces->n;
+
+	int len;
+
+	len = Object->Formula_vector->len;
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::evaluate_affine_map len = " << len << endl;
+	}
+
+
+	geometry::geometry_global Gg;
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::evaluate_affine_map before Gg.nb_AG_elements" << endl;
+	}
+	N_points_input = Gg.nb_AG_elements(k, P->Subspaces->F->q);
+	if (f_v) {
+		cout << N_points_input << " elements in the domain" << endl;
+	}
+
+	Image_pts = NEW_lint(N_points_input);
+
+
+	input = NEW_int(k);
+	output = NEW_int(len);
+
+
+	data_structures::string_tools ST;
+	std::map<std::string, std::string> symbol_table;
+
+	ST.parse_value_pairs(symbol_table,
+				evaluate_text, verbose_level - 1);
+
+	for (i = 0; i < N_points_input; i++) {
+
+		//P->unrank_point(v, i);
+		Gg.AG_element_unrank(P->Subspaces->F->q, input, 1, k, i);
+
+		if (f_vv) {
+			cout << "algebraic_geometry_global::evaluate_affine_map "
+					"point " << i << " is ";
+			Int_vec_print(cout, input, k);
+			cout << endl;
+		}
+
+		for (h = 0; h < k; h++) {
+
+			symbol_table[Ring->get_symbol(h)] = std::to_string(input[h]);
+
+		}
+
+		for (h = 0; h < len; h++) {
+
+			output[h] = Object->Formula_vector->V[h].tree->evaluate(
+					symbol_table,
+					verbose_level - 2);
+
+		}
+
+#if 0
+		if (!Int_vec_is_zero(w, len)) {
+			P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
+					w, 1 /* stride */, len, j);
+		}
+		else {
+			j = -1;
+		}
+#endif
+		j = Gg.AG_element_rank(P->Subspaces->F->q, output, 1, len);
+
+		if (f_vv) {
+			cout << "algebraic_geometry_global::evaluate_affine_map point " << i << " = ";
+			Int_vec_print(cout, input, k);
+			cout << " and maps to ";
+			Int_vec_print(cout, output, len);
+			cout << " = " << j << endl;
+		}
+
+		Image_pts[i] = j;
+	}
+
+	FREE_int(input);
+	FREE_int(output);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::evaluate_affine_map done" << endl;
 	}
 }
 

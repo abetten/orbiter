@@ -65,26 +65,6 @@ int arc_generator_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-#if 0
-		if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
-			f_poset_classification_control = true;
-			Control = NEW_OBJECT(poset_classification::poset_classification_control);
-			if (f_v) {
-				cout << "-poset_classification_control " << endl;
-			}
-			i += Control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -poset_classification_control " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
-#endif
 		if (ST.stringcmp(argv[i], "-control") == 0) {
 			f_control = true;
 			control_label.assign(argv[++i]);
@@ -167,12 +147,6 @@ int arc_generator_description::read_arguments(
 
 void arc_generator_description::print()
 {
-#if 0
-	if (f_poset_classification_control) {
-		Control->print();
-	}
-#endif
-
 	if (f_control) {
 		cout << "-control " << control_label << endl;
 	}

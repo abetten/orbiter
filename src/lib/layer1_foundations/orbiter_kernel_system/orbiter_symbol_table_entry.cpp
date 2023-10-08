@@ -816,6 +816,24 @@ void orbiter_symbol_table_entry::init_crc_code(
 	}
 }
 
+void orbiter_symbol_table_entry::init_mapping(
+		std::string &label,
+		void *Mapping, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_mapping" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_mapping;
+	ptr = Mapping;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_mapping done" << endl;
+	}
+}
+
 
 
 
@@ -962,6 +980,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_crc_code) {
 			cout << "crc_code" << endl;
+		}
+		else if (object_type == t_mapping) {
+			cout << "mapping" << endl;
 		}
 
 	}

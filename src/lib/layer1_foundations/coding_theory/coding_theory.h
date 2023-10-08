@@ -87,6 +87,9 @@ public:
 	void make_mac_williams_equations(
 			ring_theory::longinteger_object *&M,
 			int n, int k, int q, int verbose_level);
+	void report_macwilliams_system(
+			int q, int n, int k, int verbose_level);
+
 	void make_table_of_bounds(
 			int n_max, int q, int verbose_level);
 	void make_gilbert_varshamov_code(
@@ -113,8 +116,6 @@ public:
 	int griesmer_bound_for_n(
 			int k, int d, int q, int verbose_level);
 
-	void do_make_macwilliams_system(
-			int q, int n, int k, int verbose_level);
 	void make_Hamming_space_distance_matrix(
 			int n, field_theory::finite_field *F,
 			int f_projective, int verbose_level);

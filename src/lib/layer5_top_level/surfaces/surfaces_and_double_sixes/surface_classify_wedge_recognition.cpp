@@ -18,6 +18,270 @@ namespace cubic_surfaces_and_double_sixes {
 
 
 
+
+void surface_classify_wedge::test_isomorphism(
+		std::string &surface1_label,
+		std::string &surface2_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_classify_wedge::test_isomorphism: " << surface1_label << " " << surface2_label << endl;
+	}
+
+
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *SC1;
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *SC2;
+
+	SC1 = Get_object_of_cubic_surface(surface1_label);
+	SC2 = Get_object_of_cubic_surface(surface2_label);
+
+
+	int isomorphic_to1;
+	int isomorphic_to2;
+	int *Elt_isomorphism_1to2;
+
+	Elt_isomorphism_1to2 = NEW_int(A->elt_size_in_int);
+
+	int c;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::test_isomorphism "
+				"before isomorphism_test_pairwise" << endl;
+	}
+	c = isomorphism_test_pairwise(
+			SC1, SC2,
+			isomorphic_to1, isomorphic_to2,
+			Elt_isomorphism_1to2,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_classify_wedge::test_isomorphism "
+				"after isomorphism_test_pairwise" << endl;
+	}
+
+	if (c) {
+
+		if (f_v) {
+			cout << "The surfaces are isomorphic, "
+					"an isomorphism is given by" << endl;
+			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
+			cout << "The surfaces belongs to iso type "
+					<< isomorphic_to1 << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "The surfaces are NOT isomorphic." << endl;
+			cout << "surface 1 belongs to iso type "
+					<< isomorphic_to1 << endl;
+			cout << "surface 2 belongs to iso type "
+					<< isomorphic_to2 << endl;
+		}
+	}
+	if (f_v) {
+		cout << "surface_classify_wedge::test_isomorphism done" << endl;
+	}
+}
+
+
+int surface_classify_wedge::isomorphism_test_pairwise(
+		cubic_surfaces_in_general::surface_create *SC1,
+		cubic_surfaces_in_general::surface_create *SC2,
+	int &isomorphic_to1, int &isomorphic_to2,
+	int *Elt_isomorphism_1to2,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt1, *Elt2, *Elt3;
+	int ret;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::isomorphism_test_pairwise" << endl;
+	}
+	int *coeff1;
+	int *coeff2;
+
+	coeff1 = SC1->SO->eqn;
+	coeff2 = SC2->SO->eqn;
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	if (f_v) {
+		cout << "surface_classify_wedge::isomorphism_test_pairwise "
+				"before identify_surface (1)" << endl;
+	}
+	identify_surface(
+		coeff1,
+		isomorphic_to1, Elt1,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "surface_classify_wedge::isomorphism_test_pairwise "
+				"after identify_surface (1)" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_classify_wedge::isomorphism_test_pairwise "
+				"before identify_surface (2)" << endl;
+	}
+	identify_surface(
+		coeff2,
+		isomorphic_to2, Elt2,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "surface_classify_wedge::isomorphism_test_pairwise "
+				"after identify_surface (2)" << endl;
+	}
+
+	if (isomorphic_to1 != isomorphic_to2) {
+		ret = false;
+		if (f_v) {
+			cout << "surface_classify_wedge::isomorphism_test_pairwise "
+					"not isomorphic" << endl;
+		}
+	}
+	else {
+		ret = true;
+		if (f_v) {
+			cout << "surface_classify_wedge::isomorphism_test_pairwise "
+					"they are isomorphic" << endl;
+		}
+		A->Group_element->element_invert(Elt2, Elt3, 0);
+		A->Group_element->element_mult(Elt1, Elt3, Elt_isomorphism_1to2, 0);
+		if (f_v) {
+			cout << "an isomorphism from surface1 to surface2 is" << endl;
+			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
+		}
+		algebra::matrix_group *mtx;
+
+		mtx = A->G.matrix_grp;
+
+		if (f_v) {
+			cout << "testing the isomorphism" << endl;
+			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
+			cout << "from: ";
+			Int_vec_print(cout, coeff1, 20);
+			cout << endl;
+			cout << "to  : ";
+			Int_vec_print(cout, coeff2, 20);
+			cout << endl;
+		}
+		A->Group_element->element_invert(Elt_isomorphism_1to2, Elt1, 0);
+		if (f_v) {
+			cout << "the inverse element is" << endl;
+			A->Group_element->element_print(Elt1, cout);
+		}
+		int coeff3[20];
+		int coeff4[20];
+		mtx->substitute_surface_equation(Elt1,
+				coeff1, coeff3, Surf,
+				verbose_level - 1);
+
+		Int_vec_copy(coeff2, coeff4, 20);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				coeff3, 1,
+				Surf->PolynomialDomains->nb_monomials);
+		F->Projective_space_basic->PG_element_normalize_from_front(
+				coeff4, 1,
+				Surf->PolynomialDomains->nb_monomials);
+
+		if (f_v) {
+			cout << "after substitution, normalized" << endl;
+			cout << "    : ";
+			Int_vec_print(cout, coeff3, 20);
+			cout << endl;
+			cout << "coeff2, normalized" << endl;
+			cout << "    : ";
+			Int_vec_print(cout, coeff4, 20);
+			cout << endl;
+		}
+		if (Sorting.int_vec_compare(coeff3, coeff4, 20)) {
+			cout << "The surface equations are not equal. That is bad." << endl;
+			exit(1);
+		}
+	}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	if (f_v) {
+		cout << "surface_classify_wedge::isomorphism_test_pairwise done" << endl;
+	}
+	return ret;
+}
+
+
+void surface_classify_wedge::recognition(
+		std::string &surface_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_classify_wedge::recognition surface_label = " << surface_label << endl;
+	}
+
+	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *SC;
+
+	SC = Get_object_of_cubic_surface(surface_label);
+
+
+	int isomorphic_to;
+	int *Elt_isomorphism;
+
+	Elt_isomorphism = NEW_int(A->elt_size_in_int);
+	if (f_v) {
+		cout << "surface_classify_wedge::recognition "
+				"before identify_surface" << endl;
+	}
+	identify_surface(
+		SC->SO->eqn,
+		isomorphic_to, Elt_isomorphism,
+		verbose_level);
+	if (f_v) {
+		cout << "surface_classify_wedge::recognition "
+				"after identify_surface" << endl;
+	}
+	if (f_v) {
+		cout << "surface belongs to iso type "
+				<< isomorphic_to << endl;
+	}
+
+	groups::strong_generators *SG;
+	groups::strong_generators *SG0;
+
+	SG = NEW_OBJECT(groups::strong_generators);
+	SG0 = NEW_OBJECT(groups::strong_generators);
+	if (f_v) {
+		cout << "surface_classify_wedge::recognition "
+				"before SG->stabilizer_of_cubic_surface_from_catalogue" << endl;
+	}
+	SG->stabilizer_of_cubic_surface_from_catalogue(
+		Surf_A->A,
+		F, isomorphic_to,
+		verbose_level);
+	if (f_v) {
+		cout << "surface_classify_wedge::recognition "
+				"after SG->stabilizer_of_cubic_surface_from_catalogue" << endl;
+	}
+
+	SG0->init_generators_for_the_conjugate_group_aGav(
+			SG, Elt_isomorphism, verbose_level);
+	ring_theory::longinteger_object go;
+
+	SG0->group_order(go);
+	if (f_v) {
+		cout << "The full stabilizer has order " << go << endl;
+		cout << "And is generated by" << endl;
+		SG0->print_generators_tex(cout);
+	}
+	if (f_v) {
+		cout << "surface_classify_wedge::recognition done" << endl;
+	}
+}
+
+
 void surface_classify_wedge::identify_surface(
 	int *coeff_of_given_surface,
 	int &isomorphic_to, int *Elt_isomorphism,
@@ -502,83 +766,6 @@ void surface_classify_wedge::identify_surface(
 
 
 
-void surface_classify_wedge::recognition(
-		cubic_surfaces_in_general::surface_create_description
-			*Descr,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_classify_wedge::recognition" << endl;
-	}
-	cubic_surfaces_in_general::surface_create *SC;
-	groups::strong_generators *SG;
-	groups::strong_generators *SG0;
-
-	SC = NEW_OBJECT(cubic_surfaces_in_general::surface_create);
-
-	if (f_v) {
-		cout << "surface_classify_wedge::recognition "
-				"before SC->init" << endl;
-	}
-	SC->init(Descr, verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::recognition "
-				"after SC->init" << endl;
-	}
-
-	int isomorphic_to;
-	int *Elt_isomorphism;
-
-	Elt_isomorphism = NEW_int(A->elt_size_in_int);
-	if (f_v) {
-		cout << "surface_classify_wedge::recognition "
-				"before identify_surface" << endl;
-	}
-	identify_surface(
-		SC->SO->eqn,
-		isomorphic_to, Elt_isomorphism,
-		verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::recognition "
-				"after identify_surface" << endl;
-	}
-	if (f_v) {
-		cout << "surface belongs to iso type "
-				<< isomorphic_to << endl;
-	}
-	SG = NEW_OBJECT(groups::strong_generators);
-	SG0 = NEW_OBJECT(groups::strong_generators);
-	if (f_v) {
-		cout << "surface_classify_wedge::recognition "
-				"before SG->stabilizer_of_cubic_surface_from_catalogue" << endl;
-	}
-	SG->stabilizer_of_cubic_surface_from_catalogue(
-		Surf_A->A,
-		F, isomorphic_to,
-		verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::recognition "
-				"after SG->stabilizer_of_cubic_surface_from_catalogue" << endl;
-	}
-
-	SG0->init_generators_for_the_conjugate_group_aGav(
-			SG, Elt_isomorphism, verbose_level);
-	ring_theory::longinteger_object go;
-
-	SG0->group_order(go);
-	if (f_v) {
-		cout << "The full stabilizer has order " << go << endl;
-		cout << "And is generated by" << endl;
-		SG0->print_generators_tex(cout);
-	}
-	if (f_v) {
-		cout << "surface_classify_wedge::recognition done" << endl;
-	}
-}
-
-
 void surface_classify_wedge::sweep_Cayley(
 		int verbose_level)
 {
@@ -987,7 +1174,7 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 
 	//cout << "\\begin{array}{|c|c|c|}" << endl;
 	//cout << "\\hline" << endl;
-	cout << "(a,c); \\# lines & \\mbox{OCN} \\\\" << endl;
+	cout << "(a,b,c,d); \\# lines & \\mbox{OCN} \\\\" << endl;
 	//cout << "\\hline" << endl;
 	for (a = 1; a < q; a++) {
 		for (b = 1; b < q; b++) {
@@ -1016,13 +1203,13 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 	//cout << "\\hline" << endl;
 	//cout << "\\end{array}" << endl;
 
-	int *Table;
+	long int *Table;
 	int h = 0;
 	int nb_lines, iso, nb_e;
 	knowledge_base::knowledge_base K;
 	orbiter_kernel_system::file_io Fio;
 
-	Table = NEW_int(q4 * 7);
+	Table = NEW_lint(q4 * 7);
 
 
 	for (a = 1; a < q; a++) {
@@ -1056,16 +1243,34 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 		}
 	}
 
+	std::string *headers;
+
+	headers = new string[7];
+	headers[0] = "a";
+	headers[1] = "b";
+	headers[2] = "c";
+	headers[3] = "d";
+	headers[4] = "NB_LINES";
+	headers[5] = "OCN";
+	headers[6] = "NB_E";
+
 	string fname;
 
 	fname = "surface_recognize_abcd_q" + std::to_string(q) + ".csv";
 
-	Fio.Csv_file_support->int_matrix_write_csv(
-			fname, Table, h, 7);
+
+	Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
+			fname,
+			headers, Table, h, 7);
+
+
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 
+	delete [] headers;
 
+
+	FREE_lint(Table);
 	FREE_int(Iso_type);
 	FREE_int(Nb_lines);
 
@@ -1408,223 +1613,6 @@ void surface_classify_wedge::identify_Bes(
 	}
 }
 
-int surface_classify_wedge::isomorphism_test_pairwise(
-		cubic_surfaces_in_general::surface_create *SC1,
-		cubic_surfaces_in_general::surface_create *SC2,
-	int &isomorphic_to1, int &isomorphic_to2,
-	int *Elt_isomorphism_1to2,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *Elt1, *Elt2, *Elt3;
-	int ret;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "surface_classify_wedge::isomorphism_test_pairwise" << endl;
-	}
-	int *coeff1;
-	int *coeff2;
-
-	coeff1 = SC1->SO->eqn;
-	coeff2 = SC2->SO->eqn;
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
-	if (f_v) {
-		cout << "surface_classify_wedge::isomorphism_test_pairwise "
-				"before identify_surface (1)" << endl;
-	}
-	identify_surface(
-		coeff1,
-		isomorphic_to1, Elt1,
-		verbose_level - 1);
-	if (f_v) {
-		cout << "surface_classify_wedge::isomorphism_test_pairwise "
-				"after identify_surface (1)" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_classify_wedge::isomorphism_test_pairwise "
-				"before identify_surface (2)" << endl;
-	}
-	identify_surface(
-		coeff2,
-		isomorphic_to2, Elt2,
-		verbose_level - 1);
-	if (f_v) {
-		cout << "surface_classify_wedge::isomorphism_test_pairwise "
-				"after identify_surface (2)" << endl;
-	}
-
-	if (isomorphic_to1 != isomorphic_to2) {
-		ret = false;
-		if (f_v) {
-			cout << "surface_classify_wedge::isomorphism_test_pairwise "
-					"not isomorphic" << endl;
-		}
-	}
-	else {
-		ret = true;
-		if (f_v) {
-			cout << "surface_classify_wedge::isomorphism_test_pairwise "
-					"they are isomorphic" << endl;
-		}
-		A->Group_element->element_invert(Elt2, Elt3, 0);
-		A->Group_element->element_mult(Elt1, Elt3, Elt_isomorphism_1to2, 0);
-		if (f_v) {
-			cout << "an isomorphism from surface1 to surface2 is" << endl;
-			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
-		}
-		algebra::matrix_group *mtx;
-
-		mtx = A->G.matrix_grp;
-
-		if (f_v) {
-			cout << "testing the isomorphism" << endl;
-			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
-			cout << "from: ";
-			Int_vec_print(cout, coeff1, 20);
-			cout << endl;
-			cout << "to  : ";
-			Int_vec_print(cout, coeff2, 20);
-			cout << endl;
-		}
-		A->Group_element->element_invert(Elt_isomorphism_1to2, Elt1, 0);
-		if (f_v) {
-			cout << "the inverse element is" << endl;
-			A->Group_element->element_print(Elt1, cout);
-		}
-		int coeff3[20];
-		int coeff4[20];
-		mtx->substitute_surface_equation(Elt1,
-				coeff1, coeff3, Surf,
-				verbose_level - 1);
-
-		Int_vec_copy(coeff2, coeff4, 20);
-		F->Projective_space_basic->PG_element_normalize_from_front(
-				coeff3, 1,
-				Surf->PolynomialDomains->nb_monomials);
-		F->Projective_space_basic->PG_element_normalize_from_front(
-				coeff4, 1,
-				Surf->PolynomialDomains->nb_monomials);
-
-		if (f_v) {
-			cout << "after substitution, normalized" << endl;
-			cout << "    : ";
-			Int_vec_print(cout, coeff3, 20);
-			cout << endl;
-			cout << "coeff2, normalized" << endl;
-			cout << "    : ";
-			Int_vec_print(cout, coeff4, 20);
-			cout << endl;
-		}
-		if (Sorting.int_vec_compare(coeff3, coeff4, 20)) {
-			cout << "The surface equations are not equal. That is bad." << endl;
-			exit(1);
-		}
-	}
-
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Elt3);
-	if (f_v) {
-		cout << "surface_classify_wedge::isomorphism_test_pairwise done" << endl;
-	}
-	return ret;
-}
-
-void surface_classify_wedge::test_isomorphism(
-		cubic_surfaces_in_general::surface_create_description
-			*Descr1,
-		cubic_surfaces_in_general::surface_create_description
-			*Descr2,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism" << endl;
-	}
-	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism "
-				"Descr1 = " << endl;
-		Descr1->print();
-		cout << "surface_classify_wedge::test_isomorphism "
-				"Descr2 = " << endl;
-		Descr2->print();
-	}
-
-	cubic_surfaces_in_general::surface_create *SC1;
-	cubic_surfaces_in_general::surface_create *SC2;
-	SC1 = NEW_OBJECT(cubic_surfaces_in_general::surface_create);
-	SC2 = NEW_OBJECT(cubic_surfaces_in_general::surface_create);
-
-	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism "
-				"before SC1->create_cubic_surface" << endl;
-	}
-	SC1->create_cubic_surface(Descr1, verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism "
-				"after SC1->create_cubic_surface" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism "
-				"before SC2->create_cubic_surface" << endl;
-	}
-	SC2->create_cubic_surface(Descr2, verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism "
-				"after SC2->create_cubic_surface" << endl;
-	}
-
-	int isomorphic_to1;
-	int isomorphic_to2;
-	int *Elt_isomorphism_1to2;
-
-	Elt_isomorphism_1to2 = NEW_int(A->elt_size_in_int);
-
-	int c;
-
-	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism "
-				"before isomorphism_test_pairwise" << endl;
-	}
-	c = isomorphism_test_pairwise(
-			SC1, SC2,
-			isomorphic_to1, isomorphic_to2,
-			Elt_isomorphism_1to2,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism "
-				"after isomorphism_test_pairwise" << endl;
-	}
-
-	if (c) {
-
-		if (f_v) {
-			cout << "The surfaces are isomorphic, "
-					"an isomorphism is given by" << endl;
-			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
-			cout << "The surfaces belongs to iso type "
-					<< isomorphic_to1 << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "The surfaces are NOT isomorphic." << endl;
-			cout << "surface 1 belongs to iso type "
-					<< isomorphic_to1 << endl;
-			cout << "surface 2 belongs to iso type "
-					<< isomorphic_to2 << endl;
-		}
-	}
-	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism done" << endl;
-	}
-}
 
 
 

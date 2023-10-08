@@ -69,7 +69,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_decomposition_by_group" << endl;
+		cout << "top_level_geometry_global::report_decomposition_by_group" << endl;
 	}
 
 	//long int order;
@@ -176,14 +176,14 @@ void top_level_geometry_global::report_decomposition_by_group(
 		actions::action_global AG;
 
 		if (f_v) {
-			cout << "projective_space_with_action::report_decomposition_by_group "
+			cout << "top_level_geometry_global::report_decomposition_by_group "
 					"before AG.compute_decomposition_based_on_orbit_length" << endl;
 		}
 		AG.compute_decomposition_based_on_orbit_length(PA->P,
 					Sch1, Sch2,
 					Inc, Stack, 0 /*verbose_level*/);
 		if (f_v) {
-			cout << "projective_space_with_action::report_decomposition_by_group "
+			cout << "top_level_geometry_global::report_decomposition_by_group "
 					"after AG.compute_decomposition_based_on_orbit_length" << endl;
 		}
 
@@ -250,14 +250,14 @@ void top_level_geometry_global::report_decomposition_by_group(
 		actions::action_global AG;
 
 		if (f_v) {
-			cout << "projective_space_with_action::report_decomposition_by_group "
+			cout << "top_level_geometry_global::report_decomposition_by_group "
 					"before AG.compute_decomposition_based_on_orbits" << endl;
 		}
 		AG.compute_decomposition_based_on_orbits(PA->P,
 					Sch1, Sch2,
 					Inc, Stack, 0 /*verbose_level*/);
 		if (f_v) {
-			cout << "projective_space_with_action::report_decomposition_by_group "
+			cout << "top_level_geometry_global::report_decomposition_by_group "
 					"after AG.compute_decomposition_based_on_orbits" << endl;
 		}
 
@@ -286,7 +286,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_decomposition_by_group done" << endl;
+		cout << "top_level_geometry_global::report_decomposition_by_group done" << endl;
 	}
 
 }

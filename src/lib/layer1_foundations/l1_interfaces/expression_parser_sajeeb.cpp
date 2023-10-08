@@ -61,6 +61,9 @@ static void handle_exponent_node(
 		exponent_node *node,
 		expression_parser::syntax_tree_node *current_node_copy,
 		int verbose_level);
+static int get_exponent(
+		shared_ptr<irtree_node> child2,
+		int verbose_level);
 static void collect_factors(
 		expression_parser_sajeeb *root,
 		expression_parser::syntax_tree *Tree,
@@ -850,6 +853,8 @@ void expression_parser_sajeeb::convert_to_orbiter(
 
 	if (f_v) {
 		cout << "expression_parser_sajeeb::convert_to_orbiter" << endl;
+		cout << "expression_parser_sajeeb::convert_to_orbiter "
+				"verbose_level = " << verbose_level << endl;
 	}
 
 	expression_parser_sajeeb_private_data *PD;
@@ -1301,8 +1306,7 @@ static void handle_exponent_node(
 		cout << "handle_exponent_node type1=" << t1 << " type2=" << t2 << endl;
 	}
 
-	if (child1.get()->type == irtree_node::node_type::PARAMETER_NODE &&
-			child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+	if (child1.get()->type == irtree_node::node_type::PARAMETER_NODE) {
 
 		if (f_v) {
 			cout << "handle_exponent_node PARAMETER_NODE" << endl;
@@ -1315,10 +1319,14 @@ static void handle_exponent_node(
 
 		factor.assign(node1->name);
 
-		number_node *node2 = static_cast<number_node *>(child2.get());
-		int exp;
+		int exp = 0;
 
-		exp = node2->value;
+
+		exp = get_exponent(
+				child2,
+				verbose_level);
+
+
 
 
 		if (f_v) {
@@ -1335,8 +1343,7 @@ static void handle_exponent_node(
 		}
 
 	}
-	else if (child1.get()->type == irtree_node::node_type::VARIABLE_NODE &&
-			child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+	else if (child1.get()->type == irtree_node::node_type::VARIABLE_NODE) {
 
 		if (f_v) {
 			cout << "handle_exponent_node VARIABLE_NODE" << endl;
@@ -1349,10 +1356,14 @@ static void handle_exponent_node(
 
 		factor.assign(node1->name);
 
-		number_node *node2 = static_cast<number_node *>(child2.get());
-		int exp;
+		int exp = 0;
 
-		exp = node2->value;
+
+		exp = get_exponent(
+				child2,
+				verbose_level);
+
+
 
 
 		if (f_v) {
@@ -1370,17 +1381,18 @@ static void handle_exponent_node(
 
 
 	}
-	else if (child1.get()->type == irtree_node::node_type::PLUS_NODE &&
-			child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+	else if (child1.get()->type == irtree_node::node_type::PLUS_NODE) {
 
 		plus_node *node1 = static_cast<plus_node *>(child1.get());
 
 
+		int exponent = 0;
 
-		number_node *node2 = static_cast<number_node *>(child2.get());
-		int exponent;
+		exponent = get_exponent(
+				child2,
+				verbose_level);
 
-		exponent = node2->value;
+
 
 
 		if (f_v) {
@@ -1408,17 +1420,20 @@ static void handle_exponent_node(
 
 
 	}
-	else if (child1.get()->type == irtree_node::node_type::MULTIPLY_NODE &&
-			child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+	else if (child1.get()->type == irtree_node::node_type::MULTIPLY_NODE) {
 
 		multiply_node *node1 = static_cast<multiply_node *>(child1.get());
 
 
+		int exp = 0;
 
-		number_node *node2 = static_cast<number_node *>(child2.get());
-		int exp;
 
-		exp = node2->value;
+
+		exp = get_exponent(
+				child2,
+				verbose_level);
+
+
 
 
 		if (f_v) {
@@ -1470,6 +1485,72 @@ static void handle_exponent_node(
 	}
 }
 
+
+static int get_exponent(
+		shared_ptr<irtree_node> child2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "get_exponent" << endl;
+	}
+	int exp = 0;
+
+	if (child2.get()->type == irtree_node::node_type::NUMBER_NODE) {
+		number_node *node2 = static_cast<number_node *>(child2.get());
+
+		exp = node2->value;
+	}
+	else if (child2.get()->type == irtree_node::node_type::UNARY_NEGATE_NODE) {
+
+
+		unary_negate_node *node = static_cast<unary_negate_node *>(child2.get());
+
+		shared_ptr<irtree_node> child1;
+		int cnt;
+
+		list<shared_ptr<irtree_node>>::iterator it;
+		cnt = 0;
+		for (it = node->children.begin(); it != node->children.end(); ++it) {
+			if (cnt == 0) {
+				child1 = *it;
+			}
+			else {
+				cout << "get_exponent too many children after unary minus" << endl;
+				exit(1);
+			}
+			cnt++;
+		}
+
+		if (child1.get()->type == irtree_node::node_type::NUMBER_NODE) {
+			number_node *node1 = static_cast<number_node *>(child1.get());
+
+			exp = - node1->value;
+		}
+		else {
+			cout << "handle_exponent_node unknown type of exponent node" << endl;
+			string s;
+			node_type_as_string(child2, s);
+			cout << "unknown node child2 of type: " << s << endl;
+			exit(1);
+		}
+
+
+	}
+	else {
+
+		cout << "handle_exponent_node unknown type of exponent node" << endl;
+		string s;
+		node_type_as_string(child2, s);
+		cout << "unknown node child2 of type: " << s << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "get_exponent done, exp = " << exp << endl;
+	}
+	return exp;
+}
 
 static void collect_factors(
 		expression_parser_sajeeb *root,

@@ -1616,7 +1616,11 @@ int finite_field::inverse(int i)
 int finite_field::power(int a, int n)
 // computes a^n
 {
-	return power_verbose(a, n, 0);
+	int r;
+
+	r = power_verbose(a, n, 0);
+
+	return r;
 }
 
 int finite_field::power_verbose(int a, int n, int verbose_level)
@@ -1627,6 +1631,19 @@ int finite_field::power_verbose(int a, int n, int verbose_level)
 	
 	if (f_v) {
 		cout << "finite_field::power_verbose a=" << a << " n=" << n << endl;
+	}
+	if (n < 0) {
+		if (f_v) {
+			cout << "finite_field::power_verbose "
+					"exponent is negative" << endl;
+		}
+		if (a == 0) {
+			cout << "finite_field::power_verbose "
+					"exponent is negative and the base is not invertible" << endl;
+			exit(1);
+		}
+		a = inverse(a);
+		n = -n;
 	}
 	b = a;
 	c = 1;

@@ -51,73 +51,90 @@ void coding_theory_domain::make_mac_williams_equations(
 		}
 	}
 
-	{
-
-
-		string fname;
-		string author;
-		string title;
-		string extra_praeamble;
-
-
-		fname = "MacWilliams_n" + std::to_string(n)
-				+ "_k" + std::to_string(k)
-				+ "_q" + std::to_string(q) + ".tex";
-
-		title = "MacWilliams System for a $["
-				+ std::to_string(n) + ","
-				+ std::to_string(k) + "]_{" + std::to_string(q) + "}$ code";
-
-
-
-		{
-			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
-
-			L.head(ost,
-					false /* f_book*/,
-					true /* f_title */,
-					title, author,
-					false /* f_toc */,
-					false /* f_landscape */,
-					true /* f_12pt */,
-					true /* f_enlarged_page */,
-					true /* f_pagenumbers */,
-					extra_praeamble /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "coding_theory_domain::make_mac_williams_equations "
-						"before print_longinteger_matrix_tex" << endl;
-			}
-
-			l1_interfaces::latex_interface Li;
-
-			ost << "$$" << endl;
-			ost << "\\left[" << endl;
-			Li.print_longinteger_matrix_tex(ost, M, n + 1, n + 1);
-			ost << "\\right]" << endl;
-			ost << "$$" << endl;
-
-			if (f_v) {
-				cout << "coding_theory_domain::make_mac_williams_equations "
-						"after print_longinteger_matrix_tex" << endl;
-			}
-
-
-			L.foot(ost);
-
-		}
-		orbiter_kernel_system::file_io Fio;
-
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_mac_williams_equations done" << endl;
 	}
 }
+
+void coding_theory_domain::report_macwilliams_system(
+		int q, int n, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	coding_theory_domain C;
+	ring_theory::longinteger_object *M;
+	int i, j;
+
+	if (f_v) {
+		cout << "interface_coding_theory::report_macwilliams_system" << endl;
+	}
+
+	C.make_mac_williams_equations(M, n, k, q, verbose_level);
+
+
+	string fname;
+	string author;
+	string title;
+	string extra_praeamble;
+
+
+
+	fname = "macwilliams_n" + std::to_string(n) + "_k"
+			+ std::to_string(k) + "_q" + std::to_string(q) + ".tex";
+	title = "MacWilliams system for $[" + std::to_string(n) + ","
+			+ std::to_string(k) + "]$ code over GF($" + std::to_string(q) + "$)";
+
+
+
+	l1_interfaces::latex_interface L;
+	int nb_rows, nb_cols;
+
+	nb_rows = n + 1;
+	nb_cols = n + 1;
+
+	L.report_matrix_longinteger(
+			fname,
+			title,
+			author,
+			extra_praeamble,
+			M, nb_rows, nb_cols, verbose_level);
+
+#if 0
+	cout << "\\begin{array}{r|*{" << n << "}{r}}" << endl;
+	for (i = 0; i <= n; i++) {
+		for (j = 0; j <= n; j++) {
+			cout << M[i * (n + 1) + j];
+			if (j < n) {
+				cout << " & ";
+			}
+		}
+		cout << "\\\\" << endl;
+	}
+	cout << "\\end{array}" << endl;
+#endif
+
+	cout << "[";
+	for (i = 0; i <= n; i++) {
+		cout << "[";
+		for (j = 0; j <= n; j++) {
+			cout << M[i * (n + 1) + j];
+			if (j < n) {
+				cout << ",";
+			}
+		}
+		cout << "]";
+		if (i < n) {
+			cout << ",";
+		}
+	}
+	cout << "]" << endl;
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::report_macwilliams_system done" << endl;
+	}
+}
+
 
 void coding_theory_domain::make_table_of_bounds(
 		int n_max, int q, int verbose_level)
@@ -132,17 +149,36 @@ void coding_theory_domain::make_table_of_bounds(
 
 	for (n = 2; n <= n_max; n++) {
 		for (k = 1; k <= n; k++) {
-			cout << "n=" << n << " k=" << k << " q=" << q << endl;
+
+			if (f_v) {
+				cout << "n=" << n << " k=" << k << " q=" << q << endl;
+			}
 			d_S = singleton_bound_for_d(n, k, q, 0 /*verbose_level*/);
-			cout << "d_S=" << d_S << endl;
+
+			if (f_v) {
+				cout << "d_S=" << d_S << endl;
+			}
 			d_H = hamming_bound_for_d(n, k, q, 0 /*verbose_level*/);
-			cout << "d_H=" << d_H << endl;
+
+			if (f_v) {
+				cout << "d_H=" << d_H << endl;
+			}
+
 			d_P = plotkin_bound_for_d(n, k, q, 0 /*verbose_level*/);
-			cout << "d_P=" << d_P << endl;
+			if (f_v) {
+				cout << "d_P=" << d_P << endl;
+			}
+
 			d_G = griesmer_bound_for_d(n, k, q, 0 /*verbose_level*/);
-			cout << "d_G=" << d_G << endl;
+			if (f_v) {
+				cout << "d_G=" << d_G << endl;
+			}
+
 			d_GV = gilbert_varshamov_lower_bound_for_d(n, k, q, 0 /*verbose_level*/);
-			cout << "d_GV=" << d_GV << endl;
+			if (f_v) {
+				cout << "d_GV=" << d_GV << endl;
+			}
+
 			vector<long int> entry;
 
 			entry.push_back(n);
@@ -451,8 +487,10 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 				"level = " << level << " : cnt = " << cnt
 				<< " calling the recursion:" << endl;
 	}
-	make_gilbert_varshamov_code_recursion(F, n, k, d, N_points,
-			set, f_forbidden, level + 1, verbose_level);
+	make_gilbert_varshamov_code_recursion(
+			F, n, k, d, N_points,
+			set, f_forbidden, level + 1,
+			verbose_level);
 	if (f_v) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code "
 				"level = " << level << " : cnt = " << cnt
@@ -640,7 +678,7 @@ int coding_theory_domain::griesmer_bound_for_d(
 		if (n1 > n) {
 			d--;
 			break;
-			}
+		}
 	}
 	if (f_v) {
 		cout << "coding_theory_domain::griesmer_bound_for_d done" << endl;
@@ -692,54 +730,6 @@ int coding_theory_domain::griesmer_bound_for_n(
 	return n;
 }
 
-
-void coding_theory_domain::do_make_macwilliams_system(
-		int q, int n, int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	coding_theory_domain C;
-	ring_theory::longinteger_object *M;
-	int i, j;
-
-	if (f_v) {
-		cout << "interface_coding_theory::do_make_macwilliams_system" << endl;
-	}
-
-	C.make_mac_williams_equations(M, n, k, q, verbose_level);
-
-	cout << "\\begin{array}{r|*{" << n << "}{r}}" << endl;
-	for (i = 0; i <= n; i++) {
-		for (j = 0; j <= n; j++) {
-			cout << M[i * (n + 1) + j];
-			if (j < n) {
-				cout << " & ";
-			}
-		}
-		cout << "\\\\" << endl;
-	}
-	cout << "\\end{array}" << endl;
-
-	cout << "[";
-	for (i = 0; i <= n; i++) {
-		cout << "[";
-		for (j = 0; j <= n; j++) {
-			cout << M[i * (n + 1) + j];
-			if (j < n) {
-				cout << ",";
-			}
-		}
-		cout << "]";
-		if (i < n) {
-			cout << ",";
-		}
-	}
-	cout << "]" << endl;
-
-
-	if (f_v) {
-		cout << "coding_theory_domain::do_make_macwilliams_system done" << endl;
-	}
-}
 
 
 
@@ -1222,7 +1212,7 @@ void coding_theory_domain::code_weight_enumerator(
 			}
 		}
 		weight_enumerator[wt]++;
-		}
+	}
 	if (f_v) {
 		cout << "the weight enumerator is:" << endl;
 		for (i = 0; i <= n; i++) {
@@ -1342,7 +1332,7 @@ void coding_theory_domain::code_projective_weights(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	long int N, h, wt, i;
 	int *msg;
 	int *word;
@@ -1364,12 +1354,14 @@ void coding_theory_domain::code_projective_weights(
 	word = NEW_int(n);
 
 	for (h = 0; h < N; h++) {
-		if ((h % ONE_MILLION) == 0) {
-			t1 = Os.os_ticks();
-			dt = t1 - t0;
-			cout << setw(10) << h << " / " << setw(10) << N << " : ";
-			Os.time_check_delta(cout, dt);
-			cout << endl;
+		if (f_vv) {
+			if ((h % ONE_MILLION) == 0) {
+				t1 = Os.os_ticks();
+				dt = t1 - t0;
+				cout << setw(10) << h << " / " << setw(10) << N << " : ";
+				Os.time_check_delta(cout, dt);
+				cout << endl;
+			}
 		}
 
 		F->Projective_space_basic->PG_element_unrank_modified(
@@ -1923,6 +1915,20 @@ void coding_theory_domain::do_linear_code_through_columns_of_generator_matrix(
 
 
 
+		l1_interfaces::latex_interface L;
+		int nb_rows, nb_cols;
+
+		nb_rows = k;
+		nb_cols = n;
+
+		L.report_matrix(
+					fname,
+					title,
+					author,
+					extra_praeamble,
+					genma, nb_rows, nb_cols);
+
+#if 0
 		{
 			ofstream ost(fname);
 
@@ -1953,6 +1959,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_generator_matrix(
 
 			L.foot(ost);
 		}
+#endif
 
 		orbiter_kernel_system::file_io Fio;
 
@@ -2315,7 +2322,7 @@ void coding_theory_domain::field_reduction(
 
 
 
-
+#if 0
 		{
 			ofstream ost(fname);
 			l1_interfaces::latex_interface L;
@@ -2349,6 +2356,22 @@ void coding_theory_domain::field_reduction(
 			L.foot(ost);
 
 		}
+#endif
+
+		l1_interfaces::latex_interface L;
+		int nb_rows, nb_cols;
+
+		nb_rows = m * Sub->s;
+		nb_cols = Sub->s * n;
+
+		L.report_matrix(
+					fname,
+					title,
+					author,
+					extra_praeamble,
+					M2, nb_rows, nb_cols);
+
+
 		orbiter_kernel_system::file_io Fio;
 
 		cout << "coding_theory_domain::field_reduction written "

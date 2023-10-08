@@ -79,7 +79,7 @@ void identify_cubic_surface::identify(
 	data_structures::sorting Sorting;
 
 	if (f_v) {
-		cout << "identify_cubic_surface::identify_surface" << endl;
+		cout << "identify_cubic_surface::identify" << endl;
 	}
 
 	identify_cubic_surface::Wedge = Wedge;
@@ -98,7 +98,8 @@ void identify_cubic_surface::identify(
 
 
 	if (f_v) {
-		cout << "identifying the surface ";
+		cout << "identify_cubic_surface::identify "
+				"identifying the surface ";
 		Int_vec_print(cout, coeff_of_given_surface,
 			Wedge->Surf->PolynomialDomains->nb_monomials);
 		cout << " = ";
@@ -112,7 +113,7 @@ void identify_cubic_surface::identify(
 	int h;
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"before Surf->enumerate_points" << endl;
 	}
 	Wedge->Surf->enumerate_points(
@@ -120,14 +121,15 @@ void identify_cubic_surface::identify(
 			My_Points,
 			0/*verbose_level - 2*/);
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"after Surf->enumerate_points" << endl;
 	}
 
 	nb_points = My_Points.size();
 
 	if (f_v) {
-		cout << "The surface to be identified has "
+		cout << "identify_cubic_surface::identify "
+				"The surface to be identified has "
 				<< nb_points << " points" << endl;
 	}
 
@@ -137,7 +139,7 @@ void identify_cubic_surface::identify(
 	geometry::geometry_global Geo;
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"before Geo.find_lines_which_are_contained" << endl;
 	}
 	Geo.find_lines_which_are_contained(Wedge->Surf->P,
@@ -145,14 +147,15 @@ void identify_cubic_surface::identify(
 			My_Lines,
 			0/*verbose_level - 2*/);
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"after Geo.find_lines_which_are_contained" << endl;
 	}
 
 	// the lines are not arranged according to a double six
 
 	if (f_v) {
-		cout << "The surface has " << nb_points
+		cout << "identify_cubic_surface::identify"
+				" The surface has " << nb_points
 				<< " points and " << My_Lines.size() << " lines" << endl;
 	}
 	if (My_Lines.size() != 27 /*&& nb_lines != 21*/) {
@@ -197,7 +200,7 @@ void identify_cubic_surface::identify(
 		0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"before Surf->list_starter_configurations" << endl;
 	}
 	Wedge->Surf->list_starter_configurations(
@@ -206,7 +209,7 @@ void identify_cubic_surface::identify(
 		Starter_Table, nb_starter,
 		0/*verbose_level*/);
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"after Surf->list_starter_configurations" << endl;
 	}
 
@@ -221,7 +224,7 @@ void identify_cubic_surface::identify(
 	subset_idx = Starter_Table[l * 2 + 1];
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"before Wedge->Surf->create_starter_configuration" << endl;
 	}
 	Wedge->Surf->create_starter_configuration(
@@ -229,13 +232,13 @@ void identify_cubic_surface::identify(
 			line_intersections, Lines, S3,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"after Wedge->Surf->create_starter_configuration" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"The starter configuration is S3=";
 		Lint_vec_print(cout, S3, 6);
 		cout << endl;
@@ -255,7 +258,7 @@ void identify_cubic_surface::identify(
 				Wedge->Surf->O->evaluate_bilinear_form_by_rank(
 				K1[h], K1[5]);
 		if (form_value) {
-			cout << "surface_classify_wedge::identify_surface "
+			cout << "identify_cubic_surface::identify "
 					"K1[" << h << "] and K1[5] are not collinear" << endl;
 			exit(1);
 		}
@@ -266,7 +269,7 @@ void identify_cubic_surface::identify(
 		// transform the five lines into wedge coordinates
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"before Five_p1->identify_five_plus_one" << endl;
 	}
 	Wedge->Five_p1->identify_five_plus_one(
@@ -278,12 +281,12 @@ void identify_cubic_surface::identify(
 		0 /*verbose_level - 2*/
 		);
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"after Five_p1->identify_five_plus_one" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 			"The five plus one configuration lies in orbit "
 			<< idx2 << endl;
 		cout << "An isomorphism is given by:" << endl;
@@ -325,7 +328,7 @@ void identify_cubic_surface::identify(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"flag orbit = " << flag_orbit_idx << endl;
 	}
 
@@ -335,13 +338,13 @@ void identify_cubic_surface::identify(
 				Flag_orbit_node[flag_orbit_idx].upstep_primary_orbit;
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"double_six_orbit = "
 				<< double_six_orbit << endl;
 	}
 
 	if (double_six_orbit < 0) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"double_six_orbit < 0, something is wrong" << endl;
 		exit(1);
 	}
@@ -349,7 +352,7 @@ void identify_cubic_surface::identify(
 			Flag_orbit_node[flag_orbit_idx].f_fusion_node) {
 
 		if (f_v) {
-			cout << "surface_classify_wedge::identify_surface "
+			cout << "identify_cubic_surface::identify "
 					"the flag orbit is a fusion node" << endl;
 		}
 
@@ -362,7 +365,7 @@ void identify_cubic_surface::identify(
 	else {
 
 		if (f_v) {
-			cout << "surface_classify_wedge::identify_surface "
+			cout << "identify_cubic_surface::identify "
 					"the flag orbit is a definition node" << endl;
 		}
 
@@ -378,7 +381,7 @@ void identify_cubic_surface::identify(
 			Flag_orbit_node[double_six_orbit].upstep_primary_orbit;
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_surface "
+		cout << "identify_cubic_surface::identify "
 				"iso_type = " << iso_type << endl;
 	}
 
@@ -396,7 +399,8 @@ void identify_cubic_surface::identify(
 	//A->element_mult(Elt2, Isomorphisms->ith(orb2), Elt_isomorphism, 0);
 
 	if (f_v) {
-		cout << "The surface is isomorphic to surface " << iso_type << endl;
+		cout << "identify_cubic_surface::identify "
+				"The surface is isomorphic to surface " << iso_type << endl;
 		cout << "An isomorphism is given by:" << endl;
 		Wedge->A->Group_element->element_print_quick(Elt_isomorphism, cout);
 	}
@@ -417,11 +421,13 @@ void identify_cubic_surface::identify(
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "The inverse isomorphism is given by:" << endl;
+		cout << "identify_cubic_surface::identify "
+				"The inverse isomorphism is given by:" << endl;
 		Wedge->A->Group_element->element_print_quick(
 				Elt_isomorphism_inv, cout);
 
-		cout << "The image of the set of points is: ";
+		cout << "identify_cubic_surface::identify "
+				"The image of the set of points is: ";
 		Lint_vec_print(cout, image, nb_points);
 		cout << endl;
 	}
@@ -445,7 +451,8 @@ void identify_cubic_surface::identify(
 
 
 
-	cout << "the surface in the list is = " << endl;
+	cout << "identify_cubic_surface::identify "
+			"the surface in the list is = " << endl;
 	idx = Wedge->Surfaces->Orbit[isomorphic_to].orbit_index;
 
 	Lint_vec_copy(
@@ -494,7 +501,8 @@ void identify_cubic_surface::identify(
 			coeffs_transformed, 1,
 			Wedge->Surf->PolynomialDomains->nb_monomials);
 
-	cout << "the surface to be identified was " << endl;
+	cout << "identify_cubic_surface::identify "
+			"the surface to be identified was " << endl;
 	Int_vec_print(cout,
 			coeff_of_given_surface,
 			Wedge->Surf->PolynomialDomains->nb_monomials);
@@ -503,7 +511,8 @@ void identify_cubic_surface::identify(
 	cout << endl;
 
 
-	cout << "coeffs_transformed (and normalized) = " << endl;
+	cout << "identify_cubic_surface::identify "
+			"coeffs_transformed (and normalized) = " << endl;
 	Int_vec_print(cout,
 			coeffs_transformed,
 			Wedge->Surf->PolynomialDomains->nb_monomials);

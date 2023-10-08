@@ -579,7 +579,8 @@ void projective_space_of_dimension_three::make_element_which_moves_a_line_in_PG3
 	int r, c, i, j;
 
 	//int_vec_zero(M, 16);
-	Projective_space->Subspaces->Grass_lines->unrank_lint_here(M, line_rk, 0 /*verbose_level*/);
+	Projective_space->Subspaces->Grass_lines->unrank_lint_here(
+			M, line_rk, 0 /*verbose_level*/);
 	r = Projective_space->Subspaces->Grass_lines->F->Linear_algebra->Gauss_simple(
 			M, 2, 4, base_cols, 0 /* verbose_level */);
 	Projective_space->Subspaces->Grass_lines->F->Linear_algebra->kernel_columns(
@@ -596,7 +597,8 @@ void projective_space_of_dimension_three::make_element_which_moves_a_line_in_PG3
 			M[i * 4 + j] = c;
 		}
 	}
-	Projective_space->Subspaces->Grass_lines->F->Linear_algebra->matrix_inverse(M, Mtx16, 4, 0 /* verbose_level */);
+	Projective_space->Subspaces->Grass_lines->F->Linear_algebra->matrix_inverse(
+			M, Mtx16, 4, 0 /* verbose_level */);
 	//N[4 * 4] = 0;
 	//A->Group_element->make_element(Elt, N, 0);
 

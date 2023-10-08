@@ -1703,7 +1703,6 @@ int file_io::try_to_read_file(
 {
 	int f_v = (verbose_level >= 1);
 	//int n1;
-	char *buf, *p_buf;
 	int nb_sol, len, a;
 	long int sz;
 	data_structures::string_tools ST;
@@ -1719,6 +1718,8 @@ int file_io::try_to_read_file(
 		goto return_false;
 	}
 
+	{
+	char *buf, *p_buf;
 	buf = NEW_char(sz + 1);
 
 	{
@@ -1824,10 +1825,10 @@ int file_io::try_to_read_file(
 	}
 
 	FREE_char(buf);
+	}
 	return true;
 
 return_false:
-	FREE_char(buf);
 	return false;
 }
 

@@ -243,9 +243,9 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) "
-				"+ x_0f_2(x_1,x_2,x_3) + "
-				"f_3(x_1,x_2,x_3)$, where" << endl;
+		cout << "The equation is of the form $X_0^2f_1(X_1,X_2,X_3) "
+				"+ X_0f_2(X_1,X_2,X_3) + "
+				"f_3(X_1,X_2,X_3)$, where" << endl;
 		cout << "f1=" << endl;
 		SOA->Surf->PolynomialDomains->Poly1_x123->print_equation(
 				cout, f1);
@@ -330,6 +330,14 @@ void quartic_curve_from_surface::quartic(
 	SOA->F->Linear_algebra->add_vector(
 			poly1, poly2, curve,
 			SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
+
+
+	if (f_v) {
+		cout << "The quartic curve is " << endl;
+		SOA->Surf->PolynomialDomains->Poly4_x123->print_equation(
+				cout, curve);
+		cout << endl;
+	}
 
 
 	if (f_v) {
@@ -557,6 +565,12 @@ void quartic_curve_from_surface::compute_quartic(
 	nb_bitangents = nb_lines + 1;
 	Bitangents = NEW_lint(nb_lines + 1);
 	for (i = 0; i < nb_lines; i++) {
+
+		if (f_v) {
+			cout << "quartic_curve_from_surface::compute_quartic "
+					"Line i=" << i << " = " << SOA->SO->Surf->Schlaefli->Labels->Line_label[i] << ":" << endl;
+		}
+
 
 		int Basis8[8];
 		int Basis6[6];

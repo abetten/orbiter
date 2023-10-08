@@ -39,14 +39,11 @@ public:
 	int f_identify_general_abcd;
 
 	int f_isomorphism_testing;
-	cubic_surfaces_in_general::surface_create_description
-		*isomorphism_testing_surface1;
-	cubic_surfaces_in_general::surface_create_description
-		*isomorphism_testing_surface2;
+	std::string isomorphism_testing_surface1_label;
+	std::string isomorphism_testing_surface2_label;
 
 	int f_recognize;
-	cubic_surfaces_in_general::surface_create_description
-		*recognize_surface;
+	std::string recognize_surface_label;
 
 	int f_create_source_code;
 
@@ -90,27 +87,7 @@ public:
 			poset_classification::poset_classification_report_options
 				*report_options,
 			int verbose_level);
-	void do_surface_identify_Eckardt(
-			int verbose_level);
-	void do_surface_identify_F13(
-			int verbose_level);
-	void do_surface_identify_Bes(
-			int verbose_level);
-	void do_surface_identify_general_abcd(
-			int verbose_level);
-	void do_surface_isomorphism_testing(
-			cubic_surfaces_in_general::surface_create_description
-				*surface_descr_isomorph1,
-			cubic_surfaces_in_general::surface_create_description
-				*surface_descr_isomorph2,
-			int verbose_level);
-	void do_recognize(
-			cubic_surfaces_in_general::surface_create_description
-				*surface_descr,
-			int verbose_level);
 	void do_write_source_code(
-			int verbose_level);
-	void do_sweep_Cayley(
 			int verbose_level);
 
 
@@ -122,12 +99,14 @@ public:
 // classify_five_plus_one.cpp
 // #############################################################################
 
-//! classification of five plus one sets of lines in PG(3,q). A five plus one is five pairwise skew lines with a common transversal.
+//! classification of five plus one sets of lines in PG(3,q). A five plus one is a set of five pairwise skew lines with a common transversal.
 
 
 class classify_five_plus_one {
 
 public:
+
+	projective_geometry::projective_space_with_action *PA;
 
 	int q;
 	field_theory::finite_field *F;
@@ -180,8 +159,9 @@ public:
 	classify_five_plus_one();
 	~classify_five_plus_one();
 	void init(
-			cubic_surfaces_in_general::surface_with_action
-				*Surf_A,
+			projective_geometry::projective_space_with_action *PA,
+			//cubic_surfaces_in_general::surface_with_action
+			//	*Surf_A,
 			poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
@@ -363,6 +343,9 @@ public:
 
 class surface_classify_wedge {
 public:
+
+	projective_geometry::projective_space_with_action *PA;
+
 	field_theory::finite_field *F;
 	int q;
 
@@ -401,8 +384,9 @@ public:
 	surface_classify_wedge();
 	~surface_classify_wedge();
 	void init(
-			cubic_surfaces_in_general::surface_with_action
-				*Surf_A,
+			projective_geometry::projective_space_with_action *PA,
+			//cubic_surfaces_in_general::surface_with_action
+			//	*Surf_A,
 		poset_classification::poset_classification_control
 			*Control,
 		int verbose_level);
@@ -452,13 +436,23 @@ public:
 
 
 	// surface_classify_wedge_recognition.cpp:
+	void test_isomorphism(
+			std::string &surface1_label,
+			std::string &surface2_label,
+			int verbose_level);
+	int isomorphism_test_pairwise(
+			cubic_surfaces_in_general::surface_create *SC1,
+			cubic_surfaces_in_general::surface_create *SC2,
+		int &isomorphic_to1, int &isomorphic_to2,
+		int *Elt_isomorphism_1to2,
+		int verbose_level);
+	void recognition(
+			std::string &surface_label,
+			int verbose_level);
 	void identify_surface(int *coeff_of_given_surface,
 		int &isomorphic_to, int *Elt_isomorphism,
 		int verbose_level);
-	void recognition(
-			cubic_surfaces_in_general::surface_create_description
-				*Descr,
-			int verbose_level);
+
 	void sweep_Cayley(int verbose_level);
 	void identify_general_abcd(
 		int *Iso_type, int *Nb_lines, int verbose_level);
@@ -472,18 +466,6 @@ public:
 		int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_Bes(
 		int *Iso_type, int *Nb_lines, int verbose_level);
-	int isomorphism_test_pairwise(
-			cubic_surfaces_in_general::surface_create *SC1,
-			cubic_surfaces_in_general::surface_create *SC2,
-		int &isomorphic_to1, int &isomorphic_to2,
-		int *Elt_isomorphism_1to2,
-		int verbose_level);
-	void test_isomorphism(
-			cubic_surfaces_in_general::surface_create_description
-				*Descr1,
-			cubic_surfaces_in_general::surface_create_description
-				*Descr2,
-			int verbose_level);
 
 };
 

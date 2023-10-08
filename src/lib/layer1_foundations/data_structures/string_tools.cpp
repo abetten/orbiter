@@ -743,7 +743,7 @@ void string_tools::convert_arguments(
 
 }
 
-char string_tools::get_character(istream & is, int verbose_level)
+char string_tools::get_character(std::istream & is, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char c;

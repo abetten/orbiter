@@ -422,6 +422,11 @@ public:
 	std::string map_formula_label;
 	std::string map_parameters;
 
+	int f_affine_map;
+	std::string affine_map_ring_label;
+	std::string affine_map_formula_label;
+	std::string affine_map_parameters;
+
 	int f_analyze_del_Pezzo_surface;
 	std::string analyze_del_Pezzo_surface_label;
 	std::string analyze_del_Pezzo_surface_parameters;
@@ -810,16 +815,19 @@ public:
 			geometry::object_with_canonical_form *OiP,
 		int *canonical_labeling,
 		int verbose_level);
+#if 0
 	void report_fixed_points_lines_and_planes(
 		int *Elt, std::ostream &ost,
 		int verbose_level);
+#endif
 	void report_orbits_on_points_lines_and_planes(
 		int *Elt, std::ostream &ost,
 		int verbose_level);
+#if 0
 	void compute_group_of_set(long int *set, int set_sz,
 			groups::strong_generators *&Sg,
 			int verbose_level);
-		// ToDo
+#endif
 	void do_cheat_sheet_for_decomposition_by_element_PG(
 			int decomposition_by_element_power,
 			std::string &decomposition_by_element_data,

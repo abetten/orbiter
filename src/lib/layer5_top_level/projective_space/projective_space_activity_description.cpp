@@ -54,6 +54,12 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string map_formula_label;
 	//std::string map_parameters;
 
+	f_affine_map = false;
+	//std::string affine_map_ring_label;
+	//std::string affine_map_formula_label;
+	//std::string affine_map_parameters;
+
+
 	f_analyze_del_Pezzo_surface = false;
 	//analyze_del_Pezzo_surface_label;
 	//analyze_del_Pezzo_surface_parameters;
@@ -371,6 +377,20 @@ int projective_space_activity_description::read_arguments(
 						<< map_ring_label << " "
 						<< map_formula_label << " "
 						<< map_parameters << " "
+						<< endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-affine_map") == 0) {
+			f_affine_map = true;
+			affine_map_ring_label.assign(argv[++i]);
+			affine_map_formula_label.assign(argv[++i]);
+			affine_map_parameters.assign(argv[++i]);
+			if (f_v) {
+				cout << "-affine_map "
+						<< affine_map_ring_label << " "
+						<< affine_map_formula_label << " "
+						<< affine_map_parameters << " "
 						<< endl;
 			}
 		}
@@ -1075,6 +1095,13 @@ void projective_space_activity_description::print()
 				<< map_ring_label << " "
 				<< map_formula_label << " "
 				<< map_parameters << " "
+				<< endl;
+	}
+	if (f_affine_map) {
+		cout << "-affine_map "
+				<< affine_map_ring_label << " "
+				<< affine_map_formula_label << " "
+				<< affine_map_parameters << " "
 				<< endl;
 	}
 	if (f_analyze_del_Pezzo_surface) {

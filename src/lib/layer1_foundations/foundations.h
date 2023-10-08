@@ -278,6 +278,7 @@ namespace algebraic_geometry {
 	class del_pezzo_surface_of_degree_two_object;
 	class eckardt_point_info;
 	class eckardt_point;
+	class kovalevski_points;
 	class quartic_curve_domain;
 	class quartic_curve_object_properties;
 	class quartic_curve_object;
@@ -653,6 +654,7 @@ namespace orbiter_kernel_system {
 		t_poset_classification_control,
 		t_poset_classification_activity,
 		t_crc_code,
+		t_mapping,
 	};
 
 
