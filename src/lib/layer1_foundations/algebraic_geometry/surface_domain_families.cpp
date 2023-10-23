@@ -260,6 +260,11 @@ surface_object *surface_domain::create_surface_general_abcd(
 				"after create_equation_general_abcd" << endl;
 	}
 
+	std::string label_txt;
+	std::string label_tex;
+
+	label_txt = "F_a" + std::to_string(a) + "_b" + std::to_string(b) + "_c" + std::to_string(d) + "_d" + std::to_string(d);
+	label_tex = "F\\_a" + std::to_string(a) + "\\_b" + std::to_string(b) + "\\_c" + std::to_string(d) + "\\_d" + std::to_string(d);
 	surface_object *SO;
 
 	SO = NEW_OBJECT(surface_object);
@@ -268,7 +273,9 @@ surface_object *surface_domain::create_surface_general_abcd(
 		cout << "surface_domain::create_surface_general_abcd "
 				"before SO->init_equation" << endl;
 	}
-	SO->init_equation(this, coeff20, verbose_level);
+	SO->init_equation(this, coeff20,
+			label_txt, label_tex,
+			verbose_level);
 	if (f_v) {
 		cout << "surface_domain::create_surface_general_abcd "
 				"after SO->init_equation" << endl;
@@ -304,6 +311,12 @@ surface_object *surface_domain::create_surface_bes(
 				"after create_equation_bes" << endl;
 	}
 
+	std::string label_txt;
+	std::string label_tex;
+
+	label_txt = "Bes_a" + std::to_string(a) + "_c" + std::to_string(c);
+	label_tex = "Bes\\_a" + std::to_string(a) + "\\_c" + std::to_string(c);
+
 	surface_object *SO;
 
 	SO = NEW_OBJECT(surface_object);
@@ -312,7 +325,7 @@ surface_object *surface_domain::create_surface_bes(
 		cout << "surface_domain::create_surface_bes "
 				"before SO->init_equation" << endl;
 	}
-	SO->init_equation(this, coeff20, verbose_level);
+	SO->init_equation(this, coeff20, label_txt, label_tex, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::create_surface_bes "
 				"after SO->init_equation" << endl;
@@ -345,6 +358,12 @@ surface_object *surface_domain::create_surface_F13(
 				"after create_equation_F13" << endl;
 	}
 
+	std::string label_txt;
+	std::string label_tex;
+
+	label_txt = "F13_a" + std::to_string(a);
+	label_tex = "F13\\_a" + std::to_string(a);
+
 	surface_object *SO;
 
 	SO = NEW_OBJECT(surface_object);
@@ -353,7 +372,7 @@ surface_object *surface_domain::create_surface_F13(
 		cout << "surface_domain::create_surface_F13 "
 				"before SO->init_equation" << endl;
 	}
-	SO->init_equation(this, coeff20, verbose_level);
+	SO->init_equation(this, coeff20, label_txt, label_tex, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::create_surface_F13 "
 				"after SO->init_equation" << endl;
@@ -385,6 +404,12 @@ surface_object *surface_domain::create_surface_G13(
 				"after create_equation_G13" << endl;
 	}
 
+	std::string label_txt;
+	std::string label_tex;
+
+	label_txt = "G13_a" + std::to_string(a);
+	label_tex = "G13\\_a" + std::to_string(a);
+
 	surface_object *SO;
 
 	SO = NEW_OBJECT(surface_object);
@@ -393,7 +418,7 @@ surface_object *surface_domain::create_surface_G13(
 		cout << "surface_domain::create_surface_G13 "
 				"before SO->init_equation" << endl;
 	}
-	SO->init_equation(this, coeff20, verbose_level);
+	SO->init_equation(this, coeff20, label_txt, label_tex, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::create_surface_G13 "
 				"after SO->init_equation" << endl;
@@ -576,6 +601,11 @@ surface_object *surface_domain::create_Eckardt_surface(
 		exit(1);
 	}
 
+	std::string label_txt;
+	std::string label_tex;
+
+	label_txt = "Eckardt_alpha" + std::to_string(alpha) + "_beta" + std::to_string(beta);
+	label_tex = "Eckardt\\_alpha" + std::to_string(alpha) + "\\_beta" + std::to_string(beta);
 
 
 	surface_object *SO;
@@ -588,6 +618,7 @@ surface_object *surface_domain::create_Eckardt_surface(
 	}
 	SO->init_with_27_lines(this,
 		Lines27, coeff20,
+		label_txt, label_tex,
 		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {

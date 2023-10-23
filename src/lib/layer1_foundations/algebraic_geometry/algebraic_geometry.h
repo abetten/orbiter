@@ -53,6 +53,14 @@ public:
 			long int *&Image_pts,
 			long int &N_points,
 			int verbose_level);
+	void projective_variety(
+			geometry::projective_space *P,
+			std::string &ring_label,
+			std::string &formula_label,
+			std::string &evaluate_text,
+			long int *&Image_pts,
+			long int &N_points,
+			int verbose_level);
 	void evaluate_regular_map(
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			geometry::projective_space *P,
@@ -66,6 +74,13 @@ public:
 			data_structures::symbolic_object_builder *Object,
 			std::string &evaluate_text,
 			long int *&Image_pts, long int &N_points_input,
+			int verbose_level);
+	void compute_projective_variety(
+			ring_theory::homogeneous_polynomial_domain *Ring,
+			geometry::projective_space *P,
+			data_structures::symbolic_object_builder *Object,
+			std::string &evaluate_text,
+			long int *&Variety, long int &Variety_nb_points,
 			int verbose_level);
 	void cubic_surface_family_24_generators(
 			field_theory::finite_field *F,
@@ -418,6 +433,12 @@ public:
 
 	quartic_curve_object *QO;
 
+	data_structures::set_of_sets *pts_on_lines;
+		// points are stored as indices into Pts[]
+
+	int *f_is_on_line; // [QO->nb_pts]
+
+	int **Contact_multiplicity;
 
 	data_structures::tally *Bitangent_line_type;
 	int line_type_distribution[3];
@@ -450,10 +471,28 @@ public:
 	void init(quartic_curve_object *QO, int verbose_level);
 	void compute_Kovalevski_points(
 			int verbose_level);
+	void compute_points_on_lines(
+			int verbose_level);
+	void compute_off_points_on_lines(
+			int verbose_level);
+	void compute_points_on_lines_worker(
+			long int *Pts, int nb_points,
+			long int *Lines, int nb_lines,
+			data_structures::set_of_sets *&pts_on_lines,
+			int *&f_is_on_line,
+			int verbose_level);
+	void compute_contact_multiplicity(
+			long int *Lines, int nb_lines,
+			data_structures::set_of_sets *Pts_on_line,
+			int verbose_level);
 	void print_general(std::ostream &ost);
+	void print_lines_with_points_on_them(std::ostream &ost);
 	void print_all_points(std::ostream &ost);
 	void report_bitangent_line_type(
 			std::ostream &ost);
+	void print_lines_and_points_of_contact(
+			std::ostream &ost,
+			long int *Lines, int nb_lines);
 
 };
 
@@ -499,6 +538,8 @@ public:
 	void init_polynomial_domains(int verbose_level);
 	void print_equation_maple(
 			std::stringstream &ost, int *coeffs);
+	std::string stringify_equation_maple(
+			int *eqn15);
 	void print_equation_with_line_breaks_tex(
 			std::ostream &ost, int *coeffs);
 	void print_gradient_with_line_breaks_tex(
@@ -509,12 +550,6 @@ public:
 			int *v, long int rk);
 	void print_lines_tex(
 			std::ostream &ost, long int *Lines, int nb_lines);
-	void compute_points_on_lines(
-			long int *Pts, int nb_points,
-			long int *Lines, int nb_lines,
-			data_structures::set_of_sets *&pts_on_lines,
-			int *&f_is_on_line,
-			int verbose_level);
 	void multiply_conic_times_conic(
 			int *six_coeff_a,
 		int *six_coeff_b, int *fifteen_coeff,
@@ -569,16 +604,13 @@ public:
 	quartic_curve_object *QO;
 
 
-	data_structures::set_of_sets *pts_on_lines;
-		// points are stored as indices into Pts[]
-	int *f_is_on_line; // [QO->nb_pts]
 
 
 
 	kovalevski_points *Kovalevski;
 
 
-	int *gradient;
+	int *gradient; // [4 * QO->Dom->Poly3_3->get_nb_monomials()]
 
 	long int *singular_pts;
 	int nb_singular_pts;
@@ -606,11 +638,6 @@ public:
 	void print_points(std::ostream &ost);
 	void print_all_points(std::ostream &ost);
 	void print_bitangents(std::ostream &ost);
-	void print_lines_with_points_on_them(
-			std::ostream &ost,
-			long int *Lines, int nb_lines,
-			data_structures::set_of_sets *SoS);
-	//void print_bitangents_with_points_on_them(std::ostream &ost);
 	void compute_gradient(int verbose_level);
 	void compute_singular_points_and_tangent_lines(
 			int verbose_level);
@@ -625,22 +652,18 @@ public:
 // quartic_curve_object.cpp
 // #############################################################################
 
-//! a particular quartic curve in PG(2,q), given by its equation
+//! a quartic curve in PG(2,q), given by its equation
 
 
 class quartic_curve_object {
 
 public:
-	int q;
-	field_theory::finite_field *F;
-	quartic_curve_domain *Dom;
+
+	quartic_curve_domain *Dom; // we may not have it
 
 	long int *Pts; // in increasing order
 	int nb_pts;
 
-
-	//long int *Lines;
-	//int nb_lines;
 
 	int eqn15[15];
 
@@ -653,6 +676,13 @@ public:
 
 	quartic_curve_object();
 	~quartic_curve_object();
+	void init_from_string(
+			std::string &eqn_txt,
+			std::string &pts_txt, std::string &bitangents_txt,
+			int verbose_level);
+	void allocate_points(
+			int nb_pts,
+			int verbose_level);
 	void init_equation_but_no_bitangents(
 			quartic_curve_domain *Dom,
 			int *eqn15,
@@ -673,6 +703,9 @@ public:
 		int verbose_level);
 	int find_point(
 			long int P, int &idx);
+	void print(std::ostream &ost);
+	void stringify(
+			std::string &s_Eqn, std::string &s_Pts, std::string &s_Bitangents);
 
 };
 
@@ -1169,9 +1202,14 @@ public:
 		long int *Lines_wedge, long int *Lines,
 		long int *Lines_klein, int nb_lines);
 	int build_surface_from_double_six_and_count_Eckardt_points(
-			long int *double_six, int verbose_level);
+			long int *double_six,
+			std::string &label_txt,
+			std::string &label_tex,
+			int verbose_level);
 	void build_surface_from_double_six(
 			long int *double_six,
+			std::string &label_txt,
+			std::string &label_tex,
 			algebraic_geometry::surface_object *&SO,
 			int verbose_level);
 	int create_surface_by_equation(
@@ -1197,6 +1235,8 @@ public:
 	void create_surface_by_coefficient_vector(
 			int *coeffs20,
 			std::vector<std::string> &select_double_six_string,
+			std::string &label_txt,
+			std::string &label_tex,
 			algebraic_geometry::surface_object *&SO,
 			int verbose_level);
 	void create_surface_from_catalogue(
@@ -1204,6 +1244,7 @@ public:
 			std::vector<std::string> &select_double_six_string,
 			algebraic_geometry::surface_object *&SO,
 			int verbose_level);
+	std::string stringify_eqn_maple(int *eqn);
 
 
 	// surface_domain2.cpp:
@@ -1377,6 +1418,7 @@ public:
 	void sstr_line_label(
 			std::stringstream &sstr, long int pt);
 
+#if 0
 	// report the data in the knowledge base:
 	void make_table_of_surfaces(int verbose_level);
 	void make_table_of_surfaces_detailed(
@@ -1392,10 +1434,10 @@ public:
 	void compute_table_E(
 			int *field_orders, int nb_fields,
 			long int *&Table,
-			int *&Table_idx,
-			int *&Q, int &nb_Q,
-			int *&E, int &nb_E_types, int verbose_level);
-
+			int *&E_type_idx, int &nb_E_max,
+			int *&E, int &nb_E_types,
+			int verbose_level);
+#endif
 
 	// surface_domain_families.cpp:
 	void create_equation_general_abcd(
@@ -1634,6 +1676,9 @@ public:
 	field_theory::finite_field *F;
 	surface_domain *Surf;
 
+	std::string label_txt;
+	std::string label_tex;
+
 	long int *Pts; // in increasing order
 	int nb_pts;
 
@@ -1651,9 +1696,14 @@ public:
 	~surface_object();
 	void init_equation_points_and_lines_only(
 			surface_domain *Surf, int *eqn,
+			std::string &label_txt,
+			std::string &label_tex,
 		int verbose_level);
 	void init_equation(
-			surface_domain *Surf, int *eqn, int verbose_level);
+			surface_domain *Surf, int *eqn,
+			std::string &label_txt,
+			std::string &label_tex,
+			int verbose_level);
 	void enumerate_points(int verbose_level);
 	void enumerate_points_and_lines(int verbose_level);
 	void find_real_lines(
@@ -1661,6 +1711,8 @@ public:
 			int verbose_level);
 	void init_with_27_lines(
 			surface_domain *Surf, long int *Lines27, int *eqn,
+			std::string &label_txt,
+			std::string &label_tex,
 		int f_find_double_six_and_rearrange_lines,
 		int verbose_level);
 	void compute_properties(int verbose_level);
@@ -1693,6 +1745,9 @@ public:
 	long int Clebsch_map_up_single_point(
 			long int input_point,
 			int line_1_idx, int line_2_idx, int verbose_level);
+	std::string stringify_eqn();
+	std::string stringify_Pts();
+	std::string stringify_Lines();
 
 
 };
@@ -1739,7 +1794,7 @@ public:
 	ring_theory::homogeneous_polynomial_domain *Poly3_4;
 		// cubic polynomials in four variables
 
-	ring_theory::partial_derivative *Partials; // [4]
+	ring_theory::partial_derivative *Partials; // [4] from Poly3_4 to Poly2_4
 
 
 	int f_has_large_polynomial_domains;
@@ -1815,7 +1870,13 @@ public:
 	void compute_gradient(
 			int *equation20, int *&gradient, int verbose_level);
 	long int compute_tangent_plane(
-			int *pt_coords, int *equation20, int verbose_level);
+			int *pt_coords,
+			int *gradient,
+			int verbose_level);
+	long int compute_special_bitangent(
+			geometry::projective_space *P2,
+			int *gradient,
+			int verbose_level);
 	void print_clebsch_P(
 			std::ostream &ost);
 	void print_clebsch_P_matrix_only(

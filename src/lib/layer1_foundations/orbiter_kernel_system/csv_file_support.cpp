@@ -1348,8 +1348,8 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 		for (i = 0; i < nb_files; i++) {
 			//S[i].print_table(ost, false);
 			for (j = 1; j < S[i].nb_rows; j++) {
-				ost << "\"" << cnt << "\"" << ",";
-				ost << "\"" << i << "\"" << ",";
+				ost << cnt << ",";
+				ost << i << ",";
 				S[i].print_table_row(j, f_enclose_in_parentheses, ost);
 				cnt++;
 			}

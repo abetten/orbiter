@@ -24,6 +24,11 @@ kovalevski_points::kovalevski_points()
 {
 	QO = NULL;
 
+	pts_on_lines = NULL;
+	f_is_on_line = NULL;
+
+	Contact_multiplicity = NULL;
+
 	Bitangent_line_type = NULL;
 	//line_type_distribution[3];
 	lines_on_point = NULL;
@@ -47,7 +52,21 @@ kovalevski_points::kovalevski_points()
 
 kovalevski_points::~kovalevski_points()
 {
+	if (pts_on_lines) {
+		FREE_OBJECT(pts_on_lines);
+	}
+	if (f_is_on_line) {
+		FREE_int(f_is_on_line);
+	}
 
+	if (Contact_multiplicity) {
+		int i;
+
+		for (i = 0; i < 28; i++) {
+			FREE_int(Contact_multiplicity[i]);
+		}
+		FREE_pint(Contact_multiplicity);
+	}
 	if (Bitangent_line_type) {
 		FREE_OBJECT(Bitangent_line_type);
 	}
@@ -120,30 +139,18 @@ void kovalevski_points::compute_Kovalevski_points(
 
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points before "
-				"Surf->compute_points_on_lines" << endl;
+				"compute_points_on_lines" << endl;
 	}
-	QO->Dom->compute_points_on_lines(
-			QO->Pts, QO->nb_pts,
-		QO->bitangents28, 28,
-		QO->QP->pts_on_lines,
-		QO->QP->f_is_on_line,
-		0 /* verbose_level */);
+	compute_points_on_lines(verbose_level - 2);
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points after "
-				"Surf->compute_points_on_lines" << endl;
-	}
-
-	QO->QP->pts_on_lines->sort();
-
-	if (f_v) {
-		cout << "kovalevski_points::compute_Kovalevski_points "
-				"pts_on_lines:" << endl;
-		QO->QP->pts_on_lines->print_table();
+				"compute_points_on_lines" << endl;
 	}
 
 	Bitangent_line_type = NEW_OBJECT(data_structures::tally);
-	Bitangent_line_type->init_lint(QO->QP->pts_on_lines->Set_size,
-			QO->QP->pts_on_lines->nb_sets, false, 0);
+	Bitangent_line_type->init_lint(
+			pts_on_lines->Set_size,
+			pts_on_lines->nb_sets, false, 0);
 
 	if (f_v) {
 		cout << "Line type:" << endl;
@@ -164,7 +171,7 @@ void kovalevski_points::compute_Kovalevski_points(
 	}
 
 
-	QO->QP->pts_on_lines->dualize(lines_on_point, 0 /* verbose_level */);
+	pts_on_lines->dualize(lines_on_point, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points "
 				"lines_on_point:" << endl;
@@ -172,7 +179,8 @@ void kovalevski_points::compute_Kovalevski_points(
 	}
 
 	Point_type = NEW_OBJECT(data_structures::tally);
-	Point_type->init_lint(lines_on_point->Set_size,
+	Point_type->init_lint(
+			lines_on_point->Set_size,
 			lines_on_point->nb_sets, false, 0);
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points "
@@ -208,17 +216,20 @@ void kovalevski_points::compute_Kovalevski_points(
 
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points "
-				"before Surf->compute_points_on_lines for complement" << endl;
+				"before compute_off_points_on_lines" << endl;
 	}
+#if 0
 	QO->Dom->compute_points_on_lines(
 			Pts_off, nb_pts_off,
 		QO->bitangents28, 28,
 		pts_off_on_lines,
 		f_is_on_line2,
 		0 /* verbose_level */);
+#endif
+	compute_off_points_on_lines(verbose_level - 2);
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points "
-				"after Surf->compute_points_on_lines" << endl;
+				"after compute_off_points_on_lines" << endl;
 	}
 
 	pts_off_on_lines->sort();
@@ -229,7 +240,8 @@ void kovalevski_points::compute_Kovalevski_points(
 		pts_off_on_lines->print_table();
 	}
 
-	pts_off_on_lines->dualize(lines_on_points_off, 0 /* verbose_level */);
+	pts_off_on_lines->dualize(
+			lines_on_points_off, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points "
 				"lines_on_point:" << endl;
@@ -268,6 +280,11 @@ void kovalevski_points::compute_Kovalevski_points(
 		cout << "nb_Kovalevski=" << nb_Kovalevski << endl;
 		exit(1);
 	}
+	if (f_v) {
+		cout << "kovalevski_points::compute_Kovalevski_points nb_Kovalevski     = " << nb_Kovalevski << endl;
+		cout << "kovalevski_points::compute_Kovalevski_points nb_Kovalevski_on  = " << nb_Kovalevski_on << endl;
+		cout << "kovalevski_points::compute_Kovalevski_points nb_Kovalevski_off = " << nb_Kovalevski_off << endl;
+	}
 
 	Kovalevski_point_idx = NEW_int(nb_Kovalevski);
 	Kovalevski_points = NEW_lint(nb_Kovalevski);
@@ -280,6 +297,221 @@ void kovalevski_points::compute_Kovalevski_points(
 		cout << "kovalevski_points::compute_Kovalevski_points done" << endl;
 	}
 }
+
+void kovalevski_points::compute_points_on_lines(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int *Pts;
+	int nb_points;
+	long int *Lines;
+	int nb_lines;
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_points_on_lines" << endl;
+	}
+
+	Pts = QO->Pts;
+	nb_points = QO->nb_pts;
+	Lines = QO->bitangents28;
+	nb_lines = 28;
+
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_points_on_lines "
+				"before compute_points_on_lines_worker" << endl;
+	}
+	compute_points_on_lines_worker(
+			Pts, nb_points,
+			Lines, nb_lines,
+			pts_on_lines,
+			f_is_on_line,
+			verbose_level);
+	if (f_v) {
+		cout << "kovalevski_points::compute_points_on_lines "
+				"after compute_points_on_lines_worker" << endl;
+	}
+
+	pts_on_lines->sort();
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_points_on_lines "
+				"pts_on_lines:" << endl;
+		pts_on_lines->print_table();
+	}
+
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_points_on_lines "
+				"before compute_contact_multiplicity" << endl;
+	}
+	compute_contact_multiplicity(
+			Lines, nb_lines,
+			pts_on_lines,
+			verbose_level);
+	if (f_v) {
+		cout << "kovalevski_points::compute_points_on_lines "
+				"after compute_contact_multiplicity" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_points_on_lines done" << endl;
+	}
+}
+
+
+void kovalevski_points::compute_off_points_on_lines(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int *Pts;
+	int nb_points;
+	long int *Lines;
+	int nb_lines;
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_off_points_on_lines" << endl;
+	}
+
+	Pts = Pts_off;
+	nb_points = nb_pts_off;
+	Lines = QO->bitangents28;
+	nb_lines = 28;
+
+	compute_points_on_lines_worker(
+			Pts, nb_points,
+			Lines, nb_lines,
+			pts_off_on_lines,
+			f_is_on_line2,
+			verbose_level);
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_off_points_on_lines done" << endl;
+	}
+}
+
+
+
+void kovalevski_points::compute_points_on_lines_worker(
+		long int *Pts, int nb_points,
+		long int *Lines, int nb_lines,
+		data_structures::set_of_sets *&pts_on_lines,
+		int *&f_is_on_line,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, r;
+	long int l;
+	int *pt_coords;
+	int Basis[6];
+	int Mtx[9];
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_points_on_lines_worker" << endl;
+	}
+	f_is_on_line = NEW_int(nb_points);
+	Int_vec_zero(f_is_on_line, nb_points);
+
+	pts_on_lines = NEW_OBJECT(data_structures::set_of_sets);
+	pts_on_lines->init_basic_constant_size(nb_points,
+		nb_lines, QO->Dom->F->q + 1, 0 /* verbose_level */);
+	pt_coords = NEW_int(nb_points * 3);
+	for (i = 0; i < nb_points; i++) {
+		QO->Dom->P->unrank_point(pt_coords + i * 3, Pts[i]);
+	}
+
+	Lint_vec_zero(pts_on_lines->Set_size, nb_lines);
+	for (i = 0; i < nb_lines; i++) {
+		l = Lines[i];
+		QO->Dom->P->unrank_line(Basis, l);
+		for (j = 0; j < nb_points; j++) {
+			Int_vec_copy(Basis, Mtx, 6);
+			Int_vec_copy(pt_coords + j * 3, Mtx + 6, 3);
+			r = QO->Dom->F->Linear_algebra->Gauss_easy(Mtx, 3, 3);
+			if (r == 2) {
+				pts_on_lines->add_element(i, j);
+				f_is_on_line[j] = true;
+			}
+		}
+	}
+
+	FREE_int(pt_coords);
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_points_on_lines_worker done" << endl;
+	}
+}
+
+
+void kovalevski_points::compute_contact_multiplicity(
+		long int *Lines, int nb_lines,
+		data_structures::set_of_sets *Pts_on_lines,
+		int verbose_level)
+// Pts_on_lines are the points of contact with the quartic curve for each line.
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_contact_multiplicity" << endl;
+	}
+	int i, j, h;
+	long int a;
+	int w[3];
+	int coeff_out[5];
+	int Basis[6];
+
+
+	Contact_multiplicity = NEW_pint(nb_lines);
+
+	for (i = 0; i < nb_lines; i++) {
+
+		Contact_multiplicity[i] = NEW_int(Pts_on_lines->Set_size[i]);
+
+		QO->Dom->P->Subspaces->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
+
+		for (j = 0; j < Pts_on_lines->Set_size[i]; j++) {
+			a = Pts_on_lines->Sets[i][j];
+
+			// unrank the point of the line to w[]:
+			QO->Dom->unrank_point(w, QO->Pts[a]);
+
+			Int_vec_copy(QO->Dom->P->Subspaces->Grass_lines->M, Basis, 6);
+
+			QO->Dom->F->Linear_algebra->adjust_basis(Basis, w,
+					3 /* n */, 2 /* k */, 1 /* d */, verbose_level);
+
+			// now the first row of Basis is w
+			// and the second row is another point on the line
+
+			QO->Dom->Poly4_3->substitute_line(
+					QO->eqn15 /* int *coeff_in */, coeff_out,
+					Basis /* int *Pt1_coeff */, Basis + 3,
+					0 /*verbose_level*/);
+			// coeff_in[nb_monomials], coeff_out[degree + 1]
+
+			// count the multiplicity of the root:
+			for (h = 0; h <= 4; h++) {
+				if (coeff_out[h]) {
+					break;
+				}
+			}
+
+			Contact_multiplicity[i][j] = h;
+
+
+		}
+
+	}
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_contact_multiplicity done" << endl;
+	}
+}
+
+
+
 
 void kovalevski_points::print_general(std::ostream &ost)
 {
@@ -308,6 +540,35 @@ void kovalevski_points::print_general(std::ostream &ost)
 	ost << ")";
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
+
+}
+
+void kovalevski_points::print_lines_with_points_on_them(std::ostream &ost)
+{
+	int f_v = false;
+
+	if (pts_on_lines) {
+		if (f_v) {
+			cout << "quartic_curve_object_properties::report_properties_simple "
+					"before print_lines_and_points_of_contact" << endl;
+		}
+		print_lines_and_points_of_contact(ost, QO->bitangents28, 28);
+		if (f_v) {
+			cout << "quartic_curve_object_properties::report_properties_simple "
+					"after print_lines_and_points_of_contact" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "quartic_curve_object_properties::report_properties_simple "
+					"before print_bitangents" << endl;
+		}
+		QO->QP->print_bitangents(ost);
+		if (f_v) {
+			cout << "quartic_curve_object_properties::report_properties_simple "
+					"after print_bitangents" << endl;
+		}
+	}
 
 }
 
@@ -432,6 +693,79 @@ void kovalevski_points::report_bitangent_line_type(
 
 	}
 }
+
+void kovalevski_points::print_lines_and_points_of_contact(
+		std::ostream &ost,
+		long int *Lines, int nb_lines)
+{
+	int i, j, h;
+	int verbose_level = 1;
+	long int a;
+	l1_interfaces::latex_interface L;
+	int w[3];
+
+	ost << "The lines and their points of contact are:\\\\" << endl;
+	//ost << "\\begin{multicols}{2}" << endl;
+
+	for (i = 0; i < nb_lines; i++) {
+		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
+		QO->Dom->P->Subspaces->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
+		ost << "$" << endl;
+
+		ost << QO->Dom->Schlaefli->Line_label_tex[i];
+		//ost << "\\ell_{" << i << "}";
+
+#if 0
+		if (nb_lines == 27) {
+			ost << " = " << Schlaefli->Line_label_tex[i];
+		}
+#endif
+		ost << " = " << endl;
+		//print_integer_matrix_width(cout,
+		// P->Grass_lines->M, k, n, n, F->log10_of_q + 1);
+		QO->Dom->P->Subspaces->Grass_lines->latex_matrix(ost,
+				QO->Dom->P->Subspaces->Grass_lines->M);
+
+
+		//print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 4);
+		//ost << "\\right]_{" << Lines[i] << "}" << endl;
+		ost << "_{" << Lines[i] << "}" << endl;
+
+		if (QO->Dom->F->e > 1) {
+			ost << "=" << endl;
+			ost << "\\left[" << endl;
+			L.print_integer_matrix_tex(ost,
+					QO->Dom->P->Subspaces->Grass_lines->M, 2, 3);
+			ost << "\\right]_{" << Lines[i] << "}" << endl;
+		}
+
+		for (j = 0; j < pts_on_lines->Set_size[i]; j++) {
+			a = pts_on_lines->Sets[i][j];
+
+			// unrank the point of the line to w[]:
+			QO->Dom->unrank_point(w, QO->Pts[a]);
+
+			ost << "P_{" << QO->Pts[a] << "}";
+			ost << "=\\bP";
+			Int_vec_print(ost, w, 3);
+
+			ost << "\\;" << Contact_multiplicity[i][j] << " \\times ";
+
+			if (j < pts_on_lines->Set_size[i] - 1) {
+				ost << ", ";
+			}
+
+		}
+		ost << "$\\\\" << endl;
+	}
+	//ost << "\\end{multicols}" << endl;
+	ost << "Rank of lines: ";
+	Lint_vec_print(ost, Lines, nb_lines);
+	ost << "\\\\" << endl;
+
+}
+
+
 
 
 

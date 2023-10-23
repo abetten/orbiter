@@ -291,14 +291,14 @@ void finite_field_io::print_element(
 		ost << a;
 	}
 	else {
-		if (F->f_print_as_exponentials) {
+		if (F->Descr->f_print_as_exponentials) {
 			width = 10;
 		}
 		else {
 			width = F->log10_of_q;
 		}
 		print_element_with_symbol(
-				ost, a, F->f_print_as_exponentials,
+				ost, a, F->Descr->f_print_as_exponentials,
 				width, F->get_symbol_for_print());
 	}
 }
@@ -313,14 +313,14 @@ void finite_field_io::print_element_str(
 		ost << a;
 	}
 	else {
-		if (F->f_print_as_exponentials) {
+		if (F->Descr->f_print_as_exponentials) {
 			width = 10;
 		}
 		else {
 			width = F->log10_of_q;
 		}
 		print_element_with_symbol_str(
-				ost, a, F->f_print_as_exponentials,
+				ost, a, F->Descr->f_print_as_exponentials,
 				width, F->get_symbol_for_print());
 	}
 }

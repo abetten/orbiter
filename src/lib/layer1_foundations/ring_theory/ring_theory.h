@@ -356,6 +356,7 @@ public:
 			geometry::projective_space *P,
 			long int *&Image_pts, int &N_points,
 			int verbose_level);
+	std::string stringify(int *eqn);
 
 
 };
@@ -619,6 +620,8 @@ public:
 	void add_int(int a);
 	void create_i_power_j(int i, int j);
 	int compare_with_int(int a);
+	std::string stringify();
+
 };
 
 std::ostream& operator<<(
@@ -633,17 +636,17 @@ std::ostream& operator<<(
 // partial_derivative.cpp
 // #############################################################################
 
-//! partial derivative connects two homogeneous polynomial domains
+//! partial derivative with respect to a given variable considered as a linear map between two homogeneous polynomial domains
 
 
 class partial_derivative {
 
 public:
 	homogeneous_polynomial_domain *H;
-	homogeneous_polynomial_domain *Hd;
+	homogeneous_polynomial_domain *Hd; // degree one less than H
 	int *v; // [H->get_nb_monomials()]
 	int variable_idx;
-	int *mapping; // [H->get_nb_monomials() * H->get_nb_monomials()]
+	int *mapping; // [H->get_nb_monomials() * Hd->get_nb_monomials()]
 
 
 	partial_derivative();

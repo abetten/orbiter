@@ -30,10 +30,12 @@ void poset_classification::report(
 #if 1
 	if (Opt->f_draw_poset) {
 		if (f_v) {
-			cout << "poset_classification::report before draw_poset" << endl;
+			cout << "poset_classification::report "
+					"before draw_poset" << endl;
 		}
 		if (!Control->f_draw_options) {
-			cout << "poset_classification::report Control->f_draw_poset && !Control->f_draw_options" << endl;
+			cout << "poset_classification::report "
+					"Control->f_draw_poset && !Control->f_draw_options" << endl;
 			exit(1);
 		}
 		draw_poset(get_problem_label_with_path(), depth /*actual_size*/,
@@ -41,7 +43,8 @@ void poset_classification::report(
 			Control->draw_options,
 			verbose_level);
 		if (f_v) {
-			cout << "poset_classification::report after draw_poset" << endl;
+			cout << "poset_classification::report "
+					"after draw_poset" << endl;
 		}
 	}
 
@@ -117,27 +120,32 @@ void poset_classification::report2(
 
 
 	if (f_v) {
-		cout << "poset_classification::report2 Number of Orbits By Level" << endl;
+		cout << "poset_classification::report2 "
+				"Number of Orbits By Level" << endl;
 	}
 	if (f_v) {
-		cout << "poset_classification::report2 before section Number of Orbits By Level" << endl;
+		cout << "poset_classification::report2 "
+				"before section Number of Orbits By Level" << endl;
 	}
 
 
 	ost << "\\subsection*{Number of Orbits By Level}" << endl;
 
 	if (f_v) {
-		cout << "poset_classification::report2 before report_number_of_orbits_at_level" << endl;
+		cout << "poset_classification::report2 "
+				"before report_number_of_orbits_at_level" << endl;
 	}
 	report_number_of_orbits_at_level(ost, Opt, verbose_level);
 	if (f_v) {
-		cout << "poset_classification::report2 after report_number_of_orbits_at_level" << endl;
+		cout << "poset_classification::report2 "
+				"after report_number_of_orbits_at_level" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "poset_classification::report2 before section Summary of Orbit Representatives" << endl;
+		cout << "poset_classification::report2 "
+				"before section Summary of Orbit Representatives" << endl;
 	}
 
 
@@ -147,11 +155,13 @@ void poset_classification::report2(
 	ost << endl;
 
 	if (f_v) {
-		cout << "poset_classification::report2 before report_orbits_summary" << endl;
+		cout << "poset_classification::report2 "
+				"before report_orbits_summary" << endl;
 	}
 	report_orbits_summary(ost, Opt, verbose_level);
 	if (f_v) {
-		cout << "poset_classification::report2 after report_orbits_summary" << endl;
+		cout << "poset_classification::report2 "
+				"after report_orbits_summary" << endl;
 	}
 
 
@@ -162,7 +172,8 @@ void poset_classification::report2(
 	if (Opt->f_draw_poset) {
 
 		if (f_v) {
-			cout << "poset_classification::report2 before section The Poset of Orbits: Diagram" << endl;
+			cout << "poset_classification::report2 "
+					"before section The Poset of Orbits: Diagram" << endl;
 		}
 		ost << "\\section*{The Poset of Orbits: Diagram}" << endl;
 
@@ -175,7 +186,8 @@ void poset_classification::report2(
 
 
 	if (f_v) {
-		cout << "poset_classification::report2 before section Poset of Orbits in Detail" << endl;
+		cout << "poset_classification::report2 "
+				"before section Poset of Orbits in Detail" << endl;
 	}
 
 
@@ -213,7 +225,8 @@ void poset_classification::report_orbits_in_detail(
 		}
 
 		if (f_v) {
-			cout << "poset_classification::report Orbits at Level " << level << ":" << endl;
+			cout << "poset_classification::report "
+					"Orbits at Level " << level << ":" << endl;
 		}
 		ost << endl;
 		ost << "\\subsection*{Orbits at Level " << level << "}" << endl;
@@ -222,7 +235,8 @@ void poset_classification::report_orbits_in_detail(
 
 		nb_orbits = nb_orbits_at_level(level);
 
-		ost << "There are " << nb_orbits << " orbits at level " << level << ".\\\\" << endl;
+		ost << "There are " << nb_orbits
+				<< " orbits at level " << level << ".\\\\" << endl;
 		ost << "\\bigskip" << endl;
 
 		for (orbit_at_level = 0;
@@ -268,13 +282,15 @@ void poset_classification::report_number_of_orbits_at_level(
 		int nb;
 
 		if (f_v) {
-			cout << "poset_classification::report_number_of_orbits_at_level before get_all_stabilizer_orders_at_level" << endl;
+			cout << "poset_classification::report_number_of_orbits_at_level "
+					"before get_all_stabilizer_orders_at_level" << endl;
 		}
 
 		get_all_stabilizer_orders_at_level(i, Ago, nb, verbose_level);
 
 		if (f_v) {
-			cout << "poset_classification::report_number_of_orbits_at_level after get_all_stabilizer_orders_at_level" << endl;
+			cout << "poset_classification::report_number_of_orbits_at_level "
+					"after get_all_stabilizer_orders_at_level" << endl;
 		}
 
 
@@ -357,14 +373,16 @@ void poset_classification::report_orbits_summary(
 	rep = NEW_lint(depth + 1);
 
 	if (f_vv) {
-		cout << "poset_classification::report_orbits_summary printing orbit representative" << endl;
+		cout << "poset_classification::report_orbits_summary "
+				"printing orbit representative" << endl;
 	}
 
 	cnt = 0;
 	for (level = 0; level <= depth; level++) {
 
 		if (f_vv) {
-			cout << "poset_classification::report_orbits_summary printing orbit representative at level " << level << endl;
+			cout << "poset_classification::report_orbits_summary "
+					"printing orbit representative at level " << level << endl;
 		}
 
 
@@ -378,27 +396,32 @@ void poset_classification::report_orbits_summary(
 		for (i = 0; i < nb_orbits; i++) {
 
 			if (f_vv) {
-				cout << "poset_classification::report_orbits_summary printing orbit representative at level " << level << " orbit " << i << endl;
+				cout << "poset_classification::report_orbits_summary "
+						"printing orbit representative at "
+						"level " << level << " orbit " << i << endl;
 			}
 
 			get_set_by_level(level, i, rep);
 
 			string s;
 
-			orbiter_kernel_system::Orbiter->Lint_vec->print_to_str_bare(s, rep, level);
+			s = Lint_vec_stringify(rep, level);
 
 			if (f_vv) {
-				cout << "poset_classification::report_orbits_summary set: '" << s << "'" << endl;
+				cout << "poset_classification::report_orbits_summary "
+						"set: '" << s << "'" << endl;
 			}
 
 			if (f_vv) {
-				cout << "poset_classification::report_orbits_summary before get_orbit_length_and_stabilizer_order" << endl;
+				cout << "poset_classification::report_orbits_summary "
+						"before get_orbit_length_and_stabilizer_order" << endl;
 			}
 			get_orbit_length_and_stabilizer_order(i, level,
 				stab_order, orbit_length);
 
 			if (f_vv) {
-				cout << "poset_classification::report_orbits_summary after get_orbit_length_and_stabilizer_order" << endl;
+				cout << "poset_classification::report_orbits_summary "
+						"after get_orbit_length_and_stabilizer_order" << endl;
 			}
 
 			//stab_order.print_to_string(str);
@@ -417,59 +440,72 @@ void poset_classification::report_orbits_summary(
 
 
 			if (f_vv) {
-				cout << "poset_classification::report_orbits_summary after get_node_ij" << endl;
+				cout << "poset_classification::report_orbits_summary "
+						"after get_node_ij" << endl;
 			}
 
 			if (f_vv) {
-				cout << "poset_classification::report_orbits_summary before O->get_Schreier_vector" << endl;
+				cout << "poset_classification::report_orbits_summary "
+						"before O->get_Schreier_vector" << endl;
 			}
 			Schreier_vector = O->get_Schreier_vector();
 
 			if (level < depth && Schreier_vector) {
 				if (Schreier_vector == NULL) {
-					cout << "poset_classification::report_orbits_summary Schreier_vector == NULL" << endl;
+					cout << "poset_classification::report_orbits_summary "
+							"Schreier_vector == NULL" << endl;
 					exit(1);
 				}
 				if (f_vv) {
-					cout << "poset_classification::report_orbits_summary level < depth; level=" << level << endl;
+					cout << "poset_classification::report_orbits_summary "
+							"level < depth; level=" << level << endl;
 				}
 				if (f_vv) {
-					cout << "poset_classification::report_orbits_summary before O->get_nb_of_live_points" << endl;
+					cout << "poset_classification::report_orbits_summary "
+							"before O->get_nb_of_live_points" << endl;
 				}
 				nb_live_pts = O->get_nb_of_live_points();
 				if (f_vv) {
-					cout << "poset_classification::report_orbits_summary after O->get_nb_of_live_points" << endl;
+					cout << "poset_classification::report_orbits_summary "
+							"after O->get_nb_of_live_points" << endl;
 				}
 				if (f_vv) {
-					cout << "poset_classification::report_orbits_summary before O->get_nb_of_extensions" << endl;
+					cout << "poset_classification::report_orbits_summary "
+							"before O->get_nb_of_extensions" << endl;
 				}
 				nb_extensions = O->get_nb_of_extensions();
 				if (f_vv) {
-					cout << "poset_classification::report_orbits_summary after O->get_nb_of_extensions" << endl;
+					cout << "poset_classification::report_orbits_summary "
+							"after O->get_nb_of_extensions" << endl;
 				}
 				//nbo = O->get_nb_of_orbits_under_stabilizer();
 				if (Schreier_vector->f_has_local_generators) {
 					if (f_vv) {
-						cout << "poset_classification::report_orbits_summary before Schreier_vector->local_gens->len" << endl;
+						cout << "poset_classification::report_orbits_summary "
+								"before Schreier_vector->local_gens->len" << endl;
 					}
 					nbg = Schreier_vector->local_gens->len;
 					if (f_vv) {
-						cout << "poset_classification::report_orbits_summary after Schreier_vector->local_gens->len" << endl;
+						cout << "poset_classification::report_orbits_summary "
+								"after Schreier_vector->local_gens->len" << endl;
 					}
 				}
 				else {
 					if (f_vv) {
-						cout << "poset_classification::report_orbits_summary before O->get_nb_strong_generators" << endl;
+						cout << "poset_classification::report_orbits_summary "
+								"before O->get_nb_strong_generators" << endl;
 					}
 					nbg = O->get_nb_strong_generators();
 					if (f_vv) {
-						cout << "poset_classification::report_orbits_summary after O->get_nb_strong_generators" << endl;
+						cout << "poset_classification::report_orbits_summary "
+								"after O->get_nb_strong_generators" << endl;
 					}
 				}
 			}
 			else {
 				if (f_vv) {
-					cout << "poset_classification::report_orbits_summary level < depth is false" << endl;
+					cout << "poset_classification::report_orbits_summary "
+							"level < depth is false" << endl;
 				}
 				nb_live_pts = -1;
 				nb_extensions = -1;
@@ -477,7 +513,8 @@ void poset_classification::report_orbits_summary(
 				nbg = O->get_nb_strong_generators();
 			}
 			if (f_vv) {
-				cout << "poset_classification::report_orbits_summary nb_live_pts=" << nb_live_pts
+				cout << "poset_classification::report_orbits_summary "
+						"nb_live_pts=" << nb_live_pts
 					<< " nb_extensions=" << nb_extensions
 					<< " nbg=" << nbg << endl;
 			}
@@ -597,17 +634,20 @@ void poset_classification::report_poset_of_orbits(
 			+ " -radius " + std::to_string(Control->draw_options->rad) + " ";
 
 	if (Control->draw_options->f_y_stretch) {
-		cmd += " -y_stretch " + std::to_string(Control->draw_options->y_stretch) + " ";
+		cmd += " -y_stretch "
+				+ std::to_string(Control->draw_options->y_stretch) + " ";
 	}
 
 	if (Control->draw_options->f_line_width) {
-		cmd += " -line_width " + std::to_string(Control->draw_options->line_width) + " ";
+		cmd += " -line_width "
+				+ std::to_string(Control->draw_options->line_width) + " ";
 	}
 	if (Control->draw_options->f_spanning_tree) {
 		cmd += " -spanning_tree ";
 	}
 
-	cout << "poset_classification::report_poset_of_orbits executing command: " << cmd << endl;
+	cout << "poset_classification::report_poset_of_orbits "
+			"executing command: " << cmd << endl;
 	system(cmd.c_str());
 
 	cmd = "mpost -tex=latex " + fname_out_base + ".mp";
@@ -727,11 +767,13 @@ void poset_classification::report_orbit(
 	// print strong generators for the stabilizer:
 
 	if (f_v) {
-		cout << "poset_classification::report_orbit before Poset->A2->latex_point_set" << endl;
+		cout << "poset_classification::report_orbit "
+				"before Poset->A2->latex_point_set" << endl;
 	}
 	Poset->A2->latex_point_set(ost, rep, level, 0 /* verbose_level*/);
 	if (f_v) {
-		cout << "poset_classification::report_orbit after Poset->A2->latex_point_set" << endl;
+		cout << "poset_classification::report_orbit "
+				"after Poset->A2->latex_point_set" << endl;
 	}
 
 
@@ -933,7 +975,8 @@ void poset_classification::report_orbit(
 	FREE_OBJECT(gens);
 	FREE_lint(rep);
 	if (f_v) {
-		cout << "poset_classification::report_orbit level = " << level << " orbit_at_level = " << orbit_at_level << " done" << endl;
+		cout << "poset_classification::report_orbit "
+				"level = " << level << " orbit_at_level = " << orbit_at_level << " done" << endl;
 	}
 }
 

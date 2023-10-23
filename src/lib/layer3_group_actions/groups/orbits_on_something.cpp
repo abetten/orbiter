@@ -371,7 +371,7 @@ void orbits_on_something::stabilizer_of(
 	ring_theory::longinteger_object stab_go;
 
 
-	Stab->get_gens_data_as_string_with_quotes(gens_str, 0 /*verbose_level*/);
+	gens_str = Stab->stringify_gens_data(0 /*verbose_level*/);
 	Stab->group_order(stab_go);
 	if (f_v) {
 		cout << "orbits_on_something::init The stabilizer has order " << stab_go << endl;

@@ -1267,6 +1267,17 @@ void strong_generators::group_order(ring_theory::longinteger_object &go)
 	D.multiply_up(go, tl, A->base_len(), 0 /* verbose_level */);
 }
 
+std::string strong_generators::group_order_stringify()
+{
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object go;
+	string s;
+
+	D.multiply_up(go, tl, A->base_len(), 0 /* verbose_level */);
+	s = go.stringify();
+	return s;
+}
+
 long int strong_generators::group_order_as_lint()
 {
 	ring_theory::longinteger_domain D;
@@ -3860,26 +3871,29 @@ void strong_generators::get_gens_data(
 	}
 }
 
-void strong_generators::get_gens_data_as_string_with_quotes(
-		std::string &str, int verbose_level)
+std::string strong_generators::stringify_gens_data(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "strong_generators::get_gens_data_as_string_with_quotes" << endl;
+		cout << "strong_generators::stringify_gens_data" << endl;
 	}
 	int *data;
 	int sz;
+	string str;
 
 	get_gens_data(data, sz, verbose_level);
 
 
-	Int_vec_create_string_with_quotes(str, data, sz);
-	//orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, data, sz);
+	str = Int_vec_stringify(data, sz);
+
+	FREE_int(data);
 
 	if (f_v) {
-		cout << "strong_generators::get_gens_data_as_string_with_quotes done" << endl;
+		cout << "strong_generators::stringify_gens_data done" << endl;
 	}
+	return str;
 }
 
 void strong_generators::export_to_orbiter_as_bsgs(
@@ -4086,7 +4100,46 @@ void strong_generators::report_group2(
 	}
 }
 
+void strong_generators::stringify(
+		std::string &s_tl, std::string &s_gens, std::string &s_go)
+{
+	int f_v = false;
 
+	if (f_v) {
+		cout << "strong_generators::stringify "
+				"before Int_vec_stringify" << endl;
+	}
+	s_tl = Int_vec_stringify(tl, A->base_len());
+	if (f_v) {
+		cout << "strong_generators::stringify "
+				"after Int_vec_stringify" << endl;
+	}
+
+	if (f_v) {
+		cout << "strong_generators::stringify "
+				"before stringify_gens_data" << endl;
+	}
+	s_gens = stringify_gens_data(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "strong_generators::stringify "
+				"after stringify_gens_data" << endl;
+	}
+
+	ring_theory::longinteger_object go;
+
+
+	group_order(go);
+	if (f_v) {
+		cout << "strong_generators::stringify "
+				"before go.stringify" << endl;
+	}
+	s_go = go.stringify();
+	if (f_v) {
+		cout << "strong_generators::stringify "
+				"after go.stringify" << endl;
+	}
+
+}
 
 }}}
 

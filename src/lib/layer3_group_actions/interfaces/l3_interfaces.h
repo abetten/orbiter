@@ -315,6 +315,7 @@ public:
 		int f_compute_canonical_form,
 		data_structures::bitvector *&Canonical_form,
 		l1_interfaces::nauty_output *&NO,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level);
 
 };

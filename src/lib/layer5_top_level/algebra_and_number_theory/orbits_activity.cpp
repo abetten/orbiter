@@ -313,7 +313,7 @@ void orbits_activity::do_report(int verbose_level)
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 		}
 
-		OC->Canonical_form_classifier->report(
+		OC->Canonical_form_classifier->Output->report(
 				report_options,
 				verbose_level);
 
@@ -489,7 +489,7 @@ void orbits_activity::do_export_source_code(int verbose_level)
 					"before generate_source_code" << endl;
 		}
 
-		OC->Canonical_form_classifier->generate_source_code(
+		OC->Canonical_form_classifier->Output->generate_source_code(
 				OC->Descr->Canonical_form_classifier_description->fname_base_out,
 				verbose_level);
 
@@ -727,12 +727,15 @@ void orbits_activity::do_stabilizer(int verbose_level)
 		ring_theory::longinteger_object stab_go;
 
 
-		Stab->get_gens_data_as_string_with_quotes(gens_str, 0 /*verbose_level*/);
+		gens_str = Stab->stringify_gens_data(0 /*verbose_level*/);
 		Stab->group_order(stab_go);
 		if (f_v) {
-			cout << "orbits_activity::do_stabilizer The stabilizer has order " << stab_go << endl;
-			cout << "orbits_activity::do_stabilizer Number of generators " << Stab->gens->len << endl;
-			cout << "orbits_activity::do_stabilizer Generators for the stabilizer in coded form: " << endl;
+			cout << "orbits_activity::do_stabilizer "
+					"The stabilizer has order " << stab_go << endl;
+			cout << "orbits_activity::do_stabilizer "
+					"Number of generators " << Stab->gens->len << endl;
+			cout << "orbits_activity::do_stabilizer "
+					"Generators for the stabilizer in coded form: " << endl;
 			cout << gens_str << endl;
 		}
 
@@ -781,15 +784,18 @@ void orbits_activity::do_stabilizer_of_orbit_rep(int verbose_level)
 
 	if (OC->f_has_Orb) {
 		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity before OC->Orb->stabilizer_of" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"before OC->Orb->stabilizer_of" << endl;
 		}
 		OC->Orb->stabilizer_of(Descr->stabilizer_of_orbit_rep_orbit_idx, verbose_level);
 		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity after OC->Orb->stabilizer_of" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"after OC->Orb->stabilizer_of" << endl;
 		}
 	}
 	else {
-		cout << "orbits_activity::do_stabilizer_of_orbit_rep no suitable data structure" << endl;
+		cout << "orbits_activity::do_stabilizer_of_orbit_rep "
+				"no suitable data structure" << endl;
 		exit(1);
 	}
 
@@ -956,7 +962,8 @@ void orbits_activity::do_recognize(int verbose_level)
 						"before OC->On_Subspaces->orbits_on_subspaces_PC->recognize" << endl;
 			}
 
-			OC->On_Subspaces->orbits_on_subspaces_PC->recognize(Descr->recognize[h],
+			OC->On_Subspaces->orbits_on_subspaces_PC->recognize(
+					Descr->recognize[h],
 					h, Descr->recognize.size(),
 					verbose_level);
 

@@ -199,6 +199,17 @@ void quartic_curve_domain::print_equation_maple(
 	Poly4_3->print_equation_str(ost, coeffs);
 }
 
+std::string quartic_curve_domain::stringify_equation_maple(
+		int *eqn15)
+{
+	stringstream sstr;
+	string str;
+	print_equation_maple(sstr, eqn15);
+	str = sstr.str();
+	return str;
+}
+
+
 void quartic_curve_domain::print_equation_with_line_breaks_tex(
 		std::ostream &ost, int *coeffs)
 {
@@ -288,55 +299,6 @@ void quartic_curve_domain::print_lines_tex(
 }
 
 
-
-void quartic_curve_domain::compute_points_on_lines(
-		long int *Pts, int nb_points,
-		long int *Lines, int nb_lines,
-		data_structures::set_of_sets *&pts_on_lines,
-		int *&f_is_on_line,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, l, r;
-	int *pt_coords;
-	int Basis[6];
-	int Mtx[9];
-
-	if (f_v) {
-		cout << "quartic_curve_domain::compute_points_on_lines" << endl;
-	}
-	f_is_on_line = NEW_int(nb_points);
-	Int_vec_zero(f_is_on_line, nb_points);
-
-	pts_on_lines = NEW_OBJECT(data_structures::set_of_sets);
-	pts_on_lines->init_basic_constant_size(nb_points,
-		nb_lines, F->q + 1, 0 /* verbose_level */);
-	pt_coords = NEW_int(nb_points * 3);
-	for (i = 0; i < nb_points; i++) {
-		P->unrank_point(pt_coords + i * 3, Pts[i]);
-	}
-
-	Lint_vec_zero(pts_on_lines->Set_size, nb_lines);
-	for (i = 0; i < nb_lines; i++) {
-		l = Lines[i];
-		P->unrank_line(Basis, l);
-		for (j = 0; j < nb_points; j++) {
-			Int_vec_copy(Basis, Mtx, 6);
-			Int_vec_copy(pt_coords + j * 3, Mtx + 6, 3);
-			r = F->Linear_algebra->Gauss_easy(Mtx, 3, 3);
-			if (r == 2) {
-				pts_on_lines->add_element(i, j);
-				f_is_on_line[j] = true;
-			}
-		}
-	}
-
-	FREE_int(pt_coords);
-
-	if (f_v) {
-		cout << "quartic_curve_domain::compute_points_on_lines done" << endl;
-	}
-}
 
 
 
@@ -688,12 +650,13 @@ void quartic_curve_domain::create_surface(
 
 		for (i = 0; i < 4; i++) {
 
-			if (Q->QP->pts_on_lines->Set_size[Idx[i]] != 2) {
-				cout << "quartic_curve_domain::create_surface QP->pts_on_lines->Set_size[Idx[i]] != 2" << endl;
+			if (Q->QP->Kovalevski->pts_on_lines->Set_size[Idx[i]] != 2) {
+				cout << "quartic_curve_domain::create_surface "
+						"QP->pts_on_lines->Set_size[Idx[i]] != 2" << endl;
 				exit(1);
 			}
-			pt_idx[i * 2 + 0] = Q->QP->pts_on_lines->Sets[Idx[i]][0];
-			pt_idx[i * 2 + 1] = Q->QP->pts_on_lines->Sets[Idx[i]][1];
+			pt_idx[i * 2 + 0] = Q->QP->Kovalevski->pts_on_lines->Sets[Idx[i]][0];
+			pt_idx[i * 2 + 1] = Q->QP->Kovalevski->pts_on_lines->Sets[Idx[i]][1];
 
 		}
 		for (i = 0; i < 8; i++) {
@@ -739,7 +702,8 @@ void quartic_curve_domain::create_surface(
 	}
 
 	for (i = 0; i < 4; i++) {
-		unrank_line_in_dual_coordinates(Bitangents_coeffs + i * 3, Bitangents4[i]);
+		unrank_line_in_dual_coordinates(
+				Bitangents_coeffs + i * 3, Bitangents4[i]);
 	}
 
 	if (f_v) {
@@ -769,7 +733,8 @@ void quartic_curve_domain::create_surface(
 
 	orbiter_kernel_system::Orbiter->Int_vec->transpose(M1, 3, 15, M2);
 
-	r = F->Linear_algebra->RREF_and_kernel(3, 15, M2, 0 /* verbose_level*/);
+	r = F->Linear_algebra->RREF_and_kernel(
+			3, 15, M2, 0 /* verbose_level*/);
 
 	if (r != 2) {
 		cout << "quartic_curve_domain::create_surface r != 2" << endl;

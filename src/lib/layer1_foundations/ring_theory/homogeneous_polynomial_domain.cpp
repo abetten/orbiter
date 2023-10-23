@@ -3235,7 +3235,21 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 	}
 }
 
+std::string homogeneous_polynomial_domain::stringify(int *eqn)
+{
+	string output;
+	ostringstream s;
+	int i;
 
+	for (i = 0; i < get_nb_monomials(); i++) {
+		s << eqn[i];
+		if (i < get_nb_monomials() - 1) {
+			s << ",";
+		}
+	}
+	output = s.str();
+	return output;
+}
 
 // #############################################################################
 // global functions:

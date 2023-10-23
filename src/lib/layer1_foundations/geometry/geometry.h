@@ -787,6 +787,8 @@ public:
 	std::string curve_coeffs;
 
 	int f_set;
+	std::string set_label_txt;
+	std::string set_label_tex;
 	std::string set_text;
 
 
@@ -923,11 +925,12 @@ public:
 			int m,
 			int verbose_level);
 	// creates field_theory::subfield_structure and desarguesian_spread objects
-	void create_decomposition_of_projective_plane(
+	void create_decomposition_of_projective_space(
 			std::string &fname_base,
 			projective_space *P,
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
+			std::vector<std::string> &file_names,
 			int verbose_level);
 	// creates incidence_structure and data_structures::partitionstack objects
 	void create_BLT_point(
@@ -1524,6 +1527,12 @@ class incidence_structure {
 	void compute_TDO_safe(
 			data_structures::partitionstack &PStack,
 		int depth, int verbose_level);
+	void compute_TDO_safe_and_write_files(
+			data_structures::partitionstack &PStack,
+		int depth,
+		std::string &fname_base,
+		std::vector<std::string> &file_names,
+		int verbose_level);
 	int compute_TDO(
 			data_structures::partitionstack &PStack,
 			int ht0, int depth,
@@ -1765,8 +1774,8 @@ public:
 	grassmann *Gr;
 
 	ring_theory::longinteger_object *R;
-	long int **Pts_on_plane;
-	int *nb_pts_on_plane;
+	long int **Pts_on_subspace;
+	int *nb_pts_on_subspace;
 	int len;
 
 	int *the_intersection_type;
@@ -1781,6 +1790,11 @@ public:
 
 	intersection_type();
 	~intersection_type();
+	void line_intersection_type_slow(
+		long int *set, int set_size, int threshold,
+		projective_space *P,
+		grassmann *Gr,
+		int verbose_level);
 	void plane_intersection_type_slow(
 		long int *set, int set_size, int threshold,
 		projective_space *P,
@@ -2182,6 +2196,7 @@ public:
 			int f_compute_canonical_form,
 			data_structures::bitvector *&Canonical_form,
 			l1_interfaces::nauty_output *&NO,
+			combinatorics::encoded_combinatorial_object *&Enc,
 			int verbose_level);
 	void canonical_labeling(
 			l1_interfaces::nauty_output *NO,
@@ -3055,11 +3070,17 @@ public:
 		long int *set, int set_size,
 		long int *&intersection_set, int &intersection_set_size,
 		int verbose_level);
+
+
 	void plane_intersection_invariant(
 			grassmann *G,
 		long int *set, int set_size,
 		int *&intersection_type, int &highest_intersection_number, 
 		int *&intersection_matrix, int &nb_planes, 
+		int verbose_level);
+	void line_intersection_type(
+		long int *set, int set_size, int threshold,
+		intersection_type *&Int_type,
 		int verbose_level);
 	void plane_intersection_type(
 		long int *set, int set_size, int threshold,

@@ -25,8 +25,6 @@ namespace algebraic_geometry {
 quartic_curve_object_properties::quartic_curve_object_properties()
 {
 	QO = NULL;
-	pts_on_lines = NULL;
-	f_is_on_line = NULL;
 
 	Kovalevski = NULL;
 
@@ -45,12 +43,6 @@ quartic_curve_object_properties::quartic_curve_object_properties()
 
 quartic_curve_object_properties::~quartic_curve_object_properties()
 {
-	if (pts_on_lines) {
-		FREE_OBJECT(pts_on_lines);
-	}
-	if (f_is_on_line) {
-		FREE_int(f_is_on_line);
-	}
 	if (Kovalevski) {
 		FREE_OBJECT(Kovalevski);
 	}
@@ -266,6 +258,17 @@ void quartic_curve_object_properties::report_properties_simple(
 
 
 
+	if (f_v) {
+		cout << "quartic_curve_object_properties::report_properties_simple "
+				"before Kovalevski->print_lines_with_points_on_them" << endl;
+	}
+	Kovalevski->print_lines_with_points_on_them(ost);
+	if (f_v) {
+		cout << "quartic_curve_object_properties::report_properties_simple "
+				"after Kovalevski->print_lines_with_points_on_them" << endl;
+	}
+
+#if 0
 	if (pts_on_lines) {
 		if (f_v) {
 			cout << "quartic_curve_object_properties::report_properties_simple "
@@ -288,6 +291,7 @@ void quartic_curve_object_properties::report_properties_simple(
 					"after print_bitangents" << endl;
 		}
 	}
+#endif
 
 	if (f_v) {
 		cout << "quartic_curve_object_properties::report_properties_simple "
@@ -470,95 +474,8 @@ void quartic_curve_object_properties::print_bitangents(std::ostream &ost)
 		QO->Dom->print_lines_tex(ost, QO->bitangents28, 28);
 
 		ost << "Curve Points on Bitangents:\\\\" << endl;
-		pts_on_lines->print_table_tex(ost);
+		Kovalevski->pts_on_lines->print_table_tex(ost);
 	}
-}
-
-void quartic_curve_object_properties::print_lines_with_points_on_them(
-		std::ostream &ost,
-		long int *Lines, int nb_lines,
-		data_structures::set_of_sets *SoS)
-{
-	int i, j, h;
-	int verbose_level = 1;
-	long int a;
-	l1_interfaces::latex_interface L;
-	int w[3];
-	int coeff_out[5];
-	int Basis[6];
-
-	ost << "The lines and their points of contact are:\\\\" << endl;
-	//ost << "\\begin{multicols}{2}" << endl;
-
-	for (i = 0; i < nb_lines; i++) {
-		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		QO->Dom->P->Subspaces->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
-		ost << "$" << endl;
-
-		ost << QO->Dom->Schlaefli->Line_label_tex[i];
-		//ost << "\\ell_{" << i << "}";
-
-#if 0
-		if (nb_lines == 27) {
-			ost << " = " << Schlaefli->Line_label_tex[i];
-		}
-#endif
-		ost << " = " << endl;
-		//print_integer_matrix_width(cout,
-		// P->Grass_lines->M, k, n, n, F->log10_of_q + 1);
-		QO->Dom->P->Subspaces->Grass_lines->latex_matrix(ost,
-				QO->Dom->P->Subspaces->Grass_lines->M);
-
-
-		//print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 4);
-		//ost << "\\right]_{" << Lines[i] << "}" << endl;
-		ost << "_{" << Lines[i] << "}" << endl;
-
-		if (QO->Dom->F->e > 1) {
-			ost << "=" << endl;
-			ost << "\\left[" << endl;
-			L.print_integer_matrix_tex(ost,
-					QO->Dom->P->Subspaces->Grass_lines->M, 2, 3);
-			ost << "\\right]_{" << Lines[i] << "}" << endl;
-		}
-
-		for (j = 0; j < SoS->Set_size[i]; j++) {
-			a = SoS->Sets[i][j];
-			QO->Dom->unrank_point(w, QO->Pts[a]);
-			ost << "P_{" << QO->Pts[a] << "}";
-			ost << "=\\bP";
-			Int_vec_print(ost, w, 3);
-
-			Int_vec_copy(QO->Dom->P->Subspaces->Grass_lines->M, Basis, 6);
-
-			QO->Dom->F->Linear_algebra->adjust_basis(Basis, w,
-					3 /* n */, 2 /* k */, 1 /* d */, verbose_level);
-
-			QO->Dom->Poly4_3->substitute_line(
-					QO->eqn15 /* int *coeff_in */, coeff_out,
-					Basis /* int *Pt1_coeff */, Basis + 3,
-					0 /*verbose_level*/);
-			// coeff_in[nb_monomials], coeff_out[degree + 1]
-			for (h = 0; h <= 4; h++) {
-				if (coeff_out[h]) {
-					break;
-				}
-			}
-
-			ost << "\\;" << h << " \\times ";
-
-			if (j < SoS->Set_size[i] - 1) {
-				ost << ", ";
-			}
-
-		}
-		ost << "$\\\\" << endl;
-	}
-	//ost << "\\end{multicols}" << endl;
-	ost << "Rank of lines: ";
-	Lint_vec_print(ost, Lines, nb_lines);
-	ost << "\\\\" << endl;
-
 }
 
 

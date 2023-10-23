@@ -52,7 +52,8 @@ surfaces_arc_lifting_definition_node::~surfaces_arc_lifting_definition_node()
 {
 }
 
-void surfaces_arc_lifting_definition_node::init_with_27_lines(surfaces_arc_lifting *Lift,
+void surfaces_arc_lifting_definition_node::init_with_27_lines(
+		surfaces_arc_lifting *Lift,
 		int f, int orbit_idx, long int *Lines27, int *eqn20,
 		int verbose_level)
 {
@@ -66,6 +67,11 @@ void surfaces_arc_lifting_definition_node::init_with_27_lines(surfaces_arc_lifti
 	surfaces_arc_lifting_definition_node::f = f;
 	surfaces_arc_lifting_definition_node::orbit_idx = orbit_idx;
 
+	string label_txt;
+	string label_tex;
+
+	label_txt = "arc_lifting";
+	label_tex = "arc\\_lifting";
 
 	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
@@ -73,6 +79,7 @@ void surfaces_arc_lifting_definition_node::init_with_27_lines(surfaces_arc_lifti
 		cout << "surfaces_arc_lifting_definition_node::init_with_27_lines before SO->init_with_27_lines" << endl;
 	}
 	SO->init_with_27_lines(Lift->Surf_A->Surf, Lines27, eqn20,
+			label_txt, label_tex,
 			false /* f_find_double_six_and_rearrange_lines */,
 			verbose_level - 2);
 

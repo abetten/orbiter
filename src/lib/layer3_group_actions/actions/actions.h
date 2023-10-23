@@ -1226,6 +1226,8 @@ public:
 		int *input, int *output,
 		ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
+	std::string stringify(
+		int *Elt);
 
 
 };

@@ -1509,6 +1509,7 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	int f_compute_canonical_form,
 	data_structures::bitvector *&Canonical_form,
 	l1_interfaces::nauty_output *&NO,
+	combinatorics::encoded_combinatorial_object *&Enc,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1532,6 +1533,7 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	OwCF->run_nauty(
 			f_compute_canonical_form, Canonical_form,
 			NO,
+			Enc,
 			verbose_level);
 
 	if (f_v) {

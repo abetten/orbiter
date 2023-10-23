@@ -194,14 +194,18 @@ void classification_of_objects::classify_objects_using_nauty(
 
 
 		l1_interfaces::nauty_output *NO;
+		combinatorics::encoded_combinatorial_object *Enc;
 
 		process_any_object(OwCF,
 					input_idx,
 					Ago[input_idx],
 					F_reject[input_idx],
 					NO,
+					Enc,
 					verbose_level - 1);
 
+
+		FREE_OBJECT(Enc);
 
 		if (false) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
@@ -394,6 +398,7 @@ void classification_of_objects::process_any_object(
 		geometry::object_with_canonical_form *OwCF,
 		int input_idx, long int &ago, int &f_reject,
 		l1_interfaces::nauty_output *&NO,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -418,6 +423,7 @@ void classification_of_objects::process_any_object(
 			ago,
 			iso_idx_if_found,
 			NO,
+			Enc,
 			verbose_level - 1);
 
 
@@ -495,6 +501,7 @@ int classification_of_objects::process_object(
 	long int &ago,
 	int &iso_idx_if_found,
 	l1_interfaces::nauty_output *&NO,
+	combinatorics::encoded_combinatorial_object *&Enc,
 	int verbose_level)
 // returns f_found, which is true if the object is rejected
 {
@@ -517,7 +524,6 @@ int classification_of_objects::process_object(
 	}
 
 
-
 	if (f_v) {
 		cout << "classification_of_objects::process_object "
 				"before OwCF->run_nauty" << endl;
@@ -526,13 +532,13 @@ int classification_of_objects::process_object(
 	OwCF->run_nauty(
 			true /* f_compute_canonical_form */, Canonical_form,
 			NO,
+			Enc,
 			verbose_level);
 
 	if (f_v) {
 		cout << "classification_of_objects::process_object "
 				"after OwCF->run_nauty" << endl;
 	}
-
 
 
 	ring_theory::longinteger_object go;

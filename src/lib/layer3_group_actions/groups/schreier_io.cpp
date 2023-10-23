@@ -2068,17 +2068,15 @@ void schreier::write_to_file_csv(
 
 		string str;
 
-		orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, orbit + orbit_first[i], len);
+		str = "\"" + Int_vec_stringify(orbit + orbit_first[i], len) + "\"";
 		S.fill_entry_with_text(1 + i, 3, str);
 
 
-		str.assign("");
-		orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, prev + orbit_first[i], len);
+		str = "\"" + Int_vec_stringify(prev + orbit_first[i], len) + "\"";
 		S.fill_entry_with_text(1 + i, 4, str);
 
 
-		str.assign("");
-		orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, label + orbit_first[i], len);
+		str = "\"" + Int_vec_stringify(label + orbit_first[i], len) + "\"";
 		S.fill_entry_with_text(1 + i, 5, str);
 
 	}

@@ -541,6 +541,23 @@ void lint_vec::create_string_with_quotes(std::string &str, long int *v, int len)
 	str.assign(s.str());
 }
 
+std::string lint_vec::stringify(long int *v, int len)
+{
+	string output;
+	ostringstream s;
+	int i;
+
+	for (i = 0; i < len; i++) {
+		s << v[i];
+		if (i < len - 1) {
+			s << ",";
+		}
+	}
+	output = s.str();
+	return output;
+}
+
+
 
 }}}
 

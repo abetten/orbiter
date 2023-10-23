@@ -1215,6 +1215,34 @@ void int_vec::print_as_polynomial_in_algebraic_notation(
 
 }
 
+int int_vec::compare(int *p, int *q, int len)
+{
+	data_structures::sorting Sorting;
+	int cmp;
+
+	cmp = Sorting.int_vec_compare(
+			p, q, len);
+	return cmp;
+}
+
+std::string int_vec::stringify(int *v, int len)
+{
+	string output;
+	ostringstream s;
+	int i;
+
+	for (i = 0; i < len; i++) {
+		s << v[i];
+		if (i < len - 1) {
+			s << ",";
+		}
+	}
+	output = s.str();
+	return output;
+}
+
+
+
 }}}
 
 

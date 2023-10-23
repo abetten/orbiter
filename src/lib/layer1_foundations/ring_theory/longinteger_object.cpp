@@ -552,6 +552,14 @@ int longinteger_object::compare_with_int(int a)
 	return D.compare(*this, b);
 }
 
+std::string longinteger_object::stringify()
+{
+	std::string s;
+
+	print_to_string(s);
+	return s;
+}
+
 }}}
 
 

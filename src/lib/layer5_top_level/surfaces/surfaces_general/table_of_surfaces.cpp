@@ -26,7 +26,7 @@ table_of_surfaces::table_of_surfaces()
 
 	SC = NULL;
 
-	SOA = NULL;
+	SOG = NULL;
 
 }
 
@@ -38,8 +38,8 @@ table_of_surfaces::~table_of_surfaces()
 	if (SC) {
 		FREE_OBJECTS(SC);
 	}
-	if (SOA) {
-		FREE_OBJECTS(SOA);
+	if (SOG) {
+		FREE_OBJECTS(SOG);
 	}
 }
 
@@ -50,6 +50,7 @@ void table_of_surfaces::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "table_of_surfaces::init" << endl;
@@ -76,18 +77,19 @@ void table_of_surfaces::init(
 
 
 
-	SOA = NEW_OBJECTS(surface_object_with_action, nb_cubic_surfaces);
+	SOG = NEW_OBJECTS(surface_object_with_group, nb_cubic_surfaces);
 
+	if (f_v) {
+		cout << "table_of_surfaces::init creating surfaces" << endl;
+	}
 
 	for (h = 0; h < nb_cubic_surfaces; h++) {
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "table_of_surfaces::init "
 					<< h << " / " << nb_cubic_surfaces << endl;
 		}
 
-		//Surface_create_description.f_q = true;
-		//Surface_create_description.q = q;
 		Surface_create_description[h].f_catalogue = true;
 		Surface_create_description[h].iso = h;
 
@@ -96,10 +98,10 @@ void table_of_surfaces::init(
 		Surface_create_description[h].space_pointer = PA;
 
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "table_of_surfaces::init before SC->init" << endl;
 		}
-		SC[h].init(&Surface_create_description[h], verbose_level);
+		SC[h].init(&Surface_create_description[h], verbose_level - 2);
 		if (f_v) {
 			cout << "table_of_surfaces::init after SC->init" << endl;
 		}
@@ -114,19 +116,19 @@ void table_of_surfaces::init(
 			exit(1);
 		}
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "table_of_surfaces::init "
-					"before SOA[h].init_with_surface_object" << endl;
+					"before SOG[h].init_with_surface_object" << endl;
 		}
-		SOA[h].init_with_surface_object(PA->Surf_A,
+		SOG[h].init_with_surface_object(PA->Surf_A,
 				SC[h].SO,
 				SC[h].Sg,
 				false /* f_has_nice_gens */,
 				NULL /* vector_ge *nice_gens */,
-				verbose_level);
-		if (f_v) {
+				verbose_level - 2);
+		if (f_vv) {
 			cout << "table_of_surfaces::init "
-					"after SOA[h].init_with_surface_object" << endl;
+					"after SOG[h].init_with_surface_object" << endl;
 		}
 	}
 
@@ -149,104 +151,20 @@ void table_of_surfaces::do_export(
 		cout << "table_of_surfaces::do_export" << endl;
 	}
 
-	int h;
 	std::string *Table;
 	int nb_cols;
 
-	nb_cols = 22;
 
-	Table = new string[nb_cubic_surfaces * nb_cols];
-
-	long int *Row;
-
-
-	Row = NEW_lint(nb_cols);
-
-	for (h = 0; h < nb_cubic_surfaces; h++) {
-
-		if (f_v) {
-			cout << "table_of_surfaces::do_export "
-					<< h << " / " << nb_cubic_surfaces << endl;
-		}
-
-		Row[0] = h;
-
-
-		if (f_v) {
-			cout << "collineation stabilizer order" << endl;
-		}
-		if (SC[h].f_has_group) {
-			Row[1] = SC[h].Sg->group_order_as_lint();
-		}
-		else {
-			Row[1] = 0;
-		}
-		if (f_v) {
-			cout << "projectivity stabilizer order" << endl;
-		}
-		if (PA->A->is_semilinear_matrix_group()) {
-
-
-			Row[2] = SOA[h].projectivity_group_gens->group_order_as_lint();
-
-		}
-		else {
-			Row[2] = SC[h].Sg->group_order_as_lint();
-		}
-
-		Row[3] = SC[h].SO->nb_pts;
-		Row[4] = SC[h].SO->nb_lines;
-		Row[5] = SC[h].SO->SOP->nb_Eckardt_points;
-		Row[6] = SC[h].SO->SOP->nb_Double_points;
-		Row[7] = SC[h].SO->SOP->nb_Single_points;
-		Row[8] = SC[h].SO->SOP->nb_pts_not_on_lines;
-		Row[9] = SC[h].SO->SOP->nb_Hesse_planes;
-		Row[10] = SC[h].SO->SOP->nb_axes;
-		if (f_v) {
-			cout << "SoA->Orbits_on_Eckardt_points->nb_orbits" << endl;
-		}
-		Row[11] = SOA[h].Orbits_on_Eckardt_points->nb_orbits;
-		Row[12] = SOA[h].Orbits_on_Double_points->nb_orbits;
-		Row[13] = SOA[h].Orbits_on_points_not_on_lines->nb_orbits;
-		Row[14] = SOA[h].Orbits_on_lines->nb_orbits;
-		Row[15] = SOA[h].Orbits_on_single_sixes->nb_orbits;
-		Row[16] = SOA[h].Orbits_on_tritangent_planes->nb_orbits;
-		Row[17] = SOA[h].Orbits_on_Hesse_planes->nb_orbits;
-		Row[18] = SOA[h].Orbits_on_trihedral_pairs->nb_orbits;
-
-
-
-		int j;
-
-		for (j = 0; j <= 18; j++) {
-
-			Table[h * nb_cols + j] = std::to_string(Row[j]);
-		}
-
-
-
-		{
-			string str;
-			Int_vec_create_string_with_quotes(str, SC[h].SO->eqn, 20);
-			Table[h * nb_cols + 19].assign(str);
-		}
-		{
-			stringstream sstr;
-			string str;
-			SC[h].Surf->print_equation_maple(sstr, SC[h].SO->eqn);
-			Table[h * nb_cols + 20].assign(str);
-			str.assign(sstr.str());
-		}
-		{
-			string str;
-			Lint_vec_create_string_with_quotes(str, SC[h].SO->Lines, SC[h].SO->nb_lines);
-			Table[h * nb_cols + 21].assign(str);
-		}
-
-
+	if (f_v) {
+		cout << "table_of_surfaces::do_export "
+				"before create_table" << endl;
+	}
+	create_table(Table, nb_cols, verbose_level);
+	if (f_v) {
+		cout << "table_of_surfaces::do_export "
+				"after create_table" << endl;
 	}
 
-	FREE_lint(Row);
 
 	if (f_v) {
 		cout << "table_of_surfaces::do_export "
@@ -285,6 +203,82 @@ void table_of_surfaces::do_export(
 }
 
 
+void table_of_surfaces::create_table(std::string *&Table, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "table_of_surfaces::create_table" << endl;
+	}
+
+	nb_cols = 22;
+
+	Table = new string[nb_cubic_surfaces * nb_cols];
+
+	int h;
+
+	for (h = 0; h < nb_cubic_surfaces; h++) {
+
+		if (f_v) {
+			cout << "table_of_surfaces::create_table "
+					<< h << " / " << nb_cubic_surfaces << endl;
+		}
+
+		Table[h * nb_cols + 0] = std::to_string(h);
+
+
+		if (f_v) {
+			cout << "collineation stabilizer order" << endl;
+		}
+		if (SC[h].f_has_group) {
+			Table[h * nb_cols + 1] = SC[h].Sg->group_order_stringify();
+		}
+
+		if (f_v) {
+			cout << "projectivity stabilizer order" << endl;
+		}
+		if (PA->A->is_semilinear_matrix_group()) {
+
+
+			Table[h * nb_cols + 2] = SOG[h].projectivity_group_gens->group_order_stringify();
+		}
+		else {
+			Table[h * nb_cols + 2] = SC[h].Sg->group_order_stringify();
+		}
+
+		Table[h * nb_cols + 3] = std::to_string(SC[h].SO->nb_pts);
+		Table[h * nb_cols + 4] = std::to_string(SC[h].SO->nb_lines);
+		Table[h * nb_cols + 5] = std::to_string(SC[h].SO->SOP->nb_Eckardt_points);
+		Table[h * nb_cols + 6] = std::to_string(SC[h].SO->SOP->nb_Double_points);
+		Table[h * nb_cols + 7] = std::to_string(SC[h].SO->SOP->nb_Single_points);
+		Table[h * nb_cols + 8] = std::to_string(SC[h].SO->SOP->nb_pts_not_on_lines);
+		Table[h * nb_cols + 9] = std::to_string(SC[h].SO->SOP->nb_Hesse_planes);
+		Table[h * nb_cols + 10] = std::to_string(SC[h].SO->SOP->nb_axes);
+		Table[h * nb_cols + 11] = std::to_string(SOG[h].Orbits_on_Eckardt_points->nb_orbits);
+		Table[h * nb_cols + 12] = std::to_string(SOG[h].Orbits_on_Double_points->nb_orbits);
+		Table[h * nb_cols + 13] = std::to_string(SOG[h].Orbits_on_points_not_on_lines->nb_orbits);
+		Table[h * nb_cols + 14] = std::to_string(SOG[h].Orbits_on_lines->nb_orbits);
+		Table[h * nb_cols + 15] = std::to_string(SOG[h].Orbits_on_single_sixes->nb_orbits);
+		Table[h * nb_cols + 16] = std::to_string(SOG[h].Orbits_on_tritangent_planes->nb_orbits);
+		Table[h * nb_cols + 17] = std::to_string(SOG[h].Orbits_on_Hesse_planes->nb_orbits);
+		Table[h * nb_cols + 18] = std::to_string(SOG[h].Orbits_on_trihedral_pairs->nb_orbits);
+
+
+		Table[h * nb_cols + 19] = "\"" + SC[h].SO->stringify_eqn() + "\"";
+
+		Table[h * nb_cols + 20] = "\"" + SC[h].Surf->stringify_eqn_maple(SC[h].SO->eqn) + "\"";
+
+		Table[h * nb_cols + 21] = "\"" + SC[h].SO->stringify_Lines() + "\"";
+
+
+	}
+
+	if (f_v) {
+		cout << "table_of_surfaces::create_table done" << endl;
+	}
+}
+
 void table_of_surfaces::export_csv(
 		std::string *Table,
 		int nb_cols,
@@ -300,8 +294,6 @@ void table_of_surfaces::export_csv(
 
 	string fname;
 	fname = "table_of_cubic_surfaces_q" + std::to_string(PA->F->q) + "_info.csv";
-
-	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
 
 	{
 		ofstream f(fname);
@@ -327,7 +319,9 @@ void table_of_surfaces::export_csv(
 	}
 
 
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "table_of_surfaces::export_csv done" << endl;
@@ -350,8 +344,6 @@ void table_of_surfaces::export_sql(
 	string fname;
 	fname = "table_of_cubic_surfaces_q" + std::to_string(PA->F->q) + "_data.sql";
 
-
-	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
 
 	{
 		ofstream f(fname);
@@ -391,8 +383,10 @@ void table_of_surfaces::export_sql(
 	}
 
 
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "table_of_surfaces::export_sql done" << endl;

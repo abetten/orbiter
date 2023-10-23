@@ -1889,6 +1889,7 @@ public:
 	void add_single_generator(int *Elt, 
 		int group_index, int verbose_level);
 	void group_order(ring_theory::longinteger_object &go);
+	std::string group_order_stringify();
 	long int group_order_as_lint();
 	void print_group_order(std::ostream &ost);
 	void print_generators_in_source_code();
@@ -2058,8 +2059,8 @@ public:
 			int verbose_level);
 	void get_gens_data(
 			int *&data, int &sz, int verbose_level);
-	void get_gens_data_as_string_with_quotes(
-			std::string &str, int verbose_level);
+	std::string stringify_gens_data(
+			int verbose_level);
 	void export_to_orbiter_as_bsgs(
 			actions::action *A2,
 			std::string &fname, std::string &label, std::string &label_tex,
@@ -2068,6 +2069,8 @@ public:
 			std::string &prefix, int verbose_level);
 	void report_group2(
 			std::ostream &ost, int verbose_level);
+	void stringify(
+			std::string &s_tl, std::string &s_gens, std::string &s_go);
 
 
 	// strong_generators_groups.cpp

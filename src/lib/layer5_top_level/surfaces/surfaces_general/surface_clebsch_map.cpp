@@ -49,7 +49,8 @@ void surface_clebsch_map::report(std::ostream &ost, int verbose_level)
 
 }
 
-void surface_clebsch_map::init(surface_object_with_action *SOA,
+void surface_clebsch_map::init(
+		surface_object_with_group *SOA,
 		int orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

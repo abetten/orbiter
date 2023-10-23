@@ -1322,7 +1322,7 @@ void surface_polynomial_domains::assemble_tangent_quadric(
 		Int_vec_copy(Poly1->get_monomial_pointer(i), M + 1, 3);
 		M[0] = 1;
 		idx = Poly2_4->index_of_monomial(M);
-		tangent_quadric[idx] = Surf->F->mult(two, a);
+		tangent_quadric[idx] = Surf->F->add(tangent_quadric[idx], Surf->F->mult(two, a));
 	}
 
 	for (i = 0; i < Poly2->get_nb_monomials(); i++) {
@@ -1333,7 +1333,7 @@ void surface_polynomial_domains::assemble_tangent_quadric(
 		Int_vec_copy(Poly2->get_monomial_pointer(i), M + 1, 3);
 		M[0] = 0;
 		idx = Poly2_4->index_of_monomial(M);
-		tangent_quadric[idx] = a;
+		tangent_quadric[idx] = Surf->F->add(tangent_quadric[idx], a);
 	}
 
 	if (f_v) {
@@ -1391,26 +1391,19 @@ void surface_polynomial_domains::compute_gradient(
 }
 
 long int surface_polynomial_domains::compute_tangent_plane(
-		int *pt_coords, int *equation20, int verbose_level)
+		int *pt_coords,
+		int *gradient,
+		int verbose_level)
+// gradient[4 * Poly2_4->get_nb_monomials()]
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int nb_eqns = 4;
 	int i;
 	int w[4];
-	int *gradient;
 
 	if (f_v) {
 		cout << "surface_polynomial_domains::compute_tangent_plane" << endl;
-	}
-	if (f_v) {
-		cout << "surface_polynomial_domains::compute_tangent_plane "
-				"before compute_gradient" << endl;
-	}
-	compute_gradient(equation20, gradient, verbose_level - 2);
-	if (f_v) {
-		cout << "surface_polynomial_domains::compute_tangent_plane "
-				"after compute_gradient" << endl;
 	}
 
 	for (i = 0; i < nb_eqns; i++) {
@@ -1433,13 +1426,8 @@ long int surface_polynomial_domains::compute_tangent_plane(
 					"value = " << w[i] << endl;
 		}
 	}
-	for (i = 0; i < nb_eqns; i++) {
-		if (w[i]) {
-			break;
-		}
-	}
 
-	if (i == nb_eqns) {
+	if (Int_vec_is_zero(w, nb_eqns)) {
 		cout << "surface_polynomial_domains::compute_tangent_plane "
 				"the point is singular" << endl;
 		exit(1);
@@ -1450,9 +1438,78 @@ long int surface_polynomial_domains::compute_tangent_plane(
 			w /* eqn4 */,
 			0 /* verbose_level*/);
 
-	FREE_int(gradient);
-
 	return plane_rk;
+}
+
+long int surface_polynomial_domains::compute_special_bitangent(
+		geometry::projective_space *P2,
+		int *gradient,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_polynomial_domains::compute_special_bitangent" << endl;
+	}
+
+	int v[4];
+
+	v[0] = 1;
+	v[1] = 0;
+	v[2] = 0;
+	v[3] = 0;
+
+	long int plane_rk;
+	long int special_bitangent_rk;
+
+	if (f_v) {
+		cout << "surface_polynomial_domains::compute_special_bitangent "
+				"before compute_tangent_plane" << endl;
+	}
+
+	plane_rk = compute_tangent_plane(
+			v, gradient, verbose_level);
+
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_from "
+				"after compute_tangent_plane" << endl;
+	}
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_from "
+				"plane_rk = " << plane_rk << endl;
+	}
+	int Basis12[12];
+
+	Surf->unrank_plane(Basis12, plane_rk);
+	if (f_v) {
+		cout << "surface_polynomial_domains::compute_special_bitangent "
+				"Basis12=" << endl;
+		Int_matrix_print(Basis12, 3, 4);
+	}
+	int Basis6[6];
+	int j;
+
+	// we assume that the first row of Basis12 is v = (1,0,0,0)
+
+	if (Int_vec_compare(v, Basis12, 4)) {
+		cout << "surface_polynomial_domains::compute_special_bitangent "
+				"the first row of Basis12 is not 1,0,0,0" << endl;
+		exit(1);
+	}
+
+	for (j = 0; j < 2; j++) {
+		Int_vec_copy(Basis12 + (j + 1) * 4 + 1, Basis6 + j * 3, 3);
+	}
+	special_bitangent_rk =
+			P2->Subspaces->Grass_lines->rank_lint_here(
+					Basis6, 0);
+	if (f_v) {
+		cout << "surface_polynomial_domains::compute_special_bitangent "
+				"special_bitangent_rk = " << special_bitangent_rk << endl;
+	}
+	return special_bitangent_rk;
+
 }
 
 void surface_polynomial_domains::print_clebsch_P(

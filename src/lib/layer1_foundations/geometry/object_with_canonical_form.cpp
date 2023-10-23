@@ -1130,31 +1130,49 @@ void object_with_canonical_form::encode_incma(
 	}
 	if (type == t_PTS) {
 		
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_incma type == t_PTS" << endl;
+		}
 		encode_point_set(Enc, verbose_level);
 
 	}
 	else if (type == t_LNS) {
 		
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_incma type == t_LNS" << endl;
+		}
 		encode_line_set(Enc, verbose_level);
 
 	}
 	else if (type == t_PNL) {
 
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_incma type == t_PNL" << endl;
+		}
 		encode_points_and_lines(Enc, verbose_level);
 
 	}
 	else if (type == t_PAC) {
 		
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_incma type == t_PAC" << endl;
+		}
 		encode_packing(Enc, verbose_level);
 
 	}
 	else if (type == t_INC) {
 
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_incma type == t_INC" << endl;
+		}
 		encode_incidence_geometry(Enc, verbose_level);
 
 	}
 	else if (type == t_LS) {
 
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_incma type == t_LS" << endl;
+		}
 		encode_large_set(Enc, verbose_level);
 
 	}
@@ -2049,6 +2067,7 @@ void object_with_canonical_form::run_nauty(
 		int f_compute_canonical_form,
 		data_structures::bitvector *&Canonical_form,
 		l1_interfaces::nauty_output *&NO,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2060,7 +2079,6 @@ void object_with_canonical_form::run_nauty(
 	combinatorics::combinatorics_domain Combi;
 	orbiter_kernel_system::file_io Fio;
 	l1_interfaces::nauty_interface Nau;
-	combinatorics::encoded_combinatorial_object *Enc;
 
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty" << endl;
@@ -2151,12 +2169,12 @@ void object_with_canonical_form::run_nauty(
 
 	}
 
-
+#if 0
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty before FREE_OBJECT(Enc)" << endl;
 	}
 	FREE_OBJECT(Enc);
-
+#endif
 
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty done" << endl;
@@ -2275,6 +2293,8 @@ void object_with_canonical_form::run_nauty_basic(
 
 	data_structures::bitvector *Canonical_form;
 
+	combinatorics::encoded_combinatorial_object *Enc;
+
 
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty_basic "
@@ -2283,11 +2303,14 @@ void object_with_canonical_form::run_nauty_basic(
 	run_nauty(
 			false /* f_compute_canonical_form */, Canonical_form,
 			NO,
+			Enc,
 			verbose_level);
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty_basic "
 				"after OwCF->run_nauty" << endl;
 	}
+
+	FREE_OBJECT(Enc);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty_basic done" << endl;

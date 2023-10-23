@@ -606,13 +606,15 @@ ORBITER_MODULES= \
 		layer5_top_level/projective_space/canonical_form_nauty.o \
 		layer5_top_level/projective_space/canonical_form_of_variety.o \
 		layer5_top_level/projective_space/canonical_form_substructure.o \
+		layer5_top_level/projective_space/classification_of_varieties.o \
+		layer5_top_level/projective_space/input_objects_of_type_variety.o \
 		layer5_top_level/projective_space/object_in_projective_space_with_action.o \
 		layer5_top_level/projective_space/projective_space_activity_description.o \
 		layer5_top_level/projective_space/projective_space_activity.o \
 		layer5_top_level/projective_space/projective_space_global.o \
 		layer5_top_level/projective_space/projective_space_with_action_description.o \
 		layer5_top_level/projective_space/projective_space_with_action.o \
-		layer5_top_level/projective_space/quartic_curve_object.o \
+		layer5_top_level/projective_space/summary_of_properties_of_objects.o \
 		layer5_top_level/semifields/semifield_classify_description.o \
 		layer5_top_level/semifields/semifield_classify_with_substructure.o \
 		layer5_top_level/semifields/semifield_classify.o \
@@ -646,6 +648,7 @@ ORBITER_MODULES= \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_domain_with_action.o \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_from_surface.o \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_object_with_action.o \
+		layer5_top_level/surfaces/quartic_curves/quartic_curve_object_with_group.o \
 		layer5_top_level/surfaces/surfaces_and_arcs/arc_lifting.o \
 		layer5_top_level/surfaces/surfaces_and_arcs/arc_orbits_on_pairs.o \
 		layer5_top_level/surfaces/surfaces_and_arcs/arc_partition.o \
@@ -673,7 +676,7 @@ ORBITER_MODULES= \
 		layer5_top_level/surfaces/surfaces_general/surface_create_description.o \
 		layer5_top_level/surfaces/surfaces_general/surface_create.o \
 		layer5_top_level/surfaces/surfaces_general/surface_domain_high_level.o \
-		layer5_top_level/surfaces/surfaces_general/surface_object_with_action.o \
+		layer5_top_level/surfaces/surfaces_general/surface_object_with_group.o \
 		layer5_top_level/surfaces/surfaces_general/surface_study.o \
 		layer5_top_level/surfaces/surfaces_general/surface_with_action.o \
 		layer5_top_level/surfaces/surfaces_general/table_of_surfaces.o

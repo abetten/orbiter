@@ -41,6 +41,10 @@ public:
 	int f_output_fname;
 	std::string fname_base_out;
 
+	int f_label_po_go;
+	std::string column_label_po_go;
+	int f_label_po_index;
+	std::string column_label_po_index;
 	int f_label_po;
 	std::string column_label_po;
 	int f_label_so;
@@ -51,6 +55,8 @@ public:
 	std::string column_label_pts;
 	int f_label_lines;
 	std::string column_label_bitangents;
+
+	std::vector<std::string> carry_through;
 
 	int f_degree;
 	int degree;
@@ -94,53 +100,16 @@ public:
 
 	canonical_form_classifier_description *Descr;
 
-	int *skip_vector;
-	int skip_sz;
 
 	ring_theory::homogeneous_polynomial_domain *Poly_ring;
 
 	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 
-	int nb_objects_to_test;
 
-	int idx_po, idx_so, idx_eqn, idx_pts, idx_bitangents;
+	input_objects_of_type_variety *Input;
 
-	// nauty stuff:
+	classification_of_varieties *Output;
 
-	data_structures::classify_bitvectors *CB;
-	int canonical_labeling_len;
-
-	// substructure stuff:
-
-
-	// needed once for the whole classification process:
-	set_stabilizer::substructure_classifier *SubC;
-
-
-	// needed once for each object:
-	canonical_form_substructure **CFS_table;
-		// [nb_objects_to_test]
-
-	canonical_form_of_variety **Variety_table;
-
-
-	int *Elt;
-	int *eqn2;
-
-
-	int counter;
-	int *Canonical_forms;
-		// [nb_objects_to_test * Poly_ring->get_nb_monomials()]
-	long int *Goi; // [nb_objects_to_test]
-
-	data_structures::tally_vector_data
-		*Classification_of_quartic_curves;
-		// based on Canonical_forms, nb_objects_to_test
-
-	// transversal of the isomorphism types:
-	int *transversal;
-	int *frequency;
-	int nb_types; // number of isomorphism types
 
 
 	canonical_form_classifier();
@@ -148,28 +117,8 @@ public:
 	void init(
 			canonical_form_classifier_description *Descr,
 			int verbose_level);
-	int skip_this_one(int counter);
-	void count_nb_objects_to_test(int verbose_level);
 	void classify(
 			int verbose_level);
-	void classify_nauty(int verbose_level);
-	void classify_with_substructure(int verbose_level);
-	void main_loop(int verbose_level);
-	void prepare_input(int row,
-			data_structures::spreadsheet *S,
-			quartic_curve_object *&Qco, int verbose_level);
-	void write_canonical_forms_csv(
-			std::string &fname_base,
-			int verbose_level);
-	void generate_source_code(
-			std::string &fname_base,
-			int verbose_level);
-	void report(
-			poset_classification::poset_classification_report_options *Opt,
-			int verbose_level);
-	void report2(std::ostream &ost, int verbose_level);
-	void export_canonical_form_data(
-			std::string &fname, int verbose_level);
 
 };
 
@@ -190,7 +139,6 @@ public:
 	canonical_form_classifier *Classifier;
 
 	canonical_form_of_variety *Variety;
-	//quartic_curve_object *Qco;
 
 	int nb_rows, nb_cols;
 	data_structures::bitvector *Canonical_form;
@@ -243,7 +191,7 @@ public:
 	std::string fname_case_out;
 
 	// input:
-	quartic_curve_object *Qco;
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco;
 
 
 	// output:
@@ -254,13 +202,15 @@ public:
 
 	ring_theory::longinteger_object *go_eqn;
 
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Canonical_object;
+
 
 	canonical_form_of_variety();
 	~canonical_form_of_variety();
 	void init(
 			canonical_form_classifier *Canonical_form_classifier,
 			std::string &fname_case_out,
-			quartic_curve_object *Qco,
+			applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco,
 			int verbose_level);
 	void classify_curve_nauty(
 			int verbose_level);
@@ -280,6 +230,9 @@ public:
 	void compute_canonical_form(
 			int counter,
 			int verbose_level);
+	void compute_canonical_object(int verbose_level);
+	void prepare_csv_entry_one_line(
+			std::vector<std::string> &v, int i, int verbose_level);
 
 };
 
@@ -330,6 +283,129 @@ public:
 			int *transporter_to_canonical_form,
 			groups::strong_generators *&Gens_stabilizer_original_set,
 			groups::strong_generators *&Gens_stabilizer_canonical_form,
+			int verbose_level);
+
+
+};
+
+// #############################################################################
+// classification_of_varieties.cpp
+// #############################################################################
+
+
+
+//! classification of varieties
+
+
+class classification_of_varieties {
+
+public:
+
+	canonical_form_classifier *Classifier;
+
+	// nauty stuff:
+
+	data_structures::classify_bitvectors *CB;
+	int canonical_labeling_len;
+
+	// substructure stuff:
+
+
+	// needed once for the whole classification process:
+	set_stabilizer::substructure_classifier *SubC;
+
+
+	// needed once for each object:
+	canonical_form_substructure **CFS_table;
+		// [Input->nb_objects_to_test]
+
+	canonical_form_of_variety **Variety_table; // [Input->nb_objects_to_test]
+
+
+	int *Elt;
+	int *eqn2;
+
+
+	int *Canonical_equation;
+		// [Input->nb_objects_to_test * Poly_ring->get_nb_monomials()]
+	long int *Goi; // [Input->nb_objects_to_test]
+
+	data_structures::tally_vector_data
+		*Tally;
+		// based on Canonical_forms, nb_objects_to_test
+
+	// transversal of the isomorphism types:
+	int *transversal;
+	int *frequency;
+	int nb_types; // number of isomorphism types
+
+
+	classification_of_varieties();
+	~classification_of_varieties();
+	void init(
+			canonical_form_classifier *Classifier, int verbose_level);
+	void classify_nauty(int verbose_level);
+	void classify_with_substructure(int verbose_level);
+	void main_loop(int verbose_level);
+	void write_canonical_forms_csv(
+			std::string &fname_base,
+			int verbose_level);
+	void generate_source_code(
+			std::string &fname_base,
+			int verbose_level);
+	void report(
+			poset_classification::poset_classification_report_options *Opt,
+			int verbose_level);
+	void report2(std::ostream &ost, int verbose_level);
+	void export_canonical_form_data(
+			std::string &fname, int verbose_level);
+
+};
+
+
+// #############################################################################
+// input_objects_of_type_variety.cpp
+// #############################################################################
+
+
+
+//! input objects for classification of varieties
+
+
+class input_objects_of_type_variety {
+
+public:
+
+	canonical_form_classifier *Classifier;
+
+
+	int *skip_vector;
+	int skip_sz;
+
+	int nb_objects_to_test;
+
+
+	int idx_po_go, idx_po_index;
+	int idx_po, idx_so, idx_eqn, idx_pts, idx_bitangents;
+
+	applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action **Qco;
+		// [nb_objects_to_test]
+
+
+	input_objects_of_type_variety();
+	~input_objects_of_type_variety();
+	void init(
+			canonical_form_classifier *Classifier,
+			int verbose_level);
+	int skip_this_one(int counter);
+	void count_nb_objects_to_test(int verbose_level);
+	void read_input_objects(
+			int verbose_level);
+	void prepare_input(
+			int row, int counter,
+			int *Carry_through,
+			data_structures::spreadsheet *S,
+			applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *&Qco,
 			int verbose_level);
 
 
@@ -426,6 +502,11 @@ public:
 	std::string affine_map_ring_label;
 	std::string affine_map_formula_label;
 	std::string affine_map_parameters;
+
+	int f_projective_variety;
+	std::string projective_variety_ring_label;
+	std::string projective_variety_formula_label;
+	std::string projective_variety_parameters;
 
 	int f_analyze_del_Pezzo_surface;
 	std::string analyze_del_Pezzo_surface_label;
@@ -847,8 +928,6 @@ public:
 			combinatorics::classification_of_objects_description
 				*Canonical_form_codes_Descr,
 			int verbose_level);
-	void table_of_quartic_curves(int verbose_level);
-	void table_of_cubic_surfaces(int verbose_level);
 	void cheat_sheet(
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
@@ -867,49 +946,50 @@ public:
 
 };
 
+
 // #############################################################################
-// quartic_curve_object.cpp
+// summary_of_properties_of_objects.cpp
 // #############################################################################
 
 
 
 
-//! a quartic curve with bitangents and equation. There is another class of the same name in layer1_foundations::algebraic_geometry
+//! collects properties of a class of combinatorial objects
 
 
 
-class quartic_curve_object {
+class summary_of_properties_of_objects {
 
 public:
 
-	int cnt;
-	int po;
-	int so;
+	int *field_orders;
+	int nb_fields;
 
-	int *eqn;
-	int sz;
-
-	long int *pts;
-	int nb_pts;
-
-	long int *bitangents;
-	int nb_bitangents;
+	int *Nb_objects; // [nb_fields]
+	int **nb_E; // [nb_fields][Nb_objects[i]]
+	long int **Ago; // [nb_fields][Nb_objects[i]]
 
 
-	quartic_curve_object();
-	~quartic_curve_object();
-	void init(
-			int cnt, int po, int so,
-			std::string &eqn_txt,
-			std::string &pts_txt, std::string &bitangents_txt,
+	long int *Table;
+		// Table[nb_fields * nb_E_types]
+	int *E_freq_total;
+		// [nb_E_max + 1]
+	int *E_type_idx;
+		// E_type_idx[nb_E_max + 1]
+	int nb_E_max;
+	int *E;
+	int nb_E_types;
+
+
+	summary_of_properties_of_objects();
+	~summary_of_properties_of_objects();
+	void init_surfaces(
+			int *field_orders, int nb_fields,
 			int verbose_level);
-	void init_image_of(quartic_curve_object *old_one,
-			int *Elt,
-			actions::action *A,
-			actions::action *A_on_lines,
-			int *eqn2,
+	void init_quartic_curves(
+			int *field_orders, int nb_fields,
 			int verbose_level);
-	void print(std::ostream &ost);
+
 
 };
 

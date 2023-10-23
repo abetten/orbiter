@@ -1483,7 +1483,7 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 
 	groups::strong_generators *SG;
 	l1_interfaces::nauty_output *NO;
-
+	combinatorics::encoded_combinatorial_object *Enc;
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 	if (f_v) {
@@ -1509,6 +1509,7 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 		A_linear,
 		false /* f_compute_canonical_form */, Canonical_form,
 		NO,
+		Enc,
 		verbose_level - 2);
 
 	if (f_v) {
@@ -1523,6 +1524,7 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 	}
 
 	FREE_OBJECT(NO);
+	FREE_OBJECT(Enc);
 
 	FREE_OBJECT(OwCF);
 

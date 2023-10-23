@@ -117,7 +117,7 @@ void classify_double_sixes::test_orbits(int verbose_level)
 			cout << endl;
 		}
 
-		orbiter_kernel_system::Orbiter->Lint_vec->apply(
+		Lint_vec_apply(
 				S,
 				Five_p1->Linear_complex->Neighbor_to_line,
 				S2, 5);
@@ -297,7 +297,7 @@ void classify_double_sixes::downstep(int verbose_level)
 
 		Lint_vec_copy(R->data, dataset, 5);
 
-		orbiter_kernel_system::Orbiter->Lint_vec->apply(
+		Lint_vec_apply(
 				dataset,
 				Five_p1->Linear_complex->Neighbor_to_line,
 				dataset + 5,
@@ -919,7 +919,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 
 		Five_p1->Five_plus_one->get_set_by_level(k, Idx[i], rep);
 
-		orbiter_kernel_system::Orbiter->Lint_vec->apply(
+		Lint_vec_apply(
 				rep, Five_p1->Linear_complex->Neighbor_to_line, lines, k);
 
 		Five_p1->Five_plus_one->get_stabilizer_order(k, Idx[i], go);
@@ -934,7 +934,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 
 		Five_p1->Five_plus_one->get_set_by_level(k, Idx[i], rep);
 
-		orbiter_kernel_system::Orbiter->Lint_vec->apply(
+		Lint_vec_apply(
 				rep,
 				Five_p1->Linear_complex->Neighbor_to_line,
 				lines, k);

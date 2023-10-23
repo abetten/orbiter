@@ -129,8 +129,6 @@ surface_classify_wedge::~surface_classify_wedge()
 
 void surface_classify_wedge::init(
 		projective_geometry::projective_space_with_action *PA,
-		//cubic_surfaces_in_general::surface_with_action
-		//	*Surf_A,
 	poset_classification::poset_classification_control
 		*Control,
 	int verbose_level)
@@ -388,77 +386,6 @@ void surface_classify_wedge::post_process(int verbose_level)
 				"after Surface_repository->init" << endl;
 	}
 
-#if 0
-
-	int orbit_index;
-
-	nb_surfaces = Surfaces->nb_orbits;
-
-	SaS = NEW_OBJECTS(data_structures_groups::set_and_stabilizer, nb_surfaces);
-
-	Lines = NEW_lint(nb_surfaces * 27);
-	Eqn = NEW_int(nb_surfaces * 20);
-
-	if (f_v) {
-		cout << "surface_classify_wedge::post_process processing "
-				<< Surfaces->nb_orbits << " surfaces" << endl;
-	}
-	for (orbit_index = 0;
-			orbit_index < Surfaces->nb_orbits;
-			orbit_index++) {
-
-
-		//long int Lines[27];
-		int equation[20];
-
-		if (f_v) {
-			cout << "surface_classify_wedge::post_process "
-					"orbit_index = " << orbit_index
-					<< " / " << Surfaces->nb_orbits << endl;
-		}
-
-		SaS = Surfaces->get_set_and_stabilizer(
-				orbit_index, 0 /* verbose_level */);
-
-		Lint_vec_copy(SaS->data, Lines + orbit_index * 27, 27);
-
-		if (f_v) {
-			cout << "surface_classify_wedge::post_process "
-					"orbit_index = " << orbit_index
-					<< " / " << Surfaces->nb_orbits
-					<< " before Surf->build_cubic_surface_from_lines" << endl;
-		}
-		Surf->build_cubic_surface_from_lines(
-				27,
-				Lines + orbit_index * 27,
-				equation, verbose_level - 2);
-		if (f_v) {
-			cout << "surface_classify_wedge::post_process "
-					"orbit_index = " << orbit_index
-					<< " / " << Surfaces->nb_orbits
-					<< " after Surf->build_cubic_surface_from_lines" << endl;
-		}
-
-		F->Projective_space_basic->PG_element_normalize_from_front(
-				equation, 1, 20);
-
-		if (f_v) {
-			cout << "surface_classify_wedge::post_process "
-					"orbit_index = " << orbit_index
-					<< " / " << Surfaces->nb_orbits
-					<< " equation: " << endl;
-			Int_vec_print(cout, equation, 20);
-		}
-		Int_vec_copy(equation, Eqn + orbit_index * 20, 20);
-
-		//FREE_OBJECT(SaS);
-
-	}
-	if (f_v) {
-		cout << "surface_classify_wedge::post_process processing "
-				<< Surfaces->nb_orbits << " surfaces done" << endl;
-	}
-#endif
 
 	if (f_v) {
 		cout << "surface_classify_wedge::post_process done" << endl;
@@ -894,19 +821,21 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 				cout << endl;
 			}
 
-
-			orbiter_kernel_system::Orbiter->Lint_vec->apply(
+			Lint_vec_apply(
 					S,
 					Five_p1->Linear_complex->Neighbor_to_line,
 					S2, 5);
+
 			S2[5] = Five_p1->Linear_complex->pt0_line;
 
 			four_lines[0] = S2[0];
 			four_lines[1] = S2[1];
 			four_lines[2] = S2[2];
 			four_lines[3] = S2[3];
-			Surf->perp_of_four_lines(four_lines,
-					trans12, perp_sz, 0 /* verbose_level */);
+			Surf->perp_of_four_lines(
+					four_lines,
+					trans12, perp_sz,
+					0 /* verbose_level */);
 
 			if (trans12[0] == Five_p1->Linear_complex->pt0_line) {
 				b5 = trans12[1];
@@ -1037,7 +966,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 		}
 
 		FREE_int(Starter_configuration_idx);
-		}
+	}
 
 	if (f_v) {
 		cout << "surface_classify_wedge::derived_arcs done" << endl;

@@ -12,7 +12,8 @@ MODULES = \
 	quartic_curve_create.o \
 	quartic_curve_domain_with_action.o \
 	quartic_curve_from_surface.o \
-	quartic_curve_object_with_action.o
+	quartic_curve_object_with_action.o \
+	quartic_curve_object_with_group.o
 
 
 all : $(MODULES)

@@ -129,7 +129,7 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 
 	if (f_v) {
 		cout << "surface_domain::make_spreadsheet_of_lines_in_three_kinds" << endl;
-		}
+	}
 
 	Text_wedge = new string[nb_lines];
 	Text_line = new string[nb_lines];
@@ -140,19 +140,19 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 		F->Projective_space_basic->PG_element_unrank_modified_lint(
 				w, 1, 6 /*wedge_dimension*/, a);
 		Int_vec_print_to_str(Text_wedge[i], w, 6);
-		}
+	}
 	for (i = 0; i < nb_lines; i++) {
 		a = Line_rk[i];
 		Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
 		Int_vec_print_to_str(Text_line[i], Basis, 8);
-		}
+	}
 	for (i = 0; i < nb_lines; i++) {
 		a = Klein_rk[i];
 		O->Hyperbolic_pair->unrank_point(w, 1, a, 0 /* verbose_level*/);
 			// error corrected: w was v which was v[4], so too short.
 			// Aug 25, 2018
 		Int_vec_print_to_str(Text_klein[i], w, 6);
-		}
+	}
 
 	Sp = NEW_OBJECT(data_structures::spreadsheet);
 	Sp->init_empty_table(nb_lines + 1, 7);
@@ -173,9 +173,8 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 
 
 	if (f_v) {
-		cout << "surface_domain::make_spreadsheet_of_lines_"
-				"in_three_kinds done" << endl;
-		}
+		cout << "surface_domain::make_spreadsheet_of_lines_in_three_kinds done" << endl;
+	}
 }
 
 
@@ -384,21 +383,21 @@ void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
 
 	for (i = 0; i < 3; i++) {
 		P->unrank_point(F_planes + i * 4, F_planes_rank[i]);
-		}
+	}
 	for (i = 0; i < 3; i++) {
 		P->unrank_point(G_planes + i * 4, G_planes_rank[i]);
-		}
+	}
 	cout << "[";
 	for (i = 0; i < 3; i++) {
 		Int_vec_print_GAP(cout, F_planes + i * 4, 4);
 		cout << ", ";
-		}
+	}
 	for (i = 0; i < 3; i++) {
 		Int_vec_print_GAP(cout, G_planes + i * 4, 4);
 		if (i < 3 - 1) {
 			cout << ", ";
-			}
 		}
+	}
 	cout << "];";
 }
 
@@ -441,7 +440,7 @@ void surface_domain::sstr_line_label(
 	sstr << Schlaefli->Labels->Line_label_tex[pt];
 }
 
-
+#if 0
 void surface_domain::make_table_of_surfaces(int verbose_level)
 {
 
@@ -705,7 +704,8 @@ void surface_domain::make_table_of_surfaces2(
 #endif
 
 	long int *Table;
-	int *Table_idx;
+	int *E_type_idx;
+	int nb_E_max;
 	long int *Table2;
 	int *Q;
 	int nb_Q;
@@ -717,11 +717,16 @@ void surface_domain::make_table_of_surfaces2(
 				"before compute_table_E" << endl;
 	}
 	compute_table_E(Q_table, Q_table_len,
-			Table, Table_idx, Q, nb_Q, E, nb_E_types, verbose_level);
+			Table,
+			E_type_idx, nb_E_max,
+			E, nb_E_types, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::make_table_of_surfaces2 "
 				"after compute_table_E" << endl;
 	}
+
+	Q = Q_table;
+	nb_Q = Q_table_len;
 
 	int nb_cols;
 	int k;
@@ -937,7 +942,8 @@ void surface_domain::make_table_of_surfaces2(
 #endif
 
 	FREE_lint(Table);
-	FREE_int(Q);
+	FREE_int(E_type_idx);
+	//FREE_int(Q);
 	FREE_int(E);
 
 
@@ -981,25 +987,23 @@ void surface_domain::table_bottom(
 void surface_domain::compute_table_E(
 		int *field_orders, int nb_fields,
 		long int *&Table,
-		int *&Table_idx,
-		int *&Q, int &nb_Q,
-		int *&E, int &nb_E_types, int verbose_level)
+		int *&E_type_idx, int &nb_E_max,
+		int *&E, int &nb_E_types,
+		int verbose_level)
+// Table[nb_fields * nb_E_types]
+// E_type_idx[nb_E_max + 1]
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "surface_domain::compute_table_E" << endl;
 	}
-	//int Q_table[] = {4,7,8,9,11,13,16,17,19,23,25,27,29,
-	//		31,32,37,41,43,47,49,53,59,61,64,67,71,73,79,81,83,89, 97};
-	//int Q_table_len = sizeof(Q_table) / sizeof(int);
-	int i, j, q, nb_reps, nb_E, nb_E_max, idx;
-	//int *Table_idx;
+	int i, j, q, nb_reps, nb_E, idx;
 	knowledge_base::knowledge_base K;
 
-	nb_Q = nb_fields;
-	Q = NEW_int(nb_Q);
-	Int_vec_copy(field_orders, Q, nb_Q);
+	//nb_Q = nb_fields;
+	//Q = NEW_int(nb_Q);
+	//Int_vec_copy(field_orders, Q, nb_Q);
 
 	nb_E_max = 0;
 	for (i = 0; i < nb_fields; i++) {
@@ -1010,7 +1014,11 @@ void surface_domain::compute_table_E(
 			nb_E_max = MAXIMUM(nb_E_max, nb_E);
 		}
 	}
-	cout << "nb_E_max=" << nb_E_max << endl;
+
+	if (f_v) {
+		cout << "nb_E_max=" << nb_E_max << endl;
+	}
+
 	int *E_freq;
 	E_freq = NEW_int(nb_E_max + 1);
 	Int_vec_zero(E_freq, nb_E_max + 1);
@@ -1025,47 +1033,55 @@ void surface_domain::compute_table_E(
 
 
 
-	cout << "E_freq=";
-	Int_vec_print(cout, E_freq, nb_E_max + 1);
-	cout << endl;
-
+	if (f_v) {
+		cout << "E_freq=";
+		Int_vec_print(cout, E_freq, nb_E_max + 1);
+		cout << endl;
+	}
 
 	E = NEW_int(nb_E_max + 1);
 	nb_E_types = 0;
 
-	Table_idx = NEW_int(nb_E_max + 1);
+	E_type_idx = NEW_int(nb_E_max + 1);
 	for (j = 0; j <= nb_E_max; j++) {
 		if (E_freq[j]) {
 			E[nb_E_types] = j;
-			Table_idx[j] = nb_E_types;
+			E_type_idx[j] = nb_E_types;
 			nb_E_types++;
 		}
 		else {
-			Table_idx[j] = -1;
+			E_type_idx[j] = -1;
 		}
 	}
 
 
-	Table = NEW_lint(nb_Q * nb_E_types);
-	Lint_vec_zero(Table, nb_Q * nb_E_types);
+	Table = NEW_lint(nb_fields * nb_E_types);
+	Lint_vec_zero(Table, nb_fields * nb_E_types);
 	for (i = 0; i < nb_fields; i++) {
-		q = Q[i];
+		q = field_orders[i];
 		nb_reps = K.cubic_surface_nb_reps(q);
 		for (j = 0; j < nb_reps; j++) {
 			nb_E = K.cubic_surface_nb_Eckardt_points(q, j);
-			idx = Table_idx[nb_E];
+			idx = E_type_idx[nb_E];
 			Table[i * nb_E_types + idx]++;
 		}
 	}
-	cout << "Table:" << endl;
-	Lint_matrix_print(Table, nb_Q, nb_E_types);
+	if (f_v) {
+		cout << "Table:" << endl;
+		Lint_matrix_print(Table, nb_fields, nb_E_types);
+	}
 
-	FREE_int(Table_idx);
+	FREE_int(E_freq);
+	//FREE_int(Table_idx);
 	if (f_v) {
 		cout << "surface_domain::compute_table_E done" << endl;
 	}
 }
+#endif
 
+// #############################################################################
+// globals:
+// #############################################################################
 
 
 void callback_surface_domain_sstr_line_label(

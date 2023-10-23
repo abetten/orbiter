@@ -171,7 +171,12 @@ void latex_interface::head(
 	ost << "%\\usepackage{times}" << endl;
 	ost << "%\\usepackage{pifont}" << endl;
 	if (f_enlarged_page) {
-		ost << "\\usepackage[a0paper]{geometry}" << endl;
+		//ost << "\\usepackage[a4paper]{geometry}" << endl;
+		//ost << "\\usepackage[a3paper]{geometry}" << endl;
+		//ost << "\\usepackage[a2paper]{geometry}" << endl;
+		ost << "\\usepackage[a1paper]{geometry}" << endl;
+		//ost << "\\usepackage[a0paper]{geometry}" << endl;
+
 		//ost << "\\usepackage{fullpage}" << endl;
 		//ost << "\\usepackage[top=1in,bottom=0.2in,right=1in,left=1in]{geometry}" << endl; // A Betten 2/7/2021
 #if 0

@@ -29,9 +29,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	//std::string extract_subset_set;
 	//std::string extract_subset_fname;
 
+	f_line_type_old = false;
+
 	f_line_type = false;
-	//std::string line_type_projective_space_label;
-	//std::string line_type_prefix;
 
 	f_conic_type = false;
 	conic_type_threshold = 0;
@@ -116,12 +116,16 @@ int combinatorial_object_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-line_type_old") == 0) {
+			f_line_type_old = true;
+			if (f_v) {
+				cout << "-line_type_old " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-line_type") == 0) {
 			f_line_type = true;
-			line_type_projective_space_label.assign(argv[++i]);
-			line_type_prefix.assign(argv[++i]);
 			if (f_v) {
-				cout << "-line_type " << line_type_projective_space_label << " " << line_type_prefix << endl;
+				cout << "-line_type " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-conic_type") == 0) {
@@ -251,8 +255,11 @@ void combinatorial_object_activity_description::print()
 	if (f_extract_subset) {
 		cout << "-extract_subset " << extract_subset_set << " " << extract_subset_fname << endl;
 	}
+	if (f_line_type_old) {
+		cout << "-line_type_old " << endl;
+	}
 	if (f_line_type) {
-		cout << "-line_type " << line_type_projective_space_label << " " << line_type_prefix << endl;
+		cout << "-line_type " << endl;
 	}
 	if (f_conic_type) {
 		cout << "-conic_type " << conic_type_threshold << endl;

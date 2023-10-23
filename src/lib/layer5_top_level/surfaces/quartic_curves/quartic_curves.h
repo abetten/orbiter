@@ -81,9 +81,6 @@ public:
 			quartic_curve_create *QC, int verbose_level);
 	void perform_activity(
 			int verbose_level);
-	void do_report(
-			quartic_curve_create *QC,
-			int verbose_level);
 
 };
 
@@ -190,7 +187,7 @@ public:
 
 	algebraic_geometry::quartic_curve_object *QO;
 
-	quartic_curve_object_with_action *QOA;
+	quartic_curve_object_with_group *QOG;
 
 	int f_has_group;
 	groups::strong_generators *Sg;
@@ -261,13 +258,14 @@ public:
 	void compute_group(
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
-	// ToDo
+	void export_something(
+			std::string &what, int verbose_level);
+	void do_report(
+			int verbose_level);
 	void report(
 			std::ostream &ost, int verbose_level);
 	void print_general(
 			std::ostream &ost, int verbose_level);
-	void export_something(
-			std::string &what, int verbose_level);
 
 };
 
@@ -307,6 +305,17 @@ public:
 			algebraic_geometry::quartic_curve_domain *Dom,
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
+	void table_of_quartic_curves(
+			int verbose_level);
+	void create_all_quartic_curves_over_a_given_field(
+			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create **&QC,
+			int &nb_quartic_curves,
+			int verbose_level);
+	void create_table_of_strings(
+			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create **QC,
+			int nb_quartic_curves,
+			std::string *&Table, int &nb_cols,
+			int verbose_level);
 
 };
 
@@ -330,10 +339,10 @@ public:
 	int f_has_SC;
 	cubic_surfaces_in_general::surface_create *SC;
 
-	cubic_surfaces_in_general::surface_object_with_action *SOA;
+	cubic_surfaces_in_general::surface_object_with_group *SOA;
 
 	int pt_orbit;
-	int equation_nice[20]; // equation after transformation
+
 	int *transporter;
 		// the transformation that maps
 		// the point off the lines to (1,0,0,0)
@@ -341,6 +350,10 @@ public:
 	int v[4]; // = (1,0,0,0)
 	int pt_A; // = SOA->SO->SOP->Pts_not_on_lines[i];
 	int pt_B; // = SOA->Surf->rank_point(v);
+	int po_index; // orbit length of pt_A
+
+	int equation_nice[20]; // equation after transformation
+	int *gradient; // [4 * Poly2_4->get_nb_monomials()]
 
 	long int *Lines_nice; // surface lines after transformation
 	int nb_lines;
@@ -377,7 +390,7 @@ public:
 	//long int *Pts_intersection;
 	//int nb_pts_intersection;
 
-	long int *Pts_on_curve;
+	long int *Pts_on_curve; // [sz_curve]
 		// = SOA->Surf->Poly4_x123->enumerate_points(curve)
 	int sz_curve;
 
@@ -395,7 +408,7 @@ public:
 	quartic_curve_from_surface();
 	~quartic_curve_from_surface();
 	void init(
-			cubic_surfaces_in_general::surface_object_with_action *SOA,
+			cubic_surfaces_in_general::surface_object_with_group *SOA,
 			int verbose_level);
 	void init_surface_create(
 			cubic_surfaces_in_general::surface_create *SC,
@@ -405,19 +418,21 @@ public:
 			int verbose_level);
 	void quartic(
 			int pt_orbit, int verbose_level);
-	void compute_quartic(
+	void map_surface_to_special_form(
 			int pt_orbit,
-		int *equation, long int *Lines, int nb_lines,
+		int *old_equation, long int *old_Lines, int nb_lines,
 		int verbose_level);
-	void compute_stabilizer(
+	void compute_stabilizer_with_nauty(
 			int verbose_level);
 	void cheat_sheet_quartic_curve(
 			std::ostream &ost,
 			int f_TDO,
 			int verbose_level);
+	void TDO_decomposition(
+			std::ostream &ost,
+			int verbose_level);
 
 };
-
 
 
 
@@ -426,18 +441,70 @@ public:
 // #############################################################################
 
 
-//! an instance of a quartic curve together with its stabilizer
+
+
+//! a quartic curve with bitangents and equation. There is another class of the same name in layer1_foundations::algebraic_geometry
+
 
 
 class quartic_curve_object_with_action {
 
 public:
 
-	field_theory::finite_field *F; // do not free
+	int cnt;
+	int po_go;
+	int po_index;
+	int po;
+	int so;
+
+	std::vector<std::string> Carrying_through;
+
+	algebraic_geometry::quartic_curve_object *Quartic_curve_object;
+
+
+	quartic_curve_object_with_action();
+	~quartic_curve_object_with_action();
+	void init(
+			int cnt, int po_go, int po_index, int po, int so,
+			std::string &eqn_txt,
+			std::string &pts_txt, std::string &bitangents_txt,
+			int verbose_level);
+	void init_image_of(
+			quartic_curve_object_with_action *old_one,
+			int *Elt,
+			actions::action *A,
+			actions::action *A_on_lines,
+			int *eqn2,
+			int verbose_level);
+	void print(std::ostream &ost);
+	std::string stringify_Pts();
+	std::string stringify_bitangents();
+
+};
+
+
+
+
+
+// #############################################################################
+// quartic_curve_object_with_group.cpp
+// #############################################################################
+
+
+//! an instance of a quartic curve together with its stabilizer
+
+
+class quartic_curve_object_with_group {
+
+public:
+
+	//field_theory::finite_field *F; // do not free
+	// DomA->Dom->F
 
 	quartic_curve_domain_with_action *DomA;
 
 	algebraic_geometry::quartic_curve_object *QO; // do not free
+
 	groups::strong_generators *Aut_gens;
 		// generators for the automorphism group
 
@@ -451,8 +518,8 @@ public:
 
 	groups::schreier *Orbits_on_points;
 
-	quartic_curve_object_with_action();
-	~quartic_curve_object_with_action();
+	quartic_curve_object_with_group();
+	~quartic_curve_object_with_group();
 	void init(
 			quartic_curve_domain_with_action *DomA,
 			algebraic_geometry::quartic_curve_object *QO,

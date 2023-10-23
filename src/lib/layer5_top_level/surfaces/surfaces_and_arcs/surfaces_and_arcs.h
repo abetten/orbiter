@@ -343,7 +343,7 @@ public:
 
 	arc_lifting *AL;
 
-	cubic_surfaces_in_general::surface_object_with_action *SOA;
+	cubic_surfaces_in_general::surface_object_with_group *SOA;
 
 
 	int nine_lines_idx[9];
@@ -386,7 +386,7 @@ public:
 	int orbit_idx;
 
 	algebraic_geometry::surface_object *SO;
-	cubic_surfaces_in_general::surface_object_with_action *SOA;
+	cubic_surfaces_in_general::surface_object_with_group *SOA;
 
 
 

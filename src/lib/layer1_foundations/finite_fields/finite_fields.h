@@ -457,6 +457,9 @@ public:
 	int f_symbol;
 	std::string symbol_label;
 
+	int f_print_as_exponentials;
+	int f_print_numerically;
+
 	finite_field_description();
 	~finite_field_description();
 	int read_arguments(
@@ -646,7 +649,7 @@ public:
 
 	int alpha; // primitive element
 	int log10_of_q; // needed for printing purposes
-	int f_print_as_exponentials;
+	//int f_print_as_exponentials;
 
 	finite_field_io *Io;
 

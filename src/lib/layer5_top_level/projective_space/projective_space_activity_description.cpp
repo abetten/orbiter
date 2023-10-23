@@ -60,6 +60,12 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string affine_map_parameters;
 
 
+	f_projective_variety = false;
+	//std::string projective_variety_ring_label;
+	//std::string projective_variety_formula_label;
+	//std::string projective_variety_parameters;
+
+
 	f_analyze_del_Pezzo_surface = false;
 	//analyze_del_Pezzo_surface_label;
 	//analyze_del_Pezzo_surface_parameters;
@@ -391,6 +397,20 @@ int projective_space_activity_description::read_arguments(
 						<< affine_map_ring_label << " "
 						<< affine_map_formula_label << " "
 						<< affine_map_parameters << " "
+						<< endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-projective_variety") == 0) {
+			f_projective_variety = true;
+			projective_variety_ring_label.assign(argv[++i]);
+			projective_variety_formula_label.assign(argv[++i]);
+			projective_variety_parameters.assign(argv[++i]);
+			if (f_v) {
+				cout << "-projective_variety "
+						<< projective_variety_ring_label << " "
+						<< projective_variety_formula_label << " "
+						<< projective_variety_parameters << " "
 						<< endl;
 			}
 		}
@@ -1102,6 +1122,13 @@ void projective_space_activity_description::print()
 				<< affine_map_ring_label << " "
 				<< affine_map_formula_label << " "
 				<< affine_map_parameters << " "
+				<< endl;
+	}
+	if (f_projective_variety) {
+		cout << "-projective_variety "
+				<< projective_variety_ring_label << " "
+				<< projective_variety_formula_label << " "
+				<< projective_variety_parameters << " "
 				<< endl;
 	}
 	if (f_analyze_del_Pezzo_surface) {

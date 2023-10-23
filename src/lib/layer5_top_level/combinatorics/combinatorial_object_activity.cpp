@@ -105,6 +105,45 @@ void combinatorial_object_activity::perform_activity_geometric_object(int verbos
 		cout << "combinatorial_object_activity::perform_activity_geometric_object" << endl;
 	}
 
+	if (Descr->f_line_type_old) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_geometric_object f_line_type_old" << endl;
+		}
+
+		geometry::projective_space *P;
+
+		P = GOC->Descr->P;
+
+
+		int *type;
+
+		type = NEW_int(P->Subspaces->N_lines);
+
+
+		P->Subspaces->line_intersection_type(
+				GOC->Pts, GOC->nb_pts, type, verbose_level - 1);
+			// type[N_lines]
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_geometric_object type:" << endl;
+			Int_vec_print_fully(cout, type, P->Subspaces->N_lines);
+			cout << endl;
+		}
+
+		data_structures::tally T;
+
+		T.init(type, P->Subspaces->N_lines, false, 0);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_geometric_object line type:" << endl;
+			T.print(true /* f_backwards*/);
+			cout << endl;
+			T.print_array_tex(cout, false /* f_backwards*/);
+		}
+
+	}
+
 	if (Descr->f_line_type) {
 
 		if (f_v) {
@@ -115,28 +154,44 @@ void combinatorial_object_activity::perform_activity_geometric_object(int verbos
 
 		P = GOC->Descr->P;
 
-		int *type;
-
-		type = NEW_int(P->Subspaces->N_lines);
+		int threshold = 3;
 
 
-		P->Subspaces->line_intersection_type(
-				GOC->Pts, GOC->nb_pts, type, 0 /* verbose_level */);
-			// type[N_lines]
-
-
-		data_structures::tally T;
-
-		T.init(type, P->Subspaces->N_lines, false, 0);
+		geometry::intersection_type *Int_type;
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_geometric_object line type:" << endl;
-			T.print(true /* f_backwards*/);
-			cout << endl;
+			cout << "combinatorial_object_activity::perform_activity_geometric_object "
+					"before P->line_intersection_type" << endl;
 		}
 
+		P->line_intersection_type(
+				GOC->Pts, GOC->nb_pts, threshold,
+			Int_type,
+			verbose_level - 2);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_geometric_object "
+					"after P->line_intersection_type" << endl;
+		}
+
+		if (f_v) {
+			cout << "packing_classify::compute_and_save_klein_invariants: "
+					"We found " << Int_type->len << " intersection types." << endl;
+
+			int i;
+
+			for (i = 0; i < Int_type->len; i++) {
+				cout << setw(3) << i << " : " << Int_type->R[i]
+					<< " : " << setw(5) << Int_type->nb_pts_on_subspace[i] << " : ";
+				Lint_vec_print(cout, Int_type->Pts_on_subspace[i], Int_type->nb_pts_on_subspace[i]);
+				cout << endl;
+			}
+		}
+
+		FREE_OBJECT(Int_type);
 
 	}
+
 
 	if (Descr->f_conic_type) {
 
@@ -700,6 +755,7 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 				verbose_level);
 
 	}
+
 	else if (Descr->f_line_type) {
 
 		if (f_v) {
@@ -707,13 +763,14 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 					"f_line_type" << endl;
 		}
 
-
+		exit(1);
+#if 0
 		line_type(
 					Descr->line_type_prefix,
 					Descr->line_type_projective_space_label,
 					IS,
 					verbose_level);
-
+#endif
 
 
 	}

@@ -26,7 +26,6 @@ object_in_projective_space_with_action::object_in_projective_space_with_action()
 	ago = 0;
 	nb_rows = nb_cols = 0;
 	canonical_labeling = NULL;
-	//null();
 }
 
 object_in_projective_space_with_action::~object_in_projective_space_with_action()
@@ -112,30 +111,37 @@ void object_in_projective_space_with_action::report(
 
 #if 1
 	if (f_v) {
-		cout << "projective_space_object_classifier::latex_report before Nau.set_stabilizer_of_object" << endl;
+		cout << "projective_space_object_classifier::latex_report "
+				"before Nau.set_stabilizer_of_object" << endl;
 	}
 
-	interfaces::nauty_interface_with_group Nau;
-	l1_interfaces::nauty_output *NO;
+	{
+		interfaces::nauty_interface_with_group Nau;
+		l1_interfaces::nauty_output *NO;
+		combinatorics::encoded_combinatorial_object *Enc;
 
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-	NO->nauty_output_allocate(nb_r + nb_c,
-			0,
-			nb_r + nb_c,
-			verbose_level);
+		NO = NEW_OBJECT(l1_interfaces::nauty_output);
+		NO->nauty_output_allocate(nb_r + nb_c,
+				0,
+				nb_r + nb_c,
+				verbose_level);
 
-	SG = Nau.set_stabilizer_of_object(
-			OwCF,
-		PA->A,
-		true /* f_compute_canonical_form */, Canonical_form,
-		NO,
-		verbose_level - 2);
+		SG = Nau.set_stabilizer_of_object(
+				OwCF,
+			PA->A,
+			true /* f_compute_canonical_form */, Canonical_form,
+			NO,
+			Enc,
+			verbose_level - 2);
 
-	if (f_v) {
-		cout << "projective_space_object_classifier::latex_report after Nau.set_stabilizer_of_object" << endl;
+		if (f_v) {
+			cout << "projective_space_object_classifier::latex_report "
+					"after Nau.set_stabilizer_of_object" << endl;
+		}
+
+		FREE_OBJECT(NO);
+		FREE_OBJECT(Enc);
 	}
-
-	FREE_OBJECT(NO);
 
 	SG->group_order(go);
 #endif
@@ -248,12 +254,6 @@ void object_in_projective_space_with_action::report(
 	Inc->get_and_print_row_tactical_decomposition_scheme_tex(
 		fp, true /* f_enter_math */,
 		true /* f_print_subscripts */, *Stack);
-
-#if 0
-	Inc->get_and_print_tactical_decomposition_scheme_tex(
-		fp, true /* f_enter_math */,
-		*Stack);
-#endif
 
 
 

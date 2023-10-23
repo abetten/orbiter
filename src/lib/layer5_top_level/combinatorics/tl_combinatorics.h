@@ -139,9 +139,9 @@ public:
 	std::string extract_subset_set;
 	std::string extract_subset_fname;
 
+	int f_line_type_old;
+
 	int f_line_type;
-	std::string line_type_projective_space_label;
-	std::string line_type_prefix;
 
 	int f_conic_type;
 	int conic_type_threshold;

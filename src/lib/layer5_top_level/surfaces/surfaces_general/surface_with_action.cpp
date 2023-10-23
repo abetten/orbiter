@@ -881,10 +881,19 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		else {
 			cout << "passes the double six test" << endl;
 
+
+			std::string label_txt;
+			std::string label_tex;
+
+			label_txt = "skew_hexagon";
+			label_tex = "skew_hexagon";
+
 			int nb_E;
 
 			nb_E = Surf->build_surface_from_double_six_and_count_Eckardt_points(
-					double_six, 0 /* verbose_level*/);
+					double_six,
+					label_txt, label_tex,
+					0 /* verbose_level*/);
 
 
 			cout << "A double-six for " << label_for_printing
@@ -1110,7 +1119,7 @@ void surface_with_action::sweep_4_15_lines(
 
 						cout << "the number of lines is " << SC->SO->nb_lines << endl;
 
-						SC->SOA->print_everything(cout, verbose_level);
+						SC->SOG->print_everything(cout, verbose_level);
 
 #if 1
 						if (SC->SO->nb_lines != 15) {
@@ -1677,7 +1686,7 @@ void surface_with_action::sweep_6_9_lines(
 								cout << "the number of lines is "
 										<< SC->SO->nb_lines << endl;
 
-								SC->SOA->print_everything(cout, verbose_level);
+								SC->SOG->print_everything(cout, verbose_level);
 
 #if 1
 								if (SC->SO->nb_lines != 9) {
@@ -2175,7 +2184,7 @@ void surface_with_action::sweep_4_L9_E4(
 								<< " : the number of lines is "
 								<< SC->SO->nb_lines << endl;
 
-						SC->SOA->print_everything(cout, verbose_level);
+						SC->SOG->print_everything(cout, verbose_level);
 
 #if 1
 						if (SC->SO->nb_lines != 9) {

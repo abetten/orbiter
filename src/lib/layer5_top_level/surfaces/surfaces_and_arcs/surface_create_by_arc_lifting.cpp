@@ -129,9 +129,13 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 
 
+	string label_txt;
+	string label_tex;
 
+	label_txt = "arc_lifting";
+	label_tex = "arc\\_lifting";
 
-	SOA = NEW_OBJECT(cubic_surfaces_in_general::surface_object_with_action);
+	SOA = NEW_OBJECT(cubic_surfaces_in_general::surface_object_with_group);
 
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::init "
@@ -141,6 +145,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	SOA->init_with_group(SCA->Surf_A,
 		AL->Web->Lines27, 27, AL->the_equation,
 		AL->Trihedral_pair->Aut_gens,
+		label_txt, label_tex,
 		false /* f_find_double_six_and_rearrange_lines */,
 		false, NULL,
 		verbose_level);

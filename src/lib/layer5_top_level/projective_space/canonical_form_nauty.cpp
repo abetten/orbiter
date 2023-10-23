@@ -20,23 +20,10 @@ namespace projective_geometry {
 
 canonical_form_nauty::canonical_form_nauty()
 {
-#if 0
-	idx = 0;
-	eqn = NULL;
-	sz = 0;
-
-	Pts_on_curve = NULL;
-	sz_curve = 0;
-
-	bitangents = NULL;
-	nb_bitangents = 0;
-#endif
 
 	Classifier = NULL;
 
 	Variety = NULL;
-
-	//Qco = NULL;
 
 	nb_rows = 0;
 	nb_cols = 0;
@@ -85,23 +72,13 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve" << endl;
 	}
 
-#if 0
-	canonical_form_nauty::idx = Qco->cnt;
-	canonical_form_nauty::eqn = Qco->eqn;
-	canonical_form_nauty::sz = Qco->sz;
-	canonical_form_nauty::Pts_on_curve = Qco->pts;
-	canonical_form_nauty::sz_curve = Qco->nb_pts;
-	canonical_form_nauty::bitangents = Qco->bitangents;
-	canonical_form_nauty::nb_bitangents = Qco->nb_bitangents;
-#endif
 
-	//canonical_form_nauty::Qco = Qco;
 	canonical_form_nauty::Variety = Variety;
 
 	if (f_v) {
 		cout << "equation is:";
 		Classifier->Poly_ring->print_equation_simple(
-				cout, Variety->Qco->eqn);
+				cout, Variety->Qco->Quartic_curve_object->eqn15);
 		cout << endl;
 	}
 
@@ -115,7 +92,8 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 				"before OwCF->init_point_set" << endl;
 	}
 	OwCF->init_point_set(
-			Variety->Qco->pts, Variety->Qco->nb_pts,
+			Variety->Qco->Quartic_curve_object->Pts,
+			Variety->Qco->Quartic_curve_object->nb_pts,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
@@ -138,6 +116,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 
 	interfaces::nauty_interface_with_group Nau;
 	l1_interfaces::nauty_output *NO;
+	combinatorics::encoded_combinatorial_object *Enc;
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 	NO->nauty_output_allocate(nb_rows + nb_cols,
@@ -156,6 +135,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 		true /* f_compute_canonical_form */,
 		Canonical_form,
 		NO,
+		Enc,
 		0 /*verbose_level*/);
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
@@ -189,6 +169,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 	canonical_labeling_len = NO->N;
 
 	FREE_OBJECT(NO);
+	FREE_OBJECT(Enc);
 
 	Set_stab->group_order(set_stab_order);
 	if (f_v) {
@@ -221,7 +202,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 			Classifier->Descr->PA->F,
 			Classifier->AonHPD,
 			Set_stab /* A->Strong_gens*/,
-			Variety->Qco->eqn,
+			Variety->Qco->Quartic_curve_object->eqn15,
 		verbose_level);
 	if (f_v) {
 		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "

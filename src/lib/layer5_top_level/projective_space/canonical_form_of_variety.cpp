@@ -36,6 +36,7 @@ canonical_form_of_variety::canonical_form_of_variety()
 
 	go_eqn = NULL;
 
+	Canonical_object = NULL;
 }
 
 canonical_form_of_variety::~canonical_form_of_variety()
@@ -52,13 +53,16 @@ canonical_form_of_variety::~canonical_form_of_variety()
 	if (go_eqn) {
 		FREE_OBJECT(go_eqn);
 	}
+	if (Canonical_object) {
+		FREE_OBJECT(Canonical_object);
+	}
 }
 
 
 void canonical_form_of_variety::init(
 		canonical_form_classifier *Canonical_form_classifier,
 		std::string &fname_case_out,
-		quartic_curve_object *Qco,
+		applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -77,9 +81,8 @@ void canonical_form_of_variety::init(
 	transporter_to_canonical_form =
 			NEW_int(Canonical_form_classifier->Descr->PA->A->elt_size_in_int);
 
-	//long int *canonical_pts;
 
-	canonical_pts = NEW_lint(Qco->nb_pts);
+	canonical_pts = NEW_lint(Qco->Quartic_curve_object->nb_pts);
 
 	go_eqn = NEW_OBJECT(ring_theory::longinteger_object);
 
@@ -102,7 +105,6 @@ void canonical_form_of_variety::classify_curve_nauty(
 	canonical_form_nauty *C;
 	ring_theory::longinteger_object go;
 
-	//groups::strong_generators *gens_stab_of_canonical_equation;
 
 	long int *alpha;
 	int *gamma;
@@ -144,25 +146,25 @@ void canonical_form_of_variety::classify_curve_nauty(
 
 	//FREE_OBJECT(gens_stab_of_canonical_equation);
 
-	Canonical_form_classifier->canonical_labeling_len = C->canonical_labeling_len;
+	Canonical_form_classifier->Output->canonical_labeling_len = C->canonical_labeling_len;
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::classify_curve_nauty "
 				"canonical_labeling_len=" <<
-				Canonical_form_classifier->canonical_labeling_len << endl;
+				Canonical_form_classifier->Output->canonical_labeling_len << endl;
 	}
-	if (Canonical_form_classifier->canonical_labeling_len == 0) {
+	if (Canonical_form_classifier->Output->canonical_labeling_len == 0) {
 		cout << "canonical_form_of_variety::classify_curve_nauty "
 				"canonical_labeling_len == 0, error" << endl;
 		exit(1);
 	}
-	alpha = NEW_lint(Canonical_form_classifier->canonical_labeling_len);
-	gamma = NEW_int(Canonical_form_classifier->canonical_labeling_len);
+	alpha = NEW_lint(Canonical_form_classifier->Output->canonical_labeling_len);
+	gamma = NEW_int(Canonical_form_classifier->Output->canonical_labeling_len);
 
 
-	if (Canonical_form_classifier->CB->n == 0) {
-		Canonical_form_classifier->CB->init(
-				Canonical_form_classifier->nb_objects_to_test,
+	if (Canonical_form_classifier->Output->CB->n == 0) {
+		Canonical_form_classifier->Output->CB->init(
+				Canonical_form_classifier->Input->nb_objects_to_test,
 				C->Canonical_form->get_allocated_length(),
 				verbose_level - 2);
 	}
@@ -173,7 +175,7 @@ void canonical_form_of_variety::classify_curve_nauty(
 		cout << "canonical_form_of_variety::classify_curve_nauty "
 				"before Canonical_form_classifier->CB->search_and_add_if_new" << endl;
 	}
-	Canonical_form_classifier->CB->search_and_add_if_new(
+	Canonical_form_classifier->Output->CB->search_and_add_if_new(
 			C->Canonical_form->get_data(),
 			C /* void *extra_data */,
 			f_found,
@@ -269,7 +271,7 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set(
 			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
 					"before Canonical_form_classifier->CB->compare_at idx1 = " << idx1 << endl;
 		}
-		if (Canonical_form_classifier->CB->compare_at(
+		if (Canonical_form_classifier->Output->CB->compare_at(
 				C->Canonical_form->get_data(), idx1) != 0) {
 			if (f_v) {
 				cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
@@ -363,7 +365,7 @@ int canonical_form_of_variety::find_equation(
 	int f_found = false;
 
 	canonical_form_nauty *C1;
-	C1 = (canonical_form_nauty *) Canonical_form_classifier->CB->Type_extra_data[idx1];
+	C1 = (canonical_form_nauty *) Canonical_form_classifier->Output->CB->Type_extra_data[idx1];
 
 	alpha_inv = C1->canonical_labeling;
 	if (f_v) {
@@ -371,7 +373,7 @@ int canonical_form_of_variety::find_equation(
 				"alpha_inv = " << endl;
 		Lint_vec_print(cout,
 				alpha_inv,
-				Canonical_form_classifier->canonical_labeling_len);
+				Canonical_form_classifier->Output->canonical_labeling_len);
 		cout << endl;
 	}
 
@@ -379,7 +381,7 @@ int canonical_form_of_variety::find_equation(
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
 				"beta_inv = " << endl;
-		Lint_vec_print(cout, beta_inv, Canonical_form_classifier->canonical_labeling_len);
+		Lint_vec_print(cout, beta_inv, Canonical_form_classifier->Output->canonical_labeling_len);
 		cout << endl;
 	}
 
@@ -391,7 +393,7 @@ int canonical_form_of_variety::find_equation(
 		cout << "canonical_form_of_variety::find_equation "
 				"computing alpha" << endl;
 	}
-	for (i = 0; i < Canonical_form_classifier->canonical_labeling_len; i++) {
+	for (i = 0; i < Canonical_form_classifier->Output->canonical_labeling_len; i++) {
 		j = alpha_inv[i];
 		alpha[j] = i;
 	}
@@ -400,7 +402,7 @@ int canonical_form_of_variety::find_equation(
 		cout << "canonical_form_of_variety::find_equation "
 				"computing gamma" << endl;
 	}
-	for (i = 0; i < Canonical_form_classifier->canonical_labeling_len; i++) {
+	for (i = 0; i < Canonical_form_classifier->Output->canonical_labeling_len; i++) {
 		gamma[i] = beta_inv[alpha[i]];
 	}
 	if (f_v) {
@@ -408,7 +410,7 @@ int canonical_form_of_variety::find_equation(
 				"gamma = " << endl;
 		Int_vec_print(cout,
 				gamma,
-				Canonical_form_classifier->canonical_labeling_len);
+				Canonical_form_classifier->Output->canonical_labeling_len);
 		cout << endl;
 	}
 
@@ -426,7 +428,6 @@ int canonical_form_of_variety::find_equation(
 		// possibly plus a field automorphism
 
 
-	//int Mtx_inv[10];
 	int frobenius;
 	linear_algebra::linear_algebra_global LA;
 
@@ -441,11 +442,6 @@ int canonical_form_of_variety::find_equation(
 			gamma, Mtx, frobenius,
 		0 /*verbose_level*/);
 
-#if 0
-	Canonical_form_classifier->Descr->PA->P->reverse_engineer_semilinear_map(
-			gamma, Mtx, frobenius,
-		0 /*verbose_level*/);
-#endif
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
@@ -455,30 +451,23 @@ int canonical_form_of_variety::find_equation(
 	Mtx[9] = frobenius;
 
 	Canonical_form_classifier->Descr->PA->A->Group_element->make_element(
-			Canonical_form_classifier->Elt, Mtx, 0 /* verbose_level*/);
+			Canonical_form_classifier->Output->Elt, Mtx, 0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "The isomorphism from C to C1 is given by:" << endl;
 		Canonical_form_classifier->Descr->PA->A->Group_element->element_print(
-				Canonical_form_classifier->Elt, cout);
+				Canonical_form_classifier->Output->Elt, cout);
 	}
 
 
-
-	//int frobenius_inv;
-
-	//frobenius_inv = NT.int_negate(Mtx[3 * 3], PA->F->e);
-
-
-	//PA->F->matrix_inverse(Mtx, Mtx_inv, 3, 0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
 				"before substitute_semilinear" << endl;
 	}
 	Canonical_form_classifier->Poly_ring->substitute_semilinear(
-			Qco->eqn /* coeff_in */,
-			Canonical_form_classifier->eqn2 /* coeff_out */,
+			Qco->Quartic_curve_object->eqn15 /* coeff_in */,
+			Canonical_form_classifier->Output->eqn2 /* coeff_out */,
 			Canonical_form_classifier->Descr->PA->A->is_semilinear_matrix_group(),
 			frobenius, Mtx,
 			0/*verbose_level*/);
@@ -491,14 +480,14 @@ int canonical_form_of_variety::find_equation(
 	// and belongs to the orbit of equations associated with C1.
 
 	Canonical_form_classifier->Descr->PA->F->Projective_space_basic->PG_element_normalize_from_front(
-			Canonical_form_classifier->eqn2, 1,
+			Canonical_form_classifier->Output->eqn2, 1,
 			Canonical_form_classifier->Poly_ring->get_nb_monomials());
 
 
 	if (f_v) {
 		cout << "The mapped equation is:";
 		Canonical_form_classifier->Poly_ring->print_equation_simple(
-				cout, Canonical_form_classifier->eqn2);
+				cout, Canonical_form_classifier->Output->eqn2);
 		cout << endl;
 	}
 
@@ -508,7 +497,7 @@ int canonical_form_of_variety::find_equation(
 	int idx2;
 
 	if (!C1->Orb->search_equation(
-			Canonical_form_classifier->eqn2 /*new_object */, idx2,
+			Canonical_form_classifier->Output->eqn2 /*new_object */, idx2,
 			true)) {
 		// need to map points and bitangents under gamma:
 		if (f_v) {
@@ -614,7 +603,7 @@ void canonical_form_of_variety::add_object_and_compute_canonical_equation(
 		cout << "canonical_form_of_variety::add_object_and_compute_canonical_equation "
 				"before Canonical_form_classifier->CB->add_at_idx" << endl;
 	}
-	Canonical_form_classifier->CB->add_at_idx(
+	Canonical_form_classifier->Output->CB->add_at_idx(
 			C->Canonical_form->get_data(),
 			C /* void *extra_data */,
 			idx,
@@ -662,7 +651,8 @@ void canonical_form_of_variety::compute_canonical_form(
 
 		Int_vec_copy(
 				canonical_equation,
-				Canonical_form_classifier->Canonical_forms + counter * Canonical_form_classifier->Poly_ring->get_nb_monomials(),
+				Canonical_form_classifier->Output->Canonical_equation +
+				counter * Canonical_form_classifier->Poly_ring->get_nb_monomials(),
 				Canonical_form_classifier->Poly_ring->get_nb_monomials());
 
 
@@ -681,7 +671,7 @@ void canonical_form_of_variety::compute_canonical_form(
 
 
 
-		if (Qco->nb_pts >= Canonical_form_classifier->Descr->substructure_size) {
+		if (Qco->Quartic_curve_object->nb_pts >= Canonical_form_classifier->Descr->substructure_size) {
 
 			if (f_v) {
 				cout << "canonical_form_of_variety::compute_canonical_form "
@@ -716,7 +706,7 @@ void canonical_form_of_variety::compute_canonical_form(
 						"storing CFS in CFS_table[counter], "
 						"counter = " << counter << endl;
 			}
-			Canonical_form_classifier->CFS_table[counter] = CFS;
+			Canonical_form_classifier->Output->CFS_table[counter] = CFS;
 			if (f_v) {
 				cout << "canonical_form_of_variety::compute_canonical_form "
 						"storing canonical_equation in "
@@ -724,16 +714,17 @@ void canonical_form_of_variety::compute_canonical_form(
 						"counter = " << counter << endl;
 			}
 			Int_vec_copy(canonical_equation,
-					Canonical_form_classifier->Canonical_forms + counter * Canonical_form_classifier->Poly_ring->get_nb_monomials(),
+					Canonical_form_classifier->Output->Canonical_equation +
+					counter * Canonical_form_classifier->Poly_ring->get_nb_monomials(),
 					Canonical_form_classifier->Poly_ring->get_nb_monomials());
 			if (f_v) {
 				cout << "canonical_form_of_variety::compute_canonical_form "
 						"storing group order in Goi[]" << endl;
 			}
-			Canonical_form_classifier->Goi[counter] = go_eqn->as_lint();
+			Canonical_form_classifier->Output->Goi[counter] = go_eqn->as_lint();
 			if (f_v) {
 				cout << "canonical_form_of_variety::compute_canonical_form "
-						"Goi[counter] = " << Canonical_form_classifier->Goi[counter] << endl;
+						"Goi[counter] = " << Canonical_form_classifier->Output->Goi[counter] << endl;
 			}
 
 			if (f_v) {
@@ -750,11 +741,12 @@ void canonical_form_of_variety::compute_canonical_form(
 						"Skipping" << endl;
 			}
 
-			Canonical_form_classifier->CFS_table[counter] = NULL;
+			Canonical_form_classifier->Output->CFS_table[counter] = NULL;
 			Int_vec_zero(
-					Canonical_form_classifier->Canonical_forms + counter * Canonical_form_classifier->Poly_ring->get_nb_monomials(),
+					Canonical_form_classifier->Output->Canonical_equation +
+					counter * Canonical_form_classifier->Poly_ring->get_nb_monomials(),
 					Canonical_form_classifier->Poly_ring->get_nb_monomials());
-			Canonical_form_classifier->Goi[counter] = -1;
+			Canonical_form_classifier->Output->Goi[counter] = -1;
 
 		}
 
@@ -776,6 +768,181 @@ void canonical_form_of_variety::compute_canonical_form(
 
 }
 
+
+void canonical_form_of_variety::compute_canonical_object(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "canonical_form_of_variety::compute_canonical_object" << endl;
+	}
+
+
+	Canonical_object = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action);
+
+
+	actions::action *A;
+	actions::action *A_on_lines;
+
+	A = Canonical_form_classifier->Descr->PA->A;
+	A_on_lines = Canonical_form_classifier->Descr->PA->A_on_lines;
+
+
+	if (f_v) {
+		cout << "canonical_form_of_variety::compute_canonical_object "
+				"before Qco_canonical->init_image_of" << endl;
+	}
+	Canonical_object->init_image_of(
+			Qco,
+			transporter_to_canonical_form,
+			A,
+			A_on_lines,
+			canonical_equation,
+			verbose_level);
+	if (f_v) {
+		cout << "canonical_form_of_variety::compute_canonical_object "
+				"after Qco_canonical->init_image_of" << endl;
+	}
+
+	if (f_v) {
+		cout << "canonical_form_of_variety::compute_canonical_object done" << endl;
+	}
+}
+
+void canonical_form_of_variety::prepare_csv_entry_one_line(
+		std::vector<std::string> &v, int i, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "canonical_form_of_variety::prepare_csv_entry_one_line" << endl;
+	}
+	//ost << ",";
+
+	v.push_back(std::to_string(Qco->cnt));
+	v.push_back(std::to_string(Qco->po));
+	v.push_back(std::to_string(Qco->so));
+	v.push_back(std::to_string(Qco->po_go));
+	v.push_back(std::to_string(Qco->po_index));
+	v.push_back(std::to_string(Canonical_form_classifier->Output->Tally->rep_idx[i]));
+
+#if 0
+	ost << Qco->cnt;
+	ost << ",";
+	ost << Qco->po;
+	ost << ",";
+	ost << Qco->so;
+	ost << ",";
+	ost << Qco->po_go;
+	ost << ",";
+	ost << Qco->po_index;
+	ost << "," << Canonical_form_classifier->Output->Tally->rep_idx[i];
+	ost << ",";
+#endif
+
+	if (f_v) {
+		cout << "classification_of_varieties::prepare_csv_entry_one_line "
+				"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
+				<< " preparing string data" << endl;
+	}
+	string s_Eqn;
+	string s_Pts;
+	string s_Bitangents;
+	string s_transporter;
+	string s_Eqn_canonical;
+	string s_Pts_canonical;
+	string s_Bitangents_canonical;
+	std::string s_tl, s_gens, s_go;
+
+
+	Qco->Quartic_curve_object->stringify(
+			s_Eqn, s_Pts, s_Bitangents);
+
+	s_transporter = Canonical_form_classifier->Descr->PA->A->Group_element->stringify(
+			transporter_to_canonical_form);
+
+	s_Eqn_canonical = Int_vec_stringify(
+			canonical_equation, 15);
+
+	s_Pts_canonical = Canonical_object->stringify_Pts();
+
+	s_Bitangents_canonical = Canonical_object->stringify_bitangents();
+
+	if (gens_stab_of_canonical_equation) {
+
+		if (false) {
+			cout << "classification_of_varieties::prepare_csv_entry_one_line "
+					"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
+					<< " before gens_stab_of_canonical_equation->stringify" << endl;
+		}
+		gens_stab_of_canonical_equation->stringify(s_tl, s_gens, s_go);
+	}
+	else {
+		cout << "gens_stab_of_canonical_equation is not available" << endl;
+	}
+
+	if (f_v) {
+		cout << "classification_of_varieties::prepare_csv_entry_one_line "
+				"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
+				<< " writing data" << endl;
+	}
+
+	v.push_back("\"" + s_Eqn + "\"");
+	v.push_back("\"" + s_Pts + "\"");
+	v.push_back("\"" + s_Bitangents + "\"");
+	v.push_back("\"" + s_transporter + "\"");
+	v.push_back("\"" + s_Eqn_canonical + "\"");
+	v.push_back("\"" + s_Pts_canonical + "\"");
+	v.push_back("\"" + s_Bitangents_canonical + "\"");
+	v.push_back("\"" + s_tl + "\"");
+	v.push_back("\"" + s_gens + "\"");
+	v.push_back(s_go);
+
+
+#if 0
+	ost << "\"" << s_Eqn << "\"";
+	ost << ",";
+
+	ost << "\"" << s_Pts << "\"";
+	ost << ",";
+
+	ost << "\"" << s_Bitangents << "\"";
+	ost << ",";
+
+	ost << "\"" << s_transporter << "\"";
+	ost << ",";
+
+	ost << "\"" << s_Eqn_canonical << "\"";
+	ost << ",";
+
+	ost << "\"" << s_Pts_canonical << "\"";
+	ost << ",";
+
+	ost << "\"" << s_Bitangents_canonical << "\"";
+	ost << ",";
+
+
+	ost << "\"" << s_tl << "\",";
+	ost << "\"" << s_gens << "\",";
+	ost << s_go;
+#endif
+
+
+	if (Canonical_form_classifier->Descr->carry_through.size()) {
+		int j;
+
+		for (j = 0; j < Canonical_form_classifier->Descr->carry_through.size(); j++) {
+			v.push_back(Qco->Carrying_through[j]);
+			//ost << "," << Qco->Carrying_through[j];
+		}
+	}
+
+	if (f_v) {
+		cout << "canonical_form_of_variety::prepare_csv_entry_one_line done" << endl;
+	}
+
+
+}
 
 
 }}}

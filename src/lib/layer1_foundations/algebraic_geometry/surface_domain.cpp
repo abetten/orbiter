@@ -552,7 +552,10 @@ void surface_domain::save_lines_in_three_kinds(
 
 
 int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(
-		long int *double_six, int verbose_level)
+		long int *double_six,
+		std::string &label_txt,
+		std::string &label_tex,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -616,6 +619,7 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(
 
 	SO->init_with_27_lines(this,
 		Lines27, coeffs20,
+		label_txt, label_tex,
 		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
@@ -645,6 +649,8 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(
 
 void surface_domain::build_surface_from_double_six(
 		long int *double_six,
+		std::string &label_txt,
+		std::string &label_tex,
 		algebraic_geometry::surface_object *&SO,
 		int verbose_level)
 {
@@ -740,6 +746,7 @@ void surface_domain::build_surface_from_double_six(
 
 	SO->init_with_27_lines(this,
 		Lines27, coeffs20,
+		label_txt, label_tex,
 		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 
@@ -793,7 +800,11 @@ int surface_domain::create_surface_by_equation(
 	}
 
 
+	string label_txt;
+	string label_tex;
 
+	label_txt = name_of_formula + "_" + equation_parameters;
+	label_tex = name_of_formula_tex + "\\_" + equation_parameters_tex;
 
 	// create a symbolic object containing the general formula:
 
@@ -997,6 +1008,7 @@ int surface_domain::create_surface_by_equation(
 
 	create_surface_by_coefficient_vector(coeffs,
 			select_double_six_string,
+			label_txt, label_tex,
 			SO,
 			verbose_level);
 
@@ -1080,6 +1092,7 @@ int surface_domain::create_surface_by_symbolic_object(
 
 	create_surface_by_coefficient_vector(coeffs,
 			select_double_six_string,
+			name_of_formula, name_of_formula,
 			SO,
 			verbose_level);
 
@@ -1104,6 +1117,8 @@ int surface_domain::create_surface_by_symbolic_object(
 void surface_domain::create_surface_by_coefficient_vector(
 		int *coeffs20,
 		std::vector<std::string> &select_double_six_string,
+		std::string &label_txt,
+		std::string &label_tex,
 		algebraic_geometry::surface_object *&SO,
 		int verbose_level)
 {
@@ -1126,7 +1141,7 @@ void surface_domain::create_surface_by_coefficient_vector(
 		cout << "surface_domain::create_surface_by_coefficient_vector "
 				"before SO->init_equation" << endl;
 	}
-	SO->init_equation(this, coeffs20, verbose_level);
+	SO->init_equation(this, coeffs20, label_txt, label_tex, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::create_surface_by_coefficient_vector "
 				"after SO->init_equation" << endl;
@@ -1311,6 +1326,12 @@ void surface_domain::create_surface_from_catalogue(
 				"after build_cubic_surface_from_lines" << endl;
 	}
 
+	string label_txt;
+	string label_tex;
+
+	label_txt = "catalogue_q" + std::to_string(q) + "_iso" + std::to_string(iso);
+	label_tex = "catalogue_q" + std::to_string(q) + "_iso" + std::to_string(iso);
+
 	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
@@ -1319,6 +1340,7 @@ void surface_domain::create_surface_from_catalogue(
 	}
 	SO->init_with_27_lines(this,
 		Lines27, coeffs20,
+		label_txt, label_tex,
 		false /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
 	if (f_v) {
@@ -1331,6 +1353,14 @@ void surface_domain::create_surface_from_catalogue(
 	}
 }
 
+std::string surface_domain::stringify_eqn_maple(int *eqn)
+{
+	stringstream sstr;
+	string str;
+	print_equation_maple(sstr, eqn);
+	str.assign(sstr.str());
+	return str;
+}
 
 
 

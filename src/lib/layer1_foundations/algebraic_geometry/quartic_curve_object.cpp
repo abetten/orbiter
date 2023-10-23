@@ -23,16 +23,12 @@ namespace algebraic_geometry {
 
 quartic_curve_object::quartic_curve_object()
 {
-	q = 0;
-	F = NULL;
 	Dom = NULL;
 
 
 	Pts = NULL;
 	nb_pts = 0;
 
-	//Lines = NULL;
-	//nb_lines = 0;
 
 	//eqn15[15]
 
@@ -54,11 +50,6 @@ quartic_curve_object::~quartic_curve_object()
 	if (Pts) {
 		FREE_lint(Pts);
 	}
-#if 0
-	if (Lines) {
-		FREE_lint(Lines);
-	}
-#endif
 	if (QP) {
 		FREE_OBJECT(QP);
 	}
@@ -67,6 +58,76 @@ quartic_curve_object::~quartic_curve_object()
 
 	if (f_v) {
 		cout << "quartic_curve_object::~quartic_curve_object done" << endl;
+	}
+}
+
+void quartic_curve_object::init_from_string(
+		std::string &eqn_txt,
+		std::string &pts_txt, std::string &bitangents_txt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_object::init_from_string" << endl;
+	}
+
+	quartic_curve_object::Dom = NULL;
+
+	int sz;
+	int *eqn;
+
+	Int_vec_scan(eqn_txt, eqn, sz);
+
+	if (sz != 15) {
+		cout << "quartic_curve_object::init_from_string "
+				"the equation must have 15 terms" << endl;
+		exit(1);
+	}
+
+	Int_vec_copy(eqn, eqn15, 15);
+	FREE_int(eqn);
+
+
+	Lint_vec_scan(pts_txt, Pts, nb_pts);
+
+	int nb_bitangents;
+	long int *Bitangents;
+
+	Lint_vec_scan(bitangents_txt, Bitangents, nb_bitangents);
+
+
+	if (nb_bitangents != 28) {
+		cout << "quartic_curve_object::init_from_string "
+				"the number of bitangents must be 28" << endl;
+		exit(1);
+	}
+
+	Lint_vec_copy(Bitangents, bitangents28, 28);
+	FREE_lint(Bitangents);
+
+	f_has_bitangents = true;
+
+	if (f_v) {
+		cout << "quartic_curve_object::init_from_string done" << endl;
+	}
+}
+
+void quartic_curve_object::allocate_points(
+		int nb_pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_object::allocate_points" << endl;
+	}
+
+
+	Pts = NEW_lint(nb_pts);
+
+	if (f_v) {
+		cout << "quartic_curve_object::allocate_points done" << endl;
 	}
 }
 
@@ -84,8 +145,6 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 	}
 
 	quartic_curve_object::Dom = Dom;
-	F = Dom->P->Subspaces->F;
-	q = F->q;
 
 	f_has_bitangents = false;
 	Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
@@ -136,8 +195,6 @@ void quartic_curve_object::init_equation_and_bitangents(
 	}
 
 	quartic_curve_object::Dom = Dom;
-	F = Dom->P->Subspaces->F;
-	q = F->q;
 
 	f_has_bitangents = true;
 	Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
@@ -187,7 +244,7 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
 				"before compute_properties" << endl;
 	}
-	compute_properties(verbose_level - 2);
+	compute_properties(verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
 				"after compute_properties" << endl;
@@ -292,19 +349,19 @@ void quartic_curve_object::identify_lines(
 
 	if (f_v) {
 		cout << "quartic_curve_object::identify_lines" << endl;
-		}
+	}
 	for (i = 0; i < nb_lines; i++) {
 		if (!Sorting.lint_vec_search_linear(bitangents28, 28, lines[i], idx)) {
 			cout << "quartic_curve_object::identify_lines could "
 					"not find lines[" << i << "]=" << lines[i]
 					<< " in bitangents28[]" << endl;
 			exit(1);
-			}
-		line_idx[i] = idx;
 		}
+		line_idx[i] = idx;
+	}
 	if (f_v) {
 		cout << "quartic_curve_object::identify_lines done" << endl;
-		}
+	}
 }
 
 
@@ -323,6 +380,31 @@ int quartic_curve_object::find_point(
 	}
 }
 
+void quartic_curve_object::print(std::ostream &ost)
+{
+	ost << " eqn=";
+	Int_vec_print(ost, eqn15, 15);
+	ost << " pts=";
+	Lint_vec_print(ost, Pts, nb_pts);
+	ost << " bitangents=";
+	Lint_vec_print(ost, bitangents28, 28);
+	ost << endl;
+}
+
+void quartic_curve_object::stringify(
+		std::string &s_Eqn, std::string &s_Pts, std::string &s_Bitangents)
+{
+	s_Eqn = Int_vec_stringify(
+			eqn15,
+			15);
+	s_Pts = Lint_vec_stringify(
+			Pts,
+			nb_pts);
+
+	s_Bitangents = Lint_vec_stringify(
+			bitangents28, 28);
+
+}
 
 
 

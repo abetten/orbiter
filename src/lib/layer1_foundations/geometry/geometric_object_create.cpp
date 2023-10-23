@@ -650,6 +650,9 @@ void geometric_object_create::init(
 
 		Lint_vec_scan(Descr->set_text, Pts, nb_pts);
 
+		label_txt = Descr->set_label_txt;
+		label_tex = Descr->set_label_tex;
+
 	}
 	else {
 		cout << "geometric_object_create::init "

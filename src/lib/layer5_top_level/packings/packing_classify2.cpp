@@ -172,8 +172,8 @@ void packing_classify::compute_and_save_klein_invariants(
 #if 1
 		for (i = 0; i < Int_type->len; i++) {
 			cout << setw(3) << i << " : " << Int_type->R[i]
-				<< " : " << setw(5) << Int_type->nb_pts_on_plane[i] << " : ";
-			Lint_vec_print(cout, Int_type->Pts_on_plane[i], Int_type->nb_pts_on_plane[i]);
+				<< " : " << setw(5) << Int_type->nb_pts_on_subspace[i] << " : ";
+			Lint_vec_print(cout, Int_type->Pts_on_subspace[i], Int_type->nb_pts_on_subspace[i]);
 			cout << endl;
 		}
 #endif
@@ -193,9 +193,9 @@ void packing_classify::compute_and_save_klein_invariants(
 		//v.s_i(1).as_vector().s_i(i).change_to_longinteger();
 		//v.s_i(1).as_vector().s_i(i).as_longinteger().allocate(1, R[i].rep());
 		v.s_i(2).as_vector().s_i(i).change_to_vector();
-		v.s_i(2).as_vector().s_i(i).as_vector().m_l(Int_type->nb_pts_on_plane[i]);
-		for (j = 0; j < Int_type->nb_pts_on_plane[i]; j++) {
-			v.s_i(2).as_vector().s_i(i).as_vector().m_ii(j, Int_type->Pts_on_plane[i][j]);
+		v.s_i(2).as_vector().s_i(i).as_vector().m_l(Int_type->nb_pts_on_subspace[i]);
+		for (j = 0; j < Int_type->nb_pts_on_subspace[i]; j++) {
+			v.s_i(2).as_vector().s_i(i).as_vector().m_ii(j, Int_type->Pts_on_subspace[i][j]);
 		}
 	}
 

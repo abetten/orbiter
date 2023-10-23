@@ -282,7 +282,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		string fname_map;
 		orbiter_kernel_system::file_io Fio;
 
-		fname_map = Descr->map_formula_label + "_affine_map.csv";
+		fname_map = Descr->affine_map_formula_label + "_affine_map.csv";
 
 
 		Fio.Csv_file_support->lint_matrix_write_csv(
@@ -293,6 +293,65 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 
 		FREE_lint(Image_pts);
+
+
+
+	}
+	else if (Descr->f_projective_variety) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"f_projective_variety" << endl;
+		}
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"n=" << PA->P->Subspaces->n << endl;
+		}
+
+		long int *Variety;
+		long int N_points;
+
+		algebraic_geometry::algebraic_geometry_global AGG;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before AGG.projective_variety" << endl;
+		}
+
+		AGG.projective_variety(
+				PA->P,
+				Descr->projective_variety_ring_label,
+				Descr->projective_variety_formula_label,
+				Descr->projective_variety_parameters,
+				Variety, N_points,
+				verbose_level);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after AGG.projective_variety" << endl;
+		}
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity variety:" << endl;
+			Lint_vec_print(cout, Variety, N_points);
+			cout << endl;
+			cout << "projective_space_activity::perform_activity number of points = " << N_points << endl;
+		}
+
+		string fname;
+		orbiter_kernel_system::file_io Fio;
+
+		fname = Descr->projective_variety_formula_label + "_projective_variety.csv";
+
+
+		Fio.Csv_file_support->lint_matrix_write_csv(
+				fname, Variety, N_points, 1);
+		if (f_v) {
+			cout << "Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
+		}
+
+		FREE_lint(Variety);
 
 
 
@@ -356,17 +415,23 @@ void projective_space_activity::perform_activity(int verbose_level)
 	else if (Descr->f_table_of_quartic_curves) {
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity table_of_quartic_curves" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"table_of_quartic_curves" << endl;
 		}
 
-		if (f_v) {
+		if (PA->n != 2) {
 			cout << "projective_space_activity::perform_activity "
-					"before PA->table_of_quartic_curves" << endl;
+					"need dimension equal to 2" << endl;
+			exit(1);
 		}
-		PA->table_of_quartic_curves(verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"after PA->table_of_quartic_curves" << endl;
+					"before PA->QCDA->table_of_quartic_curves" << endl;
+		}
+		PA->QCDA->table_of_quartic_curves(verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->QCDA->table_of_quartic_curves" << endl;
 		}
 
 	}
@@ -377,14 +442,17 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity table_of_cubic_surfaces" << endl;
 		}
 
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level D;
+
+
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"before PA->table_of_cubic_surfaces" << endl;
+					"before D.table_of_cubic_surfaces" << endl;
 		}
-		PA->table_of_cubic_surfaces(verbose_level);
+		D.table_of_cubic_surfaces(PA, verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"after PA->table_of_cubic_surfaces" << endl;
+					"after D.table_of_cubic_surfaces" << endl;
 		}
 	}
 

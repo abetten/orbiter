@@ -664,6 +664,8 @@ public:
 	void transpose(int *M, int m, int n, int *Mt);
 	void print_as_polynomial_in_algebraic_notation(
 			std::ostream &ost, int *coeff_vector, int len);
+	int compare(int *p, int *q, int len);
+	std::string stringify(int *v, int len);
 
 };
 
@@ -755,6 +757,7 @@ public:
 	void print_to_str(std::string &s, long int *data, int len);
 	void print_to_str_bare(std::string &s, long int *data, int len);
 	void create_string_with_quotes(std::string &str, long int *v, int len);
+	std::string stringify(long int *v, int len);
 
 
 };

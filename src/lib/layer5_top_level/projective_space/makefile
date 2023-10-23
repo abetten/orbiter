@@ -11,14 +11,15 @@ MODULES = \
 	canonical_form_nauty.o \
 	canonical_form_of_variety.o \
 	canonical_form_substructure.o \
+	classification_of_varieties.o \
+	input_objects_of_type_variety.o \
 	object_in_projective_space_with_action.o \
 	projective_space_activity_description.o \
 	projective_space_activity.o \
 	projective_space_global.o \
 	projective_space_with_action_description.o \
 	projective_space_with_action.o \
-	projective_space_with_action.o \
-	quartic_curve_object.o
+	summary_of_properties_of_objects.o
 
 all : $(MODULES)
 

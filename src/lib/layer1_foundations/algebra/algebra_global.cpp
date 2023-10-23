@@ -1356,7 +1356,7 @@ void algebra_global::algebraic_normal_form(
 	}
 
 
-	F->f_print_as_exponentials = false;
+	//F->f_print_as_exponentials = false;
 
 
 	combinatorics::polynomial_function_domain *PF;

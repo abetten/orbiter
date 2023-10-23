@@ -104,7 +104,8 @@ void tally_vector_data::init(
 	}
 	for (i = 0; i < data_length; i++) {
 		if (false) {
-			cout << "tally_vector_data::init starting to collect data i=" << i << " / " << data_length << endl;
+			cout << "tally_vector_data::init "
+					"starting to collect data i=" << i << " / " << data_length << endl;
 		}
 		if (!hash_and_find(data + i * data_set_sz,
 				idx, h, verbose_level)) {
@@ -122,7 +123,8 @@ void tally_vector_data::init(
 		}
 	}
 	if (f_v) {
-		cout << "tally_vector_data::init finished collecting data" << endl;
+		cout << "tally_vector_data::init "
+				"finished collecting data" << endl;
 	}
 
 	for (i = 0; i < nb_types; i++) {
@@ -152,7 +154,8 @@ void tally_vector_data::init(
 
 
 	if (f_v) {
-		cout << "tally_vector_data::init computing Reps_in_lex_order" << endl;
+		cout << "tally_vector_data::init "
+				"computing Reps_in_lex_order" << endl;
 	}
 
 	Reps_in_lex_order = NEW_pint(nb_types);

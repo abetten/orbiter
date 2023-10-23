@@ -2807,15 +2807,15 @@ void any_group::print_action_on_surface(
 
 	if (f_v) {
 		cout << "any_group::print_action_on_surface "
-				"before SC->SOA->print_action_on_surface" << endl;
+				"before SC->SOG->print_action_on_surface" << endl;
 	}
-	SC->SOA->print_action_on_surface(
+	SC->SOG->print_action_on_surface(
 			label_of_elements,
 			element_data, nb_elements,
 			verbose_level);
 	if (f_v) {
 		cout << "any_group::print_action_on_surface "
-				"after SC->SOA->print_action_on_surface" << endl;
+				"after SC->SOG->print_action_on_surface" << endl;
 	}
 
 	if (f_v) {

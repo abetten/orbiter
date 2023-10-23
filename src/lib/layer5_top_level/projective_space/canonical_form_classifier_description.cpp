@@ -34,6 +34,10 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	f_output_fname = false;
 	//std::string fname_base_out;
 
+	f_label_po_go = false;
+	column_label_po_go.assign("PO_GO");
+	f_label_po_index = false;
+	column_label_po_index.assign("PO_INDEX");
 	f_label_po = false;
 	column_label_po.assign("PO");
 	f_label_so = false;
@@ -45,6 +49,8 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	f_label_lines = false;
 	column_label_bitangents.assign("bitangents");
 
+
+	//std::vector<std::string> carry_through;
 
 	f_degree = false;
 	degree = 0;
@@ -108,6 +114,20 @@ int canonical_form_classifier_description::read_arguments(int argc, std::string 
 				cout << "-output_fname " << fname_base_out << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-label_po_go") == 0) {
+			f_label_po_go = true;
+			column_label_po_go.assign(argv[++i]);
+			if (f_v) {
+				cout << "-label_po_go " << column_label_po_go << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-label_po_index") == 0) {
+			f_label_po_index = true;
+			column_label_po_index.assign(argv[++i]);
+			if (f_v) {
+				cout << "-label_po_index " << column_label_po_index << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-label_po") == 0) {
 			f_label_po = true;
 			column_label_po.assign(argv[++i]);
@@ -141,6 +161,15 @@ int canonical_form_classifier_description::read_arguments(int argc, std::string 
 			column_label_bitangents.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_lines " << column_label_bitangents << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-carry_through") == 0) {
+			f_label_lines = true;
+			string s;
+			s.assign(argv[++i]);
+			carry_through.push_back(s);
+			if (f_v) {
+				cout << "-carry_through " << s << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-degree") == 0) {
@@ -207,6 +236,12 @@ void canonical_form_classifier_description::print()
 	if (f_output_fname) {
 		cout << "-output_fname " << fname_base_out << endl;
 	}
+	if (f_label_po_go) {
+		cout << "-label_po_go " << column_label_po_go << endl;
+	}
+	if (f_label_po_index) {
+		cout << "-label_po_index " << column_label_po_index << endl;
+	}
 	if (f_label_po) {
 		cout << "-label_po " << column_label_po << endl;
 	}
@@ -221,6 +256,13 @@ void canonical_form_classifier_description::print()
 	}
 	if (f_label_lines) {
 		cout << "-label_lines " << column_label_bitangents << endl;
+	}
+	if (carry_through.size()) {
+		int i;
+
+		for (i = 0; i < carry_through.size(); i++) {
+			cout << "-carry_through " << carry_through[i] << endl;
+		}
 	}
 	if (f_degree) {
 		cout << "-degree " << degree << endl;

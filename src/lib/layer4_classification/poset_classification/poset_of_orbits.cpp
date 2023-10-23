@@ -1436,8 +1436,8 @@ void poset_of_orbits::write_orbit_reps_at_level(
 
 			string S;
 
-			orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(S, Data + i * lvl, lvl);
-			f << "," << S << endl;
+			S = Lint_vec_stringify(Data + i * lvl, lvl);
+			f << ",\"" << S << "\"" << endl;
 		}
 		f << "END" << endl;
 
@@ -1584,8 +1584,8 @@ void poset_of_orbits::save_representatives_at_level_to_csv(
 			{
 				string str;
 				ost << ",";
-				orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, set, lvl);
-				ost << str;
+				str = Lint_vec_stringify(set, lvl);
+				ost << "\"" << str << "\"";
 			}
 
 			ago = get_node_ij(lvl, i)->get_stabilizer_order_lint(PC);

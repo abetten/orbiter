@@ -2339,6 +2339,11 @@ void group_element::action_on_polynomial(
 	}
 }
 
+std::string group_element::stringify(
+	int *Elt)
+{
+	return Int_vec_stringify(Elt, A->make_element_size);
+}
 
 
 }}}

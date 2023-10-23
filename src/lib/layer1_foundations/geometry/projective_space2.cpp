@@ -369,6 +369,56 @@ void projective_space::plane_intersection_invariant(
 	}
 }
 
+
+void projective_space::line_intersection_type(
+	long int *set, int set_size, int threshold,
+	intersection_type *&Int_type,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::line_intersection_type "
+				"threshold = " << threshold << endl;
+	}
+
+
+
+	Int_type = NEW_OBJECT(intersection_type);
+
+	if (f_v) {
+		cout << "projective_space::line_intersection_type "
+				"before Int_type->line_intersection_type_slow" << endl;
+	}
+	Int_type->line_intersection_type_slow(
+		set, set_size, threshold,
+		this,
+		Subspaces->Grass_lines,
+		verbose_level);
+	if (f_v) {
+		cout << "projective_space::line_intersection_type "
+				"after Int_type->line_intersection_type_slow" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space::line_intersection_type "
+				"before Int_type->compute_heighest_weight_objects" << endl;
+	}
+	Int_type->compute_heighest_weight_objects(verbose_level);
+	if (f_v) {
+		cout << "projective_space::line_intersection_type "
+				"after Int_type->compute_heighest_weight_objects" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space::line_intersection_type "
+				"done" << endl;
+	}
+
+}
+
+
 void projective_space::plane_intersection_type(
 	long int *set, int set_size, int threshold,
 	intersection_type *&Int_type,

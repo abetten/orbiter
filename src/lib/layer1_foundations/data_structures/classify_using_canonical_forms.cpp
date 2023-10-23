@@ -109,6 +109,8 @@ void classify_using_canonical_forms::find_object(
 		cout << "classify_using_canonical_forms::find_object" << endl;
 	}
 
+	combinatorics::encoded_combinatorial_object *Enc;
+
 	if (f_v) {
 		cout << "classify_using_canonical_forms::find_object "
 				"before OwCF->run_nauty" << endl;
@@ -116,11 +118,14 @@ void classify_using_canonical_forms::find_object(
 	OwCF->run_nauty(
 			true /* f_compute_canonical_form */, Canonical_form,
 			NO,
+			Enc,
 			verbose_level);
 	if (f_v) {
 		cout << "classify_using_canonical_forms::find_object "
 				"after OwCF->run_nauty" << endl;
 	}
+
+	FREE_OBJECT(Enc);
 
 	uint32_t h;
 	int c;

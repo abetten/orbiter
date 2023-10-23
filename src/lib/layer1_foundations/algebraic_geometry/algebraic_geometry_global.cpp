@@ -353,6 +353,67 @@ void algebraic_geometry_global::affine_map(
 	}
 }
 
+void algebraic_geometry_global::projective_variety(
+		geometry::projective_space *P,
+		std::string &ring_label,
+		std::string &formula_label,
+		std::string &evaluate_text,
+		long int *&Image_pts,
+		long int &N_points,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::projective_variety" << endl;
+	}
+	if (f_v) {
+		cout << "algebraic_geometry_global::projective_variety n = " << P->Subspaces->n << endl;
+	}
+
+
+
+	ring_theory::homogeneous_polynomial_domain *Ring;
+
+	Ring = Get_ring(ring_label);
+
+
+	data_structures::symbolic_object_builder *Object;
+
+	Object = Get_symbol(formula_label);
+
+
+	if (Ring->get_nb_variables() != P->Subspaces->n + 1) {
+		cout << "algebraic_geometry_global::variety "
+				"number of variables is wrong" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "algebraic_geometry_global::projective_variety "
+				"before compute_projective_variety" << endl;
+	}
+	compute_projective_variety(
+			Ring,
+			P,
+			Object,
+			evaluate_text,
+			Image_pts, N_points,
+			verbose_level);
+	if (f_v) {
+		cout << "algebraic_geometry_global::projective_variety "
+				"after compute_projective_variety" << endl;
+	}
+
+
+
+
+
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::projective_variety done" << endl;
+	}
+}
+
 void algebraic_geometry_global::evaluate_regular_map(
 		ring_theory::homogeneous_polynomial_domain *Ring,
 		geometry::projective_space *P,
@@ -575,6 +636,129 @@ void algebraic_geometry_global::evaluate_affine_map(
 		cout << "algebraic_geometry_global::evaluate_affine_map done" << endl;
 	}
 }
+
+
+
+void algebraic_geometry_global::compute_projective_variety(
+		ring_theory::homogeneous_polynomial_domain *Ring,
+		geometry::projective_space *P,
+		data_structures::symbolic_object_builder *Object,
+		std::string &evaluate_text,
+		long int *&Variety, long int &Variety_nb_points,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::compute_projective_variety" << endl;
+	}
+
+	int h;
+	long int i;
+	int k;
+	int *input;
+	int *output;
+	long int N_points_input;
+
+	k = P->Subspaces->n;
+
+	int len;
+
+	len = Object->Formula_vector->len;
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::compute_projective_variety len = " << len << endl;
+	}
+
+
+	geometry::geometry_global Gg;
+
+	N_points_input = P->Subspaces->N_points;
+	if (f_v) {
+		cout << "algebraic_geometry_global::compute_projective_variety "
+				"There are " << N_points_input << " elements in the domain" << endl;
+	}
+
+	Variety = NEW_lint(N_points_input);
+	Variety_nb_points = 0;
+
+
+	input = NEW_int(k + 1);
+	output = NEW_int(len);
+
+
+	data_structures::string_tools ST;
+	std::map<std::string, std::string> symbol_table;
+
+	ST.parse_value_pairs(symbol_table,
+				evaluate_text, verbose_level - 1);
+
+
+	for (h = 0; h < len; h++) {
+
+		cout << "Formula " << h << " : ";
+		Object->Formula_vector->V[h].tree->print_easy(cout);
+		cout << endl;
+
+	}
+
+	for (i = 0; i < N_points_input; i++) {
+
+		P->unrank_point(input, i);
+		//Gg.AG_element_unrank(P->Subspaces->F->q, input, 1, k, i);
+
+		if (f_vv) {
+			cout << "algebraic_geometry_global::compute_projective_variety "
+					"point " << i << " is ";
+			Int_vec_print(cout, input, k + 1);
+			cout << endl;
+		}
+
+		for (h = 0; h < k + 1; h++) {
+
+			symbol_table[Ring->get_symbol(h)] = std::to_string(input[h]);
+
+		}
+
+		for (h = 0; h < len; h++) {
+
+			output[h] = Object->Formula_vector->V[h].tree->evaluate(
+					symbol_table,
+					verbose_level - 2);
+
+		}
+
+		if (f_vv) {
+			cout << "algebraic_geometry_global::compute_projective_variety point " << i << " = ";
+			Int_vec_print(cout, input, k + 1);
+			cout << " evaluates to ";
+			Int_vec_print(cout, output, len);
+			cout << endl;
+		}
+
+		if (Int_vec_is_zero(output, len)) {
+			Variety[Variety_nb_points++] = i;
+			if (f_vv) {
+				cout << "algebraic_geometry_global::compute_projective_variety point on the variety " << i << " = ";
+				Int_vec_print(cout, input, k + 1);
+				cout << endl;
+			}
+		}
+
+
+	}
+
+	FREE_int(input);
+	FREE_int(output);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::compute_projective_variety done" << endl;
+	}
+}
+
+
+
 
 
 

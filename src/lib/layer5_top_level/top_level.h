@@ -231,13 +231,15 @@ namespace projective_geometry {
 	class canonical_form_nauty;
 	class canonical_form_of_variety;
 	class canonical_form_substructure;
+	class classification_of_varieties;
+	class input_objects_of_type_variety;
 	class object_in_projective_space_with_action;
 	class projective_space_activity_description;
 	class projective_space_activity;
 	class projective_space_globals;
 	class projective_space_with_action_description;
 	class projective_space_with_action;
-	class quartic_curve_object;
+	class summary_of_properties_of_objects;
 
 }
 
@@ -303,6 +305,7 @@ namespace applications_in_algebraic_geometry {
 		class quartic_curve_domain_with_action;
 		class quartic_curve_from_surface;
 		class quartic_curve_object_with_action;
+		class quartic_curve_object_with_group;
 
 	}
 
@@ -354,7 +357,7 @@ namespace applications_in_algebraic_geometry {
 		class surface_create_description;
 		class surface_create;
 		class surface_domain_high_level;
-		class surface_object_with_action;
+		class surface_object_with_group;
 		class surface_study;
 		class surface_with_action;
 		class table_of_surfaces;

@@ -51,7 +51,7 @@ finite_field::finite_field()
 	alpha = 0;
 	log10_of_q = 1;
 
-	f_print_as_exponentials = true;
+	//f_print_as_exponentials = true;
 
 	nb_times_mult = 0;
 	nb_times_add = 0;

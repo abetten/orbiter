@@ -899,6 +899,7 @@ void surfaces_arc_lifting_trace::report_product(
 	Up->Lift->A4->Group_element->element_print_latex(Elt, ost);
 	ost << "$$" << endl;
 
+#if 0
 	int f_print_as_exponentials_save = Up->Lift->F->f_print_as_exponentials;
 
 	if (f_print_as_exponentials_save == false) {
@@ -906,6 +907,7 @@ void surfaces_arc_lifting_trace::report_product(
 	}
 
 	Up->Lift->F->f_print_as_exponentials = false;
+#endif
 
 	ost << "$$" << endl;
 	Up->Lift->A4->Group_element->element_print_latex(Elt_Alpha1, ost);
@@ -917,7 +919,7 @@ void surfaces_arc_lifting_trace::report_product(
 	Up->Lift->A4->Group_element->element_print_latex(Elt, ost);
 	ost << "$$" << endl;
 
-	Up->Lift->F->f_print_as_exponentials = f_print_as_exponentials_save;
+	//Up->Lift->F->f_print_as_exponentials = f_print_as_exponentials_save;
 
 
 }

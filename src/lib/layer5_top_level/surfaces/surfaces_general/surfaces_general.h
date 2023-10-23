@@ -101,7 +101,7 @@ public:
 class surface_clebsch_map {
 public:
 
-	surface_object_with_action *SOA;
+	surface_object_with_group *SOA;
 
 	int orbit_idx;
 	int f, l, hds;
@@ -112,7 +112,7 @@ public:
 	surface_clebsch_map();
 	~surface_clebsch_map();
 	void report(std::ostream &ost, int verbose_level);
-	void init(surface_object_with_action *SOA,
+	void init(surface_object_with_group *SOA,
 			int orbit_idx, int verbose_level);
 
 };
@@ -157,7 +157,7 @@ public:
 	int f_has_nice_gens;
 	data_structures_groups::vector_ge *nice_gens;
 
-	surface_object_with_action *SOA;
+	surface_object_with_group *SOG;
 
 
 	surface_create();
@@ -263,7 +263,9 @@ public:
 	void export_something_with_group_element(
 			std::string &what, std::string &label, int verbose_level);
 	void action_on_module(
-			std::string &module_type, std::string &module_basis_label, std::string &gens_label,
+			std::string &module_type,
+			std::string &module_basis_label,
+			std::string &gens_label,
 			int verbose_level);
 	void export_gap(int verbose_level);
 	void do_report(int verbose_level);
@@ -473,24 +475,40 @@ public:
 			std::string &fname, int q, int ocn);
 	void make_fname_surface_report_pdf(
 			std::string &fname, int q, int ocn);
+	void table_of_cubic_surfaces(
+			projective_geometry::projective_space_with_action *PA,
+			int verbose_level);
+
+	// report the data in the knowledge base:
+	void make_table_of_surfaces(int verbose_level);
+	void make_table_of_quartic_curves(int verbose_level);
+	void make_table_of_objects(
+			std::ostream &ost,
+			std::string &prefix,
+			int *Q_table, int Q_table_len,
+			int f_quartic_curves,
+			int verbose_level);
+	void table_top(
+			std::ostream &ost);
+	void table_bottom(
+			std::ostream &ost);
+	void make_table_of_objects_detailed(
+			int *Q_table, int Q_table_len, int verbose_level);
 
 };
 
 
 // #############################################################################
-// surface_object_with_action.cpp
+// surface_object_with_group.cpp
 // #############################################################################
 
 
 //! an instance of a cubic surface together with its stabilizer
 
 
-class surface_object_with_action {
+class surface_object_with_group {
 
 public:
-
-	int q;
-	field_theory::finite_field *F; // do not free
 
 	algebraic_geometry::surface_domain *Surf; // do not free
 	surface_with_action *Surf_A; // do not free
@@ -534,16 +552,20 @@ public:
 
 
 
-	surface_object_with_action();
-	~surface_object_with_action();
+	surface_object_with_group();
+	~surface_object_with_group();
 	void init_equation(
 			surface_with_action *Surf_A, int *eqn,
 			groups::strong_generators *Aut_gens,
+			std::string &label_txt,
+			std::string &label_tex,
 			int verbose_level);
 	void init_with_group(
 			surface_with_action *Surf_A,
 		long int *Lines, int nb_lines, int *eqn,
 		groups::strong_generators *Aut_gens,
+		std::string &label_txt,
+		std::string &label_tex,
 		int f_find_double_six_and_rearrange_lines,
 		int f_has_nice_gens,
 		data_structures_groups::vector_ge *nice_gens,
@@ -631,6 +653,9 @@ public:
 			int *element_data, int nb_elements,
 			int verbose_level);
 	void print_double_sixes(std::ostream &ost);
+	void tactical_decomposition(
+			std::ostream &ost,
+			int verbose_level);
 
 };
 
@@ -808,7 +833,7 @@ public:
 
 	surface_create *SC;
 
-	surface_object_with_action *SOA;
+	surface_object_with_group *SOG;
 
 
 
@@ -819,6 +844,8 @@ public:
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level);
 	void do_export(
+			int verbose_level);
+	void create_table(std::string *&Table, int &nb_cols,
 			int verbose_level);
 	void export_csv(
 			std::string *Table,

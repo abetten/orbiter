@@ -37,7 +37,7 @@ quartic_curve_create::quartic_curve_create()
 	PA = NULL;
 	QCDA = NULL;
 	QO = NULL;
-	QOA = NULL;
+	QOG = NULL;
 
 	f_has_group = false;
 	Sg = NULL;
@@ -110,8 +110,6 @@ void quartic_curve_create::create_quartic_curve(
 
 
 
-	//QC = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_create);
-
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve "
 				"before init" << endl;
@@ -127,7 +125,8 @@ void quartic_curve_create::create_quartic_curve(
 		cout << "quartic_curve_create::create_quartic_curve "
 				"before apply_transformations" << endl;
 	}
-	apply_transformations(Quartic_curve_descr->transform_coeffs,
+	apply_transformations(
+			Quartic_curve_descr->transform_coeffs,
 			Quartic_curve_descr->f_inverse_transform,
 			verbose_level - 2);
 
@@ -310,7 +309,7 @@ void quartic_curve_create::create_quartic_curve_from_description(
 					"after create_quartic_curve_from_catalogue" << endl;
 			cout << "quartic_curve_create::create_quartic_curve_from_description "
 					"info about action:" << endl;
-			QOA->Aut_gens->A->print_info();
+			QOG->Aut_gens->A->print_info();
 		}
 
 
@@ -673,7 +672,8 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue "
 				"before QO->init_equation_and_bitangents" << endl;
 	}
-	QO->init_equation_and_bitangents_and_compute_properties(QCDA->Dom,
+	QO->init_equation_and_bitangents_and_compute_properties(
+			QCDA->Dom,
 			eqn15, bitangents28,
 			verbose_level - 2);
 
@@ -688,7 +688,8 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue "
 				"before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
 	}
-	Sg->stabilizer_of_quartic_curve_from_catalogue(PA->A,
+	Sg->stabilizer_of_quartic_curve_from_catalogue(
+			PA->A,
 		F, iso,
 		verbose_level - 2);
 	f_has_group = true;
@@ -703,19 +704,20 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 		Sg->A->print_info();
 	}
 
-	QOA = NEW_OBJECT(quartic_curve_object_with_action);
+	QOG = NEW_OBJECT(quartic_curve_object_with_group);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue "
-				"before QOA->init" << endl;
+				"before QOG->init" << endl;
 	}
-	QOA->init(DomA,
+	QOG->init(
+			DomA,
 			QO,
 			Sg,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue "
-				"after QOA->init" << endl;
+				"after QOG->init" << endl;
 	}
 
 
@@ -1355,16 +1357,16 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-				"before SC->SOA->compute_orbits_of_automorphism_group" << endl;
+				"before SC->SOG->compute_orbits_of_automorphism_group" << endl;
 	}
-	SC->SOA->compute_orbits_of_automorphism_group(
+	SC->SOG->compute_orbits_of_automorphism_group(
 			verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-				"after SC->SOA->compute_orbits_of_automorphism_group" << endl;
+				"after SC->SOG->compute_orbits_of_automorphism_group" << endl;
 	}
 
-	if (pt_orbit_idx >= SC->SOA->Orbits_on_points_not_on_lines->nb_orbits) {
+	if (pt_orbit_idx >= SC->SOG->Orbits_on_points_not_on_lines->nb_orbits) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"pt_orbit_idx is out of range" << endl;
 		exit(1);
@@ -1374,7 +1376,7 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 	if (f_v) {
 		cout << "Quartic curve associated with surface " << SC->prefix
 				<< " and with orbit " << pt_orbit_idx
-				<< " / " << SC->SOA->Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
+				<< " / " << SC->SOG->Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
 	}
 
 
@@ -1387,7 +1389,8 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"before QC_from_surface->init" << endl;
 	}
-	QC_from_surface->init(SC->SOA, verbose_level);
+	QC_from_surface->init(
+			SC->SOG, verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"after QC_from_surface->init" << endl;
@@ -1397,7 +1400,8 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"before QC_from_surface->init_surface_create" << endl;
 	}
-	QC_from_surface->init_surface_create(SC, verbose_level);
+	QC_from_surface->init_surface_create(
+			SC, verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"after QC_from_surface->init_surface_create" << endl;
@@ -1407,7 +1411,8 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"before QC_from_surface->init_labels" << endl;
 	}
-	QC_from_surface->init_labels(SC->label_txt, SC->label_tex, verbose_level);
+	QC_from_surface->init_labels(
+			SC->label_txt, SC->label_tex, verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"after QC_from_surface->init_labels" << endl;
@@ -1418,7 +1423,8 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"before QC_from_surface->quartic" << endl;
 	}
-	QC_from_surface->quartic(pt_orbit_idx, verbose_level);
+	QC_from_surface->quartic(
+			pt_orbit_idx, verbose_level);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
@@ -1428,12 +1434,12 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-				"before QC_from_surface->compute_stabilizer" << endl;
+				"before QC_from_surface->compute_stabilizer_with_nauty" << endl;
 	}
-	QC_from_surface->compute_stabilizer(verbose_level);
+	QC_from_surface->compute_stabilizer_with_nauty(verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-				"after QC_from_surface->compute_stabilizer" << endl;
+				"after QC_from_surface->compute_stabilizer_with_nauty" << endl;
 	}
 
 
@@ -1468,7 +1474,8 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"before QO->init_equation_and_bitangents_and_compute_properties" << endl;
 	}
-	QO->init_equation_and_bitangents_and_compute_properties(QCDA->Dom,
+	QO->init_equation_and_bitangents_and_compute_properties(
+			QCDA->Dom,
 			QC_from_surface->curve /* eqn15 */,
 			QC_from_surface->Bitangents,
 			verbose_level);
@@ -1477,27 +1484,27 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 				"after QO->init_equation_and_bitangents_and_compute_properties" << endl;
 	}
 
-	//quartic_curve_object_with_action *QA;
 
-	QOA = NEW_OBJECT(quartic_curve_object_with_action);
+	QOG = NEW_OBJECT(quartic_curve_object_with_group);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-				"before QOA->init" << endl;
+				"before QOG->init" << endl;
 	}
-	QOA->init(QCDA,
+	QOG->init(
+			QCDA,
 			QO,
 			QC_from_surface->Stab_gens_quartic,
 			verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-				"after QOA->init" << endl;
+				"after QOG->init" << endl;
 	}
 
 
-	prefix = "surface_" + prefix + "pt_orb_" + std::to_string(pt_orbit_idx);
+	prefix = "surface_" + SC->label_txt + prefix + "_pt_orb_" + std::to_string(pt_orbit_idx);
 
-	label_txt = prefix = "curve from surface";
+	label_txt = prefix;
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface done" << endl;
@@ -1613,18 +1620,22 @@ void quartic_curve_create::apply_single_transformation(
 	Elt3 = NEW_int(A->elt_size_in_int);
 
 
-	A->Group_element->make_element(Elt1, transformation_coeffs, verbose_level);
+	A->Group_element->make_element(
+			Elt1, transformation_coeffs, verbose_level);
 
 	if (f_inverse) {
-		A->Group_element->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
+		A->Group_element->element_invert(
+				Elt1, Elt2, 0 /*verbose_level*/);
 	}
 	else {
-		A->Group_element->element_move(Elt1, Elt2, 0 /*verbose_level*/);
+		A->Group_element->element_move(
+				Elt1, Elt2, 0 /*verbose_level*/);
 	}
 
 	//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
 
-	A->Group_element->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
+	A->Group_element->element_invert(
+			Elt2, Elt3, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "quartic_curve_create::apply_transformations "
@@ -1701,7 +1712,8 @@ void quartic_curve_create::apply_single_transformation(
 			cout << "quartic_curve_create::apply_transformations "
 					"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
 		}
-		SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
+		SG2->init_generators_for_the_conjugate_group_avGa(
+				Sg, Elt2, verbose_level);
 
 		if (f_v) {
 			cout << "quartic_curve_create::apply_transformations "
@@ -1717,7 +1729,7 @@ void quartic_curve_create::apply_single_transformation(
 		}
 		Sg->A->print_info();
 
-		QOA->Aut_gens = Sg;
+		QOG->Aut_gens = Sg;
 
 
 		f_has_nice_gens = false;
@@ -1913,6 +1925,138 @@ void quartic_curve_create::compute_group(
 }
 
 
+void quartic_curve_create::export_something(
+		std::string &what, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_create::export_something" << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	string fname_base;
+
+	fname_base = "quartic_curve_" + label_txt;
+
+	if (f_v) {
+		cout << "quartic_curve_create::export_something "
+				"before QOG->export_something" << endl;
+	}
+	QOG->export_something(what, fname_base, verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_create::export_something "
+				"after QOG->export_something" << endl;
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_create::export_something done" << endl;
+	}
+
+}
+
+void quartic_curve_create::do_report(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_create::do_report" << endl;
+	}
+
+	field_theory::finite_field *F;
+
+	F = QCDA->Dom->F;
+
+	{
+		string fname_report;
+
+		if (Descr->f_label_txt) {
+			fname_report = label_txt + ".tex";
+
+		}
+		else {
+			fname_report = "quartic_curve_" + label_txt + "_report.tex";
+		}
+
+		{
+			ofstream ost(fname_report);
+
+
+			string title, author, extra_praeamble;
+
+			title = label_tex + " over GF(" + std::to_string(F->q) + ")";
+
+
+			l1_interfaces::latex_interface L;
+
+			//latex_head_easy(fp);
+			L.head(ost,
+				false /* f_book */,
+				true /* f_title */,
+				title, author,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
+				extra_praeamble /* extra_praeamble */);
+
+
+
+
+			//ost << "\\subsection*{The surface $" << SC->label_tex << "$}" << endl;
+
+
+			if (QO->QP == NULL) {
+				cout << "quartic_curve_create::do_report "
+						"QO->QP == NULL" << endl;
+				exit(1);
+			}
+
+
+#if 0
+			if (f_v) {
+				cout << "quartic_curve_create::do_report "
+						"before QO->QP->report_properties_simple" << endl;
+			}
+			QO->QP->report_properties_simple(ost, verbose_level);
+			if (f_v) {
+				cout << "quartic_curve_create::do_report "
+						"after QO->QP->report_properties_simple" << endl;
+			}
+#else
+			if (f_v) {
+				cout << "quartic_curve_create::do_report "
+						"before report" << endl;
+			}
+			report(ost, verbose_level);
+			if (f_v) {
+				cout << "quartic_curve_create::do_report "
+						"after report" << endl;
+			}
+#endif
+
+
+			L.foot(ost);
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "Written file " << fname_report << " of size "
+				<< Fio.file_size(fname_report) << endl;
+		}
+
+
+	}
+	if (f_v) {
+		cout << "quartic_curve_create::do_report done" << endl;
+	}
+
+}
+
+
 void quartic_curve_create::report(
 		std::ostream &ost, int verbose_level)
 {
@@ -1941,10 +2085,10 @@ void quartic_curve_create::report(
 	}
 
 
-	if (QOA) {
+	if (QOG) {
 
 		ost << "Automorphism group:\\\\" << endl;
-		QOA->Aut_gens->print_generators_tex(ost);
+		QOG->Aut_gens->print_generators_tex(ost);
 
 	}
 
@@ -1960,30 +2104,16 @@ void quartic_curve_create::report(
 	}
 
 
+	if (f_v) {
+		cout << "quartic_curve_create::report "
+				"before QO->QP->Kovalevski->print_lines_with_points_on_them" << endl;
+	}
+	QO->QP->Kovalevski->print_lines_with_points_on_them(ost);
+	if (f_v) {
+		cout << "quartic_curve_create::report "
+				"after QO->QP->Kovalevski->print_lines_with_points_on_them" << endl;
+	}
 
-	if (QO->QP->pts_on_lines) {
-		if (f_v) {
-			cout << "quartic_curve_create::report "
-					"before QO->QP->print_lines_with_points_on_them" << endl;
-		}
-		QO->QP->print_lines_with_points_on_them(
-				ost, QO->bitangents28, 28, QO->QP->pts_on_lines);
-		if (f_v) {
-			cout << "quartic_curve_create::report "
-					"after QO->QP->print_lines_with_points_on_them" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "quartic_curve_create::report "
-					"before QO->QP->print_bitangents" << endl;
-		}
-		QO->QP->print_bitangents(ost);
-		if (f_v) {
-			cout << "quartic_curve_create::report "
-					"after QO->QP->print_bitangents" << endl;
-		}
-	}
 
 	if (f_v) {
 		cout << "quartic_curve_create::report "
@@ -2067,13 +2197,13 @@ void quartic_curve_create::print_general(
 
 	QO->QP->Kovalevski->print_general(ost);
 
-	ost << "\\hline" << endl;
+	//ost << "\\hline" << endl;
 	ost << "\\mbox{Number of singular points} & "
 			<< QO->QP->nb_singular_pts << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
 
-	if (QOA) {
+	if (QOG) {
 
 		if (f_v) {
 			cout << "quartic_curve_create::print_general "
@@ -2084,11 +2214,11 @@ void quartic_curve_create::print_general(
 
 		if (f_v) {
 			cout << "quartic_curve_create::print_general "
-					"action in QOA->Aut_gens:" << endl;
-			QOA->Aut_gens->A->print_info();
+					"action in QOG->Aut_gens:" << endl;
+			QOG->Aut_gens->A->print_info();
 		}
 
-		QOA->Aut_gens->group_order(go);
+		QOG->Aut_gens->group_order(go);
 
 		ost << "\\mbox{Stabilizer order} & " << go << "\\\\" << endl;
 		ost << "\\hline" << endl;
@@ -2096,7 +2226,7 @@ void quartic_curve_create::print_general(
 
 		std::stringstream orbit_type_on_pts;
 
-		QOA->Aut_gens->orbits_on_set_with_given_action_after_restriction(
+		QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
 				PA->A, QO->Pts, QO->nb_pts,
 				orbit_type_on_pts,
 				0 /*verbose_level */);
@@ -2107,7 +2237,7 @@ void quartic_curve_create::print_general(
 
 		std::stringstream orbit_type_on_bitangents;
 
-		QOA->Aut_gens->orbits_on_set_with_given_action_after_restriction(
+		QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
 				PA->A_on_lines, QO->bitangents28, 28,
 				orbit_type_on_bitangents,
 				0 /*verbose_level */);
@@ -2120,7 +2250,7 @@ void quartic_curve_create::print_general(
 		if (QO->QP) {
 			std::stringstream orbit_type_on_Kovelevski;
 
-			QOA->Aut_gens->orbits_on_set_with_given_action_after_restriction(
+			QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
 					PA->A, QO->QP->Kovalevski->Kovalevski_points, QO->QP->Kovalevski->nb_Kovalevski,
 					orbit_type_on_Kovelevski,
 					0 /*verbose_level */);
@@ -2137,38 +2267,6 @@ void quartic_curve_create::print_general(
 	ost << "\\end{array}" << endl;
 	ost << "$$}" << endl;
 }
-
-void quartic_curve_create::export_something(
-		std::string &what, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "quartic_curve_create::export_something" << endl;
-	}
-
-	data_structures::string_tools ST;
-
-	string fname_base;
-
-	fname_base = "quartic_curve_" + label_txt;
-
-	if (f_v) {
-		cout << "quartic_curve_create::export_something "
-				"before QOA->export_something" << endl;
-	}
-	QOA->export_something(what, fname_base, verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_create::export_something "
-				"after QOA->export_something" << endl;
-	}
-
-	if (f_v) {
-		cout << "quartic_curve_create::export_something done" << endl;
-	}
-
-}
-
 
 
 

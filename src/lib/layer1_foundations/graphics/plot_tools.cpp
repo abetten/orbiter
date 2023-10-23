@@ -90,7 +90,8 @@ void plot_tools::draw_density(
 			}
 		}
 	if (f_vv) {
-		cout << "plot_tools::draw_density outline of size " << outline_sz << ":" << endl;
+		cout << "plot_tools::draw_density "
+				"outline of size " << outline_sz << ":" << endl;
 		for (i = 0; i < outline_sz; i++) {
 			cout << outline_value[i] << " " << outline_number[i] << endl;
 			}
@@ -359,7 +360,6 @@ void plot_tools::projective_plane_draw_grid(
 	
 	if (f_v) {
 		cout << "plot_tools::projective_plane_draw_grid" << endl;
-		//cout << "plot_tools::projective_plane_draw_grid xmax=" << xmax << " ymax=" << ymax << endl;
 	}
 
 
@@ -783,7 +783,9 @@ void plot_tools::draw_mod_n_work(
 			std::vector<int> cyclotomic_set;
 			int a, b, h;
 
-			NT.cyclotomic_set(cyclotomic_set, reps[i], Descr->cyclotomic_sets_q, n, verbose_level);
+			NT.cyclotomic_set(cyclotomic_set,
+					reps[i], Descr->cyclotomic_sets_q, n,
+					verbose_level);
 
 			G.sl_color(3 + i);
 			for (h = 0; h < cyclotomic_set.size(); h++) {
@@ -916,7 +918,8 @@ void plot_tools::draw_point_set_in_plane(
 			cout << "plot_tools::draw_point_set_in_plane "
 					"before projective_plane_draw_grid" << endl;
 		}
-		projective_plane_draw_grid(fname, O,
+		projective_plane_draw_grid(
+				fname, O,
 			q, Table, nb_pts, false, NULL,
 			verbose_level - 1);
 		if (f_v) {

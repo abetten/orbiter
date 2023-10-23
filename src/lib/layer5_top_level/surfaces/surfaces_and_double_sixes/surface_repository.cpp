@@ -51,7 +51,8 @@ surface_repository::~surface_repository()
 }
 
 
-void surface_repository::init(surface_classify_wedge *Wedge, int verbose_level)
+void surface_repository::init(
+		surface_classify_wedge *Wedge, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -539,6 +540,12 @@ void surface_repository::report_surface(
 
 	equation = Eqn + orbit_index * 20;
 
+	string label_txt;
+	string label_tex;
+
+	label_txt = "surface_q" + std::to_string(Wedge->q) + "_iso" + std::to_string(orbit_index);
+	label_tex = "surface\\_q" + std::to_string(Wedge->q) + "\\_iso" + std::to_string(orbit_index);
+
 	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 
 	if (f_v) {
@@ -550,6 +557,7 @@ void surface_repository::report_surface(
 			Wedge->Surf,
 			Lines + orbit_index * 27,
 			equation,
+			label_txt, label_tex,
 			true /*f_find_double_six_and_rearrange_lines*/,
 			verbose_level - 2);
 	if (f_v) {
@@ -584,9 +592,9 @@ void surface_repository::report_surface(
 	SO->SOP->print_equation(ost);
 
 
-	cubic_surfaces_in_general::surface_object_with_action *SOA;
+	cubic_surfaces_in_general::surface_object_with_group *SOA;
 
-	SOA = NEW_OBJECT(cubic_surfaces_in_general::surface_object_with_action);
+	SOA = NEW_OBJECT(cubic_surfaces_in_general::surface_object_with_group);
 
 	if (f_v) {
 		cout << "surface_repository::report_surface "

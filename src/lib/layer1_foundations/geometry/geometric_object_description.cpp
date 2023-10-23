@@ -97,28 +97,30 @@ geometric_object_description::geometric_object_description()
 	f_Maruta_Hamada_arc = false;
 
 	f_projective_variety = false;
-	//projective_variety_ring_label
-	//variety_label;
-	//variety_label_txt
-	//variety_coeffs;
-	//Monomial_ordering_type = t_PART;
+	//std::string projective_variety_ring_label
+	//std::string variety_label;
+	//std::string variety_label_txt
+	//std::string variety_coeffs;
+	//std::string Monomial_ordering_type = t_PART;
 
 
 	f_intersection_of_zariski_open_sets = false;
-	//Variety_coeffs
+	//std::string Variety_coeffs
 
 	f_number_of_conditions_satisfied = false;
 	//std::string number_of_conditions_satisfied_fname;
 
 
 	f_projective_curve = false;
-	//projective_curve_ring_label
-	//curve_label_txt;
-	//curve_label_tex;
-	//curve_coeffs = NULL;
+	//std::string projective_curve_ring_label
+	//std::string curve_label_txt;
+	//std::string curve_label_tex;
+	//std::string curve_coeffs = NULL;
 
 	f_set = false;
-	//set_text;
+	//std::string set_label_txt;
+	//std::string set_label_tex;
+	//std::string set_text;
 
 }
 
@@ -439,9 +441,13 @@ int geometric_object_description::read_arguments(
 #endif
 		else if (ST.stringcmp(argv[i], "-set") == 0) {
 			f_set = true;
+			set_label_txt.assign(argv[++i]);
+			set_label_tex.assign(argv[++i]);
 			set_text.assign(argv[++i]);
-			cout << "-set " << set_text << endl;
+			cout << "-set " << set_label_txt << " " << set_label_tex << " " << set_text << endl;
 		}
+		//std::string set_label_txt;
+		//std::string set_label_tex;
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
@@ -599,7 +605,7 @@ void geometric_object_description::print()
 				<< curve_coeffs << endl;
 	}
 	if (f_set) {
-		cout << "-set " << set_text << endl;
+		cout << "-set " << set_label_txt << " " << set_label_tex << " " << set_text << endl;
 	}
 }
 

@@ -28,6 +28,9 @@ surface_object::surface_object()
 	F = NULL;
 	Surf = NULL;
 
+	//std::string label_txt;
+	//std::string label_tex;
+
 	//int Lines[27];
 	//int eqn[20];
 
@@ -69,6 +72,8 @@ surface_object::~surface_object()
 
 void surface_object::init_equation_points_and_lines_only(
 		surface_domain *Surf, int *eqn,
+		std::string &label_txt,
+		std::string &label_tex,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -82,6 +87,9 @@ void surface_object::init_equation_points_and_lines_only(
 	surface_object::Surf = Surf;
 	F = Surf->F;
 	q = F->q;
+
+	surface_object::label_txt = label_txt;
+	surface_object::label_txt = label_tex;
 
 	//int_vec_copy(Lines, surface_object::Lines, 27);
 	Int_vec_copy(eqn, surface_object::eqn, 20);
@@ -123,6 +131,8 @@ void surface_object::init_equation_points_and_lines_only(
 
 void surface_object::init_equation(
 		surface_domain *Surf, int *eqn,
+		std::string &label_txt,
+		std::string &label_tex,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -135,7 +145,7 @@ void surface_object::init_equation(
 		cout << "surface_object::init_equation "
 				"before init_equation_points_and_lines_only" << endl;
 	}
-	init_equation_points_and_lines_only(Surf, eqn, verbose_level);
+	init_equation_points_and_lines_only(Surf, eqn, label_txt, label_tex, verbose_level);
 	if (f_v) {
 		cout << "surface_object::init_equation "
 				"after init_equation_points_and_lines_only" << endl;
@@ -376,6 +386,8 @@ void surface_object::find_real_lines(
 void surface_object::init_with_27_lines(
 		surface_domain *Surf,
 	long int *Lines27, int *eqn,
+	std::string &label_txt,
+	std::string &label_tex,
 	int f_find_double_six_and_rearrange_lines, 
 	int verbose_level)
 {
@@ -388,6 +400,8 @@ void surface_object::init_with_27_lines(
 	F = Surf->F;
 	q = F->q;
 
+	surface_object::label_txt = label_txt;
+	surface_object::label_txt = label_tex;
 
 
 	nb_lines = 27;
@@ -3023,6 +3037,32 @@ the_end:
 	}
 	return image;
 
+}
+
+std::string surface_object::stringify_eqn()
+{
+	string s;
+
+	s = Int_vec_stringify(eqn, 20);
+	return s;
+}
+
+
+
+std::string surface_object::stringify_Pts()
+{
+	string s;
+
+	s = Lint_vec_stringify(Pts, nb_pts);
+	return s;
+}
+
+std::string surface_object::stringify_Lines()
+{
+	string s;
+
+	s = Lint_vec_stringify(Lines, nb_lines);
+	return s;
 }
 
 

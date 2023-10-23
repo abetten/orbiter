@@ -322,12 +322,14 @@ public:
 			geometry::object_with_canonical_form *OwCF,
 			int input_idx, long int &ago, int &f_reject,
 			l1_interfaces::nauty_output *&NO,
+			combinatorics::encoded_combinatorial_object *&Enc,
 			int verbose_level);
 	int process_object(
 			geometry::object_with_canonical_form *OwCF,
 		long int &ago,
 		int &iso_idx_if_found,
 		l1_interfaces::nauty_output *&NO,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level);
 	// returns f_found, which is true if the object is already in the list
 	void report_summary_of_orbits(
@@ -754,7 +756,7 @@ public:
 	int nb_flags;
 	int nb_rows;
 	int nb_cols;
-	int *partition;
+	int *partition; // [canonical_labeling_len]
 
 	int canonical_labeling_len; // = nb_rows + nb_cols
 
@@ -787,6 +789,7 @@ public:
 			l1_interfaces::nauty_output *NO,
 			int verbose_level);
 	void print_incma();
+	void save_incma(std::string &fname_base, int verbose_level);
 	void print_partition();
 	void compute_canonical_incma(
 			int *canonical_labeling,

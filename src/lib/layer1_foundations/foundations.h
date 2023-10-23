@@ -558,7 +558,7 @@ namespace knowledge_base {
 
 
 
-//! interface to external software such as latex, magma, gap, nauty, povray, as well as to Sajeeb's expression parser
+//! interface to external software, including to Sajeeb's expression parser
 
 namespace l1_interfaces {
 
@@ -859,6 +859,9 @@ namespace solvers {
 #define Int_vec_print_integer_matrix_in_C_source(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_in_C_source(A, B, C, D)
 
 #define Int_vec_apply_lint(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->apply_lint(A, B, C, D)
+#define Lint_vec_apply(from, through, to, len) orbiter_kernel_system::Orbiter->Lint_vec->apply(from, through, to, len)
+
+
 
 #define Int_vec_mone(A, B) orbiter_kernel_system::Orbiter->Int_vec->mone(A, B)
 #define Lint_vec_mone(A, B) orbiter_kernel_system::Orbiter->Lint_vec->mone(A, B)
@@ -887,9 +890,13 @@ namespace solvers {
 #define Int_vec_find_first_nonzero_entry(A, B) pivot = orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(A, B)
 
 
+#define Int_vec_compare(p, q, len) orbiter_kernel_system::Orbiter->Int_vec->compare(p, q, len)
+
 #define Int_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, v, len)
 #define Lint_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, v, len)
 
+#define Int_vec_stringify(v, len) orbiter_kernel_system::Orbiter->Int_vec->stringify(v, len)
+#define Lint_vec_stringify(v, len) orbiter_kernel_system::Orbiter->Lint_vec->stringify(v, len)
 
 #define Get_vector(A) orbiter_kernel_system::Orbiter->get_object_of_type_vector(A)
 #define Get_int_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_int_vector_from_label(A, B, C, D)

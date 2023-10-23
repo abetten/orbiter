@@ -851,20 +851,24 @@ void incidence_structure::compute_TDO_safe(
 
 		if (EVEN(i)) {
 			if (f_v) {
-				cout << "incidence_structure::compute_TDO_safe before refine_column_partition_safe" << endl;
+				cout << "incidence_structure::compute_TDO_safe "
+						"before refine_column_partition_safe" << endl;
 			}
 			f_refine = refine_column_partition_safe(PStack, verbose_level - 2);
 			if (f_v) {
-				cout << "incidence_structure::compute_TDO_safe after refine_column_partition_safe" << endl;
+				cout << "incidence_structure::compute_TDO_safe "
+						"after refine_column_partition_safe" << endl;
 			}
 		}
 		else {
 			if (f_v) {
-				cout << "incidence_structure::compute_TDO_safe before refine_row_partition_safe" << endl;
+				cout << "incidence_structure::compute_TDO_safe "
+						"before refine_row_partition_safe" << endl;
 			}
 			f_refine = refine_row_partition_safe(PStack, verbose_level - 2);
 			if (f_v) {
-				cout << "incidence_structure::compute_TDO_safe after refine_row_partition_safe" << endl;
+				cout << "incidence_structure::compute_TDO_safe "
+						"after refine_row_partition_safe" << endl;
 			}
 		}
 
@@ -884,7 +888,7 @@ void incidence_structure::compute_TDO_safe(
 				PStack.print_classes_points_and_lines(cout);
 			}
 		}
-		
+
 		if (!f_refine_prev && !f_refine) {
 			if (f_v) {
 				cout << "incidence_structure::compute_TDO_safe "
@@ -898,6 +902,111 @@ void incidence_structure::compute_TDO_safe(
 done:
 	if (f_v) {
 		cout << "incidence_structure::compute_TDO_safe done" << endl;
+	}
+
+}
+
+
+void incidence_structure::compute_TDO_safe_and_write_files(
+		data_structures::partitionstack &PStack,
+	int depth,
+	std::string &fname_base,
+	std::vector<std::string> &file_names,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int f_refine, f_refine_prev;
+	int i;
+
+	if (f_v) {
+		cout << "incidence_structure::compute_TDO_safe_and_write_files" << endl;
+	}
+
+	f_refine_prev = true;
+	for (i = 0; i < depth; i++) {
+		if (f_v) {
+			cout << "incidence_structure::compute_TDO_safe_and_write_files i = " << i << endl;
+		}
+
+
+		string fname;
+
+		fname = fname_base + std::to_string(i);
+		file_names.push_back(fname);
+
+
+		if (EVEN(i)) {
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe_and_write_files "
+						"before refine_column_partition_safe" << endl;
+			}
+			f_refine = refine_column_partition_safe(
+					PStack, verbose_level - 2);
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe_and_write_files "
+						"after refine_column_partition_safe" << endl;
+			}
+
+			{
+				ofstream ost(fname);
+
+				get_and_print_column_tactical_decomposition_scheme_tex(
+					ost, false /* f_enter_math */,
+					true /* f_print_subscripts */, PStack);
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe_and_write_files "
+						"before refine_row_partition_safe" << endl;
+			}
+			f_refine = refine_row_partition_safe(
+					PStack, verbose_level - 2);
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe_and_write_files "
+						"after refine_row_partition_safe" << endl;
+			}
+			{
+				ofstream ost(fname);
+
+				get_and_print_row_tactical_decomposition_scheme_tex(
+						ost, false /* f_enter_math */,
+						true /* f_print_subscripts */, PStack);
+			}
+		}
+
+		if (f_v) {
+			cout << "incidence_structure::compute_TDO_safe_and_write_files "
+					"i=" << i << " after refine" << endl;
+			if (EVEN(i)) {
+				int f_list_incidences = false;
+				get_and_print_col_decomposition_scheme(PStack,
+						f_list_incidences, false, verbose_level);
+				PStack.print_classes_points_and_lines(cout);
+			}
+			else {
+				int f_list_incidences = false;
+				get_and_print_row_decomposition_scheme(PStack,
+						f_list_incidences, false, verbose_level);
+				PStack.print_classes_points_and_lines(cout);
+			}
+		}
+		
+		if (!f_refine_prev && !f_refine) {
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe_and_write_files "
+						"no refinement, we are done" << endl;
+			}
+			goto done;
+		}
+		f_refine_prev = f_refine;
+	}
+
+done:
+	if (f_v) {
+		cout << "incidence_structure::compute_TDO_safe_and_write_files done" << endl;
 	}
 	
 }

@@ -37,6 +37,9 @@ finite_field_description::finite_field_description()
 	f_symbol = false;
 	//std::string symbol_label;
 
+	f_print_as_exponentials = false;
+	f_print_numerically = false;
+
 }
 
 finite_field_description::~finite_field_description()
@@ -88,6 +91,21 @@ int finite_field_description::read_arguments(
 				cout << "-symbol " << symbol_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-print_as_exponentials") == 0) {
+			f_print_as_exponentials = true;
+			f_print_numerically = false;
+			if (f_v) {
+				cout << "-print_as_exponentials " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-print_numerically") == 0) {
+			f_print_numerically = true;
+			f_print_as_exponentials = false;
+			if (f_v) {
+				cout << "-print_numerically " << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -124,6 +142,12 @@ void finite_field_description::print()
 	}
 	if (f_symbol) {
 		cout << "-symbol " << symbol_label << endl;
+	}
+	if (f_print_as_exponentials) {
+		cout << "-print_as_exponentials " << endl;
+	}
+	if (f_print_numerically) {
+		cout << "-print_numerically " << endl;
 	}
 }
 

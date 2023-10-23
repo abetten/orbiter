@@ -43,6 +43,7 @@ interface_projective::interface_projective()
 	FP_descr = NULL;
 
 	f_make_table_of_surfaces = false;
+	f_make_table_of_quartic_curves = false;
 
 	f_create_surface_reports = false;
 	//std::string create_surface_reports_field_orders_text;
@@ -73,6 +74,9 @@ void interface_projective::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		cout << "-make_table_of_surfaces " << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-make_table_of_quartic_curves") == 0) {
+		cout << "-make_table_of_quartic_curves " << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-create_surface_reports") == 0) {
 		cout << "-create_surface_reports <string : field orders>" << endl;
@@ -105,6 +109,9 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-make_table_of_quartic_curves") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-create_surface_reports") == 0) {
@@ -182,6 +189,12 @@ void interface_projective::read_arguments(int argc,
 			cout << "-make_table_of_surfaces" << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-make_table_of_quartic_curves") == 0) {
+		f_make_table_of_quartic_curves = true;
+		if (f_v) {
+			cout << "-make_table_of_quartic_curves" << endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-create_surface_atlas") == 0) {
 		f_create_surface_atlas = true;
 		create_surface_atlas_q_max = ST.strtoi(argv[++i]);
@@ -231,6 +244,9 @@ void interface_projective::print()
 	if (f_make_table_of_surfaces) {
 		cout << "-make_table_of_surfaces" << endl;
 	}
+	if (f_make_table_of_quartic_curves) {
+		cout << "-make_table_of_quartic_curves" << endl;
+	}
 	if (f_create_surface_atlas) {
 		cout << "-create_surface_atlas " << create_surface_atlas_q_max << endl;
 	}
@@ -277,9 +293,15 @@ void interface_projective::worker(int verbose_level)
 
 	else if (f_make_table_of_surfaces) {
 
-		algebraic_geometry::surface_domain Surf;
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
 
-		Surf.make_table_of_surfaces(verbose_level);
+		SH.make_table_of_surfaces(verbose_level);
+	}
+	else if (f_make_table_of_quartic_curves) {
+
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
+
+		SH.make_table_of_quartic_curves(verbose_level);
 	}
 
 	else if (f_create_surface_reports) {
