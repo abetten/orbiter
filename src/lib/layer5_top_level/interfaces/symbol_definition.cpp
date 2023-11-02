@@ -925,7 +925,7 @@ void symbol_definition::read_definition(
 
 
 		Symbolic_object_builder_description =
-				NEW_OBJECT(data_structures::symbolic_object_builder_description);
+				NEW_OBJECT(expression_parser::symbolic_object_builder_description);
 		if (f_v) {
 			cout << "reading -symbolic_object" << endl;
 		}
@@ -3645,7 +3645,7 @@ void symbol_definition::definition_of_vector(
 
 void symbol_definition::definition_of_symbolic_object(
 		std::string &label,
-		data_structures::symbolic_object_builder_description *Descr,
+		expression_parser::symbolic_object_builder_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3656,9 +3656,9 @@ void symbol_definition::definition_of_symbolic_object(
 
 
 
-	data_structures::symbolic_object_builder *SB;
+	expression_parser::symbolic_object_builder *SB;
 
-	SB = NEW_OBJECT(data_structures::symbolic_object_builder);
+	SB = NEW_OBJECT(expression_parser::symbolic_object_builder);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_symbolic_object "

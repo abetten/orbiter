@@ -1116,6 +1116,9 @@ public:
 	int f_recognize;
 	std::vector<std::string> recognize;
 
+	int f_transporter;
+	std::string transporter_label_of_set;
+
 	int f_report_options;
 	poset_classification::poset_classification_report_options
 		*report_options;
@@ -1165,6 +1168,8 @@ public:
 	void do_stabilizer_of_orbit_rep(int verbose_level);
 	void do_Kramer_Mesner_matrix(int verbose_level);
 	void do_recognize(int verbose_level);
+	void do_transporter(
+			std::string &label_of_set, int verbose_level);
 
 };
 
@@ -1210,7 +1215,11 @@ public:
 	std::string on_partition_poset_classification_control_label;
 
 	int f_on_polynomials;
-	int on_polynomials_degree;
+	std::string on_polynomials_ring;
+
+	int f_of_one_polynomial;
+	std::string of_one_polynomial_ring;
+	std::string of_one_polynomial_equation;
 
 	int f_classification_by_canonical_form;
 	projective_geometry::canonical_form_classifier_description
@@ -1273,6 +1282,9 @@ public:
 	int f_has_On_polynomials;
 	orbits_on_polynomials *On_polynomials;
 
+	int f_has_Of_One_polynomial;
+	orbits_on_polynomials *Of_One_polynomial;
+
 	int f_has_classification_by_canonical_form;
 	projective_geometry::canonical_form_classifier *Canonical_form_classifier;
 
@@ -1307,7 +1319,7 @@ public:
 
 	ring_theory::homogeneous_polynomial_domain *HPD;
 
-	geometry::projective_space *P;
+	//geometry::projective_space *P;
 
 	actions::action *A2;
 
@@ -1317,6 +1329,8 @@ public:
 
 	groups::schreier *Sch;
 	ring_theory::longinteger_object full_go;
+
+	orbits_schreier::orbit_of_equations *Orb;
 
 	std::string fname_base;
 	std::string fname_csv;
@@ -1331,7 +1345,12 @@ public:
 	~orbits_on_polynomials();
 	void init(
 			groups::linear_group *LG,
-			int degree_of_poly,
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int verbose_level);
+	void orbit_of_one_polynomial(
+			groups::linear_group *LG,
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			expression_parser::symbolic_object_builder *Symbol,
 			int verbose_level);
 	void compute_points(int verbose_level);
 	void report(int verbose_level);

@@ -326,7 +326,6 @@ void quartic_curve_create::create_quartic_curve_from_description(
 		create_quartic_curve_by_equation(
 				Descr->equation_name_of_formula,
 				Descr->equation_name_of_formula_tex,
-				Descr->equation_managed_variables,
 				Descr->equation_text,
 				Descr->equation_parameters,
 				Descr->equation_parameters_tex,
@@ -736,7 +735,6 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 void quartic_curve_create::create_quartic_curve_by_equation(
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
-		std::string &managed_variables,
 		std::string &equation_text,
 		std::string &equation_parameters,
 		std::string &equation_parameters_tex,
@@ -748,6 +746,11 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_equation" << endl;
 	}
+
+#if 0
+
+
+
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_equation" << endl;
@@ -965,20 +968,26 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 				"we need exactly 3 variables" << endl;
 		exit(1);
 	}
-
+#endif
 
 	// create the polynomial ring:
 
 
-	int nb_vars, degree;
 
-	nb_vars = 3;
-	degree = 4;
+
+	//int nb_vars, degree;
+
+	//nb_vars = 3;
+	//degree = 4;
 
 	ring_theory::homogeneous_polynomial_domain *Poly;
 
-	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	//Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
+
+	Poly = QCDA->Dom->Poly4_3;
+
+#if 0
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_equation "
 				"before Poly->init" << endl;
@@ -991,6 +1000,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		cout << "quartic_curve_create::create_quartic_curve_by_equation "
 				"after Poly->init" << endl;
 	}
+#endif
 
 	int nb_monomials;
 
@@ -1003,12 +1013,38 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		exit(1);
 	}
 
+	int *coeffs15;
+	int nb_coeffs;
 
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_equation "
+				"before Poly->parse_equation_and_substitute_parameters" << endl;
+	}
+	Poly->parse_equation_and_substitute_parameters(
+			name_of_formula,
+			name_of_formula_tex,
+			equation_text,
+			equation_parameters,
+			equation_parameter_values,
+			coeffs15, nb_coeffs,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_equation "
+				"after Poly->parse_equation_and_substitute_parameters" << endl;
+	}
+
+	if (nb_coeffs != 15) {
+		cout << "quartic_curve_create::create_quartic_curve_by_equation "
+				"nb_coeffs != 15" << endl;
+		exit(1);
+	}
+
+#if 0
 	// build the equation of the quartic curve from the table of coefficients
 	// and monomials:
 
 	int i, index;
-	int coeffs15[15];
+	//int coeffs15[15];
 
 	Int_vec_zero(coeffs15, 15);
 
@@ -1017,14 +1053,16 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		coeffs15[index] = Coeff[i];
 	}
 
+	FREE_OBJECT(Poly);
+
+#endif
+
 	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
+		cout << "quartic_curve_create::create_quartic_curve_by_equation "
 				"coeffs15: ";
 		Int_vec_print(cout, coeffs15, 15);
 		cout << endl;
 	}
-
-	FREE_OBJECT(Poly);
 
 
 
@@ -1306,6 +1344,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	cout << "label_tex = " << label_tex << endl;
 
 
+	FREE_int(coeffs15);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_equation done" << endl;

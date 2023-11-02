@@ -771,7 +771,7 @@ vector_builder *orbiter_session::get_object_of_type_vector(
 
 }
 
-data_structures::symbolic_object_builder *orbiter_session::get_object_of_type_symbolic_object(
+expression_parser::symbolic_object_builder *orbiter_session::get_object_of_type_symbolic_object(
 		std::string &label)
 {
 	int idx;
@@ -785,7 +785,7 @@ data_structures::symbolic_object_builder *orbiter_session::get_object_of_type_sy
 		cout << "orbiter_session::get_object_of_type_symbolic_object object type != t_symbolic_object" << endl;
 		exit(1);
 	}
-	return (data_structures::symbolic_object_builder *) get_object(idx);
+	return (expression_parser::symbolic_object_builder *) get_object(idx);
 
 
 }
@@ -843,6 +843,10 @@ void orbiter_session::stop_memory_debug()
 	f_memory_debug = false;
 	cout << "memory debugging stopped" << endl;
 }
+
+
+
+
 
 
 }}}

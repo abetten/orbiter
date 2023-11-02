@@ -148,7 +148,7 @@ void set_builder_description::print()
 		cout << "-end" << endl;
 	}
 	if (f_here) {
-		cout << "-here" << here_text << endl;
+		cout << "-here " << here_text << endl;
 	}
 	if (f_file) {
 		cout << "-file " << file_name << endl;

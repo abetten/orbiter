@@ -1,5 +1,5 @@
 /*
- * formula_activity.cpp
+ * symbolic_object_activity.cpp
  *
  *  Created on: Feb 4, 2022
  *      Author: betten
@@ -20,42 +20,44 @@ namespace layer1_foundations {
 namespace expression_parser {
 
 
-formula_activity::formula_activity()
+symbolic_object_activity::symbolic_object_activity()
 {
 	Descr = NULL;
 	f = NULL;
 }
 
-formula_activity::~formula_activity()
+symbolic_object_activity::~symbolic_object_activity()
 {
 }
 
-void formula_activity::init(formula_activity_description *Descr,
-		formula *f,
+void symbolic_object_activity::init(
+		symbolic_object_activity_description *Descr,
+		symbolic_object_builder *f,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "formula_activity::init" << endl;
+		cout << "symbolic_object_activity::init" << endl;
 	}
 
-	formula_activity::Descr = Descr;
-	formula_activity::f = f;
+	symbolic_object_activity::Descr = Descr;
+	symbolic_object_activity::f = f;
 	if (f_v) {
-		cout << "formula_activity::init done" << endl;
+		cout << "symbolic_object_activity::init done" << endl;
 	}
 }
 
-void formula_activity::perform_activity(int verbose_level)
+void symbolic_object_activity::perform_activity(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "formula_activity::perform_activity" << endl;
+		cout << "symbolic_object_activity::perform_activity" << endl;
 	}
 
 
+#if 0
 	if (Descr->f_export) {
 
 		std::string fname;
@@ -138,17 +140,17 @@ void formula_activity::perform_activity(int verbose_level)
 				verbose_level);
 
 	}
-
+#endif
 
 
 	if (f_v) {
-		cout << "formula_activity::perform_activity done" << endl;
+		cout << "symbolic_object_activity::perform_activity done" << endl;
 	}
 
 }
 
-
-void formula_activity::do_sweep(int f_affine,
+#if 0
+void symbolic_object_activity::do_sweep(int f_affine,
 		formula *f,
 		std::string &sweep_variables,
 		int verbose_level)
@@ -156,7 +158,7 @@ void formula_activity::do_sweep(int f_affine,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "formula_activity::do_sweep" << endl;
+		cout << "symbolic_object_activity::do_sweep" << endl;
 	}
 
 
@@ -317,11 +319,11 @@ void formula_activity::do_sweep(int f_affine,
 	FREE_OBJECT(Poly);
 
 	if (f_v) {
-		cout << "formula_activity::do_sweep done" << endl;
+		cout << "symbolic_object_activity::do_sweep done" << endl;
 	}
 
 }
-
+#endif
 
 }}}
 

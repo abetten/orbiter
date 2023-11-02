@@ -97,6 +97,132 @@ void classification_of_combinatorial_objects::init_after_nauty(
 	}
 }
 
+void classification_of_combinatorial_objects::classification_write_file(
+		std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::classification_write_file" << endl;
+	}
+
+	l1_interfaces::latex_interface L;
+	int iso;
+
+	combinatorics::encoded_combinatorial_object **Enc;
+
+	Enc = (combinatorics::encoded_combinatorial_object **) NEW_pvoid(CO->CB->nb_types);
+
+	for (iso = 0; iso < CO->CB->nb_types; iso++) {
+
+		if (f_v ) {
+			cout << "Isomorphism type " << iso << " / " << CO->CB->nb_types << endl;
+		}
+		cout << " is original object "
+			<< CO->CB->Type_rep[iso] << " and appears "
+			<< CO->CB->Type_mult[iso] << " times: \\\\" << endl;
+
+
+		data_structures::sorting Sorting;
+		int *Input_objects;
+		int nb_input_objects;
+		//int object_idx;
+
+		CO->CB->C_type_of->get_class_by_value(Input_objects,
+				nb_input_objects, iso, 0 /*verbose_level */);
+		Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
+
+		cout << "This isomorphism type appears " << nb_input_objects
+				<< " times, namely for the following "
+				<< nb_input_objects << " input objects: " << endl;
+		if (nb_input_objects < 10) {
+			cout << "$" << endl;
+			L.int_set_print_tex(
+					cout, Input_objects, nb_input_objects);
+			cout << "$\\\\" << endl;
+		}
+		else {
+			cout << "Too big to print. \\\\" << endl;
+#if 0
+			fp << "$$" << endl;
+			L.int_vec_print_as_matrix(fp, Input_objects,
+				nb_input_objects, 10 /* width */, true /* f_tex */);
+			fp << "$$" << endl;
+#endif
+		}
+
+		//object_idx = Input_objects[0];
+		geometry::object_with_canonical_form *OwCF = CO->OWCF_transversal[iso];
+
+
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex_detailed "
+					"before encode_incma" << endl;
+		}
+		OwCF->encode_incma(Enc[iso], verbose_level);
+
+		FREE_int(Input_objects);
+
+	}
+
+	string *Table;
+	int nb_c = 6;
+
+	Table = new string[CO->CB->nb_types * nb_c];
+
+	for (iso = 0; iso < CO->CB->nb_types; iso++) {
+
+
+		//int nb_points, nb_blocks;
+		//int *Inc;
+
+		//nb_points = Enc[iso]->nb_rows;
+		//nb_blocks = Enc[iso]->nb_cols;
+		//Inc = Enc[iso]->get_Incma();
+
+		string s_input_idx;
+		string s_nb_rows;
+		string s_nb_cols;
+		string s_nb_flags;
+		string s_ago;
+		string s_incma;
+
+		s_input_idx = std::to_string(CO->CB->Type_rep[iso]);
+		s_nb_rows = std::to_string(Enc[iso]->nb_rows);
+		s_nb_cols = std::to_string(Enc[iso]->nb_cols);
+		s_nb_flags = std::to_string(Enc[iso]->get_nb_flags());
+		s_ago = OwP[iso].A_perm->group_order_as_string();
+		s_incma = Enc[iso]->stringify_incma();
+
+		Table[iso * nb_c + 0] = s_input_idx;
+		Table[iso * nb_c + 1] = s_nb_rows;
+		Table[iso * nb_c + 2] = s_nb_cols;
+		Table[iso * nb_c + 3] = s_nb_flags;
+		Table[iso * nb_c + 4] = s_ago;
+		Table[iso * nb_c + 5] = "\"" + s_incma + "\"";
+
+
+	}
+
+	string fname;
+	string headings;
+
+	headings.assign("input,nb_rows,nb_cols,nb_flags,ago,flags");
+	orbiter_kernel_system::file_io Fio;
+
+	fname = fname_base + "_classification_data.csv";
+
+	Fio.Csv_file_support->write_table_of_strings(fname,
+			CO->CB->nb_types, nb_c, Table,
+			headings,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::classification_write_file done" << endl;
+	}
+}
 
 void classification_of_combinatorial_objects::classification_report(
 		combinatorics::classification_of_objects_report_options

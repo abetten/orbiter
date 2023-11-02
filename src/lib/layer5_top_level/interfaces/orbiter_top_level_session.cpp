@@ -836,9 +836,9 @@ void free_symbol_table_entry_callback(
 			cout << "t_symbolic_object" << endl;
 		}
 
-		data_structures::symbolic_object_builder *SB;
+		expression_parser::symbolic_object_builder *SB;
 
-		SB = (data_structures::symbolic_object_builder *) Symb->ptr;
+		SB = (expression_parser::symbolic_object_builder *) Symb->ptr;
 
 		FREE_OBJECT(SB);
 		Symb->ptr = NULL;

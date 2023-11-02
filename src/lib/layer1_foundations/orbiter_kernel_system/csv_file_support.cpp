@@ -1748,7 +1748,45 @@ void csv_file_support::csv_file_sort_rows_and_remove_duplicates(
 	}
 }
 
+void csv_file_support::write_table_of_strings(std::string &fname,
+		int nb_rows, int nb_cols, std::string *Table,
+		std::string &headings,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings "
+				"fname = "<< fname << endl;
+	}
+
+
+	{
+		ofstream f(fname);
+		int i, j;
+
+		f << "Row," << headings;
+		f << endl;
+		for (i = 0; i < nb_rows; i++) {
+			f << i;
+
+			for (j = 0; j < nb_cols; j++) {
+				f << "," << Table[i * nb_cols + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio->file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings done" << endl;
+	}
+}
 
 
 

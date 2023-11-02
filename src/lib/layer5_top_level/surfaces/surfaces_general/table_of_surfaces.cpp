@@ -292,36 +292,31 @@ void table_of_surfaces::export_csv(
 
 	orbiter_kernel_system::file_io Fio;
 
+
 	string fname;
-	fname = "table_of_cubic_surfaces_q" + std::to_string(PA->F->q) + "_info.csv";
+	string headings;
 
-	{
-		ofstream f(fname);
-		int i, j;
-
-		f << "Row,OCN,CollStabOrder,ProjStabOrder,nbPts,nbLines,"
+	headings.assign("OCN,CollStabOrder,ProjStabOrder,nbPts,nbLines,"
 				"nbE,nbDouble,nbSingle,nbPtsNotOn,nbHesse,nbAxes,"
 				"nbOrbE,nbOrbDouble,nbOrbPtsNotOn,nbOrbLines,"
 				"nbOrbSingleSix,nbOrbTriPlanes,nbOrbHesse,nbOrbTrihedralPairs,"
-				"Eqn20,Equation,Lines";
+				"Eqn20,Equation,Lines");
 
-
-
-		f << endl;
-		for (i = 0; i < nb_cubic_surfaces; i++) {
-			f << i;
-			for (j = 0; j < nb_cols; j++) {
-				f << "," << Table[i * nb_cols + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-
+	fname = "table_of_cubic_surfaces_q" + std::to_string(PA->F->q) + "_info.csv";
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "table_of_surfaces::export_csv "
+				"before Fio.Csv_file_support->write_table_of_strings" << endl;
 	}
+	Fio.Csv_file_support->write_table_of_strings(fname,
+			nb_cubic_surfaces, nb_cols, Table,
+			headings,
+			verbose_level);
+	if (f_v) {
+		cout << "table_of_surfaces::export_csv "
+				"after Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "table_of_surfaces::export_csv done" << endl;

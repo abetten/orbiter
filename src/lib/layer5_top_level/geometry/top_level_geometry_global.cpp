@@ -189,6 +189,18 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 
 
+		geometry::decomposition *Decomposition;
+
+
+		Decomposition = NEW_OBJECT(geometry::decomposition);
+
+		Decomposition->init_inc_and_stack(
+				Inc, Stack,
+				verbose_level);
+
+
+
+
 		while (true) {
 
 			int ht0, ht1;
@@ -196,18 +208,22 @@ void top_level_geometry_global::report_decomposition_by_group(
 			ht0 = Stack->ht;
 
 			if (f_v) {
-				cout << "process_single_case before refine_column_partition_safe" << endl;
+				cout << "process_single_case "
+						"before refine_column_partition_safe" << endl;
 			}
-			Inc->refine_column_partition_safe(*Stack, verbose_level - 2);
+			Decomposition->refine_column_partition_safe(verbose_level - 2);
 			if (f_v) {
-				cout << "process_single_case after refine_column_partition_safe" << endl;
+				cout << "process_single_case "
+						"after refine_column_partition_safe" << endl;
 			}
 			if (f_v) {
-				cout << "process_single_case before refine_row_partition_safe" << endl;
+				cout << "process_single_case "
+						"before refine_row_partition_safe" << endl;
 			}
-			Inc->refine_row_partition_safe(*Stack, verbose_level - 2);
+			Decomposition->refine_row_partition_safe(verbose_level - 2);
 			if (f_v) {
-				cout << "process_single_case after refine_row_partition_safe" << endl;
+				cout << "process_single_case "
+						"after refine_row_partition_safe" << endl;
 			}
 			ht1 = Stack->ht;
 			if (ht1 == ht0) {
@@ -217,26 +233,27 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 		int f_labeled = true;
 
-		Inc->print_partitioned(cout, *Stack, f_labeled);
-		Inc->get_and_print_decomposition_schemes(*Stack);
+		Decomposition->print_partitioned(cout, f_labeled);
+		Decomposition->get_and_print_decomposition_schemes();
 		Stack->print_classes(cout);
 
 
 		int f_print_subscripts = false;
 		ost << "Decomposition based on orbit lengths:\\\\" << endl;
 		ost << "Row scheme:\\\\" << endl;
-		Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+		Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
 			ost, true /* f_enter_math */,
-			f_print_subscripts, *Stack);
+			f_print_subscripts);
 		ost << "Column scheme:\\\\" << endl;
-		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+		Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 			ost, true /* f_enter_math */,
-			f_print_subscripts, *Stack);
+			f_print_subscripts);
 
 
 
+		FREE_OBJECT(Decomposition);
 		FREE_OBJECT(Inc);
-		FREE_OBJECT(Stack);
+		//FREE_OBJECT(Stack);
 	}
 
 
@@ -262,21 +279,32 @@ void top_level_geometry_global::report_decomposition_by_group(
 		}
 
 
+		geometry::decomposition *Decomposition;
+
+
+		Decomposition = NEW_OBJECT(geometry::decomposition);
+
+		Decomposition->init_inc_and_stack(
+				Inc, Stack,
+				verbose_level);
+
+
 		int f_print_subscripts = false;
 		ost << "Decomposition based on orbits:\\\\" << endl;
 		ost << "Row scheme:\\\\" << endl;
-		Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+		Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
 			ost, true /* f_enter_math */,
-			f_print_subscripts, *Stack);
+			f_print_subscripts);
 		ost << "Column scheme:\\\\" << endl;
-		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+		Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 			ost, true /* f_enter_math */,
-			f_print_subscripts, *Stack);
+			f_print_subscripts);
 
 
 
+		FREE_OBJECT(Decomposition);
 		FREE_OBJECT(Inc);
-		FREE_OBJECT(Stack);
+		//FREE_OBJECT(Stack);
 	}
 
 
@@ -342,7 +370,8 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	Sch2 = NEW_OBJECT(groups::schreier);
 	actions::action_global AcGl;
 
-	AcGl.all_point_orbits_from_single_generator(PA->A,
+	AcGl.all_point_orbits_from_single_generator(
+			PA->A,
 			*Sch1,
 			Elt,
 			0 /*verbose_level*/);
@@ -350,7 +379,8 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	//ost << "Orbits on lines:\\\\" << endl;
 
 	Sch2 = NEW_OBJECT(groups::schreier);
-	AcGl.all_point_orbits_from_single_generator(PA->A_on_lines,
+	AcGl.all_point_orbits_from_single_generator(
+			PA->A_on_lines,
 			*Sch2,
 			Elt,
 			0 /*verbose_level*/);
@@ -522,22 +552,33 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	}
 
 
+	geometry::decomposition *Decomposition;
+
+
+	Decomposition = NEW_OBJECT(geometry::decomposition);
+
+	Decomposition->init_inc_and_stack(
+			Inc, Stack,
+			verbose_level);
+
+
 	int f_print_subscripts = false;
 	ost << "Row scheme:\\\\" << endl;
-	Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+	Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
 		ost, true /* f_enter_math */,
-		f_print_subscripts, *Stack);
+		f_print_subscripts);
 	ost << "Column scheme:\\\\" << endl;
-	Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+	Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 		ost, true /* f_enter_math */,
-		f_print_subscripts, *Stack);
+		f_print_subscripts);
 
 
 
 	FREE_OBJECT(Sch1);
 	FREE_OBJECT(Sch2);
 	FREE_OBJECT(Inc);
-	FREE_OBJECT(Stack);
+	FREE_OBJECT(Decomposition);
+	//FREE_OBJECT(Stack);
 
 	if (f_v) {
 		cout << "top_level_geometry_global::report_decomposition_by_single_automorphism done" << endl;

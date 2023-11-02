@@ -263,6 +263,7 @@ public:
 		int verbose_level);
 	void group_order(ring_theory::longinteger_object &go);
 	long int group_order_lint();
+	std::string group_order_as_string();
 	void get_generators_from_ascii_coding(
 			std::string &ascii_coding,
 			data_structures_groups::vector_ge *&gens,

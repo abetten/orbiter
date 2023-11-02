@@ -3440,7 +3440,8 @@ void combinatorics_domain::compute_blocks_from_incma(
 			}
 		}
 		if (h != k) {
-			cout << "combinatorics_domain::compute_blocks_from_incma block size is not equal to k" << endl;
+			cout << "combinatorics_domain::compute_blocks_from_incma "
+					"block size is not equal to k" << endl;
 			exit(1);
 		}
 	}
@@ -3474,40 +3475,54 @@ void combinatorics_domain::refine_the_partition(
 
 	{
 		geometry::incidence_structure *Inc;
-		data_structures::partitionstack *Stack;
 
 
 		Inc = NEW_OBJECT(geometry::incidence_structure);
 
 		Inc->init_by_matrix(v, b, M, 0 /* verbose_level */);
 
+		geometry::decomposition *Decomposition;
+
+
+		Decomposition = NEW_OBJECT(geometry::decomposition);
+
+		Decomposition->init_incidence_structure(
+				Inc,
+				verbose_level);
+
+#if 0
+		data_structures::partitionstack *Stack;
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 
 		Stack->allocate_with_two_classes(v + b, v, b, 0 /* verbose_level */);
-
+#endif
 
 
 		while (true) {
 
 			int ht0, ht1;
 
-			ht0 = Stack->ht;
+			ht0 = Decomposition->Stack->ht;
 
 			if (f_v) {
-				cout << "combinatorics_domain::refine_the_partition before refine_column_partition_safe" << endl;
+				cout << "combinatorics_domain::refine_the_partition "
+						"before refine_column_partition_safe" << endl;
 			}
-			Inc->refine_column_partition_safe(*Stack, verbose_level - 2);
+			Decomposition->refine_column_partition_safe(verbose_level - 2);
 			if (f_v) {
-				cout << "combinatorics_domain::refine_the_partition after refine_column_partition_safe" << endl;
+				cout << "combinatorics_domain::refine_the_partition "
+						"after refine_column_partition_safe" << endl;
 			}
 			if (f_v) {
-				cout << "combinatorics_domain::refine_the_partition before refine_row_partition_safe" << endl;
+				cout << "combinatorics_domain::refine_the_partition "
+						"before refine_row_partition_safe" << endl;
 			}
-			Inc->refine_row_partition_safe(*Stack, verbose_level - 2);
+			Decomposition->refine_row_partition_safe(verbose_level - 2);
 			if (f_v) {
-				cout << "combinatorics_domain::refine_the_partition after refine_row_partition_safe" << endl;
+				cout << "combinatorics_domain::refine_the_partition "
+						"after refine_row_partition_safe" << endl;
 			}
-			ht1 = Stack->ht;
+			ht1 = Decomposition->Stack->ht;
 			if (ht1 == ht0) {
 				break;
 			}
@@ -3515,35 +3530,35 @@ void combinatorics_domain::refine_the_partition(
 
 		int f_labeled = true;
 
-		Inc->print_partitioned(cout, *Stack, f_labeled);
-		Inc->get_and_print_decomposition_schemes(*Stack);
-		Stack->print_classes(cout);
+		Decomposition->print_partitioned(cout, f_labeled);
+		Decomposition->get_and_print_decomposition_schemes();
+		Decomposition->Stack->print_classes(cout);
 
 
 		int f_print_subscripts = false;
 		if (f_v) {
 			cout << "Decomposition:\\\\" << endl;
 			cout << "Row scheme:\\\\" << endl;
-			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+			Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
 					cout, true /* f_enter_math */,
-				f_print_subscripts, *Stack);
+				f_print_subscripts);
 			cout << "Column scheme:\\\\" << endl;
-			Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+			Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 					cout, true /* f_enter_math */,
-				f_print_subscripts, *Stack);
+				f_print_subscripts);
 		}
 
 		data_structures::set_of_sets *Row_classes;
 		data_structures::set_of_sets *Col_classes;
 
-		Stack->get_row_classes(Row_classes, verbose_level);
+		Decomposition->Stack->get_row_classes(Row_classes, verbose_level);
 		if (f_v) {
 			cout << "Row classes:\\\\" << endl;
 			Row_classes->print_table_tex(cout);
 		}
 
 
-		Stack->get_column_classes(Col_classes, verbose_level);
+		Decomposition->Stack->get_column_classes(Col_classes, verbose_level);
 		if (f_v) {
 			cout << "Col classes:\\\\" << endl;
 			Col_classes->print_table_tex(cout);
@@ -3551,13 +3566,15 @@ void combinatorics_domain::refine_the_partition(
 
 		if (Row_classes->nb_sets > 1) {
 			if (f_v) {
-				cout << "combinatorics_domain::refine_the_partition The row partition splits" << endl;
+				cout << "combinatorics_domain::refine_the_partition "
+						"The row partition splits" << endl;
 			}
 		}
 
 		if (Col_classes->nb_sets > 1) {
 			if (f_v) {
-				cout << "combinatorics_domain::refine_the_partition The col partition splits" << endl;
+				cout << "combinatorics_domain::refine_the_partition "
+						"The col partition splits" << endl;
 			}
 
 			int idx;
@@ -3572,19 +3589,21 @@ void combinatorics_domain::refine_the_partition(
 				Blocks_coded[j] = Blocks_coded[a];
 			}
 			if (f_v) {
-				cout << "combinatorics_domain::refine_the_partition reducing from " << b << " down to " << b_reduced << endl;
+				cout << "combinatorics_domain::refine_the_partition "
+						"reducing from " << b << " down to " << b_reduced << endl;
 			}
 		}
 		else {
 			if (f_v) {
-				cout << "combinatorics_domain::refine_the_partition The col partition does not split" << endl;
+				cout << "combinatorics_domain::refine_the_partition "
+						"The col partition does not split" << endl;
 			}
 			b_reduced = b;
 		}
 
 
 		FREE_OBJECT(Inc);
-		FREE_OBJECT(Stack);
+		FREE_OBJECT(Decomposition);
 		FREE_OBJECT(Row_classes);
 		FREE_OBJECT(Col_classes);
 	}
@@ -3597,7 +3616,6 @@ void combinatorics_domain::refine_the_partition(
 	}
 
 }
-
 
 void combinatorics_domain::create_incidence_matrix_of_graph(int *Adj, int n,
 		int *&M, int &nb_rows, int &nb_cols,

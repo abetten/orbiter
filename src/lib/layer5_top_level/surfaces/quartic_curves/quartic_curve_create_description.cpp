@@ -45,7 +45,6 @@ quartic_curve_create_description::quartic_curve_create_description()
 	f_by_equation = false;
 	//std::string equation_name_of_formula;
 	//std::string equation_name_of_formula_tex;
-	//std::string equation_managed_variables;
 	//std::string equation_text;
 	//std::string equation_parameters;
 	//std::string equation_parameters_tex;
@@ -118,7 +117,6 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 			f_by_equation = true;
 			equation_name_of_formula.assign(argv[++i]);
 			equation_name_of_formula_tex.assign(argv[++i]);
-			equation_managed_variables.assign(argv[++i]);
 			equation_text.assign(argv[++i]);
 			equation_parameters.assign(argv[++i]);
 			equation_parameters_tex.assign(argv[++i]);
@@ -126,7 +124,6 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 			cout << "-by_equation "
 					<< equation_name_of_formula << " "
 					<< equation_name_of_formula_tex << " "
-					<< equation_managed_variables << " "
 					<< equation_text << " "
 					<< equation_parameters << " "
 					<< equation_parameters_tex << " "
@@ -217,7 +214,6 @@ void quartic_curve_create_description::print()
 		cout << "-by_equation "
 				<< equation_name_of_formula << " "
 				<< equation_name_of_formula_tex << " "
-				<< equation_managed_variables << " "
 				<< equation_text << " "
 				<< equation_parameters << " "
 				<< equation_parameters_tex << " "

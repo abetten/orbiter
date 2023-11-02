@@ -34,9 +34,12 @@ finite_field_implementation_by_tables::finite_field_implementation_by_tables()
 	inv_table = NULL;
 	frobenius_table = NULL;
 	absolute_trace_table = NULL;
+
 	log_alpha_table = NULL;
+
 	// log_alpha_table[i] = the integer k s.t. alpha^k = i (if i > 0)
 	// log_alpha_table[0] = -1
+
 	alpha_power_table = NULL;
 	v1 = NULL;
 	v2 = NULL;
@@ -357,6 +360,7 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(
 
 
 	finite_field GFp;
+
 	GFp.finite_field_init_small_order(F->p,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
@@ -365,19 +369,24 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(
 	ring_theory::unipoly_domain FX(&GFp);
 	ring_theory::unipoly_object m;
 
-	FX.create_object_by_rank_string(m, F->my_poly, 0 /*verbose_level - 2*/);
+	FX.create_object_by_rank_string(
+			m, F->my_poly, 0 /*verbose_level - 2*/);
 	if (f_vv) {
 		cout << "m=";
 		FX.print_object(m, cout);
 		cout << endl;
 	}
 	{
-		ring_theory::unipoly_domain Fq(&GFp, m, 0 /*verbose_level - 1*/);
+		ring_theory::unipoly_domain Fq(
+				&GFp, m, 0 /*verbose_level - 1*/);
 		ring_theory::unipoly_object a, c, Alpha;
 
-		Fq.create_object_by_rank(Alpha, F->alpha, 0 /*verbose_level - 2*/);
-		Fq.create_object_by_rank(a, 1, 0 /*verbose_level - 2*/);
-		Fq.create_object_by_rank(c, 1, 0 /*verbose_level - 2*/);
+		Fq.create_object_by_rank(
+				Alpha, F->alpha, 0 /*verbose_level - 2*/);
+		Fq.create_object_by_rank(
+				a, 1, 0 /*verbose_level - 2*/);
+		Fq.create_object_by_rank(
+				c, 1, 0 /*verbose_level - 2*/);
 
 		if (f_v) {
 			cout << "finite_field_implementation_by_tables::create_alpha_table_extension_field "
@@ -432,7 +441,8 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(
 	}
 }
 
-void finite_field_implementation_by_tables::init_binary_operations(int verbose_level)
+void finite_field_implementation_by_tables::init_binary_operations(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -483,7 +493,8 @@ void finite_field_implementation_by_tables::init_binary_operations(int verbose_l
 	}
 }
 
-void finite_field_implementation_by_tables::create_tables_prime_field(int verbose_level)
+void finite_field_implementation_by_tables::create_tables_prime_field(
+		int verbose_level)
 // assumes that a primitive element F->alpha mod p has already been computed
 {
 	int f_v = (verbose_level >= 1);
@@ -497,8 +508,10 @@ void finite_field_implementation_by_tables::create_tables_prime_field(int verbos
 
 	for (i = 0; i < F->q; i++) {
 		for (j = 0; j < F->q; j++) {
+
 			k = (i + j) % F->q;
 			add_table[i * F->q + j] = k;
+
 			if (k == 0) {
 				negate_table[i] = j;
 			}
@@ -510,12 +523,16 @@ void finite_field_implementation_by_tables::create_tables_prime_field(int verbos
 
 	for (i = 0; i < F->q; i++) {
 		for (j = 0; j < F->q; j++) {
+
 			if (i == 0 || j == 0) {
 				mult_table[i * F->q + j] = 0;
 				continue;
 			}
+
 			k = (i * j) % F->q;
+
 			mult_table[i * F->q + j] = k;
+
 			if (k == 1) {
 				inv_table[i] = j;
 			}
@@ -542,7 +559,7 @@ void finite_field_implementation_by_tables::create_tables_prime_field(int verbos
 
 	if (f_v) {
 		cout << "finite_field_implementation_by_tables::create_tables_prime_field finished" << endl;
-		}
+	}
 }
 
 void finite_field_implementation_by_tables::create_tables_extension_field(int verbose_level)
@@ -559,14 +576,21 @@ void finite_field_implementation_by_tables::create_tables_extension_field(int ve
 	// compute addition table and negation table:
 
 	for (i = 0; i < F->q; i++) {
+
 		Gg.AG_element_unrank(F->p, v1, 1, F->e, i);
+
 		for (j = 0; j < F->q; j++) {
+
 			Gg.AG_element_unrank(F->p, v2, 1, F->e, j);
+
 			for (l = 0; l < F->e; l++) {
 				v3[l] = (v1[l] + v2[l]) % F->p;
 			}
+
 			k = Gg.AG_element_rank(F->p, v3, 1, F->e);
+
 			add_table[i * F->q + j] = k;
+
 			if (k == 0) {
 				negate_table[i] = j;
 			}
@@ -589,7 +613,8 @@ void finite_field_implementation_by_tables::create_tables_extension_field(int ve
 			k = alpha_power_table[kk];
 			mult_table[i * F->q + j] = k;
 			if (false) {
-				cout << "finite_field_implementation_by_tables::create_tables_extension_field " << i << " * " << j << " = " << k << endl;
+				cout << "finite_field_implementation_by_tables::create_tables_extension_field "
+						<< i << " * " << j << " = " << k << endl;
 			}
 			if (k == 1) {
 				inv_table[i] = j;
@@ -612,34 +637,41 @@ void finite_field_implementation_by_tables::create_tables_extension_field(int ve
 	}
 
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::create_tables_extension_field finished" << endl;
+		cout << "finite_field_implementation_by_tables::create_tables_extension_field "
+				"finished" << endl;
 	}
 }
 
-void finite_field_implementation_by_tables::print_add_mult_tables(std::ostream &ost)
+void finite_field_implementation_by_tables::print_add_mult_tables(
+		std::ostream &ost)
 {
 
 	if (F->q < 30) {
+
 		ost << "addition table:" << endl;
-		Int_vec_print_integer_matrix_width(ost, add_table,
+		Int_vec_print_integer_matrix_width(
+				ost, add_table,
 				F->q, F->q, F->q, F->log10_of_q + 1);
 		ost << endl;
 
 		ost << "multiplication table:" << endl;
-		Int_vec_print_integer_matrix_width(ost, mult_table,
+		Int_vec_print_integer_matrix_width(
+				ost, mult_table,
 				F->q, F->q, F->q, F->log10_of_q + 1);
 		ost << endl;
 
 	}
 	else {
-		ost << "The field is too large. For the sake of space, we cannot print the tables." << endl;
+		ost << "The field is too large. "
+				"For the sake of space, we cannot print the tables." << endl;
 
 	}
 
 
 }
 
-void finite_field_implementation_by_tables::print_add_mult_tables_in_C(std::string &fname_base)
+void finite_field_implementation_by_tables::print_add_mult_tables_in_C(
+		std::string &fname_base)
 {
 
 	string fname;
@@ -651,20 +683,24 @@ void finite_field_implementation_by_tables::print_add_mult_tables_in_C(std::stri
 
 		ost << "//addition, multiplication, inversion and negation table:" << endl;
 		ost << "int add_table[] = ";
-		Int_vec_print_integer_matrix_in_C_source(ost, add_table, F->q, F->q);
+		Int_vec_print_integer_matrix_in_C_source(
+				ost, add_table, F->q, F->q);
 		ost << endl;
 
 
 		ost << "int mult_table[] = ";
-		Int_vec_print_integer_matrix_in_C_source(ost, mult_table, F->q, F->q);
+		Int_vec_print_integer_matrix_in_C_source(
+				ost, mult_table, F->q, F->q);
 		ost << endl;
 
 		ost << "int inv_table[] = ";
-		Int_vec_print_integer_matrix_in_C_source(ost, inv_table, 1, F->q);
+		Int_vec_print_integer_matrix_in_C_source(
+				ost, inv_table, 1, F->q);
 		ost << endl;
 
 		ost << "int neg_table[] = ";
-		Int_vec_print_integer_matrix_in_C_source(ost, negate_table, 1, F->q);
+		Int_vec_print_integer_matrix_in_C_source(
+				ost, negate_table, 1, F->q);
 		ost << endl;
 	}
 
@@ -725,10 +761,14 @@ void finite_field_implementation_by_tables::init_frobenius_table(int verbose_lev
 
 		if (f_v) {
 			cout << "finite_field_implementation_by_tables::init_frobenius_table "
-					"computing the images under the Frobenius automorphism" << endl;
+					"computing the images under "
+					"the Frobenius automorphism" << endl;
 		}
 		for (i = 0; i < F->q; i++) {
-			frobenius_table[i] = F->power_verbose(i, F->p, 0 /* verbose_level */);
+
+			frobenius_table[i] = F->power_verbose(
+					i, F->p, 0 /* verbose_level */);
+
 			if (f_vv) {
 				cout << "finite_field_implementation_by_tables::init_frobenius_table "
 						"frobenius_table[" << i << "]="
@@ -737,16 +777,19 @@ void finite_field_implementation_by_tables::init_frobenius_table(int verbose_lev
 		}
 		if (f_v) {
 			cout << "finite_field_implementation_by_tables::init_frobenius_table "
-					"computing the images under the Frobenius automorphism finished" << endl;
+					"computing the images under "
+					"the Frobenius automorphism finished" << endl;
 		}
 	}
 
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::init_frobenius_table done" << endl;
+		cout << "finite_field_implementation_by_tables::init_frobenius_table "
+				"done" << endl;
 	}
 }
 
-void finite_field_implementation_by_tables::init_absolute_trace_table(int verbose_level)
+void finite_field_implementation_by_tables::init_absolute_trace_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -773,7 +816,8 @@ void finite_field_implementation_by_tables::init_absolute_trace_table(int verbos
 	}
 }
 
-void finite_field_implementation_by_tables::print_tables_extension_field(std::string &poly)
+void finite_field_implementation_by_tables::print_tables_extension_field(
+		std::string &poly)
 {
 	int i, a, b, c, l;
 	int verbose_level = 0;
@@ -819,11 +863,13 @@ void finite_field_implementation_by_tables::print_tables_extension_field(std::st
 			<< setw(4) << c << " : "
 			<< setw(4) << l << " : ";
 		Fq.create_object_by_rank(elt, i, verbose_level);
-		Fq.print_object(elt, cout);
-		cout << endl;
+		string s_elt;
+
+		s_elt = Fq.object_stringify(elt);
+		cout << s_elt << endl;
 		Fq.delete_object(elt);
 
-		}
+	}
 	// FX.delete_object(m);  // this had to go, Anton Betten, Oct 30, 2011
 
 	//cout << "print_tables finished" << endl;
@@ -867,27 +913,32 @@ int finite_field_implementation_by_tables::add(int i, int j)
 	geometry::geometry_global Gg;
 
 	if (i < 0 || i >= F->q) {
-		cout << "finite_field_implementation_by_tables::add out of range, i = " << i << endl;
+		cout << "finite_field_implementation_by_tables::add "
+				"out of range, i = " << i << endl;
 		exit(1);
 	}
 	if (j < 0 || j >= F->q) {
-		cout << "finite_field_implementation_by_tables::add out of range, j = " << j << endl;
+		cout << "finite_field_implementation_by_tables::add "
+				"out of range, j = " << j << endl;
 		exit(1);
 	}
 
 	return add_table[i * F->q + j];
 }
 
-int finite_field_implementation_by_tables::add_without_table(int i, int j)
+int finite_field_implementation_by_tables::add_without_table(
+		int i, int j)
 {
 	geometry::geometry_global Gg;
 
 	if (i < 0 || i >= F->q) {
-		cout << "finite_field_implementation_by_tables::add_without_table out of range, i = " << i << endl;
+		cout << "finite_field_implementation_by_tables::add_without_table "
+				"out of range, i = " << i << endl;
 		exit(1);
 	}
 	if (j < 0 || j >= F->q) {
-		cout << "finite_field_implementation_by_tables::add_without_table out of range, j = " << j << endl;
+		cout << "finite_field_implementation_by_tables::add_without_table "
+				"out of range, j = " << j << endl;
 		exit(1);
 	}
 
@@ -895,14 +946,17 @@ int finite_field_implementation_by_tables::add_without_table(int i, int j)
 
 	Gg.AG_element_unrank(F->p, v1, 1, F->e, i);
 	Gg.AG_element_unrank(F->p, v2, 1, F->e, j);
+
 	for (l = 0; l < F->e; l++) {
 		v3[l] = (v1[l] + v2[l]) % F->p;
 	}
+
 	k = Gg.AG_element_rank(F->p, v3, 1, F->e);
 	return k;
 }
 
-int finite_field_implementation_by_tables::mult_verbose(int i, int j, int verbose_level)
+int finite_field_implementation_by_tables::mult_verbose(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int c;
@@ -911,24 +965,29 @@ int finite_field_implementation_by_tables::mult_verbose(int i, int j, int verbos
 		cout << "finite_field_implementation_by_tables::mult_verbose" << endl;
 	}
 	if (i < 0 || i >= F->q) {
-		cout << "finite_field_implementation_by_tables::mult_verbose out of range, i = " << i << endl;
+		cout << "finite_field_implementation_by_tables::mult_verbose "
+				"out of range, i = " << i << endl;
 		exit(1);
 	}
 	if (j < 0 || j >= F->q) {
-		cout << "finite_field_implementation_by_tables::mult_verbose out of range, j = " << j << endl;
+		cout << "finite_field_implementation_by_tables::mult_verbose "
+				"out of range, j = " << j << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::mult_verbose with table" << endl;
+		cout << "finite_field_implementation_by_tables::mult_verbose "
+				"with table" << endl;
 	}
 	c = mult_table[i * F->q + j];
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::mult_verbose " << i << " * " << j << " = " << c << endl;
+		cout << "finite_field_implementation_by_tables::mult_verbose "
+				<< i << " * " << j << " = " << c << endl;
 	}
 	return c;
 }
 
-int finite_field_implementation_by_tables::mult_using_discrete_log(int i, int j, int verbose_level)
+int finite_field_implementation_by_tables::mult_using_discrete_log(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int c;
@@ -947,36 +1006,43 @@ int finite_field_implementation_by_tables::mult_using_discrete_log(int i, int j,
 		exit(1);
 	}
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::mult_using_discrete_log with table" << endl;
+		cout << "finite_field_implementation_by_tables::mult_using_discrete_log "
+				"with table" << endl;
 	}
 
 	int ii, jj, kk;
 
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::mult_using_discrete_log without table" << endl;
+		cout << "finite_field_implementation_by_tables::mult_using_discrete_log "
+				"without table" << endl;
 	}
 	if (i == 0 || j == 0) {
 		return 0;
 	}
 	ii = log_alpha_table[i];
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::mult_using_discrete_log ii = " << ii << endl;
+		cout << "finite_field_implementation_by_tables::mult_using_discrete_log "
+				"ii = " << ii << endl;
 	}
 	jj = log_alpha_table[j];
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::mult_using_discrete_log jj = " << jj << endl;
+		cout << "finite_field_implementation_by_tables::mult_using_discrete_log "
+				"jj = " << jj << endl;
 	}
 	kk = (ii + jj) % (F->q - 1);
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::mult_using_discrete_log kk = " << kk << endl;
+		cout << "finite_field_implementation_by_tables::mult_using_discrete_log "
+				"kk = " << kk << endl;
 	}
 	c = alpha_power_table[kk];
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::mult_using_discrete_log c = " << c << endl;
+		cout << "finite_field_implementation_by_tables::mult_using_discrete_log "
+				"c = " << c << endl;
 	}
 
 	if (f_v) {
-		cout << "finite_field_implementation_by_tables::mult_using_discrete_log done" << endl;
+		cout << "finite_field_implementation_by_tables::mult_using_discrete_log "
+				"done" << endl;
 	}
 	return c;
 }
@@ -1049,7 +1115,8 @@ int finite_field_implementation_by_tables::frobenius_image(int a)
 }
 
 
-int finite_field_implementation_by_tables::frobenius_power(int a, int frob_power)
+int finite_field_implementation_by_tables::frobenius_power(
+		int a, int frob_power)
 // computes a^{p^frob_power}
 {
 	int j, b;
@@ -1097,9 +1164,11 @@ void finite_field_implementation_by_tables::addition_table_reordered_save_csv(
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, M, F->q, F->q);
+
 	if (f_v) {
 		cout << "finite_field_implementation_by_tables::addition_table_reordered_save_csv "
-				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 	}
 	FREE_int(M);
 }
@@ -1137,7 +1206,8 @@ void finite_field_implementation_by_tables::multiplication_table_reordered_save_
 			fname, M, F->q, F->q);
 	if (f_v) {
 		cout << "finite_field_implementation_by_tables::multiplication_table_reordered_save_csv "
-				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 	}
 	FREE_int(M);
 }

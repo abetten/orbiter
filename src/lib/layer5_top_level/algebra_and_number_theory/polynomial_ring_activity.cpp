@@ -237,10 +237,12 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 
 	}
 	else if (Descr->f_set_variable_names) {
-		cout << "-set_variable_names "
-				<< Descr->set_variable_names_txt << " "
-				<< Descr->set_variable_names_tex << " "
-				<< endl;
+		if (f_v) {
+			cout << "-set_variable_names "
+					<< Descr->set_variable_names_txt << " "
+					<< Descr->set_variable_names_tex << " "
+					<< endl;
+		}
 
 		HPD->remake_symbols(0 /* symbol_offset */,
 				Descr->set_variable_names_txt,
@@ -249,9 +251,11 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 
 	}
 	else if (Descr->f_print_equation) {
-		cout << "-print_equation "
-				<< Descr->print_equation_input << " "
-				<< endl;
+		if (f_v) {
+			cout << "-print_equation "
+					<< Descr->print_equation_input << " "
+					<< endl;
+		}
 
 		int *eqn;
 		int sz;
@@ -260,6 +264,37 @@ void polynomial_ring_activity::perform_activity(int verbose_level)
 
 		HPD->print_equation_tex(cout, eqn);
 		cout << endl;
+	}
+
+	else if (Descr->f_parse_equation) {
+		if (f_v) {
+			cout << "-parse_equation "
+					<< Descr->parse_equation_name_of_formula << " "
+					<< Descr->parse_equation_name_of_formula_tex << " "
+					<< Descr->parse_equation_equation_text << " "
+					<< Descr->parse_equation_equation_parameters << " "
+					<< Descr->parse_equation_equation_parameter_values << " "
+					<< endl;
+		}
+
+
+		int *eqn;
+		int eqn_size;
+
+		HPD->parse_equation_and_substitute_parameters(
+				Descr->parse_equation_name_of_formula,
+				Descr->parse_equation_name_of_formula_tex,
+				Descr->parse_equation_equation_text,
+				Descr->parse_equation_equation_parameters,
+				Descr->parse_equation_equation_parameter_values,
+				eqn, eqn_size,
+				verbose_level);
+		if (f_v) {
+			cout << "-parse_equation The equation is:" << endl;
+			Int_vec_print(cout, eqn, eqn_size);
+			cout << endl;
+		}
+
 	}
 
 

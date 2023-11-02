@@ -278,7 +278,6 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 	Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs(
 			Control_six_arcs_label,
 			PA,
-			//PA->Surf_A,
 			f_test_nb_Eckardt_points, nb_E,
 			verbose_level);
 
@@ -566,8 +565,6 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	int i;
 	field_theory::finite_field *F0;
 	field_theory::finite_field *F;
-	//algebraic_geometry::surface_domain *Surf;
-	//surface_with_action *Surf_A;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 	orbiter_kernel_system::file_io Fio;
@@ -582,27 +579,6 @@ void surface_domain_high_level::do_cubic_surface_properties(
 			0);
 
 	F = PA->P->Subspaces->F;
-
-#if 0
-	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init_surface_domain(F, 0 /*verbose_level - 1*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_cubic_surface_properties "
-				"after Surf->init_surface_domain" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_cubic_surface_properties "
-				"before Surf_A->init" << endl;
-	}
-	Surf_A->init(Surf, PA, true /* f_recoordinatize */, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_cubic_surface_properties "
-				"after Surf_A->init" << endl;
-	}
-#endif
 
 
 
@@ -848,8 +824,6 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 	field_theory::finite_field *F0;
 	field_theory::finite_field *F;
-	//algebraic_geometry::surface_domain *Surf;
-	//surface_with_action *Surf_A;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 	orbiter_kernel_system::file_io Fio;
@@ -863,29 +837,6 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 			0);
 
 	F = PA->P->Subspaces->F;
-
-#if 0
-	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
-	Surf->init_surface_domain(F, 0 /* verbose_level - 1 */);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
-				"after Surf->init_surface_domain" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
-				"before Surf_A->init" << endl;
-	}
-	Surf_A->init(
-			Surf, PA, true /* f_recoordinatize */,
-			0 /*verbose_level*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze "
-				"after Surf_A->init" << endl;
-	}
-#endif
 
 
 	int nb_orbits, n;
@@ -1020,10 +971,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 
 
-	//FREE_OBJECT(PA);
 	FREE_OBJECT(F0);
-	//FREE_OBJECT(Surf_A);
-	//FREE_OBJECT(Surf);
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze done" << endl;
@@ -1706,7 +1654,8 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 
 
 	{
-		fname_report_tex = "surface_atlas_q" + std::to_string(T->q) + "_e" + std::to_string(nb_e) + ".tex";
+		fname_report_tex = "surface_atlas_q" + std::to_string(T->q)
+				+ "_e" + std::to_string(nb_e) + ".tex";
 
 		{
 			ofstream ost(fname_report_tex);
@@ -1714,7 +1663,8 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 
 			string title, author, extra_praeamble;
 
-			title = "ATLAS of Cubic Surfaces, q=" + std::to_string(T->q) + ", \\#E=" + std::to_string(nb_e);
+			title = "ATLAS of Cubic Surfaces, q=" + std::to_string(T->q)
+					+ ", \\#E=" + std::to_string(nb_e);
 
 			author.assign("Anton Betten and Fatma Karaoglu");
 
@@ -1787,7 +1737,8 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_create_dickson_atlas" << endl;
-		cout << "surface_domain_high_level::do_create_dickson_atlas verbose_level=" << verbose_level << endl;
+		cout << "surface_domain_high_level::do_create_dickson_atlas "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 	orbiter_kernel_system::file_io Fio;
@@ -1861,9 +1812,12 @@ void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
 						string fname_surface_report;
 
 
-						fname_tex = "Orb" + std::to_string(c) + "_q" + std::to_string(field_orders[j]) + ".tex";
-						fname_pdf = "Orb" + std::to_string(c) + "_q" + std::to_string(field_orders[j]) + ".pdf";
-						fname_surface_report = "Orb" + std::to_string(c) + "_q" + std::to_string(field_orders[j]) + ".pdf";
+						fname_tex = "Orb" + std::to_string(c)
+								+ "_q" + std::to_string(field_orders[j]) + ".tex";
+						fname_pdf = "Orb" + std::to_string(c)
+								+ "_q" + std::to_string(field_orders[j]) + ".pdf";
+						fname_surface_report = "Orb" + std::to_string(c)
+								+ "_q" + std::to_string(field_orders[j]) + ".pdf";
 
 
 						ost << " & " << endl;
@@ -2220,16 +2174,6 @@ void surface_domain_high_level::make_table_of_objects(
 
 	Summary = NEW_OBJECT(projective_geometry::summary_of_properties_of_objects);
 
-	string label_EK;
-
-	if (f_quartic_curves) {
-		label_EK = "K";
-	}
-	else {
-		label_EK = "E";
-
-	}
-
 
 	if (f_quartic_curves) {
 		if (f_v) {
@@ -2264,227 +2208,67 @@ void surface_domain_high_level::make_table_of_objects(
 		int i, q, nb_reps;
 		for (i = 0; i < Q_table_len; i++) {
 			q = Q_table[i];
-			nb_reps = Summary->Nb_objects[i]; // K.cubic_surface_nb_reps(q);
+			nb_reps = Summary->Nb_objects[i];
 			cout << q << " : " << nb_reps << "\\\\" << endl;
 		}
 	}
 
 
-
-	//int *Q;
-	//int nb_Q;
-
-	//Q = Q_table;
-	//nb_Q = Q_table_len;
-
-	{
-		long int *Table2;
-
-		int nb_cols;
-		int i, j, k;
-
-		nb_cols = Summary->nb_E_types + 1;
-		Table2 = NEW_lint(Q_table_len * nb_cols);
-		for (i = 0; i < Q_table_len; i++) {
-			Table2[i * nb_cols + 0] = Q_table[i];
-			for (j = 0; j < Summary->nb_E_types; j++) {
-				k = Summary->E[j];
-				Table2[i * nb_cols + 1 + j] =
-						Summary->Table[i * Summary->nb_E_types + k];
-			}
-		}
-
-		std::string fname;
-
-		if (f_quartic_curves) {
-			fname = "table_of_quartic_curves_" + prefix + ".csv";
-		}
-		else {
-			fname = "table_of_cubic_surfaces_" + prefix + ".csv";
-
-		}
-
-		if (f_v) {
-			cout << "surface_domain_high_level::make_table_of_objects "
-					"preparing headers" << endl;
-		}
-		std::string *headers;
-
-		headers = new string[Summary->nb_E_types + 1];
-
-
-
-		headers[0].assign("Q");
-		for (j = 0; j < Summary->nb_E_types; j++) {
-			headers[1 + j] = label_EK + std::to_string(Summary->E[j]);
-		}
-		if (f_v) {
-			cout << "surface_domain_high_level::make_table_of_objects "
-					"preparing headers done" << endl;
-		}
-
-		orbiter_kernel_system::file_io Fio;
-
-		Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
-				fname, headers, Table2, Q_table_len, nb_cols);
-
-		if (f_v) {
-			cout << "Written file " << fname << " of size "
-					<< Fio.file_size(fname) << endl;
-		}
-
-
-		if (f_v) {
-			cout << "surface_domain_high_level::make_table_of_objects "
-					"before FREE_lint(Table2)" << endl;
-		}
-		FREE_lint(Table2);
-		if (f_v) {
-			cout << "surface_domain_high_level::make_table_of_objects "
-					"after FREE_lint(Table2)" << endl;
-		}
+	if (f_v) {
+		cout << "surface_domain_high_level::make_table_of_objects "
+				"before Summary->export_table_csv" << endl;
+	}
+	Summary->export_table_csv(
+			prefix,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_domain_high_level::make_table_of_objects "
+				"after Summary->export_table_csv" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_domain_high_level::make_table_of_objects "
+				"before Summary->table_latex" << endl;
+	}
+
+
+	Summary->table_latex(ost, verbose_level);
 
 
 	if (f_v) {
 		cout << "surface_domain_high_level::make_table_of_objects "
-				"before writing table 1" << endl;
+				"after Summary->table_latex" << endl;
 	}
-	int Nb_total = 0;
-	int i, j, q, nb_reps;
-
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|r||r||*{" << Summary->nb_E_types << "}{r|}}" << endl;
-	ost << "\\hline" << endl;
-	ost << "q  & \\mbox{total} ";
-	for (j = 0; j < Summary->nb_E_types; j++) {
-		ost << " & " << Summary->E[j];
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < Q_table_len; i++) {
-		q = Q_table[i];
-		ost << q;
-		nb_reps = Summary->Nb_objects[i];
-		//nb_reps = K.cubic_surface_nb_reps(q);
-		Nb_total += nb_reps;
-		ost << " & ";
-		ost << nb_reps;
-		for (j = 0; j < Summary->nb_E_types; j++) {
-			ost << " & " << Summary->Table[i * Summary->nb_E_types + j];
-		}
-		ost << "\\\\" << endl;
-		ost << "\\hline" << endl;
-	}
-	//cout << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-
-	ost << "Total: " << Nb_total << endl;
-
-
 
 
 	if (f_v) {
 		cout << "surface_domain_high_level::make_table_of_objects "
-				"before writing table 2" << endl;
+				"before Summary->table_ago" << endl;
 	}
 
-	ost << "\\bigskip" << endl;
+	Summary->table_ago(ost, verbose_level);
 
-	for (j = 0; j < Summary->nb_E_types; j++) {
-		ost << "\\subsection*{" << Summary->E[j] << " " << label_EK << " Points}" << endl;
-
-		Nb_total = 0;
-
-		ost << "$$" << endl;
-		ost << "\\begin{array}{|r|r|p{8cm}|}" << endl;
-		ost << "\\hline" << endl;
-		ost << "q & \\mbox{total} & \\mbox{Ago} \\\\" << endl;
-		ost << "\\hline" << endl;
-		ost << "\\hline" << endl;
-
-		for (i = 0; i < Q_table_len; i++) {
-			q = Q_table[i];
-			nb_reps = Summary->Table[i * Summary->nb_E_types + j];
-			Nb_total += nb_reps;
-			if (nb_reps) {
-
-				int nb_e;
-				int *Ago;
-				int h, u, nb_total;
-				data_structures::string_tools ST;
-
-				nb_total = Summary->Nb_objects[i]; //K.cubic_surface_nb_reps(q);
-				Ago = NEW_int(nb_reps);
-				u = 0;
-				for (h = 0; h < nb_total; h++) {
-					nb_e = Summary->nb_E[i][h];
-					//nb_E = K.cubic_surface_nb_Eckardt_points(q, h);
-					if (nb_e != Summary->E[j]) {
-						continue;
-					}
-
-#if 0
-					string stab_order;
-					int go;
-
-					K.cubic_surface_stab_gens(q, h, data,
-							nb_gens, data_size, stab_order);
-
-					//go = ST.strtolint(stab_order);
-					//Ago[u++] = go;
-#endif
-					Ago[u++] = Summary->Ago[i][h];
-				}
-
-				if (u != nb_reps) {
-					cout << "u != nb_reps" << endl;
-					exit(1);
-				}
-				data_structures::tally C;
-
-				C.init(Ago, nb_reps, false, 0);
-				ost << q << " & " << nb_reps << " & ";
-				ost << "$";
-				C.print_bare_tex(ost, true /* f_backwards*/);
-				ost << "$\\\\" << endl;
-
-				FREE_int(Ago);
+	if (f_v) {
+		cout << "surface_domain_high_level::make_table_of_objects "
+				"after Summary->table_ago" << endl;
+	}
 
 
+	if (f_v) {
+		cout << "surface_domain_high_level::make_table_of_objects "
+				"before Summary->make_detailed_table_of_objects" << endl;
+	}
 
-				ost << "\\hline" << endl;
-			}
-		}
+	Summary->make_detailed_table_of_objects(verbose_level);
 
-
-		ost << "\\end{array}" << endl;
-		ost << "$$" << endl;
-
-		ost << "Total: " << Nb_total << endl;
-
-
-		ost << "\\bigskip" << endl;
-
-
-	} // next j
-
+	if (f_v) {
+		cout << "surface_domain_high_level::make_table_of_objects "
+				"after Summary->make_detailed_table_of_objects" << endl;
+	}
 
 	FREE_OBJECT(Summary);
 
 
-	if (f_v) {
-		cout << "surface_domain_high_level::make_table_of_objects "
-				"before make_table_of_objects_detailed" << endl;
-	}
-	make_table_of_objects_detailed(Q_table, Q_table_len, verbose_level);
-	if (f_v) {
-		cout << "surface_domain_high_level::make_table_of_objects "
-				"after make_table_of_objects_detailed" << endl;
-	}
 	if (f_v) {
 		cout << "surface_domain_high_level::make_table_of_objects" << endl;
 	}
@@ -2492,6 +2276,7 @@ void surface_domain_high_level::make_table_of_objects(
 
 }
 
+#if 0
 void surface_domain_high_level::table_top(
 		std::ostream &ost)
 {
@@ -2512,78 +2297,8 @@ void surface_domain_high_level::table_bottom(
 	//ost << "\\quad" << endl;
 	ost << "$" << endl;
 }
+#endif
 
-
-void surface_domain_high_level::make_table_of_objects_detailed(
-		int *Q_table, int Q_table_len, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_domain_high_level::make_table_of_objects_detailed" << endl;
-	}
-	int i, j, q, cur, nb_E;
-	int nb_reps_total;
-	int *Nb_reps;
-	knowledge_base::knowledge_base K;
-	long int *Big_table;
-	orbiter_kernel_system::file_io Fio;
-
-	Nb_reps = NEW_int(Q_table_len);
-
-	nb_reps_total = 0;
-	for (i = 0; i < Q_table_len; i++) {
-		q = Q_table[i];
-		Nb_reps[i] = K.cubic_surface_nb_reps(q);
-		nb_reps_total += Nb_reps[i];
-	}
-	Big_table = NEW_lint(nb_reps_total * 4);
-
-	cur = 0;
-	for (i = 0; i < Q_table_len; i++) {
-		q = Q_table[i];
-		for (j = 0; j < Nb_reps[i]; j++, cur++) {
-			nb_E = K.cubic_surface_nb_Eckardt_points(q, j);
-			Big_table[cur * 4 + 0] = q;
-			Big_table[cur * 4 + 1] = nb_E;
-			Big_table[cur * 4 + 2] = j;
-
-			int *data;
-			int nb_gens;
-			int data_size;
-			string stab_order;
-			long int ago;
-			data_structures::string_tools ST;
-
-			K.cubic_surface_stab_gens(q, j, data, nb_gens, data_size, stab_order);
-			ago = ST.strtolint(stab_order);
-
-			Big_table[cur * 4 + 3] = ago;
-		}
-	}
-	std::string fname;
-
-	fname.assign("table_of_objects_QECA.csv");
-
-	std::string *headers;
-
-	headers = new string[4];
-
-
-	headers[0].assign("Q");
-	headers[1].assign("E");
-	headers[2].assign("OCN");
-	headers[3].assign("AUT");
-
-
-	Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
-			fname, headers, Big_table, nb_reps_total, 4);
-
-	FREE_lint(Big_table);
-	if (f_v) {
-		cout << "surface_domain_high_level::make_table_of_objects_detailed done" << endl;
-	}
-}
 
 
 

@@ -357,6 +357,14 @@ public:
 			long int *&Image_pts, int &N_points,
 			int verbose_level);
 	std::string stringify(int *eqn);
+	void parse_equation_and_substitute_parameters(
+			std::string &name_of_formula,
+			std::string &name_of_formula_tex,
+			std::string &equation_text,
+			std::string &equation_parameters,
+			std::string &equation_parameter_values,
+			int *&eqn, int &eqn_size,
+			int verbose_level);
 
 
 };
@@ -752,6 +760,13 @@ public:
 	int f_print_equation;
 	std::string print_equation_input;
 
+	int f_parse_equation;
+	std::string parse_equation_name_of_formula;
+	std::string parse_equation_name_of_formula_tex;
+	std::string parse_equation_equation_text;
+	std::string parse_equation_equation_parameters;
+	std::string parse_equation_equation_parameter_values;
+
 
 	polynomial_ring_activity_description();
 	~polynomial_ring_activity_description();
@@ -1046,6 +1061,8 @@ public:
 			unipoly_object p, std::ostream &ost);
 	void print_object(
 			unipoly_object p, std::ostream &ost);
+	std::string object_stringify(
+			unipoly_object p);
 	void print_object_sstr_latex(
 			unipoly_object p, std::stringstream &ost);
 	void print_object_sstr(

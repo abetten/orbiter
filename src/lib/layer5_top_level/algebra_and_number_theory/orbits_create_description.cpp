@@ -45,7 +45,11 @@ orbits_create_description::orbits_create_description()
 	//std::string on_partition_poset_classification_control_label;
 
 	f_on_polynomials = false;
-	on_polynomials_degree = 0;
+	//std::string on_polynomials_ring;
+
+	f_of_one_polynomial = false;
+	//std::string of_one_polynomial_ring;
+	//std::string of_one_polynomial_equation;
 
 	f_classification_by_canonical_form = false;
 	Canonical_form_classifier_description = NULL;
@@ -135,11 +139,22 @@ int orbits_create_description::read_arguments(int argc, std::string *argv,
 		}
 		else if (ST.stringcmp(argv[i], "-on_polynomials") == 0) {
 			f_on_polynomials = true;
-			on_polynomials_degree = ST.strtoi(argv[++i]);
+			on_polynomials_ring.assign(argv[++i]);
 			if (f_v) {
-				cout << "-on_polynomials " << on_polynomials_degree << endl;
+				cout << "-on_polynomials " << on_polynomials_ring << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-of_one_polynomial") == 0) {
+			f_of_one_polynomial = true;
+			of_one_polynomial_ring.assign(argv[++i]);
+			of_one_polynomial_equation.assign(argv[++i]);
+			if (f_v) {
+				cout << "-of_one_polynomial " << of_one_polynomial_ring
+						<< " " << of_one_polynomial_equation << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-classification_by_canonical_form") == 0) {
 			f_classification_by_canonical_form = true;
 			Canonical_form_classifier_description = NEW_OBJECT(projective_geometry::canonical_form_classifier_description);
@@ -228,7 +243,11 @@ void orbits_create_description::print()
 				<< on_partition_poset_classification_control_label << endl;
 	}
 	if (f_on_polynomials) {
-		cout << "-on_polynomials " << on_polynomials_degree << endl;
+		cout << "-on_polynomials " << on_polynomials_ring << endl;
+	}
+	if (f_of_one_polynomial) {
+		cout << "-of_one_polynomial " << of_one_polynomial_ring
+				<< " " << of_one_polynomial_equation << endl;
 	}
 	if (f_classification_by_canonical_form) {
 		cout << "-classification_by_canonical_form " << endl;

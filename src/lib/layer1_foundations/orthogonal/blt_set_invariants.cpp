@@ -231,10 +231,10 @@ void blt_set_invariants::latex(
 	int f_print_subscripts = true;
 
 	ost << "$$" << endl;
-	D2->print_row_decomposition_tex(
+	D2->Scheme->print_row_decomposition_tex(
 		ost, f_enter_math, f_print_subscripts, verbose_level - 1);
 	ost << "\\quad" << endl;
-	D2->print_column_decomposition_tex(
+	D2->Scheme->print_column_decomposition_tex(
 		ost, f_enter_math, f_print_subscripts, verbose_level - 1);
 	ost << "$$" << endl;
 	D2->Stack->print_classes_tex(ost);
@@ -242,11 +242,11 @@ void blt_set_invariants::latex(
 	if (Sos3->nb_sets) {
 		ost << "$$" << endl;
 
-		D3->print_row_decomposition_tex(
+		D3->Scheme->print_row_decomposition_tex(
 			ost, f_enter_math, f_print_subscripts, verbose_level - 1);
 		ost << "$$" << endl;
 		ost << "$$" << endl;
-		D3->print_column_decomposition_tex(
+		D3->Scheme->print_column_decomposition_tex(
 			ost, f_enter_math, f_print_subscripts, verbose_level - 1);
 		ost << "$$" << endl;
 		D3->Stack->print_classes_tex(ost);

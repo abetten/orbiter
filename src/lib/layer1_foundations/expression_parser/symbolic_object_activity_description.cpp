@@ -1,5 +1,5 @@
 /*
- * formula_activity_description.cpp
+ * symbolic_object_activity_description.cpp
  *
  *  Created on: Feb 4, 2022
  *      Author: betten
@@ -19,28 +19,32 @@ namespace layer1_foundations {
 namespace expression_parser {
 
 
-formula_activity_description::formula_activity_description()
+symbolic_object_activity_description::symbolic_object_activity_description()
 {
 	f_export = false;
 
+#if 0
 	f_evaluate = false;
 	//std::string evaluate_assignment;
+#endif
 
 	f_print = false;
 
+#if 0
 	f_sweep = false;
 	//std::string sweep_variables;
 
 	f_sweep_affine = false;
 	//std::string sweep_affine_variables;
+#endif
 }
 
-formula_activity_description::~formula_activity_description()
+symbolic_object_activity_description::~symbolic_object_activity_description()
 {
 
 }
 
-int formula_activity_description::read_arguments(
+int symbolic_object_activity_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
@@ -49,7 +53,7 @@ int formula_activity_description::read_arguments(
 	data_structures::string_tools ST;
 
 	if (f_v) {
-		cout << "formula_activity_description::read_arguments" << endl;
+		cout << "symbolic_object_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
@@ -59,6 +63,7 @@ int formula_activity_description::read_arguments(
 				cout << "-export " << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-evaluate") == 0) {
 			f_evaluate = true;
 			evaluate_assignment.assign(argv[++i]);
@@ -67,6 +72,7 @@ int formula_activity_description::read_arguments(
 						<< evaluate_assignment << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-print") == 0) {
 			f_print = true;
 			if (f_v) {
@@ -74,6 +80,7 @@ int formula_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-sweep") == 0) {
 			f_sweep = true;
 			sweep_variables.assign(argv[++i]);
@@ -91,7 +98,7 @@ int formula_activity_description::read_arguments(
 						<< " " << sweep_affine_variables << endl;
 			}
 		}
-
+#endif
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -99,19 +106,20 @@ int formula_activity_description::read_arguments(
 			break;
 		}
 		else {
-			cout << "formula_activity_description::read_arguments "
+			cout << "symbolic_object_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
 			exit(1);
 		}
 	} // next i
 	if (f_v) {
-		cout << "formula_activity_description::read_arguments done" << endl;
+		cout << "symbolic_object_activity_description::read_arguments done" << endl;
 	}
 	return i + 1;
 }
 
-void formula_activity_description::print()
+void symbolic_object_activity_description::print()
 {
+#if 0
 	if (f_export) {
 		cout << "-export " << endl;
 	}
@@ -131,7 +139,7 @@ void formula_activity_description::print()
 		cout << "-sweep "
 				<< " " << sweep_affine_variables << endl;
 	}
-
+#endif
 }
 
 

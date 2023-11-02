@@ -67,15 +67,15 @@ void any_group::classes(int verbose_level)
 
 	if (f_v) {
 		cout << "any_group::classes "
-				"before A2->conjugacy_classes_and_normalizers" << endl;
+				"before A2->get_conjugacy_classes_and_normalizers" << endl;
 	}
-	M.conjugacy_classes_and_normalizers(
+	M.get_conjugacy_classes_and_normalizers(
 			LG->A2, G,
 			label, label_tex,
 			verbose_level);
 	if (f_v) {
 		cout << "any_group::classes "
-				"after A2->conjugacy_classes_and_normalizers" << endl;
+				"after A2->get_conjugacy_classes_and_normalizers" << endl;
 	}
 
 	FREE_OBJECT(G);

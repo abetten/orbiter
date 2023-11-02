@@ -65,6 +65,7 @@ finite_field_activity_description::finite_field_activity_description()
 	power_map_k = 0;
 	//std::string power_map_elements;
 
+#if 0
 	f_parse_and_evaluate = false;
 	//parse_name_of_formula
 	//parse_managed_variables
@@ -74,7 +75,7 @@ finite_field_activity_description::finite_field_activity_description()
 	f_evaluate = false;
 	//std::string evaluate_formula_label;
 	//std::string evaluate_parameters;
-
+#endif
 
 	// Extension fields:
 
@@ -396,6 +397,7 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-parse_and_evaluate") == 0) {
 			f_parse_and_evaluate = true;
 			parse_name_of_formula.assign(argv[++i]);
@@ -421,6 +423,7 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+#endif
 
 		// Extension fields:
 
@@ -957,7 +960,7 @@ void finite_field_activity_description::print()
 					<< " " << power_map_elements
 				<< endl;
 	}
-
+#if 0
 	if (f_parse_and_evaluate) {
 		cout << "-parse_and_evaluate " << parse_name_of_formula
 				<< " " << parse_managed_variables
@@ -971,7 +974,7 @@ void finite_field_activity_description::print()
 				<< " " << evaluate_parameters
 				<< endl;
 	}
-
+#endif
 
 	// Extension fields:
 

@@ -77,8 +77,8 @@ activity_description::activity_description()
 	f_large_set_was_activity = false;
 	Large_set_was_activity_description = NULL;
 
-	f_formula_activity = false;
-	Formula_activity_description = NULL;
+	f_symbolic_object_activity = false;
+	Symbolic_object_activity_description = NULL;
 
 	f_BLT_set_classify_activity = false;
 	Blt_set_classify_activity_description = NULL;
@@ -539,21 +539,21 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-formula_activity") == 0) {
-		f_formula_activity = true;
-		Formula_activity_description =
-				NEW_OBJECT(expression_parser::formula_activity_description);
+	else if (ST.stringcmp(argv[i], "-symbolic_object_activity") == 0) {
+		f_symbolic_object_activity = true;
+		Symbolic_object_activity_description =
+				NEW_OBJECT(expression_parser::symbolic_object_activity_description);
 		if (f_v) {
-			cout << "reading -formula_activity" << endl;
+			cout << "reading -symbolic_object_activity" << endl;
 		}
-		i += Formula_activity_description->read_arguments(argc - (i + 1),
+		i += Symbolic_object_activity_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
 		i++;
 
 		if (f_v) {
-			cout << "-formula_activity" << endl;
-			Formula_activity_description->print();
+			cout << "-symbolic_object_activity" << endl;
+			Symbolic_object_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -868,13 +868,13 @@ void activity_description::worker(int verbose_level)
 
 		do_large_set_was_activity(verbose_level);
 	}
-	else if (f_formula_activity) {
+	else if (f_symbolic_object_activity) {
 
 		if (f_v) {
-			cout << "activity_description::worker f_formula_activity" << endl;
+			cout << "activity_description::worker f_symbolic_object_activity" << endl;
 		}
 
-		do_formula_activity(verbose_level);
+		do_symbolic_object_activity(verbose_level);
 	}
 	else if (f_BLT_set_classify_activity) {
 
@@ -1014,9 +1014,9 @@ void activity_description::print()
 		cout << "-large_set_with_symmetry_assumption_activity ";
 		Large_set_was_activity_description->print();
 	}
-	else if (f_formula_activity) {
-		cout << "-formula_activity ";
-		Formula_activity_description->print();
+	else if (f_symbolic_object_activity) {
+		cout << "-symbolic_object_activity ";
+		Symbolic_object_activity_description->print();
 	}
 	else if (f_BLT_set_classify_activity) {
 		cout << "-BLT_set_classify_activity ";
@@ -2085,12 +2085,12 @@ void activity_description::do_large_set_was_activity(int verbose_level)
 
 }
 
-void activity_description::do_formula_activity(int verbose_level)
+void activity_description::do_symbolic_object_activity(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "activity_description::do_formula_activity "
+		cout << "activity_description::do_symbolic_object_activity "
 				"activity for the following objects:";
 		Sym->print_with();
 	}
@@ -2106,24 +2106,25 @@ void activity_description::do_formula_activity(int verbose_level)
 		exit(1);
 	}
 
-	expression_parser::formula *f;
+	expression_parser::symbolic_object_builder *f;
 
-	f = (expression_parser::formula *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	f = (expression_parser::symbolic_object_builder *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		expression_parser::formula_activity Activity;
+		expression_parser::symbolic_object_activity Activity;
 
 
-		Activity.init(Formula_activity_description,
+		Activity.init(
+				Symbolic_object_activity_description,
 				f,
 				verbose_level);
 
 		if (f_v) {
-			cout << "activity_description::do_formula_activity "
+			cout << "activity_description::do_symbolic_object_activity "
 					"before Activity.perform_activity" << endl;
 		}
 		Activity.perform_activity(verbose_level);
 		if (f_v) {
-			cout << "activity_description::do_formula_activity "
+			cout << "activity_description::do_symbolic_object_activity "
 					"after Activity.perform_activity" << endl;
 		}
 
@@ -2132,7 +2133,7 @@ void activity_description::do_formula_activity(int verbose_level)
 	FREE_int(Idx);
 
 	if (f_v) {
-		cout << "activity_description::do_formula_activity done" << endl;
+		cout << "activity_description::do_symbolic_object_activity done" << endl;
 	}
 
 }

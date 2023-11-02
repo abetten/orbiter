@@ -211,9 +211,9 @@ void semifield_downstep_node::init(
 		else {
 			if (f_v) {
 				cout << "semifield_downstep_node::init "
-						"before sg->orbits_on_points_schreier" << endl;
+						"before sg->compute_all_point_orbits_schreier" << endl;
 				}
-			Sch = sg->orbits_on_points_schreier(
+			Sch = sg->compute_all_point_orbits_schreier(
 					A_on_cosets, verbose_level);
 			cout << "Writing schreier data structure to "
 					"file " << fname << endl;

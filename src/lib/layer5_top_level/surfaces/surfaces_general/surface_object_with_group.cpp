@@ -631,7 +631,7 @@ void surface_object_with_group::init_orbits_on_points(
 			cout << "surface_object_with_group::init_orbits_on_points "
 					"computing orbits on points using nice gens:" << endl;
 		}
-		Orbits_on_points = nice_gens->orbits_on_points_schreier(
+		Orbits_on_points = nice_gens->compute_all_point_orbits_schreier(
 				A_on_points, 0 /*verbose_level*/);
 
 	}
@@ -643,13 +643,13 @@ void surface_object_with_group::init_orbits_on_points(
 		}
 		if (f_v) {
 			cout << "surface_object_with_group::init_orbits_on_points "
-					"before Aut_gens->orbits_on_points_schreier" << endl;
+					"before Aut_gens->compute_all_point_orbits_schreier" << endl;
 		}
-		Orbits_on_points = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_points = Aut_gens->compute_all_point_orbits_schreier(
 				A_on_points, verbose_level - 2);
 		if (f_v) {
 			cout << "surface_object_with_group::init_orbits_on_points "
-					"after Aut_gens->orbits_on_points_schreier" << endl;
+					"after Aut_gens->compute_all_point_orbits_schreier" << endl;
 		}
 	}
 	if (f_v) {
@@ -696,11 +696,11 @@ void surface_object_with_group::init_orbits_on_Eckardt_points(
 			cout << "surface_object_with_group::init_orbits_on_Eckardt_points "
 					"computing orbits on points using nice gens:" << endl;
 		}
-		Orbits_on_Eckardt_points = nice_gens->orbits_on_points_schreier(
+		Orbits_on_Eckardt_points = nice_gens->compute_all_point_orbits_schreier(
 				A_on_Eckardt_points, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_Eckardt_points = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_Eckardt_points = Aut_gens->compute_all_point_orbits_schreier(
 				A_on_Eckardt_points, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -742,11 +742,11 @@ void surface_object_with_group::init_orbits_on_Double_points(
 		cout << "computing orbits on Double points:" << endl;
 	}
 	if (f_has_nice_gens) {
-		Orbits_on_Double_points = nice_gens->orbits_on_points_schreier(
+		Orbits_on_Double_points = nice_gens->compute_all_point_orbits_schreier(
 				A_on_Double_points, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_Double_points = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_Double_points = Aut_gens->compute_all_point_orbits_schreier(
 				A_on_Double_points, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -788,11 +788,11 @@ void surface_object_with_group::init_orbits_on_Single_points(
 		cout << "computing orbits on Single points:" << endl;
 	}
 	if (f_has_nice_gens) {
-		Orbits_on_Single_points = nice_gens->orbits_on_points_schreier(
+		Orbits_on_Single_points = nice_gens->compute_all_point_orbits_schreier(
 				A_on_Single_points, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_Single_points = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_Single_points = Aut_gens->compute_all_point_orbits_schreier(
 				A_on_Single_points, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -835,11 +835,11 @@ void surface_object_with_group::init_orbits_on_lines(
 		cout << "computing orbits on lines:" << endl;
 	}
 	if (f_has_nice_gens) {
-		Orbits_on_lines = nice_gens->orbits_on_points_schreier(
+		Orbits_on_lines = nice_gens->compute_all_point_orbits_schreier(
 				A_on_the_lines, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_lines = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_lines = Aut_gens->compute_all_point_orbits_schreier(
 				A_on_the_lines, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -876,11 +876,11 @@ void surface_object_with_group::init_orbits_on_half_double_sixes(
 		cout << "computing orbits on single sixes:" << endl;
 	}
 	if (f_has_nice_gens) {
-		Orbits_on_single_sixes = nice_gens->orbits_on_points_schreier(
+		Orbits_on_single_sixes = nice_gens->compute_all_point_orbits_schreier(
 				A_single_sixes, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_single_sixes = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_single_sixes = Aut_gens->compute_all_point_orbits_schreier(
 				A_single_sixes, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -931,11 +931,11 @@ void surface_object_with_group::init_orbits_on_double_sixes(
 		cout << "computing orbits on double sixes:" << endl;
 	}
 	if (f_has_nice_gens) {
-		Orbits_on_double_sixes = nice_gens->orbits_on_points_schreier(
+		Orbits_on_double_sixes = nice_gens->compute_all_point_orbits_schreier(
 				A_double_sixes, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_double_sixes = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_double_sixes = Aut_gens->compute_all_point_orbits_schreier(
 				A_double_sixes, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -976,11 +976,11 @@ void surface_object_with_group::init_orbits_on_tritangent_planes(
 	}
 
 	if (f_has_nice_gens) {
-		Orbits_on_tritangent_planes = nice_gens->orbits_on_points_schreier(
+		Orbits_on_tritangent_planes = nice_gens->compute_all_point_orbits_schreier(
 				A_on_tritangent_planes, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_tritangent_planes = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_tritangent_planes = Aut_gens->compute_all_point_orbits_schreier(
 				A_on_tritangent_planes, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -1025,11 +1025,11 @@ void surface_object_with_group::init_orbits_on_Hesse_planes(int verbose_level)
 	}
 
 	if (f_has_nice_gens) {
-		Orbits_on_Hesse_planes = nice_gens->orbits_on_points_schreier(
+		Orbits_on_Hesse_planes = nice_gens->compute_all_point_orbits_schreier(
 				A_on_Hesse_planes, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_Hesse_planes = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_Hesse_planes = Aut_gens->compute_all_point_orbits_schreier(
 				A_on_Hesse_planes, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -1082,11 +1082,11 @@ void surface_object_with_group::init_orbits_on_axes(int verbose_level)
 	}
 
 	if (f_has_nice_gens) {
-		Orbits_on_axes = nice_gens->orbits_on_points_schreier(
+		Orbits_on_axes = nice_gens->compute_all_point_orbits_schreier(
 				A_on_axes, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_axes = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_axes = Aut_gens->compute_all_point_orbits_schreier(
 				A_on_axes, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -1128,11 +1128,11 @@ void surface_object_with_group::init_orbits_on_trihedral_pairs(
 	}
 
 	if (f_has_nice_gens) {
-		Orbits_on_trihedral_pairs = nice_gens->orbits_on_points_schreier(
+		Orbits_on_trihedral_pairs = nice_gens->compute_all_point_orbits_schreier(
 				A_on_trihedral_pairs, 0 /*verbose_level*/);
 	}
 	else {
-		Orbits_on_trihedral_pairs = Aut_gens->orbits_on_points_schreier(
+		Orbits_on_trihedral_pairs = Aut_gens->compute_all_point_orbits_schreier(
 				A_on_trihedral_pairs, 0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -1177,12 +1177,12 @@ void surface_object_with_group::init_orbits_on_points_not_on_lines(
 
 	if (f_has_nice_gens) {
 		Orbits_on_points_not_on_lines =
-				nice_gens->orbits_on_points_schreier(
+				nice_gens->compute_all_point_orbits_schreier(
 						A_on_pts_not_on_lines,  0 /*verbose_level*/);
 	}
 	else {
 		Orbits_on_points_not_on_lines =
-				Aut_gens->orbits_on_points_schreier(
+				Aut_gens->compute_all_point_orbits_schreier(
 						A_on_pts_not_on_lines,  0 /*verbose_level*/);
 	}
 	if (f_v) {
@@ -2196,8 +2196,6 @@ void surface_object_with_group::export_all_quartic_curves(
 		ost_quartics_csv << pt_orbit;
 		ost_quartics_csv << "," << po_go;
 		ost_quartics_csv << "," << QC->po_index;
-
-		int i;
 
 		std::string s_eqn, s_Pts, s_Lines;
 

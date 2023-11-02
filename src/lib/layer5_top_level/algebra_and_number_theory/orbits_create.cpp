@@ -39,6 +39,9 @@ orbits_create::orbits_create()
 	f_has_On_polynomials = false;
 	On_polynomials = NULL;
 
+	f_has_Of_One_polynomial = false;
+	Of_One_polynomial = NULL;
+
 	f_has_classification_by_canonical_form = false;
 	Canonical_form_classifier = NULL;
 
@@ -335,6 +338,10 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_polynomials" << endl;
 		}
+		if (f_v) {
+			cout << "orbits_create::init ring = " << Descr->on_polynomials_ring << endl;
+		}
+
 		if (!Descr->f_group) {
 			cout << "orbits_create::init please specify the group using -group <label>" << endl;
 			exit(1);
@@ -347,16 +354,25 @@ void orbits_create::init(
 
 		On_polynomials = NEW_OBJECT(orbits_on_polynomials);
 
+
+
+		ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+		HPD = Get_ring(Descr->on_polynomials_ring);
+
 		if (f_v) {
-			cout << "orbits_create::init before On_polynomials->init" << endl;
+			cout << "orbits_create::init "
+					"before On_polynomials->init" << endl;
 		}
-		On_polynomials->init(Group->LG,
-				Descr->on_polynomials_degree,
-				//Descr->f_recognize, Descr->recognize_text,
+		On_polynomials->init(
+				Group->LG,
+				HPD,
 				verbose_level);
 
 		if (f_v) {
-			cout << "orbits_create::init after On_polynomials->init" << endl;
+			cout << "orbits_create::init "
+					"after On_polynomials->init" << endl;
 		}
 
 		f_has_On_polynomials = true;
@@ -365,6 +381,62 @@ void orbits_create::init(
 
 
 	}
+
+
+	if (Descr->f_of_one_polynomial) {
+
+
+		if (f_v) {
+			cout << "orbits_create::init f_of_one_polynomial" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_create::init ring = " << Descr->of_one_polynomial_ring << endl;
+		}
+
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
+		}
+
+		if (!Group->f_linear_group) {
+			cout << "orbits_create::init group must be linear" << endl;
+			exit(1);
+		}
+
+		Of_One_polynomial = NEW_OBJECT(orbits_on_polynomials);
+
+
+
+		ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+		HPD = Get_ring(Descr->of_one_polynomial_ring);
+
+
+		expression_parser::symbolic_object_builder *Symbol;
+
+		Symbol = Get_symbol(Descr->of_one_polynomial_equation);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before Of_One_polynomial->orbit_of_one_polynomial" << endl;
+		}
+		Of_One_polynomial->orbit_of_one_polynomial(
+				Group->LG,
+				HPD,
+				Symbol,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after Of_One_polynomial->orbit_of_one_polynomial" << endl;
+		}
+
+		f_has_Of_One_polynomial = true;
+
+	}
+
+
+
 
 	if (Descr->f_classification_by_canonical_form) {
 

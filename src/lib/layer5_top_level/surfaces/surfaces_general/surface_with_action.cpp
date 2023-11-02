@@ -1073,7 +1073,8 @@ void surface_with_action::sweep_4_15_lines(
 
 
 
-						Surface_Descr->equation_parameters = "alpha=" + std::to_string(alpha)
+						Surface_Descr->equation_parameters =
+								"alpha=" + std::to_string(alpha)
 								+ ",beta=" + std::to_string(beta)
 								+ ",gamma=" + std::to_string(gamma)
 								+ ",delta=" + std::to_string(delta);
@@ -1165,7 +1166,8 @@ void surface_with_action::sweep_4_15_lines(
 
 						{
 							string str;
-							Int_vec_create_string_with_quotes(str, SC->SO->eqn, 20);
+
+							str = "\"" + SC->SO->stringify_eqn() + "\"";
 							ost_csv << str;
 						}
 
@@ -1173,9 +1175,11 @@ void surface_with_action::sweep_4_15_lines(
 
 						{
 							string str;
-							Lint_vec_create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+
+							str = "\"" + SC->SO->stringify_Pts() + "\"";
 							ost_csv << str;
 						}
+
 
 						ost_csv << ",";
 
@@ -1187,7 +1191,7 @@ void surface_with_action::sweep_4_15_lines(
 							params[2] = gamma;
 							params[3] = delta;
 							string str;
-							Int_vec_create_string_with_quotes(str, params, 4);
+							str = "\"" + Int_vec_stringify(params, 4) + "\"";
 							ost_csv << str;
 						}
 
@@ -1402,7 +1406,8 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 			{
 				string str;
-				Int_vec_create_string_with_quotes(str, SC->SO->eqn, 20);
+
+				str = "\"" + SC->SO->stringify_eqn() + "\"";
 				ost_csv << str;
 			}
 
@@ -1410,7 +1415,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 			{
 				string str;
-				Lint_vec_create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+				str = "\"" + SC->SO->stringify_Pts() + "\"";
 				ost_csv << str;
 			}
 
@@ -1424,7 +1429,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 				params[2] = c;
 				params[3] = d;
 				string str;
-				Int_vec_create_string_with_quotes(str, params, 4);
+				str = "\"" + Int_vec_stringify(params, 4) + "\"";
 				ost_csv << str;
 			}
 
@@ -1734,8 +1739,8 @@ void surface_with_action::sweep_6_9_lines(
 
 								{
 									string str;
-									Int_vec_create_string_with_quotes(
-											str, SC->SO->eqn, 20);
+
+									str = "\"" + SC->SO->stringify_eqn() + "\"";
 									ost_csv << str;
 								}
 
@@ -1743,8 +1748,7 @@ void surface_with_action::sweep_6_9_lines(
 
 								{
 									string str;
-									Lint_vec_create_string_with_quotes(
-											str, SC->SO->Pts, SC->SO->nb_pts);
+									str = "\"" + SC->SO->stringify_Pts() + "\"";
 									ost_csv << str;
 								}
 
@@ -1760,8 +1764,7 @@ void surface_with_action::sweep_6_9_lines(
 									params[4] = f;
 									params[5] = g;
 									string str;
-									Int_vec_create_string_with_quotes(
-											str, params, 6);
+									str = "\"" + Int_vec_stringify(params, 6) + "\"";
 									ost_csv << str;
 								}
 
@@ -1811,7 +1814,8 @@ void surface_with_action::sweep_6_9_lines(
 	}
 	std::string fname;
 
-	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_6_9_lines.csv";
+	fname = Surface_Descr->equation_name_of_formula
+			+ std::to_string(F->q) + "_sweep_6_9_lines.csv";
 
 	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname, T, N, nb_cols);
@@ -1819,7 +1823,8 @@ void surface_with_action::sweep_6_9_lines(
 			<< Fio.file_size(fname) << endl;
 
 
-	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_points.txt";
+	fname = Surface_Descr->equation_name_of_formula
+			+ std::to_string(F->q) + "_points.txt";
 
 
 	{
@@ -2058,7 +2063,8 @@ void surface_with_action::sweep_4_27(
 	orbiter_kernel_system::file_io Fio;
 	std::string fname;
 
-	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep_4_27.csv";
+	fname = Surface_Descr->equation_name_of_formula
+			+ std::to_string(F->q) + "_sweep_4_27.csv";
 
 	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname, T, N, 16);
@@ -2066,7 +2072,8 @@ void surface_with_action::sweep_4_27(
 			<< Fio.file_size(fname) << endl;
 
 
-	fname = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_points.txt";
+	fname = Surface_Descr->equation_name_of_formula
+			+ std::to_string(F->q) + "_points.txt";
 
 
 	{
@@ -2121,7 +2128,8 @@ void surface_with_action::sweep_4_L9_E4(
 
 	sweep_fname_csv.assign(sweep_fname);
 
-	sweep_fname_csv = Surface_Descr->equation_name_of_formula + std::to_string(F->q) + "_sweep4_L9_E4_data.csv";
+	sweep_fname_csv = Surface_Descr->equation_name_of_formula
+			+ std::to_string(F->q) + "_sweep4_L9_E4_data.csv";
 
 
 	{
@@ -2230,7 +2238,8 @@ void surface_with_action::sweep_4_L9_E4(
 
 						{
 							string str;
-							Int_vec_create_string_with_quotes(str, SC->SO->eqn, 20);
+
+							str = "\"" + SC->SO->stringify_eqn() + "\"";
 							ost_csv << str;
 						}
 
@@ -2238,7 +2247,7 @@ void surface_with_action::sweep_4_L9_E4(
 
 						{
 							string str;
-							Lint_vec_create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+							str = "\"" + SC->SO->stringify_Pts() + "\"";
 							ost_csv << str;
 						}
 
@@ -2252,7 +2261,7 @@ void surface_with_action::sweep_4_L9_E4(
 							params[2] = delta;
 							params[3] = lambda;
 							string str;
-							Int_vec_create_string_with_quotes(str, params, 4);
+							str = "\"" + Int_vec_stringify(params, 4) + "\"";
 							ost_csv << str;
 						}
 

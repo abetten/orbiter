@@ -104,9 +104,9 @@ class activity_description {
 	apps_combinatorics::large_set_was_activity_description
 		*Large_set_was_activity_description;
 
-	int f_formula_activity;
-	expression_parser::formula_activity_description
-		*Formula_activity_description;
+	int f_symbolic_object_activity;
+	expression_parser::symbolic_object_activity_description
+		*Symbolic_object_activity_description;
 
 	int f_BLT_set_classify_activity;
 	orthogonal_geometry_applications::blt_set_classify_activity_description
@@ -160,7 +160,7 @@ public:
 	void do_diophant_activity(int verbose_level);
 	void do_design_activity(int verbose_level);
 	void do_large_set_was_activity(int verbose_level);
-	void do_formula_activity(int verbose_level);
+	void do_symbolic_object_activity(int verbose_level);
 	void do_BLT_set_classify_activity(int verbose_level);
 	void do_spread_classify_activity(int verbose_level);
 	void do_spread_activity(int verbose_level);
@@ -1204,7 +1204,7 @@ public:
 		*Vector_builder_description;
 
 	int f_symbolic_object;
-	data_structures::symbolic_object_builder_description
+	expression_parser::symbolic_object_builder_description
 		*Symbolic_object_builder_description;
 
 	int f_combinatorial_objects;
@@ -1290,7 +1290,7 @@ public:
 			int verbose_level);
 	void definition_of_symbolic_object(
 			std::string &label,
-			data_structures::symbolic_object_builder_description *Descr,
+			expression_parser::symbolic_object_builder_description *Descr,
 			int verbose_level);
 	void definition_of_combinatorial_object(int verbose_level);
 	void do_geometry_builder(int verbose_level);

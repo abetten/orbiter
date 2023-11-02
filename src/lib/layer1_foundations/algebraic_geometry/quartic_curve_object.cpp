@@ -140,9 +140,14 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_but_no_bitangents" << endl;
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_but_no_bitangents equation:" << endl;
 		Int_vec_print(cout, eqn15, 15);
 		cout << endl;
 	}
+
 
 	quartic_curve_object::Dom = Dom;
 

@@ -12,6 +12,7 @@ MODULES = \
 	arc_basic.o \
 	arc_in_projective_space.o \
 	buekenhout_metz.o \
+	decomposition_scheme.o \
 	decomposition.o \
 	desarguesian_spread.o \
 	flag.o \

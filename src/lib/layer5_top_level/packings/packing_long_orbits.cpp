@@ -800,7 +800,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		}
 
 		int i, a, b;
-		int nb_uniform;
+		//int nb_uniform;
 		int sol_idx;
 		int *clique;
 		long int *packing;
@@ -810,7 +810,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		packing = NEW_lint(PWF->PW->P->size_of_packing);
 		Packings_table = NEW_lint(nb_solutions * PWF->PW->P->size_of_packing);
 
-		nb_uniform = 0;
+		//nb_uniform = 0;
 
 
 		for (sol_idx = 0; sol_idx < nb_solutions; sol_idx++) {
@@ -977,7 +977,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			}
 			for (j = 0; j < PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads; j++) {
 				if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j] == PWF->PW->P->size_of_packing) {
-					nb_uniform++;
+					//nb_uniform++;
 					break;
 				}
 			}
@@ -1006,7 +1006,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				}
 				for (j = 0; j < PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads; j++) {
 					if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j] == PWF->PW->P->size_of_packing) {
-						nb_uniform++;
+						//nb_uniform++;
 						break;
 					}
 				}

@@ -87,8 +87,10 @@ void action_on_homogeneous_polynomials::init(
 	dimension = HPD->get_nb_monomials();
 	degree = Gg.nb_PG_elements(dimension - 1, q);
 	if (f_v) {
-		cout << "action_on_homogeneous_polynomials::init dimension = " << dimension << endl;
-		cout << "action_on_homogeneous_polynomials::init degree = " << degree << endl;
+		cout << "action_on_homogeneous_polynomials::init "
+				"dimension = " << dimension << endl;
+		cout << "action_on_homogeneous_polynomials::init "
+				"degree = " << degree << endl;
 	}
 	low_level_point_size = dimension;
 	v1 = NEW_int(dimension);
@@ -127,21 +129,25 @@ void action_on_homogeneous_polynomials::init_invariant_set_of_equations(
 	Table_of_equations = NEW_OBJECT(data_structures::int_matrix);
 
 	if (f_v) {
-		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations before Table_of_equations->allocate_and_init" << endl;
+		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations "
+				"before Table_of_equations->allocate_and_init" << endl;
 	}
 	Table_of_equations->allocate_and_init(
 			nb_equations, dimension,
 			action_on_homogeneous_polynomials::Equations);
 	if (f_v) {
-		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations after Table_of_equations->allocate_and_init" << endl;
+		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations "
+				"after Table_of_equations->allocate_and_init" << endl;
 	}
 
 	if (f_v) {
-		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations before Table_of_equations->sort_rows" << endl;
+		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations "
+				"before Table_of_equations->sort_rows" << endl;
 	}
 	Table_of_equations->sort_rows(verbose_level);
 	if (f_v) {
-		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations after Table_of_equations->sort_rows" << endl;
+		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations "
+				"after Table_of_equations->sort_rows" << endl;
 	}
 	if (f_v) {
 		int a;
@@ -229,7 +235,8 @@ long int action_on_homogeneous_polynomials::compute_image_int(
 #endif
 
 		if (!Table_of_equations->search(v2, b, 0 /* verbose_level */)) {
-			cout << "action_on_homogeneous_polynomials::compute_image_int Table_of_equations->search is false, "
+			cout << "action_on_homogeneous_polynomials::compute_image_int "
+					"Table_of_equations->search is false, "
 					"could not find equation" << endl;
 			cout << "action_on_homogeneous_polynomials::compute_image_int "
 					"a = " << a << " v1 = " << endl;
@@ -365,7 +372,8 @@ void action_on_homogeneous_polynomials::compute_representation(
 		Int_vec_zero(v1, dimension);
 		v1[i] = 1;
 		compute_image_int_low_level(
-			Elt, v1, M + i * dimension, 0 /* verbose_level */);
+			Elt, v1, M + i * dimension,
+			0 /* verbose_level */);
 	}
 
 	if (f_v) {

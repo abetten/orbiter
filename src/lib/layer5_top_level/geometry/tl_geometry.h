@@ -673,7 +673,7 @@ public:
 
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
-	data_structures::symbolic_object_builder *Formula;
+	expression_parser::symbolic_object_builder *Formula;
 
 	int object_in_codomain_idx;
 	orbiter_kernel_system::symbol_table_object_type object_in_codomain_type;

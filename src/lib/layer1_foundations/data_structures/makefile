@@ -30,8 +30,6 @@ MODULES = \
 	sorting.o \
 	spreadsheet.o \
 	string_tools.o \
-	symbolic_object_builder_description.o \
-	symbolic_object_builder.o \
 	tally_lint.o \
 	tally_vector_data.o \
 	tally.o \

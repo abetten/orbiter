@@ -706,30 +706,45 @@ void design_activity::do_tactical_decomposition(
 
 	{
 		geometry::incidence_structure *Inc;
-		data_structures::partitionstack *Stack;
 
 
 		Inc = NEW_OBJECT(geometry::incidence_structure);
 
-		Inc->init_by_matrix(DC->v, DC->b, DC->incma, 0 /* verbose_level */);
+		Inc->init_by_matrix(
+				DC->v, DC->b, DC->incma,
+				0 /* verbose_level */);
+
+		geometry::decomposition *Decomposition;
+
+
+		Decomposition = NEW_OBJECT(geometry::decomposition);
+
+		Decomposition->init_incidence_structure(
+				Inc,
+				verbose_level);
+
+#if 0
+		data_structures::partitionstack *Stack;
 
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 
-		Stack->allocate_with_two_classes(DC->v + DC->b, DC->v, DC->b, 0 /* verbose_level */);
-
+		Stack->allocate_with_two_classes(
+				DC->v + DC->b, DC->v, DC->b,
+				0 /* verbose_level */);
+#endif
 
 
 		while (true) {
 
 			int ht0, ht1;
 
-			ht0 = Stack->ht;
+			ht0 = Decomposition->Stack->ht;
 
 			if (f_v) {
 				cout << "design_activity::do_tactical_decomposition "
 						"before refine_column_partition_safe" << endl;
 			}
-			Inc->refine_column_partition_safe(*Stack, verbose_level - 2);
+			Decomposition->refine_column_partition_safe(verbose_level - 2);
 			if (f_v) {
 				cout << "design_activity::do_tactical_decomposition "
 						"after refine_column_partition_safe" << endl;
@@ -738,12 +753,12 @@ void design_activity::do_tactical_decomposition(
 				cout << "design_activity::do_tactical_decomposition "
 						"before refine_row_partition_safe" << endl;
 			}
-			Inc->refine_row_partition_safe(*Stack, verbose_level - 2);
+			Decomposition->refine_row_partition_safe(verbose_level - 2);
 			if (f_v) {
 				cout << "design_activity::do_tactical_decomposition "
 						"after refine_row_partition_safe" << endl;
 			}
-			ht1 = Stack->ht;
+			ht1 = Decomposition->Stack->ht;
 			if (ht1 == ht0) {
 				break;
 			}
@@ -751,31 +766,31 @@ void design_activity::do_tactical_decomposition(
 
 		int f_labeled = true;
 
-		Inc->print_partitioned(cout, *Stack, f_labeled);
-		Inc->get_and_print_decomposition_schemes(*Stack);
-		Stack->print_classes(cout);
+		Decomposition->print_partitioned(cout, f_labeled);
+		Decomposition->get_and_print_decomposition_schemes();
+		Decomposition->Stack->print_classes(cout);
 
 
 		int f_print_subscripts = false;
 		cout << "Decomposition:\\\\" << endl;
 		cout << "Row scheme:\\\\" << endl;
-		Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+		Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
 				cout, true /* f_enter_math */,
-			f_print_subscripts, *Stack);
+			f_print_subscripts);
 		cout << "Column scheme:\\\\" << endl;
-		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+		Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 				cout, true /* f_enter_math */,
-			f_print_subscripts, *Stack);
+			f_print_subscripts);
 
 		data_structures::set_of_sets *Row_classes;
 		data_structures::set_of_sets *Col_classes;
 
-		Stack->get_row_classes(Row_classes, verbose_level);
+		Decomposition->Stack->get_row_classes(Row_classes, verbose_level);
 		cout << "Row classes:\\\\" << endl;
 		Row_classes->print_table_tex(cout);
 
 
-		Stack->get_column_classes(Col_classes, verbose_level);
+		Decomposition->Stack->get_column_classes(Col_classes, verbose_level);
 		cout << "Col classes:\\\\" << endl;
 		Col_classes->print_table_tex(cout);
 
@@ -789,7 +804,7 @@ void design_activity::do_tactical_decomposition(
 
 
 		FREE_OBJECT(Inc);
-		FREE_OBJECT(Stack);
+		FREE_OBJECT(Decomposition);
 		FREE_OBJECT(Row_classes);
 		FREE_OBJECT(Col_classes);
 	}

@@ -120,11 +120,15 @@ void orbits_on_something::init(
 
 		if (f_v) {
 			cout << "orbits_on_something::init "
-					"computing orbits of the given group" << endl;
+					"before compute_all_point_orbits_schreier" << endl;
 		}
 
-		Sch = SG->orbits_on_points_schreier(
+		Sch = SG->compute_all_point_orbits_schreier(
 				A, verbose_level - 2);
+		if (f_v) {
+			cout << "orbits_on_something::init "
+					"after compute_all_point_orbits_schreier" << endl;
+		}
 
 		if (f_v) {
 			cout << "orbits_on_something::init "
@@ -242,15 +246,15 @@ void orbits_on_something::init_from_vector_ge(
 
 		if (f_v) {
 			cout << "orbits_on_something::init_from_vector_ge "
-					"computing orbits of the given group" << endl;
+					"before compute_all_point_orbits_schreier" << endl;
 		}
 
-		Sch = gens->orbits_on_points_schreier(
+		Sch = gens->compute_all_point_orbits_schreier(
 				A, verbose_level - 2);
 
 		if (f_v) {
 			cout << "orbits_on_something::init_from_vector_ge "
-					"computing orbits done" << endl;
+					"after compute_all_point_orbits_schreier" << endl;
 			cout << "We found " << Sch->nb_orbits
 					<< " orbits of the group" << endl;
 		}

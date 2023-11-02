@@ -317,12 +317,22 @@ void quartic_curve_object_properties::print_equation(std::ostream &ost)
 
 	ost << "$$" << endl;
 	ost << "\\begin{array}{c}" << endl;
-	QO->Dom->print_equation_with_line_breaks_tex(ost, QO->eqn15);
+
+
+	int eqn15[15];
+	Int_vec_copy(QO->eqn15, eqn15, 15);
+
+	QO->Dom->F->Projective_space_basic->PG_element_normalize_from_front(
+			eqn15, 1, 15);
+
+
+	QO->Dom->print_equation_with_line_breaks_tex(ost, eqn15);
+	//QO->Dom->print_equation_with_line_breaks_tex(ost, QO->eqn15);
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 
 	ost << "$$" << endl;
-	Int_vec_print(ost, QO->eqn15, 15);
+	Int_vec_print(ost, eqn15, 15);
 	ost << "$$" << endl;
 
 #if 0

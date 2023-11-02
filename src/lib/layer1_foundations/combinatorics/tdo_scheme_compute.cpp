@@ -29,7 +29,8 @@ tdo_scheme_compute::~tdo_scheme_compute()
 {
 }
 
-void tdo_scheme_compute::init(encoded_combinatorial_object *Enc,
+void tdo_scheme_compute::init(
+		encoded_combinatorial_object *Enc,
 		int max_depth,
 		int verbose_level)
 {
@@ -44,7 +45,8 @@ void tdo_scheme_compute::init(encoded_combinatorial_object *Enc,
 	Decomp = NEW_OBJECT(geometry::decomposition);
 
 	if (f_v) {
-		cout << "tdo_scheme_compute::init before Decomp->init_incidence_matrix" << endl;
+		cout << "tdo_scheme_compute::init "
+				"before Decomp->init_incidence_matrix" << endl;
 	}
 
 	Decomp->init_incidence_matrix(
@@ -52,43 +54,52 @@ void tdo_scheme_compute::init(encoded_combinatorial_object *Enc,
 			verbose_level);
 
 	if (f_v) {
-		cout << "tdo_scheme_compute::init after Decomp->init_incidence_matrix" << endl;
+		cout << "tdo_scheme_compute::init "
+				"after Decomp->init_incidence_matrix" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "tdo_scheme_compute::init before Decomp->setup_default_partition" << endl;
+		cout << "tdo_scheme_compute::init "
+				"before Decomp->setup_default_partition" << endl;
 	}
 	Decomp->setup_default_partition(verbose_level);
 	if (f_v) {
-		cout << "tdo_scheme_compute::init after Decomp->setup_default_partition" << endl;
+		cout << "tdo_scheme_compute::init "
+				"after Decomp->setup_default_partition" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "tdo_scheme_compute::init before Decomp->compute_TDO" << endl;
+		cout << "tdo_scheme_compute::init "
+				"before Decomp->compute_TDO" << endl;
 	}
 
 	Decomp->compute_TDO(max_depth, verbose_level);
 
 	if (f_v) {
-		cout << "tdo_scheme_compute::init after Decomp->compute_TDO" << endl;
+		cout << "tdo_scheme_compute::init "
+				"after Decomp->compute_TDO" << endl;
 	}
 
 	if (f_v) {
-		cout << "tdo_scheme_compute::init before Decomp->get_row_scheme" << endl;
+		cout << "tdo_scheme_compute::init "
+				"before Decomp->get_row_scheme" << endl;
 	}
 	Decomp->get_row_scheme(verbose_level);
 	if (f_v) {
-		cout << "tdo_scheme_compute::init after Decomp->get_row_scheme" << endl;
+		cout << "tdo_scheme_compute::init "
+				"after Decomp->get_row_scheme" << endl;
 	}
 
 	if (f_v) {
-		cout << "tdo_scheme_compute::init before Decomp->get_col_scheme" << endl;
+		cout << "tdo_scheme_compute::init "
+				"before Decomp->get_col_scheme" << endl;
 	}
 	Decomp->get_col_scheme(verbose_level);
 	if (f_v) {
-		cout << "tdo_scheme_compute::init after Decomp->get_col_scheme" << endl;
+		cout << "tdo_scheme_compute::init "
+				"after Decomp->get_col_scheme" << endl;
 	}
 
 	if (f_v) {
@@ -103,22 +114,22 @@ void tdo_scheme_compute::print_schemes(std::ostream &ost)
 	int f_print_subscripts = true;
 
 	ost << "$$" << endl;
-	Decomp->print_row_decomposition_tex(
+	Decomp->Scheme->print_row_decomposition_tex(
 		ost,
 		f_enter_math, f_print_subscripts,
 		verbose_level);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	Decomp->print_column_decomposition_tex(
+	Decomp->Scheme->print_column_decomposition_tex(
 		ost,
 		f_enter_math, f_print_subscripts,
 		verbose_level);
 	ost << "$$" << endl;
 
 
-	Decomp->Stack->print_decomposition_tex(ost,
-		Decomp->row_classes, Decomp->nb_row_classes,
-		Decomp->col_classes, Decomp->nb_col_classes);
+	Decomp->Stack->print_classes_of_decomposition_tex(ost,
+		Decomp->Scheme->row_classes, Decomp->Scheme->nb_row_classes,
+		Decomp->Scheme->col_classes, Decomp->Scheme->nb_col_classes);
 
 }
 

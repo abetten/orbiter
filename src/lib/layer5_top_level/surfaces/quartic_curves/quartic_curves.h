@@ -126,7 +126,6 @@ public:
 	int f_by_equation;
 	std::string equation_name_of_formula;
 	std::string equation_name_of_formula_tex;
-	std::string equation_managed_variables;
 	std::string equation_text;
 	std::string equation_parameters;
 	std::string equation_parameters_tex;
@@ -237,7 +236,6 @@ public:
 	void create_quartic_curve_by_equation(
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
-			std::string &managed_variables,
 			std::string &equation_text,
 			std::string &equation_parameters,
 			std::string &equation_parameters_tex,

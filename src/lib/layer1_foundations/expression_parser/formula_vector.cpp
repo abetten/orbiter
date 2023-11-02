@@ -292,7 +292,8 @@ void formula_vector::get_integer_matrix(int *&M, int verbose_level)
 	}
 }
 
-void formula_vector::get_string_representation_Sajeeb(std::vector<std::string> &S)
+void formula_vector::get_string_representation_Sajeeb(
+		std::vector<std::string> &S)
 {
 	int i, j;
 
@@ -653,7 +654,8 @@ void formula_vector::print_vector_latex(
 }
 
 
-void formula_vector::print_latex(std::ostream &ost, std::string &label)
+void formula_vector::print_latex(
+		std::ostream &ost, std::string &label)
 {
 	int i;
 	vector<string> v;
@@ -674,11 +676,12 @@ void formula_vector::print_latex(std::ostream &ost, std::string &label)
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
 
-				if (v[i * nb_cols + j].length() < 100) {
+				if (v[i * nb_cols + j].length() < 1000) {
 					ost << v[i * nb_cols + j];
 				}
 				else {
-					ost << "too large to print v[i * nb_cols + j].length() = " << v[i].length();
+					ost << "formula_vector::print_latex "
+							"too large to print v[i * nb_cols + j].length() = " << v[i].length();
 				}
 				if (j < nb_cols - 1) {
 					ost << "  & ";
@@ -703,7 +706,8 @@ void formula_vector::print_latex(std::ostream &ost, std::string &label)
 					ost << v[i];
 				}
 				else {
-					ost << "too large to print v[i].length() = " << v[i].length();
+					ost << "formula_vector::print_latex "
+							"too large to print v[i].length() = " << v[i].length();
 				}
 				ost << "\\\\" << endl;
 			}
@@ -721,7 +725,8 @@ void formula_vector::print_latex(std::ostream &ost, std::string &label)
 					ost << v[i];
 				}
 				else {
-					ost << "too large to print v[i].length() = " << v[i].length();
+					ost << "formula_vector::print_latex "
+							"too large to print v[i].length() = " << v[i].length();
 				}
 				ost << "\\\\" << endl;
 				}
@@ -901,6 +906,8 @@ void formula_vector::substitute(
 	int nb, len;
 
 	if (f_v) {
+		cout << "formula_vector::substitute "
+				"Source->len=" << Source->len << endl;
 		cout << "formula_vector::substitute N=" << N << endl;
 	}
 
@@ -909,6 +916,10 @@ void formula_vector::substitute(
 
 	if (f_v) {
 		cout << "formula_vector::substitute nb=" << nb << endl;
+	}
+
+	if (nb == 0) {
+		nb = 1;
 	}
 
 	len = nb * Target->len;
@@ -929,7 +940,8 @@ void formula_vector::substitute(
 		cout << "formula_vector::substitute len=" << len << endl;
 	}
 	if (f_v) {
-		cout << "formula_vector::substitute Target->len=" << Target->len << endl;
+		cout << "formula_vector::substitute "
+				"Target->len=" << Target->len << endl;
 	}
 
 
@@ -938,6 +950,11 @@ void formula_vector::substitute(
 
 
 	S = (formula **) NEW_pvoid(N);
+
+	if (f_v) {
+		cout << "formula_vector::substitute "
+				"nb = " << nb << endl;
+	}
 
 
 	for (s = 0; s < nb; s++) {
@@ -954,7 +971,8 @@ void formula_vector::substitute(
 
 			if (f_v) {
 				cout << "formula_vector::substitute "
-						"s=" << s << " / " << nb << " t=" << t << " / " << Target->len << endl;
+						"s=" << s << " / " << nb
+						<< " t=" << t << " / " << Target->len << endl;
 			}
 
 			formula *T;
@@ -988,7 +1006,15 @@ void formula_vector::substitute(
 
 	FREE_pvoid((void **) S);
 
+	if (f_v) {
+		cout << "formula_vector::substitute "
+				"before collect_variables" << endl;
+	}
 	collect_variables(verbose_level);
+	if (f_v) {
+		cout << "formula_vector::substitute "
+				"after collect_variables" << endl;
+	}
 
 	if (f_v) {
 		cout << "formula_vector::substitute done" << endl;
@@ -1483,7 +1509,8 @@ void formula_vector::matrix_minor(
 				"we found a matrix of size " << m << " x " << n << endl;
 	}
 	if (m != n) {
-		cout << "formula_vector::matrix_minor the input matrix must be square" << endl;
+		cout << "formula_vector::matrix_minor "
+				"the input matrix must be square" << endl;
 		exit(1);
 	}
 
@@ -1494,7 +1521,8 @@ void formula_vector::matrix_minor(
 	formula_vector *M;
 
 	if (f_v) {
-		cout << "formula_vector::matrix_minor before computing temporary matrix" << endl;
+		cout << "formula_vector::matrix_minor "
+				"before computing temporary matrix" << endl;
 	}
 
 	M = NEW_OBJECT(formula_vector);
@@ -1538,12 +1566,14 @@ void formula_vector::matrix_minor(
 		}
 	}
 	if (f_v) {
-		cout << "formula_vector::matrix_minor after computing temporary matrix" << endl;
+		cout << "formula_vector::matrix_minor "
+				"after computing temporary matrix" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "formula_vector::matrix_minor before determinant" << endl;
+		cout << "formula_vector::matrix_minor "
+				"before determinant" << endl;
 	}
 
 	formula_vector *Det;
@@ -1559,7 +1589,8 @@ void formula_vector::matrix_minor(
 			verbose_level);
 
 	if (f_v) {
-		cout << "formula_vector::matrix_minor after determinant" << endl;
+		cout << "formula_vector::matrix_minor "
+				"after determinant" << endl;
 	}
 
 	FREE_OBJECT(M);
@@ -1567,7 +1598,8 @@ void formula_vector::matrix_minor(
 
 	if (ODD(i + j)) {
 		if (f_v) {
-			cout << "formula_vector::matrix_minor before multiplying by -1" << endl;
+			cout << "formula_vector::matrix_minor "
+					"before multiplying by -1" << endl;
 		}
 
 		Det->V[0].tree->multiply_by_minus_one(
@@ -1575,7 +1607,8 @@ void formula_vector::matrix_minor(
 				verbose_level);
 
 		if (f_v) {
-			cout << "formula_vector::matrix_minor after multiplying by -1" << endl;
+			cout << "formula_vector::matrix_minor "
+					"after multiplying by -1" << endl;
 		}
 	}
 
@@ -1812,12 +1845,14 @@ void formula_vector::multiply_2by2_from_the_left(
 	for (u = 0; u < m; u++) {
 		if (u == i) {
 			if (f_v) {
-				cout << "formula_vector::multiply_2by2_from_the_left u = " << u << endl;
+				cout << "formula_vector::multiply_2by2_from_the_left "
+						"u = " << u << endl;
 			}
 			// row i is a linear combination of row i and row j:
 			for (v = 0; v < n; v++) {
 				if (f_v) {
-					cout << "formula_vector::multiply_2by2_from_the_left u = " << u << " v=" << v << endl;
+					cout << "formula_vector::multiply_2by2_from_the_left "
+							"u = " << u << " v=" << v << endl;
 				}
 				V[u * n + v].make_linear_combination(
 						&A2->V[0 * 2 + 0],
@@ -1830,7 +1865,8 @@ void formula_vector::multiply_2by2_from_the_left(
 						managed_variables_text,
 						verbose_level);
 				if (f_v) {
-					cout << "formula_vector::multiply_2by2_from_the_left u = " << u << " v=" << v << endl;
+					cout << "formula_vector::multiply_2by2_from_the_left "
+							"u = " << u << " v=" << v << endl;
 					V[u * n + v].print_easy(cout);
 					cout << endl;
 				}
@@ -1838,12 +1874,14 @@ void formula_vector::multiply_2by2_from_the_left(
 		}
 		else if (u == j) {
 			if (f_v) {
-				cout << "formula_vector::multiply_2by2_from_the_left u = " << u << endl;
+				cout << "formula_vector::multiply_2by2_from_the_left "
+						"u = " << u << endl;
 			}
 			// row j is a linear combination of row i and row j:
 			for (v = 0; v < n; v++) {
 				if (f_v) {
-					cout << "formula_vector::multiply_2by2_from_the_left u = " << u << " v=" << v << endl;
+					cout << "formula_vector::multiply_2by2_from_the_left "
+							"u = " << u << " v=" << v << endl;
 				}
 				V[u * n + v].make_linear_combination(
 						&A2->V[1 * 2 + 0],
@@ -1856,7 +1894,8 @@ void formula_vector::multiply_2by2_from_the_left(
 						managed_variables_text,
 						verbose_level);
 				if (f_v) {
-					cout << "formula_vector::multiply_2by2_from_the_left u = " << u << " v=" << v << endl;
+					cout << "formula_vector::multiply_2by2_from_the_left "
+							"u = " << u << " v=" << v << endl;
 					V[u * n + v].print_easy(cout);
 					cout << endl;
 				}
@@ -1956,11 +1995,13 @@ void formula_vector::collect_variables(int verbose_level)
 
 	for (i = 0; i < len; i++) {
 		if (f_v) {
-			cout << "formula_vector::collect_variables i=" << i << " / " << len << endl;
+			cout << "formula_vector::collect_variables "
+					"i=" << i << " / " << len << endl;
 		}
 		V[i].collect_variables(verbose_level);
 		if (f_v) {
-			cout << "formula_vector::collect_variables i=" << i << " / " << len << " done" << endl;
+			cout << "formula_vector::collect_variables "
+					"i=" << i << " / " << len << " done" << endl;
 		}
 	}
 

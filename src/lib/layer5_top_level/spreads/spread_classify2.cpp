@@ -406,6 +406,8 @@ void spread_classify::klein(
 		} // if
 	} // next h
 
+	// ToDo:
+#if 0
 	if (nb_blocks < 20) {
 
 		cout << "we will draw an incidence picture" << endl;
@@ -506,6 +508,7 @@ void spread_classify::klein(
 		FREE_OBJECT(Stack);
 		FREE_OBJECT(I);
 	}
+#endif
 
 	FREE_int(Inc);
 	

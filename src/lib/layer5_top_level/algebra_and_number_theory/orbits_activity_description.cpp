@@ -49,6 +49,9 @@ orbits_activity_description::orbits_activity_description()
 	f_recognize = false;
 	//std::vector<std::string> recognize;
 
+	f_transporter = false;
+	//std::string transporter_label_of_set;
+
 	f_report_options = false;
 	report_options = NULL;
 
@@ -148,6 +151,14 @@ int orbits_activity_description::read_arguments(
 				cout << "-recognize " << recognize[recognize.size() - 1] << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-transporter") == 0) {
+
+			f_transporter = true;
+			transporter_label_of_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-transporter " << transporter_label_of_set << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-report_options") == 0) {
 			f_report_options = true;
 
@@ -231,6 +242,9 @@ void orbits_activity_description::print()
 		for (i = 0; i < recognize.size(); i++) {
 			cout << i << " : " << recognize[i] << endl;
 		}
+	}
+	if (f_transporter) {
+		cout << "-transporter " << transporter_label_of_set << endl;
 	}
 	if (f_report_options) {
 		cout << "-report_options" << endl;

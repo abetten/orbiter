@@ -1045,18 +1045,18 @@ int vector_ge::test_if_all_elements_stabilize_a_set(
 }
 
 
-groups::schreier *vector_ge::orbits_on_points_schreier(
+groups::schreier *vector_ge::compute_all_point_orbits_schreier(
 		actions::action *A_given, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	groups::schreier *Sch;
 
 	if (f_v) {
-		cout << "vector_ge::orbits_on_points_schreier "
+		cout << "vector_ge::compute_all_point_orbits_schreier "
 				"degree = " << A_given->degree << endl;
 	}
 	if (f_v) {
-		cout << "vector_ge::orbits_on_points_schreier "
+		cout << "vector_ge::compute_all_point_orbits_schreier "
 				"action ";
 		A_given->print_info();
 		cout << endl;
@@ -1068,22 +1068,22 @@ groups::schreier *vector_ge::orbits_on_points_schreier(
 	Sch->initialize_tables();
 	Sch->init_generators(*this, verbose_level - 2);
 	if (f_v) {
-		cout << "vector_ge::orbits_on_points_schreier "
+		cout << "vector_ge::compute_all_point_orbits_schreier "
 				"before Sch->compute_all_point_orbits" << endl;
 	}
 	Sch->compute_all_point_orbits(verbose_level);
 	if (f_v) {
-		cout << "vector_ge::orbits_on_points_schreier "
+		cout << "vector_ge::compute_all_point_orbits_schreier "
 				"after Sch->compute_all_point_orbits" << endl;
 	}
 
 	if (f_v) {
-		cout << "vector_ge::orbits_on_points_schreier "
+		cout << "vector_ge::compute_all_point_orbits_schreier "
 				"we found " << Sch->nb_orbits << " orbits" << endl;
 	}
 
 	if (f_v) {
-		cout << "vector_ge::orbits_on_points_schreier done" << endl;
+		cout << "vector_ge::compute_all_point_orbits_schreier done" << endl;
 	}
 	return Sch;
 }

@@ -614,7 +614,8 @@ void finite_field_io::latex_multiplication_table(
 	f << "\\cdot ";
 	for (i = 1; i < F->q; i++) {
 		f << " &";
-		print_element_with_symbol(f, i, f_elements_exponential,
+		print_element_with_symbol(
+				f, i, f_elements_exponential,
 				10 /* width */,
 			symbol_for_print);
 	}
@@ -622,13 +623,15 @@ void finite_field_io::latex_multiplication_table(
 	f << "\\hline" << endl;
 	for (i = 1; i < F->q; i++) {
 		f << setw(3);
-		print_element_with_symbol(f, i, f_elements_exponential,
+		print_element_with_symbol(
+				f, i, f_elements_exponential,
 				10 /* width */,
 			symbol_for_print);
 		for (j = 1; j < F->q; j++) {
 			k = F->mult(i, j);
 			f << "&" << setw(3);
-			print_element_with_symbol(f, k, f_elements_exponential,
+			print_element_with_symbol(
+					f, k, f_elements_exponential,
 					10 /* width */,
 				symbol_for_print);
 		}
@@ -639,7 +642,8 @@ void finite_field_io::latex_multiplication_table(
 }
 
 void finite_field_io::latex_matrix(
-		std::ostream &f, int f_elements_exponential,
+		std::ostream &f,
+		int f_elements_exponential,
 		std::string &symbol_for_print, int *M, int m, int n)
 {
 	int i, j;
@@ -861,7 +865,9 @@ void finite_field_io::report_subfields(
 			long int generator;
 
 			q0 = NT.i_power_j(F->p, h);
+
 			index_in_multiplicative_group = (F->q - 1) / (q0 - 1);
+
 			generator = F->alpha_power(index_in_multiplicative_group);
 
 			if (h == 1) {

@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace data_structures {
+namespace expression_parser {
 
 
 symbolic_object_builder::symbolic_object_builder()
@@ -521,11 +521,11 @@ void symbolic_object_builder::do_determinant(
 		cout << "symbolic_object_builder::do_determinant" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O1;
+	symbolic_object_builder *O1;
 
 	O1 = Get_symbol(Descr->determinant_source);
 
-	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+	Formula_vector = NEW_OBJECT(formula_vector);
 
 
 	if (f_v) {
@@ -567,7 +567,7 @@ void symbolic_object_builder::do_characteristic_polynomial(
 
 	variable = Descr->characteristic_polynomial_variable;
 
-	data_structures::symbolic_object_builder *O1;
+	symbolic_object_builder *O1;
 
 	O1 = Get_symbol(Descr->characteristic_polynomial_source);
 
@@ -629,8 +629,8 @@ void symbolic_object_builder::do_substitute(
 		cout << "symbolic_object_builder::do_substitute" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O_target;
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_target;
+	symbolic_object_builder *O_source;
 
 	O_target = Get_symbol(Descr->substitute_target);
 	O_source = Get_symbol(Descr->substitute_source);
@@ -673,7 +673,7 @@ void symbolic_object_builder::do_simplify(
 		cout << "symbolic_object_builder::do_simplify" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_source;
 
 	O_source = Get_symbol(Descr->simplify_source);
 
@@ -713,7 +713,7 @@ void symbolic_object_builder::do_expand(
 		cout << "symbolic_object_builder::do_expand" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_source;
 
 	O_source = Get_symbol(Descr->expand_source);
 
@@ -756,7 +756,7 @@ void symbolic_object_builder::do_right_nullspace(
 		cout << "symbolic_object_builder::do_right_nullspace" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_source;
 
 	O_source = Get_symbol(Descr->right_nullspace_source);
 
@@ -798,7 +798,7 @@ void symbolic_object_builder::do_minor(
 		cout << "symbolic_object_builder::do_minor" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_source;
 
 	O_source = Get_symbol(Descr->minor_source);
 
@@ -840,7 +840,7 @@ void symbolic_object_builder::do_symbolic_nullspace(
 		cout << "symbolic_object_builder::do_symbolic_nullspace" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_source;
 
 	O_source = Get_symbol(Descr->symbolic_nullspace_source);
 
@@ -905,7 +905,7 @@ void symbolic_object_builder::do_stack(
 	}
 	for (i = 0; i < variables.size(); i++) {
 
-		data_structures::symbolic_object_builder *O_source;
+		symbolic_object_builder *O_source;
 
 		O_source = Get_symbol(variables[i]);
 
@@ -965,7 +965,7 @@ void symbolic_object_builder::do_stack(
 
 		for (i = 0; i < variables.size(); i++) {
 
-			data_structures::symbolic_object_builder *O_source;
+			symbolic_object_builder *O_source;
 
 			O_source = Get_symbol(variables[i]);
 
@@ -1025,8 +1025,8 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 	}
 
 
-	data_structures::symbolic_object_builder *O_source;
-	data_structures::symbolic_object_builder *O_A2;
+	symbolic_object_builder *O_source;
+	symbolic_object_builder *O_A2;
 
 	O_source = Get_symbol(Descr->multiply_2x2_from_the_left_source);
 	O_A2 = Get_symbol(Descr->multiply_2x2_from_the_left_A2);
@@ -1115,7 +1115,7 @@ void symbolic_object_builder::do_matrix_entry(
 		cout << "symbolic_object_builder::do_matrix_entry" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_source;
 
 	O_source = Get_symbol(Descr->matrix_entry_source);
 
@@ -1178,7 +1178,7 @@ void symbolic_object_builder::do_vector_entry(
 		cout << "symbolic_object_builder::do_vector_entry" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_source;
 
 	O_source = Get_symbol(Descr->vector_entry_source);
 
@@ -1237,7 +1237,7 @@ void symbolic_object_builder::do_collect(
 		cout << "symbolic_object_builder::do_collect" << endl;
 	}
 
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_source;
 
 	O_source = Get_symbol(Descr->collect_source);
 
@@ -1391,8 +1391,8 @@ void symbolic_object_builder::do_CRC_encode(
 				<< " " << Descr->encode_CRC_check_polynomial
 				<< endl;
 	}
-	data_structures::symbolic_object_builder *O_data;
-	data_structures::symbolic_object_builder *O_check;
+	symbolic_object_builder *O_data;
+	symbolic_object_builder *O_check;
 
 	O_data = Get_symbol(Descr->encode_CRC_data_polynomial);
 
@@ -1636,8 +1636,8 @@ void symbolic_object_builder::do_CRC_decode(
 				<< " " << Descr->decode_CRC_check_polynomial
 				<< endl;
 	}
-	data_structures::symbolic_object_builder *O_data;
-	data_structures::symbolic_object_builder *O_check;
+	symbolic_object_builder *O_data;
+	symbolic_object_builder *O_check;
 
 	O_data = Get_symbol(Descr->decode_CRC_data_polynomial);
 
@@ -1869,20 +1869,23 @@ void symbolic_object_builder::do_submatrix(
 				<< " " << Descr->submatrix_nb_cols
 				<< endl;
 	}
-	data_structures::symbolic_object_builder *O_source;
+	symbolic_object_builder *O_source;
 
 	O_source = Get_symbol(Descr->submatrix_source);
 
 	if (!O_source->Formula_vector->f_matrix) {
-		cout << "symbolic_object_builder::do_submatrix we expect the input object to be a matrix" << endl;
+		cout << "symbolic_object_builder::do_submatrix "
+				"we expect the input object to be a matrix" << endl;
 		exit(1);
 	}
 	if (O_source->Formula_vector->nb_rows < Descr->submatrix_row_first + Descr->submatrix_nb_rows) {
-		cout << "symbolic_object_builder::do_submatrix the input matrix does not have sufficiently many rows" << endl;
+		cout << "symbolic_object_builder::do_submatrix "
+				"the input matrix does not have sufficiently many rows" << endl;
 		exit(1);
 	}
 	if (O_source->Formula_vector->nb_cols < Descr->submatrix_col_first + Descr->submatrix_nb_cols) {
-		cout << "symbolic_object_builder::do_submatrix the input matrix does not have sufficiently many columns" << endl;
+		cout << "symbolic_object_builder::do_submatrix "
+				"the input matrix does not have sufficiently many columns" << endl;
 		exit(1);
 	}
 

@@ -70,7 +70,7 @@ public:
 
 	combinatorics::classification_of_objects *CO;
 
-	object_with_properties *OwP;
+	object_with_properties *OwP; // [CO->nb_orbits]
 
 	int f_projective_space;
 	projective_geometry::projective_space_with_action *PA;
@@ -83,6 +83,9 @@ public:
 			combinatorics::classification_of_objects *CO,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
+			int verbose_level);
+	void classification_write_file(
+			std::string &fname_base,
 			int verbose_level);
 	void classification_report(
 			combinatorics::classification_of_objects_report_options

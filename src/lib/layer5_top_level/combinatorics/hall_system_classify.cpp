@@ -360,7 +360,7 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 		}
 
 		Orbits_on_triples =
-				Strong_gens_Hall_reflection->orbits_on_points_schreier(
+				Strong_gens_Hall_reflection->compute_all_point_orbits_schreier(
 				A_on_triples, 0 /*verbose_level*/);
 
 		if (f_v) {

@@ -1712,24 +1712,33 @@ void surface_object_properties::print_equation(std::ostream &ost)
 	ost << "The equation of the surface ";
 	ost << " is :" << endl;
 
+	int eqn20[20];
+	Int_vec_copy(SO->eqn, eqn20, 20);
+	SO->F->Projective_space_basic->PG_element_normalize_from_front(
+			eqn20, 1, 20);
+
 #if 0
 	ost << "$$" << endl;
 	SO->Surf->print_equation_tex(ost, SO->eqn);
 	ost << endl << "=0\n$$" << endl;
 #else
-	SO->Surf->print_equation_with_line_breaks_tex(ost, SO->eqn);
+	SO->Surf->print_equation_with_line_breaks_tex(ost, eqn20);
 #endif
-	Int_vec_print(ost, SO->eqn, 20);
+
+
+	Int_vec_print(ost, eqn20, 20);
 	ost << "\\\\" << endl;
 
 	long int rk;
 
 	SO->F->Projective_space_basic->PG_element_rank_modified_lint(
 			SO->eqn, 1, 20, rk);
-	ost << "The point rank of the equation over GF$(" << SO->F->q << ")$ is " << rk << "\\\\" << endl;
+
+	ost << "The point rank of the equation over "
+			"GF$(" << SO->F->q << ")$ is " << rk << "\\\\" << endl;
 
 	ost << "\\begin{verbatim}" << endl;
-	SO->Surf->PolynomialDomains->Poly3_4->print_equation_relaxed(ost, SO->eqn);
+	SO->Surf->PolynomialDomains->Poly3_4->print_equation_relaxed(ost, eqn20);
 	ost << endl;
 	ost << "\\end{verbatim}" << endl;
 
@@ -2211,7 +2220,7 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 		for (p = 0; p < SO->nb_pts; p++) {
 			if (lines_on_point->Set_size[p] != 2) {
 				continue;
-				}
+			}
 			a = lines_on_point->Sets[p][0];
 			b = lines_on_point->Sets[p][1];
 			if (a > b) {

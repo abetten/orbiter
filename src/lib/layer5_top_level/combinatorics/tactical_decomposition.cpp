@@ -179,6 +179,8 @@ void tactical_decomposition::report(int f_enter_math, std::ostream &ost)
 	Inc->get_and_print_tactical_decomposition_scheme_tex(
 		ost, f_enter_math, *Stack);
 #else
+
+#if 0
 	cout << "translation_plane_via_andre_model::report "
 			"Row-scheme:" << endl;
 	ost << "Tactical decomposition schemes:\\\\" << endl;
@@ -193,6 +195,8 @@ void tactical_decomposition::report(int f_enter_math, std::ostream &ost)
 		ost, false /* f_enter_math */,
 		true /* f_print_subscripts */, *Stack);
 	ost << "$$" << endl;
+#endif
+
 #endif
 }
 

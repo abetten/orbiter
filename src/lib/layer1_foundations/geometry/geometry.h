@@ -141,7 +141,8 @@ public:
 
 	arc_basic();
 	~arc_basic();
-	void init(field_theory::finite_field *F, int verbose_level);
+	void init(
+			field_theory::finite_field *F, int verbose_level);
 
 	void Segre_hyperoval(
 			long int *&Pts, int &nb_pts, int verbose_level);
@@ -408,6 +409,81 @@ public:
 };
 
 
+// #############################################################################
+// decomposition_scheme.cpp
+// #############################################################################
+
+
+//! one-sided decomposition scheme of an incidence structure
+
+
+class decomposition_scheme {
+
+public:
+
+	decomposition *Decomposition;
+
+
+	int *row_classes;
+	int *row_class_inv;
+	int nb_row_classes;
+
+	int *col_classes;
+	int *col_class_inv;
+	int nb_col_classes;
+
+	int f_has_row_scheme;
+	int *row_scheme;
+	int f_has_col_scheme;
+	int *col_scheme;
+
+	data_structures::set_of_sets *SoS_points;
+	data_structures::set_of_sets *SoS_lines;
+
+	decomposition_scheme();
+	~decomposition_scheme();
+	void init_row_and_col_schemes(
+			decomposition *Decomposition,
+			int verbose_level);
+	void get_classes(int verbose_level);
+	void init_row_scheme(
+			decomposition *Decomposition,
+			int verbose_level);
+	void init_col_scheme(
+			decomposition *Decomposition,
+			int verbose_level);
+	void get_row_scheme(
+			int verbose_level);
+	void get_col_scheme(
+			int verbose_level);
+	void print_row_decomposition_tex(
+		std::ostream &ost,
+		int f_enter_math, int f_print_subscripts,
+		int verbose_level);
+	void print_column_decomposition_tex(
+		std::ostream &ost,
+		int f_enter_math, int f_print_subscripts,
+		int verbose_level);
+	void print_decomposition_scheme_tex(
+			std::ostream &ost,
+		int *scheme);
+	void print_tactical_decomposition_scheme_tex(
+			std::ostream &ost,
+		int f_print_subscripts);
+	void print_tactical_decomposition_scheme_tex_internal(
+		std::ostream &ost, int f_enter_math_mode,
+		int f_print_subscripts);
+	void print_row_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int f_print_subscripts);
+	void print_column_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int f_print_subscripts);
+	void print_non_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int f_print_subscripts);
+
+};
 
 
 // #############################################################################
@@ -424,26 +500,23 @@ public:
 	
 	int nb_points;
 	int nb_blocks;
-	int *Inc;
-	incidence_structure *I;
+	int N;
+	int *Incma;
+
+	//int f_has_encoding;
+	//combinatorics::encoded_combinatorial_object *Enc;
+	incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 
 	int f_has_decomposition;
-	int *row_classes;
-	int *row_class_inv;
-	int nb_row_classes;
-	int *col_classes;
-	int *col_class_inv;
-	int nb_col_classes;
-	int f_has_row_scheme;
-	int *row_scheme;
-	int f_has_col_scheme;
-	int *col_scheme;
-	
+	decomposition_scheme *Scheme;
 
 
 	decomposition();
 	~decomposition();
+	void init_incidence_structure(
+			incidence_structure *Inc,
+			int verbose_level);
 	void init_inc_and_stack(
 			incidence_structure *Inc,
 			data_structures::partitionstack *Stack,
@@ -452,23 +525,100 @@ public:
 			int m, int n, int *M,
 		int verbose_level);
 		// copies the incidence matrix
+#if 0
+	void init_encoding(
+			combinatorics::encoded_combinatorial_object *Enc,
+			int verbose_level);
+#endif
+	void compute_TDO_deep(
+			int verbose_level);
+	void compute_the_decomposition(
+			int verbose_level);
 	void setup_default_partition(
 			int verbose_level);
 	void compute_TDO(
 			int max_depth, int verbose_level);
-	void print_row_decomposition_tex(
-			std::ostream &ost,
-		int f_enter_math, int f_print_subscripts, 
-		int verbose_level);
-	void print_column_decomposition_tex(
-			std::ostream &ost,
-		int f_enter_math, int f_print_subscripts, 
-		int verbose_level);
 	void get_row_scheme(
 			int verbose_level);
 	void get_col_scheme(
 			int verbose_level);
-	
+	void compute_TDO_safe(
+		int depth, int verbose_level);
+	void compute_TDO_safe_and_write_files(
+		int depth,
+		std::string &fname_base,
+		std::vector<std::string> &file_names,
+		int verbose_level);
+	int refine_column_partition_safe(
+			int verbose_level);
+	int refine_row_partition_safe(
+			int verbose_level);
+	void get_partition(
+		int *row_classes, int *row_class_idx, int &nb_row_classes,
+		int *col_classes, int *col_class_idx, int &nb_col_classes);
+	void get_and_print_row_decomposition_scheme(
+		int f_list_incidences,
+		int f_local_coordinates, int verbose_level);
+	void get_and_print_col_decomposition_scheme(
+		int f_list_incidences,
+		int f_local_coordinates, int verbose_level);
+	void get_row_decomposition_scheme(
+		int *row_classes, int *row_class_inv, int nb_row_classes,
+		int *col_classes, int *col_class_inv, int nb_col_classes,
+		int *row_scheme, int verbose_level);
+	void get_row_decomposition_scheme_if_possible(
+		int *row_classes, int *row_class_inv, int nb_row_classes,
+		int *col_classes, int *col_class_inv, int nb_col_classes,
+		int *row_scheme, int verbose_level);
+	void get_col_decomposition_scheme(
+		int *row_classes, int *row_class_inv, int nb_row_classes,
+		int *col_classes, int *col_class_inv, int nb_col_classes,
+		int *col_scheme, int verbose_level);
+	void row_scheme_to_col_scheme(
+		int *row_classes, int *row_class_inv, int nb_row_classes,
+		int *col_classes, int *col_class_inv, int nb_col_classes,
+		int *row_scheme, int *col_scheme, int verbose_level);
+	void print_row_tactical_decomposition_scheme_incidences_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int *row_classes, int *row_class_inv, int nb_row_classes,
+		int *col_classes, int *col_class_inv, int nb_col_classes,
+		int f_local_coordinates, int verbose_level);
+	void print_col_tactical_decomposition_scheme_incidences_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int *row_classes, int *row_class_inv, int nb_row_classes,
+		int *col_classes, int *col_class_inv, int nb_col_classes,
+		int f_local_coordinates, int verbose_level);
+	void get_incidences_by_row_scheme(
+		int *row_classes, int *row_class_inv, int nb_row_classes,
+		int *col_classes, int *col_class_inv, int nb_col_classes,
+		int row_class_idx, int col_class_idx,
+		int rij, int *&incidences, int verbose_level);
+	void get_incidences_by_col_scheme(
+		int *row_classes, int *row_class_inv, int nb_row_classes,
+		int *col_classes, int *col_class_inv, int nb_col_classes,
+		int row_class_idx, int col_class_idx,
+		int kij, int *&incidences, int verbose_level);
+	void get_and_print_decomposition_schemes();
+	void get_and_print_row_tactical_decomposition_scheme_tex(
+		std::ostream &ost,
+		int f_enter_math, int f_print_subscripts);
+	void get_and_print_column_tactical_decomposition_scheme_tex(
+		std::ostream &ost,
+		int f_enter_math, int f_print_subscripts);
+	void print_partitioned(
+		std::ostream &ost,
+		int f_labeled);
+	void print_column_labels(
+		std::ostream &ost,
+		int *col_classes, int nb_col_classes, int width);
+	void print_hline(
+		std::ostream &ost,
+		int *col_classes, int nb_col_classes, int width, int f_labeled);
+	void print_line(
+		std::ostream &ost,
+		int row_cell, int i, int *col_classes, int nb_col_classes,
+		int width, int f_labeled);
+
 };
 
 
@@ -1129,7 +1279,7 @@ public:
 // grassmann.cpp
 // #############################################################################
 
-//! to rank and unrank subspaces of a fixed dimension in F_q^n
+//! ranking and unranking of subspaces in F_q^n
 
 
 class grassmann {
@@ -1296,7 +1446,7 @@ public:
 // grassmann_embedded.cpp
 // #############################################################################
 
-//! subspaces with a fixed embedding
+//! ranking and unranking of subspaces with a fixed embedding in a larger space
 
 
 class grassmann_embedded {
@@ -1345,7 +1495,7 @@ public:
 // hermitian.cpp
 // #############################################################################
 
-//! hermitian space
+//! ranking and unranking of points on a hermitian variety
 
 
 class hermitian {
@@ -1515,6 +1665,19 @@ class incidence_structure {
 	void save_inc_file(char *fname);
 	void save_row_by_row_file(char *fname);
 	void print(std::ostream &ost);
+	data_structures::bitvector *encode_as_bitvector();
+	incidence_structure *apply_canonical_labeling(
+			long int *canonical_labeling, int verbose_level);
+	void save_as_csv(
+			std::string &fname_csv, int verbose_level);
+	void init_large_set(
+			long int *blocks,
+			int N_points, int design_b, int design_k,
+			int partition_class_size,
+			int *&partition, int verbose_level);
+
+
+#if 0
 	void compute_TDO_safe_first(
 			data_structures::partitionstack &PStack,
 		int depth, int &step, int &f_refine, 
@@ -1664,7 +1827,8 @@ class incidence_structure {
 	void rearrange(
 			int *&Vi, int &nb_V,
 		int *&Bj, int &nb_B, int *&R, int *&X,
-		data_structures::partitionstack &P);
+		data_structures::partitionstack &P,
+		int verbose_level);
 	void decomposition_print_tex(
 			std::ostream &ost,
 			data_structures::partitionstack &PStack,
@@ -1739,16 +1903,8 @@ class incidence_structure {
 		int **distinguished_line_sets, 
 		int *distinguished_line_set_size, 
 		int verbose_level);
-	data_structures::bitvector *encode_as_bitvector();
-	incidence_structure *apply_canonical_labeling(
-			long int *canonical_labeling, int verbose_level);
-	void save_as_csv(
-			std::string &fname_csv, int verbose_level);
-	void init_large_set(
-			long int *blocks,
-			int N_points, int design_b, int design_k,
-			int partition_class_size,
-			int *&partition, int verbose_level);
+#endif
+
 };
 
 

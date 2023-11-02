@@ -183,7 +183,20 @@ void orbits_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	else if (Descr->f_transporter) {
 
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_transporter" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_recognize" << endl;
+		}
+		do_transporter(Descr->transporter_label_of_set, verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_recognize" << endl;
+		}
+
+	}
 
 
 
@@ -983,6 +996,88 @@ void orbits_activity::do_recognize(int verbose_level)
 
 	if (f_v) {
 		cout << "orbits_activity::do_recognize done" << endl;
+	}
+}
+
+
+void orbits_activity::do_transporter(
+		std::string &label_of_set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_activity::do_transporter" << endl;
+	}
+
+	long int *the_set;
+	int set_size;
+
+	Get_lint_vector_from_label(label_of_set, the_set, set_size, 0 /* verbose_level */);
+
+
+	if (OC->f_has_Of_One_polynomial) {
+
+		string fname;
+
+		if (f_v) {
+			cout << "orbits_activity::do_transporter "
+					"before OC->On_polynomials->export_something" << endl;
+		}
+
+		int *transporter;
+		int i;
+		int Nb;
+
+		actions::action *A;
+
+		A = OC->Of_One_polynomial->A;
+
+		Nb = set_size;
+
+		transporter = NEW_int(A->elt_size_in_int);
+
+		for (i = 0; i < Nb; i++) {
+
+			if (f_v) {
+				cout << "orbits_on_polynomials::orbit_of_one_polynomial "
+						"before OC->Of_One_polynomial->Orb->get_transporter" << endl;
+
+			}
+			OC->Of_One_polynomial->Orb->get_transporter(
+					the_set[i],
+					transporter, verbose_level);
+
+			if (f_v) {
+				cout << "orbits_on_polynomials::orbit_of_one_polynomial "
+						"after OC->Of_One_polynomial->Orb->get_transporter" << endl;
+
+			}
+
+			cout << "i=" << i << " / " << Nb << " Idx[i] = " << the_set[i] << endl;
+			cout << "transporter=" << endl;
+			A->Group_element->element_print(transporter, cout);
+			cout << endl;
+		}
+
+		FREE_int(transporter);
+
+		if (f_v) {
+			cout << "orbits_activity::do_transporter "
+					"after OC->On_polynomials->export_something" << endl;
+		}
+
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "orbits_activity::do_transporter "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+
+
+	}
+
+
+	if (f_v) {
+		cout << "orbits_activity::do_transporter done" << endl;
 	}
 }
 

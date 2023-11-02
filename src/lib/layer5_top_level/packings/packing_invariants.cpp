@@ -261,6 +261,8 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		Inc[i * total_nb_blocks + j] = 1;
 	}
 
+	// ToDo:
+#if 0
 	if (false /*nb_blocks < 20*/) {
 
 		cout << "we will draw an incidence picture" << endl;
@@ -361,6 +363,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 				true /* f_print_subscripts */, *Stack);
 		}
 	}
+#endif
 
 
 	if (f_v) {

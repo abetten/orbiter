@@ -18,6 +18,47 @@ namespace interfaces {
 
 
 // #############################################################################
+// conjugacy_classes_and_normalizers.cpp:
+// #############################################################################
+
+//! Magma output for conjugacy classes and normalizers of a group
+
+
+class conjugacy_classes_and_normalizers {
+
+public:
+
+
+	actions::action *A;
+	std::string fname;
+
+	int nb_classes;
+	int *perms;
+	long int *class_size;
+	int *class_order_of_element;
+	long int *class_normalizer_order;
+	int *class_normalizer_number_of_generators;
+	int **normalizer_generators_perms;
+
+	// perms[nb_classes * A->degree]
+	// class_size[nb_classes]
+	// class_order_of_element[nb_classes]
+	// class_normalizer_order[nb_classes]
+	// class_normalizer_number_of_generators[nb_classes]
+	// normalizer_generators_perms[nb_classes][class_normalizer_number_of_generators[i] * A->degree]
+
+
+	conjugacy_classes_and_normalizers();
+	~conjugacy_classes_and_normalizers();
+	void read_magma_output_file(
+			actions::action *A,
+			std::string &fname,
+			int verbose_level);
+
+};
+
+
+// #############################################################################
 // nauty_interface_with_group.cpp:
 // #############################################################################
 
@@ -136,20 +177,8 @@ public:
 	void read_conjugacy_classes_and_normalizers_from_MAGMA(
 			actions::action *A,
 			std::string &fname,
-			int &nb_classes,
-			int *&perms,
-			long int *&class_size,
-			int *&class_order_of_element,
-			long int *&class_normalizer_order,
-			int *&class_normalizer_number_of_generators,
-			int **&normalizer_generators_perms,
+			conjugacy_classes_and_normalizers *&class_data,
 			int verbose_level);
-	// perms[nb_classes * A->degree]
-	// class_size[nb_classes]
-	// class_order_of_element[nb_classes]
-	// class_normalizer_order[nb_classes]
-	// class_normalizer_number_of_generators[nb_classes]
-	// normalizer_generators_perms[nb_classes][class_normalizer_number_of_generators[i] * A->degree]
 	void normalizer_of_cyclic_group_using_MAGMA(
 			actions::action *A,
 			std::string &fname_magma_prefix,
@@ -201,7 +230,7 @@ public:
 			groups::sims *override_Sims,
 			int subgroup_order,
 			int verbose_level);
-	void conjugacy_classes_and_normalizers(
+	void get_conjugacy_classes_and_normalizers(
 			actions::action *A,
 			groups::sims *override_Sims,
 			std::string &label,

@@ -31,7 +31,8 @@ arc_basic::~arc_basic()
 
 }
 
-void arc_basic::init(field_theory::finite_field *F, int verbose_level)
+void arc_basic::init(
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -128,8 +129,10 @@ void arc_basic::GlynnI_hyperoval(
 		exit(1);
 	}
 
-	cout << "arc_basic::GlynnI_hyperoval sigma = " << sigma
+	if (f_v) {
+		cout << "arc_basic::GlynnI_hyperoval sigma = " << sigma
 			<< " gamma = " << gamma << endl;
+	}
 	//Gamma = i_power_j(2, gamma);
 	Sigma = NT.i_power_j(2, sigma);
 
@@ -200,8 +203,10 @@ void arc_basic::GlynnII_hyperoval(
 		exit(1);
 	}
 
-	cout << "arc_basic::GlynnII_hyperoval "
+	if (f_v) {
+		cout << "arc_basic::GlynnII_hyperoval "
 			"sigma = " << sigma << " gamma = " << i << endl;
+	}
 	Gamma = NT.i_power_j(2, gamma);
 	Sigma = NT.i_power_j(2, sigma);
 
@@ -541,11 +546,14 @@ int arc_basic::Adelaide64(int t)
 	t_powers = NEW_int(65);
 
 	F->Io->power_table(t, t_powers, 65);
-	a = F->add7(t_powers[4], t_powers[8], t_powers[14], t_powers[34],
+	a = F->add7(
+			t_powers[4], t_powers[8], t_powers[14], t_powers[34],
 			t_powers[42], t_powers[48], t_powers[62]);
-	b = F->add8(t_powers[6], t_powers[16], t_powers[26], t_powers[28],
+	b = F->add8(
+			t_powers[6], t_powers[16], t_powers[26], t_powers[28],
 			t_powers[30], t_powers[32], t_powers[40], t_powers[58]);
-	c = F->add8(t_powers[10], t_powers[18], t_powers[24], t_powers[36],
+	c = F->add8(
+			t_powers[10], t_powers[18], t_powers[24], t_powers[36],
 			t_powers[44], t_powers[50], t_powers[52], t_powers[60]);
 	beta21 = F->power(2, 21);
 	beta42 = F->mult(beta21, beta21);

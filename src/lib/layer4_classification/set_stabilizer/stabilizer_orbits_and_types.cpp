@@ -240,12 +240,14 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern" << endl;
 	}
 	if (f_v) {
-		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern computing orbits on points" << endl;
+		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
+				"before compute_all_point_orbits_schreier" << endl;
 	}
-	Schreier = selected_set_stab_gens->orbits_on_points_schreier(
+	Schreier = selected_set_stab_gens->compute_all_point_orbits_schreier(
 			CS->SubSt->SubC->A2, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern computing orbits on points done, "
+		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
+				"after compute_all_point_orbits_schreier, "
 				"we found " << Schreier->nb_orbits << " orbits" << endl;
 	}
 

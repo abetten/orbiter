@@ -360,13 +360,13 @@ void object_with_properties::latex_report(
 
 	if (f_v) {
 		cout << "object_with_properties::latex_report "
-				"before orbits_on_points_schreier" << endl;
+				"before compute_all_point_orbits_schreier" << endl;
 	}
-	Sch = A_perm->Strong_gens->orbits_on_points_schreier(A_perm,
+	Sch = A_perm->Strong_gens->compute_all_point_orbits_schreier(A_perm,
 			verbose_level);
 	if (f_v) {
 		cout << "object_with_properties::latex_report "
-				"after orbits_on_points_schreier" << endl;
+				"after compute_all_point_orbits_schreier" << endl;
 	}
 #endif
 

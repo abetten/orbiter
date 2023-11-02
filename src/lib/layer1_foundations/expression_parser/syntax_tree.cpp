@@ -544,6 +544,36 @@ void syntax_tree::get_monopoly(
 	}
 }
 
+void syntax_tree::get_multipoly(
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int *&eqn, int &sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::get_multipoly" << endl;
+	}
+
+	if (f_v) {
+		cout << "syntax_tree::get_multipoly "
+				"before Root->get_multipoly" << endl;
+	}
+	Root->get_multipoly(HPD,
+			eqn, sz,
+			verbose_level);
+	if (f_v) {
+		cout << "syntax_tree::get_multipoly "
+				"after Root->get_multipoly" << endl;
+	}
+
+	if (f_v) {
+		cout << "syntax_tree::get_multipoly done" << endl;
+	}
+
+
+}
+
 void syntax_tree::multiply_by_minus_one(
 		field_theory::finite_field *Fq,
 		int verbose_level)

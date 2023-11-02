@@ -205,6 +205,10 @@ public:
 	void csv_file_sort_rows_and_remove_duplicates(
 			std::string &fname,
 			int verbose_level);
+	void write_table_of_strings(std::string &fname,
+			int nb_rows, int nb_cols, std::string *Table,
+			std::string &headings,
+			int verbose_level);
 
 
 };
@@ -412,10 +416,14 @@ public:
 	void delete_file(
 			std::string &fname);
 
-	void fwrite_int4(FILE *fp, int a);
-	int_4 fread_int4(FILE *fp);
-	void fwrite_uchars(FILE *fp, unsigned char *p, int len);
-	void fread_uchars(FILE *fp, unsigned char *p, int len);
+	void fwrite_int4(
+			FILE *fp, int a);
+	int_4 fread_int4(
+			FILE *fp);
+	void fwrite_uchars(
+			FILE *fp, unsigned char *p, int len);
+	void fread_uchars(
+			FILE *fp, unsigned char *p, int len);
 
 	void read_ascii_set_of_sets_constant_size(
 			std::string &fname_ascii,
@@ -1070,7 +1078,7 @@ public:
 			std::string &label);
 	data_structures::vector_builder *get_object_of_type_vector(
 			std::string &label);
-	data_structures::symbolic_object_builder *get_object_of_type_symbolic_object(
+	expression_parser::symbolic_object_builder *get_object_of_type_symbolic_object(
 			std::string &label);
 	coding_theory::crc_object *get_object_of_type_crc_code(
 			std::string &label);

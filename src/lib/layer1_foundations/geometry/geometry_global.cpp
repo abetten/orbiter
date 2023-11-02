@@ -1831,18 +1831,30 @@ void geometry_global::create_decomposition_of_projective_space(
 		cout << "geometry_global::create_decomposition_of_projective_space" << endl;
 	}
 	{
-		incidence_structure *I;
+
+		incidence_structure *Inc;
+		Inc = NEW_OBJECT(incidence_structure);
+		Inc->init_projective_space(P, verbose_level);
+
+
+		decomposition *Decomp;
+
+		Decomp = NEW_OBJECT(decomposition);
+		Decomp->init_incidence_structure(
+				Inc,
+				verbose_level);
+
+#if 0
 		data_structures::partitionstack *Stack;
 		int depth = INT_MAX;
 
-		I = NEW_OBJECT(incidence_structure);
-		I->init_projective_space(P, verbose_level);
 
 		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(I->nb_rows + I->nb_cols, 0 /* verbose_level */);
 		Stack->subset_contiguous(I->nb_rows, I->nb_cols);
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
+#endif
 
 		int *the_points;
 		int *the_lines;
@@ -1857,11 +1869,13 @@ void geometry_global::create_decomposition_of_projective_space(
 			the_lines[i] = lines[i];
 		}
 
-		Stack->split_cell_front_or_back(
-				the_points, nb_points, true /* f_front*/, verbose_level);
+		Decomp->Stack->split_cell_front_or_back(
+				the_points, nb_points, true /* f_front*/,
+				verbose_level);
 
-		Stack->split_line_cell_front_or_back(
-				the_lines, nb_lines, true /* f_front*/, verbose_level);
+		Decomp->Stack->split_line_cell_front_or_back(
+				the_lines, nb_lines, true /* f_front*/,
+				verbose_level);
 
 
 		FREE_int(the_points);
@@ -1869,18 +1883,22 @@ void geometry_global::create_decomposition_of_projective_space(
 
 		if (f_v) {
 			cout << "geometry_global::create_decomposition_of_projective_space "
-					"before I->compute_TDO_safe_and_write_files" << endl;
+					"before Decomp->compute_TDO_safe_and_write_files" << endl;
 		}
-		I->compute_TDO_safe_and_write_files(*Stack, depth, fname_base, file_names, verbose_level);
+		Decomp->compute_TDO_safe_and_write_files(
+				Decomp->N /* depth */,
+				fname_base, file_names,
+				verbose_level);
 		if (f_v) {
 			cout << "geometry_global::create_decomposition_of_projective_space "
-					"after I->compute_TDO_safe_and_write_files" << endl;
+					"after Decomp->compute_TDO_safe_and_write_files" << endl;
 		}
 
 
 
-		FREE_OBJECT(Stack);
-		FREE_OBJECT(I);
+		//FREE_OBJECT(Stack);
+		FREE_OBJECT(Decomp);
+		FREE_OBJECT(Inc);
 	}
 	if (f_v) {
 		cout << "geometry_global::create_decomposition_of_projective_space done" << endl;

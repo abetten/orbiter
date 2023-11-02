@@ -140,9 +140,23 @@ void quartic_curve_domain_with_action::table_of_quartic_curves(
 
 
 	orbiter_kernel_system::file_io Fio;
+
 	string fname;
+	string headings;
+
+	headings.assign("OCN,K,Kon,Koff,Ago,NbPts,BisecantType,Eqn15,Eqn,Pts,Bitangents28");
 
 	fname = "quartic_curves_q" + std::to_string(PA->F->q) + "_info.csv";
+
+	Fio.Csv_file_support->write_table_of_strings(fname,
+			nb_quartic_curves, nb_cols, Table,
+			headings,
+			verbose_level);
+
+
+#if 0
+	string fname;
+
 
 
 	{
@@ -166,6 +180,7 @@ void quartic_curve_domain_with_action::table_of_quartic_curves(
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
+#endif
 
 	delete [] Table;
 

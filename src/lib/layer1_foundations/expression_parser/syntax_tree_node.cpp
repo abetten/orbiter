@@ -448,7 +448,7 @@ void syntax_tree_node::init_terminal_node_text_with_exponent(
 					"the object exists: name = " << value_text << endl;
 		}
 
-		data_structures::symbolic_object_builder *Builder;
+		expression_parser::symbolic_object_builder *Builder;
 
 		Builder = Get_symbol(value_text);
 
@@ -970,6 +970,129 @@ void syntax_tree_node::get_monopoly(
 	}
 	if (f_v) {
 		cout << "syntax_tree_node::get_monopoly done" << endl;
+	}
+}
+
+void syntax_tree_node::get_multipoly(
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int *&eqn, int &sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::get_multipoly" << endl;
+	}
+	int i;
+
+	sz = HPD->get_nb_monomials();
+	eqn = NEW_int(HPD->get_nb_monomials());
+	Int_vec_zero(eqn, HPD->get_nb_monomials());
+
+	std::map<std::string,int> variable_idx;
+	int *monomial;
+	int coeff;
+
+
+	monomial = NEW_int(HPD->nb_variables);
+
+	for (i = 0; i < HPD->nb_variables; i++) {
+		variable_idx[HPD->get_symbol(i)] = i;
+	}
+
+
+	if (type == operation_type_add) {
+		if (f_v) {
+			cout << "syntax_tree_node::get_multipoly "
+					"addition node" << endl;
+		}
+		if (f_v) {
+			cout << "syntax_tree_node::get_monomial add node, "
+					"nb_nodes = " << nb_nodes << endl;
+		}
+		for (i = 0; i < nb_nodes; i++) {
+			if (f_v) {
+				cout << "syntax_tree_node::get_monomial "
+						"child " << i << " / " << nb_nodes << endl;
+			}
+			Int_vec_zero(monomial, HPD->nb_variables);
+			coeff = 1;
+			Nodes[i]->get_monomial(variable_idx, HPD->nb_variables,
+					monomial, coeff, verbose_level);
+			idx = HPD->index_of_monomial(monomial);
+			if (f_v) {
+				cout << "syntax_tree_node::get_monomial "
+						"child " << i << " / " << nb_nodes << " monomial = ";
+				Int_vec_print(cout, monomial, HPD->nb_variables);
+				cout << " : coeff = " << coeff << " idx = " << idx;
+				cout << endl;
+			}
+			eqn[idx] = HPD->get_F()->add(eqn[idx], coeff);
+		}
+	}
+	else if (type == operation_type_mult) {
+		cout << "syntax_tree_node::get_multipoly "
+				"multiplication node is not allowed" << endl;
+		exit(1);
+	}
+
+	FREE_int(monomial);
+
+	if (f_v) {
+		cout << "syntax_tree_node::get_multipoly done" << endl;
+	}
+}
+
+void syntax_tree_node::get_monomial(
+		std::map<std::string,int> &variable_idx, int nb_variables,
+		int *exponent_vector, int &coeff,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::get_monomial" << endl;
+	}
+	int i;
+
+
+
+
+	if (f_terminal) {
+		if (T->f_text) {
+			exponent_vector[variable_idx[T->value_text]] += get_exponent();
+		}
+		else if (T->f_int) {
+			coeff = Tree->Fq->mult(coeff, T->value_int);
+		}
+		else {
+			cout << "syntax_tree_node::get_monomial "
+					"illegal type of terminal node" << endl;
+			exit(1);
+		}
+	}
+	else {
+		if (type == operation_type_add) {
+			cout << "syntax_tree_node::get_monomial "
+					"addition node is not allowed" << endl;
+			exit(1);
+		}
+		else {
+			if (f_v) {
+				cout << "syntax_tree_node::get_monomial add node, "
+						"nb_nodes = " << nb_nodes << endl;
+			}
+			for (i = 0; i < nb_nodes; i++) {
+				if (f_v) {
+					cout << "syntax_tree_node::get_monomial "
+							"child " << i << " / " << nb_nodes << endl;
+				}
+				Nodes[i]->get_monomial(variable_idx, nb_variables, exponent_vector, coeff, verbose_level);
+			}
+		}
+	}
+	if (f_v) {
+		cout << "syntax_tree_node::get_monomial done" << endl;
 	}
 }
 

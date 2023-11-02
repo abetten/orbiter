@@ -488,12 +488,12 @@ public:
 			int *Q_table, int Q_table_len,
 			int f_quartic_curves,
 			int verbose_level);
+#if 0
 	void table_top(
 			std::ostream &ost);
 	void table_bottom(
 			std::ostream &ost);
-	void make_table_of_objects_detailed(
-			int *Q_table, int Q_table_len, int verbose_level);
+#endif
 
 };
 

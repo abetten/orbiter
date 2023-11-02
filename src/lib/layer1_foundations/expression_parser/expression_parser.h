@@ -15,163 +15,7 @@ namespace layer1_foundations {
 namespace expression_parser {
 
 
-// #############################################################################
-// expression_parser_domain.cpp
-// #############################################################################
 
-
-
-//! a domain for things related to expression parsing
-
-class expression_parser_domain {
-public:
-	expression_parser_domain();
-	~expression_parser_domain();
-	void parse_and_evaluate(
-			field_theory::finite_field *Fq,
-			std::string &name_of_formula,
-			std::string &formula_text,
-			std::string &managed_variables,
-			int f_evaluate,
-			std::string &parameters,
-			int verbose_level);
-	// uses the old parser
-	void evaluate(
-			std::string &formula_label,
-			std::string &parameters,
-			int verbose_level);
-	// ToDo: use symbolic object instead
-	int evaluate_formula(
-			formula *F,
-			std::string &parameters,
-			int verbose_level);
-	// creates a homogeneous_polynomial_domain object
-	// if the formula is homogeneous
-	void evaluate_managed_formula(
-			formula *F,
-			std::string &parameters,
-			int *&Values, int &nb_monomials,
-			int verbose_level);
-	// creates a homogeneous_polynomial_domain object
-
-};
-
-
-
-
-
-// #############################################################################
-// expression_parser.cpp
-// #############################################################################
-
-
-
-//! class to parse expressions
-
-
-
-
-class expression_parser {
-
-
-
-	private:
-
-		lexer *Lexer;
-
-	public:
-
-		// symbol table
-		std::map<std::string, double> symbols;
-
-	syntax_tree *Tree;
-
-	expression_parser();
-	~expression_parser();
-
-
-	// access symbols with operator []
-	double & operator[] (std::string & key) { return symbols [key]; }
-
-
-
-	syntax_tree_node *Primary(int verbose_level,
-		  int &f_single_literal, std::string &single_literal,
-		  int &f_has_seen_minus, const bool get);
-	syntax_tree_node *Term(int verbose_level, const bool get);
-	syntax_tree_node *AddSubtract(int verbose_level, const bool get);
-	syntax_tree_node *Comparison(int verbose_level, const bool get);
-	syntax_tree_node *Expression(int verbose_level, const bool get);
-	syntax_tree_node *CommaList(int verbose_level, const bool get);
-	void parse(syntax_tree *tree, std::string & program, int verbose_level);
-
-};
-
-
-// #############################################################################
-// formula_activity_description.cpp
-// #############################################################################
-
-
-//! description of an activity involving a formula
-
-class formula_activity_description {
-public:
-
-	int f_export;
-
-	int f_evaluate;
-	//std::string evaluate_finite_field_label;
-	std::string evaluate_assignment;
-
-	int f_print;
-	//std::string print_over_Fq_field_label;
-
-	int f_sweep;
-	std::string sweep_variables;
-
-	int f_sweep_affine;
-	std::string sweep_affine_variables;
-
-
-
-	formula_activity_description();
-	~formula_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-
-// #############################################################################
-// formula_activity.cpp
-// #############################################################################
-
-
-//! an activity involving a symbolic expression
-
-class formula_activity {
-public:
-
-
-	formula_activity_description *Descr;
-	formula *f;
-
-	formula_activity();
-	~formula_activity();
-	void init(formula_activity_description *Descr,
-			formula *f,
-			int verbose_level);
-	void perform_activity(int verbose_level);
-	void do_sweep(int f_affine,
-			formula *f,
-			std::string &sweep_variables,
-			int verbose_level);
-
-};
 
 
 // #############################################################################
@@ -217,7 +61,8 @@ public:
 			int len, int verbose_level);
 	int is_integer_matrix();
 	void get_integer_matrix(int *&M, int verbose_level);
-	void get_string_representation_Sajeeb(std::vector<std::string> &S);
+	void get_string_representation_Sajeeb(
+			std::vector<std::string> &S);
 	void get_string_representation_formula(
 			std::vector<std::string> &S, int verbose_level);
 	void print_Sajeeb(std::ostream &ost);
@@ -231,7 +76,8 @@ public:
 			std::vector<std::string> &S, std::ostream &ost);
 	void print_vector_latex(
 			std::vector<std::string> &S, std::ostream &ost);
-	void print_latex(std::ostream &ost, std::string &label);
+	void print_latex(
+			std::ostream &ost, std::string &label);
 	void make_A_minus_lambda_Identity(
 			formula_vector *A,
 			field_theory::finite_field *Fq,
@@ -363,12 +209,6 @@ public:
 			std::string &managed_variables_text,
 			field_theory::finite_field *Fq,
 			int verbose_level);
-	void init_formula(
-			std::string &label, std::string &label_tex,
-			std::string &managed_variables, std::string &formula_text,
-			field_theory::finite_field *Fq,
-			int verbose_level);
-	// using the old parser
 	void init_formula_from_tree(
 			std::string &label, std::string &label_tex,
 			field_theory::finite_field *Fq,
@@ -434,12 +274,17 @@ public:
 			int verbose_level);
 	void simplify(
 			int verbose_level);
-	void expand_in_place(int f_write_trees,
+	void expand_in_place(
+			int f_write_trees,
 			int verbose_level);
 	int highest_order_term(
 			std::string &variable, int verbose_level);
 	void get_monopoly(
 			std::string &variable, int *&coeff, int &nb_coeff,
+			int verbose_level);
+	void get_multipoly(
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int *&eqn, int &sz,
 			int verbose_level);
 	void latex_tree(
 			std::string &label, int verbose_level);
@@ -448,7 +293,8 @@ public:
 	void latex_tree_split(
 			std::string &label, int split_level, int split_mod,
 			int verbose_level);
-	void collect_variables(int verbose_level);
+	void collect_variables(
+			int verbose_level);
 	void collect_monomial_terms(
 			data_structures::int_matrix *&I, int *&Coeff,
 			int verbose_level);
@@ -461,34 +307,311 @@ public:
 
 
 // #############################################################################
-// lexer.cpp
+// symbolic_object_activity_description.cpp
 // #############################################################################
 
-//! lexical analysis of expressions
 
+//! description of an activity involving a symbolic object
 
-
-class lexer {
+class symbolic_object_activity_description {
 public:
-	  std::string program;
 
-	  const char * pWord;
-	  const char * pWordStart;
-	  // last token parsed
-	  TokenType type;
-	  std::string word;
-	  double value;
-	  syntax_tree_node_terminal *T;
+	int f_export;
 
-	  lexer();
-	  void print_token(std::ostream &ost, TokenType t);
-	  void token_as_string(std::string &s, TokenType t);
-	  TokenType GetToken (int verbose_level, const bool ignoreSign = false);
-	  void create_text_token(std::string &txt);
-	  void create_double_token(double dbl);
-	  void CheckToken (TokenType wanted);
+#if 0
+	int f_evaluate;
+	//std::string evaluate_finite_field_label;
+	std::string evaluate_assignment;
+#endif
+
+	int f_print;
+	//std::string print_over_Fq_field_label;
+
+#if 0
+	int f_sweep;
+	std::string sweep_variables;
+
+	int f_sweep_affine;
+	std::string sweep_affine_variables;
+#endif
+
+
+	symbolic_object_activity_description();
+	~symbolic_object_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
 
 };
+
+
+
+// #############################################################################
+// symbolic_object_activity.cpp
+// #############################################################################
+
+
+//! an activity involving a symbolic object
+
+class symbolic_object_activity {
+public:
+
+
+	symbolic_object_activity_description *Descr;
+	symbolic_object_builder *f;
+
+	symbolic_object_activity();
+	~symbolic_object_activity();
+	void init(
+			symbolic_object_activity_description *Descr,
+			symbolic_object_builder *f,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+#if 0
+	void do_sweep(int f_affine,
+			formula *f,
+			std::string &sweep_variables,
+			int verbose_level);
+#endif
+
+};
+
+
+
+// #############################################################################
+// symbolic_object_builder_description.cpp
+// #############################################################################
+
+
+
+//! to define a symbolic object
+
+
+class symbolic_object_builder_description {
+public:
+
+	int f_label_txt;
+	std::string label_txt;
+
+	int f_label_tex;
+	std::string label_tex;
+
+	int f_managed_variables;
+	std::string managed_variables;
+
+	int f_text;
+	std::string text_txt;
+
+	int f_field;
+	std::string field_label;
+
+	int f_field_pointer;
+	field_theory::finite_field *field_pointer;
+
+
+	int f_ring;
+	std::string ring_label;
+
+	int f_file;
+	std::string file_name;
+
+
+
+
+	int f_matrix;
+	int nb_rows;
+
+	int f_determinant;
+	std::string determinant_source;
+
+	int f_characteristic_polynomial;
+	std::string characteristic_polynomial_variable;
+	std::string characteristic_polynomial_source;
+
+	int f_substitute;
+	std::string substitute_variables;
+	std::string substitute_target;
+	std::string substitute_source;
+
+
+	int f_simplify;
+	std::string simplify_source;
+
+	int f_expand;
+	std::string expand_source;
+
+	int f_right_nullspace;
+	std::string right_nullspace_source;
+
+	int f_minor;
+	std::string minor_source;
+	int minor_i;
+	int minor_j;
+
+	int f_symbolic_nullspace;
+	std::string symbolic_nullspace_source;
+
+	int f_stack_matrices_vertically;
+	int f_stack_matrices_horizontally;
+	int f_stack_matrices_z_shape;
+	std::string stack_matrices_label;
+
+	int f_multiply_2x2_from_the_left;
+	std::string multiply_2x2_from_the_left_source;
+	std::string multiply_2x2_from_the_left_A2;
+	int multiply_2x2_from_the_left_i;
+	int multiply_2x2_from_the_left_j;
+
+	int f_matrix_entry;
+	std::string matrix_entry_source;
+	int matrix_entry_i;
+	int matrix_entry_j;
+
+	int f_vector_entry;
+	std::string vector_entry_source;
+	int vector_entry_i;
+
+	int f_collect;
+	std::string collect_source;
+	std::string collect_by;
+
+	int f_encode_CRC;
+	int encode_CRC_block_length;
+	std::string encode_CRC_data_polynomial;
+	std::string encode_CRC_check_polynomial;
+
+	int f_decode_CRC;
+	int decode_CRC_block_length;
+	std::string decode_CRC_data_polynomial;
+	std::string decode_CRC_check_polynomial;
+
+	int f_submatrix;
+	std::string submatrix_source;
+	int submatrix_row_first;
+	int submatrix_nb_rows;
+	int submatrix_col_first;
+	int submatrix_nb_cols;
+
+
+	int f_do_not_simplify;
+
+	int f_write_trees_during_expand;
+
+	symbolic_object_builder_description();
+	~symbolic_object_builder_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+
+};
+
+
+// #############################################################################
+// symbolic_object_builder.cpp
+// #############################################################################
+
+
+
+//! to create a vector of symbolic objects from class symbolic_object_builder_description
+
+
+class symbolic_object_builder {
+public:
+
+	symbolic_object_builder_description *Descr;
+	std::string label;
+
+	field_theory::finite_field *Fq;
+
+	ring_theory::homogeneous_polynomial_domain *Ring;
+
+
+	expression_parser::formula_vector *Formula_vector;
+
+	symbolic_object_builder();
+	~symbolic_object_builder();
+	void init(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void process_arguments(
+			int verbose_level);
+	void do_determinant(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_characteristic_polynomial(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_substitute(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_simplify(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_expand(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_right_nullspace(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_minor(
+			symbolic_object_builder_description *Descr,
+			int minor_i, int minor_j,
+			std::string &label,
+			int verbose_level);
+	void do_symbolic_nullspace(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_stack(
+			symbolic_object_builder_description *Descr,
+			int verbose_level);
+	void do_multiply_2x2_from_the_left(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_matrix_entry(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_vector_entry(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_collect(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_CRC_encode(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_CRC_decode(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_submatrix(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void multiply_terms(
+			expression_parser::formula **terms,
+			int n,
+			int &stage_counter,
+			int verbose_level);
+
+};
+
 
 // #############################################################################
 // syntax_tree_node_terminal.cpp
@@ -625,6 +748,14 @@ public:
 	void get_monopoly(
 			std::string &variable,
 			std::vector<int> &Coeff, std::vector<int> &Exp,
+			int verbose_level);
+	void get_multipoly(
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int *&eqn, int &sz,
+			int verbose_level);
+	void get_monomial(
+			std::map<std::string,int> &variable_idx, int nb_variables,
+			int *exponent_vector, int &coeff,
 			int verbose_level);
 	void get_exponent_and_coefficient_of_variable(
 			std::string &variable, int &coeff, int &exp,
@@ -816,6 +947,10 @@ public:
 			int verbose_level);
 	void get_monopoly(
 			std::string &variable, int *&coeff, int &nb_coeff,
+			int verbose_level);
+	void get_multipoly(
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int *&eqn, int &sz,
 			int verbose_level);
 	void multiply_by_minus_one(
 			field_theory::finite_field *Fq,

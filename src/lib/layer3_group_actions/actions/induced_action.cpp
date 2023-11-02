@@ -2149,8 +2149,12 @@ action *induced_action::induced_action_on_homogeneous_polynomials(
 
 	OnHP = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 
-	A->label = A_old->label + "_on_homog_poly_" + std::to_string(HPD->nb_variables) + "_" + std::to_string(HPD->degree);
-	A->label_tex = A_old->label_tex + " {\\rm OnHomPoly}_{" + std::to_string(HPD->nb_variables) + "," + std::to_string(HPD->degree) + "}";
+	A->label = A_old->label + "_on_homog_poly_"
+			+ std::to_string(HPD->nb_variables)
+			+ "_" + std::to_string(HPD->degree);
+	A->label_tex = A_old->label_tex
+			+ " {\\rm OnHomPoly}_{" + std::to_string(HPD->nb_variables)
+			+ "," + std::to_string(HPD->degree) + "}";
 
 
 	if (f_v) {

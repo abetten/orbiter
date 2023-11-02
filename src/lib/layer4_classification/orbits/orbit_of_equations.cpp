@@ -19,7 +19,8 @@ namespace orbiter {
 namespace layer4_classification {
 namespace orbits_schreier {
 
-static int orbit_of_equations_compare_func(void *a, void *b, void *data);
+static int orbit_of_equations_compare_func(
+		void *a, void *b, void *data);
 
 
 
@@ -208,7 +209,8 @@ void orbit_of_equations::print_orbit()
 	}
 }
 
-void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
+void orbit_of_equations::compute_orbit(
+		int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -454,18 +456,33 @@ void orbit_of_equations::get_transporter(
 	if (f_v) {
 		cout << "orbit_of_equations::get_transporter" << endl;
 	}
+	if (f_v) {
+		cout << "orbit_of_equations::get_transporter "
+				"position_of_original_object = "
+				<< position_of_original_object << endl;
+	}
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
 	A->Group_element->element_one(Elt1, 0);
 	idx1 = idx;
 	idx0 = prev[idx1];
+	if (f_v) {
+		cout << "orbit_of_equations::get_transporter "
+				"at idx1 = " << idx1 << " idx0 = " << idx0 << endl;
+	}
 	while (idx0 >= 0) {
 		l = label[idx1];
+		if (f_v) {
+			cout << "orbit_of_equations::get_transporter "
+					"at idx1 = " << idx1 << " idx0 = " << idx0 << " l=" << l << endl;
+		}
+
 		A->Group_element->element_mult(
 				SG->gens->ith(l),
 				Elt1,
 				Elt2, 0);
+
 		A->Group_element->element_move(Elt2, Elt1, 0);
 		idx1 = idx0;
 		idx0 = prev[idx1];
@@ -522,7 +539,8 @@ void orbit_of_equations::get_random_schreier_generator(
 				<< ", random generator " << r2 << endl;
 	}
 	
-	A->Group_element->element_mult(E1, SG->gens->ith(r2), E2, 0);
+	A->Group_element->element_mult(
+			E1, SG->gens->ith(r2), E2, 0);
 
 	// compute image of original subspace under E2:
 	Int_vec_copy(
@@ -553,7 +571,9 @@ void orbit_of_equations::get_random_schreier_generator(
 	A->Group_element->element_mult(E2, E4, E5, 0);
 
 	// test:
-	map_an_equation(cur_object, new_object, E5, 0 /* verbose_level*/);
+	map_an_equation(
+			cur_object, new_object, E5,
+			0 /* verbose_level*/);
 	if (search_data(new_object, pt3, false)) {
 		if (f_vv) {
 			cout << "testing: new object is at position " << pt3 << endl;
@@ -829,7 +849,8 @@ groups::strong_generators *orbit_of_equations::stabilizer_any_point(
 	// transporter_inv is an element which maps
 	// the orbit representative to the given object.
 
-	A->Group_element->element_invert(transporter_inv, transporter, 0);
+	A->Group_element->element_invert(
+			transporter_inv, transporter, 0);
 
 
 
@@ -841,8 +862,10 @@ groups::strong_generators *orbit_of_equations::stabilizer_any_point(
 		cout << "orbit_of_equations::stabilizer_any_point "
 				"before gens->init_generators_for_the_conjugate_group_aGav" << endl;
 	}
-	gens->init_generators_for_the_conjugate_group_aGav(gens0,
-		transporter, verbose_level);
+	gens->init_generators_for_the_conjugate_group_aGav(
+			gens0,
+		transporter,
+		verbose_level);
 	if (f_v) {
 		cout << "orbit_of_equations::stabilizer_any_point "
 				"after gens->init_generators_for_the_conjugate_group_aGav" << endl;
@@ -883,6 +906,7 @@ int orbit_of_equations::search_equation(
 	Int_vec_copy(eqn,
 			data + 1,
 			AonHPD->HPD->get_nb_monomials());
+
 	if (Sorting.vec_search(
 			(void **)Equations,
 			orbit_of_equations_compare_func,

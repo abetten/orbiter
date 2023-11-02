@@ -580,6 +580,16 @@ void unipoly_domain::print_object(
 	ost << s.str();
 }
 
+std::string unipoly_domain::object_stringify(
+		unipoly_object p)
+{
+	std::stringstream s;
+
+	print_object_sstr(p, s);
+	return s.str();
+}
+
+
 void unipoly_domain::print_object_sstr_latex(
 		unipoly_object p, std::stringstream &ost)
 {

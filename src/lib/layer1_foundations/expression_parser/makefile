@@ -6,13 +6,12 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	expression_parser_domain.o \
-	expression_parser.o \
-	formula_activity_description.o \
-	formula_activity.o \
 	formula_vector.o \
 	formula.o \
-	lexer.o \
+	symbolic_object_activity_description.o \
+	symbolic_object_activity.o \
+	symbolic_object_builder_description.o \
+	symbolic_object_builder.o \
 	syntax_tree_latex.o \
 	syntax_tree_node_io.o \
 	syntax_tree_node_terminal.o \

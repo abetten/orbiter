@@ -37,15 +37,18 @@ group_action_on_combinatorial_object::group_action_on_combinatorial_object()
 	points = NULL;
 	lines = NULL;
 
-	Inc = NULL;
-	S = NULL;
+	Decomposition = NULL;
+
+	//Inc = NULL;
+	//S = NULL;
 
 	Sch_points = NULL;
 	Sch_lines = NULL;
 
-	SoS_points = NULL;
-	SoS_lines = NULL;
+	//SoS_points = NULL;
+	//SoS_lines = NULL;
 
+#if 0
 	row_classes = NULL;
 	row_class_inv = NULL;
 	nb_row_classes = 0;
@@ -56,6 +59,7 @@ group_action_on_combinatorial_object::group_action_on_combinatorial_object()
 
 	row_scheme = NULL;
 	col_scheme = NULL;
+#endif
 
 	Flags = NULL;
 	Anti_Flags = NULL;
@@ -77,7 +81,6 @@ void group_action_on_combinatorial_object::init(
 		std::string &label_txt,
 		std::string &label_tex,
 		geometry::object_with_canonical_form *OwCF,
-		//groups::schreier *Sch,
 		actions::action *A_perm,
 		int verbose_level)
 {
@@ -91,7 +94,6 @@ void group_action_on_combinatorial_object::init(
 	group_action_on_combinatorial_object::label_tex = label_tex;
 
 	group_action_on_combinatorial_object::OwCF = OwCF;
-	//group_action_on_combinatorial_object::Sch = Sch;
 	group_action_on_combinatorial_object::A_perm = A_perm;
 
 
@@ -159,6 +161,8 @@ void group_action_on_combinatorial_object::init(
 				"after A_perm->Induced_action->restricted_action" << endl;
 	}
 
+	geometry::incidence_structure *Inc;
+
 	Inc = NEW_OBJECT(geometry::incidence_structure);
 
 	if (f_v) {
@@ -175,6 +179,21 @@ void group_action_on_combinatorial_object::init(
 	}
 
 
+	Decomposition = NEW_OBJECT(geometry::decomposition);
+
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"before Decomposition->init_incidence_structure" << endl;
+	}
+	Decomposition->init_incidence_structure(Inc, verbose_level - 1);
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"after Decomposition->init_incidence_structure" << endl;
+	}
+
+
+
+#if 0
 	S = NEW_OBJECT(data_structures::partitionstack);
 
 	int N;
@@ -189,6 +208,7 @@ void group_action_on_combinatorial_object::init(
 	// split off the column class:
 	S->subset_contiguous(Inc->nb_points(), Inc->nb_lines());
 	S->split_cell(0);
+#endif
 
 	#if 0
 	// ToDo:
@@ -197,20 +217,33 @@ void group_action_on_combinatorial_object::init(
 	#endif
 
 
+
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"before Decomposition->compute_TDO_deep" << endl;
+	}
+	Decomposition->compute_TDO_deep(verbose_level - 1);
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"after Decomposition->compute_TDO_deep" << endl;
+	}
+
+#if 0
 	int TDO_depth = N;
 	//int TDO_ht;
 
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"before Inc->compute_TDO_safe" << endl;
+				"before Decomposition->I->compute_TDO_safe" << endl;
 	}
-	Inc->compute_TDO_safe(*S, TDO_depth, verbose_level - 3);
+	Decomposition->I->compute_TDO_safe(*Decomposition->Stack, TDO_depth, verbose_level - 3);
 	//TDO_ht = S.ht;
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"after Inc->compute_TDO_safe" << endl;
+				"after Decomposition->I->compute_TDO_safe" << endl;
 	}
+#endif
 
 	Sch_points = NEW_OBJECT(groups::schreier);
 	Sch_points->init(A_on_points, verbose_level - 2);
@@ -258,15 +291,16 @@ void group_action_on_combinatorial_object::init(
 				"before S->split_by_orbit_partition" << endl;
 	}
 
-	S->split_by_orbit_partition(
+	Decomposition->Stack->split_by_orbit_partition(
 			Sch_points->nb_orbits,
 		Sch_points->orbit_first, Sch_points->orbit_len, Sch_points->orbit,
 		0 /* offset */,
 		verbose_level - 2);
-	S->split_by_orbit_partition(
+
+	Decomposition->Stack->split_by_orbit_partition(
 			Sch_lines->nb_orbits,
 		Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
-		Inc->nb_points() /* offset */,
+		Decomposition->Inc->nb_points() /* offset */,
 		verbose_level - 2);
 
 	if (f_v) {
@@ -274,9 +308,21 @@ void group_action_on_combinatorial_object::init(
 				"after S->split_by_orbit_partition" << endl;
 	}
 
-	S->get_row_classes(
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"before Decomposition->compute_the_decomposition" << endl;
+	}
+	Decomposition->compute_the_decomposition(
+			verbose_level - 1);
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"after Decomposition->compute_the_decomposition" << endl;
+	}
+
+#if 0
+	Decomposition->Stack->get_row_classes(
 			SoS_points, 0 /*verbose_level*/);
-	S->get_column_classes(
+	Decomposition->Stack->get_column_classes(
 			SoS_lines, 0 /*verbose_level*/);
 
 #if 0
@@ -291,7 +337,7 @@ void group_action_on_combinatorial_object::init(
 		cout << "group_action_on_combinatorial_object::init "
 				"before S->allocate_and_get_decomposition" << endl;
 	}
-	S->allocate_and_get_decomposition(
+	Decomposition->Stack->allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes,
 		verbose_level - 2);
@@ -329,7 +375,7 @@ void group_action_on_combinatorial_object::init(
 		cout << "group_action_on_combinatorial_object::init "
 				"after Inc->get_row_decomposition_scheme" << endl;
 	}
-
+#endif
 
 
 	if (f_v) {
@@ -401,7 +447,6 @@ void group_action_on_combinatorial_object::report_flag_orbits(
 
 void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 		std::ostream &ost,
-		//groups::schreier *Sch,
 		int verbose_level)
 // TDA = tactical decomposition by automorphism group
 {
@@ -528,7 +573,6 @@ void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 
 void group_action_on_combinatorial_object::export_INP_with_flag_orbits(
 		std::ostream &ost,
-		//groups::schreier *Sch,
 		int verbose_level)
 // INP = input geometry
 {
@@ -538,24 +582,6 @@ void group_action_on_combinatorial_object::export_INP_with_flag_orbits(
 		cout << "group_action_on_combinatorial_object::export_INP_with_flag_orbits" << endl;
 	}
 
-#if 0
-	combinatorics::encoded_combinatorial_object *Enc;
-
-	if (f_v) {
-		cout << "group_action_on_combinatorial_object::export_INP_with_flag_orbits "
-				"before OwCF->encode_incma" << endl;
-	}
-	OwCF->encode_incma(Enc, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "group_action_on_combinatorial_object::export_INP_with_flag_orbits "
-				"after OwCF->encode_incma" << endl;
-		cout << "group_action_on_combinatorial_object::export_INP_with_flag_orbits "
-				"Enc->nb_rows = " << Enc->nb_rows << endl;
-		cout << "group_action_on_combinatorial_object::export_INP_with_flag_orbits "
-				"Enc->nb_cols = " << Enc->nb_cols << endl;
-		//Enc->print_incma();
-	}
-#endif
 
 	orbiter_kernel_system::file_io Fio;
 	string fname;

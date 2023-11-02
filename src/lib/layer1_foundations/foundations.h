@@ -2,10 +2,10 @@
 //
 // Anton Betten
 //
-// renamed from galois.h: August 16, 2018
 // started as orbiter:  October 23, 2002
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
+// renamed from galois.h: August 16, 2018
 
 
 #ifndef ORBITER_SRC_LIB_FOUNDATIONS_FOUNDATIONS_H_
@@ -378,8 +378,6 @@ namespace data_structures {
 	class sorting;
 	class spreadsheet;
 	class string_tools;
-	class symbolic_object_builder_description;
-	class symbolic_object_builder;
 	class tally_lint;
 	class tally_vector_data;
 	class tally;
@@ -393,13 +391,12 @@ namespace data_structures {
 namespace expression_parser {
 
 	// expression_parser:
-	class expression_parser_domain;
-	class expression_parser;
-	class formula_activity_description;
-	class formula_activity;
 	class formula_vector;
 	class formula;
-	class lexer;
+	class symbolic_object_activity_description;
+	class symbolic_object_activity;
+	class symbolic_object_builder_description;
+	class symbolic_object_builder;
 	class syntax_tree_node_terminal;
 	class syntax_tree_node;
 	class syntax_tree;
@@ -441,6 +438,7 @@ namespace geometry {
 	class arc_basic;
 	class arc_in_projective_space;
 	class buekenhout_metz;
+	class decomposition_scheme;
 	class decomposition;
 	class desarguesian_spread;
 	class flag;

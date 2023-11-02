@@ -18,7 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace data_structures {
+namespace expression_parser {
 
 
 symbolic_object_builder_description::symbolic_object_builder_description()
@@ -139,7 +139,7 @@ int symbolic_object_builder_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i = 0;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "symbolic_object_builder_description::read_arguments" << endl;

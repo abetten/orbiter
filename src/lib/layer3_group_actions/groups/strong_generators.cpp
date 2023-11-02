@@ -2579,14 +2579,14 @@ void strong_generators::orbits_on_points_with_given_action(
 	}
 }
 
-schreier *strong_generators::orbits_on_points_schreier(
+schreier *strong_generators::compute_all_point_orbits_schreier(
 		actions::action *A_given, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	schreier *Sch;
 
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"degree = " << A_given->degree << endl;
 		cout << "A_given=";
 		A_given->print_info();
@@ -2596,13 +2596,13 @@ schreier *strong_generators::orbits_on_points_schreier(
 	group_order(go);
 
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"go = " << go << endl;
 	}
 
 
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"generators:" << endl;
 		//print_generators_tex();
 	}
@@ -2611,22 +2611,22 @@ schreier *strong_generators::orbits_on_points_schreier(
 	Sch->init(A_given, verbose_level - 2);
 	Sch->initialize_tables();
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"before Sch->init_generators" << endl;
 	}
 	Sch->init_generators(*gens, verbose_level - 2);
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"before Sch->compute_all_point_orbits" << endl;
 	}
 	Sch->compute_all_point_orbits(verbose_level - 2);
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"after Sch->compute_all_point_orbits" << endl;
 	}
 
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"done, we found " << Sch->nb_orbits << " orbits" << endl;
 	}
 	return Sch;

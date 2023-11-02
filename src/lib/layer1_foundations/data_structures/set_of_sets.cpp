@@ -990,6 +990,7 @@ void set_of_sets::compute_incidence_matrix(
 	}
 }
 
+#if 0
 void set_of_sets::compute_and_print_tdo_row_scheme(
 		std::ostream &file, int verbose_level)
 {
@@ -1101,6 +1102,7 @@ void set_of_sets::compute_and_print_tdo_col_scheme(
 		cout << "set_of_sets::compute_and_print_tdo_col_scheme done" << endl;
 	}
 }
+#endif
 
 void set_of_sets::init_decomposition(
 		geometry::decomposition *&D, int verbose_level)
@@ -1583,19 +1585,30 @@ void set_of_sets::get_eckardt_points(
 		cout << "set_of_sets::get_eckardt_points" << endl;
 	}
 
-	geometry::incidence_structure *IS;
+	geometry::incidence_structure *Inc;
+
+	Inc = NEW_OBJECT(geometry::incidence_structure);
+
+	Inc->init_by_set_of_sets(this, false);
+
+	geometry::decomposition *Decomposition;
+
+	Decomposition = NEW_OBJECT(geometry::decomposition);
+
+	Decomposition->init_incidence_structure(
+			Inc,
+			verbose_level - 1);
+
+#if 0
 	partitionstack *PStack;
-
-	IS = NEW_OBJECT(geometry::incidence_structure);
-
-	IS->init_by_set_of_sets(this, false);
 
 	PStack = NEW_OBJECT(partitionstack);
 	PStack->allocate(nb_sets + underlying_set_size, 0 /* verbose_level */);
 	PStack->subset_contiguous(nb_sets, underlying_set_size);
 	PStack->split_cell(0 /* verbose_level */);
+#endif
 	
-	IS->compute_TDO_safe(*PStack,
+	Decomposition->compute_TDO_safe(
 			1 /*nb_lines + nb_points_on_surface*/ /* depth */,
 			0 /* verbose_level */);
 
@@ -1611,14 +1624,14 @@ void set_of_sets::get_eckardt_points(
 	int *col_classes, *col_class_inv, nb_col_classes;
 	int *col_scheme;
 
-	PStack->allocate_and_get_decomposition(
+	Decomposition->Stack->allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
 		0/*verbose_level*/);
 	
 	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
 
-	IS->get_col_decomposition_scheme(*PStack, 
+	Decomposition->get_col_decomposition_scheme(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
 		col_scheme, 0/*verbose_level*/);
@@ -1627,7 +1640,7 @@ void set_of_sets::get_eckardt_points(
 	
 	if (f_v) {
 		cout << "col_scheme:" << endl;
-		PStack->print_decomposition_scheme(cout, 
+		Decomposition->Stack->print_decomposition_scheme(cout,
 			row_classes, nb_row_classes,
 			col_classes, nb_col_classes, 
 			col_scheme, -1, -1);
@@ -1638,7 +1651,7 @@ void set_of_sets::get_eckardt_points(
 	nb_E = 0;
 	for (j = 0; j < nb_col_classes; j++) {
 		c = col_classes[j];
-		sz = PStack->cellSize[c];
+		sz = Decomposition->Stack->cellSize[c];
 		s = 0;
 		for (i = 0; i < nb_row_classes; i++) {
 			s += col_scheme[i * nb_col_classes + j];
@@ -1657,15 +1670,15 @@ void set_of_sets::get_eckardt_points(
 	h = 0;
 	for (j = 0; j < nb_col_classes; j++) {
 		c = col_classes[j];
-		sz = PStack->cellSize[c];
+		sz = Decomposition->Stack->cellSize[c];
 		s = 0;
 		for (i = 0; i < nb_row_classes; i++) {
 			s += col_scheme[i * nb_col_classes + j];
 		}
 		if (s == 3) {
-			f = PStack->startCell[c];
+			f = Decomposition->Stack->startCell[c];
 			for (i = 0; i < sz; i++) {
-				y = PStack->pointList[f + i] - nb_sets;
+				y = Decomposition->Stack->pointList[f + i] - nb_sets;
 				E[h++] = y;
 			}
 		}
@@ -1676,8 +1689,9 @@ void set_of_sets::get_eckardt_points(
 	FREE_int(col_classes);
 	FREE_int(col_class_inv);
 	FREE_int(col_scheme);
-	FREE_OBJECT(PStack);
-	FREE_OBJECT(IS);
+	//FREE_OBJECT(PStack);
+	FREE_OBJECT(Decomposition);
+	FREE_OBJECT(Inc);
 
 	if (f_v) {
 		cout << "set_of_sets::get_eckardt_points done" << endl;

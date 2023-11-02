@@ -1355,6 +1355,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		FREE_OBJECT(Fq);
 
 	}
+#if 0
 	else if (Descr->f_parse_and_evaluate) {
 
 		if (f_v) {
@@ -1381,7 +1382,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 
 	}
-
+#endif
 
 	else if (Descr->f_product_of) {
 
@@ -1530,7 +1531,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 
 	}
-
+#if 0
 	else if (Descr->f_evaluate) {
 
 		if (f_v) {
@@ -1554,7 +1555,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 
 	}
-
+#endif
 
 
 

@@ -939,6 +939,17 @@ long int action::group_order_lint()
 }
 
 
+std::string action::group_order_as_string()
+{
+	ring_theory::longinteger_object go;
+	string s;
+
+	group_order(go);
+	s = go.stringify();
+	return s;
+}
+
+
 
 
 
@@ -1132,10 +1143,14 @@ void action::point_stabilizer_any_point(
 	
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point "
-				"computing all point orbits:" << endl;
+				"before compute_all_point_orbits_schreier" << endl;
 	}
-	Sch = Strong_gens->orbits_on_points_schreier(
+	Sch = Strong_gens->compute_all_point_orbits_schreier(
 			this, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "action::point_stabilizer_any_point "
+				"after compute_all_point_orbits_schreier" << endl;
+	}
 	//compute_all_point_orbits(Sch,
 	//*Strong_gens->gens, 0 /* verbose_level */);
 	if (f_v) {
@@ -1205,9 +1220,13 @@ void action::point_stabilizer_any_point_with_given_group(
 	
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point_with_given_group "
-				"computing all point orbits:" << endl;
+				"before compute_all_point_orbits_schreier" << endl;
 	}
-	Sch = input_gens->orbits_on_points_schreier(this, 0 /* verbose_level */);
+	Sch = input_gens->compute_all_point_orbits_schreier(this, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "action::point_stabilizer_any_point_with_given_group "
+				"after compute_all_point_orbits_schreier" << endl;
+	}
 	//compute_all_point_orbits(Sch, *Strong_gens->gens, 0 /* verbose_level */);
 	cout << "computing all point orbits done, found "
 			<< Sch->nb_orbits << " orbits" << endl;

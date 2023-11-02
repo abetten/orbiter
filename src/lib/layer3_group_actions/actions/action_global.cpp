@@ -1424,11 +1424,15 @@ void action_global::orbits_on_equations(
 
 	if (f_v) {
 		cout << "action_global::orbits_on_equations "
-				"computing orbits on the equations:" << endl;
+				"before compute_all_point_orbits_schreier" << endl;
 	}
-	Orb = gens->orbits_on_points_schreier(
+	Orb = gens->compute_all_point_orbits_schreier(
 			A_on_equations,
 			verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::orbits_on_equations "
+				"after compute_all_point_orbits_schreier" << endl;
+	}
 
 	if (false) {
 		cout << "action_global::orbits_on_equations "
@@ -3909,6 +3913,18 @@ void action_global::report_TDA(
 		cout << "action_global::report_TDA" << endl;
 	}
 
+
+	geometry::decomposition *Decomposition;
+
+
+	Decomposition = NEW_OBJECT(geometry::decomposition);
+
+	Decomposition->init_incidence_structure(
+			Inc,
+			verbose_level);
+
+
+#if 0
 	data_structures::partitionstack S;
 
 	int N;
@@ -3929,9 +3945,9 @@ void action_global::report_TDA(
 	S.split_cell_front_or_back(data, target_size,
 			true /* f_front */, 0 /* verbose_level*/);
 	#endif
+#endif
 
-
-	int TDO_depth = N;
+	int TDO_depth = Decomposition->N;
 	//int TDO_ht;
 
 
@@ -3939,19 +3955,19 @@ void action_global::report_TDA(
 		cout << "action_global::report_TDA "
 				"before Inc->compute_TDO_safe" << endl;
 	}
-	Inc->compute_TDO_safe(S, TDO_depth, verbose_level - 3);
+	Decomposition->compute_TDO_safe(TDO_depth, verbose_level - 3);
 	//TDO_ht = S.ht;
 
 
-	if (S.ht < size_limit_for_printing) {
+	if (Decomposition->Stack->ht < size_limit_for_printing) {
 		ost << "The TDO decomposition is" << endl;
-		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+		Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 				ost, true /* f_enter_math */,
-				true /* f_print_subscripts */, S);
+				true /* f_print_subscripts */);
 	}
 	else {
 		ost << "The TDO decomposition is very large (with "
-				<< S.ht<< " classes).\\\\" << endl;
+				<< Decomposition->Stack->ht<< " classes).\\\\" << endl;
 	}
 
 
@@ -3980,12 +3996,12 @@ void action_global::report_TDA(
 			cout << "found " << Sch_lines->nb_orbits
 					<< " orbits on lines" << endl;
 		}
-		S.split_by_orbit_partition(
+		Decomposition->Stack->split_by_orbit_partition(
 				Sch_points->nb_orbits,
 			Sch_points->orbit_first, Sch_points->orbit_len, Sch_points->orbit,
 			0 /* offset */,
 			verbose_level - 2);
-		S.split_by_orbit_partition(
+		Decomposition->Stack->split_by_orbit_partition(
 				Sch_lines->nb_orbits,
 			Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
 			Inc->nb_points() /* offset */,
@@ -4004,9 +4020,9 @@ void action_global::report_TDA(
 				0 /*verbose_level*/);
 #endif
 
-		S.get_row_classes(
+		Decomposition->Stack->get_row_classes(
 				SoS_points, 0 /*verbose_level*/);
-		S.get_column_classes(
+		Decomposition->Stack->get_column_classes(
 				SoS_lines, 0 /*verbose_level*/);
 
 		ost << "Point orbits:\\\\" << endl;
@@ -4022,17 +4038,18 @@ void action_global::report_TDA(
 		FREE_OBJECT(Sch_lines);
 	}
 
-	if (S.ht < size_limit_for_printing) {
+	if (Decomposition->Stack->ht < size_limit_for_printing) {
 		ost << "The TDA decomposition is" << endl;
-		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+		Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 				ost, true /* f_enter_math */,
-				true /* f_print_subscripts */, S);
+				true /* f_print_subscripts */);
 	}
 	else {
 		ost << "The TDA decomposition is very large (with "
-				<< S.ht << " classes).\\\\" << endl;
+				<< Decomposition->Stack->ht << " classes).\\\\" << endl;
 	}
 
+	FREE_OBJECT(Decomposition);
 	FREE_OBJECT(gens);
 
 	if (f_v) {

@@ -68,6 +68,7 @@ public:
 	int power_map_k;
 	std::string power_map_elements;
 
+#if 0
 	int f_parse_and_evaluate;
 	std::string parse_name_of_formula;
 	std::string parse_managed_variables;
@@ -77,7 +78,7 @@ public:
 	int f_evaluate;
 	std::string evaluate_formula_label;
 	std::string evaluate_parameters;
-
+#endif
 
 
 	// Section 3.3:
@@ -363,11 +364,15 @@ public:
 	void init_quadratic_subfield(int verbose_level);
 	void init_frobenius_table(int verbose_level);
 	void init_absolute_trace_table(int verbose_level);
-	void print_tables_extension_field(std::string &poly);
+	void print_tables_extension_field(
+			std::string &poly);
 	int add(int i, int j);
-	int add_without_table(int i, int j);
-	int mult_verbose(int i, int j, int verbose_level);
-	int mult_using_discrete_log(int i, int j, int verbose_level);
+	int add_without_table(
+			int i, int j);
+	int mult_verbose(
+			int i, int j, int verbose_level);
+	int mult_using_discrete_log(
+			int i, int j, int verbose_level);
 	int negate(int i);
 	int negate_without_table(int i);
 	int inverse(int i);

@@ -59,7 +59,8 @@ std::string formula::string_representation(
 		s = string_representation_Sajeeb();
 	}
 	else {
-		s = string_representation_formula(f_latex, 0 /*verbose_level*/);
+		s = string_representation_formula(
+				f_latex, 0 /*verbose_level*/);
 	}
 	return s;
 }
@@ -88,7 +89,8 @@ std::string formula::string_representation_formula(
 		cout << "formula::string_representation_formula "
 				"before tree->print_to_vector" << endl;
 	}
-	tree->print_to_vector(rep, f_latex, 0 /*verbose_level*/);
+	tree->print_to_vector(
+			rep, f_latex, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "formula::string_representation_formula "
 				"after tree->print_to_vector" << endl;
@@ -150,7 +152,10 @@ void formula::init_empty_plus_node(
 		cout << "expression_parser_domain::init_empty_plus_node "
 				"before tree->init" << endl;
 	}
-	tree->init(Fq, true, managed_variables, verbose_level - 1);
+	tree->init(
+			Fq,
+			true, managed_variables,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "expression_parser_domain::init_empty_plus_node "
 				"after tree->init" << endl;
@@ -167,116 +172,6 @@ void formula::init_empty_plus_node(
 	}
 }
 
-void formula::init_formula(
-		std::string &label, std::string &label_tex,
-		std::string &managed_variables, std::string &formula_text,
-		field_theory::finite_field *Fq,
-		int verbose_level)
-// using the old parser
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "formula::init_formula" << endl;
-	}
-
-	name_of_formula.assign(label);
-	name_of_formula_latex.assign(label_tex);
-	formula::managed_variables.assign(managed_variables);
-	formula::formula_text.assign(formula_text);
-
-	formula::Fq = Fq;
-
-	expression_parser Parser;
-	//data_structures::string_tools ST;
-	//syntax_tree *tree;
-	int i;
-
-	tree = NEW_OBJECT(syntax_tree);
-
-	if (f_v) {
-		cout << "expression_parser_domain::init_formula "
-				"before tree->init" << endl;
-	}
-	tree->init(Fq, true /* f_has_managed_variables */, managed_variables, verbose_level - 1);
-	if (f_v) {
-		cout << "expression_parser_domain::init_formula "
-				"after tree->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "formula::init_formula "
-				"Formula " << name_of_formula
-				<< " = " << formula_text << endl;
-		cout << "formula::init_formula "
-				"Managed variables: " << managed_variables << endl;
-	}
-
-	data_structures::string_tools ST;
-
-
-	ST.parse_comma_separated_list(
-			managed_variables, tree->managed_variables,
-			verbose_level - 1);
-	tree->f_has_managed_variables = true;
-
-
-	nb_managed_vars = tree->managed_variables.size();
-
-	if (f_v) {
-		cout << "formula::init_formula "
-				"Managed variables: " << endl;
-		for (i = 0; i < nb_managed_vars; i++) {
-			cout << i << " : " << tree->managed_variables[i] << endl;
-		}
-	}
-
-
-	if (f_v) {
-		cout << "formula::init_formula "
-				"Starting to parse " << name_of_formula << endl;
-	}
-	Parser.parse(tree, formula_text, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "formula::init_formula "
-				"Parsing " << name_of_formula << " finished" << endl;
-	}
-
-
-	if (false) {
-		cout << "formula::init_formula "
-				"Syntax tree:" << endl;
-		tree->print(cout);
-	}
-
-	std::string fname;
-	fname = name_of_formula + ".gv";
-
-	{
-		std::ofstream ost(fname);
-		tree->Root->export_graphviz(name_of_formula, ost);
-	}
-
-	if (f_is_homogeneous) {
-		cout << "formula::init_formula "
-				"before tree->is_homogeneous" << endl;
-	}
-	f_is_homogeneous = tree->is_homogeneous(degree, verbose_level - 3);
-	if (f_is_homogeneous) {
-		cout << "formula::init_formula "
-				"after tree->is_homogeneous" << endl;
-	}
-
-	if (f_is_homogeneous) {
-		cout << "formula::init_formula "
-				"the formula is homogeneous of degree " << degree << endl;
-	}
-
-	if (f_v) {
-		cout << "formula::init_formula done" << endl;
-	}
-}
 
 void formula::init_formula_from_tree(
 		std::string &label, std::string &label_tex,
@@ -372,7 +267,11 @@ void formula::init_formula_monopoly(
 		cout << "formula::init_formula_monopoly "
 				"before tree->init" << endl;
 	}
-	tree->init(Fq, true /* f_has_managed_variables */, managed_variables, verbose_level - 1);
+	tree->init(
+			Fq,
+			true /* f_has_managed_variables */,
+			managed_variables,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "formula::init_formula_monopoly "
 				"after tree->init" << endl;
@@ -421,13 +320,15 @@ void formula::init_formula_Sajeeb(
 
 	if (f_managed_variables) {
 		if (f_v) {
-			cout << "formula::init_formula_Sajeeb managed_variables = " << managed_variables << endl;
+			cout << "formula::init_formula_Sajeeb "
+					"managed_variables = " << managed_variables << endl;
 		}
 		formula::managed_variables.assign(managed_variables);
 	}
 	else {
 		if (f_v) {
-			cout << "formula::init_formula_Sajeeb no managed variables" << endl;
+			cout << "formula::init_formula_Sajeeb "
+					"no managed variables" << endl;
 		}
 		formula::managed_variables = "";
 	}
@@ -597,9 +498,9 @@ void formula::evaluate_with_symbol_table(
 	if (f_v) {
 		cout << "formula::evaluate_with_symbol_table" << endl;
 	}
-	long int a;
+	//long int a;
 
-	a = tree->evaluate(
+	tree->evaluate(
 			symbol_table, verbose_level - 1);
 
 
@@ -1061,124 +962,150 @@ void formula::simplify(
 	int verbose_level_down = 0;
 
 	if (f_v) {
-		cout << "formula::simplify before tree->Root->simplify_exponents" << endl;
+		cout << "formula::simplify "
+				"before tree->Root->simplify_exponents" << endl;
 	}
 
 	tree->Root->simplify_exponents(verbose_level_down);
 
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->simplify_exponents" << endl;
+		cout << "formula::simplify "
+				"after tree->Root->simplify_exponents" << endl;
 	}
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->simplify_exponents tree = ";
+		cout << "formula::simplify "
+				"after tree->Root->simplify_exponents tree = ";
 		tree->print_easy(cout);
 	}
 
 	if (f_v) {
-		cout << "formula::simplify before tree->Root->simplify_constants" << endl;
+		cout << "formula::simplify "
+				"before tree->Root->simplify_constants" << endl;
 	}
 
 	tree->Root->simplify_constants(verbose_level_down);
 
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->simplify_constants" << endl;
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants" << endl;
 	}
 
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->simplify_constants tree = ";
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants tree = ";
 		tree->print_easy(cout);
 	}
 
 	if (f_v) {
-		cout << "formula::simplify before tree->simplify" << endl;
+		cout << "formula::simplify "
+				"before tree->simplify" << endl;
 	}
 
 	tree->simplify(verbose_level_down);
 
 	if (f_v) {
-		cout << "formula::simplify after tree->simplify" << endl;
+		cout << "formula::simplify "
+				"after tree->simplify" << endl;
 	}
 	if (f_v) {
-		cout << "formula::simplify after tree->simplify tree = ";
+		cout << "formula::simplify "
+				"after tree->simplify tree = ";
 		tree->print_easy(cout);
 	}
 
 
 
 	if (f_v) {
-		cout << "formula::simplify before tree->Root->simplify_constants" << endl;
+		cout << "formula::simplify "
+				"before tree->Root->simplify_constants" << endl;
 	}
 
 	tree->Root->simplify_constants(verbose_level_down);
 
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->simplify_constants" << endl;
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants" << endl;
 	}
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->simplify_constants tree = ";
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants tree = ";
 		tree->print_easy(cout);
 	}
 
 
 	if (f_v) {
-		cout << "formula::simplify before tree->Root->flatten" << endl;
+		cout << "formula::simplify "
+				"before tree->Root->flatten" << endl;
 	}
 
 	tree->Root->flatten(verbose_level_down);
 
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->flatten" << endl;
+		cout << "formula::simplify "
+				"after tree->Root->flatten" << endl;
 	}
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->flatten tree = ";
+		cout << "formula::simplify "
+				"after tree->Root->flatten tree = ";
 		tree->print_easy(cout);
 	}
 
 	if (f_v) {
-		cout << "formula::simplify before tree->Root->sort_terms" << endl;
+		cout << "formula::simplify "
+				"before tree->Root->sort_terms" << endl;
 	}
 
 	tree->Root->sort_terms(verbose_level_down);
 
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->sort_terms" << endl;
+		cout << "formula::simplify "
+				"after tree->Root->sort_terms" << endl;
 	}
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->sort_terms tree = ";
+		cout << "formula::simplify "
+				"after tree->Root->sort_terms tree = ";
 		tree->print_easy(cout);
 	}
 
 	if (f_v) {
-		cout << "formula::simplify before tree->Root->simplify_constants" << endl;
+		cout << "formula::simplify "
+				"before tree->Root->simplify_constants" << endl;
 	}
 
 	tree->Root->simplify_constants(verbose_level_down);
 
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->simplify_constants" << endl;
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants" << endl;
 	}
 	if (f_v) {
-		cout << "formula::simplify after tree->Root->simplify_constants tree = ";
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants "
+				"tree = ";
 		tree->print_easy(cout);
 	}
 
 	if (f_v) {
-		cout << "formula::simplify before tree->simplify" << endl;
+		cout << "formula::simplify "
+				"before tree->simplify" << endl;
 	}
 
 	tree->simplify(verbose_level_down);
 
 	if (f_v) {
-		cout << "formula::simplify after tree->simplify" << endl;
+		cout << "formula::simplify "
+				"after tree->simplify" << endl;
 	}
 	if (f_v) {
-		cout << "formula::simplify after tree->simplify tree = ";
+		cout << "formula::simplify "
+				"after tree->simplify tree = ";
 		tree->print_easy(cout);
 	}
 
 
 	if (f_v) {
-		cout << "formula::simplify at the end formula:" << endl;
+		cout << "formula::simplify "
+				"at the end formula:" << endl;
 		tree->print_easy(cout);
 		cout << endl;
 	}
@@ -1189,7 +1116,8 @@ void formula::simplify(
 
 }
 
-void formula::expand_in_place(int f_write_trees,
+void formula::expand_in_place(
+		int f_write_trees,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1411,11 +1339,13 @@ void formula::expand_in_place(int f_write_trees,
 
 
 		if (tree->needs_to_be_expanded() == false) {
-			cout << "formula::expand_in_place formula does not need to be expanded again" << endl;
+			cout << "formula::expand_in_place "
+					"formula does not need to be expanded again" << endl;
 			break;
 		}
 		else {
-			cout << "formula::expand_in_place needs to be expanded again" << endl;
+			cout << "formula::expand_in_place "
+					"needs to be expanded again" << endl;
 		}
 	}
 
@@ -1500,6 +1430,22 @@ void formula::get_monopoly(
 	}
 }
 
+void formula::get_multipoly(
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int *&eqn, int &sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::get_multipoly" << endl;
+	}
+	tree->get_multipoly(HPD, eqn, sz, verbose_level - 1);
+	if (f_v) {
+		cout << "formula::get_multipoly done" << endl;
+	}
+}
+
 
 void formula::latex_tree(
 		std::string &label, int verbose_level)
@@ -1522,7 +1468,8 @@ void formula::latex_tree_split(
 	tree->latex_tree_split(label, split_level, split_mod, verbose_level);
 }
 
-void formula::collect_variables(int verbose_level)
+void formula::collect_variables(
+		int verbose_level)
 {
 	tree->collect_variables(verbose_level);
 }

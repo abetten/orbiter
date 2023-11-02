@@ -99,21 +99,18 @@ ORBITER_MODULES= \
 		layer1_foundations/data_structures/sorting.o \
 		layer1_foundations/data_structures/spreadsheet.o \
 		layer1_foundations/data_structures/string_tools.o \
-		layer1_foundations/data_structures/symbolic_object_builder_description.o \
-		layer1_foundations/data_structures/symbolic_object_builder.o \
 		layer1_foundations/data_structures/tally_lint.o \
 		layer1_foundations/data_structures/tally_vector_data.o \
 		layer1_foundations/data_structures/tally.o \
 		layer1_foundations/data_structures/vector_builder_description.o \
 		layer1_foundations/data_structures/vector_builder.o \
 		layer1_foundations/data_structures/vector_hashing.o \
-		layer1_foundations/expression_parser/expression_parser_domain.o \
-		layer1_foundations/expression_parser/expression_parser.o \
-		layer1_foundations/expression_parser/formula_activity_description.o \
-		layer1_foundations/expression_parser/formula_activity.o \
 		layer1_foundations/expression_parser/formula_vector.o \
 		layer1_foundations/expression_parser/formula.o \
-		layer1_foundations/expression_parser/lexer.o \
+		layer1_foundations/expression_parser/symbolic_object_activity_description.o \
+		layer1_foundations/expression_parser/symbolic_object_activity.o \
+		layer1_foundations/expression_parser/symbolic_object_builder_description.o \
+		layer1_foundations/expression_parser/symbolic_object_builder.o \
 		layer1_foundations/expression_parser/syntax_tree_latex.o \
 		layer1_foundations/expression_parser/syntax_tree_node_io.o \
 		layer1_foundations/expression_parser/syntax_tree_node_terminal.o \
@@ -151,6 +148,7 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/arc_basic.o \
 		layer1_foundations/geometry/arc_in_projective_space.o \
 		layer1_foundations/geometry/buekenhout_metz.o \
+		layer1_foundations/geometry/decomposition_scheme.o \
 		layer1_foundations/geometry/decomposition.o \
 		layer1_foundations/geometry/desarguesian_spread.o \
 		layer1_foundations/geometry/flag.o \
@@ -419,6 +417,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/induced_actions/action_on_subgroups.o \
 		layer3_group_actions/induced_actions/action_on_wedge_product.o \
 		layer3_group_actions/induced_actions/product_action.o \
+		layer3_group_actions/interfaces/conjugacy_classes_and_normalizers.o \
 		layer3_group_actions/interfaces/l3_interface_gap.o \
 		layer3_group_actions/interfaces/magma_interface.o \
 		layer3_group_actions/interfaces/nauty_interface_with_group.o \

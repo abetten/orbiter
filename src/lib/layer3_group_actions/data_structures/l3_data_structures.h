@@ -83,7 +83,6 @@ public:
 
 	combinatorics::encoded_combinatorial_object *Enc;
 
-	//groups::schreier *Sch;
 	actions::action *A_perm;
 
 	groups::strong_generators *gens;
@@ -94,20 +93,21 @@ public:
 	long int *points;
 	long int *lines;
 
-	geometry::incidence_structure *Inc;
-	data_structures::partitionstack *S;
+	geometry::decomposition *Decomposition;
+	//geometry::incidence_structure *Inc;
+	//data_structures::partitionstack *S;
 
 	groups::schreier *Sch_points;
 	groups::schreier *Sch_lines;
 
-	data_structures::set_of_sets *SoS_points;
-	data_structures::set_of_sets *SoS_lines;
+	//data_structures::set_of_sets *SoS_points;
+	//data_structures::set_of_sets *SoS_lines;
 
-	int *row_classes, *row_class_inv, nb_row_classes;
-	int *col_classes, *col_class_inv, nb_col_classes;
+	//int *row_classes, *row_class_inv, nb_row_classes;
+	//int *col_classes, *col_class_inv, nb_col_classes;
 
-	int *row_scheme;
-	int *col_scheme;
+	//int *row_scheme;
+	//int *col_scheme;
 
 
 	flag_orbits_incidence_structure *Flags;
@@ -120,7 +120,6 @@ public:
 			std::string &label_txt,
 			std::string &label_tex,
 			geometry::object_with_canonical_form *OwCF,
-			//groups::schreier *Sch,
 			actions::action *A_perm,
 			int verbose_level);
 	void compute_flag_orbits(int verbose_level);
@@ -901,7 +900,7 @@ public:
 			actions::action *A2,
 		long int *set, int sz,
 		int verbose_level);
-	groups::schreier *orbits_on_points_schreier(
+	groups::schreier *compute_all_point_orbits_schreier(
 			actions::action *A_given, int verbose_level);
 	void reverse_isomorphism_exterior_square(int verbose_level);
 	void matrix_representation(

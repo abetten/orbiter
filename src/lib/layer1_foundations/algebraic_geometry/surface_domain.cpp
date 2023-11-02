@@ -808,10 +808,10 @@ int surface_domain::create_surface_by_equation(
 
 	// create a symbolic object containing the general formula:
 
-	data_structures::symbolic_object_builder_description *Descr1;
+	expression_parser::symbolic_object_builder_description *Descr1;
 
 
-	Descr1 = NEW_OBJECT(data_structures::symbolic_object_builder_description);
+	Descr1 = NEW_OBJECT(expression_parser::symbolic_object_builder_description);
 	Descr1->f_field_pointer = true;
 	Descr1->field_pointer = F;
 	Descr1->f_text = true;
@@ -820,9 +820,9 @@ int surface_domain::create_surface_by_equation(
 
 
 
-	data_structures::symbolic_object_builder *SB1;
+	expression_parser::symbolic_object_builder *SB1;
 
-	SB1 = NEW_OBJECT(data_structures::symbolic_object_builder);
+	SB1 = NEW_OBJECT(expression_parser::symbolic_object_builder);
 
 
 
@@ -847,10 +847,10 @@ int surface_domain::create_surface_by_equation(
 	// create a second symbolic object containing the specific values
 	// to be substituted.
 
-	data_structures::symbolic_object_builder_description *Descr2;
+	expression_parser::symbolic_object_builder_description *Descr2;
 
 
-	Descr2 = NEW_OBJECT(data_structures::symbolic_object_builder_description);
+	Descr2 = NEW_OBJECT(expression_parser::symbolic_object_builder_description);
 	Descr2->f_field_pointer = true;
 	Descr2->field_pointer = F;
 	Descr2->f_text = true;
@@ -858,9 +858,9 @@ int surface_domain::create_surface_by_equation(
 
 
 
-	data_structures::symbolic_object_builder *SB2;
+	expression_parser::symbolic_object_builder *SB2;
 
-	SB2 = NEW_OBJECT(data_structures::symbolic_object_builder);
+	SB2 = NEW_OBJECT(expression_parser::symbolic_object_builder);
 
 	string s2;
 
@@ -883,8 +883,8 @@ int surface_domain::create_surface_by_equation(
 	// Perform the substitution.
 	// Create temporary object Formula_vector_after_sub
 
-	data_structures::symbolic_object_builder *O_target = SB1;
-	data_structures::symbolic_object_builder *O_source = SB2;
+	expression_parser::symbolic_object_builder *O_target = SB1;
+	expression_parser::symbolic_object_builder *O_source = SB2;
 
 	//O_target = Get_symbol(Descr->substitute_target);
 	//O_source = Get_symbol(Descr->substitute_source);
@@ -1046,7 +1046,7 @@ int surface_domain::create_surface_by_symbolic_object(
 
 
 
-	data_structures::symbolic_object_builder *Symbol;
+	expression_parser::symbolic_object_builder *Symbol;
 
 	Symbol = Get_symbol(name_of_formula);
 

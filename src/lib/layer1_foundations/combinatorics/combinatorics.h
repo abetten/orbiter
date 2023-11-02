@@ -780,6 +780,8 @@ public:
 	void init(
 			int nb_rows, int nb_cols,
 			int verbose_level);
+	std::string stringify_incma();
+	int get_nb_flags();
 	int *get_Incma();
 	void set_incidence_ij(int i, int j);
 	int get_incidence_ij(int i, int j);

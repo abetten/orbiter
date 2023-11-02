@@ -275,7 +275,8 @@ int partitionstack::biggest_non_discrete_cell_rows_preferred()
 	return cell;
 }
 
-int partitionstack::nb_partition_classes(int from, int len)
+int partitionstack::nb_partition_classes(
+		int from, int len)
 {
 	int i, c, l, n;
 
@@ -290,7 +291,8 @@ int partitionstack::nb_partition_classes(int from, int len)
 	return n;
 }
 
-int partitionstack::is_subset_of_cell(int *set, int size, int &cell_idx)
+int partitionstack::is_subset_of_cell(
+		int *set, int size, int &cell_idx)
 {
 	int i, a, idx, c;
 
@@ -420,7 +422,8 @@ void partitionstack::print_raw()
 	}
 }
 
-void partitionstack::print_class(std::ostream& ost, int idx)
+void partitionstack::print_class(
+		std::ostream& ost, int idx)
 {
 	int first, len, j;
 	int *S;
@@ -440,7 +443,8 @@ void partitionstack::print_class(std::ostream& ost, int idx)
 	FREE_int(S);
 }
 
-void partitionstack::print_classes_tex(std::ostream& ost)
+void partitionstack::print_classes_tex(
+		std::ostream& ost)
 {
 	int i;
 	
@@ -451,7 +455,8 @@ void partitionstack::print_classes_tex(std::ostream& ost)
 	}
 }
 
-void partitionstack::print_class_tex(std::ostream& ost, int idx)
+void partitionstack::print_class_tex(
+		std::ostream& ost, int idx)
 {
 	int first_column_element = startCell[1];
 	int first, len, j;
@@ -482,7 +487,8 @@ void partitionstack::print_class_tex(std::ostream& ost, int idx)
 	FREE_int(S);
 }
 
-void partitionstack::print_class_point_or_line(std::ostream& ost, int idx)
+void partitionstack::print_class_point_or_line(
+		std::ostream& ost, int idx)
 {
 	int first_column_element = startCell[1];
 	int first, len, j;
@@ -521,7 +527,8 @@ void partitionstack::print_class_point_or_line(std::ostream& ost, int idx)
 	FREE_int(S);
 }
 
-void partitionstack::print_classes(std::ostream& ost)
+void partitionstack::print_classes(
+		std::ostream& ost)
 {
 	int i;
 	
@@ -530,7 +537,8 @@ void partitionstack::print_classes(std::ostream& ost)
 	}
 }
 
-void partitionstack::print_classes_points_and_lines(std::ostream& ost)
+void partitionstack::print_classes_points_and_lines(
+		std::ostream& ost)
 {
 	int i;
 	
@@ -620,7 +628,8 @@ void partitionstack::print_cell(int i)
 	cout << " }";
 }
 
-void partitionstack::print_cell_latex(std::ostream &ost, int i)
+void partitionstack::print_cell_latex(
+		std::ostream &ost, int i)
 {
 	int j, first, len;
 
@@ -958,11 +967,10 @@ void partitionstack::split_multiple_cells(int *set,
 	int i, a, pos_a, c;
 
 	if (f_v) {
-		cout << "partitionstack::split_multiple_cells for subset { ";
-		for (i = 0; i < set_size; i++) {
-			cout << set[i] << " ";
-		}
-		cout << "}" << endl;
+		cout << "partitionstack::split_multiple_cells "
+				"for subset ";
+		Int_vec_print(cout, set, set_size);
+		cout << endl;
 	}
 	f_done = NEW_int(set_size);
 	cell_nb = NEW_int(set_size);
@@ -1194,7 +1202,8 @@ void partitionstack::isolate_point(int pt)
 #endif
 }
 
-void partitionstack::subset_contiguous(int from, int len)
+void partitionstack::subset_contiguous(
+		int from, int len)
 {
 #ifdef SPLIT_MULTIPLY
 	int i;
@@ -1248,14 +1257,23 @@ void partitionstack::allocate_and_get_decomposition(
 	int *&col_classes, int *&col_class_inv, int &nb_col_classes, 
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "partitionstack::allocate_and_get_decomposition" << endl;
+	}
 	int i, c;
 	
 	row_classes = NEW_int(ht);
 	col_classes = NEW_int(ht);
 	row_class_inv = NEW_int(ht);
 	col_class_inv = NEW_int(ht);
-	get_row_and_col_classes(row_classes, nb_row_classes,
-			col_classes, nb_col_classes, verbose_level - 1);
+
+	get_row_and_col_classes(
+			row_classes, nb_row_classes,
+			col_classes, nb_col_classes,
+			verbose_level - 1);
+
 	for (i = 0; i < ht; i++) {
 		row_class_inv[i] = col_class_inv[i] = -1;
 	}
@@ -1267,14 +1285,23 @@ void partitionstack::allocate_and_get_decomposition(
 		c = col_classes[i];
 		col_class_inv[c] = i;
 	}
+	if (f_v) {
+		cout << "partitionstack::allocate_and_get_decomposition done" << endl;
+	}
 }
 
 void partitionstack::get_row_and_col_permutation(
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
 	int *row_perm, int *row_perm_inv, 
-	int *col_perm, int *col_perm_inv)
+	int *col_perm, int *col_perm_inv,
+	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "partitionstack::get_row_and_col_permutation" << endl;
+	}
 	int i, j, c, a, f, l, pos;
 	int first_column_element = startCell[1];
 
@@ -1302,19 +1329,25 @@ void partitionstack::get_row_and_col_permutation(
 			pos++;
 		}
 	}
+	if (f_v) {
+		cout << "partitionstack::get_row_and_col_permutation done" << endl;
+	}
 }
 
 void partitionstack::get_row_and_col_classes(
 	int *row_classes, int &nb_row_classes,
-	int *col_classes, int &nb_col_classes, int verbose_level)
+	int *col_classes, int &nb_col_classes,
+	int verbose_level)
 {
-	int i, c, l;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "partitionstack::get_row_and_col_classes n = " << n << endl;
+		cout << "partitionstack::get_row_and_col_classes" << endl;
 	}
+
+	int i, c, l;
+
 	nb_row_classes = 0;
 	nb_col_classes = 0;
 #if 0
@@ -1342,9 +1375,13 @@ void partitionstack::get_row_and_col_classes(
 		l = cellSize[c];
 		i += l;
 	}
+	if (f_v) {
+		cout << "partitionstack::get_row_and_col_classes done" << endl;
+	}
 }
 
-void partitionstack::initial_matrix_decomposition(int nbrows, int nbcols,
+void partitionstack::initial_matrix_decomposition(
+		int nbrows, int nbcols,
 	int *V, int nb_V, int *B, int nb_B, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1383,7 +1420,8 @@ void partitionstack::initial_matrix_decomposition(int nbrows, int nbcols,
 	}
 }
 
-int partitionstack::is_descendant_of(int cell,
+int partitionstack::is_descendant_of(
+		int cell,
 		int ancestor_cell, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1422,7 +1460,8 @@ int partitionstack::is_descendant_of(int cell,
 	return false;
 }
 
-int partitionstack::is_descendant_of_at_level(int cell,
+int partitionstack::is_descendant_of_at_level(
+		int cell,
 		int ancestor_cell, int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1496,7 +1535,7 @@ int partitionstack::cellSizeAtLevel(int cell, int level)
 }
 
 
-void partitionstack::print_decomposition_tex(
+void partitionstack::print_classes_of_decomposition_tex(
 		std::ostream &ost,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes)
@@ -1752,9 +1791,9 @@ void partitionstack::print_column_tactical_decomposition_scheme_tex(
 	for (i = 0; i < nb_row_classes; i++) {
 		c = row_classes[i];
 		ost << setw(6) << cellSize[c];
-			if (f_print_subscripts) {
-				ost << "_{" << setw(3) << c << "}";
-			}
+		if (f_print_subscripts) {
+			ost << "_{" << setw(3) << c << "}";
+		}
 		//f = P.startCell[c];
 		for (j = 0; j < nb_col_classes; j++) {
 			ost << " & " << setw(12) << col_scheme[i * nb_col_classes + j];
@@ -1854,7 +1893,8 @@ int partitionstack::hash_column_refinement_info(
 	return h;
 }
 
-int partitionstack::hash_row_refinement_info(int ht0,
+int partitionstack::hash_row_refinement_info(
+		int ht0,
 		int *data, int depth, int hash0)
 {
 	int cell, i, j, first, len, ancestor;
@@ -2106,7 +2146,8 @@ void partitionstack::radix_sort_bits(
 	}
 }
 
-void partitionstack::swap_ij(int *perm, int *perm_inv, int i, int j)
+void partitionstack::swap_ij(
+		int *perm, int *perm_inv, int i, int j)
 {
 	int tmp;
 

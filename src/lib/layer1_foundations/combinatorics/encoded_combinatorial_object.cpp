@@ -174,6 +174,43 @@ void encoded_combinatorial_object::init(
 	}
 }
 
+std::string encoded_combinatorial_object::stringify_incma()
+{
+	int *Flags;
+	int nb_f;
+	int i, j;
+	string s;
+
+	nb_f = 0;
+	Flags = NEW_int(nb_rows * nb_cols);
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			if (get_incidence_ij(i, j)) {
+				Flags[nb_f++] = i * nb_cols + j;
+			}
+		}
+	}
+	s = Int_vec_stringify(Flags, nb_f);
+	FREE_int(Flags);
+	return s;
+}
+
+int encoded_combinatorial_object::get_nb_flags()
+{
+	int nb_f;
+	int i, j;
+
+	nb_f = 0;
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			if (get_incidence_ij(i, j)) {
+				nb_f++;
+			}
+		}
+	}
+	return nb_f;
+}
+
 int *encoded_combinatorial_object::get_Incma()
 {
 	return Incma;

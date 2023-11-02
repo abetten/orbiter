@@ -457,10 +457,14 @@ void set_and_stabilizer::rearrange_by_orbits(
 			
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
-				"computing orbits on set:" << endl;
+				"before compute_all_point_orbits_schreier" << endl;
 	}
-	Orb = Strong_gens->orbits_on_points_schreier(
+	Orb = Strong_gens->compute_all_point_orbits_schreier(
 			A_on_set, verbose_level);
+	if (f_v) {
+		cout << "set_and_stabilizer::rearrange_by_orbits "
+				"after compute_all_point_orbits_schreier" << endl;
+	}
 
 	data2 = NEW_lint(sz);
 

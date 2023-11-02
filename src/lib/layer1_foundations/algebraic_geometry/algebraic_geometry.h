@@ -64,21 +64,21 @@ public:
 	void evaluate_regular_map(
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			geometry::projective_space *P,
-			data_structures::symbolic_object_builder *Object,
+			expression_parser::symbolic_object_builder *Object,
 			std::string &evaluate_text,
 			long int *&Image_pts, long int &N_points_output,
 			int verbose_level);
 	void evaluate_affine_map(
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			geometry::projective_space *P,
-			data_structures::symbolic_object_builder *Object,
+			expression_parser::symbolic_object_builder *Object,
 			std::string &evaluate_text,
 			long int *&Image_pts, long int &N_points_input,
 			int verbose_level);
 	void compute_projective_variety(
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			geometry::projective_space *P,
-			data_structures::symbolic_object_builder *Object,
+			expression_parser::symbolic_object_builder *Object,
 			std::string &evaluate_text,
 			long int *&Variety, long int &Variety_nb_points,
 			int verbose_level);

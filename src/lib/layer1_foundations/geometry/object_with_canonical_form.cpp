@@ -144,6 +144,7 @@ void object_with_canonical_form::print_rows(
 	}
 }
 
+
 void object_with_canonical_form::print_tex_detailed(
 		std::ostream &ost,
 		int f_show_incma, int verbose_level)

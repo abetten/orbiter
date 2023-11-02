@@ -42,6 +42,14 @@ polynomial_ring_activity_description::polynomial_ring_activity_description()
 	f_print_equation = false;
 	//std::string print_equation_input;
 
+	f_parse_equation = false;
+	//std::string parse_equation_name_of_formula;
+	//std::string parse_equation_name_of_formula_tex;
+	//std::string parse_equation_equation_text;
+	//std::string parse_equation_equation_parameters;
+	//std::string parse_equation_equation_parameter_values;
+
+
 }
 
 
@@ -119,6 +127,25 @@ int polynomial_ring_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-parse_equation") == 0) {
+			f_parse_equation = true;
+			parse_equation_name_of_formula.assign(argv[++i]);
+			parse_equation_name_of_formula_tex.assign(argv[++i]);
+			parse_equation_equation_text.assign(argv[++i]);
+			parse_equation_equation_parameters.assign(argv[++i]);
+			parse_equation_equation_parameter_values.assign(argv[++i]);
+
+			if (f_v) {
+				cout << "-parse_equation "
+						<< parse_equation_name_of_formula << " "
+						<< parse_equation_name_of_formula_tex << " "
+						<< parse_equation_equation_text << " "
+						<< parse_equation_equation_parameters << " "
+						<< parse_equation_equation_parameter_values << " "
+						<< endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -165,6 +192,15 @@ void polynomial_ring_activity_description::print()
 	if (f_print_equation) {
 		cout << "-print_equation "
 				<< print_equation_input << " "
+				<< endl;
+	}
+	if (f_parse_equation) {
+		cout << "-parse_equation "
+				<< parse_equation_name_of_formula << " "
+				<< parse_equation_name_of_formula_tex << " "
+				<< parse_equation_equation_text << " "
+				<< parse_equation_equation_parameters << " "
+				<< parse_equation_equation_parameter_values << " "
 				<< endl;
 	}
 }

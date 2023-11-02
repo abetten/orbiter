@@ -839,12 +839,13 @@ class partitionstack {
 		int ht;
 		int ht0;
 
-		int *pointList, *invPointList;
-		int *cellNumber;
+		int *pointList; // [n]
+		int *invPointList; // [n]
+		int *cellNumber; // [n]
 
-		int *startCell;
-		int *cellSize;
-		int *parent;
+		int *startCell; // [n + 1]
+		int *cellSize; // [n + 1]
+		int *parent; // [n + 1]
 
 
 	// for matrix canonization:
@@ -855,12 +856,12 @@ class partitionstack {
 		//
 	// used if SPLIT_MULTIPLY is defined:
 		int nb_subsets;
-		int *subset_first;
-		int *subset_length;
-		int *subsets;
+		int *subset_first; // [n + 1]
+		int *subset_length; // [n + 1]
+		int *subsets; // [n + 1]
 		//
 	// used if SPLIT_MULTIPLY is not defined:
-		int *subset;
+		int *subset;  // [n + 1]
 		int subset_size;
 
 	partitionstack();
@@ -875,22 +876,31 @@ class partitionstack {
 	int biggest_non_discrete_cell();
 	int smallest_non_discrete_cell_rows_preferred();
 	int biggest_non_discrete_cell_rows_preferred();
-	int nb_partition_classes(int from, int len);
-	int is_subset_of_cell(int *set, int size, int &cell_idx);
+	int nb_partition_classes(
+			int from, int len);
+	int is_subset_of_cell(
+			int *set, int size, int &cell_idx);
 	void sort_cells();
 	void sort_cell(int cell);
 	void reverse_cell(int cell);
 	void check();
 	void print_raw();
-	void print_class(std::ostream& ost, int idx);
-	void print_classes_tex(std::ostream& ost);
-	void print_class_tex(std::ostream& ost, int idx);
-	void print_class_point_or_line(std::ostream& ost, int idx);
-	void print_classes(std::ostream& ost);
-	void print_classes_points_and_lines(std::ostream& ost);
+	void print_class(
+			std::ostream& ost, int idx);
+	void print_classes_tex(
+			std::ostream& ost);
+	void print_class_tex(
+			std::ostream& ost, int idx);
+	void print_class_point_or_line(
+			std::ostream& ost, int idx);
+	void print_classes(
+			std::ostream& ost);
+	void print_classes_points_and_lines(
+			std::ostream& ost);
 	std::ostream& print(std::ostream& ost);
 	void print_cell(int i);
-	void print_cell_latex(std::ostream &ost, int i);
+	void print_cell_latex(
+			std::ostream &ost, int i);
 	void print_subset();
 	void get_cell(int i,
 			int *&cell, int &cell_sz, int verbose_level);
@@ -912,15 +922,19 @@ class partitionstack {
 	void split_cell(int verbose_level);
 	void split_multiple_cells(int *set, int set_size, 
 		int f_front, int verbose_level);
-	void split_line_cell_front_or_back(int *set, int set_size, 
+	void split_line_cell_front_or_back(
+			int *set, int set_size,
 		int f_front, int verbose_level);
-	void split_cell_front_or_back(int *set, int set_size, 
+	void split_cell_front_or_back(
+			int *set, int set_size,
 		int f_front, int verbose_level);
-	void split_cell(int *set, int set_size, int verbose_level);
+	void split_cell(
+			int *set, int set_size, int verbose_level);
 	void join_cell();
 	void reduce_height(int ht0);
 	void isolate_point(int pt);
-	void subset_contiguous(int from, int len);
+	void subset_contiguous(
+			int from, int len);
 	int is_row_class(int c);
 	int is_col_class(int c);
 	void allocate_and_get_decomposition(
@@ -933,13 +947,14 @@ class partitionstack {
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int *row_perm, int *row_perm_inv, 
-		int *col_perm, int *col_perm_inv);
-	void get_row_and_col_classes(int *row_classes, 
-		int &nb_row_classes,
-		int *col_classes, int &nb_col_classes, 
+		int *col_perm, int *col_perm_inv,
 		int verbose_level);
-	void initial_matrix_decomposition(int nbrows, 
-		int nbcols,
+	void get_row_and_col_classes(
+			int *row_classes, int &nb_row_classes,
+			int *col_classes, int &nb_col_classes,
+			int verbose_level);
+	void initial_matrix_decomposition(
+			int nbrows, int nbcols,
 		int *V, int nb_V, int *B, int nb_B, 
 		int verbose_level);
 	int is_descendant_of(int cell, int ancestor_cell, 
@@ -948,7 +963,7 @@ class partitionstack {
 			int level, int verbose_level);
 	int cellSizeAtLevel(int cell, int level);
 
-	void print_decomposition_tex(
+	void print_classes_of_decomposition_tex(
 			std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes);
@@ -1005,7 +1020,8 @@ class partitionstack {
 			int left, int right,
 		int *C, int length, int radix, int mask,
 		int verbose_level);
-	void swap_ij(int *perm, int *perm_inv, int i, int j);
+	void swap_ij(
+			int *perm, int *perm_inv, int i, int j);
 	void split_by_orbit_partition(
 			int nb_orbits,
 		int *orbit_first, int *orbit_len, int *orbit,
@@ -1199,12 +1215,14 @@ public:
 	void compute_incidence_matrix(
 			int *&Inc, int &m, int &n,
 		int verbose_level);
+#if 0
 	void compute_and_print_tdo_row_scheme(
 			std::ostream &file,
 		int verbose_level);
 	void compute_and_print_tdo_col_scheme(
 			std::ostream &file,
 		int verbose_level);
+#endif
 	void init_decomposition(
 			geometry::decomposition *&D, int verbose_level);
 	void compute_tdo_decomposition(
@@ -1876,238 +1894,6 @@ public:
 int string_tools_compare_strings(void *a, void *b, void *data);
 
 
-// #############################################################################
-// symbolic_object_builder_description.cpp
-// #############################################################################
-
-
-
-//! to define a symbolic object
-
-
-class symbolic_object_builder_description {
-public:
-
-	int f_label_txt;
-	std::string label_txt;
-
-	int f_label_tex;
-	std::string label_tex;
-
-	int f_managed_variables;
-	std::string managed_variables;
-
-	int f_text;
-	std::string text_txt;
-
-	int f_field;
-	std::string field_label;
-
-	int f_field_pointer;
-	field_theory::finite_field *field_pointer;
-
-
-	int f_ring;
-	std::string ring_label;
-
-	int f_file;
-	std::string file_name;
-
-
-
-
-	int f_matrix;
-	int nb_rows;
-
-	int f_determinant;
-	std::string determinant_source;
-
-	int f_characteristic_polynomial;
-	std::string characteristic_polynomial_variable;
-	std::string characteristic_polynomial_source;
-
-	int f_substitute;
-	std::string substitute_variables;
-	std::string substitute_target;
-	std::string substitute_source;
-
-
-	int f_simplify;
-	std::string simplify_source;
-
-	int f_expand;
-	std::string expand_source;
-
-	int f_right_nullspace;
-	std::string right_nullspace_source;
-
-	int f_minor;
-	std::string minor_source;
-	int minor_i;
-	int minor_j;
-
-	int f_symbolic_nullspace;
-	std::string symbolic_nullspace_source;
-
-	int f_stack_matrices_vertically;
-	int f_stack_matrices_horizontally;
-	int f_stack_matrices_z_shape;
-	std::string stack_matrices_label;
-
-	int f_multiply_2x2_from_the_left;
-	std::string multiply_2x2_from_the_left_source;
-	std::string multiply_2x2_from_the_left_A2;
-	int multiply_2x2_from_the_left_i;
-	int multiply_2x2_from_the_left_j;
-
-	int f_matrix_entry;
-	std::string matrix_entry_source;
-	int matrix_entry_i;
-	int matrix_entry_j;
-
-	int f_vector_entry;
-	std::string vector_entry_source;
-	int vector_entry_i;
-
-	int f_collect;
-	std::string collect_source;
-	std::string collect_by;
-
-	int f_encode_CRC;
-	int encode_CRC_block_length;
-	std::string encode_CRC_data_polynomial;
-	std::string encode_CRC_check_polynomial;
-
-	int f_decode_CRC;
-	int decode_CRC_block_length;
-	std::string decode_CRC_data_polynomial;
-	std::string decode_CRC_check_polynomial;
-
-	int f_submatrix;
-	std::string submatrix_source;
-	int submatrix_row_first;
-	int submatrix_nb_rows;
-	int submatrix_col_first;
-	int submatrix_nb_cols;
-
-
-	int f_do_not_simplify;
-
-	int f_write_trees_during_expand;
-
-	symbolic_object_builder_description();
-	~symbolic_object_builder_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-
-
-};
-
-
-// #############################################################################
-// symbolic_object_builder.cpp
-// #############################################################################
-
-
-
-//! to create a vector of symbolic objects from class symbolic_object_builder_description
-
-
-class symbolic_object_builder {
-public:
-
-	symbolic_object_builder_description *Descr;
-	std::string label;
-
-	field_theory::finite_field *Fq;
-
-	ring_theory::homogeneous_polynomial_domain *Ring;
-
-
-	expression_parser::formula_vector *Formula_vector;
-
-	symbolic_object_builder();
-	~symbolic_object_builder();
-	void init(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void process_arguments(
-			int verbose_level);
-	void do_determinant(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_characteristic_polynomial(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_substitute(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_simplify(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_expand(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_right_nullspace(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_minor(
-			symbolic_object_builder_description *Descr,
-			int minor_i, int minor_j,
-			std::string &label,
-			int verbose_level);
-	void do_symbolic_nullspace(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_stack(
-			symbolic_object_builder_description *Descr,
-			int verbose_level);
-	void do_multiply_2x2_from_the_left(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_matrix_entry(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_vector_entry(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_collect(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_CRC_encode(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_CRC_decode(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void do_submatrix(
-			symbolic_object_builder_description *Descr,
-			std::string &label,
-			int verbose_level);
-	void multiply_terms(
-			expression_parser::formula **terms,
-			int n,
-			int &stage_counter,
-			int verbose_level);
-
-};
 
 
 

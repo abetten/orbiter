@@ -951,7 +951,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 
 				cout << "computing the orbits of conjugated "
 						"overgroups of order " << oo << ":" << endl;
-				Sch_overgroups = N->Strong_gens->orbits_on_points_schreier(
+				Sch_overgroups = N->Strong_gens->compute_all_point_orbits_schreier(
 						A_on_overgroups, 0 /*verbose_level*/);
 
 				cout << "The conjugacy classes of overgroups of order "

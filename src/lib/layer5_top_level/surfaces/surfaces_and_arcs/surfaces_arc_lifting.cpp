@@ -381,7 +381,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 		T = Table_orbits_on_pairs + arc_idx;
 
 		int orbit_on_pairs_idx, nb_orbits_on_pairs;
-		int downstep_secondary_orbit = 0;
+		//int downstep_secondary_orbit = 0;
 
 		nb_orbits_on_pairs = T->Orbits_on_pairs->nb_orbits_at_level(2);
 
@@ -411,7 +411,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 				flag_orbit_on_partition_idx[cur_flag_orbit] = orbit_on_partition_idx;
 
 				cur_flag_orbit++;
-				downstep_secondary_orbit++;
+				//downstep_secondary_orbit++;
 
 
 			} // orbit_on_partition_idx

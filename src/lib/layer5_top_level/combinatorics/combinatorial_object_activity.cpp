@@ -444,6 +444,13 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 				cout << "combinatorial_object_activity::perform_activity_input_stream "
 						"after classification_report" << endl;
 			}
+
+			string fname_base;
+
+			fname_base = Descr->Classification_of_objects_report_options->prefix;
+			C->classification_write_file(
+					fname_base,
+					verbose_level);
 		}
 
 		//FREE_OBJECTS(OwP);
@@ -544,6 +551,12 @@ void combinatorial_object_activity::perform_activity_input_stream(int verbose_le
 			}
 		}
 
+		string fname_base;
+
+		fname_base = Descr->Classification_of_objects_report_options->prefix;
+		C->classification_write_file(
+				fname_base,
+				verbose_level);
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_input_stream "

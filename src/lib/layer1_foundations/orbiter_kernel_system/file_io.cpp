@@ -53,7 +53,7 @@ void file_io::concatenate_files(
 	int h, cnt;
 
 	if (f_v) {
-		cout << "concatenate_files " << fname_in_mask
+		cout << "file_io::concatenate_files " << fname_in_mask
 			<< " N=" << N << " fname_out=" << fname_out << endl;
 	}
 
@@ -72,7 +72,8 @@ void file_io::concatenate_files(
 
 			sz = file_size(fname);
 			if (sz < 0) {
-				cout << "concatenate_files input file does not exist: "
+				cout << "file_io::concatenate_files "
+						"input file does not exist: "
 						<< fname << " skipping" << endl;
 				//missing_idx[nb_missing++] = h;
 				missing_idx.push_back(h);
@@ -88,7 +89,8 @@ void file_io::concatenate_files(
 				cnt = 0;
 				while (true) {
 					if (fp.eof()) {
-						cout << "Encountered End-of-file without having seen EOF "
+						cout << "file_io::concatenate_files "
+								"Encountered End-of-file without having seen EOF "
 								"marker, perhaps the file is corrupt. "
 								"I was trying to read the file " << fname << endl;
 						missing_idx.push_back(h);
@@ -116,9 +118,11 @@ void file_io::concatenate_files(
 		} // next h
 		fp_out << EOF_marker << " " << cnt_total << endl;
 	}
-	cout << "Written file " << fname_out << " of size "
+	cout << "file_io::concatenate_files "
+			"Written file " << fname_out << " of size "
 		<< file_size(fname_out) << endl;
-	cout << "There are " << missing_idx.size()
+	cout << "file_io::concatenate_files "
+			"There are " << missing_idx.size()
 			<< " missing files, they are:" << endl;
 
 	for (h = 0; h < (int) missing_idx.size(); h++) {
@@ -131,7 +135,7 @@ void file_io::concatenate_files(
 	}
 
 	if (f_v) {
-		cout << "concatenate_files done" << endl;
+		cout << "file_io::concatenate_files done" << endl;
 	}
 }
 
@@ -181,7 +185,8 @@ void file_io::concatenate_files_into(
 				cnt = 0;
 				while (true) {
 					if (fp.eof()) {
-						cout << "Encountered End-of-file without having seen EOF "
+						cout << "file_io::concatenate_files_into "
+								"Encountered End-of-file without having seen EOF "
 								"marker, perhaps the file is corrupt. "
 								"I was trying to read the file " << fname << endl;
 						missing_idx.push_back(h);
@@ -398,8 +403,8 @@ int file_io::find_orbit_index_in_data_file(
 
 	sz = file_size(fname);
 	if (sz <= 0) {
-		cout << "find_orbit_index_in_data_file file "
-				<< fname << " does not exist" << endl;
+		cout << "file_io::find_orbit_index_in_data_file "
+				"file " << fname << " does not exist" << endl;
 		exit(1);
 	}
 	ifstream f(fname);
@@ -504,8 +509,6 @@ void file_io::write_exact_cover_problem_to_file(
 		<< fname << " of size " << file_size(fname) << endl;
 }
 
-//#define BUFSIZE_READ_SOLUTION_FILE ONE_MILLION
-
 void file_io::read_solution_file(
 		std::string &fname,
 	int *Inc, int nb_rows, int nb_cols,
@@ -520,7 +523,7 @@ void file_io::read_solution_file(
 
 	if (f_v) {
 		cout << "file_io::read_solution_file" << endl;
-		}
+	}
 	x = NEW_int(nb_cols);
 	y = NEW_int(nb_rows);
 	if (f_v) {
@@ -727,7 +730,7 @@ void file_io::count_number_of_solutions_in_file(
 	char *buf;
 
 	if (f_v) {
-		cout << "count_number_of_solutions_in_file " << fname << endl;
+		cout << "file_io::count_number_of_solutions_in_file " << fname << endl;
 		cout << "trying to read file " << fname << " of size "
 			<< file_size(fname) << endl;
 	}
@@ -738,7 +741,7 @@ void file_io::count_number_of_solutions_in_file(
 
 	sz = file_size(fname);
 	if (sz < 0) {
-		cout << "count_number_of_solutions_in_file file "
+		cout << "file_io::count_number_of_solutions_in_file file "
 			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
@@ -755,14 +758,14 @@ void file_io::count_number_of_solutions_in_file(
 
 		while (true) {
 			if (fp.eof()) {
-				cout << "count_number_of_solutions_in_file "
+				cout << "file_io::count_number_of_solutions_in_file "
 						"eof, break" << endl;
 				break;
 			}
 			fp.getline(buf, sz, '\n');
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
-				cout << "count_number_of_solutions_in_file "
+				cout << "file_io::count_number_of_solutions_in_file "
 						"empty line" << endl;
 				exit(1);
 			}
@@ -778,7 +781,7 @@ void file_io::count_number_of_solutions_in_file(
 	}
 	FREE_char(buf);
 	if (f_v) {
-		cout << "count_number_of_solutions_in_file " << fname << endl;
+		cout << "file_io::count_number_of_solutions_in_file " << fname << endl;
 		cout << "nb_solutions = " << nb_solutions << endl;
 	}
 }
@@ -797,7 +800,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 	int the_case_count = 0;
 
 	if (f_v) {
-		cout << "count_number_of_solutions_in_file_by_case "
+		cout << "file_io::count_number_of_solutions_in_file_by_case "
 			<< fname << endl;
 		cout << "trying to read file " << fname << " of size "
 			<< file_size(fname) << endl;
@@ -811,7 +814,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 
 	sz = file_size(fname);
 	if (sz < 0) {
-		cout << "count_number_of_solutions_in_file_by_case file "
+		cout << "file_io::count_number_of_solutions_in_file_by_case file "
 			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
@@ -829,14 +832,14 @@ void file_io::count_number_of_solutions_in_file_by_case(
 		the_case = -1;
 		while (true) {
 			if (fp.eof()) {
-				cout << "count_number_of_solutions_in_file_by_case "
+				cout << "file_io::count_number_of_solutions_in_file_by_case "
 						"eof, break" << endl;
 				break;
 			}
 			fp.getline(buf, sz, '\n');
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
-				cout << "count_number_of_solutions_in_file_by_case "
+				cout << "file_io::count_number_of_solutions_in_file_by_case "
 						"empty line, break" << endl;
 				break;
 			}
@@ -844,7 +847,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 			if (strncmp(buf, "# start case", 12) == 0) {
 				the_case = atoi(buf + 13);
 				the_case_count = 0;
-				cout << "count_number_of_solutions_in_file_by_case "
+				cout << "file_io::count_number_of_solutions_in_file_by_case "
 						"read start case " << the_case << endl;
 			}
 			else if (strncmp(buf, "# end case", 10) == 0) {
@@ -884,7 +887,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 	FREE_char(buf);
 
 	if (f_v) {
-		cout << "count_number_of_solutions_in_file_by_case "
+		cout << "file_io::count_number_of_solutions_in_file_by_case "
 			<< fname << endl;
 		cout << "nb_cases = " << nb_cases << endl;
 	}
@@ -899,8 +902,8 @@ void file_io::read_solutions_from_file_and_get_solution_size(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "read_solutions_from_file_and_get_solution_size" << endl;
-		cout << "read_solutions_from_file_and_get_solution_size trying to read file "
+		cout << "file_io::read_solutions_from_file_and_get_solution_size" << endl;
+		cout << "file_io::read_solutions_from_file_and_get_solution_size trying to read file "
 			<< fname << " of size " << file_size(fname) << endl;
 	}
 
@@ -930,7 +933,7 @@ void file_io::read_solutions_from_file_and_get_solution_size(
 
 	sz = file_size(fname);
 	if (sz < 0) {
-		cout << "read_solutions_from_file_and_get_solution_size file "
+		cout << "file_io::read_solutions_from_file_and_get_solution_size file "
 			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
@@ -991,8 +994,8 @@ void file_io::read_solutions_from_file(
 	data_structures::string_tools ST;
 
 	if (f_v) {
-		cout << "read_solutions_from_file" << endl;
-		cout << "read_solutions_from_file trying to read file "
+		cout << "file_io::read_solutions_from_file" << endl;
+		cout << "file_io::read_solutions_from_file trying to read file "
 			<< fname << " of size " << file_size(fname) << endl;
 		cout << "read_solutions_from_file solution_size="
 			<< solution_size << endl;
@@ -1002,7 +1005,7 @@ void file_io::read_solutions_from_file(
 
 	sz = file_size(fname);
 	if (sz < 0) {
-		cout << "file_io::read_solutions_from_file "
+		cout << "file_io::file_io::read_solutions_from_file "
 				"the file " << fname << " does not exist" << endl;
 		return;
 	}
@@ -1013,7 +1016,7 @@ void file_io::read_solutions_from_file(
 		nb_solutions,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "read_solutions_from_file, reading "
+		cout << "file_io::read_solutions_from_file, reading "
 			<< nb_solutions << " solutions" << endl;
 	}
 
@@ -1035,7 +1038,7 @@ void file_io::read_solutions_from_file(
 				break;
 			}
 			if (a != solution_size) {
-				cout << "read_solutions_from_file "
+				cout << "file_io::read_solutions_from_file "
 						"a != solution_size" << endl;
 				exit(1);
 			}
@@ -1047,13 +1050,13 @@ void file_io::read_solutions_from_file(
 		}
 	}
 	if (nb_sol != nb_solutions) {
-		cout << "read_solutions_from_file "
+		cout << "file_io::read_solutions_from_file "
 				"nb_sol != nb_solutions" << endl;
 		exit(1);
 	}
 	FREE_char(buf);
 	if (f_v) {
-		cout << "read_solutions_from_file done" << endl;
+		cout << "file_io::read_solutions_from_file done" << endl;
 	}
 }
 
@@ -1137,10 +1140,12 @@ void file_io::read_solutions_from_file_by_case(
 	data_structures::string_tools ST;
 
 	if (f_v) {
-		cout << "read_solutions_from_file_by_case" << endl;
-		cout << "read_solutions_from_file_by_case trying to read file "
+		cout << "file_io::read_solutions_from_file_by_case" << endl;
+		cout << "file_io::read_solutions_from_file_by_case "
+				"trying to read file "
 			<< fname << " of size " << file_size(fname) << endl;
-		cout << "read_solutions_from_file_by_case solution_size="
+		cout << "file_io::read_solutions_from_file_by_case "
+				"solution_size="
 			<< solution_size << endl;
 	}
 
@@ -1169,7 +1174,7 @@ void file_io::read_solutions_from_file_by_case(
 			fp.getline(buf, sz, '\n');
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
-				cout << "read_solutions_from_file_by_case "
+				cout << "file_io::read_solutions_from_file_by_case "
 						"empty line, break" << endl;
 				break;
 			}
@@ -1178,22 +1183,22 @@ void file_io::read_solutions_from_file_by_case(
 				the_case = atoi(buf + 13);
 				the_case_count = 0;
 				if (the_case != case_nb[nb_case1]) {
-					cout << "read_solutions_from_file_by_case "
+					cout << "file_io::read_solutions_from_file_by_case "
 							"the_case != case_nb[nb_case1]" << endl;
 					exit(1);
 				}
 				Solutions[nb_case1] =
 						NEW_lint(nb_solutions[nb_case1] * solution_size);
-				cout << "read_solutions_from_file_by_case "
+				cout << "file_io::read_solutions_from_file_by_case "
 						"read start case " << the_case << endl;
 			}
 			else if (strncmp(buf, "# end case", 10) == 0) {
 				if (the_case_count != nb_solutions[nb_case1]) {
-					cout << "read_solutions_from_file_by_case "
+					cout << "file_io::read_solutions_from_file_by_case "
 							"the_case_count != nb_solutions[nb_case1]" << endl;
 					exit(1);
 				}
-				cout << "read_solutions_from_file_by_case "
+				cout << "file_io::read_solutions_from_file_by_case "
 						"read end case " << the_case << endl;
 				nb_case1++;
 				the_case = -1;
@@ -1210,7 +1215,7 @@ void file_io::read_solutions_from_file_by_case(
 					p_buf = buf;
 					ST.s_scan_lint(&p_buf, &sz);
 					if (sz != solution_size) {
-						cout << "read_solutions_from_file_by_case "
+						cout << "file_io::read_solutions_from_file_by_case "
 								"sz != solution_size" << endl;
 						exit(1);
 					}
@@ -1225,7 +1230,7 @@ void file_io::read_solutions_from_file_by_case(
 	}
 	FREE_char(buf);
 	if (f_v) {
-		cout << "read_solutions_from_file_by_case done" << endl;
+		cout << "file_io::read_solutions_from_file_by_case done" << endl;
 	}
 }
 
@@ -1397,7 +1402,7 @@ void file_io::int_matrix_read_text(
 	int i, j;
 
 	if (file_size(fname) <= 0) {
-		cout << "int_matrix_read_text The file "
+		cout << "file_io::int_matrix_read_text The file "
 			<< fname << " does not exist" << endl;
 		exit(1);
 	}
@@ -1491,7 +1496,8 @@ void file_io::parse_sets(
 	data_structures::string_tools ST;
 
 	if (f_v) {
-		cout << "parse_sets f_casenumbers=" << f_casenumbers
+		cout << "file_io::parse_sets "
+				"f_casenumbers=" << f_casenumbers
 			<< " nb_cases = " << nb_cases << endl;
 	}
 
@@ -1583,15 +1589,15 @@ int file_io::count_number_of_orbits_in_file(
 	data_structures::string_tools ST;
 
 	if (f_v) {
-		cout << "count_number_of_orbits_in_file " << fname << endl;
-		cout << "count_number_of_orbits_in_file "
+		cout << "file_io::count_number_of_orbits_in_file " << fname << endl;
+		cout << "file_io::count_number_of_orbits_in_file "
 				"trying to read file "
 			<< fname << " of size " << file_size(fname) << endl;
 	}
 
 	sz = file_size(fname);
 	if (sz < 0) {
-		cout << "count_number_of_orbits_in_file "
+		cout << "file_io::count_number_of_orbits_in_file "
 				"file size is -1" << endl;
 		return -1;
 	}
@@ -1614,7 +1620,7 @@ int file_io::count_number_of_orbits_in_file(
 			//"reading line, nb_sol = " << nb_sol << endl;
 			fp.getline(buf, sz, '\n');
 			if (strlen(buf) == 0) {
-				cout << "count_number_of_orbits_in_file "
+				cout << "file_io::count_number_of_orbits_in_file "
 						"reading an empty line" << endl;
 				break;
 			}
@@ -1628,7 +1634,7 @@ int file_io::count_number_of_orbits_in_file(
 			ST.s_scan_int(&p_buf, &len);
 			if (len == -1) {
 				if (f_v) {
-					cout << "count_number_of_orbits_in_file "
+					cout << "file_io::count_number_of_orbits_in_file "
 							"found a complete file with " << nb_sol
 							<< " solutions" << endl;
 				}
@@ -1636,7 +1642,7 @@ int file_io::count_number_of_orbits_in_file(
 			}
 			else {
 				if (false) {
-					cout << "count_number_of_orbits_in_file "
+					cout << "file_io::count_number_of_orbits_in_file "
 							"found a set of size " << len << endl;
 				}
 			}
@@ -1660,14 +1666,15 @@ int file_io::count_number_of_lines_in_file(
 	long int sz;
 
 	if (f_v) {
-		cout << "count_number_of_lines_in_file " << fname << endl;
+		cout << "file_io::count_number_of_lines_in_file " << fname << endl;
 		cout << "trying to read file " << fname << " of size "
 			<< file_size(fname) << endl;
 	}
 
 	sz = file_size(fname);
 	if (sz < 0) {
-		cout << "count_number_of_lines_in_file file size is -1" << endl;
+		cout << "file_io::count_number_of_lines_in_file "
+				"file size is -1" << endl;
 		return 0;
 	}
 
@@ -1708,7 +1715,8 @@ int file_io::try_to_read_file(
 	data_structures::string_tools ST;
 
 	if (f_v) {
-		cout << "try_to_read_file trying to read file " << fname
+		cout << "file_io::try_to_read_file "
+				"trying to read file " << fname
 			<< " of size " << file_size(fname) << endl;
 	}
 
@@ -1736,7 +1744,7 @@ int file_io::try_to_read_file(
 		sscanf(buf + 1, "%d", &n1);
 		cout << "n1=" << n1;
 		if (n1 != n) {
-			cout << "try_to_read_file() n1 != n" << endl;
+			cout << "file_io::try_to_read_file n1 != n" << endl;
 			exit(1);
 		}
 #endif
@@ -1760,7 +1768,8 @@ int file_io::try_to_read_file(
 			ST.s_scan_int(&p_buf, &len);
 			if (len == -1) {
 				if (f_v) {
-					cout << "found a complete file with "
+					cout << "file_io::try_to_read_file "
+							"found a complete file with "
 						<< nb_sol << " solutions" << endl;
 				}
 				break;
@@ -1783,7 +1792,7 @@ int file_io::try_to_read_file(
 		}
 		sscanf(buf + 1, "%d", &n1);
 		if (n1 != n) {
-			cout << "try_to_read_file() n1 != n" << endl;
+			cout << "file_io::try_to_read_file n1 != n" << endl;
 			exit(1);
 		}
 #endif
@@ -1841,7 +1850,7 @@ void file_io::read_and_parse_data_file(
 	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "file_io::read_and_parse_data_file: "
+		cout << "file_io::read_and_parse_data_file "
 				"reading file "
 			<< fname << endl;
 	}
@@ -1867,7 +1876,7 @@ void file_io::read_and_parse_data_file(
 
 
 	if (f_v) {
-		cout << "file_io::read_and_parse_data_file: "
+		cout << "file_io::read_and_parse_data_file "
 				"parsing sets" << endl;
 	}
 	//parse_sets(nb_cases, data, set_sizes, sets);
@@ -2159,7 +2168,7 @@ void file_io::read_set_from_file_lint(
 	long int a;
 
 	if (f_v) {
-		cout << "read_set_from_file_lint opening file " << fname
+		cout << "file_io::read_set_from_file_lint opening file " << fname
 			<< " of size " << file_size(fname)
 			<< " for reading" << endl;
 	}
@@ -2167,13 +2176,13 @@ void file_io::read_set_from_file_lint(
 
 	f >> set_size;
 	if (f_v) {
-		cout << "read_set_from_file_lint allocating set of size "
+		cout << "file_io::read_set_from_file_lint allocating set of size "
 			<< set_size << endl;
 	}
 	the_set = NEW_lint(set_size);
 
 	if (f_v) {
-		cout << "read_set_from_file_lint reading set of size "
+		cout << "file_io::read_set_from_file_lint reading set of size "
 			<< set_size << endl;
 	}
 	for (i = 0; i < set_size; i++) {
@@ -2188,11 +2197,13 @@ void file_io::read_set_from_file_lint(
 		the_set[i] = a;
 	}
 	if (f_v) {
-		cout << "read a set of size " << set_size
+		cout << "file_io::read_set_from_file_lint "
+				"read a set of size " << set_size
 			<< " from file " << fname << endl;
 	}
 	if (f_vv) {
-		cout << "the set is:" << endl;
+		cout << "file_io::read_set_from_file_lint "
+				"the set is:" << endl;
 		Lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
@@ -2206,7 +2217,7 @@ void file_io::write_set_to_file_lint(
 	int i;
 
 	if (f_v) {
-		cout << "write_set_to_file_lint opening file "
+		cout << "file_io::write_set_to_file_lint opening file "
 			<< fname << " for writing" << endl;
 	}
 	{
@@ -2225,7 +2236,8 @@ void file_io::write_set_to_file_lint(
 		f << endl << -1 << endl;
 	}
 	if (f_v) {
-		cout << "Written file " << fname << " of size "
+		cout << "file_io::write_set_to_file_lint "
+				"Written file " << fname << " of size "
 			<< file_size(fname) << endl;
 	}
 }
@@ -2240,7 +2252,7 @@ void file_io::read_set_from_file_int4(
 	int_4 a;
 
 	if (f_v) {
-		cout << "read_set_from_file_int4 opening file " << fname
+		cout << "file_io::read_set_from_file_int4 opening file " << fname
 			<< " of size " << file_size(fname)
 			<< " for reading" << endl;
 	}
@@ -2263,11 +2275,13 @@ void file_io::read_set_from_file_int4(
 		the_set[i] = b;
 	}
 	if (f_v) {
-		cout << "read a set of size " << set_size
+		cout << "file_io::read_set_from_file_int4 "
+				"read a set of size " << set_size
 			<< " from file " << fname << endl;
 	}
 	if (f_vv) {
-		cout << "the set is:" << endl;
+		cout << "file_io::read_set_from_file_int4 "
+				"the set is:" << endl;
 		Lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
@@ -2284,7 +2298,8 @@ void file_io::read_set_from_file_int8(
 	int_8 a;
 
 	if (f_v) {
-		cout << "read_set_from_file_int8 opening file " << fname
+		cout << "file_io::read_set_from_file_int8 "
+				"opening file " << fname
 			<< " of size " << file_size(fname)
 			<< " for reading" << endl;
 	}
@@ -2307,11 +2322,13 @@ void file_io::read_set_from_file_int8(
 		the_set[i] = b;
 	}
 	if (f_v) {
-		cout << "read a set of size " << set_size
+		cout << "file_io::read_set_from_file_int8 "
+				"read a set of size " << set_size
 			<< " from file " << fname << endl;
 	}
 	if (f_vv) {
-		cout << "the set is:" << endl;
+		cout << "file_io::read_set_from_file_int8 "
+				"the set is:" << endl;
 		Lint_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
@@ -2360,7 +2377,8 @@ void file_io::write_set_to_file_as_int4(
 		}
 	}
 	if (f_v) {
-		cout << "Written file " << fname
+		cout << "file_io::write_set_to_file_as_int4 "
+				"Written file " << fname
 			<< " of size " << file_size(fname) << endl;
 	}
 }
@@ -2407,7 +2425,8 @@ void file_io::write_set_to_file_as_int8(
 		}
 	}
 	if (f_v) {
-		cout << "Written file " << fname
+		cout << "file_io::write_set_to_file_as_int8 "
+				"Written file " << fname
 			<< " of size " << file_size(fname) << endl;
 	}
 }
@@ -2444,11 +2463,13 @@ void file_io::read_k_th_set_from_file(
 		}
 	}
 	if (f_v) {
-		cout << "read a set of size " << set_size
+		cout << "file_io::read_k_th_set_from_file "
+				"read a set of size " << set_size
 			<< " from file " << fname << endl;
 	}
 	if (f_vv) {
-		cout << "the set is:" << endl;
+		cout << "file_io::read_k_th_set_from_file "
+				"the set is:" << endl;
 		Int_vec_print(cout, the_set, set_size);
 		cout << endl;
 	}
@@ -2488,7 +2509,8 @@ void file_io::write_incidence_matrix_to_file(
 		f << -1 << endl;
 	}
 	if (f_v) {
-		cout << "Written file " << fname << " of size "
+		cout << "file_io::write_incidence_matrix_to_file "
+				"Written file " << fname << " of size "
 			<< file_size(fname) << endl;
 	}
 }
@@ -2626,7 +2648,8 @@ void file_io::read_incidence_file(
 	sz = Fio.file_size(inc_file_name);
 
 	if (f_v) {
-		cout << "file_io::read_incidence_file file size = " << sz << endl;
+		cout << "file_io::read_incidence_file "
+				"file size = " << sz << endl;
 	}
 
 	buf = NEW_char(sz);
@@ -2972,7 +2995,8 @@ void file_io::delete_file(
 	system(cmd.c_str());
 }
 
-void file_io::fwrite_int4(FILE *fp, int a)
+void file_io::fwrite_int4(
+		FILE *fp, int a)
 {
 	int_4 I;
 
@@ -2980,7 +3004,8 @@ void file_io::fwrite_int4(FILE *fp, int a)
 	fwrite(&I, 1 /* size */, 4 /* items */, fp);
 }
 
-int_4 file_io::fread_int4(FILE *fp)
+int_4 file_io::fread_int4(
+		FILE *fp)
 {
 	int_4 I;
 
@@ -2988,12 +3013,14 @@ int_4 file_io::fread_int4(FILE *fp)
 	return I;
 }
 
-void file_io::fwrite_uchars(FILE *fp, unsigned char *p, int len)
+void file_io::fwrite_uchars(
+		FILE *fp, unsigned char *p, int len)
 {
 	fwrite(p, 1 /* size */, len /* items */, fp);
 }
 
-void file_io::fread_uchars(FILE *fp, unsigned char *p, int len)
+void file_io::fread_uchars(
+		FILE *fp, unsigned char *p, int len)
 {
 	fread(p, 1 /* size */, len /* items */, fp);
 }
@@ -3749,7 +3776,8 @@ void file_io::save_cumulative_canonical_labeling(
 			M[u * canonical_labeling_len + v] = Cumulative_canonical_labeling[u][v];
 		}
 	}
-	Csv_file_support->lint_matrix_write_csv(canonical_labeling_fname,
+	Csv_file_support->lint_matrix_write_csv(
+			canonical_labeling_fname,
 			M, Cumulative_canonical_labeling.size(), canonical_labeling_len);
 
 	if (f_v) {

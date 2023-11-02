@@ -256,7 +256,7 @@ void algebraic_geometry_global::map(
 	Ring = Get_ring(ring_label);
 
 
-	data_structures::symbolic_object_builder *Object;
+	expression_parser::symbolic_object_builder *Object;
 
 	Object = Get_symbol(formula_label);
 
@@ -317,7 +317,7 @@ void algebraic_geometry_global::affine_map(
 	Ring = Get_ring(ring_label);
 
 
-	data_structures::symbolic_object_builder *Object;
+	expression_parser::symbolic_object_builder *Object;
 
 	Object = Get_symbol(formula_label);
 
@@ -378,7 +378,7 @@ void algebraic_geometry_global::projective_variety(
 	Ring = Get_ring(ring_label);
 
 
-	data_structures::symbolic_object_builder *Object;
+	expression_parser::symbolic_object_builder *Object;
 
 	Object = Get_symbol(formula_label);
 
@@ -417,7 +417,7 @@ void algebraic_geometry_global::projective_variety(
 void algebraic_geometry_global::evaluate_regular_map(
 		ring_theory::homogeneous_polynomial_domain *Ring,
 		geometry::projective_space *P,
-		data_structures::symbolic_object_builder *Object,
+		expression_parser::symbolic_object_builder *Object,
 		std::string &evaluate_text,
 		long int *&Image_pts, long int &N_points_input,
 		int verbose_level)
@@ -529,7 +529,7 @@ void algebraic_geometry_global::evaluate_regular_map(
 void algebraic_geometry_global::evaluate_affine_map(
 		ring_theory::homogeneous_polynomial_domain *Ring,
 		geometry::projective_space *P,
-		data_structures::symbolic_object_builder *Object,
+		expression_parser::symbolic_object_builder *Object,
 		std::string &evaluate_text,
 		long int *&Image_pts, long int &N_points_input,
 		int verbose_level)
@@ -642,7 +642,7 @@ void algebraic_geometry_global::evaluate_affine_map(
 void algebraic_geometry_global::compute_projective_variety(
 		ring_theory::homogeneous_polynomial_domain *Ring,
 		geometry::projective_space *P,
-		data_structures::symbolic_object_builder *Object,
+		expression_parser::symbolic_object_builder *Object,
 		std::string &evaluate_text,
 		long int *&Variety, long int &Variety_nb_points,
 		int verbose_level)
@@ -657,18 +657,20 @@ void algebraic_geometry_global::compute_projective_variety(
 	int h;
 	long int i;
 	int k;
+	int input_len;
+	int output_len;
 	int *input;
 	int *output;
 	long int N_points_input;
 
 	k = P->Subspaces->n;
 
-	int len;
-
-	len = Object->Formula_vector->len;
+	input_len = k + 1;
+	output_len = Object->Formula_vector->len;
 
 	if (f_v) {
-		cout << "algebraic_geometry_global::compute_projective_variety len = " << len << endl;
+		cout << "algebraic_geometry_global::compute_projective_variety "
+				"output_len = " << output_len << endl;
 	}
 
 
@@ -677,15 +679,18 @@ void algebraic_geometry_global::compute_projective_variety(
 	N_points_input = P->Subspaces->N_points;
 	if (f_v) {
 		cout << "algebraic_geometry_global::compute_projective_variety "
-				"There are " << N_points_input << " elements in the domain" << endl;
+				"There are " << N_points_input
+				<< " elements in the domain" << endl;
 	}
+
+
 
 	Variety = NEW_lint(N_points_input);
 	Variety_nb_points = 0;
 
 
-	input = NEW_int(k + 1);
-	output = NEW_int(len);
+	input = NEW_int(input_len);
+	output = NEW_int(output_len);
 
 
 	data_structures::string_tools ST;
@@ -695,7 +700,7 @@ void algebraic_geometry_global::compute_projective_variety(
 				evaluate_text, verbose_level - 1);
 
 
-	for (h = 0; h < len; h++) {
+	for (h = 0; h < output_len; h++) {
 
 		cout << "Formula " << h << " : ";
 		Object->Formula_vector->V[h].tree->print_easy(cout);
@@ -711,17 +716,17 @@ void algebraic_geometry_global::compute_projective_variety(
 		if (f_vv) {
 			cout << "algebraic_geometry_global::compute_projective_variety "
 					"point " << i << " is ";
-			Int_vec_print(cout, input, k + 1);
+			Int_vec_print(cout, input, input_len);
 			cout << endl;
 		}
 
-		for (h = 0; h < k + 1; h++) {
+		for (h = 0; h < input_len; h++) {
 
 			symbol_table[Ring->get_symbol(h)] = std::to_string(input[h]);
 
 		}
 
-		for (h = 0; h < len; h++) {
+		for (h = 0; h < output_len; h++) {
 
 			output[h] = Object->Formula_vector->V[h].tree->evaluate(
 					symbol_table,
@@ -730,18 +735,20 @@ void algebraic_geometry_global::compute_projective_variety(
 		}
 
 		if (f_vv) {
-			cout << "algebraic_geometry_global::compute_projective_variety point " << i << " = ";
-			Int_vec_print(cout, input, k + 1);
+			cout << "algebraic_geometry_global::compute_projective_variety "
+					"point " << i << " = ";
+			Int_vec_print(cout, input, input_len);
 			cout << " evaluates to ";
-			Int_vec_print(cout, output, len);
+			Int_vec_print(cout, output, output_len);
 			cout << endl;
 		}
 
-		if (Int_vec_is_zero(output, len)) {
+		if (Int_vec_is_zero(output, output_len)) {
 			Variety[Variety_nb_points++] = i;
 			if (f_vv) {
-				cout << "algebraic_geometry_global::compute_projective_variety point on the variety " << i << " = ";
-				Int_vec_print(cout, input, k + 1);
+				cout << "algebraic_geometry_global::compute_projective_variety "
+						"point on the variety " << i << " = ";
+				Int_vec_print(cout, input, input_len);
 				cout << endl;
 			}
 		}

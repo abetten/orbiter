@@ -1986,7 +1986,7 @@ public:
 	void orbits_on_points_with_given_action(
 			actions::action *A_given,
 		int &nb_orbits, int *&orbit_reps, int verbose_level);
-	schreier *orbits_on_points_schreier(
+	schreier *compute_all_point_orbits_schreier(
 			actions::action *A_given,
 		int verbose_level);
 	schreier *orbit_of_one_point_schreier(

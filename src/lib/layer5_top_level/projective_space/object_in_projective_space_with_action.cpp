@@ -170,7 +170,7 @@ void object_in_projective_space_with_action::report(
 				verbose_level);
 
 
-		Sch = SG->orbits_on_points_schreier(A_on_spreads, verbose_level);
+		Sch = SG->compute_all_point_orbits_schreier(A_on_spreads, verbose_level);
 
 		fp << "Orbits on spreads:\\\\" << endl;
 		Sch->print_and_list_orbits_tex(fp);
@@ -250,10 +250,19 @@ void object_in_projective_space_with_action::report(
 #endif
 #endif
 
+	geometry::decomposition *Decomposition;
 
-	Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+
+	Decomposition = NEW_OBJECT(geometry::decomposition);
+
+	Decomposition->init_inc_and_stack(
+			Inc, Stack,
+			verbose_level);
+
+
+	Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
 		fp, true /* f_enter_math */,
-		true /* f_print_subscripts */, *Stack);
+		true /* f_print_subscripts */);
 
 
 
@@ -263,12 +272,12 @@ void object_in_projective_space_with_action::report(
 	f_refine_prev = true;
 	for (h = 0; h < max_TDO_depth; h++) {
 		if (EVEN(h)) {
-			f_refine = Inc->refine_column_partition_safe(
-					*Stack, verbose_level - 3);
+			f_refine = Decomposition->refine_column_partition_safe(
+					verbose_level - 3);
 		}
 		else {
-			f_refine = Inc->refine_row_partition_safe(
-					*Stack, verbose_level - 3);
+			f_refine = Decomposition->refine_row_partition_safe(
+					verbose_level - 3);
 		}
 
 		if (f_v) {
@@ -277,18 +286,18 @@ void object_in_projective_space_with_action::report(
 		}
 		if (EVEN(h)) {
 			//int f_list_incidences = false;
-			Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+			Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 				fp, true /* f_enter_math */,
-				f_print_subscripts, *Stack);
+				f_print_subscripts);
 			//get_and_print_col_decomposition_scheme(
 			//PStack, f_list_incidences, false);
 			//PStack.print_classes_points_and_lines(cout);
 		}
 		else {
 			//int f_list_incidences = false;
-			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+			Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
 				fp, true /* f_enter_math */,
-				f_print_subscripts, *Stack);
+				f_print_subscripts);
 			//get_and_print_row_decomposition_scheme(
 			//PStack, f_list_incidences, false);
 			//PStack.print_classes_points_and_lines(cout);
@@ -309,7 +318,8 @@ void object_in_projective_space_with_action::report(
 
 	FREE_OBJECT(SG);
 
-	FREE_OBJECT(Stack);
+	FREE_OBJECT(Decomposition);
+	//FREE_OBJECT(Stack);
 	FREE_OBJECT(Inc);
 
 }

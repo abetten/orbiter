@@ -965,6 +965,10 @@ public:
 	int *field_orders;
 	int nb_fields;
 
+	std::string label_EK;
+
+	int f_quartic_curves;
+
 	int *Nb_objects; // [nb_fields]
 	int **nb_E; // [nb_fields][Nb_objects[i]]
 	long int **Ago; // [nb_fields][Nb_objects[i]]
@@ -979,6 +983,7 @@ public:
 	int nb_E_max;
 	int *E;
 	int nb_E_types;
+	int Nb_total;
 
 
 	summary_of_properties_of_objects();
@@ -988,6 +993,16 @@ public:
 			int verbose_level);
 	void init_quartic_curves(
 			int *field_orders, int nb_fields,
+			int verbose_level);
+	void compute_Nb_total();
+	void export_table_csv(
+			std::string &prefix,
+			int verbose_level);
+	void table_latex(
+			std::ostream &ost, int verbose_level);
+	void table_ago(
+			std::ostream &ost, int verbose_level);
+	void make_detailed_table_of_objects(
 			int verbose_level);
 
 
