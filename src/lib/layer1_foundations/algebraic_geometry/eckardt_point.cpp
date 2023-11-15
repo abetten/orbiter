@@ -50,7 +50,8 @@ void eckardt_point::print()
 	}
 }
 
-void eckardt_point::latex(std::ostream &ost)
+void eckardt_point::latex(
+		std::ostream &ost)
 {
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;
@@ -75,7 +76,8 @@ void eckardt_point::latex(std::ostream &ost)
 	}
 }
 
-void eckardt_point::latex_index_only(std::ostream &ost)
+void eckardt_point::latex_index_only(
+		std::ostream &ost)
 {
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;
@@ -98,7 +100,8 @@ void eckardt_point::latex_index_only(std::ostream &ost)
 	}
 }
 
-void eckardt_point::latex_to_string(std::string &s)
+void eckardt_point::latex_to_string(
+		std::string &s)
 {
 	string s1;
 	
@@ -106,7 +109,8 @@ void eckardt_point::latex_to_string(std::string &s)
 	s = "E_{" + s1 + "}";
 }
 
-void eckardt_point::latex_to_str_without_E(std::string &s)
+void eckardt_point::latex_to_str_without_E(
+		std::string &s)
 {
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;
@@ -132,14 +136,16 @@ void eckardt_point::latex_to_str_without_E(std::string &s)
 
 
 
-void eckardt_point::init2(int i, int j)
+void eckardt_point::init2(
+		int i, int j)
 {
 	len = 2;
 	index[0] = i;
 	index[1] = j;
 }
 
-void eckardt_point::init3(int ij, int kl, int mn)
+void eckardt_point::init3(
+		int ij, int kl, int mn)
 {
 	len = 3;
 	index[0] = ij;
@@ -147,7 +153,8 @@ void eckardt_point::init3(int ij, int kl, int mn)
 	index[2] = mn;
 }
 
-void eckardt_point::init6(int i, int j, int k, int l, int m, int n)
+void eckardt_point::init6(
+		int i, int j, int k, int l, int m, int n)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -157,7 +164,8 @@ void eckardt_point::init6(int i, int j, int k, int l, int m, int n)
 	index[2] = Combi.ij2k(m, n, 6);
 }
 
-void eckardt_point::init_by_rank(int rk)
+void eckardt_point::init_by_rank(
+		int rk)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -178,7 +186,8 @@ void eckardt_point::init_by_rank(int rk)
 }
 
 
-void eckardt_point::three_lines(surface_domain *S, int *three_lines)
+void eckardt_point::three_lines(
+		surface_domain *S, int *three_lines)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -227,7 +236,8 @@ int eckardt_point::rank()
 	}
 }
 
-void eckardt_point::unrank(int rk,
+void eckardt_point::unrank(
+		int rk,
 		int &i, int &j, int &k, int &l, int &m, int &n)
 {
 	combinatorics::combinatorics_domain Combi;

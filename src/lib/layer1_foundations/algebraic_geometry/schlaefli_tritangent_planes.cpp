@@ -92,7 +92,8 @@ void schlaefli_tritangent_planes::init(
 
 
 
-void schlaefli_tritangent_planes::make_Eckardt_points(int verbose_level)
+void schlaefli_tritangent_planes::make_Eckardt_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -266,7 +267,8 @@ int schlaefli_tritangent_planes::choose_tritangent_plane_for_Clebsch_map(
 	return planes[0];
 }
 
-void schlaefli_tritangent_planes::latex_tritangent_planes(std::ostream &ost)
+void schlaefli_tritangent_planes::latex_tritangent_planes(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i, j, a;
@@ -302,7 +304,8 @@ void schlaefli_tritangent_planes::latex_tritangent_planes(std::ostream &ost)
 	cout << "schlaefli_tritangent_planes::latex_tritangent_planes done" << endl;
 }
 
-void schlaefli_tritangent_planes::latex_table_of_Eckardt_points(std::ostream &ost)
+void schlaefli_tritangent_planes::latex_table_of_Eckardt_points(
+		std::ostream &ost)
 {
 	int i, j;
 	int three_lines[3];
@@ -328,7 +331,8 @@ void schlaefli_tritangent_planes::latex_table_of_Eckardt_points(std::ostream &os
 	//cout << "schlaefli_tritangent_planes::latex_table_of_Eckardt_points done" << endl;
 }
 
-void schlaefli_tritangent_planes::latex_table_of_tritangent_planes(std::ostream &ost)
+void schlaefli_tritangent_planes::latex_table_of_tritangent_planes(
+		std::ostream &ost)
 {
 	int i, j;
 	int three_lines[3];

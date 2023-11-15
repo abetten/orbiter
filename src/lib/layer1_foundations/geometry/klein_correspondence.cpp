@@ -1207,7 +1207,8 @@ long int klein_correspondence::apply_polarity(
 }
 
 void klein_correspondence::compute_line_intersection_graph(
-		long int *Lines, int nb_lines, int *&Adj, int f_complement, int verbose_level)
+		long int *Lines, int nb_lines, int *&Adj, int f_complement,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

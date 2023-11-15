@@ -215,7 +215,7 @@ public:
 	void create_surface_Cayley_form(
 			int k, int l, int m, int n,
 			int verbose_level);
-	int create_surface_by_equation(
+	void create_surface_by_equation(
 			std::string &ring_label,
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,

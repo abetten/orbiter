@@ -100,7 +100,8 @@ kovalevski_points::~kovalevski_points()
 	}
 }
 
-void kovalevski_points::init(quartic_curve_object *QO, int verbose_level)
+void kovalevski_points::init(
+		quartic_curve_object *QO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -513,7 +514,8 @@ void kovalevski_points::compute_contact_multiplicity(
 
 
 
-void kovalevski_points::print_general(std::ostream &ost)
+void kovalevski_points::print_general(
+		std::ostream &ost)
 {
 
 	if (f_fullness_has_been_established) {
@@ -543,7 +545,8 @@ void kovalevski_points::print_general(std::ostream &ost)
 
 }
 
-void kovalevski_points::print_lines_with_points_on_them(std::ostream &ost)
+void kovalevski_points::print_lines_with_points_on_them(
+		std::ostream &ost)
 {
 	int f_v = false;
 
@@ -572,7 +575,8 @@ void kovalevski_points::print_lines_with_points_on_them(std::ostream &ost)
 
 }
 
-void kovalevski_points::print_all_points(std::ostream &ost)
+void kovalevski_points::print_all_points(
+		std::ostream &ost)
 {
 	int i, j;
 	int v[3];

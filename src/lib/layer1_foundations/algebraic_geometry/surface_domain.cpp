@@ -744,7 +744,8 @@ void surface_domain::build_surface_from_double_six(
 				"before SO->init_with_27_lines" << endl;
 	}
 
-	SO->init_with_27_lines(this,
+	SO->init_with_27_lines(
+			this,
 		Lines27, coeffs20,
 		label_txt, label_tex,
 		false /* f_find_double_six_and_rearrange_lines */,
@@ -765,6 +766,7 @@ void surface_domain::build_surface_from_double_six(
 
 }
 
+#if 0
 int surface_domain::create_surface_by_equation(
 		ring_theory::homogeneous_polynomial_domain *Poly,
 		std::string &name_of_formula,
@@ -1025,6 +1027,7 @@ int surface_domain::create_surface_by_equation(
 	}
 	return true;
 }
+#endif
 
 
 
@@ -1090,7 +1093,8 @@ int surface_domain::create_surface_by_symbolic_object(
 				"before create_surface_by_coefficient_vector" << endl;
 	}
 
-	create_surface_by_coefficient_vector(coeffs,
+	create_surface_by_coefficient_vector(
+			coeffs,
 			select_double_six_string,
 			name_of_formula, name_of_formula,
 			SO,
@@ -1141,7 +1145,10 @@ void surface_domain::create_surface_by_coefficient_vector(
 		cout << "surface_domain::create_surface_by_coefficient_vector "
 				"before SO->init_equation" << endl;
 	}
-	SO->init_equation(this, coeffs20, label_txt, label_tex, verbose_level);
+	SO->init_equation(
+			this, coeffs20,
+			label_txt, label_tex,
+			verbose_level);
 	if (f_v) {
 		cout << "surface_domain::create_surface_by_coefficient_vector "
 				"after SO->init_equation" << endl;
@@ -1170,61 +1177,20 @@ void surface_domain::create_surface_by_coefficient_vector(
 					SO->Lines,
 					verbose_level);
 
-#if 0
-			int *select_double_six;
-			int sz;
-			long int New_lines[27];
-
-
-			data_structures::string_tools ST;
-
-			ST.read_string_of_schlaefli_labels(select_double_six_string[i],
-					select_double_six, sz, verbose_level);
-
-
-			//Orbiter->Int_vec.scan(select_double_six_string[i], select_double_six, sz);
-			if (sz != 12) {
-				cout << "surface_domain::create_surface_by_coefficient_vector "
-						"f_select_double_six double six must consist of 12 numbers" << endl;
-				exit(1);
-			}
-
-			if (f_v) {
-				cout << "surface_domain::create_surface_by_coefficient_vector "
-						"select_double_six = ";
-				Int_vec_print(cout, select_double_six, 12);
-				cout << endl;
-			}
-
-
-			if (f_v) {
-				cout << "surface_domain::create_surface_by_coefficient_vector "
-						"before "
-						"rearrange_lines_according_to_a_given_double_six" << endl;
-			}
-			rearrange_lines_according_to_a_given_double_six(
-					SO->Lines, select_double_six, New_lines, 0 /* verbose_level */);
-
-			Lint_vec_copy(New_lines, SO->Lines, 27);
-			FREE_int(select_double_six);
-#endif
 
 		}
-
-
-		if (f_v) {
-			cout << "surface_domain::create_surface_by_coefficient_vector "
-					"before compute_properties" << endl;
-		}
-		SO->compute_properties(verbose_level - 2);
-		if (f_v) {
-			cout << "surface_domain::create_surface_by_coefficient_vector "
-					"after compute_properties" << endl;
-		}
-
 
 	}
 
+	if (f_v) {
+		cout << "surface_domain::create_surface_by_coefficient_vector "
+				"before compute_properties" << endl;
+	}
+	SO->compute_properties(verbose_level - 2);
+	if (f_v) {
+		cout << "surface_domain::create_surface_by_coefficient_vector "
+				"after compute_properties" << endl;
+	}
 
 
 
@@ -1300,42 +1266,6 @@ void surface_domain::create_surface_from_catalogue(
 					verbose_level);
 
 
-#if 0
-			int *select_double_six;
-			int sz;
-			long int New_lines[27];
-
-			if (f_v) {
-				cout << "surface_domain::create_surface_from_catalogue "
-						"selecting double six " << i << " / " << nb_select_double_six << endl;
-			}
-			Int_vec_scan(select_double_six_string[i], select_double_six, sz);
-			if (sz != 12) {
-				cout << "surface_domain::create_surface_from_catalogue "
-						"f_select_double_six double six must consist of 12 numbers" << endl;
-				exit(1);
-			}
-
-			if (f_v) {
-				cout << "surface_domain::create_surface_from_catalogue "
-						"select_double_six = ";
-				Int_vec_print(cout, select_double_six, 12);
-				cout << endl;
-			}
-
-
-			if (f_v) {
-				cout << "surface_domain::create_surface_from_catalogue "
-						"before rearrange_lines_according_to_a_given_double_six" << endl;
-			}
-			rearrange_lines_according_to_a_given_double_six(
-					Lines27, select_double_six, New_lines,
-					0 /* verbose_level */);
-
-			Lint_vec_copy(New_lines, Lines27, 27);
-			FREE_int(select_double_six);
-#endif
-
 		}
 	}
 
@@ -1365,7 +1295,8 @@ void surface_domain::create_surface_from_catalogue(
 		cout << "surface_domain::create_surface_from_catalogue "
 				"before SO->init_with_27_lines" << endl;
 	}
-	SO->init_with_27_lines(this,
+	SO->init_with_27_lines(
+			this,
 		Lines27, coeffs20,
 		label_txt, label_tex,
 		false /* f_find_double_six_and_rearrange_lines */,

@@ -29,7 +29,8 @@ geometry_global::~geometry_global()
 }
 
 
-long int geometry_global::nb_PG_elements(int n, int q)
+long int geometry_global::nb_PG_elements(
+		int n, int q)
 // $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
 {
 	long int qhl, l, deg;
@@ -45,7 +46,8 @@ long int geometry_global::nb_PG_elements(int n, int q)
 	return deg;
 }
 
-long int geometry_global::nb_PG_elements_not_in_subspace(int n, int m, int q)
+long int geometry_global::nb_PG_elements_not_in_subspace(
+		int n, int m, int q)
 // |PG_n(q)| - |PG_m(q)|
 {
 	long int a, b;
@@ -55,7 +57,8 @@ long int geometry_global::nb_PG_elements_not_in_subspace(int n, int m, int q)
 	return a - b;
 }
 
-long int geometry_global::nb_AG_elements(int n, int q)
+long int geometry_global::nb_AG_elements(
+		int n, int q)
 // $q^n$
 {
 	number_theory::number_theory_domain NT;
@@ -63,7 +66,8 @@ long int geometry_global::nb_AG_elements(int n, int q)
 	return NT.i_power_j_lint(q, n);
 }
 
-long int geometry_global::nb_affine_lines(int n, int q)
+long int geometry_global::nb_affine_lines(
+		int n, int q)
 {
 	number_theory::number_theory_domain NT;
 	long int qnp1, qn, q2, a, b, denom, res;
@@ -360,8 +364,10 @@ void geometry_global::create_Buekenhout_Metz(
 
 	BM = NEW_OBJECT(buekenhout_metz);
 
-	BM->buekenhout_metz_init(Fq, FQ,
-		f_Uab, parameter_a, parameter_b, f_classical, verbose_level);
+	BM->buekenhout_metz_init(
+			Fq, FQ,
+		f_Uab, parameter_a, parameter_b, f_classical,
+		verbose_level);
 
 
 	if (BM->f_Uab) {
@@ -579,7 +585,8 @@ long int geometry_global::nb_pts_Qminus(int k, int q)
 // the following functions are for the hyperbolic quadric with Witt index n:
 // #############################################################################
 
-long int geometry_global::nb_pts_S(int n, int q)
+long int geometry_global::nb_pts_S(
+		int n, int q)
 // Number of singular vectors (including the zero vector)
 {
 	long int a;
@@ -600,7 +607,8 @@ long int geometry_global::nb_pts_S(int n, int q)
 	return a;
 }
 
-long int geometry_global::nb_pts_N(int n, int q)
+long int geometry_global::nb_pts_N(
+		int n, int q)
 // Number of non-singular vectors.
 // Of course, |N(n,q)| + |S(n,q)| = q^{2n}
 // |N(n,q)| = (q - 1) * |N1(n,q)|
@@ -620,7 +628,8 @@ long int geometry_global::nb_pts_N(int n, int q)
 	return a;
 }
 
-long int geometry_global::nb_pts_N1(int n, int q)
+long int geometry_global::nb_pts_N1(
+		int n, int q)
 // Number of non-singular vectors
 // for one fixed value of the quadratic form
 // i.e. number of solutions of
@@ -645,7 +654,8 @@ long int geometry_global::nb_pts_N1(int n, int q)
 	return a;
 }
 
-long int geometry_global::nb_pts_Sbar(int n, int q)
+long int geometry_global::nb_pts_Sbar(
+		int n, int q)
 // number of singular projective points
 // |S(n,q)| = (q-1) * |Sbar(n,q)| + 1
 {
@@ -669,7 +679,8 @@ long int geometry_global::nb_pts_Sbar(int n, int q)
 	return a;
 }
 
-long int geometry_global::nb_pts_Nbar(int n, int q)
+long int geometry_global::nb_pts_Nbar(
+		int n, int q)
 // |Nbar(1,q)| = q - 1
 {
 	//int a;
@@ -1599,101 +1610,6 @@ void geometry_global::do_transversal(
 }
 
 
-#if 0
-void geometry_global::do_cheat_sheet_PG(field_theory::finite_field *F,
-		graphics::layered_graph_draw_options *O,
-		int n,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_PG verbose_level="
-				<< verbose_level << endl;
-	}
-
-
-	projective_space *P;
-
-	P = NEW_OBJECT(projective_space);
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_PG before P->init" << endl;
-	}
-	P->projective_space_init(n, F,
-		true /*f_init_incidence_structure*/,
-		0 /* verbose_level */);
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_PG after P->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_PG before P->create_latex_report" << endl;
-	}
-	P->create_latex_report(O, verbose_level);
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_PG after P->create_latex_report" << endl;
-	}
-
-
-
-	FREE_OBJECT(P);
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_PG done" << endl;
-	}
-
-}
-
-void geometry_global::do_cheat_sheet_Gr(field_theory::finite_field *F,
-		int n, int k,
-		int verbose_level)
-// creates a projective_space object
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_Gr verbose_level="
-				<< verbose_level << endl;
-	}
-
-
-	projective_space *P;
-
-	P = NEW_OBJECT(projective_space);
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_Gr before P->init" << endl;
-	}
-	P->projective_space_init(n - 1, F,
-		true /*f_init_incidence_structure*/,
-		0 /* verbose_level */);
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_Gr after P->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_Gr "
-				"before P->create_latex_report_for_Grassmannian" << endl;
-	}
-	P->create_latex_report_for_Grassmannian(k, verbose_level);
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_Gr "
-				"after P->create_latex_report_for_Grassmannian" << endl;
-	}
-
-
-
-	FREE_OBJECT(P);
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_PG done" << endl;
-	}
-
-}
-#endif
 
 
 void geometry_global::do_cheat_sheet_hermitian(
@@ -2325,12 +2241,14 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 				"input Line2:" << endl;
 		Int_matrix_print(Line2, 2, 4);
 	}
-	P->Subspaces->F->Linear_algebra->Gauss_step_make_pivot_one(Line1 + 4, Line1,
+	P->Subspaces->F->Linear_algebra->Gauss_step_make_pivot_one(
+			Line1 + 4, Line1,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
 		// So, now Line1[3] = 0 and Line1[7] = 1
-	P->Subspaces->F->Linear_algebra->Gauss_step_make_pivot_one(Line2 + 4, Line2,
+	P->Subspaces->F->Linear_algebra->Gauss_step_make_pivot_one(
+			Line2 + 4, Line2,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
@@ -2367,8 +2285,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		Int_matrix_print(Line2 + 4, 1, 4);
 	}
 	// compute P1 * A3 to figure out if A switches P1 and P2 or not:
-	P->Subspaces->F->Linear_algebra->mult_vector_from_the_left(Line1, A3, P1A, 3, 3);
-	P->Subspaces->F->Linear_algebra->mult_vector_from_the_left(Line2, A3, P2A, 3, 3);
+	P->Subspaces->F->Linear_algebra->mult_vector_from_the_left(
+			Line1, A3, P1A, 3, 3);
+	P->Subspaces->F->Linear_algebra->mult_vector_from_the_left(
+			Line2, A3, P2A, 3, 3);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"P1 * A = " << endl;
@@ -2382,8 +2302,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 			cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 					"applying frobenius" << endl;
 		}
-		P->Subspaces->F->Linear_algebra->vector_frobenius_power_in_place(P1A, 3, frobenius);
-		P->Subspaces->F->Linear_algebra->vector_frobenius_power_in_place(P2A, 3, frobenius);
+		P->Subspaces->F->Linear_algebra->vector_frobenius_power_in_place(
+				P1A, 3, frobenius);
+		P->Subspaces->F->Linear_algebra->vector_frobenius_power_in_place(
+				P2A, 3, frobenius);
 	}
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
@@ -2443,14 +2365,16 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		Int_matrix_print(y, 1, 3);
 	}
 
-	P->Subspaces->F->Linear_algebra->linear_combination_of_vectors(1, x, m1, y, xmy, 3);
+	P->Subspaces->F->Linear_algebra->linear_combination_of_vectors(
+			1, x, m1, y, xmy, 3);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"xmy:" << endl;
 		Int_matrix_print(xmy, 1, 3);
 	}
 
-	P->Subspaces->F->Linear_algebra->transpose_matrix(A3, A3t, 3, 3);
+	P->Subspaces->F->Linear_algebra->transpose_matrix(
+			A3, A3t, 3, 3);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"A3t:" << endl;
@@ -2458,18 +2382,22 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	}
 
 
-	P->Subspaces->F->Linear_algebra->mult_vector_from_the_right(A3t, xmy, v, 3, 3);
+	P->Subspaces->F->Linear_algebra->mult_vector_from_the_right(
+			A3t, xmy, v, 3, 3);
 	if (f_semilinear) {
-		P->Subspaces->F->Linear_algebra->vector_frobenius_power_in_place(v, 3, frobenius);
+		P->Subspaces->F->Linear_algebra->vector_frobenius_power_in_place(
+				v, 3, frobenius);
 	}
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"v:" << endl;
 		Int_matrix_print(v, 1, 3);
 	}
-	P->Subspaces->F->Linear_algebra->mult_vector_from_the_right(A3t, x, w, 3, 3);
+	P->Subspaces->F->Linear_algebra->mult_vector_from_the_right(
+			A3t, x, w, 3, 3);
 	if (f_semilinear) {
-		P->Subspaces->F->Linear_algebra->vector_frobenius_power_in_place(w, 3, frobenius);
+		P->Subspaces->F->Linear_algebra->vector_frobenius_power_in_place(
+				w, 3, frobenius);
 	}
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
@@ -2490,8 +2418,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		Int_vec_copy(Line2 + 0, Mt + 12, 4);
 	}
 
-	P->Subspaces->F->Linear_algebra->negate_vector_in_place(Mt + 8, 8);
-	P->Subspaces->F->Linear_algebra->transpose_matrix(Mt, M, 4, 4);
+	P->Subspaces->F->Linear_algebra->negate_vector_in_place(
+			Mt + 8, 8);
+	P->Subspaces->F->Linear_algebra->transpose_matrix(
+			Mt, M, 4, 4);
 	//int_vec_copy(Mt, M, 16);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
@@ -2499,8 +2429,10 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		Int_matrix_print(M, 4, 4);
 	}
 
-	P->Subspaces->F->Linear_algebra->invert_matrix_memory_given(M,
-			Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
+	P->Subspaces->F->Linear_algebra->invert_matrix_memory_given(
+			M,
+			Mv, 4, M_tmp, tmp_basecols,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"Mv:" << endl;
@@ -2509,7 +2441,8 @@ void geometry_global::hyperplane_lifting_with_two_lines_fixed(
 
 	v[3] = 0;
 	w[3] = 0;
-	P->Subspaces->F->Linear_algebra->mult_vector_from_the_right(Mv, v, lmei, 4, 4);
+	P->Subspaces->F->Linear_algebra->mult_vector_from_the_right(
+			Mv, v, lmei, 4, 4);
 	if (f_v) {
 		cout << "geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"lmei:" << endl;
@@ -2662,12 +2595,14 @@ void geometry_global::hyperplane_lifting_with_two_lines_moved(
 				"input Line2_to:" << endl;
 		Int_matrix_print(Line2_to, 2, 4);
 	}
-	P->Subspaces->F->Linear_algebra->Gauss_step_make_pivot_one(Line1_to + 4, Line1_to,
+	P->Subspaces->F->Linear_algebra->Gauss_step_make_pivot_one(
+			Line1_to + 4, Line1_to,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
 		// So, now Line1[3] = 0 and Line1[7] = 1
-	P->Subspaces->F->Linear_algebra->Gauss_step_make_pivot_one(Line2_to + 4, Line2_to,
+	P->Subspaces->F->Linear_algebra->Gauss_step_make_pivot_one(
+			Line2_to + 4, Line2_to,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
@@ -3019,9 +2954,11 @@ void geometry_global::find_secant_lines(
 		for (j = i + 1; j < set_size; j++) {
 			P->unrank_point(M, set[i]);
 			P->unrank_point(M + d, set[j]);
-			rk = P->Subspaces->Grass_lines->rank_lint_here(M, 0 /* verbose_level */);
+			rk = P->Subspaces->Grass_lines->rank_lint_here(
+					M, 0 /* verbose_level */);
 
-			if (!Sorting.lint_vec_search(lines, nb_lines, rk, idx, 0)) {
+			if (!Sorting.lint_vec_search(
+					lines, nb_lines, rk, idx, 0)) {
 				if (nb_lines == max_lines) {
 					cout << "geometry_global::find_secant_lines "
 							"nb_lines == max_lines" << endl;
@@ -3121,7 +3058,8 @@ void geometry_global::find_lines_which_are_contained(
 				"before find_secant_lines" << endl;
 	}
 
-	find_secant_lines(P,
+	find_secant_lines(
+			P,
 			set1, sz1,
 			secants, nb_secants, n2,
 			0/*verbose_level - 3*/);
@@ -3147,7 +3085,8 @@ void geometry_global::find_lines_which_are_contained(
 	//nb_lines = 0;
 	for (i = 0; i < nb_secants; i++) {
 		rk = secants[i];
-		P->Subspaces->Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
+		P->Subspaces->Grass_lines->unrank_lint_here(
+				M, rk, 0 /* verbose_level */);
 		if (f_vvv) {
 			cout << "testing secant " << i << " / " << nb_secants
 					<< " which is line " << rk << ":" << endl;
@@ -3251,7 +3190,8 @@ void geometry_global::find_lines_which_are_contained(
 				Int_matrix_print(M, 2, d);
 			}
 
-			rk = P->Subspaces->Grass_lines->rank_lint_here(M, 0 /* verbose_level */);
+			rk = P->Subspaces->Grass_lines->rank_lint_here(
+					M, 0 /* verbose_level */);
 			if (f_vvv) {
 				cout << "geometry_global::find_lines_which_are_contained "
 						"line rk=" << rk << ":" << endl;

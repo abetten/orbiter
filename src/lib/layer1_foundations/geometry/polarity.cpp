@@ -50,7 +50,8 @@ polarity::~polarity()
 	}
 }
 
-void polarity::init_standard_polarity(projective_space *P, int verbose_level)
+void polarity::init_standard_polarity(
+		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 1);
@@ -168,7 +169,8 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 	}
 }
 
-void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_level)
+void polarity::init_general_polarity(
+		projective_space *P, int *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 1);
@@ -304,7 +306,8 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 	}
 }
 
-void polarity::determine_absolute_points(int *&f_absolute, int verbose_level)
+void polarity::determine_absolute_points(
+		int *&f_absolute, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -344,7 +347,8 @@ void polarity::determine_absolute_points(int *&f_absolute, int verbose_level)
 
 }
 
-void polarity::determine_absolute_lines(int verbose_level)
+void polarity::determine_absolute_lines(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -390,7 +394,8 @@ void polarity::determine_absolute_lines(int verbose_level)
 }
 
 
-void polarity::init_reversal_polarity(projective_space *P, int verbose_level)
+void polarity::init_reversal_polarity(
+		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Mtx;
@@ -435,7 +440,8 @@ void polarity::init_reversal_polarity(projective_space *P, int verbose_level)
 	}
 }
 
-void polarity::report(std::ostream &f)
+void polarity::report(
+		std::ostream &f)
 {
 	int i;
 

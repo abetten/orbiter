@@ -353,7 +353,8 @@ void projective_space_subspaces::compute_number_of_subspaces(
 }
 
 
-void projective_space_subspaces::init_incidence_structure(int verbose_level)
+void projective_space_subspaces::init_incidence_structure(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -406,7 +407,8 @@ void projective_space_subspaces::init_incidence_structure(int verbose_level)
 	}
 }
 
-void projective_space_subspaces::init_polarity(int verbose_level)
+void projective_space_subspaces::init_polarity(
+		int verbose_level)
 // uses Grass_hyperplanes
 {
 	int f_v = (verbose_level >= 1);
@@ -763,7 +765,8 @@ void projective_space_subspaces::make_incidence_matrix(
 	}
 }
 
-int projective_space_subspaces::is_incident(int pt, int line)
+int projective_space_subspaces::is_incident(
+		int pt, int line)
 {
 	int f_v = false;
 	long int rk;
@@ -807,7 +810,8 @@ int projective_space_subspaces::is_incident(int pt, int line)
 	}
 }
 
-void projective_space_subspaces::incidence_m_ii(int pt, int line, int a)
+void projective_space_subspaces::incidence_m_ii(
+		int pt, int line, int a)
 {
 	//long int b;
 
@@ -1165,7 +1169,8 @@ void projective_space_subspaces::incidence_and_stack_for_type_ij(
 	}
 }
 
-long int projective_space_subspaces::nb_rk_k_subspaces_as_lint(int k)
+long int projective_space_subspaces::nb_rk_k_subspaces_as_lint(
+		int k)
 {
 	combinatorics::combinatorics_domain C;
 	ring_theory::longinteger_object aa;
@@ -1177,7 +1182,8 @@ long int projective_space_subspaces::nb_rk_k_subspaces_as_lint(int k)
 	return N;
 }
 
-long int projective_space_subspaces::rank_point(int *v)
+long int projective_space_subspaces::rank_point(
+		int *v)
 {
 	long int b;
 	int verbose_level = 0;
@@ -1201,13 +1207,15 @@ long int projective_space_subspaces::rank_point(int *v)
 	return b;
 }
 
-void projective_space_subspaces::unrank_point(int *v, long int rk)
+void projective_space_subspaces::unrank_point(
+		int *v, long int rk)
 {
 	F->Projective_space_basic->PG_element_unrank_modified_lint(
 			v, 1, n + 1, rk);
 }
 
-void projective_space_subspaces::unrank_points(int *v, long int *Rk, int sz)
+void projective_space_subspaces::unrank_points(
+		int *v, long int *Rk, int sz)
 {
 	int i;
 
@@ -1217,7 +1225,8 @@ void projective_space_subspaces::unrank_points(int *v, long int *Rk, int sz)
 	}
 }
 
-long int projective_space_subspaces::rank_line(int *basis)
+long int projective_space_subspaces::rank_line(
+		int *basis)
 {
 	long int b;
 
@@ -1225,12 +1234,14 @@ long int projective_space_subspaces::rank_line(int *basis)
 	return b;
 }
 
-void projective_space_subspaces::unrank_line(int *basis, long int rk)
+void projective_space_subspaces::unrank_line(
+		int *basis, long int rk)
 {
 	Grass_lines->unrank_lint_here(basis, rk, 0/*verbose_level - 4*/);
 }
 
-void projective_space_subspaces::unrank_lines(int *v, long int *Rk, int nb)
+void projective_space_subspaces::unrank_lines(
+		int *v, long int *Rk, int nb)
 {
 	int i;
 
@@ -1240,7 +1251,8 @@ void projective_space_subspaces::unrank_lines(int *v, long int *Rk, int nb)
 	}
 }
 
-long int projective_space_subspaces::rank_plane(int *basis)
+long int projective_space_subspaces::rank_plane(
+		int *basis)
 {
 	long int b;
 
@@ -1253,7 +1265,8 @@ long int projective_space_subspaces::rank_plane(int *basis)
 	return b;
 }
 
-void projective_space_subspaces::unrank_plane(int *basis, long int rk)
+void projective_space_subspaces::unrank_plane(
+		int *basis, long int rk)
 {
 	if (Grass_planes == NULL) {
 		cout << "projective_space_subspaces::unrank_plane "
@@ -1978,7 +1991,8 @@ void projective_space_subspaces::find_k_secant_lines(
 	FREE_int(type);
 }
 
-void projective_space_subspaces::export_incidence_matrix_to_csv(int verbose_level)
+void projective_space_subspaces::export_incidence_matrix_to_csv(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2072,7 +2086,8 @@ void projective_space_subspaces::export_restricted_incidence_matrix_to_csv(
 	}
 }
 
-void projective_space_subspaces::make_fname_incidence_matrix_csv(std::string &fname)
+void projective_space_subspaces::make_fname_incidence_matrix_csv(
+		std::string &fname)
 {
 
 	fname = "PG_n" + std::to_string(n) + "_q" + std::to_string(q) + "_incidence_matrix.csv";
@@ -2196,7 +2211,8 @@ void projective_space_subspaces::compute_decomposition_based_on_tally(
 
 }
 
-void projective_space_subspaces::polarity_rank_k_subspace(int k,
+void projective_space_subspaces::polarity_rank_k_subspace(
+		int k,
 		long int rk_in, long int &rk_out, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

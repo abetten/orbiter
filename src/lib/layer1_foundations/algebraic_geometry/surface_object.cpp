@@ -145,7 +145,9 @@ void surface_object::init_equation(
 		cout << "surface_object::init_equation "
 				"before init_equation_points_and_lines_only" << endl;
 	}
-	init_equation_points_and_lines_only(Surf, eqn, label_txt, label_tex, verbose_level);
+	init_equation_points_and_lines_only(
+			Surf, eqn, label_txt, label_tex,
+			verbose_level);
 	if (f_v) {
 		cout << "surface_object::init_equation "
 				"after init_equation_points_and_lines_only" << endl;
@@ -157,7 +159,8 @@ void surface_object::init_equation(
 			cout << "surface_object::init_equation before "
 					"find_double_six_and_rearrange_lines" << endl;
 		}
-		find_double_six_and_rearrange_lines(Lines, 0/*verbose_level - 2*/);
+		find_double_six_and_rearrange_lines(
+				Lines, 0/*verbose_level - 2*/);
 
 		if (f_v) {
 			cout << "surface_object::init_equation after "
@@ -193,7 +196,8 @@ void surface_object::init_equation(
 
 
 
-void surface_object::enumerate_points(int verbose_level)
+void surface_object::enumerate_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -235,7 +239,8 @@ void surface_object::enumerate_points(int verbose_level)
 
 
 
-void surface_object::enumerate_points_and_lines(int verbose_level)
+void surface_object::enumerate_points_and_lines(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -251,7 +256,8 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 		cout << "surface_object::enumerate_points_and_lines "
 				"before Surf->enumerate_points" << endl;
 	}
-	Surf->enumerate_points(eqn,
+	Surf->enumerate_points(
+			eqn,
 		Points,
 		0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -275,7 +281,8 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 		cout << "surface_object::enumerate_points_and_lines before "
 				"Geo.find_lines_which_are_contained" << endl;
 	}
-	Geo.find_lines_which_are_contained(Surf->P,
+	Geo.find_lines_which_are_contained(
+			Surf->P,
 			Points, The_Lines, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_object::enumerate_points_and_lines after "
@@ -350,7 +357,8 @@ void surface_object::find_real_lines(
 	}
 	for (i = 0, j = 0; i < The_Lines.size(); i++) {
 		rk = The_Lines[i];
-		Surf->P->Subspaces->Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
+		Surf->P->Subspaces->Grass_lines->unrank_lint_here(
+				M, rk, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "surface_object::find_real_lines testing line" << endl;
 			Int_matrix_print(M, 2, 4);
@@ -367,7 +375,7 @@ void surface_object::find_real_lines(
 			Int_vec_print(cout, coeff_out, 4);
 			cout << endl;
 		}
-		if (!orbiter_kernel_system::Orbiter->Int_vec->is_zero(coeff_out, 4)) {
+		if (!Int_vec_is_zero(coeff_out, 4)) {
 			if (f_v) {
 				cout << "surface_object::find_real_lines not a real line" << endl;
 			}
@@ -419,7 +427,8 @@ void surface_object::init_with_27_lines(
 			cout << "surface_object::init_with_27_lines before "
 					"find_double_six_and_rearrange_lines" << endl;
 		}
-		find_double_six_and_rearrange_lines(surface_object::Lines,
+		find_double_six_and_rearrange_lines(
+				surface_object::Lines,
 				verbose_level);
 		if (f_v) {
 			cout << "surface_object::init_with_27_lines after "
@@ -462,7 +471,8 @@ void surface_object::init_with_27_lines(
 	}
 }
 
-void surface_object::compute_properties(int verbose_level)
+void surface_object::compute_properties(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -479,7 +489,8 @@ void surface_object::compute_properties(int verbose_level)
 	}
 }
 
-void surface_object::recompute_properties(int verbose_level)
+void surface_object::recompute_properties(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -531,10 +542,12 @@ void surface_object::find_double_six_and_rearrange_lines(
 
 	line_intersections = NEW_OBJECT(data_structures::set_of_sets);
 
-	line_intersections->init_from_adjacency_matrix(27,
+	line_intersections->init_from_adjacency_matrix(
+			27,
 			Adj, 0 /* verbose_level */);
 
-	Surf->list_starter_configurations(Lines0, 27, 
+	Surf->list_starter_configurations(
+			Lines0, 27,
 		line_intersections, Starter_Table, nb_starter, verbose_level);
 
 		// 432 = 36 * 12
@@ -549,7 +562,8 @@ void surface_object::find_double_six_and_rearrange_lines(
 	line_idx = Starter_Table[l * 2 + 0];
 	subset_idx = Starter_Table[l * 2 + 1];
 
-	Surf->create_starter_configuration(line_idx, 
+	Surf->create_starter_configuration(
+			line_idx,
 		subset_idx, line_intersections, 
 		Lines0, S3, 
 		0 /* verbose_level */);
@@ -579,7 +593,8 @@ void surface_object::find_double_six_and_rearrange_lines(
 		cout << "surface_object::find_double_six_and_rearrange_lines "
 				"before Surf->create_remaining_fifteen_lines" << endl;
 	}
-	Surf->create_remaining_fifteen_lines(double_six, 
+	Surf->create_remaining_fifteen_lines(
+			double_six,
 		Lines1 + 12, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface_object::find_double_six_and_rearrange_lines "
@@ -612,130 +627,6 @@ void surface_object::find_double_six_and_rearrange_lines(
 
 
 
-#if 0
-void surface_object::compute_tritangent_planes(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	latex_interface L;
-
-	if (f_v) {
-		cout << "surface_object::compute_tritangent_planes" << endl;
-	}
-
-	
-	if (f_v) {
-		cout << "surface_object::compute_tritangent_planes "
-				"before compute_tritangent_planes_slow" << endl;
-	}
-	Surf->compute_tritangent_planes_slow(Lines,
-		Tritangent_planes, nb_tritangent_planes, 
-		Unitangent_planes, nb_unitangent_planes, 
-		Lines_in_tritangent_plane, 
-		Line_in_unitangent_plane, 
-		verbose_level);
-
-
-	if (f_v) {
-		cout << "surface_object::compute_tritangent_planes "
-				"Lines_in_tritangent_plane: " << endl;
-		L.print_lint_matrix_with_standard_labels(cout,
-				Lines_in_tritangent_plane, nb_tritangent_planes, 3,
-				false);
-	}
-
-
-	int *Cnt;
-	int i, j, a;
-
-	Cnt = NEW_int(27);
-	int_vec_zero(Cnt, 27);
-	Tritangent_planes_on_lines = NEW_int(27 * 5);
-	for (i = 0; i < nb_tritangent_planes; i++) {
-		for (j = 0; j < 3; j++) {
-			a = Lines_in_tritangent_plane[i * 3 + j];
-			Tritangent_planes_on_lines[a * 5 + Cnt[a]++] = i;
-		}
-	}
-	for (i = 0; i < 27; i++) {
-		if (Cnt[i] != 5) {
-			cout << "surface_object::compute_tritangent_planes "
-					"Cnt[i] != 5" << endl;
-			exit(1);
-		}
-	}
-	FREE_int(Cnt);
-
-
-	Unitangent_planes_on_lines = NEW_int(27 * (q + 1 - 5));
-	Cnt = NEW_int(27);
-	int_vec_zero(Cnt, 27);
-	for (i = 0; i < nb_unitangent_planes; i++) {
-		a = Line_in_unitangent_plane[i];
-		Unitangent_planes_on_lines[a * (q + 1 - 5) + Cnt[a]++] = i;
-	}
-	for (i = 0; i < 27; i++) {
-		if (Cnt[i] != (q + 1 - 5)) {
-			cout << "surface_object::compute_tritangent_planes "
-					"Cnt[i] != (q + 1 - 5)" << endl;
-			exit(1);
-		}
-	}
-	FREE_int(Cnt);
-
-
-	iso_type_of_tritangent_plane = NEW_int(nb_tritangent_planes);
-	for (i = 0; i < nb_tritangent_planes; i++) {
-		long int three_lines[3];
-		for (j = 0; j < 3; j++) {
-			three_lines[j] = Lines[Lines_in_tritangent_plane[i * 3 + j]];
-		}
-		iso_type_of_tritangent_plane[i] = 
-			Surf->identify_three_lines(
-			three_lines, 0 /* verbose_level */);
-	}
-
-	Type_iso_tritangent_planes = NEW_OBJECT(tally);
-	Type_iso_tritangent_planes->init(iso_type_of_tritangent_plane, 
-		nb_tritangent_planes, false, 0);
-	if (f_v) {
-		cout << "Type iso of tritangent planes: ";
-		Type_iso_tritangent_planes->print_bare(true);
-		cout << endl;
-	}
-	
-	Tritangent_plane_to_Eckardt = NEW_int(nb_tritangent_planes);
-	Eckardt_to_Tritangent_plane = NEW_int(nb_tritangent_planes);
-	Tritangent_plane_dual = NEW_int(nb_tritangent_planes);
-	for (i = 0; i < nb_tritangent_planes; i++) {
-		int three_lines[3];
-		for (j = 0; j < 3; j++) {
-			three_lines[j] = Lines_in_tritangent_plane[i * 3 + j];
-		}
-		a = Surf->Eckardt_point_from_tritangent_plane(three_lines);
-		Tritangent_plane_to_Eckardt[i] = a;
-		Eckardt_to_Tritangent_plane[a] = i;
-	}
-	for (i = 0; i < nb_tritangent_planes; i++) {
-		Tritangent_plane_dual[i] = 
-			Surf->P->dual_rank_of_plane_in_three_space(
-			Tritangent_planes[i], 0 /* verbose_level */);
-	}
-
-
-	Trihedral_pairs_as_tritangent_planes = NEW_lint(Surf->nb_trihedral_pairs * 6);
-	for (i = 0; i < Surf->nb_trihedral_pairs; i++) {
-		for (j = 0; j < 6; j++) {
-			a = Surf->Trihedral_to_Eckardt[i * 6 + j];
-			Trihedral_pairs_as_tritangent_planes[i * 6 + j] = Eckardt_to_Tritangent_plane[a];
-		}
-	}
-
-
-	if (f_v) {
-		cout << "surface_object::compute_tritangent_planes done" << endl;
-	}
-}
-#endif
 
 
 #if 0
@@ -1823,22 +1714,24 @@ void surface_object::identify_lines(
 
 	if (f_v) {
 		cout << "surface_object::identify_lines" << endl;
-		}
+	}
 	for (i = 0; i < nb_lines; i++) {
-		if (!Sorting.lint_vec_search_linear(Lines, 27, lines[i], idx)) {
+		if (!Sorting.lint_vec_search_linear(
+				Lines, 27, lines[i], idx)) {
 			cout << "surface_object::identify_lines could "
 					"not find lines[" << i << "]=" << lines[i]
 					<< " in Lines[]" << endl;
 			exit(1);
-			}
-		line_idx[i] = idx;
 		}
+		line_idx[i] = idx;
+	}
 	if (f_v) {
 		cout << "surface_object::identify_lines done" << endl;
-		}
+	}
 }
 
-void surface_object::print_nine_lines_latex(std::ostream &ost,
+void surface_object::print_nine_lines_latex(
+		std::ostream &ost,
 	long int *nine_lines, int *nine_lines_idx)
 {
 	l1_interfaces::latex_interface L;
@@ -1853,7 +1746,7 @@ void surface_object::print_nine_lines_latex(std::ostream &ost,
 	ost << "\\begin{array}{c|ccc}" << endl;
 	for (j = 0; j < 3; j++) {
 		ost << " & " << j;
-		}
+	}
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < 3; i++) {
@@ -1864,16 +1757,16 @@ void surface_object::print_nine_lines_latex(std::ostream &ost,
 			ost << "\\ell_{" << idx << "}";
 			if (j < 3 - 1) {
 				ost << " & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 	ost << "\\qquad" << endl;
 	ost << "\\begin{array}{c|ccc}" << endl;
 	for (j = 0; j < 3; j++) {
 		ost << " & " << j;
-		}
+	}
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < 3; i++) {
@@ -1884,10 +1777,10 @@ void surface_object::print_nine_lines_latex(std::ostream &ost,
 			ost << Surf->Schlaefli->Labels->Line_label_tex[idx];
 			if (j < 3 - 1) {
 				ost << " & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 }
@@ -2000,7 +1893,8 @@ void surface_object::compute_clebsch_maps(int verbose_level)
 
 
 
-int surface_object::find_point(long int P, int &idx)
+int surface_object::find_point(
+		long int P, int &idx)
 {
 	data_structures::sorting Sorting;
 
@@ -2013,7 +1907,8 @@ int surface_object::find_point(long int P, int &idx)
 	}
 }
 
-void surface_object::export_something(std::string &what,
+void surface_object::export_something(
+		std::string &what,
 		std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2031,7 +1926,6 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_points.csv";
 
-		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.Csv_file_support->lint_matrix_write_csv(
 				fname, Pts, 1, nb_pts);
 
@@ -2052,7 +1946,6 @@ void surface_object::export_something(std::string &what,
 
 		Lint_vec_complement_to(Pts, Pts_off, Surf->P->Subspaces->N_points, nb_pts);
 
-		//Fio.write_set_to_file(fname, Pts_off, nb_pts_off, 0 /*verbose_level*/);
 		Fio.Csv_file_support->lint_matrix_write_csv(
 				fname, Pts_off, 1, nb_pts_off);
 
@@ -2122,7 +2015,6 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_lines.csv";
 
-		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.Csv_file_support->lint_matrix_write_csv(
 				fname, Lines, nb_lines, 1);
 
@@ -2135,7 +2027,6 @@ void surface_object::export_something(std::string &what,
 
 		fname = fname_base + "_lines_Pluecker.csv";
 
-		//Fio.write_set_to_file(fname, Pts, nb_pts, 0 /*verbose_level*/);
 		Fio.Csv_file_support->int_matrix_write_csv(
 				fname, SOP->Pluecker_coordinates, nb_lines, 6);
 
@@ -2291,21 +2182,24 @@ void surface_object::export_something(std::string &what,
 
 
 
-void surface_object::print_lines_tex(std::ostream &ost)
+void surface_object::print_lines_tex(
+		std::ostream &ost)
 {
 
 	Surf->print_lines_tex(ost, Lines, nb_lines);
 
 }
 
-void surface_object::print_one_line_tex(std::ostream &ost, int idx)
+void surface_object::print_one_line_tex(
+		std::ostream &ost, int idx)
 {
 
 	Surf->print_one_line_tex(ost, Lines, nb_lines, idx);
 
 }
 
-void surface_object::Clebsch_map_up(std::string &fname_base,
+void surface_object::Clebsch_map_up(
+		std::string &fname_base,
 		int line_1_idx, int line_2_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

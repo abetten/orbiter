@@ -235,7 +235,8 @@ void seventytwo_cases::compute_arc(
 	}
 }
 
-void seventytwo_cases::compute_partition(int verbose_level)
+void seventytwo_cases::compute_partition(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

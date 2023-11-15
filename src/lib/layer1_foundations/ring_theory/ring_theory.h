@@ -937,6 +937,17 @@ public:
 	void print_longinteger_after_multiplying(
 			std::ostream &ost,
 			int *factors, int len);
+	void parse_equation(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &name_of_formula,
+			std::string &name_of_formula_tex,
+			std::string &managed_variables,
+			std::string &equation_text,
+			std::string &equation_parameters,
+			std::string &equation_parameters_tex,
+			std::string &equation_parameter_values,
+			int *&coeffs, int &nb_coeffs,
+			int verbose_level);
 
 };
 

@@ -263,7 +263,8 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 
 
 
-void quartic_curve_object::enumerate_points(int verbose_level)
+void quartic_curve_object::enumerate_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -294,7 +295,8 @@ void quartic_curve_object::enumerate_points(int verbose_level)
 
 
 
-void quartic_curve_object::compute_properties(int verbose_level)
+void quartic_curve_object::compute_properties(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -311,7 +313,8 @@ void quartic_curve_object::compute_properties(int verbose_level)
 	}
 }
 
-void quartic_curve_object::recompute_properties(int verbose_level)
+void quartic_curve_object::recompute_properties(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -385,7 +388,8 @@ int quartic_curve_object::find_point(
 	}
 }
 
-void quartic_curve_object::print(std::ostream &ost)
+void quartic_curve_object::print(
+		std::ostream &ost)
 {
 	ost << " eqn=";
 	Int_vec_print(ost, eqn15, 15);

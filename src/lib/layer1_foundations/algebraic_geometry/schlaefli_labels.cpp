@@ -52,7 +52,8 @@ schlaefli_labels::~schlaefli_labels()
 }
 
 
-void schlaefli_labels::init(int verbose_level)
+void schlaefli_labels::init(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	l1_interfaces::latex_interface L;

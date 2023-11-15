@@ -826,13 +826,15 @@ void projective_space_basic::PG_element_unrank_modified_not_in_subspace(
 	PG_element_unrank_modified_lint(v, stride, len, a);
 }
 
-void projective_space_basic::projective_point_unrank(int n, int *v, int rk)
+void projective_space_basic::projective_point_unrank(
+		int n, int *v, int rk)
 {
 	PG_element_unrank_modified(v, 1 /* stride */,
 			n + 1 /* len */, rk);
 }
 
-long int projective_space_basic::projective_point_rank(int n, int *v)
+long int projective_space_basic::projective_point_rank(
+		int n, int *v)
 {
 	long int rk;
 
@@ -940,7 +942,8 @@ void projective_space_basic::all_PG_elements_in_subspace_array_is_given(
 	}
 }
 
-void projective_space_basic::display_all_PG_elements(int n)
+void projective_space_basic::display_all_PG_elements(
+		int n)
 {
 	int *v = NEW_int(n + 1);
 	geometry::geometry_global Gg;
@@ -959,7 +962,8 @@ void projective_space_basic::display_all_PG_elements(int n)
 	FREE_int(v);
 }
 
-void projective_space_basic::display_all_PG_elements_not_in_subspace(int n, int m)
+void projective_space_basic::display_all_PG_elements_not_in_subspace(
+		int n, int m)
 {
 	int *v = NEW_int(n + 1);
 	geometry::geometry_global Gg;
@@ -978,7 +982,8 @@ void projective_space_basic::display_all_PG_elements_not_in_subspace(int n, int 
 	FREE_int(v);
 }
 
-void projective_space_basic::display_all_AG_elements(int n)
+void projective_space_basic::display_all_AG_elements(
+		int n)
 {
 	int *v = NEW_int(n);
 	geometry::geometry_global Gg;

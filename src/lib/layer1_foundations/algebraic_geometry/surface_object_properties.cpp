@@ -230,7 +230,8 @@ surface_object_properties::~surface_object_properties()
 }
 
 
-void surface_object_properties::init(surface_object *SO, int verbose_level)
+void surface_object_properties::init(
+		surface_object *SO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -288,7 +289,8 @@ void surface_object_properties::init(surface_object *SO, int verbose_level)
 	}
 }
 
-void surface_object_properties::compute_properties(int verbose_level)
+void surface_object_properties::compute_properties(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
@@ -633,7 +635,8 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 }
 
-void surface_object_properties::compute_axes(int verbose_level)
+void surface_object_properties::compute_axes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, h, l, idx;
@@ -713,7 +716,8 @@ void surface_object_properties::compute_axes(int verbose_level)
 	}
 }
 
-void surface_object_properties::compute_gradient(int verbose_level)
+void surface_object_properties::compute_gradient(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -738,7 +742,8 @@ void surface_object_properties::compute_gradient(int verbose_level)
 
 
 
-void surface_object_properties::compute_singular_points_and_tangent_planes(int verbose_level)
+void surface_object_properties::compute_singular_points_and_tangent_planes(
+		int verbose_level)
 // a singular point is a point where all partials vanish
 // We compute the set of singular points into Pts[nb_pts]
 {
@@ -950,12 +955,14 @@ void surface_object_properties::compute_adjacency_matrix_of_line_intersection_gr
 
 }
 
-int surface_object_properties::Adj_ij(int i, int j)
+int surface_object_properties::Adj_ij(
+		int i, int j)
 {
 	return Adj_line_intersection_graph[i * SO->nb_lines + j];
 }
 
-void surface_object_properties::compute_plane_type_by_points(int verbose_level)
+void surface_object_properties::compute_plane_type_by_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1122,7 +1129,8 @@ void surface_object_properties::print_everything(std::ostream &ost, int verbose_
 #endif
 
 
-void surface_object_properties::report_properties(std::ostream &ost, int verbose_level)
+void surface_object_properties::report_properties(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1190,7 +1198,8 @@ void surface_object_properties::report_properties(std::ostream &ost, int verbose
 	}
 }
 
-void surface_object_properties::report_properties_simple(std::ostream &ost, int verbose_level)
+void surface_object_properties::report_properties_simple(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1347,7 +1356,8 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 
 }
 
-void surface_object_properties::print_line_intersection_graph(std::ostream &ost)
+void surface_object_properties::print_line_intersection_graph(
+		std::ostream &ost)
 {
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Line Intersection Graph}" << endl;
@@ -1361,7 +1371,8 @@ void surface_object_properties::print_line_intersection_graph(std::ostream &ost)
 	print_neighbor_sets(ost);
 }
 
-void surface_object_properties::print_adjacency_list(std::ostream &ost)
+void surface_object_properties::print_adjacency_list(
+		std::ostream &ost)
 {
 	if (SO->nb_lines < 128) {
 		int i, j, m, n, h;
@@ -1440,7 +1451,8 @@ void surface_object_properties::print_adjacency_list(std::ostream &ost)
 }
 
 
-void surface_object_properties::print_adjacency_matrix(std::ostream &ost)
+void surface_object_properties::print_adjacency_matrix(
+		std::ostream &ost)
 {
 	if (SO->nb_lines < 128) {
 		int i, j, m, n;
@@ -1544,7 +1556,8 @@ void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 	}
 }
 
-void surface_object_properties::print_neighbor_sets(std::ostream &ost)
+void surface_object_properties::print_neighbor_sets(
+		std::ostream &ost)
 {
 	int i, j, h, p;
 	data_structures::sorting Sorting;
@@ -2646,7 +2659,8 @@ void surface_object_properties::compute_transversal_lines(
 
 
 
-void surface_object_properties::clebsch_map_latex(std::ostream &ost,
+void surface_object_properties::clebsch_map_latex(
+		std::ostream &ost,
 	long int *Clebsch_map, int *Clebsch_coeff)
 {
 	long int i, j, a;

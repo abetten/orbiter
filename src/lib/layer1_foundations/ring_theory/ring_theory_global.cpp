@@ -2936,6 +2936,240 @@ void finite_field::do_ideal(int n,
 #endif
 
 
+void ring_theory_global::parse_equation(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		std::string &name_of_formula,
+		std::string &name_of_formula_tex,
+		std::string &managed_variables,
+		std::string &equation_text,
+		std::string &equation_parameters,
+		std::string &equation_parameters_tex,
+		std::string &equation_parameter_values,
+		int *&coeffs, int &nb_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation" << endl;
+		cout << "ring_theory_global::parse_equation "
+				"name_of_formula=" << name_of_formula << endl;
+		cout << "ring_theory_global::parse_equation "
+				"name_of_formula_tex=" << name_of_formula_tex << endl;
+		cout << "ring_theory_global::parse_equation "
+				"managed_variables=" << managed_variables << endl;
+		cout << "ring_theory_global::parse_equation "
+				"equation_text=" << equation_text << endl;
+		cout << "ring_theory_global::parse_equation "
+				"equation_parameters=" << equation_parameters << endl;
+		cout << "ring_theory_global::parse_equation "
+				"equation_parameters_tex=" << equation_parameters_tex << endl;
+		cout << "ring_theory_global::parse_equation "
+				"equation_parameter_values=" << equation_parameter_values << endl;
+	}
+
+
+	string label_txt;
+	string label_tex;
+
+	label_txt = name_of_formula + "_" + equation_parameters;
+	label_tex = name_of_formula_tex + "\\_" + equation_parameters_tex;
+
+	// create a symbolic object containing the general formula:
+
+	expression_parser::symbolic_object_builder_description *Descr1;
+
+
+	Descr1 = NEW_OBJECT(expression_parser::symbolic_object_builder_description);
+	Descr1->f_field_pointer = true;
+	Descr1->field_pointer = Poly->get_F();
+	Descr1->f_text = true;
+	Descr1->text_txt = equation_text;
+
+
+
+
+	expression_parser::symbolic_object_builder *SB1;
+
+	SB1 = NEW_OBJECT(expression_parser::symbolic_object_builder);
+
+
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"before SB1->init" << endl;
+	}
+
+	string s1;
+
+	s1 = name_of_formula + "_raw";
+
+	SB1->init(Descr1, s1, verbose_level);
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"after SB1->init" << endl;
+	}
+
+
+
+	// create a second symbolic object containing the specific values
+	// to be substituted.
+
+	expression_parser::symbolic_object_builder_description *Descr2;
+
+
+	Descr2 = NEW_OBJECT(expression_parser::symbolic_object_builder_description);
+	Descr2->f_field_pointer = true;
+	Descr2->field_pointer = Poly->get_F();
+	Descr2->f_text = true;
+	Descr2->text_txt = equation_parameter_values;
+
+
+
+	expression_parser::symbolic_object_builder *SB2;
+
+	SB2 = NEW_OBJECT(expression_parser::symbolic_object_builder);
+
+	string s2;
+
+	s2 = name_of_formula + "_param_values";
+
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"before SB2->init" << endl;
+	}
+
+	SB2->init(Descr2, s2, verbose_level);
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"after SB2->init" << endl;
+	}
+
+
+	// Perform the substitution.
+	// Create temporary object Formula_vector_after_sub
+
+	expression_parser::symbolic_object_builder *O_target = SB1;
+	expression_parser::symbolic_object_builder *O_source = SB2;
+
+	//O_target = Get_symbol(Descr->substitute_target);
+	//O_source = Get_symbol(Descr->substitute_source);
+
+
+	expression_parser::formula_vector *Formula_vector_after_sub;
+
+
+	Formula_vector_after_sub = NEW_OBJECT(expression_parser::formula_vector);
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"before Formula_vector_after_sub->substitute" << endl;
+	}
+	Formula_vector_after_sub->substitute(
+			O_source->Formula_vector,
+			O_target->Formula_vector,
+			equation_parameters /*Descr->substitute_variables*/,
+			name_of_formula, name_of_formula_tex,
+			managed_variables,
+			verbose_level);
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"after Formula_vector_after_sub->substitute" << endl;
+	}
+
+
+	// Perform simplification
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"before Formula_vector_after_sub->V[0].simplify" << endl;
+	}
+	Formula_vector_after_sub->V[0].simplify(verbose_level);
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"after Formula_vector_after_sub->V[0].simplify" << endl;
+	}
+
+	// Perform expansion.
+	// The result will be in the temporary object Formula_vector_after_expand
+
+
+	expression_parser::formula_vector *Formula_vector_after_expand;
+
+	Formula_vector_after_expand = NEW_OBJECT(expression_parser::formula_vector);
+
+	int f_write_trees_during_expand = false;
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"before Formula_vector->expand" << endl;
+	}
+	Formula_vector_after_expand->expand(
+			Formula_vector_after_sub,
+			Poly->get_F(),
+			name_of_formula, name_of_formula_tex,
+			managed_variables,
+			f_write_trees_during_expand,
+			verbose_level);
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"after Formula_vector->expand" << endl;
+	}
+
+	// Perform simplification
+
+
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"before Formula_vector_after_expand->V[0].simplify" << endl;
+	}
+	Formula_vector_after_expand->V[0].simplify(verbose_level);
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"after Formula_vector_after_expand->V[0].simplify" << endl;
+	}
+
+
+
+	// assemble the equation as a vector of coefficients
+	// in the ordering of the polynomial ring:
+
+	//int *coeffs;
+	//int nb_coeffs;
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"before Formula_vector_after_expand->V[0].collect_coefficients_of_equation" << endl;
+	}
+	Formula_vector_after_expand->V[0].collect_coefficients_of_equation(
+			Poly,
+			coeffs, nb_coeffs,
+			verbose_level);
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"after Formula_vector_after_expand->V[0].collect_coefficients_of_equation" << endl;
+	}
+
+#if 0
+	if (nb_coeffs != 20) {
+		cout << "ring_theory_global::parse_equation nb_coeffs != 20" << endl;
+		exit(1);
+	}
+	// build a surface_object and compute properties of the surface:
+
+#endif
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation done" << endl;
+	}
+
+
+}
+
 
 
 }}}

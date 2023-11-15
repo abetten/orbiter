@@ -980,11 +980,15 @@ public:
 
 	geometry_global();
 	~geometry_global();
-	long int nb_PG_elements(int n, int q);
+	long int nb_PG_elements(
+			int n, int q);
 		// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
-	long int nb_PG_elements_not_in_subspace(int n, int m, int q);
-	long int nb_AG_elements(int n, int q);
-	long int nb_affine_lines(int n, int q);
+	long int nb_PG_elements_not_in_subspace(
+			int n, int m, int q);
+	long int nb_AG_elements(
+			int n, int q);
+	long int nb_affine_lines(
+			int n, int q);
 	long int AG_element_rank(
 			int q, int *v, int stride, int len);
 	void AG_element_unrank(
@@ -1024,11 +1028,16 @@ public:
 	// number of singular points on Q^+(k,q)
 	long int nb_pts_Qminus(int k, int q);
 	// number of singular points on Q^-(k,q)
-	long int nb_pts_S(int n, int q);
-	long int nb_pts_N(int n, int q);
-	long int nb_pts_N1(int n, int q);
-	long int nb_pts_Sbar(int n, int q);
-	long int nb_pts_Nbar(int n, int q);
+	long int nb_pts_S(
+			int n, int q);
+	long int nb_pts_N(
+			int n, int q);
+	long int nb_pts_N1(
+			int n, int q);
+	long int nb_pts_Sbar(
+			int n, int q);
+	long int nb_pts_Nbar(
+			int n, int q);
 	//void test_Orthogonal(int epsilon, int k, int q);
 	//void test_orthogonal(int n, int q);
 	int &TDO_upper_bound(int i, int j);
@@ -1690,235 +1699,6 @@ class incidence_structure {
 			int partition_class_size,
 			int *&partition, int verbose_level);
 
-
-#if 0
-	void compute_TDO_safe_first(
-			data_structures::partitionstack &PStack,
-		int depth, int &step, int &f_refine, 
-		int &f_refine_prev, int verbose_level);
-	int compute_TDO_safe_next(
-			data_structures::partitionstack &PStack,
-		int depth, int &step, int &f_refine, 
-		int &f_refine_prev, int verbose_level);
-		// returns true when we are done, false otherwise
-	void compute_TDO_safe(
-			data_structures::partitionstack &PStack,
-		int depth, int verbose_level);
-	void compute_TDO_safe_and_write_files(
-			data_structures::partitionstack &PStack,
-		int depth,
-		std::string &fname_base,
-		std::vector<std::string> &file_names,
-		int verbose_level);
-	int compute_TDO(
-			data_structures::partitionstack &PStack,
-			int ht0, int depth,
-		int verbose_level);
-	int compute_TDO_step(
-			data_structures::partitionstack &PStack, int ht0,
-		int verbose_level);
-	void get_partition(
-			data_structures::partitionstack &PStack,
-		int *row_classes, int *row_class_idx, int &nb_row_classes, 
-		int *col_classes, int *col_class_idx, int &nb_col_classes);
-	int refine_column_partition_safe(
-			data_structures::partitionstack &PStack,
-		int verbose_level);
-	int refine_row_partition_safe(
-			data_structures::partitionstack &PStack,
-		int verbose_level);
-	int refine_column_partition(
-			data_structures::partitionstack &PStack, int ht0,
-		int verbose_level);
-	int refine_row_partition(
-			data_structures::partitionstack &PStack, int ht0,
-		int verbose_level);
-	void print_row_tactical_decomposition_scheme_incidences_tex(
-			data_structures::partitionstack &PStack,
-		std::ostream &ost, int f_enter_math_mode,
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int f_local_coordinates, int verbose_level);
-	void print_col_tactical_decomposition_scheme_incidences_tex(
-			data_structures::partitionstack &PStack,
-		std::ostream &ost, int f_enter_math_mode,
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int f_local_coordinates, int verbose_level);
-	void get_incidences_by_row_scheme(
-			data_structures::partitionstack &PStack,
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int row_class_idx, int col_class_idx, 
-		int rij, int *&incidences, int verbose_level);
-	void get_incidences_by_col_scheme(
-			data_structures::partitionstack &PStack,
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int row_class_idx, int col_class_idx, 
-		int kij, int *&incidences, int verbose_level);
-	void get_row_decomposition_scheme(
-			data_structures::partitionstack &PStack,
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int *row_scheme, int verbose_level);
-	void get_row_decomposition_scheme_if_possible(
-			data_structures::partitionstack &PStack,
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int *row_scheme, int verbose_level);
-	void get_col_decomposition_scheme(
-			data_structures::partitionstack &PStack,
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int *col_scheme, int verbose_level);
-	
-	void row_scheme_to_col_scheme(
-			data_structures::partitionstack &PStack,
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int *row_scheme, int *col_scheme, int verbose_level);
-	void get_and_print_row_decomposition_scheme(
-			data_structures::partitionstack &PStack,
-		int f_list_incidences,
-		int f_local_coordinates, int verbose_level);
-	void get_and_print_col_decomposition_scheme(
-			data_structures::partitionstack &PStack,
-		int f_list_incidences,
-		int f_local_coordinates, int verbose_level);
-	void get_and_print_decomposition_schemes(
-			data_structures::partitionstack &PStack);
-	void get_and_print_decomposition_schemes_tex(
-			data_structures::partitionstack &PStack);
-	void get_and_print_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math,
-			data_structures::partitionstack &PStack);
-	void get_scheme(
-		int *&row_classes, int *&row_class_inv, int &nb_row_classes,
-		int *&col_classes, int *&col_class_inv, int &nb_col_classes,
-		int *&scheme, int f_row_scheme,
-		data_structures::partitionstack &PStack);
-	void free_scheme(
-		int *row_classes, int *row_class_inv, 
-		int *col_classes, int *col_class_inv, 
-		int *scheme);
-	void get_and_print_row_tactical_decomposition_scheme_tex(
-			std::ostream &ost,
-			int f_enter_math, int f_print_subscripts,
-			data_structures::partitionstack &PStack);
-	void get_and_print_column_tactical_decomposition_scheme_tex(
-			std::ostream &ost,
-			int f_enter_math, int f_print_subscripts,
-			data_structures::partitionstack &PStack);
-	void print_non_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math,
-			data_structures::partitionstack &PStack);
-	void print_line(
-			std::ostream &ost,
-			data_structures::partitionstack &P,
-		int row_cell, int i, int *col_classes, int nb_col_classes, 
-		int width, int f_labeled);
-	void print_column_labels(
-			std::ostream &ost, data_structures::partitionstack &P,
-		int *col_classes, int nb_col_classes, int width);
-	void print_hline(
-			std::ostream &ost,
-			data_structures::partitionstack &P,
-		int *col_classes, int nb_col_classes, 
-		int width, int f_labeled);
-	void print_partitioned(
-			std::ostream &ost,
-			data_structures::partitionstack &P, int f_labeled);
-	void point_collinearity_graph(
-			int *Adj, int verbose_level);
-		// G[nb_points() * nb_points()]
-	void line_intersection_graph(
-			int *Adj, int verbose_level);
-		// G[nb_lines() * nb_lines()]
-	void latex_it(
-			std::ostream &ost,
-			data_structures::partitionstack &P);
-	void rearrange(
-			int *&Vi, int &nb_V,
-		int *&Bj, int &nb_B, int *&R, int *&X,
-		data_structures::partitionstack &P,
-		int verbose_level);
-	void decomposition_print_tex(
-			std::ostream &ost,
-			data_structures::partitionstack &PStack,
-			int f_row_tactical, int f_col_tactical,
-		int f_detailed,
-		int f_local_coordinates, int verbose_level);
-	void do_tdo_high_level(
-			data_structures::partitionstack &S,
-		int f_tdo_steps, int f_tdo_depth, int tdo_depth, 
-		int f_write_tdo_files, int f_pic, 
-		int f_include_tdo_scheme, int f_include_tdo_extra, 
-		int f_write_tdo_class_files, 
-		int verbose_level);
-	void compute_tdo(
-			data_structures::partitionstack &S,
-		int f_write_tdo_files, 
-		int f_pic, 
-		int f_include_tdo_scheme, 
-		int verbose_level);
-	void compute_tdo_stepwise(
-			data_structures::partitionstack &S,
-		int TDO_depth, 
-		int f_write_tdo_files, 
-		int f_pic, 
-		int f_include_tdo_scheme, 
-		int f_include_extra, 
-		int verbose_level);
-	void init_partitionstack_trivial(
-			data_structures::partitionstack *S,
-		int verbose_level);
-	void init_partitionstack(
-			data_structures::partitionstack *S,
-		int f_row_part, int nb_row_parts, int *row_parts,
-		int f_col_part, int nb_col_parts, int *col_parts,
-		int nb_distinguished_point_sets, 
-			int **distinguished_point_sets, 
-			int *distinguished_point_set_size, 
-		int nb_distinguished_line_sets, 
-			int **distinguished_line_sets, 
-			int *distinguished_line_set_size, 
-		int verbose_level);
-	void shrink_aut_generators(
-		int nb_distinguished_point_sets, 
-		int nb_distinguished_line_sets, 
-		int Aut_counter, int *Aut, int *Base, int Base_length, 
-		int verbose_level);
-	void print_aut_generators(
-			int Aut_counter, int *Aut,
-		int Base_length, int *Base, int *Transversal_length);
-	void compute_extended_collinearity_graph(
-		int *&Adj, int &v, int *&partition, 
-		int f_row_part, int nb_row_parts, int *row_parts,
-		int f_col_part, int nb_col_parts, int *col_parts,
-		int nb_distinguished_point_sets, 
-			int **distinguished_point_sets, 
-			int *distinguished_point_set_size, 
-		int nb_distinguished_line_sets, 
-			int **distinguished_line_sets, 
-			int *distinguished_line_set_size, 
-		int verbose_level);
-		// side effect: the distinguished sets 
-		// will be sorted afterwards
-	void compute_extended_matrix(
-		int *&M, int &nb_rows, int &nb_cols, 
-		int &total, int *&partition, 
-		int f_row_part, int nb_row_parts, int *row_parts,
-		int f_col_part, int nb_col_parts, int *col_parts,
-		int nb_distinguished_point_sets, 
-		int **distinguished_point_sets, 
-		int *distinguished_point_set_size, 
-		int nb_distinguished_line_sets, 
-		int **distinguished_line_sets, 
-		int *distinguished_line_set_size, 
-		int verbose_level);
-#endif
-
 };
 
 
@@ -2076,7 +1856,8 @@ public:
 	long int apply_polarity(
 		long int a, int *Polarity36, int verbose_level);
 	void compute_line_intersection_graph(
-			long int *Lines, int nb_lines, int *&Adj, int f_complement, int verbose_level);
+			long int *Lines, int nb_lines, int *&Adj, int f_complement,
+			int verbose_level);
 
 };
 
@@ -2603,11 +2384,16 @@ public:
 
 	polarity();
 	~polarity();
-	void init_standard_polarity(projective_space *P, int verbose_level);
-	void init_general_polarity(projective_space *P, int *Mtx, int verbose_level);
-	void determine_absolute_points(int *&f_absolute, int verbose_level);
-	void determine_absolute_lines(int verbose_level);
-	void init_reversal_polarity(projective_space *P, int verbose_level);
+	void init_standard_polarity(
+			projective_space *P, int verbose_level);
+	void init_general_polarity(
+			projective_space *P, int *Mtx, int verbose_level);
+	void determine_absolute_points(
+			int *&f_absolute, int verbose_level);
+	void determine_absolute_lines(
+			int verbose_level);
+	void init_reversal_polarity(
+			projective_space *P, int verbose_level);
 	void report(std::ostream &f);
 
 };
@@ -2674,8 +2460,10 @@ public:
 	void PG_element_unrank_modified_not_in_subspace(
 			int *v, int stride, int len, int m, long int a);
 
-	void projective_point_unrank(int n, int *v, int rk);
-	long int projective_point_rank(int n, int *v);
+	void projective_point_unrank(
+			int n, int *v, int rk);
+	long int projective_point_rank(
+			int n, int *v);
 	void all_PG_elements_in_subspace(
 			int *genma, int k, int n,
 			long int *&point_list, int &nb_points,
@@ -2684,9 +2472,12 @@ public:
 			int *genma, int k, int n,
 			long int *point_list, int &nb_points,
 			int verbose_level);
-	void display_all_PG_elements(int n);
-	void display_all_PG_elements_not_in_subspace(int n, int m);
-	void display_all_AG_elements(int n);
+	void display_all_PG_elements(
+			int n);
+	void display_all_PG_elements_not_in_subspace(
+			int n, int m);
+	void display_all_AG_elements(
+			int n);
 
 };
 
@@ -3008,8 +2799,10 @@ public:
 		int verbose_level);
 	void compute_number_of_subspaces(
 		int verbose_level);
-	void init_incidence_structure(int verbose_level);
-	void init_polarity(int verbose_level);
+	void init_incidence_structure(
+			int verbose_level);
+	void init_polarity(
+			int verbose_level);
 	// uses Grass_hyperplanes
 	void intersect_with_line(
 			long int *set, int set_sz,
@@ -3032,13 +2825,16 @@ public:
 	int create_point_on_line(
 		long int line_rk, long int pt_rk, int verbose_level);
 	// pt_rk is between 0 and q-1.
-	void make_incidence_matrix(int &m, int &n,
+	void make_incidence_matrix(
+			int &m, int &n,
 		int *&Inc, int verbose_level);
 	void make_incidence_matrix(
 		std::vector<int> &Pts, std::vector<int> &Lines,
 		int *&Inc, int verbose_level);
-	int is_incident(int pt, int line);
-	void incidence_m_ii(int pt, int line, int a);
+	int is_incident(
+			int pt, int line);
+	void incidence_m_ii(
+			int pt, int line, int a);
 	void make_incidence_structure_and_partition(
 		incidence_structure *&Inc,
 		data_structures::partitionstack *&Stack,
@@ -3053,7 +2849,8 @@ public:
 	int incidence_test_for_objects_of_type_ij(
 		int type_i, int type_j, int i, int j,
 		int verbose_level);
-	void points_on_line(long int line_rk,
+	void points_on_line(
+			long int line_rk,
 			long int *&the_points,
 			int &nb_points, int verbose_level);
 	void points_covered_by_plane(
@@ -3065,15 +2862,24 @@ public:
 		incidence_structure *&Inc,
 		data_structures::partitionstack *&Stack,
 		int verbose_level);
-	long int nb_rk_k_subspaces_as_lint(int k);
-	long int rank_point(int *v);
-	void unrank_point(int *v, long int rk);
-	void unrank_points(int *v, long int *Rk, int sz);
-	long int rank_line(int *basis);
-	void unrank_line(int *basis, long int rk);
-	void unrank_lines(int *v, long int *Rk, int nb);
-	long int rank_plane(int *basis);
-	void unrank_plane(int *basis, long int rk);
+	long int nb_rk_k_subspaces_as_lint(
+			int k);
+	long int rank_point(
+			int *v);
+	void unrank_point(
+			int *v, long int rk);
+	void unrank_points(
+			int *v, long int *Rk, int sz);
+	long int rank_line(
+			int *basis);
+	void unrank_line(
+			int *basis, long int rk);
+	void unrank_lines(
+			int *v, long int *Rk, int nb);
+	long int rank_plane(
+			int *basis);
+	void unrank_plane(
+			int *basis, long int rk);
 
 	long int line_through_two_points(
 			long int p1, long int p2);
@@ -3133,10 +2939,12 @@ public:
 		long int *secant_lines, int &nb_secant_lines,
 		int verbose_level);
 
-	void export_incidence_matrix_to_csv(int verbose_level);
+	void export_incidence_matrix_to_csv(
+			int verbose_level);
 	void export_restricted_incidence_matrix_to_csv(
 			std::string &rows, std::string &cols, int verbose_level);
-	void make_fname_incidence_matrix_csv(std::string &fname);
+	void make_fname_incidence_matrix_csv(
+			std::string &fname);
 	void compute_decomposition(
 			data_structures::partitionstack *S1,
 			data_structures::partitionstack *S2,
@@ -3149,7 +2957,8 @@ public:
 			incidence_structure *&Inc,
 			data_structures::partitionstack *&Stack,
 			int verbose_level);
-	void polarity_rank_k_subspace(int k,
+	void polarity_rank_k_subspace(
+			int k,
 			long int rk_in, long int &rk_out, int verbose_level);
 	void planes_through_a_line(
 		long int line_rk, std::vector<long int> &plane_ranks,
@@ -3231,7 +3040,8 @@ public:
 	int is_contained_in_Baer_subline(
 			long int *pts, int nb_pts,
 		int verbose_level);
-	void circle_type_of_line_subset(int *pts, int nb_pts, 
+	void circle_type_of_line_subset(
+			int *pts, int nb_pts,
 		int *circle_type, int verbose_level);
 		// circle_type[nb_pts]
 	void intersection_of_subspace_with_point_set(

@@ -495,7 +495,8 @@ void schlaefli_trihedral_pairs::process_trihedral_pairs(
 	}
 }
 
-void schlaefli_trihedral_pairs::init_axes(int verbose_level)
+void schlaefli_trihedral_pairs::init_axes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, j, rk;
@@ -556,7 +557,8 @@ void schlaefli_trihedral_pairs::init_axes(int verbose_level)
 	}
 }
 
-int schlaefli_trihedral_pairs::identify_axis(int *axis_E_idx, int verbose_level)
+int schlaefli_trihedral_pairs::identify_axis(
+		int *axis_E_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -581,7 +583,8 @@ int schlaefli_trihedral_pairs::identify_axis(int *axis_E_idx, int verbose_level)
 	return idx;
 }
 
-void schlaefli_trihedral_pairs::init_collinear_Eckardt_triples(int verbose_level)
+void schlaefli_trihedral_pairs::init_collinear_Eckardt_triples(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, rk, h;
@@ -792,7 +795,8 @@ void schlaefli_trihedral_pairs::latex_trihedral_pair_as_matrix(
 	ost << "\\end{array}" << endl;
 }
 
-void schlaefli_trihedral_pairs::latex_table_of_trihedral_pairs(std::ostream &ost)
+void schlaefli_trihedral_pairs::latex_table_of_trihedral_pairs(
+		std::ostream &ost)
 {
 	int i;
 
@@ -824,7 +828,8 @@ void schlaefli_trihedral_pairs::latex_table_of_trihedral_pairs(std::ostream &ost
 
 
 
-void schlaefli_trihedral_pairs::latex_triads(std::ostream &ost)
+void schlaefli_trihedral_pairs::latex_triads(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i, j, a;
@@ -857,7 +862,8 @@ void schlaefli_trihedral_pairs::latex_triads(std::ostream &ost)
 	cout << "schlaefli_trihedral_pairs::latex_triads done" << endl;
 }
 
-void schlaefli_trihedral_pairs::print_trihedral_pairs(std::ostream &ost)
+void schlaefli_trihedral_pairs::print_trihedral_pairs(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i, j, a;

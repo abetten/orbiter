@@ -86,7 +86,8 @@ void quartic_curve_domain::init(
 	}
 }
 
-void quartic_curve_domain::init_polynomial_domains(int verbose_level)
+void quartic_curve_domain::init_polynomial_domains(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -226,12 +227,14 @@ void quartic_curve_domain::print_gradient_with_line_breaks_tex(
 			"\\\\\n" /* const char *new_line_text*/);
 }
 
-void quartic_curve_domain::unrank_point(int *v, long int rk)
+void quartic_curve_domain::unrank_point(
+		int *v, long int rk)
 {
 	P->unrank_point(v, rk);
 }
 
-long int quartic_curve_domain::rank_point(int *v)
+long int quartic_curve_domain::rank_point(
+		int *v)
 {
 	long int rk;
 

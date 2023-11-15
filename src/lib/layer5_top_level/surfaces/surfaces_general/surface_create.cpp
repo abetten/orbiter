@@ -573,7 +573,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 					"before create_surface_by_equation" << endl;
 		}
 
-		if (!create_surface_by_equation(
+		create_surface_by_equation(
 				Descr->equation_ring_label,
 				Descr->equation_name_of_formula,
 				Descr->equation_name_of_formula_tex,
@@ -583,13 +583,7 @@ int surface_create::create_surface_from_description(int verbose_level)
 				Descr->equation_parameters_tex,
 				Descr->equation_parameter_values,
 				Descr->select_double_six_string,
-				verbose_level - 2)) {
-			if (f_v) {
-				cout << "surface_create::create_surface_from_description "
-						"cannot create surface" << endl;
-			}
-			return false;
-		}
+				verbose_level - 2);
 		if (f_v) {
 			cout << "surface_create::create_surface_from_description "
 					"after create_surface_by_equation" << endl;
@@ -1612,7 +1606,7 @@ void surface_create::create_surface_Cayley_form(
 
 
 
-int surface_create::create_surface_by_equation(
+void surface_create::create_surface_by_equation(
 		std::string &ring_label,
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
@@ -1631,19 +1625,19 @@ int surface_create::create_surface_by_equation(
 		cout << "surface_create::create_surface_by_equation" << endl;
 	}
 
-	int ret;
-
-	if (f_v) {
-		cout << "surface_create::create_surface_by_equation "
-				"before Surf->create_surface_by_equation" << endl;
-	}
-
+	ring_theory::ring_theory_global Ring_global;
 	ring_theory::homogeneous_polynomial_domain *Ring;
+	int *coeffs;
+	int nb_coeffs;
 
 	Ring = Get_ring(ring_label);
 
 
-	ret = Surf->create_surface_by_equation(
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before Ring_global.parse_equation" << endl;
+	}
+	Ring_global.parse_equation(
 			Ring,
 			name_of_formula,
 			name_of_formula_tex,
@@ -1652,17 +1646,28 @@ int surface_create::create_surface_by_equation(
 			equation_parameters,
 			equation_parameters_tex,
 			equation_parameter_values,
+			coeffs, nb_coeffs,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"after Ring_global.parse_equation" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"before Surf->create_surface_by_coefficient_vector" << endl;
+	}
+	Surf->create_surface_by_coefficient_vector(
+			coeffs,
 			select_double_six_string,
+			name_of_formula,
+			name_of_formula_tex,
 			SO,
-			verbose_level - 1);
+			verbose_level);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation "
 				"after Surf->create_surface_by_equation" << endl;
-	}
-
-	if (!ret) {
-		return false;
 	}
 
 	data_structures::string_tools ST;
@@ -1697,7 +1702,6 @@ int surface_create::create_surface_by_equation(
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation done" << endl;
 	}
-	return true;
 
 }
 
