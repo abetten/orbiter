@@ -1643,7 +1643,7 @@ void set_of_sets::get_eckardt_points(
 		Decomposition->Stack->print_decomposition_scheme(cout,
 			row_classes, nb_row_classes,
 			col_classes, nb_col_classes, 
-			col_scheme, -1, -1);
+			col_scheme);
 	}
 
 	int i, j, c, s, sz;

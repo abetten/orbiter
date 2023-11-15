@@ -34,6 +34,7 @@ surface_with_action::surface_with_action()
 	Elt1 = NULL;
 
 	AonHPD_3_4 = NULL;
+	AonHPD_4_3 = NULL;
 
 	Classify_trihedral_pairs = NULL;
 
@@ -53,6 +54,9 @@ surface_with_action::~surface_with_action()
 	}
 	if (AonHPD_3_4) {
 		FREE_OBJECT(AonHPD_3_4);
+	}
+	if (AonHPD_4_3) {
+		FREE_OBJECT(AonHPD_4_3);
 	}
 	if (Classify_trihedral_pairs) {
 		FREE_OBJECT(Classify_trihedral_pairs);
@@ -142,6 +146,20 @@ void surface_with_action::init(
 	}
 	AonHPD_3_4->init(A, Surf->PolynomialDomains->Poly3_4, verbose_level);
 	
+
+	AonHPD_4_3 = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
+	if (f_v) {
+		cout << "surface_with_action::init "
+				"before AonHPD_4_3->init" << endl;
+	}
+	AonHPD_4_3->init(PA->PA2->A, Surf->PolynomialDomains->Poly4_x123, verbose_level);
+
+
+
+
+
+
+
 #if 1
 	Classify_trihedral_pairs =
 			NEW_OBJECT(cubic_surfaces_and_arcs::classify_trihedral_pairs);

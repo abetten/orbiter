@@ -342,7 +342,8 @@ int &stabilizer_chain_base_data::get_base_len()
 	return base_len;
 }
 
-long int &stabilizer_chain_base_data::base_i(int i)
+long int &stabilizer_chain_base_data::base_i(
+		int i)
 {
 	return base[i];
 }
@@ -352,7 +353,8 @@ long int *&stabilizer_chain_base_data::get_base()
 	return base;
 }
 
-int &stabilizer_chain_base_data::transversal_length_i(int i)
+int &stabilizer_chain_base_data::transversal_length_i(
+		int i)
 {
 	return transversal_length[i];
 }
@@ -362,7 +364,8 @@ int *&stabilizer_chain_base_data::get_transversal_length()
 	return transversal_length;
 }
 
-long int &stabilizer_chain_base_data::orbit_ij(int i, int j)
+long int &stabilizer_chain_base_data::orbit_ij(
+		int i, int j)
 {
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 		return orbit[i][j];
@@ -373,7 +376,8 @@ long int &stabilizer_chain_base_data::orbit_ij(int i, int j)
 	}
 }
 
-long int &stabilizer_chain_base_data::orbit_inv_ij(int i, int j)
+long int &stabilizer_chain_base_data::orbit_inv_ij(
+		int i, int j)
 {
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 		return orbit_inv[i][j];

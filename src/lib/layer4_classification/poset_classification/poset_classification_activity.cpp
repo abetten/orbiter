@@ -302,6 +302,18 @@ void poset_classification_activity::perform_work(
 				PC->get_depth(), verbose_level);
 	}
 
+
+	if (Descr->recognize.size()) {
+		int h;
+
+		for (h = 0; h < Descr->recognize.size(); h++) {
+
+			PC->recognize(Descr->recognize[h],
+					h, Descr->recognize.size(),
+					verbose_level);
+		}
+	}
+
 	if (f_v) {
 		cout << "poset_classification_activity::perform_work done" << endl;
 	}
@@ -392,6 +404,20 @@ void poset_classification_activity::compute_Kramer_Mesner_matrix(
 
 	}
 
+	long int *Mtk_inf;
+
+
+	if (f_v) {
+		cout << "poset_classification_activity::compute_Kramer_Mesner_matrix "
+				"before Asup_to_Ainf" << endl;
+	}
+	Asup_to_Ainf(
+			t, k,
+			Mtk, Mtk_inf, verbose_level);
+	if (f_v) {
+		cout << "poset_classification_activity::compute_Kramer_Mesner_matrix "
+				"after Asup_to_Ainf" << endl;
+	}
 
 
 	orbiter_kernel_system::file_io Fio;
@@ -408,6 +434,18 @@ void poset_classification_activity::compute_Kramer_Mesner_matrix(
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
+
+	fname = PC->get_problem_label() + "_KM_inf_" + std::to_string(t) + "_" + std::to_string(k) + ".csv";
+
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, Mtk_inf, nb_r, nb_c);
+
+	//Mtk.print(cout);
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+
+
 	if (f_v) {
 		cout << "poset_classification_activity::compute_Kramer_Mesner_matrix "
 				"computing Kramer Mesner matrices done" << endl;
@@ -417,6 +455,7 @@ void poset_classification_activity::compute_Kramer_Mesner_matrix(
 	}
 	FREE_plint(pM);
 	FREE_lint(Mtk);
+	FREE_lint(Mtk_inf);
 
 	if (f_v) {
 		cout << "poset_classification_activity::compute_Kramer_Mesner_matrix done" << endl;
@@ -717,7 +756,7 @@ int poset_classification_activity::count_incidences_down(
 
 void poset_classification_activity::Asup_to_Ainf(
 		int t, int k,
-		int *M_sup, int *M_inf, int verbose_level)
+		long int *M_sup, long int *&M_inf, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
@@ -728,7 +767,8 @@ void poset_classification_activity::Asup_to_Ainf(
 	ring_theory::longinteger_object *ol_t;
 	ring_theory::longinteger_object *ol_k;
 	int Nt, Nk;
-	int i, j, a, c;
+	int i, j;
+	long int a, c;
 
 	if (f_v) {
 		cout << "poset_classification_activity::Asup_to_Ainf" << endl;
@@ -736,6 +776,9 @@ void poset_classification_activity::Asup_to_Ainf(
 	Nt = PC->nb_orbits_at_level(t);
 	Nk = PC->nb_orbits_at_level(k);
 	PC->get_stabilizer_order(0, 0, go);
+
+	M_inf = NEW_lint(Nt * Nk);
+
 	if (f_v) {
 		cout << "poset_classification_activity::Asup_to_Ainf go=" << go << endl;
 	}
@@ -791,7 +834,7 @@ void poset_classification_activity::Asup_to_Ainf(
 						<< " ol_k[j]=" << ol_k[j] << endl;
 				exit(1);
 			}
-			c = cc.as_int();
+			c = cc.as_lint();
 			M_inf[i * Nk + j] = c;
 		}
 	}

@@ -454,7 +454,8 @@ void orthogonal::report(std::ostream &ost, int verbose_level)
 	}
 }
 
-void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
+void orthogonal::report_schemes(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -676,8 +677,12 @@ void orthogonal::create_latex_report(int verbose_level)
 		string extra_praeamble;
 
 
-		fname = "O_" + std::to_string(Quadratic_form->epsilon) + "_" + std::to_string(Quadratic_form->n) + "_" + std::to_string(F->q) + ".tex";
-		title = "Orthogonal Space  ${\\rm O}(" + std::to_string(Quadratic_form->epsilon) + "," + std::to_string(Quadratic_form->n) + "," + std::to_string(F->q) + ")$";
+		fname = "O_" + std::to_string(Quadratic_form->epsilon)
+				+ "_" + std::to_string(Quadratic_form->n)
+				+ "_" + std::to_string(F->q) + ".tex";
+		title = "Orthogonal Space  ${\\rm O}(" + std::to_string(Quadratic_form->epsilon)
+				+ "," + std::to_string(Quadratic_form->n) + ","
+				+ std::to_string(F->q) + ")$";
 
 
 		{
@@ -742,7 +747,8 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 	Int_vec_zero(T, N_points * N_lines);
 
 	if (f_v) {
-		cout << "orthogonal::export_incidence_matrix_to_csv computing points on line for all lines" << endl;
+		cout << "orthogonal::export_incidence_matrix_to_csv "
+				"computing points on line for all lines" << endl;
 	}
 
 	for (line_rk = 0; line_rk < N_lines; line_rk++) {

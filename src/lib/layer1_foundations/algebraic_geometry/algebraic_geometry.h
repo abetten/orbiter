@@ -711,6 +711,81 @@ public:
 
 
 
+// #############################################################################
+// schlaefli_double_six.cpp
+// #############################################################################
+
+//! Schlaefli double sixes on a cubic surface
+
+
+class schlaefli_double_six {
+
+public:
+
+	schlaefli *Schlaefli;
+
+
+	long int *Double_six; // [36 * 12]
+	std::string *Double_six_label_tex; // [36]
+
+
+	int *Half_double_six_characteristic_vector; // [72 * 27]
+
+	int *Double_six_characteristic_vector; // [36 * 27]
+
+
+	long int *Half_double_sixes; // [72 * 6]
+		// warning: the half double sixes are sorted individually,
+		// so the pairing between the lines
+		// in the associated double six is gone.
+	std::string *Half_double_six_label_tex; // [72]
+
+	int *Half_double_six_to_double_six; // [72]
+	int *Half_double_six_to_double_six_row; // [72]
+
+
+
+
+	schlaefli_double_six();
+	~schlaefli_double_six();
+	void init(
+			schlaefli *Schlaefli, int verbose_level);
+	void init_double_sixes(
+			int verbose_level);
+	void create_half_double_sixes(
+			int verbose_level);
+	int find_half_double_six(
+			long int *half_double_six);
+	void latex_table_of_double_sixes(
+			std::ostream &ost);
+	void latex_double_six_symbolic(
+			std::ostream &ost, int idx);
+	void latex_double_six_index_set(
+			std::ostream &ost, int idx);
+	void latex_table_of_half_double_sixes(
+			std::ostream &ost);
+	void latex_half_double_six(
+			std::ostream &ost, int idx);
+	void print_half_double_sixes_in_GAP();
+	void write_double_sixes(
+			std::string &prefix, int verbose_level);
+	void print_half_double_sixes_numerically(
+			std::ostream &ost);
+	void latex_double_six(
+			std::ostream &ost, long int *Lines, int idx);
+	void latex_double_six_wedge(
+			std::ostream &ost, long int *Lines, int idx);
+	void latex_double_six_Klein(
+			std::ostream &ost, long int *Lines, int idx);
+	void latex_double_six_Pluecker_coordinates_transposed(
+			std::ostream &ost, long int *Lines, int idx);
+	void latex_double_six_Klein_transposed(
+			std::ostream &ost, long int *Lines, int idx);
+	void print_double_sixes(
+			std::ostream &ost, long int *Lines);
+
+};
+
 
 // #############################################################################
 // schlaefli_labels.cpp
@@ -738,20 +813,17 @@ public:
 
 
 // #############################################################################
-// schlaefli.cpp
+// schlaefli_trihedral_pairs.cpp
 // #############################################################################
 
-//! Schlaefli labeling of objects in cubic surfaces with 27 lines. This is general information that applies to any cubic surface.
+//! Trihedral pairs of a cubic surface with 27 lines using Schlaefli labels.
 
 
-class schlaefli {
+class schlaefli_trihedral_pairs {
 
 public:
 
-	surface_domain *Surf;
-
-
-	schlaefli_labels *Labels;
+	schlaefli *Schlaefli;
 
 
 	int *Trihedral_pairs; // [nb_trihedral_pairs * 9]
@@ -766,21 +838,24 @@ public:
 	data_structures::tally *Classify_trihedral_pairs_row_values;
 	data_structures::tally *Classify_trihedral_pairs_col_values;
 
-	int nb_Eckardt_points; // = 45
-	eckardt_point *Eckardt_points;
+	// these are the axes:
+	//int nb_trihedral_to_Eckardt; // nb_trihedral_pairs * 6
+	long int *Axes; // [nb_trihedral_pairs * 6]
 
-	std::string *Eckard_point_label; // [nb_Eckardt_points]
-	std::string *Eckard_point_label_tex; // [nb_Eckardt_points]
+		// the axes, 6 Eckardt points per trihedral pair.
+		// the first 3 are the axis on the three planes listed in the rows,
+		// the second three are the axis of the three planes formed by the columns.
 
-	int nb_trihedral_to_Eckardt; // nb_trihedral_pairs * 6
-	long int *Trihedral_to_Eckardt;
-		// [nb_trihedral_pairs * 6]
-		// first the three rows, then the three columns
 		// long int so that we can induce the action on it
 
 
+	int nb_axes; // = nb_trihedral_pairs * 2 = 240
 
-	int nb_collinear_Eckardt_triples;
+	data_structures::int_matrix *Axes_sorted;
+	 // [nb_axes * 3];
+
+
+	int nb_collinear_Eckardt_triples; // nb_axes
 		// nb_trihedral_pairs * 2
 	int *collinear_Eckardt_triples_rank;
 		// as three subsets of 45 = nb_Eckardt_points
@@ -788,33 +863,59 @@ public:
 	data_structures::tally *Classify_collinear_Eckardt_triples;
 
 
-	// Schlaefli stuff, part2:
+	schlaefli_trihedral_pairs();
+	~schlaefli_trihedral_pairs();
+	void init(
+			schlaefli *Schlaefli, int verbose_level);
+	void make_trihedral_pairs(int verbose_level);
+	void make_Tijk(
+			int *T, int i, int j, int k);
+	void make_Tlmnp(
+			int *T, int l, int m, int n, int p);
+	void make_Tdefght(
+			int *T, int d, int e, int f, int g, int h, int t);
+	void make_triads(
+			int verbose_level);
+	void make_trihedral_pair_disjointness_graph(
+			int *&Adj, int verbose_level);
+	void process_trihedral_pairs(
+			int verbose_level);
+	void init_axes(int verbose_level);
+	int identify_axis(int *axis_E_idx, int verbose_level);
+	void init_collinear_Eckardt_triples(int verbose_level);
+	void find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
+		int *E_idx, int nb_E,
+		int *&T_idx, int &nb_T, int verbose_level);
+	void latex_abstract_trihedral_pair(
+			std::ostream &ost, int t_idx);
+	void latex_trihedral_pair_as_matrix(
+			std::ostream &ost, int *T, long int *TE);
+	void latex_table_of_trihedral_pairs(std::ostream &ost);
+	void latex_triads(std::ostream &ost);
+	void print_trihedral_pairs(std::ostream &ost);
+
+};
 
 
-	long int *Double_six; // [36 * 12]
-	std::string *Double_six_label_tex; // [36]
+
+// #############################################################################
+// schlaefli_tritangent_planes.cpp
+// #############################################################################
+
+//! Tritangent planes of a cubic surface with 27 lines using Schlaefli labels.
 
 
-	int *Half_double_six_characteristic_vector; // [72 * 27]
+class schlaefli_tritangent_planes {
 
-	int *Double_six_characteristic_vector; // [36 * 27]
+public:
 
+	schlaefli *Schlaefli;
 
-	long int *Half_double_sixes; // [72 * 6]
-		// warning: the half double sixes are sorted individually,
-		// so the pairing between the lines
-		// in the associated double six is gone.
-	std::string *Half_double_six_label_tex; // [72]
+	int nb_Eckardt_points; // = 45
+	eckardt_point *Eckardt_points;
 
-	int *Half_double_six_to_double_six; // [72]
-	int *Half_double_six_to_double_six_row; // [72]
-
-
-	// Schlaefli stuff, part3:
-
-	int *adjacency_matrix_of_lines;
-		// [27 * 27]
-		// indexed by the lines in Schlaefli labeling
+	std::string *Eckard_point_label; // [nb_Eckardt_points]
+	std::string *Eckard_point_label_tex; // [nb_Eckardt_points]
 
 	int *incidence_lines_vs_tritangent_planes;
 		// [27 * 45]
@@ -825,47 +926,92 @@ public:
 		// long int so that we can induce the action on it
 
 
+	schlaefli_tritangent_planes();
+	~schlaefli_tritangent_planes();
+	void init(
+			schlaefli *Schlaefli, int verbose_level);
+	void make_Eckardt_points(int verbose_level);
+	void init_incidence_matrix_of_lines_vs_tritangent_planes(
+			int verbose_level);
+	void find_tritangent_planes_intersecting_in_a_line(
+		int line_idx,
+		int &plane1, int &plane2, int verbose_level);
+	void make_tritangent_plane_disjointness_graph(
+			int *&Adj, int &nb_vertices, int verbose_level);
+	int choose_tritangent_plane_for_Clebsch_map(
+			int line_a, int line_b,
+				int transversal_line, int verbose_level);
+	void latex_tritangent_planes(std::ostream &ost);
+	void latex_table_of_Eckardt_points(std::ostream &ost);
+	void latex_table_of_tritangent_planes(std::ostream &ost);
+	void write_lines_vs_tritangent_planes(
+			std::string &prefix, int verbose_level);
+	int third_line_in_tritangent_plane(
+			int l1, int l2, int verbose_level);
+	int Eckardt_point_from_tritangent_plane(
+			int *tritangent_plane);
+
+};
+
+
+
+// #############################################################################
+// schlaefli.cpp
+// #############################################################################
+
+//! Schlaefli labeling of objects in cubic surfaces with 27 lines.
+
+
+class schlaefli {
+
+public:
+
+	surface_domain *Surf;
+
+
+	schlaefli_labels *Labels;
+
+
+	schlaefli_double_six *Schlaefli_double_six;
+
+	schlaefli_tritangent_planes *Schlaefli_tritangent_planes;
+
+
+	schlaefli_trihedral_pairs *Schlaefli_trihedral_pairs;
+
+
+
+
+	// Schlaefli stuff, part3:
+
+	int *adjacency_matrix_of_lines;
+		// [27 * 27]
+		// indexed by the lines in Schlaefli labeling
+
+
+
 
 	schlaefli();
 	~schlaefli();
 	void init(
 			surface_domain *Surf, int verbose_level);
-	void init_line_data(int verbose_level);
-	void init_Schlaefli_labels(int verbose_level);
-	void find_tritangent_planes_intersecting_in_a_line(
-		int line_idx,
-		int &plane1, int &plane2, int verbose_level);
-	void make_triads(int verbose_level);
-	void make_trihedral_pair_disjointness_graph(
-			int *&Adj, int verbose_level);
-	void make_trihedral_pairs(int verbose_level);
-	void process_trihedral_pairs(int verbose_level);
 	int line_ai(int i);
 	int line_bi(int i);
 	int line_cij(int i, int j);
-	int type_of_line(int line);
+	int type_of_line(
+			int line);
 		// 0 = a_i, 1 = b_i, 2 = c_ij
-	void index_of_line(int line, int &i, int &j);
+	void index_of_line(
+			int line, int &i, int &j);
 		// returns i for a_i, i for b_i and (i,j) for c_ij
-	int third_line_in_tritangent_plane(
-			int l1, int l2, int verbose_level);
-	void make_Tijk(int *T, int i, int j, int k);
-	void make_Tlmnp(int *T, int l, int m, int n, int p);
-	void make_Tdefght(int *T, int d, int e, int f, int g, int h, int t);
-	void make_Eckardt_points(int verbose_level);
-	void init_Trihedral_to_Eckardt(int verbose_level);
-	int Eckardt_point_from_tritangent_plane(int *tritangent_plane);
-	void init_collinear_Eckardt_triples(int verbose_level);
-	void find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
-		int *E_idx, int nb_E,
-		int *&T_idx, int &nb_T, int verbose_level);
-	void init_double_sixes(int verbose_level);
-	void create_half_double_sixes(int verbose_level);
-	int find_half_double_six(long int *half_double_six);
-	void ijklm2n(int i, int j, int k, int l, int m, int &n);
-	void ijkl2mn(int i, int j, int k, int l, int &m, int &n);
-	void ijk2lmn(int i, int j, int k, int &l, int &m, int &n);
-	void ij2klmn(int i, int j, int &k, int &l, int &m, int &n);
+	void ijklm2n(
+			int i, int j, int k, int l, int m, int &n);
+	void ijkl2mn(
+			int i, int j, int k, int l, int &m, int &n);
+	void ijk2lmn(
+			int i, int j, int k, int &l, int &m, int &n);
+	void ij2klmn(
+			int i, int j, int &k, int &l, int &m, int &n);
 	void get_half_double_six_associated_with_Clebsch_map(
 		int line1, int line2, int transversal,
 		int hds[6],
@@ -873,43 +1019,28 @@ public:
 	void prepare_clebsch_map(
 			int ds, int ds_row, int &line1,
 		int &line2, int &transversal, int verbose_level);
-	void init_adjacency_matrix_of_lines(int verbose_level);
-	void init_incidence_matrix_of_lines_vs_tritangent_planes(
+	void init_adjacency_matrix_of_lines(
 			int verbose_level);
-	void set_adjacency_matrix_of_lines(int i, int j);
-	int get_adjacency_matrix_of_lines(int i, int j);
-	int choose_tritangent_plane_for_Clebsch_map(
-			int line_a, int line_b,
-				int transversal_line, int verbose_level);
+	void set_adjacency_matrix_of_lines(
+			int i, int j);
+	int get_adjacency_matrix_of_lines(
+			int i, int j);
 
-	void latex_table_of_double_sixes(std::ostream &ost);
-	void latex_double_six_symbolic(std::ostream &ost, int idx);
-	void latex_double_six_index_set(std::ostream &ost, int idx);
-	void latex_table_of_half_double_sixes(std::ostream &ost);
-	void print_Steiner_and_Eckardt(std::ostream &ost);
-	void latex_abstract_trihedral_pair(std::ostream &ost, int t_idx);
-	void latex_table_of_Schlaefli_labeling_of_lines(std::ostream &ost);
-	void latex_trihedral_pair(
-			std::ostream &ost, int *T, long int *TE);
-	void latex_table_of_trihedral_pairs(std::ostream &ost);
-	void latex_triads(std::ostream &ost);
-	void print_trihedral_pairs(std::ostream &ost);
-	void latex_half_double_six(std::ostream &ost, int idx);
-	void latex_table_of_Eckardt_points(std::ostream &ost);
-	void latex_table_of_tritangent_planes(std::ostream &ost);
-	void print_line(std::ostream &ost, int rk);
-	void print_Schlaefli_labelling(std::ostream &ost);
+	void print_Steiner_and_Eckardt(
+			std::ostream &ost);
+	void latex_table_of_Schlaefli_labeling_of_lines(
+			std::ostream &ost);
+	void print_line(
+			std::ostream &ost, int rk);
+	void print_Schlaefli_labelling(
+			std::ostream &ost);
 	void print_set_of_lines_tex(
 			std::ostream &ost, long int *v, int len);
-	void latex_table_of_clebsch_maps(std::ostream &ost);
-	void print_half_double_sixes_in_GAP();
+	void latex_table_of_clebsch_maps(
+			std::ostream &ost);
 	int identify_Eckardt_point(
 			int line1, int line2, int line3, int verbose_level);
 	void write_lines_vs_line(
-			std::string &prefix, int verbose_level);
-	void write_lines_vs_tritangent_planes(
-			std::string &prefix, int verbose_level);
-	void write_double_sixes(
 			std::string &prefix, int verbose_level);
 
 };
@@ -1081,8 +1212,6 @@ public:
 	void compute_planes_and_dual_point_ranks(int verbose_level);
 	void print_planes_in_trihedral_pairs(std::ostream &ost);
 	void print_tritangent_planes(std::ostream &ost);
-	void print_single_tritangent_plane(
-			std::ostream &ost, int plane_idx);
 
 	void latex_table_of_trihedral_pairs(
 			std::ostream &ost, int *T, int nb_T);
@@ -1104,6 +1233,11 @@ public:
 			std::ostream &ost, int *T, long int *TE);
 	void latex_table_of_trihedral_pairs(std::ostream &ost);
 	void print_Steiner_and_Eckardt(std::ostream &ost);
+
+
+	void print_single_tritangent_plane(
+			std::ostream &ost, int plane_idx);
+
 
 };
 
@@ -1244,6 +1378,10 @@ public:
 			std::vector<std::string> &select_double_six_string,
 			algebraic_geometry::surface_object *&SO,
 			int verbose_level);
+	void pick_double_six(
+			std::string &select_double_six_string,
+			long int *Lines27,
+			int verbose_level);
 	std::string stringify_eqn_maple(int *eqn);
 
 
@@ -1284,10 +1422,14 @@ public:
 
 
 	// surface_domain_lines.cpp:
-	void init_Schlaefli(int verbose_level);
-	void unrank_line(int *v, long int rk);
-	void unrank_lines(int *v, long int *Rk, int nb);
-	long int rank_line(int *v);
+	void init_Schlaefli(
+			int verbose_level);
+	void unrank_line(
+			int *v, long int rk);
+	void unrank_lines(
+			int *v, long int *Rk, int nb);
+	long int rank_line(
+			int *v);
 	void build_cubic_surface_from_lines(
 			int len, long int *S, int *coeff,
 		int verbose_level);
@@ -1409,35 +1551,20 @@ public:
 			std::ostream &ost, int *the_equation);
 	void print_lines_tex(
 			std::ostream &ost, long int *Lines, int nb_lines);
+	void print_trihedral_pair_in_dual_coordinates_in_GAP(
+		long int *F_planes_rank, long int *G_planes_rank);
+	void print_basics(
+			std::ostream &ost);
+	void print_point_with_orbiter_rank(
+			std::ostream &ost, long int rk, int *v);
+	void print_point(
+			std::ostream &ost, int *v);
+	void sstr_line_label(
+			std::stringstream &sstr, long int pt);
 	void print_one_line_tex(
 			std::ostream &ost,
 			long int *Lines, int nb_lines, int idx);
-	void print_trihedral_pair_in_dual_coordinates_in_GAP(
-		long int *F_planes_rank, long int *G_planes_rank);
-	void print_basics(std::ostream &ost);
-	void sstr_line_label(
-			std::stringstream &sstr, long int pt);
 
-#if 0
-	// report the data in the knowledge base:
-	void make_table_of_surfaces(int verbose_level);
-	void make_table_of_surfaces_detailed(
-			int *Q_table, int Q_table_len, int verbose_level);
-	void make_table_of_surfaces2(
-			std::ostream &ost,
-			std::string &prefix,
-			int *Q_table, int Q_table_len, int verbose_level);
-	void table_top(
-			std::ostream &ost);
-	void table_bottom(
-			std::ostream &ost);
-	void compute_table_E(
-			int *field_orders, int nb_fields,
-			long int *&Table,
-			int *&E_type_idx, int &nb_E_max,
-			int *&E, int &nb_E_types,
-			int verbose_level);
-#endif
 
 	// surface_domain_families.cpp:
 	void create_equation_general_abcd(
@@ -1635,7 +1762,6 @@ public:
 			std::ostream &ost);
 	void print_double_sixes(std::ostream &ost);
 	void print_half_double_sixes(std::ostream &ost);
-	void print_half_double_sixes_numerically(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost);
 	void print_trihedral_pairs_numerically(std::ostream &ost);
 
@@ -1729,15 +1855,6 @@ public:
 	void export_something(
 			std::string &what,
 			std::string &fname_base, int verbose_level);
-	void latex_double_six(std::ostream &ost, int idx);
-	void latex_double_six_wedge(
-			std::ostream &ost, int idx);
-	void latex_double_six_Klein(
-			std::ostream &ost, int idx);
-	void latex_double_six_Pluecker_coordinates_transposed(
-			std::ostream &ost, int idx);
-	void latex_double_six_Klein_transposed(
-			std::ostream &ost, int idx);
 	void print_lines_tex(std::ostream &ost);
 	void print_one_line_tex(std::ostream &ost, int idx);
 	void Clebsch_map_up(std::string &fname_base,
@@ -1864,9 +1981,9 @@ public:
 	void split_nice_equation(
 			int *nice_equation, int *&f1,
 		int *&f2, int *&f3, int verbose_level);
-	void assemble_tangent_quadric(
+	void assemble_polar_hypersurface(
 			int *f1, int *f2, int *f3,
-		int *&tangent_quadric, int verbose_level);
+		int *&polar_hypersurface, int verbose_level);
 	void compute_gradient(
 			int *equation20, int *&gradient, int verbose_level);
 	long int compute_tangent_plane(

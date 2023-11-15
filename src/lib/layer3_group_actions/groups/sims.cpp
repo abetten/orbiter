@@ -2166,7 +2166,7 @@ void sims::element_as_permutation(
 	
 	element_unrank_lint(elt_rk, Elt);
 
-	A_special->Group_element->element_as_permutation(Elt, perm, 0);
+	A_special->Group_element->compute_permutation(Elt, perm, 0);
 	
 
 	FREE_int(Elt);

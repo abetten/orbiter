@@ -53,27 +53,13 @@ quartic_curve_from_surface::quartic_curve_from_surface()
 	poly1 = NULL;
 	poly2 = NULL;
 	two = four = mfour = 0;
-	tangent_quadric = NULL;
-	Pts_on_tangent_quadric = NULL;
-	nb_pts_on_tangent_quadric = 0;
-
-	//line_type = NULL;
-	//type_collected = NULL;
-
-	//Class_pts = NULL;
-	//nb_class_pts = 0;
-
-	//Pts_intersection = NULL;
-	//nb_pts_intersection = 0;
+	polar_hypersurface = NULL;
+	Pts_on_polar_hypersurface = NULL;
+	nb_pts_on_polar_hypersurface = 0;
 
 	Pts_on_curve = NULL;
 	sz_curve = 0;
 
-#if 0
-	gens_copy = NULL;
-	moved_surface = NULL;
-	stab_gens_P0 = NULL;
-#endif
 
 	Stab_gens_quartic = NULL;
 }
@@ -116,11 +102,11 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	if (poly2) {
 		FREE_int(poly2);
 	}
-	if (tangent_quadric) {
-		FREE_int(tangent_quadric);
+	if (polar_hypersurface) {
+		FREE_int(polar_hypersurface);
 	}
-	if (Pts_on_tangent_quadric) {
-		FREE_lint(Pts_on_tangent_quadric);
+	if (Pts_on_polar_hypersurface) {
+		FREE_lint(Pts_on_polar_hypersurface);
 	}
 	//if (Pts_intersection) {
 	//	FREE_lint(Pts_intersection);
@@ -128,17 +114,6 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	if (Pts_on_curve) {
 		FREE_lint(Pts_on_curve);
 	}
-#if 0
-	if (gens_copy) {
-		FREE_OBJECT(gens_copy);
-	}
-	if (moved_surface) {
-		FREE_OBJECT(moved_surface);
-	}
-	if (stab_gens_P0) {
-		FREE_OBJECT(stab_gens_P0);
-	}
-#endif
 	if (Stab_gens_quartic) {
 		FREE_OBJECT(Stab_gens_quartic);
 	}
@@ -218,8 +193,9 @@ void quartic_curve_from_surface::quartic(
 		cout << "quartic_curve_from_surface::quartic "
 				"before map_surface_to_special_form" << endl;
 	}
-	map_surface_to_special_form(pt_orbit,
-			SOA->SO->eqn, SOA->SO->Lines, SOA->SO->nb_lines,
+	map_surface_to_special_form(
+			pt_orbit,
+			//SOA->SO->eqn, SOA->SO->Lines, SOA->SO->nb_lines,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
@@ -348,16 +324,16 @@ void quartic_curve_from_surface::quartic(
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic before "
-				"Surf->assemble_tangent_quadric" << endl;
+				"Surf->assemble_polar_hypersurface" << endl;
 	}
-	SOA->Surf->PolynomialDomains->assemble_tangent_quadric(
+	SOA->Surf->PolynomialDomains->assemble_polar_hypersurface(
 			f1, f2, f3,
-			tangent_quadric, verbose_level - 2);
+			polar_hypersurface, verbose_level - 2);
 
 	if (f_v) {
-		cout << "The tangent quadric is " << endl;
+		cout << "The polar hypersurface is " << endl;
 		SOA->Surf->PolynomialDomains->Poly2_4->print_equation(
-				cout, tangent_quadric);
+				cout, polar_hypersurface);
 		cout << endl;
 	}
 
@@ -372,24 +348,23 @@ void quartic_curve_from_surface::quartic(
 		int h;
 
 		SOA->Surf->PolynomialDomains->Poly2_4->enumerate_points(
-				tangent_quadric,
+				polar_hypersurface,
 				Points,
 				0 /* verbose_level */);
 
-		nb_pts_on_tangent_quadric = Points.size();
-		//Pts_on_tangent_quadric = NEW_lint(SOA->Surf->P->N_points);
-		Pts_on_tangent_quadric = NEW_lint(nb_pts_on_tangent_quadric);
+		nb_pts_on_polar_hypersurface = Points.size();
+		Pts_on_polar_hypersurface = NEW_lint(nb_pts_on_polar_hypersurface);
 
-		for (h = 0; h < nb_pts_on_tangent_quadric; h++) {
-			Pts_on_tangent_quadric[h] = Points[h];
+		for (h = 0; h < nb_pts_on_polar_hypersurface; h++) {
+			Pts_on_polar_hypersurface[h] = Points[h];
 		}
 	}
 
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
-				"We found " << nb_pts_on_tangent_quadric
-			<< " points on the tangent quadric." << endl;
+				"We found " << nb_pts_on_polar_hypersurface
+			<< " points on the polar hypersurface." << endl;
 	}
 
 
@@ -397,14 +372,14 @@ void quartic_curve_from_surface::quartic(
 #if 0
 	line_type = NEW_int(SOA->Surf->P->N_lines);
 
-	SOA->Surf->P->line_intersection_type(Pts_on_tangent_quadric,
-			nb_pts_on_tangent_quadric, line_type, verbose_level);
+	SOA->Surf->P->line_intersection_type(Pts_on_polar_hypersurface,
+			nb_pts_on_polar_hypersurface, line_type, verbose_level);
 
 
 
-	type_collected = NEW_int(nb_pts_on_tangent_quadric + 1);
+	type_collected = NEW_int(nb_pts_on_polar_hypersurface + 1);
 
-	Int_vec_zero(type_collected, nb_pts_on_tangent_quadric + 1);
+	Int_vec_zero(type_collected, nb_pts_on_polar_hypersurface + 1);
 	for (i = 0; i < SOA->Surf->P->N_lines; i++) {
 		type_collected[line_type[i]]++;
 	}
@@ -412,9 +387,9 @@ void quartic_curve_from_surface::quartic(
 
 
 #if 0
-	ost << "The line type of the tangent quadric is:" << endl;
+	ost << "The line type of the polar hypersurface is:" << endl;
 	ost << "$$" << endl;
-	for (i = 0; i <= nb_pts_on_tangent_quadric; i++) {
+	for (i = 0; i <= nb_pts_on_polar_hypersurface; i++) {
 		if (type_collected[i] == 0) {
 			continue;
 		}
@@ -434,11 +409,11 @@ void quartic_curve_from_surface::quartic(
 
 
 	Sorting.vec_intersect(Pts_on_surface, nb_pts_on_surface,
-		Pts_on_tangent_quadric, nb_pts_on_tangent_quadric,
+		Pts_on_tangent_quadric, nb_pts_on_polar_hypersurface,
 		Pts_intersection, nb_pts_intersection);
 
 
-	ost << "The tangent quadric intersects the cubic surface in "
+	ost << "The polar hypersurface intersects the cubic surface in "
 			<< nb_pts_intersection << " points." << endl;
 #endif
 
@@ -508,10 +483,14 @@ void quartic_curve_from_surface::quartic(
 
 void quartic_curve_from_surface::map_surface_to_special_form(
 		int pt_orbit,
-	int *old_equation, long int *old_Lines, int nb_lines,
+	//int *old_equation, long int *old_Lines, int nb_lines,
 	int verbose_level)
 // Bitangents[] are listed in the same order
 // as the lines are listed in Lines[]
+// based on SOA->Orbits_on_points_not_on_lines
+// old_equation = SOA->SO->eqn
+// old_Lines = SOA->SO->Lines
+// nb_lines = SOA->SO->nb_lines
 {
 	int f_v = (verbose_level >= 1);
 	int fst;
@@ -551,7 +530,8 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 
 	SOA->Surf_A->A->Strong_gens->make_element_which_moves_a_point_from_A_to_B(
 			SOA->Surf_A->A,
-			pt_A, pt_B, transporter, verbose_level);
+			pt_A, pt_B, transporter,
+			verbose_level);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -561,8 +541,10 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 	}
 
 	SOA->Surf_A->AonHPD_3_4->compute_image_int_low_level(
-			transporter, old_equation /*int *input*/,
-			equation_nice /* int *output */, verbose_level);
+			transporter,
+			SOA->SO->eqn /*int *input*/,
+			equation_nice /* int *output */,
+			verbose_level);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -589,8 +571,26 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
 				"mapping the lines" << endl;
 	}
-	quartic_curve_from_surface::nb_lines = nb_lines;
+	nb_lines = SOA->SO->nb_lines;
 	Lines_nice = NEW_lint(nb_lines);
+
+	for (i = 0; i < nb_lines; i++) {
+
+		if (f_v) {
+			cout << "quartic_curve_from_surface::map_surface_to_special_form "
+					"Line i=" << i << " = "
+					<< SOA->SO->Surf->Schlaefli->Labels->Line_label[i] << ":" << endl;
+		}
+
+		Lines_nice[i] = SOA->Surf_A->A2->Group_element->element_image_of(
+				SOA->SO->Lines[i], transporter, 0);
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+				"computing the bitangent lines" << endl;
+	}
+
 	nb_bitangents = nb_lines + 1;
 	Bitangents = NEW_lint(nb_lines + 1);
 	for (i = 0; i < nb_lines; i++) {
@@ -606,8 +606,6 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 		int Basis6[6];
 		int j;
 
-		Lines_nice[i] = SOA->Surf_A->A2->Group_element->element_image_of(
-				old_Lines[i], transporter, 0);
 
 		SOA->Surf_A->PA->P->Subspaces->Grass_lines->unrank_lint_here(
 				Basis8, Lines_nice[i], 0);
@@ -702,7 +700,8 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::map_surface_to_special_form Lines_nice = ";
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+				"Lines_nice = ";
 		Lint_vec_print(cout, Lines_nice, nb_lines);
 		cout << endl;
 	}
@@ -731,30 +730,30 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 
 	groups::strong_generators *SG_pt_stab = NULL;
 	ring_theory::longinteger_object pt_stab_order;
-	geometry::object_with_canonical_form *OiP = NULL;
+	geometry::object_with_canonical_form *OwCF = NULL;
 
 	int f_compute_canonical_form = false;
 	data_structures::bitvector *Canonical_form;
 
 
-	OiP = NEW_OBJECT(geometry::object_with_canonical_form);
+	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"before OiP->init_point_set" << endl;
+				"before OwCF->init_point_set" << endl;
 	}
-	OiP->init_point_set(
+	OwCF->init_point_set(
 			Pts_on_curve, sz_curve,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"after OiP->init_point_set" << endl;
+				"after OwCF->init_point_set" << endl;
 	}
-	OiP->P = Surf_A->PA->PA2->P;
+	OwCF->P = Surf_A->PA->PA2->P;
 
 	int nb_rows, nb_cols;
 
-	OiP->encoding_size(
+	OwCF->encoding_size(
 				nb_rows, nb_cols,
 				verbose_level);
 	if (f_v) {
@@ -783,7 +782,7 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 
 
 	SG_pt_stab = Nau.set_stabilizer_of_object(
-		OiP,
+			OwCF,
 		Surf_A->PA->PA2->A,
 		f_compute_canonical_form, Canonical_form,
 		NO,
@@ -814,24 +813,7 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 				"pt_stab_order = " << pt_stab_order << endl;
 	}
 
-	FREE_OBJECT(OiP);
-
-	induced_actions::action_on_homogeneous_polynomials *AonHPD;
-
-	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"before AonHPD->init" << endl;
-	}
-	AonHPD->init(
-			Surf_A->PA->PA2->A,
-			Surf_A->Surf->PolynomialDomains->Poly4_x123,
-			verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"after AonHPD->init" << endl;
-	}
-
+	FREE_OBJECT(OwCF);
 
 
 
@@ -848,9 +830,12 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
 				"before Orb->init" << endl;
 	}
-	Orb->init(Surf_A->PA->PA2->A, Surf_A->PA->F,
-		AonHPD,
-		SG_pt_stab /* A->Strong_gens*/, curve,
+	Orb->init(
+			Surf_A->PA->PA2->A,
+			Surf_A->PA->F,
+			Surf_A->AonHPD_4_3 /* AonHPD */,
+		SG_pt_stab /* A->Strong_gens*/,
+		curve,
 		verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
@@ -877,7 +862,6 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 
 	FREE_OBJECT(SG_pt_stab);
 	FREE_OBJECT(Orb);
-	FREE_OBJECT(AonHPD);
 
 
 	if (f_v) {
@@ -1012,41 +996,41 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 
 
-	ost << "The tangent quadric is given as" << endl;
+	ost << "The polar hypersurface is given as" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal C}_2 = & {\\rm \\bf v}(2x_0 \\cdot f_1 + f_2) = {\\rm \\bf v}(";
 	SOA->Surf->PolynomialDomains->Poly2_4->print_equation_with_line_breaks_tex(
 			ost,
-			tangent_quadric, 8 /* nb_terms_per_line */, "\\\\\n&");
+			polar_hypersurface, 8 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 
 
-	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric
+	ost << "The polar hypersurface has " << nb_pts_on_polar_hypersurface
 			<< " points.\\\\" << endl;
 
 	//Sorting.lint_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
 #if 1
-	ost << "The points on the tangent quadric are:\\\\" << endl;
+	ost << "The points on the polar hypersurface are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
-		SOA->Surf->unrank_point(v, Pts_on_tangent_quadric[i]);
+	for (i = 0; i < nb_pts_on_polar_hypersurface; i++) {
+		SOA->Surf->unrank_point(v, Pts_on_polar_hypersurface[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
-				<< Pts_on_tangent_quadric[i] << "}=";
+				<< Pts_on_polar_hypersurface[i] << "}=";
 		Int_vec_print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
 #endif
 
-	ost << "The points on the tangent quadric are: ";
-	Lint_vec_print_fully(ost, Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
+	ost << "The points on the polar hypersurface are: ";
+	Lint_vec_print_fully(ost, Pts_on_polar_hypersurface, nb_pts_on_polar_hypersurface);
 	ost << "\\\\" << endl;
 
 
 
 
-	//ost << "The tangent quadric intersects the cubic surface in "
+	//ost << "The polar hypersurface intersects the cubic surface in "
 	//		<< nb_pts_intersection << " points." << endl;
 
 

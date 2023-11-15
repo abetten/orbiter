@@ -698,8 +698,8 @@ void kovalevski_points::print_lines_and_points_of_contact(
 		std::ostream &ost,
 		long int *Lines, int nb_lines)
 {
-	int i, j, h;
-	int verbose_level = 1;
+	int i, j;
+	//int verbose_level = 1;
 	long int a;
 	l1_interfaces::latex_interface L;
 	int w[3];

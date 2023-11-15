@@ -20,7 +20,8 @@ namespace algebraic_geometry {
 
 
 
-void surface_domain::init_Schlaefli(int verbose_level)
+void surface_domain::init_Schlaefli(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -48,12 +49,14 @@ void surface_domain::init_Schlaefli(int verbose_level)
 
 
 
-void surface_domain::unrank_line(int *v, long int rk)
+void surface_domain::unrank_line(
+		int *v, long int rk)
 {
 	Gr->unrank_lint_here(v, rk, 0 /* verbose_level */);
 }
 
-void surface_domain::unrank_lines(int *v, long int *Rk, int nb)
+void surface_domain::unrank_lines(
+		int *v, long int *Rk, int nb)
 {
 	int i;
 
@@ -62,7 +65,8 @@ void surface_domain::unrank_lines(int *v, long int *Rk, int nb)
 	}
 }
 
-long int surface_domain::rank_line(int *v)
+long int surface_domain::rank_line(
+		int *v)
 {
 	long int rk;
 
@@ -100,7 +104,8 @@ void surface_domain::build_cubic_surface_from_lines(
 		cout << "surface_domain::build_cubic_surface_from_lines "
 				"before F->Gauss_simple" << endl;
 	}
-	r = F->Linear_algebra->Gauss_simple(System,
+	r = F->Linear_algebra->Gauss_simple(
+			System,
 			nb_rows, PolynomialDomains->nb_monomials,
 		base_cols, 0 /* verbose_level */);
 	if (f_v) {
@@ -111,7 +116,8 @@ void surface_domain::build_cubic_surface_from_lines(
 	if (false) {
 		cout << "surface_domain::create_system "
 				"The system in RREF:" << endl;
-		Int_matrix_print(System, nb_rows, PolynomialDomains->nb_monomials);
+		Int_matrix_print(
+				System, nb_rows, PolynomialDomains->nb_monomials);
 	}
 	if (f_v) {
 		cout << "surface_domain::create_system "
@@ -132,7 +138,8 @@ void surface_domain::build_cubic_surface_from_lines(
 		cout << "surface_domain::build_cubic_surface_from_lines "
 				"before F->matrix_get_kernel" << endl;
 	}
-	F->Linear_algebra->matrix_get_kernel(System,
+	F->Linear_algebra->matrix_get_kernel(
+			System,
 			r, PolynomialDomains->nb_monomials, base_cols, r,
 		kernel_m, kernel_n, coeff,
 		0 /* verbose_level */);
@@ -167,7 +174,8 @@ int surface_domain::rank_of_system(
 
 	int base_cols[20];
 
-	r = F->Linear_algebra->Gauss_simple(System,
+	r = F->Linear_algebra->Gauss_simple(
+			System,
 			nb_rows, PolynomialDomains->nb_monomials,
 		base_cols, 0 /* verbose_level */);
 
@@ -360,7 +368,7 @@ void surface_domain::compute_intersection_points_and_indices(
 	}
 	Intersection_pt = NEW_int(nb_lines * nb_lines);
 	Intersection_pt_idx = NEW_int(nb_lines * nb_lines);
-	orbiter_kernel_system::Orbiter->Int_vec->mone(Intersection_pt, nb_lines * nb_lines);
+	Int_vec_mone(Intersection_pt, nb_lines * nb_lines);
 
 	for (j1 = 0; j1 < nb_lines; j1++) {
 		a1 = Lines[j1];
@@ -635,7 +643,8 @@ int surface_domain::five_plus_one_to_double_six(
 	Perp = NEW_plint(nb_subsets);
 	Perp_sz = NEW_int(nb_subsets);
 	if (f_v) {
-		cout << "surface_domain::five_plus_one_to_double_six computing perp of 4-subsets" << endl;
+		cout << "surface_domain::five_plus_one_to_double_six "
+				"computing perp of 4-subsets" << endl;
 	}
 	for (rk = 0; rk < nb_subsets; rk++) {
 		Combi.unrank_k_subset(rk, subset, 5, 4);
@@ -644,14 +653,16 @@ int surface_domain::five_plus_one_to_double_six(
 		}
 
 		if (f_v) {
-			cout << "surface_domain::five_plus_one_to_double_six subset " << rk << " / " << nb_subsets << " : " << endl;
+			cout << "surface_domain::five_plus_one_to_double_six "
+					"subset " << rk << " / " << nb_subsets << " : " << endl;
 		}
 		O->perp_of_k_points(
 				pts, 4,
 			Perp[rk], Perp_sz[rk],
 			0/*verbose_level - 1*/);
 		if (false) {
-			cout << "surface_domain::five_plus_one_to_double_six the perp of the subset ";
+			cout << "surface_domain::five_plus_one_to_double_six "
+					"the perp of the subset ";
 			Int_vec_print(cout, subset, 4);
 			cout << " has size " << Perp_sz[rk] << " : ";
 			Lint_vec_print(cout, Perp[rk], Perp_sz[rk]);
@@ -718,13 +729,15 @@ int surface_domain::five_plus_one_to_double_six(
 
 	//Perp_opp = NEW_int(O->alpha * (O->q + 1));
 	if (f_v) {
-		cout << "surface_domain::five_plus_one_to_double_six before O->perp_of_k_points" << endl;
+		cout << "surface_domain::five_plus_one_to_double_six "
+				"before O->perp_of_k_points" << endl;
 	}
 	O->perp_of_k_points(
 			opposites, 4, Perp_opp, Perp_opp_sz,
 			0/*verbose_level - 1*/);
 	if (f_v) {
-		cout << "surface_domain::five_plus_one_to_double_six after O->perp_of_k_points" << endl;
+		cout << "surface_domain::five_plus_one_to_double_six "
+				"after O->perp_of_k_points" << endl;
 	}
 	if (false) {
 		cout << "the perp of the opposite subset ";
@@ -735,7 +748,8 @@ int surface_domain::five_plus_one_to_double_six(
 	}
 	if (Perp_opp_sz != 2) {
 		ret = false;
-		cout << "surface_domain::five_plus_one_to_double_six Perp_opp_sz != 2, "
+		cout << "surface_domain::five_plus_one_to_double_six "
+				"Perp_opp_sz != 2, "
 				"something is wrong" << endl;
 		exit(1);
 		FREE_lint(Perp_opp);
@@ -750,7 +764,8 @@ int surface_domain::five_plus_one_to_double_six(
 		transversal_opp = Perp_opp[0];
 	}
 	else {
-		cout << "surface_domain::five_plus_one_to_double_six something is wrong "
+		cout << "surface_domain::five_plus_one_to_double_six "
+				"something is wrong "
 				"with Perp_opp" << endl;
 		exit(1);
 	}
@@ -979,7 +994,8 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 		}
 
 		if (I5_sz[rk] != 1) {
-			cout << "surface_domain::create_double_six I5_sz[rk] != 1" << endl;
+			cout << "surface_domain::create_double_six "
+					"I5_sz[rk] != 1" << endl;
 			ret = false;
 			goto free_it;
 		}
@@ -1041,7 +1057,8 @@ free_it:
 
 
 	if (f_v) {
-		cout << "surface_domain::create_double_six_from_six_disjoint_lines done" << endl;
+		cout << "surface_domain::create_double_six_from_six_disjoint_lines "
+				"done" << endl;
 	}
 	return ret;
 }
@@ -1085,7 +1102,8 @@ void surface_domain::create_the_fifteen_other_lines(
 			cout << "the rank is not 3" << endl;
 			exit(1);
 		}
-		Planes[h] = Gr3->rank_lint_here(Basis0,
+		Planes[h] = Gr3->rank_lint_here(
+				Basis0,
 				0/* verbose_level*/);
 		if (f_v) {
 			cout << "plane " << h << " / " << 30
@@ -1185,7 +1203,8 @@ int surface_domain::test_double_six_property(
 			}
 			if (Adj[i * 12 + j] != expect) {
 				cout << "surface_domain::test_double_six_property double six property is "
-						"violated for " << Schlaefli->Labels->Line_label[i] << " and " << Schlaefli->Labels->Line_label[j] << endl;
+						"violated for " << Schlaefli->Labels->Line_label[i]
+						<< " and " << Schlaefli->Labels->Line_label[j] << endl;
 				f_fail = true;
 			}
 		}
@@ -1216,8 +1235,8 @@ void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 	int *&Adj, long int *S, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
-	long int *o_rank;
+	//int i, j;
+	//long int *o_rank;
 
 	if (f_v) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_intersection_graph" << endl;
@@ -1230,6 +1249,12 @@ void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 	}
 #endif
 
+	Klein->compute_line_intersection_graph(
+			S /* Lines */, n /* nb_lines */, Adj,
+			false /* f_complement */,
+			0 /*verbose_level*/);
+
+#if 0
 	o_rank = NEW_lint(n);
 	for (i = 0; i < n; i++) {
 		o_rank[i] = Klein->line_to_point_on_quadric(
@@ -1248,6 +1273,8 @@ void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 		}
 	}
 	FREE_lint(o_rank);
+#endif
+
 	if (f_v) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_intersection_graph done" << endl;
 	}
@@ -1264,8 +1291,8 @@ void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
 	int *&Adj, long int *S, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
-	long int *o_rank;
+	//int i, j;
+	//long int *o_rank;
 
 	if (f_v) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_disjointness_graph" << endl;
@@ -1278,6 +1305,13 @@ void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
 	}
 #endif
 
+	Klein->compute_line_intersection_graph(
+			S /* Lines */, n /* nb_lines */, Adj,
+			true /* f_complement */,
+			0 /*verbose_level*/);
+
+
+#if 0
 	o_rank = NEW_lint(n);
 	for (i = 0; i < n; i++) {
 		o_rank[i] = Klein->line_to_point_on_quadric(
@@ -1296,6 +1330,8 @@ void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
 		}
 	}
 	FREE_lint(o_rank);
+#endif
+
 	if (f_v) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_disjointness_graph done" << endl;
 	}
@@ -1415,33 +1451,52 @@ void surface_domain::rearrange_lines_according_to_a_given_double_six(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *Adj;
-	int nb_lines = 27;
-	int i, j, h;
 
 	if (f_v) {
 		cout << "surface_domain::rearrange_lines_according_to_a_given_double_six" << endl;
 	}
+
+#if 0
+	int *Adj;
+	int nb_lines = 27;
+
 	if (f_v) {
 		cout << "surface_domain::rearrange_lines_according_to_a_given_double_six "
 			"before compute_adjacency_matrix_of_line_intersection_graph" << endl;
 	}
-	compute_adjacency_matrix_of_line_intersection_graph(Adj,
+	compute_adjacency_matrix_of_line_intersection_graph(
+			Adj,
 		Lines, nb_lines, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::rearrange_lines_according_to_a_given_double_six "
+			"after compute_adjacency_matrix_of_line_intersection_graph" << endl;
+	}
+#endif
+
+	int i, j, h;
 
 	for (i = 0; i < 12; i++) {
 		New_lines[i] = Lines[given_double_six[i]];
 	}
 
 
+	if (f_v) {
+		cout << "surface_domain::rearrange_lines_according_to_a_given_double_six "
+			"before computing c_ij lines" << endl;
+	}
 	h = 0;
 	for (i = 0; i < 6; i++) {
 		for (j = i + 1; j < 6; j++, h++) {
 			New_lines[12 + h] = compute_cij(
 					New_lines /* double_six */, i, j,
-				0 /* verbose_level */);
+				verbose_level - 1);
 		}
 	}
+	if (f_v) {
+		cout << "surface_domain::rearrange_lines_according_to_a_given_double_six "
+			"after computing c_ij lines" << endl;
+	}
+
 	if (f_v) {
 		cout << "New_lines:";
 		Lint_vec_print(cout, New_lines, 27);
@@ -1763,7 +1818,7 @@ void surface_domain::create_lines_from_plane_equations(
 	}
 
 	for (line_idx = 0; line_idx < 27; line_idx++) {
-		Schlaefli->find_tritangent_planes_intersecting_in_a_line(
+		Schlaefli->Schlaefli_tritangent_planes->find_tritangent_planes_intersecting_in_a_line(
 			line_idx, plane1, plane2, 0 /* verbose_level */);
 		Int_vec_copy(
 				The_plane_equations + plane1 * 4, Basis, 4);
@@ -1853,8 +1908,8 @@ long int surface_domain::compute_cij(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "surface_domain::compute_cij before matrix_get_"
-				"kernel Basis1" << endl;
+		cout << "surface_domain::compute_cij "
+				"before matrix_get_kernel Basis1" << endl;
 	}
 	F->Linear_algebra->matrix_get_kernel(
 			Basis1, 3, 4, base_cols1, 3,
@@ -1875,12 +1930,13 @@ long int surface_domain::compute_cij(
 		}
 	}
 	if (f_v) {
-		cout << "surface_domain::compute_cij before matrix_"
-				"get_kernel Basis2" << endl;
+		cout << "surface_domain::compute_cij "
+				"before matrix_get_kernel Basis2" << endl;
 	}
 	F->Linear_algebra->matrix_get_kernel(
 			Basis2, 3, 4, base_cols2, 3,
 		kernel_m, kernel_n, K2, 0 /* verbose_level */);
+
 	if (kernel_m != 4) {
 		cout << "surface_domain::compute_cij kernel_m != 4 "
 				"when computing K2" << endl;

@@ -865,7 +865,7 @@ void surface_object_with_group::init_orbits_on_half_double_sixes(
 		cout << "creating action on half double sixes:" << endl;
 	}
 	A_single_sixes = A_on_the_lines->Induced_action->create_induced_action_on_sets(
-			72, 6, Surf->Schlaefli->Double_six,
+			72, 6, Surf->Schlaefli->Schlaefli_double_six->Double_six,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on half double sixes done" << endl;
@@ -969,7 +969,7 @@ void surface_object_with_group::init_orbits_on_tritangent_planes(
 	A_on_tritangent_planes =
 			A_on_the_lines->Induced_action->create_induced_action_on_sets(
 			SO->SOP->SmoothProperties->nb_tritangent_planes, 3,
-			Surf->Schlaefli->Lines_in_tritangent_planes,
+			Surf->Schlaefli->Schlaefli_tritangent_planes->Lines_in_tritangent_planes,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on tritangent planes done" << endl;
@@ -1121,7 +1121,7 @@ void surface_object_with_group::init_orbits_on_trihedral_pairs(
 	A_on_trihedral_pairs =
 			A_on_tritangent_planes->Induced_action->create_induced_action_on_sets(
 					120, 6,
-					Surf->Schlaefli->Trihedral_to_Eckardt,
+					Surf->Schlaefli->Schlaefli_trihedral_pairs->Axes,
 					0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on trihedral pairs created" << endl;
@@ -1322,9 +1322,11 @@ void surface_object_with_group::print_automorphism_group(
 	int nb;
 	int block_width = 10;
 	nb = Orbits_on_lines->nb_orbits;
+
 	Orbits_on_lines->get_orbit_decomposition_scheme_of_graph(
 			SO->SOP->Adj_line_intersection_graph, SO->nb_lines, Decomp_scheme,
 			0 /*verbose_level*/);
+
 	ost << "\\subsection*{Decomposition scheme of line intersection graph}" << endl;
 	ost << "Decomposition scheme of line intersection graph:" << endl;
 	L.print_integer_matrix_tex_block_by_block(ost,
@@ -1459,7 +1461,7 @@ void surface_object_with_group::cheat_sheet_basic(
 
 			ost << "orbit rep:" << endl;
 			ost << "$$" << endl;
-			Surf->Schlaefli->latex_half_double_six(ost, idx);
+			Surf->Schlaefli->Schlaefli_double_six->latex_half_double_six(ost, idx);
 			ost << "$$" << endl;
 
 		}
@@ -1472,7 +1474,8 @@ void surface_object_with_group::cheat_sheet_basic(
 	}
 }
 
-void surface_object_with_group::cheat_sheet(std::ostream &ost,
+void surface_object_with_group::cheat_sheet(
+		std::ostream &ost,
 		std::string &label_txt,
 		std::string &label_tex,
 		int f_print_orbits, std::string &fname_mask,
@@ -1613,6 +1616,248 @@ void surface_object_with_group::cheat_sheet(std::ostream &ost,
 
 }
 
+void surface_object_with_group::cheat_sheet_group_elements(
+		std::ostream &ost,
+		std::string &fname_csv,
+		std::string &col_heading,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet_group_elements" << endl;
+		cout << "surface_object_with_group::cheat_sheet_group_elements "
+				"verbose_level = " << verbose_level << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	data_structures::string_tools ST;
+
+	data_structures::spreadsheet S;
+
+	S.read_spreadsheet(fname_csv, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet_group_elements "
+				"S.nb_rows = " << S.nb_rows << endl;
+		cout << "surface_object_with_group::cheat_sheet_group_elements "
+				"S.nb_cols = " << S.nb_cols << endl;
+	}
+
+
+	int idx_input;
+	int row;
+
+	int *Data;
+	int *data;
+	int sz;
+	int N;
+
+
+	N = S.nb_rows - 1;
+	Data = NEW_int(N * Surf_A->A->make_element_size);
+
+	idx_input = S.find_column(col_heading);
+
+	for (row = 0; row < N; row++) {
+
+		string s_data;
+		string s_data2;
+
+
+		s_data = S.get_entry_ij(row + 1, idx_input);
+
+		ST.drop_quotes(s_data, s_data2);
+
+		Int_vec_scan(s_data2, data, sz);
+		cout << "read:" << s_data2 << endl;
+		if (sz != Surf_A->A->make_element_size) {
+			cout << "data size mismatch" << endl;
+			cout << "sz = " << sz << endl;
+			cout << "Surf_A->A->make_element_size = " << Surf_A->A->make_element_size << endl;
+			exit(1);
+		}
+		Int_vec_copy(data,
+				Data + row * Surf_A->A->make_element_size,
+				Surf_A->A->make_element_size);
+	}
+
+	int *Elt;
+	int i;
+
+	Elt = NEW_int(Surf_A->A->elt_size_in_int);
+
+	int nb_col = 13;
+	int nb;
+	string *Table;
+
+	nb = S.nb_cols + nb_col;
+	Table = new string[N * nb];
+
+	for (i = 0; i < N; i++) {
+
+		int j;
+
+
+		for (j = 0; j < S.nb_cols; j++) {
+
+			Table[i * nb + j] = S.get_entry_ij(i + 1, j);
+		}
+		cout << "Element " << i << " / " << N << " is:" << endl;
+		ost << "$" << endl;
+
+		Surf_A->A->Group_element->make_element(
+				Elt, Data + i * Surf_A->A->make_element_size,
+				0 /*verbose_level*/);
+
+		Surf_A->A->Group_element->element_print_latex(Elt, ost);
+
+#if 0
+		actions::action *A_on_points;
+		actions::action *A_on_Eckardt_points;
+		actions::action *A_on_Double_points;
+		actions::action *A_on_Single_points;
+		actions::action *A_on_the_lines;
+		actions::action *A_single_sixes;
+		actions::action *A_double_sixes;
+		actions::action *A_on_tritangent_planes;
+		actions::action *A_on_Hesse_planes;
+		actions::action *A_on_axes;
+		actions::action *A_on_trihedral_pairs;
+		actions::action *A_on_pts_not_on_lines;
+#endif
+
+#if 0
+		A_on_points->Group_element->element_order_and_cycle_type_verbose(
+				void *elt, int *cycle_type, int verbose_level)
+		// cycle_type[i - 1] is the number of cycles of length i for 1 le i le n
+#endif
+
+		ost << "$" << endl;
+		ost << "\\\\" << endl;
+		ost << "\\bigskip" << endl;
+
+		data_structures_groups::vector_ge *gens;
+
+		gens = NEW_OBJECT(data_structures_groups::vector_ge);
+
+		gens->init_single(Surf_A->A, Elt, verbose_level);
+
+
+		groups::schreier **Orbits;
+
+		Orbits = (groups::schreier **) NEW_pvoid(nb_col);
+
+		// ToDo:
+		if (f_v) {
+			cout << "surface_object_with_group::cheat_sheet_group_elements "
+					"before compute_all_point_orbits_schreier" << endl;
+		}
+		Orbits[0] = gens->compute_all_point_orbits_schreier(Surf_A->A, verbose_level - 2);
+		Orbits[1] = gens->compute_all_point_orbits_schreier(A_on_points, verbose_level - 2);
+		Orbits[2] = gens->compute_all_point_orbits_schreier(A_on_Eckardt_points, verbose_level - 2);
+		Orbits[3] = gens->compute_all_point_orbits_schreier(A_on_Double_points, verbose_level - 2);
+		Orbits[4] = gens->compute_all_point_orbits_schreier(A_on_Single_points, verbose_level - 2);
+		Orbits[5] = gens->compute_all_point_orbits_schreier(A_on_the_lines, verbose_level - 2);
+		Orbits[6] = gens->compute_all_point_orbits_schreier(A_single_sixes, verbose_level - 2);
+		Orbits[7] = gens->compute_all_point_orbits_schreier(A_double_sixes, verbose_level - 2);
+		Orbits[8] = gens->compute_all_point_orbits_schreier(A_on_tritangent_planes, verbose_level - 2);
+		Orbits[9] = gens->compute_all_point_orbits_schreier(A_on_Hesse_planes, verbose_level - 2);
+		Orbits[10] = gens->compute_all_point_orbits_schreier(A_on_axes, verbose_level - 2);
+		Orbits[11] = gens->compute_all_point_orbits_schreier(A_on_trihedral_pairs, verbose_level - 2);
+		Orbits[12] = gens->compute_all_point_orbits_schreier(A_on_pts_not_on_lines, verbose_level - 2);
+
+		for (j = 0; j < nb_col; j++) {
+
+			string s;
+			data_structures::tally *Classify_orbits_by_length;
+
+			Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
+
+			Classify_orbits_by_length->init(Orbits[j]->orbit_len, Orbits[j]->nb_orbits, false, 0);
+
+			cout << "j=" << j << " : ";
+			s = Classify_orbits_by_length->stringify_bare_tex(false);
+			cout << s << endl;
+
+			Table[i * nb + S.nb_cols + j] = "\"" + s + "\"";
+
+
+			FREE_OBJECT(Classify_orbits_by_length);
+		}
+
+		for (j = 0; j < nb_col; j++) {
+			FREE_OBJECT(Orbits[j]);
+		}
+
+		FREE_pvoid((void **) Orbits);
+
+		if (f_v) {
+			cout << "surface_object_with_group::cheat_sheet_group_elements "
+					"after compute_all_point_orbits_schreier" << endl;
+		}
+
+
+
+	}
+
+	string fname;
+	string *Headings;
+	string headings;
+
+	Headings = new string[nb];
+
+
+	int j;
+
+	for (j = 0; j < S.nb_cols; j++) {
+
+		Headings[j] = S.get_entry_ij(0, j);
+	}
+	for (j = 0; j < nb_col; j++) {
+		Headings[S.nb_cols + j] = "ORB" + std::to_string(j);
+	}
+
+	for (j = 0; j < nb; j++) {
+		headings += Headings[j];
+		if (j < nb - 1) {
+			headings += ",";
+		}
+	}
+
+	fname = fname_csv;
+	ST.chop_off_extension(fname);
+	fname += "_properties.csv";
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet_group_elements "
+				"before Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+	Fio.Csv_file_support->write_table_of_strings(fname,
+			N, nb, Table,
+			headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::export_csv "
+				"after Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+
+	delete [] Headings;
+	delete [] Table;
+
+	FREE_int(Elt);
+	FREE_int(Data);
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet_group_elements "
+				"done" << verbose_level << endl;
+	}
+}
+
+
+
 void surface_object_with_group::print_automorphism_group_generators(
 		std::ostream &ost, int verbose_level)
 {
@@ -1750,7 +1995,8 @@ void surface_object_with_group::print_automorphism_group_generators(
 						<< " before export_group_and_copy_to_latex" << endl;
 			}
 
-			Syl->Sub[idx].SG->export_group_and_copy_to_latex(label_group,
+			Syl->Sub[idx].SG->export_group_and_copy_to_latex(
+					label_group,
 					ost,
 					projectivity_group_gens->A,
 					verbose_level - 2);
@@ -1768,7 +2014,8 @@ void surface_object_with_group::print_automorphism_group_generators(
 						"idx=" << idx << " / " << Syl->nb_primes
 						<< " before export_group_and_copy_to_latex" << endl;
 			}
-			Syl->Sub[idx].SG->export_group_and_copy_to_latex(label_group,
+			Syl->Sub[idx].SG->export_group_and_copy_to_latex(
+					label_group,
 					ost,
 					A_on_the_lines,
 					verbose_level - 2);
@@ -2468,7 +2715,7 @@ void surface_object_with_group::print_everything(
 		cout << "surface_object_with_group::print_everything "
 				"before print_half_double_sixes_numerically" << endl;
 	}
-	SO->SOP->print_half_double_sixes_numerically(ost);
+	Surf->Schlaefli->Schlaefli_double_six->print_half_double_sixes_numerically(ost);
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
 				"after print_half_double_sixes_numerically" << endl;
@@ -2497,14 +2744,14 @@ void surface_object_with_group::print_everything(
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
-				"before tactical_decomposition" << endl;
+				"before tactical_decomposition_inside_projective_space" << endl;
 	}
-	tactical_decomposition(
+	tactical_decomposition_inside_projective_space(
 			ost,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
-				"after tactical_decomposition" << endl;
+				"after tactical_decomposition_inside_projective_space" << endl;
 	}
 
 	if (f_v) {
@@ -2518,6 +2765,32 @@ void surface_object_with_group::print_summary(
 {
 	ost << "\\subsection*{Summary}" << endl;
 
+	string s_orbits_lines;
+	string s_orbits_points;
+	string s_orbits_Eckardt_points;
+	string s_orbits_Double_points;
+	string s_orbits_Single_points;
+	string s_orbits_Zero_points;
+	string s_orbits_Hesse_planes;
+	string s_orbits_Axes;
+	string s_orbits_single_sixes;
+	string s_orbits_double_sixes;
+	string s_orbits_tritangent_planes;
+	string s_orbits_trihedral_pairs;
+
+	Orbits_on_lines->print_orbit_length_distribution_to_string(s_orbits_lines);
+	Orbits_on_points->print_orbit_length_distribution_to_string(s_orbits_points);
+	Orbits_on_Eckardt_points->print_orbit_length_distribution_to_string(s_orbits_Eckardt_points);
+	Orbits_on_Double_points->print_orbit_length_distribution_to_string(s_orbits_Double_points);
+	Orbits_on_Single_points->print_orbit_length_distribution_to_string(s_orbits_Single_points);
+	Orbits_on_points_not_on_lines->print_orbit_length_distribution_to_string(s_orbits_Zero_points);
+	Orbits_on_Hesse_planes->print_orbit_length_distribution_to_string(s_orbits_Hesse_planes);
+	Orbits_on_axes->print_orbit_length_distribution_to_string(s_orbits_Axes);
+	Orbits_on_single_sixes->print_orbit_length_distribution_to_string(s_orbits_single_sixes);
+	Orbits_on_double_sixes->print_orbit_length_distribution_to_string(s_orbits_double_sixes);
+	Orbits_on_tritangent_planes->print_orbit_length_distribution_to_string(s_orbits_tritangent_planes);
+	Orbits_on_trihedral_pairs->print_orbit_length_distribution_to_string(s_orbits_trihedral_pairs);
+
 
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
@@ -2526,115 +2799,55 @@ void surface_object_with_group::print_summary(
 	ost << "\\mbox{Object} & \\mbox{Number}  & \\mbox{Orbit type} \\\\";
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Lines} & " << SO->nb_lines << " & ";
-	{
-		string str;
-		Orbits_on_lines->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Lines} & " << SO->nb_lines << " & " << s_orbits_lines;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Points on surface} & " << SO->nb_pts << " & ";
-	{
-		string str;
-		Orbits_on_points->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Points on surface} & " << SO->nb_pts << " & " << s_orbits_points;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
 	ost << "\\mbox{Singular points} & " << SO->SOP->nb_singular_pts << " & \\\\" << endl;
 	ost << "\\hline" << endl;
 
-	ost << "\\mbox{Eckardt points} & " << SO->SOP->nb_Eckardt_points << " & ";
-	{
-		string str;
-		Orbits_on_Eckardt_points->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Eckardt points} & " << SO->SOP->nb_Eckardt_points << " & " << s_orbits_Eckardt_points;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	ost << "\\mbox{Double points} & " << SO->SOP->nb_Double_points << " & ";
-	{
-		string str;
-		Orbits_on_Double_points->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Double points} & " << SO->SOP->nb_Double_points << " & " << s_orbits_Double_points;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	ost << "\\mbox{Single points} & " << SO->SOP->nb_Single_points << " & ";
-	{
-		string str;
-		Orbits_on_Single_points->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Single points} & " << SO->SOP->nb_Single_points << " & " << s_orbits_Single_points;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	ost << "\\mbox{Points off lines} & " << SO->SOP->nb_pts_not_on_lines << " & ";
-	{
-		string str;
-		Orbits_on_points_not_on_lines->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Points off lines} & " << SO->SOP->nb_pts_not_on_lines << " & " << s_orbits_Zero_points;
 	ost << "\\\\" << endl;
 
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Hesse planes} & " << SO->SOP->nb_Hesse_planes << " & ";
-	{
-		string str;
-		Orbits_on_Hesse_planes->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Hesse planes} & " << SO->SOP->nb_Hesse_planes << " & " << s_orbits_Hesse_planes;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	ost << "\\mbox{Axes} & " << SO->SOP->nb_axes << " & ";
-	{
-		string str;
-		Orbits_on_axes->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Axes} & " << SO->SOP->nb_axes << " & " << s_orbits_Axes;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
 
-	ost << "\\mbox{Single sixes} & " << 72 << " & ";
-	{
-		string str;
-		Orbits_on_single_sixes->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Single sixes} & " << 72 << " & " << s_orbits_single_sixes;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	ost << "\\mbox{Double sixes} & " << 36 << " & ";
-	{
-		string str;
-		Orbits_on_double_sixes->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Double sixes} & " << 36 << " & " << s_orbits_double_sixes;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	ost << "\\mbox{Tritangent planes} & " << 45 << " & ";
-	{
-		string str;
-		Orbits_on_tritangent_planes->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Tritangent planes} & " << 45 << " & " << s_orbits_tritangent_planes;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
 
-	ost << "\\mbox{Trihedral pairs} & " << 120 << " & ";
-	{
-		string str;
-		Orbits_on_trihedral_pairs->print_orbit_length_distribution_to_string(str);
-		ost << str;
-	}
+	ost << "\\mbox{Trihedral pairs} & " << 120 << " & " << s_orbits_trihedral_pairs;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
@@ -2810,11 +3023,14 @@ void surface_object_with_group::print_action_on_surface(
 
 void surface_object_with_group::print_double_sixes(std::ostream &ost)
 {
-	int idx;
+	//int idx;
 	ost << "\\bigskip" << endl;
 
 	ost << "\\subsection*{Double sixes}" << endl;
 
+	SO->Surf->Schlaefli->Schlaefli_double_six->print_double_sixes(ost, SO->Lines);
+
+#if 0
 	//SO->Surf->Schlaefli->latex_table_of_double_sixes(ost);
 
 	for (idx = 0; idx < 36; idx++) {
@@ -2875,19 +3091,20 @@ void surface_object_with_group::print_double_sixes(std::ostream &ost)
 		ost << "$\\\\" << endl;
 
 	}
+#endif
 
 
 }
 
 
-void surface_object_with_group::tactical_decomposition(
+void surface_object_with_group::tactical_decomposition_inside_projective_space(
 		std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition" << endl;
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space" << endl;
 	}
 
 
@@ -2897,12 +3114,12 @@ void surface_object_with_group::tactical_decomposition(
 	fname_base = SO->label_tex + "_TDO";
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition "
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
 			"fname_base = " << fname_base << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition "
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
 			"before GG.create_decomposition_of_projective_space" << endl;
 	}
 
@@ -2919,7 +3136,7 @@ void surface_object_with_group::tactical_decomposition(
 
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition "
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
 			"after GG.create_decomposition_of_projective_space" << endl;
 	}
 
@@ -2938,7 +3155,7 @@ void surface_object_with_group::tactical_decomposition(
 
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition done" << endl;
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space done" << endl;
 	}
 }
 

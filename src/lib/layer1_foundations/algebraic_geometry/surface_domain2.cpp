@@ -120,10 +120,10 @@ void surface_domain::Trihedral_pairs_to_planes(
 	if (f_v) {
 		cout << "surface_domain::Trihedral_pairs_to_planes" << endl;
 	}
-	for (t = 0; t < Schlaefli->nb_trihedral_pairs; t++) {
+	for (t = 0; t < Schlaefli->Schlaefli_trihedral_pairs->nb_trihedral_pairs; t++) {
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 3; j++) {
-				lines_in_tritangent_plane[j] = Schlaefli->Trihedral_pairs[t * 9 + i * 3 + j];
+				lines_in_tritangent_plane[j] = Schlaefli->Schlaefli_trihedral_pairs->Trihedral_pairs[t * 9 + i * 3 + j];
 				three_lines[j] = Lines[lines_in_tritangent_plane[j]];
 			}
 			rk = plane_from_three_lines(three_lines, 0 /* verbose_level */);
@@ -131,7 +131,7 @@ void surface_domain::Trihedral_pairs_to_planes(
 		}
 		for (j = 0; j < 3; j++) {
 			for (i = 0; i < 3; i++) {
-				lines_in_tritangent_plane[i] = Schlaefli->Trihedral_pairs[t * 9 + i * 3 + j];
+				lines_in_tritangent_plane[i] = Schlaefli->Schlaefli_trihedral_pairs->Trihedral_pairs[t * 9 + i * 3 + j];
 				three_lines[i] = Lines[lines_in_tritangent_plane[i]];
 			}
 			rk = plane_from_three_lines(three_lines, 0 /* verbose_level */);
@@ -141,7 +141,7 @@ void surface_domain::Trihedral_pairs_to_planes(
 	if (f_v) {
 		cout << "Trihedral_pairs_to_planes:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
-				Planes_by_rank, Schlaefli->nb_trihedral_pairs, 6, false /* f_tex */);
+				Planes_by_rank, Schlaefli->Schlaefli_trihedral_pairs->nb_trihedral_pairs, 6, false /* f_tex */);
 	}
 	if (f_v) {
 		cout << "surface_domain::Trihedral_pairs_to_planes done" << endl;
@@ -349,7 +349,8 @@ void surface_domain::compute_nine_lines_by_dual_point_ranks(
 		for (j = 0; j < 3; j++) {
 			Int_vec_copy(F_planes + i * 4, Basis, 4);
 			Int_vec_copy(G_planes + j * 4, Basis + 4, 4);
-			F->Linear_algebra->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
+			F->Linear_algebra->RREF_and_kernel(
+					4, 2, Basis, 0 /* verbose_level */);
 			nine_lines[i * 3 + j] = Gr->rank_lint_here(
 				Basis + 8, 0 /* verbose_level */);
 		}

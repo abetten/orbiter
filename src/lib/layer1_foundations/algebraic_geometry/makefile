@@ -19,7 +19,10 @@ MODULES = \
 	quartic_curve_domain.o \
 	quartic_curve_object_properties.o \
 	quartic_curve_object.o \
+	schlaefli_double_six.o \
 	schlaefli_labels.o \
+	schlaefli_trihedral_pairs.o \
+	schlaefli_tritangent_planes.o \
 	schlaefli.o \
 	seventytwo_cases.o \
 	smooth_surface_object_properties.o \

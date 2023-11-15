@@ -26,7 +26,6 @@ namespace layer3_group_actions {
 
 namespace actions {
 
-	// actions
 	class action;
 	class action_global;
 	class action_pointer_table;
@@ -65,7 +64,7 @@ namespace data_structures_groups {
 namespace groups {
 
 
-	// groups
+	class conjugacy_class_of_elements;
 	class direct_product;
 	class exceptional_isomorphism_O4;
 	class linear_group_description;
@@ -95,7 +94,6 @@ namespace groups {
 namespace induced_actions {
 
 
-	// induced_actions
 	class action_by_conjugation;
 	class action_by_representation;
 	class action_by_restriction;

@@ -310,6 +310,8 @@ public:
 
 
 
+	std::vector<std::string> recognize;
+
 
 	poset_classification_activity_description();
 	~poset_classification_activity_description();
@@ -362,8 +364,9 @@ public:
 		int lvl2, int po2, int verbose_level);
 	int count_incidences_down(int lvl1,
 		int po1, int lvl2, int po2, int verbose_level);
-	void Asup_to_Ainf(int t, int k, int *M_sup,
-		int *M_inf, int verbose_level);
+	void Asup_to_Ainf(int t, int k,
+		long int *M_sup, long int *&M_inf,
+		int verbose_level);
 	void test_for_multi_edge_in_classification_graph(
 		int depth, int verbose_level);
 	void Kramer_Mesner_matrix_neighboring(

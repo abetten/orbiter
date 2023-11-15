@@ -1228,14 +1228,6 @@ public:
 	int f_override_generators;
 	std::string override_generators_label;
 
-#if 0
-	int f_draw_tree;
-	int draw_tree_idx;
-
-	int f_recognize;
-	std::string recognize_text;
-#endif
-
 	orbits_create_description();
 	~orbits_create_description();
 	int read_arguments(int argc, std::string *argv,

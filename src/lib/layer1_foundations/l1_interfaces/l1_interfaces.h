@@ -360,12 +360,14 @@ class nauty_interface {
 
 public:
 
-	void nauty_interface_graph_bitvec(int v,
+	void nauty_interface_graph_bitvec(
+			int v,
 			data_structures::bitvector *Bitvec,
 		int *partition,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level);
-	void nauty_interface_graph_int(int v, int *Adj,
+	void nauty_interface_graph_int(
+			int v, int *Adj,
 		int *partition,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level);

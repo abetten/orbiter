@@ -28,6 +28,10 @@ public:
 
 	int f_report;
 
+	int f_report_group_elements;
+	std::string report_group_elements_csv_file;
+	std::string report_group_elements_heading;
+
 	int f_export_something;
 	std::string export_something_what;
 
@@ -269,8 +273,14 @@ public:
 			int verbose_level);
 	void export_gap(int verbose_level);
 	void do_report(int verbose_level);
+	void do_report_group_elements(
+			std::string &fname_csv, std::string &col_heading,
+			int verbose_level);
 	void do_report2(
 			std::ostream &ost, int verbose_level);
+	void do_report_group_elements2(
+			std::ostream &ost, std::string &fname_csv, std::string &col_heading,
+			int verbose_level);
 	void report_with_group(
 			std::string &Control_six_arcs_label,
 			int verbose_level);
@@ -312,6 +322,7 @@ public:
 
 	int f_catalogue;
 	int iso;
+
 	int f_by_coefficients;
 	std::string coefficients_text;
 
@@ -344,6 +355,7 @@ public:
 	std::string arc_lifting_two_lines_text;
 
 	int f_arc_lifting_with_two_lines;
+
 	std::vector<std::string> select_double_six_string;
 
 	int f_Cayley_form;
@@ -604,17 +616,24 @@ public:
 			std::ostream &ost,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
-	void print_automorphism_group(std::ostream &ost,
+	void print_automorphism_group(
+			std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
 		graphics::layered_graph_draw_options *Opt,
 		int verbose_level);
 	void cheat_sheet_basic(
 			std::ostream &ost, int verbose_level);
-	void cheat_sheet(std::ostream &ost,
+	void cheat_sheet(
+			std::ostream &ost,
 			std::string &label_txt,
 			std::string &label_tex,
 			int f_print_orbits, std::string &fname_mask,
 			graphics::layered_graph_draw_options *Opt,
+			int verbose_level);
+	void cheat_sheet_group_elements(
+			std::ostream &ost,
+			std::string &fname_csv,
+			std::string &col_heading,
 			int verbose_level);
 	void print_automorphism_group_generators(
 			std::ostream &ost, int verbose_level);
@@ -653,7 +672,7 @@ public:
 			int *element_data, int nb_elements,
 			int verbose_level);
 	void print_double_sixes(std::ostream &ost);
-	void tactical_decomposition(
+	void tactical_decomposition_inside_projective_space(
 			std::ostream &ost,
 			int verbose_level);
 
@@ -758,6 +777,7 @@ public:
 	int *Elt1;
 
 	induced_actions::action_on_homogeneous_polynomials *AonHPD_3_4;
+	induced_actions::action_on_homogeneous_polynomials *AonHPD_4_3;
 
 
 	cubic_surfaces_and_arcs::classify_trihedral_pairs

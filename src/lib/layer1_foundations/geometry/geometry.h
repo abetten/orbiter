@@ -414,7 +414,7 @@ public:
 // #############################################################################
 
 
-//! one-sided decomposition scheme of an incidence structure
+//! a decomposition scheme of an incidence structure
 
 
 class decomposition_scheme {
@@ -618,6 +618,16 @@ public:
 		std::ostream &ost,
 		int row_cell, int i, int *col_classes, int nb_col_classes,
 		int width, int f_labeled);
+	void print_row_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int *row_classes, int nb_row_classes,
+		int *col_classes, int nb_col_classes,
+		int *row_scheme, int f_print_subscripts);
+	void print_column_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int *row_classes, int nb_row_classes,
+		int *col_classes, int nb_col_classes,
+		int *col_scheme, int f_print_subscripts);
 
 };
 
@@ -1182,6 +1192,10 @@ public:
 			std::string &label,
 			int verbose_level);
 	void do_unrank_lines_in_PG(
+			geometry::projective_space *P,
+			std::string &label,
+			int verbose_level);
+	void do_points_on_lines_in_PG(
 			geometry::projective_space *P,
 			std::string &label,
 			int verbose_level);
@@ -2061,6 +2075,8 @@ public:
 		long int a, int verbose_level);
 	long int apply_polarity(
 		long int a, int *Polarity36, int verbose_level);
+	void compute_line_intersection_graph(
+			long int *Lines, int nb_lines, int *&Adj, int f_complement, int verbose_level);
 
 };
 
@@ -2252,7 +2268,8 @@ public:
 			int q,
 			int verbose_level);
 	void init_packing_from_set_of_sets(
-			data_structures::set_of_sets *SoS, int verbose_level);
+			data_structures::set_of_sets *SoS,
+			int verbose_level);
 	void init_packing_from_spread_table(
 		long int *data,
 		long int *Spread_table, int nb_spreads, int spread_size,

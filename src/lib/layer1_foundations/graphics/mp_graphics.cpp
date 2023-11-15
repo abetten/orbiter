@@ -4003,7 +4003,7 @@ void mp_graphics::draw_matrix_in_color(
 	int f_has_labels, int *labels)
 {
 	grid_frame F;
-	int i, j, a, cnt, mn;
+	int i, j, a, mn;
 	int indent = 0;
 	string s;
 
@@ -4093,7 +4093,7 @@ void mp_graphics::draw_matrix_in_color(
 
 	sf_interior(100);
 
-	cnt = 0;
+	//cnt = 0;
 
 
 	double color_step = (double) nb_colors / (double) (nb_colors_in_scale);
@@ -4117,7 +4117,7 @@ void mp_graphics::draw_matrix_in_color(
 
 			a = Table[i * n + j];
 
-			cnt++;
+			//cnt++;
 
 			//if (cnt > 5000)  continue;
 			//grid_fill_polygon4(&F, i, j, i + 1, j, i + 1, j + 1, i, j + 1);

@@ -701,7 +701,6 @@ public:
 
 
 
-	//char *elt;
 	int *Elt1;
 	int *tl; // [A->base_len]
 

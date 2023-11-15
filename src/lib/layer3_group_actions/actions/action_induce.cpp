@@ -14,7 +14,8 @@ namespace layer3_group_actions {
 namespace actions {
 
 
-int action::least_moved_point_at_level(int level, int verbose_level)
+int action::least_moved_point_at_level(
+		int level, int verbose_level)
 {
 	return Sims->least_moved_point_at_level(level, verbose_level);
 }
@@ -186,7 +187,8 @@ void action::lex_least_base(
 	}
 }
 
-int action::test_if_lex_least_base(int verbose_level)
+int action::test_if_lex_least_base(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *AA;

@@ -1252,134 +1252,6 @@ int partitionstack::is_col_class(int c)
 	}
 }
 
-void partitionstack::allocate_and_get_decomposition(
-	int *&row_classes, int *&row_class_inv, int &nb_row_classes,
-	int *&col_classes, int *&col_class_inv, int &nb_col_classes, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "partitionstack::allocate_and_get_decomposition" << endl;
-	}
-	int i, c;
-	
-	row_classes = NEW_int(ht);
-	col_classes = NEW_int(ht);
-	row_class_inv = NEW_int(ht);
-	col_class_inv = NEW_int(ht);
-
-	get_row_and_col_classes(
-			row_classes, nb_row_classes,
-			col_classes, nb_col_classes,
-			verbose_level - 1);
-
-	for (i = 0; i < ht; i++) {
-		row_class_inv[i] = col_class_inv[i] = -1;
-	}
-	for (i = 0; i < nb_row_classes; i++) {
-		c = row_classes[i];
-		row_class_inv[c] = i;
-	}
-	for (i = 0; i < nb_col_classes; i++) {
-		c = col_classes[i];
-		col_class_inv[c] = i;
-	}
-	if (f_v) {
-		cout << "partitionstack::allocate_and_get_decomposition done" << endl;
-	}
-}
-
-void partitionstack::get_row_and_col_permutation(
-	int *row_classes, int nb_row_classes,
-	int *col_classes, int nb_col_classes, 
-	int *row_perm, int *row_perm_inv, 
-	int *col_perm, int *col_perm_inv,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "partitionstack::get_row_and_col_permutation" << endl;
-	}
-	int i, j, c, a, f, l, pos;
-	int first_column_element = startCell[1];
-
-	pos = 0;
-	for (i = 0; i < nb_row_classes; i++) {
-		c = row_classes[i];
-		f = startCell[c];
-		l = cellSize[c];
-		for (j = 0; j < l; j++) {
-			a = pointList[f + j];
-			row_perm_inv[pos] = a;
-			row_perm[a] = pos;
-			pos++;
-		}
-	}
-	pos = 0;
-	for (i = 0; i < nb_col_classes; i++) {
-		c = col_classes[i];
-		f = startCell[c];
-		l = cellSize[c];
-		for (j = 0; j < l; j++) {
-			a = pointList[f + j] - first_column_element;
-			col_perm_inv[pos] = a;
-			col_perm[a] = pos;
-			pos++;
-		}
-	}
-	if (f_v) {
-		cout << "partitionstack::get_row_and_col_permutation done" << endl;
-	}
-}
-
-void partitionstack::get_row_and_col_classes(
-	int *row_classes, int &nb_row_classes,
-	int *col_classes, int &nb_col_classes,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-
-	if (f_v) {
-		cout << "partitionstack::get_row_and_col_classes" << endl;
-	}
-
-	int i, c, l;
-
-	nb_row_classes = 0;
-	nb_col_classes = 0;
-#if 0
-	for (c = 0; c < ht; c++) {
-		if (is_row_class(c)) {
-			row_classes[nb_row_classes++] = c;
-			}
-		else {
-			col_classes[nb_col_classes++] = c;
-			}
-		}
-#endif
-	i = 0;
-	while (i < n) {
-		c = cellNumber[i];
-		if (f_vv) {
-			cout << i << " : " << c << endl;
-		}
-		if (is_row_class(c)) {
-			row_classes[nb_row_classes++] = c;
-		}
-		else {
-			col_classes[nb_col_classes++] = c;
-		}
-		l = cellSize[c];
-		i += l;
-	}
-	if (f_v) {
-		cout << "partitionstack::get_row_and_col_classes done" << endl;
-	}
-}
-
 void partitionstack::initial_matrix_decomposition(
 		int nbrows, int nbcols,
 	int *V, int nb_V, int *B, int nb_B, int verbose_level)
@@ -1535,318 +1407,6 @@ int partitionstack::cellSizeAtLevel(int cell, int level)
 }
 
 
-void partitionstack::print_classes_of_decomposition_tex(
-		std::ostream &ost,
-	int *row_classes, int nb_row_classes,
-	int *col_classes, int nb_col_classes)
-{
-	int i, j, c, f, l, a;
-	int first_column_element = startCell[1];
-	
-	for (i = 0; i < nb_row_classes; i++) {
-		c = row_classes[i];
-		f = startCell[c];
-		l = cellSize[c];
-		ost << "V" << i << " of size " << l << " contains ";
-		for (j = 0; j < l; j++) {
-			a = pointList[f + j];
-			ost << a;
-			if (j < l - 1) {
-				ost << ", ";
-			}
-			if ((j + 1) % 25 == 0) {
-				ost << "\\\\" << endl;
-			}
-		}
-		ost << "\\\\" << endl;
-	}
-	for (i = 0; i < nb_col_classes; i++) {
-		c = col_classes[i];
-		f = startCell[c];
-		l = cellSize[c];
-		ost << "B" << i << " of size " << l << " contains ";
-		for (j = 0; j < l; j++) {
-			a = pointList[f + j] - first_column_element;
-			ost << a;
-			if (j < l - 1) {
-				ost << ", ";
-			}
-			if ((j + 1) % 25 == 0) {
-				ost << "\\\\" << endl;
-			}
-		}
-		ost << "\\\\" << endl;
-	}
-}
-
-void partitionstack::print_decomposition_scheme(
-		std::ostream &ost,
-	int *row_classes, int nb_row_classes,
-	int *col_classes, int nb_col_classes, 
-	int *scheme, int marker1, int marker2)
-{
-	int c, i, j;
-	
-	if (marker1 >= 0) ost << "  ";
-	if (marker2 >= 0) ost << "  ";
-
-	ost << "             | ";
-	for (j = 0; j < nb_col_classes; j++) {
-		c = col_classes[j];
-		ost << setw(6) << cellSize[c] << "_{" << setw(3) << c << "}";
-	}
-	ost << endl;
-
-	if (marker1 >= 0) ost << "--";
-	if (marker2 >= 0) ost << "--";
-	ost << "---------------";
-	for (i = 0; i < nb_col_classes; i++) {
-		ost << "------------";
-	}
-	ost << endl;
-	for (i = 0; i < nb_row_classes; i++) {
-		c = row_classes[i];
-		ost << setw(6) << cellSize[c] << "_{" << setw(3) << c << "}";
-		if (marker1 >= 0) {
-			if (is_descendant_of(c, marker1, 0)) {
-				ost << " *";
-			}
-			else {
-				ost << "  ";
-			}
-		}
-		if (marker2 >= 0) {
-			if (is_descendant_of(c, marker2, 0)) {
-				ost << " *";
-			}
-			else {
-				ost << "  ";
-			}
-		}
-		ost << " | ";
-		//f = P.startCell[c];
-		for (j = 0; j < nb_col_classes; j++) {
-			ost << setw(12) << scheme[i * nb_col_classes + j];
-		}
-		ost << endl;
-	}
-	ost << endl;
-	ost << endl;
-}
-
-void partitionstack::print_decomposition_scheme_tex(
-		std::ostream &ost,
-	int *row_classes, int nb_row_classes,
-	int *col_classes, int nb_col_classes, 
-	int *scheme)
-{
-	int c, i, j;
-	
-	ost << "\\begin{align*}" << endl;
-	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
-	ost << " ";
-	for (j = 0; j < nb_col_classes; j++) {
-		ost << " & ";
-		c = col_classes[j];
-		ost << setw(6) << cellSize[c] << "_{" << setw(3) << c << "}";
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < nb_row_classes; i++) {
-		c = row_classes[i];
-		ost << setw(6) << cellSize[c] << "_{" << setw(3) << c << "}";
-		//f = P.startCell[c];
-		for (j = 0; j < nb_col_classes; j++) {
-			ost << " & " << setw(12) << scheme[i * nb_col_classes + j];
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	ost << "\\end{align*}" << endl;
-}
-
-void partitionstack::print_tactical_decomposition_scheme_tex(
-		std::ostream &ost,
-	int *row_classes, int nb_row_classes,
-	int *col_classes, int nb_col_classes, 
-	int *row_scheme, int *col_scheme,
-	int f_print_subscripts)
-{
-	print_tactical_decomposition_scheme_tex_internal(ost, true, 
-		row_classes, nb_row_classes,
-		col_classes, nb_col_classes,
-		row_scheme, col_scheme, f_print_subscripts);
-}
-
-void partitionstack::print_tactical_decomposition_scheme_tex_internal(
-	std::ostream &ost, int f_enter_math_mode,
-	int *row_classes, int nb_row_classes,
-	int *col_classes, int nb_col_classes, 
-	int *row_scheme, int *col_scheme,
-	int f_print_subscripts)
-{
-	int c, i, j;
-	
-	if (f_enter_math_mode) {
-		ost << "\\begin{align*}" << endl;
-	}
-	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
-	ost << " ";
-	for (j = 0; j < nb_col_classes; j++) {
-		ost << " & ";
-		c = col_classes[j];
-		ost << setw(6) << cellSize[c];
-		if (f_print_subscripts) {
-			ost << "_{" << setw(3) << c << "}";
-		}
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < nb_row_classes; i++) {
-		c = row_classes[i];
-		ost << setw(6) << cellSize[c];
-			if (f_print_subscripts) {
-				ost << "_{" << setw(3) << c << "}";
-			}
-		//f = P.startCell[c];
-		for (j = 0; j < nb_col_classes; j++) {
-			ost << " & " << setw(12) << row_scheme[i * nb_col_classes + j] 
-				<< "\\backslash " << col_scheme[i * nb_col_classes + j];
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\end{align*}" << endl;
-	}
-}
-
-void partitionstack::print_row_tactical_decomposition_scheme_tex(
-	std::ostream &ost, int f_enter_math_mode,
-	int *row_classes, int nb_row_classes,
-	int *col_classes, int nb_col_classes, 
-	int *row_scheme, int f_print_subscripts)
-{
-	int c, i, j;
-	
-	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\begin{align*}" << endl;
-	}
-	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
-	ost << "\\rightarrow ";
-	for (j = 0; j < nb_col_classes; j++) {
-		ost << " & ";
-		c = col_classes[j];
-		ost << setw(6) << cellSize[c];
-		if (f_print_subscripts) {
-			ost << "_{" << setw(3) << c << "}";
-		}
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < nb_row_classes; i++) {
-		c = row_classes[i];
-		ost << setw(6) << cellSize[c];
-			if (f_print_subscripts) {
-				ost << "_{" << setw(3) << c << "}";
-			}
-		//f = P.startCell[c];
-		for (j = 0; j < nb_col_classes; j++) {
-			ost << " & " << setw(12) << row_scheme[i * nb_col_classes + j];
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\end{align*}" << endl;
-	}
-	ost << "%}" << endl;
-}
-
-void partitionstack::print_column_tactical_decomposition_scheme_tex(
-	std::ostream &ost, int f_enter_math_mode,
-	int *row_classes, int nb_row_classes,
-	int *col_classes, int nb_col_classes, 
-	int *col_scheme, int f_print_subscripts)
-{
-	int c, i, j;
-	
-	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\begin{align*}" << endl;
-	}
-	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
-	ost << "\\downarrow ";
-	for (j = 0; j < nb_col_classes; j++) {
-		ost << " & ";
-		c = col_classes[j];
-		ost << setw(6) << cellSize[c];
-		if (f_print_subscripts) {
-			ost << "_{" << setw(3) << c << "}";
-		}
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < nb_row_classes; i++) {
-		c = row_classes[i];
-		ost << setw(6) << cellSize[c];
-		if (f_print_subscripts) {
-			ost << "_{" << setw(3) << c << "}";
-		}
-		//f = P.startCell[c];
-		for (j = 0; j < nb_col_classes; j++) {
-			ost << " & " << setw(12) << col_scheme[i * nb_col_classes + j];
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\end{align*}" << endl;
-	}
-	ost << "%}" << endl;
-}
-
-void partitionstack::print_non_tactical_decomposition_scheme_tex(
-	std::ostream &ost, int f_enter_math_mode,
-	int *row_classes, int nb_row_classes,
-	int *col_classes, int nb_col_classes, 
-	int f_print_subscripts)
-{
-	int c, i, j;
-	
-	if (f_enter_math_mode) {
-		ost << "\\begin{align*}" << endl;
-	}
-	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
-	ost << " ";
-	for (j = 0; j < nb_col_classes; j++) {
-		ost << " & ";
-		c = col_classes[j];
-		ost << setw(6) << cellSize[c];
-		if (f_print_subscripts) {
-			ost << "_{" << setw(3) << c << "}";
-		}
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < nb_row_classes; i++) {
-		c = row_classes[i];
-		ost << setw(6) << cellSize[c];
-			if (f_print_subscripts) {
-				ost << "_{" << setw(3) << c << "}";
-			}
-		//f = P.startCell[c];
-		for (j = 0; j < nb_col_classes; j++) {
-			ost << " & ";
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\end{align*}" << endl;
-	}
-}
 
 int partitionstack::hash_column_refinement_info(
 		int ht0, int *data, int depth, int hash0)
@@ -2216,6 +1776,305 @@ void partitionstack::split_by_orbit_partition(
 		cout << "partitionstack::split_by_orbit_partition done" << endl;
 	}
 }
+
+
+
+
+
+void partitionstack::allocate_and_get_decomposition(
+	int *&row_classes, int *&row_class_inv, int &nb_row_classes,
+	int *&col_classes, int *&col_class_inv, int &nb_col_classes,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "partitionstack::allocate_and_get_decomposition" << endl;
+	}
+	int i, c;
+
+	row_classes = NEW_int(ht);
+	col_classes = NEW_int(ht);
+	row_class_inv = NEW_int(ht);
+	col_class_inv = NEW_int(ht);
+
+	get_row_and_col_classes(
+			row_classes, nb_row_classes,
+			col_classes, nb_col_classes,
+			verbose_level - 1);
+
+	for (i = 0; i < ht; i++) {
+		row_class_inv[i] = col_class_inv[i] = -1;
+	}
+	for (i = 0; i < nb_row_classes; i++) {
+		c = row_classes[i];
+		row_class_inv[c] = i;
+	}
+	for (i = 0; i < nb_col_classes; i++) {
+		c = col_classes[i];
+		col_class_inv[c] = i;
+	}
+	if (f_v) {
+		cout << "partitionstack::allocate_and_get_decomposition done" << endl;
+	}
+}
+
+void partitionstack::get_row_and_col_permutation(
+	int *row_classes, int nb_row_classes,
+	int *col_classes, int nb_col_classes,
+	int *row_perm, int *row_perm_inv,
+	int *col_perm, int *col_perm_inv,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "partitionstack::get_row_and_col_permutation" << endl;
+	}
+	int i, j, c, a, f, l, pos;
+	int first_column_element = startCell[1];
+
+	pos = 0;
+	for (i = 0; i < nb_row_classes; i++) {
+		c = row_classes[i];
+		f = startCell[c];
+		l = cellSize[c];
+		for (j = 0; j < l; j++) {
+			a = pointList[f + j];
+			row_perm_inv[pos] = a;
+			row_perm[a] = pos;
+			pos++;
+		}
+	}
+	pos = 0;
+	for (i = 0; i < nb_col_classes; i++) {
+		c = col_classes[i];
+		f = startCell[c];
+		l = cellSize[c];
+		for (j = 0; j < l; j++) {
+			a = pointList[f + j] - first_column_element;
+			col_perm_inv[pos] = a;
+			col_perm[a] = pos;
+			pos++;
+		}
+	}
+	if (f_v) {
+		cout << "partitionstack::get_row_and_col_permutation done" << endl;
+	}
+}
+
+void partitionstack::get_row_and_col_classes(
+	int *row_classes, int &nb_row_classes,
+	int *col_classes, int &nb_col_classes,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "partitionstack::get_row_and_col_classes" << endl;
+	}
+
+	int i, c, l;
+
+	nb_row_classes = 0;
+	nb_col_classes = 0;
+#if 0
+	for (c = 0; c < ht; c++) {
+		if (is_row_class(c)) {
+			row_classes[nb_row_classes++] = c;
+			}
+		else {
+			col_classes[nb_col_classes++] = c;
+			}
+		}
+#endif
+	i = 0;
+	while (i < n) {
+		c = cellNumber[i];
+		if (f_vv) {
+			cout << i << " : " << c << endl;
+		}
+		if (is_row_class(c)) {
+			row_classes[nb_row_classes++] = c;
+		}
+		else {
+			col_classes[nb_col_classes++] = c;
+		}
+		l = cellSize[c];
+		i += l;
+	}
+	if (f_v) {
+		cout << "partitionstack::get_row_and_col_classes done" << endl;
+	}
+}
+
+void partitionstack::print_classes_of_decomposition_tex(
+		std::ostream &ost,
+	int *row_classes, int nb_row_classes,
+	int *col_classes, int nb_col_classes)
+{
+	int i, j, c, f, l, a;
+	int first_column_element = startCell[1];
+
+	for (i = 0; i < nb_row_classes; i++) {
+		c = row_classes[i];
+		f = startCell[c];
+		l = cellSize[c];
+		ost << "V" << i << " of size " << l << " contains ";
+		for (j = 0; j < l; j++) {
+			a = pointList[f + j];
+			ost << a;
+			if (j < l - 1) {
+				ost << ", ";
+			}
+			if ((j + 1) % 25 == 0) {
+				ost << "\\\\" << endl;
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	for (i = 0; i < nb_col_classes; i++) {
+		c = col_classes[i];
+		f = startCell[c];
+		l = cellSize[c];
+		ost << "B" << i << " of size " << l << " contains ";
+		for (j = 0; j < l; j++) {
+			a = pointList[f + j] - first_column_element;
+			ost << a;
+			if (j < l - 1) {
+				ost << ", ";
+			}
+			if ((j + 1) % 25 == 0) {
+				ost << "\\\\" << endl;
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+}
+
+void partitionstack::print_decomposition_scheme(
+		std::ostream &ost,
+	int *row_classes, int nb_row_classes,
+	int *col_classes, int nb_col_classes,
+	int *scheme)
+{
+	int c, i, j;
+
+	ost << "             | ";
+	for (j = 0; j < nb_col_classes; j++) {
+		c = col_classes[j];
+		ost << setw(6) << cellSize[c] << "_{" << setw(3) << c << "}";
+	}
+	ost << endl;
+
+	ost << "---------------";
+	for (i = 0; i < nb_col_classes; i++) {
+		ost << "------------";
+	}
+	ost << endl;
+	for (i = 0; i < nb_row_classes; i++) {
+		c = row_classes[i];
+		ost << setw(6) << cellSize[c] << "_{" << setw(3) << c << "}";
+		ost << " | ";
+		//f = P.startCell[c];
+		for (j = 0; j < nb_col_classes; j++) {
+			ost << setw(12) << scheme[i * nb_col_classes + j];
+		}
+		ost << endl;
+	}
+	ost << endl;
+	ost << endl;
+}
+
+void partitionstack::print_row_tactical_decomposition_scheme_tex(
+	std::ostream &ost, int f_enter_math_mode,
+	int *row_classes, int nb_row_classes,
+	int *col_classes, int nb_col_classes,
+	int *row_scheme, int f_print_subscripts)
+{
+	int c, i, j;
+
+	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\begin{align*}" << endl;
+	}
+	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
+	ost << "\\rightarrow ";
+	for (j = 0; j < nb_col_classes; j++) {
+		ost << " & ";
+		c = col_classes[j];
+		ost << setw(6) << cellSize[c];
+		if (f_print_subscripts) {
+			ost << "_{" << setw(3) << c << "}";
+		}
+	}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_row_classes; i++) {
+		c = row_classes[i];
+		ost << setw(6) << cellSize[c];
+			if (f_print_subscripts) {
+				ost << "_{" << setw(3) << c << "}";
+			}
+		//f = P.startCell[c];
+		for (j = 0; j < nb_col_classes; j++) {
+			ost << " & " << setw(12) << row_scheme[i * nb_col_classes + j];
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\end{align*}" << endl;
+	}
+	ost << "%}" << endl;
+}
+
+void partitionstack::print_column_tactical_decomposition_scheme_tex(
+	std::ostream &ost, int f_enter_math_mode,
+	int *row_classes, int nb_row_classes,
+	int *col_classes, int nb_col_classes,
+	int *col_scheme, int f_print_subscripts)
+{
+	int c, i, j;
+
+	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\begin{align*}" << endl;
+	}
+	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
+	ost << "\\downarrow ";
+	for (j = 0; j < nb_col_classes; j++) {
+		ost << " & ";
+		c = col_classes[j];
+		ost << setw(6) << cellSize[c];
+		if (f_print_subscripts) {
+			ost << "_{" << setw(3) << c << "}";
+		}
+	}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_row_classes; i++) {
+		c = row_classes[i];
+		ost << setw(6) << cellSize[c];
+		if (f_print_subscripts) {
+			ost << "_{" << setw(3) << c << "}";
+		}
+		//f = P.startCell[c];
+		for (j = 0; j < nb_col_classes; j++) {
+			ost << " & " << setw(12) << col_scheme[i * nb_col_classes + j];
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\end{align*}" << endl;
+	}
+	ost << "%}" << endl;
+}
+
+
+
 
 
 }}}

@@ -268,7 +268,8 @@ void encoded_combinatorial_object::print_incma()
 
 }
 
-void encoded_combinatorial_object::save_incma(std::string &fname_base, int verbose_level)
+void encoded_combinatorial_object::save_incma(
+		std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -282,14 +283,16 @@ void encoded_combinatorial_object::save_incma(std::string &fname_base, int verbo
 	fname_incma = fname_base + "_incma.csv";
 	fname_partition = fname_base + "_partition.csv";
 
-	Fio.Csv_file_support->int_matrix_write_csv(fname_incma, Incma, nb_rows, nb_cols);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_incma, Incma, nb_rows, nb_cols);
 	if (f_v) {
 		cout << "encoded_combinatorial_object::save_incma "
 				"written file " << fname_incma << " of size "
 				<< Fio.file_size(fname_incma) << endl;
 	}
 
-	Fio.Csv_file_support->int_matrix_write_csv(fname_partition, partition, 1, canonical_labeling_len);
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_partition, partition, 1, canonical_labeling_len);
 	if (f_v) {
 		cout << "encoded_combinatorial_object::save_incma "
 				"written file " << fname_partition << " of size "

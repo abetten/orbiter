@@ -766,7 +766,7 @@ void nth_roots::print_irreducible_polynomials_as_makefile_variables(
 		cout << "nth_roots::print_irreducible_polynomials_as_makefile_variables" << endl;
 	}
 
-	int rk, a;
+	int a;
 
 	for (i = 0; i < Cyc->S->nb_sets; i++) {
 

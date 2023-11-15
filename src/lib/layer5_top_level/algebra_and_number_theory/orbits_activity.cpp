@@ -948,7 +948,8 @@ void orbits_activity::do_recognize(int verbose_level)
 						"before OC->On_subsets->recognize" << endl;
 			}
 
-			OC->On_subsets->recognize(Descr->recognize[h],
+			OC->On_subsets->recognize(
+					Descr->recognize[h],
 					h, Descr->recognize.size(),
 					verbose_level);
 			if (f_v) {

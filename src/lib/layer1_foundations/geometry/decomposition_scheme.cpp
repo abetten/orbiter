@@ -25,6 +25,7 @@ decomposition_scheme::decomposition_scheme()
 	row_classes = NULL;
 	row_class_inv = NULL;
 	nb_row_classes = 0;
+
 	col_classes = NULL;
 	col_class_inv = NULL;
 	nb_col_classes = 0;
@@ -32,6 +33,7 @@ decomposition_scheme::decomposition_scheme()
 
 	f_has_row_scheme = false;
 	row_scheme = NULL;
+
 	f_has_col_scheme = false;
 	col_scheme = NULL;
 
@@ -46,8 +48,14 @@ decomposition_scheme::~decomposition_scheme()
 {
 	if (row_classes) {
 		FREE_int(row_classes);
+	}
+	if (row_class_inv) {
 		FREE_int(row_class_inv);
+	}
+	if (col_classes) {
 		FREE_int(col_classes);
+	}
+	if (col_class_inv) {
 		FREE_int(col_class_inv);
 	}
 

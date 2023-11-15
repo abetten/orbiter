@@ -28,7 +28,10 @@ ORBITER_MODULES= \
 		layer1_foundations/algebraic_geometry/quartic_curve_domain.o \
 		layer1_foundations/algebraic_geometry/quartic_curve_object_properties.o \
 		layer1_foundations/algebraic_geometry/quartic_curve_object.o \
+		layer1_foundations/algebraic_geometry/schlaefli_double_six.o \
 		layer1_foundations/algebraic_geometry/schlaefli_labels.o \
+		layer1_foundations/algebraic_geometry/schlaefli_trihedral_pairs.o \
+		layer1_foundations/algebraic_geometry/schlaefli_tritangent_planes.o \
 		layer1_foundations/algebraic_geometry/schlaefli.o \
 		layer1_foundations/algebraic_geometry/seventytwo_cases.o \
 		layer1_foundations/algebraic_geometry/smooth_surface_object_properties.o \
@@ -367,6 +370,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/data_structures/union_find_on_k_subsets.o \
 		layer3_group_actions/data_structures/vector_ge_description.o \
 		layer3_group_actions/data_structures/vector_ge.o \
+		layer3_group_actions/groups/conjugacy_class_of_elements.o \
 		layer3_group_actions/groups/direct_product.o \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \
 		layer3_group_actions/groups/linear_group.o \

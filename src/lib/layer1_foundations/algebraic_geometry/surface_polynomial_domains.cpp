@@ -1274,8 +1274,8 @@ void surface_polynomial_domains::split_nice_equation(
 		}
 		Int_vec_copy(Poly3_4->get_monomial_pointer(i), M, 4);
 		if (M[0] == 3) {
-			cout << "surface_polynomial_domains::split_nice_equation the x_0^3 "
-				"term is supposed to be zero" << endl;
+			cout << "surface_polynomial_domains::split_nice_equation "
+					"the x_0^3-term is supposed to be zero" << endl;
 			exit(1);
 		}
 		else if (M[0] == 2) {
@@ -1296,23 +1296,23 @@ void surface_polynomial_domains::split_nice_equation(
 	}
 }
 
-void surface_polynomial_domains::assemble_tangent_quadric(
+void surface_polynomial_domains::assemble_polar_hypersurface(
 	int *f1, int *f2, int *f3,
-	int *&tangent_quadric, int verbose_level)
+	int *&polar_hypersurface, int verbose_level)
 // 2*x_0*f_1 + f_2
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::assemble_tangent_quadric" << endl;
+		cout << "surface_polynomial_domains::assemble_polar_hypersurface" << endl;
 	}
 	int M[4];
 	int i, a, idx, two;
 
 
 	two = Surf->F->add(1, 1);
-	tangent_quadric = NEW_int(Poly2_4->get_nb_monomials());
-	Int_vec_zero(tangent_quadric, Poly2_4->get_nb_monomials());
+	polar_hypersurface = NEW_int(Poly2_4->get_nb_monomials());
+	Int_vec_zero(polar_hypersurface, Poly2_4->get_nb_monomials());
 
 	for (i = 0; i < Poly1->get_nb_monomials(); i++) {
 		a = f1[i];
@@ -1322,7 +1322,8 @@ void surface_polynomial_domains::assemble_tangent_quadric(
 		Int_vec_copy(Poly1->get_monomial_pointer(i), M + 1, 3);
 		M[0] = 1;
 		idx = Poly2_4->index_of_monomial(M);
-		tangent_quadric[idx] = Surf->F->add(tangent_quadric[idx], Surf->F->mult(two, a));
+		polar_hypersurface[idx] = Surf->F->add(
+				polar_hypersurface[idx], Surf->F->mult(two, a));
 	}
 
 	for (i = 0; i < Poly2->get_nb_monomials(); i++) {
@@ -1333,11 +1334,11 @@ void surface_polynomial_domains::assemble_tangent_quadric(
 		Int_vec_copy(Poly2->get_monomial_pointer(i), M + 1, 3);
 		M[0] = 0;
 		idx = Poly2_4->index_of_monomial(M);
-		tangent_quadric[idx] = Surf->F->add(tangent_quadric[idx], a);
+		polar_hypersurface[idx] = Surf->F->add(polar_hypersurface[idx], a);
 	}
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::assemble_tangent_quadric done" << endl;
+		cout << "surface_polynomial_domains::assemble_polar_hypersurface done" << endl;
 	}
 }
 
@@ -1353,7 +1354,8 @@ void surface_polynomial_domains::compute_gradient(
 
 
 	if (f_v) {
-		cout << "surface_polynomial_domains::compute_gradient Poly2_4->get_nb_monomials() = " << Poly2_4->get_nb_monomials() << endl;
+		cout << "surface_polynomial_domains::compute_gradient "
+				"Poly2_4->get_nb_monomials() = " << Poly2_4->get_nb_monomials() << endl;
 	}
 
 	gradient = NEW_int(4 * Poly2_4->get_nb_monomials());
@@ -1363,7 +1365,8 @@ void surface_polynomial_domains::compute_gradient(
 			cout << "surface_polynomial_domains::compute_gradient i=" << i << endl;
 		}
 		if (f_v) {
-			cout << "surface_polynomial_domains::compute_gradient eqn_in=";
+			cout << "surface_polynomial_domains::compute_gradient "
+					"eqn_in=";
 			Int_vec_print(cout, equation20, 20);
 			cout << " = " << endl;
 			Poly3_4->print_equation(cout, equation20);

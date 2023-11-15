@@ -483,6 +483,26 @@ void tally::print_bare(int f_backwards)
 	}
 }
 
+std::string tally::stringify_bare(int f_backwards)
+{
+	data_structures::sorting Sorting;
+	string s;
+
+	if (f_second) {
+		s = Sorting.int_vec_stringify_types_bare(
+				cout, f_backwards, second_data_sorted,
+			second_nb_types, second_type_first, second_type_len);
+		//cout << endl;
+	}
+	else {
+		s = Sorting.int_vec_stringify_types_bare(
+				cout, f_backwards, data_sorted,
+			nb_types, type_first, type_len);
+		//cout << endl;
+	}
+	return s;
+}
+
 void tally::print_bare_tex(
 		std::ostream &ost, int f_backwards)
 {
@@ -499,6 +519,27 @@ void tally::print_bare_tex(
 		//cout << endl;	
 	}
 }
+
+std::string tally::stringify_bare_tex(int f_backwards)
+{
+	data_structures::sorting Sorting;
+	string s;
+
+	if (f_second) {
+		s = stringify_types_bare_tex(
+				f_backwards, second_data_sorted,
+			second_nb_types, second_type_first, second_type_len);
+		//cout << endl;
+	}
+	else {
+		s = stringify_types_bare_tex(
+				f_backwards, data_sorted,
+			nb_types, type_first, type_len);
+		//cout << endl;
+	}
+	return s;
+}
+
 
 void tally::print_types_bare_tex(
 		std::ostream &ost, int f_backwards, int *the_vec_sorted,
@@ -544,6 +585,61 @@ void tally::print_types_bare_tex(
 			//ost << "$ ";
 		}
 	}
+}
+
+std::string tally::stringify_types_bare_tex(
+		int f_backwards, int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
+{
+	int i, f, l, a;
+	string s;
+
+	if (f_backwards) {
+		for (i = nb_types - 1; i >= 0; i--) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			//ost << "$" << a;
+			s += std::to_string(a);
+			//ost << a;
+			if (l > 9) {
+				s += "^{" + std::to_string(l) + "}";
+				//ost << "^{" << l << "}";
+			}
+			else if (l > 1) {
+				s += "^" + std::to_string(l);
+				//ost << "^" << l;
+			}
+			if (i) {
+				s += ",\\,";
+			}
+			//ost << "$ ";
+		}
+	}
+	else {
+		for (i = 0; i < nb_types; i++) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			//ost << "$" << a;
+			s += std::to_string(a);
+			//ost << a;
+			if (l > 9) {
+				s += "^{" + std::to_string(l) + "}";
+				//ost << "^{" << l << "}";
+			}
+			else if (l > 1) {
+				s += "^" + std::to_string(l);
+				//ost << "^" << l;
+			}
+			if (i < nb_types - 1) {
+				s += ",\\,";
+				//ost << ",\\,";
+			}
+			//ost << "$ ";
+		}
+	}
+	return s;
 }
 
 void tally::print_array_tex(

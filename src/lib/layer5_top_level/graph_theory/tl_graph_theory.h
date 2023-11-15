@@ -169,6 +169,7 @@ public:
 	std::string coll_orthogonal_space_label;
 	std::string coll_orthogonal_set_of_points_label;
 
+	int f_tritangent_planes_disjointness_graph;
 	int f_trihedral_pair_disjointness_graph;
 
 	int f_non_attacking_queens_graph;

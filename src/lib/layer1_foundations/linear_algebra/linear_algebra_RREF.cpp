@@ -1181,6 +1181,31 @@ int linear_algebra::Gauss_easy(
 	return rk;
 }
 
+int linear_algebra::Gauss_easy_from_the_back(
+		int *A, int m, int n)
+// returns the rank
+{
+	int *base_cols;
+	int *B;
+	int rk;
+
+	B = NEW_int(m * n);
+	reverse_columns_of_matrix(
+				A, B, m, n);
+
+	base_cols = NEW_int(n);
+	rk = Gauss_int(
+			B, false, true, base_cols, false, NULL, m, n, n, 0);
+	FREE_int(base_cols);
+
+	reverse_columns_of_matrix(
+				B, A, m, n);
+
+	return rk;
+}
+
+
+
 int linear_algebra::Gauss_easy_memory_given(
 		int *A,
 		int m, int n, int *base_cols)

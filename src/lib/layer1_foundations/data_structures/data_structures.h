@@ -588,6 +588,7 @@ public:
 	int find_first_nonzero_entry(int *v, int len);
 	void zero(int *v, long int len);
 	int is_zero(int *v, long int len);
+	void one(int *v, long int len);
 	void mone(int *v, long int len);
 	void copy(int *from, int *to, long int len);
 	void copy_to_lint(int *from, long int *to, long int len);
@@ -733,6 +734,7 @@ public:
 			long int *v, int &len,
 			long int *take_away, int nb_take_away);
 	void zero(long int *v, long int len);
+	void one(long int *v, long int len);
 	void mone(long int *v, long int len);
 	void copy(long int *from, long int *to, long int len);
 	void copy_to_int(long int *from, int *to, long int len);
@@ -937,22 +939,6 @@ class partitionstack {
 			int from, int len);
 	int is_row_class(int c);
 	int is_col_class(int c);
-	void allocate_and_get_decomposition(
-		int *&row_classes, int *&row_class_inv, 
-			int &nb_row_classes,
-		int *&col_classes, int *&col_class_inv, 
-			int &nb_col_classes, 
-		int verbose_level);
-	void get_row_and_col_permutation(
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes, 
-		int *row_perm, int *row_perm_inv, 
-		int *col_perm, int *col_perm_inv,
-		int verbose_level);
-	void get_row_and_col_classes(
-			int *row_classes, int &nb_row_classes,
-			int *col_classes, int &nb_col_classes,
-			int verbose_level);
 	void initial_matrix_decomposition(
 			int nbrows, int nbcols,
 		int *V, int nb_V, int *B, int nb_B, 
@@ -963,47 +949,8 @@ class partitionstack {
 			int level, int verbose_level);
 	int cellSizeAtLevel(int cell, int level);
 
-	void print_classes_of_decomposition_tex(
-			std::ostream &ost,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes);
-	void print_decomposition_scheme(
-			std::ostream &ost,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes, 
-		int *scheme, int marker1, int marker2);
-	void print_decomposition_scheme_tex(
-			std::ostream &ost,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes, 
-		int *scheme);
-	void print_tactical_decomposition_scheme_tex_internal(
-			std::ostream &ost, int f_enter_math_mode,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes, 
-		int *row_scheme, int *col_scheme,
-		int f_print_subscripts);
-	void print_tactical_decomposition_scheme_tex(
-			std::ostream &ost,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes, 
-		int *row_scheme, int *col_scheme,
-		int f_print_subscripts);
-	void print_row_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math_mode,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes, 
-		int *row_scheme, int f_print_subscripts);
-	void print_column_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math_mode,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes, 
-		int *col_scheme, int f_print_subscripts);
-	void print_non_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math_mode,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes, 
-		int f_print_subscripts);
+
+
 	int hash_column_refinement_info(
 			int ht0, int *data, int depth,
 		int hash0);
@@ -1025,8 +972,46 @@ class partitionstack {
 	void split_by_orbit_partition(
 			int nb_orbits,
 		int *orbit_first, int *orbit_len, int *orbit,
-		int offset, 
+		int offset,
 		int verbose_level);
+
+
+	void allocate_and_get_decomposition(
+		int *&row_classes, int *&row_class_inv,
+			int &nb_row_classes,
+		int *&col_classes, int *&col_class_inv,
+			int &nb_col_classes,
+		int verbose_level);
+	void get_row_and_col_permutation(
+		int *row_classes, int nb_row_classes,
+		int *col_classes, int nb_col_classes,
+		int *row_perm, int *row_perm_inv,
+		int *col_perm, int *col_perm_inv,
+		int verbose_level);
+	void get_row_and_col_classes(
+			int *row_classes, int &nb_row_classes,
+			int *col_classes, int &nb_col_classes,
+			int verbose_level);
+	void print_classes_of_decomposition_tex(
+			std::ostream &ost,
+		int *row_classes, int nb_row_classes,
+		int *col_classes, int nb_col_classes);
+	void print_decomposition_scheme(
+			std::ostream &ost,
+		int *row_classes, int nb_row_classes,
+		int *col_classes, int nb_col_classes, 
+		int *scheme);
+	void print_row_tactical_decomposition_scheme_tex(
+			std::ostream &ost, int f_enter_math_mode,
+		int *row_classes, int nb_row_classes,
+		int *col_classes, int nb_col_classes,
+		int *row_scheme, int f_print_subscripts);
+	void print_column_tactical_decomposition_scheme_tex(
+			std::ostream &ost, int f_enter_math_mode,
+		int *row_classes, int nb_row_classes,
+		int *col_classes, int nb_col_classes,
+		int *col_scheme, int f_print_subscripts);
+
 };
 
 // #############################################################################
@@ -1441,7 +1426,7 @@ public:
 			long int *v,
 			int len, long int a, int &idx,
 			int verbose_level);
-	// This function finds the first occurrence of the element a.
+		// This function finds the first occurrence of the element a.
 	int longinteger_vec_search(
 			ring_theory::longinteger_object *v, int len,
 			ring_theory::longinteger_object &a, int &idx);
@@ -1451,7 +1436,8 @@ public:
 			int *v, int l, int *&w, int &w_len);
 	void int_vec_multiplicities(
 			int *v, int l, int *&w, int &w_len);
-	void int_vec_values_and_multiplicities(int *v, int l,
+	void int_vec_values_and_multiplicities(
+			int *v, int l,
 		int *&val, int *&mult, int &nb_values);
 	void int_vec_classify(
 			int length, int *the_vec, int *&the_vec_sorted,
@@ -1490,6 +1476,10 @@ public:
 	void int_vec_print_types_bare(
 			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
+	std::string int_vec_stringify_types_bare(
+			std::ostream &ost,
+		int f_backwards, int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void lint_vec_print_types_bare(
 			std::ostream &ost,
@@ -1659,16 +1649,18 @@ public:
 class spreadsheet {
 
 public:
+	int nb_rows, nb_cols;
 
+private:
 	char **tokens;
 	int nb_tokens;
 
 	int *line_start, *line_size;
 	int nb_lines;
 
-	int nb_rows, nb_cols;
 	int *Table;
 
+public:
 
 	spreadsheet();
 	~spreadsheet();
@@ -1760,6 +1752,8 @@ public:
 			int verbose_level);
 	void get_value_double_or_NA(
 			int i, int j, double &val, int &f_NA);
+	std::string get_entry_ij(
+			int i, int j);
 	void get_string(
 			std::string &str, int i, int j);
 	long int get_lint(int i, int j);
@@ -1801,9 +1795,11 @@ public:
 	int s_scan_str(char **s, char *str);
 	int s_scan_token_comma_separated(
 			const char **s, char *str, int verbose_level);
-	void scan_permutation_from_string(std::string &s,
+	void scan_permutation_from_string(
+			std::string &s,
 		int *&perm, int &degree, int verbose_level);
-	void scan_permutation_from_stream(std::istream & is,
+	void scan_permutation_from_stream(
+			std::istream & is,
 		int *&perm, int &degree, int verbose_level);
 	void chop_string(const char *str, int &argc, char **&argv);
 	void chop_string_comma_separated(
@@ -2059,11 +2055,16 @@ public:
 	void print_bare_stringstream(
 			std::stringstream &sstr, int f_backwards);
 	void print_bare(int f_backwards);
+	std::string stringify_bare(int f_backwards);
 	void print_bare_tex(
 			std::ostream &ost, int f_backwards);
+	std::string stringify_bare_tex(int f_backwards);
 	void print_types_bare_tex(
 			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
+		int nb_types, int *type_first, int *type_len);
+	std::string stringify_types_bare_tex(
+			int f_backwards, int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void print_array_tex(
 			std::ostream &ost, int f_backwards);

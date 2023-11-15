@@ -327,7 +327,8 @@ void classification_of_objects::classify_objects_using_nauty(
 	}
 }
 
-void classification_of_objects::save_automorphism_group_order(int verbose_level)
+void classification_of_objects::save_automorphism_group_order(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -361,7 +362,8 @@ void classification_of_objects::save_automorphism_group_order(int verbose_level)
 	}
 }
 
-void classification_of_objects::save_transversal(int verbose_level)
+void classification_of_objects::save_transversal(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

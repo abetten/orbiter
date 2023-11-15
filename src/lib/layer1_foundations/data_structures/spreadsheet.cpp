@@ -1275,6 +1275,22 @@ void spreadsheet::get_value_double_or_NA(
 	}
 }
 
+std::string spreadsheet::get_entry_ij(
+		int i, int j)
+{
+	int t;
+	string str;
+
+	t = Table[i * nb_cols + j];
+	if (t == -1) {
+		str.assign("");
+	}
+	else {
+		str.assign(tokens[t]);
+	}
+	return str;
+}
+
 void spreadsheet::get_string(
 		std::string &str, int i, int j)
 {

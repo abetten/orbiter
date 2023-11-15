@@ -34,6 +34,8 @@ conjugacy_classes_and_normalizers::conjugacy_classes_and_normalizers()
 	class_normalizer_number_of_generators = NULL;
 	normalizer_generators_perms = NULL;
 
+	Conjugacy_class = NULL;
+
 }
 
 conjugacy_classes_and_normalizers::~conjugacy_classes_and_normalizers()
@@ -54,7 +56,23 @@ conjugacy_classes_and_normalizers::~conjugacy_classes_and_normalizers()
 		FREE_int(class_normalizer_number_of_generators);
 	}
 	if (normalizer_generators_perms) {
+		int i;
+
+		for (i = 0; i < nb_classes; i++) {
+			FREE_int(normalizer_generators_perms[i]);
+		}
+
 		FREE_pint(normalizer_generators_perms);
+	}
+	if (Conjugacy_class) {
+		int i;
+
+		for (i = 0; i < nb_classes; i++) {
+			FREE_OBJECT(Conjugacy_class[i]);
+		}
+
+		FREE_pvoid((void **) Conjugacy_class);
+
 	}
 
 }
@@ -65,7 +83,6 @@ void conjugacy_classes_and_normalizers::read_magma_output_file(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, h;
 
 	if (f_v) {
 		cout << "conjugacy_classes_and_normalizers::read_magma_output_file" << endl;
@@ -74,6 +91,8 @@ void conjugacy_classes_and_normalizers::read_magma_output_file(
 		cout << "conjugacy_classes_and_normalizers::read_magma_output_file "
 				"degree=" << A->degree << endl;
 	}
+
+	int i, j, h;
 
 	conjugacy_classes_and_normalizers::A = A;
 	conjugacy_classes_and_normalizers::fname.assign(fname);
@@ -164,6 +183,325 @@ void conjugacy_classes_and_normalizers::read_magma_output_file(
 	}
 	if (f_v) {
 		cout << "conjugacy_classes_and_normalizers::read_magma_output_file done" << endl;
+	}
+}
+
+void conjugacy_classes_and_normalizers::create_classes(
+		groups::sims *group_G, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::create_classes" << endl;
+	}
+
+	Conjugacy_class = (groups::conjugacy_class_of_elements **) NEW_pvoid(nb_classes);
+
+	int idx;
+
+	for (idx = 0; idx < nb_classes; idx++) {
+		Conjugacy_class[idx] = NEW_OBJECT(groups::conjugacy_class_of_elements);
+
+		Conjugacy_class[idx]->init(
+				this,
+				idx,
+				group_G,
+				verbose_level - 1);
+
+	}
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::create_classes" << endl;
+	}
+}
+
+void conjugacy_classes_and_normalizers::report(
+		groups::sims *override_sims,
+		std::string &label_latex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report" << endl;
+	}
+
+	int i;
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "i : class_order_of_element : class_normalizer_order" << endl;
+	for (i = 0; i < nb_classes; i++) {
+		cout << i << " : " << class_order_of_element[i] << " : " << class_normalizer_order[i] << endl;
+	}
+
+
+
+	data_structures::string_tools ST;
+	ring_theory::longinteger_object go;
+
+	override_sims->group_order(go);
+	cout << "The group has order " << go << endl;
+
+	string fname_latex;
+
+	fname_latex = fname;
+
+	ST.replace_extension_with(fname_latex, ".tex");
+
+
+	{
+		ofstream fp(fname_latex);
+		string title, author, extra_praeamble;
+		l1_interfaces::latex_interface L;
+
+		title = "Conjugacy classes of $" + label_latex + "$";
+
+		author = "computed by Orbiter and MAGMA";
+
+		L.head(fp,
+			false /* f_book */, true /* f_title */,
+			title, author /* const char *author */,
+			false /* f_toc */, false /* f_landscape */, true /* f_12pt */,
+			true /* f_enlarged_page */, true /* f_pagenumbers */,
+			extra_praeamble /* extra_praeamble */);
+		//latex_head_easy(fp);
+
+		fp << "\\section{Conjugacy classes in $" << label_latex << "$}" << endl;
+
+
+		fp << "The group order is " << endl;
+		fp << "$$" << endl;
+		go.print_not_scientific(fp);
+		fp << endl;
+		fp << "$$" << endl;
+
+		cout << "second time" << endl;
+
+		cout << "i : class_order_of_element : class_normalizer_order" << endl;
+		for (i = 0; i < nb_classes; i++) {
+			cout << i << " : " << class_order_of_element[i]
+				<< " : " << class_normalizer_order[i] << endl;
+		}
+
+
+		if (f_v) {
+			cout << "conjugacy_classes_and_normalizers::report "
+					"before report_classes" << endl;
+		}
+		report_classes(fp, verbose_level - 1);
+		if (f_v) {
+			cout << "conjugacy_classes_and_normalizers::report "
+					"after report_classes" << endl;
+		}
+
+
+
+		L.foot(fp);
+	}
+	cout << "Written file " << fname_latex << " of size "
+			<< Fio.file_size(fname_latex) << endl;
+
+
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report done" << endl;
+	}
+}
+
+void conjugacy_classes_and_normalizers::export_csv(
+		groups::sims *override_sims,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::export_csv" << endl;
+	}
+
+	data_structures::string_tools ST;
+	string fname_csv;
+
+	fname_csv.assign(fname);
+
+
+	ST.replace_extension_with(fname_csv, ".csv");
+	{
+		ofstream fp(fname_csv);
+
+		int idx;
+
+		fp << "ROW,class_order_of_element,class_size" << endl;
+		for (idx = 0; idx < nb_classes; idx++) {
+			fp << idx << "," << class_order_of_element[idx] << "," << class_size[idx] << endl;
+		}
+		fp << "END" << endl;
+
+	}
+
+	string fname_data;
+
+	fname_data.assign(fname);
+
+	ST.replace_extension_with(fname_data, "_data.csv");
+
+
+	{
+		ofstream fp(fname_data);
+
+		int idx;
+		int *data;
+
+		data = NEW_int(A->make_element_size);
+
+		fp << "ROW,class_order_of_element,class_size,classrep" << endl;
+		for (idx = 0; idx < nb_classes; idx++) {
+			fp << idx << "," << class_order_of_element[idx] << "," << class_size[idx];
+
+
+			long int goi, ngo;
+
+			goi = class_order_of_element[idx];
+			ngo = class_normalizer_order[idx];
+
+
+
+			cout << "goi=" << goi << endl;
+			cout << "ngo=" << ngo << endl;
+
+
+			groups::strong_generators *gens;
+			data_structures_groups::vector_ge *nice_gens;
+
+			gens = NEW_OBJECT(groups::strong_generators);
+
+
+			// create strong generators for the cyclic group generated by the i-th class rep
+			// nice_gens will contain the single generator only.
+			if (f_v) {
+				cout << "conjugacy_classes_and_normalizers::report computing H, "
+					"before gens->init_from_permutation_representation" << endl;
+			}
+			gens->init_from_permutation_representation(
+					A, override_sims,
+					perms + idx * A->degree,
+				1, goi, nice_gens,
+				verbose_level - 5);
+
+			if (f_v) {
+				cout << "conjugacy_classes_and_normalizers::report computing H, "
+					"after gens->init_from_permutation_representation" << endl;
+			}
+
+			int *Elt;
+
+			Elt = nice_gens->ith(0);
+			A->Group_element->code_for_make_element(
+						data, Elt);
+			fp << ",\"";
+			Int_vec_print_bare_fully(fp, data, A->make_element_size);
+			fp << "\"";
+
+			FREE_OBJECT(gens);
+
+			fp << endl;
+		}
+		fp << "END" << endl;
+
+		FREE_int(data);
+	}
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::export_csv done" << endl;
+	}
+}
+
+void conjugacy_classes_and_normalizers::report_classes(
+		std::ofstream &fp, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report_classes" << endl;
+	}
+	int idx;
+
+	cout << "The conjugacy classes are:" << endl;
+	for (idx = 0; idx < nb_classes; idx++) {
+
+
+		Conjugacy_class[idx]->report_single_class(fp, verbose_level - 1);
+
+	}
+
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report_classes "
+				"before export_csv" << endl;
+	}
+	export_csv(verbose_level);
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report_classes "
+				"after export_csv" << endl;
+	}
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report_classes done" << endl;
+	}
+}
+
+void conjugacy_classes_and_normalizers::export_csv(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::export_csv" << endl;
+	}
+
+	int idx;
+	int nb_cols = 1;
+	string *Table;
+
+	cout << "The conjugacy class representatives are:" << endl;
+
+	Table = new string[nb_classes * nb_cols];
+
+	for (idx = 0; idx < nb_classes; idx++) {
+
+		Table[idx * nb_cols + 0] =
+				Conjugacy_class[idx]->conjugacy_class_of_elements::stringify_representative_coded(
+				verbose_level - 1);
+
+	}
+
+
+
+	orbiter_kernel_system::file_io Fio;
+
+
+	string fname;
+	string headings;
+
+	headings.assign("Rep");
+
+	fname = fname + "_classes.csv";
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::export_csv "
+				"before Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+	Fio.Csv_file_support->write_table_of_strings(fname,
+			nb_classes, nb_cols, Table,
+			headings,
+			verbose_level);
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::export_csv "
+				"after Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+
+	delete [] Table;
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::export_csv" << endl;
 	}
 }
 

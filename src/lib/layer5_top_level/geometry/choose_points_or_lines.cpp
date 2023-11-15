@@ -88,7 +88,8 @@ void choose_points_or_lines::free_representative()
 	int f_v = false;
 
 	if (f_v) {
-		cout << "choose_points_or_lines::free_representative freeing representative" << endl;
+		cout << "choose_points_or_lines::free_representative "
+				"freeing representative" << endl;
 	}
 	if (representative) {
 		FREE_lint(representative);
@@ -100,7 +101,8 @@ void choose_points_or_lines::free_representative()
 		FREE_OBJECT(Stab_Strong_gens);
 	}
 	if (f_v) {
-		cout << "choose_points_or_lines::free_representative freeing stab" << endl;
+		cout << "choose_points_or_lines::free_representative "
+				"freeing stab" << endl;
 	}
 	if (stab) {
 		FREE_OBJECT(stab);
@@ -118,7 +120,8 @@ void poset::add_testing_without_group(
 		int verbose_level)
 #endif
 
-void choose_points_or_lines::init(const char *label, void *data, 
+void choose_points_or_lines::init(
+		const char *label, void *data,
 		actions::action *A, actions::action *A_lines,
 	int f_choose_lines, 
 	int nb_points_or_lines, 

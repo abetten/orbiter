@@ -540,7 +540,8 @@ void known_groups::setup_linear_group_from_strong_generators(
 	}
 }
 
-void known_groups::init_sims_from_generators(int verbose_level)
+void known_groups::init_sims_from_generators(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	groups::sims *S;

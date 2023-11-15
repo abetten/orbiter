@@ -140,7 +140,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 
 	for (h = 0; h < 6; h++) {
 		row_col_Eckardt_points[h] =
-				Surf->Schlaefli->Trihedral_to_Eckardt[t_idx0 * 6 + h];
+				Surf->Schlaefli->Schlaefli_trihedral_pairs->Axes[t_idx0 * 6 + h];
 	}
 	//int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx0 * 6, row_col_Eckardt_points, 6);
 
@@ -290,7 +290,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 
 		long int e[6];
 
-		Lint_vec_copy(Surf->Schlaefli->Trihedral_to_Eckardt + T_idx[i] * 6, e, 6);
+		Lint_vec_copy(Surf->Schlaefli->Schlaefli_trihedral_pairs->Axes + T_idx[i] * 6, e, 6);
 		for (j = 0; j < 6; j++) {
 			Dual_point_ranks[i * 6 + j] = The_plane_duals[e[j]];
 		}
@@ -627,7 +627,7 @@ void web_of_cubic_curves::find_trihedral_pairs(int verbose_level)
 		for (i = 0; i < nb_T; i++) {
 			t_idx = T_idx[i];
 			cout << i << " / " << nb_T << ": T_{" << t_idx << "} =  T_{"
-					<< Surf->Schlaefli->Trihedral_pair_labels[t_idx] << "}" << endl;
+					<< Surf->Schlaefli->Schlaefli_trihedral_pairs->Trihedral_pair_labels[t_idx] << "}" << endl;
 		}
 	}
 
@@ -654,7 +654,7 @@ void web_of_cubic_curves::create_surface_equation_from_trihedral_pair(
 	}
 
 
-	Lint_vec_copy(Surf->Schlaefli->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
+	Lint_vec_copy(Surf->Schlaefli->Schlaefli_trihedral_pairs->Axes + t_idx * 6, row_col_Eckardt_points, 6);
 
 	Int_vec_copy(Tritangent_plane_equations + row_col_Eckardt_points[0] * 4,
 			The_six_plane_equations, 4);
@@ -736,11 +736,11 @@ void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 	}
 
 	if (f_v) {
-		cout << "Trihedral pair T_{" << Surf->Schlaefli->Trihedral_pair_labels[t_idx] << "}"
+		cout << "Trihedral pair T_{" << Surf->Schlaefli->Schlaefli_trihedral_pairs->Trihedral_pair_labels[t_idx] << "}"
 			<< endl;
 	}
 
-	Lint_vec_copy(Surf->Schlaefli->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
+	Lint_vec_copy(Surf->Schlaefli->Schlaefli_trihedral_pairs->Axes + t_idx * 6, row_col_Eckardt_points, 6);
 
 	if (f_v) {
 		cout << "row_col_Eckardt_points = ";
@@ -918,7 +918,7 @@ void web_of_cubic_curves::print_trihedral_plane_equations(
 	ost << "The chosen abstract trihedral pair is no "
 			<< t_idx0 << ":" << endl;
 	ost << "$$" << endl;
-	Surf->Schlaefli->latex_abstract_trihedral_pair(ost, t_idx0);
+	Surf->Schlaefli->Schlaefli_trihedral_pairs->latex_abstract_trihedral_pair(ost, t_idx0);
 	ost << "$$" << endl;
 	ost << "The six planes in the trihedral pair are:" << endl;
 	ost << "$$" << endl;
@@ -929,10 +929,10 @@ void web_of_cubic_curves::print_trihedral_plane_equations(
 	ost << "The six curves are:\\\\";
 	for (i = 0; i < 6; i++) {
 		ost << "$$" << endl;
-		ost << "W_{" << Surf->Schlaefli->Eckard_point_label[row_col_Eckardt_points[i]];
+		ost << "W_{" << Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label[row_col_Eckardt_points[i]];
 		ost << "}=\\Phi\\big(\\pi_{" << row_col_Eckardt_points[i]
 			<< "}\\big) = \\Phi\\big(\\pi_{"
-			<< Surf->Schlaefli->Eckard_point_label[row_col_Eckardt_points[i]]
+			<< Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label[row_col_Eckardt_points[i]]
 			<< "}\\big)=V\\Big(" << endl;
 		Surf->PolynomialDomains->Poly3->print_equation(ost, six_curves + i * 10);
 		ost << "\\Big)" << endl;
@@ -958,10 +958,10 @@ void web_of_cubic_curves::print_trihedral_plane_equations(
 	ost << "The four base curves are:\\\\";
 	for (i = 0; i < 4; i++) {
 		ost << "$$" << endl;
-		ost << "W_{" << Surf->Schlaefli->Eckard_point_label[base_curves4[i]];
+		ost << "W_{" << Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label[base_curves4[i]];
 		ost << "}=\\Phi\\big(\\pi_{" << base_curves4[i]
 			<< "}\\big) = \\Phi\\big(\\pi_{"
-			<< Surf->Schlaefli->Eckard_point_label[base_curves4[i]]
+			<< Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label[base_curves4[i]]
 			<< "}\\big)=V\\Big(" << endl;
 		Surf->PolynomialDomains->Poly3->print_equation(ost, base_curves + i * 10);
 		ost << "\\Big)" << endl;
@@ -977,7 +977,7 @@ void web_of_cubic_curves::print_trihedral_plane_equations(
 	ost << "The resulting tritangent plane equations are:\\\\";
 	for (i = 0; i < 45; i++) {
 		ost << "$\\pi_{" << i << "}=\\pi_{"
-			<< Surf->Schlaefli->Eckard_point_label[i] << "}=V\\Big(";
+			<< Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label[i] << "}=V\\Big(";
 		Surf->PolynomialDomains->Poly1_4->print_equation(ost,
 				Tritangent_plane_equations + i * 4);
 		ost << "\\Big)$\\\\";
@@ -1026,7 +1026,7 @@ void web_of_cubic_curves::print_the_six_plane_equations(
 	for (i = 0; i < 6; i++) {
 		h = row_col_Eckardt_points[i];
 		ost << "$\\pi_{" << h << "}=\\pi_{"
-				<< Surf->Schlaefli->Eckard_point_label[h] << "}=V\\big(";
+				<< Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label[h] << "}=V\\big(";
 		Surf->PolynomialDomains->Poly1_4->print_equation(ost, Tritangent_plane_equations + h * 4);
 		ost << "\\big)$\\\\";
 	}
@@ -1219,9 +1219,9 @@ void web_of_cubic_curves::print_web_of_cubic_curves(
 
 		string label;
 
-		label = "W_{" + Surf->Schlaefli->Eckard_point_label[h] + "}"
+		label = "W_{" + Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label[h] + "}"
 				"=\\Phi\\big(\\pi_{" + std::to_string(h) + "}\\big) "
-				"= \\Phi\\big(\\pi_{" + Surf->Schlaefli->Eckard_point_label[h] + "}\\big)";
+				"= \\Phi\\big(\\pi_{" + Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label[h] + "}\\big)";
 		ost << label;
 		ost << " = ";
 		if (h < 30) {
@@ -1323,7 +1323,7 @@ static void Web_of_cubic_curves_entry_print(int *p,
 	else if (j == -1) {
 
 		output += "\\pi_{" + std::to_string(i) + "}";
-		output += " = \\pi_{" + Web->Surf->Schlaefli->Eckard_point_label[i] + "}";
+		output += " = \\pi_{" + Web->Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label[i] + "}";
 	}
 	else {
 		output += std::to_string(i);

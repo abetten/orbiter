@@ -441,7 +441,8 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 }
 
 
-void hermitian_spreads_classify::early_test_func(long int *S, int len,
+void hermitian_spreads_classify::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)

@@ -107,6 +107,26 @@ void vector_ge::init_by_hdl(actions::action *A,
 	}
 }
 
+void vector_ge::init_by_hdl(actions::action *A,
+		std::vector<int> &gen_hdl, int verbose_level)
+{
+	int i;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::init_by_hdl" << endl;
+	}
+	init(A, verbose_level);
+	allocate(gen_hdl.size(), verbose_level);
+	for (i = 0; i < gen_hdl.size(); i++) {
+		A->Group_element->element_retrieve(gen_hdl[i], ith(i), 0);
+	}
+	if (f_v) {
+		cout << "vector_ge::init_by_hdl done" << endl;
+	}
+}
+
+
 void vector_ge::init_single(actions::action *A,
 		int *Elt, int verbose_level)
 {
@@ -185,6 +205,12 @@ void vector_ge::init_from_data(actions::action *A, int *data,
 	if (f_v) {
 		cout << "vector_ge::init_from_data" << endl;
 	}
+
+	if (elt_size != A->make_element_size) {
+		cout << "vector_ge::init_from_data "
+				"elt_size != A->make_element_size" << endl;
+		exit(1);
+	}
 	Elt = NEW_int(A->elt_size_in_int);
 	init(A, verbose_level);
 	allocate(nb_elements, verbose_level);
@@ -204,7 +230,42 @@ void vector_ge::init_from_data(actions::action *A, int *data,
 	}
 }
 
-void vector_ge::init_conjugate_svas_of(vector_ge *v,
+void vector_ge::init_transposed(
+		vector_ge *v,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "vector_ge::init_transposed" << endl;
+	}
+
+	init(v->A, verbose_level - 2);
+	allocate(v->len, verbose_level - 2);
+	for (i = 0; i < v->len; i++) {
+		if (f_v) {
+			cout << "before element_transpose " << i << " / "
+					<< v->len << ":" << endl;
+			A->Group_element->element_print_quick(v->ith(i), cout);
+		}
+		A->Group_element->element_transpose(v->ith(i), ith(i),
+				0 /* verbose_level*/);
+		if (f_v) {
+			cout << "after element_transpose " << i << " / "
+					<< v->len << ":" << endl;
+			A->Group_element->element_print_quick(ith(i), cout);
+		}
+	}
+
+	if (f_v) {
+		cout << "vector_ge::init_transposed done" << endl;
+	}
+}
+
+
+void vector_ge::init_conjugate_svas_of(
+		vector_ge *v,
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -236,7 +297,8 @@ void vector_ge::init_conjugate_svas_of(vector_ge *v,
 	}
 }
 
-void vector_ge::init_conjugate_sasv_of(vector_ge *v,
+void vector_ge::init_conjugate_sasv_of(
+		vector_ge *v,
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -791,17 +853,20 @@ void vector_ge::export_inversion_graphs(
 			int N;
 			int i, j;
 
-			A->Group_element->element_as_permutation(Elt, perm, 0 /* verbose_level*/);
+			A->Group_element->compute_permutation(
+					Elt, perm, 0 /* verbose_level*/);
 
 			graph_theory::graph_theory_domain GT;
 
 
 			if (f_v) {
-				cout << "vector_ge::export_inversion_graphs before GT.make_inversion_graph" << endl;
+				cout << "vector_ge::export_inversion_graphs "
+						"before GT.make_inversion_graph" << endl;
 			}
 			GT.make_inversion_graph(Adj, N, perm, A->degree, verbose_level);
 			if (f_v) {
-				cout << "vector_ge::export_inversion_graphs after GT.make_inversion_graph" << endl;
+				cout << "vector_ge::export_inversion_graphs "
+						"after GT.make_inversion_graph" << endl;
 			}
 
 			ost << h;
@@ -1252,6 +1317,8 @@ int vector_ge::test_if_in_set_stabilizer(
 	}
 	return ret;
 }
+
+
 }}}
 
 

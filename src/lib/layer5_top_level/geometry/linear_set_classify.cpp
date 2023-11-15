@@ -535,7 +535,8 @@ void linear_set_classify::init(
 	}
 }
 
-void linear_set_classify::do_classify(int verbose_level)
+void linear_set_classify::do_classify(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -546,7 +547,8 @@ void linear_set_classify::do_classify(int verbose_level)
 	//int t0 = os_ticks();
 
 	if (f_v) {
-		cout << "linear_set_classify::do_classify calling generator_main" << endl;
+		cout << "linear_set_classify::do_classify "
+				"calling generator_main" << endl;
 		cout << "A=";
 		Gen->get_A()->print_info();
 		cout << "A2=";
@@ -557,7 +559,9 @@ void linear_set_classify::do_classify(int verbose_level)
 	int f_use_invariant_subset_if_available = true;
 
 
-	Gen->compute_orbits(0, depth, schreier_depth, f_use_invariant_subset_if_available,
+	Gen->compute_orbits(
+			0, depth, schreier_depth,
+			f_use_invariant_subset_if_available,
 			verbose_level);
 
 #if 0
@@ -572,7 +576,8 @@ void linear_set_classify::do_classify(int verbose_level)
 	int nb_orbits;
 
 	if (f_v) {
-		cout << "linear_set_classify::do_classify done with generator_main" << endl;
+		cout << "linear_set_classify::do_classify "
+				"done with generator_main" << endl;
 	}
 	nb_orbits = Gen->nb_orbits_at_level(depth);
 	if (f_v) {
@@ -586,7 +591,8 @@ void linear_set_classify::do_classify(int verbose_level)
 	}
 }
 
-int linear_set_classify::test_set(int len, long int *S, int verbose_level)
+int linear_set_classify::test_set(
+		int len, long int *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -610,7 +616,8 @@ int linear_set_classify::test_set(int len, long int *S, int verbose_level)
 			len, vector_space_dimension, vector_space_dimension,
 			Fq->log10_of_q);
 	}
-	rk = Fq->Linear_algebra->Gauss_simple(Basis, len, vector_space_dimension,
+	rk = Fq->Linear_algebra->Gauss_simple(
+			Basis, len, vector_space_dimension,
 			base_cols, 0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "the matrix has rank " << rk << endl;
@@ -638,7 +645,8 @@ int linear_set_classify::test_set(int len, long int *S, int verbose_level)
 	return ret;
 }
 
-void linear_set_classify::compute_intersection_types_at_level(int level,
+void linear_set_classify::compute_intersection_types_at_level(
+		int level,
 	int &nb_nodes, int *&Intersection_dimensions, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -671,7 +679,8 @@ void linear_set_classify::compute_intersection_types_at_level(int level,
 	}
 }
 
-void linear_set_classify::calculate_intersections(int depth, int verbose_level)
+void linear_set_classify::calculate_intersections(
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -768,7 +777,8 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 	}
 }
 
-void linear_set_classify::read_data_file(int depth, int verbose_level)
+void linear_set_classify::read_data_file(
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int depth_completed;
@@ -777,11 +787,13 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 	if (f_v) {
 		cout << "linear_set_classify::read_data_file" << endl;
 	}
-	fname = Gen->get_problem_label_with_path() + "_" + std::to_string(depth) + ".data";
+	fname = Gen->get_problem_label_with_path()
+			+ "_" + std::to_string(depth) + ".data";
 
 	Gen->read_data_file(depth_completed, fname, 0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "linear_set_classify::read_data_file after read_data_file" << endl;
+		cout << "linear_set_classify::read_data_file "
+				"after read_data_file" << endl;
 	}
 
 	int level;
@@ -817,7 +829,8 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 }
 
 
-void linear_set_classify::print_orbits_at_level(int level)
+void linear_set_classify::print_orbits_at_level(
+		int level)
 {
 	int len, orbit_at_level, i;
 	ring_theory::longinteger_object go;
@@ -849,7 +862,8 @@ void linear_set_classify::print_orbits_at_level(int level)
 
 }
 
-void linear_set_classify::classify_secondary(int argc, const char **argv,
+void linear_set_classify::classify_secondary(
+		int argc, const char **argv,
 	int level, int orbit_at_level,
 	groups::strong_generators *strong_gens,
 	int verbose_level)
@@ -1035,7 +1049,8 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 
 }
 
-void linear_set_classify::do_classify_secondary(int verbose_level)
+void linear_set_classify::do_classify_secondary(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
@@ -1318,7 +1333,8 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 	FREE_lint(candidates);
 }
 
-void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
+void linear_set_classify::init_compute_stabilizer(
+		int argc, const char **argv,
 	int level, int orbit_at_level,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens_previous,

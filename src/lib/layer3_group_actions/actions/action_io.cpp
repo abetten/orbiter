@@ -829,7 +829,8 @@ void action::list_elements_as_permutations_vertically(
 	}
 }
 
-void action::print_symmetry_group_type(std::ostream &ost)
+void action::print_symmetry_group_type(
+		std::ostream &ost)
 {
 	action_global AG;
 
@@ -891,7 +892,8 @@ void action::print_info()
 
 }
 
-void action::report_basic_orbits(std::ostream &ost)
+void action::report_basic_orbits(
+		std::ostream &ost)
 {
 	int i;
 
@@ -920,7 +922,8 @@ void action::print_base()
 	}
 }
 
-void action::print_bare_base(std::ofstream &ost)
+void action::print_bare_base(
+		std::ofstream &ost)
 {
 	if (Stabilizer_chain) {
 		orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(ost, get_base(), base_len());
@@ -931,7 +934,8 @@ void action::print_bare_base(std::ofstream &ost)
 	}
 }
 
-void action::latex_all_points(std::ostream &ost)
+void action::latex_all_points(
+		std::ostream &ost)
 {
 	int i;
 	int *v;
@@ -1073,14 +1077,16 @@ void action::latex_point_set(
 }
 
 
-void action::print_group_order(std::ostream &ost)
+void action::print_group_order(
+		std::ostream &ost)
 {
 	ring_theory::longinteger_object go;
 	group_order(go);
 	cout << go;
 }
 
-void action::print_group_order_long(std::ostream &ost)
+void action::print_group_order_long(
+		std::ostream &ost)
 {
 	int i;
 
@@ -1288,7 +1294,7 @@ void action::print_one_element_tex(
 
 		perm = NEW_int(degree);
 
-		Group_element->element_as_permutation(
+		Group_element->compute_permutation(
 				Elt,
 				perm, 0 /* verbose_level */);
 

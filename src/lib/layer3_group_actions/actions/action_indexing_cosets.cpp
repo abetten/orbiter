@@ -16,7 +16,8 @@ namespace layer3_group_actions {
 namespace actions {
 
 
-void action::coset_unrank(groups::sims *G,
+void action::coset_unrank(
+		groups::sims *G,
 		groups::sims *U,
 		long int rank, int *Elt, int verbose_level)
 {
@@ -44,7 +45,8 @@ void action::coset_unrank(groups::sims *G,
 
 	U->group_order(U_order);
 
-	D.integral_division(G_order, U_order, index, rem, 0);
+	D.integral_division(
+			G_order, U_order, index, rem, 0);
 
 	if (f_v) {
 		cout << "The full group has order " << G_order << endl;

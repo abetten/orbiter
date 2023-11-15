@@ -169,7 +169,7 @@ void action_on_module::init_action_on_module(
 		A_on_module =
 				A_on_the_lines->Induced_action->create_induced_action_on_sets(
 				SO->SOP->SmoothProperties->nb_tritangent_planes, 3,
-				SO->Surf->Schlaefli->Lines_in_tritangent_planes,
+				SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Lines_in_tritangent_planes,
 				0 /*verbose_level*/);
 		if (module_dimension_n != 45) {
 			cout << "module_dimension_n should be 45" << endl;
@@ -186,7 +186,7 @@ void action_on_module::init_action_on_module(
 			cout << "creating action on half double sixes:" << endl;
 		}
 		A_single_sixes = A_on_the_lines->Induced_action->create_induced_action_on_sets(
-				72, 6, SO->Surf->Schlaefli->Double_six,
+				72, 6, SO->Surf->Schlaefli->Schlaefli_double_six->Double_six,
 				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "creating action on half double sixes done" << endl;

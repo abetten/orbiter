@@ -69,6 +69,17 @@ void lint_vec::zero(long int *v, long int len)
 	}
 }
 
+void lint_vec::one(long int *v, long int len)
+{
+	int i;
+	long int *p;
+
+	for (p = v, i = 0; i < len; p++, i++) {
+		*p = 1;
+	}
+}
+
+
 void lint_vec::mone(long int *v, long int len)
 {
 	int i;

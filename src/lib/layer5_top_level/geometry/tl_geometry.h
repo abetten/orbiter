@@ -30,8 +30,6 @@ public:
 
 	int f_control;
 	std::string control_label;
-	//int f_poset_classification_control;
-	//poset_classification::poset_classification_control *Control;
 
 	int f_d;
 	int d;
@@ -47,7 +45,6 @@ public:
 
 	int f_test_nb_Eckardt_points;
 	int nb_E;
-	//algebraic_geometry::surface_domain *Surf;
 
 	int f_affine;
 
@@ -291,7 +288,8 @@ public:
 	void freeself();
 	void null_representative();
 	void free_representative();
-	void init(const char *label, void *data, 
+	void init(
+			const char *label, void *data,
 			actions::action *A, actions::action *A_lines,
 		int f_choose_lines, 
 		int nb_points_or_lines, 
@@ -459,7 +457,8 @@ public:
 	void read_arguments(int argc, std::string *argv);
 	void init2(int verbose_level);
 	void compute(int depth, int verbose_level);
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
@@ -566,15 +565,22 @@ public:
 		int s, int n, int q,
 		std::string &poly_q, std::string &poly_Q,
 		int depth, int f_identify, int verbose_level);
-	void do_classify(int verbose_level);
-	int test_set(int len, long int *S, int verbose_level);
-	void compute_intersection_types_at_level(int level,
+	void do_classify(
+			int verbose_level);
+	int test_set(
+			int len, long int *S, int verbose_level);
+	void compute_intersection_types_at_level(
+			int level,
 		int &nb_nodes, int *&Intersection_dimensions,
 		int verbose_level);
-	void calculate_intersections(int depth, int verbose_level);
-	void read_data_file(int depth, int verbose_level);
-	void print_orbits_at_level(int level);
-	void classify_secondary(int argc, const char **argv,
+	void calculate_intersections(
+			int depth, int verbose_level);
+	void read_data_file(
+			int depth, int verbose_level);
+	void print_orbits_at_level(
+			int level);
+	void classify_secondary(
+			int argc, const char **argv,
 		int level, int orbit_at_level,
 		groups::strong_generators *strong_gens,
 		int verbose_level);
@@ -582,7 +588,8 @@ public:
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens_previous,
 		int verbose_level);
-	void do_classify_secondary(int verbose_level);
+	void do_classify_secondary(
+			int verbose_level);
 	int test_set_secondary(
 			int len, long int *S, int verbose_level);
 	void compute_stabilizer_of_linear_set(
@@ -590,7 +597,8 @@ public:
 		int level, int orbit_at_level,
 		groups::strong_generators *&strong_gens,
 		int verbose_level);
-	void init_compute_stabilizer(int argc, const char **argv,
+	void init_compute_stabilizer(
+			int argc, const char **argv,
 		int level, int orbit_at_level,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens_previous,
@@ -644,7 +652,8 @@ public:
 	mapping_description();
 	~mapping_description();
 	int read_arguments(
-			int argc, std::string *argv, int verbose_level);
+			int argc, std::string *argv,
+			int verbose_level);
 	void print();
 
 
@@ -715,7 +724,6 @@ public:
 
 	int f_control;
 	std::string control_label;
-	//poset_classification::poset_classification_control *Control;
 
 	int f_epsilon;
 	int epsilon; // the type of the quadric (0, 1 or -1)

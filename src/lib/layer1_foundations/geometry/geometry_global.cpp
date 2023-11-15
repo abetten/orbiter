@@ -3973,7 +3973,107 @@ void geometry_global::do_unrank_lines_in_PG(
 	FREE_lint(v);
 	FREE_int(basis);
 
+	if (f_v) {
+		cout << "geometry_global::do_unrank_lines_in_PG done" << endl;
+	}
 }
+
+
+void geometry_global::do_points_on_lines_in_PG(
+		geometry::projective_space *P,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_points_on_lines_in_PG" << endl;
+	}
+
+	int len;
+	int *basis;
+	int *w;
+
+	long int *v;
+	int sz;
+
+	Get_lint_vector_from_label(label, v, sz, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "geometry_global::do_points_on_lines_in_PG v = ";
+		Lint_vec_print(cout, v, sz);
+		cout << endl;
+	}
+
+
+	int d, q;
+	long int *Pts;
+
+	q = P->Subspaces->F->q;
+	d = P->Subspaces->n + 1;
+
+	len = 2 * d;
+
+	basis = NEW_int(len);
+	w = NEW_int(d);
+	Pts = NEW_lint(sz * (q + 1));
+
+	int i;
+
+	for (i = 0; i < sz; i++) {
+
+
+		P->unrank_line(basis, v[i]);
+
+
+		cout << v[i] << " = " << endl;
+		Int_matrix_print(basis, 2, d);
+		cout << endl;
+
+
+		int coeffs[2];
+		int a;
+
+		// loop over all points on the line:
+		for (a = 0; a < q + 1; a++) {
+
+			// unrank a point on the projective line:
+			P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+					coeffs, 1, 2, a);
+
+
+			P->Subspaces->F->Linear_algebra->mult_vector_from_the_left(
+					coeffs, basis, w, 2, d);
+
+
+
+			// rank the test point and see
+			// if it belongs to the surface:
+			P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
+					w, 1, d, Pts[i * (q + 1) + a]);
+
+
+		}
+
+	}
+	if (f_v) {
+		cout << "geometry_global::do_points_on_lines_in_PG Pts on lines:" << endl;
+		Lint_matrix_print(Pts, sz, q + 1);
+	}
+
+
+	FREE_lint(v);
+	FREE_int(basis);
+	FREE_int(w);
+	FREE_lint(Pts);
+
+	if (f_v) {
+		cout << "geometry_global::do_points_on_lines_in_PG done" << endl;
+	}
+}
+
+
+
 
 void geometry_global::do_cone_over(int n,
 		field_theory::finite_field *F,

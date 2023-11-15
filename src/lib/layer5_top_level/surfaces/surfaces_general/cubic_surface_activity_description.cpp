@@ -23,6 +23,10 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 {
 	f_report = false;
 
+	f_report_group_elements = false;
+	//std::string report_group_elements_csv_file;
+	//std::string report_group_elements_heading;
+
 	f_export_something = false;
 	//std::string export_something_what;
 
@@ -75,6 +79,16 @@ int cubic_surface_activity_description::read_arguments(
 			f_report = true;
 			if (f_v) {
 				cout << "-report " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-report_group_elements") == 0) {
+			f_report_group_elements = true;
+			report_group_elements_csv_file.assign(argv[++i]);
+			report_group_elements_heading.assign(argv[++i]);
+			if (f_v) {
+				cout << "-report_group_elements "
+						<< report_group_elements_csv_file
+						<< " " << report_group_elements_heading << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_something") == 0) {
@@ -176,6 +190,11 @@ void cubic_surface_activity_description::print()
 {
 	if (f_report) {
 		cout << "-report " << endl;
+	}
+	if (f_report_group_elements) {
+		cout << "-report_group_elements "
+				<< report_group_elements_csv_file
+				<< " " << report_group_elements_heading << endl;
 	}
 	if (f_export_something) {
 		cout << "-export_something " << export_something_what << endl;

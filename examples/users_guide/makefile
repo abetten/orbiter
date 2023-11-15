@@ -300,6 +300,11 @@ CODE_RS_6_4_7="\
 # Section 4.5
 
 
+SURFACE_F9_1_EQN="4*X0*X1^2+4*X1^2*X2+8*X0*X2^2+\
+3*X1*X2^2+3*X0*X1*X2+X0^2*X3+6*X0*X3^2+\
+5*X0*X1*X3+X0*X2*X3+5*X1*X2*X3"
+
+
 EC_11_EQUATION="1,0,3,0,0,0,10,1,0,0"
 
 
@@ -2006,10 +2011,10 @@ test_2_8:
 
 symbolic_poly:
 	$(ORBITER) -v 3 \
-		-define F -finite_field -q 2 -end \
+		-define F -finite_field -q 7 -end \
 		-define M -symbolic_object \
 			-field F \
-			-text "X^2+X+1"\
+			-text "-X^2-X+1"\
 		-end \
 
 
@@ -2264,6 +2269,26 @@ symbolic_test_6:
 		-end
 	pdflatex a.tex
 	open a.pdf
+
+
+
+symbolic_test_7:
+	$(ORBITER) -v 10 \
+		-define Fq -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field Fq \
+			-text "a*b^-1" \
+		-end \
+		-define values -symbolic_object \
+			-field Fq \
+			-text "1,3" \
+		-end \
+		-define eval -symbolic_object \
+			-field Fq \
+			-substitute "a,b" M values \
+		-end
+	#pdflatex M.tex
+	#$(OPEN) M.pdf
 
 
 
@@ -3975,17 +4000,17 @@ PG_8_2:
 
 
 ###############################################################################
-# Section 4.2: Indexing Points
+# Section 4.2: Indexing Points and Lines
 
-SECTION_INDEXING_POINTS:
+SECTION_INDEXING_POINTS_AND_LINES:
 
 test_4_2:
 	make PG_2_4_rank_point
 	make PG_2_4_unrank_point
-	make elliptic_curve_b1_c3_q11.txt
-	make PG_2_2_incidence_matrix
-	make PG_2_4_incidence_matrix
-	make PG_2_8_incidence_matrix
+	make PG_2_2_rank_lines
+	make PG_2_2_unrank_lines
+	make PG_3_3_rank_lines
+	make PG_3_5_unrank_lines
 
 
 PG_2_4_rank_point:
@@ -3999,21 +4024,106 @@ PG_2_4_rank_point:
 
 PG_2_4_unrank_point:
 	$(ORBITER) -v 2 \
-		-define v -vector -dense "19,20" -end \
+		-define v -vector -dense "20" -end \
 		-define F -finite_field -q 4 -end \
 		-with F -do -finite_field_activity \
 			-unrank_point_in_PG 2 v -end
 
 
-elliptic_curve_b1_c3_q11.txt:
+
+PG_2_2_rank_lines:
 	$(ORBITER) -v 2 \
-		-define F -finite_field -q 11 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define EC -geometric_object P \
-			-elliptic_curve 1 3 \
+		-define v -vector -format 4 \
+		-dense "1,0,0, 0,1,0, 1,0,0, 0,0,1, 1,1,1, 0,1,0, 1,1,1, 0,0,1" \
 		-end \
-		-with EC -do -combinatorial_object_activity -save \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-rank_lines_in_PG v \
+		-end \
+
+
+PG_2_2_unrank_lines:
+	$(ORBITER) -v 2 \
+		-define v -vector -format 4 \
+		-dense "0,1,2,3,4,5,6" \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-unrank_lines_in_PG v \
+		-end \
+
+
+
+PG_3_3_rank_lines:
+	$(ORBITER) -v 2 \
+		-define v1 -vector -format 3 \
+		-dense "1,0,2,2,0,1,1,2, 1,0,2,0,0,1,1,2, 1,0,2,2,0,1,2,1" \
+		-end \
+		-define v2 -vector -format 3 \
+		-dense "1,0,0,0,0,1,0,0, 1,0,0,0,0,0,0,1, 0,1,0,0,0,0,2,1" \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-rank_lines_in_PG v1 \
+		-end \
+		-with P -do \
+		-projective_space_activity \
+			-rank_lines_in_PG v2 \
 		-end
+
+
+PG_3_5_unrank_lines:
+	$(ORBITER) -v 2 \
+		-define v -vector \
+			-dense "0,36,72,108,144,805" \
+		-end \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-unrank_lines_in_PG v \
+		-end
+
+
+
+
+
+
+###############################################################################
+# Section 4.3: Incidence Matrices
+
+
+SECTION_INCIDENCE_MATRICES:
+
+
+test_4_3:
+	make PG_2_16
+	make PG_2_2_incidence_matrix
+	make PG_2_4_incidence_matrix
+	make PG_2_8_incidence_matrix
+	make PG_2_4_with_decomposition
+	make PG_2_4_incma_cyclic
+	make PG_2_4_incma_singer_sub_3
+	make PG_2_4_incma_singer_sub_7
+
+
+PG_2_16:
+	$(ORBITER) -v 2 \
+		-draw_options -xin 20000 -yin 20000 \
+		-radius 200 -line_width 0.3 -nodes_empty -end \
+		-define F -finite_field -q 16 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do -projective_space_activity \
+			-cheat_sheet \
+		-end
+	pdflatex PG_2_16.tex 
+	$(OPEN) PG_2_16.pdf
 
 
 
@@ -4075,38 +4185,7 @@ PG_2_8_incidence_matrix:
 
 
 
-
-
-###############################################################################
-# Section 4.3: Finite Desarguesian Projective Planes
-
-
-SECTION_FINITE_DESARGUESIAN_PROJECTIVE_PLANES:
-
-
-test_4_3:
-	make PG_2_16
-	make PG_2_4_with_decomposition
-	make PG_2_4_incma_cyclic
-	make PG_2_4_incma_singer_sub_3
-	make PG_2_4_incma_singer_sub_7
-
-
-PG_2_16:
-	$(ORBITER) -v 2 \
-		-draw_options -xin 20000 -yin 20000 \
-		-radius 200 -line_width 0.3 -nodes_empty -end \
-		-define F -finite_field -q 16 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do -projective_space_activity \
-			-cheat_sheet \
-		-end
-	pdflatex PG_2_16.tex 
-	$(OPEN) PG_2_16.pdf
-
-
-
-
+# ToDo:
 
 PG_2_4_with_decomposition:
 	$(ORBITER) -v 2 \
@@ -4179,8 +4258,6 @@ SECTION_GRASSMANNIAN:
 
 test_4_4:
 	make GR_3_2_2
-	make PG_3_3_rank_lines
-	make PG_3_5_unrank_lines
 	make planes_in_pencil
 
 
@@ -4199,38 +4276,6 @@ GR_3_2_2:
 	$(OPEN) Gr_3_2_2.pdf
 
 
-
-PG_3_3_rank_lines:
-	$(ORBITER) -v 2 \
-		-define v1 -vector -format 3 \
-		-dense "1,0,2,2,0,1,1,2, 1,0,2,0,0,1,1,2, 1,0,2,2,0,1,2,1" \
-		-end \
-		-define v2 -vector -format 3 \
-		-dense "1,0,0,0,0,1,0,0, 1,0,0,0,0,0,0,1, 0,1,0,0,0,0,2,1" \
-		-end \
-		-define F -finite_field -q 3 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-rank_lines_in_PG v1 \
-		-end \
-		-with P -do \
-		-projective_space_activity \
-			-rank_lines_in_PG v2 \
-		-end
-
-
-PG_3_5_unrank_lines:
-	$(ORBITER) -v 2 \
-		-define v -vector \
-			-dense "0,36,72,108,144,805" \
-		-end \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-unrank_lines_in_PG v \
-		-end
 
 
 
@@ -4254,9 +4299,88 @@ SECTION_ALGEBRAIC_SETS:
 
 
 test_4_5:
+	make Fermat_curve_F7
+	make Hesse_pencil_F7
+	make surface_F9
+	make elliptic_curve_b1_c3_q11.txt
 	make EC_11.txt
 	make Hirschfeld_surface_q4.txt
 	make Hirschfeld_surface_q16.txt
+
+
+
+Fermat_curve_F7:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_lex \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+			-end \
+		-define Fermat -symbolic_object \
+			-field F \
+			-text "y0^3+y1^3+y2^3" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-projective_variety R Fermat "" \
+		-end
+
+
+Hesse_pencil_F7:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_lex \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+			-end \
+		-define Hesse_pencil -symbolic_object \
+			-field F \
+			-text "y0^3+y1^3+y2^3+y0*y1*y2" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-projective_variety R Hesse_pencil "" \
+		-end
+
+
+surface_F9:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 9 -print_numerically -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_lex \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+			-end \
+		-define surface_F9 -symbolic_object \
+			-field F \
+			-text $(SURFACE_F9_1_EQN) \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-projective_variety R surface_F9 "" \
+		-end
+
+
+elliptic_curve_b1_c3_q11.txt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define EC -geometric_object P \
+			-elliptic_curve 1 3 \
+		-end \
+		-with EC -do -combinatorial_object_activity -save \
+		-end
 
 
 EC_11.txt:
@@ -4628,8 +4752,6 @@ test_4_9:
 	make fixed_objects_2A
 	make fixed_objects_2B
 	make fixed_objects_2C
-	make PG_2_2_rank_lines
-	make PG_2_2_unrank_lines
 	make trans
 
 
@@ -4676,30 +4798,6 @@ fixed_objects_2C:
 	$(OPEN) fix_structure_2C.pdf
 
 
-PG_2_2_rank_lines:
-	$(ORBITER) -v 2 \
-		-define v -vector -format 4 \
-		-dense "1,0,0, 0,1,0, 1,0,0, 0,0,1, 1,1,1, 0,1,0, 1,1,1, 0,0,1" \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-rank_lines_in_PG v \
-		-end \
-
-
-PG_2_2_unrank_lines:
-	$(ORBITER) -v 2 \
-		-define v -vector -format 4 \
-		-dense "0,1,2,3,4,5,6" \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-unrank_lines_in_PG v \
-		-end \
 
 
 trans:
@@ -4967,7 +5065,8 @@ Edge_curve_q23_line_type:
 		-define F -finite_field -q 23 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define E -geometric_object P \
-			-set $(EDGE_CURVE_Q23_AS_POINTS) \
+			-set "edge_curve_q23" "edge\_curve\_q23" \
+			$(EDGE_CURVE_Q23_AS_POINTS) \
 		-end \
 		-with E -do \
 		-combinatorial_object_activity \
@@ -7117,6 +7216,7 @@ PGOm_6_2_Class_2A:
 		-end
 
 
+
 #PGOm_6_2_class_of_2A.csv
 
 
@@ -8327,7 +8427,8 @@ hyperoval_16_1_conic_type:
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define H_16_1 -geometric_object P \
-			-set $(HYPEROVAL_16_144) \
+			-set "hyperoval_16_144" "hyperoval\_16\_144" \
+			$(HYPEROVAL_16_144) \
 		-end \
 		-with H_16_1 -do \
 		-combinatorial_object_activity \
@@ -8344,7 +8445,8 @@ hyperoval_16_1_nonconical_type:
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define H_16_1 -geometric_object P \
-			-set $(HYPEROVAL_16_144) \
+			-set "hyperoval_16_144" "hyperoval\_16\_144" \
+			$(HYPEROVAL_16_144) \
 		-end \
 		-with H_16_1 -do \
 		-combinatorial_object_activity \
@@ -8366,7 +8468,8 @@ hyperoval_16_2_nonconical_type:
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define H_16_2 -geometric_object P \
-			-set $(HYPEROVAL_16_16320) \
+			-set "hyperoval_16_16320" "hyperoval\_16\_16320" \
+			$(HYPEROVAL_16_16320) \
 		-end \
 		-with H_16_2 -do \
 		-combinatorial_object_activity \
@@ -8909,7 +9012,8 @@ Family_general_F7:
 		-end
 	pdflatex surface_family_general_abcd_q7_a2_b3_c3_d4_report.tex
 	$(OPEN) surface_family_general_abcd_q7_a2_b3_c3_d4_report.pdf
-		
+
+
 # Fermat with 18 Eckardt points
 # no automorphism group
 
@@ -9598,7 +9702,7 @@ quartic_curve_q9_1:
 				-report \
 			-end
 	pdflatex quartic_curve_surface_surface_pt_orb_0_report.tex
-	$(OPEN) quartic_curve_surface_surface_pt_orb_0_report.pdf
+	open quartic_curve_surface_surface_pt_orb_0_report.pdf
 
 
 #The points by rank are: ( 5, 18, 25, 36, 39, 40, 42, 43, 47, 50, 51, 54, 55, 58, 59, 62, 68, 69, 70, 71, 76, 77, 79, 81, 85, 87, 89, 90 )
@@ -9660,11 +9764,17 @@ quartic_curves_q13_classify:
 			-input_fname_mask quartics_q13.csv \
 			-nb_files 1 \
 			-output_fname quartic_curves_q13_classified \
+			-label_po_go "PO_GO" \
+			-label_po_index "PO_INDEX" \
 			-label_po "PO" \
 			-label_so "orbit" \
 			-label_equation "curve" \
 			-label_points "pts_on_curve" \
 			-label_lines "bitangents" \
+			-carry_through "NB_E" \
+			-carry_through "NB_DOUBLE" \
+			-carry_through "NB_SINGLE" \
+			-carry_through "NB_ZERO" \
 			-degree 4 \
 			-algorithm_substructure \
 			-substructure_size 4 \
@@ -9715,11 +9825,17 @@ quartic_curves_q19_classify:
 			-input_fname_mask quartics_q19.csv \
 			-nb_files 1 \
 			-output_fname quartic_curves_q19_classified \
+			-label_po_go "PO_GO" \
+			-label_po_index "PO_INDEX" \
 			-label_po "PO" \
 			-label_so "orbit" \
 			-label_equation "curve" \
 			-label_points "pts_on_curve" \
 			-label_lines "bitangents" \
+			-carry_through "NB_E" \
+			-carry_through "NB_DOUBLE" \
+			-carry_through "NB_SINGLE" \
+			-carry_through "NB_ZERO" \
 			-degree 4 \
 			-algorithm_substructure \
 			-substructure_size 4 \
@@ -9753,6 +9869,9 @@ test_7_3:
 	make surface_classify_q9
 	make surface_classify_q11
 	make surface_classify_q13
+	make Family_general_F31_25_5_5_25_recognize
+	make surface_F_abcd_identify_q11
+	make Family_general_F11_iso_test
 
 
 surface_classify_q4:
@@ -9873,6 +9992,70 @@ surface_classify_q13:
 		-print_symbols
 	pdflatex Surfaces_q13.tex
 	$(OPEN) Surfaces_q13.pdf
+
+
+
+Family_general_F31_25_5_5_25_recognize:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 31 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Surf -cubic_surface \
+			-space P -family_general_abcd 25 5 5 25 \
+		-end \
+		-with Surf -do \
+		-cubic_surface_activity \
+			-report \
+		-end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q31" \
+		-end \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes AllSurf Control \
+		-end \
+		-with AllSurf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-recognize Surf \
+		-end
+
+surface_F_abcd_identify_q11:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q11" \
+		-end \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes AllSurf Control \
+		-end \
+		-with AllSurf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-identify_general_abcd \
+		-end
+
+Family_general_F11_iso_test:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Surf1 -cubic_surface \
+			-space P -family_general_abcd 2 4 4 2 \
+		-end \
+		-define Surf2 -cubic_surface \
+			-space P -family_general_abcd 5 10 7 5 \
+		-end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q11" \
+		-end \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes AllSurf Control \
+		-end \
+		-with AllSurf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-isomorphism_testing Surf1 Surf2 \
+		-end
+
 
 
 
@@ -10483,7 +10666,21 @@ test_8_2:
 	make Endrass_F7.txt
 	make octic_prepare
 
-
+parse_algebraic_formula:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+		-end \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation "eqn" "eqn" "y0^3+y1^3+y2^3" "" "" \
+		-end 
 
 
 Cremona_map:
@@ -15122,7 +15319,7 @@ geo_LSQ6.inc:
 			-test Test_lines \
 		-end
 
-
+#LSQ6.inc
 
 ###############################################################################
 # Section 11.5: Design Theory
@@ -17177,6 +17374,7 @@ test_13_1:
 	make Paley_13_graph_complement
 	make Winnie_Li_graph_q16_index2
 	make Sarnak_graph_29_5
+	make tritangent_planes_graph
 	make trihedral_pair_graph
 	make small_graph
 	make petersen
@@ -17244,11 +17442,19 @@ Sarnak_graph_29_5:
 		-define Gamma -graph -Sarnak 29 5 -end \
 
 
+tritangent_planes_graph:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end
+
+
 trihedral_pair_graph:
 	$(ORBITER) -v 2 \
 		-define Gamma \
 			-graph -trihedral_pair_disjointness_graph \
 		-end
+
 
 
 small_graph:
@@ -17381,6 +17587,7 @@ test_13_2:
 	make Cycle_9_eigenvalues
 	make Paley_13_draw
 	make Paley_13_eigenvalues
+	make tritangent_planes_graph_eigenvalues
 	make Cayley_Z11_1mod3_eigenvalues_and_draw
 	make Cayley_Sym4_coxeter_draw
 	make Cayley_Sym5_coxeter_draw
@@ -17462,6 +17669,15 @@ Paley_13_eigenvalues:
 		-graph_theoretic_activity -eigenvalues -end
 	pdflatex Paley_13_eigenvalues.tex
 	$(OPEN) Paley_13_eigenvalues.pdf
+
+
+tritangent_planes_graph_eigenvalues:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end
 
 
 
@@ -17987,7 +18203,7 @@ Paley_13_cliques_classify:
 		-define Gamma -graph -Paley F -end \
 		-define Orb -orbits -group G \
 			-on_subsets 5 Control \
-		-end
+		-end 
 
 #User time: 0.01 of a second, dt=1 tps = 100
 
@@ -18002,7 +18218,58 @@ Paley_13_cliques_all:
 		-end
 
 
+tritangent_planes_graph_aut:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end 
+	pdflatex tritangent_planes_disjointness_report.tex
+	open tritangent_planes_disjointness_report.pdf
 
+#tritangent_planes_disjointness_report.tex
+#tritangent_planes_disjointness_gens.csv
+#tritangent_planes_disjointness_group.makefile
+
+tritangent_planes_graph_cliques_classify:
+	$(ORBITER) -v 4 \
+		-define Control -poset_classification_control \
+			-W \
+			-problem_label tri \
+			-clique_test Gamma \
+			-depth 9 \
+		-end \
+		-define gens -vector -file tritangent_planes_disjointness_gens.csv -end \
+		-define G -permutation_group \
+		-bsgs tritangent_planes_disjointness "tritangent\_planes\_disjointness" 45 51840 "0,3,12,24" 6 gens -end \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-define Orb -orbits -group G \
+			-on_subsets 9 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-recognize "4,9,11,14,21,26,30,35,40" \
+		-end
+
+#tri_reps_lvl_9.csv
+
+
+tritangent_planes_graph_cliques_all:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 9 \
+		-end
+
+
+#tritangent_planes_disjointness_sol.csv
 
 
 
@@ -19015,7 +19282,7 @@ geo_LSQ6_c: LSQ6.inc
 			-end \
 		-end
 	pdflatex LSQ6_classification.tex
-	#$(OPEN) LSQ6_classification.pdf
+	$(OPEN) LSQ6_classification.pdf
 	$(ORBITER) -v 2 \
 		-loop L 0 12 1 \
 			-draw_matrix \
@@ -19548,6 +19815,7 @@ Chain_232_aut:
 		-end
 	pdflatex chain_graph_report.tex
 	$(OPEN) chain_graph_report.pdf
+
 
 
 
@@ -20932,6 +21200,7 @@ SECTION_MATHEMATICAL_DATA:
 
 test_17_1:
 	make make_table_of_surfaces
+	make make_table_of_quartic_curves
 	make cubic_surfaces_table_q17
 	make quartic_curves_table_q17
 	make blt_set_table_q13
@@ -20942,6 +21211,13 @@ make_table_of_surfaces:
 		-make_table_of_surfaces
 	pdflatex surfaces_report.tex
 	$(OPEN) surfaces_report.pdf
+
+
+make_table_of_quartic_curves:
+	$(ORBITER) -v 3 \
+		-make_table_of_quartic_curves
+	pdflatex quartic_curves_report.tex
+	open quartic_curves_report.pdf
 
 
 
@@ -20960,12 +21236,14 @@ quartic_curves_table_q17:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 17 -end \
 		-define P -projective_space \
-			-n 3 -field F -v 0 \
+			-n 2 -field F -v 0 \
 		-end \
 		-with P -do \
 			-projective_space_activity \
 				-table_of_quartic_curves \
 		-end
+
+# quartic_curves_q17_info.csv
 
 
 blt_set_table_q7: 

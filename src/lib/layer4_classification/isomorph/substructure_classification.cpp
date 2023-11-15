@@ -784,7 +784,7 @@ void substructure_classification::create_level_database(int level, int verbose_l
 				cout << endl;
 			}
 
-			int len, nb_fusion;
+			int len; // nb_fusion;
 			layer2_discreta::typed_objects::Vector v;
 
 
@@ -813,13 +813,14 @@ void substructure_classification::create_level_database(int level, int verbose_l
 
 				// A->coded_elt_size_in_char
 
-
+#if 0
 			nb_fusion = 0;
 			for (j = 0; j < O->get_nb_of_extensions(); j++) {
 				if (O->get_E(j)->get_type() == EXTENSION_TYPE_FUSION) {
 					nb_fusion++;
 				}
 			}
+#endif
 
 			len = 1 + 1 + level + 1;
 			if (O->get_nb_strong_generators()) {

@@ -78,6 +78,7 @@ create_graph_description::create_graph_description()
 	//std::string coll_orthogonal_space_label;
 	//std::string coll_orthogonal_set_of_points_label;
 
+	f_tritangent_planes_disjointness_graph = false;
 	f_trihedral_pair_disjointness_graph = false;
 
 	f_non_attacking_queens_graph = false;
@@ -266,6 +267,12 @@ int create_graph_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-tritangent_planes_disjointness_graph") == 0) {
+			f_tritangent_planes_disjointness_graph = true;
+			if (f_v) {
+				cout << "-tritangent_planes_disjointness_graph " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-trihedral_pair_disjointness_graph") == 0) {
 			f_trihedral_pair_disjointness_graph = true;
 			if (f_v) {
@@ -425,6 +432,9 @@ void create_graph_description::print()
 			<< " " << coll_orthogonal_space_label
 			<< " " << coll_orthogonal_set_of_points_label
 			<< endl;
+	}
+	if (f_tritangent_planes_disjointness_graph) {
+		cout << "-tritangent_planes_disjointness_graph " << endl;
 	}
 	if (f_trihedral_pair_disjointness_graph) {
 		cout << "-trihedral_pair_disjointness_graph " << endl;

@@ -2637,7 +2637,7 @@ void surface_create::export_something_with_group_element(
 			for (i = 0; i < gens_builder->V->len; i++) {
 				ost << i << ",";
 
-				SOG->A_on_tritangent_planes->Group_element->element_as_permutation(
+				SOG->A_on_tritangent_planes->Group_element->compute_permutation(
 						gens_builder->V->ith(i),
 						perm, 0 /* verbose_level */);
 
@@ -2683,7 +2683,7 @@ void surface_create::export_something_with_group_element(
 			for (i = 0; i < gens_builder->V->len; i++) {
 				ost << i << ",";
 
-				SOG->A_double_sixes->Group_element->element_as_permutation(
+				SOG->A_double_sixes->Group_element->compute_permutation(
 						gens_builder->V->ith(i),
 						perm, 0 /* verbose_level */);
 
@@ -2732,7 +2732,7 @@ void surface_create::export_something_with_group_element(
 			for (i = 0; i < gens_builder->V->len; i++) {
 				ost << i << ",";
 
-				SOG->A_on_the_lines->Group_element->element_as_permutation(
+				SOG->A_on_the_lines->Group_element->compute_permutation(
 						gens_builder->V->ith(i),
 						perm, 0 /* verbose_level */);
 
@@ -3039,6 +3039,86 @@ void surface_create::do_report(int verbose_level)
 
 }
 
+void surface_create::do_report_group_elements(
+		std::string &fname_csv, std::string &col_heading,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::do_report_group_elements" << endl;
+	}
+
+	field_theory::finite_field *F;
+
+	F = PA->F;
+
+	{
+		string fname_report;
+
+		if (Descr->f_label_txt) {
+			fname_report = label_txt + ".tex";
+
+		}
+		else {
+			fname_report = "surface_" + label_txt + "elements_report.tex";
+		}
+
+		{
+			ofstream ost(fname_report);
+
+
+			string title, author, extra_praeamble;
+
+			title = label_tex + " over GF(" + std::to_string(F->q) + ")";
+
+
+			l1_interfaces::latex_interface L;
+
+			//latex_head_easy(fp);
+			L.head(ost,
+				false /* f_book */,
+				true /* f_title */,
+				title, author,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
+				extra_praeamble /* extra_praeamble */);
+
+
+
+
+			//ost << "\\subsection*{The surface $" << SC->label_tex << "$}" << endl;
+			if (f_v) {
+				cout << "surface_create::do_report_group_elements "
+						"before do_report_group_elements2" << endl;
+			}
+			do_report_group_elements2(ost, fname_csv, col_heading, verbose_level);
+			if (f_v) {
+				cout << "surface_create::do_report_group_elements "
+						"after do_report_group_elements2" << endl;
+			}
+
+
+			L.foot(ost);
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "Written file " << fname_report << " of size "
+			<< Fio.file_size(fname_report) << endl;
+
+
+	}
+	if (f_v) {
+		cout << "surface_create::do_report_group_elements done" << endl;
+	}
+
+}
+
+
+
 void surface_create::do_report2(
 		std::ostream &ost, int verbose_level)
 {
@@ -3132,6 +3212,40 @@ void surface_create::do_report2(
 
 	if (f_v) {
 		cout << "surface_create::do_report2 done" << endl;
+	}
+
+}
+
+
+void surface_create::do_report_group_elements2(
+		std::ostream &ost, std::string &fname_csv, std::string &col_heading,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::do_report_group_elements2" << endl;
+	}
+
+
+
+
+
+
+	if (SOG == NULL) {
+		cout << "surface_create::do_report_group_elements2 SOG == NULL" << endl;
+		exit(1);
+	}
+	else {
+
+		SOG->cheat_sheet_group_elements(ost, fname_csv, col_heading,
+				verbose_level);
+
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::do_report_group_elements2 done" << endl;
 	}
 
 }

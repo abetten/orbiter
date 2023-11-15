@@ -1275,7 +1275,7 @@ void any_group::random_element(
 
 		perm = NEW_int(A1->degree);
 
-		A1->Group_element->element_as_permutation(
+		A1->Group_element->compute_permutation(
 				Elt,
 				perm, 0 /*verbose_level*/);
 		cout << "In list notation:" << endl;
@@ -1303,6 +1303,8 @@ void any_group::random_element(
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
+
+	// read vector from file:
 
 	data_structures::vector_builder_description *Descr;
 	user_interface::symbol_definition *Symbol_definition;
@@ -2146,38 +2148,44 @@ void any_group::create_latex_report_for_modified_group(
 
 #if 0
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_modified_group before A->report" << endl;
+				cout << "any_group::create_latex_report_for_modified_group "
+						"before A->report" << endl;
 			}
 			A->report(ost, A->f_has_sims, A->Sims,
 					A->f_has_strong_generators, A->Strong_gens,
 					O,
 					verbose_level);
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_modified_group after A->report" << endl;
+				cout << "any_group::create_latex_report_for_modified_group "
+						"after A->report" << endl;
 			}
 #endif
 
 
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_modified_group before Subgroup_gens->print_generators_in_latex_individually" << endl;
+				cout << "any_group::create_latex_report_for_modified_group "
+						"before Subgroup_gens->print_generators_in_latex_individually" << endl;
 			}
 			Subgroup_gens->print_generators_in_latex_individually(ost);
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_modified_group after Subgroup_gens->print_generators_in_latex_individually" << endl;
+				cout << "any_group::create_latex_report_for_modified_group "
+						"after Subgroup_gens->print_generators_in_latex_individually" << endl;
 			}
 			//A_initial->print_base();
 			//A_initial->print_info();
 
 #if 0
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_modified_group before Subgroup_sims->report" << endl;
+				cout << "any_group::create_latex_report_for_modified_group "
+						"before Subgroup_sims->report" << endl;
 			}
 			Subgroup_sims->report(ost,
 					label,
 					O,
 					verbose_level);
 			if (f_v) {
-				cout << "any_group::create_latex_report_for_modified_group after Subgroup_sims->report" << endl;
+				cout << "any_group::create_latex_report_for_modified_group "
+						"after Subgroup_sims->report" << endl;
 			}
 #endif
 
@@ -2420,6 +2428,8 @@ void any_group::print_given_elements_tex(
 					<< nb_elements << " of order " << ord << ":" << endl;
 
 			A->print_one_element_tex(ost, Elt, f_with_permutation);
+			Int_vec_print(ost, Elt, A->make_element_size);
+			ost << "\\\\" << endl;
 
 			if (f_with_fix_structure) {
 				int f;
@@ -2454,14 +2464,20 @@ void any_group::process_given_elements(
 		cout << "any_group::process_given_elements" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+
+	data_structures_groups::vector_ge *vec_in;
+
+	vec_in = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	vec_in->init_from_data(A, element_data,
+		nb_elements, A->make_element_size, 0 /* verbose_level */);
 
 
 
 	int *Elt;
 	ring_theory::longinteger_object go;
 
-	Elt = NEW_int(A->elt_size_in_int);
+	//Elt = NEW_int(A->elt_size_in_int);
 
 
 	string fname;
@@ -2489,9 +2505,13 @@ void any_group::process_given_elements(
 
 		for (i = 0; i < nb_elements; i++) {
 
+#if 0
 			A->Group_element->make_element(Elt,
 					element_data + i * A->make_element_size,
 					verbose_level);
+#endif
+
+			Elt = vec_in->ith(i);
 
 			ord = A->Group_element->element_order(Elt);
 
@@ -2505,10 +2525,15 @@ void any_group::process_given_elements(
 
 		L.foot(ost);
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
+	orbiter_kernel_system::file_io Fio;
 
-	FREE_int(Elt);
+	cout << "Written file " << fname
+			<< " of size " << Fio.file_size(fname) << endl;
+
+	FREE_OBJECT(vec_in);
+	//FREE_int(Elt);
+
 	if (f_v) {
 		cout << "any_group::process_given_elements done" << endl;
 	}
@@ -2525,18 +2550,14 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 		cout << "any_group::apply_isomorphism_wedge_product_4to6" << endl;
 	}
 
-
-	orbiter_kernel_system::file_io Fio;
-
-
-
-	int *Elt;
-	int *Elt_in;
+	//int *Elt;
+	//int *Elt_in;
 	int *Elt_out;
-	int *Output;
-	ring_theory::longinteger_object go;
+	//int *Output;
 
-	Elt = NEW_int(A->elt_size_in_int);
+	//ring_theory::longinteger_object go;
+
+	//Elt = NEW_int(A->elt_size_in_int);
 
 	int elt_size_out;
 
@@ -2544,7 +2565,7 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 	Elt_out = NEW_int(elt_size_out);
 
-	Output = NEW_int(nb_elements * elt_size_out);
+	//Output = NEW_int(nb_elements * elt_size_out);
 
 
 	string fname;
@@ -2557,6 +2578,20 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 		exit(1);
 	}
 
+	data_structures_groups::vector_ge *vec_in;
+	data_structures_groups::vector_ge *vec_out;
+
+	vec_in = NEW_OBJECT(data_structures_groups::vector_ge);
+	vec_out = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	vec_in->init_from_data(A, element_data,
+		nb_elements, A->make_element_size, 0 /* verbose_level */);
+
+	vec_out->init(A, verbose_level);
+	vec_out->allocate(nb_elements, 0 /* verbose_level */);
+
+
+
 	{
 		int i;
 
@@ -2564,9 +2599,10 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			Elt_in = element_data + i * A->make_element_size;
+			//Elt_in = element_data + i * A->make_element_size;
 
-			A->Group_element->make_element(Elt, Elt_in, verbose_level);
+			//A->Group_element->make_element(Elt, Elt_in, verbose_level);
+
 
 
 			induced_actions::action_on_wedge_product *AW = A->G.AW;
@@ -2577,22 +2613,33 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 			//		Elt, Elt_out, verbose_level);
 
 			AW->F->Linear_algebra->wedge_product(
-					Elt, Elt_out, AW->n, AW->wedge_dimension,
+					vec_in->ith(i), Elt_out,
+					AW->n, AW->wedge_dimension,
 					0 /* verbose_level */);
 
 
 			if (A->is_semilinear_matrix_group()) {
-				Elt_out[6 * 6] = Elt_in[4 * 4];
+				Elt_out[6 * 6] = vec_in->ith(i)[4 * 4];
 			}
 
-			Int_vec_copy(Elt_out, Output + i * elt_size_out, elt_size_out);
+			A->Group_element->make_element(
+					vec_out->ith(i), Elt_out, 0 /* verbose_level */);
+
+			//Int_vec_copy(Elt_out, Output + i * elt_size_out, elt_size_out);
 
 		}
 
 	}
 
+	orbiter_kernel_system::file_io Fio;
+
+#if 0
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, Output, nb_elements, elt_size_out);
+#else
+	vec_out->save_csv(
+			fname, verbose_level - 1);
+#endif
 
 	if (f_v) {
 		cout << "any_group::apply_isomorphism_wedge_product_4to6 "
@@ -2601,9 +2648,11 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 	}
 
 
-	FREE_int(Elt);
+	//FREE_int(Elt);
 	FREE_int(Elt_out);
-	FREE_int(Output);
+	//FREE_int(Output);
+	FREE_OBJECT(vec_in);
+	FREE_OBJECT(vec_out);
 
 
 

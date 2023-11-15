@@ -305,7 +305,8 @@ int group_theoretic_activity_description::read_arguments(
 			f_canonical_image_GAP = true;
 			canonical_image_GAP_input_set.assign(argv[++i]);
 			if (f_v) {
-				cout << "-canonical_image_GAP " << canonical_image_GAP_input_set << endl;
+				cout << "-canonical_image_GAP "
+						<< canonical_image_GAP_input_set << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-canonical_image") == 0) {
@@ -329,7 +330,8 @@ int group_theoretic_activity_description::read_arguments(
 			find_standard_generators_order_b = ST.strtoi(argv[++i]);
 			find_standard_generators_order_ab = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-find_standard_generators " << find_standard_generators_order_a
+				cout << "-find_standard_generators "
+						<< find_standard_generators_order_a
 						<< " " << find_standard_generators_order_b
 						<< " " << find_standard_generators_order_ab
 						<< endl;
@@ -391,7 +393,8 @@ int group_theoretic_activity_description::read_arguments(
 			f_permutation_representation_of_element = true;
 			permutation_representation_element_text.assign(argv[++i]);
 			if (f_v) {
-				cout << "-permutation_representation_of_element " << permutation_representation_element_text
+				cout << "-permutation_representation_of_element "
+						<< permutation_representation_element_text
 						<< " " << endl;
 			}
 		}
@@ -413,7 +416,8 @@ int group_theoretic_activity_description::read_arguments(
 			normalizer_of_cyclic_subgroup_label.assign(argv[++i]);
 			normalizer_of_cyclic_subgroup_data.assign(argv[++i]);
 			if (f_v) {
-				cout << "-normalizer_of_cyclic_subgroup " << normalizer_of_cyclic_subgroup_label
+				cout << "-normalizer_of_cyclic_subgroup "
+						<< normalizer_of_cyclic_subgroup_label
 						<< " " << normalizer_of_cyclic_subgroup_data << endl;
 			}
 		}
@@ -686,7 +690,8 @@ int group_theoretic_activity_description::read_arguments(
 			f_representation_on_polynomials = true;
 			representation_on_polynomials_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-representation_on_polynomials " << representation_on_polynomials_degree << endl;
+				cout << "-representation_on_polynomials "
+						<< representation_on_polynomials_degree << endl;
 			}
 		}
 
@@ -757,7 +762,8 @@ void group_theoretic_activity_description::print()
 		cout << "-search_element_of_order " << search_element_order << endl;
 	}
 	if (f_find_standard_generators) {
-		cout << "-find_standard_generators " << find_standard_generators_order_a
+		cout << "-find_standard_generators "
+				<< find_standard_generators_order_a
 					<< " " << find_standard_generators_order_b
 					<< " " << find_standard_generators_order_ab
 					<< endl;
@@ -786,7 +792,8 @@ void group_theoretic_activity_description::print()
 				<< " " << centralizer_of_element_data << endl;
 	}
 	if (f_permutation_representation_of_element) {
-		cout << "-permutation_representation_of_element " << permutation_representation_element_text
+		cout << "-permutation_representation_of_element "
+				<< permutation_representation_element_text
 				<< " " << endl;
 	}
 	if (f_orbits_on_group_elements_under_conjugation) {

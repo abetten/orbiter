@@ -2678,12 +2678,12 @@ void scene::clebsch_cubic_version2_lines_c()
 		0,-1,1,0,-1,0,0,0,
 		0,-1,0,1,-1,0,1,0,
 		};
-	int i, j, h;
+	int i, j;
 	double L[8];
 	double a, av;
 	orbiter_kernel_system::numerics N;
 
-	h = 0;
+	//h = 0;
 	for (i = 0; i < 15; i++) {
 		N.vec_copy(C + i * 8, L, 8);
 		if (ABS(L[3]) < 0.001 && ABS(L[7]) < 0.001) {
@@ -2701,7 +2701,7 @@ void scene::clebsch_cubic_version2_lines_c()
 			L[4 + j] += L[j] * a;
 		}
 		line_extended(L[0], L[1], L[2], L[0] + L[4], L[1] + L[5], L[2] + L[6], 10.);
-		h++;
+		//h++;
 	}
 
 

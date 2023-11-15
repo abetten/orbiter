@@ -282,7 +282,10 @@ namespace algebraic_geometry {
 	class quartic_curve_domain;
 	class quartic_curve_object_properties;
 	class quartic_curve_object;
+	class schlaefli_double_six;
 	class schlaefli_labels;
+	class schlaefli_trihedral_pairs;
+	class schlaefli_tritangent_planes;
 	class schlaefli;
 	class seventytwo_cases;
 	class smooth_surface_object_properties;
@@ -819,8 +822,8 @@ namespace solvers {
 #define Int_vec_print_integer_matrix(A,B,C,D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
 #define Int_vec_print_integer_matrix_width(A,B,C,D,E,F) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, E, F)
 
-#define Int_vec_copy(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->copy(A, B, C)
-#define Lint_vec_copy(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->copy(A, B, C)
+#define Int_vec_copy(from, to, len) orbiter_kernel_system::Orbiter->Int_vec->copy(from, to, len)
+#define Lint_vec_copy(from, to, len) orbiter_kernel_system::Orbiter->Lint_vec->copy(from, to, len)
 
 #define Int_vec_print_to_str(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_to_str(A, B, C)
 #define Lint_vec_print_to_str(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_to_str(A, B, C)
@@ -844,6 +847,7 @@ namespace solvers {
 #define Int_vec_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->zero(A, B);
 #define Lint_vec_zero(A, B) orbiter_kernel_system::Orbiter->Lint_vec->zero(A, B)
 
+
 #define Int_vec_is_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->is_zero(A, B)
 
 #define Int_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->scan(A, B, C)
@@ -860,6 +864,9 @@ namespace solvers {
 #define Lint_vec_apply(from, through, to, len) orbiter_kernel_system::Orbiter->Lint_vec->apply(from, through, to, len)
 
 
+
+#define Int_vec_one(A, B) orbiter_kernel_system::Orbiter->Int_vec->one(A, B)
+#define Lint_vec_one(A, B) orbiter_kernel_system::Orbiter->Lint_vec->one(A, B)
 
 #define Int_vec_mone(A, B) orbiter_kernel_system::Orbiter->Int_vec->mone(A, B)
 #define Lint_vec_mone(A, B) orbiter_kernel_system::Orbiter->Lint_vec->mone(A, B)

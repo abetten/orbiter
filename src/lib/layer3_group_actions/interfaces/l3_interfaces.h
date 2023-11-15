@@ -48,11 +48,26 @@ public:
 	// normalizer_generators_perms[nb_classes][class_normalizer_number_of_generators[i] * A->degree]
 
 
+	groups::conjugacy_class_of_elements **Conjugacy_class;
+
 	conjugacy_classes_and_normalizers();
 	~conjugacy_classes_and_normalizers();
 	void read_magma_output_file(
 			actions::action *A,
 			std::string &fname,
+			int verbose_level);
+	void create_classes(
+			groups::sims *group_G, int verbose_level);
+	void report(
+			groups::sims *override_sims,
+			std::string &label_latex,
+			int verbose_level);
+	void export_csv(
+			groups::sims *override_sims,
+			int verbose_level);
+	void report_classes(
+			std::ofstream &fp, int verbose_level);
+	void export_csv(
 			int verbose_level);
 
 };
@@ -165,11 +180,6 @@ public:
 			actions::action *A,
 			std::string &prefix,
 			groups::sims *G, int verbose_level);
-	void conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
-			actions::action *A,
-			std::string &prefix,
-			std::string &fname_magma,
-			std::string &fname_output);
 	void conjugacy_classes_and_normalizers_using_MAGMA(
 			actions::action *A,
 			std::string &prefix,
@@ -292,6 +302,27 @@ class nauty_interface_with_group {
 public:
 	nauty_interface_with_group();
 	~nauty_interface_with_group();
+
+	groups::strong_generators *set_stabilizer_of_object(
+			geometry::object_with_canonical_form *OwCF,
+			actions::action *A_linear,
+		int f_compute_canonical_form,
+		data_structures::bitvector *&Canonical_form,
+		l1_interfaces::nauty_output *&NO,
+		combinatorics::encoded_combinatorial_object *&Enc,
+		int verbose_level);
+	void automorphism_group_as_permutation_group(
+			l1_interfaces::nauty_output *NO,
+			actions::action *&A_perm,
+			int verbose_level);
+	void reverse_engineer_linear_group_from_permutation_group(
+			actions::action *A_linear,
+			geometry::projective_space *P,
+			groups::strong_generators *&SG,
+			actions::action *&A_perm,
+			l1_interfaces::nauty_output *NO,
+			int verbose_level);
+
 	actions::action *create_automorphism_group_of_colored_graph_object(
 			graph_theory::colored_graph *CG,
 			int verbose_level);
@@ -327,25 +358,6 @@ public:
 		int *Adj, int n, int *labeling,
 		int verbose_level);
 	// labeling[n]
-	void automorphism_group_as_permutation_group(
-			l1_interfaces::nauty_output *NO,
-			actions::action *&A_perm,
-			int verbose_level);
-	void reverse_engineer_linear_group_from_permutation_group(
-			actions::action *A_linear,
-			geometry::projective_space *P,
-			groups::strong_generators *&SG,
-			actions::action *&A_perm,
-			l1_interfaces::nauty_output *NO,
-			int verbose_level);
-	groups::strong_generators *set_stabilizer_of_object(
-			geometry::object_with_canonical_form *OwCF,
-			actions::action *A_linear,
-		int f_compute_canonical_form,
-		data_structures::bitvector *&Canonical_form,
-		l1_interfaces::nauty_output *&NO,
-		combinatorics::encoded_combinatorial_object *&Enc,
-		int verbose_level);
 
 };
 

@@ -27,7 +27,8 @@ brick_domain::~brick_domain()
 {
 }
 
-void brick_domain::init(field_theory::finite_field *F, int verbose_level)
+void brick_domain::init(
+		field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i;
@@ -44,7 +45,8 @@ void brick_domain::init(field_theory::finite_field *F, int verbose_level)
 		}
 }
 
-void brick_domain::unrank(int rk,
+void brick_domain::unrank(
+		int rk,
 		int &f_vertical, int &x0, int &y0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -61,7 +63,8 @@ void brick_domain::unrank(int rk,
 		}
 }
 
-int brick_domain::rank(int f_vertical, int x0, int y0, int verbose_level)
+int brick_domain::rank(
+		int f_vertical, int x0, int y0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk;
@@ -81,7 +84,8 @@ int brick_domain::rank(int f_vertical, int x0, int y0, int verbose_level)
 	return rk;
 }
 
-void brick_domain::unrank_coordinates(int rk,
+void brick_domain::unrank_coordinates(
+		int rk,
 		int &x1, int &y1, int &x2, int &y2,
 		int verbose_level)
 {
@@ -101,7 +105,8 @@ void brick_domain::unrank_coordinates(int rk,
 		}
 }
 
-int brick_domain::rank_coordinates(int x1, int y1,
+int brick_domain::rank_coordinates(
+		int x1, int y1,
 		int x2, int y2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -1270,7 +1270,8 @@ action *induced_action::create_induced_action_by_conjugation(
 
 action *induced_action::induced_action_by_right_multiplication(
 	int f_basis, groups::sims *old_G,
-	groups::sims *Base_group, int f_ownership, int verbose_level)
+	groups::sims *Base_group, int f_ownership,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	induced_actions::action_by_right_multiplication *ABRM;

@@ -50,6 +50,17 @@ void linear_algebra::copy_matrix(
 	Int_vec_copy(A, B, ma * na);
 }
 
+void linear_algebra::reverse_columns_of_matrix(
+		int *A, int *B, int m, int n)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			B[i * n + j] = A[i * n + (n - 1 - j)];
+		}
+	}
+}
 void linear_algebra::reverse_matrix(
 		int *A, int *B, int m, int n)
 {

@@ -822,6 +822,8 @@ public:
 	void copy(vector_ge *&vector_copy, int verbose_level);
 	void init_by_hdl(actions::action *A,
 			int *gen_hdl, int nb_gen, int verbose_level);
+	void init_by_hdl(actions::action *A,
+			std::vector<int> &gen_hdl, int verbose_level);
 	void init_single(actions::action *A,
 			int *Elt, int verbose_level);
 	void init_double(actions::action *A,
@@ -832,6 +834,9 @@ public:
 		// data[nb_elements * degree]
 	void init_from_data(actions::action *A, int *data,
 		int nb_elements, int elt_size, int verbose_level);
+	void init_transposed(
+			vector_ge *v,
+			int verbose_level);
 	void init_conjugate_svas_of(vector_ge *v, int *Elt,
 		int verbose_level);
 	void init_conjugate_sasv_of(vector_ge *v, int *Elt,

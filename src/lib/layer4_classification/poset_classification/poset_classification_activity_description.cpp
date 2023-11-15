@@ -60,6 +60,9 @@ poset_classification_activity_description::poset_classification_activity_descrip
 
 
 	f_test_multi_edge_in_decomposition_matrix = false;
+
+	//std::vector<std::string> recognize;
+
 }
 
 poset_classification_activity_description::~poset_classification_activity_description()
@@ -248,6 +251,14 @@ int poset_classification_activity_description::read_arguments(
 				cout << "-test_multi_edge_in_decomposition_matrix " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
+			string s;
+			s.assign(argv[++i]);
+			recognize.push_back(s);
+			if (f_v) {
+				cout << "-recognize " << s << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -341,6 +352,13 @@ void poset_classification_activity_description::print()
 	}
 	if (f_test_multi_edge_in_decomposition_matrix) {
 		cout << "-test_multi_edge_in_decomposition_matrix" << endl;
+	}
+	if (recognize.size()) {
+		int i;
+		for (i = 0; i < recognize.size(); i++) {
+			cout << "-recognize " << recognize[i] << endl;
+		}
+
 	}
 }
 

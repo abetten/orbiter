@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	conjugacy_class_of_elements.o \
 	direct_product.o \
 	exceptional_isomorphism_O4.o \
 	linear_group.o \

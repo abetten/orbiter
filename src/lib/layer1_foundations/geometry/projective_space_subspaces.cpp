@@ -142,7 +142,6 @@ void projective_space_subspaces::init(
 {
 
 	int f_v = (verbose_level >= 1);
-	int i;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::init" << endl;
@@ -2443,7 +2442,7 @@ void projective_space_subspaces::plane_intersection(
 	Grass_planes->unrank_lint_here(
 			Basis_save, plane_rank, 0 /* verbose_level */);
 
-	int nb_pts_on_plane = 0;
+	//int nb_pts_on_plane = 0;
 	long int local_rank;
 
 	for (u = 0; u < set_size; u++) {
@@ -2453,7 +2452,7 @@ void projective_space_subspaces::plane_intersection(
 				Basis,
 				4, d, 0 /* verbose_level */);
 		if (r < 4) {
-			nb_pts_on_plane++;
+			//nb_pts_on_plane++;
 			point_indices.push_back(u);
 
 			Int_vec_copy(Basis_save, Basis, 3 * d);

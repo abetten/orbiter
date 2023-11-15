@@ -575,7 +575,8 @@ void object_with_canonical_form::init_packing_from_string(
 }
 
 void object_with_canonical_form::init_packing_from_set_of_sets(
-		data_structures::set_of_sets *SoS, int verbose_level)
+		data_structures::set_of_sets *SoS,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2136,7 +2137,7 @@ void object_with_canonical_form::run_nauty(
 		NO,
 		verbose_level - 3);
 
-	Int_vec_copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
+	//Int_vec_copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
 	t1 = Os.os_ticks();
 	dt = t1 - t0;
@@ -2164,9 +2165,19 @@ void object_with_canonical_form::run_nauty(
 
 	if (f_compute_canonical_form) {
 
+		if (f_v) {
+			cout << "object_with_canonical_form::run_nauty "
+					"before Enc->compute_canonical_form" << endl;
+		}
+
 
 		Enc->compute_canonical_form(Canonical_form,
 				NO->canonical_labeling, verbose_level);
+
+		if (f_v) {
+			cout << "object_with_canonical_form::run_nauty "
+					"after Enc->compute_canonical_form" << endl;
+		}
 
 	}
 

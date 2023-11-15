@@ -348,7 +348,9 @@ public:
 	int v[4]; // = (1,0,0,0)
 	int pt_A; // = SOA->SO->SOP->Pts_not_on_lines[i];
 	int pt_B; // = SOA->Surf->rank_point(v);
-	int po_index; // orbit length of pt_A
+	int po_index;
+		// orbit length of pt_A
+		// under the stabilizer of the cubic surface
 
 	int equation_nice[20]; // equation after transformation
 	int *gradient; // [4 * Poly2_4->get_nb_monomials()]
@@ -375,29 +377,16 @@ public:
 	int *poly2; // -4 * f1 * f3
 	int two, four, mfour; // 2, 4, -4 in F
 
-	int *tangent_quadric; // = 2 * x_0 * f_1 + f_2
-	long int *Pts_on_tangent_quadric;
+	int *polar_hypersurface; // = 2 * x_0 * f_1 + f_2
+	long int *Pts_on_polar_hypersurface;
 		// = SOA->Surf->Poly2_4->enumerate_points(tangent_quadric)
-	int nb_pts_on_tangent_quadric;
+	int nb_pts_on_polar_hypersurface;
 
-	//int *line_type;
-	//int *type_collected;
-
-	//int *Class_pts;
-	//int nb_class_pts;
-	//long int *Pts_intersection;
-	//int nb_pts_intersection;
 
 	long int *Pts_on_curve; // [sz_curve]
 		// = SOA->Surf->Poly4_x123->enumerate_points(curve)
 	int sz_curve;
 
-#if 0
-	strong_generators *gens_copy;
-	set_and_stabilizer *moved_surface;
-	//strong_generators *stab_gens_moved_surface;
-	strong_generators *stab_gens_P0;
-#endif
 
 	groups::strong_generators *Stab_gens_quartic;
 
@@ -418,7 +407,7 @@ public:
 			int pt_orbit, int verbose_level);
 	void map_surface_to_special_form(
 			int pt_orbit,
-		int *old_equation, long int *old_Lines, int nb_lines,
+		//int *old_equation, long int *old_Lines, int nb_lines,
 		int verbose_level);
 	void compute_stabilizer_with_nauty(
 			int verbose_level);

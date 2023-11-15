@@ -289,7 +289,8 @@ void domino_assignment::stage2(int verbose_level)
 	}
 }
 
-void domino_assignment::initialize_assignment(int D, int s,
+void domino_assignment::initialize_assignment(
+		int D, int s,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -655,7 +656,8 @@ void domino_assignment::move(domino_assignment *To)
 	Int_vec_copy(matching, To->matching, M * N);
 }
 
-void domino_assignment::draw_domino_matrix(std::string &fname,
+void domino_assignment::draw_domino_matrix(
+		std::string &fname,
 		int depth,
 		int f_has_cost, int cost,
 		graphics::layered_graph_draw_options *Draw_options,
@@ -672,7 +674,8 @@ void domino_assignment::draw_domino_matrix(std::string &fname,
 			verbose_level - 1);
 }
 
-void domino_assignment::draw_domino_matrix2(std::string &fname,
+void domino_assignment::draw_domino_matrix2(
+		std::string &fname,
 	int f_has_cost, int cost,
 	int f_frame, int f_grid, int f_B, int *B,
 	int f_numbers, int f_gray,
@@ -1929,7 +1932,8 @@ int domino_assignment::breadth_search(
 	}
 }
 
-void domino_assignment::rotate_once(int ro, int verbose_level)
+void domino_assignment::rotate_once(
+		int ro, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1962,7 +1966,8 @@ void domino_assignment::rotate_once(int ro, int verbose_level)
 
 }
 
-void domino_assignment::rotate_randomized(int verbose_level)
+void domino_assignment::rotate_randomized(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
@@ -2002,7 +2007,8 @@ void domino_assignment::rotate_randomized(int verbose_level)
 
 }
 
-void domino_assignment::do_horizontal_shift(int ro, int verbose_level)
+void domino_assignment::do_horizontal_shift(
+		int ro, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j2;
@@ -2038,7 +2044,8 @@ void domino_assignment::do_horizontal_shift(int ro, int verbose_level)
 }
 
 
-void domino_assignment::do_vertical_shift(int ro, int verbose_level)
+void domino_assignment::do_vertical_shift(
+		int ro, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i2;
@@ -2073,13 +2080,15 @@ void domino_assignment::do_vertical_shift(int ro, int verbose_level)
 	assi[ro * 5 + 3] = i2;
 }
 
-void domino_assignment::shift_once(int ro, int verbose_level)
+void domino_assignment::shift_once(
+		int ro, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "domino_assignment::shift_once shifting domino " << ro << " verbose_level=" << verbose_level << endl;
+		cout << "domino_assignment::shift_once shifting "
+				"domino " << ro << " verbose_level=" << verbose_level << endl;
 	}
 	if (f_vv) {
 		cout << "shifting domino " << ro << ", which is x(" << assi[ro * 5 + 0] << "," << assi[ro*5+1]<<","<<assi[ro*5+2]<<","<<assi[ro*5+3]<<","<<assi[ro*5+4]<<")"<<endl;
@@ -2094,7 +2103,8 @@ void domino_assignment::shift_once(int ro, int verbose_level)
 
 }
 
-void domino_assignment::shift_once_randomized(int verbose_level)
+void domino_assignment::shift_once_randomized(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
@@ -2110,7 +2120,8 @@ void domino_assignment::shift_once_randomized(int verbose_level)
 
 }
 
-void domino_assignment::shift_randomized(int verbose_level)
+void domino_assignment::shift_randomized(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ro, r1, i;
@@ -2133,7 +2144,8 @@ void domino_assignment::shift_randomized(int verbose_level)
 
 }
 
-void domino_assignment::flip_after_shift(int verbose_level)
+void domino_assignment::flip_after_shift(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -2148,7 +2160,8 @@ void domino_assignment::flip_after_shift(int verbose_level)
 	}
 }
 
-void domino_assignment::print_matching(std::ostream &ost)
+void domino_assignment::print_matching(
+		std::ostream &ost)
 {
 	int i, j, m;
 
@@ -2168,7 +2181,9 @@ void domino_assignment::print_matching(std::ostream &ost)
 				ost << "W";
 			}
 			else {
-				cout << "domino_assignment::print_matching unexpected value in matching at position " << i << "," << j << " is " << m << endl;
+				cout << "domino_assignment::print_matching "
+						"unexpected value in matching at position "
+						<< i << "," << j << " is " << m << endl;
 				exit(1);
 			}
 		}
@@ -2176,7 +2191,8 @@ void domino_assignment::print_matching(std::ostream &ost)
 	}
 }
 
-void domino_assignment::print(std::ostream &ost)
+void domino_assignment::print(
+		std::ostream &ost)
 {
 	int i, j, a, m;
 
@@ -2203,7 +2219,9 @@ void domino_assignment::print(std::ostream &ost)
 				ost << "W";
 			}
 			else {
-				cout << "domino_assignment::print unexpected value in matching at position " << i << "," << j << " is " << m << endl;
+				cout << "domino_assignment::print "
+						"unexpected value in matching at position "
+						<< i << "," << j << " is " << m << endl;
 				exit(1);
 			}
 		}
@@ -2220,7 +2238,8 @@ void domino_assignment::print(std::ostream &ost)
 }
 
 
-void domino_assignment::prepare_latex(std::string &photo_label, int verbose_level)
+void domino_assignment::prepare_latex(
+		std::string &photo_label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2317,7 +2336,8 @@ void domino_assignment::prepare_latex(std::string &photo_label, int verbose_leve
 
 }
 
-void domino_assignment::record_flip(int idx, int verbose_level)
+void domino_assignment::record_flip(
+		int idx, int verbose_level)
 {
 	domino_change C;
 
@@ -2327,7 +2347,8 @@ void domino_assignment::record_flip(int idx, int verbose_level)
 	nb_changes++;
 }
 
-void domino_assignment::record_swap(int s1, int s2, int verbose_level)
+void domino_assignment::record_swap(
+		int s1, int s2, int verbose_level)
 {
 	domino_change C;
 
@@ -2337,7 +2358,8 @@ void domino_assignment::record_swap(int s1, int s2, int verbose_level)
 
 }
 
-void domino_assignment::record_matching(int verbose_level)
+void domino_assignment::record_matching(
+		int verbose_level)
 {
 	domino_change C;
 
@@ -2347,7 +2369,8 @@ void domino_assignment::record_matching(int verbose_level)
 	nb_changes++;
 }
 
-void domino_assignment::drop_changes_to(int nb_changes_to_drop_to, int verbose_level)
+void domino_assignment::drop_changes_to(
+		int nb_changes_to_drop_to, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int l;
@@ -2365,7 +2388,8 @@ void domino_assignment::drop_changes_to(int nb_changes_to_drop_to, int verbose_l
 	}
 }
 
-void domino_assignment::classify_changes_by_type(int verbose_level)
+void domino_assignment::classify_changes_by_type(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int l, i, t;
@@ -2390,7 +2414,8 @@ void domino_assignment::classify_changes_by_type(int verbose_level)
 	}
 }
 
-void domino_assignment::get_cost_function(int *&Cost, int &len, int verbose_level)
+void domino_assignment::get_cost_function(
+		int *&Cost, int &len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

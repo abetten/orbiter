@@ -985,7 +985,7 @@ void quadratic_form::make_collinearity_graph(
 	}
 
 	int i, j;
-	int d, nb_e, nb_inc;
+	int d; //, nb_e, nb_inc;
 	int *v1, *v2;
 	long int Nb_points;
 
@@ -1055,8 +1055,8 @@ void quadratic_form::make_collinearity_graph(
 		}
 	}
 
-	nb_e = 0;
-	nb_inc = 0;
+	//nb_e = 0;
+	//nb_inc = 0;
 	for (i = 0; i < sz; i++) {
 
 		a = Set[i];
@@ -1073,14 +1073,14 @@ void quadratic_form::make_collinearity_graph(
 			val = evaluate_bilinear_form(v1, v2, 1);
 
 			if (val == 0) {
-				nb_e++;
+				//nb_e++;
 				Adj[i * N + j] = 1;
 				Adj[j * N + i] = 1;
 			}
 			else {
 				Adj[i * N + j] = 0;
 				Adj[j * N + i] = 0;
-				nb_inc++;
+				//nb_inc++;
 			}
 		}
 		Adj[i * N + i] = 0;

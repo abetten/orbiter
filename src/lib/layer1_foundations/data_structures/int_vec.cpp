@@ -176,6 +176,16 @@ int int_vec::is_zero(int *v, long int len)
 	return true;
 }
 
+void int_vec::one(int *v, long int len)
+{
+	int i;
+	int *p;
+
+	for (p = v, i = 0; i < len; p++, i++) {
+		*p = 1;
+	}
+}
+
 
 void int_vec::mone(int *v, long int len)
 {

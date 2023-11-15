@@ -1206,6 +1206,50 @@ long int klein_correspondence::apply_polarity(
 	return a_perp;
 }
 
+void klein_correspondence::compute_line_intersection_graph(
+		long int *Lines, int nb_lines, int *&Adj, int f_complement, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "klein_correspondence::compute_line_intersection_graph" << endl;
+	}
+
+	long int *o_rank;
+	int i, j;
+
+	o_rank = NEW_lint(nb_lines);
+	for (i = 0; i < nb_lines; i++) {
+		o_rank[i] = line_to_point_on_quadric(
+				Lines[i], 0 /* verbose_level*/);
+	}
+
+	Adj = NEW_int(nb_lines * nb_lines);
+	Int_vec_zero(Adj, nb_lines * nb_lines);
+	for (i = 0; i < nb_lines; i++) {
+		for (j = i + 1; j < nb_lines; j++) {
+			if (f_complement) {
+				if (O->evaluate_bilinear_form_by_rank(
+					o_rank[i], o_rank[j]) != 0) {
+					Adj[i * nb_lines + j] = 1;
+					Adj[j * nb_lines + i] = 1;
+				}
+			}
+			else {
+				if (O->evaluate_bilinear_form_by_rank(
+					o_rank[i], o_rank[j]) == 0) {
+					Adj[i * nb_lines + j] = 1;
+					Adj[j * nb_lines + i] = 1;
+				}
+			}
+		}
+	}
+	FREE_lint(o_rank);
+
+	if (f_v) {
+		cout << "klein_correspondence::compute_line_intersection_graph done" << endl;
+	}
+}
 
 }}}
 

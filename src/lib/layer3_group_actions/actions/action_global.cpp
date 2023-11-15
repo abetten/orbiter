@@ -1727,7 +1727,7 @@ void action_global::perform_tests(
 			cout << "Elt1 = " << endl;
 			A->Group_element->element_print_quick(Elt1, cout);
 		}
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt1, perm1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
@@ -1739,7 +1739,7 @@ void action_global::perform_tests(
 			cout << "Elt2 = " << endl;
 			A->Group_element->element_print_quick(Elt2, cout);
 		}
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt2, perm2, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
@@ -1752,7 +1752,7 @@ void action_global::perform_tests(
 			cout << "Elt3 = " << endl;
 			A->Group_element->element_print_quick(Elt3, cout);
 		}
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt3, perm3, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
@@ -1789,7 +1789,7 @@ void action_global::perform_tests(
 			cout << "Elt1 = " << endl;
 			A->Group_element->element_print_quick(Elt1, cout);
 		}
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt1, perm1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
@@ -1801,7 +1801,7 @@ void action_global::perform_tests(
 			cout << "Elt2 = " << endl;
 			A->Group_element->element_print_quick(Elt2, cout);
 		}
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt2, perm2, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
@@ -1814,7 +1814,7 @@ void action_global::perform_tests(
 			cout << "Elt3 = " << endl;
 			A->Group_element->element_print_quick(Elt3, cout);
 		}
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt3, perm3, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
@@ -1846,7 +1846,7 @@ void action_global::perform_tests(
 			cout << "Elt1 = " << endl;
 			A->Group_element->element_print_quick(Elt1, cout);
 		}
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt1, perm1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
@@ -1858,7 +1858,7 @@ void action_global::perform_tests(
 			cout << "Elt2 = " << endl;
 			A->Group_element->element_print_quick(Elt2, cout);
 		}
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt2, perm2, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
@@ -1879,7 +1879,7 @@ void action_global::perform_tests(
 		}
 
 
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt3, perm3, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as Elt3 as permutation: " << endl;
@@ -1887,7 +1887,7 @@ void action_global::perform_tests(
 			cout << endl;
 		}
 
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt4, perm4, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as Elt4 as permutation: " << endl;
@@ -1921,7 +1921,7 @@ void action_global::perform_tests(
 
 	int data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
 	A->Group_element->make_element(Elt1, data, verbose_level);
-	A->Group_element->element_as_permutation(
+	A->Group_element->compute_permutation(
 			Elt1, perm1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "as Elt1 as permutation: " << endl;
@@ -1930,7 +1930,7 @@ void action_global::perform_tests(
 	}
 
 	A->Group_element->element_invert(Elt1, Elt2, 0);
-	A->Group_element->element_as_permutation(
+	A->Group_element->compute_permutation(
 			Elt2, perm2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "as Elt2 as permutation: " << endl;
@@ -4057,7 +4057,181 @@ void action_global::report_TDA(
 	}
 }
 
+void action_global::test_if_two_actions_agree_vector(
+		action *A1, action *A2,
+		data_structures_groups::vector_ge *gens1,
+		data_structures_groups::vector_ge *gens2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "action_global::test_if_two_actions_agree_vector" << endl;
+	}
+
+	if (gens1->len != gens2->len) {
+		cout << "action_global::test_if_two_actions_agree_vector vector length does not agree" << endl;
+		exit(1);
+	}
+
+
+	int h;
+
+	for (h = 0; h < gens1->len; h++) {
+		if (f_v) {
+			cout << "generator " << h << " / " << gens1->len << " : " << endl;
+		}
+		//A_linear->element_print(gens1->ith(g), cout);
+
+		test_if_two_actions_agree(
+				A1, A2, gens1->ith(h), gens2->ith(h), verbose_level);
+
+	}
+	if (f_v) {
+		cout << "action_global::test_if_two_actions_agree_vector done" << endl;
+	}
+}
+
+void action_global::test_if_two_actions_agree(
+		action *A1, action *A2, int *Elt1, int *Elt2, int verbose_level)
+// The degree of A2 can be larger than the degree of A1.
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::test_if_two_actions_agree" << endl;
+	}
+
+#if 0
+	if (A1->degree != A2->degree) {
+		cout << "action_global::test_if_two_actions_agree the degrees differ" << endl;
+		exit(1);
+	}
+#endif
+
+	int i, j1, j2;
+
+	for (i = 0; i < A1->degree; i++) {
+		j1 = A1->Group_element->element_image_of(i, Elt1, 0);
+		j2 = A2->Group_element->element_image_of(i, Elt2, 0);
+		if (j1 != j2) {
+			cout << "action_global::test_if_two_actions_agree "
+					"j1 != j2" << endl;
+			cout << "i=" << i << endl;
+			cout << "j1=" << j1 << endl;
+			cout << "j2=" << j2 << endl;
+			cout << endl;
+			exit(1);
+		}
+	}
+
+	if (f_v) {
+		cout << "action_global::test_if_two_actions_agree return true" << endl;
+	}
+}
+
+void action_global::reverse_engineer_semilinear_group(
+		action *A_perm, action *A_linear,
+		geometry::projective_space *P,
+		data_structures_groups::vector_ge *gens_in,
+		data_structures_groups::vector_ge *&gens_out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "action_global::reverse_engineer_semilinear_group" << endl;
+	}
+
+
+	linear_algebra::linear_algebra_global LA;
+
+	//action *A_perm;
+
+	int d;
+
+	d = A_linear->matrix_group_dimension();
+
+
+	//action *A_linear;
+
+	//A_linear = A;
+
+	if (A_linear == NULL) {
+		cout << "action_global::reverse_engineer_semilinear_group "
+				"A_linear == NULL" << endl;
+		exit(1);
+	}
+
+	//data_structures_groups::vector_ge *gens; // permutations from nauty
+	//data_structures_groups::vector_ge *gens1; // matrices
+	int g, frobenius, pos;
+	int *Mtx;
+	int *Elt1;
+	int c;
+
+	//gens = A_perm->Strong_gens->gens;
+
+	gens_out = NEW_OBJECT(data_structures_groups::vector_ge);
+	gens_out->init(A_linear, verbose_level - 2);
+	gens_out->allocate(gens_in->len, verbose_level - 2);
+	Elt1 = NEW_int(A_linear->elt_size_in_int);
+
+	Mtx = NEW_int(d * d + 1); // leave space for frobenius
+
+	pos = 0;
+	for (g = 0; g < gens_in->len; g++) {
+		if (f_vv) {
+			cout << "action_global::reverse_engineer_semilinear_group "
+					"strong generator " << g << ":" << endl;
+			//A_perm->element_print(gens->ith(g), cout);
+			cout << endl;
+		}
+
+		c = LA.reverse_engineer_semilinear_map(
+				P->Subspaces->F,
+				P->Subspaces->n,
+				gens_in->ith(g), Mtx, frobenius,
+				0 /*verbose_level - 2*/);
+
+		if (c) {
+
+			Mtx[d * d] = frobenius;
+			A_linear->Group_element->make_element(
+					Elt1, Mtx, 0 /*verbose_level - 2*/);
+			if (f_vv) {
+				cout << "action_global::reverse_engineer_semilinear_group "
+						"semi-linear group element:" << endl;
+				A_linear->Group_element->element_print(Elt1, cout);
+			}
+			A_linear->Group_element->element_move(Elt1, gens_out->ith(pos), 0);
+
+
+			pos++;
+		}
+		else {
+			//if (f_vv) {
+				cout << "action_global::reverse_engineer_semilinear_group "
+						"generator " << g << " does not "
+						"correspond to a semilinear mapping" << endl;
+				exit(1);
+			//}
+		}
+	}
+	gens_out->reallocate(pos, verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::reverse_engineer_semilinear_group "
+				"we found " << gens_out->len << " generators" << endl;
+	}
+
+	FREE_int(Mtx);
+	FREE_int(Elt1);
+
+	if (f_v) {
+		cout << "action_global::reverse_engineer_semilinear_group done" << endl;
+	}
+}
 
 }}}
 

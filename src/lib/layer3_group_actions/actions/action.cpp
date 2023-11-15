@@ -599,7 +599,8 @@ void action::map_a_set_based_on_hdl(
 
 
 
-void action::init_sims_only(groups::sims *G, int verbose_level)
+void action::init_sims_only(
+		groups::sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i, k;
@@ -649,7 +650,8 @@ void action::init_sims_only(groups::sims *G, int verbose_level)
 	}
 }
 
-void action::compute_strong_generators_from_sims(int verbose_level)
+void action::compute_strong_generators_from_sims(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -673,7 +675,8 @@ void action::compute_strong_generators_from_sims(int verbose_level)
 	}
 }
 
-void action::compute_all_point_orbits(groups::schreier &S,
+void action::compute_all_point_orbits(
+		groups::schreier &S,
 		data_structures_groups::vector_ge &gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -916,7 +919,8 @@ void action::find_strong_generators_at_level(
 
 
 
-void action::group_order(ring_theory::longinteger_object &go)
+void action::group_order(
+		ring_theory::longinteger_object &go)
 {
 	//longinteger_domain D;
 	

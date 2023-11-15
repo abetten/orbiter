@@ -68,6 +68,24 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	if (Descr->f_report_group_elements) {
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"before SC->do_report_group_elements" << endl;
+		}
+		SC->do_report_group_elements(
+				Descr->report_group_elements_csv_file,
+				Descr->report_group_elements_heading,
+				verbose_level);
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity "
+					"after SC->do_report_group_elements" << endl;
+		}
+
+	}
+
+
 	if (Descr->f_export_something) {
 
 		if (f_v) {

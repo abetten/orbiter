@@ -73,7 +73,8 @@ static void nauty_interface_fill_nauty_output(int n,
 typedef unsigned char uchar;
 
 
-void nauty_interface::nauty_interface_graph_bitvec(int v,
+void nauty_interface::nauty_interface_graph_bitvec(
+		int v,
 		data_structures::bitvector *Bitvec,
 		int *partition,
 		l1_interfaces::nauty_output *NO,
@@ -100,7 +101,8 @@ void nauty_interface::nauty_interface_graph_bitvec(int v,
 
 	m = (n + WORDSIZE - 1) / WORDSIZE;
 	if (n >= MAXN) {
-		cout << "nauty_interface::nauty_interface_graph_bitvec n >= MAXN" << endl;
+		cout << "nauty_interface::nauty_interface_graph_bitvec "
+				"n >= MAXN" << endl;
 		exit(1);
 	}
 	//cout << "nauty_interface_graph_bitvec n = " << n << " m=" << m << endl;
@@ -128,16 +130,23 @@ void nauty_interface::nauty_interface_graph_bitvec(int v,
 	//ptn[v - 1] = 0;
 	//cout << "calling nauty..." << endl;
 	if (f_v) {
-		cout << "nauty_interface::nauty_interface_graph_bitvec calling nauty" << endl;
+		cout << "nauty_interface::nauty_interface_graph_bitvec "
+				"calling nauty (densenauty)" << endl;
 	}
 	//	nauty(g, lab, ptn, NILSET, orbits, &options,
 	//&stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+
 	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
+	if (f_v) {
+		cout << "nauty_interface::nauty_interface_graph_bitvec "
+				"after nauty (densenauty)" << endl;
+	}
 
 	orbiter_kernel_system::Orbiter->nb_calls_to_densenauty++;
 
 	if (f_v) {
-		cout << "nauty_interface::nauty_interface_graph_bitvec after nauty" << endl;
+		cout << "nauty_interface::nauty_interface_graph_bitvec "
+				"after nauty" << endl;
 		cout << "base_length=" << base_length << endl;
 		cout << "transversal_length=";
 		for (i = 0; i < base_length; i++) {
@@ -149,34 +158,11 @@ void nauty_interface::nauty_interface_graph_bitvec(int v,
 		cout << endl;
 	}
 	//cout << "numnodes=" << stats.numnodes << endl;
-#if 0
-	for (i = 0; i < n; i++) {
-		labeling[i] = lab[i];
-	}
-#endif
 
 #if 1
 
 	nauty_interface_fill_nauty_output(n, NO, verbose_level);
 
-#if 0
-	//Ago = ago;
-	longinteger_domain Dom;
-
-	Dom.multiply_up(Ago, transversal_length, base_length, 0 /* verbose_level*/);
-	Base_length = base_length;
-	for (i = base_length - 1; i >= 0; i--) {
-		Base[base_length - 1 - i] = base[i];
-		Transversal_length[base_length - 1 - i] = transversal_length[i];
-	}
-
-	for (i = 0; i < aut_counter; i++) {
-		for (j = 0; j < n; j++) {
-			Aut[i * n + j] = aut[i * n + j];
-		}
-	}
-	Aut_counter = aut_counter;
-#endif
 
 #endif
 	nauty_interface_free_data();
@@ -187,7 +173,8 @@ void nauty_interface::nauty_interface_graph_bitvec(int v,
 }
 
 
-void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
+void nauty_interface::nauty_interface_graph_int(
+		int v, int *Adj,
 	int *partition,
 	l1_interfaces::nauty_output *NO,
 	int verbose_level)
@@ -261,24 +248,6 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 
 	nauty_interface_fill_nauty_output(n, NO, verbose_level);
 
-#if 0
-	//Ago = ago;
-	longinteger_domain Dom;
-
-	Dom.multiply_up(Ago, transversal_length, base_length, 0 /* verbose_level*/);
-	Base_length = base_length;
-	for (i = base_length - 1; i >= 0; i--) {
-		Base[base_length - 1 - i] = base[i];
-		Transversal_length[base_length - 1 - i] = transversal_length[i];
-	}
-
-	for (i = 0; i < aut_counter; i++) {
-		for (j = 0; j < n; j++) {
-			Aut[i * n + j] = aut[i * n + j];
-		}
-	}
-	Aut_counter = aut_counter;
-#endif
 
 #endif
 	nauty_interface_free_data();
@@ -316,13 +285,15 @@ void nauty_interface::nauty_interface_matrix_int(
 
 	// global variables in nauty.c:
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int before nauty_interface_allocate_data" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int "
+				"before nauty_interface_allocate_data" << endl;
 	}
 
 	nauty_interface_allocate_data(n);
 
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int after nauty_interface_allocate_data" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int "
+				"after nauty_interface_allocate_data" << endl;
 	}
 
 
@@ -344,7 +315,8 @@ void nauty_interface::nauty_interface_matrix_int(
 	}
 
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int init adjacency" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int "
+				"init adjacency" << endl;
 	}
 
 	for (i = 0; i < Enc->nb_rows; i++) {
@@ -362,7 +334,8 @@ void nauty_interface::nauty_interface_matrix_int(
 	}
 
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int init lab[] and ptn[]" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int "
+				"init lab[] and ptn[]" << endl;
 	}
 	for (i = 0; i < n; i++) {
 		lab[i] = i;
@@ -370,7 +343,8 @@ void nauty_interface::nauty_interface_matrix_int(
 	}
 	//ptn[v - 1] = 0;
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int, calling densenauty" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int "
+				"calling densenauty" << endl;
 	}
 	//	nauty(g, lab, ptn, NILSET, orbits,
 	//&options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
@@ -379,9 +353,12 @@ void nauty_interface::nauty_interface_matrix_int(
 	orbiter_kernel_system::Orbiter->nb_calls_to_densenauty++;
 
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int, after densenauty" << endl;
-		cout << "nauty_interface::nauty_interface_matrix_int, ago=" << ago << endl;
-		cout << "nauty_interface::nauty_interface_matrix_int, numnodes=" << stats.numnodes << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int "
+				"after densenauty" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int "
+				"ago=" << ago << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int "
+				"numnodes=" << stats.numnodes << endl;
 	}
 #if 1
 
@@ -431,7 +408,8 @@ static void nauty_interface_free_data()
 #endif
 
 
-static void nauty_interface_fill_nauty_output(int n,
+static void nauty_interface_fill_nauty_output(
+		int n,
 		l1_interfaces::nauty_output *NO,
 	int verbose_level)
 {
@@ -444,8 +422,12 @@ static void nauty_interface_fill_nauty_output(int n,
 	if (f_v) {
 		cout << "nauty_interface_fill_nauty_output" << endl;
 	}
-	Dom.multiply_up(*NO->Ago, transversal_length, base_length, 0 /* verbose_level*/);
+	Dom.multiply_up(
+			*NO->Ago, transversal_length, base_length,
+			0 /* verbose_level*/);
+
 	NO->Base_length = base_length;
+
 	for (i = base_length - 1; i >= 0; i--) {
 		NO->Base[base_length - 1 - i] = base[i];
 		NO->Base_lint[base_length - 1 - i] = base[i];
@@ -477,6 +459,7 @@ static void nauty_interface_fill_nauty_output(int n,
 	NO->nb_othernode = nb_othernode;
 	NO->nb_processnode = nb_processnode;
 	NO->nb_firstterminal = nb_firstterminal;
+
 	if (fp_nauty) {
 		fprintf(fp_nauty, "-1\n");
 		fclose(fp_nauty);

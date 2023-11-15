@@ -609,6 +609,9 @@ public:
 	int f_unrank_lines_in_PG;
 	std::string unrank_lines_in_PG_text;
 
+	int f_points_on_lines;
+	std::string points_on_lines_text;
+
 	int f_move_two_lines_in_hyperplane_stabilizer;
 	long int line1_from;
 	long int line2_from;

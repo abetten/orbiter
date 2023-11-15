@@ -86,6 +86,8 @@ public:
 
 	void copy_matrix(
 			int *A, int *B, int ma, int na);
+	void reverse_columns_of_matrix(
+			int *A, int *B, int m, int n);
 	void reverse_matrix(
 			int *A, int *B, int ma, int na);
 	void identity_matrix(int *A, int n);
@@ -434,6 +436,8 @@ public:
 	int Gauss_easy(
 			int *A, int m, int n);
 		// returns the rank
+	int Gauss_easy_from_the_back(
+			int *A, int m, int n);
 	int Gauss_easy_memory_given(
 			int *A, int m, int n, int *base_cols);
 	int Gauss_simple(

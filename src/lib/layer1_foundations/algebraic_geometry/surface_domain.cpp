@@ -1157,15 +1157,24 @@ void surface_domain::create_surface_by_coefficient_vector(
 		int i;
 
 		for (i = 0; i < nb_select_double_six; i++) {
-			int *select_double_six;
-			int sz;
-			long int New_lines[27];
+
 
 			if (f_v) {
 				cout << "surface_domain::create_surface_by_coefficient_vector "
 						"selecting double six " << i << " / "
 						<< nb_select_double_six << endl;
 			}
+
+			pick_double_six(
+					select_double_six_string[i],
+					SO->Lines,
+					verbose_level);
+
+#if 0
+			int *select_double_six;
+			int sz;
+			long int New_lines[27];
+
 
 			data_structures::string_tools ST;
 
@@ -1198,7 +1207,7 @@ void surface_domain::create_surface_by_coefficient_vector(
 
 			Lint_vec_copy(New_lines, SO->Lines, 27);
 			FREE_int(select_double_six);
-
+#endif
 
 		}
 
@@ -1224,6 +1233,8 @@ void surface_domain::create_surface_by_coefficient_vector(
 	}
 
 }
+
+
 
 void surface_domain::create_surface_from_catalogue(
 		int iso,
@@ -1276,6 +1287,20 @@ void surface_domain::create_surface_from_catalogue(
 		int i;
 
 		for (i = 0; i < nb_select_double_six; i++) {
+
+
+			if (f_v) {
+				cout << "surface_domain::create_surface_from_catalogue "
+						"selecting double six " << i << " / " << nb_select_double_six << endl;
+			}
+
+			pick_double_six(
+					select_double_six_string[i],
+					Lines27,
+					verbose_level);
+
+
+#if 0
 			int *select_double_six;
 			int sz;
 			long int New_lines[27];
@@ -1309,6 +1334,8 @@ void surface_domain::create_surface_from_catalogue(
 
 			Lint_vec_copy(New_lines, Lines27, 27);
 			FREE_int(select_double_six);
+#endif
+
 		}
 	}
 
@@ -1352,6 +1379,99 @@ void surface_domain::create_surface_from_catalogue(
 		cout << "surface_domain::create_surface_from_catalogue done" << endl;
 	}
 }
+
+void surface_domain::pick_double_six(
+		std::string &select_double_six_string,
+		long int *Lines27,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::pick_double_six" << endl;
+	}
+	int select_double_six[12];
+	long int New_lines[27];
+
+
+	data_structures::string_tools ST;
+	std::vector<std::string> array_of_strings;
+
+
+	if (f_v) {
+		cout << "surface_domain::pick_double_six "
+				"before ST.parse_comma_separated_list" << endl;
+	}
+
+	ST.parse_comma_separated_list(
+			select_double_six_string, array_of_strings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain::pick_double_six "
+				"before ST.parse_comma_separated_list" << endl;
+	}
+
+	if (array_of_strings.size() != 12) {
+		cout << "surface_domain::pick_double_six "
+				"need exactly 12 lines for a double six" << endl;
+		exit(1);
+	}
+
+	int i;
+
+	for (i = 0; i < 12; i++) {
+
+
+		string s;
+
+		s = array_of_strings[i];
+
+
+		if (f_v) {
+			cout << "surface_domain::pick_double_six "
+					"i=" << i << " : " << s << endl;
+		}
+
+		if (isalpha(s[0])) {
+			select_double_six[i] = ST.read_schlaefli_label(s.c_str());
+		}
+		else {
+			select_double_six[i] = std::atoi(s.c_str());
+		}
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::pick_double_six "
+				"select_double_six = ";
+		Int_vec_print(cout, select_double_six, 12);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::pick_double_six "
+				"before "
+				"rearrange_lines_according_to_a_given_double_six" << endl;
+	}
+	rearrange_lines_according_to_a_given_double_six(
+			Lines27, select_double_six, New_lines,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::pick_double_six "
+				"after "
+				"rearrange_lines_according_to_a_given_double_six" << endl;
+	}
+
+	Lint_vec_copy(New_lines, Lines27, 27);
+
+	if (f_v) {
+		cout << "surface_domain::pick_double_six done" << endl;
+	}
+
+}
+
 
 std::string surface_domain::stringify_eqn_maple(int *eqn)
 {

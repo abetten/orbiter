@@ -250,7 +250,7 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 		for (row = 0; row < S.nb_rows - 1; row++, counter++) {
 
-			int j, t;
+			int j;
 			string pts_txt;
 			long int *pts;
 			int nb_pts;
@@ -263,12 +263,15 @@ void substructure_classifier::set_stabilizer_in_any_space(
 			}
 
 			j = col_idx;
+			pts_txt = S.get_entry_ij(row + 1, j);
+#if 0
 			t = S.Table[(row + 1) * S.nb_cols + j];
 			if (S.tokens[t] == NULL) {
 				cout << "substructure_classifier::set_stabilizer_in_any_space "
 						"token[t] == NULL" << endl;
 			}
 			pts_txt.assign(S.tokens[t]);
+#endif
 
 			data_structures::string_tools ST;
 

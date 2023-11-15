@@ -102,13 +102,13 @@ void orbits_on_something::init(
 		Sch->init_generators(*SG->gens, 0 /*verbose_level*/);
 		//Orbits_on_lines->compute_all_point_orbits(verbose_level);
 		{
-		ifstream fp(fname);
-		if (f_v) {
-			cout << "orbits_on_something::init "
-					"before reading orbits from file "
-					<< fname << endl;
-		}
-		Sch->read_from_file_binary(fp, verbose_level);
+			ifstream fp(fname);
+			if (f_v) {
+				cout << "orbits_on_something::init "
+						"before reading orbits from file "
+						<< fname << endl;
+			}
+			Sch->read_from_file_binary(fp, verbose_level);
 		}
 		if (f_v) {
 			cout << "orbits_on_something::init "
@@ -228,13 +228,13 @@ void orbits_on_something::init_from_vector_ge(
 		Sch->init_generators(*gens, 0 /*verbose_level*/);
 		//Orbits_on_lines->compute_all_point_orbits(verbose_level);
 		{
-		ifstream fp(fname);
-		if (f_v) {
-			cout << "orbits_on_something::init_from_vector_ge "
-					"before reading orbits from file "
-					<< fname << endl;
-		}
-		Sch->read_from_file_binary(fp, verbose_level);
+			ifstream fp(fname);
+			if (f_v) {
+				cout << "orbits_on_something::init_from_vector_ge "
+						"before reading orbits from file "
+						<< fname << endl;
+			}
+			Sch->read_from_file_binary(fp, verbose_level);
 		}
 		if (f_v) {
 			cout << "orbits_on_something::init_from_vector_ge "
@@ -307,7 +307,8 @@ void orbits_on_something::init_from_vector_ge(
 }
 
 
-void orbits_on_something::stabilizer_any_point(int pt,
+void orbits_on_something::stabilizer_any_point(
+		int pt,
 		strong_generators *&Stab, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

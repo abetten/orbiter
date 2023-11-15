@@ -574,7 +574,7 @@ void sims::print_all_group_elements_tree(
 		//A->element_print_as_permutation(Elt, cout);
 		//cout << endl;
 #else
-		A->Group_element->element_as_permutation(
+		A->Group_element->compute_permutation(
 				Elt,
 				perm, 0 /*verbose_level*/);
 		ost << A->degree;

@@ -92,7 +92,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity "
 					"before PA->P->write_lines_vs_tritangent_planes" << endl;
 		}
-		PA->Surf_A->Surf->Schlaefli->write_lines_vs_tritangent_planes(prefix, verbose_level);
+		PA->Surf_A->Surf->Schlaefli->Schlaefli_tritangent_planes->write_lines_vs_tritangent_planes(prefix, verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"after PA->P->write_lines_vs_tritangent_planes" << endl;
@@ -107,12 +107,12 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"before PA->P->write_double_sixes" << endl;
+					"before Schlaefli_double_six->write_double_sixes" << endl;
 		}
-		PA->Surf_A->Surf->Schlaefli->write_double_sixes(prefix, verbose_level);
+		PA->Surf_A->Surf->Schlaefli->Schlaefli_double_six->write_double_sixes(prefix, verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"after PA->P->write_double_sixes" << endl;
+					"after Schlaefli_double_six->write_double_sixes" << endl;
 		}
 	}
 
@@ -335,7 +335,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity variety:" << endl;
 			Lint_vec_print(cout, Variety, N_points);
 			cout << endl;
-			cout << "projective_space_activity::perform_activity number of points = " << N_points << endl;
+			cout << "projective_space_activity::perform_activity "
+					"number of points = " << N_points << endl;
 		}
 
 		string fname;
@@ -911,6 +912,24 @@ void projective_space_activity::perform_activity(int verbose_level)
 					"after Geo.do_unrank_lines_in_PG" << endl;
 		}
 	}
+	else if (Descr->f_points_on_lines) {
+
+
+		geometry::geometry_global Geo;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before Geo.do_points_on_lines_in_PG" << endl;
+		}
+		Geo.do_points_on_lines_in_PG(
+				PA->P,
+				Descr->points_on_lines_text,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after Geo.do_points_on_lines_in_PG" << endl;
+		}
+	}
 	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer) {
 
 
@@ -961,8 +980,10 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity "
 					"before PA->P->Subspaces->planes_through_a_set_of_lines" << endl;
 		}
-		PA->P->Subspaces->planes_through_a_set_of_lines(Lines, nb_lines,
-				Plane_ranks, nb_planes_on_one_line, verbose_level);
+		PA->P->Subspaces->planes_through_a_set_of_lines(
+				Lines, nb_lines,
+				Plane_ranks, nb_planes_on_one_line,
+				verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"after PA->P->Subspaces->planes_through_a_set_of_lines" << endl;
@@ -1043,8 +1064,12 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity plane_intersection_type:" << Descr->plane_intersection_type_of_klein_image_input << endl;
-			cout << "projective_space_activity::perform_activity plane_intersection_type_threshold = " << Descr->plane_intersection_type_of_klein_image_threshold << endl;
+			cout << "projective_space_activity::perform_activity "
+					"plane_intersection_type:"
+					<< Descr->plane_intersection_type_of_klein_image_input << endl;
+			cout << "projective_space_activity::perform_activity "
+					"plane_intersection_type_threshold = "
+					<< Descr->plane_intersection_type_of_klein_image_threshold << endl;
 		}
 
 		geometry::geometry_global G;
@@ -1071,8 +1096,12 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "projective_space_activity::perform_activity plane_intersection_type_of_klein_image:" << Descr->plane_intersection_type_of_klein_image_input << endl;
-			cout << "projective_space_activity::perform_activity plane_intersection_type_of_klein_image_threshold = " << Descr->plane_intersection_type_of_klein_image_threshold << endl;
+			cout << "projective_space_activity::perform_activity "
+					"plane_intersection_type_of_klein_image:"
+					<< Descr->plane_intersection_type_of_klein_image_input << endl;
+			cout << "projective_space_activity::perform_activity "
+					"plane_intersection_type_of_klein_image_threshold = "
+					<< Descr->plane_intersection_type_of_klein_image_threshold << endl;
 		}
 
 		geometry::geometry_global G;

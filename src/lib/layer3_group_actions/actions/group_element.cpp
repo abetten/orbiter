@@ -30,7 +30,8 @@ group_element::~group_element()
 {
 }
 
-void group_element::init(action *A, int verbose_level)
+void group_element::init(
+		action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -43,7 +44,8 @@ void group_element::init(action *A, int verbose_level)
 	}
 }
 
-int group_element::image_of(void *elt, int a)
+int group_element::image_of(
+		void *elt, int a)
 {
 	A->ptr->nb_times_image_of_called++;
 	return (*A->ptr->ptr_element_image_of)(*A, a, elt, 0);
@@ -72,36 +74,42 @@ int group_element::linear_entry_frobenius(
 	return (*A->ptr->ptr_element_linear_entry_frobenius)(*A, elt, 0);
 }
 
-void group_element::one(void *elt)
+void group_element::one(
+		void *elt)
 {
 	(*A->ptr->ptr_element_one)(*A, elt, 0);
 }
 
-int group_element::is_one(void *elt)
+int group_element::is_one(
+		void *elt)
 {
 	return element_is_one(elt, 0);
 	//return (*ptr_element_is_one)(*A, elt, false);
 }
 
-void group_element::unpack(void *elt, void *Elt)
+void group_element::unpack(
+		void *elt, void *Elt)
 {
 	A->ptr->nb_times_unpack_called++;
 	(*A->ptr->ptr_element_unpack)(*A, elt, Elt, 0);
 }
 
-void group_element::pack(void *Elt, void *elt)
+void group_element::pack(
+		void *Elt, void *elt)
 {
 	A->ptr->nb_times_pack_called++;
 	(*A->ptr->ptr_element_pack)(*A, Elt, elt, 0);
 }
 
-void group_element::retrieve(void *elt, int hdl)
+void group_element::retrieve(
+		void *elt, int hdl)
 {
 	A->ptr->nb_times_retrieve_called++;
 	(*A->ptr->ptr_element_retrieve)(*A, hdl, elt, 0);
 }
 
-int group_element::store(void *elt)
+int group_element::store(
+		void *elt)
 {
 	A->ptr->nb_times_store_called++;
 	return (*A->ptr->ptr_element_store)(*A, elt, 0);
@@ -130,29 +138,34 @@ void group_element::mult_apply_from_the_left(
 	(*A->ptr->ptr_element_move)(*A, A->elt_mult_apply, b, 0);
 }
 
-void group_element::invert(void *a, void *av)
+void group_element::invert(
+		void *a, void *av)
 {
 	A->ptr->nb_times_invert_called++;
 	(*A->ptr->ptr_element_invert)(*A, a, av, 0);
 }
 
-void group_element::invert_in_place(void *a)
+void group_element::invert_in_place(
+		void *a)
 {
 	(*A->ptr->ptr_element_invert)(*A, a, A->elt_mult_apply, 0);
 	(*A->ptr->ptr_element_move)(*A, A->elt_mult_apply, a, 0);
 }
 
-void group_element::transpose(void *a, void *at)
+void group_element::transpose(
+		void *a, void *at)
 {
 	(*A->ptr->ptr_element_transpose)(*A, a, at, 0);
 }
 
-void group_element::move(void *a, void *b)
+void group_element::move(
+		void *a, void *b)
 {
 	(*A->ptr->ptr_element_move)(*A, a, b, 0);
 }
 
-void group_element::dispose(int hdl)
+void group_element::dispose(
+		int hdl)
 {
 	(*A->ptr->ptr_element_dispose)(*A, hdl, 0);
 }
@@ -187,7 +200,8 @@ void group_element::unrank_point(long int rk, int *v)
 {
 	if (A->ptr->ptr_unrank_point == NULL) {
 		cout << "group_element::unrank_point "
-				"ptr_unrank_point == NULL, label=" << A->ptr->label << endl;
+				"ptr_unrank_point == NULL, "
+				"label=" << A->ptr->label << endl;
 		exit(1);
 	}
 	(*A->ptr->ptr_unrank_point)(*A, rk, v);
@@ -198,7 +212,8 @@ long int group_element::rank_point(int *v)
 {
 	if (A->ptr->ptr_rank_point == NULL) {
 		cout << "group_element::rank_point "
-				"ptr_rank_point == NULL, label=" << A->ptr->label << endl;
+				"ptr_rank_point == NULL, "
+				"label=" << A->ptr->label << endl;
 		exit(1);
 	}
 	return (*A->ptr->ptr_rank_point)(*A, v);
@@ -245,7 +260,7 @@ void group_element::element_image_of_low_level(
 		cout << "group_element::element_image_of_low_level "
 				"A->ptr is NULL" << endl;
 		exit(1);
-		}
+	}
 	A->ptr->nb_times_image_of_low_level_called++;
 	(*A->ptr->ptr_element_image_of_low_level)(
 			*A,
@@ -285,32 +300,32 @@ int group_element::element_is_one(
 	if (f_v) {
 		cout << "group_element::element_is_one "
 				"in action " << A->label << endl;
-		}
+	}
 	if (A->f_has_kernel && A->Kernel->A->base_len()) {
 		int *Elt1;
 		int drop_out_level, image;
-		Elt1 = NEW_int(A->elt_size_in_int); // this should be avoided
+		Elt1 = NEW_int(A->elt_size_in_int);
 		if (f_v) {
 			cout << "group_element::element_is_one "
 					"before Kernel->strip" << endl;
-			}
-		ret = A->Kernel->strip((int *)elt, Elt1 /* *residue */,
-			drop_out_level, image, 0 /*verbose_level*/);
+		}
+		ret = A->Kernel->strip(
+				(int *)elt, Elt1 /* *residue */,
+			drop_out_level, image,
+			0 /*verbose_level*/);
+
 		FREE_int(Elt1);
 		if (f_v) {
 			cout << "group_element::element_is_one "
 					"returning " << ret << endl;
-			}
-		if (ret)
-			return true;
-		else
-			return false;
 		}
+		return ret;
+	}
 	ret = (*A->ptr->ptr_element_is_one)(*A, elt, verbose_level);
 	if (f_v) {
 		cout << "group_element::element_is_one "
 				"returning " << ret << endl;
-		}
+	}
 
 	return ret;
 }
@@ -388,7 +403,7 @@ void group_element::element_print_quick(
 		cout << "group_element::element_print_quick "
 				"ptr_element_print_quick == NULL" << endl;
 		exit(1);
-		}
+	}
 	(*A->ptr->ptr_element_print_quick)(*A, elt, ost);
 }
 
@@ -401,12 +416,14 @@ void group_element::element_print_latex(
 void group_element::element_print_latex_with_extras(
 		void *elt, std::string &label, std::ostream &ost)
 {
-	int *fp, n, ord;
+	//int *fp,;
+	int n, ord;
 
-	fp = NEW_int(A->degree);
-	n = find_fixed_points(elt, fp, 0);
+	//fp = NEW_int(A->degree);
+	//n = count_fixed_points(elt, fp, 0);
+	n = count_fixed_points(elt, 0);
 	//cout << "with " << n << " fixed points" << endl;
-	FREE_int(fp);
+	//FREE_int(fp);
 
 	ord = element_order(elt);
 
@@ -439,6 +456,19 @@ void group_element::element_code_for_make_element(
 	(*A->ptr->ptr_element_code_for_make_element)(*A, elt, data);
 }
 
+std::string group_element::element_stringify_code_for_make_element(
+		void *elt)
+{
+	int *data;
+	string s;
+
+	data = NEW_int(A->make_element_size);
+	(*A->ptr->ptr_element_code_for_make_element)(*A, elt, data);
+	s = Int_vec_stringify(data, A->make_element_size);
+	FREE_int(data);
+	return s;
+}
+
 void group_element::element_print_for_make_element(
 		void *elt, std::ostream &ost)
 {
@@ -466,7 +496,8 @@ void group_element::element_print_as_permutation_verbose(
 			ost, 0, false, true, verbose_level);
 }
 
-void group_element::element_as_permutation(
+
+void group_element::compute_permutation(
 		void *elt,
 		int *perm, int verbose_level)
 {
@@ -475,22 +506,61 @@ void group_element::element_as_permutation(
 	int i, j;
 
 	if (f_v) {
-		cout << "group_element::element_as_permutation" << endl;
-		}
+		cout << "group_element::compute_permutation" << endl;
+	}
 	for (i = 0; i < A->degree; i++) {
+
 		if (f_vv) {
-			cout << "group_element::element_as_permutation" << i << endl;
-			}
+			cout << "group_element::compute_permutation" << i << endl;
+		}
 		j = element_image_of(i, elt, verbose_level - 2);
 		perm[i] = j;
 		if (f_vv) {
-			cout << "group_element::element_as_permutation "
+			cout << "group_element::compute_permutation "
 					<< i << "->" << j << endl;
-			}
 		}
+	}
 	if (f_v) {
-		cout << "group_element::element_as_permutation done" << endl;
-		}
+		cout << "group_element::compute_permutation done" << endl;
+	}
+}
+
+void group_element::cycle_type(
+		void *elt,
+		int *cycles, int &nb_cycles,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::cycle_type" << endl;
+	}
+
+	combinatorics::combinatorics_domain Combi;
+	int *perm;
+
+	perm = NEW_int(A->degree);
+	if (f_v) {
+		cout << "group_element::cycle_type "
+				"before compute_permutation" << endl;
+	}
+	compute_permutation(
+			elt,
+			perm, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "group_element::cycle_type "
+				"after compute_permutation" << endl;
+	}
+
+
+	Combi.perm_cycle_type(
+			perm, A->degree, cycles, nb_cycles);
+
+	FREE_int(perm);
+
+	if (f_v) {
+		cout << "group_element::cycle_type done" << endl;
+	}
 }
 
 void group_element::element_print_as_permutation_with_offset(
@@ -499,8 +569,8 @@ void group_element::element_print_as_permutation_with_offset(
 	int f_print_cycles_of_length_one, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = false; //(verbose_level >= 2);
-	int *v, i, j;
+	//int f_vv = false; //(verbose_level >= 2);
+	int *perm;
 	int f_cycle_length = false;
 	int f_max_cycle_length = false;
 	int max_cycle_length = 50;
@@ -516,11 +586,22 @@ void group_element::element_print_as_permutation_with_offset(
 				"the degree is too large, we won't print the permutation" << endl;
 		return;
 	}
-	v = NEW_int(A->degree);
+
+	perm = NEW_int(A->degree);
+
 	if (f_v) {
 		cout << "group_element::element_print_as_permutation_with_offset "
-				"computing list of images" << endl;
+				"before compute_permutation" << endl;
 	}
+	compute_permutation(
+			elt,
+			perm, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "group_element::element_print_as_permutation_with_offset "
+				"after compute_permutation" << endl;
+	}
+
+#if 0
 	for (i = 0; i < A->degree; i++) {
 		if (f_vv) {
 			cout << "group_element::element_print_as_permutation_with_offset "
@@ -532,14 +613,16 @@ void group_element::element_print_as_permutation_with_offset(
 			cout << "group_element::element_print_as_permutation_with_offset "
 					<< i << "->" << j << endl;
 		}
-		v[i] = j;
+		perm[i] = j;
 	}
-	//perm_print(ost, v, degree);
+#endif
+	//perm_print(ost, perm, degree);
 	if (f_v) {
 		cout << "group_element::element_print_as_permutation_with_offset "
 				"before Combi.perm_print_offset" << endl;
 	}
-	Combi.perm_print_offset(ost, v, A->degree, offset,
+	Combi.perm_print_offset(
+			ost, perm, A->degree, offset,
 			f_print_cycles_of_length_one,
 			f_cycle_length,
 			f_max_cycle_length, max_cycle_length,
@@ -571,7 +654,7 @@ void group_element::element_print_as_permutation_with_offset(
 
 
 	//ost << endl;
-	FREE_int(v);
+	FREE_int(perm);
 }
 
 void group_element::element_print_as_permutation_with_offset_and_max_cycle_length(
@@ -580,24 +663,33 @@ void group_element::element_print_as_permutation_with_offset_and_max_cycle_lengt
 	int max_cycle_length,
 	int f_orbit_structure)
 {
-	int *v, i, j;
+	int *perm;
 	int f_print_cycles_of_length_one = false;
 	int f_cycle_length = false;
 	int f_max_cycle_length = true;
 	combinatorics::combinatorics_domain Combi;
 
-	v = NEW_int(A->degree);
+	perm = NEW_int(A->degree);
+
+	compute_permutation(
+			elt,
+			perm, 0 /* verbose_level */);
+#if 0
 	for (i = 0; i < A->degree; i++) {
 		j = element_image_of(i, elt, false);
-		v[i] = j;
+		perm[i] = j;
 	}
+#endif
 	//perm_print(ost, v, degree);
-	Combi.perm_print_offset(ost, v, A->degree, offset,
+
+	Combi.perm_print_offset(
+			ost, perm, A->degree, offset,
 			f_print_cycles_of_length_one,
 			f_cycle_length,
 			f_max_cycle_length, max_cycle_length, f_orbit_structure,
 			NULL, NULL);
-	FREE_int(v);
+
+	FREE_int(perm);
 }
 
 void group_element::element_print_image_of_set(
@@ -611,26 +703,37 @@ void group_element::element_print_image_of_set(
 	}
 }
 
-int group_element::element_signum_of_permutation(void *elt)
+int group_element::element_signum_of_permutation(
+		void *elt)
 {
-	int *v;
-	int i, j, sgn;
+	int *perm;
+	int sgn;
 	combinatorics::combinatorics_domain Combi;
 
-	v = NEW_int(A->degree);
+	perm = NEW_int(A->degree);
+
+	compute_permutation(
+			elt,
+			perm, 0 /* verbose_level */);
+#if 0
 	for (i = 0; i < A->degree; i++) {
 		j = element_image_of(i, elt, false);
-		v[i] = j;
+		perm[i] = j;
 	}
-	sgn = Combi.perm_signum(v, A->degree);
-	FREE_int(v);
+#endif
+
+	sgn = Combi.perm_signum(perm, A->degree);
+
+	FREE_int(perm);
+
 	return sgn;
 }
 
 
 
-void group_element::element_write_file_fp(int *Elt,
-		ofstream &fp, int verbose_level)
+void group_element::element_write_file_fp(
+		int *Elt,
+		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *elt;
@@ -650,8 +753,9 @@ void group_element::element_write_file_fp(int *Elt,
 	//fwrite(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
 }
 
-void group_element::element_read_file_fp(int *Elt,
-		ifstream &fp, int verbose_level)
+void group_element::element_read_file_fp(
+		int *Elt,
+		std::ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *elt;
@@ -667,7 +771,8 @@ void group_element::element_read_file_fp(int *Elt,
 	}
 }
 
-void group_element::element_write_file(int *Elt,
+void group_element::element_write_file(
+		int *Elt,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -692,7 +797,8 @@ void group_element::element_write_file(int *Elt,
 		}
 }
 
-void group_element::element_read_file(int *Elt,
+void group_element::element_read_file(
+		int *Elt,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -758,7 +864,8 @@ void group_element::element_read_from_memory_object(
 	element_unpack(elt, Elt, false);
 }
 
-void group_element::element_write_to_file_binary(int *Elt,
+void group_element::element_write_to_file_binary(
+		int *Elt,
 		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -794,7 +901,8 @@ void group_element::element_write_to_file_binary(int *Elt,
 	}
 }
 
-void group_element::element_read_from_file_binary(int *Elt,
+void group_element::element_read_from_file_binary(
+		int *Elt,
 		std::ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -820,7 +928,8 @@ void group_element::element_read_from_file_binary(int *Elt,
 	}
 }
 
-void group_element::random_element(groups::sims *S, int *Elt, int verbose_level)
+void group_element::random_element(
+		groups::sims *S, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -835,7 +944,8 @@ void group_element::random_element(groups::sims *S, int *Elt, int verbose_level)
 	}
 }
 
-int group_element::element_has_order_two(int *E1, int verbose_level)
+int group_element::element_has_order_two(
+		int *E1, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret;
@@ -858,7 +968,8 @@ int group_element::element_has_order_two(int *E1, int verbose_level)
 	return ret;
 }
 
-int group_element::product_has_order_two(int *E1,
+int group_element::product_has_order_two(
+		int *E1,
 		int *E2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -883,7 +994,8 @@ int group_element::product_has_order_two(int *E1,
 	return ret;
 }
 
-int group_element::product_has_order_three(int *E1,
+int group_element::product_has_order_three(
+		int *E1,
 		int *E2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -909,7 +1021,8 @@ int group_element::product_has_order_three(int *E1,
 	return ret;
 }
 
-int group_element::element_order(void *elt)
+int group_element::element_order(
+		void *elt)
 {
 	int *cycle_type;
 	int order;
@@ -930,7 +1043,7 @@ int group_element::element_order_and_cycle_type(
 
 int group_element::element_order_and_cycle_type_verbose(
 		void *elt, int *cycle_type, int verbose_level)
-// cycle_type[i - 1] is the number of cycle of length i for 1 le i le n
+// cycle_type[i - 1] is the number of cycles of length i for 1 le i le n
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -998,7 +1111,8 @@ int group_element::element_order_and_cycle_type_verbose(
 	return order;
 }
 
-int group_element::element_order_if_divisor_of(void *elt, int o)
+int group_element::element_order_if_divisor_of(
+		void *elt, int o)
 // returns the order of the element if o == 0
 // if o != 0, returns the order of the element provided it divides o,
 // 0 otherwise.
@@ -1056,7 +1170,8 @@ int group_element::element_order_if_divisor_of(void *elt, int o)
 	return order;
 }
 
-void group_element::element_print_base_images(int *Elt)
+void group_element::element_print_base_images(
+		int *Elt)
 {
 	element_print_base_images(Elt, cout);
 }
@@ -1204,7 +1319,8 @@ void group_element::minimize_base_images(
 	FREE_int(Elt3);
 }
 
-void group_element::element_conjugate_bvab(int *Elt_A,
+void group_element::element_conjugate_bvab(
+		int *Elt_A,
 		int *Elt_B, int *Elt_C,
 		int verbose_level)
 {
@@ -1239,7 +1355,8 @@ void group_element::element_conjugate_bvab(int *Elt_A,
 	}
 }
 
-void group_element::element_conjugate_babv(int *Elt_A,
+void group_element::element_conjugate_babv(
+		int *Elt_A,
 		int *Elt_B, int *Elt_C,
 		int verbose_level)
 {
@@ -1262,7 +1379,8 @@ void group_element::element_conjugate_babv(int *Elt_A,
 	FREE_int(Elt2);
 }
 
-void group_element::element_commutator_abavbv(int *Elt_A,
+void group_element::element_commutator_abavbv(
+		int *Elt_A,
 		int *Elt_B, int *Elt_C,
 		int verbose_level)
 {
@@ -1291,7 +1409,8 @@ void group_element::element_commutator_abavbv(int *Elt_A,
 	FREE_int(Elt4);
 }
 
-int group_element::find_non_fixed_point(void *elt, int verbose_level)
+int group_element::find_non_fixed_point(
+		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1315,7 +1434,9 @@ int group_element::find_non_fixed_point(void *elt, int verbose_level)
 	return -1;
 }
 
-int group_element::find_fixed_points(void *elt,
+#if 0
+int group_element::find_fixed_points(
+		void *elt,
 		int *fixed_points, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1336,14 +1457,41 @@ int group_element::find_fixed_points(void *elt,
 	}
 	return n;
 }
+#endif
 
-int group_element::count_fixed_points(void *elt, int verbose_level)
+void group_element::compute_fixed_points(
+		void *elt,
+		std::vector<long int> &fixed_points, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int i, j;
+
+	if (f_v) {
+		cout << "group_element::compute_fixed_points "
+				"computing fixed points in action "
+				<< A->label << " of degree " << A->degree << endl;
+	}
+	for (i = 0; i < A->degree; i++) {
+		j = element_image_of(i, elt, 0);
+		if (j == i) {
+			fixed_points.push_back(i);
+		}
+	}
+	if (f_v) {
+		cout << "group_element::compute_fixed_points "
+				"found " << fixed_points.size() << " fixed points" << endl;
+	}
+}
+
+int group_element::count_fixed_points(
+		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, cnt = 0;
 
 	if (f_v) {
-		cout << "group_element::count_fixed_points counting fixed points in action "
+		cout << "group_element::count_fixed_points "
+				"counting fixed points in action "
 				<< A->label << " of degree " << A->degree << endl;
 	}
 	for (i = 0; i < A->degree; i++) {
@@ -1359,11 +1507,12 @@ int group_element::count_fixed_points(void *elt, int verbose_level)
 	return cnt;
 }
 
-int group_element::test_if_set_stabilizes(int *Elt,
+int group_element::test_if_set_stabilizes(
+		int *Elt,
 		int size, long int *set, int verbose_level)
 {
 	long int *set1, *set2;
-	int i, cmp;
+	int cmp;
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
 
@@ -1372,11 +1521,12 @@ int group_element::test_if_set_stabilizes(int *Elt,
 	}
 	set1 = NEW_lint(size);
 	set2 = NEW_lint(size);
-	for (i = 0; i < size; i++) {
-		set1[i] = set[i];
-	}
+	Lint_vec_copy(set, set1, size);
+
 	Sorting.lint_vec_quicksort_increasingly(set1, size);
+
 	map_a_set(set1, set2, size, Elt, 0);
+
 	Sorting.lint_vec_quicksort_increasingly(set2, size);
 	cmp = Sorting.lint_vec_compare(set1, set2, size);
 	if (f_v) {
@@ -1427,12 +1577,14 @@ void group_element::map_a_set(
 	}
 	for (i = 0; i < n; i++) {
 		if (f_vv) {
-			cout << "group_element::map_a_set i=" << i << " / " << n
+			cout << "group_element::map_a_set "
+					"i=" << i << " / " << n
 					<< ", computing image of " << set[i] << endl;
 		}
 		image_set[i] = element_image_of(set[i], Elt, verbose_level - 2);
 		if (f_vv) {
-			cout << "group_element::map_a_set i=" << i << " / " << n << ", image of "
+			cout << "group_element::map_a_set "
+					"i=" << i << " / " << n << ", image of "
 					<< set[i] << " is " << image_set[i] << endl;
 		}
 	}
@@ -1471,7 +1623,8 @@ void group_element::make_element_from_permutation_representation(
 			exit(1);
 		}
 	}
-	make_element_from_base_image(Elt, S, base_image, verbose_level);
+	make_element_from_base_image(
+			Elt, S, base_image, verbose_level);
 
 	FREE_int(base_image);
 	if (f_v) {
@@ -1530,9 +1683,15 @@ void group_element::make_element_from_base_image(
 	Elt3 = NEW_int(A->elt_size_in_int);
 	Elt4 = NEW_int(A->elt_size_in_int);
 	Elt5 = NEW_int(A->elt_size_in_int);
+
+	Int_vec_copy(data, base_image, A->base_len());
+
+#if 0
 	for (j = 0; j < A->base_len(); j++) {
 		base_image[j] = data[j];
 	}
+#endif
+
 	element_one(Elt3, 0);
 
 	for (i = 0; i < A->base_len(); i++) {
@@ -1689,43 +1848,50 @@ void group_element::make_element(
 		if (f_v) {
 			cout << "group_element::make_element action_on_sets_t" << endl;
 		}
-		A->subaction->Group_element->make_element(Elt, data, verbose_level);
+		A->subaction->Group_element->make_element(
+				Elt, data, verbose_level);
 	}
 	else if (A->type_G == action_on_pairs_t) {
 		if (f_v) {
 			cout << "group_element::make_element action_on_pairs_t" << endl;
 		}
-		A->subaction->Group_element->make_element(Elt, data, verbose_level);
+		A->subaction->Group_element->make_element(
+				Elt, data, verbose_level);
 	}
 	else if (A->type_G == matrix_group_t) {
 		if (f_v) {
 			cout << "group_element::make_element matrix_group_t" << endl;
 		}
-		A->G.matrix_grp->make_element(Elt, data, verbose_level);
+		A->G.matrix_grp->make_element(
+				Elt, data, verbose_level);
 	}
 	else if (A->type_G == wreath_product_t) {
 		if (f_v) {
 			cout << "group_element::make_element wreath_product_t" << endl;
 		}
-		A->G.wreath_product_group->make_element(Elt, data, verbose_level);
+		A->G.wreath_product_group->make_element(
+				Elt, data, verbose_level);
 	}
 	else if (A->type_G == direct_product_t) {
 		if (f_v) {
 			cout << "group_element::make_element direct_product_t" << endl;
 		}
-		A->G.direct_product_group->make_element(Elt, data, verbose_level);
+		A->G.direct_product_group->make_element(
+				Elt, data, verbose_level);
 	}
 	else if (A->f_has_subaction) {
 		if (f_v) {
 			cout << "group_element::make_element subaction" << endl;
 		}
-		A->subaction->Group_element->make_element(Elt, data, verbose_level);
+		A->subaction->Group_element->make_element(
+				Elt, data, verbose_level);
 	}
 	else if (A->type_G == perm_group_t) {
 		if (f_v) {
 			cout << "group_element::make_element perm_group_t" << endl;
 		}
-		A->G.perm_grp->make_element(Elt, data, verbose_level);
+		A->G.perm_grp->make_element(
+				Elt, data, verbose_level);
 	}
 	else {
 		cout << "group_element::make_element unknown type_G: ";
@@ -1735,7 +1901,8 @@ void group_element::make_element(
 	}
 }
 
-void group_element::element_power_int_in_place(int *Elt,
+void group_element::element_power_int_in_place(
+		int *Elt,
 		int n, int verbose_level)
 {
 	int *Elt2;
@@ -1838,14 +2005,15 @@ int group_element::check_if_in_set_stabilizer(
 	data_structures::sorting Sorting;
 
 	ordered_set = NEW_lint(size);
-	for (i = 0; i < size; i++) {
-		ordered_set[i] = set[i];
-	}
+	Lint_vec_copy(set, ordered_set, size);
+
 	Sorting.lint_vec_heapsort(ordered_set, size);
+
 	for (i = 0; i < size; i++) {
 		a = ordered_set[i];
 		b = element_image_of(a, Elt, 0);
-		if (!Sorting.lint_vec_search(ordered_set, size, b, idx, 0)) {
+		if (!Sorting.lint_vec_search(
+				ordered_set, size, b, idx, 0)) {
 			if (f_v) {
 				cout << "group_element::check_if_in_set_stabilizer fails" << endl;
 				cout << "set: ";
@@ -1875,7 +2043,8 @@ void group_element::check_if_in_set_stabilizer_debug(
 
 	if (f_v) {
 		cout << "group_element::check_if_in_set_stabilizer_debug" << endl;
-		cout << "group_element::check_if_in_set_stabilizer_debug size = " << size << endl;
+		cout << "group_element::check_if_in_set_stabilizer_debug "
+				"size = " << size << endl;
 	}
 
 	int i, a, b, idx;
@@ -1883,12 +2052,12 @@ void group_element::check_if_in_set_stabilizer_debug(
 	data_structures::sorting Sorting;
 
 	ordered_set = NEW_lint(size);
-	for (i = 0; i < size; i++) {
-		ordered_set[i] = set[i];
-	}
+	Lint_vec_copy(set, ordered_set, size);
+
 	Sorting.lint_vec_heapsort(ordered_set, size);
 	if (f_v) {
-		cout << "group_element::check_if_in_set_stabilizer_debug sorted set:" << endl;
+		cout << "group_element::check_if_in_set_stabilizer_debug "
+				"sorted set:" << endl;
 		Lint_vec_print(cout, ordered_set, size);
 		cout << endl;
 	}
@@ -1896,7 +2065,8 @@ void group_element::check_if_in_set_stabilizer_debug(
 		a = ordered_set[i];
 		b = element_image_of(a, Elt, 0);
 		if (f_v) {
-			cout << "group_element::check_if_in_set_stabilizer_debug " << a << " -> " << b << endl;
+			cout << "group_element::check_if_in_set_stabilizer_debug "
+					<< a << " -> " << b << endl;
 			cout << "a=" << a << " = ";
 			print_point(a, cout);
 			cout << endl;
@@ -1904,7 +2074,8 @@ void group_element::check_if_in_set_stabilizer_debug(
 			print_point(b, cout);
 			cout << endl;
 		}
-		if (!Sorting.lint_vec_search(ordered_set, size, b, idx, 0)) {
+		if (!Sorting.lint_vec_search(
+					ordered_set, size, b, idx, 0)) {
 			if (f_v) {
 				cout << "group_element::check_if_in_set_stabilizer fails" << endl;
 				cout << "set: ";
@@ -1951,9 +2122,12 @@ int group_element::check_if_transporter_for_set(
 		cout << endl;
 	}
 	ordered_set2 = NEW_lint(size);
+	Lint_vec_copy(set2, ordered_set2, size);
+#if 0
 	for (i = 0; i < size; i++) {
 		ordered_set2[i] = set2[i];
 	}
+#endif
 	Sorting.lint_vec_heapsort(ordered_set2, size);
 	if (f_vv) {
 		cout << "sorted target set:" << endl;
@@ -1969,7 +2143,8 @@ int group_element::check_if_transporter_for_set(
 		if (false) {
 			cout << "i=" << i << " a=" << a << " b=" << b << endl;
 		}
-		if (!Sorting.lint_vec_search(ordered_set2, size, b, idx, 0)) {
+		if (!Sorting.lint_vec_search(
+				ordered_set2, size, b, idx, 0)) {
 			if (f_v) {
 				cout << "group_element::check_if_transporter_for_set fails" << endl;
 				cout << "set1   : ";
@@ -2003,8 +2178,6 @@ void group_element::compute_fixed_objects_in_PG(
 // creates temporary actions using induced_action_on_grassmannian
 {
 	int f_v = (verbose_level >= 1);
-	int j, h;
-	long int a;
 
 	if (f_v) {
 		cout << "group_element::compute_fixed_objects_in_PG" << endl;
@@ -2024,50 +2197,34 @@ void group_element::compute_fixed_objects_in_PG(
 				"computing fixed points" << endl;
 	}
 	{
-		vector<long int> fix;
+		vector<long int> fixed_points;
 
-		for (a = 0; a < P->Subspaces->N_points; a++) {
-			j = A->Group_element->element_image_of(a, Elt, 0 /* verbose_level */);
-			if (j == a) {
-				fix.push_back(a);
-			}
-		}
+		compute_fixed_points(
+				Elt,
+				fixed_points, 0 /* verbose_level */);
 
-		Fix.push_back(fix);
+		Fix.push_back(fixed_points);
 	}
 
+	int dimension;
 
-	for (h = 2; h <= up_to_which_rank; h++) {
-
-		if (f_v) {
-			cout << "group_element::compute_fixed_objects_in_PG "
-					"computing fixed subspaces of rank " << h << endl;
-		}
-		vector<long int> fix;
-		action *Ah;
+	for (dimension = 2; dimension <= up_to_which_rank; dimension++) {
 
 		if (f_v) {
 			cout << "group_element::compute_fixed_objects_in_PG "
-					"before A->Induced_action->induced_action_on_grassmannian" << endl;
-		}
-		Ah = A->Induced_action->induced_action_on_grassmannian(
-				h, 0 /* verbose_level*/);
-		if (f_v) {
-			cout << "group_element::compute_fixed_objects_in_PG "
-					"after A->Induced_action->induced_action_on_grassmannian" << endl;
+					"computing fixed subspaces of rank " << dimension << endl;
 		}
 
-		for (a = 0; a < Ah->degree; a++) {
-			j = Ah->Group_element->element_image_of(
-					a, Elt, 0 /* verbose_level */);
-			if (j == a) {
-				fix.push_back(a);
-			}
-		}
+		vector<long int> fixpoints;
 
-		Fix.push_back(fix);
 
-		FREE_OBJECT(Ah);
+		compute_fixed_points_in_induced_action_on_grassmannian(
+			Elt,
+			dimension,
+			fixpoints,
+			0 /*verbose_level*/);
+
+		Fix.push_back(fixpoints);
 
 
 	}
@@ -2078,6 +2235,48 @@ void group_element::compute_fixed_objects_in_PG(
 	}
 }
 
+void group_element::compute_fixed_points_in_induced_action_on_grassmannian(
+	int *Elt,
+	int dimension,
+	std::vector<long int> &fixpoints,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::compute_fixed_points_in_induced_action_on_grassmannian" << endl;
+	}
+
+	action *A_induced;
+
+	if (f_v) {
+		cout << "group_element::compute_fixed_points_in_induced_action_on_grassmannian "
+				"before A->Induced_action->induced_action_on_grassmannian" << endl;
+	}
+	A_induced = A->Induced_action->induced_action_on_grassmannian(
+			dimension, 0 /* verbose_level*/);
+	if (f_v) {
+		cout << "group_element::compute_fixed_points_in_induced_action_on_grassmannian "
+				"after A->Induced_action->induced_action_on_grassmannian" << endl;
+	}
+
+	long int a, b;
+
+	for (a = 0; a < A_induced->degree; a++) {
+		b = A_induced->Group_element->element_image_of(
+				a, Elt, 0 /* verbose_level */);
+		if (b == a) {
+			fixpoints.push_back(a);
+		}
+	}
+
+
+	FREE_OBJECT(A_induced);
+
+	if (f_v) {
+		cout << "group_element::compute_fixed_points_in_induced_action_on_grassmannian done" << endl;
+	}
+}
 
 void group_element::report_fixed_objects_in_PG(
 		std::ostream &ost,
@@ -2242,7 +2441,8 @@ int group_element::test_if_it_fixes_the_polynomial(
 	data_structures::sorting Sorting;
 	int cmp;
 
-	cmp = Sorting.integer_vec_compare(input1, output, HPD->get_nb_monomials());
+	cmp = Sorting.integer_vec_compare(
+			input1, output, HPD->get_nb_monomials());
 	if (f_v) {
 		cout << "group_element::test_if_it_fixes_the_polynomial "
 				"cmp = " << cmp << endl;
@@ -2318,11 +2518,13 @@ void group_element::action_on_polynomial(
 
 
 	if (f_semilinear) {
-		HPD->substitute_semilinear(input, output,
+		HPD->substitute_semilinear(
+				input, output,
 				f_semilinear, Elt[n * n], Elt1, 0 /* verbose_level */);
 	}
 	else {
-		HPD->substitute_linear(input, output, Elt1, 0 /* verbose_level */);
+		HPD->substitute_linear(
+				input, output, Elt1, 0 /* verbose_level */);
 	}
 
 	if (f_vv) {

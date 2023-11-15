@@ -357,25 +357,30 @@ int string_tools::s_scan_token_comma_separated(
 	return true;
 }
 
-void string_tools::scan_permutation_from_string(std::string &s,
+void string_tools::scan_permutation_from_string(
+		std::string &s,
 	int *&perm, int &degree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "string_tools::scan_permutation_from_string s = " << s << endl;
+		cout << "string_tools::scan_permutation_from_string "
+				"s = " << s << endl;
 	}
 	istringstream ins(s);
 	if (f_v) {
-		cout << "string_tools::scan_permutation_from_string before scan_permutation_from_stream" << endl;
+		cout << "string_tools::scan_permutation_from_string "
+				"before scan_permutation_from_stream" << endl;
 	}
 	scan_permutation_from_stream(ins, perm, degree, verbose_level);
 	if (f_v) {
-		cout << "string_tools::scan_permutation_from_string done" << endl;
+		cout << "string_tools::scan_permutation_from_string "
+				"done" << endl;
 	}
 }
 
-void string_tools::scan_permutation_from_stream(std::istream & is,
+void string_tools::scan_permutation_from_stream(
+		std::istream & is,
 	int *&perm, int &degree, int verbose_level)
 // Scans a permutation from a stream.
 {
@@ -440,7 +445,8 @@ void string_tools::scan_permutation_from_stream(std::istream & is,
 				cout << "digit as string: " << s << ", numeric: " << dig << endl;
 			}
 			if (dig < 0) {
-				cout << "string_tools::scan_permutation_from_stream digit < 0" << endl;
+				cout << "string_tools::scan_permutation_from_stream "
+						"digit < 0" << endl;
 				exit(1);
 			}
 			if (dig >= l) {
@@ -452,7 +458,8 @@ void string_tools::scan_permutation_from_stream(std::istream & is,
 
 				l1 = MAXIMUM(l + (l >> 1), largest_point + 1);
 				if (f_v) {
-					cout << "string_tools::scan_permutation_from_stream digit = "
+					cout << "string_tools::scan_permutation_from_stream "
+							"digit = "
 						<< dig << " >= " << l
 						<< ", extending permutation degree to "
 						<< l1 << endl;
@@ -541,7 +548,8 @@ void string_tools::scan_permutation_from_stream(std::istream & is,
 	FREE_int(cycle);
 }
 
-void string_tools::chop_string(const char *str, int &argc, char **&argv)
+void string_tools::chop_string(
+		const char *str, int &argc, char **&argv)
 {
 	int l, i, len;
 	char *s;
@@ -743,7 +751,8 @@ void string_tools::convert_arguments(
 
 }
 
-char string_tools::get_character(std::istream & is, int verbose_level)
+char string_tools::get_character(
+		std::istream & is, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char c;
@@ -760,7 +769,8 @@ char string_tools::get_character(std::istream & is, int verbose_level)
 	return c;
 }
 
-void string_tools::replace_extension_with(char *p, const char *new_ext)
+void string_tools::replace_extension_with(
+		char *p, const char *new_ext)
 {
 	int i, l;
 
@@ -777,7 +787,8 @@ void string_tools::replace_extension_with(char *p, const char *new_ext)
 	strcat(p, new_ext);
 }
 
-void string_tools::replace_extension_with(std::string &p, const char *new_ext)
+void string_tools::replace_extension_with(
+		std::string &p, const char *new_ext)
 {
 	int i, l;
 	string q;
@@ -905,7 +916,8 @@ void string_tools::chop_off_extension_if_present(
 	}
 }
 
-void string_tools::get_fname_base(const char *p, char *fname_base)
+void string_tools::get_fname_base(
+		const char *p, char *fname_base)
 {
 	int i, l = strlen(p);
 
@@ -919,7 +931,8 @@ void string_tools::get_fname_base(const char *p, char *fname_base)
 	}
 }
 
-void string_tools::get_extension(std::string &p, std::string &ext)
+void string_tools::get_extension(
+		std::string &p, std::string &ext)
 {
 	int i, l = p.length();
 
@@ -971,7 +984,8 @@ void string_tools::get_extension_if_present_and_chop_off(
 	}
 }
 
-void string_tools::string_fix_escape_characters(std::string &str)
+void string_tools::string_fix_escape_characters(
+		std::string &str)
 {
 	string str_t, str_D, str_B, str_n;
 
@@ -999,7 +1013,8 @@ void string_tools::string_fix_escape_characters(std::string &str)
 
 }
 
-void string_tools::remove_specific_character(std::string &str, char c)
+void string_tools::remove_specific_character(
+		std::string &str, char c)
 {
 	char st[1000];
 
@@ -1031,7 +1046,8 @@ void string_tools::create_comma_separated_list(
 }
 
 void string_tools::parse_comma_separated_list(
-		std::string &input_text, std::vector<std::string> &output,
+		std::string &input_text,
+		std::vector<std::string> &output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1112,7 +1128,8 @@ int string_tools::is_all_whitespace(const char *str)
 	return true;
 }
 
-void string_tools::text_to_three_double(std::string &text, double *d)
+void string_tools::text_to_three_double(
+		std::string &text, double *d)
 {
 	double *data;
 	int data_sz;
@@ -1131,7 +1148,8 @@ void string_tools::text_to_three_double(std::string &text, double *d)
 
 }
 
-int string_tools::strcmp_with_or_without(char *p, char *q)
+int string_tools::strcmp_with_or_without(
+		char *p, char *q)
 {
 	char *str1;
 	char *str2;
@@ -1163,7 +1181,8 @@ int string_tools::strcmp_with_or_without(char *p, char *q)
 	return ret;
 }
 
-int string_tools::starts_with_a_number(std::string &str)
+int string_tools::starts_with_a_number(
+		std::string &str)
 {
 	char c;
 
@@ -1176,13 +1195,15 @@ int string_tools::starts_with_a_number(std::string &str)
 	}
 }
 
-int string_tools::compare_string_string(std::string &str1, std::string &str2)
+int string_tools::compare_string_string(
+		std::string &str1, std::string &str2)
 {
 	return strcmp(str1.c_str(), str2.c_str());
 }
 
 
-int string_tools::stringcmp(std::string &str, const char *p)
+int string_tools::stringcmp(
+		std::string &str, const char *p)
 {
 	return strcmp(str.c_str(), p);
 }
@@ -1250,8 +1271,8 @@ void string_tools::parse_value_pairs(
 			cout << "did not find '=' in variable assignment" << endl;
 			exit(1);
 		}
-		std::string symb = values[i].substr (0, found);
-		std::string val = values[i].substr (found + 1, values[i].length() - found - 1);
+		std::string symb = values[i].substr(0, found);
+		std::string val = values[i].substr(found + 1, values[i].length() - found - 1);
 
 
 
@@ -1295,7 +1316,8 @@ void string_tools::parse_comma_separated_values(
 	}
 }
 
-void string_tools::drop_quotes(std::string &in, std::string &out)
+void string_tools::drop_quotes(
+		std::string &in, std::string &out)
 {
 	int len;
 
@@ -1322,7 +1344,8 @@ void string_tools::parse_comma_separated_strings(
 	char str[1000];
 
 	while (true) {
-		if (!s_scan_token_comma_separated(&p, str, 0 /* verbose_level */)) {
+		if (!s_scan_token_comma_separated(
+				&p, str, 0 /* verbose_level */)) {
 			break;
 		}
 		string var;
@@ -1420,7 +1443,8 @@ int string_tools::read_schlaefli_label(const char *p)
 		return 26;
 	}
 	else {
-		cout << "string_tools::read_schlaefli_label unknown schlaefli label: " << p << endl;
+		cout << "string_tools::read_schlaefli_label "
+				"unknown schlaefli label: " << p << endl;
 		exit(1);
 	}
 }
@@ -1439,7 +1463,8 @@ void string_tools::read_string_of_schlaefli_labels(
 	chop_string_comma_separated(str.c_str(), sz, argv);
 
 	if (f_v) {
-		cout << "string_tools::read_string_of_schlaefli_labels reading:" << endl;
+		cout << "string_tools::read_string_of_schlaefli_labels "
+				"reading:" << endl;
 		for (i = 0; i < sz; i++) {
 			cout << i << " : " << argv[i] << endl;
 		}
@@ -1452,7 +1477,8 @@ void string_tools::read_string_of_schlaefli_labels(
 
 
 	if (f_v) {
-		cout << "string_tools::read_string_of_schlaefli_labels done" << endl;
+		cout << "string_tools::read_string_of_schlaefli_labels "
+				"done" << endl;
 	}
 }
 

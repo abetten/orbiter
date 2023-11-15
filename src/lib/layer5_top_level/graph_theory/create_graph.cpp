@@ -559,6 +559,31 @@ void create_graph::init(
 					"after create_coll_orthogonal" << endl;
 		}
 	}
+
+
+	else if (description->f_tritangent_planes_disjointness_graph) {
+
+		algebraic_geometry::surface_domain *Surf;
+		field_theory::finite_field *F;
+
+		F = NEW_OBJECT(field_theory::finite_field);
+		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+
+		F->finite_field_init_small_order(5,
+				false /* f_without_tables */,
+				false /* f_compute_related_fields */,
+				0);
+		Surf->init_surface_domain(F, verbose_level);
+
+		Surf->Schlaefli->Schlaefli_tritangent_planes->make_tritangent_plane_disjointness_graph(Adj, N, verbose_level);
+
+		label.assign("tritangent_planes_disjointness");
+		label_tex.assign("tritangent\\_planes\\_disjointness");
+
+		FREE_OBJECT(Surf);
+		FREE_OBJECT(F);
+	}
+
 	else if (description->f_trihedral_pair_disjointness_graph) {
 
 		algebraic_geometry::surface_domain *Surf;
@@ -573,7 +598,7 @@ void create_graph::init(
 				0);
 		Surf->init_surface_domain(F, verbose_level);
 
-		Surf->Schlaefli->make_trihedral_pair_disjointness_graph(Adj, verbose_level);
+		Surf->Schlaefli->Schlaefli_trihedral_pairs->make_trihedral_pair_disjointness_graph(Adj, verbose_level);
 		N = 120;
 		label.assign("trihedral_pair_disjointness");
 		label_tex.assign("trihedral\\_pair\\_disjointness");

@@ -101,7 +101,7 @@ void clebsch_map::init_half_double_six(
 	line_idx[0] = line1;
 	line_idx[1] = line2;
 
-	tritangent_plane_idx = Surf->Schlaefli->choose_tritangent_plane_for_Clebsch_map(
+	tritangent_plane_idx = Surf->Schlaefli->Schlaefli_tritangent_planes->choose_tritangent_plane_for_Clebsch_map(
 			line1, line2,
 			transversal, verbose_level);
 
@@ -133,13 +133,13 @@ void clebsch_map::init_half_double_six(
 				"Lines with points on them:" << endl;
 		SO->SOP->print_lines_with_points_on_them(cout);
 		cout << "The half double six is no " << hds
-				<< "$ = " << Surf->Schlaefli->Half_double_six_label_tex[hds]
+				<< "$ = " << Surf->Schlaefli->Schlaefli_double_six->Half_double_six_label_tex[hds]
 				<< "$ : $";
-		Lint_vec_print(cout, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
+		Lint_vec_print(cout, Surf->Schlaefli->Schlaefli_double_six->Half_double_sixes + hds * 6, 6);
 		cout << " = \\{" << endl;
 		for (h = 0; h < 6; h++) {
 			cout << Surf->Schlaefli->Labels->Line_label_tex[
-					Surf->Schlaefli->Half_double_sixes[hds * 6 + h]];
+					Surf->Schlaefli->Schlaefli_double_six->Half_double_sixes[hds * 6 + h]];
 			if (h < 6 - 1) {
 				cout << ", ";
 			}
@@ -153,7 +153,7 @@ void clebsch_map::init_half_double_six(
 			cout << "surface_with_action::arc_lifting_and_classify u="
 					<< u << " / 6" << endl;
 		}
-		a = SO->Lines[Surf->Schlaefli->Half_double_sixes[hds * 6 + u]];
+		a = SO->Lines[Surf->Schlaefli->Schlaefli_double_six->Half_double_sixes[hds * 6 + u]];
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"intersecting line " << a << " and plane "
@@ -712,11 +712,11 @@ void clebsch_map::report(
 	int h;
 
 	ost << "The half double six is no " << hds << "$ = "
-			<< Surf->Schlaefli->Half_double_six_label_tex[hds] << "$ : $";
-	Lint_vec_print(ost, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
+			<< Surf->Schlaefli->Schlaefli_double_six->Half_double_six_label_tex[hds] << "$ : $";
+	Lint_vec_print(ost, Surf->Schlaefli->Schlaefli_double_six->Half_double_sixes + hds * 6, 6);
 	ost << " = \\{" << endl;
 	for (h = 0; h < 6; h++) {
-		ost << Surf->Schlaefli->Labels->Line_label_tex[Surf->Schlaefli->Half_double_sixes[hds * 6 + h]];
+		ost << Surf->Schlaefli->Labels->Line_label_tex[Surf->Schlaefli->Schlaefli_double_six->Half_double_sixes[hds * 6 + h]];
 		if (h < 6 - 1) {
 			ost << ", ";
 		}
@@ -731,7 +731,7 @@ void clebsch_map::report(
 	ost << "transversal = " << transversal << " = $"
 			<< Surf->Schlaefli->Labels->Line_label_tex[transversal] << "$\\\\" << endl;
 	ost << "plane\\_rk = $\\pi_{" << tritangent_plane_idx << "} = \\pi_{"
-			<< Surf->Schlaefli->Eckard_point_label_tex[tritangent_plane_idx] << "} = "
+			<< Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[tritangent_plane_idx] << "} = "
 			<< plane_rk_global << "$\\\\" << endl;
 
 

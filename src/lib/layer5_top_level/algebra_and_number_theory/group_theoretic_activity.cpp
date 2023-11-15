@@ -1002,7 +1002,8 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->orbits_on_set_from_file" << endl;
 		}
-		AG->orbits_on_set_from_file(Descr->orbit_of_set_from_file_fname, verbose_level);
+		AG->orbits_on_set_from_file(
+				Descr->orbit_of_set_from_file_fname, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->orbits_on_set_from_file" << endl;
@@ -1062,7 +1063,8 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->do_classify_ovoids" << endl;
 		}
-		AG->do_classify_ovoids(Descr->Ovoid_classify_description, verbose_level);
+		AG->do_classify_ovoids(
+				Descr->Ovoid_classify_description, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->do_classify_ovoids" << endl;

@@ -302,7 +302,7 @@ void input_objects_of_type_variety::prepare_input(
 
 
 
-	int i, t;
+	int i;
 	int po_go, po_index;
 	int po, so;
 
@@ -315,24 +315,34 @@ void input_objects_of_type_variety::prepare_input(
 	string pts_txt;
 	string bitangents_txt;
 
+	eqn_txt = S->get_entry_ij(row + 1, idx_eqn);
+#if 0
 	t = S->Table[(row + 1) * S->nb_cols + idx_eqn];
 	if (S->tokens[t] == NULL) {
 		cout << "input_objects_of_type_variety::prepare_input "
 				"token[t] == NULL" << endl;
 	}
 	eqn_txt.assign(S->tokens[t]);
+#endif
+
+	pts_txt = S->get_entry_ij(row + 1, idx_pts);
+#if 0
 	t = S->Table[(row + 1) * S->nb_cols + idx_pts];
 	if (S->tokens[t] == NULL) {
 		cout << "input_objects_of_type_variety::prepare_input "
 				"token[t] == NULL" << endl;
 	}
 	pts_txt.assign(S->tokens[t]);
+#endif
+	bitangents_txt = S->get_entry_ij(row + 1, idx_bitangents);
+#if 0
 	t = S->Table[(row + 1) * S->nb_cols + idx_bitangents];
 	if (S->tokens[t] == NULL) {
 		cout << "input_objects_of_type_variety::prepare_input "
 				"token[t] == NULL" << endl;
 	}
 	bitangents_txt.assign(S->tokens[t]);
+#endif
 
 	data_structures::string_tools ST;
 
@@ -376,6 +386,10 @@ void input_objects_of_type_variety::prepare_input(
 
 	for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
 
+		string s;
+
+		s = S->get_entry_ij(row + 1, Carry_through[i]);
+#if 0
 		t = S->Table[(row + 1) * S->nb_cols + Carry_through[i]];
 		if (S->tokens[t] == NULL) {
 			cout << "input_objects_of_type_variety::prepare_input "
@@ -385,6 +399,8 @@ void input_objects_of_type_variety::prepare_input(
 		string s;
 
 		s.assign(S->tokens[t]);
+#endif
+
 		Qco->Carrying_through.push_back(s);
 
 	}

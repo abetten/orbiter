@@ -58,8 +58,8 @@ void sorting::int_vec_search_vec(
 		if (!int_vec_search(v, len, A[i], Idx[i])) {
 			cout << "sorting::int_vec_search_vec did not find entry" << endl;
 			exit(1); 
-			}
 		}
+	}
 }
 
 void sorting::lint_vec_search_vec(
@@ -72,9 +72,9 @@ void sorting::lint_vec_search_vec(
 		if (!lint_vec_search(v, len, A[i], idx, 0)) {
 			cout << "sorting::int_vec_search_vec did not find entry" << endl;
 			exit(1);
-			}
-		Idx[i] = idx;
 		}
+		Idx[i] = idx;
+	}
 }
 
 void sorting::int_vec_search_vec_linear(
@@ -86,8 +86,8 @@ void sorting::int_vec_search_vec_linear(
 		if (!int_vec_search_linear(v, len, A[i], Idx[i])) {
 			cout << "int_vec_search_vec did not find entry" << endl;
 			exit(1); 
-			}
 		}
+	}
 }
 
 void sorting::lint_vec_search_vec_linear(
@@ -115,16 +115,16 @@ int sorting::int_vec_is_subset_of(
 		a = set[i];
 		while (big_set[j] < a && j < big_set_sz) {
 			j++;
-			}
+		}
 		if (j == big_set_sz) {
 			return false;
-			}
+		}
 		if (big_set[j] == a) {
 			j++;
 			continue;
-			}
-		return false;
 		}
+		return false;
+	}
 	return true;
 }
 
@@ -153,7 +153,7 @@ int sorting::lint_vec_is_subset_of(
 			continue;
 		}
 		return false;
-		}
+	}
 	return true;
 }
 
@@ -164,7 +164,7 @@ void sorting::int_vec_swap_points(
 	
 	if (idx1 == idx2) {
 		return;
-		}
+	}
 	p1 = list[idx1];
 	p2 = list[idx2];
 	list[idx1] = p2;
@@ -181,8 +181,8 @@ int sorting::int_vec_is_sorted(
 	for (i = 1; i < len; i++) {
 		if (v[i - 1] > v[i]) {
 			return false;
-			}
 		}
+	}
 	return true;
 }
 
@@ -196,10 +196,10 @@ void sorting::int_vec_sort_and_remove_duplicates(
 		if (v[i] == v[i - 1]) {
 			for (j = i + 1; j < len; j++) {
 				v[j - 1] = v[j];
-				}
-			len--;
 			}
+			len--;
 		}
+	}
 }
 
 void sorting::lint_vec_sort_and_remove_duplicates(
@@ -212,10 +212,10 @@ void sorting::lint_vec_sort_and_remove_duplicates(
 		if (v[i] == v[i - 1]) {
 			for (j = i + 1; j < len; j++) {
 				v[j - 1] = v[j];
-				}
-			len--;
 			}
+			len--;
 		}
+	}
 }
 
 int sorting::int_vec_sort_and_test_if_contained(
@@ -228,18 +228,18 @@ int sorting::int_vec_sort_and_test_if_contained(
 	for (i = 0, j = 0; i < len1; ) {
 		if (j == len2) {
 			return false;
-			}
+		}
 		if (v1[i] == v2[j]) {
 			i++;
 			j++;
-			}
+		}
 		else if (v1[i] > v2[j]) {
 			j++;
-			}
+		}
 		else if (v1[i] < v2[j]) {
 			return false;
-			}
 		}
+	}
 	return true;
 }
 
@@ -253,18 +253,18 @@ int sorting::lint_vec_sort_and_test_if_contained(
 	for (i = 0, j = 0; i < len1; ) {
 		if (j == len2) {
 			return false;
-			}
+		}
 		if (v1[i] == v2[j]) {
 			i++;
 			j++;
-			}
+		}
 		else if (v1[i] > v2[j]) {
 			j++;
-			}
+		}
 		else if (v1[i] < v2[j]) {
 			return false;
-			}
 		}
+	}
 	return true;
 }
 
@@ -278,20 +278,20 @@ int sorting::int_vecs_are_disjoint(
 	while (true) {
 		if (i == len1) {
 			break;
-			}
+		}
 		if (j == len2) {
 			break;
-			}
+		}
 		if (v1[i] == v2[j]) {
 			return false;
-			}
+		}
 		if (v1[i] < v2[j]) {
 			i++;
-			}
+		}
 		else if (v1[i] > v2[j]) {
 			j++;
-			}
 		}
+	}
 	return true;
 }
 
@@ -306,22 +306,22 @@ int sorting::int_vecs_find_common_element(
 	while (true) {
 		if (i == len1) {
 			break;
-			}
+		}
 		if (j == len2) {
 			break;
-			}
+		}
 		if (v1[i] == v2[j]) {
 			idx1 = i;
 			idx2 = j;
 			return true;
-			}
+		}
 		if (v1[i] < v2[j]) {
 			i++;
-			}
+		}
 		else if (v1[i] > v2[j]) {
 			j++;
-			}
 		}
+	}
 	return false;
 }
 
@@ -336,22 +336,22 @@ int sorting::lint_vecs_find_common_element(
 	while (true) {
 		if (i == len1) {
 			break;
-			}
+		}
 		if (j == len2) {
 			break;
-			}
+		}
 		if (v1[i] == v2[j]) {
 			idx1 = i;
 			idx2 = j;
 			return true;
-			}
+		}
 		if (v1[i] < v2[j]) {
 			i++;
-			}
+		}
 		else if (v1[i] > v2[j]) {
 			j++;
-			}
 		}
+	}
 	return false;
 }
 
@@ -365,14 +365,14 @@ void sorting::int_vec_insert_and_reallocate_if_necessary(
 	int idx, t;
 
 	if (f_v) {
-		cout << "int_vec_insert_and_reallocate_if_necessary" << endl;
-		}
+		cout << "sorting::int_vec_insert_and_reallocate_if_necessary" << endl;
+	}
 	if (int_vec_search(vec, used_length, a, idx)) {
 		if (f_vv) {
-			cout << "int_vec_insert_and_reallocate_if_necessary "
+			cout << "sorting::int_vec_insert_and_reallocate_if_necessary "
 					"element " << a << " is already in the list" << endl;
-			}
 		}
+	}
 	else {
 		if (used_length == alloc_length) {
 			int *C;
@@ -383,30 +383,30 @@ void sorting::int_vec_insert_and_reallocate_if_necessary(
 			C = NEW_int(new_alloc_length);
 			for (t = 0; t < used_length; t++) {
 				C[t] = vec[t];
-				}
+			}
 			FREE_int(vec);
 			vec = C;
 			alloc_length = new_alloc_length;
-			}
+		}
 		for (t = used_length; t > idx; t--) {
 			vec[t] = vec[t - 1];
-			}
+		}
 		vec[idx] = a;
 		used_length++;
 		if (false) {
 			cout << "element " << a << " has been added to the "
 					"list at position " << idx << " updated length = "
 					<< used_length << endl;
-			}
+		}
 		if (f_v) {
 			if ((used_length & (1024 - 1)) == 0) {
 				cout << "used_length = " << used_length << endl;
-				}
 			}
 		}
+	}
 	if (f_v) {
-		cout << "int_vec_insert_and_reallocate_if_necessary done" << endl;
-		}
+		cout << "sorting::int_vec_insert_and_reallocate_if_necessary done" << endl;
+	}
 }
 
 void sorting::int_vec_append_and_reallocate_if_necessary(
@@ -419,8 +419,8 @@ void sorting::int_vec_append_and_reallocate_if_necessary(
 	int t;
 
 	if (f_v) {
-		cout << "int_vec_append_and_reallocate_if_necessary" << endl;
-		}
+		cout << "sorting::int_vec_append_and_reallocate_if_necessary" << endl;
+	}
 	if (used_length == alloc_length) {
 		int *C;
 		int new_alloc_length;
@@ -430,27 +430,27 @@ void sorting::int_vec_append_and_reallocate_if_necessary(
 		C = NEW_int(new_alloc_length);
 		for (t = 0; t < used_length; t++) {
 			C[t] = vec[t];
-			}
+		}
 		FREE_int(vec);
 		vec = C;
 		alloc_length = new_alloc_length;
-		}
+	}
 	vec[used_length] = a;
 	used_length++;
 	if (false) {
 		cout << "element " << a << " has been appended to the list "
 				"at position " << used_length - 1 << " updated "
 				"length = " << used_length << endl;
-		}
+	}
 	if (f_v) {
 		if ((used_length & (1024 - 1)) == 0) {
 			cout << "used_length = " << used_length << endl;
-			}
 		}
+	}
 	if (f_v) {
-		cout << "int_vec_append_and_reallocate_if_necessary "
+		cout << "sorting::int_vec_append_and_reallocate_if_necessary "
 				"done" << endl;
-		}
+	}
 }
 
 void sorting::lint_vec_append_and_reallocate_if_necessary(
@@ -464,7 +464,7 @@ void sorting::lint_vec_append_and_reallocate_if_necessary(
 
 	if (f_v) {
 		cout << "lint_vec_append_and_reallocate_if_necessary" << endl;
-		}
+	}
 	if (used_length == alloc_length) {
 		long int *C;
 		int new_alloc_length;
@@ -474,27 +474,27 @@ void sorting::lint_vec_append_and_reallocate_if_necessary(
 		C = NEW_lint(new_alloc_length);
 		for (t = 0; t < used_length; t++) {
 			C[t] = vec[t];
-			}
+		}
 		FREE_lint(vec);
 		vec = C;
 		alloc_length = new_alloc_length;
-		}
+	}
 	vec[used_length] = a;
 	used_length++;
 	if (false) {
 		cout << "element " << a << " has been appended to the list "
 				"at position " << used_length - 1 << " updated "
 				"length = " << used_length << endl;
-		}
+	}
 	if (f_v) {
 		if ((used_length & (1024 - 1)) == 0) {
 			cout << "used_length = " << used_length << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "lint_vec_append_and_reallocate_if_necessary "
 				"done" << endl;
-		}
+	}
 }
 
 int sorting::int_vec_is_zero(
@@ -505,8 +505,8 @@ int sorting::int_vec_is_zero(
 	for (i = 0; i < len; i++) {
 		if (v[i]) {
 			return false;
-			}
 		}
+	}
 	return true;
 }
 
@@ -569,15 +569,15 @@ void sorting::test_if_set(
 	S = NEW_int(set_size);
 	for (i = 0; i < set_size; i++) {
 		S[i] = set[i];
-		}
+	}
 	int_vec_heapsort(S, set_size);
 	for (i = 0; i < set_size - 1; i++) {
 		if (S[i] == S[i + 1]) {
 			cout << "the set is not a set: the element "
 				<< S[i] << " is repeated" << endl;
 			exit(1);
-			}
 		}
+	}
 	FREE_int(S);
 }
 
@@ -590,7 +590,7 @@ int sorting::lint_vec_test_if_set(
 	S = NEW_lint(set_size);
 	for (i = 0; i < set_size; i++) {
 		S[i] = set[i];
-		}
+	}
 	lint_vec_heapsort(S, set_size);
 	for (i = 0; i < set_size - 1; i++) {
 		if (S[i] == S[i + 1]) {
@@ -610,7 +610,7 @@ int sorting::test_if_set_with_return_value(
 	S = NEW_int(set_size);
 	for (i = 0; i < set_size; i++) {
 		S[i] = set[i];
-		}
+	}
 	int_vec_heapsort(S, set_size);
 	for (i = 0; i < set_size - 1; i++) {
 		if (S[i] == S[i + 1]) {
@@ -618,8 +618,8 @@ int sorting::test_if_set_with_return_value(
 				<< S[i] << " is repeated" << endl;
 			FREE_int(S);
 			return false;
-			}
 		}
+	}
 	FREE_int(S);
 	return true;
 }
@@ -633,7 +633,7 @@ int sorting::test_if_set_with_return_value_lint(
 	S = NEW_int(set_size);
 	for (i = 0; i < set_size; i++) {
 		S[i] = set[i];
-		}
+	}
 	int_vec_heapsort(S, set_size);
 	for (i = 0; i < set_size - 1; i++) {
 		if (S[i] == S[i + 1]) {
@@ -641,8 +641,8 @@ int sorting::test_if_set_with_return_value_lint(
 				<< S[i] << " is repeated" << endl;
 			FREE_int(S);
 			return false;
-			}
 		}
+	}
 	FREE_int(S);
 	return true;
 }
@@ -659,17 +659,17 @@ void sorting::rearrange_subset(
 		if (j < k && subset[j] == i) {
 			rearranged_set[j] = set[subset[j]];
 			j++;
-			}
+		}
 		else {
 			rearranged_set[k + i - j] = set[i];
-			}
 		}
+	}
 	if (f_v) {
-		cout << "rearrange_subset ";
+		cout << "sorting::rearrange_subset ";
 		Int_vec_print(cout, rearranged_set, n);
 		cout << endl;
 #if 0
-		cout << "rearrange_subset subset=";
+		cout << "sorting::rearrange_subset subset=";
 		int_vec_print(cout, set, n);
 		cout << " : ";
 		int_vec_print(cout, subset, k);
@@ -677,7 +677,7 @@ void sorting::rearrange_subset(
 		int_vec_print(cout, rearranged_set, n);
 		cout << endl;
 #endif
-		}
+	}
 }
 
 void sorting::rearrange_subset_lint(
@@ -692,16 +692,16 @@ void sorting::rearrange_subset_lint(
 		if (j < k && subset[j] == i) {
 			rearranged_set[j] = set[subset[j]];
 			j++;
-			}
+		}
 		else {
 			rearranged_set[k + i - j] = set[i];
-			}
 		}
+	}
 	if (f_v) {
-		cout << "rearrange_subset ";
+		cout << "sorting::rearrange_subset_lint ";
 		Lint_vec_print(cout, rearranged_set, n);
 		cout << endl;
-		}
+	}
 }
 
 void sorting::rearrange_subset_lint_all(
@@ -716,16 +716,16 @@ void sorting::rearrange_subset_lint_all(
 		if (j < k && subset[j] == i) {
 			rearranged_set[j] = set[subset[j]];
 			j++;
-			}
+		}
 		else {
 			rearranged_set[k + i - j] = set[i];
-			}
 		}
+	}
 	if (f_v) {
-		cout << "rearrange_subset ";
+		cout << "sorting::rearrange_subset_lint_all ";
 		Lint_vec_print(cout, rearranged_set, n);
 		cout << endl;
-		}
+	}
 }
 
 int sorting::int_vec_search_linear(
@@ -737,8 +737,8 @@ int sorting::int_vec_search_linear(
 		if (v[i] == a) {
 			idx = i;
 			return true;
-			}
 		}
+	}
 	return false;
 }
 
@@ -751,8 +751,8 @@ int sorting::lint_vec_search_linear(
 		if (v[i] == a) {
 			idx = i;
 			return true;
-			}
 		}
+	}
 	return false;
 }
 
@@ -767,10 +767,10 @@ void sorting::int_vec_intersect(
 	V2 = NEW_int(len2);
 	for (i = 0; i < len1; i++) {
 		V1[i] = v1[i];
-		}
+	}
 	for (i = 0; i < len2; i++) {
 		V2[i] = v2[i];
-		}
+	}
 	int_vec_heapsort(V1, len1);
 	int_vec_heapsort(V2, len2);
 	v3 = NEW_int(MAXIMUM(len1, len2));
@@ -779,8 +779,8 @@ void sorting::int_vec_intersect(
 		a = V1[i];
 		if (int_vec_search(V2, len2, a, idx)) {
 			v3[len3++] = a;
-			}
 		}
+	}
 
 	FREE_int(V1);
 	FREE_int(V2);
@@ -798,10 +798,10 @@ void sorting::vec_intersect(
 	V2 = NEW_lint(len2);
 	for (i = 0; i < len1; i++) {
 		V1[i] = v1[i];
-		}
+	}
 	for (i = 0; i < len2; i++) {
 		V2[i] = v2[i];
-		}
+	}
 	lint_vec_heapsort(V1, len1);
 	lint_vec_heapsort(V2, len2);
 	v3 = NEW_lint(MAXIMUM(len1, len2));
@@ -810,8 +810,8 @@ void sorting::vec_intersect(
 		a = V1[i];
 		if (lint_vec_search(V2, len2, a, idx, 0 /* verbose_level */)) {
 			v3[len3++] = a;
-			}
 		}
+	}
 
 	FREE_lint(V1);
 	FREE_lint(V2);
@@ -829,7 +829,7 @@ void sorting::int_vec_intersect_sorted_vectors(
 	while (true) {
 		if (i >= len1 || j >= len2) {
 			break;
-			}
+		}
 		a = v1[i];
 		b = v2[j];
 
@@ -837,14 +837,14 @@ void sorting::int_vec_intersect_sorted_vectors(
 			v3[len3++] = a;
 			i++;
 			j++;
-			}
+		}
 		else if (a < b) {
 			i++;
-			}
+		}
 		else {
 			j++;
-			}
 		}
+	}
 }
 
 void sorting::lint_vec_intersect_sorted_vectors(
@@ -859,7 +859,7 @@ void sorting::lint_vec_intersect_sorted_vectors(
 	while (true) {
 		if (i >= len1 || j >= len2) {
 			break;
-			}
+		}
 		a = v1[i];
 		b = v2[j];
 
@@ -867,14 +867,14 @@ void sorting::lint_vec_intersect_sorted_vectors(
 			v3[len3++] = a;
 			i++;
 			j++;
-			}
+		}
 		else if (a < b) {
 			i++;
-			}
+		}
 		else {
 			j++;
-			}
 		}
+	}
 }
 
 
@@ -888,7 +888,7 @@ void sorting::int_vec_sorting_permutation(
 	
 	for (i = 0; i < len; i++) {
 		perm_inv[i] = i;
-		}
+	}
 	int_vec_heapsort_with_log(v, perm_inv, len);
 	if (!f_increasingly) {
 		int n2 = len >> 1;
@@ -901,8 +901,8 @@ void sorting::int_vec_sorting_permutation(
 			a = perm_inv[i];
 			perm_inv[i] = perm_inv[len - 1 - i];
 			perm_inv[len - 1 - i] = a;
-			}
 		}
+	}
 	Combi.perm_inverse(perm_inv, perm, len);
 }
 
@@ -955,7 +955,7 @@ void sorting::int_vec_quicksort(
 		int_vec_partition(v, compare_func, left, right, &middle);
 		int_vec_quicksort(v, compare_func, left, middle - 1);
 		int_vec_quicksort(v, compare_func, middle + 1, right);
-		}
+	}
 }
 
 void sorting::lint_vec_quicksort(
@@ -968,7 +968,7 @@ void sorting::lint_vec_quicksort(
 		lint_vec_partition(v, compare_func, left, right, &middle);
 		lint_vec_quicksort(v, compare_func, left, middle - 1);
 		lint_vec_quicksort(v, compare_func, middle + 1, right);
-		}
+	}
 }
 
 void sorting::int_vec_quicksort_increasingly(
@@ -1000,8 +1000,9 @@ void sorting::quicksort_array(
 		int len, void **v,
 	int (*compare_func)(void *a, void *b, void *data), void *data)
 {
-	if (len <= 1)
+	if (len <= 1) {
 		return;
+	}
 	quicksort(v, NULL, compare_func, data, 0, len - 1);
 }
 
@@ -1009,8 +1010,9 @@ void sorting::quicksort_array_with_perm(
 		int len, void **v, int *perm,
 	int (*compare_func)(void *a, void *b, void *data), void *data)
 {
-	if (len <= 1)
+	if (len <= 1) {
 		return;
+	}
 	quicksort(v, perm, compare_func, data, 0, len - 1);
 }
 
@@ -1086,12 +1088,13 @@ int sorting::vec_search_general(void *vec,
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "vec_search_general len=" << len << endl;
-		}
+		cout << "sorting::vec_search_general "
+				"len=" << len << endl;
+	}
 	if (len == 0) {
 		idx = 0;
 		return false;
-		}
+	}
 	l = 0;
 	r = len;
 	// invariant:
@@ -1101,14 +1104,14 @@ int sorting::vec_search_general(void *vec,
 	while (l < r) {
 		if (f_v) {
 			cout << "vec_search_general l=" << l << " r=" << r << endl;
-			}
+		}
 		m = (l + r) >> 1;
 		// if the length of the search area is even
 		// we examine the element above the middle
 		res = (*compare_func)(vec, a, m, data_for_compare);
 		if (f_v) {
 			cout << "m=" << m << " res=" << res << endl;
-			}
+		}
 		//res = v[m] - a;
 		//cout << "vec_search_general l=" << l << " m=" << m << " r=" 
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
@@ -1116,17 +1119,17 @@ int sorting::vec_search_general(void *vec,
 			l = m + 1;
 			if (res == 0) {
 				f_found = true;
-				}
-			}
-		else {
-			r = m;
 			}
 		}
+		else {
+			r = m;
+		}
+	}
 	// now: l == r; 
 	// and f_found is set accordingly */
 	if (f_found) {
 		l--;
-		}
+	}
 	idx = l;
 	return f_found;
 }
@@ -1139,14 +1142,14 @@ int sorting::int_vec_search_and_insert_if_necessary(
 	if (!int_vec_search(v, len, a, idx)) {
 		for (t = len - 1; t >= idx; t--) {
 			v[t + 1] = v[t];
-			}
+		}
 		v[idx] = a;
 		len++;
 		return true;
-		}
+	}
 	else {
 		return false;
-		}
+	}
 }
 
 int sorting::int_vec_search_and_remove_if_found(
@@ -1157,13 +1160,13 @@ int sorting::int_vec_search_and_remove_if_found(
 	if (int_vec_search(v, len, a, idx)) {
 		for (t = idx; t < len - 1; t++) {
 			v[t] = v[t + 1];
-			}
+		}
 		len--;
 		return true;
-		}
+	}
 	else {
 		return false;
-		}
+	}
 }
 
 
@@ -1182,7 +1185,7 @@ int sorting::int_vec_search(
 	if (len == 0) {
 		idx = 0;
 		return false;
-		}
+	}
 	l = 0;
 	r = len;
 	// invariant:
@@ -1197,7 +1200,7 @@ int sorting::int_vec_search(
 		if (f_v) {
 			cout << "l=" << l << " r=" << r<< " m=" << m
 				<< " v[m]=" << v[m] << " res=" << res << endl;
-			}
+		}
 		//cout << "search l=" << l << " m=" << m << " r=" 
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
 		// so, res is 
@@ -1208,24 +1211,24 @@ int sorting::int_vec_search(
 			l = m + 1;
 			if (f_v) {
 				cout << "moving to the right" << endl;
-				}
+			}
 			if (res == 0) {
 				f_found = true;
-				}
 			}
+		}
 		else {
 			if (f_v) {
 				cout << "moving to the left" << endl;
-				}
-			r = m;
 			}
+			r = m;
 		}
+	}
 	// now: l == r; 
 	// and f_found is set accordingly */
 #if 1
 	if (f_found) {
 		l--;
-		}
+	}
 #endif
 	idx = l;
 	return f_found;
@@ -1246,12 +1249,13 @@ int sorting::lint_vec_search(
 	int f_found = false;
 
 	if (f_v) {
-		cout << "sorting::lint_vec_search len=" << len << ", searching for " << a << endl;
+		cout << "sorting::lint_vec_search "
+				"len=" << len << ", searching for " << a << endl;
 	}
 	if (len == 0) {
 		idx = 0;
 		return false;
-		}
+	}
 	l = 0;
 	r = len;
 	// invariant:
@@ -1261,13 +1265,15 @@ int sorting::lint_vec_search(
 	while (l < r) {
 		m = (l + r) >> 1;
 		if (f_v) {
-			cout << "sorting::lint_vec_search l=" << l << " m=" << m << " r=" << r << endl;
+			cout << "sorting::lint_vec_search "
+					"l=" << l << " m=" << m << " r=" << r << endl;
 		}
 		// if the length of the search area is even
 		// we examine the element above the middle
 		res = v[m] - a;
 		if (f_v) {
-			cout << "sorting::lint_vec_search v[m]=" << v[m] << " a=" << a << endl;
+			cout << "sorting::lint_vec_search "
+					"v[m]=" << v[m] << " a=" << a << endl;
 		}
 		//cout << "search l=" << l << " m=" << m << " r="
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
@@ -1279,31 +1285,32 @@ int sorting::lint_vec_search(
 			l = m + 1;
 			if (f_v) {
 				cout << "moving to the right" << endl;
-				}
+			}
 			if (res == 0) {
 				if (f_v) {
 					cout << "f_found = true" << endl;
-					}
-				f_found = true;
 				}
+				f_found = true;
 			}
+		}
 		else {
 			if (f_v) {
 				cout << "moving to the left" << endl;
-				}
-			r = m;
 			}
+			r = m;
 		}
+	}
 	// now: l == r;
 	// and f_found is set accordingly */
 #if 1
 	if (f_found) {
 		l--;
-		}
+	}
 #endif
 	idx = l;
 	if (f_v) {
-		cout << "sorting::lint_vec_search len=" << len << ", searching "
+		cout << "sorting::lint_vec_search "
+				"len=" << len << ", searching "
 				"for " << a << " done, f_found=" << f_found
 				<< " idx=" << idx << endl;
 	}
@@ -1327,12 +1334,13 @@ int sorting::vector_lint_search(
 
 	len = v.size();
 	if (f_v) {
-		cout << "sorting::vector_lint_search len=" << len << ", searching for " << a << endl;
+		cout << "sorting::vector_lint_search "
+				"len=" << len << ", searching for " << a << endl;
 	}
 	if (len == 0) {
 		idx = 0;
 		return false;
-		}
+	}
 	l = 0;
 	r = len;
 	// invariant:
@@ -1342,13 +1350,15 @@ int sorting::vector_lint_search(
 	while (l < r) {
 		m = (l + r) >> 1;
 		if (f_v) {
-			cout << "sorting::vector_lint_search l=" << l << " m=" << m << " r=" << r << endl;
+			cout << "sorting::vector_lint_search "
+					"l=" << l << " m=" << m << " r=" << r << endl;
 		}
 		// if the length of the search area is even
 		// we examine the element above the middle
 		res = v[m] - a;
 		if (f_v) {
-			cout << "sorting::vector_lint_search v[m]=" << v[m] << " a=" << a << endl;
+			cout << "sorting::vector_lint_search "
+					"v[m]=" << v[m] << " a=" << a << endl;
 		}
 		//cout << "search l=" << l << " m=" << m << " r="
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
@@ -1360,31 +1370,32 @@ int sorting::vector_lint_search(
 			l = m + 1;
 			if (f_v) {
 				cout << "moving to the right" << endl;
-				}
+			}
 			if (res == 0) {
 				if (f_v) {
 					cout << "f_found = true" << endl;
-					}
-				f_found = true;
 				}
+				f_found = true;
 			}
+		}
 		else {
 			if (f_v) {
 				cout << "moving to the left" << endl;
-				}
-			r = m;
 			}
+			r = m;
 		}
+	}
 	// now: l == r;
 	// and f_found is set accordingly */
 #if 1
 	if (f_found) {
 		l--;
-		}
+	}
 #endif
 	idx = l;
 	if (f_v) {
-		cout << "sorting::vector_lint_search len=" << len << ", searching "
+		cout << "sorting::vector_lint_search "
+				"len=" << len << ", searching "
 				"for " << a << " done, f_found=" << f_found
 				<< " idx=" << idx << endl;
 	}
@@ -1402,19 +1413,21 @@ int sorting::int_vec_search_first_occurrence(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "sorting::int_vec_search_first_occurrence searching for " << a
+		cout << "sorting::int_vec_search_first_occurrence "
+				"searching for " << a
 				<< " len=" << len << endl;
-		}
+	}
 	if (len == 0) {
 		idx = 0;
 		return false;
-		}
+	}
 	l = 0;
 	r = len;
 	if (f_v) {
-		cout << "sorting::int_vec_search_first_occurrence searching for "
+		cout << "sorting::int_vec_search_first_occurrence "
+				"searching for "
 				<< a << " l=" << l << " r=" << r << endl;
-		}
+	}
 	// invariant:
 	// v[i] < a for i < l;
 	// v[i] >=  a for i >= r;
@@ -1425,10 +1438,12 @@ int sorting::int_vec_search_first_occurrence(
 		// we examine the element above the middle
 		//res = v[m] - a;
 		if (f_v) {
-			cout << "sorting::int_vec_search_first_occurrence l=" << l
-					<< " r=" << r<< " m=" << m  << " v[m]=" << v[m] << endl;
+			cout << "sorting::int_vec_search_first_occurrence "
+					"l=" << l
+					<< " r=" << r<< " m=" << m
+					<< " v[m]=" << v[m] << endl;
 					//<< " res=" << res << endl;
-			}
+		}
 		//cout << "search l=" << l << " m=" << m << " r=" 
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
 		// so, res is 
@@ -1440,35 +1455,35 @@ int sorting::int_vec_search_first_occurrence(
 			if (f_v) {
 				cout << "sorting::int_vec_search_first_occurrence "
 						"moving to the right" << endl;
-				}
 			}
+		}
 		else {
 			r = m;
 			if (f_v) {
 				cout << "sorting::int_vec_search_first_occurrence "
 						"moving to the left" << endl;
-				}
+			}
 			if (v[m] == a /*res == 0*/) {
 				if (f_v) {
 					cout << "sorting::int_vec_search_first_occurrence "
 							"we found the element" << endl;
-					}
-				f_found = true;
 				}
+				f_found = true;
 			}
 		}
+	}
 	// now: l == r; 
 	// and f_found is set accordingly */
 #if 0
 	if (f_found) {
 		l--;
-		}
+	}
 #endif
 	idx = l;
 	if (f_v) {
 		cout << "sorting::int_vec_search_first_occurrence done "
 				"f_found=" << f_found << " idx=" << idx << endl;
-		}
+	}
 	return f_found;
 }
 
@@ -1485,17 +1500,17 @@ int sorting::lint_vec_search_first_occurrence(
 	if (f_v) {
 		cout << "int_vec_search_first_occurrence searching for " << a
 				<< " len=" << len << endl;
-		}
+	}
 	if (len == 0) {
 		idx = 0;
 		return false;
-		}
+	}
 	l = 0;
 	r = len;
 	if (f_v) {
 		cout << "int_vec_search_first_occurrence searching for "
 				<< a << " l=" << l << " r=" << r << endl;
-		}
+	}
 	// invariant:
 	// v[i] < a for i < l;
 	// v[i] >=  a for i >= r;
@@ -1509,7 +1524,7 @@ int sorting::lint_vec_search_first_occurrence(
 			cout << "int_vec_search_first_occurrence l=" << l
 					<< " r=" << r<< " m=" << m  << " v[m]=" << v[m] << endl;
 					//<< " res=" << res << endl;
-			}
+		}
 		//cout << "search l=" << l << " m=" << m << " r="
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
 		// so, res is
@@ -1521,35 +1536,35 @@ int sorting::lint_vec_search_first_occurrence(
 			if (f_v) {
 				cout << "int_vec_search_first_occurrence "
 						"moving to the right" << endl;
-				}
 			}
+		}
 		else {
 			r = m;
 			if (f_v) {
 				cout << "int_vec_search_first_occurrence "
 						"moving to the left" << endl;
-				}
+			}
 			if (v[m] == a /*res == 0*/) {
 				if (f_v) {
 					cout << "int_vec_search_first_occurrence "
 							"we found the element" << endl;
-					}
-				f_found = true;
 				}
+				f_found = true;
 			}
 		}
+	}
 	// now: l == r;
 	// and f_found is set accordingly */
 #if 0
 	if (f_found) {
 		l--;
-		}
+	}
 #endif
 	idx = l;
 	if (f_v) {
 		cout << "int_vec_search_first_occurrence done "
 				"f_found=" << f_found << " idx=" << idx << endl;
-		}
+	}
 	return f_found;
 }
 
@@ -1565,7 +1580,7 @@ int sorting::longinteger_vec_search(
 	if (len == 0) {
 		idx = 0;
 		return false;
-		}
+	}
 	l = 0;
 	r = len;
 	// invariant:
@@ -1589,17 +1604,17 @@ int sorting::longinteger_vec_search(
 			l = m + 1;
 			if (res == 0) {
 				f_found = true;
-				}
-			}
-		else {
-			r = m;
 			}
 		}
+		else {
+			r = m;
+		}
+	}
 	// now: l == r; 
 	// and f_found is set accordingly */
 	if (f_found) {
 		l--;
-		}
+	}
 	idx = l;
 	return f_found;
 }
@@ -1628,7 +1643,7 @@ void sorting::int_vec_values(
 		f = C.type_first[i];
 		a = C.data_sorted[f];
 		w[i] = a;
-		}
+	}
 }
 
 void sorting::int_vec_multiplicities(
@@ -1644,7 +1659,7 @@ void sorting::int_vec_multiplicities(
 	w = NEW_int(w_len);
 	for (i = 0; i < w_len; i++) {
 		w[i] = C.type_len[i];
-		}
+	}
 }
 
 void sorting::int_vec_values_and_multiplicities(
@@ -1665,7 +1680,7 @@ void sorting::int_vec_values_and_multiplicities(
 		a = C.data_sorted[f];
 		val[i] = a;
 		mult[i] = len;
-		}
+	}
 }
 
 void sorting::int_vec_classify(
@@ -1703,13 +1718,13 @@ void sorting::int_vec_classify_with_arrays(
 	
 	for (i = 0; i < length; i++) {
 		the_vec_sorted[i] = the_vec[i];
-		}
+	}
 	int_vec_sorting_permutation(the_vec_sorted,
 			length, sorting_perm, sorting_perm_inv,
 			true /* f_increasingly */);
 	for (i = 0; i < length; i++) {
 		the_vec_sorted[sorting_perm[i]] = the_vec[i];
-		}
+	}
 	
 	int_vec_sorted_collect_types(length, the_vec_sorted, 
 		nb_types, type_first, type_len);
@@ -1750,14 +1765,14 @@ void sorting::int_vec_sorted_collect_types(
 	for (i = 1; i < length; i++) {
 		if (the_vec_sorted[i] == the_vec_sorted[i - 1]) {
 			type_len[nb_types]++;
-			}
+		}
 		else {
 			type_first[nb_types + 1] =
 				type_first[nb_types] + type_len[nb_types];
 			nb_types++;
 			type_len[nb_types] = 1;
-			}
 		}
+	}
 	nb_types++;
 }
 
@@ -1802,7 +1817,8 @@ void sorting::int_vec_print_classified(
 	//int i, f, l, a;
 	
 	
-	int_vec_classify(len, vec, the_vec_sorted, 
+	int_vec_classify(
+			len, vec, the_vec_sorted,
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
 #if 0
@@ -1817,7 +1833,8 @@ void sorting::int_vec_print_classified(
 		}
 	ost << " )";
 #endif
-	int_vec_print_types(ost, false /* f_backwards */, the_vec_sorted, 
+	int_vec_print_types(
+			ost, false /* f_backwards */, the_vec_sorted,
 		nb_types, type_first, type_len);
 	FREE_int(the_vec_sorted);
 	FREE_int(sorting_perm);
@@ -1843,7 +1860,8 @@ void sorting::lint_vec_print_types(
 	int nb_types, int *type_first, int *type_len)
 {
 	ost << "( ";
-	lint_vec_print_types_bare(ost,
+	lint_vec_print_types_bare(
+			ost,
 		f_backwards, the_vec_sorted, nb_types, type_first, type_len);
 	ost << " )";
 }
@@ -1863,11 +1881,12 @@ void sorting::int_vec_print_types_bare_stringstream(
 			sstr << a;
 			if (l > 1) {
 				sstr << "^{" << l << "}";
-				}
-			if (i)
+			}
+			if (i) {
 				sstr << ", ";
 			}
 		}
+	}
 	else {
 		for (i = 0; i < nb_types; i++) {
 			f = type_first[i];
@@ -1876,14 +1895,16 @@ void sorting::int_vec_print_types_bare_stringstream(
 			sstr << a;
 			if (l > 1) {
 				sstr << "^{" << l << "}";
-				}
-			if (i < nb_types - 1)
+			}
+			if (i < nb_types - 1) {
 				sstr << ", ";
 			}
 		}
+	}
 }
 
-void sorting::lint_vec_print_types_bare_stringstream(std::stringstream &sstr,
+void sorting::lint_vec_print_types_bare_stringstream(
+		std::stringstream &sstr,
 	int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1898,11 +1919,12 @@ void sorting::lint_vec_print_types_bare_stringstream(std::stringstream &sstr,
 			sstr << a;
 			if (l > 1) {
 				sstr << "^{" << l << "}";
-				}
-			if (i)
+			}
+			if (i) {
 				sstr << ", ";
 			}
 		}
+	}
 	else {
 		for (i = 0; i < nb_types; i++) {
 			f = type_first[i];
@@ -1911,14 +1933,16 @@ void sorting::lint_vec_print_types_bare_stringstream(std::stringstream &sstr,
 			sstr << a;
 			if (l > 1) {
 				sstr << "^{" << l << "}";
-				}
-			if (i < nb_types - 1)
+			}
+			if (i < nb_types - 1) {
 				sstr << ", ";
 			}
 		}
+	}
 }
 
-void sorting::int_vec_print_types_bare(std::ostream &ost,
+void sorting::int_vec_print_types_bare(
+		std::ostream &ost,
 	int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1932,11 +1956,12 @@ void sorting::int_vec_print_types_bare(std::ostream &ost,
 			ost << a;
 			if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i)
+			}
+			if (i) {
 				ost << ", ";
 			}
 		}
+	}
 	else {
 		for (i = 0; i < nb_types; i++) {
 			f = type_first[i];
@@ -1945,14 +1970,62 @@ void sorting::int_vec_print_types_bare(std::ostream &ost,
 			ost << a;
 			if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i < nb_types - 1)
+			}
+			if (i < nb_types - 1) {
 				ost << ", ";
 			}
 		}
+	}
 }
 
-void sorting::lint_vec_print_types_bare(std::ostream &ost,
+std::string sorting::int_vec_stringify_types_bare(
+		std::ostream &ost,
+	int f_backwards, int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
+{
+	int i, f, l, a;
+	string s;
+
+	if (f_backwards) {
+		for (i = nb_types - 1; i >= 0; i--) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			s += std::to_string(a);
+			//ost << a;
+			if (l > 1) {
+				s += "^" + std::to_string(l);
+				//ost << "^" << l;
+			}
+			if (i) {
+				s += ", ";
+				//ost << ", ";
+			}
+		}
+	}
+	else {
+		for (i = 0; i < nb_types; i++) {
+			f = type_first[i];
+			l = type_len[i];
+			a = the_vec_sorted[f];
+			s += std::to_string(a);
+			//ost << a;
+			if (l > 1) {
+				s += "^" + std::to_string(l);
+				//ost << "^" << l;
+			}
+			if (i < nb_types - 1) {
+				s += ", ";
+				//ost << ", ";
+			}
+		}
+	}
+	return s;
+}
+
+
+void sorting::lint_vec_print_types_bare(
+		std::ostream &ost,
 	int f_backwards, long int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -1967,11 +2040,12 @@ void sorting::lint_vec_print_types_bare(std::ostream &ost,
 			ost << a;
 			if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i)
+			}
+			if (i) {
 				ost << ", ";
 			}
 		}
+	}
 	else {
 		for (i = 0; i < nb_types; i++) {
 			f = type_first[i];
@@ -1980,11 +2054,12 @@ void sorting::lint_vec_print_types_bare(std::ostream &ost,
 			ost << a;
 			if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i < nb_types - 1)
+			}
+			if (i < nb_types - 1) {
 				ost << ", ";
 			}
 		}
+	}
 }
 
 
@@ -2003,15 +2078,16 @@ void sorting::int_vec_print_types_bare_tex(
 			ost << "$" << a;
 			if (l > 9) {
 				ost << "^{" << l << "}";
-				}
+			}
 			else if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i)
-				ost << ",\\,";
-			ost << "$ ";
 			}
+			if (i) {
+				ost << ",\\,";
+			}
+			ost << "$ ";
 		}
+	}
 	else {
 		for (i = 0; i < nb_types; i++) {
 			f = type_first[i];
@@ -2020,15 +2096,16 @@ void sorting::int_vec_print_types_bare_tex(
 			ost << "$" << a;
 			if (l > 9) {
 				ost << "^{" << l << "}";
-				}
+			}
 			else if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i < nb_types - 1)
-				ost << ",\\,";
-			ost << "$ ";
 			}
+			if (i < nb_types - 1) {
+				ost << ",\\,";
+			}
+			ost << "$ ";
 		}
+	}
 }
 
 void sorting::lint_vec_print_types_bare_tex(
@@ -2046,15 +2123,16 @@ void sorting::lint_vec_print_types_bare_tex(
 			ost << "$" << a;
 			if (l > 9) {
 				ost << "^{" << l << "}";
-				}
+			}
 			else if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i)
-				ost << ",\\,";
-			ost << "$ ";
 			}
+			if (i) {
+				ost << ",\\,";
+			}
+			ost << "$ ";
 		}
+	}
 	else {
 		for (i = 0; i < nb_types; i++) {
 			f = type_first[i];
@@ -2063,15 +2141,16 @@ void sorting::lint_vec_print_types_bare_tex(
 			ost << "$" << a;
 			if (l > 9) {
 				ost << "^{" << l << "}";
-				}
+			}
 			else if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i < nb_types - 1)
-				ost << ",\\,";
-			ost << "$ ";
 			}
+			if (i < nb_types - 1) {
+				ost << ",\\,";
+			}
+			ost << "$ ";
 		}
+	}
 }
 
 void sorting::int_vec_print_types_bare_tex_we_are_in_math_mode(
@@ -2089,15 +2168,16 @@ void sorting::int_vec_print_types_bare_tex_we_are_in_math_mode(
 			ost << a;
 			if (l > 9) {
 				ost << "^{" << l << "}";
-				}
+			}
 			else if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i)
-				ost << ",\\,";
-			ost << " ";
 			}
+			if (i) {
+				ost << ",\\,";
+			}
+			ost << " ";
 		}
+	}
 	else {
 		for (i = 0; i < nb_types; i++) {
 			f = type_first[i];
@@ -2106,15 +2186,16 @@ void sorting::int_vec_print_types_bare_tex_we_are_in_math_mode(
 			ost << a;
 			if (l > 9) {
 				ost << "^{" << l << "}";
-				}
+			}
 			else if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i < nb_types - 1)
-				ost << ",\\,";
-			ost << " ";
 			}
+			if (i < nb_types - 1) {
+				ost << ",\\,";
+			}
+			ost << " ";
 		}
+	}
 }
 
 void sorting::lint_vec_print_types_bare_tex_we_are_in_math_mode(
@@ -2133,15 +2214,16 @@ void sorting::lint_vec_print_types_bare_tex_we_are_in_math_mode(
 			ost << a;
 			if (l > 9) {
 				ost << "^{" << l << "}";
-				}
+			}
 			else if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i)
-				ost << ",\\,";
-			ost << " ";
 			}
+			if (i) {
+				ost << ",\\,";
+			}
+			ost << " ";
 		}
+	}
 	else {
 		for (i = 0; i < nb_types; i++) {
 			f = type_first[i];
@@ -2150,15 +2232,16 @@ void sorting::lint_vec_print_types_bare_tex_we_are_in_math_mode(
 			ost << a;
 			if (l > 9) {
 				ost << "^{" << l << "}";
-				}
+			}
 			else if (l > 1) {
 				ost << "^" << l;
-				}
-			if (i < nb_types - 1)
-				ost << ",\\,";
-			ost << " ";
 			}
+			if (i < nb_types - 1) {
+				ost << ",\\,";
+			}
+			ost << " ";
 		}
+	}
 }
 
 void sorting::Heapsort(
@@ -2175,7 +2258,7 @@ void sorting::Heapsort(
 		end--;
 		Heapsort_sift_down(v, 0, end,
 				entry_size_in_chars, compare_func);
-		}
+	}
 }
 	
 void sorting::Heapsort_general(

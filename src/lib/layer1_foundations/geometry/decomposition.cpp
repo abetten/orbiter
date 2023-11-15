@@ -884,7 +884,7 @@ void decomposition::get_and_print_row_decomposition_scheme(
 		Stack->print_decomposition_scheme(cout,
 			row_classes, nb_row_classes,
 			col_classes, nb_col_classes,
-			row_scheme, -1, -1);
+			row_scheme);
 	}
 
 	if (f_list_incidences) {
@@ -935,7 +935,7 @@ void decomposition::get_and_print_col_decomposition_scheme(
 		Stack->print_decomposition_scheme(cout,
 			row_classes, nb_row_classes,
 			col_classes, nb_col_classes,
-			col_scheme, -1, -1);
+			col_scheme);
 	}
 
 	if (f_list_incidences) {
@@ -972,16 +972,20 @@ void decomposition::get_row_decomposition_scheme(
 	data0 = NEW_int(nb_col_classes);
 	data1 = NEW_int(nb_col_classes);
 	Int_vec_zero(row_scheme, nb_row_classes * nb_col_classes);
+
 	for (I = 0; I < nb_row_classes; I++) {
 		c1 = row_classes[I];
 		f1 = Stack->startCell[c1];
 		l1 = Stack->cellSize[c1];
 		Int_vec_zero(data0, nb_col_classes);
+
 		for (i = 0; i < l1; i++) {
+
 			x = Stack->pointList[f1 + i];
 			Int_vec_zero(data1, nb_col_classes);
 			nb = Inc->get_lines_on_point(
 					neighbors, x, verbose_level - 2);
+
 			for (u = 0; u < nb; u++) {
 				y = neighbors[u];
 				j = Inc->nb_points() + y;
@@ -1032,25 +1036,21 @@ void decomposition::get_row_decomposition_scheme_if_possible(
 	neighbors = NEW_int(Inc->max_r);
 	data0 = NEW_int(nb_col_classes);
 	data1 = NEW_int(nb_col_classes);
-	for (i = 0; i < nb_row_classes * nb_col_classes; i++) {
-		row_scheme[i] = 0;
-	}
+	Int_vec_zero(row_scheme, nb_row_classes * nb_col_classes);
+
 	for (I = 0; I < nb_row_classes; I++) {
 		c1 = row_classes[I];
 		f1 = Stack->startCell[c1];
 		l1 = Stack->cellSize[c1];
-		for (j = 0; j < nb_col_classes; j++) {
-			data0[j] = 0;
-		}
+		Int_vec_zero(data0, nb_col_classes);
+
 		for (i = 0; i < l1; i++) {
 			x = Stack->pointList[f1 + i];
-			for (J = 0; J < nb_col_classes; J++) {
-				data1[J] = 0;
-			}
+			Int_vec_zero(data1, nb_col_classes);
+
 			nb = Inc->get_lines_on_point(
 					neighbors, x, verbose_level - 2);
-			//O.lines_on_point_by_line_rank(x, neighbors,
-			//verbose_level - 2);
+
 			for (u = 0; u < nb; u++) {
 				y = neighbors[u];
 				j = Inc->nb_points() + y;
@@ -1059,9 +1059,7 @@ void decomposition::get_row_decomposition_scheme_if_possible(
 				data1[J]++;
 			}
 			if (i == 0) {
-				for (J = 0; J < nb_col_classes; J++) {
-					data0[J] = data1[J];
-				}
+				Int_vec_copy(data1, data0, nb_col_classes);
 			}
 			else {
 				for (J = 0; J < nb_col_classes; J++) {
@@ -1100,32 +1098,17 @@ void decomposition::get_col_decomposition_scheme(
 	data0 = NEW_int(nb_row_classes);
 	data1 = NEW_int(nb_row_classes);
 	Int_vec_zero(col_scheme, nb_row_classes * nb_col_classes);
-#if 0
-	for (i = 0; i < nb_row_classes * nb_col_classes; i++) {
-		col_scheme[i] = 0;
-	}
-#endif
+
 	for (J = 0; J < nb_col_classes; J++) {
 		c1 = col_classes[J];
 		f1 = Stack->startCell[c1];
 		l1 = Stack->cellSize[c1];
 		Int_vec_zero(data0, nb_row_classes);
-#if 0
-		for (i = 0; i < nb_row_classes; i++) {
-			data0[i] = 0;
-		}
-#endif
+
 		for (j = 0; j < l1; j++) {
 			y = Stack->pointList[f1 + j] - Inc->nb_points();
 			Int_vec_zero(data1, nb_row_classes);
-#if 0
-			for (I = 0; I < nb_row_classes; I++) {
-				data1[I] = 0;
-			}
-#endif
 
-			//O.points_on_line_by_line_rank(y, neighbors,
-			//verbose_level - 2);
 			nb = Inc->get_points_on_line(
 					neighbors, y, verbose_level - 2);
 
@@ -1136,9 +1119,12 @@ void decomposition::get_col_decomposition_scheme(
 				data1[I]++;
 			}
 			if (j == 0) {
+				Int_vec_copy(data1, data0, nb_row_classes);
+#if 0
 				for (I = 0; I < nb_row_classes; I++) {
 					data0[I] = data1[I];
 				}
+#endif
 			}
 			else {
 				for (I = 0; I < nb_row_classes; I++) {
@@ -1526,13 +1512,13 @@ void decomposition::get_and_print_decomposition_schemes()
 	Stack->print_decomposition_scheme(cout,
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes,
-		row_scheme, -1, -1);
+		row_scheme);
 
 	cout << "col_scheme:" << endl;
 	Stack->print_decomposition_scheme(cout,
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes,
-		col_scheme, -1, -1);
+		col_scheme);
 
 	FREE_int(row_classes);
 	FREE_int(row_class_inv);
@@ -1551,6 +1537,10 @@ void decomposition::get_and_print_row_tactical_decomposition_scheme_tex(
 	int *row_scheme; //, *col_scheme;
 	int verbose_level = 0;
 	int f_v = false;
+
+	if (f_v) {
+		cout << "decomposition::get_and_print_row_tactical_decomposition_scheme_tex" << endl;
+	}
 
 	if (f_v) {
 		cout << "decomposition::get_and_print_row_tactical_decomposition_scheme_tex "
@@ -1576,9 +1566,9 @@ void decomposition::get_and_print_row_tactical_decomposition_scheme_tex(
 
 	if (f_v) {
 		cout << "decomposition::get_and_print_row_tactical_decomposition_scheme_tex "
-				"before Stack->print_row_tactical_decomposition_scheme_tex" << endl;
+				"before print_row_tactical_decomposition_scheme_tex" << endl;
 	}
-	Stack->print_row_tactical_decomposition_scheme_tex(ost, f_enter_math,
+	print_row_tactical_decomposition_scheme_tex(ost, f_enter_math,
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes,
 		row_scheme, f_print_subscripts);
@@ -1602,6 +1592,10 @@ void decomposition::get_and_print_column_tactical_decomposition_scheme_tex(
 	int f_v = false;
 
 	if (f_v) {
+		cout << "decomposition::get_and_print_column_tactical_decomposition_scheme_tex" << endl;
+	}
+
+	if (f_v) {
 		cout << "decomposition::get_and_print_column_tactical_decomposition_scheme_tex "
 				"computing column scheme" << endl;
 	}
@@ -1618,7 +1612,11 @@ void decomposition::get_and_print_column_tactical_decomposition_scheme_tex(
 		col_scheme, verbose_level);
 
 
-	Stack->print_column_tactical_decomposition_scheme_tex(
+	if (f_v) {
+		cout << "decomposition::get_and_print_column_tactical_decomposition_scheme_tex "
+				"before print_column_tactical_decomposition_scheme_tex" << endl;
+	}
+	print_column_tactical_decomposition_scheme_tex(
 		ost, f_enter_math,
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes,
@@ -1791,6 +1789,92 @@ void decomposition::print_line(
 		}
 	}
 	//ost << endl;
+}
+
+void decomposition::print_row_tactical_decomposition_scheme_tex(
+	std::ostream &ost, int f_enter_math_mode,
+	int *row_classes, int nb_row_classes,
+	int *col_classes, int nb_col_classes,
+	int *row_scheme, int f_print_subscripts)
+{
+	int c, i, j;
+
+	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\begin{align*}" << endl;
+	}
+	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
+	ost << "\\rightarrow ";
+	for (j = 0; j < nb_col_classes; j++) {
+		ost << " & ";
+		c = col_classes[j];
+		ost << setw(6) << Stack->cellSize[c];
+		if (f_print_subscripts) {
+			ost << "_{" << setw(3) << c << "}";
+		}
+	}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_row_classes; i++) {
+		c = row_classes[i];
+		ost << setw(6) << Stack->cellSize[c];
+			if (f_print_subscripts) {
+				ost << "_{" << setw(3) << c << "}";
+			}
+		//f = P.startCell[c];
+		for (j = 0; j < nb_col_classes; j++) {
+			ost << " & " << setw(12) << row_scheme[i * nb_col_classes + j];
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\end{align*}" << endl;
+	}
+	ost << "%}" << endl;
+}
+
+void decomposition::print_column_tactical_decomposition_scheme_tex(
+	std::ostream &ost, int f_enter_math_mode,
+	int *row_classes, int nb_row_classes,
+	int *col_classes, int nb_col_classes,
+	int *col_scheme, int f_print_subscripts)
+{
+	int c, i, j;
+
+	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\begin{align*}" << endl;
+	}
+	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
+	ost << "\\downarrow ";
+	for (j = 0; j < nb_col_classes; j++) {
+		ost << " & ";
+		c = col_classes[j];
+		ost << setw(6) << Stack->cellSize[c];
+		if (f_print_subscripts) {
+			ost << "_{" << setw(3) << c << "}";
+		}
+	}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_row_classes; i++) {
+		c = row_classes[i];
+		ost << setw(6) << Stack->cellSize[c];
+		if (f_print_subscripts) {
+			ost << "_{" << setw(3) << c << "}";
+		}
+		//f = P.startCell[c];
+		for (j = 0; j < nb_col_classes; j++) {
+			ost << " & " << setw(12) << col_scheme[i * nb_col_classes + j];
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\end{align*}" << endl;
+	}
+	ost << "%}" << endl;
 }
 
 

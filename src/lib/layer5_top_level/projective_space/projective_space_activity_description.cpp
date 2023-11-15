@@ -165,6 +165,9 @@ projective_space_activity_description::projective_space_activity_description()
 	f_unrank_lines_in_PG = false;
 	//std::string unrank_lines_in_PG_text;
 
+	f_points_on_lines = false;
+	//std::string points_on_lines_text;
+
 	f_move_two_lines_in_hyperplane_stabilizer = false;
 	line1_from = 0;
 	line2_from = 0;
@@ -756,6 +759,15 @@ int projective_space_activity_description::read_arguments(
 				cout << "-unrank_lines_in_PG " << unrank_lines_in_PG_text << endl;
 			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-points_on_lines") == 0) {
+			f_points_on_lines = true;
+			points_on_lines_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-points_on_lines " << points_on_lines_text << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
 			f_move_two_lines_in_hyperplane_stabilizer = true;
 			line1_from = ST.strtoi(argv[++i]);
@@ -1262,6 +1274,9 @@ void projective_space_activity_description::print()
 
 	if (f_unrank_lines_in_PG) {
 		cout << "-unrank_lines_in_PG " << unrank_lines_in_PG_text << endl;
+	}
+	if (f_points_on_lines) {
+		cout << "-points_on_lines " << points_on_lines_text << endl;
 	}
 	if (f_move_two_lines_in_hyperplane_stabilizer) {
 		cout << "-move_two_lines_in_hyperplane_stabilizer"

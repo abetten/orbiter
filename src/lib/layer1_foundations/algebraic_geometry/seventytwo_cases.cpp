@@ -281,12 +281,12 @@ void seventytwo_cases::compute_half_double_six(
 		cout << "seventytwo_cases::compute_half_double_six" << endl;
 	}
 
-	half_double_six[0] = SO->Surf->Schlaefli->third_line_in_tritangent_plane(m1, l1, verbose_level);
-	half_double_six[1] = SO->Surf->Schlaefli->third_line_in_tritangent_plane(m1, l2, verbose_level);
+	half_double_six[0] = SO->Surf->Schlaefli->Schlaefli_tritangent_planes->third_line_in_tritangent_plane(m1, l1, verbose_level);
+	half_double_six[1] = SO->Surf->Schlaefli->Schlaefli_tritangent_planes->third_line_in_tritangent_plane(m1, l2, verbose_level);
 	for (i = 0; i < 4; i++) {
 		half_double_six[2 + i] = transversals4[i];
 	}
-	half_double_six_index = SO->Surf->Schlaefli->find_half_double_six(half_double_six);
+	half_double_six_index = SO->Surf->Schlaefli->Schlaefli_double_six->find_half_double_six(half_double_six);
 	if (f_v) {
 		cout << "seventytwo_cases::compute_half_double_six done" << endl;
 	}
@@ -334,7 +334,7 @@ void seventytwo_cases::report_seventytwo_maps_top(
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|c|c|c|c|c|c|c|c|}" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\multicolumn{10}{|c|}{\\mbox{Tritangent Plane}\\; \\pi_{" << t << "} = \\pi_{" << Surf->Schlaefli->Eckard_point_label_tex[t] << "} \\; \\mbox{Part "<< line_idx << "}}\\\\" << endl;
+	ost << "\\multicolumn{10}{|c|}{\\mbox{Tritangent Plane}\\; \\pi_{" << t << "} = \\pi_{" << Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[t] << "} \\; \\mbox{Part "<< line_idx << "}}\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Clebsch} & m_1-\\mbox{Case} & (m_1,m_2,m_3) & (\\ell_1',\\ell_2') & (t_3',t_4',t_5',t_6') & HDS & \\mbox{Arc} & \\mbox{Pair} & \\mbox{Part} &  \\mbox{Flag-Orb}  \\\\" << endl;
 	ost << "\\hline" << endl;
@@ -405,7 +405,7 @@ void seventytwo_cases::report_Clebsch_map_details(
 	ost << "\\bigskip" << endl << endl;
 
 	ost << "The associated half double six " << half_double_six_index << " is: $";
-	H = Surf->Schlaefli->Double_six + half_double_six_index * 6;
+	H = Surf->Schlaefli->Schlaefli_double_six->Double_six + half_double_six_index * 6;
 	for (i = 0; i < 6; i++) {
 		ost << Surf->Schlaefli->Labels->Line_label_tex[H[i]];
 		if (i < 6 - 1) {
@@ -483,8 +483,8 @@ void seventytwo_cases::report_Clebsch_map_aut_coset(
 		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[transversals4[2]]
 		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[transversals4[3]]
 		<< ") & ";
-	ost << Surf->Schlaefli->Double_six_label_tex[ds] << " & ";
-	H = Surf->Schlaefli->Double_six + half_double_six_index * 6;
+	ost << Surf->Schlaefli->Schlaefli_double_six->Double_six_label_tex[ds] << " & ";
+	H = Surf->Schlaefli->Schlaefli_double_six->Double_six + half_double_six_index * 6;
 	for (i = 0; i < 6; i++) {
 		ost << Surf->Schlaefli->Labels->Line_label_tex[H[i]];
 		if (i < 6 - 1) {

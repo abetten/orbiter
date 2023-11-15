@@ -74,7 +74,7 @@ void surface_clebsch_map::init(
 
 	if (f_v) {
 		cout << "The half double six is no " << hds << " : ";
-		Lint_vec_print(cout, SOA->Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
+		Lint_vec_print(cout, SOA->Surf->Schlaefli->Schlaefli_double_six->Half_double_sixes + hds * 6, 6);
 		cout << endl;
 	}
 

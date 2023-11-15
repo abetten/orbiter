@@ -651,7 +651,7 @@ void trihedral_pair_with_action::create_the_six_plane_equations(int t_idx, int v
 	}
 
 
-	Lint_vec_copy(AL->Surf->Schlaefli->Trihedral_to_Eckardt + t_idx * 6,
+	Lint_vec_copy(AL->Surf->Schlaefli->Schlaefli_trihedral_pairs->Axes + t_idx * 6,
 			AL->Web->row_col_Eckardt_points, 6);
 
 	for (i = 0; i < 6; i++) {

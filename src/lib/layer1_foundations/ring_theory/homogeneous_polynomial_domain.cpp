@@ -1696,7 +1696,8 @@ void homogeneous_polynomial_domain::substitute_linear(
 		cout << "homogeneous_polynomial_domain::substitute_linear" << endl;
 		}
 
-	substitute_semilinear(coeff_in, coeff_out, 
+	substitute_semilinear(
+			coeff_in, coeff_out,
 		false /* f_semilinear */, 0 /* frob_power */,
 		Mtx_inv, verbose_level);
 	if (f_v) {
@@ -2255,6 +2256,7 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 		Int_vec_print(cout, Kernel + h * get_nb_monomials(), get_nb_monomials());
 		cout << " : " << endl;
 
+#if 0
 		vector<long int> Points;
 		int i;
 
@@ -2262,10 +2264,13 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 				Points, verbose_level);
 		nb_pts2 = Points.size();
 
+
 		Pts2 = NEW_lint(nb_pts2);
 		for (i = 0; i < nb_pts2; i++) {
 			Pts2[i] = Points[i];
 		}
+#endif
+		enumerate_points_lint(Kernel + h * get_nb_monomials(), Pts2, nb_pts2, verbose_level);
 
 
 		cout << "We found " << nb_pts2 << " points "
@@ -2641,7 +2646,8 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 
 		string fname2;
 
-		fname2 = number_of_conditions_satisfied_fname + std::to_string(t) + ".csv";
+		fname2 = number_of_conditions_satisfied_fname
+				+ std::to_string(t) + ".csv";
 
 
 
@@ -2659,7 +2665,8 @@ void homogeneous_polynomial_domain::number_of_conditions_satisfied(
 		Fio.Csv_file_support->lint_vec_write_csv(
 				the_class, l, fname2, label);
 
-		cout << "class of type " << t << " contains " << l << " elements:" << endl;
+		cout << "class of type " << t
+				<< " contains " << l << " elements:" << endl;
 		F->Io->display_table_of_projective_points(
 				cout, the_class, l, get_nb_variables());
 
@@ -2759,7 +2766,8 @@ void homogeneous_polynomial_domain::create_intersection_of_zariski_open_sets(
 			sz2 = 0;
 			for (i = 0; i < nb_pts; i++) {
 				a = Points[i];
-				if (Sorting.lint_vec_search(Pts1, sz1, a, idx, 0)) {
+				if (Sorting.lint_vec_search(
+						Pts1, sz1, a, idx, 0)) {
 					Pts2[sz2++] = a;
 				}
 			}
@@ -2843,18 +2851,15 @@ void homogeneous_polynomial_domain::create_projective_variety(
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::create_projective_variety "
-				"before HPD->enumerate_points" << endl;
+				"before enumerate_points_lint" << endl;
 	}
 
+#if 0
 	vector<long int> Points;
 	int i;
 
 	enumerate_points(coeff, Points, verbose_level);
 
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::create_projective_variety "
-				"after HPD->enumerate_points, nb_pts = " << Points.size() << endl;
-	}
 
 
 	nb_pts = Points.size();
@@ -2862,6 +2867,16 @@ void homogeneous_polynomial_domain::create_projective_variety(
 	for (i = 0; i < nb_pts; i++) {
 		Pts[i] = Points[i];
 	}
+#endif
+
+	enumerate_points_lint(coeff, Pts, nb_pts, verbose_level);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::create_projective_variety "
+				"after enumerate_points_lint, "
+				"nb_pts = " << nb_pts << endl;
+	}
+
 
 	F->Io->display_table_of_projective_points(
 			cout, Pts, nb_pts, get_nb_variables());
@@ -3031,32 +3046,6 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 	}
 
 
-#if 0
-	if (!Formula->f_is_homogeneous) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
-				"Formula is not homogeneous" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
-				"Formula is homogeneous of degree " << Formula->degree << endl;
-	}
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
-				"Formula->nb_managed_vars = " << Formula->nb_managed_vars << endl;
-	}
-	if (Formula->nb_managed_vars != nb_variables) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
-				"Formula->nb_managed_vars != nb_variables" << endl;
-		exit(1);
-	}
-	if (Formula->degree != degree) {
-		cout << "homogeneous_polynomial_domain::get_coefficient_vector "
-				"Formula->nb_managed_vars != degree" << endl;
-		exit(1);
-	}
-#endif
-
 	expression_parser::syntax_tree_node **Subtrees;
 	int nb_monomials;
 
@@ -3094,7 +3083,8 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 
 
 		for (i = 0; i < nb_monomials; i++) {
-			cout << "homogeneous_polynomial_domain::get_coefficient_vector Monomial " << i << " : ";
+			cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+					"Monomial " << i << " : ";
 			if (Subtrees[i]) {
 				Subtrees[i]->print_expression(cout);
 				cout << " * ";
@@ -3102,7 +3092,8 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 				cout << endl;
 			}
 			else {
-				cout << "homogeneous_polynomial_domain::get_coefficient_vector no subtree" << endl;
+				cout << "homogeneous_polynomial_domain::get_coefficient_vector "
+						"no subtree" << endl;
 			}
 		}
 
@@ -3208,7 +3199,8 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 		}
 
 		for (h = 0; h < P->Subspaces->n + 1; h++) {
-			w[h] = evaluate_at_a_point(Coefficient_vector + h * nb_monomials, v);
+			w[h] = evaluate_at_a_point(
+					Coefficient_vector + h * nb_monomials, v);
 		}
 
 
@@ -3529,68 +3521,6 @@ void homogeneous_polynomial_domain::parse_equation_and_substitute_parameters(
 	FREE_OBJECT(Descr1);
 	FREE_OBJECT(Descr2);
 
-
-#if 0
-	// create the polynomial ring:
-
-
-	int nb_vars, degree;
-
-	nb_vars = 3;
-	degree = 4;
-
-	ring_theory::homogeneous_polynomial_domain *Poly;
-
-	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::parse_equation_and_substitute_parameters "
-				"before Poly->init" << endl;
-	}
-	Poly->init(F,
-			nb_vars /* nb_vars */, degree,
-			t_PART,
-			0/*verbose_level*/);
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::parse_equation_and_substitute_parameters "
-				"after Poly->init" << endl;
-	}
-
-	int nb_monomials;
-
-
-	nb_monomials = Poly->get_nb_monomials();
-
-	if (nb_monomials != 15) {
-		cout << "homogeneous_polynomial_domain::parse_equation_and_substitute_parameters "
-				"nb_monomials != 15" << endl;
-		exit(1);
-	}
-
-
-	// build the equation of the quartic curve from the table of coefficients
-	// and monomials:
-
-	int i, index;
-	int coeffs15[15];
-
-	Int_vec_zero(coeffs15, 15);
-
-	for (i = 0; i < I->m; i++) {
-		index = Poly->index_of_monomial(I->M + i * I->n);
-		coeffs15[index] = Coeff[i];
-	}
-
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::parse_equation_and_substitute_parameters "
-				"coeffs15: ";
-		Int_vec_print(cout, coeffs15, 15);
-		cout << endl;
-	}
-
-	FREE_OBJECT(Poly);
-
-#endif
 
 
 
