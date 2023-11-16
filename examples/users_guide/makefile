@@ -10655,6 +10655,9 @@ SECTION_MULTIVARIATE_POLYNOMIALS:
 
 
 test_8_2:
+	make parse_algebraic_formula
+	make Fermat_cubic_F9
+	make Fermat_cubic_F9_c
 	make Cremona_map
 	make arcs_5_2_q11
 	make arcs_5_2_q11_ideal
@@ -10681,6 +10684,53 @@ parse_algebraic_formula:
 			-ring_theoretic_activity \
 			-parse_equation "eqn" "eqn" "y0^3+y1^3+y2^3" "" "" \
 		-end 
+
+Fermat_cubic_F9:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+			-end \
+		-define Fermat_cubic -symbolic_object \
+			-field F \
+			-text "y0^3+y1^3+y2^3" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-projective_variety R Fermat_cubic "" \
+		-end
+
+Fermat_cubic_F9_c:
+	$(ORBITER) -v 6 \
+		-define C -combinatorial_objects \
+			-set_of_points "3, 5, 13, 28, 45, 53, 61, 69, 77, 85" \
+		-end \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Fermat_cubic_F9 \
+				-save_ago \
+				-max_TDO_depth 10 \
+			-end \
+			-report \
+				-prefix Fermat_cubic_F9 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-export_labels \
+				-dont_show_incidence_matrices \
+				-export_group_GAP \
+			-end \
+		-end
+	pdflatex Fermat_cubic_F9_classification.tex
+	open Fermat_cubic_F9_classification.pdf
 
 
 Cremona_map:

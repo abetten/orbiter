@@ -1789,7 +1789,8 @@ void sims::create_group_table(
 
 void sims::compute_conjugacy_classes(
 		actions::action *&Aconj,
-		induced_actions::action_by_conjugation *&ABC, schreier *&Sch,
+		induced_actions::action_by_conjugation *&ABC,
+		schreier *&Sch,
 	strong_generators *&SG, int &nb_classes,
 	int *&class_size, int *&class_rep,
 	int verbose_level)

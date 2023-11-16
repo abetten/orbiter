@@ -109,7 +109,8 @@ void linear_group::linear_group_init(
 	}
 }
 
-void linear_group::linear_group_import(int verbose_level)
+void linear_group::linear_group_import(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -134,7 +135,8 @@ void linear_group::linear_group_import(int verbose_level)
 	}
 }
 
-void linear_group::linear_group_import_group_of_plane(int verbose_level)
+void linear_group::linear_group_import_group_of_plane(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -218,7 +220,8 @@ void linear_group::linear_group_import_group_of_plane(int verbose_level)
 }
 
 
-void linear_group::linear_group_create(int verbose_level)
+void linear_group::linear_group_create(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -659,7 +662,8 @@ int linear_group::linear_group_apply_modification(
 	return f_OK;
 }
 
-void linear_group::init_PGL2q_OnConic(int verbose_level)
+void linear_group::init_PGL2q_OnConic(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -707,7 +711,8 @@ void linear_group::init_PGL2q_OnConic(int verbose_level)
 	}
 }
 
-void linear_group::init_wedge_action(int verbose_level)
+void linear_group::init_wedge_action(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -780,7 +785,8 @@ void linear_group::init_wedge_action(int verbose_level)
 	}
 }
 
-void linear_group::init_wedge_action_detached(int verbose_level)
+void linear_group::init_wedge_action_detached(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -869,7 +875,8 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 	}
 }
 
-void linear_group::init_monomial_group(int verbose_level)
+void linear_group::init_monomial_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -899,7 +906,8 @@ void linear_group::init_monomial_group(int verbose_level)
 	}
 }
 
-void linear_group::init_diagonal_group(int verbose_level)
+void linear_group::init_diagonal_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -928,7 +936,8 @@ void linear_group::init_diagonal_group(int verbose_level)
 	}
 }
 
-void linear_group::init_singer_group(int singer_power, int verbose_level)
+void linear_group::init_singer_group(
+		int singer_power, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -994,7 +1003,8 @@ void linear_group::init_singer_group_and_frobenius(
 	}
 }
 
-void linear_group::init_null_polarity_group(int verbose_level)
+void linear_group::init_null_polarity_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1023,7 +1033,8 @@ void linear_group::init_null_polarity_group(int verbose_level)
 	}
 }
 
-void linear_group::init_borel_subgroup_upper(int verbose_level)
+void linear_group::init_borel_subgroup_upper(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1054,7 +1065,8 @@ void linear_group::init_borel_subgroup_upper(int verbose_level)
 	}
 }
 
-void linear_group::init_identity_subgroup(int verbose_level)
+void linear_group::init_identity_subgroup(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1083,7 +1095,8 @@ void linear_group::init_identity_subgroup(int verbose_level)
 	}
 }
 
-void linear_group::init_symplectic_group(int verbose_level)
+void linear_group::init_symplectic_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1125,7 +1138,8 @@ void linear_group::init_symplectic_group(int verbose_level)
 	}
 }
 
-void linear_group::init_subfield_structure_action(int s, int verbose_level)
+void linear_group::init_subfield_structure_action(
+		int s, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1167,7 +1181,8 @@ void linear_group::init_subfield_structure_action(int s, int verbose_level)
 	}
 }
 
-void linear_group::init_orthogonal_group(int epsilon, int verbose_level)
+void linear_group::init_orthogonal_group(
+		int epsilon, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1329,7 +1344,8 @@ void linear_group::init_subgroup_by_generators(
 	}
 }
 
-void linear_group::init_subgroup_Janko1(int verbose_level)
+void linear_group::init_subgroup_Janko1(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1475,7 +1491,8 @@ void linear_group::report(
 			cout << "linear_group::report before A2->report" << endl;
 		}
 
-		A2->report(ost, true /*f_sims*/, H,
+		A2->report(
+				ost, true /*f_sims*/, H,
 				true /* f_strong_gens */, Strong_gens,
 				LG_Draw_options,
 				verbose_level);

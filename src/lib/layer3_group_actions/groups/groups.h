@@ -310,27 +310,42 @@ public:
 	void linear_group_init(
 			linear_group_description *description,
 		int verbose_level);
-	void linear_group_import(int verbose_level);
-	void linear_group_import_group_of_plane(int verbose_level);
-	void linear_group_create(int verbose_level);
+	void linear_group_import(
+			int verbose_level);
+	void linear_group_import_group_of_plane(
+			int verbose_level);
+	void linear_group_create(
+			int verbose_level);
 	int linear_group_apply_modification(
 			linear_group_description *description,
 			int verbose_level);
 
-	void init_PGL2q_OnConic(int verbose_level);
-	void init_wedge_action(int verbose_level);
-	void init_wedge_action_detached(int verbose_level);
-	void init_monomial_group(int verbose_level);
-	void init_diagonal_group(int verbose_level);
-	void init_singer_group(int singer_power, int verbose_level);
+	void init_PGL2q_OnConic(
+			int verbose_level);
+	void init_wedge_action(
+			int verbose_level);
+	void init_wedge_action_detached(
+			int verbose_level);
+	void init_monomial_group(
+			int verbose_level);
+	void init_diagonal_group(
+			int verbose_level);
+	void init_singer_group(
+			int singer_power, int verbose_level);
 	void init_singer_group_and_frobenius(
 			int singer_power, int verbose_level);
-	void init_null_polarity_group(int verbose_level);
-	void init_borel_subgroup_upper(int verbose_level);
-	void init_identity_subgroup(int verbose_level);
-	void init_symplectic_group(int verbose_level);
-	void init_subfield_structure_action(int s, int verbose_level);
-	void init_orthogonal_group(int epsilon, int verbose_level);
+	void init_null_polarity_group(
+			int verbose_level);
+	void init_borel_subgroup_upper(
+			int verbose_level);
+	void init_identity_subgroup(
+			int verbose_level);
+	void init_symplectic_group(
+			int verbose_level);
+	void init_subfield_structure_action(
+			int s, int verbose_level);
+	void init_orthogonal_group(
+			int epsilon, int verbose_level);
 	void init_subgroup_from_file(
 			std::string &subgroup_fname,
 			std::string &subgroup_label,
@@ -341,7 +356,8 @@ public:
 			int nb_subgroup_generators,
 			int *subgroup_generators_data,
 			int verbose_level);
-	void init_subgroup_Janko1(int verbose_level);
+	void init_subgroup_Janko1(
+			int verbose_level);
 	void report(
 			std::ostream &fp,
 			int f_sylow, int f_group_table,
@@ -402,9 +418,11 @@ public:
 			int f_load_save,
 			std::string &prefix,
 			int verbose_level);
-	void stabilizer_any_point(int pt,
+	void stabilizer_any_point(
+			int pt,
 			strong_generators *&Stab, int verbose_level);
-	void stabilizer_of(int orbit_idx, int verbose_level);
+	void stabilizer_of(
+			int orbit_idx, int verbose_level);
 	void idx_of_points_in_orbits_of_length_l(
 			long int *set, int set_sz, int go, int l,
 			std::vector<int> &Idx,
@@ -426,11 +444,16 @@ public:
 	void print_orbits_based_on_filtered_orbits(
 			std::ostream &ost,
 			data_structures::set_of_sets *Filtered_orbits);
-	void classify_orbits_by_length(int verbose_level);
-	void report_classified_orbit_lengths(std::ostream &ost);
-	void report_classified_orbits_by_lengths(std::ostream &ost);
-	int get_orbit_type_index(int orbit_length);
-	int get_orbit_type_index_if_present(int orbit_length);
+	void classify_orbits_by_length(
+			int verbose_level);
+	void report_classified_orbit_lengths(
+			std::ostream &ost);
+	void report_classified_orbits_by_lengths(
+			std::ostream &ost);
+	int get_orbit_type_index(
+			int orbit_length);
+	int get_orbit_type_index_if_present(
+			int orbit_length);
 	void test_all_orbits_by_length(
 		int (*test_function)(
 				long int *orbit, int orbit_length, void *data),
@@ -527,9 +550,11 @@ public:
 					int a, int i, int j,
 					void *evaluate_data, int verbose_level),
 			void *evaluate_data, int verbose_level);
-	void get_orbit_number_and_position(long int a,
+	void get_orbit_number_and_position(
+			long int a,
 			int &orbit_idx, int &orbit_pos, int verbose_level);
-	void create_latex_report(int verbose_level);
+	void create_latex_report(
+			int verbose_level);
 	void report(
 			std::ostream &ost, int verbose_level);
 	void report_quick(
@@ -812,7 +837,8 @@ public:
 	schreier();
 	~schreier();
 
-	schreier(actions::action *A, int verbose_level);
+	schreier(
+			actions::action *A, int verbose_level);
 	void delete_images();
 	void init_preferred_choice_function(
 			void (*preferred_choice_function)(
@@ -821,11 +847,15 @@ public:
 			void *preferred_choice_function_data,
 			int preferred_choice_function_data2,
 			int verbose_level);
-	void init_images(int nb_images, int verbose_level);
-	void init_images_only(int nb_images,
+	void init_images(
+			int nb_images, int verbose_level);
+	void init_images_only(
+			int nb_images,
 			long int degree, int *images, int verbose_level);
-	void images_append(int verbose_level);
-	void init(actions::action *A, int verbose_level);
+	void images_append(
+			int verbose_level);
+	void init(
+			actions::action *A, int verbose_level);
 	void allocate_tables();
 	void init2();
 	void initialize_tables();
@@ -834,13 +864,16 @@ public:
 	void init_generators(
 			data_structures_groups::vector_ge &generators,
 			int verbose_level);
-	void init_images_recycle(int nb_images,
+	void init_images_recycle(
+			int nb_images,
 			int **old_images,
 			int idx_deleted_generator,
 			int verbose_level);
-	void init_images_recycle(int nb_images,
+	void init_images_recycle(
+			int nb_images,
 			int **old_images, int verbose_level);
-	void init_generators(int nb, int *elt, int verbose_level);
+	void init_generators(
+			int nb, int *elt, int verbose_level);
 	void init_generators_recycle_images(
 			data_structures_groups::vector_ge &generators,
 			int **old_images,
@@ -858,43 +891,57 @@ public:
 			int **old_images,
 			int idx_generator_to_delete,
 			int verbose_level);
-	void init_generators_recycle_images(int nb,
+	void init_generators_recycle_images(
+			int nb,
 			int *elt, int **old_images, int verbose_level);
-	void init_generators_by_hdl(int nb_gen, int *gen_hdl, 
+	void init_generators_by_hdl(
+			int nb_gen, int *gen_hdl,
 		int verbose_level);
 	void init_generators_by_handle(
 			std::vector<int> &gen_hdl,
 			int verbose_level);
 	long int get_image(
 			long int i, int gen_idx, int verbose_level);
-	void swap_points(int i, int j, int verbose_level);
-	void move_point_here(int here, int pt);
-	int orbit_representative(int pt);
-	int depth_in_tree(int j);
+	void swap_points(
+			int i, int j, int verbose_level);
+	void move_point_here(
+			int here, int pt);
+	int orbit_representative(
+			int pt);
+	int depth_in_tree(
+			int j);
 		// j is a coset, not a point
-	void transporter_from_orbit_rep_to_point(int pt, 
+	void transporter_from_orbit_rep_to_point(
+			int pt,
 		int &orbit_idx, int *Elt, int verbose_level);
-	void transporter_from_point_to_orbit_rep(int pt, 
+	void transporter_from_point_to_orbit_rep(
+			int pt,
 		int &orbit_idx, int *Elt, int verbose_level);
-	void coset_rep(int j, int verbose_level);
+	void coset_rep(
+			int j, int verbose_level);
 		// j is a coset, not a point
 		// result is in cosetrep
 		// determines an element in the group 
 		// that moves the orbit representative 
 		// to the j-th point in the orbit.
-	void coset_rep_inv(int j, int verbose_level);
-	void extend_orbit(int *elt, int verbose_level);
-	void compute_all_point_orbits(int verbose_level);
+	void coset_rep_inv(
+			int j, int verbose_level);
+	void extend_orbit(
+			int *elt, int verbose_level);
+	void compute_all_point_orbits(
+			int verbose_level);
 	void compute_all_point_orbits_with_prefered_reps(
 		int *prefered_reps, int nb_prefered_reps, 
 		int verbose_level);
 	void compute_all_point_orbits_with_preferred_labels(
 		long int *preferred_labels, int verbose_level);
-	void compute_all_orbits_on_invariant_subset(int len, 
+	void compute_all_orbits_on_invariant_subset(
+			int len,
 		long int *subset, int verbose_level);
 	void compute_all_orbits_on_invariant_subset_lint(
 		int len, long int *subset, int verbose_level);
-	void compute_point_orbit(int pt, int verbose_level);
+	void compute_point_orbit(
+			int pt, int verbose_level);
 	void compute_point_orbit_with_limited_depth(
 			int pt, int max_depth, int verbose_level);
 	int sum_up_orbit_lengths();
@@ -921,7 +968,8 @@ public:
 	void intersection_vector(
 			int *set, int len,
 		int *intersection_cnt);
-	void orbits_on_invariant_subset_fast(int len, 
+	void orbits_on_invariant_subset_fast(
+			int len,
 		int *subset, int verbose_level);
 	void orbits_on_invariant_subset_fast_lint(
 		int len, long int *subset, int verbose_level);
@@ -983,15 +1031,18 @@ public:
 			int verbose_level);
 	void get_orbit_reps(
 			int *&Reps, int &nb_reps, int verbose_level);
-	int find_shortest_orbit_if_unique(int &idx);
-	void elements_in_orbit_of(int pt, int *orb, int &nb, 
+	int find_shortest_orbit_if_unique(
+			int &idx);
+	void elements_in_orbit_of(
+			int pt, int *orb, int &nb,
 		int verbose_level);
 	void get_orbit_length(
 			int *&orbit_length, int verbose_level);
 	void get_orbit_lengths_once_each(
 			int *&orbit_lengths,
 		int &nb_orbit_lengths);
-	int orbit_number(int pt);
+	int orbit_number(
+			int pt);
 	void get_orbit_number_and_position(
 			int pt, int &orbit_idx, int &orbit_pos,
 			int verbose_level);
@@ -1000,7 +1051,8 @@ public:
 		int verbose_level);
 	void create_point_list_sorted(
 			int *&point_list, int &point_list_length);
-	void shallow_tree_generators(int orbit_idx,
+	void shallow_tree_generators(
+			int orbit_idx,
 			int f_randomized,
 			schreier *&shallow_tree,
 			int verbose_level);
@@ -1015,7 +1067,8 @@ public:
 		// schreier forest
 	double get_average_word_length();
 		// This function returns the average word length of the forest.
-	double get_average_word_length(int orbit_idx);
+	double get_average_word_length(
+			int orbit_idx);
 	void compute_orbit_invariant(
 			int *&orbit_invariant,
 			int (*compute_orbit_invariant_callback)(schreier *Sch,
@@ -1028,31 +1081,43 @@ public:
 			combinatorics::classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
-	void latex_TDA(std::ostream &ost,
+	void latex_TDA(
+			std::ostream &ost,
 			combinatorics::encoded_combinatorial_object *Enc,
 			int verbose_level);
 
 	// schreier_io.cpp:
-	void latex(std::string &fname);
-	void print_orbit_lengths(std::ostream &ost);
-	void print_orbit_lengths_tex(std::ostream &ost);
-	void print_fixed_points_tex(std::ostream &ost);
+	void latex(
+			std::string &fname);
+	void print_orbit_lengths(
+			std::ostream &ost);
+	void print_orbit_lengths_tex(
+			std::ostream &ost);
+	void print_fixed_points_tex(
+			std::ostream &ost);
 	void print_orbit_length_distribution(
 			std::ostream &ost);
 	void print_orbit_length_distribution_to_string(
 			std::string &str);
-	void print_orbit_reps(std::ostream &ost);
-	void print(std::ostream &ost);
-	void print_and_list_orbits(std::ostream &ost);
-	void print_and_list_orbits_with_original_labels(std::ostream &ost);
-	void print_and_list_orbits_tex(std::ostream &ost);
-	void print_and_list_non_trivial_orbits_tex(std::ostream &ost);
+	void print_orbit_reps(
+			std::ostream &ost);
+	void print(
+			std::ostream &ost);
+	void print_and_list_orbits(
+			std::ostream &ost);
+	void print_and_list_orbits_with_original_labels(
+			std::ostream &ost);
+	void print_and_list_orbits_tex(
+			std::ostream &ost);
+	void print_and_list_non_trivial_orbits_tex(
+			std::ostream &ost);
 	void print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
 			std::ostream &ost,
 			actions::action *default_action,
 			strong_generators *gens,
 			int verbose_level);
-	void make_orbit_trees(std::ostream &ost,
+	void make_orbit_trees(
+			std::ostream &ost,
 			std::string &fname_mask,
 			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
@@ -1068,39 +1133,47 @@ public:
 		void (*print_point)(
 				std::ostream &ost, int pt, void *data),
 			void *data);
-	void print_and_list_orbits_using_labels(std::ostream &ost,
+	void print_and_list_orbits_using_labels(
+			std::ostream &ost,
 		long int *labels);
-	void print_tables(std::ostream &ost, int f_with_cosetrep);
+	void print_tables(
+			std::ostream &ost, int f_with_cosetrep);
 	void print_tables_latex(
 			std::ostream &ost, int f_with_cosetrep);
 	void print_generators();
 	void print_generators_latex(
 			std::ostream &ost);
 	void print_generators_with_permutations();
-	void print_orbit(int orbit_no);
+	void print_orbit(
+			int orbit_no);
 	void print_orbit_using_labels(
 			int orbit_no, long int *labels);
-	void print_orbit(std::ostream &ost, int orbit_no);
+	void print_orbit(
+			std::ostream &ost, int orbit_no);
 	void print_orbit_with_original_labels(
 			std::ostream &ost, int orbit_no);
-	void print_orbit_tex(std::ostream &ost, int orbit_no);
+	void print_orbit_tex(
+			std::ostream &ost, int orbit_no);
 	void print_orbit_sorted_tex(
 			std::ostream &ost,
 			int orbit_no, int f_truncate, int max_length);
 	void get_orbit_sorted(
 			int *&v, int &len, int orbit_no);
-	void print_and_list_orbit_and_stabilizer_tex(int i,
+	void print_and_list_orbit_and_stabilizer_tex(
+			int i,
 			actions::action *default_action,
 		ring_theory::longinteger_object &full_group_order,
 		std::ostream &ost);
-	void write_orbit_summary(std::string &fname,
+	void write_orbit_summary(
+			std::string &fname,
 			actions::action *default_action,
 			ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
 	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 		int i, actions::action *default_action,
 		strong_generators *gens, std::ostream &ost);
-	void print_and_list_orbit_tex(int i, std::ostream &ost);
+	void print_and_list_orbit_tex(
+			int i, std::ostream &ost);
 	void print_and_list_orbits_sorted_by_length_tex(
 			std::ostream &ost);
 	void print_and_list_orbits_and_stabilizer_sorted_by_length(
@@ -1125,18 +1198,25 @@ public:
 		void (*print_point)(
 				std::ostream &ost, int pt, void *data),
 		void *data);
-	void print_orbit_type(int f_backwards);
-	void list_all_orbits_tex(std::ostream &ost);
-	void print_orbit_through_labels(std::ostream &ost,
+	void print_orbit_type(
+			int f_backwards);
+	void list_all_orbits_tex(
+			std::ostream &ost);
+	void print_orbit_through_labels(
+			std::ostream &ost,
 		int orbit_no, long int *point_labels);
 	void print_orbit_sorted(
 			std::ostream &ost, int orbit_no);
-	void print_orbit(int cur, int last);
-	void print_tree(int orbit_no);
-	void export_tree_as_layered_graph(int orbit_no,
+	void print_orbit(
+			int cur, int last);
+	void print_tree(
+			int orbit_no);
+	void export_tree_as_layered_graph(
+			int orbit_no,
 			std::string &fname_mask,
 			int verbose_level);
-	void draw_forest(std::string &fname_mask,
+	void draw_forest(
+			std::string &fname_mask,
 			graphics::layered_graph_draw_options *Opt,
 			int f_has_point_labels, long int *point_labels,
 			int verbose_level);
@@ -1144,12 +1224,14 @@ public:
 			int orbit_no,
 			data_structures::set_of_sets *&SoS,
 			int verbose_level);
-	void draw_tree(std::string &fname,
+	void draw_tree(
+			std::string &fname,
 			graphics::layered_graph_draw_options *Opt,
 			int orbit_no,
 			int f_has_point_labels, long int *point_labels,
 			int verbose_level);
-	void draw_tree2(std::string &fname,
+	void draw_tree2(
+			std::string &fname,
 			graphics::layered_graph_draw_options *Opt,
 			int *weight, int *placement_x, int max_depth,
 			int i, int last,
@@ -1170,19 +1252,28 @@ public:
 			int f_has_point_labels, long int *point_labels,
 			int y_max,
 			int verbose_level);
-	void subtree_place(int *weight, int *placement_x,
+	void subtree_place(
+			int *weight, int *placement_x,
 		int left, int right, int i, int last);
-	int subtree_calc_weight(int *weight, int &max_depth,
+	int subtree_calc_weight(
+			int *weight, int &max_depth,
 		int i, int last);
 	int subtree_depth_first(
 			std::ostream &ost, int *path, int i, int last);
-	void print_path(std::ostream &ost, int *path, int l);
-	void write_to_file_csv(std::string &fname_csv, int verbose_level);
-	void write_to_file_binary(std::ofstream &fp, int verbose_level);
-	void read_from_file_binary(std::ifstream &fp, int verbose_level);
-	void write_file_binary(std::string &fname, int verbose_level);
-	void read_file_binary(std::string &fname, int verbose_level);
-	void list_elements_as_permutations_vertically(std::ostream &ost);
+	void print_path(
+			std::ostream &ost, int *path, int l);
+	void write_to_file_csv(
+			std::string &fname_csv, int verbose_level);
+	void write_to_file_binary(
+			std::ofstream &fp, int verbose_level);
+	void read_from_file_binary(
+			std::ifstream &fp, int verbose_level);
+	void write_file_binary(
+			std::string &fname, int verbose_level);
+	void read_file_binary(
+			std::string &fname, int verbose_level);
+	void list_elements_as_permutations_vertically(
+			std::ostream &ost);
 };
 
 // #############################################################################
@@ -1726,7 +1817,8 @@ public:
 			int *&Table, long int &n, int verbose_level);
 	void compute_conjugacy_classes(
 			actions::action *&Aconj,
-			induced_actions::action_by_conjugation *&ABC, schreier *&Sch,
+			induced_actions::action_by_conjugation *&ABC,
+			schreier *&Sch,
 		strong_generators *&SG, int &nb_classes,
 		int *&class_size, int *&class_rep,
 		int verbose_level);

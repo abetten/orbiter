@@ -1834,7 +1834,8 @@ void surface_object_with_group::cheat_sheet_group_elements(
 		cout << "surface_object_with_group::cheat_sheet_group_elements "
 				"before Fio.Csv_file_support->write_table_of_strings" << endl;
 	}
-	Fio.Csv_file_support->write_table_of_strings(fname,
+	Fio.Csv_file_support->write_table_of_strings(
+			fname,
 			N, nb, Table,
 			headings,
 			verbose_level);

@@ -216,68 +216,6 @@ int geometry_global::PG_element_modified_is_in_subspace(
 
 
 
-#if 0
-void geometry_global::determine_conic(int q, std::string &override_poly,
-		long int *input_pts, int nb_pts, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	field_theory::finite_field F;
-	projective_space *P;
-	int v[3];
-	int len = 3;
-	int six_coeffs[6];
-	int i;
-
-	if (f_v) {
-		cout << "determine_conic q=" << q << endl;
-		cout << "input_pts: ";
-		Lint_vec_print(cout, input_pts, nb_pts);
-		cout << endl;
-		}
-	F.init_override_polynomial(q, override_poly, false /* f_without_tables */, verbose_level);
-
-	P = NEW_OBJECT(projective_space);
-	if (f_vv) {
-		cout << "determine_conic before P->init" << endl;
-		}
-	P->init(len - 1, &F,
-		false,
-		verbose_level - 2/*MINIMUM(2, verbose_level)*/);
-
-	if (f_vv) {
-		cout << "determine_conic after P->init" << endl;
-		}
-	P->determine_conic_in_plane(input_pts, nb_pts,
-			six_coeffs, verbose_level - 2);
-
-	if (f_v) {
-		cout << "determine_conic the six coefficients are ";
-		Int_vec_print(cout, six_coeffs, 6);
-		cout << endl;
-		}
-
-	long int points[1000];
-	int nb_points;
-	//int v[3];
-
-	P->conic_points(input_pts, six_coeffs,
-			points, nb_points, verbose_level - 2);
-	if (f_v) {
-		cout << "the " << nb_points << " conic points are: ";
-		Lint_vec_print(cout, points, nb_points);
-		cout << endl;
-		for (i = 0; i < nb_points; i++) {
-			P->unrank_point(v, points[i]);
-			cout << i << " : " << points[i] << " : ";
-			Int_vec_print(cout, v, 3);
-			cout << endl;
-			}
-		}
-	FREE_OBJECT(P);
-}
-#endif
-
 int geometry_global::test_if_arc(
 		field_theory::finite_field *Fq,
 		int *pt_coords,

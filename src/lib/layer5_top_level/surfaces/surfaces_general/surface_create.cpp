@@ -820,7 +820,8 @@ void surface_create::create_Eckardt_surface(
 				"before Surf->create_Eckardt_surface" << endl;
 	}
 
-	SO = Surf->create_Eckardt_surface(a, b,
+	SO = Surf->create_Eckardt_surface(
+			a, b,
 			alpha, beta,
 			verbose_level);
 
@@ -856,9 +857,15 @@ void surface_create::create_Eckardt_surface(
 	f_has_group = true;
 	f_has_nice_gens = true;
 
-	prefix = "family_Eckardt_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_b" + std::to_string(b);
-	label_txt = "family_Eckardt_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_b" + std::to_string(b);
-	label_tex = "family\\_Eckardt\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a) + "\\_b" + std::to_string(b);
+	prefix = "family_Eckardt_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a)
+			+ "_b" + std::to_string(b);
+	label_txt = "family_Eckardt_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a)
+			+ "_b" + std::to_string(b);
+	label_tex = "family\\_Eckardt\\_q" + std::to_string(F->q)
+			+ "\\_a" + std::to_string(a)
+			+ "\\_b" + std::to_string(b);
 
 	if (f_v) {
 		cout << "surface_create::create_Eckardt_surface done" << endl;
@@ -916,9 +923,12 @@ void surface_create::create_surface_G13(
 
 
 
-	prefix = "family_G13_q" + std::to_string(F->q) + "_a" + std::to_string(a);
-	label_txt = "family_G13_q" + std::to_string(F->q) + "_a" + std::to_string(a);
-	label_tex = "family\\_G13\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a);
+	prefix = "family_G13_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a);
+	label_txt = "family_G13_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a);
+	label_tex = "family\\_G13\\_q" + std::to_string(F->q)
+			+ "\\_a" + std::to_string(a);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_G13 done" << endl;
@@ -971,9 +981,12 @@ void surface_create::create_surface_F13(
 	f_has_group = true;
 	f_has_nice_gens = true;
 
-	prefix = "family_F13_q" + std::to_string(F->q) + "_a" + std::to_string(a);
-	label_txt = "family_F13_q" + std::to_string(F->q) + "_a" + std::to_string(a);
-	label_tex = "family\\_F13\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a);
+	prefix = "family_F13_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a);
+	label_txt = "family_F13_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a);
+	label_tex = "family\\_F13\\_q" + std::to_string(F->q)
+			+ "\\_a" + std::to_string(a);
 
 
 	if (f_v) {
@@ -1032,9 +1045,15 @@ void surface_create::create_surface_bes(
 	f_has_nice_gens = true;
 
 
-	prefix = "family_bes_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_c" + std::to_string(c);
-	label_txt = "family_bes_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_c" + std::to_string(c);
-	label_tex = "family\\_bes\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a) + "\\_c" + std::to_string(c);
+	prefix = "family_bes_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a)
+			+ "_c" + std::to_string(c);
+	label_txt = "family_bes_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a)
+			+ "_c" + std::to_string(c);
+	label_tex = "family\\_bes\\_q" + std::to_string(F->q)
+			+ "\\_a" + std::to_string(a)
+			+ "\\_c" + std::to_string(c);
 
 
 
@@ -1066,7 +1085,8 @@ void surface_create::create_surface_general_abcd(
 				"before Surf->create_surface_general_abcd" << endl;
 	}
 
-	SO = Surf->create_surface_general_abcd(a, b, c, d, verbose_level);
+	SO = Surf->create_surface_general_abcd(
+			a, b, c, d, verbose_level);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_general_abcd "
@@ -1096,9 +1116,21 @@ void surface_create::create_surface_general_abcd(
 	f_has_group = false;
 	f_has_nice_gens = true;
 
-	prefix = "family_general_abcd_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_b" + std::to_string(b) + "_c" + std::to_string(c) + "_d" + std::to_string(d);
-	label_txt = "family_general_abcd_q" + std::to_string(F->q) + "_a" + std::to_string(a) + "_b" + std::to_string(b) + "_c" + std::to_string(c) + "_d" + std::to_string(d);
-	label_tex = "family\\_general\\_abcd\\_q" + std::to_string(F->q) + "\\_a" + std::to_string(a) + "\\_b" + std::to_string(b) + "\\_c" + std::to_string(c) + "\\_d" + std::to_string(d);
+	prefix = "family_general_abcd_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a)
+			+ "_b" + std::to_string(b)
+			+ "_c" + std::to_string(c)
+			+ "_d" + std::to_string(d);
+	label_txt = "family_general_abcd_q" + std::to_string(F->q)
+			+ "_a" + std::to_string(a)
+			+ "_b" + std::to_string(b)
+			+ "_c" + std::to_string(c)
+			+ "_d" + std::to_string(d);
+	label_tex = "family\\_general\\_abcd\\_q" + std::to_string(F->q)
+			+ "\\_a" + std::to_string(a)
+			+ "\\_b" + std::to_string(b)
+			+ "\\_c" + std::to_string(c)
+			+ "\\_d" + std::to_string(d);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_general_abcd done" << endl;
@@ -1293,9 +1325,12 @@ void surface_create::create_surface_from_catalogue(
 
 
 
-	prefix = "catalogue_q" + std::to_string(F->q) + "_iso" + std::to_string(iso);
-	label_txt = "catalogue_q" + std::to_string(F->q) + "_iso" + std::to_string(iso);
-	label_tex = "catalogue\\_q" + std::to_string(F->q) + "\\_iso" + std::to_string(iso);
+	prefix = "catalogue_q" + std::to_string(F->q)
+			+ "_iso" + std::to_string(iso);
+	label_txt = "catalogue_q" + std::to_string(F->q)
+			+ "_iso" + std::to_string(iso);
+	label_tex = "catalogue\\_q" + std::to_string(F->q)
+			+ "\\_iso" + std::to_string(iso);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue done" << endl;
@@ -1374,9 +1409,27 @@ void surface_create::create_surface_by_arc_lifting(
 
 	Lint_vec_copy(AL->Web->Lines27, Lines27, 27);
 
-	prefix = "arc_lifting_trihedral_q" + std::to_string(F->q) + "_arc_" + std::to_string(arc[0]) + "_" + std::to_string(arc[1]) + "_" + std::to_string(arc[2]) + "_" + std::to_string(arc[3]) + "_" + std::to_string(arc[4]) + "_" + std::to_string(arc[5]);
-	label_txt = "arc_lifting_trihedral_q" + std::to_string(F->q) + "_arc_" + std::to_string(arc[0]) + "_" + std::to_string(arc[1]) + "_" + std::to_string(arc[2]) + "_" + std::to_string(arc[3]) + "_" + std::to_string(arc[4]) + "_" + std::to_string(arc[5]);
-	label_tex = "arc\\_lifting\\_trihedral\\_q" + std::to_string(F->q) + "\\_arc\\_" + std::to_string(arc[0]) + "\\_" + std::to_string(arc[1]) + "\\_" + std::to_string(arc[2]) + "\\_" + std::to_string(arc[3]) + "\\_" + std::to_string(arc[4]) + "\\_" + std::to_string(arc[5]);
+	prefix = "arc_lifting_trihedral_q" + std::to_string(F->q)
+			+ "_arc_" + std::to_string(arc[0])
+			+ "_" + std::to_string(arc[1])
+			+ "_" + std::to_string(arc[2])
+			+ "_" + std::to_string(arc[3])
+			+ "_" + std::to_string(arc[4])
+			+ "_" + std::to_string(arc[5]);
+	label_txt = "arc_lifting_trihedral_q" + std::to_string(F->q)
+			+ "_arc_" + std::to_string(arc[0])
+			+ "_" + std::to_string(arc[1])
+			+ "_" + std::to_string(arc[2])
+			+ "_" + std::to_string(arc[3])
+			+ "_" + std::to_string(arc[4])
+			+ "_" + std::to_string(arc[5]);
+	label_tex = "arc\\_lifting\\_trihedral\\_q" + std::to_string(F->q)
+			+ "\\_arc\\_" + std::to_string(arc[0])
+			+ "\\_" + std::to_string(arc[1])
+			+ "\\_" + std::to_string(arc[2])
+			+ "\\_" + std::to_string(arc[3])
+			+ "\\_" + std::to_string(arc[4])
+			+ "\\_" + std::to_string(arc[5]);
 
 
 
@@ -1386,7 +1439,8 @@ void surface_create::create_surface_by_arc_lifting(
 		cout << "surface_create::create_surface_by_arc_lifting "
 				"before SO->init_with_27_lines" << endl;
 	}
-	SO->init_with_27_lines(Surf,
+	SO->init_with_27_lines(
+			Surf,
 		Lines27, coeffs20,
 		label_txt, label_tex,
 		false /* f_find_double_six_and_rearrange_lines */,
@@ -1483,9 +1537,34 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 	Lint_vec_copy(AL->lines27, Lines27, 27);
 
 
-	prefix = "arc_lifting_with_two_lines_q" + std::to_string(F->q) + "_lines_" + std::to_string(line1) + "_" + std::to_string(line2) + "_arc_" + std::to_string(arc[0]) + "_" + std::to_string(arc[1]) + "_" + std::to_string(arc[2]) + "_" + std::to_string(arc[3]) + "_" + std::to_string(arc[4]) + "_" + std::to_string(arc[5]);
-	label_txt = "arc_lifting_with_two_lines_q" + std::to_string(F->q) + "_lines_" + std::to_string(line1) + "_" + std::to_string(line2) + "_arc_" + std::to_string(arc[0]) + "_" + std::to_string(arc[1]) + "_" + std::to_string(arc[2]) + "_" + std::to_string(arc[3]) + "_" + std::to_string(arc[4]) + "_" + std::to_string(arc[5]);
-	label_tex = "arc\\_lifting\\_with\\_two\\_lines\\_q" + std::to_string(F->q) + "\\_lines\\_" + std::to_string(line1) + "\\_" + std::to_string(line2) + "\\_arc\\_" + std::to_string(arc[0]) + "\\_" + std::to_string(arc[1]) + "\\_" + std::to_string(arc[2]) + "\\_" + std::to_string(arc[3]) + "\\_" + std::to_string(arc[4]) + "\\_" + std::to_string(arc[5]);
+	prefix = "arc_lifting_with_two_lines_q" + std::to_string(F->q)
+			+ "_lines_" + std::to_string(line1)
+			+ "_" + std::to_string(line2)
+			+ "_arc_" + std::to_string(arc[0])
+			+ "_" + std::to_string(arc[1])
+			+ "_" + std::to_string(arc[2])
+			+ "_" + std::to_string(arc[3])
+			+ "_" + std::to_string(arc[4])
+			+ "_" + std::to_string(arc[5]);
+	label_txt = "arc_lifting_with_two_lines_q"
+			+ std::to_string(F->q)
+			+ "_lines_" + std::to_string(line1)
+			+ "_" + std::to_string(line2)
+			+ "_arc_" + std::to_string(arc[0])
+			+ "_" + std::to_string(arc[1])
+			+ "_" + std::to_string(arc[2])
+			+ "_" + std::to_string(arc[3])
+			+ "_" + std::to_string(arc[4])
+			+ "_" + std::to_string(arc[5]);
+	label_tex = "arc\\_lifting\\_with\\_two\\_lines\\_q" + std::to_string(F->q)
+			+ "\\_lines\\_" + std::to_string(line1)
+			+ "\\_" + std::to_string(line2)
+			+ "\\_arc\\_" + std::to_string(arc[0])
+			+ "\\_" + std::to_string(arc[1])
+			+ "\\_" + std::to_string(arc[2])
+			+ "\\_" + std::to_string(arc[3])
+			+ "\\_" + std::to_string(arc[4])
+			+ "\\_" + std::to_string(arc[5]);
 
 
 	SO = NEW_OBJECT(algebraic_geometry::surface_object);
@@ -1558,17 +1637,26 @@ void surface_create::create_surface_Cayley_form(
 
 	string str_parameters;
 
-	str_parameters = "klmn_" + std::to_string(k) + "_" + std::to_string(l) + "_" + std::to_string(m) + "_" + std::to_string(n);
+	str_parameters = "klmn_" + std::to_string(k)
+			+ "_" + std::to_string(l)
+			+ "_" + std::to_string(m)
+			+ "_" + std::to_string(n);
 
 
-	prefix = "Cayley_q" + std::to_string(F->q) + "_" + str_parameters;
+	prefix = "Cayley_q" + std::to_string(F->q)
+			+ "_" + str_parameters;
 
-	label_txt = "Cayley_q" + std::to_string(F->q) + "_" + str_parameters;
+	label_txt = "Cayley_q" + std::to_string(F->q)
+			+ "_" + str_parameters;
 
 
-	str_parameters = "klmn\\_" + std::to_string(k) + "\\_" + std::to_string(l) + "\\_" + std::to_string(m) + "\\_" + std::to_string(n);
+	str_parameters = "klmn\\_" + std::to_string(k)
+			+ "\\_" + std::to_string(l)
+			+ "\\_" + std::to_string(m)
+			+ "\\_" + std::to_string(n);
 
-	label_tex = "Cayley\\_q" + std::to_string(F->q) + "\\_" + str_parameters;
+	label_tex = "Cayley\\_q" + std::to_string(F->q)
+			+ "\\_" + str_parameters;
 
 
 
@@ -1849,7 +1937,7 @@ void surface_create::create_surface_by_skew_hexagon(
 		cout << "surface_create::create_surface_by_skew_hexagon" << endl;
 	}
 
-	int Pluecker_ccords[] = {
+	int Pluecker_coords[] = {
 			1,0,0,0,0,0,
 			0,1,0,1,0,0,
 			0,1,1,0,0,0,
@@ -1864,7 +1952,7 @@ void surface_create::create_surface_by_skew_hexagon(
 
 	for (i = 0; i < nb_pts; i++) {
 		Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(
-				Pluecker_ccords + i * 6, 0 /*verbose_level*/);
+				Pluecker_coords + i * 6, 0 /*verbose_level*/);
 	}
 
 	if (nb_pts != 6) {
@@ -2309,18 +2397,22 @@ void surface_create::apply_single_transformation(
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
-	A->Group_element->make_element(Elt1, transformation_coeffs, verbose_level);
+	A->Group_element->make_element(
+			Elt1, transformation_coeffs, verbose_level);
 
 	if (f_inverse) {
-		A->Group_element->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
+		A->Group_element->element_invert(
+				Elt1, Elt2, 0 /*verbose_level*/);
 	}
 	else {
-		A->Group_element->element_move(Elt1, Elt2, 0 /*verbose_level*/);
+		A->Group_element->element_move(
+				Elt1, Elt2, 0 /*verbose_level*/);
 	}
 
 	//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
 
-	A->Group_element->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
+	A->Group_element->element_invert(
+			Elt2, Elt3, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "surface_create::apply_single_transformation "
@@ -2342,7 +2434,8 @@ void surface_create::apply_single_transformation(
 	algebra::matrix_group *M;
 
 	M = A->G.matrix_grp;
-	M->substitute_surface_equation(Elt3,
+	M->substitute_surface_equation(
+			Elt3,
 			SO->eqn, coeffs_out, Surf,
 			verbose_level - 1);
 
@@ -2350,7 +2443,8 @@ void surface_create::apply_single_transformation(
 		cout << "surface_create::apply_single_transformation "
 				"The equation of the transformed surface is:" << endl;
 		cout << "$$" << endl;
-		Surf->print_equation_tex(cout, coeffs_out);
+		Surf->print_equation_tex(
+				cout, coeffs_out);
 		cout << endl;
 		cout << "$$" << endl;
 	}
@@ -3153,12 +3247,16 @@ void surface_create::do_report2(
 				"before SC->SO->SOP->create_summary_file" << endl;
 	}
 	if (Descr->f_label_for_summary) {
-		SO->SOP->create_summary_file(summary_file_name,
-				Descr->label_for_summary, col_postfix, verbose_level);
+		SO->SOP->create_summary_file(
+				summary_file_name,
+				Descr->label_for_summary, col_postfix,
+				verbose_level);
 	}
 	else {
-		SO->SOP->create_summary_file(summary_file_name,
-				label_txt, col_postfix, verbose_level);
+		SO->SOP->create_summary_file(
+				summary_file_name,
+				label_txt, col_postfix,
+				verbose_level);
 	}
 	if (f_v) {
 		cout << "surface_create::do_report2 "
@@ -3242,7 +3340,8 @@ void surface_create::do_report_group_elements2(
 	}
 	else {
 
-		SOG->cheat_sheet_group_elements(ost, fname_csv, col_heading,
+		SOG->cheat_sheet_group_elements(
+				ost, fname_csv, col_heading,
 				verbose_level);
 
 	}
@@ -3407,7 +3506,8 @@ void surface_create::test_group(int verbose_level)
 	}
 }
 
-void surface_create::all_quartic_curves(int verbose_level)
+void surface_create::all_quartic_curves(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3462,7 +3562,9 @@ void surface_create::all_quartic_curves(int verbose_level)
 			cout << "surface_create::all_quartic_curves "
 					"before SOG->all_quartic_curves" << endl;
 		}
-		SOG->all_quartic_curves(label_txt, label_tex, ost, verbose_level);
+		SOG->all_quartic_curves(
+				label_txt, label_tex, ost,
+				verbose_level);
 		if (f_v) {
 			cout << "surface_create::all_quartic_curves "
 					"after SOG->all_quartic_curves" << endl;
@@ -3483,7 +3585,8 @@ void surface_create::all_quartic_curves(int verbose_level)
 
 }
 
-void surface_create::export_all_quartic_curves(int verbose_level)
+void surface_create::export_all_quartic_curves(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3492,7 +3595,8 @@ void surface_create::export_all_quartic_curves(int verbose_level)
 	}
 
 	if (!f_has_group) {
-		cout << "surface_create::export_all_quartic_curves The automorphism group "
+		cout << "surface_create::export_all_quartic_curves "
+				"The automorphism group "
 				"of the surface is missing" << endl;
 		exit(1);
 	}
@@ -3519,7 +3623,8 @@ void surface_create::export_all_quartic_curves(int verbose_level)
 			cout << "surface_create::export_all_quartic_curves "
 					"before SOG->export_all_quartic_curves" << endl;
 		}
-		SOG->export_all_quartic_curves(ost_curves, verbose_level - 1);
+		SOG->export_all_quartic_curves(
+				ost_curves, verbose_level - 1);
 		if (f_v) {
 			cout << "surface_create::export_all_quartic_curves "
 					"after SOG->export_all_quartic_curves" << endl;

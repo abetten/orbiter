@@ -86,7 +86,8 @@ schreier::~schreier()
 	delete_images();
 }
 
-schreier::schreier(actions::action *A, int verbose_level)
+schreier::schreier(
+		actions::action *A, int verbose_level)
 {
 	init(A, verbose_level);
 }
@@ -129,7 +130,8 @@ void schreier::init_preferred_choice_function(
 }
 
 
-void schreier::init_images(int nb_images, int verbose_level)
+void schreier::init_images(
+		int nb_images, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j;
@@ -161,7 +163,8 @@ void schreier::init_images(int nb_images, int verbose_level)
 	}
 }
 
-void schreier::init_images_only(int nb_images,
+void schreier::init_images_only(
+		int nb_images,
 		long int degree, int *images, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -197,7 +200,8 @@ void schreier::init_images_only(int nb_images,
 }
 
 
-void schreier::init_images_recycle(int nb_images,
+void schreier::init_images_recycle(
+		int nb_images,
 		int **old_images, int idx_deleted_generator,
 		int verbose_level)
 {
@@ -246,7 +250,8 @@ void schreier::init_images_recycle(int nb_images,
 
 
 
-void schreier::init_images_recycle(int nb_images,
+void schreier::init_images_recycle(
+		int nb_images,
 		int **old_images, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -287,7 +292,8 @@ void schreier::init_images_recycle(int nb_images,
 
 
 
-void schreier::images_append(int verbose_level)
+void schreier::images_append(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -310,7 +316,8 @@ void schreier::images_append(int verbose_level)
 	nb_images++;
 }
 
-void schreier::init(actions::action *A, int verbose_level)
+void schreier::init(
+		actions::action *A, int verbose_level)
 {
 	schreier::A = A;
 	degree = A->degree;
@@ -520,7 +527,8 @@ void schreier::init_generators_recycle_images(
 
 
 
-void schreier::init_generators_recycle_images(int nb,
+void schreier::init_generators_recycle_images(
+		int nb,
 		int *elt, int **old_images, int verbose_level)
 // elt must point to nb * A->elt_size_in_int
 // int's that are
@@ -551,7 +559,8 @@ void schreier::init_generators_recycle_images(int nb,
 
 
 
-void schreier::init_generators_by_hdl(int nb_gen, 
+void schreier::init_generators_by_hdl(
+		int nb_gen,
 	int *gen_hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -709,7 +718,8 @@ long int schreier::get_image(
 	return a;
 }
 
-void schreier::swap_points(int i, int j, int verbose_level)
+void schreier::swap_points(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int pi, pj;
@@ -729,7 +739,8 @@ void schreier::swap_points(int i, int j, int verbose_level)
 	}
 }
 
-void schreier::move_point_here(int here, int pt)
+void schreier::move_point_here(
+		int here, int pt)
 {
 	int a, loc;
 	if (orbit[here] == pt) {
@@ -743,7 +754,8 @@ void schreier::move_point_here(int here, int pt)
 	orbit_inv[pt] = here;
 }
 
-int schreier::orbit_representative(int pt)
+int schreier::orbit_representative(
+		int pt)
 {
 	int j;
 	
@@ -756,7 +768,8 @@ int schreier::orbit_representative(int pt)
 	}
 }
 
-int schreier::depth_in_tree(int j)
+int schreier::depth_in_tree(
+		int j)
 // j is a coset, not a point
 {
 	if (prev[j] == -1) {
@@ -767,7 +780,8 @@ int schreier::depth_in_tree(int j)
 	}
 }
 
-void schreier::transporter_from_orbit_rep_to_point(int pt, 
+void schreier::transporter_from_orbit_rep_to_point(
+		int pt,
 	int &orbit_idx, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -792,7 +806,8 @@ void schreier::transporter_from_orbit_rep_to_point(int pt,
 	}
 }
 
-void schreier::transporter_from_point_to_orbit_rep(int pt, 
+void schreier::transporter_from_point_to_orbit_rep(
+		int pt,
 	int &orbit_idx, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -908,7 +923,8 @@ void schreier::coset_rep_with_verbosity(
 }
 #endif
 
-void schreier::coset_rep_inv(int j, int verbose_level)
+void schreier::coset_rep_inv(
+		int j, int verbose_level)
 // j is a coset, not a point
 // result is in cosetrep
 {
@@ -947,7 +963,8 @@ void schreier::coset_rep_inv(int j, int verbose_level)
 
 
 
-void schreier::extend_orbit(int *elt, int verbose_level)
+void schreier::extend_orbit(
+		int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 3);
@@ -1036,7 +1053,8 @@ void schreier::extend_orbit(int *elt, int verbose_level)
 	}
 }
 
-void schreier::compute_all_point_orbits(int verbose_level)
+void schreier::compute_all_point_orbits(
+		int verbose_level)
 {
 	int pt, pt_loc, cur, pt0;
 	int f_v = (verbose_level >= 1);
@@ -1313,7 +1331,8 @@ void schreier::compute_all_orbits_on_invariant_subset_lint(
 	}
 }
 
-void schreier::compute_point_orbit(int pt, int verbose_level)
+void schreier::compute_point_orbit(
+		int pt, int verbose_level)
 {
 	int pt_loc, cur, cur_pt, total, i, next_pt;
 	int next_pt_loc, total1, cur1;
@@ -2984,7 +3003,8 @@ void schreier::get_orbit_reps(
 	}
 }
 
-int schreier::find_shortest_orbit_if_unique(int &idx)
+int schreier::find_shortest_orbit_if_unique(
+		int &idx)
 {
 	int l_min = 0, l, i;
 	int idx_min = -1;
@@ -3010,7 +3030,8 @@ int schreier::find_shortest_orbit_if_unique(int &idx)
 	return f_is_unique;
 }
 
-void schreier::elements_in_orbit_of(int pt, 
+void schreier::elements_in_orbit_of(
+		int pt,
 	int *orb, int &nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3072,7 +3093,8 @@ void schreier::get_orbit_lengths_once_each(
 }
 
 
-int schreier::orbit_number(int pt)
+int schreier::orbit_number(
+		int pt)
 {
 	int pos;
 	int idx;
@@ -3243,7 +3265,8 @@ void schreier::create_point_list_sorted(
 	Sorting.int_vec_heapsort(point_list, point_list_length);
 }
 
-void schreier::shallow_tree_generators(int orbit_idx,
+void schreier::shallow_tree_generators(
+		int orbit_idx,
 		int f_randomized,
 		schreier *&shallow_tree,
 		int verbose_level)
@@ -3587,7 +3610,8 @@ double schreier::get_average_word_length() {
 	return avgwl;
 }
 
-double schreier::get_average_word_length(int orbit_idx)
+double schreier::get_average_word_length(
+		int orbit_idx)
 {
 	int fst = orbit_first[orbit_idx];
 	//int len = orbit_len[orbit_idx];
@@ -3659,7 +3683,8 @@ void schreier::print_TDA(
 	}
 }
 
-void schreier::latex_TDA(std::ostream &ost,
+void schreier::latex_TDA(
+		std::ostream &ost,
 		combinatorics::encoded_combinatorial_object *Enc,
 		int verbose_level)
 {

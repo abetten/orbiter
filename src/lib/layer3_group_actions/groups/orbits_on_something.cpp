@@ -647,7 +647,8 @@ void orbits_on_something::print_orbits_based_on_filtered_orbits(
 
 
 
-void orbits_on_something::classify_orbits_by_length(int verbose_level)
+void orbits_on_something::classify_orbits_by_length(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -697,7 +698,8 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 	}
 }
 
-void orbits_on_something::report_classified_orbit_lengths(std::ostream &ost)
+void orbits_on_something::report_classified_orbit_lengths(
+		std::ostream &ost)
 {
 	int i;
 
@@ -709,7 +711,8 @@ void orbits_on_something::report_classified_orbit_lengths(std::ostream &ost)
 	}
 }
 
-void orbits_on_something::report_classified_orbits_by_lengths(std::ostream &ost)
+void orbits_on_something::report_classified_orbits_by_lengths(
+		std::ostream &ost)
 {
 	int i, j;
 	long int a;
@@ -729,7 +732,8 @@ void orbits_on_something::report_classified_orbits_by_lengths(std::ostream &ost)
 	}
 }
 
-int orbits_on_something::get_orbit_type_index(int orbit_length)
+int orbits_on_something::get_orbit_type_index(
+		int orbit_length)
 {
 	int i;
 
@@ -742,7 +746,8 @@ int orbits_on_something::get_orbit_type_index(int orbit_length)
 	exit(1);
 }
 
-int orbits_on_something::get_orbit_type_index_if_present(int orbit_length)
+int orbits_on_something::get_orbit_type_index_if_present(
+		int orbit_length)
 {
 	int i;
 
@@ -772,7 +777,8 @@ void orbits_on_something::test_all_orbits_by_length(
 		orbit_length = Classify_orbits_by_length->get_value_of_class(type_idx);
 
 		if (f_v) {
-			cout << "orbits_on_something::test_all_orbits_by_length type_idx = " << type_idx << " orbit_length = " << orbit_length << endl;
+			cout << "orbits_on_something::test_all_orbits_by_length "
+					"type_idx = " << type_idx << " orbit_length = " << orbit_length << endl;
 		}
 		test_orbits_of_a_certain_length(
 			orbit_length,
@@ -1463,7 +1469,6 @@ void orbits_on_something::extract_orbits(
 	int nb_orbits,
 	int *orbits,
 	long int *extracted_set,
-	//set_of_sets *my_orbits_classified,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1972,7 +1977,8 @@ void orbits_on_something::compute_orbit_invariant_after_classification(
 }
 
 
-void orbits_on_something::get_orbit_number_and_position(long int a,
+void orbits_on_something::get_orbit_number_and_position(
+		long int a,
 		int &orbit_idx, int &orbit_pos, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1990,7 +1996,8 @@ void orbits_on_something::get_orbit_number_and_position(long int a,
 
 
 
-void orbits_on_something::create_latex_report(int verbose_level)
+void orbits_on_something::create_latex_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname_tex;
