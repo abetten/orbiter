@@ -80,6 +80,7 @@ void object_in_projective_space_with_action::report(
 		std::ostream &fp,
 		projective_space_with_action *PA,
 		int max_TDO_depth, int verbose_level)
+// includes the TDO
 {
 	int f_v = (verbose_level >= 1);
 
@@ -281,7 +282,7 @@ void object_in_projective_space_with_action::report(
 		}
 
 		if (f_v) {
-			cout << "incidence_structure::compute_TDO_safe "
+			cout << "projective_space_object_classifier::latex_report "
 					"h=" << h << " after refine" << endl;
 		}
 		if (EVEN(h)) {

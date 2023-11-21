@@ -359,6 +359,7 @@ void spreadsheet::save(
 		}
 }
 
+
 void spreadsheet::read_spreadsheet(
 		std::string &fname, int verbose_level)
 {
@@ -407,21 +408,21 @@ void spreadsheet::read_spreadsheet(
 	
 	if (false) {
 		{
-		int f, l, j;
-	
-		for (i = 0; i < nb_lines; i++) {
-			f = line_start[i];
-			l = line_size[i];
-			cout << "Line " << i << " : ";
-			for (j = 0; j < l; j++) {
-				cout << "'" << tokens[f + j] << "'";
-				if (j < l - 1) {
-					cout << ", ";
+			int f, l, j;
+
+			for (i = 0; i < nb_lines; i++) {
+				f = line_start[i];
+				l = line_size[i];
+				cout << "Line " << i << " : ";
+				for (j = 0; j < l; j++) {
+					cout << "'" << tokens[f + j] << "'";
+					if (j < l - 1) {
+						cout << ", ";
+						}
 					}
+				cout << endl;
 				}
-			cout << endl;
 			}
-		}
 		}
 
 	int j;
@@ -432,13 +433,13 @@ void spreadsheet::read_spreadsheet(
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			Table[i * nb_cols + j] = -1;
-			}
 		}
+	}
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < MINIMUM(nb_cols, line_size[i]); j++) {
 			Table[i * nb_cols + j] = line_start[i] + j;
-			}
 		}
+	}
 
 	if (false) {
 		cout << "spreadsheet::read_spreadsheet" << endl;
@@ -478,18 +479,18 @@ void spreadsheet::print_table_latex_all_columns(
 	f_column_select = NEW_int(nb_cols);
 	for (j = 0; j < nb_cols; j++) {
 		f_column_select[j] = true;
-		}
+	}
 	
 	//cout << "Table:" << endl;
 	ost << "\\begin{tabular}{|c|";
 	for (j = 0; j < nb_cols; j++) {
 		ost << "c|";
-		}
+	}
 	ost << "}" << endl;
 	for (i = 0; i < nb_rows; i++) {
 		print_table_row_latex(i,
 				f_column_select, f_enclose_in_parentheses, ost);
-		}
+	}
 	ost << "\\end{tabular}" << endl;
 
 	FREE_int(f_column_select);
@@ -545,6 +546,13 @@ void spreadsheet::print_table_row(
 {
 	int j, t; //, h;
 	
+	if (row >= nb_rows) {
+		cout << "spreadsheet::print_table_row row is out if range" << endl;
+		cout << "row=" << row << endl;
+		cout << "nb_rows=" << nb_rows << endl;
+		exit(1);
+	}
+
 	//cout << "Row " << row << " : ";
 	for (j = 0; j < nb_cols; j++) {
 		t = Table[row * nb_cols + j];
@@ -1652,6 +1660,61 @@ void spreadsheet::compare_columns(
 	}
 }
 
+void spreadsheet::stringify(
+		std::string *&Header_rows, std::string *&Header_cols, std::string *&T,
+		int &nb_r, int &nb_c,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::stringify" << endl;
+	}
+
+
+	nb_r = nb_rows - 1;
+	nb_c = nb_cols - 1;
+	Header_rows = new string[nb_r];
+	Header_cols = new string[nb_c];
+	T = new string[nb_r * nb_c];
+
+	int i, j;
+
+	T = new string[nb_r * nb_c];
+
+	for (i = 0; i < nb_r; i++) {
+
+		string s;
+
+		get_string(s, i + 1, 0);
+
+		Header_rows[i] = s;
+	}
+
+	for (j = 0; j < nb_c; j++) {
+
+		string s;
+
+		get_string(s, 0, j + 1);
+
+		Header_cols[j] = s;
+	}
+
+	for (i = 0; i < nb_r; i++) {
+		for (j = 0; j < nb_c; j++) {
+
+			string s;
+
+			get_string(s, i + 1, j + 1);
+
+			T[i * nb_c + j] = s;
+		}
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::stringify done" << endl;
+	}
+}
 
 
 

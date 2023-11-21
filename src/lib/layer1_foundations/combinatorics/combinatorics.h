@@ -1397,10 +1397,12 @@ public:
 
 	tdo_scheme_compute();
 	~tdo_scheme_compute();
-	void init(encoded_combinatorial_object *Enc,
+	void init(
+			encoded_combinatorial_object *Enc,
 			int max_depth,
 			int verbose_level);
-	void print_schemes(std::ostream &ost);
+	void print_schemes(
+			std::ostream &ost);
 
 };
 

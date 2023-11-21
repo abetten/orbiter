@@ -80,6 +80,32 @@ void set_of_sets_lint::init(
 	}
 }
 
+
+
+
+void set_of_sets_lint::init_single(
+		long int underlying_set_size,
+		long int *Pts, int sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "set_of_sets_lint::init_single" << endl;
+	}
+
+	int Sz[1];
+
+	Sz[0] = sz;
+
+	init_basic(underlying_set_size, 1 /* nb_sets */, Sz, verbose_level - 1);
+
+	Lint_vec_copy(Pts, Sets[0], sz);
+	if (f_v) {
+		cout << "set_of_sets_lint::init_single done" << endl;
+	}
+}
+
+
 void set_of_sets_lint::init_basic(
 		long int underlying_set_size,
 		int nb_sets, int *Sz, int verbose_level)
@@ -101,7 +127,8 @@ void set_of_sets_lint::init_basic(
 	for (i = 0; i < nb_sets; i++) {
 		Set_size[i] = Sz[i];
 		if (false /*f_v*/) {
-			cout << "set_of_sets::init_basic allocating set " << i
+			cout << "set_of_sets::init_basic "
+					"allocating set " << i
 					<< " of size " << Sz[i] << endl;
 		}
 		Sets[i] = NEW_lint(Sz[i]);

@@ -1390,21 +1390,6 @@ public:
 			std::string &label_tex,
 			algebraic_geometry::surface_object *&SO,
 			int verbose_level);
-#if 0
-	int create_surface_by_equation(
-			ring_theory::homogeneous_polynomial_domain *Poly,
-			std::string &name_of_formula,
-			std::string &name_of_formula_tex,
-			std::string &managed_variables,
-			std::string &equation_text,
-			std::string &equation_parameters,
-			std::string &equation_parameters_tex,
-			std::string &equation_parameter_values,
-			std::vector<std::string> &select_double_six_string,
-			algebraic_geometry::surface_object *&SO,
-			int verbose_level);
-	// returns false if the equation is zero
-#endif
 	int create_surface_by_symbolic_object(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
@@ -1801,30 +1786,51 @@ public:
 			std::ostream &ost);
 
 
-	void print_plane_type_by_points(std::ostream &ost);
-	void print_lines(std::ostream &ost);
-	void print_lines_with_points_on_them(std::ostream &ost);
-	void print_equation(std::ostream &ost);
-	void print_summary(std::ostream &ost);
-	void print_affine_points_in_source_code(std::ostream &ost);
-	void print_points(std::ostream &ost);
-	void print_Eckardt_points(std::ostream &ost);
-	void print_Hesse_planes(std::ostream &ost);
-	void print_axes(std::ostream &ost);
-	void print_singular_points(std::ostream &ost);
-	void print_double_points(std::ostream &ost);
-	void print_single_points(std::ostream &ost);
-	void print_points_on_surface(std::ostream &ost);
-	void print_all_points_on_surface(std::ostream &ost);
-	void print_points_on_lines(std::ostream &ost);
+	void print_plane_type_by_points(
+			std::ostream &ost);
+	void print_lines(
+			std::ostream &ost);
+	void print_lines_with_points_on_them(
+			std::ostream &ost);
+	void print_equation(
+			std::ostream &ost);
+	void print_summary(
+			std::ostream &ost);
+	void print_affine_points_in_source_code(
+			std::ostream &ost);
+	void print_points(
+			std::ostream &ost);
+	void print_Eckardt_points(
+			std::ostream &ost);
+	void print_Hesse_planes(
+			std::ostream &ost);
+	void print_axes(
+			std::ostream &ost);
+	void print_singular_points(
+			std::ostream &ost);
+	void print_double_points(
+			std::ostream &ost);
+	void print_single_points(
+			std::ostream &ost);
+	void print_points_on_surface(
+			std::ostream &ost);
+	void print_all_points_on_surface(
+			std::ostream &ost);
+	void print_points_on_lines(
+			std::ostream &ost);
 	void print_points_on_surface_but_not_on_a_line(
 			std::ostream &ost);
-	void print_double_sixes(std::ostream &ost);
-	void print_half_double_sixes(std::ostream &ost);
-	void print_trihedral_pairs(std::ostream &ost);
-	void print_trihedral_pairs_numerically(std::ostream &ost);
+	void print_double_sixes(
+			std::ostream &ost);
+	void print_half_double_sixes(
+			std::ostream &ost);
+	void print_trihedral_pairs(
+			std::ostream &ost);
+	void print_trihedral_pairs_numerically(
+			std::ostream &ost);
 
-	int compute_transversal_line(int line_a, int line_b,
+	int compute_transversal_line(
+			int line_a, int line_b,
 		int verbose_level);
 	void compute_transversal_lines(
 		int line_a, int line_b, int *transversals5,
@@ -2000,8 +2006,10 @@ public:
 
 	surface_polynomial_domains();
 	~surface_polynomial_domains();
-	void init(surface_domain *Surf, int verbose_level);
-	void init_large_polynomial_domains(int verbose_level);
+	void init(
+			surface_domain *Surf, int verbose_level);
+	void init_large_polynomial_domains(
+			int verbose_level);
 	void label_variables_3(
 			ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
@@ -2076,6 +2084,69 @@ public:
 		int lambda, int *the_equation);
 
 };
+
+
+
+
+// #############################################################################
+// variety_object.cpp
+// #############################################################################
+
+//! projective variety
+
+
+class variety_object {
+
+public:
+
+	geometry::projective_space *Projective_space;
+
+	ring_theory::homogeneous_polynomial_domain *Ring;
+
+
+	//quartic_curve_domain *Dom; // we may not have it
+
+
+	//long int *Pts; // in increasing order
+	//int nb_pts;
+
+
+	int *eqn;
+
+
+	data_structures::set_of_sets *Point_sets;
+
+	data_structures::set_of_sets *Line_sets;
+
+
+
+	//int f_has_bitangents;
+	//long int bitangents28[28];
+
+	//quartic_curve_object_properties *QP;
+
+
+	variety_object();
+	~variety_object();
+	void init_equation(
+			geometry::projective_space *Projective_space,
+			ring_theory::homogeneous_polynomial_domain *Ring,
+			int *equation,
+			int verbose_level);
+	void init_set_of_sets(
+			geometry::projective_space *Projective_space,
+			ring_theory::homogeneous_polynomial_domain *Ring,
+			int *equation,
+			data_structures::set_of_sets *Point_sets,
+			data_structures::set_of_sets *Line_sets,
+			int verbose_level);
+	void enumerate_points(
+			int verbose_level);
+
+
+};
+
+
 
 
 

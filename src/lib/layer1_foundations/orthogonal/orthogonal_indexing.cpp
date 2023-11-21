@@ -156,20 +156,23 @@ long int orthogonal_indexing::Q_epsilon_rank_private(
 
 
 
-void orthogonal_indexing::Q_unrank(int *v,
+void orthogonal_indexing::Q_unrank(
+		int *v,
 		int stride, int k, long int a, int verbose_level)
 {
 
 	Q_unrank_directly(v, stride, k, a, verbose_level);
 }
 
-long int orthogonal_indexing::Q_rank(int *v,
+long int orthogonal_indexing::Q_rank(
+		int *v,
 		int stride, int k, int verbose_level)
 {
 	return Q_rank_directly(v, stride, k, verbose_level);
 }
 
-void orthogonal_indexing::Q_unrank_directly(int *v,
+void orthogonal_indexing::Q_unrank_directly(
+		int *v,
 		int stride, int k, long int a,
 		int verbose_level)
 // parabolic quadric
@@ -201,7 +204,8 @@ void orthogonal_indexing::Q_unrank_directly(int *v,
 	}
 }
 
-long int orthogonal_indexing::Q_rank_directly(int *v,
+long int orthogonal_indexing::Q_rank_directly(
+		int *v,
 		int stride, int k,
 		int verbose_level)
 // parabolic quadric
@@ -234,7 +238,8 @@ long int orthogonal_indexing::Q_rank_directly(int *v,
 	return a + b;
 }
 
-void orthogonal_indexing::Qplus_unrank(int *v,
+void orthogonal_indexing::Qplus_unrank(
+		int *v,
 		int stride, int k, long int a,
 		int verbose_level)
 // hyperbolic quadric
@@ -247,7 +252,8 @@ void orthogonal_indexing::Qplus_unrank(int *v,
 	Sbar_unrank(v, stride, n, a, verbose_level);
 }
 
-long int orthogonal_indexing::Qplus_rank(int *v,
+long int orthogonal_indexing::Qplus_rank(
+		int *v,
 		int stride, int k,
 		int verbose_level)
 // hyperbolic quadric
@@ -266,7 +272,8 @@ long int orthogonal_indexing::Qplus_rank(int *v,
 	return a;
 }
 
-void orthogonal_indexing::Qminus_unrank(int *v,
+void orthogonal_indexing::Qminus_unrank(
+		int *v,
 		int stride, int k, long int a,
 		int c1, int c2, int c3,
 		int verbose_level)
@@ -335,7 +342,8 @@ void orthogonal_indexing::Qminus_unrank(int *v,
 	}
 }
 
-long int orthogonal_indexing::Qminus_rank(int *v,
+long int orthogonal_indexing::Qminus_rank(
+		int *v,
 		int stride, int k, int c1, int c2, int c3,
 		int verbose_level)
 // elliptic quadric
@@ -424,7 +432,8 @@ long int orthogonal_indexing::Qminus_rank(int *v,
 
 
 
-void orthogonal_indexing::S_unrank(int *v, int stride, int n, long int a)
+void orthogonal_indexing::S_unrank(
+		int *v, int stride, int n, long int a)
 {
 	long int l, i, j, x, y, u;
 	int alpha, beta;
@@ -487,7 +496,8 @@ void orthogonal_indexing::S_unrank(int *v, int stride, int n, long int a)
 	}
 }
 
-void orthogonal_indexing::S_rank(int *v, int stride, int n, long int &a)
+void orthogonal_indexing::S_rank(
+		int *v, int stride, int n, long int &a)
 {
 	long int l, i, j, x, y, u;
 	int alpha, beta, gamma, delta, epsilon;
@@ -549,7 +559,8 @@ void orthogonal_indexing::S_rank(int *v, int stride, int n, long int &a)
 	}
 }
 
-void orthogonal_indexing::N_unrank(int *v, int stride, int n, long int a)
+void orthogonal_indexing::N_unrank(
+		int *v, int stride, int n, long int a)
 {
 	long int l, i, j, k, j1, x, y, z, yz, u;
 	int alpha, beta, gamma, delta, epsilon;
@@ -627,7 +638,8 @@ void orthogonal_indexing::N_unrank(int *v, int stride, int n, long int a)
 	}
 }
 
-void orthogonal_indexing::N_rank(int *v, int stride, int n, long int &a)
+void orthogonal_indexing::N_rank(
+		int *v, int stride, int n, long int &a)
 {
 	long int l, i, j, k, x, y, z, yz, u;
 	int alpha, beta, gamma, delta;
@@ -701,7 +713,8 @@ void orthogonal_indexing::N_rank(int *v, int stride, int n, long int &a)
 	}
 }
 
-void orthogonal_indexing::N1_unrank(int *v, int stride, int n, long int a)
+void orthogonal_indexing::N1_unrank(
+		int *v, int stride, int n, long int a)
 {
 	long int l, i, j, k, j1, x, y, z, yz, u;
 	int alpha, beta, gamma;
@@ -808,7 +821,8 @@ void orthogonal_indexing::N1_unrank(int *v, int stride, int n, long int a)
 	}
 }
 
-void orthogonal_indexing::N1_rank(int *v, int stride, int n, long int &a)
+void orthogonal_indexing::N1_rank(
+		int *v, int stride, int n, long int &a)
 {
 	long int l, i, j, k, x, y, z, yz, u;
 	int alpha, alpha_inv, beta, gamma, gamma2, gamma_inv;
@@ -911,7 +925,8 @@ void orthogonal_indexing::N1_rank(int *v, int stride, int n, long int &a)
 	}
 }
 
-void orthogonal_indexing::Sbar_unrank(int *v,
+void orthogonal_indexing::Sbar_unrank(
+		int *v,
 		int stride, int n, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1015,7 +1030,8 @@ void orthogonal_indexing::Sbar_unrank(int *v,
 	}
 }
 
-void orthogonal_indexing::Sbar_rank(int *v,
+void orthogonal_indexing::Sbar_rank(
+		int *v,
 		int stride, int n, long int &a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1144,7 +1160,8 @@ void orthogonal_indexing::Sbar_rank(int *v,
 	}
 }
 
-void orthogonal_indexing::Nbar_unrank(int *v, int stride, int n, long int a)
+void orthogonal_indexing::Nbar_unrank(
+		int *v, int stride, int n, long int a)
 {
 	int y, l;
 
@@ -1169,7 +1186,8 @@ void orthogonal_indexing::Nbar_unrank(int *v, int stride, int n, long int a)
 	}
 }
 
-void orthogonal_indexing::Nbar_rank(int *v, int stride, int n, long int &a)
+void orthogonal_indexing::Nbar_rank(
+		int *v, int stride, int n, long int &a)
 {
 	if (n == 1) {
 		if (v[1 * stride] != 1) {

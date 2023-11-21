@@ -415,7 +415,8 @@ void quadratic_form_list_coding::make_Gram_matrix_from_list_coded_quadratic_form
 	}
 }
 
-void quadratic_form_list_coding::add_term(int n,
+void quadratic_form_list_coding::add_term(
+		int n,
 		field_theory::finite_field &F,
 	int &nb_terms, int *form_i, int *form_j, int *form_coeff,
 	int *Gram,

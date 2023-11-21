@@ -776,6 +776,11 @@ public:
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
+	void refine_decomposition_TDA(
+			geometry::decomposition *Decomposition,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens,
+			int verbose_level);
 	void test_if_two_actions_agree_vector(
 			action *A1, action *A2,
 			data_structures_groups::vector_ge *gens1,

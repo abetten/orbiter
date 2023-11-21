@@ -3108,25 +3108,28 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space" << endl;
 	}
 
-
+#if 0
 	geometry::geometry_global GG;
 	string fname_base;
 
-	fname_base = SO->label_tex + "_TDO";
+	fname_base = SO->label_txt + "_TDO";
 
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
 			"fname_base = " << fname_base << endl;
 	}
 
+
+
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-			"before GG.create_decomposition_of_projective_space" << endl;
+			"before GG.compute_TDO_decomposition_of_projective_space_old" << endl;
 	}
+
 
 	std::vector<std::string> file_names;
 
-	GG.create_decomposition_of_projective_space(
+	GG.compute_TDO_decomposition_of_projective_space_old(
 			fname_base,
 			Surf_A->PA->P,
 			SO->Pts, SO->nb_pts,
@@ -3138,9 +3141,8 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-			"after GG.create_decomposition_of_projective_space" << endl;
+			"after GG.compute_TDO_decomposition_of_projective_space_old" << endl;
 	}
-
 
 	ost << endl << endl;
 
@@ -3154,6 +3156,194 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 
 	}
 
+#endif
+
+
+
+
+	geometry::geometry_global GG;
+	geometry::decomposition_scheme *Decomposition_scheme;
+
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"before GG.compute_TDO_decomposition_of_projective_space" << endl;
+	}
+	Decomposition_scheme = GG.compute_TDO_decomposition_of_projective_space(
+			Surf_A->PA->P,
+			SO->Pts, SO->nb_pts,
+			SO->Lines, SO->nb_lines,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"after GG.compute_TDO_decomposition_of_projective_space" << endl;
+	}
+
+
+
+	string fname1;
+	string fname2;
+
+	fname1 = "surface_" + SO->label_txt + "_TDO_row";
+	fname2 = "surface_" + SO->label_txt + "_TDO_col";
+
+	string fname1_tex;
+	string fname2_tex;
+
+	fname1_tex = fname1 + ".tex";
+	fname2_tex = fname2 + ".tex";
+
+	{
+		ofstream ost(fname1_tex);
+
+		int f_enter_math = false;
+		int f_print_subscripts = true;
+
+		Decomposition_scheme->print_row_tactical_decomposition_scheme_tex(
+				ost, f_enter_math, f_print_subscripts);
+
+	}
+	{
+		ofstream ost(fname2_tex);
+
+		int f_enter_math = false;
+		int f_print_subscripts = true;
+
+		Decomposition_scheme->print_column_tactical_decomposition_scheme_tex(
+				ost, f_enter_math, f_print_subscripts);
+
+	}
+
+	ost << endl << endl;
+
+
+	ost << "$$" << endl;
+	ost << "\\input " << fname1_tex << endl;
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+	ost << "\\input " << fname2_tex << endl;
+	ost << "$$" << endl;
+
+
+	string fname1_csv;
+	string fname2_csv;
+
+	string fname1b_csv;
+	string fname2b_csv;
+
+	fname1_csv = fname1 + ".csv";
+	fname2_csv = fname2 + ".csv";
+	fname1b_csv = fname1 + "_sets.csv";
+	fname2b_csv = fname2 + "_sets.csv";
+
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"before Decomposition_scheme->write_csv" << endl;
+	}
+	Decomposition_scheme->write_csv(
+			fname1_csv, fname2_csv,
+			fname1b_csv, fname2b_csv,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"after Decomposition_scheme->write_csv" << endl;
+	}
+
+	actions::action_global AG;
+
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"before AG.refine_decomposition_TDA" << endl;
+	}
+	AG.refine_decomposition_TDA(
+			Decomposition_scheme->Decomposition,
+			Surf_A->A /* A_on_points */, Surf_A->A2 /* A_on_lines */,
+			Aut_gens,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"after AG.refine_decomposition_TDA" << endl;
+	}
+
+	geometry::decomposition_scheme *Decomposition_scheme_TDA;
+
+	Decomposition_scheme_TDA = NEW_OBJECT(geometry::decomposition_scheme);
+
+	if (f_v) {
+		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
+				"before Decomposition_scheme->init_row_and_col_schemes" << endl;
+	}
+	Decomposition_scheme_TDA->init_row_and_col_schemes(
+			Decomposition_scheme->Decomposition,
+		verbose_level);
+	if (f_v) {
+		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
+				"after Decomposition_scheme->init_row_and_col_schemes" << endl;
+	}
+
+
+	fname1 = "surface_" + SO->label_txt + "_TDA_row";
+	fname2 = "surface_" + SO->label_txt + "_TDA_col";
+
+
+	fname1_tex = fname1 + ".tex";
+	fname2_tex = fname2 + ".tex";
+
+	{
+		ofstream ost(fname1_tex);
+
+		int f_enter_math = false;
+		int f_print_subscripts = true;
+
+		Decomposition_scheme_TDA->print_row_tactical_decomposition_scheme_tex(
+				ost, f_enter_math, f_print_subscripts);
+
+	}
+	{
+		ofstream ost(fname2_tex);
+
+		int f_enter_math = false;
+		int f_print_subscripts = true;
+
+		Decomposition_scheme_TDA->print_column_tactical_decomposition_scheme_tex(
+				ost, f_enter_math, f_print_subscripts);
+
+	}
+
+	ost << endl << endl;
+
+
+	ost << "TDA:" << endl;
+	ost << "$$" << endl;
+	ost << "\\input " << fname1_tex << endl;
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+	ost << "\\input " << fname2_tex << endl;
+	ost << "$$" << endl;
+
+
+	algebraic_geometry::variety_object *V;
+
+	V = NEW_OBJECT(algebraic_geometry::variety_object);
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"before V->init_set_of_sets" << endl;
+	}
+	V->init_set_of_sets(
+			Surf_A->PA->P,
+			Surf_A->Surf->PolynomialDomains->Poly3_4,
+			SO->eqn,
+			Decomposition_scheme->SoS_points,
+			Decomposition_scheme->SoS_lines,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"after V->init_set_of_sets" << endl;
+	}
+
+
+
+	FREE_OBJECT(Decomposition_scheme->Decomposition);
+	FREE_OBJECT(Decomposition_scheme);
 
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space done" << endl;

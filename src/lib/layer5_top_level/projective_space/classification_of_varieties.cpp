@@ -219,7 +219,8 @@ void classification_of_varieties::init(
 }
 
 
-void classification_of_varieties::classify_nauty(int verbose_level)
+void classification_of_varieties::classify_nauty(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -252,7 +253,8 @@ void classification_of_varieties::classify_nauty(int verbose_level)
 
 }
 
-void classification_of_varieties::classify_with_substructure(int verbose_level)
+void classification_of_varieties::classify_with_substructure(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -314,7 +316,8 @@ void classification_of_varieties::classify_with_substructure(int verbose_level)
 }
 
 
-void classification_of_varieties::main_loop(int verbose_level)
+void classification_of_varieties::main_loop(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -340,7 +343,8 @@ void classification_of_varieties::main_loop(int verbose_level)
 
 		string fname_case_out;
 
-		fname_case_out = Classifier->Descr->fname_base_out + "_cnt" + std::to_string(counter);
+		fname_case_out = Classifier->Descr->fname_base_out
+				+ "_cnt" + std::to_string(counter);
 
 		canonical_form_of_variety *Variety;
 
@@ -369,7 +373,8 @@ void classification_of_varieties::main_loop(int verbose_level)
 					"counter = " << counter << " / " << Classifier->Input->nb_objects_to_test
 					<< " before Variety->compute_canonical_form" << endl;
 		}
-		Variety->compute_canonical_form(counter, verbose_level - 1);
+		Variety->compute_canonical_form(
+				counter, verbose_level - 1);
 		if (f_v) {
 			cout << "classification_of_varieties::main_loop "
 					"counter = " << counter << " / " << Classifier->Input->nb_objects_to_test

@@ -802,10 +802,11 @@ void csv_file_support::do_csv_file_select_rows(
 	S.read_spreadsheet(fname, verbose_level);
 
 
+
 	int i;
 
 
-
+#if 1
 	string fname_out;
 
 	fname_out = fname;
@@ -819,11 +820,12 @@ void csv_file_support::do_csv_file_select_rows(
 		for (i = 0; i < nb_rows; i++) {
 			//ost << i << ",";
 			S.print_table_row(Rows[i] + 1, false, ost);
-			}
+		}
 		ost << "END" << endl;
 	}
 	cout << "Written file " << fname_out
 			<< " of size " << Fio->file_size(fname_out) << endl;
+#endif
 
 	FREE_int(Rows);
 
@@ -886,6 +888,7 @@ void csv_file_support::do_csv_file_split_rows_modulo(
 
 void csv_file_support::do_csv_file_select_cols(
 		std::string &fname,
+		std::string &fname_append,
 		std::string &cols_text,
 		int verbose_level)
 {
@@ -894,67 +897,127 @@ void csv_file_support::do_csv_file_select_cols(
 	if (f_v) {
 		cout << "csv_file_support::do_csv_file_select_cols" << endl;
 	}
-	int *Cols;
+	long int *Cols;
 	int nb_cols;
-	data_structures::string_tools ST;
 
-	Int_vec_scan(cols_text, Cols, nb_cols);
+	//Int_vec_scan(cols_text, Cols, nb_cols);
+
+
+	data_structures::vector_builder *vb;
+
+	vb = Get_vector(cols_text);
+
+	nb_cols = vb->len;
+	Cols = vb->v;
+	//long int *v;
+	//int len;
+
 
 	data_structures::spreadsheet S;
 
 	S.read_spreadsheet(fname, verbose_level);
 
 
-	int i;
 	int nb_rows;
 
 	nb_rows = S.nb_rows;
 	if (f_v) {
 		cout << "csv_file_support::do_csv_file_select_cols "
 				"nb_rows=" << nb_rows << endl;
+		cout << "csv_file_support::do_csv_file_select_cols "
+				"nb_cols=" << nb_cols << endl;
 	}
 
 
+	std::string *Header_rows;
+	std::string *Header_cols;
+	std::string *T;
+	int nb_r, nb_c;
+
+	S.stringify(
+			Header_rows, Header_cols, T,
+			nb_r, nb_c,
+			verbose_level - 1);
+
+	int i, j;
+
+	if (false) {
+		cout << "Header_cols" << endl;
+		for (j = 0; j < nb_c; j++) {
+			cout << j << " : " << Header_cols[j] << endl;
+		}
+		cout << "Header_rows" << endl;
+		for (i = 0; i < nb_r; i++) {
+			cout << i << " : " << Header_rows[i] << endl;
+		}
+		cout << "T" << endl;
+		for (i = 0; i < nb_r; i++) {
+			for (j = 0; j < nb_c; j++) {
+				cout << i << "," << j << " : " << T[i * nb_c + j] << endl;
+
+			}
+		}
+	}
+
+	std::string *Header_cols2;
+	std::string *T2;
+
+	Header_cols2 = new string [nb_cols];
+	for (j = 0; j < nb_cols; j++) {
+		Header_cols2[j] = Header_cols[Cols[j]];
+	}
+
+	T2 = new string [nb_r * nb_cols];
+	for (i = 0; i < nb_r; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			T2[i * nb_cols + j] = T[i * nb_c + Cols[j]];
+
+		}
+	}
+
+
+	data_structures::string_tools ST;
 	string fname_out;
 
 	fname_out = fname;
 	ST.chop_off_extension(fname_out);
-	fname_out += "_select.csv";
+	fname_out += fname_append;
+	fname_out += ".csv";
 
-	{
-		ofstream ost(fname_out);
-		ost << "Row,";
-		S.print_table_row_with_column_selection(
-				0, false, Cols, nb_cols, ost, verbose_level);
-		for (i = 0; i < nb_rows - 1; i++) {
-			ost << i << ",";
-			S.print_table_row_with_column_selection(i + 1, false,
-					Cols, nb_cols, ost, verbose_level);
-			}
-		ost << "END" << endl;
+
+	string headings;
+
+
+	for (j = 0; j < nb_cols; j++) {
+		headings += Header_cols2[j];
+		if (j < 1 + nb_cols - 1) {
+			headings += ",";
+		}
 	}
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_cols "
+				"before Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+	Fio->Csv_file_support->write_table_of_strings(
+			fname_out,
+			nb_r, nb_cols, T2,
+			headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::export_csv "
+				"after Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+
+
+
+
 	cout << "Written file " << fname_out
 			<< " of size " << Fio->file_size(fname_out) << endl;
 
-	fname_out = fname;
-	ST.chop_off_extension(fname_out);
-	fname_out += "_special.csv";
 
-	{
-		ofstream ost(fname_out);
-		//ost << "Row,";
-		//S.print_table_row_with_column_selection(0, false, Cols, nb_cols, ost);
-		for (i = 0; i < nb_rows - 1; i++) {
-			ost << "Orb" << i << "=";
-			S.print_table_row_with_column_selection(i + 1, false,
-					Cols, nb_cols, ost, verbose_level);
-			}
-		ost << "END" << endl;
-	}
-	cout << "Written file " << fname_out
-			<< " of size " << Fio->file_size(fname_out) << endl;
-
-	FREE_int(Cols);
+	//FREE_int(Cols);
 	if (f_v) {
 		cout << "csv_file_support::do_csv_file_select_cols done" << endl;
 	}

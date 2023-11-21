@@ -1610,7 +1610,8 @@ void surface_object_properties::print_neighbor_sets(
 
 
 
-void surface_object_properties::print_plane_type_by_points(std::ostream &ost)
+void surface_object_properties::print_plane_type_by_points(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{Plane types by points}" << endl;
 		//*fp << "$$" << endl;
@@ -1620,13 +1621,15 @@ void surface_object_properties::print_plane_type_by_points(std::ostream &ost)
 	ost << "\\\\" << endl;
 }
 
-void surface_object_properties::print_lines(std::ostream &ost)
+void surface_object_properties::print_lines(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{The " << SO->nb_lines << " Lines}" << endl;
 	SO->Surf->print_lines_tex(ost, SO->Lines, SO->nb_lines);
 }
 
-void surface_object_properties::print_lines_with_points_on_them(std::ostream &ost)
+void surface_object_properties::print_lines_with_points_on_them(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 
@@ -1719,7 +1722,8 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 	}
 }
 
-void surface_object_properties::print_equation(std::ostream &ost)
+void surface_object_properties::print_equation(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{The equation}" << endl;
 	ost << "The equation of the surface ";
@@ -1761,7 +1765,8 @@ void surface_object_properties::print_equation(std::ostream &ost)
 
 }
 
-void surface_object_properties::print_summary(std::ostream &ost)
+void surface_object_properties::print_summary(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{Summary}" << endl;
 
@@ -1810,7 +1815,8 @@ void surface_object_properties::print_summary(std::ostream &ost)
 #endif
 }
 
-void surface_object_properties::print_affine_points_in_source_code(std::ostream &ost)
+void surface_object_properties::print_affine_points_in_source_code(
+		std::ostream &ost)
 {
 	int i, j, cnt;
 	int v[4];
@@ -1838,7 +1844,8 @@ void surface_object_properties::print_affine_points_in_source_code(std::ostream 
 	ost << "\\end{verbatim}" << endl;
 }
 
-void surface_object_properties::print_points(std::ostream &ost)
+void surface_object_properties::print_points(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{All Points on surface}" << endl;
 
@@ -1884,7 +1891,8 @@ void surface_object_properties::print_points(std::ostream &ost)
 #endif
 }
 
-void surface_object_properties::print_Eckardt_points(std::ostream &ost)
+void surface_object_properties::print_Eckardt_points(
+		std::ostream &ost)
 {
 	//latex_interface L;
 	int i, j, p, a, b, c;
@@ -2010,7 +2018,8 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 
 }
 
-void surface_object_properties::print_Hesse_planes(std::ostream &ost)
+void surface_object_properties::print_Hesse_planes(
+		std::ostream &ost)
 {
 	//latex_interface L;
 	int i, j;
@@ -2105,7 +2114,8 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 
 }
 
-void surface_object_properties::print_axes(std::ostream &ost)
+void surface_object_properties::print_axes(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i, j, idx, t_idx, t_r, a;
@@ -2129,7 +2139,8 @@ void surface_object_properties::print_axes(std::ostream &ost)
 	}
 }
 
-void surface_object_properties::print_singular_points(std::ostream &ost)
+void surface_object_properties::print_singular_points(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i, j, p;
@@ -2176,7 +2187,8 @@ void surface_object_properties::print_singular_points(std::ostream &ost)
 
 
 
-void surface_object_properties::print_double_points(std::ostream &ost)
+void surface_object_properties::print_double_points(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i, p, a, b;
@@ -2296,7 +2308,8 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 	}
 }
 
-void surface_object_properties::print_single_points(std::ostream &ost)
+void surface_object_properties::print_single_points(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i, p, a;
@@ -2363,7 +2376,8 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 	}
 }
 
-void surface_object_properties::print_points_on_surface(std::ostream &ost)
+void surface_object_properties::print_points_on_surface(
+		std::ostream &ost)
 {
 	//latex_interface L;
 	//int i;
@@ -2395,7 +2409,8 @@ void surface_object_properties::print_points_on_surface(std::ostream &ost)
 #endif
 }
 
-void surface_object_properties::print_all_points_on_surface(std::ostream &ost)
+void surface_object_properties::print_all_points_on_surface(
+		std::ostream &ost)
 {
 	//latex_interface L;
 	//int i;
@@ -2431,7 +2446,8 @@ void surface_object_properties::print_all_points_on_surface(std::ostream &ost)
 	}
 }
 
-void surface_object_properties::print_points_on_lines(std::ostream &ost)
+void surface_object_properties::print_points_on_lines(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i;
@@ -2511,7 +2527,8 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(
 	}
 }
 
-void surface_object_properties::print_double_sixes(std::ostream &ost)
+void surface_object_properties::print_double_sixes(
+		std::ostream &ost)
 {
 	//int i, j, a;
 	//latex_interface L;
@@ -2525,7 +2542,8 @@ void surface_object_properties::print_double_sixes(std::ostream &ost)
 
 }
 
-void surface_object_properties::print_half_double_sixes(std::ostream &ost)
+void surface_object_properties::print_half_double_sixes(
+		std::ostream &ost)
 {
 	//int h, i, j, a;
 	//latex_interface L;
@@ -2543,7 +2561,8 @@ void surface_object_properties::print_half_double_sixes(std::ostream &ost)
 }
 
 
-void surface_object_properties::print_trihedral_pairs(std::ostream &ost)
+void surface_object_properties::print_trihedral_pairs(
+		std::ostream &ost)
 {
 
 	SO->Surf->Schlaefli->Schlaefli_tritangent_planes->latex_tritangent_planes(ost);
@@ -2553,7 +2572,8 @@ void surface_object_properties::print_trihedral_pairs(std::ostream &ost)
 	SO->Surf->Schlaefli->Schlaefli_trihedral_pairs->latex_triads(ost);
 }
 
-void surface_object_properties::print_trihedral_pairs_numerically(std::ostream &ost)
+void surface_object_properties::print_trihedral_pairs_numerically(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 

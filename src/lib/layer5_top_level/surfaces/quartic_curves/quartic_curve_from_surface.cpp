@@ -945,14 +945,18 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 	ost << "The transformed surface is" << endl;
 	ost << "$$" << endl;
-	L.print_integer_matrix_tex(ost, equation_nice, 1, SOA->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
+	L.print_integer_matrix_tex(
+			ost, equation_nice, 1,
+			SOA->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
 	ost << "$$" << endl;
 
 
 
 	ost << "The gradient is" << endl;
 	ost << "$$" << endl;
-	L.print_integer_matrix_tex(ost, gradient, 4, SOA->Surf->PolynomialDomains->Poly2_4->get_nb_monomials());
+	L.print_integer_matrix_tex(
+			ost, gradient, 4,
+			SOA->Surf->PolynomialDomains->Poly2_4->get_nb_monomials());
 	ost << "$$" << endl;
 
 
@@ -1014,7 +1018,8 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "The points on the polar hypersurface are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_polar_hypersurface; i++) {
-		SOA->Surf->unrank_point(v, Pts_on_polar_hypersurface[i]);
+		SOA->Surf->unrank_point(
+				v, Pts_on_polar_hypersurface[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_on_polar_hypersurface[i] << "}=";
 		Int_vec_print_fully(ost, v, 4);
@@ -1024,7 +1029,10 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 #endif
 
 	ost << "The points on the polar hypersurface are: ";
-	Lint_vec_print_fully(ost, Pts_on_polar_hypersurface, nb_pts_on_polar_hypersurface);
+	Lint_vec_print_fully(
+			ost,
+			Pts_on_polar_hypersurface,
+			nb_pts_on_polar_hypersurface);
 	ost << "\\\\" << endl;
 
 
@@ -1149,12 +1157,12 @@ void quartic_curve_from_surface::TDO_decomposition(
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::TDO_decomposition "
-			"before GG.create_decomposition_of_projective_space" << endl;
+			"before GG.compute_TDO_decomposition_of_projective_space_old" << endl;
 	}
 
 	std::vector<std::string> file_names;
 
-	GG.create_decomposition_of_projective_space(
+	GG.compute_TDO_decomposition_of_projective_space_old(
 			fname_base,
 			SOA->Surf_A->PA->PA2->P,
 			Pts_on_curve, sz_curve,
@@ -1164,7 +1172,7 @@ void quartic_curve_from_surface::TDO_decomposition(
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::TDO_decomposition "
-			"after GG.create_decomposition_of_projective_space" << endl;
+			"after GG.compute_TDO_decomposition_of_projective_space_old" << endl;
 	}
 
 	ost << endl << endl;

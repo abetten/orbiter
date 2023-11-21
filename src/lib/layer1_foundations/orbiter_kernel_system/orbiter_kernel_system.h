@@ -162,6 +162,7 @@ public:
 			int verbose_level);
 	void do_csv_file_select_cols(
 			std::string &fname,
+			std::string &fname_append,
 			std::string &cols_text,
 			int verbose_level);
 	void do_csv_file_select_rows_and_cols(

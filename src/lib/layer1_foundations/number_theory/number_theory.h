@@ -41,7 +41,8 @@ public:
 			field_theory::finite_field *F,
 			int n, int verbose_level);
 	void print();
-	void print_latex(std::ostream &ost);
+	void print_latex(
+			std::ostream &ost);
 	void print_latex_with_selection(
 			std::ostream &ost, int *Selection, int nb_sel);
 
@@ -79,7 +80,8 @@ public:
 	void init(
 			field_theory::finite_field *F,
 			int b, int c, int verbose_level);
-	void compute_points(int verbose_level);
+	void compute_points(
+			int verbose_level);
 	void add_point_to_table(
 			int x, int y, int z);
 	int evaluate_RHS(int x);
@@ -106,7 +108,8 @@ public:
 	void make_affine_point(
 			int x1, int x2, int x3,
 		int &a, int &b, int verbose_level);
-	void compute_addition_table(int verbose_level);
+	void compute_addition_table(
+			int verbose_level);
 	void print_addition_table();
 	int index_of_point(
 			int x1, int x2, int x3);
@@ -116,8 +119,10 @@ public:
 			std::ostream &ost);
 	void order_of_all_points(
 			std::vector<int> &Ord);
-	int order_of_point(int i);
-	void print_all_powers(int i);
+	int order_of_point(
+			int i);
+	void print_all_powers(
+			int i);
 };
 
 
@@ -223,53 +228,96 @@ class number_theory_domain {
 public:
 	number_theory_domain();
 	~number_theory_domain();
-	long int mod(long int a, long int p);
-	long int int_negate(long int a, long int p);
-	long int power_mod(long int a, long int n, long int p);
-	long int inverse_mod(long int a, long int p);
-	long int mult_mod(long int a, long int b, long int p);
-	long int add_mod(long int a, long int b, long int p);
-	long int ab_over_c(long int a, long int b, long int c);
-	long int int_abs(long int a);
-	long int gcd_lint(long int m, long int n);
-	void extended_gcd_int(int m, int n, int &g, int &u, int &v);
-	void extended_gcd_lint(long int m, long int n,
+	long int mod(
+			long int a, long int p);
+	long int int_negate(
+			long int a, long int p);
+	long int power_mod(
+			long int a, long int n, long int p);
+	long int inverse_mod(
+			long int a, long int p);
+	long int mult_mod(
+			long int a, long int b, long int p);
+	long int add_mod(
+			long int a, long int b, long int p);
+	long int ab_over_c(
+			long int a, long int b, long int c);
+	long int int_abs(
+			long int a);
+	long int gcd_lint(
+			long int m, long int n);
+	void extended_gcd_int(
+			int m, int n, int &g, int &u, int &v);
+	void extended_gcd_lint(
+			long int m, long int n,
 			long int &g, long int &u, long int &v);
-	long int gcd_with_key_in_latex(std::ostream &ost,
-			long int a, long int b, int f_key, int verbose_level);
-	int i_power_j_safe(int i, int j);
-	long int i_power_j_lint_safe(int i, int j, int verbose_level);
-	long int i_power_j_lint(long int i, long int j);
-	int i_power_j(int i, int j);
+	void extended_gcd_with_key(
+			ring_theory::longinteger_object &a,
+			ring_theory::longinteger_object &b, ring_theory::longinteger_object &g,
+			ring_theory::longinteger_object &u, ring_theory::longinteger_object &v,
+			std::ostream &ost, int f_key,
+			int &nb_steps,
+		int verbose_level);
+	long int gcd_with_key_in_latex(
+			std::ostream &ost,
+			long int a, long int b, int f_key,
+			int verbose_level);
+	int i_power_j_safe(
+			int i, int j);
+	long int i_power_j_lint_safe(
+			int i, int j, int verbose_level);
+	long int i_power_j_lint(
+			long int i, long int j);
+	int i_power_j(
+			int i, int j);
 	void do_eulerfunction_interval(
-			long int n_min, long int n_max, int verbose_level);
-	long int euler_function(long int n);
-	long int moebius_function(long int n);
-	long int order_mod_p(long int a, long int p);
-	int int_log2(int n);
-	int int_log10(int n);
-	int lint_log10(long int n);
-	int int_logq(int n, int q);
+			long int n_min, long int n_max,
+			int verbose_level);
+	long int euler_function(
+			long int n);
+	long int moebius_function(
+			long int n);
+	long int order_mod_p(
+			long int a, long int p);
+	int int_log2(
+			int n);
+	int int_log10(
+			int n);
+	int lint_log10(
+			long int n);
+	int int_logq(
+			int n, int q);
 	// returns the number of digits in base q representation
-	int lint_logq(long int n, int q);
-	int is_strict_prime_power(int q);
+	int lint_logq(
+			long int n, int q);
+	int is_strict_prime_power(
+			int q);
 	// assuming that q is a prime power, this function tests
 	// if q is a strict prime power
-	int is_prime(int p);
-	int is_prime_power(int q);
-	int is_prime_power(int q, int &p, int &h);
-	int smallest_primedivisor(int n);
+	int is_prime(
+			int p);
+	int is_prime_power(
+			int q);
+	int is_prime_power(
+			int q, int &p, int &h);
+	int smallest_primedivisor(
+			int n);
 	//Computes the smallest prime dividing $n$.
 	//The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
-	int sp_ge(int n, int p_min);
-	int factor_int(int a, int *&primes, int *&exponents);
-	int nb_prime_factors_counting_multiplicities(long int a);
-	int nb_distinct_prime_factors(long int a);
+	int sp_ge(
+			int n, int p_min);
+	int factor_int(
+			int a, int *&primes, int *&exponents);
+	int nb_prime_factors_counting_multiplicities(
+			long int a);
+	int nb_distinct_prime_factors(
+			long int a);
 	void factor_lint(
 			long int a,
 			std::vector<long int> &primes,
 			std::vector<int> &exponents);
-	void factor_prime_power(int q, int &p, int &e);
+	void factor_prime_power(
+			int q, int &p, int &e);
 	long int primitive_root_randomized(
 			long int p, int verbose_level);
 	long int primitive_root(
@@ -285,8 +333,10 @@ public:
 			std::ostream &ost,
 			long int a, long int m, int verbose_level);
 	//Computes the Legendre symbol $\left( \frac{a}{m} \right)$.
-	int ny2(long int x, long int &x1);
-	int ny_p(long int n, long int p);
+	int ny2(
+			long int x, long int &x1);
+	int ny_p(
+			long int n, long int p);
 	//long int sqrt_mod_simple(long int a, long int p);
 	void print_factorization(
 			int nb_primes, int *primes, int *exponents);
@@ -294,27 +344,39 @@ public:
 			int nb_primes,
 			ring_theory::longinteger_object *primes,
 			int *exponents);
-	void int_add_fractions(int at, int ab, int bt, int bb,
+	void int_add_fractions(
+			int at, int ab, int bt, int bb,
 		int &ct, int &cb, int verbose_level);
-	void int_mult_fractions(int at, int ab, int bt, int bb,
+	void int_mult_fractions(
+			int at, int ab, int bt, int bb,
 		int &ct, int &cb, int verbose_level);
-	int choose_a_prime_greater_than(int lower_bound);
-	int choose_a_prime_in_interval(int lower_bound, int upper_bound);
-	int random_integer_greater_than(int n, int lower_bound);
-	int random_integer_in_interval(int lower_bound, int upper_bound);
+	int choose_a_prime_greater_than(
+			int lower_bound);
+	int choose_a_prime_in_interval(
+			int lower_bound, int upper_bound);
+	int random_integer_greater_than(
+			int n, int lower_bound);
+	int random_integer_in_interval(
+			int lower_bound, int upper_bound);
 	int nb_primes_available();
-	int get_prime_from_table(int idx);
+	int get_prime_from_table(
+			int idx);
 	long int Chinese_Remainders(
 			std::vector<long int> &Remainders,
 			std::vector<long int> &Moduli,
 			long int &M, int verbose_level);
-	long int ChineseRemainder2(long int a1, long int a2,
+	long int ChineseRemainder2(
+			long int a1, long int a2,
 			long int p1, long int p2, int verbose_level);
-	void sieve(std::vector<int> &primes,
+	void sieve(
+			std::vector<int> &primes,
 			int factorbase, int verbose_level);
-	void sieve_primes(std::vector<int> &v,
-			int from, int to, int limit, int verbose_level);
-	int nb_primes(int n);
+	void sieve_primes(
+			std::vector<int> &v,
+			int from, int to, int limit,
+			int verbose_level);
+	int nb_primes(
+			int n);
 	void cyclotomic_set(
 			std::vector<int> &cyclotomic_set,
 			int a, int q, int n, int verbose_level);
@@ -368,6 +430,16 @@ public:
 			geometry::projective_space *P2,
 		int *A6, int p1_rk, int p2_rk,
 		int verbose_level);
+	void create_gcd_worksheet(
+			int nb_problems, int N, int f_key,
+			int verbose_level);
+	void create_gcd_worksheet2(
+			std::ostream &ost,
+			int nb_problems, int f_key, int N);
+	void create_gcd_problem(
+			std::ostream &ost, int f_key, int N);
+	void make_gcd_problem(
+			std::ostream &ost, int f_key, int N);
 
 };
 

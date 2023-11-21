@@ -149,7 +149,8 @@ void cyclotomic_sets::print()
 	S->print_table();
 }
 
-void cyclotomic_sets::print_latex(std::ostream &ost)
+void cyclotomic_sets::print_latex(
+		std::ostream &ost)
 {
 	S->print_table_latex_simple(ost);
 }

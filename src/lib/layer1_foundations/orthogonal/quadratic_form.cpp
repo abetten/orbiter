@@ -160,7 +160,8 @@ void quadratic_form::init(
 }
 
 
-void quadratic_form::init_form_and_Gram_matrix(int verbose_level)
+void quadratic_form::init_form_and_Gram_matrix(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx;
@@ -271,7 +272,8 @@ void quadratic_form::init_form_and_Gram_matrix(int verbose_level)
 	}
 }
 
-void quadratic_form::make_Gram_matrix(int verbose_level)
+void quadratic_form::make_Gram_matrix(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, u, offset = 0;
@@ -312,7 +314,8 @@ void quadratic_form::make_Gram_matrix(int verbose_level)
 
 
 
-int quadratic_form::evaluate_quadratic_form(int *v, int stride)
+int quadratic_form::evaluate_quadratic_form(
+		int *v, int stride)
 {
 	int f;
 
@@ -882,7 +885,8 @@ void quadratic_form::Siegel_map_between_singular_points(
 	FREE_int(x);
 }
 
-void quadratic_form::choose_anisotropic_form(int verbose_level)
+void quadratic_form::choose_anisotropic_form(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::unipoly_domain FX(F);

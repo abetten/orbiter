@@ -87,7 +87,8 @@ void linear_complex::init(
 	}
 }
 
-void linear_complex::compute_neighbors(int verbose_level)
+void linear_complex::compute_neighbors(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, a, b, c;

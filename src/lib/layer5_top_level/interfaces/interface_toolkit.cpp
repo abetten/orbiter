@@ -176,6 +176,11 @@ interface_toolkit::interface_toolkit()
 	//std::string compare_columns_column1;
 	//std::string compare_columns_column2;
 
+	f_gcd_worksheet = false;
+	gcd_worksheet_nb_problems = 0;
+	gcd_worksheet_N = 0;
+	gcd_worksheet_key = false;
+
 }
 
 
@@ -287,6 +292,10 @@ void interface_toolkit::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-compare_columns") == 0) {
 		cout << "-compare_columns <col1> <col2> " << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-gcd_worksheet") == 0) {
+		cout << "-gcd_worksheet <nb_problems> <N> <f_key>" << endl;
+	}
+
 }
 
 int interface_toolkit::recognize_keyword(int argc,
@@ -400,6 +409,9 @@ int interface_toolkit::recognize_keyword(int argc,
 	else if (ST.stringcmp(argv[i], "-compare_columns") == 0) {
 		return true;
 	}
+	else if (ST.stringcmp(argv[i], "-gcd_worksheet") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -477,11 +489,14 @@ void interface_toolkit::read_arguments(int argc,
 	else if (ST.stringcmp(argv[i], "-csv_file_select_cols") == 0) {
 		f_csv_file_select_cols = true;
 		csv_file_select_cols_fname.assign(argv[++i]);
+		csv_file_select_cols_fname_append.assign(argv[++i]);
 		csv_file_select_cols_text.assign(argv[++i]);
 		if (f_v) {
 			cout << "-csv_file_select_cols "
 					<< csv_file_select_cols_fname
-				<< " " << csv_file_select_cols_text << endl;
+					<< " " << csv_file_select_cols_fname_append
+					<< " " << csv_file_select_cols_text
+				<< endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
@@ -892,6 +907,19 @@ void interface_toolkit::read_arguments(int argc,
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-gcd_worksheet") == 0) {
+		f_gcd_worksheet = true;
+		gcd_worksheet_nb_problems = ST.strtoi(argv[++i]);
+		gcd_worksheet_N = ST.strtoi(argv[++i]);
+		gcd_worksheet_key = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-gcd_worksheet "
+					<< " " << gcd_worksheet_nb_problems
+					<< " " << gcd_worksheet_N
+					<< " " << gcd_worksheet_key
+					<< endl;
+		}
+	}
 
 
 	if (f_v) {
@@ -923,8 +951,11 @@ void interface_toolkit::print()
 				<< " " << csv_file_split_rows_modulo_n << endl;
 	}
 	if (f_csv_file_select_cols) {
-		cout << "-csv_file_select_cols " << csv_file_select_cols_fname
-				<< " " << csv_file_select_cols_text << endl;
+		cout << "-csv_file_select_cols "
+				<< csv_file_select_cols_fname
+				<< " " << csv_file_select_cols_fname_append
+				<< " " << csv_file_select_cols_text
+			<< endl;
 	}
 	if (f_csv_file_select_rows_and_cols) {
 		cout << "-csv_file_select_rows_and_cols "
@@ -1086,6 +1117,13 @@ void interface_toolkit::print()
 					<< " " << compare_columns_column2
 					<< endl;
 	}
+	if (f_gcd_worksheet) {
+		cout << "-gcd_worksheet "
+				<< " " << gcd_worksheet_nb_problems
+				<< " " << gcd_worksheet_N
+				<< " " << gcd_worksheet_key
+				<< endl;
+	}
 }
 
 void interface_toolkit::worker(int verbose_level)
@@ -1175,6 +1213,7 @@ void interface_toolkit::worker(int verbose_level)
 
 		Fio.Csv_file_support->do_csv_file_select_cols(
 				csv_file_select_cols_fname,
+				csv_file_select_cols_fname_append,
 				csv_file_select_cols_text, verbose_level);
 	}
 	else if (f_csv_file_select_rows_and_cols) {
@@ -1864,7 +1903,14 @@ void interface_toolkit::worker(int verbose_level)
 				verbose_level);
 	}
 
+	else if (f_gcd_worksheet) {
 
+		number_theory::number_theory_domain NT;
+
+		NT.create_gcd_worksheet(
+				gcd_worksheet_nb_problems, gcd_worksheet_N, gcd_worksheet_key,
+				verbose_level);
+	}
 
 
 	if (f_v) {

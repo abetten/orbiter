@@ -147,7 +147,8 @@ void quartic_curve_object_with_action::init_image_of(
 }
 
 
-void quartic_curve_object_with_action::print(std::ostream &ost)
+void quartic_curve_object_with_action::print(
+		std::ostream &ost)
 {
 	ost << "cnt=" << cnt;
 	ost << " po=" << po;

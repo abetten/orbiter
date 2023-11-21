@@ -29,7 +29,8 @@ latex_interface::~latex_interface()
 
 }
 
-void latex_interface::head_easy(std::ostream& ost)
+void latex_interface::head_easy(
+		std::ostream& ost)
 {
 	std::string dummy;
 
@@ -48,7 +49,8 @@ void latex_interface::head_easy(std::ostream& ost)
 
 }
 
-void latex_interface::head_easy_and_enlarged(std::ostream& ost)
+void latex_interface::head_easy_and_enlarged(
+		std::ostream& ost)
 {
 	std::string dummy;
 
@@ -87,7 +89,8 @@ void latex_interface::head_easy_with_extras_in_the_praeamble(
 
 }
 
-void latex_interface::head_easy_sideways(std::ostream& ost)
+void latex_interface::head_easy_sideways(
+		std::ostream& ost)
 {
 	std::string dummy;
 
@@ -553,7 +556,8 @@ void latex_interface::head(
 }
 
 
-void latex_interface::foot(std::ostream& ost)
+void latex_interface::foot(
+		std::ostream& ost)
 {
 	ost << endl;
 	ost << endl;

@@ -438,7 +438,8 @@ void linear_algebra_global::nullspace(
 		cout << "linear_algebra_global::nullspace "
 				"before F->Linear_algebra->Gauss_int" << endl;
 	}
-	rk1 = F->Linear_algebra->Gauss_int(A + rk_A * n,
+	rk1 = F->Linear_algebra->Gauss_int(
+			A + rk_A * n,
 		false /* f_special */, true /* f_complete */, base_cols,
 		false /* f_P */, NULL /*P*/, n - rk_A, n, n,
 		0 /*verbose_level*/);
@@ -687,7 +688,8 @@ void linear_algebra_global::do_RREF(
 		//Int_matrix_print(A, m, n);
 	}
 
-	rk = F->Linear_algebra->Gauss_int(A,
+	rk = F->Linear_algebra->Gauss_int(
+			A,
 		false /* f_special */, true /* f_complete */, base_cols,
 		false /* f_P */, NULL /*P*/, m, n, n,
 		0 /*verbose_level*/);
@@ -891,7 +893,10 @@ void linear_algebra_global::RREF_demo(
 		string extra_praeamble;
 
 
-		fname = "RREF_example_q" + std::to_string(F->q) + "_" + std::to_string(m) + "_" + std::to_string(n) + ".tex";
+		fname = "RREF_example_q" + std::to_string(F->q)
+				+ "_" + std::to_string(m)
+				+ "_" + std::to_string(n)
+				+ ".tex";
 		title = "RREF example $q=" + std::to_string(F->q) + "$";
 
 
@@ -978,8 +983,9 @@ void linear_algebra_global::RREF_with_steps_latex(
 	i = 0;
 	j = 0;
 	while (true) {
-		if (F->Linear_algebra->RREF_search_pivot(A, m, n,
-			i, j, base_cols, verbose_level)) {
+		if (F->Linear_algebra->RREF_search_pivot(
+				A, m, n,
+				i, j, base_cols, verbose_level)) {
 			ost << "\\noindent  Position $(i,j)=(" << i << "," << j << "),$ "
 					"found pivot in column " << base_cols[i] << "\\\\" << endl;
 			ost << "$$" << endl;
@@ -996,7 +1002,8 @@ void linear_algebra_global::RREF_with_steps_latex(
 			}
 
 
-			F->Linear_algebra->RREF_make_pivot_one(A, m, n, i, j, base_cols, verbose_level);
+			F->Linear_algebra->RREF_make_pivot_one(
+					A, m, n, i, j, base_cols, verbose_level);
 			ost << "\\noindent After making pivot 1:\\\\" << endl;
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
@@ -1012,7 +1019,8 @@ void linear_algebra_global::RREF_with_steps_latex(
 			}
 
 
-			F->Linear_algebra->RREF_elimination_below(A, m, n, i, j, base_cols, verbose_level);
+			F->Linear_algebra->RREF_elimination_below(
+					A, m, n, i, j, base_cols, verbose_level);
 			ost << "\\noindent After elimination below pivot:\\\\" << endl;
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
@@ -1036,7 +1044,8 @@ void linear_algebra_global::RREF_with_steps_latex(
 		}
 	}
 	for (i = rk - 1; i >= 0; i--) {
-		F->Linear_algebra->RREF_elimination_above(A, m, n, i, base_cols, verbose_level);
+		F->Linear_algebra->RREF_elimination_above(
+				A, m, n, i, base_cols, verbose_level);
 		ost << "\\noindent After elimination above pivot " << i
 				<< " in position (" << i << "," << base_cols[i] << "):\\\\" << endl;
 		ost << "$$" << endl;
@@ -1073,13 +1082,17 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 		int n,
 	int *Elt, int *Mtx, int &frobenius,
 	int verbose_level)
+// the element is given as permutation of
+// the points of projective space in Elt[]
+// out: Mtx[d * d], frobenius
+// d = n + 1
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int d = n + 1;
 	int *v1, *v2, *v1_save;
 	int *w1, *w2, *w1_save;
-	int h, hh, l, e, frobenius_inv, lambda, rk, c, cv;
+	int hh, l, e, frobenius_inv, lambda, rk, c, cv;
 	long int i, j;
 	int *system;
 	int *base_cols;
@@ -1102,6 +1115,7 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 	w1_save = NEW_int(d);
 
 
+	// compute row i of Mtx[] as the image of the unit vector e_i under the given element
 
 	if (f_v) {
 		cout << "linear_algebra_global::reverse_engineer_semilinear_map "
@@ -1110,14 +1124,10 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 	for (e = 0; e < d; e++) {
 		// map the unit vector e_e
 		// (with a one in position e and zeros elsewhere):
-		for (h = 0; h < d; h++) {
-			if (h == e) {
-				v1[h] = 1;
-			}
-			else {
-				v1[h] = 0;
-			}
-		}
+
+		Int_vec_zero(v1, d);
+		v1[e] = 1;
+
 		Int_vec_copy(v1, v1_save, d);
 		F->Projective_space_basic->PG_element_rank_modified_lint(
 				v1, 1, n + 1, i);
@@ -1157,9 +1167,7 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 				"mapping the all-one vector"
 				<< endl;
 	}
-	for (h = 0; h < d; h++) {
-		v1[h] = 1;
-	}
+	Int_vec_one(v1, d);
 	Int_vec_copy(v1, v1_save, d);
 	//i = rank_point(v1);
 
@@ -1185,7 +1193,14 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 
 	system = NEW_int(d * (d + 1));
 	base_cols = NEW_int(d + 1);
+
+	// we will use a system of size d x (d + 1):
+
 	// coefficient matrix:
+	// the first d columns of system are the rows of Mtx.
+	// the RHS is v2, the image of the all one vector.
+	// The RHS is stored in column d of system.
+
 	for (i = 0; i < d; i++) {
 		for (j = 0; j < d; j++) {
 			system[i * (d + 1) + j] = Mtx[j * d + i];
@@ -1219,6 +1234,16 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 				d, d + 1, d + 1, F->log10_of_q);
 		cout << endl;
 	}
+
+	// multiply the i-th row of Mtx
+	// by the i-th element in the RHS of system.
+
+	// Is is done so that the image
+	// of the all-one vector is the all-one vector
+	// with respect to the new basis.
+
+	// we will use a system of size d x (d + 1):
+
 	for (i = 0; i < d; i++) {
 		c = system[i * (d + 1) + d];
 		if (c == 0) {
@@ -1226,6 +1251,7 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 					"the input matrix does not have full rank" << endl;
 			exit(1);
 		}
+		// multiply row i by c:
 		for (j = 0; j < d; j++) {
 			Mtx[i * d + j] = F->mult(c, Mtx[i * d + j]);
 		}
@@ -1250,19 +1276,13 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 		}
 
 
+		// we will use a system of size d x 3 :
+
 		// create the vector (1,p,0,...,0)
 
-		for (h = 0; h < d; h++) {
-			if (h == 0) {
-				v1[h] = 1;
-			}
-			else if (h == 1) {
-				v1[h] = F->p;
-			}
-			else {
-				v1[h] = 0;
-			}
-		}
+		Int_vec_zero(v1, d);
+		v1[0] = 1;
+		v1[1] = F->p;
 		Int_vec_copy(v1, v1_save, d);
 		//i = rank_point(v1);
 
@@ -1284,11 +1304,14 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 
 
 		// coefficient matrix:
+		// the first two columns are the first two basis vectors:
+
 		for (i = 0; i < d; i++) {
 			for (j = 0; j < 2; j++) {
 				system[i * 3 + j] = Mtx[j * d + i];
 			}
 		}
+
 		// RHS:
 		for (i = 0; i < d; i++) {
 			system[i * 3 + 2] = v2[i];

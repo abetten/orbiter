@@ -39,6 +39,7 @@ MODULES = \
 	projective_space_subspaces.o \
 	projective_space.o \
 	projective_space2.o \
+	row_and_col_partition.o \
 	spread_domain.o \
 	spread_tables.o \
 	three_skew_subspaces.o \

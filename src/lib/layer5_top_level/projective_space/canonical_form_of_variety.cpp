@@ -433,7 +433,7 @@ int canonical_form_of_variety::find_equation(
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
-				"before PA->P->reverse_engineer_semilinear_map" << endl;
+				"before LA.reverse_engineer_semilinear_map" << endl;
 	}
 
 	LA.reverse_engineer_semilinear_map(
@@ -445,7 +445,7 @@ int canonical_form_of_variety::find_equation(
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
-				"after PA->P->reverse_engineer_semilinear_map" << endl;
+				"after LA.reverse_engineer_semilinear_map" << endl;
 	}
 
 	Mtx[9] = frobenius;
@@ -769,7 +769,8 @@ void canonical_form_of_variety::compute_canonical_form(
 }
 
 
-void canonical_form_of_variety::compute_canonical_object(int verbose_level)
+void canonical_form_of_variety::compute_canonical_object(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -817,7 +818,6 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	if (f_v) {
 		cout << "canonical_form_of_variety::prepare_csv_entry_one_line" << endl;
 	}
-	//ost << ",";
 
 	v.push_back(std::to_string(Qco->cnt));
 	v.push_back(std::to_string(Qco->po));
@@ -826,19 +826,6 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	v.push_back(std::to_string(Qco->po_index));
 	v.push_back(std::to_string(Canonical_form_classifier->Output->Tally->rep_idx[i]));
 
-#if 0
-	ost << Qco->cnt;
-	ost << ",";
-	ost << Qco->po;
-	ost << ",";
-	ost << Qco->so;
-	ost << ",";
-	ost << Qco->po_go;
-	ost << ",";
-	ost << Qco->po_index;
-	ost << "," << Canonical_form_classifier->Output->Tally->rep_idx[i];
-	ost << ",";
-#endif
 
 	if (f_v) {
 		cout << "classification_of_varieties::prepare_csv_entry_one_line "
@@ -899,41 +886,11 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	v.push_back(s_go);
 
 
-#if 0
-	ost << "\"" << s_Eqn << "\"";
-	ost << ",";
-
-	ost << "\"" << s_Pts << "\"";
-	ost << ",";
-
-	ost << "\"" << s_Bitangents << "\"";
-	ost << ",";
-
-	ost << "\"" << s_transporter << "\"";
-	ost << ",";
-
-	ost << "\"" << s_Eqn_canonical << "\"";
-	ost << ",";
-
-	ost << "\"" << s_Pts_canonical << "\"";
-	ost << ",";
-
-	ost << "\"" << s_Bitangents_canonical << "\"";
-	ost << ",";
-
-
-	ost << "\"" << s_tl << "\",";
-	ost << "\"" << s_gens << "\",";
-	ost << s_go;
-#endif
-
-
 	if (Canonical_form_classifier->Descr->carry_through.size()) {
 		int j;
 
 		for (j = 0; j < Canonical_form_classifier->Descr->carry_through.size(); j++) {
 			v.push_back(Qco->Carrying_through[j]);
-			//ost << "," << Qco->Carrying_through[j];
 		}
 	}
 

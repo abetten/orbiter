@@ -16,7 +16,8 @@ namespace layer1_foundations {
 namespace orthogonal_geometry {
 
 
-void orthogonal::list_points_by_type(int verbose_level)
+void orthogonal::list_points_by_type(
+		int verbose_level)
 {
 	int t;
 
@@ -35,7 +36,8 @@ void orthogonal::report_points_by_type(
 	}
 }
 
-void orthogonal::list_points_of_given_type(int t, int verbose_level)
+void orthogonal::list_points_of_given_type(
+		int t, int verbose_level)
 {
 	long int i, j, rk, u;
 
@@ -59,7 +61,8 @@ void orthogonal::list_points_of_given_type(int t, int verbose_level)
 	cout << endl;
 }
 
-void orthogonal::report_points_of_given_type(std::ostream &ost,
+void orthogonal::report_points_of_given_type(
+		std::ostream &ost,
 		int t, int verbose_level)
 {
 	long int i, j, rk, u;
@@ -85,7 +88,8 @@ void orthogonal::report_points_of_given_type(std::ostream &ost,
 	//ost << endl;
 }
 
-void orthogonal::report_points(std::ostream &ost, int verbose_level)
+void orthogonal::report_points(
+		std::ostream &ost, int verbose_level)
 {
 	long int rk;
 
@@ -117,7 +121,8 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 	//ost << endl;
 }
 
-void orthogonal::report_given_point_set(std::ostream &ost,
+void orthogonal::report_given_point_set(
+		std::ostream &ost,
 		long int *Pts, int nb_pts, int verbose_level)
 {
 	long int rk;
@@ -137,7 +142,8 @@ void orthogonal::report_given_point_set(std::ostream &ost,
 	//ost << endl;
 }
 
-void orthogonal::report_lines(std::ostream &ost, int verbose_level)
+void orthogonal::report_lines(
+		std::ostream &ost, int verbose_level)
 {
 	int len;
 	int i, a, d = Quadratic_form->n;
@@ -228,7 +234,8 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 }
 
 
-void orthogonal::report_given_line_set(std::ostream &ost,
+void orthogonal::report_given_line_set(
+		std::ostream &ost,
 		long int *Lines, int nb_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -335,7 +342,8 @@ void orthogonal::report_given_line_set(std::ostream &ost,
 
 
 
-void orthogonal::list_all_points_vs_points(int verbose_level)
+void orthogonal::list_all_points_vs_points(
+		int verbose_level)
 {
 	int t1, t2;
 
@@ -346,7 +354,8 @@ void orthogonal::list_all_points_vs_points(int verbose_level)
 	}
 }
 
-void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
+void orthogonal::list_points_vs_points(
+		int t1, int t2, int verbose_level)
 {
 	int i, j, rk1, rk2, u, cnt;
 
@@ -391,7 +400,8 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 
 
 
-void orthogonal::report(std::ostream &ost, int verbose_level)
+void orthogonal::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -464,8 +474,8 @@ void orthogonal::report_schemes(
 	int nb_cols = 0;
 	data_structures::partitionstack *Stack;
 	int *set;
-	int *row_classes;
-	int *col_classes;
+	//int *row_classes;
+	//int *col_classes;
 	int *row_scheme;
 	int *col_scheme;
 
@@ -591,49 +601,37 @@ void orthogonal::report_schemes(
 		FREE_int(set);
 
 
-		int nb_row_classes;
-		int nb_col_classes;
+		geometry::row_and_col_partition *RC;
 
-		row_classes = NEW_int(Stack->ht);
-		col_classes = NEW_int(Stack->ht);
 
-		if (f_v) {
-			cout << "orthogonal::report_schemes "
-					"before Stack->get_row_and_col_classes" << endl;
-		}
 		Stack->get_row_and_col_classes(
-			row_classes, nb_row_classes,
-			col_classes, nb_col_classes, 0 /* verbose_level*/);
+				RC,
+			0 /*verbose_level*/);
 
 		if (f_v) {
 			cout << "orthogonal::report_schemes "
-					"before Stack->print_row_tactical_decomposition_scheme_tex" << endl;
+					"before RC->print_row_tactical_decomposition_scheme_tex" << endl;
 		}
-		Stack->print_row_tactical_decomposition_scheme_tex(ost,
+		RC->print_row_tactical_decomposition_scheme_tex(
+				ost,
 				true /*f_enter_math*/,
-				row_classes, nb_row_classes,
-				col_classes, nb_col_classes,
 				row_scheme, false /* f_print_subscripts */);
 
 		if (f_v) {
 			cout << "orthogonal::report_schemes "
-					"before Stack->print_column_tactical_decomposition_scheme_tex" << endl;
+					"before RC->print_column_tactical_decomposition_scheme_tex" << endl;
 		}
-		Stack->print_column_tactical_decomposition_scheme_tex(ost,
+		RC->print_column_tactical_decomposition_scheme_tex(
+				ost,
 				true /*f_enter_math*/,
-				row_classes, nb_row_classes,
-				col_classes, nb_col_classes,
 				col_scheme, false /* f_print_subscripts */);
 
-		FREE_int(row_classes);
-		FREE_int(col_classes);
-		FREE_int(row_scheme);
-		FREE_int(col_scheme);
 
 		FREE_int(original_row_class);
 		FREE_int(original_col_class);
 
 
+		FREE_OBJECT(RC);
 		FREE_OBJECT(Stack);
 	}
 	if (f_v) {
@@ -642,7 +640,8 @@ void orthogonal::report_schemes(
 }
 
 
-void orthogonal::report_schemes_easy(std::ostream &ost)
+void orthogonal::report_schemes_easy(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface Li;
 
@@ -660,7 +659,8 @@ void orthogonal::report_schemes_easy(std::ostream &ost)
 
 }
 
-void orthogonal::create_latex_report(int verbose_level)
+void orthogonal::create_latex_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -724,7 +724,8 @@ void orthogonal::create_latex_report(int verbose_level)
 	}
 }
 
-void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
+void orthogonal::export_incidence_matrix_to_csv(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -809,7 +810,8 @@ void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
 	}
 }
 
-void orthogonal::make_fname_incidence_matrix_csv(std::string &fname)
+void orthogonal::make_fname_incidence_matrix_csv(
+		std::string &fname)
 {
 	fname = Quadratic_form->label_txt + "_incidence_matrix.csv";
 }

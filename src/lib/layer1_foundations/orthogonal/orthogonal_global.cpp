@@ -88,7 +88,8 @@ void orthogonal_global::create_Linear_BLT_set(long int *set, int *ABC, int verbo
 #endif
 
 
-void orthogonal_global::create_BLT_set_from_flock(orthogonal *O,
+void orthogonal_global::create_BLT_set_from_flock(
+		orthogonal *O,
 		long int *set, int *ABC, int verbose_level)
 // output: set[q + 1]
 // input: ABC[q * 3]
@@ -137,7 +138,8 @@ void orthogonal_global::create_BLT_set_from_flock(orthogonal *O,
 }
 
 
-void orthogonal_global::create_FTWKB_flock(orthogonal *O,
+void orthogonal_global::create_FTWKB_flock(
+		orthogonal *O,
 		int *ABC, int verbose_level)
 // for q congruent 2 mod 3
 // a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
@@ -156,12 +158,14 @@ void orthogonal_global::create_FTWKB_flock(orthogonal *O,
 	int q = O->F->q;
 
 	if (q <= 5) {
-		cout << "orthogonal_global::create_FTWKB_flock q <= 5" << endl;
+		cout << "orthogonal_global::create_FTWKB_flock "
+				"q <= 5" << endl;
 		exit(1);
 	}
 	r = q % 3;
 	if (r != 2) {
-		cout << "orthogonal_global::create_FTWKB_flock q mod 3 must be 2" << endl;
+		cout << "orthogonal_global::create_FTWKB_flock "
+				"q mod 3 must be 2" << endl;
 		exit(1);
 	}
 	Int_vec_zero(ABC, 3 * (q + 1));
@@ -183,7 +187,8 @@ void orthogonal_global::create_FTWKB_flock(orthogonal *O,
 	}
 }
 
-void orthogonal_global::create_K1_flock(orthogonal *O,
+void orthogonal_global::create_K1_flock(
+		orthogonal *O,
 		int *ABC, int verbose_level)
 // for a nonsquare m, and q=p^e
 // a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
@@ -227,7 +232,8 @@ void orthogonal_global::create_K1_flock(orthogonal *O,
 	}
 }
 
-void orthogonal_global::create_K2_flock(orthogonal *O,
+void orthogonal_global::create_K2_flock(
+		orthogonal *O,
 		int *ABC, int verbose_level)
 // for q congruent 2 or 3 mod 5
 // a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
@@ -274,7 +280,8 @@ void orthogonal_global::create_K2_flock(orthogonal *O,
 }
 
 
-void orthogonal_global::create_FTWKB_flock_and_BLT_set(orthogonal *O,
+void orthogonal_global::create_FTWKB_flock_and_BLT_set(
+		orthogonal *O,
 		long int *set, int *ABC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -309,7 +316,8 @@ void orthogonal_global::create_FTWKB_flock_and_BLT_set(orthogonal *O,
 	}
 
 	if (f_v) {
-		cout << "orthogonal_global::create_FTWKB_flock_and_BLT_set the BLT set K1 is ";
+		cout << "orthogonal_global::create_FTWKB_flock_and_BLT_set "
+				"the BLT set K1 is ";
 		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
 	}
@@ -321,7 +329,8 @@ void orthogonal_global::create_FTWKB_flock_and_BLT_set(orthogonal *O,
 
 
 
-void orthogonal_global::create_K1_flock_and_BLT_set(orthogonal *O,
+void orthogonal_global::create_K1_flock_and_BLT_set(
+		orthogonal *O,
 		long int *set, int *ABC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -356,7 +365,8 @@ void orthogonal_global::create_K1_flock_and_BLT_set(orthogonal *O,
 	}
 
 	if (f_v) {
-		cout << "orthogonal_global::create_K1_flock_and_BLT_set the BLT set K1 is ";
+		cout << "orthogonal_global::create_K1_flock_and_BLT_set "
+				"the BLT set K1 is ";
 		Lint_vec_print(cout, set, q + 1);
 		cout << endl;
 	}
@@ -367,7 +377,8 @@ void orthogonal_global::create_K1_flock_and_BLT_set(orthogonal *O,
 }
 
 
-void orthogonal_global::create_K2_flock_and_BLT_set(orthogonal *O,
+void orthogonal_global::create_K2_flock_and_BLT_set(
+		orthogonal *O,
 		long int *set, int *ABC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -412,7 +423,8 @@ void orthogonal_global::create_K2_flock_and_BLT_set(orthogonal *O,
 
 }
 
-void orthogonal_global::create_LP_37_72_BLT_set(orthogonal *O,
+void orthogonal_global::create_LP_37_72_BLT_set(
+		orthogonal *O,
 		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -491,7 +503,8 @@ void orthogonal_global::create_LP_37_72_BLT_set(orthogonal *O,
 	}
 }
 
-void orthogonal_global::create_LP_37_4a_BLT_set(orthogonal *O,
+void orthogonal_global::create_LP_37_4a_BLT_set(
+		orthogonal *O,
 		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -570,7 +583,8 @@ void orthogonal_global::create_LP_37_4a_BLT_set(orthogonal *O,
 	}
 }
 
-void orthogonal_global::create_LP_37_4b_BLT_set(orthogonal *O,
+void orthogonal_global::create_LP_37_4b_BLT_set(
+		orthogonal *O,
 		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -649,7 +663,8 @@ void orthogonal_global::create_LP_37_4b_BLT_set(orthogonal *O,
 	}
 }
 
-void orthogonal_global::create_Law_71_BLT_set(orthogonal *O,
+void orthogonal_global::create_Law_71_BLT_set(
+		orthogonal *O,
 		long int *set, int verbose_level)
 // This example can be found in Maska Law's thesis on page 115.
 // Maska Law: Flocks, generalised quadrangles
@@ -739,7 +754,8 @@ void orthogonal_global::create_Law_71_BLT_set(orthogonal *O,
 }
 
 
-int orthogonal_global::BLT_test_full(orthogonal *O,
+int orthogonal_global::BLT_test_full(
+		orthogonal *O,
 		int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -749,23 +765,27 @@ int orthogonal_global::BLT_test_full(orthogonal *O,
 	}
 	if (!collinearity_test(O, size, set, 0/*verbose_level - 2*/)) {
 		if (f_v) {
-			cout << "orthogonal_global::BLT_test_full fails due to collinearity_test" << endl;
+			cout << "orthogonal_global::BLT_test_full "
+					"fails due to collinearity_test" << endl;
 		}
 		return false;
 	}
 	if (!BLT_test(O, size, set, verbose_level)) {
 		if (f_v) {
-			cout << "orthogonal_global::BLT_test_full fails due to BLT_test" << endl;
+			cout << "orthogonal_global::BLT_test_full "
+					"fails due to BLT_test" << endl;
 		}
 		return false;
 	}
 	if (f_v) {
-		cout << "orthogonal_global::BLT_test_full passes" << endl;
+		cout << "orthogonal_global::BLT_test_full "
+				"passes" << endl;
 	}
 	return true;
 }
 
-int orthogonal_global::BLT_test(orthogonal *O,
+int orthogonal_global::BLT_test(
+		orthogonal *O,
 		int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -780,11 +800,13 @@ int orthogonal_global::BLT_test(orthogonal *O,
 		return true;
 	}
 	if (f_v) {
-		cout << "orthogonal_global::BLT_test BLT_test for" << endl;
+		cout << "orthogonal_global::BLT_test BLT_test "
+				"for" << endl;
 		Lint_vec_print(cout, set, size);
 		cout << endl;
 		if (f_vv) {
-			cout << "orthogonal_global::BLT_test the set of points is:" << endl;
+			cout << "orthogonal_global::BLT_test "
+					"the set of points is:" << endl;
 			for (i = 0; i < size; i++) {
 				O->Hyperbolic_pair->unrank_point(
 						O->Hyperbolic_pair->v1, 1, set[i], 0 /*verbose_level - 1*/);
@@ -936,7 +958,8 @@ int orthogonal_global::BLT_test(orthogonal *O,
 	return f_OK;
 }
 
-int orthogonal_global::collinearity_test(orthogonal *O,
+int orthogonal_global::collinearity_test(
+		orthogonal *O,
 		int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

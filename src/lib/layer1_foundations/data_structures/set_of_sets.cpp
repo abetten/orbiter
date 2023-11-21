@@ -236,6 +236,28 @@ void set_of_sets::init_basic_constant_size(
 	}
 }
 
+void set_of_sets::init_single(
+		int underlying_set_size,
+		long int *Pts, int sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "set_of_sets::init_single" << endl;
+	}
+
+	long int Sz[1];
+
+	Sz[0] = sz;
+
+	init_basic(underlying_set_size, 1 /* nb_sets */, Sz, verbose_level - 1);
+
+	Lint_vec_copy(Pts, Sets[0], sz);
+	if (f_v) {
+		cout << "set_of_sets::init_single done" << endl;
+	}
+}
+
 //#define MY_BUFSIZE ONE_MILLION
 
 void set_of_sets::init_from_file(
@@ -666,12 +688,14 @@ int set_of_sets::total_size()
 	return sz;
 }
 
-long int &set_of_sets::element(int i, int j)
+long int &set_of_sets::element(
+		int i, int j)
 {
 	return Sets[i][j];
 }
 
-void set_of_sets::add_element(int i, long int a)
+void set_of_sets::add_element(
+		int i, long int a)
 {
 	Sets[i][Set_size[i]++] = a;
 }
@@ -1173,9 +1197,13 @@ void set_of_sets::compute_tdo_decomposition(
 
 	if (f_v) {
 		cout << "set_of_sets::compute_tdo_decomposition "
-				"before D.compute_TDO" << endl;
+				"before D.compute_TDO_old" << endl;
 	}
-	D.compute_TDO(INT_MAX, verbose_level);
+	D.compute_TDO_old(INT_MAX, verbose_level - 2);
+	if (f_v) {
+		cout << "set_of_sets::compute_tdo_decomposition "
+				"after D.compute_TDO_old" << endl;
+	}
 
 	if (f_v) {
 		cout << "set_of_sets::compute_tdo_scheme done" << endl;
@@ -1392,11 +1420,75 @@ void set_of_sets::save_csv(
 		int f_make_heading, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	spreadsheet *Sp;
+
 
 	if (f_v) {
 		cout << "set_of_sets::save_csv" << endl;
 	}
+
+	std::string *data; // [nb_sets * 2]
+	int i;
+
+	data = new std::string[nb_sets * 2];
+
+	for (i = 0; i < nb_sets; i++) {
+
+		string s1, s2;
+
+		s1 = std::to_string(Set_size[i]);
+		s2 = "\"" + Lint_vec_stringify(Sets[i], Set_size[i]) + "\"";
+		data[2 * i + 0] = s1;
+		data[2 * i + 1] = s2;
+	}
+
+
+	string *Headings;
+	string headings;
+	int nb_row, nb_col;
+
+	nb_row = nb_sets;
+	nb_col = 2;
+
+	Headings = new string[nb_col];
+
+
+	int j;
+
+	for (j = 0; j < 2; j++) {
+
+		Headings[j] = "C" + std::to_string(j);
+	}
+
+	for (j = 0; j < nb_col; j++) {
+		headings += Headings[j];
+		if (j < 1 + nb_col - 1) {
+			headings += ",";
+		}
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "set_of_sets::save_csv "
+				"before Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+	Fio.Csv_file_support->write_table_of_strings(
+			fname,
+			nb_row, nb_col, data,
+			headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "set_of_sets::save_csv "
+				"after Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+
+	delete [] data;
+	delete [] Headings;
+
+#if 0
+	spreadsheet *Sp;
+
 	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_set_of_sets(this, f_make_heading);
 	Sp->save(fname, verbose_level);
@@ -1405,10 +1497,14 @@ void set_of_sets::save_csv(
 				"before delete spreadsheet" << endl;
 	}
 	//FREE_OBJECT(Sp); // ToDo
+#endif
+
+
 	if (f_v) {
 		cout << "set_of_sets::save_csv done" << endl;
 	}
 }
+
 
 void set_of_sets::save_constant_size_csv(
 		std::string &fname,
@@ -1468,7 +1564,8 @@ void set_of_sets::sort()
 	}
 }
 
-void set_of_sets::sort_big(int verbose_level)
+void set_of_sets::sort_big(
+		int verbose_level)
 {
 	sorting Sorting;
 
@@ -1599,62 +1696,45 @@ void set_of_sets::get_eckardt_points(
 			Inc,
 			verbose_level - 1);
 
-#if 0
-	partitionstack *PStack;
-
-	PStack = NEW_OBJECT(partitionstack);
-	PStack->allocate(nb_sets + underlying_set_size, 0 /* verbose_level */);
-	PStack->subset_contiguous(nb_sets, underlying_set_size);
-	PStack->split_cell(0 /* verbose_level */);
-#endif
-	
 	Decomposition->compute_TDO_safe(
 			1 /*nb_lines + nb_points_on_surface*/ /* depth */,
 			0 /* verbose_level */);
 
-#if 0
-	{
-	IS->get_and_print_row_tactical_decomposition_scheme_tex(
-		cout /*fp_row_scheme */, false /* f_enter_math */, *PStack);
-	IS->get_and_print_column_tactical_decomposition_scheme_tex(
-		cout /*fp_col_scheme */, false /* f_enter_math */, *PStack);
-	}
-#endif
-	int *row_classes, *row_class_inv, nb_row_classes;
-	int *col_classes, *col_class_inv, nb_col_classes;
 	int *col_scheme;
 
-	Decomposition->Stack->allocate_and_get_decomposition(
-		row_classes, row_class_inv, nb_row_classes,
-		col_classes, col_class_inv, nb_col_classes, 
-		0/*verbose_level*/);
-	
-	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
+	geometry::row_and_col_partition *RC;
+
+	RC = NEW_OBJECT(geometry::row_and_col_partition);
+
+	RC->init_from_partitionstack(
+			Decomposition->Stack,
+			verbose_level);
+
+
+	col_scheme = NEW_int(RC->nb_row_classes * RC->nb_col_classes);
 
 	Decomposition->get_col_decomposition_scheme(
-		row_classes, row_class_inv, nb_row_classes,
-		col_classes, col_class_inv, nb_col_classes, 
-		col_scheme, 0/*verbose_level*/);
+		RC,
+		col_scheme, 0 /*verbose_level*/);
+
 
 	//cout << *this << endl;
 	
 	if (f_v) {
 		cout << "col_scheme:" << endl;
-		Decomposition->Stack->print_decomposition_scheme(cout,
-			row_classes, nb_row_classes,
-			col_classes, nb_col_classes, 
+		RC->print_decomposition_scheme(cout,
 			col_scheme);
 	}
 
 	int i, j, c, s, sz;
 	
 	nb_E = 0;
-	for (j = 0; j < nb_col_classes; j++) {
-		c = col_classes[j];
+	for (j = 0; j < RC->nb_col_classes; j++) {
+		c = RC->col_classes[j];
 		sz = Decomposition->Stack->cellSize[c];
 		s = 0;
-		for (i = 0; i < nb_row_classes; i++) {
-			s += col_scheme[i * nb_col_classes + j];
+		for (i = 0; i < RC->nb_row_classes; i++) {
+			s += col_scheme[i * RC->nb_col_classes + j];
 		}
 		if (s == 3) {
 			nb_E += sz;
@@ -1668,12 +1748,12 @@ void set_of_sets::get_eckardt_points(
 	
 	E = NEW_int(nb_E);
 	h = 0;
-	for (j = 0; j < nb_col_classes; j++) {
-		c = col_classes[j];
+	for (j = 0; j < RC->nb_col_classes; j++) {
+		c = RC->col_classes[j];
 		sz = Decomposition->Stack->cellSize[c];
 		s = 0;
-		for (i = 0; i < nb_row_classes; i++) {
-			s += col_scheme[i * nb_col_classes + j];
+		for (i = 0; i < RC->nb_row_classes; i++) {
+			s += col_scheme[i * RC->nb_col_classes + j];
 		}
 		if (s == 3) {
 			f = Decomposition->Stack->startCell[c];
@@ -1684,10 +1764,7 @@ void set_of_sets::get_eckardt_points(
 		}
 	}
 
-	FREE_int(row_classes);
-	FREE_int(row_class_inv);
-	FREE_int(col_classes);
-	FREE_int(col_class_inv);
+	FREE_OBJECT(RC);
 	FREE_int(col_scheme);
 	//FREE_OBJECT(PStack);
 	FREE_OBJECT(Decomposition);
@@ -1760,7 +1837,8 @@ static int set_of_sets_compare_func(
 				"must have the same size" << endl;
 		exit(1);
 	}
-	c = Sorting.lint_vec_compare(S->Sets[i], S->Sets[j], S->Set_size[i]);
+	c = Sorting.lint_vec_compare(
+			S->Sets[i], S->Sets[j], S->Set_size[i]);
 	return c;
 }
 

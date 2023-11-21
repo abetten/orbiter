@@ -480,8 +480,10 @@ void tdo_scheme_synthetic::get_partition(
 		col_class_index[h][i] = -1;
 	}
 			
-	P->get_row_and_col_classes(row_classes[h], nb_row_classes[h],
-		col_classes[h], nb_col_classes[h], verbose_level - 1);
+	P->get_row_and_col_classes_old_fashioned(
+			row_classes[h], nb_row_classes[h],
+		col_classes[h], nb_col_classes[h],
+		verbose_level - 1);
 				
 	for (i = 0; i < nb_row_classes[h]; i++) {
 		row_class_index[h][row_classes[h][i]] = i;

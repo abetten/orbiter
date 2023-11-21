@@ -76,7 +76,8 @@ canonical_form_classifier_description::~canonical_form_classifier_description()
 {
 }
 
-int canonical_form_classifier_description::read_arguments(int argc, std::string *argv,
+int canonical_form_classifier_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

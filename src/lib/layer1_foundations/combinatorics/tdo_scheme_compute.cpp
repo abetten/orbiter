@@ -72,14 +72,14 @@ void tdo_scheme_compute::init(
 
 	if (f_v) {
 		cout << "tdo_scheme_compute::init "
-				"before Decomp->compute_TDO" << endl;
+				"before Decomp->compute_TDO_old" << endl;
 	}
 
-	Decomp->compute_TDO(max_depth, verbose_level);
+	Decomp->compute_TDO_old(max_depth, verbose_level);
 
 	if (f_v) {
 		cout << "tdo_scheme_compute::init "
-				"after Decomp->compute_TDO" << endl;
+				"after Decomp->compute_TDO_old" << endl;
 	}
 
 	if (f_v) {
@@ -107,7 +107,8 @@ void tdo_scheme_compute::init(
 	}
 }
 
-void tdo_scheme_compute::print_schemes(std::ostream &ost)
+void tdo_scheme_compute::print_schemes(
+		std::ostream &ost)
 {
 	int verbose_level = 0;
 	int f_enter_math = false;
@@ -127,9 +128,7 @@ void tdo_scheme_compute::print_schemes(std::ostream &ost)
 	ost << "$$" << endl;
 
 
-	Decomp->Stack->print_classes_of_decomposition_tex(ost,
-		Decomp->Scheme->row_classes, Decomp->Scheme->nb_row_classes,
-		Decomp->Scheme->col_classes, Decomp->Scheme->nb_col_classes);
+	Decomp->Scheme->RC->print_classes_of_decomposition_tex(ost);
 
 }
 

@@ -108,7 +108,8 @@ void elliptic_curve::init(
 }
 
 
-void elliptic_curve::compute_points(int verbose_level)
+void elliptic_curve::compute_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int x, y, y1, y2;
@@ -678,7 +679,8 @@ int multiple_of_point(elliptic_curve &E, int i, int n)
 }
 #endif
 
-void elliptic_curve::compute_addition_table(int verbose_level)
+void elliptic_curve::compute_addition_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_v3 = (verbose_level >= 3);
@@ -920,7 +922,8 @@ void elliptic_curve::order_of_all_points(
 }
 
 
-int elliptic_curve::order_of_point(int i)
+int elliptic_curve::order_of_point(
+		int i)
 {
 	int j;
 	int ord;
@@ -934,7 +937,8 @@ int elliptic_curve::order_of_point(int i)
 	return ord;
 }
 
-void elliptic_curve::print_all_powers(int i)
+void elliptic_curve::print_all_powers(
+		int i)
 {
 	int j;
 	int ord;

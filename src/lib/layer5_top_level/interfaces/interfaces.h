@@ -772,6 +772,7 @@ class interface_toolkit {
 
 	int f_csv_file_select_cols;
 	std::string csv_file_select_cols_fname;
+	std::string csv_file_select_cols_fname_append;
 	std::string csv_file_select_cols_text;
 
 	int f_csv_file_select_rows_and_cols;
@@ -904,6 +905,11 @@ class interface_toolkit {
 	std::string compare_columns_fname;
 	std::string compare_columns_column1;
 	std::string compare_columns_column2;
+
+	int f_gcd_worksheet;
+	int gcd_worksheet_nb_problems;
+	int gcd_worksheet_N;
+	int gcd_worksheet_key;
 
 
 public:

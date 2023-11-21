@@ -1670,7 +1670,8 @@ void geometry_global::do_create_desarguesian_spread(
 	}
 }
 
-void geometry_global::create_decomposition_of_projective_space(
+
+void geometry_global::compute_TDO_decomposition_of_projective_space_old(
 		std::string &fname_base,
 		projective_space *P,
 		long int *points, int nb_points,
@@ -1682,7 +1683,7 @@ void geometry_global::create_decomposition_of_projective_space(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "geometry_global::create_decomposition_of_projective_space" << endl;
+		cout << "geometry_global::compute_TDO_decomposition_of_projective_space_old" << endl;
 	}
 	{
 
@@ -1698,45 +1699,19 @@ void geometry_global::create_decomposition_of_projective_space(
 				Inc,
 				verbose_level);
 
-#if 0
-		data_structures::partitionstack *Stack;
-		int depth = INT_MAX;
 
-
-		Stack = NEW_OBJECT(data_structures::partitionstack);
-		Stack->allocate(I->nb_rows + I->nb_cols, 0 /* verbose_level */);
-		Stack->subset_contiguous(I->nb_rows, I->nb_cols);
-		Stack->split_cell(0 /* verbose_level */);
-		Stack->sort_cells();
-#endif
-
-		int *the_points;
-		int *the_lines;
-		int i;
-		the_points = NEW_int(nb_points);
-		the_lines = NEW_int(nb_lines);
-
-		for (i = 0; i < nb_points; i++) {
-			the_points[i] = points[i];
-		}
-		for (i = 0; i < nb_lines; i++) {
-			the_lines[i] = lines[i];
-		}
-
-		Decomp->Stack->split_cell_front_or_back(
-				the_points, nb_points, true /* f_front*/,
+		Decomp->Stack->split_cell_front_or_back_lint(
+				points, nb_points, true /* f_front*/,
 				verbose_level);
 
-		Decomp->Stack->split_line_cell_front_or_back(
-				the_lines, nb_lines, true /* f_front*/,
+		Decomp->Stack->split_line_cell_front_or_back_lint(
+				lines, nb_lines, true /* f_front*/,
 				verbose_level);
 
 
-		FREE_int(the_points);
-		FREE_int(the_lines);
 
 		if (f_v) {
-			cout << "geometry_global::create_decomposition_of_projective_space "
+			cout << "geometry_global::compute_TDO_decomposition_of_projective_space_old "
 					"before Decomp->compute_TDO_safe_and_write_files" << endl;
 		}
 		Decomp->compute_TDO_safe_and_write_files(
@@ -1744,7 +1719,7 @@ void geometry_global::create_decomposition_of_projective_space(
 				fname_base, file_names,
 				verbose_level);
 		if (f_v) {
-			cout << "geometry_global::create_decomposition_of_projective_space "
+			cout << "geometry_global::compute_TDO_decomposition_of_projective_space_old "
 					"after Decomp->compute_TDO_safe_and_write_files" << endl;
 		}
 
@@ -1755,11 +1730,67 @@ void geometry_global::create_decomposition_of_projective_space(
 		FREE_OBJECT(Inc);
 	}
 	if (f_v) {
-		cout << "geometry_global::create_decomposition_of_projective_space done" << endl;
+		cout << "geometry_global::compute_TDO_decomposition_of_projective_space_old done" << endl;
 	}
 
 }
 
+geometry::decomposition_scheme *geometry_global::compute_TDO_decomposition_of_projective_space(
+		projective_space *P,
+		long int *points, int nb_points,
+		long int *lines, int nb_lines,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::compute_TDO_decomposition_of_projective_space" << endl;
+	}
+
+	geometry::decomposition *Decomposition;
+
+	Decomposition = NEW_OBJECT(geometry::decomposition);
+
+
+	Decomposition->init_decomposition_of_projective_space(
+			P,
+			points, nb_points,
+			lines, nb_lines,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
+				"before Decomposition_scheme->compute_TDO" << endl;
+	}
+	Decomposition->compute_TDO(
+			verbose_level - 1);
+	if (f_v) {
+		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
+				"after Decomposition_scheme->compute_TDO" << endl;
+	}
+
+
+
+	geometry::decomposition_scheme *Decomposition_scheme;
+
+	Decomposition_scheme = NEW_OBJECT(geometry::decomposition_scheme);
+
+	if (f_v) {
+		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
+				"before Decomposition_scheme->init_row_and_col_schemes" << endl;
+	}
+	Decomposition_scheme->init_row_and_col_schemes(
+			Decomposition,
+		verbose_level);
+	if (f_v) {
+		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
+				"after Decomposition_scheme->init_row_and_col_schemes" << endl;
+	}
+
+	return Decomposition_scheme;
+
+}
 
 void geometry_global::create_BLT_point(
 		field_theory::finite_field *F,

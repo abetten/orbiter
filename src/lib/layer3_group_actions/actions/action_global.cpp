@@ -3450,71 +3450,9 @@ void action_global::orthogonal_group_random_generator(
 
 
 
-
-//#############################################################################
-
-void callback_choose_random_generator_orthogonal(int iteration,
-	int *Elt, void *data, int verbose_level)
-{
-	//verbose_level += 5;
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "action_global::callback_choose_random_generator_orthogonal "
-				"iteration=" << iteration << endl;
-		}
-
-	groups::schreier_sims *ss = (groups::schreier_sims *) data;
-	action *A = ss->GA;
-	action *subaction = ss->KA;
-	algebra::matrix_group *M;
-#if 0
-	int f_siegel = true;
-	int f_reflection = true;
-	int f_similarity = true;
-	int f_semisimilarity = true;
-#endif
-
-	induced_actions::action_on_orthogonal *AO;
-	orthogonal_geometry::orthogonal *O;
-	action_global AG;
-
-	AO = A->G.AO;
-	O = AO->O;
-
-	M = subaction->G.matrix_grp;
-	if (f_v) {
-		cout << "action_global::callback_choose_random_generator_orthogonal "
-				"iteration=" << iteration
-				<< " before M->orthogonal_group_random_generator"
-				<< endl;
-	}
-	AG.orthogonal_group_random_generator(
-			ss->GA,
-			O,
-			M,
-		f_generator_orthogonal_siegel,
-		f_generator_orthogonal_reflection,
-		f_generator_orthogonal_similarity,
-		f_generator_orthogonal_semisimilarity,
-		Elt, verbose_level - 2);
-	//M->GL_invert_internal(Elt, Elt + M->elt_size_int_half, 0);
-	if (f_v) {
-		cout << "action_global::callback_choose_random_generator_orthogonal "
-				"iteration=" << iteration
-				<< " after M->orthogonal_group_random_generator"
-				<< endl;
-	}
-
-	if (f_v) {
-		cout << "action_global::callback_choose_random_generator_orthogonal "
-				"iteration=" << iteration << " done" << endl;
-	}
-}
-
-
 void action_global::init_base(
-		actions::action *A, algebra::matrix_group *M, int verbose_level)
+		actions::action *A, algebra::matrix_group *M,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -3566,7 +3504,8 @@ void action_global::init_base(
 }
 
 void action_global::init_base_projective(
-		actions::action *A, algebra::matrix_group *M, int verbose_level)
+		actions::action *A, algebra::matrix_group *M,
+		int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
@@ -3600,7 +3539,8 @@ void action_global::init_base_projective(
 		cout << "action_global::init_base_projective "
 				"before A->Stabilizer_chain->allocate_base_data" << endl;
 	}
-	A->Stabilizer_chain->allocate_base_data(A, base_len, verbose_level);
+	A->Stabilizer_chain->allocate_base_data(
+			A, base_len, verbose_level);
 	if (f_vv) {
 		cout << "action_global::init_base_projective "
 				"after A->Stabilizer_chain->allocate_base_data" << endl;
@@ -4057,6 +3997,63 @@ void action_global::report_TDA(
 	}
 }
 
+
+void action_global::refine_decomposition_TDA(
+		geometry::decomposition *Decomposition,
+		actions::action *A_on_points, actions::action *A_on_lines,
+		groups::strong_generators *gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::refine_decomposition_TDA" << endl;
+	}
+	groups::schreier *Sch_points;
+	groups::schreier *Sch_lines;
+	Sch_points = NEW_OBJECT(groups::schreier);
+	Sch_points->init(A_on_points, verbose_level - 2);
+	Sch_points->initialize_tables();
+	Sch_points->init_generators(
+			*gens->gens /* *generators */, verbose_level - 2);
+	Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
+
+	if (f_v) {
+		cout << "action_global::refine_decomposition_TDA "
+				"found " << Sch_points->nb_orbits
+				<< " orbits on points" << endl;
+	}
+	Sch_lines = NEW_OBJECT(groups::schreier);
+	Sch_lines->init(A_on_lines, verbose_level - 2);
+	Sch_lines->initialize_tables();
+	Sch_lines->init_generators(
+			*gens->gens /* *generators */, verbose_level - 2);
+	Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
+
+	if (f_v) {
+		cout << "action_global::refine_decomposition_TDA "
+				"found " << Sch_lines->nb_orbits
+				<< " orbits on lines" << endl;
+	}
+	Decomposition->Stack->split_by_orbit_partition(
+			Sch_points->nb_orbits,
+		Sch_points->orbit_first, Sch_points->orbit_len, Sch_points->orbit,
+		0 /* offset */,
+		verbose_level - 2);
+	Decomposition->Stack->split_by_orbit_partition(
+			Sch_lines->nb_orbits,
+		Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
+		Decomposition->Inc->nb_points() /* offset */,
+		verbose_level - 2);
+
+	FREE_OBJECT(Sch_points);
+	FREE_OBJECT(Sch_lines);
+
+	if (f_v) {
+		cout << "action_global::refine_decomposition_TDA done" << endl;
+	}
+}
+
 void action_global::test_if_two_actions_agree_vector(
 		action *A1, action *A2,
 		data_structures_groups::vector_ge *gens1,
@@ -4205,7 +4202,8 @@ void action_global::reverse_engineer_semilinear_group(
 						"semi-linear group element:" << endl;
 				A_linear->Group_element->element_print(Elt1, cout);
 			}
-			A_linear->Group_element->element_move(Elt1, gens_out->ith(pos), 0);
+			A_linear->Group_element->element_move(
+					Elt1, gens_out->ith(pos), 0);
 
 
 			pos++;
@@ -4232,6 +4230,75 @@ void action_global::reverse_engineer_semilinear_group(
 		cout << "action_global::reverse_engineer_semilinear_group done" << endl;
 	}
 }
+
+
+
+
+
+//#############################################################################
+
+void callback_choose_random_generator_orthogonal(
+		int iteration,
+	int *Elt, void *data, int verbose_level)
+{
+	//verbose_level += 5;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration << endl;
+		}
+
+	groups::schreier_sims *ss = (groups::schreier_sims *) data;
+	action *A = ss->GA;
+	action *subaction = ss->KA;
+	algebra::matrix_group *M;
+#if 0
+	int f_siegel = true;
+	int f_reflection = true;
+	int f_similarity = true;
+	int f_semisimilarity = true;
+#endif
+
+	induced_actions::action_on_orthogonal *AO;
+	orthogonal_geometry::orthogonal *O;
+	action_global AG;
+
+	AO = A->G.AO;
+	O = AO->O;
+
+	M = subaction->G.matrix_grp;
+	if (f_v) {
+		cout << "action_global::callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration
+				<< " before M->orthogonal_group_random_generator"
+				<< endl;
+	}
+	AG.orthogonal_group_random_generator(
+			ss->GA,
+			O,
+			M,
+		f_generator_orthogonal_siegel,
+		f_generator_orthogonal_reflection,
+		f_generator_orthogonal_similarity,
+		f_generator_orthogonal_semisimilarity,
+		Elt, verbose_level - 2);
+	//M->GL_invert_internal(Elt, Elt + M->elt_size_int_half, 0);
+	if (f_v) {
+		cout << "action_global::callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration
+				<< " after M->orthogonal_group_random_generator"
+				<< endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration << " done" << endl;
+	}
+}
+
+
+
 
 }}}
 

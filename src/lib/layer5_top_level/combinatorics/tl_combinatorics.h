@@ -1503,7 +1503,8 @@ public:
 			int max_TDO_depth,
 			std::string &label,
 			int verbose_level);
-	void lift_generators_to_matrix_group(int verbose_level);
+	void lift_generators_to_matrix_group(
+			int verbose_level);
 	void init_object_in_projective_space(
 			geometry::object_with_canonical_form *OwCF,
 			l1_interfaces::nauty_output *NO,

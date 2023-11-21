@@ -127,7 +127,8 @@ surface_polynomial_domains::~surface_polynomial_domains()
 }
 
 
-void surface_polynomial_domains::init(surface_domain *Surf, int verbose_level)
+void surface_polynomial_domains::init(
+		surface_domain *Surf, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -328,7 +329,8 @@ void surface_polynomial_domains::init(surface_domain *Surf, int verbose_level)
 
 }
 
-void surface_polynomial_domains::init_large_polynomial_domains(int verbose_level)
+void surface_polynomial_domains::init_large_polynomial_domains(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

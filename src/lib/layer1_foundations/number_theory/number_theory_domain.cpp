@@ -131,7 +131,8 @@ number_theory_domain::~number_theory_domain()
 
 }
 
-long int number_theory_domain::mod(long int a, long int p)
+long int number_theory_domain::mod(
+		long int a, long int p)
 {
 	int f_negative = false;
 	long int r;
@@ -147,7 +148,8 @@ long int number_theory_domain::mod(long int a, long int p)
 	return r;
 }
 
-long int number_theory_domain::int_negate(long int a, long int p)
+long int number_theory_domain::int_negate(
+		long int a, long int p)
 {
 	long int b;
 
@@ -161,7 +163,8 @@ long int number_theory_domain::int_negate(long int a, long int p)
 }
 
 
-long int number_theory_domain::power_mod(long int a, long int n, long int p)
+long int number_theory_domain::power_mod(
+		long int a, long int n, long int p)
 {
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object A, N, M;
@@ -173,7 +176,8 @@ long int number_theory_domain::power_mod(long int a, long int n, long int p)
 	return A.as_lint();
 }
 
-long int number_theory_domain::inverse_mod(long int a, long int p)
+long int number_theory_domain::inverse_mod(
+		long int a, long int p)
 {
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object A, B, U, V, G;
@@ -183,7 +187,8 @@ long int number_theory_domain::inverse_mod(long int a, long int p)
 	B.create(p);
 	D.extended_gcd(A,B, G, U, V, 0 /* verbose_level */);
 	if (!G.is_one() && !G.is_mone()) {
-		cout << "number_theory_domain::inverse_mod a and p are not coprime" << endl;
+		cout << "number_theory_domain::inverse_mod "
+				"a and p are not coprime" << endl;
 		cout << "a=" << a << endl;
 		cout << "p=" << p << endl;
 		cout << "gcd=" << G << endl;
@@ -196,7 +201,8 @@ long int number_theory_domain::inverse_mod(long int a, long int p)
 	return u;
 }
 
-long int number_theory_domain::mult_mod(long int a, long int b, long int p)
+long int number_theory_domain::mult_mod(
+		long int a, long int b, long int p)
 {
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object A, B, C, P;
@@ -208,7 +214,8 @@ long int number_theory_domain::mult_mod(long int a, long int b, long int p)
 	return C.as_int();
 }
 
-long int number_theory_domain::add_mod(long int a, long int b, long int p)
+long int number_theory_domain::add_mod(
+		long int a, long int b, long int p)
 {
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object A, B, C, P, Q;
@@ -222,7 +229,8 @@ long int number_theory_domain::add_mod(long int a, long int b, long int p)
 	return r;
 }
 
-long int number_theory_domain::ab_over_c(long int a, long int b, long int c)
+long int number_theory_domain::ab_over_c(
+		long int a, long int b, long int c)
 {
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object A, B, C, AB, Q;
@@ -235,17 +243,19 @@ long int number_theory_domain::ab_over_c(long int a, long int b, long int c)
 	return Q.as_lint();
 }
 
-long int number_theory_domain::int_abs(long int a)
+long int number_theory_domain::int_abs(
+		long int a)
 {
 	if (a < 0) {
 		return -a;
-		}
+	}
 	else {
 		return a;
-		}
+	}
 }
 
-long int number_theory_domain::gcd_lint(long int m, long int n)
+long int number_theory_domain::gcd_lint(
+		long int m, long int n)
 {
 #if 0
 	longinteger_domain D;
@@ -285,7 +295,8 @@ long int number_theory_domain::gcd_lint(long int m, long int n)
 #endif
 }
 
-void number_theory_domain::extended_gcd_int(int m, int n, int &g, int &u, int &v)
+void number_theory_domain::extended_gcd_int(
+		int m, int n, int &g, int &u, int &v)
 {
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object M, N, G, U, V;
@@ -299,7 +310,8 @@ void number_theory_domain::extended_gcd_int(int m, int n, int &g, int &u, int &v
 	v = V.as_int();
 }
 
-void number_theory_domain::extended_gcd_lint(long int m, long int n,
+void number_theory_domain::extended_gcd_lint(
+		long int m, long int n,
 		long int &g, long int &u, long int &v)
 {
 	ring_theory::longinteger_domain D;
@@ -314,8 +326,229 @@ void number_theory_domain::extended_gcd_lint(long int m, long int n,
 	v = V.as_lint();
 }
 
-long int number_theory_domain::gcd_with_key_in_latex(std::ostream &ost,
-		long int a, long int b, int f_key, int verbose_level)
+void number_theory_domain::extended_gcd_with_key(
+		ring_theory::longinteger_object &a,
+		ring_theory::longinteger_object &b, ring_theory::longinteger_object &g,
+		ring_theory::longinteger_object &u, ring_theory::longinteger_object &v,
+		std::ostream &ost, int f_key,
+		int &nb_steps,
+	int verbose_level)
+// the gcd computed here is always nonnegative
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "number_theory_domain::extended_gcd_with_key "
+				"a=" << a << " b=" << b << endl;
+	}
+
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object q, rm1, r, rp1, sm1, s, sp1, tm1, t, tp1, x, y;
+	int c;
+
+	nb_steps = 1;
+
+	if (a.is_zero()) {
+		b.assign_to(g);
+		u.create(0);
+		v.create(1);
+		if (g.sign()) {
+			g.negate();
+			u.negate();
+			v.negate();
+		}
+		return;
+	}
+	if (b.is_zero()) {
+		a.assign_to(g);
+		u.create(1);
+		v.create(0);
+		if (g.sign()) {
+			g.negate();
+			u.negate();
+			v.negate();
+		}
+		return;
+	}
+	c = D.compare_unsigned(a, b);
+
+	if (c < 0) {
+		// |a| < |b|
+		extended_gcd_with_key(
+				b, a, g, v, u,
+				ost, f_key,
+				nb_steps,
+				verbose_level);
+		return;
+	}
+	if (a.sign()) {
+		a.negate();
+		extended_gcd_with_key(
+				a, b, g, u, v,
+				ost, f_key,
+				nb_steps,
+				verbose_level);
+		a.negate();
+		u.negate();
+		if (g.sign()) {
+			g.negate();
+			u.negate();
+			v.negate();
+		}
+		return;
+	}
+	if (b.sign()) {
+		b.negate();
+		extended_gcd_with_key(
+				a, b, g, u, v,
+				ost, f_key,
+				nb_steps,
+				verbose_level);
+		b.negate();
+		v.negate();
+		if (g.sign()) {
+			g.negate();
+			u.negate();
+			v.negate();
+		}
+		return;
+	}
+
+	// now a > 0, b > 0 and a >= b
+	a.assign_to(rm1);
+	b.assign_to(r);
+	sm1.create(1);
+	tm1.create(0);
+	s.create(0);
+	t.create(1);
+
+
+	if (f_key) {
+		ost << "$";
+		rm1.print(ost);
+		ost << "=";
+		t.print(ost);
+		ost << "\\cdot ";
+		a.print(ost);
+		ost << " + ";
+		s.print(ost);
+		ost << "\\cdot ";
+		b.print(ost);
+		ost << "$";
+		ost << "\\\\" << endl;
+		ost << endl;
+		ost << "\\smallskip" << endl;
+		ost << endl;
+
+		ost << "$";
+		r.print(ost);
+		ost << "=";
+		s.print(ost);
+		ost << "\\cdot ";
+		a.print(ost);
+		ost << " + ";
+		t.print(ost);
+		ost << "\\cdot ";
+		b.print(ost);
+		ost << "$";
+		ost << "\\\\" << endl;
+		ost << endl;
+		ost << "\\smallskip" << endl;
+		ost << endl;
+
+	}
+
+
+	while (true) {
+		nb_steps++;
+		D.integral_division(
+				rm1, r, q, rp1, verbose_level - 1);
+		if (rp1.is_zero()) {
+			r.assign_to(g);
+			s.assign_to(u);
+			t.assign_to(v);
+			return;
+		}
+		if (f_vv) {
+			rm1.print(cout);
+			cout << " = ";
+			q.print(cout);
+			cout << " * ";
+			r.print(cout);
+			cout << " + ";
+			rp1.print(cout);
+			cout << endl;
+		}
+		if (f_key) {
+			ost << "$\\qquad";
+			rm1.print(ost);
+			ost << "=";
+			q.print(ost);
+			ost << "\\cdot ";
+			r.print(ost);
+			ost << " + ";
+			rp1.print(ost);
+			ost << "$";
+			ost << "\\\\" << endl;
+			ost << endl;
+			ost << "\\smallskip" << endl;
+			ost << endl;
+
+		}
+		q.negate();
+		D.mult(q, s, x);
+		D.mult(q, t, y);
+		D.add(sm1, x, sp1);
+		D.add(tm1, y, tp1);
+		r.swap_with(rm1);
+		s.swap_with(sm1);
+		t.swap_with(tm1);
+		rp1.swap_with(r);
+		sp1.swap_with(s);
+		tp1.swap_with(t);
+		if (f_vv) {
+			r.print(cout);
+			cout << " = ";
+			s.print(cout);
+			cout << " * ";
+			a.print(cout);
+			cout << " + ";
+			t.print(cout);
+			cout << " * ";
+			b.print(cout);
+			cout << endl;
+		}
+		if (f_key) {
+			ost << "$";
+			r.print(ost);
+			ost << "=";
+			s.print(ost);
+			ost << "\\cdot ";
+			a.print(ost);
+			ost << " + ";
+			t.print(ost);
+			ost << "\\cdot ";
+			b.print(ost);
+			ost << "$";
+			ost << "\\\\" << endl;
+			ost << endl;
+			ost << "\\smallskip" << endl;
+			ost << endl;
+
+		}
+	}
+	if (f_v) {
+		cout << "number_theory_domain::extended_gcd_with_key done" << endl;
+	}
+}
+
+
+
+long int number_theory_domain::gcd_with_key_in_latex(
+		std::ostream &ost,
+		long int a, long int b, int f_key,
+		int verbose_level)
 //Computes gcd(a,b)
 {
 	int f_v = (verbose_level >= 1);
@@ -366,7 +599,8 @@ long int number_theory_domain::gcd_with_key_in_latex(std::ostream &ost,
 	return b1;
 }
 
-int number_theory_domain::i_power_j_safe(int i, int j)
+int number_theory_domain::i_power_j_safe(
+		int i, int j)
 {
 	ring_theory::longinteger_domain D;
 
@@ -389,7 +623,8 @@ int number_theory_domain::i_power_j_safe(int i, int j)
 	return res;
 }
 
-long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_level)
+long int number_theory_domain::i_power_j_lint_safe(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
@@ -433,7 +668,8 @@ long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_lev
 	return res;
 }
 
-long int number_theory_domain::i_power_j_lint(long int i, long int j)
+long int number_theory_domain::i_power_j_lint(
+		long int i, long int j)
 //Computes $i^j$ as integer.
 //There is no checking for overflow.
 {
@@ -447,7 +683,8 @@ long int number_theory_domain::i_power_j_lint(long int i, long int j)
 	return r;
 }
 
-int number_theory_domain::i_power_j(int i, int j)
+int number_theory_domain::i_power_j(
+		int i, int j)
 //Computes $i^j$ as integer.
 //There is no checking for overflow.
 {
@@ -463,7 +700,8 @@ int number_theory_domain::i_power_j(int i, int j)
 
 
 void number_theory_domain::do_eulerfunction_interval(
-		long int n_min, long int n_max, int verbose_level)
+		long int n_min, long int n_max,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int n, i;
@@ -528,7 +766,8 @@ void number_theory_domain::do_eulerfunction_interval(
 
 	string fname;
 
-	fname = "table_eulerfunction_" + std::to_string(n_min) + "_" + std::to_string(n_max) + ".csv";
+	fname = "table_eulerfunction_" + std::to_string(n_min)
+			+ "_" + std::to_string(n_max) + ".csv";
 
 	string *Headers;
 
@@ -558,7 +797,8 @@ void number_theory_domain::do_eulerfunction_interval(
 
 
 
-long int number_theory_domain::euler_function(long int n)
+long int number_theory_domain::euler_function(
+		long int n)
 //Computes Euler's $\varphi$-function for $n$.
 //Uses the prime factorization of $n$. before: eulerfunc
 {
@@ -586,7 +826,8 @@ long int number_theory_domain::euler_function(long int n)
 	return k;
 }
 
-long int number_theory_domain::moebius_function(long int n)
+long int number_theory_domain::moebius_function(
+		long int n)
 //Computes the Moebius $\mu$-function for $n$.
 //Uses the prime factorization of $n$.
 {
@@ -614,7 +855,8 @@ long int number_theory_domain::moebius_function(long int n)
 
 
 
-long int number_theory_domain::order_mod_p(long int a, long int p)
+long int number_theory_domain::order_mod_p(
+		long int a, long int p)
 //Computes the order of $a$ mod $p$, i.~e. the smallest $k$ 
 //s.~th. $a^k \equiv 1$ mod $p$.
 {
@@ -641,7 +883,8 @@ long int number_theory_domain::order_mod_p(long int a, long int p)
 	return o;
 }
 
-int number_theory_domain::int_log2(int n)
+int number_theory_domain::int_log2(
+		int n)
 // returns $\log_2(n)$ 
 {	int i;
 	
@@ -655,7 +898,8 @@ int number_theory_domain::int_log2(int n)
 	return i;
 }
 
-int number_theory_domain::int_log10(int n)
+int number_theory_domain::int_log10(
+		int n)
 // returns $\log_{10}(n)$ 
 {
 	int j;
@@ -673,7 +917,8 @@ int number_theory_domain::int_log10(int n)
 	return j;
 }
 
-int number_theory_domain::lint_log10(long int n)
+int number_theory_domain::lint_log10(
+		long int n)
 // returns $\log_{10}(n)$
 {
 	long int j;
@@ -691,7 +936,8 @@ int number_theory_domain::lint_log10(long int n)
 	return j;
 }
 
-int number_theory_domain::int_logq(int n, int q)
+int number_theory_domain::int_logq(
+		int n, int q)
 // returns the number of digits in base q representation
 {	int i;
 	
@@ -707,7 +953,8 @@ int number_theory_domain::int_logq(int n, int q)
 	return i;
 }
 
-int number_theory_domain::lint_logq(long int n, int q)
+int number_theory_domain::lint_logq(
+		long int n, int q)
 // returns the number of digits in base q representation
 {
 	int i;
@@ -724,7 +971,8 @@ int number_theory_domain::lint_logq(long int n, int q)
 	return i;
 }
 
-int number_theory_domain::is_strict_prime_power(int q)
+int number_theory_domain::is_strict_prime_power(
+		int q)
 // assuming that q is a prime power, this function tests
 // if q is a strict prime power
 {
@@ -737,7 +985,8 @@ int number_theory_domain::is_strict_prime_power(int q)
 		return false;
 }
 
-int number_theory_domain::is_prime(int p)
+int number_theory_domain::is_prime(
+		int p)
 {
 	int p1;
 	
@@ -748,14 +997,16 @@ int number_theory_domain::is_prime(int p)
 		return true;
 }
 
-int number_theory_domain::is_prime_power(int q)
+int number_theory_domain::is_prime_power(
+		int q)
 {
 	int p, h;
 
 	return is_prime_power(q, p, h);
 }
 
-int number_theory_domain::is_prime_power(int q, int &p, int &h)
+int number_theory_domain::is_prime_power(
+		int q, int &p, int &h)
 {
 	int i;
 	
@@ -775,7 +1026,8 @@ int number_theory_domain::is_prime_power(int q, int &p, int &h)
 	return true;
 }
 
-int number_theory_domain::smallest_primedivisor(int n)
+int number_theory_domain::smallest_primedivisor(
+		int n)
 //Computes the smallest prime dividing $n$. 
 //The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
 {
@@ -807,7 +1059,8 @@ int number_theory_domain::smallest_primedivisor(int n)
 	}
 }
 
-int number_theory_domain::sp_ge(int n, int p_min)
+int number_theory_domain::sp_ge(
+		int n, int p_min)
 // Computes the smallest prime dividing $n$
 // which is greater than or equal to p\_min. 
 {
@@ -866,7 +1119,8 @@ int number_theory_domain::sp_ge(int n, int p_min)
 #endif
 }
 
-int number_theory_domain::factor_int(int a, int *&primes, int *&exponents)
+int number_theory_domain::factor_int(
+		int a, int *&primes, int *&exponents)
 {
 	int alloc_len = 10, len = 0;
 	int p, i;
@@ -919,7 +1173,8 @@ int number_theory_domain::factor_int(int a, int *&primes, int *&exponents)
 	return len;
 }
 
-int number_theory_domain::nb_prime_factors_counting_multiplicities(long int a)
+int number_theory_domain::nb_prime_factors_counting_multiplicities(
+		long int a)
 {
 	vector<long int> primes;
 	vector<int> exponents;
@@ -933,7 +1188,8 @@ int number_theory_domain::nb_prime_factors_counting_multiplicities(long int a)
 	return cnt;
 }
 
-int number_theory_domain::nb_distinct_prime_factors(long int a)
+int number_theory_domain::nb_distinct_prime_factors(
+		long int a)
 {
 	vector<long int> primes;
 	vector<int> exponents;
@@ -977,7 +1233,8 @@ void number_theory_domain::factor_lint(
 	}
 }
 
-void number_theory_domain::factor_prime_power(int q, int &p, int &e)
+void number_theory_domain::factor_prime_power(
+		int q, int &p, int &e)
 {
 	if (q == 1) {
 		cout << "factor_prime_power q is one" << endl;
@@ -1009,21 +1266,26 @@ long int number_theory_domain::primitive_root_randomized(
 	int cnt = 0;
 
 	if (f_v) {
-		cout << "number_theory_domain::primitive_root_randomized p=" << p << endl;
+		cout << "number_theory_domain::primitive_root_randomized "
+				"p=" << p << endl;
 	}
 	if (p < 2) {
-		cout << "number_theory_domain::primitive_root_randomized: p < 2" << endl;
+		cout << "number_theory_domain::primitive_root_randomized: "
+				"p < 2" << endl;
 		exit(1);
 	}
 
 	pm1 = p - 1;
 	if (f_v) {
-		cout << "number_theory_domain::primitive_root_randomized before factor_lint " << pm1 << endl;
+		cout << "number_theory_domain::primitive_root_randomized "
+				"before factor_lint " << pm1 << endl;
 	}
 	factor_lint(pm1, primes, exponents);
 	if (f_v) {
-		cout << "number_theory_domain::primitive_root_randomized after factor_lint " << pm1 << endl;
-		cout << "number_theory_domain::primitive_root_randomized number of factors is " << primes.size() << endl;
+		cout << "number_theory_domain::primitive_root_randomized "
+				"after factor_lint " << pm1 << endl;
+		cout << "number_theory_domain::primitive_root_randomized "
+				"number of factors is " << primes.size() << endl;
 	}
 	while (true) {
 		cnt++;
@@ -1032,17 +1294,21 @@ long int number_theory_domain::primitive_root_randomized(
 			continue;
 		}
 		if (f_v) {
-			cout << "number_theory_domain::primitive_root_randomized iteration " << cnt << " : trying " << a << endl;
+			cout << "number_theory_domain::primitive_root_randomized "
+					"iteration " << cnt << " : trying " << a << endl;
 		}
 		for (i = 0; i < (long int) primes.size(); i++) {
 			n = pm1 / primes[i];
 			if (f_v) {
-				cout << "number_theory_domain::primitive_root_randomized iteration " << cnt << " : trying " << a
-						<< " : prime factor " << i << " / " << primes.size() << " raising to the power " << n << endl;
+				cout << "number_theory_domain::primitive_root_randomized "
+						"iteration " << cnt << " : trying " << a
+						<< " : prime factor " << i << " / " << primes.size()
+						<< " raising to the power " << n << endl;
 			}
 			b = power_mod(a, n, p);
 			if (f_v) {
-				cout << "number_theory_domain::primitive_root_randomized iteration " << cnt
+				cout << "number_theory_domain::primitive_root_randomized "
+						"iteration " << cnt
 						<< " : trying " << a << " : prime factor " << i << " / " << primes.size()
 						<< " raising to the power " << n << " yields " << b << endl;
 			}
@@ -1057,7 +1323,8 @@ long int number_theory_domain::primitive_root_randomized(
 	}
 
 	if (f_v) {
-		cout << "number_theory_domain::primitive_root_randomized done after " << cnt << " trials" << endl;
+		cout << "number_theory_domain::primitive_root_randomized "
+				"done after " << cnt << " trials" << endl;
 	}
 	return a;
 }
@@ -1636,14 +1903,16 @@ int number_theory_domain::Legendre_with_key_in_latex(
 		return r1;
 	}
 	if (a1 <= 0) {
-		cout << "number_theory_domain::Legendre_with_key_in_latex a1 == -1 || a1 == 0" << endl;
+		cout << "number_theory_domain::Legendre_with_key_in_latex "
+				"a1 == -1 || a1 == 0" << endl;
 		exit(1);
 	}
 	cout << "number_theory_domain::Legendre_with_key_in_latex wrong termination" << endl;
 	exit(1);
 }
 
-int number_theory_domain::ny2(long int x, long int &x1)
+int number_theory_domain::ny2(
+		long int x, long int &x1)
 //returns $n = \ny_2(x).$ 
 //Computes $x1 := \frac{x}{2^n}$. 
 {
@@ -1678,7 +1947,8 @@ int number_theory_domain::ny2(long int x, long int &x1)
 	return n1;
 }
 
-int number_theory_domain::ny_p(long int n, long int p)
+int number_theory_domain::ny_p(
+		long int n, long int p)
 //Returns $\nu_p(n),$ the integer $k$ with $n=p^k n'$ and $p \nmid n'$.
 {
 	int ny_p;
@@ -1755,7 +2025,8 @@ void number_theory_domain::print_longfactorization(
 }
 
 
-void number_theory_domain::int_add_fractions(int at, int ab,
+void number_theory_domain::int_add_fractions(
+		int at, int ab,
 		int bt, int bb, int &ct, int &cb,
 		int verbose_level)
 {
@@ -1793,7 +2064,8 @@ void number_theory_domain::int_add_fractions(int at, int ab,
 	}
 }
 
-void number_theory_domain::int_mult_fractions(int at, int ab,
+void number_theory_domain::int_mult_fractions(
+		int at, int ab,
 		int bt, int bb, int &ct, int &cb,
 		int verbose_level)
 {
@@ -1843,7 +2115,8 @@ void number_theory_domain::int_mult_fractions(int at, int ab,
 }
 
 
-int number_theory_domain::choose_a_prime_greater_than(int lower_bound)
+int number_theory_domain::choose_a_prime_greater_than(
+		int lower_bound)
 {
 	int p, r;
 	int nb_primes = sizeof(the_first_thousand_primes) / sizeof(int);
@@ -1858,7 +2131,8 @@ int number_theory_domain::choose_a_prime_greater_than(int lower_bound)
 	}
 }
 
-int number_theory_domain::choose_a_prime_in_interval(int lower_bound, int upper_bound)
+int number_theory_domain::choose_a_prime_in_interval(
+		int lower_bound, int upper_bound)
 {
 	int p, r;
 	int nb_primes = sizeof(the_first_thousand_primes) / sizeof(int);
@@ -1873,7 +2147,8 @@ int number_theory_domain::choose_a_prime_in_interval(int lower_bound, int upper_
 	}
 }
 
-int number_theory_domain::random_integer_greater_than(int n, int lower_bound)
+int number_theory_domain::random_integer_greater_than(
+		int n, int lower_bound)
 {
 	int r;
 	orbiter_kernel_system::os_interface Os;
@@ -1886,7 +2161,8 @@ int number_theory_domain::random_integer_greater_than(int n, int lower_bound)
 	}
 }
 
-int number_theory_domain::random_integer_in_interval(int lower_bound, int upper_bound)
+int number_theory_domain::random_integer_in_interval(
+		int lower_bound, int upper_bound)
 {
 	orbiter_kernel_system::os_interface Os;
 	int r, n;
@@ -1905,7 +2181,8 @@ int number_theory_domain::nb_primes_available()
 	return sizeof(the_first_thousand_primes) / sizeof(int);
 }
 
-int number_theory_domain::get_prime_from_table(int idx)
+int number_theory_domain::get_prime_from_table(
+		int idx)
 {
 	return the_first_thousand_primes[idx];
 }
@@ -1956,7 +2233,8 @@ long int number_theory_domain::Chinese_Remainders(
 }
 
 
-long int number_theory_domain::ChineseRemainder2(long int a1, long int a2,
+long int number_theory_domain::ChineseRemainder2(
+		long int a1, long int a2,
 		long int p1, long int p2, int verbose_level)
 {
 	long int k, ma1, p1v, x;
@@ -1969,7 +2247,8 @@ long int number_theory_domain::ChineseRemainder2(long int a1, long int a2,
 }
 
 
-void number_theory_domain::sieve(std::vector<int> &primes,
+void number_theory_domain::sieve(
+		std::vector<int> &primes,
 		int factorbase, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1997,8 +2276,10 @@ void number_theory_domain::sieve(std::vector<int> &primes,
 	}
 }
 
-void number_theory_domain::sieve_primes(std::vector<int> &v,
-		int from, int to, int limit, int verbose_level)
+void number_theory_domain::sieve_primes(
+		std::vector<int> &v,
+		int from, int to, int limit,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int x, y, l, k, p, f_prime;
@@ -2054,7 +2335,8 @@ void number_theory_domain::sieve_primes(std::vector<int> &v,
 	}
 }
 
-int number_theory_domain::nb_primes(int n)
+int number_theory_domain::nb_primes(
+		int n)
 //Returns the number of primes in the prime factorization
 //of $n$ (including multiplicities).
 {
@@ -2861,6 +3143,175 @@ int number_theory_domain::elliptic_curve_addition(
 	}
 	return p3_rk;
 }
+
+void number_theory_domain::create_gcd_worksheet(
+		int nb_problems, int N, int f_key,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "number_theory_domain::create_gcd_worksheet" << endl;
+	}
+
+#if 0
+	orbiter_kernel_system::os_interface Os;
+	if (f_seed) {
+		Os.seed_random_generator(seed);
+	}
+#endif
+
+	string fname;
+
+	fname = "worksheet_gcd_N" + std::to_string(N);
+#if 0
+	if (f_seed) {
+		fname  += "_seed" + std::to_string(seed);
+
+	}
+#endif
+	if (f_key) {
+		fname += "_key";
+	}
+	fname += ".tex";
+
+	orbiter_kernel_system::file_io Fio;
+
+	{
+		ofstream ost(fname);
+		l1_interfaces::latex_interface L;
+
+		L.head_easy(ost);
+
+		create_gcd_worksheet2(ost, nb_problems, f_key, N);
+
+		L.foot(ost);
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+}
+void number_theory_domain::create_gcd_worksheet2(
+		std::ostream &ost,
+		int nb_problems, int f_key, int N)
+{
+	int i;
+
+
+	//ost << "Compute the following expressions:" << endl;
+	//ost << endl;
+	ost << "\\bigskip" << endl;
+	ost << endl;
+	ost << "\\begin{enumerate}[(1)]" << endl;
+	for (i = 0; i < nb_problems; i++) {
+
+		create_gcd_problem(ost, f_key, N);
+	}
+
+	ost << "\\end{enumerate}" << endl;
+}
+
+void number_theory_domain::create_gcd_problem(
+		std::ostream &ost, int f_key, int N)
+{
+	ost << "\\item" << endl;
+	make_gcd_problem(ost, f_key, N);
+}
+
+void number_theory_domain::make_gcd_problem(
+		std::ostream &ost, int f_key, int N)
+{
+	int a, b, c, g;
+	number_theory_domain NT;
+	orbiter_kernel_system::os_interface Os;
+
+
+	int nb_steps;
+
+	ring_theory::longinteger_object A;
+	ring_theory::longinteger_object B;
+
+
+	cout << "make_gcd_problem" << endl;
+
+	while (true) {
+		while (true) {
+			c = Os.random_integer(N / 10) + 1;
+			if ((c % 5) != 0) {
+				break;
+			}
+		}
+		while (true) {
+			a = Os.random_integer(N);
+			b = Os.random_integer(N);
+			g = NT.gcd_lint(a, b);
+			if (a > 5 && b > 5 && a != b && ((g % 5) != 0)) {
+				break;
+			}
+		}
+
+		a = a * c;
+		b = b * c;
+
+
+		A.create(a);
+		B.create(b);
+
+		ring_theory::longinteger_object G;
+		ring_theory::longinteger_object U;
+		ring_theory::longinteger_object V;
+
+		extended_gcd_with_key(
+				A,
+				B, G, U, V,
+				cout, false /* f_key */,
+				nb_steps,
+				0 /* verbose_level */);
+
+		if (nb_steps > 4) {
+			break;
+		}
+	}
+
+
+
+	//g = NT.gcd_lint(a, b);
+	//cout << "gcd(" << a << ", " << b << ")=" << g << endl;
+	ost << "$\\gcd\\big(" << a << ", " << b << "\\big)  = \\underline{\\hspace*{20mm}} = \\underline{\\hspace*{20mm}} \\cdot " << a << " + \\underline{\\hspace*{20mm}} \\cdot " << b << "$";
+	ost << endl;
+	ost << "\\smallskip" << endl;
+	ost << endl;
+
+	if (f_key) {
+
+		ring_theory::longinteger_object G;
+		ring_theory::longinteger_object U;
+		ring_theory::longinteger_object V;
+
+		A.create(a);
+		B.create(b);
+
+		extended_gcd_with_key(
+				A,
+				B, G, U, V,
+				ost, f_key,
+				nb_steps,
+				0 /* verbose_level */);
+
+		//int g;
+		//g = NT.gcd_with_key_in_latex(ost, a, b, f_key, 1 /*verbose_level*/);
+		//ost << "=\\underline{{\\bf " << g << "}\\hspace*{20mm}}$" << endl;
+	}
+	else {
+		//ost << "=\\underline{\\hspace*{20mm}}$" << endl;
+	}
+	ost << endl;
+	ost << "\\bigskip" << endl;
+	ost << endl;
+
+}
+
+
 
 
 

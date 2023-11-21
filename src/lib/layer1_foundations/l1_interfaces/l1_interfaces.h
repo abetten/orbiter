@@ -183,17 +183,22 @@ class latex_interface {
 public:
 	latex_interface();
 	~latex_interface();
-	void head_easy(std::ostream& ost);
-	void head_easy_and_enlarged(std::ostream& ost);
+	void head_easy(
+			std::ostream& ost);
+	void head_easy_and_enlarged(
+			std::ostream& ost);
 	void head_easy_with_extras_in_the_praeamble(
 			std::ostream& ost, std::string &extras);
-	void head_easy_sideways(std::ostream& ost);
-	void head(std::ostream& ost, int f_book, int f_title,
+	void head_easy_sideways(
+			std::ostream& ost);
+	void head(
+			std::ostream& ost, int f_book, int f_title,
 			std::string &title, std::string &author,
 		int f_toc, int f_landscape, int f_12pt,
 		int f_enlarged_page, int f_pagenumbers,
 		std::string &extras_for_preamble);
-	void foot(std::ostream& ost);
+	void foot(
+			std::ostream& ost);
 
 	// two functions from DISCRETA1:
 
@@ -206,12 +211,14 @@ public:
 		int f_labelling_points, std::string *point_labels,
 		int f_labelling_blocks, std::string *block_labels,
 		int verbose_level);
-	void incma_latex(std::ostream &fp,
+	void incma_latex(
+			std::ostream &fp,
 		int v, int b,
 		int V, int B, int *Vi, int *Bj,
 		int *incma,
 		int verbose_level);
-	void incma_latex_with_labels(std::ostream &fp,
+	void incma_latex_with_labels(
+			std::ostream &fp,
 		int v, int b,
 		int V, int B, int *Vi, int *Bj,
 		int *row_labels_int,
@@ -265,9 +272,11 @@ public:
 		int m_offset, int n_offset);
 	void print_big_integer_matrix_tex(
 			std::ostream &ost, int *p, int m, int n);
-	void int_vec_print_as_matrix(std::ostream &ost,
+	void int_vec_print_as_matrix(
+			std::ostream &ost,
 		int *v, int len, int width, int f_tex);
-	void lint_vec_print_as_matrix(std::ostream &ost,
+	void lint_vec_print_as_matrix(
+			std::ostream &ost,
 		long int *v, int len, int width, int f_tex);
 	void int_matrix_print_with_labels_and_partition(
 			std::ostream &ost,
@@ -344,7 +353,8 @@ public:
 			std::string &title,
 			std::string &author,
 			std::string &extra_praeamble,
-			ring_theory::longinteger_object *M, int nb_rows, int nb_cols, int verbose_level);
+			ring_theory::longinteger_object *M, int nb_rows, int nb_cols,
+			int verbose_level);
 
 };
 

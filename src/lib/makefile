@@ -43,6 +43,7 @@ ORBITER_MODULES= \
 		layer1_foundations/algebraic_geometry/surface_object_properties.o \
 		layer1_foundations/algebraic_geometry/surface_object.o \
 		layer1_foundations/algebraic_geometry/surface_polynomial_domains.o \
+		layer1_foundations/algebraic_geometry/variety_object.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
 		layer1_foundations/coding_theory/code_diagram.o \
 		layer1_foundations/coding_theory/coding_theory_domain_crc.o \
@@ -178,6 +179,7 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/projective_space_subspaces.o \
 		layer1_foundations/geometry/projective_space.o \
 		layer1_foundations/geometry/projective_space2.o \
+		layer1_foundations/geometry/row_and_col_partition.o \
 		layer1_foundations/geometry/spread_domain.o \
 		layer1_foundations/geometry/spread_tables.o \
 		layer1_foundations/geometry/three_skew_subspaces.o \

@@ -497,7 +497,8 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 
 
 
-int orthogonal::evaluate_bilinear_form_by_rank(int i, int j)
+int orthogonal::evaluate_bilinear_form_by_rank(
+		int i, int j)
 {
 	Hyperbolic_pair->unrank_point(Hyperbolic_pair->v1, 1, i, 0);
 	Hyperbolic_pair->unrank_point(Hyperbolic_pair->v2, 1, j, 0);
@@ -661,7 +662,8 @@ void orthogonal::points_on_line_by_coordinates(
 	}
 }
 
-void orthogonal::lines_on_point(long int pt,
+void orthogonal::lines_on_point(
+		long int pt,
 		long int *line_pencil_point_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -981,7 +983,8 @@ void orthogonal::make_initial_partition(
 	}
 }
 
-void orthogonal::point_to_line_map(int size,
+void orthogonal::point_to_line_map(
+		int size,
 		long int *point_ranks,
 		int *&line_vector, int verbose_level)
 // this function is assuming that there are very few lines!
@@ -1078,7 +1081,8 @@ void orthogonal::find_minimal_point_on_line(
 	}
 }
 
-void orthogonal::zero_vector(int *u, int stride, int len)
+void orthogonal::zero_vector(
+		int *u, int stride, int len)
 {
 	int i;
 	
@@ -1087,7 +1091,8 @@ void orthogonal::zero_vector(int *u, int stride, int len)
 	}
 }
 
-int orthogonal::is_zero_vector(int *u, int stride, int len)
+int orthogonal::is_zero_vector(
+		int *u, int stride, int len)
 {
 	int i;
 	
@@ -1099,7 +1104,8 @@ int orthogonal::is_zero_vector(int *u, int stride, int len)
 	return true;
 }
 
-void orthogonal::change_form_value(int *u,
+void orthogonal::change_form_value(
+		int *u,
 		int stride, int m, int multiplier)
 {
 	int i;
@@ -1109,7 +1115,8 @@ void orthogonal::change_form_value(int *u,
 	}
 }
 
-void orthogonal::scalar_multiply_vector(int *u,
+void orthogonal::scalar_multiply_vector(
+		int *u,
 		int stride, int len, int multiplier)
 {
 	int i;
@@ -1119,7 +1126,8 @@ void orthogonal::scalar_multiply_vector(int *u,
 	}
 }
 
-int orthogonal::last_non_zero_entry(int *u, int stride, int len)
+int orthogonal::last_non_zero_entry(
+		int *u, int stride, int len)
 {
 	int i;
 	
@@ -1133,7 +1141,8 @@ int orthogonal::last_non_zero_entry(int *u, int stride, int len)
 	exit(1);
 }
 
-void orthogonal::normalize_point(int *v, int stride)
+void orthogonal::normalize_point(
+		int *v, int stride)
 {
 	if (Quadratic_form->epsilon == 1) {
 		F->Projective_space_basic->PG_element_normalize(
@@ -1146,7 +1155,8 @@ void orthogonal::normalize_point(int *v, int stride)
 }
 
 
-int orthogonal::is_ending_dependent(int *vec1, int *vec2)
+int orthogonal::is_ending_dependent(
+		int *vec1, int *vec2)
 {
 	int i;
 	
@@ -1166,7 +1176,8 @@ int orthogonal::is_ending_dependent(int *vec1, int *vec2)
 	return true;
 }
 
-void orthogonal::Gauss_step(int *v1, int *v2, int len, int idx)
+void orthogonal::Gauss_step(
+		int *v1, int *v2, int len, int idx)
 // afterwards: v2[idx] = 0 and v1,v2 span the same space as before
 {
 	int i, a;
@@ -1189,7 +1200,8 @@ void orthogonal::Gauss_step(int *v1, int *v2, int len, int idx)
 	}
 }
 
-void orthogonal::perp(long int pt,
+void orthogonal::perp(
+		long int pt,
 		long int *Perp_without_pt, int &sz,
 		int verbose_level)
 // Perp_without_pt needs to be of size [Hyperbolic_pair->alpha * (Quadratic_form->q + 1)]
@@ -1313,7 +1325,8 @@ void orthogonal::perp(long int pt,
 	}
 }
 
-void orthogonal::perp_of_two_points(long int pt1,
+void orthogonal::perp_of_two_points(
+		long int pt1,
 		long int pt2,
 		long int *Perp, int &sz, int verbose_level)
 {
@@ -1347,7 +1360,8 @@ void orthogonal::perp_of_two_points(long int pt1,
 	}
 }
 
-void orthogonal::perp_of_k_points(long int *pts,
+void orthogonal::perp_of_k_points(
+		long int *pts,
 		int nb_pts,
 		long int *&Perp, int &sz, int verbose_level)
 // requires k >= 2

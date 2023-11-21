@@ -869,10 +869,12 @@ class partitionstack {
 	partitionstack();
 	~partitionstack();
 	void free();
-	void allocate(int n, int verbose_level);
+	void allocate(
+			int n, int verbose_level);
 	void allocate_with_two_classes(
 			int n, int v, int b, int verbose_level);
-	int parent_at_height(int h, int cell);
+	int parent_at_height(
+			int h, int cell);
 	int is_discrete();
 	int smallest_non_discrete_cell();
 	int biggest_non_discrete_cell();
@@ -883,8 +885,10 @@ class partitionstack {
 	int is_subset_of_cell(
 			int *set, int size, int &cell_idx);
 	void sort_cells();
-	void sort_cell(int cell);
-	void reverse_cell(int cell);
+	void sort_cell(
+			int cell);
+	void reverse_cell(
+			int cell);
 	void check();
 	void print_raw();
 	void print_class(
@@ -899,55 +903,72 @@ class partitionstack {
 			std::ostream& ost);
 	void print_classes_points_and_lines(
 			std::ostream& ost);
-	std::ostream& print(std::ostream& ost);
-	void print_cell(int i);
+	std::ostream& print(
+			std::ostream& ost);
+	void print_cell(
+			int i);
 	void print_cell_latex(
 			std::ostream &ost, int i);
 	void print_subset();
-	void get_cell(int i,
+	void get_cell(
+			int i,
 			int *&cell, int &cell_sz, int verbose_level);
-	void get_cell_lint(int i,
+	void get_cell_lint(
+			int i,
 			long int *&cell, int &cell_sz,
 			int verbose_level);
-	void get_row_classes(
-			set_of_sets *&Sos, int verbose_level);
-	void get_column_classes(
-			set_of_sets *&Sos, int verbose_level);
-	void write_cell_to_file(int i,
+	void write_cell_to_file(
+			int i,
 			std::string &fname, int verbose_level);
-	void write_cell_to_file_points_or_lines(int i, 
+	void write_cell_to_file_points_or_lines(
+			int i,
 			std::string &fname, int verbose_level);
 	void refine_arbitrary_set_lint(
 			int size, long int *set, int verbose_level);
 	void refine_arbitrary_set(
 			int size, int *set, int verbose_level);
-	void split_cell(int verbose_level);
-	void split_multiple_cells(int *set, int set_size, 
+	void split_cell(
+			int verbose_level);
+	void split_multiple_cells(
+			int *set, int set_size,
 		int f_front, int verbose_level);
+	void split_line_cell_front_or_back_lint(
+			long int *set, int set_size, int f_front,
+			int verbose_level);
 	void split_line_cell_front_or_back(
 			int *set, int set_size,
 		int f_front, int verbose_level);
+	void split_cell_front_or_back_lint(
+			long int *set, int set_size, int f_front,
+			int verbose_level);
 	void split_cell_front_or_back(
 			int *set, int set_size,
 		int f_front, int verbose_level);
 	void split_cell(
 			int *set, int set_size, int verbose_level);
 	void join_cell();
-	void reduce_height(int ht0);
-	void isolate_point(int pt);
+	void reduce_height(
+			int ht0);
+	void isolate_point(
+			int pt);
 	void subset_contiguous(
 			int from, int len);
-	int is_row_class(int c);
-	int is_col_class(int c);
+	int is_row_class(
+			int c);
+	int is_col_class(
+			int c);
 	void initial_matrix_decomposition(
 			int nbrows, int nbcols,
 		int *V, int nb_V, int *B, int nb_B, 
 		int verbose_level);
-	int is_descendant_of(int cell, int ancestor_cell, 
+	int is_descendant_of(
+			int cell, int ancestor_cell,
 		int verbose_level);
-	int is_descendant_of_at_level(int cell, int ancestor_cell, 
+	int is_descendant_of_at_level(
+			int cell, int ancestor_cell,
 			int level, int verbose_level);
-	int cellSizeAtLevel(int cell, int level);
+	int cellSizeAtLevel(
+			int cell, int level);
 
 
 
@@ -975,42 +996,22 @@ class partitionstack {
 		int offset,
 		int verbose_level);
 
-
-	void allocate_and_get_decomposition(
-		int *&row_classes, int *&row_class_inv,
-			int &nb_row_classes,
-		int *&col_classes, int *&col_class_inv,
-			int &nb_col_classes,
-		int verbose_level);
 	void get_row_and_col_permutation(
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes,
+			geometry::row_and_col_partition *RC,
 		int *row_perm, int *row_perm_inv,
 		int *col_perm, int *col_perm_inv,
 		int verbose_level);
 	void get_row_and_col_classes(
+			geometry::row_and_col_partition *&RC,
+			int verbose_level);
+	void get_row_and_col_classes_old_fashioned(
 			int *row_classes, int &nb_row_classes,
 			int *col_classes, int &nb_col_classes,
-			int verbose_level);
-	void print_classes_of_decomposition_tex(
-			std::ostream &ost,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes);
-	void print_decomposition_scheme(
-			std::ostream &ost,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes, 
-		int *scheme);
-	void print_row_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math_mode,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes,
-		int *row_scheme, int f_print_subscripts);
-	void print_column_tactical_decomposition_scheme_tex(
-			std::ostream &ost, int f_enter_math_mode,
-		int *row_classes, int nb_row_classes,
-		int *col_classes, int nb_col_classes,
-		int *col_scheme, int f_print_subscripts);
+		int verbose_level);
+	void get_row_classes(
+			set_of_sets *&Sos, int verbose_level);
+	void get_column_classes(
+			set_of_sets *&Sos, int verbose_level);
 
 };
 
@@ -1109,6 +1110,11 @@ public:
 			int nb_sets, int verbose_level);
 	void init(long int underlying_set_size,
 			int nb_sets, long int **Pts, int *Sz, int verbose_level);
+	void init_from_set_of_sets(
+			set_of_sets *SoS, int verbose_level);
+	void init_single(
+			long int underlying_set_size,
+			long int *Pts, int sz, int verbose_level);
 	void init_basic(long int underlying_set_size,
 			int nb_sets, int *Sz, int verbose_level);
 	void init_set(int idx_of_set,
@@ -1160,6 +1166,9 @@ public:
 	void init_basic_constant_size(
 			int underlying_set_size,
 		int nb_sets, int constant_size, int verbose_level);
+	void init_single(
+			int underlying_set_size,
+			long int *Pts, int sz, int verbose_level);
 	void init_from_file(
 			int &underlying_set_size,
 			std::string &fname, int verbose_level);
@@ -1176,8 +1185,10 @@ public:
 	void init_cycle_structure(
 			int *perm, int n, int verbose_level);
 	int total_size();
-	long int &element(int i, int j);
-	void add_element(int i, long int a);
+	long int &element(
+			int i, int j);
+	void add_element(
+			int i, long int a);
 	void print();
 	void print_table();
 	void print_table_tex(
@@ -1232,10 +1243,12 @@ public:
 		int f_make_heading, int verbose_level);
 	void save_constant_size_csv(std::string &fname,
 			int verbose_level);
-	int find_common_element_in_two_sets(int idx1, int idx2, 
+	int find_common_element_in_two_sets(
+			int idx1, int idx2,
 		int &common_elt);
 	void sort();
-	void sort_big(int verbose_level);
+	void sort_big(
+			int verbose_level);
 	void compute_orbits(
 			int &nb_orbits,
 			int *&orbit, int *&orbit_inv,
@@ -1765,6 +1778,10 @@ public:
 			spreadsheet *S2, char *join_by);
 	void compare_columns(
 			std::string &col1_label, std::string &col2_label,
+			int verbose_level);
+	void stringify(
+			std::string *&Header_rows, std::string *&Header_cols, std::string *&T,
+			int &nb_r, int &nb_c,
 			int verbose_level);
 
 

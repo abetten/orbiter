@@ -363,7 +363,8 @@ long int unusual_model::convert_to_rank(
 	return rank;
 }
 
-void unusual_model::convert_from_rank(long int rank,
+void unusual_model::convert_from_rank(
+		long int rank,
 	int *unusual_coordinates, int verbose_level)
 {
 	int usual[5];
@@ -374,7 +375,8 @@ void unusual_model::convert_from_rank(long int rank,
 			unusual_coordinates, verbose_level - 1);
 }
 
-void unusual_model::convert_to_usual(int n,
+void unusual_model::convert_to_usual(
+		int n,
 	int *unusual_coordinates,
 	int *usual_coordinates,
 	int verbose_level)
@@ -419,7 +421,8 @@ void unusual_model::convert_to_usual(int n,
 	FREE_int(tmp);
 }
 
-void unusual_model::convert_from_usual(int n,
+void unusual_model::convert_from_usual(
+		int n,
 	int *usual_coordinates,
 	int *unusual_coordinates,
 	int verbose_level)
@@ -705,14 +708,16 @@ void unusual_model::create_Mondello_BLT_set(
 	//FREE_int(Table);
 }
 
-int unusual_model::N2(int a)
+int unusual_model::N2(
+		int a)
 {
 	return Quadratic_form_list_coding->SubS->retract(
 			FQ->N2(a), 0 /* verbose_level */);
 	
 }
 
-int unusual_model::T2(int a)
+int unusual_model::T2(
+		int a)
 {
 	return Quadratic_form_list_coding->SubS->retract(
 			FQ->T2(a), 0 /* verbose_level */);
@@ -1295,7 +1300,8 @@ void unusual_model::create_4by4_matrix(
 	}
 }
 
-void unusual_model::print_2x2(int *v, int *f_semi)
+void unusual_model::print_2x2(
+		int *v, int *f_semi)
 {
 	int i, j, a, l;
 	
@@ -1334,7 +1340,8 @@ void unusual_model::print_2x2(int *v, int *f_semi)
 	}
 }
 
-void unusual_model::print_M5(orthogonal *O, int *M5)
+void unusual_model::print_M5(
+		orthogonal *O, int *M5)
 {
 	int M4[16], v[4], f_semi[4];
 	

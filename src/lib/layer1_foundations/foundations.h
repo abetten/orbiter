@@ -293,6 +293,7 @@ namespace algebraic_geometry {
 	class surface_object_properties;
 	class surface_object;
 	class surface_polynomial_domains;
+	class variety_object;
 	class web_of_cubic_curves;
 
 }
@@ -467,6 +468,7 @@ namespace geometry {
 	class projective_space_reporting;
 	class projective_space_subspaces;
 	class projective_space;
+	class row_and_col_partition;
 	class spread_domain;
 	class spread_tables;
 	class three_skew_subspaces;

@@ -78,7 +78,8 @@ public:
 
 	canonical_form_classifier_description();
 	~canonical_form_classifier_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -91,7 +92,7 @@ public:
 
 
 
-//! to classify objects using canonical forms
+//! Classification of algebraic objects in projective space using canonical forms
 
 
 class canonical_form_classifier {
@@ -230,7 +231,8 @@ public:
 	void compute_canonical_form(
 			int counter,
 			int verbose_level);
-	void compute_canonical_object(int verbose_level);
+	void compute_canonical_object(
+			int verbose_level);
 	void prepare_csv_entry_one_line(
 			std::vector<std::string> &v, int i, int verbose_level);
 
@@ -343,9 +345,12 @@ public:
 	classification_of_varieties();
 	~classification_of_varieties();
 	void init(
-			canonical_form_classifier *Classifier, int verbose_level);
-	void classify_nauty(int verbose_level);
-	void classify_with_substructure(int verbose_level);
+			canonical_form_classifier *Classifier,
+			int verbose_level);
+	void classify_nauty(
+			int verbose_level);
+	void classify_with_substructure(
+			int verbose_level);
 	void main_loop(int verbose_level);
 	void write_canonical_forms_csv(
 			std::string &fname_base,
@@ -397,8 +402,10 @@ public:
 	void init(
 			canonical_form_classifier *Classifier,
 			int verbose_level);
-	int skip_this_one(int counter);
-	void count_nb_objects_to_test(int verbose_level);
+	int skip_this_one(
+			int counter);
+	void count_nb_objects_to_test(
+			int verbose_level);
 	void read_input_objects(
 			int verbose_level);
 	void prepare_input(

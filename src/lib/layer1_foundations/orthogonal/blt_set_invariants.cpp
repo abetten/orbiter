@@ -85,7 +85,8 @@ void blt_set_invariants::init(
 	}
 }
 
-void blt_set_invariants::compute(int verbose_level)
+void blt_set_invariants::compute(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

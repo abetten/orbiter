@@ -193,7 +193,8 @@ void hyperbolic_pair::init(
 
 }
 
-void hyperbolic_pair::init_counting_functions(int verbose_level)
+void hyperbolic_pair::init_counting_functions(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry::geometry_global Gg;
@@ -300,7 +301,8 @@ void hyperbolic_pair::init_counting_functions(int verbose_level)
 	}
 }
 
-void hyperbolic_pair::init_decomposition(int verbose_level)
+void hyperbolic_pair::init_decomposition(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry::geometry_global Gg;
@@ -393,7 +395,8 @@ void hyperbolic_pair::init_decomposition(int verbose_level)
 	}
 
 }
-void hyperbolic_pair::init_parabolic(int verbose_level)
+void hyperbolic_pair::init_parabolic(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -460,7 +463,8 @@ void hyperbolic_pair::init_parabolic(int verbose_level)
 	}
 }
 
-void hyperbolic_pair::init_parabolic_even(int verbose_level)
+void hyperbolic_pair::init_parabolic_even(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry::geometry_global Gg;
@@ -577,7 +581,8 @@ void hyperbolic_pair::init_parabolic_even(int verbose_level)
 	}
 }
 
-void hyperbolic_pair::init_parabolic_odd(int verbose_level)
+void hyperbolic_pair::init_parabolic_odd(
+		int verbose_level)
 {
 	long int a, b, c;
 	int f_v = (verbose_level >= 1);
@@ -782,7 +787,8 @@ void hyperbolic_pair::init_parabolic_odd(int verbose_level)
 }
 
 
-void hyperbolic_pair::init_hyperbolic(int verbose_level)
+void hyperbolic_pair::init_hyperbolic(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
